@@ -1,70 +1,60 @@
-From: =?utf-8?q?SZEDER=20G=C3=A1bor?= <szeder@ira.uka.de>
-Subject: [PATCH] Documentation: minor cleanup in a use case in 'git stash'
-	manual
-Date: Tue,  2 Sep 2008 03:45:01 +0200
-Message-ID: <1220319901-23733-1-git-send-email-szeder@ira.uka.de>
-References: <1220319324-23012-1-git-send-email-szeder@ira.uka.de>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: pack count on repo.or.cz
+Date: Mon, 01 Sep 2008 18:47:36 -0700
+Message-ID: <7vod37s4hz.fsf@gitster.siamese.dyndns.org>
+References: <7vsksjsbcc.fsf@gitster.siamese.dyndns.org>
+ <20080902000037.GA11869@coredump.intra.peff.net>
+ <20080902010410.GI10360@machine.or.cz>
+ <20080902011433.GA12682@coredump.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org,
-	=?utf-8?q?Jonas=20Flod=C3=A9n?= <jonas.floden@gmail.com>,
-	=?utf-8?q?SZEDER=20G=C3=A1bor?= <szeder@ira.uka.de>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Sep 02 03:46:11 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: Petr Baudis <pasky@suse.cz>, git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Tue Sep 02 03:48:50 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KaKyA-0006aI-0s
-	for gcvg-git-2@gmane.org; Tue, 02 Sep 2008 03:46:10 +0200
+	id 1KaL0j-0006x8-B5
+	for gcvg-git-2@gmane.org; Tue, 02 Sep 2008 03:48:49 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752234AbYIBBpE convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 1 Sep 2008 21:45:04 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752210AbYIBBpE
-	(ORCPT <rfc822;git-outgoing>); Mon, 1 Sep 2008 21:45:04 -0400
-Received: from moutng.kundenserver.de ([212.227.126.186]:57048 "EHLO
-	moutng.kundenserver.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752091AbYIBBpD (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 1 Sep 2008 21:45:03 -0400
-Received: from [127.0.1.1] (p5B13393C.dip0.t-ipconnect.de [91.19.57.60])
-	by mrelayeu.kundenserver.de (node=mrelayeu4) with ESMTP (Nemesis)
-	id 0ML21M-1KaKx12ypK-0007yB; Tue, 02 Sep 2008 03:45:00 +0200
-X-Mailer: git-send-email 1.6.0.1.171.gaaac
-In-Reply-To: <1220319324-23012-1-git-send-email-szeder@ira.uka.de>
-X-Provags-ID: V01U2FsdGVkX1/Xj/ACRBLGf2iA27KwM4L5h9nKs0jQbWcZjFE
- IIgAao/N7sYP3rxEJuTHHFNi1boZi9YAl78mFYw0KydNZtdG2x
- 2lM3LVFT8j0Wsz6ez14BA==
+	id S1752286AbYIBBro (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 1 Sep 2008 21:47:44 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752300AbYIBBro
+	(ORCPT <rfc822;git-outgoing>); Mon, 1 Sep 2008 21:47:44 -0400
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:56446 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752275AbYIBBrn (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 1 Sep 2008 21:47:43 -0400
+Received: from localhost.localdomain (localhost [127.0.0.1])
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 513E35E9B1;
+	Mon,  1 Sep 2008 21:47:42 -0400 (EDT)
+Received: from pobox.com (ip68-225-240-211.oc.oc.cox.net [68.225.240.211])
+ (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
+ certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
+ ESMTPSA id 90CCE5E9AF; Mon,  1 Sep 2008 21:47:38 -0400 (EDT)
+In-Reply-To: <20080902011433.GA12682@coredump.intra.peff.net> (Jeff King's
+ message of "Mon, 1 Sep 2008 21:14:33 -0400")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: 21C621D6-7891-11DD-ACC3-9EE598D589B0-77302942!a-sasl-fastnet.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/94638>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/94639>
 
-There is no need to explicitly pass the file to be committed to 'git
-commit', because it's contents is already in the index.
+Jeff King <peff@peff.net> writes:
 
-Signed-off-by: SZEDER G=C3=A1bor <szeder@ira.uka.de>
----
+> Though an even simpler solution, since you control all of the repos, is
+> to just temporarily add references from the "parent" of the fork to
+> every ref of every forked child. Then do the repack in the parent, which
+> should then contain all of the objects for all of the children, delete
+> the temporary references, and prune in the children (who should see most
+> of their objects now in the parent).
 
-  Ah, and one more small change in stash docs.
+Hmm, I am slightly worried about doing so might defeat the whole point of
+making the sample repository a separate one from git.git hosted there.
 
- Documentation/git-stash.txt |    2 +-
- 1 files changed, 1 insertions(+), 1 deletions(-)
-
-diff --git a/Documentation/git-stash.txt b/Documentation/git-stash.txt
-index cdf3cf1..f91368c 100644
---- a/Documentation/git-stash.txt
-+++ b/Documentation/git-stash.txt
-@@ -207,7 +207,7 @@ each change before committing:
- $ git add --patch foo            # add just first part to the index
- $ git stash save --keep-index    # save all other changes to the stash
- $ edit/build/test first part
--$ git commit foo -m 'First part' # commit fully tested change
-+$ git commit -m 'First part'     # commit fully tested change
- $ git stash pop                  # prepare to work on all other change=
-s
- # ... repeat above five steps until one commit remains ...
- $ edit/build/test remaining parts
---=20
-1.6.0.1.171.gaaac
+The reason it is not a branch in git.git is because I did not want to
+contaminate the official git.git repository with commit objects in tree
+objects (aka gitlinks); it would deny access to clients older than 1.5.2.
