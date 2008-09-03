@@ -1,69 +1,61 @@
-From: Johan Herland <johan@herland.net>
-Subject: Re: Merge seems to get confused by (reverted) cherry-picks
-Date: Wed, 3 Sep 2008 13:16:05 +0200
-Message-ID: <200809031316.05336.johan@herland.net>
-References: <20080903072011.GA14252@atjola.homenet> <7vprnld5ws.fsf@gitster.siamese.dyndns.org> <48BE56BD.6050805@gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
+From: Pieter de Bie <pdebie@ai.rug.nl>
+Subject: Re: [RFC] Detached-HEAD reminder on commit?
+Date: Wed, 3 Sep 2008 13:27:33 +0200
+Message-ID: <4C04A26E-5829-4A39-AD89-F5A68E606AA3@ai.rug.nl>
+References: <1220383905-48316-1-git-send-email-pdebie@ai.rug.nl> <7vk5dujn9h.fsf@gitster.siamese.dyndns.org> <20080902210524.GB7757@leksak.fem-net> <0578A0F2-F90A-4555-9B34-726F26A1CDBB@ai.rug.nl>
+Mime-Version: 1.0 (Apple Message framework v926)
+Content-Type: text/plain; charset=US-ASCII; format=flowed; delsp=yes
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-	=?iso-8859-1?q?Bj=F6rn_Steinbrink?= <B.Steinbrink@gmx.de>,
-	Linus Torvalds <torvalds@linux-foundation.org>
-To: Ittay Dror <ittay.dror@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Sep 03 13:18:20 2008
+Cc: Stephan Beyer <s-beyer@gmx.net>,
+	Junio C Hamano <gitster@pobox.com>,
+	Git Mailinglist <git@vger.kernel.org>
+To: Nicolas Pitre <nico@cam.org>, Johan Herland <johan@herland.net>
+X-From: git-owner@vger.kernel.org Wed Sep 03 13:29:01 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KaqNK-0003nY-G0
-	for gcvg-git-2@gmane.org; Wed, 03 Sep 2008 13:18:14 +0200
+	id 1KaqXj-0006p9-KX
+	for gcvg-git-2@gmane.org; Wed, 03 Sep 2008 13:29:00 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752077AbYICLRH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 3 Sep 2008 07:17:07 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752113AbYICLRF
-	(ORCPT <rfc822;git-outgoing>); Wed, 3 Sep 2008 07:17:05 -0400
-Received: from sam.opera.com ([213.236.208.81]:52868 "EHLO smtp.opera.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751398AbYICLRE (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 3 Sep 2008 07:17:04 -0400
-Received: from pc107.coreteam.oslo.opera.com (pat-tdc.opera.com [213.236.208.22])
-	by smtp.opera.com (8.13.4/8.13.4/Debian-3sarge3) with ESMTP id m83BG5WM032540
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
-	Wed, 3 Sep 2008 11:16:10 GMT
-User-Agent: KMail/1.9.9
-In-Reply-To: <48BE56BD.6050805@gmail.com>
-Content-Disposition: inline
+	id S1751640AbYICL1x (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 3 Sep 2008 07:27:53 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751607AbYICL1w
+	(ORCPT <rfc822;git-outgoing>); Wed, 3 Sep 2008 07:27:52 -0400
+Received: from frim.nl ([87.230.85.232]:41252 "EHLO
+	lvps87-230-85-232.dedicated.hosteurope.de" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751592AbYICL1w (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 3 Sep 2008 07:27:52 -0400
+Received: from s5591931c.adsl.wanadoo.nl ([85.145.147.28] helo=[192.168.1.11])
+	by lvps87-230-85-232.dedicated.hosteurope.de with esmtpsa (TLS-1.0:RSA_AES_128_CBC_SHA1:16)
+	(Exim 4.63)
+	(envelope-from <pdebie@ai.rug.nl>)
+	id 1KaqWS-0001Mp-D3; Wed, 03 Sep 2008 13:27:40 +0200
+In-Reply-To: <0578A0F2-F90A-4555-9B34-726F26A1CDBB@ai.rug.nl>
+X-Mailer: Apple Mail (2.926)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/94786>
-
-On Wednesday 03 September 2008, Ittay Dror wrote:
-> Note: codeville tried to implement a merge algorithm that considers
-> the history to decide what the user wants to do:
-> http://revctrl.org/PreciseCodevilleMerge. Maybe worth while
-> exploring?
-
-You haven't been here long, have you? ;)
-
-There was an infamous mailing list discussion between Bram Cohen (who 
-created PreciseCodevilleMerge), and Linus Torvalds back in 2005, 
-discussing merge strategies. It is well recounted here:
-
-http://wincent.com/a/about/wincent/weblog/archives/2007/07/a_look_back_bra.php
-
-Also, nowadays, even Bram himself seems to have conceded 
-PreciseCodevilleMerge in favour of traditional 3-way merge, at least if 
-you look at item #3 in the following posting from his blog:
-
-http://bramcohen.livejournal.com/52148.html
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/94787>
 
 
+On 2 sep 2008, at 23:51, Pieter de Bie wrote:
+>
+> How about a single line then, something like
+>
+> 	Vienna:git pieter$ ./git commit --allow-empty -m"test"
+> 	Created commit 6ce62c8b: test
+> 	Remember you are on a detached head, create a new branch to not  
+> lose these changes
 
-...Johan
+Or, as a final suggestion, something unintrusive like:
 
--- 
-Johan Herland, <johan@herland.net>
-www.herland.net
+(on detached head)
+	Vienna:git pieter$ ./git commit --allow-empty -m"test"
+	Created commit 6ce62c8b on detached head: test
+(on branch)
+	Vienna:git pieter$ ./git commit --allow-empty -m"test"
+	Created commit 6ce62c8b on branch 'master': test
+
+- Pieter
