@@ -1,92 +1,89 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 0/4] tests: use "git xyzzy" form
-Date: Wed, 03 Sep 2008 13:45:46 -0700
-Message-ID: <7vwsht9cw5.fsf@gitster.siamese.dyndns.org>
-References: <20080903175925.6117@nanako3.lavabit.com>
- <48BE6D1F.1060603@op5.se> <7v8wu9athn.fsf@gitster.siamese.dyndns.org>
+Subject: Re: [PATCH 1/2] add '%d' pretty format specifier to show decoration
+Date: Wed, 03 Sep 2008 13:59:17 -0700
+Message-ID: <7vsksh9c9m.fsf@gitster.siamese.dyndns.org>
+References: <alpine.LNX.1.10.0809032036270.32295@pollux>
+ <20080903191217.GA31195@coredump.intra.peff.net>
+ <7v4p4xat3v.fsf@gitster.siamese.dyndns.org>
+ <20080903203616.GB32223@coredump.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Andreas Ericsson <ae@op5.se>, git@vger.kernel.org
-To: Nanako Shiraishi <nanako3@lavabit.com>
-X-From: git-owner@vger.kernel.org Wed Sep 03 22:47:15 2008
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Michael Dressel <MichaelTiloDressel@t-online.de>,
+	git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Wed Sep 03 23:00:40 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KazFl-0001yc-4v
-	for gcvg-git-2@gmane.org; Wed, 03 Sep 2008 22:47:01 +0200
+	id 1KazSp-0007kw-QB
+	for gcvg-git-2@gmane.org; Wed, 03 Sep 2008 23:00:32 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753328AbYICUpy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 3 Sep 2008 16:45:54 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752667AbYICUpy
-	(ORCPT <rfc822;git-outgoing>); Wed, 3 Sep 2008 16:45:54 -0400
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:48486 "EHLO
+	id S1753397AbYICU7Z convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 3 Sep 2008 16:59:25 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753431AbYICU7Z
+	(ORCPT <rfc822;git-outgoing>); Wed, 3 Sep 2008 16:59:25 -0400
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:53720 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752531AbYICUpy (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 3 Sep 2008 16:45:54 -0400
+	with ESMTP id S1752293AbYICU7Z convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 3 Sep 2008 16:59:25 -0400
 Received: from localhost.localdomain (localhost [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id D89C45B386;
-	Wed,  3 Sep 2008 16:45:52 -0400 (EDT)
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id C8ADC5B771;
+	Wed,  3 Sep 2008 16:59:23 -0400 (EDT)
 Received: from pobox.com (ip68-225-240-211.oc.oc.cox.net [68.225.240.211])
  (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
  certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
- ESMTPSA id CED715B385; Wed,  3 Sep 2008 16:45:48 -0400 (EDT)
-In-Reply-To: <7v8wu9athn.fsf@gitster.siamese.dyndns.org> (Junio C. Hamano's
- message of "Wed, 03 Sep 2008 13:01:56 -0700")
+ ESMTPSA id 150095B76F; Wed,  3 Sep 2008 16:59:19 -0400 (EDT)
+In-Reply-To: <20080903203616.GB32223@coredump.intra.peff.net> (Jeff King's
+ message of "Wed, 3 Sep 2008 16:36:16 -0400")
 User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: 4C8779A6-79F9-11DD-89A2-9EE598D589B0-77302942!a-sasl-fastnet.pobox.com
+X-Pobox-Relay-ID: 2FE21EEE-79FB-11DD-985B-9EE598D589B0-77302942!a-sasl-fastnet.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/94851>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/94852>
 
-Thanks.
+Jeff King <peff@peff.net> writes:
 
-I looked at the output from:
+> On Wed, Sep 03, 2008 at 01:10:12PM -0700, Junio C Hamano wrote:
+>
+>> I agree with the above reasoning.  If we go with surrounding parenth=
+eses,
+>> it might even make sense to include a SP _before_ the opening parent=
+hesis,
+>> so that "%h %s%d" expands to either of these:
+>>=20
+>>    $ git show -s --pretty=3Dformat:'%h %s%d' v1.6.0^0 v1.6.0^1
+>>    ea02eef GIT 1.6.0 (refs/tags/v1.6.0)
+>>    373a273 Merge git-gui 0.11.0
+>
+> Isn't that what you argued against in Dscho's version of the patch?
+>
+>     http://mid.gmane.org/7v1w5exfwb.fsf@gitster.siamese.dyndns.org
 
-    $ git grep -e git-'[a-z]' t/t[0-8]???-*.sh t/t9001-*.sh
+Yeah, but unlike Linus, I am not infallible.  Also, I can change my min=
+d.
 
-after applying these patches to the tip of ho/dashless topic, 7e44c93
-('git foo' program identifies itself without dash in die() messages,
-2008-08-31) to review what you did not change are reasonable.
+If the concensus is that we do the simpler variant _now_ and leave
+extending it for later, I think it is Ok to pick any one reasonable
+default/simple format, and including the parentheses (with leading SP)
+would be one reasonable default, certainly more reasonable than not
+including the parentheses at all.
 
-I won't quote the whole output from the above grep, but there are a few
-lines worth commenting on.
+The background is somewhat different, too.
 
-t/t5300-pack-object.sh:test_description='git-pack-object
-t/t5305-include-tag.sh:test_description='git-pack-object --include-tag'
+Back then I didn't think anybody but Dscho was interested in including
+decorate in --pretty=3Dformat in half-baked form.  Ren=C3=A9 is comment=
+ was to do
+more flexible but complex variant.  I didn't see many people wanted to
+have it in "limited but usable for simpler needs" form.
 
-These might want changing.
-
-t/t5602-clone-remote-exec.sh:	echo "localhost git-upload-pack '\''/path/to/repo'\''" >expected
-t/t5602-clone-remote-exec.sh:	GIT_SSH=./not_ssh git clone -u /something/bin/git-upload-pack localhost:/path/to/repo junk
-t/t5602-clone-remote-exec.sh:	echo "localhost /something/bin/git-upload-pack '\''/path/to/repo'\''" >expected
-
-These we do want to keep in git-foo form
-
-The remainder of the grep output looked all reasonable; they hit options
-like "--git-dir" and "is-inside-git-dir", and pathnames like "git-gui" and
-".git/rebase-merge/git-rebase-todo".
-
-Doing this _carefully_ (otherwise the result would be useless) must have
-been quite a lot of effort, and what was posted seems to have been done
-quite carefully.
-
-The cross-checking I did with "grep" in this message does *not* catch if
-you converted something that shouldn't have been converted (e.g. changing
-the pathname ".git/rebase-merge/git-rebase-todo" to "git rebase-todo"
-would have been a disaster).  It needs real eyeballing of the patches
-themselves to catch such an error, and we would need help from people.
-
-Volunteers?  Just please say "I'll go through patch [n/4] line by line"
-now to avoid duplicated work with others (more eyeballs looking at the
-same thing will catch more errors, but I do not think we have that many
-volunteers here), and then after you are done, come back with "They all
-are command invocations and conversion is correct" or with "This one is
-incorrect and should be kept."
-
-Oh, also, there are many other t9XXX series of tests.  Can somebody
-volunteer to do the same for the rest of them?
-
-Puh-leeeeze?
+It wasn't that urgent, as opposed to this round more people seem to be
+interested in having it even in a limited form.  And I knew Dscho was v=
+ery
+much capable of doing the "going whole nine yards" version, instead of =
+a
+simple-limited one.  "If we can afford to spend time to get it right in
+the first round why not?" was part of the reasons behind my objection.
