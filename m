@@ -1,53 +1,83 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [RFC] Detached-HEAD reminder on commit?
-Date: Wed, 3 Sep 2008 15:41:56 -0400
-Message-ID: <20080903194156.GA31756@coredump.intra.peff.net>
-References: <1220383905-48316-1-git-send-email-pdebie@ai.rug.nl> <200809022339.20123.johan@herland.net> <20080902214428.GA20355@sigill.intra.peff.net> <200809030945.08619.johan@herland.net> <20080903131507.GC12936@coredump.intra.peff.net> <20080903133446.GA6967@coredump.intra.peff.net> <alpine.LNX.1.00.0809031234560.19665@iabervon.org> <20080903180726.GA16454@coredump.intra.peff.net> <7vljy9auoq.fsf@gitster.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 0/4] tests: use "git xyzzy" form
+Date: Wed, 03 Sep 2008 13:01:56 -0700
+Message-ID: <7v8wu9athn.fsf@gitster.siamese.dyndns.org>
+References: <20080903175925.6117@nanako3.lavabit.com>
+ <48BE6D1F.1060603@op5.se>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Sep 03 21:43:38 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: Nanako Shiraishi <nanako3@lavabit.com>, git@vger.kernel.org
+To: Andreas Ericsson <ae@op5.se>
+X-From: git-owner@vger.kernel.org Wed Sep 03 22:04:00 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KayGD-0006YJ-N0
-	for gcvg-git-2@gmane.org; Wed, 03 Sep 2008 21:43:26 +0200
+	id 1Kaya7-0004dp-Nt
+	for gcvg-git-2@gmane.org; Wed, 03 Sep 2008 22:04:00 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752609AbYICTl7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 3 Sep 2008 15:41:59 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754173AbYICTl7
-	(ORCPT <rfc822;git-outgoing>); Wed, 3 Sep 2008 15:41:59 -0400
-Received: from peff.net ([208.65.91.99]:2777 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752595AbYICTl6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 3 Sep 2008 15:41:58 -0400
-Received: (qmail 31118 invoked by uid 111); 3 Sep 2008 19:41:57 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.32) with SMTP; Wed, 03 Sep 2008 15:41:57 -0400
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Wed, 03 Sep 2008 15:41:56 -0400
-Content-Disposition: inline
-In-Reply-To: <7vljy9auoq.fsf@gitster.siamese.dyndns.org>
+	id S1754068AbYICUCo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 3 Sep 2008 16:02:44 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754082AbYICUCo
+	(ORCPT <rfc822;git-outgoing>); Wed, 3 Sep 2008 16:02:44 -0400
+Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:51514 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752330AbYICUCn (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 3 Sep 2008 16:02:43 -0400
+Received: from localhost.localdomain (localhost [127.0.0.1])
+	by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id 16E9E72C1D;
+	Wed,  3 Sep 2008 16:02:40 -0400 (EDT)
+Received: from pobox.com (ip68-225-240-211.oc.oc.cox.net [68.225.240.211])
+ (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
+ certificate requested) by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with
+ ESMTPSA id EC64572C16; Wed,  3 Sep 2008 16:01:59 -0400 (EDT)
+In-Reply-To: <48BE6D1F.1060603@op5.se> (Andreas Ericsson's message of "Wed,
+ 03 Sep 2008 12:55:27 +0200")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: 431AF984-79F3-11DD-AD09-3113EBD4C077-77302942!a-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/94845>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/94846>
 
-On Wed, Sep 03, 2008 at 12:36:05PM -0700, Junio C Hamano wrote:
+Andreas Ericsson <ae@op5.se> writes:
 
-> It was a good idea to keep the scripted ones in contrib/examples so that
-> they are readily accessible to find out what we used to do ;-).
+> Nanako Shiraishi wrote:
+>> These four patches update test scripts to use "git xyzzy" format so that
+>> they can serve as sample usage for git commands better.
+>>
+>>  [PATCH 1/4] tests: use "git xyzzy" form (t0000 - t3599)
+>>  [PATCH 2/4] tests: use "git xyzzy" form (t3600 - t6999)
+>>  [PATCH 3/4] tests: use "git xyzzy" form (t7000 - t7199)
+>>  [PATCH 4/4] tests: use "git xyzzy" form (t7200 - t9001)
+>
+> Are you absolutely 100% certain that what you're testing is still
+> the files in the build directory after applying these patches?
 
-Who's to say I didn't do:
+Very good point, but that issue has been with us forever before these
+patches, because many command invocations do use "git foo" form already.
+t/test-lib.sh is supposed to make sure the tests do not refer to installed
+git.
 
-  deleted=$(git log -1 --pretty=format:%H --diff-filter=D -- git-checkout.sh)
-  git show ${deleted}^:git-checkout.sh
+My primary development box does not have any git installed on the system
+path, and I keep a bunch of installations with prefix=$HOME/git-$variant/
+where $variant are master, next, maint, plus things like v1.3.0, v1.4.4.4,
+etc.
 
-? :P
+$PATH begins with "/home/junio/gitstuff/bin:/home/junio/git-active/bin:"
+before the usual /usr/bin:/bin and friends.  "gitstuff" has things like
+stgit, guilt and tig but no git in it.  $HOME/git-active is a symbolic
+link to point at a specific variant installed, usually 'next' but switched
+to 'master' during the -rc cycle.
 
--Peff
+I created a copy of installation from git-master in git-dontuse, replaced
+all git and git subcommands with this shell script, and pointed at it with
+$HOME/git-active:
 
-PS Actually, I was about to look it up in the history when I remembered
-that we put it into contrib. :)
+    #!/bin/sh
+    echo "DO NOT USE ME"
+    echo "DO NOT USE ME" >&2
+    exit 1
+
+The test passes, with or without these four patches.
