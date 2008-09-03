@@ -1,229 +1,80 @@
 From: Giuseppe Bilotta <giuseppe.bilotta@gmail.com>
-Subject: [PATCH] gitweb: action in path with use_pathinfo
-Date: Wed,  3 Sep 2008 11:57:15 +0200
-Message-ID: <1220435839-29360-2-git-send-email-giuseppe.bilotta@gmail.com>
+Subject: [PATCH] gitweb: use_pathinfo filenames start with /
+Date: Wed,  3 Sep 2008 11:57:16 +0200
+Message-ID: <1220435839-29360-3-git-send-email-giuseppe.bilotta@gmail.com>
 References: <1220435839-29360-1-git-send-email-giuseppe.bilotta@gmail.com>
+ <1220435839-29360-2-git-send-email-giuseppe.bilotta@gmail.com>
 Cc: Jakub Narebski <jnareb@gmail.com>, Petr Baudis <pasky@ucw.cz>,
 	Lea Wiemann <lewiemann@gmail.com>,
 	Giuseppe Bilotta <giuseppe.bilotta@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Sep 03 11:58:54 2008
+X-From: git-owner@vger.kernel.org Wed Sep 03 11:58:56 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Kap8P-0000SL-23
-	for gcvg-git-2@gmane.org; Wed, 03 Sep 2008 11:58:45 +0200
+	id 1Kap8P-0000SL-QJ
+	for gcvg-git-2@gmane.org; Wed, 03 Sep 2008 11:58:46 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752077AbYICJ5a (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	id S1752111AbYICJ5d (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 3 Sep 2008 05:57:33 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752024AbYICJ5d
+	(ORCPT <rfc822;git-outgoing>); Wed, 3 Sep 2008 05:57:33 -0400
+Received: from ey-out-2122.google.com ([74.125.78.27]:13977 "EHLO
+	ey-out-2122.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752000AbYICJ5a (ORCPT <rfc822;git@vger.kernel.org>);
 	Wed, 3 Sep 2008 05:57:30 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752024AbYICJ5a
-	(ORCPT <rfc822;git-outgoing>); Wed, 3 Sep 2008 05:57:30 -0400
-Received: from fk-out-0910.google.com ([209.85.128.186]:39013 "EHLO
-	fk-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751954AbYICJ52 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 3 Sep 2008 05:57:28 -0400
-Received: by fk-out-0910.google.com with SMTP id 18so2146168fkq.5
-        for <git@vger.kernel.org>; Wed, 03 Sep 2008 02:57:26 -0700 (PDT)
+Received: by ey-out-2122.google.com with SMTP id 6so1366057eyi.37
+        for <git@vger.kernel.org>; Wed, 03 Sep 2008 02:57:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:received:received:from:to:cc:subject:date
          :message-id:x-mailer:in-reply-to:references;
-        bh=pEs8iIKF+df8y+tE258Kj2KFNEVWYlYAuQIfC/yCMBc=;
-        b=A6N4CNgn191XIwRPGb73Xt0pJlHb9KkGdr1yNSqmRiWef5IVq0+RRmSyNC1jfw6zU6
-         jl5Iv7/RotWUhYHbaUbUQGcRqdFrOe1+b6P+6XNXWZZr6y8O0eUnwqpBKGjHBYBYNMbf
-         3IEZZlK8ps86ed0OYtDKLGxtd6jCeR2Xm/Pj8=
+        bh=VR25s6RVhvLfA8C1G7n3v6T9XxOJpEM3hnR5sV2H6bI=;
+        b=QwKA+spRAzssAoTdT9hNFi4oPLHBZMlsrIw6INV9MrBOMcOVkTiHIZ2dIB6LV/xuL+
+         HPmmDVSXnk4g8KWmIlBjpaV5r+H6+o8HG2fcUjq+PWrBczUcdhgS1xMehrfCM+ekdHOQ
+         xo8Xf/58R186eQeK4NPyDloFh4EjxNTRB9ir4=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        b=Hs3GyIygE2R0yO1O6JWm2a8xj7wuOWzMmil1X8/MUGhIy3iy2rO+Et4VIQ534lEgDn
-         grKNGFqIJQU5I1nrwbQ9D3sKA467mt5BLT/Yjvx0p0iq2sY49UPVTLJwZ2ZtmpcyK4hk
-         Ot0BOooTjl/26aCYneY1eW92M4hqlh7IjiQ9k=
-Received: by 10.180.236.20 with SMTP id j20mr6738156bkh.57.1220435846018;
-        Wed, 03 Sep 2008 02:57:26 -0700 (PDT)
+        b=bWQ0jVIilj5ScWkUisKb0ocfIAk1v3gBJWK16K4Qf8KVR+m5oAVwyzEWvPXp/jwaaH
+         evLNJ9ZSlo72XndO5pbwsMvA7xDhnhINCnayi/OY0cxjIQXDG21HoyMRysgkzPi4bMSE
+         JOnWsIwMLyvF6WtCFO1taiuZQzphBS+H5W2V0=
+Received: by 10.210.110.5 with SMTP id i5mr9869922ebc.2.1220435849402;
+        Wed, 03 Sep 2008 02:57:29 -0700 (PDT)
 Received: from localhost ( [78.15.13.249])
-        by mx.google.com with ESMTPS id h7sm47783981nfh.4.2008.09.03.02.57.24
+        by mx.google.com with ESMTPS id k10sm7195846nfh.25.2008.09.03.02.57.27
         (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Wed, 03 Sep 2008 02:57:25 -0700 (PDT)
+        Wed, 03 Sep 2008 02:57:28 -0700 (PDT)
 X-Mailer: git-send-email 1.5.6.5
-In-Reply-To: <1220435839-29360-1-git-send-email-giuseppe.bilotta@gmail.com>
+In-Reply-To: <1220435839-29360-2-git-send-email-giuseppe.bilotta@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/94775>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/94776>
 
-When using path info, reduce the number of CGI parameters by embedding
-the action in the path. The typicial cgiweb path is thus
-$project/$action/$hash_base:$file_name or $project/$action/$hash
-
-This is mostly backwards compatible with the old-style gitweb paths,
-except when $project/$branch was used to access a branch whose name
-matches a gitweb action.
+When using path info, make filenames start with a / (right after the :
+that separates them from the hash base). This minimal change allows
+relative navigation to work properly when viewing HTML files.
 
 Signed-off-by: Giuseppe Bilotta <giuseppe.bilotta@gmail.com>
 ---
- gitweb/gitweb.perl |  109 ++++++++++++++++++++++++++++++++++------------------
- 1 files changed, 72 insertions(+), 37 deletions(-)
+ gitweb/gitweb.perl |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
 
 diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
-index 29e2156..496dce4 100755
+index 496dce4..9d4952f 100755
 --- a/gitweb/gitweb.perl
 +++ b/gitweb/gitweb.perl
-@@ -488,6 +488,37 @@ if (defined $searchtext) {
- 	$search_regexp = $search_use_regexp ? $searchtext : quotemeta $searchtext;
- }
- 
-+# dispatch
-+my %actions = (
-+	"blame" => \&git_blame,
-+	"blobdiff" => \&git_blobdiff,
-+	"blobdiff_plain" => \&git_blobdiff_plain,
-+	"blob" => \&git_blob,
-+	"blob_plain" => \&git_blob_plain,
-+	"commitdiff" => \&git_commitdiff,
-+	"commitdiff_plain" => \&git_commitdiff_plain,
-+	"commit" => \&git_commit,
-+	"forks" => \&git_forks,
-+	"heads" => \&git_heads,
-+	"history" => \&git_history,
-+	"log" => \&git_log,
-+	"rss" => \&git_rss,
-+	"atom" => \&git_atom,
-+	"search" => \&git_search,
-+	"search_help" => \&git_search_help,
-+	"shortlog" => \&git_shortlog,
-+	"summary" => \&git_summary,
-+	"tag" => \&git_tag,
-+	"tags" => \&git_tags,
-+	"tree" => \&git_tree,
-+	"snapshot" => \&git_snapshot,
-+	"object" => \&git_object,
-+	# those below don't need $project
-+	"opml" => \&git_opml,
-+	"project_list" => \&git_project_list,
-+	"project_index" => \&git_project_index,
-+);
-+
- # now read PATH_INFO and use it as alternative to parameters
- sub evaluate_path_info {
- 	return if defined $project;
-@@ -512,6 +543,16 @@ sub evaluate_path_info {
- 	# do not change any parameters if an action is given using the query string
- 	return if $action;
- 	$path_info =~ s,^\Q$project\E/*,,;
-+
-+	# next comes the action
-+	$action = $path_info;
-+	$action =~ s,/.*$,,;
-+	if (exists $actions{$action}) {
-+		$path_info =~ s,^\Q$action\E/*,,;
-+	} else {
-+		$action  = undef;
-+	}
-+
- 	my ($refname, $pathname) = split(/:/, $path_info, 2);
- 	if (defined $pathname) {
- 		# we got "project.git/branch:filename" or "project.git/branch:dir/"
-@@ -525,10 +566,12 @@ sub evaluate_path_info {
- 		}
- 		$hash_base ||= validate_refname($refname);
- 		$file_name ||= validate_pathname($pathname);
-+		$hash      ||= git_get_hash_by_path($hash_base, $file_name);
- 	} elsif (defined $refname) {
- 		# we got "project.git/branch"
--		$action ||= "shortlog";
--		$hash   ||= validate_refname($refname);
-+		$action    ||= "shortlog";
-+		$hash      ||= validate_refname($refname);
-+		$hash_base ||= validate_refname($refname);
- 	}
- }
- evaluate_path_info();
-@@ -537,37 +580,6 @@ evaluate_path_info();
- our $git_dir;
- $git_dir = "$projectroot/$project" if $project;
- 
--# dispatch
--my %actions = (
--	"blame" => \&git_blame,
--	"blobdiff" => \&git_blobdiff,
--	"blobdiff_plain" => \&git_blobdiff_plain,
--	"blob" => \&git_blob,
--	"blob_plain" => \&git_blob_plain,
--	"commitdiff" => \&git_commitdiff,
--	"commitdiff_plain" => \&git_commitdiff_plain,
--	"commit" => \&git_commit,
--	"forks" => \&git_forks,
--	"heads" => \&git_heads,
--	"history" => \&git_history,
--	"log" => \&git_log,
--	"rss" => \&git_rss,
--	"atom" => \&git_atom,
--	"search" => \&git_search,
--	"search_help" => \&git_search_help,
--	"shortlog" => \&git_shortlog,
--	"summary" => \&git_summary,
--	"tag" => \&git_tag,
--	"tags" => \&git_tags,
--	"tree" => \&git_tree,
--	"snapshot" => \&git_snapshot,
--	"object" => \&git_object,
--	# those below don't need $project
--	"opml" => \&git_opml,
--	"project_list" => \&git_project_list,
--	"project_index" => \&git_project_index,
--);
--
- if (!defined $action) {
- 	if (defined $hash) {
- 		$action = git_get_type($hash);
-@@ -624,8 +636,13 @@ sub href (%) {
- 	if ($params{-replay}) {
- 		while (my ($name, $symbol) = each %mapping) {
- 			if (!exists $params{$name}) {
--				# to allow for multivalued params we use arrayref form
--				$params{$name} = [ $cgi->param($symbol) ];
-+				if ($cgi->param($symbol)) {
-+					# to allow for multivalued params we use arrayref form
-+					$params{$name} = [ $cgi->param($symbol) ];
-+				} else {
-+					no strict 'refs';
-+					$params{$name} = $$name if $$name;
-+				}
- 			}
- 		}
- 	}
-@@ -636,10 +653,28 @@ sub href (%) {
- 		$href .= "/".esc_url($params{'project'}) if defined $params{'project'};
- 		delete $params{'project'};
- 
--		# Summary just uses the project path URL
--		if (defined $params{'action'} && $params{'action'} eq 'summary') {
-+		# Summary just uses the project path URL, any other action come next
-+		# in the URL
-+		if (defined $params{'action'}) {
-+			$href .= "/".esc_url($params{'action'}) unless $params{'action'} eq 'summary';
- 			delete $params{'action'};
- 		}
-+
-+		# next, we put either hash_base:file_name or hash
-+		if (defined $params{'hash_base'}) {
-+			$href .= "/".esc_url($params{'hash_base'});
-+			if (defined $params{'file_name'}) {
-+				$href .= ":".esc_url($params{'file_name'});
-+				delete $params{'hash'} if $params{'hash'} eq git_get_hash_by_path($params{'hash_base'},$params{'file_name'});
-+				delete $params{'file_name'};
-+			} else {
-+				delete $params{'hash'} if $params{'hash'} eq $params{'hash_base'};
-+			}
-+			delete $params{'hash_base'};
-+		} elsif (defined $params{'hash'}) {
-+			$href .= "/".esc_url($params{'hash'});
-+			delete $params{'hash'};
-+		}
- 	}
- 
- 	# now encode the parameters explicitly
+@@ -664,7 +664,7 @@ sub href (%) {
+ 		if (defined $params{'hash_base'}) {
+ 			$href .= "/".esc_url($params{'hash_base'});
+ 			if (defined $params{'file_name'}) {
+-				$href .= ":".esc_url($params{'file_name'});
++				$href .= ":/".esc_url($params{'file_name'});
+ 				delete $params{'hash'} if $params{'hash'} eq git_get_hash_by_path($params{'hash_base'},$params{'file_name'});
+ 				delete $params{'file_name'};
+ 			} else {
 -- 
 1.5.6.5
