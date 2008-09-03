@@ -1,54 +1,77 @@
 From: Jeff King <peff@peff.net>
 Subject: Re: [RFC] Detached-HEAD reminder on commit?
-Date: Wed, 3 Sep 2008 09:15:07 -0400
-Message-ID: <20080903131507.GC12936@coredump.intra.peff.net>
-References: <1220383905-48316-1-git-send-email-pdebie@ai.rug.nl> <200809022339.20123.johan@herland.net> <20080902214428.GA20355@sigill.intra.peff.net> <200809030945.08619.johan@herland.net>
+Date: Wed, 3 Sep 2008 09:34:46 -0400
+Message-ID: <20080903133446.GA6967@coredump.intra.peff.net>
+References: <1220383905-48316-1-git-send-email-pdebie@ai.rug.nl> <200809022339.20123.johan@herland.net> <20080902214428.GA20355@sigill.intra.peff.net> <200809030945.08619.johan@herland.net> <20080903131507.GC12936@coredump.intra.peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org, Stephan Beyer <s-beyer@gmx.net>,
+Cc: Johan Herland <johan@herland.net>, git@vger.kernel.org,
+	Stephan Beyer <s-beyer@gmx.net>,
 	Junio C Hamano <gitster@pobox.com>,
 	Pieter de Bie <pdebie@ai.rug.nl>
-To: Johan Herland <johan@herland.net>
-X-From: git-owner@vger.kernel.org Wed Sep 03 15:16:39 2008
+To: Daniel Barkalow <barkalow@iabervon.org>
+X-From: git-owner@vger.kernel.org Wed Sep 03 15:37:00 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KasDh-0005FC-K1
-	for gcvg-git-2@gmane.org; Wed, 03 Sep 2008 15:16:26 +0200
+	id 1KasXB-000359-3z
+	for gcvg-git-2@gmane.org; Wed, 03 Sep 2008 15:36:33 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751691AbYICNPL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 3 Sep 2008 09:15:11 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751751AbYICNPL
-	(ORCPT <rfc822;git-outgoing>); Wed, 3 Sep 2008 09:15:11 -0400
-Received: from peff.net ([208.65.91.99]:4135 "EHLO peff.net"
+	id S1755336AbYICNeu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 3 Sep 2008 09:34:50 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754592AbYICNeu
+	(ORCPT <rfc822;git-outgoing>); Wed, 3 Sep 2008 09:34:50 -0400
+Received: from peff.net ([208.65.91.99]:4913 "EHLO peff.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751687AbYICNPK (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 3 Sep 2008 09:15:10 -0400
-Received: (qmail 27055 invoked by uid 111); 3 Sep 2008 13:15:09 -0000
+	id S1752026AbYICNet (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 3 Sep 2008 09:34:49 -0400
+Received: (qmail 27251 invoked by uid 111); 3 Sep 2008 13:34:47 -0000
 Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.32) with SMTP; Wed, 03 Sep 2008 09:15:09 -0400
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Wed, 03 Sep 2008 09:15:07 -0400
+    by peff.net (qpsmtpd/0.32) with SMTP; Wed, 03 Sep 2008 09:34:47 -0400
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Wed, 03 Sep 2008 09:34:46 -0400
 Content-Disposition: inline
-In-Reply-To: <200809030945.08619.johan@herland.net>
+In-Reply-To: <20080903131507.GC12936@coredump.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/94792>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/94793>
 
-On Wed, Sep 03, 2008 at 09:45:08AM +0200, Johan Herland wrote:
+On Wed, Sep 03, 2008 at 09:15:07AM -0400, Jeff King wrote:
 
-> But what happened to the various suggestions in that original thread on 
-> adding a safety valve when _leaving_ the detached state (i.e. preventing 
-> the user from leaving their detached commits unreachable)?
+> Hrm. I thought we decided on a message like:
+> 
+>   Previous HEAD position was 1234abcd
+> 
+> when leaving the detached HEAD state, but it seems to have disappeared.
+> Maybe with the move to builtin-checkout (sorry, I don't have time to
+> bisect right at this second). Was that intentional?
 
-Hrm. I thought we decided on a message like:
+OK, I lied. I did have time to bisect it.
 
-  Previous HEAD position was 1234abcd
+It never worked in builtin-checkout, and I am a bit suspicious of the
+code (and comment) below. Why would we not want to show such a message
+if moving to a branch (as long as it is not a _new_ branch)? The patch
+below makes more sense to me.
 
-when leaving the detached HEAD state, but it seems to have disappeared.
-Maybe with the move to builtin-checkout (sorry, I don't have time to
-bisect right at this second). Was that intentional?
-
--Peff
+---
+diff --git a/builtin-checkout.c b/builtin-checkout.c
+index b380ad6..b2c7d3c 100644
+--- a/builtin-checkout.c
++++ b/builtin-checkout.c
+@@ -386,12 +386,12 @@ static int switch_branches(struct checkout_opts *opts, struct branch_info *new)
+ 	}
+ 
+ 	/*
+-	 * If the new thing isn't a branch and isn't HEAD and we're
++	 * If the new thing isn't isn't HEAD and we're
+ 	 * not starting a new branch, and we want messages, and we
+ 	 * weren't on a branch, and we're moving to a new commit,
+ 	 * describe the old commit.
+ 	 */
+-	if (!new->path && strcmp(new->name, "HEAD") && !opts->new_branch &&
++	if (strcmp(new->name, "HEAD") && !opts->new_branch &&
+ 	    !opts->quiet && !old.path && new->commit != old.commit)
+ 		describe_detached_head("Previous HEAD position was", old.commit);
+ 
