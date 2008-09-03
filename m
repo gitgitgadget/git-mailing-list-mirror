@@ -1,101 +1,73 @@
-From: Daniel Barkalow <barkalow@iabervon.org>
-Subject: Re: [RFC] Detached-HEAD reminder on commit?
-Date: Wed, 3 Sep 2008 12:49:43 -0400 (EDT)
-Message-ID: <alpine.LNX.1.00.0809031234560.19665@iabervon.org>
-References: <1220383905-48316-1-git-send-email-pdebie@ai.rug.nl> <200809022339.20123.johan@herland.net> <20080902214428.GA20355@sigill.intra.peff.net> <200809030945.08619.johan@herland.net> <20080903131507.GC12936@coredump.intra.peff.net>
- <20080903133446.GA6967@coredump.intra.peff.net>
+From: "Felipe Contreras" <felipe.contreras@gmail.com>
+Subject: Re: [ANNOUNCE] Git User's Survey 2008
+Date: Wed, 3 Sep 2008 19:49:50 +0300
+Message-ID: <94a0d4530809030949v7c8c6ec4uc60bc873a40637d0@mail.gmail.com>
+References: <200808312329.17312.jnareb@gmail.com> <48BB9742.3000109@gmail.com>
+	 <200809011034.48342.jnareb@gmail.com>
+	 <48BE8109.9030701@jaeger.mine.nu>
+	 <1a6be5fa0809030546n28e2a1besdc4435e874f2f0f9@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Johan Herland <johan@herland.net>, git@vger.kernel.org,
-	Stephan Beyer <s-beyer@gmx.net>,
-	Junio C Hamano <gitster@pobox.com>,
-	Pieter de Bie <pdebie@ai.rug.nl>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Wed Sep 03 18:51:11 2008
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: "Christian Jaeger" <christian@jaeger.mine.nu>, git@vger.kernel.org
+To: "Tor Arvid Lund" <torarvid@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Sep 03 18:51:22 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KavZE-0005P7-GJ
-	for gcvg-git-2@gmane.org; Wed, 03 Sep 2008 18:50:52 +0200
+	id 1KavZR-0005V0-F5
+	for gcvg-git-2@gmane.org; Wed, 03 Sep 2008 18:51:05 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752048AbYICQtq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 3 Sep 2008 12:49:46 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751662AbYICQtq
-	(ORCPT <rfc822;git-outgoing>); Wed, 3 Sep 2008 12:49:46 -0400
-Received: from iabervon.org ([66.92.72.58]:53824 "EHLO iabervon.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751255AbYICQtq (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 3 Sep 2008 12:49:46 -0400
-Received: (qmail 26796 invoked by uid 1000); 3 Sep 2008 16:49:43 -0000
-Received: from localhost (sendmail-bs@127.0.0.1)
-  by localhost with SMTP; 3 Sep 2008 16:49:43 -0000
-In-Reply-To: <20080903133446.GA6967@coredump.intra.peff.net>
-User-Agent: Alpine 1.00 (LNX 882 2007-12-20)
+	id S1752079AbYICQtw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 3 Sep 2008 12:49:52 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752077AbYICQtw
+	(ORCPT <rfc822;git-outgoing>); Wed, 3 Sep 2008 12:49:52 -0400
+Received: from py-out-1112.google.com ([64.233.166.178]:61398 "EHLO
+	py-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751255AbYICQtw (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 3 Sep 2008 12:49:52 -0400
+Received: by py-out-1112.google.com with SMTP id p76so1555891pyb.10
+        for <git@vger.kernel.org>; Wed, 03 Sep 2008 09:49:51 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to
+         :subject:cc:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:references;
+        bh=Jku4FMQ1y0GHHGABPJqR31ZZmlIGh9pbsoto9vsgmGE=;
+        b=pkYc5pU1SUL9hY695kwwgMd3g8Nwtvu2mFrK1VFwpmNzE/8Pzo96404YfqsfMvhDNJ
+         ol+V03UQ9DWZElQWxWWj8Xwtrw+Z18uY7zxlObI+HS7YSMlIpRqB/yPrEAqr/bDqOv/d
+         6jieObCVdQN2anWYZmuB5AEeBZ025PnGV5Q9A=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
+         :content-type:content-transfer-encoding:content-disposition
+         :references;
+        b=GJWLNhGGZVeYNbhIe55Z86jjEWpgnqUWp2QQ5Hr0wCO40hpU9TseCQOyyv+aJ+Ly2Q
+         WosQLjPQKCXB3Omw8J4B0mV8ep1WmJy9xAPUm9XncfWDgvIdU0UUlb+c8KSn9NdXwNff
+         fbawKzkBBj4o5bf3gbFTGFVe1EFFDU9CP8w6w=
+Received: by 10.141.48.6 with SMTP id a6mr5030352rvk.236.1220460590748;
+        Wed, 03 Sep 2008 09:49:50 -0700 (PDT)
+Received: by 10.140.166.19 with HTTP; Wed, 3 Sep 2008 09:49:50 -0700 (PDT)
+In-Reply-To: <1a6be5fa0809030546n28e2a1besdc4435e874f2f0f9@mail.gmail.com>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/94812>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/94813>
 
-On Wed, 3 Sep 2008, Jeff King wrote:
+On Wed, Sep 3, 2008 at 3:46 PM, Tor Arvid Lund <torarvid@gmail.com> wrote:
+> On Wed, Sep 3, 2008 at 2:20 PM, Christian Jaeger
+> <christian@jaeger.mine.nu> wrote:
+>> I've found the many questions interesting as it showed me quite a number of
+>> interesting commands I didn't know about yet (so I said "never" to all of
+>> them, but that doesn't mean they aren't useful to me, just that I didn't
+>> know about them!):
+>
+> I agree 100% :-)
 
-> On Wed, Sep 03, 2008 at 09:15:07AM -0400, Jeff King wrote:
-> 
-> > Hrm. I thought we decided on a message like:
-> > 
-> >   Previous HEAD position was 1234abcd
-> > 
-> > when leaving the detached HEAD state, but it seems to have disappeared.
-> > Maybe with the move to builtin-checkout (sorry, I don't have time to
-> > bisect right at this second). Was that intentional?
-> 
-> OK, I lied. I did have time to bisect it.
-> 
-> It never worked in builtin-checkout, and I am a bit suspicious of the
-> code (and comment) below. Why would we not want to show such a message
-> if moving to a branch (as long as it is not a _new_ branch)? The patch
-> below makes more sense to me.
+Me too.
 
-Good point. I think I confused myself with the new branch case. On the 
-other hand, I think the "not starting a new branch" case should go as 
-well. If you've got a detached HEAD, and you do:
-
-$ git checkout -b foo origin/master
-
-we probably ought to describe the old state. The reason that starting a 
-new branch usually shouldn't give the message is that new->commit == 
-old.commit (assuming that the defaults have gotten filled in by this 
-point, which they should have).
-
-(I think I included the new branch case to match the existing branch case; 
-I'm not sure where I got the idea that switching to a branch shouldn't 
-give the message. Hey, at least the comment makes it clear that I was 
-actually trying to write the wrong code...)
-
-Actually, the test for HEAD should be able to go, also, since checking out 
-HEAD wouldn't change the current commit, although this doesn't matter to 
-anything other than the complexity of the condition.
-
-> 
-> ---
-> diff --git a/builtin-checkout.c b/builtin-checkout.c
-> index b380ad6..b2c7d3c 100644
-> --- a/builtin-checkout.c
-> +++ b/builtin-checkout.c
-> @@ -386,12 +386,12 @@ static int switch_branches(struct checkout_opts *opts, struct branch_info *new)
->  	}
->  
->  	/*
-> -	 * If the new thing isn't a branch and isn't HEAD and we're
-> +	 * If the new thing isn't isn't HEAD and we're
->  	 * not starting a new branch, and we want messages, and we
->  	 * weren't on a branch, and we're moving to a new commit,
->  	 * describe the old commit.
->  	 */
-> -	if (!new->path && strcmp(new->name, "HEAD") && !opts->new_branch &&
-> +	if (strcmp(new->name, "HEAD") && !opts->new_branch &&
->  	    !opts->quiet && !old.path && new->commit != old.commit)
->  		describe_detached_head("Previous HEAD position was", old.commit);
->  
-> 
+-- 
+Felipe Contreras
