@@ -1,53 +1,92 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH 1/2] add '%d' pretty format specifier to show decoration
-Date: Wed, 3 Sep 2008 16:36:16 -0400
-Message-ID: <20080903203616.GB32223@coredump.intra.peff.net>
-References: <alpine.LNX.1.10.0809032036270.32295@pollux> <20080903191217.GA31195@coredump.intra.peff.net> <7v4p4xat3v.fsf@gitster.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 0/4] tests: use "git xyzzy" form
+Date: Wed, 03 Sep 2008 13:45:46 -0700
+Message-ID: <7vwsht9cw5.fsf@gitster.siamese.dyndns.org>
+References: <20080903175925.6117@nanako3.lavabit.com>
+ <48BE6D1F.1060603@op5.se> <7v8wu9athn.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Michael Dressel <MichaelTiloDressel@t-online.de>,
-	git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Sep 03 22:37:43 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: Andreas Ericsson <ae@op5.se>, git@vger.kernel.org
+To: Nanako Shiraishi <nanako3@lavabit.com>
+X-From: git-owner@vger.kernel.org Wed Sep 03 22:47:15 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Kaz6X-00074D-Gx
-	for gcvg-git-2@gmane.org; Wed, 03 Sep 2008 22:37:30 +0200
+	id 1KazFl-0001yc-4v
+	for gcvg-git-2@gmane.org; Wed, 03 Sep 2008 22:47:01 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756061AbYICUgW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 3 Sep 2008 16:36:22 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756138AbYICUgW
-	(ORCPT <rfc822;git-outgoing>); Wed, 3 Sep 2008 16:36:22 -0400
-Received: from peff.net ([208.65.91.99]:4535 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756061AbYICUgT (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 3 Sep 2008 16:36:19 -0400
-Received: (qmail 31591 invoked by uid 111); 3 Sep 2008 20:36:18 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.32) with SMTP; Wed, 03 Sep 2008 16:36:18 -0400
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Wed, 03 Sep 2008 16:36:16 -0400
-Content-Disposition: inline
-In-Reply-To: <7v4p4xat3v.fsf@gitster.siamese.dyndns.org>
+	id S1753328AbYICUpy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 3 Sep 2008 16:45:54 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752667AbYICUpy
+	(ORCPT <rfc822;git-outgoing>); Wed, 3 Sep 2008 16:45:54 -0400
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:48486 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752531AbYICUpy (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 3 Sep 2008 16:45:54 -0400
+Received: from localhost.localdomain (localhost [127.0.0.1])
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id D89C45B386;
+	Wed,  3 Sep 2008 16:45:52 -0400 (EDT)
+Received: from pobox.com (ip68-225-240-211.oc.oc.cox.net [68.225.240.211])
+ (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
+ certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
+ ESMTPSA id CED715B385; Wed,  3 Sep 2008 16:45:48 -0400 (EDT)
+In-Reply-To: <7v8wu9athn.fsf@gitster.siamese.dyndns.org> (Junio C. Hamano's
+ message of "Wed, 03 Sep 2008 13:01:56 -0700")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: 4C8779A6-79F9-11DD-89A2-9EE598D589B0-77302942!a-sasl-fastnet.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/94850>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/94851>
 
-On Wed, Sep 03, 2008 at 01:10:12PM -0700, Junio C Hamano wrote:
+Thanks.
 
-> I agree with the above reasoning.  If we go with surrounding parentheses,
-> it might even make sense to include a SP _before_ the opening parenthesis,
-> so that "%h %s%d" expands to either of these:
-> 
->    $ git show -s --pretty=format:'%h %s%d' v1.6.0^0 v1.6.0^1
->    ea02eef GIT 1.6.0 (refs/tags/v1.6.0)
->    373a273 Merge git-gui 0.11.0
+I looked at the output from:
 
-Isn't that what you argued against in Dscho's version of the patch?
+    $ git grep -e git-'[a-z]' t/t[0-8]???-*.sh t/t9001-*.sh
 
-    http://mid.gmane.org/7v1w5exfwb.fsf@gitster.siamese.dyndns.org
+after applying these patches to the tip of ho/dashless topic, 7e44c93
+('git foo' program identifies itself without dash in die() messages,
+2008-08-31) to review what you did not change are reasonable.
 
--Peff
+I won't quote the whole output from the above grep, but there are a few
+lines worth commenting on.
+
+t/t5300-pack-object.sh:test_description='git-pack-object
+t/t5305-include-tag.sh:test_description='git-pack-object --include-tag'
+
+These might want changing.
+
+t/t5602-clone-remote-exec.sh:	echo "localhost git-upload-pack '\''/path/to/repo'\''" >expected
+t/t5602-clone-remote-exec.sh:	GIT_SSH=./not_ssh git clone -u /something/bin/git-upload-pack localhost:/path/to/repo junk
+t/t5602-clone-remote-exec.sh:	echo "localhost /something/bin/git-upload-pack '\''/path/to/repo'\''" >expected
+
+These we do want to keep in git-foo form
+
+The remainder of the grep output looked all reasonable; they hit options
+like "--git-dir" and "is-inside-git-dir", and pathnames like "git-gui" and
+".git/rebase-merge/git-rebase-todo".
+
+Doing this _carefully_ (otherwise the result would be useless) must have
+been quite a lot of effort, and what was posted seems to have been done
+quite carefully.
+
+The cross-checking I did with "grep" in this message does *not* catch if
+you converted something that shouldn't have been converted (e.g. changing
+the pathname ".git/rebase-merge/git-rebase-todo" to "git rebase-todo"
+would have been a disaster).  It needs real eyeballing of the patches
+themselves to catch such an error, and we would need help from people.
+
+Volunteers?  Just please say "I'll go through patch [n/4] line by line"
+now to avoid duplicated work with others (more eyeballs looking at the
+same thing will catch more errors, but I do not think we have that many
+volunteers here), and then after you are done, come back with "They all
+are command invocations and conversion is correct" or with "This one is
+incorrect and should be kept."
+
+Oh, also, there are many other t9XXX series of tests.  Can somebody
+volunteer to do the same for the rest of them?
+
+Puh-leeeeze?
