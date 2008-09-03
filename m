@@ -1,56 +1,59 @@
-From: Petr Baudis <pasky@suse.cz>
-Subject: Re: [PATCH] bash completion: Hide more plumbing commands
-Date: Thu, 4 Sep 2008 00:31:18 +0200
-Message-ID: <20080903223118.GW10544@machine.or.cz>
-References: <20080826171012.GO10360@machine.or.cz> <20080826171144.21328.82727.stgit@localhost> <20080826172410.GJ26523@spearce.org> <7v1w0bab1c.fsf@gitster.siamese.dyndns.org> <20080903222350.GC10360@machine.or.cz>
+From: "Felipe Carvalho Oliveira" <felipekde@gmail.com>
+Subject: Re: [ANNOUNCE] Git User's Survey 2008
+Date: Wed, 3 Sep 2008 19:47:45 -0300
+Message-ID: <a2075f4c0809031547l4e87da1bifd8187632a3f829e@mail.gmail.com>
+References: <200808312329.17312.jnareb@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: "Shawn O. Pearce" <spearce@spearce.org>, git@vger.kernel.org,
-	andi@firstfloor.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Sep 04 00:32:31 2008
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: "Jakub Narebski" <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Sep 04 00:49:08 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Kb0to-0002X2-Kv
-	for gcvg-git-2@gmane.org; Thu, 04 Sep 2008 00:32:29 +0200
+	id 1Kb19i-0006fV-Hn
+	for gcvg-git-2@gmane.org; Thu, 04 Sep 2008 00:48:55 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752103AbYICWbX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 3 Sep 2008 18:31:23 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751773AbYICWbX
-	(ORCPT <rfc822;git-outgoing>); Wed, 3 Sep 2008 18:31:23 -0400
-Received: from w241.dkm.cz ([62.24.88.241]:51479 "EHLO machine.or.cz"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751757AbYICWbW (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 3 Sep 2008 18:31:22 -0400
-Received: by machine.or.cz (Postfix, from userid 2001)
-	id F20573939B3B; Thu,  4 Sep 2008 00:31:18 +0200 (CEST)
+	id S1752233AbYICWrr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 3 Sep 2008 18:47:47 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752010AbYICWrr
+	(ORCPT <rfc822;git-outgoing>); Wed, 3 Sep 2008 18:47:47 -0400
+Received: from ey-out-2122.google.com ([74.125.78.24]:20224 "EHLO
+	ey-out-2122.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751834AbYICWrq (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 3 Sep 2008 18:47:46 -0400
+Received: by ey-out-2122.google.com with SMTP id 6so1484445eyi.37
+        for <git@vger.kernel.org>; Wed, 03 Sep 2008 15:47:45 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to
+         :subject:cc:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:references;
+        bh=yzsBC3hINALq8WOEOBpz97NzvoSg/13fL9uQFrlBTg0=;
+        b=KxbMxGwIcqamv4SckhmyOMDYH0U4YtWwbvV8Srxivob+1nIOHzTIInFPlewH+/0JQn
+         eGplHufHVrAEiJpfp9u6ntk4/ck64EHKFWChcqGaqMtCIaKlsIhBEhRAwDTF41xtVF3z
+         hEXObN0PJxgE2atNDhcRbkVzCeFJcxN20wWgY=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
+         :content-type:content-transfer-encoding:content-disposition
+         :references;
+        b=EVOhngsd+qSqdtgxSIr5yL6+S537DGXJM1PXrcKFzIO/4XB7eUVN4JJ16WGKgJDotr
+         P408SEweW8eh0++ncy16cb/Y917h7NA0jXNeTwjITHkFlbwsW8UWw6EKSUPfrIElcV5p
+         1duVHmTPzx3W98BDSB0GNLme8hlqYc1S6p12w=
+Received: by 10.210.25.19 with SMTP id 19mr1798887eby.113.1220482065136;
+        Wed, 03 Sep 2008 15:47:45 -0700 (PDT)
+Received: by 10.210.46.3 with HTTP; Wed, 3 Sep 2008 15:47:45 -0700 (PDT)
+In-Reply-To: <200808312329.17312.jnareb@gmail.com>
 Content-Disposition: inline
-In-Reply-To: <20080903222350.GC10360@machine.or.cz>
-User-Agent: Mutt/1.5.16 (2007-06-09)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/94867>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/94868>
 
-On Thu, Sep 04, 2008 at 12:23:50AM +0200, Petr Baudis wrote:
-> I started on a patch, but frankly, I hate it. Adding such a filtering to
-> git-status is quite invasive, while I believe that it's simply not worth
-> it - I have yet to encounter a situation with git when simply looking at
-> either git diff or plain git status is impractical to check which files
-> need to be merged yet, so I don't want to expend energy on a patch which
-> is going to be ugly and useless by my belief.
-> 
-> If you do insist that we need this functionality, can you please just
-> drop the git ls-files bit from the patch, or should I resend it?
+Great survey. Just filled the questionnaire.
 
-It just occured to me - what about
-
-	git diff --diff-filter=U [--name-status]
-
-or is that too long? (The universal answer being, "you can alias it".
-;-)
-
-				Petr "Pasky" Baudis
+Felipe(Brazil)
