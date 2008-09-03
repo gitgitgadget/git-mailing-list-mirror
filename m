@@ -1,93 +1,56 @@
-From: "Bert Wesarg" <bert.wesarg@googlemail.com>
-Subject: Re: [PATCH v3] for-each-ref: `:short` format for `refname`
-Date: Wed, 3 Sep 2008 18:33:45 +0200
-Message-ID: <36ca99e90809030933m15ef9cf5p1a56bfe90071fc10@mail.gmail.com>
-References: <36ca99e90809030133r43fc5a3agad1aa38339a758a3@mail.gmail.com>
-	 <1220431352-30605-1-git-send-email-bert.wesarg@googlemail.com>
-	 <20080903151829.GB27682@spearce.org>
+From: "Jonathan del Strother" <maillist@steelskies.com>
+Subject: blame vs annotate?
+Date: Wed, 3 Sep 2008 17:43:03 +0100
+Message-ID: <57518fd10809030943i35af222fw82cf591c737b8c04@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-Cc: "Junio C Hamano" <gitster@pobox.com>, git@vger.kernel.org,
-	szeder@ira.uka.de
-To: "Shawn O. Pearce" <spearce@spearce.org>
-X-From: git-owner@vger.kernel.org Wed Sep 03 18:34:59 2008
+To: "Git Mailing List" <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Wed Sep 03 18:44:44 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KavJl-0007gH-PZ
-	for gcvg-git-2@gmane.org; Wed, 03 Sep 2008 18:34:54 +0200
+	id 1KavSn-0002ol-Bj
+	for gcvg-git-2@gmane.org; Wed, 03 Sep 2008 18:44:13 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751784AbYICQdr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 3 Sep 2008 12:33:47 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751880AbYICQdr
-	(ORCPT <rfc822;git-outgoing>); Wed, 3 Sep 2008 12:33:47 -0400
-Received: from wa-out-1112.google.com ([209.85.146.182]:44070 "EHLO
-	wa-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751662AbYICQdq (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 3 Sep 2008 12:33:46 -0400
-Received: by wa-out-1112.google.com with SMTP id j37so2024856waf.23
-        for <git@vger.kernel.org>; Wed, 03 Sep 2008 09:33:45 -0700 (PDT)
+	id S1752114AbYICQnH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 3 Sep 2008 12:43:07 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752079AbYICQnG
+	(ORCPT <rfc822;git-outgoing>); Wed, 3 Sep 2008 12:43:06 -0400
+Received: from yx-out-2324.google.com ([74.125.44.29]:38963 "EHLO
+	yx-out-2324.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752005AbYICQnF (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 3 Sep 2008 12:43:05 -0400
+Received: by yx-out-2324.google.com with SMTP id 8so1666164yxm.1
+        for <git@vger.kernel.org>; Wed, 03 Sep 2008 09:43:04 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlemail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to
-         :subject:cc:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:references;
-        bh=+mTENokxve51PBdtCU9We3hXlvYE5dslh58L4ZCrpKY=;
-        b=gCyr14tqbCNxYFGYIxN0WDcU8s09hB/GR5Cr2MPoOb/bHUIUM8uz/hUCPXlVow/kUj
-         nckzBt+3LV6MDmm/i/EvYfqJLdpps3oQrMCq7XTID0OmibGB7wBMzszzRsg6cXLCglk/
-         0VNvQt5lN54aABCXgFuudphpBxhxoRNQ7yID0=
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:sender
+         :to:subject:mime-version:content-type:content-transfer-encoding
+         :content-disposition:x-google-sender-auth;
+        bh=3Xxb6IhM+PEBbLFZVYiylEoEXkJqbqUsqxi1drc0HVY=;
+        b=Rjw5aBl1i9r9Wpv0gJ/hmkNtuBqjAN1hJeCjGMUnLoRcuTFjaf2I6XWXaHhhEs+Tly
+         e8RejhlQnICVsMxk3DYSg8q7az+Enla7oEmuaweAg/m1XIsvMMhWtLP+taIKq/Opm08C
+         fpeRy5/x+PpVlzYgO9Mf8Auy6iQ2U7UBFHyxY=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=googlemail.com; s=gamma;
-        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
-         :content-type:content-transfer-encoding:content-disposition
-         :references;
-        b=EcWVtVS1TlcCm7Bmava7rY7J8jhgoK+2RBh70B6o4UGv/WS0nndGbAhAAn3Ktvwyko
-         aXmsuPtnbdzpBAM4kHenz4qkCZaLLfJ1BMPV/wG0jx2JafCEO63JLm1E2eLpwX2DbIll
-         0bjPTvvxc2KlIHfbNgh8pU+hZS99U1Mya1bHU=
-Received: by 10.114.53.1 with SMTP id b1mr7772186waa.53.1220459625559;
-        Wed, 03 Sep 2008 09:33:45 -0700 (PDT)
-Received: by 10.70.49.12 with HTTP; Wed, 3 Sep 2008 09:33:45 -0700 (PDT)
-In-Reply-To: <20080903151829.GB27682@spearce.org>
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:sender:to:subject:mime-version:content-type
+         :content-transfer-encoding:content-disposition:x-google-sender-auth;
+        b=DwkGyMlNS1LomxjjDu1s7HSeqeTbYtalmRTpe+x957ffRLI/zXminuPrXo/8ywq8J2
+         eO3U6fJQvezfzwk5EOtgki39KI6cb6jbg6Sh+rw/Kf/n7PzZvRTFUbvpjCX6y/G2lSkQ
+         5QJEiwtXn1+TkI/eShFdA/zN9YKvpRY269Kv0=
+Received: by 10.142.14.18 with SMTP id 18mr3124338wfn.129.1220460183894;
+        Wed, 03 Sep 2008 09:43:03 -0700 (PDT)
+Received: by 10.142.70.18 with HTTP; Wed, 3 Sep 2008 09:43:03 -0700 (PDT)
 Content-Disposition: inline
+X-Google-Sender-Auth: 46280fa4d20ce20e
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/94810>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/94811>
 
-On Wed, Sep 3, 2008 at 17:18, Shawn O. Pearce <spearce@spearce.org> wrote:
-> Bert Wesarg <bert.wesarg@googlemail.com> wrote:
->> Try to shorten the refname to a non-ambiguous name.
->>
->> Changes in v3:
->>  * don't compare sha1's, its ambiguous if the short name
->>    resovles to more than one ref
->>  * use xstrdup()
->>  * use indexes for the loops to clarify backward/forward
->>    direction
->>
->>
->> Signed-off-by: Bert Wesarg <bert.wesarg@googlemail.com>
->> Cc: git@vger.kernel.org
->> Cc: szeder@ira.uka.de
->> Cc: Shawn O. Pearce <spearce@spearce.org>
->> ---
->
-> Looks good.  But the commit messages shouldn't have the "Changes
-> in v3" section or probably the "Cc:" lines.  The changes in v3
-> part usually goes below the ---.
-Ok, but shouldn't git format-patch detect that there is already a ---
-in the commit message, or is it illegal to have more than one ---?
-
-And while we are at it, shouldn't git format-patch detect, that there
-is already a [*PATCH*]-prefix in the first line of the commit?
-
-I always need to edit these two things after format-patch.
-
-Bert
->
-> --
-> Shawn.
->
+What's the difference between 'git blame' & 'git annotate'?  The
+output is practically identical - it's not obvious when you would use
+one over the other
