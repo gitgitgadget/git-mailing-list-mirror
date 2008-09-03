@@ -1,61 +1,72 @@
-From: Pieter de Bie <pdebie@ai.rug.nl>
-Subject: Re: [RFC] Detached-HEAD reminder on commit?
-Date: Wed, 3 Sep 2008 13:27:33 +0200
-Message-ID: <4C04A26E-5829-4A39-AD89-F5A68E606AA3@ai.rug.nl>
-References: <1220383905-48316-1-git-send-email-pdebie@ai.rug.nl> <7vk5dujn9h.fsf@gitster.siamese.dyndns.org> <20080902210524.GB7757@leksak.fem-net> <0578A0F2-F90A-4555-9B34-726F26A1CDBB@ai.rug.nl>
-Mime-Version: 1.0 (Apple Message framework v926)
-Content-Type: text/plain; charset=US-ASCII; format=flowed; delsp=yes
+From: Christian Jaeger <christian@jaeger.mine.nu>
+Subject: Re: [ANNOUNCE] Git User's Survey 2008
+Date: Wed, 03 Sep 2008 14:20:25 +0200
+Message-ID: <48BE8109.9030701@jaeger.mine.nu>
+References: <200808312329.17312.jnareb@gmail.com> <48BB9742.3000109@gmail.com> <200809011034.48342.jnareb@gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=utf-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Cc: Stephan Beyer <s-beyer@gmx.net>,
-	Junio C Hamano <gitster@pobox.com>,
-	Git Mailinglist <git@vger.kernel.org>
-To: Nicolas Pitre <nico@cam.org>, Johan Herland <johan@herland.net>
-X-From: git-owner@vger.kernel.org Wed Sep 03 13:29:01 2008
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Sep 03 14:21:48 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KaqXj-0006p9-KX
-	for gcvg-git-2@gmane.org; Wed, 03 Sep 2008 13:29:00 +0200
+	id 1KarMp-0005US-Um
+	for gcvg-git-2@gmane.org; Wed, 03 Sep 2008 14:21:48 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751640AbYICL1x (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 3 Sep 2008 07:27:53 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751607AbYICL1w
-	(ORCPT <rfc822;git-outgoing>); Wed, 3 Sep 2008 07:27:52 -0400
-Received: from frim.nl ([87.230.85.232]:41252 "EHLO
-	lvps87-230-85-232.dedicated.hosteurope.de" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751592AbYICL1w (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 3 Sep 2008 07:27:52 -0400
-Received: from s5591931c.adsl.wanadoo.nl ([85.145.147.28] helo=[192.168.1.11])
-	by lvps87-230-85-232.dedicated.hosteurope.de with esmtpsa (TLS-1.0:RSA_AES_128_CBC_SHA1:16)
-	(Exim 4.63)
-	(envelope-from <pdebie@ai.rug.nl>)
-	id 1KaqWS-0001Mp-D3; Wed, 03 Sep 2008 13:27:40 +0200
-In-Reply-To: <0578A0F2-F90A-4555-9B34-726F26A1CDBB@ai.rug.nl>
-X-Mailer: Apple Mail (2.926)
+	id S1751751AbYICMU3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 3 Sep 2008 08:20:29 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751691AbYICMU3
+	(ORCPT <rfc822;git-outgoing>); Wed, 3 Sep 2008 08:20:29 -0400
+Received: from ethlife-a.ethz.ch ([129.132.49.178]:35719 "HELO ethlife.ethz.ch"
+	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with SMTP
+	id S1751751AbYICMU2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 3 Sep 2008 08:20:28 -0400
+Received: (qmail 17222 invoked from network); 3 Sep 2008 12:20:25 -0000
+Received: from unknown (HELO elvis-jaeger.mine.nu) (127.0.0.1)
+  by localhost with SMTP; 3 Sep 2008 12:20:25 -0000
+Received: (qmail 28944 invoked from network); 3 Sep 2008 12:20:25 -0000
+Received: from unknown (HELO ?127.0.0.1?) (10.0.5.1)
+  by elvis-jaeger.mine.nu with SMTP; 3 Sep 2008 12:20:25 -0000
+User-Agent: Mozilla-Thunderbird 2.0.0.16 (X11/20080724)
+In-Reply-To: <200809011034.48342.jnareb@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/94787>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/94788>
+
+Jakub Narebski wrote:
+> Last, if you are accessing the survey from the same computer, and you
+> have cookies enabled, you can always return and finish/correct survey
+> later.  Perhaps that should be stated upfront, and not only at the end
+> 9after submitting survey)...
+
+Hm, I've got cookies disabled usually; the survey had a link at the 
+bottom which was a javascript link, and it lead me to a screen asking me 
+for my email and a button "inform about news" or some such (kind of 
+'spammy' purpose only I guess). So I'm not sure whether my entries got 
+saved at all?
+
+I've found the many questions interesting as it showed me quite a number 
+of interesting commands I didn't know about yet (so I said "never" to 
+all of them, but that doesn't mean they aren't useful to me, just that I 
+didn't know about them!):
+
+git add -u / -A
+
+git log --graph
+
+git relink
+
+git request-pull
+
+(git show-branch)
+
+(git stash --keep-index)
+
+(git whatchanged)
 
 
-On 2 sep 2008, at 23:51, Pieter de Bie wrote:
->
-> How about a single line then, something like
->
-> 	Vienna:git pieter$ ./git commit --allow-empty -m"test"
-> 	Created commit 6ce62c8b: test
-> 	Remember you are on a detached head, create a new branch to not  
-> lose these changes
-
-Or, as a final suggestion, something unintrusive like:
-
-(on detached head)
-	Vienna:git pieter$ ./git commit --allow-empty -m"test"
-	Created commit 6ce62c8b on detached head: test
-(on branch)
-	Vienna:git pieter$ ./git commit --allow-empty -m"test"
-	Created commit 6ce62c8b on branch 'master': test
-
-- Pieter
+Christian.
