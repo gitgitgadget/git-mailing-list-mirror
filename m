@@ -1,114 +1,72 @@
-From: m.skoric@web.de
-Subject: Re: Unable to clone svn repository
-Date: Wed, 03 Sep 2008 13:01:47 +0200
-Organization: http://freemail.web.de/
-Message-ID: <1295387102@web.de>
+From: Andreas Ericsson <ae@op5.se>
+Subject: Re: Merge seems to get confused by (reverted) cherry-picks
+Date: Wed, 03 Sep 2008 13:04:23 +0200
+Message-ID: <48BE6F37.3070302@op5.se>
+References: <20080903072011.GA14252@atjola.homenet> <7vprnld5ws.fsf@gitster.siamese.dyndns.org> <48BE56BD.6050805@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-15
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Vincent Kergonna <git@kergonna.fr>
-X-From: git-owner@vger.kernel.org Wed Sep 03 13:02:57 2008
+Content-Type: text/plain; charset=ISO-8859-15; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: Junio C Hamano <gitster@pobox.com>,
+	=?ISO-8859-15?Q?Bj=F6rn_Steinbr?= =?ISO-8859-15?Q?ink?= 
+	<B.Steinbrink@gmx.de>,
+	Linus Torvalds <torvalds@linux-foundation.org>,
+	git@vger.kernel.org
+To: Ittay Dror <ittay.dror@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Sep 03 13:06:04 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Kaq8W-0008PF-4N
-	for gcvg-git-2@gmane.org; Wed, 03 Sep 2008 13:02:56 +0200
+	id 1KaqB6-0000a0-FL
+	for gcvg-git-2@gmane.org; Wed, 03 Sep 2008 13:05:47 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750997AbYICLBu convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 3 Sep 2008 07:01:50 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751070AbYICLBu
-	(ORCPT <rfc822;git-outgoing>); Wed, 3 Sep 2008 07:01:50 -0400
-Received: from fmmailgate05.web.de ([217.72.192.243]:37025 "EHLO
-	fmmailgate05.web.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750890AbYICLBt convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 3 Sep 2008 07:01:49 -0400
-Received: from web.de 
-	by fmmailgate05.web.de (Postfix) with SMTP id F3FF65911E96;
-	Wed,  3 Sep 2008 13:01:47 +0200 (CEST)
-Received: from [217.110.125.178] by freemailng2303.web.de with HTTP;
- Wed, 03 Sep 2008 13:01:47 +0200
-X-Provags-Id: V01U2FsdGVkX18AEfWE4z7+M53/EzeWC/uSgHOpLFEVOXdoFar3wOanbLP3B
- fjo5qiTpRvdVcRXAK4allHP2OQrtqfuvD5R7NfZqJCqjX6WvNU=
+	id S1751751AbYICLEa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 3 Sep 2008 07:04:30 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751558AbYICLEa
+	(ORCPT <rfc822;git-outgoing>); Wed, 3 Sep 2008 07:04:30 -0400
+Received: from mail.op5.se ([193.201.96.20]:50601 "EHLO mail.op5.se"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751351AbYICLE3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 3 Sep 2008 07:04:29 -0400
+Received: from localhost (localhost.localdomain [127.0.0.1])
+	by mail.op5.se (Postfix) with ESMTP id 6FBA61B80362;
+	Wed,  3 Sep 2008 13:09:58 +0200 (CEST)
+X-Virus-Scanned: amavisd-new at 
+X-Spam-Flag: NO
+X-Spam-Score: -4.399
+X-Spam-Level: 
+X-Spam-Status: No, score=-4.399 tagged_above=-10 required=6.6
+	tests=[ALL_TRUSTED=-1.8, BAYES_00=-2.599]
+Received: from mail.op5.se ([127.0.0.1])
+	by localhost (mail.op5.se [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id RZgaYME00cnw; Wed,  3 Sep 2008 13:09:56 +0200 (CEST)
+Received: from clix.int.op5.se (unknown [192.168.1.181])
+	by mail.op5.se (Postfix) with ESMTP id 5BE681B80046;
+	Wed,  3 Sep 2008 13:09:54 +0200 (CEST)
+User-Agent: Thunderbird 2.0.0.16 (X11/20080723)
+In-Reply-To: <48BE56BD.6050805@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/94784>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/94785>
 
-> -----Urspr=FCngliche Nachricht-----
-> Von: "Vincent Kergonna" <git@kergonna.fr>
-> Gesendet: 02.09.08 18:13:23
-> An: m.skoric@web.de
-> CC: git@vger.kernel.org
-> Betreff: Re: Unable to clone svn repository
+Ittay Dror wrote:
+> Note: codeville tried to implement a merge algorithm that considers the 
+> history to decide what the user wants to do: 
+> http://revctrl.org/PreciseCodevilleMerge. Maybe worth while exploring?
+> 
 
+I believe that one would still fail for this case, as "ImplicitUndo"
+isn't included.
 
-> > Hi guys,
-> >
->=20
-> Hi,
->=20
-> > im getting an error when im trying to clone a big svn repository. t=
-runk
-> > and a couple of branches worked before
-> > git crashed.
-> >
-> > git Version 1.6.0.1
-> >
-> > command: git-svn clone https://SECRETURL --trunk=3Dtrunk --branches=
-=3Dbranches
-> > --tags=3Dtags
-> > error:
-> >
-> > Found possible branch point:
-> > https://SECRETURL/branches/dirk/Abo-Uebernahme (Bug #994) =3D>
-> > https://SECRETURL/branches/Abo-Uebernahme (Bug #994), 341
-> > Initializing parent: Abo-Uebernahme (Bug #994)@341
-> > W: Ignoring error from SVN, path probably does not exist: (175002):=
- RA
-> > layer request failed: REPORT request failed on '/svn/tixx1/!svn/bc/=
-101':
-> > REPORT of '/svn/tixx1/!svn/bc/101': Could not read chunk size: Secu=
-re
-> > connection truncated (https://SECRETURL)
-> > W: Do not be alarmed at the above message git-svn is just searching
-> > aggressively for old history.
-> > This may take a while on large repositories
-> > Found possible branch point: https://SECRETURL/trunk =3D>
-> > https://SECRETURL/branches/dirk/Abo-Uebernahme (Bug #994), 203
-> > Found branch parent: (Abo-Uebernahme (Bug #994)@341)
-> > bb831869748c98bf97d105c5894ae65331c95c08
-> > Bad URL passed to RA layer: Malformed URL for repository at
-> > /usr/bin/git-svn line 3792
-> >
-> > Maybe a https problem -> "Secure connection truncated (https://SECR=
-ETURL)"
-> > ?
-> > Anyone has an idea and can help me?
-> >
->=20
-> I'm not 100% sure but I think I hit this problem last friday. It you =
-cd
-> into the directory created by "git svn clone" you can do
->=20
-> git svn update
->=20
-> it should continue to download the changes. I had to update it severa=
-l
-> times because I got the error several times, but in the end I managed=
- to
-> have a clone of the svn repository.
+Besides that, I'd rather have something simple that does something
+predictable than something complex that pushes the "gets it right"
+figure from 98% to 99.2%, while failing in completely annoying and
+surprising ways sometimes. Someone or something still has to verify
+that the merge produced something sane.
 
-git-svn update isn't a valid git cmd. Do you mean git-svn fetch?
-But that didn't helped anyway.
-
-Any clue?
-
-Majk=20
-
-
-_____________________________________________________________________
-Der WEB.DE SmartSurfer hilft bis zu 70% Ihrer Onlinekosten zu sparen!
-http://smartsurfer.web.de/?mc=3D100071&distributionid=3D000000000066
+-- 
+Andreas Ericsson                   andreas.ericsson@op5.se
+OP5 AB                             www.op5.se
+Tel: +46 8-230225                  Fax: +46 8-230231
