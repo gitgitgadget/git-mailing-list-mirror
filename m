@@ -1,97 +1,83 @@
-From: Jakub Narebski <jnareb@gmail.com>
+From: "Felipe Contreras" <felipe.contreras@gmail.com>
 Subject: Re: Git User's Survey 2008 partial summary
-Date: Wed, 3 Sep 2008 18:00:26 +0200
-Message-ID: <200809031800.27739.jnareb@gmail.com>
-References: <200809031607.19722.jnareb@gmail.com> <d411cc4a0809030841n7defd31frbbab2a1b7ab824d7@mail.gmail.com>
+Date: Wed, 3 Sep 2008 19:25:17 +0300
+Message-ID: <94a0d4530809030925t33d4260bof169372d65717af4@mail.gmail.com>
+References: <200809031607.19722.jnareb@gmail.com>
+	 <20080903144552.GA27682@spearce.org>
+	 <20080903172050.61d510d6@pc09.procura.nl>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, Miguel Arroz <arroz@survs.com>
-To: "Scott Chacon" <schacon@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Sep 03 18:04:40 2008
+Cc: "Shawn O. Pearce" <spearce@spearce.org>,
+	"Jakub Narebski" <jnareb@gmail.com>, git@vger.kernel.org
+To: "H.Merijn Brand" <h.m.brand@xs4all.nl>
+X-From: git-owner@vger.kernel.org Wed Sep 03 18:26:29 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Kauns-00048V-J1
-	for gcvg-git-2@gmane.org; Wed, 03 Sep 2008 18:01:57 +0200
+	id 1KavBb-0004YG-Bk
+	for gcvg-git-2@gmane.org; Wed, 03 Sep 2008 18:26:27 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752077AbYICQAc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 3 Sep 2008 12:00:32 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751193AbYICQAc
-	(ORCPT <rfc822;git-outgoing>); Wed, 3 Sep 2008 12:00:32 -0400
-Received: from fg-out-1718.google.com ([72.14.220.153]:28386 "EHLO
-	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752000AbYICQAb (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 3 Sep 2008 12:00:31 -0400
-Received: by fg-out-1718.google.com with SMTP id 19so187189fgg.17
-        for <git@vger.kernel.org>; Wed, 03 Sep 2008 09:00:30 -0700 (PDT)
+	id S1751691AbYICQZT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 3 Sep 2008 12:25:19 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751962AbYICQZT
+	(ORCPT <rfc822;git-outgoing>); Wed, 3 Sep 2008 12:25:19 -0400
+Received: from rv-out-0506.google.com ([209.85.198.236]:11870 "EHLO
+	rv-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751662AbYICQZS (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 3 Sep 2008 12:25:18 -0400
+Received: by rv-out-0506.google.com with SMTP id k40so2833649rvb.1
+        for <git@vger.kernel.org>; Wed, 03 Sep 2008 09:25:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:subject:date
-         :user-agent:cc:references:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:message-id;
-        bh=/mnc7ANOrbsm6TH7niylUPwZK17jd+nnHNlmevhT5FY=;
-        b=VNiQc8AXl9TOSPCR/YI2LsPRs0OIcHKBcDkAu1J/TPgs1TUUaORhtPzT0a470sWwcY
-         i4bcvkjgLc8CuDodzs5XkKSDq7iEcx9FfwMCjKskvGwTuQEb19DHx+ovNezUC5p7c+Fj
-         /a9LSK6alOZSQRC147fWLusPPyuc8WPKd6leM=
+        h=domainkey-signature:received:received:message-id:date:from:to
+         :subject:cc:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:references;
+        bh=bYEmTYvfEt3vgqJESpsjTKY2VhDTmgaj1x7hrtNX254=;
+        b=dtKjVmw6bV68kSPVRDReqQlFalEzQ8g6kAblvqtSjKz3V1GkfqR5sTQRVQRBWC1uX9
+         N22vQDDj7LxKRq8FGxsKFoqRQpBCYOC8JPBKXJ4kK1WrsxSPe1JjRXBeCTSDPPel5eTy
+         lMzZ/s/+IrYJy6K44CTrHU3h0EQzh7I6/NrlY=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=from:to:subject:date:user-agent:cc:references:in-reply-to
-         :mime-version:content-type:content-transfer-encoding
-         :content-disposition:message-id;
-        b=dcn2znGdatW+/2jGXIYz9wOpHKRvtfavDGwp5pIfr/kwcv5AHLVpyIQ9lGA84QKtp5
-         9HlghkA76p9v7FqGu9+3Trh0xaPffyB3exk/HhW7bKI4kz2G31/NKv7F2GUIhWPnD0G4
-         U9GKza+0OYnqMYchahUwsM6FxlTRz+v9xHFYw=
-Received: by 10.86.27.19 with SMTP id a19mr6788611fga.37.1220457629923;
-        Wed, 03 Sep 2008 09:00:29 -0700 (PDT)
-Received: from ?192.168.1.11? ( [83.8.253.191])
-        by mx.google.com with ESMTPS id 4sm10030933fge.8.2008.09.03.09.00.28
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Wed, 03 Sep 2008 09:00:28 -0700 (PDT)
-User-Agent: KMail/1.9.3
-In-Reply-To: <d411cc4a0809030841n7defd31frbbab2a1b7ab824d7@mail.gmail.com>
+        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
+         :content-type:content-transfer-encoding:content-disposition
+         :references;
+        b=A62E2Ppk+fDQfuLKY9pJD72XORzOwaHT/tZxSNjboUGxRnYfdAdAotTE2/nw5enkcY
+         OSHC0mStjg7jdypjBgTJFZIfMHvep1U6LnkJM5T5Oc00UFOewXLAETCcxnm6r9Dv8F9W
+         D3pR4jK1mnLvMdcOOCaLMG75T6R2M1jTIWeE4=
+Received: by 10.141.185.3 with SMTP id m3mr5037822rvp.40.1220459117512;
+        Wed, 03 Sep 2008 09:25:17 -0700 (PDT)
+Received: by 10.140.166.19 with HTTP; Wed, 3 Sep 2008 09:25:17 -0700 (PDT)
+In-Reply-To: <20080903172050.61d510d6@pc09.procura.nl>
 Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/94808>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/94809>
 
-On Wed, 3 September 2008, Scott Chacon wrote:
-> On Wed, Sep 3, 2008 at 7:07 AM, Jakub Narebski <jnareb@gmail.com> wrote:
-> >
-> > This is partial summary of Git User's Survey 2008 after more that 1000
-> > (yes, that is more than _thousands_ responses) just after the 3 days
-> > of running the survey.  It is based on "Analysis" page for this survey:
-> >  http://www.survs.com/shareResults?survey=M3PIVU72&rndm=OKJQ45LAG8
-> 
-> Is there a way to download the raw data?  There may be some
-> interesting correlations between answers in different fields I would
-> like to look for in the data, but it's too aggregated here.  I heard
-> it would be available at the end, but can I get it from somewhere now
-> as well?
+On Wed, Sep 3, 2008 at 6:20 PM, H.Merijn Brand <h.m.brand@xs4all.nl> wrote:
+> On Wed, 3 Sep 2008 07:45:52 -0700, "Shawn O. Pearce"
+> <spearce@spearce.org> wrote:
+>
+>> Jakub Narebski <jnareb@gmail.com> wrote:
+>> > This is partial summary of Git User's Survey 2008 [...]
+>> >
+>> > 03. With which programming languages are you proficient?
+>> >
+>> > Around 939 people answered this question.  C is most popular with 59%;
+>> > Ruby and surprisingly a bit shell script programming have around second
+>> > place, with about 52-53%.  More people are proficient with Python than
+>> > in Perl by about 1/3-1/4.  Very few people (25 responses, around 3%)
+>> > feel proficient in Tcl/Tk, which means shallow pool of possible git-gui
+>> > and gitk contributors.
+>
+> Rewrite them in perl or python and get more patches?
+> The fact that it is not perl withheld me from finding solutions to
+> problems I still have with the git-gui gitk combination
 
-I, as survey administrator, can export survey data to CSV or Excel
-formats, but currently I cannot export URL to such data.  So you can
-either ask me to send you such data[*1*] (CSV for around 700 individual
-responses weights 1.7MB, and 272KB after gzipping), or sign in
-to Survs.com (which might, or might not, require invite) and ask me
-to add to "git" role/account/group.
+Ruby!
 
-On the other hand you can use different filters (again, I think only
-survey administrator can do this, or whatever role is it) to limit
-summarized replies, for example show summary only for users which
-use Git on MS Windows (answered "What operating system..." question,
-and the answer was "MS Windows (Cygwin)" or "MS Windows (msysGit)".
-
-I can also enable individual responses in shared view (above link),
-so you can see reply by reply; but I don't think this is particularly
-useful, especially with 1000+ responses (21 in 'testing' channel).
-
-
-[*1*] I will not send this to git mailing list...
 -- 
-Jakub Narebski
-Poland
+Felipe Contreras
