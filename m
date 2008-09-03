@@ -1,68 +1,77 @@
-From: "Dutta, Ranjan" <ranjan.dutta@intel.com>
-Subject: Issue with GIT server
-Date: Thu, 4 Sep 2008 03:21:20 +0530
-Message-ID: <9B6BEB600FC42B4A9A16868DA97FAFEE1B2ACF@bgsmsx412.gar.corp.intel.com>
-Mime-Version: 1.0
-Content-Type: text/plain;
-	charset="us-ascii"
-Content-Transfer-Encoding: 8BIT
-To: <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Wed Sep 03 23:52:58 2008
+From: Robin Rosenberg <robin.rosenberg@dewire.com>
+Subject: [EGIT PATCH 4/4] Switch usage of AnyObjectId.toString() to new AnyObjectId.name()
+Date: Wed,  3 Sep 2008 23:28:14 +0200
+Message-ID: <1220477294-23268-2-git-send-email-robin.rosenberg@dewire.com>
+References: <20080903170438.GA28315@spearce.org>
+ <1220477294-23268-1-git-send-email-robin.rosenberg@dewire.com>
+Cc: git@vger.kernel.org, Robin Rosenberg <robin.rosenberg@dewire.com>
+To: spearce@spearce.org, Jonas Fonseca <fonseca@diku.dk>
+X-From: git-owner@vger.kernel.org Thu Sep 04 00:00:50 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Kb0HK-0000T7-QF
-	for gcvg-git-2@gmane.org; Wed, 03 Sep 2008 23:52:43 +0200
+	id 1Kb0P4-0002iS-Fh
+	for gcvg-git-2@gmane.org; Thu, 04 Sep 2008 00:00:42 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751692AbYICVvh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 3 Sep 2008 17:51:37 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751505AbYICVvh
-	(ORCPT <rfc822;git-outgoing>); Wed, 3 Sep 2008 17:51:37 -0400
-Received: from mga11.intel.com ([192.55.52.93]:39079 "EHLO mga11.intel.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751398AbYICVvg convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 3 Sep 2008 17:51:36 -0400
-Received: from fmsmga002.fm.intel.com ([10.253.24.26])
-  by fmsmga102.fm.intel.com with ESMTP; 03 Sep 2008 14:49:28 -0700
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="4.32,320,1217833200"; 
-   d="scan'208";a="376430590"
-Received: from fmsmsx333.amr.corp.intel.com ([132.233.42.2])
-  by fmsmga002.fm.intel.com with ESMTP; 03 Sep 2008 14:48:51 -0700
-Received: from bgsmsx412.gar.corp.intel.com ([10.223.4.244]) by fmsmsx333.amr.corp.intel.com with Microsoft SMTPSVC(6.0.3790.1830);
-	 Wed, 3 Sep 2008 14:51:25 -0700
-X-MimeOLE: Produced By Microsoft Exchange V6.5
-Content-class: urn:content-classes:message
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-Thread-Topic: Issue with GIT server 
-Thread-Index: AckOCN5dQi6DXyN1SFW96G5/gfaVIgAAI42AAAEowVAAAEQfIA==
-X-OriginalArrivalTime: 03 Sep 2008 21:51:25.0954 (UTC) FILETIME=[3690FE20:01C90E0F]
+	id S1751833AbYICV7g (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 3 Sep 2008 17:59:36 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751828AbYICV7g
+	(ORCPT <rfc822;git-outgoing>); Wed, 3 Sep 2008 17:59:36 -0400
+Received: from av12-1-sn2.hy.skanova.net ([81.228.8.185]:52235 "EHLO
+	av12-1-sn2.hy.skanova.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751819AbYICV7f (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 3 Sep 2008 17:59:35 -0400
+X-Greylist: delayed 1728 seconds by postgrey-1.27 at vger.kernel.org; Wed, 03 Sep 2008 17:59:35 EDT
+Received: by av12-1-sn2.hy.skanova.net (Postfix, from userid 502)
+	id 9652437F7D; Wed,  3 Sep 2008 23:30:46 +0200 (CEST)
+Received: from smtp4-1-sn2.hy.skanova.net (smtp4-1-sn2.hy.skanova.net [81.228.8.92])
+	by av12-1-sn2.hy.skanova.net (Postfix) with ESMTP
+	id 79FC637EDE; Wed,  3 Sep 2008 23:30:46 +0200 (CEST)
+Received: from localhost.localdomain (h250n1fls32o811.telia.com [213.67.100.250])
+	by smtp4-1-sn2.hy.skanova.net (Postfix) with ESMTP id 61C3537E4D;
+	Wed,  3 Sep 2008 23:30:46 +0200 (CEST)
+X-Mailer: git-send-email 1.6.0.1.161.g7f314
+In-Reply-To: <1220477294-23268-1-git-send-email-robin.rosenberg@dewire.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/94859>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/94860>
 
-Hello,
+Two more places
 
-I am facing the following issue with GIT server running on Ubuntu 8.04
-using an http interface (apache2)..
+Signed-off-by: Robin Rosenberg <robin.rosenberg@dewire.com>
+---
+ .../spearce/jgit/lib/T0005_ShallowSpeedTest.java   |    2 +-
+ .../org/spearce/jgit/lib/T0006_DeepSpeedTest.java  |    2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
 
-When I try to push code at the GIT client end
-
-1. git-add(s)
-2. git-commit
-3. sudo git push upload master
-
-I get this error - 
-
-error: http-push died with strange error
-error: failed to push some refs to 'http://<usernaM@<server ip
-address>/<git_dir>/'
-
-Any pointers as to how to debug this further ?
-
-Regards,
-Ranjan
+diff --git a/org.spearce.jgit.test/exttst/org/spearce/jgit/lib/T0005_ShallowSpeedTest.java b/org.spearce.jgit.test/exttst/org/spearce/jgit/lib/T0005_ShallowSpeedTest.java
+index 3b8c60a..736e363 100644
+--- a/org.spearce.jgit.test/exttst/org/spearce/jgit/lib/T0005_ShallowSpeedTest.java
++++ b/org.spearce.jgit.test/exttst/org/spearce/jgit/lib/T0005_ShallowSpeedTest.java
+@@ -60,7 +60,7 @@ public void testShallowHistoryScan() throws IOException {
+ 				break;
+ 			ObjectId parentId = parents[0];
+ 			commit = db.mapCommit(parentId);
+-			commit.getCommitId().toString();
++			commit.getCommitId().name();
+ 			++n;
+ 		}
+ 		assertEquals(12275, n);
+diff --git a/org.spearce.jgit.test/exttst/org/spearce/jgit/lib/T0006_DeepSpeedTest.java b/org.spearce.jgit.test/exttst/org/spearce/jgit/lib/T0006_DeepSpeedTest.java
+index 684bfba..f480b99 100644
+--- a/org.spearce.jgit.test/exttst/org/spearce/jgit/lib/T0006_DeepSpeedTest.java
++++ b/org.spearce.jgit.test/exttst/org/spearce/jgit/lib/T0006_DeepSpeedTest.java
+@@ -62,7 +62,7 @@ public void testDeepHistoryScan() throws IOException {
+ 			commit = db.mapCommit(parentId);
+ 			TreeEntry m = commit.getTree().findBlobMember("net/netfilter/nf_queue.c");
+ 			if (m != null)
+-				commit.getCommitId().toString();
++				commit.getCommitId().name();
+ 			++n;
+ 		}
+ 
+-- 
+1.6.0.1.161.g7f314
