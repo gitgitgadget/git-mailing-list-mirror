@@ -1,64 +1,58 @@
-From: Giuseppe Bilotta <giuseppe.bilotta@gmail.com>
-Subject: Re: gitweb pathinfo improvements
-Date: Wed, 03 Sep 2008 12:02:54 +0200
-Message-ID: <g9lncf$182$1@ger.gmane.org>
-References: <1220435839-29360-1-git-send-email-giuseppe.bilotta@gmail.com>
+From: Petr Baudis <pasky@suse.cz>
+Subject: Re: pack count on repo.or.cz [was "Medium term dreams"]
+Date: Wed, 3 Sep 2008 12:08:28 +0200
+Message-ID: <20080903100828.GS10360@machine.or.cz>
+References: <7vsksjsbcc.fsf@gitster.siamese.dyndns.org> <20080902000037.GA11869@coredump.intra.peff.net> <20080902010410.GI10360@machine.or.cz> <20080902011433.GA12682@coredump.intra.peff.net> <20080902111531.GL10360@machine.or.cz> <20080902115424.GA11303@coredump.intra.peff.net> <20080902130801.GN10360@machine.or.cz> <48BD446C.6020403@viscovery.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7Bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Sep 03 12:04:46 2008
+Cc: Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
+	git@vger.kernel.org
+To: Johannes Sixt <j.sixt@viscovery.net>
+X-From: git-owner@vger.kernel.org Wed Sep 03 12:09:43 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KapE7-00028B-RX
-	for gcvg-git-2@gmane.org; Wed, 03 Sep 2008 12:04:40 +0200
+	id 1KapIz-0003gZ-O0
+	for gcvg-git-2@gmane.org; Wed, 03 Sep 2008 12:09:42 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751533AbYICKDO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 3 Sep 2008 06:03:14 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751598AbYICKDN
-	(ORCPT <rfc822;git-outgoing>); Wed, 3 Sep 2008 06:03:13 -0400
-Received: from main.gmane.org ([80.91.229.2]:53335 "EHLO ciao.gmane.org"
+	id S1751677AbYICKIg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 3 Sep 2008 06:08:36 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751783AbYICKIg
+	(ORCPT <rfc822;git-outgoing>); Wed, 3 Sep 2008 06:08:36 -0400
+Received: from w241.dkm.cz ([62.24.88.241]:50304 "EHLO machine.or.cz"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751533AbYICKDN (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 3 Sep 2008 06:03:13 -0400
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1KapCg-0002mM-8p
-	for git@vger.kernel.org; Wed, 03 Sep 2008 10:03:10 +0000
-Received: from 78.15.13.249 ([78.15.13.249])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Wed, 03 Sep 2008 10:03:10 +0000
-Received: from giuseppe.bilotta by 78.15.13.249 with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Wed, 03 Sep 2008 10:03:10 +0000
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@ger.gmane.org
-X-Gmane-NNTP-Posting-Host: 78.15.13.249
-User-Agent: KNode/0.10.9
-X-Face: ::w9}R^l{WGM\{y)C0QF@4^U,',W3Mk^X0HP)=:bKM^Z]A9+6bY6fe3}O*]fH{l<j1/9RTp  `KR0idy]Im#9^%}P5Dga'>AViT_'?&>&ufo2_X5Vs3C^tPO@drZRuu&6iK}x}~9`F\-dNZ>(p|V7`4
+	id S1751664AbYICKIf (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 3 Sep 2008 06:08:35 -0400
+Received: by machine.or.cz (Postfix, from userid 2001)
+	id 4D3413939B4B; Wed,  3 Sep 2008 12:08:28 +0200 (CEST)
+Content-Disposition: inline
+In-Reply-To: <48BD446C.6020403@viscovery.net>
+User-Agent: Mutt/1.5.16 (2007-06-09)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/94781>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/94782>
 
-Damn, I forgot the patch sequence numbers.
+On Tue, Sep 02, 2008 at 03:49:32PM +0200, Johannes Sixt wrote:
+> Petr Baudis schrieb:
+> >> As to why the other packs weren't pruned, I don't know. In my example,
+> >> you can see that the pruning happens as we expect. So either there is a
+> >> bug in git-prune-packed, or there is something we're not realizing.
+> > 
+> > Well, that's my question here. :-)
+> 
+> Does removing all the *.keep files help? ;)
 
-On Wednesday 03 September 2008 11:57, Giuseppe Bilotta wrote:
-> The following patchset improves on gitweb's support for PATH_INFO
-> by supporting paths in the form project/action/[parent..]hash,
-> both in generating them and in accepting them. The old path info
-> style project/hash is still supported as long as it doesn't
-> conflict with the new style
-> 
-> For those that prefer git trees to patch bombs, my git tree is
-> available for gitweb browsing at http://git.oblomov.eu/git and for
-> git cloning at git://git.oblomov.eu/git/git
-> 
-> The changes are very local to the PATH_INFO parsing and creation,
-> so I hope they don't conflict with Lea's cache work.
+Haha, good catch - thanks! :-) I wonder where they came from, though I
+hazily remember some curious behaviour of older Git versions wrt. .keep
+files and they seem all to be of old date. Now I have a single nice pack
+and fsck of all the forks still passes fine.
+
+Thanks all, I will adopt this for all projects.
 
 -- 
-Giuseppe "Oblomov" Bilotta
+				Petr "Pasky" Baudis
+The next generation of interesting software will be done
+on the Macintosh, not the IBM PC.  -- Bill Gates
