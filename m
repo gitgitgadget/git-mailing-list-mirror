@@ -1,91 +1,53 @@
 From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH 2/2] allow '%d' pretty format specifier to show
-	decoration
-Date: Wed, 3 Sep 2008 15:36:15 -0400
-Message-ID: <20080903193615.GA31225@coredump.intra.peff.net>
-References: <20080820175325.GD27773@sigill.intra.peff.net> <20080820180034.GB32005@sigill.intra.peff.net> <alpine.DEB.1.00.0808202042260.24820@pacific.mpi-cbg.de.mpi-cbg.de>
+Subject: Re: [RFC] Detached-HEAD reminder on commit?
+Date: Wed, 3 Sep 2008 15:41:56 -0400
+Message-ID: <20080903194156.GA31756@coredump.intra.peff.net>
+References: <1220383905-48316-1-git-send-email-pdebie@ai.rug.nl> <200809022339.20123.johan@herland.net> <20080902214428.GA20355@sigill.intra.peff.net> <200809030945.08619.johan@herland.net> <20080903131507.GC12936@coredump.intra.peff.net> <20080903133446.GA6967@coredump.intra.peff.net> <alpine.LNX.1.00.0809031234560.19665@iabervon.org> <20080903180726.GA16454@coredump.intra.peff.net> <7vljy9auoq.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: "MichaelTiloDressel@t-online.de" <MichaelTiloDressel@t-online.de>,
-	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Wed Sep 03 21:37:33 2008
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Sep 03 21:43:38 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KayAO-0004Td-Uv
-	for gcvg-git-2@gmane.org; Wed, 03 Sep 2008 21:37:25 +0200
+	id 1KayGD-0006YJ-N0
+	for gcvg-git-2@gmane.org; Wed, 03 Sep 2008 21:43:26 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752479AbYICTgU convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 3 Sep 2008 15:36:20 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752318AbYICTgU
-	(ORCPT <rfc822;git-outgoing>); Wed, 3 Sep 2008 15:36:20 -0400
-Received: from peff.net ([208.65.91.99]:3183 "EHLO peff.net"
+	id S1752609AbYICTl7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 3 Sep 2008 15:41:59 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754173AbYICTl7
+	(ORCPT <rfc822;git-outgoing>); Wed, 3 Sep 2008 15:41:59 -0400
+Received: from peff.net ([208.65.91.99]:2777 "EHLO peff.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752169AbYICTgS (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 3 Sep 2008 15:36:18 -0400
-Received: (qmail 31043 invoked by uid 111); 3 Sep 2008 19:36:16 -0000
+	id S1752595AbYICTl6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 3 Sep 2008 15:41:58 -0400
+Received: (qmail 31118 invoked by uid 111); 3 Sep 2008 19:41:57 -0000
 Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.32) with SMTP; Wed, 03 Sep 2008 15:36:16 -0400
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Wed, 03 Sep 2008 15:36:15 -0400
+    by peff.net (qpsmtpd/0.32) with SMTP; Wed, 03 Sep 2008 15:41:57 -0400
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Wed, 03 Sep 2008 15:41:56 -0400
 Content-Disposition: inline
-In-Reply-To: <alpine.DEB.1.00.0808202042260.24820@pacific.mpi-cbg.de.mpi-cbg.de>
+In-Reply-To: <7vljy9auoq.fsf@gitster.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/94844>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/94845>
 
-On Wed, Aug 20, 2008 at 08:43:29PM +0200, Johannes Schindelin wrote:
+On Wed, Sep 03, 2008 at 12:36:05PM -0700, Junio C Hamano wrote:
 
-> Indeed.  When I posted a similar patch, there was some discussion, to=
-o. =20
-> But no resolution, as it seemed nobody was really interested.
+> It was a good idea to keep the scripted ones in contrib/examples so that
+> they are readily accessible to find out what we used to do ;-).
 
-I know Junio called you negative, but I actually appreciate having you
-point out related work (even if I don't get around to reading it for 2
-weeks!).
+Who's to say I didn't do:
 
-It is funny how similar our patches ended up, even though I didn't even
-realize yours existed. It looks like the comments were not all that
-different, either.
+  deleted=$(git log -1 --pretty=format:%H --diff-filter=D -- git-checkout.sh)
+  git show ${deleted}^:git-checkout.sh
 
-To summarize what was said then (for the benefit of Michael, who is
-moving this forward):
-
-  - Junio didn't like the expansion to include a space and enclosing
-    parentheses, because then we don't know where to put the space.
-    I agree with that. Though note that you will still end up with an
-    extra space for a blank decoration.
-
-  - Ren=C3=A9 suggested a comma delimeter, which Michael's patch does.
-
-  - Ren=C3=A9 suggested a foobar2000-inspired expansion construct for d=
-ealing
-    with the extra parentheses and space when no decoration exists. If
-    we are going to expand the expansion language I think I would prefe=
-r
-    something more like what show-ref uses (as Jakub suggested), but
-    with "tags" expanded so that they can contain arbitrary data. So
-    something like:
-
-      %(decorate:delim=3D, :prefix=3D (:suffix=3D\))
-
-    or even:
-
-      %(decorate:+ (%(decorate:delim=3D, ))
-
-    to use the more shell-ish conditional.
-
-    But I think it is not a problem to introduce '%d' _and_ make such
-    improvements later.
-
-  - Ren=C3=A9 also suggested that he wanted a placeholder for git-descr=
-ibe
-    output. Logically, this would also want %d. Maybe it is worth makin=
-g
-    this %decorate now to avoid confusion later.
+? :P
 
 -Peff
+
+PS Actually, I was about to look it up in the history when I remembered
+that we put it into contrib. :)
