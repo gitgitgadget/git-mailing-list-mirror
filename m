@@ -1,127 +1,147 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH 1/2] add '%d' pretty format specifier to show decoration
-Date: Wed, 3 Sep 2008 15:12:17 -0400
-Message-ID: <20080903191217.GA31195@coredump.intra.peff.net>
-References: <alpine.LNX.1.10.0809032036270.32295@pollux>
+From: Nicolas Pitre <nico@cam.org>
+Subject: [PATCH] improve handling of sideband message display
+Date: Wed, 03 Sep 2008 15:13:42 -0400 (EDT)
+Message-ID: <alpine.LFD.1.10.0809031458150.23787@xanadu.home>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
 Cc: git@vger.kernel.org
-To: Michael Dressel <MichaelTiloDressel@t-online.de>
-X-From: git-owner@vger.kernel.org Wed Sep 03 21:13:30 2008
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Sep 03 21:15:12 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KaxnE-0005Xi-Jj
-	for gcvg-git-2@gmane.org; Wed, 03 Sep 2008 21:13:29 +0200
+	id 1Kaxol-0005vh-9K
+	for gcvg-git-2@gmane.org; Wed, 03 Sep 2008 21:15:03 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754411AbYICTMU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 3 Sep 2008 15:12:20 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753580AbYICTMU
-	(ORCPT <rfc822;git-outgoing>); Wed, 3 Sep 2008 15:12:20 -0400
-Received: from peff.net ([208.65.91.99]:2393 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752191AbYICTMU (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 3 Sep 2008 15:12:20 -0400
-Received: (qmail 30664 invoked by uid 111); 3 Sep 2008 19:12:18 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.32) with SMTP; Wed, 03 Sep 2008 15:12:18 -0400
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Wed, 03 Sep 2008 15:12:17 -0400
-Content-Disposition: inline
-In-Reply-To: <alpine.LNX.1.10.0809032036270.32295@pollux>
+	id S1756059AbYICTNu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 3 Sep 2008 15:13:50 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756009AbYICTNu
+	(ORCPT <rfc822;git-outgoing>); Wed, 3 Sep 2008 15:13:50 -0400
+Received: from relais.videotron.ca ([24.201.245.36]:18775 "EHLO
+	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755933AbYICTNt (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 3 Sep 2008 15:13:49 -0400
+Received: from xanadu.home ([66.131.194.97]) by VL-MO-MR003.ip.videotron.ca
+ (Sun Java(tm) System Messaging Server 6.3-4.01 (built Aug  3 2007; 32bit))
+ with ESMTP id <0K6M00D6PW2UU3H0@VL-MO-MR003.ip.videotron.ca> for
+ git@vger.kernel.org; Wed, 03 Sep 2008 15:13:43 -0400 (EDT)
+X-X-Sender: nico@xanadu.home
+User-Agent: Alpine 1.10 (LFD 962 2008-03-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/94838>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/94839>
 
-On Wed, Sep 03, 2008 at 08:40:08PM +0200, Michael Dressel wrote:
 
-> This is a variation of the patch provided by  Jeff King <peff@peff.net>:
-> allow '%d' pretty format specifier to show decoration
+Currently the code looks for line break characters in order to prepend
+"remote: " to every line received as many lines can be sent in a single
+chunk.  However the opposite might happen too, i.e. a single message
+line split amongst multiple chunks.  This patch adds support for the
+later case to avoid displays like:
 
-Thank you for picking this up. I had been meaning to look at it further
-but hadn't gotten around to it yet.
+	remote: Compressing objeremote: cts: 100% (313/313), done.
 
-> would calculate decorations, but not show them. You can now
-> do:
->
->   git log --pretty=format:'%H (%d) %s'
+Signed-off-by: Nicolas Pitre <nico@cam.org>
+---
+ sideband.c |   66 +++++++++++++++++++++++++++++++++++++++--------------------
+ 1 files changed, 43 insertions(+), 23 deletions(-)
 
-I think Junio requested the enclosing parentheses be included. I am not
-sure I agree, but we are already mandating the comma separator.
-Personally, I think the right solution is more like
-
-  %(decorate:delim=, )
-
-but that is a much bigger change (and part of what was holding me up on
-just improving this patch). I think adding %d in the meantime (with or
-without the surrounding parentheses) is reasonable.
-
-> The difference is that you don't need --decorate when %d has been given
-> because this would be "doppeltgemoppelt" (redundant).
-
-This is good, but I don't like the implementation:
-
-> +static int deco_in_format(int argc, const char **argv)
-> +{
-> +	int i;
-> +	int deco=0;
-> +	for (i=0;i<argc;i++)
-> +	{
-> +		if ((strstr(argv[i], "pretty=format:") ||
-> +					strstr(argv[i], "pretty=tformat:")) &&
-> +				strstr(argv[i], "%d"))
-> +		{
-> +			deco=1;
-> +			break;
-> +		}
-> +
-> +	}
-> +	return deco;
-> +}
-
-There are two bad things about this:
-
-  1. It looks through argv. Partly this is a bit ugly, and we should
-     just hook into the part where we have already parsed --pretty=.
-     Which in this case really means looking at user_format after
-     calling setup_revisions (which is sadly a static global; it really
-     should be cleaned up as a member of struct rev_list). But worse
-     here is that you don't even look through argv correctly. You really
-     want prefixcmp(argv[i], "--pretty=format:"), since otherwise this
-     would trigger on something like:
-
-         git log ':/implement %d in pretty:format'
-
-     which is unlikely, perhaps, but I don't think it's that hard to do
-     it right in this case.
-
-  2. It just looks for '%d' rather than using the same parser as the
-     rest of the code. I _think_ this is actually correct now, because
-     we don't even allow simple quoting like '%%d'. But it would be much
-     cleaner, I think, to have a library call next to
-     format_commit_message() that fills in a struct of "used" items.
-
-So something like:
-
-  static void cmd_log_init(...)
-  {
-          struct user_format_need ufneed;
-  ...
-          for (i = 1; i < argc; i++) {
-            ...
-                  if (!stcmp(arg, "--decorate"))
-                          decorate = 1;
-            ...
-          }
-
-          user_format_needs(&ufneed);
-          if (decorate || ufneed.decorate)
-            for_each_ref(add_ref_decoration, NULL);
-
-  }
-
-Make sense?
-
--Peff
+diff --git a/sideband.c b/sideband.c
+index b677781..cca3360 100644
+--- a/sideband.c
++++ b/sideband.c
+@@ -25,6 +25,7 @@ int recv_sideband(const char *me, int in_stream, int out, int err)
+ 	unsigned sf;
+ 	char buf[LARGE_PACKET_MAX + 2*FIX_SIZE];
+ 	char *suffix, *term;
++	int skip_pf = 0;
+ 
+ 	memcpy(buf, PREFIX, pf);
+ 	term = getenv("TERM");
+@@ -54,39 +55,58 @@ int recv_sideband(const char *me, int in_stream, int out, int err)
+ 			return SIDEBAND_REMOTE_ERROR;
+ 		case 2:
+ 			buf[pf] = ' ';
+-			len += pf+1;
+-			while (1) {
+-				int brk = pf+1;
++			do {
++				char *b = buf;
++				int brk = 0;
+ 
+-				/* Break the buffer into separate lines. */
+-				while (brk < len) {
++				/*
++				 * If the last buffer didn't end with a line
++				 * break then we should not print a prefix
++				 * this time around.
++				 */
++				if (skip_pf) {
++					b += pf+1;
++				} else {
++					len += pf+1;
++					brk += pf+1;
++				}
++
++				/* Look for a line break. */
++				for (;;) {
+ 					brk++;
+-					if (buf[brk-1] == '\n' ||
+-					    buf[brk-1] == '\r')
++					if (brk > len) {
++						brk = 0;
++						break;
++					}
++					if (b[brk-1] == '\n' ||
++					    b[brk-1] == '\r')
+ 						break;
+ 				}
+ 
+ 				/*
+ 				 * Let's insert a suffix to clear the end
+-				 * of the screen line, but only if current
+-				 * line data actually contains something.
++				 * of the screen line if a line break was
++				 * found.  Also, if we don't skip the
++				 * prefix, then a non-empty string must be
++				 * present too.
+ 				 */
+-				if (brk > pf+1 + 1) {
++				if (brk > (skip_pf ? 0 : (pf+1 + 1))) {
+ 					char save[FIX_SIZE];
+-					memcpy(save, buf + brk, sf);
+-					buf[brk + sf - 1] = buf[brk - 1];
+-					memcpy(buf + brk - 1, suffix, sf);
+-					safe_write(err, buf, brk + sf);
+-					memcpy(buf + brk, save, sf);
+-				} else
+-					safe_write(err, buf, brk);
++					memcpy(save, b + brk, sf);
++					b[brk + sf - 1] = b[brk - 1];
++					memcpy(b + brk - 1, suffix, sf);
++					safe_write(err, b, brk + sf);
++					memcpy(b + brk, save, sf);
++					len -= brk;
++				} else {
++					int l = brk ? brk : len;
++					safe_write(err, b, l);
++					len -= l;
++				}
+ 
+-				if (brk < len) {
+-					memmove(buf + pf+1, buf + brk, len - brk);
+-					len = len - brk + pf+1;
+-				} else
+-					break;
+-			}
++				skip_pf = !brk;
++				memmove(buf + pf+1, b + brk, len);
++			} while (len);
+ 			continue;
+ 		case 1:
+ 			safe_write(out, buf + pf+1, len);
+-- 
+1.6.0.1.305.g552e0.dirty
