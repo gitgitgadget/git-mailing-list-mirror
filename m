@@ -1,64 +1,68 @@
-From: Jonas Fonseca <fonseca@diku.dk>
-Subject: Re: [JGIT PATCH 2/2] Move pathOf to RepositoryTestCase and use it
-	for locating test files
-Date: Thu, 4 Sep 2008 13:17:52 +0200
-Message-ID: <20080904111752.GA27590@diku.dk>
-References: <20080903091022.GC23406@diku.dk> <20080903170904.GB28315@spearce.org> <9e85b2570809031847r34a760ecwea365930327eb205@mail.gmail.com> <20080904032118.GA3262@spearce.org> <20080904092311.GA25735@diku.dk> <m3prnkp4qq.fsf@localhost.localdomain>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: "Shawn O. Pearce" <spearce@spearce.org>,
-	Imran M Yousuf <imran@smartitengineering.com>,
-	Imran M Yousuf <imyousuf@smartitengineering.com>,
-	Robin Rosenberg <robin.rosenberg@dewire.com>,
-	git@vger.kernel.org
-To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Sep 04 13:19:05 2008
+From: Matthieu Moy <Matthieu.Moy@imag.fr>
+Subject: [PATCH] Mention the fact that 'git annotate' is only for backward compatibility.
+Date: Thu,  4 Sep 2008 14:00:52 +0200
+Message-ID: <1220529652-24050-1-git-send-email-Matthieu.Moy@imag.fr>
+References: <bd6139dc0809040216v40914e82h6a4032941cf65996@mail.gmail.com>
+Cc: Matthieu Moy <Matthieu.Moy@imag.fr>
+To: gitster@pobox.com, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Sep 04 14:20:42 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KbCrf-0008AU-Ne
-	for gcvg-git-2@gmane.org; Thu, 04 Sep 2008 13:19:04 +0200
+	id 1KbDpI-0008A9-Cu
+	for gcvg-git-2@gmane.org; Thu, 04 Sep 2008 14:20:40 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753047AbYIDLR4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 4 Sep 2008 07:17:56 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752374AbYIDLR4
-	(ORCPT <rfc822;git-outgoing>); Thu, 4 Sep 2008 07:17:56 -0400
-Received: from mgw1.diku.dk ([130.225.96.91]:45040 "EHLO mgw1.diku.dk"
+	id S1752449AbYIDMTd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 4 Sep 2008 08:19:33 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752458AbYIDMTd
+	(ORCPT <rfc822;git-outgoing>); Thu, 4 Sep 2008 08:19:33 -0400
+Received: from harmonie.imag.fr ([147.171.130.40]:53445 "EHLO harmonie.imag.fr"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751472AbYIDLRz (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 4 Sep 2008 07:17:55 -0400
-Received: from localhost (localhost [127.0.0.1])
-	by mgw1.diku.dk (Postfix) with ESMTP id 8CFE952C3D8;
-	Thu,  4 Sep 2008 13:17:54 +0200 (CEST)
-X-Virus-Scanned: amavisd-new at diku.dk
-Received: from mgw1.diku.dk ([127.0.0.1])
-	by localhost (mgw1.diku.dk [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id ppAP7XlF6WKi; Thu,  4 Sep 2008 13:17:52 +0200 (CEST)
-Received: from nhugin.diku.dk (nhugin.diku.dk [130.225.96.140])
-	by mgw1.diku.dk (Postfix) with ESMTP id 5E49352C3A8;
-	Thu,  4 Sep 2008 13:17:52 +0200 (CEST)
-Received: from tyr.diku.dk (tyr.diku.dk [130.225.96.226])
-	by nhugin.diku.dk (Postfix) with ESMTP
-	id EF5776DF835; Thu,  4 Sep 2008 13:17:50 +0200 (CEST)
-Received: by tyr.diku.dk (Postfix, from userid 3873)
-	id 4455A1DE5F8; Thu,  4 Sep 2008 13:17:52 +0200 (CEST)
-Content-Disposition: inline
-In-Reply-To: <m3prnkp4qq.fsf@localhost.localdomain>
-User-Agent: Mutt/1.5.16 (2007-06-09)
+	id S1752276AbYIDMTc (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 4 Sep 2008 08:19:32 -0400
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by harmonie.imag.fr (8.13.8/8.13.8) with ESMTP id m84CFoPH000501;
+	Thu, 4 Sep 2008 14:16:03 +0200 (CEST)
+Received: from bauges.imag.fr ([129.88.43.5])
+	by mail-veri.imag.fr with esmtps (TLS-1.0:RSA_AES_256_CBC_SHA:32)
+	(Exim 4.50)
+	id 1KbDW9-0007zn-29; Thu, 04 Sep 2008 14:00:53 +0200
+Received: from moy by bauges.imag.fr with local (Exim 4.63)
+	(envelope-from <moy@imag.fr>)
+	id 1KbDW8-0006GI-VW; Thu, 04 Sep 2008 14:00:52 +0200
+X-Mailer: git-send-email 1.6.0.7.g161c
+In-Reply-To: <bd6139dc0809040216v40914e82h6a4032941cf65996@mail.gmail.com>
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-3.0 (harmonie.imag.fr [147.171.130.40]); Thu, 04 Sep 2008 14:16:03 +0200 (CEST)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM for more information
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: moy@imag.fr
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/94926>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/94927>
 
-Jakub Narebski <jnareb@gmail.com> wrote Thu, Sep 04, 2008:
-> Could you please add it to Git Wiki
->   http://git.or.cz/gitwiki/InterfacesFrontendsAndTools
-> when it is ready, at least for testing purposes?
 
-Of course. There is already a NetbeansPlugin page but it doesn't look
-like it was integrated into the tools list.
+Signed-off-by: Matthieu Moy <Matthieu.Moy@imag.fr>
+---
+ Documentation/git-annotate.txt |    3 +++
+ 1 files changed, 3 insertions(+), 0 deletions(-)
 
+diff --git a/Documentation/git-annotate.txt b/Documentation/git-annotate.txt
+index 8b6b56a..6e05825 100644
+--- a/Documentation/git-annotate.txt
++++ b/Documentation/git-annotate.txt
+@@ -14,6 +14,9 @@ DESCRIPTION
+ Annotates each line in the given file with information from the commit
+ which introduced the line. Optionally annotate from a given revision.
+ 
++This command exists for backward compatibility. For regular use, you
++should use linkgit:git-blame[1] instead.
++
+ OPTIONS
+ -------
+ include::blame-options.txt[]
 -- 
-Jonas Fonseca
+1.6.0.7.g161c
