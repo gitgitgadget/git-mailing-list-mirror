@@ -1,83 +1,78 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Peculiar behavior of git 1.5.6
-Date: Thu, 04 Sep 2008 01:35:10 -0700
-Message-ID: <7vljy85mwx.fsf@gitster.siamese.dyndns.org>
-References: <48BF759B.9090309@lwfinger.net> <48BF97B3.5060309@viscovery.net>
+Subject: Re: Are more and more patches getting lost lately?
+Date: Thu, 04 Sep 2008 01:45:30 -0700
+Message-ID: <7vhc8w5mfp.fsf@gitster.siamese.dyndns.org>
+References: <20080904083343.6117@nanako3.lavabit.com>
+ <7vd4jk8r78.fsf@gitster.siamese.dyndns.org>
+ <20080904172059.6117@nanako3.lavabit.com>
+ <7bfdc29a0809040130u21d43a22ncf2e481eefd9ff89@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Larry Finger <Larry.Finger@lwfinger.net>, git@vger.kernel.org
-To: Johannes Sixt <j.sixt@viscovery.net>
-X-From: git-owner@vger.kernel.org Thu Sep 04 10:36:30 2008
+Cc: "Nanako Shiraishi" <nanako3@lavabit.com>,
+	"Junio C Hamano" <gitster@pobox.com>, git@vger.kernel.org
+To: "Imran M Yousuf" <imyousuf@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Sep 04 10:46:47 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KbAKJ-0000Rx-AF
-	for gcvg-git-2@gmane.org; Thu, 04 Sep 2008 10:36:27 +0200
+	id 1KbAUI-0003Rv-Bb
+	for gcvg-git-2@gmane.org; Thu, 04 Sep 2008 10:46:46 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752970AbYIDIfU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 4 Sep 2008 04:35:20 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752387AbYIDIfT
-	(ORCPT <rfc822;git-outgoing>); Thu, 4 Sep 2008 04:35:19 -0400
-Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:65303 "EHLO
+	id S1752268AbYIDIpk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 4 Sep 2008 04:45:40 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752243AbYIDIpk
+	(ORCPT <rfc822;git-outgoing>); Thu, 4 Sep 2008 04:45:40 -0400
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:47558 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752336AbYIDIfS (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 4 Sep 2008 04:35:18 -0400
+	with ESMTP id S1751671AbYIDIpj (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 4 Sep 2008 04:45:39 -0400
 Received: from localhost.localdomain (localhost [127.0.0.1])
-	by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id DFD5072295;
-	Thu,  4 Sep 2008 04:35:16 -0400 (EDT)
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 3BDF45E505;
+	Thu,  4 Sep 2008 04:45:37 -0400 (EDT)
 Received: from pobox.com (ip68-225-240-211.oc.oc.cox.net [68.225.240.211])
  (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
- certificate requested) by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with
- ESMTPSA id C8B6E72292; Thu,  4 Sep 2008 04:35:12 -0400 (EDT)
-In-Reply-To: <48BF97B3.5060309@viscovery.net> (Johannes Sixt's message of
- "Thu, 04 Sep 2008 10:09:23 +0200")
+ certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
+ ESMTPSA id 6C49B5E504; Thu,  4 Sep 2008 04:45:32 -0400 (EDT)
+In-Reply-To: <7bfdc29a0809040130u21d43a22ncf2e481eefd9ff89@mail.gmail.com>
+ (Imran M. Yousuf's message of "Thu, 4 Sep 2008 14:30:38 +0600")
 User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: 66AB6492-7A5C-11DD-9C77-3113EBD4C077-77302942!a-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: D8699D64-7A5D-11DD-B000-9EE598D589B0-77302942!a-sasl-fastnet.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/94907>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/94908>
 
-Johannes Sixt <j.sixt@viscovery.net> writes:
+"Imran M Yousuf" <imyousuf@gmail.com> writes:
 
-> Larry Finger schrieb:
->> On one of my systems, I found strange behavior for git-1.5.6.GIT. On the
->> first pull of the linux-2.6 tree, I got a message that one file was not
->> uptodate. When I investigated any possible differences with git-diff,
->> there were none. A subsequent git-pull worked fine. I lost the console
->> output for linux-2.6, but the same thing happened for Linville's
->> wireless-testing, as shown below:
->> 
->> finger@sonylap:~/wireless-testing> git --version
->> git version 1.5.6.GIT
->> finger@sonylap:~/wireless-testing> git pull
->> error: Entry 'drivers/bluetooth/bt3c_cs.c' not uptodate. Cannot merge.
->> fatal: merging of trees 294e21019bac11cb782e8d1893d02ce98ed816a4 and
->> 810d24221c9c532475af90d1b7ba9ca381dc3696 failed
->> Merge with strategy recursive failed.
->> finger@sonylap:~/wireless-testing> git diff > tmp
->> finger@sonylap:~/wireless-testing> cat tmp
->> finger@sonylap:~/wireless-testing> git pull
->> Removed Documentation/usb/auerswald.txt
->> Auto-merged MAINTAINERS
->> ...
->> 
->> Is this a bug in git, an incompatibility between my version and that of
->> the server at kernel.org, or something else?
->
-> I guess you had touched the timestamp of drivers/bluetooth/bt3c_cs.c in
-> some way without modifying its contents, which made 'git pull' think it is
-> modified.
->
-> The 'git diff' that you did next corrected this behind your back, so that
-> the subsequent 'git pull' did not see any modification anymore. (BTW, if
-> you had used 'git status' instead of 'git diff' you would have observed
-> the same behavior.)
+> I actually liked the following 2 patch and since it was Junio I did
+> not think support was required :-D.
+> ...
+>> From: Junio C Hamano <gitster@pobox.com>
+>> Subject: [PATCH/RFC] feeding Maildir to git-am
+>> Date: Tue, 19 Aug 2008 22:25:57 -0700
+>> Message-ID: <7vbpzotfyy.fsf@gitster.siamese.dyndns.org>
+>>
+>> http://article.gmane.org/gmane.comp.version-control.git/92963
+>>
+>> From: Junio C Hamano <gitster@pobox.com>
+>> Subject: Re* [PATCH] git-apply - Add --include=PATH
+>> Date: Mon, 25 Aug 2008 01:05:31 -0700
+>> Message-ID: <7vhc99h644.fsf@gitster.siamese.dyndns.org>
+>>
+>> http://article.gmane.org/gmane.comp.version-control.git/93604
 
-That still does not explain the symptom --- shouldn't "git pull" or
-underlying "git merge"  have first refreshed the index?
+I think for most of these patches, and other patches from me of the same
+nature, I tried to make it clear that the patches were primarily to
+illustrate possibly better solutions, and I do not consider them finished
+solutions.
 
-1.5.6 is before the C rewrite of git-merge, so it is somewhat surprising
-that if there were such bugs, but 1.5.6.GIT does not tell us much...
+The quality of these patches from me do not meet my patch acceptance
+criteria.
+
+More importantly I wasn't the one with the itch.  Onus of testing them,
+polishing them as necessary and providing documentation into the final
+applicable patch lie on the original requestors' shoulders.
+
+Especially when I am busy.
