@@ -1,62 +1,78 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] Fix thinko in Release Notes
-Date: Thu, 04 Sep 2008 00:37:55 -0700
-Message-ID: <7vzlmo5pkc.fsf@gitster.siamese.dyndns.org>
-References: <e51f4f550809040030h25b7913dn85269d135d1a28e0@mail.gmail.com>
+From: Johannes Sixt <j.sixt@viscovery.net>
+Subject: Re: Peculiar behavior of git 1.5.6
+Date: Thu, 04 Sep 2008 10:09:23 +0200
+Message-ID: <48BF97B3.5060309@viscovery.net>
+References: <48BF759B.9090309@lwfinger.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, gitster@pobox.com
-To: "Kris Shannon" <kris@shannon.id.au>
-X-From: git-owner@vger.kernel.org Thu Sep 04 09:39:13 2008
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Larry Finger <Larry.Finger@lwfinger.net>
+X-From: git-owner@vger.kernel.org Thu Sep 04 10:10:59 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Kb9Qu-0000mn-F9
-	for gcvg-git-2@gmane.org; Thu, 04 Sep 2008 09:39:12 +0200
+	id 1Kb9vd-0000wd-0O
+	for gcvg-git-2@gmane.org; Thu, 04 Sep 2008 10:10:57 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752142AbYIDHiG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 4 Sep 2008 03:38:06 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751938AbYIDHiE
-	(ORCPT <rfc822;git-outgoing>); Thu, 4 Sep 2008 03:38:04 -0400
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:35032 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751962AbYIDHiE (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 4 Sep 2008 03:38:04 -0400
-Received: from localhost.localdomain (localhost [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 5412E5C25C;
-	Thu,  4 Sep 2008 03:38:01 -0400 (EDT)
-Received: from pobox.com (ip68-225-240-211.oc.oc.cox.net [68.225.240.211])
- (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
- certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
- ESMTPSA id 9C8415C25B; Thu,  4 Sep 2008 03:37:57 -0400 (EDT)
-In-Reply-To: <e51f4f550809040030h25b7913dn85269d135d1a28e0@mail.gmail.com>
- (Kris Shannon's message of "Thu, 4 Sep 2008 17:30:26 +1000")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: 66E835FA-7A54-11DD-BC13-9EE598D589B0-77302942!a-sasl-fastnet.pobox.com
+	id S1752374AbYIDIJq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 4 Sep 2008 04:09:46 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754039AbYIDIJp
+	(ORCPT <rfc822;git-outgoing>); Thu, 4 Sep 2008 04:09:45 -0400
+Received: from lilzmailso01.liwest.at ([212.33.55.23]:60044 "EHLO
+	lilzmailso01.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752374AbYIDIJo (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 4 Sep 2008 04:09:44 -0400
+Received: from cm56-163-160.liwest.at ([86.56.163.160] helo=linz.eudaptics.com)
+	by lilzmailso01.liwest.at with esmtpa (Exim 4.66)
+	(envelope-from <j.sixt@viscovery.net>)
+	id 1Kb9u8-0001in-E4; Thu, 04 Sep 2008 10:09:40 +0200
+Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.42])
+	by linz.eudaptics.com (Postfix) with ESMTP
+	id 0010A6D9; Thu,  4 Sep 2008 10:09:23 +0200 (CEST)
+User-Agent: Thunderbird 2.0.0.6 (Windows/20070728)
+In-Reply-To: <48BF759B.9090309@lwfinger.net>
+X-Spam-Score: 1.7 (+)
+X-Spam-Report: ALL_TRUSTED=-1.8, BAYES_99=3.5
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/94902>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/94903>
 
-"Kris Shannon" <kris@shannon.id.au> writes:
+Larry Finger schrieb:
+> On one of my systems, I found strange behavior for git-1.5.6.GIT. On the
+> first pull of the linux-2.6 tree, I got a message that one file was not
+> uptodate. When I investigated any possible differences with git-diff,
+> there were none. A subsequent git-pull worked fine. I lost the console
+> output for linux-2.6, but the same thing happened for Linville's
+> wireless-testing, as shown below:
+> 
+> finger@sonylap:~/wireless-testing> git --version
+> git version 1.5.6.GIT
+> finger@sonylap:~/wireless-testing> git pull
+> error: Entry 'drivers/bluetooth/bt3c_cs.c' not uptodate. Cannot merge.
+> fatal: merging of trees 294e21019bac11cb782e8d1893d02ce98ed816a4 and
+> 810d24221c9c532475af90d1b7ba9ca381dc3696 failed
+> Merge with strategy recursive failed.
+> finger@sonylap:~/wireless-testing> git diff > tmp
+> finger@sonylap:~/wireless-testing> cat tmp
+> finger@sonylap:~/wireless-testing> git pull
+> Removed Documentation/usb/auerswald.txt
+> Auto-merged MAINTAINERS
+> ...
+> 
+> Is this a bug in git, an incompatibility between my version and that of
+> the server at kernel.org, or something else?
 
-> Signed-off-by: Kris Shannon <kris@shannon.id.au>
-> ---
->  Documentation/RelNotes-1.6.0.2.txt |    2 +-
->  1 files changed, 1 insertions(+), 1 deletions(-)
->
-> diff --git a/Documentation/RelNotes-1.6.0.2.txt
-> b/Documentation/RelNotes-1.6.0.2.txt
-> index 686e607..a862305 100644
-> --- a/Documentation/RelNotes-1.6.0.2.txt
-> +++ b/Documentation/RelNotes-1.6.0.2.txt
-> @@ -30,7 +30,7 @@ Fixes since v1.6.0.1
->
->  * "git for-each-ref refs/heads/" did not work as expected.
->
-> -* "git log --grep=pattern -i" did not ignore case.
-> +* "git log -i --grep=pattern" did not ignore case.
+I guess you had touched the timestamp of drivers/bluetooth/bt3c_cs.c in
+some way without modifying its contents, which made 'git pull' think it is
+modified.
 
-Hmm, that's right.  We evaluate from left to right ;-)
+The 'git diff' that you did next corrected this behind your back, so that
+the subsequent 'git pull' did not see any modification anymore. (BTW, if
+you had used 'git status' instead of 'git diff' you would have observed
+the same behavior.)
+
+-- Hannes
