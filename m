@@ -1,96 +1,102 @@
-From: Nanako Shiraishi <nanako3@lavabit.com>
-Subject: Re: Re*: Peculiar behavior of git 1.5.6
-Date: Thu, 04 Sep 2008 19:20:08 +0900
-Message-ID: <20080904192008.6117@nanako3.lavabit.com>
-References: <7v3akg5jul.fsf_-_@gitster.siamese.dyndns.org>
- <48BF759B.9090309@lwfinger.net> <48BF97B3.5060309@viscovery.net>
- <7vljy85mwx.fsf@gitster.siamese.dyndns.org>
- <57518fd10809040211q12d1f0ddk16f2d4273ee7d488@mail.gmail.com>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: [Monotone-devel] Re: [RFC] mtn to git conversion script
+Date: Thu, 04 Sep 2008 03:31:52 -0700 (PDT)
+Message-ID: <m3vdxcp5gv.fsf@localhost.localdomain>
+References: <94a0d4530808240218j4bedbe3di99303da9addc93a4@mail.gmail.com>
+	<20080824131405.GJ23800@genesis.frugalware.org>
+	<94a0d4530808241133n5cc9f17arc79a1a5013187869@mail.gmail.com>
+	<20080824224658.GA16590@spearce.org>
+	<94a0d4530808241745r3f2bdb56q9cfa8bc61f79223e@mail.gmail.com>
+	<g95eoo$5ok$8@ger.gmane.org>
+	<94a0d4530808280203o6d97f69we4768115e12800c2@mail.gmail.com>
+	<94a0d4530809040243k49635fd3kfef1ee22a6865e98@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Cc: "Jonathan del Strother" <maillist@steelskies.com>,
-	"Johannes Sixt" <j.sixt@viscovery.net>,
-	"Larry Finger" <Larry.Finger@lwfinger.net>, git@vger.kernel.org
-To: "Junio C Hamano" <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Sep 04 12:21:59 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: "Anand Kumria" <wildfire@progsoc.org>, monotone-devel@nongnu.org,
+	git@vger.kernel.org
+To: "Felipe Contreras" <felipe.contreras@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Sep 04 12:35:01 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KbByO-0006Wb-40
-	for gcvg-git-2@gmane.org; Thu, 04 Sep 2008 12:21:56 +0200
+	id 1KbC9A-00022i-5M
+	for gcvg-git-2@gmane.org; Thu, 04 Sep 2008 12:33:04 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752970AbYIDKUu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 4 Sep 2008 06:20:50 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752772AbYIDKUu
-	(ORCPT <rfc822;git-outgoing>); Thu, 4 Sep 2008 06:20:50 -0400
-Received: from karen.lavabit.com ([72.249.41.33]:46063 "EHLO karen.lavabit.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752449AbYIDKUt (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 4 Sep 2008 06:20:49 -0400
-Received: from b.earth.lavabit.com (b.earth.lavabit.com [192.168.111.11])
-	by karen.lavabit.com (Postfix) with ESMTP id D8C8CC88B0;
-	Thu,  4 Sep 2008 05:20:39 -0500 (CDT)
-Received: from 7427.lavabit.com (212.62.97.20)
-	by lavabit.com with ESMTP id ME0A98TT02B6; Thu, 04 Sep 2008 05:20:48 -0500
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws; s=lavabit; d=lavabit.com;
-  b=YpYy/+RgDE6Y6lzMndW2jLcA9wy0wniqvIAVYk4l+95q1n7S2i+NaZG7WlL/KEMWMswzblBsfdRSWqij+Y8G1+ORin9HwANxJl4o57OKpneajLjQuIRV8SkgkRzXk3WeqaaFbYAmFZ63ssjaAjWbP4siWkkgtYpc/lc3bKc/Jro=;
-  h=From:To:Cc:Date:Subject:In-Reply-To:References:MIME-Version:Content-Type:Content-Transfer-Encoding:Message-Id:Quoting Junio C Hamano <gitster@pobox.com>;
-In-Reply-To: <7v3akg5jul.fsf_-_@gitster.siamese.dyndns.org>
+	id S1751013AbYIDKbz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 4 Sep 2008 06:31:55 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751834AbYIDKbz
+	(ORCPT <rfc822;git-outgoing>); Thu, 4 Sep 2008 06:31:55 -0400
+Received: from fg-out-1718.google.com ([72.14.220.153]:58368 "EHLO
+	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750844AbYIDKby (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 4 Sep 2008 06:31:54 -0400
+Received: by fg-out-1718.google.com with SMTP id 19so390026fgg.17
+        for <git@vger.kernel.org>; Thu, 04 Sep 2008 03:31:53 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:received:received
+         :x-authentication-warning:to:cc:subject:references:from:in-reply-to
+         :message-id:lines:user-agent:mime-version:content-type:date;
+        bh=ad+9Z4R+4xDgxKB0mt98OGDUjk6ADp2UDiwaGzgYRfE=;
+        b=u3uNNmrh5qcUoTUV/u63ijJu4t6H4BAebSRmNLFO3yQhc/WRY8/Gcggu+vTrSnnGqh
+         nGZW/heqyX0yZoCiOFdYl9cZt2w8T0xSG8RgGIP0XJbDye9QGQcyeIJpB62vvtuJIBeQ
+         GqSU/leYAmoGh+sExPyGeVsxTugaWGz7CtkXc=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=x-authentication-warning:to:cc:subject:references:from:in-reply-to
+         :message-id:lines:user-agent:mime-version:content-type:date;
+        b=bVqq6tjVh1vY1yuQefmuwRm4IgxNKVoI1szlOgWgQE/9Y3Qc0ke3UY7eXO+2ZvYyBR
+         SYsYE4ySzn+MblsHLucTVC+rV4bQOi3E8AX5nJp12sT5BGRDebtA1c88y5TumL4X3BU+
+         oCpVEsiEJPMkXzpZYggSgjFUHCIRs4L85Pbw0=
+Received: by 10.86.74.15 with SMTP id w15mr7552358fga.42.1220524313408;
+        Thu, 04 Sep 2008 03:31:53 -0700 (PDT)
+Received: from localhost.localdomain ( [83.8.201.254])
+        by mx.google.com with ESMTPS id 4sm11152809fge.8.2008.09.04.03.31.51
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Thu, 04 Sep 2008 03:31:52 -0700 (PDT)
+Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
+	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id m84AVnbW015685;
+	Thu, 4 Sep 2008 12:31:50 +0200
+Received: (from jnareb@localhost)
+	by localhost.localdomain (8.13.4/8.13.4/Submit) id m84AVj5r015682;
+	Thu, 4 Sep 2008 12:31:45 +0200
+X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
+In-Reply-To: <94a0d4530809040243k49635fd3kfef1ee22a6865e98@mail.gmail.com>
+User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/94920>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/94921>
 
-Quoting Junio C Hamano <gitster@pobox.com>:
+"Felipe Contreras" <felipe.contreras@gmail.com> writes:
 
-> In any case, I think this should fix the unrelated issue.
->
-> -- >8 --
-> stash: refresh the index before deciding if the work tree is dirty
->
-> Unlike the case where the user does have a real change in the work tree,
-> refusing to work because of unclean stat information is not very helpful.
->
-> Signed-off-by: Junio C Hamano <gitster@pobox.com>
+> Ok, now the basics seem to be working. So I'm uploading some code if
+> anyone wants to take a look.
+> 
+> The C code is generating a topologically sorted list of revisions, and
+> storing the relevant information (certs and parents) separately. This
+> code is very fast. It's using GLib and sqlite3, so probably the GLib
+> stuff should be converted to use libgit.
+> http://gist.github.com/8742
+> 
+> The Ruby code takes that input and generates an output suitable for
+> fast-import. It would be tedious to port the parsing stuff to C, but
+> straightforward.
+> http://gist.github.com/8740
+> 
+> A patch for fast-import is required, I already submitted it.
+> 
+> Comments?
 
-Acked-by: Nanako Shiraishi <nanako3@lavabit.com>
+If you feel like it is good enough, could you add information about
+this tool to Git Wiki:
+  http://git.or.cz/gitwiki/InterfacesFrontendsAndTools
+in the "Interaction with other Revision Control Systems" section?
 
-> ---
->  git-stash.sh |    3 +++
->  1 files changed, 3 insertions(+), 0 deletions(-)
->
-> diff --git c/git-stash.sh w/git-stash.sh
-> index e15c12a..d799c76 100755
-> --- c/git-stash.sh
-> +++ w/git-stash.sh
-> @@ -39,6 +39,7 @@ clear_stash () {
->  create_stash () {
->  	stash_msg="$1"
->  
-> +	git update-index -q --refresh
->  	if no_changes
->  	then
->  		exit 0
-> @@ -101,6 +102,7 @@ save_stash () {
->  
->  	stash_msg="$*"
->  
-> +	git update-index -q --refresh
->  	if no_changes
->  	then
->  		echo 'No local changes to save'
-> @@ -150,6 +152,7 @@ show_stash () {
->  }
->  
->  apply_stash () {
-> +	git update-index -q --refresh &&
->  	git diff-files --quiet --ignore-submodules ||
->  		die 'Cannot restore on top of a dirty state'
->  
-
+TIA
 -- 
-Nanako Shiraishi
-http://ivory.ap.teacup.com/nanako3/
+Jakub Narebski
+Poland
+ShadeHawk on #git
