@@ -1,62 +1,65 @@
-From: Larry Finger <Larry.Finger@lwfinger.net>
-Subject: Peculiar behavior of git 1.5.6
-Date: Thu, 04 Sep 2008 00:43:55 -0500
-Message-ID: <48BF759B.9090309@lwfinger.net>
+From: Giuseppe Bilotta <giuseppe.bilotta@gmail.com>
+Subject: git rev-list --author/--committer b0rked with -F/--fixed-strings
+Date: Thu, 04 Sep 2008 08:47:37 +0200
+Message-ID: <g9o0ac$qig$1@ger.gmane.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7Bit
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Sep 04 07:49:42 2008
+X-From: git-owner@vger.kernel.org Thu Sep 04 08:49:06 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Kb7iv-0005dj-5E
-	for gcvg-git-2@gmane.org; Thu, 04 Sep 2008 07:49:41 +0200
+	id 1Kb8eL-00031B-CH
+	for gcvg-git-2@gmane.org; Thu, 04 Sep 2008 08:49:01 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751584AbYIDFsf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 4 Sep 2008 01:48:35 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751436AbYIDFse
-	(ORCPT <rfc822;git-outgoing>); Thu, 4 Sep 2008 01:48:34 -0400
-Received: from mtiwmhc11.worldnet.att.net ([204.127.131.115]:57377 "EHLO
-	mtiwmhc11.worldnet.att.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751100AbYIDFse (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 4 Sep 2008 01:48:34 -0400
-X-Greylist: delayed 302 seconds by postgrey-1.27 at vger.kernel.org; Thu, 04 Sep 2008 01:48:34 EDT
-Received: from [192.168.1.111] (cpe-69-76-241-187.kc.res.rr.com[69.76.241.187])
-          by worldnet.att.net (mtiwmhc11) with ESMTP
-          id <20080904054331111004uka8e>; Thu, 4 Sep 2008 05:43:31 +0000
-User-Agent: Thunderbird 2.0.0.12 (X11/20071114)
+	id S1750899AbYIDGrz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 4 Sep 2008 02:47:55 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751050AbYIDGry
+	(ORCPT <rfc822;git-outgoing>); Thu, 4 Sep 2008 02:47:54 -0400
+Received: from main.gmane.org ([80.91.229.2]:57625 "EHLO ciao.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750870AbYIDGry (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 4 Sep 2008 02:47:54 -0400
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1Kb8dA-0006eK-HZ
+	for git@vger.kernel.org; Thu, 04 Sep 2008 06:47:48 +0000
+Received: from 78.15.13.249 ([78.15.13.249])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Thu, 04 Sep 2008 06:47:48 +0000
+Received: from giuseppe.bilotta by 78.15.13.249 with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Thu, 04 Sep 2008 06:47:48 +0000
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@ger.gmane.org
+X-Gmane-NNTP-Posting-Host: 78.15.13.249
+User-Agent: KNode/0.10.9
+X-Face: ::w9}R^l{WGM\{y)C0QF@4^U,',W3Mk^X0HP)=:bKM^Z]A9+6bY6fe3}O*]fH{l<j1/9RTp  `KR0idy]Im#9^%}P5Dga'>AViT_'?&>&ufo2_X5Vs3C^tPO@drZRuu&6iK}x}~9`F\-dNZ>(p|V7`4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/94898>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/94899>
 
-On one of my systems, I found strange behavior for git-1.5.6.GIT. On 
-the first pull of the linux-2.6 tree, I got a message that one file 
-was not uptodate. When I investigated any possible differences with 
-git-diff, there were none. A subsequent git-pull worked fine. I lost 
-the console output for linux-2.6, but the same thing happened for 
-Linville's wireless-testing, as shown below:
+Hello all,
 
-finger@sonylap:~/wireless-testing> git --version
-git version 1.5.6.GIT
-finger@sonylap:~/wireless-testing> git pull
-error: Entry 'drivers/bluetooth/bt3c_cs.c' not uptodate. Cannot merge.
-fatal: merging of trees 294e21019bac11cb782e8d1893d02ce98ed816a4 and 
-810d24221c9c532475af90d1b7ba9ca381dc3696 failed
-Merge with strategy recursive failed.
-finger@sonylap:~/wireless-testing> git diff > tmp
-finger@sonylap:~/wireless-testing> cat tmp
-finger@sonylap:~/wireless-testing> git pull
-Removed Documentation/usb/auerswald.txt
-Auto-merged MAINTAINERS
-...
+I was recently looking into the reason why the gitweb search box
+failed to provide results when using the author and committer
+search and NOT using regexp searches.
 
-Is this a bug in git, an incompatibility between my version and that 
-of the server at kernel.org, or something else?
+I managed to track the fault down to the inability for git
+rev-list to handle --author and --committer in conjunction with
+the --fixed-strings option.
 
-Thanks,
+It's not difficult to see that the reason for this is that the
+author and committer search patterns are *always* built as regular
+expressions. However, I couldn't see any obvious way to do things
+in a *different* way ...
 
-Larry
+So, is this a known bug (I would call it a bug, yes) in rev-list?
+Are there any ideas around on how to fix it?
+
+-- 
+Giuseppe "Oblomov" Bilotta
