@@ -1,103 +1,70 @@
-From: Kai Blin <kai@samba.org>
-Subject: Re: Directory renames without breaking git log.
-Date: Thu, 4 Sep 2008 22:52:34 +0200
-Message-ID: <200809042252.37329.kai@samba.org>
-References: <200809032338.35359.kai@samba.org> <200809042145.09573.kai@samba.org> <7vtzcv1yk8.fsf@gitster.siamese.dyndns.org>
-Mime-Version: 1.0
-Content-Type: multipart/signed;
-  boundary="nextPart2728509.jmnxuI4eQ1";
-  protocol="application/pgp-signature";
-  micalg=pgp-sha1
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Sep 04 22:53:50 2008
+From: Gustaf Hendeby <hendeby@isy.liu.se>
+Subject: [PATCH] Avoid warning when bisecting a merge
+Date: Thu,  4 Sep 2008 23:02:30 +0200
+Message-ID: <1220562150-19962-1-git-send-email-hendeby@isy.liu.se>
+Cc: chriscool@tuxfamily.org, gitster@pobox.com,
+	Gustaf Hendeby <hendeby@isy.liu.se>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Sep 04 23:03:58 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KbLpq-0004Xt-DN
-	for gcvg-git-2@gmane.org; Thu, 04 Sep 2008 22:53:46 +0200
+	id 1KbLzf-0007W6-Rt
+	for gcvg-git-2@gmane.org; Thu, 04 Sep 2008 23:03:56 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754353AbYIDUwj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 4 Sep 2008 16:52:39 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754157AbYIDUwi
-	(ORCPT <rfc822;git-outgoing>); Thu, 4 Sep 2008 16:52:38 -0400
-Received: from mail.samba.org ([66.70.73.150]:60390 "EHLO lists.samba.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752026AbYIDUwi (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 4 Sep 2008 16:52:38 -0400
-Received: from ip6-localhost (localhost [127.0.0.1])
-	by lists.samba.org (Postfix) with ESMTP id E169316394D;
-	Thu,  4 Sep 2008 20:52:33 +0000 (GMT)
-User-Agent: KMail/1.9.9
-In-Reply-To: <7vtzcv1yk8.fsf@gitster.siamese.dyndns.org>
+	id S1753228AbYIDVCd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 4 Sep 2008 17:02:33 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752856AbYIDVCd
+	(ORCPT <rfc822;git-outgoing>); Thu, 4 Sep 2008 17:02:33 -0400
+Received: from bogotron.isy.liu.se ([130.236.48.26]:54983 "EHLO
+	bogotron.isy.liu.se" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752649AbYIDVCc (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 4 Sep 2008 17:02:32 -0400
+Received: from spamotron.isy.liu.se (spamotron.isy.liu.se [130.236.48.19])
+	by bogotron.isy.liu.se (Postfix) with ESMTP id 0441F25A44;
+	Thu,  4 Sep 2008 23:02:31 +0200 (MEST)
+Received: from bogotron.isy.liu.se ([130.236.48.26])
+ by spamotron.isy.liu.se (spamotron.isy.liu.se [130.236.48.19]) (amavisd-new, port 10022)
+ with ESMTP id 21585-07; Fri,  4 Jul 2008 02:08:56 +0200 (MEST)
+Received: from pluring.isy.liu.se (pluring.isy.liu.se [130.236.56.134])
+	by bogotron.isy.liu.se (Postfix) with ESMTP id 5172625A49;
+	Thu,  4 Sep 2008 23:02:30 +0200 (MEST)
+Received: by pluring.isy.liu.se (Postfix, from userid 2087)
+	id 2EA732ED78; Thu,  4 Sep 2008 23:02:30 +0200 (CEST)
+X-Mailer: git-send-email 1.6.0.1.320.ga0f13.dirty
+X-Virus-Scanned: by amavisd-new at isy.liu.se
+X-Spam-Checker-Version: SpamAssassin 2.63-isy (2004-01-11) on spamotron.isy.liu.se
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/94957>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/94958>
 
---nextPart2728509.jmnxuI4eQ1
-Content-Type: text/plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: quoted-printable
-Content-Disposition: inline
+Trying to compare an empty string as a number results in an error,
+hence make sure checkout_done is set before using it.
 
-On Thursday 04 September 2008 21:49:27 Junio C Hamano wrote:
+Signed-off-by: Gustaf Hendeby <hendeby@isy.liu.se>
+---
 
-> > git blame still works, and git log --sparse path/to/file works, of
-> > course. --sparse makes giving a path a bit pointless, of course, but we
-> > probably can live with that for time being. I'm still open for
-> > suggestions, of course. :)
->
-> Give both directories, like:
->
-> 	"git log -- newdir olddir"
->
-> perhaps?
+This one should go on top of cc/bisect.
 
-Better, but really ugly, as we'll have to keep doing this for the rest of t=
-he=20
-project's life to get the full history. And while it's all nice and fun for=
-=20
-git log -- source3/configure.in source/configure.in, it's less fun for deep=
-er=20
-paths.
+/Gustaf
 
-We'll probably end up just doing a git-filter-branch renaming the samba3=20
-source dir source3 from the beginning and the samba4 source dir source4 fro=
-m=20
-the beginning, and then do the octopus merge. Without any paths changing,=20
-that should probably work. It's a bit annoying to break all external=20
-branches, but we only need to do this once, and people will only need to=20
-git-format-patch and git-am once, and we can provide a step-by-step guide f=
-or=20
-this as well.
+ git-bisect.sh |    1 +
+ 1 files changed, 1 insertions(+), 0 deletions(-)
 
-Thanks for the feedback, though. :)
-
-Cheers,
-Kai
-
-=2D-=20
-Kai Blin
-WorldForge developer  http://www.worldforge.org/
-Wine developer        http://wiki.winehq.org/KaiBlin
-Samba team member     http://www.samba.org/samba/team/
-=2D-
-Will code for cotton.
-
---nextPart2728509.jmnxuI4eQ1
-Content-Type: application/pgp-signature; name=signature.asc 
-Content-Description: This is a digitally signed message part.
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.6 (GNU/Linux)
-
-iD8DBQBIwEqVEKXX/bF2FpQRApbqAJ9VKpLZUZ1gLzj8y/zUbvxb+XVfBgCdFKaC
-M3ELpumFhHm8TOkCvzaLK5Q=
-=Deav
------END PGP SIGNATURE-----
-
---nextPart2728509.jmnxuI4eQ1--
+diff --git a/git-bisect.sh b/git-bisect.sh
+index 69a9a56..05d14b3 100755
+--- a/git-bisect.sh
++++ b/git-bisect.sh
+@@ -437,6 +437,7 @@ bisect_next() {
+ 		"refs/bisect/skip-*" | tr '\012' ' ') &&
+ 
+ 	# Maybe some merge bases must be tested first
++	checkout_done=0
+ 	check_good_are_ancestors_of_bad "$bad" "$good" "$skip" || exit
+ 	test "$checkout_done" -eq "1" && checkout_done='' && return
+ 
+-- 
+1.6.0.1.320.ga0f13.dirty
