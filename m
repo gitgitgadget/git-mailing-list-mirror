@@ -1,90 +1,127 @@
-From: Gustaf Hendeby <hendeby@isy.liu.se>
-Subject: Re: [PATCH] Fix AsciiDoc errors in merge documentation
-Date: Fri, 05 Sep 2008 00:26:14 +0200
-Message-ID: <48C06086.7080405@isy.liu.se>
-References: <48BFBBEF.6010403@isy.liu.se> <200809042348.48570.johan@herland.net>
+From: Stephan Beyer <s-beyer@gmx.net>
+Subject: Re: [GSoC] Git projects for Google Summer of Code 2008 final
+	evaluation
+Date: Fri, 5 Sep 2008 00:36:53 +0200
+Message-ID: <20080904223653.GA15170@leksak.fem-net>
+References: <200809042315.58898.jnareb@gmail.com>
 Mime-Version: 1.0
-Content-Type: multipart/mixed;
- boundary="------------000101080209030406080401"
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-To: Johan Herland <johan@herland.net>
-X-From: git-owner@vger.kernel.org Fri Sep 05 00:27:26 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Sam Vilain <sam@vilain.net>,
+	Joshua Roys <roysjosh@gmail.com>,
+	Sverre Rabbelier <alturin@gmail.com>,
+	Sverre Rabbelier <sverre@rabbelier.nl>,
+	David Symonds <dsymonds@gmail.com>,
+	Lea Wiemann <LeWiemann@gmail.com>,
+	John Hawley <warthog19@eaglescrag.net>,
+	Marek Zawirski <marek.zawirski@gmail.com>,
+	"Shawn O. Pearce" <spearce@spearce.org>,
+	Miklos Vajna <vmiklos@frugalware.org>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Christian Couder <chriscool@tuxfamily.org>,
+	Daniel Barkalow <barkalow@iabervon.org>,
+	Junio Hamano <gitster@pobox.com>
+To: Jakub Narebski <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Sep 05 00:38:22 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KbNIS-0006PZ-F0
-	for gcvg-git-2@gmane.org; Fri, 05 Sep 2008 00:27:24 +0200
+	id 1KbNSz-0000ct-Ok
+	for gcvg-git-2@gmane.org; Fri, 05 Sep 2008 00:38:18 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754675AbYIDW0T (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 4 Sep 2008 18:26:19 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754692AbYIDW0S
-	(ORCPT <rfc822;git-outgoing>); Thu, 4 Sep 2008 18:26:18 -0400
-Received: from bogotron.isy.liu.se ([130.236.48.26]:60760 "EHLO
-	bogotron.isy.liu.se" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754666AbYIDW0S (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 4 Sep 2008 18:26:18 -0400
-Received: from spamotron.isy.liu.se (spamotron.isy.liu.se [130.236.48.19])
-	by bogotron.isy.liu.se (Postfix) with ESMTP id D7FA825A51;
-	Fri,  5 Sep 2008 00:26:16 +0200 (MEST)
-Received: from bogotron.isy.liu.se ([130.236.48.26])
- by spamotron.isy.liu.se (spamotron.isy.liu.se [130.236.48.19]) (amavisd-new, port 10022)
- with ESMTP id 21868-10; Fri,  4 Jul 2008 02:08:56 +0200 (MEST)
-Received: from [192.168.13.34] (85.8.6.119.static.se.wasadata.net [85.8.6.119])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by bogotron.isy.liu.se (Postfix) with ESMTP id 14F2A25A50;
-	Fri,  5 Sep 2008 00:26:16 +0200 (MEST)
-User-Agent: Thunderbird 2.0.0.16 (Windows/20080708)
-In-Reply-To: <200809042348.48570.johan@herland.net>
-X-Virus-Scanned: by amavisd-new at isy.liu.se
-X-Spam-Checker-Version: SpamAssassin 2.63-isy (2004-01-11) on spamotron.isy.liu.se
+	id S1754795AbYIDWhB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 4 Sep 2008 18:37:01 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754775AbYIDWhB
+	(ORCPT <rfc822;git-outgoing>); Thu, 4 Sep 2008 18:37:01 -0400
+Received: from mail.gmx.net ([213.165.64.20]:36212 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1754722AbYIDWhA (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 4 Sep 2008 18:37:00 -0400
+Received: (qmail invoked by alias); 04 Sep 2008 22:36:56 -0000
+Received: from q137.fem.tu-ilmenau.de (EHLO leksak.fem-net) [141.24.46.137]
+  by mail.gmx.net (mp066) with SMTP; 05 Sep 2008 00:36:56 +0200
+X-Authenticated: #1499303
+X-Provags-ID: V01U2FsdGVkX1+snmUEhwysupQXvPAhh4ahDSsE6ulwOuOpbUa0TC
+	6lcT/EIattB7OA
+Received: from sbeyer by leksak.fem-net with local (Exim 4.69)
+	(envelope-from <s-beyer@gmx.net>)
+	id 1KbNRd-0004lB-8I; Fri, 05 Sep 2008 00:36:53 +0200
+Content-Disposition: inline
+In-Reply-To: <200809042315.58898.jnareb@gmail.com>
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.6
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/94967>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/94968>
 
-This is a multi-part message in MIME format.
---------------000101080209030406080401
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
+Hi,
 
-Johan Herland wrote:
-> On Thursday 04 September 2008, Gustaf Hendeby wrote:
->> Trying to compile the documentation from next has failed for me for a
->> while and now I got to the point where I tracked down the offending
->> commit: 70a3f89733a (git-merge documentation: describe how conflict is
->> presented).
+my reply belongs to:
+> 6. git-sequencer
 > 
-> This fixes the problem for me.
+> Student: Stephan Beyer
+> Mentor: Christian Couder, Daniel Barkalow
 
-Nice, solves my problems too. Thanks!
+Jakub Narebski wrote:
+[...]
+> So students and mentors, please write what do you think current status 
+> of project is: is it done, is it ready, is it perhaps already merged 
+> in, or can be merged in at any time.
 
-Tested-by: Gustaf Hendeby <hendeby@isy.liu.se>
+It is done, but not ready.
 
-/Gustaf
+This means, we, my mentors and I, are currently still reviewing the code.
+But I am pinched for time until the end of September due to an important
+exam. My mentors also have not much time and so everything is a little
+slowed down.
+When they ACK, it will be sent to the list.
 
---------------000101080209030406080401
-Content-Type: text/x-vcard; charset=utf-8;
- name="hendeby.vcf"
-Content-Transfer-Encoding: 7bit
-Content-Disposition: attachment;
- filename="hendeby.vcf"
+> Please write also what wasn't done, or what should be done different
+> way (hindsight and all that).
 
-begin:vcard
-fn:Gustaf Hendeby
-n:Hendeby;Gustaf
-org;quoted-printable:Link=C3=B6pings universitet;Department of Electrical Enginering
-adr;quoted-printable:;;;Link=C3=B6ping;;SE-581 83;Sweden
-email;internet:hendeby@isy.liu.se
-title:Research Associate
-tel;work:+46 14 28 22 26
-tel;cell:+46 730 64 64 89
-x-mozilla-html:FALSE
-url:http://www.control.isy.liu.se/~hendeby
-version:2.1
-end:vcard
+During the GSoC application phase I have done a breakdown and I declared
+two items as "bonus" if I am really quick with the rest. But I wasn't
+that quick, so none of the bonus items have even begun.
 
+Those were:
+ 6. [bonus] rewrite the users in C
+ 7. [bonus] discuss (with git development team and/or mentor)
+    sequencer features needed for gitk and implement them
 
---------------000101080209030406080401--
+Now I think (7) is even more needed/interesting, e.g. to be able to do
+interactive rebasing with gitk.
+
+And (6) shouldn't be that hard, but it will be even more interesting when
+sequencer is libified. I have some ideas for that, but I think, this is
+not so important in near time. Perhaps, there are other parts that need
+some libification first. :)
+
+> Students, could you please tell us if you plan to work on git further, 
+
+Yes!
+
+But due to my current lack of time I have ignored some topics on the
+list that I am interested in. :-(
+
+> and in what range (how much time can you get to work on git).
+
+This is fluctating.
+
+> What do you think about git development community?
+
+Strange people. Lunatics. Geeks.
+
+:-)
+
+> What have you learned from participating in GSoC?
+
+In the beginning: portable shell is a mess. ;)
+Well, I guess I have learned a lot more...
+
+Regards,
+ Stephan
+
+-- 
+Stephan Beyer <s-beyer@gmx.net>, PGP 0x6EDDD207FCC5040F
