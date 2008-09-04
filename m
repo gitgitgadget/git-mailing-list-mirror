@@ -1,350 +1,125 @@
 From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: [JGIT PATCH 7/7] Refactor bundle transport to permit streaming from application
-Date: Thu,  4 Sep 2008 16:42:19 -0700
-Message-ID: <1220571739-4219-8-git-send-email-spearce@spearce.org>
+Subject: [JGIT PATCH 5/7] Include URIish in bundle transport within any TransportExceptions
+Date: Thu,  4 Sep 2008 16:42:17 -0700
+Message-ID: <1220571739-4219-6-git-send-email-spearce@spearce.org>
 References: <1220571739-4219-1-git-send-email-spearce@spearce.org>
  <1220571739-4219-2-git-send-email-spearce@spearce.org>
  <1220571739-4219-3-git-send-email-spearce@spearce.org>
  <1220571739-4219-4-git-send-email-spearce@spearce.org>
  <1220571739-4219-5-git-send-email-spearce@spearce.org>
- <1220571739-4219-6-git-send-email-spearce@spearce.org>
- <1220571739-4219-7-git-send-email-spearce@spearce.org>
 Cc: git@vger.kernel.org
 To: Robin Rosenberg <robin.rosenberg@dewire.com>
-X-From: git-owner@vger.kernel.org Fri Sep 05 01:44:25 2008
+X-From: git-owner@vger.kernel.org Fri Sep 05 01:44:29 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KbOUt-0000st-3S
-	for gcvg-git-2@gmane.org; Fri, 05 Sep 2008 01:44:19 +0200
+	id 1KbOUu-0000st-4t
+	for gcvg-git-2@gmane.org; Fri, 05 Sep 2008 01:44:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752121AbYIDXma (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 4 Sep 2008 19:42:30 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751932AbYIDXm1
-	(ORCPT <rfc822;git-outgoing>); Thu, 4 Sep 2008 19:42:27 -0400
-Received: from george.spearce.org ([209.20.77.23]:33780 "EHLO
+	id S1752160AbYIDXmc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 4 Sep 2008 19:42:32 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752093AbYIDXmb
+	(ORCPT <rfc822;git-outgoing>); Thu, 4 Sep 2008 19:42:31 -0400
+Received: from george.spearce.org ([209.20.77.23]:33775 "EHLO
 	george.spearce.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751959AbYIDXmY (ORCPT <rfc822;git@vger.kernel.org>);
+	with ESMTP id S1751894AbYIDXmY (ORCPT <rfc822;git@vger.kernel.org>);
 	Thu, 4 Sep 2008 19:42:24 -0400
 Received: by george.spearce.org (Postfix, from userid 1000)
-	id E6CBD3835F; Thu,  4 Sep 2008 23:42:23 +0000 (UTC)
+	id A00EC383A6; Thu,  4 Sep 2008 23:42:22 +0000 (UTC)
 X-Spam-Checker-Version: SpamAssassin 3.2.4 (2008-01-01) on george.spearce.org
 X-Spam-Level: 
 X-Spam-Status: No, score=-4.4 required=4.0 tests=ALL_TRUSTED,BAYES_00
 	autolearn=ham version=3.2.4
 Received: from localhost.localdomain (localhost [127.0.0.1])
-	by george.spearce.org (Postfix) with ESMTP id 2192338377;
-	Thu,  4 Sep 2008 23:42:22 +0000 (UTC)
+	by george.spearce.org (Postfix) with ESMTP id 884EA3835F;
+	Thu,  4 Sep 2008 23:42:21 +0000 (UTC)
 X-Mailer: git-send-email 1.6.0.1.319.g9f32b
-In-Reply-To: <1220571739-4219-7-git-send-email-spearce@spearce.org>
+In-Reply-To: <1220571739-4219-5-git-send-email-spearce@spearce.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/94979>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/94980>
 
-The new TransportBundleStream is public and can be created by an
-application directly from any InputStream.  This permits the app
-to obtain the bundle data on its own via any means and feed it
-into the bundle transport.
+This way the bundle path (as entered by the user) is reported as
+part of the error.
 
 Signed-off-by: Shawn O. Pearce <spearce@spearce.org>
 ---
- .../src/org/spearce/jgit/transport/Transport.java  |    4 +-
- .../spearce/jgit/transport/TransportBundle.java    |   36 +-------
- .../jgit/transport/TransportBundleFile.java        |   82 +++++++++++++++
- .../jgit/transport/TransportBundleStream.java      |  105 ++++++++++++++++++++
- 4 files changed, 191 insertions(+), 36 deletions(-)
- create mode 100644 org.spearce.jgit/src/org/spearce/jgit/transport/TransportBundleFile.java
- create mode 100644 org.spearce.jgit/src/org/spearce/jgit/transport/TransportBundleStream.java
+ .../spearce/jgit/transport/TransportBundle.java    |   21 ++++++++-----------
+ 1 files changed, 9 insertions(+), 12 deletions(-)
 
-diff --git a/org.spearce.jgit/src/org/spearce/jgit/transport/Transport.java b/org.spearce.jgit/src/org/spearce/jgit/transport/Transport.java
-index 65f2c6b..7284b28 100644
---- a/org.spearce.jgit/src/org/spearce/jgit/transport/Transport.java
-+++ b/org.spearce.jgit/src/org/spearce/jgit/transport/Transport.java
-@@ -204,8 +204,8 @@ else if (TransportGitAnon.canHandle(remote))
- 		else if (TransportAmazonS3.canHandle(remote))
- 			return new TransportAmazonS3(local, remote);
- 
--		else if (TransportBundle.canHandle(remote))
--			return new TransportBundle(local, remote);
-+		else if (TransportBundleFile.canHandle(remote))
-+			return new TransportBundleFile(local, remote);
- 
- 		else if (TransportLocal.canHandle(remote))
- 			return new TransportLocal(local, remote);
 diff --git a/org.spearce.jgit/src/org/spearce/jgit/transport/TransportBundle.java b/org.spearce.jgit/src/org/spearce/jgit/transport/TransportBundle.java
-index 765fc0f..fed34e8 100644
+index e502619..de62fb8 100644
 --- a/org.spearce.jgit/src/org/spearce/jgit/transport/TransportBundle.java
 +++ b/org.spearce.jgit/src/org/spearce/jgit/transport/TransportBundle.java
-@@ -40,9 +40,6 @@
- package org.spearce.jgit.transport;
+@@ -128,7 +128,7 @@ BundleFetchConnection() throws TransportException {
+ 				in = new FileInputStream(bundle);
+ 				bin = new RewindBufferedInputStream(in);
+ 			} catch (FileNotFoundException err) {
+-				throw new TransportException(bundle.getPath() + ": not found");
++				throw new TransportException(uri, "not found");
+ 			}
  
- import java.io.BufferedInputStream;
--import java.io.File;
--import java.io.FileInputStream;
--import java.io.FileNotFoundException;
- import java.io.IOException;
- import java.io.InputStream;
- import java.util.ArrayList;
-@@ -52,8 +49,8 @@
- import java.util.List;
- import java.util.Set;
+ 			try {
+@@ -137,8 +137,7 @@ BundleFetchConnection() throws TransportException {
+ 					readBundleV2();
+ 					break;
+ 				default:
+-					throw new TransportException(bundle.getPath()
+-							+ ": not a bundle");
++					throw new TransportException(uri, "not a bundle");
+ 				}
  
--import org.spearce.jgit.errors.MissingObjectException;
- import org.spearce.jgit.errors.MissingBundlePrerequisiteException;
-+import org.spearce.jgit.errors.MissingObjectException;
- import org.spearce.jgit.errors.NotSupportedException;
- import org.spearce.jgit.errors.PackProtocolException;
- import org.spearce.jgit.errors.TransportException;
-@@ -66,7 +63,6 @@
- import org.spearce.jgit.revwalk.RevFlag;
- import org.spearce.jgit.revwalk.RevObject;
- import org.spearce.jgit.revwalk.RevWalk;
--import org.spearce.jgit.util.FS;
- import org.spearce.jgit.util.RawParseUtils;
+ 				in.getChannel().position(
+@@ -149,12 +148,10 @@ BundleFetchConnection() throws TransportException {
+ 				throw err;
+ 			} catch (IOException err) {
+ 				close();
+-				throw new TransportException(bundle.getPath() + ": "
+-						+ err.getMessage(), err);
++				throw new TransportException(uri, err.getMessage(), err);
+ 			} catch (RuntimeException err) {
+ 				close();
+-				throw new TransportException(bundle.getPath() + ": "
+-						+ err.getMessage(), err);
++				throw new TransportException(uri, err.getMessage(), err);
+ 			}
+ 		}
  
- /**
-@@ -76,39 +72,11 @@
-  * communicate with to decide what the peer already knows. So push is not
-  * supported by the bundle transport.
-  */
--class TransportBundle extends PackTransport {
-+abstract class TransportBundle extends PackTransport {
- 	static final String V2_BUNDLE_SIGNATURE = "# v2 git bundle";
+@@ -162,7 +159,7 @@ private int readSignature() throws IOException {
+ 			final String rev = readLine(new byte[1024]);
+ 			if (V2_BUNDLE_SIGNATURE.equals(rev))
+ 				return 2;
+-			throw new TransportException(bundle.getPath() + ": not a bundle");
++			throw new TransportException(uri, "not a bundle");
+ 		}
  
--	static boolean canHandle(final URIish uri) {
--		if (uri.getHost() != null || uri.getPort() > 0 || uri.getUser() != null
--				|| uri.getPass() != null || uri.getPath() == null)
--			return false;
--
--		if ("file".equals(uri.getScheme()) || uri.getScheme() == null) {
--			final File f = FS.resolve(new File("."), uri.getPath());
--			return f.isFile() || f.getName().endsWith(".bundle");
--		}
--
--		return false;
--	}
--
--	private final File bundle;
--
- 	TransportBundle(final Repository local, final URIish uri) {
- 		super(local, uri);
--		bundle = FS.resolve(new File("."), uri.getPath()).getAbsoluteFile();
--	}
--
--	@Override
--	public FetchConnection openFetch() throws NotSupportedException,
--			TransportException {
--		final InputStream src;
--		try {
--			src = new FileInputStream(bundle);
--		} catch (FileNotFoundException err) {
--			throw new TransportException(uri, "not found");
--		}
--		return new BundleFetchConnection(src);
- 	}
+ 		private void readBundleV2() throws IOException {
+@@ -189,8 +186,8 @@ private void readBundleV2() throws IOException {
+ 		}
  
- 	@Override
-diff --git a/org.spearce.jgit/src/org/spearce/jgit/transport/TransportBundleFile.java b/org.spearce.jgit/src/org/spearce/jgit/transport/TransportBundleFile.java
-new file mode 100644
-index 0000000..c9ff1b2
---- /dev/null
-+++ b/org.spearce.jgit/src/org/spearce/jgit/transport/TransportBundleFile.java
-@@ -0,0 +1,82 @@
-+/*
-+ * Copyright (C) 2008, Shawn O. Pearce <spearce@spearce.org>
-+ *
-+ * All rights reserved.
-+ *
-+ * Redistribution and use in source and binary forms, with or
-+ * without modification, are permitted provided that the following
-+ * conditions are met:
-+ *
-+ * - Redistributions of source code must retain the above copyright
-+ *   notice, this list of conditions and the following disclaimer.
-+ *
-+ * - Redistributions in binary form must reproduce the above
-+ *   copyright notice, this list of conditions and the following
-+ *   disclaimer in the documentation and/or other materials provided
-+ *   with the distribution.
-+ *
-+ * - Neither the name of the Git Development Community nor the
-+ *   names of its contributors may be used to endorse or promote
-+ *   products derived from this software without specific prior
-+ *   written permission.
-+ *
-+ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND
-+ * CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES,
-+ * INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
-+ * OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
-+ * ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR
-+ * CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
-+ * SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT
-+ * NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
-+ * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
-+ * CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT,
-+ * STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
-+ * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
-+ * ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-+ */
-+
-+package org.spearce.jgit.transport;
-+
-+import java.io.File;
-+import java.io.FileInputStream;
-+import java.io.FileNotFoundException;
-+import java.io.InputStream;
-+
-+import org.spearce.jgit.errors.NotSupportedException;
-+import org.spearce.jgit.errors.TransportException;
-+import org.spearce.jgit.lib.Repository;
-+import org.spearce.jgit.util.FS;
-+
-+class TransportBundleFile extends TransportBundle {
-+	static boolean canHandle(final URIish uri) {
-+		if (uri.getHost() != null || uri.getPort() > 0 || uri.getUser() != null
-+				|| uri.getPass() != null || uri.getPath() == null)
-+			return false;
-+
-+		if ("file".equals(uri.getScheme()) || uri.getScheme() == null) {
-+			final File f = FS.resolve(new File("."), uri.getPath());
-+			return f.isFile() || f.getName().endsWith(".bundle");
-+		}
-+
-+		return false;
-+	}
-+
-+	private final File bundle;
-+
-+	TransportBundleFile(final Repository local, final URIish uri) {
-+		super(local, uri);
-+		bundle = FS.resolve(new File("."), uri.getPath()).getAbsoluteFile();
-+	}
-+
-+	@Override
-+	public FetchConnection openFetch() throws NotSupportedException,
-+			TransportException {
-+		final InputStream src;
-+		try {
-+			src = new FileInputStream(bundle);
-+		} catch (FileNotFoundException err) {
-+			throw new TransportException(uri, "not found");
-+		}
-+		return new BundleFetchConnection(src);
-+	}
-+}
-diff --git a/org.spearce.jgit/src/org/spearce/jgit/transport/TransportBundleStream.java b/org.spearce.jgit/src/org/spearce/jgit/transport/TransportBundleStream.java
-new file mode 100644
-index 0000000..0272261
---- /dev/null
-+++ b/org.spearce.jgit/src/org/spearce/jgit/transport/TransportBundleStream.java
-@@ -0,0 +1,105 @@
-+/*
-+ * Copyright (C) 2008, Google Inc.
-+ *
-+ * All rights reserved.
-+ *
-+ * Redistribution and use in source and binary forms, with or
-+ * without modification, are permitted provided that the following
-+ * conditions are met:
-+ *
-+ * - Redistributions of source code must retain the above copyright
-+ *   notice, this list of conditions and the following disclaimer.
-+ *
-+ * - Redistributions in binary form must reproduce the above
-+ *   copyright notice, this list of conditions and the following
-+ *   disclaimer in the documentation and/or other materials provided
-+ *   with the distribution.
-+ *
-+ * - Neither the name of the Git Development Community nor the
-+ *   names of its contributors may be used to endorse or promote
-+ *   products derived from this software without specific prior
-+ *   written permission.
-+ *
-+ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND
-+ * CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES,
-+ * INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
-+ * OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
-+ * ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR
-+ * CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
-+ * SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT
-+ * NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
-+ * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
-+ * CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT,
-+ * STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
-+ * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
-+ * ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-+ */
-+
-+package org.spearce.jgit.transport;
-+
-+import java.io.IOException;
-+import java.io.InputStream;
-+
-+import org.spearce.jgit.errors.TransportException;
-+import org.spearce.jgit.lib.Repository;
-+
-+/**
-+ * Single shot fetch from a streamed Git bundle.
-+ * <p>
-+ * The bundle is read from an unbuffered input stream, which limits the
-+ * transport to opening at most one FetchConnection before needing to recreate
-+ * the transport instance.
-+ */
-+public class TransportBundleStream extends TransportBundle {
-+	private InputStream src;
-+
-+	/**
-+	 * Create a new transport to fetch objects from a streamed bundle.
-+	 * <p>
-+	 * The stream can be unbuffered (buffering is automatically provided
-+	 * internally to smooth out short reads) and unpositionable (the stream is
-+	 * read from only once, sequentially).
-+	 * <p>
-+	 * When the FetchConnection or the this instance is closed the supplied
-+	 * input stream is also automatically closed. This frees callers from
-+	 * needing to keep track of the supplied stream.
-+	 * 
-+	 * @param db
-+	 *            repository the fetched objects will be loaded into.
-+	 * @param uri
-+	 *            symbolic name of the source of the stream. The URI can
-+	 *            reference a non-existent resource. It is used only for
-+	 *            exception reporting.
-+	 * @param in
-+	 *            the stream to read the bundle from.
-+	 */
-+	public TransportBundleStream(final Repository db, final URIish uri,
-+			final InputStream in) {
-+		super(db, uri);
-+		src = in;
-+	}
-+
-+	@Override
-+	public FetchConnection openFetch() throws TransportException {
-+		if (src == null)
-+			throw new TransportException(uri, "Only one fetch supported");
-+		try {
-+			return new BundleFetchConnection(src);
-+		} finally {
-+			src = null;
-+		}
-+	}
-+
-+	@Override
-+	public void close() {
-+		if (src != null) {
-+			try {
-+				src.close();
-+			} catch (IOException err) {
-+				// Ignore a close error.
-+			} finally {
-+				src = null;
-+			}
-+		}
-+	}
-+}
+ 		private PackProtocolException duplicateAdvertisement(final String name) {
+-			return new PackProtocolException("duplicate advertisements of "
+-					+ name);
++			return new PackProtocolException(uri,
++					"duplicate advertisements of " + name);
+ 		}
+ 
+ 		private String readLine(final byte[] hdrbuf) throws IOException {
+@@ -217,10 +214,10 @@ protected void doFetch(final ProgressMonitor monitor,
+ 				ip.renameAndOpenPack();
+ 			} catch (IOException err) {
+ 				close();
+-				throw new TransportException(err.getMessage(), err);
++				throw new TransportException(uri, err.getMessage(), err);
+ 			} catch (RuntimeException err) {
+ 				close();
+-				throw new TransportException(err.getMessage(), err);
++				throw new TransportException(uri, err.getMessage(), err);
+ 			}
+ 		}
+ 
 -- 
 1.6.0.1.319.g9f32b
