@@ -1,76 +1,119 @@
-From: Mike Hommey <mh@glandium.org>
-Subject: Re: Medium term dreams
-Date: Thu, 4 Sep 2008 07:33:09 +0200
-Organization: glandium.org
-Message-ID: <20080904053309.GA16412@glandium.org>
-References: <7vsksjsbcc.fsf@gitster.siamese.dyndns.org>
+From: Boyd Lynn Gerber <gerberb@zenez.com>
+Subject: Re: latest clone/pull of git.git problems with setlinebuf.
+Date: Wed, 3 Sep 2008 23:39:55 -0600
+Message-ID: <alpine.LNX.1.10.0809032337480.26028@suse104.zenez.com>
+References: <alpine.LNX.1.10.0809031858570.12887@suse104.zenez.com> <7vljy88u0m.fsf@gitster.siamese.dyndns.org> <alpine.LNX.1.10.0809032157200.21167@suse104.zenez.com> <7vhc8w8rme.fsf@gitster.siamese.dyndns.org>
+ <alpine.LNX.1.10.0809032325080.25336@suse104.zenez.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
+Content-Type: TEXT/PLAIN; charset=US-ASCII; format=flowed
+Cc: Git List <git@vger.kernel.org>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Sep 04 07:35:08 2008
+X-From: git-owner@vger.kernel.org Thu Sep 04 07:41:04 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Kb7UQ-0002Fi-PT
-	for gcvg-git-2@gmane.org; Thu, 04 Sep 2008 07:34:43 +0200
+	id 1Kb7aZ-00048r-6p
+	for gcvg-git-2@gmane.org; Thu, 04 Sep 2008 07:41:03 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756183AbYIDFdg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 4 Sep 2008 01:33:36 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756135AbYIDFdg
-	(ORCPT <rfc822;git-outgoing>); Thu, 4 Sep 2008 01:33:36 -0400
-Received: from vuizook.err.no ([194.24.252.247]:45518 "EHLO vuizook.err.no"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755059AbYIDFdf (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 4 Sep 2008 01:33:35 -0400
-Received: from cha92-13-88-165-248-19.fbx.proxad.net ([88.165.248.19] helo=jigen)
-	by vuizook.err.no with esmtps (TLS-1.0:RSA_AES_256_CBC_SHA1:32)
-	(Exim 4.67)
-	(envelope-from <mh@glandium.org>)
-	id 1Kb7T9-0004ml-Vf; Thu, 04 Sep 2008 07:33:30 +0200
-Received: from mh by jigen with local (Exim 4.69)
-	(envelope-from <mh@jigen>)
-	id 1Kb7Sv-0004Z7-LY; Thu, 04 Sep 2008 07:33:09 +0200
-Content-Disposition: inline
-In-Reply-To: <7vsksjsbcc.fsf@gitster.siamese.dyndns.org>
-X-GPG-Fingerprint: A479 A824 265C B2A5 FC54  8D1E DE4B DA2C 54FD 2A58
-User-Agent: Mutt/1.5.18 (2008-05-17)
-X-Spam-Status: (score 0.1): No, score=0.1 required=5.0 tests=RDNS_DYNAMIC autolearn=disabled version=3.2.3
+	id S1751775AbYIDFj5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 4 Sep 2008 01:39:57 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751864AbYIDFj5
+	(ORCPT <rfc822;git-outgoing>); Thu, 4 Sep 2008 01:39:57 -0400
+Received: from suse104.zenez.com ([198.60.105.164]:26315 "EHLO
+	suse104.zenez.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751635AbYIDFj4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 4 Sep 2008 01:39:56 -0400
+Received: by suse104.zenez.com (Postfix, from userid 1000)
+	id 7C00FA7C93D; Wed,  3 Sep 2008 23:39:55 -0600 (MDT)
+Received: from localhost (localhost [127.0.0.1])
+	by suse104.zenez.com (Postfix) with ESMTP id 6792EA7C939;
+	Wed,  3 Sep 2008 23:39:55 -0600 (MDT)
+In-Reply-To: <alpine.LNX.1.10.0809032325080.25336@suse104.zenez.com>
+User-Agent: Alpine 1.10 (LNX 962 2008-03-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/94896>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/94897>
 
-On Mon, Sep 01, 2008 at 04:19:47PM -0700, Junio C Hamano wrote:
-> Perhaps because it is also Linus's brainchild, git development has not
-> generally advanced by intelligent design but by organic evolution.  We
-> have worked without setting any grand, long term visions, but primarily
-> by gathering the fruits of individual developers' work to scratch their
-> own itches.  While I do not see that as a problem at all, it sometimes
-> may help to write down some medium to long term wishes to review what we
-> haven't done (and we should) in a perspective.
-> 
-> This is such a wishlist, not a grand intelligent design in any way.
-> 
-> 1. Pathspecs
-> 2. Submodules
+On Wed, 3 Sep 2008, Boyd Lynn Gerber wrote:
+> On Wed, 3 Sep 2008, Junio C Hamano wrote:
+>> Boyd Lynn Gerber <gerberb@zenez.com> writes:
+>>> On Wed, 3 Sep 2008, Junio C Hamano wrote:
+>>>> Ah, ok.  I should have noticed that setlinebuf() was outside POSIX (it is
+>>>> not usable on older BSDs either).
+>>>> 
+>>>> Let's see if we can replace it with setvbuf() which is POSIX.
+>>> 
+>>> This fixes the problem. on both OS's.
+>> 
+>> By the way, have you actually exercised the codepath, or does your above
+>> "fixes" mean "compiles"?
+>> 
+>> I knew it would compile on a system with POSIX setvbuf(), but I was unsure 
+>> about the size argument.  I know for glibc giving <NULL, 0> would be 
+>> equivalent to setlinebuf(), but POSIX itself leaves what exactly happens to 
+>> the size argument quite vague, saying only "otherwise [when buf is a null 
+>> pointer], size may determine the size of a buffer allocated by the 
+>> setvbuf() function."  Does size=0 mean it allocates very little, and while 
+>> it tries to line buffer the output, because the buffer is so small that it 
+>> fails to buffer an entire line causing early flushing of the stream?
+>
+> I only compiled it.  I am debuging some test errors.  I did a gmake test
+>
+> This is the test that fails.  Everything before it passes.
 
-I'd add these two:
+...
+*   still broken 4: pretend we have a known breakage
+*   FIXED 5: pretend we have fixed a known breakage
+...
 
-- Handle cvs/svn/whatever remotes as standard remotes.
+> *   ok 41: very long name in the index handled sanely
+> * fixed 1 known breakage(s)
+> * still have 1 known breakage(s)
+> * passed all remaining 40 test(s)
+> *** t0001-init.sh ***
+> ...
+> *   ok 9: GIT_DIR & GIT_WORK_TREE (2)
+> * FAIL 10: reinit
+>
+>
+>                (
+>                        unset GIT_CONFIG GIT_WORK_TREE GIT_CONFIG
+>
+>                        mkdir again &&
+>                        cd again &&
+>                        git init >out1 2>err1 &&
+>                        git init >out2 2>err2
+>                ) &&
+>                grep "Initialized empty" again/out1 &&
+>                grep "Reinitialized existing" again/out2 &&
+>                >again/empty &&
+>                test_cmp again/empty again/err1 &&
+>                test_cmp again/empty again/err2
+>
+> * FAIL 11: init with --template
+>
+>                mkdir template-source &&
+>                echo content >template-source/file &&
+>                (
+>                        mkdir template-custom &&
+>                        cd template-custom &&
+>                        git init --template=../template-source
+>                ) &&
+>                test_cmp template-source/file template-custom/.git/file
+>
+> *   ok 12: init with --template (blank)
+> * failed 2 among 12 test(s)
+> gmake[2]: *** [t0001-init.sh] Error 1
 
-I don't see why these remotes should have a different workflow, and why
-there couldn't be hooks to do whatever is required to pull/push from
-these remotes when git pull/push'ing. This might not be easy to implement,
-but I think it is a worthwhile goal.
+I have now inclulded everything in gmake test that was not an OK.  I hope 
+this answers your questions.
 
-- Git-aware mergetool
+What I should have said is that I have not used it outside of gmake and 
+gmake test.
 
-There are various merge scenarios where using standard tools such as
-those supported by current git-mergetool is not very helpful, and where
-some basic git awareness might help the user resolve conflicts in more
-natural ways.
-
-Mike
+--
+Boyd Gerber <gerberb@zenez.com>
+ZENEZ	1042 East Fort Union #135, Midvale Utah  84047
