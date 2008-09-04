@@ -1,92 +1,95 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] Teach "log -F --author=<match>" to behave better
-Date: Thu, 04 Sep 2008 12:34:19 -0700
-Message-ID: <7vy7271z9g.fsf@gitster.siamese.dyndns.org>
-References: <g9o0ac$qig$1@ger.gmane.org>
- <7v4p4w75b7.fsf@gitster.siamese.dyndns.org>
- <7vprnk5n3c.fsf_-_@gitster.siamese.dyndns.org>
- <20080904140902.GY10544@machine.or.cz>
+From: Kai Blin <kai@samba.org>
+Subject: Re: Directory renames without breaking git log.
+Date: Thu, 4 Sep 2008 21:45:09 +0200
+Message-ID: <200809042145.09573.kai@samba.org>
+References: <200809032338.35359.kai@samba.org> <905315640809031716j7d74d7a6m51b434f62b011135@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Giuseppe Bilotta <giuseppe.bilotta@gmail.com>, git@vger.kernel.org
-To: Petr Baudis <pasky@suse.cz>
-X-From: git-owner@vger.kernel.org Thu Sep 04 21:35:40 2008
+Content-Type: multipart/signed;
+  boundary="nextPart1675328.BtMqQGVHMs";
+  protocol="application/pgp-signature";
+  micalg=pgp-sha1
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Sep 04 21:46:25 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KbKcE-0005nH-Km
-	for gcvg-git-2@gmane.org; Thu, 04 Sep 2008 21:35:39 +0200
+	id 1KbKmY-0000rq-Tp
+	for gcvg-git-2@gmane.org; Thu, 04 Sep 2008 21:46:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754732AbYIDTec (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 4 Sep 2008 15:34:32 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754691AbYIDTec
-	(ORCPT <rfc822;git-outgoing>); Thu, 4 Sep 2008 15:34:32 -0400
-Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:46476 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754554AbYIDTeb (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 4 Sep 2008 15:34:31 -0400
-Received: from localhost.localdomain (localhost [127.0.0.1])
-	by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id 28C0E730EE;
-	Thu,  4 Sep 2008 15:34:30 -0400 (EDT)
-Received: from pobox.com (ip68-225-240-211.oc.oc.cox.net [68.225.240.211])
- (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
- certificate requested) by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with
- ESMTPSA id D7CD5730E4; Thu,  4 Sep 2008 15:34:24 -0400 (EDT)
-In-Reply-To: <20080904140902.GY10544@machine.or.cz> (Petr Baudis's message of
- "Thu, 4 Sep 2008 16:09:02 +0200")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: 7E3E5644-7AB8-11DD-986E-3113EBD4C077-77302942!a-sasl-quonix.pobox.com
+	id S1753689AbYIDTpM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 4 Sep 2008 15:45:12 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753438AbYIDTpL
+	(ORCPT <rfc822;git-outgoing>); Thu, 4 Sep 2008 15:45:11 -0400
+Received: from mail.samba.org ([66.70.73.150]:53573 "EHLO lists.samba.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753113AbYIDTpK (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 4 Sep 2008 15:45:10 -0400
+Received: from ip6-localhost (localhost [127.0.0.1])
+	by lists.samba.org (Postfix) with ESMTP id D7CCB16391B
+	for <git@vger.kernel.org>; Thu,  4 Sep 2008 19:45:05 +0000 (GMT)
+User-Agent: KMail/1.9.9
+In-Reply-To: <905315640809031716j7d74d7a6m51b434f62b011135@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/94953>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/94954>
 
-Petr Baudis <pasky@suse.cz> writes:
+--nextPart1675328.BtMqQGVHMs
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: quoted-printable
+Content-Disposition: inline
 
-> On Thu, Sep 04, 2008 at 01:31:19AM -0700, Junio C Hamano wrote:
->> To handle --author=<match> request, the code created a grep instruction
->> that tried to match a line that begins with 'author ' and <match>
->> somewhere on the same line.  "begins with 'author '" obviously needs to be
->> expressed with an regexp '^author '.
->> 
->> When the user specifies --fixed-string, this does not work at all.
->> 
->> This extends the grep machinery so that a match insn can ignore user
->> specified --fixed-string request, and uses the '( -e A --and -e B )'
->> construct from the grep machinery in order to express "has to begin with
->> '^author ', and also the same line must match the given pattern".
->> 
->> Signed-off-by: Junio C Hamano <gitster@pobox.com>
+On Thursday 04 September 2008 02:16:24 Tarmigan wrote:
+> On Wed, Sep 3, 2008 at 2:38 PM, Kai Blin <kai@samba.org> wrote:
+> > Unfortunately, the directories are big enough that git log stops to tra=
+ck
+> > the renamed files, so e.g. git log ./samba3 does not show the samba3
+> > history. The history is not lost, of course, but it's way less intuitive
+> > to get it.
 >
-> Wow, this is clever solution! FWIW,
+> You can try setting diff.renamelimit to 0 in your ~/.gitconfig.  See
+> Linus's email here for a similar situation in the kernel:
+> http://lwn.net/Articles/292948/
 
-Actually, it is not clever at all.
+That doesn't seem to fix "git log path/to/file" cases. The really interesti=
+ng=20
+part is that if I try git log --follow -M -C path/to/file, I don't get any=
+=20
+history at all. (--follow is the culprit, if I remove that I at least get t=
+he=20
+merge commit)
 
-It is a more natural solution, than what we originally had, at least from
-the view of somebody who wrote our grep superstructure.  We use stock
-regexp(3) library for finding individual matches, but the layer on top of
-that to implement the default behaviour to --or hits together from
-multiple expressions, optionally --and hits to find a line that has both
-expressions, parenthesize to form groups of expressions etc. are all our
-inventions.
+git blame still works, and git log --sparse path/to/file works, of=20
+course. --sparse makes giving a path a bit pointless, of course, but we=20
+probably can live with that for time being. I'm still open for suggestions,=
+=20
+of course. :)
 
-One related thing I suspect many people haven't realized is that "git log"
-can use "--all-match".
+Cheers,
+Kai
 
-These two do different things:
+=2D-=20
+Kai Blin
+WorldForge developer  http://www.worldforge.org/
+Wine developer        http://wiki.winehq.org/KaiBlin
+Samba team member     http://www.samba.org/samba/team/
+=2D-
+Will code for cotton.
 
-	$ git log --author=Linus --grep=revision
-	$ git log --all-match --author=Linus --grep=revision
+--nextPart1675328.BtMqQGVHMs
+Content-Type: application/pgp-signature; name=signature.asc 
+Content-Description: This is a digitally signed message part.
 
-The former finds commits that talk about "revision" by anybody, or commits
-by Linus where he may or may not talk about "revision".  The latter finds
-only commits by Linus where he talks about a word "revision" in the log
-message.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.6 (GNU/Linux)
 
-I've been wondering if we want to make --all-match the default for
-revision traversal family (i.e. "git log"), as I suspect it would match
-people's expectations more naturally, even though it is a backward
-incompatible change.  It is backward incompatible only because the
-original implementation was stupid ;-).
+iD8DBQBIwDrFEKXX/bF2FpQRAgJQAJ9qnBB/PSVf8HZMsP8gAHK3R9amaQCfWz+1
+fLQZROHSme3HWNHxudxzhl4=
+=X5Vg
+-----END PGP SIGNATURE-----
+
+--nextPart1675328.BtMqQGVHMs--
