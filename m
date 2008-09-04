@@ -1,84 +1,64 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: latest clone/pull of git.git problems with setlinebuf.
-Date: Wed, 03 Sep 2008 20:33:29 -0700
-Message-ID: <7vljy88u0m.fsf@gitster.siamese.dyndns.org>
-References: <alpine.LNX.1.10.0809031858570.12887@suse104.zenez.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH 1/2] add '%d' pretty format specifier to show decoration
+Date: Wed, 3 Sep 2008 23:51:40 -0400
+Message-ID: <20080904035139.GA28123@sigill.intra.peff.net>
+References: <alpine.LNX.1.10.0809032036270.32295@pollux> <20080903191217.GA31195@coredump.intra.peff.net> <7v4p4xat3v.fsf@gitster.siamese.dyndns.org> <20080903203616.GB32223@coredump.intra.peff.net> <7vsksh9c9m.fsf@gitster.siamese.dyndns.org> <48BF0A5A.2040502@lsrfire.ath.cx>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Git List <git@vger.kernel.org>
-To: Boyd Lynn Gerber <gerberb@zenez.com>
-X-From: git-owner@vger.kernel.org Thu Sep 04 05:34:53 2008
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Michael Dressel <MichaelTiloDressel@t-online.de>,
+	git@vger.kernel.org
+To: =?utf-8?B?UmVuw6k=?= Scharfe <rene.scharfe@lsrfire.ath.cx>
+X-From: git-owner@vger.kernel.org Thu Sep 04 05:52:53 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Kb5cK-0005eL-Ha
-	for gcvg-git-2@gmane.org; Thu, 04 Sep 2008 05:34:45 +0200
+	id 1Kb5ts-0000KD-Ao
+	for gcvg-git-2@gmane.org; Thu, 04 Sep 2008 05:52:52 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753614AbYIDDdi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 3 Sep 2008 23:33:38 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753641AbYIDDdi
-	(ORCPT <rfc822;git-outgoing>); Wed, 3 Sep 2008 23:33:38 -0400
-Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:48982 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753600AbYIDDdh (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 3 Sep 2008 23:33:37 -0400
-Received: from localhost.localdomain (localhost [127.0.0.1])
-	by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id 56A9E7241C;
-	Wed,  3 Sep 2008 23:33:34 -0400 (EDT)
-Received: from pobox.com (ip68-225-240-211.oc.oc.cox.net [68.225.240.211])
- (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
- certificate requested) by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with
- ESMTPSA id 7D3C57241B; Wed,  3 Sep 2008 23:33:31 -0400 (EDT)
-In-Reply-To: <alpine.LNX.1.10.0809031858570.12887@suse104.zenez.com> (Boyd
- Lynn Gerber's message of "Wed, 3 Sep 2008 19:04:30 -0600")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: 40B391D0-7A32-11DD-8B73-3113EBD4C077-77302942!a-sasl-quonix.pobox.com
+	id S1753709AbYIDDvp convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 3 Sep 2008 23:51:45 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753688AbYIDDvp
+	(ORCPT <rfc822;git-outgoing>); Wed, 3 Sep 2008 23:51:45 -0400
+Received: from peff.net ([208.65.91.99]:4873 "EHLO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753641AbYIDDvp (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 3 Sep 2008 23:51:45 -0400
+Received: (qmail 5632 invoked by uid 111); 4 Sep 2008 03:51:43 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.32) with ESMTP; Wed, 03 Sep 2008 23:51:43 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 03 Sep 2008 23:51:40 -0400
+Content-Disposition: inline
+In-Reply-To: <48BF0A5A.2040502@lsrfire.ath.cx>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/94885>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/94886>
 
-Boyd Lynn Gerber <gerberb@zenez.com> writes:
+On Thu, Sep 04, 2008 at 12:06:18AM +0200, Ren=C3=A9 Scharfe wrote:
 
-> Hello,
->
-> I just noticed that setlinebuf is coming back as undefined when trying
-> to build the lastest version.
->
-> on UnixWare 7.1.4 I get
->
->     LINK git-var
->     CC daemon.o
-> UX:acomp: WARNING: "daemon.c", line 485: end-of-loop code not reached
->     LINK git-daemon
-> Undefined                       first referenced
-> symbol                              in file
-> setlinebuf                          daemon.o
-> UX:ld: ERROR: Symbol referencing errors. No output written to git-daemon
-> gmake: *** [git-daemon] Error 1
+> The patch below does that by using a static variable to remember if t=
+he
+> decorations have already been loaded.  That's not too unreasonable, I
+> think, because we currently have no way of unloading them.
 
-Ah, ok.  I should have noticed that setlinebuf() was outside POSIX (it is
-not usable on older BSDs either).
+Yes, I think lazy loading is a good solution here, since there is no
+extra context that needs to be known to load the decorations.
 
-Let's see if we can replace it with setvbuf() which is POSIX.
+> +	case 'd':
+> +		if (add_again(sb, &c->decoration))
+> +			return 1;
+> +		format_decoration(sb, commit);
+> +		c->decoration.len =3D sb->len - c->decoration.off;
+> +		return 1;
 
----
- daemon.c |    3 ++-
- 1 files changed, 2 insertions(+), 1 deletions(-)
+The add_again chunk code is for things that take a long time (like
+finding the shortest abbreviation for some hashes). I'm not sure this
+counts as "long", as it is just doing a hash lookup on the decoration.
+On the other hand, I doubt the extra couple of bytes used hurts much.
 
-diff --git c/daemon.c w/daemon.c
-index 23278e2..7f2743a 100644
---- c/daemon.c
-+++ w/daemon.c
-@@ -1083,7 +1083,8 @@ int main(int argc, char **argv)
- 		openlog("git-daemon", LOG_PID, LOG_DAEMON);
- 		set_die_routine(daemon_die);
- 	} else
--		setlinebuf(stderr); /* avoid splitting a message in the middle */
-+		/* avoid splitting a message in the middle */
-+		setvbuf(stderr, NULL, _IOLBF, 0);
- 
- 	if (inetd_mode && (group_name || user_name))
- 		die("--user and --group are incompatible with --inetd");
+-Peff
