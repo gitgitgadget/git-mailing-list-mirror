@@ -1,106 +1,108 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Are more and more patches getting lost lately?
-Date: Thu, 04 Sep 2008 02:00:27 -0700
-Message-ID: <7v8wu85lqs.fsf@gitster.siamese.dyndns.org>
-References: <7vd4jk8r78.fsf@gitster.siamese.dyndns.org>
- <20080904083343.6117@nanako3.lavabit.com>
- <20080904172059.6117@nanako3.lavabit.com>
+From: "Jonathan del Strother" <maillist@steelskies.com>
+Subject: Re: Peculiar behavior of git 1.5.6
+Date: Thu, 4 Sep 2008 10:11:00 +0100
+Message-ID: <57518fd10809040211q12d1f0ddk16f2d4273ee7d488@mail.gmail.com>
+References: <48BF759B.9090309@lwfinger.net> <48BF97B3.5060309@viscovery.net>
+	 <7vljy85mwx.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Nanako Shiraishi <nanako3@lavabit.com>
-X-From: git-owner@vger.kernel.org Thu Sep 04 11:02:01 2008
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: "Johannes Sixt" <j.sixt@viscovery.net>,
+	"Larry Finger" <Larry.Finger@lwfinger.net>, git@vger.kernel.org
+To: "Junio C Hamano" <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Sep 04 11:12:37 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KbAik-0007I7-0H
-	for gcvg-git-2@gmane.org; Thu, 04 Sep 2008 11:01:42 +0200
+	id 1KbAss-0001oa-W9
+	for gcvg-git-2@gmane.org; Thu, 04 Sep 2008 11:12:11 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752543AbYIDJAf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 4 Sep 2008 05:00:35 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752326AbYIDJAf
-	(ORCPT <rfc822;git-outgoing>); Thu, 4 Sep 2008 05:00:35 -0400
-Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:33729 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751760AbYIDJAe (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 4 Sep 2008 05:00:34 -0400
-Received: from localhost.localdomain (localhost [127.0.0.1])
-	by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id 9F332724F5;
-	Thu,  4 Sep 2008 05:00:32 -0400 (EDT)
-Received: from pobox.com (ip68-225-240-211.oc.oc.cox.net [68.225.240.211])
- (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
- certificate requested) by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with
- ESMTPSA id B0EBE724F4; Thu,  4 Sep 2008 05:00:29 -0400 (EDT)
-In-Reply-To: <20080904172059.6117@nanako3.lavabit.com> (Nanako Shiraishi's
- message of "Thu, 04 Sep 2008 17:20:59 +0900")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: EE1E3B68-7A5F-11DD-8715-3113EBD4C077-77302942!a-sasl-quonix.pobox.com
+	id S1752525AbYIDJLF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 4 Sep 2008 05:11:05 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752144AbYIDJLD
+	(ORCPT <rfc822;git-outgoing>); Thu, 4 Sep 2008 05:11:03 -0400
+Received: from wf-out-1314.google.com ([209.85.200.174]:8175 "EHLO
+	wf-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751669AbYIDJLB (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 4 Sep 2008 05:11:01 -0400
+Received: by wf-out-1314.google.com with SMTP id 27so3188370wfd.4
+        for <git@vger.kernel.org>; Thu, 04 Sep 2008 02:11:00 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:sender
+         :to:subject:cc:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:references
+         :x-google-sender-auth;
+        bh=w+ZM1+wfmXa/G7+OJfgrYaCHosHiGo4EJ6FQC36cdek=;
+        b=JIDknrCsiyQalBFxPFOjPhqCt8uOrlDxiZkHTfY403z8u2E/QYhAoi6bDLGy5zKdWQ
+         ykyAGVNGrEppDVqqGHpjxYKjpD/ZrScrPw9ZmFVk/kR/N6NiHfCVqBr9d7oQojNtdyS7
+         SqpaHV+RRysdFKmRbthaTgGYIagOg5DBhex70=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:sender:to:subject:cc:in-reply-to:mime-version
+         :content-type:content-transfer-encoding:content-disposition
+         :references:x-google-sender-auth;
+        b=TAKafEcfTto0xRCM82aAxvk6s6iVgRlyMmoxT10tYyM0HrG/Tw/0Wn/rQP3QWSeJ4Y
+         ZWuLNV/Yr1V31duobhK33NzLfrITo6P1fQUGvjTUsi2r0WDwM7MWlAE8xueof4BB1ShJ
+         gJ0X5vv1CyfQh0fJTaEkE7YU7pxcyhTSFqApM=
+Received: by 10.142.215.5 with SMTP id n5mr3460016wfg.131.1220519460667;
+        Thu, 04 Sep 2008 02:11:00 -0700 (PDT)
+Received: by 10.142.70.18 with HTTP; Thu, 4 Sep 2008 02:11:00 -0700 (PDT)
+In-Reply-To: <7vljy85mwx.fsf@gitster.siamese.dyndns.org>
+Content-Disposition: inline
+X-Google-Sender-Auth: 2554a321099720c7
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/94909>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/94910>
 
-Nanako Shiraishi <nanako3@lavabit.com> writes:
-
-> Quoting Junio C Hamano <gitster@pobox.com>:
+On Thu, Sep 4, 2008 at 9:35 AM, Junio C Hamano <gitster@pobox.com> wrote:
+> Johannes Sixt <j.sixt@viscovery.net> writes:
 >
->> Nanako Shiraishi <nanako3@lavabit.com> writes:
+>> Larry Finger schrieb:
+>>> On one of my systems, I found strange behavior for git-1.5.6.GIT. On the
+>>> first pull of the linux-2.6 tree, I got a message that one file was not
+>>> uptodate. When I investigated any possible differences with git-diff,
+>>> there were none. A subsequent git-pull worked fine. I lost the console
+>>> output for linux-2.6, but the same thing happened for Linville's
+>>> wireless-testing, as shown below:
+>>>
+>>> finger@sonylap:~/wireless-testing> git --version
+>>> git version 1.5.6.GIT
+>>> finger@sonylap:~/wireless-testing> git pull
+>>> error: Entry 'drivers/bluetooth/bt3c_cs.c' not uptodate. Cannot merge.
+>>> fatal: merging of trees 294e21019bac11cb782e8d1893d02ce98ed816a4 and
+>>> 810d24221c9c532475af90d1b7ba9ca381dc3696 failed
+>>> Merge with strategy recursive failed.
+>>> finger@sonylap:~/wireless-testing> git diff > tmp
+>>> finger@sonylap:~/wireless-testing> cat tmp
+>>> finger@sonylap:~/wireless-testing> git pull
+>>> Removed Documentation/usb/auerswald.txt
+>>> Auto-merged MAINTAINERS
+>>> ...
+>>>
+>>> Is this a bug in git, an incompatibility between my version and that of
+>>> the server at kernel.org, or something else?
 >>
->>> I noticed that recently there are many patches sent to the list
->>> that are left unapplied (and many of them are from you).  Many
->>> of them look useful or at least promising to become useful.
+>> I guess you had touched the timestamp of drivers/bluetooth/bt3c_cs.c in
+>> some way without modifying its contents, which made 'git pull' think it is
+>> modified.
 >>
->> Geez.  Well,... thanks.
->>
->> Do you have particular ones in the list that you really want to see
->> in-tree early, do you want all of them, or what?
+>> The 'git diff' that you did next corrected this behind your back, so that
+>> the subsequent 'git pull' did not see any modification anymore. (BTW, if
+>> you had used 'git status' instead of 'git diff' you would have observed
+>> the same behavior.)
 >
-> Your "diff --quiet" and Petr's bash completion.
-
-I do not recall what the status of "diff --quiet" thing was when the
-discussion petered off.  I'll have to dig it up later.
-
-I've queued the bash completion from Pasky.
-
-> Also there are many patches that are from *you*.  Did you forget to apply
-> them, are they buggy, or are they in any way bad?
+> That still does not explain the symptom --- shouldn't "git pull" or
+> underlying "git merge"  have first refreshed the index?
 >
-> From: Junio C Hamano <gitster@pobox.com>
-> Subject: Re: [PATCH] Enable git rev-list to parse --quiet
-> Date: Thu, 17 Jul 2008 23:10:19 -0700
-> Message-ID: <7vy73zd8ok.fsf@gitster.siamese.dyndns.org>
+> 1.5.6 is before the C rewrite of git-merge, so it is somewhat surprising
+> that if there were such bugs, but 1.5.6.GIT does not tell us much...
 >
-> http://article.gmane.org/gmane.comp.version-control.git/88994
 
-Be reasonable -- that's more than 5 minutes ago.
-
-'rev-list --check-empty $args' would be equivalent to 'test -z "$(rev-list
--1 $args)"'; I am not interested in it myself, and original requestor went
-away.  I have been assuming that it is not worth our time to worry about
-it if the change is not even necessary by somebody who brought it up
-originally.
-
-> From: Junio C Hamano <gitster@pobox.com>
-> Subject: [PATCH/RFC] feeding Maildir to git-am
-> Date: Tue, 19 Aug 2008 22:25:57 -0700
-> Message-ID: <7vbpzotfyy.fsf@gitster.siamese.dyndns.org>
->
-> http://article.gmane.org/gmane.comp.version-control.git/92963
-
-I wanted to see more positive feedback or better alternatives from people
-who do deal with Maildir, especially because I do not use Maildir
-anywhere.  Again, the discussion seems to have petered out, so...
-
-> From: Junio C Hamano <gitster@pobox.com>
-> Subject: Re* [PATCH] git-apply - Add --include=PATH
-> Date: Mon, 25 Aug 2008 01:05:31 -0700
-> Message-ID: <7vhc99h644.fsf@gitster.siamese.dyndns.org>
->
-> http://article.gmane.org/gmane.comp.version-control.git/93604
-
-IIRC, the patch was in a good shape but without documentation and tests.
-I suspect reassembling the pieces from the mailing list archive into an
-appliable e-mail submission would have been trivial, if somebody cared
-deeply enough, but nothing came out of it.
+Incidentally - git stash pop/apply has the same problem.  Touching a
+file, then applying the stash over the top will tell you "Cannot
+restore on top of a dirty state", but will work fine after a "git
+status"
