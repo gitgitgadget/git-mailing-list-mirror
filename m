@@ -1,65 +1,99 @@
-From: Giuseppe Bilotta <giuseppe.bilotta@gmail.com>
-Subject: git rev-list --author/--committer b0rked with -F/--fixed-strings
-Date: Thu, 04 Sep 2008 08:47:37 +0200
-Message-ID: <g9o0ac$qig$1@ger.gmane.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: git rev-list --author/--committer b0rked with -F/--fixed-strings
+Date: Thu, 04 Sep 2008 00:12:28 -0700
+Message-ID: <7v4p4w75b7.fsf@gitster.siamese.dyndns.org>
+References: <g9o0ac$qig$1@ger.gmane.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7Bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Sep 04 08:49:06 2008
+Cc: git@vger.kernel.org
+To: Giuseppe Bilotta <giuseppe.bilotta@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Sep 04 09:14:38 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Kb8eL-00031B-CH
-	for gcvg-git-2@gmane.org; Thu, 04 Sep 2008 08:49:01 +0200
+	id 1Kb932-0002Hf-LT
+	for gcvg-git-2@gmane.org; Thu, 04 Sep 2008 09:14:33 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750899AbYIDGrz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 4 Sep 2008 02:47:55 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751050AbYIDGry
-	(ORCPT <rfc822;git-outgoing>); Thu, 4 Sep 2008 02:47:54 -0400
-Received: from main.gmane.org ([80.91.229.2]:57625 "EHLO ciao.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750870AbYIDGry (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 4 Sep 2008 02:47:54 -0400
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1Kb8dA-0006eK-HZ
-	for git@vger.kernel.org; Thu, 04 Sep 2008 06:47:48 +0000
-Received: from 78.15.13.249 ([78.15.13.249])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Thu, 04 Sep 2008 06:47:48 +0000
-Received: from giuseppe.bilotta by 78.15.13.249 with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Thu, 04 Sep 2008 06:47:48 +0000
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@ger.gmane.org
-X-Gmane-NNTP-Posting-Host: 78.15.13.249
-User-Agent: KNode/0.10.9
-X-Face: ::w9}R^l{WGM\{y)C0QF@4^U,',W3Mk^X0HP)=:bKM^Z]A9+6bY6fe3}O*]fH{l<j1/9RTp  `KR0idy]Im#9^%}P5Dga'>AViT_'?&>&ufo2_X5Vs3C^tPO@drZRuu&6iK}x}~9`F\-dNZ>(p|V7`4
+	id S1751261AbYIDHN0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 4 Sep 2008 03:13:26 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751448AbYIDHN0
+	(ORCPT <rfc822;git-outgoing>); Thu, 4 Sep 2008 03:13:26 -0400
+Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:60846 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751050AbYIDHNZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 4 Sep 2008 03:13:25 -0400
+Received: from localhost.localdomain (localhost [127.0.0.1])
+	by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id 6827773B02;
+	Thu,  4 Sep 2008 03:13:22 -0400 (EDT)
+Received: from pobox.com (ip68-225-240-211.oc.oc.cox.net [68.225.240.211])
+ (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
+ certificate requested) by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with
+ ESMTPSA id 1DEE373B00; Thu,  4 Sep 2008 03:13:16 -0400 (EDT)
+In-Reply-To: <g9o0ac$qig$1@ger.gmane.org> (Giuseppe Bilotta's message of
+ "Thu, 04 Sep 2008 08:47:37 +0200")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: F55D8C26-7A50-11DD-96F1-3113EBD4C077-77302942!a-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/94899>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/94900>
 
-Hello all,
+Giuseppe Bilotta <giuseppe.bilotta@gmail.com> writes:
 
-I was recently looking into the reason why the gitweb search box
-failed to provide results when using the author and committer
-search and NOT using regexp searches.
+> So, is this a known bug (I would call it a bug, yes) in rev-list?
+> Are there any ideas around on how to fix it?
 
-I managed to track the fault down to the inability for git
-rev-list to handle --author and --committer in conjunction with
-the --fixed-strings option.
+It depends on what you are trying to do.  An obvious thing to do is to
+accept the fact that it has always been a regexp match, and quotemeta your
+input string.
 
-It's not difficult to see that the reason for this is that the
-author and committer search patterns are *always* built as regular
-expressions. However, I couldn't see any obvious way to do things
-in a *different* way ...
+Because we allow you to give "-F" and "--author=foo" in any order, looking
+at the options we have seen already and adjusting the pattern depending on
+the fixed-string option in the code would not be workable.  You would have
+to instead queue up all the --grep/--author/--committer options until the
+very end and _then_ compile them at the end, after you saw all the other
+grep related options such as -i/-F/-E
 
-So, is this a known bug (I would call it a bug, yes) in rev-list?
-Are there any ideas around on how to fix it?
+I am not interested in helping people with attitude very much ;-), but one
+somewhat related thing I have been wanting to add was the change in the
+attached patch.  It allows you to anchor not just at the beginning but at
+the end.
 
--- 
-Giuseppe "Oblomov" Bilotta
+ revision.c |   14 ++++++++++----
+ 1 files changed, 10 insertions(+), 4 deletions(-)
+
+diff --git c/revision.c w/revision.c
+index 36291b6..83478ef 100644
+--- c/revision.c
++++ w/revision.c
+@@ -956,18 +956,24 @@ static void add_grep(struct rev_info *revs, const char *ptn, enum grep_pat_token
+ static void add_header_grep(struct rev_info *revs, const char *field, const char *pattern)
+ {
+ 	char *pat;
+-	const char *prefix;
++	const char *prefix, *suffix;
+ 	int patlen, fldlen;
+ 
+ 	fldlen = strlen(field);
+ 	patlen = strlen(pattern);
+-	pat = xmalloc(patlen + fldlen + 10);
+-	prefix = ".*";
++	pat = xmalloc(patlen + fldlen + 64);
++	suffix = prefix = ".*";
+ 	if (*pattern == '^') {
+ 		prefix = "";
+ 		pattern++;
++		patlen--;
+ 	}
+-	sprintf(pat, "^%s %s%s", field, prefix, pattern);
++	if (pattern[patlen-1] == '$') {
++		suffix = "";
++		patlen--;
++	}
++	sprintf(pat, "^%s %s%.*s%s [1-9][0-9]* [-+][0-1][0-9][0-9][0-9]$",
++		field, prefix, patlen, pattern, suffix);
+ 	add_grep(revs, pat, GREP_PATTERN_HEAD);
+ }
+ 
