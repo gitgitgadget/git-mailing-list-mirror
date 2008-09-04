@@ -1,78 +1,106 @@
 From: Junio C Hamano <gitster@pobox.com>
 Subject: Re: Are more and more patches getting lost lately?
-Date: Thu, 04 Sep 2008 01:45:30 -0700
-Message-ID: <7vhc8w5mfp.fsf@gitster.siamese.dyndns.org>
-References: <20080904083343.6117@nanako3.lavabit.com>
- <7vd4jk8r78.fsf@gitster.siamese.dyndns.org>
+Date: Thu, 04 Sep 2008 02:00:27 -0700
+Message-ID: <7v8wu85lqs.fsf@gitster.siamese.dyndns.org>
+References: <7vd4jk8r78.fsf@gitster.siamese.dyndns.org>
+ <20080904083343.6117@nanako3.lavabit.com>
  <20080904172059.6117@nanako3.lavabit.com>
- <7bfdc29a0809040130u21d43a22ncf2e481eefd9ff89@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: "Nanako Shiraishi" <nanako3@lavabit.com>,
-	"Junio C Hamano" <gitster@pobox.com>, git@vger.kernel.org
-To: "Imran M Yousuf" <imyousuf@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Sep 04 10:46:47 2008
+Cc: git@vger.kernel.org
+To: Nanako Shiraishi <nanako3@lavabit.com>
+X-From: git-owner@vger.kernel.org Thu Sep 04 11:02:01 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KbAUI-0003Rv-Bb
-	for gcvg-git-2@gmane.org; Thu, 04 Sep 2008 10:46:46 +0200
+	id 1KbAik-0007I7-0H
+	for gcvg-git-2@gmane.org; Thu, 04 Sep 2008 11:01:42 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752268AbYIDIpk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 4 Sep 2008 04:45:40 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752243AbYIDIpk
-	(ORCPT <rfc822;git-outgoing>); Thu, 4 Sep 2008 04:45:40 -0400
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:47558 "EHLO
+	id S1752543AbYIDJAf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 4 Sep 2008 05:00:35 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752326AbYIDJAf
+	(ORCPT <rfc822;git-outgoing>); Thu, 4 Sep 2008 05:00:35 -0400
+Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:33729 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751671AbYIDIpj (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 4 Sep 2008 04:45:39 -0400
+	with ESMTP id S1751760AbYIDJAe (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 4 Sep 2008 05:00:34 -0400
 Received: from localhost.localdomain (localhost [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 3BDF45E505;
-	Thu,  4 Sep 2008 04:45:37 -0400 (EDT)
+	by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id 9F332724F5;
+	Thu,  4 Sep 2008 05:00:32 -0400 (EDT)
 Received: from pobox.com (ip68-225-240-211.oc.oc.cox.net [68.225.240.211])
  (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
- certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
- ESMTPSA id 6C49B5E504; Thu,  4 Sep 2008 04:45:32 -0400 (EDT)
-In-Reply-To: <7bfdc29a0809040130u21d43a22ncf2e481eefd9ff89@mail.gmail.com>
- (Imran M. Yousuf's message of "Thu, 4 Sep 2008 14:30:38 +0600")
+ certificate requested) by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with
+ ESMTPSA id B0EBE724F4; Thu,  4 Sep 2008 05:00:29 -0400 (EDT)
+In-Reply-To: <20080904172059.6117@nanako3.lavabit.com> (Nanako Shiraishi's
+ message of "Thu, 04 Sep 2008 17:20:59 +0900")
 User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: D8699D64-7A5D-11DD-B000-9EE598D589B0-77302942!a-sasl-fastnet.pobox.com
+X-Pobox-Relay-ID: EE1E3B68-7A5F-11DD-8715-3113EBD4C077-77302942!a-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/94908>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/94909>
 
-"Imran M Yousuf" <imyousuf@gmail.com> writes:
+Nanako Shiraishi <nanako3@lavabit.com> writes:
 
-> I actually liked the following 2 patch and since it was Junio I did
-> not think support was required :-D.
-> ...
->> From: Junio C Hamano <gitster@pobox.com>
->> Subject: [PATCH/RFC] feeding Maildir to git-am
->> Date: Tue, 19 Aug 2008 22:25:57 -0700
->> Message-ID: <7vbpzotfyy.fsf@gitster.siamese.dyndns.org>
+> Quoting Junio C Hamano <gitster@pobox.com>:
+>
+>> Nanako Shiraishi <nanako3@lavabit.com> writes:
 >>
->> http://article.gmane.org/gmane.comp.version-control.git/92963
+>>> I noticed that recently there are many patches sent to the list
+>>> that are left unapplied (and many of them are from you).  Many
+>>> of them look useful or at least promising to become useful.
 >>
->> From: Junio C Hamano <gitster@pobox.com>
->> Subject: Re* [PATCH] git-apply - Add --include=PATH
->> Date: Mon, 25 Aug 2008 01:05:31 -0700
->> Message-ID: <7vhc99h644.fsf@gitster.siamese.dyndns.org>
+>> Geez.  Well,... thanks.
 >>
->> http://article.gmane.org/gmane.comp.version-control.git/93604
+>> Do you have particular ones in the list that you really want to see
+>> in-tree early, do you want all of them, or what?
+>
+> Your "diff --quiet" and Petr's bash completion.
 
-I think for most of these patches, and other patches from me of the same
-nature, I tried to make it clear that the patches were primarily to
-illustrate possibly better solutions, and I do not consider them finished
-solutions.
+I do not recall what the status of "diff --quiet" thing was when the
+discussion petered off.  I'll have to dig it up later.
 
-The quality of these patches from me do not meet my patch acceptance
-criteria.
+I've queued the bash completion from Pasky.
 
-More importantly I wasn't the one with the itch.  Onus of testing them,
-polishing them as necessary and providing documentation into the final
-applicable patch lie on the original requestors' shoulders.
+> Also there are many patches that are from *you*.  Did you forget to apply
+> them, are they buggy, or are they in any way bad?
+>
+> From: Junio C Hamano <gitster@pobox.com>
+> Subject: Re: [PATCH] Enable git rev-list to parse --quiet
+> Date: Thu, 17 Jul 2008 23:10:19 -0700
+> Message-ID: <7vy73zd8ok.fsf@gitster.siamese.dyndns.org>
+>
+> http://article.gmane.org/gmane.comp.version-control.git/88994
 
-Especially when I am busy.
+Be reasonable -- that's more than 5 minutes ago.
+
+'rev-list --check-empty $args' would be equivalent to 'test -z "$(rev-list
+-1 $args)"'; I am not interested in it myself, and original requestor went
+away.  I have been assuming that it is not worth our time to worry about
+it if the change is not even necessary by somebody who brought it up
+originally.
+
+> From: Junio C Hamano <gitster@pobox.com>
+> Subject: [PATCH/RFC] feeding Maildir to git-am
+> Date: Tue, 19 Aug 2008 22:25:57 -0700
+> Message-ID: <7vbpzotfyy.fsf@gitster.siamese.dyndns.org>
+>
+> http://article.gmane.org/gmane.comp.version-control.git/92963
+
+I wanted to see more positive feedback or better alternatives from people
+who do deal with Maildir, especially because I do not use Maildir
+anywhere.  Again, the discussion seems to have petered out, so...
+
+> From: Junio C Hamano <gitster@pobox.com>
+> Subject: Re* [PATCH] git-apply - Add --include=PATH
+> Date: Mon, 25 Aug 2008 01:05:31 -0700
+> Message-ID: <7vhc99h644.fsf@gitster.siamese.dyndns.org>
+>
+> http://article.gmane.org/gmane.comp.version-control.git/93604
+
+IIRC, the patch was in a good shape but without documentation and tests.
+I suspect reassembling the pieces from the mailing list archive into an
+appliable e-mail submission would have been trivial, if somebody cared
+deeply enough, but nothing came out of it.
