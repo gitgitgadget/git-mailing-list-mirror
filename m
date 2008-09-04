@@ -1,76 +1,77 @@
-From: Tarmigan <tarmigan+git@gmail.com>
-Subject: Re: Directory renames without breaking git log.
-Date: Wed, 3 Sep 2008 17:16:24 -0700
-Message-ID: <905315640809031716j7d74d7a6m51b434f62b011135@mail.gmail.com>
-References: <200809032338.35359.kai@samba.org>
+From: Boyd Lynn Gerber <gerberb@zenez.com>
+Subject: latest clone/pull of git.git problems with setlinebuf.
+Date: Wed, 3 Sep 2008 19:04:30 -0600
+Message-ID: <alpine.LNX.1.10.0809031858570.12887@suse104.zenez.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: "Kai Blin" <kai@samba.org>
-X-From: git-owner@vger.kernel.org Thu Sep 04 02:17:37 2008
+Content-Type: TEXT/PLAIN; format=flowed; charset=US-ASCII
+To: Git List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Thu Sep 04 03:06:00 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Kb2XU-0004n4-UB
-	for gcvg-git-2@gmane.org; Thu, 04 Sep 2008 02:17:33 +0200
+	id 1Kb3IK-0006hF-49
+	for gcvg-git-2@gmane.org; Thu, 04 Sep 2008 03:05:56 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752326AbYIDAQ0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 3 Sep 2008 20:16:26 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752259AbYIDAQ0
-	(ORCPT <rfc822;git-outgoing>); Wed, 3 Sep 2008 20:16:26 -0400
-Received: from ey-out-2122.google.com ([74.125.78.27]:45508 "EHLO
-	ey-out-2122.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751760AbYIDAQ0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 3 Sep 2008 20:16:26 -0400
-Received: by ey-out-2122.google.com with SMTP id 6so1496282eyi.37
-        for <git@vger.kernel.org>; Wed, 03 Sep 2008 17:16:24 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:sender
-         :to:subject:cc:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:references
-         :x-google-sender-auth;
-        bh=XtAyt4/kKHTOuRIe0Ijhsxj49e7cVjtGGBZSrD18FPo=;
-        b=Qsz1ij7+729ddQU6n14FIu34kacnBxO85xUz07pYXyIqC8+wfh/hOhVjxIQ2PQwuW8
-         njLz7MW6uuRiJ5tVyjafqnR6TxPfvtbxMgGJxPPtGaivLLXGJlHoy0LoMa+QelrWckDx
-         q8UPykhurhtnpHkumBKm6gi2DURUjoYREL/jg=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:sender:to:subject:cc:in-reply-to:mime-version
-         :content-type:content-transfer-encoding:content-disposition
-         :references:x-google-sender-auth;
-        b=aAlpobuRAAqoGt6LbCHTKfY2HwVy7uoRlSY1FRNyJ13S95ShtlvF6WhurgN8PA+Ren
-         +pCE3TlFp9cx+5LabkysOc0Tj8lUyPdrUaN2iP1YasY66t2evDexf8xumdWvBcMFTsUO
-         DAsSTxvAw9lliisml0SR9eqiHnfvZPvcFQBZU=
-Received: by 10.210.18.18 with SMTP id 18mr10918870ebr.95.1220487384318;
-        Wed, 03 Sep 2008 17:16:24 -0700 (PDT)
-Received: by 10.210.28.18 with HTTP; Wed, 3 Sep 2008 17:16:24 -0700 (PDT)
-In-Reply-To: <200809032338.35359.kai@samba.org>
-Content-Disposition: inline
-X-Google-Sender-Auth: f5422660df6000e0
+	id S1752318AbYIDBEc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 3 Sep 2008 21:04:32 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752342AbYIDBEc
+	(ORCPT <rfc822;git-outgoing>); Wed, 3 Sep 2008 21:04:32 -0400
+Received: from suse104.zenez.com ([198.60.105.164]:17774 "EHLO
+	suse104.zenez.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752230AbYIDBEb (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 3 Sep 2008 21:04:31 -0400
+Received: by suse104.zenez.com (Postfix, from userid 1000)
+	id BBE82A7C92F; Wed,  3 Sep 2008 19:04:30 -0600 (MDT)
+Received: from localhost (localhost [127.0.0.1])
+	by suse104.zenez.com (Postfix) with ESMTP id ABE03A7C92E
+	for <git@vger.kernel.org>; Wed,  3 Sep 2008 19:04:30 -0600 (MDT)
+User-Agent: Alpine 1.10 (LNX 962 2008-03-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/94874>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/94875>
 
-On Wed, Sep 3, 2008 at 2:38 PM, Kai Blin <kai@samba.org> wrote:
-> Hi folks,
->
-> in an effort to make Samba development easier, we're trying to merge the
-> Samba3 and Samba4 branches into a single branch. In order to do so, we need
-> to rename the "source" directories both Samba 3 and Samba 4 have (we're
-> planning to use source3 and source4).
->
-> Unfortunately, the directories are big enough that git log stops to track the
-> renamed files, so e.g. git log ./samba3 does not show the samba3 history. The
-> history is not lost, of course, but it's way less intuitive to get it.
+Hello,
 
-You can try setting diff.renamelimit to 0 in your ~/.gitconfig.  See
-Linus's email here for a similar situation in the kernel:
-http://lwn.net/Articles/292948/
+I just noticed that setlinebuf is coming back as undefined when trying to 
+build the lastest version.
+
+on UnixWare 7.1.4 I get
+
+     LINK git-var
+     CC daemon.o
+UX:acomp: WARNING: "daemon.c", line 485: end-of-loop code not reached
+     LINK git-daemon
+Undefined                       first referenced
+symbol                              in file
+setlinebuf                          daemon.o
+UX:ld: ERROR: Symbol referencing errors. No output written to git-daemon
+gmake: *** [git-daemon] Error 1
+
+
+and on OpenServer 6.0 I get
+
+     LINK git-http-push
+     CC daemon.o
+UX:acomp: WARNING: "daemon.c", line 485: end-of-loop code not reached
+     LINK git-daemon
+Undefined                       first referenced
+symbol                              in file
+setlinebuf                          daemon.o
+UX:ld: ERROR: Symbol referencing errors. No output written to git-daemon
+gmake: *** [git-daemon] Error 1
+
+So the new behavior breaks things.  On UnixWare 7.1.4 there is a 
+/usr/ucb/cc but when I use it much more breaks.  It is better to use the 
+/usr/bin/cc.
+
+Can we please revert the patch that breaks this or provide a better fix. 
+The older methods at least worked.
 
 Thanks,
-Tarmigan
+
+--
+Boyd Gerber <gerberb@zenez.com>
+ZENEZ	1042 East Fort Union #135, Midvale Utah  84047
