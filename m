@@ -1,76 +1,110 @@
-From: "Avery Pennarun" <apenwarr@gmail.com>
-Subject: Re: latest clone/pull of git.git problems with setlinebuf.
-Date: Wed, 3 Sep 2008 22:04:28 -0400
-Message-ID: <32541b130809031904mb62d13du234da4558bead723@mail.gmail.com>
-References: <alpine.LNX.1.10.0809031858570.12887@suse104.zenez.com>
-	 <alpine.LNX.1.10.0809031907540.12887@suse104.zenez.com>
+From: Federico Lucifredi <flucifredi@acm.org>
+Subject: Re: Suggestion: "man git clone"
+Date: Wed, 03 Sep 2008 22:22:26 -0400
+Message-ID: <48BF4662.9000305@acm.org>
+References: <48ACB29C.7000606@zytor.com> <48ADE2FF.4080704@acm.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Cc: "Git List" <git@vger.kernel.org>
-To: "Boyd Lynn Gerber" <gerberb@zenez.com>
-X-From: git-owner@vger.kernel.org Thu Sep 04 04:10:14 2008
+Cc: Git Mailing List <git@vger.kernel.org>
+To: "H. Peter Anvin" <hpa@zytor.com>
+X-From: git-owner@vger.kernel.org Thu Sep 04 04:24:26 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Kb4IX-0004Nw-It
-	for gcvg-git-2@gmane.org; Thu, 04 Sep 2008 04:10:14 +0200
+	id 1Kb4VX-0007bk-BZ
+	for gcvg-git-2@gmane.org; Thu, 04 Sep 2008 04:23:39 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753267AbYIDCEd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 3 Sep 2008 22:04:33 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753211AbYIDCEd
-	(ORCPT <rfc822;git-outgoing>); Wed, 3 Sep 2008 22:04:33 -0400
-Received: from rv-out-0506.google.com ([209.85.198.237]:59855 "EHLO
-	rv-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753201AbYIDCEd (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 3 Sep 2008 22:04:33 -0400
-Received: by rv-out-0506.google.com with SMTP id k40so3040970rvb.1
-        for <git@vger.kernel.org>; Wed, 03 Sep 2008 19:04:28 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to
-         :subject:cc:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:references;
-        bh=zJngVX//6wTr3kEfzb/w9SZFw0/ib7l5ZIdaENDshfk=;
-        b=kHT6NN4LgFTDJSbbWbLRKRYplwGjKiMds4ntG49b3tyU0L3UKVxR/QuJDlDo5s5zdv
-         2F/asC7l8Qj3OqJbgAnScK/oks/4C9r/q0bvdmNW5maG6/Aj2QhgiSFoZt6XmMQzRM3F
-         dnn73s5cg5ZC9AoER0aUz3dD5h/FSQUxXGai8=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
-         :content-type:content-transfer-encoding:content-disposition
-         :references;
-        b=P8OHK2KzCdz81ZzJlcUtHgeQwPcIgZ3T5HDwDuabT/2fHHGlZUBBv3j19qMyVRexF9
-         MVfNEZJDw4qC2NPwHqu7kPTT/Hk9+WeyUrpFOMT82PB62Hl6LjQTmlRqPngJTY8kU4am
-         7dYiwjeKKTVJCdqo0HoBXEFOmp2u/Ft34XY7I=
-Received: by 10.141.75.17 with SMTP id c17mr5324450rvl.212.1220493868129;
-        Wed, 03 Sep 2008 19:04:28 -0700 (PDT)
-Received: by 10.141.194.15 with HTTP; Wed, 3 Sep 2008 19:04:28 -0700 (PDT)
-In-Reply-To: <alpine.LNX.1.10.0809031907540.12887@suse104.zenez.com>
-Content-Disposition: inline
+	id S1753201AbYIDCWc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 3 Sep 2008 22:22:32 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752862AbYIDCWc
+	(ORCPT <rfc822;git-outgoing>); Wed, 3 Sep 2008 22:22:32 -0400
+Received: from mail3.sea5.speakeasy.net ([69.17.117.5]:51497 "EHLO
+	mail3.sea5.speakeasy.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752688AbYIDCWc (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 3 Sep 2008 22:22:32 -0400
+Received: (qmail 30168 invoked from network); 4 Sep 2008 02:22:29 -0000
+Received: from dsl092-066-189.bos1.dsl.speakeasy.net (HELO spaceman.local) (federico@[66.92.66.189])
+          (envelope-sender <flucifredi@acm.org>)
+          by mail3.sea5.speakeasy.net (qmail-ldap-1.03) with AES256-SHA encrypted SMTP
+          for <hpa@zytor.com>; 4 Sep 2008 02:22:29 -0000
+User-Agent: Thunderbird 2.0.0.16 (Macintosh/20080707)
+In-Reply-To: <48ADE2FF.4080704@acm.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/94878>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/94879>
 
-On Wed, Sep 3, 2008 at 9:10 PM, Boyd Lynn Gerber <gerberb@zenez.com> wrote:
-> I really hate getting everything working only to then have another break-age
-> from master on a pull.  Can we please try to keep some compatitbility with
-> other non linux OS's.
+Hello HP, All,
+  I somehow managed to forget this (age must be taking its toll), but 
+there is a convention commonly used for man pages of Perl Modules, which 
+can be reasonably usable for subcommands as well:
 
-Well, it's kind of unavoidable; presumably most of the developers
-don't have access to a UnixWare system, and thus have no idea if their
-patches will break compatibility with it.
+  man APR::Brigade
 
-Perhaps what you need is an autobuilder running on UnixWare that will
-build Junio's pu and next branches, so that you can report problems
-before they make it all the way into master.
+will work just fine, with a file by the same name. This convention is in 
+current use, and would map to
 
-Hey, what a coincidence!  I have just what you need! :)
-http://marc.info/?l=git&m=122015205123247&w=2
+  man git::clone
 
-Have fun,
+while :: is not as immediate in context as in Perl, it does do the job, 
+and works regardless of pager.
 
-Avery
+  I would still go with the single big page (people are used to 
+vi-search with "/" anyway), but if you want to split the manual this 
+would work, and you could refer to the pages explicitly in the main git 
+page.
+
+  Finally, and importantly, "apropos clone" or "man -k clone" would 
+correctly point to git::clone as a valid result.
+
+  One more option for you.
+
+  Best -F
+
+Federico Lucifredi wrote:
+> Hello HP,
+>  I have seen this in (funnily enough) a project I manage myself, which 
+> has subcommands structured similarly to Git.
+> 
+>  I have looked at options, but so far the current behavior (man foo-bar) 
+> seems the best option for foo's subcommand bar. The alternative, also 
+> acceptable, is a large page with subsections for each command. Sections 
+> (man 1) are used for chapter-like page groupings, not for subsections on 
+> a single command - those would have to be implemented as an additional 
+> layer.
+> 
+>  But, as another participant in the thread has commented, that would not 
+> port to other platforms very quickly (although it would get to Linux and 
+> OS-X promptly, and may eventually make its way into other platforms).
+> 
+>  I am open to ideas, but so far the two options above are better than 
+> anything else that has been so far suggested...
+> 
+>  Best -F
+> 
+> H. Peter Anvin wrote:
+>> Given the recent change of "git-foo" to "git foo", it would be really 
+>> nice if one could type, for example:
+>>
+>>     man git clone
+>>
+>> and actually get the man page for the git clone command.  There are 
+>> quite a few other pieces of software which also could benefit from 
+>> that kind of indirection.
+>>
+>> Right now the above command shows the man page git(1) followed by 
+>> clone(2), which I believe has be classified as utterly useless 
+>> behaviour...
+>>
+>>     -hpa
+> 
+> 
+
+
+-- 
+_________________________________________
+-- "'Problem' is a bleak word for challenge" - Richard Fish
+(Federico L. Lucifredi) - flucifredi@acm.org
