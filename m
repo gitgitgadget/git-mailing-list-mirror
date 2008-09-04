@@ -1,70 +1,108 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] bash completion: Hide more plumbing commands
-Date: Wed, 03 Sep 2008 21:57:47 -0700
-Message-ID: <7vwshs7bjo.fsf@gitster.siamese.dyndns.org>
-References: <20080826171012.GO10360@machine.or.cz>
- <20080826171144.21328.82727.stgit@localhost>
- <m3y72jr80w.fsf@localhost.localdomain> <20080903175651.GZ10360@machine.or.cz>
+From: Boyd Lynn Gerber <gerberb@zenez.com>
+Subject: Re: latest clone/pull of git.git problems with setlinebuf.
+Date: Wed, 3 Sep 2008 23:29:32 -0600
+Message-ID: <alpine.LNX.1.10.0809032325080.25336@suse104.zenez.com>
+References: <alpine.LNX.1.10.0809031858570.12887@suse104.zenez.com> <7vljy88u0m.fsf@gitster.siamese.dyndns.org> <alpine.LNX.1.10.0809032157200.21167@suse104.zenez.com> <7vhc8w8rme.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Jakub Narebski <jnareb@gmail.com>, git@vger.kernel.org,
-	gitster@pobox.com, andi@firstfloor.org
-To: Petr Baudis <pasky@suse.cz>
-X-From: git-owner@vger.kernel.org Thu Sep 04 06:59:12 2008
+Content-Type: TEXT/PLAIN; charset=US-ASCII; format=flowed
+Cc: Git List <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Sep 04 07:30:49 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Kb6vy-0002zx-6g
-	for gcvg-git-2@gmane.org; Thu, 04 Sep 2008 06:59:06 +0200
+	id 1Kb7QW-0000xB-RA
+	for gcvg-git-2@gmane.org; Thu, 04 Sep 2008 07:30:41 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752336AbYIDE57 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 4 Sep 2008 00:57:59 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752233AbYIDE56
-	(ORCPT <rfc822;git-outgoing>); Thu, 4 Sep 2008 00:57:58 -0400
-Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:53738 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751654AbYIDE55 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 4 Sep 2008 00:57:57 -0400
-Received: from localhost.localdomain (localhost [127.0.0.1])
-	by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id 4265C72F38;
-	Thu,  4 Sep 2008 00:57:56 -0400 (EDT)
-Received: from pobox.com (ip68-225-240-211.oc.oc.cox.net [68.225.240.211])
- (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
- certificate requested) by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with
- ESMTPSA id AAB0D72F36; Thu,  4 Sep 2008 00:57:49 -0400 (EDT)
-In-Reply-To: <20080903175651.GZ10360@machine.or.cz> (Petr Baudis's message of
- "Wed, 3 Sep 2008 19:56:51 +0200")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: 09D1D012-7A3E-11DD-BDB1-3113EBD4C077-77302942!a-sasl-quonix.pobox.com
+	id S1751629AbYIDF3e (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 4 Sep 2008 01:29:34 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751635AbYIDF3e
+	(ORCPT <rfc822;git-outgoing>); Thu, 4 Sep 2008 01:29:34 -0400
+Received: from suse104.zenez.com ([198.60.105.164]:10539 "EHLO
+	suse104.zenez.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751584AbYIDF3d (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 4 Sep 2008 01:29:33 -0400
+Received: by suse104.zenez.com (Postfix, from userid 1000)
+	id 2487BA7C91A; Wed,  3 Sep 2008 23:29:32 -0600 (MDT)
+Received: from localhost (localhost [127.0.0.1])
+	by suse104.zenez.com (Postfix) with ESMTP id 17AA7A7C912;
+	Wed,  3 Sep 2008 23:29:32 -0600 (MDT)
+In-Reply-To: <7vhc8w8rme.fsf@gitster.siamese.dyndns.org>
+User-Agent: Alpine 1.10 (LNX 962 2008-03-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/94893>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/94894>
 
-Petr Baudis <pasky@suse.cz> writes:
-
-> On Tue, Aug 26, 2008 at 10:38:45AM -0700, Jakub Narebski wrote:
->> Petr Baudis <pasky@suse.cz> writes:
->> > +		count-objects)    : plumbing;;
->> 
->> Plumbing (hyphenated name is a very good hint), but useful to decide
->> when to repack. I'm partially to leaving it, as I use it from time to
->> time from CLI.
+On Wed, 3 Sep 2008, Junio C Hamano wrote:
+> Boyd Lynn Gerber <gerberb@zenez.com> writes:
+>> On Wed, 3 Sep 2008, Junio C Hamano wrote:
+>>> Ah, ok.  I should have noticed that setlinebuf() was outside POSIX (it is
+>>> not usable on older BSDs either).
+>>>
+>>> Let's see if we can replace it with setvbuf() which is POSIX.
+>>
+>> This fixes the problem. on both OS's.
 >
-> Is this just residuum of customs developed before auto-gc was
-> introduced?
+> By the way, have you actually exercised the codepath, or does your above
+> "fixes" mean "compiles"?
 >
->> > +		ls-files)         : plumbing;;
->> 
->> IIRC it doesn't have porcelain equivalent.
->
-> git status for the generally end-user-interesting functionality.
+> I knew it would compile on a system with POSIX setvbuf(), but I was 
+> unsure about the size argument.  I know for glibc giving <NULL, 0> would 
+> be equivalent to setlinebuf(), but POSIX itself leaves what exactly 
+> happens to the size argument quite vague, saying only "otherwise [when 
+> buf is a null pointer], size may determine the size of a buffer 
+> allocated by the setvbuf() function."  Does size=0 mean it allocates 
+> very little, and while it tries to line buffer the output, because the 
+> buffer is so small that it fails to buffer an entire line causing early 
+> flushing of the stream?
 
-I do not consider either of the above plumbing, but I tend to agree that
-they are much less frequently used.  I think verify-pack falls into the
-same category.
+I only compiled it.  I am debuging some test errors.  I did a gmake test
 
-Applied to 'maint' but won't be pushing out for some time (my git day is
-over).
+This is the test that fails.  Everything before it passes.
+
+*   ok 41: very long name in the index handled sanely
+* fixed 1 known breakage(s)
+* still have 1 known breakage(s)
+* passed all remaining 40 test(s)
+*** t0001-init.sh ***
+...
+*   ok 9: GIT_DIR & GIT_WORK_TREE (2)
+* FAIL 10: reinit
+
+
+                 (
+                         unset GIT_CONFIG GIT_WORK_TREE GIT_CONFIG
+
+                         mkdir again &&
+                         cd again &&
+                         git init >out1 2>err1 &&
+                         git init >out2 2>err2
+                 ) &&
+                 grep "Initialized empty" again/out1 &&
+                 grep "Reinitialized existing" again/out2 &&
+                 >again/empty &&
+                 test_cmp again/empty again/err1 &&
+                 test_cmp again/empty again/err2
+
+* FAIL 11: init with --template
+
+                 mkdir template-source &&
+                 echo content >template-source/file &&
+                 (
+                         mkdir template-custom &&
+                         cd template-custom &&
+                         git init --template=../template-source
+                 ) &&
+                 test_cmp template-source/file template-custom/.git/file
+
+*   ok 12: init with --template (blank)
+* failed 2 among 12 test(s)
+gmake[2]: *** [t0001-init.sh] Error 1
+
+
+--
+Boyd Gerber <gerberb@zenez.com>
+ZENEZ	1042 East Fort Union #135, Midvale Utah  84047
