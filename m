@@ -1,67 +1,60 @@
-From: Boyd Lynn Gerber <gerberb@zenez.com>
-Subject: Re: latest clone/pull of git.git problems with setlinebuf.
-Date: Wed, 3 Sep 2008 21:58:08 -0600
-Message-ID: <alpine.LNX.1.10.0809032157200.21167@suse104.zenez.com>
-References: <alpine.LNX.1.10.0809031858570.12887@suse104.zenez.com> <7vljy88u0m.fsf@gitster.siamese.dyndns.org>
+From: "Shawn O. Pearce" <spearce@spearce.org>
+Subject: Re: [JGIT PATCH 2/2] Move pathOf to RepositoryTestCase and use it
+	for locating test files
+Date: Wed, 3 Sep 2008 21:09:29 -0700
+Message-ID: <20080904040929.GA3633@spearce.org>
+References: <20080903091022.GC23406@diku.dk> <20080903170904.GB28315@spearce.org> <20080903214818.GB6316@diku.dk> <20080903230216.GI28315@spearce.org> <20080903235711.GA18666@diku.dk>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII; format=flowed
-Cc: Git List <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Sep 04 05:59:19 2008
+Content-Type: text/plain; charset=utf-8
+Cc: Imran M Yousuf <imyousuf@smartitengineering.com>,
+	Robin Rosenberg <robin.rosenberg@dewire.com>,
+	git@vger.kernel.org
+To: Jonas Fonseca <fonseca@diku.dk>
+X-From: git-owner@vger.kernel.org Thu Sep 04 06:10:47 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Kb604-0001Ew-Lv
-	for gcvg-git-2@gmane.org; Thu, 04 Sep 2008 05:59:17 +0200
+	id 1Kb6B9-00034b-0n
+	for gcvg-git-2@gmane.org; Thu, 04 Sep 2008 06:10:43 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752120AbYIDD6L (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 3 Sep 2008 23:58:11 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752026AbYIDD6K
-	(ORCPT <rfc822;git-outgoing>); Wed, 3 Sep 2008 23:58:10 -0400
-Received: from suse104.zenez.com ([198.60.105.164]:25120 "EHLO
-	suse104.zenez.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752000AbYIDD6J (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 3 Sep 2008 23:58:09 -0400
-Received: by suse104.zenez.com (Postfix, from userid 1000)
-	id 967CBA7C939; Wed,  3 Sep 2008 21:58:08 -0600 (MDT)
-Received: from localhost (localhost [127.0.0.1])
-	by suse104.zenez.com (Postfix) with ESMTP id 870B9A7C931;
-	Wed,  3 Sep 2008 21:58:08 -0600 (MDT)
-In-Reply-To: <7vljy88u0m.fsf@gitster.siamese.dyndns.org>
-User-Agent: Alpine 1.10 (LNX 962 2008-03-14)
+	id S1750870AbYIDEJa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 4 Sep 2008 00:09:30 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750844AbYIDEJa
+	(ORCPT <rfc822;git-outgoing>); Thu, 4 Sep 2008 00:09:30 -0400
+Received: from george.spearce.org ([209.20.77.23]:36488 "EHLO
+	george.spearce.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750806AbYIDEJa (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 4 Sep 2008 00:09:30 -0400
+Received: by george.spearce.org (Postfix, from userid 1001)
+	id 8D52138375; Thu,  4 Sep 2008 04:09:29 +0000 (UTC)
+Content-Disposition: inline
+In-Reply-To: <20080903235711.GA18666@diku.dk>
+User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/94887>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/94888>
 
-On Wed, 3 Sep 2008, Junio C Hamano wrote:
-> Boyd Lynn Gerber <gerberb@zenez.com> writes:
->> I just noticed that setlinebuf is coming back as undefined when trying
->> to build the lastest version.
->>
->> on UnixWare 7.1.4 I get
->>
->>     LINK git-var
->>     CC daemon.o
->> UX:acomp: WARNING: "daemon.c", line 485: end-of-loop code not reached
->>     LINK git-daemon
->> Undefined                       first referenced
->> symbol                              in file
->> setlinebuf                          daemon.o
->> UX:ld: ERROR: Symbol referencing errors. No output written to git-daemon
->> gmake: *** [git-daemon] Error 1
->
-> Ah, ok.  I should have noticed that setlinebuf() was outside POSIX (it is
-> not usable on older BSDs either).
->
-> Let's see if we can replace it with setvbuf() which is POSIX.
+Jonas Fonseca <fonseca@diku.dk> wrote:
+> BTW, I have started a JGit tutorial on the EGit wiki. For now it 
+> mostly consists of stub sections, but I hope to put more work into
+> it in the days to follow. "Best viewed" via:
+> 
+>  - http://code.google.com/docreader/#p=egit&t=JGitTutorial
 
-This fixes the problem. on both OS's.
+This is quite nice.  I like the starting page, where you walked
+through some of the command line tools.  Well written IMHO.
+ 
+> Ideas and improvements for the topics and general structure are very
+> welcome. The structure is given in the TableOfContents page.
+> 
+>  - http://code.google.com/p/egit/wiki/TableOfContents
 
-Thanks,
+This also looks good.  When I can find some time I'll try to fill
+one of these in.  I'm not sure my writing is quite as good as
+yours though.  ;-)
 
---
-Boyd Gerber <gerberb@zenez.com>
-ZENEZ	1042 East Fort Union #135, Midvale Utah  84047
+-- 
+Shawn.
