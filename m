@@ -1,160 +1,110 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re* git submodule output on invalid command
-Date: Fri, 05 Sep 2008 11:52:41 -0700
-Message-ID: <7vy726v30m.fsf@gitster.siamese.dyndns.org>
-References: <1220631370-19777-1-git-send-email-pdebie@ai.rug.nl>
+From: "Kevin Williams" <kevwil@gmail.com>
+Subject: Re: git-p4 and changing p4 depot path
+Date: Fri, 5 Sep 2008 12:54:34 -0600
+Message-ID: <683a886f0809051154r4b8a8121j7e0b7694ad728661@mail.gmail.com>
+References: <683a886f0809050947k3b461495u459607dccf891698@mail.gmail.com>
+	 <1a6be5fa0809051104g59e08b2dya37add721483d390@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Git Mailinglist <git@vger.kernel.org>
-To: Pieter de Bie <pdebie@ai.rug.nl>
-X-From: git-owner@vger.kernel.org Fri Sep 05 20:54:13 2008
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: "Tor Arvid Lund" <torarvid@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Sep 05 20:56:15 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KbgRV-0008FR-Jm
-	for gcvg-git-2@gmane.org; Fri, 05 Sep 2008 20:54:02 +0200
+	id 1KbgT8-0000MG-5q
+	for gcvg-git-2@gmane.org; Fri, 05 Sep 2008 20:55:42 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752488AbYIESwt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 5 Sep 2008 14:52:49 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752393AbYIESwt
-	(ORCPT <rfc822;git-outgoing>); Fri, 5 Sep 2008 14:52:49 -0400
-Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:59361 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752518AbYIESws (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 5 Sep 2008 14:52:48 -0400
-Received: from localhost.localdomain (localhost [127.0.0.1])
-	by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id 08F36746F2;
-	Fri,  5 Sep 2008 14:52:47 -0400 (EDT)
-Received: from pobox.com (ip68-225-240-211.oc.oc.cox.net [68.225.240.211])
- (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
- certificate requested) by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with
- ESMTPSA id 912AE746EF; Fri,  5 Sep 2008 14:52:43 -0400 (EDT)
-In-Reply-To: <1220631370-19777-1-git-send-email-pdebie@ai.rug.nl> (Pieter de
- Bie's message of "Fri, 5 Sep 2008 18:16:10 +0200")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: D4ACB034-7B7B-11DD-BFEB-3113EBD4C077-77302942!a-sasl-quonix.pobox.com
+	id S1751242AbYIESyh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 5 Sep 2008 14:54:37 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751167AbYIESyg
+	(ORCPT <rfc822;git-outgoing>); Fri, 5 Sep 2008 14:54:36 -0400
+Received: from ey-out-2122.google.com ([74.125.78.27]:55450 "EHLO
+	ey-out-2122.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751151AbYIESyg (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 5 Sep 2008 14:54:36 -0400
+Received: by ey-out-2122.google.com with SMTP id 6so238023eyi.37
+        for <git@vger.kernel.org>; Fri, 05 Sep 2008 11:54:34 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to
+         :subject:cc:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:references;
+        bh=G4Flwo1NTvxD9QGaPHnmxmC9YprW4uwPyFCSx4um4CA=;
+        b=ezRPL/omCGmBIGQqJvQ3L4YNstHhiEAkthxLdLZFc7ph9jcsnSU3YXibfXf3rS+Q0r
+         p508CdRNZjLsUsg04A5Qmq9aQ2tm3Ijh+k7wyMsqKEODY5+82JlniMhZqrJvYmDIBUvw
+         VZUwlQMzr0Q5/G8uyM5263VNGZ7ee1mDPA2O0=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
+         :content-type:content-transfer-encoding:content-disposition
+         :references;
+        b=qpzMqsxn9ulOB79L+/1s6rD0jjCesaD6EWsfE6mJgjrThajmcaUDncNqRGgJAViTgM
+         iRiAYLQOtelJxfe5CXEulmAaeIhCfk4raK3tn7pgzmmjJybMqSokavnSHd4gCh7+s7gq
+         66azp84Y0rDJdPDS60Djm96zxW6BjjJhQqVls=
+Received: by 10.210.68.17 with SMTP id q17mr8097528eba.134.1220640874441;
+        Fri, 05 Sep 2008 11:54:34 -0700 (PDT)
+Received: by 10.210.73.11 with HTTP; Fri, 5 Sep 2008 11:54:34 -0700 (PDT)
+In-Reply-To: <1a6be5fa0809051104g59e08b2dya37add721483d390@mail.gmail.com>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/95030>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/95031>
 
-Pieter de Bie <pdebie@ai.rug.nl> writes:
+Thanks for the detailed explanation. That will definitely come in
+handy next time.
 
-> ..., something like 'git
-> submodule satsus' is valid and should return nothing, because there are
-> no submodules in the 'satsus' path. However, I still feel this should
-> produce a warning.
+I was working against one path, then was told to commit to a p4 branch location.
+
+I ended up copying my files in the git-p4 working dir over to the p4
+working dir and committing from there, so not a problem anymore, but
+I'm impressed that there's a way to do it right from git-p4.
+
+Now if I could just convince IT to switch to git .... :)
+
+On Fri, Sep 5, 2008 at 12:04 PM, Tor Arvid Lund <torarvid@gmail.com> wrote:
+> Hi,
 >
-> I'm sure there is a nicer way to alert the user than my patch below, which
-> warns if the user did not supply any valid paths. Anyone else got a more
-> satisfying approach?
+> On Fri, Sep 5, 2008 at 6:47 PM, Kevin Williams <kevwil@gmail.com> wrote:
+>> I've got some code I've been working on in a local git repository that
+>> I cloned from Perforce using git-p4. Now, I need to commit my changes
+>> to a *different depot path* within Perforce. Since the p4 depot path
+>> is stored in the logs rather than config, and logs are immutable
+>> because commits are immutable, it seems I cannot do this. Is there any
+>> way to do this? Why isn't the depot path stored in config? Please
+>> help!
+>
+> I'm not sure I understand why you want to commit to a different
+> path... Is is just another branch in p4?
+>
+> In that case, git-p4 already has some support for working with all
+> branches of a project, given that they all reside under a common path,
+> like:
+>
+> //depot/path/to/project/MAIN
+> //depot/path/to/project/REL_1_4
+>
+> ... where MAIN and REL_1_4 are branches of 'project'. This can be
+> cloned by invoking
+>
+> git p4 clone --detect-branches //depot/path/to/project@all
+>
+> When you are ready to push your git commits to p4, git-p4 will use the
+> log message of the nearest parent commit from p4 to determine which
+> depot path (branch) to use. In this way, you can commit your work to
+> different p4 branches.
+>
+> -Tor Arvid Lund-
+>
 
-"ls-files --error-unmatch" would warn you of mistyped nonexistent paths,
-but "git submodule Makefile" would still catch the Makefile from the
-toplevel superproject happily and will not complain without checking after
-filtering by submodules.
 
-> diff --git a/git-submodule.sh b/git-submodule.sh
-> index 1c39b59..3aae746 100755
-> --- a/git-submodule.sh
-> +++ b/git-submodule.sh
-> @@ -59,7 +59,12 @@ resolve_relative_url ()
->  #
->  module_list()
->  {
-> -       git ls-files --stage -- "$@" | grep '^160000 '
-> +       git ls-files --stage -- "$@" | grep '^160000 ' ||
-> +       if test -z "$@"; then
 
-Shell nit; this must be "$*" not "$@", right?
+-- 
+Cheers,
 
-> +               die "This repository contains no submodules"
-> +       else
-> +               die "Could not find any submodules in paths $@"
-
-Because die() acts as if it is a fancier echo from output POV this does
-not matter in practice, but as a principle, this should also be "$*"
-instead.  Upon seeing "git submodule a b c", your intention is not to pass
-three parameters "Could not find a", "b" and "c" to die() but is to pass a
-single string that is the error message.
-
-By the way, because this "limiting only to submodules" seem to appear very
-often, we might want to give ls-files a native feature to do so, perhaps
-something like this.  Then your warning/error could become:
-
-	git ls-files --limit-type=submodule --error-unmatch
-
-Although we would need to make the error message that comes from this
-codepath tweakable by the caller.
-
- builtin-ls-files.c |   34 ++++++++++++++++++++++++++++++++++
- 1 files changed, 34 insertions(+), 0 deletions(-)
-
-diff --git c/builtin-ls-files.c w/builtin-ls-files.c
-index e8d568e..69e3b5b 100644
---- c/builtin-ls-files.c
-+++ w/builtin-ls-files.c
-@@ -28,6 +28,10 @@ static const char **pathspec;
- static int error_unmatch;
- static char *ps_matched;
- static const char *with_tree;
-+static unsigned int limit_types;
-+#define ENTRY_REGULAR   02
-+#define ENTRY_SYMLINK   01
-+#define ENTRY_SUBMODULE 04
- 
- static const char *tag_cached = "";
- static const char *tag_unmerged = "";
-@@ -37,6 +41,18 @@ static const char *tag_killed = "";
- static const char *tag_modified = "";
- 
- 
-+static unsigned int entry_type_from_name(const char *name)
-+{
-+	if (!strcmp(name, "regular"))
-+		return ENTRY_REGULAR;
-+	else if (!strcmp(name, "symlink"))
-+		return ENTRY_SYMLINK;
-+	else if (!strcmp(name, "submodule"))
-+		return ENTRY_SUBMODULE;
-+	else
-+		die("Unknown entry type: %s", name);
-+}
-+
- /*
-  * Match a pathspec against a filename. The first "skiplen" characters
-  * are the common prefix
-@@ -205,6 +221,20 @@ static void show_ce_entry(const char *tag, struct cache_entry *ce)
- 		tag = alttag;
- 	}
- 
-+	if (limit_types) {
-+		unsigned int entry_type;
-+		if (S_ISLNK(ce->ce_mode))
-+			entry_type = ENTRY_SYMLINK;
-+		else if (S_ISREG(ce->ce_mode))
-+			entry_type = ENTRY_REGULAR;
-+		else if (S_ISGITLINK(ce->ce_mode))
-+			entry_type = ENTRY_SUBMODULE;
-+		else
-+			die("Unknown type of entry %06o", ce->ce_mode);
-+		if (!(limit_types & entry_type))
-+			return;
-+	}
-+
- 	if (!show_stage) {
- 		fputs(tag, stdout);
- 	} else {
-@@ -551,6 +581,10 @@ int cmd_ls_files(int argc, const char **argv, const char *prefix)
- 			with_tree = arg + 12;
- 			continue;
- 		}
-+		if (!prefixcmp(arg, "--limit-type=")) {
-+			limit_types |= entry_type_from_name(arg + 13);
-+			continue;
-+		}
- 		if (!prefixcmp(arg, "--abbrev=")) {
- 			abbrev = strtoul(arg+9, NULL, 10);
- 			if (abbrev && abbrev < MINIMUM_ABBREV)
+Kevin Williams
+http://kevwil.com/
