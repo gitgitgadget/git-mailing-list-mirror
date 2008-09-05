@@ -1,73 +1,56 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: Re: How can i write a new protocol for git
-Date: Fri, 5 Sep 2008 07:52:46 -0700
-Message-ID: <20080905145246.GA20537@spearce.org>
-References: <976e6d070809050222v1580ae53ye96dee913d44ae4b@mail.gmail.com> <20080905094746.GA26820@glandium.org>
+From: =?UTF-8?B?UmVuw6kgU2NoYXJmZQ==?= <rene.scharfe@lsrfire.ath.cx>
+Subject: Re: [PATCH 3/3] add '%d' pretty format specifier to show decoration
+Date: Fri, 05 Sep 2008 18:14:55 +0200
+Message-ID: <48C15AFF.3070806@lsrfire.ath.cx>
+References: <alpine.LNX.1.10.0809032036270.32295@pollux> <20080903191217.GA31195@coredump.intra.peff.net> <7v4p4xat3v.fsf@gitster.siamese.dyndns.org> <20080903203616.GB32223@coredump.intra.peff.net> <7vsksh9c9m.fsf@gitster.siamese.dyndns.org> <48BF0A5A.2040502@lsrfire.ath.cx> <20080904035139.GA28123@sigill.intra.peff.net> <48C002FB.9010401@lsrfire.ath.cx> <48C055B3.3030204@lsrfire.ath.cx> <20080905001133.GA17463@coredump.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Sky Patrick <patricksky852@gmail.com>, git@vger.kernel.org
-To: Mike Hommey <mh@glandium.org>
-X-From: git-owner@vger.kernel.org Fri Sep 05 16:54:33 2008
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Michael Dressel <MichaelTiloDressel@t-online.de>,
+	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Fri Sep 05 18:16:11 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KbchA-0004vi-Ob
-	for gcvg-git-2@gmane.org; Fri, 05 Sep 2008 16:53:57 +0200
+	id 1Kbdyk-0000it-Jk
+	for gcvg-git-2@gmane.org; Fri, 05 Sep 2008 18:16:11 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754896AbYIEOws (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 5 Sep 2008 10:52:48 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753776AbYIEOws
-	(ORCPT <rfc822;git-outgoing>); Fri, 5 Sep 2008 10:52:48 -0400
-Received: from george.spearce.org ([209.20.77.23]:58091 "EHLO
-	george.spearce.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753448AbYIEOwr (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 5 Sep 2008 10:52:47 -0400
-Received: by george.spearce.org (Postfix, from userid 1001)
-	id 6C82C38353; Fri,  5 Sep 2008 14:52:46 +0000 (UTC)
-Content-Disposition: inline
-In-Reply-To: <20080905094746.GA26820@glandium.org>
-User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
+	id S1752941AbYIEQPA convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 5 Sep 2008 12:15:00 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752576AbYIEQPA
+	(ORCPT <rfc822;git-outgoing>); Fri, 5 Sep 2008 12:15:00 -0400
+Received: from india601.server4you.de ([85.25.151.105]:53692 "EHLO
+	india601.server4you.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752042AbYIEQO7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 5 Sep 2008 12:14:59 -0400
+Received: from [10.0.1.200] (p57B7D008.dip.t-dialin.net [87.183.208.8])
+	by india601.server4you.de (Postfix) with ESMTPSA id 1258B2F8045;
+	Fri,  5 Sep 2008 18:14:57 +0200 (CEST)
+User-Agent: Thunderbird 2.0.0.16 (Windows/20080708)
+In-Reply-To: <20080905001133.GA17463@coredump.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/95020>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/95021>
 
-Mike Hommey <mh@glandium.org> wrote:
-> On Fri, Sep 05, 2008 at 05:22:57PM +0800, Sky Patrick wrote:
-> > 
-> > If i want to write a new protocol for file transfer and would like to
-> > to integrate it with git. Is it possible and easy to integrate it ?
-> > Currently, i know that jgit may achieve it, but it is a Java
-> > implementation and may not work with git command line program that
-> > written in C.
+Jeff King schrieb:
+> On Thu, Sep 04, 2008 at 11:40:03PM +0200, Ren=C3=A9 Scharfe wrote:
+>=20
+>> Michael Dressel implemented an initial version and chose the letter =
+d,
+>> Junio suggested to add a leading space and parentheses.
+>=20
+> The whole series looks good to me, and I am happy if it is applied
+> as-is. The only question I might raise is whether we want to use "%d"
+> for this, or use something longer to anticipate a collision with othe=
+r
+> "d" words (I think you mentioned "describe" at one point).
 
-Writing a dumb protocol support isn't difficult in JGit due to the
-abstractions in place.  Its a little harder in C Git, unless Mike
-(or someone else) can abstract out the cURL library usage and make
-it more flexible.  Though these days cURL supports just about any
-file transfer protocol known.
- 
-> First, it would depend if you need this new protocol to be a dumb
-> protocol (like rsync and http) or "native" (git or ssh).
+%d for decorations is OK, I think -- we still can use %D for describe.
+When someone implements it eventually. *cough* ;-)
 
-Writing a smart protocol is a PITA.  Look at the smart HTTP effort
-I am trying to do.  OK, I'm not spending a whole lot of time on
-it, but its a damn difficult thing to do well, and to keep simple
-enough that it can be described and reimplemented.  Otherwise we
-have another that-thing-before-Git on our hands.
-
-> I've been meaning to refactor the dumb protocol "stack" for a while, but
-> haven't gone much further than ideas in my mind (i.e. no code). I also
-> have some start of http code recfactoring, that is waiting for this dumb
-> protocol rework to be completed.
-
-Yea.  One reason why I'm doing the smart HTTP effort prototype in
-JGit is because the C code structure makes this harder to implement
-without first going through a number of refactorings.  Though for the
-smart HTTP stuff I really need to refactor fetch-pack/send-pack and
-upload-pack/receive-pack, not the dumb walkers.
-
--- 
-Shawn.
+Thanks,
+Ren=C3=A9
