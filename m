@@ -1,85 +1,65 @@
-From: Pieter de Bie <pdebie@ai.rug.nl>
-Subject: git submodule output on invalid command
-Date: Fri,  5 Sep 2008 18:16:10 +0200
-Message-ID: <1220631370-19777-1-git-send-email-pdebie@ai.rug.nl>
-To: Git Mailinglist <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Fri Sep 05 18:21:06 2008
+From: "Kevin Williams" <kevwil@gmail.com>
+Subject: git-p4 and changing p4 depot path
+Date: Fri, 5 Sep 2008 10:47:25 -0600
+Message-ID: <683a886f0809050947k3b461495u459607dccf891698@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Sep 05 18:48:47 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Kbe0G-0001RC-Qu
-	for gcvg-git-2@gmane.org; Fri, 05 Sep 2008 18:17:45 +0200
+	id 1KbeUC-0006TY-F9
+	for gcvg-git-2@gmane.org; Fri, 05 Sep 2008 18:48:40 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755204AbYIEQQT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 5 Sep 2008 12:16:19 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755196AbYIEQQS
-	(ORCPT <rfc822;git-outgoing>); Fri, 5 Sep 2008 12:16:18 -0400
-Received: from smtp-1.orange.nl ([193.252.22.241]:8123 "EHLO smtp-1.orange.nl"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755191AbYIEQQR (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 5 Sep 2008 12:16:17 -0400
-Received: from me-wanadoo.net (localhost [127.0.0.1])
-	by mwinf6001.online.nl (SMTP Server) with ESMTP id 74CE31C0008A
-	for <git@vger.kernel.org>; Fri,  5 Sep 2008 18:16:15 +0200 (CEST)
-Received: from localhost.localdomain (s5591931c.adsl.wanadoo.nl [85.145.147.28])
-	by mwinf6001.online.nl (SMTP Server) with ESMTP id 279091C00086
-	for <git@vger.kernel.org>; Fri,  5 Sep 2008 18:16:10 +0200 (CEST)
-X-ME-UUID: 20080905161615162.279091C00086@mwinf6001.online.nl
-X-Mailer: git-send-email 1.6.0.rc1.288.g5b89f
+	id S1754335AbYIEQrc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 5 Sep 2008 12:47:32 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752714AbYIEQrb
+	(ORCPT <rfc822;git-outgoing>); Fri, 5 Sep 2008 12:47:31 -0400
+Received: from ey-out-2122.google.com ([74.125.78.25]:18095 "EHLO
+	ey-out-2122.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752909AbYIEQr1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 5 Sep 2008 12:47:27 -0400
+Received: by ey-out-2122.google.com with SMTP id 6so222742eyi.37
+        for <git@vger.kernel.org>; Fri, 05 Sep 2008 09:47:25 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to
+         :subject:mime-version:content-type:content-transfer-encoding
+         :content-disposition;
+        bh=gwHSvtpbW4vZxg0MYQSki2YeIl8ZHY/u5a4aYIvQBHg=;
+        b=ilO8kgpZ760g1srRx4fCf2j9HYC0lPd+gwy0J3SQYtqZQd0tb79PD15tR0eC+JCRFJ
+         akn8Lk+ZW3Cuc0a4PK6gFz+n24n0A8jxVYdHQoMcxfE9YZuEAnnTLusjlxvmz84/dYLR
+         eyOiu/77aR5rDLdF8asnOcrg3IZCpG5MNLmis=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:to:subject:mime-version:content-type
+         :content-transfer-encoding:content-disposition;
+        b=TN1p/vIR8JrgN9TWjDaOwaZwhhbcSSFiqK9LnyJbzCWa18UrT1eF0J1SvDzM/c0MA/
+         QJqyP2FjPga8+MSzEeMesufOILvy7EQRjFwwfY/jtnz9c+n5DOyXf7cRusLXhHVbjuDD
+         oiseh6/UGXUGCNf2u292MVVyZA+8MzMAQDoHQ=
+Received: by 10.210.61.19 with SMTP id j19mr13989839eba.88.1220633245814;
+        Fri, 05 Sep 2008 09:47:25 -0700 (PDT)
+Received: by 10.210.73.11 with HTTP; Fri, 5 Sep 2008 09:47:25 -0700 (PDT)
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/95022>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/95023>
 
-If you give git submodule an invalid commands, it outputs nothing.
-For example:
+I've got some code I've been working on in a local git repository that
+I cloned from Perforce using git-p4. Now, I need to commit my changes
+to a *different depot path* within Perforce. Since the p4 depot path
+is stored in the logs rather than config, and logs are immutable
+because commits are immutable, it seems I cannot do this. Is there any
+way to do this? Why isn't the depot path stored in config? Please
+help!
 
-	Vienna:git pieter$ git submodule satsus
-	Vienna:git pieter$
+-- 
+Cheers,
 
-This is because the default command is 'status' and status accepts paths to
-limit the output.
-
-I tried to find a fix for this, but git-submodule also allows a syntax
-like
-
-	git submodule --cached status
-and
-	git submodule --cached
-
-so you can't just look at the first argument to see if a command is valid.
-Similarly, the default command is 'status', so something like
-
-	Vienna:bonnenteller pieter$ git submodule vendor/
-	ef38bc83b7ff4b290a6b1f4d82df03585fbb7529 vendor/plugins/will_paginate (2.3.2)
-
-is also valid. Using that line of reasoning, something like 'git submodule satsus'
-is valid and should return nothing, because there are no submodules in
-the 'satsus' path. However, I still feel this should produce a warning.
-
-I'm sure there is a nicer way to alert the user than my patch below, which
-warns if the user did not supply any valid paths. Anyone else got a more
-satisfying approach?
-
-- Pieter
-
-diff --git a/git-submodule.sh b/git-submodule.sh
-index 1c39b59..3aae746 100755
---- a/git-submodule.sh
-+++ b/git-submodule.sh
-@@ -59,7 +59,12 @@ resolve_relative_url ()
- #
- module_list()
- {
--       git ls-files --stage -- "$@" | grep '^160000 '
-+       git ls-files --stage -- "$@" | grep '^160000 ' ||
-+       if test -z "$@"; then
-+               die "This repository contains no submodules"
-+       else
-+               die "Could not find any submodules in paths $@"
-+       fi
- }
- 
- #
+Kevin Williams
+http://kevwil.com/
