@@ -1,214 +1,115 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] Teach "log -F --author=<match>" to behave better
-Date: Thu, 04 Sep 2008 21:47:59 -0700
-Message-ID: <7vabenyz9c.fsf@gitster.siamese.dyndns.org>
-References: <g9o0ac$qig$1@ger.gmane.org>
- <7v4p4w75b7.fsf@gitster.siamese.dyndns.org>
- <7vprnk5n3c.fsf_-_@gitster.siamese.dyndns.org>
- <20080904140902.GY10544@machine.or.cz>
+From: "Shawn O. Pearce" <spearce@spearce.org>
+Subject: Re: Git Gui does not want to work on chunk level
+Date: Thu, 4 Sep 2008 21:53:27 -0700
+Message-ID: <20080905045327.GA31166@spearce.org>
+References: <c6c947f60808270216k2feb8f9ar765cdee1fc3910ee@mail.gmail.com> <c6c947f60809031223i575ca3fdya357588610bb72e8@mail.gmail.com> <20080903230814.GJ28315@spearce.org> <c6c947f60809040220t589e65bfkbd693fd335792069@mail.gmail.com> <20080904143723.GB23708@spearce.org> <c6c947f60809040754g34e60633lcd5f872ac5e80158@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Giuseppe Bilotta <giuseppe.bilotta@gmail.com>, git@vger.kernel.org
-To: Petr Baudis <pasky@suse.cz>
-X-From: git-owner@vger.kernel.org Fri Sep 05 06:49:19 2008
+Content-Type: text/plain; charset=utf-8
+Cc: git-users@googlegroups.com, git@vger.kernel.org
+To: Alexander Gladysh <agladysh@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Sep 05 06:54:40 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KbTG2-0005C5-1r
-	for gcvg-git-2@gmane.org; Fri, 05 Sep 2008 06:49:18 +0200
+	id 1KbTLC-00061U-26
+	for gcvg-git-2@gmane.org; Fri, 05 Sep 2008 06:54:38 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751243AbYIEEsL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 5 Sep 2008 00:48:11 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751074AbYIEEsK
-	(ORCPT <rfc822;git-outgoing>); Fri, 5 Sep 2008 00:48:10 -0400
-Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:44726 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750848AbYIEEsJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 5 Sep 2008 00:48:09 -0400
-Received: from localhost.localdomain (localhost [127.0.0.1])
-	by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id B291073D7E;
-	Fri,  5 Sep 2008 00:48:06 -0400 (EDT)
-Received: from pobox.com (ip68-225-240-211.oc.oc.cox.net [68.225.240.211])
- (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
- certificate requested) by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with
- ESMTPSA id 9A8C673D7A; Fri,  5 Sep 2008 00:48:01 -0400 (EDT)
-In-Reply-To: <20080904140902.GY10544@machine.or.cz> (Petr Baudis's message of
- "Thu, 4 Sep 2008 16:09:02 +0200")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: D4D9A3E4-7B05-11DD-8AF1-3113EBD4C077-77302942!a-sasl-quonix.pobox.com
+	id S1751179AbYIEEx3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 5 Sep 2008 00:53:29 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750907AbYIEEx3
+	(ORCPT <rfc822;git-outgoing>); Fri, 5 Sep 2008 00:53:29 -0400
+Received: from george.spearce.org ([209.20.77.23]:38560 "EHLO
+	george.spearce.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750720AbYIEEx2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 5 Sep 2008 00:53:28 -0400
+Received: by george.spearce.org (Postfix, from userid 1001)
+	id B5F4D38353; Fri,  5 Sep 2008 04:53:27 +0000 (UTC)
+Content-Disposition: inline
+In-Reply-To: <c6c947f60809040754g34e60633lcd5f872ac5e80158@mail.gmail.com>
+User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/94988>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/94989>
 
-Actually, I changed my mind.  If we were to polish the grep machinery to
-suit the log matching usage, I think doing it the way this patch does is
-much better.
+Alexander Gladysh <agladysh@gmail.com> wrote:
+> 
+> Aha! Thank you! That "--" is a comment in Lua (that is commented line
+> that was removed in diff). First dash is from diff, next two came from
+> file itself.
+> 
+> Steps to reproduce the bug:
+...
 
--- >8 --
-log --author/--committer: really match only with name part
+So that was an awesome reproduction case.  I have committed the
+following fix and will push it out in a few minutes:
 
-When we tried to find commits done by AUTHOR, the first implementation
-tried to pattern match a line with "^author .*AUTHOR", which later was
-enhanced to strip leading caret and look for "^author AUTHOR" when the
-search pattern was anchored at the left end (i.e. --author="^AUTHOR").
+--8<--
+git-gui: Fix diff parsing for lines starting with "--" or "++"
 
-This had a few problems:
+Languages like Lua and SQL use "--" to mark a line as commented out.
+If this appears at column 0 and is part of the pre-image we may see
+"--- foo" in the diff, indicating that the line whose content is
+ "-- foo" has been removed from the new version.
 
- * When looking for fixed strings (e.g. "git log -F --author=x --grep=y"),
-   the regexp internally used "^author .*x" would never match anything;
+git-gui was incorrectly parsing "--- foo" as the old file name
+in the file header, causing it to generate a bad patch file when
+the user tried to stage or unstage a hunk or the selected line.
+We need to keep track of where we are in the parsing so that we do
+not misread a deletion or addition record as part of the header.
 
- * To match at the end (e.g. "git log --author='google.com>$'"), the
-   generated regexp has to also match the trailing timestamp part the
-   commit header lines have.  Also, in order to determine if the '$' at
-   the end means "match at the end of the line" or just a literal dollar
-   sign (probably backslash-quoted), we would need to parse the regexp
-   ourselves.
-
-An earlier alternative tried to make sure that a line matches "^author "
-(to limit by field name) and the user supplied pattern at the same time.
-While it solved the -F problem by introducing a special override for
-matching the "^author ", it did not solve the trailing timestamp nor tail
-match problem.  It also would have matched every commit if --author=author
-was asked for, not because the author's email part had this string, but
-because every commit header line that talks about the author begins with
-that field name, regardleses of who wrote it.  
-
-Instead of piling more hacks on top of hacks, this rethinks the grep
-machinery that is used to look for strings in the commit header, and makes
-sure that (1) field name matches literally at the beginning of the line,
-followed by a SP, and (2) the user supplied pattern is matched against the
-remainder of the line, excluding the trailing timestamp data.
-
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
+Reported-by: Alexander Gladysh <agladysh@gmail.com>
+Signed-off-by: Shawn O. Pearce <spearce@spearce.org>
 ---
- grep.c     |   41 +++++++++++++++++++++++++++++++++++++++++
- grep.h     |    3 +++
- revision.c |   15 +--------------
- 3 files changed, 45 insertions(+), 14 deletions(-)
+ lib/diff.tcl |   18 +++++++++++-------
+ 1 files changed, 11 insertions(+), 7 deletions(-)
 
-diff --git c/grep.c w/grep.c
-index f67d671..44a7dc6 100644
---- c/grep.c
-+++ w/grep.c
-@@ -2,6 +2,20 @@
- #include "grep.h"
- #include "xdiff-interface.h"
- 
-+void append_header_grep_pattern(struct grep_opt *opt, const char *field, const char *pat)
-+{
-+	struct grep_pat *p = xcalloc(1, sizeof(*p));
-+	p->pattern = pat;
-+	p->origin = "header";
-+	p->no = 0;
-+	p->token = GREP_PATTERN_HEAD;
-+	p->field = field;
-+	p->field_len = strlen(field);
-+	*opt->pattern_tail = p;
-+	opt->pattern_tail = &p->next;
-+	p->next = NULL;
-+}
-+
- void append_grep_pattern(struct grep_opt *opt, const char *pat,
- 			 const char *origin, int no, enum grep_pat_token t)
- {
-@@ -247,16 +261,41 @@ static int fixmatch(const char *pattern, char *line, regmatch_t *match)
+diff --git a/lib/diff.tcl b/lib/diff.tcl
+index 4a7138b..1970b60 100644
+--- a/lib/diff.tcl
++++ b/lib/diff.tcl
+@@ -192,6 +192,7 @@ proc show_diff {path w {lno {}} {scroll_pos {}}} {
+ 		return
  	}
- }
  
-+static int strip_timestamp(char *bol, char **eol_p)
-+{
-+	char *eol = *eol_p;
-+	int ch;
-+
-+	while (bol < --eol) {
-+		if (*eol != '>')
-+			continue;
-+		*eol_p = ++eol;
-+		ch = *eol;
-+		*eol = '\0';
-+		return ch;
-+	}
-+	return 0;
-+}
-+
- static int match_one_pattern(struct grep_opt *opt, struct grep_pat *p, char *bol, char *eol, enum grep_context ctx)
- {
- 	int hit = 0;
- 	int at_true_bol = 1;
-+	int saved_ch = 0;
- 	regmatch_t pmatch[10];
- 
- 	if ((p->token != GREP_PATTERN) &&
- 	    ((p->token == GREP_PATTERN_HEAD) != (ctx == GREP_CONTEXT_HEAD)))
- 		return 0;
- 
-+	if (p->token == GREP_PATTERN_HEAD) {
-+		/* author/committer fields in a commit object */
-+		if (strncmp(bol, p->field, p->field_len) || bol[p->field_len] != ' ')
-+			return 0;
-+		bol += p->field_len + 1;
-+		saved_ch = strip_timestamp(bol, &eol);
-+	}
-+
-  again:
- 	if (!opt->fixed) {
- 		regex_t *exp = &p->regexp;
-@@ -298,6 +337,8 @@ static int match_one_pattern(struct grep_opt *opt, struct grep_pat *p, char *bol
- 			goto again;
++	set ::current_diff_inheader 1
+ 	fconfigure $fd \
+ 		-blocking 0 \
+ 		-encoding binary \
+@@ -207,18 +208,21 @@ proc read_diff {fd scroll_pos} {
+ 	while {[gets $fd line] >= 0} {
+ 		# -- Cleanup uninteresting diff header lines.
+ 		#
+-		if {   [string match {diff --git *}      $line]
+-			|| [string match {diff --cc *}       $line]
+-			|| [string match {diff --combined *} $line]
+-			|| [string match {--- *}             $line]
+-			|| [string match {+++ *}             $line]} {
+-			append current_diff_header $line "\n"
+-			continue
++		if {$::current_diff_inheader} {
++			if {   [string match {diff --git *}      $line]
++			    || [string match {diff --cc *}       $line]
++			    || [string match {diff --combined *} $line]
++			    || [string match {--- *}             $line]
++			    || [string match {+++ *}             $line]} {
++				append current_diff_header $line "\n"
++				continue
++			}
  		}
- 	}
-+	if (p->token == GREP_PATTERN_HEAD && saved_ch)
-+		*eol = saved_ch;
- 	return hit;
- }
+ 		if {[string match {index *} $line]} continue
+ 		if {$line eq {deleted file mode 120000}} {
+ 			set line "deleted symlink"
+ 		}
++		set ::current_diff_inheader 0
  
-diff --git c/grep.h w/grep.h
-index d252dd2..0454e50 100644
---- c/grep.h
-+++ w/grep.h
-@@ -23,6 +23,8 @@ struct grep_pat {
- 	int no;
- 	enum grep_pat_token token;
- 	const char *pattern;
-+	const char *field;
-+	int field_len;
- 	regex_t regexp;
- };
- 
-@@ -74,6 +76,7 @@ struct grep_opt {
- };
- 
- extern void append_grep_pattern(struct grep_opt *opt, const char *pat, const char *origin, int no, enum grep_pat_token t);
-+extern void append_header_grep_pattern(struct grep_opt *opt, const char *field, const char *pat);
- extern void compile_grep_patterns(struct grep_opt *opt);
- extern void free_grep_patterns(struct grep_opt *opt);
- extern int grep_buffer(struct grep_opt *opt, const char *name, char *buf, unsigned long size);
-diff --git c/revision.c w/revision.c
-index 36291b6..4092a11 100644
---- c/revision.c
-+++ w/revision.c
-@@ -955,20 +955,7 @@ static void add_grep(struct rev_info *revs, const char *ptn, enum grep_pat_token
- 
- static void add_header_grep(struct rev_info *revs, const char *field, const char *pattern)
- {
--	char *pat;
--	const char *prefix;
--	int patlen, fldlen;
--
--	fldlen = strlen(field);
--	patlen = strlen(pattern);
--	pat = xmalloc(patlen + fldlen + 10);
--	prefix = ".*";
--	if (*pattern == '^') {
--		prefix = "";
--		pattern++;
--	}
--	sprintf(pat, "^%s %s%s", field, prefix, pattern);
--	add_grep(revs, pat, GREP_PATTERN_HEAD);
-+	append_header_grep_pattern(&revs->grep_filter, field, pattern);
- }
- 
- static void add_message_grep(struct rev_info *revs, const char *pattern)
+ 		# -- Automatically detect if this is a 3 way diff.
+ 		#
+-- 
+1.6.0.1.274.g007e4
+
+
+-- 
+Shawn.
