@@ -1,119 +1,84 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] Avoid warning when bisecting a merge
-Date: Thu, 04 Sep 2008 23:29:15 -0700
-Message-ID: <7vhc8vxg04.fsf@gitster.siamese.dyndns.org>
-References: <1220562150-19962-1-git-send-email-hendeby@isy.liu.se>
- <200809050814.36937.chriscool@tuxfamily.org>
+From: Matthieu Moy <Matthieu.Moy@imag.fr>
+Subject: Re: [PATCH] Mention the fact that 'git annotate' is only for backward compatibility.
+Date: Fri, 05 Sep 2008 08:31:40 +0200
+Message-ID: <vpqaben6r3n.fsf@bauges.imag.fr>
+References: <bd6139dc0809040216v40914e82h6a4032941cf65996@mail.gmail.com>
+	<1220529652-24050-1-git-send-email-Matthieu.Moy@imag.fr>
+	<20080904123046.GX10544@machine.or.cz>
+	<7v63pb3emm.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=iso-8859-1
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Gustaf Hendeby <hendeby@isy.liu.se>, git@vger.kernel.org,
-	gitster@pobox.com
-To: Christian Couder <chriscool@tuxfamily.org>
-X-From: git-owner@vger.kernel.org Fri Sep 05 08:33:26 2008
+Cc: Petr Baudis <pasky@suse.cz>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Sep 05 08:36:43 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KbUsd-0000Hz-Sf
-	for gcvg-git-2@gmane.org; Fri, 05 Sep 2008 08:33:16 +0200
+	id 1KbUvu-0001R1-JO
+	for gcvg-git-2@gmane.org; Fri, 05 Sep 2008 08:36:39 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752330AbYIEG3Z convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 5 Sep 2008 02:29:25 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752230AbYIEG3Z
-	(ORCPT <rfc822;git-outgoing>); Fri, 5 Sep 2008 02:29:25 -0400
-Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:53061 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751713AbYIEG3Z convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 5 Sep 2008 02:29:25 -0400
-Received: from localhost.localdomain (localhost [127.0.0.1])
-	by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id D1C8F74B6D;
-	Fri,  5 Sep 2008 02:29:23 -0400 (EDT)
-Received: from pobox.com (ip68-225-240-211.oc.oc.cox.net [68.225.240.211])
- (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
- certificate requested) by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with
- ESMTPSA id 15D4C74B64; Fri,  5 Sep 2008 02:29:17 -0400 (EDT)
-In-Reply-To: <200809050814.36937.chriscool@tuxfamily.org> (Christian Couder's
- message of "Fri, 5 Sep 2008 08:14:36 +0200")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: FB108678-7B13-11DD-8135-3113EBD4C077-77302942!a-sasl-quonix.pobox.com
+	id S1752394AbYIEGfb convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 5 Sep 2008 02:35:31 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752504AbYIEGf3
+	(ORCPT <rfc822;git-outgoing>); Fri, 5 Sep 2008 02:35:29 -0400
+Received: from harmonie.imag.fr ([147.171.130.40]:41653 "EHLO harmonie.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752687AbYIEGf1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 5 Sep 2008 02:35:27 -0400
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by harmonie.imag.fr (8.13.8/8.13.8) with ESMTP id m856VgK1021662;
+	Fri, 5 Sep 2008 08:31:42 +0200 (CEST)
+Received: from bauges.imag.fr ([129.88.43.5])
+	by mail-veri.imag.fr with esmtps (TLS-1.0:RSA_AES_256_CBC_SHA:32)
+	(Exim 4.50)
+	id 1KbUr6-0007K1-4z; Fri, 05 Sep 2008 08:31:40 +0200
+Received: from moy by bauges.imag.fr with local (Exim 4.63)
+	(envelope-from <moy@imag.fr>)
+	id 1KbUr6-0001Rc-2l; Fri, 05 Sep 2008 08:31:40 +0200
+In-Reply-To: <7v63pb3emm.fsf@gitster.siamese.dyndns.org> (Junio C. Hamano's message of "Thu\, 04 Sep 2008 12\:17\:05 -0700")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.1 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-3.0 (harmonie.imag.fr [147.171.130.40]); Fri, 05 Sep 2008 08:31:43 +0200 (CEST)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM for more information
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: moy@imag.fr
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/94995>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/94996>
 
-Christian Couder <chriscool@tuxfamily.org> writes:
+Junio C Hamano <gitster@pobox.com> writes:
 
-> Le jeudi 4 septembre 2008, Gustaf Hendeby a =C3=A9crit :
->> Trying to compare an empty string as a number results in an error,
->> hence make sure checkout_done is set before using it.
+> Petr Baudis <pasky@suse.cz> writes:
 >
-> This patch seems to work fine.=20
->
->> Signed-off-by: Gustaf Hendeby <hendeby@isy.liu.se>
->
-> Acked-by: Christian Couder <chriscool@tuxfamily.org>
+>> Can you please also mark it deprecated in the bash completion and
+>> command-list.txt?
 
-Have you actually read the patch and thought about it before acking it?
+[...]
 
-Why does a variable that says "have we done checkout?" have three state=
-s?
-Certainly it is not like "yes, no, dunno", right?  checkout_done=3D0 wh=
-ich
-was added by Gustaf, checkout_done=3D1 is the state the test checks wit=
-h
-(presumably set by check_good_are_ancestors_of_bad), and checkout_done=3D=
-''
-which the code does before returning?
+> While I do not mind marking annotate as ": infrequently used ;;" in t=
+he
+> completion script, I am skeptical about the value of such a change.
+> Dropping annotate from the completion is a _slight_ improvement in th=
+at
+> when people type "git a<TAB>" they will see one less candidates, but =
+it is
+> not a great deal of improvement: four down from five.
 
->> diff --git a/git-bisect.sh b/git-bisect.sh
->> index 69a9a56..05d14b3 100755
->> --- a/git-bisect.sh
->> +++ b/git-bisect.sh
->> @@ -437,6 +437,7 @@ bisect_next() {
->>  		"refs/bisect/skip-*" | tr '\012' ' ') &&
->>
->>  	# Maybe some merge bases must be tested first
->> +	checkout_done=3D0
->>  	check_good_are_ancestors_of_bad "$bad" "$good" "$skip" || exit
->>  	test "$checkout_done" -eq "1" && checkout_done=3D'' && return
+Hm, right. Someone used to "$scm annotate" will probably try
+"git=A0an<TAB>" and not finding anything there would be misleading
+(probably why svn has "annotate" as an alias for "blame").
 
-> PS: After thinking about it, I wonder if we should remove $checkout_d=
-one=20
-> entirely and use the return value from "check_merge_bases"=20
-> and "check_good_are_ancestors_of_bad" to know if a checkout was done.
+> Mentioning that we support both names for findability in both annotat=
+e and
+> blame manual pages (not just annotate page) might be a better thing t=
+o do.
 
-Yup, that might make more sense. In the meantime, I suspect this makes
-more sense than introducing a new state "0".
+git-blame.txt already somehow has it in the documentation for "-c". I
+can't think of a good wording to improve it.
 
-diff --git c/git-bisect.sh w/git-bisect.sh
-index 69a9a56..73f01bb 100755
---- c/git-bisect.sh
-+++ w/git-bisect.sh
-@@ -30,6 +30,7 @@ OPTIONS_SPEC=3D
- . git-sh-setup
- require_work_tree
-=20
-+checkout_done=3D
- _x40=3D'[0-9a-f][0-9a-f][0-9a-f][0-9a-f][0-9a-f]'
- _x40=3D"$_x40$_x40$_x40$_x40$_x40$_x40$_x40$_x40"
-=20
-@@ -418,7 +419,7 @@ check_good_are_ancestors_of_bad() {
- 	_side=3D$(git rev-list $_good ^$_bad)
- 	if test -n "$_side"; then
- 		check_merge_bases "$_bad" "$_good" "$_skip" || return
--		test "$checkout_done" -eq "1" && return
-+		test -n "$checkout_done" && return
- 	fi
-=20
- 	: > "$GIT_DIR/BISECT_ANCESTORS_OK"
-@@ -438,7 +439,7 @@ bisect_next() {
-=20
- 	# Maybe some merge bases must be tested first
- 	check_good_are_ancestors_of_bad "$bad" "$good" "$skip" || exit
--	test "$checkout_done" -eq "1" && checkout_done=3D'' && return
-+	test -n "$checkout_done" && checkout_done=3D'' && return
-=20
- 	# Get bisection information
- 	BISECT_OPT=3D''
+--=20
+Matthieu
