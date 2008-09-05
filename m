@@ -1,85 +1,133 @@
-From: Matthieu Moy <Matthieu.Moy@imag.fr>
-Subject: Re: [PATCH] Mention the fact that 'git annotate' is only for backward compatibility.
-Date: Fri, 05 Sep 2008 14:06:55 +0200
-Message-ID: <vpqy7266bkw.fsf@bauges.imag.fr>
-References: <bd6139dc0809040216v40914e82h6a4032941cf65996@mail.gmail.com>
-	<1220529652-24050-1-git-send-email-Matthieu.Moy@imag.fr>
-	<20080904123046.GX10544@machine.or.cz>
-	<7v63pb3emm.fsf@gitster.siamese.dyndns.org>
-	<vpqaben6r3n.fsf@bauges.imag.fr>
-	<7v3akfxd74.fsf@gitster.siamese.dyndns.org>
-	<20080905080759.GN10360@machine.or.cz>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Petr Baudis <pasky@suse.cz>
-X-From: git-owner@vger.kernel.org Fri Sep 05 14:10:15 2008
+From: Florian Ragwitz <rafl@debian.org>
+Subject: [PATCH] Add git-svn branch to allow branch creation in SVN repositories
+Date: Fri,  5 Sep 2008 13:34:07 +0200
+Message-ID: <1220614447-3751-1-git-send-email-rafl@debian.org>
+Cc: Florian Ragwitz <rafl@debian.org>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Sep 05 14:13:19 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Kba8c-0007uu-00
-	for gcvg-git-2@gmane.org; Fri, 05 Sep 2008 14:10:06 +0200
+	id 1KbaBW-0000RI-Bb
+	for gcvg-git-2@gmane.org; Fri, 05 Sep 2008 14:13:06 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752498AbYIEMI6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 5 Sep 2008 08:08:58 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752471AbYIEMI6
-	(ORCPT <rfc822;git-outgoing>); Fri, 5 Sep 2008 08:08:58 -0400
-Received: from harmonie.imag.fr ([147.171.130.40]:56676 "EHLO harmonie.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752498AbYIEMI6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 5 Sep 2008 08:08:58 -0400
-Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by harmonie.imag.fr (8.13.8/8.13.8) with ESMTP id m85C6vsP021211;
-	Fri, 5 Sep 2008 14:06:57 +0200 (CEST)
-Received: from bauges.imag.fr ([129.88.43.5])
-	by mail-veri.imag.fr with esmtps (TLS-1.0:RSA_AES_256_CBC_SHA:32)
-	(Exim 4.50)
-	id 1Kba5X-0007Q5-ES; Fri, 05 Sep 2008 14:06:55 +0200
-Received: from moy by bauges.imag.fr with local (Exim 4.63)
-	(envelope-from <moy@imag.fr>)
-	id 1Kba5X-0002Bk-Bo; Fri, 05 Sep 2008 14:06:55 +0200
-In-Reply-To: <20080905080759.GN10360@machine.or.cz> (Petr Baudis's message of "Fri\, 5 Sep 2008 10\:07\:59 +0200")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.1 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-3.0 (harmonie.imag.fr [147.171.130.40]); Fri, 05 Sep 2008 14:06:58 +0200 (CEST)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM for more information
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: moy@imag.fr
+	id S1752304AbYIEML6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 5 Sep 2008 08:11:58 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752208AbYIEML6
+	(ORCPT <rfc822;git-outgoing>); Fri, 5 Sep 2008 08:11:58 -0400
+Received: from weedy.perldition.org ([85.10.210.75]:49704 "EHLO
+	weedy.perldition.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752177AbYIEML5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 5 Sep 2008 08:11:57 -0400
+X-Greylist: delayed 2236 seconds by postgrey-1.27 at vger.kernel.org; Fri, 05 Sep 2008 08:11:57 EDT
+Received: from p4fd7562a.dip.t-dialin.net ([79.215.86.42]:53182 helo=ata.xb.lan)
+	by weedy.perldition.org with esmtpsa (TLSv1:AES256-SHA:256)
+	(Exim 4.60)
+	(envelope-from <rafl@debian.org>)
+	id 1KbZZm-0003HX-0V; Fri, 05 Sep 2008 13:34:06 +0200
+Received: from rafl by ata.xb.lan with local (Exim 4.69)
+	(envelope-from <rafl@debian.org>)
+	id 1KbZZn-0000yr-Fk; Fri, 05 Sep 2008 13:34:07 +0200
+X-Mailer: git-send-email 1.5.6.5
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/95007>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/95008>
 
-Petr Baudis <pasky@suse.cz> writes:
+Signed-off-by: Florian Ragwitz <rafl@debian.org>
+---
+ Documentation/git-svn.txt |   14 ++++++++++++++
+ git-svn.perl              |   30 +++++++++++++++++++++++++++++-
+ 2 files changed, 43 insertions(+), 1 deletions(-)
 
-> On Fri, Sep 05, 2008 at 12:29:51AM -0700, Junio C Hamano wrote:
->> diff --git c/Documentation/git-annotate.txt w/Documentation/git-annotate.txt
->> index 8b6b56a..78dc5e2 100644
->> --- c/Documentation/git-annotate.txt
->> +++ w/Documentation/git-annotate.txt
->> @@ -14,6 +14,11 @@ DESCRIPTION
->>  Annotates each line in the given file with information from the commit
->>  which introduced the line. Optionally annotate from a given revision.
->>  
->> +The only difference from this command and linkgit:git-blame[1] is that
->                        ^^^^ between?
->> +they use slightly different output formats, and this command exists only
-
-I'm not sure it's clear enough that "this command" is "annotate" since
-you talked about git blame right before, but I'm being picky.
-
->> +for backward compatibility to support existing scripts, and provide more
->> +familiar command name for people coming from other SCM systems.
->> +
->>  OPTIONS
->>  -------
->>  include::blame-options.txt[]
->
-> I like this one.
-
-Meetoo.
-
+diff --git a/Documentation/git-svn.txt b/Documentation/git-svn.txt
+index 1e644ca..23cf7c3 100644
+--- a/Documentation/git-svn.txt
++++ b/Documentation/git-svn.txt
+@@ -149,6 +149,18 @@ and have no uncommitted changes.
+ 	is very strongly discouraged.
+ --
+ 
++'branch'::
++    Create a branch in the SVN repository.
++
++-m;;
++--message;;
++    Allows to specify the commit message.
++
++-t;;
++--tag;;
++    Create a tag by using the tags_subdir instead of the branches_subdir
++    specified during git svn init.
++
+ 'log'::
+ 	This should make it easy to look up svn log messages when svn
+ 	users refer to -r/--revision numbers.
+@@ -498,6 +510,8 @@ Tracking and contributing to an entire Subversion-managed project
+ 	git svn clone http://svn.foo.org/project -T trunk -b branches -t tags
+ # View all branches and tags you have cloned:
+ 	git branch -r
++# Create a new branch in SVN
++    git svn branch waldo
+ # Reset your master to trunk (or any other branch, replacing 'trunk'
+ # with the appropriate name):
+ 	git reset --hard remotes/trunk
+diff --git a/git-svn.perl b/git-svn.perl
+index 7a1d26d..55a2052 100755
+--- a/git-svn.perl
++++ b/git-svn.perl
+@@ -66,7 +66,7 @@ my ($_stdin, $_help, $_edit,
+ 	$_version, $_fetch_all, $_no_rebase,
+ 	$_merge, $_strategy, $_dry_run, $_local,
+ 	$_prefix, $_no_checkout, $_url, $_verbose,
+-	$_git_format, $_commit_url);
++	$_git_format, $_commit_url, $_tag);
+ $Git::SVN::_follow_parent = 1;
+ my %remote_opts = ( 'username=s' => \$Git::SVN::Prompt::_username,
+                     'config-dir=s' => \$Git::SVN::Ra::config_dir,
+@@ -131,6 +131,10 @@ my %cmd = (
+ 			  'revision|r=i' => \$_revision,
+ 			  'no-rebase' => \$_no_rebase,
+ 			%cmt_opts, %fc_opts } ],
++	branch => [ \&cmd_branch,
++	            'Create a branch in the SVN repository',
++	            { 'tag|t'       => \$_tag,
++	              'message|m=s' => \$_message } ],
+ 	'set-tree' => [ \&cmd_set_tree,
+ 	                "Set an SVN repository to a git tree-ish",
+ 			{ 'stdin|' => \$_stdin, %cmt_opts, %fc_opts, } ],
+@@ -537,6 +541,30 @@ sub cmd_dcommit {
+ 	unlink $gs->{index};
+ }
+ 
++sub cmd_branch {
++	my $branch_name = shift or die "branch name required\n";
++	my $head        = shift || 'HEAD';
++
++	my ($src, $rev, undef, $gs) = working_head_info($head);
++
++	my $remote      = Git::SVN::read_all_remotes()->{svn};
++	my ($lft, $rgt) = @{ $remote->{ $_tag ? 'tags' : 'branches' }->{path} }{qw/left right/};
++	my $dst         = join '/', $remote->{url}, $lft, $branch_name, ($rgt || ());
++
++	my $ctx = SVN::Client->new(
++		auth    => Git::SVN::Ra::_auth_providers(),
++		log_msg => sub { ${ $_[0] } = $_message || 'Create branch ' . $branch_name },
++	);
++
++	eval {
++		$ctx->ls($dst, 'HEAD', 0);
++	} and die "branch ${branch_name} already exists\n";
++
++	$ctx->copy($src, $rev, $dst);
++
++	$gs->fetch_all;
++}
++
+ sub cmd_find_rev {
+ 	my $revision_or_hash = shift or die "SVN or git revision required ",
+ 	                                    "as a command-line argument\n";
 -- 
-Matthieu
+1.5.6.5
