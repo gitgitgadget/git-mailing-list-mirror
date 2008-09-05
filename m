@@ -1,59 +1,72 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: Re: Git Gui does not want to work on chunk level
-Date: Thu, 4 Sep 2008 22:20:26 -0700
-Message-ID: <20080905052026.GB31166@spearce.org>
-References: <c6c947f60808270216k2feb8f9ar765cdee1fc3910ee@mail.gmail.com> <c6c947f60809031223i575ca3fdya357588610bb72e8@mail.gmail.com> <20080903230814.GJ28315@spearce.org> <c6c947f60809040220t589e65bfkbd693fd335792069@mail.gmail.com> <20080904143723.GB23708@spearce.org> <c6c947f60809040754g34e60633lcd5f872ac5e80158@mail.gmail.com> <20080905045327.GA31166@spearce.org> <7v63pbyxu9.fsf@gitster.siamese.dyndns.org>
+From: Johan Herland <johan@herland.net>
+Subject: Re: [PATCH] Fix AsciiDoc errors in merge documentation
+Date: Fri, 05 Sep 2008 08:09:20 +0200
+Message-ID: <200809050809.20791.johan@herland.net>
+References: <48BFBBEF.6010403@isy.liu.se>
+ <200809042348.48570.johan@herland.net>
+ <7vbpz31oup.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Alexander Gladysh <agladysh@gmail.com>, git-users@googlegroups.com,
-	git@vger.kernel.org
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: 7BIT
+Cc: git@vger.kernel.org, Gustaf Hendeby <hendeby@isy.liu.se>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Sep 05 07:21:42 2008
+X-From: git-owner@vger.kernel.org Fri Sep 05 08:10:44 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KbTlF-0002iy-SO
-	for gcvg-git-2@gmane.org; Fri, 05 Sep 2008 07:21:34 +0200
+	id 1KbUWp-00042L-6X
+	for gcvg-git-2@gmane.org; Fri, 05 Sep 2008 08:10:43 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751345AbYIEFU1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 5 Sep 2008 01:20:27 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751447AbYIEFU1
-	(ORCPT <rfc822;git-outgoing>); Fri, 5 Sep 2008 01:20:27 -0400
-Received: from george.spearce.org ([209.20.77.23]:50093 "EHLO
-	george.spearce.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750910AbYIEFU0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 5 Sep 2008 01:20:26 -0400
-Received: by george.spearce.org (Postfix, from userid 1001)
-	id 3B44338353; Fri,  5 Sep 2008 05:20:26 +0000 (UTC)
-Content-Disposition: inline
-In-Reply-To: <7v63pbyxu9.fsf@gitster.siamese.dyndns.org>
-User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
+	id S1752042AbYIEGJg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 5 Sep 2008 02:09:36 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751713AbYIEGJg
+	(ORCPT <rfc822;git-outgoing>); Fri, 5 Sep 2008 02:09:36 -0400
+Received: from smtp.getmail.no ([84.208.20.33]:46369 "EHLO smtp.getmail.no"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751642AbYIEGJf (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 5 Sep 2008 02:09:35 -0400
+Received: from pmxchannel-daemon.no-osl-m323-srv-009-z2.isp.get.no by
+ no-osl-m323-srv-009-z2.isp.get.no
+ (Sun Java System Messaging Server 6.2-7.05 (built Sep  5 2006))
+ id <0K6P0070PL3YC200@no-osl-m323-srv-009-z2.isp.get.no> for
+ git@vger.kernel.org; Fri, 05 Sep 2008 08:09:34 +0200 (CEST)
+Received: from smtp.getmail.no ([10.5.16.1])
+ by no-osl-m323-srv-009-z2.isp.get.no
+ (Sun Java System Messaging Server 6.2-7.05 (built Sep  5 2006))
+ with ESMTP id <0K6P008R7L3LXS40@no-osl-m323-srv-009-z2.isp.get.no> for
+ git@vger.kernel.org; Fri, 05 Sep 2008 08:09:21 +0200 (CEST)
+Received: from alpha.herland ([84.215.102.95])
+ by no-osl-m323-srv-004-z1.isp.get.no
+ (Sun Java System Messaging Server 6.2-7.05 (built Sep  5 2006))
+ with ESMTP id <0K6P00J3TL3KJZ40@no-osl-m323-srv-004-z1.isp.get.no> for
+ git@vger.kernel.org; Fri, 05 Sep 2008 08:09:21 +0200 (CEST)
+In-reply-to: <7vbpz31oup.fsf@gitster.siamese.dyndns.org>
+Content-disposition: inline
+User-Agent: KMail/1.9.9
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/94991>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/94992>
 
-Junio C Hamano <gitster@pobox.com> wrote:
-> "Shawn O. Pearce" <spearce@spearce.org> writes:
-> 
-> > git-gui was incorrectly parsing "--- foo" as the old file name
-> > in the file header, causing it to generate a bad patch file when
-> > the user tried to stage or unstage a hunk or the selected line.
-> > We need to keep track of where we are in the parsing so that we do
-> > not misread a deletion or addition record as part of the header.
-> 
-> While keeping track of state is obviously a good change, it also might be
-> worth noticing "@@ -k,l +m,n @@" header and actively using the
-> information.
+On Friday 05 September 2008, Junio C Hamano wrote:
+> Johan Herland <johan@herland.net> writes:
+> > [...]
+>
+> Thanks.  It's good to see issues with new changes are resolved while they
+> are still in 'next'.
 
-Yea.  But that was a lot more work.
+Hey, that's what next is for, isn't it? ;)
 
-Noticing a hunk header, getting the line counts from it, then
-keeping a running counter to know how many lines before either EOF
-or the next header are all part of that hunk is just a lot of code
-I didn't feel like writing this evening.  ;-)
+> Have you tried this patch without double quotes around the teletype text,
+> by the way?
+
+Seems to work fine, as well.
+
+
+...Johan
 
 -- 
-Shawn.
+Johan Herland, <johan@herland.net>
+www.herland.net
