@@ -1,113 +1,98 @@
-From: Pieter de Bie <pdebie@ai.rug.nl>
-Subject: [PATCH] Builtin-commit: show on which branch a commit was added
-Date: Fri,  5 Sep 2008 19:13:05 +0200
-Message-ID: <1220634785-55543-1-git-send-email-pdebie@ai.rug.nl>
-References: <4C04A26E-5829-4A39-AD89-F5A68E606AA3@ai.rug.nl>
-Cc: Pieter de Bie <pdebie@ai.rug.nl>
-To: Junio C Hamano <gitster@pobox.com>,
-	Git Mailinglist <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Fri Sep 05 19:14:28 2008
+From: Shinya Kuribayashi <skuribay@ruby.dti.ne.jp>
+Subject: [StGit PATCH rev3] contrib/stgit-completion.bash: Remove add/applied/cp/rm/unapplied
+Date: Sat, 06 Sep 2008 02:16:22 +0900
+Message-ID: <48C16966.90009@ruby.dti.ne.jp>
+References: <48B9A37B.4060001@ruby.dti.ne.jp> <48B9AE01.1010804@ruby.dti.ne.jp>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: catalin.marinas@gmail.com, kha@treskal.com
+X-From: git-owner@vger.kernel.org Fri Sep 05 19:17:49 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Kbet4-0007EB-JV
-	for gcvg-git-2@gmane.org; Fri, 05 Sep 2008 19:14:23 +0200
+	id 1KbewI-0008Q8-1c
+	for gcvg-git-2@gmane.org; Fri, 05 Sep 2008 19:17:42 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751818AbYIERNL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 5 Sep 2008 13:13:11 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751824AbYIERNL
-	(ORCPT <rfc822;git-outgoing>); Fri, 5 Sep 2008 13:13:11 -0400
-Received: from smtp-3.orange.nl ([193.252.22.243]:45443 "EHLO smtp-3.orange.nl"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751640AbYIERNK (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 5 Sep 2008 13:13:10 -0400
-Received: from me-wanadoo.net (localhost [127.0.0.1])
-	by mwinf6208.online.nl (SMTP Server) with ESMTP id D4BC61C00086;
-	Fri,  5 Sep 2008 19:13:07 +0200 (CEST)
-Received: from localhost.localdomain (s5591931c.adsl.wanadoo.nl [85.145.147.28])
-	by mwinf6208.online.nl (SMTP Server) with ESMTP id F19FA1C00082;
-	Fri,  5 Sep 2008 19:13:06 +0200 (CEST)
-X-ME-UUID: 20080905171306989.F19FA1C00082@mwinf6208.online.nl
-X-Mailer: git-send-email 1.6.0.1.346.g880d9.dirty
-In-Reply-To: <4C04A26E-5829-4A39-AD89-F5A68E606AA3@ai.rug.nl>
+	id S1751696AbYIERQg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 5 Sep 2008 13:16:36 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751300AbYIERQg
+	(ORCPT <rfc822;git-outgoing>); Fri, 5 Sep 2008 13:16:36 -0400
+Received: from smtp14.dti.ne.jp ([202.216.231.189]:62923 "EHLO
+	smtp14.dti.ne.jp" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751167AbYIERQf (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 5 Sep 2008 13:16:35 -0400
+Received: from [192.168.1.3] (PPPa881.tokyo-ip.dti.ne.jp [210.159.215.131]) by smtp14.dti.ne.jp (3.11s) with ESMTP AUTH id m85HGN4N003273;Sat, 6 Sep 2008 02:16:25 +0900 (JST)
+User-Agent: Thunderbird 2.0.0.16 (X11/20080707)
+In-Reply-To: <48B9AE01.1010804@ruby.dti.ne.jp>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/95024>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/95025>
 
-This outputs the current branch on which a commit was created, just for
-reference. For example:
+These commands are no longer available.
 
-	Created commit 6d42875 on master: Fix submodule invalid command error
-
-This also reminds the committer when he is on a detached HEAD:
-
-	Created commit 02a7172 on detached HEAD: Also do this for 'git commit --amend'
-
-Signed-off-by: Pieter de Bie <pdebie@ai.rug.nl>
+Signed-off-by: Shinya Kuribayashi <skuribay@ruby.dti.ne.jp>
 ---
- builtin-commit.c |   26 ++++++++++++++++++++++++--
- 1 files changed, 24 insertions(+), 2 deletions(-)
 
-diff --git a/builtin-commit.c b/builtin-commit.c
-index 8165bb3..a82483d 100644
---- a/builtin-commit.c
-+++ b/builtin-commit.c
-@@ -878,10 +878,31 @@ int cmd_status(int argc, const char **argv, const char *prefix)
- 	return commitable ? 0 : 1;
- }
+Shinya Kuribayashi wrote:
+> > "stg add" was dropped several months ago.
+> 
+> Hm, I should have removed applied/unapplied entries also.
+
+Sorry for the noise, again.  I've still missed `cp' and `rm', sigh.
+Hope this one is finally get merged.  Thanks!
+
+  Shinya
+
+ contrib/stgit-completion.bash |    7 -------
+ 1 files changed, 0 insertions(+), 7 deletions(-)
+
+diff --git a/contrib/stgit-completion.bash b/contrib/stgit-completion.bash
+index 1867e6b..1467c28 100644
+--- a/contrib/stgit-completion.bash
++++ b/contrib/stgit-completion.bash
+@@ -11,8 +11,6 @@
+ #         . ~/.stgit-completion.bash
  
-+static char* get_commit_format_string()
-+{
-+	unsigned char sha[20];
-+	const char* head = resolve_ref("HEAD", sha, 0, NULL);
-+	struct strbuf buf = STRBUF_INIT;
-+
-+	strbuf_addstr(&buf, "format:%h");
-+
-+	/* Are we on a detached HEAD? */
-+	if (!strcmp("HEAD", head))
-+		strbuf_addstr(&buf, " on detached HEAD");
-+	else if (!prefixcmp(head, "refs/heads/")) {
-+		strbuf_addstr(&buf, " on ");
-+		strbuf_addstr(&buf, head + 11);
-+	}
-+	strbuf_addstr(&buf, ": %s");
-+
-+	return buf.buf;
-+}
-+
- static void print_summary(const char *prefix, const unsigned char *sha1)
- {
- 	struct rev_info rev;
- 	struct commit *commit;
-+	char* format = get_commit_format_string();
- 
- 	commit = lookup_commit(sha1);
- 	if (!commit)
-@@ -899,7 +920,7 @@ static void print_summary(const char *prefix, const unsigned char *sha1)
- 
- 	rev.verbose_header = 1;
- 	rev.show_root_diff = 1;
--	get_commit_format("format:%h: %s", &rev);
-+	get_commit_format(format, &rev);
- 	rev.always_show_header = 0;
- 	rev.diffopt.detect_rename = 1;
- 	rev.diffopt.rename_limit = 100;
-@@ -910,10 +931,11 @@ static void print_summary(const char *prefix, const unsigned char *sha1)
- 
- 	if (!log_tree_commit(&rev, commit)) {
- 		struct strbuf buf = STRBUF_INIT;
--		format_commit_message(commit, "%h: %s", &buf, DATE_NORMAL);
-+		format_commit_message(commit, format + 7, &buf, DATE_NORMAL);
- 		printf("%s\n", buf.buf);
- 		strbuf_release(&buf);
- 	}
-+	free(format);
- }
- 
- static int git_commit_config(const char *k, const char *v, void *cb)
--- 
-1.6.0.1.346.g880d9.dirty
+ _stg_commands="
+-    add
+-    applied
+     branch
+     delete
+     diff
+@@ -20,7 +18,6 @@ _stg_commands="
+     clone
+     coalesce
+     commit
+-    cp
+     edit
+     export
+     files
+@@ -44,14 +41,12 @@ _stg_commands="
+     rename
+     repair
+     resolved
+-    rm
+     series
+     show
+     sink
+     status
+     sync
+     top
+-    unapplied
+     uncommit
+     unhide
+ "
+@@ -264,8 +259,6 @@ _stg ()
+         # working-copy commands
+         diff)   _stg_patches_options $command _applied_patches "-r --range" ;;
+ 	resolved) _complete_files $command "$(_conflicting_files)" ;;
+-	add)	_complete_files $command "$(_unknown_files)" ;;
+-#	rm)	_complete_files $command "$(_known_files)" ;;
+ 	# commands that usually raher accept branches
+ 	branch) _complete_branch $command _all_branches ;;
+ 	rebase) _complete_branch $command _all_branches ;;
