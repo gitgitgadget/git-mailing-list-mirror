@@ -1,81 +1,139 @@
-From: "Alexander Gladysh" <agladysh-Re5JQEeQqe8AvxtiuMwx3w@public.gmane.org>
-Subject: Re: Git Gui does not want to work on chunk level
-Date: Fri, 5 Sep 2008 23:27:19 +0400
-Message-ID: <c6c947f60809051227o6a3890c9m1767921a6bb9a804@mail.gmail.com>
-References: <c6c947f60808270216k2feb8f9ar765cdee1fc3910ee@mail.gmail.com> <c6c947f60809031223i575ca3fdya357588610bb72e8@mail.gmail.com> <20080903230814.GJ28315@spearce.org> <c6c947f60809040220t589e65bfkbd693fd335792069@mail.gmail.com> <20080904143723.GB23708@spearce.org> <c6c947f60809040754g34e60633lcd5f872ac5e80158@mail.gmail.com> <20080905045327.GA31166@spearce.org>
-Reply-To: git-users-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org
+From: Heikki Orsila <heikki.orsila@iki.fi>
+Subject: [PATCH] Add --dirstat-by-file diff option
+Date: Fri, 5 Sep 2008 22:27:35 +0300
+Message-ID: <20080905192735.GA12853@zakalwe.fi>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: git-users-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org, git-u79uwXL29TY76Z2rM5mHXA@public.gmane.org
-To: "Shawn O. Pearce" <spearce-o8xcbExO1WpAfugRpC6u6w@public.gmane.org>
-X-From: grbounce-9bT_dAUAAACIBuRSQHd8xQYABcDNOWyf=gcggu-git-users=m.gmane.org-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org Fri Sep 05 21:28:38 2008
-Return-path: <grbounce-9bT_dAUAAACIBuRSQHd8xQYABcDNOWyf=gcggu-git-users=m.gmane.org-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org>
-Envelope-to: gcggu-git-users@m.gmane.org
-Received: from yx-out-2122.google.com ([74.125.44.24])
+Content-Type: text/plain; charset=iso-8859-1
+Cc: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Sep 05 21:29:00 2008
+Return-path: <git-owner@vger.kernel.org>
+Envelope-to: gcvg-git-2@gmane.org
+Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Kbgyr-0002Na-6Z
-	for gcggu-git-users@m.gmane.org; Fri, 05 Sep 2008 21:28:29 +0200
-Received: by yx-out-2122.google.com with SMTP id 22so408851yxm.63
-        for <gcggu-git-users@m.gmane.org>; Fri, 05 Sep 2008 12:27:27 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlegroups.com; s=beta;
-        h=domainkey-signature:received:received:x-sender:x-apparently-to
-         :received:received:received-spf:authentication-results:received
-         :dkim-signature:domainkey-signature:received:received:message-id
-         :date:from:to:subject:cc:in-reply-to:mime-version:content-type
-         :references:reply-to:sender:precedence:x-google-loop:mailing-list
-         :list-id:list-post:list-help:list-unsubscribe:x-beenthere-env
-         :x-beenthere;
-        bh=PMdaD+3VSHpXIfXxnEStCRrt3eV73uwYYVTimLNb4y8=;
-        b=0E6ktzOEVJwEyqjkMiIma+Azi1zBxIB1vDYca/bfrXZrYoup4DWrrn3RjhJCafnTC5
-         uZAEkcOqrCkfSJi6J9Eso8eo6PO3uifz96lufe5QOr7dbpH9/mfDuAMi2A7XBlBruneC
-         mU7HEz5YYLLVaO6U6yVh0Gsb4+eiROGE8/QoI=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=googlegroups.com; s=beta;
-        h=x-sender:x-apparently-to:received-spf:authentication-results
-         :dkim-signature:domainkey-signature:message-id:date:from:to:subject
-         :cc:in-reply-to:mime-version:content-type:references:reply-to:sender
-         :precedence:x-google-loop:mailing-list:list-id:list-post:list-help
-         :list-unsubscribe:x-beenthere-env:x-beenthere;
-        b=CBJK+oLPLQyXYuUdWqWHciXvK5r37g7jaaeTKzyak5hb8Tv5I8zd5WV5b4qrJyOv6Q
-         HWI8jP5TsJsqKN/XKG3kJLe6XtZ98IHghZbAH7VX4wozIg2/uvV0BznsdVVl40XX95uy
-         FhDQ5zCi89CiV0Y1P0XWCuKUz6DUF2fFn41+0=
-Received: by 10.114.199.1 with SMTP id w1mr318530waf.6.1220642841008;
-        Fri, 05 Sep 2008 12:27:21 -0700 (PDT)
-Received: by 10.106.151.34 with SMTP id y34gr144prd.0;
-	Fri, 05 Sep 2008 12:27:20 -0700 (PDT)
-X-Sender: agladysh-Re5JQEeQqe8AvxtiuMwx3w@public.gmane.org
-X-Apparently-To: git-users-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org
-Received: by 10.114.111.6 with SMTP id j6mr7292225wac.29.1220642840530; Fri, 05 Sep 2008 12:27:20 -0700 (PDT)
-Received: from wa-out-1112.google.com ([172.21.189.38]) by mx.google.com with ESMTP id k32si456206wah.1.2008.09.05.12.27.19; Fri, 05 Sep 2008 12:27:20 -0700 (PDT)
-Received-SPF: neutral (google.com: 172.21.189.38 is neither permitted nor denied by domain of agladysh-Re5JQEeQqe8AvxtiuMwx3w@public.gmane.org) client-ip=172.21.189.38;
-Authentication-Results: mx.google.com; spf=neutral (google.com: 172.21.189.38 is neither permitted nor denied by domain of agladysh-Re5JQEeQqe8AvxtiuMwx3w@public.gmane.org) smtp.mail=agladysh-Re5JQEeQqe8AvxtiuMwx3w@public.gmane.org; dkim=pass (test mode) header.i=@gmail.com
-Received: by wa-out-1112.google.com with SMTP id m38so451832waf.14 for <git-users-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org>; Fri, 05 Sep 2008 12:27:19 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=gamma; h=domainkey-signature:received:received:message-id:date:from:to :subject:cc:in-reply-to:mime-version:content-type :content-transfer-encoding:content-disposition:references; bh=pRU3g+r1gTWldafcFvGJrbVx82h1kxUjgHVo9j7eFUM=; b=A3DiXd7SfAx0epux58SU708hkWSPHg91zq4FyKNOxzdsGztwAmlUEeSlV2OyeGuiAH CHnyYWpoA39l382MMURJ6q4IVJHL2lskNZy/bm/fNf58U9INnBTUIXCVYGBYonMpN2gx vz1r2j7qVzN0wx2uTuh+2eCtvnEMLEsA4CZIw=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=gmail.com; s=gamma; h=message-id:date:from:to:subject:cc:in-reply-to:mime-version :content-type:content-transfer-encoding:content-disposition :references; b=j69f6gsfYmeneyHxJ3cFr8vHjfWHLEMh8K9whA++Ug2lgNsYW9/27JAHEtVGcXYcQg SlM+nFd+h+tVFDoBcFRZqhhfz9CkPy9GY4gEkpqtgv6c5ynn9x9d354444vK5S95QqfZ zkJcqQQLMNsb8TdEKCoAQw9cIJJirjs9TqUrQ=
-Received: by 10.115.46.9 with SMTP id y9mr8318634waj.23.1220642839299; Fri, 05 Sep 2008 12:27:19 -0700 (PDT)
-Received: by 10.115.95.8 with HTTP; Fri, 5 Sep 2008 12:27:19 -0700 (PDT)
-In-Reply-To: <20080905045327.GA31166-o8xcbExO1WpAfugRpC6u6w@public.gmane.org>
-Sender: git-users-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org
+	id 1Kbgz8-0002TI-3r
+	for gcvg-git-2@gmane.org; Fri, 05 Sep 2008 21:28:46 +0200
+Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
+	id S1752019AbYIET1h (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 5 Sep 2008 15:27:37 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751251AbYIET1h
+	(ORCPT <rfc822;git-outgoing>); Fri, 5 Sep 2008 15:27:37 -0400
+Received: from zakalwe.fi ([80.83.5.154]:58580 "EHLO zakalwe.fi"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751167AbYIET1h (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 5 Sep 2008 15:27:37 -0400
+Received: by zakalwe.fi (Postfix, from userid 1023)
+	id 4B1612BC68; Fri,  5 Sep 2008 22:27:35 +0300 (EEST)
+Content-Disposition: inline
+User-Agent: Mutt/1.5.11
+Sender: git-owner@vger.kernel.org
 Precedence: bulk
-X-Google-Loop: groups
-Mailing-List: list git-users-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org;
-	contact git-users+owner-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org
-List-Id: <git-users.googlegroups.com>
-List-Post: <mailto:git-users-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org>
-List-Help: <mailto:git-users+help-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org>
-List-Unsubscribe: <http://googlegroups.com/group/git-users/subscribe>,
-	<mailto:git-users+unsubscribe-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org>
-X-BeenThere-Env: git-users-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org
-X-BeenThere: git-users-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/95034>
+List-ID: <git.vger.kernel.org>
+X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/95035>
 
+--dirstat-by-file is the same as --dirstat, but it counts
+"impacted files" instead of "impacted lines" (lines that
+are added or removed).
 
-> So that was an awesome reproduction case.  I have committed the
-> following fix and will push it out in a few minutes:
+The patch also cleans --cumulative option handling.
+DIFF_OPT_CUMULATIVE_DIRSTAT is used instead of
+DIFF_FORMAT_CUMULATIVE.
 
-<...>
+Signed-off-by: Heikki Orsila <heikki.orsila@iki.fi>
+---
+This version takes notice of comments from Junio C Hamano and Jeff King.
 
-Thank you! The fix helped indeed. I can commit on hunk level again! :-)
+Changes to earlier version:
 
-Alexander.
+* use --dirstat-by-file instead of --filedirstat
+
+* cleaner handling of --cumulative
+
+ Documentation/diff-options.txt |    3 +++
+ diff.c                         |   18 +++++++++++++-----
+ diff.h                         |    3 ++-
+ 3 files changed, 18 insertions(+), 6 deletions(-)
+
+diff --git a/Documentation/diff-options.txt b/Documentation/diff-options.txt
+index 1759386..039452b 100644
+--- a/Documentation/diff-options.txt
++++ b/Documentation/diff-options.txt
+@@ -66,6 +66,9 @@ endif::git-format-patch[]
+ 	the "--cumulative" flag, which adds up percentages recursively
+ 	even when they have been already reported for a sub-directory.
+ 
++--dirstat-by-file[=limit]::
++	Same as --dirstat, but counts changed files instead of lines.
++
+ --summary::
+ 	Output a condensed summary of extended header information
+ 	such as creations, renames and mode changes.
+diff --git a/diff.c b/diff.c
+index 135dec4..9b8010d 100644
+--- a/diff.c
++++ b/diff.c
+@@ -1078,7 +1078,7 @@ static void show_dirstat(struct diff_options *options)
+ 	dir.alloc = 0;
+ 	dir.nr = 0;
+ 	dir.percent = options->dirstat_percent;
+-	dir.cumulative = options->output_format & DIFF_FORMAT_CUMULATIVE;
++	dir.cumulative = DIFF_OPT_TST(options, CUMULATIVE_DIRSTAT);
+ 
+ 	changed = 0;
+ 	for (i = 0; i < q->nr; i++) {
+@@ -1110,9 +1110,13 @@ static void show_dirstat(struct diff_options *options)
+ 		/*
+ 		 * Original minus copied is the removed material,
+ 		 * added is the new material.  They are both damages
+-		 * made to the preimage.
++		 * made to the preimage. In --dirstat-by-file mode, count
++		 * damaged files, not damaged lines. This is done by
++		 * counting only a single damaged line per file.
+ 		 */
+ 		damage = (p->one->size - copied) + added;
++		if (DIFF_OPT_TST(options, DIRSTAT_BY_FILE) && damage > 0)
++			damage = 1;
+ 
+ 		ALLOC_GROW(dir.files, dir.nr + 1, dir.alloc);
+ 		dir.files[dir.nr].name = name;
+@@ -2472,9 +2476,13 @@ int diff_opt_parse(struct diff_options *options, const char **av, int ac)
+ 		options->output_format |= DIFF_FORMAT_SHORTSTAT;
+ 	else if (opt_arg(arg, 'X', "dirstat", &options->dirstat_percent))
+ 		options->output_format |= DIFF_FORMAT_DIRSTAT;
+-	else if (!strcmp(arg, "--cumulative"))
+-		options->output_format |= DIFF_FORMAT_CUMULATIVE;
+-	else if (!strcmp(arg, "--check"))
++	else if (opt_arg(arg, 0, "dirstat-by-file", &options->dirstat_percent)) {
++		options->output_format |= DIFF_FORMAT_DIRSTAT;
++		DIFF_OPT_SET(options, DIRSTAT_BY_FILE);
++	} else if (!strcmp(arg, "--cumulative")) {
++		options->output_format |= DIFF_FORMAT_DIRSTAT;
++		DIFF_OPT_SET(options, CUMULATIVE_DIRSTAT);
++	} else if (!strcmp(arg, "--check"))
+ 		options->output_format |= DIFF_FORMAT_CHECKDIFF;
+ 	else if (!strcmp(arg, "--summary"))
+ 		options->output_format |= DIFF_FORMAT_SUMMARY;
+diff --git a/diff.h b/diff.h
+index 50fb5dd..102c38c 100644
+--- a/diff.h
++++ b/diff.h
+@@ -31,7 +31,6 @@ typedef void (*diff_format_fn_t)(struct diff_queue_struct *q,
+ #define DIFF_FORMAT_PATCH	0x0010
+ #define DIFF_FORMAT_SHORTSTAT	0x0020
+ #define DIFF_FORMAT_DIRSTAT	0x0040
+-#define DIFF_FORMAT_CUMULATIVE	0x0080
+ 
+ /* These override all above */
+ #define DIFF_FORMAT_NAME	0x0100
+@@ -64,6 +63,8 @@ typedef void (*diff_format_fn_t)(struct diff_queue_struct *q,
+ #define DIFF_OPT_CHECK_FAILED        (1 << 16)
+ #define DIFF_OPT_RELATIVE_NAME       (1 << 17)
+ #define DIFF_OPT_IGNORE_SUBMODULES   (1 << 18)
++#define DIFF_OPT_CUMULATIVE_DIRSTAT  (1 << 19)
++#define DIFF_OPT_DIRSTAT_BY_FILE     (1 << 20)
+ #define DIFF_OPT_TST(opts, flag)    ((opts)->flags & DIFF_OPT_##flag)
+ #define DIFF_OPT_SET(opts, flag)    ((opts)->flags |= DIFF_OPT_##flag)
+ #define DIFF_OPT_CLR(opts, flag)    ((opts)->flags &= ~DIFF_OPT_##flag)
+-- 
+1.6.0.1
