@@ -1,98 +1,80 @@
-From: Shinya Kuribayashi <skuribay@ruby.dti.ne.jp>
-Subject: [StGit PATCH rev3] contrib/stgit-completion.bash: Remove add/applied/cp/rm/unapplied
-Date: Sat, 06 Sep 2008 02:16:22 +0900
-Message-ID: <48C16966.90009@ruby.dti.ne.jp>
-References: <48B9A37B.4060001@ruby.dti.ne.jp> <48B9AE01.1010804@ruby.dti.ne.jp>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: catalin.marinas@gmail.com, kha@treskal.com
-X-From: git-owner@vger.kernel.org Fri Sep 05 19:17:49 2008
+From: Miklos Vajna <vmiklos@frugalware.org>
+Subject: [PATCH] merge-recursive: get rid of virtual_id
+Date: Fri,  5 Sep 2008 19:26:42 +0200
+Message-ID: <1220635602-13796-1-git-send-email-vmiklos@frugalware.org>
+References: <7vy7273f9v.fsf@gitster.siamese.dyndns.org>
+Cc: git@vger.kernel.org, Stephan Beyer <s-beyer@gmx.net>,
+	Alex Riesen <raa.lkml@gmail.com>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Sep 05 19:27:54 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KbewI-0008Q8-1c
-	for gcvg-git-2@gmane.org; Fri, 05 Sep 2008 19:17:42 +0200
+	id 1Kbf69-0003OY-UN
+	for gcvg-git-2@gmane.org; Fri, 05 Sep 2008 19:27:54 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751696AbYIERQg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 5 Sep 2008 13:16:36 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751300AbYIERQg
-	(ORCPT <rfc822;git-outgoing>); Fri, 5 Sep 2008 13:16:36 -0400
-Received: from smtp14.dti.ne.jp ([202.216.231.189]:62923 "EHLO
-	smtp14.dti.ne.jp" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751167AbYIERQf (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 5 Sep 2008 13:16:35 -0400
-Received: from [192.168.1.3] (PPPa881.tokyo-ip.dti.ne.jp [210.159.215.131]) by smtp14.dti.ne.jp (3.11s) with ESMTP AUTH id m85HGN4N003273;Sat, 6 Sep 2008 02:16:25 +0900 (JST)
-User-Agent: Thunderbird 2.0.0.16 (X11/20080707)
-In-Reply-To: <48B9AE01.1010804@ruby.dti.ne.jp>
+	id S1751708AbYIER0r (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 5 Sep 2008 13:26:47 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751770AbYIER0q
+	(ORCPT <rfc822;git-outgoing>); Fri, 5 Sep 2008 13:26:46 -0400
+Received: from yugo.dsd.sztaki.hu ([195.111.2.114]:54357 "EHLO
+	yugo.frugalware.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751708AbYIER0q (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 5 Sep 2008 13:26:46 -0400
+Received: from vmobile.example.net (dsl5401C0BB.pool.t-online.hu [84.1.192.187])
+	by yugo.frugalware.org (Postfix) with ESMTP id 77CF01DDC5B;
+	Fri,  5 Sep 2008 19:26:43 +0200 (CEST)
+Received: by vmobile.example.net (Postfix, from userid 1003)
+	id DC24F84CA; Fri,  5 Sep 2008 19:26:42 +0200 (CEST)
+X-Mailer: git-send-email 1.6.0.1
+In-Reply-To: <7vy7273f9v.fsf@gitster.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/95025>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/95026>
 
-These commands are no longer available.
+We now just leave the object->sha1 field of virtual commits 0{40} as it
+is initialized, as a unique hash is not necessary in case of virtual
+commits.
 
-Signed-off-by: Shinya Kuribayashi <skuribay@ruby.dti.ne.jp>
+Signed-off-by: Miklos Vajna <vmiklos@frugalware.org>
 ---
 
-Shinya Kuribayashi wrote:
-> > "stg add" was dropped several months ago.
-> 
-> Hm, I should have removed applied/unapplied entries also.
+On Thu, Sep 04, 2008 at 12:03:08PM -0700, Junio C Hamano <gitster@pobox.com> wrote:
+> Does it hurt if we get rid of virtual_id and always leave the
+> object->sha1 field of virtual commits 0{40} as it is initialized?
 
-Sorry for the noise, again.  I've still missed `cp' and `rm', sigh.
-Hope this one is finally get merged.  Thanks!
+I don't think so. Here is a patch that does it.
 
-  Shinya
+ merge-recursive.c |    6 +-----
+ 1 files changed, 1 insertions(+), 5 deletions(-)
 
- contrib/stgit-completion.bash |    7 -------
- 1 files changed, 0 insertions(+), 7 deletions(-)
-
-diff --git a/contrib/stgit-completion.bash b/contrib/stgit-completion.bash
-index 1867e6b..1467c28 100644
---- a/contrib/stgit-completion.bash
-+++ b/contrib/stgit-completion.bash
-@@ -11,8 +11,6 @@
- #         . ~/.stgit-completion.bash
+diff --git a/merge-recursive.c b/merge-recursive.c
+index 1c24c31..dbdb9ac 100644
+--- a/merge-recursive.c
++++ b/merge-recursive.c
+@@ -35,18 +35,14 @@ static struct tree *shift_tree_object(struct tree *one, struct tree *two)
+ }
  
- _stg_commands="
--    add
--    applied
-     branch
-     delete
-     diff
-@@ -20,7 +18,6 @@ _stg_commands="
-     clone
-     coalesce
-     commit
--    cp
-     edit
-     export
-     files
-@@ -44,14 +41,12 @@ _stg_commands="
-     rename
-     repair
-     resolved
--    rm
-     series
-     show
-     sink
-     status
-     sync
-     top
--    unapplied
-     uncommit
-     unhide
- "
-@@ -264,8 +259,6 @@ _stg ()
-         # working-copy commands
-         diff)   _stg_patches_options $command _applied_patches "-r --range" ;;
- 	resolved) _complete_files $command "$(_conflicting_files)" ;;
--	add)	_complete_files $command "$(_unknown_files)" ;;
--#	rm)	_complete_files $command "$(_known_files)" ;;
- 	# commands that usually raher accept branches
- 	branch) _complete_branch $command _all_branches ;;
- 	rebase) _complete_branch $command _all_branches ;;
+ /*
+- * A virtual commit has
+- * - (const char *)commit->util set to the name, and
+- * - *(int *)commit->object.sha1 set to the virtual id.
++ * A virtual commit has (const char *)commit->util set to the name.
+  */
+ 
+ struct commit *make_virtual_commit(struct tree *tree, const char *comment)
+ {
+ 	struct commit *commit = xcalloc(1, sizeof(struct commit));
+-	static unsigned virtual_id = 1;
+ 	commit->tree = tree;
+ 	commit->util = (void*)comment;
+-	*(int*)commit->object.sha1 = virtual_id++;
+ 	/* avoid warnings */
+ 	commit->object.parsed = 1;
+ 	return commit;
+-- 
+1.6.0.1
