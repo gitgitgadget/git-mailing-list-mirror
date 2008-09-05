@@ -1,58 +1,72 @@
-From: Teemu Likonen <tlikonen@iki.fi>
-Subject: --all-match
-Date: Fri, 5 Sep 2008 15:35:24 +0300
-Message-ID: <20080905123524.GA3124@mithlond.arda.local>
-References: <g9o0ac$qig$1@ger.gmane.org> <7v4p4w75b7.fsf@gitster.siamese.dyndns.org> <7vprnk5n3c.fsf_-_@gitster.siamese.dyndns.org> <20080904140902.GY10544@machine.or.cz> <7vy7271z9g.fsf@gitster.siamese.dyndns.org>
+From: Miklos Vajna <vmiklos@frugalware.org>
+Subject: Re: Patch for git-svn.perl
+Date: Fri, 5 Sep 2008 15:29:58 +0200
+Message-ID: <20080905132958.GT16514@genesis.frugalware.org>
+References: <257934.40788.qm@web27803.mail.ukl.yahoo.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Petr Baudis <pasky@suse.cz>,
-	Giuseppe Bilotta <giuseppe.bilotta@gmail.com>,
-	git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Sep 05 14:37:41 2008
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="XUmrTyVHrg2/ImRG"
+Cc: normalperson@yhbt.net, brad.king@kitware.com, git@vger.kernel.org
+To: Paul Talacko <gnuruandstuff@yahoo.co.uk>
+X-From: git-owner@vger.kernel.org Fri Sep 05 15:31:21 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KbaYd-00008K-TS
-	for gcvg-git-2@gmane.org; Fri, 05 Sep 2008 14:37:00 +0200
+	id 1KbbP7-0008FU-2E
+	for gcvg-git-2@gmane.org; Fri, 05 Sep 2008 15:31:13 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751659AbYIEMfx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 5 Sep 2008 08:35:53 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752436AbYIEMfw
-	(ORCPT <rfc822;git-outgoing>); Fri, 5 Sep 2008 08:35:52 -0400
-Received: from mta-out.inet.fi ([195.156.147.13]:35992 "EHLO kirsi1.inet.fi"
+	id S1752996AbYIENaF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 5 Sep 2008 09:30:05 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752988AbYIENaE
+	(ORCPT <rfc822;git-outgoing>); Fri, 5 Sep 2008 09:30:04 -0400
+Received: from virgo.iok.hu ([193.202.89.103]:60740 "EHLO virgo.iok.hu"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752168AbYIEMfw (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 5 Sep 2008 08:35:52 -0400
-Received: from mithlond.arda.local (80.220.180.181) by kirsi1.inet.fi (8.5.014)
-        id 48B55E9A00787455; Fri, 5 Sep 2008 15:35:26 +0300
-Received: from dtw by mithlond.arda.local with local (Exim 4.63)
-	(envelope-from <tlikonen@iki.fi>)
-	id 1KbaX6-0001s8-DI; Fri, 05 Sep 2008 15:35:24 +0300
+	id S1752918AbYIENaB (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 5 Sep 2008 09:30:01 -0400
+Received: from kag.elte.hu (kag.elte.hu [157.181.177.1])
+	by virgo.iok.hu (Postfix) with ESMTP id A0E981B2542;
+	Fri,  5 Sep 2008 15:29:59 +0200 (CEST)
+Received: from genesis.frugalware.org (frugalware.elte.hu [157.181.177.34])
+	by kag.elte.hu (Postfix) with ESMTP id 6BA4F4465E;
+	Fri,  5 Sep 2008 15:29:59 +0200 (CEST)
+Received: by genesis.frugalware.org (Postfix, from userid 1000)
+	id 132E91190009; Fri,  5 Sep 2008 15:29:58 +0200 (CEST)
 Content-Disposition: inline
-In-Reply-To: <7vy7271z9g.fsf@gitster.siamese.dyndns.org>
-User-Agent: Mutt/1.5.13 (2006-08-11)
+In-Reply-To: <257934.40788.qm@web27803.mail.ukl.yahoo.com>
+User-Agent: Mutt/1.5.17 (2007-11-01)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/95010>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/95011>
 
-Junio C Hamano wrote (2008-09-04 12:34 -0700):
 
-> One related thing I suspect many people haven't realized is that "git
-> log" can use "--all-match".
+--XUmrTyVHrg2/ImRG
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-> I've been wondering if we want to make --all-match the default for
-> revision traversal family (i.e. "git log"), as I suspect it would
-> match people's expectations more naturally, even though it is
-> a backward incompatible change.  It is backward incompatible only
-> because the original implementation was stupid ;-).
+On Fri, Sep 05, 2008 at 11:18:26AM +0000, Paul Talacko <gnuruandstuff@yahoo=
+=2Eco.uk> wrote:
+> There's an issue in git-svn as autoprops are not applied to renamed files=
+, only to added files.
+>=20
+> This patch fixes the bug.
 
-You can count my vote for making --all-match the default, at least for
-"git log". My logic says that adding more commit-limiting options to
-command line would limit commits more.
+Please read Documentation/SubmittingPatches and send a proper patch,
+thanks!
 
-Anyway, thanks for hint. I see --all-match is not a new feature (70d0afb
-2006-09-27).
+--XUmrTyVHrg2/ImRG
+Content-Type: application/pgp-signature
+Content-Disposition: inline
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.9 (GNU/Linux)
+
+iEYEARECAAYFAkjBNFYACgkQe81tAgORUJZtsQCgjY4vCBhUA7s0a5B5kFko1n17
+G1oAnRa0SDjNKUUeotoIh/iX9PRjbF+p
+=rvmc
+-----END PGP SIGNATURE-----
+
+--XUmrTyVHrg2/ImRG--
