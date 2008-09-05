@@ -1,73 +1,160 @@
-From: Michael Dressel <MichaelTiloDressel@t-online.de>
-Subject: Re: [PATCH 3/3] add '%d' pretty format specifier to show
- decoration
-Date: Fri, 5 Sep 2008 20:38:03 +0200 (CEST)
-Message-ID: <alpine.LNX.1.10.0809052035280.3868@pollux>
-References: <alpine.LNX.1.10.0809032036270.32295@pollux> <20080903191217.GA31195@coredump.intra.peff.net> <7v4p4xat3v.fsf@gitster.siamese.dyndns.org> <20080903203616.GB32223@coredump.intra.peff.net> <7vsksh9c9m.fsf@gitster.siamese.dyndns.org>
- <48BF0A5A.2040502@lsrfire.ath.cx> <20080904035139.GA28123@sigill.intra.peff.net> <48C002FB.9010401@lsrfire.ath.cx> <48C055B3.3030204@lsrfire.ath.cx> <20080905001133.GA17463@coredump.intra.peff.net> <7v7i9r1lnm.fsf@gitster.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re* git submodule output on invalid command
+Date: Fri, 05 Sep 2008 11:52:41 -0700
+Message-ID: <7vy726v30m.fsf@gitster.siamese.dyndns.org>
+References: <1220631370-19777-1-git-send-email-pdebie@ai.rug.nl>
 Mime-Version: 1.0
-Content-Type: MULTIPART/MIXED; BOUNDARY="0-2037727355-1220639779=:3868"
-Cc: Jeff King <peff@peff.net>,
-	=?ISO-8859-15?Q?Ren=E9_Scharfe?= <rene.scharfe@lsrfire.ath.cx>,
-	Michael Dressel <MichaelTiloDressel@t-online.de>,
-	git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Sep 05 20:40:58 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: Git Mailinglist <git@vger.kernel.org>
+To: Pieter de Bie <pdebie@ai.rug.nl>
+X-From: git-owner@vger.kernel.org Fri Sep 05 20:54:13 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KbgDV-0002UX-UL
-	for gcvg-git-2@gmane.org; Fri, 05 Sep 2008 20:39:34 +0200
+	id 1KbgRV-0008FR-Jm
+	for gcvg-git-2@gmane.org; Fri, 05 Sep 2008 20:54:02 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751643AbYIESi2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 5 Sep 2008 14:38:28 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751640AbYIESi2
-	(ORCPT <rfc822;git-outgoing>); Fri, 5 Sep 2008 14:38:28 -0400
-Received: from mailout07.t-online.de ([194.25.134.83]:50018 "EHLO
-	mailout07.t-online.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751002AbYIESi1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 5 Sep 2008 14:38:27 -0400
-Received: from fwd24.aul.t-online.de 
-	by mailout07.sul.t-online.de with smtp 
-	id 1KbgC2-0007MI-00; Fri, 05 Sep 2008 20:38:02 +0200
-Received: from [192.168.2.100] (r28N1ZZZwh1+3OQaImMKoCtkVYjykLDaWqPoIXq0iQPlIFbLmzhK0YgUOt8fkBjQ4S@[84.163.207.35]) by fwd24.t-online.de
-	with esmtp id 1KbgBw-0QA7VI0; Fri, 5 Sep 2008 20:37:56 +0200
-X-X-Sender: michael@pollux
-In-Reply-To: <7v7i9r1lnm.fsf@gitster.siamese.dyndns.org>
-User-Agent: Alpine 1.10 (LNX 962 2008-03-14)
-Content-ID: <alpine.LNX.1.10.0809052036550.3868@pollux>
-X-ID: r28N1ZZZwh1+3OQaImMKoCtkVYjykLDaWqPoIXq0iQPlIFbLmzhK0YgUOt8fkBjQ4S
-X-TOI-MSGID: 344d2e5e-7172-4777-9593-9cf62991473a
+	id S1752488AbYIESwt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 5 Sep 2008 14:52:49 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752393AbYIESwt
+	(ORCPT <rfc822;git-outgoing>); Fri, 5 Sep 2008 14:52:49 -0400
+Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:59361 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752518AbYIESws (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 5 Sep 2008 14:52:48 -0400
+Received: from localhost.localdomain (localhost [127.0.0.1])
+	by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id 08F36746F2;
+	Fri,  5 Sep 2008 14:52:47 -0400 (EDT)
+Received: from pobox.com (ip68-225-240-211.oc.oc.cox.net [68.225.240.211])
+ (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
+ certificate requested) by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with
+ ESMTPSA id 912AE746EF; Fri,  5 Sep 2008 14:52:43 -0400 (EDT)
+In-Reply-To: <1220631370-19777-1-git-send-email-pdebie@ai.rug.nl> (Pieter de
+ Bie's message of "Fri, 5 Sep 2008 18:16:10 +0200")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: D4ACB034-7B7B-11DD-BFEB-3113EBD4C077-77302942!a-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/95029>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/95030>
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
+Pieter de Bie <pdebie@ai.rug.nl> writes:
 
---0-2037727355-1220639779=:3868
-Content-Type: TEXT/PLAIN; CHARSET=ISO-8859-15; FORMAT=flowed
-Content-Transfer-Encoding: 8BIT
-Content-ID: <alpine.LNX.1.10.0809052036551.3868@pollux>
-
-
-
-On Thu, 4 Sep 2008, Junio C Hamano wrote:
-
-> Jeff King <peff@peff.net> writes:
+> ..., something like 'git
+> submodule satsus' is valid and should return nothing, because there are
+> no submodules in the 'satsus' path. However, I still feel this should
+> produce a warning.
 >
->> On Thu, Sep 04, 2008 at 11:40:03PM +0200, René Scharfe wrote:
->>
->>> Michael Dressel implemented an initial version and chose the letter d,
->>> Junio suggested to add a leading space and parentheses.
->>
+> I'm sure there is a nicer way to alert the user than my patch below, which
+> warns if the user did not supply any valid paths. Anyone else got a more
+> satisfying approach?
 
-Very nice.
-Only that I did not do the very first implementation it was Jeff King.
+"ls-files --error-unmatch" would warn you of mistyped nonexistent paths,
+but "git submodule Makefile" would still catch the Makefile from the
+toplevel superproject happily and will not complain without checking after
+filtering by submodules.
 
-Cheers,
-Michael
---0-2037727355-1220639779=:3868--
+> diff --git a/git-submodule.sh b/git-submodule.sh
+> index 1c39b59..3aae746 100755
+> --- a/git-submodule.sh
+> +++ b/git-submodule.sh
+> @@ -59,7 +59,12 @@ resolve_relative_url ()
+>  #
+>  module_list()
+>  {
+> -       git ls-files --stage -- "$@" | grep '^160000 '
+> +       git ls-files --stage -- "$@" | grep '^160000 ' ||
+> +       if test -z "$@"; then
+
+Shell nit; this must be "$*" not "$@", right?
+
+> +               die "This repository contains no submodules"
+> +       else
+> +               die "Could not find any submodules in paths $@"
+
+Because die() acts as if it is a fancier echo from output POV this does
+not matter in practice, but as a principle, this should also be "$*"
+instead.  Upon seeing "git submodule a b c", your intention is not to pass
+three parameters "Could not find a", "b" and "c" to die() but is to pass a
+single string that is the error message.
+
+By the way, because this "limiting only to submodules" seem to appear very
+often, we might want to give ls-files a native feature to do so, perhaps
+something like this.  Then your warning/error could become:
+
+	git ls-files --limit-type=submodule --error-unmatch
+
+Although we would need to make the error message that comes from this
+codepath tweakable by the caller.
+
+ builtin-ls-files.c |   34 ++++++++++++++++++++++++++++++++++
+ 1 files changed, 34 insertions(+), 0 deletions(-)
+
+diff --git c/builtin-ls-files.c w/builtin-ls-files.c
+index e8d568e..69e3b5b 100644
+--- c/builtin-ls-files.c
++++ w/builtin-ls-files.c
+@@ -28,6 +28,10 @@ static const char **pathspec;
+ static int error_unmatch;
+ static char *ps_matched;
+ static const char *with_tree;
++static unsigned int limit_types;
++#define ENTRY_REGULAR   02
++#define ENTRY_SYMLINK   01
++#define ENTRY_SUBMODULE 04
+ 
+ static const char *tag_cached = "";
+ static const char *tag_unmerged = "";
+@@ -37,6 +41,18 @@ static const char *tag_killed = "";
+ static const char *tag_modified = "";
+ 
+ 
++static unsigned int entry_type_from_name(const char *name)
++{
++	if (!strcmp(name, "regular"))
++		return ENTRY_REGULAR;
++	else if (!strcmp(name, "symlink"))
++		return ENTRY_SYMLINK;
++	else if (!strcmp(name, "submodule"))
++		return ENTRY_SUBMODULE;
++	else
++		die("Unknown entry type: %s", name);
++}
++
+ /*
+  * Match a pathspec against a filename. The first "skiplen" characters
+  * are the common prefix
+@@ -205,6 +221,20 @@ static void show_ce_entry(const char *tag, struct cache_entry *ce)
+ 		tag = alttag;
+ 	}
+ 
++	if (limit_types) {
++		unsigned int entry_type;
++		if (S_ISLNK(ce->ce_mode))
++			entry_type = ENTRY_SYMLINK;
++		else if (S_ISREG(ce->ce_mode))
++			entry_type = ENTRY_REGULAR;
++		else if (S_ISGITLINK(ce->ce_mode))
++			entry_type = ENTRY_SUBMODULE;
++		else
++			die("Unknown type of entry %06o", ce->ce_mode);
++		if (!(limit_types & entry_type))
++			return;
++	}
++
+ 	if (!show_stage) {
+ 		fputs(tag, stdout);
+ 	} else {
+@@ -551,6 +581,10 @@ int cmd_ls_files(int argc, const char **argv, const char *prefix)
+ 			with_tree = arg + 12;
+ 			continue;
+ 		}
++		if (!prefixcmp(arg, "--limit-type=")) {
++			limit_types |= entry_type_from_name(arg + 13);
++			continue;
++		}
+ 		if (!prefixcmp(arg, "--abbrev=")) {
+ 			abbrev = strtoul(arg+9, NULL, 10);
+ 			if (abbrev && abbrev < MINIMUM_ABBREV)
