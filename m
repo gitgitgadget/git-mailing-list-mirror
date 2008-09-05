@@ -1,82 +1,135 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
-X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=BAYES_00,DKIM_ADSP_CUSTOM_MED,
-	DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
-From: =?UTF-8?B?SmFrdWIgTmFyxJlic2tp?= <jnareb@gmail.com>
-Subject: Re: [PATCH v1 3/3] Documentation: replace: add --graft option
-Date: Fri, 23 May 2014 19:06:41 +0200
-Message-ID: <537F8021.8080304@gmail.com>
-References: <20140522211836.27162.80311.chriscool@tuxfamily.org> <20140522213307.27162.3251.chriscool@tuxfamily.org>
+X-Spam-ASN: AS31976 209.132.176.0/21
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] Mention the fact that 'git annotate' is only for
+ backward compatibility.
+Date: Fri, 05 Sep 2008 00:56:15 -0700
+Message-ID: <7vod33vxeo.fsf@gitster.siamese.dyndns.org>
+References: <bd6139dc0809040216v40914e82h6a4032941cf65996@mail.gmail.com>
+ <1220529652-24050-1-git-send-email-Matthieu.Moy@imag.fr>
+ <20080904123046.GX10544@machine.or.cz>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8;
-	format=flowed
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-NNTP-Posting-Date: Fri, 23 May 2014 17:07:16 +0000 (UTC)
-Cc: git@vger.kernel.org, Jeff King <peff@peff.net>,
-	Michael Haggerty <mhagger@alum.mit.edu>
-To: Christian Couder <chriscool@tuxfamily.org>,
-	Junio C Hamano <gitster@pobox.com>
+Content-Type: text/plain; charset=us-ascii
+NNTP-Posting-Date: Fri, 5 Sep 2008 07:56:37 +0000 (UTC)
+Cc: Matthieu Moy <Matthieu.Moy@imag.fr>, git@vger.kernel.org
+To: Petr Baudis <pasky@suse.cz>
 Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git-2@plane.gmane.org
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=message-id:date:from:user-agent:mime-version:to:cc:subject
-         :references:in-reply-to:content-type:content-transfer-encoding;
-        bh=rKpu9DmkXEEJNcFQr00XhsKeQKZ6kAbaJa7isHF4rhI=;
-        b=proHkoLxFjKqyOFMf+MSMm3zcRCZCFCVrH9lzTc4WMt9rCb43I26iEtwIuGOxupHPl
-         KVuXsf4he5XueAp0Fs+ZUOpcJ8iJjMDY6yhcYXFxdh6nB4+kmwMOMLv8UYOPGf8IfZC5
-         QE2gU0+qYWozlxPz+xPmBQbHTj+9WGet1dE3wBF1qTX3kTWwOAVUR3GOOps/d8+zfflY
-         Gi+F7HBbJUTJqEinQ6dByoBp7pqpSz0rBAoozArSLJ7AJCLSmiHn4MtY+1jpVZBf/gTD
-         9AYxIgC+qei56jKFtlQqbv1qWRhFZAs0iSMOI0oO86In6Ab7oGydBCIh14kgCdble1KF
-         NevQ==
-X-Received: by 10.14.194.133 with SMTP id m5mr9947917een.38.1400864804761;
-        Fri, 23 May 2014 10:06:44 -0700 (PDT)
-User-Agent: Mozilla/5.0 (Windows NT 5.1; rv:24.0) Gecko/20100101 Thunderbird/24.5.0
-In-Reply-To: <20140522213307.27162.3251.chriscool@tuxfamily.org>
+Envelope-to: gcvg-git-2@gmane.org
+In-Reply-To: <20080904123046.GX10544@machine.or.cz> (Petr Baudis's message of
+ "Thu, 4 Sep 2008 14:30:47 +0200")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: 21099A98-7B20-11DD-99AC-3113EBD4C077-77302942!a-sasl-quonix.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/250000>
-Received: from vger.kernel.org ([209.132.180.67]) by plane.gmane.org with
- esmtp (Exim 4.69) (envelope-from <git-owner@vger.kernel.org>) id
- 1Wnsvz-0001CK-17 for gcvg-git-2@plane.gmane.org; Fri, 23 May 2014 19:07:07
- +0200
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/95000>
+Received: from vger.kernel.org ([209.132.176.167]) by lo.gmane.org with esmtp
+ (Exim 4.50) id 1KbWC9-0005hr-OT for gcvg-git-2@gmane.org; Fri, 05 Sep 2008
+ 09:57:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1753757AbaEWRG6 convert rfc822-to-quoted-printable (ORCPT
- <rfc822;gcvg-git-2@m.gmane.org>); Fri, 23 May 2014 13:06:58 -0400
-Received: from mail-ee0-f51.google.com ([74.125.83.51]:46751 "EHLO
- mail-ee0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with
- ESMTP id S1753128AbaEWRGq (ORCPT <rfc822;git@vger.kernel.org>); Fri, 23 May
- 2014 13:06:46 -0400
-Received: by mail-ee0-f51.google.com with SMTP id e51so3778750eek.24 for
- <git@vger.kernel.org>; Fri, 23 May 2014 10:06:44 -0700 (PDT)
-Received: from [192.168.130.241] ([158.75.2.130]) by mx.google.com with
- ESMTPSA id h45sm9678275eev.20.2014.05.23.10.06.42 for <multiple recipients>
- (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128); Fri, 23 May 2014
- 10:06:43 -0700 (PDT)
+ S1752481AbYIEH4X (ORCPT <rfc822;gcvg-git-2@m.gmane.org>); Fri, 5 Sep 2008
+ 03:56:23 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751898AbYIEH4X
+ (ORCPT <rfc822;git-outgoing>); Fri, 5 Sep 2008 03:56:23 -0400
+Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:60131 "EHLO
+ sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+ id S1751042AbYIEH4W (ORCPT <rfc822;git@vger.kernel.org>); Fri, 5 Sep 2008
+ 03:56:22 -0400
+Received: from localhost.localdomain (localhost [127.0.0.1]) by
+ a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id 751967476A; Fri,  5
+ Sep 2008 03:56:21 -0400 (EDT)
+Received: from pobox.com (ip68-225-240-211.oc.oc.cox.net [68.225.240.211])
+ (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
+ certificate requested) by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with
+ ESMTPSA id 38F4A74769; Fri,  5 Sep 2008 03:56:16 -0400 (EDT)
 Sender: git-owner@vger.kernel.org
 
-W dniu 2014-05-22 23:33, Christian Couder pisze:
+Petr Baudis <pasky@suse.cz> writes:
 
-> +--graft <commit> [<parent>...]::
-> +	Create a graft commit. A new commit is created with the same
-> +	content as <commit> except that its parents will be
-> +	[<parent>...] instead of <commit>'s parents. A replacement ref
-> +	is then created to replace <commit> with the newly created
-> +	commit.
-> +
->   -l <pattern>::
->   --list <pattern>::
->   	List replace refs for objects that match the given pattern (or
+> I'm also curious about
+> ...
+> in builtin-blame.c. Junio, you introduced this in e68989a739d - why
+> do you use a separate flag instead of OUTPUT_ANNOTATE_COMPAT?
 
-Here I think you can add the graft replacing example:
+Let's do this.  Still passes t8001 and t9400.
 
-   cat .git/info/grafts | while read line
-   do git replace --graft $line; done
+-- >8 --
+"blame -c" should be compatible with "annotate"
 
---=20
-Jakub Nar=C4=99bski
+There is no reason to have a separate variable cmd_is_annotate;
+OUTPUT_ANNOTATE_COMPAT option is supposed to produce the compatibility
+output, and we should produce the same output even when the command was
+not invoked as "annotate" but as "blame -c".
+
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
+---
+ builtin-blame.c                 |    9 +++++----
+ t/t9400-git-cvsserver-server.sh |   13 +++++++++++++
+ 2 files changed, 18 insertions(+), 4 deletions(-)
+
+diff --git i/builtin-blame.c w/builtin-blame.c
+index d2fc68c..9bc901c 100644
+--- i/builtin-blame.c
++++ w/builtin-blame.c
+@@ -38,7 +38,6 @@ static int show_root;
+ static int reverse;
+ static int blank_boundary;
+ static int incremental;
+-static int cmd_is_annotate;
+ static int xdl_opts = XDF_NEED_MINIMAL;
+ static struct string_list mailmap;
+ 
+@@ -1686,7 +1685,7 @@ static void emit_other(struct scoreboard *sb, struct blame_entry *ent, int opt)
+ 		if (suspect->commit->object.flags & UNINTERESTING) {
+ 			if (blank_boundary)
+ 				memset(hex, ' ', length);
+-			else if (!cmd_is_annotate) {
++			else if (!(opt & OUTPUT_ANNOTATE_COMPAT)) {
+ 				length--;
+ 				putchar('^');
+ 			}
+@@ -2317,8 +2316,7 @@ int cmd_blame(int argc, const char **argv, const char *prefix)
+ 	};
+ 
+ 	struct parse_opt_ctx_t ctx;
+-
+-	cmd_is_annotate = !strcmp(argv[0], "annotate");
++	int cmd_is_annotate = !strcmp(argv[0], "annotate");
+ 
+ 	git_config(git_blame_config, NULL);
+ 	init_revisions(&revs, NULL);
+@@ -2346,6 +2344,9 @@ int cmd_blame(int argc, const char **argv, const char *prefix)
+ parse_done:
+ 	argc = parse_options_end(&ctx);
+ 
++	if (cmd_is_annotate)
++		output_option |= OUTPUT_ANNOTATE_COMPAT;
++
+ 	if (DIFF_OPT_TST(&revs.diffopt, FIND_COPIES_HARDER))
+ 		opt |= (PICKAXE_BLAME_COPY | PICKAXE_BLAME_MOVE |
+ 			PICKAXE_BLAME_COPY_HARDER);
+diff --git i/t/t9400-git-cvsserver-server.sh w/t/t9400-git-cvsserver-server.sh
+index 4b91f8d..c1850d2 100755
+--- i/t/t9400-git-cvsserver-server.sh
++++ w/t/t9400-git-cvsserver-server.sh
+@@ -488,4 +488,17 @@ test_expect_success 'cvs co -c (shows module database)' '
+     ! grep -v "^master[	 ]\+master$" < out
+ '
+ 
++#------------
++# CVS ANNOTATE
++#------------
++
++cd "$WORKDIR"
++test_expect_success 'cvs annotate' '
++    cd cvswork &&
++    GIT_CONFIG="$git_config" cvs annotate merge >../out &&
++    sed -e "s/ .*//" ../out >../actual &&
++    for i in 3 1 1 1 1 1 1 1 2 4; do echo 1.$i; done >../expect &&
++    test_cmp ../expect ../actual
++'
++
