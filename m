@@ -1,125 +1,51 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: [JGIT PATCH 5/7] Include URIish in bundle transport within any TransportExceptions
-Date: Thu,  4 Sep 2008 16:42:17 -0700
-Message-ID: <1220571739-4219-6-git-send-email-spearce@spearce.org>
-References: <1220571739-4219-1-git-send-email-spearce@spearce.org>
- <1220571739-4219-2-git-send-email-spearce@spearce.org>
- <1220571739-4219-3-git-send-email-spearce@spearce.org>
- <1220571739-4219-4-git-send-email-spearce@spearce.org>
- <1220571739-4219-5-git-send-email-spearce@spearce.org>
-Cc: git@vger.kernel.org
-To: Robin Rosenberg <robin.rosenberg@dewire.com>
-X-From: git-owner@vger.kernel.org Fri Sep 05 01:44:29 2008
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH 3/3] add '%d' pretty format specifier to show decoration
+Date: Thu, 4 Sep 2008 20:11:34 -0400
+Message-ID: <20080905001133.GA17463@coredump.intra.peff.net>
+References: <alpine.LNX.1.10.0809032036270.32295@pollux> <20080903191217.GA31195@coredump.intra.peff.net> <7v4p4xat3v.fsf@gitster.siamese.dyndns.org> <20080903203616.GB32223@coredump.intra.peff.net> <7vsksh9c9m.fsf@gitster.siamese.dyndns.org> <48BF0A5A.2040502@lsrfire.ath.cx> <20080904035139.GA28123@sigill.intra.peff.net> <48C002FB.9010401@lsrfire.ath.cx> <48C055B3.3030204@lsrfire.ath.cx>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Michael Dressel <MichaelTiloDressel@t-online.de>,
+	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: =?utf-8?B?UmVuw6k=?= Scharfe <rene.scharfe@lsrfire.ath.cx>
+X-From: git-owner@vger.kernel.org Fri Sep 05 02:12:58 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KbOUu-0000st-4t
-	for gcvg-git-2@gmane.org; Fri, 05 Sep 2008 01:44:20 +0200
+	id 1KbOwb-0007FX-VU
+	for gcvg-git-2@gmane.org; Fri, 05 Sep 2008 02:12:58 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752160AbYIDXmc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 4 Sep 2008 19:42:32 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752093AbYIDXmb
-	(ORCPT <rfc822;git-outgoing>); Thu, 4 Sep 2008 19:42:31 -0400
-Received: from george.spearce.org ([209.20.77.23]:33775 "EHLO
-	george.spearce.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751894AbYIDXmY (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 4 Sep 2008 19:42:24 -0400
-Received: by george.spearce.org (Postfix, from userid 1000)
-	id A00EC383A6; Thu,  4 Sep 2008 23:42:22 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.2.4 (2008-01-01) on george.spearce.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-4.4 required=4.0 tests=ALL_TRUSTED,BAYES_00
-	autolearn=ham version=3.2.4
-Received: from localhost.localdomain (localhost [127.0.0.1])
-	by george.spearce.org (Postfix) with ESMTP id 884EA3835F;
-	Thu,  4 Sep 2008 23:42:21 +0000 (UTC)
-X-Mailer: git-send-email 1.6.0.1.319.g9f32b
-In-Reply-To: <1220571739-4219-5-git-send-email-spearce@spearce.org>
+	id S1753552AbYIEALh convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 4 Sep 2008 20:11:37 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750899AbYIEALh
+	(ORCPT <rfc822;git-outgoing>); Thu, 4 Sep 2008 20:11:37 -0400
+Received: from peff.net ([208.65.91.99]:1930 "EHLO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751751AbYIEALg (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 4 Sep 2008 20:11:36 -0400
+Received: (qmail 13274 invoked by uid 111); 5 Sep 2008 00:11:35 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+    by peff.net (qpsmtpd/0.32) with SMTP; Thu, 04 Sep 2008 20:11:35 -0400
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Thu, 04 Sep 2008 20:11:34 -0400
+Content-Disposition: inline
+In-Reply-To: <48C055B3.3030204@lsrfire.ath.cx>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/94980>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/94981>
 
-This way the bundle path (as entered by the user) is reported as
-part of the error.
+On Thu, Sep 04, 2008 at 11:40:03PM +0200, Ren=C3=A9 Scharfe wrote:
 
-Signed-off-by: Shawn O. Pearce <spearce@spearce.org>
----
- .../spearce/jgit/transport/TransportBundle.java    |   21 ++++++++-----------
- 1 files changed, 9 insertions(+), 12 deletions(-)
+> Michael Dressel implemented an initial version and chose the letter d=
+,
+> Junio suggested to add a leading space and parentheses.
 
-diff --git a/org.spearce.jgit/src/org/spearce/jgit/transport/TransportBundle.java b/org.spearce.jgit/src/org/spearce/jgit/transport/TransportBundle.java
-index e502619..de62fb8 100644
---- a/org.spearce.jgit/src/org/spearce/jgit/transport/TransportBundle.java
-+++ b/org.spearce.jgit/src/org/spearce/jgit/transport/TransportBundle.java
-@@ -128,7 +128,7 @@ BundleFetchConnection() throws TransportException {
- 				in = new FileInputStream(bundle);
- 				bin = new RewindBufferedInputStream(in);
- 			} catch (FileNotFoundException err) {
--				throw new TransportException(bundle.getPath() + ": not found");
-+				throw new TransportException(uri, "not found");
- 			}
- 
- 			try {
-@@ -137,8 +137,7 @@ BundleFetchConnection() throws TransportException {
- 					readBundleV2();
- 					break;
- 				default:
--					throw new TransportException(bundle.getPath()
--							+ ": not a bundle");
-+					throw new TransportException(uri, "not a bundle");
- 				}
- 
- 				in.getChannel().position(
-@@ -149,12 +148,10 @@ BundleFetchConnection() throws TransportException {
- 				throw err;
- 			} catch (IOException err) {
- 				close();
--				throw new TransportException(bundle.getPath() + ": "
--						+ err.getMessage(), err);
-+				throw new TransportException(uri, err.getMessage(), err);
- 			} catch (RuntimeException err) {
- 				close();
--				throw new TransportException(bundle.getPath() + ": "
--						+ err.getMessage(), err);
-+				throw new TransportException(uri, err.getMessage(), err);
- 			}
- 		}
- 
-@@ -162,7 +159,7 @@ private int readSignature() throws IOException {
- 			final String rev = readLine(new byte[1024]);
- 			if (V2_BUNDLE_SIGNATURE.equals(rev))
- 				return 2;
--			throw new TransportException(bundle.getPath() + ": not a bundle");
-+			throw new TransportException(uri, "not a bundle");
- 		}
- 
- 		private void readBundleV2() throws IOException {
-@@ -189,8 +186,8 @@ private void readBundleV2() throws IOException {
- 		}
- 
- 		private PackProtocolException duplicateAdvertisement(final String name) {
--			return new PackProtocolException("duplicate advertisements of "
--					+ name);
-+			return new PackProtocolException(uri,
-+					"duplicate advertisements of " + name);
- 		}
- 
- 		private String readLine(final byte[] hdrbuf) throws IOException {
-@@ -217,10 +214,10 @@ protected void doFetch(final ProgressMonitor monitor,
- 				ip.renameAndOpenPack();
- 			} catch (IOException err) {
- 				close();
--				throw new TransportException(err.getMessage(), err);
-+				throw new TransportException(uri, err.getMessage(), err);
- 			} catch (RuntimeException err) {
- 				close();
--				throw new TransportException(err.getMessage(), err);
-+				throw new TransportException(uri, err.getMessage(), err);
- 			}
- 		}
- 
--- 
-1.6.0.1.319.g9f32b
+The whole series looks good to me, and I am happy if it is applied
+as-is. The only question I might raise is whether we want to use "%d"
+for this, or use something longer to anticipate a collision with other
+"d" words (I think you mentioned "describe" at one point).
+
+-Peff
