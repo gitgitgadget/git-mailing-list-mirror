@@ -1,97 +1,164 @@
-From: Jan Hudec <bulb@ucw.cz>
-Subject: Re: Git User's Survey 2008 partial summary
-Date: Sat, 6 Sep 2008 00:17:31 +0200
-Message-ID: <20080905221731.GI15520@efreet.light.src>
-References: <200809031607.19722.jnareb@gmail.com> <20080903144552.GA27682@spearce.org> <20080903172050.61d510d6@pc09.procura.nl> <94a0d4530809030925t33d4260bof169372d65717af4@mail.gmail.com> <402731c90809031943n181ad6fbw366f90e80aaca2a@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v4] for-each-ref: `:short` format for `refname`
+Date: Fri, 05 Sep 2008 15:20:11 -0700
+Message-ID: <7vej3yutes.fsf@gitster.siamese.dyndns.org>
+References: <7vtzcxaxgr.fsf@gitster.siamese.dyndns.org>
+ <1220649383-17916-1-git-send-email-bert.wesarg@googlemail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Felipe Contreras <felipe.contreras@gmail.com>, git@vger.kernel.org
-To: David Aguilar <davvid@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Sep 06 00:18:52 2008
+Cc: git@vger.kernel.org, szeder@ira.uka.de,
+	"Shawn O. Pearce" <spearce@spearce.org>
+To: Bert Wesarg <bert.wesarg@googlemail.com>
+X-From: git-owner@vger.kernel.org Sat Sep 06 00:21:29 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Kbjdj-0007A7-BI
-	for gcvg-git-2@gmane.org; Sat, 06 Sep 2008 00:18:51 +0200
+	id 1KbjgH-0007f9-3Z
+	for gcvg-git-2@gmane.org; Sat, 06 Sep 2008 00:21:29 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751890AbYIEWRp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 5 Sep 2008 18:17:45 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751944AbYIEWRp
-	(ORCPT <rfc822;git-outgoing>); Fri, 5 Sep 2008 18:17:45 -0400
-Received: from ns1.bluetone.cz ([212.158.128.13]:40451 "EHLO ns1.bluetone.cz"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751751AbYIEWRo (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 5 Sep 2008 18:17:44 -0400
-Received: from localhost (spamhole.bluetone.cz [192.168.13.2])
-	by ns1.bluetone.cz (Postfix) with ESMTP id 455615737A;
-	Sat,  6 Sep 2008 00:17:43 +0200 (CEST)
-Received: from ns1.bluetone.cz ([192.168.13.1])
-	by localhost (spamhole.bluetone.cz [192.168.13.2]) (amavisd-new, port 10026)
-	with ESMTP id RlP+SUydetmX; Sat,  6 Sep 2008 00:17:39 +0200 (CEST)
-Received: from efreet.light.src (145-119-207-85.strcechy.adsl-llu.static.bluetone.cz [85.207.119.145])
-	by ns1.bluetone.cz (Postfix) with ESMTP id 17BA557366;
-	Sat,  6 Sep 2008 00:17:38 +0200 (CEST)
-Received: from bulb by efreet.light.src with local (Exim 4.69)
-	(envelope-from <bulb@ucw.cz>)
-	id 1KbjcR-00078J-Kx; Sat, 06 Sep 2008 00:17:31 +0200
-Content-Disposition: inline
-In-Reply-To: <402731c90809031943n181ad6fbw366f90e80aaca2a@mail.gmail.com>
-User-Agent: Mutt/1.5.18 (2008-05-17)
+	id S1752135AbYIEWUW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 5 Sep 2008 18:20:22 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752118AbYIEWUW
+	(ORCPT <rfc822;git-outgoing>); Fri, 5 Sep 2008 18:20:22 -0400
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:40280 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751972AbYIEWUW (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 5 Sep 2008 18:20:22 -0400
+Received: from localhost.localdomain (localhost [127.0.0.1])
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 695815E46D;
+	Fri,  5 Sep 2008 18:20:20 -0400 (EDT)
+Received: from pobox.com (ip68-225-240-211.oc.oc.cox.net [68.225.240.211])
+ (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
+ certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
+ ESMTPSA id 30FB45E468; Fri,  5 Sep 2008 18:20:15 -0400 (EDT)
+In-Reply-To: <1220649383-17916-1-git-send-email-bert.wesarg@googlemail.com>
+ (Bert Wesarg's message of "Fri, 5 Sep 2008 23:16:23 +0200")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: D3794C28-7B98-11DD-8496-D0CFFE4BC1C1-77302942!a-sasl-fastnet.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/95045>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/95046>
 
-On Wed, Sep 03, 2008 at 19:43:20 -0700, David Aguilar wrote:
-> On Wed, Sep 3, 2008 at 9:25 AM, Felipe Contreras
-> <felipe.contreras@gmail.com> wrote:
-> > On Wed, Sep 3, 2008 at 6:20 PM, H.Merijn Brand <h.m.brand@xs4all.nl> wrote:
-> >> On Wed, 3 Sep 2008 07:45:52 -0700, "Shawn O. Pearce"
-> >> <spearce@spearce.org> wrote:
-> >>
-> >>> Jakub Narebski <jnareb@gmail.com> wrote:
-> >>> > This is partial summary of Git User's Survey 2008 [...]
-> >>> >
-> >>> > 03. With which programming languages are you proficient?
-> >>> >
-> >>> > Around 939 people answered this question.  C is most popular with 59%;
-> >>> > Ruby and surprisingly a bit shell script programming have around second
-> >>> > place, with about 52-53%.  More people are proficient with Python than
-> >>> > in Perl by about 1/3-1/4.  Very few people (25 responses, around 3%)
-> >>> > feel proficient in Tcl/Tk, which means shallow pool of possible git-gui
-> >>> > and gitk contributors.
-> >>
-> >> Rewrite them in perl or python and get more patches?
-> >> The fact that it is not perl withheld me from finding solutions to
-> >> problems I still have with the git-gui gitk combination
-> >
-> > Ruby!
-> >
-> > --
-> > Felipe Contreras
-> 
-> There's already a python git-gui:
->     http://cola.tuxfamily.org/
-> 
-> PyQt is a very mature library, which is one of the primary reasons I
-> chose Python.
+Bert Wesarg <bert.wesarg@googlemail.com> writes:
 
-Sorry, but I disagree. Tried PyQt, been hugely disapointed. Boils down to any
-thing that can make Python (or, for that matter, any) interpreter segfault
-being totally broken.
+> ...
+> To integrate this new format into the bash completion to get
+> only non-ambiguous refs is beyond the scope of this patch.
+>
+> Signed-off-by: Bert Wesarg <bert.wesarg@googlemail.com>
+>
+> ---
+> Cc: git@vger.kernel.org
+> Cc: szeder@ira.uka.de
+> Cc: Shawn O. Pearce <spearce@spearce.org>
 
-But as far as Qt goes, I would really just stick with C++. Python or Ruby
-have some advantage, but I am not sure it's that big to offset the fact, that
-a lot of code already exists in QGit.
+Nice writeup of the history of this patch, if on tad-too-verbose side.
 
-> Does Ruby have any good and mature UI libraries?  I know it's all the
-> rage for web stuff, but I haven't heard too much about people using it
-> for GUIs.
+> diff --git a/builtin-for-each-ref.c b/builtin-for-each-ref.c
+> index 21e92bb..9b44092 100644
+> --- a/builtin-for-each-ref.c
+> +++ b/builtin-for-each-ref.c
+> @@ -546,6 +546,107 @@ static void grab_values(struct atom_value *val, int deref, struct object *obj, v
+> +/*
+> + * Shorten the refname to an non-ambiguous form
+> + */
+> +static char *get_short_ref(struct refinfo *ref)
+> +{
+> ...
+> +	/* skip first rule, it will always match */
+> +	for (i = nr_rules - 1; i > 0 ; --i) {
+> +		int j;
+> +		int short_name_len;
+> +
+> +		if (1 != sscanf(ref->refname, scanf_fmts[i], short_name))
+> +			continue;
+> +
+> +		short_name_len = strlen(short_name);
+> +
+> +		/*
+> +		 * check if the short name resolves to a valid ref,
+> +		 * but use only rules prior to the matched one
+> +		 */
+> +		for (j = 0; j < i; j++) {
+> ...
+> +		}
+> +		/*
+> +		 * short name is non-ambiguous if all previous rules
+> +		 * haven't resolved to a valid ref
+> +		 */
+> +		if (j == i)
+> +			return short_name;
 
-Qt? I believe Ruby Qt bindings are in better shape (properly handle Qt
-deleting objects under Ruby's hands).
+Is this inner loop essentially the same as calling dwim_ref(), while
+temporarily turning warn_ambiguous_refs on, and checking for return value
+of one?
 
--- 
-						 Jan 'Bulb' Hudec <bulb@ucw.cz>
+> diff --git a/t/t6300-for-each-ref.sh b/t/t6300-for-each-ref.sh
+> index 8ced593..4f247dd 100755
+> --- a/t/t6300-for-each-ref.sh
+> +++ b/t/t6300-for-each-ref.sh
+> @@ -262,6 +262,50 @@ for i in "--perl --shell" "-s --python" "--python --tcl" "--tcl --perl"; do
+>  	"
+>  done
+>  
+> +cat >expected <<\EOF
+> +master
+> +testtag
+> +EOF
+> +
+> +test_expect_success 'Check short refname format' '
+> +	(git for-each-ref --format="%(refname:short)" refs/heads &&
+> +	git for-each-ref --format="%(refname:short)" refs/tags) >actual &&
+> +	test_cmp expected actual
+> +'
+
+Not a complaint nor objection but mere curiosity.  Why does this run two
+for-each-ref, not just one with two patterns?
+
+> +test_expect_success 'Check for invalid refname format' '
+> +	test_must_fail git for-each-ref --format="%(refname:INVALID)"
+> +'
+
+Good.
+
+> +cat >expected <<\EOF
+> +heads/master
+> +master
+> +EOF
+> +
+> +test_expect_success 'Check ambiguous head and tag refs' '
+> +	git checkout -b newtag &&
+> +	echo "Using $datestamp" > one &&
+> +	git add one &&
+> +	git commit -m "Branch" &&
+> +	setdate_and_increment &&
+> +	git tag -m "Tagging at $datestamp" master &&
+> +	git for-each-ref --format "%(refname:short)" refs/heads/master refs/tags/master >actual &&
+> +	test_cmp expected actual
+> +'
+> +
+> +cat >expected <<\EOF
+> +heads/ambiguous
+> +ambiguous
+> +EOF
+> +
+> +test_expect_success 'Check ambiguous head and tag refs II' '
+> +	git checkout master &&
+> +	git tag ambiguous testtag^0 &&
+> +	git branch ambiguous testtag^0 &&
+> +	git for-each-ref --format "%(refname:short)" refs/heads/ambiguous refs/tags/ambiguous >actual &&
+> +	test_cmp expected actual
+> +'
+> +
+
+Can we also try first creating a clone of some repo and run:
+
+	for-each-ref --format="%(refname:short)" refs/remotes
+
+I am unsure how "remotes/origin" when "refs/remotes/origin/HEAD" points at
+their 'master' branch behaves with your code, and/or how it should behave.
+
+Other than that, nicely done.
