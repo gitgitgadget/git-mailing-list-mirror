@@ -1,63 +1,67 @@
-From: Mike Hommey <mh@glandium.org>
-Subject: Re: How can i write a new protocol for git
-Date: Fri, 5 Sep 2008 11:47:46 +0200
-Organization: glandium.org
-Message-ID: <20080905094746.GA26820@glandium.org>
-References: <976e6d070809050222v1580ae53ye96dee913d44ae4b@mail.gmail.com>
+From: Paul Talacko <gnuruandstuff@yahoo.co.uk>
+Subject: Patch for git-svn.perl
+Date: Fri, 5 Sep 2008 11:18:26 +0000 (GMT)
+Message-ID: <257934.40788.qm@web27803.mail.ukl.yahoo.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Sky Patrick <patricksky852@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Sep 05 11:49:21 2008
+Content-Type: multipart/mixed; boundary="0-1376124197-1220613506=:40788"
+To: normalperson@yhbt.net, brad.king@kitware.com, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Sep 05 13:26:21 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KbXwK-000339-Qv
-	for gcvg-git-2@gmane.org; Fri, 05 Sep 2008 11:49:17 +0200
+	id 1KbZSD-00032h-N5
+	for gcvg-git-2@gmane.org; Fri, 05 Sep 2008 13:26:18 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751179AbYIEJsA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 5 Sep 2008 05:48:00 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751217AbYIEJsA
-	(ORCPT <rfc822;git-outgoing>); Fri, 5 Sep 2008 05:48:00 -0400
-Received: from vuizook.err.no ([194.24.252.247]:48723 "EHLO vuizook.err.no"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751042AbYIEJr7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 5 Sep 2008 05:47:59 -0400
-Received: from cha92-13-88-165-248-19.fbx.proxad.net ([88.165.248.19] helo=jigen)
-	by vuizook.err.no with esmtps (TLS-1.0:RSA_AES_256_CBC_SHA1:32)
-	(Exim 4.67)
-	(envelope-from <mh@glandium.org>)
-	id 1KbXuw-0004lN-F5; Fri, 05 Sep 2008 11:47:56 +0200
-Received: from mh by jigen with local (Exim 4.69)
-	(envelope-from <mh@jigen>)
-	id 1KbXus-00076J-Mf; Fri, 05 Sep 2008 11:47:46 +0200
-Content-Disposition: inline
-In-Reply-To: <976e6d070809050222v1580ae53ye96dee913d44ae4b@mail.gmail.com>
-X-GPG-Fingerprint: A479 A824 265C B2A5 FC54  8D1E DE4B DA2C 54FD 2A58
-User-Agent: Mutt/1.5.18 (2008-05-17)
-X-Spam-Status: (score 0.1): No, score=0.1 required=5.0 tests=RDNS_DYNAMIC autolearn=disabled version=3.2.3
+	id S1751908AbYIELZJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 5 Sep 2008 07:25:09 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751625AbYIELZJ
+	(ORCPT <rfc822;git-outgoing>); Fri, 5 Sep 2008 07:25:09 -0400
+Received: from web27803.mail.ukl.yahoo.com ([217.146.182.8]:28204 "HELO
+	web27803.mail.ukl.yahoo.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with SMTP id S1751325AbYIELZI (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 5 Sep 2008 07:25:08 -0400
+X-Greylist: delayed 400 seconds by postgrey-1.27 at vger.kernel.org; Fri, 05 Sep 2008 07:25:07 EDT
+Received: (qmail 41565 invoked by uid 60001); 5 Sep 2008 11:18:26 -0000
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+  s=s1024; d=yahoo.co.uk;
+  h=X-YMail-OSG:Received:X-Mailer:Date:From:Subject:To:MIME-Version:Content-Type:Message-ID;
+  b=J4RuxHKtEIe7SCQ5fRpqXrXPLkHSEZI9rbQ7zdNLgFzu4syY1yieaN7Nft+HxriZhtCwV9dBFNBKy2ESi42CRtAB499VnNpkQZbWmNLAkmYX91QrzcpWfNh4USy+Qt1PNLqEIeor1tW7tkcSGsvh1aJPzH5fMWpL6qcfbsRpIyY=;
+X-YMail-OSG: D4qhVvQVM1maqy4hKpSeyu66lzWsqJMpMy1Frh8RDwPaogctDD56iSGuXMTd2sW.mm2hLlj6fhUBi91mqqcom0LXWxbkEViIV1wyOZF3MXQsLhmbnK98syLt.Ph0q3HX_1c-
+Received: from [193.179.106.23] by web27803.mail.ukl.yahoo.com via HTTP; Fri, 05 Sep 2008 11:18:26 GMT
+X-Mailer: YahooMailWebService/0.7.218.2
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/95005>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/95006>
 
-On Fri, Sep 05, 2008 at 05:22:57PM +0800, Sky Patrick wrote:
-> Hi,
-> 
-> If i want to write a new protocol for file transfer and would like to
-> to integrate it with git. Is it possible and easy to integrate it ?
-> Currently, i know that jgit may achieve it, but it is a Java
-> implementation and may not work with git command line program that
-> written in C.
+--0-1376124197-1220613506=:40788
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 
-First, it would depend if you need this new protocol to be a dumb
-protocol (like rsync and http) or "native" (git or ssh).
+Hello,
 
-I've been meaning to refactor the dumb protocol "stack" for a while, but
-haven't gone much further than ideas in my mind (i.e. no code). I also
-have some start of http code recfactoring, that is waiting for this dumb
-protocol rework to be completed.
+There's an issue in git-svn as autoprops are not applied to renamed files, =
+only to added files.
 
-Mike
+This patch fixes the bug.
+
+=0A=0A=0A      
+--0-1376124197-1220613506=:40788
+Content-Type: application/octet-stream; name=patch
+Content-Transfer-Encoding: base64
+Content-Disposition: attachment; filename="patch"
+
+ZGlmZiAtLWdpdCBhL2dpdC1zdm4ucGVybCBiL2dpdC1zdm4ucGVybAppbmRl
+eCA3YTFkMjZkLi4wYTA0Y2MwIDEwMDc1NQotLS0gYS9naXQtc3ZuLnBlcmwK
+KysrIGIvZ2l0LXN2bi5wZXJsCkBAIC0zNjM2LDYgKzM2MzYsNyBAQCBzdWIg
+UiB7CiAJbXkgJGZiYXQgPSAkc2VsZi0+YWRkX2ZpbGUoJHNlbGYtPnJlcG9f
+cGF0aCgkbS0+e2ZpbGVfYn0pLCAkcGJhdCwKIAkJCQkkc2VsZi0+dXJsX3Bh
+dGgoJG0tPntmaWxlX2F9KSwgJHNlbGYtPntyfSk7CiAJcHJpbnQgIlx0Ulx0
+JG0tPntmaWxlX2F9ID0+ICRtLT57ZmlsZV9ifVxuIiB1bmxlc3MgJDo6X3E7
+CisJJHNlbGYtPmFwcGx5X2F1dG9wcm9wcyggJGZpbGUsICRmYmF0ICk7CiAJ
+JHNlbGYtPmNoZ19maWxlKCRmYmF0LCAkbSk7CiAJJHNlbGYtPmNsb3NlX2Zp
+bGUoJGZiYXQsdW5kZWYsJHNlbGYtPntwb29sfSk7CiAK
+
+--0-1376124197-1220613506=:40788--
