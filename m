@@ -1,67 +1,85 @@
-From: Paul Talacko <gnuruandstuff@yahoo.co.uk>
-Subject: Patch for git-svn.perl
-Date: Fri, 5 Sep 2008 11:18:26 +0000 (GMT)
-Message-ID: <257934.40788.qm@web27803.mail.ukl.yahoo.com>
+From: Matthieu Moy <Matthieu.Moy@imag.fr>
+Subject: Re: [PATCH] Mention the fact that 'git annotate' is only for backward compatibility.
+Date: Fri, 05 Sep 2008 14:06:55 +0200
+Message-ID: <vpqy7266bkw.fsf@bauges.imag.fr>
+References: <bd6139dc0809040216v40914e82h6a4032941cf65996@mail.gmail.com>
+	<1220529652-24050-1-git-send-email-Matthieu.Moy@imag.fr>
+	<20080904123046.GX10544@machine.or.cz>
+	<7v63pb3emm.fsf@gitster.siamese.dyndns.org>
+	<vpqaben6r3n.fsf@bauges.imag.fr>
+	<7v3akfxd74.fsf@gitster.siamese.dyndns.org>
+	<20080905080759.GN10360@machine.or.cz>
 Mime-Version: 1.0
-Content-Type: multipart/mixed; boundary="0-1376124197-1220613506=:40788"
-To: normalperson@yhbt.net, brad.king@kitware.com, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Sep 05 13:26:21 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Petr Baudis <pasky@suse.cz>
+X-From: git-owner@vger.kernel.org Fri Sep 05 14:10:15 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KbZSD-00032h-N5
-	for gcvg-git-2@gmane.org; Fri, 05 Sep 2008 13:26:18 +0200
+	id 1Kba8c-0007uu-00
+	for gcvg-git-2@gmane.org; Fri, 05 Sep 2008 14:10:06 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751908AbYIELZJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 5 Sep 2008 07:25:09 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751625AbYIELZJ
-	(ORCPT <rfc822;git-outgoing>); Fri, 5 Sep 2008 07:25:09 -0400
-Received: from web27803.mail.ukl.yahoo.com ([217.146.182.8]:28204 "HELO
-	web27803.mail.ukl.yahoo.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with SMTP id S1751325AbYIELZI (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 5 Sep 2008 07:25:08 -0400
-X-Greylist: delayed 400 seconds by postgrey-1.27 at vger.kernel.org; Fri, 05 Sep 2008 07:25:07 EDT
-Received: (qmail 41565 invoked by uid 60001); 5 Sep 2008 11:18:26 -0000
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-  s=s1024; d=yahoo.co.uk;
-  h=X-YMail-OSG:Received:X-Mailer:Date:From:Subject:To:MIME-Version:Content-Type:Message-ID;
-  b=J4RuxHKtEIe7SCQ5fRpqXrXPLkHSEZI9rbQ7zdNLgFzu4syY1yieaN7Nft+HxriZhtCwV9dBFNBKy2ESi42CRtAB499VnNpkQZbWmNLAkmYX91QrzcpWfNh4USy+Qt1PNLqEIeor1tW7tkcSGsvh1aJPzH5fMWpL6qcfbsRpIyY=;
-X-YMail-OSG: D4qhVvQVM1maqy4hKpSeyu66lzWsqJMpMy1Frh8RDwPaogctDD56iSGuXMTd2sW.mm2hLlj6fhUBi91mqqcom0LXWxbkEViIV1wyOZF3MXQsLhmbnK98syLt.Ph0q3HX_1c-
-Received: from [193.179.106.23] by web27803.mail.ukl.yahoo.com via HTTP; Fri, 05 Sep 2008 11:18:26 GMT
-X-Mailer: YahooMailWebService/0.7.218.2
+	id S1752498AbYIEMI6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 5 Sep 2008 08:08:58 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752471AbYIEMI6
+	(ORCPT <rfc822;git-outgoing>); Fri, 5 Sep 2008 08:08:58 -0400
+Received: from harmonie.imag.fr ([147.171.130.40]:56676 "EHLO harmonie.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752498AbYIEMI6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 5 Sep 2008 08:08:58 -0400
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by harmonie.imag.fr (8.13.8/8.13.8) with ESMTP id m85C6vsP021211;
+	Fri, 5 Sep 2008 14:06:57 +0200 (CEST)
+Received: from bauges.imag.fr ([129.88.43.5])
+	by mail-veri.imag.fr with esmtps (TLS-1.0:RSA_AES_256_CBC_SHA:32)
+	(Exim 4.50)
+	id 1Kba5X-0007Q5-ES; Fri, 05 Sep 2008 14:06:55 +0200
+Received: from moy by bauges.imag.fr with local (Exim 4.63)
+	(envelope-from <moy@imag.fr>)
+	id 1Kba5X-0002Bk-Bo; Fri, 05 Sep 2008 14:06:55 +0200
+In-Reply-To: <20080905080759.GN10360@machine.or.cz> (Petr Baudis's message of "Fri\, 5 Sep 2008 10\:07\:59 +0200")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.1 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-3.0 (harmonie.imag.fr [147.171.130.40]); Fri, 05 Sep 2008 14:06:58 +0200 (CEST)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM for more information
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: moy@imag.fr
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/95006>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/95007>
 
---0-1376124197-1220613506=:40788
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Petr Baudis <pasky@suse.cz> writes:
 
-Hello,
+> On Fri, Sep 05, 2008 at 12:29:51AM -0700, Junio C Hamano wrote:
+>> diff --git c/Documentation/git-annotate.txt w/Documentation/git-annotate.txt
+>> index 8b6b56a..78dc5e2 100644
+>> --- c/Documentation/git-annotate.txt
+>> +++ w/Documentation/git-annotate.txt
+>> @@ -14,6 +14,11 @@ DESCRIPTION
+>>  Annotates each line in the given file with information from the commit
+>>  which introduced the line. Optionally annotate from a given revision.
+>>  
+>> +The only difference from this command and linkgit:git-blame[1] is that
+>                        ^^^^ between?
+>> +they use slightly different output formats, and this command exists only
 
-There's an issue in git-svn as autoprops are not applied to renamed files, =
-only to added files.
+I'm not sure it's clear enough that "this command" is "annotate" since
+you talked about git blame right before, but I'm being picky.
 
-This patch fixes the bug.
+>> +for backward compatibility to support existing scripts, and provide more
+>> +familiar command name for people coming from other SCM systems.
+>> +
+>>  OPTIONS
+>>  -------
+>>  include::blame-options.txt[]
+>
+> I like this one.
 
-=0A=0A=0A      
---0-1376124197-1220613506=:40788
-Content-Type: application/octet-stream; name=patch
-Content-Transfer-Encoding: base64
-Content-Disposition: attachment; filename="patch"
+Meetoo.
 
-ZGlmZiAtLWdpdCBhL2dpdC1zdm4ucGVybCBiL2dpdC1zdm4ucGVybAppbmRl
-eCA3YTFkMjZkLi4wYTA0Y2MwIDEwMDc1NQotLS0gYS9naXQtc3ZuLnBlcmwK
-KysrIGIvZ2l0LXN2bi5wZXJsCkBAIC0zNjM2LDYgKzM2MzYsNyBAQCBzdWIg
-UiB7CiAJbXkgJGZiYXQgPSAkc2VsZi0+YWRkX2ZpbGUoJHNlbGYtPnJlcG9f
-cGF0aCgkbS0+e2ZpbGVfYn0pLCAkcGJhdCwKIAkJCQkkc2VsZi0+dXJsX3Bh
-dGgoJG0tPntmaWxlX2F9KSwgJHNlbGYtPntyfSk7CiAJcHJpbnQgIlx0Ulx0
-JG0tPntmaWxlX2F9ID0+ICRtLT57ZmlsZV9ifVxuIiB1bmxlc3MgJDo6X3E7
-CisJJHNlbGYtPmFwcGx5X2F1dG9wcm9wcyggJGZpbGUsICRmYmF0ICk7CiAJ
-JHNlbGYtPmNoZ19maWxlKCRmYmF0LCAkbSk7CiAJJHNlbGYtPmNsb3NlX2Zp
-bGUoJGZiYXQsdW5kZWYsJHNlbGYtPntwb29sfSk7CiAK
-
---0-1376124197-1220613506=:40788--
+-- 
+Matthieu
