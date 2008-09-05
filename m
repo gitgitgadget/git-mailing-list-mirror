@@ -1,339 +1,129 @@
-From: Bert Wesarg <bert.wesarg@googlemail.com>
-Subject: [PATCH v4] for-each-ref: `:short` format for `refname`
-Date: Fri,  5 Sep 2008 23:16:23 +0200
-Message-ID: <1220649383-17916-1-git-send-email-bert.wesarg@googlemail.com>
-References: <7vtzcxaxgr.fsf@gitster.siamese.dyndns.org>
+From: "Scott Chacon" <schacon@gmail.com>
+Subject: Re: Git Community Book
+Date: Fri, 5 Sep 2008 14:34:34 -0700
+Message-ID: <d411cc4a0809051434g4e92790fsa38d12487630aa9f@mail.gmail.com>
+References: <d411cc4a0809051208k2a15c4a7te09a6979929e52f7@mail.gmail.com>
+	 <7vmyimv0qr.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Bert Wesarg <bert.wesarg@googlemail.com>, git@vger.kernel.org,
-	szeder@ira.uka.de, "Shawn O. Pearce" <spearce@spearce.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Sep 05 23:17:37 2008
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: "git list" <git@vger.kernel.org>
+To: "Junio C Hamano" <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Sep 05 23:36:07 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KbigS-0000nn-Sm
-	for gcvg-git-2@gmane.org; Fri, 05 Sep 2008 23:17:37 +0200
+	id 1KbiyF-0005nf-Qu
+	for gcvg-git-2@gmane.org; Fri, 05 Sep 2008 23:36:00 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752538AbYIEVQa convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 5 Sep 2008 17:16:30 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752511AbYIEVQa
-	(ORCPT <rfc822;git-outgoing>); Fri, 5 Sep 2008 17:16:30 -0400
-Received: from fg-out-1718.google.com ([72.14.220.158]:16031 "EHLO
-	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751825AbYIEVQ3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 5 Sep 2008 17:16:29 -0400
-Received: by fg-out-1718.google.com with SMTP id 19so817916fgg.17
-        for <git@vger.kernel.org>; Fri, 05 Sep 2008 14:16:27 -0700 (PDT)
+	id S1751605AbYIEVeh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 5 Sep 2008 17:34:37 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751558AbYIEVeh
+	(ORCPT <rfc822;git-outgoing>); Fri, 5 Sep 2008 17:34:37 -0400
+Received: from py-out-1112.google.com ([64.233.166.181]:17989 "EHLO
+	py-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751448AbYIEVeg (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 5 Sep 2008 17:34:36 -0400
+Received: by py-out-1112.google.com with SMTP id p76so372344pyb.10
+        for <git@vger.kernel.org>; Fri, 05 Sep 2008 14:34:34 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlemail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:cc:subject:date
-         :message-id:x-mailer:in-reply-to:references:mime-version
-         :content-type:content-transfer-encoding;
-        bh=s91iuyNf1HeJwWEc98GYSfR1IGKQxgJ0au8Ze4DmAxs=;
-        b=WLcdnzOE9c/6k4KLkId/sP/nyn6qbj4rzrDCb6KUAsQ6pyOdJ5ma89fsi8hjtFK9mR
-         7SGzCVr65eaBQBm4W0n01LGu/xeOvvphYJ3ilJbWRkpIakClr/MoxXKeiuXSYPDnZS9u
-         crMXje5dEgbfzw+65/luJmQNayrBhg7D8Ag7s=
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to
+         :subject:cc:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:references;
+        bh=0yw7ZwMybldqVgt9SOxVDhnEiyQSVvyNNMWFNujka5w=;
+        b=IeyVLpw69mA8e3e2foKlxYaIKIn+H28FAh/0feJnzuKIylL285n1SeukZFT3cJvOP+
+         d3KrSXMK1q+jb+NctKI5T5qAOXXygFyFc+IVggHdSefuJcPSRmxZn2H4dNnjycuA5Ff4
+         OqChgdzhXSq5AqkxiDYQI31q160xNaNK2nZ8w=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=googlemail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references
-         :mime-version:content-type:content-transfer-encoding;
-        b=MfJR53c1CnOMM5qy0fZRr5c3EWweoDAmqtmF+bJkG6liBOZQXZlC04uib+6XVTvrLa
-         8kOvY3xttJEyPrvoN2T07b/ZMwkMPWb7F8YIri9bwHHAGjBRX9dvPkQWR5fCFqfspqsm
-         eaqplG7+0RlXh7cKiAzBVwlF5hG5i/miFIQyY=
-Received: by 10.86.90.13 with SMTP id n13mr7576086fgb.3.1220649387299;
-        Fri, 05 Sep 2008 14:16:27 -0700 (PDT)
-Received: from localhost ( [91.15.73.19])
-        by mx.google.com with ESMTPS id e20sm1433118fga.1.2008.09.05.14.16.25
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Fri, 05 Sep 2008 14:16:26 -0700 (PDT)
-X-Mailer: git-send-email 1.6.0
-In-Reply-To: <7vtzcxaxgr.fsf@gitster.siamese.dyndns.org>
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
+         :content-type:content-transfer-encoding:content-disposition
+         :references;
+        b=Vv8UHALTUzoM9sEYY+aGN9ogxKswtIsLVPs4gEXiHrmKWH7fUnCkFAsdVOwOg/YiNc
+         1MCX7jv6tAmIcYBkq5hrZ4/lJheEpqvQbWTSkqts8IXsG9YaNTZGzEJ7Qc4m+2UfIitN
+         o7wIgH115E8BlQGgLLVnOtVl3dQOuqlisJdVc=
+Received: by 10.114.145.18 with SMTP id s18mr10597572wad.26.1220650474419;
+        Fri, 05 Sep 2008 14:34:34 -0700 (PDT)
+Received: by 10.114.135.18 with HTTP; Fri, 5 Sep 2008 14:34:34 -0700 (PDT)
+In-Reply-To: <7vmyimv0qr.fsf@gitster.siamese.dyndns.org>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/95041>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/95042>
 
-Tries to shorten the refname to a non-ambiguous name.
+On Fri, Sep 5, 2008 at 12:41 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> "Scott Chacon" <schacon@gmail.com> writes:
+>
+>> Also, the last section of the book is on some of the plumbing - mostly
+>> stuff I've found difficult to pick up with the existing documentation
+>> while re-implementing stuff in Ruby.  I would really appreciate it if
+>> someone could proofread some of these chapters for errors:
+>>
+>> http://book.git-scm.com/7_the_packfile.html
+>
+> Nice pictures.  You might also want to know that code for reading pack idx
+> version 2 was backported to 1.4.4.5 for people who are stuck on 1.4.4
+> series for whatever reason.
+>
+> What is the target audience of this section?  If it is written for a mere
+> curious type, or if it is written to give "here is the general idea, for
+> more details read the source", the level of detail here would be Ok.
+>
+> If you are writing for people who want to (re)implement something that
+> produces these files, you might want to at least say that offset/sha1[]
+> table is sorted by sha1[] values (this is to allow binary search of this
+> table), and fanout[] table points at the offset/sha1[] table in a specific
+> way (so that part of the latter table that covers all hashes that start
+> with a given byte can be found to avoid 8 iterations of the binary
+> search).
+>
+> <data> part is just zlib stream for non-delta object types; for the two
+> delta object representations, the <data> portion contains something that
+> identifies which base object this delta representation depends on, and the
+> delta to apply on the base object to resurrect this object.  ref-delta
+> uses 20-byte hash of the base object at the beginning of <data>, while
+> ofs-delta stores an offset within the same packfile to identify the base
+> object.  In either case, two important constraints a reimplementor must
+> adhere to are:
+>
+>  * delta representation must be based on some other object within the same
+>   packfile;
+>
+>  * the base object must be of the same underlying type (blob, tree, commit
+>   or tag);
+>
+>> http://book.git-scm.com/7_raw_git.html
+>
+> I am guessing this is for Porcelain writers who use plumbing.  Please
+> don't teach echoing into .git/refs/...  but DO teach using update-ref with
+> the -m option.  We do not want people's random Porcelains flipping the tip
+> of branches without leaving trail in reflog for users to use to recover
+> from mistakes.
+>
 
-Szeder G=C3=A1bor noticed that the git bash completion takes a
-tremendous amount of time to strip leading components from
-heads and tags refs (i.e. refs/heads, refs/tags, ...). He
-proposed a new atom called 'refbasename' which removes at
-most two leading components from the ref name.
+I've implemented all of these and Linus's fixes and suggestions.
+Thanks for the feedback.
 
-I myself, proposed a more dynamic solution, which strips off
-common leading components with the matched pattern.
+To answer your earlier question, these docs are basically for people
+working on bindings/re-implementations in other languages, since there
+is no real linked library available yet, as a primer before they dig
+into the source, or possibly so they don't have to.
 
-But the current bash solution and both proposals suffer from
-one mayor problem: ambiguous refs.
+I'm not fantastic at C, so it took me a while in some cases - figuring
+out that the size listed in the object header was not the actual size
+of the data, but the size of it when expanded, for example, was not
+very easy to do.  I've been doing a lot of work on re-implementations
+in Ruby and ObjC because I can't easily make real bindings, so I
+thought I would add things that I could not easily find in the docs
+for others that are trying in other languages.
 
-A ref is ambiguous, if it resolves to more than one full refs.
-I.e. given the refs refs/heads/xyzzy and refs/tags/xyzzy. The
-(short) ref xyzzy can point to both refs.
+If you want, I could create a patch for any of this stuff to
+Documentation/ (that goes for the whole book), but someone will have
+to tell me which parts might be useful to add.
 
-( Note: Its irrelevant whether the referenced objects are the
-  same or not. )
-
-This proposal solves this by checking for ambiguity of the
-shorten ref name.
-
-The shortening is done with the same rules for resolving refs
-but in the reverse order. The short name is checked if it
-resolves to a different ref.
-
-To continue the above example, the output would be like this:
-
-heads/xyzzy
-xyzzy
-
-So, if you want just tags, xyzzy is not ambiguous, because it
-will resolve to a tag. If you need the heads you get a also
-a non-ambiguous short form of the ref.
-
-To integrate this new format into the bash completion to get
-only non-ambiguous refs is beyond the scope of this patch.
-
-Signed-off-by: Bert Wesarg <bert.wesarg@googlemail.com>
-
----
-Cc: git@vger.kernel.org
-Cc: szeder@ira.uka.de
-Cc: Shawn O. Pearce <spearce@spearce.org>
-
- Documentation/git-for-each-ref.txt |    1 +
- builtin-for-each-ref.c             |  135 ++++++++++++++++++++++++++++=
-++++++--
- t/t6300-for-each-ref.sh            |   44 ++++++++++++
- 3 files changed, 173 insertions(+), 7 deletions(-)
-
-diff --git a/Documentation/git-for-each-ref.txt b/Documentation/git-for=
--each-ref.txt
-index eae6c0e..4016f59 100644
---- a/Documentation/git-for-each-ref.txt
-+++ b/Documentation/git-for-each-ref.txt
-@@ -74,6 +74,7 @@ For all objects, the following names can be used:
-=20
- refname::
- 	The name of the ref (the part after $GIT_DIR/).
-+	For a non-ambiguous short name of the ref append `:short`.
-=20
- objecttype::
- 	The type of the object (`blob`, `tree`, `commit`, `tag`).
-diff --git a/builtin-for-each-ref.c b/builtin-for-each-ref.c
-index 21e92bb..9b44092 100644
---- a/builtin-for-each-ref.c
-+++ b/builtin-for-each-ref.c
-@@ -546,6 +546,107 @@ static void grab_values(struct atom_value *val, i=
-nt deref, struct object *obj, v
- }
-=20
- /*
-+ * generate a format suitable for scanf from a ref_rev_parse_rules
-+ * rule, that is replace the "%.*s" spec with a "%s" spec
-+ */
-+static void gen_scanf_fmt(char *scanf_fmt, const char *rule)
-+{
-+	char *spec;
-+
-+	spec =3D strstr(rule, "%.*s");
-+	if (!spec || strstr(spec + 4, "%.*s"))
-+		die("invalid rule in ref_rev_parse_rules: %s", rule);
-+
-+	/* copy all until spec */
-+	strncpy(scanf_fmt, rule, spec - rule);
-+	scanf_fmt[spec - rule] =3D '\0';
-+	/* copy new spec */
-+	strcat(scanf_fmt, "%s");
-+	/* copy remaining rule */
-+	strcat(scanf_fmt, spec + 4);
-+
-+	return;
-+}
-+
-+/*
-+ * Shorten the refname to an non-ambiguous form
-+ */
-+static char *get_short_ref(struct refinfo *ref)
-+{
-+	int i;
-+	static char **scanf_fmts;
-+	static int nr_rules;
-+	char *short_name;
-+
-+	/* pre generate scanf formats from ref_rev_parse_rules[] */
-+	if (!nr_rules) {
-+		size_t total_len =3D 0;
-+
-+		/* the rule list is NULL terminated, count them first */
-+		for (; ref_rev_parse_rules[nr_rules]; nr_rules++)
-+			/* no +1 because strlen("%s") < strlen("%.*s") */
-+			total_len +=3D strlen(ref_rev_parse_rules[nr_rules]);
-+
-+		scanf_fmts =3D xmalloc(nr_rules * sizeof(char *) + total_len);
-+
-+		total_len =3D 0;
-+		for (i =3D 0; i < nr_rules; i++) {
-+			scanf_fmts[i] =3D (char *)&scanf_fmts[nr_rules]
-+					+ total_len;
-+			gen_scanf_fmt(scanf_fmts[i], ref_rev_parse_rules[i]);
-+			total_len +=3D strlen(ref_rev_parse_rules[i]);
-+		}
-+	}
-+
-+	/* bail out if there are no rules */
-+	if (!nr_rules)
-+		return ref->refname;
-+
-+	/* buffer for scanf result, at most ref->refname must fit */
-+	short_name =3D xstrdup(ref->refname);
-+
-+	/* skip first rule, it will always match */
-+	for (i =3D nr_rules - 1; i > 0 ; --i) {
-+		int j;
-+		int short_name_len;
-+
-+		if (1 !=3D sscanf(ref->refname, scanf_fmts[i], short_name))
-+			continue;
-+
-+		short_name_len =3D strlen(short_name);
-+
-+		/*
-+		 * check if the short name resolves to a valid ref,
-+		 * but use only rules prior to the matched one
-+		 */
-+		for (j =3D 0; j < i; j++) {
-+			const char *rule =3D ref_rev_parse_rules[j];
-+			unsigned char short_objectname[20];
-+
-+			/*
-+			 * the short name is ambiguous, if it resolves
-+			 * (with this previous rule) to a valid ref
-+			 * read_ref() returns 0 on success
-+			 */
-+			if (!read_ref(mkpath(rule, short_name_len, short_name),
-+				      short_objectname))
-+				break;
-+		}
-+
-+		/*
-+		 * short name is non-ambiguous if all previous rules
-+		 * haven't resolved to a valid ref
-+		 */
-+		if (j =3D=3D i)
-+			return short_name;
-+	}
-+
-+	free(short_name);
-+	return ref->refname;
-+}
-+
-+
-+/*
-  * Parse the object referred by ref, and grab needed value.
-  */
- static void populate_value(struct refinfo *ref)
-@@ -570,13 +671,33 @@ static void populate_value(struct refinfo *ref)
- 	for (i =3D 0; i < used_atom_cnt; i++) {
- 		const char *name =3D used_atom[i];
- 		struct atom_value *v =3D &ref->value[i];
--		if (!strcmp(name, "refname"))
--			v->s =3D ref->refname;
--		else if (!strcmp(name, "*refname")) {
--			int len =3D strlen(ref->refname);
--			char *s =3D xmalloc(len + 4);
--			sprintf(s, "%s^{}", ref->refname);
--			v->s =3D s;
-+		int deref =3D 0;
-+		if (*name =3D=3D '*') {
-+			deref =3D 1;
-+			name++;
-+		}
-+		if (!prefixcmp(name, "refname")) {
-+			const char *formatp =3D strchr(name, ':');
-+			const char *refname =3D ref->refname;
-+
-+			/* look for "short" refname format */
-+			if (formatp) {
-+				formatp++;
-+				if (!strcmp(formatp, "short"))
-+					refname =3D get_short_ref(ref);
-+				else
-+					die("unknown refname format %s",
-+					    formatp);
-+			}
-+
-+			if (!deref)
-+				v->s =3D refname;
-+			else {
-+				int len =3D strlen(refname);
-+				char *s =3D xmalloc(len + 4);
-+				sprintf(s, "%s^{}", refname);
-+				v->s =3D s;
-+			}
- 		}
- 	}
-=20
-diff --git a/t/t6300-for-each-ref.sh b/t/t6300-for-each-ref.sh
-index 8ced593..4f247dd 100755
---- a/t/t6300-for-each-ref.sh
-+++ b/t/t6300-for-each-ref.sh
-@@ -262,6 +262,50 @@ for i in "--perl --shell" "-s --python" "--python =
---tcl" "--tcl --perl"; do
- 	"
- done
-=20
-+cat >expected <<\EOF
-+master
-+testtag
-+EOF
-+
-+test_expect_success 'Check short refname format' '
-+	(git for-each-ref --format=3D"%(refname:short)" refs/heads &&
-+	git for-each-ref --format=3D"%(refname:short)" refs/tags) >actual &&
-+	test_cmp expected actual
-+'
-+
-+test_expect_success 'Check for invalid refname format' '
-+	test_must_fail git for-each-ref --format=3D"%(refname:INVALID)"
-+'
-+
-+cat >expected <<\EOF
-+heads/master
-+master
-+EOF
-+
-+test_expect_success 'Check ambiguous head and tag refs' '
-+	git checkout -b newtag &&
-+	echo "Using $datestamp" > one &&
-+	git add one &&
-+	git commit -m "Branch" &&
-+	setdate_and_increment &&
-+	git tag -m "Tagging at $datestamp" master &&
-+	git for-each-ref --format "%(refname:short)" refs/heads/master refs/t=
-ags/master >actual &&
-+	test_cmp expected actual
-+'
-+
-+cat >expected <<\EOF
-+heads/ambiguous
-+ambiguous
-+EOF
-+
-+test_expect_success 'Check ambiguous head and tag refs II' '
-+	git checkout master &&
-+	git tag ambiguous testtag^0 &&
-+	git branch ambiguous testtag^0 &&
-+	git for-each-ref --format "%(refname:short)" refs/heads/ambiguous ref=
-s/tags/ambiguous >actual &&
-+	test_cmp expected actual
-+'
-+
- test_expect_success 'an unusual tag with an incomplete line' '
-=20
- 	git tag -m "bogo" bogo &&
---=20
-1.6.0
+Thanks again for taking the time!
+Scott
