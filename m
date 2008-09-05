@@ -1,68 +1,88 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: [JGIT PATCH] Expose the raw timezone offset from PersonIdent
-Date: Thu,  4 Sep 2008 18:37:19 -0700
-Message-ID: <1220578639-11723-1-git-send-email-spearce@spearce.org>
-Cc: git@vger.kernel.org
-To: Robin Rosenberg <robin.rosenberg@dewire.com>
-X-From: git-owner@vger.kernel.org Fri Sep 05 03:38:29 2008
+From: "Imran M Yousuf" <imran@smartitengineering.com>
+Subject: Re: [JGIT PATCH 2/2] Move pathOf to RepositoryTestCase and use it for locating test files
+Date: Fri, 5 Sep 2008 07:48:49 +0600
+Message-ID: <9e85b2570809041848x6b232508y535974e6036eed51@mail.gmail.com>
+References: <20080903091022.GC23406@diku.dk>
+	 <20080903170904.GB28315@spearce.org>
+	 <9e85b2570809031847r34a760ecwea365930327eb205@mail.gmail.com>
+	 <20080904032118.GA3262@spearce.org> <20080904092311.GA25735@diku.dk>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: "Shawn O. Pearce" <spearce@spearce.org>,
+	"Imran M Yousuf" <imyousuf@smartitengineering.com>,
+	"Robin Rosenberg" <robin.rosenberg@dewire.com>, git@vger.kernel.org
+To: "Jonas Fonseca" <fonseca@diku.dk>
+X-From: git-owner@vger.kernel.org Fri Sep 05 03:53:49 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KbQHM-0007BU-GU
-	for gcvg-git-2@gmane.org; Fri, 05 Sep 2008 03:38:29 +0200
+	id 1KbQW1-0001HA-Vk
+	for gcvg-git-2@gmane.org; Fri, 05 Sep 2008 03:53:38 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751868AbYIEBhV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 4 Sep 2008 21:37:21 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751894AbYIEBhV
-	(ORCPT <rfc822;git-outgoing>); Thu, 4 Sep 2008 21:37:21 -0400
-Received: from george.spearce.org ([209.20.77.23]:32903 "EHLO
-	george.spearce.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751623AbYIEBhU (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 4 Sep 2008 21:37:20 -0400
-Received: by george.spearce.org (Postfix, from userid 1000)
-	id 1F0A33835F; Fri,  5 Sep 2008 01:37:20 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.2.4 (2008-01-01) on george.spearce.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-4.4 required=4.0 tests=ALL_TRUSTED,BAYES_00
-	autolearn=ham version=3.2.4
-Received: from localhost.localdomain (localhost [127.0.0.1])
-	by george.spearce.org (Postfix) with ESMTP id AE89F38269;
-	Fri,  5 Sep 2008 01:37:19 +0000 (UTC)
-X-Mailer: git-send-email 1.6.0.1.319.g9f32b
+	id S1751711AbYIEBsw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 4 Sep 2008 21:48:52 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751623AbYIEBsv
+	(ORCPT <rfc822;git-outgoing>); Thu, 4 Sep 2008 21:48:51 -0400
+Received: from qb-out-0506.google.com ([72.14.204.236]:10106 "EHLO
+	qb-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751481AbYIEBsv (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 4 Sep 2008 21:48:51 -0400
+Received: by qb-out-0506.google.com with SMTP id f11so293502qba.17
+        for <git@vger.kernel.org>; Thu, 04 Sep 2008 18:48:50 -0700 (PDT)
+Received: by 10.210.114.15 with SMTP id m15mr12875155ebc.45.1220579329144;
+        Thu, 04 Sep 2008 18:48:49 -0700 (PDT)
+Received: by 10.210.113.7 with HTTP; Thu, 4 Sep 2008 18:48:49 -0700 (PDT)
+In-Reply-To: <20080904092311.GA25735@diku.dk>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/94986>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/94987>
 
-Applications may wish to have this value, much as they
-can get the raw seconds-since-epoch and reformat it
-for their own uses.
+On Thu, Sep 4, 2008 at 3:23 PM, Jonas Fonseca <fonseca@diku.dk> wrote:
+> Shawn O. Pearce <spearce@spearce.org> wrote Wed, Sep 03, 2008:
+>> Imran M Yousuf <imran@smartitengineering.com> wrote:
+>> > Almighty willing, I will submit my patches this weekend (on Saturday).
+>> > I develop in NetBeans so that would make it easier for sure.
+>
+> Perfect. You might be interested in the hopefully soon to be released
+> jgit-based nbgit module:
+>
+>  - http://nbgit.googlecode.com/
+>
+> The feature set is limited but some of the basics features should be
+> there.
 
-Signed-off-by: Shawn O. Pearce <spearce@spearce.org>
----
- .../src/org/spearce/jgit/lib/PersonIdent.java      |    8 ++++++++
- 1 files changed, 8 insertions(+), 0 deletions(-)
+Ah great! I am really interested in it, I scheduled time on November
+to develop it since you have already started on it I guess I will join
+you guys. I had a discussion with Alex Coles couple of months back he
+was using CLI output for the purpose, its nice to see JGit being used
+as I suggested him the same. Let me get a little free and I will join
+that project as well.
 
-diff --git a/org.spearce.jgit/src/org/spearce/jgit/lib/PersonIdent.java b/org.spearce.jgit/src/org/spearce/jgit/lib/PersonIdent.java
-index 5e524d3..bc5479a 100644
---- a/org.spearce.jgit/src/org/spearce/jgit/lib/PersonIdent.java
-+++ b/org.spearce.jgit/src/org/spearce/jgit/lib/PersonIdent.java
-@@ -260,6 +260,14 @@ public TimeZone getTimeZone() {
- 		return TimeZone.getTimeZone(ids[0]);
- 	}
- 
-+	/**
-+	 * @return this person's preferred time zone as minutes east of UTC. If the
-+	 *         timezone is to the west of UTC it is negative.
-+	 */
-+	public int getTimeZoneOffset() {
-+		return tzOffset;
-+	}
-+
- 	public int hashCode() {
- 		return getEmailAddress().hashCode() ^ (int) when;
- 	}
+Cheers,
+
+Imran
+
+>
+>> Awesome.  Then I'll hold off on Jonas' patch for now.
+>
+> Super.
+>
+> --
+> Jonas Fonseca
+>
+
+
+
 -- 
-1.6.0.1.319.g9f32b
+Imran M Yousuf
+Entrepreneur & Software Engineer
+Smart IT Engineering
+Dhaka, Bangladesh
+Email: imran@smartitengineering.com
+Blog: http://imyousuf-tech.blogs.smartitengineering.com/
+Mobile: +880-1711402557
