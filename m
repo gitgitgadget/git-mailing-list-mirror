@@ -1,71 +1,81 @@
-From: "Thomas Adam" <thomas.adam22@gmail.com>
-Subject: Re: Git Community Book
-Date: Fri, 5 Sep 2008 20:15:55 +0100
-Message-ID: <18071eea0809051215n6a8e1468gfd28876d7d5b0488@mail.gmail.com>
-References: <d411cc4a0809051208k2a15c4a7te09a6979929e52f7@mail.gmail.com>
+From: "Alexander Gladysh" <agladysh-Re5JQEeQqe8AvxtiuMwx3w@public.gmane.org>
+Subject: Re: Git Gui does not want to work on chunk level
+Date: Fri, 5 Sep 2008 23:27:19 +0400
+Message-ID: <c6c947f60809051227o6a3890c9m1767921a6bb9a804@mail.gmail.com>
+References: <c6c947f60808270216k2feb8f9ar765cdee1fc3910ee@mail.gmail.com> <c6c947f60809031223i575ca3fdya357588610bb72e8@mail.gmail.com> <20080903230814.GJ28315@spearce.org> <c6c947f60809040220t589e65bfkbd693fd335792069@mail.gmail.com> <20080904143723.GB23708@spearce.org> <c6c947f60809040754g34e60633lcd5f872ac5e80158@mail.gmail.com> <20080905045327.GA31166@spearce.org>
+Reply-To: git-users-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: "git list" <git@vger.kernel.org>
-To: "Scott Chacon" <schacon@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Sep 05 21:17:19 2008
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git-2@gmane.org
-Received: from vger.kernel.org ([209.132.176.167])
+Cc: git-users-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org, git-u79uwXL29TY76Z2rM5mHXA@public.gmane.org
+To: "Shawn O. Pearce" <spearce-o8xcbExO1WpAfugRpC6u6w@public.gmane.org>
+X-From: grbounce-9bT_dAUAAACIBuRSQHd8xQYABcDNOWyf=gcggu-git-users=m.gmane.org-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org Fri Sep 05 21:28:38 2008
+Return-path: <grbounce-9bT_dAUAAACIBuRSQHd8xQYABcDNOWyf=gcggu-git-users=m.gmane.org-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org>
+Envelope-to: gcggu-git-users@m.gmane.org
+Received: from yx-out-2122.google.com ([74.125.44.24])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Kbgo2-0007dZ-Vd
-	for gcvg-git-2@gmane.org; Fri, 05 Sep 2008 21:17:19 +0200
-Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752035AbYIETQB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 5 Sep 2008 15:16:01 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751516AbYIETQA
-	(ORCPT <rfc822;git-outgoing>); Fri, 5 Sep 2008 15:16:00 -0400
-Received: from ug-out-1314.google.com ([66.249.92.173]:13775 "EHLO
-	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751944AbYIETP7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 5 Sep 2008 15:15:59 -0400
-Received: by ug-out-1314.google.com with SMTP id c2so227739ugf.37
-        for <git@vger.kernel.org>; Fri, 05 Sep 2008 12:15:56 -0700 (PDT)
+	id 1Kbgyr-0002Na-6Z
+	for gcggu-git-users@m.gmane.org; Fri, 05 Sep 2008 21:28:29 +0200
+Received: by yx-out-2122.google.com with SMTP id 22so408851yxm.63
+        for <gcggu-git-users@m.gmane.org>; Fri, 05 Sep 2008 12:27:27 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to
-         :subject:cc:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:references;
-        bh=b+H+/pWNAnpeN5Zku6Sv6e9rf6qSIgmRkUeC8hHU4Y0=;
-        b=HluBbjNYTvwrfdIilv1INVFMKD706KGcl0ArtAsAz+cPYD5BIDorbntz8PLRmWNGTl
-         hZK8f1jZ8i2CMy7vrRJ+gI4yu7bcq17HYZtaVCuEmMeJ53d9+UuPILjVH2gwNndXJlPR
-         GeIVJuIJVaYN7OvS7HrOnJka9lfCRDwinWpvI=
+        d=googlegroups.com; s=beta;
+        h=domainkey-signature:received:received:x-sender:x-apparently-to
+         :received:received:received-spf:authentication-results:received
+         :dkim-signature:domainkey-signature:received:received:message-id
+         :date:from:to:subject:cc:in-reply-to:mime-version:content-type
+         :references:reply-to:sender:precedence:x-google-loop:mailing-list
+         :list-id:list-post:list-help:list-unsubscribe:x-beenthere-env
+         :x-beenthere;
+        bh=PMdaD+3VSHpXIfXxnEStCRrt3eV73uwYYVTimLNb4y8=;
+        b=0E6ktzOEVJwEyqjkMiIma+Azi1zBxIB1vDYca/bfrXZrYoup4DWrrn3RjhJCafnTC5
+         uZAEkcOqrCkfSJi6J9Eso8eo6PO3uifz96lufe5QOr7dbpH9/mfDuAMi2A7XBlBruneC
+         mU7HEz5YYLLVaO6U6yVh0Gsb4+eiROGE8/QoI=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
-         :content-type:content-transfer-encoding:content-disposition
-         :references;
-        b=L6l+stUfcFGc5lHWbFVgoNth4XZMycol5UO29JFqYfzP+g8b3pA4mTnEk+QPH3v0pZ
-         i7QQHlpaBVlGRmO4P7nLagzvJJQyVdovrZm8Bo44bAMhV/K+lxQ1IViYnQ6soX24IDpG
-         wmnn8CVEah5AnKj6GakHAgrxo+QLm+yZBcTRc=
-Received: by 10.103.249.7 with SMTP id b7mr8194333mus.51.1220642155445;
-        Fri, 05 Sep 2008 12:15:55 -0700 (PDT)
-Received: by 10.103.182.8 with HTTP; Fri, 5 Sep 2008 12:15:55 -0700 (PDT)
-In-Reply-To: <d411cc4a0809051208k2a15c4a7te09a6979929e52f7@mail.gmail.com>
-Content-Disposition: inline
-Sender: git-owner@vger.kernel.org
+        d=googlegroups.com; s=beta;
+        h=x-sender:x-apparently-to:received-spf:authentication-results
+         :dkim-signature:domainkey-signature:message-id:date:from:to:subject
+         :cc:in-reply-to:mime-version:content-type:references:reply-to:sender
+         :precedence:x-google-loop:mailing-list:list-id:list-post:list-help
+         :list-unsubscribe:x-beenthere-env:x-beenthere;
+        b=CBJK+oLPLQyXYuUdWqWHciXvK5r37g7jaaeTKzyak5hb8Tv5I8zd5WV5b4qrJyOv6Q
+         HWI8jP5TsJsqKN/XKG3kJLe6XtZ98IHghZbAH7VX4wozIg2/uvV0BznsdVVl40XX95uy
+         FhDQ5zCi89CiV0Y1P0XWCuKUz6DUF2fFn41+0=
+Received: by 10.114.199.1 with SMTP id w1mr318530waf.6.1220642841008;
+        Fri, 05 Sep 2008 12:27:21 -0700 (PDT)
+Received: by 10.106.151.34 with SMTP id y34gr144prd.0;
+	Fri, 05 Sep 2008 12:27:20 -0700 (PDT)
+X-Sender: agladysh-Re5JQEeQqe8AvxtiuMwx3w@public.gmane.org
+X-Apparently-To: git-users-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org
+Received: by 10.114.111.6 with SMTP id j6mr7292225wac.29.1220642840530; Fri, 05 Sep 2008 12:27:20 -0700 (PDT)
+Received: from wa-out-1112.google.com ([172.21.189.38]) by mx.google.com with ESMTP id k32si456206wah.1.2008.09.05.12.27.19; Fri, 05 Sep 2008 12:27:20 -0700 (PDT)
+Received-SPF: neutral (google.com: 172.21.189.38 is neither permitted nor denied by domain of agladysh-Re5JQEeQqe8AvxtiuMwx3w@public.gmane.org) client-ip=172.21.189.38;
+Authentication-Results: mx.google.com; spf=neutral (google.com: 172.21.189.38 is neither permitted nor denied by domain of agladysh-Re5JQEeQqe8AvxtiuMwx3w@public.gmane.org) smtp.mail=agladysh-Re5JQEeQqe8AvxtiuMwx3w@public.gmane.org; dkim=pass (test mode) header.i=@gmail.com
+Received: by wa-out-1112.google.com with SMTP id m38so451832waf.14 for <git-users-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org>; Fri, 05 Sep 2008 12:27:19 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=gamma; h=domainkey-signature:received:received:message-id:date:from:to :subject:cc:in-reply-to:mime-version:content-type :content-transfer-encoding:content-disposition:references; bh=pRU3g+r1gTWldafcFvGJrbVx82h1kxUjgHVo9j7eFUM=; b=A3DiXd7SfAx0epux58SU708hkWSPHg91zq4FyKNOxzdsGztwAmlUEeSlV2OyeGuiAH CHnyYWpoA39l382MMURJ6q4IVJHL2lskNZy/bm/fNf58U9INnBTUIXCVYGBYonMpN2gx vz1r2j7qVzN0wx2uTuh+2eCtvnEMLEsA4CZIw=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=gmail.com; s=gamma; h=message-id:date:from:to:subject:cc:in-reply-to:mime-version :content-type:content-transfer-encoding:content-disposition :references; b=j69f6gsfYmeneyHxJ3cFr8vHjfWHLEMh8K9whA++Ug2lgNsYW9/27JAHEtVGcXYcQg SlM+nFd+h+tVFDoBcFRZqhhfz9CkPy9GY4gEkpqtgv6c5ynn9x9d354444vK5S95QqfZ zkJcqQQLMNsb8TdEKCoAQw9cIJJirjs9TqUrQ=
+Received: by 10.115.46.9 with SMTP id y9mr8318634waj.23.1220642839299; Fri, 05 Sep 2008 12:27:19 -0700 (PDT)
+Received: by 10.115.95.8 with HTTP; Fri, 5 Sep 2008 12:27:19 -0700 (PDT)
+In-Reply-To: <20080905045327.GA31166-o8xcbExO1WpAfugRpC6u6w@public.gmane.org>
+Sender: git-users-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org
 Precedence: bulk
-List-ID: <git.vger.kernel.org>
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/95033>
+X-Google-Loop: groups
+Mailing-List: list git-users-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org;
+	contact git-users+owner-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org
+List-Id: <git-users.googlegroups.com>
+List-Post: <mailto:git-users-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org>
+List-Help: <mailto:git-users+help-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org>
+List-Unsubscribe: <http://googlegroups.com/group/git-users/subscribe>,
+	<mailto:git-users+unsubscribe-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org>
+X-BeenThere-Env: git-users-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org
+X-BeenThere: git-users-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/95034>
 
-2008/9/5 Scott Chacon <schacon@gmail.com>:
-> Hey all,
->
-> I just wanted to let those of you who are interested know that I've
-> been making a lot of progress on the Git Community Book
-> (http://book.git-scm.com)  I was wondering if anyone was interested in
 
-I'm going to bite and ask the obvious questions:
+> So that was an awesome reproduction case.  I have committed the
+> following fix and will push it out in a few minutes:
 
-1.  How does what you're producing differ from the current Git Users' Manual?
-2.  Is this project of yours aiming to obsolete the Git Users' Manual
-with "official" sanctioning from people involved with Git?
-3.  Assuming 2 is a "no", patches to the Users' Guide would be nice.  :)
+<...>
 
--- Thomas Adam
+Thank you! The fix helped indeed. I can commit on hunk level again! :-)
+
+Alexander.
