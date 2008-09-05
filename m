@@ -1,85 +1,73 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [ANNOUNCE] Git User's Survey 2008
-Date: Fri, 5 Sep 2008 10:45:43 -0400
-Message-ID: <20080905144543.GA25022@coredump.intra.peff.net>
-References: <200808312329.17312.jnareb@gmail.com> <48BB9742.3000109@gmail.com> <200809011034.48342.jnareb@gmail.com> <48BE8109.9030701@jaeger.mine.nu> <1a6be5fa0809030546n28e2a1besdc4435e874f2f0f9@mail.gmail.com> <94a0d4530809030949v7c8c6ec4uc60bc873a40637d0@mail.gmail.com> <e29894ca0809050646g2f198890le2312d065696d1dd@mail.gmail.com>
+From: "Shawn O. Pearce" <spearce@spearce.org>
+Subject: Re: How can i write a new protocol for git
+Date: Fri, 5 Sep 2008 07:52:46 -0700
+Message-ID: <20080905145246.GA20537@spearce.org>
+References: <976e6d070809050222v1580ae53ye96dee913d44ae4b@mail.gmail.com> <20080905094746.GA26820@glandium.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: =?utf-8?Q?Marc-Andr=C3=A9?= Lureau <marcandre.lureau@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Sep 05 16:47:05 2008
+Cc: Sky Patrick <patricksky852@gmail.com>, git@vger.kernel.org
+To: Mike Hommey <mh@glandium.org>
+X-From: git-owner@vger.kernel.org Fri Sep 05 16:54:33 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KbcaQ-0002BL-9x
-	for gcvg-git-2@gmane.org; Fri, 05 Sep 2008 16:46:58 +0200
+	id 1KbchA-0004vi-Ob
+	for gcvg-git-2@gmane.org; Fri, 05 Sep 2008 16:53:57 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753456AbYIEOps convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 5 Sep 2008 10:45:48 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753448AbYIEOps
-	(ORCPT <rfc822;git-outgoing>); Fri, 5 Sep 2008 10:45:48 -0400
-Received: from peff.net ([208.65.91.99]:3524 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751465AbYIEOps (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 5 Sep 2008 10:45:48 -0400
-Received: (qmail 18153 invoked by uid 111); 5 Sep 2008 14:45:45 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.32) with SMTP; Fri, 05 Sep 2008 10:45:45 -0400
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Fri, 05 Sep 2008 10:45:43 -0400
+	id S1754896AbYIEOws (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 5 Sep 2008 10:52:48 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753776AbYIEOws
+	(ORCPT <rfc822;git-outgoing>); Fri, 5 Sep 2008 10:52:48 -0400
+Received: from george.spearce.org ([209.20.77.23]:58091 "EHLO
+	george.spearce.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753448AbYIEOwr (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 5 Sep 2008 10:52:47 -0400
+Received: by george.spearce.org (Postfix, from userid 1001)
+	id 6C82C38353; Fri,  5 Sep 2008 14:52:46 +0000 (UTC)
 Content-Disposition: inline
-In-Reply-To: <e29894ca0809050646g2f198890le2312d065696d1dd@mail.gmail.com>
+In-Reply-To: <20080905094746.GA26820@glandium.org>
+User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/95019>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/95020>
 
-On Fri, Sep 05, 2008 at 04:46:02PM +0300, Marc-Andr=C3=A9 Lureau wrote:
+Mike Hommey <mh@glandium.org> wrote:
+> On Fri, Sep 05, 2008 at 05:22:57PM +0800, Sky Patrick wrote:
+> > 
+> > If i want to write a new protocol for file transfer and would like to
+> > to integrate it with git. Is it possible and easy to integrate it ?
+> > Currently, i know that jgit may achieve it, but it is a Java
+> > implementation and may not work with git command line program that
+> > written in C.
 
-> I cannot find yet a good workflow with either mutt, gmail or evolutio=
-n
-> over imap.
->=20
-> If somebody could explain how they handle the git send-mail patches
-> they recieve, I would be thankful. How do you create .mbox files? Wha=
-t
-> is your workflow when you deal with mails?
+Writing a dumb protocol support isn't difficult in JGit due to the
+abstractions in place.  Its a little harder in C Git, unless Mike
+(or someone else) can abstract out the cURL library usage and make
+it more flexible.  Though these days cURL supports just about any
+file transfer protocol known.
+ 
+> First, it would depend if you need this new protocol to be a dumb
+> protocol (like rsync and http) or "native" (git or ssh).
 
-When I receive patches via mutt, I usually apply them with this:
+Writing a smart protocol is a PITA.  Look at the smart HTTP effort
+I am trying to do.  OK, I'm not spending a whole lot of time on
+it, but its a damn difficult thing to do well, and to keep simple
+enough that it can be described and reimplemented.  Otherwise we
+have another that-thing-before-Git on our hands.
 
-  macro index,pager A '<pipe-message>git<space>am<enter>'
+> I've been meaning to refactor the dumb protocol "stack" for a while, but
+> haven't gone much further than ideas in my mind (i.e. no code). I also
+> have some start of http code recfactoring, that is waiting for this dumb
+> protocol rework to be completed.
 
-which will apply in your current directory. For my git folder, I use a
-hook to always apply to my git repo:
+Yea.  One reason why I'm doing the smart HTTP effort prototype in
+JGit is because the C code structure makes this harder to implement
+without first going through a number of refactorings.  Though for the
+smart HTTP stuff I really need to refactor fetch-pack/send-pack and
+upload-pack/receive-pack, not the dumb walkers.
 
-  folder-hook git macro index,pager A
-  '<pipe-message>cd<space>$HOME/compile/git<space>&&<space>git<space>am=
-<enter>'
-
-If there are several patches in a series, I may pull them into an mbox
-and apply separately:
-
-  [in mutt]
-  T pattern [or tag message individually, or Esc-T to tag thread]
-  ;C ~/name-of-patch-topic
-
-  [in another terminal]
-  cd /path/to/repo
-  git am ~/name-of-patch-topic
-
-To send one or two patches, I create an mbox and then use mutt to send:
-
-  git format-patch -s --stdout "$@" >.mbox
-  mutt -f .mbox
-  rm -f .mbox
-
-and in my muttrc:
-
-  macro index,pager b ":set edit_headers=3Dyes<enter><resend-message>:s=
-et edit_headers=3Dno<enter>"
-
-Hope that helps,
-
--Peff
+-- 
+Shawn.
