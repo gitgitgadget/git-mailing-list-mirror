@@ -1,56 +1,62 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] Avoid warning when bisecting a merge
-Date: Fri, 05 Sep 2008 01:31:02 -0700
-Message-ID: <7v3akfvvsp.fsf@gitster.siamese.dyndns.org>
-References: <1220562150-19962-1-git-send-email-hendeby@isy.liu.se>
- <200809050814.36937.chriscool@tuxfamily.org>
- <7vhc8vxg04.fsf@gitster.siamese.dyndns.org> <48C0DD32.5010008@isy.liu.se>
+From: "Sky Patrick" <patricksky852@gmail.com>
+Subject: How can i write a new protocol for git
+Date: Fri, 5 Sep 2008 17:22:57 +0800
+Message-ID: <976e6d070809050222v1580ae53ye96dee913d44ae4b@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Christian Couder <chriscool@tuxfamily.org>, git@vger.kernel.org
-To: Gustaf Hendeby <hendeby@isy.liu.se>
-X-From: git-owner@vger.kernel.org Fri Sep 05 10:32:31 2008
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Sep 05 11:24:13 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KbWjt-0005iT-A3
-	for gcvg-git-2@gmane.org; Fri, 05 Sep 2008 10:32:21 +0200
+	id 1KbXXx-0004r3-UJ
+	for gcvg-git-2@gmane.org; Fri, 05 Sep 2008 11:24:06 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753064AbYIEIbN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 5 Sep 2008 04:31:13 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753060AbYIEIbN
-	(ORCPT <rfc822;git-outgoing>); Fri, 5 Sep 2008 04:31:13 -0400
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:43375 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752905AbYIEIbM (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 5 Sep 2008 04:31:12 -0400
-Received: from localhost.localdomain (localhost [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 9DF785D11B;
-	Fri,  5 Sep 2008 04:31:10 -0400 (EDT)
-Received: from pobox.com (ip68-225-240-211.oc.oc.cox.net [68.225.240.211])
- (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
- certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
- ESMTPSA id 0166D5D11A; Fri,  5 Sep 2008 04:31:06 -0400 (EDT)
-In-Reply-To: <48C0DD32.5010008@isy.liu.se> (Gustaf Hendeby's message of "Fri,
- 05 Sep 2008 09:18:10 +0200")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: FE4AFA74-7B24-11DD-A89B-D0CFFE4BC1C1-77302942!a-sasl-fastnet.pobox.com
+	id S1750739AbYIEJW7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 5 Sep 2008 05:22:59 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750738AbYIEJW6
+	(ORCPT <rfc822;git-outgoing>); Fri, 5 Sep 2008 05:22:58 -0400
+Received: from wf-out-1314.google.com ([209.85.200.173]:49186 "EHLO
+	wf-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750705AbYIEJW6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 5 Sep 2008 05:22:58 -0400
+Received: by wf-out-1314.google.com with SMTP id 27so378664wfd.4
+        for <git@vger.kernel.org>; Fri, 05 Sep 2008 02:22:57 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to
+         :subject:mime-version:content-type:content-transfer-encoding
+         :content-disposition;
+        bh=XxNvnbiuyPe1S0noSI9mpgoToDP5vPtkg+1CKUWgkks=;
+        b=IuQIVmdaZ0dtHqYbauQJB+hY8qjGC7/IMYgjUqDEF+Oq+sNCV2wZ1I+D354bz1vTzh
+         5snqVAI9cMjeJSBJQW4jYSq7NLTSYRl4XHdPTBvENWVMd6Nku4TBPhyZn2RRBjn5ncXP
+         odk9AmllOGl2q0t+Zj2H6qLCDwY59P1CMBGrI=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:to:subject:mime-version:content-type
+         :content-transfer-encoding:content-disposition;
+        b=oswOmNgYsqp3xNhbxaN/KTyPm8BDGLtBMClUeVg7dvu4l5HXPFNs+ZbnYrpOaoJuqa
+         Bj0inCaYDhOOAivpH4rQRIiXMRJfoPkI3PriHTw0MQ4vaZFed2twQtT47YGfjR7TWtaC
+         Ay5s8N7oH8euS01mvpIR8+na1mHYd1hslmPys=
+Received: by 10.142.158.17 with SMTP id g17mr3977177wfe.73.1220606577226;
+        Fri, 05 Sep 2008 02:22:57 -0700 (PDT)
+Received: by 10.142.225.6 with HTTP; Fri, 5 Sep 2008 02:22:57 -0700 (PDT)
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/95002>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/95003>
 
-Gustaf Hendeby <hendeby@isy.liu.se> writes:
+Hi,
 
-> On 09/05/2008 08:29 AM, Junio C Hamano wrote:
-> ...
->> Yup, that might make more sense. In the meantime, I suspect this makes
->> more sense than introducing a new state "0".
->
-> I can't argue with that.  Junio, your suggestion makes more sense.  I
-> should have paid more attention to what I was doing.  Sorry about the noise.
+If i want to write a new protocol for file transfer and would like to
+to integrate it with git. Is it possible and easy to integrate it ?
+Currently, i know that jgit may achieve it, but it is a Java
+implementation and may not work with git command line program that
+written in C.
 
-That's Ok.  Spotting mistakes is an important part of the review process;
-there is no need to be afraid of or apologetic about it.
+Regards
+Patrick
