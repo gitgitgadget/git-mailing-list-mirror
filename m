@@ -1,76 +1,78 @@
-From: "Jon Smirl" <jonsmirl@gmail.com>
-Subject: Re: Alternates and push
-Date: Sat, 6 Sep 2008 14:24:59 -0400
-Message-ID: <9e4733910809061124r3759ea79sda98b549df3e6e58@mail.gmail.com>
-References: <9e4733910809060542s5ede6d6m5bdb894c958ea8b7@mail.gmail.com>
-	 <20080906162030.GT9129@mit.edu>
-	 <7viqt9rvwm.fsf@gitster.siamese.dyndns.org>
+From: "=?ISO-8859-7?Q?Christos_=D4rochalakis?=" <yatiohi@ideopolis.gr>
+Subject: Re: Git Community Book
+Date: Sat, 6 Sep 2008 21:26:45 +0300
+Message-ID: <f7b87f7c0809061126y17f6b601iaeb9a3661c914391@mail.gmail.com>
+References: <d411cc4a0809051208k2a15c4a7te09a6979929e52f7@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-Cc: "Theodore Tso" <tytso@mit.edu>,
-	"Git Mailing List" <git@vger.kernel.org>
-To: "Junio C Hamano" <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Sep 06 20:27:12 2008
+Cc: "git list" <git@vger.kernel.org>
+To: "Scott Chacon" <schacon@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Sep 06 20:27:55 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Kc2UW-0007QR-Fx
-	for gcvg-git-2@gmane.org; Sat, 06 Sep 2008 20:26:36 +0200
+	id 1Kc2Vl-0007yf-Jm
+	for gcvg-git-2@gmane.org; Sat, 06 Sep 2008 20:27:54 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754894AbYIFSZD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 6 Sep 2008 14:25:03 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754876AbYIFSZD
-	(ORCPT <rfc822;git-outgoing>); Sat, 6 Sep 2008 14:25:03 -0400
-Received: from wr-out-0506.google.com ([64.233.184.227]:48111 "EHLO
-	wr-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754853AbYIFSZA (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 6 Sep 2008 14:25:00 -0400
-Received: by wr-out-0506.google.com with SMTP id 69so936944wri.5
-        for <git@vger.kernel.org>; Sat, 06 Sep 2008 11:24:59 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to
-         :subject:cc:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:references;
-        bh=/fioHGxTW2UsJfKwSW+pkSGNFCu7KynPLlW2Sy7ls6c=;
-        b=ZpFRcg0tAPlaRfOZcdbVgiEtcUcCpKr0kaXTIpKtd0fZKk3n4QC/9U1f3u5hMvN0Xe
-         JFmjcc0EGcegNqGEw7Ako5RgEnmEO2jiNkh65oBdMAawZNsLlZPTvTkSjIO7uc2xvo9Y
-         ea6mlmuakpZ7QV/lGgaeWkc2Jw0b6N+vXlo/U=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
-         :content-type:content-transfer-encoding:content-disposition
-         :references;
-        b=XXLcFTr/7HHWGJBNXhCqC1NtJvHk6/8rE3lMjjOzzxutjlqvRFwTlm8UzY3tRyeiuT
-         8+25KrNdrU9dZB95cu97PpwpXVbWKXhAuaTwT+Jwm1WPfINHo9cuHdvMoo73woDy5Geh
-         VYcTe7wwKGlUVDtvMNOMN7gLn+xK81DX3puOA=
-Received: by 10.70.110.1 with SMTP id i1mr16182426wxc.59.1220725499591;
-        Sat, 06 Sep 2008 11:24:59 -0700 (PDT)
-Received: by 10.70.55.6 with HTTP; Sat, 6 Sep 2008 11:24:59 -0700 (PDT)
-In-Reply-To: <7viqt9rvwm.fsf@gitster.siamese.dyndns.org>
+	id S1752433AbYIFS0r (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 6 Sep 2008 14:26:47 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752451AbYIFS0r
+	(ORCPT <rfc822;git-outgoing>); Sat, 6 Sep 2008 14:26:47 -0400
+Received: from wf-out-1314.google.com ([209.85.200.168]:30327 "EHLO
+	wf-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752372AbYIFS0q (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 6 Sep 2008 14:26:46 -0400
+Received: by wf-out-1314.google.com with SMTP id 27so934515wfd.4
+        for <git@vger.kernel.org>; Sat, 06 Sep 2008 11:26:45 -0700 (PDT)
+Received: by 10.142.213.10 with SMTP id l10mr4562477wfg.163.1220725605137;
+        Sat, 06 Sep 2008 11:26:45 -0700 (PDT)
+Received: by 10.142.222.16 with HTTP; Sat, 6 Sep 2008 11:26:45 -0700 (PDT)
+In-Reply-To: <d411cc4a0809051208k2a15c4a7te09a6979929e52f7@mail.gmail.com>
 Content-Disposition: inline
+X-Google-Sender-Auth: b8cd84e88c5a7249
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/95088>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/95089>
 
-On 9/6/08, Junio C Hamano <gitster@pobox.com> wrote:
-> Theodore Tso <tytso@MIT.EDU> writes:
+On Fri, Sep 5, 2008 at 10:08 PM, Scott Chacon <schacon@gmail.com> wrote:
+> Hey all,
 >
->  > Long-standing mis-feature in git's logic in deciding what to push.
->  > It's been reported a few times, but apparently it's hard to fix, or at
->  > least it never hsa been fixed as far as I know.
->
->
-> This comes from an early (mis)design of git.
+> I just wanted to let those of you who are interested know that I've
+> been making a lot of progress on the Git Community Book
+> (http://book.git-scm.com)
+> ...
 
-What happens if I set a remote in my github digispeaker repo pointing
-to github's linus repo and the set a chron script to fetch it once a
-day? The alternates link is still in place.
+Hello Scott!
 
--- 
-Jon Smirl
-jonsmirl@gmail.com
+Nice book, I just started reading it and I have a recommendation to
+make, at "Chapter 4: Git Treeishes" you write
+
+---------
+http://book.git-scm.com/4_git_treeishes.html
+Range
+
+Finally, you can specify a range of commits with the range spec. This
+will give you all the commits between 7b593b5 and 51bea1 (where 51bea1
+is most recent), excluding 7b593b5 but including 51bea1:
+
+7b593b5..51bea1
+
+This will include every commit since 7b593b:
+
+7b593b..
+---------
+
+This in not quite correct. "commits between A and B" cannot really
+apply here. I believe that "commits reachable from B and not from A"
+is more precise. Actually you are already using the "reachability"
+explanation at the start of "Chapter 3: Basic usage".
+
+This issue is also described at the rev-parse man page.
+
+Apart from that, you could also include "a...b" syntax for completeness.
+
+-christos
