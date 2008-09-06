@@ -1,112 +1,64 @@
-From: Christian Couder <chriscool@tuxfamily.org>
-Subject: Re: [PATCH] builtin-symbolic-ref: comment on the use of "resolve_ref" with reading == 0
-Date: Sat, 6 Sep 2008 14:03:13 +0200
-Message-ID: <200809061403.14592.chriscool@tuxfamily.org>
-References: <20080906095543.c627b692.chriscool@tuxfamily.org> <7vwshpsi1g.fsf@gitster.siamese.dyndns.org>
+From: "Jon Smirl" <jonsmirl@gmail.com>
+Subject: Alternates and push
+Date: Sat, 6 Sep 2008 08:42:50 -0400
+Message-ID: <9e4733910809060542s5ede6d6m5bdb894c958ea8b7@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Sep 06 14:01:20 2008
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+To: "Git Mailing List" <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Sat Sep 06 14:44:07 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KbwTX-0000M0-WE
-	for gcvg-git-2@gmane.org; Sat, 06 Sep 2008 14:01:12 +0200
+	id 1Kbx92-0002dT-7Y
+	for gcvg-git-2@gmane.org; Sat, 06 Sep 2008 14:44:04 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751243AbYIFL7k convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 6 Sep 2008 07:59:40 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751240AbYIFL7k
-	(ORCPT <rfc822;git-outgoing>); Sat, 6 Sep 2008 07:59:40 -0400
-Received: from smtp7-g19.free.fr ([212.27.42.64]:42084 "EHLO smtp7-g19.free.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751239AbYIFL7k convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 6 Sep 2008 07:59:40 -0400
-Received: from smtp7-g19.free.fr (localhost [127.0.0.1])
-	by smtp7-g19.free.fr (Postfix) with ESMTP id 47823B0151;
-	Sat,  6 Sep 2008 13:59:38 +0200 (CEST)
-Received: from bureau.boubyland (gre92-7-82-243-130-161.fbx.proxad.net [82.243.130.161])
-	by smtp7-g19.free.fr (Postfix) with ESMTP id F1150B0142;
-	Sat,  6 Sep 2008 13:59:37 +0200 (CEST)
-User-Agent: KMail/1.9.9
-In-Reply-To: <7vwshpsi1g.fsf@gitster.siamese.dyndns.org>
+	id S1751032AbYIFMmx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 6 Sep 2008 08:42:53 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751318AbYIFMmw
+	(ORCPT <rfc822;git-outgoing>); Sat, 6 Sep 2008 08:42:52 -0400
+Received: from py-out-1112.google.com ([64.233.166.181]:59136 "EHLO
+	py-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750991AbYIFMmw (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 6 Sep 2008 08:42:52 -0400
+Received: by py-out-1112.google.com with SMTP id p76so467173pyb.10
+        for <git@vger.kernel.org>; Sat, 06 Sep 2008 05:42:51 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to
+         :subject:mime-version:content-type:content-transfer-encoding
+         :content-disposition;
+        bh=Jzr6dPgZ8FEQk+k9UYdEvxJHReLdvCRwf6UjSv/OMM8=;
+        b=WAd0NhCmVF/OLRjh6adZSDvNUOJzJ4X3fr9nIc0VQ/WsUkba4pFyTgRhqaCqnu5YrI
+         GbKuVCQMjGEkc85y9LFP/Bo2/+fol5hMNBoegOjxZk8dzmFZT1iCdTedtm+nQ57880o/
+         qApxK09m5flTBPzYYZX9jq1MKJZPWZMBm79YU=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:to:subject:mime-version:content-type
+         :content-transfer-encoding:content-disposition;
+        b=CF9Moaid323KPuklw/P+CtplGIZ68OTjOVRfB6EJtOuQLaK0wEOmFJAqxv/aU55tDv
+         XHzMkIDPHmAzWweJSnZTl8+7NEhFtHHhWMWv2EOA3/zsPzCEsVoqrVlTaKLV1v1R+QvR
+         I0RSCfwAd/k84g+xloOFECss8uegKqB8VQ1zw=
+Received: by 10.64.47.16 with SMTP id u16mr26073484qbu.73.1220704970952;
+        Sat, 06 Sep 2008 05:42:50 -0700 (PDT)
+Received: by 10.64.178.13 with HTTP; Sat, 6 Sep 2008 05:42:50 -0700 (PDT)
 Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/95071>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/95072>
 
-Le samedi 6 septembre 2008, Junio C Hamano a =E9crit :
-> Christian Couder <chriscool@tuxfamily.org> writes:
-> > diff --git a/builtin-symbolic-ref.c b/builtin-symbolic-ref.c
-> > index bfc78bb..9490c47 100644
-> > --- a/builtin-symbolic-ref.c
-> > +++ b/builtin-symbolic-ref.c
-> > @@ -12,6 +12,16 @@ static void check_symref(const char *HEAD, int
-> > quiet) ...
-> > +	/*
-> > +	 * It doesn't seem logical to use "resolve_ref" with reading =3D=3D=
- 0
-> > +	 * as we are just checking if a ref exists,...
-> > ...
-> > +	 */
->
-> I have to say that this comment is confused.
->
-> When you have a full ref (as opposed to an abbreviated one that you m=
-ight
-> give to dwim_ref()), you can use it for two kinds of things:
->
->  (1) You can use it to find out what _object_ the ref points at.  Thi=
-s is
->      "reading" the ref, and the ref, if it is not symbolic, has to ex=
-ist,
->      and if it is symbolic, it has to point at an existing ref, becau=
-se
->      the "read" goes through the symref to the ref it points at.
+At github my repo, digispeaker, has an alternate pointing to github's
+local copy of Linus' tree. I ignored my tree for a month and then
+pushed to it including 200MB of objects from Linus' tree. These 200MB
+of objects were pushed up to the server, but these objects were
+already in the alternates repository.
 
-Then the parameter should perhaps be=20
-called "get_object", "get_target", "full_dereference" or something like=
-=20
-that instead of "reading".
+What's supposed to happen? Is something broken in github's setup, or
+does pushing not take into account alternates?
 
->  (2) Anything else.  This could be a prelude to "writing" to the ref,=
- in
->      which case a write to a symref that points at yet-to-be-born ref
->     will create the real ref pointed by the symref, so such a symref =
-is
->     not an error.  It has to answer "here is the real ref you should =
-write
->     into" (or, "we will write into").
->
->      But the access that is not "reading" does not have to be "writin=
-g";
->      it can be merely checking _where it leads to_.  And check_symref=
-()
->      uses this call for exactly that purpose.  This access is not
->      "checking if a ref exists".
-
-In "resolve_ref" in refs.c there is the following comment:
-
-		/* Special case: non-existing file.
-		 * Not having the refs/heads/new-branch is OK
-		 * if we are writing into it, so is .git/HEAD
-		 * that points at refs/heads/master still to be
-		 * born.  It is NOT OK if we are resolving for
-		 * reading.
-		 */
-
-that seems to mean that we are either "writing" or "reading".
-
-> So reading=3D=3D0 is the logical thing to do here.
-
-It seems logical after your explanations, yes, and thank you for them, =
-but I=20
-don't think it is logical when reading the existing source code or=20
-comments.
-
-Regards,
-Christian.
+-- 
+Jon Smirl
+jonsmirl@gmail.com
