@@ -1,71 +1,89 @@
-From: Miklos Vajna <vmiklos@frugalware.org>
-Subject: [PATCH] builtin-merge: release the lockfile in try_merge_strategy()
-Date: Sat,  6 Sep 2008 18:29:49 +0200
-Message-ID: <1220718589-12424-1-git-send-email-vmiklos@frugalware.org>
-References: <20080906021222.GY16514@genesis.frugalware.org>
-Cc: Eric Raible <raible@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Sep 06 18:31:02 2008
+From: Giuseppe Bilotta <giuseppe.bilotta@gmail.com>
+Subject: Re: [ANNOUNCE] yap: Yet Another (Git) Porcelain
+Date: Sat, 06 Sep 2008 18:39:02 +0200
+Message-ID: <g9ubn8$deg$1@ger.gmane.org>
+References: <20080906150723.GA31540@dervierte>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7Bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Sep 06 18:40:22 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Kc0gf-0005Xn-M0
-	for gcvg-git-2@gmane.org; Sat, 06 Sep 2008 18:31:02 +0200
+	id 1Kc0ph-0007Yd-I9
+	for gcvg-git-2@gmane.org; Sat, 06 Sep 2008 18:40:22 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751948AbYIFQ3x (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 6 Sep 2008 12:29:53 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752065AbYIFQ3x
-	(ORCPT <rfc822;git-outgoing>); Sat, 6 Sep 2008 12:29:53 -0400
-Received: from yugo.dsd.sztaki.hu ([195.111.2.114]:38297 "EHLO
-	yugo.frugalware.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751532AbYIFQ3x (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 6 Sep 2008 12:29:53 -0400
-Received: from vmobile.example.net (dsl5401CA71.pool.t-online.hu [84.1.202.113])
-	by yugo.frugalware.org (Postfix) with ESMTP id E10601DDC5B;
-	Sat,  6 Sep 2008 18:29:50 +0200 (CEST)
-Received: by vmobile.example.net (Postfix, from userid 1003)
-	id 3C21984CA; Sat,  6 Sep 2008 18:29:50 +0200 (CEST)
-X-Mailer: git-send-email 1.6.0.1
-In-Reply-To: <20080906021222.GY16514@genesis.frugalware.org>
+	id S1751736AbYIFQjP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 6 Sep 2008 12:39:15 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752164AbYIFQjP
+	(ORCPT <rfc822;git-outgoing>); Sat, 6 Sep 2008 12:39:15 -0400
+Received: from main.gmane.org ([80.91.229.2]:54178 "EHLO ciao.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751532AbYIFQjO (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 6 Sep 2008 12:39:14 -0400
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1Kc0oZ-0000dN-Fg
+	for git@vger.kernel.org; Sat, 06 Sep 2008 16:39:11 +0000
+Received: from 78.15.13.249 ([78.15.13.249])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Sat, 06 Sep 2008 16:39:11 +0000
+Received: from giuseppe.bilotta by 78.15.13.249 with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Sat, 06 Sep 2008 16:39:11 +0000
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@ger.gmane.org
+X-Gmane-NNTP-Posting-Host: 78.15.13.249
+User-Agent: KNode/0.10.9
+X-Face: ::w9}R^l{WGM\{y)C0QF@4^U,',W3Mk^X0HP)=:bKM^Z]A9+6bY6fe3}O*]fH{l<j1/9RTp  `KR0idy]Im#9^%}P5Dga'>AViT_'?&>&ufo2_X5Vs3C^tPO@drZRuu&6iK}x}~9`F\-dNZ>(p|V7`4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/95080>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/95081>
 
-Once we committed the locked index, we should release the lockfile. In
-most cases this is done automatically when the process ends, but this is
-not true in this case.
+On Saturday 06 September 2008 17:07, Steven Walter wrote:
 
-Signed-off-by: Miklos Vajna <vmiklos@frugalware.org>
----
+> After starting yap several weeks ago
 
-On Sat, Sep 06, 2008 at 04:12:23AM +0200, Miklos Vajna <vmiklos@frugalware.org> wrote:
-> > Try reverting 18668f5 (builtin-merge: avoid run_command_v_opt() for
-> > recursive and subtree, 2008-08-28).  That patch seems to be
-> > seriously broken.
->
-> Yes, that works around the problem. I'll try to send a fix later
-> today.
+If you're interested in cross-platformness, you might want to be
+aware that there is already at least another 'yap' in Windows:
+MikTeX's DVI viewer (Yet Another Previewer). Just FYI.
 
-Here is - I think - the proper prefix.
+> By leveraging the extensible nature of yap, its svn mode strives to make
+> a remote svn repository act and feel as much like a git repository as
+> possible to lessen the impedance mismatch to the user.
 
- builtin-merge.c |    1 +
- 1 files changed, 1 insertions(+), 0 deletions(-)
+>     * SVN interoperation
+>         * Cloning an SVN repository is no different than cloning a git
+>           repository (only slower)
+>         * Same command to push to an SVN repo as a git repo
+>         * Standard workflow (yap update) is appropriate for svn-based and
+>           git-native setups
+>         * Working with "cache repositories" is supported directly.  When
+>           cloning a repository generated by "yap clone <svn url>", the new
+>           repositories is automatically configured to push back to the
+>           subversion repository.
 
-diff --git a/builtin-merge.c b/builtin-merge.c
-index b857cf6..bb09e6f 100644
---- a/builtin-merge.c
-+++ b/builtin-merge.c
-@@ -576,6 +576,7 @@ static int try_merge_strategy(const char *strategy, struct commit_list *common,
- 				(write_cache(index_fd, active_cache, active_nr) ||
- 				 commit_locked_index(lock)))
- 			die ("unable to write %s", get_index_file());
-+		rollback_lock_file(lock);
- 		return clean ? 0 : 1;
- 	} else {
- 		args = xmalloc((4 + commit_list_count(common) +
+This is an extremely interesting idea. I've always wondered myself
+if it were possible to make git-svn operation more transparent,
+although it has always been my understanding that the interface
+difference might be substantially driven by robustness, especially
+for 'roundtrip' operation, and by the fact that svn would not
+really be suited for some of the operations that are common in git
+workflow. It'll be interesting to see the level of transparency
+that can be achieved without bringing down the svn server ;)
+
+I think that the most complex situations arise from cloning svn
+repositories that undergo heavy structure changes in their
+history, moving from a structure where there was no
+trunk/branches/tags because the project was just kept in the svn
+root, to thetraditional trunk/branches/tags structure (I've come
+across at least two svn repositories like this in the past, and
+git-svn used to have quite some problems in importing them
+directely, although I haven't tried it recently).
+
 -- 
-1.6.0.1
+Giuseppe "Oblomov" Bilotta
