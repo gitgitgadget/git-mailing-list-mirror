@@ -1,241 +1,212 @@
-From: "Scott Chacon" <schacon@gmail.com>
-Subject: Re: Git Community Book
-Date: Sat, 6 Sep 2008 11:14:22 -0700
-Message-ID: <d411cc4a0809061114k6b9f01b9sdf479360d4cb4c41@mail.gmail.com>
-References: <d411cc4a0809051208k2a15c4a7te09a6979929e52f7@mail.gmail.com>
-	 <7vmyimv0qr.fsf@gitster.siamese.dyndns.org>
-	 <d411cc4a0809051434g4e92790fsa38d12487630aa9f@mail.gmail.com>
-	 <20080906063325.GD28035@spearce.org>
+From: "Bert Wesarg" <bert.wesarg@googlemail.com>
+Subject: Re: [PATCH v4] for-each-ref: `:short` format for `refname`
+Date: Sat, 6 Sep 2008 20:16:05 +0200
+Message-ID: <36ca99e90809061116q7b9559f8w2b939f22e5f94fb7@mail.gmail.com>
+References: <7vtzcxaxgr.fsf@gitster.siamese.dyndns.org>
+	 <1220649383-17916-1-git-send-email-bert.wesarg@googlemail.com>
+	 <7vej3yutes.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-Cc: "Junio C Hamano" <gitster@pobox.com>,
-	"git list" <git@vger.kernel.org>
-To: "Shawn O. Pearce" <spearce@spearce.org>
-X-From: git-owner@vger.kernel.org Sat Sep 06 20:15:33 2008
+Cc: git@vger.kernel.org, szeder@ira.uka.de,
+	"Shawn O. Pearce" <spearce@spearce.org>
+To: "Junio C Hamano" <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sat Sep 06 20:17:55 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Kc2Jn-0004ad-Oo
-	for gcvg-git-2@gmane.org; Sat, 06 Sep 2008 20:15:32 +0200
+	id 1Kc2Ld-00055r-EF
+	for gcvg-git-2@gmane.org; Sat, 06 Sep 2008 20:17:26 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752063AbYIFSOZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 6 Sep 2008 14:14:25 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752084AbYIFSOY
-	(ORCPT <rfc822;git-outgoing>); Sat, 6 Sep 2008 14:14:24 -0400
-Received: from wa-out-1112.google.com ([209.85.146.177]:29003 "EHLO
-	wa-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751685AbYIFSOX (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 6 Sep 2008 14:14:23 -0400
-Received: by wa-out-1112.google.com with SMTP id j37so655379waf.23
-        for <git@vger.kernel.org>; Sat, 06 Sep 2008 11:14:22 -0700 (PDT)
+	id S1752526AbYIFSQL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 6 Sep 2008 14:16:11 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752613AbYIFSQJ
+	(ORCPT <rfc822;git-outgoing>); Sat, 6 Sep 2008 14:16:09 -0400
+Received: from wr-out-0506.google.com ([64.233.184.232]:50887 "EHLO
+	wr-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752566AbYIFSQH (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 6 Sep 2008 14:16:07 -0400
+Received: by wr-out-0506.google.com with SMTP id 69so934700wri.5
+        for <git@vger.kernel.org>; Sat, 06 Sep 2008 11:16:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
+        d=googlemail.com; s=gamma;
         h=domainkey-signature:received:received:message-id:date:from:to
          :subject:cc:in-reply-to:mime-version:content-type
          :content-transfer-encoding:content-disposition:references;
-        bh=yeheCSssIUJqNNpzQqbHsRWEQVSbONgSiF2iryqYHYc=;
-        b=jva+kgVlFQbbTwlh6mINbwEBYp99j/GCKwPmQ42aFw/HTNbGd6YufriYSvJ6AyEd6y
-         L0uLRsZMIM7C8L/J69dNutLIBnSiip+2EQrjdQpxwurHZjk3CSDomUDq2av2Fcp2uTry
-         SehrE02zrQ4JbZee8Hm9z4uj50nFsZZT5oCuo=
+        bh=qr/koynXHygHqshkckDY6e2BBIvzq8zz3SMTDy4XYSk=;
+        b=el8bfExHzB5Nvh62tVKfL/7A3Bs5ynJKmOJfc4JXssofGKOErevUCjGyYvsig4uUQ2
+         23aghgBupAdgOOjZtQShwnd4ocFwQ/FZ2eXWkJvoiDSmxfDaBMxnF0TFDwnmKDoEYuSV
+         0XTkUDCEglUZiuw/orzhoyCvjI9+1BGmE95Y0=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
+        d=googlemail.com; s=gamma;
         h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
          :content-type:content-transfer-encoding:content-disposition
          :references;
-        b=fZVyChJPj6BE2VWJLLPwE8xN0rLZ6vG8WQTxXz+oupE2U7PLGNOd9fdyiNIvbGWD3r
-         NpkJEJEQrBu3CryHJMV6ddiwtTfyrB4rztb0axCaX37mrmlhLjqJ4Us9m9be2uAHiRQw
-         M+s4uB0X2FFdDRNXZTg4A+ouA9DzK1u/LQM94=
-Received: by 10.114.47.12 with SMTP id u12mr11089925wau.187.1220724862480;
-        Sat, 06 Sep 2008 11:14:22 -0700 (PDT)
-Received: by 10.114.135.18 with HTTP; Sat, 6 Sep 2008 11:14:22 -0700 (PDT)
-In-Reply-To: <20080906063325.GD28035@spearce.org>
+        b=Caep/13Yt5tce+PJWm91JsNV0D+7Soa/3jnNtfKjrzEtyC1bHmmdEUfPnohrF+DteE
+         hA8hpn+MPnsPaVVWZbsT9nD6+ve6ibJsMZyYXJtEtENLeUDvln0btVXJ9XXBnEpVy51t
+         64Cmz3ZrPV5gIFL8iPg/YJWCpmiiUPFJjycv0=
+Received: by 10.70.66.9 with SMTP id o9mr16289078wxa.1.1220724966079;
+        Sat, 06 Sep 2008 11:16:06 -0700 (PDT)
+Received: by 10.70.49.12 with HTTP; Sat, 6 Sep 2008 11:16:05 -0700 (PDT)
+In-Reply-To: <7vej3yutes.fsf@gitster.siamese.dyndns.org>
 Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/95086>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/95087>
 
-Thanks a ton for this, I'll incorporate all of this.
+On Sat, Sep 6, 2008 at 00:20, Junio C Hamano <gitster@pobox.com> wrote:
+> Bert Wesarg <bert.wesarg@googlemail.com> writes:
+>
+>> ...
+>> To integrate this new format into the bash completion to get
+>> only non-ambiguous refs is beyond the scope of this patch.
+>>
+>> Signed-off-by: Bert Wesarg <bert.wesarg@googlemail.com>
+>>
+>> ---
+>> Cc: git@vger.kernel.org
+>> Cc: szeder@ira.uka.de
+>> Cc: Shawn O. Pearce <spearce@spearce.org>
+>
+> Nice writeup of the history of this patch, if on tad-too-verbose side.
+>
+>> diff --git a/builtin-for-each-ref.c b/builtin-for-each-ref.c
+>> index 21e92bb..9b44092 100644
+>> --- a/builtin-for-each-ref.c
+>> +++ b/builtin-for-each-ref.c
+>> @@ -546,6 +546,107 @@ static void grab_values(struct atom_value *val, int deref, struct object *obj, v
+>> +/*
+>> + * Shorten the refname to an non-ambiguous form
+>> + */
+>> +static char *get_short_ref(struct refinfo *ref)
+>> +{
+>> ...
+>> +     /* skip first rule, it will always match */
+>> +     for (i = nr_rules - 1; i > 0 ; --i) {
+>> +             int j;
+>> +             int short_name_len;
+>> +
+>> +             if (1 != sscanf(ref->refname, scanf_fmts[i], short_name))
+>> +                     continue;
+>> +
+>> +             short_name_len = strlen(short_name);
+>> +
+>> +             /*
+>> +              * check if the short name resolves to a valid ref,
+>> +              * but use only rules prior to the matched one
+>> +              */
+>> +             for (j = 0; j < i; j++) {
+>> ...
+>> +             }
+>> +             /*
+>> +              * short name is non-ambiguous if all previous rules
+>> +              * haven't resolved to a valid ref
+>> +              */
+>> +             if (j == i)
+>> +                     return short_name;
+>
+> Is this inner loop essentially the same as calling dwim_ref(), while
+> temporarily turning warn_ambiguous_refs on, and checking for return value
+> of one?
+Not exactly.
 
-On Fri, Sep 5, 2008 at 11:33 PM, Shawn O. Pearce <spearce@spearce.org> wrote:
-> Scott Chacon <schacon@gmail.com> wrote:
->> On Fri, Sep 5, 2008 at 12:41 PM, Junio C Hamano <gitster@pobox.com> wrote:
->> > "Scott Chacon" <schacon@gmail.com> writes:
->> >
->> >> Also, the last section of the book is on some of the plumbing - mostly
->> >> stuff I've found difficult to pick up with the existing documentation
->> >> while re-implementing stuff in Ruby.  I would really appreciate it if
->> >> someone could proofread some of these chapters for errors:
->> >>
->> >> http://book.git-scm.com/7_the_packfile.html
->
-> OK, time for me to throw in comments.  ;-)
->
-> I do like this book, its organized and concise.  Thanks for doing it.
->
->
-> http://book.git-scm.com/7_how_git_stores_objects.html:
->
-> The loose object formatting of
->
->  header = "#{type} #{size}#body"
->  store = header + content
->
-> I can't read Ruby so I'm not sure what the header value computes
-> out to here.  #body should be a \0.  I'm also not sure that the
-> prior line setting size = content.length.to_s is very clear for
-> the non-Ruby people to understand how a size is formatted.
->
+Short version:
 
-Sorry, the markdown thingy is translating all the '\0's to '#body' for
-some freaking reason unless I write it as '\\0'.  I'll fix this - it's
-difficult for me to find these sometimes.  As for the rest of the ruby
-stuff, I think I'll add some comments.
+To follow my above example, with dwim_ref() we would get this:
 
-> If the code shown here is the Ruby implementation I'm a little
-> concerned about it writing directly into the loose object.  If the
-> write is partial then you have a partial object which is at the
-> right name, but is unusable.  That can give you corruption that
-> is difficult to track down and fix.  C Git and JGit both write
-> to temporary files then atomically move the temporary file into
-> position under its proper name only after it has been fully written.
+heads/xyzzy
+tags/xyzzy
 
-That is a good idea - I don't do it that way and I certainly will
-change the implementation to do so and modify these docs to reflect
-that advice.
+Long version:
 
-> "When objects are written to disk, it is often in the loose format,
-> since that format is less expensive to access."
->
-> I'm not sure that statement is true.  Access from packs tends
-> to scream compared to access from loose objects.  The overheads
-> of opening and closing the file descriptors, even on Linux, is
-> what kills performance for data access.  However Git writes to
-> loose objects first and packs later for _safety_ not efficiency.
-> Although it is a lot more efficient to write a 2 KB loose object
-> and avoid rewriting a 50 MB pack, but its also less likely to fail
-> and make you lose your work.
+Currently we consider only rules prior to the matched rule (the rule
+which gives us the short name). That is, if any of these rules will
+also resolve to a valid ref, the short name is  ambiguous, else its
+unambiguous. If we would consider subsequent rules past the matched
+one, we may find more valid refs for this short name. Because the
+current rule would match first if we try to resolve the short name, we
+don't have to check these rules. We get only a "ambiguous refs"
+warning.
 
-Thanks for the clarification.  I write to loose objects first largely
-because it's so much easier to do.  But also because I don't mmap
-objects, so packfile access is not faster for implementations that
-can't do that very well.  Also, I had originally meant "less expensive
-to write", but I can see that is not clear.
-
-
-> http://book.git-scm.com/7_the_git_index.html:
->
-> I wouldn't say that the index stores permissions.  More like it
-> stores the "class" or "type" of the thing located at that path.
-> There are 4 major classes:
->
->        - regular file
->        - executable file
->        - symbolic link
->        - git submodule
->
-> The 5th class is the subtree, but only appears in trees and not
-> in the index since the index file is actually flat.
-
-Interesting.  This documentation is actually from the User Manual -
-I'll update this chapter first and if it looks better, I'll submit a
-patch to the UM, too.
-
-> http://book.git-scm.com/7_the_packfile.html:
->
-> You should probably point out that the .idx file uses network byte
-> order for the numeric fields like the version number and the file
-> offsets.
-
-Will do.
+I have no opinion if we want this 'strict unambiguousness'.
 
 >
-> I'd also point out that the offsets in index v1 are unsigned and
-> from the start of the pack file.  The offsets in index v2 are
-> also unsigned, but the 1<<31 is tested in the 32 bit offset to
-> see if a 64 bit offset is used.  The algorithm there is:
+>> diff --git a/t/t6300-for-each-ref.sh b/t/t6300-for-each-ref.sh
+>> index 8ced593..4f247dd 100755
+>> --- a/t/t6300-for-each-ref.sh
+>> +++ b/t/t6300-for-each-ref.sh
+>> @@ -262,6 +262,50 @@ for i in "--perl --shell" "-s --python" "--python --tcl" "--tcl --perl"; do
+>>       "
+>>  done
+>>
+>> +cat >expected <<\EOF
+>> +master
+>> +testtag
+>> +EOF
+>> +
+>> +test_expect_success 'Check short refname format' '
+>> +     (git for-each-ref --format="%(refname:short)" refs/heads &&
+>> +     git for-each-ref --format="%(refname:short)" refs/tags) >actual &&
+>> +     test_cmp expected actual
+>> +'
 >
->        if offset32 & 1<<31:
->                offset = ofs64_table[offset32 & ~(1<<31)]
->        else
->                offset = offset32
->
-> Its also rather unclear how the fan out table can be used to limit
-> the binary search.  What you are missing is describing that fanout[X]
-> holds the number of objects whose first byte of their SHA-1 is <= X.
-> Hence fanout[0] has the number of objects whose SHA-1 starts with
-> "00" and fanout[0x15] has the number of objects whose SHA-1 starts
-> with "15", "14", "13", ..., "00".  Thus fanout[0xff] has the total
-> number of objects in the pack.
->
-> In the pack file section I'd also point out the version and entry
-> count are unsigned network byte order.  This is not clear from the
-> Ruby code, although one can guess at it if one knows the git.git
-> code very very well (like I do).
->
-> "After that, you get a series of packed objects, in order of thier SHAs"
->
-> Aside from s/thier/their/ this is not a correct statement _AT ALL_.
->
-> The ordering of objects in the packfile is very carefully planned
-> by the packer to maximize data locality from most recent -> least
-> recent information, making the most recent revisions of a project
-> the fastest to access.  This has _NOTHING_ to do with their SHA-1
-> names.
->
-> Technically a pack may store objects in any random order.  Heck,
-> you can wire up an RNG to the packer to always produce a different
-> ordering each time you pack.  Practically an implementation shouldn't
-> be that stupid and should instead try to order objects by recency,
-> like git.git and JGit both do.
->
-> "At the end of the packfile is a 20-byte SHA1 sum of all the shas
-> (in sorted order) in that packfile."
->
-> Also incorrect.  The 20-byte checksum at the end of the pack file
-> is a checksum of all bytes preceeding the checksum itself.  We use
-> it as an end-to-end data integrity check, especially on the network
-> transport to verify that every bit sent by the one side is received
-> correctly on the other side.
->
-
-I'm an idiot.  I say this because I actually implemented a bunch of
-this stuff (in Ruby) and ran into most of these issues when trying to
-implement it.  So I knew these things not 3 weeks ago, but I still
-wrote it this way.  Dur.  Thanks for the corrections, I'll update
-everything accordingly.
-
-> BTW, can I just say, I love the graphics in this book.  They are
-> quite well done.  Very worthwhile.
-
-Thanks.
+> Not a complaint nor objection but mere curiosity.  Why does this run two
+> for-each-ref, not just one with two patterns?
+Its more a leftover from the :strip version, where the pattern was the point of
+interest.
 
 >
+>> +test_expect_success 'Check for invalid refname format' '
+>> +     test_must_fail git for-each-ref --format="%(refname:INVALID)"
+>> +'
 >
-> http://book.git-scm.com/7_transfer_protocols.html:
+> Good.
 >
-> You might as well explain that the stream returned by upload-pack
-> uses the same 4 byte line length framing to form "packets", with
-> the 5th byte (really first byte of the payload) indicating the
-> "stream":
+>> +cat >expected <<\EOF
+>> +heads/master
+>> +master
+>> +EOF
+>> +
+>> +test_expect_success 'Check ambiguous head and tag refs' '
+>> +     git checkout -b newtag &&
+>> +     echo "Using $datestamp" > one &&
+>> +     git add one &&
+>> +     git commit -m "Branch" &&
+>> +     setdate_and_increment &&
+>> +     git tag -m "Tagging at $datestamp" master &&
+>> +     git for-each-ref --format "%(refname:short)" refs/heads/master refs/tags/master >actual &&
+>> +     test_cmp expected actual
+>> +'
+>> +
+>> +cat >expected <<\EOF
+>> +heads/ambiguous
+>> +ambiguous
+>> +EOF
+>> +
+>> +test_expect_success 'Check ambiguous head and tag refs II' '
+>> +     git checkout master &&
+>> +     git tag ambiguous testtag^0 &&
+>> +     git branch ambiguous testtag^0 &&
+>> +     git for-each-ref --format "%(refname:short)" refs/heads/ambiguous refs/tags/ambiguous >actual &&
+>> +     test_cmp expected actual
+>> +'
+>> +
 >
->        - stream 1 ('\001') is the PACK data
->        - stream 2 ('\002') is progress data/information
->        - stream 3 ('\003') is the OH S**T we are aborting, died, dead
+> Can we also try first creating a clone of some repo and run:
 >
-> You may also want to explain that the way you know the end of the
-> pack is to read the header, get the entry count, and then read that
-> many objects from the stream, and then verify the pack checksum.
+>        for-each-ref --format="%(refname:short)" refs/remotes
 >
-> --
-> Shawn.
+> I am unsure how "remotes/origin" when "refs/remotes/origin/HEAD" points at
+> their 'master' branch behaves with your code, and/or how it should behave.
+I will look at this.
+
+
+>
+> Other than that, nicely done.
+>
 >
 
-Thanks again for all the time it must have taken to review all of this
-- I'll make sure it gets into the book, and where appropriate, back
-into the UM or other internal git docs.
-
-Scott
+Bert
