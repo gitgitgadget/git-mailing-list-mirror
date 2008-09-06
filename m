@@ -1,88 +1,111 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: [ANNOUNCE] yap: Yet Another (Git) Porcelain
-Date: Sat, 06 Sep 2008 08:36:40 -0700 (PDT)
-Message-ID: <m38wu5p9q4.fsf@localhost.localdomain>
-References: <20080906150723.GA31540@dervierte>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Steven Walter <stevenrwalter@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Sep 06 17:37:52 2008
+From: Robin Rosenberg <robin.rosenberg@dewire.com>
+Subject: [EGIT PATCH] Add an action to set quickdiff baseline to first parent of HEAD
+Date: Sat,  6 Sep 2008 17:48:22 +0200
+Message-ID: <1220716102-25837-1-git-send-email-robin.rosenberg@dewire.com>
+Cc: git@vger.kernel.org, Robin Rosenberg <robin.rosenberg@dewire.com>
+To: spearce@spearce.org
+X-From: git-owner@vger.kernel.org Sat Sep 06 18:21:06 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KbzrC-0002Bm-Bm
-	for gcvg-git-2@gmane.org; Sat, 06 Sep 2008 17:37:50 +0200
+	id 1Kc0X3-0003Q0-6z
+	for gcvg-git-2@gmane.org; Sat, 06 Sep 2008 18:21:05 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752037AbYIFPgn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 6 Sep 2008 11:36:43 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751929AbYIFPgn
-	(ORCPT <rfc822;git-outgoing>); Sat, 6 Sep 2008 11:36:43 -0400
-Received: from mu-out-0910.google.com ([209.85.134.187]:56172 "EHLO
-	mu-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751437AbYIFPgm (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 6 Sep 2008 11:36:42 -0400
-Received: by mu-out-0910.google.com with SMTP id g7so708858muf.1
-        for <git@vger.kernel.org>; Sat, 06 Sep 2008 08:36:40 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:received:received
-         :x-authentication-warning:to:cc:subject:references:from:in-reply-to
-         :message-id:lines:user-agent:mime-version:content-type:date;
-        bh=7WlZwarul2qSrH/9IIXCIWirt2Fie+GAfbcqRz41MwM=;
-        b=S7N3oLqkkm/5faiOilhrg7pDBPe7YsHqhy0WvWU2jukiA0GrP7sSS4szUP70Pz+68E
-         NsDoYXywd4QChxVBQZfmXHqFaIQylrOTwhp/mlVK69I1mQCmJTiU2zBPpanB+YFhGL08
-         4/7u9kps2RuylwNQ4PgaeeFiVDtA7dchX16a8=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=x-authentication-warning:to:cc:subject:references:from:in-reply-to
-         :message-id:lines:user-agent:mime-version:content-type:date;
-        b=BvoCWXyLXyfL/7160c+PKkw18LThF0Mt2SLbsAKCbQUkVuJS1Fzg9rWhldvDL2S0m8
-         PLrO4+PnIp/+070640WwbDLF3NDNUnQjHmHQoNFGXRjUl9wtzVPuQ8oP0yE8Fx1K7Wff
-         IbeFiqgEOmzwNDqBj5pu7dPZJdf6sNRHrXajk=
-Received: by 10.103.20.7 with SMTP id x7mr8827522mui.75.1220715400859;
-        Sat, 06 Sep 2008 08:36:40 -0700 (PDT)
-Received: from localhost.localdomain ( [83.8.234.117])
-        by mx.google.com with ESMTPS id y6sm7706562mug.7.2008.09.06.08.36.38
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Sat, 06 Sep 2008 08:36:40 -0700 (PDT)
-Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id m86Fabfv003931;
-	Sat, 6 Sep 2008 17:36:37 +0200
-Received: (from jnareb@localhost)
-	by localhost.localdomain (8.13.4/8.13.4/Submit) id m86FaawU003928;
-	Sat, 6 Sep 2008 17:36:36 +0200
-X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
-In-Reply-To: <20080906150723.GA31540@dervierte>
-User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
+	id S1751903AbYIFQT5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 6 Sep 2008 12:19:57 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752055AbYIFQT5
+	(ORCPT <rfc822;git-outgoing>); Sat, 6 Sep 2008 12:19:57 -0400
+Received: from av7-2-sn3.vrr.skanova.net ([81.228.9.182]:42527 "EHLO
+	av7-2-sn3.vrr.skanova.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751736AbYIFQT4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 6 Sep 2008 12:19:56 -0400
+X-Greylist: delayed 1725 seconds by postgrey-1.27 at vger.kernel.org; Sat, 06 Sep 2008 12:19:56 EDT
+Received: by av7-2-sn3.vrr.skanova.net (Postfix, from userid 502)
+	id 58B4F3802A; Sat,  6 Sep 2008 17:51:09 +0200 (CEST)
+Received: from smtp3-2-sn3.vrr.skanova.net (smtp3-2-sn3.vrr.skanova.net [81.228.9.102])
+	by av7-2-sn3.vrr.skanova.net (Postfix) with ESMTP
+	id 366AB37E72; Sat,  6 Sep 2008 17:51:09 +0200 (CEST)
+Received: from localhost.localdomain (h250n1fls32o811.telia.com [213.67.100.250])
+	by smtp3-2-sn3.vrr.skanova.net (Postfix) with ESMTP id AA85E37E42;
+	Sat,  6 Sep 2008 17:51:08 +0200 (CEST)
+X-Mailer: git-send-email 1.6.0.1.161.g7f314
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/95077>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/95078>
 
-Steven Walter <stevenrwalter@gmail.com> writes:
+This is useful when reviewing code.
 
-> After starting yap several weeks ago, I feel it has reached a level of
-> maturity that makes it suitable for public consumption.  yap is three
-> things, in increasing order of relevance:
-> 
->     1) A git porcelain implemented in python
->     2) A git porcelain with a friendlier, more orthogonal interface
->     3) A extensible git porcelain
+Signed-off-by: Robin Rosenberg <robin.rosenberg@dewire.com>
+---
+ org.spearce.egit.ui/plugin.xml                     |    7 +++++
+ .../actions/ResetQuickdiffBaselineAction.java      |    2 +-
+ .../ResetQuickdiffBaselineHeadParentAction.java    |   24 ++++++++++++++++++++
+ 3 files changed, 32 insertions(+), 1 deletions(-)
+ create mode 100644 org.spearce.egit.ui/src/org/spearce/egit/ui/internal/actions/ResetQuickdiffBaselineHeadParentAction.java
 
-A question, and a request.
-
-First, a question: how your yap porcelain differs from efforts of
-EasyGit (eg) and Pyrite?
-
-And a request: could you add (short) information about your work to
-Git Wiki: http://git.or.cz/gitwiki/InterfacesFrontendsAndTools,
-of course in the "Version Control Interface layers" section? 
-
-TIA.
+diff --git a/org.spearce.egit.ui/plugin.xml b/org.spearce.egit.ui/plugin.xml
+index 55207eb..2472c9b 100644
+--- a/org.spearce.egit.ui/plugin.xml
++++ b/org.spearce.egit.ui/plugin.xml
+@@ -150,6 +150,13 @@
+ 	       label="Reset quickdiff baseline to HEAD"
+ 	       menubarPath="additions">
+ 	 </action>
++	 <action
++	       class="org.spearce.egit.ui.internal.actions.ResetQuickdiffBaselineHeadParentAction"
++	       enablesFor="*"
++	       id="org.spearce.egit.ui.resetquickdiffheadparentbaseline"
++	       label="Reset quickdiff baseline to first parent of HEAD"
++	       menubarPath="additions">
++	 </action>
+ 	  </objectContribution>
+    </extension>
+ 
+diff --git a/org.spearce.egit.ui/src/org/spearce/egit/ui/internal/actions/ResetQuickdiffBaselineAction.java b/org.spearce.egit.ui/src/org/spearce/egit/ui/internal/actions/ResetQuickdiffBaselineAction.java
+index a42635a..597ee10 100644
+--- a/org.spearce.egit.ui/src/org/spearce/egit/ui/internal/actions/ResetQuickdiffBaselineAction.java
++++ b/org.spearce.egit.ui/src/org/spearce/egit/ui/internal/actions/ResetQuickdiffBaselineAction.java
+@@ -13,7 +13,7 @@
+ import org.eclipse.jface.action.IAction;
+ 
+ /**
+- * Changes the reference for the quickdiff
++ * Changes the reference for the quickdiff to HEAD
+  */
+ public class ResetQuickdiffBaselineAction extends AbstractRevObjectAction {
+ 
+diff --git a/org.spearce.egit.ui/src/org/spearce/egit/ui/internal/actions/ResetQuickdiffBaselineHeadParentAction.java b/org.spearce.egit.ui/src/org/spearce/egit/ui/internal/actions/ResetQuickdiffBaselineHeadParentAction.java
+new file mode 100644
+index 0000000..85a9998
+--- /dev/null
++++ b/org.spearce.egit.ui/src/org/spearce/egit/ui/internal/actions/ResetQuickdiffBaselineHeadParentAction.java
+@@ -0,0 +1,24 @@
++/*******************************************************************************
++ * Copyright (C) 2008, Robin Rosenberg <robin.rosenberg@dewire.com>
++ *
++ * All rights reserved. This program and the accompanying materials
++ * are made available under the terms of the Eclipse Public License v1.0
++ * See LICENSE for the full license text, also available.
++ *******************************************************************************/
++package org.spearce.egit.ui.internal.actions;
++
++import java.util.List;
++
++import org.eclipse.core.resources.IWorkspaceRunnable;
++import org.eclipse.jface.action.IAction;
++
++/**
++ * Changes the reference for the quickdiff to the (first) parent of HEAD
++ */
++public class ResetQuickdiffBaselineHeadParentAction extends AbstractRevObjectAction {
++
++	@Override
++	protected IWorkspaceRunnable createOperation(IAction act, List selection) {
++		return new QuickdiffBaselineOperation(getActiveRepository(), "HEAD^1");
++	}
++}
 -- 
-Jakub Narebski
-Poland
-ShadeHawk on #git
+1.6.0.1.161.g7f314
