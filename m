@@ -1,56 +1,78 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Bug? - Unexpected lock file error
-Date: Fri, 05 Sep 2008 17:09:32 -0700
-Message-ID: <7vtzcut9s3.fsf@gitster.siamese.dyndns.org>
-References: <279b37b20809051622q6b3ab37tec3f1726c71952e4@mail.gmail.com>
- <7v63paupd8.fsf@gitster.siamese.dyndns.org>
+From: Stephan Beyer <s-beyer@gmx.net>
+Subject: Re: Git Community Book
+Date: Sat, 6 Sep 2008 02:48:31 +0200
+Message-ID: <20080906004831.GA8984@leksak.fem-net>
+References: <d411cc4a0809051208k2a15c4a7te09a6979929e52f7@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: "Git Mailing List" <git@vger.kernel.org>,
-	Miklos Vajna <vmiklos@frugalware.org>
-To: "Eric Raible" <raible@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Sep 06 02:11:02 2008
+Cc: git list <git@vger.kernel.org>
+To: Scott Chacon <schacon@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Sep 06 02:52:03 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KblOG-0005jF-99
-	for gcvg-git-2@gmane.org; Sat, 06 Sep 2008 02:11:00 +0200
+	id 1Kbm1r-00078U-Mi
+	for gcvg-git-2@gmane.org; Sat, 06 Sep 2008 02:51:56 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752315AbYIFAJq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 5 Sep 2008 20:09:46 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752210AbYIFAJp
-	(ORCPT <rfc822;git-outgoing>); Fri, 5 Sep 2008 20:09:45 -0400
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:60880 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752117AbYIFAJo (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 5 Sep 2008 20:09:44 -0400
-Received: from localhost.localdomain (localhost [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 6F5745D25F;
-	Fri,  5 Sep 2008 20:09:42 -0400 (EDT)
-Received: from pobox.com (ip68-225-240-211.oc.oc.cox.net [68.225.240.211])
- (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
- certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
- ESMTPSA id 587645D25E; Fri,  5 Sep 2008 20:09:38 -0400 (EDT)
-In-Reply-To: <7v63paupd8.fsf@gitster.siamese.dyndns.org> (Junio C. Hamano's
- message of "Fri, 05 Sep 2008 16:47:31 -0700")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: 1ABF104A-7BA8-11DD-AD37-D0CFFE4BC1C1-77302942!a-sasl-fastnet.pobox.com
+	id S1751156AbYIFAsr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 5 Sep 2008 20:48:47 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750848AbYIFAsr
+	(ORCPT <rfc822;git-outgoing>); Fri, 5 Sep 2008 20:48:47 -0400
+Received: from mail.gmx.net ([213.165.64.20]:34924 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1750835AbYIFAsq (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 5 Sep 2008 20:48:46 -0400
+Received: (qmail invoked by alias); 06 Sep 2008 00:48:39 -0000
+Received: from q137.fem.tu-ilmenau.de (EHLO leksak.fem-net) [141.24.46.137]
+  by mail.gmx.net (mp003) with SMTP; 06 Sep 2008 02:48:39 +0200
+X-Authenticated: #1499303
+X-Provags-ID: V01U2FsdGVkX1+Z1KYZskOZKKBrYePOI7OhXvhvadBdECb8h6neDS
+	perDlicYmepy8F
+Received: from sbeyer by leksak.fem-net with local (Exim 4.69)
+	(envelope-from <s-beyer@gmx.net>)
+	id 1KblyZ-00035G-M9; Sat, 06 Sep 2008 02:48:31 +0200
+Content-Disposition: inline
+In-Reply-To: <d411cc4a0809051208k2a15c4a7te09a6979929e52f7@mail.gmail.com>
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.6899999999999999
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/95052>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/95053>
 
-Junio C Hamano <gitster@pobox.com> writes:
+Hi,
 
-> "Eric Raible" <raible@gmail.com> writes:
->
->> If 'empty' has any commits then the merge happens as expected.
->
-> I think it is a bug in the git-merge rewritten in C, in "Already
-> uptodate!" codepath.
+Scott Chacon wrote:
+> I just wanted to let those of you who are interested know that I've
+> been making a lot of progress on the Git Community Book
+> (http://book.git-scm.com)  I was wondering if anyone was interested in
+> helping me with a few parts.
 
-Try reverting 18668f5 (builtin-merge: avoid run_command_v_opt() for
-recursive and subtree, 2008-08-28).  That patch seems to be seriously
-broken.
+I just had a very quick look over the PDF, meaning only looking at
+pictures and headlines.
+
+Just nitpicking about one thing:
+I was wondering if "Stash Queue" is the right headline, because I
+usually use
+
+	git stash save	# oh, an interrupt, have to do something else now
+
+and after this is done:
+
+	git stash pop	# back to the real work
+
+And if you are interrupted in an interrupt, you want the last stash
+being the first one to pop, which is a stack-like (last in, first out)
+behavior.
+
+Of course, there may be cases where you want the queuing behavior that
+you advertise in the book.
+I use it rather seldomly. But perhaps it is just me :-)
+
+Regards,
+  Stephan
+
+-- 
+Stephan Beyer <s-beyer@gmx.net>, PGP 0x6EDDD207FCC5040F
