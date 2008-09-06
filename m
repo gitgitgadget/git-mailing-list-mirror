@@ -1,80 +1,74 @@
-From: Christian Couder <chriscool@tuxfamily.org>
-Subject: [PATCH] builtin-symbolic-ref: comment on the use of "resolve_ref"
- with reading == 0
-Date: Sat, 6 Sep 2008 09:55:43 +0200
-Message-ID: <20080906095543.c627b692.chriscool@tuxfamily.org>
+From: Andreas Ericsson <ae@op5.se>
+Subject: Re: Git User's Survey 2008 partial summary, part 3
+Date: Sat, 06 Sep 2008 10:27:12 +0200
+Message-ID: <48C23EE0.8090507@op5.se>
+References: <200809031607.19722.jnareb@gmail.com> <200809060422.34779.jnareb@gmail.com> <20080906051530.GB28035@spearce.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
+Content-Type: text/plain; charset=ISO-8859-15; format=flowed
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Sep 06 09:53:20 2008
+Cc: Jakub Narebski <jnareb@gmail.com>, git@vger.kernel.org
+To: "Shawn O. Pearce" <spearce@spearce.org>
+X-From: git-owner@vger.kernel.org Sat Sep 06 10:33:46 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Kbsbe-0001Tc-4n
-	for gcvg-git-2@gmane.org; Sat, 06 Sep 2008 09:53:18 +0200
+	id 1KbtEn-0003vz-Hf
+	for gcvg-git-2@gmane.org; Sat, 06 Sep 2008 10:33:46 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752108AbYIFHwJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 6 Sep 2008 03:52:09 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752103AbYIFHwI
-	(ORCPT <rfc822;git-outgoing>); Sat, 6 Sep 2008 03:52:08 -0400
-Received: from smtp6-g19.free.fr ([212.27.42.36]:52123 "EHLO smtp6-g19.free.fr"
+	id S1752126AbYIFI1U (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 6 Sep 2008 04:27:20 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752118AbYIFI1U
+	(ORCPT <rfc822;git-outgoing>); Sat, 6 Sep 2008 04:27:20 -0400
+Received: from mail.op5.se ([193.201.96.20]:35928 "EHLO mail.op5.se"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752093AbYIFHwI (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 6 Sep 2008 03:52:08 -0400
-Received: from smtp6-g19.free.fr (localhost.localdomain [127.0.0.1])
-	by smtp6-g19.free.fr (Postfix) with ESMTP id 5C73719739;
-	Sat,  6 Sep 2008 09:52:05 +0200 (CEST)
-Received: from localhost.boubyland (gre92-7-82-243-130-161.fbx.proxad.net [82.243.130.161])
-	by smtp6-g19.free.fr (Postfix) with SMTP id E5D5919782;
-	Sat,  6 Sep 2008 09:52:04 +0200 (CEST)
-X-Mailer: Sylpheed 2.5.0 (GTK+ 2.12.11; i486-pc-linux-gnu)
+	id S1752103AbYIFI1T (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 6 Sep 2008 04:27:19 -0400
+Received: from localhost (localhost.localdomain [127.0.0.1])
+	by mail.op5.se (Postfix) with ESMTP id 89FBF1B800A4;
+	Sat,  6 Sep 2008 10:33:06 +0200 (CEST)
+X-Virus-Scanned: amavisd-new at 
+X-Spam-Flag: NO
+X-Spam-Score: -2.499
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.499 tagged_above=-10 required=6.6
+	tests=[BAYES_00=-2.599, RDNS_NONE=0.1]
+Received: from mail.op5.se ([127.0.0.1])
+	by localhost (mail.op5.se [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id G5EFgz7FCRnM; Sat,  6 Sep 2008 10:33:05 +0200 (CEST)
+Received: from clix.int.op5.se (unknown [172.27.78.6])
+	by mail.op5.se (Postfix) with ESMTP id BFA0D1B8004D;
+	Sat,  6 Sep 2008 10:33:04 +0200 (CEST)
+User-Agent: Thunderbird 2.0.0.16 (X11/20080723)
+In-Reply-To: <20080906051530.GB28035@spearce.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/95065>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/95066>
 
-The following thread:
+Shawn O. Pearce wrote:
+> Jakub Narebski <jnareb@gmail.com> wrote:
+>> Note that quite a few people wrote about integration with IDE/editor in 
+>> the "35. What tools (or kind of tools) would you like to see Git 
+>> support in?" question.
+> 
+> Both Eclipse and NetBeans are getting on board with JGit and trying
+> to make viable plugins from it.  So hopefully by the next survey
+> this particular question will have been answered for a decent
+> precentage of our IDE toting users.
+> 
+> Actually, I'm rather excited by what's going on in the Git IDE
+> space these days.  The NetBeans plugin is seeing more activity,
+> and since GSoC so has EGit.  Both projects have been steadily
+> picking up contributors.  Quite a good thing.
+> 
 
-http://thread.gmane.org/gmane.comp.version-control.git/42469
+The geany ide has some limited git support as well. Since it's
+written in C, I believe a libified git would boost its level of
+support tremendously.
 
-(the message ID from the first message is:
-
-20070318020645.2444.75365.julian@quantumfyre.co.uk)
-
-explains why "resolve_ref" is used with a "reading" parameter set to 0
-instead of 1, but there was no comment saying that near the code.
-
-Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
----
- builtin-symbolic-ref.c |   10 ++++++++++
- 1 files changed, 10 insertions(+), 0 deletions(-)
-
-	This comment may save other people some time.
-
-diff --git a/builtin-symbolic-ref.c b/builtin-symbolic-ref.c
-index bfc78bb..9490c47 100644
---- a/builtin-symbolic-ref.c
-+++ b/builtin-symbolic-ref.c
-@@ -12,6 +12,16 @@ static void check_symref(const char *HEAD, int quiet)
- {
- 	unsigned char sha1[20];
- 	int flag;
-+
-+	/*
-+	 * It doesn't seem logical to use "resolve_ref" with reading == 0
-+	 * as we are just checking if a ref exists, but some code depends
-+	 * on the following to work:
-+	 *
-+	 *    $ git init-db
-+	 *    $ git symbolic-ref HEAD
-+	 *    refs/heads/master
-+	 */
- 	const char *refs_heads_master = resolve_ref(HEAD, sha1, 0, &flag);
- 
- 	if (!refs_heads_master)
 -- 
-1.6.0.1.338.g5e95.dirty
+Andreas Ericsson                   andreas.ericsson@op5.se
+OP5 AB                             www.op5.se
+Tel: +46 8-230225                  Fax: +46 8-230231
