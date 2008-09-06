@@ -1,79 +1,89 @@
-From: Teemu Likonen <tlikonen@iki.fi>
-Subject: Extremely simple Vim interface for Git
-Date: Sat, 6 Sep 2008 22:37:44 +0300
-Message-ID: <20080906193744.GA3122@mithlond.arda.local>
+From: "Steven Walter" <stevenrwalter@gmail.com>
+Subject: Re: [ANNOUNCE] yap: Yet Another (Git) Porcelain
+Date: Sat, 6 Sep 2008 16:04:06 -0400
+Message-ID: <e06498070809061304v368faf66tf5e5a153212306a8@mail.gmail.com>
+References: <20080906150723.GA31540@dervierte>
+	 <m38wu5p9q4.fsf@localhost.localdomain>
+	 <e06498070809060912q2f7ed0cflb02e3efc7b81976e@mail.gmail.com>
+	 <200809062101.28672.jnareb@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Sep 06 21:38:58 2008
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, blix@sophiasuchtig.com
+To: "Jakub Narebski" <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Sep 06 22:05:53 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Kc3cX-0001Dw-Dx
-	for gcvg-git-2@gmane.org; Sat, 06 Sep 2008 21:38:57 +0200
+	id 1Kc42Y-000770-G1
+	for gcvg-git-2@gmane.org; Sat, 06 Sep 2008 22:05:51 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752400AbYIFThs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 6 Sep 2008 15:37:48 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752367AbYIFThs
-	(ORCPT <rfc822;git-outgoing>); Sat, 6 Sep 2008 15:37:48 -0400
-Received: from mta-out.inet.fi ([195.156.147.13]:56431 "EHLO jenni1.inet.fi"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752150AbYIFThr (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 6 Sep 2008 15:37:47 -0400
-Received: from mithlond.arda.local (80.220.180.181) by jenni1.inet.fi (8.5.014)
-        id 488F153401CFE048 for git@vger.kernel.org; Sat, 6 Sep 2008 22:37:46 +0300
-Received: from dtw by mithlond.arda.local with local (Exim 4.63)
-	(envelope-from <tlikonen@iki.fi>)
-	id 1Kc3bM-0001x9-MQ
-	for git@vger.kernel.org; Sat, 06 Sep 2008 22:37:44 +0300
+	id S1752828AbYIFUEJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 6 Sep 2008 16:04:09 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752633AbYIFUEI
+	(ORCPT <rfc822;git-outgoing>); Sat, 6 Sep 2008 16:04:08 -0400
+Received: from wr-out-0506.google.com ([64.233.184.226]:55141 "EHLO
+	wr-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752720AbYIFUEH (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 6 Sep 2008 16:04:07 -0400
+Received: by wr-out-0506.google.com with SMTP id 69so962656wri.5
+        for <git@vger.kernel.org>; Sat, 06 Sep 2008 13:04:06 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to
+         :subject:cc:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:references;
+        bh=S3k3Cm2y04dXk86tPSoSJaBWFDBTcGs+ycYiqD19H/A=;
+        b=VDBFsHM5sjNepP4qCP4PcLNCKwTJCde6NUXLqRn5wgZMqJPCmN2XA2PFcmDrHhac1w
+         NDQ6hgnjJzEk0f38uOTLU+CCYC3gbcpamTho6iOAM9LMse3BJ7G7ALlINZBW8JpjDO9w
+         EazSxJGHsaXlFo7ZefozbxFTLQ+HfLu5IKe7g=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
+         :content-type:content-transfer-encoding:content-disposition
+         :references;
+        b=e33crf3KFm2o+jf3K/BOk7iiowM16vnmYPurI/wBitpEWqJhVDmBM37Yo1xgjF6k50
+         0+ixAi9o8OIzIm0MgVdqQzwlj27eRUBSfSokFYV4X1A0WVcRRus0+dVJ9exkhmeY7rVH
+         Xhr5iAAKNt722avLmhYYTzaQF3cT+qlq0vv8U=
+Received: by 10.90.98.13 with SMTP id v13mr16865094agb.54.1220731446316;
+        Sat, 06 Sep 2008 13:04:06 -0700 (PDT)
+Received: by 10.90.25.17 with HTTP; Sat, 6 Sep 2008 13:04:06 -0700 (PDT)
+In-Reply-To: <200809062101.28672.jnareb@gmail.com>
 Content-Disposition: inline
-User-Agent: Mutt/1.5.13 (2006-08-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/95096>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/95097>
 
-Here's a very simple idea for using Git from Vim editor. Add these lines 
-to your ~/.vimrc file:
+On Sat, Sep 6, 2008 at 3:01 PM, Jakub Narebski <jnareb@gmail.com> wrote:
+>> To my knowledge, Pyrite does not support plugins.
+>
+> As far as I know Pyrite is one-man work.  Why not to join efforts,
+> bringing those two projects together?  Both share the same language,
+> Python.
 
+That's an interesting idea and something I'd like to pursue.
 
-    command! -complete=file -nargs=* Git   call s:RunShellCommand('git '.<q-args>)
-    command! -complete=file -nargs=* Svn   call s:RunShellCommand('svn '.<q-args>)
-    command! -complete=file -nargs=+ Shell call s:RunShellCommand(<q-args>)
+> By the way, please take into account
+>  http://en.wikipedia.org/wiki/Yap_(disambiguation)
+>
+> Most commonly known YAP is I think Yet Another Previewer, which is
+> the name of the DVI viewer included on the widely used MiKTeX TeX
+> distribution for the Microsoft Windows platform,
+>
+> YAGP, or YA(G)P, is I think free of such conotations.
 
-    let $EDITOR = '/usr/bin/gvim --nofork'
-
-    function! s:RunShellCommand(cmdline)
-        botright new
-        setlocal buftype=nofile bufhidden=wipe nobuflisted noswapfile
-        setlocal nowrap
-        call setline(1,a:cmdline)
-        call setline(2,substitute(a:cmdline,'.','=','g'))
-        execute 'silent 2read !'.escape(a:cmdline,'()%#')
-        setlocal nomodifiable
-        1
-    endfunction
-
-
-Now, command :Git works just like "git" from shell except that the 
-output is displayed in a Vim scratch buffer/window. The buffer will be 
-wiped out from memory when the window is closed. Filename completion and 
-piping works. Examples:
-
-    :Git diff --cached
-    :Git help merge
-    :Git branch | column
-
-(I am aware that there are VCS plugins for Vim. I happen like this 
-approach better because it works just like the command line Git which 
-I'm familiar with.)
-
-As a "side effect" this also adds similar :Svn command as well as :Shell 
-command which can be used to run any shell command and have its output 
-displayed in a Vim window. Using the first two letters of :Shell is 
-enough in my system because I don't have other custom commands which 
-start with letters "Sh".
-
-    :Sh ls -l
+I was not aware of that.  I'm not firmly attached to the name I've
+chosen, but I would like the command to remain short (2-3 letters).
+Maybe call it YAGP and use "yg" for the command?
+-- 
+-Steven Walter <stevenrwalter@gmail.com>
+"A human being should be able to change a diaper, plan an invasion,
+butcher a hog, conn a ship, design a building, write a sonnet, balance
+accounts, build a wall, set a bone, comfort the dying, take orders,
+give orders, cooperate, act alone, solve equations, analyze a new
+problem, pitch manure, program a computer, cook a tasty meal, fight
+efficiently, die gallantly. Specialization is for insects."
+ -Robert Heinlein
