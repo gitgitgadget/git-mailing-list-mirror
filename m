@@ -1,102 +1,70 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: [ANNOUNCE] yap: Yet Another (Git) Porcelain
-Date: Sat, 6 Sep 2008 21:01:26 +0200
-Message-ID: <200809062101.28672.jnareb@gmail.com>
-References: <20080906150723.GA31540@dervierte> <m38wu5p9q4.fsf@localhost.localdomain> <e06498070809060912q2f7ed0cflb02e3efc7b81976e@mail.gmail.com>
+From: "Shawn O. Pearce" <spearce@spearce.org>
+Subject: Re: Alternates and push
+Date: Sat, 6 Sep 2008 12:21:06 -0700
+Message-ID: <20080906192106.GB18631@spearce.org>
+References: <9e4733910809060542s5ede6d6m5bdb894c958ea8b7@mail.gmail.com> <20080906162030.GT9129@mit.edu> <7viqt9rvwm.fsf@gitster.siamese.dyndns.org> <9e4733910809061124r3759ea79sda98b549df3e6e58@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: 7bit
-To: "Steven Walter" <stevenrwalter@gmail.com>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Sep 06 21:02:55 2008
+Content-Type: text/plain; charset=utf-8
+Cc: Junio C Hamano <gitster@pobox.com>, Theodore Tso <tytso@mit.edu>,
+	Git Mailing List <git@vger.kernel.org>
+To: Jon Smirl <jonsmirl@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Sep 06 21:22:19 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Kc33R-0000yj-WB
-	for gcvg-git-2@gmane.org; Sat, 06 Sep 2008 21:02:42 +0200
+	id 1Kc3MN-0005rM-M9
+	for gcvg-git-2@gmane.org; Sat, 06 Sep 2008 21:22:16 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751896AbYIFTBf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 6 Sep 2008 15:01:35 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752055AbYIFTBf
-	(ORCPT <rfc822;git-outgoing>); Sat, 6 Sep 2008 15:01:35 -0400
-Received: from fg-out-1718.google.com ([72.14.220.156]:20858 "EHLO
-	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751532AbYIFTBe (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 6 Sep 2008 15:01:34 -0400
-Received: by fg-out-1718.google.com with SMTP id 19so998786fgg.17
-        for <git@vger.kernel.org>; Sat, 06 Sep 2008 12:01:31 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:subject:date
-         :user-agent:references:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:message-id;
-        bh=2WfPTifRfIguhb+vKrGEiEYhJpc7526soDSNQIgQNms=;
-        b=xGk8gnkci7W6gIAl6gQYOfC+as4dPNQ7c0oMQPPS4mybCbOHTW+77eeHfgRy59yrSO
-         55Ux8boLGoWKsnM6DxSfeONr5liCjMvHpTfd11hJcGdt5q+cy0TAAi6RcL7U4p62C+Yn
-         wkwKW6Y3moBEjiI6JfyAecEwLLWkglb50oilQ=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=from:to:subject:date:user-agent:references:in-reply-to:mime-version
-         :content-type:content-transfer-encoding:content-disposition
-         :message-id;
-        b=OSSQqQKAMwHFAjSy+3+GyeSaFnUYjIEDG/rmeDrAkLK7o521NPYuDg8rrHFuUMH3NA
-         RSjVnsuVmNH3NFkkyGit58PfyviwWzc8v2X5SL8hDRfQp2FJCOLIoau8S9vJju95L26x
-         jKEseLq9+Fo7SnWmZqYr/wWrB/ERIEpNwbXsM=
-Received: by 10.86.97.7 with SMTP id u7mr9869477fgb.29.1220727691617;
-        Sat, 06 Sep 2008 12:01:31 -0700 (PDT)
-Received: from ?192.168.1.11? ( [83.8.234.117])
-        by mx.google.com with ESMTPS id e20sm2475095fga.1.2008.09.06.12.01.29
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Sat, 06 Sep 2008 12:01:30 -0700 (PDT)
-User-Agent: KMail/1.9.3
-In-Reply-To: <e06498070809060912q2f7ed0cflb02e3efc7b81976e@mail.gmail.com>
+	id S1752224AbYIFTVJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 6 Sep 2008 15:21:09 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752150AbYIFTVI
+	(ORCPT <rfc822;git-outgoing>); Sat, 6 Sep 2008 15:21:08 -0400
+Received: from george.spearce.org ([209.20.77.23]:45073 "EHLO
+	george.spearce.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752084AbYIFTVH (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 6 Sep 2008 15:21:07 -0400
+Received: by george.spearce.org (Postfix, from userid 1001)
+	id 8421D38353; Sat,  6 Sep 2008 19:21:06 +0000 (UTC)
 Content-Disposition: inline
+In-Reply-To: <9e4733910809061124r3759ea79sda98b549df3e6e58@mail.gmail.com>
+User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/95093>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/95094>
 
-[Back on git mailing list]
-
-On Sat, 6 Sep 2008, Steven Walter wrote:
-> On Sat, Sep 6, 2008 at 11:36 AM, Jakub Narebski <jnareb@gmail.com> wrote:
+Jon Smirl <jonsmirl@gmail.com> wrote:
+> On 9/6/08, Junio C Hamano <gitster@pobox.com> wrote:
+> > Theodore Tso <tytso@MIT.EDU> writes:
 > >
-> > First, a question: how your yap porcelain differs from efforts of
-> > EasyGit (eg) and Pyrite?
+> >  > Long-standing mis-feature in git's logic in deciding what to push.
+> >  > It's been reported a few times, but apparently it's hard to fix, or at
+> >  > least it never hsa been fixed as far as I know.
+> >
+> >
+> > This comes from an early (mis)design of git.
 > 
-> In the case of EasyGit, it differs in that yap's interface does not
-> have the requirement of being fully backwards-compatible with core
-> git.  Dropping that requirement gave me more freedom to simplify and
-> clean-up the interface.
+> What happens if I set a remote in my github digispeaker repo pointing
+> to github's linus repo and the set a chron script to fetch it once a
+> day? The alternates link is still in place.
 
-I can understand this.  EasyGit is more about making git self
-documenting than anything more, from what I understand.
+github should do what repo.or.cz does:
 
-> To my knowledge, Pyrite does not support plugins.
+	ln -s .../linus.git/refs digispeaker.git/refs/forkee
 
-As far as I know Pyrite is one-man work.  Why not to join efforts,
-bringing those two projects together?  Both share the same language,
-Python.
+That way the refs available in Linus' tree are also available
+in your tree as Git will transparently follow the symlink.
 
-> > And a request: could you add (short) information about your work to
-> > Git Wiki: http://git.or.cz/gitwiki/InterfacesFrontendsAndTools,
-> > of course in the "Version Control Interface layers" section?
-> 
-> Done.
+However you have to be careful to make sure `git pack-refs` isn't
+run with `--all --prune` as it will delete the refs from linus.git
+when executed in digispeaker.git.  Fun times when I did that to my
+own repository one day.  ;-)
 
-Thanks.
+Though we probably should fix Git to be somewhat smarter.  But
+until that stable binary is available, the symlink trick above
+is a good work around.
 
-
-By the way, please take into account 
-  http://en.wikipedia.org/wiki/Yap_(disambiguation)
-
-Most commonly known YAP is I think Yet Another Previewer, which is
-the name of the DVI viewer included on the widely used MiKTeX TeX
-distribution for the Microsoft Windows platform,
-
-YAGP, or YA(G)P, is I think free of such conotations.
 -- 
-Jakub Narebski
-Poland
+Shawn.
