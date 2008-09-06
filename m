@@ -1,132 +1,76 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Alternates and push
-Date: Sat, 06 Sep 2008 11:06:49 -0700
-Message-ID: <7viqt9rvwm.fsf@gitster.siamese.dyndns.org>
-References: <9e4733910809060542s5ede6d6m5bdb894c958ea8b7@mail.gmail.com>
- <20080906162030.GT9129@mit.edu>
+Subject: Re: file deletion in index lost after checkout -b
+Date: Sat, 06 Sep 2008 11:10:32 -0700
+Message-ID: <7vej3xrvqf.fsf@gitster.siamese.dyndns.org>
+References: <20080901034414.GR6619@jabba.hq.digizenstudio.com>
+ <7vljy7xgs5.fsf@gitster.siamese.dyndns.org>
+ <20080906171108.GA10924@jabba.hq.digizenstudio.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Jon Smirl <jonsmirl@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: Theodore Tso <tytso@MIT.EDU>
-X-From: git-owner@vger.kernel.org Sat Sep 06 20:08:48 2008
+Cc: git <git@vger.kernel.org>
+To: Jing Xue <jingxue@digizenstudio.com>
+X-From: git-owner@vger.kernel.org Sat Sep 06 20:11:52 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Kc2DG-00031H-9z
-	for gcvg-git-2@gmane.org; Sat, 06 Sep 2008 20:08:46 +0200
+	id 1Kc2GA-0003ev-9E
+	for gcvg-git-2@gmane.org; Sat, 06 Sep 2008 20:11:46 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752581AbYIFSG5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 6 Sep 2008 14:06:57 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752462AbYIFSG5
-	(ORCPT <rfc822;git-outgoing>); Sat, 6 Sep 2008 14:06:57 -0400
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:42379 "EHLO
+	id S1754610AbYIFSKm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 6 Sep 2008 14:10:42 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752380AbYIFSKm
+	(ORCPT <rfc822;git-outgoing>); Sat, 6 Sep 2008 14:10:42 -0400
+Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:45334 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752224AbYIFSG4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 6 Sep 2008 14:06:56 -0400
+	with ESMTP id S1752455AbYIFSKl (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 6 Sep 2008 14:10:41 -0400
 Received: from localhost.localdomain (localhost [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 7B15C5FCA2;
-	Sat,  6 Sep 2008 14:06:55 -0400 (EDT)
+	by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id 1D0BD7668B;
+	Sat,  6 Sep 2008 14:10:38 -0400 (EDT)
 Received: from pobox.com (ip68-225-240-211.oc.oc.cox.net [68.225.240.211])
  (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
- certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
- ESMTPSA id 711565FCA1; Sat,  6 Sep 2008 14:06:51 -0400 (EDT)
-In-Reply-To: <20080906162030.GT9129@mit.edu> (Theodore Tso's message of "Sat,
- 6 Sep 2008 12:20:30 -0400")
+ certificate requested) by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with
+ ESMTPSA id 09A397668A; Sat,  6 Sep 2008 14:10:34 -0400 (EDT)
+In-Reply-To: <20080906171108.GA10924@jabba.hq.digizenstudio.com> (Jing Xue's
+ message of "Sat, 6 Sep 2008 13:11:08 -0400")
 User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: 970B7440-7C3E-11DD-9915-D0CFFE4BC1C1-77302942!a-sasl-fastnet.pobox.com
+X-Pobox-Relay-ID: 1BBC5646-7C3F-11DD-9756-3113EBD4C077-77302942!a-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/95084>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/95085>
 
-Theodore Tso <tytso@MIT.EDU> writes:
+Jing Xue <jingxue@digizenstudio.com> writes:
 
-> Long-standing mis-feature in git's logic in deciding what to push.
-> It's been reported a few times, but apparently it's hard to fix, or at
-> least it never hsa been fixed as far as I know.
+> On Thu, Sep 04, 2008 at 11:12:26PM -0700, Junio C Hamano wrote:
+>> [jc: please redirect an answer _meant for you_ off to the list with M-F-T header]
+>
+> I changed mutt to not use M-F-T with the git list at all. Hope this one
+> turns out better.
 
-This comes from an early (mis)design of git.
+Thanks; I meant to say "please do not redirect", but you got what I wanted
+to say correctly.
 
-Background.
+>> > The deletion of 2.txt appears lost during 'checkout -b foo', while the
+>> > modification and addition were both brought over. Is it a bug?
+>> 
+>> This behaviour is unchanged since early June 2005.
+>> 
+>>     http://thread.gmane.org/gmane.comp.version-control.git/4641/focus=4646
+>> 
+>> This is exactly the case marked as *0*, which both Linus and I said "it
+>> feels somewhat wrong but otherwise we cannot start from an empty index".
+>> 
+>> We may want to do better this time around, though.
+>
+> I have since found out that:
+>
+> 1. file deletions in the working directory but not in index would not be forgotten. That
+> makes "file deletions in index" case rather a corner one.
+>
+> 2. "checkout -b -m" would do the right thing.
 
- * A git repository and the object store it uses can be separate.  From
-   the beginning, you can have a"objects/" directory (aka "object store")
-   that is shared by more than one repositories.  There is no Porcelain
-   level support to set up two repositories that physically share the same
-   object store, but the result of "git init; rm -rf .git/objects; ln -s
-   $other/.git/objects .git/objects" was supposed to work (and it still
-   largely works, until you gc) in the original design.
-
-   The alternate object store does not even have to be a git repository,
-   which makes things worse.  You can have everybody pointing at
-   /var/cache/objects, and /var/cache does not have to be a git repository
-   (i.e. no var/cache/refs).
-
- * The existing alternates mechanism is not about alternate repositories.
-   It is about alternate object stores.  That is why each line of this
-   file points at "objects" directory elsewhere, not the ".git" directory
-   that is typically at one level above that "objects" directory.
-
-   The fact your repository's object store points at the object store that
-   happens to be inside Linus's repository does not imply that Linus's
-   object store is associated with refs in Linus's repository in any way
-   (that's the early _mis_design part).
-
- * An existing ref in a git repository is meant to be a guarantee that all
-   objects the object referenced by the ref is found somewhere in the
-   object store(s) the repository uses.  Object transfers in git
-   (i.e. fetch and push) use this guarantee to tell what a repository has
-   to the other side.
-
-   What happens in your case is that github end knows that the repository
-   you are pushing into have up to the refs you have there.  Alternate may
-   point at object store that holds objects from Linus's repository, but
-   there is no information as to what the latest commits you do not see in
-   your refs namespace (namely, "what's Linus's latest" is not something
-   you can learn from your repository that has alternates).
-
-A possible fix would involve:
-
- - Deprecate objects/info/alternates file, and GIT_OBJECT_DIRECTORY and
-   GIT_ALTERNATE_OBJECT_DIRECTORIES environment variables;
-
- - Introduce info/alternates that points at alternate _repositories_ (as
-   opposed to objects/info/alternates that points at alternate object
-   stores);
-
- - Teach fetch and push to include refs from alternate _repositories_ into
-   what local side considers complete.
-
-The above won't break existing setups, but it won't help them either.  All
-the borrowing repositoies need to be converted if we go that route.
-
-We could instead redefine the semantics of the existing alternates
-mechanism.  This technically *breaks* backward compatibility, but I
-suspect it won't hurt many existing installations:
-
- - Declare that a freestanding object store is illegal.  In other words,
-   if a directory "$D/objects" is (1) used as $GIT_OBJECT_DIRECTORY's
-   value, (2) pointed by some repository's "alternates" file, or (3)
-   listed in $GIT_ALTERNATE_OBJECT_DIRECTORIES's value, this change makes
-   it illegal for "$D" not being a proper git repository.
-
-   This will not break your example of your repository's object store
-   borrowing from the object store inside Linus's repository.
-
- - When you have "$D/objects" in alternates, start relying on "$D/refs"
-   being correct (i.e. repository $D is not corrupt).  This technically
-   makes the system slightly less robust, as we are depending on _other
-   people's_ good behaviour even more when you use alternates, but you are
-   already depending on them having good objects in $D/objects anyway, so
-   it is not a big deal.
-
- - Now that we declared that everything reachable from "$D/refs" do not
-   have to be transferred from elsewhere when a push sends things into us
-   (or a fetch gets things from elsewhere into us) when you have
-   "$D/objects" in your alternates.  In your "borrowing from Linus"
-   example, Linus's latest will be reachable from somewhere in "$D/refs",
-   when you are borrowing from him by having "$D/objects" in your
-   alternates. 
+Both correct.  1. does not involve case *0*; 2. does not do two-tree
+switch but internally uses three-tree switch and uses different codepath.
