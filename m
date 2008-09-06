@@ -1,133 +1,112 @@
-From: "Giuseppe Bilotta" <giuseppe.bilotta@gmail.com>
-Subject: Re: gitweb pathinfo improvements
-Date: Sat, 6 Sep 2008 13:55:44 +0200
-Message-ID: <cb7bb73a0809060455n78145ccdw99beeebbd7e0439a@mail.gmail.com>
-References: <1220435839-29360-1-git-send-email-giuseppe.bilotta@gmail.com>
-	 <200809061322.31094.jnareb@gmail.com>
+From: Christian Couder <chriscool@tuxfamily.org>
+Subject: Re: [PATCH] builtin-symbolic-ref: comment on the use of "resolve_ref" with reading == 0
+Date: Sat, 6 Sep 2008 14:03:13 +0200
+Message-ID: <200809061403.14592.chriscool@tuxfamily.org>
+References: <20080906095543.c627b692.chriscool@tuxfamily.org> <7vwshpsi1g.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, "Petr Baudis" <pasky@ucw.cz>,
-	"Lea Wiemann" <lewiemann@gmail.com>,
-	"Junio C Hamano" <gitster@pobox.com>
-To: "Jakub Narebski" <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Sep 06 14:00:21 2008
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sat Sep 06 14:01:20 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KbwSU-0008Qj-Pv
-	for gcvg-git-2@gmane.org; Sat, 06 Sep 2008 14:00:07 +0200
+	id 1KbwTX-0000M0-WE
+	for gcvg-git-2@gmane.org; Sat, 06 Sep 2008 14:01:12 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751014AbYIFLzr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 6 Sep 2008 07:55:47 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751013AbYIFLzr
-	(ORCPT <rfc822;git-outgoing>); Sat, 6 Sep 2008 07:55:47 -0400
-Received: from yx-out-2324.google.com ([74.125.44.28]:32811 "EHLO
-	yx-out-2324.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750844AbYIFLzq (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 6 Sep 2008 07:55:46 -0400
-Received: by yx-out-2324.google.com with SMTP id 8so461142yxm.1
-        for <git@vger.kernel.org>; Sat, 06 Sep 2008 04:55:45 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to
-         :subject:cc:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:references;
-        bh=1ahl14La4iguhpiwt6hmwDQqCOrXrTwVrUV148dsMO0=;
-        b=tC5V7wEOQuEWoJhKcirqAEHfOqaamtfbeTApMHGAd+3gPHf47VazAUYI++PSiIysfA
-         htql0R7UCSPptwGImhFB+M1NEJllTLuBbBU0AWFPlRLqf2pvTDrUZgLEalUEsPYLB9VF
-         Z1B0Rz2VRSjlPJDDdBnDj2vN3AmBl8Q45IG2I=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
-         :content-type:content-transfer-encoding:content-disposition
-         :references;
-        b=Ez5UHL1AoXW11UXt/h85+NLZdg5xlDmcin615ywGR3gtCj+/Kb31ETprnKzy2B1VeZ
-         R32q6h8cQYRZEfnJUrz7v4xLFNb14EzzZkC4kgNW0gIJ6KQB6xx/0J2JzrNcgWzUoV71
-         sGqTi3lV5JTrVGYCLJr/74UG/h8t81RgQ3aQw=
-Received: by 10.151.108.5 with SMTP id k5mr3614328ybm.226.1220702144684;
-        Sat, 06 Sep 2008 04:55:44 -0700 (PDT)
-Received: by 10.150.145.2 with HTTP; Sat, 6 Sep 2008 04:55:44 -0700 (PDT)
-In-Reply-To: <200809061322.31094.jnareb@gmail.com>
+	id S1751243AbYIFL7k convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 6 Sep 2008 07:59:40 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751240AbYIFL7k
+	(ORCPT <rfc822;git-outgoing>); Sat, 6 Sep 2008 07:59:40 -0400
+Received: from smtp7-g19.free.fr ([212.27.42.64]:42084 "EHLO smtp7-g19.free.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751239AbYIFL7k convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 6 Sep 2008 07:59:40 -0400
+Received: from smtp7-g19.free.fr (localhost [127.0.0.1])
+	by smtp7-g19.free.fr (Postfix) with ESMTP id 47823B0151;
+	Sat,  6 Sep 2008 13:59:38 +0200 (CEST)
+Received: from bureau.boubyland (gre92-7-82-243-130-161.fbx.proxad.net [82.243.130.161])
+	by smtp7-g19.free.fr (Postfix) with ESMTP id F1150B0142;
+	Sat,  6 Sep 2008 13:59:37 +0200 (CEST)
+User-Agent: KMail/1.9.9
+In-Reply-To: <7vwshpsi1g.fsf@gitster.siamese.dyndns.org>
 Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/95070>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/95071>
 
-On Sat, Sep 6, 2008 at 1:22 PM, Jakub Narebski <jnareb@gmail.com> wrote:
-> Below there is table of contents / shortlog of this series, which I
-> think is a good practice to include in cover letter describing the
-> series:
+Le samedi 6 septembre 2008, Junio C Hamano a =E9crit :
+> Christian Couder <chriscool@tuxfamily.org> writes:
+> > diff --git a/builtin-symbolic-ref.c b/builtin-symbolic-ref.c
+> > index bfc78bb..9490c47 100644
+> > --- a/builtin-symbolic-ref.c
+> > +++ b/builtin-symbolic-ref.c
+> > @@ -12,6 +12,16 @@ static void check_symref(const char *HEAD, int
+> > quiet) ...
+> > +	/*
+> > +	 * It doesn't seem logical to use "resolve_ref" with reading =3D=3D=
+ 0
+> > +	 * as we are just checking if a ref exists,...
+> > ...
+> > +	 */
 >
-> Table of contents:
-> ==================
->  * [PATCH 1/5] gitweb: action in path with use_pathinfo
->  * [PATCH 2/5] gitweb: use_pathinfo filenames start with /
->  * [PATCH 3/5] gitweb: parse parent..current syntax from pathinfo
->  * [PATCH 4/5] gitweb: use_pathinfo creates parent..current paths
->  * [PATCH 5/5] gitweb: remove PATH_INFO from $my_url and $my_uri
-
-Yes, I really have to learn proper behaviour when sending a patchest.
-I'll make treasure of yours and Junio's hints on the matter 8-)
-
-I'll probably have to resend this patch series anyway, since I've
-already found a quirk for which an additional patch is ready, and the
-double-dot-filename thing you mention below needs fixing as well.
-
-BTW, is there a way to automate this summary generation when using
-format-patch or send-email?
-
-> The problem with fitting more parameters in pathinfo is first backwards
-> compatibility (this is not strict requirement, but we would rather not
-> make existing bookmarked pathinfo URLs invalid), and second with
-> ordering those parameters and detecting when one parameter ends and
-> next one begins (which is made more complicated by the fact that some
-> parameters, like action or hash/hash_base can be skipped).
+> I have to say that this comment is confused.
 >
-> This trouble with fitting parameters in pathinfo creates some
-> limitations and tradeoffs. For example (optionally!) embedding
-> the action in the pathinfo, by putting it after project and before
-> hash/hash_base (usually refname) and filename makes old-style
-> $project/$branch lead to incorrect view. This also means that we have
-> to be careful about creating pathinfo links, either by always putting
-> an action, or using full ref name (which I think we do anyway to avoid
-> tag/head ambiguities); or doing it only in the case of possible
-> conflict i.e. branch named like one of gitweb actions.
+> When you have a full ref (as opposed to an abbreviated one that you m=
+ight
+> give to dwim_ref()), you can use it for two kinds of things:
+>
+>  (1) You can use it to find out what _object_ the ref points at.  Thi=
+s is
+>      "reading" the ref, and the ref, if it is not symbolic, has to ex=
+ist,
+>      and if it is symbolic, it has to point at an existing ref, becau=
+se
+>      the "read" goes through the symref to the ref it points at.
 
-Yes, this was something that got me thinking for a while. I've tried
-as hard as possible to preserve backwards compatibility, and old-style
-paths should still work correctly except for projects whose branched
-are named exactly like gitweb actions.
+Then the parameter should perhaps be=20
+called "get_object", "get_target", "full_dereference" or something like=
+=20
+that instead of "reading".
 
-> Using ':' or ':/' to separate branch name (hash or hash_base) from
-> filename doesn't lead to problems, as pathinfo is split on _first_
-> occurrence of ':', and refnames cannot contain ':'. Using '..' to
-> separate $hash_parent_base:$file_parent from $hash_base:$filename
-> is IMVHO a very good idea... but when creating pathinfo links we have
-> to consider filenames with '..' in them; an example is there in git
-> repository: "t/t5515/refs.master_.._.git" file. Then we probably want
-> to fallback on CGI query/CGI parameters. NOTE: I have not read the
-> patch yet, perhaps it does this.
+>  (2) Anything else.  This could be a prelude to "writing" to the ref,=
+ in
+>      which case a write to a symref that points at yet-to-be-born ref
+>     will create the real ref pointed by the symref, so such a symref =
+is
+>     not an error.  It has to answer "here is the real ref you should =
+write
+>     into" (or, "we will write into").
+>
+>      But the access that is not "reading" does not have to be "writin=
+g";
+>      it can be merely checking _where it leads to_.  And check_symref=
+()
+>      uses this call for exactly that purpose.  This access is not
+>      "checking if a ref exists".
 
-Actually, this was not a case I had taken into consideration (a
-filename with two dots). It should be straightforward to change the
-link-creation code to switch to CGI parameters in this case. Should I
-change the corresponding patch, or would it be enough to add a patch
-to the series clearing this issue?
+In "resolve_ref" in refs.c there is the following comment:
 
-> By the way, this is perhaps slightly outside the issue of this series,
-> but having a..b syntax would tempt to handcraft gitweb URLs for
-> equivalents of "git log a..b", "git log a...b" and "git diff a...b",
-> neither of which works yet.
+		/* Special case: non-existing file.
+		 * Not having the refs/heads/new-branch is OK
+		 * if we are writing into it, so is .git/HEAD
+		 * that points at refs/heads/master still to be
+		 * born.  It is NOT OK if we are resolving for
+		 * reading.
+		 */
 
-I do have a patch to that effect for the shortlog action:
-http://git.oblomov.eu/git/commitdiff/refs/heads/gitweb/shortlog and
-you can see it in effect on my gitweb with links such as
-http://git.oblomov.eu/git/master..gitweb/pathinfo.
+that seems to mean that we are either "writing" or "reading".
 
+> So reading=3D=3D0 is the logical thing to do here.
 
--- 
-Giuseppe "Oblomov" Bilotta
+It seems logical after your explanations, yes, and thank you for them, =
+but I=20
+don't think it is logical when reading the existing source code or=20
+comments.
+
+Regards,
+Christian.
