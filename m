@@ -1,85 +1,77 @@
-From: Teemu Likonen <tlikonen@iki.fi>
-Subject: Re: Extremely simple Vim interface for Git
-Date: Sun, 7 Sep 2008 20:46:50 +0300
-Message-ID: <20080907174650.GA3404@mithlond.arda.local>
-References: <20080906193744.GA3122@mithlond.arda.local> <d2e97e800809070332t35e4ed46u7af4653ea768b39b@mail.gmail.com> <20080907131356.GC3387@mithlond.arda.local>
+From: Jan Hudec <bulb@ucw.cz>
+Subject: Re: Alternates and push
+Date: Sun, 7 Sep 2008 20:49:22 +0200
+Message-ID: <20080907184922.GA3909@efreet.light.src>
+References: <9e4733910809060542s5ede6d6m5bdb894c958ea8b7@mail.gmail.com> <20080906162030.GT9129@mit.edu> <7viqt9rvwm.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Michael Wookey <michaelwookey@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Sep 07 19:48:01 2008
+Cc: Theodore Tso <tytso@MIT.EDU>, Jon Smirl <jonsmirl@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sun Sep 07 20:50:42 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KcOMh-0008V5-Jl
-	for gcvg-git-2@gmane.org; Sun, 07 Sep 2008 19:48:00 +0200
+	id 1KcPLL-00068E-8a
+	for gcvg-git-2@gmane.org; Sun, 07 Sep 2008 20:50:39 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754346AbYIGRqx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 7 Sep 2008 13:46:53 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754383AbYIGRqx
-	(ORCPT <rfc822;git-outgoing>); Sun, 7 Sep 2008 13:46:53 -0400
-Received: from mta-out.inet.fi ([195.156.147.13]:59986 "EHLO kirsi2.inet.fi"
+	id S1754887AbYIGSt2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 7 Sep 2008 14:49:28 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754833AbYIGSt2
+	(ORCPT <rfc822;git-outgoing>); Sun, 7 Sep 2008 14:49:28 -0400
+Received: from ns1.bluetone.cz ([212.158.128.13]:45099 "EHLO ns1.bluetone.cz"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754322AbYIGRqx (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 7 Sep 2008 13:46:53 -0400
-Received: from mithlond.arda.local (80.220.180.181) by kirsi2.inet.fi (8.5.014)
-        id 488DC54E01E15338; Sun, 7 Sep 2008 20:46:50 +0300
-Received: from dtw by mithlond.arda.local with local (Exim 4.63)
-	(envelope-from <tlikonen@iki.fi>)
-	id 1KcOLa-00016U-8h; Sun, 07 Sep 2008 20:46:50 +0300
+	id S1754468AbYIGSt2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 7 Sep 2008 14:49:28 -0400
+Received: from localhost (spamhole.bluetone.cz [192.168.13.2])
+	by ns1.bluetone.cz (Postfix) with ESMTP id AC7DA5729C;
+	Sun,  7 Sep 2008 20:49:26 +0200 (CEST)
+Received: from ns1.bluetone.cz ([192.168.13.1])
+	by localhost (spamhole.bluetone.cz [192.168.13.2]) (amavisd-new, port 10026)
+	with ESMTP id 2wYkp5dnk+c1; Sun,  7 Sep 2008 20:49:24 +0200 (CEST)
+Received: from efreet.light.src (145-119-207-85.strcechy.adsl-llu.static.bluetone.cz [85.207.119.145])
+	by ns1.bluetone.cz (Postfix) with ESMTP id 35EF957341;
+	Sun,  7 Sep 2008 20:49:24 +0200 (CEST)
+Received: from bulb by efreet.light.src with local (Exim 4.69)
+	(envelope-from <bulb@ucw.cz>)
+	id 1KcPK6-0006c6-BB; Sun, 07 Sep 2008 20:49:22 +0200
 Content-Disposition: inline
-In-Reply-To: <20080907131356.GC3387@mithlond.arda.local>
-User-Agent: Mutt/1.5.13 (2006-08-11)
+In-Reply-To: <7viqt9rvwm.fsf@gitster.siamese.dyndns.org>
+User-Agent: Mutt/1.5.18 (2008-05-17)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/95159>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/95160>
 
-Teemu Likonen wrote (2008-09-07 16:13 +0300):
-
-> > Then Vim will apply diff syntax highlighting to the scratch buffer
-> > when a "diff" command is executed.
+On Sat, Sep 06, 2008 at 11:06:49 -0700, Junio C Hamano wrote:
+> Theodore Tso <tytso@MIT.EDU> writes:
 > 
-> Good idea. I implemented the same thing this way:
+> > Long-standing mis-feature in git's logic in deciding what to push.
+> > It's been reported a few times, but apparently it's hard to fix, or at
+> > least it never hsa been fixed as far as I know.
 > 
->     if match(a:cmdline,'\v^(git|hg|svn|bzr) diff') >= 0
->         setlocal filetype=diff
->     endif
+> This comes from an early (mis)design of git.
+> [...]
+>  * The existing alternates mechanism is not about alternate repositories.
+>    It is about alternate object stores.  That is why each line of this
+>    file points at "objects" directory elsewhere, not the ".git" directory
+>    that is typically at one level above that "objects" directory.
+> 
+>    The fact your repository's object store points at the object store that
+>    happens to be inside Linus's repository does not imply that Linus's
+>    object store is associated with refs in Linus's repository in any way
+>    (that's the early _mis_design part).
 
-Or even better, detect by the content:
+Why is this a *mis*design? Couldn't push be fixed by redesigning it's
+protocol along the lines of:
+ - clients sends a list of sha1s it wants to push, from the tip down
+ - server stops it when it sees an object it has -- this check can be done
+   against the object store without having a ref for it.
 
-    if search('\m\C^--- .*\n+++ .*\n@@','n')
-        setlocal filetype=diff
-    endif
+Regards,
+Jan
 
-It works with things like "git show" and "git log -p" too. Here's 
-updated version for those who are interested:
-
-    command! -complete=file -nargs=* Git call s:RunShellCommand('git '.<q-args>)
-
-    " To run any shell command:
-    "command! -complete=file -nargs=+ Shell call s:RunShellCommand(<q-args>)
-
-    " Additional $VCS commands:
-    "command! -complete=file -nargs=* Hg call s:RunShellCommand('hg '.<q-args>)
-    "command! -complete=file -nargs=* Svn call s:RunShellCommand('svn '.<q-args>)
-    "command! -complete=file -nargs=* Bzr call s:RunShellCommand('bzr '.<q-args>)
-
-    " In case a shell command wants to open $EDITOR we use something
-    " that works from inside Vim.
-    let $EDITOR = '/usr/bin/gvim --nofork'
-
-    function! s:RunShellCommand(cmdline)
-        botright new
-        setlocal buftype=nofile bufhidden=wipe nobuflisted noswapfile nowrap
-        call setline(1,a:cmdline)
-        call setline(2,substitute(a:cmdline,'.','=','g'))
-        execute 'silent $read !'.escape(a:cmdline,'()%#')
-        setlocal nomodifiable
-        if search('\m\C^--- .*\n+++ .*\n@@','n')
-            setlocal filetype=diff
-        endif
-        1
-    endfunction
+-- 
+						 Jan 'Bulb' Hudec <bulb@ucw.cz>
