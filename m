@@ -1,70 +1,76 @@
-From: Pieter de Bie <pieter@frim.nl>
-Subject: Re: [RFC PATCH 0/2] Teach how to discard changes in the working directory
-Date: Mon, 8 Sep 2008 01:09:05 +0200
-Message-ID: <B391BF4E-22D3-4083-8DDC-CF5823467813@frim.nl>
-References: <1220825103-19599-1-git-send-email-mail@cup.kalibalik.dk> <7vtzcrk1wt.fsf@gitster.siamese.dyndns.org>
-Mime-Version: 1.0 (Apple Message framework v926)
-Content-Type: text/plain; charset=US-ASCII; format=flowed; delsp=yes
-Content-Transfer-Encoding: 7bit
-Cc: Anders Melchiorsen <mail@cup.kalibalik.dk>, git@vger.kernel.org
+From: Boyd Lynn Gerber <gerberb@zenez.com>
+Subject: Re: What's in git.git (Sep 2008, #01; Sat, 06)
+Date: Sun, 7 Sep 2008 17:25:00 -0600
+Message-ID: <alpine.LNX.1.10.0809071723090.25543@suse104.zenez.com>
+References: <7vtzcso58c.fsf@gitster.siamese.dyndns.org> <alpine.LNX.1.10.0809070812350.6003@suse104.zenez.com> <7v3akbopzb.fsf@gitster.siamese.dyndns.org> <alpine.LNX.1.10.0809071139060.6003@suse104.zenez.com> <7vd4jfn5hx.fsf@gitster.siamese.dyndns.org>
+Mime-Version: 1.0
+Content-Type: TEXT/PLAIN; charset=US-ASCII; format=flowed
+Cc: Git List <git@vger.kernel.org>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Sep 08 01:10:27 2008
+X-From: git-owner@vger.kernel.org Mon Sep 08 01:26:20 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KcTOl-0003L6-9o
-	for gcvg-git-2@gmane.org; Mon, 08 Sep 2008 01:10:27 +0200
+	id 1KcTe7-0005rc-5q
+	for gcvg-git-2@gmane.org; Mon, 08 Sep 2008 01:26:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750910AbYIGXJV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 7 Sep 2008 19:09:21 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751083AbYIGXJV
-	(ORCPT <rfc822;git-outgoing>); Sun, 7 Sep 2008 19:09:21 -0400
-Received: from frim.nl ([87.230.85.232]:40370 "EHLO
-	lvps87-230-85-232.dedicated.hosteurope.de" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1750910AbYIGXJU (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 7 Sep 2008 19:09:20 -0400
-Received: from s5591931c.adsl.wanadoo.nl ([85.145.147.28] helo=[192.168.1.11])
-	by lvps87-230-85-232.dedicated.hosteurope.de with esmtpsa (TLS-1.0:RSA_AES_128_CBC_SHA1:16)
-	(Exim 4.63)
-	(envelope-from <pieter@frim.nl>)
-	id 1KcTNc-0003Au-7n; Mon, 08 Sep 2008 01:09:16 +0200
-In-Reply-To: <7vtzcrk1wt.fsf@gitster.siamese.dyndns.org>
-X-Mailer: Apple Mail (2.926)
+	id S1750971AbYIGXZE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 7 Sep 2008 19:25:04 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750887AbYIGXZE
+	(ORCPT <rfc822;git-outgoing>); Sun, 7 Sep 2008 19:25:04 -0400
+Received: from suse104.zenez.com ([198.60.105.164]:12087 "EHLO
+	suse104.zenez.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750783AbYIGXZC (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 7 Sep 2008 19:25:02 -0400
+Received: by suse104.zenez.com (Postfix, from userid 1000)
+	id D7279A7C291; Sun,  7 Sep 2008 17:25:00 -0600 (MDT)
+Received: from localhost (localhost [127.0.0.1])
+	by suse104.zenez.com (Postfix) with ESMTP id CB914A7C28E;
+	Sun,  7 Sep 2008 17:25:00 -0600 (MDT)
+In-Reply-To: <7vd4jfn5hx.fsf@gitster.siamese.dyndns.org>
+User-Agent: Alpine 1.10 (LNX 962 2008-03-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/95190>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/95191>
 
+On Sun, 7 Sep 2008, Junio C Hamano wrote:
+> Boyd Lynn Gerber <gerberb@zenez.com> writes:
+>> On Sun, 7 Sep 2008, Junio C Hamano wrote:
+>>> Boyd Lynn Gerber <gerberb@zenez.com> writes:
+>>>> On Sat, 6 Sep 2008, Junio C Hamano wrote:
+>>>>> Quite a many minor fixes appeared on 'maint'.  1.6.0.2 needs to happen
+>>>>> soon.  Any favorite fixes (not feature enhancements) not on the list here?
+>>>>
+>>>> I would really like to see this graduate to master before 1.6.0.2
+>>>>
+>>>> * jc/setlinebuf-setvbuf (Wed Sep 3 20:33:29 2008 -0700) 1 commit
+>>>>  + daemon.c: avoid setlinebuf()
+>>>
+>>> I do not think the setlinebuf() change affected 'maint' to begin with; it
+>>> was part of the series to clean-up daemon and to make maximum simultanous
+>>> number of connections configurable.  Are you having trouble building and/
+>>> or running 1.6.0.1 on your box?
+>>
+>> No, it does not work.  I have the git-shell problems,...
+>
+> Then it does not have anything to do with the setlinebuf-setvbuf topic at
+> all, does it?
+>
+> I think we already have 6ffaecc (shell: do not play duplicated definition
+> games to shrink the executable, 2008-08-19), which was cherry-picked from
+> 4cfc24a (shell: do not play duplicated definition games to shrink the
+> executable, 2008-08-19) on 'master'.  Do you still have problem building
+> 'maint' on your boxes?
 
-On 8 sep 2008, at 00:48, Junio C Hamano wrote:
+No, maint does build.  I just thought your were going to release 1.6.0.2 
+from master.  I think the next commit for set-linebug-setvbug needs to be 
+in it for release.
 
-> I would agree that "hint is often given in #git" is an indication that
-> people do not know "git checkout" to check out the path from the  
-> index to
-> get rid of the change.  I further suspect that "I modified my file  
-> and git
-> status says 'Changed but not updated'; what should I do" may not be  
-> asked
-> often anymore, which might owe the hint we have in status output.   
-> Even
-> then, I do not necessarily agree that the status output (yes, I am  
-> also
-> questioning the existing hints as well) is the best place to teach  
-> these
-> people.
+Thanks,
 
-Yes, this seems unclear to a lot of people. How about a small and  
-focused
-man-page or similar to help people explain the differences between the
-working directory, the index and HEAD? Then we can just add something
-like
-
-	If you are unsure what to do, run `git help stage-changes`
-
-or so. This would differ from the git-commit man-page in that there is
-less clutter and most likely contains the information the user needs
-at the top of the page.
-
-- Pieter
+--
+Boyd Gerber <gerberb@zenez.com>
+ZENEZ	1042 East Fort Union #135, Midvale Utah  84047
