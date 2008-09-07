@@ -1,102 +1,88 @@
-From: Jeff King <peff@peff.net>
+From: Junio C Hamano <gitster@pobox.com>
 Subject: Re: [RFC] cherry-pick using multiple parents to implement -x
-Date: Sun, 7 Sep 2008 13:28:07 -0400
-Message-ID: <20080907172807.GA25233@coredump.intra.peff.net>
+Date: Sun, 07 Sep 2008 10:28:56 -0700
+Message-ID: <7vtzcrn9uv.fsf@gitster.siamese.dyndns.org>
 References: <20080907103415.GA3139@cuci.nl>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
 To: "Stephen R. van den Berg" <srb@cuci.nl>
-X-From: git-owner@vger.kernel.org Sun Sep 07 19:29:19 2008
+X-From: git-owner@vger.kernel.org Sun Sep 07 19:30:12 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KcO4b-0002Yo-W2
-	for gcvg-git-2@gmane.org; Sun, 07 Sep 2008 19:29:18 +0200
+	id 1KcO5T-0002j3-HW
+	for gcvg-git-2@gmane.org; Sun, 07 Sep 2008 19:30:12 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754181AbYIGR2L (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 7 Sep 2008 13:28:11 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754108AbYIGR2K
-	(ORCPT <rfc822;git-outgoing>); Sun, 7 Sep 2008 13:28:10 -0400
-Received: from peff.net ([208.65.91.99]:2583 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754029AbYIGR2J (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 7 Sep 2008 13:28:09 -0400
-Received: (qmail 12509 invoked by uid 111); 7 Sep 2008 17:28:08 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.32) with SMTP; Sun, 07 Sep 2008 13:28:08 -0400
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Sun, 07 Sep 2008 13:28:07 -0400
-Content-Disposition: inline
-In-Reply-To: <20080907103415.GA3139@cuci.nl>
+	id S1754282AbYIGR3F (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 7 Sep 2008 13:29:05 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754277AbYIGR3E
+	(ORCPT <rfc822;git-outgoing>); Sun, 7 Sep 2008 13:29:04 -0400
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:52597 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754236AbYIGR3C (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 7 Sep 2008 13:29:02 -0400
+Received: from localhost.localdomain (localhost [127.0.0.1])
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 2CBC45A158;
+	Sun,  7 Sep 2008 13:29:01 -0400 (EDT)
+Received: from pobox.com (ip68-225-240-211.oc.oc.cox.net [68.225.240.211])
+ (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
+ certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
+ ESMTPSA id 65C735A154; Sun,  7 Sep 2008 13:28:58 -0400 (EDT)
+In-Reply-To: <20080907103415.GA3139@cuci.nl> (Stephen R. van den Berg's
+ message of "Sun, 7 Sep 2008 12:34:15 +0200")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: 75DB8980-7D02-11DD-9AAF-D0CFFE4BC1C1-77302942!a-sasl-fastnet.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/95153>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/95154>
 
-On Sun, Sep 07, 2008 at 12:34:15PM +0200, Stephen R. van den Berg wrote:
-
+"Stephen R. van den Berg" <srb@cuci.nl> writes:
 > The questions now are:
 > - Would there be good reason not to record the backport/forwardport
 >   relationship in the additional parents of a commit?
 
-Parents mean something different than just a link. If A is a parent of
-B, then that implies that at point B, we considered all of the history
-leading up to B (including A), and arrived at a certain tree state.
+In general, I do not think what you did is a good idea.  The _only_ case
+you can do what you did and keep your sanity is if you cherry-picked every
+single commit that matters from one branch to the other.
 
-But cherry-picking means we looked at just A and used it to find a
-certain tree-state. It says nothing about anything that came _before_ A.
+If something is not "parent", you shouldn't be recording it as such.
 
-So imagine this history:
+Remember, when you are making a commit on top of one or more parents, you
+are making this statement:
 
-A--B--C <-- master
- \
-  D--E--F <-- side branch
+ * I have considered all histories leading to these parent commits, and
+   based on that I decided that the tree I am recording as a child of
+   these parents suits the purpose of my branch better than any of them.
 
-Now let's say we want to cherry-pick E. If we mark the cherry-picked
-commit as a parent, we get:
+This applies to one-parent case as well.
 
-A--B--C--E' <-- master
- \      /
-  D----E--F <-- side branch
+Imagine you have two histories, forked long time ago, and have side-port
+of one commit:
 
-Now let's say we want to merge the branches. What's our merge base?
-Without your proposal, it is A, but now it is actually E. So doing a
-three-way merge between E' and F with base E, it will look like our
-master branch _removed_ the change from D which is still present in F.
-And in a 3-way merge if one side removes something but the other side
-leaves it untouched, then the result removes it.
+             o---...o---B---A
+            /
+        ---o---o---...o---X---A'
 
-So the merge result is bogus, as it is missing D.
+What side-porting A from the top history to create A' in the bottom
+history means is that the change between B and A in the top history, and
+no other change from the top history, is applied on top of X to produce
+state A' in the bottom history.  What B did is not included in the bottom
+history.
 
-I'm including a quick script below which creates this situation (it may
-need tweaking to run on your system, but hopefully you get the point).
+If you recorded A' with parents A and X.  Here is what you would get:
 
--Peff
+             o---...o---B---A
+            /                \ (wrong)
+        ---o---o---...o---X---A'
 
--- >8 --
-#!/bin/sh -ex
+But that is not what you did.  The tree state A' lacks what B did, which
+could be a critical security fix, and you didn't consider all history that
+leads to A when you cherry-picked it to create A'.
 
-rm -rf repo
-
-change() {
-  perl -pi -e '/^'$1'$/ and $_ .= "changed $_"' words &&
-  git commit -a -m $1 &&
-  git tag $1
-}
-
-mkdir repo && cd repo && git init
-cp /usr/share/dict/words . && git add words && git commit -m initial
-change A
-change B
-change C
-git checkout -b other A
-change D
-change E
-change F
-git checkout master
-git cherry-pick -n E
-tree=`git write-tree`
-commit=`echo cherry pick | git commit-tree $tree -p HEAD^ -p E`
-git update-ref HEAD $commit
+To put it another way, having the parent link from A' to A is a statement
+that A' is a superset of A.  Because A contains B, you are claiming A'
+also contains B, which is not the case in your cherry-picked history.
