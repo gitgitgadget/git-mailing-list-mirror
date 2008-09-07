@@ -1,83 +1,66 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: Re: Git User's Survey 2008 partial summary, part 3
-Date: Sun, 7 Sep 2008 16:47:18 -0700
-Message-ID: <20080907234718.GC15460@spearce.org>
-References: <200809031607.19722.jnareb@gmail.com> <200809060422.34779.jnareb@gmail.com> <20080906051530.GB28035@spearce.org> <2c6b72b30809071607m69148ec0mc9d0925e24bb7b7e@mail.gmail.com>
+From: Boyd Lynn Gerber <gerberb@zenez.com>
+Subject: Re: What's in git.git (Sep 2008, #01; Sat, 06)
+Date: Sun, 7 Sep 2008 17:48:48 -0600
+Message-ID: <alpine.LNX.1.10.0809071746260.25543@suse104.zenez.com>
+References: <7vtzcso58c.fsf@gitster.siamese.dyndns.org> <alpine.LNX.1.10.0809070812350.6003@suse104.zenez.com> <7v3akbopzb.fsf@gitster.siamese.dyndns.org> <alpine.LNX.1.10.0809071139060.6003@suse104.zenez.com> <7vd4jfn5hx.fsf@gitster.siamese.dyndns.org>
+ <alpine.LNX.1.10.0809071723090.25543@suse104.zenez.com> <7vljy3jzre.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Jakub Narebski <jnareb@gmail.com>, git@vger.kernel.org
-To: Jonas Fonseca <jonas.fonseca@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Sep 08 01:48:36 2008
+Content-Type: TEXT/PLAIN; charset=US-ASCII; format=flowed
+Cc: Git List <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Sep 08 01:50:05 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KcTza-0000t8-GI
-	for gcvg-git-2@gmane.org; Mon, 08 Sep 2008 01:48:30 +0200
+	id 1KcU10-00018G-M1
+	for gcvg-git-2@gmane.org; Mon, 08 Sep 2008 01:49:59 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750835AbYIGXrU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 7 Sep 2008 19:47:20 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750823AbYIGXrU
-	(ORCPT <rfc822;git-outgoing>); Sun, 7 Sep 2008 19:47:20 -0400
-Received: from george.spearce.org ([209.20.77.23]:56509 "EHLO
-	george.spearce.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750783AbYIGXrT (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 7 Sep 2008 19:47:19 -0400
-Received: by george.spearce.org (Postfix, from userid 1001)
-	id B54083835C; Sun,  7 Sep 2008 23:47:18 +0000 (UTC)
-Content-Disposition: inline
-In-Reply-To: <2c6b72b30809071607m69148ec0mc9d0925e24bb7b7e@mail.gmail.com>
-User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
+	id S1750894AbYIGXst (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 7 Sep 2008 19:48:49 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750910AbYIGXst
+	(ORCPT <rfc822;git-outgoing>); Sun, 7 Sep 2008 19:48:49 -0400
+Received: from suse104.zenez.com ([198.60.105.164]:4128 "EHLO
+	suse104.zenez.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750885AbYIGXst (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 7 Sep 2008 19:48:49 -0400
+Received: by suse104.zenez.com (Postfix, from userid 1000)
+	id 2AD03A7C291; Sun,  7 Sep 2008 17:48:48 -0600 (MDT)
+Received: from localhost (localhost [127.0.0.1])
+	by suse104.zenez.com (Postfix) with ESMTP id 18D23A7C28E;
+	Sun,  7 Sep 2008 17:48:48 -0600 (MDT)
+In-Reply-To: <7vljy3jzre.fsf@gitster.siamese.dyndns.org>
+User-Agent: Alpine 1.10 (LNX 962 2008-03-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/95195>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/95196>
 
-Jonas Fonseca <jonas.fonseca@gmail.com> wrote:
-> One thing that I am wondering about is how to best integrate the
-> various git-specific traits. NetBeans already has several VCS plugins,
-> many of which are derived from the same code and have been built to
-> abide to the same UI design principles, and so naturally they have a
-> similar "feel" to them. It seems foolish to not try and respect this
-> when integrating git into the IDE space. Especially, to make it easier
-> for people to try out and switch to git.
+On Sun, 7 Sep 2008, Junio C Hamano wrote:
+> Boyd Lynn Gerber <gerberb@zenez.com> writes:
+>> On Sun, 7 Sep 2008, Junio C Hamano wrote:
+>> ...
+>>> I think we already have 6ffaecc (shell: do not play duplicated definition
+>>> games to shrink the executable, 2008-08-19), which was cherry-picked from
+>>> 4cfc24a (shell: do not play duplicated definition games to shrink the
+>>> executable, 2008-08-19) on 'master'.  Do you still have problem building
+>>> 'maint' on your boxes?
+>>
+>> No, maint does build.  I just thought your were going to release
+>> 1.6.0.2 from master.  I think the next commit for set-linebug-setvbug
+>> needs to be in it for release.
+>
+> Thanks for clarifying, so as far as you are concerned, 'maint', which is
+> the only thing that matters for 1.6.0.2, is in a good shape ;-)
 
-Yea, that's a big concern for any IDE implementor.  Many of the
-Eclipse team providers (if not all of them?) have derived from the
-CVS team provider that comes as part of the base platform.  So they
-often share the same look-and-feel.  But I think Eclipse defines
-less of a common VCS UI than what you are implying NetBeans does.
+Yes, I guess I miss-understood your maintainer notes.  I re-read them 
+before posting.  I thought I read that you branch off master for the point 
+releases.  I guess that master would be only for 1.6.1 not 1.6.0.2.  Sorry 
+for my miss-understanding.
 
-In Eclipse I think it is more common to define VCS custom views
-(little windows/toolbars) and let the user turn on/off each view
-as they see fit.
- 
-> One example is the question of how to enable users to work with the
-> index without adding too many obscure UI elements. NetBeans VCS
-> infrastructure and diff engine automatically annotates, which lines in
-> the editor has been changed, modified, or deleted, and allows users to
-> revert on a chunk level. While it seems very practical to extend the
-> annotation bar to allow changes to be staged (I am not sure if this is
-> even possible) it could end up cluttering a concept that many users
-> are already very familiar with.
+Thanks,
 
-Yea, extending the annotation bar to show the index may actually
-be useful quite useful.  If its only 15 pixels of horizontal width
-lost that's actually worthwhile.  I think an older version of EGit
-had something like this until I broke it.  I can't remember.
-
-> I am curious what kind of considerations you have done on this topic
-> in your work on EGit.
-
-We've mostly ignored it.  I haven't put a lot of thought into it
-because I have been focused on getting a solid JGit implementation
-in place.
-
-I do know that I really miss having an overview of what is
-essentially the left side of git-gui; the staged and unstaged
-(but modified) file lists.  The resource decorator is nice, but it
-doesn't quite give the same flat-tree overview.
-
--- 
-Shawn.
+--
+Boyd Gerber <gerberb@zenez.com>
+ZENEZ	1042 East Fort Union #135, Midvale Utah  84047
