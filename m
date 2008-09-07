@@ -1,122 +1,115 @@
-From: Rod <armyofthepenguin@gmail.com>
-Subject: A git problem with timestamps
-Date: Sun, 7 Sep 2008 09:54:02 -0400
-Message-ID: <200809070954.03394.armyofthepenguin@gmail.com>
+From: "Jon Smirl" <jonsmirl@gmail.com>
+Subject: Re: pack operation is thrashing my server
+Date: Sun, 7 Sep 2008 09:58:11 -0400
+Message-ID: <9e4733910809070658k66e0481fx758e9a365229cf18@mail.gmail.com>
+References: <a6b6acf60808101247r4fea978ft6d2cdc53e1f99c0e@mail.gmail.com>
+	 <alpine.LFD.1.10.0808141633080.4352@xanadu.home>
+	 <alpine.LFD.1.10.0808141544150.3324@nehalem.linux-foundation.org>
+	 <alpine.LFD.1.10.0808151729070.3324@nehalem.linux-foundation.org>
+	 <7vk5dorclv.fsf@gitster.siamese.dyndns.org>
+	 <alpine.LFD.1.10.0809061812090.3117@nehalem.linux-foundation.org>
+	 <9e4733910809061950g6d9d2cf1g708f8faf0c06108@mail.gmail.com>
+	 <alpine.LFD.1.10.0809061957320.3117@nehalem.linux-foundation.org>
+	 <9e4733910809062043y661d2d54rcb034d4c70296727@mail.gmail.com>
+	 <alpine.LFD.1.10.0809062148110.3117@nehalem.linux-foundation.org>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="us-ascii"
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Sep 07 15:55:48 2008
+Cc: git@vger.kernel.org
+To: "Linus Torvalds" <torvalds@linux-foundation.org>
+X-From: git-owner@vger.kernel.org Sun Sep 07 15:59:39 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KcKjy-0008Sf-0a
-	for gcvg-git-2@gmane.org; Sun, 07 Sep 2008 15:55:46 +0200
+	id 1KcKnV-0000mp-7p
+	for gcvg-git-2@gmane.org; Sun, 07 Sep 2008 15:59:25 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753755AbYIGNyL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 7 Sep 2008 09:54:11 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753764AbYIGNyL
-	(ORCPT <rfc822;git-outgoing>); Sun, 7 Sep 2008 09:54:11 -0400
-Received: from an-out-0708.google.com ([209.85.132.243]:48297 "EHLO
-	an-out-0708.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753734AbYIGNyK (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 7 Sep 2008 09:54:10 -0400
-Received: by an-out-0708.google.com with SMTP id d40so182538and.103
-        for <git@vger.kernel.org>; Sun, 07 Sep 2008 06:54:08 -0700 (PDT)
+	id S1754930AbYIGN6R (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 7 Sep 2008 09:58:17 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754836AbYIGN6Q
+	(ORCPT <rfc822;git-outgoing>); Sun, 7 Sep 2008 09:58:16 -0400
+Received: from wx-out-0506.google.com ([66.249.82.225]:56093 "EHLO
+	wx-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754468AbYIGN6P (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 7 Sep 2008 09:58:15 -0400
+Received: by wx-out-0506.google.com with SMTP id h27so6355wxd.4
+        for <git@vger.kernel.org>; Sun, 07 Sep 2008 06:58:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:subject:date
-         :user-agent:mime-version:content-type:content-transfer-encoding
-         :content-disposition:message-id;
-        bh=ZN/etHpbKiWAXjZjT6N/vcPCLYpP5qpRHHTK06vZ4qM=;
-        b=lotvRUeLqGlr9Ha/m7iKLq4oh7mWwx9Vp+xatJnQ1MrMY2L5fTqPNUIRa5Y6PbNSEC
-         BVLYw1gCPjyz95T4gq1pFpKr07t8v97SbVaaszAIt2l330rqqcCSbOymKPOKA0C3+/N/
-         pOZ/40fiYYJPxDJIbHX0W79CjtK2pdu/UcCaU=
+        h=domainkey-signature:received:received:message-id:date:from:to
+         :subject:cc:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:references;
+        bh=7/+WPU3rUZ8FJUoitfV7YafbCD7dcCFC0aANleaohC0=;
+        b=otEtw+V5Tf6Obx8xMh8Y7PTIXms62iJvLNXtzFkBSdpLCSa3PpGjrYppjrE6fqMZ1S
+         bSlMgf2GGVYuZvTMOEGSBiMMKwv+y8vxwZTaUBg06hl603dNhnuKviypn2aGe7PRb5FT
+         FMGclsW6fBmk0+hGMXrGd8Fy+UZbnLdJuTD6c=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=from:to:subject:date:user-agent:mime-version:content-type
-         :content-transfer-encoding:content-disposition:message-id;
-        b=pH4ooHtJorpOqw1wbEV7fMQ5q1d6jUZqjCOTp7wUjraRU6Assic+6L87TvLdfQgYja
-         EUGscY00i5Q92M3gSezjLAf3j3Odm8iPd70B3b6RBtWcwp5HdOgxFQaGO01UlM3UMqlU
-         S1Sy94a/h2Yo3bejelVWyAozPPQ4gMeDRrQGs=
-Received: by 10.100.152.11 with SMTP id z11mr14391081and.157.1220795648695;
-        Sun, 07 Sep 2008 06:54:08 -0700 (PDT)
-Received: from castleroogna.localdomain ( [69.140.56.88])
-        by mx.google.com with ESMTPS id i16sm230030wxd.27.2008.09.07.06.54.04
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Sun, 07 Sep 2008 06:54:06 -0700 (PDT)
-User-Agent: KMail/1.9.9
+        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
+         :content-type:content-transfer-encoding:content-disposition
+         :references;
+        b=LwMyUfHauj6XW51J3en0/jZ0AyB/SPLkTfTj+9wA+DAqtemE4VwzwOE/uipvm3rFwd
+         eDtwdtniB8E4unjs5lDZh2JshfKUuSegdaDTe82lx0JA2l1DYX5xrko7veQLc8/ibqfx
+         +sMUZLKrU7Z+wDC5JA1NpEbA++X0rViqzgCt4=
+Received: by 10.70.75.20 with SMTP id x20mr17566587wxa.29.1220795891944;
+        Sun, 07 Sep 2008 06:58:11 -0700 (PDT)
+Received: by 10.70.55.6 with HTTP; Sun, 7 Sep 2008 06:58:11 -0700 (PDT)
+In-Reply-To: <alpine.LFD.1.10.0809062148110.3117@nehalem.linux-foundation.org>
 Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/95139>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/95140>
 
-I have a problem with a git repository that I'm hoping you folks can help me 
-with. 
+On 9/7/08, Linus Torvalds <torvalds@linux-foundation.org> wrote:
+>
+>
+>  On Sat, 6 Sep 2008, Jon Smirl wrote:
+>  >
+>
+> > When I was playing with those giant Mozilla packs speed of zlib wasn't
+>  > a big problem. Number one problem was the repack process exceeding 3GB
+>  > which forced me to get 64b hardware and 8GB of memory. If you start
+>  > swapping in a repack, kill it, it will probably take a month to
+>  > finish.
+>
+>
+> .. and you'd make things much much WORSE?
 
-If you folks have the time here's my situation:
-============================
-2 persons developing together (Fred and Barney if you will). Fred's repository 
-is the canonical repository, Barney cloned from Fred, and periodically has 
-Fred pull Barney's work, and if it passes muster, merge it into Fred's 
-master. Barney is good about pulling Fred's master into his own master 
-periodically and basing his work off the master branch.
+My observations on the Mozilla packs indicated that the problems were
+elsewhere in git, not in the decompression algorithms. Why does a
+single 2000 delta chain take 15% of the entire pack time? Something
+isn't right when long chains are processed which triggers far more
+decompressions than needed.
 
-Fred starts with source code that is not his own (or under version control), 
-but that he needs to clean up with help from Barney.
 
-Now Fred is a conscientious Linux user and uses ntp to make sure his system 
-date is in sync within a couple of milliseconds of UTC. Barney (that would be 
-me) is a slacker too lazy to run ntpclient, or ntpd to make sure he's also 
-in sync with UTC. In point of fact, Barney's clock says he's 6 hours earlier 
-than Fred (i.e., when Fred's system clock say it's 6 p.m., Barney's clock say 
-it's noon.).
+>
+>
+>  > Size and speed are not unrelated.
+>
+>
+> Jon, go away.
+>
+>  Go and _look_ at those damn numbers you tried to point me to.
+>
+>  Those "better" compression models you pointed at are not only hundreds of
+>  times slower than zlib, they take hundreds of times more memory too!
+>
+>  Yes, size and speed are definitely not unrelated. And in this situation,
+>  when it comes to compression algorithms, the relationship is _very_ clear:
+>
+>   - better compression takes more memory and is slower
+>
+>  Really. You're trying to argue for something, but you don't seem to
+>  realize that you argue _against_ the thing you think you are arguing for.
+>
+>
+>                 Linus
+>
 
-Git has no problem keeping track of the order in which commits occurs as gitk 
-clearly shows. But git log has a problem since it's ordering by time stamps, 
-so it shows Fred's initial commit occurring *After* some commits pulled from 
-Barney's repository. 
 
-What's really bugging Fred and Barney is that Fred has received a new updated 
-version of the original source code he was tasked to clean up. What Fred and 
-Barney would like to do is to make a branch of the repository from the base 
-of master, and then apply the history of master onto this branch. For 
-personal reasons, they don't want to simply rebase master off this branch.
-
-To be a little more specific, what Fred and  Barney would like to do is to 
-branch master's base node (not HEAD), call it "updated_original_source_code", 
-unroll the "updated" original source code in this branch, commit the diffs 
-from the original source code to "updated" original source code, and then 
-apply the history of master by using git-format-patch and git-am to generate 
-a sequence of patches to apply onto updated_original_source_code branch. 
-
-The problem is that the patches generated by git-format-patch are generated by 
-timestamp, and since slacker Barney's timestamps are off by 6 hours, some of 
-the patches would be applied in the wrong order thus borking the operation. 
-Have you any suggestions for how to get around this problem? I'm sure I can't 
-be the only person to have used the wrong system clock time.
-
-Here are the git commands Fred is attempting to use:
-# Branch the *base* of master
-git checkout -b updated_original_source_code 345678
-
-cp ../updated_source_code.tar.gz .
-tar zxvf updated_source_code.tar.gz
-
-# Commit all changes from original_source_code
-# to updated_source_code
-git -a -m "Updated original source code"
-
-# Now apply the history of master onto this branch:
-# This is where they get hosed because the timestamps
-# from Barney's commits are wrong, and hence the 
-# generated patches are out of order.
-git format-patch 345678..master | git am -k -3
-
---Rod
-
-P.s. Would a diagram help?
+-- 
+Jon Smirl
+jonsmirl@gmail.com
