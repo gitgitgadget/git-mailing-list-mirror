@@ -1,108 +1,126 @@
-From: Jan Hudec <bulb@ucw.cz>
-Subject: Re: Alternates and push
-Date: Sun, 7 Sep 2008 21:17:40 +0200
-Message-ID: <20080907191740.GA29055@efreet.light.src>
-References: <9e4733910809060542s5ede6d6m5bdb894c958ea8b7@mail.gmail.com> <20080906162030.GT9129@mit.edu> <7viqt9rvwm.fsf@gitster.siamese.dyndns.org> <20080907184922.GA3909@efreet.light.src> <7vhc8rn5sl.fsf@gitster.siamese.dyndns.org>
+From: arjen@yaph.org (Arjen Laarhoven)
+Subject: [RFC/PATCH] Use compatibility regex library for OSX/Darwin
+Date: Sun, 7 Sep 2008 20:45:37 +0200
+Message-ID: <20080907184537.GA4148@regex.yaph.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Theodore Tso <tytso@MIT.EDU>, Jon Smirl <jonsmirl@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sun Sep 07 21:19:31 2008
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Sep 07 21:19:43 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KcPmv-0005e0-0P
-	for gcvg-git-2@gmane.org; Sun, 07 Sep 2008 21:19:09 +0200
+	id 1KcPmt-0005e0-2t
+	for gcvg-git-2@gmane.org; Sun, 07 Sep 2008 21:19:07 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755130AbYIGTRt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 7 Sep 2008 15:17:49 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755102AbYIGTRt
-	(ORCPT <rfc822;git-outgoing>); Sun, 7 Sep 2008 15:17:49 -0400
-Received: from ns1.bluetone.cz ([212.158.128.13]:36682 "EHLO ns1.bluetone.cz"
+	id S1754692AbYIGTRi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 7 Sep 2008 15:17:38 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754892AbYIGTRi
+	(ORCPT <rfc822;git-outgoing>); Sun, 7 Sep 2008 15:17:38 -0400
+Received: from regex.yaph.org ([193.202.115.201]:36520 "EHLO regex.yaph.org"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755049AbYIGTRs (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 7 Sep 2008 15:17:48 -0400
-Received: from localhost (spamhole.bluetone.cz [192.168.13.2])
-	by ns1.bluetone.cz (Postfix) with ESMTP id 7234857374;
-	Sun,  7 Sep 2008 21:17:46 +0200 (CEST)
-Received: from ns1.bluetone.cz ([192.168.13.1])
-	by localhost (spamhole.bluetone.cz [192.168.13.2]) (amavisd-new, port 10026)
-	with ESMTP id x52BU2EeIfRm; Sun,  7 Sep 2008 21:17:43 +0200 (CEST)
-Received: from efreet.light.src (145-119-207-85.strcechy.adsl-llu.static.bluetone.cz [85.207.119.145])
-	by ns1.bluetone.cz (Postfix) with ESMTP id 1F696572C2;
-	Sun,  7 Sep 2008 21:17:40 +0200 (CEST)
-Received: from bulb by efreet.light.src with local (Exim 4.69)
-	(envelope-from <bulb@ucw.cz>)
-	id 1KcPlU-0007a3-Cr; Sun, 07 Sep 2008 21:17:40 +0200
+	id S1754268AbYIGTRh (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 7 Sep 2008 15:17:37 -0400
+X-Greylist: delayed 1950 seconds by postgrey-1.27 at vger.kernel.org; Sun, 07 Sep 2008 15:17:37 EDT
+Received: by regex.yaph.org (Postfix, from userid 1000)
+	id 8A29F5B7D3; Sun,  7 Sep 2008 20:45:37 +0200 (CEST)
 Content-Disposition: inline
-In-Reply-To: <7vhc8rn5sl.fsf@gitster.siamese.dyndns.org>
-User-Agent: Mutt/1.5.18 (2008-05-17)
+User-Agent: Mutt/1.5.11
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/95163>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/95164>
 
-On Sun, Sep 07, 2008 at 11:56:42 -0700, Junio C Hamano wrote:
-> Jan Hudec <bulb@ucw.cz> writes:
-> 
-> > On Sat, Sep 06, 2008 at 11:06:49 -0700, Junio C Hamano wrote:
-> >> Theodore Tso <tytso@MIT.EDU> writes:
-> >> 
-> >> > Long-standing mis-feature in git's logic in deciding what to push.
-> >> > It's been reported a few times, but apparently it's hard to fix, or at
-> >> > least it never hsa been fixed as far as I know.
-> >> 
-> >> This comes from an early (mis)design of git.
-> >> [...]
-> >>  * The existing alternates mechanism is not about alternate repositories.
-> >>    It is about alternate object stores.  That is why each line of this
-> >>    file points at "objects" directory elsewhere, not the ".git" directory
-> >>    that is typically at one level above that "objects" directory.
-> >> 
-> >>    The fact your repository's object store points at the object store that
-> >>    happens to be inside Linus's repository does not imply that Linus's
-> >>    object store is associated with refs in Linus's repository in any way
-> >>    (that's the early _mis_design part).
-> >
-> > Why is this a *mis*design? Couldn't push be fixed by redesigning it's
-> > protocol along the lines of:
-> >  - clients sends a list of sha1s it wants to push, from the tip down
-> >  - server stops it when it sees an object it has -- this check can be done
-> >    against the object store without having a ref for it.
-> 
-> Because your second step is *BROKEN*.
-> 
-> Think of a case where an earlier commit walker started fetching into that
-> "server" end, which got newer commits and their associated objects first
-> and then older ones, and then got killed before reaching to the objects it
+The standard libc regex library on OSX does not support alternation
+in POSIX Basic Regular Expression mode.  This breaks the diff.funcname
+functionality on OSX.
 
-Is there really any transport that stores newer objects first? And can't be
-fixed to only store the objects when they are good. My proposal definitely
-does not need to do that (the list goes from newest to older, but the data in
-third step can come from oldest to newer).
+To fix this, we use the GNU regex library which is already present in
+the compat/ diretory for the MinGW port.  However, simply adding compat/
+to the COMPAT_CFLAGS variable causes a conflict between the system
+fnmatch.h and the one present in compat/.  To remedy this, move the
+regex and fnmatch functionality to their own subdirectories in compat/
+so they can be included seperately.
 
-> already had.  In such a case, the commit walker will *not* update the refs
-> on the server end (and for a very good reason).
-> 
-> After that, the server end would have:
-> 
->  * refs that point at some older commits, all objects from whom are
->    guaranteed to be in the repository (that's the "ref" guarantee);
-> 
->  * newer commits and their objects, but if you follow them you will hit
->    some objects that are *NOT* in the repository.
-> 
-> Now imagine starting your broken procedure to serve clients from such a
-> repository.  Your second step would cause the server to attempt to pack
-> the difference from the latter classes of incomplete objects and makes the
-> pack generation fail.
+Signed-off-by: Arjen Laarhoven <arjen@yaph.org>
+---
+This patch is based on 'maint'.  It needs testing on MinGW (although
+the change is trivial).
 
-Yes, it would add a requirement that objects are only placed in the object
-store after all objects they reference, but I can't imagine good reason this
-couldn't be done.
+Also, I'm sure the problem occurs on more non-Linux systems (or non
+GNU libc systems).  If people who have access to those systems (BSD's,
+HP-UX, AIX, etc) can test it, I'd be happy to add those systems to the
+patch so it can fix for multiple systems at once.
 
+ Makefile                       |    6 ++++--
+ compat/{ => fnmatch}/fnmatch.c |    0
+ compat/{ => fnmatch}/fnmatch.h |    0
+ compat/{ => regex}/regex.c     |    0
+ compat/{ => regex}/regex.h     |    0
+ t/t4018-diff-funcname.sh       |    6 ++++++
+ 6 files changed, 10 insertions(+), 2 deletions(-)
+ rename compat/{ => fnmatch}/fnmatch.c (100%)
+ rename compat/{ => fnmatch}/fnmatch.h (100%)
+ rename compat/{ => regex}/regex.c (100%)
+ rename compat/{ => regex}/regex.h (100%)
+
+diff --git a/Makefile b/Makefile
+index 672ea74..a8b3f9e 100644
+--- a/Makefile
++++ b/Makefile
+@@ -626,6 +626,8 @@ ifeq ($(uname_S),Darwin)
+ 	endif
+ 	NO_STRLCPY = YesPlease
+ 	NO_MEMMEM = YesPlease
++	COMPAT_CFLAGS += -Icompat/regex
++	COMPAT_OBJS += compat/regex/regex.o
+ endif
+ ifeq ($(uname_S),SunOS)
+ 	NEEDS_SOCKET = YesPlease
+@@ -750,10 +752,10 @@ ifneq (,$(findstring MINGW,$(uname_S)))
+ 	NO_SVN_TESTS = YesPlease
+ 	NO_PERL_MAKEMAKER = YesPlease
+ 	NO_POSIX_ONLY_PROGRAMS = YesPlease
+-	COMPAT_CFLAGS += -D__USE_MINGW_ACCESS -DNOGDI -Icompat
++	COMPAT_CFLAGS += -D__USE_MINGW_ACCESS -DNOGDI -Icompat -Icompat/regex -Icompat/fnmatch
+ 	COMPAT_CFLAGS += -DSNPRINTF_SIZE_CORR=1
+ 	COMPAT_CFLAGS += -DSTRIP_EXTENSION=\".exe\"
+-	COMPAT_OBJS += compat/mingw.o compat/fnmatch.o compat/regex.o compat/winansi.o
++	COMPAT_OBJS += compat/mingw.o compat/fnmatch/fnmatch.o compat/regex/regex.o compat/winansi.o
+ 	EXTLIBS += -lws2_32
+ 	X = .exe
+ 	gitexecdir = ../libexec/git-core
+diff --git a/compat/fnmatch.c b/compat/fnmatch/fnmatch.c
+similarity index 100%
+rename from compat/fnmatch.c
+rename to compat/fnmatch/fnmatch.c
+diff --git a/compat/fnmatch.h b/compat/fnmatch/fnmatch.h
+similarity index 100%
+rename from compat/fnmatch.h
+rename to compat/fnmatch/fnmatch.h
+diff --git a/compat/regex.c b/compat/regex/regex.c
+similarity index 100%
+rename from compat/regex.c
+rename to compat/regex/regex.c
+diff --git a/compat/regex.h b/compat/regex/regex.h
+similarity index 100%
+rename from compat/regex.h
+rename to compat/regex/regex.h
+diff --git a/t/t4018-diff-funcname.sh b/t/t4018-diff-funcname.sh
+index 833d6cb..18bcd97 100755
+--- a/t/t4018-diff-funcname.sh
++++ b/t/t4018-diff-funcname.sh
+@@ -57,4 +57,10 @@ test_expect_success 'last regexp must not be negated' '
+ 	test_must_fail git diff --no-index Beer.java Beer-correct.java
+ '
+ 
++test_expect_success 'alternation in pattern' '
++	git config diff.java.funcname "^[ 	]*\\(\\(public\\|static\\).*\\)$"
++	git diff --no-index Beer.java Beer-correct.java |
++	grep "^@@.*@@ public static void main("
++'
++
+ test_done
 -- 
-						 Jan 'Bulb' Hudec <bulb@ucw.cz>
+1.6.0.1.337.g5c7d67
