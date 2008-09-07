@@ -1,129 +1,101 @@
-From: "Elijah Newren" <newren@gmail.com>
-Subject: Is incremental staging really the common mode? [Was: Re: Git User's Survey 2008 partial summary, part 4 - how do we use Git]
-Date: Sun, 7 Sep 2008 14:17:23 -0600
-Message-ID: <51419b2c0809071317g6f916b19p1c2792595be58047@mail.gmail.com>
+From: "Stephen R. van den Berg" <srb@cuci.nl>
+Subject: Re: [RFC] cherry-pick using multiple parents to implement -x
+Date: Sun, 7 Sep 2008 22:22:02 +0200
+Message-ID: <20080907202202.GC8765@cuci.nl>
+References: <20080907103415.GA3139@cuci.nl> <20080907172807.GA25233@coredump.intra.peff.net> <20080907195626.GA8765@cuci.nl> <20080907200441.GA26705@coredump.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, "Stephan Beyer" <s-beyer@gmx.net>
-To: "Jakub Narebski" <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Sep 07 22:18:32 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Sun Sep 07 22:23:14 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KcQiN-00023f-65
-	for gcvg-git-2@gmane.org; Sun, 07 Sep 2008 22:18:31 +0200
+	id 1KcQmv-00033h-6x
+	for gcvg-git-2@gmane.org; Sun, 07 Sep 2008 22:23:13 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755687AbYIGURY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 7 Sep 2008 16:17:24 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755699AbYIGURY
-	(ORCPT <rfc822;git-outgoing>); Sun, 7 Sep 2008 16:17:24 -0400
-Received: from rv-out-0506.google.com ([209.85.198.230]:28292 "EHLO
-	rv-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755603AbYIGURY (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 7 Sep 2008 16:17:24 -0400
-Received: by rv-out-0506.google.com with SMTP id k40so1141760rvb.1
-        for <git@vger.kernel.org>; Sun, 07 Sep 2008 13:17:23 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to
-         :subject:cc:mime-version:content-type:content-transfer-encoding
-         :content-disposition;
-        bh=S07iJ76EMGe1KB6usfThsN//ynbLkJy9M1+KSDSb/R4=;
-        b=aeCIx4XW/FAF1KTJy1DxKJvtUlTZC9Hhixi0bn3EYctCXbGQcnqtQ3MrCoDuA+KQ/h
-         vTDgN863vjRd/X5gZWv6DrI3dPl5WuYsYa7tVybkJ+s9U6rsPRGGyUct8XKtOQASKBbS
-         bKYNzhEQ80Z4apiYhXaW8I8oX2rxr6S3Xp4r8=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:cc:mime-version:content-type
-         :content-transfer-encoding:content-disposition;
-        b=dP7VnOgCgd6ljvCV4v1ExHkom9c72d/V8nybLqHgbERLh93H86Pw73qnznoU6oJgp1
-         O3ivo7cdmm6iOd+Ltsd7cz+nasdmSnq5KI+m6eHY+y/kLraAyb9JPuX9AJhxG/lk8+TL
-         HOVTRT5gLdMxfKSm02vVyyzRDwJZ4VdsSKuNY=
-Received: by 10.141.164.13 with SMTP id r13mr8313529rvo.53.1220818643175;
-        Sun, 07 Sep 2008 13:17:23 -0700 (PDT)
-Received: by 10.141.5.11 with HTTP; Sun, 7 Sep 2008 13:17:23 -0700 (PDT)
+	id S1755704AbYIGUWG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 7 Sep 2008 16:22:06 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754322AbYIGUWF
+	(ORCPT <rfc822;git-outgoing>); Sun, 7 Sep 2008 16:22:05 -0400
+Received: from aristoteles.cuci.nl ([212.125.128.18]:42572 "EHLO
+	aristoteles.cuci.nl" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755571AbYIGUWE (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 7 Sep 2008 16:22:04 -0400
+Received: by aristoteles.cuci.nl (Postfix, from userid 500)
+	id E87625465; Sun,  7 Sep 2008 22:22:02 +0200 (CEST)
 Content-Disposition: inline
+In-Reply-To: <20080907200441.GA26705@coredump.intra.peff.net>
+User-Agent: Mutt/1.5.13 (2006-08-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/95172>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/95173>
 
-Hi,
+Jeff King wrote:
+>On Sun, Sep 07, 2008 at 09:56:26PM +0200, Stephen R. van den Berg wrote:
+>> That implication is not a technical one, but merely a convention in the
+>> mind of the git-user.  Relevant, of course, but maybe we can accomodate
+>> both uses.
 
-On Sat, Sep 6, 2008 at 4:17 PM, Jakub Narebski <jnareb@gmail.com> wrote:
-> This is partial summary of Git User's Survey 2008 after more that 2000
-> (yes, that is more than _two thousands_ responses) just after the 6 days
-> of running the survey.  It is based on "Analysis" page for this survey:
->  http://www.survs.com/shareResults?survey=M3PIVU72&rndm=OKJQ45LAG8
->
-<snip>
-> git add + git commit   | 65% (1012)
-> git commit -a          | 63%  (981)
-<snip>
-> Analysis: strangely "git add + git commit" is slightly more used than
-> "git commit -a"; I would suspect that "git commit -a" would dominate a
-> bit over other forms of committing.  What is for me more suprising is
-> that "git commit <file>..." has such large presence in often used
-> commands; I would think that it should be mostly used as 'sometimes'
-> command.
+>I'm not sure I agree. I believe that property is part of the definition
+>of the commit DAG as originally conceived (but somebody like Linus could
+>say more). Obviously there is no formal definition, but I already
+>pointed out one thing that will break in that instance. I don't know if
+>there are others.
 
-Does this data really compare usage of incremental staging of commits
-vs. non-incremental all-changes-included commits?
+Yes, of course.  But even then, it's merely a formal definition, the
+thing I'm after now is if there is any code that actually relies on that
+formal definition.  That would be the code to review and perhaps adapt
+in order to make it support the sideport-parents without hurting the old
+definition.
 
-You didn't have a git add + git commit -a, so if people feel like they
-have brand new files to add to the repository often, adding new files
-alone would cause them to mark the git add + git commit box as "often"
-(or maybe I was the only one dumb enough to think this was
-significantly related to adding new files?).  That alone could account
-for the difference, assuming others misunderstood as I did.
+>> What if the merge-base determination code is modified to behave as
+>> if --first-parent is specified while searching for the merge-base?
+>> In that case it *will* find A as the merge-base, even in the presence of
+>> "sideportlinks".
 
-Also, you didn't have a continuum of "often" to compare between.  For
-example, I marked "add -p" as something I use often (btw, a huge
-thanks to whoever added interactive hunk editing to that command),
-though that doesn't mean I use it as much as commit -a.  I would say
-that I use both add and add -p forms of incremental staging "often",
-yet both combined with commit are still far less than my usage of
-commit -a.
+>But then it will fail to find legitimate merge bases. So yes, you _can_
 
-There may be another issue at play here too: some may have come to
-feel that usage of commit -a is error prone and better to avoid.
-Maybe I'm the only one, but every once in a while I start
-incrementally staging a commit, forget about it, come back to the
-project later, and then do a commit -a out of habit (since commit -a
-is so common).  Oops -- there goes all my careful staging work!
+Will it?  Can you give me one example where it would find the wrong one?
 
-Actually, I'm really not hit by that last bug anymore, since EasyGit
-prevents it for me.  But it's an annoyance of mine with core git.
+>come up with a merge algorithm that handles this situation. But is it
+>then up to the user to say "Oh, this parent link means something else.
+>Use this other algorithm"?
 
+That, of course, is unacceptable.  It either is seemless and supports
+both uses transparently, or it has to be done (if at all) using a separate
+link (not one of the normal parents) indeed.
 
-This topic does make me wonder whether I am missing something, though,
-particularly due to Junio's recent comments about diff defaults[1]:
+> In that case, it really seems we are abusing
+>the "parent" link and it would be more appropriate to have some _other_
+>type of link.
 
-'If they understand "the meaning of the index", not just as literal reading
-of the manual page "it is a staging area to prepare for the next commit",
-but including the reason why there is a "staging area" and how it is to be
-used, they would reach the conclusion that "diff by default will show the
-leftover from incremental staging and it is the right thing".'
+Quite.
 
-Despite believing that I understand the index pretty well and use it
-often, and love being able to get the unstaged portion of my changes,
-I never came to any such conclusion and it hit me by surprise.  There
-seems to be an assumption in what Junio has written that incremental
-staging is the common mode of operation; given that assumption I can
-buy the rest of his argument.  But that seems at odds with my
-perception of the default mode of operation, which is at least
-partially backed up by Linus' admission that commit -a is the common
-case.[2]  Is incremental staging really the common mode of operation?
+>Though I think if you look through the archives, people have argued
+>against having any git-level link to cherry-picked commits. The history
+>leading up to that cherry-pick is not necessarily of interest (though I
+>think you are proposing that it be optional to create such a link via
+>-x).
 
-Am I still missing something fundamental about the index?
+Optional, indeed, and sometimes quite useful.
 
+>> Does that resolve all technical issues?
 
-Elijah
+>I really don't know. I think you are proposing changing a core
+>assumption of the data structure, so I wouldn't be too surprised if
+>there is other code that relies on it.
 
+>You can use the script I posted in my last email as a basis for a
+>cherry-pick that does what you want (cherry-pick -n, write-tree,
+>commit-tree, update-ref). You might try a few experiments with that.
 
-[1] http://article.gmane.org/gmane.comp.version-control.git/92820
+I will, thanks.
+-- 
+Sincerely,
+           Stephen R. van den Berg.
 
-[2] http://marc.info/?l=git&m=116493011406600&w=2
+"The future is here, it's just not widely distributed yet." -- William Gibson
