@@ -1,76 +1,60 @@
-From: Boyd Lynn Gerber <gerberb@zenez.com>
-Subject: Re: What's in git.git (Sep 2008, #01; Sat, 06)
-Date: Sun, 7 Sep 2008 17:25:00 -0600
-Message-ID: <alpine.LNX.1.10.0809071723090.25543@suse104.zenez.com>
-References: <7vtzcso58c.fsf@gitster.siamese.dyndns.org> <alpine.LNX.1.10.0809070812350.6003@suse104.zenez.com> <7v3akbopzb.fsf@gitster.siamese.dyndns.org> <alpine.LNX.1.10.0809071139060.6003@suse104.zenez.com> <7vd4jfn5hx.fsf@gitster.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [RFC PATCH 0/2] Teach how to discard changes in the working
+ directory
+Date: Sun, 07 Sep 2008 16:32:16 -0700
+Message-ID: <7vprnfjzwf.fsf@gitster.siamese.dyndns.org>
+References: <1220825103-19599-1-git-send-email-mail@cup.kalibalik.dk>
+ <7vtzcrk1wt.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII; format=flowed
-Cc: Git List <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Sep 08 01:26:20 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Anders Melchiorsen <mail@cup.kalibalik.dk>
+X-From: git-owner@vger.kernel.org Mon Sep 08 01:35:02 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KcTe7-0005rc-5q
-	for gcvg-git-2@gmane.org; Mon, 08 Sep 2008 01:26:19 +0200
+	id 1KcTmX-0007AE-9D
+	for gcvg-git-2@gmane.org; Mon, 08 Sep 2008 01:35:01 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750971AbYIGXZE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 7 Sep 2008 19:25:04 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750887AbYIGXZE
-	(ORCPT <rfc822;git-outgoing>); Sun, 7 Sep 2008 19:25:04 -0400
-Received: from suse104.zenez.com ([198.60.105.164]:12087 "EHLO
-	suse104.zenez.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750783AbYIGXZC (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 7 Sep 2008 19:25:02 -0400
-Received: by suse104.zenez.com (Postfix, from userid 1000)
-	id D7279A7C291; Sun,  7 Sep 2008 17:25:00 -0600 (MDT)
-Received: from localhost (localhost [127.0.0.1])
-	by suse104.zenez.com (Postfix) with ESMTP id CB914A7C28E;
-	Sun,  7 Sep 2008 17:25:00 -0600 (MDT)
-In-Reply-To: <7vd4jfn5hx.fsf@gitster.siamese.dyndns.org>
-User-Agent: Alpine 1.10 (LNX 962 2008-03-14)
+	id S1750967AbYIGXcY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 7 Sep 2008 19:32:24 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750823AbYIGXcY
+	(ORCPT <rfc822;git-outgoing>); Sun, 7 Sep 2008 19:32:24 -0400
+Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:65117 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750791AbYIGXcY (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 7 Sep 2008 19:32:24 -0400
+Received: from localhost.localdomain (localhost [127.0.0.1])
+	by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id 3077D78969;
+	Sun,  7 Sep 2008 19:32:22 -0400 (EDT)
+Received: from pobox.com (ip68-225-240-211.oc.oc.cox.net [68.225.240.211])
+ (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
+ certificate requested) by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with
+ ESMTPSA id 5BA9E78965; Sun,  7 Sep 2008 19:32:19 -0400 (EDT)
+In-Reply-To: <7vtzcrk1wt.fsf@gitster.siamese.dyndns.org> (Junio C. Hamano's
+ message of "Sun, 07 Sep 2008 15:48:50 -0700")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: 38434F3A-7D35-11DD-90D1-3113EBD4C077-77302942!a-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/95191>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/95192>
 
-On Sun, 7 Sep 2008, Junio C Hamano wrote:
-> Boyd Lynn Gerber <gerberb@zenez.com> writes:
->> On Sun, 7 Sep 2008, Junio C Hamano wrote:
->>> Boyd Lynn Gerber <gerberb@zenez.com> writes:
->>>> On Sat, 6 Sep 2008, Junio C Hamano wrote:
->>>>> Quite a many minor fixes appeared on 'maint'.  1.6.0.2 needs to happen
->>>>> soon.  Any favorite fixes (not feature enhancements) not on the list here?
->>>>
->>>> I would really like to see this graduate to master before 1.6.0.2
->>>>
->>>> * jc/setlinebuf-setvbuf (Wed Sep 3 20:33:29 2008 -0700) 1 commit
->>>>  + daemon.c: avoid setlinebuf()
->>>
->>> I do not think the setlinebuf() change affected 'maint' to begin with; it
->>> was part of the series to clean-up daemon and to make maximum simultanous
->>> number of connections configurable.  Are you having trouble building and/
->>> or running 1.6.0.1 on your box?
->>
->> No, it does not work.  I have the git-shell problems,...
+Junio C Hamano <gitster@pobox.com> writes:
+
+> I would agree that "hint is often given in #git" is an indication that
+> people do not know "git checkout" to check out the path from the index to
+> get rid of the change.  I further suspect that "I modified my file and git
+> status says 'Changed but not updated'; what should I do" may not be asked
+> often anymore, which might owe the hint we have in status output.  Even
+> then, I do not necessarily agree that the status output (yes, I am also
+> questioning the existing hints as well) is the best place to teach these
+> people.
 >
-> Then it does not have anything to do with the setlinebuf-setvbuf topic at
-> all, does it?
->
-> I think we already have 6ffaecc (shell: do not play duplicated definition
-> games to shrink the executable, 2008-08-19), which was cherry-picked from
-> 4cfc24a (shell: do not play duplicated definition games to shrink the
-> executable, 2008-08-19) on 'master'.  Do you still have problem building
-> 'maint' on your boxes?
+> The approach would lead to insanely long output that reproduces the user
+> manual, and we should draw the line somewhere.  As I said, I suspect that
+> what we say is already too chatty.
 
-No, maint does build.  I just thought your were going to release 1.6.0.2 
-from master.  I think the next commit for set-linebug-setvbug needs to be 
-in it for release.
-
-Thanks,
-
---
-Boyd Gerber <gerberb@zenez.com>
-ZENEZ	1042 East Fort Union #135, Midvale Utah  84047
+Having said all that, I'll queue them to see what other people think.
