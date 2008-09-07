@@ -1,76 +1,128 @@
-From: Linus Torvalds <torvalds@linux-foundation.org>
-Subject: Re: pack operation is thrashing my server
-Date: Sat, 6 Sep 2008 21:50:34 -0700 (PDT)
-Message-ID: <alpine.LFD.1.10.0809062148110.3117@nehalem.linux-foundation.org>
-References: <a6b6acf60808101247r4fea978ft6d2cdc53e1f99c0e@mail.gmail.com>  <alpine.LFD.1.10.0808141442150.4352@xanadu.home>  <alpine.LFD.1.10.0808141215520.3324@nehalem.linux-foundation.org>  <alpine.LFD.1.10.0808141633080.4352@xanadu.home> 
- <alpine.LFD.1.10.0808141544150.3324@nehalem.linux-foundation.org>  <alpine.LFD.1.10.0808151729070.3324@nehalem.linux-foundation.org>  <7vk5dorclv.fsf@gitster.siamese.dyndns.org>  <alpine.LFD.1.10.0809061812090.3117@nehalem.linux-foundation.org> 
- <9e4733910809061950g6d9d2cf1g708f8faf0c06108@mail.gmail.com>  <alpine.LFD.1.10.0809061957320.3117@nehalem.linux-foundation.org> <9e4733910809062043y661d2d54rcb034d4c70296727@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] Builtin-commit: show on which branch a commit was added
+Date: Sat, 06 Sep 2008 22:27:44 -0700
+Message-ID: <7vzlmkpltb.fsf@gitster.siamese.dyndns.org>
+References: <4C04A26E-5829-4A39-AD89-F5A68E606AA3@ai.rug.nl>
+ <1220634785-55543-1-git-send-email-pdebie@ai.rug.nl>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org
-To: Jon Smirl <jonsmirl@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Sep 07 06:52:24 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: Git Mailinglist <git@vger.kernel.org>
+To: Pieter de Bie <pdebie@ai.rug.nl>
+X-From: git-owner@vger.kernel.org Sun Sep 07 07:29:02 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KcCG1-0008JE-DF
-	for gcvg-git-2@gmane.org; Sun, 07 Sep 2008 06:52:17 +0200
+	id 1KcCpZ-0004ZR-B0
+	for gcvg-git-2@gmane.org; Sun, 07 Sep 2008 07:29:01 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751213AbYIGEvK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 7 Sep 2008 00:51:10 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751208AbYIGEvK
-	(ORCPT <rfc822;git-outgoing>); Sun, 7 Sep 2008 00:51:10 -0400
-Received: from smtp1.linux-foundation.org ([140.211.169.13]:51563 "EHLO
-	smtp1.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751172AbYIGEvJ (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 7 Sep 2008 00:51:09 -0400
-Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [140.211.169.55])
-	by smtp1.linux-foundation.org (8.14.2/8.13.5/Debian-3ubuntu1.1) with ESMTP id m874oYN6006275
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Sat, 6 Sep 2008 21:50:36 -0700
-Received: from localhost (localhost [127.0.0.1])
-	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id m874oYjK020347;
-	Sat, 6 Sep 2008 21:50:34 -0700
-In-Reply-To: <9e4733910809062043y661d2d54rcb034d4c70296727@mail.gmail.com>
-User-Agent: Alpine 1.10 (LFD 962 2008-03-14)
-X-Spam-Status: No, hits=-3.437 required=5 tests=AWL,BAYES_00
-X-Spam-Checker-Version: SpamAssassin 3.2.4-osdl_revision__1.47__
-X-MIMEDefang-Filter: lf$Revision: 1.188 $
-X-Scanned-By: MIMEDefang 2.63 on 140.211.169.13
+	id S1751269AbYIGF1x (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 7 Sep 2008 01:27:53 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751208AbYIGF1x
+	(ORCPT <rfc822;git-outgoing>); Sun, 7 Sep 2008 01:27:53 -0400
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:41242 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751188AbYIGF1w (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 7 Sep 2008 01:27:52 -0400
+Received: from localhost.localdomain (localhost [127.0.0.1])
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 6EF055EC54;
+	Sun,  7 Sep 2008 01:27:50 -0400 (EDT)
+Received: from pobox.com (ip68-225-240-211.oc.oc.cox.net [68.225.240.211])
+ (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
+ certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
+ ESMTPSA id 6823E5EC53; Sun,  7 Sep 2008 01:27:46 -0400 (EDT)
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: B67E359C-7C9D-11DD-A4CB-D0CFFE4BC1C1-77302942!a-sasl-fastnet.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/95111>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/95112>
 
+Pieter de Bie <pdebie@ai.rug.nl> writes:
 
+> This outputs the current branch on which a commit was created, just for
+> reference. For example:
+>
+> 	Created commit 6d42875 on master: Fix submodule invalid command error
+>
+> This also reminds the committer when he is on a detached HEAD:
+>
+> 	Created commit 02a7172 on detached HEAD: Also do this for 'git commit --amend'
+>
 
-On Sat, 6 Sep 2008, Jon Smirl wrote:
-> 
-> When I was playing with those giant Mozilla packs speed of zlib wasn't
-> a big problem. Number one problem was the repack process exceeding 3GB
-> which forced me to get 64b hardware and 8GB of memory. If you start
-> swapping in a repack, kill it, it will probably take a month to
-> finish.
+Given the recent "reminder" discussion, I suspect people without $PS1 set
+to show the current branch would like this, majority of others would be
+neutral, while some may actively hate it for cluttering the output even
+more.  But I also suspect the initial annoyance the third camp may feel
+will pass rather quickly after they get used to seeing these.
 
-.. and you'd make things much much WORSE?
+> diff --git a/builtin-commit.c b/builtin-commit.c
+> index 8165bb3..a82483d 100644
+> --- a/builtin-commit.c
+> +++ b/builtin-commit.c
+> @@ -878,10 +878,31 @@ int cmd_status(int argc, const char **argv, const char *prefix)
+>  	return commitable ? 0 : 1;
+>  }
+>  
+> +static char* get_commit_format_string()
 
-> Size and speed are not unrelated.
+Style.
 
-Jon, go away.
+	static char *get_commit_format_string(void)
 
-Go and _look_ at those damn numbers you tried to point me to.
+> +{
+> +	unsigned char sha[20];
+> +	const char* head = resolve_ref("HEAD", sha, 0, NULL);
 
-Those "better" compression models you pointed at are not only hundreds of 
-times slower than zlib, they take hundreds of times more memory too!
+Style.
 
-Yes, size and speed are definitely not unrelated. And in this situation, 
-when it comes to compression algorithms, the relationship is _very_ clear:
+	const char *head = ...
 
- - better compression takes more memory and is slower
+> ...
+> +	else if (!prefixcmp(head, "refs/heads/")) {
+> +		strbuf_addstr(&buf, " on ");
+> +		strbuf_addstr(&buf, head + 11);
 
-Really. You're trying to argue for something, but you don't seem to 
-realize that you argue _against_ the thing you think you are arguing for.
+Isn't this function crafting a format string for format_commit_message()?
+What happens if your branch name has % in it?
 
-		Linus
+> +	}
+> +	strbuf_addstr(&buf, ": %s");
+> +
+> +	return buf.buf;
+
+API violation, I think; see strbuf_detach().
+
+> +}
+> +
+>  static void print_summary(const char *prefix, const unsigned char *sha1)
+>  {
+>  	struct rev_info rev;
+>  	struct commit *commit;
+> +	char* format = get_commit_format_string();
+
+Style.
+
+	char *format = ...
+
+> @@ -910,10 +931,11 @@ static void print_summary(const char *prefix, const unsigned char *sha1)
+>  
+>  	if (!log_tree_commit(&rev, commit)) {
+>  		struct strbuf buf = STRBUF_INIT;
+> -		format_commit_message(commit, "%h: %s", &buf, DATE_NORMAL);
+> +		format_commit_message(commit, format + 7, &buf, DATE_NORMAL);
+> 		printf("%s\n", buf.buf);
+> 		strbuf_release(&buf);
+
+I somehow suspect it might be much simpler, more contained and robust if you:
+
+ (1) chuck get_commit_format_string(), and leave all the existing code as-is;
+
+ (2) format "%h: %s" into buf here;
+
+ (3) call resolve_ref(HEAD) here to see if you are on detached HEAD (or
+     otherwise what branch you are on) after (2),
+
+ (4) find the first ':' in buf.buf and do your "on HEAD"/"on master"
+     magic, using the result from (3).
