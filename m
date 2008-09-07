@@ -1,123 +1,108 @@
-From: Anders Melchiorsen <mail@cup.kalibalik.dk>
-Subject: [RFC PATCH 1/2] wt-status: Split header generation into three functions
-Date: Mon,  8 Sep 2008 00:05:02 +0200
-Message-ID: <1220825103-19599-2-git-send-email-mail@cup.kalibalik.dk>
-References: <1220825103-19599-1-git-send-email-mail@cup.kalibalik.dk>
-Cc: Anders Melchiorsen <mail@cup.kalibalik.dk>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Sep 08 00:06:46 2008
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [RFC] cherry-pick using multiple parents to implement -x
+Date: Sun, 07 Sep 2008 15:22:08 -0700
+Message-ID: <7v1vzvlhpr.fsf@gitster.siamese.dyndns.org>
+References: <20080907103415.GA3139@cuci.nl>
+ <7vtzcrn9uv.fsf@gitster.siamese.dyndns.org> <20080907201038.GB8765@cuci.nl>
+ <200809072316.58516.trast@student.ethz.ch>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: "Stephen R. van den Berg" <srb@cuci.nl>, git@vger.kernel.org
+To: Thomas Rast <trast@student.ethz.ch>
+X-From: git-owner@vger.kernel.org Mon Sep 08 00:24:04 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KcSOt-0007mh-G6
-	for gcvg-git-2@gmane.org; Mon, 08 Sep 2008 00:06:31 +0200
+	id 1KcSfq-0002mZ-GX
+	for gcvg-git-2@gmane.org; Mon, 08 Sep 2008 00:24:03 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753107AbYIGWFM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 7 Sep 2008 18:05:12 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753091AbYIGWFL
-	(ORCPT <rfc822;git-outgoing>); Sun, 7 Sep 2008 18:05:11 -0400
-Received: from mail.hotelhot.dk ([77.75.163.100]:33296 "EHLO mail.hotelhot.dk"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752794AbYIGWFG (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 7 Sep 2008 18:05:06 -0400
-Received: from mail.hotelhot.dk (localhost [127.0.0.1])
-	by mail.hotelhot.dk (Postfix) with ESMTP id 4E62B1405A;
-	Mon,  8 Sep 2008 00:05:07 +0200 (CEST)
-Received: from localhost.localdomain (router.kalibalik.dk [192.168.0.1])
-	by mail.hotelhot.dk (Postfix) with ESMTP id F2A6714062;
-	Mon,  8 Sep 2008 00:05:06 +0200 (CEST)
-X-Mailer: git-send-email 1.6.0.1.dirty
-In-Reply-To: <1220825103-19599-1-git-send-email-mail@cup.kalibalik.dk>
-X-Virus-Scanned: ClamAV using ClamSMTP
+	id S1756712AbYIGWWT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 7 Sep 2008 18:22:19 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756723AbYIGWWS
+	(ORCPT <rfc822;git-outgoing>); Sun, 7 Sep 2008 18:22:18 -0400
+Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:59166 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757132AbYIGWWQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 7 Sep 2008 18:22:16 -0400
+Received: from localhost.localdomain (localhost [127.0.0.1])
+	by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id 80F477839C;
+	Sun,  7 Sep 2008 18:22:14 -0400 (EDT)
+Received: from pobox.com (ip68-225-240-211.oc.oc.cox.net [68.225.240.211])
+ (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
+ certificate requested) by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with
+ ESMTPSA id 3FF977839B; Sun,  7 Sep 2008 18:22:10 -0400 (EDT)
+In-Reply-To: <200809072316.58516.trast@student.ethz.ch> (Thomas Rast's
+ message of "Sun, 7 Sep 2008 23:16:54 +0200")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: 6C4E234A-7D2B-11DD-A6CB-3113EBD4C077-77302942!a-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/95183>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/95184>
 
-Reorganize header generation so that all header text related to each
-block is in one place.
+Thomas Rast <trast@student.ethz.ch> writes:
 
-This adds a function, but makes it easier to see what is generated in
-each case. It also allows for easy tweaking of individual headers.
----
- wt-status.c |   35 ++++++++++++++++++++---------------
- 1 files changed, 20 insertions(+), 15 deletions(-)
+> Stephen R. van den Berg wrote:
+>> Junio C Hamano wrote:
+>> >             o---...o---B---A
+>> >            /                \ (wrong)
+>> >        ---o---o---...o---X---A'
+> [...]
+>> >To put it another way, having the parent link from A' to A is a statement
+>> >that A' is a superset of A.  Because A contains B, you are claiming A'
+>> >also contains B, which is not the case in your cherry-picked history.
+>> 
+>> Which existing git command actually misbehaves because it makes the
+>> above assumption?
+>
+> Most importantly: merge.
 
-diff --git a/wt-status.c b/wt-status.c
-index 889e50f..ceb3a1e 100644
---- a/wt-status.c
-+++ b/wt-status.c
-@@ -22,12 +22,6 @@ static char wt_status_colors[][COLOR_MAXLEN] = {
- 	"\033[31m", /* WT_STATUS_NOBRANCH: red */
- };
- 
--static const char use_add_msg[] =
--"use \"git add <file>...\" to update what will be committed";
--static const char use_add_rm_msg[] =
--"use \"git add/rm <file>...\" to update what will be committed";
--static const char use_add_to_include_msg[] =
--"use \"git add <file>...\" to include in what will be committed";
- enum untracked_status_type show_untracked_files = SHOW_NORMAL_UNTRACKED_FILES;
- 
- static int parse_status_slot(const char *var, int offset)
-@@ -76,12 +70,24 @@ static void wt_status_print_cached_header(struct wt_status *s)
- 	color_fprintf_ln(s->fp, c, "#");
- }
- 
--static void wt_status_print_header(struct wt_status *s,
--				   const char *main, const char *sub)
-+static void wt_status_print_dirty_header(struct wt_status *s,
-+					 int has_deleted)
- {
- 	const char *c = color(WT_STATUS_HEADER);
--	color_fprintf_ln(s->fp, c, "# %s:", main);
--	color_fprintf_ln(s->fp, c, "#   (%s)", sub);
-+	color_fprintf_ln(s->fp, c, "# Changed but not updated:");
-+	if (!has_deleted) {
-+		color_fprintf_ln(s->fp, c, "#   (use \"git add <file>...\" to update what will be committed)");
-+	} else {
-+		color_fprintf_ln(s->fp, c, "#   (use \"git add/rm <file>...\" to update what will be committed)");
-+	}
-+	color_fprintf_ln(s->fp, c, "#");
-+}
-+
-+static void wt_status_print_untracked_header(struct wt_status *s)
-+{
-+	const char *c = color(WT_STATUS_HEADER);
-+	color_fprintf_ln(s->fp, c, "# Untracked files:");
-+	color_fprintf_ln(s->fp, c, "#   (use \"git add <file>...\" to include in what will be committed)");
- 	color_fprintf_ln(s->fp, c, "#");
- }
- 
-@@ -166,14 +172,14 @@ static void wt_status_print_changed_cb(struct diff_queue_struct *q,
- 	struct wt_status *s = data;
- 	int i;
- 	if (q->nr) {
--		const char *msg = use_add_msg;
-+		int has_deleted = 0;
- 		s->workdir_dirty = 1;
- 		for (i = 0; i < q->nr; i++)
- 			if (q->queue[i]->status == DIFF_STATUS_DELETED) {
--				msg = use_add_rm_msg;
-+				has_deleted = 1;
- 				break;
- 			}
--		wt_status_print_header(s, "Changed but not updated", msg);
-+		wt_status_print_dirty_header(s, has_deleted);
- 	}
- 	for (i = 0; i < q->nr; i++)
- 		wt_status_print_filepair(s, WT_STATUS_CHANGED, q->queue[i]);
-@@ -291,8 +297,7 @@ static void wt_status_print_untracked(struct wt_status *s)
- 		}
- 		if (!shown_header) {
- 			s->workdir_untracked = 1;
--			wt_status_print_header(s, "Untracked files",
--					       use_add_to_include_msg);
-+			wt_status_print_untracked_header(s);
- 			shown_header = 1;
- 		}
- 		color_fprintf(s->fp, color(WT_STATUS_HEADER), "#\t");
--- 
-1.6.0.1.dirty
+Yes, and this is not about "misbhave" and "assumption".  It is much more
+fundamental.
+
+Stephen earlier seems to have mistaken what I taught in an earlier message:
+
+  Remember, when you are making a commit on top of one or more parents, you
+  are making this statement:
+
+   * I have considered all histories leading to these parent commits, and
+     based on that I decided that the tree I am recording as a child of
+     these parents suits the purpose of my branch better than any of them.
+
+  This applies to one-parent case as well.
+
+as a mere convention or something, but it is not.  It is what the merge
+semantics and merge-base computation (implemented in mathematical terms
+over commit DAG) do, expressed in layman's terms.
+
+The decision to merge your history with A' means that (1) you trust what
+you have done so far, (2) you trust the judgement of what the other person
+who built the history that leads to A' as well, and (3) you deem that the
+purpose of these two histories are compatible with each other.  The last
+item is why you are merging with him.
+
+                             v you were here
+                     o---o---o---M
+                    /           /
+            o---...O---B---A   /
+           /                \ /
+       ---o---o---...o---X---A'
+
+Because of the "I have considered all things behind this commit, and I
+declare this tree suits my purpose better than any of them" statement when
+a merge A' was made, and the fact that you trust the judgement of the
+person who made that statement, and the fact that you think the purpose of
+his history is compatible with yours, we look at O as the merge base when
+merging with A' to create M, and resulting history that lead to M claims
+that it has A _and B_, in addition to X and other developments done on the
+bottom branch of his, on top of what you used to have.
+
+However, the transition from A to A' involves reverting B among other
+things, and the history M includes that revert.  That's the consequence of
+you trusting judgement made when A' was made (i.e. "fix in B does not
+matter, and reverting it is better for my history") and thinking that
+judgement is compatible with the purpose of your history (i.e. "yes, I
+agree that dropping the fix made in B does not matter to my history
+either, and that is why I am merging with A'").
