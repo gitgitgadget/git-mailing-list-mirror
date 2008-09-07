@@ -1,88 +1,96 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [Patch reminder] Don't verify host name in SSL certs when
- GIT_SSL_NO_VERIFY is set
-Date: Sun, 07 Sep 2008 01:35:54 -0700
-Message-ID: <7v7i9onyj9.fsf@gitster.siamese.dyndns.org>
-References: <20080907082059.GA26705@glandium.org>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: Git User's Survey 2008 partial summary, part 4 - how do we use Git
+Date: Sun, 7 Sep 2008 10:44:29 +0200
+Message-ID: <200809071044.30804.jnareb@gmail.com>
+References: <200809031607.19722.jnareb@gmail.com> <200809070017.09463.jnareb@gmail.com> <48C39145.9020709@op5.se>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Mike Hommey <mh@glandium.org>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Sep 07 10:37:18 2008
+Content-Type: text/plain; charset=iso-8859-15
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, Stephan Beyer <s-beyer@gmx.net>
+To: Andreas Ericsson <ae@op5.se>
+X-From: git-owner@vger.kernel.org Sun Sep 07 10:44:29 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KcFli-0007uE-AI
-	for gcvg-git-2@gmane.org; Sun, 07 Sep 2008 10:37:14 +0200
+	id 1KcFsc-0000ta-Uj
+	for gcvg-git-2@gmane.org; Sun, 07 Sep 2008 10:44:23 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752720AbYIGIgG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 7 Sep 2008 04:36:06 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752681AbYIGIgF
-	(ORCPT <rfc822;git-outgoing>); Sun, 7 Sep 2008 04:36:05 -0400
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:35993 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752560AbYIGIgE (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 7 Sep 2008 04:36:04 -0400
-Received: from localhost.localdomain (localhost [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 4875C5E01F;
-	Sun,  7 Sep 2008 04:36:00 -0400 (EDT)
-Received: from pobox.com (ip68-225-240-211.oc.oc.cox.net [68.225.240.211])
- (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
- certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
- ESMTPSA id 770F95E01E; Sun,  7 Sep 2008 04:35:57 -0400 (EDT)
-In-Reply-To: <20080907082059.GA26705@glandium.org> (Mike Hommey's message of
- "Sun, 7 Sep 2008 10:20:59 +0200")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: FFC38A94-7CB7-11DD-BD4D-D0CFFE4BC1C1-77302942!a-sasl-fastnet.pobox.com
+	id S1752560AbYIGIm7 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 7 Sep 2008 04:42:59 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752593AbYIGIm7
+	(ORCPT <rfc822;git-outgoing>); Sun, 7 Sep 2008 04:42:59 -0400
+Received: from fg-out-1718.google.com ([72.14.220.158]:12354 "EHLO
+	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752305AbYIGIm6 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 7 Sep 2008 04:42:58 -0400
+Received: by fg-out-1718.google.com with SMTP id 19so1118310fgg.17
+        for <git@vger.kernel.org>; Sun, 07 Sep 2008 01:42:56 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:from:to:subject:date
+         :user-agent:cc:references:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:message-id;
+        bh=8OtIdtCvtK9fp9BxMpuBe8hUVrnhdjCi92uIFJqfI9c=;
+        b=SikOAqXlR0xYNHO70Y65txCt1Sf3mNhJidnPPhgjTXycUb/ho8oPbTYqsKil9Hy0h+
+         GH5fawC4TW7NsvsX1a7OniTVHxT9fR/gwrt2pFowAYIr3NZhBzSOw0wEB4gbMmFP23Kh
+         1BLlSyDj4D+DgrtwFjlPlSqdVv5GpNaDswtkU=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=from:to:subject:date:user-agent:cc:references:in-reply-to
+         :mime-version:content-type:content-transfer-encoding
+         :content-disposition:message-id;
+        b=skCsJoCe7ucv6sI1X8TzQw654FbiEqkzL6BnK0vrLKnCgTridzIcKjbhbibDgoN6BZ
+         ZwuePHnb5LDQcSqqssFyEogMQMdk6YoHHle/HOA23qA7S4T5j5dzERpE8O6mGXuDdOJq
+         BGcMibt8YoOfAAJUfiKbZZvJu0xruIpKbdwao=
+Received: by 10.86.31.18 with SMTP id e18mr10230926fge.52.1220776976274;
+        Sun, 07 Sep 2008 01:42:56 -0700 (PDT)
+Received: from ?192.168.1.11? ( [83.8.213.144])
+        by mx.google.com with ESMTPS id d6sm3014457fga.2.2008.09.07.01.42.54
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Sun, 07 Sep 2008 01:42:55 -0700 (PDT)
+User-Agent: KMail/1.9.3
+In-Reply-To: <48C39145.9020709@op5.se>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/95128>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/95129>
 
-Subject: Don't verify host name in SSL certs when GIT_SSL_NO_VERIFY is set
-Date: Thu, 21 Feb 2008 15:10:37 -0800
+Andreas Ericsson wrote:
+> Jakub Narebski wrote:
+>>=20
+>> Analysis: strangely "git add + git commit" is slightly more used tha=
+n
+>> "git commit -a"; I would suspect that "git commit -a" would dominate=
+ a
+>> bit over other forms of committing.
+>=20
+> I believe people have finally gotten to grasp with the index. Besides=
+,
+> those answers are probably a bit skewed, as people that use git as ju=
+st
+> a faster and better cvs/svn aren't likely to be those who answer the
+> survey.
 
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
----
- Mike Hommey <mh@glandium.org> writes:
 
- > While rebasing old branches on master, I saw that I still had this
- > patch[1] ahead, to which you replied with [2]. I might be guilty of not
- > replying back then, but I think your version should be applied.
- >
- > 1. http://marc.info/?l=git&m=120362183916288&w=2
- > 2. http://marc.info/?l=git&m=120363548506950&w=2
+=46rom "Git User's Survey 2008 partial summary, part 3" subthread:
+Message-Id: <200809060422.34779.jnareb@gmail.com>
 
- Thanks.
+>> 10. Rate your own proficiency with Git
+>>
+>> Here again the distribution is almost perfectly symmetric. =A0Most
+>> people say that they are proficient with Git enough for everyday use
+>> (44%), slightly more (23%) can offer advice than selected 'casual,
+>> needs advice', while slightly more (7%) thinks themself novices than
+>> people who think that know Git very well (4%).
+>>
+>> For this survey it seems to imply that results would not be biased
+>> (skewed) by people who know Git well to very well.
 
- Just to make sure we are on the same page and to give other people
- comment on and potentially offer better solution, this is the patch in
- question.
+So it doesn't seem that answers are skewed much...
 
- Next time around, please forward/resend "old patches that should not have
- been forgotten" in the way I am doing here.
-
-diff --git a/http.c b/http.c
-index 5925d07..8dce820 100644
---- a/http.c
-+++ b/http.c
-@@ -176,7 +176,16 @@ static CURL* get_curl_handle(void)
- {
- 	CURL* result = curl_easy_init();
- 
--	curl_easy_setopt(result, CURLOPT_SSL_VERIFYPEER, curl_ssl_verify);
-+	if (!curl_ssl_verify) {
-+		curl_easy_setopt(result, CURLOPT_SSL_VERIFYPEER, 0);
-+		curl_easy_setopt(result, CURLOPT_SSL_VERIFYHOST, 0);
-+	} else {
-+		/* Verify authenticity of the peer's certificate */
-+		curl_easy_setopt(result, CURLOPT_SSL_VERIFYPEER, 1);
-+		/* The name in the cert must match whom we tried to connect */
-+		curl_easy_setopt(result, CURLOPT_SSL_VERIFYHOST, 2);
-+	}
-+
- #if LIBCURL_VERSION_NUM >= 0x070907
- 	curl_easy_setopt(result, CURLOPT_NETRC, CURL_NETRC_OPTIONAL);
- #endif
+--=20
+Jakub Narebski
+Poland
