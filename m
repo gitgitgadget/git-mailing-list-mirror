@@ -1,100 +1,96 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: A git problem with timestamps
-Date: Sun, 07 Sep 2008 13:03:26 -0700
-Message-ID: <7vvdx7lo4x.fsf@gitster.siamese.dyndns.org>
-References: <200809070954.03394.armyofthepenguin@gmail.com>
+From: "Stephen R. van den Berg" <srb@cuci.nl>
+Subject: Re: [RFC] cherry-pick using multiple parents to implement -x
+Date: Sun, 7 Sep 2008 22:10:38 +0200
+Message-ID: <20080907201038.GB8765@cuci.nl>
+References: <20080907103415.GA3139@cuci.nl> <7vtzcrn9uv.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-To: Rod <armyofthepenguin@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Sep 07 22:06:01 2008
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sun Sep 07 22:11:52 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KcQVv-0007aI-J4
-	for gcvg-git-2@gmane.org; Sun, 07 Sep 2008 22:05:47 +0200
+	id 1KcQbs-0000hJ-UP
+	for gcvg-git-2@gmane.org; Sun, 07 Sep 2008 22:11:49 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755013AbYIGUDe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 7 Sep 2008 16:03:34 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755569AbYIGUDe
-	(ORCPT <rfc822;git-outgoing>); Sun, 7 Sep 2008 16:03:34 -0400
-Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:46927 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754322AbYIGUDd (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 7 Sep 2008 16:03:33 -0400
-Received: from localhost.localdomain (localhost [127.0.0.1])
-	by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id 685A2774D5;
-	Sun,  7 Sep 2008 16:03:32 -0400 (EDT)
-Received: from pobox.com (ip68-225-240-211.oc.oc.cox.net [68.225.240.211])
- (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
- certificate requested) by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with
- ESMTPSA id E4E93774D4; Sun,  7 Sep 2008 16:03:28 -0400 (EDT)
-In-Reply-To: <200809070954.03394.armyofthepenguin@gmail.com>
- (armyofthepenguin@gmail.com's message of "Sun, 7 Sep 2008 09:54:02 -0400")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: 0BF3742C-7D18-11DD-8496-3113EBD4C077-77302942!a-sasl-quonix.pobox.com
+	id S1755593AbYIGUKl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 7 Sep 2008 16:10:41 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755581AbYIGUKk
+	(ORCPT <rfc822;git-outgoing>); Sun, 7 Sep 2008 16:10:40 -0400
+Received: from aristoteles.cuci.nl ([212.125.128.18]:58860 "EHLO
+	aristoteles.cuci.nl" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754322AbYIGUKk (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 7 Sep 2008 16:10:40 -0400
+Received: by aristoteles.cuci.nl (Postfix, from userid 500)
+	id CC4F55465; Sun,  7 Sep 2008 22:10:38 +0200 (CEST)
+Content-Disposition: inline
+In-Reply-To: <7vtzcrn9uv.fsf@gitster.siamese.dyndns.org>
+User-Agent: Mutt/1.5.13 (2006-08-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/95169>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/95170>
 
-Rod <armyofthepenguin@gmail.com> writes:
+Junio C Hamano wrote:
+>"Stephen R. van den Berg" <srb@cuci.nl> writes:
+>> The questions now are:
+>> - Would there be good reason not to record the backport/forwardport
+>>   relationship in the additional parents of a commit?
 
-> Here are the git commands Fred is attempting to use:
-> # Branch the *base* of master
-> git checkout -b updated_original_source_code 345678
->
-> cp ../updated_source_code.tar.gz .
-> tar zxvf updated_source_code.tar.gz
->
-> # Commit all changes from original_source_code
-> # to updated_source_code
-> git -a -m "Updated original source code"
->
-> # Now apply the history of master onto this branch:
-> # This is where they get hosed because the timestamps
-> # from Barney's commits are wrong, and hence the 
-> # generated patches are out of order.
-> git format-patch 345678..master | git am -k -3
+>In general, I do not think what you did is a good idea.  The _only_ case
+>you can do what you did and keep your sanity is if you cherry-picked every
+>single commit that matters from one branch to the other.
 
-First of all, the branch name "updated_original_source_code" does not make
-much sense.  When you get another round of source tarball update, what
-would you do?  Create "updated_original_source_code_2"?  The one after
-that is "updated_original_source_code_3"?
+Wouldn't that be the normal use case for these kind of side-port
+references?
 
-That misses the whole point of revision control, doesn't it?
+>If something is not "parent", you shouldn't be recording it as such.
 
-You instead keep an "upstream" branch, whose tip might be at 345678 before
-accepting the tarball update, and you advance its tip only with the
-upstream updates:
+It depends on what you define to be a parent.  The git repository
+doesn't care either way (that's the beauty of the format definition of
+the git repository, just as the tree snapshots allow for later more
+complicated diff/blame processing history, so do the parent
+relationships allow for more complicated parent references which were
+not imagined as the repository format was defined).
 
-      Barney               o---o---o       o---o
-                          /         \     /     \
-      Fred   o---o---o---o---o---o---o---o---o---o
-            /
-        ---o---------------------------------------o
-           ^                                       ^
-           upstream ===== (tarball update) ======> upstream
+>Remember, when you are making a commit on top of one or more parents, you
+>are making this statement:
 
-You can tag its tip after every time you accept the tarball update from
-your upstream.
+> * I have considered all histories leading to these parent commits, and
+>   based on that I decided that the tree I am recording as a child of
+>   these parents suits the purpose of my branch better than any of them.
 
-A natural thing to do from there is to _merge_ upstream changes to your
-shared development, that results in:
+That is a statement which depends on the view of the user.  I concur
+that up till now, that is what a user says.  But maybe it is possible to
+accomodate both the traditional statement and the sideport-statement
+without confusing the two.
 
+>This applies to one-parent case as well.
 
-      Barney               o---o---o       o---o
-                          /         \     /     \
-      Fred   o---o---o---o---o---o---o---o---o---o---*
-            /                                       /
-        ---o---------------------------------------o
-           ^                                       ^
-           upstream ===== (tarball update) ======> upstream
+>Imagine you have two histories, forked long time ago, and have side-port
+>of one commit:
 
-Of course you could rebase all history on top of updated upstream (buy why
-bother? -- you are not keeping a linear history by cross merging between
-two developers already, so there is no point doing a "format-patch | am"
-sequence to linearlize your history at this point), and --topo-order given
-to format-patch may help with broken timestamps one of you recorded.
+>If you recorded A' with parents A and X.  Here is what you would get:
+
+>             o---...o---B---A
+>            /                \ (wrong)
+>        ---o---o---...o---X---A'
+
+>But that is not what you did.  The tree state A' lacks what B did, which
+>could be a critical security fix, and you didn't consider all history that
+>leads to A when you cherry-picked it to create A'.
+
+>To put it another way, having the parent link from A' to A is a statement
+>that A' is a superset of A.  Because A contains B, you are claiming A'
+>also contains B, which is not the case in your cherry-picked history.
+
+Which existing git command actually misbehaves because it makes the
+above assumption?
+-- 
+Sincerely,
+           Stephen R. van den Berg.
+
+"The future is here, it's just not widely distributed yet." -- William Gibson
