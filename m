@@ -1,82 +1,100 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [RFC] cherry-pick using multiple parents to implement -x
-Date: Sun, 7 Sep 2008 16:04:42 -0400
-Message-ID: <20080907200441.GA26705@coredump.intra.peff.net>
-References: <20080907103415.GA3139@cuci.nl> <20080907172807.GA25233@coredump.intra.peff.net> <20080907195626.GA8765@cuci.nl>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: A git problem with timestamps
+Date: Sun, 07 Sep 2008 13:03:26 -0700
+Message-ID: <7vvdx7lo4x.fsf@gitster.siamese.dyndns.org>
+References: <200809070954.03394.armyofthepenguin@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-To: "Stephen R. van den Berg" <srb@cuci.nl>
-X-From: git-owner@vger.kernel.org Sun Sep 07 22:05:49 2008
+To: Rod <armyofthepenguin@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Sep 07 22:06:01 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KcQW4-0007aI-Dv
-	for gcvg-git-2@gmane.org; Sun, 07 Sep 2008 22:05:48 +0200
+	id 1KcQVv-0007aI-J4
+	for gcvg-git-2@gmane.org; Sun, 07 Sep 2008 22:05:47 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755623AbYIGUEo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 7 Sep 2008 16:04:44 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755627AbYIGUEo
-	(ORCPT <rfc822;git-outgoing>); Sun, 7 Sep 2008 16:04:44 -0400
-Received: from peff.net ([208.65.91.99]:1872 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755603AbYIGUEn (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 7 Sep 2008 16:04:43 -0400
-Received: (qmail 14242 invoked by uid 111); 7 Sep 2008 20:04:43 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.32) with SMTP; Sun, 07 Sep 2008 16:04:43 -0400
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Sun, 07 Sep 2008 16:04:42 -0400
-Content-Disposition: inline
-In-Reply-To: <20080907195626.GA8765@cuci.nl>
+	id S1755013AbYIGUDe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 7 Sep 2008 16:03:34 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755569AbYIGUDe
+	(ORCPT <rfc822;git-outgoing>); Sun, 7 Sep 2008 16:03:34 -0400
+Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:46927 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754322AbYIGUDd (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 7 Sep 2008 16:03:33 -0400
+Received: from localhost.localdomain (localhost [127.0.0.1])
+	by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id 685A2774D5;
+	Sun,  7 Sep 2008 16:03:32 -0400 (EDT)
+Received: from pobox.com (ip68-225-240-211.oc.oc.cox.net [68.225.240.211])
+ (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
+ certificate requested) by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with
+ ESMTPSA id E4E93774D4; Sun,  7 Sep 2008 16:03:28 -0400 (EDT)
+In-Reply-To: <200809070954.03394.armyofthepenguin@gmail.com>
+ (armyofthepenguin@gmail.com's message of "Sun, 7 Sep 2008 09:54:02 -0400")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: 0BF3742C-7D18-11DD-8496-3113EBD4C077-77302942!a-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/95168>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/95169>
 
-On Sun, Sep 07, 2008 at 09:56:26PM +0200, Stephen R. van den Berg wrote:
+Rod <armyofthepenguin@gmail.com> writes:
 
-> >Parents mean something different than just a link. If A is a parent of
-> >B, then that implies that at point B, we considered all of the history
-> >leading up to B (including A), and arrived at a certain tree state.
-> 
-> That implication is not a technical one, but merely a convention in the
-> mind of the git-user.  Relevant, of course, but maybe we can accomodate
-> both uses.
+> Here are the git commands Fred is attempting to use:
+> # Branch the *base* of master
+> git checkout -b updated_original_source_code 345678
+>
+> cp ../updated_source_code.tar.gz .
+> tar zxvf updated_source_code.tar.gz
+>
+> # Commit all changes from original_source_code
+> # to updated_source_code
+> git -a -m "Updated original source code"
+>
+> # Now apply the history of master onto this branch:
+> # This is where they get hosed because the timestamps
+> # from Barney's commits are wrong, and hence the 
+> # generated patches are out of order.
+> git format-patch 345678..master | git am -k -3
 
-I'm not sure I agree. I believe that property is part of the definition
-of the commit DAG as originally conceived (but somebody like Linus could
-say more). Obviously there is no formal definition, but I already
-pointed out one thing that will break in that instance. I don't know if
-there are others.
+First of all, the branch name "updated_original_source_code" does not make
+much sense.  When you get another round of source tarball update, what
+would you do?  Create "updated_original_source_code_2"?  The one after
+that is "updated_original_source_code_3"?
 
-> What if the merge-base determination code is modified to behave as
-> if --first-parent is specified while searching for the merge-base?
-> In that case it *will* find A as the merge-base, even in the presence of
-> "sideportlinks".
+That misses the whole point of revision control, doesn't it?
 
-But then it will fail to find legitimate merge bases. So yes, you _can_
-come up with a merge algorithm that handles this situation. But is it
-then up to the user to say "Oh, this parent link means something else.
-Use this other algorithm"? In that case, it really seems we are abusing
-the "parent" link and it would be more appropriate to have some _other_
-type of link.
+You instead keep an "upstream" branch, whose tip might be at 345678 before
+accepting the tarball update, and you advance its tip only with the
+upstream updates:
 
-Though I think if you look through the archives, people have argued
-against having any git-level link to cherry-picked commits. The history
-leading up to that cherry-pick is not necessarily of interest (though I
-think you are proposing that it be optional to create such a link via
--x).
+      Barney               o---o---o       o---o
+                          /         \     /     \
+      Fred   o---o---o---o---o---o---o---o---o---o
+            /
+        ---o---------------------------------------o
+           ^                                       ^
+           upstream ===== (tarball update) ======> upstream
 
-> Does that resolve all technical issues?
+You can tag its tip after every time you accept the tarball update from
+your upstream.
 
-I really don't know. I think you are proposing changing a core
-assumption of the data structure, so I wouldn't be too surprised if
-there is other code that relies on it.
+A natural thing to do from there is to _merge_ upstream changes to your
+shared development, that results in:
 
-You can use the script I posted in my last email as a basis for a
-cherry-pick that does what you want (cherry-pick -n, write-tree,
-commit-tree, update-ref). You might try a few experiments with that.
 
--Peff
+      Barney               o---o---o       o---o
+                          /         \     /     \
+      Fred   o---o---o---o---o---o---o---o---o---o---*
+            /                                       /
+        ---o---------------------------------------o
+           ^                                       ^
+           upstream ===== (tarball update) ======> upstream
+
+Of course you could rebase all history on top of updated upstream (buy why
+bother? -- you are not keeping a linear history by cross merging between
+two developers already, so there is no point doing a "format-patch | am"
+sequence to linearlize your history at this point), and --topo-order given
+to format-patch may help with broken timestamps one of you recorded.
