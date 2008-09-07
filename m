@@ -1,99 +1,102 @@
-From: Nicolas Pitre <nico@cam.org>
-Subject: Re: pack operation is thrashing my server
-Date: Sun, 07 Sep 2008 13:11:36 -0400 (EDT)
-Message-ID: <alpine.LFD.1.10.0809071310030.23787@xanadu.home>
-References: <a6b6acf60808101247r4fea978ft6d2cdc53e1f99c0e@mail.gmail.com>
- <87vdy71i6w.fsf@basil.nowhere.org>
- <1EE44425-6910-4C37-9242-54D0078FC377@adacore.com>
- <alpine.LFD.1.10.0808131024460.4352@xanadu.home>
- <20080813145944.GB3782@spearce.org>
- <alpine.LFD.1.10.0808131123221.4352@xanadu.home>
- <20080813155016.GD3782@spearce.org>
- <alpine.LFD.1.10.0808131228270.4352@xanadu.home>
- <alpine.LFD.1.10.0808141014410.3324@nehalem.linux-foundation.org>
- <alpine.LFD.1.10.0808141022500.3324@nehalem.linux-foundation.org>
- <alpine.LFD.1.10.0808141442150.4352@xanadu.home>
- <alpine.LFD.1.10.0808141215520.3324@nehalem.linux-foundation.org>
- <alpine.LFD.1.10.0808141633080.4352@xanadu.home>
- <alpine.LFD.1.10.0808141544150.3324@nehalem.linux-foundation.org>
- <alpine.LFD.1.10.0808151729070.3324@nehalem.linux-foundation.org>
- <7vk5dorclv.fsf@gitster.siamese.dyndns.org>
- <alpine.LFD.1.10.0809061812090.3117@nehalem.linux-foundation.org>
- <7vbpz0r8gb.fsf@gitster.siamese.dyndns.org>
+From: Jeff King <peff@peff.net>
+Subject: Re: [RFC] cherry-pick using multiple parents to implement -x
+Date: Sun, 7 Sep 2008 13:28:07 -0400
+Message-ID: <20080907172807.GA25233@coredump.intra.peff.net>
+References: <20080907103415.GA3139@cuci.nl>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: Linus Torvalds <torvalds@linux-foundation.org>,
-	"Shawn O. Pearce" <spearce@spearce.org>,
-	Geert Bosch <bosch@adacore.com>,
-	Andi Kleen <andi@firstfloor.org>, Ken Pratt <ken@kenpratt.net>,
-	git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sun Sep 07 19:12:49 2008
+Content-Type: text/plain; charset=utf-8
+Cc: git@vger.kernel.org
+To: "Stephen R. van den Berg" <srb@cuci.nl>
+X-From: git-owner@vger.kernel.org Sun Sep 07 19:29:19 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KcNoe-0007Xa-Px
-	for gcvg-git-2@gmane.org; Sun, 07 Sep 2008 19:12:49 +0200
+	id 1KcO4b-0002Yo-W2
+	for gcvg-git-2@gmane.org; Sun, 07 Sep 2008 19:29:18 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754011AbYIGRLn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 7 Sep 2008 13:11:43 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753891AbYIGRLn
-	(ORCPT <rfc822;git-outgoing>); Sun, 7 Sep 2008 13:11:43 -0400
-Received: from relais.videotron.ca ([24.201.245.36]:14316 "EHLO
-	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754003AbYIGRLm (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 7 Sep 2008 13:11:42 -0400
-Received: from xanadu.home ([66.131.194.97]) by VL-MO-MR001.ip.videotron.ca
- (Sun Java(tm) System Messaging Server 6.3-4.01 (built Aug  3 2007; 32bit))
- with ESMTP id <0K6U00FAM53CR520@VL-MO-MR001.ip.videotron.ca> for
- git@vger.kernel.org; Sun, 07 Sep 2008 13:11:36 -0400 (EDT)
-X-X-Sender: nico@xanadu.home
-In-reply-to: <7vbpz0r8gb.fsf@gitster.siamese.dyndns.org>
-User-Agent: Alpine 1.10 (LFD 962 2008-03-14)
+	id S1754181AbYIGR2L (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 7 Sep 2008 13:28:11 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754108AbYIGR2K
+	(ORCPT <rfc822;git-outgoing>); Sun, 7 Sep 2008 13:28:10 -0400
+Received: from peff.net ([208.65.91.99]:2583 "EHLO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754029AbYIGR2J (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 7 Sep 2008 13:28:09 -0400
+Received: (qmail 12509 invoked by uid 111); 7 Sep 2008 17:28:08 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+    by peff.net (qpsmtpd/0.32) with SMTP; Sun, 07 Sep 2008 13:28:08 -0400
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Sun, 07 Sep 2008 13:28:07 -0400
+Content-Disposition: inline
+In-Reply-To: <20080907103415.GA3139@cuci.nl>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/95152>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/95153>
 
-On Sat, 6 Sep 2008, Junio C Hamano wrote:
+On Sun, Sep 07, 2008 at 12:34:15PM +0200, Stephen R. van den Berg wrote:
 
-> Linus Torvalds <torvalds@linux-foundation.org> writes:
-> 
-> > The reason? 
-> >
-> > Right now we depend on "avail_out" also making zlib understand to stop 
-> > looking at the input stream. Sad, but true - we don't know or care about 
-> > the compressed size of the object, only the uncompressed size. So in 
-> > unpack_compressed_entry(), we simply set the output length, and expect 
-> > zlib to stop when it's sufficient.
-> >
-> > Which it does - but the patch kind of violates that whole design.
-> >
-> > Now, it so happens that things seem to work, probably because the zlib 
-> > format does have enough synchronization in it to not try to continue past 
-> > the end _anyway_, but I think this makes the patch be of debatable value.
-> 
-> I thought the fact we do check the status with Z_STREAM_END means that we
-> do already expect and rely on zlib to know where the end of input stream
-> is, and stop there (otherwise we say something fishy is going on and we
-> error out), and it was part of the design, not just "so happens" and "has
-> enough synch ... _anyway_".
-> 
-> If input zlib stream were corrupted and it detected the end of stream too
-> early, then check of "stream.total_out != size" would fail even though we
-> would see "st == Z_STREAM_END".  If input stream were corrupted and it
-> went past the end marker, we will read past the end and into some garbage
-> that is the in-pack header of the next object representation, but zlib
-> shouldn't go berserk even in that case, and would stop after filling the
-> slop you allocated in the buffer --- we would detect the situation from
-> stream.total_out != size and most likely st != Z_STREAM_END in such a
-> case.
+> The questions now are:
+> - Would there be good reason not to record the backport/forwardport
+>   relationship in the additional parents of a commit?
 
-Unless I'm missing something, I think your analysis is right and 
-everything should be safe.
+Parents mean something different than just a link. If A is a parent of
+B, then that implies that at point B, we considered all of the history
+leading up to B (including A), and arrived at a certain tree state.
 
+But cherry-picking means we looked at just A and used it to find a
+certain tree-state. It says nothing about anything that came _before_ A.
 
-Nicolas
+So imagine this history:
+
+A--B--C <-- master
+ \
+  D--E--F <-- side branch
+
+Now let's say we want to cherry-pick E. If we mark the cherry-picked
+commit as a parent, we get:
+
+A--B--C--E' <-- master
+ \      /
+  D----E--F <-- side branch
+
+Now let's say we want to merge the branches. What's our merge base?
+Without your proposal, it is A, but now it is actually E. So doing a
+three-way merge between E' and F with base E, it will look like our
+master branch _removed_ the change from D which is still present in F.
+And in a 3-way merge if one side removes something but the other side
+leaves it untouched, then the result removes it.
+
+So the merge result is bogus, as it is missing D.
+
+I'm including a quick script below which creates this situation (it may
+need tweaking to run on your system, but hopefully you get the point).
+
+-Peff
+
+-- >8 --
+#!/bin/sh -ex
+
+rm -rf repo
+
+change() {
+  perl -pi -e '/^'$1'$/ and $_ .= "changed $_"' words &&
+  git commit -a -m $1 &&
+  git tag $1
+}
+
+mkdir repo && cd repo && git init
+cp /usr/share/dict/words . && git add words && git commit -m initial
+change A
+change B
+change C
+git checkout -b other A
+change D
+change E
+change F
+git checkout master
+git cherry-pick -n E
+tree=`git write-tree`
+commit=`echo cherry pick | git commit-tree $tree -p HEAD^ -p E`
+git update-ref HEAD $commit
