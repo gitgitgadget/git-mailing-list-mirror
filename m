@@ -1,96 +1,101 @@
-From: "Stephen R. van den Berg" <srb@cuci.nl>
-Subject: Re: [RFC] cherry-pick using multiple parents to implement -x
-Date: Sun, 7 Sep 2008 22:10:38 +0200
-Message-ID: <20080907201038.GB8765@cuci.nl>
-References: <20080907103415.GA3139@cuci.nl> <7vtzcrn9uv.fsf@gitster.siamese.dyndns.org>
+From: Andreas Ericsson <ae@op5.se>
+Subject: [PATCH] Teach "git diff -p" to locate PHP class methods
+Date: Sun, 07 Sep 2008 22:15:29 +0200
+Message-ID: <48C43661.8010405@op5.se>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sun Sep 07 22:11:52 2008
+Content-Type: text/plain; charset=ISO-8859-15; format=flowed
+Content-Transfer-Encoding: 7bit
+To: Git Mailing List <git@vger.kernel.org>,
+	Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sun Sep 07 22:16:49 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KcQbs-0000hJ-UP
-	for gcvg-git-2@gmane.org; Sun, 07 Sep 2008 22:11:49 +0200
+	id 1KcQgh-0001jH-GM
+	for gcvg-git-2@gmane.org; Sun, 07 Sep 2008 22:16:48 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755593AbYIGUKl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 7 Sep 2008 16:10:41 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755581AbYIGUKk
-	(ORCPT <rfc822;git-outgoing>); Sun, 7 Sep 2008 16:10:40 -0400
-Received: from aristoteles.cuci.nl ([212.125.128.18]:58860 "EHLO
-	aristoteles.cuci.nl" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754322AbYIGUKk (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 7 Sep 2008 16:10:40 -0400
-Received: by aristoteles.cuci.nl (Postfix, from userid 500)
-	id CC4F55465; Sun,  7 Sep 2008 22:10:38 +0200 (CEST)
-Content-Disposition: inline
-In-Reply-To: <7vtzcrn9uv.fsf@gitster.siamese.dyndns.org>
-User-Agent: Mutt/1.5.13 (2006-08-11)
+	id S1755569AbYIGUPl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 7 Sep 2008 16:15:41 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755571AbYIGUPl
+	(ORCPT <rfc822;git-outgoing>); Sun, 7 Sep 2008 16:15:41 -0400
+Received: from mail.op5.se ([193.201.96.20]:50938 "EHLO mail.op5.se"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754322AbYIGUPk (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 7 Sep 2008 16:15:40 -0400
+Received: from localhost (localhost.localdomain [127.0.0.1])
+	by mail.op5.se (Postfix) with ESMTP id C9D261B800A7;
+	Sun,  7 Sep 2008 22:21:37 +0200 (CEST)
+X-Virus-Scanned: amavisd-new at 
+X-Spam-Flag: NO
+X-Spam-Score: -2.499
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.499 tagged_above=-10 required=6.6
+	tests=[BAYES_00=-2.599, RDNS_NONE=0.1]
+Received: from mail.op5.se ([127.0.0.1])
+	by localhost (mail.op5.se [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id LFdHLy+rDV3R; Sun,  7 Sep 2008 22:21:31 +0200 (CEST)
+Received: from clix.int.op5.se (unknown [172.27.78.22])
+	by mail.op5.se (Postfix) with ESMTP id 8CC281B8007E;
+	Sun,  7 Sep 2008 22:21:30 +0200 (CEST)
+User-Agent: Thunderbird 2.0.0.16 (X11/20080723)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/95170>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/95171>
 
-Junio C Hamano wrote:
->"Stephen R. van den Berg" <srb@cuci.nl> writes:
->> The questions now are:
->> - Would there be good reason not to record the backport/forwardport
->>   relationship in the additional parents of a commit?
+Otherwise it will always print the class-name rather
+than the name of the function inside that class.
 
->In general, I do not think what you did is a good idea.  The _only_ case
->you can do what you did and keep your sanity is if you cherry-picked every
->single commit that matters from one branch to the other.
+While we're at it, reorder the gitattributes manpage to
+list the built-in funcname pattern names in alphabetical
+order.
 
-Wouldn't that be the normal use case for these kind of side-port
-references?
+Signed-off-by: Andreas Ericsson <ae@op5.se>
+---
+ Documentation/gitattributes.txt |    6 ++++--
+ diff.c                          |    1 +
+ 2 files changed, 5 insertions(+), 2 deletions(-)
 
->If something is not "parent", you shouldn't be recording it as such.
-
-It depends on what you define to be a parent.  The git repository
-doesn't care either way (that's the beauty of the format definition of
-the git repository, just as the tree snapshots allow for later more
-complicated diff/blame processing history, so do the parent
-relationships allow for more complicated parent references which were
-not imagined as the repository format was defined).
-
->Remember, when you are making a commit on top of one or more parents, you
->are making this statement:
-
-> * I have considered all histories leading to these parent commits, and
->   based on that I decided that the tree I am recording as a child of
->   these parents suits the purpose of my branch better than any of them.
-
-That is a statement which depends on the view of the user.  I concur
-that up till now, that is what a user says.  But maybe it is possible to
-accomodate both the traditional statement and the sideport-statement
-without confusing the two.
-
->This applies to one-parent case as well.
-
->Imagine you have two histories, forked long time ago, and have side-port
->of one commit:
-
->If you recorded A' with parents A and X.  Here is what you would get:
-
->             o---...o---B---A
->            /                \ (wrong)
->        ---o---o---...o---X---A'
-
->But that is not what you did.  The tree state A' lacks what B did, which
->could be a critical security fix, and you didn't consider all history that
->leads to A when you cherry-picked it to create A'.
-
->To put it another way, having the parent link from A' to A is a statement
->that A' is a superset of A.  Because A contains B, you are claiming A'
->also contains B, which is not the case in your cherry-picked history.
-
-Which existing git command actually misbehaves because it makes the
-above assumption?
+diff --git a/Documentation/gitattributes.txt b/Documentation/gitattributes.txt
+index 5fb5007..75124d2 100644
+--- a/Documentation/gitattributes.txt
++++ b/Documentation/gitattributes.txt
+@@ -311,18 +311,20 @@ patterns are available:
+ 
+ - `bibtex` suitable for files with BibTeX coded references.
+ 
++- `html` suitable for HTML/XHTML documents.
++
+ - `java` suitable for source code in the Java lanugage.
+ 
+ - `pascal` suitable for source code in the Pascal/Delphi language.
+ 
++- `php` suitable for source code in the PHP language.
++
+ - `python` suitable for source code in the Python language.
+ 
+ - `ruby` suitable for source code in the Ruby language.
+ 
+ - `tex` suitable for source code for LaTeX documents.
+ 
+-- `html` suitable for HTML/XHTML documents.
+-
+ 
+ Performing a three-way merge
+ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+diff --git a/diff.c b/diff.c
+index cbd151b..e7afbe2 100644
+--- a/diff.c
++++ b/diff.c
+@@ -1402,6 +1402,7 @@ static struct builtin_funcname_pattern {
+ 			"\\|"
+ 			"^\\(.*=[ \t]*\\(class\\|record\\).*\\)$"
+ 			},
++	{ "php", "^[\t ]*\\(\\(function\\|class\\).*\\)" },
+ 	{ "python", "^\\s*\\(\\(class\\|def\\)\\s.*\\)$" },
+ 	{ "ruby", "^\\s*\\(\\(class\\|module\\|def\\)\\s.*\\)$" },
+ 	{ "tex", "^\\(\\\\\\(\\(sub\\)*section\\|chapter\\|part\\)\\*\\{0,1\\}{.*\\)$" },
 -- 
-Sincerely,
-           Stephen R. van den Berg.
-
-"The future is here, it's just not widely distributed yet." -- William Gibson
+1.6.0.1.196.g01914
