@@ -1,72 +1,66 @@
-From: "Stephen R. van den Berg" <srb@cuci.nl>
-Subject: Re: [RFC] cherry-pick using multiple parents to implement -x
-Date: Mon, 8 Sep 2008 13:51:29 +0200
-Message-ID: <20080908115129.GA19031@cuci.nl>
-References: <20080907103415.GA3139@cuci.nl> <7vhc8rjyxj.fsf@gitster.siamese.dyndns.org>
+From: Johannes Sixt <j.sixt@viscovery.net>
+Subject: Re: [PATCH] Windows: git-shell can be compiled again
+Date: Mon, 08 Sep 2008 13:53:40 +0200
+Message-ID: <48C51244.6060807@viscovery.net>
+References: <321897.23044.qm@web95004.mail.in2.yahoo.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Sep 08 13:52:41 2008
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: Kevin Yu <yujie052@gmail.com>, git@vger.kernel.org,
+	Junio C Hamano <gitster@pobox.com>
+To: dhruva <dhruva@ymail.com>
+X-From: git-owner@vger.kernel.org Mon Sep 08 13:55:11 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KcfIL-00014Q-LP
-	for gcvg-git-2@gmane.org; Mon, 08 Sep 2008 13:52:38 +0200
+	id 1KcfKV-0001i1-7I
+	for gcvg-git-2@gmane.org; Mon, 08 Sep 2008 13:54:51 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751764AbYIHLvb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 8 Sep 2008 07:51:31 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751767AbYIHLvb
-	(ORCPT <rfc822;git-outgoing>); Mon, 8 Sep 2008 07:51:31 -0400
-Received: from aristoteles.cuci.nl ([212.125.128.18]:42442 "EHLO
-	aristoteles.cuci.nl" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751656AbYIHLvb (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 8 Sep 2008 07:51:31 -0400
-Received: by aristoteles.cuci.nl (Postfix, from userid 500)
-	id A551C5465; Mon,  8 Sep 2008 13:51:29 +0200 (CEST)
-Content-Disposition: inline
-In-Reply-To: <7vhc8rjyxj.fsf@gitster.siamese.dyndns.org>
-User-Agent: Mutt/1.5.13 (2006-08-11)
+	id S1753868AbYIHLxl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 8 Sep 2008 07:53:41 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753859AbYIHLxk
+	(ORCPT <rfc822;git-outgoing>); Mon, 8 Sep 2008 07:53:40 -0400
+Received: from lilzmailso01.liwest.at ([212.33.55.23]:29247 "EHLO
+	lilzmailso01.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753792AbYIHLxj (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 8 Sep 2008 07:53:39 -0400
+Received: from cm56-163-160.liwest.at ([86.56.163.160] helo=linz.eudaptics.com)
+	by lilzmailso01.liwest.at with esmtpa (Exim 4.66)
+	(envelope-from <j.sixt@viscovery.net>)
+	id 1KcfJI-0006sw-Gd; Mon, 08 Sep 2008 13:53:36 +0200
+Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.42])
+	by linz.eudaptics.com (Postfix) with ESMTP
+	id 549CB6B7; Mon,  8 Sep 2008 13:53:36 +0200 (CEST)
+User-Agent: Thunderbird 2.0.0.6 (Windows/20070728)
+In-Reply-To: <321897.23044.qm@web95004.mail.in2.yahoo.com>
+X-Enigmail-Version: 0.95.5
+X-Spam-Score: 1.7 (+)
+X-Spam-Report: ALL_TRUSTED=-1.8, BAYES_99=3.5
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/95240>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/95241>
 
-Junio C Hamano wrote:
->"Stephen R. van den Berg" <srb@cuci.nl> writes:
->I think the commit object name -x records in the commit message of the
->cherry-picked one is noticed by gitweb to give you an easy access.  You
->could teach gitk a similar trick, and that would not just help cherry
->picking but also reverts, and a fix-up commit that says "This fixes the
->regression introduced by commit 90ff09a5".
+dhruva schrieb:
+>  Are there any M$ specific issues still out there that needs some attention? I could help on stuff that does not require git internal knowledge. Are there some M$ specific performance issues that I could try to help? Let me know, I will try my best to help. I need to have git on both GNU/linux and M$ platforms for day job.
 
-Checking the on-disk format I see that it has been defined in a rather
-extensible way.
+In order of increasing difficulty:
 
-If we were to put the SHA1-ref somewhere in the commit message, 
-finding references to a certain commit through cherry-picks becomes
-rather disk/CPU-intensive.
+- Run the tests on different platforms and servicepack levels.
 
-Would there be any objections against extending the on-disk format to
-accomodate something like the following:
+- Get proficient in building the installer for a release.
 
-commit 7df437e56b5a2c5ec7140dd097b517563db4972c
-tree a006f20b481d811ccb4846534ef6394be5bc78a8
-parent ff1e8bfcd69e5e0ee1a3167e80ef75b611f72123
-parent bbb896d8e10f736bfda8f587c0009c358c9a8599
-cousin 6ffaecc7d8b2c3c188a2efa5977a6e6605d878d9
-cousin a1184d85e8752658f02746982822f43f32316803
-author Junio C Hamano <gitster@pobox.com> 1220153499 -0700
-committer Junio C Hamano <gitster@pobox.com> 1220153499 -0700
+- Find a way to build perl scripts that is acceptable for upstream git.git
+and that also works on MSYS/MinGW. Currently we still modify the build
+procedure, and the results do not work during 'make test'.
 
-Whereas cherry-pick would (optionally) generate a cousin reference for every
-commit it picks.
+- Give some love to git-svn.perl. It will be removed from msysgit's
+1.6.0.x release because it raises expectations that cannot be fulfilled.
+Please dig the list archive: http://groups.google.com/group/msysgit
 
-I'm willing to do the work to fix up git-core to support the new field.
--- 
-Sincerely,
-           Stephen R. van den Berg.
-The Horkheimer Effect: "The odds of it being cloudy are directly proportional
-to the importance of an astronomical event."
+I don't think a lot can be done performance-wise unless you want to help
+port scripts to C.
+
+-- Hannes
