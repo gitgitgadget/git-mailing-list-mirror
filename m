@@ -1,59 +1,79 @@
-From: Johannes Sixt <j.sixt@viscovery.net>
-Subject: Re: [PATCH] Windows: git-shell can be compiled again
-Date: Mon, 08 Sep 2008 14:22:13 +0200
-Message-ID: <48C518F5.5090201@viscovery.net>
-References: <117629.48595.qm@web95011.mail.in2.yahoo.com>
+From: "Alexander Gavrilov" <angavrilov@gmail.com>
+Subject: Re: [PATCH (GIT-GUI) 1/8] git-gui: Don't allow staging files with conflicts.
+Date: Mon, 8 Sep 2008 16:25:00 +0400
+Message-ID: <bb6f213e0809080525t5da18021jf8f564a748545468@mail.gmail.com>
+References: <200808310052.21595.angavrilov@gmail.com>
+	 <200808310054.19732.angavrilov@gmail.com>
+	 <48C5161E.3020402@viscovery.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-Cc: Kevin Yu <yujie052@gmail.com>, git@vger.kernel.org,
-	Junio C Hamano <gitster@pobox.com>
-To: dhruva <dhruva@ymail.com>
-X-From: git-owner@vger.kernel.org Mon Sep 08 14:23:29 2008
+Cc: git@vger.kernel.org, "Shawn O. Pearce" <spearce@spearce.org>
+To: "Johannes Sixt" <j.sixt@viscovery.net>
+X-From: git-owner@vger.kernel.org Mon Sep 08 14:26:20 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KcfmB-0002ZE-0U
-	for gcvg-git-2@gmane.org; Mon, 08 Sep 2008 14:23:27 +0200
+	id 1Kcfop-0003Gd-PS
+	for gcvg-git-2@gmane.org; Mon, 08 Sep 2008 14:26:12 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751767AbYIHMWL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 8 Sep 2008 08:22:11 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751605AbYIHMWL
-	(ORCPT <rfc822;git-outgoing>); Mon, 8 Sep 2008 08:22:11 -0400
-Received: from lilzmailso02.liwest.at ([212.33.55.13]:38554 "EHLO
-	lilzmailso02.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751458AbYIHMWK (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 8 Sep 2008 08:22:10 -0400
-Received: from cm56-163-160.liwest.at ([86.56.163.160] helo=linz.eudaptics.com)
-	by lilzmailso02.liwest.at with esmtpa (Exim 4.66)
-	(envelope-from <j.sixt@viscovery.net>)
-	id 1Kcfkq-0006pS-Vs; Mon, 08 Sep 2008 14:22:08 +0200
-Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.42])
-	by linz.eudaptics.com (Postfix) with ESMTP
-	id CF4786B7; Mon,  8 Sep 2008 14:22:04 +0200 (CEST)
-User-Agent: Thunderbird 2.0.0.6 (Windows/20070728)
-In-Reply-To: <117629.48595.qm@web95011.mail.in2.yahoo.com>
-X-Enigmail-Version: 0.95.5
-X-Spam-Score: 0.2 (/)
-X-Spam-Report: ALL_TRUSTED=-1.8, BAYES_80=2
+	id S1752665AbYIHMZF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 8 Sep 2008 08:25:05 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752557AbYIHMZF
+	(ORCPT <rfc822;git-outgoing>); Mon, 8 Sep 2008 08:25:05 -0400
+Received: from yx-out-2324.google.com ([74.125.44.30]:5502 "EHLO
+	yx-out-2324.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752488AbYIHMZC (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 8 Sep 2008 08:25:02 -0400
+Received: by yx-out-2324.google.com with SMTP id 8so821751yxm.1
+        for <git@vger.kernel.org>; Mon, 08 Sep 2008 05:25:01 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to
+         :subject:cc:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:references;
+        bh=3C7J9g68lGdUV2rpHrM92P2l4pPiLzhPN3VVMC//UJo=;
+        b=Gc26j7JjZB/qXAkajAgqMuEDjudae78jHKdo2cvTsIbypHQKKnMLEKbIG8foMiXFXY
+         tm+B4yRG2jTigfSNK5uAtVOT/Rwd0/5r/wIgyiU9XNKEjlXUK/fAVYFOi01mpeZEHIN8
+         DUyeXogX8x6fRe9w/IElb/2OHo4V5DqZ7RH8E=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
+         :content-type:content-transfer-encoding:content-disposition
+         :references;
+        b=DYCb92qkxFw66DNTd6LxZg/rfoNn/r7fxHdIdHeMyzXgmHFcbNYabztsgzV+GEQ19M
+         lnpt/3vXMsrdytsDXbJqhSfbFC3I8k3JJ0XL61sBvvTYGAk2la9ww6B3Jwy+3bnv8lkO
+         lKyV+uOGWd0K7LisRYIRcATiXVep14aOd9c88=
+Received: by 10.103.23.4 with SMTP id a4mr6285354muj.0.1220876700849;
+        Mon, 08 Sep 2008 05:25:00 -0700 (PDT)
+Received: by 10.103.251.10 with HTTP; Mon, 8 Sep 2008 05:25:00 -0700 (PDT)
+In-Reply-To: <48C5161E.3020402@viscovery.net>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/95244>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/95245>
 
-dhruva schrieb:
->> From: Johannes Sixt <j.sixt@viscovery.net>
->> - Find a way to build perl scripts that is acceptable for upstream git.git
->> and that also works on MSYS/MinGW. Currently we still modify the build
->> procedure, and the results do not work during 'make test'.
-> 
-> Could you please elaborate on the above. Do you mean, rewrite some perl scripts or something else?
+> I know I'm a bit late... I just got the first impression of the
+> consequences of this patch. And I don't like them.
+>
+> I did a merge with conflicts, and the result was resolved to my liking by
+> rerere. (And even if rerere did not kick in - I'd have resolved the
+> conflicts in an external editor anyway.) Now I want to stage the file -
+> but I can't. :-(
+>
+> No, I can't "Run merge tool", because I don't have one.
+> No, I don't want to "Use remote version" or "Use local version" or "Revert
+> to base".
+> Yes, I want to stage the file _as_is_!!
+>
+> Please help.
 
-No. I mean to have a better solution to the build procedure than commit
-bd2f73a6ba6da in mingw.git. Look at that commit and at the 'use ...' line
-that the build procedure inserts at the top of the perl scripts, and you
-should understand the problem (hint: it's the colon in "C:/somwhere").
+I'll make a patch today to add a new item to the popup menu.
 
--- Hannes
+I don't use rerere much, so I didn't notice this problem myself until
+yesterday evening.
+
+Alexander
