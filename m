@@ -1,70 +1,91 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [RFC] cherry-pick using multiple parents to implement -x
-Date: Sun, 07 Sep 2008 16:53:12 -0700
-Message-ID: <7vhc8rjyxj.fsf@gitster.siamese.dyndns.org>
-References: <20080907103415.GA3139@cuci.nl>
+Subject: Re: Alternates and push
+Date: Sun, 07 Sep 2008 17:02:05 -0700
+Message-ID: <7vd4jfjyiq.fsf@gitster.siamese.dyndns.org>
+References: <9e4733910809060542s5ede6d6m5bdb894c958ea8b7@mail.gmail.com>
+ <20080906162030.GT9129@mit.edu> <7viqt9rvwm.fsf@gitster.siamese.dyndns.org>
+ <20080907234118.GA8161@mit.edu>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: "Stephen R. van den Berg" <srb@cuci.nl>
-X-From: git-owner@vger.kernel.org Mon Sep 08 01:54:32 2008
+Cc: Jon Smirl <jonsmirl@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>
+To: Theodore Tso <tytso@MIT.EDU>
+X-From: git-owner@vger.kernel.org Mon Sep 08 02:04:02 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KcU5P-0001y7-3I
-	for gcvg-git-2@gmane.org; Mon, 08 Sep 2008 01:54:31 +0200
+	id 1KcUEa-0003MB-If
+	for gcvg-git-2@gmane.org; Mon, 08 Sep 2008 02:04:01 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751083AbYIGXxY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 7 Sep 2008 19:53:24 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750885AbYIGXxY
-	(ORCPT <rfc822;git-outgoing>); Sun, 7 Sep 2008 19:53:24 -0400
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:46270 "EHLO
+	id S1751502AbYIHACS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 7 Sep 2008 20:02:18 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751487AbYIHACR
+	(ORCPT <rfc822;git-outgoing>); Sun, 7 Sep 2008 20:02:17 -0400
+Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:34952 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750783AbYIGXxY (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 7 Sep 2008 19:53:24 -0400
+	with ESMTP id S1751237AbYIHACQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 7 Sep 2008 20:02:16 -0400
 Received: from localhost.localdomain (localhost [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 0CCD15E5CC;
-	Sun,  7 Sep 2008 19:53:23 -0400 (EDT)
+	by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id 1275B78CD8;
+	Sun,  7 Sep 2008 20:02:12 -0400 (EDT)
 Received: from pobox.com (ip68-225-240-211.oc.oc.cox.net [68.225.240.211])
  (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
- certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
- ESMTPSA id 5ECB85E5CB; Sun,  7 Sep 2008 19:53:20 -0400 (EDT)
-In-Reply-To: <20080907103415.GA3139@cuci.nl> (Stephen R. van den Berg's
- message of "Sun, 7 Sep 2008 12:34:15 +0200")
+ certificate requested) by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with
+ ESMTPSA id 7369978CD4; Sun,  7 Sep 2008 20:02:07 -0400 (EDT)
+In-Reply-To: <20080907234118.GA8161@mit.edu> (Theodore Tso's message of "Sun,
+ 7 Sep 2008 19:41:18 -0400")
 User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: 27CD77F4-7D38-11DD-86C1-D0CFFE4BC1C1-77302942!a-sasl-fastnet.pobox.com
+X-Pobox-Relay-ID: 63206BEE-7D39-11DD-A066-3113EBD4C077-77302942!a-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/95197>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/95198>
 
-"Stephen R. van den Berg" <srb@cuci.nl> writes:
+Theodore Tso <tytso@MIT.EDU> writes:
 
-> - And depending on an affirmative on the previous question, would it be
->   acceptable to teach the gitk preceding/following tag listing to deal
->   with these backport/forwardports ?
+> On Sat, Sep 06, 2008 at 11:06:49AM -0700, Junio C Hamano wrote:
+>> We could instead redefine the semantics of the existing alternates
+>> mechanism.  This technically *breaks* backward compatibility, but I
+>> suspect it won't hurt many existing installations:
+>> 
+>>  - Declare that a freestanding object store is illegal.  In other words,
+>>    if a directory "$D/objects" is (1) used as $GIT_OBJECT_DIRECTORY's
+>>    value, (2) pointed by some repository's "alternates" file, or (3)
+>>    listed in $GIT_ALTERNATE_OBJECT_DIRECTORIES's value, this change makes
+>>    it illegal for "$D" not being a proper git repository.
+>> 
+>>    This will not break your example of your repository's object store
+>>    borrowing from the object store inside Linus's repository.
+>> 
+>>  - When you have "$D/objects" in alternates, start relying on "$D/refs"
+>>    being correct (i.e. repository $D is not corrupt).  This technically
+>>    makes the system slightly less robust, as we are depending on _other
+>>    people's_ good behaviour even more when you use alternates, but you are
+>>    already depending on them having good objects in $D/objects anyway, so
+>>    it is not a big deal.
+>
+> One way that wouldn't break backwards compatibility would be to use
+> $D/refs if it exists, but if it isn't, fall back to existing behavior
+> (which is to say, only use the refs in the repository, not in the
+> borrowed repository/object store).  Is there a reason why this would
+> be problematic?
 
-Even though the answer to "the previous question" is a solid no, it is not
-just acceptable but it would be very useful to teach gitk that the commit
-you cherry-picked from is somehow related to the resulting commit from the
-cherry-picking, and teach it to give you an easy access (and even a visual
-cue about their relationship) to the other commit when it is showing the
-cherry-picked commit.
+I think you just reiterated what I said in "we could instead", and I think
+we are in agreement.
 
-I think the commit object name -x records in the commit message of the
-cherry-picked one is noticed by gitweb to give you an easy access.  You
-could teach gitk a similar trick, and that would not just help cherry
-picking but also reverts, and a fix-up commit that says "This fixes the
-regression introduced by commit 90ff09a5".
+I already stated the reason this could be problematic and also I said I do
+not think it is a big deal in the above.
 
-You could further draw _different_ kind of line on the upper "graph" pane,
-to show that a commit is _related_ to another commit.  Because cherry-pick
-relation is about the resulting commit and the _single_ commit that was
-cherry-picked (in other words, the parent of the cherry-picked original
-does not have _any_ relation to the commit that results from the
-cherry-pick), such a line should be visually very distinct from the usual
-parent-child relationship, which is the gitk graph (or any other commit
-ancestry graph) is about.  But if it can be represented clearly, I'd
-imagine that it would be interesting to see.
+I think the question to ask at this point is not "is there a reason why
+this would be problematic", but "is it really not a big deal as Junio
+claims?" and "aren't there _other_ reasons than the above that makes it
+problematic?".
+
+The arguments to make are "Junio is worrying too much; depending on the
+other repository's ref is no worse than depending on the objects the other
+repository uses, and here is a proof that it is not just 'not a big deal'
+but 'no problem at all'", "I've polled the userbase and there is no
+existing configuration that will be broken by this change", and "I have
+this configuration that will be broken by above change, don't do it".
