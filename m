@@ -1,8 +1,9 @@
 From: imyousuf@gmail.com
-Subject: [JGIT PATCH 2/3] Relocate test resources to classpath and load from there
-Date: Mon,  8 Sep 2008 09:07:35 +0600
-Message-ID: <1220843256-1243-2-git-send-email-imyousuf@gmail.com>
+Subject: [JGIT PATCH 3/3] Add a POM file for setting JGit library as a Maven project
+Date: Mon,  8 Sep 2008 09:07:36 +0600
+Message-ID: <1220843256-1243-3-git-send-email-imyousuf@gmail.com>
 References: <1220843256-1243-1-git-send-email-imyousuf@gmail.com>
+ <1220843256-1243-2-git-send-email-imyousuf@gmail.com>
 Cc: spearce@spearce.org, robin.rosenberg@dewire.com,
 	Imran M Yousuf <imyousuf@smartitengineering.com>
 To: git@vger.kernel.org
@@ -11,203 +12,240 @@ Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KcX7w-0000Bt-TG
-	for gcvg-git-2@gmane.org; Mon, 08 Sep 2008 05:09:21 +0200
+	id 1KcX7y-0000Bt-55
+	for gcvg-git-2@gmane.org; Mon, 08 Sep 2008 05:09:22 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752902AbYIHDIE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 7 Sep 2008 23:08:04 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752970AbYIHDID
-	(ORCPT <rfc822;git-outgoing>); Sun, 7 Sep 2008 23:08:03 -0400
-Received: from ey-out-2122.google.com ([74.125.78.25]:64143 "EHLO
-	ey-out-2122.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752901AbYIHDIB (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 7 Sep 2008 23:08:01 -0400
-Received: by ey-out-2122.google.com with SMTP id 6so611523eyi.37
-        for <git@vger.kernel.org>; Sun, 07 Sep 2008 20:07:59 -0700 (PDT)
+	id S1753106AbYIHDIO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 7 Sep 2008 23:08:14 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753114AbYIHDIN
+	(ORCPT <rfc822;git-outgoing>); Sun, 7 Sep 2008 23:08:13 -0400
+Received: from nf-out-0910.google.com ([64.233.182.190]:6647 "EHLO
+	nf-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753093AbYIHDIM (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 7 Sep 2008 23:08:12 -0400
+Received: by nf-out-0910.google.com with SMTP id d3so294795nfc.21
+        for <git@vger.kernel.org>; Sun, 07 Sep 2008 20:08:11 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:received:received:from:to:cc:subject:date
          :message-id:x-mailer:in-reply-to:references;
-        bh=GVF6Vya7XOxiYSkXviPoA7wlVuhZXG5eW7AnAAaQg/k=;
-        b=G8C5AGfTiw17FNmYLoB9ngTiwkmVU4OpVqAfr9hZB63oqx4tgd8sRC+ShROvyH0txH
-         Bq+H4b0IUEqW3K8QXqTA6iSsaqUKoFf6emP00Z0ycVYF3d0+kfBI4we2FlGLbBMm/yyx
-         q4dASxa7TsKRtb5MAp80VudweTq/WEszVbtoQ=
+        bh=apRwymcHwBBqpFB9Ch0knn3LE2gVpioCY6NpUQ5seoA=;
+        b=uxY4OTWeGWaZ3SkZio/vPsAZO10AypC/r6asWs/ChJiiI7empO0vxNbv4tImot5d3Y
+         Km5d99F9vAcVuFVrjx2aYao25l5GfSTvrKjPqXQBIwz7vAkRj9UG32celJSlAhVCKTSr
+         jj8MOpbPbBH5VgbKJ0pcCp99WPPXzdXF1gLxs=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        b=VLrT4sZzchFqiGBPQ0N9GPeKv8nyxRoDHjk98oq54S1fxoOl80qX8wvOZ52Mi21Nfa
-         K6yQK7C0iwxdU1JIX4qAxRtL9v1Fj9r3ZBw14JHYvVYarU3MVnufYJ6L5VvvW68ne/mc
-         uZj3EvbV0BtiwOnCYrGycAbQ5Cyh9Vj4ppwZQ=
-Received: by 10.210.113.16 with SMTP id l16mr18030778ebc.108.1220843278998;
-        Sun, 07 Sep 2008 20:07:58 -0700 (PDT)
+        b=DzZv9QqY00aqLpgM/ehb7EyLmxdN3E0iNovIp6DoCyzxktjQ758BEQhIR/cru8IsJ4
+         O2gabTgTXnBt3fiqwdrcfrHqkv6rqiZAv/+tjDaacBSzZ84HRb96cGFawsxKkE+7ahIA
+         u4yO5FnBwDu96QI/b2PylgTMTkO0CfdZAaPpE=
+Received: by 10.210.48.14 with SMTP id v14mr18060808ebv.71.1220843291095;
+        Sun, 07 Sep 2008 20:08:11 -0700 (PDT)
 Received: from localhost ( [62.101.198.35])
-        by mx.google.com with ESMTPS id d2sm3020976nfc.20.2008.09.07.20.07.53
+        by mx.google.com with ESMTPS id i4sm18761500nfh.1.2008.09.07.20.08.04
         (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Sun, 07 Sep 2008 20:07:57 -0700 (PDT)
+        Sun, 07 Sep 2008 20:08:09 -0700 (PDT)
 X-Mailer: git-send-email 1.5.6
-In-Reply-To: <1220843256-1243-1-git-send-email-imyousuf@gmail.com>
+In-Reply-To: <1220843256-1243-2-git-send-email-imyousuf@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/95210>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/95211>
 
 From: Imran M Yousuf <imyousuf@smartitengineering.com>
 
-Previously test case resources were located in the root directory, this
-change relocates them to a classpath location and loads the resources from
-there.
-
-If there is request for any test resource that is not present in classpath
-then util method will return the same value as it would in previous state.
+Add ignore list for mavenized JGit's artifacts directory.
 
 Signed-off-by: Imran M Yousuf <imyousuf@smartitengineering.com>
 ---
- org.spearce.jgit.test/.classpath                   |    1 +
- .../jgit/test/resources}/create-second-pack        |    0 
- .../org/spearce/jgit/test/resources}/gitgit.index  |  Bin 134799 -> 134799 bytes
- .../spearce/jgit/test/resources}/gitgit.lsfiles    |    0 
- .../org/spearce/jgit/test/resources}/gitgit.lstree |    0 
- ...ck-34be9032ac282b11fa9babdc2b2a93ca996c9c2f.idx |  Bin 1256 -> 1256 bytes
- ...-34be9032ac282b11fa9babdc2b2a93ca996c9c2f.idxV2 |  Bin 1296 -> 1296 bytes
- ...k-34be9032ac282b11fa9babdc2b2a93ca996c9c2f.pack |  Bin 7811 -> 7811 bytes
- ...ck-9fb5b411fe6dfa89cc2e6b89d2bd8e5de02b5745.idx |  Bin 1088 -> 1088 bytes
- ...k-9fb5b411fe6dfa89cc2e6b89d2bd8e5de02b5745.pack |  Bin 164 -> 164 bytes
- ...ck-df2982f284bbabb6bdb59ee3fcc6eb0983e20371.idx |  Bin 2696 -> 2696 bytes
- ...-df2982f284bbabb6bdb59ee3fcc6eb0983e20371.idxV2 |  Bin 2976 -> 2976 bytes
- ...k-df2982f284bbabb6bdb59ee3fcc6eb0983e20371.pack |  Bin 5956 -> 5956 bytes
- ...ck-e6d07037cbcf13376308a0a995d1fa48f8f76aaa.idx |  Bin 1112 -> 1112 bytes
- ...k-e6d07037cbcf13376308a0a995d1fa48f8f76aaa.pack |  Bin 1643 -> 1643 bytes
- .../org/spearce/jgit/test/resources}/pack-huge.idx |  Bin 2368 -> 2368 bytes
- .../org/spearce/jgit/test/resources}/packed-refs   |    0 
- .../tst/org/spearce/jgit/util/JGitTestUtil.java    |   15 ++++++++++++++-
- 18 files changed, 15 insertions(+), 1 deletions(-)
- rename org.spearce.jgit.test/{tst => tst-rsrc/org/spearce/jgit/test/resources}/create-second-pack (100%)
- rename org.spearce.jgit.test/{tst => tst-rsrc/org/spearce/jgit/test/resources}/gitgit.index (100%)
- rename org.spearce.jgit.test/{tst => tst-rsrc/org/spearce/jgit/test/resources}/gitgit.lsfiles (100%)
- rename org.spearce.jgit.test/{tst => tst-rsrc/org/spearce/jgit/test/resources}/gitgit.lstree (100%)
- rename org.spearce.jgit.test/{tst => tst-rsrc/org/spearce/jgit/test/resources}/pack-34be9032ac282b11fa9babdc2b2a93ca996c9c2f.idx (100%)
- rename org.spearce.jgit.test/{tst => tst-rsrc/org/spearce/jgit/test/resources}/pack-34be9032ac282b11fa9babdc2b2a93ca996c9c2f.idxV2 (100%)
- rename org.spearce.jgit.test/{tst => tst-rsrc/org/spearce/jgit/test/resources}/pack-34be9032ac282b11fa9babdc2b2a93ca996c9c2f.pack (100%)
- rename org.spearce.jgit.test/{tst => tst-rsrc/org/spearce/jgit/test/resources}/pack-9fb5b411fe6dfa89cc2e6b89d2bd8e5de02b5745.idx (100%)
- rename org.spearce.jgit.test/{tst => tst-rsrc/org/spearce/jgit/test/resources}/pack-9fb5b411fe6dfa89cc2e6b89d2bd8e5de02b5745.pack (100%)
- rename org.spearce.jgit.test/{tst => tst-rsrc/org/spearce/jgit/test/resources}/pack-df2982f284bbabb6bdb59ee3fcc6eb0983e20371.idx (100%)
- rename org.spearce.jgit.test/{tst => tst-rsrc/org/spearce/jgit/test/resources}/pack-df2982f284bbabb6bdb59ee3fcc6eb0983e20371.idxV2 (100%)
- rename org.spearce.jgit.test/{tst => tst-rsrc/org/spearce/jgit/test/resources}/pack-df2982f284bbabb6bdb59ee3fcc6eb0983e20371.pack (100%)
- rename org.spearce.jgit.test/{tst => tst-rsrc/org/spearce/jgit/test/resources}/pack-e6d07037cbcf13376308a0a995d1fa48f8f76aaa.idx (100%)
- rename org.spearce.jgit.test/{tst => tst-rsrc/org/spearce/jgit/test/resources}/pack-e6d07037cbcf13376308a0a995d1fa48f8f76aaa.pack (100%)
- rename org.spearce.jgit.test/{tst => tst-rsrc/org/spearce/jgit/test/resources}/pack-huge.idx (100%)
- rename org.spearce.jgit.test/{tst => tst-rsrc/org/spearce/jgit/test/resources}/packed-refs (100%)
+ jgit-maven/.gitignore   |    1 +
+ jgit-maven/jgit/pom.xml |  169 +++++++++++++++++++++++++++++++++++++++++++++++
+ 2 files changed, 170 insertions(+), 0 deletions(-)
+ create mode 100644 jgit-maven/.gitignore
+ create mode 100644 jgit-maven/jgit/pom.xml
 
-diff --git a/org.spearce.jgit.test/.classpath b/org.spearce.jgit.test/.classpath
-index 592fa17..a276507 100644
---- a/org.spearce.jgit.test/.classpath
-+++ b/org.spearce.jgit.test/.classpath
-@@ -1,6 +1,7 @@
- <?xml version="1.0" encoding="UTF-8"?>
- <classpath>
- 	<classpathentry excluding="**/*.idx|**/*.pack" kind="src" path="tst"/>
-+	<classpathentry kind="src" path="tst-rsrc"/>
- 	<classpathentry kind="src" path="exttst"/>
- 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/J2SE-1.5"/>
- 	<classpathentry combineaccessrules="false" kind="src" path="/org.spearce.jgit"/>
-diff --git a/org.spearce.jgit.test/tst/create-second-pack b/org.spearce.jgit.test/tst-rsrc/org/spearce/jgit/test/resources/create-second-pack
-similarity index 100%
-rename from org.spearce.jgit.test/tst/create-second-pack
-rename to org.spearce.jgit.test/tst-rsrc/org/spearce/jgit/test/resources/create-second-pack
-diff --git a/org.spearce.jgit.test/tst/gitgit.index b/org.spearce.jgit.test/tst-rsrc/org/spearce/jgit/test/resources/gitgit.index
-similarity index 100%
-rename from org.spearce.jgit.test/tst/gitgit.index
-rename to org.spearce.jgit.test/tst-rsrc/org/spearce/jgit/test/resources/gitgit.index
-diff --git a/org.spearce.jgit.test/tst/gitgit.lsfiles b/org.spearce.jgit.test/tst-rsrc/org/spearce/jgit/test/resources/gitgit.lsfiles
-similarity index 100%
-rename from org.spearce.jgit.test/tst/gitgit.lsfiles
-rename to org.spearce.jgit.test/tst-rsrc/org/spearce/jgit/test/resources/gitgit.lsfiles
-diff --git a/org.spearce.jgit.test/tst/gitgit.lstree b/org.spearce.jgit.test/tst-rsrc/org/spearce/jgit/test/resources/gitgit.lstree
-similarity index 100%
-rename from org.spearce.jgit.test/tst/gitgit.lstree
-rename to org.spearce.jgit.test/tst-rsrc/org/spearce/jgit/test/resources/gitgit.lstree
-diff --git a/org.spearce.jgit.test/tst/pack-34be9032ac282b11fa9babdc2b2a93ca996c9c2f.idx b/org.spearce.jgit.test/tst-rsrc/org/spearce/jgit/test/resources/pack-34be9032ac282b11fa9babdc2b2a93ca996c9c2f.idx
-similarity index 100%
-rename from org.spearce.jgit.test/tst/pack-34be9032ac282b11fa9babdc2b2a93ca996c9c2f.idx
-rename to org.spearce.jgit.test/tst-rsrc/org/spearce/jgit/test/resources/pack-34be9032ac282b11fa9babdc2b2a93ca996c9c2f.idx
-diff --git a/org.spearce.jgit.test/tst/pack-34be9032ac282b11fa9babdc2b2a93ca996c9c2f.idxV2 b/org.spearce.jgit.test/tst-rsrc/org/spearce/jgit/test/resources/pack-34be9032ac282b11fa9babdc2b2a93ca996c9c2f.idxV2
-similarity index 100%
-rename from org.spearce.jgit.test/tst/pack-34be9032ac282b11fa9babdc2b2a93ca996c9c2f.idxV2
-rename to org.spearce.jgit.test/tst-rsrc/org/spearce/jgit/test/resources/pack-34be9032ac282b11fa9babdc2b2a93ca996c9c2f.idxV2
-diff --git a/org.spearce.jgit.test/tst/pack-34be9032ac282b11fa9babdc2b2a93ca996c9c2f.pack b/org.spearce.jgit.test/tst-rsrc/org/spearce/jgit/test/resources/pack-34be9032ac282b11fa9babdc2b2a93ca996c9c2f.pack
-similarity index 100%
-rename from org.spearce.jgit.test/tst/pack-34be9032ac282b11fa9babdc2b2a93ca996c9c2f.pack
-rename to org.spearce.jgit.test/tst-rsrc/org/spearce/jgit/test/resources/pack-34be9032ac282b11fa9babdc2b2a93ca996c9c2f.pack
-diff --git a/org.spearce.jgit.test/tst/pack-9fb5b411fe6dfa89cc2e6b89d2bd8e5de02b5745.idx b/org.spearce.jgit.test/tst-rsrc/org/spearce/jgit/test/resources/pack-9fb5b411fe6dfa89cc2e6b89d2bd8e5de02b5745.idx
-similarity index 100%
-rename from org.spearce.jgit.test/tst/pack-9fb5b411fe6dfa89cc2e6b89d2bd8e5de02b5745.idx
-rename to org.spearce.jgit.test/tst-rsrc/org/spearce/jgit/test/resources/pack-9fb5b411fe6dfa89cc2e6b89d2bd8e5de02b5745.idx
-diff --git a/org.spearce.jgit.test/tst/pack-9fb5b411fe6dfa89cc2e6b89d2bd8e5de02b5745.pack b/org.spearce.jgit.test/tst-rsrc/org/spearce/jgit/test/resources/pack-9fb5b411fe6dfa89cc2e6b89d2bd8e5de02b5745.pack
-similarity index 100%
-rename from org.spearce.jgit.test/tst/pack-9fb5b411fe6dfa89cc2e6b89d2bd8e5de02b5745.pack
-rename to org.spearce.jgit.test/tst-rsrc/org/spearce/jgit/test/resources/pack-9fb5b411fe6dfa89cc2e6b89d2bd8e5de02b5745.pack
-diff --git a/org.spearce.jgit.test/tst/pack-df2982f284bbabb6bdb59ee3fcc6eb0983e20371.idx b/org.spearce.jgit.test/tst-rsrc/org/spearce/jgit/test/resources/pack-df2982f284bbabb6bdb59ee3fcc6eb0983e20371.idx
-similarity index 100%
-rename from org.spearce.jgit.test/tst/pack-df2982f284bbabb6bdb59ee3fcc6eb0983e20371.idx
-rename to org.spearce.jgit.test/tst-rsrc/org/spearce/jgit/test/resources/pack-df2982f284bbabb6bdb59ee3fcc6eb0983e20371.idx
-diff --git a/org.spearce.jgit.test/tst/pack-df2982f284bbabb6bdb59ee3fcc6eb0983e20371.idxV2 b/org.spearce.jgit.test/tst-rsrc/org/spearce/jgit/test/resources/pack-df2982f284bbabb6bdb59ee3fcc6eb0983e20371.idxV2
-similarity index 100%
-rename from org.spearce.jgit.test/tst/pack-df2982f284bbabb6bdb59ee3fcc6eb0983e20371.idxV2
-rename to org.spearce.jgit.test/tst-rsrc/org/spearce/jgit/test/resources/pack-df2982f284bbabb6bdb59ee3fcc6eb0983e20371.idxV2
-diff --git a/org.spearce.jgit.test/tst/pack-df2982f284bbabb6bdb59ee3fcc6eb0983e20371.pack b/org.spearce.jgit.test/tst-rsrc/org/spearce/jgit/test/resources/pack-df2982f284bbabb6bdb59ee3fcc6eb0983e20371.pack
-similarity index 100%
-rename from org.spearce.jgit.test/tst/pack-df2982f284bbabb6bdb59ee3fcc6eb0983e20371.pack
-rename to org.spearce.jgit.test/tst-rsrc/org/spearce/jgit/test/resources/pack-df2982f284bbabb6bdb59ee3fcc6eb0983e20371.pack
-diff --git a/org.spearce.jgit.test/tst/pack-e6d07037cbcf13376308a0a995d1fa48f8f76aaa.idx b/org.spearce.jgit.test/tst-rsrc/org/spearce/jgit/test/resources/pack-e6d07037cbcf13376308a0a995d1fa48f8f76aaa.idx
-similarity index 100%
-rename from org.spearce.jgit.test/tst/pack-e6d07037cbcf13376308a0a995d1fa48f8f76aaa.idx
-rename to org.spearce.jgit.test/tst-rsrc/org/spearce/jgit/test/resources/pack-e6d07037cbcf13376308a0a995d1fa48f8f76aaa.idx
-diff --git a/org.spearce.jgit.test/tst/pack-e6d07037cbcf13376308a0a995d1fa48f8f76aaa.pack b/org.spearce.jgit.test/tst-rsrc/org/spearce/jgit/test/resources/pack-e6d07037cbcf13376308a0a995d1fa48f8f76aaa.pack
-similarity index 100%
-rename from org.spearce.jgit.test/tst/pack-e6d07037cbcf13376308a0a995d1fa48f8f76aaa.pack
-rename to org.spearce.jgit.test/tst-rsrc/org/spearce/jgit/test/resources/pack-e6d07037cbcf13376308a0a995d1fa48f8f76aaa.pack
-diff --git a/org.spearce.jgit.test/tst/pack-huge.idx b/org.spearce.jgit.test/tst-rsrc/org/spearce/jgit/test/resources/pack-huge.idx
-similarity index 100%
-rename from org.spearce.jgit.test/tst/pack-huge.idx
-rename to org.spearce.jgit.test/tst-rsrc/org/spearce/jgit/test/resources/pack-huge.idx
-diff --git a/org.spearce.jgit.test/tst/packed-refs b/org.spearce.jgit.test/tst-rsrc/org/spearce/jgit/test/resources/packed-refs
-similarity index 100%
-rename from org.spearce.jgit.test/tst/packed-refs
-rename to org.spearce.jgit.test/tst-rsrc/org/spearce/jgit/test/resources/packed-refs
-diff --git a/org.spearce.jgit.test/tst/org/spearce/jgit/util/JGitTestUtil.java b/org.spearce.jgit.test/tst/org/spearce/jgit/util/JGitTestUtil.java
-index bfeb2a0..121b929 100644
---- a/org.spearce.jgit.test/tst/org/spearce/jgit/util/JGitTestUtil.java
-+++ b/org.spearce.jgit.test/tst/org/spearce/jgit/util/JGitTestUtil.java
-@@ -38,8 +38,13 @@
- package org.spearce.jgit.util;
- 
- import java.io.File;
-+import java.net.URL;
- 
- public abstract class JGitTestUtil {
-+	
-+	public static final String CLASSPATH_TO_RESOURCES =
-+		"/org/spearce/jgit/test/resources/";
-+	
-     private JGitTestUtil() {
-         throw new AssertionError();
-     }
-@@ -48,6 +53,14 @@ public static File getTestResourceFile(String fileName) {
-         if (fileName == null || fileName.length() <= 0) {
-             return null;
-         }
--        return new File("tst", fileName);
-+        URL url = JGitTestUtil.class.getResource(
-+    		new StringBuilder(CLASSPATH_TO_RESOURCES)
-+    		.append(fileName).toString());
-+        //If URL is null then try to load it as it was being
-+        //loaded previously
-+        if (url == null) {
-+        	return new File("tst", fileName);
-+        }
-+		return new File(url.getPath());
-     }
- }
+diff --git a/jgit-maven/.gitignore b/jgit-maven/.gitignore
+new file mode 100644
+index 0000000..eb5a316
+--- /dev/null
++++ b/jgit-maven/.gitignore
+@@ -0,0 +1 @@
++target
+diff --git a/jgit-maven/jgit/pom.xml b/jgit-maven/jgit/pom.xml
+new file mode 100644
+index 0000000..c4d7c24
+--- /dev/null
++++ b/jgit-maven/jgit/pom.xml
+@@ -0,0 +1,169 @@
++<?xml version="1.0" encoding="UTF-8"?>
++<!--
++All rights reserved.
++Redistribution and use in source and binary forms, with or
++without modification, are permitted provided that the following
++conditions are met:
++
++Redistributions of source code must retain the above copyright
++notice, this list of conditions and the following disclaimer.
++
++Redistributions in binary form must reproduce the above
++copyright notice, this list of conditions and the following
++disclaimer in the documentation and/or other materials provided
++with the distribution.
++
++Neither the name of the Git Development Community nor the
++names of its contributors may be used to endorse or promote
++products derived from this software without specific prior
++written permission.
++
++THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND
++CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES,
++INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
++OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
++ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR
++CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
++SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT
++NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
++LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
++CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT,
++STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
++ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
++ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
++-->
++<project xmlns="http://maven.apache.org/POM/4.0.0" 
++        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
++        xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
++    <modelVersion>4.0.0</modelVersion>
++    <groupId>org.spearce</groupId>
++    <artifactId>jgit</artifactId>
++    <packaging>jar</packaging>
++    <version>0.4-SNAPSHOT</version>
++    <name>jgit</name>
++    <url>http://repo.or.cz/w/egit.git</url>
++    <mailingLists>
++        <mailingList>
++            <name>GIT Mailing List</name>
++            <post>git@vger.kernel.org</post>
++            <archive>http://marc.info/?l=git</archive>
++        </mailingList>
++    </mailingLists>
++    <description>Pure Java implementation of Git</description>
++    <developers>
++        <developer>
++            <name>Shawn O. Pearce</name>
++            <email>spearce@spearce.org</email>
++            <roles>
++                <role>Maintainer</role>
++            </roles>
++        </developer>
++        <developer>
++            <name>Robin Rosenberg</name>
++            <email>robin.rosenberg@dewire.com</email>
++            <roles>
++                <role>Maintainer</role>
++            </roles>
++        </developer>
++        <developer>
++            <name>Dave Watson</name>
++            <email>dwatson@mimvista.com</email>
++            <roles>
++                <role>Developer</role>
++            </roles>
++        </developer>
++        <developer>
++            <name>Roger C. Soares</name>
++            <email>rogersoares@intelinet.com.br</email>
++            <roles>
++                <role>Developer</role>
++            </roles>
++	</developer>
++	<developer>
++            <name>Marek Zawirski</name>
++            <email>marek.zawirski@gmail.com</email>
++            <roles>
++                <role>Developer</role>
++            </roles>
++        </developer>
++        <developer>
++            <name>Imran M Yousuf</name>
++            <email>imyousuf@smartitengineering.com</email>
++            <organization>Smart IT Engineering</organization>
++            <roles>
++                <role>Contributor</role>
++            </roles>
++        </developer>
++    </developers>
++    <licenses>
++        <license>
++            <name>3-clause (new-style) BSD license.</name>
++            <comments>
++                All rights reserved.
++                Redistribution and use in source and binary forms, with or
++                without modification, are permitted provided that the following
++                conditions are met:
++
++                Redistributions of source code must retain the above copyright
++                notice, this list of conditions and the following disclaimer.
++
++                Redistributions in binary form must reproduce the above
++                copyright notice, this list of conditions and the following
++                disclaimer in the documentation and/or other materials provided
++                with the distribution.
++
++                Neither the name of the Git Development Community nor the
++                names of its contributors may be used to endorse or promote
++                products derived from this software without specific prior
++                written permission.
++
++                THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND
++                CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES,
++                INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
++                OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
++                ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR
++                CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
++                SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT
++                NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
++                LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
++                CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT,
++                STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
++                ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
++                ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
++            </comments>
++        </license>
++    </licenses>
++    <build>
++        <sourceDirectory>../../org.spearce.jgit/src/</sourceDirectory>
++        <testResources>
++            <testResource>
++                <directory>../../org.spearce.jgit.test/tst-rsrc/</directory>
++            </testResource>
++        </testResources>
++        <testSourceDirectory>../../org.spearce.jgit.test/tst/</testSourceDirectory>
++        <plugins>
++            <plugin>
++                <artifactId>maven-compiler-plugin</artifactId>
++                <version>2.0.2</version>
++                <configuration>
++                    <source>1.5</source>
++                    <target>1.5</target>
++                </configuration>
++            </plugin>
++        </plugins>
++    </build>
++    <dependencies>
++        <dependency>
++            <groupId>junit</groupId>
++            <artifactId>junit</artifactId>
++            <version>3.8.1</version>
++            <scope>test</scope>
++        </dependency>
++        <dependency>
++            <groupId>com.jcraft</groupId>
++            <artifactId>jsch</artifactId>
++            <version>0.1.38</version>
++            <scope>compile</scope>
++        </dependency>
++    </dependencies>
++</project>
 -- 
 1.5.6
