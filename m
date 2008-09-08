@@ -1,81 +1,64 @@
-From: "Jing Xue" <jingxue@digizenstudio.com>
-Subject: Re: git-p4 and keyword expansion
-Date: Mon, 08 Sep 2008 17:39:00 -0400
-Message-ID: <20080908173900.102324atjr5geizo@intranet.digizenstudio.com>
-References: <554296.48174.qm@web95003.mail.in2.yahoo.com>
+From: Scott Wood <scottwood@freescale.com>
+Subject: Re: git apply vs. renamed files index mismatch
+Date: Mon, 08 Sep 2008 16:38:57 -0500
+Message-ID: <48C59B71.3040902@freescale.com>
+References: <1220900995-11928-1-git-send-email-becky.bruce@freescale.com> <1220900995-11928-2-git-send-email-becky.bruce@freescale.com> <48C57A92.6060608@freescale.com> <20080908212717.GA21338@oksana.dev.rtsoft.ru>
 Mime-Version: 1.0
-Content-Type: text/plain;
-	charset=UTF-8;
-	DelSp="Yes";
-	format="flowed"
-Content-Transfer-Encoding: 8BIT
-Cc: "GIT SCM" <git@vger.kernel.org>
-To: dhruva <dhruva@ymail.com>
-X-From: git-owner@vger.kernel.org Mon Sep 08 23:40:17 2008
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: Becky Bruce <becky.bruce@freescale.com>, linuxppc-dev@ozlabs.org,
+	git@vger.kernel.org
+To: avorontsov@ru.mvista.com
+X-From: git-owner@vger.kernel.org Mon Sep 08 23:41:37 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KcoSy-0000EX-0H
-	for gcvg-git-2@gmane.org; Mon, 08 Sep 2008 23:40:12 +0200
+	id 1KcoUG-0000bI-2h
+	for gcvg-git-2@gmane.org; Mon, 08 Sep 2008 23:41:32 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753920AbYIHVjE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 8 Sep 2008 17:39:04 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753317AbYIHVjD
-	(ORCPT <rfc822;git-outgoing>); Mon, 8 Sep 2008 17:39:03 -0400
-Received: from k2smtpout05-01.prod.mesa1.secureserver.net ([64.202.189.56]:58868
-	"HELO k2smtpout05-01.prod.mesa1.secureserver.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1753250AbYIHVjC convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 8 Sep 2008 17:39:02 -0400
-Received: (qmail 3455 invoked from network); 8 Sep 2008 21:39:01 -0000
-Received: from unknown (HELO ip-72-167-33-213.ip.secureserver.net) (72.167.33.213)
-  by k2smtpout05-01.prod.mesa1.secureserver.net (64.202.189.56) with ESMTP; 08 Sep 2008 21:39:01 -0000
-Received: from localhost (unknown [127.0.0.1])
-	by ip-72-167-33-213.ip.secureserver.net (Postfix) with ESMTP id 2065710008B;
-	Mon,  8 Sep 2008 21:39:01 +0000 (UTC)
-Received: from ip-72-167-33-213.ip.secureserver.net ([127.0.0.1])
-	by localhost (ip-72-167-33-213.ip.secureserver.net [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id Fge6No6dipiO; Mon,  8 Sep 2008 17:39:00 -0400 (EDT)
-Received: by ip-72-167-33-213.ip.secureserver.net (Postfix, from userid 48)
-	id 522F8100A22; Mon,  8 Sep 2008 17:39:00 -0400 (EDT)
-Received: from mailrelay3.private.geico.com (mailrelay3.private.geico.com
-	[205.143.204.110]) by intranet.digizenstudio.com (Horde Framework) with
-	HTTP; Mon, 08 Sep 2008 17:39:00 -0400
-In-Reply-To: <554296.48174.qm@web95003.mail.in2.yahoo.com>
-Content-Disposition: inline
-User-Agent: Internet Messaging Program (IMP) H3 (4.2)
+	id S1754203AbYIHVk0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 8 Sep 2008 17:40:26 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754199AbYIHVkZ
+	(ORCPT <rfc822;git-outgoing>); Mon, 8 Sep 2008 17:40:25 -0400
+Received: from az33egw01.freescale.net ([192.88.158.102]:40381 "EHLO
+	az33egw01.freescale.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753892AbYIHVkZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 8 Sep 2008 17:40:25 -0400
+Received: from az33smr01.freescale.net (az33smr01.freescale.net [10.64.34.199])
+	by az33egw01.freescale.net (8.12.11/az33egw01) with ESMTP id m88Le9C5010419;
+	Mon, 8 Sep 2008 14:40:10 -0700 (MST)
+Received: from [10.82.16.68] (udp110651uds.am.freescale.net [10.82.16.68])
+	by az33smr01.freescale.net (8.13.1/8.13.0) with ESMTP id m88Le9Ta019649;
+	Mon, 8 Sep 2008 16:40:09 -0500 (CDT)
+User-Agent: Mozilla-Thunderbird 2.0.0.16 (X11/20080724)
+In-Reply-To: <20080908212717.GA21338@oksana.dev.rtsoft.ru>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/95306>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/95307>
 
-Quoting dhruva <dhruva@ymail.com>:
+Anton Vorontsov wrote:
+> I always thought that posting "-M" patches to the public lists is
+> discouraged since it is quite difficult to apply them via patch(1).
+> Also think of non-git users...
 
-> Hi,
->  The git-p4 script unexpands all p4 keywords before feeding it to  
-> git fastimport. When there is a new version, it records only the  
-> diffs minus the keyword contents at it unexpands and then feeds to  
-> fastimport. When trying to submit back to perforce, applying a patch  
-> on top of the latest file in p4 with the keyword expanded fails  
-> because we have not tracked that difference.
-> Patch applying fails and expects you to manually (out of git) to do  
-> a 'p4 submit' and get back and do 'git-p4 submit --continue'.
->  Removing the keyword unexpanding code in 'git-p4' with the  
-> following patch makes it work:
+I think the substantially enhanced reviewability trumps non-git-users 
+who can follow the rename instructions manually (or fix up their patch 
+utility) if they insist on shunning tools that would make their life easier.
 
-I'm not really arguing against the patch itself, but just wondering  
-whether it would be a good idea to make it optional or configurable.
+> diff --git a/arch/powerpc/kernel/dma.c b/arch/powerpc/kernel/dma.c
+> new file mode 100644
+> index 0000000..ae5708e
+> [...]
+> diff --git a/arch/powerpc/kernel/dma_64.c b/arch/powerpc/kernel/dma_64.c
+> deleted file mode 100644
+> index ae5708e..0000000
+> 
+> That is, if hashes match then it was pure rename.
 
-IIUC, there are reasons for git to discourage keyword expansion - for  
-instance as discussed in this thread:
+I suppose, though it's not as easy to spot, and won't help in showing 
+what the differences are if there are any.
 
-http://kerneltrap.org/mailarchive/git/2007/10/11/335112
-
-Cheers.
--- 
-Jing Xue
-
-----------------------------------------------------------------
-This message was sent using IMP, the Internet Messaging Program.
+-Scott
