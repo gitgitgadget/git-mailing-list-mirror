@@ -1,70 +1,78 @@
-From: "Santi Bejar" <santi@agolina.net>
-Subject: Re: Gitk and --no-walk don't play together
-Date: Mon, 8 Sep 2008 20:53:41 +0200
-Message-ID: <adf1fd3d0809081153o5ed8f2d8i94c5b23a2f28858@mail.gmail.com>
-References: <alpine.LNX.1.10.0809081223360.1621@fbirervta.pbzchgretzou.qr>
-	 <adf1fd3d0809080934s67b2a8b1w19aeb3d8e5f8b4ab@mail.gmail.com>
-	 <alpine.LNX.1.10.0809081310260.1621@fbirervta.pbzchgretzou.qr>
+From: Brandon Casey <casey@nrlssc.navy.mil>
+Subject: Re: [PATCH] t6023-merge-file: Work around non-portable sed usage
+Date: Mon, 08 Sep 2008 14:06:02 -0500
+Message-ID: <cNVNi0DglMtk8yH2LYJQdUZ7rfXlu4pff2TkbJj4KU6hnx-n_IQ3nw@cipher.nrlssc.navy.mil>
+References: <1220898558-73783-1-git-send-email-arjen@yaph.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: "Jan Engelhardt" <jengelh@medozas.de>
-X-From: git-owner@vger.kernel.org Mon Sep 08 21:01:54 2008
+Content-Transfer-Encoding: 7bit
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Arjen Laarhoven <arjen@yaph.org>
+X-From: git-owner@vger.kernel.org Mon Sep 08 21:07:48 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Kclzh-0002LJ-5M
-	for gcvg-git-2@gmane.org; Mon, 08 Sep 2008 21:01:49 +0200
+	id 1Kcm57-0003tf-Qb
+	for gcvg-git-2@gmane.org; Mon, 08 Sep 2008 21:07:26 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753378AbYIHTAm convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 8 Sep 2008 15:00:42 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753216AbYIHTAl
-	(ORCPT <rfc822;git-outgoing>); Mon, 8 Sep 2008 15:00:41 -0400
-Received: from yx-out-2324.google.com ([74.125.44.30]:37006 "EHLO
-	yx-out-2324.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752976AbYIHTAl convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 8 Sep 2008 15:00:41 -0400
-Received: by yx-out-2324.google.com with SMTP id 8so905946yxm.1
-        for <git@vger.kernel.org>; Mon, 08 Sep 2008 12:00:39 -0700 (PDT)
-Received: by 10.103.198.20 with SMTP id a20mr10488821muq.56.1220900021218;
-        Mon, 08 Sep 2008 11:53:41 -0700 (PDT)
-Received: by 10.102.247.10 with HTTP; Mon, 8 Sep 2008 11:53:41 -0700 (PDT)
-In-Reply-To: <alpine.LNX.1.10.0809081310260.1621@fbirervta.pbzchgretzou.qr>
-Content-Disposition: inline
+	id S1753612AbYIHTGT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 8 Sep 2008 15:06:19 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753648AbYIHTGT
+	(ORCPT <rfc822;git-outgoing>); Mon, 8 Sep 2008 15:06:19 -0400
+Received: from mail1.nrlssc.navy.mil ([128.160.35.1]:54396 "EHLO
+	mail.nrlssc.navy.mil" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753581AbYIHTGT (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 8 Sep 2008 15:06:19 -0400
+Received: by mail.nrlssc.navy.mil id m88J62dF005997; Mon, 8 Sep 2008 14:06:02 -0500
+In-Reply-To: <1220898558-73783-1-git-send-email-arjen@yaph.org>
+X-OriginalArrivalTime: 08 Sep 2008 19:06:02.0520 (UTC) FILETIME=[EFCDE180:01C911E5]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/95290>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/95291>
 
-On Mon, Sep 8, 2008 at 7:25 PM, Jan Engelhardt <jengelh@medozas.de> wro=
-te:
->
-> On Monday 2008-09-08 12:34, Santi Bejar wrote:
->>
->>> in an attempt to only show only the tags in the graph, gitk barfs:
->>
->>Use the "List references" in the file menu.
->
-> Nope, the intention was to have gitk display something like
->
-> * Linux 2.6.26
-> |
-> * Linux 2.6.25
->
-> without any intermediate commits.
->
+Arjen Laarhoven wrote:
+> OS X sed doesn't understand '\n' on the right side of a substitution.
+> Use a valid substitution character instead and use 'tr' to convert
+> those to a newline.
+> 
+> Signed-off-by: Arjen Laarhoven <arjen@yaph.org>
+> ---
+> This patch prevents the "diff3 -m" feature in next (commit
+> e0af48e49682ea) from breaking the tests which are added in that
+> commit.
+> 
+>  t/t6023-merge-file.sh |    4 ++--
+>  1 files changed, 2 insertions(+), 2 deletions(-)
+> 
+> diff --git a/t/t6023-merge-file.sh b/t/t6023-merge-file.sh
+> index 42620e0..5e18d68 100755
+> --- a/t/t6023-merge-file.sh
+> +++ b/t/t6023-merge-file.sh
+> @@ -150,8 +150,8 @@ test_expect_success 'MERGE_ZEALOUS simplifies non-conflicts' '
+>  
+>  '
+>  
+> -sed -e 's/deerit./&\n\n\n\n/' -e "s/locavit,/locavit;/" < new6.txt > new8.txt
+> -sed -e 's/deerit./&\n\n\n\n/' -e "s/locavit,/locavit --/" < new7.txt > new9.txt
+> +sed -e 's/deerit./&%%%%/' -e "s/locavit,/locavit;/"< new6.txt | tr '%' '\012' > new8.txt
+> +sed -e 's/deerit./&%%%%/' -e "s/locavit,/locavit --/" < new7.txt | tr '%' '\012' > new9.txt
+>  
+>  test_expect_success 'ZEALOUS_ALNUM' '
+>  
 
-I think the only option is to generate a graft file specifying 2.6.25
-as parent  of 2.6.26.
+I was just encountering this myself.
 
-I have an script that generates it. It gives an overview of the
-branches/tags, where the parents of a branch/tag are the independent
-branches/tags that are antecesors (search for git-overview in the
-list). But currently it has a very bad performance, it could be added
-to git itself like the other history simplifications, but I don=B4t
-know.
+sed can be fixed without the use of tr by replacing '\n' with an explicit newline like:
 
-Santi
+sed -e 's/deerit./&\
+\
+\
+\
+/' -e "s/locavit,/locavit;/" < new6.txt > new8.txt
+
+Of course it doesn't fit on one line though.
+
+-brandon
