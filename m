@@ -1,111 +1,108 @@
-From: Abhijit Menon-Sen <ams@toroid.org>
-Subject: Re: [PATCH] Git.pm: Use File::Temp->tempfile instead of ->new
-Date: Mon, 8 Sep 2008 13:35:48 +0530
-Message-ID: <20080908080548.GA3206@toroid.org>
-References: <48BBB59F.9080204@statsbiblioteket.dk> <vpqvdxggpw6.fsf@bauges.imag.fr> <20080901100435.GC6555@toroid.org> <48BBC20E.20808@statsbiblioteket.dk> <20080901104222.GA10026@toroid.org> <48BBCBEA.8000301@statsbiblioteket.dk> <7vskscplsz.fsf@gitster.siamese.dyndns.org> <20080907092624.GA8470@toroid.org> <48C40670.6090106@gmail.com>
+From: dhruva <dhruva@ymail.com>
+Subject: Re: What's the status of MinGW port.
+Date: Mon, 8 Sep 2008 13:52:10 +0530 (IST)
+Message-ID: <532046.43033.qm@web95005.mail.in2.yahoo.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <gitster@pobox.com>,
-	"Tom G. Christensen" <tgc@statsbiblioteket.dk>,
-	git@vger.kernel.org, Matthieu Moy <Matthieu.Moy@imag.fr>,
-	Petr Baudis <pasky@suse.cz>
-To: Marcus Griep <neoeinstein@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Sep 08 10:07:13 2008
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8BIT
+Cc: git@vger.kernel.org
+To: Johannes Sixt <j.sixt@viscovery.net>, Kevin Yu <yujie052@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Sep 08 10:23:35 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Kcbm6-0006Ya-7z
-	for gcvg-git-2@gmane.org; Mon, 08 Sep 2008 10:07:06 +0200
+	id 1Kcc1x-0001rP-Hl
+	for gcvg-git-2@gmane.org; Mon, 08 Sep 2008 10:23:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751461AbYIHIFy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 8 Sep 2008 04:05:54 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751243AbYIHIFx
-	(ORCPT <rfc822;git-outgoing>); Mon, 8 Sep 2008 04:05:53 -0400
-Received: from fugue.toroid.org ([85.10.196.113]:46389 "EHLO fugue.toroid.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751086AbYIHIFw (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 8 Sep 2008 04:05:52 -0400
-Received: from penne.toroid.org (penne-vpn [10.8.0.6])
-	by fugue.toroid.org (Postfix) with ESMTP id 811C0558577;
-	Mon,  8 Sep 2008 10:05:49 +0200 (CEST)
-Received: by penne.toroid.org (Postfix, from userid 1000)
-	id 3E5B0388402; Mon,  8 Sep 2008 13:35:48 +0530 (IST)
-Content-Disposition: inline
-In-Reply-To: <48C40670.6090106@gmail.com>
+	id S1752330AbYIHIWP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 8 Sep 2008 04:22:15 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752332AbYIHIWO
+	(ORCPT <rfc822;git-outgoing>); Mon, 8 Sep 2008 04:22:14 -0400
+Received: from n4a.bullet.mail.tp2.yahoo.com ([203.188.202.98]:46980 "HELO
+	n4a.bullet.mail.tp2.yahoo.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with SMTP id S1752269AbYIHIWO convert rfc822-to-8bit
+	(ORCPT <rfc822;git@vger.kernel.org>); Mon, 8 Sep 2008 04:22:14 -0400
+Received: from [203.188.202.76] by n4.bullet.mail.tp2.yahoo.com with NNFMP; 08 Sep 2008 08:22:12 -0000
+Received: from [202.43.196.224] by t2.bullet.mail.tp2.yahoo.com with NNFMP; 08 Sep 2008 08:22:12 -0000
+Received: from [203.212.168.60] by t1.bullet.tpe.yahoo.com with NNFMP; 08 Sep 2008 08:22:12 -0000
+Received: from [203.104.17.88] by t1.bullet.kr1.yahoo.com with NNFMP; 08 Sep 2008 08:22:12 -0000
+Received: from [127.0.0.1] by omp102.mail.in2.yahoo.com with NNFMP; 08 Sep 2008 08:22:10 -0000
+X-Yahoo-Newman-Property: ymail-3
+X-Yahoo-Newman-Id: 632233.53764.bm@omp102.mail.in2.yahoo.com
+Received: (qmail 43690 invoked by uid 60001); 8 Sep 2008 08:22:10 -0000
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+  s=s1024; d=ymail.com;
+  h=X-YMail-OSG:Received:X-Mailer:Date:From:Subject:To:Cc:MIME-Version:Content-Type:Content-Transfer-Encoding:Message-ID;
+  b=Wfr+Q3EZJrdlnUbneSOxTDIIAfRaNAlYrIYpAEFsrXIgHvMRo5w1Puj3navo3TpPFKqhf5fF4NrwFe6gvBLUcE31SKEj69QfO7xmcMvpKJNg7g3oWBTylNDIak8wDXwO6zThZMIaIy23szD0gckVa2jbXKzhJAR7VXRDkoaRjG4=;
+X-YMail-OSG: Yr61K34VM1nthladzcnOMYQqNN.8MMR8z.BrgjGDyhN6.JHsLdz0EWGnapiu3VDW6z2ntmj3t_1R.OfzD4nkHvtlr46beqfsy7SWbPpVNH73dEnNKqwCyGu1IVBoyG0-
+Received: from [202.3.112.9] by web95005.mail.in2.yahoo.com via HTTP; Mon, 08 Sep 2008 13:52:10 IST
+X-Mailer: YahooMailRC/1096.28 YahooMailWebService/0.7.218.2
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/95227>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/95228>
 
-At 2008-09-07 12:50:56 -0400, neoeinstein@gmail.com wrote:
->
-> As I was the one who brought File::Temp->new over from git-svn, I can
-> take a look at reducing the dependency to ->tempfile.  If you don't
-> patch in first, I'll get one in as well.
+Hi,
+ I cloned the git repo from 'git://git2.kernel.org/pub/scm/git/git.git'. I had an earlier msysGIT with build environment. I just got into the msys (bash) environment and ran a 'gmake'. It built fine on Windows XP.
+ I thank everyone involved in making git work on windoze. It really makes it a lot more easier to push git as a serious dVCS in the corporate world with development hapenning on different platforms :-)
+ Once I iron out git-p4, hoping to say "Git the hell out of here ... p4" soon.
 
-Please do.
+A trivial issue in install:
+'gmake install' had a small issue in trying to install non existant 'git-shell.exe'. The following trivial patch on master to Makefile handles that:
 
-Here's my latest patch, in case you find it useful as a starting point.
-I do not have more time or inclination to work on this at the moment.
-The problem with this patch is that the caller (git-svn in this case)
-assumes that a File::Temp object will be returned, and depends on the
-OO interface (e.g. by calling $tmp_fh->filename).
 
-Unfortunately, I do not think the problem is limited to filename(). I
-blessed $$temp_fd into a stub package that provided a fake filename()
-method, but t9100-git-svn-basic.sh failed a little further on, and I
-did not investigate further. Anyway, I don't think emulating the
-File::Temp OO interface is a good solution at all.
+diff --git a/Makefile b/Makefile
+index dfed7ba..d5a3327 100644
+--- a/Makefile
++++ b/Makefile
+@@ -1365,7 +1365,10 @@ install: all
+        $(INSTALL) -d -m 755 '$(DESTDIR_SQ)$(bindir_SQ)'
+        $(INSTALL) -d -m 755 '$(DESTDIR_SQ)$(gitexec_instdir_SQ)'
+        $(INSTALL) $(ALL_PROGRAMS) '$(DESTDIR_SQ)$(gitexec_instdir_SQ)'
+-       $(INSTALL) git$X git-upload-pack$X git-receive-pack$X git-upload-archive
+$X git-shell$X '$(DESTDIR_SQ)$(bindir_SQ)'
++ifndef NO_POSIX_ONLY_PROGRAMS
++       $(INSTALL) git-shell$X '$(DESTDIR_SQ)$(bindir_SQ)'
++endif
++       $(INSTALL) git$X git-upload-pack$X git-receive-pack$X git-upload-archive
+$X '$(DESTDIR_SQ)$(bindir_SQ)'
+        $(MAKE) -C templates DESTDIR='$(DESTDIR_SQ)' install
+        $(MAKE) -C perl prefix='$(prefix_SQ)' DESTDIR='$(DESTDIR_SQ)' install
+ ifndef NO_TCLTK
 
-(Tom: I'm sorry I ran out of energy before I could put together a
-complete fix for you.)
 
--- ams
+-dhruva
 
-From: Abhijit Menon-Sen <ams@toroid.org>
-Date: Mon, 8 Sep 2008 12:26:59 +0530
-Subject: [PATCH] Git.pm: Use File::Temp->tempfile instead of ->new
 
-Perl 5.8.0 ships with File::Temp 0.13, which does not have the new()
-interface introduced in 0.14, as pointed out by Tom G. Christensen.
+----- Original Message ----
+> From: Johannes Sixt <j.sixt@viscovery.net>
+> To: Kevin Yu <yujie052@gmail.com>
+> Cc: git@vger.kernel.org
+> Sent: Monday, 8 September, 2008 12:38:08 PM
+> Subject: Re: What's the status of MinGW port.
+> 
+> Kevin Yu schrieb:
+> >       GIT is a great tool, but I'm running Windows XP.
+> >       It seems like msysgit hasn't been updated for a long time,
+> > neither has the mingw.git branch.
+> >       Is there any plan to create a native version of GIT on MS Windows?
+> 
+> There are no plans anymore to create such a thing.
+> 
+> It is already there: http://code.google.com/p/msysgit/
+> 
+> If the lack of activity is worrysome to you, you could help create a
+> release tarball for 1.6..0(.x).
+> 
+> -- Hannes
+> 
+> --
+> To unsubscribe from this list: send the line "unsubscribe git" in
+> the body of a message to majordomo@vger.kernel.org
+> More majordomo info at  http://vger.kernel.org/majordomo-info.html
 
-Signed-off-by: Abhijit Menon-Sen <ams@toroid.org>
----
- perl/Git.pm |   13 ++++++++-----
- 1 files changed, 8 insertions(+), 5 deletions(-)
 
-diff --git a/perl/Git.pm b/perl/Git.pm
-index 102e6a4..b0498ca 100644
---- a/perl/Git.pm
-+++ b/perl/Git.pm
-@@ -991,7 +991,7 @@ the same string.
- sub temp_release {
- 	my ($self, $temp_fd, $trunc) = _maybe_self(@_);
- 
--	if (ref($temp_fd) ne 'File::Temp') {
-+	if (exists $TEMP_FILES{$temp_fd}) {
- 		$temp_fd = $TEMP_FILES{$temp_fd};
- 	}
- 	unless ($TEMP_LOCKS{$temp_fd}) {
-@@ -1021,10 +1021,13 @@ sub _temp_cache {
- 			carp "Temp file '", $name,
- 				"' was closed. Opening replacement.";
- 		}
--		$$temp_fd = File::Temp->new(
--			TEMPLATE => 'Git_XXXXXX',
--			DIR => File::Spec->tmpdir
--			) or throw Error::Simple("couldn't open new temp file");
-+		eval {
-+			($$temp_fd) = File::Temp->tempfile(
-+				'Git_XXXXXX',
-+				DIR => File::Spec->tmpdir
-+			);
-+		};
-+		throw Error::Simple("couldn't open new temp file") if $@;
- 		$$temp_fd->autoflush;
- 		binmode $$temp_fd;
- 	}
--- 
-1.6.0.1.196.g01914
+
+      Get an email ID as yourname@ymail.com or yourname@rocketmail.com. Click here http://in.promos.yahoo.com/address
