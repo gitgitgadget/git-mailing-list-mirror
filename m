@@ -1,70 +1,54 @@
-From: david@lang.hm
-Subject: Re: Is incremental staging really the common mode?
-Date: Sun, 7 Sep 2008 17:45:24 -0700 (PDT)
-Message-ID: <alpine.DEB.1.10.0809071742470.8096@asgard.lang.hm>
-References: <51419b2c0809071317g6f916b19p1c2792595be58047@mail.gmail.com> <alpine.DEB.1.10.0809071729310.8096@asgard.lang.hm> <7v1vzvjwqz.fsf@gitster.siamese.dyndns.org>
+From: Jeff King <peff@peff.net>
+Subject: Re: [RFC] cherry-pick using multiple parents to implement -x
+Date: Sun, 7 Sep 2008 21:49:59 -0400
+Message-ID: <20080908014959.GA29129@coredump.intra.peff.net>
+References: <20080907103415.GA3139@cuci.nl> <20080907172807.GA25233@coredump.intra.peff.net> <20080907195626.GA8765@cuci.nl> <20080907200441.GA26705@coredump.intra.peff.net> <20080907202202.GC8765@cuci.nl>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII; format=flowed
-Cc: Elijah Newren <newren@gmail.com>,
-	Jakub Narebski <jnareb@gmail.com>, git@vger.kernel.org,
-	Stephan Beyer <s-beyer@gmx.net>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Sep 08 02:45:41 2008
+Content-Type: text/plain; charset=utf-8
+Cc: git@vger.kernel.org
+To: "Stephen R. van den Berg" <srb@cuci.nl>
+X-From: git-owner@vger.kernel.org Mon Sep 08 03:51:34 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KcUst-0001oQ-Vh
-	for gcvg-git-2@gmane.org; Mon, 08 Sep 2008 02:45:40 +0200
+	id 1KcVue-0005t0-H0
+	for gcvg-git-2@gmane.org; Mon, 08 Sep 2008 03:51:33 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751122AbYIHAoe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 7 Sep 2008 20:44:34 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751448AbYIHAod
-	(ORCPT <rfc822;git-outgoing>); Sun, 7 Sep 2008 20:44:33 -0400
-Received: from mail.lang.hm ([64.81.33.126]:37187 "EHLO bifrost.lang.hm"
+	id S1752449AbYIHBuE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 7 Sep 2008 21:50:04 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752376AbYIHBuE
+	(ORCPT <rfc822;git-outgoing>); Sun, 7 Sep 2008 21:50:04 -0400
+Received: from peff.net ([208.65.91.99]:4889 "EHLO peff.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750885AbYIHAod (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 7 Sep 2008 20:44:33 -0400
-Received: from asgard.lang.hm (asgard.lang.hm [10.0.0.100])
-	by bifrost.lang.hm (8.13.4/8.13.4/Debian-3) with ESMTP id m880iRqp028546;
-	Sun, 7 Sep 2008 17:44:27 -0700
-X-X-Sender: dlang@asgard.lang.hm
-In-Reply-To: <7v1vzvjwqz.fsf@gitster.siamese.dyndns.org>
-User-Agent: Alpine 1.10 (DEB 962 2008-03-14)
+	id S1751792AbYIHBuB (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 7 Sep 2008 21:50:01 -0400
+Received: (qmail 15885 invoked by uid 111); 8 Sep 2008 01:50:00 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+    by peff.net (qpsmtpd/0.32) with SMTP; Sun, 07 Sep 2008 21:50:00 -0400
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Sun, 07 Sep 2008 21:49:59 -0400
+Content-Disposition: inline
+In-Reply-To: <20080907202202.GC8765@cuci.nl>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/95203>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/95204>
 
-On Sun, 7 Sep 2008, Junio C Hamano wrote:
+On Sun, Sep 07, 2008 at 10:22:02PM +0200, Stephen R. van den Berg wrote:
 
-> david@lang.hm writes:
->
->> also, how many are doing 'git add .' or 'git add *' followed by git
->> commit?
->
-> Everybody who starts a new history from scratch from an existing tarball
-> would be doing this at least once ;-)
->
->> there were several commands listed that I have never heard of before
->> and will want to research to see what they do to see if I should be
->> using them.
->
-> The commands singled out were either (1) ancient, nobody should be using
-> them, and we would love to prove that nobody is using them anymore so that
-> we can remove them, or (2) reasonably new inventions that would help
-> common situations more than the stock Porcelain we have had for years, to
-> see if they are already widely adopted.
+> >But then it will fail to find legitimate merge bases. So yes, you _can_
+> 
+> Will it?  Can you give me one example where it would find the wrong one?
 
-it would be really good to indicate which is which. I spotted several 
-things that looked like they would help me, but I have no idea which ones 
-I should use and which I shouldn't
+How about the example I gave already? The first merge-base is E, but
+that is not correct for the merge I gave. So you propose an algorithm
+which will find A. But now imagine the exact some topology, but there
+was no cherry-pick; instead, E' is actually a merge. Wouldn't E be the
+right merge-base then?
 
-> Perhaps somebody (or group of people, taking turns) should post a "git
-> trick of the week" series to this mailing list?
+And yes, of course the _content_ of the trees in E' will be different in
+those two cases. But the shape of the history graph will be the same,
+and that is the only thing that goes into finding a merge base.
 
-that would be a good idea. I would suggest also putting them on the wiki 
-and (if possible) package them up periodicly as a fortune file.
-
-David Lang
+-Peff
