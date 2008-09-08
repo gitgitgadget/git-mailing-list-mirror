@@ -1,108 +1,76 @@
-From: dhruva <dhruva@ymail.com>
-Subject: Re: What's the status of MinGW port.
-Date: Mon, 8 Sep 2008 13:52:10 +0530 (IST)
-Message-ID: <532046.43033.qm@web95005.mail.in2.yahoo.com>
+From: "Tor Arvid Lund" <torarvid@gmail.com>
+Subject: Re: git-p4 and keyword expansion
+Date: Mon, 8 Sep 2008 10:27:02 +0200
+Message-ID: <1a6be5fa0809080127h5db71093o364aade2fb955acc@mail.gmail.com>
+References: <554296.48174.qm@web95003.mail.in2.yahoo.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8BIT
-Cc: git@vger.kernel.org
-To: Johannes Sixt <j.sixt@viscovery.net>, Kevin Yu <yujie052@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Sep 08 10:23:35 2008
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: "GIT SCM" <git@vger.kernel.org>
+To: dhruva <dhruva@ymail.com>
+X-From: git-owner@vger.kernel.org Mon Sep 08 10:28:22 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Kcc1x-0001rP-Hl
-	for gcvg-git-2@gmane.org; Mon, 08 Sep 2008 10:23:30 +0200
+	id 1Kcc6Y-0002wS-ML
+	for gcvg-git-2@gmane.org; Mon, 08 Sep 2008 10:28:15 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752330AbYIHIWP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 8 Sep 2008 04:22:15 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752332AbYIHIWO
-	(ORCPT <rfc822;git-outgoing>); Mon, 8 Sep 2008 04:22:14 -0400
-Received: from n4a.bullet.mail.tp2.yahoo.com ([203.188.202.98]:46980 "HELO
-	n4a.bullet.mail.tp2.yahoo.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with SMTP id S1752269AbYIHIWO convert rfc822-to-8bit
-	(ORCPT <rfc822;git@vger.kernel.org>); Mon, 8 Sep 2008 04:22:14 -0400
-Received: from [203.188.202.76] by n4.bullet.mail.tp2.yahoo.com with NNFMP; 08 Sep 2008 08:22:12 -0000
-Received: from [202.43.196.224] by t2.bullet.mail.tp2.yahoo.com with NNFMP; 08 Sep 2008 08:22:12 -0000
-Received: from [203.212.168.60] by t1.bullet.tpe.yahoo.com with NNFMP; 08 Sep 2008 08:22:12 -0000
-Received: from [203.104.17.88] by t1.bullet.kr1.yahoo.com with NNFMP; 08 Sep 2008 08:22:12 -0000
-Received: from [127.0.0.1] by omp102.mail.in2.yahoo.com with NNFMP; 08 Sep 2008 08:22:10 -0000
-X-Yahoo-Newman-Property: ymail-3
-X-Yahoo-Newman-Id: 632233.53764.bm@omp102.mail.in2.yahoo.com
-Received: (qmail 43690 invoked by uid 60001); 8 Sep 2008 08:22:10 -0000
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-  s=s1024; d=ymail.com;
-  h=X-YMail-OSG:Received:X-Mailer:Date:From:Subject:To:Cc:MIME-Version:Content-Type:Content-Transfer-Encoding:Message-ID;
-  b=Wfr+Q3EZJrdlnUbneSOxTDIIAfRaNAlYrIYpAEFsrXIgHvMRo5w1Puj3navo3TpPFKqhf5fF4NrwFe6gvBLUcE31SKEj69QfO7xmcMvpKJNg7g3oWBTylNDIak8wDXwO6zThZMIaIy23szD0gckVa2jbXKzhJAR7VXRDkoaRjG4=;
-X-YMail-OSG: Yr61K34VM1nthladzcnOMYQqNN.8MMR8z.BrgjGDyhN6.JHsLdz0EWGnapiu3VDW6z2ntmj3t_1R.OfzD4nkHvtlr46beqfsy7SWbPpVNH73dEnNKqwCyGu1IVBoyG0-
-Received: from [202.3.112.9] by web95005.mail.in2.yahoo.com via HTTP; Mon, 08 Sep 2008 13:52:10 IST
-X-Mailer: YahooMailRC/1096.28 YahooMailWebService/0.7.218.2
+	id S1752083AbYIHI1I (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 8 Sep 2008 04:27:08 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751821AbYIHI1G
+	(ORCPT <rfc822;git-outgoing>); Mon, 8 Sep 2008 04:27:06 -0400
+Received: from fg-out-1718.google.com ([72.14.220.152]:28212 "EHLO
+	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751628AbYIHI1E (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 8 Sep 2008 04:27:04 -0400
+Received: by fg-out-1718.google.com with SMTP id 19so1400967fgg.17
+        for <git@vger.kernel.org>; Mon, 08 Sep 2008 01:27:02 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to
+         :subject:cc:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:references;
+        bh=ZVP+mRZJTOqqroY7/rOyt6F52oHODBZvQeY1l9sASEs=;
+        b=MDON2n9KlUd1MUUvGM9cU4kZchD5a+Be1iQ/MwowmiO5m98Xk6GrDuY6GBdXIRfeZB
+         /L41bCbSDtobmV4C0cEX5yW5E0V3jAwmBHWT428bP//eU1sIxyo8Tn9MnHsfKHP8AC43
+         1DkYrp8i2HCiOI2GCoABp8hMN/OVToN0YCg3I=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
+         :content-type:content-transfer-encoding:content-disposition
+         :references;
+        b=KllWakTQ8FIpoxAmMR9Gck4C7NgmtGHvEU/HRn7S1cZz9UOWeNU0RcXfY4MvhDHjx1
+         ThRGxr7QpZygH55Jr8TLqbYsZK38loky57PtmjtZgNx51Xq2EBDHQ4m15rpdrrEq4eJ4
+         zke9WLWTEheGbEl2nPe38cYNKi0XHM3lwMJ4A=
+Received: by 10.86.98.14 with SMTP id v14mr11035481fgb.74.1220862422698;
+        Mon, 08 Sep 2008 01:27:02 -0700 (PDT)
+Received: by 10.86.79.9 with HTTP; Mon, 8 Sep 2008 01:27:02 -0700 (PDT)
+In-Reply-To: <554296.48174.qm@web95003.mail.in2.yahoo.com>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/95228>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/95229>
 
 Hi,
- I cloned the git repo from 'git://git2.kernel.org/pub/scm/git/git.git'. I had an earlier msysGIT with build environment. I just got into the msys (bash) environment and ran a 'gmake'. It built fine on Windows XP.
- I thank everyone involved in making git work on windoze. It really makes it a lot more easier to push git as a serious dVCS in the corporate world with development hapenning on different platforms :-)
- Once I iron out git-p4, hoping to say "Git the hell out of here ... p4" soon.
 
-A trivial issue in install:
-'gmake install' had a small issue in trying to install non existant 'git-shell.exe'. The following trivial patch on master to Makefile handles that:
+On Mon, Sep 8, 2008 at 6:25 AM, dhruva <dhruva@ymail.com> wrote:
+> Hi,
+>  The git-p4 script unexpands all p4 keywords before feeding it to git fastimport. When there is a new version, it records only the diffs minus the keyword contents at it unexpands and then feeds to fastimport. When trying to submit back to perforce, applying a patch on top of the latest file in p4 with the keyword expanded fails because we have not tracked that difference. Patch applying fails and expects you to manually (out of git) to do a 'p4 submit' and get back and do 'git-p4 submit --continue'.
+>  Removing the keyword unexpanding code in 'git-p4' with the following patch makes it work:
 
+Yes, I have also experienced this problem, and haven't yet come up
+with a solution to it. Your solution seems to solve the problem with
+submitting to p4, but it would also mean that files cloned from p4
+would have diffs in the git database whenever the p4 headers changed.
+This does not seem nice to me. Are all the keyword expansions
+reproducable? I mean... could we store them in git as before
+(unexpanded), and make some logic to recreate them upon submitting to
+p4? That might work...
 
-diff --git a/Makefile b/Makefile
-index dfed7ba..d5a3327 100644
---- a/Makefile
-+++ b/Makefile
-@@ -1365,7 +1365,10 @@ install: all
-        $(INSTALL) -d -m 755 '$(DESTDIR_SQ)$(bindir_SQ)'
-        $(INSTALL) -d -m 755 '$(DESTDIR_SQ)$(gitexec_instdir_SQ)'
-        $(INSTALL) $(ALL_PROGRAMS) '$(DESTDIR_SQ)$(gitexec_instdir_SQ)'
--       $(INSTALL) git$X git-upload-pack$X git-receive-pack$X git-upload-archive
-$X git-shell$X '$(DESTDIR_SQ)$(bindir_SQ)'
-+ifndef NO_POSIX_ONLY_PROGRAMS
-+       $(INSTALL) git-shell$X '$(DESTDIR_SQ)$(bindir_SQ)'
-+endif
-+       $(INSTALL) git$X git-upload-pack$X git-receive-pack$X git-upload-archive
-$X '$(DESTDIR_SQ)$(bindir_SQ)'
-        $(MAKE) -C templates DESTDIR='$(DESTDIR_SQ)' install
-        $(MAKE) -C perl prefix='$(prefix_SQ)' DESTDIR='$(DESTDIR_SQ)' install
- ifndef NO_TCLTK
+I think, at least, that although this is a nice initiative, we should
+find a nicer solution.
 
-
--dhruva
-
-
------ Original Message ----
-> From: Johannes Sixt <j.sixt@viscovery.net>
-> To: Kevin Yu <yujie052@gmail.com>
-> Cc: git@vger.kernel.org
-> Sent: Monday, 8 September, 2008 12:38:08 PM
-> Subject: Re: What's the status of MinGW port.
-> 
-> Kevin Yu schrieb:
-> >       GIT is a great tool, but I'm running Windows XP.
-> >       It seems like msysgit hasn't been updated for a long time,
-> > neither has the mingw.git branch.
-> >       Is there any plan to create a native version of GIT on MS Windows?
-> 
-> There are no plans anymore to create such a thing.
-> 
-> It is already there: http://code.google.com/p/msysgit/
-> 
-> If the lack of activity is worrysome to you, you could help create a
-> release tarball for 1.6..0(.x).
-> 
-> -- Hannes
-> 
-> --
-> To unsubscribe from this list: send the line "unsubscribe git" in
-> the body of a message to majordomo@vger.kernel.org
-> More majordomo info at  http://vger.kernel.org/majordomo-info.html
-
-
-
-      Get an email ID as yourname@ymail.com or yourname@rocketmail.com. Click here http://in.promos.yahoo.com/address
+-Tor Arvid-
