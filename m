@@ -1,56 +1,55 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] Add help.autocorrect to enable/disable autocorrecting
-Date: Sun, 07 Sep 2008 23:50:45 -0700
-Message-ID: <7vbpyzgmgq.fsf@gitster.siamese.dyndns.org>
-References: <20080828171533.GA6024@blimp.local>
- <20080828212722.GF6439@steel.home> <20080828212815.GG6439@steel.home>
+From: "Stephen R. van den Berg" <srb@cuci.nl>
+Subject: Re: [RFC] cherry-pick using multiple parents to implement -x
+Date: Mon, 8 Sep 2008 08:57:23 +0200
+Message-ID: <20080908065723.GA29969@cuci.nl>
+References: <20080907103415.GA3139@cuci.nl> <20080907172807.GA25233@coredump.intra.peff.net> <20080907195626.GA8765@cuci.nl> <20080907200441.GA26705@coredump.intra.peff.net> <20080907202202.GC8765@cuci.nl> <20080908014959.GA29129@coredump.intra.peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>
-To: Alex Riesen <raa.lkml@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Sep 08 08:52:21 2008
+Cc: git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Mon Sep 08 08:58:42 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KcabQ-0003yd-QR
-	for gcvg-git-2@gmane.org; Mon, 08 Sep 2008 08:52:01 +0200
+	id 1Kcaht-0005iS-AP
+	for gcvg-git-2@gmane.org; Mon, 08 Sep 2008 08:58:41 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751676AbYIHGuy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 8 Sep 2008 02:50:54 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751790AbYIHGuy
-	(ORCPT <rfc822;git-outgoing>); Mon, 8 Sep 2008 02:50:54 -0400
-Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:36057 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751649AbYIHGux (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 8 Sep 2008 02:50:53 -0400
-Received: from localhost.localdomain (localhost [127.0.0.1])
-	by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id 76A5D7828F;
-	Mon,  8 Sep 2008 02:50:52 -0400 (EDT)
-Received: from pobox.com (ip68-225-240-211.oc.oc.cox.net [68.225.240.211])
- (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
- certificate requested) by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with
- ESMTPSA id 9FC447828E; Mon,  8 Sep 2008 02:50:48 -0400 (EDT)
-In-Reply-To: <20080828212815.GG6439@steel.home> (Alex Riesen's message of
- "Thu, 28 Aug 2008 23:28:15 +0200")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: 7A6DEB58-7D72-11DD-B3AE-3113EBD4C077-77302942!a-sasl-quonix.pobox.com
+	id S1752204AbYIHG5Z (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 8 Sep 2008 02:57:25 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752150AbYIHG5Z
+	(ORCPT <rfc822;git-outgoing>); Mon, 8 Sep 2008 02:57:25 -0400
+Received: from aristoteles.cuci.nl ([212.125.128.18]:52227 "EHLO
+	aristoteles.cuci.nl" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752168AbYIHG5Y (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 8 Sep 2008 02:57:24 -0400
+Received: by aristoteles.cuci.nl (Postfix, from userid 500)
+	id 7C8BF5465; Mon,  8 Sep 2008 08:57:23 +0200 (CEST)
+Content-Disposition: inline
+In-Reply-To: <20080908014959.GA29129@coredump.intra.peff.net>
+User-Agent: Mutt/1.5.13 (2006-08-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/95219>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/95220>
 
-Alex Riesen <raa.lkml@gmail.com> writes:
+Jeff King wrote:
+>On Sun, Sep 07, 2008 at 10:22:02PM +0200, Stephen R. van den Berg wrote:
+>> >But then it will fail to find legitimate merge bases. So yes, you _can_
 
-> It is off(0) by default, to avoid scaring people unless they asked to.
+>> Will it?  Can you give me one example where it would find the wrong one?
 
-I do not think this is off by default, by the way.  "off by default" means
-that you would not waste extra cycles to compute the list of suggestions.
+>How about the example I gave already? The first merge-base is E, but
+>that is not correct for the merge I gave. So you propose an algorithm
+>which will find A. But now imagine the exact some topology, but there
+>was no cherry-pick; instead, E' is actually a merge. Wouldn't E be the
+>right merge-base then?
 
-I am not suggesting that it should be "off" by default in that sense,
-though.  I am just pointing out that it is not described correctly.
-
-I also noticed that this does not seem to pay attention to mistyped
-aliases.  Is it by design, oversight, or lazyness?
+Indeed.  Q.E.D.
+I'll drop the idea with the parentlinks.
+-- 
+Sincerely,
+           Stephen R. van den Berg.
+The Horkheimer Effect: "The odds of it being cloudy are directly proportional
+to the importance of an astronomical event."
