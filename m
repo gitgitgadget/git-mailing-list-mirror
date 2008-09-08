@@ -1,82 +1,149 @@
-From: david@lang.hm
-Subject: Re: Is incremental staging really the common mode? [Was: Re: Git
- User's Survey 2008 partial summary, part 4 - how do we use Git]
-Date: Sun, 7 Sep 2008 17:32:09 -0700 (PDT)
-Message-ID: <alpine.DEB.1.10.0809071729310.8096@asgard.lang.hm>
-References: <51419b2c0809071317g6f916b19p1c2792595be58047@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] builtin-symbolic-ref: comment on the use of
+ "resolve_ref" with reading == 0
+Date: Sun, 07 Sep 2008 17:33:26 -0700
+Message-ID: <7v63p7jx2h.fsf@gitster.siamese.dyndns.org>
+References: <20080906095543.c627b692.chriscool@tuxfamily.org>
+ <7vwshpsi1g.fsf@gitster.siamese.dyndns.org>
+ <200809061403.14592.chriscool@tuxfamily.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII; format=flowed
-Cc: Jakub Narebski <jnareb@gmail.com>, git@vger.kernel.org,
-	Stephan Beyer <s-beyer@gmx.net>
-To: Elijah Newren <newren@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Sep 08 02:32:48 2008
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: Christian Couder <chriscool@tuxfamily.org>
+X-From: git-owner@vger.kernel.org Mon Sep 08 02:34:40 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KcUgR-0008Gb-Gz
-	for gcvg-git-2@gmane.org; Mon, 08 Sep 2008 02:32:48 +0200
+	id 1KcUiG-00007A-4s
+	for gcvg-git-2@gmane.org; Mon, 08 Sep 2008 02:34:40 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751291AbYIHAbT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 7 Sep 2008 20:31:19 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751282AbYIHAbT
-	(ORCPT <rfc822;git-outgoing>); Sun, 7 Sep 2008 20:31:19 -0400
-Received: from mail.lang.hm ([64.81.33.126]:55982 "EHLO bifrost.lang.hm"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751032AbYIHAbT (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 7 Sep 2008 20:31:19 -0400
-Received: from asgard.lang.hm (asgard.lang.hm [10.0.0.100])
-	by bifrost.lang.hm (8.13.4/8.13.4/Debian-3) with ESMTP id m880VCtO028497;
-	Sun, 7 Sep 2008 17:31:12 -0700
-X-X-Sender: dlang@asgard.lang.hm
-In-Reply-To: <51419b2c0809071317g6f916b19p1c2792595be58047@mail.gmail.com>
-User-Agent: Alpine 1.10 (DEB 962 2008-03-14)
+	id S1751342AbYIHAdd convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 7 Sep 2008 20:33:33 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751282AbYIHAdd
+	(ORCPT <rfc822;git-outgoing>); Sun, 7 Sep 2008 20:33:33 -0400
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:51870 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751243AbYIHAdc convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 7 Sep 2008 20:33:32 -0400
+Received: from localhost.localdomain (localhost [127.0.0.1])
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 6536E5EB91;
+	Sun,  7 Sep 2008 20:33:31 -0400 (EDT)
+Received: from pobox.com (ip68-225-240-211.oc.oc.cox.net [68.225.240.211])
+ (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
+ certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
+ ESMTPSA id 5DD8F5EB90; Sun,  7 Sep 2008 20:33:28 -0400 (EDT)
+In-Reply-To: <200809061403.14592.chriscool@tuxfamily.org> (Christian Couder's
+ message of "Sat, 6 Sep 2008 14:03:13 +0200")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: C34C4444-7D3D-11DD-8FE7-D0CFFE4BC1C1-77302942!a-sasl-fastnet.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/95199>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/95200>
 
-On Sun, 7 Sep 2008, Elijah Newren wrote:
+Christian Couder <chriscool@tuxfamily.org> writes:
 
-> Hi,
->
-> On Sat, Sep 6, 2008 at 4:17 PM, Jakub Narebski <jnareb@gmail.com> wrote:
->> This is partial summary of Git User's Survey 2008 after more that 2000
->> (yes, that is more than _two thousands_ responses) just after the 6 days
->> of running the survey.  It is based on "Analysis" page for this survey:
->>  http://www.survs.com/shareResults?survey=M3PIVU72&rndm=OKJQ45LAG8
+> Le samedi 6 septembre 2008, Junio C Hamano a =C3=A9crit :
+>> Christian Couder <chriscool@tuxfamily.org> writes:
+>> ...
+>> > +	 * It doesn't seem logical to use "resolve_ref" with reading =3D=
+=3D 0
+>> > +	 * as we are just checking if a ref exists,...
+>> > ...
+>> > +	 */
 >>
-> <snip>
->> git add + git commit   | 65% (1012)
->> git commit -a          | 63%  (981)
-> <snip>
->> Analysis: strangely "git add + git commit" is slightly more used than
->> "git commit -a"; I would suspect that "git commit -a" would dominate a
->> bit over other forms of committing.  What is for me more suprising is
->> that "git commit <file>..." has such large presence in often used
->> commands; I would think that it should be mostly used as 'sometimes'
->> command.
+>> I have to say that this comment is confused.
+>>
+>> When you have a full ref (as opposed to an abbreviated one that you =
+might
+>> give to dwim_ref()), you can use it for two kinds of things:
+>>
+>>  (1) You can use it to find out what _object_ the ref points at.  Th=
+is is
+>>      "reading" the ref, and the ref, if it is not symbolic, has to e=
+xist,
+>>      and if it is symbolic, it has to point at an existing ref, beca=
+use
+>>      the "read" goes through the symref to the ref it points at.
 >
-> Does this data really compare usage of incremental staging of commits
-> vs. non-incremental all-changes-included commits?
+> Then the parameter should perhaps be=20
+> called "get_object", "get_target", "full_dereference" or something li=
+ke=20
+> that instead of "reading".
+
+Another way to think about this is the difference is between:
+
+	open(2)+read(2)+close(2)
+        readlink(2)
+
+> In "resolve_ref" in refs.c there is the following comment:
 >
-> You didn't have a git add + git commit -a, so if people feel like they
-> have brand new files to add to the repository often, adding new files
-> alone would cause them to mark the git add + git commit box as "often"
-> (or maybe I was the only one dumb enough to think this was
-> significantly related to adding new files?).  That alone could account
-> for the difference, assuming others misunderstood as I did.
+> 		/* Special case: non-existing file.
+> 		 * Not having the refs/heads/new-branch is OK
+> 		 * if we are writing into it, so is .git/HEAD
+> 		 * that points at refs/heads/master still to be
+> 		 * born.  It is NOT OK if we are resolving for
+> 		 * reading.
+> 		 */
+>
+> that seems to mean that we are either "writing" or "reading".
 
-also, how many are doing 'git add .' or 'git add *' followed by git 
-commit?
+I never said the current comments are perfect.
 
-there were several commands listed that I have never heard of before and 
-will want to research to see what they do to see if I should be using 
-them.
+Your patch was about adding comments to help later developers.  If you
+think this "if we are writing into it" is wrong because implies "it is =
+Ok
+to be missing only when we are writing into it", I would very much agre=
+e
+with _that_ observation.
 
-next survey it would be handy to have links from each command you are 
-asking about to a page that describes what it does and why you would use 
-it (_not_ just a link to the man page for git add in the example above)
+But then, _this_ comment is what needs to be clarified.
 
-David Lang
+Instead, your patch adds an incorrect observation in a single caller; t=
+hat
+is hardly an improvement.  The observation being incorrect would not he=
+lp
+later people, and one caller being commented would not help as much as =
+the
+callee getting correct comments.
+
+So how about improving the comment that is misleading?
+
+I am not sure what the right re-wording for "reading" would be.  It is
+similar to "*_gently()" interface, but it is different.  You could call=
+ it
+"must_exist", but I am not sure if that is much an improvement either.
+
+ refs.c |   15 +++++++++------
+ 1 files changed, 9 insertions(+), 6 deletions(-)
+
+diff --git i/refs.c w/refs.c
+index 39a3b23..a712077 100644
+--- i/refs.c
++++ w/refs.c
+@@ -409,12 +409,15 @@ const char *resolve_ref(const char *ref, unsigned=
+ char *sha1, int reading, int *
+ 		if (--depth < 0)
+ 			return NULL;
+=20
+-		/* Special case: non-existing file.
+-		 * Not having the refs/heads/new-branch is OK
+-		 * if we are writing into it, so is .git/HEAD
+-		 * that points at refs/heads/master still to be
+-		 * born.  It is NOT OK if we are resolving for
+-		 * reading.
++		/*
++		 * Special case: non-existing file.
++		 * Not having the refs/heads/new-branch is not OK
++		 * we are resolving for reading.  But not everybody
++		 * calls this function to learn what object the ref
++		 * points at.  E.g. it can be called to learn what the
++		 * symref points at.  Also if we are writing into it,
++		 * it is Ok for .git/HEAD to point at refs/heads/master
++		 * that does not exist yet.
+ 		 */
+ 		if (lstat(path, &st) < 0) {
+ 			struct ref_list *list =3D get_packed_refs();
