@@ -1,74 +1,88 @@
-From: "Stephen R. van den Berg" <srb@cuci.nl>
-Subject: Re: [RFC] cherry-pick using multiple parents to implement -x
-Date: Mon, 8 Sep 2008 15:42:22 +0200
-Message-ID: <20080908134222.GA20998@cuci.nl>
-References: <20080907103415.GA3139@cuci.nl> <7vhc8rjyxj.fsf@gitster.siamese.dyndns.org> <20080908115129.GA19031@cuci.nl> <48C522F6.7090308@gnu.org>
+From: Nicolas Pitre <nico@cam.org>
+Subject: Re: Storing Large Flat Namespaces
+Date: Mon, 08 Sep 2008 09:58:43 -0400 (EDT)
+Message-ID: <alpine.LFD.1.10.0809080923250.23787@xanadu.home>
+References: <21d738060809071858p703149ccmbec0276ad4ad8f88@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Paolo Bonzini <bonzini@gnu.org>
-X-From: git-owner@vger.kernel.org Mon Sep 08 15:43:45 2008
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+Cc: git@vger.kernel.org
+To: Jaap Suter <git@jaapsuter.com>
+X-From: git-owner@vger.kernel.org Mon Sep 08 15:59:59 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Kch1i-00076l-5E
-	for gcvg-git-2@gmane.org; Mon, 08 Sep 2008 15:43:34 +0200
+	id 1KchHa-0003Ix-24
+	for gcvg-git-2@gmane.org; Mon, 08 Sep 2008 15:59:58 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754151AbYIHNmZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 8 Sep 2008 09:42:25 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754126AbYIHNmY
-	(ORCPT <rfc822;git-outgoing>); Mon, 8 Sep 2008 09:42:24 -0400
-Received: from aristoteles.cuci.nl ([212.125.128.18]:43738 "EHLO
-	aristoteles.cuci.nl" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754119AbYIHNmY (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 8 Sep 2008 09:42:24 -0400
-Received: by aristoteles.cuci.nl (Postfix, from userid 500)
-	id D1B065465; Mon,  8 Sep 2008 15:42:22 +0200 (CEST)
-Content-Disposition: inline
-In-Reply-To: <48C522F6.7090308@gnu.org>
-User-Agent: Mutt/1.5.13 (2006-08-11)
+	id S1752749AbYIHN6u (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 8 Sep 2008 09:58:50 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752624AbYIHN6u
+	(ORCPT <rfc822;git-outgoing>); Mon, 8 Sep 2008 09:58:50 -0400
+Received: from relais.videotron.ca ([24.201.245.36]:17591 "EHLO
+	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752452AbYIHN6u (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 8 Sep 2008 09:58:50 -0400
+Received: from xanadu.home ([66.131.194.97]) by VL-MH-MR001.ip.videotron.ca
+ (Sun Java(tm) System Messaging Server 6.3-4.01 (built Aug  3 2007; 32bit))
+ with ESMTP id <0K6V009TQQTV4IJ0@VL-MH-MR001.ip.videotron.ca> for
+ git@vger.kernel.org; Mon, 08 Sep 2008 09:58:44 -0400 (EDT)
+X-X-Sender: nico@xanadu.home
+In-reply-to: <21d738060809071858p703149ccmbec0276ad4ad8f88@mail.gmail.com>
+User-Agent: Alpine 1.10 (LFD 962 2008-03-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/95248>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/95249>
 
-Paolo Bonzini wrote:
->> commit 7df437e56b5a2c5ec7140dd097b517563db4972c
->> tree a006f20b481d811ccb4846534ef6394be5bc78a8
->> parent ff1e8bfcd69e5e0ee1a3167e80ef75b611f72123
->> parent bbb896d8e10f736bfda8f587c0009c358c9a8599
->> cousin 6ffaecc7d8b2c3c188a2efa5977a6e6605d878d9
->> cousin a1184d85e8752658f02746982822f43f32316803
->> author Junio C Hamano <gitster@pobox.com> 1220153499 -0700
->> committer Junio C Hamano <gitster@pobox.com> 1220153499 -0700
+On Sun, 7 Sep 2008, Jaap Suter wrote:
 
->What about "origin", and making it propagated through cherry-picks?  In
+> Hello,
+> 
+> I'm investigating the possibility of using Git to store a large flat
+> namespace. As an example, imagine a single directory containing
+> thousands or millions of files, each named using a 16-byte guid,
+> evenly distributed.
+> 
+> I'm aware that the Git object model makes various trade-offs,
+> typically in favor of managing source-tree layouts - which it does
+> extremely well. However, perhaps it is possible to carry some of Git's
+> features as a content revision tracker over to other storage
+> applications?
+> 
+> Currently, tree objects for large flat directories are quite large.
+> Doing a git-init, git-add, git-push on a flat directory with 10,000
+> files creates a tree object that is 24 kilobytes compressed. Any
+> change to a single file would create a whole new tree object, 24
+> kilobytes every time.
 
-"origin" gives a better sense of direction, so maybe that's better, yes.
+Sure.  But as soon as you repack that repository, there will be only one 
+24-kilobyte tree object for the latest revision and older revisions will 
+have their tree object stored as a delta against the latest one, which 
+should be merely the size of the changed entry only.
 
->other words, if I "cherry-pick -x" A generating B, and do the same on B
->generating C, C should have A as origin.  Also, "git cherry-pick -n -x"
->should add the commit to a list of origins somewhere so that "git
->commit" can reuse it.
+As to the idea of splitting a large flat directory namespace into 
+sub-trees... that would only help in the commit case which isn't that 
+interesting since commits are done much less frequent than, say, 
+directory walking.  In the later case, you might end up inflating less 
+object data for files at the beginning of the directory but more for 
+files towards the end, which on average won't be a gain.  And in all 
+cases you're looking up more objects.  And, to benefit from any 
+advantage left if any, you'd need to do significant surgery in the tree 
+walking code, otherwise simply reconstructing the current object format 
+from subtree objects won't bring any advantage over the current packed 
+format using deltas.
 
-That is debatable, and should be configurable with a switch.
-It depends on the way of operation, I guess.
-If one picks A -> B, and then B -> C, then usually for C you want B
-to be the origin to indicate that the patch has been tested and shaved
-to fit from A -> B, and further polished to fit from B -> C.
-Usually backporting involves shaving the patch slightly to fit the older
-branch, and in that case it is truly more honest to point back to B
-instead of A from C.  And besides, you can follow the chain to C -> B -> A
-if you like, no information is lost.
+The pack V4 should in theory be much better with large directories since 
+the design of its tree object representation would allow walking partial 
+tree by recursively following deltas making a complete tree walk almost 
+linear in terms of processing and data touched.  But that too requires a 
+major surgery of the tree walking code (the main reason holding me back 
+from rushing into any pack v4 work at the moment).  But pack v4 won't 
+change anything in the commit case -- you would still have to repack in 
+order to benefit from it.
 
->Furthermore, "git cherry" should use origins if available.
 
-That is one of the places in git that needs to accomodate the new field,
-luckily the impact on the rest of git-core is rather minimal, I think.
--- 
-Sincerely,
-           Stephen R. van den Berg.
-The Horkheimer Effect: "The odds of it being cloudy are directly proportional
-to the importance of an astronomical event."
+Nicolas
