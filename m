@@ -1,46 +1,47 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [RFC PATCH] Documentation: new upstream rebase recovery section
- in git-rebase
-Date: Mon, 08 Sep 2008 15:55:51 -0700
-Message-ID: <7vk5dmdz7s.fsf@gitster.siamese.dyndns.org>
-References: <1220386721-10215-1-git-send-email-trast@student.ethz.ch>
+Subject: Re: [PATCH v4] for-each-ref: `:short` format for `refname`
+Date: Mon, 08 Sep 2008 15:57:19 -0700
+Message-ID: <7vfxoadz5c.fsf@gitster.siamese.dyndns.org>
+References: <7vtzcxaxgr.fsf@gitster.siamese.dyndns.org>
+ <1220649383-17916-1-git-send-email-bert.wesarg@googlemail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Thomas Rast <trast@student.ethz.ch>
-X-From: git-owner@vger.kernel.org Tue Sep 09 00:57:13 2008
+Cc: git@vger.kernel.org, szeder@ira.uka.de,
+	"Shawn O. Pearce" <spearce@spearce.org>
+To: Bert Wesarg <bert.wesarg@googlemail.com>
+X-From: git-owner@vger.kernel.org Tue Sep 09 00:58:42 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KcpfT-00027F-Bb
-	for gcvg-git-2@gmane.org; Tue, 09 Sep 2008 00:57:11 +0200
+	id 1Kcpgu-0002NC-S8
+	for gcvg-git-2@gmane.org; Tue, 09 Sep 2008 00:58:41 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753800AbYIHW4A (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 8 Sep 2008 18:56:00 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754034AbYIHW4A
-	(ORCPT <rfc822;git-outgoing>); Mon, 8 Sep 2008 18:56:00 -0400
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:62075 "EHLO
+	id S1754160AbYIHW5e (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 8 Sep 2008 18:57:34 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754090AbYIHW5e
+	(ORCPT <rfc822;git-outgoing>); Mon, 8 Sep 2008 18:57:34 -0400
+Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:39725 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753773AbYIHWz6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 8 Sep 2008 18:55:58 -0400
+	with ESMTP id S1753261AbYIHW5e (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 8 Sep 2008 18:57:34 -0400
 Received: from localhost.localdomain (localhost [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 201F15F22B;
-	Mon,  8 Sep 2008 18:55:57 -0400 (EDT)
+	by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id D6E0C79473;
+	Mon,  8 Sep 2008 18:57:32 -0400 (EDT)
 Received: from pobox.com (ip68-225-240-211.oc.oc.cox.net [68.225.240.211])
  (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
- certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
- ESMTPSA id 2DF7F5F22A; Mon,  8 Sep 2008 18:55:53 -0400 (EDT)
-In-Reply-To: <1220386721-10215-1-git-send-email-trast@student.ethz.ch>
- (Thomas Rast's message of "Tue, 2 Sep 2008 22:18:41 +0200")
+ certificate requested) by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with
+ ESMTPSA id CBC727946E; Mon,  8 Sep 2008 18:57:23 -0400 (EDT)
+In-Reply-To: <1220649383-17916-1-git-send-email-bert.wesarg@googlemail.com>
+ (Bert Wesarg's message of "Fri, 5 Sep 2008 23:16:23 +0200")
 User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: 4C495442-7DF9-11DD-805C-D0CFFE4BC1C1-77302942!a-sasl-fastnet.pobox.com
+X-Pobox-Relay-ID: 855BF5AA-7DF9-11DD-8FC3-3113EBD4C077-77302942!a-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/95314>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/95315>
 
-Any follow-up on this topic since:
+Any followup on this topic since:
 
-    http://thread.gmane.org/gmane.comp.version-control.git/94701/focus=94761
+  http://thread.gmane.org/gmane.comp.version-control.git/94478/focus=95041
