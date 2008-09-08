@@ -1,106 +1,91 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] Use GIT_COMMITTER_IDENT instead of hardcoded values in
- import-tars.perl
-Date: Mon, 08 Sep 2008 13:40:20 -0700
-Message-ID: <7vzlmie5hn.fsf@gitster.siamese.dyndns.org>
-References: <7v3arixm8h.fsf@gitster.siamese.dyndns.org>
- <1220777531-28934-1-git-send-email-mh@glandium.org>
- <alpine.DEB.1.00.0809081649040.13830@pacific.mpi-cbg.de.mpi-cbg.de>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Mike Hommey <mh@glandium.org>, git@vger.kernel.org
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Mon Sep 08 22:41:38 2008
+From: Dmitry Potapov <dpotapov@gmail.com>
+Subject: [PATCH 1/2] git-rebase-interactive: do not squash commits on abort
+Date: Tue,  9 Sep 2008 00:42:48 +0400
+Message-ID: <1220906569-26878-1-git-send-email-dpotapov@gmail.com>
+Cc: Dmitry Potapov <dpotapov@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Sep 08 22:44:06 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KcnYH-0008KC-IO
-	for gcvg-git-2@gmane.org; Mon, 08 Sep 2008 22:41:38 +0200
+	id 1Kcnag-0000cu-1r
+	for gcvg-git-2@gmane.org; Mon, 08 Sep 2008 22:44:06 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753676AbYIHUka (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 8 Sep 2008 16:40:30 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753543AbYIHUka
-	(ORCPT <rfc822;git-outgoing>); Mon, 8 Sep 2008 16:40:30 -0400
-Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:58336 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753250AbYIHUka (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 8 Sep 2008 16:40:30 -0400
-Received: from localhost.localdomain (localhost [127.0.0.1])
-	by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id 08A5F79FE7;
-	Mon,  8 Sep 2008 16:40:29 -0400 (EDT)
-Received: from pobox.com (ip68-225-240-211.oc.oc.cox.net [68.225.240.211])
- (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
- certificate requested) by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with
- ESMTPSA id 67B6D79FE3; Mon,  8 Sep 2008 16:40:22 -0400 (EDT)
-In-Reply-To: <alpine.DEB.1.00.0809081649040.13830@pacific.mpi-cbg.de.mpi-cbg.de> (Johannes
- Schindelin's message of "Mon, 8 Sep 2008 16:51:45 +0200 (CEST)")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: 5F90B4C2-7DE6-11DD-9E74-3113EBD4C077-77302942!a-sasl-quonix.pobox.com
+	id S1753317AbYIHUm6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 8 Sep 2008 16:42:58 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753239AbYIHUm5
+	(ORCPT <rfc822;git-outgoing>); Mon, 8 Sep 2008 16:42:57 -0400
+Received: from fg-out-1718.google.com ([72.14.220.152]:24832 "EHLO
+	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753109AbYIHUm5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 8 Sep 2008 16:42:57 -0400
+Received: by fg-out-1718.google.com with SMTP id 19so1598138fgg.17
+        for <git@vger.kernel.org>; Mon, 08 Sep 2008 13:42:52 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:from:to:cc:subject:date
+         :message-id:x-mailer;
+        bh=R3EibMHrU6V1E6aI4OQv971HmAbwvm65++65o0PPDbo=;
+        b=ULyaDO/JuiV2BlirdsZHdbUWSM8YPufY8wR8Blrlf+J3gXMpzvh8EtQfvhyYFKvgtQ
+         8X8DV++a/rhlyqHt019Mwx44zafhBPX3q5/0eGIerzIO4rzyTtz2+tchk7Qty2zezzlL
+         /Cli0nSeJJyYFjFtBQUdlLVyW5e+rpM3t6SLA=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=from:to:cc:subject:date:message-id:x-mailer;
+        b=Np73FYf1fPm2LSvQ5itmtKxNCUAlwPoZJ4aQUG1Cg/tNQSKiAfny/+Hf/VkAHwsRMB
+         ZAP42MLy+MP/w7yVpl0H85CsLHOsuHgC6LExcL6XBh4NwULeiQf8PDXDShYKyFi1dWHy
+         vUCBt+bmYPdsgTJq1pQpAlwSHLrGbdchSIj5E=
+Received: by 10.86.97.7 with SMTP id u7mr11671468fgb.29.1220906572567;
+        Mon, 08 Sep 2008 13:42:52 -0700 (PDT)
+Received: from localhost ( [85.141.189.164])
+        by mx.google.com with ESMTPS id 4sm5738726fgg.4.2008.09.08.13.42.50
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Mon, 08 Sep 2008 13:42:51 -0700 (PDT)
+X-Mailer: git-send-email 1.6.0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/95298>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/95299>
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+If git rebase interactive is stopped by "edit" command and then the user
+said "git rebase --continue" while having some stage changes, git rebase
+interactive is trying to amend the last commit by doing:
+  git --soft reset && git commit
 
-> On Sun, 7 Sep 2008, Mike Hommey wrote:
->
->> -my $committer_name = 'T Ar Creator';
->> -my $committer_email = 'tar@example.com';
->> +chomp(my $committer_ident = `git var GIT_COMMITTER_IDENT`);
->> +die 'You need to set user name and email'
->> +	unless ($committer_ident =~ s/(.+ <[^>]+>).*/\1/);
->
-> I have at least one script that will be broken by this change in behavior.
->
-> To me, the issue is just like git-cvsimport, which sets the committer not 
-> to the actual committer, so that two people can end up with identical 
-> commit names, even if they cvsimported independently.  I'd like the same 
-> behavior for import-tars.  I actually use it that way.
+However, the user can abort commit for some reason by providing an empty
+log message, and that would leave the last commit undone, while the user
+being completely unaware about what happened. Now if the user tries to
+continue, by issuing "git rebase --continue" that squashes two previous
+commits.
 
-I sense there are conflicting goals here.
+Signed-off-by: Dmitry Potapov <dpotapov@gmail.com>
+---
+ git-rebase--interactive.sh |    7 +++++--
+ 1 files changed, 5 insertions(+), 2 deletions(-)
 
-cvsimport has partial information about the author (only short account
-name and nothing else), and by replicating them without taking them
-literally you can achieve reproducibility.  On the other extreme is to use
-the authorname mapping file to sacrifice reproducibility with other people
-that do not have the identical author mapping file to obtain more readable
-resulting history with real names.  You can do both.
-
-With the hardcoded 'T Ar Creator', you do not have any choice but strict
-reproducibility without readable names.  With Mike's original patch to
-make it in line with git-import.{sh,perl}, you cannot still have both,
-because setting GIT_COMMITTER_NAME does not affect what user.name
-configuration says.  But with "git var GIT_COMMITTER_IDENT", you could.
-
-This makes me wonder if it might be a better design to:
-
- * Make fast-import feeders to preserve as much information from the
-   source material but not from the environment.  This is half-similar in
-   spirit to what cvsimport does---it does not know the timezone so it
-   always uses GMT, and it uses the short account name because it is the
-   only thing available, but it does not use hardcoded "cvs", and the
-   environment can affect it further by setting up an author mapping
-   file.  Here I am saying a fast-import feeder shouldn't (and does not
-   have to) take the environment into account, if it does not have good
-   data in the source material.
-
-   In the context of importing tarballs, zipfiles and an existing directory
-   which is a tarball extract, there is not much authorship information in
-   the source material (each entry in a tarball may have the owner
-   information, but what if your tarball have more than one files, with
-   different owners?).
-
- * Invent a fast-import stream filter that allows you to munge authorship
-   and committer information selectively.  Splice that in to the pipeline
-   between the feeder and the fast-import, if you want the resulting
-   history more readable if desired (e.g. use author mapping file).
-
-   Or you can choose not to use such a filter, and get a reproducible
-   result.
-
-If the "filter" turns out to be simple enough, it might even make sense to
-make it part of the fast-import itself, but that is an implementation
-detail.
+diff --git a/git-rebase--interactive.sh b/git-rebase--interactive.sh
+index 929d681..5b2b1e5 100755
+--- a/git-rebase--interactive.sh
++++ b/git-rebase--interactive.sh
+@@ -429,12 +429,15 @@ do
+ 				die "Cannot find the author identity"
+ 			if test -f "$DOTEST"/amend
+ 			then
++				amend=$(git rev-parse --verify HEAD)
+ 				git reset --soft HEAD^ ||
+ 				die "Cannot rewind the HEAD"
+ 			fi
+ 			export GIT_AUTHOR_NAME GIT_AUTHOR_EMAIL GIT_AUTHOR_DATE &&
+-			git commit --no-verify -F "$DOTEST"/message -e ||
+-			die "Could not commit staged changes."
++			git commit --no-verify -F "$DOTEST"/message -e || {
++				test -n "$amend" && git reset --soft $amend
++				die "Could not commit staged changes."
++			}
+ 		fi
+ 
+ 		require_clean_work_tree
+-- 
+1.6.0
