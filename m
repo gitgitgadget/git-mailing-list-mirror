@@ -1,105 +1,120 @@
-From: Karl =?iso-8859-1?Q?Hasselstr=F6m?= <kha@treskal.com>
-Subject: Re: [StGit PATCH] add option to import series directly from a tar archive
-Date: Mon, 8 Sep 2008 23:22:57 +0200
-Message-ID: <20080908212257.GA9924@diana.vm.bytemark.co.uk>
-References: <48C34EC7.9040102@gmail.com> <20080908180317.GA6123@diana.vm.bytemark.co.uk> <48C56AD9.6040007@gmail.com>
+From: Karl =?utf-8?q?Hasselstr=C3=B6m?= <kha@treskal.com>
+Subject: [StGit PATCH 0/3] Auto-generate man pages and command list
+Date: Mon, 08 Sep 2008 23:07:52 +0200
+Message-ID: <20080908210302.1957.44280.stgit@yoghurt>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: git@vger.kernel.org
-To: Clark Williams <clark.williams@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Sep 08 23:02:11 2008
+To: Catalin Marinas <catalin.marinas@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Sep 08 23:09:11 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Kcns3-00069V-I3
-	for gcvg-git-2@gmane.org; Mon, 08 Sep 2008 23:02:04 +0200
+	id 1Kcnyx-0008QS-42
+	for gcvg-git-2@gmane.org; Mon, 08 Sep 2008 23:09:11 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753976AbYIHVA4 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 8 Sep 2008 17:00:56 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753972AbYIHVAz
-	(ORCPT <rfc822;git-outgoing>); Mon, 8 Sep 2008 17:00:55 -0400
-Received: from diana.vm.bytemark.co.uk ([80.68.90.142]:1545 "EHLO
+	id S1754033AbYIHVIB convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 8 Sep 2008 17:08:01 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753972AbYIHVIA
+	(ORCPT <rfc822;git-outgoing>); Mon, 8 Sep 2008 17:08:00 -0400
+Received: from diana.vm.bytemark.co.uk ([80.68.90.142]:1919 "EHLO
 	diana.vm.bytemark.co.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753890AbYIHVAz (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 8 Sep 2008 17:00:55 -0400
-Received: from kha by diana.vm.bytemark.co.uk with local (Exim 3.36 #1 (Debian))
-	id 1KcoCH-0003L7-00; Mon, 08 Sep 2008 22:22:57 +0100
-Content-Disposition: inline
-In-Reply-To: <48C56AD9.6040007@gmail.com>
-X-Manual-Spam-Check: kha@treskal.com, clean
-User-Agent: Mutt/1.5.9i
+	with ESMTP id S1753612AbYIHVIA (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 8 Sep 2008 17:08:00 -0400
+Received: from localhost ([127.0.0.1] helo=[127.0.1.1])
+	by diana.vm.bytemark.co.uk with esmtp (Exim 3.36 #1 (Debian))
+	id 1KcoJE-0003bs-00; Mon, 08 Sep 2008 22:30:08 +0100
+User-Agent: StGIT/0.14.3.236.g0c611
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/95301>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/95302>
 
-On 2008-09-08 13:11:37 -0500, Clark Williams wrote:
+The first patch auto-generates man pages for all StGit commands. We
+still have to write the actual text by hand (bummer!), but we get all
+the flags for free. Now we just have to take all those man pages and
+make them good ...
 
-> Patch series tarballs are quite common from people who use quilt
-> (e.g. many of the kernel -rt series developers).
+The third patch gets rid of the manual list of all commands in main.py
+and stg.txt, and instead generates it automatically. (There's still
+one list in the bash completion script; it is my next target.)
 
-Ah.
+---
 
-> My biggest problem (now that I can directly import them) is to see
-> if I can ease StGit's patch import rules a bit, since quilt accepts
-> pretty much anything as long as there's a diff in there somewhere. I
-> bomb out regularly importing the -rt series using StGit, because
-> some people don't put complete email addresses in their patches.
+Karl Hasselstr=C3=B6m (3):
+      Generate command lists automatically
+      asciidoc.conf: Steal updates from git
+      Auto-generate man pages for all StGit commands
 
-Yes, that would be a welcome addition.
 
-> As to the test, I'll get right on that...:)
-
-Swell!
-
-> Karl Hasselstr=F6m wrote:
->
-> > By the way, is the separator always '/' in tarfile? Or should you
-> > use os.sep? (There is also os.pardir which you could use instead
-> > of '..', but that might be overdoing it a little ...)
->
-> I doubt there are many Windows-generated tarballs out there (except
-> for the Cygwin case; I believe they use '/'), but I shouldn't be so
-> Unix-centric. I'll work on cleaning it up.
-
-Well, it's no big deal, really. Just thought I'd mention it.
-
-> I did consider adding Zipfile support as well, but didn't get a very
-> good match-up between tar functionality and zip functionality. Maybe
-> later...
-
-I had a quick look at the zipfile module, and it looks like it too
-could easily be wrapped in a small class like I suggested in point
-(1).
-
-> I did consider pulling directly from the tarball. I'll look into it.
-
-Just don't let my suggestions take all the fun out of contributing ...
-only do it my way if you really think it's better.
-
-> > On 2008-09-06 22:47:19 -0500, Clark Williams wrote:
-> >
-> > > +    # cleanup the tmpdir
-> > > +    os.system('rm -rf %s' % tmpdir)
-> >
-> > Aaah! My eyes! My _eyes_!!!!!
-> >
-> > Seriously, though, you'd want to use something like shutil.rmtree
-> > here.
->
-> Man, I could not for the life of me remember which module had that
-> in it. To be fair I wasn't up at work with my Python Essential
-> Reference, which would have pointed me directly at it, but I would
-> have thought I could have gotten there through the Python docs.
-> Sigh...
->
-> You can dock my StGit pay for the visit to the eye doctor :)
-
-:-)
+ Documentation/.gitignore           |    4 -
+ Documentation/COMMAND-TEMPLATE.txt |   42 ---------
+ Documentation/Makefile             |   15 +++
+ Documentation/asciidoc.conf        |  100 +++++++++++++++-----
+ Documentation/stg-branch.txt       |  114 -----------------------
+ Documentation/stg-clone.txt        |   32 -------
+ Documentation/stg-init.txt         |   29 ------
+ Documentation/stg-new.txt          |  115 ------------------------
+ Documentation/stg-sink.txt         |   49 ----------
+ Documentation/stg.txt              |  138 ----------------------------
+ Makefile                           |   18 +++-
+ stg-build                          |   37 ++++++++
+ stgit/argparse.py                  |  176 ++++++++++++++++++++++++++++=
+--------
+ stgit/commands/.gitignore          |    1=20
+ stgit/commands/__init__.py         |   78 ++++++++++++++++
+ stgit/commands/branch.py           |  123 ++++++++++++++++---------
+ stgit/commands/clean.py            |   22 ++---
+ stgit/commands/clone.py            |   20 +++-
+ stgit/commands/coalesce.py         |   14 ++-
+ stgit/commands/commit.py           |   22 +++--
+ stgit/commands/delete.py           |   16 ++-
+ stgit/commands/diff.py             |   27 +++---
+ stgit/commands/edit.py             |   24 ++---
+ stgit/commands/export.py           |   48 +++++-----
+ stgit/commands/files.py            |   24 ++---
+ stgit/commands/float.py            |   18 ++--
+ stgit/commands/fold.py             |   23 ++---
+ stgit/commands/goto.py             |   11 +-
+ stgit/commands/hide.py             |   17 ++-
+ stgit/commands/id.py               |   12 +-
+ stgit/commands/imprt.py            |   93 +++++++++----------
+ stgit/commands/init.py             |   14 ++-
+ stgit/commands/log.py              |   34 +++----
+ stgit/commands/mail.py             |  116 +++++++++++-------------
+ stgit/commands/new.py              |   34 ++++---
+ stgit/commands/patches.py          |   22 ++---
+ stgit/commands/pick.py             |   50 +++++-----
+ stgit/commands/pop.py              |   28 +++---
+ stgit/commands/pull.py             |   23 ++---
+ stgit/commands/push.py             |   38 +++-----
+ stgit/commands/rebase.py           |   23 ++---
+ stgit/commands/refresh.py          |   45 ++++-----
+ stgit/commands/rename.py           |   20 ++--
+ stgit/commands/repair.py           |   11 +-
+ stgit/commands/resolved.py         |   27 +++---
+ stgit/commands/series.py           |   78 +++++++---------
+ stgit/commands/show.py             |   31 +++---
+ stgit/commands/sink.py             |   44 ++++++---
+ stgit/commands/status.py           |   53 +++++------
+ stgit/commands/sync.py             |   31 +++---
+ stgit/commands/top.py              |   16 ++-
+ stgit/commands/uncommit.py         |   25 +++--
+ stgit/commands/unhide.py           |   19 ++--
+ stgit/main.py                      |  138 ++--------------------------
+ 54 files changed, 1024 insertions(+), 1358 deletions(-)
+ delete mode 100644 Documentation/COMMAND-TEMPLATE.txt
+ delete mode 100644 Documentation/stg-branch.txt
+ delete mode 100644 Documentation/stg-clone.txt
+ delete mode 100644 Documentation/stg-init.txt
+ delete mode 100644 Documentation/stg-new.txt
+ delete mode 100644 Documentation/stg-sink.txt
+ create mode 100755 stg-build
+ create mode 100644 stgit/commands/.gitignore
 
 --=20
-Karl Hasselstr=F6m, kha@treskal.com
+Karl Hasselstr=C3=B6m, kha@treskal.com
       www.treskal.com/kalle
