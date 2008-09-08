@@ -1,64 +1,67 @@
-From: "Marcello Henrique" <faraohh@gmail.com>
-Subject: Change checkout remotely.
-Date: Mon, 8 Sep 2008 12:42:22 -0300
-Message-ID: <f5cc88f60809080842l34760997r4b821a79e7727d91@mail.gmail.com>
+From: Josef 'Jeff' Sipek <jeffpc@josefsipek.net>
+Subject: Re: [ANNOUNCE] Guilt v0.31
+Date: Mon, 8 Sep 2008 11:45:12 -0400
+Message-ID: <20080908154512.GC27550@josefsipek.net>
+References: <20080908135244.GB27550@josefsipek.net> <48C54728.1030809@fastmail.fm>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Sep 08 17:43:31 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Michael J Gruber <michaeljgruber+gmane@fastmail.fm>
+X-From: git-owner@vger.kernel.org Mon Sep 08 17:46:22 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Kcitm-0003Xe-Gi
-	for gcvg-git-2@gmane.org; Mon, 08 Sep 2008 17:43:31 +0200
+	id 1KciwW-0004UX-6g
+	for gcvg-git-2@gmane.org; Mon, 08 Sep 2008 17:46:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752682AbYIHPmZ convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 8 Sep 2008 11:42:25 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754729AbYIHPmZ
-	(ORCPT <rfc822;git-outgoing>); Mon, 8 Sep 2008 11:42:25 -0400
-Received: from gv-out-0910.google.com ([216.239.58.189]:38987 "EHLO
-	gv-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754568AbYIHPmY convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 8 Sep 2008 11:42:24 -0400
-Received: by gv-out-0910.google.com with SMTP id e6so252678gvc.37
-        for <git@vger.kernel.org>; Mon, 08 Sep 2008 08:42:23 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to
-         :subject:mime-version:content-type:content-transfer-encoding
-         :content-disposition;
-        bh=z/65tjOuHZ2qT1Kqrb9FH/1QvPfckYL5al2dKTLp1Rg=;
-        b=ayUB39oKj+yXkN8Pyv1RuZ4NiXLXZ9E1m3QUPzb5BxEretIK64Nfl/HkP89MpBEMw2
-         4XqSfjaigzbfq9nioTWekzUeyYyZ/NmQDOK89g6A6HkwJMN9Iqxrjn0Ng1Y14ou4YMVT
-         nPy2onXwsEhVZEjMz1Tk/30svdGdBHcBqDm3Q=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:mime-version:content-type
-         :content-transfer-encoding:content-disposition;
-        b=j5Qmz8I0sKnao6y1hw/xQpYgdB9Twncm1NN/HUFepcaY97Xpp4C8QamPqA+b/KerxX
-         sug65LhTqHVAX5gr6vdlJHH2HrxlMLefwzcVqDpUt8yRYMeovEkxZfw0dg0c0ho1QpM4
-         kPneEC0XZxfkI7BfOZWUNCqxbUd0WvuxJzwEU=
-Received: by 10.210.81.10 with SMTP id e10mr18988559ebb.44.1220888543011;
-        Mon, 08 Sep 2008 08:42:23 -0700 (PDT)
-Received: by 10.210.87.5 with HTTP; Mon, 8 Sep 2008 08:42:22 -0700 (PDT)
+	id S1752953AbYIHPpP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 8 Sep 2008 11:45:15 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753036AbYIHPpO
+	(ORCPT <rfc822;git-outgoing>); Mon, 8 Sep 2008 11:45:14 -0400
+Received: from josefsipek.net ([141.211.133.196]:34029 "EHLO josefsipek.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752885AbYIHPpN (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 8 Sep 2008 11:45:13 -0400
+Received: by josefsipek.net (Postfix, from userid 1000)
+	id BD4171C00D92; Mon,  8 Sep 2008 11:45:12 -0400 (EDT)
 Content-Disposition: inline
+In-Reply-To: <48C54728.1030809@fastmail.fm>
+User-Agent: Mutt/1.5.18 (2008-05-17)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/95262>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/95263>
 
-Hello,
+On Mon, Sep 08, 2008 at 05:39:20PM +0200, Michael J Gruber wrote:
+> Josef 'Jeff' Sipek venit, vidit, dixit 08.09.2008 15:52:
+> > Guilt v0.31 is available for download.
+> > 
+> > Guilt (Git Quilt) is a series of bash scripts which add a Mercurial
+> > queues-like functionality and interface to git.
+> > 
+> > Tarballs:
+> > http://www.kernel.org/pub/linux/kernel/people/jsipek/guilt/
+> > 
+> > Git repo:
+> > git://git.kernel.org/pub/scm/linux/kernel/git/jsipek/guilt.git
+> > 
+> > 
+> > This is a mostly bugfixes-only release to get the fixes that accumulated
+> > over the past several months out of the door.
+> > 
+> > As always, patches, and other feedback is welcome.
+> > 
+> > Josef "Jeff" Sipek.
+> 
+> Guilt insists on being used with git 1.5.*. Is this intended?
 
-Is it possible change checkout another work tree remotely and refresh a=
-ll files?
+&^$@#^(@$# My bad...I guess I'll have to push out a fix for that... :/
 
-=46or example: git remote other checkout other-branch-x
+Thanks for pointing it out!
 
-Thanks!
---
-Marcello Henrique
-Associa=E7=E3o Software Livre de Goi=E1s (www.aslgo.org.br)
-Cercomp - UFG (www.cercomp.ufg.br)
+Josef 'Jeff' Sipek.
+
+-- 
+A computer without Microsoft is like chocolate cake without mustard.
