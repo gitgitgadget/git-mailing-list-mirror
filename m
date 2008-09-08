@@ -1,65 +1,74 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Is incremental staging really the common mode?
-Date: Sun, 07 Sep 2008 17:40:20 -0700
-Message-ID: <7v1vzvjwqz.fsf@gitster.siamese.dyndns.org>
-References: <51419b2c0809071317g6f916b19p1c2792595be58047@mail.gmail.com>
- <alpine.DEB.1.10.0809071729310.8096@asgard.lang.hm>
+From: Theodore Tso <tytso@MIT.EDU>
+Subject: Re: Alternates and push
+Date: Sun, 7 Sep 2008 20:41:37 -0400
+Message-ID: <20080908004137.GB8161@mit.edu>
+References: <9e4733910809060542s5ede6d6m5bdb894c958ea8b7@mail.gmail.com> <20080906162030.GT9129@mit.edu> <7viqt9rvwm.fsf@gitster.siamese.dyndns.org> <20080907234118.GA8161@mit.edu> <7vd4jfjyiq.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Elijah Newren <newren@gmail.com>,
-	Jakub Narebski <jnareb@gmail.com>, git@vger.kernel.org,
-	Stephan Beyer <s-beyer@gmx.net>
-To: david@lang.hm
-X-From: git-owner@vger.kernel.org Mon Sep 08 02:41:38 2008
+Cc: Jon Smirl <jonsmirl@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Sep 08 02:42:49 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KcUoy-00018q-UV
-	for gcvg-git-2@gmane.org; Mon, 08 Sep 2008 02:41:37 +0200
+	id 1KcUq9-0001O6-5d
+	for gcvg-git-2@gmane.org; Mon, 08 Sep 2008 02:42:49 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751243AbYIHAkb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 7 Sep 2008 20:40:31 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751448AbYIHAka
-	(ORCPT <rfc822;git-outgoing>); Sun, 7 Sep 2008 20:40:30 -0400
-Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:38138 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750885AbYIHAka (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 7 Sep 2008 20:40:30 -0400
-Received: from localhost.localdomain (localhost [127.0.0.1])
-	by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id 59C2178083;
-	Sun,  7 Sep 2008 20:40:29 -0400 (EDT)
-Received: from pobox.com (ip68-225-240-211.oc.oc.cox.net [68.225.240.211])
- (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
- certificate requested) by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with
- ESMTPSA id 05F8478080; Sun,  7 Sep 2008 20:40:22 -0400 (EDT)
-In-Reply-To: <alpine.DEB.1.10.0809071729310.8096@asgard.lang.hm>
- (david@lang.hm's message of "Sun, 7 Sep 2008 17:32:09 -0700 (PDT)")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: BC6B4BCE-7D3E-11DD-AC98-3113EBD4C077-77302942!a-sasl-quonix.pobox.com
+	id S1751493AbYIHAlm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 7 Sep 2008 20:41:42 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750973AbYIHAlm
+	(ORCPT <rfc822;git-outgoing>); Sun, 7 Sep 2008 20:41:42 -0400
+Received: from BISCAYNE-ONE-STATION.MIT.EDU ([18.7.7.80]:48787 "EHLO
+	biscayne-one-station.mit.edu" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1750823AbYIHAll (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 7 Sep 2008 20:41:41 -0400
+Received: from outgoing.mit.edu (OUTGOING-AUTH.MIT.EDU [18.7.22.103])
+	by biscayne-one-station.mit.edu (8.13.6/8.9.2) with ESMTP id m880fdMK012274;
+	Sun, 7 Sep 2008 20:41:39 -0400 (EDT)
+Received: from closure.thunk.org (c-98-216-98-217.hsd1.ma.comcast.net [98.216.98.217])
+	(authenticated bits=0)
+        (User authenticated as tytso@ATHENA.MIT.EDU)
+	by outgoing.mit.edu (8.13.6/8.12.4) with ESMTP id m880fblS002951
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
+	Sun, 7 Sep 2008 20:41:38 -0400 (EDT)
+Received: from tytso by closure.thunk.org with local (Exim 4.69)
+	(envelope-from <tytso@mit.edu>)
+	id 1KcUoz-0003Vk-Mr; Sun, 07 Sep 2008 20:41:37 -0400
+Content-Disposition: inline
+In-Reply-To: <7vd4jfjyiq.fsf@gitster.siamese.dyndns.org>
+User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
+X-Scanned-By: MIMEDefang 2.42
+X-Spam-Flag: NO
+X-Spam-Score: 0.00
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/95201>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/95202>
 
-david@lang.hm writes:
+On Sun, Sep 07, 2008 at 05:02:05PM -0700, Junio C Hamano wrote:
+> 
+> I think you just reiterated what I said in "we could instead", and I think
+> we are in agreement.
+> 
 
-> also, how many are doing 'git add .' or 'git add *' followed by git
-> commit?
+Sorry, I misunderstood what you were saying.  I thought you were
+proposing that if $D/refs didn't exist, then if alternates pointed at
+$D/objects, git would reject using it.  But that makes no sense, which
+is why I didn't understand why you proposed it.  (Turns out I
+misunderstood you.  :-)
 
-Everybody who starts a new history from scratch from an existing tarball
-would be doing this at least once ;-)
+> The arguments to make are "Junio is worrying too much; depending on the
+> other repository's ref is no worse than depending on the objects the other
+> repository uses, and here is a proof that it is not just 'not a big deal'
+> but 'no problem at all'", "I've polled the userbase and there is no
+> existing configuration that will be broken by this change", and "I have
+> this configuration that will be broken by above change, don't do it".
 
-> there were several commands listed that I have never heard of before
-> and will want to research to see what they do to see if I should be
-> using them.
+So the only configuration I can think of that would be broken by this
+is where $D/refs exists, but is insane.  (i.e., such that git fsck for
+$D would result in errors).  That seems pretty unlikely...
 
-The commands singled out were either (1) ancient, nobody should be using
-them, and we would love to prove that nobody is using them anymore so that
-we can remove them, or (2) reasonably new inventions that would help
-common situations more than the stock Porcelain we have had for years, to
-see if they are already widely adopted.
-
-Perhaps somebody (or group of people, taking turns) should post a "git
-trick of the week" series to this mailing list?
+   	 	   	     	  	       - Ted
