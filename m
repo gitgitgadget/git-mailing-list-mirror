@@ -1,53 +1,72 @@
-From: dhruva <dhruva@ymail.com>
-Subject: Re: [PATCH] Windows: git-shell can be compiled again
-Date: Mon, 8 Sep 2008 17:01:31 +0530 (IST)
-Message-ID: <321897.23044.qm@web95004.mail.in2.yahoo.com>
+From: "Stephen R. van den Berg" <srb@cuci.nl>
+Subject: Re: [RFC] cherry-pick using multiple parents to implement -x
+Date: Mon, 8 Sep 2008 13:51:29 +0200
+Message-ID: <20080908115129.GA19031@cuci.nl>
+References: <20080907103415.GA3139@cuci.nl> <7vhc8rjyxj.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8BIT
-Cc: Kevin Yu <yujie052@gmail.com>, git@vger.kernel.org,
-	Junio C Hamano <gitster@pobox.com>
-To: Johannes Sixt <j.sixt@viscovery.net>
-X-From: git-owner@vger.kernel.org Mon Sep 08 13:32:45 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Sep 08 13:52:41 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Kcez3-0004xE-Oc
-	for gcvg-git-2@gmane.org; Mon, 08 Sep 2008 13:32:42 +0200
+	id 1KcfIL-00014Q-LP
+	for gcvg-git-2@gmane.org; Mon, 08 Sep 2008 13:52:38 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750973AbYIHLbe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 8 Sep 2008 07:31:34 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751064AbYIHLbe
-	(ORCPT <rfc822;git-outgoing>); Mon, 8 Sep 2008 07:31:34 -0400
-Received: from n1a.bullet.in.yahoo.com ([202.43.219.18]:34974 "HELO
-	n1a.bullet.in.yahoo.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with SMTP id S1750902AbYIHLbe convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 8 Sep 2008 07:31:34 -0400
-Received: from [202.86.4.171] by n1.bullet.in.yahoo.com with NNFMP; 08 Sep 2008 11:31:31 -0000
-Received: from [203.104.17.89] by t2.bullet.in.yahoo.com with NNFMP; 08 Sep 2008 11:31:31 -0000
-Received: from [127.0.0.1] by omp103.mail.in2.yahoo.com with NNFMP; 08 Sep 2008 11:31:31 -0000
-X-Yahoo-Newman-Property: ymail-3
-X-Yahoo-Newman-Id: 518878.63826.bm@omp103.mail.in2.yahoo.com
-Received: (qmail 23580 invoked by uid 60001); 8 Sep 2008 11:31:31 -0000
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-  s=s1024; d=ymail.com;
-  h=X-YMail-OSG:Received:X-Mailer:Date:From:Subject:To:Cc:MIME-Version:Content-Type:Content-Transfer-Encoding:Message-ID;
-  b=i++mnK4MrW1wofEYVbHq0/9dBkkoKzNjJgIFIQUFbT4gWZudaHoScLzj72Y+fBjd48tV+x4T95vbkp913Kv5Wpqqg6CP3RFWuQ6J/ARvQuAlJpKeUasjA361M7SJtwazhY6tik6NVhzgLvE3vTui+55OqLd/XWLftFWMHefSHzY=;
-X-YMail-OSG: lfZsg6wVM1lRgLYNlgQ80Mwm8.LJQWsDXl9dlOiKcUuhtdj23o2j2nU0klvb81.TC8XYEeeERP0KpJ.3WOpS0V6L1jmN_TbOqwNzWvGRCILoJnNdGHicHS36Es9RiQA-
-Received: from [202.3.112.9] by web95004.mail.in2.yahoo.com via HTTP; Mon, 08 Sep 2008 17:01:31 IST
-X-Mailer: YahooMailRC/1096.28 YahooMailWebService/0.7.218.2
+	id S1751764AbYIHLvb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 8 Sep 2008 07:51:31 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751767AbYIHLvb
+	(ORCPT <rfc822;git-outgoing>); Mon, 8 Sep 2008 07:51:31 -0400
+Received: from aristoteles.cuci.nl ([212.125.128.18]:42442 "EHLO
+	aristoteles.cuci.nl" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751656AbYIHLvb (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 8 Sep 2008 07:51:31 -0400
+Received: by aristoteles.cuci.nl (Postfix, from userid 500)
+	id A551C5465; Mon,  8 Sep 2008 13:51:29 +0200 (CEST)
+Content-Disposition: inline
+In-Reply-To: <7vhc8rjyxj.fsf@gitster.siamese.dyndns.org>
+User-Agent: Mutt/1.5.13 (2006-08-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/95239>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/95240>
 
-Hi,
- Are there any M$ specific issues still out there that needs some attention? I could help on stuff that does not require git internal knowledge. Are there some M$ specific performance issues that I could try to help? Let me know, I will try my best to help. I need to have git on both GNU/linux and M$ platforms for day job.
+Junio C Hamano wrote:
+>"Stephen R. van den Berg" <srb@cuci.nl> writes:
+>I think the commit object name -x records in the commit message of the
+>cherry-picked one is noticed by gitweb to give you an easy access.  You
+>could teach gitk a similar trick, and that would not just help cherry
+>picking but also reverts, and a fix-up commit that says "This fixes the
+>regression introduced by commit 90ff09a5".
 
--dhruva
+Checking the on-disk format I see that it has been defined in a rather
+extensible way.
 
+If we were to put the SHA1-ref somewhere in the commit message, 
+finding references to a certain commit through cherry-picks becomes
+rather disk/CPU-intensive.
 
+Would there be any objections against extending the on-disk format to
+accomodate something like the following:
 
-      Get an email ID as yourname@ymail.com or yourname@rocketmail.com. Click here http://in.promos.yahoo.com/address
+commit 7df437e56b5a2c5ec7140dd097b517563db4972c
+tree a006f20b481d811ccb4846534ef6394be5bc78a8
+parent ff1e8bfcd69e5e0ee1a3167e80ef75b611f72123
+parent bbb896d8e10f736bfda8f587c0009c358c9a8599
+cousin 6ffaecc7d8b2c3c188a2efa5977a6e6605d878d9
+cousin a1184d85e8752658f02746982822f43f32316803
+author Junio C Hamano <gitster@pobox.com> 1220153499 -0700
+committer Junio C Hamano <gitster@pobox.com> 1220153499 -0700
+
+Whereas cherry-pick would (optionally) generate a cousin reference for every
+commit it picks.
+
+I'm willing to do the work to fix up git-core to support the new field.
+-- 
+Sincerely,
+           Stephen R. van den Berg.
+The Horkheimer Effect: "The odds of it being cloudy are directly proportional
+to the importance of an astronomical event."
