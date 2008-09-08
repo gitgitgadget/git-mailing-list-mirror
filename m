@@ -1,102 +1,105 @@
-From: Dmitry Potapov <dpotapov@gmail.com>
-Subject: [PATCH 2/2] git-rebase--interactive: auto amend only edited commit
-Date: Tue,  9 Sep 2008 00:42:49 +0400
-Message-ID: <1220906569-26878-2-git-send-email-dpotapov@gmail.com>
-References: <1220906569-26878-1-git-send-email-dpotapov@gmail.com>
-Cc: Dmitry Potapov <dpotapov@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Sep 08 22:44:12 2008
+From: Karl =?iso-8859-1?Q?Hasselstr=F6m?= <kha@treskal.com>
+Subject: Re: [StGit PATCH] add option to import series directly from a tar archive
+Date: Mon, 8 Sep 2008 23:22:57 +0200
+Message-ID: <20080908212257.GA9924@diana.vm.bytemark.co.uk>
+References: <48C34EC7.9040102@gmail.com> <20080908180317.GA6123@diana.vm.bytemark.co.uk> <48C56AD9.6040007@gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: Clark Williams <clark.williams@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Sep 08 23:02:11 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Kcnag-0000cu-Q7
-	for gcvg-git-2@gmane.org; Mon, 08 Sep 2008 22:44:07 +0200
+	id 1Kcns3-00069V-I3
+	for gcvg-git-2@gmane.org; Mon, 08 Sep 2008 23:02:04 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753920AbYIHUnB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 8 Sep 2008 16:43:01 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753485AbYIHUnA
-	(ORCPT <rfc822;git-outgoing>); Mon, 8 Sep 2008 16:43:00 -0400
-Received: from rn-out-0910.google.com ([64.233.170.187]:9390 "EHLO
-	rn-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753869AbYIHUm7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 8 Sep 2008 16:42:59 -0400
-Received: by rn-out-0910.google.com with SMTP id k40so256942rnd.17
-        for <git@vger.kernel.org>; Mon, 08 Sep 2008 13:42:57 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:cc:subject:date
-         :message-id:x-mailer:in-reply-to:references;
-        bh=dKmc65EzQFrLIGEKR4N/WysETRvJubYiFpPObrxMDA8=;
-        b=ndtYYyuFpQDNX0CpMQzZecSy/gjlWBCRjRmtgHZmkj6MIGKAWnNgEl3kCeWA5PZa/M
-         EmEW7jhMXYBoy3Y1X6CCFns6pBBBZP2Rlr4gMm7M/y6ZwLXhPTaxxxayfarrmA1gnnxC
-         g8erC9HMcBifu9QM7WQDRGsseuDBQLnx8fNOk=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        b=SqlZyKxF+4iaR4ruHivlyR6CD1zNcIRw0GceSObDN/hDElYgfvPRc2viMCPUeCYxAD
-         f2JOuSuVOXBKq7+NhJBHOQ59Mw15eWiBS5AkLNWsZh7pipeBEY5HFgyvh3lhwBj++hn+
-         TJzg5w5AU3MfebRu5F46H+GJ0IqHwSibxkv1U=
-Received: by 10.86.4.2 with SMTP id 2mr6459564fgd.21.1220906576657;
-        Mon, 08 Sep 2008 13:42:56 -0700 (PDT)
-Received: from localhost ( [85.141.189.164])
-        by mx.google.com with ESMTPS id 4sm5738791fgg.4.2008.09.08.13.42.54
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Mon, 08 Sep 2008 13:42:55 -0700 (PDT)
-X-Mailer: git-send-email 1.6.0
-In-Reply-To: <1220906569-26878-1-git-send-email-dpotapov@gmail.com>
+	id S1753976AbYIHVA4 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 8 Sep 2008 17:00:56 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753972AbYIHVAz
+	(ORCPT <rfc822;git-outgoing>); Mon, 8 Sep 2008 17:00:55 -0400
+Received: from diana.vm.bytemark.co.uk ([80.68.90.142]:1545 "EHLO
+	diana.vm.bytemark.co.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753890AbYIHVAz (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 8 Sep 2008 17:00:55 -0400
+Received: from kha by diana.vm.bytemark.co.uk with local (Exim 3.36 #1 (Debian))
+	id 1KcoCH-0003L7-00; Mon, 08 Sep 2008 22:22:57 +0100
+Content-Disposition: inline
+In-Reply-To: <48C56AD9.6040007@gmail.com>
+X-Manual-Spam-Check: kha@treskal.com, clean
+User-Agent: Mutt/1.5.9i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/95300>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/95301>
 
-"git rebase --continue" issued after git rebase being stop by "edit"
-command is trying to amend the last commit using stage changes. However,
-if the last commit is not the commit that was marked as "edit" then it
-can produce unexpected results.
+On 2008-09-08 13:11:37 -0500, Clark Williams wrote:
 
-For instance, after being stop by "edit", I have made some changes to
-commit message using "git commit --amend". After that I realized that
-I forgot to add some changes to some file. So, I said "git add file"
-and the "git rebase --continue". Unfortunately, it caused that the new
-commit message was lost.
+> Patch series tarballs are quite common from people who use quilt
+> (e.g. many of the kernel -rt series developers).
 
-Another problem is that after being stopped at "edit", the user adds new
-commits. In this case, automatic amend behavior of git rebase triggered
-by some stage changes causes that not only that the log message of the
-last commit is lost but that it will contain also wrong Author and Date
-information.
+Ah.
 
-Therefore, this patch restrict automatic amend only to the situation
-where HEAD is the commit at which git rebase stop by "edit" command.
+> My biggest problem (now that I can directly import them) is to see
+> if I can ease StGit's patch import rules a bit, since quilt accepts
+> pretty much anything as long as there's a diff in there somewhere. I
+> bomb out regularly importing the -rt series using StGit, because
+> some people don't put complete email addresses in their patches.
 
-Signed-off-by: Dmitry Potapov <dpotapov@gmail.com>
----
- git-rebase--interactive.sh |    4 +++-
- 1 files changed, 3 insertions(+), 1 deletions(-)
+Yes, that would be a welcome addition.
 
-diff --git a/git-rebase--interactive.sh b/git-rebase--interactive.sh
-index 5b2b1e5..84721c9 100755
---- a/git-rebase--interactive.sh
-+++ b/git-rebase--interactive.sh
-@@ -284,7 +284,7 @@ do_next () {
- 		pick_one $sha1 ||
- 			die_with_patch $sha1 "Could not apply $sha1... $rest"
- 		make_patch $sha1
--		: > "$DOTEST"/amend
-+		echo $sha1 > "$DOTEST"/amend
- 		warn "Stopped at $sha1... $rest"
- 		warn "You can amend the commit now, with"
- 		warn
-@@ -430,6 +430,8 @@ do
- 			if test -f "$DOTEST"/amend
- 			then
- 				amend=$(git rev-parse --verify HEAD)
-+				test "$amend" = $(cat "$DOTEST"/amend) ||
-+				die "You have uncommitted changes"
- 				git reset --soft HEAD^ ||
- 				die "Cannot rewind the HEAD"
- 			fi
--- 
-1.6.0
+> As to the test, I'll get right on that...:)
+
+Swell!
+
+> Karl Hasselstr=F6m wrote:
+>
+> > By the way, is the separator always '/' in tarfile? Or should you
+> > use os.sep? (There is also os.pardir which you could use instead
+> > of '..', but that might be overdoing it a little ...)
+>
+> I doubt there are many Windows-generated tarballs out there (except
+> for the Cygwin case; I believe they use '/'), but I shouldn't be so
+> Unix-centric. I'll work on cleaning it up.
+
+Well, it's no big deal, really. Just thought I'd mention it.
+
+> I did consider adding Zipfile support as well, but didn't get a very
+> good match-up between tar functionality and zip functionality. Maybe
+> later...
+
+I had a quick look at the zipfile module, and it looks like it too
+could easily be wrapped in a small class like I suggested in point
+(1).
+
+> I did consider pulling directly from the tarball. I'll look into it.
+
+Just don't let my suggestions take all the fun out of contributing ...
+only do it my way if you really think it's better.
+
+> > On 2008-09-06 22:47:19 -0500, Clark Williams wrote:
+> >
+> > > +    # cleanup the tmpdir
+> > > +    os.system('rm -rf %s' % tmpdir)
+> >
+> > Aaah! My eyes! My _eyes_!!!!!
+> >
+> > Seriously, though, you'd want to use something like shutil.rmtree
+> > here.
+>
+> Man, I could not for the life of me remember which module had that
+> in it. To be fair I wasn't up at work with my Python Essential
+> Reference, which would have pointed me directly at it, but I would
+> have thought I could have gotten there through the Python docs.
+> Sigh...
+>
+> You can dock my StGit pay for the visit to the eye doctor :)
+
+:-)
+
+--=20
+Karl Hasselstr=F6m, kha@treskal.com
+      www.treskal.com/kalle
