@@ -1,152 +1,167 @@
-From: Alexander Gavrilov <angavrilov@gmail.com>
-Subject: [PATCH (GIT-GUI FIX)] git-gui: Fix Blame Parent & Context for working copy lines.
-Date: Mon, 8 Sep 2008 11:18:52 +0400
-Organization: HOME
-Message-ID: <200809081118.52705.angavrilov@gmail.com>
+From: Daniel Barkalow <barkalow@iabervon.org>
+Subject: Re: Alternates and push
+Date: Mon, 8 Sep 2008 03:24:56 -0400 (EDT)
+Message-ID: <alpine.LNX.1.00.0809080246520.19665@iabervon.org>
+References: <9e4733910809060542s5ede6d6m5bdb894c958ea8b7@mail.gmail.com> <20080906162030.GT9129@mit.edu> <7viqt9rvwm.fsf@gitster.siamese.dyndns.org> <20080907234118.GA8161@mit.edu> <7v4p4ri5t2.fsf@gitster.siamese.dyndns.org>
+ <7viqt7gmtq.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="us-ascii"
-Content-Transfer-Encoding: 7bit
-Cc: "Shawn O. Pearce" <spearce@spearce.org>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Sep 08 09:21:29 2008
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: "Shawn O. Pearce" <spearce@spearce.org>,
+	Theodore Tso <tytso@MIT.EDU>, Jon Smirl <jonsmirl@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Sep 08 09:26:17 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Kcb3n-0003X8-Bt
-	for gcvg-git-2@gmane.org; Mon, 08 Sep 2008 09:21:19 +0200
+	id 1Kcb8S-0004yJ-JD
+	for gcvg-git-2@gmane.org; Mon, 08 Sep 2008 09:26:09 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752126AbYIHHUF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 8 Sep 2008 03:20:05 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752064AbYIHHUF
-	(ORCPT <rfc822;git-outgoing>); Mon, 8 Sep 2008 03:20:05 -0400
-Received: from fg-out-1718.google.com ([72.14.220.158]:19927 "EHLO
-	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752050AbYIHHUD (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 8 Sep 2008 03:20:03 -0400
-Received: by fg-out-1718.google.com with SMTP id 19so1382916fgg.17
-        for <git@vger.kernel.org>; Mon, 08 Sep 2008 00:20:02 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:organization:to:subject
-         :date:user-agent:cc:mime-version:content-type
-         :content-transfer-encoding:content-disposition:message-id;
-        bh=AzBX7MLYYsr/ymavltU7Fwedc7YfpGGoyWrn3pjUcf0=;
-        b=bfwOm48GBA7OJy98eTXn5+U77aTsxw7bxkc3tsV/UjkljmGS/BNcXwIiSTYuyW2QQJ
-         9nAYudMUprGp3pN3RQw0db6ILYu70qyUB2AJfiw3+H/TI2lRDNs22yrYKCckDu4Ek2dj
-         GGwEXpPqyZaiGSVBQJXw5iwUMODdhJUfFl8YY=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=from:organization:to:subject:date:user-agent:cc:mime-version
-         :content-type:content-transfer-encoding:content-disposition
-         :message-id;
-        b=YCXeKaCAcQUPcJ0TAjOvXZjjgGhE+zBAE9Oa8gJxx/PrIwevGilRHZTPGVdUT2w5jS
-         8oq2SOL9yYsDqS4r1uBC0GF0AzBVp/0sPm8/fWn39i+dZc7kTrFh4MuDWhEc7FWcNzVm
-         OFh3hGiewtuOeA2BkRo7zfP1jrXBfxUHWkVMw=
-Received: by 10.86.27.19 with SMTP id a19mr11002785fga.56.1220858402009;
-        Mon, 08 Sep 2008 00:20:02 -0700 (PDT)
-Received: from ?192.168.100.3? ( [92.255.85.78])
-        by mx.google.com with ESMTPS id d6sm4111341fga.2.2008.09.08.00.20.00
-        (version=SSLv3 cipher=RC4-MD5);
-        Mon, 08 Sep 2008 00:20:01 -0700 (PDT)
-User-Agent: KMail/1.9.9
-Content-Disposition: inline
+	id S1752529AbYIHHY7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 8 Sep 2008 03:24:59 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752504AbYIHHY6
+	(ORCPT <rfc822;git-outgoing>); Mon, 8 Sep 2008 03:24:58 -0400
+Received: from iabervon.org ([66.92.72.58]:37729 "EHLO iabervon.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752488AbYIHHY6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 8 Sep 2008 03:24:58 -0400
+Received: (qmail 32374 invoked by uid 1000); 8 Sep 2008 07:24:56 -0000
+Received: from localhost (sendmail-bs@127.0.0.1)
+  by localhost with SMTP; 8 Sep 2008 07:24:56 -0000
+In-Reply-To: <7viqt7gmtq.fsf@gitster.siamese.dyndns.org>
+User-Agent: Alpine 1.00 (LNX 882 2007-12-20)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/95222>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/95223>
 
-Make Blame Parent Commit and Show History Context work
-properly for lines blamed on the working copy.
+On Sun, 7 Sep 2008, Junio C Hamano wrote:
 
-Signed-off-by: Alexander Gavrilov <angavrilov@gmail.com>
----
+> Junio C Hamano <gitster@pobox.com> writes:
+> 
+> > Theodore Tso <tytso@MIT.EDU> writes:
+> >
+> >> One way that wouldn't break backwards compatibility would be to use
+> >> $D/refs if it exists, but if it isn't, fall back to existing behavior
+> >> (which is to say, only use the refs in the repository, not in the
+> >> borrowed repository/object store).  Is there a reason why this would
+> >> be problematic?
+> >
+> > This does not answer "is this safe enough change?" question, but the code
+> > to implement this should look like this (Area expert Daniel CC'ed).
+> 
+> Oops, I forgot to Cc Daniel.  Shawn also CC'ed because he will have the
+> same issue with the smart CGI based http-push he is building.
 
-	Currently it displays an ugly error box.
+The use of transport in general looks good to me; I'm not really an area 
+expert for the native protocol.
 
-	-- Alexander
+> > +static int add_refs_from_alternate(struct alternate_object_database *e, void *unused)
+> > +{
+> > +	char *other = xstrdup(make_absolute_path(e->base));
+> > +...
+> > +	remote = remote_get(other);
+> > +	transport = transport_get(remote, other);
+> > +	for (extra = transport_get_remote_refs(transport);
+> > +	     extra;
+> > +	     extra = extra->next) {
+> > +		/*
+> > +		 * Make sure this is named uniquely but with invalid name, so
+> > +		 * that we can catch the other end trying to do anything funky
+> > +		 * with it.
+> > +		 */
+> > +		strbuf_reset(&buf);
+> > +		strbuf_addf(&buf, "refs/borrowed-ref/%s", extra->name);
+> > +		add_extra_ref(buf.buf, extra->old_sha1, 0);
+> > +	}
+> > +	transport_disconnect(transport);
+> > +	free(other);
+> > +	return 0;
+> > +}
+> 
+> I need to clarify the comment in the above function.
+> 
+> When you are running "git push", the protocol employed is the send-pack
+> protocol, which begins by the receiving end advertising what refs it has
+> and where they point at.  The above code is in the receiving end and adds
+> extra refs from alternate repositories to this advertisement.
+> 
+> The advertisement serves two different purposes.  One is the immediate
+> issue we are tackling --- to tell the sending end what objects are not
+> needed in the pack it sends.  Objects that are reachable from the objects
+> in this advertisement do not have to be sent.  When the sending end wants
+> to send its 'master', for example, it uses this information to compute the
+> set of objects by doing (roughly):
+> 
+> 	git rev-list --objects master --not $sha1_1 $sha1_2 ...
+> 
+> where $sha1_N are the objects we advertise here.  The more we assure the
+> sender we have, the less it has to send to us.
+> 
+> But there is another purpose the sender uses this information for.  It is
+> used to determine which refs to push (when "git push" is run without any
+> explicit refspecs, it does "matching refs" -- it learns the set of refs
+> the receiving end has from this advertisement, and updates the refs of the
+> same name the sending end also has), and which branches on the receiving
+> end should be removed (when "git push --mirror" is run, it will send NULL
+> updates to refs the receiving end has but the sender doesn't).
+> 
+> We do want to show the extra object names to the sender so that it can
+> exclude more objects from the transfer, but for the latter purpose, we
+> really do not want these phoney refs to be understood as refs we have by
+> the sending end.  In the original version of my patch, I actually had
+> "refs/borrowed*refs%s/%s" as the format string (notice the asterisk) to
+> make it an invalid refname, and (notice the extra %s) to make them unique
+> by including the full-pathname to the repository as part of this string,
+> so that we can pretend we have different 'master' from two alternate
+> repositories.
+> 
+> The sending end, however, has a safety to silently ignore malformed refs
+> it learns from the receiving end over the wire.  So the current sender
+> won't work with asterisk in there '*', nor full-pathname, because
+> typically it contains "/.git/" in the string, which would make it an
+> invalid refname to be ignored.
+>
+> Also, the sending end remembers the objects we have per refname, so
+> sending two records with the same refname pointing at two different
+> objects will not work well either (the current code is loose and does not
+> check duplicates, but that is not a feature by design but is an accident).
+> If the receiving repository borrows from two alternate repositories, both
+> of which have 'master' branch, we would be sending two records, each of
+> which claims that it is "refs/borrowed-ref/refs/heads/master" but pointing
+> at a different commit.
+> 
+> That is the "unique and invalid" comment above is about (iow, the above
+> hunk that does not send "unique and invalid" refs cannot be the final form
+> of this enhancement).
+> 
+> What this means is that we also need to update the sending side in order
+> to enable this enhancement.  connect.c::get_remote_heads() is the relevant
+> code and we would probably need to add an option to keep all refs (and
+> invalid refs) in the returned list.  Both remote.c::match_refs() and
+> builtin-send-pack.c::do_send_pack() need to be taught to ignore the
+> invalid refs in the list, while builtin-send-pack.c::pack_objects() should
+> utilize all the refs (and invalid ones) when excluding the objects the
+> receiving end claims to have.  While at it, we probably should declare
+> that sending duplicate invalid refs is not an error (and we can use
+> something like "*borrowed*" as the phoney refname --- we do not need the
+> uniqueness for them, nor we need to tell the other end what ref we are
+> borrowing from whom).
 
- git-gui.sh    |    3 +++
- lib/blame.tcl |   29 ++++++++++++++++++++++++++---
- 2 files changed, 29 insertions(+), 3 deletions(-)
+I think we should use a really invalid ref name, like "^" or something 
+like that, so that it's clearly not an actually available ref, but just a 
+way for the remote to mention that it has the object, and the remote 
+doesn't have to try to make it unique.
 
-diff --git a/git-gui.sh b/git-gui.sh
-index 57a0c34..f249b0b 100755
---- a/git-gui.sh
-+++ b/git-gui.sh
-@@ -1061,6 +1061,9 @@ set current_diff_path {}
- set is_3way_diff 0
- set selected_commit_type new
- 
-+set nullid "0000000000000000000000000000000000000000"
-+set nullid2 "0000000000000000000000000000000000000001"
-+
- ######################################################################
- ##
- ## task management
-diff --git a/lib/blame.tcl b/lib/blame.tcl
-index b5fc9fa..84d55b5 100644
---- a/lib/blame.tcl
-+++ b/lib/blame.tcl
-@@ -939,9 +939,20 @@ method _format_offset_date {base offset} {
- }
- 
- method _gitkcommit {} {
-+	global nullid
-+
- 	set dat [_get_click_amov_info $this]
- 	if {$dat ne {}} {
- 		set cmit [lindex $dat 0]
-+
-+		# If the line belongs to the working copy, use HEAD instead
-+		if {$cmit eq $nullid} {
-+			if {[catch {set cmit [git rev-parse --verify HEAD]} err]} {
-+				error_popup [strcat [mc "Cannot find HEAD commit:"] "\n\n$err"]
-+				return;
-+			}
-+		}
-+
- 		set radius [get_config gui.blamehistoryctx]
- 		set cmdline [list --select-commit=$cmit]
- 
-@@ -978,12 +989,20 @@ method _gitkcommit {} {
- }
- 
- method _blameparent {} {
-+	global nullid
-+
- 	set dat [_get_click_amov_info $this]
- 	if {$dat ne {}} {
- 		set cmit [lindex $dat 0]
- 		set new_path [lindex $dat 1]
- 
--		if {[catch {set cparent [git rev-parse --verify "$cmit^"]}]} {
-+		# Allow using Blame Parent on lines modified in the working copy
-+		if {$cmit eq $nullid} {
-+			set parent_ref "HEAD"
-+		} else {
-+			set parent_ref "$cmit^"
-+		}
-+		if {[catch {set cparent [git rev-parse --verify $parent_ref]} err]} {
- 			error_popup [strcat [mc "Cannot find parent commit:"] "\n\n$err"]
- 			return;
- 		}
-@@ -993,8 +1012,12 @@ method _blameparent {} {
- 		# Generate a diff between the commit and its parent,
- 		# and use the hunks to update the line number.
- 		# Request zero context to simplify calculations.
--		if {[catch {set fd [eval git_read diff-tree \
--				--unified=0 $cparent $cmit $new_path]} err]} {
-+		if {$cmit eq $nullid} {
-+			set diffcmd [list diff-index --unified=0 $cparent -- $new_path]
-+		} else {
-+			set diffcmd [list diff-tree --unified=0 $cparent $cmit -- $new_path]
-+		}
-+		if {[catch {set fd [eval git_read $diffcmd]} err]} {
- 			$status stop [mc "Unable to display parent"]
- 			error_popup [strcat [mc "Error loading diff:"] "\n\n$err"]
- 			return
--- 
-1.6.0.20.g6148bc
+> We can start sending invalid refs (just replace - with * in the patch I
+> sent) from the receiving end without waiting for the sender end program to
+> get updated.  The sending end will ignore it and nothing (other than the
+> extra startup overhead the additional code has) bad should happen.  When
+> the sender is updated to keep the invalid refs, it will start to take
+> notice and your push will suddenly get smaller.
+
+Agreed.
+	-Daniel
+*This .sig left intentionally blank*
