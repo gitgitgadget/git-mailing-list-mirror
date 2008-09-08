@@ -1,120 +1,212 @@
 From: Karl =?utf-8?q?Hasselstr=C3=B6m?= <kha@treskal.com>
-Subject: [StGit PATCH 0/3] Auto-generate man pages and command list
-Date: Mon, 08 Sep 2008 23:07:52 +0200
-Message-ID: <20080908210302.1957.44280.stgit@yoghurt>
+Subject: [StGit PATCH 2/3] asciidoc.conf: Steal updates from git
+Date: Mon, 08 Sep 2008 23:08:05 +0200
+Message-ID: <20080908210805.1957.79447.stgit@yoghurt>
+References: <20080908210302.1957.44280.stgit@yoghurt>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: git@vger.kernel.org
 To: Catalin Marinas <catalin.marinas@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Sep 08 23:09:11 2008
+X-From: git-owner@vger.kernel.org Mon Sep 08 23:09:28 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Kcnyx-0008QS-42
-	for gcvg-git-2@gmane.org; Mon, 08 Sep 2008 23:09:11 +0200
+	id 1KcnzB-0008Tt-4f
+	for gcvg-git-2@gmane.org; Mon, 08 Sep 2008 23:09:25 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754033AbYIHVIB convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 8 Sep 2008 17:08:01 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753972AbYIHVIA
-	(ORCPT <rfc822;git-outgoing>); Mon, 8 Sep 2008 17:08:00 -0400
-Received: from diana.vm.bytemark.co.uk ([80.68.90.142]:1919 "EHLO
+	id S1754058AbYIHVIQ convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 8 Sep 2008 17:08:16 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754062AbYIHVIQ
+	(ORCPT <rfc822;git-outgoing>); Mon, 8 Sep 2008 17:08:16 -0400
+Received: from diana.vm.bytemark.co.uk ([80.68.90.142]:1924 "EHLO
 	diana.vm.bytemark.co.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753612AbYIHVIA (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 8 Sep 2008 17:08:00 -0400
+	with ESMTP id S1754051AbYIHVIJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 8 Sep 2008 17:08:09 -0400
 Received: from localhost ([127.0.0.1] helo=[127.0.1.1])
 	by diana.vm.bytemark.co.uk with esmtp (Exim 3.36 #1 (Debian))
-	id 1KcoJE-0003bs-00; Mon, 08 Sep 2008 22:30:08 +0100
+	id 1KcoJR-0003ci-00; Mon, 08 Sep 2008 22:30:21 +0100
+In-Reply-To: <20080908210302.1957.44280.stgit@yoghurt>
 User-Agent: StGIT/0.14.3.236.g0c611
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/95302>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/95303>
 
-The first patch auto-generates man pages for all StGit commands. We
-still have to write the actual text by hand (bummer!), but we get all
-the flags for free. Now we just have to take all those man pages and
-make them good ...
+Steal updates to asciidoc.conf from git. Also, make sure that we use
+the link:[] abd stglink:[] macros correctly everywhere.
 
-The third patch gets rid of the manual list of all commands in main.py
-and stg.txt, and instead generates it automatically. (There's still
-one list in the bash completion script; it is my next target.)
+Signed-off-by: Karl Hasselstr=C3=B6m <kha@treskal.com>
 
 ---
 
-Karl Hasselstr=C3=B6m (3):
-      Generate command lists automatically
-      asciidoc.conf: Steal updates from git
-      Auto-generate man pages for all StGit commands
-
-
- Documentation/.gitignore           |    4 -
- Documentation/COMMAND-TEMPLATE.txt |   42 ---------
- Documentation/Makefile             |   15 +++
- Documentation/asciidoc.conf        |  100 +++++++++++++++-----
- Documentation/stg-branch.txt       |  114 -----------------------
- Documentation/stg-clone.txt        |   32 -------
- Documentation/stg-init.txt         |   29 ------
- Documentation/stg-new.txt          |  115 ------------------------
- Documentation/stg-sink.txt         |   49 ----------
- Documentation/stg.txt              |  138 ----------------------------
- Makefile                           |   18 +++-
- stg-build                          |   37 ++++++++
- stgit/argparse.py                  |  176 ++++++++++++++++++++++++++++=
+ Documentation/asciidoc.conf |   79 +++++++++++++++++++++++++++++++----=
 --------
- stgit/commands/.gitignore          |    1=20
- stgit/commands/__init__.py         |   78 ++++++++++++++++
- stgit/commands/branch.py           |  123 ++++++++++++++++---------
- stgit/commands/clean.py            |   22 ++---
- stgit/commands/clone.py            |   20 +++-
- stgit/commands/coalesce.py         |   14 ++-
- stgit/commands/commit.py           |   22 +++--
- stgit/commands/delete.py           |   16 ++-
- stgit/commands/diff.py             |   27 +++---
- stgit/commands/edit.py             |   24 ++---
- stgit/commands/export.py           |   48 +++++-----
- stgit/commands/files.py            |   24 ++---
- stgit/commands/float.py            |   18 ++--
- stgit/commands/fold.py             |   23 ++---
- stgit/commands/goto.py             |   11 +-
- stgit/commands/hide.py             |   17 ++-
- stgit/commands/id.py               |   12 +-
- stgit/commands/imprt.py            |   93 +++++++++----------
- stgit/commands/init.py             |   14 ++-
- stgit/commands/log.py              |   34 +++----
- stgit/commands/mail.py             |  116 +++++++++++-------------
- stgit/commands/new.py              |   34 ++++---
- stgit/commands/patches.py          |   22 ++---
- stgit/commands/pick.py             |   50 +++++-----
- stgit/commands/pop.py              |   28 +++---
- stgit/commands/pull.py             |   23 ++---
- stgit/commands/push.py             |   38 +++-----
- stgit/commands/rebase.py           |   23 ++---
- stgit/commands/refresh.py          |   45 ++++-----
- stgit/commands/rename.py           |   20 ++--
- stgit/commands/repair.py           |   11 +-
- stgit/commands/resolved.py         |   27 +++---
- stgit/commands/series.py           |   78 +++++++---------
- stgit/commands/show.py             |   31 +++---
- stgit/commands/sink.py             |   44 ++++++---
- stgit/commands/status.py           |   53 +++++------
- stgit/commands/sync.py             |   31 +++---
- stgit/commands/top.py              |   16 ++-
- stgit/commands/uncommit.py         |   25 +++--
- stgit/commands/unhide.py           |   19 ++--
- stgit/main.py                      |  138 ++--------------------------
- 54 files changed, 1024 insertions(+), 1358 deletions(-)
- delete mode 100644 Documentation/COMMAND-TEMPLATE.txt
- delete mode 100644 Documentation/stg-branch.txt
- delete mode 100644 Documentation/stg-clone.txt
- delete mode 100644 Documentation/stg-init.txt
- delete mode 100644 Documentation/stg-new.txt
- delete mode 100644 Documentation/stg-sink.txt
- create mode 100755 stg-build
- create mode 100644 stgit/commands/.gitignore
+ Documentation/stg.txt       |    2 +
+ stgit/argparse.py           |    2 +
+ stgit/commands/clone.py     |    4 +-
+ 4 files changed, 61 insertions(+), 26 deletions(-)
 
---=20
-Karl Hasselstr=C3=B6m, kha@treskal.com
-      www.treskal.com/kalle
+
+diff --git a/Documentation/asciidoc.conf b/Documentation/asciidoc.conf
+index 4c83756..69447ab 100644
+--- a/Documentation/asciidoc.conf
++++ b/Documentation/asciidoc.conf
+@@ -1,51 +1,86 @@
+-## gitlink: macro
+-#
+-# Usage: gitlink:command[manpage-section]
+-#
+-# Note, {0} is the manpage section, while {target} is the command.
+-#
+-# Show GIT link as: <command>(<section>); if section is defined, else =
+just show
+-# the command.
+-
+ [attributes]
+-caret=3D^
++asterisk=3D&#42;
++plus=3D&#43;
++caret=3D&#94;
+ startsb=3D&#91;
+ endsb=3D&#93;
+ tilde=3D&#126;
+=20
+ ifdef::backend-docbook[]
+-[gitlink-inlinemacro]
+-{0%{target}}
+-{0#<citerefentry>}
+-{0#<refentrytitle>{target}</refentrytitle><manvolnum>{0}</manvolnum>}
+-{0#</citerefentry>}
+-endif::backend-docbook[]
+-
+-ifdef::backend-docbook[]
++ifndef::docbook-xsl-172[]
+ # "unbreak" docbook-xsl v1.68 for manpages. v1.69 works with or withou=
+t this.
++# v1.72 breaks with this because it replaces dots not in roff requests=
+=2E
+ [listingblock]
+ <example><title>{title}</title>
+ <literallayout>
++ifdef::doctype-manpage[]
++&#10;.ft C&#10;
++endif::doctype-manpage[]
+ |
++ifdef::doctype-manpage[]
++&#10;.ft&#10;
++endif::doctype-manpage[]
+ </literallayout>
+ {title#}</example>
++endif::docbook-xsl-172[]
++endif::backend-docbook[]
++
++ifdef::doctype-manpage[]
++ifdef::backend-docbook[]
++[header]
++template::[header-declarations]
++<refentry>
++<refmeta>
++<refentrytitle>{mantitle}</refentrytitle>
++<manvolnum>{manvolnum}</manvolnum>
++<refmiscinfo class=3D"source">StGit</refmiscinfo>
++<refmiscinfo class=3D"version">{stgit_version}</refmiscinfo>
++<refmiscinfo class=3D"manual">StGit Manual</refmiscinfo>
++</refmeta>
++<refnamediv>
++  <refname>{manname}</refname>
++  <refpurpose>{manpurpose}</refpurpose>
++</refnamediv>
++endif::backend-docbook[]
++endif::doctype-manpage[]
++
++## link: macro
++#
++# Usage: link:command[manpage-section]
++#
++# Note, {0} is the manpage section, while {target} is the command.
++#
++# Show link as: <command>(<section>); if section is defined, else just
++# show the command.
++
++ifdef::backend-docbook[]
++[link-inlinemacro]
++{0%{target}}
++{0#<citerefentry>}
++{0#<refentrytitle>{target}</refentrytitle><manvolnum>{0}</manvolnum>}
++{0#</citerefentry>}
+ endif::backend-docbook[]
+=20
+ ifdef::backend-xhtml11[]
+-[gitlink-inlinemacro]
++[link-inlinemacro]
+ <a href=3D"{target}.html">{target}{0?({0})}</a>
+ endif::backend-xhtml11[]
+=20
+-# stglink
++## stglink: macro
++#
++# Usage: stglink:command[]
++#
++# Show StGit link as: stg-<command>(1) in man pages, stg <command> in
++# html.
+=20
+ ifdef::backend-docbook[]
+ [stglink-inlinemacro]
+ <citerefentry>
+-<refentrytitle>stg {target}</refentrytitle><manvolnum>1</manvolnum>
++  <refentrytitle>stg-{target}</refentrytitle><manvolnum>1</manvolnum>
+ </citerefentry>
+ endif::backend-docbook[]
+=20
+ ifdef::backend-xhtml11[]
+ [stglink-inlinemacro]
+-<a href=3D"stg-{target}.html">stg {target}(1)</a>
++<a href=3D"stg-{target}.html">stg {target}</a>
+ endif::backend-xhtml11[]
+diff --git a/Documentation/stg.txt b/Documentation/stg.txt
+index f6cd815..a0b2176 100644
+--- a/Documentation/stg.txt
++++ b/Documentation/stg.txt
+@@ -245,7 +245,7 @@ CONFIGURATION MECHANISM
+ -----------------------
+=20
+ Starting with 0.12, StGIT uses the same configuration mechanism as
+-GIT.  See gitlink:git[7] for more details.
++GIT.  See link:git[7] for more details.
+=20
+ TEMPLATES
+ ---------
+diff --git a/stgit/argparse.py b/stgit/argparse.py
+index 4cd9527..d0134f8 100644
+--- a/stgit/argparse.py
++++ b/stgit/argparse.py
+@@ -94,7 +94,7 @@ def write_asciidoc(cmd, f):
+             o.write_asciidoc(f)
+             f.write('\n')
+     _write_underlined('StGit', '-', f)
+-    f.write('Part of the StGit suite - see stglink:stg[1]\n')
++    f.write('Part of the StGit suite - see link:stg[1]\n')
+=20
+ def sign_options():
+     def callback(option, opt_str, value, parser, sign_str):
+diff --git a/stgit/commands/clone.py b/stgit/commands/clone.py
+index d2c68bb..b83169e 100644
+--- a/stgit/commands/clone.py
++++ b/stgit/commands/clone.py
+@@ -24,10 +24,10 @@ help =3D 'Make a local clone of a remote repository=
+'
+ usage =3D ['<repository> <dir>']
+ description =3D """
+ Clone a git repository into the local directory <dir> (using
+-gitlink:clone[]) and initialise the local branch "master".
++stglink:clone[]) and initialise the local branch "master".
+=20
+ This operation is for example suitable to start working using the
+-"tracking branch" workflow (see gitlink:stg[1]). Other means to setup
++"tracking branch" workflow (see link:stg[1]). Other means to setup
+ an StGit stack are stglink:init[] and the '--create' and '--clone'
+ commands of stglink:branch[].
+=20
