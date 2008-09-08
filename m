@@ -1,85 +1,94 @@
-From: Dmitry Potapov <dpotapov@gmail.com>
-Subject: Re: Gitk and --no-walk don't play together
-Date: Mon, 8 Sep 2008 23:07:04 +0400
-Message-ID: <20080908190704.GA28210@dpotapov.dyndns.org>
-References: <alpine.LNX.1.10.0809081223360.1621@fbirervta.pbzchgretzou.qr> <adf1fd3d0809080934s67b2a8b1w19aeb3d8e5f8b4ab@mail.gmail.com> <alpine.LNX.1.10.0809081310260.1621@fbirervta.pbzchgretzou.qr>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [ANNOUNCE] Guilt v0.31
+Date: Mon, 08 Sep 2008 12:17:25 -0700
+Message-ID: <7vmyiifnwa.fsf@gitster.siamese.dyndns.org>
+References: <20080908135244.GB27550@josefsipek.net>
+ <36ca99e90809081133s58e3d32h8b85804f5bb76902@mail.gmail.com>
+ <20080908184322.GE27550@josefsipek.net>
+ <36ca99e90809081150v4ad6e7a0n72b5cca39e02b1bc@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Santi Bejar <santi@agolina.net>, git@vger.kernel.org
-To: Jan Engelhardt <jengelh@medozas.de>
-X-From: git-owner@vger.kernel.org Mon Sep 08 21:11:21 2008
+Cc: "Josef 'Jeff' Sipek" <jeffpc@josefsipek.net>,
+	"Git Mailing List" <git@vger.kernel.org>,
+	"Linux Kernel Mailing List" <linux-kernel@vger.kernel.org>,
+	guilt@lists.josefsipek.net, "Brandon Philips" <brandon@ifup.org>
+To: "Bert Wesarg" <bert.wesarg@googlemail.com>
+X-From: git-owner@vger.kernel.org Mon Sep 08 21:19:12 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Kcm8o-00058f-Ns
-	for gcvg-git-2@gmane.org; Mon, 08 Sep 2008 21:11:15 +0200
+	id 1KcmGU-0007x1-7s
+	for gcvg-git-2@gmane.org; Mon, 08 Sep 2008 21:19:10 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753676AbYIHTKI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 8 Sep 2008 15:10:08 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753216AbYIHTKI
-	(ORCPT <rfc822;git-outgoing>); Mon, 8 Sep 2008 15:10:08 -0400
-Received: from fg-out-1718.google.com ([72.14.220.152]:51454 "EHLO
-	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753720AbYIHTKG (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 8 Sep 2008 15:10:06 -0400
-Received: by fg-out-1718.google.com with SMTP id 19so1574479fgg.17
-        for <git@vger.kernel.org>; Mon, 08 Sep 2008 12:07:09 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:cc:subject
-         :message-id:references:mime-version:content-type:content-disposition
-         :in-reply-to:user-agent;
-        bh=yjtU8hqDN/tifyXtdJGKVIAk1EYavvaoLVYKJwm72Rc=;
-        b=LtRXCzcpC6Xxum7JA9SFewaJm1yUoHr/lfqnSjaSDM8tgVVLBT37jWtycGhdCx4wHp
-         Zdpr+TAzeZX0DKdJ1LsNp85Cdn5dp/DzDfAgoULkDq4xDU3G7WV7N9Jq/nfmaEwbFevX
-         R5sJt2AyVeghVzcFBeIPN7RdoCC7sFbp9xdHg=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        b=g4/Pl73BMZWM9AiVYgSFuVz0+1QxHpy+A3DpbExMvAPbnYZrE+9lnk6hIQU/5hxRVO
-         jx2ymH5N6ALLkyQxOmUeNf154gVnd29E7RDuUjleB7AkOh7lq9rTbBbgdvsWKoBl8kvQ
-         XCJ5nTNRr9XxrF19sYGHqQ1McEeWyaxFzfcHg=
-Received: by 10.86.82.16 with SMTP id f16mr11606095fgb.16.1220900828856;
-        Mon, 08 Sep 2008 12:07:08 -0700 (PDT)
-Received: from localhost ( [85.141.189.164])
-        by mx.google.com with ESMTPS id 3sm4871716fge.3.2008.09.08.12.07.06
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Mon, 08 Sep 2008 12:07:07 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <alpine.LNX.1.10.0809081310260.1621@fbirervta.pbzchgretzou.qr>
-User-Agent: Mutt/1.5.13 (2006-08-11)
+	id S1753390AbYIHTSB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 8 Sep 2008 15:18:01 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753016AbYIHTSA
+	(ORCPT <rfc822;git-outgoing>); Mon, 8 Sep 2008 15:18:00 -0400
+Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:48769 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752421AbYIHTSA (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 8 Sep 2008 15:18:00 -0400
+Received: from localhost.localdomain (localhost [127.0.0.1])
+	by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id EBAFB79439;
+	Mon,  8 Sep 2008 15:17:58 -0400 (EDT)
+Received: from pobox.com (ip68-225-240-211.oc.oc.cox.net [68.225.240.211])
+ (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
+ certificate requested) by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with
+ ESMTPSA id 457B07942E; Mon,  8 Sep 2008 15:17:28 -0400 (EDT)
+In-Reply-To: <36ca99e90809081150v4ad6e7a0n72b5cca39e02b1bc@mail.gmail.com>
+ (Bert Wesarg's message of "Mon, 8 Sep 2008 20:50:03 +0200")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: D9180734-7DDA-11DD-825F-3113EBD4C077-77302942!a-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/95292>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/95293>
 
-On Mon, Sep 08, 2008 at 01:25:12PM -0400, Jan Engelhardt wrote:
-> rev-list completes without any problems. I straced gitk, and see:
-> 
-> 	git log --no-color -z --pretty=raw --topo-order
-> 	--parents --boundary --no-walk v2.6.25 v2.6.26
+"Bert Wesarg" <bert.wesarg@googlemail.com> writes:
 
-git log crashed when it tried to print the boundary commit.
-It seems the bug exists in all 1.5.4.x and was fixed in 1.5.5.
-The commit that fixed the bug is 3131b71 when --show-all was added
-to revision log. The lines that fixed this bug are the following:
+> I must admit, that I don't like these extra tarballs with docs. I
+> always expect, that the manpages are nicely installed if I type 'make
+> install' (or at least with a install-doc target). But I need to
+> download this extra package, and extract it to the right place, there
+> is no Makefile whatsoever. In case of git its really annoying, because
+> the help mechanism is relying on the manpages (i.e. git help <cmd> or
+> git <cmd> --help, but you know this).
 
-> diff --git a/log-tree.c b/log-tree.c
-> index 1f3fcf1..e9ba6df 100644
-> --- a/log-tree.c
-> +++ b/log-tree.c
-> @@ -278,6 +282,9 @@ void show_log(struct rev_info *opt, const char *sep)
->  		}
->  	}
->  
-> +	if (!commit->buffer)
-> +		return;
-> +
->  	/*
->  	 * And then the pretty-printed message itself
->  	 */
+There is no need to feel "it[']s really annoying", as install-doc from the
+tarball distribution works out of the box.
 
-Dmitry
+I used 1.6.0.1 in the demonstration below, but this is nothing new in that
+version but has been like this for quite some time (it is how sample RPMs
+binary packages are built, so the procedure ought to work):
+
+    $ ls -1 /usr/bin/git ;# to show there is no other "git" on this box
+    ls: /usr/bin/git: No such file or directory
+    $ mkdir /var/tmp/16
+    $ cd /var/tmp/16
+    $ wget http://www.kernel.org/pub/software/scm/git/git-1.6.0.1.tar.gz
+    $ tar xf git-1.6.0.1.tar.gz
+    $ cd git-1.6.0.1
+    $ make prefix=/var/tmp/16test install install-doc
+    $ PATH=/var/tmp/16test/bin:/usr/bin:/bin
+    $ export PATH
+    $ unset MANPATH
+    $ git help cat-file | cat -s | tail -n 8
+    Reformatting git-cat-file(1), please wait...
+    DOCUMENTATION
+           Documentation by David Greaves, Junio C Hamano and the git-list
+           <git@vger.kernel.org>.
+
+    GIT
+           Part of the git(1) suite
+
+    Git 1.6.0.1                       09/08/2008                   GIT-CAT-FILE(1)
+
+
+The extra tarballs for documentation are also given as courtesy because
+they are supposed to be platform independent and some people do not want
+to generate them themselves (even though they could).
+
+Either be thankful for the availability of tarballs, or ignore them and
+generate them yourself --- it's your choice.
