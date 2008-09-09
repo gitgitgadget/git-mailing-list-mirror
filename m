@@ -1,124 +1,202 @@
-From: "Steven Walter" <stevenrwalter@gmail.com>
-Subject: Re: [ANNOUNCE] yap: Yet Another (Git) Porcelain
-Date: Mon, 8 Sep 2008 21:05:28 -0400
-Message-ID: <e06498070809081805l46ff295du69d8c9a2cc0ef59a@mail.gmail.com>
-References: <20080906150723.GA31540@dervierte>
-	 <m38wu5p9q4.fsf@localhost.localdomain>
-	 <e06498070809060912q2f7ed0cflb02e3efc7b81976e@mail.gmail.com>
-	 <200809062101.28672.jnareb@gmail.com>
-	 <5d46db230809072045u7ade2d62i514aac49149a463d@mail.gmail.com>
+From: Eric Wong <normalperson@yhbt.net>
+Subject: Re: [PATCH v2] Git.pm: Use File::Temp->tempfile instead of ->new
+Date: Mon, 8 Sep 2008 18:53:38 -0700
+Message-ID: <20080909015338.GA15974@yp-box.dyndns.org>
+References: <1220889063-20387-1-git-send-email-marcus@griep.us> <1220892781-24343-1-git-send-email-marcus@griep.us>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: "Jakub Narebski" <jnareb@gmail.com>, git@vger.kernel.org
-To: "Govind Salinas" <govind@sophiasuchtig.com>
-X-From: git-owner@vger.kernel.org Tue Sep 09 03:06:54 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: Git Mailing List <git@vger.kernel.org>,
+	Junio C Hamano <gitster@pobox.com>,
+	"Tom G. Christensen" <tgc@statsbiblioteket.dk>,
+	Abhijit Menon-Sen <ams@toroid.org>
+To: Marcus Griep <marcus@griep.us>
+X-From: git-owner@vger.kernel.org Tue Sep 09 03:54:48 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Kcrgv-0006vx-Ba
-	for gcvg-git-2@gmane.org; Tue, 09 Sep 2008 03:06:49 +0200
+	id 1KcsRL-0008B0-Rm
+	for gcvg-git-2@gmane.org; Tue, 09 Sep 2008 03:54:48 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754751AbYIIBFb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 8 Sep 2008 21:05:31 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754423AbYIIBFb
-	(ORCPT <rfc822;git-outgoing>); Mon, 8 Sep 2008 21:05:31 -0400
-Received: from wr-out-0506.google.com ([64.233.184.227]:5361 "EHLO
-	wr-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754415AbYIIBFa (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 8 Sep 2008 21:05:30 -0400
-Received: by wr-out-0506.google.com with SMTP id 69so1822884wri.5
-        for <git@vger.kernel.org>; Mon, 08 Sep 2008 18:05:28 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to
-         :subject:cc:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:references;
-        bh=azTL/AIEsrzj1TzKy7w7LhRB7u4ihqIZg2qjJsXf/zs=;
-        b=II5+jBqaAZNxZAbxZ5gGj+OSXl66UcgBTmGSi45F9w0T51uXIFQXW9hCSWd/UKlltR
-         bLTzYB5+bVAIzH7TUhOXErgy1pgO89IKPpX+awolsrJGdGLg9XcMHYVsxXl8EDAxRYfS
-         vKSsgOEy9D4SEU/nm6gfFtuDgdAEdU37rk8cY=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
-         :content-type:content-transfer-encoding:content-disposition
-         :references;
-        b=UQmNLnryIYOft/DF3/ER7qsEKRCQU1aFMjY56hRdDIUFlSsHUx01WsGVPKWlFWAdOS
-         U/rMUkWJ8Xft1fKgl+XhyZQvLUQChyLemRZT6gg7di3j5pV2/WcQG/MponuVPj4+nR+b
-         2xv8CD9iOfjDCnrU/R+bfHO9+qwOqRxipaebY=
-Received: by 10.90.31.8 with SMTP id e8mr20050452age.98.1220922328709;
-        Mon, 08 Sep 2008 18:05:28 -0700 (PDT)
-Received: by 10.90.25.17 with HTTP; Mon, 8 Sep 2008 18:05:28 -0700 (PDT)
-In-Reply-To: <5d46db230809072045u7ade2d62i514aac49149a463d@mail.gmail.com>
+	id S1751711AbYIIBxk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 8 Sep 2008 21:53:40 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751502AbYIIBxk
+	(ORCPT <rfc822;git-outgoing>); Mon, 8 Sep 2008 21:53:40 -0400
+Received: from hand.yhbt.net ([66.150.188.102]:45517 "EHLO hand.yhbt.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751300AbYIIBxj (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 8 Sep 2008 21:53:39 -0400
+Received: from localhost.localdomain (localhost [127.0.0.1])
+	by hand.yhbt.net (Postfix) with ESMTP id 2822A2DC01B;
+	Mon,  8 Sep 2008 18:53:38 -0700 (PDT)
 Content-Disposition: inline
+In-Reply-To: <1220892781-24343-1-git-send-email-marcus@griep.us>
+User-Agent: Mutt/1.5.18 (2008-05-17)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/95325>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/95326>
 
-On Sun, Sep 7, 2008 at 11:45 PM, Govind Salinas
-<govind@sophiasuchtig.com> wrote:
->>> To my knowledge, Pyrite does not support plugins.
->
-> Depends on what you mean by plugins.  There is a way to load what I call
-> extensions that you can use to add commands or modify the way existing
-> commands operate.  It is crude at the moment but it works.  I have a
-> proof of concept extension/plugin that adds different ways of specifying
-> revisions.  I assume you mean something similar.
+Marcus Griep <marcus@griep.us> wrote:
+> Perl 5.8.0 ships with File::Temp 0.13, which does not have the new()
+> interface introduced in 0.14, as pointed out by Tom G. Christensen.
+> 
+> This modifies Git.pm to use the more established tempfile() interface
+> and updates 'git svn' to match.
+> 
+> Signed-off-by: Marcus Griep <marcus@griep.us>
+> ---
+> 
+>  This patch v2 cleans up a few code items, corrects a misspelling,
+>  and ensures that the temp file gets unlinked when we exit, now
+>  that we are requesting the filename.  Otherwise, the previous
+>  comments stand:
+>  
+>  Per the earlier patch versions by Abhijit Menon-Sen and Tom G. Christensen.
+>  Both of you may want to run a test and add your 'Tested-by' to the thread
+>  if everything works out before Eric Wong adds his 'Acked-by'.
 
-That pretty well describes what I mean by a plugin system.  Does your
-system allow anything other than commands to be overridden?  Do your
-commands ever call other commands, and if so, will the overridden
-method be called in that case?
+Thanks Marcus, this works for me.
+(Perl 5.10.0, so no compatibility issues).
 
-Yap's plugin system is pretty nice (IMHO), but it was designed almost
-exclusively as a means to an end: the svn plugin.  With the svn
-plugin, "yap clone" will accept an SVN url as readily as a git URL,
-and the result it what you would expect if you had a git URL:  a
-full-history git clone of the svn repository with all branches and
-tags.  Obviously, the svn clone would be much slower than the
-equivalent git command, but that's the price one pays in interacting
-with svn.  However, this "yap" repo can then be cloned, and all the
-svn meta-information will be present in the new repository.  This
-means that the new repository can immediately be used for pushing
-commits back to the original svn repository without any additional
-configuration.  Additionally, you can use an svn revision anywhere a
-git committish can be used.
+<bikeshed>
+Can we rename temp_fname() to temp_path(), though?  "fname"
+just doesn't look right in the API to me...
+</bikeshed>
 
-In a yap "yap-svn" clone, "svn" appears as just another remote.  "yap
-push svn foo" does the expected thing.  Likewise for fetching and
-updating.  In theory a similarly parallel interface could be provided
-to other SCMs.  Facilitating users who track SVN repositories with git
-was one of the majors goals of the yap project, and I encourage users
-who do so to give yap a try.
-
-> I am currently not doing much work on the command line interface since
-> people seemed to object to my ideas.  Instead I am focusing on the gui
-> instead.  Since you say you are not going to keep the command lines
-> compatible, what do you intend to do differently?
-
-The command-line interface has been my primary focus, as that is what
-I and my co-workers usually use.  The interface that yap has now is
-intended to be more orthogonal and "safer" than the standard git
-porcelain.  By "safer" I mean that yap will not perform an operation
-that cannot be readily reversed without explicit confirmation (an "-f"
-flag, for instance).  For example, the closest equivalent to "git
-reset --hard" in yap is "yap point."  yap point fails if there are any
-uncommitted changes (staged or unstaged), or if it would create
-"dangling commits" that can no longer be referenced by a ref (unless
-"-f" is given).  On the orthogonal side, "yap" provides
-commit/uncommit as a pair, as well as stage/unstage.  They are small
-things, but small things can make a big improvement in user experience
-(especially if it keeps you from killing uncommitted changes you had
-forgotten about).
--- 
--Steven Walter <stevenrwalter@gmail.com>
-"A human being should be able to change a diaper, plan an invasion,
-butcher a hog, conn a ship, design a building, write a sonnet, balance
-accounts, build a wall, set a bone, comfort the dying, take orders,
-give orders, cooperate, act alone, solve equations, analyze a new
-problem, pitch manure, program a computer, cook a tasty meal, fight
-efficiently, die gallantly. Specialization is for insects."
- -Robert Heinlein
+>  git-svn.perl |    4 ++--
+>  perl/Git.pm  |   42 ++++++++++++++++++++++++++++++------------
+>  2 files changed, 32 insertions(+), 14 deletions(-)
+> 
+> diff --git a/git-svn.perl b/git-svn.perl
+> index ee3f5ed..c92bd8e 100755
+> --- a/git-svn.perl
+> +++ b/git-svn.perl
+> @@ -3304,7 +3304,7 @@ sub close_file {
+>  					my $out = syswrite($tmp_fh, $str, $res);
+>  					defined($out) && $out == $res
+>  						or croak("write ",
+> -							$tmp_fh->filename,
+> +							Git::temp_fname($tmp_fh),
+>  							": $!\n");
+>  				}
+>  				defined $res or croak $!;
+> @@ -3315,7 +3315,7 @@ sub close_file {
+>  		}
+>  
+>  		$hash = $::_repository->hash_and_insert_object(
+> -				$fh->filename);
+> +				Git::temp_fname($fh));
+>  		$hash =~ /^[a-f\d]{40}$/ or die "not a sha1: $hash\n";
+>  
+>  		Git::temp_release($fb->{base}, 1);
+> diff --git a/perl/Git.pm b/perl/Git.pm
+> index 102e6a4..3f5514c 100644
+> --- a/perl/Git.pm
+> +++ b/perl/Git.pm
+> @@ -58,7 +58,7 @@ require Exporter;
+>                  command_bidi_pipe command_close_bidi_pipe
+>                  version exec_path hash_object git_cmd_try
+>                  remote_refs
+> -                temp_acquire temp_release temp_reset);
+> +                temp_acquire temp_release temp_reset temp_fname);
+>  
+>  
+>  =head1 DESCRIPTION
+> @@ -937,7 +937,7 @@ sub _close_cat_blob {
+>  
+>  { # %TEMP_* Lexical Context
+>  
+> -my (%TEMP_LOCKS, %TEMP_FILES);
+> +my (%TEMP_FILEMAP, %TEMP_FILES);
+>  
+>  =item temp_acquire ( NAME )
+>  
+> @@ -965,7 +965,7 @@ sub temp_acquire {
+>  
+>  	my $temp_fd = _temp_cache($name);
+>  
+> -	$TEMP_LOCKS{$temp_fd} = 1;
+> +	$TEMP_FILES{$temp_fd}{locked} = 1;
+>  	$temp_fd;
+>  }
+>  
+> @@ -991,16 +991,16 @@ the same string.
+>  sub temp_release {
+>  	my ($self, $temp_fd, $trunc) = _maybe_self(@_);
+>  
+> -	if (ref($temp_fd) ne 'File::Temp') {
+> +	if (exists $TEMP_FILEMAP{$temp_fd}) {
+>  		$temp_fd = $TEMP_FILES{$temp_fd};
+>  	}
+> -	unless ($TEMP_LOCKS{$temp_fd}) {
+> +	unless ($TEMP_FILES{$temp_fd}{locked}) {
+>  		carp "Attempt to release temp file '",
+>  			$temp_fd, "' that has not been locked";
+>  	}
+>  	temp_reset($temp_fd) if $trunc and $temp_fd->opened;
+>  
+> -	$TEMP_LOCKS{$temp_fd} = 0;
+> +	$TEMP_FILES{$temp_fd}{locked} = 0;
+>  	undef;
+>  }
+>  
+> @@ -1009,9 +1009,9 @@ sub _temp_cache {
+>  
+>  	_verify_require();
+>  
+> -	my $temp_fd = \$TEMP_FILES{$name};
+> +	my $temp_fd = \$TEMP_FILEMAP{$name};
+>  	if (defined $$temp_fd and $$temp_fd->opened) {
+> -		if ($TEMP_LOCKS{$$temp_fd}) {
+> +		if ($TEMP_FILES{$$temp_fd}{locked}) {
+>  			throw Error::Simple("Temp file with moniker '",
+>  				$name, "' already in use");
+>  		}
+> @@ -1021,12 +1021,13 @@ sub _temp_cache {
+>  			carp "Temp file '", $name,
+>  				"' was closed. Opening replacement.";
+>  		}
+> -		$$temp_fd = File::Temp->new(
+> -			TEMPLATE => 'Git_XXXXXX',
+> -			DIR => File::Spec->tmpdir
+> +		my $fname;
+> +		($$temp_fd, $fname) = File::Temp->tempfile(
+> +			'Git_XXXXXX', UNLINK => 1
+>  			) or throw Error::Simple("couldn't open new temp file");
+>  		$$temp_fd->autoflush;
+>  		binmode $$temp_fd;
+> +		$TEMP_FILES{$$temp_fd}{fname} = $fname;
+>  	}
+>  	$$temp_fd;
+>  }
+> @@ -1053,8 +1054,25 @@ sub temp_reset {
+>  		or throw Error::Simple("expected file position to be reset");
+>  }
+>  
+> +=item temp_fname ( NAME )
+> +
+> +=item temp_fname ( FILEHANDLE )
+> +
+> +Returns the filename associated with the given tempfile.
+> +
+> +=cut
+> +
+> +sub temp_fname {
+> +	my ($self, $temp_fd) = _maybe_self(@_);
+> +
+> +	if (exists $TEMP_FILEMAP{$temp_fd}) {
+> +		$temp_fd = $TEMP_FILEMAP{$temp_fd};
+> +	}
+> +	$TEMP_FILES{$temp_fd}{fname};
+> +}
+> +
+>  sub END {
+> -	unlink values %TEMP_FILES if %TEMP_FILES;
+> +	unlink values %TEMP_FILEMAP if %TEMP_FILEMAP;
+>  }
+>  
+>  } # %TEMP_* Lexical Context
+> -- 
+> 1.6.0.1.400.gd2470
