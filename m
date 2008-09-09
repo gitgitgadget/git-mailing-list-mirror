@@ -1,65 +1,73 @@
-From: Paolo Bonzini <bonzini@gnu.org>
-Subject: Re: [PATCH 2/4] receive-pack: make it a builtin
-Date: Tue, 09 Sep 2008 16:47:55 +0200
-Message-ID: <48C68C9B.8070402@gnu.org>
-References: <1220948830-3275-1-git-send-email-gitster@pobox.com> <1220948830-3275-2-git-send-email-gitster@pobox.com> <1220948830-3275-3-git-send-email-gitster@pobox.com> <48C64138.3020406@gnu.org> <7v63p59z3w.fsf@gitster.siamese.dyndns.org>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [GSoC] Git projects for Google Summer of Code 2008 final
+ evaluation
+Date: Tue, 9 Sep 2008 16:52:41 +0200 (CEST)
+Message-ID: <alpine.DEB.1.00.0809091651270.13830@pacific.mpi-cbg.de.mpi-cbg.de>
+References: <200809042315.58898.jnareb@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Sep 09 16:50:30 2008
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org, Sam Vilain <sam@vilain.net>,
+	Joshua Roys <roysjosh@gmail.com>,
+	Sverre Rabbelier <alturin@gmail.com>,
+	Sverre Rabbelier <sverre@rabbelier.nl>,
+	David Symonds <dsymonds@gmail.com>,
+	Lea Wiemann <LeWiemann@gmail.com>,
+	John Hawley <warthog19@eaglescrag.net>,
+	Marek Zawirski <marek.zawirski@gmail.com>,
+	"Shawn O. Pearce" <spearce@spearce.org>,
+	Miklos Vajna <vmiklos@frugalware.org>,
+	Stephan Beyer <s-beyer@gmx.net>,
+	Christian Couder <chriscool@tuxfamily.org>,
+	Daniel Barkalow <barkalow@iabervon.org>,
+	Junio Hamano <gitster@pobox.com>
+To: Jakub Narebski <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Sep 09 16:51:37 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Kd4Wu-0000Or-Ku
-	for gcvg-git-2@gmane.org; Tue, 09 Sep 2008 16:49:21 +0200
+	id 1Kd4Vx-0008SK-N8
+	for gcvg-git-2@gmane.org; Tue, 09 Sep 2008 16:48:22 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753200AbYIIOsI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 9 Sep 2008 10:48:08 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753211AbYIIOsI
-	(ORCPT <rfc822;git-outgoing>); Tue, 9 Sep 2008 10:48:08 -0400
-Received: from main.gmane.org ([80.91.229.2]:54599 "EHLO ciao.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752942AbYIIOsG (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 9 Sep 2008 10:48:06 -0400
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1Kd4Ve-000898-SG
-	for git@vger.kernel.org; Tue, 09 Sep 2008 14:48:02 +0000
-Received: from 195.176.178.209 ([195.176.178.209])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Tue, 09 Sep 2008 14:48:02 +0000
-Received: from bonzini by 195.176.178.209 with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Tue, 09 Sep 2008 14:48:02 +0000
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@ger.gmane.org
-X-Gmane-NNTP-Posting-Host: 195.176.178.209
-User-Agent: Thunderbird 2.0.0.16 (Macintosh/20080707)
-In-Reply-To: <7v63p59z3w.fsf@gitster.siamese.dyndns.org>
+	id S1754606AbYIIOrN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 9 Sep 2008 10:47:13 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754549AbYIIOrN
+	(ORCPT <rfc822;git-outgoing>); Tue, 9 Sep 2008 10:47:13 -0400
+Received: from mail.gmx.net ([213.165.64.20]:49442 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1754101AbYIIOrM (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 9 Sep 2008 10:47:12 -0400
+Received: (qmail invoked by alias); 09 Sep 2008 14:47:10 -0000
+Received: from pacific.mpi-cbg.de (EHLO [141.5.10.38]) [141.5.10.38]
+  by mail.gmx.net (mp003) with SMTP; 09 Sep 2008 16:47:10 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX188hH1mpTk8fGLNXiM1yszfV7HGdmfSbmQwWOHteo
+	RGOrNwD741TsGy
+X-X-Sender: schindelin@pacific.mpi-cbg.de.mpi-cbg.de
+In-Reply-To: <200809042315.58898.jnareb@gmail.com>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.67
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/95391>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/95392>
 
->> So how do I
->>
->>         receive-pack = /home/bonzinip/bin/git-receive-pack
->>
->> now?  Using libexec or ".../bin/git receive-pack" is fine, I just would
->> like to know it and see it in the release notes.
+Hi,
+
+On Thu, 4 Sep 2008, Jakub Narebski wrote:
+
+> 5. git-merge builtin
 > 
-> Please check your Makefile (I'm too lazy to double check); don't we
-> install these server side programs in $(bindir)?
+> Student: Miklos Vajna
+> Mentor: Johannes Schindelin
 
-Yes, I interpreted the obsolete comment in Makefile
+My 2 cents: a full success.  Details are public, so no need to repeat all 
+that here, right? ;-)
 
-# ... and all the rest that could be moved out of bindir to gitexecdir
+Was also nice to read it on kernel trap (last sentence in the announcement 
+of Git 1.6.0).
 
-as s/could be/were/, but there is a special rule in install to place
-these in $(bindir).
-
-Paolo
+Ciao,
+Dscho
