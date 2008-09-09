@@ -1,72 +1,87 @@
-From: Johannes Sixt <j.sixt@viscovery.net>
-Subject: Re: [PATCH 2/2] git-rebase--interactive: auto amend only edited commit
-Date: Tue, 09 Sep 2008 08:42:57 +0200
-Message-ID: <48C61AF1.1060703@viscovery.net>
-References: <1220906569-26878-1-git-send-email-dpotapov@gmail.com> <1220906569-26878-2-git-send-email-dpotapov@gmail.com>
+From: "Bert Wesarg" <bert.wesarg@googlemail.com>
+Subject: Re: [PATCH v4] for-each-ref: `:short` format for `refname`
+Date: Tue, 9 Sep 2008 08:52:00 +0200
+Message-ID: <36ca99e90809082352q3c87447eme73379673fe652f4@mail.gmail.com>
+References: <7vtzcxaxgr.fsf@gitster.siamese.dyndns.org>
+	 <1220649383-17916-1-git-send-email-bert.wesarg@googlemail.com>
+	 <7vfxoadz5c.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Dmitry Potapov <dpotapov@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Sep 09 08:44:21 2008
+Cc: git@vger.kernel.org, szeder@ira.uka.de,
+	"Shawn O. Pearce" <spearce@spearce.org>
+To: "Junio C Hamano" <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Sep 09 08:53:31 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KcwxW-0003L2-HJ
-	for gcvg-git-2@gmane.org; Tue, 09 Sep 2008 08:44:19 +0200
+	id 1Kcx6P-0005Pk-IR
+	for gcvg-git-2@gmane.org; Tue, 09 Sep 2008 08:53:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753261AbYIIGnG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 9 Sep 2008 02:43:06 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753442AbYIIGnG
-	(ORCPT <rfc822;git-outgoing>); Tue, 9 Sep 2008 02:43:06 -0400
-Received: from lilzmailso02.liwest.at ([212.33.55.13]:33007 "EHLO
-	lilzmailso02.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753027AbYIIGnD (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 9 Sep 2008 02:43:03 -0400
-Received: from cm56-163-160.liwest.at ([86.56.163.160] helo=linz.eudaptics.com)
-	by lilzmailso02.liwest.at with esmtpa (Exim 4.66)
-	(envelope-from <j.sixt@viscovery.net>)
-	id 1KcwwD-0005EN-Qd; Tue, 09 Sep 2008 08:42:58 +0200
-Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.42])
-	by linz.eudaptics.com (Postfix) with ESMTP
-	id 91AAE69F; Tue,  9 Sep 2008 08:42:57 +0200 (CEST)
-User-Agent: Thunderbird 2.0.0.6 (Windows/20070728)
-In-Reply-To: <1220906569-26878-2-git-send-email-dpotapov@gmail.com>
-X-Spam-Score: 1.7 (+)
-X-Spam-Report: ALL_TRUSTED=-1.8, BAYES_99=3.5
+	id S1756143AbYIIGwF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 9 Sep 2008 02:52:05 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756294AbYIIGwE
+	(ORCPT <rfc822;git-outgoing>); Tue, 9 Sep 2008 02:52:04 -0400
+Received: from wx-out-0506.google.com ([66.249.82.228]:15194 "EHLO
+	wx-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756277AbYIIGwC (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 9 Sep 2008 02:52:02 -0400
+Received: by wx-out-0506.google.com with SMTP id h27so440037wxd.4
+        for <git@vger.kernel.org>; Mon, 08 Sep 2008 23:52:00 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=googlemail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to
+         :subject:cc:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:references;
+        bh=AWSV9XZropbvGg7hb1t0o0TGp444QgFx4PJHc6fy778=;
+        b=LuHCBY10gUPWdn/cEf9opvyj6V8VksKGV0Zbb4yuvhia8PW2vI1405ZqJUDF4r7Qwq
+         uh9CDUrVwt2ELSPQYq8SXlxcnwMzDhjvK3O9h5ec3kosGuZc3SojuZ/r9AE+JjONr9oe
+         Ce1ReWqPQt2Zc5dcQ75Orh140BvLElPKPSaWU=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=googlemail.com; s=gamma;
+        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
+         :content-type:content-transfer-encoding:content-disposition
+         :references;
+        b=ejYYCRWYmGvTbVoTrGAm636Tkrl/hxZx5wApsDrKSM5kHQ5RO7vTym1z3Hp0lN5MGi
+         cX9O/BsjQ9Ov563OSdGuIkhddXVEAp3vD3p1ysZyJ0puDn7CRSJ6no+96knZcQVCipJS
+         iyq2SG4iCUJRVghZ9EI7pHhauFykagDPM9U/Q=
+Received: by 10.70.49.9 with SMTP id w9mr20278946wxw.55.1220943120801;
+        Mon, 08 Sep 2008 23:52:00 -0700 (PDT)
+Received: by 10.70.49.12 with HTTP; Mon, 8 Sep 2008 23:52:00 -0700 (PDT)
+In-Reply-To: <7vfxoadz5c.fsf@gitster.siamese.dyndns.org>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/95340>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/95341>
 
-Dmitry Potapov schrieb:
-> Another problem is that after being stopped at "edit", the user adds new
-> commits. In this case, automatic amend behavior of git rebase triggered
-> by some stage changes causes that not only that the log message of the
-> last commit is lost but that it will contain also wrong Author and Date
-> information.
-> 
-> Therefore, this patch restrict automatic amend only to the situation
-> where HEAD is the commit at which git rebase stop by "edit" command.
-...
-> @@ -430,6 +430,8 @@ do
->  			if test -f "$DOTEST"/amend
->  			then
->  				amend=$(git rev-parse --verify HEAD)
-> +				test "$amend" = $(cat "$DOTEST"/amend) ||
-> +				die "You have uncommitted changes"
+On Tue, Sep 9, 2008 at 00:57, Junio C Hamano <gitster@pobox.com> wrote:
+> Any followup on this topic since:
+>
+>  http://thread.gmane.org/gmane.comp.version-control.git/94478/focus=95041
+>
+>
+I plan on looking at the refs/remote test today.
 
-Doesn't this terse message carry a bit of a "WTF?" factor? In other
-situations rebase --continue goes into git-commit just fine, but it does
-not under these special conditions. How about this:
+Any opinions, whether we want the 'strict' mode? i.e.:
 
-"Will not auto-commit uncommitted changes after you have already committed
-something. Please run 'git commit --amend' yourself."
+for refs/heads/xyzzy and refs/tags/xyzzy:
 
->  				git reset --soft HEAD^ ||
->  				die "Cannot rewind the HEAD"
->  			fi
+loose mode (current implementation):
 
--- Hannes
+  refs/heads/xyzzy => heads/xyzzy
+  refs/tags/xyzzy  => xyzzy
+
+there would be a ambiguous warning (if enabled) if you use xyzzy as a
+tag, but it resolves correctly to the tag.
+
+strict mode:
+
+  refs/heads/xyzzy => heads/xyzzy
+  refs/tags/xyzzy  => tags/xyzzy
+
+will always produce a non-ambiguous short forms.
+
+Bert
