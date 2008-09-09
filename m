@@ -1,107 +1,92 @@
-From: Michael J Gruber <michaeljgruber+gmane@fastmail.fm>
-Subject: Re: [ANNOUNCE] Guilt v0.31
-Date: Tue, 09 Sep 2008 17:40:15 +0200
-Message-ID: <48C698DF.7010401@fastmail.fm>
-References: <20080908135244.GB27550@josefsipek.net> <36ca99e90809081133s58e3d32h8b85804f5bb76902@mail.gmail.com> <20080908184322.GE27550@josefsipek.net> <36ca99e90809081150v4ad6e7a0n72b5cca39e02b1bc@mail.gmail.com> <7vmyiifnwa.fsf@gitster.siamese.dyndns.org> <48C64B8B.5000606@fastmail.fm> <48C673CF.2000107@fastmail.fm> <7vd4jd8i9b.fsf@gitster.siamese.dyndns.org>
+From: "Anatol Pomozov" <anatol.pomozov@gmail.com>
+Subject: Commit templates are not readable after 'make install'
+Date: Tue, 9 Sep 2008 08:41:38 -0700
+Message-ID: <3665a1a00809090841l5d34f57ax8ad99d99a28bd494@mail.gmail.com>
+References: <3665a1a00809090835g2a8ea4aas6cfa2ebc922f12b2@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-Cc: Bert Wesarg <bert.wesarg@googlemail.com>,
-	Josef 'Jeff' Sipek <jeffpc@josefsipek.net>,
-	Git Mailing List <git@vger.kernel.org>,
-	Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
-	guilt@lists.josefsipek.net, Brandon Philips <brandon@ifup.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Sep 09 17:42:28 2008
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Sep 09 17:43:52 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Kd5LP-0003hh-TV
-	for gcvg-git-2@gmane.org; Tue, 09 Sep 2008 17:41:32 +0200
+	id 1Kd5Mp-0004He-UB
+	for gcvg-git-2@gmane.org; Tue, 09 Sep 2008 17:43:00 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753788AbYIIPkY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 9 Sep 2008 11:40:24 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753375AbYIIPkX
-	(ORCPT <rfc822;git-outgoing>); Tue, 9 Sep 2008 11:40:23 -0400
-Received: from out3.smtp.messagingengine.com ([66.111.4.27]:54707 "EHLO
-	out3.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1753370AbYIIPkW (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 9 Sep 2008 11:40:22 -0400
-Received: from compute1.internal (compute1.internal [10.202.2.41])
-	by out1.messagingengine.com (Postfix) with ESMTP id 13C9915E93E;
-	Tue,  9 Sep 2008 11:40:21 -0400 (EDT)
-Received: from heartbeat2.messagingengine.com ([10.202.2.161])
-  by compute1.internal (MEProxy); Tue, 09 Sep 2008 11:40:21 -0400
-X-Sasl-enc: mEVASSH+ZFfktXkKDmv1/fD2a+ukEYeNhsiQfHvPj+HZ 1220974820
-Received: from [139.174.44.12] (whitehead.math.tu-clausthal.de [139.174.44.12])
-	by mail.messagingengine.com (Postfix) with ESMTPSA id C77B03674E;
-	Tue,  9 Sep 2008 11:40:19 -0400 (EDT)
-User-Agent: Thunderbird 2.0.0.16 (X11/20080707)
-In-Reply-To: <7vd4jd8i9b.fsf@gitster.siamese.dyndns.org>
+	id S1754418AbYIIPll (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 9 Sep 2008 11:41:41 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754427AbYIIPll
+	(ORCPT <rfc822;git-outgoing>); Tue, 9 Sep 2008 11:41:41 -0400
+Received: from nf-out-0910.google.com ([64.233.182.187]:19737 "EHLO
+	nf-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754342AbYIIPlk (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 9 Sep 2008 11:41:40 -0400
+Received: by nf-out-0910.google.com with SMTP id d3so683271nfc.21
+        for <git@vger.kernel.org>; Tue, 09 Sep 2008 08:41:38 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to
+         :subject:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:references;
+        bh=n8It25v08Bu2yaOhUVUuyj9R2Z2xMbLFOwiWIa+Fve0=;
+        b=Nqqn0brN5bYY3aIzKzIkgXEdy6XJB+My/65+y/lRYGhwQMMIoMejxrpnWh6u1OS5EW
+         RRv5II3pYhSPmuLtKctoBeblBsPNs/oTmxJu6481pAGVkZ0AF+okAN0bjvmTHIGxzJCU
+         IJ4gyKvEcHDpqzioxJtvt8IyK/UjHS2brFqxs=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:to:subject:in-reply-to:mime-version
+         :content-type:content-transfer-encoding:content-disposition
+         :references;
+        b=Q2tYiApFDWpbnobm/sZ5o6nPoadYQQAaqtaQ8v5C9BJtAIVw0+2Qt4Ar5JrB4zxgQ0
+         zogJHhpQu962Ejgacs78roulT7B4C4x7fvM+t5VJQS6XR3fxe1DREwvEkoOO2OBOZLco
+         47raoLmzbSiJLwE4VGRqg50gwl6uRiKfW7Oag=
+Received: by 10.210.67.20 with SMTP id p20mr20772225eba.66.1220974898835;
+        Tue, 09 Sep 2008 08:41:38 -0700 (PDT)
+Received: by 10.210.130.11 with HTTP; Tue, 9 Sep 2008 08:41:38 -0700 (PDT)
+In-Reply-To: <3665a1a00809090835g2a8ea4aas6cfa2ebc922f12b2@mail.gmail.com>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/95399>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/95400>
 
-Junio C Hamano venit, vidit, dixit 09.09.2008 17:13:
-> Michael J Gruber <michaeljgruber+gmane@fastmail.fm> writes:
-> 
->> I would go about renaming quick-install-doc to quick-install-man, introducing quick-install-html doing the analogous using the "html" branch and quick-install-doc doing both, which would be more in line with the install-doc target.
->>
->> Are there any objections to renaming quick-install-doc to quick-install-man?
-> 
-> What does it improve?
+Hi,
 
-It makes it more systematic.
+I build git from sources and I have one small permissions issue that
+(I think) should be fixed.
 
-Right now:
+So I build it as described in INSTALL file
+make prefix=/usr all
+sudo make prefix=/usr install
 
-Documentation/Makefile:
-all: builds html and man
-install: installs only man (depends on man)
-install-{info,html}: installs $foo (depends on $foo)
-quick-install: installs man from man branch
+Everything goes fine here and we have a new version of git installed
+$ git --version
+git version 1.6.0.1.285.g1070
 
-Makefile:
-doc: builds html and man (-C D all)
-install-doc: installs only man (-C D install)
-install-{info,html}: installs $foo (-C D install-$foo)
-quick-install-doc: installs man from man branch (-C D install-$foo)
+But when I want to create a new repo, I have a fatal problem
+$ git init
+fatal: cannot copy /usr/share/git-core/templates/
+hooks/applypatch-msg.sample to
+/personal/sources/opensource/1/.git/hooks/applypatch-msg.sample
 
-So there is a distinct asymmetry between build targets and install
-targets. Wouldn't you expect "make install" to install what "make"
-builds? That is true, but "make install-doc" doesn't install what "make
-doc" builds.
 
-Put it differently:
-doc = man + html for build targets
-doc = man for install targets
+Because of the template files are readable only for root
+$ ls -l /usr/share/git-core/templates/hooks/
+total 44
+-rwxr-x--- 1 root root  452 2008-08-29 11:04 applypatch-msg.sample
+-rwxr-x--- 1 root root  894 2008-08-29 11:04 commit-msg.sample
+-rwxr-x--- 1 root root  160 2008-08-29 11:04 post-commit.sample
+-rwxr-x--- 1 root root  553 2008-08-29 11:04 post-receive.sample
 
-What's worse: "make doc" fails if you don't have xmlto, even though
-"make install-doc" may succeed; but you'll never try it when the build
-fails. Until a few hours ago I thought I couldn't build man pages at
-work (asciidoc, but no xmlto), and I had never heard about
-quick-install-doc until I looked at the Makefiles in detail.
 
-> IOW, can't you do what you want to do (I am assuming that what you want to
-> do is to be able to copy out the pregenerated contents from convenience
-> branches) without such a rename?
+I could fix the problem by running
+$ sudo chmod a+r -R /usr/share/git-core/templates
 
-Sure I can. "Namen sind Schall und Rauch". Names don't matter.
-quick-install-html would follow the above logic. I just think that the
-doc logic is flawed.
 
-So, my suggestion is that doc = man + html, whether it appears in a
-build target or an install target.
+But I think it should do 'make' when it installs git-core, isnt it?
 
-> If you rename the target, I am reasonably sure you would break somebody's
-> build procedure.  It is a separate topic if there are large number of such
-> somebody, or just a limited few.
-
-I keep hearing this argument, and I'm even more surprised to hear it
-right after a major release. If not now then when's a good time for
-cleaning up confusing inconsistencies?
-
-Michael
+--
+anatol
