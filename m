@@ -1,60 +1,77 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 2/4] receive-pack: make it a builtin
-Date: Tue, 09 Sep 2008 07:24:03 -0700
-Message-ID: <7v63p59z3w.fsf@gitster.siamese.dyndns.org>
-References: <1220948830-3275-1-git-send-email-gitster@pobox.com>
- <1220948830-3275-2-git-send-email-gitster@pobox.com>
- <1220948830-3275-3-git-send-email-gitster@pobox.com>
- <48C64138.3020406@gnu.org>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH 0/7] prefix discovery at runtime (on Windows)
+Date: Tue, 9 Sep 2008 16:49:19 +0200 (CEST)
+Message-ID: <alpine.DEB.1.00.0809091648130.13830@pacific.mpi-cbg.de.mpi-cbg.de>
+References: <1218977083-14526-1-git-send-email-prohaska@zib.de> <7v3al35xmy.fsf@gitster.siamese.dyndns.org> <7vprnedzgc.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Paolo Bonzini <bonzini@gnu.org>
-X-From: git-owner@vger.kernel.org Tue Sep 09 16:26:09 2008
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Steffen Prohaska <prohaska@zib.de>,
+	Johannes Sixt <johannes.sixt@telecom.at>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Sep 09 16:48:32 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Kd49i-0007yc-R1
-	for gcvg-git-2@gmane.org; Tue, 09 Sep 2008 16:25:23 +0200
+	id 1Kd4Se-0007Ag-GN
+	for gcvg-git-2@gmane.org; Tue, 09 Sep 2008 16:44:57 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752338AbYIIOYL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 9 Sep 2008 10:24:11 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751606AbYIIOYK
-	(ORCPT <rfc822;git-outgoing>); Tue, 9 Sep 2008 10:24:10 -0400
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:39447 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751176AbYIIOYJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 9 Sep 2008 10:24:09 -0400
-Received: from localhost.localdomain (localhost [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 349E556A00;
-	Tue,  9 Sep 2008 10:24:08 -0400 (EDT)
-Received: from pobox.com (ip68-225-240-211.oc.oc.cox.net [68.225.240.211])
- (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
- certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
- ESMTPSA id A2440569FC; Tue,  9 Sep 2008 10:24:05 -0400 (EDT)
-In-Reply-To: <48C64138.3020406@gnu.org> (Paolo Bonzini's message of "Tue, 09
- Sep 2008 11:26:16 +0200")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: F6C2537A-7E7A-11DD-AB0E-D0CFFE4BC1C1-77302942!a-sasl-fastnet.pobox.com
+	id S1753979AbYIIOnt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 9 Sep 2008 10:43:49 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751617AbYIIOnt
+	(ORCPT <rfc822;git-outgoing>); Tue, 9 Sep 2008 10:43:49 -0400
+Received: from mail.gmx.net ([213.165.64.20]:51569 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1751442AbYIIOns (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 9 Sep 2008 10:43:48 -0400
+Received: (qmail invoked by alias); 09 Sep 2008 14:43:47 -0000
+Received: from pacific.mpi-cbg.de (EHLO [141.5.10.38]) [141.5.10.38]
+  by mail.gmx.net (mp045) with SMTP; 09 Sep 2008 16:43:47 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1+HxHFiHpaHmOTJVKvKDoHtBw+3r3jLmGI4HwLLad
+	J42k2OxJCFQCt6
+X-X-Sender: schindelin@pacific.mpi-cbg.de.mpi-cbg.de
+In-Reply-To: <7vprnedzgc.fsf@gitster.siamese.dyndns.org>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.6
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/95388>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/95389>
 
-Paolo Bonzini <bonzini@gnu.org> writes:
+Hi,
 
-> Junio C Hamano wrote:
->> It is a good thing to do in general, but more importantly, transport
->> routines can only be used by built-ins, which is what I'll be adding next.
->
-> So how do I
->
->         receive-pack = /home/bonzinip/bin/git-receive-pack
->
-> now?  Using libexec or ".../bin/git receive-pack" is fine, I just would
-> like to know it and see it in the release notes.
+On Mon, 8 Sep 2008, Junio C Hamano wrote:
 
-Please check your Makefile (I'm too lazy to double check); don't we
-install these server side programs in $(bindir)?
+> Junio C Hamano <gitster@pobox.com> writes:
+> 
+> > Steffen Prohaska <prohaska@zib.de> writes:
+> >
+> >> Apologies for proposing such large changes that late in the release 
+> >> cycle. Maybe we want to postpone the series until 1.6.0.1 or even 
+> >> 1.6.1.
+> >
+> > Well, from the cursory look, it does not seem to be 1.6.0.1 material, 
+> > even though it is possible to fork a topic at 1.6.0 and use the 
+> > changes in 'next', then 'master', and eventually to 'maint' to produce 
+> > 1.6.0.X, if all of this hapapens before 1.6.1.
+> >
+> > I wouldn't mind at all if the binary distribution on Windows is based 
+> > on "git.git plus port specific patchset that will eventually be sent 
+> > upstream" like it used to be.  In fact it might even be preferrable, 
+> > as I won't be testing ports to that platform myself anyway.
+> 
+> If the depth difference between /usr/libexec/git-cat-file and /bin/git 
+> is the major source of this headache, I do not think it is unreasonable 
+> for the mingw git port to use "gitexecdir=$(bindir)" layout by default.  
+> After all, Windows users do not really care where bulk of things are, as 
+> long as they see one single clickable icon on the desktop, don't they?
+
+I think the main point is that we could (finally!) adopt a saner default 
+on Unix: instead of hardcoding an absolute exec path, a relative would do.  
+So I'd like to see this supported for Linux...
+
+Ciao,
+Dscho
