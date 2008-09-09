@@ -1,129 +1,109 @@
 From: Michael J Gruber <michaeljgruber+gmane@fastmail.fm>
-Subject: [PATCH 2/2] separate build targets for man and html documentation
-Date: Wed, 10 Sep 2008 10:19:34 +0200
-Message-ID: <81ce09dd0ac69ee7e09731e3ad26ff7cd1ab0765.1221035620.git.michaeljgruber+gmane@fastmail.fm>
+Subject: [PATCH 1/2] allow installation of man and html doc from the man and html branches
+Date: Tue, 9 Sep 2008 22:44:17 +0200
+Message-ID: <1082ea29216aba63f5d2b13763eeceebe46e0691.1221035620.git.michaeljgruber+gmane@fastmail.fm>
 References: <cover.1221035620.git.michaeljgruber+gmane@fastmail.fm>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-15
 Content-Transfer-Encoding: 7bit
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Sep 10 11:06:50 2008
+X-From: git-owner@vger.kernel.org Wed Sep 10 11:06:49 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KdLek-0001Rc-I0
-	for gcvg-git-2@gmane.org; Wed, 10 Sep 2008 11:06:35 +0200
+	id 1KdLej-0001Rc-Oo
+	for gcvg-git-2@gmane.org; Wed, 10 Sep 2008 11:06:34 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751720AbYIJJF1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 10 Sep 2008 05:05:27 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751792AbYIJJF1
-	(ORCPT <rfc822;git-outgoing>); Wed, 10 Sep 2008 05:05:27 -0400
-Received: from out3.smtp.messagingengine.com ([66.111.4.27]:33560 "EHLO
+	id S1751742AbYIJJF0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 10 Sep 2008 05:05:26 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751559AbYIJJFZ
+	(ORCPT <rfc822;git-outgoing>); Wed, 10 Sep 2008 05:05:25 -0400
+Received: from out3.smtp.messagingengine.com ([66.111.4.27]:57119 "EHLO
 	out3.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751720AbYIJJFY (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 10 Sep 2008 05:05:24 -0400
-Received: from compute1.internal (compute1.internal [10.202.2.41])
-	by out1.messagingengine.com (Postfix) with ESMTP id B80A715FDF5
-	for <git@vger.kernel.org>; Wed, 10 Sep 2008 05:05:23 -0400 (EDT)
+	by vger.kernel.org with ESMTP id S1751508AbYIJJFV (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 10 Sep 2008 05:05:21 -0400
+Received: from compute2.internal (compute2.internal [10.202.2.42])
+	by out1.messagingengine.com (Postfix) with ESMTP id 405EC15FB72
+	for <git@vger.kernel.org>; Wed, 10 Sep 2008 05:05:21 -0400 (EDT)
 Received: from heartbeat2.messagingengine.com ([10.202.2.161])
-  by compute1.internal (MEProxy); Wed, 10 Sep 2008 05:05:23 -0400
-X-Sasl-enc: laDmvmgGNFu031FajRaMkk1TUy0ssNBNxMQMGSfAtlmW 1221037523
+  by compute2.internal (MEProxy); Wed, 10 Sep 2008 05:05:21 -0400
+X-Sasl-enc: Dqzp38T65BAMLaDxkiZ6fV3PJWD8lBraAfb25GSieo+p 1221037520
 Received: from [139.174.44.12] (whitehead.math.tu-clausthal.de [139.174.44.12])
-	by mail.messagingengine.com (Postfix) with ESMTPSA id 387EA25BCE
-	for <git@vger.kernel.org>; Wed, 10 Sep 2008 05:05:23 -0400 (EDT)
-X-Mailbox-Line: From 81ce09dd0ac69ee7e09731e3ad26ff7cd1ab0765 Mon Sep 17 00:00:00 2001
+	by mail.messagingengine.com (Postfix) with ESMTPSA id D469028807
+	for <git@vger.kernel.org>; Wed, 10 Sep 2008 05:05:20 -0400 (EDT)
+X-Mailbox-Line: From 1082ea29216aba63f5d2b13763eeceebe46e0691 Mon Sep 17 00:00:00 2001
 In-Reply-To: <cover.1221035620.git.michaeljgruber+gmane@fastmail.fm>
 User-Agent: Thunderbird 2.0.0.16 (X11/20080707)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/95500>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/95501>
 
-This introduces new build targets "man" and "html" which allow building
-the documentation in the respective formats separately. This helps
-people with a partial documentation build chain: html pages can be built
-without xmlto.
+This patch introduces a make target "quick-install-html" which installs
+the html documentation from the branch origin/html, without the need for
+asciidoc/xmlto. This is analogous to the existing "quick-install-doc"
+target for the man pages.
 
-This is documented in INSTALL now, together with corrections: Before,
-instructions in INSTALL would build man+html but install man only. Now
-the instructions build and install both, and new and pre-existing
-targets are explained.
-
-Note that build targets "doc" and "man" correspond to install targets
-"install-doc install-html" and "install-doc" respectively. This
-inconsistency is not changed, in order to keep everyone's build scripts
-from breaking.
+We advertise these targets in the INSTALL file now.
 
 Signed-off-by: Michael J Gruber <michaeljgruber+gmane@fastmail.fm>
 ---
- INSTALL  |   15 ++++++++++++---
- Makefile |    6 ++++++
- 2 files changed, 18 insertions(+), 3 deletions(-)
+ Documentation/Makefile |    4 ++++
+ INSTALL                |    5 +++++
+ Makefile               |    3 +++
+ 3 files changed, 12 insertions(+), 0 deletions(-)
 
+diff --git a/Documentation/Makefile b/Documentation/Makefile
+index 62269e3..ded0e40 100644
+--- a/Documentation/Makefile
++++ b/Documentation/Makefile
+@@ -44,6 +44,7 @@ MANPAGE_XSL = callouts.xsl
+ INSTALL?=install
+ RM ?= rm -f
+ DOC_REF = origin/man
++HTML_REF = origin/html
+ 
+ infodir?=$(prefix)/share/info
+ MAKEINFO=makeinfo
+@@ -222,4 +223,7 @@ install-webdoc : html
+ quick-install:
+ 	sh ./install-doc-quick.sh $(DOC_REF) $(DESTDIR)$(mandir)
+ 
++quick-install-html:
++	sh ./install-doc-quick.sh $(HTML_REF) $(DESTDIR)$(htmldir)
++
+ .PHONY: .FORCE-GIT-VERSION-FILE
 diff --git a/INSTALL b/INSTALL
-index 7c13473..a40d77d 100644
+index 2bae53f..7c13473 100644
 --- a/INSTALL
 +++ b/INSTALL
-@@ -6,7 +6,7 @@ will install the git programs in your own ~/bin/ directory.  If you want
- to do a global install, you can do
+@@ -117,6 +117,11 @@ Issues of note:
  
- 	$ make prefix=/usr all doc info ;# as yourself
--	# make prefix=/usr install install-doc install-info ;# as root
-+	# make prefix=/usr install install-doc install-html install-info ;# as root
+ 	http://www.kernel.org/pub/software/scm/git/docs/
  
- (or prefix=/usr/local, of course).  Just like any program suite
- that uses $prefix, the built results have some paths encoded,
-@@ -19,7 +19,7 @@ set up install paths (via config.mak.autogen), so you can write instead
- 	$ make configure ;# as yourself
- 	$ ./configure --prefix=/usr ;# as yourself
- 	$ make all doc ;# as yourself
--	# make install install-doc ;# as root
-+	# make install install-doc install-html;# as root
- 
- 
- Issues of note:
-@@ -89,13 +89,22 @@ Issues of note:
-    inclined to install the tools, the default build target
-    ("make all") does _not_ build them.
- 
-+   "make doc" builds documentation in man and html formats; there are
-+   also "make man", "make html" and "make info". Note that "make html"
-+   requires asciidoc, but not xmlto. "make man" (and thus make doc)
-+   requires both.
++   There is also "make quick-install-doc" and "make quick-install-html"
++   which installs man pages resp. html documentation from these branches.
++   This does not require asciidoc/xmlto, but it works from within
++   a checkout of git.git only.
 +
-+   "make install-doc" installs documentation in man format only; there
-+   are also "make install-man", "make install-html" and "make
-+   install-info".
-+
-    Building and installing the info file additionally requires
-    makeinfo and docbook2X.  Version 0.8.3 is known to work.
- 
-    The documentation is written for AsciiDoc 7, but "make
-    ASCIIDOC8=YesPlease doc" will let you format with AsciiDoc 8.
- 
--   Alternatively, pre-formatted documentation are available in
-+   Alternatively, pre-formatted documentation is available in
-    "html" and "man" branches of the git repository itself.  For
-    example, you could:
- 
+    It has been reported that docbook-xsl version 1.72 and 1.73 are
+    buggy; 1.72 misformats manual pages for callouts, and 1.73 needs
+    the patch in contrib/patches/docbook-xsl-manpages-charmap.patch
 diff --git a/Makefile b/Makefile
-index eeaf6d4..66e1982 100644
+index f4c31c8..eeaf6d4 100644
 --- a/Makefile
 +++ b/Makefile
-@@ -1265,6 +1265,12 @@ $(XDIFF_LIB): $(XDIFF_OBJS)
- doc:
- 	$(MAKE) -C Documentation all
+@@ -1401,6 +1401,9 @@ install-info:
+ quick-install-doc:
+ 	$(MAKE) -C Documentation quick-install
  
-+man:
-+	$(MAKE) -C Documentation man
++quick-install-html:
++	$(MAKE) -C Documentation quick-install-html
 +
-+html:
-+	$(MAKE) -C Documentation html
-+
- info:
- 	$(MAKE) -C Documentation info
  
+ 
+ ### Maintainer's dist rules
 -- 
 1.6.0.1.285.g1070
