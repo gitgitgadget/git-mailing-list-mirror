@@ -1,85 +1,90 @@
-From: Matthieu Moy <Matthieu.Moy@imag.fr>
-Subject: Re: git merge vs git commit
-Date: Tue, 09 Sep 2008 23:32:21 +0200
-Message-ID: <vpqiqt50zve.fsf@bauges.imag.fr>
-References: <20080909165236.GA8850@flint.arm.linux.org.uk>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 6/6] t9400, t9401: use "git cvsserver" without dash
+Date: Tue, 09 Sep 2008 14:38:31 -0700
+Message-ID: <7vljy13sq0.fsf@gitster.siamese.dyndns.org>
+References: <20080910062529.6117@nanako3.lavabit.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-To: Russell King <rmk@arm.linux.org.uk>
-X-From: git-owner@vger.kernel.org Tue Sep 09 23:36:22 2008
+To: Nanako Shiraishi <nanako3@lavabit.com>
+X-From: git-owner@vger.kernel.org Tue Sep 09 23:39:52 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KdAso-0001R7-4c
-	for gcvg-git-2@gmane.org; Tue, 09 Sep 2008 23:36:22 +0200
+	id 1KdAw7-0002MJ-8v
+	for gcvg-git-2@gmane.org; Tue, 09 Sep 2008 23:39:47 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752919AbYIIVfI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 9 Sep 2008 17:35:08 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752811AbYIIVfI
-	(ORCPT <rfc822;git-outgoing>); Tue, 9 Sep 2008 17:35:08 -0400
-Received: from imag.imag.fr ([129.88.30.1]:63962 "EHLO imag.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752590AbYIIVfH (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 9 Sep 2008 17:35:07 -0400
-Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by imag.imag.fr (8.13.8/8.13.8) with ESMTP id m89LXCrP009642
-	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
-	Tue, 9 Sep 2008 23:33:12 +0200 (CEST)
-Received: from bauges.imag.fr ([129.88.43.5])
-	by mail-veri.imag.fr with esmtps (TLS-1.0:RSA_AES_256_CBC_SHA:32)
-	(Exim 4.50)
-	id 1KdAov-0000FA-Jm; Tue, 09 Sep 2008 23:32:21 +0200
-Received: from moy by bauges.imag.fr with local (Exim 4.63)
-	(envelope-from <moy@imag.fr>)
-	id 1KdAov-0003Iv-HX; Tue, 09 Sep 2008 23:32:21 +0200
-In-Reply-To: <20080909165236.GA8850@flint.arm.linux.org.uk> (Russell King's message of "Tue\, 9 Sep 2008 17\:52\:37 +0100")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.1 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-3.0 (imag.imag.fr [129.88.30.1]); Tue, 09 Sep 2008 23:33:12 +0200 (CEST)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM for more information
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: moy@imag.fr
+	id S1753003AbYIIVij (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 9 Sep 2008 17:38:39 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753254AbYIIVij
+	(ORCPT <rfc822;git-outgoing>); Tue, 9 Sep 2008 17:38:39 -0400
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:49895 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753000AbYIIVij (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 9 Sep 2008 17:38:39 -0400
+Received: from localhost.localdomain (localhost [127.0.0.1])
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id DCD4A5AA56;
+	Tue,  9 Sep 2008 17:38:37 -0400 (EDT)
+Received: from pobox.com (ip68-225-240-211.oc.oc.cox.net [68.225.240.211])
+ (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
+ certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
+ ESMTPSA id 17E4B5AA55; Tue,  9 Sep 2008 17:38:34 -0400 (EDT)
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: A98091B6-7EB7-11DD-8C9B-D0CFFE4BC1C1-77302942!a-sasl-fastnet.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/95442>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/95443>
 
-Russell King <rmk@arm.linux.org.uk> writes:
+Nanako Shiraishi <nanako3@lavabit.com> writes:
 
-> Hi,
->
-> Using git 1.5.4.5, I notice that the result from git merge and git commit
-> are different in an unexpected way.
->
-> Take the following tree:
->
->      B---C---D---E2
->     /
->   -A1
->     \
->      F---G---H---I3
->
-> (letters represent commits, numbers represent where the references are).
->
-> Your current head is '1', and you want to merge branches '2' and '3', so
-> you use:
->
-> 	git merge 2 3
+> The environment variable CVS_SERVER is still set to "git-cvsserver",
+> because tests fail with CVS_SERVER='git cvsserver' (or double quotes).
 
-AAUI, "git merge 2 3" doesn't mean "merge 2 and 3 together", but
-"merge 2 and 3 with the current HEAD". So, what you wanted was :
+My eyes are getting dry after looking at these s/git-/git / patches, so
+please do not get offended if I leave these in my Inbox unread for a few
+days.
 
-git checkout 1
-git merge 2
+But I think this particular one is worth mentioning something about, so I
+am responding to it now.
 
-And what you did was an octopus merge of A, E and I (which ends up
-being the same since A is anyway the common ancestor of E and I).
+To me, the above suggests that:
 
-Now, this doesn't explain why the conflicted merge gives a result
-different from the other.
+ * we should install git-cvsserver in $(bindir) so that it can be found on
+   $PATH; and
 
--- 
-Matthieu
+ * it would be better to encourage users to consistently use
+   "git-cvsserver" everywhere instead of "git cvsserver"; hence
+
+ * this [6/6] in the series should be discarded.
+
+We already install "server side programs" in $(bindir).
+
+When we think about any of these server side programs, we do not think of
+it as a feature chosen by the subcommand word on the command line given to
+a program "git" (even though for built-ins, internal implementation might
+allow such usage).
+
+Instead we think of it as a single freestanding program in git suite.  For
+example, when people talk about "You can use git-shell as your user's
+login shell to limit the potential damage to your system", they do not
+mean "the shell subcommand of git", but they mean the git-shell "program".
+
+We do not run "git in daemon mode", but run "git-daemon" which is the
+daemon program that serves native git protocol.
+
+So why don't we do this (not just for test but for documentation as well)?
+
+ * We do not use "git foo" form when refering to the "server side
+   programs".  Make it official;
+
+ * We move "server side programs" in git(7) documentation into its
+   separate subsection; and
+
+ * We always install "server side programs" in $(bindir).
+
+I think git-cvsserver is the last one we missed from the set of server
+side programs (git-cvsserver, git-daemon, git-receive-pack,
+git-upload-archive, git-upload-pack).
