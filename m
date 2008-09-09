@@ -1,84 +1,101 @@
-From: Sergio <sergio.callegari@gmail.com>
-Subject: Re: Tracking OpenOffice files/other compressed files with Git
-Date: Tue, 9 Sep 2008 09:02:36 +0000 (UTC)
-Message-ID: <loom.20080909T085002-376@post.gmane.org>
-References: <Pine.LNX.4.64.0809090715520.19359@ds9.cixit.se> <48C61F94.3060400@viscovery.net>
+From: Geert Uytterhoeven <Geert.Uytterhoeven@sonycom.com>
+Subject: Re: git apply vs. renamed files index mismatch
+Date: Tue, 9 Sep 2008 11:06:55 +0200 (CEST)
+Message-ID: <Pine.LNX.4.64.0809091105010.27142@vixen.sonytel.be>
+References: <1220900995-11928-1-git-send-email-becky.bruce@freescale.com>
+ <1220900995-11928-2-git-send-email-becky.bruce@freescale.com>
+ <48C57A92.6060608@freescale.com> <20080908212717.GA21338@oksana.dev.rtsoft.ru>
+ <48C59B71.3040902@freescale.com> <20080908215441.GA924@oksana.dev.rtsoft.ru>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Sep 09 11:04:16 2008
+Content-Type: MULTIPART/MIXED; BOUNDARY="-584349381-517155090-1220951215=:27142"
+Cc: Scott Wood <scottwood@freescale.com>, git@vger.kernel.org,
+	linuxppc-dev@ozlabs.org
+To: Anton Vorontsov <avorontsov@ru.mvista.com>
+X-From: git-owner@vger.kernel.org Tue Sep 09 11:08:42 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Kcz8j-0005xl-44
-	for gcvg-git-2@gmane.org; Tue, 09 Sep 2008 11:04:01 +0200
+	id 1KczCo-0007Be-6o
+	for gcvg-git-2@gmane.org; Tue, 09 Sep 2008 11:08:14 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753184AbYIIJCy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 9 Sep 2008 05:02:54 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753389AbYIIJCy
-	(ORCPT <rfc822;git-outgoing>); Tue, 9 Sep 2008 05:02:54 -0400
-Received: from main.gmane.org ([80.91.229.2]:32953 "EHLO ciao.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751731AbYIIJCx (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 9 Sep 2008 05:02:53 -0400
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1Kcz7W-0002BI-Ix
-	for git@vger.kernel.org; Tue, 09 Sep 2008 09:02:49 +0000
-Received: from 137.204.201.149 ([137.204.201.149])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Tue, 09 Sep 2008 09:02:46 +0000
-Received: from sergio.callegari by 137.204.201.149 with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Tue, 09 Sep 2008 09:02:46 +0000
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@ger.gmane.org
-X-Gmane-NNTP-Posting-Host: main.gmane.org
-User-Agent: Loom/3.14 (http://gmane.org/)
-X-Loom-IP: 137.204.201.149 (Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.8.1.16) Gecko/20080715 Ubuntu/7.10 (gutsy) Firefox/2.0.0.16)
+	id S1754724AbYIIJHF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 9 Sep 2008 05:07:05 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754690AbYIIJHF
+	(ORCPT <rfc822;git-outgoing>); Tue, 9 Sep 2008 05:07:05 -0400
+Received: from vervifontaine.sonytel.be ([80.88.33.193]:40767 "EHLO
+	vervifontaine.sonycom.com" rhost-flags-OK-OK-OK-FAIL)
+	by vger.kernel.org with ESMTP id S1754661AbYIIJHD (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 9 Sep 2008 05:07:03 -0400
+Received: from vixen.sonytel.be (piraat.sonytel.be [43.221.60.197])
+	by vervifontaine.sonycom.com (Postfix) with ESMTP id C812258ADF;
+	Tue,  9 Sep 2008 11:06:55 +0200 (MEST)
+In-Reply-To: <20080908215441.GA924@oksana.dev.rtsoft.ru>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/95362>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/95363>
 
-Johannes Sixt <j.sixt <at> viscovery.net> writes:
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
+---584349381-517155090-1220951215=:27142
+Content-Type: TEXT/PLAIN; charset=UTF-8
+Content-Transfer-Encoding: 8BIT
+
+On Tue, 9 Sep 2008, Anton Vorontsov wrote:
+> On Mon, Sep 08, 2008 at 04:38:57PM -0500, Scott Wood wrote:
+> > Anton Vorontsov wrote:
+> >> I always thought that posting "-M" patches to the public lists is
+> >> discouraged since it is quite difficult to apply them via patch(1).
+> >> Also think of non-git users...
+> >
+> > I think the substantially enhanced reviewability trumps non-git-users  
+> > who can follow the rename instructions manually (or fix up their patch  
+> > utility) if they insist on shunning tools that would make their life 
+> > easier.
 > 
-> Peter Krefting schrieb:
-> > Since OpenOffice doucuments are just zipped xml files, I wondered how
-> > difficult it would be to create some hooks/hack git to track the files
-> > inside the archives instead?
+> Can't disagree, I myself use git. ;-) But I'm also using standard
+> patch(1) to test occasional patches... And sometimes linux-X tree
+> isn't tracked by git (e.g. -mm otm snapshots).
 > 
-> You could write a "clean" filter that "recompresses" the archive with
-> level 0 upon git-add.
+> >> diff --git a/arch/powerpc/kernel/dma.c b/arch/powerpc/kernel/dma.c
+> >> new file mode 100644
+> >> index 0000000..ae5708e
+> >> [...]
+> >> diff --git a/arch/powerpc/kernel/dma_64.c b/arch/powerpc/kernel/dma_64.c
+> >> deleted file mode 100644
+> >> index ae5708e..0000000
+> >>
+> >> That is, if hashes match then it was pure rename.
+> >
+> > I suppose, though it's not as easy to spot, and won't help in showing  
+> > what the differences are if there are any.
 > 
+> ..rename and changes ideally go in separate patches.
 
+Except if the rename also requires some small changes (cfr. the move of
+include/asm-*). But if no changes are required to fix breakage caused by the
+rename, then make the changes separate.
 
-A couple of notes:
+> IIRC this also helps git to track renames (it can easily compare
+> hashes instead of guessing).
 
-1) For Openoffice documents whose size is dominated by embed images and other
-large objects, the git delta mechanism already performs reasonably well, since
-OO files are Zip archives where each file is compressed separately.  If you do
-not change an image, then that image remains stored in the same way and the
-delta can be done.
+With kind regards,
 
-2) For OO documents whose size is dominated by plain content, the git delta
-mechanism cannot work, since the zip compression introduces "mixing" and a small
-change in the document is converted into a very large change in the zip file.
+Geert Uytterhoeven
+Software Architect
 
-It could be possible to write a clean filter to uncompress before commit.
-However there is a trick with the complementary smudge filter to be used at
-checkout. If you do not smudge properly, git always shows the file as changed
-wrt the index.  Smudging correctly would mean using the very same compression
-ratio and compress method that OO uses, which can be a little tricky. I have
-tried using the zip binary both in the clean and the smudge phases and it does
-not work nicely. The smudged file is always different from the original one. One
-should probably work at a lower level to have a finer control on what is
-happening (libzip) and prepend to the uncompressed file the compression
-parameters to be restored on smudging.
+Sony Techsoft Centre Europe
+The Corporate Village · Da Vincilaan 7-D1 · B-1935 Zaventem · Belgium
 
-The bigger issue is however that the clean/smudge thing can be really slow when
-dealing with large OO files.
+Phone:    +32 (0)2 700 8453
+Fax:      +32 (0)2 700 8622
+E-mail:   Geert.Uytterhoeven@sonycom.com
+Internet: http://www.sony-europe.com/
+
+A division of Sony Europe (Belgium) N.V.
+VAT BE 0413.825.160 · RPR Brussels
+Fortis · BIC GEBABEBB · IBAN BE41293037680010
+---584349381-517155090-1220951215=:27142--
