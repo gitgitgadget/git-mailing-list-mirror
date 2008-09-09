@@ -1,63 +1,62 @@
-From: Peter Krefting <peter@softwolves.pp.se>
-Subject: Tracking OpenOffice files/other compressed files with Git
-Date: Tue, 9 Sep 2008 07:19:55 +0100 (CET)
-Organization: /universe/earth/europe/norway/oslo
-Message-ID: <Pine.LNX.4.64.0809090715520.19359@ds9.cixit.se>
+From: =?ISO-8859-1?Q?=22Peter_Valdemar_M=F8rch_=28Lists=29=22?= 
+	<4ux6as402@sneakemail.com>
+Subject: Re: Extremely simple Vim interface for Git
+Date: Tue, 09 Sep 2008 08:26:12 +0200
+Message-ID: <48C61704.8060206@sneakemail.com>
+References: <20080906193744.GA3122@mithlond.arda.local>	 <18071eea0809070623v4a54cbb8j2face0724651ef56@mail.gmail.com> <cc29171c0809081041s2a4e1e2etd76b6e9b291db27e@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-To: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Tue Sep 09 08:22:06 2008
+Content-Type: text/plain; charset=ISO-8859-1;
+	format=flowed
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+To: bob.hiestand@gmail.com, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Sep 09 08:28:15 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Kcwb9-0004b1-Ug
-	for gcvg-git-2@gmane.org; Tue, 09 Sep 2008 08:21:12 +0200
+	id 1Kcwh9-0007j7-HF
+	for gcvg-git-2@gmane.org; Tue, 09 Sep 2008 08:27:24 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755140AbYIIGT7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 9 Sep 2008 02:19:59 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756203AbYIIGT6
-	(ORCPT <rfc822;git-outgoing>); Tue, 9 Sep 2008 02:19:58 -0400
-Received: from ds9.cixit.se ([193.15.169.228]:35451 "EHLO ds9.cixit.se"
+	id S1753858AbYIIG0R convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 9 Sep 2008 02:26:17 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753820AbYIIG0Q
+	(ORCPT <rfc822;git-outgoing>); Tue, 9 Sep 2008 02:26:16 -0400
+Received: from morch.com ([193.58.255.207]:57597 "EHLO morch.com"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756193AbYIIGT5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 9 Sep 2008 02:19:57 -0400
-Received: from ds9.cixit.se (peter@localhost [127.0.0.1])
-	by ds9.cixit.se (8.12.3/8.12.3/Debian-7.2) with ESMTP id m896JtY1019976
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Tue, 9 Sep 2008 08:19:56 +0200
-Received: from localhost (peter@localhost)
-	by ds9.cixit.se (8.12.3/8.12.3/Debian-7.2) with ESMTP id m896JtXV019971;
-	Tue, 9 Sep 2008 08:19:55 +0200
-X-Authentication-Warning: ds9.cixit.se: peter owned process doing -bs
-Accept: text/plain
-X-Warning: Junk / bulk email will be reported
-X-Rating: This message is not to be eaten by humans
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-3.0 (ds9.cixit.se [127.0.0.1]); Tue, 09 Sep 2008 08:19:56 +0200 (CEST)
+	id S1753261AbYIIG0Q (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 9 Sep 2008 02:26:16 -0400
+Received: from [192.168.1.214] (ANice-157-1-60-70.w90-36.abo.wanadoo.fr [90.36.75.70])
+	by morch.com (Postfix) with ESMTP id 4C76B28DD;
+	Tue,  9 Sep 2008 08:30:15 +0200 (CEST)
+User-Agent: Thunderbird 2.0.0.16 (X11/20080724)
+In-Reply-To: <cc29171c0809081041s2a4e1e2etd76b6e9b291db27e@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/95338>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/95339>
 
-Hi!
+Bob Hiestand bob.hiestand-at-gmail.com |Lists| wrote:
+>> Looks interesting.  Have you seen this though:
+>>
+>> http://code.google.com/p/vcscommand/
+>=20
+> On this mailing list you should use this link instead:
+>=20
+> http://repo.or.cz/w/vcscommand.git
 
-I find myself tracking OpenOffice files every now and then. Mostly to
-synchronise to be able to edit documents in multiple locations, less
-for the actual history.
+I personally have the opposite preference. The home page gives an=20
+overview and a link to the repository. The repository has no overview o=
+r=20
+easy-to-find link to the home page. Therefore I'd almost always perfer =
+a=20
+link to the project home page to get an idea. For 9 out of 10 projects =
+I=20
+wouldn't download the code anyway.
 
-I notice, however, that the Git history tend to grow quite a bit,
-especially for larger documents (I have a 175 kilobyte spredsheet that
-has a git database of about 8 megabytes).
+But who are we to impose our preferences on another poster?
 
-Since OpenOffice doucuments are just zipped xml files, I wondered how
-difficult it would be to create some hooks/hack git to track the files
-inside the archives instead?
-
-
-Alternatively, does anyone know if it is possible to set OpenOffice not
-to use compression for a saved document? If it was uncompressed text, I
-would think Git's delta compression would fare better.
-
--- 
-\\// Peter - http://www.softwolves.pp.se/
+Peter
+--=20
+Peter Valdemar M=F8rch
+http://www.morch.com
