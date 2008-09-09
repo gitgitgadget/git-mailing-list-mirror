@@ -1,75 +1,109 @@
-From: Johannes Sixt <j.sixt@viscovery.net>
-Subject: Re: Tracking OpenOffice files/other compressed files with Git
-Date: Tue, 09 Sep 2008 13:22:38 +0200
-Message-ID: <48C65C7E.3030305@viscovery.net>
-References: <Pine.LNX.4.64.0809090715520.19359@ds9.cixit.se> <48C61F94.3060400@viscovery.net> <loom.20080909T085002-376@post.gmane.org> <48C6569C.60000@viscovery.net> <48C658DE.3070001@gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Sergio Callegari <sergio.callegari@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Sep 09 13:24:23 2008
+From: Dmitry Potapov <dpotapov@gmail.com>
+Subject: [PATCH v2] git-rebase--interactive: auto amend only edited commit
+Date: Tue,  9 Sep 2008 16:05:26 +0400
+Message-ID: <1220961926-13235-1-git-send-email-dpotapov@gmail.com>
+References: <20080909070055.GB28210@dpotapov.dyndns.org>
+Cc: git@vger.kernel.org, Dmitry Potapov <dpotapov@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Sep 09 14:07:27 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Kd1K0-0001Dv-10
-	for gcvg-git-2@gmane.org; Tue, 09 Sep 2008 13:23:48 +0200
+	id 1Kd1zz-0006wc-4b
+	for gcvg-git-2@gmane.org; Tue, 09 Sep 2008 14:07:11 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752695AbYIILWk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 9 Sep 2008 07:22:40 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752238AbYIILWk
-	(ORCPT <rfc822;git-outgoing>); Tue, 9 Sep 2008 07:22:40 -0400
-Received: from lilzmailso02.liwest.at ([212.33.55.13]:51752 "EHLO
-	lilzmailso02.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751826AbYIILWk (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 9 Sep 2008 07:22:40 -0400
-Received: from cm56-163-160.liwest.at ([86.56.163.160] helo=linz.eudaptics.com)
-	by lilzmailso02.liwest.at with esmtpa (Exim 4.66)
-	(envelope-from <j.sixt@viscovery.net>)
-	id 1Kd1Is-0006In-E0; Tue, 09 Sep 2008 13:22:38 +0200
-Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.42])
-	by linz.eudaptics.com (Postfix) with ESMTP
-	id 2D5F769F; Tue,  9 Sep 2008 13:22:38 +0200 (CEST)
-User-Agent: Thunderbird 2.0.0.6 (Windows/20070728)
-In-Reply-To: <48C658DE.3070001@gmail.com>
-X-Enigmail-Version: 0.95.5
-X-Spam-Score: 1.7 (+)
-X-Spam-Report: ALL_TRUSTED=-1.8, BAYES_99=3.5
+	id S1755830AbYIIMFf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 9 Sep 2008 08:05:35 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753532AbYIIMFf
+	(ORCPT <rfc822;git-outgoing>); Tue, 9 Sep 2008 08:05:35 -0400
+Received: from yw-out-2324.google.com ([74.125.46.30]:64022 "EHLO
+	yw-out-2324.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755578AbYIIMFd (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 9 Sep 2008 08:05:33 -0400
+Received: by yw-out-2324.google.com with SMTP id 9so191133ywe.1
+        for <git@vger.kernel.org>; Tue, 09 Sep 2008 05:05:31 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:from:to:cc:subject:date
+         :message-id:x-mailer:in-reply-to:references;
+        bh=dqZ59L1um/GZ6YPX1mLMVSWWYQuyqkjSUcsGyUOVepU=;
+        b=vkCFhccvOFUDZJpcHVx9QwYx8h9fbkNAkt6cUbGnfGWjdYG8g/96VVhj0Cz2abCRhl
+         +zsYG/DQSflM12VGqunD0amGVbKygi49vo86T+0q6cv0Uuy992XNs0F0MY04yTbXAS+3
+         xUgNg1SxzyzDY0nqJFL7Rwfw6K6QSYW6g63X8=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
+        b=TsgzrkpXBalFqE0lpw84X9WGLKzmyzxKo032QL/EeEIlq0RC11wV6l+1oI1OmJfb2Z
+         TJqPRMqTL4CgQYR517KcxfncMf2A3GfYGIXHgmpI9hLf5koRcse0cB3bZ93fe9+sMCJh
+         Ilo6laNXhJneiplTuTPuaTufYl+vi83FUJYp8=
+Received: by 10.86.80.17 with SMTP id d17mr337558fgb.41.1220961930820;
+        Tue, 09 Sep 2008 05:05:30 -0700 (PDT)
+Received: from localhost ( [85.141.189.164])
+        by mx.google.com with ESMTPS id l19sm5771215fgb.7.2008.09.09.05.05.27
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Tue, 09 Sep 2008 05:05:29 -0700 (PDT)
+X-Mailer: git-send-email 1.6.0
+In-Reply-To: <20080909070055.GB28210@dpotapov.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/95375>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/95376>
 
-Sergio Callegari schrieb:
-> But in any case it would be preferable to smudge on checkout since
-> uncompressed OO files can be quite huge.
-> Also to have uncompressed OO files in the worktree means that if you
-> ever need to send one as an attachment to somebody you need to reopen
-> and resave it before making the attachment, which is a bit uncomfortable!
+"git rebase --continue" issued after git rebase being stop by "edit"
+command is trying to amend the last commit using stage changes. However,
+if the last commit is not the commit that was marked as "edit" then it
+can produce unexpected results.
 
-True. Choose your poison.
+For instance, after being stop by "edit", I have made some changes to
+commit message using "git commit --amend". After that I realized that
+I forgot to add some changes to some file. So, I said "git add file"
+and the "git rebase --continue". Unfortunately, it caused that the new
+commit message was lost.
 
->> A file that you have just 'git add'ed must not show up as dirty even
->> if it
->> was processed by a "clean" filter. If it does, then this indicates a bug
->> in git, and not that a corresponding "smudge" filter is missing or
->> misbehaves. Yes, I have observed this with my own "clean" filter some
->> time
->> ago, but I have not yet tried hard enough to find a reproducible test
->> case.
->>
->>   
-> But am I correct in saying that it will show dirty if you clean and then
-> smudge in a non symmetric way?
+Another problem is that after being stopped at "edit", the user adds new
+commits. In this case, automatic amend behavior of git rebase triggered
+by some stage changes causes that not only that the log message of the
+last commit is lost but that it will contain also wrong Author and Date
+information.
 
-No.
+Therefore, this patch restrict automatic amend only to the situation
+where HEAD is the commit at which git rebase stop by "edit" command.
 
-The "smudge" filter kicks in only if the file in the worktree must be
-replaced, for example, due to 'git checkout'. After the filter has
-completed, the stat information of the smudged version is stored in the
-index, and so the file does not appear as dirty. (Again, if you observe
-something else, then git must be fixed, IMO.)
+Signed-off-by: Dmitry Potapov <dpotapov@gmail.com>
+---
 
--- Hannes
+Changes:
+ 1. I have correct the obvious bug pointed by Junio.
+ 2. The error message is more verbose now.
+
+ git-rebase--interactive.sh |    6 +++++-
+ 1 files changed, 5 insertions(+), 1 deletions(-)
+
+diff --git a/git-rebase--interactive.sh b/git-rebase--interactive.sh
+index 5b2b1e5..d2aa954 100755
+--- a/git-rebase--interactive.sh
++++ b/git-rebase--interactive.sh
+@@ -284,7 +284,7 @@ do_next () {
+ 		pick_one $sha1 ||
+ 			die_with_patch $sha1 "Could not apply $sha1... $rest"
+ 		make_patch $sha1
+-		: > "$DOTEST"/amend
++		git rev-parse --verify HEAD > "$DOTEST"/amend
+ 		warn "Stopped at $sha1... $rest"
+ 		warn "You can amend the commit now, with"
+ 		warn
+@@ -430,6 +430,10 @@ do
+ 			if test -f "$DOTEST"/amend
+ 			then
+ 				amend=$(git rev-parse --verify HEAD)
++				test "$amend" = $(cat "$DOTEST"/amend) ||
++				die "\
++You have uncommitted changes in your working tree. Please, commit them
++first and then run 'git rebase --continue' again."
+ 				git reset --soft HEAD^ ||
+ 				die "Cannot rewind the HEAD"
+ 			fi
+-- 
+1.6.0
