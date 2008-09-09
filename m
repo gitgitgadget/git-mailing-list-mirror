@@ -1,81 +1,83 @@
-From: Johannes Sixt <j.sixt@viscovery.net>
+From: Sergio Callegari <sergio.callegari@gmail.com>
 Subject: Re: Tracking OpenOffice files/other compressed files with Git
-Date: Tue, 09 Sep 2008 12:57:32 +0200
-Message-ID: <48C6569C.60000@viscovery.net>
-References: <Pine.LNX.4.64.0809090715520.19359@ds9.cixit.se> <48C61F94.3060400@viscovery.net> <loom.20080909T085002-376@post.gmane.org>
+Date: Tue, 09 Sep 2008 13:07:10 +0200
+Message-ID: <48C658DE.3070001@gmail.com>
+References: <Pine.LNX.4.64.0809090715520.19359@ds9.cixit.se> <48C61F94.3060400@viscovery.net> <loom.20080909T085002-376@post.gmane.org> <48C6569C.60000@viscovery.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
 Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org
-To: Sergio <sergio.callegari@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Sep 09 12:58:45 2008
+To: Johannes Sixt <j.sixt@viscovery.net>
+X-From: git-owner@vger.kernel.org Tue Sep 09 13:08:31 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Kd0vk-0001uE-4p
-	for gcvg-git-2@gmane.org; Tue, 09 Sep 2008 12:58:44 +0200
+	id 1Kd15D-00054s-1R
+	for gcvg-git-2@gmane.org; Tue, 09 Sep 2008 13:08:31 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752044AbYIIK5g (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 9 Sep 2008 06:57:36 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751949AbYIIK5g
-	(ORCPT <rfc822;git-outgoing>); Tue, 9 Sep 2008 06:57:36 -0400
-Received: from lilzmailso01.liwest.at ([212.33.55.23]:43684 "EHLO
-	lilzmailso01.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751977AbYIIK5f (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 9 Sep 2008 06:57:35 -0400
-Received: from cm56-163-160.liwest.at ([86.56.163.160] helo=linz.eudaptics.com)
-	by lilzmailso01.liwest.at with esmtpa (Exim 4.66)
-	(envelope-from <j.sixt@viscovery.net>)
-	id 1Kd0ua-0006qr-R5; Tue, 09 Sep 2008 12:57:33 +0200
-Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.42])
-	by linz.eudaptics.com (Postfix) with ESMTP
-	id 9572B69F; Tue,  9 Sep 2008 12:57:32 +0200 (CEST)
-User-Agent: Thunderbird 2.0.0.6 (Windows/20070728)
-In-Reply-To: <loom.20080909T085002-376@post.gmane.org>
-X-Spam-Score: 1.7 (+)
-X-Spam-Report: ALL_TRUSTED=-1.8, BAYES_99=3.5
+	id S1751826AbYIILHW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 9 Sep 2008 07:07:22 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754005AbYIILHQ
+	(ORCPT <rfc822;git-outgoing>); Tue, 9 Sep 2008 07:07:16 -0400
+Received: from el-out-1112.google.com ([209.85.162.179]:49269 "EHLO
+	el-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753591AbYIILHO (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 9 Sep 2008 07:07:14 -0400
+Received: by el-out-1112.google.com with SMTP id z25so239459ele.1
+        for <git@vger.kernel.org>; Tue, 09 Sep 2008 04:07:13 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from
+         :user-agent:mime-version:to:cc:subject:references:in-reply-to
+         :content-type:content-transfer-encoding;
+        bh=/XHL3OCzAst1yRUIUreXWV8ooeeEaKY0mwacUk1Sp0U=;
+        b=lzKRO5FwzX/mouPvsXbsdQr3j4zwQlY9pvc2AAotTqdL+shUcSZ5HRmbin/OxcEyoh
+         4UzIC8qoY5VU8wUxaZVmZevElAuxhsS1JI2wXOfUTlCA2NCA/1JLfVDpKwi1BL34P8Fu
+         H+O2OQkWLM/baUvXufyc4hPZSyqIbTMVqcFYY=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:user-agent:mime-version:to:cc:subject
+         :references:in-reply-to:content-type:content-transfer-encoding;
+        b=j+wn434nN1FCjeLEiRypuMaOAA8j8Y+pDulEOBt9nlCnchvl8C6gkAKCGlQv7WLuim
+         v7WlkVuUitzl7ZaP/6XOQO2Qt3i647j2uOoEbs+H/Xs4JJw9UhZGhkXEXnS7jFxh/wos
+         6dj5qIng94ldfdjYoANIkXPMRoHSIkoxeYlXQ=
+Received: by 10.103.247.5 with SMTP id z5mr11131178mur.31.1220958432241;
+        Tue, 09 Sep 2008 04:07:12 -0700 (PDT)
+Received: from ?137.204.201.149? ( [137.204.201.149])
+        by mx.google.com with ESMTPS id s10sm8646052muh.12.2008.09.09.04.07.10
+        (version=SSLv3 cipher=RC4-MD5);
+        Tue, 09 Sep 2008 04:07:11 -0700 (PDT)
+User-Agent: Thunderbird 2.0.0.16 (X11/20080724)
+In-Reply-To: <48C6569C.60000@viscovery.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/95372>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/95373>
 
-[please reply to all and keep the Cc list.]
 
-Sergio schrieb:
-> Johannes Sixt <j.sixt <at> viscovery.net> writes:
-> 
->> Peter Krefting schrieb:
->>> Since OpenOffice doucuments are just zipped xml files, I wondered how
->>> difficult it would be to create some hooks/hack git to track the files
->>> inside the archives instead?
->> You could write a "clean" filter that "recompresses" the archive with
->> level 0 upon git-add.
-...
-> It could be possible to write a clean filter to uncompress before commit.
-> However there is a trick with the complementary smudge filter to be used at
-> checkout. If you do not smudge properly, git always shows the file as changed
-> wrt the index.  Smudging correctly would mean using the very same compression
-> ratio and compress method that OO uses, which can be a little tricky. I have
-> tried using the zip binary both in the clean and the smudge phases and it does
-> not work nicely. The smudged file is always different from the original one. One
-> should probably work at a lower level to have a finer control on what is
-> happening (libzip) and prepend to the uncompressed file the compression
-> parameters to be restored on smudging.
+> You don't need to smudge the OOo file on checkout iff OOo can read a file
+> that is "compressed" at level 0.
+>
+>   
+I will check again then, since my first attempt at this was not very 
+successful and I think I was getting dirty files even cleaning only.  
+But it was a long time ago right after clean was introduced.
 
-You don't need to smudge the OOo file on checkout iff OOo can read a file
-that is "compressed" at level 0.
+But in any case it would be preferable to smudge on checkout since 
+uncompressed OO files can be quite huge.
+Also to have uncompressed OO files in the worktree means that if you 
+ever need to send one as an attachment to somebody you need to reopen 
+and resave it before making the attachment, which is a bit uncomfortable!
+> A file that you have just 'git add'ed must not show up as dirty even if it
+> was processed by a "clean" filter. If it does, then this indicates a bug
+> in git, and not that a corresponding "smudge" filter is missing or
+> misbehaves. Yes, I have observed this with my own "clean" filter some time
+> ago, but I have not yet tried hard enough to find a reproducible test case.
+>
+>   
+But am I correct in saying that it will show dirty if you clean and then 
+smudge in a non symmetric way?
 
-A file that you have just 'git add'ed must not show up as dirty even if it
-was processed by a "clean" filter. If it does, then this indicates a bug
-in git, and not that a corresponding "smudge" filter is missing or
-misbehaves. Yes, I have observed this with my own "clean" filter some time
-ago, but I have not yet tried hard enough to find a reproducible test case.
-
-> The bigger issue is however that the clean/smudge thing can be really slow when
-> dealing with large OO files.
-
-True indeed.
-
--- Hannes
+Sergio
