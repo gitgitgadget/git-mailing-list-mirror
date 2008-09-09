@@ -1,69 +1,74 @@
-From: Mike Hommey <mh@glandium.org>
-Subject: Re: Tracking OpenOffice files/other compressed files with Git
-Date: Tue, 9 Sep 2008 10:18:09 +0200
-Organization: glandium.org
-Message-ID: <20080909081808.GA22697@glandium.org>
-References: <Pine.LNX.4.64.0809090715520.19359@ds9.cixit.se>
+From: Michele Ballabio <barra_cuda@katamail.com>
+Subject: git-gui: more issues with diff parsing
+Date: Tue, 9 Sep 2008 10:30:04 +0200
+Message-ID: <200809091030.04507.barra_cuda@katamail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Peter Krefting <peter@softwolves.pp.se>
-X-From: git-owner@vger.kernel.org Tue Sep 09 10:20:14 2008
+Content-Type: text/plain;
+  charset="us-ascii"
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: "Shawn O. Pearce" <spearce@spearce.org>
+X-From: git-owner@vger.kernel.org Tue Sep 09 10:22:59 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KcySK-00031I-7N
-	for gcvg-git-2@gmane.org; Tue, 09 Sep 2008 10:20:12 +0200
+	id 1KcyUy-0003rX-NW
+	for gcvg-git-2@gmane.org; Tue, 09 Sep 2008 10:22:57 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756453AbYIIISg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 9 Sep 2008 04:18:36 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754047AbYIIISf
-	(ORCPT <rfc822;git-outgoing>); Tue, 9 Sep 2008 04:18:35 -0400
-Received: from vuizook.err.no ([194.24.252.247]:59683 "EHLO vuizook.err.no"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756504AbYIIISe (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 9 Sep 2008 04:18:34 -0400
-Received: from cha92-13-88-165-248-19.fbx.proxad.net ([88.165.248.19] helo=vaio.glandium.org)
-	by vuizook.err.no with esmtps (TLS-1.0:RSA_AES_256_CBC_SHA1:32)
-	(Exim 4.67)
-	(envelope-from <mh@glandium.org>)
-	id 1KcyQa-0005wt-Jf; Tue, 09 Sep 2008 10:18:31 +0200
-Received: from mh by vaio.glandium.org with local (Exim 4.63)
-	(envelope-from <mh@glandium.org>)
-	id 1KcyQL-0005ud-1G; Tue, 09 Sep 2008 10:18:09 +0200
+	id S1754706AbYIIIVu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 9 Sep 2008 04:21:50 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754480AbYIIIVt
+	(ORCPT <rfc822;git-outgoing>); Tue, 9 Sep 2008 04:21:49 -0400
+Received: from smtp.katamail.com ([62.149.157.154]:55904 "HELO
+	smtp1.pc.aruba.it" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with SMTP id S1754639AbYIIIVs (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 9 Sep 2008 04:21:48 -0400
+Received: (qmail 13398 invoked by uid 89); 9 Sep 2008 08:21:32 -0000
+X-Spam-Checker-Version: SpamAssassin 3.2.3 (2007-08-08) on smtp1-pc
+X-Spam-Level: *
+X-Spam-Status: No, score=1.1 required=5.0 tests=BAYES_50,RDNS_NONE
+	autolearn=no version=3.2.3
+Received: from unknown (HELO host15-57-dynamic.104-80-r.retail.telecomitalia.it) (barra?cuda@katamail.com@80.104.57.15)
+  by smtp1-pc with SMTP; 9 Sep 2008 08:21:32 -0000
+User-Agent: KMail/1.9.9
 Content-Disposition: inline
-In-Reply-To: <Pine.LNX.4.64.0809090715520.19359@ds9.cixit.se>
-X-GPG-Fingerprint: A479 A824 265C B2A5 FC54  8D1E DE4B DA2C 54FD 2A58
-User-Agent: Mutt/1.5.13 (2006-08-11)
-X-SA-Exim-Connect-IP: <locally generated>
-X-SA-Exim-Mail-From: mh@glandium.org
-X-SA-Exim-Scanned: No (on vaio.glandium.org); SAEximRunCond expanded to false
-X-Spam-Status: (score 0.1): No, score=0.1 required=5.0 tests=RDNS_DYNAMIC autolearn=disabled version=3.2.3
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/95349>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/95350>
 
-On Tue, Sep 09, 2008 at 07:19:55AM +0100, Peter Krefting <peter@softwolves.pp.se> wrote:
-> Hi!
-> 
-> I find myself tracking OpenOffice files every now and then. Mostly to
-> synchronise to be able to edit documents in multiple locations, less
-> for the actual history.
-> 
-> I notice, however, that the Git history tend to grow quite a bit,
-> especially for larger documents (I have a 175 kilobyte spredsheet that
-> has a git database of about 8 megabytes).
-> 
-> Since OpenOffice doucuments are just zipped xml files, I wondered how
-> difficult it would be to create some hooks/hack git to track the files
-> inside the archives instead?
+The patch
+	git-gui: Fix diff parsing for lines starting with "--" or "++"
+seems to have introduced some glitches. With this sequence:
 
-It could be worth having a generic tool that would do similar things
-to what pristine-tar[1] does.
+git init
+touch g
+git add g
+git commit -m"g is a file"
+rm g
+echo "vvvv" > file
+ln -s file g
+git add g file
+git gui
 
-Mike
+Now clicking on "g" in the staged changes, git-gui gives this line:
+	error: Unhandled 2 way diff marker: {d}
 
-1. http://joey.kitenet.net/code/pristine-tar/
+The following patch seems to fix this particular issue, but I don't think
+it's the right fix...
+
+diff --git a/lib/diff.tcl b/lib/diff.tcl
+index a30c80a..0dac732 100644
+--- a/lib/diff.tcl
++++ b/lib/diff.tcl
+@@ -345,6 +345,8 @@ proc read_diff {fd scroll_pos} {
+ 				set tags {}
+ 			}
+ 			}
++		} elseif [string match {diff --git *} $line] {
++			continue
+ 		} else {
+ 			set op [string index $line 0]
+ 			switch -- $op {
