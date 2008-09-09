@@ -1,107 +1,84 @@
-From: "Bert Wesarg" <bert.wesarg@googlemail.com>
-Subject: Re: [PATCH v4] for-each-ref: `:short` format for `refname`
-Date: Tue, 9 Sep 2008 10:57:42 +0200
-Message-ID: <36ca99e90809090157m64253b89p6adf6a49b6d62e99@mail.gmail.com>
-References: <7vtzcxaxgr.fsf@gitster.siamese.dyndns.org>
-	 <1220649383-17916-1-git-send-email-bert.wesarg@googlemail.com>
-	 <7vfxoadz5c.fsf@gitster.siamese.dyndns.org>
-	 <36ca99e90809082352q3c87447eme73379673fe652f4@mail.gmail.com>
-	 <7vod2xagmr.fsf@gitster.siamese.dyndns.org>
+From: Sergio <sergio.callegari@gmail.com>
+Subject: Re: Tracking OpenOffice files/other compressed files with Git
+Date: Tue, 9 Sep 2008 09:02:36 +0000 (UTC)
+Message-ID: <loom.20080909T085002-376@post.gmane.org>
+References: <Pine.LNX.4.64.0809090715520.19359@ds9.cixit.se> <48C61F94.3060400@viscovery.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=us-ascii
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, szeder@ira.uka.de,
-	"Shawn O. Pearce" <spearce@spearce.org>
-To: "Junio C Hamano" <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Sep 09 10:58:53 2008
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Sep 09 11:04:16 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Kcz3k-0004rw-La
-	for gcvg-git-2@gmane.org; Tue, 09 Sep 2008 10:58:53 +0200
+	id 1Kcz8j-0005xl-44
+	for gcvg-git-2@gmane.org; Tue, 09 Sep 2008 11:04:01 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754611AbYIII5o (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 9 Sep 2008 04:57:44 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754585AbYIII5o
-	(ORCPT <rfc822;git-outgoing>); Tue, 9 Sep 2008 04:57:44 -0400
-Received: from wx-out-0506.google.com ([66.249.82.229]:19712 "EHLO
-	wx-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754075AbYIII5n (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 9 Sep 2008 04:57:43 -0400
-Received: by wx-out-0506.google.com with SMTP id h27so473701wxd.4
-        for <git@vger.kernel.org>; Tue, 09 Sep 2008 01:57:42 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlemail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to
-         :subject:cc:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:references;
-        bh=Z/Qj8GByeRpLiotJALGoZykfxRwRyPj5EPO0OzRhxUs=;
-        b=GzLlf/5NhPUVNjVLYc4pUSzuxfKHxnQEqZGpGzZWT/ltrhRDGjp+qSQ6ftiFOai+Tb
-         ti0PSYSCt/emnV682vuq7AHbVUYo2CRnFYpOAn+Toca2MWYzZxQUNuKB5Xtio9ltZZ08
-         MpVYbw196M8XtHfzOSxXPc3ZJMGkzOiO8Cuo4=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=googlemail.com; s=gamma;
-        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
-         :content-type:content-transfer-encoding:content-disposition
-         :references;
-        b=Y8oJFG6TUvPIKLoPtJSEJidWF4GOi+wgqfYeVsq0rirWZjWhHou7T0V/NrYAriEGa9
-         upPjlCn8EgJ7Kmxp+oIYT6laoAryheRY8x/uSAjHazw7XRNG2H32PauudTIpNNQkXuWp
-         gHBy6qNRqPgImNzWITxoJ4gebLs0ooHCUHFfM=
-Received: by 10.70.80.6 with SMTP id d6mr20417117wxb.53.1220950662120;
-        Tue, 09 Sep 2008 01:57:42 -0700 (PDT)
-Received: by 10.70.49.12 with HTTP; Tue, 9 Sep 2008 01:57:41 -0700 (PDT)
-In-Reply-To: <7vod2xagmr.fsf@gitster.siamese.dyndns.org>
-Content-Disposition: inline
+	id S1753184AbYIIJCy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 9 Sep 2008 05:02:54 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753389AbYIIJCy
+	(ORCPT <rfc822;git-outgoing>); Tue, 9 Sep 2008 05:02:54 -0400
+Received: from main.gmane.org ([80.91.229.2]:32953 "EHLO ciao.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751731AbYIIJCx (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 9 Sep 2008 05:02:53 -0400
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1Kcz7W-0002BI-Ix
+	for git@vger.kernel.org; Tue, 09 Sep 2008 09:02:49 +0000
+Received: from 137.204.201.149 ([137.204.201.149])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Tue, 09 Sep 2008 09:02:46 +0000
+Received: from sergio.callegari by 137.204.201.149 with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Tue, 09 Sep 2008 09:02:46 +0000
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@ger.gmane.org
+X-Gmane-NNTP-Posting-Host: main.gmane.org
+User-Agent: Loom/3.14 (http://gmane.org/)
+X-Loom-IP: 137.204.201.149 (Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.8.1.16) Gecko/20080715 Ubuntu/7.10 (gutsy) Firefox/2.0.0.16)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/95361>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/95362>
 
-On Tue, Sep 9, 2008 at 10:05, Junio C Hamano <gitster@pobox.com> wrote:
-> "Bert Wesarg" <bert.wesarg@googlemail.com> writes:
->
->> Any opinions, whether we want the 'strict' mode? i.e.:
->>
->> for refs/heads/xyzzy and refs/tags/xyzzy:
->>
->> loose mode (current implementation):
->>
->>   refs/heads/xyzzy => heads/xyzzy
->>   refs/tags/xyzzy  => xyzzy
->>
->> there would be a ambiguous warning (if enabled) if you use xyzzy as a
->> tag, but it resolves correctly to the tag.
->>
->> strict mode:
->>
->>   refs/heads/xyzzy => heads/xyzzy
->>   refs/tags/xyzzy  => tags/xyzzy
->>
->> will always produce a non-ambiguous short forms.
->
-> I have no strong opinions either way, but if we want to pick only one, I
-> suspect that the loose mode would be more appropriate for bash completion
-> purposes exactly because:
->
->  (1) the shorter form would match the users' expectations, and;
->
->  (2) if it triggers ambiguity warning to use that result that matches
->     users' expectations, it is a *good thing* --- it reminds the user
->     that s/he is playing with fire _if_ the user is of careful type who
->     enables the ambiguity warning.
->
-> Thinking about it from a different angle, it would make more sense to use
-> loose mode if the user does not have ambiguity warning configured, and use
-> strict mode if the warning is enabled.  Then people who will get warnings
-> from ambiguity will not get an ambiguous completion, and people who won't
-> will get shorter but still unambiguous completion.
->
-> Which means, despite what I said earlier, now I have a mild preference to
-> tie the choice to core.wawrnambigousrefs configuration.
-A really nice idea.  Await PATCH v5.  I had to change my plans for
-today, unfortunately.
+Johannes Sixt <j.sixt <at> viscovery.net> writes:
 
-Bert
->
+> 
+> Peter Krefting schrieb:
+> > Since OpenOffice doucuments are just zipped xml files, I wondered how
+> > difficult it would be to create some hooks/hack git to track the files
+> > inside the archives instead?
+> 
+> You could write a "clean" filter that "recompresses" the archive with
+> level 0 upon git-add.
+> 
+
+
+A couple of notes:
+
+1) For Openoffice documents whose size is dominated by embed images and other
+large objects, the git delta mechanism already performs reasonably well, since
+OO files are Zip archives where each file is compressed separately.  If you do
+not change an image, then that image remains stored in the same way and the
+delta can be done.
+
+2) For OO documents whose size is dominated by plain content, the git delta
+mechanism cannot work, since the zip compression introduces "mixing" and a small
+change in the document is converted into a very large change in the zip file.
+
+It could be possible to write a clean filter to uncompress before commit.
+However there is a trick with the complementary smudge filter to be used at
+checkout. If you do not smudge properly, git always shows the file as changed
+wrt the index.  Smudging correctly would mean using the very same compression
+ratio and compress method that OO uses, which can be a little tricky. I have
+tried using the zip binary both in the clean and the smudge phases and it does
+not work nicely. The smudged file is always different from the original one. One
+should probably work at a lower level to have a finer control on what is
+happening (libzip) and prepend to the uncompressed file the compression
+parameters to be restored on smudging.
+
+The bigger issue is however that the clean/smudge thing can be really slow when
+dealing with large OO files.
