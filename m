@@ -1,62 +1,72 @@
-From: =?ISO-8859-1?Q?=22Peter_Valdemar_M=F8rch_=28Lists=29=22?= 
-	<4ux6as402@sneakemail.com>
-Subject: Re: Extremely simple Vim interface for Git
-Date: Tue, 09 Sep 2008 08:26:12 +0200
-Message-ID: <48C61704.8060206@sneakemail.com>
-References: <20080906193744.GA3122@mithlond.arda.local>	 <18071eea0809070623v4a54cbb8j2face0724651ef56@mail.gmail.com> <cc29171c0809081041s2a4e1e2etd76b6e9b291db27e@mail.gmail.com>
+From: Johannes Sixt <j.sixt@viscovery.net>
+Subject: Re: [PATCH 2/2] git-rebase--interactive: auto amend only edited commit
+Date: Tue, 09 Sep 2008 08:42:57 +0200
+Message-ID: <48C61AF1.1060703@viscovery.net>
+References: <1220906569-26878-1-git-send-email-dpotapov@gmail.com> <1220906569-26878-2-git-send-email-dpotapov@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1;
-	format=flowed
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: bob.hiestand@gmail.com, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Sep 09 08:28:15 2008
+Content-Type: text/plain; charset=ISO-8859-15
+Content-Transfer-Encoding: 7bit
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Dmitry Potapov <dpotapov@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Sep 09 08:44:21 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Kcwh9-0007j7-HF
-	for gcvg-git-2@gmane.org; Tue, 09 Sep 2008 08:27:24 +0200
+	id 1KcwxW-0003L2-HJ
+	for gcvg-git-2@gmane.org; Tue, 09 Sep 2008 08:44:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753858AbYIIG0R convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 9 Sep 2008 02:26:17 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753820AbYIIG0Q
-	(ORCPT <rfc822;git-outgoing>); Tue, 9 Sep 2008 02:26:16 -0400
-Received: from morch.com ([193.58.255.207]:57597 "EHLO morch.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753261AbYIIG0Q (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 9 Sep 2008 02:26:16 -0400
-Received: from [192.168.1.214] (ANice-157-1-60-70.w90-36.abo.wanadoo.fr [90.36.75.70])
-	by morch.com (Postfix) with ESMTP id 4C76B28DD;
-	Tue,  9 Sep 2008 08:30:15 +0200 (CEST)
-User-Agent: Thunderbird 2.0.0.16 (X11/20080724)
-In-Reply-To: <cc29171c0809081041s2a4e1e2etd76b6e9b291db27e@mail.gmail.com>
+	id S1753261AbYIIGnG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 9 Sep 2008 02:43:06 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753442AbYIIGnG
+	(ORCPT <rfc822;git-outgoing>); Tue, 9 Sep 2008 02:43:06 -0400
+Received: from lilzmailso02.liwest.at ([212.33.55.13]:33007 "EHLO
+	lilzmailso02.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753027AbYIIGnD (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 9 Sep 2008 02:43:03 -0400
+Received: from cm56-163-160.liwest.at ([86.56.163.160] helo=linz.eudaptics.com)
+	by lilzmailso02.liwest.at with esmtpa (Exim 4.66)
+	(envelope-from <j.sixt@viscovery.net>)
+	id 1KcwwD-0005EN-Qd; Tue, 09 Sep 2008 08:42:58 +0200
+Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.42])
+	by linz.eudaptics.com (Postfix) with ESMTP
+	id 91AAE69F; Tue,  9 Sep 2008 08:42:57 +0200 (CEST)
+User-Agent: Thunderbird 2.0.0.6 (Windows/20070728)
+In-Reply-To: <1220906569-26878-2-git-send-email-dpotapov@gmail.com>
+X-Spam-Score: 1.7 (+)
+X-Spam-Report: ALL_TRUSTED=-1.8, BAYES_99=3.5
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/95339>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/95340>
 
-Bob Hiestand bob.hiestand-at-gmail.com |Lists| wrote:
->> Looks interesting.  Have you seen this though:
->>
->> http://code.google.com/p/vcscommand/
->=20
-> On this mailing list you should use this link instead:
->=20
-> http://repo.or.cz/w/vcscommand.git
+Dmitry Potapov schrieb:
+> Another problem is that after being stopped at "edit", the user adds new
+> commits. In this case, automatic amend behavior of git rebase triggered
+> by some stage changes causes that not only that the log message of the
+> last commit is lost but that it will contain also wrong Author and Date
+> information.
+> 
+> Therefore, this patch restrict automatic amend only to the situation
+> where HEAD is the commit at which git rebase stop by "edit" command.
+...
+> @@ -430,6 +430,8 @@ do
+>  			if test -f "$DOTEST"/amend
+>  			then
+>  				amend=$(git rev-parse --verify HEAD)
+> +				test "$amend" = $(cat "$DOTEST"/amend) ||
+> +				die "You have uncommitted changes"
 
-I personally have the opposite preference. The home page gives an=20
-overview and a link to the repository. The repository has no overview o=
-r=20
-easy-to-find link to the home page. Therefore I'd almost always perfer =
-a=20
-link to the project home page to get an idea. For 9 out of 10 projects =
-I=20
-wouldn't download the code anyway.
+Doesn't this terse message carry a bit of a "WTF?" factor? In other
+situations rebase --continue goes into git-commit just fine, but it does
+not under these special conditions. How about this:
 
-But who are we to impose our preferences on another poster?
+"Will not auto-commit uncommitted changes after you have already committed
+something. Please run 'git commit --amend' yourself."
 
-Peter
---=20
-Peter Valdemar M=F8rch
-http://www.morch.com
+>  				git reset --soft HEAD^ ||
+>  				die "Cannot rewind the HEAD"
+>  			fi
+
+-- Hannes
