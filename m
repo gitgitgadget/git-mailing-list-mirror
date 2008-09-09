@@ -1,68 +1,81 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: git merge vs git commit
-Date: Tue, 09 Sep 2008 12:11:34 -0700
-Message-ID: <7vd4jd6snt.fsf@gitster.siamese.dyndns.org>
-References: <20080909165236.GA8850@flint.arm.linux.org.uk>
- <7vhc8p6x59.fsf@gitster.siamese.dyndns.org>
- <20080909185418.GI4829@genesis.frugalware.org>
+Subject: Re: Commit templates are not readable after 'make install'
+Date: Tue, 09 Sep 2008 12:19:03 -0700
+Message-ID: <7v8wu16sbc.fsf@gitster.siamese.dyndns.org>
+References: <3665a1a00809091202u295fedabl53b280aad7bedb62@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Russell King <rmk@arm.linux.org.uk>, git@vger.kernel.org
-To: Miklos Vajna <vmiklos@frugalware.org>
-X-From: git-owner@vger.kernel.org Tue Sep 09 21:12:54 2008
+Cc: git@vger.kernel.org, johannes.sixt@telecom.at
+To: "Anatol Pomozov" <anatol.pomozov@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Sep 09 21:40:23 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Kd8dw-0006lX-C6
-	for gcvg-git-2@gmane.org; Tue, 09 Sep 2008 21:12:52 +0200
+	id 1Kd94W-0006ii-EX
+	for gcvg-git-2@gmane.org; Tue, 09 Sep 2008 21:40:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753409AbYIITLp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 9 Sep 2008 15:11:45 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753782AbYIITLp
-	(ORCPT <rfc822;git-outgoing>); Tue, 9 Sep 2008 15:11:45 -0400
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:58902 "EHLO
+	id S1752898AbYIITjM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 9 Sep 2008 15:39:12 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752483AbYIITjM
+	(ORCPT <rfc822;git-outgoing>); Tue, 9 Sep 2008 15:39:12 -0400
+Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:58926 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751742AbYIITLo (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 9 Sep 2008 15:11:44 -0400
+	with ESMTP id S1751792AbYIITjL (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 9 Sep 2008 15:39:11 -0400
 Received: from localhost.localdomain (localhost [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 3EAD2566B3;
-	Tue,  9 Sep 2008 15:11:43 -0400 (EDT)
+	by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id 5745F7AA31;
+	Tue,  9 Sep 2008 15:39:08 -0400 (EDT)
 Received: from pobox.com (ip68-225-240-211.oc.oc.cox.net [68.225.240.211])
  (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
- certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
- ESMTPSA id D9B2E566B2; Tue,  9 Sep 2008 15:11:38 -0400 (EDT)
-In-Reply-To: <20080909185418.GI4829@genesis.frugalware.org> (Miklos Vajna's
- message of "Tue, 9 Sep 2008 20:54:18 +0200")
+ certificate requested) by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with
+ ESMTPSA id 4D9667A7D6; Tue,  9 Sep 2008 15:19:10 -0400 (EDT)
+In-Reply-To: <3665a1a00809091202u295fedabl53b280aad7bedb62@mail.gmail.com>
+ (Anatol Pomozov's message of "Tue, 9 Sep 2008 12:02:01 -0700")
 User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: 2390CC6A-7EA3-11DD-933F-D0CFFE4BC1C1-77302942!a-sasl-fastnet.pobox.com
+X-Pobox-Relay-ID: F81C832C-7EA6-11DD-9964-3113EBD4C077-77302942!a-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/95417>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/95418>
 
-Miklos Vajna <vmiklos@frugalware.org> writes:
+"Anatol Pomozov" <anatol.pomozov@gmail.com> writes:
 
-> On Tue, Sep 09, 2008 at 10:34:42AM -0700, Junio C Hamano <gitster@pobox.com> wrote:
->> I think some changes went into 1.6.0 around this area to (r)eject parents
->> that are redundant.
+> I build git from sources and I have one small permissions issue that
+> (I think) should be fixed.
 >
-> Yes, it was your 98cf9c3 (Introduce reduce_heads(), 2008-06-27).
+> So I build it as described in INSTALL file
+> make prefix=/usr all
+> sudo make prefix=/usr install
+>
+> Everything goes fine here and we have a new version of git installed
+> $ git --version
+> git version 1.6.0.1.285.g1070
+>
+> But when I want to create a new repo, I have a fatal problem
+> $ git init
+> fatal: cannot copy
+> /usr/share/git-core/templates/hooks/applypatch-msg.sample to
+> /personal/sources/opensource/1/.git/hooks/applypatch-msg.sample
+>
+>
+> Because of the template files are readable only for root
+> $ ls -l /usr/share/git-core/templates/hooks/
+> total 44
+> -rwxr-x--- 1 root root  452 2008-08-29 11:04 applypatch-msg.sample
+> -rwxr-x--- 1 root root  894 2008-08-29 11:04 commit-msg.sample
+> -rwxr-x--- 1 root root  160 2008-08-29 11:04 post-commit.sample
+> -rwxr-x--- 1 root root  553 2008-08-29 11:04 post-receive.sample
 
-That does not necessarily mean git-merge (or git-merge-octopus) uses that
-C function when coming up with the set of commits to record as parents.
+Didn't 9907721 (templates/Makefile: don't depend on local umask setting,
+2008-02-28) take care of that?
 
-As to what the correct behaviour is, I personally do not have a strong
-preference either way.
+    ... goes and looks ...
 
- - If you specify a fast-foward on the command line to merge into your
-   HEAD, that is your choice and you may deserve the extra parent, even if
-   it is redundant.  
+Ah, that is only to propagate the wish of the person who _built_ it.
 
- - On the other hand, if you try to merge a single fast-forward, we do not
-   even create a merge commit, so in the same spirit it may be better if
-   we dropped the original HEAD from the merged result (i.e. Russell's
-   "cleanly merged" case).
-
-I dunno.
+You probably have a tight umask and have sources checked out unreadable to
+others, which is propagated to the installation (check the permission of
+files in your templates/blt directory to verify this conjecture).  And the
+build procedure is honoring your wish to make things unreadable to others.
