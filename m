@@ -1,86 +1,86 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Commit templates are not readable after 'make install'
-Date: Wed, 10 Sep 2008 00:23:33 -0700
-Message-ID: <7vsks8xy4q.fsf@gitster.siamese.dyndns.org>
-References: <3665a1a00809091202u295fedabl53b280aad7bedb62@mail.gmail.com>
- <7v8wu16sbc.fsf@gitster.siamese.dyndns.org>
- <7vprnd5b07.fsf@gitster.siamese.dyndns.org> <48C76A88.2050109@viscovery.net>
+From: Thomas Petazzoni <thomas.petazzoni@free-electrons.com>
+Subject: [guilt] Bug with guilt patchbomb
+Date: Tue, 9 Sep 2008 10:12:34 +0200
+Message-ID: <20080909101234.070f2fdd@surf>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Anatol Pomozov <anatol.pomozov@gmail.com>, git@vger.kernel.org
-To: Johannes Sixt <j.sixt@viscovery.net>
-X-From: git-owner@vger.kernel.org Wed Sep 10 09:24:54 2008
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 8bit
+Cc: git@vger.kernel.org
+To: jsipek@cs.sunysb.edu
+X-From: git-owner@vger.kernel.org Wed Sep 10 09:34:52 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KdK4J-00043D-LX
-	for gcvg-git-2@gmane.org; Wed, 10 Sep 2008 09:24:52 +0200
+	id 1KdKDm-0006nQ-Cp
+	for gcvg-git-2@gmane.org; Wed, 10 Sep 2008 09:34:38 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751208AbYIJHXm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 10 Sep 2008 03:23:42 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751179AbYIJHXm
-	(ORCPT <rfc822;git-outgoing>); Wed, 10 Sep 2008 03:23:42 -0400
-Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:51601 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751145AbYIJHXm (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 10 Sep 2008 03:23:42 -0400
-Received: from localhost.localdomain (localhost [127.0.0.1])
-	by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id 8F22C7A6BD;
-	Wed, 10 Sep 2008 03:23:40 -0400 (EDT)
-Received: from pobox.com (ip68-225-240-211.oc.oc.cox.net [68.225.240.211])
- (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
- certificate requested) by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with
- ESMTPSA id BFECD7A6BC; Wed, 10 Sep 2008 03:23:35 -0400 (EDT)
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: 6455DF54-7F09-11DD-95DF-3113EBD4C077-77302942!a-sasl-quonix.pobox.com
+	id S1751378AbYIJHdb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 10 Sep 2008 03:33:31 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751315AbYIJHdb
+	(ORCPT <rfc822;git-outgoing>); Wed, 10 Sep 2008 03:33:31 -0400
+Received: from mail.free-electrons.com ([88.191.76.200]:50684 "EHLO
+	mail.free-electrons.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751179AbYIJHda (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 10 Sep 2008 03:33:30 -0400
+X-Greylist: delayed 4156 seconds by postgrey-1.27 at vger.kernel.org; Wed, 10 Sep 2008 03:33:30 EDT
+Received: by mail.free-electrons.com (Postfix, from userid 106)
+	id 8161EE5BB; Tue,  9 Sep 2008 10:13:12 +0200 (CEST)
+X-Spam-Checker-Version: SpamAssassin 3.2.4 (2008-01-01) on
+	mail.free-electrons.com
+X-Spam-Level: 
+X-Spam-Status: No, score=-4.3 required=5.0 tests=ALL_TRUSTED,AWL,BAYES_00
+	autolearn=ham version=3.2.4
+Received: from surf (humanoidz.org [82.247.183.72])
+	by mail.free-electrons.com (Postfix) with ESMTPA id C7E8EE5A3;
+	Tue,  9 Sep 2008 10:13:03 +0200 (CEST)
+X-Mailer: Claws Mail 3.5.0 (GTK+ 2.12.9; i486-pc-linux-gnu)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/95492>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/95493>
 
-Johannes Sixt <j.sixt@viscovery.net> writes:
+Hi,
 
->> diff --git c/templates/Makefile w/templates/Makefile
->> index 0722a92..a12c6e2 100644
->> --- c/templates/Makefile
->> +++ w/templates/Makefile
->> @@ -31,9 +31,11 @@ boilerplates.made : $(bpsrc)
->>  		dir=`expr "$$dst" : '\(.*\)/'` && \
->>  		mkdir -p blt/$$dir && \
->>  		case "$$boilerplate" in \
->> -		*--) ;; \
->> -		*) cp -p $$boilerplate blt/$$dst ;; \
->> -		esac || exit; \
->> +		*--) continue;; \
->> +		esac && \
->> +		cp $$boilerplate blt/$$dst && \
->> +		if test -x "blt/$$dst"; then rx=rx; else rx=r; fi && \
->> +		chmod a+$$rx "blt/$$dst" || exit; \
->>  	done && \
->>  	date >$@
->
-> Since only hooks need to be executable, how about this instead:
+I'm using guilt 0.28-1 (Ubuntu package) and git-core 1.5.4.3-1ubuntu2.
+When I use guilt patchbomb, I get some scary output from git-rev-list:
 
-Hmm. I tried to avoid hardcoding "it so happens that currently the only
-executables are hooks".
+Enter all the Cc: email addresses (separated by space): 
+usage: git-rev-list [OPTION] <commit-id>... [ -- paths... ]
+  limiting output:
+    --max-count=nr
+    --max-age=epoch
+    --min-age=epoch
+    --sparse
+    --no-merges
+    --remove-empty
+    --all
+    --stdin
+    --quiet
+  ordering output:
+    --topo-order
+    --date-order
+  formatting output:
+    --parents
+    --objects | --objects-edge
+    --unpacked
+    --header | --pretty
+    --abbrev=nr | --no-abbrev
+    --abbrev-commit
+    --left-right
+  special purpose:
+    --bisect
+    --bisect-vars
+    --bisect-all
+/usr/bin/guilt-patchbomb: 98: Bad substitution
+Proceed with patchbomb (this is the last chance to abort)? [y/N] 
 
-> diff --git a/templates/Makefile b/templates/Makefile
-> index 0722a92..80cd000 100644
-> --- a/templates/Makefile
-> +++ b/templates/Makefile
-> @@ -32,7 +32,12 @@ boilerplates.made : $(bpsrc)
->  		mkdir -p blt/$$dir && \
->  		case "$$boilerplate" in \
->  		*--) ;; \
-> -		*) cp -p $$boilerplate blt/$$dst ;; \
-> +		hooks--*) \
-> +			cp -p "$$boilerplate" "blt/$$dst" && \
-> +			chmod a+rx "blt/$$dst";; \
-> +		*) \
-> +			cp -p "$$boilerplate" "blt/$$dst" && \
-> +			chmod a+r "blt/$$dst";; \
->  		esac || exit; \
->  	done && \
->  	date >$@
+Sincerly,
+
+Thomas
+-- 
+Thomas Petazzoni, Free Electrons
+Kernel, drivers and embedded Linux development,
+consulting, training and support.
+http://free-electrons.com
