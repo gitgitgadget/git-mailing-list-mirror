@@ -1,86 +1,138 @@
-From: "Stephen R. van den Berg" <srb@cuci.nl>
-Subject: Re: [RFC] origin link for cherry-pick and revert
-Date: Wed, 10 Sep 2008 01:08:00 +0200
-Message-ID: <20080909230800.GB7459@cuci.nl>
-References: <20080909132212.GA25476@cuci.nl> <m3zlmhnx1z.fsf@localhost.localdomain> <20080909194354.GA13634@cuci.nl> <200809092254.30668.jnareb@gmail.com>
+From: Petr Baudis <pasky@suse.cz>
+Subject: [ANNOUNCE] TopGit v0.3
+Date: Wed, 10 Sep 2008 01:10:09 +0200
+Message-ID: <20080909231009.GD10544@machine.or.cz>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Sep 10 01:09:20 2008
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Sep 10 01:11:31 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KdCKg-00086j-Ui
-	for gcvg-git-2@gmane.org; Wed, 10 Sep 2008 01:09:15 +0200
+	id 1KdCMi-00009n-3r
+	for gcvg-git-2@gmane.org; Wed, 10 Sep 2008 01:11:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754404AbYIIXIF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 9 Sep 2008 19:08:05 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754387AbYIIXIE
-	(ORCPT <rfc822;git-outgoing>); Tue, 9 Sep 2008 19:08:04 -0400
-Received: from aristoteles.cuci.nl ([212.125.128.18]:59084 "EHLO
-	aristoteles.cuci.nl" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754340AbYIIXID (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 9 Sep 2008 19:08:03 -0400
-Received: by aristoteles.cuci.nl (Postfix, from userid 500)
-	id E2D515465; Wed, 10 Sep 2008 01:08:00 +0200 (CEST)
+	id S1753649AbYIIXKM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 9 Sep 2008 19:10:12 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754088AbYIIXKM
+	(ORCPT <rfc822;git-outgoing>); Tue, 9 Sep 2008 19:10:12 -0400
+Received: from w241.dkm.cz ([62.24.88.241]:38387 "EHLO machine.or.cz"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751569AbYIIXKL (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 9 Sep 2008 19:10:11 -0400
+Received: by machine.or.cz (Postfix, from userid 2001)
+	id 3918F393A6C5; Wed, 10 Sep 2008 01:10:09 +0200 (CEST)
 Content-Disposition: inline
-In-Reply-To: <200809092254.30668.jnareb@gmail.com>
-User-Agent: Mutt/1.5.13 (2006-08-11)
+User-Agent: Mutt/1.5.16 (2007-06-09)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/95457>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/95458>
 
-Jakub Narebski wrote:
->On Tue, 9 Sep 2008, Stephen R. van den Berg wrote:
->> On the contrary, my current proposal only needs to verify the validity
->> of a single commit, changing it like this will require the system to
->> verify the validity of two commits.  Given the rareness of the origin
->> links this will hardly present a problem, but it *does* increase
->> the overhead in checking a bit.
+  Hi!
 
->Errr... wasn't you proposing to keep/protect against pruning <cousin>
->AND <cousin>^<mainline>? You want to have _diff_ (changeset) protected,
->not a single tree state.
+  After awfully long delay, here comes v0.3 of TopGit - we hopefully
+begin to approach some kind of practical usability by now.
 
-Actually, making sure that the commit we reference in the origin link
-exists, we implicitly prove that all the parents of that commit exist as
-well.  Then again, this point is moot since I already conceded (in a
-different thread) that storing two hashes is better.
+  TopGit is meant as a fresh start in the steps of StGIT, quilt-in-git
+and others, of course in an attempt to Get It Right this time around.
+TopGit is absolutely minimal porcelain layer that will manage your
+patch queue for you using topic branches, one patch per branch,
+never rewriting the history in order to enable fully distributed
+workflow.  You can get TopGit at
 
->>>> - git rev-list --topo-order will take origin links into account to
->>>>   ensure proper ordering.
+	http://repo.or.cz/w/topgit.git
 
->Hmmm... while I think it might be a good idea, I'm not sure about its
->overhead. Should be much, I guess.
+and read up on its design, usage and implementation at:
 
-Actually, I have already programmed this part, and the overhead is close
-to zero.
+	http://repo.or.cz/w/topgit.git?a=blob;f=README
 
->>>> - git blame will follow and use the origin link if the object exists.
 
->>> Hmmmm... I'm not sure about that.
+  Aside of few minor changes, the major point of this release is remotes
+handling; you can elevate any remote to a TopGit-tracked status using
+'tg remote', then git fetch / push will haul around the TopGit bases
+as well, and 'tg update' can update your local branches based on
+the remote ones. Each repository has one "default" TopGit remote and
+the local branches are supposed to reflect this one; that is the remote
+'tg update' and all the other commands consider by default. Normally,
+this remote is the last one you called 'tg remote --populate' on, but
+you can change it in .git/config or switch it for a particular tg call
+using the 'tg -r REMOTE command' parameter.
 
->> Care to explain your doubts?
->> The reason I want this behaviour, is because it's all about tracking
->> content, and that part of the content happens to come from somewhere
->> else, and therefore blame should look there to "dig deeper" into it.
+  The other major improvement is new 'tg import' command by Aneesh Kumar
+that lets you transform a series of commits to a topic branch sequence.
+I decided not to consider the 'tg depend' work by Jan Nieuwenhuiz for
+this release yet, since it will probably take me a bit of time yet to
+fully understand his approach; so far, I have an uneasy feel about it.
 
->But blame is all about what commit brought some line to currents version.
->So the cherry-pick itself, or revert of a commit itself would be blamed,
->and should be blamed, not its parents, nor commit which got cherry-picked,
->or commit which got reversed.
+  Note that this release, as usual, received only very light testing -
+please come back with any bugs you find. If someone would feel like
+adding at least a simple testsuite, that would be really nice.
 
-Well, it depends, I guess.
-If you'd go for a "committer" based display, then following origin links
-is bad.
-If you'd go for an "author" based display, then following origin links
-should be the default (IMHO).
+
+Aneesh Kumar K.V (1):
+      topgit: Implement tg-import
+
+Bert Wesarg (1):
+      Makefile: Use $(wildcard) for commands_in
+
+David Brown (1):
+      Force adding the .topmsg and .topdep files.
+
+Jan Nieuwenhuizen (1):
+      TOPGIT: [PATCH] Use standard prefix and DESTDIR rather than explain
+
+Jonathan Nieder (2):
+      supply template argument to mktemp
+      tg-info: fix sed typo
+
+Petr Baudis (35):
+      tg-export: Ensure we don't overwrite a branch by git update-ref
+      tg create: Set up refs/top-bases/ after conflict resolution
+      README: Sketch of my current ideas on remotes handling
+      tg summary: Fix confusing variable name
+      tg remote: New command
+      tg-update.sh: Better explain base update
+      Factor out rev-parse --verify calls to new ref_exists() function
+      tg.sh: Set $base_remote to topgit.remote config value
+      recurse_deps+branch_needs_update(): Deal with remote branches
+      tg update: Support updating from remote branches
+      has_remote(): Introduce to check if branch has remote counterpart
+      tg info: Show information about remote branches
+      tg info: Asterisk-prefix 'out-of-band' warnings
+      tg summary: Show info about remote mates
+      tg summary: 'L' denotes that push will update remote mate
+      tg info: Note if local head is ahead of remote mate
+      tg summary: Mark current branch with '>'
+      tg -r REMOTE: Support for switching base remote
+      tg summary: Fix spurious errors on tg-inconsistent remotes
+      Fix recursive tg calls: Pass tg parameters through properly
+      Account for direct-tg arguments in Usage strings
+      tg import: Better description
+      tg import: Standard script header
+      tg import: Standard options parsing
+      tg import: Remove tg_ prefixes from functions
+      tg import: Change default prefix from tp/ to t/
+      README: Add synopsis for working with remotes
+      tg create -r BRANCH: Create branch based on a remote one
+      tg import -p PREFIX: Custom prefix instead of t/
+      tg import: Fix up process_commit() progress reporting
+      branch_contains(): More explicit call to git rev-list
+      tg import: Make the progress reporting stand out more
+      Merge branch 'tg-import'
+      README: Remove stale TODO
+      TopGit-0.3
+
+martin f. krafft (2):
+      Add tg-export to gitignore
+      Add various todos/wishlists
+
+
+  Have fun,
+
 -- 
-Sincerely,
-           Stephen R. van den Berg.
-
-"Be spontaneous!"
+				Petr "Pasky" Baudis
+The next generation of interesting software will be done
+on the Macintosh, not the IBM PC.  -- Bill Gates
