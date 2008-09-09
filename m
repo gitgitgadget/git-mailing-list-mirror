@@ -1,77 +1,80 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH 0/7] prefix discovery at runtime (on Windows)
-Date: Tue, 9 Sep 2008 16:49:19 +0200 (CEST)
-Message-ID: <alpine.DEB.1.00.0809091648130.13830@pacific.mpi-cbg.de.mpi-cbg.de>
-References: <1218977083-14526-1-git-send-email-prohaska@zib.de> <7v3al35xmy.fsf@gitster.siamese.dyndns.org> <7vprnedzgc.fsf@gitster.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: git apply vs. renamed files index mismatch
+Date: Tue, 09 Sep 2008 07:45:19 -0700
+Message-ID: <7vtzcp8jk0.fsf@gitster.siamese.dyndns.org>
+References: <1220900995-11928-1-git-send-email-becky.bruce@freescale.com>
+ <1220900995-11928-2-git-send-email-becky.bruce@freescale.com>
+ <48C57A92.6060608@freescale.com>
+ <20080908212717.GA21338@oksana.dev.rtsoft.ru>
+ <7vej3ucf6y.fsf@gitster.siamese.dyndns.org>
+ <20080909100628.GA15298@oksana.dev.rtsoft.ru>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Steffen Prohaska <prohaska@zib.de>,
-	Johannes Sixt <johannes.sixt@telecom.at>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Sep 09 16:48:32 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: Scott Wood <scottwood@freescale.com>,
+	Becky Bruce <becky.bruce@freescale.com>,
+	linuxppc-dev@ozlabs.org, git@vger.kernel.org
+To: avorontsov@ru.mvista.com
+X-From: git-owner@vger.kernel.org Tue Sep 09 16:49:41 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Kd4Se-0007Ag-GN
-	for gcvg-git-2@gmane.org; Tue, 09 Sep 2008 16:44:57 +0200
+	id 1Kd4UG-0007nr-Ks
+	for gcvg-git-2@gmane.org; Tue, 09 Sep 2008 16:46:37 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753979AbYIIOnt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 9 Sep 2008 10:43:49 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751617AbYIIOnt
-	(ORCPT <rfc822;git-outgoing>); Tue, 9 Sep 2008 10:43:49 -0400
-Received: from mail.gmx.net ([213.165.64.20]:51569 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751442AbYIIOns (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 9 Sep 2008 10:43:48 -0400
-Received: (qmail invoked by alias); 09 Sep 2008 14:43:47 -0000
-Received: from pacific.mpi-cbg.de (EHLO [141.5.10.38]) [141.5.10.38]
-  by mail.gmx.net (mp045) with SMTP; 09 Sep 2008 16:43:47 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1+HxHFiHpaHmOTJVKvKDoHtBw+3r3jLmGI4HwLLad
-	J42k2OxJCFQCt6
-X-X-Sender: schindelin@pacific.mpi-cbg.de.mpi-cbg.de
-In-Reply-To: <7vprnedzgc.fsf@gitster.siamese.dyndns.org>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.6
+	id S1754216AbYIIOp3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 9 Sep 2008 10:45:29 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754012AbYIIOp3
+	(ORCPT <rfc822;git-outgoing>); Tue, 9 Sep 2008 10:45:29 -0400
+Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:53433 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751176AbYIIOp2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 9 Sep 2008 10:45:28 -0400
+Received: from localhost.localdomain (localhost [127.0.0.1])
+	by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id B6EA274503;
+	Tue,  9 Sep 2008 10:45:27 -0400 (EDT)
+Received: from pobox.com (ip68-225-240-211.oc.oc.cox.net [68.225.240.211])
+ (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
+ certificate requested) by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with
+ ESMTPSA id 8187074501; Tue,  9 Sep 2008 10:45:21 -0400 (EDT)
+In-Reply-To: <20080909100628.GA15298@oksana.dev.rtsoft.ru> (Anton Vorontsov's
+ message of "Tue, 9 Sep 2008 14:06:28 +0400")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: F16C1ACA-7E7D-11DD-8F6B-3113EBD4C077-77302942!a-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/95389>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/95390>
 
-Hi,
+Anton Vorontsov <avorontsov@ru.mvista.com> writes:
 
-On Mon, 8 Sep 2008, Junio C Hamano wrote:
+> Now consider the following patch (modified by hand: it should say
+> +foo, but I changed it to +bar).
+> ...
+> The "index ..." stuff says that there are no changes and it is
+> pure rename, but obviously there is a change.
 
-> Junio C Hamano <gitster@pobox.com> writes:
-> 
-> > Steffen Prohaska <prohaska@zib.de> writes:
-> >
-> >> Apologies for proposing such large changes that late in the release 
-> >> cycle. Maybe we want to postpone the series until 1.6.0.1 or even 
-> >> 1.6.1.
-> >
-> > Well, from the cursory look, it does not seem to be 1.6.0.1 material, 
-> > even though it is possible to fork a topic at 1.6.0 and use the 
-> > changes in 'next', then 'master', and eventually to 'maint' to produce 
-> > 1.6.0.X, if all of this hapapens before 1.6.1.
-> >
-> > I wouldn't mind at all if the binary distribution on Windows is based 
-> > on "git.git plus port specific patchset that will eventually be sent 
-> > upstream" like it used to be.  In fact it might even be preferrable, 
-> > as I won't be testing ports to that platform myself anyway.
-> 
-> If the depth difference between /usr/libexec/git-cat-file and /bin/git 
-> is the major source of this headache, I do not think it is unreasonable 
-> for the mingw git port to use "gitexecdir=$(bindir)" layout by default.  
-> After all, Windows users do not really care where bulk of things are, as 
-> long as they see one single clickable icon on the desktop, don't they?
+Ah, I see what you mean.  But in general, it is not obvious at all.
 
-I think the main point is that we could (finally!) adopt a saner default 
-on Unix: instead of hardcoding an absolute exec path, a relative would do.  
-So I'd like to see this supported for Linux...
+If you have the identical preimage (recorded on the LHS of the index line)
+or the patch reproduces the postimage in full (i.e. "create a new file"),
+you *could* notice.  It's an interesting idea from git person's point of
+view (i.e. "would be fun to implement"), but I doubt it would be useful in
+practice, because:
 
-Ciao,
-Dscho
+ (1) You often do not have the identically matching preimage;
+
+ (2) More importantly, it is not unusual for people to *edit* the patch in
+     their MUA (think of typofixes), after getting it out of git.
+
+ (3) Even more importantly, even if you notice there is some difference,
+     you cannot produce the postimage by only looking at the hash (this is
+     obvious -- otherwise by definition you broke SHA-1), so you cannot
+     tell *how* the patch was modified.
+
+What is of much more practical value to learn here in the context of this
+topic would be that after accepting such a patch that does not use -M (so
+that non-git people can use patch(1) to apply), a git person can still
+verify the result with "git show -M" to see what changes other than a pure
+rename was made by the patch.
