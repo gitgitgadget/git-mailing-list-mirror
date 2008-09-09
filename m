@@ -1,106 +1,81 @@
-From: "Steven Walter" <stevenrwalter@gmail.com>
-Subject: Re: Revert behavior [Was: Re: [ANNOUNCE] yap: Yet Another (Git) Porcelain]
-Date: Tue, 9 Sep 2008 13:29:10 -0400
-Message-ID: <e06498070809091029j1e450c43i276c5a69376da3ab@mail.gmail.com>
-References: <51419b2c0809090626p2196c590j7569fb471e470f0d@mail.gmail.com>
-	 <200809091538.13961.jnareb@gmail.com>
-	 <5d46db230809090937k44fc569ct7eda35b9ee86cb22@mail.gmail.com>
+From: Michael Dressel <MichaelTiloDressel@t-online.de>
+Subject: Re: [PATCH 3/3] add '%d' pretty format specifier to show
+ decoration
+Date: Tue, 9 Sep 2008 19:33:33 +0200 (CEST)
+Message-ID: <alpine.LNX.2.00.0809091932080.3862@pollux>
+References: <alpine.LNX.1.10.0809032036270.32295@pollux> <20080903191217.GA31195@coredump.intra.peff.net> <7v4p4xat3v.fsf@gitster.siamese.dyndns.org> <20080903203616.GB32223@coredump.intra.peff.net> <7vsksh9c9m.fsf@gitster.siamese.dyndns.org>
+ <48BF0A5A.2040502@lsrfire.ath.cx> <20080904035139.GA28123@sigill.intra.peff.net> <48C002FB.9010401@lsrfire.ath.cx> <48C055B3.3030204@lsrfire.ath.cx> <20080905001133.GA17463@coredump.intra.peff.net> <7v7i9r1lnm.fsf@gitster.siamese.dyndns.org>
+ <alpine.LNX.1.10.0809052035280.3868@pollux>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: "Jakub Narebski" <jnareb@gmail.com>,
-	"Elijah Newren" <newren@gmail.com>, git@vger.kernel.org
-To: "Govind Salinas" <govind@sophiasuchtig.com>
-X-From: git-owner@vger.kernel.org Tue Sep 09 19:30:45 2008
+Content-Type: MULTIPART/MIXED; BOUNDARY="0-751586682-1220981081=:3862"
+Cc: Jeff King <peff@peff.net>,
+	=?ISO-8859-15?Q?Ren=E9_Scharfe?= <rene.scharfe@lsrfire.ath.cx>,
+	git@vger.kernel.org, Johannes.Schindelin@gmx.de
+To: gitster@pobox.com
+X-From: git-owner@vger.kernel.org Tue Sep 09 19:35:21 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Kd732-000650-0R
-	for gcvg-git-2@gmane.org; Tue, 09 Sep 2008 19:30:40 +0200
+	id 1Kd77Y-0007SR-5r
+	for gcvg-git-2@gmane.org; Tue, 09 Sep 2008 19:35:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753223AbYIIR3N (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 9 Sep 2008 13:29:13 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753392AbYIIR3N
-	(ORCPT <rfc822;git-outgoing>); Tue, 9 Sep 2008 13:29:13 -0400
-Received: from mail-gx0-f16.google.com ([209.85.217.16]:38787 "EHLO
-	mail-gx0-f16.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751731AbYIIR3M (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 9 Sep 2008 13:29:12 -0400
-Received: by gxk9 with SMTP id 9so11166995gxk.13
-        for <git@vger.kernel.org>; Tue, 09 Sep 2008 10:29:10 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to
-         :subject:cc:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:references;
-        bh=iD+/f5Y/9B+2iVZ3tE9Av6XLkBeMCOLTNwtI7ErsQ+c=;
-        b=Qk5kN4U9ytXswp2aZAlCA7EVdulNKTEnGNDBoylnOP/5nBMz7NgcCmqdgQScmkVg+b
-         BJYXRIx73cFH5Xgu9P90tSa6MaLjS7znecGIXMczLH8Io4gRlYYfeF+CgPmWb0LS3mMq
-         7moHQOkHNWqPdm0TWkaR4mJZtAsHUPJnIrLoU=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
-         :content-type:content-transfer-encoding:content-disposition
-         :references;
-        b=Iu/5TSJBN6ukYToNWK8lO9ihyk2oo//UQ7epQfraDTTjtxATbAuez0vj8t6nYJ1U6u
-         VjZk6Qy3lyLxfUkOG27uVh/3tJprYoHTz7kKLYMRP5JXRyXbVmVzkT/zkpKTQLFS0465
-         LG0jSh+57seu02wacvEcpm8/24uebMAdfo8LU=
-Received: by 10.90.114.19 with SMTP id m19mr21311014agc.61.1220981350593;
-        Tue, 09 Sep 2008 10:29:10 -0700 (PDT)
-Received: by 10.90.25.17 with HTTP; Tue, 9 Sep 2008 10:29:10 -0700 (PDT)
-In-Reply-To: <5d46db230809090937k44fc569ct7eda35b9ee86cb22@mail.gmail.com>
-Content-Disposition: inline
+	id S1753735AbYIIReN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 9 Sep 2008 13:34:13 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753575AbYIIReN
+	(ORCPT <rfc822;git-outgoing>); Tue, 9 Sep 2008 13:34:13 -0400
+Received: from mailout02.t-online.de ([194.25.134.17]:35501 "EHLO
+	mailout02.t-online.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752654AbYIIReM (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 9 Sep 2008 13:34:12 -0400
+Received: from fwd29.aul.t-online.de 
+	by mailout02.sul.t-online.de with smtp 
+	id 1Kd75r-0003TE-02; Tue, 09 Sep 2008 19:33:35 +0200
+Received: from [192.168.2.100] (SP753QZZZhezXedgHJmYwzbzWEHeXQzGFzdULNhT86DCrvvG8TklsMTrqH3jzc+wXb@[84.163.237.7]) by fwd29.t-online.de
+	with esmtp id 1Kd75e-1UWxM00; Tue, 9 Sep 2008 19:33:22 +0200
+X-X-Sender: michael@pollux
+In-Reply-To: <alpine.LNX.1.10.0809052035280.3868@pollux>
+User-Agent: Alpine 2.00 (LNX 1167 2008-08-23)
+Content-ID: <alpine.LNX.2.00.0809091924570.3862@pollux>
+X-ID: SP753QZZZhezXedgHJmYwzbzWEHeXQzGFzdULNhT86DCrvvG8TklsMTrqH3jzc+wXb
+X-TOI-MSGID: 0726d5ed-7355-4920-867e-a25496e12e2f
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/95407>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/95408>
 
-On Tue, Sep 9, 2008 at 12:37 PM, Govind Salinas
-<govind@sophiasuchtig.com> wrote:
-> My take on this comes from my own personal experience with "revert"
-> commands, the fact that "how do i undo my working dir changes" is
-> the most common question I see on the list and that I have heard
-> others with the same complaint.
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
+
+--0-751586682-1220981081=:3862
+Content-Type: TEXT/PLAIN; CHARSET=ISO-8859-15; format=flowed
+Content-Transfer-Encoding: 8BIT
+Content-ID: <alpine.LNX.2.00.0809091924571.3862@pollux>
+
+On Fri, 5 Sep 2008, Michael Dressel wrote:
+
 >
-> I will concede that revert usually means both "discard current working
-> dir changes" and "undo a previous change" in different circumstances.
-> However, the number of times that "how do i discard my working
-> dir changes" comes up on the list leads me to believe that you get
-> the most out of using revert for this, since it is something that should
-> be familiar to a user and undoing a previous commit is more rare.
 >
-> Of course, this is where I would use a DWIM-ism.
-> "pyt revert -r commitish" would generate a reverse patch but
-> "pyt revert <paths>..." would checkout from HEAD.  "pyt revert" would
-> just "git reset --hard".
+> On Thu, 4 Sep 2008, Junio C Hamano wrote:
+>
+>>  Jeff King <peff@peff.net> writes:
+>> 
+>> >  On Thu, Sep 04, 2008 at 11:40:03PM +0200, René Scharfe wrote:
+>> > 
+>> > >  Michael Dressel implemented an initial version and chose the letter d,
+>> > >  Junio suggested to add a leading space and parentheses.
+>> > 
+>
+> Very nice.
+> Only that I did not do the very first implementation it was Jeff King.
 
-In yap, "revert" is used to discard working copy changes.  "revert -a"
-reverts all changes; just "revert" replies "nothing to do."  Having
-"pyt revert" = "git reset --hard" makes me queasy; especially in
-Dvorak it's all too easy to hit Enter when reaching for '/'; seems
-like a catastrophe waiting to happen.
+I made a mistake. My last comment is wrong, There is an even  earlier 
+patch from Johannes Schindelin. Second there is no contribution  left from 
+me. I'm merely a happy user of the new feature.
 
-I tend to dislike "DWIM" in interfaces, because the computer cannot
-read your mind, and can therefore never know with certainty what I
-mean.  Especially in cases where the computer thinks I intend to
-perform an irreversible operation, I want the computer to ask first.
-Not only that, but I think having one command that does 10 different
-things is as confusing as 10 commands that each do one thing.  My
-philosophy has been to identify frequent operations and give them
-sensible commands, rather than overloading a handful of operations or
-requiring multiple commands for common tasks.  My philosophy has also
-been not to wrap every command.  If a user were to ask me, "I want to
-bisect a changeset," my response would be "okay, use git bisect."  If
-the user wants such a specialized command as that, then they shouldn't
-have trouble with dealing directly with git for that operation.
--- 
--Steven Walter <stevenrwalter@gmail.com>
-"A human being should be able to change a diaper, plan an invasion,
-butcher a hog, conn a ship, design a building, write a sonnet, balance
-accounts, build a wall, set a bone, comfort the dying, take orders,
-give orders, cooperate, act alone, solve equations, analyze a new
-problem, pitch manure, program a computer, cook a tasty meal, fight
-efficiently, die gallantly. Specialization is for insects."
- -Robert Heinlein
+Cheers,
+Michael
+
+
+--0-751586682-1220981081=:3862--
