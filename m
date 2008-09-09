@@ -1,106 +1,90 @@
-From: "Stephen R. van den Berg" <srb@cuci.nl>
-Subject: [RFC] origin link for cherry-pick and revert
-Date: Tue, 9 Sep 2008 15:22:12 +0200
-Message-ID: <20080909132212.GA25476@cuci.nl>
+From: "Elijah Newren" <newren@gmail.com>
+Subject: Revert behavior [Was: Re: [ANNOUNCE] yap: Yet Another (Git) Porcelain]
+Date: Tue, 9 Sep 2008 07:26:43 -0600
+Message-ID: <51419b2c0809090626p2196c590j7569fb471e470f0d@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Sep 09 15:24:11 2008
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: "Steven Walter" <stevenrwalter@gmail.com>,
+	"Jakub Narebski" <jnareb@gmail.com>, git@vger.kernel.org
+To: "Govind Salinas" <govind@sophiasuchtig.com>
+X-From: git-owner@vger.kernel.org Tue Sep 09 15:28:05 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Kd3Bk-00052p-7r
-	for gcvg-git-2@gmane.org; Tue, 09 Sep 2008 15:23:24 +0200
+	id 1Kd3G4-0006j2-Rp
+	for gcvg-git-2@gmane.org; Tue, 09 Sep 2008 15:27:53 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754390AbYIINWP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 9 Sep 2008 09:22:15 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754243AbYIINWP
-	(ORCPT <rfc822;git-outgoing>); Tue, 9 Sep 2008 09:22:15 -0400
-Received: from aristoteles.cuci.nl ([212.125.128.18]:50455 "EHLO
-	aristoteles.cuci.nl" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754014AbYIINWO (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 9 Sep 2008 09:22:14 -0400
-Received: by aristoteles.cuci.nl (Postfix, from userid 500)
-	id 3D5685465; Tue,  9 Sep 2008 15:22:12 +0200 (CEST)
+	id S1753074AbYIIN0p (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 9 Sep 2008 09:26:45 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753091AbYIIN0p
+	(ORCPT <rfc822;git-outgoing>); Tue, 9 Sep 2008 09:26:45 -0400
+Received: from wf-out-1314.google.com ([209.85.200.172]:59149 "EHLO
+	wf-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752401AbYIIN0o (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 9 Sep 2008 09:26:44 -0400
+Received: by wf-out-1314.google.com with SMTP id 27so2025962wfd.4
+        for <git@vger.kernel.org>; Tue, 09 Sep 2008 06:26:43 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to
+         :subject:cc:mime-version:content-type:content-transfer-encoding
+         :content-disposition;
+        bh=5Hgqo6Xgo6tw5Ob5mgrc4+KhxDbxVTV2OQWOxzy1wYs=;
+        b=RLKpJIQDZUs+DFDNb5ybeVvrHrkGZf1i68pssLnDK9Coq0adVwpSTZLRLxP1HqD/cQ
+         2CEQQW/gbkW7OuUqXRXgCCM2ix/SyrWkdjrTOZpf+tqCh2ZoDGaBKLurygK0/q7jEgIQ
+         aNJHxnGF9asOwectfjqKIqxI/P5ALyHpRD0eI=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:to:subject:cc:mime-version:content-type
+         :content-transfer-encoding:content-disposition;
+        b=VE91eA40znYqpLxIi17wQhygKNKDVyMOPr/JOnhHBxf6fCjZzYjzh5K7Da69kg10cK
+         uLl3zirYPBSP44FdJUiF8pEX7EmKtFfvOwwPL45IMBanX9HZdI9uXA7yaQvQRZfwLFUk
+         4YLEHVEqphjHyFEbi6oXY3GUFEtJvedhkN3yY=
+Received: by 10.141.88.3 with SMTP id q3mr9735652rvl.46.1220966803462;
+        Tue, 09 Sep 2008 06:26:43 -0700 (PDT)
+Received: by 10.141.5.11 with HTTP; Tue, 9 Sep 2008 06:26:43 -0700 (PDT)
 Content-Disposition: inline
-User-Agent: Mutt/1.5.13 (2006-08-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/95381>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/95382>
 
-I've read and digested the old threads about prior and related links.
-Here's a new proposal which should be able to pass muster, if I read all
-the relevant suggestions and objections in the old threads:
+Hi,
 
-Consider an origin field as such:
+On Mon, Sep 8, 2008 at 10:25 PM, Govind Salinas
+<govind@sophiasuchtig.com> wrote:
+> On Mon, Sep 8, 2008 at 8:05 PM, Steven Walter <stevenrwalter@gmail.com> wrote:
 
-commit bbb896d8e10f736bfda8f587c0009c358c9a8599
-tree b83f28279a68439b9b044bccc313bbeaa3e973f5
-parent ed0f47a8c431f27e0bd131ea1cf9cabbd580745b
-origin d2b9dff8a08cc2037a7ba0463e90791f07cb49dd
-origin a1184d85e8752658f02746982822f43f32316803 2
-author Junio C Hamano <gitster@pobox.com> 1220132115 -0700
-committer Junio C Hamano <gitster@pobox.com> 1220153445 -0700
+> I had some very different ideas along the lines of reducing the number of
+> commands (where the commands do something similar just DWIM rather
+> than force me to remember or read docs on different commands), making
+> commands look similar to commands from other SCMs (revert should do
+> what it does for me in all the other SCMs that I have used, which is to
+> checkout the HEAD copy into the working directory)
 
-The definition of the origin field reads as follows:
+Your description of revert in various systems isn't quite accurate; it
+isn't necessarily HEAD, since most systems (at least bzr and hg) can
+also revert files to revisions earlier than HEAD.  In fact, questions
+of how to do that have come up several times on this list, so you
+wouldn't want to exclude that case.  Also, the revert behavior of git
+(minus perhaps the default auto-commit) comes in pretty handy too
+sometimes, and I can't easily find it in other systems (I suspect many
+just drop back to diff + patch to handle the case that git provides).
 
-- There can be an arbitrary number of origin fields per commit.
-  Typically there is going to be at most one origin field per commit.
+I don't see why the revert command can't support all these cases that
+users want (though you'd need to add flags like --since and --in to
+differentiate between reverting the changes since a given commit or in
+a given commit).  Doing so has the added advantage that you can
+avoid/deprecate/hide/whatever the second forms of the checkout and
+reset commands of git, which have long caused confusion for users in
+understanding the differences between them and the revert command.
 
-- At the time of creation, the origin field contains a hash B which refers
-  to a reachable commit pair (B, B~1).  If B has multiple parents and the pair
-  being referred to needs to be e.g. (B, B~2), then the hash is followed by
-  a space and followed by an integer (base10, two in this case),
-  which designates the proper parentnr of B (see: mainline in git
-  cherry-pick/revert).
+Elijah
 
-- In an existing repository gc/prune shall not delete commits being
-  referred to by origin links.
-
-- During fetch/push/pull the full commit including the origin fields is
-  transmitted, however, the objects the origin links are referring to
-  are not (unless they are being transmitted because of other reasons).
-
-- When fetching/pulling it is optionally possible to tell git to
-  actually transmit objects referred to by origin links even if it would
-  otherwise not have done so.
-
-- git cherry-pick/revert allow for the creation of origin links only if
-  the object they are referring to is presently reachable.
-
-- git fsck will traverse origin links, but will stay silent if the
-  object an origin link points to is unreachable (kind of like a shallow
-  repository).
-
-- git rev-list --topo-order will take origin links into account to
-  ensure proper ordering.
-
-- gitk allows for (e.g.) dotted lines to show the origin links.
-
-- git log would show something like:
-
-  commit bbb896d8e10f736bfda8f587c0009c358c9a8599
-  Origin: d2b9dff..53d1589
-  Origin: a1184d8..e596cdd
-  Author: Junio C Hamano <gitster@pobox.com>
-  Date:   Sat Aug 30 14:35:15 2008 -0700
-
-  Note that for easy viewing: git diff d2b9dff..53d1589
-  will show the exact diff the origin link is referring to.
-
-- git log --graph will show a dotted line of somesort just like gitk.
-
-- git blame will follow and use the origin link if the object exists.
-
-- git merge disregards the whole origin field entirely, just like all
-  the rest of git-core.
-
-Anything I missed?
--- 
-Sincerely,
-           Stephen R. van den Berg.
-
-"Be spontaneous!"
+P.S. Yes, EasyGit's revert was designed this way.  Don't look to eg
+for implementation guidance, though -- I botched it, and there's a few
+bugs in it due to my mistakes.  I'll be fixing it...when I get a
+little bit of time.
