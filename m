@@ -1,169 +1,236 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH 4/4] push: receiver end advertises refs from alternate
- repositories
-Date: Tue,  9 Sep 2008 01:27:10 -0700
-Message-ID: <1220948830-3275-5-git-send-email-gitster@pobox.com>
+Subject: [PATCH 3/4] push: prepare sender to receive extended ref information
+ from the receiver
+Date: Tue,  9 Sep 2008 01:27:09 -0700
+Message-ID: <1220948830-3275-4-git-send-email-gitster@pobox.com>
 References: <1220948830-3275-1-git-send-email-gitster@pobox.com>
  <1220948830-3275-2-git-send-email-gitster@pobox.com>
  <1220948830-3275-3-git-send-email-gitster@pobox.com>
- <1220948830-3275-4-git-send-email-gitster@pobox.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Sep 09 10:28:43 2008
+X-From: git-owner@vger.kernel.org Tue Sep 09 10:28:44 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KcyaY-0005P5-2r
-	for gcvg-git-2@gmane.org; Tue, 09 Sep 2008 10:28:42 +0200
+	id 1KcyaX-0005P5-Ap
+	for gcvg-git-2@gmane.org; Tue, 09 Sep 2008 10:28:41 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754075AbYIII13 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 9 Sep 2008 04:27:29 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753531AbYIII13
-	(ORCPT <rfc822;git-outgoing>); Tue, 9 Sep 2008 04:27:29 -0400
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:54182 "EHLO
+	id S1754635AbYIII10 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 9 Sep 2008 04:27:26 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754313AbYIII10
+	(ORCPT <rfc822;git-outgoing>); Tue, 9 Sep 2008 04:27:26 -0400
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:54177 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754075AbYIII12 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 9 Sep 2008 04:27:28 -0400
+	with ESMTP id S1754654AbYIII1X (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 9 Sep 2008 04:27:23 -0400
 Received: from localhost.localdomain (localhost [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id E75755F890
-	for <git@vger.kernel.org>; Tue,  9 Sep 2008 04:27:26 -0400 (EDT)
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 287BD5F88E
+	for <git@vger.kernel.org>; Tue,  9 Sep 2008 04:27:23 -0400 (EDT)
 Received: from pobox.com (ip68-225-240-211.oc.oc.cox.net [68.225.240.211])
  (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
  certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
- ESMTPSA id 1370F5F88F for <git@vger.kernel.org>; Tue,  9 Sep 2008 04:27:25
+ ESMTPSA id 2C23C5F88D for <git@vger.kernel.org>; Tue,  9 Sep 2008 04:27:22
  -0400 (EDT)
 X-Mailer: git-send-email 1.6.0.1.415.g7bb82
-In-Reply-To: <1220948830-3275-4-git-send-email-gitster@pobox.com>
-X-Pobox-Relay-ID: 229BF96A-7E49-11DD-8AAA-D0CFFE4BC1C1-77302942!a-sasl-fastnet.pobox.com
+In-Reply-To: <1220948830-3275-3-git-send-email-gitster@pobox.com>
+X-Pobox-Relay-ID: 205B2C20-7E49-11DD-9BF9-D0CFFE4BC1C1-77302942!a-sasl-fastnet.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/95353>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/95354>
 
-Earlier, when pushing into a repository that borrows from alternate object
-stores, we followed the longstanding design decision not to trust refs in
-the alternate repository that houses the object store we are borrowing
-from.  If your public repository is borrowing from Linus's public
-repository, you pushed into it long time ago, and now when you try to push
-your updated history that is in sync with more recent history from Linus,
-you will end up sending not just your own development, but also the
-changes you acquired through Linus's tree, even though the objects needed
-for the latter already exists at the receiving end.  This is because the
-receiving end does not advertise that the objects only reachable from the
-borrowed repository (i.e. Linus's) are already available there.
+"git push" enhancement allows the receiving end to report not only its own
+refs but refs in repositories it borrows from via the alternate object
+store mechanism.  By telling the sender that objects reachable from these
+extra refs are already complete in the receiving end, the number of
+objects that need to be transfered can be cut down.
 
-This solves the issue by making the receiving end advertise refs from
-borrowed repositories.  They are not sent with their true names but with a
-phoney name ".have" to make sure that the old senders will safely ignore
-them (otherwise, the old senders will misbehave, trying to push matching
-refs, and mirror push that deletes refs that only exist at the receiving
-end).
+These entries are sent over the wire with string ".have", instead of the
+actual names of the refs.  This string was chosen so that they are ignored
+by older programs at the sending end.  If we sent some random but valid
+looking refnames for these entries, "matching refs" rule (triggered when
+running "git push" without explicit refspecs, where the sender learns what
+refs the receiver has, and updates only the ones with the names of the
+refs the sender also has) and "delete missing" rule (triggered when "git
+push --mirror" is used, where the sender tells the receiver to delete the
+refs it itself does not have) would try to update/delete them, which is
+not what we want.
+
+This prepares the send-pack (and "push" that runs native protocol) to
+accept extended existing ref information and make use of it.  The ".have"
+entries are excluded from ref matching rules, and are exempt from deletion
+rule while pushing with --mirror option, but are still used for pack
+generation purposes by providing more "bottom" range commits.
 
 Signed-off-by: Junio C Hamano <gitster@pobox.com>
 ---
- builtin-receive-pack.c |   38 ++++++++++++++++++++++++++++++++++++++
- cache.h                |    2 ++
- sha1_file.c            |   10 ++++++++++
- 3 files changed, 50 insertions(+), 0 deletions(-)
+ builtin-fetch-pack.c |    2 +-
+ builtin-send-pack.c  |   21 ++++++++++++++++-----
+ cache.h              |    6 +++++-
+ connect.c            |   17 ++++++++++++++++-
+ transport.c          |    4 ++--
+ 5 files changed, 40 insertions(+), 10 deletions(-)
 
-diff --git a/builtin-receive-pack.c b/builtin-receive-pack.c
-index 6d6027e..45e3cd9 100644
---- a/builtin-receive-pack.c
-+++ b/builtin-receive-pack.c
-@@ -6,6 +6,8 @@
- #include "exec_cmd.h"
- #include "commit.h"
- #include "object.h"
-+#include "remote.h"
-+#include "transport.h"
+diff --git a/builtin-fetch-pack.c b/builtin-fetch-pack.c
+index 459c6f0..e0c2561 100644
+--- a/builtin-fetch-pack.c
++++ b/builtin-fetch-pack.c
+@@ -735,7 +735,7 @@ int cmd_fetch_pack(int argc, const char **argv, const char *prefix)
+ 	conn = git_connect(fd, (char *)dest, args.uploadpack,
+ 			   args.verbose ? CONNECT_VERBOSE : 0);
+ 	if (conn) {
+-		get_remote_heads(fd[0], &ref, 0, NULL, 0);
++		get_remote_heads(fd[0], &ref, 0, NULL, 0, NULL);
  
- static const char receive_pack_usage[] = "git-receive-pack <git-dir>";
- 
-@@ -462,6 +464,40 @@ static int delete_only(struct command *cmd)
- 	return 1;
- }
- 
-+static int add_refs_from_alternate(struct alternate_object_database *e, void *unused)
-+{
-+	char *other = xstrdup(make_absolute_path(e->base));
-+	size_t len = strlen(other);
-+	struct remote *remote;
-+	struct transport *transport;
-+	const struct ref *extra;
-+
-+	while (other[len-1] == '/')
-+		other[--len] = '\0';
-+	if (len < 8 || memcmp(other + len - 8, "/objects", 8))
-+		return 0;
-+	/* Is this a git repository with refs? */
-+	memcpy(other + len - 8, "/refs", 6);
-+	if (!is_directory(other))
-+		return 0;
-+	other[len - 8] = '\0';
-+	remote = remote_get(other);
-+	transport = transport_get(remote, other);
-+	for (extra = transport_get_remote_refs(transport);
-+	     extra;
-+	     extra = extra->next) {
-+		add_extra_ref(".have", extra->old_sha1, 0);
-+	}
-+	transport_disconnect(transport);
-+	free(other);
-+	return 0;
-+}
-+
-+static void add_alternate_refs(void)
-+{
-+	foreach_alt_odb(add_refs_from_alternate, NULL);
-+}
-+
- int cmd_receive_pack(int argc, const char **argv, const char *prefix)
+ 		ref = fetch_pack(&args, fd, conn, ref, dest, nr_heads, heads, NULL);
+ 		close(fd[0]);
+diff --git a/builtin-send-pack.c b/builtin-send-pack.c
+index 7588d22..b3c22f6 100644
+--- a/builtin-send-pack.c
++++ b/builtin-send-pack.c
+@@ -18,7 +18,7 @@ static struct send_pack_args args = {
+ /*
+  * Make a pack stream and spit it out into file descriptor fd
+  */
+-static int pack_objects(int fd, struct ref *refs)
++static int pack_objects(int fd, struct ref *refs, struct extra_have_objects *extra)
  {
- 	int i;
-@@ -497,7 +533,9 @@ int cmd_receive_pack(int argc, const char **argv, const char *prefix)
- 	else if (0 <= receive_unpack_limit)
- 		unpack_limit = receive_unpack_limit;
+ 	/*
+ 	 * The child becomes pack-objects --revs; we feed
+@@ -34,6 +34,8 @@ static int pack_objects(int fd, struct ref *refs)
+ 		NULL,
+ 	};
+ 	struct child_process po;
++	int i;
++	char buf[42];
  
-+	add_alternate_refs();
- 	write_head_info();
-+	clear_extra_refs();
+ 	if (args.use_thin_pack)
+ 		argv[4] = "--thin";
+@@ -49,9 +51,15 @@ static int pack_objects(int fd, struct ref *refs)
+ 	 * We feed the pack-objects we just spawned with revision
+ 	 * parameters by writing to the pipe.
+ 	 */
+-	while (refs) {
+-		char buf[42];
++	for (i = 0; i < extra->nr; i++) {
++		memcpy(buf + 1, sha1_to_hex(&extra->array[i][0]), 40);
++		buf[0] = '^';
++		buf[41] = '\n';
++		if (!write_or_whine(po.in, buf, 42, "send-pack: send refs"))
++			break;
++	}
  
- 	/* EOF */
- 	packet_flush(1);
++	while (refs) {
+ 		if (!is_null_sha1(refs->old_sha1) &&
+ 		    has_sha1_file(refs->old_sha1)) {
+ 			memcpy(buf + 1, sha1_to_hex(refs->old_sha1), 40);
+@@ -381,14 +389,17 @@ static int do_send_pack(int in, int out, struct remote *remote, const char *dest
+ 	int expect_status_report = 0;
+ 	int flags = MATCH_REFS_NONE;
+ 	int ret;
++	struct extra_have_objects extra_have;
+ 
++	memset(&extra_have, 0, sizeof(extra_have));
+ 	if (args.send_all)
+ 		flags |= MATCH_REFS_ALL;
+ 	if (args.send_mirror)
+ 		flags |= MATCH_REFS_MIRROR;
+ 
+ 	/* No funny business with the matcher */
+-	remote_tail = get_remote_heads(in, &remote_refs, 0, NULL, REF_NORMAL);
++	remote_tail = get_remote_heads(in, &remote_refs, 0, NULL, REF_NORMAL,
++				       &extra_have);
+ 	get_local_heads();
+ 
+ 	/* Does the other end support the reporting? */
+@@ -496,7 +507,7 @@ static int do_send_pack(int in, int out, struct remote *remote, const char *dest
+ 
+ 	packet_flush(out);
+ 	if (new_refs && !args.dry_run) {
+-		if (pack_objects(out, remote_refs) < 0)
++		if (pack_objects(out, remote_refs, &extra_have) < 0)
+ 			return -1;
+ 	}
+ 	else
 diff --git a/cache.h b/cache.h
-index 98a7421..99af83a 100644
+index ce1f630..98a7421 100644
 --- a/cache.h
 +++ b/cache.h
-@@ -641,6 +641,8 @@ extern struct alternate_object_database {
- } *alt_odb_list;
- extern void prepare_alt_odb(void);
- extern void add_to_alternates_file(const char *reference);
-+typedef int alt_odb_fn(struct alternate_object_database *, void *);
-+extern void foreach_alt_odb(alt_odb_fn, void*);
+@@ -709,7 +709,11 @@ extern struct child_process *git_connect(int fd[2], const char *url, const char
+ extern int finish_connect(struct child_process *conn);
+ extern int path_match(const char *path, int nr, char **match);
+ extern int get_ack(int fd, unsigned char *result_sha1);
+-extern struct ref **get_remote_heads(int in, struct ref **list, int nr_match, char **match, unsigned int flags);
++struct extra_have_objects {
++	int nr, alloc;
++	unsigned char (*array)[20];
++};
++extern struct ref **get_remote_heads(int in, struct ref **list, int nr_match, char **match, unsigned int flags, struct extra_have_objects *);
+ extern int server_supports(const char *feature);
  
- struct pack_window {
- 	struct pack_window *next;
-diff --git a/sha1_file.c b/sha1_file.c
-index ae550e8..12be17b 100644
---- a/sha1_file.c
-+++ b/sha1_file.c
-@@ -393,6 +393,16 @@ void add_to_alternates_file(const char *reference)
- 		link_alt_odb_entries(alt, alt + strlen(alt), '\n', NULL, 0);
+ extern struct packed_git *parse_pack_index(unsigned char *sha1);
+diff --git a/connect.c b/connect.c
+index dd96f8e..071e355 100644
+--- a/connect.c
++++ b/connect.c
+@@ -41,12 +41,21 @@ int check_ref_type(const struct ref *ref, int flags)
+ 	return check_ref(ref->name, strlen(ref->name), flags);
  }
  
-+void foreach_alt_odb(alt_odb_fn fn, void *cb)
++static void add_extra_have(struct extra_have_objects *extra, unsigned char *sha1)
 +{
-+	struct alternate_object_database *ent;
-+
-+	prepare_alt_odb();
-+	for (ent = alt_odb_list; ent; ent = ent->next)
-+		if (fn(ent, cb))
-+			return;
++	if (extra->alloc <= extra->nr)
++		ALLOC_GROW(extra->array, extra->nr + 1, extra->alloc);
++	hashcpy(&(extra->array[extra->nr][0]), sha1);
++	extra->nr++;
 +}
 +
- void prepare_alt_odb(void)
+ /*
+  * Read all the refs from the other end
+  */
+ struct ref **get_remote_heads(int in, struct ref **list,
+ 			      int nr_match, char **match,
+-			      unsigned int flags)
++			      unsigned int flags,
++			      struct extra_have_objects *extra_have)
  {
- 	const char *alt;
+ 	*list = NULL;
+ 	for (;;) {
+@@ -72,6 +81,12 @@ struct ref **get_remote_heads(int in, struct ref **list,
+ 			server_capabilities = xstrdup(name + name_len + 1);
+ 		}
+ 
++		if (extra_have &&
++		    name_len == 5 && !memcmp(".have", name, 5)) {
++			add_extra_have(extra_have, old_sha1);
++			continue;
++		}
++
+ 		if (!check_ref(name, name_len, flags))
+ 			continue;
+ 		if (nr_match && !path_match(name, nr_match, match))
+diff --git a/transport.c b/transport.c
+index 71433d9..f7db5d9 100644
+--- a/transport.c
++++ b/transport.c
+@@ -619,7 +619,7 @@ static struct ref *get_refs_via_connect(struct transport *transport)
+ 	struct ref *refs;
+ 
+ 	connect_setup(transport);
+-	get_remote_heads(data->fd[0], &refs, 0, NULL, 0);
++	get_remote_heads(data->fd[0], &refs, 0, NULL, 0, NULL);
+ 
+ 	return refs;
+ }
+@@ -652,7 +652,7 @@ static int fetch_refs_via_pack(struct transport *transport,
+ 
+ 	if (!data->conn) {
+ 		connect_setup(transport);
+-		get_remote_heads(data->fd[0], &refs_tmp, 0, NULL, 0);
++		get_remote_heads(data->fd[0], &refs_tmp, 0, NULL, 0, NULL);
+ 	}
+ 
+ 	refs = fetch_pack(&args, data->fd, data->conn,
 -- 
 1.6.0.1.415.g7bb82
