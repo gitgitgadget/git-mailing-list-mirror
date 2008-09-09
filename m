@@ -1,90 +1,95 @@
-From: "Elijah Newren" <newren@gmail.com>
-Subject: Revert behavior [Was: Re: [ANNOUNCE] yap: Yet Another (Git) Porcelain]
-Date: Tue, 9 Sep 2008 07:26:43 -0600
-Message-ID: <51419b2c0809090626p2196c590j7569fb471e470f0d@mail.gmail.com>
+From: Paolo Bonzini <bonzini@gnu.org>
+Subject: Re: [RFC] origin link for cherry-pick and revert
+Date: Tue, 09 Sep 2008 15:38:15 +0200
+Message-ID: <48C67C47.6000107@gnu.org>
+References: <20080909132212.GA25476@cuci.nl>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-Cc: "Steven Walter" <stevenrwalter@gmail.com>,
-	"Jakub Narebski" <jnareb@gmail.com>, git@vger.kernel.org
-To: "Govind Salinas" <govind@sophiasuchtig.com>
-X-From: git-owner@vger.kernel.org Tue Sep 09 15:28:05 2008
+Cc: git@vger.kernel.org
+To: "Stephen R. van den Berg" <srb@cuci.nl>
+X-From: git-owner@vger.kernel.org Tue Sep 09 15:39:40 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Kd3G4-0006j2-Rp
-	for gcvg-git-2@gmane.org; Tue, 09 Sep 2008 15:27:53 +0200
+	id 1Kd3RL-0001yQ-97
+	for gcvg-git-2@gmane.org; Tue, 09 Sep 2008 15:39:31 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753074AbYIIN0p (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 9 Sep 2008 09:26:45 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753091AbYIIN0p
-	(ORCPT <rfc822;git-outgoing>); Tue, 9 Sep 2008 09:26:45 -0400
-Received: from wf-out-1314.google.com ([209.85.200.172]:59149 "EHLO
-	wf-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752401AbYIIN0o (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 9 Sep 2008 09:26:44 -0400
-Received: by wf-out-1314.google.com with SMTP id 27so2025962wfd.4
-        for <git@vger.kernel.org>; Tue, 09 Sep 2008 06:26:43 -0700 (PDT)
+	id S1753787AbYIINiW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 9 Sep 2008 09:38:22 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753649AbYIINiW
+	(ORCPT <rfc822;git-outgoing>); Tue, 9 Sep 2008 09:38:22 -0400
+Received: from mail-gx0-f16.google.com ([209.85.217.16]:55813 "EHLO
+	mail-gx0-f16.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752134AbYIINiU (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 9 Sep 2008 09:38:20 -0400
+Received: by gxk9 with SMTP id 9so10398582gxk.13
+        for <git@vger.kernel.org>; Tue, 09 Sep 2008 06:38:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to
-         :subject:cc:mime-version:content-type:content-transfer-encoding
-         :content-disposition;
-        bh=5Hgqo6Xgo6tw5Ob5mgrc4+KhxDbxVTV2OQWOxzy1wYs=;
-        b=RLKpJIQDZUs+DFDNb5ybeVvrHrkGZf1i68pssLnDK9Coq0adVwpSTZLRLxP1HqD/cQ
-         2CEQQW/gbkW7OuUqXRXgCCM2ix/SyrWkdjrTOZpf+tqCh2ZoDGaBKLurygK0/q7jEgIQ
-         aNJHxnGF9asOwectfjqKIqxI/P5ALyHpRD0eI=
+        h=domainkey-signature:received:received:message-id:date:from
+         :user-agent:mime-version:to:cc:subject:references:in-reply-to
+         :content-type:content-transfer-encoding:sender;
+        bh=2OpsURgTUSJZ7sGdc7mQ5ZjcSzEAn8hbOc7AV1bzTcw=;
+        b=C1cY3dOYS2O/WqDICjbCAvweljzNJRz2oZpnUcYxg1I2m6RbpkieZ/V98Bpbi+x+mX
+         vqsendLSsJ0x7TMquCJSjI8bQ9USPCqyqpNWgWKgKZj4jkHn1lXCkg6Ul+CtwhNtB5dC
+         IFawLWnQ6r3kmK+H3oXTkNWTs9lxQq7dD9Ybk=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:cc:mime-version:content-type
-         :content-transfer-encoding:content-disposition;
-        b=VE91eA40znYqpLxIi17wQhygKNKDVyMOPr/JOnhHBxf6fCjZzYjzh5K7Da69kg10cK
-         uLl3zirYPBSP44FdJUiF8pEX7EmKtFfvOwwPL45IMBanX9HZdI9uXA7yaQvQRZfwLFUk
-         4YLEHVEqphjHyFEbi6oXY3GUFEtJvedhkN3yY=
-Received: by 10.141.88.3 with SMTP id q3mr9735652rvl.46.1220966803462;
-        Tue, 09 Sep 2008 06:26:43 -0700 (PDT)
-Received: by 10.141.5.11 with HTTP; Tue, 9 Sep 2008 06:26:43 -0700 (PDT)
-Content-Disposition: inline
+        h=message-id:date:from:user-agent:mime-version:to:cc:subject
+         :references:in-reply-to:content-type:content-transfer-encoding
+         :sender;
+        b=kz10gyU9tN0PG+uPrtivhseiKwEYpniyrL0FfyH1rPPopTrdBy2yh1pyat+bJl9sZ0
+         IPJuG1yynIrc2OG2p7vMwaKawgnls3yDEmiCDWeXgijijyVpwIh8v6KfU2CnSrsNTGOI
+         iAboe0LTwtuz9efxBU9f7DgVx4wPJNxy9350k=
+Received: by 10.103.173.5 with SMTP id a5mr11223074mup.117.1220967498214;
+        Tue, 09 Sep 2008 06:38:18 -0700 (PDT)
+Received: from scientist-2.local ( [195.176.178.209])
+        by mx.google.com with ESMTPS id u9sm24860423muf.9.2008.09.09.06.38.16
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Tue, 09 Sep 2008 06:38:17 -0700 (PDT)
+User-Agent: Thunderbird 2.0.0.16 (Macintosh/20080707)
+In-Reply-To: <20080909132212.GA25476@cuci.nl>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/95382>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/95383>
 
-Hi,
+> - At the time of creation, the origin field contains a hash B which refers
+>   to a reachable commit pair (B, B~1).  If B has multiple parents and the pair
+>   being referred to needs to be e.g. (B, B~2), then the hash is followed by
+>   a space and followed by an integer (base10, two in this case),
+>   which designates the proper parentnr of B (see: mainline in git
+>   cherry-pick/revert).
 
-On Mon, Sep 8, 2008 at 10:25 PM, Govind Salinas
-<govind@sophiasuchtig.com> wrote:
-> On Mon, Sep 8, 2008 at 8:05 PM, Steven Walter <stevenrwalter@gmail.com> wrote:
+What about just storing *two* hashes?  This way cherry-pick can store
+B~1..B and revert can store B..B~1.  The two cases can be distinguished
+by checking which commit is an ancestor of which.
 
-> I had some very different ideas along the lines of reducing the number of
-> commands (where the commands do something similar just DWIM rather
-> than force me to remember or read docs on different commands), making
-> commands look similar to commands from other SCMs (revert should do
-> what it does for me in all the other SCMs that I have used, which is to
-> checkout the HEAD copy into the working directory)
+> - git cherry-pick/revert allow for the creation of origin links only if
+>   the object they are referring to is presently reachable.
 
-Your description of revert in various systems isn't quite accurate; it
-isn't necessarily HEAD, since most systems (at least bzr and hg) can
-also revert files to revisions earlier than HEAD.  In fact, questions
-of how to do that have come up several times on this list, so you
-wouldn't want to exclude that case.  Also, the revert behavior of git
-(minus perhaps the default auto-commit) comes in pretty handy too
-sometimes, and I can't easily find it in other systems (I suspect many
-just drop back to diff + patch to handle the case that git provides).
+Will cherry-pick -x create origin links?  Also, does the origin link
+propagate through multiple cherry picks?  If not, how can the origin
+object not be reachable?
 
-I don't see why the revert command can't support all these cases that
-users want (though you'd need to add flags like --since and --in to
-differentiate between reverting the changes since a given commit or in
-a given commit).  Doing so has the added advantage that you can
-avoid/deprecate/hide/whatever the second forms of the checkout and
-reset commands of git, which have long caused confusion for users in
-understanding the differences between them and the revert command.
+> [snip good stuff]
 
-Elijah
+git cherry will use origin links to mark a commit as present, and will
+only use patch-ids for commits that have no origin links.  Bonus points
+for an extra command-line/configuration option to only use origin links:
 
-P.S. Yes, EasyGit's revert was designed this way.  Don't look to eg
-for implementation guidance, though -- I botched it, and there's a few
-bugs in it due to my mistakes.  I'll be fixing it...when I get a
-little bit of time.
+  --source=default	  << default: get setting from core.cherrysource
+  --source=patch-id
+  --source=origin
+  --source=origin,patch-id
+
+  core.cherrysource = patch-id
+  core.cherrysource = origin
+  core.cherrysource = origin,patch-id
+
+Thanks!
+
+Paolo
