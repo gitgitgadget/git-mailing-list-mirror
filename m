@@ -1,78 +1,119 @@
-From: SungHyun Nam <namsh@posdata.co.kr>
-Subject: Re: using merge subtree and move it..
-Date: Tue, 09 Sep 2008 18:59:45 +0900
-Message-ID: <48C64911.4020202@posdata.co.kr>
-References: <ga4fho$5ib$1@ger.gmane.org> <48C61E1F.6000907@viscovery.net>
+From: Anton Vorontsov <avorontsov@ru.mvista.com>
+Subject: Re: git apply vs. renamed files index mismatch
+Date: Tue, 9 Sep 2008 14:06:28 +0400
+Message-ID: <20080909100628.GA15298@oksana.dev.rtsoft.ru>
+References: <1220900995-11928-1-git-send-email-becky.bruce@freescale.com> <1220900995-11928-2-git-send-email-becky.bruce@freescale.com> <48C57A92.6060608@freescale.com> <20080908212717.GA21338@oksana.dev.rtsoft.ru> <7vej3ucf6y.fsf@gitster.siamese.dyndns.org>
+Reply-To: avorontsov@ru.mvista.com
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Sep 09 12:01:24 2008
+Content-Type: text/plain; charset=windows-1251
+Cc: Scott Wood <scottwood@freescale.com>,
+	Becky Bruce <becky.bruce@freescale.com>,
+	linuxppc-dev@ozlabs.org, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Sep 09 12:07:43 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Kd027-0004YJ-MZ
-	for gcvg-git-2@gmane.org; Tue, 09 Sep 2008 12:01:16 +0200
+	id 1Kd08K-00069N-69
+	for gcvg-git-2@gmane.org; Tue, 09 Sep 2008 12:07:40 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751842AbYIIKAI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 9 Sep 2008 06:00:08 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751676AbYIIKAH
-	(ORCPT <rfc822;git-outgoing>); Tue, 9 Sep 2008 06:00:07 -0400
-Received: from main.gmane.org ([80.91.229.2]:56323 "EHLO ciao.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751571AbYIIKAG (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 9 Sep 2008 06:00:06 -0400
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1Kd00v-0004TI-4I
-	for git@vger.kernel.org; Tue, 09 Sep 2008 10:00:02 +0000
-Received: from 203.238.196.197 ([203.238.196.197])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Tue, 09 Sep 2008 10:00:01 +0000
-Received: from namsh by 203.238.196.197 with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Tue, 09 Sep 2008 10:00:01 +0000
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@ger.gmane.org
-X-Gmane-NNTP-Posting-Host: 203.238.196.197
-User-Agent: Thunderbird 2.0.0.16 (Windows/20080708)
-In-Reply-To: <48C61E1F.6000907@viscovery.net>
-X-Stationery: 0.4.10
+	id S1752305AbYIIKGb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 9 Sep 2008 06:06:31 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752238AbYIIKGb
+	(ORCPT <rfc822;git-outgoing>); Tue, 9 Sep 2008 06:06:31 -0400
+Received: from rtsoft3.corbina.net ([85.21.88.6]:6791 "EHLO
+	buildserver.ru.mvista.com" rhost-flags-OK-FAIL-OK-FAIL)
+	by vger.kernel.org with ESMTP id S1752305AbYIIKGa (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 9 Sep 2008 06:06:30 -0400
+Received: from localhost (unknown [10.150.0.9])
+	by buildserver.ru.mvista.com (Postfix) with ESMTP
+	id 67FDB8821; Tue,  9 Sep 2008 15:06:28 +0500 (SAMST)
+Content-Disposition: inline
+In-Reply-To: <7vej3ucf6y.fsf@gitster.siamese.dyndns.org>
+User-Agent: Mutt/1.5.18 (2008-05-17)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/95366>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/95367>
 
-Johannes Sixt wrote:
-> SungHyun Nam schrieb:
->> I used the subtree merge strategy. And then I moved the directory.
->> Now, can I use subtree merge for that new directory?
+On Mon, Sep 08, 2008 at 05:53:41PM -0700, Junio C Hamano wrote:
+> Anton Vorontsov <avorontsov@ru.mvista.com> writes:
 > 
-> Sure. It should work just fine.
+> >>>  3 files changed, 201 insertions(+), 201 deletions(-)
+> >>>  create mode 100644 arch/powerpc/kernel/dma.c
+> >>>  delete mode 100644 arch/powerpc/kernel/dma_64.c
+> >>
+> >> Passing -M to git format-patch makes it much easier
+> >
+> > I always thought that posting "-M" patches to the public lists is
+> > discouraged since it is quite difficult to apply them via patch(1).
+> > Also think of non-git users...
 > 
->> $ git pull -s subtree klib master
->> remote: Counting objects: 5, done.
->> remote: Compressing objects: 100% (2/2), done.
->> remote: Total 3 (delta 1), reused 0 (delta 0)
->> Unpacking objects: 100% (3/3), done.
->> From ssh://192.168.10.10/git/libs/klib
->>  * branch            master     -> FETCH_HEAD
->> error: Entry 'klib/klib.c' not uptodate. Cannot merge.
+> My understanding has been that it is encouraged on the kernel mailing
+> list, because the rename format is far easier to review by showing the
+> differences that matter to reviewers, than showing a big chunk of text
+> deleted and another big chunk of text that is similar added elsewhere.
 > 
-> Your problem is not related to subtree merge. Make sure you have no
-> changes to commit before you merge.
+> I won't comment on this any further; the use of it is strictly a list and
+> community policy issue.
+> 
+> > This is still possible by comparing the hashes:
+> > ...
+> > That is, if hashes match then it was pure rename.
+> >
+> > Though, too bad git {apply,am} does not produce any warnings if there
+> > are any hidden changes...
+> 
+> But I _do_ want to know what you mean by this comment.  Your statement
+> makes it sounds as if apply/am happily and silently accept "hidden
+> changes" and it is a bad thing.
+> 
+> Now what do you exactly mean by "any hidden changes"?  Do you mean "the
+> sender did not use renaming format, the patch you fed was a one that
+> removes a huge chunk of text from one file, and adds a similarly huge
+> chunk of text to another file.  The changes to these files looked similar
+> but was not quite the same"?  It is all there for you to review, and
+> especially if you prefer non-renaming format, then that is what you get.
 
-It seems I forgot to commit after running 'git mv lib/klib klib'.
-Oops! :( I'm not sure because the problem gone after I did some
-stupid things.  The 'some stupid things' include 'git rm -rf klib;
-...; git remote rm klib and re-doing using-merge-subtree.....'.
+As I said, "index .." lines that git puts into patches are useful to see
+if there any changes has been made to a renamed file. So usually I don't
+have to look through the whole patch to see if there are any changes,
+I can just look into the patch and conclude: "this is git patch, and the
+overhead information says that it is rename-only patch. It should
+be safe."
 
-BTW, I have no idea how I can push 'local changes in subtree' to remote.
-The 'Additional tips' in using-merge-subtree.txt said it is
-possible using subtree. But don't know how? Could someone show me
-a sample command/setup sequence?
+Now consider the following patch (modified by hand: it should say
++foo, but I changed it to +bar).
 
-Thanks,
-namsh
+diff --git a/file b/file
+deleted file mode 100644
+index 257cc56..0000000
+--- a/file
++++ /dev/null
+@@ -1 +0,0 @@
+-foo
+diff --git a/file_renamed b/file_renamed
+new file mode 100644
+index 0000000..257cc56
+--- /dev/null
++++ b/file_renamed
+@@ -0,0 +1 @@
++bar
+
+
+The "index ..." stuff says that there are no changes and it is
+pure rename, but obviously there is a change.
+
+What would be great is to have is some warning (or error), that
+is: "git-am: patch claims that it would only rename the file %s,
+but it also changes things in that file. Somebody tried to make
+a fool of you."
+
+Makes sense?
+
+-- 
+Anton Vorontsov
+email: cbouatmailru@gmail.com
+irc://irc.freenode.net/bd2
