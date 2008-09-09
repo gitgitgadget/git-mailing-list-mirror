@@ -1,65 +1,92 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] t/t91XX-svn: start removing use of "git-" from these
- tests
-Date: Tue, 09 Sep 2008 01:40:23 -0700
-Message-ID: <7vfxo9af0o.fsf@gitster.siamese.dyndns.org>
-References: <20080908190205.6117@nanako3.lavabit.com>
- <20080908101631.GA6948@toroid.org> <20080908102759.GC13085@hand.yhbt.net>
- <20080909022343.GB19190@toroid.org>
+From: =?utf-8?Q?David_K=C3=A5gedal?= <davidk@lysator.liu.se>
+Subject: [StGit PATCH] Add support for initializing a branch for stgit from Emacs.
+Date: Tue, 09 Sep 2008 10:47:22 +0200
+Message-ID: <878wu1904l.fsf@lysator.liu.se>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Eric Wong <normalperson@yhbt.net>,
-	Nanako Shiraishi <nanako3@lavabit.com>, git@vger.kernel.org
-To: Abhijit Menon-Sen <ams@toroid.org>
-X-From: git-owner@vger.kernel.org Tue Sep 09 10:41:45 2008
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+To: Catalin Marinas <catalin.marinas@gmail.com>,
+	Karl =?utf-8?Q?Hasselstr?= =?utf-8?Q?=C3=B6m?= 
+	<kha@treskal.com>, Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Tue Sep 09 10:48:33 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Kcyn7-0000Va-GW
-	for gcvg-git-2@gmane.org; Tue, 09 Sep 2008 10:41:42 +0200
+	id 1Kcytl-0002Em-8D
+	for gcvg-git-2@gmane.org; Tue, 09 Sep 2008 10:48:33 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753471AbYIIIkc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 9 Sep 2008 04:40:32 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753492AbYIIIkc
-	(ORCPT <rfc822;git-outgoing>); Tue, 9 Sep 2008 04:40:32 -0400
-Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:57655 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753471AbYIIIkb (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 9 Sep 2008 04:40:31 -0400
-Received: from localhost.localdomain (localhost [127.0.0.1])
-	by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id 109D57A8CD;
-	Tue,  9 Sep 2008 04:40:31 -0400 (EDT)
-Received: from pobox.com (ip68-225-240-211.oc.oc.cox.net [68.225.240.211])
- (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
- certificate requested) by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with
- ESMTPSA id D22A67A8CC; Tue,  9 Sep 2008 04:40:25 -0400 (EDT)
-In-Reply-To: <20080909022343.GB19190@toroid.org> (Abhijit Menon-Sen's message
- of "Tue, 9 Sep 2008 07:53:43 +0530")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: F5F78CA6-7E4A-11DD-8878-3113EBD4C077-77302942!a-sasl-quonix.pobox.com
+	id S1754545AbYIIIr1 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 9 Sep 2008 04:47:27 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754441AbYIIIr0
+	(ORCPT <rfc822;git-outgoing>); Tue, 9 Sep 2008 04:47:26 -0400
+Received: from mail.lysator.liu.se ([130.236.254.3]:50914 "EHLO
+	mail.lysator.liu.se" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753769AbYIIIr0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 9 Sep 2008 04:47:26 -0400
+Received: from localhost (localhost.localdomain [127.0.0.1])
+	by mail.lysator.liu.se (Postfix) with ESMTP id 30426200A24C;
+	Tue,  9 Sep 2008 10:47:25 +0200 (CEST)
+Received: from mail.lysator.liu.se ([127.0.0.1])
+	by localhost (lenin.lysator.liu.se [127.0.0.1]) (amavisd-new, port 10024)
+	with LMTP id 25814-01-20; Tue, 9 Sep 2008 10:47:24 +0200 (CEST)
+Received: from krank (dns.vtab.com [62.20.90.195])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by mail.lysator.liu.se (Postfix) with ESMTP id D4F16200A24B;
+	Tue,  9 Sep 2008 10:47:24 +0200 (CEST)
+Received: by krank (Postfix, from userid 1000)
+	id 6D7707B4089; Tue,  9 Sep 2008 10:47:22 +0200 (CEST)
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.1 (gnu/linux)
+X-Virus-Scanned: by amavisd-new-20030616-p10 (Debian) at lysator.liu.se
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/95358>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/95359>
 
-Abhijit Menon-Sen <ams@toroid.org> writes:
+Signed-off-by: David K=C3=A5gedal <davidk@lysator.liu.se>
+---
+ contrib/stgit.el |   12 +++++++++++-
+ 1 files changed, 11 insertions(+), 1 deletions(-)
 
-> At 2008-09-08 03:27:59 -0700, normalperson@yhbt.net wrote:
->>
->> They'll show up as false positives when grepping for "git-"
->
-> Fine, you're the maintainer, but for the record, I think this change is
-> dreadful. Changing all "git-svn blah" commands to "git svn blah" is one
-> thing, but obfuscating tests on the off-chance that someone might grep
-> for "git-" seems entirely wrong.
+This diff was taken against kha/experimental, but I don't think the
+file has changed there.
 
-I think the value of this first one is not "on the off-chance" thing, but
-the presense of this change makes it far easier to eyeball the result of
-applying the second, large-ish patch.
+diff --git a/contrib/stgit.el b/contrib/stgit.el
+index 5aaf311..aafefaf 100644
+--- a/contrib/stgit.el
++++ b/contrib/stgit.el
+@@ -130,7 +130,10 @@ Argument DIR is the repository path."
+                                     'face 'stgit-description-face)
+                  (when (memq patchsym stgit-marked-patches)
+                    (replace-match "*" nil nil nil 2)
+-                   (setq marked (cons patchsym marked))))))
++                   (setq marked (cons patchsym marked)))))
++              ((looking-at "stg series: Branch \".*\" not initialised"=
+)
++               (forward-line 1)
++               (insert "Run M-x stgit-init to initialise")))
+         (forward-line 1))
+       (setq stgit-marked-patches (nreverse marked)))))
+=20
+@@ -218,6 +221,13 @@ Commands:
+       (goto-char p)
+       nil)))
+=20
++(defun stgit-init ()
++  "Run stg init"
++  (interactive)
++  (stgit-capture-output nil
++   (stgit-run "init"))
++  (stgit-refresh))
++
+ (defun stgit-mark ()
+   "Mark the patch under point"
+   (interactive)
+--=20
+1.6.0.rc2.7.gbf8a
 
-If I were doing this as a series, I would probably have followed them up
-with a patch that reverts the token replacement this first one does as the
-final patch in the series, but I also think leaving this first patch as-is
-is fine.
+
+--=20
+David K=C3=A5gedal
