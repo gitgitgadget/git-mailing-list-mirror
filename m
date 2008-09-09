@@ -1,111 +1,107 @@
-From: Dmitry Potapov <dpotapov@gmail.com>
-Subject: Re: [PATCH 2/2] git-rebase--interactive: auto amend only edited commit
-Date: Tue, 9 Sep 2008 11:30:29 +0400
-Message-ID: <20080909073029.GC28210@dpotapov.dyndns.org>
-References: <1220906569-26878-1-git-send-email-dpotapov@gmail.com> <1220906569-26878-2-git-send-email-dpotapov@gmail.com> <48C61AF1.1060703@viscovery.net>
+From: Daniel White <daniel@whitehouse.id.au>
+Subject: [StGit PATCH] Fixes for auto-generation of man pages
+Date: Tue, 9 Sep 2008 17:17:21 +1000
+Message-ID: <20080909171721.2c7974a1@whitehouse.id.au>
+References: <20080908210302.1957.44280.stgit@yoghurt>
+	<20080908210811.1957.16419.stgit@yoghurt>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Johannes Sixt <j.sixt@viscovery.net>
-X-From: git-owner@vger.kernel.org Tue Sep 09 09:31:45 2008
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
+Cc: Catalin Marinas <catalin.marinas@gmail.com>, git@vger.kernel.org
+To: Karl =?UTF-8?B?SGFzc2Vsc3Ryw7Zt?= <kha@treskal.com>
+X-From: git-owner@vger.kernel.org Tue Sep 09 09:34:18 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KcxhP-0006xl-UQ
-	for gcvg-git-2@gmane.org; Tue, 09 Sep 2008 09:31:44 +0200
+	id 1Kcxjf-0007co-5M
+	for gcvg-git-2@gmane.org; Tue, 09 Sep 2008 09:34:03 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751731AbYIIHag (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 9 Sep 2008 03:30:36 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753389AbYIIHag
-	(ORCPT <rfc822;git-outgoing>); Tue, 9 Sep 2008 03:30:36 -0400
-Received: from fg-out-1718.google.com ([72.14.220.154]:32551 "EHLO
-	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750932AbYIIHag (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 9 Sep 2008 03:30:36 -0400
-Received: by fg-out-1718.google.com with SMTP id 19so1747719fgg.17
-        for <git@vger.kernel.org>; Tue, 09 Sep 2008 00:30:34 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:cc:subject
-         :message-id:references:mime-version:content-type:content-disposition
-         :in-reply-to:user-agent;
-        bh=sv9izZSSv3ju3MgiPT69oz1nRVzmA/z2Jwh36GZAooI=;
-        b=uQsB7F/n9mOwTIGVybTa+RumC5QK5zp3ifeh9EGfp0X/jzIAlcLRDPIyKUFrqU2LjE
-         VVmBeAnnO4O4V7b8S6Ed7sVGIwz1fJOEsG+9q0d2KZH9pw3vg84BuAyeX8uCv9vXJIS8
-         5h9GJnLGVE7Felgo3xAomUCPNToqTLgjNWlnE=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        b=RYSArqImG5eo1DKlcEd2JCPcLdfrXGx/O974+denJKt6Fjhmd25JsJ2xM9Rl0JXmLy
-         kCyMHYD9yvWtYoZZs4gX6L0J3MUstTsQpHCsmT2OLsDchhUenmGHv5187TKdnFaDM+Hd
-         l7Io2MNFHVqI7KGooLmpzUZDZ2lIQQoLUGIW8=
-Received: by 10.86.92.4 with SMTP id p4mr303064fgb.45.1220945434246;
-        Tue, 09 Sep 2008 00:30:34 -0700 (PDT)
-Received: from localhost ( [85.141.189.164])
-        by mx.google.com with ESMTPS id d6sm5504669fga.2.2008.09.09.00.30.31
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Tue, 09 Sep 2008 00:30:33 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <48C61AF1.1060703@viscovery.net>
-User-Agent: Mutt/1.5.13 (2006-08-11)
+	id S1754093AbYIIHcu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 9 Sep 2008 03:32:50 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754116AbYIIHcu
+	(ORCPT <rfc822;git-outgoing>); Tue, 9 Sep 2008 03:32:50 -0400
+Received: from mx252n.mysite4now.com ([216.10.248.252]:1157 "EHLO
+	mx252n.mysite4now.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753540AbYIIHct (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 9 Sep 2008 03:32:49 -0400
+X-Greylist: delayed 903 seconds by postgrey-1.27 at vger.kernel.org; Tue, 09 Sep 2008 03:32:49 EDT
+Received: from ppp118-208-76-25.lns1.bne4.internode.on.net [118.208.76.25] by mx252n.mysite4now.com with SMTP;
+   Tue, 9 Sep 2008 00:17:22 -0700
+In-Reply-To: <20080908210811.1957.16419.stgit@yoghurt>
+X-Mailer: Claws Mail 3.5.0 (GTK+ 2.12.11; x86_64-pc-linux-gnu)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/95345>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/95346>
 
-On Tue, Sep 09, 2008 at 08:42:57AM +0200, Johannes Sixt wrote:
-> Dmitry Potapov schrieb:
-> > Another problem is that after being stopped at "edit", the user adds new
-> > commits. In this case, automatic amend behavior of git rebase triggered
-> > by some stage changes causes that not only that the log message of the
-> > last commit is lost but that it will contain also wrong Author and Date
-> > information.
-> > 
-> > Therefore, this patch restrict automatic amend only to the situation
-> > where HEAD is the commit at which git rebase stop by "edit" command.
-> ...
-> > @@ -430,6 +430,8 @@ do
-> >  			if test -f "$DOTEST"/amend
-> >  			then
-> >  				amend=$(git rev-parse --verify HEAD)
-> > +				test "$amend" = $(cat "$DOTEST"/amend) ||
-> > +				die "You have uncommitted changes"
-> 
-> Doesn't this terse message carry a bit of a "WTF?" factor?
+stg.txt is the only man page not generated by stg-build --commands.
+Provide this page explicitly instead of including all other
+commands twice.
 
-Agreed. However, the current message in the case when you have some
-unstaged changes in your working tree is not much better:
-  "Working tree is dirty"
+stg-cmd-list.txt is only a template for inclusion in other man 
+pages, so rename to stop it being built along with other stg-* 
+files.
 
-> In other
-> situations rebase --continue goes into git-commit just fine, but it does
-> not under these special conditions. How about this:
-> 
-> "Will not auto-commit uncommitted changes after you have already committed
-> something. Please run 'git commit --amend' yourself."
+Signed-off-by: Daniel White <daniel@whitehouse.id.au>
+---
+ Documentation/.gitignore |    1 +
+ Documentation/Makefile   |    6 +++---
+ Documentation/stg.txt    |    2 +-
+ 3 files changed, 5 insertions(+), 4 deletions(-)
 
-I don't think this is the right suggestion. In cases that I mentioned above
-(and in some others), you may want to run 'git commit' *without* --amend.
-Only user may know how those changes should be committed. Giving him/her
-a direct instruction to run some specific command will produce the wrong
-result in half cases. So, how about this:
-
-"You have uncommitted changes in your working tree. Please, commit them
-first and then run 'git rebase --continue' again."
-
-or if you want to describe the cause why auto-commit does not work:
-
-"Will not auto-commit uncommitted changes after you have already committed
-something. Please commit them first and then run 'git rebase --continue'
-again."
-
-Personally, I believe those words about auto-commit is not very helpful.
-Auto-commit-on-edit feature is undocumented. So, those words may be more
-confusing than helpful, because the user starts thinking what this auto-
-commit means, while the real question here is whether changes should be
-committed with --amend or without it.
-
-Dmitry
+diff --git a/Documentation/.gitignore b/Documentation/.gitignore
+index 32dd09d..c72f35c 100644
+--- a/Documentation/.gitignore
++++ b/Documentation/.gitignore
+@@ -3,3 +3,4 @@
+ *.[1-9]
+ stg-*.txt
+ doc.dep
++command-list.txt
+diff --git a/Documentation/Makefile b/Documentation/Makefile
+index 85e9600..165e222 100644
+--- a/Documentation/Makefile
++++ b/Documentation/Makefile
+@@ -1,7 +1,7 @@
+ COMMANDS = $(shell ../stg-build --commands)
+ COMMANDS_TXT = $(patsubst %,stg-%.txt,$(COMMANDS))
+ 
+-MAN1_TXT=$(wildcard stg*.txt) $(COMMANDS_TXT)
++MAN1_TXT= stg.txt $(COMMANDS_TXT)
+ 
+ DOC_HTML=$(patsubst %.txt,%.html,$(MAN1_TXT))
+ 
+@@ -60,14 +60,14 @@ doc.dep : $(wildcard *.txt) build-docdep.perl
+ -include doc.dep
+ 
+ clean:
+-	rm -f *.xml *.html *.pdf *.1 doc.dep $(COMMANDS_TXT) stg-cmd-list.txt
++	rm -f *.xml *.html *.pdf *.1 doc.dep $(COMMANDS_TXT) command-list.txt
+ 
+ ALL_PY = $(shell find ../stgit -name '*.py')
+ 
+ $(COMMANDS_TXT): $(ALL_PY)
+ 	../stg-build --asciidoc $(basename $(subst stg-,,$@)) > $@
+ 
+-stg-cmd-list.txt: $(ALL_PY)
++command-list.txt: $(ALL_PY)
+ 	../stg-build --cmd-list > $@
+ 
+ %.html : %.txt
+diff --git a/Documentation/stg.txt b/Documentation/stg.txt
+index b4184b2..d8f7d01 100644
+--- a/Documentation/stg.txt
++++ b/Documentation/stg.txt
+@@ -105,7 +105,7 @@ description is available in individual command manpages.  Those
+ manpages are named 'stg-<command>(1)'.
+ endif::backend-docbook[]
+ 
+-include::stg-cmd-list.txt[]
++include::command-list.txt[]
+ 
+ CONFIGURATION MECHANISM
+ -----------------------
+-- 
+1.6.0.1.220.g80d1
