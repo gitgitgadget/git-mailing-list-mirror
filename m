@@ -1,83 +1,78 @@
-From: Sergio Callegari <sergio.callegari@gmail.com>
-Subject: Re: Tracking OpenOffice files/other compressed files with Git
-Date: Tue, 09 Sep 2008 13:07:10 +0200
-Message-ID: <48C658DE.3070001@gmail.com>
-References: <Pine.LNX.4.64.0809090715520.19359@ds9.cixit.se> <48C61F94.3060400@viscovery.net> <loom.20080909T085002-376@post.gmane.org> <48C6569C.60000@viscovery.net>
+From: dhruva <dhruva@ymail.com>
+Subject: Re: git-p4 and keyword expansion
+Date: Tue, 9 Sep 2008 16:44:11 +0530 (IST)
+Message-ID: <665268.90219.qm@web95009.mail.in2.yahoo.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Johannes Sixt <j.sixt@viscovery.net>
-X-From: git-owner@vger.kernel.org Tue Sep 09 13:08:31 2008
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8BIT
+Cc: GIT SCM <git@vger.kernel.org>
+To: Jing Xue <jingxue@digizenstudio.com>
+X-From: git-owner@vger.kernel.org Tue Sep 09 13:15:24 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Kd15D-00054s-1R
-	for gcvg-git-2@gmane.org; Tue, 09 Sep 2008 13:08:31 +0200
+	id 1Kd1Bp-00077m-RM
+	for gcvg-git-2@gmane.org; Tue, 09 Sep 2008 13:15:22 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751826AbYIILHW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 9 Sep 2008 07:07:22 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754005AbYIILHQ
-	(ORCPT <rfc822;git-outgoing>); Tue, 9 Sep 2008 07:07:16 -0400
-Received: from el-out-1112.google.com ([209.85.162.179]:49269 "EHLO
-	el-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753591AbYIILHO (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 9 Sep 2008 07:07:14 -0400
-Received: by el-out-1112.google.com with SMTP id z25so239459ele.1
-        for <git@vger.kernel.org>; Tue, 09 Sep 2008 04:07:13 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from
-         :user-agent:mime-version:to:cc:subject:references:in-reply-to
-         :content-type:content-transfer-encoding;
-        bh=/XHL3OCzAst1yRUIUreXWV8ooeeEaKY0mwacUk1Sp0U=;
-        b=lzKRO5FwzX/mouPvsXbsdQr3j4zwQlY9pvc2AAotTqdL+shUcSZ5HRmbin/OxcEyoh
-         4UzIC8qoY5VU8wUxaZVmZevElAuxhsS1JI2wXOfUTlCA2NCA/1JLfVDpKwi1BL34P8Fu
-         H+O2OQkWLM/baUvXufyc4hPZSyqIbTMVqcFYY=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:user-agent:mime-version:to:cc:subject
-         :references:in-reply-to:content-type:content-transfer-encoding;
-        b=j+wn434nN1FCjeLEiRypuMaOAA8j8Y+pDulEOBt9nlCnchvl8C6gkAKCGlQv7WLuim
-         v7WlkVuUitzl7ZaP/6XOQO2Qt3i647j2uOoEbs+H/Xs4JJw9UhZGhkXEXnS7jFxh/wos
-         6dj5qIng94ldfdjYoANIkXPMRoHSIkoxeYlXQ=
-Received: by 10.103.247.5 with SMTP id z5mr11131178mur.31.1220958432241;
-        Tue, 09 Sep 2008 04:07:12 -0700 (PDT)
-Received: from ?137.204.201.149? ( [137.204.201.149])
-        by mx.google.com with ESMTPS id s10sm8646052muh.12.2008.09.09.04.07.10
-        (version=SSLv3 cipher=RC4-MD5);
-        Tue, 09 Sep 2008 04:07:11 -0700 (PDT)
-User-Agent: Thunderbird 2.0.0.16 (X11/20080724)
-In-Reply-To: <48C6569C.60000@viscovery.net>
+	id S1751746AbYIILOP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 9 Sep 2008 07:14:15 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751842AbYIILOP
+	(ORCPT <rfc822;git-outgoing>); Tue, 9 Sep 2008 07:14:15 -0400
+Received: from n1a.bullet.in.yahoo.com ([202.43.219.18]:36655 "HELO
+	n1a.bullet.in.yahoo.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with SMTP id S1751566AbYIILOO convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 9 Sep 2008 07:14:14 -0400
+Received: from [202.86.4.170] by n1.bullet.in.yahoo.com with NNFMP; 09 Sep 2008 11:14:11 -0000
+Received: from [203.104.18.53] by t1.bullet.in.yahoo.com with NNFMP; 09 Sep 2008 11:14:11 -0000
+Received: from [127.0.0.1] by omp105.mail.in2.yahoo.com with NNFMP; 09 Sep 2008 11:14:11 -0000
+X-Yahoo-Newman-Property: ymail-3
+X-Yahoo-Newman-Id: 745435.77688.bm@omp105.mail.in2.yahoo.com
+Received: (qmail 90620 invoked by uid 60001); 9 Sep 2008 11:14:11 -0000
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+  s=s1024; d=ymail.com;
+  h=Received:X-Mailer:Date:From:Subject:To:Cc:MIME-Version:Content-Type:Content-Transfer-Encoding:Message-ID;
+  b=wPBNGDvJx7dTYBi7Nv8mO0eiuobLOLcxtjbqR50rvIXMy+TnERhbvbH+Cl8U/RyjHuuk0D9hQ2mhQAUWVIzbBjblXCmtMk8o1rfEmOWTu7PMaVHcQJ+dYiUsmQhgeZOys58Z1dVEt28tcl1+oGVx/Bvqj3Zcju3NhgGAF5MLpWM=;
+Received: from [202.3.112.9] by web95009.mail.in2.yahoo.com via HTTP; Tue, 09 Sep 2008 16:44:11 IST
+X-Mailer: YahooMailRC/1096.28 YahooMailWebService/0.7.218.2
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/95373>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/95374>
+
+Hello,
 
 
-> You don't need to smudge the OOo file on checkout iff OOo can read a file
-> that is "compressed" at level 0.
->
->   
-I will check again then, since my first attempt at this was not very 
-successful and I think I was getting dirty files even cleaning only.  
-But it was a long time ago right after clean was introduced.
 
-But in any case it would be preferable to smudge on checkout since 
-uncompressed OO files can be quite huge.
-Also to have uncompressed OO files in the worktree means that if you 
-ever need to send one as an attachment to somebody you need to reopen 
-and resave it before making the attachment, which is a bit uncomfortable!
-> A file that you have just 'git add'ed must not show up as dirty even if it
-> was processed by a "clean" filter. If it does, then this indicates a bug
-> in git, and not that a corresponding "smudge" filter is missing or
-> misbehaves. Yes, I have observed this with my own "clean" filter some time
-> ago, but I have not yet tried hard enough to find a reproducible test case.
->
->   
-But am I correct in saying that it will show dirty if you clean and then 
-smudge in a non symmetric way?
+----- Original Message ----
+> From: Jing Xue <jingxue@digizenstudio.com>
+> To: dhruva <dhruva@ymail.com>
+> Cc: GIT SCM <git@vger.kernel.org>
+> Sent: Tuesday, 9 September, 2008 3:09:00 AM
+> Subject: Re: git-p4 and keyword expansion
+> >  Removing the keyword unexpanding code in 'git-p4' with the  
+> > following patch makes it work:
+> 
+> I'm not really arguing against the patch itself, but just wondering  
+> whether it would be a good idea to make it optional or configurable.
 
-Sergio
+I feel the configuration must be set the first time only, when you clone using 'git-p4 clone'. Altering it in between will be very confusing! Ideally, the setting must be transferred when the git repo (cloned from git-p4) is cloned using standard git. Is it something possible (well, I am new to git and am exploring. Any extra information would help).
+
+My proposal is as follows:
+1. Add an extra command line argument to 'git-p4 clone' to either enable/disable keyword expansion
+2. Store that information under the .git folder in a file that is copied when someone clones that repo
+3. Use the stored information in future 'git-p4 sync/rebase'
+
+> IIUC, there are reasons for git to discourage keyword expansion - for  
+> instance as discussed in this thread:
+> 
+> http://kerneltrap.org/mailarchive/git/2007/10/11/335112
+
+I agree that keyword expansion is bad but there is no alternative when you work with a system that has keyword expansion and you need interoperability (p4<->git)
+
+-dhruva
+
+
+
+      Unlimited freedom, unlimited storage. Get it now, on http://help.yahoo.com/l/in/yahoo/mail/yahoomail/tools/tools-08.html/
