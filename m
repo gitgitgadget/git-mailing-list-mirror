@@ -1,70 +1,61 @@
-From: Miklos Vajna <vmiklos@frugalware.org>
+From: Jeff King <peff@peff.net>
 Subject: Re: [PATCH] t7501: always use test_cmp instead of diff
-Date: Wed, 10 Sep 2008 01:49:24 +0200
-Message-ID: <20080909234924.GN4829@genesis.frugalware.org>
+Date: Tue, 9 Sep 2008 19:54:14 -0400
+Message-ID: <20080909235414.GA4768@coredump.intra.peff.net>
 References: <1221003666-17115-1-git-send-email-vmiklos@frugalware.org>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="Ucgz5Oc/kKURWzXs"
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Sep 10 01:50:15 2008
+Content-Type: text/plain; charset=utf-8
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Miklos Vajna <vmiklos@frugalware.org>
+X-From: git-owner@vger.kernel.org Wed Sep 10 01:55:33 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KdCyM-00005O-Ey
-	for gcvg-git-2@gmane.org; Wed, 10 Sep 2008 01:50:14 +0200
+	id 1KdD3U-0001HD-Tp
+	for gcvg-git-2@gmane.org; Wed, 10 Sep 2008 01:55:33 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751315AbYIIXtF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 9 Sep 2008 19:49:05 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751537AbYIIXtE
-	(ORCPT <rfc822;git-outgoing>); Tue, 9 Sep 2008 19:49:04 -0400
-Received: from virgo.iok.hu ([193.202.89.103]:47388 "EHLO virgo.iok.hu"
+	id S1752960AbYIIXyR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 9 Sep 2008 19:54:17 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752887AbYIIXyR
+	(ORCPT <rfc822;git-outgoing>); Tue, 9 Sep 2008 19:54:17 -0400
+Received: from peff.net ([208.65.91.99]:4095 "EHLO peff.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751013AbYIIXtE (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 9 Sep 2008 19:49:04 -0400
-Received: from kag.elte.hu (kag.elte.hu [157.181.177.1])
-	by virgo.iok.hu (Postfix) with ESMTP id 66BEB1B2508;
-	Wed, 10 Sep 2008 01:49:01 +0200 (CEST)
-Received: from genesis.frugalware.org (frugalware.elte.hu [157.181.177.34])
-	by kag.elte.hu (Postfix) with ESMTP id 4289E4465E;
-	Wed, 10 Sep 2008 01:49:00 +0200 (CEST)
-Received: by genesis.frugalware.org (Postfix, from userid 1000)
-	id 3DDDE119019E; Wed, 10 Sep 2008 01:49:24 +0200 (CEST)
+	id S1752842AbYIIXyQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 9 Sep 2008 19:54:16 -0400
+Received: (qmail 22178 invoked by uid 111); 9 Sep 2008 23:54:16 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+    by peff.net (qpsmtpd/0.32) with SMTP; Tue, 09 Sep 2008 19:54:16 -0400
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Tue, 09 Sep 2008 19:54:14 -0400
 Content-Disposition: inline
 In-Reply-To: <1221003666-17115-1-git-send-email-vmiklos@frugalware.org>
-User-Agent: Mutt/1.5.17 (2007-11-01)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/95466>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/95467>
 
+On Wed, Sep 10, 2008 at 01:41:06AM +0200, Miklos Vajna wrote:
 
---Ucgz5Oc/kKURWzXs
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+>  test_expect_success \
+>      'validate git-rev-list output.' \
+> -    'diff current expected'
+> +    'test_cmp current expected'
 
-On Wed, Sep 10, 2008 at 01:41:06AM +0200, Miklos Vajna <vmiklos@frugalware.org> wrote:
-> This should make the output more readable (by default using diff -u)
-> when some tests fail.
+We seem to use the convention of
 
-Sorry for the duplication, I didn't want to send it twice. I also just
-realised after sending that I forgot to rebase it again current master,
-where git-rev-list is replaced by git rev-list, but I guess git am -3
-handles it. ;-)
+  test_cmp <expected> <actual>
 
---Ucgz5Oc/kKURWzXs
-Content-Type: application/pgp-signature
-Content-Disposition: inline
+elsewhere, rather than
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.9 (GNU/Linux)
+  test_cmp <actual> <expected>
 
-iEYEARECAAYFAkjHC4QACgkQe81tAgORUJZBygCgiIl1C2QbmOyZJphdZFrBHARs
-FlwAnjCiYhnfqlZY8wg2vhZ7PStjJOuy
-=2n5c
------END PGP SIGNATURE-----
+as you have here.  Most noticeably, that means the diff will show
+deviations from expected, rather "what should be done to make this as
+expected".  But it is also possible that in the future test_cmp could be
+enhanced to do something more interesting.
 
---Ucgz5Oc/kKURWzXs--
+I don't think it is worth it to go fix all such instances, but while you
+are here...
+
+-Peff
