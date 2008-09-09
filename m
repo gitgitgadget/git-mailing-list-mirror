@@ -1,96 +1,86 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 2/2] git-rebase--interactive: auto amend only edited
- commit
-Date: Mon, 08 Sep 2008 17:33:22 -0700
-Message-ID: <7viqt6cg4t.fsf@gitster.siamese.dyndns.org>
-References: <1220906569-26878-1-git-send-email-dpotapov@gmail.com>
- <1220906569-26878-2-git-send-email-dpotapov@gmail.com>
+Subject: Re: git apply vs. renamed files index mismatch
+Date: Mon, 08 Sep 2008 17:53:41 -0700
+Message-ID: <7vej3ucf6y.fsf@gitster.siamese.dyndns.org>
+References: <1220900995-11928-1-git-send-email-becky.bruce@freescale.com>
+ <1220900995-11928-2-git-send-email-becky.bruce@freescale.com>
+ <48C57A92.6060608@freescale.com>
+ <20080908212717.GA21338@oksana.dev.rtsoft.ru>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Dmitry Potapov <dpotapov@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Sep 09 02:35:04 2008
+Cc: Scott Wood <scottwood@freescale.com>,
+	Becky Bruce <becky.bruce@freescale.com>,
+	linuxppc-dev@ozlabs.org, git@vger.kernel.org
+To: avorontsov@ru.mvista.com
+X-From: git-owner@vger.kernel.org Tue Sep 09 02:55:09 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KcrCB-0000nC-PW
-	for gcvg-git-2@gmane.org; Tue, 09 Sep 2008 02:35:04 +0200
+	id 1KcrVa-0004hZ-DH
+	for gcvg-git-2@gmane.org; Tue, 09 Sep 2008 02:55:06 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753001AbYIIAdd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 8 Sep 2008 20:33:33 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754480AbYIIAdc
-	(ORCPT <rfc822;git-outgoing>); Mon, 8 Sep 2008 20:33:32 -0400
-Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:48787 "EHLO
+	id S1753811AbYIIAx6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 8 Sep 2008 20:53:58 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754224AbYIIAx6
+	(ORCPT <rfc822;git-outgoing>); Mon, 8 Sep 2008 20:53:58 -0400
+Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:50493 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752990AbYIIAdc (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 8 Sep 2008 20:33:32 -0400
+	with ESMTP id S1753730AbYIIAx6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 8 Sep 2008 20:53:58 -0400
 Received: from localhost.localdomain (localhost [127.0.0.1])
-	by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id 3654079216;
-	Mon,  8 Sep 2008 20:33:31 -0400 (EDT)
+	by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id 9A29679487;
+	Mon,  8 Sep 2008 20:53:56 -0400 (EDT)
 Received: from pobox.com (ip68-225-240-211.oc.oc.cox.net [68.225.240.211])
  (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
  certificate requested) by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with
- ESMTPSA id 5B61E79215; Mon,  8 Sep 2008 20:33:25 -0400 (EDT)
-In-Reply-To: <1220906569-26878-2-git-send-email-dpotapov@gmail.com> (Dmitry
- Potapov's message of "Tue, 9 Sep 2008 00:42:49 +0400")
+ ESMTPSA id 4EC4379484; Mon,  8 Sep 2008 20:53:43 -0400 (EDT)
+In-Reply-To: <20080908212717.GA21338@oksana.dev.rtsoft.ru> (Anton Vorontsov's
+ message of "Tue, 9 Sep 2008 01:27:17 +0400")
 User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: ED984E90-7E06-11DD-A8B3-3113EBD4C077-77302942!a-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: C7FFBFDA-7E09-11DD-A993-3113EBD4C077-77302942!a-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/95322>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/95323>
 
-I may not be reading your patch correctly; I am confused by what you are
-trying to do.
+Anton Vorontsov <avorontsov@ru.mvista.com> writes:
 
-> diff --git a/git-rebase--interactive.sh b/git-rebase--interactive.sh
-> index 5b2b1e5..84721c9 100755
-> --- a/git-rebase--interactive.sh
-> +++ b/git-rebase--interactive.sh
-> @@ -284,7 +284,7 @@ do_next () {
->  		pick_one $sha1 ||
->  			die_with_patch $sha1 "Could not apply $sha1... $rest"
->  		make_patch $sha1
-> -		: > "$DOTEST"/amend
-> +		echo $sha1 > "$DOTEST"/amend
+>>>  3 files changed, 201 insertions(+), 201 deletions(-)
+>>>  create mode 100644 arch/powerpc/kernel/dma.c
+>>>  delete mode 100644 arch/powerpc/kernel/dma_64.c
+>>
+>> Passing -M to git format-patch makes it much easier
+>
+> I always thought that posting "-M" patches to the public lists is
+> discouraged since it is quite difficult to apply them via patch(1).
+> Also think of non-git users...
 
-You record the $sha1 from the TODO file.  If you are editing the first one
-in the insn sequence, that is also the same as HEAD (i.e. the commit you
-are telling the user to modify with "commit --amend").  If you already
-have edited earlier ones, it is not the value of HEAD at this point.
+My understanding has been that it is encouraged on the kernel mailing
+list, because the rename format is far easier to review by showing the
+differences that matter to reviewers, than showing a big chunk of text
+deleted and another big chunk of text that is similar added elsewhere.
 
->  		warn "Stopped at $sha1... $rest"
->  		warn "You can amend the commit now, with"
->  		warn
-> @@ -430,6 +430,8 @@ do
->  			if test -f "$DOTEST"/amend
->  			then
->  				amend=$(git rev-parse --verify HEAD)
-> +				test "$amend" = $(cat "$DOTEST"/amend) ||
-> +				die "You have uncommitted changes"
+I won't comment on this any further; the use of it is strictly a list and
+community policy issue.
 
-And then you complain if HEAD, after running "commit --amend", is
-not the value you recorded above.
+> This is still possible by comparing the hashes:
+> ...
+> That is, if hashes match then it was pure rename.
+>
+> Though, too bad git {apply,am} does not produce any warnings if there
+> are any hidden changes...
 
->  				git reset --soft HEAD^ ||
->  				die "Cannot rewind the HEAD"
->  			fi
+But I _do_ want to know what you mean by this comment.  Your statement
+makes it sounds as if apply/am happily and silently accept "hidden
+changes" and it is a bad thing.
 
-If the first commit was marked as "edit", then the value you recorded in
-"$DOTEST/amend" was the HEAD, the commit the user was told to modify with
-"commit --amend".  $DOTEST/amend being the same as HEAD here would be a
-sign that the user staged changes but hasn't done "commit --amend".
-
-But if we think about the second and subsequent commits that are marked as
-"edit" in TODO file, the value recorded in "$DOTEST/amend" would not be
-the value of HEAD at this point, and whether "commit --amend" has been run
-or not, the value of HEAD is very likely to be different from that value
-(unless the user said "reset --hard $that_one").  Wouldn't this test
-almost always complain for them?
-
-Perhaps you wanted to record the value of the HEAD in the first hunk?
-
-How would this change interact with the workflow of splitting existing
-commits, described at the end of git-rebase documentation?
+Now what do you exactly mean by "any hidden changes"?  Do you mean "the
+sender did not use renaming format, the patch you fed was a one that
+removes a huge chunk of text from one file, and adds a similarly huge
+chunk of text to another file.  The changes to these files looked similar
+but was not quite the same"?  It is all there for you to review, and
+especially if you prefer non-renaming format, then that is what you get.
+So I do not think that is what you are complaining about.  It must be
+something else --- what is it?
