@@ -1,106 +1,77 @@
-From: Christian Couder <chriscool@tuxfamily.org>
-Subject: [PATCH] refs: improve comments about "reading" argument of
- "resolve_ref"
-Date: Tue, 9 Sep 2008 07:10:56 +0200
-Message-ID: <20080909071056.2521c510.chriscool@tuxfamily.org>
+From: Thomas Rast <trast@student.ethz.ch>
+Subject: Re: [RFC PATCH] Documentation: new upstream rebase recovery section in git-rebase
+Date: Tue, 9 Sep 2008 07:42:51 +0200
+Message-ID: <200809090742.54396.trast@student.ethz.ch>
+References: <1220386721-10215-1-git-send-email-trast@student.ethz.ch> <7vk5dmdz7s.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
+Content-Type: multipart/signed;
+  boundary="nextPart2928008.NBUE26yIWY";
+  protocol="application/pgp-signature";
+  micalg=pgp-sha1
 Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Sep 09 07:08:34 2008
+X-From: git-owner@vger.kernel.org Tue Sep 09 07:44:07 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KcvSs-0004SH-CI
-	for gcvg-git-2@gmane.org; Tue, 09 Sep 2008 07:08:34 +0200
+	id 1Kcw1C-00030k-IE
+	for gcvg-git-2@gmane.org; Tue, 09 Sep 2008 07:44:03 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751130AbYIIFHZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 9 Sep 2008 01:07:25 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751183AbYIIFHZ
-	(ORCPT <rfc822;git-outgoing>); Tue, 9 Sep 2008 01:07:25 -0400
-Received: from smtp6-g19.free.fr ([212.27.42.36]:42058 "EHLO smtp6-g19.free.fr"
+	id S1752822AbYIIFm4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 9 Sep 2008 01:42:56 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752682AbYIIFm4
+	(ORCPT <rfc822;git-outgoing>); Tue, 9 Sep 2008 01:42:56 -0400
+Received: from xsmtp1.ethz.ch ([82.130.70.13]:33696 "EHLO xsmtp1.ethz.ch"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750861AbYIIFHZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 9 Sep 2008 01:07:25 -0400
-Received: from smtp6-g19.free.fr (localhost.localdomain [127.0.0.1])
-	by smtp6-g19.free.fr (Postfix) with ESMTP id AB66C19776;
-	Tue,  9 Sep 2008 07:07:22 +0200 (CEST)
-Received: from localhost.boubyland (gre92-7-82-243-130-161.fbx.proxad.net [82.243.130.161])
-	by smtp6-g19.free.fr (Postfix) with SMTP id 72BFA1976C;
-	Tue,  9 Sep 2008 07:07:22 +0200 (CEST)
-X-Mailer: Sylpheed 2.5.0 (GTK+ 2.12.11; i486-pc-linux-gnu)
+	id S1751470AbYIIFmz (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 9 Sep 2008 01:42:55 -0400
+Received: from xfe2.d.ethz.ch ([82.130.124.42]) by xsmtp1.ethz.ch with Microsoft SMTPSVC(6.0.3790.3959);
+	 Tue, 9 Sep 2008 07:42:53 +0200
+Received: from [192.168.0.3] ([84.75.158.234]) by xfe2.d.ethz.ch over TLS secured channel with Microsoft SMTPSVC(6.0.3790.3959);
+	 Tue, 9 Sep 2008 07:42:53 +0200
+User-Agent: KMail/1.9.9
+In-Reply-To: <7vk5dmdz7s.fsf@gitster.siamese.dyndns.org>
+X-OriginalArrivalTime: 09 Sep 2008 05:42:53.0383 (UTC) FILETIME=[E740DD70:01C9123E]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/95335>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/95336>
 
-From: Junio C Hamano <gitster@pobox.com>
+--nextPart2928008.NBUE26yIWY
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: quoted-printable
+Content-Disposition: inline
 
-Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
----
- refs.c |   30 ++++++++++++++++++++++++------
- 1 files changed, 24 insertions(+), 6 deletions(-)
+Junio C Hamano wrote:
+> Any follow-up on this topic since:
+>=20
+>     http://thread.gmane.org/gmane.comp.version-control.git/94701/focus=3D=
+94761
 
-	Junio wrote:
-	> So how about improving the comment that is misleading?
+I've been busy doing other work, sorry.  I haven't forgotten though,
+and will definitely get back to it :-)
 
-	Ok, let's do that. On top of your patch, I added a comment based
-	on your previous email as a function header. Feel free to discard
-	it or move it to "cache.h".
+=2D Thomas
 
-	Thanks,
-	Christian. 
+=2D-=20
+Thomas Rast
+trast@student.ethz.ch
 
-diff --git a/refs.c b/refs.c
-index 39a3b23..d61893b 100644
---- a/refs.c
-+++ b/refs.c
-@@ -390,6 +390,21 @@ int resolve_gitlink_ref(const char *path, const char *refname, unsigned char *re
- 	return retval;
- }
- 
-+/*
-+ * resolve_ref: find what a ref points at
-+ *
-+ * If the "reading" argument is set, this function finds out what _object_
-+ * the ref points at. This is called "reading" the ref, and the ref, if it
-+ * is not symbolic, has to exist, and if it is symbolic, it has to point at
-+ * an existing ref, because the "read" goes through the symref to the ref
-+ * it points at.
-+ *
-+ * Otherwise, the access that is not "reading" does not have to be "writing";
-+ * it can be merely checking _where it leads to_. If it is a prelude to
-+ * "writing" to the ref, a write to a symref that points at yet-to-be-born
-+ * ref will create the real ref pointed by the symref, so such a symref is
-+ * not an error.
-+ */
- const char *resolve_ref(const char *ref, unsigned char *sha1, int reading, int *flag)
- {
- 	int depth = MAXDEPTH;
-@@ -409,12 +424,15 @@ const char *resolve_ref(const char *ref, unsigned char *sha1, int reading, int *
- 		if (--depth < 0)
- 			return NULL;
- 
--		/* Special case: non-existing file.
--		 * Not having the refs/heads/new-branch is OK
--		 * if we are writing into it, so is .git/HEAD
--		 * that points at refs/heads/master still to be
--		 * born.  It is NOT OK if we are resolving for
--		 * reading.
-+		/*
-+		 * Special case: non-existing file.
-+		 * Not having the refs/heads/new-branch is not OK if
-+		 * we are resolving for reading.  But not everybody
-+		 * calls this function to learn what object the ref
-+		 * points at.  E.g. it can be called to learn what the
-+		 * symref points at.  Also if we are writing into it,
-+		 * it is Ok for .git/HEAD to point at refs/heads/master
-+		 * that does not exist yet.
- 		 */
- 		if (lstat(path, &st) < 0) {
- 			struct ref_list *list = get_packed_refs();
--- 
-1.6.0.1.338.g5e95.dirty
+
+--nextPart2928008.NBUE26yIWY
+Content-Type: application/pgp-signature; name=signature.asc 
+Content-Description: This is a digitally signed message part.
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.0.9 (GNU/Linux)
+
+iEYEABECAAYFAkjGDN4ACgkQqUud07tmzP2rSgCcD9/ZNcqV8gDJVX9sYzWiIZHT
+XdEAniMXPy+CKQW3osDcXcUqvmAuDnW7
+=THN9
+-----END PGP SIGNATURE-----
+
+--nextPart2928008.NBUE26yIWY--
