@@ -1,80 +1,65 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: git apply vs. renamed files index mismatch
-Date: Tue, 09 Sep 2008 07:45:19 -0700
-Message-ID: <7vtzcp8jk0.fsf@gitster.siamese.dyndns.org>
-References: <1220900995-11928-1-git-send-email-becky.bruce@freescale.com>
- <1220900995-11928-2-git-send-email-becky.bruce@freescale.com>
- <48C57A92.6060608@freescale.com>
- <20080908212717.GA21338@oksana.dev.rtsoft.ru>
- <7vej3ucf6y.fsf@gitster.siamese.dyndns.org>
- <20080909100628.GA15298@oksana.dev.rtsoft.ru>
+From: Paolo Bonzini <bonzini@gnu.org>
+Subject: Re: [PATCH 2/4] receive-pack: make it a builtin
+Date: Tue, 09 Sep 2008 16:47:55 +0200
+Message-ID: <48C68C9B.8070402@gnu.org>
+References: <1220948830-3275-1-git-send-email-gitster@pobox.com> <1220948830-3275-2-git-send-email-gitster@pobox.com> <1220948830-3275-3-git-send-email-gitster@pobox.com> <48C64138.3020406@gnu.org> <7v63p59z3w.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Scott Wood <scottwood@freescale.com>,
-	Becky Bruce <becky.bruce@freescale.com>,
-	linuxppc-dev@ozlabs.org, git@vger.kernel.org
-To: avorontsov@ru.mvista.com
-X-From: git-owner@vger.kernel.org Tue Sep 09 16:49:41 2008
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Sep 09 16:50:30 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Kd4UG-0007nr-Ks
-	for gcvg-git-2@gmane.org; Tue, 09 Sep 2008 16:46:37 +0200
+	id 1Kd4Wu-0000Or-Ku
+	for gcvg-git-2@gmane.org; Tue, 09 Sep 2008 16:49:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754216AbYIIOp3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 9 Sep 2008 10:45:29 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754012AbYIIOp3
-	(ORCPT <rfc822;git-outgoing>); Tue, 9 Sep 2008 10:45:29 -0400
-Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:53433 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751176AbYIIOp2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 9 Sep 2008 10:45:28 -0400
-Received: from localhost.localdomain (localhost [127.0.0.1])
-	by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id B6EA274503;
-	Tue,  9 Sep 2008 10:45:27 -0400 (EDT)
-Received: from pobox.com (ip68-225-240-211.oc.oc.cox.net [68.225.240.211])
- (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
- certificate requested) by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with
- ESMTPSA id 8187074501; Tue,  9 Sep 2008 10:45:21 -0400 (EDT)
-In-Reply-To: <20080909100628.GA15298@oksana.dev.rtsoft.ru> (Anton Vorontsov's
- message of "Tue, 9 Sep 2008 14:06:28 +0400")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: F16C1ACA-7E7D-11DD-8F6B-3113EBD4C077-77302942!a-sasl-quonix.pobox.com
+	id S1753200AbYIIOsI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 9 Sep 2008 10:48:08 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753211AbYIIOsI
+	(ORCPT <rfc822;git-outgoing>); Tue, 9 Sep 2008 10:48:08 -0400
+Received: from main.gmane.org ([80.91.229.2]:54599 "EHLO ciao.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752942AbYIIOsG (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 9 Sep 2008 10:48:06 -0400
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1Kd4Ve-000898-SG
+	for git@vger.kernel.org; Tue, 09 Sep 2008 14:48:02 +0000
+Received: from 195.176.178.209 ([195.176.178.209])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Tue, 09 Sep 2008 14:48:02 +0000
+Received: from bonzini by 195.176.178.209 with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Tue, 09 Sep 2008 14:48:02 +0000
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@ger.gmane.org
+X-Gmane-NNTP-Posting-Host: 195.176.178.209
+User-Agent: Thunderbird 2.0.0.16 (Macintosh/20080707)
+In-Reply-To: <7v63p59z3w.fsf@gitster.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/95390>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/95391>
 
-Anton Vorontsov <avorontsov@ru.mvista.com> writes:
+>> So how do I
+>>
+>>         receive-pack = /home/bonzinip/bin/git-receive-pack
+>>
+>> now?  Using libexec or ".../bin/git receive-pack" is fine, I just would
+>> like to know it and see it in the release notes.
+> 
+> Please check your Makefile (I'm too lazy to double check); don't we
+> install these server side programs in $(bindir)?
 
-> Now consider the following patch (modified by hand: it should say
-> +foo, but I changed it to +bar).
-> ...
-> The "index ..." stuff says that there are no changes and it is
-> pure rename, but obviously there is a change.
+Yes, I interpreted the obsolete comment in Makefile
 
-Ah, I see what you mean.  But in general, it is not obvious at all.
+# ... and all the rest that could be moved out of bindir to gitexecdir
 
-If you have the identical preimage (recorded on the LHS of the index line)
-or the patch reproduces the postimage in full (i.e. "create a new file"),
-you *could* notice.  It's an interesting idea from git person's point of
-view (i.e. "would be fun to implement"), but I doubt it would be useful in
-practice, because:
+as s/could be/were/, but there is a special rule in install to place
+these in $(bindir).
 
- (1) You often do not have the identically matching preimage;
-
- (2) More importantly, it is not unusual for people to *edit* the patch in
-     their MUA (think of typofixes), after getting it out of git.
-
- (3) Even more importantly, even if you notice there is some difference,
-     you cannot produce the postimage by only looking at the hash (this is
-     obvious -- otherwise by definition you broke SHA-1), so you cannot
-     tell *how* the patch was modified.
-
-What is of much more practical value to learn here in the context of this
-topic would be that after accepting such a patch that does not use -M (so
-that non-git people can use patch(1) to apply), a git person can still
-verify the result with "git show -M" to see what changes other than a pure
-rename was made by the patch.
+Paolo
