@@ -1,129 +1,100 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: [RFC] origin link for cherry-pick and revert
-Date: Wed, 10 Sep 2008 00:35:21 +0200
-Message-ID: <200809100035.23166.jnareb@gmail.com>
-References: <20080909132212.GA25476@cuci.nl> <7vljy159v7.fsf@gitster.siamese.dyndns.org> <20080909205003.GA3397@coredump.intra.peff.net>
+From: "Elijah Newren" <newren@gmail.com>
+Subject: Re: Revert behavior
+Date: Tue, 9 Sep 2008 16:51:20 -0600
+Message-ID: <51419b2c0809091551n6f1f627cica23312795502225@mail.gmail.com>
+References: <51419b2c0809090626p2196c590j7569fb471e470f0d@mail.gmail.com>
+	 <200809091538.13961.jnareb@gmail.com>
+	 <20080909212834.GC10544@machine.or.cz>
+	 <e06498070809091439q1c543807pd6e74b7ada32434@mail.gmail.com>
+	 <7v63p53r93.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="utf-8"
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>,
-	"Stephen R. van den Berg" <srb@cuci.nl>, git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Wed Sep 10 00:36:43 2008
+Cc: "Steven Walter" <stevenrwalter@gmail.com>,
+	"Petr Baudis" <pasky@suse.cz>, "Jakub Narebski" <jnareb@gmail.com>,
+	"Govind Salinas" <govind@sophiasuchtig.com>, git@vger.kernel.org
+To: "Junio C Hamano" <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Sep 10 00:52:33 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KdBpA-0007bm-B3
-	for gcvg-git-2@gmane.org; Wed, 10 Sep 2008 00:36:40 +0200
+	id 1KdC4U-0002ux-0h
+	for gcvg-git-2@gmane.org; Wed, 10 Sep 2008 00:52:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753733AbYIIWfc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 9 Sep 2008 18:35:32 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753712AbYIIWfc
-	(ORCPT <rfc822;git-outgoing>); Tue, 9 Sep 2008 18:35:32 -0400
-Received: from mail-gx0-f16.google.com ([209.85.217.16]:53217 "EHLO
-	mail-gx0-f16.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752212AbYIIWfb (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 9 Sep 2008 18:35:31 -0400
-Received: by gxk9 with SMTP id 9so12075249gxk.13
-        for <git@vger.kernel.org>; Tue, 09 Sep 2008 15:35:30 -0700 (PDT)
+	id S1753808AbYIIWvW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 9 Sep 2008 18:51:22 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753753AbYIIWvW
+	(ORCPT <rfc822;git-outgoing>); Tue, 9 Sep 2008 18:51:22 -0400
+Received: from rv-out-0506.google.com ([209.85.198.225]:13084 "EHLO
+	rv-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753000AbYIIWvV (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 9 Sep 2008 18:51:21 -0400
+Received: by rv-out-0506.google.com with SMTP id k40so2098781rvb.1
+        for <git@vger.kernel.org>; Tue, 09 Sep 2008 15:51:20 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:subject:date
-         :user-agent:cc:references:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:message-id;
-        bh=fl/+ov5DoYXgLJQT4uPAoBJ564Z1Z1yUjtKL8TCn25A=;
-        b=B8XO4k3srSH1l7Y7J9b14FPtQlzPF9ck4BvGQDm+hiDE0DPXWcfiJh2sMQKvPT9vgx
-         6mDp+ElkDyiNZIx1rjgYptEPgt35P1zc48k0q1w6PU7UW+HRG4b6c28RLQjLPLBHQQJs
-         HS1ixyGe4A72nmFt3/gBgND7QqRjwW3GoUNaY=
+        h=domainkey-signature:received:received:message-id:date:from:to
+         :subject:cc:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:references;
+        bh=bPgPhbmbW8ShAk1OIqTFcc4ssex3TkBs7t8KdOExLoI=;
+        b=NbQlN+lkoLB2Bc2PdB9eO/2uheSDYMHmie2Tkaqif0nydwNx7iCsB9z/fWZ5zAppMZ
+         BF1ESwYSDLaGvBXhgLo3d3hmlFF+zqWc7NRpw8G0c1kMF3CWLMe0AZ/skn9oT01LObwE
+         w5pO+frxYYBz5Yj+EjWQRDljnQzp7PsJEsqGU=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=from:to:subject:date:user-agent:cc:references:in-reply-to
-         :mime-version:content-type:content-transfer-encoding
-         :content-disposition:message-id;
-        b=gz1fDhAHLuP1uXs8p89veWKGwVjJ6nF6yUcOmcIOmqIoriUfaKkeMX2lrhF9NfmfBv
-         Z640N+nEU3WmzcTs1U4FCaiZtVRMWHH7JuSvKTJKKt/fqfdptJZln6UY84cunnq8QHxZ
-         5ZTFFStXcnVaKQJKfFFPQsDAItnhiIHB8v2/0=
-Received: by 10.86.95.20 with SMTP id s20mr331179fgb.65.1220999729160;
-        Tue, 09 Sep 2008 15:35:29 -0700 (PDT)
-Received: from ?192.168.1.11? ( [83.8.199.71])
-        by mx.google.com with ESMTPS id 12sm6549840fgg.0.2008.09.09.15.35.25
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Tue, 09 Sep 2008 15:35:27 -0700 (PDT)
-User-Agent: KMail/1.9.3
-In-Reply-To: <20080909205003.GA3397@coredump.intra.peff.net>
+        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
+         :content-type:content-transfer-encoding:content-disposition
+         :references;
+        b=n9wEYnbnXtwp3R8Bs5qqS+aXUK3MSXDGfO9OL1MKD6Ofp204+LMtSWp6b8N0nBHSxl
+         Kd/MneGxoAgrceSYa7NKXyHgT0mVoH4YYTgqpOuW0KjqaJJL3Trntr7YCdoI2V1k3EVH
+         pebZOoFVAxe5M1moJsMD3dIDswIt7+pGo4gFU=
+Received: by 10.141.197.8 with SMTP id z8mr251840rvp.157.1221000680837;
+        Tue, 09 Sep 2008 15:51:20 -0700 (PDT)
+Received: by 10.141.5.11 with HTTP; Tue, 9 Sep 2008 15:51:20 -0700 (PDT)
+In-Reply-To: <7v63p53r93.fsf@gitster.siamese.dyndns.org>
 Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/95451>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/95452>
 
-On Tue, 9 Sep 2008, Jeff King wrote:
-> On Tue, Sep 09, 2008 at 01:42:52PM -0700, Junio C Hamano wrote:
-> 
-> > As for "by the way ... was used to make this commit": this is git.  So how
-> > you arrived at the tree state you record in a commit *does not matter*.
-> 
-> But it _does_ matter, which is why we have commit messages to explain
-> how you arrived at this tree state.
+On Tue, Sep 9, 2008 at 4:10 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> If you implement "eg svn-like-revert" to checkout the given paths out of
+> the last commit, instead of the index, shouldn't that be sufficient?
 
-Well, that is why I was carefull to say that "origin <rev1> <rev2>"
-(or 'changeset', or 'cset') means that tree state for given commit
-is created out of parent commit (or parent commits in the case of merge)
-and of (<rev2> - <rev1>) patch.  This is a bit of enhancement to
-"parent <rev>" meaning that tree state for current commit is derived
-from tree state of <rev>.
+No, that would leave staged changes unreverted -- a particular case of
+which means that revert wouldn't be able to undo an add operation.
+For svn-like-revert, the default should be for both staged and
+unstaged changes to be undone, unless the user specifically requested
+that only part of the changes be reverted (e.g. with --staged or
+--unstaged flags).  Making revert work prior to the initial commit for
+new adds is another case that needs a command with behavior different
+than git's checkout of paths.
 
-This is nice generalization...
+>> It it a delicate balance to have the user interface match both the
+>> mental model of the user and the storage model of the tool.
+>
+> I do not think it is that simple.
+>
+> You could match the user experience to the mental model of the other tool,
+> by hiding the differences and insisting that people use only your tool.
+>
+> The real issue is that you may need to castrate the underlying tool in
+> certain places if its world model is richer than the model the tool you
+> are trying to emulate.  Ignoring the index by making "svn-like-revert"
+> work on both index and the working tree file at the same time is a good
+> example of that.
 
-> Now, that being said:
-> 
-> > After reading the discussion so far, I am still not convinced if this is a
-> > good idea, nor this time around it is that much different from what the
-> > previous "prior" link discussion tried to do.
-> 
-> For the record, I am not convinced it is a good idea either; I was
-> hoping to steer it in a direction where somebody could say "and now this
-> is the useful thing we can do now that we could not do before." If the
-> ultimate goal is to put links to other commits into history viewers,
-> then the commit message is a reasonable place to do so. The only thing I
-> see improving with a header is that it makes more sense for pruning and
-> object transfer.
+Why?  If the command _by default_ works on both the index and working
+tree file, is that necessarily bad ('git checkout BRANCH' operates on
+both)?  If the tool can only operate on both at once, then sure, I
+agree, but that at least isn't the case with eg and wasn't my
+suggestion for git.
 
-I'm also not all convinced that 'cousin'/'origin'/'changeset'/'cset'
-header is a good idea.  I only tried to steer discussion in good
-direction if it is somewhat a good idea.
-
-First, if the only goal would be to add extra links (extra edges) to
-[graphical] history viewer, then full sha-1 of a commit which can be
-recorded in commit message for cherry-picks and reverts should be
-enough.  It does mean parsing commit message, and all possibilities
-for mistake which are connected to using conventions in free-form part
-of commit object; on the other hand it is not _that_ critical.
-
-If however 'origin' links are more (perhaps only a tiny bit more),
-for example discussed "weak" links... then I'm not sure if
-the tradeoffs are worth it. First, if it is full connectivity like
-in 'parent' header case, then a) why not use 'parent' anyway,
-b) it pins the history indefinitely long. Second, if it is "weak"
-link, i.e. local protect it on prune, then a) there are problems
-with transferring the data, and protecting links on transfer,
-as somewhere in the middle or at the end there might be repository
-which uses older git (backwards compatibility strikes again),
-b) git in many, many places assumes that object is valid if it passes,
-and all objects linked to from object are valid; we would have either
-use some kind of separate 'not strictly checked' packfile/storage,
-or have grafts-like thingy.
-
-So I'm not sure if 'origin' links are worth the trouble.
+Not all alternate porcelains try to hide or destroy the index.  Some
+of us really do love it.
 
 
-About much, much earlier "prior" link discussion: I think the discussion
-about "prior" header link was done before reflogs, or at least before
-reflogs got turned on by default.
-
--- 
-Jakub Narebski
-Poland
+Elijah
