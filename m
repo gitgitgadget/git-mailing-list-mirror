@@ -1,69 +1,61 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 1/4] is_directory(): a generic helper function
-Date: Tue, 09 Sep 2008 07:51:06 -0700
-Message-ID: <7vprnd8jad.fsf@gitster.siamese.dyndns.org>
-References: <1220948830-3275-1-git-send-email-gitster@pobox.com>
- <1220948830-3275-2-git-send-email-gitster@pobox.com>
- <48C6508B.1080600@viscovery.net>
- <20080909123207.GA25799@coredump.intra.peff.net>
+From: "Shawn O. Pearce" <spearce@spearce.org>
+Subject: Re: Alternates and push
+Date: Tue, 9 Sep 2008 07:57:14 -0700
+Message-ID: <20080909145714.GD10015@spearce.org>
+References: <9e4733910809060542s5ede6d6m5bdb894c958ea8b7@mail.gmail.com> <20080906162030.GT9129@mit.edu> <7viqt9rvwm.fsf@gitster.siamese.dyndns.org> <9e4733910809061124r3759ea79sda98b549df3e6e58@mail.gmail.com> <20080906192106.GB18631@spearce.org> <20080909083551.GA10544@machine.or.cz>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Johannes Sixt <j.sixt@viscovery.net>, git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Tue Sep 09 16:53:20 2008
+Content-Type: text/plain; charset=utf-8
+Cc: Jon Smirl <jonsmirl@gmail.com>, Junio C Hamano <gitster@pobox.com>,
+	Theodore Tso <tytso@mit.edu>,
+	Git Mailing List <git@vger.kernel.org>
+To: Petr Baudis <pasky@suse.cz>
+X-From: git-owner@vger.kernel.org Tue Sep 09 17:00:42 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Kd4Zr-0001W6-7B
-	for gcvg-git-2@gmane.org; Tue, 09 Sep 2008 16:52:23 +0200
+	id 1Kd4fh-0003rM-Ay
+	for gcvg-git-2@gmane.org; Tue, 09 Sep 2008 16:58:25 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753270AbYIIOvQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 9 Sep 2008 10:51:16 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752898AbYIIOvQ
-	(ORCPT <rfc822;git-outgoing>); Tue, 9 Sep 2008 10:51:16 -0400
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:44012 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751176AbYIIOvP (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 9 Sep 2008 10:51:15 -0400
-Received: from localhost.localdomain (localhost [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 7BFA356DE9;
-	Tue,  9 Sep 2008 10:51:13 -0400 (EDT)
-Received: from pobox.com (ip68-225-240-211.oc.oc.cox.net [68.225.240.211])
- (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
- certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
- ESMTPSA id C2FBA56DE8; Tue,  9 Sep 2008 10:51:09 -0400 (EDT)
-In-Reply-To: <20080909123207.GA25799@coredump.intra.peff.net> (Jeff King's
- message of "Tue, 9 Sep 2008 08:32:07 -0400")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: BF826874-7E7E-11DD-B0DE-D0CFFE4BC1C1-77302942!a-sasl-fastnet.pobox.com
+	id S1753478AbYIIO5P (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 9 Sep 2008 10:57:15 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753460AbYIIO5P
+	(ORCPT <rfc822;git-outgoing>); Tue, 9 Sep 2008 10:57:15 -0400
+Received: from george.spearce.org ([209.20.77.23]:34639 "EHLO
+	george.spearce.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753332AbYIIO5O (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 9 Sep 2008 10:57:14 -0400
+Received: by george.spearce.org (Postfix, from userid 1001)
+	id 1FD393835C; Tue,  9 Sep 2008 14:57:14 +0000 (UTC)
+Content-Disposition: inline
+In-Reply-To: <20080909083551.GA10544@machine.or.cz>
+User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/95393>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/95394>
 
-Jeff King <peff@peff.net> writes:
+Petr Baudis <pasky@suse.cz> wrote:
+> On Sat, Sep 06, 2008 at 12:21:06PM -0700, Shawn O. Pearce wrote:
+> > github should do what repo.or.cz does:
+> > 
+> > 	ln -s .../linus.git/refs digispeaker.git/refs/forkee
+> 
+> But it should be used only in controlled environment. If you happen to
+> have permissions to write to the forkee, you can wipe out its refs with
+> git fetch --mirror (and if you don't happen to have permissions, it will
+> just fail, so currently you cannot use this on repo.or.cz forks,
+> unfortunately). If you don't make sure refs are never packed (I do on
+> repo.or.cz, historically because of dumb transports - do they support
+> packed refs by now?), this won't work either. Maybe there are other
+> considerations too.
 
-> On Tue, Sep 09, 2008 at 12:31:39PM +0200, Johannes Sixt wrote:
->
->> Junio C Hamano schrieb:
->> > +/*
->> > + * Do not use this for inspecting *tracked* content.  When path is a
->> > + * symlink to a directory, we do not want to say it is a directory.
->> 
->> I though stat(2) checks the thing that a symlink points to. Then either
->> this comment is not correct or you want to use lstat(2), no?
->
-> I assume he meant "do not use this for tracked content, because in that
-> case...". But I had to read it twice to make sense.
+All very good points.
 
-Sorry, I can't type, but you assumed correctly.  When we are tracking a
-path "a/b" where "b" is a submodule, we want to notice the change made by
-the user to rmdir "a/b" and replace it with a symbolic link that points
-elsewhere, so we shouldn't be using is_directory() in such a codepath.
-Worse yet, we also want to catch the case where you "rm -fr a" and make a
-symlink that points at a directory that may (or may not) have a
-subdirectory "b".  If we were tracking "a/b", then we have to say that the
-directory "a/b" does not exist anymore.  It shows that is_directory() is a
-wrong function to use while inspecting the tracked content (aka worktree).
+The dumb transports do support packed-refs in more modern versions.
+I forget when they learned it though.  Being nice to them by not
+packing refs is still good if you can.
+
+-- 
+Shawn.
