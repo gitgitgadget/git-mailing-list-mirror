@@ -1,76 +1,86 @@
-From: "Tom G. Christensen" <tgc@statsbiblioteket.dk>
-Subject: Re: [PATCH v2] Git.pm: Use File::Temp->tempfile instead of ->new
-Date: Tue, 9 Sep 2008 09:41:30 +0200
-Message-ID: <48C628AA.4020100@statsbiblioteket.dk>
-References: <1220889063-20387-1-git-send-email-marcus@griep.us> <1220892781-24343-1-git-send-email-marcus@griep.us>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v4] for-each-ref: `:short` format for `refname`
+Date: Tue, 09 Sep 2008 01:05:32 -0700
+Message-ID: <7vod2xagmr.fsf@gitster.siamese.dyndns.org>
+References: <7vtzcxaxgr.fsf@gitster.siamese.dyndns.org>
+ <1220649383-17916-1-git-send-email-bert.wesarg@googlemail.com>
+ <7vfxoadz5c.fsf@gitster.siamese.dyndns.org>
+ <36ca99e90809082352q3c87447eme73379673fe652f4@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="ISO-8859-1"; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: Git Mailing List <git@vger.kernel.org>,
-	Eric Wong <normalperson@yhbt.net>,
-	Junio C Hamano <gitster@pobox.com>,
-	Abhijit Menon-Sen <ams@toroid.org>
-To: Marcus Griep <marcus@griep.us>
-X-From: git-owner@vger.kernel.org Tue Sep 09 09:42:51 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: "Junio C Hamano" <gitster@pobox.com>, git@vger.kernel.org,
+	szeder@ira.uka.de, "Shawn O. Pearce" <spearce@spearce.org>
+To: "Bert Wesarg" <bert.wesarg@googlemail.com>
+X-From: git-owner@vger.kernel.org Tue Sep 09 10:07:07 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Kcxs1-0001LF-U8
-	for gcvg-git-2@gmane.org; Tue, 09 Sep 2008 09:42:42 +0200
+	id 1KcyFP-0007Rz-EM
+	for gcvg-git-2@gmane.org; Tue, 09 Sep 2008 10:06:51 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754046AbYIIHle (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 9 Sep 2008 03:41:34 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754262AbYIIHle
-	(ORCPT <rfc822;git-outgoing>); Tue, 9 Sep 2008 03:41:34 -0400
-Received: from sbexch03.sb.statsbiblioteket.dk ([130.225.24.68]:16760 "EHLO
-	sbexch03.sb.statsbiblioteket.dk" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1753743AbYIIHld (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 9 Sep 2008 03:41:33 -0400
-Received: from [130.225.25.181] (130.225.25.181) by
- sbexch03.sb.statsbiblioteket.dk (130.225.24.68) with Microsoft SMTP Server id
- 8.1.291.1; Tue, 9 Sep 2008 09:41:31 +0200
-User-Agent: Thunderbird 2.0.0.16 (X11/20080820)
-In-Reply-To: <1220892781-24343-1-git-send-email-marcus@griep.us>
+	id S1754566AbYIIIFn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 9 Sep 2008 04:05:43 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754637AbYIIIFm
+	(ORCPT <rfc822;git-outgoing>); Tue, 9 Sep 2008 04:05:42 -0400
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:50920 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754313AbYIIIFl (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 9 Sep 2008 04:05:41 -0400
+Received: from localhost.localdomain (localhost [127.0.0.1])
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id C2E495F617;
+	Tue,  9 Sep 2008 04:05:40 -0400 (EDT)
+Received: from pobox.com (ip68-225-240-211.oc.oc.cox.net [68.225.240.211])
+ (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
+ certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
+ ESMTPSA id B56E65F616; Tue,  9 Sep 2008 04:05:34 -0400 (EDT)
+In-Reply-To: <36ca99e90809082352q3c87447eme73379673fe652f4@mail.gmail.com>
+ (Bert Wesarg's message of "Tue, 9 Sep 2008 08:52:00 +0200")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: 18158496-7E46-11DD-87BA-D0CFFE4BC1C1-77302942!a-sasl-fastnet.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/95347>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/95348>
 
-Marcus Griep wrote:
-> Perl 5.8.0 ships with File::Temp 0.13, which does not have the new()
-> interface introduced in 0.14, as pointed out by Tom G. Christensen.
-> 
-> This modifies Git.pm to use the more established tempfile() interface
-> and updates 'git svn' to match.
-> 
-> Signed-off-by: Marcus Griep <marcus@griep.us>
-> ---
-> 
->  This patch v2 cleans up a few code items, corrects a misspelling,
->  and ensures that the temp file gets unlinked when we exit, now
->  that we are requesting the filename.  Otherwise, the previous
->  comments stand:
-> 
->  Per the earlier patch versions by Abhijit Menon-Sen and Tom G. Christensen.
->  Both of you may want to run a test and add your 'Tested-by' to the thread
->  if everything works out before Eric Wong adds his 'Acked-by'.
-> 
-The testsuite now passes t9100-git-svn-basic.sh and instead fails at 
-t9108-git-svn-glob.sh but this appears to be unrelated to the File::Temp 
-issue.
+"Bert Wesarg" <bert.wesarg@googlemail.com> writes:
 
---- expect.three        2008-09-09 07:34:39.000000000 +0000
-+++ stderr.three        2008-09-09 07:34:42.000000000 +0000
-@@ -1,2 +1,3 @@
-+Parentheses missing around "my" list at 
-/home/tgc/projects/git/t/../git-svn line 4429.
-  Only one set of wildcard directories (e.g. '*' or '*/*/*') is 
-supported: 'branches/*/t/*'
+> Any opinions, whether we want the 'strict' mode? i.e.:
+>
+> for refs/heads/xyzzy and refs/tags/xyzzy:
+>
+> loose mode (current implementation):
+>
+>   refs/heads/xyzzy => heads/xyzzy
+>   refs/tags/xyzzy  => xyzzy
+>
+> there would be a ambiguous warning (if enabled) if you use xyzzy as a
+> tag, but it resolves correctly to the tag.
+>
+> strict mode:
+>
+>   refs/heads/xyzzy => heads/xyzzy
+>   refs/tags/xyzzy  => tags/xyzzy
+>
+> will always produce a non-ambiguous short forms.
 
-* FAIL 3: test disallow multi-globs
+I have no strong opinions either way, but if we want to pick only one, I
+suspect that the loose mode would be more appropriate for bash completion
+purposes exactly because:
 
-Tested-by: Tom G. Christensen <tgc@statsbiblioteket.dk>
+ (1) the shorter form would match the users' expectations, and;
 
--tgc
+ (2) if it triggers ambiguity warning to use that result that matches
+     users' expectations, it is a *good thing* --- it reminds the user
+     that s/he is playing with fire _if_ the user is of careful type who
+     enables the ambiguity warning.
+
+Thinking about it from a different angle, it would make more sense to use
+loose mode if the user does not have ambiguity warning configured, and use
+strict mode if the warning is enabled.  Then people who will get warnings
+from ambiguity will not get an ambiguous completion, and people who won't
+will get shorter but still unambiguous completion.
+
+Which means, despite what I said earlier, now I have a mild preference to
+tie the choice to core.wawrnambigousrefs configuration.
