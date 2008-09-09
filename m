@@ -1,94 +1,61 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [RFC] origin link for cherry-pick and revert
-Date: Tue, 9 Sep 2008 15:59:31 -0400
-Message-ID: <20080909195930.GA2785@coredump.intra.peff.net>
-References: <20080909132212.GA25476@cuci.nl> <m3zlmhnx1z.fsf@localhost.localdomain> <20080909194354.GA13634@cuci.nl>
+From: =?ISO-8859-15?Q?Ren=E9_Scharfe?= <rene.scharfe@lsrfire.ath.cx>
+Subject: Re: [PATCH 3/3] add '%d' pretty format specifier to show decoration
+Date: Tue, 09 Sep 2008 22:15:40 +0200
+Message-ID: <48C6D96C.3020207@lsrfire.ath.cx>
+References: <alpine.LNX.1.10.0809032036270.32295@pollux> <20080903191217.GA31195@coredump.intra.peff.net> <7v4p4xat3v.fsf@gitster.siamese.dyndns.org> <20080903203616.GB32223@coredump.intra.peff.net> <7vsksh9c9m.fsf@gitster.siamese.dyndns.org> <48BF0A5A.2040502@lsrfire.ath.cx> <20080904035139.GA28123@sigill.intra.peff.net> <48C002FB.9010401@lsrfire.ath.cx> <48C055B3.3030204@lsrfire.ath.cx> <20080905001133.GA17463@coredump.intra.peff.net> <7v7i9r1lnm.fsf@gitster.siamese.dyndns.org> <alpine.LNX.1.10.0809052035280.3868@pollux> <alpine.LNX.2.00.0809091932080.3862@pollux>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Jakub Narebski <jnareb@gmail.com>, git@vger.kernel.org
-To: "Stephen R. van den Berg" <srb@cuci.nl>
-X-From: git-owner@vger.kernel.org Tue Sep 09 22:00:48 2008
+Content-Type: text/plain; charset=ISO-8859-15
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: gitster@pobox.com, Jeff King <peff@peff.net>, git@vger.kernel.org,
+	Johannes.Schindelin@gmx.de
+To: Michael Dressel <MichaelTiloDressel@t-online.de>
+X-From: git-owner@vger.kernel.org Tue Sep 09 22:17:17 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Kd9OF-0004MK-7T
-	for gcvg-git-2@gmane.org; Tue, 09 Sep 2008 22:00:43 +0200
+	id 1Kd9e3-0001R0-Dw
+	for gcvg-git-2@gmane.org; Tue, 09 Sep 2008 22:17:03 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756883AbYIIT7e (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 9 Sep 2008 15:59:34 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756831AbYIIT7e
-	(ORCPT <rfc822;git-outgoing>); Tue, 9 Sep 2008 15:59:34 -0400
-Received: from peff.net ([208.65.91.99]:1908 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756407AbYIIT7d (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 9 Sep 2008 15:59:33 -0400
-Received: (qmail 18100 invoked by uid 111); 9 Sep 2008 19:59:32 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.32) with SMTP; Tue, 09 Sep 2008 15:59:32 -0400
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Tue, 09 Sep 2008 15:59:31 -0400
-Content-Disposition: inline
-In-Reply-To: <20080909194354.GA13634@cuci.nl>
+	id S1755177AbYIIUPw convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 9 Sep 2008 16:15:52 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754762AbYIIUPw
+	(ORCPT <rfc822;git-outgoing>); Tue, 9 Sep 2008 16:15:52 -0400
+Received: from india601.server4you.de ([85.25.151.105]:48975 "EHLO
+	india601.server4you.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754181AbYIIUPw (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 9 Sep 2008 16:15:52 -0400
+Received: from [10.0.1.200] (p57B7CA89.dip.t-dialin.net [87.183.202.137])
+	by india601.server4you.de (Postfix) with ESMTPSA id A85062F8043;
+	Tue,  9 Sep 2008 22:15:49 +0200 (CEST)
+User-Agent: Thunderbird 2.0.0.16 (Windows/20080708)
+In-Reply-To: <alpine.LNX.2.00.0809091932080.3862@pollux>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/95420>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/95421>
 
-On Tue, Sep 09, 2008 at 09:43:54PM +0200, Stephen R. van den Berg wrote:
+Michael Dressel schrieb:
+> On Fri, 5 Sep 2008, Michael Dressel wrote:
+>> On Thu, 4 Sep 2008, Junio C Hamano wrote:
+>>> Jeff King <peff@peff.net> writes:
+>>>> On Thu, Sep 04, 2008 at 11:40:03PM +0200, Ren=E9 Scharfe wrote:
+>>>>> Michael Dressel implemented an initial version and chose the=20
+>>>>> letter d, Junio suggested to add a leading space and=20
+>>>>> parentheses.
+>>=20
+>> Very nice. Only that I did not do the very first implementation it=20
+>> was Jeff King.
+>=20
+> I made a mistake. My last comment is wrong, There is an even  earlier
+> patch from Johannes Schindelin. Second there is no contribution left
+> from me. I'm merely a happy user of the new feature.
 
-> >Besides I very much prefer using 'origin <sha1> <sha2>' (as proposed
-> 
-> The simplicity sounds inviting.  I'd like to hear from others who have
-> more experience (than I have) with the git vs. changeset paradigms about
-> this.  This allows a bit more flexibility in specifying the origin, the
-> question is if it's needed.
+Hmm, when I wrote this commit message I didn't reread yours that
+mentioned Jeff.  The patch is already in next; I'm not sure if changing
+its commit message is a sensible option.  I remember that Dscho
+suggested multiple times to steal his ideas, implement them and then
+reap all the credit for them, though. ;-)
 
-One thing to keep in mind is that you are not just proposing some new
-behavior for a command, but rather a new header for the data structure
-that we will live with from now until eternity. So I think it makes
-sense to allow the general case even if nobody is generating it yet, if
-there is some chance that it may be useful for somebody to generate in
-the future.
-
-And yes, you can get _too_ general to the point where your semantics
-become meaningless. But I don't think that is the case here. You are
-defining the origin field as "by the way, the difference between state X
-and state Y was used to make this commit". cherry-pick just happens to
-make Y=X^, but something like rebase could use a series.
-
-As for "git vs changeset": this is git. So you have a sequence of tree
-states whether that is what you want or not. Thus you are specifying
-the difference between _some_ pair of commits. I don't see any benefit
-to restricting it to a commit and one of its parents.
-
-> On the contrary, my current proposal only needs to verify the validity
-> of a single commit, changing it like this will require the system to
-> verify the validity of two commits.  Given the rareness of the origin
-> links this will hardly present a problem, but it *does* increase
-> the overhead in checking a bit.
-
-Actually, it could decrease it. If I tell you that you must have "X" and
-"X^2", then you could get away with just checking if you have "X". But
-you might also want to check whether "X" even _has_ a second parent. And
-that means not just looking up the object, but accessing it (resolving
-deltas if need be, uncompressing, parsing the object).  With "X" and
-"Y", it is just two object lookups.
-
-Now obviously you don't have to be quite so careful in the "hash plus
-parent" case. And if you are going to _do_ anything with the origin
-field, you will end up accessing those objects anyway. But in that case,
-you end up with the same number of lookups and accesses anyway: 2 of
-each.
-
-> >On the other hand this leads to the following question: what happens
-> >if you cherry-pick or revert a commit which has its own 'origin'
-> >links?
-> 
-> Nothing special.  cherry-pick/revert behave as if the existing origin links
-> were not present in the first place.
-
-I think that is smart; if somebody wants to drill down into the history
-of origin links, they can do so at lookup time.
-
--Peff
+Ren=E9
