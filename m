@@ -1,90 +1,98 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 6/6] t9400, t9401: use "git cvsserver" without dash
-Date: Tue, 09 Sep 2008 14:38:31 -0700
-Message-ID: <7vljy13sq0.fsf@gitster.siamese.dyndns.org>
-References: <20080910062529.6117@nanako3.lavabit.com>
+From: "Steven Walter" <stevenrwalter@gmail.com>
+Subject: Re: Revert behavior [Was: Re: [ANNOUNCE] yap: Yet Another (Git) Porcelain]
+Date: Tue, 9 Sep 2008 17:39:46 -0400
+Message-ID: <e06498070809091439q1c543807pd6e74b7ada32434@mail.gmail.com>
+References: <51419b2c0809090626p2196c590j7569fb471e470f0d@mail.gmail.com>
+	 <200809091538.13961.jnareb@gmail.com>
+	 <20080909212834.GC10544@machine.or.cz>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Nanako Shiraishi <nanako3@lavabit.com>
-X-From: git-owner@vger.kernel.org Tue Sep 09 23:39:52 2008
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: "Jakub Narebski" <jnareb@gmail.com>,
+	"Elijah Newren" <newren@gmail.com>,
+	"Govind Salinas" <govind@sophiasuchtig.com>, git@vger.kernel.org
+To: "Petr Baudis" <pasky@suse.cz>
+X-From: git-owner@vger.kernel.org Tue Sep 09 23:40:56 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KdAw7-0002MJ-8v
-	for gcvg-git-2@gmane.org; Tue, 09 Sep 2008 23:39:47 +0200
+	id 1KdAxD-0002f5-VV
+	for gcvg-git-2@gmane.org; Tue, 09 Sep 2008 23:40:56 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753003AbYIIVij (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 9 Sep 2008 17:38:39 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753254AbYIIVij
-	(ORCPT <rfc822;git-outgoing>); Tue, 9 Sep 2008 17:38:39 -0400
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:49895 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753000AbYIIVij (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 9 Sep 2008 17:38:39 -0400
-Received: from localhost.localdomain (localhost [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id DCD4A5AA56;
-	Tue,  9 Sep 2008 17:38:37 -0400 (EDT)
-Received: from pobox.com (ip68-225-240-211.oc.oc.cox.net [68.225.240.211])
- (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
- certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
- ESMTPSA id 17E4B5AA55; Tue,  9 Sep 2008 17:38:34 -0400 (EDT)
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: A98091B6-7EB7-11DD-8C9B-D0CFFE4BC1C1-77302942!a-sasl-fastnet.pobox.com
+	id S1753463AbYIIVjt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 9 Sep 2008 17:39:49 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753457AbYIIVjt
+	(ORCPT <rfc822;git-outgoing>); Tue, 9 Sep 2008 17:39:49 -0400
+Received: from mail-gx0-f16.google.com ([209.85.217.16]:54730 "EHLO
+	mail-gx0-f16.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753388AbYIIVjs (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 9 Sep 2008 17:39:48 -0400
+Received: by gxk9 with SMTP id 9so11938234gxk.13
+        for <git@vger.kernel.org>; Tue, 09 Sep 2008 14:39:46 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to
+         :subject:cc:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:references;
+        bh=faDYztOIIdsbGC9PUClz33CjaNHTVxpFHrSALIBsxM4=;
+        b=qgy0xXo2XI9zqkcSPPrHCJrC4imW3RyM91JkvZjZZYuqlH4b4s+E5mJvLyZK2iVQFz
+         K4b2RFLgZD4fH5s1HBW1wBFFHQ1OxSntJ6XJxA71yJT3h2r0qSTAqiME7hMkCNH8DkTG
+         2tyNuw9l/KWlDZD9ekLHrQMLYflwzgB2+/0Ec=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
+         :content-type:content-transfer-encoding:content-disposition
+         :references;
+        b=IpcXHdUsyDE+6ka33uw66+scqPIW7DWosr7rnbfVWqLkMV7m0iw9MTiB+TpVi1uxKc
+         AAKhD3SzjEm74x8OPd5e3/XUgMbxc11bxH4hQLD7tB161Lf03TbpvTYfVvCqUf2AiPfE
+         h7PNmcnuvcd3NnDTqT9/QB8X8CEvTJ8CfhQOE=
+Received: by 10.90.65.14 with SMTP id n14mr285062aga.99.1220996386612;
+        Tue, 09 Sep 2008 14:39:46 -0700 (PDT)
+Received: by 10.90.25.17 with HTTP; Tue, 9 Sep 2008 14:39:46 -0700 (PDT)
+In-Reply-To: <20080909212834.GC10544@machine.or.cz>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/95443>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/95444>
 
-Nanako Shiraishi <nanako3@lavabit.com> writes:
+On Tue, Sep 9, 2008 at 5:28 PM, Petr Baudis <pasky@suse.cz> wrote:
+> On Tue, Sep 09, 2008 at 03:38:13PM +0200, Jakub Narebski wrote:
+>> By the way, I think the fact that in different SCMs meaning of
+>> "$scm revert" and of "$scm reset" differs widely caused Mercurial
+>> to adopt "hg backout" for creating a commit which reverts changes
+>> (cherry-pick -R), and "hg rollback" to undo last commit.
+>
+> This brings up a point I wanted to raise - sometimes when the meanings
+> across the systems (including Git) are too conflicting, it should be
+> considered to use a completely different command name whatsoever to
+> reduce the confusion. This is e.g. the reason Cogito had no "pull"
+> (but "update") or "checkout" (but "restore" and "switch") commands.
 
-> The environment variable CVS_SERVER is still set to "git-cvsserver",
-> because tests fail with CVS_SERVER='git cvsserver' (or double quotes).
+I agree with this.  That's part of the problem I have with schemes to
+make commands work similarly to other SCMs.  If you give, for example,
+eg a mode to act like "svn revert;" that all well and good until the
+user runs "git diff" and you're made a liar.  In svn, there would be
+no diff, because the files all match their respective upstream
+versions.  In git, you would see changes because the file no longer
+matches the last commit.
 
-My eyes are getting dry after looking at these s/git-/git / patches, so
-please do not get offended if I leave these in my Inbox unread for a few
-days.
-
-But I think this particular one is worth mentioning something about, so I
-am responding to it now.
-
-To me, the above suggests that:
-
- * we should install git-cvsserver in $(bindir) so that it can be found on
-   $PATH; and
-
- * it would be better to encourage users to consistently use
-   "git-cvsserver" everywhere instead of "git cvsserver"; hence
-
- * this [6/6] in the series should be discarded.
-
-We already install "server side programs" in $(bindir).
-
-When we think about any of these server side programs, we do not think of
-it as a feature chosen by the subcommand word on the command line given to
-a program "git" (even though for built-ins, internal implementation might
-allow such usage).
-
-Instead we think of it as a single freestanding program in git suite.  For
-example, when people talk about "You can use git-shell as your user's
-login shell to limit the potential damage to your system", they do not
-mean "the shell subcommand of git", but they mean the git-shell "program".
-
-We do not run "git in daemon mode", but run "git-daemon" which is the
-daemon program that serves native git protocol.
-
-So why don't we do this (not just for test but for documentation as well)?
-
- * We do not use "git foo" form when refering to the "server side
-   programs".  Make it official;
-
- * We move "server side programs" in git(7) documentation into its
-   separate subsection; and
-
- * We always install "server side programs" in $(bindir).
-
-I think git-cvsserver is the last one we missed from the set of server
-side programs (git-cvsserver, git-daemon, git-receive-pack,
-git-upload-archive, git-upload-pack).
+It it a delicate balance to have the user interface match both the
+mental model of the user and the storage model of the tool.  That's
+what all of these projects, (git, cogito, yap, eg, pyrite) are
+attempting to do.  I don't know of an objective way to measure success
+in this attempt, other than simple popularity.  Popularity suggests
+that the git porcelain is the most successful, and I would agree
+regarding storage model, but I am not convinced that it best matches a
+typical SCM user's mental model.
+-- 
+-Steven Walter <stevenrwalter@gmail.com>
+"A human being should be able to change a diaper, plan an invasion,
+butcher a hog, conn a ship, design a building, write a sonnet, balance
+accounts, build a wall, set a bone, comfort the dying, take orders,
+give orders, cooperate, act alone, solve equations, analyze a new
+problem, pitch manure, program a computer, cook a tasty meal, fight
+efficiently, die gallantly. Specialization is for insects."
+ -Robert Heinlein
