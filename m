@@ -1,125 +1,100 @@
-From: Miklos Vajna <vmiklos@frugalware.org>
-Subject: [PATCH] t7501: always use test_cmp instead of diff
-Date: Wed, 10 Sep 2008 19:32:44 +0200
-Message-ID: <1221067964-12287-1-git-send-email-vmiklos@frugalware.org>
-References: <7vljy03m2m.fsf@gitster.siamese.dyndns.org>
-Cc: Jeff King <peff@peff.net>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Sep 10 19:34:09 2008
+From: "Ulrik Sverdrup" <ulrik.sverdrup@gmail.com>
+Subject: Re: git merge vs git commit
+Date: Wed, 10 Sep 2008 19:42:44 +0200
+Message-ID: <a1b6cb1b0809101042x2d097524q7b95d4164141a443@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Sep 10 19:44:01 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KdTZh-0001w0-G7
-	for gcvg-git-2@gmane.org; Wed, 10 Sep 2008 19:33:53 +0200
+	id 1KdTjP-0005FR-2s
+	for gcvg-git-2@gmane.org; Wed, 10 Sep 2008 19:43:55 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751446AbYIJRcq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 10 Sep 2008 13:32:46 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751425AbYIJRcq
-	(ORCPT <rfc822;git-outgoing>); Wed, 10 Sep 2008 13:32:46 -0400
-Received: from yugo.dsd.sztaki.hu ([195.111.2.114]:40163 "EHLO
-	yugo.frugalware.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751232AbYIJRcp (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 10 Sep 2008 13:32:45 -0400
-Received: from vmobile.example.net (dsl5401CEA5.pool.t-online.hu [84.1.206.165])
-	by yugo.frugalware.org (Postfix) with ESMTPA id 11531149C5E;
-	Wed, 10 Sep 2008 19:32:44 +0200 (CEST)
-Received: by vmobile.example.net (Postfix, from userid 1003)
-	id C7E8384CA; Wed, 10 Sep 2008 19:32:44 +0200 (CEST)
-X-Mailer: git-send-email 1.6.0.1
-In-Reply-To: <7vljy03m2m.fsf@gitster.siamese.dyndns.org>
+	id S1752879AbYIJRmr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 10 Sep 2008 13:42:47 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752724AbYIJRmq
+	(ORCPT <rfc822;git-outgoing>); Wed, 10 Sep 2008 13:42:46 -0400
+Received: from yw-out-2324.google.com ([74.125.46.31]:54565 "EHLO
+	yw-out-2324.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752585AbYIJRmq (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 10 Sep 2008 13:42:46 -0400
+Received: by yw-out-2324.google.com with SMTP id 9so480985ywe.1
+        for <git@vger.kernel.org>; Wed, 10 Sep 2008 10:42:44 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to
+         :subject:mime-version:content-type:content-transfer-encoding
+         :content-disposition;
+        bh=xU1NpOnAqLVgv/CxnWcudkn+4w8d82rnmBN0fjlgPS8=;
+        b=M0ogKBt4+KCMUV1v+RUe93J72v06PF+3NmgXH0QakntCgLoCgu608+p4ojfSP8mUzT
+         bUnHTOYAtSx9WEx+h/QRzjGlqSg2WQ7n5i2LC0buhdpMRtLTatriQ14MCI7B4K4hSnlM
+         Q3vP6T4kcqE7SywfeKsJYm/xyyLEkX0cpwkTQ=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:to:subject:mime-version:content-type
+         :content-transfer-encoding:content-disposition;
+        b=TshZBzfNsX3Tf9B4vFMtbAq28rVB8Rfzotk/Fv3uN8hdTk9pIZDTahvb74oqt5nMvu
+         1RLFRwMYEAtj7uKtam5CciFkWZUlm/Zp3e5upeqYndjmTVdxvQeHtQr6a9hmopUTeFSc
+         Y/DpvwNI25Yq+4C4xrZMwgJIRbPvEiOZwoWac=
+Received: by 10.100.4.1 with SMTP id 1mr1783222and.149.1221068564724;
+        Wed, 10 Sep 2008 10:42:44 -0700 (PDT)
+Received: by 10.100.41.13 with HTTP; Wed, 10 Sep 2008 10:42:44 -0700 (PDT)
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/95541>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/95542>
 
-This should make the output more readable (by default using diff -u)
-when some tests fail.
-
-Also changed the diff order from "current expected" to "expected
-current".
-
-Signed-off-by: Miklos Vajna <vmiklos@frugalware.org>
----
-
-On Tue, Sep 09, 2008 at 05:02:09PM -0700, Junio C Hamano <gitster@pobox.com> wrote:
-> > We seem to use the convention of
-> >
-> >   test_cmp <expected> <actual>
-> >
-> > elsewhere, rather than
-> >
-> >   test_cmp <actual> <expected>
-> >
-> > as you have here.  Most noticeably, that means the diff will show
-> > deviations from expected, rather "what should be done to make this
-> > as expected".
+Matthieu Moy <Matthieu.Moy@imag.fr>:
 >
-> Yes, please.
+>>Russell King <rmk@arm.linux.org.uk> writes:
+>>
+>> Hi,
+>>
+>> Using git 1.5.4.5, I notice that the result from git merge and git commit
+>> are different in an unexpected way.
+>>
+>> Take the following tree:
+>>
+>>      B---C---D---E2
+>>     /
+>>   -A1
+>>     \
+>>      F---G---H---I3
+>>
+>> (letters represent commits, numbers represent where the references are).
+>>
+>> Your current head is '1', and you want to merge branches '2' and '3', so
+>> you use:
+>>
+>>      git merge 2 3
+>
+>AAUI, "git merge 2 3" doesn't mean "merge 2 and 3 together", but
+>"merge 2 and 3 with the current HEAD". So, what you wanted was :
+>
+>git checkout 1
+>git merge 2
+>
+>And what you did was an octopus merge of A, E and I (which ends up
+>being the same since A is anyway the common ancestor of E and I).
+>
+>Now, this doesn't explain why the conflicted merge gives a result
+>different from the other.
+>
 
-Here is an updated patch that does this as well.
+(I'm not on the list, please CC)
 
- t/t7501-commit.sh |   12 ++++++------
- 1 files changed, 6 insertions(+), 6 deletions(-)
+Reading the whole thread I think we have an explanation: octupus-merge
+learned to remove reduntant parents and does so in the clean merge
+case, but merge in general does not it; this is what happens in the
+conflict case.
 
-diff --git a/t/t7501-commit.sh b/t/t7501-commit.sh
-index 469bff8..63bfc6d 100755
---- a/t/t7501-commit.sh
-+++ b/t/t7501-commit.sh
-@@ -141,7 +141,7 @@ EOF
- 
- test_expect_success \
-     'validate git rev-list output.' \
--    'diff current expected'
-+    'test_cmp expected current'
- 
- test_expect_success 'partial commit that involves removal (1)' '
- 
-@@ -151,7 +151,7 @@ test_expect_success 'partial commit that involves removal (1)' '
- 	git commit -m "Partial: add elif" elif &&
- 	git diff-tree --name-status HEAD^ HEAD >current &&
- 	echo "A	elif" >expected &&
--	diff expected current
-+	test_cmp expected current
- 
- '
- 
-@@ -160,7 +160,7 @@ test_expect_success 'partial commit that involves removal (2)' '
- 	git commit -m "Partial: remove file" file &&
- 	git diff-tree --name-status HEAD^ HEAD >current &&
- 	echo "D	file" >expected &&
--	diff expected current
-+	test_cmp expected current
- 
- '
- 
-@@ -171,7 +171,7 @@ test_expect_success 'partial commit that involves removal (3)' '
- 	git commit -m "Partial: modify elif" elif &&
- 	git diff-tree --name-status HEAD^ HEAD >current &&
- 	echo "M	elif" >expected &&
--	diff expected current
-+	test_cmp expected current
- 
- '
- 
-@@ -187,7 +187,7 @@ test_expect_success 'amend commit to fix author' '
- 		expected &&
- 	git commit --amend --author="$author" &&
- 	git cat-file -p HEAD > current &&
--	diff expected current
-+	test_cmp expected current
- 
- '
- 
-@@ -256,7 +256,7 @@ test_expect_success 'amend commit to fix author' '
- 		expected &&
- 	git commit --amend --author="$author" &&
- 	git cat-file -p HEAD > current &&
--	diff expected current
-+	test_cmp expected current
- 
- '
- 
--- 
-1.6.0.1
+However it remains that three parents are to be expected with the
+given user action
+
+Ulrik Sverdrup
