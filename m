@@ -1,45 +1,78 @@
-From: Karl =?iso-8859-1?Q?Hasselstr=F6m?= <kha@treskal.com>
-Subject: Re: [StGit PATCH] Add support for initializing a branch for stgit from Emacs.
-Date: Wed, 10 Sep 2008 17:58:06 +0200
-Message-ID: <20080910155806.GB26098@diana.vm.bytemark.co.uk>
-References: <878wu1904l.fsf@lysator.liu.se>
+From: Paolo Bonzini <bonzini@gnu.org>
+Subject: Re: [RFC] origin link for cherry-pick and revert
+Date: Wed, 10 Sep 2008 17:37:05 +0200
+Message-ID: <48C7E9A1.5080409@gnu.org>
+References: <20080909132212.GA25476@cuci.nl> <m3zlmhnx1z.fsf@localhost.localdomain> <20080909194354.GA13634@cuci.nl> <alpine.LFD.1.10.0809091631250.3117@nehalem.linux-foundation.org> <20080909235848.GE7459@cuci.nl> <alpine.LFD.1.10.0809091722010.3384@nehalem.linux-foundation.org> <48C785C3.9010204@gnu.org> <alpine.LFD.1.10.0809100830570.3384@nehalem.linux-foundation.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Catalin Marinas <catalin.marinas@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: David =?iso-8859-1?Q?K=E5gedal?= <davidk@lysator.liu.se>
-X-From: git-owner@vger.kernel.org Wed Sep 10 17:37:09 2008
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: "Stephen R. van den Berg" <srb@cuci.nl>,
+	Jakub Narebski <jnareb@gmail.com>, git@vger.kernel.org
+To: Linus Torvalds <torvalds@linux-foundation.org>
+X-From: git-owner@vger.kernel.org Wed Sep 10 17:38:23 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KdRki-00024T-92
-	for gcvg-git-2@gmane.org; Wed, 10 Sep 2008 17:37:08 +0200
+	id 1KdRlq-0002Qt-9E
+	for gcvg-git-2@gmane.org; Wed, 10 Sep 2008 17:38:18 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752204AbYIJPgA convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 10 Sep 2008 11:36:00 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752148AbYIJPgA
-	(ORCPT <rfc822;git-outgoing>); Wed, 10 Sep 2008 11:36:00 -0400
-Received: from diana.vm.bytemark.co.uk ([80.68.90.142]:1866 "EHLO
-	diana.vm.bytemark.co.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752021AbYIJPf7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 10 Sep 2008 11:35:59 -0400
-Received: from kha by diana.vm.bytemark.co.uk with local (Exim 3.36 #1 (Debian))
-	id 1KdS50-0006oh-00; Wed, 10 Sep 2008 16:58:06 +0100
-Content-Disposition: inline
-In-Reply-To: <878wu1904l.fsf@lysator.liu.se>
-X-Manual-Spam-Check: kha@treskal.com, clean
-User-Agent: Mutt/1.5.9i
+	id S1752382AbYIJPhM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 10 Sep 2008 11:37:12 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752394AbYIJPhL
+	(ORCPT <rfc822;git-outgoing>); Wed, 10 Sep 2008 11:37:11 -0400
+Received: from mail-gx0-f16.google.com ([209.85.217.16]:46922 "EHLO
+	mail-gx0-f16.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752370AbYIJPhK (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 10 Sep 2008 11:37:10 -0400
+Received: by gxk9 with SMTP id 9so13948264gxk.13
+        for <git@vger.kernel.org>; Wed, 10 Sep 2008 08:37:08 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from
+         :user-agent:mime-version:to:cc:subject:references:in-reply-to
+         :content-type:content-transfer-encoding:sender;
+        bh=u6RlS1FmXmBXjaJ4Qk2klEWdPj9qakhstnNsLklzn/w=;
+        b=epkeXkPxEtLlUoIcGpqcYksT6L/Uxlyx7fr8IbS75ARDKGuY/dxpNB1gbRSB+n8TU3
+         v7e4S3pjJ5vfh9/7QGd4vDGUBsL822r6sKfVRuhTu6JbGm0tDXGvX0fQcoHEQiW1jvDo
+         9eSB3FReiIZdHs/cwzWKseWq0/pnRPz6eOI58=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:user-agent:mime-version:to:cc:subject
+         :references:in-reply-to:content-type:content-transfer-encoding
+         :sender;
+        b=T/fBB3qTIr0IT5fcC02wQWFhavANPA44mjVt6nL7+U8nY0HeQ//D2yKvNFchYEH2jH
+         Q3AHN3KId7keXpmj868/AoY7IufAgSuh509+9UfnH9h2V+lCL9cGALu5oFa0iojv3wnp
+         GGhRkE3033yAgvCSVVjn0MtfuE7Zgodz2sYoQ=
+Received: by 10.86.95.20 with SMTP id s20mr1067659fgb.49.1221061027550;
+        Wed, 10 Sep 2008 08:37:07 -0700 (PDT)
+Received: from scientist-2.mobile.usilu.net ( [195.176.179.202])
+        by mx.google.com with ESMTPS id 12sm7591910fgg.0.2008.09.10.08.37.06
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Wed, 10 Sep 2008 08:37:06 -0700 (PDT)
+User-Agent: Thunderbird 2.0.0.16 (Macintosh/20080707)
+In-Reply-To: <alpine.LFD.1.10.0809100830570.3384@nehalem.linux-foundation.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/95531>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/95532>
 
-Thanks, that's a nice addition. (I haven't had the chance to try it
-out yet, though.)
+Linus Torvalds wrote:
+> 
+> On Wed, 10 Sep 2008, Paolo Bonzini wrote:
+>> Not really local data.  More like _weakly referenced_ data.  If it is
+>> there, cool.  If it is not there, no big deal.
+> 
+> You think it's "cool".
+> 
+> I think it is "unreliable, random, and depends on the phase of the moon".
 
---=20
-Karl Hasselstr=F6m, kha@treskal.com
-      www.treskal.com/kalle
+I think that shallow clones are not any different from this.  If the
+required piece of history is there, cool.  If they're not there, no big
+deal.
+
+I understood the hyperbole, but I think that it's not unreliable,
+because all it relies on is the uniqueness of SHA1 values.
+
+Paolo
