@@ -1,81 +1,133 @@
-From: david@lang.hm
-Subject: Re: rsync vs. git-push/pull ? (+kudus)
-Date: Wed, 10 Sep 2008 06:27:22 -0700 (PDT)
-Message-ID: <alpine.DEB.1.10.0809100624130.8096@asgard.lang.hm>
-References: <dfb262380809062311i3fffb900m5d73f5396b403dbe@mail.gmail.com>  <alpine.DEB.1.10.0809062326000.8096@asgard.lang.hm> <dfb262380809092331i3399731cqdec3b2bb79d2fcdd@mail.gmail.com>
+From: "=?UTF-8?Q?Eddy_Petri=C8=99or?=" <eddy.petrisor@gmail.com>
+Subject: Re: [PATCH 0/3] git-svn-externals PoC (in a sh script)
+Date: Wed, 10 Sep 2008 16:56:10 +0300
+Message-ID: <60381eeb0809100656u1117cfb6i72e327495d513f9c@mail.gmail.com>
+References: <60381eeb0808281702q3dc7543enff2b35ebbcc80d08@mail.gmail.com>
+	 <20080829092927.GA7500@yp-box.dyndns.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII; format=flowed
-Cc: git@vger.kernel.org
-To: Ramagudi Naziir <naziirr@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Sep 10 15:29:32 2008
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: base64
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Sep 10 15:58:10 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KdPjN-0007y1-F1
-	for gcvg-git-2@gmane.org; Wed, 10 Sep 2008 15:27:37 +0200
+	id 1KdQCE-00026U-VJ
+	for gcvg-git-2@gmane.org; Wed, 10 Sep 2008 15:57:28 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750925AbYIJN02 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 10 Sep 2008 09:26:28 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750910AbYIJN01
-	(ORCPT <rfc822;git-outgoing>); Wed, 10 Sep 2008 09:26:27 -0400
-Received: from mail.lang.hm ([64.81.33.126]:57090 "EHLO bifrost.lang.hm"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750818AbYIJN01 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 10 Sep 2008 09:26:27 -0400
-Received: from asgard.lang.hm (asgard.lang.hm [10.0.0.100])
-	by bifrost.lang.hm (8.13.4/8.13.4/Debian-3) with ESMTP id m8ADQPco011208;
-	Wed, 10 Sep 2008 06:26:26 -0700
-X-X-Sender: dlang@asgard.lang.hm
-In-Reply-To: <dfb262380809092331i3399731cqdec3b2bb79d2fcdd@mail.gmail.com>
-User-Agent: Alpine 1.10 (DEB 962 2008-03-14)
+	id S1751852AbYIJN4O (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 10 Sep 2008 09:56:14 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751821AbYIJN4N
+	(ORCPT <rfc822;git-outgoing>); Wed, 10 Sep 2008 09:56:13 -0400
+Received: from mail-gx0-f16.google.com ([209.85.217.16]:32814 "EHLO
+	mail-gx0-f16.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751767AbYIJN4M (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 10 Sep 2008 09:56:12 -0400
+Received: by gxk9 with SMTP id 9so13631235gxk.13
+        for <git@vger.kernel.org>; Wed, 10 Sep 2008 06:56:11 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to
+         :subject:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:references;
+        bh=GGGQpNdUqLnecRIvCEdO88JsVxmKmGhGC6dezdgvFFU=;
+        b=ShiLgEHvwx149LGM/6e65nYV21mD2gfcFIj8ZBOxkAEmcKij/86ma6r+qlFC8B8LJf
+         W0D4eqQ6bJgbZ4sCEVCXjwy9NwHxgwvo1uKhUMaeeTTf8jIJi0y2SZhqjQ6f1vS12fPa
+         j2h2m5GLPKa2Crk0UptNRULIB/jItllv2ybnY=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:to:subject:in-reply-to:mime-version
+         :content-type:content-transfer-encoding:content-disposition
+         :references;
+        b=NtrsY4mNw68FSpVjcfUgdGwLLwJkUP3qE43B2ZHP9GNJNyxriXHOzN0JNwwYcDzwQZ
+         Ljv7H+XnPDDchv8j0tIADaQq5npqnqnXOQ6/+d8w3e0MkljzXLgZisUnxdEAkc7CkPEQ
+         tJ/kw7aJvaiNvOmMzPrG3sD3sV1RfDY+oqIek=
+Received: by 10.150.54.1 with SMTP id c1mr2109523yba.62.1221054970902;
+        Wed, 10 Sep 2008 06:56:10 -0700 (PDT)
+Received: by 10.150.182.11 with HTTP; Wed, 10 Sep 2008 06:56:10 -0700 (PDT)
+In-Reply-To: <20080829092927.GA7500@yp-box.dyndns.org>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/95517>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/95518>
 
-On Wed, 10 Sep 2008, Ramagudi Naziir wrote:
-
-> Hi David,
->
-> On Sun, Sep 7, 2008 at 9:27 AM,  <david@lang.hm> wrote:
->> On Sun, 7 Sep 2008, Ramagudi Naziir wrote:
->>
->>> Hi all,
->>>
->>> I have several local git repositories on my machine. I'm the only
->>> user, and use them only locally. Now, sometimes when I need to work
->>> remotely, I just rsync my repositories to my laptop, and keep working
->>> there. When I finish (few hours, days or sometimes weeks later), I
->>> just rsync everything back to my local git repositories on my main
->>> workstation, and continue working there.
->>>
->>> Now I was wondering whether it's OK or whether there are bad
->>> implication I might not think of working this way. For example, maybe
->>> some of these little git files are named differently on each machine,
->>> and rsyncing them back and forth makes me piling a lot of clutter (in
->>> that case maybe git-gc will clean up everything). Or maybe something
->>> else horrid is going on and I really should just use git-push or pull.
->>
->> the git files are names by their content so you don't need to worry about
->> them being named differently
->
-> But can I end up having a lot of clutter ? e.g. if these files change,
-> then rsync will copy the new files, and the old ones will still be
-> kept, piling up like crud. is this correct ? is it problematic ? will
-> git-gc fix it ?
-
-git keeps copies of all the old files around anyway (that's it's purpose 
-after all ;-)
-
-
-when git gc runs it creates pack files to replace the individual files, 
-but unless you run git gc --prune it does not remove anything and the 
-individual files hang around.
-
-so when you do the rsync back and forth you should have it delete files 
-from the target that aren't on the source (or run git gc --prune 
-afterwords)
-
-David Lang
+KFBsZWFzZSBrZWVwIHRoZSBDQy4gVGhhbmtzKQoKMjAwOC84LzI5IEVyaWMgV29uZyA8bm9ybWFs
+cGVyc29uQHloYnQubmV0PjoKPiBFZGR5IFBldHJpyJlvciA8ZWRkeS5wZXRyaXNvckBnbWFpbC5j
+b20+IHdyb3RlOgo+PiBIZWxsbywKPgo+IEhpIEVkZHksCgpIZWxsbyBhbmQgc29ycnkgZm9yIHRo
+ZSBsYXRlIHJlcGx5LgoKKEkgd2FzIG9uIGEgc21hbGwgdmFjYXRpb24gYXdheSBmcm9tIHRoZSBj
+b21wdXRlciBpbiB0aGUgbGFzdCB0d28gd2Vla3MuKQoKPj4gSSBoYXZlIHN0YXJ0ZWQgYSB3aGls
+ZSBiYWNrIHdvcmtpbmcgb24gc3VwcG9ydCBmb3Igc3ZuOmV4dGVybmFscwo+PiBzdXBwb3J0IGZv
+ciBnaXQtc3ZuLCBidXQgc2luY2UgSSdtIG5vdCB0aGF0IHNhdGlzZmllZCB3aXRoIHRoZSBjdXJy
+ZW50Cj4+IHN0YXR1cyBvZiB0aGUgcGF0Y2gsIEkgaGF2ZW4ndCBtb2RpZmllZCBnaXQtc3ZuIGl0
+c2VsZiBhbmQganVzdCBsZWZ0Cj4+IHRoZSBzaCBzY3JpcHQgSSBtYWRlIGFzIGEgUG9DIGFzIGl0
+IHdhcy4KPj4KPj4gVGhlcmUncyBzdGlsbCB3b3JrIHRvIGJlIGRvbmUgdG8gaXQsIGJ1dCBJIHRo
+ZSBjdXJyZW50IHZlcnNpb24gaXMKPj4gZnVuY3Rpb25hbCBlbm91Z2ggdG8gYmUgcHJvYmFibHkg
+Zm91bmQgdXNlZnVsIGJ5IG1vcmUgcGVvcGxlIHRoYW4KPj4gbXlzZWxmLgo+Cj4gQ29vbC4KPgo+
+IEkgZGVmaW5pdGVseSBsaWtlIHRoZSBzZXBhcmF0ZSBzY3JpcHQgYXBwcm9hY2guICBOb3Qgc3Vy
+ZSBpZiB5b3UgcmVhZCBteQo+IHBvc3RzLCB5b3VyIFBvQyBzZWVtcyBpbmxpbmUgd2l0aCBteSB0
+aG91Z2h0cyBvbiBoYW5kbGluZyBleHRlcm5hbHMgYmUKPiBzZWVuIGhlcmU6Cj4KPiBodHRwOi8v
+YXJ0aWNsZS5nbWFuZS5vcmcvZ21hbmUuY29tcC52ZXJzaW9uLWNvbnRyb2wuZ2l0LzkxMjgzCj4g
+aHR0cDovL2FydGljbGUuZ21hbmUub3JnL2dtYW5lLmNvbXAudmVyc2lvbi1jb250cm9sLmdpdC85
+MTI5MwoKV1JUIHRoZSByZXZpc2lvbiBwaW5uaW5nLCBpdCBzZWVtcyB0byBtZSB0aGF0IGlzIGVu
+b3VnaCB0byBsb2NhdGUgdGhhdApyZXZpc2lvbiBvbiB0aGUgVVJJIGluIHF1ZXN0aW9uIGFuZCBj
+aGVja291dCB0aGF0IHJldmlzaW9uLiBTdGlsbCBJIGFtCnVuc3VyZSBpZiBpdCB3b3VsZCBiZSB3
+aXNlIHRvIChzdGFzaCArKSBzdm4gcmViYXNlICsgY2hlY2tvdXQgdGhlCnBpbm5lZCB2ZXJzaW9u
+ICgrIHN0YXNoIHBvcCksIHNpbmNlIG9uZSB3b3VsZCBuZWVkbGVzc2x5IHB1bGwgbmV3ZXIKc3R1
+ZmYgYXMgdGhlIHJlbW90ZSBzdm4gSEVBRCBhZHZhbmNlcywgYnV0IHRoZSBwaW5uZWQgdmVyc2lv
+biBtaWdodApzaW1wbHkgc3RhZ25hdGUuCgoKSSBhbHJlYWR5IGhhdmUvd3JvdGUgc29tZSBjb2Rl
+IHRoYXQgZm9sbG93cyB0aGUgcmVtb3RlIEhFQUQgb3IgYQpzcGVjaWZpYyBmb3IgdGhlIG5lY2Vz
+c2FyeSwgYnV0IEkgYW0gdW5zdXJlIGlmIGlzIHN0aWxsIHByZXNlbnQgaW4gdGhlClBvQyBzY3Jp
+cHQsIGlzIG5vdCB0aGF0IGhhcmQgKGluIHNoIC0gYSAic3ZuIGluZm8iIG9uIHRoZSBVUkksIG5v
+dCBvbgp0aGUgbG9jYWwgY29weSB3b3VsZCByZXZlYWwgdGhlIHJlYWwgcmV2aXNpb24gb2YgdGhl
+IEhFQUQpLgoKPj4gQ3VycmVudCBzdGF0dXMgZm9sbG93czoKPj4KPj4gICAgIEN1cnJlbnQgZnVu
+Y3Rpb25hbGl0eToKPj4gICAgICAtIGZldGNoZXMgYWxsIHRoZSBleHRlcm5hbHMgb2YgYW4gYWxy
+ZWFkeSBzdm4tZmV0Y2hlZCByZXBvCj4+ICAgICAgLSBzdXBwb3J0IGZvciBzdm46ZXh0ZXJuYWxz
+IHJlZnJlc2gKPj4gICAgICAtIGlmIHRoZSBsb2NhdGlvbiBvZiB0aGUgZXh0ZXJuYWwgaGFzIGNo
+YW5nZWQsIHRoZSBjdXJyZW50IHdvcmtpbmcKPj4gICAgICAgIGNvcHkgd2lsbCBiZSBwbGFjZWQg
+YXNpZGUgYW5kIGEgbmV3IGRpcmVjdG9yeSB3aWxsIGJlIGNyZWF0ZWQKPj4gICAgICAgIGluc3Rl
+YWQKPj4gICAgICAtIGlmIHRoZSByZW1vdGUgVVJJIGlzIHRoZSBzYW1lIChtYXliZSBhIHZlcmlz
+b24gYnVtcCwgdGhlcmUgd2lsbAo+PiAgICAgICAgYmUgYSAnZ2l0IHN2biByZWJhc2UnCj4+ICAg
+ICAgLSByZW1vdmUgc3VwcG9ydCAodXNlZnVsIGZvciB0ZXN0aW5nIHB1cnBvc2VzIG9yIGNsZWFu
+IHJlc3RhcnRzKQo+PiAgICAgIC0gYXZvaWQgem9tYmllIGV4dGVybmFscyBhdCBhbGwgY29zdHMg
+LSBpbiBzb21lIHJlcG9zIGVtcHR5Cj4+ICAgICAgICBzdm46ZXh0ZXJuYWxzIG1pZ2h0IGV4aXN0
+OyBzdm4gaWdub3JlcyBzdWNoIGV4dGVybmFscywgc28gZ2l0IHNob3VsZAo+PiAgICAgICAgZG8g
+dGhlIHNhbWUKPj4KPj4gICAgIFRPRE86Cj4+ICAgICAgLSB0YWtlIGludG8gYWNjb3VudCB0aGUg
+cmV2aXNpb24gb2YgYW4gZXh0ZXJuYWwsIGlmIGl0IGV4aXN0cwo+PiAgICAgIC0gZG8gbm90IGRv
+IGRlZXAgc3ZuIGNsb25pbmcsIHRvIGF2b2lkIGxlZ3RoeSBvcGVyYXRpb25zLCBqdXN0IHB1bGwg
+SEVBRAo+PiAgICAgICAgKHRoaXMgYWN0dWFsbHkgbmVlZHMgY2hhbmdlcyBpbiBnaXQtc3ZuIGl0
+c2VsZikKPgo+IGdpdCBzdm4gY2xvbmUgLXI8bGF0ZXN0X3JldmlzaW9uX251bWJlcj4gVVJMIHNo
+b3VsZCB3b3JrIGlmIHlvdSBleHRyYWN0Cj4gdGhlIHJldmlzaW9uIG51bWJlciBlYXNpbHkuCgpX
+aHkgd2FzIEkgdW5kZXIgdGhlIGltcHJlc3Npb24gdGhhdCB0aGlzIHdhc24ndCB3b3JraW5nPyBP
+ciB3YXMgSQpleHBlY3RpbmcgYSBzaGFsbG93IHJlcG8/Cgo+IFNwZWNpZnlpbmcgIi1ySEVBRCIg
+d2lsbCBvbmx5IHdvcmsgaWYgdGhlCj4gYnJhbmNoIG9mIHRoZSBleHRlcm5hbCB5b3UncmUgdHJh
+Y2tpbmcgd2FzIHRoZSBsYXN0IG1vZGlmaWVkIHJldmlzaW9uIGluCj4gdGhlIHJlcG9zaXRvcnks
+IHNvIGl0J3Mgbm90IHZlcnkgdXNlZnVsLgoKYXMgSSBhbHJlYWR5IHNhaWQsICJzdm4gaW5mbyBV
+UkkiIGNhbiByZXR1cm4gdGhlIHJlYWwgcmV2aXNpb24sIG5vCm5lZWQgdG8gbmVzcyB3aXRoIHRo
+ZSBwc2V1ZG8tcmV2aXNpb24gSEVBRC4KCj4gICJzdm4gbG9nIiBzZWVtcyB0byBoYXZlIHRoZQo+
+IHNhbWUgc2VtYW50aWNzIGFzIGdpdC1zdm4gYXMgZmFyIGFzIC1ySEVBRCBiZWluZyB1c2VmdWwg
+b3Igbm90Li4uCj4KPj4gICAgICAtIHVzZS9jcmVhdGUgc2hhbGxvdyBjb3BpZXMgdG8gZ2l0IHN2
+biByZXBvcyAob25lIHJldmlzaW9uIHNob3VsZCBiZSBlbm91Z2gKPj4gICAgICAgIGZvciBtb3N0
+IGV4dGVybmFscykKPj4gICAgICAtIHVzZSBzdWJtb2R1bGVzIGZvciBleHRlcm5hbHMKPgo+IEkn
+bSBub3Qgc3VyZSBpZiBtYXBwaW5nIHN1Ym1vZHVsZXMgdG8gZXh0ZXJuYWxzIGlzIGEgZ29vZCBp
+ZGVhCj4gYmVjYXVzZSBleHRlcm5hbHMgZG9uJ3QgcmVxdWlyZSBleGFjdCByZXZpc2lvbnMgYW5k
+IHN1Ym1vZHVsZXMgZG8uCgpJIGRvbid0IHRoaW5rIEkgY2FuIGZvbGxvdyB5b3UuIEV4dGVybmFs
+cyBhY3R1YWxseSByZXF1aXJlIGV4YWN0CnJldmlzaW9ucyBvciBjYW4gYmUgbWFkZSB0byBwcmV0
+ZW5kIGFzIGlmIHRoZXkgZG8gaW4gZ2l0LXN2biBjb250ZXh0CndpdGggY29udGludW91cyBIRUFE
+IHJlZnJlc2guCgo+IFRoZXJlJ3MgYWxzbyBhbiBpc3N1ZSBJIHdhcyBqdXN0IG1hZGUgYXdhcmUg
+b2YgdHdvIGRheXMgYWdvIHdpdGgKPiBzdWJtb2R1bGVzIGFuZCBnaXQtc3ZuIHRoYXQgSSBoYXZl
+bid0IGhhZCB0aW1lIHRvIHdvcmsgb24uCj4KPiBBbm90aGVyIHVzZXIgYWxzbyBwcml2YXRlbHkg
+cmVwb3J0ZWQgYSBidWcgdG8gbWUgYWJvdXQgZ2l0LXN2biBoYXZpbmcKPiB0cm91YmxlIGRjb21t
+aXR0aW5nIHdoZW4gdXNpbmcgc3VibW9kdWxlcy4gIEkndmUgYXR0YWNoZWQgdGhlIHRlc3QgY2Fz
+ZQo+IGhlcmUgaW4gY2FzZSB5b3UgaGF2ZSBhbnkgdGhvdWdodHMgb24gaG93IHRvIGhhbmRsZSB0
+aGlzIChJIHRoaW5rIHRoZQo+IGVhc2llc3Qgd291bGQgYmUgdG8gaWdub3JlIHN1Ym1vZHVsZXMg
+b24gZGNvbW1pdCBlbnRpcmVseSkuCgpQcm9iYWJseSwgYW5kIHRyeSBsYXRlciB0byB0YWNrbGUg
+dGhlIHByb2JsZW0uCgo+PiBBbnkgY29tbWVudHMgYXJlIHdlbGNvbWUuCj4KPiBBbHNvIHNvbWUg
+c21hbGwgcG9ydGFiaWxpdHkgaXNzdWVzOiAiZ3JlcCAtcSIgaXMgZGVmaW5pdGVseSB1bnBvcnRh
+YmxlCj4gaW4gbXkgZXhwZXJpZW5jZS4gIFRoZXJlIGFyZSBwcm9iYWJseSBzb21lIG1vcmUgdGhh
+dCBJIGFtIG1pc3NpbmcgbXkgZXllCj4gYXQgdGhpcyB0aW1lIG9mIG5pZ2h0Li4uCgpXaWxsIGZp
+eCBpdC4KCi0tIApSZWdhcmRzLApFZGR5UAo9PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09
+PT09PT09PT09PT09PT0KIkltYWdpbmF0aW9uIGlzIG1vcmUgaW1wb3J0YW50IHRoYW4ga25vd2xl
+ZGdlIiBBLkVpbnN0ZWluCg==
