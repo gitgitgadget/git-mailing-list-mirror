@@ -1,89 +1,83 @@
-From: "Ramagudi Naziir" <naziirr@gmail.com>
+From: Matthieu Moy <Matthieu.Moy@imag.fr>
 Subject: Re: rsync vs. git-push/pull ? (+kudus)
-Date: Wed, 10 Sep 2008 09:35:44 +0300
-Message-ID: <dfb262380809092335q3d61488gf680c91ac23e69da@mail.gmail.com>
+Date: Wed, 10 Sep 2008 09:05:28 +0200
+Message-ID: <vpqej3sa3bb.fsf@bauges.imag.fr>
 References: <dfb262380809062311i3fffb900m5d73f5396b403dbe@mail.gmail.com>
-	 <20080907073821.GA28289@linode.davidb.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-To: "David Brown" <git@davidb.org>
-X-From: git-owner@vger.kernel.org Wed Sep 10 08:37:16 2008
+To: "Ramagudi Naziir" <naziirr@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Sep 10 09:08:32 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KdJK8-0000Mt-Oy
-	for gcvg-git-2@gmane.org; Wed, 10 Sep 2008 08:37:09 +0200
+	id 1KdJoT-0008Kd-Ow
+	for gcvg-git-2@gmane.org; Wed, 10 Sep 2008 09:08:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751559AbYIJGfq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 10 Sep 2008 02:35:46 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751767AbYIJGfq
-	(ORCPT <rfc822;git-outgoing>); Wed, 10 Sep 2008 02:35:46 -0400
-Received: from rv-out-0506.google.com ([209.85.198.225]:50218 "EHLO
-	rv-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751075AbYIJGfp (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 10 Sep 2008 02:35:45 -0400
-Received: by rv-out-0506.google.com with SMTP id k40so2254633rvb.1
-        for <git@vger.kernel.org>; Tue, 09 Sep 2008 23:35:44 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to
-         :subject:cc:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:references;
-        bh=dMiAZ09HFvql8P1S5MmpXcoz0ZtmD82eX5ZZoQqQYIM=;
-        b=uKR6bLaYqM5xLmQqGnJ7KoRAnVkCz62Uz7QMnx6wZ2PyvjDedrCQLlnkP0W0q9n6Ip
-         fskfYtlCwLRwIl+zDcSxRu5bC0TyeIRqL1TnZw4Vn/Yiz8cHJMAdxhPVRdEkDfd0dSI4
-         +oq/Bg8ciU9APSxtIz9eYaW1Sl7r3cLN90Ag4=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
-         :content-type:content-transfer-encoding:content-disposition
-         :references;
-        b=u+cLieT0JFKB0KQf77b8vMPufmNRcHi13P0WQzmHBVx5O5ZvmLsi3Y7ZgbQG+tWoE7
-         d3OBMU4ZmOQ6u1rQGyxtqJ9UUZMKrm+WGby7p2hq9Y5ZuXG2yWUs6/6zF3mFsoOdratw
-         I5+dULE6BjMrDKa0h22JPwMxX8LCByukifv7E=
-Received: by 10.140.188.19 with SMTP id l19mr520853rvf.79.1221028544379;
-        Tue, 09 Sep 2008 23:35:44 -0700 (PDT)
-Received: by 10.141.29.1 with HTTP; Tue, 9 Sep 2008 23:35:44 -0700 (PDT)
-In-Reply-To: <20080907073821.GA28289@linode.davidb.org>
-Content-Disposition: inline
+	id S1751258AbYIJHHS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 10 Sep 2008 03:07:18 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751142AbYIJHHS
+	(ORCPT <rfc822;git-outgoing>); Wed, 10 Sep 2008 03:07:18 -0400
+Received: from imag.imag.fr ([129.88.30.1]:34090 "EHLO imag.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751233AbYIJHHQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 10 Sep 2008 03:07:16 -0400
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by imag.imag.fr (8.13.8/8.13.8) with ESMTP id m8A75Xlq016235
+	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
+	Wed, 10 Sep 2008 09:05:33 +0200 (CEST)
+Received: from bauges.imag.fr ([129.88.43.5])
+	by mail-veri.imag.fr with esmtps (TLS-1.0:RSA_AES_256_CBC_SHA:32)
+	(Exim 4.50)
+	id 1KdJlY-0006Fg-GS; Wed, 10 Sep 2008 09:05:28 +0200
+Received: from moy by bauges.imag.fr with local (Exim 4.63)
+	(envelope-from <moy@imag.fr>)
+	id 1KdJlY-0003Tz-E6; Wed, 10 Sep 2008 09:05:28 +0200
+In-Reply-To: <dfb262380809062311i3fffb900m5d73f5396b403dbe@mail.gmail.com> (Ramagudi Naziir's message of "Sun\, 7 Sep 2008 09\:11\:47 +0300")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.1 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-3.0 (imag.imag.fr [129.88.30.1]); Wed, 10 Sep 2008 09:05:33 +0200 (CEST)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM for more information
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: moy@imag.fr
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/95488>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/95489>
 
-Hi David,
+"Ramagudi Naziir" <naziirr@gmail.com> writes:
 
-On Sun, Sep 7, 2008 at 10:38 AM, David Brown <git@davidb.org> wrote:
-> On Sun, Sep 07, 2008 at 09:11:47AM +0300, Ramagudi Naziir wrote:
+> Hi all,
 >
->> I really prefer rsync to git-push/pull since it is much more easier -
->> It's one command that syncs my whole working folder, including the git
->> repositories..
+> I have several local git repositories on my machine. I'm the only
+> user, and use them only locally. Now, sometimes when I need to work
+> remotely, I just rsync my repositories to my laptop, and keep working
+> there. When I finish (few hours, days or sometimes weeks later), I
+> just rsync everything back to my local git repositories on my main
+> workstation, and continue working there.
 >
-> I used to do this quite a bit until after a few times I forgot to sync
-> before changing things.  I solved this by creating a bare repo I could
-> push/pull from, and pushing one of them to it, then fetching and
-> merging in the other.
+> Now I was wondering whether it's OK or whether there are bad
 
-can you please elaborate on this technique ? I don't really get it.
-You mean you have an empty git repository somewhere, with which you
-are synchronizing all other repositories ?
->
-> After getting more familiar with git, I now use git with push/pull for
-> pretty much anything I want synchronized.  It nicely keeps track of
-> what I've done, whereas it is easier with rsync, or even unison, to
-> forget to do the sync.
+Clearly, it's more risky to use rsync: git knows which repository is
+ahead of the other, knows it has to do a merge in case the two
+diverged, ... but if you really know what you're doing, this should be
+OK.
 
-so you have myriad of git repositories ? and you push/pull all of them
-every time you move to another station ? I also have a lot of git
-repositories, even for stuff other than source code projects.
+Technically, there's at least one case which can be problematic if you
+"rsync" without "--delete": packed references. For example, the tip of
+the master branch is normally stored in .git/refs/heads/master, but
+after packing, git removes this file, and puts all the references in
+.git/packed-refs (so it's just 1 file, eats less inodes, less
+round-trips for HTTP fetch, ...). Then, if .git/refs/heads/master is
+re-created, it takes precedence over .git/packed-refs. So if you 
+"git gc" locally, and then "rsync remote/ local/", you'll end up with
+an old .git/refs/heads/master that overrides the new .git/packed-refs,
+and git will behave as if you went backwards in history.
 
-thank you
-naziir
->
-> David
->
+Easily fixable, but I've been hit by this once and took time to
+understand what was happening ;-).
+
+-- 
+Matthieu
