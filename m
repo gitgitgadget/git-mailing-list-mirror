@@ -1,91 +1,109 @@
-From: "Mark Levedahl" <mlevedahl@gmail.com>
-Subject: Re: Commit 140b378d07229e breaks gitk highlighting
-Date: Wed, 10 Sep 2008 16:03:35 -0400
-Message-ID: <30e4a070809101303u15b98bd5uc11f545fdb5a8835@mail.gmail.com>
-References: <30e4a070809090531i6c6dd2c8r189e70927b5444c9@mail.gmail.com>
-	 <7vtzcnx0uc.fsf@gitster.siamese.dyndns.org>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: "Git Mailing List" <git@vger.kernel.org>,
-	"=?ISO-8859-1?Q?Karl_Hasselstr=F6m?=" <kha@treskal.com>,
-	"Paul Mackerras" <paulus@samba.org>
-To: "Junio C Hamano" <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Sep 10 22:06:13 2008
+From: Miklos Vajna <vmiklos@frugalware.org>
+Subject: [PATCH 3/3] t7603: add new testcases to ensure builtin-commit uses reduce_heads()
+Date: Wed, 10 Sep 2008 22:10:33 +0200
+Message-ID: <e2b601d3a89785ec9da5de061adc37693a3bd323.1221077214.git.vmiklos@frugalware.org>
+References: <cover.1221077214.git.vmiklos@frugalware.org>
+ <11d30964e7de652a790f5362f0b49e2a19de17ee.1221077214.git.vmiklos@frugalware.org>
+ <2984711bae2f0777b210ed04210693ac02164519.1221077214.git.vmiklos@frugalware.org>
+Cc: Russell King <rmk@arm.linux.org.uk>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Sep 10 22:11:52 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KdVw3-0001XX-1d
-	for gcvg-git-2@gmane.org; Wed, 10 Sep 2008 22:05:38 +0200
+	id 1KdW2S-0003is-I2
+	for gcvg-git-2@gmane.org; Wed, 10 Sep 2008 22:11:45 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752168AbYIJUDi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 10 Sep 2008 16:03:38 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752145AbYIJUDi
-	(ORCPT <rfc822;git-outgoing>); Wed, 10 Sep 2008 16:03:38 -0400
-Received: from yw-out-2324.google.com ([74.125.46.30]:39990 "EHLO
-	yw-out-2324.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751928AbYIJUDh (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 10 Sep 2008 16:03:37 -0400
-Received: by yw-out-2324.google.com with SMTP id 9so6608ywe.1
-        for <git@vger.kernel.org>; Wed, 10 Sep 2008 13:03:36 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to
-         :subject:cc:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:references;
-        bh=1fYog8Z+0UhNIuc95H6xCj+OG3WXRodct7/n1G8zJLY=;
-        b=vI0xKw9Yuk5exT3DAUOTwxzEGWUQBzE50+CDnNBJ8PE1TGfekvZvqPCvx8SB1KgdEN
-         t3ClHUUVg0ciM+V1uu3KPwESxFV1pyNIa0MHuT4QsOO5izFy7YUCQAd3uyFHCeoPWeHA
-         pALqi/lrTQzROuGXZFdZQ3z7yN36j+bOBVAHA=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
-         :content-type:content-transfer-encoding:content-disposition
-         :references;
-        b=LtPFzK6J1bKplvBxGNk/v+ym/o35cntRJVslvbcPVzw0pQ51RHrBmXtc6NRxk+SN3m
-         diosx3CKfOGOZmaymbUxDBOPDmGYc57j0slanPTdrIbFG9JD/6ZpeQsSuhNudbzk5KPi
-         VFLJ3IU/LkDt0KnAkyfrZHj1c9o6tRn0pmpWg=
-Received: by 10.187.163.5 with SMTP id q5mr201053fao.44.1221077015054;
-        Wed, 10 Sep 2008 13:03:35 -0700 (PDT)
-Received: by 10.187.158.14 with HTTP; Wed, 10 Sep 2008 13:03:35 -0700 (PDT)
-In-Reply-To: <7vtzcnx0uc.fsf@gitster.siamese.dyndns.org>
-Content-Disposition: inline
+	id S1752210AbYIJUKg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 10 Sep 2008 16:10:36 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752213AbYIJUKf
+	(ORCPT <rfc822;git-outgoing>); Wed, 10 Sep 2008 16:10:35 -0400
+Received: from yugo.dsd.sztaki.hu ([195.111.2.114]:36732 "EHLO
+	yugo.frugalware.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751521AbYIJUKe (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 10 Sep 2008 16:10:34 -0400
+Received: from vmobile.example.net (dsl5401CEA5.pool.t-online.hu [84.1.206.165])
+	by yugo.frugalware.org (Postfix) with ESMTPA id 433C1149C61;
+	Wed, 10 Sep 2008 22:10:33 +0200 (CEST)
+Received: by vmobile.example.net (Postfix, from userid 1003)
+	id BAD8784CC; Wed, 10 Sep 2008 22:10:33 +0200 (CEST)
+X-Mailer: git-send-email 1.6.0.1
+In-Reply-To: <2984711bae2f0777b210ed04210693ac02164519.1221077214.git.vmiklos@frugalware.org>
+In-Reply-To: <cover.1221077214.git.vmiklos@frugalware.org>
+References: <cover.1221077214.git.vmiklos@frugalware.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/95549>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/95550>
 
-On Wed, Sep 10, 2008 at 3:22 PM, Junio C Hamano <gitster@pobox.com> wrote:
->
-> Feeding the following to "git diff-tree -r -s --stdin -- t" misbehaves
-> with that change.  The second line is skipped.
->
-> 7c4d0219cf9ab6a7738a09ad7fec72d5e9f2ac67
-> a786091b4a487bc08bbff4864717cf5d8383e983
-> 4a09bc966449ca0a7e9a5bb70f91b47debdd7c4e
->
-> This should fix it.
->
+Signed-off-by: Miklos Vajna <vmiklos@frugalware.org>
+---
+ t/t7603-merge-reduce-heads.sh |   53 +++++++++++++++++++++++++++++++++++++++++
+ 1 files changed, 53 insertions(+), 0 deletions(-)
 
-> diff --git a/builtin-diff-tree.c b/builtin-diff-tree.c
-> index 1138c2d..a9e32c9 100644
-> --- a/builtin-diff-tree.c
-> +++ b/builtin-diff-tree.c
-> @@ -71,8 +71,7 @@ static int diff_tree_stdin(char *line)
->        line[len-1] = 0;
->        if (get_sha1_hex(line, sha1))
->                return -1;
-> -       obj = lookup_object(sha1);
-> -       obj = obj ? obj : parse_object(sha1);
-> +       obj = parse_object(sha1);
->        if (!obj)
->                return -1;
->        if (obj->type == OBJ_COMMIT)
->
-
-Yes, that fixes the problems I see.
-
-Thanks,
-Mark
+diff --git a/t/t7603-merge-reduce-heads.sh b/t/t7603-merge-reduce-heads.sh
+index b47b7b9..7e17eb4 100755
+--- a/t/t7603-merge-reduce-heads.sh
++++ b/t/t7603-merge-reduce-heads.sh
+@@ -60,4 +60,57 @@ test_expect_success 'merge c1 with c2, c3, c4, c5' '
+ 	test -f c5.c
+ '
+ 
++test_expect_success 'setup' '
++	for i in A B C D E
++	do
++		echo $i > $i.c &&
++		git add $i.c &&
++		git commit -m $i &&
++		git tag $i
++	done &&
++	git reset --hard A &&
++	for i in F G H I
++	do
++		echo $i > $i.c &&
++		git add $i.c &&
++		git commit -m $i &&
++		git tag $i
++	done
++'
++
++test_expect_success 'merge E and I' '
++	git reset --hard A &&
++	git merge E I
++'
++
++test_expect_success 'verify merge result' '
++	test $(git rev-parse HEAD^1) = $(git rev-parse E) &&
++	test $(git rev-parse HEAD^2) = $(git rev-parse I)
++'
++
++test_expect_success 'add conflicts' '
++	git reset --hard E &&
++	echo foo > file.c &&
++	git add file.c &&
++	git commit -m E2 &&
++	git tag E2 &&
++	git reset --hard I &&
++	echo bar >file.c &&
++	git add file.c &&
++	git commit -m I2 &&
++	git tag I2
++'
++
++test_expect_success 'merge E2 and I2, causing a conflict and resolve it' '
++	git reset --hard A &&
++	test_must_fail git merge E2 I2 &&
++	echo baz > file.c &&
++	git add file.c &&
++	git commit -m "resolve conflict"
++'
++
++test_expect_success 'verify merge result' '
++	test $(git rev-parse HEAD^1) = $(git rev-parse E2) &&
++	test $(git rev-parse HEAD^2) = $(git rev-parse I2)
++'
+ test_done
+-- 
+1.6.0.1
