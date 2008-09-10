@@ -1,93 +1,121 @@
-From: "Eric Raible" <raible@gmail.com>
-Subject: RFC: perhaps a "new file" should not be deleted by "git reset --hard"
-Date: Wed, 10 Sep 2008 12:12:21 -0700
-Message-ID: <279b37b20809101212g57e9ad99qbf6fa15888679894@mail.gmail.com>
+From: Simon Hausmann <simon@lst.de>
+Subject: Re: PATCH: git-p4 optional handling of RCS keywords
+Date: Wed, 10 Sep 2008 21:18:52 +0200
+Message-ID: <200809102119.01630.simon@lst.de>
+References: <646617.59689.qm@web95011.mail.in2.yahoo.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: multipart/signed;
+  boundary="nextPart5138431.danGmDdy0Z";
+  protocol="application/pgp-signature";
+  micalg=pgp-sha1
 Content-Transfer-Encoding: 7bit
-To: "Git Mailing List" <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Wed Sep 10 21:13:39 2008
+Cc: Junio C Hamano <gitster@pobox.com>, GIT SCM <git@vger.kernel.org>,
+	Jing Xue <jingxue@digizenstudio.com>
+To: dhruva <dhruva@ymail.com>
+X-From: git-owner@vger.kernel.org Wed Sep 10 21:20:25 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KdV87-00015O-7z
-	for gcvg-git-2@gmane.org; Wed, 10 Sep 2008 21:13:31 +0200
+	id 1KdVEg-0003Oe-3T
+	for gcvg-git-2@gmane.org; Wed, 10 Sep 2008 21:20:18 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751508AbYIJTMY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 10 Sep 2008 15:12:24 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751078AbYIJTMY
-	(ORCPT <rfc822;git-outgoing>); Wed, 10 Sep 2008 15:12:24 -0400
-Received: from mail-gx0-f16.google.com ([209.85.217.16]:44961 "EHLO
-	mail-gx0-f16.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751258AbYIJTMX (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 10 Sep 2008 15:12:23 -0400
-Received: by gxk9 with SMTP id 9so14572770gxk.13
-        for <git@vger.kernel.org>; Wed, 10 Sep 2008 12:12:22 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to
-         :subject:mime-version:content-type:content-transfer-encoding
-         :content-disposition;
-        bh=C7OsIsBnRW6euhyis9BUOYgOad0nP/Bq6GB8OvhRBWw=;
-        b=ARmpFj25ANW1r5s/UdCoj/0xqtguQqVIKlI3/Qi6oFI/Em41/mMaMhjeIxD/B+oX7A
-         cEKSl84TSDXlwnnKlzHQOqrDQo12pkjeYyU6PpDhOOlk/D8Orqe9+cc3k+chKSoj3rT7
-         WTX0sUAIEtrcrWNz47YPe8loB5m/WiiJXZeYo=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:mime-version:content-type
-         :content-transfer-encoding:content-disposition;
-        b=dfwchRQbremlhos5W4Cd8Sp6za8wpKwrEEUYisIY3mc5DsDtXF4vQZes50ALx29NsH
-         E4HUYkjbpoheDscW4Ioqu6U0Z4ZMhbhGAfAXSD3ix9JJ3qIHvXa1iFNoB0p3ApYRxmPO
-         DMVjEGVNKO8EQm4BiZbixAImbg3QYZQEmfcVQ=
-Received: by 10.150.95.15 with SMTP id s15mr2520883ybb.210.1221073941362;
-        Wed, 10 Sep 2008 12:12:21 -0700 (PDT)
-Received: by 10.151.113.10 with HTTP; Wed, 10 Sep 2008 12:12:21 -0700 (PDT)
-Content-Disposition: inline
+	id S1751633AbYIJTTK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 10 Sep 2008 15:19:10 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751546AbYIJTTJ
+	(ORCPT <rfc822;git-outgoing>); Wed, 10 Sep 2008 15:19:09 -0400
+Received: from hoat.troll.no ([62.70.27.150]:58508 "EHLO hoat.troll.no"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751258AbYIJTTI (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 10 Sep 2008 15:19:08 -0400
+Received: from hoat.troll.no (tedur.troll.no [62.70.27.154])
+	by hoat.troll.no (Postfix) with SMTP id 4C003209FF;
+	Wed, 10 Sep 2008 21:19:02 +0200 (CEST)
+Received: from rani.localnet (unknown [172.20.1.59])
+	by hoat.troll.no (Postfix) with ESMTP id 2D7EC20995;
+	Wed, 10 Sep 2008 21:19:02 +0200 (CEST)
+User-Agent: KMail/1.10.1 (Linux/2.6.26-5-generic; KDE/4.1.1; i686; ; )
+In-Reply-To: <646617.59689.qm@web95011.mail.in2.yahoo.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/95546>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/95547>
 
-In http://marc.theaimsgroup.com/?l=git&m=114917892328066
-(references by http://git.or.cz/gitwiki/GitFaq), Linus says:
+--nextPart5138431.danGmDdy0Z
+Content-Type: text/plain;
+  charset="utf-8"
+Content-Transfer-Encoding: quoted-printable
+Content-Disposition: inline
 
-'And "git reset" won't be deleting files it doesn't track (it had _better_
-not touch them), even more so when it has been told to ignore them, so it
-makes total sense to _not_ delete them when doing that reset.'
+On Wednesday 10 September 2008 08:29:56 dhruva wrote:
+> Hi,
+>  Incorporated the style tip, sure makes it look cleaner.
+>
+> diff --git a/contrib/fast-import/git-p4 b/contrib/fast-import/git-p4
+> index 2216cac..3e72e43 100755
+> --- a/contrib/fast-import/git-p4
+> +++ b/contrib/fast-import/git-p4
+> @@ -16,6 +16,9 @@ from sets import Set;
+>
+>  verbose =3D False
+>
+> +# Handling of RCS keyowrds. To ensure backward compatibility, the default
+> +# is to strip keywords. Default behavior is controlled here
+> +kwstrip =3D True
+>
+>  def p4_build_cmd(cmd):
+>      """Build a suitable p4 command line.
+> @@ -975,7 +978,9 @@ class P4Sync(Command):
+>                  sys.stderr.write("p4 print fails with: %s\n" % repr(stat=
+))
+>                  continue
+>
+> -            if stat['type'] in ('text+ko', 'unicode+ko', 'binary+ko'):
+> +            if not kwstrip:
+> +               pass
+> +            elif stat['type'] in ('text+ko', 'unicode+ko', 'binary+ko'):
+>                  text =3D re.sub(r'(?i)\$(Id|Header):[^$]*\$',r'$\1$', te=
+xt)
+>              elif stat['type'] in ('text+k', 'ktext', 'kxtext',
+> 'unicode+k', 'binary+k'): text =3D
+> re.sub(r'\$(Id|Header|Author|Date|DateTime|Change|File|Revision):[^$]*\$'=
+,r
+>'$\1$', text) @@ -1850,6 +1855,16 @@ def main():
+>          (cmd, args) =3D parser.parse_args(sys.argv[2:], cmd);
+>      global verbose
+>      verbose =3D cmd.verbose
+> +
+> +    global kwstrip
+> +    kwval =3D gitConfig("git-p4.kwstrip")
+> +    if len(kwval) > 0:
+> +       kwval =3D kwval.lower();
+> +        if "false" =3D=3D kwval:
+> +            kwstrip =3D False
+> +        elif "true" =3D=3D kwval:
+> +            kwstrip =3D True
 
-Now consider this example:
+I have another style nitpick, sorry :). Please use "kwval =3D=3D "false" in=
+stead=20
+of the other way around.
 
-# Create a single commit in a new repo (so that we have a HEAD)
-mkdir xx
-cd xx
-git init
-git commit --allow-empty -m"initial"
-# Add an important file
-echo "Important stuff" > file42
-git add file42
-git status # -> new file:   file42
-ls # -> file42, or course
-git reset --hard
-ls # -> nothing
+Otherwise your patch looks good to me, I think it's a very good option to a=
+dd.=20
+Please resend with commit message so that Junio can include it.
 
-I would argue that as a "new file" (as reported by git status)
-that file42 was never actually tracked by git.  Sure, it _would_
-have been tracked in the future, but git never actually tracked it
-(it's not part of any commits).
 
-So in this scenario wouldn't it make more sense for
-"git reset --hard" to handle file42 as "git reset" does
-instead of deleting it w/out a trace [1]?
+Simon
 
-The same question goes for "git checkout -f", too, I suppose.
+--nextPart5138431.danGmDdy0Z
+Content-Type: application/pgp-signature; name=signature.asc 
+Content-Description: This is a digitally signed message part.
 
-I actually accidentally deleted hundred of newly added files yesterday
-doing just this.  https://mozy.com/?code=V3D4MM) saved my butt,
-but it wasn't pleasant.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.6 (GNU/Linux)
 
-- Eric
+iD8DBQBIyB2lWXvMThJCpvIRAmK1AKD06qNan2YOvF3mA1nGWVz+aV0HOgCeN6bJ
+wjAIvUbpStE5HgSh6U76AJI=
+=F9nS
+-----END PGP SIGNATURE-----
 
-[1] - There's not even a reflog entry.  Sure, "git fsck" can be
-used, but that's hardly a friendly fallback.
+--nextPart5138431.danGmDdy0Z--
