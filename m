@@ -1,87 +1,97 @@
-From: Paolo Bonzini <bonzini@gnu.org>
-Subject: Re: [RFC] origin link for cherry-pick and revert
-Date: Thu, 11 Sep 2008 07:16:20 +0200
-Message-ID: <48C8A9A4.7030906@gnu.org>
-References: <20080909132212.GA25476@cuci.nl> <20080909211355.GB10544@machine.or.cz> <20080909225603.GA7459@cuci.nl> <20080910122118.GI21071@mit.edu> <20080910141630.GB7397@cuci.nl> <20080910151015.GA8869@coredump.intra.peff.net> <20080910215045.GA22739@cuci.nl> <20080910215410.GA24432@coredump.intra.peff.net> <20080910223427.GB22739@cuci.nl> <20080910225518.GA24534@coredump.intra.peff.net> <20080910231900.GF22739@cuci.nl>
+From: Mike Hommey <mh@glandium.org>
+Subject: Re: git svn segfaults in _Delta.so
+Date: Wed, 10 Sep 2008 21:03:22 +0200
+Organization: glandium.org
+Message-ID: <20080910190322.GA1503@glandium.org>
+References: <E7387B42-6A3D-432B-8478-71A5E510D905@gmail.com> <9B7A97D1-7175-4FCC-94CB-21EBE12E4F88@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: Jeff King <peff@peff.net>, Theodore Tso <tytso@MIT.EDU>,
-	Petr Baudis <pasky@suse.cz>, git@vger.kernel.org
-To: "Stephen R. van den Berg" <srb@cuci.nl>
-X-From: git-owner@vger.kernel.org Thu Sep 11 07:17:46 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Thomas Harning <harningt@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Sep 11 07:22:43 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KdeYh-00028c-Lo
-	for gcvg-git-2@gmane.org; Thu, 11 Sep 2008 07:17:36 +0200
+	id 1KdedQ-0003id-Uk
+	for gcvg-git-2@gmane.org; Thu, 11 Sep 2008 07:22:29 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751583AbYIKFQ2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 11 Sep 2008 01:16:28 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751560AbYIKFQ2
-	(ORCPT <rfc822;git-outgoing>); Thu, 11 Sep 2008 01:16:28 -0400
-Received: from wr-out-0506.google.com ([64.233.184.237]:8034 "EHLO
-	wr-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751491AbYIKFQ1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 11 Sep 2008 01:16:27 -0400
-Received: by wr-out-0506.google.com with SMTP id 69so122104wri.5
-        for <git@vger.kernel.org>; Wed, 10 Sep 2008 22:16:23 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from
-         :user-agent:mime-version:to:cc:subject:references:in-reply-to
-         :content-type:content-transfer-encoding:sender;
-        bh=YNZMCqhiiHgXKWMRBBpbWMt6Eju6L4qzRtAaE6rZy24=;
-        b=brVYwPIUMLvsLHjWQMh17CNAwiBjhgpOF5ZW4/ontE4dqZyLclN516U/uvQMhuBgMm
-         AkYNL5Xtpg8axmnau/sA+0SFrx/FW8b9QGHBI4yVCtmfVJvJV0zq/4bsTdvOtZdCWXNu
-         U16neWLD6TbZvt0u3vCBtHuFxmEgeAkXICOds=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:user-agent:mime-version:to:cc:subject
-         :references:in-reply-to:content-type:content-transfer-encoding
-         :sender;
-        b=qpkXmDSuXfnmIWbTBDndIpbv5BVJw+rTHct0GzF8Oco4lDooLd1jpQXTcUGzIbHxKv
-         LUky0QNhFnFEqytfZzXDIWQs+PIccsmM0/j9GE9oVQjkh2/Avw7ZnGVjH3dNmp3uprzo
-         CFB7L8tNXBDkyrEodgF8UumzXA9dHlLCYKYzM=
-Received: by 10.103.23.20 with SMTP id a20mr1490715muj.128.1221110183061;
-        Wed, 10 Sep 2008 22:16:23 -0700 (PDT)
-Received: from scientist-2.lan ( [89.96.108.150])
-        by mx.google.com with ESMTPS id j2sm4270622mue.4.2008.09.10.22.16.22
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Wed, 10 Sep 2008 22:16:22 -0700 (PDT)
-User-Agent: Thunderbird 2.0.0.16 (Macintosh/20080707)
-In-Reply-To: <20080910231900.GF22739@cuci.nl>
+	id S1751792AbYIKFVW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 11 Sep 2008 01:21:22 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751483AbYIKFVW
+	(ORCPT <rfc822;git-outgoing>); Thu, 11 Sep 2008 01:21:22 -0400
+Received: from vuizook.err.no ([194.24.252.247]:59130 "EHLO vuizook.err.no"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751380AbYIKFVU (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 11 Sep 2008 01:21:20 -0400
+Received: from cha92-13-88-165-248-19.fbx.proxad.net ([88.165.248.19] helo=jigen)
+	by vuizook.err.no with esmtps (TLS-1.0:RSA_AES_256_CBC_SHA1:32)
+	(Exim 4.69)
+	(envelope-from <mh@glandium.org>)
+	id 1KdecK-0000pX-3o; Thu, 11 Sep 2008 07:21:22 +0200
+Received: from mh by jigen with local (Exim 4.69)
+	(envelope-from <mh@jigen>)
+	id 1KdUyI-0000Qv-MI; Wed, 10 Sep 2008 21:03:22 +0200
+Content-Disposition: inline
+In-Reply-To: <9B7A97D1-7175-4FCC-94CB-21EBE12E4F88@gmail.com>
+X-GPG-Fingerprint: A479 A824 265C B2A5 FC54  8D1E DE4B DA2C 54FD 2A58
+User-Agent: Mutt/1.5.18 (2008-05-17)
+X-Spam-Status: (score 2.0): Spam detection software, running on the system "vuizook.err.no", has
+	identified this incoming email as possible spam.  The original message
+	has been attached to this so you can view it (if it isn't spam) or label
+	similar future email.  If you have any questions, see
+	the administrator of that system for details.
+	Content preview:  On Wed, Sep 10, 2008 at 02:40:31PM -0400, Thomas Harning wrote:
+	> On Sep 10, 2008, at 2:21 PM, Thomas Harning wrote: > >> I just recently
+	setup a new system and installed subversion 1.5.1 and >> the latest git from
+	head. >> >> On an existing repository (copied from the same system but slightly
+	>> older software) running git svn rebase will cause it to segfault in >>
+	_Delta.so (part of subversion's perl libraries).... even when there is >>
+	nothing to do... it even seems to successfully do all the operations. >>
+	I've built su 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/95580>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/95581>
 
+On Wed, Sep 10, 2008 at 02:40:31PM -0400, Thomas Harning wrote:
+> On Sep 10, 2008, at 2:21 PM, Thomas Harning wrote:
+>
+>> I just recently setup a new system and installed subversion 1.5.1 and 
+>> the latest git from head.
+>>
+>> On an existing repository (copied from the same system but slightly  
+>> older software) running git svn rebase will cause it to segfault in  
+>> _Delta.so (part of subversion's perl libraries).... even when there is 
+>> nothing to do... it even seems to successfully do all the operations.  
+>> I've built subversion and git with debugging enabled and cannot get any 
+>> useful stack-trace. the stacktrace is:
+>>
+>> #0  0x00007fbed7edd3a0 in ?? ()
+>> #1  0x00007fbed99fa75d in ?? ()
+>> #2  0x0000000000000001 in ?? ()
+>> #3  0x00007fbed99fb217 in ?? ()
+>> #4  0x00007fbed99e82d8 in ?? ()
+>> #5  0x0000000000000001 in ?? ()
+>> #6  0x000000000070e250 in cwd.17580 ()
+>> #7  0x000000000070d7f8 in buffer.17586 ()
+>> #8  0x0000000000f7f408 in ?? ()
+>> #9  0x00007fbed99fb205 in ?? ()
+>> #10 0x0000000000000000 in ?? ()
+>>
+>>
+>> The only way I know that it is _Delta.so is that in 'dmesg' i get:
+>> git-svn[1277]: segfault at 7f64fa7213a0 ip 7f64fa7213a0 sp  
+>> 7fff07a9a2b8 error 14 in _Delta.so[7f64fa92c000+22000]
+>>
+>> In another machine w/ very similar software (slightly older by a month 
+>> or so) I do not see these segfaults.  However it is running svn 1.4.6  
+>> .. so it might be svn versions...  will report on status after 
+>> downgrade
+> svn 1.4.6 does not suffer the segfaults...
 
->>> - The origin information is no longer cryptographically protected (under
->>>   certain circumstances this could be considered an advantage and a
->>>   disadvantage at the same time).
-> 
->> I haven't thought enough about it to decide whether there is a scenario
->> where making such a "cherry-picked from" annotation might make use of
->> that property.
-> 
-> Being able to subvert the authenticity of git blame by providing fake
-> origin information is not very appealing.
+I would suggest you to try some other stuff that uses the svn perl
+library (svk, for example). My guess is that it will crash similarly.
 
-You could use a dummy submodule to ensure that each commit pointed to
-the right set of notes.  It would force to create a separate commit
-whenever you modified the notes, which is actually not bad.
-
-Alternatively, the header of the commit can be modified to add a pointer
-to a tree object for the notes; I suppose this is more palatable than
-the origin link.  The tree could be organized in directories+blobs like
-.git/objects to speed up the lookup.
-
-I actually like the commit notes idea, but then I wonder: why are the
-author and committer part of the commit object?  How does the plumbing
-use them?  Isn't that metadata that could live in the "notes"?  And so,
-why should the origin link have less privileges?
-
-Paolo
+Mike
