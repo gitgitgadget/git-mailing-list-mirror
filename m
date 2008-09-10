@@ -1,65 +1,95 @@
-From: Linus Torvalds <torvalds@linux-foundation.org>
-Subject: Re: [RFC] origin link for cherry-pick and revert
-Date: Wed, 10 Sep 2008 08:46:19 -0700 (PDT)
-Message-ID: <alpine.LFD.1.10.0809100844040.3384@nehalem.linux-foundation.org>
-References: <20080909132212.GA25476@cuci.nl> <m3zlmhnx1z.fsf@localhost.localdomain> <20080909194354.GA13634@cuci.nl> <alpine.LFD.1.10.0809091631250.3117@nehalem.linux-foundation.org> <20080909235848.GE7459@cuci.nl> <alpine.LFD.1.10.0809091722010.3384@nehalem.linux-foundation.org>
- <48C785C3.9010204@gnu.org> <alpine.LFD.1.10.0809100830570.3384@nehalem.linux-foundation.org> <48C7E9A1.5080409@gnu.org> <alpine.LFD.1.10.0809100841080.3384@nehalem.linux-foundation.org>
-Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: "Stephen R. van den Berg" <srb@cuci.nl>,
-	Jakub Narebski <jnareb@gmail.com>, git@vger.kernel.org
-To: Paolo Bonzini <bonzini@gnu.org>
-X-From: git-owner@vger.kernel.org Wed Sep 10 17:48:33 2008
+From: Pieter de Bie <pdebie@ai.rug.nl>
+Subject: [PATCH] git wrapper: also uses aliases to suggest mistyped commands
+Date: Wed, 10 Sep 2008 17:54:28 +0200
+Message-ID: <1221062068-5660-1-git-send-email-pdebie@ai.rug.nl>
+Cc: Pieter de Bie <pdebie@ai.rug.nl>
+To: Git Mailinglist <git@vger.kernel.org>,
+	Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Sep 10 17:56:11 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KdRvT-0005uC-3T
-	for gcvg-git-2@gmane.org; Wed, 10 Sep 2008 17:48:15 +0200
+	id 1KdS2o-0000KL-3z
+	for gcvg-git-2@gmane.org; Wed, 10 Sep 2008 17:55:50 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752128AbYIJPrI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 10 Sep 2008 11:47:08 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752021AbYIJPrH
-	(ORCPT <rfc822;git-outgoing>); Wed, 10 Sep 2008 11:47:07 -0400
-Received: from smtp1.linux-foundation.org ([140.211.169.13]:60516 "EHLO
-	smtp1.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751654AbYIJPrG (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 10 Sep 2008 11:47:06 -0400
-Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [140.211.169.55])
-	by smtp1.linux-foundation.org (8.14.2/8.13.5/Debian-3ubuntu1.1) with ESMTP id m8AFkKi4005634
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Wed, 10 Sep 2008 08:46:21 -0700
-Received: from localhost (localhost [127.0.0.1])
-	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id m8AFkJkn013231;
-	Wed, 10 Sep 2008 08:46:19 -0700
-In-Reply-To: <alpine.LFD.1.10.0809100841080.3384@nehalem.linux-foundation.org>
-User-Agent: Alpine 1.10 (LFD 962 2008-03-14)
-X-Spam-Status: No, hits=-3.937 required=5 tests=AWL,BAYES_00,OSDL_HEADER_SUBJECT_BRACKETED
-X-Spam-Checker-Version: SpamAssassin 3.2.4-osdl_revision__1.47__
-X-MIMEDefang-Filter: lf$Revision: 1.188 $
-X-Scanned-By: MIMEDefang 2.63 on 140.211.169.13
+	id S1752150AbYIJPyl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 10 Sep 2008 11:54:41 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751908AbYIJPyl
+	(ORCPT <rfc822;git-outgoing>); Wed, 10 Sep 2008 11:54:41 -0400
+Received: from smtp-3.orange.nl ([193.252.22.243]:54777 "EHLO smtp-3.orange.nl"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751838AbYIJPyk (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 10 Sep 2008 11:54:40 -0400
+Received: from me-wanadoo.net (localhost [127.0.0.1])
+	by mwinf6201.online.nl (SMTP Server) with ESMTP id 659D51C00084;
+	Wed, 10 Sep 2008 17:54:34 +0200 (CEST)
+Received: from localhost.localdomain (s5591931c.adsl.wanadoo.nl [85.145.147.28])
+	by mwinf6201.online.nl (SMTP Server) with ESMTP id B97FF1C00083;
+	Wed, 10 Sep 2008 17:54:29 +0200 (CEST)
+X-ME-UUID: 20080910155433759.B97FF1C00083@mwinf6201.online.nl
+X-Mailer: git-send-email 1.6.0.1.346.g880d9.dirty
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/95535>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/95536>
 
 
+Signed-off-by: Pieter de Bie <pdebie@ai.rug.nl>
+---
+ help.c |   15 +++++++++++++++
+ 1 files changed, 15 insertions(+), 0 deletions(-)
 
-On Wed, 10 Sep 2008, Linus Torvalds wrote:
->
-> Sure. I don't use them either. But because I don't use them, it doesn't 
-> affect me. It also doesn't change the core git data structures in any way 
-> to introduce any new problems.
-
-Btw, so far nobody has even _explained_ what the advantage of the origin 
-link is. It apparently has no effect for most things, and for other things 
-it has some (unspecified) effect when it can be resolved.
-
-Apart from the "dotted line" in graphical history viewers, I haven't 
-actually heard any single concrete example of exactly what it would *do*.
-
-And that dotted line really does sound like something you could do with 
-just the existing "hyperlink" functionality in the commit message.
-
-		Linus
+diff --git a/help.c b/help.c
+index 300cd38..24904d4 100644
+--- a/help.c
++++ b/help.c
+@@ -262,11 +262,15 @@ int is_in_cmdlist(struct cmdnames *c, const char *s)
+ }
+ 
+ static int autocorrect;
++static struct cmdnames aliases;
+ 
+ static int git_unknown_cmd_config(const char *var, const char *value, void *cb)
+ {
+ 	if (!strcmp(var, "help.autocorrect"))
+ 		autocorrect = git_config_int(var,value);
++	/* Also use aliases for command lookup */
++	if (!prefixcmp(var, "alias."))
++		add_cmdname(&aliases, var + 6, strlen(var + 6));
+ 
+ 	return git_default_config(var, value, cb);
+ }
+@@ -280,6 +284,15 @@ static int levenshtein_compare(const void *p1, const void *p2)
+ 	return l1 != l2 ? l1 - l2 : strcmp(s1, s2);
+ }
+ 
++static void add_cmd_list(struct cmdnames *cmds, struct cmdnames *old)
++{
++	int i;
++	ALLOC_GROW(cmds->names, cmds->cnt + old->cnt, cmds->alloc);
++
++	for (i = 0; i < old->cnt; i++)
++		cmds->names[cmds->cnt++] = old->names[i];
++}
++
+ const char *help_unknown_cmd(const char *cmd)
+ {
+ 	int i, n, best_similarity = 0;
+@@ -287,11 +300,13 @@ const char *help_unknown_cmd(const char *cmd)
+ 
+ 	memset(&main_cmds, 0, sizeof(main_cmds));
+ 	memset(&other_cmds, 0, sizeof(main_cmds));
++	memset(&aliases, 0, sizeof(aliases));
+ 
+ 	git_config(git_unknown_cmd_config, NULL);
+ 
+ 	load_command_list("git-", &main_cmds, &other_cmds);
+ 
++	add_cmd_list(&main_cmds, &aliases);
+ 	ALLOC_GROW(main_cmds.names, main_cmds.cnt + other_cmds.cnt,
+ 		   main_cmds.alloc);
+ 	memcpy(main_cmds.names + main_cmds.cnt, other_cmds.names,
+-- 
+1.6.0.1.346.g880d9.dirty
