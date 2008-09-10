@@ -1,145 +1,207 @@
-From: Paolo Bonzini <bonzini@gnu.org>
+From: Theodore Tso <tytso@MIT.EDU>
 Subject: Re: [RFC] origin link for cherry-pick and revert
-Date: Wed, 10 Sep 2008 17:57:37 +0200
-Message-ID: <48C7EE71.8080305@gnu.org>
-References: <20080909132212.GA25476@cuci.nl> <m3zlmhnx1z.fsf@localhost.localdomain> <20080909194354.GA13634@cuci.nl> <alpine.LFD.1.10.0809091631250.3117@nehalem.linux-foundation.org> <20080909235848.GE7459@cuci.nl> <alpine.LFD.1.10.0809091722010.3384@nehalem.linux-foundation.org> <48C785C3.9010204@gnu.org> <alpine.LFD.1.10.0809100830570.3384@nehalem.linux-foundation.org> <48C7E9A1.5080409@gnu.org> <alpine.LFD.1.10.0809100841080.3384@nehalem.linux-foundation.org> <alpine.LFD.1.10.0809100844040.3384@nehalem.linux-foundation.org>
+Date: Wed, 10 Sep 2008 12:18:52 -0400
+Message-ID: <20080910161852.GR21071@mit.edu>
+References: <20080909132212.GA25476@cuci.nl> <20080909211355.GB10544@machine.or.cz> <20080909225603.GA7459@cuci.nl> <20080910122118.GI21071@mit.edu> <20080910141630.GB7397@cuci.nl>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: "Stephen R. van den Berg" <srb@cuci.nl>,
-	Jakub Narebski <jnareb@gmail.com>, git@vger.kernel.org
-To: Linus Torvalds <torvalds@linux-foundation.org>
-X-From: git-owner@vger.kernel.org Wed Sep 10 17:59:02 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: Petr Baudis <pasky@suse.cz>, git@vger.kernel.org
+To: "Stephen R. van den Berg" <srb@cuci.nl>
+X-From: git-owner@vger.kernel.org Wed Sep 10 18:21:09 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KdS5i-0001Yj-4C
-	for gcvg-git-2@gmane.org; Wed, 10 Sep 2008 17:58:50 +0200
+	id 1KdSQR-000090-QI
+	for gcvg-git-2@gmane.org; Wed, 10 Sep 2008 18:20:16 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752357AbYIJP5n (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 10 Sep 2008 11:57:43 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752219AbYIJP5n
-	(ORCPT <rfc822;git-outgoing>); Wed, 10 Sep 2008 11:57:43 -0400
-Received: from mail-gx0-f16.google.com ([209.85.217.16]:43741 "EHLO
-	mail-gx0-f16.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752186AbYIJP5m (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 10 Sep 2008 11:57:42 -0400
-Received: by gxk9 with SMTP id 9so14013664gxk.13
-        for <git@vger.kernel.org>; Wed, 10 Sep 2008 08:57:40 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from
-         :user-agent:mime-version:to:cc:subject:references:in-reply-to
-         :content-type:content-transfer-encoding:sender;
-        bh=VUqXw2xOgnL3nO/LvcNlM0t0clq0Yy7YEdjBW6Y7j8A=;
-        b=PUmssjGfcceQgMVsamtE0jMm32fxpTYz/BoKR6h2PuMrLfPSXStP/amADhTYq1B7z6
-         POgvi40ax1VtvCS7jS8s7Y3ug411p0+YQNl1644O3/K8v+ZrvBgLvmhmw2hsqYzuvnYS
-         2xp0Y3G+hE5++jRzmWJJo+qbEUsLxlKjW9NOU=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:user-agent:mime-version:to:cc:subject
-         :references:in-reply-to:content-type:content-transfer-encoding
-         :sender;
-        b=ax+hByGkgo0r8+VGwBZTQgzN6T0ROTRrGuEZhCyQOWkHnnC3+k7PE1nSQr7XyLQle3
-         FjnxMU1M6O8GazH33qGhj4kI14N0pyF77W6FNLRYWdlVQx2+DISmUBUc1R7Fd3ZqUJpd
-         fbVj+83hH/qMVAay3/ccsgYZkmbJPozEC2a/k=
-Received: by 10.86.60.15 with SMTP id i15mr1108981fga.14.1221062259382;
-        Wed, 10 Sep 2008 08:57:39 -0700 (PDT)
-Received: from scientist-2.mobile.usilu.net ( [195.176.179.202])
-        by mx.google.com with ESMTPS id l12sm8777994fgb.6.2008.09.10.08.57.38
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Wed, 10 Sep 2008 08:57:38 -0700 (PDT)
-User-Agent: Thunderbird 2.0.0.16 (Macintosh/20080707)
-In-Reply-To: <alpine.LFD.1.10.0809100844040.3384@nehalem.linux-foundation.org>
+	id S1752307AbYIJQTI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 10 Sep 2008 12:19:08 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752257AbYIJQTH
+	(ORCPT <rfc822;git-outgoing>); Wed, 10 Sep 2008 12:19:07 -0400
+Received: from BISCAYNE-ONE-STATION.MIT.EDU ([18.7.7.80]:37936 "EHLO
+	biscayne-one-station.mit.edu" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1752216AbYIJQTG (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 10 Sep 2008 12:19:06 -0400
+Received: from outgoing.mit.edu (OUTGOING-AUTH.MIT.EDU [18.7.22.103])
+	by biscayne-one-station.mit.edu (8.13.6/8.9.2) with ESMTP id m8AGIrqq029269;
+	Wed, 10 Sep 2008 12:18:53 -0400 (EDT)
+Received: from closure.thunk.org (c-98-216-98-217.hsd1.ma.comcast.net [98.216.98.217])
+	(authenticated bits=0)
+        (User authenticated as tytso@ATHENA.MIT.EDU)
+	by outgoing.mit.edu (8.13.6/8.12.4) with ESMTP id m8AGIqVD006082
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
+	Wed, 10 Sep 2008 12:18:52 -0400 (EDT)
+Received: from tytso by closure.thunk.org with local (Exim 4.69)
+	(envelope-from <tytso@mit.edu>)
+	id 1KdSP6-0003hu-5G; Wed, 10 Sep 2008 12:18:52 -0400
+Content-Disposition: inline
+In-Reply-To: <20080910141630.GB7397@cuci.nl>
+User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
+X-Scanned-By: MIMEDefang 2.42
+X-Spam-Flag: NO
+X-Spam-Score: 0.00
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/95537>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/95538>
 
+On Wed, Sep 10, 2008 at 04:16:30PM +0200, Stephen R. van den Berg wrote:
+> The renumbering is not a problem, renumbering is a rare operation since
+> a project's history is supposed to be stable.  And even if renumbering
+> is performed, it is a well understood operation of which the renumbering
+> of the origin links imposes a negligible overhead on top of the existing
+> renumbering overhead.
 
-> Btw, so far nobody has even _explained_ what the advantage of the origin 
-> link is. It apparently has no effect for most things, and for other things 
-> it has some (unspecified) effect when it can be resolved.
-> 
-> Apart from the "dotted line" in graphical history viewers, I haven't 
-> actually heard any single concrete example of exactly what it would *do*.
+Well *you* were the one using this as an argument for using the origin
+link.  But I'll note that in some workflows, rebasing happens all the
+time when a patch is being developed and moved around.  Sometimes
+patches are created in git, exported as a patch, and then it re-enters
+git again later (which is another reason why using an external UUID or
+bug tracking identifier is a good thing).
 
-I mentioned git-cherry as an additional use case.  Automatic rename
-detection works because it might have the occasional false negative, but
-it has practically no false positive, and those are what screws up
-merges.  But automatic changeset detection a la git-patch-id has too
-many false negatives to make the current implementation of git-cherry
-practical, and here's when the origin link comes in.  Also, automatic
-changeset detection does not work with reverts, only with cherry-picks.
+> >Addresses-Bug: Red_Hat/149480, Sourceforge_Feature/120167
+> >or
+> >Addresses-Bug: Debian/432865, Launchpad/203323, Sourceforge_Bug/1926023
+> 
+> >Once you have this information, it is not difficult to maintain a
+> >berk_db database which maps a particular Bug identifier (i.e.,
+> >Red_Hat/149480, or Debian/471977, or Launchpad/203323) to a series of
+> >commits.
+> 
+> This is nice, I admit, but it has the following downsides:
+> - It is nontrivial to automate this on execution of "git cherry-pick".
 
-Blame could also use the origin link to go backwards in the history and
-find the origin of the code, without being fooled by reverts.
+It's trivial if it's in the free-form text.  In fact, it happens
+automatically.  If it's stored within the git commit object, then it
+will be done in the C code (if you've updated to the latest git;
+again, one of the advantages of doing it in free-form text).
 
-I'll quote another message I sent in the thread:
+> - In a distributed environment this requires a network-reachable bug
+>   database.
+> - A network-reachable bug database means that suddenly git needs network
+>   access for e.g. cherry-pick, revert, gitk, log --graph, blame.
+> - Network queries for commits containing references kind of kills
+>   performance.
 
->> And why are the notes created by git cherry-pick -x insufficient for that?
-> 
-> For example, these notes (or the ones created by "git revert") are
-> *wrong* because they talk about commits instead of changesets (deltas
-> between two commits).
-> 
-> Why is only one commit present?  Because these messages are meant for
-> users, not for programs.  That's easy to see: users think of commits as
-> deltas anyway, even though git stores them as snapshots---"git show
-> HEAD" shows a delta, not a snapshot.
-> 
-> And what does this mean for programs?  That they must resort to
-> commit-message scraping to distinguish the two cases. (*)
-> 
->    (*) A GUI blame program, for example, would need to distinguish
->    whether code added by a commit is taken from commit 4329bd8, or is
->    reverting commit 4329bd8.  (In the first case, the author of that
->    code is whoever was responsible for that code in 4329bd8; in the
->    second case, it is whoever was responsible for that code in
->    4329bd8^).  If recording changesets, you see 4329bd8^..4329bd8 in
->    the first case, and 4329bd8..4329bd8^ in the second, so it is trivial
->    to follow the chain.
-> 
-> And scraping is bad.  Imagine people that are writing commit messages in
-> their native language.  What if they patch git to translate the magic
-> notes created by "git cherry-pick -x" or "git revert" (maybe a future
-> version of git will do that automatically)?  Should they translate also
-> every program that scrapes the messages?
-> 
-> 
-> Whenever there is a piece of data that could be useful to programs (no
-> matter if plumbing or porcelain), I consider free form notes to be bad.
-> Because data is data, and metadata is metadata.
-> 
-> If there was a generic way to put porcelain-level metadata in commit
-> messages (e.g. Signed-Off-By and Acknowledged-By can be already
-> considered metadata), I would not be so much in favor of "origin" links
-> being part of the commit object's format.  Now if you think about it,
-> commit references within this kind of metadata would have mostly the
-> properties that Stephen explained in his first message:
-> 
-> 1) they would be rewritten by git-filter-branch
-> 
-> 2) these references, albeit weak by default
+No, because you don't need to look up the bug identifier unless you
+want to, you know, actually look at the bug.  Otherwise, we are just
+using something like "debian/432865" as an identifier; you only need
+to look them up if you want to look up the bug.  Any time you have a
+collaborative development environment, you will need either a
+centralized, network accessible bug tracking system, or use a
+distributed bug tracking system.  Either way, though, if it's just
+matter of seeing whether or not a bug fix such as debian/432865 is
+fixed by some commit in some branch, using the bug identifier actually
+makes this *easier*, not harder.
 
-(Note to Linus: reinforcement of your disagreement will be implicitly
-assumed :-)
+> - Some backports don't have entries in a bug database because they
+>   weren't bugs to begin with, in which case it becomes impossible to add
+>   an identifier to the commit message after the fact.
 
-> could optionally be
-> followed when fetching (either with command-line or configuration options)
-> 
-> 3) they would not be pruned by git-gc, unlike notes
-> 
-> 4) possibly, git rev-list --topo-order would sort commits by taking into
-> account metadata references too.
-> 
-> So the implementation effort would be roughly the same.
-> 
-> But, can you think of any other such metadata?  Personally I can't, so
-> while I understand the opposition to a new commit header field that
-> would be there from here to eternity (or until the LHC starts), I do
-> think it is the simplest thing that can possibly work.
+This is true.  The transition is a little easier if you are pointing
+to a pre-existing commit, whereas if you need some kind of rendevous
+identifer (whether it is a bug ID or some UUID).  On the other hand,
+you've cherry-picked some bug fix using a git that didn't support the
+origin link, you'd also be screwed, so 
 
-Paolo
+> - It relies heavily on tools outside of git-core, which raises the
+>   threshold for using it.
+
+Well, it relies on changes to git --- just like the origin link
+requires changes to git.  If the it is implemented using free-form
+text, which is a great way to prototype it, you have the *option* of
+implementing it via either git porcelain changes or outside tools like
+emacs or vi macros (just as most of us who are kernel developers have
+editor macros that insert Signed-off-by: into git commit messages, as
+well as changes in git porcelain such that "git am -s" automatically
+adds the Signed-off-by header).  But given the wildly successful use
+of Signed-off-by in the kernel sources, this objection seems not very
+credible, to say the least.
+
+> The recommended practice here is quite simple:
+> 
+> - Origin links should only be created pointing to stable commits (i.e.
+>   commits which you'd be willing to publish or already have published).
+> 
+> - This implies that pointing an origin link at a commit in a strain that
+>   you still want to rebase is asking for trouble.  Doing this is akin to
+>   doing a merge between two branches and then you start rebasing 4
+>   commits *below* the mergepoint.  Don't do that.
+
+Right.  And if we use a UUID to identify commits, then we don't have
+to have these restrictions.
+
+> - The only special case I'd allow is if you rebase a strain and the
+>   origin link points from one of the commits in the strain to be rebased
+>   back *into* the same strain being rebased (most likely a revert).
+>   Rebase can be bothered to renumber the origin link in this case.
+
+Nope, because you might have a branch to the original origin link, and
+some body else may have already done a cherry-pick to the original
+origin commit.  You've hand-waved around the problem by saying, "don't
+do that", but it just points out how **fragile** the origin link
+scheme really is.  It's just not robust.
+
+In contrast, generating a UUID per commit is much more robust, since
+you can now export it out of git in a patch, and then re-import it
+later, and have the right thing happen.
+
+> >(and I am not convinced that you do), the ***much*** better approach
+> >is to use the same approach as the bug tracking identifier, and add a
+> >level of indirection.  How would that work in practice?  Whenever you
+> >create a new commit, create a UUID which is assigned to the patch.
+> 
+> This only works if you know at time of commit that you want to backport
+> it at some later date.
+
+I'm suggesting that all commits (once you upgrade to a version of git
+that supports this --- and you've already handwaved away the question
+on whether you can get all of developers for a project to upgrade to
+the latest git, remember) would have a UUID generated.  That UUID
+could be stored internal to git, or (perhaps as an initial prototyping
+as a proof of concept, before we add something into the git commit
+record **forever**) could be in the free-form text.
+
+> >Yes, it means that you have to maintain a separate database so you can
+> >easily find the list of commits that contain a particular UUID, but I
+> >suspect you would need this in the case of the origin link concept
+> >anyway, since sooner or later some of the more useful uses of said
+> >link would require you to be able to find the commits which had origin
+> >links to the original commit, which means you would need to create and
+> >maintain this database anyway.
+> 
+> That isn't true.  Finding commits which have origin links to a certain
+> commit is just as hard as finding all children of a certain commit.
+> It's not exactly instant, but it is not a big problem, and depending on
+> the amount of repositorytraversal you already are doing, it might even
+> be a negligible amount of extra overhead.
+
+My point is you'll need this separate database anyway, in order to
+deal with the cases where you have two commits that point to the same
+(non-existent) origin link, one in maint1, and one in maint2, and
+given the commit in the maint1 branch, you want to see if there is
+related comit in the maint2 branch you'll need this database anyway
+(or you do a brute force search of the repository, which isn't too bad
+for modest datbases).  It's identical in both cases --- but having a
+UUID field in the commit is much *cleaner*, since it merely states
+that these two commits introduce the same semantic change; it doesn't
+imply some kind of parent/child relationship which an origin link
+implies.
+
+> The database needs to be available to anyone doing a clone of the
+> repository, which implies that:
+> - It needs to be network based.
+> - It needs controlled write access (which is a mess).
+> - It is slow during blame/gitk operations.
+> - It is rather nontrivial to get things setup such that someone (after
+>   cloning the repository) is able to run cherry-pick/gitk/blame/revert
+>   and have those commands use the database transparently.
+
+No it doesn't, since the database can be inferred from the objects in
+the repository.  So you can generate it locally if you need it, merely
+as an optimization.  The same is true for the origin link proposal, as
+I've said.
+
+    		    	    	     - Ted
