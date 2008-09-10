@@ -1,111 +1,83 @@
-From: "Stephen R. van den Berg" <srb@cuci.nl>
-Subject: Re: [RFC] origin link for cherry-pick and revert, and more about porcelain-level metadata
-Date: Wed, 10 Sep 2008 17:15:42 +0200
-Message-ID: <20080910151542.GA10523@cuci.nl>
-References: <20080909132212.GA25476@cuci.nl> <20080909211355.GB10544@machine.or.cz> <20080909225603.GA7459@cuci.nl> <20080909230525.GC10360@machine.or.cz> <48C794D6.20001@gnu.org> <20080910143329.GE28210@dpotapov.dyndns.org>
+From: Paolo Bonzini <bonzini@gnu.org>
+Subject: Re: [RFC] origin link for cherry-pick and revert, and more about
+ porcelain-level metadata
+Date: Wed, 10 Sep 2008 17:24:35 +0200
+Message-ID: <48C7E6B3.7030403@gnu.org>
+References: <20080909132212.GA25476@cuci.nl> <20080909211355.GB10544@machine.or.cz> <20080909225603.GA7459@cuci.nl> <20080909230525.GC10360@machine.or.cz> <48C794D6.20001@gnu.org> <20080910143329.GE28210@dpotapov.dyndns.org> <20080910151542.GA10523@cuci.nl>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Paolo Bonzini <bonzini@gnu.org>, Petr Baudis <pasky@suse.cz>,
-	git@vger.kernel.org
-To: Dmitry Potapov <dpotapov@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Sep 10 17:17:12 2008
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: Dmitry Potapov <dpotapov@gmail.com>, git@vger.kernel.org
+To: "Stephen R. van den Berg" <srb@cuci.nl>
+X-From: git-owner@vger.kernel.org Wed Sep 10 17:26:03 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KdRR5-00049j-Ry
-	for gcvg-git-2@gmane.org; Wed, 10 Sep 2008 17:16:52 +0200
+	id 1KdRZq-0006k7-0Z
+	for gcvg-git-2@gmane.org; Wed, 10 Sep 2008 17:25:54 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752196AbYIJPPo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 10 Sep 2008 11:15:44 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751939AbYIJPPo
-	(ORCPT <rfc822;git-outgoing>); Wed, 10 Sep 2008 11:15:44 -0400
-Received: from aristoteles.cuci.nl ([212.125.128.18]:34993 "EHLO
-	aristoteles.cuci.nl" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751847AbYIJPPn (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 10 Sep 2008 11:15:43 -0400
-Received: by aristoteles.cuci.nl (Postfix, from userid 500)
-	id 6C8A25465; Wed, 10 Sep 2008 17:15:42 +0200 (CEST)
-Content-Disposition: inline
-In-Reply-To: <20080910143329.GE28210@dpotapov.dyndns.org>
-User-Agent: Mutt/1.5.13 (2006-08-11)
+	id S1752291AbYIJPYp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 10 Sep 2008 11:24:45 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752204AbYIJPYo
+	(ORCPT <rfc822;git-outgoing>); Wed, 10 Sep 2008 11:24:44 -0400
+Received: from mail-gx0-f16.google.com ([209.85.217.16]:33539 "EHLO
+	mail-gx0-f16.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752149AbYIJPYn (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 10 Sep 2008 11:24:43 -0400
+Received: by gxk9 with SMTP id 9so13908722gxk.13
+        for <git@vger.kernel.org>; Wed, 10 Sep 2008 08:24:42 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from
+         :user-agent:mime-version:to:cc:subject:references:in-reply-to
+         :x-enigmail-version:content-type:content-transfer-encoding:sender;
+        bh=o3EXB8/Hy1F3p0Rfu2m+lEDZ4r4MiwYA1IM+vAPc6vM=;
+        b=ERopKXwMaC9AZG8+n4YUEfa1vNUMkQZI+2iPo/FU8GMBeB2iMOXkm85KlZFuAf53Xe
+         RTxAmHwCPUbtnQdPUAfAH46lZsnwZksDwZEG+tTFw5Md4TbT5PU7b9BItuUIgFbpiC5l
+         /oA0v83MQ+BU1nLpVpQpHgSoHvbbro2fa8mCU=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:user-agent:mime-version:to:cc:subject
+         :references:in-reply-to:x-enigmail-version:content-type
+         :content-transfer-encoding:sender;
+        b=XIx7LtzN1R4sOFuy68hNY1j6bNwLmomUiuewNC8NrwQR2V9hXkftYhfWePODUuG9tb
+         wMm0ry1xzTiePsfwlEjWIMjEZYB8Rc+VhTdKXKyaoQkTvGmrAGyzcDi/W26WxKEUlKAY
+         +rvnQLWhem20njLrqxZyaPegA8pRu7YULehn4=
+Received: by 10.86.100.19 with SMTP id x19mr1040942fgb.70.1221060281184;
+        Wed, 10 Sep 2008 08:24:41 -0700 (PDT)
+Received: from scientist-2.mobile.usilu.net ( [195.176.179.202])
+        by mx.google.com with ESMTPS id d6sm7549044fga.2.2008.09.10.08.24.40
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Wed, 10 Sep 2008 08:24:40 -0700 (PDT)
+User-Agent: Thunderbird 2.0.0.16 (Macintosh/20080707)
+In-Reply-To: <20080910151542.GA10523@cuci.nl>
+X-Enigmail-Version: 0.95.7
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/95526>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/95527>
 
-Dmitry Potapov wrote:
->On Wed, Sep 10, 2008 at 11:35:18AM +0200, Paolo Bonzini wrote:
->> Another problem is that in some projects actually there are two "maint"
->> branches (e.g. currently GCC 4.2 and GCC 4.3), and most developers do
->> not care about what goes in the older "maint" branch; they develop for
->> trunk and for the newer "maint" branch, and then one person comes and
->> cherry-picks into the older "maint" branch.  This has two problems:
+> > > fork topic branches off the older branch [and merge them]
+>
+> Could you explain how the above mechanisms work based on the following
+> cherry-pick action:
+> 
+> A -- B -- C -- D -- L
+>       \            /
+>        E -- F -- G -- H -- K
+> 
+> D is the stable branch.
+> K is the development branch.
+> G is cherry-picked and applied to D producing L.
+> The origin link of L would have contained (G, F).
+> 
+> How would such a workflow be implemented using the temporary branches
+> you describe?
 
->> 1) Having to fork topic branches off the older branch would force extra
->> testing on the developers.
+You don't.  You do everything in topic branches based off the stable
+branch, and you merge them.  That's the other way round, compared to
+what you (and I) are used to.
 
->If a branch is meant to included in the oldest version, it must be
->tested with that version anyway, and it is better when it is written for
->the old version, because functions tend to be more backward compatible
->than forward compatible. In other words, functions may often acquire
->some extra functionality over time without changing their signature, so
->the code written for a new version will merge without any conflict to
->the old one, but it won't work correctly under some conditions. It is
->certainly possible to have a problem in the opposite direction, but it
->is much less likely, and usually bugs introduced in the development
->version are not as bad as destabilizing a stable branch. Thus starting
->branch that is clearly meant for inclusion to the old version from that
->version is the right thing do.
-
->Of course, if you have more than one stable branch for a long time then
->you may want some branches forked from the new stable. You can do that
->by merging uninteresting changes from the new stable with the 'ours'
->strategy (so they will be ignored), and after that merging actually
->interesting features from the new stable.
-
->In contrast to cherry-picking, the real merge creates the history that
->can be easily visualized and understood.
-
-Could you explain how the above mechanisms work based on the following
-cherry-pick action:
-
-A -- B -- C -- D -- L
-      \            /
-       E -- F -- G -- H -- K
-
-D is the stable branch.
-K is the development branch.
-G is cherry-picked and applied to D producing L.
-The origin link of L would have contained (G, F).
-
-How would such a workflow be implemented using the temporary branches
-you describe?
-
->If you clearly mark all bugs in the commit message, there will be no
->problem to find them by grepping log. There is a lot of potentially
-
-Sometimes they're not bugs, yet they still are backported and thus carry
-no special marks.
-
->useful information, and the 'origin' link is just one of many. It may
-
-True, but it's one of the few machine-useable ones.
-
->be okay to do some general mechanism for custom commit attributes (if
->it's really necessary),
-
-That's the problem, a general mechanism is undesirable, that we already
-have the free-form textfield for.
-
-> but making a hack for one specific item of
->information feels very wrong.
-
-It's a rather well-defined usefull property (which precludes it from
-being a hack, I suppose).
--- 
-Sincerely,
-           Stephen R. van den Berg.
-
-"Am I paying for this abuse or is it extra?"
+Paolo
