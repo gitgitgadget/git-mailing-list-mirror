@@ -1,93 +1,95 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [RFC] origin link for cherry-pick and revert
-Date: Wed, 10 Sep 2008 11:10:16 -0400
-Message-ID: <20080910151015.GA8869@coredump.intra.peff.net>
-References: <20080909132212.GA25476@cuci.nl> <20080909211355.GB10544@machine.or.cz> <20080909225603.GA7459@cuci.nl> <20080910122118.GI21071@mit.edu> <20080910141630.GB7397@cuci.nl>
+From: Marcus Griep <marcus@griep.us>
+Subject: Re: [PATCH] git-svn: Fixes my() parameter list syntax error in pre-5.8
+ Perl
+Date: Wed, 10 Sep 2008 11:11:15 -0400
+Message-ID: <48C7E393.2070006@griep.us>
+References: <48C7745F.1070008@statsbiblioteket.dk> <1221059386-3972-1-git-send-email-marcus@griep.us>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Theodore Tso <tytso@MIT.EDU>, Petr Baudis <pasky@suse.cz>,
-	git@vger.kernel.org
-To: "Stephen R. van den Berg" <srb@cuci.nl>
-X-From: git-owner@vger.kernel.org Wed Sep 10 17:11:49 2008
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Eric Wong <normalperson@yhbt.net>,
+	Junio C Hamano <gitster@pobox.com>,
+	"Tom G. Christensen" <tgc@statsbiblioteket.dk>
+To: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Wed Sep 10 17:12:59 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KdRLp-0002SB-TP
-	for gcvg-git-2@gmane.org; Wed, 10 Sep 2008 17:11:26 +0200
+	id 1KdRMs-0002mx-4m
+	for gcvg-git-2@gmane.org; Wed, 10 Sep 2008 17:12:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753170AbYIJPKU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 10 Sep 2008 11:10:20 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752149AbYIJPKU
-	(ORCPT <rfc822;git-outgoing>); Wed, 10 Sep 2008 11:10:20 -0400
-Received: from peff.net ([208.65.91.99]:4610 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753170AbYIJPKS (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 10 Sep 2008 11:10:18 -0400
-Received: (qmail 31119 invoked by uid 111); 10 Sep 2008 15:10:17 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.32) with SMTP; Wed, 10 Sep 2008 11:10:17 -0400
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Wed, 10 Sep 2008 11:10:16 -0400
-Content-Disposition: inline
-In-Reply-To: <20080910141630.GB7397@cuci.nl>
+	id S1752008AbYIJPLW convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 10 Sep 2008 11:11:22 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751939AbYIJPLW
+	(ORCPT <rfc822;git-outgoing>); Wed, 10 Sep 2008 11:11:22 -0400
+Received: from py-out-1112.google.com ([64.233.166.176]:32471 "EHLO
+	py-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751078AbYIJPLV (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 10 Sep 2008 11:11:21 -0400
+Received: by py-out-1112.google.com with SMTP id p76so1664259pyb.10
+        for <git@vger.kernel.org>; Wed, 10 Sep 2008 08:11:20 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from
+         :user-agent:mime-version:to:cc:subject:references:in-reply-to
+         :x-enigmail-version:content-type:content-transfer-encoding:sender;
+        bh=f8FI06OkevDgCH/6/zYbQ86sXU5jE0kPJXY5xFdCtwY=;
+        b=cob52XBMdWPX+38JaZI0tDykXmu8vBJLVjneTS8zYQF5O+1a3epxnhk6Br9o3WzMGZ
+         K5Oa9R+UiwE0lVcGtOy6zFPoH4aviH4ty03S6orYGwzOtkx+aHvA+fIMuY69IzNLxGQ0
+         3Djz2Rwb22hk2zuEIjHtYw2gmrUyiAt1W7utY=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:user-agent:mime-version:to:cc:subject
+         :references:in-reply-to:x-enigmail-version:content-type
+         :content-transfer-encoding:sender;
+        b=cCGjYdTXV1uT/4S7Ku0i9EDtkEisynSnucILSif04D4ObOjIokOlsbzJcYpSlXGyV3
+         MUZV2ILGQ8YTc7DXdSGcC+qtH2zFlqSkKl1YS8siYIiqwiCrIL/RJ6C4iYQXmQi+U7il
+         Cf/h7oErefAGzEAQF0Fd2UwUGbrHFUliBOdQo=
+Received: by 10.114.39.16 with SMTP id m16mr762721wam.98.1221059479812;
+        Wed, 10 Sep 2008 08:11:19 -0700 (PDT)
+Received: from ?10.95.36.106? ( [4.79.245.132])
+        by mx.google.com with ESMTPS id h36sm19342392wxd.26.2008.09.10.08.11.17
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Wed, 10 Sep 2008 08:11:18 -0700 (PDT)
+User-Agent: Thunderbird 2.0.0.16 (Windows/20080708)
+In-Reply-To: <1221059386-3972-1-git-send-email-marcus@griep.us>
+X-Enigmail-Version: 0.95.7
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/95524>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/95525>
 
-On Wed, Sep 10, 2008 at 04:16:30PM +0200, Stephen R. van den Berg wrote:
+Sorry:
 
-> >Once you have this information, it is not difficult to maintain a
-> >berk_db database which maps a particular Bug identifier (i.e.,
-> >Red_Hat/149480, or Debian/471977, or Launchpad/203323) to a series of
-> >commits.
-> 
-> This is nice, I admit, but it has the following downsides:
-> - It is nontrivial to automate this on execution of "git cherry-pick".
+Signed-off-by: Marcus Griep <marcus@griep.us>
 
-Maybe a cherry-picking hook?
+Marcus Griep wrote:
+> ---
+>=20
+>  Per Tom G. Christensen's commentary on a breaking test in git-svn.
+>=20
+>  git-svn.perl |    2 +-
+>  1 files changed, 1 insertions(+), 1 deletions(-)
+>=20
+> diff --git a/git-svn.perl b/git-svn.perl
+> index ecacf74..a97e1ca 100755
+> --- a/git-svn.perl
+> +++ b/git-svn.perl
+> @@ -4425,7 +4425,7 @@ sub config_pager {
+> =20
+>  sub run_pager {
+>  	return unless -t *STDOUT && defined $pager;
+> -	pipe my $rfd, my $wfd or return;
+> +	pipe my ($rfd, $wfd) or return;
+>  	defined(my $pid =3D fork) or ::fatal "Can't fork: $!";
+>  	if (!$pid) {
+>  		open STDOUT, '>&', $wfd or
 
-> - In a distributed environment this requires a network-reachable bug
->   database.
-
-Use a distributed bug tracking system (DBTS).
-
-> - A network-reachable bug database means that suddenly git needs network
->   access for e.g. cherry-pick, revert, gitk, log --graph, blame.
-
-Use a DBTS.
-
-> - Network queries for commits containing references kind of kills
->   performance.
-
-Use a DBTS.
-
-> - Some backports don't have entries in a bug database because they
->   weren't bugs to begin with, in which case it becomes impossible to add
->   an identifier to the commit message after the fact.
-
-Use a DBTS, since then you can generally make up a new UUID on the spot.
-
-> - It relies heavily on tools outside of git-core, which raises the
->   threshold for using it.
-
-True.
-
-But maybe Ted is on to something here. Rather than adding the
-information to the commit object itself, why not maintain a separate
-mapping, but keep it _within git_. That is how most of the DBTS's work
-that I have seen. Maybe it is possible to implement some subset of the
-features in a tool that could become part of core git.
-
-There was a proposal at some point for a "notes" feature which would
-allow after-the-fact annotation of commits. I don't recall the exact
-details, but I think it stored its information as a git tree of blobs.
-You could choose whether or not to transfer the notes based on
-transferring a ref pointing to the notes tree.
-
-I'm not sure how applicable this is to your problem, but if you want to
-investigate you can find discussion in the list archive under the name
-"notes".
-
--Peff
+--=20
+Marcus Griep
+GPG Key ID: 0x5E968152
+=E2=80=94=E2=80=94
+http://www.boohaunt.net
+=D7=90=D7=AA.=CF=88=CE=BF=C2=B4
