@@ -1,81 +1,73 @@
-From: Nicolas Pitre <nico@cam.org>
-Subject: Re: [RFC] origin link for cherry-pick and revert
-Date: Thu, 11 Sep 2008 16:27:00 -0400 (EDT)
-Message-ID: <alpine.LFD.1.10.0809111604040.23787@xanadu.home>
-References: <20080909235848.GE7459@cuci.nl>
- <alpine.LFD.1.10.0809091722010.3384@nehalem.linux-foundation.org>
- <20080910054244.GB15715@cuci.nl>
- <alpine.LFD.1.10.0809100828360.3384@nehalem.linux-foundation.org>
- <20080910230906.GD22739@cuci.nl>
- <alpine.LFD.1.10.0809101733050.3384@nehalem.linux-foundation.org>
- <20080911062242.GA23070@cuci.nl>
- <alpine.LFD.1.10.0809110835070.3384@nehalem.linux-foundation.org>
- <20080911192356.GC1451@cuci.nl>
- <alpine.LFD.1.10.0809111534300.23787@xanadu.home>
- <20080911195516.GE1451@cuci.nl>
+From: Eric Raible <raible@gmail.com>
+Subject: Re: RFC: perhaps a "new file" should not be deleted by "git reset --hard"
+Date: Thu, 11 Sep 2008 20:50:27 +0000 (UTC)
+Message-ID: <loom.20080911T204256-821@post.gmane.org>
+References: <279b37b20809101212g57e9ad99qbf6fa15888679894@mail.gmail.com>  <eafc0afe0809101912v72916d3hce9ae5d6812f0db8@mail.gmail.com>  <eafc0afe0809101914lff5b23ehaf625d702fbd9b5d@mail.gmail.com> <51419b2c0809101938v30e5a1aflf944027aedc2d900@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: Linus Torvalds <torvalds@linux-foundation.org>,
-	Jakub Narebski <jnareb@gmail.com>, git@vger.kernel.org
-To: "Stephen R. van den Berg" <srb@cuci.nl>
-X-From: git-owner@vger.kernel.org Thu Sep 11 22:28:27 2008
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Sep 11 22:51:46 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Kdsm1-0002aG-T7
-	for gcvg-git-2@gmane.org; Thu, 11 Sep 2008 22:28:18 +0200
+	id 1Kdt8i-0002Bt-U2
+	for gcvg-git-2@gmane.org; Thu, 11 Sep 2008 22:51:45 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752608AbYIKU1J (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 11 Sep 2008 16:27:09 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752987AbYIKU1J
-	(ORCPT <rfc822;git-outgoing>); Thu, 11 Sep 2008 16:27:09 -0400
-Received: from relais.videotron.ca ([24.201.245.36]:15874 "EHLO
-	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752120AbYIKU1H (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 11 Sep 2008 16:27:07 -0400
-Received: from xanadu.home ([66.131.194.97]) by VL-MH-MR001.ip.videotron.ca
- (Sun Java(tm) System Messaging Server 6.3-4.01 (built Aug  3 2007; 32bit))
- with ESMTP id <0K71005B1ST0PN90@VL-MH-MR001.ip.videotron.ca> for
- git@vger.kernel.org; Thu, 11 Sep 2008 16:27:00 -0400 (EDT)
-X-X-Sender: nico@xanadu.home
-In-reply-to: <20080911195516.GE1451@cuci.nl>
-User-Agent: Alpine 1.10 (LFD 962 2008-03-14)
+	id S1752926AbYIKUuh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 11 Sep 2008 16:50:37 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752852AbYIKUuh
+	(ORCPT <rfc822;git-outgoing>); Thu, 11 Sep 2008 16:50:37 -0400
+Received: from main.gmane.org ([80.91.229.2]:39007 "EHLO ciao.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751893AbYIKUug (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 11 Sep 2008 16:50:36 -0400
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1Kdt7a-0007x4-RS
+	for git@vger.kernel.org; Thu, 11 Sep 2008 20:50:34 +0000
+Received: from adsl-75-24-208-45.dsl.pltn13.sbcglobal.net ([75.24.208.45])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Thu, 11 Sep 2008 20:50:34 +0000
+Received: from raible by adsl-75-24-208-45.dsl.pltn13.sbcglobal.net with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Thu, 11 Sep 2008 20:50:34 +0000
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@ger.gmane.org
+X-Gmane-NNTP-Posting-Host: main.gmane.org
+User-Agent: Loom/3.14 (http://gmane.org/)
+X-Loom-IP: 75.24.208.45 (Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US) AppleWebKit/525.13 (KHTML, like Gecko) Chrome/0.2.149.29 Safari/525.13)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/95643>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/95644>
 
-On Thu, 11 Sep 2008, Stephen R. van den Berg wrote:
+Elijah Newren <newren <at> gmail.com> writes:
 
-> Nicolas Pitre wrote:
-> >On Thu, 11 Sep 2008, Stephen R. van den Berg wrote:
-> >> when doing things with temporary branches.  The origin field is meant to
-> >> be filled *ONLY* when cherry-picking from one permanent branch to
-> >> another permanent branch.  This is a *rare* operation.
+> Anyway, Eric wasn't really talking about ignoring files, since he was
+> explicitly adding them for the next commit.  It's just that at some
+> point he changed his mind and decided he didn't want to include any of
+> the changes he had already made in the next commit, but was surprised
+> when git reset --hard deleted the files from both the index and
+> working copy instead of just the index.  git reset --hard really is
+> meant for throwing away unwanted stuff (particularly including in the
+> working directory), but I can see how he may have expected behavior
+> more along the lines of git rm --cached for those particular files.  I
+> don't agree with that viewpoint (I see files as tracked as soon as you
+> stage it, not once you commit it), but I can see where the expectation
+> comes from.
 > 
-> >... and therefore you might as well just have a separate file (which 
-> >might or might not be tracked by git like the .gitignore files are) 
-> >to keep that information?  Since this is a rare operation, modifying the 
-> >core database structure for this doesn't appear that appealing to most 
-> >so far.
-> 
-> For various reasons, the best alternate place would be at the trailing
-> end of the free-form field.  Using a separate structure causes
-> (performance) problems (mostly).
+> Just my thoughts,
+> Elijah
 
-Did you try it?  I don't particularly buy this performance argument, and 
-the bulk of my contributions to git so far were about performances.  It 
-is quite easy to load a flat file with sorted commit SHA1s, and given 
-that origin links are the result of a rare operation, then there 
-shouldn't be too many entries to search through.  Hell, doing 213647 
-lookups (and many other things like inflating zlib deflated data)  with 
-each of them for commit objects in my Linux repository which has 1355167 
-total entries takes only 6 seconds here, or about a quarter of a 
-milisecond for each lookup.  I doubt doing an extra lookup in a much 
-smaller table would show on the radar.
+Yes, you have a 100% correct understand of what I'm trying to say.
+But can you see a downside to "git reset --hard" treating newly
+added files as "git reset"?
 
+Wiping out existing files (with no realistic recovery) is a bit harsh,
+isn't it?  Especially when AFAICS there's no downside to leaving the
+untracked files as they were before they were "git add"-ed.
 
-Nicolas
+- Eric
