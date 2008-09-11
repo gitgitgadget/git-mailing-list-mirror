@@ -1,70 +1,104 @@
-From: "Stephen R. van den Berg" <srb@cuci.nl>
+From: Theodore Tso <tytso@MIT.EDU>
 Subject: Re: [RFC] origin link for cherry-pick and revert
-Date: Thu, 11 Sep 2008 14:39:02 +0200
-Message-ID: <20080911123902.GB2056@cuci.nl>
-References: <20080909194354.GA13634@cuci.nl> <alpine.LFD.1.10.0809091631250.3117@nehalem.linux-foundation.org> <20080909235848.GE7459@cuci.nl> <alpine.LFD.1.10.0809091722010.3384@nehalem.linux-foundation.org> <20080910054244.GB15715@cuci.nl> <alpine.LFD.1.10.0809100828360.3384@nehalem.linux-foundation.org> <20080910230906.GD22739@cuci.nl> <alpine.LFD.1.10.0809101733050.3384@nehalem.linux-foundation.org> <20080911062242.GA23070@cuci.nl> <48C90F06.4000309@gmail.com>
+Date: Thu, 11 Sep 2008 09:51:46 -0400
+Message-ID: <20080911135146.GE5082@mit.edu>
+References: <20080909132212.GA25476@cuci.nl> <alpine.LFD.1.10.0809101733050.3384@nehalem.linux-foundation.org> <20080911062242.GA23070@cuci.nl> <200809111020.55115.jnareb@gmail.com> <20080911123148.GA2056@cuci.nl>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Linus Torvalds <torvalds@linux-foundation.org>,
-	Jakub Narebski <jnareb@gmail.com>, git@vger.kernel.org
-To: A Large Angry SCM <gitzilla@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Sep 11 14:40:14 2008
+Cc: Jakub Narebski <jnareb@gmail.com>,
+	Linus Torvalds <torvalds@linux-foundation.org>,
+	git@vger.kernel.org
+To: "Stephen R. van den Berg" <srb@cuci.nl>
+X-From: git-owner@vger.kernel.org Thu Sep 11 15:53:56 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KdlT2-0003lT-Ud
-	for gcvg-git-2@gmane.org; Thu, 11 Sep 2008 14:40:13 +0200
+	id 1Kdmbn-0002f1-Vc
+	for gcvg-git-2@gmane.org; Thu, 11 Sep 2008 15:53:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752472AbYIKMjF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 11 Sep 2008 08:39:05 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752674AbYIKMjF
-	(ORCPT <rfc822;git-outgoing>); Thu, 11 Sep 2008 08:39:05 -0400
-Received: from aristoteles.cuci.nl ([212.125.128.18]:58505 "EHLO
-	aristoteles.cuci.nl" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752235AbYIKMjE (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 11 Sep 2008 08:39:04 -0400
-Received: by aristoteles.cuci.nl (Postfix, from userid 500)
-	id 1079F5465; Thu, 11 Sep 2008 14:39:02 +0200 (CEST)
+	id S1751713AbYIKNwH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 11 Sep 2008 09:52:07 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752674AbYIKNwG
+	(ORCPT <rfc822;git-outgoing>); Thu, 11 Sep 2008 09:52:06 -0400
+Received: from BISCAYNE-ONE-STATION.MIT.EDU ([18.7.7.80]:55653 "EHLO
+	biscayne-one-station.mit.edu" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751636AbYIKNwE (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 11 Sep 2008 09:52:04 -0400
+Received: from outgoing.mit.edu (OUTGOING-AUTH.MIT.EDU [18.7.22.103])
+	by biscayne-one-station.mit.edu (8.13.6/8.9.2) with ESMTP id m8BDpmH4017988;
+	Thu, 11 Sep 2008 09:51:48 -0400 (EDT)
+Received: from closure.thunk.org (c-98-216-98-217.hsd1.ma.comcast.net [98.216.98.217])
+	(authenticated bits=0)
+        (User authenticated as tytso@ATHENA.MIT.EDU)
+	by outgoing.mit.edu (8.13.6/8.12.4) with ESMTP id m8BDpkfq020998
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
+	Thu, 11 Sep 2008 09:51:47 -0400 (EDT)
+Received: from tytso by closure.thunk.org with local (Exim 4.69)
+	(envelope-from <tytso@mit.edu>)
+	id 1KdmaI-0001ND-NR; Thu, 11 Sep 2008 09:51:46 -0400
 Content-Disposition: inline
-In-Reply-To: <48C90F06.4000309@gmail.com>
-User-Agent: Mutt/1.5.13 (2006-08-11)
+In-Reply-To: <20080911123148.GA2056@cuci.nl>
+User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
+X-Scanned-By: MIMEDefang 2.42
+X-Spam-Flag: NO
+X-Spam-Score: 0.00
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/95606>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/95607>
 
-A Large Angry SCM wrote:
->Stephen R. van den Berg wrote:
->>If you fetch just branches A, B and C, but not D, the origin link from A
->>to D is dangling. 
+On Thu, Sep 11, 2008 at 02:31:48PM +0200, Stephen R. van den Berg wrote:
+> 
+> Well, the train of thought here goes as follows:
+> 1. Sure, why not add a field (zero or more) at the bottom of the free-form
+>    commit message reading like:
+> 
+>    Origin: bbb896d8e10f736bfda8f587c0009c358c9a8599 ee837244df2e2e4e9171f508f83f353730db9e53
+> 
+> 2. Add support to cherry-pick/revert to actually generate the field upon
+>    demand.
 
->I do not understand how this can be considered an acceptable behavior. 
->If an object ID is referenced in an object header, particularly commit 
->objects, fetch must gather those objects also because to do otherwise 
->breaks the cryptographic authentication in git.
+"git cherry-pick -x" already generates the field you want.
 
-No it does not.
-The cryptographic seal is calculated over the content of the commit,
-which includes the hashes of all referenced objects, but doesn't include
-the objects themselves.
-The content of the commit is not violated.
+> 
+> 3. Then add support to prune/gc/fsck/blame/log --graph to take the field
+>    into account.
+> 
 
-Do not forget though:
-- origin links are a rare occurrence.
-- When they occur, they usually were made to point into other (deemed)
-  important public branches.
-- Due to the fact that the branches they are pointing into are important
-  and public, in most cases the origin links *will* point to objects you
-  actually already have (even if you fetched from someone else).
-- The only time you're going to have dangling origin links is when
-  they were pointing at someone's private branches, in which case it was
-  not very prudent of the committer to actually record the link in the
-  first place.  But nothing breaks if you don't have his private branch
-  locally.
--- 
-Sincerely,
-           Stephen R. van den Berg.
-"There are three types of people in the world;
- those who can count, and those who can't."
+Um, why should "git fsck", or "git prune" or "git gc" need to
+understand about this field?  What were you saying about unclean
+semantics, again?  I thought you claimed that dangling origin links
+were OK?  So why the heck should git fsck care?  And why shouldn't
+gc/prune drop objects that are only referenced via the origin link.
+
+> 4. Add support to filter-branch/rebase to renumber the field if necessary.
+
+As we discussed earlier in some cases renumbering the field is not the
+right thing to do, especially if the commit in question has already
+been cherry-picked --- and you don't know that.  Again, this is why
+prototyping it outside of the core git is so useful; it will show up
+some of these fundamental flaws in the origin link proposal.
+
+> Well, and after having done steps 1 to 5, the net result is that it
+> works almost as if the field is present in the header, except that:
+> - It is now at the end of the body in the commit message.
+> - It takes more time to find and parse it.
+
+A proof of concept, even if it isn't fully performant, is useful to
+prove that an idea actually has merit --- which clearly not everyone
+believes at this point.
+
+I'll also note that having a ***local*** database to cache the origin
+link is a great way of short-circuiting the performance difficulties.
+If it works, then it will be a lot easier to convince people that
+perhaps it should be done git-core, and by modifying core git functions.
+
+Alternatively, if you think this is such a great idea, why don't you
+grab a copy of the git repository, and start hacking the idea
+yourself?  If you have running code, it tends to make the idea much
+more concrete, and much easier to evaluate.  Or were you hoping to
+convince other people to do all of this programming for you?
+
+						- Ted
