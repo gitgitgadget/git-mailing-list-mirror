@@ -1,85 +1,73 @@
-From: "Mike Ralphson" <mike.ralphson@gmail.com>
-Subject: Re: [PATCH] Use compatibility regex library also on AIX
-Date: Thu, 11 Sep 2008 09:31:25 +0100
-Message-ID: <e2b179460809110131h781f0c91i9d478e20b55dec24@mail.gmail.com>
-References: <20080907184537.GA4148@regex.yaph.org>
-	 <e2b179460809100103t4266650bnac00097cfb86c0b1@mail.gmail.com>
-	 <20080910100301.GA27748@regex.yaph.org>
-	 <e2b179460809100453r3df4ec8dh3d9bfbbd468c5676@mail.gmail.com>
-	 <e2b179460809110059i2eca8b07x6d263f06cc8e5d32@mail.gmail.com>
-	 <48C8D374.9050007@viscovery.net>
-	 <20080911082554.GB27748@regex.yaph.org>
+From: Paolo Bonzini <bonzini@gnu.org>
+Subject: Re: [RFC] origin link for cherry-pick and revert
+Date: Thu, 11 Sep 2008 10:45:49 +0200
+Message-ID: <48C8DABD.40201@gnu.org>
+References: <20080909225603.GA7459@cuci.nl> <20080910122118.GI21071@mit.edu> <20080910141630.GB7397@cuci.nl> <20080910151015.GA8869@coredump.intra.peff.net> <20080910215045.GA22739@cuci.nl> <20080910215410.GA24432@coredump.intra.peff.net> <20080910223427.GB22739@cuci.nl> <20080910225518.GA24534@coredump.intra.peff.net> <20080910231900.GF22739@cuci.nl> <48C8A9A4.7030906@gnu.org> <20080911075539.GA27089@cuci.nl>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-Cc: "Johannes Sixt" <j.sixt@viscovery.net>, git@vger.kernel.org
-To: "Arjen Laarhoven" <arjen@yaph.org>,
-	"Junio C Hamano" <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Sep 11 10:32:39 2008
+Cc: Jeff King <peff@peff.net>, Theodore Tso <tytso@MIT.EDU>,
+	Petr Baudis <pasky@suse.cz>, git@vger.kernel.org
+To: "Stephen R. van den Berg" <srb@cuci.nl>
+X-From: git-owner@vger.kernel.org Thu Sep 11 10:47:06 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KdhbO-0003YU-VU
-	for gcvg-git-2@gmane.org; Thu, 11 Sep 2008 10:32:35 +0200
+	id 1KdhpR-0007Rl-Ms
+	for gcvg-git-2@gmane.org; Thu, 11 Sep 2008 10:47:06 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752369AbYIKIb1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 11 Sep 2008 04:31:27 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752368AbYIKIb1
-	(ORCPT <rfc822;git-outgoing>); Thu, 11 Sep 2008 04:31:27 -0400
-Received: from rv-out-0506.google.com ([209.85.198.232]:52301 "EHLO
-	rv-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752357AbYIKIb0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 11 Sep 2008 04:31:26 -0400
-Received: by rv-out-0506.google.com with SMTP id k40so251513rvb.1
-        for <git@vger.kernel.org>; Thu, 11 Sep 2008 01:31:25 -0700 (PDT)
+	id S1751727AbYIKIp5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 11 Sep 2008 04:45:57 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751905AbYIKIp5
+	(ORCPT <rfc822;git-outgoing>); Thu, 11 Sep 2008 04:45:57 -0400
+Received: from gv-out-0910.google.com ([216.239.58.186]:43360 "EHLO
+	gv-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751583AbYIKIp4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 11 Sep 2008 04:45:56 -0400
+Received: by gv-out-0910.google.com with SMTP id e6so171459gvc.37
+        for <git@vger.kernel.org>; Thu, 11 Sep 2008 01:45:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to
-         :subject:cc:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:references;
-        bh=ybJei42FMYm3/gSYKsqec+N5E80X7ZxPxOf8zCROyfo=;
-        b=rSzRURs4LTkfPPBKIuAo680UOj55Zewx1Zm9x51VZsAI4Kd0dOg/mhWkb14oZsHnXi
-         jKSGMJX+yM4hdu76WIKJDAv244RVX/d1x0eb9eHBTuhvgDaXj6Nv0/9wxa9eFvbb3lXu
-         ePmnSe6R24xMHZwOriZDxG2Qo8bSVJOLyudlY=
+        h=domainkey-signature:received:received:message-id:date:from
+         :user-agent:mime-version:to:cc:subject:references:in-reply-to
+         :x-enigmail-version:content-type:content-transfer-encoding:sender;
+        bh=hmxGs9mnojfynYgkmTYzb7Z1P2O//rPvWMqirQZYG0w=;
+        b=BiEap9ifH3sEM7xjs1fUQZjrEB/2BfFZmwlGzVCwOzlvgMe6SBaMXUZhQ+viOCdrBE
+         LJ+pdiSUND/8MDdqc6grqeKcbCQrll2KrGOUDuKCIxjHe1MjmMhMbleN/v5bezxJSTna
+         gVmEcduwR4Y7bNXWuqoStbkAlFKkEOHzx3VAY=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
-         :content-type:content-transfer-encoding:content-disposition
-         :references;
-        b=bNVkeeZK0afi10KKAY8sOP0K+iri5ZI9hCvIIbZzhsToEj1TYWLnobDs06F42Ant20
-         agMAAf6XfcnKJOPpq0gnm1lOBFLEztoPm42pyHmAcG8wMmD+6JUGo/pMBm5NSfXMnJ+Y
-         fj66jF72lMop0Naf1qYj+iCzaGrz9eUd9rc7Q=
-Received: by 10.140.128.11 with SMTP id a11mr1537391rvd.232.1221121885402;
-        Thu, 11 Sep 2008 01:31:25 -0700 (PDT)
-Received: by 10.140.143.2 with HTTP; Thu, 11 Sep 2008 01:31:25 -0700 (PDT)
-In-Reply-To: <20080911082554.GB27748@regex.yaph.org>
-Content-Disposition: inline
+        h=message-id:date:from:user-agent:mime-version:to:cc:subject
+         :references:in-reply-to:x-enigmail-version:content-type
+         :content-transfer-encoding:sender;
+        b=Rht+d5rQy1kHS6xV9s90WoS/BUh3VzuJRqAtdEPeYiYJ4fEvRYZDJeI75dehDux9mD
+         0vd2KFiKGerhxiyD3nE1HB8FHzDWIxgsSHZpNzkWMtmeGG42eMAQ2JOpR3QGCpP6lWpr
+         UrdVn6/zJQidG8v+1nztX8FWSRI5tFDV9ucZQ=
+Received: by 10.86.68.2 with SMTP id q2mr1811891fga.43.1221122752334;
+        Thu, 11 Sep 2008 01:45:52 -0700 (PDT)
+Received: from scientist-2.mobile.usilu.net ( [195.176.179.202])
+        by mx.google.com with ESMTPS id d4sm10339586fga.5.2008.09.11.01.45.51
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Thu, 11 Sep 2008 01:45:51 -0700 (PDT)
+User-Agent: Thunderbird 2.0.0.16 (Macintosh/20080707)
+In-Reply-To: <20080911075539.GA27089@cuci.nl>
+X-Enigmail-Version: 0.95.7
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/95596>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/95597>
 
-2008/9/11 Arjen Laarhoven <arjen@yaph.org>:
-> On Thu, Sep 11, 2008 at 10:14:44AM +0200, Johannes Sixt wrote:
->> This augments 3632cfc24 (Use compatibility regex library on Darwin,
->> 2008-09-07), which already carries a "Tested-by" statement for AIX,
->> but that test was actually done with this patch included.
->
-> I hadn't realized it had already gone in to 'pu'.  I've put the AIX part
-> into my local patch, and also had it tested on HP-UX.  Today I'll
-> probably can test it on Solaris too, and add that as well.
 
-I think the reason it's in pu is that it's in maint, master and next too...
+>> I actually like the commit notes idea, but then I wonder: why are the
+>> author and committer part of the commit object?  How does the plumbing
+>> use them?  Isn't that metadata that could live in the "notes"?  And so,
+> 
+> we already *have* the non-mutable version of the notes, it's called the
+> header of the commit message.
 
-All my test runs went bang this morning. 8-)
+Yes, that was my point.  I don't see how the author and committer fit in
+the header of the commit message, if the origin does not.
 
-2008/9/11 Junio C Hamano <gitster@pobox.com>:
-> Sorry, my fault --- I should have noticed the missing "ifeq AIX"
-> anywhere in the hunk headers.
-
-No, I shouldn't have added the Tested-by without making it clear I was
-testing the tip of the thread, not the original patch. My bad.
-
-Mike
+Paolo
