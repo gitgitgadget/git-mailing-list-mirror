@@ -1,81 +1,72 @@
-From: Jeff King <peff@peff.net>
+From: Sam Vilain <sam@vilain.net>
 Subject: Re: [RFC] origin link for cherry-pick and revert
-Date: Thu, 11 Sep 2008 19:26:10 -0400
-Message-ID: <20080911232610.GA4279@coredump.intra.peff.net>
-References: <20080911062242.GA23070@cuci.nl> <200809111020.55115.jnareb@gmail.com> <20080911123148.GA2056@cuci.nl> <20080911135146.GE5082@mit.edu> <20080911153202.GD2056@cuci.nl> <20080911180037.GH5082@mit.edu> <20080911190335.GB1451@cuci.nl> <20080911200452.GM5082@mit.edu> <20080911214650.GB3187@coredump.intra.peff.net> <alpine.LFD.1.10.0809111533110.3384@nehalem.linux-foundation.org>
+Date: Fri, 12 Sep 2008 11:28:36 +1200
+Message-ID: <48C9A9A4.8090703@vilain.net>
+References: <20080909132212.GA25476@cuci.nl> <alpine.LFD.1.10.0809100841080.3384@nehalem.linux-foundation.org> <alpine.LFD.1.10.0809100844040.3384@nehalem.linux-foundation.org> <200809101823.22072.jnareb@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Theodore Tso <tytso@MIT.EDU>,
-	"Stephen R. van den Berg" <srb@cuci.nl>,
-	Jakub Narebski <jnareb@gmail.com>, git@vger.kernel.org
-To: Linus Torvalds <torvalds@linux-foundation.org>
-X-From: git-owner@vger.kernel.org Fri Sep 12 01:27:28 2008
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: Linus Torvalds <torvalds@linux-foundation.org>,
+	Paolo Bonzini <bonzini@gnu.org>,
+	"Stephen R. van den Berg" <srb@cuci.nl>, git@vger.kernel.org
+To: Jakub Narebski <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Sep 12 01:30:03 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KdvZJ-0006v4-H4
-	for gcvg-git-2@gmane.org; Fri, 12 Sep 2008 01:27:22 +0200
+	id 1Kdvbp-0007U8-Ir
+	for gcvg-git-2@gmane.org; Fri, 12 Sep 2008 01:29:58 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754689AbYIKX0N (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 11 Sep 2008 19:26:13 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754213AbYIKX0N
-	(ORCPT <rfc822;git-outgoing>); Thu, 11 Sep 2008 19:26:13 -0400
-Received: from peff.net ([208.65.91.99]:1496 "EHLO peff.net"
+	id S1754836AbYIKX2u (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 11 Sep 2008 19:28:50 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754811AbYIKX2u
+	(ORCPT <rfc822;git-outgoing>); Thu, 11 Sep 2008 19:28:50 -0400
+Received: from watts.utsl.gen.nz ([202.78.240.73]:50948 "EHLO mail.utsl.gen.nz"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752490AbYIKX0M (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 11 Sep 2008 19:26:12 -0400
-Received: (qmail 6707 invoked by uid 111); 11 Sep 2008 23:26:11 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.32) with SMTP; Thu, 11 Sep 2008 19:26:11 -0400
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Thu, 11 Sep 2008 19:26:10 -0400
-Content-Disposition: inline
-In-Reply-To: <alpine.LFD.1.10.0809111533110.3384@nehalem.linux-foundation.org>
+	id S1754802AbYIKX2t (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 11 Sep 2008 19:28:49 -0400
+Received: by mail.utsl.gen.nz (Postfix, from userid 1004)
+	id 5A2B321C50D; Fri, 12 Sep 2008 11:28:47 +1200 (NZST)
+X-Spam-Checker-Version: SpamAssassin 3.2.3 (2007-08-08) on
+	mail.musashi.utsl.gen.nz
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.7 required=5.0 tests=AWL,BAYES_00 autolearn=ham
+	version=3.2.3
+Received: from [192.168.2.22] (leibniz.catalyst.net.nz [202.78.240.7])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by mail.utsl.gen.nz (Postfix) with ESMTP id E6B9021C13D;
+	Fri, 12 Sep 2008 11:28:38 +1200 (NZST)
+User-Agent: Icedove 1.5.0.12 (X11/20070606)
+In-Reply-To: <200809101823.22072.jnareb@gmail.com>
+X-Enigmail-Version: 0.94.2.0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/95666>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/95667>
 
-On Thu, Sep 11, 2008 at 04:10:26PM -0700, Linus Torvalds wrote:
-
-> > And obviously in Linus's workflow such references are basically useless,
-> > and they should just not be generated.
+Jakub Narebski wrote:
+>> And that dotted line really does sound like something you could do with 
+>> just the existing "hyperlink" functionality in the commit message.
 > 
-> This has _nothing_ to do with workflows or anything else.
-> 
-> Why are people claiming these total red herrings?
-> 
-> I have asked several times what it is that makes it so important that the 
-> "origin" information be in the headers. Nobody has been able to explain 
-> why it's so different from just doing it in the free-form part. NOBODY.
+> As far as I understand (note: I'm neither for, nor against the proposal;
+> although I think it has thin chance to be accepted, especially soon),
+> it is for graphical history viewers, for git-cherry to make it more
+> precise (to detect duplicated/cherry-picked changes better), and in
+> the future possibly to help history-aware merge strategies. And probably
+> help patch management interfaces.
 
-The message you are responding to has nothing to do with an origin
-header versus putting it in the free-form part. It is equally a problem
-with both approaches.
+Can I suggest,
 
-I was purely commenting on the "if I mention an arbitrary sha-1, what is
-the person reading it supposed to _do_ with it, if they may never have
-seen that sha-1" issue.
+ 1. bury this origin link idea
 
-So yes, it has _everything_ to do with workflows. In Stephen's case, he
-claims that all references will be to commits on long-lived branches. In
-which case, it is a non-issue because they will have the referenced
-commits.
+ 2. make git-cherry-pick have a similar option to '-x', but instead of
+    recording the original commit ID, record the original *patch* ID,
+    *if* there was a merge conflict for that cherry pick.
 
-But in the general case, people will not have them, and there is
-potential head-scratching. My point is that even if a feature works for
-Stephen's workflow, it may not be a good feature for everyone, since
-other solutions handle the general case (as well as his case) much
-better.
+ 3. tools can build indexes from patch ID => (commit IDs) to make this
+    other form of history navigation fast.
 
-> [ranting about how the origin header is bad]
-> The only thing I have ever argued against is adding commit headers that 
-> have no sane semantics and don't make sense as internal git data 
-> structures.
-
-Yes, and I totally agree with everything you said. If you read the mail
-you are responding to carefully, you will see that I never mention an
-origin header versus the free-form commit.
-
--Peff
+Sam
