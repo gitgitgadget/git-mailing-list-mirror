@@ -1,117 +1,87 @@
-From: dhruva <dhruva@ymail.com>
-Subject: Re: PATCH: git-p4 optional handling of RCS keywords
-Date: Thu, 11 Sep 2008 09:36:34 +0530 (IST)
-Message-ID: <880457.35643.qm@web95006.mail.in2.yahoo.com>
+From: Paolo Bonzini <bonzini@gnu.org>
+Subject: Re: [RFC] origin link for cherry-pick and revert
+Date: Thu, 11 Sep 2008 07:16:20 +0200
+Message-ID: <48C8A9A4.7030906@gnu.org>
+References: <20080909132212.GA25476@cuci.nl> <20080909211355.GB10544@machine.or.cz> <20080909225603.GA7459@cuci.nl> <20080910122118.GI21071@mit.edu> <20080910141630.GB7397@cuci.nl> <20080910151015.GA8869@coredump.intra.peff.net> <20080910215045.GA22739@cuci.nl> <20080910215410.GA24432@coredump.intra.peff.net> <20080910223427.GB22739@cuci.nl> <20080910225518.GA24534@coredump.intra.peff.net> <20080910231900.GF22739@cuci.nl>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8BIT
-Cc: Junio C Hamano <gitster@pobox.com>, GIT SCM <git@vger.kernel.org>,
-	Jing Xue <jingxue@digizenstudio.com>
-To: Simon Hausmann <simon@lst.de>
-X-From: git-owner@vger.kernel.org Thu Sep 11 06:08:56 2008
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: Jeff King <peff@peff.net>, Theodore Tso <tytso@MIT.EDU>,
+	Petr Baudis <pasky@suse.cz>, git@vger.kernel.org
+To: "Stephen R. van den Berg" <srb@cuci.nl>
+X-From: git-owner@vger.kernel.org Thu Sep 11 07:17:46 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KddUF-0006Z9-HV
-	for gcvg-git-2@gmane.org; Thu, 11 Sep 2008 06:08:56 +0200
+	id 1KdeYh-00028c-Lo
+	for gcvg-git-2@gmane.org; Thu, 11 Sep 2008 07:17:36 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750801AbYIKEGi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 11 Sep 2008 00:06:38 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750759AbYIKEGi
-	(ORCPT <rfc822;git-outgoing>); Thu, 11 Sep 2008 00:06:38 -0400
-Received: from n2b.bullet.mail.in2.yahoo.com ([203.104.19.41]:20266 "HELO
-	n2b.bullet.mail.in2.yahoo.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with SMTP id S1750712AbYIKEGh convert rfc822-to-8bit
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 11 Sep 2008 00:06:37 -0400
-X-Greylist: delayed 77798 seconds by postgrey-1.27 at vger.kernel.org; Thu, 11 Sep 2008 00:06:37 EDT
-Received: from [202.86.4.170] by n2.bullet.mail.in2.yahoo.com with NNFMP; 11 Sep 2008 04:06:35 -0000
-Received: from [203.104.18.48] by t1.bullet.in.yahoo.com with NNFMP; 11 Sep 2008 04:06:35 -0000
-Received: from [127.0.0.1] by omp104.mail.in2.yahoo.com with NNFMP; 11 Sep 2008 04:06:35 -0000
-X-Yahoo-Newman-Property: ymail-3
-X-Yahoo-Newman-Id: 11664.55511.bm@omp104.mail.in2.yahoo.com
-Received: (qmail 36087 invoked by uid 60001); 11 Sep 2008 04:06:34 -0000
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-  s=s1024; d=ymail.com;
-  h=X-YMail-OSG:Received:X-Mailer:Date:From:Subject:To:Cc:MIME-Version:Content-Type:Content-Transfer-Encoding:Message-ID;
-  b=gSthO6oYAJbQcKXjH5Zy0JYvwlsJ7Hd+SHIxlpbfxVr3YUpKjt3an/SmN4ktXzJ0cy4gXOiTVxcwglut+TqtdWvkTibjh9xwV04IG834SmiVz+ZhuciN45Pxq9QC/tCZ5RgWZAp9/ziGDrnTXTw1q/6D3j3Bh0PS62kjimRPN+w=;
-X-YMail-OSG: V5YPIPAVM1kJ6klr2Odtb0P17KQxDf0Lfm6qE49hQe9wrru4ciUIePZSJ43G_F4JQeolHAlzMg_oWAnBJ.RRDWIxT1gVPbGo.YOe3g0Kk5oPcjD.9.HJ4c.pCMrvmZw-
-Received: from [202.3.112.9] by web95006.mail.in2.yahoo.com via HTTP; Thu, 11 Sep 2008 09:36:34 IST
-X-Mailer: YahooMailRC/1096.28 YahooMailWebService/0.7.218.2
+	id S1751583AbYIKFQ2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 11 Sep 2008 01:16:28 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751560AbYIKFQ2
+	(ORCPT <rfc822;git-outgoing>); Thu, 11 Sep 2008 01:16:28 -0400
+Received: from wr-out-0506.google.com ([64.233.184.237]:8034 "EHLO
+	wr-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751491AbYIKFQ1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 11 Sep 2008 01:16:27 -0400
+Received: by wr-out-0506.google.com with SMTP id 69so122104wri.5
+        for <git@vger.kernel.org>; Wed, 10 Sep 2008 22:16:23 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from
+         :user-agent:mime-version:to:cc:subject:references:in-reply-to
+         :content-type:content-transfer-encoding:sender;
+        bh=YNZMCqhiiHgXKWMRBBpbWMt6Eju6L4qzRtAaE6rZy24=;
+        b=brVYwPIUMLvsLHjWQMh17CNAwiBjhgpOF5ZW4/ontE4dqZyLclN516U/uvQMhuBgMm
+         AkYNL5Xtpg8axmnau/sA+0SFrx/FW8b9QGHBI4yVCtmfVJvJV0zq/4bsTdvOtZdCWXNu
+         U16neWLD6TbZvt0u3vCBtHuFxmEgeAkXICOds=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:user-agent:mime-version:to:cc:subject
+         :references:in-reply-to:content-type:content-transfer-encoding
+         :sender;
+        b=qpkXmDSuXfnmIWbTBDndIpbv5BVJw+rTHct0GzF8Oco4lDooLd1jpQXTcUGzIbHxKv
+         LUky0QNhFnFEqytfZzXDIWQs+PIccsmM0/j9GE9oVQjkh2/Avw7ZnGVjH3dNmp3uprzo
+         CFB7L8tNXBDkyrEodgF8UumzXA9dHlLCYKYzM=
+Received: by 10.103.23.20 with SMTP id a20mr1490715muj.128.1221110183061;
+        Wed, 10 Sep 2008 22:16:23 -0700 (PDT)
+Received: from scientist-2.lan ( [89.96.108.150])
+        by mx.google.com with ESMTPS id j2sm4270622mue.4.2008.09.10.22.16.22
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Wed, 10 Sep 2008 22:16:22 -0700 (PDT)
+User-Agent: Thunderbird 2.0.0.16 (Macintosh/20080707)
+In-Reply-To: <20080910231900.GF22739@cuci.nl>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/95579>
-
-Hello,
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/95580>
 
 
-Commit message: Modifying RCS keywords prevents submitting to p4 from git due to missing hunks. Optional shrinking of RCS keywords in git-p4. New option git-p4.kwstrip set to true or false controls the behavior..
-
-diff --git a/contrib/fast-import/git-p4 b/contrib/fast-import/git-p4
-index 2216cac..ac8b7f7 100755
---- a/contrib/fast-import/git-p4
-+++ b/contrib/fast-import/git-p4
-@@ -16,6 +16,9 @@ from sets import Set;
-
- verbose = False
-
-+# Handling of RCS keyowrds. To ensure backward compatibility, the default
-+# is to strip keywords. Default behavior is controlled here
-+kwstrip = True
-
- def p4_build_cmd(cmd):
-     """Build a suitable p4 command line.
-@@ -975,7 +978,9 @@ class P4Sync(Command):
-                 sys.stderr.write("p4 print fails with: %s\n" % repr(stat))
-                 continue
-
--            if stat['type'] in ('text+ko', 'unicode+ko', 'binary+ko'):
-+            if not kwstrip:
-+               pass
-+            elif stat['type'] in ('text+ko', 'unicode+ko', 'binary+ko'):
-                 text = re.sub(r'(?i)\$(Id|Header):[^$]*\$',r'$\1$', text)
-             elif stat['type'] in ('text+k', 'ktext', 'kxtext', 'unicode+k', 'binary+k'):
-                 text = re.sub(r'\$(Id|Header|Author|Date|DateTime|Change|File|Revision):[^$]*\$',r'$\1$', text)
-@@ -1850,6 +1855,16 @@ def main():
-         (cmd, args) = parser.parse_args(sys.argv[2:], cmd);
-     global verbose
-     verbose = cmd.verbose
-+
-+    global kwstrip
-+    kwval = gitConfig("git-p4.kwstrip")
-+    if len(kwval) > 0:
-+       kwval = kwval.lower();
-+        if kwval == "false":
-+            kwstrip = False
-+        elif kwval == "true":
-+            kwstrip = True
-+
-     if cmd.needsGit:
-         if cmd.gitdir == None:
-             cmd.gitdir = os..path.abspath(".git")
-
-
--dhruva
-
-
------ Original Message ----
-> From: Simon Hausmann <simon@lst.de>
-> > +       kwval = kwval.lower();
-> > +        if "false" == kwval:
-> > +            kwstrip = False
-> > +        elif "true" == kwval:
-> > +            kwstrip = True
+>>> - The origin information is no longer cryptographically protected (under
+>>>   certain circumstances this could be considered an advantage and a
+>>>   disadvantage at the same time).
 > 
-> I have another style nitpick, sorry :). Please use "kwval == "false" instead 
-> of the other way around.
+>> I haven't thought enough about it to decide whether there is a scenario
+>> where making such a "cherry-picked from" annotation might make use of
+>> that property.
+> 
+> Being able to subvert the authenticity of git blame by providing fake
+> origin information is not very appealing.
 
-There was a reason for keeping the constant as lvalue to avoid typos like '=' instead from '==' from 'C' school, I realize that python throws an error when such things happen. Must say that programming languages are becoming smarter and taking away the charm of programming...
- 
-> Otherwise your patch looks good to me, I think it's a very good option to add. 
-> Please resend with commit message so that Junio can include it.
+You could use a dummy submodule to ensure that each commit pointed to
+the right set of notes.  It would force to create a separate commit
+whenever you modified the notes, which is actually not bad.
 
+Alternatively, the header of the commit can be modified to add a pointer
+to a tree object for the notes; I suppose this is more palatable than
+the origin link.  The tree could be organized in directories+blobs like
+.git/objects to speed up the lookup.
 
-      Add more friends to your messenger and enjoy! Go to http://in.messenger.yahoo.com/invite/
+I actually like the commit notes idea, but then I wonder: why are the
+author and committer part of the commit object?  How does the plumbing
+use them?  Isn't that metadata that could live in the "notes"?  And so,
+why should the origin link have less privileges?
+
+Paolo
