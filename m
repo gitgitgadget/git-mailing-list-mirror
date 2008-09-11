@@ -1,104 +1,169 @@
-From: Theodore Tso <tytso@MIT.EDU>
-Subject: Re: [RFC] origin link for cherry-pick and revert
-Date: Thu, 11 Sep 2008 09:51:46 -0400
-Message-ID: <20080911135146.GE5082@mit.edu>
-References: <20080909132212.GA25476@cuci.nl> <alpine.LFD.1.10.0809101733050.3384@nehalem.linux-foundation.org> <20080911062242.GA23070@cuci.nl> <200809111020.55115.jnareb@gmail.com> <20080911123148.GA2056@cuci.nl>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Jakub Narebski <jnareb@gmail.com>,
-	Linus Torvalds <torvalds@linux-foundation.org>,
-	git@vger.kernel.org
-To: "Stephen R. van den Berg" <srb@cuci.nl>
-X-From: git-owner@vger.kernel.org Thu Sep 11 15:53:56 2008
+From: Florian Ragwitz <rafl@debian.org>
+Subject: [PATCH] Add git-svn branch to allow branch creation in SVN repositories
+Date: Thu, 11 Sep 2008 16:20:39 +0200
+Message-ID: <1221142839-29624-1-git-send-email-rafl@debian.org>
+Cc: Florian Ragwitz <rafl@debian.org>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Sep 11 16:24:28 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Kdmbn-0002f1-Vc
-	for gcvg-git-2@gmane.org; Thu, 11 Sep 2008 15:53:20 +0200
+	id 1Kdn4F-0004aG-TM
+	for gcvg-git-2@gmane.org; Thu, 11 Sep 2008 16:22:44 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751713AbYIKNwH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 11 Sep 2008 09:52:07 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752674AbYIKNwG
-	(ORCPT <rfc822;git-outgoing>); Thu, 11 Sep 2008 09:52:06 -0400
-Received: from BISCAYNE-ONE-STATION.MIT.EDU ([18.7.7.80]:55653 "EHLO
-	biscayne-one-station.mit.edu" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751636AbYIKNwE (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 11 Sep 2008 09:52:04 -0400
-Received: from outgoing.mit.edu (OUTGOING-AUTH.MIT.EDU [18.7.22.103])
-	by biscayne-one-station.mit.edu (8.13.6/8.9.2) with ESMTP id m8BDpmH4017988;
-	Thu, 11 Sep 2008 09:51:48 -0400 (EDT)
-Received: from closure.thunk.org (c-98-216-98-217.hsd1.ma.comcast.net [98.216.98.217])
-	(authenticated bits=0)
-        (User authenticated as tytso@ATHENA.MIT.EDU)
-	by outgoing.mit.edu (8.13.6/8.12.4) with ESMTP id m8BDpkfq020998
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
-	Thu, 11 Sep 2008 09:51:47 -0400 (EDT)
-Received: from tytso by closure.thunk.org with local (Exim 4.69)
-	(envelope-from <tytso@mit.edu>)
-	id 1KdmaI-0001ND-NR; Thu, 11 Sep 2008 09:51:46 -0400
-Content-Disposition: inline
-In-Reply-To: <20080911123148.GA2056@cuci.nl>
-User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
-X-Scanned-By: MIMEDefang 2.42
-X-Spam-Flag: NO
-X-Spam-Score: 0.00
+	id S1752150AbYIKOVf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 11 Sep 2008 10:21:35 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751986AbYIKOVf
+	(ORCPT <rfc822;git-outgoing>); Thu, 11 Sep 2008 10:21:35 -0400
+Received: from weedy.perldition.org ([85.10.210.75]:45764 "EHLO
+	weedy.perldition.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751813AbYIKOVe (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 11 Sep 2008 10:21:34 -0400
+Received: from p4fd756d7.dip.t-dialin.net ([79.215.86.215]:56992 helo=ata.xb.lan)
+	by weedy.perldition.org with esmtpsa (TLSv1:AES256-SHA:256)
+	(Exim 4.60)
+	(envelope-from <rafl@debian.org>)
+	id 1Kdn2T-0003r1-O9; Thu, 11 Sep 2008 16:20:56 +0200
+Received: from rafl by ata.xb.lan with local (Exim 4.69)
+	(envelope-from <rafl@debian.org>)
+	id 1Kdn2F-0007iA-BJ; Thu, 11 Sep 2008 16:20:39 +0200
+X-Mailer: git-send-email 1.5.6.5
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/95607>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/95608>
 
-On Thu, Sep 11, 2008 at 02:31:48PM +0200, Stephen R. van den Berg wrote:
-> 
-> Well, the train of thought here goes as follows:
-> 1. Sure, why not add a field (zero or more) at the bottom of the free-form
->    commit message reading like:
-> 
->    Origin: bbb896d8e10f736bfda8f587c0009c358c9a8599 ee837244df2e2e4e9171f508f83f353730db9e53
-> 
-> 2. Add support to cherry-pick/revert to actually generate the field upon
->    demand.
+Signed-off-by: Florian Ragwitz <rafl@debian.org>
+---
+ Documentation/git-svn.txt |   24 +++++++++++++++++++++++-
+ git-svn.perl              |   43 ++++++++++++++++++++++++++++++++++++++++++-
+ 2 files changed, 65 insertions(+), 2 deletions(-)
 
-"git cherry-pick -x" already generates the field you want.
-
-> 
-> 3. Then add support to prune/gc/fsck/blame/log --graph to take the field
->    into account.
-> 
-
-Um, why should "git fsck", or "git prune" or "git gc" need to
-understand about this field?  What were you saying about unclean
-semantics, again?  I thought you claimed that dangling origin links
-were OK?  So why the heck should git fsck care?  And why shouldn't
-gc/prune drop objects that are only referenced via the origin link.
-
-> 4. Add support to filter-branch/rebase to renumber the field if necessary.
-
-As we discussed earlier in some cases renumbering the field is not the
-right thing to do, especially if the commit in question has already
-been cherry-picked --- and you don't know that.  Again, this is why
-prototyping it outside of the core git is so useful; it will show up
-some of these fundamental flaws in the origin link proposal.
-
-> Well, and after having done steps 1 to 5, the net result is that it
-> works almost as if the field is present in the header, except that:
-> - It is now at the end of the body in the commit message.
-> - It takes more time to find and parse it.
-
-A proof of concept, even if it isn't fully performant, is useful to
-prove that an idea actually has merit --- which clearly not everyone
-believes at this point.
-
-I'll also note that having a ***local*** database to cache the origin
-link is a great way of short-circuiting the performance difficulties.
-If it works, then it will be a lot easier to convince people that
-perhaps it should be done git-core, and by modifying core git functions.
-
-Alternatively, if you think this is such a great idea, why don't you
-grab a copy of the git repository, and start hacking the idea
-yourself?  If you have running code, it tends to make the idea much
-more concrete, and much easier to evaluate.  Or were you hoping to
-convince other people to do all of this programming for you?
-
-						- Ted
+diff --git a/Documentation/git-svn.txt b/Documentation/git-svn.txt
+index 1e644ca..0fe4955 100644
+--- a/Documentation/git-svn.txt
++++ b/Documentation/git-svn.txt
+@@ -149,6 +149,22 @@ and have no uncommitted changes.
+ 	is very strongly discouraged.
+ --
+ 
++'branch'::
++	Create a branch in the SVN repository.
++
++-m;;
++--message;;
++	Allows to specify the commit message.
++
++-t;;
++--tag;;
++	Create a tag by using the tags_subdir instead of the branches_subdir
++	specified during git svn init.
++
++'tag'::
++	Create a tag in the SVN repository. This is a shorthand for
++	'branch -t'.
++
+ 'log'::
+ 	This should make it easy to look up svn log messages when svn
+ 	users refer to -r/--revision numbers.
+@@ -372,7 +388,8 @@ Passed directly to 'git-rebase' when using 'dcommit' if a
+ -n::
+ --dry-run::
+ 
+-This can be used with the 'dcommit' and 'rebase' commands.
++This can be used with the 'dcommit', 'rebase', 'branch' and 'tag'
++commands.
+ 
+ For 'dcommit', print out the series of git arguments that would show
+ which diffs would be committed to SVN.
+@@ -381,6 +398,9 @@ For 'rebase', display the local branch associated with the upstream svn
+ repository associated with the current branch and the URL of svn
+ repository that will be fetched from.
+ 
++For 'branch' and 'tag', display the urls that will be used for copying when
++creating the branch or tag.
++
+ --
+ 
+ ADVANCED OPTIONS
+@@ -498,6 +518,8 @@ Tracking and contributing to an entire Subversion-managed project
+ 	git svn clone http://svn.foo.org/project -T trunk -b branches -t tags
+ # View all branches and tags you have cloned:
+ 	git branch -r
++# Create a new branch in SVN
++    git svn branch waldo
+ # Reset your master to trunk (or any other branch, replacing 'trunk'
+ # with the appropriate name):
+ 	git reset --hard remotes/trunk
+diff --git a/git-svn.perl b/git-svn.perl
+index 88066c9..54a785c 100755
+--- a/git-svn.perl
++++ b/git-svn.perl
+@@ -66,7 +66,7 @@ my ($_stdin, $_help, $_edit,
+ 	$_version, $_fetch_all, $_no_rebase,
+ 	$_merge, $_strategy, $_dry_run, $_local,
+ 	$_prefix, $_no_checkout, $_url, $_verbose,
+-	$_git_format, $_commit_url);
++	$_git_format, $_commit_url, $_tag);
+ $Git::SVN::_follow_parent = 1;
+ my %remote_opts = ( 'username=s' => \$Git::SVN::Prompt::_username,
+                     'config-dir=s' => \$Git::SVN::Ra::config_dir,
+@@ -131,6 +131,14 @@ my %cmd = (
+ 			  'revision|r=i' => \$_revision,
+ 			  'no-rebase' => \$_no_rebase,
+ 			%cmt_opts, %fc_opts } ],
++	branch => [ \&cmd_branch,
++	            'Create a branch in the SVN repository',
++	            { 'message|m=s' => \$_message,
++	              'dry-run|n' => \$_dry_run } ],
++	tag => [ sub { $_tag = 1; cmd_branch(@_) },
++	         'Create a tag in the SVN repository',
++	         { 'message|m=s' => \$_message,
++	           'dry-run|n' => \$_dry_run } ],
+ 	'set-tree' => [ \&cmd_set_tree,
+ 	                "Set an SVN repository to a git tree-ish",
+ 			{ 'stdin|' => \$_stdin, %cmt_opts, %fc_opts, } ],
+@@ -537,6 +545,39 @@ sub cmd_dcommit {
+ 	unlink $gs->{index};
+ }
+ 
++sub cmd_branch {
++	my ($branch_name, $head) = @_;
++
++	die "branch name required\n" unless $branch_name;
++	$head ||= 'HEAD';
++
++	my ($src, $rev, undef, $gs) = working_head_info($head);
++
++	my $remote = Git::SVN::read_all_remotes()->{svn};
++	my $glob = $remote->{ $_tag ? 'tags' : 'branches' };
++	my ($lft, $rgt) = @{ $glob->{path} }{qw/left right/};
++	my $dst = join '/', $remote->{url}, $lft, $branch_name, ($rgt || ());
++
++	my $ctx = SVN::Client->new(
++		auth    => Git::SVN::Ra::_auth_providers(),
++		log_msg => sub {
++			${ $_[0] } = defined $_message
++				? $_message
++				: 'Create branch ' . $branch_name;
++		},
++	);
++
++	eval {
++		$ctx->ls($dst, 'HEAD', 0);
++	} and die "branch ${branch_name} already exists\n";
++
++	print "Copying ${src} at r${rev} to ${dst}...\n";
++	$ctx->copy($src, $rev, $dst)
++		unless $_dry_run;
++
++	$gs->fetch_all;
++}
++
+ sub cmd_find_rev {
+ 	my $revision_or_hash = shift or die "SVN or git revision required ",
+ 	                                    "as a command-line argument\n";
+-- 
+1.5.6.5
