@@ -1,110 +1,100 @@
-From: Michal Vitecek <fuf@mageo.cz>
-Subject: Re: [RFH] git cherry-pick takes forever
-Date: Thu, 11 Sep 2008 09:56:16 +0200
-Message-ID: <20080911075616.GB3144@mageo.cz>
-References: <20080910082610.GA3144@mageo.cz> <7vk5dkxqvf.fsf@gitster.siamese.dyndns.org>
+From: "Mike Ralphson" <mike.ralphson@gmail.com>
+Subject: Re: [RFC/PATCH] Use compatibility regex library for OSX/Darwin
+Date: Thu, 11 Sep 2008 08:59:29 +0100
+Message-ID: <e2b179460809110059i2eca8b07x6d263f06cc8e5d32@mail.gmail.com>
+References: <20080907184537.GA4148@regex.yaph.org>
+	 <e2b179460809100103t4266650bnac00097cfb86c0b1@mail.gmail.com>
+	 <20080910100301.GA27748@regex.yaph.org>
+	 <e2b179460809100453r3df4ec8dh3d9bfbbd468c5676@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <gitster@pobox.com>
-To: git list <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Thu Sep 11 09:58:43 2008
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, "Arjen Laarhoven" <arjen@yaph.org>,
+	"Johannes Sixt" <j.sixt@viscovery.net>
+To: "Junio C Hamano" <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Sep 11 10:00:47 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Kdh3O-00035V-KQ
-	for gcvg-git-2@gmane.org; Thu, 11 Sep 2008 09:57:27 +0200
+	id 1Kdh6U-0004LL-86
+	for gcvg-git-2@gmane.org; Thu, 11 Sep 2008 10:00:38 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751939AbYIKH4T (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 11 Sep 2008 03:56:19 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751943AbYIKH4T
-	(ORCPT <rfc822;git-outgoing>); Thu, 11 Sep 2008 03:56:19 -0400
-Received: from interactive-1.com ([193.85.232.82]:47811 "EHLO
-	interactive-1.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751720AbYIKH4T (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 11 Sep 2008 03:56:19 -0400
-Received: from interactive-1.com (localhost.localdomain [127.0.0.1])
-	by interactive-1.com (Postfix) with ESMTP id 5F98B2D3C21;
-	Thu, 11 Sep 2008 09:56:17 +0200 (CEST)
+	id S1751797AbYIKH7c (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 11 Sep 2008 03:59:32 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751935AbYIKH7c
+	(ORCPT <rfc822;git-outgoing>); Thu, 11 Sep 2008 03:59:32 -0400
+Received: from rv-out-0506.google.com ([209.85.198.236]:50852 "EHLO
+	rv-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751595AbYIKH7b (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 11 Sep 2008 03:59:31 -0400
+Received: by rv-out-0506.google.com with SMTP id k40so241015rvb.1
+        for <git@vger.kernel.org>; Thu, 11 Sep 2008 00:59:30 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to
+         :subject:cc:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:references;
+        bh=JYWJMoKP+qUV9m62MTw4uwvGDbi3tj5+JArCpcaDdng=;
+        b=jdDOL54TPYzTyAfkX4RNWEAA6ONx11pupST+OYCBTc/6VchshGRVVuv/ZIJp2547uO
+         PBbZsTRH3HrM16QLcZRyw66b5RFrlX3UmymhRZF2DH56Ct++f4zBBg93Qml7rSGdFURf
+         wOeDGg5OpBhyDvpoCmz5ibNp4eqwURAtJ1eA0=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
+         :content-type:content-transfer-encoding:content-disposition
+         :references;
+        b=KKKRRoSGTvfe32vAdMTq2hQM0xGEzJRMDeGGmyZxZJywGOxqUoombXfeTb8wuWiIE6
+         l26f3VVqg7/ruYtaqDKxIZcR5OECx8oFV3zgqMYi1cYDG5XtylEsO3eW1xYSEQ0NdG9n
+         gcPGCCZfUCu4hFbJWaq6Dl1vPx+02ZbfAJHJY=
+Received: by 10.140.203.9 with SMTP id a9mr1512113rvg.288.1221119969889;
+        Thu, 11 Sep 2008 00:59:29 -0700 (PDT)
+Received: by 10.140.143.2 with HTTP; Thu, 11 Sep 2008 00:59:29 -0700 (PDT)
+In-Reply-To: <e2b179460809100453r3df4ec8dh3d9bfbbd468c5676@mail.gmail.com>
 Content-Disposition: inline
-In-Reply-To: <7vk5dkxqvf.fsf@gitster.siamese.dyndns.org>
-User-Agent: Mutt/1.5.18 (2008-05-17)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/95590>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/95591>
 
- Hello,
-
-Junio C Hamano wrote:
->Michal Vitecek <fuf@mageo.cz> writes:
->>  I have two git repositories: one is the origin of the other. However no
->>  merging is being done as the projects in the repositories quite differ
->>  but still use the same core. So to propagate changes I cherry-pick
->>  those which are useful from one repository to another.
+2008/9/10 Mike Ralphson <mike.ralphson@gmail.com>:
+> 2008/9/10 Arjen Laarhoven <arjen@yaph.org>:
+>> On Wed, Sep 10, 2008 at 09:03:05AM +0100, Mike Ralphson wrote:
+>>> 2008/9/7 Arjen Laarhoven <arjen@yaph.org>
+>>> > The standard libc regex library on OSX does not support alternation
+>>> > in POSIX Basic Regular Expression mode.  This breaks the diff.funcname
+>>> > functionality on OSX.
+>>> >
+>>> > Also, I'm sure the problem occurs on more non-Linux systems (or non
+>>> > GNU libc systems).  If people who have access to those systems (BSD's,
+>>> > HP-UX, AIX, etc) can test it, I'd be happy to add those systems to the
+>>> > patch so it can fix for multiple systems at once.
+>>>
+>>> I can confirm that the issue shown up by your new testcase is also
+>>> present in AIX 5.3.
+>
+>>> Adding -lcompat/regex to COMPAT_CFLAGS as per your Darwin hunk
+>>> provokes lots of warnings:
 >>
->>  however 'git cherry-pick' has lately started to last almost forever:
+>> I think your problem is a lowercase ell instead of an uppercase i ;-)
 >
->Can you define "lately"?  Is it a function of your git version, or is it a
->function of the age of your repositories?
-
- It's a function a cherry-picking some commits - afterwards
- cherry-picking crawls. One of the commits removes a number of files
- (614) and also renames some (303).
-
->>  $ time git cherry-pick b42b77e66a83f1298d9900a9bb1078b9b42e8618
->>  Finished one cherry-pick.
->>  Created commit 7caef83: - removed some superfluous newlines
->>  2 files changed, 0 insertions(+), 2 deletions(-)
->>  git cherry-pick b42b77e66a83f1298d9900a9bb1078b9b42e8618  282.97s user 34.69s system 100% cpu 5:17.63 total
->>
->>  Both repositories have approximately 16k commits and their forking
->>  point (merge base) is 250 to 490 commits far away.
+> Doh. I think my problem is this font! And having not used a language
+> with a separate linker since last century.
 >
->When talking about cherry-pick, the size of the history (unless the
->repository has too many objects and badly packed) does not matter; the
->operation is purely about your current state, the cherry-picked commit
->itself, and the parent commit of the cherry-picked one.
-
- I too thought so but after cherry-picking starting taking so long I
- began to doubt my thoughts :)
-
->Taking 5 minutes to cherry-pick a change to only two paths, one line
->deletion each, is plain ridiculous, but if the tree state of cherry-picked
->commit and the tree state of the target is vastly different (e.g. almost
->no common pathnames), the behaviour is certainly understandable.  Ancient
->git used straight three-way merge for cherry-pick, but recent ones use
->more expensive "recursive-merge", which tries to detect renames.  If the
->states of trees are very dissimilar, you can end up wasting a lot of time.
+> I guess I picked a really bad patch to try and pick up and test direct
+> from gmail. No reflection on your patch, just my workflow.
 >
->    $ H=$(git rev-parse 7caef83^) ;# the commit before cherry-pick
->    $ C=b42b77e6 ;# the cherry-picked one
+> Having carefully checked the content of the testcase too, I can now
+> say this does fix the issue without extra warnings or testcase
+> failures on AIX 5.3, so for what it's worth:
 >
->cherry-pick operation roughly runs these two diffs:
->
->    $ time git diff --shortstat -M $H $C
+> Tested-by: Mike Ralphson <mike@abacus.co.uk>
 
- $ time git diff --shortstat -M $H $C
- 2 files changed, 0 insertions(+), 2 deletions(-)
- git diff --shortstat -M $H $C  0.00s user 0.00s system 72% cpu 0.006 total
+Junio, sorry, I should have made this clear, but as above in the
+thread, Johannes Sixt's 'patchlet' is required to be squashed into
+3632cfc24, and I think Arjen was going to re-roll the patch.
 
->    $ time git diff --shortstat -M $H $C^1
+I can submit the required follow-up, but it really should have J6's S-o-b.
 
- $ time git diff --shortstat -M $H $C\^1
- git diff --shortstat -M $H $C\^1  0.00s user 0.00s system 0% cpu 0.003 total
-
->and uses the result to perform its work.  Can you clock these?
->
->If you rarely have renames, it may be much more efficient to run "git
->format-patch -1 --stdout $C | git am -3" instead of cherry-pick.
-
- Turning off renames detection in diff (via 'git config --add diff.renames
- false') helped and 'git cherry-pick' is instant now.
-
- Maybe my repositories are "strange" in some way. I would be more than
- happy to provide more information if needed.
-
-        Thank you,
--- 
-		Michal Vitecek		(fuf@mageo.cz)
+Mike
