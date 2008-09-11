@@ -1,73 +1,81 @@
-From: Eric Raible <raible@gmail.com>
-Subject: Re: RFC: perhaps a "new file" should not be deleted by "git reset --hard"
-Date: Thu, 11 Sep 2008 20:50:27 +0000 (UTC)
-Message-ID: <loom.20080911T204256-821@post.gmane.org>
-References: <279b37b20809101212g57e9ad99qbf6fa15888679894@mail.gmail.com>  <eafc0afe0809101912v72916d3hce9ae5d6812f0db8@mail.gmail.com>  <eafc0afe0809101914lff5b23ehaf625d702fbd9b5d@mail.gmail.com> <51419b2c0809101938v30e5a1aflf944027aedc2d900@mail.gmail.com>
+From: Theodore Tso <tytso@MIT.EDU>
+Subject: Re: [RFC] origin link for cherry-pick and revert
+Date: Thu, 11 Sep 2008 17:01:18 -0400
+Message-ID: <20080911210118.GO5082@mit.edu>
+References: <alpine.LFD.1.10.0809091722010.3384@nehalem.linux-foundation.org> <20080910054244.GB15715@cuci.nl> <alpine.LFD.1.10.0809100828360.3384@nehalem.linux-foundation.org> <20080910230906.GD22739@cuci.nl> <alpine.LFD.1.10.0809101733050.3384@nehalem.linux-foundation.org> <20080911062242.GA23070@cuci.nl> <alpine.LFD.1.10.0809110835070.3384@nehalem.linux-foundation.org> <20080911192356.GC1451@cuci.nl> <alpine.LFD.1.10.0809111534300.23787@xanadu.home> <20080911195516.GE1451@cuci.nl>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Sep 11 22:51:46 2008
+Cc: Nicolas Pitre <nico@cam.org>,
+	Linus Torvalds <torvalds@linux-foundation.org>,
+	Jakub Narebski <jnareb@gmail.com>, git@vger.kernel.org
+To: "Stephen R. van den Berg" <srb@cuci.nl>
+X-From: git-owner@vger.kernel.org Thu Sep 11 23:02:56 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Kdt8i-0002Bt-U2
-	for gcvg-git-2@gmane.org; Thu, 11 Sep 2008 22:51:45 +0200
+	id 1KdtJQ-0005hc-UJ
+	for gcvg-git-2@gmane.org; Thu, 11 Sep 2008 23:02:49 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752926AbYIKUuh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 11 Sep 2008 16:50:37 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752852AbYIKUuh
-	(ORCPT <rfc822;git-outgoing>); Thu, 11 Sep 2008 16:50:37 -0400
-Received: from main.gmane.org ([80.91.229.2]:39007 "EHLO ciao.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751893AbYIKUug (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 11 Sep 2008 16:50:36 -0400
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1Kdt7a-0007x4-RS
-	for git@vger.kernel.org; Thu, 11 Sep 2008 20:50:34 +0000
-Received: from adsl-75-24-208-45.dsl.pltn13.sbcglobal.net ([75.24.208.45])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Thu, 11 Sep 2008 20:50:34 +0000
-Received: from raible by adsl-75-24-208-45.dsl.pltn13.sbcglobal.net with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Thu, 11 Sep 2008 20:50:34 +0000
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@ger.gmane.org
-X-Gmane-NNTP-Posting-Host: main.gmane.org
-User-Agent: Loom/3.14 (http://gmane.org/)
-X-Loom-IP: 75.24.208.45 (Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US) AppleWebKit/525.13 (KHTML, like Gecko) Chrome/0.2.149.29 Safari/525.13)
+	id S1753999AbYIKVBl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 11 Sep 2008 17:01:41 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754617AbYIKVBl
+	(ORCPT <rfc822;git-outgoing>); Thu, 11 Sep 2008 17:01:41 -0400
+Received: from BISCAYNE-ONE-STATION.MIT.EDU ([18.7.7.80]:62173 "EHLO
+	biscayne-one-station.mit.edu" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1752960AbYIKVBk (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 11 Sep 2008 17:01:40 -0400
+Received: from outgoing.mit.edu (OUTGOING-AUTH.MIT.EDU [18.7.22.103])
+	by biscayne-one-station.mit.edu (8.13.6/8.9.2) with ESMTP id m8BL1KG7024737;
+	Thu, 11 Sep 2008 17:01:20 -0400 (EDT)
+Received: from closure.thunk.org (c-98-216-98-217.hsd1.ma.comcast.net [98.216.98.217])
+	(authenticated bits=0)
+        (User authenticated as tytso@ATHENA.MIT.EDU)
+	by outgoing.mit.edu (8.13.6/8.12.4) with ESMTP id m8BL1Ihx025949
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
+	Thu, 11 Sep 2008 17:01:18 -0400 (EDT)
+Received: from tytso by closure.thunk.org with local (Exim 4.69)
+	(envelope-from <tytso@mit.edu>)
+	id 1KdtHy-0002Jp-AJ; Thu, 11 Sep 2008 17:01:18 -0400
+Content-Disposition: inline
+In-Reply-To: <20080911195516.GE1451@cuci.nl>
+User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
+X-Scanned-By: MIMEDefang 2.42
+X-Spam-Flag: NO
+X-Spam-Score: 0.00
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/95644>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/95645>
 
-Elijah Newren <newren <at> gmail.com> writes:
-
-> Anyway, Eric wasn't really talking about ignoring files, since he was
-> explicitly adding them for the next commit.  It's just that at some
-> point he changed his mind and decided he didn't want to include any of
-> the changes he had already made in the next commit, but was surprised
-> when git reset --hard deleted the files from both the index and
-> working copy instead of just the index.  git reset --hard really is
-> meant for throwing away unwanted stuff (particularly including in the
-> working directory), but I can see how he may have expected behavior
-> more along the lines of git rm --cached for those particular files.  I
-> don't agree with that viewpoint (I see files as tracked as soon as you
-> stage it, not once you commit it), but I can see where the expectation
-> comes from.
+On Thu, Sep 11, 2008 at 09:55:16PM +0200, Stephen R. van den Berg wrote:
+> >  Having it versionned also 
+> >means that older git versions will be able to carry that information 
+> >even if they won't make any use of it, and that also solves the 
+> >cryptographic issue since that data is part of the top commit SHA1.
 > 
-> Just my thoughts,
-> Elijah
+> It would allow the data to be faked, that is undesirable for "git blame".
 
-Yes, you have a 100% correct understand of what I'm trying to say.
-But can you see a downside to "git reset --hard" treating newly
-added files as "git reset"?
+Why would this matter?  The information is largely
+self-authenticating.  If a commit claims to have come from some other
+cherry-pick, a human taking a quick look at it would know instantly
+that this wasn't true.  So what's the harm done if some incorrect
+information gets introduced?  "git blame" is something which is
+generally used by humans, not by automated programs.
 
-Wiping out existing files (with no realistic recovery) is a bit harsh,
-isn't it?  Especially when AFAICS there's no downside to leaving the
-untracked files as they were before they were "git add"-ed.
+Also, what's the attack scenario?  The person who originally makes the
+commit can easily fake the origin link information.  They can hack git
+to fill on some other commit ID, for example.  So what you are
+protecting against is someone after the fact adding the annotation
+that this commit was related to this other commit.  When would this be
+a bad thing to do?  If they are adding correct information, it's a
+good thing.  If they add incorrect information, what's the harm they
+can as a result of being able to add the incorrect information.
+(Noting that if this annotation file is kept under git control, you
+can use what ever access controls and/or process controls that verify
+that a new cherry-pick --- or a commit claiming to be a cherry-pick
+--- is valid and should be accepted into the master git repository for
+that project.
 
-- Eric
+						- Ted
