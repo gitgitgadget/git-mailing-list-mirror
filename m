@@ -1,73 +1,70 @@
-From: Paolo Bonzini <bonzini@gnu.org>
-Subject: Re: [RFC] origin link for cherry-pick and revert
-Date: Thu, 11 Sep 2008 10:45:49 +0200
-Message-ID: <48C8DABD.40201@gnu.org>
-References: <20080909225603.GA7459@cuci.nl> <20080910122118.GI21071@mit.edu> <20080910141630.GB7397@cuci.nl> <20080910151015.GA8869@coredump.intra.peff.net> <20080910215045.GA22739@cuci.nl> <20080910215410.GA24432@coredump.intra.peff.net> <20080910223427.GB22739@cuci.nl> <20080910225518.GA24534@coredump.intra.peff.net> <20080910231900.GF22739@cuci.nl> <48C8A9A4.7030906@gnu.org> <20080911075539.GA27089@cuci.nl>
+From: Michael J Gruber <michaeljgruber+gmane@fastmail.fm>
+Subject: Re: What's in git.git (Sep 2008, #02; Wed, 10)
+Date: Thu, 11 Sep 2008 11:09:53 +0200
+Message-ID: <48C8E061.5030904@fastmail.fm>
+References: <7viqt3tk8b.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-Cc: Jeff King <peff@peff.net>, Theodore Tso <tytso@MIT.EDU>,
-	Petr Baudis <pasky@suse.cz>, git@vger.kernel.org
-To: "Stephen R. van den Berg" <srb@cuci.nl>
-X-From: git-owner@vger.kernel.org Thu Sep 11 10:47:06 2008
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Sep 11 11:11:28 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KdhpR-0007Rl-Ms
-	for gcvg-git-2@gmane.org; Thu, 11 Sep 2008 10:47:06 +0200
+	id 1KdiCt-0006J4-KE
+	for gcvg-git-2@gmane.org; Thu, 11 Sep 2008 11:11:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751727AbYIKIp5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 11 Sep 2008 04:45:57 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751905AbYIKIp5
-	(ORCPT <rfc822;git-outgoing>); Thu, 11 Sep 2008 04:45:57 -0400
-Received: from gv-out-0910.google.com ([216.239.58.186]:43360 "EHLO
-	gv-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751583AbYIKIp4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 11 Sep 2008 04:45:56 -0400
-Received: by gv-out-0910.google.com with SMTP id e6so171459gvc.37
-        for <git@vger.kernel.org>; Thu, 11 Sep 2008 01:45:52 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from
-         :user-agent:mime-version:to:cc:subject:references:in-reply-to
-         :x-enigmail-version:content-type:content-transfer-encoding:sender;
-        bh=hmxGs9mnojfynYgkmTYzb7Z1P2O//rPvWMqirQZYG0w=;
-        b=BiEap9ifH3sEM7xjs1fUQZjrEB/2BfFZmwlGzVCwOzlvgMe6SBaMXUZhQ+viOCdrBE
-         LJ+pdiSUND/8MDdqc6grqeKcbCQrll2KrGOUDuKCIxjHe1MjmMhMbleN/v5bezxJSTna
-         gVmEcduwR4Y7bNXWuqoStbkAlFKkEOHzx3VAY=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:user-agent:mime-version:to:cc:subject
-         :references:in-reply-to:x-enigmail-version:content-type
-         :content-transfer-encoding:sender;
-        b=Rht+d5rQy1kHS6xV9s90WoS/BUh3VzuJRqAtdEPeYiYJ4fEvRYZDJeI75dehDux9mD
-         0vd2KFiKGerhxiyD3nE1HB8FHzDWIxgsSHZpNzkWMtmeGG42eMAQ2JOpR3QGCpP6lWpr
-         UrdVn6/zJQidG8v+1nztX8FWSRI5tFDV9ucZQ=
-Received: by 10.86.68.2 with SMTP id q2mr1811891fga.43.1221122752334;
-        Thu, 11 Sep 2008 01:45:52 -0700 (PDT)
-Received: from scientist-2.mobile.usilu.net ( [195.176.179.202])
-        by mx.google.com with ESMTPS id d4sm10339586fga.5.2008.09.11.01.45.51
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Thu, 11 Sep 2008 01:45:51 -0700 (PDT)
-User-Agent: Thunderbird 2.0.0.16 (Macintosh/20080707)
-In-Reply-To: <20080911075539.GA27089@cuci.nl>
-X-Enigmail-Version: 0.95.7
+	id S1751905AbYIKJKE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 11 Sep 2008 05:10:04 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751876AbYIKJKD
+	(ORCPT <rfc822;git-outgoing>); Thu, 11 Sep 2008 05:10:03 -0400
+Received: from out3.smtp.messagingengine.com ([66.111.4.27]:52243 "EHLO
+	out3.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751792AbYIKJKC (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 11 Sep 2008 05:10:02 -0400
+Received: from compute1.internal (compute1.internal [10.202.2.41])
+	by out1.messagingengine.com (Postfix) with ESMTP id 63BF4160551;
+	Thu, 11 Sep 2008 05:10:01 -0400 (EDT)
+Received: from heartbeat2.messagingengine.com ([10.202.2.161])
+  by compute1.internal (MEProxy); Thu, 11 Sep 2008 05:10:01 -0400
+X-Sasl-enc: 7lR3+Hmp07hMQ0R4AQxzqFcoAxlsDV4GDNLKMS+5FtVz 1221124201
+Received: from [139.174.44.12] (whitehead.math.tu-clausthal.de [139.174.44.12])
+	by mail.messagingengine.com (Postfix) with ESMTPSA id CB8D23A214;
+	Thu, 11 Sep 2008 05:10:00 -0400 (EDT)
+User-Agent: Thunderbird 2.0.0.16 (X11/20080707)
+In-Reply-To: <7viqt3tk8b.fsf@gitster.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/95597>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/95598>
 
-
->> I actually like the commit notes idea, but then I wonder: why are the
->> author and committer part of the commit object?  How does the plumbing
->> use them?  Isn't that metadata that could live in the "notes"?  And so,
+Junio C Hamano venit, vidit, dixit 11.09.2008 05:49:
+> There are still a few topics that are meant for 'maint' cooking in higher
+> stages; we will have 1.6.0.2 after they are merged down.
 > 
-> we already *have* the non-mutable version of the notes, it's called the
-> header of the commit message.
+> On the 'master' front, it looks like 1.6.1 will not have anything
+> particularly big like 1.6.0 did.  Other than many s/git-foo/git foo/
+> updates in tests (finished -- the documentation needs to go through the
+> same process), there are many small bells and whistles enhancements, but
 
-Yes, that was my point.  I don't see how the author and committer fit in
-the header of the commit message, if the origin does not.
+Was there some final consensus on how to undashify the man pages? There
+is still the issue of keeping man viewers working which detect links
+from man page text like git-commit(1). Within a man page context forms
+like that are natural and should not be confusing (assuming man users
+know man), but for the html version it's unnatural. In fact, even the
+section numbers look unnatural on the html version (pretending to be a
+non-man-unaware html "customer"); also, the html doc is not split into
+subdirs by section.
 
-Paolo
+I think the cleanest approach would consist in introducing another
+linkgit macro (for everything linkgit:git-) which ouputs dashed resp.
+dashless forms for docbook (i.e. man) resp. html targets. I'll cook up a
+POC if noone keeps me from doing so ;)
+
+Michael
+
+P.S.: There are also dashes to be removed in the text (non-link) of the
+doc, of course. But this doesn't pose any technical hurdles.
