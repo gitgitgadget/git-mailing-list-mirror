@@ -1,80 +1,99 @@
-From: "Eric Raible" <raible@gmail.com>
-Subject: Re: RFC: perhaps a "new file" should not be deleted by "git reset --hard"
-Date: Thu, 11 Sep 2008 15:19:25 -0700
-Message-ID: <279b37b20809111519o76bea81br738983b4cda1978e@mail.gmail.com>
-References: <279b37b20809101212g57e9ad99qbf6fa15888679894@mail.gmail.com>
-	 <eafc0afe0809101912v72916d3hce9ae5d6812f0db8@mail.gmail.com>
-	 <eafc0afe0809101914lff5b23ehaf625d702fbd9b5d@mail.gmail.com>
-	 <51419b2c0809101938v30e5a1aflf944027aedc2d900@mail.gmail.com>
-	 <loom.20080911T204256-821@post.gmane.org>
-	 <7vd4jas6x8.fsf@gitster.siamese.dyndns.org>
+From: "Stephen R. van den Berg" <srb@cuci.nl>
+Subject: Re: [RFC] origin link for cherry-pick and revert
+Date: Fri, 12 Sep 2008 00:32:03 +0200
+Message-ID: <20080911223203.GA29559@cuci.nl>
+References: <20080909132212.GA25476@cuci.nl> <alpine.LFD.1.10.0809101733050.3384@nehalem.linux-foundation.org> <20080911062242.GA23070@cuci.nl> <200809111020.55115.jnareb@gmail.com> <20080911123148.GA2056@cuci.nl> <alpine.LFD.1.10.0809111047380.23787@xanadu.home> <20080911160040.GE2056@cuci.nl> <alpine.LFD.1.10.0809111222170.23787@xanadu.home> <7vy71ys8a7.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: "Junio C Hamano" <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Sep 12 00:20:39 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: Nicolas Pitre <nico@cam.org>, Jakub Narebski <jnareb@gmail.com>,
+	Linus Torvalds <torvalds@linux-foundation.org>,
+	git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Sep 12 00:33:23 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KduWh-0001PE-5Y
-	for gcvg-git-2@gmane.org; Fri, 12 Sep 2008 00:20:35 +0200
+	id 1Kduiy-000426-9K
+	for gcvg-git-2@gmane.org; Fri, 12 Sep 2008 00:33:16 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753028AbYIKWT2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 11 Sep 2008 18:19:28 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752427AbYIKWT1
-	(ORCPT <rfc822;git-outgoing>); Thu, 11 Sep 2008 18:19:27 -0400
-Received: from py-out-1112.google.com ([64.233.166.180]:34624 "EHLO
-	py-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751810AbYIKWT1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 11 Sep 2008 18:19:27 -0400
-Received: by py-out-1112.google.com with SMTP id p76so444947pyb.10
-        for <git@vger.kernel.org>; Thu, 11 Sep 2008 15:19:26 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to
-         :subject:cc:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:references;
-        bh=Mh3pDJMzr/y6x5REhfqUWYvfl7/IijjUZ4t+bvlmN3g=;
-        b=ogawmA2NqKxtdsLxTQEzr9I7nkzXEDWj1gQg22Y4VxQmFD2/HNz5vKaJ5NReP/VRO3
-         LVcGKF3LNN6nU9gY6lARQDzn07878dz+Un7Y/NtEBbbnyxq+qKY1XvjxTHNtbvBeCS4W
-         j6zUyyeCTM4Zl12pXqBedg3Zj0BruByESHKEE=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
-         :content-type:content-transfer-encoding:content-disposition
-         :references;
-        b=ukdGQhqvn5gOeV9S0NRrD5MHZmcQJjZ6Pf8JoHmyzYyGCimzoB4LI92cnO0cVRfmQC
-         H6McdS69jLAhF536vctAOIl/KlybGa2pS1xtKiTH33i8Dl/jooSPpAesFCsivm/N+FTh
-         Dk1obLDVprivuZuCxlkNxFnqjivwkA5cIRoNk=
-Received: by 10.142.211.1 with SMTP id j1mr780225wfg.313.1221171565723;
-        Thu, 11 Sep 2008 15:19:25 -0700 (PDT)
-Received: by 10.142.14.12 with HTTP; Thu, 11 Sep 2008 15:19:25 -0700 (PDT)
-In-Reply-To: <7vd4jas6x8.fsf@gitster.siamese.dyndns.org>
+	id S1752150AbYIKWcI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 11 Sep 2008 18:32:08 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751689AbYIKWcH
+	(ORCPT <rfc822;git-outgoing>); Thu, 11 Sep 2008 18:32:07 -0400
+Received: from aristoteles.cuci.nl ([212.125.128.18]:46446 "EHLO
+	aristoteles.cuci.nl" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751380AbYIKWcG (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 11 Sep 2008 18:32:06 -0400
+Received: by aristoteles.cuci.nl (Postfix, from userid 500)
+	id 953FE5465; Fri, 12 Sep 2008 00:32:03 +0200 (CEST)
 Content-Disposition: inline
+In-Reply-To: <7vy71ys8a7.fsf@gitster.siamese.dyndns.org>
+User-Agent: Mutt/1.5.13 (2006-08-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/95656>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/95657>
 
-On Thu, Sep 11, 2008 at 2:34 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> Eric Raible <raible@gmail.com> writes:
->
->> But can you see a downside to "git reset --hard" treating newly
->> added files as "git reset"?
->
-> Of course.  The --hard option is called --hard without inviting short
-> option for a reason.
->
-> [various good reasons snipped]
+Junio C Hamano wrote:
+>I keep hearing "blame" in this discussion, but I do not understand why
+>people think blame should _follow_ this "origin" information (in the usual
+>sense of "following").
 
-Thanks for the definitive response.  I suppose that I had been getting
-rather cavalier about --hard.  Now my expectations are more aligned with
-reality.
+>Suppose you cherry-pick an existing commit from unrelated context:
 
-And that reality makes perfect sense, it's just a bit harsh when hundreds
-of important files get obliterated!
+>         ...---A---B
+>                    . (origin)
+>                     .
+>        ...---o---X---Y---Z
 
-- Eric
+>i.e. on top of X the difference to bring A to B is applied to produce Y,
+>and a new development Z is made on top.  You start digging from Z.
+
+>Let's see how we would want "origin" get involved.  Instead of the above,
+>what Y would do would be:
+
+>   (1) if the contents (excluding the part Z changed) is different from X,
+>       instead of taking the blame itself, give the _final_ blame to B.
+
+>   (2) the remainder is passed to X as usual.
+
+Sounds reasonable.
+
+>This is different from the normal "following" in that B is not allowed to
+>pass the blame to its parents (should it be allowed to pass it to its
+>"origin"?), because the _only thing_ cherry-pick did was to transport what
+>B did (relative to A) to the unrelated history that led to X.
+
+Well, I'd expect:
+a. That B should be able to pass blame onto it's origin.
+b. That B should be able to pass blame onto A (and deeper).
+
+Let me show another example:
+
+...-C---D---E---F---G
+                 . (origin)
+                  .
+         ...---A---B
+                    . (origin)
+                     .
+        ...---o---X---Y---Z
+
+
+Now suppose there is a piece of sourcecode which evolves from C to F,
+then when I dig into G using blame I get something like:  CCCFFEGGDDDCC
+(Every letter represents a line in the sourcecode)
+
+Digging into Z I'd expect to see the following:  ZZCCCFFEDDYDCCB
+
+All this assumes that there were minimal changes to the patch when
+creating B, and also minimal changes to the patch when creating Y.
+
+I.e. large parts of that code where developed during C, D, E and F, so
+that is what I expect to see; is that illogical?
+-- 
+Sincerely,
+           Stephen R. van den Berg.
+"There are three types of people in the world;
+ those who can count, and those who can't."
