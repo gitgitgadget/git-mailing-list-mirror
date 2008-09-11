@@ -1,88 +1,70 @@
-From: Karl =?iso-8859-1?Q?Hasselstr=F6m?= <kha@treskal.com>
-Subject: Re: [StGit PATCH 1/3] Auto-generate man pages for all StGit commands
-Date: Thu, 11 Sep 2008 08:58:32 +0200
-Message-ID: <20080911065832.GA6409@diana.vm.bytemark.co.uk>
-References: <20080908210302.1957.44280.stgit@yoghurt> <20080908210758.1957.664.stgit@yoghurt> <b0943d9e0809101456w3c74b86fm9d311fb2594bcf4f@mail.gmail.com>
+From: dhruva <dhruva@ymail.com>
+Subject: Re: PATCH: git-p4 optional handling of RCS keywords
+Date: Thu, 11 Sep 2008 12:43:28 +0530 (IST)
+Message-ID: <269721.95776.qm@web95004.mail.in2.yahoo.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Catalin Marinas <catalin.marinas@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Sep 11 08:37:37 2008
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8BIT
+Cc: Simon Hausmann <simon@lst.de>, Junio C Hamano <gitster@pobox.com>,
+	GIT SCM <git@vger.kernel.org>,
+	Jing Xue <jingxue@digizenstudio.com>
+To: Tor Arvid Lund <torarvid@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Sep 11 09:14:41 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Kdfo5-0002hm-Vy
-	for gcvg-git-2@gmane.org; Thu, 11 Sep 2008 08:37:34 +0200
+	id 1KdgNz-0004Lr-K3
+	for gcvg-git-2@gmane.org; Thu, 11 Sep 2008 09:14:40 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751817AbYIKGg0 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 11 Sep 2008 02:36:26 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751821AbYIKGg0
-	(ORCPT <rfc822;git-outgoing>); Thu, 11 Sep 2008 02:36:26 -0400
-Received: from diana.vm.bytemark.co.uk ([80.68.90.142]:2841 "EHLO
-	diana.vm.bytemark.co.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751742AbYIKGgZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 11 Sep 2008 02:36:25 -0400
-Received: from kha by diana.vm.bytemark.co.uk with local (Exim 3.36 #1 (Debian))
-	id 1Kdg8O-0001hj-00; Thu, 11 Sep 2008 07:58:32 +0100
-Content-Disposition: inline
-In-Reply-To: <b0943d9e0809101456w3c74b86fm9d311fb2594bcf4f@mail.gmail.com>
-X-Manual-Spam-Check: kha@treskal.com, clean
-User-Agent: Mutt/1.5.9i
+	id S1751905AbYIKHNc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 11 Sep 2008 03:13:32 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751902AbYIKHNc
+	(ORCPT <rfc822;git-outgoing>); Thu, 11 Sep 2008 03:13:32 -0400
+Received: from n1a.bullet.in.yahoo.com ([202.43.219.18]:27141 "HELO
+	n1a.bullet.in.yahoo.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with SMTP id S1751797AbYIKHNb convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 11 Sep 2008 03:13:31 -0400
+Received: from [202.86.4.170] by n1.bullet.in.yahoo.com with NNFMP; 11 Sep 2008 07:13:28 -0000
+Received: from [203.104.18.53] by t1.bullet.in.yahoo.com with NNFMP; 11 Sep 2008 07:13:28 -0000
+Received: from [127.0.0.1] by omp105.mail.in2.yahoo.com with NNFMP; 11 Sep 2008 07:13:28 -0000
+X-Yahoo-Newman-Property: ymail-3
+X-Yahoo-Newman-Id: 466727.85375.bm@omp105.mail.in2.yahoo.com
+Received: (qmail 97927 invoked by uid 60001); 11 Sep 2008 07:13:28 -0000
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+  s=s1024; d=ymail.com;
+  h=X-YMail-OSG:Received:X-Mailer:Date:From:Subject:To:Cc:MIME-Version:Content-Type:Content-Transfer-Encoding:Message-ID;
+  b=2HQYwuV2TF5ZwYKFsZJ0Yz1GwFBGuPS/phLHuTSHN0v53FZxK6MXaqwqi+6gXi56HoP1EC+NNgMgIk7Mbo2mQtWnw4EXYG9k8ZyGJTIROaR4+cjCSf9IqlfuwfpsWvhHiyijptGWdjJLpSx/YRjm10K+0nizBQxs50NyR5SPZZA=;
+X-YMail-OSG: _kTFTI0VM1mTgbmR0Rup.rMRBjy_vW2a3zk7X.4UVrVFrPXc1SbrSUP1yIUWk6h6HBYNkbYoII4XX4zq5YfOxZYN0iOi1jUeUlra1f8Ed.XPFMUxZay26ANhyGbNE4w-
+Received: from [202.3.112.9] by web95004.mail.in2.yahoo.com via HTTP; Thu, 11 Sep 2008 12:43:28 IST
+X-Mailer: YahooMailRC/1096.28 YahooMailWebService/0.7.218.2
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/95587>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/95588>
 
-On 2008-09-10 22:56:55 +0100, Catalin Marinas wrote:
+Hi,
 
-> On 08/09/2008, Karl Hasselstr=F6m <kha@treskal.com> wrote:
->
-> > Auto-generate man pages based on the docs that are in each
-> > stgit/commands/<cmd>.py file. That doc format is extended in order
-> > to support both brief command help output and manpage text.
->
-> Really great stuff. Thanks.
 
-Glad you like it. Now all we have to do is feed the system with
-high-quality input ... :-)
+ The patch I have sent is 1 single patch.
 
-> I can see a slight difference in behaviour but I don't have any
-> issue with it - previously "stg help <cmd>" showed the full
-> description while "stg <cmd> --help" only the short one.
 
-Yes, that's intentional. I tried to say something about it in the
-commit message, but I guess I didn't do a very good job about it.
+----- Original Message ----
+> From: Tor Arvid Lund <torarvid@gmail.com>
+> To: dhruva <dhruva@ymail.com>
+> Me guesses that Junio (who gets loads of patches) would be happy if you do:
+> 
+> 1) Squash these changes down to one single commit
+> 2) Run git format-patch -1
+> 3) Send it to the list either with git send-email, or otherwise send
+> the 0001-.patch to the list directly if your
+> mailer supports it.
 
-The interactive help now uses only the one-line command description;
-the multiline description goes only to the man page/html. There are
-two reasons for this:
+Let me start learning that now. I have added my own extensions on top of what I have submitted, I need to figure out a way to do all these stuff (I am still a newbie to git ;)
 
-  1. The interactive help should be short and sweet. If the user wants
-     to spend a minute or more learning about a command, she is better
-     served by the "real" reference docs.
+-dhruva
 
-  2. The multiline descriptions (both for the command itself and for
-     its flags) contain, or should contain, asciidoc markup. If we
-     wanted to display this text in the interactive help we'd need to
-     at least be able to strip the markup out, something which I
-     haven't even tried to do.
 
-> An additional point on naming - should we use StGIT or StGit? The
-> original name was StGIT since GIT looked like an acronym. It looks
-> like now more people name it Git hence our tool moved slowly into
-> StGit but not everywhere. I personally like StGIT but the last 3
-> letters should really be the same as the official git (Git, GIT).
 
-As you may or may not have noticed, I'm responsible for the vast
-majority of "StGit"s. I prefer it because "git" isn't really an
-acronym, and I happen to like camel case ... :-)
-
-You're right that we ought to standardize on one of the spellings,
-though.
-
---=20
-Karl Hasselstr=F6m, kha@treskal.com
-      www.treskal.com/kalle
+      Get an email ID as yourname@ymail.com or yourname@rocketmail.com. Click here http://in.promos.yahoo.com/address
