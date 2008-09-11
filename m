@@ -1,72 +1,70 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH] Use compatibility regex library also on AIX
-Date: Thu, 11 Sep 2008 08:12:16 -0400
-Message-ID: <20080911121216.GB17303@coredump.intra.peff.net>
-References: <20080907184537.GA4148@regex.yaph.org> <e2b179460809100103t4266650bnac00097cfb86c0b1@mail.gmail.com> <20080910100301.GA27748@regex.yaph.org> <e2b179460809100453r3df4ec8dh3d9bfbbd468c5676@mail.gmail.com> <e2b179460809110059i2eca8b07x6d263f06cc8e5d32@mail.gmail.com> <48C8D374.9050007@viscovery.net> <20080911082554.GB27748@regex.yaph.org> <e2b179460809110131h781f0c91i9d478e20b55dec24@mail.gmail.com>
+From: A Large Angry SCM <gitzilla@gmail.com>
+Subject: Re: [RFC] origin link for cherry-pick and revert
+Date: Thu, 11 Sep 2008 08:28:54 -0400
+Message-ID: <48C90F06.4000309@gmail.com>
+References: <20080909132212.GA25476@cuci.nl> <m3zlmhnx1z.fsf@localhost.localdomain> <20080909194354.GA13634@cuci.nl> <alpine.LFD.1.10.0809091631250.3117@nehalem.linux-foundation.org> <20080909235848.GE7459@cuci.nl> <alpine.LFD.1.10.0809091722010.3384@nehalem.linux-foundation.org> <20080910054244.GB15715@cuci.nl> <alpine.LFD.1.10.0809100828360.3384@nehalem.linux-foundation.org> <20080910230906.GD22739@cuci.nl> <alpine.LFD.1.10.0809101733050.3384@nehalem.linux-foundation.org> <20080911062242.GA23070@cuci.nl>
+Reply-To: gitzilla@gmail.com
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Arjen Laarhoven <arjen@yaph.org>,
-	Junio C Hamano <gitster@pobox.com>,
-	Johannes Sixt <j.sixt@viscovery.net>, git@vger.kernel.org
-To: Mike Ralphson <mike.ralphson@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Sep 11 14:13:35 2008
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: Linus Torvalds <torvalds@linux-foundation.org>,
+	Jakub Narebski <jnareb@gmail.com>, git@vger.kernel.org
+To: "Stephen R. van den Berg" <srb@cuci.nl>
+X-From: git-owner@vger.kernel.org Thu Sep 11 14:30:48 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Kdl3D-0003nP-2N
-	for gcvg-git-2@gmane.org; Thu, 11 Sep 2008 14:13:31 +0200
+	id 1KdlJN-0000Ur-Ek
+	for gcvg-git-2@gmane.org; Thu, 11 Sep 2008 14:30:13 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752570AbYIKMMT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 11 Sep 2008 08:12:19 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752351AbYIKMMT
-	(ORCPT <rfc822;git-outgoing>); Thu, 11 Sep 2008 08:12:19 -0400
-Received: from peff.net ([208.65.91.99]:4216 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752149AbYIKMMS (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 11 Sep 2008 08:12:18 -0400
-Received: (qmail 10844 invoked by uid 111); 11 Sep 2008 12:12:17 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.32) with SMTP; Thu, 11 Sep 2008 08:12:17 -0400
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Thu, 11 Sep 2008 08:12:16 -0400
-Content-Disposition: inline
-In-Reply-To: <e2b179460809110131h781f0c91i9d478e20b55dec24@mail.gmail.com>
+	id S1752743AbYIKM3E (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 11 Sep 2008 08:29:04 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752698AbYIKM3D
+	(ORCPT <rfc822;git-outgoing>); Thu, 11 Sep 2008 08:29:03 -0400
+Received: from yw-out-2324.google.com ([74.125.46.29]:20776 "EHLO
+	yw-out-2324.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752563AbYIKM3B (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 11 Sep 2008 08:29:01 -0400
+Received: by yw-out-2324.google.com with SMTP id 9so105066ywe.1
+        for <git@vger.kernel.org>; Thu, 11 Sep 2008 05:29:00 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id
+         :disposition-notification-to:date:from:reply-to:user-agent
+         :mime-version:to:cc:subject:references:in-reply-to:content-type
+         :content-transfer-encoding;
+        bh=ZkgWcJ1xy9k1EUqOiJAIj+414XURIybnBaZBxvsFH1c=;
+        b=Km0XhUuaG59g56WXS3v4TSAyWM1zItJKu53eHTeqRhkr4Q9Oe3htL9ELe+zagz3137
+         qbosic+DmPrbtCIUIlfzE6B8y5RAkMrlLsZ85J5UlEo0l3bl/xyLmvJjrZyROJymxZ4s
+         u3wrs4pqO39z4STMOxRgXRzIh92D2iO/gNq8s=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:disposition-notification-to:date:from:reply-to
+         :user-agent:mime-version:to:cc:subject:references:in-reply-to
+         :content-type:content-transfer-encoding;
+        b=IwdRe96ueyfYpAr+DK7XptsxOI9CD9ivOR1ASxZP2/qAX4PGxd9DJkWIZhb7Wlfytv
+         XXO/Bs+sKWGl1NEOHyeR2UUkr1j75iEBuA5jaR5BmVVy0yWNf2WzByV96wT/caJ18rEI
+         JgxaOLbQhEVC4xbnNjWHe+oJ/LX1wtg5697vU=
+Received: by 10.100.41.8 with SMTP id o8mr3431937ano.11.1221136140281;
+        Thu, 11 Sep 2008 05:29:00 -0700 (PDT)
+Received: from ?10.0.0.6? ( [66.177.19.100])
+        by mx.google.com with ESMTPS id b32sm16095977ana.34.2008.09.11.05.28.58
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Thu, 11 Sep 2008 05:28:59 -0700 (PDT)
+User-Agent: Thunderbird 1.5.0.10 (X11/20060911)
+In-Reply-To: <20080911062242.GA23070@cuci.nl>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/95602>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/95603>
 
-On Thu, Sep 11, 2008 at 09:31:25AM +0100, Mike Ralphson wrote:
+Stephen R. van den Berg wrote:
+> If you fetch just branches A, B and C, but not D, the origin link from A
+> to D is dangling. 
 
-> I think the reason it's in pu is that it's in maint, master and next too...
-> 
-> All my test runs went bang this morning. 8-)
-
-Mine too. :)
-
-This is needed for FreeBSD, as well. No idea about OpenBSD or others.
-Should probably be squashed with the AIX patch if it's not too late.
-
--- >8 --
-Use compatibility regex library also on FreeBSD
-
-Commit 3632cfc24 makes the same change for Darwin; however, the problem
-also exists on FreeBSD.
-
-Signed-off-by: Jeff King <peff@peff.net>
----
-
-diff --git a/Makefile b/Makefile
-index 247cd2d..9b1bd7b 100644
---- a/Makefile
-+++ b/Makefile
-@@ -688,6 +688,8 @@ ifeq ($(uname_S),FreeBSD)
- 	BASIC_LDFLAGS += -L/usr/local/lib
- 	DIR_HAS_BSD_GROUP_SEMANTICS = YesPlease
- 	THREADED_DELTA_SEARCH = YesPlease
-+	COMPAT_CFLAGS += -Icompat/regex
-+	COMPAT_OBJS += compat/regex/regex.o
- endif
- ifeq ($(uname_S),OpenBSD)
- 	NO_STRCASESTR = YesPlease
+I do not understand how this can be considered an acceptable behavior. 
+If an object ID is referenced in an object header, particularly commit 
+objects, fetch must gather those objects also because to do otherwise 
+breaks the cryptographic authentication in git.
