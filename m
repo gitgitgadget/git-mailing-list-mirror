@@ -1,62 +1,70 @@
-From: Robin Rosenberg <robin.rosenberg.lists@dewire.com>
-Subject: Re: [JGIT PATCH 1/2] Issue 23: Resolve tag^0 as tag^{commit}
-Date: Fri, 12 Sep 2008 00:47:58 +0200
-Message-ID: <200809120047.58484.robin.rosenberg.lists@dewire.com>
-References: <20080911213927.GA20238@diku.dk>
+From: david@lang.hm
+Subject: Re: Git User's Survey 2008 partial summary, part 5 - other SCM
+Date: Thu, 11 Sep 2008 15:51:38 -0700 (PDT)
+Message-ID: <alpine.DEB.1.10.0809111543580.15169@asgard.lang.hm>
+References: <200809031607.19722.jnareb@gmail.com> <200809112214.18366.jnareb@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: 7bit
-Cc: "Shawn O. Pearce" <spearce@spearce.org>, git@vger.kernel.org
-To: Jonas Fonseca <fonseca@diku.dk>
-X-From: git-owner@vger.kernel.org Fri Sep 12 00:49:26 2008
+Content-Type: TEXT/PLAIN; charset=US-ASCII; format=flowed
+Cc: git@vger.kernel.org
+To: Jakub Narebski <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Sep 12 00:51:56 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Kduya-0007Zb-Fr
-	for gcvg-git-2@gmane.org; Fri, 12 Sep 2008 00:49:24 +0200
+	id 1Kdv0y-00081X-0f
+	for gcvg-git-2@gmane.org; Fri, 12 Sep 2008 00:51:52 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753614AbYIKWsR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 11 Sep 2008 18:48:17 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753453AbYIKWsR
-	(ORCPT <rfc822;git-outgoing>); Thu, 11 Sep 2008 18:48:17 -0400
-Received: from av8-2-sn3.vrr.skanova.net ([81.228.9.184]:40164 "EHLO
-	av8-2-sn3.vrr.skanova.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752819AbYIKWsQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 11 Sep 2008 18:48:16 -0400
-Received: by av8-2-sn3.vrr.skanova.net (Postfix, from userid 502)
-	id A118F37F25; Fri, 12 Sep 2008 00:48:14 +0200 (CEST)
-Received: from smtp3-1-sn3.vrr.skanova.net (smtp3-1-sn3.vrr.skanova.net [81.228.9.101])
-	by av8-2-sn3.vrr.skanova.net (Postfix) with ESMTP
-	id 78DFE37E7F; Fri, 12 Sep 2008 00:48:14 +0200 (CEST)
-Received: from [10.3.4.244] (h250n1fls32o811.telia.com [213.67.100.250])
-	by smtp3-1-sn3.vrr.skanova.net (Postfix) with ESMTP id 3055F37E4C;
-	Fri, 12 Sep 2008 00:48:14 +0200 (CEST)
-User-Agent: KMail/1.9.9
-In-Reply-To: <20080911213927.GA20238@diku.dk>
-Content-Disposition: inline
+	id S1754263AbYIKWup (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 11 Sep 2008 18:50:45 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752634AbYIKWup
+	(ORCPT <rfc822;git-outgoing>); Thu, 11 Sep 2008 18:50:45 -0400
+Received: from mail.lang.hm ([64.81.33.126]:53063 "EHLO bifrost.lang.hm"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754171AbYIKWuo (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 11 Sep 2008 18:50:44 -0400
+Received: from asgard.lang.hm (asgard.lang.hm [10.0.0.100])
+	by bifrost.lang.hm (8.13.4/8.13.4/Debian-3) with ESMTP id m8BMog73019373;
+	Thu, 11 Sep 2008 15:50:42 -0700
+X-X-Sender: dlang@asgard.lang.hm
+In-Reply-To: <200809112214.18366.jnareb@gmail.com>
+User-Agent: Alpine 1.10 (DEB 962 2008-03-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/95659>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/95660>
 
-torsdagen den 11 september 2008 23.39.27 skrev Jonas Fonseca:
-> Repository.resolve("tag^0") failed with "not a commit". Fix it and add a
-> test case for it.
+On Thu, 11 Sep 2008, Jakub Narebski wrote:
 
-It seems this case is not *that* special. It is tag^N == tag^{commit}^N
-Same for tag~N == tag^{commit}~N-
+> A bit suprising for me is high place of Perforce.  Another strange
+> thing (and a bit alarming) is that MS Visual SourceSafe has higher
+> place than Monotone; but that might be caused by different design and
+> different target groups of Monotone and Git, which might have caused
+> that the communities have almost no overlap; people choose either Git
+> or Monotone, one or the other.  BitKeeper has also a very low number
+> of active users among Git users... but that is not that strange,
+> considering history.
 
-My fault, i guess, but it would be nice of you fixed it while you are at it.
+I think you are making the wrong assumption here.
 
-Second, the testcase in the second patch fails on my machine.
+someone may use CVS becouse they contribute to a project that is only 
+availabe via CVS
 
-testDerefTaggedTagTree(org.spearce.jgit.lib.T0008_testparserev)
-junit.framework.ComparisonFailure: expected:<[269e1253bad5c247c6bde37aa48ae1e03138206c]> but was:<[be83157b4ffe650d728ba4f98ad47b623b0d0c20]>
-	at junit.framework.Assert.assertEquals(Assert.java:81)
-	at junit.framework.Assert.assertEquals(Assert.java:87)
-	at org.spearce.jgit.lib.T0008_testparserev.testDerefTaggedTagTree(T0008_testparserev.java:123)
+someone may use Perforce becouse that is the VCS that their company uses
 
--- robin
+if you do commercial development with windows you are almsot going to be 
+required to use MS VSS.
+
+you are looking at it from the point of view of 'which VCS would you 
+select for a new project', but that would be a very different question.
+
+I find it interesting that the number of people who use git and the other 
+DVCS systems in so small. Is this becouse the 'market share' of those 
+other systems is small? or becouse people who learn git aren't willing to 
+put up with other systems (or vice-versa)? or is there some other trend 
+or tendancy that makes people who select one DVCS more likely to work on 
+similar projects, so people interested in those types of projects will 
+generally just see a single DVCS system
+
+David Lang
