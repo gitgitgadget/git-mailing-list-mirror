@@ -1,105 +1,116 @@
-From: Paolo Bonzini <bonzini@gnu.org>
+From: Linus Torvalds <torvalds@linux-foundation.org>
 Subject: Re: [RFC] origin link for cherry-pick and revert
-Date: Thu, 11 Sep 2008 18:01:12 +0200
-Message-ID: <48C940C8.6040407@gnu.org>
-References: <20080909132212.GA25476@cuci.nl> <m3zlmhnx1z.fsf@localhost.localdomain> <20080909194354.GA13634@cuci.nl> <alpine.LFD.1.10.0809091631250.3117@nehalem.linux-foundation.org> <20080909235848.GE7459@cuci.nl> <alpine.LFD.1.10.0809091722010.3384@nehalem.linux-foundation.org> <20080910054244.GB15715@cuci.nl> <alpine.LFD.1.10.0809100828360.3384@nehalem.linux-foundation.org> <20080910230906.GD22739@cuci.nl> <alpine.LFD.1.10.0809101733050.3384@nehalem.linux-foundation.org> <20080911062242.GA23070@cuci.nl> <alpine.LFD.1.10.0809110835070.3384@nehalem.linux-foundation.org>
+Date: Thu, 11 Sep 2008 09:23:29 -0700 (PDT)
+Message-ID: <alpine.LFD.1.10.0809110910430.3384@nehalem.linux-foundation.org>
+References: <20080909132212.GA25476@cuci.nl> <m3zlmhnx1z.fsf@localhost.localdomain> <20080909194354.GA13634@cuci.nl> <alpine.LFD.1.10.0809091631250.3117@nehalem.linux-foundation.org> <20080909235848.GE7459@cuci.nl> <alpine.LFD.1.10.0809091722010.3384@nehalem.linux-foundation.org>
+ <20080910054244.GB15715@cuci.nl> <alpine.LFD.1.10.0809100828360.3384@nehalem.linux-foundation.org> <20080910230906.GD22739@cuci.nl> <alpine.LFD.1.10.0809101733050.3384@nehalem.linux-foundation.org> <20080911062242.GA23070@cuci.nl>
+ <alpine.LFD.1.10.0809110835070.3384@nehalem.linux-foundation.org> <48C940C8.6040407@gnu.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
+Content-Type: TEXT/PLAIN; charset=US-ASCII
 Cc: "Stephen R. van den Berg" <srb@cuci.nl>,
 	Jakub Narebski <jnareb@gmail.com>, git@vger.kernel.org
-To: Linus Torvalds <torvalds@linux-foundation.org>
-X-From: git-owner@vger.kernel.org Thu Sep 11 18:03:03 2008
+To: Paolo Bonzini <bonzini@gnu.org>
+X-From: git-owner@vger.kernel.org Thu Sep 11 18:25:32 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Kdod6-0005AN-0G
-	for gcvg-git-2@gmane.org; Thu, 11 Sep 2008 18:02:48 +0200
+	id 1Kdoz0-0004jM-Cr
+	for gcvg-git-2@gmane.org; Thu, 11 Sep 2008 18:25:26 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756036AbYIKQBV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 11 Sep 2008 12:01:21 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754368AbYIKQBU
-	(ORCPT <rfc822;git-outgoing>); Thu, 11 Sep 2008 12:01:20 -0400
-Received: from rn-out-0910.google.com ([64.233.170.185]:11053 "EHLO
-	rn-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756011AbYIKQBS (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 11 Sep 2008 12:01:18 -0400
-Received: by rn-out-0910.google.com with SMTP id k40so287400rnd.17
-        for <git@vger.kernel.org>; Thu, 11 Sep 2008 09:01:17 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from
-         :user-agent:mime-version:to:cc:subject:references:in-reply-to
-         :content-type:content-transfer-encoding:sender;
-        bh=R0nqX85ncEhHpd2pemAioRGIGmra/pFCZq8Ss+Qgg38=;
-        b=A/dvfMZYiYz4icPpMXkPqoclY+2MhU3LiAGlN/nieroSHLlus2aMdI6N0JhuLnQO6C
-         em7ZIHp2RDHUZmAI8lXEYkS6MFvAS7v/IzTs1HDcinNuQ+39Op5Kk7dVycRMC9j9+zir
-         X3vZZJO0OTLOaTGuxcb609Gc7ps1X+JHBgtOE=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:user-agent:mime-version:to:cc:subject
-         :references:in-reply-to:content-type:content-transfer-encoding
-         :sender;
-        b=heuMAejxk1FvGBiTMafm61tXwI5oWpCdE0j8W++h5DfCwSUw6lXB2tBl433N2Q6UVv
-         0hNkv2dBN0qQjARXnN2L0LY2owQSG5+n4SXWdkrJ9lfhnhRfRVQZMHX1esO9ZN22azr2
-         /1VjbaoBsFrqojNsLdfdyzZzOvc/VI9oBZi7M=
-Received: by 10.86.90.13 with SMTP id n13mr2180910fgb.50.1221148875912;
-        Thu, 11 Sep 2008 09:01:15 -0700 (PDT)
-Received: from scientist-2.mobile.usilu.net ( [195.176.179.202])
-        by mx.google.com with ESMTPS id l12sm10960705fgb.6.2008.09.11.09.01.14
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Thu, 11 Sep 2008 09:01:14 -0700 (PDT)
-User-Agent: Thunderbird 2.0.0.16 (Macintosh/20080707)
-In-Reply-To: <alpine.LFD.1.10.0809110835070.3384@nehalem.linux-foundation.org>
+	id S1752304AbYIKQYR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 11 Sep 2008 12:24:17 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752294AbYIKQYR
+	(ORCPT <rfc822;git-outgoing>); Thu, 11 Sep 2008 12:24:17 -0400
+Received: from smtp1.linux-foundation.org ([140.211.169.13]:54350 "EHLO
+	smtp1.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751986AbYIKQYQ (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 11 Sep 2008 12:24:16 -0400
+Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [140.211.169.55])
+	by smtp1.linux-foundation.org (8.14.2/8.13.5/Debian-3ubuntu1.1) with ESMTP id m8BGNUO3009615
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Thu, 11 Sep 2008 09:23:31 -0700
+Received: from localhost (localhost [127.0.0.1])
+	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id m8BGNTSg005312;
+	Thu, 11 Sep 2008 09:23:29 -0700
+In-Reply-To: <48C940C8.6040407@gnu.org>
+User-Agent: Alpine 1.10 (LFD 962 2008-03-14)
+X-Spam-Status: No, hits=-3.938 required=5 tests=AWL,BAYES_00,OSDL_HEADER_SUBJECT_BRACKETED
+X-Spam-Checker-Version: SpamAssassin 3.2.4-osdl_revision__1.47__
+X-MIMEDefang-Filter: lf$Revision: 1.188 $
+X-Scanned-By: MIMEDefang 2.63 on 140.211.169.13
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/95617>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/95618>
 
 
->> If you fetch just branches A, B and C, but not D, the origin link from A
->> to D is dangling.  Once you have fetched D as well [..]
+
+On Thu, 11 Sep 2008, Paolo Bonzini wrote:
 > 
-> So I just said we deleted beanch 'D', so there's no way to ever fetch it 
-> again.
-> 
-> Get it?
+> Yes, but you should not have used Stephen's proposed new option to git
+> cherry-pick, just like you shouldn't have used the existing -x option.
+> "-x" would not have created a dangling reference, but it would have
+> created a puzzling commit message.
 
-Yes, but you should not have used Stephen's proposed new option to git
-cherry-pick, just like you shouldn't have used the existing -x option.
-"-x" would not have created a dangling reference, but it would have
-created a puzzling commit message.
+But my point is, _none_ of what Stephen proposes has _any_ advantage over 
+the already existing functionality.
 
-> The fact is, a big part of git is temporary branches. It's one of the 
-> *best* features of git. Throw-away stuff. Those throw-away branches are 
-> often done for initial development, and then the final result is often a 
-> cleaned-up version. Often using rebase or cherry-picking or any number of 
-> things.
+IOW, absolutely *everything* is actually done better with existing data 
+structures, and then just adding tools to perhaps follow those SHA1's in 
+the commit message.
 
-These days I doubt people would use cherry-pick, they would probably use
-interactive rebase.  But anyway, exactly for the same reason...
+The whole "origin" field doesn't have any semantics that make sense for 
+core git. It's basically ignored by all normal git operations, and the 
+_only_ things that people seem to point out as being features are things 
+that can - and obviously in my opinion should - be done by much higher 
+levels.
 
-> "git cherry-pick" DOES NOT PUT THE ORIGINAL SHA1 IN THE 
-> COMMENT FIELD BY DEFAULT.
+For example, the claim was that it's hard to follow the chain of 
+cherry-picks. That's not _true_. Use gitweb and gitk, and you can already 
+see them. Sure, you need to use "-x", BUT YOU'D HAVE TO USE THAT WITH 
+Steven's MODEL TOO!
 
-... neither should cherry-picking create the origin link by default.
-Only if requested by the user, using a new option that is basically "-x"
-done in a different way.  Just like "-x", it should not be used when
-cherry-picking from private branches.
+Exactly because it would be a frigging _disaster_ if that "origin" field 
+was done by default.
 
-But say someone does it, then what happens?  If people clone the branch,
-the reference will be basically unusable.  But since "git gc" does not
-delete the referenced commit, at least the origin commit is still
-available in the repository where the cherry-pick was made.  It is
-debatable whether it is better or worse than "-x".
+And the only thing that "origin" does is:
 
-Can we discuss instead a generic way to have porcelain-level metadata,
-immutable or at least versioned, for the commit objects?  (This is the
-same kind of metadata as the author or committer, which clearly have
-nothing to do with the git plumbing.)  Do you have any proposal of saner
-semantics, not for the origin link but for commit references within this
-kind of metadata in general?
+ - hide the information
 
-Paolo
+ - make it easier to make mistakes (either enable the feature by default, 
+   or not notice that you didn't enable it when you wanted to)
+
+ - add a requirement for a backwards-incompatible field that is just 
+   guaranteed to confuse any old git binaries.
+
+ - make it _harder_ to do things like send revert/cherry-pick information 
+   by email.
+
+See? There are only downsides.
+
+Look at the kernel -stable trees. They explicitly add that cherry-pick 
+information, and can add *more*. For example, they go look at
+
+	http://git.kernel.org/?p=linux/kernel/git/stable/linux-2.6.26.y.git;a=commit;h=cb09de4542ad75cc3b66d0cf1a86217bf5633416
+
+and then go to its parent commit (just click on the parent SHA). And 
+notice how the stable kernel tree commits talk about where they were 
+back-ported from, or _why_ they aren't back-ports at all!
+
+IOW, there are really two main cases:
+
+ - the common case for cherry-picking: you do not want any origin 
+   information, because it's irrelevant, pointless, and *wrong*.
+
+ - you _do_ want origin information, but you actually want to _explain_ 
+   explicitly why it's not irrelevant, pointless, or wrong.
+
+And yes, the latter case is about a lot more than "this was 
+cherry-picked". It's about "this fixes that other commit we did", or it's 
+about "this was anti-cherry-picked - ie reverted". They are all "origins" 
+for the commit in the sense that they are relevant to the commit, but they 
+all need some explanation of what _kind_ of origins they are.
+
+			Linus
