@@ -1,116 +1,83 @@
-From: Linus Torvalds <torvalds@linux-foundation.org>
-Subject: Re: [RFC] origin link for cherry-pick and revert
-Date: Thu, 11 Sep 2008 09:23:29 -0700 (PDT)
-Message-ID: <alpine.LFD.1.10.0809110910430.3384@nehalem.linux-foundation.org>
-References: <20080909132212.GA25476@cuci.nl> <m3zlmhnx1z.fsf@localhost.localdomain> <20080909194354.GA13634@cuci.nl> <alpine.LFD.1.10.0809091631250.3117@nehalem.linux-foundation.org> <20080909235848.GE7459@cuci.nl> <alpine.LFD.1.10.0809091722010.3384@nehalem.linux-foundation.org>
- <20080910054244.GB15715@cuci.nl> <alpine.LFD.1.10.0809100828360.3384@nehalem.linux-foundation.org> <20080910230906.GD22739@cuci.nl> <alpine.LFD.1.10.0809101733050.3384@nehalem.linux-foundation.org> <20080911062242.GA23070@cuci.nl>
- <alpine.LFD.1.10.0809110835070.3384@nehalem.linux-foundation.org> <48C940C8.6040407@gnu.org>
+From: "Elijah Newren" <newren@gmail.com>
+Subject: Re: RFC: perhaps a "new file" should not be deleted by "git reset --hard"
+Date: Thu, 11 Sep 2008 10:32:33 -0600
+Message-ID: <51419b2c0809110932r4e8c833fx740ccb0c8e46f0af@mail.gmail.com>
+References: <279b37b20809101212g57e9ad99qbf6fa15888679894@mail.gmail.com>
+	 <eafc0afe0809101912v72916d3hce9ae5d6812f0db8@mail.gmail.com>
+	 <279b37b20809101946k309ad113neb7d051f1c6c410e@mail.gmail.com>
+	 <eafc0afe0809102305u6de85ef3ib2c08004dea8d6f9@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: "Stephen R. van den Berg" <srb@cuci.nl>,
-	Jakub Narebski <jnareb@gmail.com>, git@vger.kernel.org
-To: Paolo Bonzini <bonzini@gnu.org>
-X-From: git-owner@vger.kernel.org Thu Sep 11 18:25:32 2008
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: "Eric Raible" <raible@gmail.com>,
+	"Git Mailing List" <git@vger.kernel.org>
+To: "Changsheng Jiang" <jiangzuoyan@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Sep 11 18:33:58 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Kdoz0-0004jM-Cr
-	for gcvg-git-2@gmane.org; Thu, 11 Sep 2008 18:25:26 +0200
+	id 1Kdp6z-0007LK-LJ
+	for gcvg-git-2@gmane.org; Thu, 11 Sep 2008 18:33:42 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752304AbYIKQYR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 11 Sep 2008 12:24:17 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752294AbYIKQYR
-	(ORCPT <rfc822;git-outgoing>); Thu, 11 Sep 2008 12:24:17 -0400
-Received: from smtp1.linux-foundation.org ([140.211.169.13]:54350 "EHLO
-	smtp1.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751986AbYIKQYQ (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 11 Sep 2008 12:24:16 -0400
-Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [140.211.169.55])
-	by smtp1.linux-foundation.org (8.14.2/8.13.5/Debian-3ubuntu1.1) with ESMTP id m8BGNUO3009615
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Thu, 11 Sep 2008 09:23:31 -0700
-Received: from localhost (localhost [127.0.0.1])
-	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id m8BGNTSg005312;
-	Thu, 11 Sep 2008 09:23:29 -0700
-In-Reply-To: <48C940C8.6040407@gnu.org>
-User-Agent: Alpine 1.10 (LFD 962 2008-03-14)
-X-Spam-Status: No, hits=-3.938 required=5 tests=AWL,BAYES_00,OSDL_HEADER_SUBJECT_BRACKETED
-X-Spam-Checker-Version: SpamAssassin 3.2.4-osdl_revision__1.47__
-X-MIMEDefang-Filter: lf$Revision: 1.188 $
-X-Scanned-By: MIMEDefang 2.63 on 140.211.169.13
+	id S1752720AbYIKQce (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 11 Sep 2008 12:32:34 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751986AbYIKQce
+	(ORCPT <rfc822;git-outgoing>); Thu, 11 Sep 2008 12:32:34 -0400
+Received: from rv-out-0506.google.com ([209.85.198.226]:31671 "EHLO
+	rv-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752720AbYIKQce (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 11 Sep 2008 12:32:34 -0400
+Received: by rv-out-0506.google.com with SMTP id k40so409049rvb.1
+        for <git@vger.kernel.org>; Thu, 11 Sep 2008 09:32:33 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to
+         :subject:cc:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:references;
+        bh=qdR/+kNB3fJjK65VJH/jJpjmSGGyy2I0XKdNJIe6H5o=;
+        b=QuZPlQi56wCmVgFHEgfRlif/WNYm5j1Vn4lE/6/2Pb6uabtQE7X6YsoFSbL1sQydd0
+         hu5rwfViSUHEuXEs4dKg3YqJpsSfckz3ghtWaypYB/YXbGKX7vx8IGTSuaiDXoyBRo9x
+         36HLBSex3oeawV2Ne3NWy2kD4/kVSn+TKk5f8=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
+         :content-type:content-transfer-encoding:content-disposition
+         :references;
+        b=slZ8UlhXTZsUDRWGfaKrS3Pfeg7zI4TJrSWCWeXGCquPjAiA7+TEsCZcdnP0yq9jG2
+         7Ntl2wJ78HSP9Zhk/38B420dcNsV8qRbsVAsFw5kp74xNyoDiWTZyODsKZ0mxRGaL31x
+         lazs4LrDnwITm64f2TTt+0nXomQu8Fsd98wYs=
+Received: by 10.141.164.13 with SMTP id r13mr1923561rvo.53.1221150753075;
+        Thu, 11 Sep 2008 09:32:33 -0700 (PDT)
+Received: by 10.141.163.16 with HTTP; Thu, 11 Sep 2008 09:32:33 -0700 (PDT)
+In-Reply-To: <eafc0afe0809102305u6de85ef3ib2c08004dea8d6f9@mail.gmail.com>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/95618>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/95619>
+
+On Thu, Sep 11, 2008 at 12:05 AM, Changsheng Jiang
+<jiangzuoyan@gmail.com> wrote:
+> I don't know what version of you git, my git with version 1.5.4.5
+> doesn't delete the file file42 after git-reset.
+
+He stated the same with his version.  The point wasn't the behavior of
+git reset, but of git reset --hard.
+
+> BTW, if you added the file42 to .gitignore, why git-status still
+> reported "new file" file42"?
+
+>From the gitignore(5) manpage:
+
+"Note that all the gitignore files really concern only files that are
+not already tracked by git; in order to ignore uncommitted changes in
+already tracked files, please refer to..."
+
+Once you run git add, the file is tracked (unless you do something to
+explicitly stop tracking it).
 
 
-
-On Thu, 11 Sep 2008, Paolo Bonzini wrote:
-> 
-> Yes, but you should not have used Stephen's proposed new option to git
-> cherry-pick, just like you shouldn't have used the existing -x option.
-> "-x" would not have created a dangling reference, but it would have
-> created a puzzling commit message.
-
-But my point is, _none_ of what Stephen proposes has _any_ advantage over 
-the already existing functionality.
-
-IOW, absolutely *everything* is actually done better with existing data 
-structures, and then just adding tools to perhaps follow those SHA1's in 
-the commit message.
-
-The whole "origin" field doesn't have any semantics that make sense for 
-core git. It's basically ignored by all normal git operations, and the 
-_only_ things that people seem to point out as being features are things 
-that can - and obviously in my opinion should - be done by much higher 
-levels.
-
-For example, the claim was that it's hard to follow the chain of 
-cherry-picks. That's not _true_. Use gitweb and gitk, and you can already 
-see them. Sure, you need to use "-x", BUT YOU'D HAVE TO USE THAT WITH 
-Steven's MODEL TOO!
-
-Exactly because it would be a frigging _disaster_ if that "origin" field 
-was done by default.
-
-And the only thing that "origin" does is:
-
- - hide the information
-
- - make it easier to make mistakes (either enable the feature by default, 
-   or not notice that you didn't enable it when you wanted to)
-
- - add a requirement for a backwards-incompatible field that is just 
-   guaranteed to confuse any old git binaries.
-
- - make it _harder_ to do things like send revert/cherry-pick information 
-   by email.
-
-See? There are only downsides.
-
-Look at the kernel -stable trees. They explicitly add that cherry-pick 
-information, and can add *more*. For example, they go look at
-
-	http://git.kernel.org/?p=linux/kernel/git/stable/linux-2.6.26.y.git;a=commit;h=cb09de4542ad75cc3b66d0cf1a86217bf5633416
-
-and then go to its parent commit (just click on the parent SHA). And 
-notice how the stable kernel tree commits talk about where they were 
-back-ported from, or _why_ they aren't back-ports at all!
-
-IOW, there are really two main cases:
-
- - the common case for cherry-picking: you do not want any origin 
-   information, because it's irrelevant, pointless, and *wrong*.
-
- - you _do_ want origin information, but you actually want to _explain_ 
-   explicitly why it's not irrelevant, pointless, or wrong.
-
-And yes, the latter case is about a lot more than "this was 
-cherry-picked". It's about "this fixes that other commit we did", or it's 
-about "this was anti-cherry-picked - ie reverted". They are all "origins" 
-for the commit in the sense that they are relevant to the commit, but they 
-all need some explanation of what _kind_ of origins they are.
-
-			Linus
+Hope that helps,
+Elijah
