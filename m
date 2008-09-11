@@ -1,96 +1,62 @@
-From: "Stephen R. van den Berg" <srb@cuci.nl>
-Subject: Re: [RFC] origin link for cherry-pick and revert
-Date: Fri, 12 Sep 2008 00:40:27 +0200
-Message-ID: <20080911224027.GB29559@cuci.nl>
-References: <20080909132212.GA25476@cuci.nl> <alpine.LFD.1.10.0809101733050.3384@nehalem.linux-foundation.org> <20080911062242.GA23070@cuci.nl> <200809111020.55115.jnareb@gmail.com> <20080911123148.GA2056@cuci.nl> <alpine.LFD.1.10.0809111047380.23787@xanadu.home> <20080911160040.GE2056@cuci.nl> <alpine.LFD.1.10.0809111222170.23787@xanadu.home> <7vy71ys8a7.fsf@gitster.siamese.dyndns.org> <20080911223203.GA29559@cuci.nl>
+From: Robin Rosenberg <robin.rosenberg.lists@dewire.com>
+Subject: Re: [JGIT PATCH 1/2] Issue 23: Resolve tag^0 as tag^{commit}
+Date: Fri, 12 Sep 2008 00:47:58 +0200
+Message-ID: <200809120047.58484.robin.rosenberg.lists@dewire.com>
+References: <20080911213927.GA20238@diku.dk>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Nicolas Pitre <nico@cam.org>, Jakub Narebski <jnareb@gmail.com>,
-	Linus Torvalds <torvalds@linux-foundation.org>,
-	git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Sep 12 00:41:37 2008
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
+Cc: "Shawn O. Pearce" <spearce@spearce.org>, git@vger.kernel.org
+To: Jonas Fonseca <fonseca@diku.dk>
+X-From: git-owner@vger.kernel.org Fri Sep 12 00:49:26 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Kdur2-0005s5-JR
-	for gcvg-git-2@gmane.org; Fri, 12 Sep 2008 00:41:37 +0200
+	id 1Kduya-0007Zb-Fr
+	for gcvg-git-2@gmane.org; Fri, 12 Sep 2008 00:49:24 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754184AbYIKWk2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 11 Sep 2008 18:40:28 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753439AbYIKWk2
-	(ORCPT <rfc822;git-outgoing>); Thu, 11 Sep 2008 18:40:28 -0400
-Received: from aristoteles.cuci.nl ([212.125.128.18]:51480 "EHLO
-	aristoteles.cuci.nl" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754158AbYIKWk2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 11 Sep 2008 18:40:28 -0400
-Received: by aristoteles.cuci.nl (Postfix, from userid 500)
-	id 0FE495465; Fri, 12 Sep 2008 00:40:27 +0200 (CEST)
+	id S1753614AbYIKWsR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 11 Sep 2008 18:48:17 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753453AbYIKWsR
+	(ORCPT <rfc822;git-outgoing>); Thu, 11 Sep 2008 18:48:17 -0400
+Received: from av8-2-sn3.vrr.skanova.net ([81.228.9.184]:40164 "EHLO
+	av8-2-sn3.vrr.skanova.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752819AbYIKWsQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 11 Sep 2008 18:48:16 -0400
+Received: by av8-2-sn3.vrr.skanova.net (Postfix, from userid 502)
+	id A118F37F25; Fri, 12 Sep 2008 00:48:14 +0200 (CEST)
+Received: from smtp3-1-sn3.vrr.skanova.net (smtp3-1-sn3.vrr.skanova.net [81.228.9.101])
+	by av8-2-sn3.vrr.skanova.net (Postfix) with ESMTP
+	id 78DFE37E7F; Fri, 12 Sep 2008 00:48:14 +0200 (CEST)
+Received: from [10.3.4.244] (h250n1fls32o811.telia.com [213.67.100.250])
+	by smtp3-1-sn3.vrr.skanova.net (Postfix) with ESMTP id 3055F37E4C;
+	Fri, 12 Sep 2008 00:48:14 +0200 (CEST)
+User-Agent: KMail/1.9.9
+In-Reply-To: <20080911213927.GA20238@diku.dk>
 Content-Disposition: inline
-In-Reply-To: <20080911223203.GA29559@cuci.nl>
-User-Agent: Mutt/1.5.13 (2006-08-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/95658>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/95659>
 
-Stephen R. van den Berg wrote:
->Junio C Hamano wrote:
->>This is different from the normal "following" in that B is not allowed to
->>pass the blame to its parents (should it be allowed to pass it to its
->>"origin"?), because the _only thing_ cherry-pick did was to transport what
->>B did (relative to A) to the unrelated history that led to X.
+torsdagen den 11 september 2008 23.39.27 skrev Jonas Fonseca:
+> Repository.resolve("tag^0") failed with "not a commit". Fix it and add a
+> test case for it.
 
->Well, I'd expect:
->a. That B should be able to pass blame onto it's origin.
->b. That B should be able to pass blame onto A (and deeper).
+It seems this case is not *that* special. It is tag^N == tag^{commit}^N
+Same for tag~N == tag^{commit}~N-
 
->Let me show another example:
+My fault, i guess, but it would be nice of you fixed it while you are at it.
 
->....-C---D---E---F---G
->                 . (origin)
->                  .
->         ...---A---B
->                    . (origin)
->                     .
->        ...---o---X---Y---Z
+Second, the testcase in the second patch fails on my machine.
 
->Now suppose there is a piece of sourcecode which evolves from C to F,
->then when I dig into G using blame I get something like:  CCCFFEGGDDDCC
->(Every letter represents a line in the sourcecode)
+testDerefTaggedTagTree(org.spearce.jgit.lib.T0008_testparserev)
+junit.framework.ComparisonFailure: expected:<[269e1253bad5c247c6bde37aa48ae1e03138206c]> but was:<[be83157b4ffe650d728ba4f98ad47b623b0d0c20]>
+	at junit.framework.Assert.assertEquals(Assert.java:81)
+	at junit.framework.Assert.assertEquals(Assert.java:87)
+	at org.spearce.jgit.lib.T0008_testparserev.testDerefTaggedTagTree(T0008_testparserev.java:123)
 
->Digging into Z I'd expect to see the following:  ZZCCCFFEDDYDCCB
-
->All this assumes that there were minimal changes to the patch when
->creating B, and also minimal changes to the patch when creating Y.
-
->I.e. large parts of that code where developed during C, D, E and F, so
->that is what I expect to see; is that illogical?
-
-I'm sorry, you're right, I'm confusing things here.  The case I'm describing
-here can only happen when you do this:
-
-....-C---D---E---F---G
-      \...\...\..\ (origin)
-                  .
-         ...---A---B
-                    . (origin)
-                     .
-        ...---o---X---Y---Z
-
-I.e. the first cherry-pick needs to cherry-pick C, D, E *and* F into B,
-that will result in four origin fields there.
-And yes, that means that:
-- blame follows origin links (repeatedly).
-- blame does *not* travel to parents of commits found through an origin
-  link.
-
-Does that mean that blame uses origin fields?  Yes, it does, and it has
-to check for origin links at every commit it traverses.
--- 
-Sincerely,
-           Stephen R. van den Berg.
-"There are three types of people in the world;
- those who can count, and those who can't."
+-- robin
