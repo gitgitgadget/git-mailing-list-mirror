@@ -1,59 +1,76 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [RFC] origin link for cherry-pick and revert
-Date: Thu, 11 Sep 2008 19:01:17 -0400
-Message-ID: <20080911230117.GA4194@coredump.intra.peff.net>
-References: <20080911062242.GA23070@cuci.nl> <200809111020.55115.jnareb@gmail.com> <20080911123148.GA2056@cuci.nl> <20080911135146.GE5082@mit.edu> <20080911153202.GD2056@cuci.nl> <20080911180037.GH5082@mit.edu> <20080911190335.GB1451@cuci.nl> <20080911200452.GM5082@mit.edu> <20080911214650.GB3187@coredump.intra.peff.net> <20080911225648.GC29559@cuci.nl>
+From: "Jeff Whiteside" <jeff.m.whiteside@gmail.com>
+Subject: Re: RFC: perhaps a "new file" should not be deleted by "git reset --hard"
+Date: Thu, 11 Sep 2008 16:04:19 -0700
+Message-ID: <3ab397d0809111604r5d9dda04p32a987208d1fa92d@mail.gmail.com>
+References: <279b37b20809101212g57e9ad99qbf6fa15888679894@mail.gmail.com>
+	 <eafc0afe0809101912v72916d3hce9ae5d6812f0db8@mail.gmail.com>
+	 <eafc0afe0809101914lff5b23ehaf625d702fbd9b5d@mail.gmail.com>
+	 <51419b2c0809101938v30e5a1aflf944027aedc2d900@mail.gmail.com>
+	 <loom.20080911T204256-821@post.gmane.org>
+	 <7vd4jas6x8.fsf@gitster.siamese.dyndns.org>
+	 <279b37b20809111519o76bea81br738983b4cda1978e@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Theodore Tso <tytso@MIT.EDU>, Jakub Narebski <jnareb@gmail.com>,
-	Linus Torvalds <torvalds@linux-foundation.org>,
-	git@vger.kernel.org
-To: "Stephen R. van den Berg" <srb@cuci.nl>
-X-From: git-owner@vger.kernel.org Fri Sep 12 01:02:29 2008
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: "Junio C Hamano" <gitster@pobox.com>, git@vger.kernel.org
+To: "Eric Raible" <raible@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Sep 12 01:06:01 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KdvBE-0001gG-Mf
-	for gcvg-git-2@gmane.org; Fri, 12 Sep 2008 01:02:29 +0200
+	id 1KdvEV-0002HM-Uc
+	for gcvg-git-2@gmane.org; Fri, 12 Sep 2008 01:05:52 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754501AbYIKXBV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 11 Sep 2008 19:01:21 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754436AbYIKXBU
-	(ORCPT <rfc822;git-outgoing>); Thu, 11 Sep 2008 19:01:20 -0400
-Received: from peff.net ([208.65.91.99]:3034 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753439AbYIKXBU (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 11 Sep 2008 19:01:20 -0400
-Received: (qmail 6512 invoked by uid 111); 11 Sep 2008 23:01:19 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.32) with SMTP; Thu, 11 Sep 2008 19:01:19 -0400
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Thu, 11 Sep 2008 19:01:17 -0400
+	id S1754627AbYIKXEY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 11 Sep 2008 19:04:24 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753122AbYIKXEX
+	(ORCPT <rfc822;git-outgoing>); Thu, 11 Sep 2008 19:04:23 -0400
+Received: from ug-out-1314.google.com ([66.249.92.170]:37627 "EHLO
+	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752852AbYIKXEU (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 11 Sep 2008 19:04:20 -0400
+Received: by ug-out-1314.google.com with SMTP id k3so950019ugf.37
+        for <git@vger.kernel.org>; Thu, 11 Sep 2008 16:04:19 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to
+         :subject:cc:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:references;
+        bh=y8aGOneRDu99ZsLfj7WCPQlAFDUUv/9xLQgw5WNrI7Q=;
+        b=XJgZ0VMiKuQYyt4UHXFka+Szwoo3R0hSshgwC2RtEBqnJma0WOxG8/V2MAX/14V3HF
+         EaX4Kf3RJjZzuV40eCJGblpx8pyjKLQ5L8zT5qG6tcY6lbkiegORL3PUhxNNlkmNsWu6
+         EielxS/ajgf9WVjUjQbdHv24rwDFLNvqC3zwg=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
+         :content-type:content-transfer-encoding:content-disposition
+         :references;
+        b=t9E29Avh584X5Ij0mdJffRXBfYxkHLp+7hqmaqC3TWH6NE0KPMLvpFTgpttgc1z6s2
+         K7qzaPNPZzdlTAyeI2H+Rr5+7b3lF3ItBBChAz/58I84/xGEoZZoKT5T8EHD2Byfo11a
+         NXG6bOHsrhTShjMYFQ7AkCELX2fAYIk/UPuho=
+Received: by 10.67.40.6 with SMTP id s6mr8628560ugj.33.1221174259224;
+        Thu, 11 Sep 2008 16:04:19 -0700 (PDT)
+Received: by 10.67.93.17 with HTTP; Thu, 11 Sep 2008 16:04:19 -0700 (PDT)
+In-Reply-To: <279b37b20809111519o76bea81br738983b4cda1978e@mail.gmail.com>
 Content-Disposition: inline
-In-Reply-To: <20080911225648.GC29559@cuci.nl>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/95662>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/95663>
 
-On Fri, Sep 12, 2008 at 12:56:48AM +0200, Stephen R. van den Berg wrote:
+The command is wrapped up in all kinds of semantics at which you have
+to guess or read tons of vague or outdated literature.  That's what
+makes git's learning curve so retarded.
 
-> Well, the usual way to fix this is to actually startup fetch and tell it
-> to try and fetch all the weak links (or just fetch a single hash (the
-> offending origin link)) from upstream; this is by no means the default
-> operatingmode of fetch, but I don't see any harm in allowing to fetch
-> those if one really wants to.
+Why is it not just    git reset --index     or     git reset
+--worktree    or   git reset --commitrepo REVISION  or   git reset
+--all ?
+And if you want to delete all untracked files
+     ls | sed s/`git status --index --filenamesonly`//g | rm
+     ls | sed s/`git status --commitrepo --filenamesonly`//g | rm
+           (I realize those commands don't actually work, but I'm a noob.)
 
-Maybe I am misremembering the details of fetching, but I believe you
-cannot fetch an arbitrary SHA-1, and that is by design. So:
-
-  1. You would have to argue the merits of changing that design. I
-     believe the rationale relates to exposing some subset of the
-     content via refs, but I have personally never felt that is very
-     compelling.
-
-  2. Even if we did make a change, that means that _both_ sides need the
-     upgraded version.
-
--Peff
+So that 'tracked by git' isn't just another ambiguous semantic.
+Instead 'Tracked by index'/'Tracked by commitrepo'.
