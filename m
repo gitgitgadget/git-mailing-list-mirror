@@ -1,72 +1,81 @@
-From: "Stephen R. van den Berg" <srb@cuci.nl>
+From: Jeff King <peff@peff.net>
 Subject: Re: [RFC] origin link for cherry-pick and revert
-Date: Fri, 12 Sep 2008 01:17:42 +0200
-Message-ID: <20080911231742.GD29559@cuci.nl>
-References: <200809111020.55115.jnareb@gmail.com> <20080911123148.GA2056@cuci.nl> <20080911135146.GE5082@mit.edu> <20080911153202.GD2056@cuci.nl> <20080911180037.GH5082@mit.edu> <20080911190335.GB1451@cuci.nl> <20080911200452.GM5082@mit.edu> <20080911214650.GB3187@coredump.intra.peff.net> <20080911225648.GC29559@cuci.nl> <20080911230117.GA4194@coredump.intra.peff.net>
+Date: Thu, 11 Sep 2008 19:26:10 -0400
+Message-ID: <20080911232610.GA4279@coredump.intra.peff.net>
+References: <20080911062242.GA23070@cuci.nl> <200809111020.55115.jnareb@gmail.com> <20080911123148.GA2056@cuci.nl> <20080911135146.GE5082@mit.edu> <20080911153202.GD2056@cuci.nl> <20080911180037.GH5082@mit.edu> <20080911190335.GB1451@cuci.nl> <20080911200452.GM5082@mit.edu> <20080911214650.GB3187@coredump.intra.peff.net> <alpine.LFD.1.10.0809111533110.3384@nehalem.linux-foundation.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Theodore Tso <tytso@MIT.EDU>, Jakub Narebski <jnareb@gmail.com>,
-	Linus Torvalds <torvalds@linux-foundation.org>,
-	git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Fri Sep 12 01:19:02 2008
+Content-Type: text/plain; charset=utf-8
+Cc: Theodore Tso <tytso@MIT.EDU>,
+	"Stephen R. van den Berg" <srb@cuci.nl>,
+	Jakub Narebski <jnareb@gmail.com>, git@vger.kernel.org
+To: Linus Torvalds <torvalds@linux-foundation.org>
+X-From: git-owner@vger.kernel.org Fri Sep 12 01:27:28 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KdvRF-00051z-Gx
-	for gcvg-git-2@gmane.org; Fri, 12 Sep 2008 01:19:02 +0200
+	id 1KdvZJ-0006v4-H4
+	for gcvg-git-2@gmane.org; Fri, 12 Sep 2008 01:27:22 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754720AbYIKXRo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 11 Sep 2008 19:17:44 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754729AbYIKXRn
-	(ORCPT <rfc822;git-outgoing>); Thu, 11 Sep 2008 19:17:43 -0400
-Received: from aristoteles.cuci.nl ([212.125.128.18]:41409 "EHLO
-	aristoteles.cuci.nl" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754624AbYIKXRn (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 11 Sep 2008 19:17:43 -0400
-Received: by aristoteles.cuci.nl (Postfix, from userid 500)
-	id 0EC655465; Fri, 12 Sep 2008 01:17:42 +0200 (CEST)
+	id S1754689AbYIKX0N (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 11 Sep 2008 19:26:13 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754213AbYIKX0N
+	(ORCPT <rfc822;git-outgoing>); Thu, 11 Sep 2008 19:26:13 -0400
+Received: from peff.net ([208.65.91.99]:1496 "EHLO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752490AbYIKX0M (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 11 Sep 2008 19:26:12 -0400
+Received: (qmail 6707 invoked by uid 111); 11 Sep 2008 23:26:11 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+    by peff.net (qpsmtpd/0.32) with SMTP; Thu, 11 Sep 2008 19:26:11 -0400
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Thu, 11 Sep 2008 19:26:10 -0400
 Content-Disposition: inline
-In-Reply-To: <20080911230117.GA4194@coredump.intra.peff.net>
-User-Agent: Mutt/1.5.13 (2006-08-11)
+In-Reply-To: <alpine.LFD.1.10.0809111533110.3384@nehalem.linux-foundation.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/95665>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/95666>
 
-Jeff King wrote:
->On Fri, Sep 12, 2008 at 12:56:48AM +0200, Stephen R. van den Berg wrote:
->> Well, the usual way to fix this is to actually startup fetch and tell it
->> to try and fetch all the weak links (or just fetch a single hash (the
->> offending origin link)) from upstream; this is by no means the default
->> operatingmode of fetch, but I don't see any harm in allowing to fetch
->> those if one really wants to.
+On Thu, Sep 11, 2008 at 04:10:26PM -0700, Linus Torvalds wrote:
 
->Maybe I am misremembering the details of fetching, but I believe you
->cannot fetch an arbitrary SHA-1, and that is by design. So:
+> > And obviously in Linus's workflow such references are basically useless,
+> > and they should just not be generated.
+> 
+> This has _nothing_ to do with workflows or anything else.
+> 
+> Why are people claiming these total red herrings?
+> 
+> I have asked several times what it is that makes it so important that the 
+> "origin" information be in the headers. Nobody has been able to explain 
+> why it's so different from just doing it in the free-form part. NOBODY.
 
-I see, didn't know that.
+The message you are responding to has nothing to do with an origin
+header versus putting it in the free-form part. It is equally a problem
+with both approaches.
 
->  1. You would have to argue the merits of changing that design. I
->     believe the rationale relates to exposing some subset of the
->     content via refs, but I have personally never felt that is very
->     compelling.
+I was purely commenting on the "if I mention an arbitrary sha-1, what is
+the person reading it supposed to _do_ with it, if they may never have
+seen that sha-1" issue.
 
-Well, I can understand why it is done this way, I think.
+So yes, it has _everything_ to do with workflows. In Stephen's case, he
+claims that all references will be to commits on long-lived branches. In
+which case, it is a non-issue because they will have the referenced
+commits.
 
->  2. Even if we did make a change, that means that _both_ sides need the
->     upgraded version.
+But in the general case, people will not have them, and there is
+potential head-scratching. My point is that even if a feature works for
+Stephen's workflow, it may not be a good feature for everyone, since
+other solutions handle the general case (as well as his case) much
+better.
 
-If you're using origin links, you'd need that anyway, so that's a given.
-I could imagine the minimum would be something like:
+> [ranting about how the origin header is bad]
+> The only thing I have ever argued against is adding commit headers that 
+> have no sane semantics and don't make sense as internal git data 
+> structures.
 
- Allow direct SHA1 fetches (which obviously pull in all parents as well)
- if the ref is part of one of the public branches (either as a commit,
- or as an origin link).
--- 
-Sincerely,
-           Stephen R. van den Berg.
-"There are three types of people in the world;
- those who can count, and those who can't."
+Yes, and I totally agree with everything you said. If you read the mail
+you are responding to carefully, you will see that I never mention an
+origin header versus the free-form commit.
+
+-Peff
