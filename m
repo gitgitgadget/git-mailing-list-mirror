@@ -1,101 +1,80 @@
-From: "Stephen R. van den Berg" <srb@cuci.nl>
+From: Nicolas Pitre <nico@cam.org>
 Subject: Re: [RFC] origin link for cherry-pick and revert
-Date: Thu, 11 Sep 2008 21:23:56 +0200
-Message-ID: <20080911192356.GC1451@cuci.nl>
-References: <20080909194354.GA13634@cuci.nl> <alpine.LFD.1.10.0809091631250.3117@nehalem.linux-foundation.org> <20080909235848.GE7459@cuci.nl> <alpine.LFD.1.10.0809091722010.3384@nehalem.linux-foundation.org> <20080910054244.GB15715@cuci.nl> <alpine.LFD.1.10.0809100828360.3384@nehalem.linux-foundation.org> <20080910230906.GD22739@cuci.nl> <alpine.LFD.1.10.0809101733050.3384@nehalem.linux-foundation.org> <20080911062242.GA23070@cuci.nl> <alpine.LFD.1.10.0809110835070.3384@nehalem.linux-foundation.org>
+Date: Thu, 11 Sep 2008 15:33:00 -0400 (EDT)
+Message-ID: <alpine.LFD.1.10.0809111527030.23787@xanadu.home>
+References: <20080909132212.GA25476@cuci.nl>
+ <alpine.LFD.1.10.0809101733050.3384@nehalem.linux-foundation.org>
+ <20080911062242.GA23070@cuci.nl> <200809111020.55115.jnareb@gmail.com>
+ <20080911123148.GA2056@cuci.nl> <20080911135146.GE5082@mit.edu>
+ <20080911153202.GD2056@cuci.nl> <20080911180037.GH5082@mit.edu>
+ <20080911190335.GB1451@cuci.nl>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Jakub Narebski <jnareb@gmail.com>, git@vger.kernel.org
-To: Linus Torvalds <torvalds@linux-foundation.org>
-X-From: git-owner@vger.kernel.org Thu Sep 11 21:25:07 2008
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+Cc: Theodore Tso <tytso@MIT.EDU>, Jakub Narebski <jnareb@gmail.com>,
+	Linus Torvalds <torvalds@linux-foundation.org>,
+	git@vger.kernel.org
+To: "Stephen R. van den Berg" <srb@cuci.nl>
+X-From: git-owner@vger.kernel.org Thu Sep 11 21:35:28 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Kdrms-0003nR-Vb
-	for gcvg-git-2@gmane.org; Thu, 11 Sep 2008 21:25:07 +0200
+	id 1Kdrvw-0007oP-7B
+	for gcvg-git-2@gmane.org; Thu, 11 Sep 2008 21:34:28 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752661AbYIKTX6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 11 Sep 2008 15:23:58 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752512AbYIKTX6
-	(ORCPT <rfc822;git-outgoing>); Thu, 11 Sep 2008 15:23:58 -0400
-Received: from aristoteles.cuci.nl ([212.125.128.18]:37265 "EHLO
-	aristoteles.cuci.nl" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752487AbYIKTX6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 11 Sep 2008 15:23:58 -0400
-Received: by aristoteles.cuci.nl (Postfix, from userid 500)
-	id C82665465; Thu, 11 Sep 2008 21:23:56 +0200 (CEST)
-Content-Disposition: inline
-In-Reply-To: <alpine.LFD.1.10.0809110835070.3384@nehalem.linux-foundation.org>
-User-Agent: Mutt/1.5.13 (2006-08-11)
+	id S1753373AbYIKTdV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 11 Sep 2008 15:33:21 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753458AbYIKTdV
+	(ORCPT <rfc822;git-outgoing>); Thu, 11 Sep 2008 15:33:21 -0400
+Received: from relais.videotron.ca ([24.201.245.36]:46826 "EHLO
+	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752634AbYIKTdU (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 11 Sep 2008 15:33:20 -0400
+Received: from xanadu.home ([66.131.194.97]) by VL-MH-MR002.ip.videotron.ca
+ (Sun Java(tm) System Messaging Server 6.3-4.01 (built Aug  3 2007; 32bit))
+ with ESMTP id <0K7100687QB0PP38@VL-MH-MR002.ip.videotron.ca> for
+ git@vger.kernel.org; Thu, 11 Sep 2008 15:33:01 -0400 (EDT)
+X-X-Sender: nico@xanadu.home
+In-reply-to: <20080911190335.GB1451@cuci.nl>
+User-Agent: Alpine 1.10 (LFD 962 2008-03-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/95629>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/95630>
 
-Linus Torvalds wrote:
->On Thu, 11 Sep 2008, Stephen R. van den Berg wrote:
->> >delete of the origin branch will basically make them unreachable.
+On Thu, 11 Sep 2008, Stephen R. van den Berg wrote:
 
->> False.
+> Theodore Tso wrote:
+> >On Thu, Sep 11, 2008 at 05:32:02PM +0200, Stephen R. van den Berg wrote:
+> >> gc will preserve the commits the origin links point to once they are
+> >> reachable.  I.e. if the developer doesn't care about the commits the
+> >> origin links point to (i.e. if the branches are not reachable) then gc
+> >> just skips them, if the developer *does* care, the origin links are used
+> >> to keep those objects alive (and, of course, all their parenthood).
+> 
+> >This seems wrong.  OK, suppose you have branches A, B, C, and D, while
+> >you are on branch C, you cherry pick commit 'p' from branch B, so that
+> >there is a new commit q on branch C which has an origin link
+> >containing the commit ID's p^ and 'p.    
+> 
+> Ok.
+> 
+> >Now suppose branch B gets deleted, and you do a "git gc".  All of the
+> >commits that were part of branch B will vanish except for p^ and p,
+> 
+> Not quite.  Obviously all parents of p and p^ will continue to exist.
+> I.e. deleting branch B will cause all commits from p till the tip of B
+> (except p itself) to vanish.  Keeping p implies that the whole chain of
+> parents below p will continue to exist and be reachable.  That's the way
+> a git repository works.
 
->Stephen, here's a f*cking clue:
-> - I know how git works.
+And that's what I called stupid in my earlier reply to you.  Either you 
+have proper branches or tags keeping P around, or deleting B brings 
+everything not reachable through other branches or tags (or reflog) 
+away too.  Otherwise there is no point making a dangling origin link 
+valid.
 
-I'd presume you do, but that doesn't mean you always accurately express
-yourself.
 
->> If you fetch just branches A, B and C, but not D, the origin link from A
->> to D is dangling.  Once you have fetched D as well [..]
-
->So I just said we deleted beanch 'D', so there's no way to ever fetch it 
->again.
-
-You did not state you deleted branch 'D' on the repository being fetched
-*FROM*.  I assumed you meant you deleted branch 'D' on the repository
-doing the fetching (after having fetched 'D' in the past).
-
->Get it?
-
-"You stupid git".
-
->The fact is, a big part of git is temporary branches. It's one of the 
->*best* features of git. Throw-away stuff. Those throw-away branches are 
->often done for initial development, and then the final result is often a 
->cleaned-up version. Often using rebase or cherry-picking or any number of 
->things.
-
-Indeed, features I value in git very much, and use every day, thanks.
-
-[...portions of man git-cherry-pick stripped...]
-
->Can you not understand that? The "origin" field is _garbage_. It's garbage 
->for all normal cases. The original commit will not ever even EXIST in the 
->result, because it has long since been thrown away and will never exist 
->anywhere else.
-
-The origin field will *not* be created on regular cherry-picks, this
-*would* create garbage.  The origin field is not meant to be generated
-when doing things with temporary branches.  The origin field is meant to
-be filled *ONLY* when cherry-picking from one permanent branch to
-another permanent branch.  This is a *rare* operation.
-
->Garbage should be _avoided_, not added.
-
-Quite.
-
-I do understand that "normal cases" in your case mean cherry-picks among
-temporary branches.
-Well, you are completely right that *your* normal cases should not (and
-will not) generate an origin field.
-The origin field is intended for the *abnormal* cases, which means
-cherry-picking between permanent branches (which, apparently, you rarely
-do, if ever), this is something that (depending on your workflow) can be
-a more frequent event.  For *those* cases, the origin field will not
-contain garbage.
--- 
-Sincerely,
-           Stephen R. van den Berg.
-"There are three types of people in the world;
- those who can count, and those who can't."
+Nicolas
