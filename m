@@ -1,133 +1,84 @@
-From: Nicolas Pitre <nico@cam.org>
-Subject: Re: [RFC] origin link for cherry-pick and revert
-Date: Thu, 11 Sep 2008 13:02:36 -0400 (EDT)
-Message-ID: <alpine.LFD.1.10.0809111222170.23787@xanadu.home>
-References: <20080909132212.GA25476@cuci.nl>
- <alpine.LFD.1.10.0809101733050.3384@nehalem.linux-foundation.org>
- <20080911062242.GA23070@cuci.nl> <200809111020.55115.jnareb@gmail.com>
- <20080911123148.GA2056@cuci.nl>
- <alpine.LFD.1.10.0809111047380.23787@xanadu.home>
- <20080911160040.GE2056@cuci.nl>
+From: Clark Williams <clark.williams@gmail.com>
+Subject: StGit question
+Date: Thu, 11 Sep 2008 12:04:06 -0500
+Message-ID: <48C94F86.6080707@gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: Jakub Narebski <jnareb@gmail.com>,
-	Linus Torvalds <torvalds@linux-foundation.org>,
-	git@vger.kernel.org
-To: "Stephen R. van den Berg" <srb@cuci.nl>
-X-From: git-owner@vger.kernel.org Thu Sep 11 19:04:46 2008
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Sep 11 19:05:59 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Kdpaf-0001w3-GI
-	for gcvg-git-2@gmane.org; Thu, 11 Sep 2008 19:04:22 +0200
+	id 1Kdpbb-0002CB-Nr
+	for gcvg-git-2@gmane.org; Thu, 11 Sep 2008 19:05:43 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751893AbYIKRDO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 11 Sep 2008 13:03:14 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751852AbYIKRDN
-	(ORCPT <rfc822;git-outgoing>); Thu, 11 Sep 2008 13:03:13 -0400
-Received: from relais.videotron.ca ([24.201.245.36]:61632 "EHLO
-	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751850AbYIKRDN (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 11 Sep 2008 13:03:13 -0400
-Received: from xanadu.home ([66.131.194.97]) by VL-MH-MR001.ip.videotron.ca
- (Sun Java(tm) System Messaging Server 6.3-4.01 (built Aug  3 2007; 32bit))
- with ESMTP id <0K71001JNJCC20C1@VL-MH-MR001.ip.videotron.ca> for
- git@vger.kernel.org; Thu, 11 Sep 2008 13:02:37 -0400 (EDT)
-X-X-Sender: nico@xanadu.home
-In-reply-to: <20080911160040.GE2056@cuci.nl>
-User-Agent: Alpine 1.10 (LFD 962 2008-03-14)
+	id S1752150AbYIKREM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 11 Sep 2008 13:04:12 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752058AbYIKREL
+	(ORCPT <rfc822;git-outgoing>); Thu, 11 Sep 2008 13:04:11 -0400
+Received: from mail-gx0-f16.google.com ([209.85.217.16]:64427 "EHLO
+	mail-gx0-f16.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752062AbYIKREK (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 11 Sep 2008 13:04:10 -0400
+Received: by gxk9 with SMTP id 9so16924410gxk.13
+        for <git@vger.kernel.org>; Thu, 11 Sep 2008 10:04:08 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from
+         :user-agent:mime-version:to:subject:x-enigmail-version:content-type
+         :content-transfer-encoding;
+        bh=DEJ5+o0G/dH9DIlnEEzASwRgrL6mBK2d0zo47OwNTos=;
+        b=U1ihnWO6SOLIyVUBaDbQLuqE5H5BejU1j8pDwxGdRpDQxbI8HYLEUw4+L7Wtf5OutS
+         +Ssl5coGwSlH+GAVpnvYWntcrOhHJWAY9MWgdmb34EEPclTuPY5BZ9OAREbDFeVdj/qj
+         jzL22THj3hSDK2LlujtYwf35xhVV42tZjdKoo=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:user-agent:mime-version:to:subject
+         :x-enigmail-version:content-type:content-transfer-encoding;
+        b=F4/FNIhm876etxjIE0Ai9GhQU/DNTaDS7ooK2bOrE9saRqE0e40MVxxnjQ5PTRWHPV
+         kWd4LPqXQOFF4CNh8SmLeuZRpFXdBWfEY0i9Q7ZaKveD34Wi8duh748y0OdBLNpZcxkT
+         EirKXObSewhTILo7rxOh2D/t1t1NX2sC26X2Q=
+Received: by 10.100.198.13 with SMTP id v13mr3748264anf.125.1221152648634;
+        Thu, 11 Sep 2008 10:04:08 -0700 (PDT)
+Received: from ?172.16.16.136? ( [12.68.228.100])
+        by mx.google.com with ESMTPS id c14sm18784184ana.4.2008.09.11.10.04.06
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Thu, 11 Sep 2008 10:04:07 -0700 (PDT)
+User-Agent: Thunderbird 2.0.0.14 (X11/20080501)
+X-Enigmail-Version: 0.95.7
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/95622>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/95623>
 
-On Thu, 11 Sep 2008, Stephen R. van den Berg wrote:
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-> Let me try and describe once more the typical environment this origin field
-> is vital in:
-> 
-> Imagine a repository with:
-> - 33774 commits total
-> - 13 years of history
-> - 1 development branch
-> - 9 stable branches (forked off of the development branch at regular
->   intervals during the past 13 years).
-> - The stable branches are never merged with each other or with the
->   development branch.
-> - 2787 individual back/forward ports between the development and stable
->   branches.
-> 
-> In order to have meaningful output for git-blame, it needs to follow the
-> chain across cherry-picks reliably.
-> Once you alter a piece of code, in order to figure out what more to alter,
-> you need to verify if this piece of code was or wasn't forward/backported.
-> Reliable and fast reporting of this, and actual comparison of the
-> different forward/backports between the 9 branches is essential.  It
-> basically means that you need to view the diffs of the patches across 9
-> branches on a regular basis.
-> 
-> Without the origin links, this workflow will cost a lot more time to
-> pursue (I know it, because I'm living it at the moment, and no, I'm not
-> the only developer, it's a development team).
-> 
-> This development model is not unique to my situation, it occurs at more
-> places.
+Are there any guidelines or best-practices for sharing StGit trees?
 
-OK.  I think I might be able to believe you.
+I'm working with the Linux -rt patchset and I need to be able to share my tree with
+other people. What I'd *like* to do is push git tree's up to a git server, let other
+people fetch them and have them be able to 'stg uncommit' to get back to my stack
+state. The problem is that when someone uncommits, you lose the patch names.  If
+you're trying to create an RPM out of a stack, this causes problems :).
 
-Where I feel uncomfortable is with the real semantics of your "origin" 
-link proposal.
+Is there something I can do or something that we can do to StGit to make it possible
+for an 'uncommit' to restore the original patch name? It looks like I could modify
+the commit message, so that the first line is the patch name, but that's not very
+nice for people scanning commits.
 
-First, its name.  The word "origin" probably has a too narrow meaning 
-that creates confusion.  I'd suggest something like a 
-"may-be-related-to" field that would be like a weak link.
+Or am I missing something completely trivial that will make my life easier?
 
-The format of a may-be-related-to field would be the same as the parent 
-field, except that the object pointed to by the sha1 could have its type 
-relaxed, i.e. it could be anything like a blob or a tag.
+Thanks,
+Clark
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.9 (GNU/Linux)
+Comment: Using GnuPG with Fedora - http://enigmail.mozdev.org
 
-The semantics of a "may-be-related-to" link would be defined for object 
-reachability only:
-
-- If the may-be-related-to link is dangling then it is ignored.
-
-- If it is not dangling then usual reachability rules apply.
-
-That's all the core git might care about, and the only real argument for 
-not having this information in the free form commit message.
-
-Still, in your case, you probably won't get rid of your stable branches, 
-hence the reachability argument is rather weak for your usage scenario, 
-meaning that you could as well have that info in the free form text 
-(like cherry-pick -x), and even generate a special graft file from that 
-locally for visualization/blame purposes.  Sure the indirection will add 
-some overhead, but I doubt it'll be measurable.
-
-People fetching your main branch won't have to carry the whole 
-repository because those weak links would otherwise be followed if 
-they're formally part of the commit header.  And if they want 
-to benefit from the information those weak links carry then they just 
-have to also fetch the branch(es) where those links are pointing.  At 
-that point it is trivial to regenerate the special graft file locally 
-which would also have the benefit of only containing links to actually 
-reachable commits, hence you'd never have dangling "origin" links.
-
-Conclusion: the only fundamental reason for having this weak link 
-information in the commit header is for reachability convenience for 
-when the actual branch that contained the referenced commits is gone, 
-which IMHO is a bad justification.  Having lines of developments hanging 
-off of a weak link alone is just plain stupid if you can't reach it via 
-proper branches or tags.
-
-So I think that your usage scenario is a valid one, but I think that you 
-should implement it some other ways, like this special graft file I 
-mentioned above, which can be generated and updated from custom 
-information found in the free form comment text of a commit object, and 
-that proper reachability issues should continue to be handled through 
-proper branches and tags as it is done today.
-
-
-Nicolas
+iEYEARECAAYFAkjJT4UACgkQqA4JVb61b9d1tgCfeVNG1BkaZ9czZpeHrFumU+xW
+3/kAnj307N0Wx5nLSmtIPr5d+UetAxEG
+=uol3
+-----END PGP SIGNATURE-----
