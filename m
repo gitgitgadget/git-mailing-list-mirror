@@ -1,59 +1,86 @@
-From: Petr Baudis <pasky@suse.cz>
-Subject: CGit and repository list
-Date: Fri, 12 Sep 2008 16:58:04 +0200
-Message-ID: <20080912145804.GF10544@machine.or.cz>
-References: <19449377.post@talk.nabble.com> <8e04b5820809120533o1e7da548l6868660767a5435d@mail.gmail.com> <m3vdx1o72x.fsf@localhost.localdomain> <8c5c35580809120736x4170b2dbq3438bd619326ae00@mail.gmail.com>
+From: Theodore Tso <tytso@MIT.EDU>
+Subject: Re: [RFC] origin link for cherry-pick and revert
+Date: Fri, 12 Sep 2008 10:58:02 -0400
+Message-ID: <20080912145802.GV5082@mit.edu>
+References: <20080909132212.GA25476@cuci.nl> <alpine.LFD.1.10.0809100841080.3384@nehalem.linux-foundation.org> <alpine.LFD.1.10.0809100844040.3384@nehalem.linux-foundation.org> <200809101823.22072.jnareb@gmail.com> <48C9A9A4.8090703@vilain.net> <alpine.LFD.1.10.0809111641110.3384@nehalem.linux-foundation.org> <20080912054739.GB22228@cuci.nl>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Jakub Narebski <jnareb@gmail.com>, git@vger.kernel.org
-To: Lars Hjemli <hjemli@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Sep 12 16:59:18 2008
+Cc: Linus Torvalds <torvalds@linux-foundation.org>,
+	Sam Vilain <sam@vilain.net>, Jakub Narebski <jnareb@gmail.com>,
+	Paolo Bonzini <bonzini@gnu.org>, git@vger.kernel.org
+To: "Stephen R. van den Berg" <srb@cuci.nl>
+X-From: git-owner@vger.kernel.org Fri Sep 12 17:04:37 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KeA78-0007OL-J0
-	for gcvg-git-2@gmane.org; Fri, 12 Sep 2008 16:59:15 +0200
+	id 1KeAC6-0000ko-Ms
+	for gcvg-git-2@gmane.org; Fri, 12 Sep 2008 17:04:23 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752667AbYILO6I (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 12 Sep 2008 10:58:08 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752863AbYILO6G
-	(ORCPT <rfc822;git-outgoing>); Fri, 12 Sep 2008 10:58:06 -0400
-Received: from w241.dkm.cz ([62.24.88.241]:60041 "EHLO machine.or.cz"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752093AbYILO6G (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 12 Sep 2008 10:58:06 -0400
-Received: by machine.or.cz (Postfix, from userid 2001)
-	id 21951393BEAD; Fri, 12 Sep 2008 16:58:04 +0200 (CEST)
+	id S1753064AbYILPDL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 12 Sep 2008 11:03:11 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752863AbYILPDK
+	(ORCPT <rfc822;git-outgoing>); Fri, 12 Sep 2008 11:03:10 -0400
+Received: from BISCAYNE-ONE-STATION.MIT.EDU ([18.7.7.80]:55840 "EHLO
+	biscayne-one-station.mit.edu" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1752093AbYILPDJ (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 12 Sep 2008 11:03:09 -0400
+Received: from outgoing.mit.edu (OUTGOING-AUTH.MIT.EDU [18.7.22.103])
+	by biscayne-one-station.mit.edu (8.13.6/8.9.2) with ESMTP id m8CF1pvN022885;
+	Fri, 12 Sep 2008 11:01:55 -0400 (EDT)
+Received: from closure.thunk.org (c-98-216-98-217.hsd1.ma.comcast.net [98.216.98.217])
+	(authenticated bits=0)
+        (User authenticated as tytso@ATHENA.MIT.EDU)
+	by outgoing.mit.edu (8.13.6/8.12.4) with ESMTP id m8CEw2Nm006829
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
+	Fri, 12 Sep 2008 10:58:04 -0400 (EDT)
+Received: from tytso by closure.thunk.org with local (Exim 4.69)
+	(envelope-from <tytso@mit.edu>)
+	id 1KeA5y-0004Sn-N3; Fri, 12 Sep 2008 10:58:02 -0400
 Content-Disposition: inline
-In-Reply-To: <8c5c35580809120736x4170b2dbq3438bd619326ae00@mail.gmail.com>
-User-Agent: Mutt/1.5.16 (2007-06-09)
+In-Reply-To: <20080912054739.GB22228@cuci.nl>
+User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
+X-Scanned-By: MIMEDefang 2.42
+X-Spam-Flag: NO
+X-Spam-Score: 0.00
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/95730>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/95731>
 
-  Hi,
-
-On Fri, Sep 12, 2008 at 04:36:11PM +0200, Lars Hjemli wrote:
-> <plug>
-> Current cgit also allows cloning over http using the same url as for
-> browsing the repo, i.e. you may
+On Fri, Sep 12, 2008 at 07:47:39AM +0200, Stephen R. van den Berg wrote:
+> >You could add it as a 
 > 
->   $ git clone http://hjemli.net/git/cgit
+> >	Original-patch-id: <sha1>
 > 
-> This has one advantage over just publishing the repo; you don't have
-> to run `git-update-server-info` (thanks to the work done by Shawn O.
-> Pearce on git-http-backend, which is shamelessly reimplemented in
-> cgit).
-> </plug>
+> That will probably work fine when operating locally on (short) temporary
+> branches.
+> 
+> It would probably become computationally prohibitive to use it between
+> long lived permanent branches.  In that case it would need to be
+> augmented by the sha1 of the originating commit.
 
-  this finally tripped me over and I wanted to quickly add cgit as an
-alternate viewing interface at repo.or.cz. But it seems that cgit
-requires all the repositories explicitly listed in the config file.
-Do you plan to remove this limitation in the future?
+Nope, as Sam suggested in his original message (but which got clipped
+by Linus when he was replying) all you have to do is to have a
+separate local database which ties commits and patch-id's together as
+a cache/index.
 
-  Thanks,
+I know you seem to be resistent to caches, but caches are **good**
+because they are local information, which by definition can be
+implementation-dependent; you can always generate the cache from the
+git repository if for some reason you need to extend it.  It also
+means that if it turns out you need to index reationships a different
+way, you can do that without having to make fundamental (incompatible)
+changes in the git object.  
 
-				Petr "Pasky" Baudis
+It's much like SQL databases; you have your database tables, where
+making changes to the database schema is painful --- and indexes,
+which can be added and dropped with much less effort.  Think of these
+local caches are database indexes.  Just because you need an index in
+a particular direction to optimize a query or loopup operation does
+***not*** imply that you need to make a fundamental, globally visible,
+database schema change or git object layout which breaks compatibility
+for everybody.
+
+						- Ted
