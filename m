@@ -1,81 +1,122 @@
-From: A Large Angry SCM <gitzilla@gmail.com>
-Subject: Re: [RFC] origin link for cherry-pick and revert
-Date: Thu, 11 Sep 2008 20:30:40 -0400
-Message-ID: <48C9B830.2060903@gmail.com>
-References: <20080909132212.GA25476@cuci.nl> <alpine.LFD.1.10.0809111527030.23787@xanadu.home> <20080911194447.GD1451@cuci.nl> <200809112205.16928.jnareb@gmail.com> <20080911202228.GG1451@cuci.nl>
-Reply-To: gitzilla@gmail.com
+From: Marcus Griep <marcus@griep.us>
+Subject: Re: [PATCH 1/2] Documentation: new upstream rebase recovery section
+ in git-rebase
+Date: Thu, 11 Sep 2008 21:15:16 -0400
+Message-ID: <48C9C2A4.6070601@griep.us>
+References: <200809030738.09589.trast@student.ethz.ch> <1221147525-5589-1-git-send-email-trast@student.ethz.ch> <1221147525-5589-2-git-send-email-trast@student.ethz.ch>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: Jakub Narebski <jnareb@gmail.com>, Nicolas Pitre <nico@cam.org>,
-	Theodore Tso <tytso@mit.edu>,
-	Linus Torvalds <torvalds@linux-foundation.org>,
-	git@vger.kernel.org
-To: "Stephen R. van den Berg" <srb@cuci.nl>
-X-From: git-owner@vger.kernel.org Fri Sep 12 02:32:50 2008
+Content-Type: multipart/signed; micalg=pgp-sha1;
+ protocol="application/pgp-signature";
+ boundary="------------enig35C6663A91437C97E0652A90"
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+To: Thomas Rast <trast@student.ethz.ch>
+X-From: git-owner@vger.kernel.org Fri Sep 12 03:21:11 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Kdwaf-0003Qx-Ut
-	for gcvg-git-2@gmane.org; Fri, 12 Sep 2008 02:32:50 +0200
+	id 1KdxLS-0007LB-SW
+	for gcvg-git-2@gmane.org; Fri, 12 Sep 2008 03:21:11 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752987AbYILAap (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 11 Sep 2008 20:30:45 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751893AbYILAap
-	(ORCPT <rfc822;git-outgoing>); Thu, 11 Sep 2008 20:30:45 -0400
-Received: from mail-gx0-f16.google.com ([209.85.217.16]:41450 "EHLO
-	mail-gx0-f16.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751848AbYILAap (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 11 Sep 2008 20:30:45 -0400
-Received: by gxk9 with SMTP id 9so17953852gxk.13
-        for <git@vger.kernel.org>; Thu, 11 Sep 2008 17:30:43 -0700 (PDT)
+	id S1752478AbYILBPg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 11 Sep 2008 21:15:36 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752613AbYILBPg
+	(ORCPT <rfc822;git-outgoing>); Thu, 11 Sep 2008 21:15:36 -0400
+Received: from an-out-0708.google.com ([209.85.132.251]:48270 "EHLO
+	an-out-0708.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752305AbYILBPf (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 11 Sep 2008 21:15:35 -0400
+Received: by an-out-0708.google.com with SMTP id d40so75478and.103
+        for <git@vger.kernel.org>; Thu, 11 Sep 2008 18:15:34 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id
-         :disposition-notification-to:date:from:reply-to:user-agent
-         :mime-version:to:cc:subject:references:in-reply-to:content-type
-         :content-transfer-encoding;
-        bh=MDKcnMPD5i+RdjWPh/3BnGG5gPKKmYA8xq+tKK6X2OQ=;
-        b=qajEbSOT6MhBwd4JRgX/bfpjZw/G0JdIw/VPUuLLWwb29D54nPhKvam4TVQHZD8aaE
-         I67tmExNBFKpmT/HYYrzSkbF9BgS5Ni1pFZd3JGvDqFqEnisRgTcOGo5wsAQ7bDxOvna
-         PU/4YLxO1QgvDH37LSNpqU0TUAf6uWgYy64w4=
+        h=domainkey-signature:received:received:message-id:date:from
+         :user-agent:mime-version:to:cc:subject:references:in-reply-to
+         :x-enigmail-version:content-type:sender;
+        bh=70TaRr9hPP0LpXdyvnkktj9QgBgGwkk9gY/nRa6CdWc=;
+        b=VQ1MOilAUrXTPr4pAOf98wbu4zvVRySdct/clsXWh8AWvvSL0Wu/20G4Qvw2s8Lt/X
+         3WQRF6Y3n1bTggyU/rJ+gXnl7pQR8gQWZvFUZbFIo6Ryf4qOK/NwJnT4JAIW7cCR/uhb
+         X35C40pleOp1+c5ocIeUkq2rOpgyQWEesDVFE=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=message-id:disposition-notification-to:date:from:reply-to
-         :user-agent:mime-version:to:cc:subject:references:in-reply-to
-         :content-type:content-transfer-encoding;
-        b=hExZ5tMm8xRcfkht19APCr3Dwy6/n+ixC+qq9G28t4hl8ALpNpckHj8QU9ruJytXZy
-         IONvqWKDyrNeLKQ0csZDJn5irjvADbocS+D5/7INNm3SCG1g3cthldNkEi6B/+3IeOMc
-         LFpDvOIzLvrIH1JSldhmNOnirC3k9MCNU/2fs=
-Received: by 10.90.86.10 with SMTP id j10mr4134079agb.22.1221179443327;
-        Thu, 11 Sep 2008 17:30:43 -0700 (PDT)
-Received: from ?10.0.0.6? ( [66.177.19.100])
-        by mx.google.com with ESMTPS id 15sm12096407wrl.3.2008.09.11.17.30.42
+        h=message-id:date:from:user-agent:mime-version:to:cc:subject
+         :references:in-reply-to:x-enigmail-version:content-type:sender;
+        b=ig/R40CqvqSbWu2Ix1kfVh1owe83APzFVX3wCj1cYISUM8D33o4Xeflq3eNmjOmIl3
+         w2ORa6G4rZFo20vBfcqEp9hHTrOuVVFKV8gviyyVYhz9opAAJEtDfyLVMPpVwzWsSE7w
+         fU96j5K2eEntQOl9PxnQDho6kymD2XtJzxQlM=
+Received: by 10.100.232.13 with SMTP id e13mr4385432anh.140.1221182134681;
+        Thu, 11 Sep 2008 18:15:34 -0700 (PDT)
+Received: from ?192.168.1.154? ( [71.174.65.37])
+        by mx.google.com with ESMTPS id b37sm17702227ana.33.2008.09.11.18.15.32
         (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Thu, 11 Sep 2008 17:30:42 -0700 (PDT)
-User-Agent: Thunderbird 1.5.0.10 (X11/20060911)
-In-Reply-To: <20080911202228.GG1451@cuci.nl>
+        Thu, 11 Sep 2008 18:15:33 -0700 (PDT)
+User-Agent: Thunderbird 2.0.0.16 (Windows/20080708)
+In-Reply-To: <1221147525-5589-2-git-send-email-trast@student.ethz.ch>
+X-Enigmail-Version: 0.95.7
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/95676>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/95677>
 
-Stephen R. van den Berg wrote:
-> Jakub Narebski wrote:
->> Stephen R. van den Berg wrote:
->>> Well, the principle of least surprise dictates that they should be kept
->>> by gc as described above, however...
->>> I can envision an option to gc say "--drop-weak-links" which does
->>> exactly what you describe.
-> 
->> Well, IIRC the need for this was one of the causes of "death" of 'prior'
->> header link proposal...
-> 
-> As I understood it, one of the causes of death of the "prior" link
-> proposal was that it was unclear if it pulled in the linked-to commits
-> upon fetch.  In the "origin" case, the default is *not* to fetch them.
+This is an OpenPGP/MIME signed message (RFC 2440 and 3156)
+--------------enig35C6663A91437C97E0652A90
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
 
-And that's WRONG. Both prior and origin must fetch them if they're 
-reference in the header.
+Thomas Rast wrote:
+> +Now suppose the 'subsystem' maintainer decides to clean up his history=
+
+> +with an interactive rebase.  He edits commits A and D (marked with a
+> +`*`), decides to remove D entirely and moves B to the front.  This
+> +results in
+
+Minor correction:
+-+with an interactive rebase.  He edits commits A and D (marked with a
+++with an interactive rebase.  He edits commits A and C (marked with a
+
+> +To fix this, you have to manually transplant your own part of the
+> +history to the new branch head.  Looking at `git log`, you should be
+> +able to determine that three commits on 'topic' are yours.  Again
+> +assuming you are already on 'topic', you can do
+> +------------
+> +    git rebase --onto subsystem HEAD~3
+> +------------
+> +to put things right.  Of course, this again ripples onwards:
+> +'everyone' downstream from 'subsystem' will have to 'manually' rebase
+> +all their work!
+
+I like this documentation because it provides another clear case of how
+the '--onto' option is used.
+
+--=20
+Marcus Griep
+GPG Key ID: 0x5E968152
+=E2=80=94=E2=80=94
+http://www.boohaunt.net
+=D7=90=D7=AA.=CF=88=CE=BF=C2=B4
+
+
+--------------enig35C6663A91437C97E0652A90
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: OpenPGP digital signature
+Content-Disposition: attachment; filename="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQIVAwUBSMnCsQPFruyc22R/AQKUBQ//YKJIkFZZF60vfK/AMNpcxYYCwhZQg6aF
+Ns53wdCcbtFi2pweT6u6fbO7gV6lAWcIlZipXDnFqsVkLSZVoEJOfAljwN/b9Kjn
+NnjKgq4+FoZVGFcKMmySO7nLqsG2ZgQvRAe24/OYgmx05nUbgAKlLZFGlvD499pi
+v/joXyZdSzEttLF4AAbnp54pIfOh1nkiEjnxXByhiNOtakk+/4PhxW/ELH7fG+v9
+W660l06V4AyflLxhb//LOv5ubVJfgdu37JzJ3rblboVx4aRzIRCGbTySvlUABAlE
+kPPTqICEgBCOa0ps0JyfkcaZa7BsRc6C7d6ZsTLa4KntCuwC5deov2AP1wgxypeB
+s8ppmE+Ahb4CamUwUKptjRbjuqQt02NFxC5eGE6gv27YQqN5M1U4vQ1f7/hpNBWG
+K7h3vwcbvYTkscKCe6LPVgGYhL1hqgo6XBnS+6mOheatbOSGsK5KXSiQ3w1jCVjU
+icjzZm0FQgO9EP06UFlMXIvglP0/7fCfxPelqoTdHzfkvwVQfFe+w31ulU48GD6E
+XYT68ZUoTmE369rLHltbh9XPkiPAVN+03xp/W8cOdGJSvQWpReOVDw6nJmkhHc+Z
+7iZkpVhSMcEXmUEZZOxBtxg4WTTbi5qG6kFfN+F2ejSDwC/8XSPIMaT2nqZjanPp
+7/0lVySDidc=
+=NCpw
+-----END PGP SIGNATURE-----
+
+--------------enig35C6663A91437C97E0652A90--
