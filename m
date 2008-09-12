@@ -1,56 +1,65 @@
-From: "Stephen R. van den Berg" <srb@cuci.nl>
-Subject: Re: [RFC] origin link for cherry-pick and revert
-Date: Fri, 12 Sep 2008 18:43:48 +0200
-Message-ID: <20080912164348.GC2915@cuci.nl>
-References: <20080909132212.GA25476@cuci.nl> <alpine.LFD.1.10.0809100841080.3384@nehalem.linux-foundation.org> <alpine.LFD.1.10.0809100844040.3384@nehalem.linux-foundation.org> <200809101823.22072.jnareb@gmail.com> <48C9A9A4.8090703@vilain.net> <alpine.LFD.1.10.0809111641110.3384@nehalem.linux-foundation.org> <20080912054739.GB22228@cuci.nl> <20080912145802.GV5082@mit.edu> <20080912155427.GB2915@cuci.nl> <20080912161911.GA12096@coredump.intra.peff.net>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: git-gui: more issues with diff parsing
+Date: Fri, 12 Sep 2008 10:06:18 -0700
+Message-ID: <7vy71xpa45.fsf@gitster.siamese.dyndns.org>
+References: <200809091030.04507.barra_cuda@katamail.com>
+ <20080912152345.GE22960@spearce.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Fri Sep 12 18:45:05 2008
+Cc: Michele Ballabio <barra_cuda@katamail.com>, git@vger.kernel.org
+To: "Shawn O. Pearce" <spearce@spearce.org>
+X-From: git-owner@vger.kernel.org Fri Sep 12 19:07:54 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KeBlR-0007UM-Uj
-	for gcvg-git-2@gmane.org; Fri, 12 Sep 2008 18:44:58 +0200
+	id 1KeC7J-00069E-5n
+	for gcvg-git-2@gmane.org; Fri, 12 Sep 2008 19:07:33 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752952AbYILQnu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 12 Sep 2008 12:43:50 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752727AbYILQnu
-	(ORCPT <rfc822;git-outgoing>); Fri, 12 Sep 2008 12:43:50 -0400
-Received: from aristoteles.cuci.nl ([212.125.128.18]:47230 "EHLO
-	aristoteles.cuci.nl" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752685AbYILQnt (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 12 Sep 2008 12:43:49 -0400
-Received: by aristoteles.cuci.nl (Postfix, from userid 500)
-	id 86BCC5465; Fri, 12 Sep 2008 18:43:48 +0200 (CEST)
-Content-Disposition: inline
-In-Reply-To: <20080912161911.GA12096@coredump.intra.peff.net>
-User-Agent: Mutt/1.5.13 (2006-08-11)
+	id S1753346AbYILRGZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 12 Sep 2008 13:06:25 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753302AbYILRGZ
+	(ORCPT <rfc822;git-outgoing>); Fri, 12 Sep 2008 13:06:25 -0400
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:40786 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753167AbYILRGZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 12 Sep 2008 13:06:25 -0400
+Received: from localhost.localdomain (localhost [127.0.0.1])
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id C55A060A9A;
+	Fri, 12 Sep 2008 13:06:23 -0400 (EDT)
+Received: from pobox.com (ip68-225-240-211.oc.oc.cox.net [68.225.240.211])
+ (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
+ certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
+ ESMTPSA id 263D860A96; Fri, 12 Sep 2008 13:06:19 -0400 (EDT)
+In-Reply-To: <20080912152345.GE22960@spearce.org> (Shawn O. Pearce's message
+ of "Fri, 12 Sep 2008 08:23:45 -0700")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: 20DD37DC-80ED-11DD-A204-D0CFFE4BC1C1-77302942!a-sasl-fastnet.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/95751>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/95752>
 
-Jeff King wrote:
->On Fri, Sep 12, 2008 at 05:54:27PM +0200, Stephen R. van den Berg wrote:
+"Shawn O. Pearce" <spearce@spearce.org> writes:
 
->> True.  But repopulating this cache after cloning means that you have to
->> calculate the patch-id of *every* commit in the repository.  It sounds
->> like something to avoid, but maybe I'm overly concerned, I have only a
->> vague idea on how computationally intensive this is.
+> Notice how we get two diffs for the same file?  That's why git-gui
+> is choking on this particular change.  It expected only one diff
+> for the path it gave to Git.  It got two back.  In cases like this
+> we may not be able to support line or hunk application as the patch
+> is really two different patches against that path.  :-|
+>
+>> The following patch seems to fix this particular issue, but I don't think
+>> it's the right fix...
+>
+> I don't think that is the right fix, but the one that I just tried to
+> write to do clear_diff when we see the second diff --git line didn't
+> work either.  Plus we probably need to disable the hunk apply code.
 
->For a rough estimate, try:
+You will have the same issue not for submodules, too.  A typechange has
+always been expressed as delete followed by create.
 
->  time git log -p | git patch-id >/dev/null
-
-On my system that results in 2ms per commit on average.  Not huge, but
-not small either, I guess.  Running it results in real waiting time, it
-all depends on how patient the user is.
--- 
-Sincerely,
-           Stephen R. van den Berg.
-
-"Father's Day: Nine months before Mother's Day."
+Probably you already have learned the nature of change (i.e. create?
+modify? delete? typechange?) when you populate the list of files with
+changes that could be staged, which means by the time the user picks from
+the liast you already know if it is a typechange.
