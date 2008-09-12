@@ -1,121 +1,228 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: Git User's Survey 2008 partial summary, part 5 - other SCM
-Date: Fri, 12 Sep 2008 12:44:58 +0200
-Message-ID: <200809121244.59067.jnareb@gmail.com>
-References: <200809031607.19722.jnareb@gmail.com> <200809112214.18366.jnareb@gmail.com> <alpine.DEB.1.10.0809111543580.15169@asgard.lang.hm>
-Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: David Lang <david@lang.hm>
-X-From: git-owner@vger.kernel.org Fri Sep 12 12:46:27 2008
+From: Michael J Gruber <git@drmicha.warpmail.net>
+Subject: [PATCH/RFC 0/6] Documentation: use dashless links
+Date: Fri, 12 Sep 2008 12:55:19 +0200
+Message-ID: <1221216926-20435-1-git-send-email-git@drmicha.warpmail.net>
+Cc: Michael J Gruber <git@drmicha.warpmail.net>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Sep 12 12:57:19 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Ke6AU-0001B3-Sf
-	for gcvg-git-2@gmane.org; Fri, 12 Sep 2008 12:46:27 +0200
+	id 1Ke6L0-0003pN-Qk
+	for gcvg-git-2@gmane.org; Fri, 12 Sep 2008 12:57:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752720AbYILKpO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 12 Sep 2008 06:45:14 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752712AbYILKpO
-	(ORCPT <rfc822;git-outgoing>); Fri, 12 Sep 2008 06:45:14 -0400
-Received: from gv-out-0910.google.com ([216.239.58.187]:1809 "EHLO
-	gv-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752451AbYILKpM (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 12 Sep 2008 06:45:12 -0400
-Received: by gv-out-0910.google.com with SMTP id e6so512604gvc.37
-        for <git@vger.kernel.org>; Fri, 12 Sep 2008 03:45:09 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:subject:date
-         :user-agent:cc:references:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:message-id;
-        bh=eWm5Sdfnc5Rr/PjZSJwCJyu411xGAtU5zOySBLOzlkA=;
-        b=hwIFN1D0KBsJ5c6Qne4O21iK5AYRazdvGXfAHgtOqngYIpER0DXJgnKTb6akNNK1Tp
-         cIJmbeu/P59Fn2WXkzeSrMj7SrI7JJEC9redeiZ841sFnZzjN7Dw9XjTD5qkDdNQ2mlD
-         Gx1WpVGPDWPkbqwVCX0QoI1XPLThUxr0mplIQ=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=from:to:subject:date:user-agent:cc:references:in-reply-to
-         :mime-version:content-type:content-transfer-encoding
-         :content-disposition:message-id;
-        b=v2WX+l/Knk5HQvlADKJh3ERSXyL46ZdnBPQllLxAI190HcawhGHXSlhFCRX1cYQK/2
-         Zq3SS7SYutjKhHXtXmjVA4LEBT6Evx/E4Ol3On47HDVzPvWKFlf7FYOTry+fyetQYrZ1
-         xn4qnCQjWaIJR87rnGFAYtm+HQzFsm8KmSbMI=
-Received: by 10.86.26.11 with SMTP id 11mr3057987fgz.12.1221216309044;
-        Fri, 12 Sep 2008 03:45:09 -0700 (PDT)
-Received: from ?192.168.1.11? ( [83.8.239.193])
-        by mx.google.com with ESMTPS id 4sm12540425fgg.4.2008.09.12.03.45.06
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Fri, 12 Sep 2008 03:45:08 -0700 (PDT)
-User-Agent: KMail/1.9.3
-In-Reply-To: <alpine.DEB.1.10.0809111543580.15169@asgard.lang.hm>
-Content-Disposition: inline
+	id S1752724AbYILKzh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 12 Sep 2008 06:55:37 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752477AbYILKzh
+	(ORCPT <rfc822;git-outgoing>); Fri, 12 Sep 2008 06:55:37 -0400
+Received: from out1.smtp.messagingengine.com ([66.111.4.25]:51893 "EHLO
+	out1.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1752451AbYILKzg (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 12 Sep 2008 06:55:36 -0400
+Received: from compute1.internal (compute1.internal [10.202.2.41])
+	by out1.messagingengine.com (Postfix) with ESMTP id 15013160EAB
+	for <git@vger.kernel.org>; Fri, 12 Sep 2008 06:55:35 -0400 (EDT)
+Received: from heartbeat1.messagingengine.com ([10.202.2.160])
+  by compute1.internal (MEProxy); Fri, 12 Sep 2008 06:55:35 -0400
+X-Sasl-enc: kTWmrwL3eTQTDi/QnPw8q6v20uZQHbbhY9N66JQkMNbB 1221216934
+Received: from localhost (whitehead.math.tu-clausthal.de [139.174.44.12])
+	by mail.messagingengine.com (Postfix) with ESMTPSA id 1413D18250;
+	Fri, 12 Sep 2008 06:55:33 -0400 (EDT)
+X-Mailer: git-send-email 1.6.0.1.308.gede4c
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/95698>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/95699>
 
-On Fri, 12 Sep 2008 00:51, david@lang.hm wrote:
-> On Thu, 11 Sep 2008, Jakub Narebski wrote:
-> 
-> > A bit suprising for me is high place of Perforce.  Another strange
-> > thing (and a bit alarming) is that MS Visual SourceSafe has higher
-> > place than Monotone; but that might be caused by different design and
-> > different target groups of Monotone and Git, which might have caused
-> > that the communities have almost no overlap; people choose either Git
-> > or Monotone, one or the other.  BitKeeper has also a very low number
-> > of active users among Git users... but that is not that strange,
-> > considering history.
-> 
-> I think you are making the wrong assumption here.
-> 
-> Someone may use CVS becouse they contribute to a project that is only 
-> availabe via CVS
-> 
-> Someone may use Perforce becouse that is the VCS that their company uses
+This is yet another attempt at making Junio's eyes sore...
+This series implements dashless links in html doc for all commands where
+the dashless form is preferred. The idea is to use two different link
+macros, such that man pages (from docbook) get the form some viewers
+need, whereas html pages get dashless links.
 
-True, I have forgot that "I use this SCM" (or "I used this SCM") doesn't
-necessarily mean that one _choose_ this SCM.  One can use some SCM
-because it is SCM project uses, or because their company requires it;
-but not necessary, as git-svn and git-p4 show one can use Git, and
-make it interact with respectively Subversion and Perforce, and trying
-to make it look like one uses this other SCM.
+The series is broken down into steps which basically correspond to one
+"sed" each, and can thus be checked easily.
 
-> If you do commercial development with Windows you are almsot going to be 
-> required to use MS VSS.
+Specific R for C:
+Do we have a final list of commands which should be advertised in dashed
+form? Specifically: What about git-http-{fetch,push}?
 
-I hope not.  Even Microsoft themselves supposedly doesn't recommend
-Source(Un)Safe, but MS Visual Studio Team System.
+To do, after the C in RFC:
+Undashify command names in the body of the doc (non-link text).
 
-> You are looking at it from the point of view of 'which VCS would you 
-> select for a new project', but that would be a very different question.
+P.S.: This series corresponds to
+ede4caf6e3204f9d63758d6410d0f124b0caab32..29993d99b87b701158d21c8234a162123ee29e39
+in the dashless-doc branch of http://repo.or.cz/w/git/mjg.git
 
-Right.
+P.P.S.: I switched my e-mail address. Sorry about that, I'll stick with
+that one.
 
-> I find it interesting that the number of people who use git and the other 
-> DVCS systems in so small. Is this becouse the 'market share' of those 
-> other systems is small? Or becouse people who learn git aren't willing to 
-> put up with other systems (or vice-versa)? Or is there some other trend 
-> or tendancy that makes people who select one DVCS more likely to work on 
-> similar projects, so people interested in those types of projects will 
-> generally just see a single DVCS system
+Michael J Gruber (6):
+  modified asciidoc macros for dashless git doc
+  convert doc links for server type programmes
+  convert doc links for non-dashed git commands
+  convert doc links for other pages
+  convert doc links for git subcommands
+  adjust the command lists (by category) to the new doc link macros
 
-I don't think 59% (in the example case of using currently Subversion)
-is small.  Take into account for example that there are people who (as
-seen from responses to other questions in this survey) use SCM (Git)
-only to track their private work, never publishing.  Then there are
-people who do not track (perhaps with exception of web interfaces)
-other projects development using version control systems, even if they
-do follow their development.
-
-Side note: the number of replies in "still use" category agrees with
-other data, like mentioned Ohloh stacks, or Debian popcon (package
-popularity), or Newren research, or vcscomparison research.
-
--- 
-Jakub Narebski
-Poland
+ Documentation/asciidoc.conf              |   19 ++-
+ Documentation/blame-options.txt          |    2 +-
+ Documentation/cmd-list.perl              |    7 +-
+ Documentation/config.txt                 |  174 +++++++++++-----------
+ Documentation/diff-options.txt           |    6 +-
+ Documentation/everyday.txt               |   48 +++---
+ Documentation/fetch-options.txt          |    2 +-
+ Documentation/git-add.txt                |   18 +-
+ Documentation/git-am.txt                 |   14 +-
+ Documentation/git-annotate.txt           |    6 +-
+ Documentation/git-apply.txt              |    2 +-
+ Documentation/git-archimport.txt         |    2 +-
+ Documentation/git-archive.txt            |    2 +-
+ Documentation/git-bisect.txt             |    2 +-
+ Documentation/git-blame.txt              |    6 +-
+ Documentation/git-branch.txt             |    8 +-
+ Documentation/git-bundle.txt             |    2 +-
+ Documentation/git-cat-file.txt           |    4 +-
+ Documentation/git-check-attr.txt         |    4 +-
+ Documentation/git-check-ref-format.txt   |    4 +-
+ Documentation/git-checkout-index.txt     |    2 +-
+ Documentation/git-checkout.txt           |    4 +-
+ Documentation/git-cherry-pick.txt        |    4 +-
+ Documentation/git-cherry.txt             |    4 +-
+ Documentation/git-citool.txt             |    4 +-
+ Documentation/git-clean.txt              |    2 +-
+ Documentation/git-clone.txt              |    4 +-
+ Documentation/git-commit-tree.txt        |    6 +-
+ Documentation/git-commit.txt             |   18 +-
+ Documentation/git-config.txt             |    2 +-
+ Documentation/git-count-objects.txt      |    2 +-
+ Documentation/git-cvsexportcommit.txt    |    2 +-
+ Documentation/git-cvsimport.txt          |    6 +-
+ Documentation/git-cvsserver.txt          |    8 +-
+ Documentation/git-daemon.txt             |    2 +-
+ Documentation/git-describe.txt           |    2 +-
+ Documentation/git-diff-files.txt         |    2 +-
+ Documentation/git-diff-index.txt         |    2 +-
+ Documentation/git-diff-tree.txt          |    2 +-
+ Documentation/git-diff.txt               |    8 +-
+ Documentation/git-fast-export.txt        |    6 +-
+ Documentation/git-fast-import.txt        |    4 +-
+ Documentation/git-fetch-pack.txt         |    2 +-
+ Documentation/git-fetch.txt              |    4 +-
+ Documentation/git-filter-branch.txt      |    8 +-
+ Documentation/git-fmt-merge-msg.txt      |    4 +-
+ Documentation/git-format-patch.txt       |    6 +-
+ Documentation/git-fsck-objects.txt       |    2 +-
+ Documentation/git-fsck.txt               |    2 +-
+ Documentation/git-gc.txt                 |   12 +-
+ Documentation/git-get-tar-commit-id.txt  |    2 +-
+ Documentation/git-grep.txt               |    2 +-
+ Documentation/git-gui.txt                |    4 +-
+ Documentation/git-hash-object.txt        |    2 +-
+ Documentation/git-help.txt               |   10 +-
+ Documentation/git-http-fetch.txt         |    2 +-
+ Documentation/git-http-push.txt          |    2 +-
+ Documentation/git-imap-send.txt          |    2 +-
+ Documentation/git-index-pack.txt         |    2 +-
+ Documentation/git-init-db.txt            |    2 +-
+ Documentation/git-init.txt               |    2 +-
+ Documentation/git-instaweb.txt           |    6 +-
+ Documentation/git-log.txt                |    4 +-
+ Documentation/git-lost-found.txt         |    4 +-
+ Documentation/git-ls-files.txt           |   10 +-
+ Documentation/git-ls-remote.txt          |    2 +-
+ Documentation/git-ls-tree.txt            |    2 +-
+ Documentation/git-mailinfo.txt           |    4 +-
+ Documentation/git-mailsplit.txt          |    2 +-
+ Documentation/git-merge-base.txt         |    2 +-
+ Documentation/git-merge-file.txt         |    4 +-
+ Documentation/git-merge-index.txt        |    2 +-
+ Documentation/git-merge-one-file.txt     |    2 +-
+ Documentation/git-merge-tree.txt         |    2 +-
+ Documentation/git-merge.txt              |   14 +-
+ Documentation/git-mergetool.txt          |    2 +-
+ Documentation/git-mktag.txt              |    2 +-
+ Documentation/git-mktree.txt             |    2 +-
+ Documentation/git-mv.txt                 |    2 +-
+ Documentation/git-name-rev.txt           |    2 +-
+ Documentation/git-pack-objects.txt       |    8 +-
+ Documentation/git-pack-redundant.txt     |    8 +-
+ Documentation/git-pack-refs.txt          |    2 +-
+ Documentation/git-parse-remote.txt       |    2 +-
+ Documentation/git-patch-id.txt           |    2 +-
+ Documentation/git-peek-remote.txt        |    2 +-
+ Documentation/git-prune-packed.txt       |    6 +-
+ Documentation/git-prune.txt              |   10 +-
+ Documentation/git-pull.txt               |    8 +-
+ Documentation/git-push.txt               |    6 +-
+ Documentation/git-quiltimport.txt        |    2 +-
+ Documentation/git-read-tree.txt          |    8 +-
+ Documentation/git-rebase.txt             |    4 +-
+ Documentation/git-receive-pack.txt       |    6 +-
+ Documentation/git-reflog.txt             |    8 +-
+ Documentation/git-relink.txt             |    2 +-
+ Documentation/git-remote.txt             |   12 +-
+ Documentation/git-repack.txt             |   16 +-
+ Documentation/git-repo-config.txt        |    2 +-
+ Documentation/git-request-pull.txt       |    2 +-
+ Documentation/git-rerere.txt             |    2 +-
+ Documentation/git-reset.txt              |    6 +-
+ Documentation/git-rev-list.txt           |    2 +-
+ Documentation/git-rev-parse.txt          |    4 +-
+ Documentation/git-revert.txt             |    8 +-
+ Documentation/git-rm.txt                 |    4 +-
+ Documentation/git-send-email.txt         |    2 +-
+ Documentation/git-send-pack.txt          |    6 +-
+ Documentation/git-sh-setup.txt           |    2 +-
+ Documentation/git-shell.txt              |    2 +-
+ Documentation/git-shortlog.txt           |    2 +-
+ Documentation/git-show-branch.txt        |    4 +-
+ Documentation/git-show-index.txt         |    2 +-
+ Documentation/git-show-ref.txt           |    4 +-
+ Documentation/git-show.txt               |    4 +-
+ Documentation/git-stash.txt              |   12 +-
+ Documentation/git-status.txt             |    8 +-
+ Documentation/git-stripspace.txt         |    2 +-
+ Documentation/git-submodule.txt          |    4 +-
+ Documentation/git-svn.txt                |    8 +-
+ Documentation/git-symbolic-ref.txt       |    2 +-
+ Documentation/git-tag.txt                |    2 +-
+ Documentation/git-tar-tree.txt           |    2 +-
+ Documentation/git-unpack-file.txt        |    2 +-
+ Documentation/git-unpack-objects.txt     |    4 +-
+ Documentation/git-update-index.txt       |   14 +-
+ Documentation/git-update-ref.txt         |    2 +-
+ Documentation/git-update-server-info.txt |    4 +-
+ Documentation/git-upload-archive.txt     |    2 +-
+ Documentation/git-upload-pack.txt        |    2 +-
+ Documentation/git-var.txt                |    8 +-
+ Documentation/git-verify-pack.txt        |    2 +-
+ Documentation/git-verify-tag.txt         |    2 +-
+ Documentation/git-web--browse.txt        |    4 +-
+ Documentation/git-whatchanged.txt        |    2 +-
+ Documentation/git-write-tree.txt         |    2 +-
+ Documentation/git.txt                    |   40 +++---
+ Documentation/gitattributes.txt          |   10 +-
+ Documentation/gitcli.txt                 |    2 +-
+ Documentation/gitcore-tutorial.txt       |   16 +-
+ Documentation/gitcvs-migration.txt       |   24 ++--
+ Documentation/gitdiffcore.txt            |   16 +-
+ Documentation/gitglossary.txt            |    6 +-
+ Documentation/githooks.txt               |    2 +-
+ Documentation/gitignore.txt              |    2 +-
+ Documentation/gitk.txt                   |    6 +-
+ Documentation/gitmodules.txt             |    6 +-
+ Documentation/gitrepository-layout.txt   |   30 ++--
+ Documentation/gittutorial-2.txt          |   22 ++--
+ Documentation/gittutorial.txt            |   28 ++--
+ Documentation/glossary-content.txt       |   18 +-
+ Documentation/merge-config.txt           |    8 +-
+ Documentation/pretty-options.txt         |    2 +-
+ Documentation/rev-list-options.txt       |   14 +-
+ Documentation/urls-remotes.txt           |    2 +-
+ Documentation/urls.txt                   |    2 +-
+ Documentation/user-manual.txt            |  246 +++++++++++++++---------------
+ command-list.txt                         |   12 +-
+ 158 files changed, 680 insertions(+), 664 deletions(-)
