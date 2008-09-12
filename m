@@ -1,93 +1,153 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: [PATCH 1/6] submodule.*: Introduce simple C interface for submodule lookup by path
-Date: Fri, 12 Sep 2008 14:35:54 -0700 (PDT)
-Message-ID: <m3hc8lnj4k.fsf@localhost.localdomain>
-References: <20080912210817.31628.69014.stgit@localhost>
-	<20080912210857.31628.7605.stgit@localhost>
-	<7vsks5njmg.fsf@gitster.siamese.dyndns.org>
+From: Petr Baudis <pasky@suse.cz>
+Subject: [PATCH] git mv: Support moving submodules
+Date: Fri, 12 Sep 2008 23:42:31 +0200
+Message-ID: <20080912214129.14829.53058.stgit@localhost>
+References: <20080912210908.31628.50439.stgit@localhost>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Petr Baudis <pasky@suse.cz>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Sep 12 23:37:11 2008
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Cc: gitster@pobox.com
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Sep 12 23:44:36 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KeGKB-00041y-H6
-	for gcvg-git-2@gmane.org; Fri, 12 Sep 2008 23:37:08 +0200
+	id 1KeGRO-0005mc-D5
+	for gcvg-git-2@gmane.org; Fri, 12 Sep 2008 23:44:34 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752952AbYILVf6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 12 Sep 2008 17:35:58 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752574AbYILVf6
-	(ORCPT <rfc822;git-outgoing>); Fri, 12 Sep 2008 17:35:58 -0400
-Received: from mail-gx0-f16.google.com ([209.85.217.16]:48947 "EHLO
-	mail-gx0-f16.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752541AbYILVf6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 12 Sep 2008 17:35:58 -0400
-Received: by gxk9 with SMTP id 9so20383836gxk.13
-        for <git@vger.kernel.org>; Fri, 12 Sep 2008 14:35:56 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:received:received
-         :x-authentication-warning:to:cc:subject:references:from:in-reply-to
-         :message-id:lines:user-agent:mime-version:content-type:date;
-        bh=ExrLNqHdRZA7p+uQT1iHPYG9i1TE9hKlMugMaxj7Ja0=;
-        b=Wsm4MYYIJJlV7h+287JH6+sosmdrK903X+S4yHuxH8Dot6z7fVMqA8X/64WOW0SajD
-         xjS4VkzVGlOmPBnPiarEoo3Mpgz6JEi2XLoO507OjAyzb86U0trsV+sFRBRPCzVOuDCk
-         KScHV7A2ClzIxWvD3id43duKksI+p+gy3iZtI=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=x-authentication-warning:to:cc:subject:references:from:in-reply-to
-         :message-id:lines:user-agent:mime-version:content-type:date;
-        b=jqABE/VXDkbKh6wOEjnUyRsaDvjrimLdtqmLFdQOtWJROzFB3qfB2X1olGknJkH7xI
-         ARVQ9Goa3ky9iGZ+u1D5Q3FtPyxkKAseM7y4wRQyHgFjSw7k+jbc2zJUqYNByPHKpt1Z
-         cGx/m2pz9AtfwTidSOOU9kwCMMbG7M8TXsfTs=
-Received: by 10.103.214.13 with SMTP id r13mr3390092muq.4.1221255355657;
-        Fri, 12 Sep 2008 14:35:55 -0700 (PDT)
-Received: from localhost.localdomain ( [83.8.211.228])
-        by mx.google.com with ESMTPS id y2sm8292789mug.2.2008.09.12.14.35.43
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Fri, 12 Sep 2008 14:35:54 -0700 (PDT)
-Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id m8CLZ3n4021444;
-	Fri, 12 Sep 2008 23:35:13 +0200
-Received: (from jnareb@localhost)
-	by localhost.localdomain (8.13.4/8.13.4/Submit) id m8CLYakl021436;
-	Fri, 12 Sep 2008 23:34:36 +0200
-X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
-In-Reply-To: <7vsks5njmg.fsf@gitster.siamese.dyndns.org>
-User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
+	id S1753601AbYILVmg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 12 Sep 2008 17:42:36 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751241AbYILVmg
+	(ORCPT <rfc822;git-outgoing>); Fri, 12 Sep 2008 17:42:36 -0400
+Received: from 132-201.104-92.cust.bluewin.ch ([92.104.201.132]:53866 "EHLO
+	pixie.suse.cz" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1753133AbYILVmf (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 12 Sep 2008 17:42:35 -0400
+Received: from [127.0.0.1] (localhost [127.0.0.1])
+	by pixie.suse.cz (Postfix) with ESMTP id 679302AC749;
+	Fri, 12 Sep 2008 23:42:31 +0200 (CEST)
+In-Reply-To: <20080912210908.31628.50439.stgit@localhost>
+User-Agent: StGIT/0.14.2
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/95771>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/95772>
 
-Junio C Hamano <gitster@pobox.com> writes:
+This patch adds support for moving submodules to 'git mv', including
+rewriting of the .gitmodules file to reflect the movement.
 
-> Petr Baudis <pasky@suse.cz> writes:
+Signed-off-by: Petr Baudis <pasky@suse.cz>
+---
 
-> > +{
-> > +	struct gitmodules_info *info = info_;
-> > +	const char *subkey;
-> > +
-> > +	if (prefixcmp(key, "submodule."))
-> > +		return 0;
-> > +
-> > +	subkey = strrchr(key, '.');
-> > +	if (!subkey)
-> > +		return 0;
-> 
-> This cannot happen; you made sure the thing begins with "submodule."
-> already.
-[cut]
+I'm sorry, I was careless - this is the correct patch version, referring to
+string_list_item.string instead of .path.
 
-Are there any api to access and manipulate configuration,
-including fqvn with the subsection part, instead of having
-to do this again and again?
+Also, the testsuite in patch 4 is for some reason marked as (c)'d by Dscho.
+Not that it would be a big deal.
 
--- 
-Jakub Narebski
-Poland
-ShadeHawk on #git
+ builtin-mv.c |   37 +++++++++++++++++++++++++++++++++----
+ 1 files changed, 33 insertions(+), 4 deletions(-)
+
+diff --git a/builtin-mv.c b/builtin-mv.c
+index 4f65b5a..2970acc 100644
+--- a/builtin-mv.c
++++ b/builtin-mv.c
+@@ -9,6 +9,7 @@
+ #include "cache-tree.h"
+ #include "string-list.h"
+ #include "parse-options.h"
++#include "submodule.h"
+ 
+ static const char * const builtin_mv_usage[] = {
+ 	"git mv [options] <source>... <destination>",
+@@ -49,6 +50,24 @@ static const char *add_slash(const char *path)
+ 	return path;
+ }
+ 
++static int ce_is_gitlink(int i)
++{
++	return i < 0 ? 0 : S_ISGITLINK(active_cache[i]->ce_mode);
++}
++
++static void rename_submodule(struct string_list_item *i)
++{
++	char *key = submodule_by_path(i->string);
++
++	config_exclusive_filename = ".gitmodules";
++	if (git_config_set(key, (const char *) i->util))
++		die("cannot update .gitmodules");
++	config_exclusive_filename = NULL;
++
++	free(key);
++}
++
++
+ static struct lock_file lock_file;
+ 
+ int cmd_mv(int argc, const char **argv, const char *prefix)
+@@ -65,6 +84,8 @@ int cmd_mv(int argc, const char **argv, const char *prefix)
+ 	enum update_mode { BOTH = 0, WORKING_DIRECTORY, INDEX } *modes;
+ 	struct stat st;
+ 	struct string_list src_for_dst = {NULL, 0, 0, 0};
++	/* .string is source path, .util is destination path */
++	struct string_list submodules = {NULL, 0, 0, 0};
+ 
+ 	git_config(git_default_config, NULL);
+ 
+@@ -84,7 +105,8 @@ int cmd_mv(int argc, const char **argv, const char *prefix)
+ 		/* special case: "." was normalized to "" */
+ 		destination = copy_pathspec(dest_path[0], argv, argc, 1);
+ 	else if (!lstat(dest_path[0], &st) &&
+-			S_ISDIR(st.st_mode)) {
++			S_ISDIR(st.st_mode) &&
++			!ce_is_gitlink(cache_name_pos(dest_path[0], strlen(dest_path[0])))) {
+ 		dest_path[0] = add_slash(dest_path[0]);
+ 		destination = copy_pathspec(dest_path[0], argv, argc, 1);
+ 	} else {
+@@ -96,7 +118,7 @@ int cmd_mv(int argc, const char **argv, const char *prefix)
+ 	/* Checking */
+ 	for (i = 0; i < argc; i++) {
+ 		const char *src = source[i], *dst = destination[i];
+-		int length, src_is_dir;
++		int length, src_is_dir, src_cache_pos;
+ 		const char *bad = NULL;
+ 
+ 		if (show_only)
+@@ -111,7 +133,7 @@ int cmd_mv(int argc, const char **argv, const char *prefix)
+ 		} else if ((src_is_dir = S_ISDIR(st.st_mode))
+ 				&& lstat(dst, &st) == 0)
+ 			bad = "cannot move directory over file";
+-		else if (src_is_dir) {
++		else if ((src_cache_pos = cache_name_pos(src, length)) < 0 && src_is_dir) {
+ 			const char *src_w_slash = add_slash(src);
+ 			int len_w_slash = length + 1;
+ 			int first, last;
+@@ -177,7 +199,7 @@ int cmd_mv(int argc, const char **argv, const char *prefix)
+ 				} else
+ 					bad = "Cannot overwrite";
+ 			}
+-		} else if (cache_name_pos(src, length) < 0)
++		} else if (src_cache_pos < 0)
+ 			bad = "not under version control";
+ 		else if (string_list_has_string(&src_for_dst, dst))
+ 			bad = "multiple sources for the same target";
+@@ -214,10 +236,17 @@ int cmd_mv(int argc, const char **argv, const char *prefix)
+ 
+ 		pos = cache_name_pos(src, strlen(src));
+ 		assert(pos >= 0);
++		if (ce_is_gitlink(pos))
++			string_list_insert(src, &submodules)->util = (void *) dst;
+ 		if (!show_only)
+ 			rename_cache_entry_at(pos, dst);
+ 	}
+ 
++	for (i = 0; i < submodules.nr; i++)
++		rename_submodule(&submodules.items[i]);
++	if (submodules.nr > 0 && add_file_to_cache(".gitmodules", 0))
++		die("cannot add new .gitmodules to the index");
++
+ 	if (active_cache_changed) {
+ 		if (write_cache(newfd, active_cache, active_nr) ||
+ 		    commit_locked_index(&lock_file))
