@@ -1,153 +1,140 @@
-From: Petr Baudis <pasky@suse.cz>
-Subject: [PATCH] git mv: Support moving submodules
-Date: Fri, 12 Sep 2008 23:42:31 +0200
-Message-ID: <20080912214129.14829.53058.stgit@localhost>
-References: <20080912210908.31628.50439.stgit@localhost>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 2/6] git rm: Support for removing submodules
+Date: Fri, 12 Sep 2008 14:49:56 -0700
+Message-ID: <7v8wtxniez.fsf@gitster.siamese.dyndns.org>
+References: <20080912210817.31628.69014.stgit@localhost>
+ <20080912210902.31628.7325.stgit@localhost>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Cc: gitster@pobox.com
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Sep 12 23:44:36 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, gitster@pobox.com
+To: Petr Baudis <pasky@suse.cz>
+X-From: git-owner@vger.kernel.org Fri Sep 12 23:51:30 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KeGRO-0005mc-D5
-	for gcvg-git-2@gmane.org; Fri, 12 Sep 2008 23:44:34 +0200
+	id 1KeGY6-0007MZ-3r
+	for gcvg-git-2@gmane.org; Fri, 12 Sep 2008 23:51:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753601AbYILVmg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 12 Sep 2008 17:42:36 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751241AbYILVmg
-	(ORCPT <rfc822;git-outgoing>); Fri, 12 Sep 2008 17:42:36 -0400
-Received: from 132-201.104-92.cust.bluewin.ch ([92.104.201.132]:53866 "EHLO
-	pixie.suse.cz" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1753133AbYILVmf (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 12 Sep 2008 17:42:35 -0400
-Received: from [127.0.0.1] (localhost [127.0.0.1])
-	by pixie.suse.cz (Postfix) with ESMTP id 679302AC749;
-	Fri, 12 Sep 2008 23:42:31 +0200 (CEST)
-In-Reply-To: <20080912210908.31628.50439.stgit@localhost>
-User-Agent: StGIT/0.14.2
+	id S1757997AbYILVuP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 12 Sep 2008 17:50:15 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757980AbYILVuO
+	(ORCPT <rfc822;git-outgoing>); Fri, 12 Sep 2008 17:50:14 -0400
+Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:47817 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757943AbYILVuM (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 12 Sep 2008 17:50:12 -0400
+Received: from localhost.localdomain (localhost [127.0.0.1])
+	by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id 1DDD47EE42;
+	Fri, 12 Sep 2008 17:50:09 -0400 (EDT)
+Received: from pobox.com (ip68-225-240-211.oc.oc.cox.net [68.225.240.211])
+ (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
+ certificate requested) by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with
+ ESMTPSA id 707247EE40; Fri, 12 Sep 2008 17:49:59 -0400 (EDT)
+In-Reply-To: <20080912210902.31628.7325.stgit@localhost> (Petr Baudis's
+ message of "Fri, 12 Sep 2008 23:09:02 +0200")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: C4BE7718-8114-11DD-9C30-3113EBD4C077-77302942!a-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/95772>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/95773>
 
-This patch adds support for moving submodules to 'git mv', including
-rewriting of the .gitmodules file to reflect the movement.
+Petr Baudis <pasky@suse.cz> writes:
 
-Signed-off-by: Petr Baudis <pasky@suse.cz>
----
+> @@ -20,7 +20,8 @@ and no updates to their contents can be staged in the index,
+>  though that default behavior can be overridden with the `-f` option.
+>  When '--cached' is given, the staged content has to
+>  match either the tip of the branch or the file on disk,
+> -allowing the file to be removed from just the index.
+> +allowing the file to be removed from just the index;
+> +this is always the case when removing submodules.
 
-I'm sorry, I was careless - this is the correct patch version, referring to
-string_list_item.string instead of .path.
+Sorry, I read this three times but "this" is unclear to me.  Different and
+mutually incompatible interpretations I tried to understand it are:
 
-Also, the testsuite in patch 4 is for some reason marked as (c)'d by Dscho.
-Not that it would be a big deal.
+ (1) When removing submodules, whether --cached or not, the index can
+     match either HEAD or the work tree; this is different from removing
+     regular blobs where the index must match with HEAD without --cached
+     nor -f;
 
- builtin-mv.c |   37 +++++++++++++++++++++++++++++++++----
- 1 files changed, 33 insertions(+), 4 deletions(-)
+ (2) When removing submodules with --cached, the index can match either
+     HEAD or the work tree and it is removed only from the index.  You
+     cannot remove submodules without --cached;
 
-diff --git a/builtin-mv.c b/builtin-mv.c
-index 4f65b5a..2970acc 100644
---- a/builtin-mv.c
-+++ b/builtin-mv.c
-@@ -9,6 +9,7 @@
- #include "cache-tree.h"
- #include "string-list.h"
- #include "parse-options.h"
-+#include "submodule.h"
- 
- static const char * const builtin_mv_usage[] = {
- 	"git mv [options] <source>... <destination>",
-@@ -49,6 +50,24 @@ static const char *add_slash(const char *path)
- 	return path;
- }
- 
-+static int ce_is_gitlink(int i)
-+{
-+	return i < 0 ? 0 : S_ISGITLINK(active_cache[i]->ce_mode);
-+}
-+
-+static void rename_submodule(struct string_list_item *i)
-+{
-+	char *key = submodule_by_path(i->string);
-+
-+	config_exclusive_filename = ".gitmodules";
-+	if (git_config_set(key, (const char *) i->util))
-+		die("cannot update .gitmodules");
-+	config_exclusive_filename = NULL;
-+
-+	free(key);
-+}
-+
-+
- static struct lock_file lock_file;
- 
- int cmd_mv(int argc, const char **argv, const char *prefix)
-@@ -65,6 +84,8 @@ int cmd_mv(int argc, const char **argv, const char *prefix)
- 	enum update_mode { BOTH = 0, WORKING_DIRECTORY, INDEX } *modes;
- 	struct stat st;
- 	struct string_list src_for_dst = {NULL, 0, 0, 0};
-+	/* .string is source path, .util is destination path */
-+	struct string_list submodules = {NULL, 0, 0, 0};
- 
- 	git_config(git_default_config, NULL);
- 
-@@ -84,7 +105,8 @@ int cmd_mv(int argc, const char **argv, const char *prefix)
- 		/* special case: "." was normalized to "" */
- 		destination = copy_pathspec(dest_path[0], argv, argc, 1);
- 	else if (!lstat(dest_path[0], &st) &&
--			S_ISDIR(st.st_mode)) {
-+			S_ISDIR(st.st_mode) &&
-+			!ce_is_gitlink(cache_name_pos(dest_path[0], strlen(dest_path[0])))) {
- 		dest_path[0] = add_slash(dest_path[0]);
- 		destination = copy_pathspec(dest_path[0], argv, argc, 1);
- 	} else {
-@@ -96,7 +118,7 @@ int cmd_mv(int argc, const char **argv, const char *prefix)
- 	/* Checking */
- 	for (i = 0; i < argc; i++) {
- 		const char *src = source[i], *dst = destination[i];
--		int length, src_is_dir;
-+		int length, src_is_dir, src_cache_pos;
- 		const char *bad = NULL;
- 
- 		if (show_only)
-@@ -111,7 +133,7 @@ int cmd_mv(int argc, const char **argv, const char *prefix)
- 		} else if ((src_is_dir = S_ISDIR(st.st_mode))
- 				&& lstat(dst, &st) == 0)
- 			bad = "cannot move directory over file";
--		else if (src_is_dir) {
-+		else if ((src_cache_pos = cache_name_pos(src, length)) < 0 && src_is_dir) {
- 			const char *src_w_slash = add_slash(src);
- 			int len_w_slash = length + 1;
- 			int first, last;
-@@ -177,7 +199,7 @@ int cmd_mv(int argc, const char **argv, const char *prefix)
- 				} else
- 					bad = "Cannot overwrite";
- 			}
--		} else if (cache_name_pos(src, length) < 0)
-+		} else if (src_cache_pos < 0)
- 			bad = "not under version control";
- 		else if (string_list_has_string(&src_for_dst, dst))
- 			bad = "multiple sources for the same target";
-@@ -214,10 +236,17 @@ int cmd_mv(int argc, const char **argv, const char *prefix)
- 
- 		pos = cache_name_pos(src, strlen(src));
- 		assert(pos >= 0);
-+		if (ce_is_gitlink(pos))
-+			string_list_insert(src, &submodules)->util = (void *) dst;
- 		if (!show_only)
- 			rename_cache_entry_at(pos, dst);
- 	}
- 
-+	for (i = 0; i < submodules.nr; i++)
-+		rename_submodule(&submodules.items[i]);
-+	if (submodules.nr > 0 && add_file_to_cache(".gitmodules", 0))
-+		die("cannot add new .gitmodules to the index");
-+
- 	if (active_cache_changed) {
- 		if (write_cache(newfd, active_cache, active_nr) ||
- 		    commit_locked_index(&lock_file))
+ (3) When removing submodules, the index can match either HEAD or the work
+     tree and it is removed only from the index, even if you did not give
+     --cached;
+
+It later becomes clear that you meant (3) in the second hunk, but the
+first time reader of the resulting document (not this patch) won't be
+reading from bottom to top.
+
+This is a leftover issue from ealier documentation 25dc720 (Clarify and
+fix English in "git-rm" documentation, 2008-04-16), but the description is
+unclear what should happen while working towards the initial commit
+(i.e. no HEAD yet).  I think check_local_mod() allows removal in such a
+case.  Perhaps you can clarify the point while at it, please?
+
+> diff --git a/builtin-rm.c b/builtin-rm.c
+> index 6bd8211..7475de2 100644
+> --- a/builtin-rm.c
+> +++ b/builtin-rm.c
+> ...
+> -static void add_list(const char *name)
+> +static void add_list(const char *name, int is_gitlink)
+>  {
+>  	if (list.nr >= list.alloc) {
+>  		list.alloc = alloc_nr(list.alloc);
+> -		list.name = xrealloc(list.name, list.alloc * sizeof(const char *));
+> +		list.info = xrealloc(list.info, list.alloc * sizeof(*list.info));
+>  	}
+
+ALLOC_GROW()?
+
+> @@ -38,6 +44,13 @@ static int remove_file(const char *name)
+>  	if (ret && errno == ENOENT)
+>  		/* The user has removed it from the filesystem by hand */
+>  		ret = errno = 0;
+> +	if (ret && errno == EISDIR) {
+> +		/* This is a gitlink entry; try to remove at least the
+> +		 * directory if the submodule is not checked out; we always
+> +		 * leave the checked out ones as they are */
+
+	/*
+	 * Style?
+         * for a multi-line comment.
+         */
+
+> +static void remove_submodule(const char *name)
+> +{
+> +	char *key = submodule_by_path(name);
+> +	char *sectend = strrchr(key, '.');
+> +
+> +	assert(sectend);
+> +	*sectend = 0;
+
+Here is one caller I questioned in my comments on [1/6].  It is clear this
+caller wants to use "submodule.xyzzy" out of "submodule.xyzzy.path".  The
+function returning "submodule.xyzzy.path" does not feel like a clean and
+reusable interface to me.  I'd suggest either returning "submodule.xyzzy"
+(that's too specialized only for this caller to my taste, though), or just
+"xyzzy" and have the caller synthesize whatever string it wants to use
+(yes, it loses microoptimization but do we really care about it in this
+codepath?), if you have other callers that want different strings around
+"xyzzy".
+
+> @@ -140,7 +169,7 @@ static struct option builtin_rm_options[] = {
+>  
+>  int cmd_rm(int argc, const char **argv, const char *prefix)
+>  {
+> -	int i, newfd;
+> +	int i, newfd, subs;
+
+Perhaps hoist "int removed" up one scope level and reuse it?  I misread
+that you are counting the number of gitlinks in the index, not the number
+of gitlinks that is being removed, on my first read.  The variable is used
+for the latter.
+
+Other than that I did not see anything questionable in [2/6].
