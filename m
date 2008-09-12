@@ -1,132 +1,93 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 1/6] submodule.*: Introduce simple C interface for
- submodule lookup by path
-Date: Fri, 12 Sep 2008 14:23:51 -0700
-Message-ID: <7vsks5njmg.fsf@gitster.siamese.dyndns.org>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: [PATCH 1/6] submodule.*: Introduce simple C interface for submodule lookup by path
+Date: Fri, 12 Sep 2008 14:35:54 -0700 (PDT)
+Message-ID: <m3hc8lnj4k.fsf@localhost.localdomain>
 References: <20080912210817.31628.69014.stgit@localhost>
- <20080912210857.31628.7605.stgit@localhost>
+	<20080912210857.31628.7605.stgit@localhost>
+	<7vsks5njmg.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Petr Baudis <pasky@suse.cz>
-X-From: git-owner@vger.kernel.org Fri Sep 12 23:25:15 2008
+Cc: Petr Baudis <pasky@suse.cz>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Sep 12 23:37:11 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KeG8f-0001QN-5x
-	for gcvg-git-2@gmane.org; Fri, 12 Sep 2008 23:25:13 +0200
+	id 1KeGKB-00041y-H6
+	for gcvg-git-2@gmane.org; Fri, 12 Sep 2008 23:37:08 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755931AbYILVYF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 12 Sep 2008 17:24:05 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755876AbYILVYE
-	(ORCPT <rfc822;git-outgoing>); Fri, 12 Sep 2008 17:24:04 -0400
-Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:45943 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753496AbYILVYD (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 12 Sep 2008 17:24:03 -0400
-Received: from localhost.localdomain (localhost [127.0.0.1])
-	by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id CA18E7EBCC;
-	Fri, 12 Sep 2008 17:24:00 -0400 (EDT)
-Received: from pobox.com (ip68-225-240-211.oc.oc.cox.net [68.225.240.211])
- (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
- certificate requested) by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with
- ESMTPSA id C6DD67EBCA; Fri, 12 Sep 2008 17:23:53 -0400 (EDT)
-In-Reply-To: <20080912210857.31628.7605.stgit@localhost> (Petr Baudis's
- message of "Fri, 12 Sep 2008 23:08:57 +0200")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: 1DF7B280-8111-11DD-98E9-3113EBD4C077-77302942!a-sasl-quonix.pobox.com
+	id S1752952AbYILVf6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 12 Sep 2008 17:35:58 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752574AbYILVf6
+	(ORCPT <rfc822;git-outgoing>); Fri, 12 Sep 2008 17:35:58 -0400
+Received: from mail-gx0-f16.google.com ([209.85.217.16]:48947 "EHLO
+	mail-gx0-f16.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752541AbYILVf6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 12 Sep 2008 17:35:58 -0400
+Received: by gxk9 with SMTP id 9so20383836gxk.13
+        for <git@vger.kernel.org>; Fri, 12 Sep 2008 14:35:56 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:received:received
+         :x-authentication-warning:to:cc:subject:references:from:in-reply-to
+         :message-id:lines:user-agent:mime-version:content-type:date;
+        bh=ExrLNqHdRZA7p+uQT1iHPYG9i1TE9hKlMugMaxj7Ja0=;
+        b=Wsm4MYYIJJlV7h+287JH6+sosmdrK903X+S4yHuxH8Dot6z7fVMqA8X/64WOW0SajD
+         xjS4VkzVGlOmPBnPiarEoo3Mpgz6JEi2XLoO507OjAyzb86U0trsV+sFRBRPCzVOuDCk
+         KScHV7A2ClzIxWvD3id43duKksI+p+gy3iZtI=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=x-authentication-warning:to:cc:subject:references:from:in-reply-to
+         :message-id:lines:user-agent:mime-version:content-type:date;
+        b=jqABE/VXDkbKh6wOEjnUyRsaDvjrimLdtqmLFdQOtWJROzFB3qfB2X1olGknJkH7xI
+         ARVQ9Goa3ky9iGZ+u1D5Q3FtPyxkKAseM7y4wRQyHgFjSw7k+jbc2zJUqYNByPHKpt1Z
+         cGx/m2pz9AtfwTidSOOU9kwCMMbG7M8TXsfTs=
+Received: by 10.103.214.13 with SMTP id r13mr3390092muq.4.1221255355657;
+        Fri, 12 Sep 2008 14:35:55 -0700 (PDT)
+Received: from localhost.localdomain ( [83.8.211.228])
+        by mx.google.com with ESMTPS id y2sm8292789mug.2.2008.09.12.14.35.43
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Fri, 12 Sep 2008 14:35:54 -0700 (PDT)
+Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
+	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id m8CLZ3n4021444;
+	Fri, 12 Sep 2008 23:35:13 +0200
+Received: (from jnareb@localhost)
+	by localhost.localdomain (8.13.4/8.13.4/Submit) id m8CLYakl021436;
+	Fri, 12 Sep 2008 23:34:36 +0200
+X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
+In-Reply-To: <7vsks5njmg.fsf@gitster.siamese.dyndns.org>
+User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/95770>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/95771>
 
-Petr Baudis <pasky@suse.cz> writes:
+Junio C Hamano <gitster@pobox.com> writes:
 
-> +static int gitmodules_worker(const char *key, const char *value, void *info_)
+> Petr Baudis <pasky@suse.cz> writes:
 
-Won't you ever have different kind of work in the future?
-find_submodule_by_path(), perhaps?
+> > +{
+> > +	struct gitmodules_info *info = info_;
+> > +	const char *subkey;
+> > +
+> > +	if (prefixcmp(key, "submodule."))
+> > +		return 0;
+> > +
+> > +	subkey = strrchr(key, '.');
+> > +	if (!subkey)
+> > +		return 0;
+> 
+> This cannot happen; you made sure the thing begins with "submodule."
+> already.
+[cut]
 
-> +{
-> +	struct gitmodules_info *info = info_;
-> +	const char *subkey;
-> +
-> +	if (prefixcmp(key, "submodule."))
-> +		return 0;
-> +
-> +	subkey = strrchr(key, '.');
-> +	if (!subkey)
-> +		return 0;
+Are there any api to access and manipulate configuration,
+including fqvn with the subsection part, instead of having
+to do this again and again?
 
-This cannot happen; you made sure the thing begins with "submodule."
-already.
-
-> +	if (strcmp(subkey, ".path"))
-> +		return 0;
-
-This will miss a misconfigured "submodule.path" (two level).
-
-I can understand if this part were:
-
-	subkey = strrchr(key, '.');
-        if (!subkey || subkey == key + strlen("submodule.") - 1)
-        	return 0;
-
-> +	if (strcmp(value, info->path))
-> +		return 0;
-
-This will segfault on a misconfigured:
-
-	[submodule "xyzzy"]
-        	path
-
-> +	/* Found the key to change. */
-> +	if (info->key) {
-> +		error("multiple submodules live at path `%s'", info->path);
-
-Why is this "error()", not "warning()"?
-
-> +		/* The last one is supposed to win. */
-> +		free(info->key);
-> +	}
-> +	info->key = xstrdup(key);
-> +	return 0;
-
-Have to wonder if it makes easier for the users if this function kept only
-"xyzzy" out of "submodule.xyzzy.path", not the whole thing.  Cannot judge
-without actual callers.
-
-> +}
-> +
-> +char *submodule_by_path(const char *path)
-> +{
-> +	struct gitmodules_info info = { path, NULL };
-> +
-> +	config_exclusive_filename = ".gitmodules";
-> +	if (git_config(gitmodules_worker, &info))
-> +		die("cannot process .gitmodules");
-> +	if (!info.key)
-> +		die("the submodule of `%s' not found in .gitmodules", path);
-> +	config_exclusive_filename = NULL;
-> +
-> +	return info.key;
-> +}
-> diff --git a/submodule.h b/submodule.h
-> new file mode 100644
-> index 0000000..bc74fa0
-> --- /dev/null
-> +++ b/submodule.h
-> @@ -0,0 +1,8 @@
-> +#ifndef SUBMODULE_H
-> +#define SUBMODULE_H
-> +
-> +/* Find submodule living at given path in .gitmodules and return the key
-> + * of its path config variable (dynamically allocated). */
-
-Style?
-
-> +extern char *submodule_by_path(const char *path);
-> +
-> +#endif
+-- 
+Jakub Narebski
+Poland
+ShadeHawk on #git
