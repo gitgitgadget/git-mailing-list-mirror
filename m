@@ -1,84 +1,86 @@
-From: Thomas Rast <trast@student.ethz.ch>
-Subject: [RFH] Asciidoc non-example blocks [was: Re: [RFC PATCH] Documentation: add manpage about workflows]
-Date: Fri, 12 Sep 2008 09:26:15 +0200
-Message-ID: <200809120926.21607.trast@student.ethz.ch>
-References: <1221147525-5589-3-git-send-email-trast@student.ethz.ch> <1221147585-5695-1-git-send-email-trast@student.ethz.ch>
+From: Karl =?iso-8859-1?Q?Hasselstr=F6m?= <kha@treskal.com>
+Subject: Re: StGit question
+Date: Fri, 12 Sep 2008 09:51:16 +0200
+Message-ID: <20080912075116.GA26685@diana.vm.bytemark.co.uk>
+References: <48C94F86.6080707@gmail.com>
 Mime-Version: 1.0
-Content-Type: multipart/signed;
-  boundary="nextPart2822513.PVsaqtLVXo";
-  protocol="application/pgp-signature";
-  micalg=pgp-sha1
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Sep 12 09:27:46 2008
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, Catalin Marinas <catalin.marinas@gmail.com>
+To: Clark Williams <clark.williams@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Sep 12 09:32:13 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Ke34C-0004CC-Mv
-	for gcvg-git-2@gmane.org; Fri, 12 Sep 2008 09:27:45 +0200
+	id 1Ke36q-00058K-92
+	for gcvg-git-2@gmane.org; Fri, 12 Sep 2008 09:30:28 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752013AbYILH00 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 12 Sep 2008 03:26:26 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752004AbYILH0Z
-	(ORCPT <rfc822;git-outgoing>); Fri, 12 Sep 2008 03:26:25 -0400
-Received: from xsmtp0.ethz.ch ([82.130.70.14]:29706 "EHLO XSMTP0.ethz.ch"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751512AbYILH0Z (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 12 Sep 2008 03:26:25 -0400
-Received: from xfe2.d.ethz.ch ([82.130.124.42]) by XSMTP0.ethz.ch with Microsoft SMTPSVC(6.0.3790.3959);
-	 Fri, 12 Sep 2008 09:26:23 +0200
-Received: from pcjremy.inf.ethz.ch ([129.132.153.233]) by xfe2.d.ethz.ch over TLS secured channel with Microsoft SMTPSVC(6.0.3790.3959);
-	 Fri, 12 Sep 2008 09:26:23 +0200
-User-Agent: KMail/1.9.9
-In-Reply-To: <1221147585-5695-1-git-send-email-trast@student.ethz.ch>
-X-OriginalArrivalTime: 12 Sep 2008 07:26:23.0868 (UTC) FILETIME=[DC3AEBC0:01C914A8]
+	id S1752128AbYILH3V convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 12 Sep 2008 03:29:21 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752120AbYILH3V
+	(ORCPT <rfc822;git-outgoing>); Fri, 12 Sep 2008 03:29:21 -0400
+Received: from diana.vm.bytemark.co.uk ([80.68.90.142]:1850 "EHLO
+	diana.vm.bytemark.co.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751852AbYILH3V (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 12 Sep 2008 03:29:21 -0400
+Received: from kha by diana.vm.bytemark.co.uk with local (Exim 3.36 #1 (Debian))
+	id 1Ke3Qy-00076U-00; Fri, 12 Sep 2008 08:51:16 +0100
+Content-Disposition: inline
+In-Reply-To: <48C94F86.6080707@gmail.com>
+X-Manual-Spam-Check: kha@treskal.com, clean
+User-Agent: Mutt/1.5.9i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/95689>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/95690>
 
---nextPart2822513.PVsaqtLVXo
-Content-Type: text/plain;
-  charset="utf-8"
-Content-Transfer-Encoding: quoted-printable
-Content-Disposition: inline
+On 2008-09-11 12:04:06 -0500, Clark Williams wrote:
 
-Thomas Rast wrote:
-> +.Merge upwards
-> +[caption=3D"Rule: "]
-> +=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
-> +Always commit your fixes to the oldest supported branch that require
-> +them.  Then (periodically) merge the main branches upwards into each
-> +other.
-> +=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+> Are there any guidelines or best-practices for sharing StGit trees?
 
-Turns out that asciidoc, at least the 8.2.5 on my system, does not
-honour the custom caption when converting to manpages.  They become
-numbered 'Example' blocks instead.  Is there another way to get a
-similar result?
+See below. ;-)
 
-=2D Thomas
+> I'm working with the Linux -rt patchset and I need to be able to
+> share my tree with other people. What I'd *like* to do is push git
+> tree's up to a git server, let other people fetch them and have them
+> be able to 'stg uncommit' to get back to my stack state. The problem
+> is that when someone uncommits, you lose the patch names. If you're
+> trying to create an RPM out of a stack, this causes problems :).
+>
+> Is there something I can do or something that we can do to StGit to
+> make it possible for an 'uncommit' to restore the original patch
+> name? It looks like I could modify the commit message, so that the
+> first line is the patch name, but that's not very nice for people
+> scanning commits.
+>
+> Or am I missing something completely trivial that will make my life
+> easier?
 
-=2D-=20
-Thomas Rast
-trast@student.ethz.ch
+You've probably already found this and dismissed it, but
 
+  $ stg uncommit foo bar baz woo wee aaahh
 
+will uncommit six patches and give them those names. So if you just
+share the output of
 
---nextPart2822513.PVsaqtLVXo
-Content-Type: application/pgp-signature; name=signature.asc 
-Content-Description: This is a digitally signed message part.
+  $ stg series --applied --noprefix
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.0.9 (GNU/Linux)
+along with your branch, the other end will be able to recreate a
+series with the same names. (In not-quite-bleeding-edge stg's, "series
+--applied" is spelled "applied".)
 
-iEYEABECAAYFAkjKGZ0ACgkQqUud07tmzP3a/ACfRqYS5u3qMAyCA9hzeseDF8g9
-7LoAn3yebic2CjdSmrz18gAO6/oTu28+
-=a34p
------END PGP SIGNATURE-----
+As for merging your work once both of you have made changes to the
+series, the current solution is "stg sync", which you'll have to ask
+Catalin about. The patch stack log in my experimental branch is
+designed to allow for true 3-way merging of patch series, so that
+you'd be able to get your colleague's latest modifications with a
+simple "stg merge" command, but that merge currently exists only in a
+couple of mails to this list -- there isn't even a prototype
+implementation -- so I expect you'll have more luck with "stg sync"
+right now ...
 
---nextPart2822513.PVsaqtLVXo--
+--=20
+Karl Hasselstr=F6m, kha@treskal.com
+      www.treskal.com/kalle
