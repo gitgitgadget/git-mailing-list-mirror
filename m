@@ -1,78 +1,139 @@
-From: "Eric Raible" <raible@gmail.com>
-Subject: Re: RFC: perhaps a "new file" should not be deleted by "git reset --hard"
-Date: Thu, 11 Sep 2008 16:49:54 -0700
-Message-ID: <279b37b20809111649h77666a46u362dddfa1b40e0ca@mail.gmail.com>
-References: <279b37b20809101212g57e9ad99qbf6fa15888679894@mail.gmail.com>
-	 <eafc0afe0809101912v72916d3hce9ae5d6812f0db8@mail.gmail.com>
-	 <279b37b20809101946k309ad113neb7d051f1c6c410e@mail.gmail.com>
-	 <eafc0afe0809102305u6de85ef3ib2c08004dea8d6f9@mail.gmail.com>
-	 <51419b2c0809110932r4e8c833fx740ccb0c8e46f0af@mail.gmail.com>
-	 <3ab397d0809111022m24c81bd9y2520f6be478babd3@mail.gmail.com>
-	 <279b37b20809111424y73a3f6b9xe7f5019b9ba0da16@mail.gmail.com>
-	 <20080911233941.GP4829@genesis.frugalware.org>
+From: Jonas Fonseca <fonseca@diku.dk>
+Subject: Re: [JGIT PATCH 1/2] Issue 23: Resolve tag^0 as tag^{commit}
+Date: Fri, 12 Sep 2008 02:00:07 +0200
+Message-ID: <20080912000007.GA31931@diku.dk>
+References: <20080911213927.GA20238@diku.dk> <200809120047.58484.robin.rosenberg.lists@dewire.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: "Jeff Whiteside" <jeff.m.whiteside@gmail.com>,
-	"Elijah Newren" <newren@gmail.com>,
-	"Changsheng Jiang" <jiangzuoyan@gmail.com>,
-	"Git Mailing List" <git@vger.kernel.org>
-To: "Miklos Vajna" <vmiklos@frugalware.org>
-X-From: git-owner@vger.kernel.org Fri Sep 12 01:51:08 2008
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: "Shawn O. Pearce" <spearce@spearce.org>, git@vger.kernel.org,
+	Imran M Yousuf <imyousuf@smartitengineering.com>
+To: Robin Rosenberg <robin.rosenberg.lists@dewire.com>
+X-From: git-owner@vger.kernel.org Fri Sep 12 02:01:28 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KdvwE-0003L6-Ly
-	for gcvg-git-2@gmane.org; Fri, 12 Sep 2008 01:51:03 +0200
+	id 1Kdw6C-0005B9-Tq
+	for gcvg-git-2@gmane.org; Fri, 12 Sep 2008 02:01:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753779AbYIKXt4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 11 Sep 2008 19:49:56 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754213AbYIKXt4
-	(ORCPT <rfc822;git-outgoing>); Thu, 11 Sep 2008 19:49:56 -0400
-Received: from mail-gx0-f16.google.com ([209.85.217.16]:65419 "EHLO
-	mail-gx0-f16.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753567AbYIKXtz (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 11 Sep 2008 19:49:55 -0400
-Received: by mail-gx0-f16.google.com with SMTP id 9so17891698gxk.13
-        for <git@vger.kernel.org>; Thu, 11 Sep 2008 16:49:54 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to
-         :subject:cc:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:references;
-        bh=wFbODns/CyxjxI50h9MgyKVGUUipmWH/2xznTpxwqbU=;
-        b=oxdahMIR3xFPvzCWjFyWdz3noZ1RXyO83c2AXhz82O8VE17OGxGYp5KjuAbjDTk5Ci
-         ojxieybI/76LTZz7ENmkZTGX3F8AweNRy/EtvCV1K6u+wlpCCSJMvziWXIAnacgQ9s6H
-         RbYZw92W1Q//JG2UKp9E3kDodszu8U22Pv/TI=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
-         :content-type:content-transfer-encoding:content-disposition
-         :references;
-        b=PNEWQOVNkqWJlTjFxDC6Aea0crRn40gwO+kejcFRtRqBpdUuzdPKdczW1c0xGuXX2v
-         A1H4y1QBk5NvXGBeYr0ZmDCPMO6eussCuLSg4AbIrgA/GTFGbquWUp2g2egfP8vr8tVb
-         w5faK6zqx7L893P7lGCLy29+CgbP1vw/yfjIc=
-Received: by 10.150.12.3 with SMTP id 3mr5025707ybl.16.1221176994648;
-        Thu, 11 Sep 2008 16:49:54 -0700 (PDT)
-Received: by 10.151.113.10 with HTTP; Thu, 11 Sep 2008 16:49:54 -0700 (PDT)
-In-Reply-To: <20080911233941.GP4829@genesis.frugalware.org>
+	id S1753122AbYILAAN convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 11 Sep 2008 20:00:13 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753439AbYILAAN
+	(ORCPT <rfc822;git-outgoing>); Thu, 11 Sep 2008 20:00:13 -0400
+Received: from mgw1.diku.dk ([130.225.96.91]:49628 "EHLO mgw1.diku.dk"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753061AbYILAAL (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 11 Sep 2008 20:00:11 -0400
+Received: from localhost (localhost [127.0.0.1])
+	by mgw1.diku.dk (Postfix) with ESMTP id 95FF852C44A;
+	Fri, 12 Sep 2008 02:00:09 +0200 (CEST)
+X-Virus-Scanned: amavisd-new at diku.dk
+Received: from mgw1.diku.dk ([127.0.0.1])
+	by localhost (mgw1.diku.dk [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id h+qKELHWQaUc; Fri, 12 Sep 2008 02:00:08 +0200 (CEST)
+Received: from nhugin.diku.dk (nhugin.diku.dk [130.225.96.140])
+	by mgw1.diku.dk (Postfix) with ESMTP id 17A2D52C365;
+	Fri, 12 Sep 2008 02:00:08 +0200 (CEST)
+Received: from tyr.diku.dk (tyr.diku.dk [130.225.96.226])
+	by nhugin.diku.dk (Postfix) with ESMTP
+	id 156276DF894; Fri, 12 Sep 2008 01:59:55 +0200 (CEST)
+Received: by tyr.diku.dk (Postfix, from userid 3873)
+	id F2DDC1A4001; Fri, 12 Sep 2008 02:00:07 +0200 (CEST)
 Content-Disposition: inline
+In-Reply-To: <200809120047.58484.robin.rosenberg.lists@dewire.com>
+User-Agent: Mutt/1.5.16 (2007-06-09)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/95672>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/95673>
 
-On Thu, Sep 11, 2008 at 4:39 PM, Miklos Vajna <vmiklos@frugalware.org> wrote:
-> On Thu, Sep 11, 2008 at 02:24:51PM -0700, Eric Raible <raible@gmail.com> wrote:
->> My question is why "git reset --hard" can't make a special case for
->> _newly added_ tracked files.  After all, "git status" knows that they're
->> "new files", and "git reset --hard" could realize that wiping them off
->> the face of the earth isn't the most helpful thing possible.
+Robin Rosenberg <robin.rosenberg.lists@dewire.com> wrote Fri, Sep 12, 2=
+008:
+> torsdagen den 11 september 2008 23.39.27 skrev Jonas Fonseca:
+> > Repository.resolve("tag^0") failed with "not a commit". Fix it and =
+add a
+> > test case for it.
+>=20
+> It seems this case is not *that* special. It is tag^N =3D=3D tag^{com=
+mit}^N
+> Same for tag~N =3D=3D tag^{commit}~N-
+=20
+git-rev-parse(1) says:
+
+ =B7 A suffix ^ to a revision parameter means the first parent of that
+   commit object.  ^<n> means the <n>th parent (i.e.  rev^ is
+   equivalent to rev^1). As a special rule, rev^0 means the commit
+   itself and is used when rev is the object name of a tag object that
+   refers to a commit object.
+
+but does take tag^1, however not tag^2. It looks like tag~N is broken i=
+n
+JGit ("not a commit") so should also be fixed if we want to be
+compatible with git-rev-parse.
+
+BTW, I just noticed that ^{} is not handled correctly either for tags.
+
+ =B7 A suffix ^ followed by an empty brace pair (e.g.  v0.99.8^{}) mean=
+s
+   the object could be a tag, and dereference the tag recursively
+   until a non-tag object is found.
+
+Only one derefence is performed.
+
+> My fault, i guess, but it would be nice of you fixed it while you are=
+ at it.
+
+I will try to make fixes for the above cases tomorrow.
+
+> Second, the testcase in the second patch fails on my machine.
+>=20
+> testDerefTaggedTagTree(org.spearce.jgit.lib.T0008_testparserev)
+> junit.framework.ComparisonFailure: expected:<[269e1253bad5c247c6bde37=
+aa48ae1e03138206c]> but was:<[be83157b4ffe650d728ba4f98ad47b623b0d0c20]=
 >
-> I rarely need this, but I use 'git read-tree -m HEAD' before git reset
-> --hard in case I want such a behaviour.
+> 	at junit.framework.Assert.assertEquals(Assert.java:81)
+> 	at junit.framework.Assert.assertEquals(Assert.java:87)
+> 	at org.spearce.jgit.lib.T0008_testparserev.testDerefTaggedTagTree(T0=
+008_testparserev.java:123)
 
-What advantages does "git read-tree -m HEAD" have over "git reset" or
-"git rm --cached <file list>"?
+I reran all the test before formatting the patch, but after doing some
+last minut changes. When I run all the tests using maven (inside
+NetBeans or from the command line) it tells me:
+
+	Tests run: 428, Failures: 0, Errors: 0, Skipped: 0
+
+=46rom the output it looks like the tests in the files named T000* are
+never run. However, where the breakage is (could be my setup) I don't
+know. Imran?
+
+Anyway, for now I will just run the single test specifically. Perhaps I
+should just put this into the same patch. Anyway, the following should
+fix it.
+
+diff --git a/org.spearce.jgit.test/tst/org/spearce/jgit/lib/T0008_testp=
+arserev.java b/org.spearce.jgit.test/tst/org/spearce/jgit/lib/T0008_tes=
+tparserev.java
+index 2a1a4ad..1fc73b4 100644
+--- a/org.spearce.jgit.test/tst/org/spearce/jgit/lib/T0008_testparserev=
+=2Ejava
++++ b/org.spearce.jgit.test/tst/org/spearce/jgit/lib/T0008_testparserev=
+=2Ejava
+@@ -117,7 +117,7 @@ public void testDerefTagIssue23() throws IOExceptio=
+n {
+ 	}
+=20
+ 	public void testDerefTaggedTagTree() throws IOException {
+-		assertEquals("269e1253bad5c247c6bde37aa48ae1e03138206c",db.resolve("=
+refs/tags/C").name());
++		assertEquals("be83157b4ffe650d728ba4f98ad47b623b0d0c20",db.resolve("=
+refs/tags/C").name());
+ 		assertEquals("d86a2aada2f5e7ccf6f11880bfb9ab404e8a8864",db.resolve("=
+refs/tags/C^{commit}").name());
+ 		assertEquals("856ec208ae6cadac25a6d74f19b12bb27a24fe24",db.resolve("=
+refs/tags/C^{tree}").name());
+ 	}
+
+--=20
+Jonas Fonseca
