@@ -1,91 +1,67 @@
-From: Jakub Narebski <jnareb@gmail.com>
+From: "Shawn O. Pearce" <spearce@spearce.org>
 Subject: Re: CGit and repository list
-Date: Fri, 12 Sep 2008 17:54:29 +0200
-Message-ID: <200809121754.30277.jnareb@gmail.com>
-References: <19449377.post@talk.nabble.com> <8c5c35580809120736x4170b2dbq3438bd619326ae00@mail.gmail.com> <20080912145804.GF10544@machine.or.cz>
+Date: Fri, 12 Sep 2008 09:00:06 -0700
+Message-ID: <20080912160006.GI22960@spearce.org>
+References: <19449377.post@talk.nabble.com> <8c5c35580809120736x4170b2dbq3438bd619326ae00@mail.gmail.com> <20080912145804.GF10544@machine.or.cz> <200809121754.30277.jnareb@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: 7bit
-Cc: Lars Hjemli <hjemli@gmail.com>, git@vger.kernel.org
-To: Petr Baudis <pasky@suse.cz>
-X-From: git-owner@vger.kernel.org Fri Sep 12 17:55:54 2008
+Content-Type: text/plain; charset=utf-8
+Cc: Petr Baudis <pasky@suse.cz>, Lars Hjemli <hjemli@gmail.com>,
+	git@vger.kernel.org
+To: Jakub Narebski <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Sep 12 18:01:18 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KeAzx-0001IQ-BW
-	for gcvg-git-2@gmane.org; Fri, 12 Sep 2008 17:55:53 +0200
+	id 1KeB5A-0002tq-33
+	for gcvg-git-2@gmane.org; Fri, 12 Sep 2008 18:01:16 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754499AbYILPyh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 12 Sep 2008 11:54:37 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754802AbYILPyh
-	(ORCPT <rfc822;git-outgoing>); Fri, 12 Sep 2008 11:54:37 -0400
-Received: from an-out-0708.google.com ([209.85.132.249]:15981 "EHLO
-	an-out-0708.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754431AbYILPyg (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 12 Sep 2008 11:54:36 -0400
-Received: by an-out-0708.google.com with SMTP id d40so108416and.103
-        for <git@vger.kernel.org>; Fri, 12 Sep 2008 08:54:35 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:subject:date
-         :user-agent:cc:references:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:message-id;
-        bh=j6uOK4qcmyKxNKIDY4y1qIsT5poxX9+gXALY064MKSI=;
-        b=vh6ysvCdDTtwL+qQvr8Ts2oifqB6XJr5DyD2AmQSmRs8Y0wV2ESTEL/yPEya8R9wEq
-         ypkUHWnQv8oxJfZsj1Rpuq9fS5fnLt7B3iW/J365U6DrnDChU3wIS8UAe1bSSoLhVdhQ
-         2KgFwmH9NcaNBqVq0jJF3YdgkMcVmjneJy+7Y=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=from:to:subject:date:user-agent:cc:references:in-reply-to
-         :mime-version:content-type:content-transfer-encoding
-         :content-disposition:message-id;
-        b=LFQ29KeExt9aU2BpVbAYNfiEwBMUCVuVFymhrY+V9FlkvZL2edD4mw5GGTOXzVsvRq
-         eHxrnf/+ehIHQrljnIxrd8nmGDZut+OrDKjA7bmIUcVgGVkfvpCpg8h4Ed8+9Z26/Zwd
-         /JB0iUcGpAfE3wwt04VNhLwyYX6pZG4fQZtWQ=
-Received: by 10.86.1.1 with SMTP id 1mr3355424fga.61.1221234873875;
-        Fri, 12 Sep 2008 08:54:33 -0700 (PDT)
-Received: from ?192.168.1.11? ( [83.8.211.228])
-        by mx.google.com with ESMTPS id 4sm12984229fgg.4.2008.09.12.08.54.31
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Fri, 12 Sep 2008 08:54:32 -0700 (PDT)
-User-Agent: KMail/1.9.3
-In-Reply-To: <20080912145804.GF10544@machine.or.cz>
+	id S1752934AbYILQAH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 12 Sep 2008 12:00:07 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752991AbYILQAH
+	(ORCPT <rfc822;git-outgoing>); Fri, 12 Sep 2008 12:00:07 -0400
+Received: from george.spearce.org ([209.20.77.23]:40602 "EHLO
+	george.spearce.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752934AbYILQAG (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 12 Sep 2008 12:00:06 -0400
+Received: by george.spearce.org (Postfix, from userid 1001)
+	id 1845E3835C; Fri, 12 Sep 2008 16:00:06 +0000 (UTC)
 Content-Disposition: inline
+In-Reply-To: <200809121754.30277.jnareb@gmail.com>
+User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/95742>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/95743>
 
-Petr Baudis wrote:
-> On Fri, Sep 12, 2008 at 04:36:11PM +0200, Lars Hjemli wrote:
-> >
-> > <plug>
-> > Current cgit also allows cloning over http using the same url as for
-> > browsing the repo, i.e. you may
+Jakub Narebski <jnareb@gmail.com> wrote:
+> Petr Baudis wrote:
 > > 
-> >   $ git clone http://hjemli.net/git/cgit
-> > 
-> > This has one advantage over just publishing the repo; you don't have
-> > to run `git-update-server-info` (thanks to the work done by Shawn O.
-> > Pearce on git-http-backend, which is shamelessly reimplemented in
-> > cgit).
-> > </plug>
+> >   this finally tripped me over and I wanted to quickly add cgit as an
+> > alternate viewing interface at repo.or.cz. [...]
 > 
->   this finally tripped me over and I wanted to quickly add cgit as an
-> alternate viewing interface at repo.or.cz. [...]
+> Or you can wait a little while for "smart" HTTP server, which I guess
+> also generates automatically or/and on the fly objects/info/packs and
+> info/refs required by "dumb" protocols clients (including old HTTP
+> clients).
 
-Or you can wait a little while for "smart" HTTP server, which I guess
-also generates automatically or/and on the fly objects/info/packs and
-info/refs required by "dumb" protocols clients (including old HTTP
-clients).
+The automatic generation of objects/info/packs and info/refs is
+planned for support in the smart CGI, but it doesn't help the
+"gitweb URL is same as clone URL" concept.  For that you need your
+HTTP server to know how to issue some requests to gitweb and others
+to the smart CGI or to the filesystem.
+ 
+> P.S. Could you please gather some statistics to compare the period
+> before and after installing "smart" HTTP server (and after smart
+> clients became widespread).
 
-P.S. Could you please gather some statistics to compare the period
-before and after installing "smart" HTTP server (and after smart
-clients became widespread).
+Well, it would help if there was a working implementation of the
+"smart" HTTP server.  ;-)
+
+Right now I haven't been able to touch the project for two weeks
+straight.  I'm hoping to be able to put 2 full days into it next
+week.  Lets see how that plan works.
 
 -- 
-Jakub Narebski
-Poland
+Shawn.
