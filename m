@@ -1,71 +1,282 @@
-From: Theodore Tso <tytso@MIT.EDU>
-Subject: Re: [RFC] origin link for cherry-pick and revert
-Date: Fri, 12 Sep 2008 14:44:06 -0400
-Message-ID: <20080912184406.GB5082@mit.edu>
-References: <alpine.LFD.1.10.0809100841080.3384@nehalem.linux-foundation.org> <alpine.LFD.1.10.0809100844040.3384@nehalem.linux-foundation.org> <200809101823.22072.jnareb@gmail.com> <48C9A9A4.8090703@vilain.net> <alpine.LFD.1.10.0809111641110.3384@nehalem.linux-foundation.org> <20080912054739.GB22228@cuci.nl> <20080912145802.GV5082@mit.edu> <20080912155427.GB2915@cuci.nl> <20080912161911.GA12096@coredump.intra.peff.net> <20080912164348.GC2915@cuci.nl>
+From: Alexander Gavrilov <angavrilov@gmail.com>
+Subject: [RFC PATCH (GIT-GUI)] git-gui: Add more integration options to citool.
+Date: Fri, 12 Sep 2008 22:43:49 +0400
+Organization: HOME
+Message-ID: <200809122243.50007.angavrilov@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Jeff King <peff@peff.net>, git@vger.kernel.org
-To: "Stephen R. van den Berg" <srb@cuci.nl>
-X-From: git-owner@vger.kernel.org Fri Sep 12 20:45:42 2008
+Content-Type: text/plain;
+  charset="us-ascii"
+Content-Transfer-Encoding: 7bit
+Cc: "Shawn O. Pearce" <spearce@spearce.org>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Sep 12 20:46:18 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KeDeG-00088Y-KU
-	for gcvg-git-2@gmane.org; Fri, 12 Sep 2008 20:45:41 +0200
+	id 1KeDep-0008Fd-NZ
+	for gcvg-git-2@gmane.org; Fri, 12 Sep 2008 20:46:16 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753482AbYILSod (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 12 Sep 2008 14:44:33 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753458AbYILSoc
-	(ORCPT <rfc822;git-outgoing>); Fri, 12 Sep 2008 14:44:32 -0400
-Received: from BISCAYNE-ONE-STATION.MIT.EDU ([18.7.7.80]:42896 "EHLO
-	biscayne-one-station.mit.edu" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1753448AbYILSoc (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 12 Sep 2008 14:44:32 -0400
-Received: from outgoing.mit.edu (OUTGOING-AUTH.MIT.EDU [18.7.22.103])
-	by biscayne-one-station.mit.edu (8.13.6/8.9.2) with ESMTP id m8CIi7JN027797;
-	Fri, 12 Sep 2008 14:44:07 -0400 (EDT)
-Received: from closure.thunk.org (c-98-216-98-217.hsd1.ma.comcast.net [98.216.98.217])
-	(authenticated bits=0)
-        (User authenticated as tytso@ATHENA.MIT.EDU)
-	by outgoing.mit.edu (8.13.6/8.12.4) with ESMTP id m8CIi6in012455
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
-	Fri, 12 Sep 2008 14:44:06 -0400 (EDT)
-Received: from tytso by closure.thunk.org with local (Exim 4.69)
-	(envelope-from <tytso@mit.edu>)
-	id 1KeDck-0005AL-3V; Fri, 12 Sep 2008 14:44:06 -0400
+	id S1753696AbYILSpI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 12 Sep 2008 14:45:08 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753614AbYILSpI
+	(ORCPT <rfc822;git-outgoing>); Fri, 12 Sep 2008 14:45:08 -0400
+Received: from fg-out-1718.google.com ([72.14.220.157]:35214 "EHLO
+	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753458AbYILSpG (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 12 Sep 2008 14:45:06 -0400
+Received: by fg-out-1718.google.com with SMTP id 19so562768fgg.17
+        for <git@vger.kernel.org>; Fri, 12 Sep 2008 11:45:04 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:from:organization:to:subject
+         :date:user-agent:cc:mime-version:content-type
+         :content-transfer-encoding:content-disposition:message-id;
+        bh=2XeotsewM+n7JD8oZ5b0kZapBmbydddozaixBTk5OAQ=;
+        b=Vd3j2geA6ojKxFamUrpc5nUX+lLe6y9hCSApWS3Y2CmcwR23nPCvA19Sl6c5GpK4dn
+         0Un909VrwEzbfwKuVTlV/jkgq/KaJ+VPwOVfmHPc0HaBA7xhIuuxit4nzCwi5HD793QJ
+         tmlFnCdHz5oYhxb2EZl8Us/Wtw9YI37lfidbc=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=from:organization:to:subject:date:user-agent:cc:mime-version
+         :content-type:content-transfer-encoding:content-disposition
+         :message-id;
+        b=Kcdm1ljLhIBcqHEovhhxoFjv6ropWQwgT5f/hyCHCqJFa1kdzbx8Qqvp53tmxKH4f0
+         h25St6+AgqBjGx8I+QJ4B51vN/eASwkGjG3XCRYnVe13JoLImGRG1Yg2HxE63E4e0e01
+         epKcaipKMW1fy9dmj3pv+3NWYnkIyPBAtyfRI=
+Received: by 10.180.225.16 with SMTP id x16mr3495602bkg.91.1221245104190;
+        Fri, 12 Sep 2008 11:45:04 -0700 (PDT)
+Received: from ?192.168.100.3? ( [92.255.85.78])
+        by mx.google.com with ESMTPS id g28sm10788865fkg.8.2008.09.12.11.45.02
+        (version=SSLv3 cipher=RC4-MD5);
+        Fri, 12 Sep 2008 11:45:02 -0700 (PDT)
+User-Agent: KMail/1.9.9
 Content-Disposition: inline
-In-Reply-To: <20080912164348.GC2915@cuci.nl>
-User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
-X-Scanned-By: MIMEDefang 2.42
-X-Spam-Flag: NO
-X-Spam-Score: 0.00
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/95758>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/95759>
 
-On Fri, Sep 12, 2008 at 06:43:48PM +0200, Stephen R. van den Berg wrote:
-> >> True.  But repopulating this cache after cloning means that you have to
-> >> calculate the patch-id of *every* commit in the repository.  It sounds
-> >> like something to avoid, but maybe I'm overly concerned, I have only a
-> >> vague idea on how computationally intensive this is.
-> 
-> >For a rough estimate, try:
-> 
-> >  time git log -p | git patch-id >/dev/null
-> 
-> On my system that results in 2ms per commit on average.  Not huge, but
-> not small either, I guess.  Running it results in real waiting time, it
-> all depends on how patient the user is.
+- Make citool return nonzero exit code if it did not commit.
+- Add a mode where it does not actually commit and simply
+  exits with zero code. Commit message is either disabled,
+  or simply dumped to GITGUI_EDITMSG before exiting.
+- Add an option to immediately start it in amend mode.
 
-For a local clone, git could be taught to copy the cache file.  For a
-network-based clone, the percentage of time needed to download is
-roughly 2-3 times that (although that will obviously depend on your
-network connectivity).  Building this cache can be done in the
-background, though, or delayed until the first time the cache is
-needed.
+Rationale:
 
-						- Ted
+1) Use 'git citool --nocommit' instead of mergetool in scripts.
+2) Use 'git citool --amend' to edit commits while rebasing.
+
+Signed-off-by: Alexander Gavrilov <angavrilov@gmail.com>
+---
+
+	I think this functionality might be useful, in particular for some of
+	my own scripts. But I'm not sure if this is the best way to do it.
+
+	-- Alexander
+
+
+ git-gui.sh     |   81 +++++++++++++++++++++++++++++++++++++++++++++++++++++---
+ lib/commit.tcl |    8 ++++-
+ 2 files changed, 83 insertions(+), 6 deletions(-)
+
+diff --git a/git-gui.sh b/git-gui.sh
+index fb43255..91457a2 100755
+--- a/git-gui.sh
++++ b/git-gui.sh
+@@ -961,10 +961,32 @@ blame {
+ }
+ citool {
+ 	enable_option singlecommit
++	enable_option retcode
+ 
+ 	disable_option multicommit
+ 	disable_option branch
+ 	disable_option transport
++
++	while {[llength $argv] > 0} {
++		set a [lindex $argv 0]
++		switch -- $a {
++		--amend {
++			enable_option initialamend
++		}
++		--nocommit {
++			enable_option nocommit
++			enable_option nocommitmsg
++		}
++		--commitmsg {
++			disable_option nocommitmsg
++		}
++		default {
++			break
++		}
++		}
++
++		set argv [lrange $argv 1 end]
++	}
+ }
+ }
+ 
+@@ -1121,6 +1143,20 @@ proc PARENT {} {
+ 	return $empty_tree
+ }
+ 
++proc force_amend {} {
++	global selected_commit_type
++	global HEAD PARENT MERGE_HEAD commit_type
++
++	repository_state newType newHEAD newMERGE_HEAD
++	set HEAD $newHEAD
++	set PARENT $newHEAD
++	set MERGE_HEAD $newMERGE_HEAD
++	set commit_type $newType
++
++	set selected_commit_type amend
++	do_select_commit_type
++}
++
+ proc rescan {after {honor_trustmtime 1}} {
+ 	global HEAD PARENT MERGE_HEAD commit_type
+ 	global ui_index ui_workdir ui_comm
+@@ -1767,11 +1803,19 @@ proc do_gitk {revs} {
+ }
+ 
+ set is_quitting 0
++set ret_code    1
+ 
+-proc do_quit {} {
++proc terminate_me {win} {
++	global ret_code
++	if {$win ne {.}} return
++	exit $ret_code
++}
++
++proc do_quit {{rc {1}}} {
+ 	global ui_comm is_quitting repo_config commit_type
+ 	global GITGUI_BCK_exists GITGUI_BCK_i
+ 	global ui_comm_spell
++	global ret_code
+ 
+ 	if {$is_quitting} return
+ 	set is_quitting 1
+@@ -1826,6 +1870,7 @@ proc do_quit {} {
+ 		}
+ 	}
+ 
++	set ret_code $rc
+ 	destroy .
+ }
+ 
+@@ -2228,6 +2273,14 @@ if {[is_enabled branch]} {
+ 
+ # -- Commit Menu
+ #
++proc commit_btn_caption {} {
++	if {[is_enabled nocommit]} {
++		return [mc "Done"]
++	} else {
++		return [mc Commit@@verb]
++	}
++}
++
+ if {[is_enabled multicommit] || [is_enabled singlecommit]} {
+ 	menu .mbar.commit
+ 
+@@ -2293,7 +2346,7 @@ if {[is_enabled multicommit] || [is_enabled singlecommit]} {
+ 		-command do_signoff \
+ 		-accelerator $M1T-S
+ 
+-	.mbar.commit add command -label [mc Commit@@verb] \
++	.mbar.commit add command -label [commit_btn_caption] \
+ 		-command do_commit \
+ 		-accelerator $M1T-Return
+ 	lappend disable_on_lock \
+@@ -2621,7 +2674,7 @@ button .vpane.lower.commarea.buttons.signoff -text [mc "Sign Off"] \
+ 	-command do_signoff
+ pack .vpane.lower.commarea.buttons.signoff -side top -fill x
+ 
+-button .vpane.lower.commarea.buttons.commit -text [mc Commit@@verb] \
++button .vpane.lower.commarea.buttons.commit -text [commit_btn_caption] \
+ 	-command do_commit
+ pack .vpane.lower.commarea.buttons.commit -side top -fill x
+ lappend disable_on_lock \
+@@ -2631,6 +2684,13 @@ button .vpane.lower.commarea.buttons.push -text [mc Push] \
+ 	-command do_push_anywhere
+ pack .vpane.lower.commarea.buttons.push -side top -fill x
+ 
++if {[is_enabled nocommitmsg]} {
++	.vpane.lower.commarea.buttons.signoff configure -state disabled
++}
++if {[is_enabled nocommit]} {
++	.vpane.lower.commarea.buttons.push configure -state disabled
++}
++
+ # -- Commit Message Buffer
+ #
+ frame .vpane.lower.commarea.buffer
+@@ -3212,7 +3272,20 @@ lock_index begin-read
+ if {![winfo ismapped .]} {
+ 	wm deiconify .
+ }
+-after 1 do_rescan
++after 1 {
++	if {[is_enabled initialamend]} {
++		force_amend
++	} else {
++		do_rescan
++	}
++
++	if {[is_enabled nocommitmsg]} {
++		$ui_comm configure -state disabled -background gray
++	}
++}
+ if {[is_enabled multicommit]} {
+ 	after 1000 hint_gc
+ }
++if {[is_enabled retcode]} {
++	bind . <Destroy> {+terminate_me %W}
++}
+diff --git a/lib/commit.tcl b/lib/commit.tcl
+index 2977315..3345149 100644
+--- a/lib/commit.tcl
++++ b/lib/commit.tcl
+@@ -168,7 +168,7 @@ File %s cannot be committed by this program.
+ 		}
+ 		}
+ 	}
+-	if {!$files_ready && ![string match *merge $curType]} {
++	if {!$files_ready && ![string match *merge $curType] && ![is_enabled nocommit]} {
+ 		info_popup [mc "No changes to commit.
+ 
+ You must stage at least 1 file before you can commit.
+@@ -177,6 +177,8 @@ You must stage at least 1 file before you can commit.
+ 		return
+ 	}
+ 
++	if {[is_enabled nocommitmsg]} { do_quit 0 }
++
+ 	# -- A message is required.
+ 	#
+ 	set msg [string trim [$ui_comm get 1.0 end]]
+@@ -212,6 +214,8 @@ A good commit message has the following format:
+ 	puts $msg_wt $msg
+ 	close $msg_wt
+ 
++	if {[is_enabled nocommit]} { do_quit 0 }
++
+ 	# -- Run the pre-commit hook.
+ 	#
+ 	set fd_ph [githook_read pre-commit]
+@@ -410,7 +414,7 @@ A rescan will be automatically started now.
+ 		set ::GITGUI_BCK_exists 0
+ 	}
+ 
+-	if {[is_enabled singlecommit]} do_quit
++	if {[is_enabled singlecommit]} { do_quit 0 }
+ 
+ 	# -- Update in memory status
+ 	#
+-- 
+1.6.0.20.g6148bc
