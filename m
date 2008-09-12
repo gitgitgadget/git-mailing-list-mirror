@@ -1,56 +1,88 @@
-From: Karl =?iso-8859-1?Q?Hasselstr=F6m?= <kha@treskal.com>
-Subject: Re: [StGit PATCH] add option to import series directly from a tar archive
-Date: Fri, 12 Sep 2008 17:44:47 +0200
-Message-ID: <20080912154447.GD31240@diana.vm.bytemark.co.uk>
-References: <48C34EC7.9040102@gmail.com> <20080908180317.GA6123@diana.vm.bytemark.co.uk> <48C56AD9.6040007@gmail.com> <2008-09-12-14-21-13+trackit+sam@rfc1149.net> <48CA674B.9080900@gmail.com>
+From: "Shawn O. Pearce" <spearce@spearce.org>
+Subject: Re: git-gui: more issues with diff parsing
+Date: Fri, 12 Sep 2008 08:23:45 -0700
+Message-ID: <20080912152345.GE22960@spearce.org>
+References: <200809091030.04507.barra_cuda@katamail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Samuel Tardieu <sam@rfc1149.net>, git@vger.kernel.org
-To: Clark Williams <clark.williams@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Sep 12 17:24:28 2008
+Content-Type: text/plain; charset=utf-8
+Cc: git@vger.kernel.org
+To: Michele Ballabio <barra_cuda@katamail.com>
+X-From: git-owner@vger.kernel.org Fri Sep 12 17:25:08 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KeAVX-00084T-DE
-	for gcvg-git-2@gmane.org; Fri, 12 Sep 2008 17:24:27 +0200
+	id 1KeAW4-0008Fd-Ks
+	for gcvg-git-2@gmane.org; Fri, 12 Sep 2008 17:25:01 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756935AbYILPWo convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 12 Sep 2008 11:22:44 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756862AbYILPWo
-	(ORCPT <rfc822;git-outgoing>); Fri, 12 Sep 2008 11:22:44 -0400
-Received: from diana.vm.bytemark.co.uk ([80.68.90.142]:1462 "EHLO
-	diana.vm.bytemark.co.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753408AbYILPWo (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 12 Sep 2008 11:22:44 -0400
-Received: from kha by diana.vm.bytemark.co.uk with local (Exim 3.36 #1 (Debian))
-	id 1KeApD-0000IJ-00; Fri, 12 Sep 2008 16:44:47 +0100
+	id S1753647AbYILPXr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 12 Sep 2008 11:23:47 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753346AbYILPXr
+	(ORCPT <rfc822;git-outgoing>); Fri, 12 Sep 2008 11:23:47 -0400
+Received: from george.spearce.org ([209.20.77.23]:47198 "EHLO
+	george.spearce.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753161AbYILPXq (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 12 Sep 2008 11:23:46 -0400
+Received: by george.spearce.org (Postfix, from userid 1001)
+	id E92373835C; Fri, 12 Sep 2008 15:23:45 +0000 (UTC)
 Content-Disposition: inline
-In-Reply-To: <48CA674B.9080900@gmail.com>
-X-Manual-Spam-Check: kha@treskal.com, clean
-User-Agent: Mutt/1.5.9i
+In-Reply-To: <200809091030.04507.barra_cuda@katamail.com>
+User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/95736>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/95737>
 
-On 2008-09-12 07:57:47 -0500, Clark Williams wrote:
+Michele Ballabio <barra_cuda@katamail.com> wrote:
+> The patch
+> 	git-gui: Fix diff parsing for lines starting with "--" or "++"
+> seems to have introduced some glitches. With this sequence:
 
-> then write a test to keep Karl happy,
+Oy.
+ 
+> git init
+> touch g
+> git add g
+> git commit -m"g is a file"
+> rm g
+> echo "vvvv" > file
+> ln -s file g
+> git add g file
+> git gui
+> 
+> Now clicking on "g" in the staged changes, git-gui gives this line:
+> 	error: Unhandled 2 way diff marker: {d}
 
-Technically, you write the test to make sure that your new feature
-works as intended and won't break in the future. But since that's
-rather a mouthful, I guess "Karl" will do as an acronym. ;-)
+The diff is weird:
 
-> then try to come up with a way to deal with importing patches that
-> don't have complete email addresses, no descriptions, etc. Once I
-> get through that, I'll see if we can deal with weirdly rooted patch
-> series.
+  $ git-diff-index --cached -p --no-color -U5 d6e02aa06c91c711d98ae06e6e69c5de5841a5e5 -- g
+  diff --git a/g b/g
+  deleted file mode 100644
+  index e69de29..1a010b1
+  diff --git a/g b/g
+  new file mode 120000
+  index e69de29..1a010b1
+  --- /dev/null
+  +++ b/g
+  @@ -0,0 +1 @@
+  +file
+  \ No newline at end of file
 
-Nice.
+Notice how we get two diffs for the same file?  That's why git-gui
+is choking on this particular change.  It expected only one diff
+for the path it gave to Git.  It got two back.  In cases like this
+we may not be able to support line or hunk application as the patch
+is really two different patches against that path.  :-|
 
---=20
-Karl Hasselstr=F6m, kha@treskal.com
-      www.treskal.com/kalle
+> The following patch seems to fix this particular issue, but I don't think
+> it's the right fix...
+
+I don't think that is the right fix, but the one that I just tried to
+write to do clear_diff when we see the second diff --git line didn't
+work either.  Plus we probably need to disable the hunk apply code.
+
+I'll look at it again when I can get more time.
+
+-- 
+Shawn.
