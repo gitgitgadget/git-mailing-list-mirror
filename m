@@ -1,82 +1,79 @@
-From: "Catalin Marinas" <catalin.marinas@gmail.com>
-Subject: Re: StGit question
-Date: Fri, 12 Sep 2008 23:18:22 +0100
-Message-ID: <b0943d9e0809121518p38f60733v3857fa66ac80d152@mail.gmail.com>
-References: <48C94F86.6080707@gmail.com>
-	 <20080912075116.GA26685@diana.vm.bytemark.co.uk>
-	 <48CA6367.9020300@gmail.com>
-	 <b0943d9e0809121515v53c6d593o8211b3cbbb8dfba4@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] git mv: Support moving submodules
+Date: Fri, 12 Sep 2008 15:19:07 -0700
+Message-ID: <7vprn9m2hw.fsf@gitster.siamese.dyndns.org>
+References: <20080912210908.31628.50439.stgit@localhost>
+ <20080912214129.14829.53058.stgit@localhost>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: "=?ISO-8859-1?Q?Karl_Hasselstr=F6m?=" <kha@treskal.com>,
-	git@vger.kernel.org
-To: "Clark Williams" <clark.williams@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Sep 13 00:19:32 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Petr Baudis <pasky@suse.cz>
+X-From: git-owner@vger.kernel.org Sat Sep 13 00:20:22 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KeGzD-0005Ex-Re
-	for gcvg-git-2@gmane.org; Sat, 13 Sep 2008 00:19:32 +0200
+	id 1KeH01-0005Q5-D5
+	for gcvg-git-2@gmane.org; Sat, 13 Sep 2008 00:20:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756213AbYILWSY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 12 Sep 2008 18:18:24 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753641AbYILWSX
-	(ORCPT <rfc822;git-outgoing>); Fri, 12 Sep 2008 18:18:23 -0400
-Received: from rv-out-0506.google.com ([209.85.198.231]:57935 "EHLO
-	rv-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752150AbYILWSX (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 12 Sep 2008 18:18:23 -0400
-Received: by rv-out-0506.google.com with SMTP id k40so993330rvb.1
-        for <git@vger.kernel.org>; Fri, 12 Sep 2008 15:18:22 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to
-         :subject:cc:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:references;
-        bh=9ABcR21RYg/OPDktIV6w2fu59/DWd2tzhvmrZErr6QU=;
-        b=tEz8GWsfJylzcViTmfCgfwDmJZ+JNzbC7ysVmlhJIhsoejiL27N4PSz3LDZVNpSSKd
-         4vXx+pJSdwWnhBMA7Hi+XDEe6HxWDS+SYjJl855Dok4WVOZr9y1/B5OPHJsaiJtew/sK
-         Pf5bGxRuwNAuLH9WXwYFMulv2riDA6QXUeVJY=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
-         :content-type:content-transfer-encoding:content-disposition
-         :references;
-        b=fwt8ptZ9hyccLbuBaj9Vl0Jh7olrx6yjP3oOuk85ykGlHNm/I/R5vOCXww0P1lyuCh
-         IBCC8fP8P7djd8HNsABvD1HHRrMLRzGSszh7oTAApu7azm2JfyIWF8jwawDzLixtJSx1
-         Vg7naqUCw4Y1ZN2xObj+gFNzy99HPcQnOKsgc=
-Received: by 10.141.76.21 with SMTP id d21mr2941096rvl.270.1221257902309;
-        Fri, 12 Sep 2008 15:18:22 -0700 (PDT)
-Received: by 10.140.136.21 with HTTP; Fri, 12 Sep 2008 15:18:22 -0700 (PDT)
-In-Reply-To: <b0943d9e0809121515v53c6d593o8211b3cbbb8dfba4@mail.gmail.com>
-Content-Disposition: inline
+	id S1756600AbYILWTO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 12 Sep 2008 18:19:14 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756694AbYILWTN
+	(ORCPT <rfc822;git-outgoing>); Fri, 12 Sep 2008 18:19:13 -0400
+Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:49915 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755580AbYILWTN (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 12 Sep 2008 18:19:13 -0400
+Received: from localhost.localdomain (localhost [127.0.0.1])
+	by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id 421307E10A;
+	Fri, 12 Sep 2008 18:19:12 -0400 (EDT)
+Received: from pobox.com (ip68-225-240-211.oc.oc.cox.net [68.225.240.211])
+ (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
+ certificate requested) by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with
+ ESMTPSA id DA92B7E108; Fri, 12 Sep 2008 18:19:08 -0400 (EDT)
+In-Reply-To: <20080912214129.14829.53058.stgit@localhost> (Petr Baudis's
+ message of "Fri, 12 Sep 2008 23:42:31 +0200")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: D3BDC738-8118-11DD-AA66-3113EBD4C077-77302942!a-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/95780>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/95781>
 
-On 12/09/2008, Catalin Marinas <catalin.marinas@gmail.com> wrote:
-> On 12/09/2008, Clark Williams <clark.williams@gmail.com> wrote:
->  > Most of the time it's not more than one or two patches difference, so I think that it
->  >  can be handled manually for now. I'll definitely keep an eye on sync and merge though...
->
->
-> As Karl said, we have some plans to allow collaboration between
->  multiple StGit repositories but we didn't have much time to look at it
->  recently. Karl's "merge" stuff looks promising though.
->
->  What "sync" does is that it allow the same set of patches between two
->  branches to be synchronised in case modifications happened on one of
->  these branches. In your situation, you would have to fetch the remote
->  branch, uncommit as in Karl's method and either import or sync the
->  remote patches with those on your local branch.
+Petr Baudis <pasky@suse.cz> writes:
 
-BTW, "sync" allows synchronisation with a series of patches stored in
-a directory. So you can also share patches using exported repositories
-with import and sync.
+> diff --git a/builtin-mv.c b/builtin-mv.c
+> index 4f65b5a..2970acc 100644
+> --- a/builtin-mv.c
+> +++ b/builtin-mv.c
+> @@ -9,6 +9,7 @@
+>  #include "cache-tree.h"
+>  #include "string-list.h"
+>  #include "parse-options.h"
+> +#include "submodule.h"
+>  
+>  static const char * const builtin_mv_usage[] = {
+>  	"git mv [options] <source>... <destination>",
+> @@ -49,6 +50,24 @@ static const char *add_slash(const char *path)
+>  	return path;
+>  }
+>  
+> +static int ce_is_gitlink(int i)
+> +{
+> +	return i < 0 ? 0 : S_ISGITLINK(active_cache[i]->ce_mode);
+> +}
 
--- 
-Catalin
+This interface itself is ugly (why should a caller pass "it is unmerged or
+does not exist" without checking?), and it also makes the hunk that begins
+at 84/105 ugly.  Why not "path_is_gitlink(const char*)" and run
+cache_name_pos() here instead?
+
+The interface, even if it is internal, should be done with a better taste
+than that, even though I understand that you wanted to reuse the cache_pos
+for the source one while you check.
+
+Oh, by the way, what should happen when you have an unmerged path in the
+index and say "git mv path elsewhere" (this question is *not* limited to
+submodules).  Compared to that, what _does_ happen with the current code,
+and with your patch?
