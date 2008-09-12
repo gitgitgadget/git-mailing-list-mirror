@@ -1,138 +1,68 @@
-From: Christian Stimming <stimming@tuhh.de>
-Subject: [PATCH] gitk: Add untranslated error messages to translation.
-Date: Fri, 12 Sep 2008 11:39:43 +0200
-Organization: Alumni Technische =?iso-8859-1?q?Universit=E4t?= Hamburg-Harburg
-Message-ID: <200809121139.43501.stimming@tuhh.de>
+From: "Alexander Gavrilov" <angavrilov@gmail.com>
+Subject: Re: [PATCH] git-gui: I18n fix sentence parts into full sentences for translation again.
+Date: Fri, 12 Sep 2008 14:23:42 +0400
+Message-ID: <bb6f213e0809120323l3c18cd32hfde9ef6756593061@mail.gmail.com>
+References: <200809121117.39407.stimming@tuhh.de>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="us-ascii"
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Paul Mackerras <paulus@samba.org>
-X-From: git-owner@vger.kernel.org Fri Sep 12 11:41:04 2008
+Cc: git@vger.kernel.org, "Shawn O. Pearce" <spearce@spearce.org>
+To: "Christian Stimming" <stimming@tuhh.de>
+X-From: git-owner@vger.kernel.org Fri Sep 12 12:25:13 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Ke59D-0000va-Kh
-	for gcvg-git-2@gmane.org; Fri, 12 Sep 2008 11:41:04 +0200
+	id 1Ke5pw-0004cw-B1
+	for gcvg-git-2@gmane.org; Fri, 12 Sep 2008 12:25:12 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752508AbYILJj5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 12 Sep 2008 05:39:57 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752477AbYILJj5
-	(ORCPT <rfc822;git-outgoing>); Fri, 12 Sep 2008 05:39:57 -0400
-Received: from smtp3.rz.tu-harburg.de ([134.28.202.138]:41169 "EHLO
-	smtp3.rz.tu-harburg.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751852AbYILJj4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 12 Sep 2008 05:39:56 -0400
-Received: from mail2.rz.tu-harburg.de (mail2.rz.tu-harburg.de [134.28.202.179])
-	by smtp3.rz.tu-harburg.de (8.13.8/8.13.8) with ESMTP id m8C9dW75018661
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=OK);
-	Fri, 12 Sep 2008 11:39:33 +0200
-Received: from [192.168.0.101] (e176218255.adsl.alicedsl.de [85.176.218.255])
-	(user=alucst mech=LOGIN bits=0)
-	by mail2.rz.tu-harburg.de (8.13.8/8.13.8) with ESMTP id m8C9dULO011642
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Fri, 12 Sep 2008 11:39:32 +0200
-User-Agent: KMail/1.9.5
+	id S1752613AbYILKXp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 12 Sep 2008 06:23:45 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751852AbYILKXp
+	(ORCPT <rfc822;git-outgoing>); Fri, 12 Sep 2008 06:23:45 -0400
+Received: from yx-out-2324.google.com ([74.125.44.29]:38581 "EHLO
+	yx-out-2324.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752477AbYILKXo (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 12 Sep 2008 06:23:44 -0400
+Received: by yx-out-2324.google.com with SMTP id 8so275975yxm.1
+        for <git@vger.kernel.org>; Fri, 12 Sep 2008 03:23:43 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to
+         :subject:cc:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:references;
+        bh=NZUGBmAGtRTLcYML1mq2w/WkzKrSJFtnkXbvdMX+AA8=;
+        b=ATff+OIZVGMuuoR9mqYFa1J8IGXJ64d4PaT0a6FLtUaUd3yKqTvvWgT00bEKr/1Z6W
+         yg2R4f4uCQVqomzRKw/odqHgE+ab21lPPqlGKi4ICK1WOGG0gUsJ2aLKpVkrylMDs+9c
+         pYXxAgaWuTBCftoFcNP3kQpdww3qXkmhw+nZw=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
+         :content-type:content-transfer-encoding:content-disposition
+         :references;
+        b=ppYSvBMUFAurc7gB3DcHcVbLrgEn4G1FmKpvkJwXVzlYnhLxUyIk/aR9hys4R2sbIl
+         CGed0dPW8h5eqVqWdnLk8NbLh76G5O4kp8JN9vjzVVYpXn7QWNh4ZglKDfSD6QaVOprz
+         nLu2ln7fuSSwBez3VAGoFGlhotsXwKJbYj3dc=
+Received: by 10.103.244.10 with SMTP id w10mr2805489mur.67.1221215022859;
+        Fri, 12 Sep 2008 03:23:42 -0700 (PDT)
+Received: by 10.103.251.10 with HTTP; Fri, 12 Sep 2008 03:23:42 -0700 (PDT)
+In-Reply-To: <200809121117.39407.stimming@tuhh.de>
 Content-Disposition: inline
-X-Scanned-By: TUHH Rechenzentrum content checker on 134.28.202.138
-X-Scanned-By: TUHH Rechenzentrum content checker on 134.28.202.179
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/95695>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/95696>
 
-Signed-off-by: Christian Stimming <stimming@tuhh.de>
----
- gitk |   18 +++++++++---------
- 1 files changed, 9 insertions(+), 9 deletions(-)
+On Fri, Sep 12, 2008 at 1:17 PM, Christian Stimming <stimming@tuhh.de> wrote:
+>-       set op_question [mc "Force resolution to %s?
+>-Note that the diff shows only conflicting changes.
+>+    set op_question [strcat $targetquestion "\n" \
+>+[mc "Note that the diff shows only conflicting changes.
+...
+> -               $target [short_path $current_diff_path]]
+> +               $targetquestion [short_path $current_diff_path]]]
 
-diff --git a/gitk b/gitk
-index 2eaa2ae..ccf6952 100755
---- a/gitk
-+++ b/gitk
-@@ -269,7 +269,7 @@ proc parseviewrevs {view revs} {
- 		lappend badrev $line
- 	    }
- 	}		    
--	error_popup "Error parsing revisions: $err"
-+	error_popup "[mc "Error parsing revisions:"] $err"
- 	return {}
-     }
-     set ret {}
-@@ -324,7 +324,7 @@ proc start_rev_list {view} {
- 	if {[catch {
- 	    set str [exec sh -c $viewargscmd($view)]
- 	} err]} {
--	    error_popup "Error executing --argscmd command: $err"
-+	    error_popup "[mc "Error executing --argscmd command:"] $err"
- 	    return 0
- 	}
- 	set args [concat $args [split $str "\n"]]
-@@ -500,7 +500,7 @@ proc updatecommits {} {
- 	set fd [open [concat | git log --no-color -z --pretty=raw --parents \
- 			  --boundary $args "--" $vfilelimit($view)] r]
-     } err]} {
--	error_popup "Error executing git log: $err"
-+	error_popup "[mc "Error executing git log:"] $err"
- 	return
-     }
-     if {$viewactive($view) == 0} {
-@@ -2936,7 +2936,7 @@ proc save_file_from_commit {filename output what} {
- 	if {[string match "fatal: bad revision *" $err]} {
- 	    return $nullfile
- 	}
--	error_popup "Error getting \"$filename\" from $what: $err"
-+	error_popup "[mc "Error getting \"%s\" from %s:" $filename $what] $err"
- 	return {}
-     }
-     return $output
-@@ -2993,7 +2993,7 @@ proc external_diff {} {
- 	set gitktmpdir [file join [file dirname $gitdir] \
- 			    [format ".gitk-tmp.%s" [pid]]]
- 	if {[catch {file mkdir $gitktmpdir} err]} {
--	    error_popup "Error creating temporary directory $gitktmpdir: $err"
-+	    error_popup "[mc "Error creating temporary directory %s:" $gitktmpdir] $err"
- 	    unset gitktmpdir
- 	    return
- 	}
-@@ -3002,7 +3002,7 @@ proc external_diff {} {
-     incr diffnum
-     set diffdir [file join $gitktmpdir $diffnum]
-     if {[catch {file mkdir $diffdir} err]} {
--	error_popup "Error creating temporary directory $diffdir: $err"
-+	error_popup "[mc "Error creating temporary directory %s:" $diffdir] $err"
- 	return
-     }
- 
-@@ -3015,7 +3015,7 @@ proc external_diff {} {
- 		     [list $difffromfile $difftofile]]
-         if {[catch {set fl [open $cmd r]} err]} {
-             file delete -force $diffdir
--            error_popup [mc "$extdifftool: command failed: $err"]
-+            error_popup "$extdifftool: [mc "command failed:"] $err"
-         } else {
-             fconfigure $fl -blocking 0
-             filerun $fl [list delete_at_eof $fl $diffdir]
-@@ -3040,7 +3040,7 @@ proc external_blame {parent_idx} {
-     }
- 
-     if {[catch {exec git gui blame $base_commit $flist_menu_file &} err]} {
--	error_popup [mc "git gui blame: command failed: $err"]
-+	error_popup "[mc "git gui blame: command failed:"] $err"
-     }
- }
- 
-@@ -3049,7 +3049,7 @@ proc delete_at_eof {f dir} {
-     while {[gets $f line] >= 0} {}
-     if {[eof $f]} {
- 	if {[catch {close $f} err]} {
--	    error_popup "External diff viewer failed: $err"
-+	    error_popup "[mc "External diff viewer failed:"] $err"
- 	}
- 	file delete -force $dir
- 	return 0
--- 
-1.6.0.rc1.34.g0fe8c
+You should remove this $target completely -- there is no %s to match it anymore.
+
+Alexander.
