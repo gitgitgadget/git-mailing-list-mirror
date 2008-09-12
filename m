@@ -1,122 +1,98 @@
-From: Marcus Griep <marcus@griep.us>
-Subject: Re: [PATCH 1/2] Documentation: new upstream rebase recovery section
- in git-rebase
-Date: Thu, 11 Sep 2008 21:15:16 -0400
-Message-ID: <48C9C2A4.6070601@griep.us>
-References: <200809030738.09589.trast@student.ethz.ch> <1221147525-5589-1-git-send-email-trast@student.ethz.ch> <1221147525-5589-2-git-send-email-trast@student.ethz.ch>
+From: "Imran M Yousuf" <imran@smartitengineering.com>
+Subject: Re: [JGIT PATCH 1/2] Issue 23: Resolve tag^0 as tag^{commit}
+Date: Fri, 12 Sep 2008 07:51:05 +0600
+Message-ID: <9e85b2570809111851y756fdb3en2c17c69bf5ac444e@mail.gmail.com>
+References: <20080911213927.GA20238@diku.dk>
+	 <200809120047.58484.robin.rosenberg.lists@dewire.com>
+	 <20080912000007.GA31931@diku.dk>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
- protocol="application/pgp-signature";
- boundary="------------enig35C6663A91437C97E0652A90"
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-To: Thomas Rast <trast@student.ethz.ch>
-X-From: git-owner@vger.kernel.org Fri Sep 12 03:21:11 2008
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: "Robin Rosenberg" <robin.rosenberg.lists@dewire.com>,
+	"Shawn O. Pearce" <spearce@spearce.org>, git@vger.kernel.org,
+	"Imran M Yousuf" <imyousuf@smartitengineering.com>
+To: "Jonas Fonseca" <fonseca@diku.dk>
+X-From: git-owner@vger.kernel.org Fri Sep 12 03:52:25 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KdxLS-0007LB-SW
-	for gcvg-git-2@gmane.org; Fri, 12 Sep 2008 03:21:11 +0200
+	id 1Kdxpb-0004bp-5m
+	for gcvg-git-2@gmane.org; Fri, 12 Sep 2008 03:52:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752478AbYILBPg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 11 Sep 2008 21:15:36 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752613AbYILBPg
-	(ORCPT <rfc822;git-outgoing>); Thu, 11 Sep 2008 21:15:36 -0400
-Received: from an-out-0708.google.com ([209.85.132.251]:48270 "EHLO
-	an-out-0708.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752305AbYILBPf (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 11 Sep 2008 21:15:35 -0400
-Received: by an-out-0708.google.com with SMTP id d40so75478and.103
-        for <git@vger.kernel.org>; Thu, 11 Sep 2008 18:15:34 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from
-         :user-agent:mime-version:to:cc:subject:references:in-reply-to
-         :x-enigmail-version:content-type:sender;
-        bh=70TaRr9hPP0LpXdyvnkktj9QgBgGwkk9gY/nRa6CdWc=;
-        b=VQ1MOilAUrXTPr4pAOf98wbu4zvVRySdct/clsXWh8AWvvSL0Wu/20G4Qvw2s8Lt/X
-         3WQRF6Y3n1bTggyU/rJ+gXnl7pQR8gQWZvFUZbFIo6Ryf4qOK/NwJnT4JAIW7cCR/uhb
-         X35C40pleOp1+c5ocIeUkq2rOpgyQWEesDVFE=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:user-agent:mime-version:to:cc:subject
-         :references:in-reply-to:x-enigmail-version:content-type:sender;
-        b=ig/R40CqvqSbWu2Ix1kfVh1owe83APzFVX3wCj1cYISUM8D33o4Xeflq3eNmjOmIl3
-         w2ORa6G4rZFo20vBfcqEp9hHTrOuVVFKV8gviyyVYhz9opAAJEtDfyLVMPpVwzWsSE7w
-         fU96j5K2eEntQOl9PxnQDho6kymD2XtJzxQlM=
-Received: by 10.100.232.13 with SMTP id e13mr4385432anh.140.1221182134681;
-        Thu, 11 Sep 2008 18:15:34 -0700 (PDT)
-Received: from ?192.168.1.154? ( [71.174.65.37])
-        by mx.google.com with ESMTPS id b37sm17702227ana.33.2008.09.11.18.15.32
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Thu, 11 Sep 2008 18:15:33 -0700 (PDT)
-User-Agent: Thunderbird 2.0.0.16 (Windows/20080708)
-In-Reply-To: <1221147525-5589-2-git-send-email-trast@student.ethz.ch>
-X-Enigmail-Version: 0.95.7
+	id S1753858AbYILBvL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 11 Sep 2008 21:51:11 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753458AbYILBvK
+	(ORCPT <rfc822;git-outgoing>); Thu, 11 Sep 2008 21:51:10 -0400
+Received: from ey-out-2122.google.com ([74.125.78.27]:31599 "EHLO
+	ey-out-2122.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753830AbYILBvJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 11 Sep 2008 21:51:09 -0400
+Received: by ey-out-2122.google.com with SMTP id 6so259848eyi.37
+        for <git@vger.kernel.org>; Thu, 11 Sep 2008 18:51:05 -0700 (PDT)
+Received: by 10.210.36.8 with SMTP id j8mr4241898ebj.168.1221184265171;
+        Thu, 11 Sep 2008 18:51:05 -0700 (PDT)
+Received: by 10.210.113.7 with HTTP; Thu, 11 Sep 2008 18:51:05 -0700 (PDT)
+In-Reply-To: <20080912000007.GA31931@diku.dk>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/95677>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/95678>
 
-This is an OpenPGP/MIME signed message (RFC 2440 and 3156)
---------------enig35C6663A91437C97E0652A90
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
+On Fri, Sep 12, 2008 at 6:00 AM, Jonas Fonseca <fonseca@diku.dk> wrote:
+>> Second, the testcase in the second patch fails on my machine.
+>>
+>> testDerefTaggedTagTree(org.spearce.jgit.lib.T0008_testparserev)
+>> junit.framework.ComparisonFailure: expected:<[269e1253bad5c247c6bde37aa48ae1e03138206c]> but was:<[be83157b4ffe650d728ba4f98ad47b623b0d0c20]>
+>>       at junit.framework.Assert.assertEquals(Assert.java:81)
+>>       at junit.framework.Assert.assertEquals(Assert.java:87)
+>>       at org.spearce.jgit.lib.T0008_testparserev.testDerefTaggedTagTree(T0008_testparserev.java:123)
+>
+> I reran all the test before formatting the patch, but after doing some
+> last minut changes. When I run all the tests using maven (inside
+> NetBeans or from the command line) it tells me:
+>
+>        Tests run: 428, Failures: 0, Errors: 0, Skipped: 0
+>
+> From the output it looks like the tests in the files named T000* are
+> never run. However, where the breakage is (could be my setup) I don't
+> know. Imran?
+>
 
-Thomas Rast wrote:
-> +Now suppose the 'subsystem' maintainer decides to clean up his history=
+Hmm, I will have to check it. Will come back with some feedback after
+checking. Usually if a class is a TestCase then it should have run.
 
-> +with an interactive rebase.  He edits commits A and D (marked with a
-> +`*`), decides to remove D entirely and moves B to the front.  This
-> +results in
-
-Minor correction:
--+with an interactive rebase.  He edits commits A and D (marked with a
-++with an interactive rebase.  He edits commits A and C (marked with a
-
-> +To fix this, you have to manually transplant your own part of the
-> +history to the new branch head.  Looking at `git log`, you should be
-> +able to determine that three commits on 'topic' are yours.  Again
-> +assuming you are already on 'topic', you can do
-> +------------
-> +    git rebase --onto subsystem HEAD~3
-> +------------
-> +to put things right.  Of course, this again ripples onwards:
-> +'everyone' downstream from 'subsystem' will have to 'manually' rebase
-> +all their work!
-
-I like this documentation because it provides another clear case of how
-the '--onto' option is used.
-
---=20
-Marcus Griep
-GPG Key ID: 0x5E968152
-=E2=80=94=E2=80=94
-http://www.boohaunt.net
-=D7=90=D7=AA.=CF=88=CE=BF=C2=B4
+> Anyway, for now I will just run the single test specifically. Perhaps I
+> should just put this into the same patch. Anyway, the following should
+> fix it.
+>
+> diff --git a/org.spearce.jgit.test/tst/org/spearce/jgit/lib/T0008_testparserev.java b/org.spearce.jgit.test/tst/org/spearce/jgit/lib/T0008_testparserev.java
+> index 2a1a4ad..1fc73b4 100644
+> --- a/org.spearce.jgit.test/tst/org/spearce/jgit/lib/T0008_testparserev.java
+> +++ b/org.spearce.jgit.test/tst/org/spearce/jgit/lib/T0008_testparserev.java
+> @@ -117,7 +117,7 @@ public void testDerefTagIssue23() throws IOException {
+>        }
+>
+>        public void testDerefTaggedTagTree() throws IOException {
+> -               assertEquals("269e1253bad5c247c6bde37aa48ae1e03138206c",db.resolve("refs/tags/C").name());
+> +               assertEquals("be83157b4ffe650d728ba4f98ad47b623b0d0c20",db.resolve("refs/tags/C").name());
+>                assertEquals("d86a2aada2f5e7ccf6f11880bfb9ab404e8a8864",db.resolve("refs/tags/C^{commit}").name());
+>                assertEquals("856ec208ae6cadac25a6d74f19b12bb27a24fe24",db.resolve("refs/tags/C^{tree}").name());
+>        }
+>
+> --
+> Jonas Fonseca
+>
 
 
---------------enig35C6663A91437C97E0652A90
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: OpenPGP digital signature
-Content-Disposition: attachment; filename="signature.asc"
 
------BEGIN PGP SIGNATURE-----
-
-iQIVAwUBSMnCsQPFruyc22R/AQKUBQ//YKJIkFZZF60vfK/AMNpcxYYCwhZQg6aF
-Ns53wdCcbtFi2pweT6u6fbO7gV6lAWcIlZipXDnFqsVkLSZVoEJOfAljwN/b9Kjn
-NnjKgq4+FoZVGFcKMmySO7nLqsG2ZgQvRAe24/OYgmx05nUbgAKlLZFGlvD499pi
-v/joXyZdSzEttLF4AAbnp54pIfOh1nkiEjnxXByhiNOtakk+/4PhxW/ELH7fG+v9
-W660l06V4AyflLxhb//LOv5ubVJfgdu37JzJ3rblboVx4aRzIRCGbTySvlUABAlE
-kPPTqICEgBCOa0ps0JyfkcaZa7BsRc6C7d6ZsTLa4KntCuwC5deov2AP1wgxypeB
-s8ppmE+Ahb4CamUwUKptjRbjuqQt02NFxC5eGE6gv27YQqN5M1U4vQ1f7/hpNBWG
-K7h3vwcbvYTkscKCe6LPVgGYhL1hqgo6XBnS+6mOheatbOSGsK5KXSiQ3w1jCVjU
-icjzZm0FQgO9EP06UFlMXIvglP0/7fCfxPelqoTdHzfkvwVQfFe+w31ulU48GD6E
-XYT68ZUoTmE369rLHltbh9XPkiPAVN+03xp/W8cOdGJSvQWpReOVDw6nJmkhHc+Z
-7iZkpVhSMcEXmUEZZOxBtxg4WTTbi5qG6kFfN+F2ejSDwC/8XSPIMaT2nqZjanPp
-7/0lVySDidc=
-=NCpw
------END PGP SIGNATURE-----
-
---------------enig35C6663A91437C97E0652A90--
+-- 
+Imran M Yousuf
+Entrepreneur & Software Engineer
+Smart IT Engineering
+Dhaka, Bangladesh
+Email: imran@smartitengineering.com
+Blog: http://imyousuf-tech.blogs.smartitengineering.com/
+Mobile: +880-1711402557
