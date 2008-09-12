@@ -1,43 +1,44 @@
 From: Michael J Gruber <git@drmicha.warpmail.net>
-Subject: [PATCH/RFC 2/6] convert doc links for server type programmes from linkgit to gitlink
-Date: Fri, 12 Sep 2008 12:55:21 +0200
-Message-ID: <1221216926-20435-3-git-send-email-git@drmicha.warpmail.net>
+Subject: [PATCH/RFC 2/6] convert doc links for server type programmes
+Date: Fri, 12 Sep 2008 12:55:22 +0200
+Message-ID: <1221216926-20435-4-git-send-email-git@drmicha.warpmail.net>
 References: <1221216926-20435-1-git-send-email-git@drmicha.warpmail.net>
  <1221216926-20435-2-git-send-email-git@drmicha.warpmail.net>
+ <1221216926-20435-3-git-send-email-git@drmicha.warpmail.net>
 Cc: Michael J Gruber <git@drmicha.warpmail.net>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Sep 12 12:57:21 2008
+X-From: git-owner@vger.kernel.org Fri Sep 12 12:57:22 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Ke6L2-0003pN-LL
+	id 1Ke6L3-0003pN-DA
 	for gcvg-git-2@gmane.org; Fri, 12 Sep 2008 12:57:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753030AbYILKzx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 12 Sep 2008 06:55:53 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753056AbYILKzx
-	(ORCPT <rfc822;git-outgoing>); Fri, 12 Sep 2008 06:55:53 -0400
-Received: from out1.smtp.messagingengine.com ([66.111.4.25]:57158 "EHLO
+	id S1753161AbYILK4A (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 12 Sep 2008 06:56:00 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753137AbYILK4A
+	(ORCPT <rfc822;git-outgoing>); Fri, 12 Sep 2008 06:56:00 -0400
+Received: from out1.smtp.messagingengine.com ([66.111.4.25]:34219 "EHLO
 	out1.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1753013AbYILKzw (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 12 Sep 2008 06:55:52 -0400
+	by vger.kernel.org with ESMTP id S1753135AbYILKz7 (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 12 Sep 2008 06:55:59 -0400
 Received: from compute1.internal (compute1.internal [10.202.2.41])
-	by out1.messagingengine.com (Postfix) with ESMTP id 66429160EAD
-	for <git@vger.kernel.org>; Fri, 12 Sep 2008 06:55:51 -0400 (EDT)
-Received: from heartbeat1.messagingengine.com ([10.202.2.160])
-  by compute1.internal (MEProxy); Fri, 12 Sep 2008 06:55:51 -0400
-X-Sasl-enc: fFQwePBgWINiFTHZqUibi7kXMYjjfQG5S1fwjOrbslc1 1221216950
+	by out1.messagingengine.com (Postfix) with ESMTP id 0CA2F15F53C
+	for <git@vger.kernel.org>; Fri, 12 Sep 2008 06:55:58 -0400 (EDT)
+Received: from heartbeat2.messagingengine.com ([10.202.2.161])
+  by compute1.internal (MEProxy); Fri, 12 Sep 2008 06:55:58 -0400
+X-Sasl-enc: DWaV4P9aeGFXQ/Oqv8QnG+2/3m5R8sgQBZ92X0EgUI81 1221216957
 Received: from localhost (whitehead.math.tu-clausthal.de [139.174.44.12])
-	by mail.messagingengine.com (Postfix) with ESMTPSA id 697CACFD3;
-	Fri, 12 Sep 2008 06:55:50 -0400 (EDT)
+	by mail.messagingengine.com (Postfix) with ESMTPSA id 239F427AB4;
+	Fri, 12 Sep 2008 06:55:57 -0400 (EDT)
 X-Mailer: git-send-email 1.6.0.1.308.gede4c
-In-Reply-To: <1221216926-20435-2-git-send-email-git@drmicha.warpmail.net>
+In-Reply-To: <1221216926-20435-3-git-send-email-git@drmicha.warpmail.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/95700>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/95701>
 
 For all server type programmes, we use the macro "linkgitasis" which
 preserves any dashes:
