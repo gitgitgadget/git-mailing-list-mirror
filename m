@@ -1,224 +1,145 @@
 From: Petr Baudis <pasky@suse.cz>
-Subject: [PATCH 2/6] git rm: Support for removing submodules
-Date: Fri, 12 Sep 2008 23:09:02 +0200
-Message-ID: <20080912210902.31628.7325.stgit@localhost>
+Subject: [PATCH 3/6] git mv: Support moving submodules
+Date: Fri, 12 Sep 2008 23:09:08 +0200
+Message-ID: <20080912210908.31628.50439.stgit@localhost>
 References: <20080912210817.31628.69014.stgit@localhost>
 Mime-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
 Cc: gitster@pobox.com
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Sep 12 23:10:28 2008
+X-From: git-owner@vger.kernel.org Fri Sep 12 23:10:35 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KeFuN-0006J2-FQ
-	for gcvg-git-2@gmane.org; Fri, 12 Sep 2008 23:10:27 +0200
+	id 1KeFuO-0006J2-7Q
+	for gcvg-git-2@gmane.org; Fri, 12 Sep 2008 23:10:28 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757426AbYILVJI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 12 Sep 2008 17:09:08 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757329AbYILVJH
-	(ORCPT <rfc822;git-outgoing>); Fri, 12 Sep 2008 17:09:07 -0400
-Received: from 132-201.104-92.cust.bluewin.ch ([92.104.201.132]:53665 "EHLO
+	id S1757522AbYILVJN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 12 Sep 2008 17:09:13 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756585AbYILVJN
+	(ORCPT <rfc822;git-outgoing>); Fri, 12 Sep 2008 17:09:13 -0400
+Received: from 132-201.104-92.cust.bluewin.ch ([92.104.201.132]:53669 "EHLO
 	pixie.suse.cz" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1757426AbYILVJG (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 12 Sep 2008 17:09:06 -0400
+	with ESMTP id S1757329AbYILVJM (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 12 Sep 2008 17:09:12 -0400
 Received: from [127.0.0.1] (localhost [127.0.0.1])
-	by pixie.suse.cz (Postfix) with ESMTP id EF8432AC8A1;
-	Fri, 12 Sep 2008 23:09:02 +0200 (CEST)
+	by pixie.suse.cz (Postfix) with ESMTP id 511862AC8A4;
+	Fri, 12 Sep 2008 23:09:08 +0200 (CEST)
 In-Reply-To: <20080912210817.31628.69014.stgit@localhost>
 User-Agent: StGIT/0.14.2
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/95765>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/95766>
 
-This patch adds support for removing submodules to 'git rm', including
-appropriately editing the .gitmodules file to reflect this. Submodule
-_checkouts_ are never removed; that can be potentially catastrophic
-and the user should remove them manually, if really desired.
+This patch adds support for moving submodules to 'git mv', including
+rewriting of the .gitmodules file to reflect the movement.
 
 Signed-off-by: Petr Baudis <pasky@suse.cz>
 ---
 
- Documentation/git-rm.txt |    6 +++-
- builtin-rm.c             |   65 ++++++++++++++++++++++++++++++++++++++--------
- 2 files changed, 58 insertions(+), 13 deletions(-)
+ builtin-mv.c |   37 +++++++++++++++++++++++++++++++++----
+ 1 files changed, 33 insertions(+), 4 deletions(-)
 
-diff --git a/Documentation/git-rm.txt b/Documentation/git-rm.txt
-index 5afb1e7..0c92687 100644
---- a/Documentation/git-rm.txt
-+++ b/Documentation/git-rm.txt
-@@ -20,7 +20,8 @@ and no updates to their contents can be staged in the index,
- though that default behavior can be overridden with the `-f` option.
- When '--cached' is given, the staged content has to
- match either the tip of the branch or the file on disk,
--allowing the file to be removed from just the index.
-+allowing the file to be removed from just the index;
-+this is always the case when removing submodules.
- 
- 
- OPTIONS
-@@ -57,7 +58,8 @@ OPTIONS
- --cached::
- 	Use this option to unstage and remove paths only from the index.
- 	Working tree files, whether modified or not, will be
--	left alone.
-+	left alone.  Note that this is always assumed when removing
-+	a checked-out submodule.
- 
- --ignore-unmatch::
- 	Exit with a zero status even if no files matched.
-diff --git a/builtin-rm.c b/builtin-rm.c
-index 6bd8211..7475de2 100644
---- a/builtin-rm.c
-+++ b/builtin-rm.c
+diff --git a/builtin-mv.c b/builtin-mv.c
+index 4f65b5a..52e3ea5 100644
+--- a/builtin-mv.c
++++ b/builtin-mv.c
 @@ -9,6 +9,7 @@
  #include "cache-tree.h"
- #include "tree-walk.h"
+ #include "string-list.h"
  #include "parse-options.h"
 +#include "submodule.h"
  
- static const char * const builtin_rm_usage[] = {
- 	"git rm [options] [--] <file>...",
-@@ -17,16 +18,21 @@ static const char * const builtin_rm_usage[] = {
- 
- static struct {
- 	int nr, alloc;
--	const char **name;
-+	struct {
-+		const char *name;
-+		int is_gitlink;
-+	} *info;
- } list;
- 
--static void add_list(const char *name)
-+static void add_list(const char *name, int is_gitlink)
- {
- 	if (list.nr >= list.alloc) {
- 		list.alloc = alloc_nr(list.alloc);
--		list.name = xrealloc(list.name, list.alloc * sizeof(const char *));
-+		list.info = xrealloc(list.info, list.alloc * sizeof(*list.info));
- 	}
--	list.name[list.nr++] = name;
-+	list.info[list.nr].name = name;
-+	list.info[list.nr].is_gitlink = is_gitlink;
-+	list.nr++;
+ static const char * const builtin_mv_usage[] = {
+ 	"git mv [options] <source>... <destination>",
+@@ -49,6 +50,24 @@ static const char *add_slash(const char *path)
+ 	return path;
  }
  
- static int remove_file(const char *name)
-@@ -38,6 +44,13 @@ static int remove_file(const char *name)
- 	if (ret && errno == ENOENT)
- 		/* The user has removed it from the filesystem by hand */
- 		ret = errno = 0;
-+	if (ret && errno == EISDIR) {
-+		/* This is a gitlink entry; try to remove at least the
-+		 * directory if the submodule is not checked out; we always
-+		 * leave the checked out ones as they are */
-+		if (!rmdir(name) || errno == ENOTEMPTY)
-+			ret = errno = 0;
-+	}
- 
- 	if (!ret && (slash = strrchr(name, '/'))) {
- 		char *n = xstrdup(name);
-@@ -65,7 +78,7 @@ static int check_local_mod(unsigned char *head, int index_only)
- 		struct stat st;
- 		int pos;
- 		struct cache_entry *ce;
--		const char *name = list.name[i];
-+		const char *name = list.info[i].name;
- 		unsigned char sha1[20];
- 		unsigned mode;
- 		int local_changes = 0;
-@@ -83,7 +96,7 @@ static int check_local_mod(unsigned char *head, int index_only)
- 			/* It already vanished from the working tree */
- 			continue;
- 		}
--		else if (S_ISDIR(st.st_mode)) {
-+		else if (S_ISDIR(st.st_mode) && !S_ISGITLINK(ce->ce_mode)) {
- 			/* if a file was removed and it is now a
- 			 * directory, that is the same as ENOENT as
- 			 * far as git is concerned; we do not track
-@@ -122,6 +135,22 @@ static int check_local_mod(unsigned char *head, int index_only)
- 	return errs;
- }
- 
-+static void remove_submodule(const char *name)
++static int ce_is_gitlink(int i)
 +{
-+	char *key = submodule_by_path(name);
-+	char *sectend = strrchr(key, '.');
++	return i < 0 ? 0 : S_ISGITLINK(active_cache[i]->ce_mode);
++}
 +
-+	assert(sectend);
-+	*sectend = 0;
++static void rename_submodule(struct string_list_item *i)
++{
++	char *key = submodule_by_path(i->path);
 +
 +	config_exclusive_filename = ".gitmodules";
-+	if (git_config_rename_section(key, NULL) <= 0)
-+		die("cannot remove section `%s' from .gitmodules", key);
++	if (git_config_set(key, (const char *) i->util))
++		die("cannot update .gitmodules");
 +	config_exclusive_filename = NULL;
 +
 +	free(key);
 +}
 +
++
  static struct lock_file lock_file;
  
- static int show_only = 0, force = 0, index_only = 0, recursive = 0, quiet = 0;
-@@ -140,7 +169,7 @@ static struct option builtin_rm_options[] = {
+ int cmd_mv(int argc, const char **argv, const char *prefix)
+@@ -65,6 +84,8 @@ int cmd_mv(int argc, const char **argv, const char *prefix)
+ 	enum update_mode { BOTH = 0, WORKING_DIRECTORY, INDEX } *modes;
+ 	struct stat st;
+ 	struct string_list src_for_dst = {NULL, 0, 0, 0};
++	/* .path is source path, .util is destination path */
++	struct string_list submodules = {NULL, 0, 0, 0};
  
- int cmd_rm(int argc, const char **argv, const char *prefix)
- {
--	int i, newfd;
-+	int i, newfd, subs;
- 	const char **pathspec;
- 	char *seen;
+ 	git_config(git_default_config, NULL);
  
-@@ -168,7 +197,7 @@ int cmd_rm(int argc, const char **argv, const char *prefix)
- 		struct cache_entry *ce = active_cache[i];
- 		if (!match_pathspec(pathspec, ce->name, ce_namelen(ce), 0, seen))
- 			continue;
--		add_list(ce->name);
-+		add_list(ce->name, S_ISGITLINK(ce->ce_mode));
+@@ -84,7 +105,8 @@ int cmd_mv(int argc, const char **argv, const char *prefix)
+ 		/* special case: "." was normalized to "" */
+ 		destination = copy_pathspec(dest_path[0], argv, argc, 1);
+ 	else if (!lstat(dest_path[0], &st) &&
+-			S_ISDIR(st.st_mode)) {
++			S_ISDIR(st.st_mode) &&
++			!ce_is_gitlink(cache_name_pos(dest_path[0], strlen(dest_path[0])))) {
+ 		dest_path[0] = add_slash(dest_path[0]);
+ 		destination = copy_pathspec(dest_path[0], argv, argc, 1);
+ 	} else {
+@@ -96,7 +118,7 @@ int cmd_mv(int argc, const char **argv, const char *prefix)
+ 	/* Checking */
+ 	for (i = 0; i < argc; i++) {
+ 		const char *src = source[i], *dst = destination[i];
+-		int length, src_is_dir;
++		int length, src_is_dir, src_cache_pos;
+ 		const char *bad = NULL;
+ 
+ 		if (show_only)
+@@ -111,7 +133,7 @@ int cmd_mv(int argc, const char **argv, const char *prefix)
+ 		} else if ((src_is_dir = S_ISDIR(st.st_mode))
+ 				&& lstat(dst, &st) == 0)
+ 			bad = "cannot move directory over file";
+-		else if (src_is_dir) {
++		else if ((src_cache_pos = cache_name_pos(src, length)) < 0 && src_is_dir) {
+ 			const char *src_w_slash = add_slash(src);
+ 			int len_w_slash = length + 1;
+ 			int first, last;
+@@ -177,7 +199,7 @@ int cmd_mv(int argc, const char **argv, const char *prefix)
+ 				} else
+ 					bad = "Cannot overwrite";
+ 			}
+-		} else if (cache_name_pos(src, length) < 0)
++		} else if (src_cache_pos < 0)
+ 			bad = "not under version control";
+ 		else if (string_list_has_string(&src_for_dst, dst))
+ 			bad = "multiple sources for the same target";
+@@ -214,10 +236,17 @@ int cmd_mv(int argc, const char **argv, const char *prefix)
+ 
+ 		pos = cache_name_pos(src, strlen(src));
+ 		assert(pos >= 0);
++		if (ce_is_gitlink(pos))
++			string_list_insert(src, &submodules)->util = (void *) dst;
+ 		if (!show_only)
+ 			rename_cache_entry_at(pos, dst);
  	}
  
- 	if (pathspec) {
-@@ -216,9 +245,11 @@ int cmd_rm(int argc, const char **argv, const char *prefix)
- 	 * the index unless all of them succeed.
- 	 */
- 	for (i = 0; i < list.nr; i++) {
--		const char *path = list.name[i];
-+		const char *path = list.info[i].name;
- 		if (!quiet)
--			printf("rm '%s'\n", path);
-+			printf("rm%s '%s'\n",
-+				list.info[i].is_gitlink ? "dir" : "",
-+				path);
- 
- 		if (remove_file_from_cache(path))
- 			die("git rm: unable to remove %s", path);
-@@ -238,7 +269,7 @@ int cmd_rm(int argc, const char **argv, const char *prefix)
- 	if (!index_only) {
- 		int removed = 0;
- 		for (i = 0; i < list.nr; i++) {
--			const char *path = list.name[i];
-+			const char *path = list.info[i].name;
- 			if (!remove_file(path)) {
- 				removed = 1;
- 				continue;
-@@ -248,6 +279,18 @@ int cmd_rm(int argc, const char **argv, const char *prefix)
- 		}
- 	}
- 
-+	/*
-+	 * Get rid of stale submodule setup.
-+	 */
-+	subs = 0;
-+	for (i = 0; i < list.nr; i++)
-+		if (list.info[i].is_gitlink) {
-+			remove_submodule(list.info[i].name);
-+			subs++;
-+		}
-+	if (subs && add_file_to_cache(".gitmodules", 0))
++	for (i = 0; i < submodules.nr; i++)
++		rename_submodule(&submodules.items[i]);
++	if (submodules.nr > 0 && add_file_to_cache(".gitmodules", 0))
 +		die("cannot add new .gitmodules to the index");
 +
  	if (active_cache_changed) {
