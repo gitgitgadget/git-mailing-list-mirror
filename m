@@ -1,83 +1,94 @@
-From: Samuel Tardieu <sam@rfc1149.net>
-Subject: Re: [StGit PATCH] add option to import series directly from a tar archive
-Date: Fri, 12 Sep 2008 14:21:13 +0200
-Organization: RFC 1149 (see http://www.rfc1149.net/)
-Message-ID: <2008-09-12-14-21-13+trackit+sam@rfc1149.net>
-References: <48C34EC7.9040102@gmail.com>
-	<20080908180317.GA6123@diana.vm.bytemark.co.uk>
-	<48C56AD9.6040007@gmail.com>
+From: "Ciprian Dorin Craciun" <ciprian.craciun@gmail.com>
+Subject: Re: configuring git public repository
+Date: Fri, 12 Sep 2008 15:33:27 +0300
+Message-ID: <8e04b5820809120533o1e7da548l6868660767a5435d@mail.gmail.com>
+References: <19449377.post@talk.nabble.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 8bit
-Cc: Karl =?iso-8859-1?Q?Hasselstr=F6m?= <kha@treskal.com>,
-	git@vger.kernel.org
-To: Clark Williams <clark.williams@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Sep 12 14:29:46 2008
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: sagi4 <geetha@angleritech.com>
+X-From: git-owner@vger.kernel.org Fri Sep 12 14:34:39 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Ke7mR-00024S-9q
-	for gcvg-git-2@gmane.org; Fri, 12 Sep 2008 14:29:43 +0200
+	id 1Ke7rC-0003Iy-Lo
+	for gcvg-git-2@gmane.org; Fri, 12 Sep 2008 14:34:39 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753496AbYILM2g (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 12 Sep 2008 08:28:36 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753432AbYILM2g
-	(ORCPT <rfc822;git-outgoing>); Fri, 12 Sep 2008 08:28:36 -0400
-Received: from zaphod.rfc1149.net ([88.191.14.223]:48499 "EHLO
-	mail.rfc1149.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753464AbYILM2f (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 12 Sep 2008 08:28:35 -0400
-X-Greylist: delayed 427 seconds by postgrey-1.27 at vger.kernel.org; Fri, 12 Sep 2008 08:28:34 EDT
-Received: from localhost (localhost [127.0.0.1])
-	by mail.rfc1149.net (Postfix) with ESMTP id B4C4DE0E81;
-	Fri, 12 Sep 2008 14:21:25 +0200 (CEST)
-X-Virus-Scanned: amavisd-new at rfc1149.net
-Received: from mail.rfc1149.net ([127.0.0.1])
-	by localhost (zaphod.rfc1149.net [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id sgn+ddDTDz9X; Fri, 12 Sep 2008 14:21:16 +0200 (CEST)
-Received: from mail2.rfc1149.net (unknown [IPv6:2a01:e35:1382:f950::3])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(Client CN "mail2.rfc1149.net", Issuer "rfc1149.net" (verified OK))
-	by mail.rfc1149.net (Postfix) with ESMTPS id D993CE0536;
-	Fri, 12 Sep 2008 14:21:15 +0200 (CEST)
-Received: from localhost (localhost [127.0.0.1])
-	by mail2.rfc1149.net (Postfix) with ESMTP id CD598C40BC;
-	Fri, 12 Sep 2008 14:21:14 +0200 (CEST)
-Received: from mail2.rfc1149.net ([127.0.0.1])
-	by localhost (localhost [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id sG6GFcfsEDly; Fri, 12 Sep 2008 14:21:14 +0200 (CEST)
-Received: by mail2.rfc1149.net (Postfix, from userid 1000)
-	id 3CA13C40BD; Fri, 12 Sep 2008 14:21:14 +0200 (CEST)
-In-Reply-To: <48C56AD9.6040007@gmail.com> (Clark Williams's message of "Mon\, 08 Sep 2008 13\:11\:37 -0500")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-WWW: http://www.rfc1149.net/sam
-X-Jabber: <sam@rfc1149.net> (see http://www.jabber.org/)
-X-OpenPGP-Fingerprint: 79C0 AE3C CEA8 F17B 0EF1  45A5 F133 2241 1B80 ADE6 (see http://www.gnupg.org/)
+	id S1753515AbYILMdb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 12 Sep 2008 08:33:31 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753464AbYILMdb
+	(ORCPT <rfc822;git-outgoing>); Fri, 12 Sep 2008 08:33:31 -0400
+Received: from nf-out-0910.google.com ([64.233.182.189]:49246 "EHLO
+	nf-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752093AbYILMda (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 12 Sep 2008 08:33:30 -0400
+Received: by nf-out-0910.google.com with SMTP id d3so432315nfc.21
+        for <git@vger.kernel.org>; Fri, 12 Sep 2008 05:33:28 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to
+         :subject:cc:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:references;
+        bh=R8t9rMdyb+3MsNHIi9Tue4EQ3kez/8ANmgOjvGRhHpE=;
+        b=PyOI0r+M0cQXQXWMY0SxvGcXAVbbY62+pA53y7jDqWl8E6v7YpXCKzP8Q3p5Pvni5L
+         cXhpALxInRdktmRxdXVPyxoS3UkA8nzV0c1SNmKRdWd/Dwknelq4p68Q4FK8+DuyzHpw
+         ZiaAMnnj+CTwM1tGYjC0hIBH8dEN7MSc8WP54=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
+         :content-type:content-transfer-encoding:content-disposition
+         :references;
+        b=MMRg25sg2YN0vj9I6Q/ZX3i0iAx55yvPxwt8dK/rky8Pbp9VFLTHv6w+LaFBuiSUHc
+         rDzEW9o3sy5X/YkHojDIQgG/l4xoASErqzYoV7zHYU7GzBTEA409SPXZ3RHq9sTK3prk
+         r68pLEdL+Vy1j4ctQCQO0tbPlvKjyHyH26bEM=
+Received: by 10.210.133.2 with SMTP id g2mr5013437ebd.163.1221222807616;
+        Fri, 12 Sep 2008 05:33:27 -0700 (PDT)
+Received: by 10.210.117.20 with HTTP; Fri, 12 Sep 2008 05:33:27 -0700 (PDT)
+In-Reply-To: <19449377.post@talk.nabble.com>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/95716>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/95717>
 
->>>>> "Clark" == Clark Williams <clark.williams@gmail.com> writes:
+    Hello!
 
-Clark> [...] is to see if I can ease StGit's patch
-Clark> import rules a bit, since quilt accepts pretty much anything as
-Clark> long as there's a diff in there somewhere. I bomb out regularly
-Clark> importing the -rt series using StGit, because some people don't
-Clark> put complete email addresses in their patches.
+    If I'm correct, you have two major options:
+    -- install your own git infrastructure:
+        -- by using git-daemon and serving the git repository throught
+git://...;
+        -- by using gitweb? and serving it as http://...;
+        -- by using ssh and serving it as ssh://... (this is
+appropriate mostly for private repositories);
+    -- using an existing Git hosting service like:
+        -- (of course) http://repo.or.cz/
+        -- http://github.org/
+        -- http://gitorious.org/
+        -- see also http://git.or.cz/gitwiki/GitHosting
 
-Two things that would be great would be:
+    For open-source / public repositories I would opt for using an
+existing hosting service.
 
-  - to be able to import patches with "-p0" (people not using git
-    often sends such patches)
+    Hope it's useful for you,
+    Ciprian Dorin Craciun.
 
-  - to be able to find where the patch should be applied; I sometimes
-    receive patches for GCC directory "gcc/ada/", diffed from there,
-    and if StGit could see that the patch only makes sense there and
-    not at the top-level it would be great as well
 
- Sam
--- 
-Samuel Tardieu -- sam@rfc1149.net -- http://www.rfc1149.net/
+On Fri, Sep 12, 2008 at 7:47 AM, sagi4 <geetha@angleritech.com> wrote:
+>
+> Hi all,
+>
+> I am new git..
+>
+> I would like to configure git as a public repository for my rails
+> application..
+>
+> Please help me..
+>
+> Thanks
+> Sg..
+> --
+> View this message in context: http://www.nabble.com/configuring-git-public-repository-tp19449377p19449377.html
+> Sent from the git mailing list archive at Nabble.com.
