@@ -1,56 +1,45 @@
-From: Karl =?iso-8859-1?Q?Hasselstr=F6m?= <kha@treskal.com>
-Subject: Re: [StGit PATCH] add option to import series directly from a tar archive
-Date: Fri, 12 Sep 2008 15:08:34 +0200
-Message-ID: <20080912130834.GB31240@diana.vm.bytemark.co.uk>
-References: <48C34EC7.9040102@gmail.com> <20080908180317.GA6123@diana.vm.bytemark.co.uk> <48C56AD9.6040007@gmail.com> <2008-09-12-14-21-13+trackit+sam@rfc1149.net> <20080912130703.GA31240@diana.vm.bytemark.co.uk>
+From: delux <jared@2ndnaturestudio.com>
+Subject: Gitweb
+Date: Fri, 12 Sep 2008 05:48:24 -0700 (PDT)
+Message-ID: <19455112.post@talk.nabble.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Clark Williams <clark.williams@gmail.com>, git@vger.kernel.org
-To: Samuel Tardieu <sam@rfc1149.net>
-X-From: git-owner@vger.kernel.org Fri Sep 12 14:47:35 2008
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Sep 12 14:49:34 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Ke83g-0006eP-So
-	for gcvg-git-2@gmane.org; Fri, 12 Sep 2008 14:47:33 +0200
+	id 1Ke85d-0007BV-0U
+	for gcvg-git-2@gmane.org; Fri, 12 Sep 2008 14:49:33 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752957AbYILMqZ convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 12 Sep 2008 08:46:25 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752852AbYILMqZ
-	(ORCPT <rfc822;git-outgoing>); Fri, 12 Sep 2008 08:46:25 -0400
-Received: from diana.vm.bytemark.co.uk ([80.68.90.142]:4863 "EHLO
-	diana.vm.bytemark.co.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752452AbYILMqY (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 12 Sep 2008 08:46:24 -0400
-Received: from kha by diana.vm.bytemark.co.uk with local (Exim 3.36 #1 (Debian))
-	id 1Ke8O2-0008AZ-00; Fri, 12 Sep 2008 14:08:34 +0100
-Content-Disposition: inline
-In-Reply-To: <20080912130703.GA31240@diana.vm.bytemark.co.uk>
-X-Manual-Spam-Check: kha@treskal.com, clean
-User-Agent: Mutt/1.5.9i
+	id S1752922AbYILMs0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 12 Sep 2008 08:48:26 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752863AbYILMs0
+	(ORCPT <rfc822;git-outgoing>); Fri, 12 Sep 2008 08:48:26 -0400
+Received: from kuber.nabble.com ([216.139.236.158]:45255 "EHLO
+	kuber.nabble.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752477AbYILMsZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 12 Sep 2008 08:48:25 -0400
+Received: from isper.nabble.com ([192.168.236.156])
+	by kuber.nabble.com with esmtp (Exim 4.63)
+	(envelope-from <lists@nabble.com>)
+	id 1Ke84W-0002BT-NU
+	for git@vger.kernel.org; Fri, 12 Sep 2008 05:48:24 -0700
+X-Nabble-From: jared@2ndnaturestudio.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/95720>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/95721>
 
-On 2008-09-12 15:07:03 +0200, Karl Hasselstr=F6m wrote:
 
-> On 2008-09-12 14:21:13 +0200, Samuel Tardieu wrote:
->
-> >   - to be able to find where the patch should be applied; I
-> >     sometimes receive patches for GCC directory "gcc/ada/", diffed
-> >     from there, and if StGit could see that the patch only makes
-> >     sense there and not at the top-level it would be great as well
->
-> I don't believe git-apply can do this (please correct me if I'm
-> wrong)
-
-It does have a --directory flag, but that requires the user to specify
-the path manually.
-
---=20
-Karl Hasselstr=F6m, kha@treskal.com
-      www.treskal.com/kalle
+I posted on another subject before and thanks to all who replied to that, Now
+I want to put gitweb on my server and have read everything to do it but cant
+seem to find the files. I know that it is supposed to be bundled with git
+but I am not the one who installed git, so is there anywhere I can get the
+gitweb files? 
+-- 
+View this message in context: http://www.nabble.com/Gitweb-tp19455112p19455112.html
+Sent from the git mailing list archive at Nabble.com.
