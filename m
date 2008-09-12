@@ -1,94 +1,57 @@
-From: Ralf Wildenhues <Ralf.Wildenhues@gmx.de>
-Subject: [PATCH] Fix some manual typos.
-Date: Fri, 12 Sep 2008 21:10:26 +0200
-Organization: Department of Numerical Simulation, University of Bonn
-Message-ID: <20080912191026.GB32380@ins.uni-bonn.de>
+From: "Stephen R. van den Berg" <srb@cuci.nl>
+Subject: Re: [RFC] origin link for cherry-pick and revert
+Date: Fri, 12 Sep 2008 22:56:18 +0200
+Message-ID: <20080912205618.GA8711@cuci.nl>
+References: <alpine.LFD.1.10.0809100844040.3384@nehalem.linux-foundation.org> <200809101823.22072.jnareb@gmail.com> <48C9A9A4.8090703@vilain.net> <alpine.LFD.1.10.0809111641110.3384@nehalem.linux-foundation.org> <20080912054739.GB22228@cuci.nl> <20080912145802.GV5082@mit.edu> <20080912155427.GB2915@cuci.nl> <20080912161911.GA12096@coredump.intra.peff.net> <20080912164348.GC2915@cuci.nl> <20080912184406.GB5082@mit.edu>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Sep 12 21:30:04 2008
+Cc: Jeff King <peff@peff.net>, git@vger.kernel.org
+To: Theodore Tso <tytso@MIT.EDU>
+X-From: git-owner@vger.kernel.org Fri Sep 12 22:57:46 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KeELD-0003n0-Pi
-	for gcvg-git-2@gmane.org; Fri, 12 Sep 2008 21:30:04 +0200
+	id 1KeFhy-0002zd-4o
+	for gcvg-git-2@gmane.org; Fri, 12 Sep 2008 22:57:38 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755485AbYILT24 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 12 Sep 2008 15:28:56 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755087AbYILT24
-	(ORCPT <rfc822;git-outgoing>); Fri, 12 Sep 2008 15:28:56 -0400
-Received: from merkur.ins.uni-bonn.de ([131.220.223.13]:45273 "EHLO
-	merkur.ins.uni-bonn.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755410AbYILT24 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 12 Sep 2008 15:28:56 -0400
-X-Greylist: delayed 1098 seconds by postgrey-1.27 at vger.kernel.org; Fri, 12 Sep 2008 15:28:55 EDT
-Received: from localhost.localdomain (xdsl-87-79-251-167.netcologne.de [87.79.251.167])
-	by merkur.ins.uni-bonn.de (Postfix) with ESMTP id 2F24B40004147
-	for <git@vger.kernel.org>; Fri, 12 Sep 2008 21:10:36 +0200 (CEST)
-Received: from ralf by localhost.localdomain with local (Exim 4.69)
-	(envelope-from <Ralf.Wildenhues@gmx.de>)
-	id 1KeE2E-0003LN-PR
-	for git@vger.kernel.org; Fri, 12 Sep 2008 21:10:26 +0200
-Mail-Followup-To: Ralf Wildenhues <Ralf.Wildenhues@gmx.de>,
-	git@vger.kernel.org
+	id S1759097AbYILU4W (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 12 Sep 2008 16:56:22 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757588AbYILU4V
+	(ORCPT <rfc822;git-outgoing>); Fri, 12 Sep 2008 16:56:21 -0400
+Received: from aristoteles.cuci.nl ([212.125.128.18]:49290 "EHLO
+	aristoteles.cuci.nl" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1760568AbYILU4T (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 12 Sep 2008 16:56:19 -0400
+Received: by aristoteles.cuci.nl (Postfix, from userid 500)
+	id 4E2C05465; Fri, 12 Sep 2008 22:56:18 +0200 (CEST)
 Content-Disposition: inline
-User-Agent: Mutt/1.5.18 (2008-05-17)
+In-Reply-To: <20080912184406.GB5082@mit.edu>
+User-Agent: Mutt/1.5.13 (2006-08-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/95761>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/95762>
 
-Signed-off-by: Ralf Wildenhues <Ralf.Wildenhues@gmx.de>
----
+Theodore Tso wrote:
+>On Fri, Sep 12, 2008 at 06:43:48PM +0200, Stephen R. van den Berg wrote:
+>> On my system that results in 2ms per commit on average.  Not huge, but
+>> not small either, I guess.  Running it results in real waiting time, it
+>> all depends on how patient the user is.
 
-Thanks for git!
+>For a local clone, git could be taught to copy the cache file.  For a
+>network-based clone, the percentage of time needed to download is
+>roughly 2-3 times that (although that will obviously depend on your
+>network connectivity).  Building this cache can be done in the
+>background, though, or delayed until the first time the cache is
+>needed.
 
-Cheers,
-Ralf
-
- Documentation/git-web--browse.txt |    2 +-
- Documentation/gitattributes.txt   |    2 +-
- Documentation/merge-config.txt    |    2 +-
- 3 files changed, 3 insertions(+), 3 deletions(-)
-
-diff --git a/Documentation/git-web--browse.txt b/Documentation/git-web--browse.txt
-index 36afad8..7f7a45b 100644
---- a/Documentation/git-web--browse.txt
-+++ b/Documentation/git-web--browse.txt
-@@ -77,7 +77,7 @@ the URLs passed as arguments.
- Note about konqueror
- --------------------
- 
--When 'konqueror' is specified by the a command line option or a
-+When 'konqueror' is specified by a command line option or a
- configuration variable, we launch 'kfmclient' to try to open the HTML
- man page on an already opened konqueror in a new tab if possible.
- 
-diff --git a/Documentation/gitattributes.txt b/Documentation/gitattributes.txt
-index 75124d2..6f3551d 100644
---- a/Documentation/gitattributes.txt
-+++ b/Documentation/gitattributes.txt
-@@ -313,7 +313,7 @@ patterns are available:
- 
- - `html` suitable for HTML/XHTML documents.
- 
--- `java` suitable for source code in the Java lanugage.
-+- `java` suitable for source code in the Java language.
- 
- - `pascal` suitable for source code in the Pascal/Delphi language.
- 
-diff --git a/Documentation/merge-config.txt b/Documentation/merge-config.txt
-index 00277e0..c735788 100644
---- a/Documentation/merge-config.txt
-+++ b/Documentation/merge-config.txt
-@@ -1,5 +1,5 @@
- merge.stat::
--	Whether to print the diffstat between ORIG_HEAD and merge result
-+	Whether to print the diffstat between ORIG_HEAD and the merge result
- 	at the end of the merge.  True by default.
- 
- merge.log::
+Fair enough.  If noone beats me to it, I'll probably take a stab at
+implementing something like this and see how it fares for my own
+application.
 -- 
-1.6.0.1.309.g48068
+Sincerely,
+           Stephen R. van den Berg.
+
+"Father's Day: Nine months before Mother's Day."
