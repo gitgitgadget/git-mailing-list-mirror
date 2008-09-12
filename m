@@ -1,7 +1,7 @@
 From: Petr Baudis <pasky@suse.cz>
-Subject: [PATCH 4/6] t7403: Submodule git mv, git rm testsuite
-Date: Fri, 12 Sep 2008 23:09:13 +0200
-Message-ID: <20080912210913.31628.20562.stgit@localhost>
+Subject: [PATCH 5/6] t7400: Add short "git submodule add" testsuite
+Date: Fri, 12 Sep 2008 23:09:19 +0200
+Message-ID: <20080912210918.31628.97855.stgit@localhost>
 References: <20080912210817.31628.69014.stgit@localhost>
 Mime-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
@@ -13,282 +13,83 @@ Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KeFuO-0006J2-W1
-	for gcvg-git-2@gmane.org; Fri, 12 Sep 2008 23:10:29 +0200
+	id 1KeFuP-0006J2-Ou
+	for gcvg-git-2@gmane.org; Fri, 12 Sep 2008 23:10:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757748AbYILVJT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 12 Sep 2008 17:09:19 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753762AbYILVJS
-	(ORCPT <rfc822;git-outgoing>); Fri, 12 Sep 2008 17:09:18 -0400
-Received: from 132-201.104-92.cust.bluewin.ch ([92.104.201.132]:53671 "EHLO
+	id S1757666AbYILVJX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 12 Sep 2008 17:09:23 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757795AbYILVJX
+	(ORCPT <rfc822;git-outgoing>); Fri, 12 Sep 2008 17:09:23 -0400
+Received: from 132-201.104-92.cust.bluewin.ch ([92.104.201.132]:53674 "EHLO
 	pixie.suse.cz" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1756585AbYILVJR (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 12 Sep 2008 17:09:17 -0400
+	with ESMTP id S1757666AbYILVJW (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 12 Sep 2008 17:09:22 -0400
 Received: from [127.0.0.1] (localhost [127.0.0.1])
-	by pixie.suse.cz (Postfix) with ESMTP id AF46A2AC8A6;
-	Fri, 12 Sep 2008 23:09:13 +0200 (CEST)
+	by pixie.suse.cz (Postfix) with ESMTP id 1E77B2AC8A7;
+	Fri, 12 Sep 2008 23:09:19 +0200 (CEST)
 In-Reply-To: <20080912210817.31628.69014.stgit@localhost>
 User-Agent: StGIT/0.14.2
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/95767>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/95768>
 
-The testsuite for newly added submodule support in git mv, git rm.
+This patch introduces basic tests for
+
+	git submodule add
+
+covering the basic functionality and the -b parameter.
+
+A trivial update --init test fix freeloads on this commit as well.
 
 Signed-off-by: Petr Baudis <pasky@suse.cz>
 ---
 
- t/t7403-submodule-mvrm.sh |  242 +++++++++++++++++++++++++++++++++++++++++++++
- 1 files changed, 242 insertions(+), 0 deletions(-)
- create mode 100755 t/t7403-submodule-mvrm.sh
+ t/t7400-submodule-basic.sh |   28 +++++++++++++++++++++++++++-
+ 1 files changed, 27 insertions(+), 1 deletions(-)
 
-diff --git a/t/t7403-submodule-mvrm.sh b/t/t7403-submodule-mvrm.sh
-new file mode 100755
-index 0000000..9b50d6a
---- /dev/null
-+++ b/t/t7403-submodule-mvrm.sh
-@@ -0,0 +1,242 @@
-+#!/bin/sh
-+#
-+# Copyright (c) 2008 Johannes Schindelin
-+#
+diff --git a/t/t7400-submodule-basic.sh b/t/t7400-submodule-basic.sh
+index be73f7b..8a002bc 100755
+--- a/t/t7400-submodule-basic.sh
++++ b/t/t7400-submodule-basic.sh
+@@ -200,7 +200,7 @@ test_expect_success 'update --init' '
+ 
+ 	mv init init2 &&
+ 	git config -f .gitmodules submodule.example.url "$(pwd)/init2" &&
+-	git config --remove-section submodule.example
++	git config --remove-section submodule.example &&
+ 	git submodule update init > update.out &&
+ 	grep "not initialized" update.out &&
+ 	test ! -d init/.git &&
+@@ -209,4 +209,30 @@ test_expect_success 'update --init' '
+ 
+ '
+ 
++test_expect_success 'submodule add' '
 +
-+test_description='Test submodules support in git mv and git rm'
-+
-+. ./test-lib.sh
-+
-+test_expect_success setup '
-+
-+	(mkdir sub-repo &&
-+	 cd sub-repo &&
-+	 git init &&
-+	 echo file > file &&
-+	 git add file &&
-+	 git commit -m "sub initial") &&
-+	(cp -r sub-repo sub2-repo &&
-+	 cd sub2-repo &&
-+	 echo file2 > file &&
-+	 git add file &&
-+	 git commit -m "sub commit2") &&
-+	git submodule add "$(pwd)/sub-repo" sub &&
-+	git submodule add "$(pwd)/sub2-repo" sub2 &&
-+	git commit -m initial &&
-+	test "$(git config -f .gitmodules submodule.sub.path)" = "sub" &&
-+	test "$(git config -f .gitmodules submodule.sub2.path)" = "sub2"
++	git submodule add "$(pwd)/init2" init-added &&
++	test -d init-added/.git &&
++	[ "$(git config -f .gitmodules submodule.init-added.url)" = "$(pwd)/init2" ] &&
++	[ "$(git config -f .gitmodules submodule.init-added.path)" = "init-added" ]
 +
 +'
 +
-+test_expect_success 'git mv of a submodule' '
++test_expect_success 'submodule add -b' '
 +
-+	git mv sub sub.moved &&
-+	! test -d sub &&
-+	test -d sub.moved/.git &&
-+	! git ls-files --error-unmatch sub &&
-+	test "$(git ls-files --stage --error-unmatch sub.moved | cut -d " " -f 1)" = 160000 &&
-+	test "$(git config -f .gitmodules submodule.sub.path)" = "sub.moved" &&
-+	! git config -f .gitmodules submodule.sub.moved.path
-+
-+'
-+
-+test_expect_success 'git submodule add vs. git mv' '
-+
-+	! git submodule add "$(pwd)/sub2-repo" sub.moved &&
-+	git submodule add "$(pwd)/sub2-repo" sub &&
-+	test -d sub/.git &&
-+	test "$(git config -f .gitmodules submodule.sub.url)" = "$(pwd)/sub-repo" &&
-+	test "$(git config -f .gitmodules submodule.sub.path)" = "sub.moved" &&
-+	test "$(git config -f .gitmodules submodule.sub~.path)" = "sub"
++	(
++		cd init2 &&
++		git checkout -b branch &&
++		echo t >s &&
++		git add s &&
++		git commit -m "change branch" &&
++		git checkout master
++	) &&
++	git submodule add -b branch -- "$(pwd)/init2" init-added-b &&
++	test -d init-added-b/.git &&
++	[ "$(git config -f .gitmodules submodule.init-added-b.url)" = "$(pwd)/init2" ] &&
++	[ "$(cd init2 && git rev-parse branch)" = "$(cd init-added-b && git rev-parse HEAD)" ]
 +
 +'
 +
-+test_expect_success 'git mv onto existing file' '
-+
-+	echo file > file &&
-+	git add file &&
-+	! git mv sub.moved file &&
-+	test -d sub.moved &&
-+	! test -d file/.git &&
-+	test "$(git ls-files --stage --error-unmatch file | cut -d " " -f 1)" = 100644 &&
-+	test "$(git ls-files --stage --error-unmatch sub.moved | cut -d " " -f 1)" = 160000 &&
-+	test "$(git config -f .gitmodules submodule.sub.path)" = "sub.moved"
-+
-+'
-+
-+test_expect_success 'git mv onto existing directory' '
-+
-+	mkdir -p dir &&
-+	echo file > dir/file &&
-+	git add dir/file &&
-+	git mv sub.moved dir &&
-+	! test -d sub.moved &&
-+	test -d dir/sub.moved/.git &&
-+	! git ls-files --error-unmatch sub.moved &&
-+	test "$(git ls-files --stage --error-unmatch dir/sub.moved | cut -d " " -f 1)" = 160000 &&
-+	test "$(git config -f .gitmodules submodule.sub.path)" = "dir/sub.moved" &&
-+	git mv dir/sub.moved . &&
-+	test "$(git config -f .gitmodules submodule.sub.path)" = "sub.moved"
-+
-+'
-+
-+test_expect_success 'git mv onto existing submodule' '
-+
-+	! git mv sub.moved sub2 &&
-+	test -d sub.moved/.git &&
-+	! test -d sub2/sub.moved &&
-+	test "$(git ls-files --stage --error-unmatch sub2 | cut -d " " -f 1)" = 160000 &&
-+	test "$(git ls-files --stage --error-unmatch sub.moved | cut -d " " -f 1)" = 160000 &&
-+	test "$(git config -f .gitmodules submodule.sub.path)" = "sub.moved"
-+
-+'
-+
-+test_expect_success 'git mv of multiple submodules' '
-+
-+	mkdir -p dir &&
-+	git mv sub.moved sub dir &&
-+	! test -d sub.moved &&
-+	! test -d sub &&
-+	test -d dir/sub.moved/.git &&
-+	test -d dir/sub/.git &&
-+	! git ls-files --error-unmatch sub.moved sub &&
-+	test "$(git ls-files --stage --error-unmatch dir/sub.moved dir/sub | cut -d " " -f 1 | uniq)" = 160000 &&
-+	! git config -f .gitmodules submodule.dir.path &&
-+	test "$(git config -f .gitmodules submodule.sub.path)" = "dir/sub.moved" &&
-+	test "$(git config -f .gitmodules submodule.sub~.path)" = "dir/sub"
-+
-+'
-+
-+test_expect_success 'git mv of multiple submodules back from a subdir' '
-+
-+	(cd dir && git mv sub.moved sub .. && cd ..) &&
-+	test -d sub.moved &&
-+	test -d sub &&
-+	! test -d dir/sub.moved/.git &&
-+	! test -d dir/sub/.git &&
-+	! git ls-files --error-unmatch dir/sub.moved dir/sub &&
-+	test "$(git ls-files --stage --error-unmatch sub.moved sub | cut -d " " -f 1 | uniq)" = 160000 &&
-+	test "$(git config -f .gitmodules submodule.sub.path)" = "sub.moved" &&
-+	test "$(git config -f .gitmodules submodule.sub~.path)" = "sub"
-+
-+'
-+
-+test_expect_success 'git mv of non-checked-out submodules' '
-+
-+	git clone . clone &&
-+	(cd clone &&
-+	test -d sub &&
-+	test -d sub2 &&
-+	! test -d sub/.git &&
-+	! test -d sub2/.git &&
-+	git ls-files --stage --error-unmatch sub sub2 > ls-files.out &&
-+	mkdir -p dir &&
-+	git mv sub sub2 dir &&
-+	! test -d sub &&
-+	! test -d sub2 &&
-+	test -d dir/sub &&
-+	test -d dir/sub2 &&
-+	! git ls-files --error-unmatch sub sub2 &&
-+	test "$(git ls-files --stage --error-unmatch dir/sub dir/sub2 | cut -d " " -f 1 | uniq)" = 160000 &&
-+	git ls-files --stage --error-unmatch dir/sub dir/sub2 | sed "s#dir/##g" | diff - ls-files.out &&
-+	test "$(git config -f .gitmodules submodule.sub.path)" = "dir/sub" &&
-+	test "$(git config -f .gitmodules submodule.sub2.path)" = "dir/sub2" &&
-+	(cd dir && git mv sub2 .. && cd ..) &&
-+	test -d sub2 &&
-+	! test -d dir/sub2 &&
-+	! git ls-files --error-unmatch dir/sub2 &&
-+	test "$(git ls-files --stage --error-unmatch sub2 | cut -d " " -f 1)" = 160000 &&
-+	test "$(git config -f .gitmodules submodule.sub2.path)" = "sub2")
-+
-+'
-+
-+test_expect_success 'checkpointing state with git commit' '
-+
-+	git commit -m"checkpoint" -a &&
-+	(cd clone && git commit -m"clone checkpoint" -a)
-+
-+'
-+
-+test_expect_success 'git rm of a regular submodule' '
-+
-+	git rm sub2 &&
-+	test -d sub2/.git &&
-+	! git ls-files --error-unmatch sub2 &&
-+	! git config -f .gitmodules submodule.sub2.path &&
-+	! git config -f .gitmodules submodule.sub2.url
-+
-+'
-+
-+test_expect_success 'git rm of a submodule with name different from path' '
-+
-+	git rm sub.moved &&
-+	test -d sub.moved/.git &&
-+	! git ls-files --error-unmatch sub.moved &&
-+	! git config -f .gitmodules submodule.sub.path &&
-+	! git config -f .gitmodules submodule.sub.url
-+
-+'
-+
-+test_expect_success 'git rm of a modified submodule' '
-+
-+	git mv sub dir/sub && # more fun with richer path
-+	(cd dir/sub &&
-+	 echo mod > file &&
-+	 git commit -m "sub mod" file) &&
-+	git add dir/sub &&
-+	! git rm dir/sub &&
-+	test -d dir/sub/.git &&
-+	test "$(git ls-files --stage --error-unmatch dir/sub | cut -d " " -f 1)" = "160000" &&
-+	git config -f .gitmodules submodule.sub~.path &&
-+	git config -f .gitmodules submodule.sub~.url &&
-+	git rm -f dir/sub &&
-+	test -d dir/sub/.git &&
-+	! git ls-files --error-unmatch dir/sub &&
-+	! git config -f .gitmodules submodule.sub~.path &&
-+	! git config -f .gitmodules submodule.sub~.url
-+
-+'
-+
-+test_expect_success 'git rm of a submodule from within a subdirectory' '
-+
-+	git submodule add "$(pwd)/sub-repo" sub-torm &&
-+	mkdir -p dir &&
-+	# -f since we did not commit the submodule
-+	(cd dir && git rm -f ../sub-torm && cd ..) &&
-+	test -d sub-torm/.git &&
-+	! git ls-files --error-unmatch sub-torm &&
-+	! git config -f .gitmodules submodule.sub-torm.path &&
-+	! git config -f .gitmodules submodule.sub-torm.url
-+
-+'
-+
-+test_expect_success 'git rm of a non-checked-out submodule' '
-+
-+	(cd clone &&
-+	test -d dir/sub &&
-+	! test -d dir/sub/.git &&
-+	git rm dir/sub &&
-+	! test -d dir/sub &&
-+	! git ls-files --error-unmatch dir/sub &&
-+	! git config -f .gitmodules submodule.sub.path &&
-+	! git config -f .gitmodules submodule.sub.url)
-+
-+'
-+
-+test_expect_success 'git rm of a non-checked-out submodule w/ different working tree' '
-+
-+	(cd clone &&
-+	rmdir sub2 &&
-+	echo cunning > sub2 &&
-+	! git rm sub2 &&
-+	test -f sub2 &&
-+	test "$(git ls-files --stage --error-unmatch sub2 | cut -d " " -f 1)" = "160000" &&
-+	git rm -f sub2 &&
-+	! test -e sub2 &&
-+	! git ls-files --error-unmatch sub2 &&
-+	! git config -f .gitmodules submodule.sub2.path &&
-+	! git config -f .gitmodules submodule.sub2.url)
-+
-+'
-+
-+test_done
+ test_done
