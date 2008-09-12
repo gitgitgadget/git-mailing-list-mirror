@@ -1,111 +1,115 @@
-From: Clark Williams <clark.williams@gmail.com>
-Subject: Re: [StGit PATCH] add option to import series directly from a tar
- archive
-Date: Fri, 12 Sep 2008 07:57:47 -0500
-Message-ID: <48CA674B.9080900@gmail.com>
-References: <48C34EC7.9040102@gmail.com>	<20080908180317.GA6123@diana.vm.bytemark.co.uk>	<48C56AD9.6040007@gmail.com> <2008-09-12-14-21-13+trackit+sam@rfc1149.net>
+From: Petr Baudis <pasky@suse.cz>
+Subject: Re: [ANNOUNCE] TopGit v0.3
+Date: Fri, 12 Sep 2008 15:15:30 +0200
+Message-ID: <20080912131530.GZ10360@machine.or.cz>
+References: <20080909231009.GD10544@machine.or.cz> <1221120192.8962.7.camel@heerbeest> <20080912110017.GW10360@machine.or.cz> <1221222433.29747.8.camel@heerbeest>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: =?UTF-8?B?S2FybCBIYXNzZWxzdHLDtm0=?= <kha@treskal.com>,
-	git@vger.kernel.org
-To: Samuel Tardieu <sam@rfc1149.net>
-X-From: git-owner@vger.kernel.org Fri Sep 12 14:59:28 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Jan Nieuwenhuizen <janneke-list@xs4all.nl>
+X-From: git-owner@vger.kernel.org Fri Sep 12 15:16:47 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Ke8F5-0001Zw-K5
-	for gcvg-git-2@gmane.org; Fri, 12 Sep 2008 14:59:20 +0200
+	id 1Ke8Vt-0006s7-SA
+	for gcvg-git-2@gmane.org; Fri, 12 Sep 2008 15:16:42 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753309AbYILM6M (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 12 Sep 2008 08:58:12 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753002AbYILM6M
-	(ORCPT <rfc822;git-outgoing>); Fri, 12 Sep 2008 08:58:12 -0400
-Received: from an-out-0708.google.com ([209.85.132.250]:63727 "EHLO
-	an-out-0708.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752852AbYILM6K (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 12 Sep 2008 08:58:10 -0400
-Received: by an-out-0708.google.com with SMTP id d40so95578and.103
-        for <git@vger.kernel.org>; Fri, 12 Sep 2008 05:58:10 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from
-         :user-agent:mime-version:to:cc:subject:references:in-reply-to
-         :x-enigmail-version:content-type:content-transfer-encoding;
-        bh=HzjP9gR3UEuUc0k55VOke3Attl+C/VP+sLMAQOwtqFc=;
-        b=pCR18izcp0J43Ib3hknG/xCd/WKXxbZcPjROxDLLgIFXyWECdIKPwKA6ZJiVUQmPsp
-         zFDNRNDa20bj5Vk68nVz4peQvWwv1M/5tYfcPZthcE+c2wXrOK60d2g7SczK5bz2BSM5
-         s/kauZmwAcKErY/Cy0m96hZZO+UEYVgcKD2w8=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:user-agent:mime-version:to:cc:subject
-         :references:in-reply-to:x-enigmail-version:content-type
-         :content-transfer-encoding;
-        b=TGM5tV/S9By7/uUk7jT4WFbdF81fn7AgNpKoj6YJ1Rv44eWpW90B+Cce3+WUYdx8ev
-         eAD37o1E2mN0ZwEk6QSMVis5HjqyQgmGa6D2hTDoe2ero495a93NwENmQttFpyHvAcYa
-         YwTo/1l6C1CjdotDVB17laP+rhFyZUg+HnzBU=
-Received: by 10.100.154.19 with SMTP id b19mr5049203ane.98.1221224290241;
-        Fri, 12 Sep 2008 05:58:10 -0700 (PDT)
-Received: from ?192.168.2.35? ( [74.239.78.188])
-        by mx.google.com with ESMTPS id c20sm21167045ana.21.2008.09.12.05.57.58
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Fri, 12 Sep 2008 05:58:09 -0700 (PDT)
-User-Agent: Thunderbird 2.0.0.14 (X11/20080501)
-In-Reply-To: <2008-09-12-14-21-13+trackit+sam@rfc1149.net>
-X-Enigmail-Version: 0.95.7
+	id S1751803AbYILNPe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 12 Sep 2008 09:15:34 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751893AbYILNPd
+	(ORCPT <rfc822;git-outgoing>); Fri, 12 Sep 2008 09:15:33 -0400
+Received: from w241.dkm.cz ([62.24.88.241]:50881 "EHLO machine.or.cz"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751676AbYILNPd (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 12 Sep 2008 09:15:33 -0400
+Received: by machine.or.cz (Postfix, from userid 2001)
+	id DD809393A816; Fri, 12 Sep 2008 15:15:30 +0200 (CEST)
+Content-Disposition: inline
+In-Reply-To: <1221222433.29747.8.camel@heerbeest>
+User-Agent: Mutt/1.5.16 (2007-06-09)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/95723>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/95724>
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
-
-Samuel Tardieu wrote:
->>>>>> "Clark" == Clark Williams <clark.williams@gmail.com> writes:
+On Fri, Sep 12, 2008 at 02:27:13PM +0200, Jan Nieuwenhuizen wrote:
+> On vr, 2008-09-12 at 13:00 +0200, Petr Baudis wrote:
 > 
-> Clark> [...] is to see if I can ease StGit's patch
-> Clark> import rules a bit, since quilt accepts pretty much anything as
-> Clark> long as there's a diff in there somewhere. I bomb out regularly
-> Clark> importing the -rt series using StGit, because some people don't
-> Clark> put complete email addresses in their patches.
+> > But this is rewriting history, isn't it?
 > 
-> Two things that would be great would be:
+> No (that would be useless), see 
 > 
->   - to be able to import patches with "-p0" (people not using git
->     often sends such patches)
+>     http://kerneltrap.org/mailarchive/git/2008/8/13/2925144 #first tg redepend idea
 
-I'm not sure how easy this is going to be. It looks like the patch is applied with
-'git --apply' from the file stgit/git.py:apply_patch(). The default '-p' value is 1,
-so we'd have to figure out how to pass the 0 along and then get it into the
-apply_patch() function.
+Huh. I can't see how that could ever work.
 
+> 	$ git checkout -b P' P
+> 	$ git rebase --onto B' B
+> 	$ git checkout P
+> 	$ git merge --no-ff --no-commit B'   (*)
+> 	$ git read-tree -u P'
+> 	$ git commit
+> 	$ git branch -D P'
+
+The read-tree step is broken, you can't do that. The dependencies
+content will be gone from your base, but not from the actual head -
+what's the point of removing them at all?
+
+Actually, tg patch will then show diff not only of your patch, but the
+removed dependencies as well!
+
+There's plenty of other problems with this approach as well. And I can't
+see how readding a removed dependency would work at all either.
+
+> I've just implemented the second idea
 > 
->   - to be able to find where the patch should be applied; I sometimes
->     receive patches for GCC directory "gcc/ada/", diffed from there,
->     and if StGit could see that the patch only makes sense there and
->     not at the top-level it would be great as well
+>     http://kerneltrap.org/mailarchive/git/2008/8/15/2954214
 > 
+> but haven't got any time to test it yet.  Then there's also 
+> 
+>     http://kerneltrap.org/mailarchive/git/2008/8/15/2952004
+> 
+> to consider.
 
-Zowie, I thought I only had to worry about folks sending patches with incomplete
-information. So you get patches to the ada compiler that are rooted in gcc/ada (e.g.
-patch in tarball says "./ChangeLog", instead of gcc/ada/ChangeLog) rather than at a
-top level? Only way I could see to deal with that would be to try and pass in the
-appropriate prefix from the command line.
+That's good point, indirect dependencies problem did not occur to me
+before. That's troublesome...
 
-My current plans are to clean up the first cut at the tarfile logic, then write a
-test to keep Karl happy, then try to come up with a way to deal with importing
-patches that don't have complete email addresses, no descriptions, etc. Once I get
-through that, I'll see if we can deal with weirdly rooted patch series.
+I'm beginning to wonder if it is worth the trouble to support changing
+dependencies in existing branches at all, except in the case the
+dependency got merged to upstream (then we don't hit any of these
+troubles). I'm stopping to see any way how to sanely support dependency
+removal without history rewriting, since we rely on Git for our all
+changes propagation.
 
-Clark
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.9 (GNU/Linux)
-Comment: Using GnuPG with Fedora - http://enigmail.mozdev.org
+> > Currently, I'm thinking that something like .topundeps (or !-prefixing
+> > dependencies in .topdeps) is the only way to implement this...
+> 
+> Yeah, i've been thinking that too.  It would be nice if we could
+> hack around that.  It seems that the two redepend ideas get around
+> it at the expense of creating the whole list of dependencies,
+> which is much too expensive for my taste.
 
-iEYEARECAAYFAkjKZ0sACgkQqA4JVb61b9eg2ACffDv+FXsL1NifMvxr1tbO2c3s
-Hc4AoJPb/RZJrpqT6QybeZrj8rNFJg1y
-=ccj/
------END PGP SIGNATURE-----
+Actually, you would have to do this here as well for what we could call
+"the evil Jonathan scenario":
+
+> 	Make a topic branch t/foo depending on master.
+> 	Change the dependency of t/foo to the older version maint.
+> 	Make a new topic branch t/bar depending on t/foo and master.
+
+When creating t/bar, you _need_ to look in t/foo dependencies to figure
+out that you really do need the master stuff merged.
+
+Even worse, these dependency removals act dominantly through merges.
+Consider t/xyzzy and t/qux both depending on master. If you remove
+master dependency from t/xyzzy and then merge them together, you'll lose
+master from the result, even though t/qux needs it, because of the
+dependency removal commit!
+
+More and more worms turn up in the can.
+
+-- 
+				Petr "Pasky" Baudis
+The next generation of interesting software will be done
+on the Macintosh, not the IBM PC.  -- Bill Gates
