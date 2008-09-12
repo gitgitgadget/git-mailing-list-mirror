@@ -1,228 +1,213 @@
 From: Michael J Gruber <git@drmicha.warpmail.net>
-Subject: [PATCH/RFC 0/6] Documentation: use dashless links
-Date: Fri, 12 Sep 2008 12:55:19 +0200
-Message-ID: <1221216926-20435-1-git-send-email-git@drmicha.warpmail.net>
+Subject: [PATCH/RFC 2/6] convert doc links for server type programmes from linkgit to gitlink
+Date: Fri, 12 Sep 2008 12:55:21 +0200
+Message-ID: <1221216926-20435-3-git-send-email-git@drmicha.warpmail.net>
+References: <1221216926-20435-1-git-send-email-git@drmicha.warpmail.net>
+ <1221216926-20435-2-git-send-email-git@drmicha.warpmail.net>
 Cc: Michael J Gruber <git@drmicha.warpmail.net>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Sep 12 12:57:19 2008
+X-From: git-owner@vger.kernel.org Fri Sep 12 12:57:21 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Ke6L0-0003pN-Qk
-	for gcvg-git-2@gmane.org; Fri, 12 Sep 2008 12:57:19 +0200
+	id 1Ke6L2-0003pN-LL
+	for gcvg-git-2@gmane.org; Fri, 12 Sep 2008 12:57:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752724AbYILKzh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 12 Sep 2008 06:55:37 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752477AbYILKzh
-	(ORCPT <rfc822;git-outgoing>); Fri, 12 Sep 2008 06:55:37 -0400
-Received: from out1.smtp.messagingengine.com ([66.111.4.25]:51893 "EHLO
+	id S1753030AbYILKzx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 12 Sep 2008 06:55:53 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753056AbYILKzx
+	(ORCPT <rfc822;git-outgoing>); Fri, 12 Sep 2008 06:55:53 -0400
+Received: from out1.smtp.messagingengine.com ([66.111.4.25]:57158 "EHLO
 	out1.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1752451AbYILKzg (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 12 Sep 2008 06:55:36 -0400
+	by vger.kernel.org with ESMTP id S1753013AbYILKzw (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 12 Sep 2008 06:55:52 -0400
 Received: from compute1.internal (compute1.internal [10.202.2.41])
-	by out1.messagingengine.com (Postfix) with ESMTP id 15013160EAB
-	for <git@vger.kernel.org>; Fri, 12 Sep 2008 06:55:35 -0400 (EDT)
+	by out1.messagingengine.com (Postfix) with ESMTP id 66429160EAD
+	for <git@vger.kernel.org>; Fri, 12 Sep 2008 06:55:51 -0400 (EDT)
 Received: from heartbeat1.messagingengine.com ([10.202.2.160])
-  by compute1.internal (MEProxy); Fri, 12 Sep 2008 06:55:35 -0400
-X-Sasl-enc: kTWmrwL3eTQTDi/QnPw8q6v20uZQHbbhY9N66JQkMNbB 1221216934
+  by compute1.internal (MEProxy); Fri, 12 Sep 2008 06:55:51 -0400
+X-Sasl-enc: fFQwePBgWINiFTHZqUibi7kXMYjjfQG5S1fwjOrbslc1 1221216950
 Received: from localhost (whitehead.math.tu-clausthal.de [139.174.44.12])
-	by mail.messagingengine.com (Postfix) with ESMTPSA id 1413D18250;
-	Fri, 12 Sep 2008 06:55:33 -0400 (EDT)
+	by mail.messagingengine.com (Postfix) with ESMTPSA id 697CACFD3;
+	Fri, 12 Sep 2008 06:55:50 -0400 (EDT)
 X-Mailer: git-send-email 1.6.0.1.308.gede4c
+In-Reply-To: <1221216926-20435-2-git-send-email-git@drmicha.warpmail.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/95699>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/95700>
 
-This is yet another attempt at making Junio's eyes sore...
-This series implements dashless links in html doc for all commands where
-the dashless form is preferred. The idea is to use two different link
-macros, such that man pages (from docbook) get the form some viewers
-need, whereas html pages get dashless links.
+For all server type programmes, we use the macro "linkgitasis" which
+preserves any dashes:
 
-The series is broken down into steps which basically correspond to one
-"sed" each, and can thus be checked easily.
+git-cvsserver
+git-daemon
+git-receive-pack
+git-shell
+git-upload-archive
+git-upload-pack
 
-Specific R for C:
-Do we have a final list of commands which should be advertised in dashed
-form? Specifically: What about git-http-{fetch,push}?
+Signed-off-by: Michael J Gruber <git@drmicha.warpmail.net>
+---
+ Documentation/config.txt           |   12 ++++++------
+ Documentation/everyday.txt         |    4 ++--
+ Documentation/git-cvsimport.txt    |    2 +-
+ Documentation/git-cvsserver.txt    |    2 +-
+ Documentation/git-push.txt         |    2 +-
+ Documentation/gitcvs-migration.txt |    4 ++--
+ Documentation/user-manual.txt      |    4 ++--
+ 7 files changed, 15 insertions(+), 15 deletions(-)
 
-To do, after the C in RFC:
-Undashify command names in the body of the doc (non-link text).
-
-P.S.: This series corresponds to
-ede4caf6e3204f9d63758d6410d0f124b0caab32..29993d99b87b701158d21c8234a162123ee29e39
-in the dashless-doc branch of http://repo.or.cz/w/git/mjg.git
-
-P.P.S.: I switched my e-mail address. Sorry about that, I'll stick with
-that one.
-
-Michael J Gruber (6):
-  modified asciidoc macros for dashless git doc
-  convert doc links for server type programmes
-  convert doc links for non-dashed git commands
-  convert doc links for other pages
-  convert doc links for git subcommands
-  adjust the command lists (by category) to the new doc link macros
-
- Documentation/asciidoc.conf              |   19 ++-
- Documentation/blame-options.txt          |    2 +-
- Documentation/cmd-list.perl              |    7 +-
- Documentation/config.txt                 |  174 +++++++++++-----------
- Documentation/diff-options.txt           |    6 +-
- Documentation/everyday.txt               |   48 +++---
- Documentation/fetch-options.txt          |    2 +-
- Documentation/git-add.txt                |   18 +-
- Documentation/git-am.txt                 |   14 +-
- Documentation/git-annotate.txt           |    6 +-
- Documentation/git-apply.txt              |    2 +-
- Documentation/git-archimport.txt         |    2 +-
- Documentation/git-archive.txt            |    2 +-
- Documentation/git-bisect.txt             |    2 +-
- Documentation/git-blame.txt              |    6 +-
- Documentation/git-branch.txt             |    8 +-
- Documentation/git-bundle.txt             |    2 +-
- Documentation/git-cat-file.txt           |    4 +-
- Documentation/git-check-attr.txt         |    4 +-
- Documentation/git-check-ref-format.txt   |    4 +-
- Documentation/git-checkout-index.txt     |    2 +-
- Documentation/git-checkout.txt           |    4 +-
- Documentation/git-cherry-pick.txt        |    4 +-
- Documentation/git-cherry.txt             |    4 +-
- Documentation/git-citool.txt             |    4 +-
- Documentation/git-clean.txt              |    2 +-
- Documentation/git-clone.txt              |    4 +-
- Documentation/git-commit-tree.txt        |    6 +-
- Documentation/git-commit.txt             |   18 +-
- Documentation/git-config.txt             |    2 +-
- Documentation/git-count-objects.txt      |    2 +-
- Documentation/git-cvsexportcommit.txt    |    2 +-
- Documentation/git-cvsimport.txt          |    6 +-
- Documentation/git-cvsserver.txt          |    8 +-
- Documentation/git-daemon.txt             |    2 +-
- Documentation/git-describe.txt           |    2 +-
- Documentation/git-diff-files.txt         |    2 +-
- Documentation/git-diff-index.txt         |    2 +-
- Documentation/git-diff-tree.txt          |    2 +-
- Documentation/git-diff.txt               |    8 +-
- Documentation/git-fast-export.txt        |    6 +-
- Documentation/git-fast-import.txt        |    4 +-
- Documentation/git-fetch-pack.txt         |    2 +-
- Documentation/git-fetch.txt              |    4 +-
- Documentation/git-filter-branch.txt      |    8 +-
- Documentation/git-fmt-merge-msg.txt      |    4 +-
- Documentation/git-format-patch.txt       |    6 +-
- Documentation/git-fsck-objects.txt       |    2 +-
- Documentation/git-fsck.txt               |    2 +-
- Documentation/git-gc.txt                 |   12 +-
- Documentation/git-get-tar-commit-id.txt  |    2 +-
- Documentation/git-grep.txt               |    2 +-
- Documentation/git-gui.txt                |    4 +-
- Documentation/git-hash-object.txt        |    2 +-
- Documentation/git-help.txt               |   10 +-
- Documentation/git-http-fetch.txt         |    2 +-
- Documentation/git-http-push.txt          |    2 +-
- Documentation/git-imap-send.txt          |    2 +-
- Documentation/git-index-pack.txt         |    2 +-
- Documentation/git-init-db.txt            |    2 +-
- Documentation/git-init.txt               |    2 +-
- Documentation/git-instaweb.txt           |    6 +-
- Documentation/git-log.txt                |    4 +-
- Documentation/git-lost-found.txt         |    4 +-
- Documentation/git-ls-files.txt           |   10 +-
- Documentation/git-ls-remote.txt          |    2 +-
- Documentation/git-ls-tree.txt            |    2 +-
- Documentation/git-mailinfo.txt           |    4 +-
- Documentation/git-mailsplit.txt          |    2 +-
- Documentation/git-merge-base.txt         |    2 +-
- Documentation/git-merge-file.txt         |    4 +-
- Documentation/git-merge-index.txt        |    2 +-
- Documentation/git-merge-one-file.txt     |    2 +-
- Documentation/git-merge-tree.txt         |    2 +-
- Documentation/git-merge.txt              |   14 +-
- Documentation/git-mergetool.txt          |    2 +-
- Documentation/git-mktag.txt              |    2 +-
- Documentation/git-mktree.txt             |    2 +-
- Documentation/git-mv.txt                 |    2 +-
- Documentation/git-name-rev.txt           |    2 +-
- Documentation/git-pack-objects.txt       |    8 +-
- Documentation/git-pack-redundant.txt     |    8 +-
- Documentation/git-pack-refs.txt          |    2 +-
- Documentation/git-parse-remote.txt       |    2 +-
- Documentation/git-patch-id.txt           |    2 +-
- Documentation/git-peek-remote.txt        |    2 +-
- Documentation/git-prune-packed.txt       |    6 +-
- Documentation/git-prune.txt              |   10 +-
- Documentation/git-pull.txt               |    8 +-
- Documentation/git-push.txt               |    6 +-
- Documentation/git-quiltimport.txt        |    2 +-
- Documentation/git-read-tree.txt          |    8 +-
- Documentation/git-rebase.txt             |    4 +-
- Documentation/git-receive-pack.txt       |    6 +-
- Documentation/git-reflog.txt             |    8 +-
- Documentation/git-relink.txt             |    2 +-
- Documentation/git-remote.txt             |   12 +-
- Documentation/git-repack.txt             |   16 +-
- Documentation/git-repo-config.txt        |    2 +-
- Documentation/git-request-pull.txt       |    2 +-
- Documentation/git-rerere.txt             |    2 +-
- Documentation/git-reset.txt              |    6 +-
- Documentation/git-rev-list.txt           |    2 +-
- Documentation/git-rev-parse.txt          |    4 +-
- Documentation/git-revert.txt             |    8 +-
- Documentation/git-rm.txt                 |    4 +-
- Documentation/git-send-email.txt         |    2 +-
- Documentation/git-send-pack.txt          |    6 +-
- Documentation/git-sh-setup.txt           |    2 +-
- Documentation/git-shell.txt              |    2 +-
- Documentation/git-shortlog.txt           |    2 +-
- Documentation/git-show-branch.txt        |    4 +-
- Documentation/git-show-index.txt         |    2 +-
- Documentation/git-show-ref.txt           |    4 +-
- Documentation/git-show.txt               |    4 +-
- Documentation/git-stash.txt              |   12 +-
- Documentation/git-status.txt             |    8 +-
- Documentation/git-stripspace.txt         |    2 +-
- Documentation/git-submodule.txt          |    4 +-
- Documentation/git-svn.txt                |    8 +-
- Documentation/git-symbolic-ref.txt       |    2 +-
- Documentation/git-tag.txt                |    2 +-
- Documentation/git-tar-tree.txt           |    2 +-
- Documentation/git-unpack-file.txt        |    2 +-
- Documentation/git-unpack-objects.txt     |    4 +-
- Documentation/git-update-index.txt       |   14 +-
- Documentation/git-update-ref.txt         |    2 +-
- Documentation/git-update-server-info.txt |    4 +-
- Documentation/git-upload-archive.txt     |    2 +-
- Documentation/git-upload-pack.txt        |    2 +-
- Documentation/git-var.txt                |    8 +-
- Documentation/git-verify-pack.txt        |    2 +-
- Documentation/git-verify-tag.txt         |    2 +-
- Documentation/git-web--browse.txt        |    4 +-
- Documentation/git-whatchanged.txt        |    2 +-
- Documentation/git-write-tree.txt         |    2 +-
- Documentation/git.txt                    |   40 +++---
- Documentation/gitattributes.txt          |   10 +-
- Documentation/gitcli.txt                 |    2 +-
- Documentation/gitcore-tutorial.txt       |   16 +-
- Documentation/gitcvs-migration.txt       |   24 ++--
- Documentation/gitdiffcore.txt            |   16 +-
- Documentation/gitglossary.txt            |    6 +-
- Documentation/githooks.txt               |    2 +-
- Documentation/gitignore.txt              |    2 +-
- Documentation/gitk.txt                   |    6 +-
- Documentation/gitmodules.txt             |    6 +-
- Documentation/gitrepository-layout.txt   |   30 ++--
- Documentation/gittutorial-2.txt          |   22 ++--
- Documentation/gittutorial.txt            |   28 ++--
- Documentation/glossary-content.txt       |   18 +-
- Documentation/merge-config.txt           |    8 +-
- Documentation/pretty-options.txt         |    2 +-
- Documentation/rev-list-options.txt       |   14 +-
- Documentation/urls-remotes.txt           |    2 +-
- Documentation/urls.txt                   |    2 +-
- Documentation/user-manual.txt            |  246 +++++++++++++++---------------
- command-list.txt                         |   12 +-
- 158 files changed, 680 insertions(+), 664 deletions(-)
+diff --git a/Documentation/config.txt b/Documentation/config.txt
+index 922ac7b..98ca1a1 100644
+--- a/Documentation/config.txt
++++ b/Documentation/config.txt
+@@ -691,11 +691,11 @@ rerere.enabled::
+ 
+ gitcvs.enabled::
+ 	Whether the CVS server interface is enabled for this repository.
+-	See linkgit:git-cvsserver[1].
++	See linkgitasis:git-cvsserver[1].
+ 
+ gitcvs.logfile::
+ 	Path to a log file where the CVS server interface well... logs
+-	various stuff. See linkgit:git-cvsserver[1].
++	various stuff. See linkgitasis:git-cvsserver[1].
+ 
+ gitcvs.usecrlfattr::
+ 	If true, the server will look up the `crlf` attribute for
+@@ -721,7 +721,7 @@ gitcvs.dbname::
+ 	derived from the git repository. The exact meaning depends on the
+ 	used database driver, for SQLite (which is the default driver) this
+ 	is a filename. Supports variable substitution (see
+-	linkgit:git-cvsserver[1] for details). May not contain semicolons (`;`).
++	linkgitasis:git-cvsserver[1] for details). May not contain semicolons (`;`).
+ 	Default: '%Ggitcvs.%m.sqlite'
+ 
+ gitcvs.dbdriver::
+@@ -730,19 +730,19 @@ gitcvs.dbdriver::
+ 	with 'DBD::SQLite', reported to work with 'DBD::Pg', and
+ 	reported *not* to work with 'DBD::mysql'. Experimental feature.
+ 	May not contain double colons (`:`). Default: 'SQLite'.
+-	See linkgit:git-cvsserver[1].
++	See linkgitasis:git-cvsserver[1].
+ 
+ gitcvs.dbuser, gitcvs.dbpass::
+ 	Database user and password. Only useful if setting 'gitcvs.dbdriver',
+ 	since SQLite has no concept of database users and/or passwords.
+ 	'gitcvs.dbuser' supports variable substitution (see
+-	linkgit:git-cvsserver[1] for details).
++	linkgitasis:git-cvsserver[1] for details).
+ 
+ gitcvs.dbTableNamePrefix::
+ 	Database table name prefix.  Prepended to the names of any
+ 	database tables used, allowing a single database to be used
+ 	for several repositories.  Supports variable substitution (see
+-	linkgit:git-cvsserver[1] for details).  Any non-alphabetic
++	linkgitasis:git-cvsserver[1] for details).  Any non-alphabetic
+ 	characters will be replaced with underscores.
+ 
+ All gitcvs variables except for 'gitcvs.usecrlfattr' and
+diff --git a/Documentation/everyday.txt b/Documentation/everyday.txt
+index e598cdd..097760c 100644
+--- a/Documentation/everyday.txt
++++ b/Documentation/everyday.txt
+@@ -341,10 +341,10 @@ Repository Administration[[Repository Administration]]
+ A repository administrator uses the following tools to set up
+ and maintain access to the repository by developers.
+ 
+-  * linkgit:git-daemon[1] to allow anonymous download from
++  * linkgitasis:git-daemon[1] to allow anonymous download from
+     repository.
+ 
+-  * linkgit:git-shell[1] can be used as a 'restricted login shell'
++  * linkgitasis:git-shell[1] can be used as a 'restricted login shell'
+     for shared central repository users.
+ 
+ link:howto/update-hook-example.txt[update hook howto] has a good
+diff --git a/Documentation/git-cvsimport.txt b/Documentation/git-cvsimport.txt
+index b7a8c10..91d51a4 100644
+--- a/Documentation/git-cvsimport.txt
++++ b/Documentation/git-cvsimport.txt
+@@ -32,7 +32,7 @@ any CVS branches, yourself.  It is advisable to specify a named remote via
+ -r to separate and protect the incoming branches.
+ 
+ If you intend to set up a shared public repository that all developers can
+-read/write, or if you want to use linkgit:git-cvsserver[1], then you
++read/write, or if you want to use linkgitasis:git-cvsserver[1], then you
+ probably want to make a bare clone of the imported repository,
+ and use the clone as the shared repository.
+ See linkgit:gitcvs-migration[7].
+diff --git a/Documentation/git-cvsserver.txt b/Documentation/git-cvsserver.txt
+index 785779e..72fb93f 100644
+--- a/Documentation/git-cvsserver.txt
++++ b/Documentation/git-cvsserver.txt
+@@ -28,7 +28,7 @@ OPTIONS
+ -------
+ 
+ All these options obviously only make sense if enforced by the server side.
+-They have been implemented to resemble the linkgit:git-daemon[1] options as
++They have been implemented to resemble the linkgitasis:git-daemon[1] options as
+ closely as possible.
+ 
+ --base-path <path>::
+diff --git a/Documentation/git-push.txt b/Documentation/git-push.txt
+index 45c9643..213e05f 100644
+--- a/Documentation/git-push.txt
++++ b/Documentation/git-push.txt
+@@ -21,7 +21,7 @@ necessary to complete the given refs.
+ 
+ You can make interesting things happen to a repository
+ every time you push into it, by setting up 'hooks' there.  See
+-documentation for linkgit:git-receive-pack[1].
++documentation for linkgitasis:git-receive-pack[1].
+ 
+ 
+ OPTIONS
+diff --git a/Documentation/gitcvs-migration.txt b/Documentation/gitcvs-migration.txt
+index aaa7ef7..221b5d0 100644
+--- a/Documentation/gitcvs-migration.txt
++++ b/Documentation/gitcvs-migration.txt
+@@ -100,7 +100,7 @@ Next, give every team member read/write access to this repository.  One
+ easy way to do this is to give all the team members ssh access to the
+ machine where the repository is hosted.  If you don't want to give them a
+ full shell on the machine, there is a restricted shell which only allows
+-users to do git pushes and pulls; see linkgit:git-shell[1].
++users to do git pushes and pulls; see linkgitasis:git-shell[1].
+ 
+ Put all the committers in the same group, and make the repository
+ writable by that group:
+@@ -163,7 +163,7 @@ Providing CVS Access to a git Repository
+ ----------------------------------------
+ 
+ It is also possible to provide true CVS access to a git repository, so
+-that developers can still use CVS; see linkgit:git-cvsserver[1] for
++that developers can still use CVS; see linkgitasis:git-cvsserver[1] for
+ details.
+ 
+ Alternative Development Models
+diff --git a/Documentation/user-manual.txt b/Documentation/user-manual.txt
+index 08d1310..26525f4 100644
+--- a/Documentation/user-manual.txt
++++ b/Documentation/user-manual.txt
+@@ -1865,14 +1865,14 @@ at.  You can then skip to the section
+ "<<pushing-changes-to-a-public-repository,Pushing changes to a public
+ repository>>", below.
+ 
+-Otherwise, all you need to do is start linkgit:git-daemon[1]; it will
++Otherwise, all you need to do is start linkgitasis:git-daemon[1]; it will
+ listen on port 9418.  By default, it will allow access to any directory
+ that looks like a git directory and contains the magic file
+ git-daemon-export-ok.  Passing some directory paths as git-daemon
+ arguments will further restrict the exports to those paths.
+ 
+ You can also run git-daemon as an inetd service; see the
+-linkgit:git-daemon[1] man page for details.  (See especially the
++linkgitasis:git-daemon[1] man page for details.  (See especially the
+ examples section.)
+ 
+ [[exporting-via-http]]
+-- 
+1.6.0.1.308.gede4c
