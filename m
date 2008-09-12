@@ -1,67 +1,71 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: Re: CGit and repository list
-Date: Fri, 12 Sep 2008 09:00:06 -0700
-Message-ID: <20080912160006.GI22960@spearce.org>
-References: <19449377.post@talk.nabble.com> <8c5c35580809120736x4170b2dbq3438bd619326ae00@mail.gmail.com> <20080912145804.GF10544@machine.or.cz> <200809121754.30277.jnareb@gmail.com>
+From: Theodore Tso <tytso@MIT.EDU>
+Subject: Re: [RFC] origin link for cherry-pick and revert
+Date: Fri, 12 Sep 2008 12:00:59 -0400
+Message-ID: <20080912160059.GY5082@mit.edu>
+References: <20080909132212.GA25476@cuci.nl> <20080912054739.GB22228@cuci.nl> <20080912145802.GV5082@mit.edu> <200809121711.32448.jnareb@gmail.com> <48CA8D6A.4000303@gnu.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Petr Baudis <pasky@suse.cz>, Lars Hjemli <hjemli@gmail.com>,
-	git@vger.kernel.org
-To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Sep 12 18:01:18 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: Jakub Narebski <jnareb@gmail.com>,
+	"Stephen R. van den Berg" <srb@cuci.nl>,
+	Linus Torvalds <torvalds@linux-foundation.org>,
+	Sam Vilain <sam@vilain.net>, git@vger.kernel.org
+To: Paolo Bonzini <bonzini@gnu.org>
+X-From: git-owner@vger.kernel.org Fri Sep 12 18:02:38 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KeB5A-0002tq-33
-	for gcvg-git-2@gmane.org; Fri, 12 Sep 2008 18:01:16 +0200
+	id 1KeB6S-0003I1-99
+	for gcvg-git-2@gmane.org; Fri, 12 Sep 2008 18:02:36 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752934AbYILQAH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 12 Sep 2008 12:00:07 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752991AbYILQAH
-	(ORCPT <rfc822;git-outgoing>); Fri, 12 Sep 2008 12:00:07 -0400
-Received: from george.spearce.org ([209.20.77.23]:40602 "EHLO
-	george.spearce.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752934AbYILQAG (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 12 Sep 2008 12:00:06 -0400
-Received: by george.spearce.org (Postfix, from userid 1001)
-	id 1845E3835C; Fri, 12 Sep 2008 16:00:06 +0000 (UTC)
+	id S1754431AbYILQB2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 12 Sep 2008 12:01:28 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754720AbYILQB2
+	(ORCPT <rfc822;git-outgoing>); Fri, 12 Sep 2008 12:01:28 -0400
+Received: from BISCAYNE-ONE-STATION.MIT.EDU ([18.7.7.80]:46384 "EHLO
+	biscayne-one-station.mit.edu" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1754274AbYILQB1 (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 12 Sep 2008 12:01:27 -0400
+Received: from outgoing.mit.edu (OUTGOING-AUTH.MIT.EDU [18.7.22.103])
+	by biscayne-one-station.mit.edu (8.13.6/8.9.2) with ESMTP id m8CG11Lu013386;
+	Fri, 12 Sep 2008 12:01:01 -0400 (EDT)
+Received: from closure.thunk.org (c-98-216-98-217.hsd1.ma.comcast.net [98.216.98.217])
+	(authenticated bits=0)
+        (User authenticated as tytso@ATHENA.MIT.EDU)
+	by outgoing.mit.edu (8.13.6/8.12.4) with ESMTP id m8CG0xX7003461
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
+	Fri, 12 Sep 2008 12:01:00 -0400 (EDT)
+Received: from tytso by closure.thunk.org with local (Exim 4.69)
+	(envelope-from <tytso@mit.edu>)
+	id 1KeB4t-0004hj-CY; Fri, 12 Sep 2008 12:00:59 -0400
 Content-Disposition: inline
-In-Reply-To: <200809121754.30277.jnareb@gmail.com>
+In-Reply-To: <48CA8D6A.4000303@gnu.org>
 User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
+X-Scanned-By: MIMEDefang 2.42
+X-Spam-Flag: NO
+X-Spam-Score: 0.00
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/95743>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/95744>
 
-Jakub Narebski <jnareb@gmail.com> wrote:
-> Petr Baudis wrote:
-> > 
-> >   this finally tripped me over and I wanted to quickly add cgit as an
-> > alternate viewing interface at repo.or.cz. [...]
+On Fri, Sep 12, 2008 at 05:40:26PM +0200, Paolo Bonzini wrote:
+> > But it is not true that "you can always generate the cache from the
+> > git repository" in this case; the patch-id that is to be saved is
+> > _original_ patch-id of cherry-picked (or reverted) changeset.
 > 
-> Or you can wait a little while for "smart" HTTP server, which I guess
-> also generates automatically or/and on the fly objects/info/packs and
-> info/refs required by "dumb" protocols clients (including old HTTP
-> clients).
+> He's proposing storing the original patch id in the commit message, and
+> caching the commit SHA->patch id association on the side.
+> 
 
-The automatic generation of objects/info/packs and info/refs is
-planned for support in the smart CGI, but it doesn't help the
-"gitweb URL is same as clone URL" concept.  For that you need your
-HTTP server to know how to issue some requests to gitweb and others
-to the smart CGI or to the filesystem.
- 
-> P.S. Could you please gather some statistics to compare the period
-> before and after installing "smart" HTTP server (and after smart
-> clients became widespread).
+Actually its the association in the other direction which you'd want
+to cache.  It's fast given the commit SHA to dig the original patch id
+out of the commit message.  What is harder is given a patch id X, to
+find all of the commits which either (a) have a patch id of X, or (b)
+have a commit message indicating that the original patch-id was X.  So
+having a database which caches this information, so given a patch-id,
+you can quickly look up the related commits, is what I believe Sam was
+proposing, and which I think would solve the problem quite nicely.
 
-Well, it would help if there was a working implementation of the
-"smart" HTTP server.  ;-)
-
-Right now I haven't been able to touch the project for two weeks
-straight.  I'm hoping to be able to put 2 full days into it next
-week.  Lets see how that plan works.
-
--- 
-Shawn.
+	       	       	     	   	     - Ted
