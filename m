@@ -1,83 +1,114 @@
-From: Sam Vilain <sam@vilain.net>
-Subject: Re: [RFC] origin link for cherry-pick and revert
-Date: Fri, 12 Sep 2008 14:24:40 +1200
-Message-ID: <48C9D2E8.1000506@vilain.net>
-References: <20080909132212.GA25476@cuci.nl> <alpine.LFD.1.10.0809100841080.3384@nehalem.linux-foundation.org> <alpine.LFD.1.10.0809100844040.3384@nehalem.linux-foundation.org> <200809101823.22072.jnareb@gmail.com> <48C9A9A4.8090703@vilain.net> <alpine.LFD.1.10.0809111641110.3384@nehalem.linux-foundation.org>
+From: mriou <matthieu.riou@gmail.com>
+Subject: git-svn: file not found in commit
+Date: Thu, 11 Sep 2008 19:48:06 -0700 (PDT)
+Message-ID: <19448485.post@talk.nabble.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
+Content-Type: text/plain; charset=us-ascii
 Content-Transfer-Encoding: 7bit
-Cc: Jakub Narebski <jnareb@gmail.com>, Paolo Bonzini <bonzini@gnu.org>,
-	"Stephen R. van den Berg" <srb@cuci.nl>, git@vger.kernel.org
-To: Linus Torvalds <torvalds@linux-foundation.org>
-X-From: git-owner@vger.kernel.org Fri Sep 12 04:29:29 2008
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Sep 12 04:49:18 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KdyPT-0003go-Qv
-	for gcvg-git-2@gmane.org; Fri, 12 Sep 2008 04:29:24 +0200
+	id 1Kdyij-0000OW-VN
+	for gcvg-git-2@gmane.org; Fri, 12 Sep 2008 04:49:18 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753651AbYILCYw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 11 Sep 2008 22:24:52 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754483AbYILCYw
-	(ORCPT <rfc822;git-outgoing>); Thu, 11 Sep 2008 22:24:52 -0400
-Received: from watts.utsl.gen.nz ([202.78.240.73]:49845 "EHLO mail.utsl.gen.nz"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753567AbYILCYv (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 11 Sep 2008 22:24:51 -0400
-Received: by mail.utsl.gen.nz (Postfix, from userid 1004)
-	id 6916E21C6AC; Fri, 12 Sep 2008 14:24:49 +1200 (NZST)
-X-Spam-Checker-Version: SpamAssassin 3.2.3 (2007-08-08) on
-	mail.musashi.utsl.gen.nz
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.8 required=5.0 tests=AWL,BAYES_00 autolearn=ham
-	version=3.2.3
-Received: from [192.168.2.22] (leibniz.catalyst.net.nz [202.78.240.7])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by mail.utsl.gen.nz (Postfix) with ESMTP id 81B8B21C50D;
-	Fri, 12 Sep 2008 14:24:41 +1200 (NZST)
-User-Agent: Icedove 1.5.0.12 (X11/20070606)
-In-Reply-To: <alpine.LFD.1.10.0809111641110.3384@nehalem.linux-foundation.org>
-X-Enigmail-Version: 0.94.2.0
+	id S1754531AbYILCsK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 11 Sep 2008 22:48:10 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754403AbYILCsJ
+	(ORCPT <rfc822;git-outgoing>); Thu, 11 Sep 2008 22:48:09 -0400
+Received: from kuber.nabble.com ([216.139.236.158]:50949 "EHLO
+	kuber.nabble.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753567AbYILCsI (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 11 Sep 2008 22:48:08 -0400
+Received: from isper.nabble.com ([192.168.236.156])
+	by kuber.nabble.com with esmtp (Exim 4.63)
+	(envelope-from <lists@nabble.com>)
+	id 1Kdyhb-0007do-0U
+	for git@vger.kernel.org; Thu, 11 Sep 2008 19:48:07 -0700
+X-Nabble-From: matthieu.riou@gmail.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/95679>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/95680>
 
-Linus Torvalds wrote:
-> 
-> On Fri, 12 Sep 2008, Sam Vilain wrote:
->>  2. make git-cherry-pick have a similar option to '-x', but instead of
->>     recording the original commit ID, record the original *patch* ID,
->>     *if* there was a merge conflict for that cherry pick.
-> 
-> Actually, don't make it dependent on merge conflicts. Just make it depend 
-> on whether the patch ID is _different_.
-> 
-> It can happen even without any conflicts, just because the context 
-> changed. So it really isn't about merge conflicts per se, just the fact 
-> that a patch can change when it is applied in a new area with a three-way 
-> diff - or because it got applied with fuzz.
-> 
-> You could add it as a 
-> 
-> 	Original-patch-id: <sha1>
-> 
-> or something. And then you just need to teach "git cherry/rebase" to take 
-> both the original ID and the new one into account when deciding whether it 
-> has already seen that patch.
 
-Yes, right - it's the patch ID changing that's the problem for
-git-cherry / rev-list --cherry-pick to be able to spot changes as the
-'same'.
+Hi,
 
-Someone else pointed out that git-rebase -i might want to have this as well.
+I'm trying to import with git-svn an Apache repository located at:
 
-I actually looked into coding this, but there was a little problem with
-the way git-revert worked - it builds the commit message before the diff
-is calculated.  So there would probably need to be a little trivial
-refactoring first before this can be implemented.
+http://svn.eu.apache.org/repos/asf/ode
 
-Sam.
+Doing so, at some point git-svn seems to get lost when identifying a parent:
+
+r563284 = 1e889810d5344e1222077f4026b028a922826d45 (trunk)
+Found possible branch point:
+https://svn.eu.apache.org/repos/asf/ode/trunk/tasks =>
+https://svn.eu.apache.org/repos/asf/ode/branches/bart, 563283
+Initializing parent: bart@563283
+W: Ignoring error from SVN, path probably does not exist: (175007): HTTP
+Path Not Found: '/repos/asf/!svn/bc/10001/ode/trunk/tasks' path not found
+W: Do not be alarmed at the above message git-svn is just searching
+aggressively for old history.
+This may take a while on large repositories
+branch_from: /incubator/ode => /incubator/ode/trunk/tasks
+Found possible branch point:
+https://svn.eu.apache.org/repos/asf/incubator/ode/trunk/tasks =>
+https://svn.eu.apache.org/repos/asf/ode/trunk/tasks, 560672
+Initializing parent: bart@560672
+Found branch parent: (bart@563283) 69e8e3436d6572333b81a2c12cb6d3db8d4780a7
+Following parent with do_switch
+Successfully followed parent
+r560673 = 7bf3908aca6fccf484f7dd806e57292400600f70 (bart@563283)
+        D       hibernate.rake
+        D       cobertura.rake
+        D       jdepend.rake
+jbi.rake was not found in commit 7bf3908aca6fccf484f7dd806e57292400600f70
+(r560673)
+
+The error message is correct, that revision didn't contain this file, it's
+been added much later. So the parent identification seems to be getting it
+wrong. And I have to agree the logs are confusing around that revision:
+
+$ svn log -r 563283:563286 --verbose https://svn.apache.org/repos/asf/
+------------------------------------------------------------------------
+r563283 | mszefler | 2007-08-07 00:19:24 +0300 (Tue, 07 Aug 2007) | 2 lines
+Changed paths:
+  D /ode/branches/bart
+
+Remove.
+------------------------------------------------------------------------
+r563284 | mszefler | 2007-08-07 00:19:32 +0300 (Tue, 07 Aug 2007) | 2 lines
+Changed paths:
+  A /ode/branches/bart (from /ode/trunk/tasks:563283)
+  D /ode/trunk/tasks
+
+Moved.
+------------------------------------------------------------------------
+r563285 | mszefler | 2007-08-07 00:20:11 +0300 (Tue, 07 Aug 2007) | 2 lines
+Changed paths:
+  A /ode/trunk/tasks (from /ode/branches/bart:563284)
+
+copyied back.
+------------------------------------------------------------------------
+r563286 | mszefler | 2007-08-07 00:21:57 +0300 (Tue, 07 Aug 2007) | 2 lines
+Changed paths:
+  A /ode/branches/bart/tasks (from /ode/trunk/tasks:563285)
+
+copied.
+------------------------------------------------------------------------
+
+So my questions are the following:
+ - is there a way I can help git svn finding the correct ancestor?
+ - is there a way I can ask git svn to ignore ancestors only when it fails?
+
+If the answer is no in both cases, maybe I could add a switch to ignore
+those errors?
+
+Thanks,
+Matthieu
+-- 
+View this message in context: http://www.nabble.com/git-svn%3A-file-not-found-in-commit-tp19448485p19448485.html
+Sent from the git mailing list archive at Nabble.com.
