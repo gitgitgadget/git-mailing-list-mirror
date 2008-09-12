@@ -1,86 +1,82 @@
-From: Theodore Tso <tytso@MIT.EDU>
+From: Paolo Bonzini <bonzini@gnu.org>
 Subject: Re: [RFC] origin link for cherry-pick and revert
-Date: Fri, 12 Sep 2008 10:58:02 -0400
-Message-ID: <20080912145802.GV5082@mit.edu>
-References: <20080909132212.GA25476@cuci.nl> <alpine.LFD.1.10.0809100841080.3384@nehalem.linux-foundation.org> <alpine.LFD.1.10.0809100844040.3384@nehalem.linux-foundation.org> <200809101823.22072.jnareb@gmail.com> <48C9A9A4.8090703@vilain.net> <alpine.LFD.1.10.0809111641110.3384@nehalem.linux-foundation.org> <20080912054739.GB22228@cuci.nl>
+Date: Fri, 12 Sep 2008 17:05:40 +0200
+Message-ID: <48CA8544.8090000@gnu.org>
+References: <20080909132212.GA25476@cuci.nl> <alpine.LFD.1.10.0809100841080.3384@nehalem.linux-foundation.org> <alpine.LFD.1.10.0809100844040.3384@nehalem.linux-foundation.org> <200809101823.22072.jnareb@gmail.com> <48C9A9A4.8090703@vilain.net> <alpine.LFD.1.10.0809111641110.3384@nehalem.linux-foundation.org> <20080912054739.GB22228@cuci.nl> <20080912145802.GV5082@mit.edu>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Linus Torvalds <torvalds@linux-foundation.org>,
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: "Stephen R. van den Berg" <srb@cuci.nl>,
+	Linus Torvalds <torvalds@linux-foundation.org>,
 	Sam Vilain <sam@vilain.net>, Jakub Narebski <jnareb@gmail.com>,
-	Paolo Bonzini <bonzini@gnu.org>, git@vger.kernel.org
-To: "Stephen R. van den Berg" <srb@cuci.nl>
-X-From: git-owner@vger.kernel.org Fri Sep 12 17:04:37 2008
+	git@vger.kernel.org
+To: Theodore Tso <tytso@MIT.EDU>
+X-From: git-owner@vger.kernel.org Fri Sep 12 17:07:21 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KeAC6-0000ko-Ms
-	for gcvg-git-2@gmane.org; Fri, 12 Sep 2008 17:04:23 +0200
+	id 1KeAEW-0001UZ-C0
+	for gcvg-git-2@gmane.org; Fri, 12 Sep 2008 17:06:52 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753064AbYILPDL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 12 Sep 2008 11:03:11 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752863AbYILPDK
-	(ORCPT <rfc822;git-outgoing>); Fri, 12 Sep 2008 11:03:10 -0400
-Received: from BISCAYNE-ONE-STATION.MIT.EDU ([18.7.7.80]:55840 "EHLO
-	biscayne-one-station.mit.edu" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1752093AbYILPDJ (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 12 Sep 2008 11:03:09 -0400
-Received: from outgoing.mit.edu (OUTGOING-AUTH.MIT.EDU [18.7.22.103])
-	by biscayne-one-station.mit.edu (8.13.6/8.9.2) with ESMTP id m8CF1pvN022885;
-	Fri, 12 Sep 2008 11:01:55 -0400 (EDT)
-Received: from closure.thunk.org (c-98-216-98-217.hsd1.ma.comcast.net [98.216.98.217])
-	(authenticated bits=0)
-        (User authenticated as tytso@ATHENA.MIT.EDU)
-	by outgoing.mit.edu (8.13.6/8.12.4) with ESMTP id m8CEw2Nm006829
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
-	Fri, 12 Sep 2008 10:58:04 -0400 (EDT)
-Received: from tytso by closure.thunk.org with local (Exim 4.69)
-	(envelope-from <tytso@mit.edu>)
-	id 1KeA5y-0004Sn-N3; Fri, 12 Sep 2008 10:58:02 -0400
-Content-Disposition: inline
-In-Reply-To: <20080912054739.GB22228@cuci.nl>
-User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
-X-Scanned-By: MIMEDefang 2.42
-X-Spam-Flag: NO
-X-Spam-Score: 0.00
+	id S1753436AbYILPFp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 12 Sep 2008 11:05:45 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753399AbYILPFp
+	(ORCPT <rfc822;git-outgoing>); Fri, 12 Sep 2008 11:05:45 -0400
+Received: from yw-out-2324.google.com ([74.125.46.28]:51276 "EHLO
+	yw-out-2324.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753203AbYILPFo (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 12 Sep 2008 11:05:44 -0400
+Received: by yw-out-2324.google.com with SMTP id 9so325974ywe.1
+        for <git@vger.kernel.org>; Fri, 12 Sep 2008 08:05:42 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from
+         :user-agent:mime-version:to:cc:subject:references:in-reply-to
+         :x-enigmail-version:content-type:content-transfer-encoding:sender;
+        bh=NG8ZbqoOk/wO+HpYwZ+QzIUMKkI5pyuSo04yAaH6sFU=;
+        b=nhKe5U+6yTscJR3wUXeL9KG8ojajVCIeTJYgOsu90DM4BbnTMdWgdbgZfE6h22xE38
+         0HncGam61Oc3EsfTiLW3BiHIV2eKlQ9rCa789EM4K10iLHOI1KF+Mv588RxuD2MP40C0
+         D/8Y0aFp/L6P43WHCi4fjFSHJujE86tloj7i0=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:user-agent:mime-version:to:cc:subject
+         :references:in-reply-to:x-enigmail-version:content-type
+         :content-transfer-encoding:sender;
+        b=Ud6OnWP4/w+gwNjonvGTln9m6bmnAdsTpdhwp6pcXj1RFjO4M0H8Ct2n+MAUUdT9kg
+         H7+2r19/Rk/3aZcB31OQm+UbpSnxjlJF/TBGFKufG/JvfMeYLRylp0kgbf3TOqPUUkFK
+         tgt/NtIAqDPrbBHJ2OMeO4+WYH7Xl+WeB2hqI=
+Received: by 10.86.65.9 with SMTP id n9mr3308569fga.55.1221231941816;
+        Fri, 12 Sep 2008 08:05:41 -0700 (PDT)
+Received: from scientist-2.mobile.usilu.net ( [195.176.179.202])
+        by mx.google.com with ESMTPS id 4sm12894651fgg.4.2008.09.12.08.05.40
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Fri, 12 Sep 2008 08:05:41 -0700 (PDT)
+User-Agent: Thunderbird 2.0.0.16 (Macintosh/20080707)
+In-Reply-To: <20080912145802.GV5082@mit.edu>
+X-Enigmail-Version: 0.95.7
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/95731>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/95732>
 
-On Fri, Sep 12, 2008 at 07:47:39AM +0200, Stephen R. van den Berg wrote:
-> >You could add it as a 
+Theodore Tso wrote:
+> On Fri, Sep 12, 2008 at 07:47:39AM +0200, Stephen R. van den Berg wrote:
+>>> You could add it as a 
+>>> 	Original-patch-id: <sha1>
+>> That will probably work fine when operating locally on (short) temporary
+>> branches.
+>>
+>> It would probably become computationally prohibitive to use it between
+>> long lived permanent branches.  In that case it would need to be
+>> augmented by the sha1 of the originating commit.
 > 
-> >	Original-patch-id: <sha1>
-> 
-> That will probably work fine when operating locally on (short) temporary
-> branches.
-> 
-> It would probably become computationally prohibitive to use it between
-> long lived permanent branches.  In that case it would need to be
-> augmented by the sha1 of the originating commit.
+> Nope, as Sam suggested in his original message (but which got clipped
+> by Linus when he was replying) all you have to do is to have a
+> separate local database which ties commits and patch-id's together as
+> a cache/index.
 
-Nope, as Sam suggested in his original message (but which got clipped
-by Linus when he was replying) all you have to do is to have a
-separate local database which ties commits and patch-id's together as
-a cache/index.
+Yeah, I must admit I am okay with *this* cache.
 
-I know you seem to be resistent to caches, but caches are **good**
-because they are local information, which by definition can be
-implementation-dependent; you can always generate the cache from the
-git repository if for some reason you need to extend it.  It also
-means that if it turns out you need to index reationships a different
-way, you can do that without having to make fundamental (incompatible)
-changes in the git object.  
-
-It's much like SQL databases; you have your database tables, where
-making changes to the database schema is painful --- and indexes,
-which can be added and dropped with much less effort.  Think of these
-local caches are database indexes.  Just because you need an index in
-a particular direction to optimize a query or loopup operation does
-***not*** imply that you need to make a fundamental, globally visible,
-database schema change or git object layout which breaks compatibility
-for everybody.
-
-						- Ted
+Paolo
