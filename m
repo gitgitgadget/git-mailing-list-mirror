@@ -1,115 +1,97 @@
-From: Petr Baudis <pasky@suse.cz>
-Subject: Re: [ANNOUNCE] TopGit v0.3
-Date: Fri, 12 Sep 2008 15:15:30 +0200
-Message-ID: <20080912131530.GZ10360@machine.or.cz>
-References: <20080909231009.GD10544@machine.or.cz> <1221120192.8962.7.camel@heerbeest> <20080912110017.GW10360@machine.or.cz> <1221222433.29747.8.camel@heerbeest>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: Gitweb
+Date: Fri, 12 Sep 2008 06:27:30 -0700 (PDT)
+Message-ID: <m3r67po5ps.fsf@localhost.localdomain>
+References: <19455112.post@talk.nabble.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-To: Jan Nieuwenhuizen <janneke-list@xs4all.nl>
-X-From: git-owner@vger.kernel.org Fri Sep 12 15:16:47 2008
+To: delux <jared@2ndnaturestudio.com>
+X-From: git-owner@vger.kernel.org Fri Sep 12 15:29:26 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Ke8Vt-0006s7-SA
-	for gcvg-git-2@gmane.org; Fri, 12 Sep 2008 15:16:42 +0200
+	id 1Ke8ho-0003Qa-F9
+	for gcvg-git-2@gmane.org; Fri, 12 Sep 2008 15:29:00 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751803AbYILNPe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 12 Sep 2008 09:15:34 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751893AbYILNPd
-	(ORCPT <rfc822;git-outgoing>); Fri, 12 Sep 2008 09:15:33 -0400
-Received: from w241.dkm.cz ([62.24.88.241]:50881 "EHLO machine.or.cz"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751676AbYILNPd (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 12 Sep 2008 09:15:33 -0400
-Received: by machine.or.cz (Postfix, from userid 2001)
-	id DD809393A816; Fri, 12 Sep 2008 15:15:30 +0200 (CEST)
-Content-Disposition: inline
-In-Reply-To: <1221222433.29747.8.camel@heerbeest>
-User-Agent: Mutt/1.5.16 (2007-06-09)
+	id S1751577AbYILN1h (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 12 Sep 2008 09:27:37 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751717AbYILN1g
+	(ORCPT <rfc822;git-outgoing>); Fri, 12 Sep 2008 09:27:36 -0400
+Received: from mail-gx0-f16.google.com ([209.85.217.16]:41066 "EHLO
+	mail-gx0-f16.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751521AbYILN1f (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 12 Sep 2008 09:27:35 -0400
+Received: by gxk9 with SMTP id 9so19015035gxk.13
+        for <git@vger.kernel.org>; Fri, 12 Sep 2008 06:27:34 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:received:received
+         :x-authentication-warning:to:cc:subject:references:from:in-reply-to
+         :message-id:lines:user-agent:mime-version:content-type:date;
+        bh=JQQgJsmBSxqZCLlpcRhgidYaFfVBcKq6lY511m4RXQ8=;
+        b=IIi8jrrb0KKUgrPGFYPYPip+2w8BIADwb7RRQy+93ItHDcd7fFm3eI1+QzH+MqrQvC
+         yw7UYVSETbKLpsIDQaxNpbIl0lf8ZIAyIvgmtkBOjNwmPvg4idmaWzg9w7gcU0BO75b6
+         b2kGtCgRjaCVnQE3RsolGPEnJemXIyataU1Bc=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=x-authentication-warning:to:cc:subject:references:from:in-reply-to
+         :message-id:lines:user-agent:mime-version:content-type:date;
+        b=bhJMJMQKsjzQqj/0jEDwRxbgYWYMKZt8IGOROCJQpF0FXzoKFzzkjQ2gtLkdHUamR3
+         p/6wT8clCk1cIM2oagpGr7+3AnvrzPxJN83l8kA+TZZunMssTo/O84q9VWTahPprQ3xy
+         e2HmzO+V0KX7OS8jMGa8zWP1MMExpPWuRDTN4=
+Received: by 10.103.213.10 with SMTP id p10mr2967606muq.46.1221226051487;
+        Fri, 12 Sep 2008 06:27:31 -0700 (PDT)
+Received: from localhost.localdomain ( [83.8.211.228])
+        by mx.google.com with ESMTPS id s10sm19350633muh.12.2008.09.12.06.27.28
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Fri, 12 Sep 2008 06:27:30 -0700 (PDT)
+Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
+	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id m8CDQupa018135;
+	Fri, 12 Sep 2008 15:27:06 +0200
+Received: (from jnareb@localhost)
+	by localhost.localdomain (8.13.4/8.13.4/Submit) id m8CDQduj018127;
+	Fri, 12 Sep 2008 15:26:39 +0200
+X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
+In-Reply-To: <19455112.post@talk.nabble.com>
+User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/95724>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/95725>
 
-On Fri, Sep 12, 2008 at 02:27:13PM +0200, Jan Nieuwenhuizen wrote:
-> On vr, 2008-09-12 at 13:00 +0200, Petr Baudis wrote:
-> 
-> > But this is rewriting history, isn't it?
-> 
-> No (that would be useless), see 
-> 
->     http://kerneltrap.org/mailarchive/git/2008/8/13/2925144 #first tg redepend idea
+delux <jared@2ndnaturestudio.com> writes:
 
-Huh. I can't see how that could ever work.
+> I posted on another subject before and thanks to all who replied to
+> that, Now I want to put gitweb on my server and have read everything
+> to do it but cant seem to find the files. I know that it is supposed
+> to be bundled with git but I am not the one who installed git, so is
+> there anywhere I can get the gitweb files?
 
-> 	$ git checkout -b P' P
-> 	$ git rebase --onto B' B
-> 	$ git checkout P
-> 	$ git merge --no-ff --no-commit B'   (*)
-> 	$ git read-tree -u P'
-> 	$ git commit
-> 	$ git branch -D P'
+First, what operating system, and in the case of Linux what
+distribution do you use?  For example both Fedora Core and Debian (so
+also all Debian-derived distributions like Ubuntu) have gitweb*
+package; so it should be very simple to install this.
 
-The read-tree step is broken, you can't do that. The dependencies
-content will be gone from your base, but not from the actual head -
-what's the point of removing them at all?
+Because installing CGI script (or legacy mod_perl script) differs from
+distribution to distribution, therefore stock RPMS from kernel.org
+doesn't create gitweb package.  So you would have to either download
+source tarball, or clone git repository, read gitweb/INSTALL and then
+run 
+  $ make gitweb/gitweb.cgi <options>
+or 
+  $ make configure && ./configure && make gitweb/gitweb.cgi
+and simply copy the files (there is no install target for gitweb) as
+described, ensuring that web server is configured to run CGI scripts
+(or mod_perl scripts).
 
-Actually, tg patch will then show diff not only of your patch, but the
-removed dependencies as well!
 
-There's plenty of other problems with this approach as well. And I can't
-see how readding a removed dependency would work at all either.
-
-> I've just implemented the second idea
-> 
->     http://kerneltrap.org/mailarchive/git/2008/8/15/2954214
-> 
-> but haven't got any time to test it yet.  Then there's also 
-> 
->     http://kerneltrap.org/mailarchive/git/2008/8/15/2952004
-> 
-> to consider.
-
-That's good point, indirect dependencies problem did not occur to me
-before. That's troublesome...
-
-I'm beginning to wonder if it is worth the trouble to support changing
-dependencies in existing branches at all, except in the case the
-dependency got merged to upstream (then we don't hit any of these
-troubles). I'm stopping to see any way how to sanely support dependency
-removal without history rewriting, since we rely on Git for our all
-changes propagation.
-
-> > Currently, I'm thinking that something like .topundeps (or !-prefixing
-> > dependencies in .topdeps) is the only way to implement this...
-> 
-> Yeah, i've been thinking that too.  It would be nice if we could
-> hack around that.  It seems that the two redepend ideas get around
-> it at the expense of creating the whole list of dependencies,
-> which is much too expensive for my taste.
-
-Actually, you would have to do this here as well for what we could call
-"the evil Jonathan scenario":
-
-> 	Make a topic branch t/foo depending on master.
-> 	Change the dependency of t/foo to the older version maint.
-> 	Make a new topic branch t/bar depending on t/foo and master.
-
-When creating t/bar, you _need_ to look in t/foo dependencies to figure
-out that you really do need the master stuff merged.
-
-Even worse, these dependency removals act dominantly through merges.
-Consider t/xyzzy and t/qux both depending on master. If you remove
-master dependency from t/xyzzy and then merge them together, you'll lose
-master from the result, even though t/qux needs it, because of the
-dependency removal commit!
-
-More and more worms turn up in the can.
+You can see gitweb at work at http://git.debian.org, and modified
+gitweb at http://git.kernel.org and http://repo.or.cz.
 
 -- 
-				Petr "Pasky" Baudis
-The next generation of interesting software will be done
-on the Macintosh, not the IBM PC.  -- Bill Gates
+Jakub Narebski
+Poland
+ShadeHawk on #git
