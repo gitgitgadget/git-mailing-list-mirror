@@ -1,409 +1,230 @@
-From: Thomas Rast <trast@student.ethz.ch>
-Subject: [PATCH 3/3] Documentation: add manpage about workflows
-Date: Sat, 13 Sep 2008 18:11:02 +0200
-Message-ID: <1221322263-25291-4-git-send-email-trast@student.ethz.ch>
-References: <7v8wtwk4yp.fsf@gitster.siamese.dyndns.org>
- <1221322263-25291-1-git-send-email-trast@student.ethz.ch>
- <1221322263-25291-2-git-send-email-trast@student.ethz.ch>
- <1221322263-25291-3-git-send-email-trast@student.ethz.ch>
-Cc: Junio C Hamano <junio@pobox.com>
+From: Heikki Orsila <heikki.orsila@iki.fi>
+Subject: [PATCH] Start conforming code to "git subcmd" style part 3
+Date: Sat, 13 Sep 2008 19:30:59 +0300
+Message-ID: <20080913163058.GA5108@zakalwe.fi>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=iso-8859-1
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Jakub Narebski <jnareb@gmail.com>,
+	Christian Couder <chriscool@tuxfamily.org>,
+	Andreas Ericsson <ae@op5.se>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Sep 13 18:12:31 2008
+X-From: git-owner@vger.kernel.org Sat Sep 13 18:32:14 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KeXjW-0001Zh-3h
-	for gcvg-git-2@gmane.org; Sat, 13 Sep 2008 18:12:26 +0200
+	id 1KeY2f-00060t-Lo
+	for gcvg-git-2@gmane.org; Sat, 13 Sep 2008 18:32:14 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751928AbYIMQLU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 13 Sep 2008 12:11:20 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751832AbYIMQLS
-	(ORCPT <rfc822;git-outgoing>); Sat, 13 Sep 2008 12:11:18 -0400
-Received: from xsmtp1.ethz.ch ([82.130.70.13]:43500 "EHLO xsmtp1.ethz.ch"
+	id S1751981AbYIMQbE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 13 Sep 2008 12:31:04 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751853AbYIMQbD
+	(ORCPT <rfc822;git-outgoing>); Sat, 13 Sep 2008 12:31:03 -0400
+Received: from zakalwe.fi ([80.83.5.154]:47322 "EHLO zakalwe.fi"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751722AbYIMQLM (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 13 Sep 2008 12:11:12 -0400
-Received: from xfe0.d.ethz.ch ([82.130.124.40]) by xsmtp1.ethz.ch with Microsoft SMTPSVC(6.0.3790.3959);
-	 Sat, 13 Sep 2008 18:11:10 +0200
-Received: from localhost.localdomain ([77.56.223.244]) by xfe0.d.ethz.ch over TLS secured channel with Microsoft SMTPSVC(6.0.3790.3959);
-	 Sat, 13 Sep 2008 18:11:09 +0200
-X-Mailer: git-send-email 1.6.0.2.408.g3709
-In-Reply-To: <1221322263-25291-3-git-send-email-trast@student.ethz.ch>
-X-OriginalArrivalTime: 13 Sep 2008 16:11:09.0839 (UTC) FILETIME=[55BE91F0:01C915BB]
+	id S1751764AbYIMQbA (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 13 Sep 2008 12:31:00 -0400
+Received: by zakalwe.fi (Postfix, from userid 1023)
+	id 0C76B2BC73; Sat, 13 Sep 2008 19:30:59 +0300 (EEST)
+Content-Disposition: inline
+User-Agent: Mutt/1.5.11
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/95806>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/95807>
 
-This attempts to make a manpage about workflows that is both handy to
-point people at it and as a beginner's introduction.
+User notifications are presented as 'git cmd', and code comments
+are presented as '"cmd"' or 'git's cmd', rather than 'git-cmd'.
 
-Signed-off-by: Thomas Rast <trast@student.ethz.ch>
+Signed-off-by: Heikki Orsila <heikki.orsila@iki.fi>
 ---
+ builtin-init-db.c        |    2 +-
+ builtin-pack-objects.c   |    4 ++--
+ builtin-read-tree.c      |    2 +-
+ builtin-rev-list.c       |    2 +-
+ builtin-rm.c             |    2 +-
+ builtin-send-pack.c      |    2 +-
+ builtin-tar-tree.c       |   14 +++++++-------
+ builtin-unpack-objects.c |    2 +-
+ builtin-update-index.c   |    8 ++++----
+ 9 files changed, 19 insertions(+), 19 deletions(-)
 
-Interdiff follows.  The important change is that the format-patch
-recipe says to use send-email, hopefully keeping people from damaging
-their patches via cut&paste.
-
-Unfortunately I still don't know how to make the blocks look right in
-manpage format.
-
-
- Documentation/Makefile         |    2 +-
- Documentation/gitworkflows.txt |  330 ++++++++++++++++++++++++++++++++++++++++
- 2 files changed, 331 insertions(+), 1 deletions(-)
- create mode 100644 Documentation/gitworkflows.txt
-
-diff --git a/Documentation/Makefile b/Documentation/Makefile
-index ded0e40..e33ddcb 100644
---- a/Documentation/Makefile
-+++ b/Documentation/Makefile
-@@ -6,7 +6,7 @@ MAN5_TXT=gitattributes.txt gitignore.txt gitmodules.txt githooks.txt \
- 	gitrepository-layout.txt
- MAN7_TXT=gitcli.txt gittutorial.txt gittutorial-2.txt \
- 	gitcvs-migration.txt gitcore-tutorial.txt gitglossary.txt \
--	gitdiffcore.txt
-+	gitdiffcore.txt gitworkflows.txt
+diff --git a/builtin-init-db.c b/builtin-init-db.c
+index baf0d09..8140c12 100644
+--- a/builtin-init-db.c
++++ b/builtin-init-db.c
+@@ -37,7 +37,7 @@ static void copy_templates_1(char *path, int baselen,
  
- MAN_TXT = $(MAN1_TXT) $(MAN5_TXT) $(MAN7_TXT)
- MAN_XML=$(patsubst %.txt,%.xml,$(MAN_TXT))
-diff --git a/Documentation/gitworkflows.txt b/Documentation/gitworkflows.txt
-new file mode 100644
-index 0000000..b4b43da
---- /dev/null
-+++ b/Documentation/gitworkflows.txt
-@@ -0,0 +1,330 @@
-+gitworkflows(7)
-+===============
-+
-+NAME
-+----
-+gitworkflows - An overview of recommended workflows with git
-+
-+SYNOPSIS
-+--------
-+git *
-+
-+
-+DESCRIPTION
-+-----------
-+
-+This tutorial gives a brief overview of workflows recommended to
-+use, and collaborate with, Git.
-+
-+While the prose tries to motivate each of them, we formulate a set of
-+'rules' for quick reference.  Do not always take them literally; you
-+should value good reasons higher than following a random manpage to
-+the letter.
-+
-+
-+SEPARATE CHANGES
-+----------------
-+
-+As a general rule, you should try to split your changes into small
-+logical steps, and commit each of them.  They should be consistent,
-+working independently of any later commits, pass the test suite, etc.
-+
-+To achieve this, try to commit your new work at least every couple
-+hours.  You can always go back and edit the commits with `git rebase
-+--interactive` to further improve the history before you publish it.
-+
-+
-+MANAGING BRANCHES
-+-----------------
-+
-+In the following, we will assume there are 'developers', 'testers' and
-+'users'.  Even if the "Testers" are actually an automated test suite
-+and all "Users" are developers themselves, try to think in these terms
-+as you follow a software change through its life cycle.
-+
-+Usually a change evolves in a few steps:
-+
-+* The developers implement a few iterations until it "seems to work".
-+
-+* The testers play with it, report bugs, test the fixes, eventually
-+  clearing the change for stable releases.
-+
-+* As the users work with the new feature, they report bugs which will
-+  have to be fixed.
-+
-+In the following sections we discuss some problems that arise from
-+such a "change flow", and how to solve them with Git.
-+
-+We consider a fictional project with (supported) stable branch
-+'maint', main testing/development branch 'master' and "bleeding edge"
-+branch 'next'.  We collectively call these three branches 'main
-+branches'.
-+
-+
-+Merging upwards
-+~~~~~~~~~~~~~~~
-+
-+Since Git is quite good at merges, one should try to use them to
-+propagate changes.  For example, if a bug is fixed, you would want to
-+apply the corresponding fix to all main branches.
-+
-+A quick moment of thought reveals that you cannot do this by merging
-+"downwards" to older releases, since that would merge 'all' changes.
-+Hence the following:
-+
-+.Merge upwards
-+[caption="Rule: "]
-+=====================================
-+Always commit your fixes to the oldest supported branch that require
-+them.  Then (periodically) merge the main branches upwards into each
-+other.
-+=====================================
-+
-+This gives a very controlled flow of fixes.  If you notice that you
-+have applied a fix to e.g. 'master' that is also required in 'maint',
-+you will need to cherry-pick it (using linkgit:git-cherry-pick[1])
-+downwards.  This will happen a few times and is nothing to worry about
-+unless you do it all the time.
-+
-+
-+Topic branches
-+~~~~~~~~~~~~~~
-+
-+Any nontrivial feature will require several patches to implement, and
-+may get extra bugfixes or improvements during its lifetime.  If all
-+such commits were in one long linear history chain (e.g., if they were
-+all committed directly to 'master'), it becomes very hard to see how
-+they belong together.
-+
-+The key concept here is "topic branches".  The name is pretty self
-+explanatory, with a minor caveat that comes from the "merge upwards"
-+rule above:
-+
-+.Topic branches
-+[caption="Rule: "]
-+=====================================
-+Make a side branch for every topic. Fork it off at the oldest main
-+branch that you will eventually want to merge it into.
-+=====================================
-+
-+Many things can then be done very naturally:
-+
-+* To get the feature/bugfix into a main branch, simply merge it.  If
-+  the topic has evolved further in the meantime, merge again.
-+
-+* If you find you need new features from an 'other' branch to continue
-+  working on your topic, merge 'other' to 'topic'.  (However, do not
-+  do this "just habitually", see below.)
-+
-+* If you find you forked off the wrong branch and want to move it
-+  "back in time", use linkgit:git-rebase[1].
-+
-+Note that the last two points clash: a topic that has been merged
-+elsewhere should not be rebased.  See the section on RECOVERING FROM
-+UPSTREAM REBASE in linkgit:git-rebase[1].
-+
-+We should point out that "habitually" (regularly for no real reason)
-+merging a main branch into your topics -- and by extension, merging
-+anything upstream into anything downstream on a regular basis -- is
-+frowned upon:
-+
-+.Merge to downstream only at well-defined points
-+[caption="Rule: "]
-+=====================================
-+Do not merge to downstream except:
-+
-+* with a good reason (such as upstream API changes that affect you), or
-+
-+* at well-defined points such as when an upstream release has been tagged.
-+=====================================
-+
-+Otherwise, the many resulting small merges will greatly clutter up
-+history.  Anyone who later investigates the history of a file will
-+have to find out whether that merge affected the topic in
-+development.  Linus hates it.  An upstream might even inadvertently be
-+merged into a "more stable" branch.  And so on.
-+
-+
-+Integration branches
-+~~~~~~~~~~~~~~~~~~~~
-+
-+If you followed the last paragraph, you will now have many small topic
-+branches, and occasionally wonder how they interact.  Perhaps the
-+result of merging them does not even work?  But on the other hand, we
-+want to avoid merging them anywhere "stable" because such merges
-+cannot easily be undone.
-+
-+The solution, of course, is to make a merge that we can undo: merge
-+into a throw-away branch.
-+
-+.Integration branches
-+[caption="Rule: "]
-+=====================================
-+To test the interaction of several topics, merge them into a
-+throw-away branch.
-+=====================================
-+
-+If you make it (very) clear that this branch is going to be deleted
-+right after the testing, you can even publish this branch, for example
-+to give the testers a chance to work with it, or other developers a
-+chance to see if their in-progress work will be compatible.
-+
-+
-+SHARING WORK
-+------------
-+
-+After the last section, you should know how to manage topics.  In
-+general, you will not be the only person working on the project, so
-+you will have to share your work.
-+
-+Roughly speaking, there are two important workflows.  Their
-+distinguishing mark is whether they can be used to propagate merges.
-+Medium to large projects will typically employ some mixture of the
-+two:
-+
-+* "Upstream" in the most general sense 'pushes' changes to the
-+  repositor(ies) holding the main history.  Everyone can 'pull' from
-+  there to stay up to date.
-+
-+* Frequent contributors, subsystem maintainers, etc. may use push/pull
-+  to send their changes upstream.
-+
-+* The rest -- typically anyone more than one or two levels away from the
-+  main maintainer -- send patches by mail.
-+
-+None of these boundaries are sharp, so find out what works best for
-+you.
-+
-+
-+Push/pull
-+~~~~~~~~~
-+
-+There are three main tools that can be used for this:
-+
-+* linkgit:git-push[1] copies your branches to a remote repository,
-+  usually to one that can be read by all involved parties;
-+
-+* linkgit:git-fetch[1] that copies remote branches to your repository;
-+  and
-+
-+* linkgit:git-pull[1] that does fetch and merge in one go.
-+
-+Note the last point.  Do 'not' use 'git-pull' unless you actually want
-+to merge the remote branch.
-+
-+Getting changes out is easy:
-+
-+.Push/pull: Publishing branches/topics
-+[caption="Recipe: "]
-+=====================================
-+`git push <remote> <branch>` and tell everyone where they can fetch
-+from.
-+=====================================
-+
-+You will still have to tell people by other means, such as mail.  (Git
-+provides the linkgit:request-pull[1] to send preformatted pull
-+requests to upstream maintainers to simplify this task.)
-+
-+If you just want to get the newest copies of the main branches,
-+staying up to date is easy too:
-+
-+.Push/pull: Staying up to date
-+[caption="Recipe: "]
-+=====================================
-+Use `git fetch <remote>` or `git remote update` to stay up to date.
-+=====================================
-+
-+Then simply fork your topic branches from the stable remotes as
-+explained earlier.
-+
-+If you are a maintainer and would like to merge other people's topic
-+branches to the main branches, they will typically send a request to
-+do so by mail.  Such a request might say
-+
-+-------------------------------------
-+Please pull from
-+    git://some.server.somewhere/random/repo.git mytopic
-+-------------------------------------
-+
-+In that case, 'git-pull' can do the fetch and merge in one go, as
-+follows.
-+
-+.Push/pull: Merging remote topics
-+[caption="Recipe: "]
-+=====================================
-+`git pull <url> <branch>`
-+=====================================
-+
-+Occasionally, the maintainer may get merge conflicts when he tries to
-+pull changes from downstream.  In this case, he can ask downstream to
-+do the merge and resolve the conflicts themselves (perhaps they will
-+know better how to resolve them).  It is one of the rare cases where
-+downstream 'should' merge from upstream.
-+
-+
-+format-patch/am
-+~~~~~~~~~~~~~~~
-+
-+If you are a contributor that sends changes upstream in the form of
-+emails, you should use topic branches as usual (see above).  Then use
-+linkgit:git-format-patch[1] to generate the corresponding emails
-+(highly recommended over manually formatting them because it makes the
-+maintainer's life easier).
-+
-+.format-patch/am: Publishing branches/topics
-+[caption="Recipe: "]
-+=====================================
-+* `git format-patch -M upstream..topic` to turn them into preformatted
-+  patch files
-+* `git send-email --to=<recipient> <patches>`
-+=====================================
-+
-+See the linkgit:git-format-patch[1] and linkgit:git-send-email[1]
-+manpages for further usage notes.  Also you should be aware that the
-+maintainer may impose further restrictions, such as "Signed-off-by"
-+requirements.
-+
-+If the maintainer tells you that your patch no longer applies to the
-+current upstream, you will have to rebase your topic (you cannot use a
-+merge because you cannot format-patch merges):
-+
-+.format-patch/am: Keeping topics up to date
-+[caption="Recipe: "]
-+=====================================
-+`git rebase upstream`
-+=====================================
-+
-+You can then fix the conflicts during the rebase.  Presumably you have
-+not published your topic other than by mail, so rebasing it is not a
-+problem.
-+
-+If you receive such a patch (as maintainer, or perhaps reader of the
-+mailing list it was sent to), save the mail to a file and use
-+'git-am':
-+
-+.format-patch/am: Publishing branches/topics
-+[caption="Recipe: "]
-+=====================================
-+`git am < patch`
-+=====================================
-+
-+One feature worth pointing out is the three-way merge, which can help
-+if you get conflicts because of renames: `git am -3` will use index
-+information contained in patches to reconstruct a merge base.  See
-+linkgit:git-am[1] for other options.
-+
-+
-+SEE ALSO
-+--------
-+linkgit:gittutorial[7],
-+linkgit:git-push[1],
-+linkgit:git-pull[1],
-+linkgit:git-merge[1],
-+linkgit:git-rebase[1],
-+linkgit:git-format-patch[1],
-+linkgit:git-send-email[1],
-+linkgit:git-am[1]
-+
-+GIT
-+---
-+Part of the linkgit:git[1] suite.
+ 	/* Note: if ".git/hooks" file exists in the repository being
+ 	 * re-initialized, /etc/core-git/templates/hooks/update would
+-	 * cause git-init to fail here.  I think this is sane but
++	 * cause "git init" to fail here.  I think this is sane but
+ 	 * it means that the set of templates we ship by default, along
+ 	 * with the way the namespace under .git/ is organized, should
+ 	 * be really carefully chosen.
+diff --git a/builtin-pack-objects.c b/builtin-pack-objects.c
+index ba2cf00..217fd49 100644
+--- a/builtin-pack-objects.c
++++ b/builtin-pack-objects.c
+@@ -23,7 +23,7 @@
+ #endif
+ 
+ static const char pack_usage[] = "\
+-git-pack-objects [{ -q | --progress | --all-progress }] \n\
++git pack-objects [{ -q | --progress | --all-progress }] \n\
+ 	[--max-pack-size=N] [--local] [--incremental] \n\
+ 	[--window=N] [--window-memory=N] [--depth=N] \n\
+ 	[--no-reuse-delta] [--no-reuse-object] [--delta-base-offset] \n\
+@@ -1872,7 +1872,7 @@ static void mark_in_pack_object(struct object *object, struct packed_git *p, str
+ 
+ /*
+  * Compare the objects in the offset order, in order to emulate the
+- * "git-rev-list --objects" output that produced the pack originally.
++ * "git rev-list --objects" output that produced the pack originally.
+  */
+ static int ofscmp(const void *a_, const void *b_)
+ {
+diff --git a/builtin-read-tree.c b/builtin-read-tree.c
+index dddc304..ac219ac 100644
+--- a/builtin-read-tree.c
++++ b/builtin-read-tree.c
+@@ -64,7 +64,7 @@ static void prime_cache_tree(void)
+ 
+ }
+ 
+-static const char read_tree_usage[] = "git-read-tree (<sha> | [[-m [--trivial] [--aggressive] | --reset | --prefix=<prefix>] [-u | -i]] [--exclude-per-directory=<gitignore>] [--index-output=<file>] <sha1> [<sha2> [<sha3>]])";
++static const char read_tree_usage[] = "git read-tree (<sha> | [[-m [--trivial] [--aggressive] | --reset | --prefix=<prefix>] [-u | -i]] [--exclude-per-directory=<gitignore>] [--index-output=<file>] <sha1> [<sha2> [<sha3>]])";
+ 
+ static struct lock_file lock_file;
+ 
+diff --git a/builtin-rev-list.c b/builtin-rev-list.c
+index c023003..facaff2 100644
+--- a/builtin-rev-list.c
++++ b/builtin-rev-list.c
+@@ -178,7 +178,7 @@ static void finish_object(struct object_array_entry *p)
+ static void show_object(struct object_array_entry *p)
+ {
+ 	/* An object with name "foo\n0000000..." can be used to
+-	 * confuse downstream git-pack-objects very badly.
++	 * confuse downstream "git pack-objects" very badly.
+ 	 */
+ 	const char *ep = strchr(p->name, '\n');
+ 
+diff --git a/builtin-rm.c b/builtin-rm.c
+index 6bd8211..fdac34f 100644
+--- a/builtin-rm.c
++++ b/builtin-rm.c
+@@ -104,7 +104,7 @@ static int check_local_mod(unsigned char *head, int index_only)
+ 				     "from both the file and the HEAD\n"
+ 				     "(use -f to force removal)", name);
+ 		else if (!index_only) {
+-			/* It's not dangerous to git-rm --cached a
++			/* It's not dangerous to "git rm --cached" a
+ 			 * file if the index matches the file or the
+ 			 * HEAD, since it means the deleted content is
+ 			 * still available somewhere.
+diff --git a/builtin-send-pack.c b/builtin-send-pack.c
+index 7588d22..2af9f29 100644
+--- a/builtin-send-pack.c
++++ b/builtin-send-pack.c
+@@ -43,7 +43,7 @@ static int pack_objects(int fd, struct ref *refs)
+ 	po.out = fd;
+ 	po.git_cmd = 1;
+ 	if (start_command(&po))
+-		die("git-pack-objects failed (%s)", strerror(errno));
++		die("git pack-objects failed (%s)", strerror(errno));
+ 
+ 	/*
+ 	 * We feed the pack-objects we just spawned with revision
+diff --git a/builtin-tar-tree.c b/builtin-tar-tree.c
+index cb7007e..edcf72a 100644
+--- a/builtin-tar-tree.c
++++ b/builtin-tar-tree.c
+@@ -9,19 +9,19 @@
+ 
+ static const char tar_tree_usage[] =
+ "git tar-tree [--remote=<repo>] <tree-ish> [basedir]\n"
+-"*** Note that this command is now deprecated; use git-archive instead.";
++"*** Note that this command is now deprecated; use \"git archive\" instead.";
+ 
+ int cmd_tar_tree(int argc, const char **argv, const char *prefix)
+ {
+ 	/*
+-	 * git-tar-tree is now a wrapper around git-archive --format=tar
++	 * "git tar-tree" is now a wrapper around "git archive" --format=tar
+ 	 *
+ 	 * $0 --remote=<repo> arg... ==>
+-	 *	git-archive --format=tar --remote=<repo> arg...
++	 *	git archive --format=tar --remote=<repo> arg...
+ 	 * $0 tree-ish ==>
+-	 *	git-archive --format=tar tree-ish
++	 *	git archive --format=tar tree-ish
+ 	 * $0 tree-ish basedir ==>
+-	 * 	git-archive --format-tar --prefix=basedir tree-ish
++	 * 	git archive --format-tar --prefix=basedir tree-ish
+ 	 */
+ 	int i;
+ 	const char **nargv = xcalloc(sizeof(*nargv), argc + 2);
+@@ -53,8 +53,8 @@ int cmd_tar_tree(int argc, const char **argv, const char *prefix)
+ 	nargv[nargc] = NULL;
+ 
+ 	fprintf(stderr,
+-		"*** git-tar-tree is now deprecated.\n"
+-		"*** Running git-archive instead.\n***");
++		"*** \"git tar-tree\" is now deprecated.\n"
++		"*** Running \"git archive\" instead.\n***");
+ 	for (i = 0; i < nargc; i++) {
+ 		fputc(' ', stderr);
+ 		sq_quote_print(stderr, nargv[i]);
+diff --git a/builtin-unpack-objects.c b/builtin-unpack-objects.c
+index a891866..40b20f2 100644
+--- a/builtin-unpack-objects.c
++++ b/builtin-unpack-objects.c
+@@ -13,7 +13,7 @@
+ #include "fsck.h"
+ 
+ static int dry_run, quiet, recover, has_errors, strict;
+-static const char unpack_usage[] = "git-unpack-objects [-n] [-q] [-r] [--strict] < pack-file";
++static const char unpack_usage[] = "git unpack-objects [-n] [-q] [-r] [--strict] < pack-file";
+ 
+ /* We always read in 4kB chunks. */
+ static unsigned char buffer[4096];
+diff --git a/builtin-update-index.c b/builtin-update-index.c
+index ce83224..417f972 100644
+--- a/builtin-update-index.c
++++ b/builtin-update-index.c
+@@ -14,7 +14,7 @@
+  * Default to not allowing changes to the list of files. The
+  * tool doesn't actually care, but this makes it harder to add
+  * files to the revision control by mistake by doing something
+- * like "git-update-index *" and suddenly having all the object
++ * like "git update-index *" and suddenly having all the object
+  * files be revision controlled.
+  */
+ static int allow_add;
+@@ -313,18 +313,18 @@ static void read_index_info(int line_termination)
+ 		/* This reads lines formatted in one of three formats:
+ 		 *
+ 		 * (1) mode         SP sha1          TAB path
+-		 * The first format is what "git-apply --index-info"
++		 * The first format is what "git apply --index-info"
+ 		 * reports, and used to reconstruct a partial tree
+ 		 * that is used for phony merge base tree when falling
+ 		 * back on 3-way merge.
+ 		 *
+ 		 * (2) mode SP type SP sha1          TAB path
+-		 * The second format is to stuff git-ls-tree output
++		 * The second format is to stuff "git ls-tree" output
+ 		 * into the index file.
+ 		 *
+ 		 * (3) mode         SP sha1 SP stage TAB path
+ 		 * This format is to put higher order stages into the
+-		 * index file and matches git-ls-files --stage output.
++		 * index file and matches "git ls-files --stage" output.
+ 		 */
+ 		errno = 0;
+ 		ul = strtoul(buf.buf, &ptr, 8);
 -- 
-1.6.0.2.408.g3709
+1.6.0.1
