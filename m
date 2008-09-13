@@ -1,97 +1,73 @@
-From: "Lars Hjemli" <hjemli@gmail.com>
-Subject: Re: CGit and repository list
-Date: Sat, 13 Sep 2008 22:02:26 +0200
-Message-ID: <8c5c35580809131302w1f51f4ebsede59eb2ae36a99c@mail.gmail.com>
-References: <19449377.post@talk.nabble.com>
-	 <20080912145804.GF10544@machine.or.cz>
-	 <8c5c35580809120810s69e8ec4fnf2a629d4cf575901@mail.gmail.com>
-	 <200809121812.40920.johan@herland.net>
-	 <20080912224817.GF10360@machine.or.cz>
-	 <8c5c35580809121620x2de1828cq498b3709f7b0bd1b@mail.gmail.com>
-	 <20080913194938.GI10360@machine.or.cz>
+From: david@lang.hm
+Subject: Re: Git User's Survey 2008 partial summary, part 5 - other SCM
+Date: Sat, 13 Sep 2008 14:11:29 -0700 (PDT)
+Message-ID: <alpine.DEB.1.10.0809131408010.17867@asgard.lang.hm>
+References: <200809031607.19722.jnareb@gmail.com> <200809112214.18366.jnareb@gmail.com> <alpine.DEB.1.10.0809111543580.15169@asgard.lang.hm> <200809121244.59067.jnareb@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: "Johan Herland" <johan@herland.net>, git@vger.kernel.org,
-	"Jakub Narebski" <jnareb@gmail.com>,
-	"Kristian H??gsberg" <hoegsberg@gmail.com>
-To: "Petr Baudis" <pasky@suse.cz>
-X-From: git-owner@vger.kernel.org Sat Sep 13 22:03:36 2008
+Content-Type: TEXT/PLAIN; charset=US-ASCII; format=flowed
+Cc: git@vger.kernel.org
+To: Jakub Narebski <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Sep 13 23:11:52 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KebLD-00086x-77
-	for gcvg-git-2@gmane.org; Sat, 13 Sep 2008 22:03:35 +0200
+	id 1KecPH-0007P5-V8
+	for gcvg-git-2@gmane.org; Sat, 13 Sep 2008 23:11:52 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752639AbYIMUC2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 13 Sep 2008 16:02:28 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752625AbYIMUC2
-	(ORCPT <rfc822;git-outgoing>); Sat, 13 Sep 2008 16:02:28 -0400
-Received: from rv-out-0506.google.com ([209.85.198.238]:38284 "EHLO
-	rv-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752583AbYIMUC1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 13 Sep 2008 16:02:27 -0400
-Received: by rv-out-0506.google.com with SMTP id k40so1421302rvb.1
-        for <git@vger.kernel.org>; Sat, 13 Sep 2008 13:02:26 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to
-         :subject:cc:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:references;
-        bh=LF2hnNX9m4L+oYiMLTJ7YEfhZQ0FO56eEy/81PHVLPc=;
-        b=iN7ls1Cbnga3R+wGYBSzd30SHJz1EvafngUxW5R8CraCghpCG70kv8GRMoNzo3XutE
-         JrtWsAf+QXvsOrN4GZkhza2trgOVSEKXBBt3GXUIWmtESZbiJxyjdmQMDBv1gFtRoZVR
-         yB/lVJuVpIOns6iizh3HTv70nkWHCsus4lzUQ=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
-         :content-type:content-transfer-encoding:content-disposition
-         :references;
-        b=o21TNeHuRfc1+t6nKZv36hMGm24r9xJrrauqkQpntV0pDahi0GjxkSvsCeiMPfhyxL
-         KqIWE6fPTg81DeLV6wA4uHqqblLyqdDkf1+2JZiECAezRzb6D7L1In5Za2od2smhTIqA
-         pILQialz2qtwu3gKQXFs5oIXPcKBtt+3jMD6c=
-Received: by 10.115.108.1 with SMTP id k1mr4635863wam.78.1221336146434;
-        Sat, 13 Sep 2008 13:02:26 -0700 (PDT)
-Received: by 10.114.166.20 with HTTP; Sat, 13 Sep 2008 13:02:26 -0700 (PDT)
-In-Reply-To: <20080913194938.GI10360@machine.or.cz>
-Content-Disposition: inline
+	id S1752498AbYIMVKi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 13 Sep 2008 17:10:38 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751698AbYIMVKi
+	(ORCPT <rfc822;git-outgoing>); Sat, 13 Sep 2008 17:10:38 -0400
+Received: from mail.lang.hm ([64.81.33.126]:47403 "EHLO bifrost.lang.hm"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751462AbYIMVKh (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 13 Sep 2008 17:10:37 -0400
+Received: from asgard.lang.hm (asgard.lang.hm [10.0.0.100])
+	by bifrost.lang.hm (8.13.4/8.13.4/Debian-3) with ESMTP id m8DLAYbP032216;
+	Sat, 13 Sep 2008 14:10:34 -0700
+X-X-Sender: dlang@asgard.lang.hm
+In-Reply-To: <200809121244.59067.jnareb@gmail.com>
+User-Agent: Alpine 1.10 (DEB 962 2008-03-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/95814>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/95815>
 
-On Sat, Sep 13, 2008 at 9:49 PM, Petr Baudis <pasky@suse.cz> wrote:
-> On Sat, Sep 13, 2008 at 01:20:50AM +0200, Lars Hjemli wrote:
->> I guess I could add support for something like
+On Fri, 12 Sep 2008, Jakub Narebski wrote:
+
+> On Fri, 12 Sep 2008 00:51, david@lang.hm wrote:
+>> On Thu, 11 Sep 2008, Jakub Narebski wrote:
 >>
->>   scan-paths=/pub/git
->>
->> in cgitrc (and optionally store the result of the scan as another
->> cgitrc-file in the cache directory). Would that improve things for
->> you?
+> True, I have forgot that "I use this SCM" (or "I used this SCM") doesn't
+> necessarily mean that one _choose_ this SCM.  One can use some SCM
+> because it is SCM project uses, or because their company requires it;
+> but not necessary, as git-svn and git-p4 show one can use Git, and
+> make it interact with respectively Subversion and Perforce, and trying
+> to make it look like one uses this other SCM.
+
+I would expect people to still count those as using the other SCM. git-svn 
+and git-p4 can do a lot, but they don't do everything, once in a while I 
+would expect to need to use the native commands for the upstream SCM
+
+>> I find it interesting that the number of people who use git and the other
+>> DVCS systems in so small. Is this becouse the 'market share' of those
+>> other systems is small? Or becouse people who learn git aren't willing to
+>> put up with other systems (or vice-versa)? Or is there some other trend
+>> or tendancy that makes people who select one DVCS more likely to work on
+>> similar projects, so people interested in those types of projects will
+>> generally just see a single DVCS system
 >
-> Yes, certainly.
+> I don't think 59% (in the example case of using currently Subversion)
+> is small.  Take into account for example that there are people who (as
+> seen from responses to other questions in this survey) use SCM (Git)
+> only to track their private work, never publishing.  Then there are
+> people who do not track (perhaps with exception of web interfaces)
+> other projects development using version control systems, even if they
+> do follow their development.
 
-Ok, I'll try to come up with something.
+Subversion is not a Distributed SCM. I am pointing out the much smaller 
+overlap between distributed SCM systems.
 
-
-> I wonder why
->
->        http://repo.or.cz/c/libc.git/
->
-> has such a funny-looking summary page.
-
-I suppose you mean http://repo.or.cz/c/glibc.git/? It looks like cgit
-dies when trying to process the tags in this repo. I'll clone it and
-see if I can reproduce/fix the problem.
-
-
-> Let me know if you want me to update cgit there sometime. In the next
-> days I will add some means for switching between cgit and gitweb views.
-
-Cool, I'll keep you posted ;-)
-
---
-larsh
+David Lang
