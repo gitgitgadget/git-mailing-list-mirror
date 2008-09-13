@@ -1,105 +1,51 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 6/6] git submodule add: Fix naming clash handling
-Date: Fri, 12 Sep 2008 19:24:12 -0700
-Message-ID: <7v63p0n5pv.fsf@gitster.siamese.dyndns.org>
-References: <20080912210817.31628.69014.stgit@localhost>
- <20080912210924.31628.61593.stgit@localhost>
+From: dhruva <dhruva@ymail.com>
+Subject: git+ssh using 'plink' on windows
+Date: Sat, 13 Sep 2008 08:45:21 +0530 (IST)
+Message-ID: <262032.88533.qm@web95003.mail.in2.yahoo.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Mark Levedahl <mlevedahl@gmail.com>,
-	Lars Hjemli <hjemli@gmail.com>
-To: Petr Baudis <pasky@suse.cz>
-X-From: git-owner@vger.kernel.org Sat Sep 13 04:25:30 2008
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8BIT
+To: GIT SCM <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Sat Sep 13 05:17:22 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KeKpF-0005Ss-Ak
-	for gcvg-git-2@gmane.org; Sat, 13 Sep 2008 04:25:29 +0200
+	id 1KeLdO-0005oD-Dw
+	for gcvg-git-2@gmane.org; Sat, 13 Sep 2008 05:17:18 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755596AbYIMCYV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 12 Sep 2008 22:24:21 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755824AbYIMCYV
-	(ORCPT <rfc822;git-outgoing>); Fri, 12 Sep 2008 22:24:21 -0400
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:62381 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755099AbYIMCYU (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 12 Sep 2008 22:24:20 -0400
-Received: from localhost.localdomain (localhost [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 3466660041;
-	Fri, 12 Sep 2008 22:24:19 -0400 (EDT)
-Received: from pobox.com (ip68-225-240-211.oc.oc.cox.net [68.225.240.211])
- (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
- certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
- ESMTPSA id 684A66003D; Fri, 12 Sep 2008 22:24:14 -0400 (EDT)
-In-Reply-To: <20080912210924.31628.61593.stgit@localhost> (Petr Baudis's
- message of "Fri, 12 Sep 2008 23:09:24 +0200")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: 11C2D826-813B-11DD-AA3E-D0CFFE4BC1C1-77302942!a-sasl-fastnet.pobox.com
+	id S1757769AbYIMDPb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 12 Sep 2008 23:15:31 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757763AbYIMDPa
+	(ORCPT <rfc822;git-outgoing>); Fri, 12 Sep 2008 23:15:30 -0400
+Received: from n1a.bullet.in.yahoo.com ([202.43.219.18]:43782 "HELO
+	n1a.bullet.in.yahoo.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with SMTP id S1757550AbYIMDPY convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 12 Sep 2008 23:15:24 -0400
+Received: from [202.86.4.171] by n1.bullet.in.yahoo.com with NNFMP; 13 Sep 2008 03:15:21 -0000
+Received: from [203.104.18.49] by t2.bullet.in.yahoo.com with NNFMP; 13 Sep 2008 03:15:21 -0000
+Received: from [127.0.0.1] by omp110.mail.in2.yahoo.com with NNFMP; 13 Sep 2008 03:15:21 -0000
+X-Yahoo-Newman-Property: ymail-3
+X-Yahoo-Newman-Id: 444483.97202.bm@omp110.mail.in2.yahoo.com
+Received: (qmail 90314 invoked by uid 60001); 13 Sep 2008 03:15:21 -0000
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+  s=s1024; d=ymail.com;
+  h=X-YMail-OSG:Received:X-Mailer:Date:From:Subject:To:MIME-Version:Content-Type:Content-Transfer-Encoding:Message-ID;
+  b=bOI4WX+qc1Ak/Rjqt/2Ytvmu+XGQAx/afOAJVAV4Rbo0gvM68FA5q5+4KOh3FiakJsllsHYDQSwlpc82ruxWllwKqWL8FbF8KJemRF6wGemaFBfFK9wnXpBDF0p7sXNd25lXrnZ2ny0lfCzTKx/gpBVlWNyQGm0Wf3X8TpBZHUg=;
+X-YMail-OSG: 3wCVLvEVM1m3TaNtXAmaGc9jeh7D5uUf.OVC_dFYk9uYmhtOJEUc2rtEvfx9ych.isKVAorng7UNT_4TcM6iz0NC9zH4PeH61ruS4DvWohNj7d0Y4hw0CHxoXichano-
+Received: from [59.92.200.119] by web95003.mail.in2.yahoo.com via HTTP; Sat, 13 Sep 2008 08:45:21 IST
+X-Mailer: YahooMailRC/1096.28 YahooMailWebService/0.7.218.2
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/95788>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/95789>
 
-Petr Baudis <pasky@suse.cz> writes:
+Hello,
+ Since I use git on windows (without cygwin), I am keen to know if 'git+ssh' protocol work with Putty's plink? plink is a ssh like client on windows with almost similar features.
 
-> This patch fixes git submodule add behaviour when we add submodule
-> living at a same path as logical name of existing submodule. This
-> can happen e.g. in case the user git mv's the previous submodule away
-> and then git submodule add's another under the same name.
+-dhruva
 
-In short, name "example" was used to name the submodule bound at path
-"init" in earlier tests, and the new one adds another submodule whose name
-and path are both "example" and makes sure they do not get mixed up (and
-the original code did mix them up).
 
->  git-submodule.sh           |   15 ++++++++++++---
->  t/t7400-submodule-basic.sh |   11 +++++++++++
->  2 files changed, 23 insertions(+), 3 deletions(-)
->
-> diff --git a/git-submodule.sh b/git-submodule.sh
-> index 1c39b59..3e4d839 100755
-> --- a/git-submodule.sh
-> +++ b/git-submodule.sh
-> @@ -201,10 +201,19 @@ cmd_add()
->  	git add "$path" ||
->  	die "Failed to add submodule '$path'"
->  
-> -	git config -f .gitmodules submodule."$path".path "$path" &&
-> -	git config -f .gitmodules submodule."$path".url "$repo" &&
-> +	name="$path"
-> +	if git config -f .gitmodules submodule."$name".path; then
-> +		name="$path~"; i=1;
-> +		while git config -f .gitmodules submodule."$name".path; do
-> +			name="$path~$i"
-> +			i=$((i+1))
-> +		done
-> +	fi
-> +
-> +	git config -f .gitmodules submodule."$name".path "$path" &&
-> +	git config -f .gitmodules submodule."$name".url "$repo" &&
->  	git add .gitmodules ||
-> -	die "Failed to register submodule '$path'"
-> +	die "Failed to register submodule '$path' (name '$name')"
->  }
 
-The logic of the fix seems to be correct, but shouldn't the test be like
-this instead?
-
-	if git config -f .gitmodules "submodule.$name.path" >/dev/null
-        then
-
-The same thing for "git config" used in the "while" loop.
-
-Also I am not sure if name="$path~" is a good idea for two reasons:
-
- - name suffixed with tilde and number looks too much like revision
-   expression.
-
- - A, A~, A~1, A~2... looks ugly; A, A-0, A-1, A-2,... (or start counting
-   from 1 or 2) I would understand.
-
-By the way, I noticed that cmd_add does not seem to cd_to_toplevel, and
-accesses .gitmodules in the current working directory.  Isn't this a bug?
-How should "git submodule add" work from inside a subdirectory?
+      Unlimited freedom, unlimited storage. Get it now, on http://help.yahoo.com/l/in/yahoo/mail/yahoomail/tools/tools-08.html/
