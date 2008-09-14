@@ -1,339 +1,305 @@
-From: Dmitry Potapov <dpotapov@gmail.com>
+From: "Alexey Mahotkin" <squadette@gmail.com>
 Subject: Re: Git at Better SCM Initiative comparison of VCS (long)
-Date: Sun, 14 Sep 2008 18:43:06 +0400
-Message-ID: <20080914144306.GF28210@dpotapov.dyndns.org>
+Date: Sun, 14 Sep 2008 19:09:36 +0400
+Message-ID: <bb5b640b0809140809g1aff9047qd6baf6cd66d23ec6@mail.gmail.com>
 References: <200809131906.18746.jnareb@gmail.com>
+	 <20080914144306.GF28210@dpotapov.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Alexey Mahotkin <squadette@gmail.com>
-To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Sep 14 16:44:36 2008
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: base64
+Cc: "Jakub Narebski" <jnareb@gmail.com>, git@vger.kernel.org
+To: "Dmitry Potapov" <dpotapov@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Sep 14 17:10:49 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Kespu-0008T0-KJ
-	for gcvg-git-2@gmane.org; Sun, 14 Sep 2008 16:44:27 +0200
+	id 1KetFQ-000610-0g
+	for gcvg-git-2@gmane.org; Sun, 14 Sep 2008 17:10:49 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752143AbYINOnP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 14 Sep 2008 10:43:15 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752039AbYINOnP
-	(ORCPT <rfc822;git-outgoing>); Sun, 14 Sep 2008 10:43:15 -0400
-Received: from nf-out-0910.google.com ([64.233.182.190]:21686 "EHLO
-	nf-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751992AbYINOnN (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 14 Sep 2008 10:43:13 -0400
-Received: by nf-out-0910.google.com with SMTP id d3so919673nfc.21
-        for <git@vger.kernel.org>; Sun, 14 Sep 2008 07:43:11 -0700 (PDT)
+	id S1751992AbYINPJj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 14 Sep 2008 11:09:39 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751941AbYINPJj
+	(ORCPT <rfc822;git-outgoing>); Sun, 14 Sep 2008 11:09:39 -0400
+Received: from rv-out-0506.google.com ([209.85.198.229]:63980 "EHLO
+	rv-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751865AbYINPJh (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 14 Sep 2008 11:09:37 -0400
+Received: by rv-out-0506.google.com with SMTP id k40so1742993rvb.1
+        for <git@vger.kernel.org>; Sun, 14 Sep 2008 08:09:37 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:cc:subject
-         :message-id:references:mime-version:content-type:content-disposition
-         :in-reply-to:user-agent;
-        bh=SVFP/iC4MV7pnJNg2HwZEqiDJKVoBZ0gCTYC9H1PntA=;
-        b=Ge3hMo0VaYuT7xpRXjcb4g4Y+zUmQAN27unjUfuiFPM37DBtKtiFwPZhG0wqRPtove
-         41rjDB9s3ffLGMK6y52qnIT4uOd5cB1wr8ifvQ9hNkOgd8lEWGoXnL0hFIOioIvmok8C
-         a6F+xODH7zd8S1/vhCPzcm2QoLuXN4aEn32Zo=
+        h=domainkey-signature:received:received:message-id:date:from:to
+         :subject:cc:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:references;
+        bh=OGm6KRYTUU0LTMnDjDHpun5KwqHlrRilxsEyA4/cQzg=;
+        b=o2cYtQr0meBQT21a6beDxirHc9TEHA1r+Pox4UM/kBxks7F65jA6X4R00Ulg2ulEYH
+         iqxn0w84KYGdMSidQYcRf8qb/S3UfyNmwNQc7/6ejW/VzLgqHYaQJY+1PeEKxBP6vTZH
+         cFt/IhzUQzRTWUpkc1aCq7XbJGbJFe5q38CZg=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        b=EtpYdws3o7KjOccYiZFd3sRGopdvLbgkEU3Pk959qPRAzaY30ssGNMXuC231Hi2XrD
-         5NoKSL+UKmKos4OZebEsgPm21lXocIdEpt+mMyFjX54VmgR1put+Vp5YqUcaLYBCO+xA
-         Xg5pmBS4qE+rldVLk1uMyYqbF0PV0xQXbF7DY=
-Received: by 10.86.60.15 with SMTP id i15mr5042940fga.14.1221403390616;
-        Sun, 14 Sep 2008 07:43:10 -0700 (PDT)
-Received: from localhost ( [85.141.149.192])
-        by mx.google.com with ESMTPS id 4sm6946206fge.8.2008.09.14.07.43.08
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Sun, 14 Sep 2008 07:43:09 -0700 (PDT)
+        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
+         :content-type:content-transfer-encoding:content-disposition
+         :references;
+        b=g1m+BLzXUVyheKtQKqr9/ORZA0k5pHWcieWuJ/e/Sg09S12vsCQZ/LC2JhZ7nHiYwf
+         gk0fVnYnBNeCgmKelrKkuUKRr+Iq2YMiCg4V10iivKyXcKlHbKWxzIwb6uBOx9gINLTF
+         MR7r3DKaIFyRH5fe2grhdgc0TuraSAnxJLt3U=
+Received: by 10.140.136.5 with SMTP id j5mr4111462rvd.0.1221404976701;
+        Sun, 14 Sep 2008 08:09:36 -0700 (PDT)
+Received: by 10.141.67.11 with HTTP; Sun, 14 Sep 2008 08:09:36 -0700 (PDT)
+In-Reply-To: <20080914144306.GF28210@dpotapov.dyndns.org>
 Content-Disposition: inline
-In-Reply-To: <200809131906.18746.jnareb@gmail.com>
-User-Agent: Mutt/1.5.13 (2006-08-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/95845>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/95846>
 
-Hello Jakub,
-
-I have added Alexey Mahotkin in CC, who is allegedly the author of that
-information about Git that you can read on the better-scm site.
-
-On Sat, Sep 13, 2008 at 07:06:16PM +0200, Jakub Narebski wrote:
-> 
-> I have thought about trying yet another time... but Git was already
-> added; see http://better-scm.berlios.de/news/changes-2008-08-07/
-
-Interesting, the site still mentions Git as missing in a few places.
-For instance, when you click on Git in the list of alternatives, you
-get this: http://better-scm.berlios.de/alternatives/git/
-and then when you got to FAQ, you can read this:
-
-| The reason it's not there is that while many people have complained
-| about its absense, no one suitable has volunteered to become its
-| champion and supplied a good enough patch. If you have a substantial
-| amount of git expertise, have good English writing skills, and wish to
-| volunteer, then we'll be happy to hear from you. If not - at least don't
-| complain about it.
-|
-| In addition to everything that was said here, it seems that the
-| originator and maintainer of the site and comparison is now banned
-| from sending messages to vger.kernel.org, which hosts several
-| Linux-kernel-related mailing-lists, including the git one. This has
-| interfered with some of his Linux-related open-source work, including
-| trying to find a "Better SCM" maintainer for git. This is unfortunate,
-| but changing this situation, is currently beyond his control.
-
-Source: http://better-scm.berlios.de/faq/#git-missing
-
-I am surprised to hear that Shlomi Fish is banned...
-
-> scm>     <section id="repos_operations">
-> scm>         <title>Repository Operations</title>
-> scm>         <section id="atomic_commits">
-> scm>             <title>Atomic Commits</title>
-> scm>             <expl>
-> scm>                 Support for atomic commits means that if an
-> scm>                 operation on the repository is interrupted
-> scm>                 in the middle, the repository will not be
-> scm>                 left in an inconsistent state. Are the
-> scm>                 check-in operations atomic, or can
-> scm>                 interrupting an operation leave the
-> scm>                 repository in an intermediate state?
-> scm>             </expl>
-> 
-> Here I think the explanation of a criterion (feature) is clear enough.
-> I might have added that "interruption" include killing of a process
-> during for example commit, lack of disk space for a full commit, or
-> a network fail during network operation (fetch or push, or equivalent).
-
-My initial reaction was to say that killing a process with -9 is not
-what you expect to see in practice, but a second later, I realized how
-wrong I was. Lack of memory may cause that the process gets killed with
--9, and it has been observed in practice (at least, in case of Mercury
-repo): http://norman.walsh.name/2007/08/09/mercurial
-
-Another thing that is not clear in the above criterion is what exactly
-"inconsistent state" (or "intermediate state") means. For instance, if
-Git gets killed during commit, you may have to remove .git/index.lock
-manually. AFAIK, Mercury leaves the 'journal' file and you have to
-run "hg recovery". Does it mean that the commit is not atomic?
-
-Another thing here is that "git commit" is local, so I am not sure
-if this question includes network operations...
-
-> scm>         <section id="move">
-> scm>             <title>Files and Directories Moves or Renames</title>
-> scm>             <expl>
-> scm>                 Does the system support moving a file or directory to
-> scm>                 a different location while still retaining the history
-> scm>                 of the file? <b>Note:</b> also see the next section
-> scm>                 about intelligent merging of renamed paths.
-> scm>             </expl>
-> 
-> In my opinion this criterion is next to worthess without more in depth
-> clarification of what does it mean to "support" moves or renames; as
-> entries for different systems are written by different people, if it
-> is not clear how to check if some feature is supported, some might
-> write 'no' for some system A, and some other person can write 'yes'
-> for other system B, even if the support is better in system A than in
-> system B (and would be considered enough, i.e. 'yes' answer, by the
-> creator of this criterion).
-> 
-> For me the support for renames/moves and copying (see next section)
-> means that:
-> 
->  0.) When examining or going to some point in the history (some old
->      revision/version of a project) the state you get is _exactly_
->      the same as it was at that time, exactly the same as it was
->      recorded (comitted) then.
-> 
->      For example tricks with moving *,v files in the CVS repository
->      break this assertion.
-
-IMHO, the above assertion is assumed when we talk about renaming, as
-the system that is not capable of that will not be qualified as an
-SCM. Yet, there is still plenty way to interpret the above criterion.
-Even in CVS, the history of the file does not disappear when you move
-a file. You can just write, this file move was renamed from old-name,
-so anyone can get old history without any problem. Of course, it will
-require some an additional step taken manually. But if the requirement
-is to see all log history with one $scm log command, you can just copy
-old log into log of a newly added file. Of course, you cannot run $scm
-annotate on that file and see who changed what line, but there is no
-such a requirement above.
-
-So, I agree, it should be better defined.
-
-> 
->  1.) When examining history of a project as a whole version control
->      system tells you that file was renamed (moved). I would consider
->      having there renaming represented as copy + delete to be only
->      a partial support of this feature.
-
-If files moving is interpreted in the sense of preserving the old history
-then copy + delete fully satisfies that criterion.
-
-However, if you defined support of file movement as ability to see that
-some file when you look at the history of the whole project then
-certainly copy + delete representation would not satisfy it.
-
-So, perhaps, it should be two separate points:
-- ability to preserve history of rename (with detail clarification
-  of what it means)
-- ability to show renames in the project history
-
-> 
-> scm>                 <s id="git">
-> scm>                     Renames are supported for most practical
-> scm>                     purposes.  Git even detects renames when a file has been
-> scm>                     changed afterward the rename.  However, due to a peculiar
-> scm>                     repository structure, renames are not recorded
-> scm>                     explicitly, and Git has to deduce them (which works well
-> scm>                     in practice).
-> scm>                 </s>
-> 
-> First, a correction to above statement.  It is not due to "a peculiar
-> repository structure", but due to "a design decision" (perhaps with
-> link to some explanation why it was implemented this way; I planned
-> to make a wiki page about 'rename tracking' vs. 'rename detection'
-> with references to various mailing list messages etc., but to this
-> day it was not created).
-
-Agreed.
-
-> 
-> 
-> Second, we can think about how the above statement could be improved.
-> 
-
-<long and detail explanation of how git works>
-
-> 
-> ...Now only put the above in a few short sentences to be used in
-> "Better SCM Initiative" comparison table...
-
-Git tracks content rather than file-ids, and therefore it uses heuristics
-for rename detection.  This approach has an advantage of being able to
-preserve history for code lines between files, which usually happens much
-more often than file renaming.
-
-> scm>                 <s id="git">
-> scm>                     No. As detailed in the <a
-> scm>                         href="http://git.or.cz/gitwiki/GitFaq#rename-tracking">Git
-> scm>                         FAQ</a>:
-> scm>                     "Git has a rename command git mv, but that is just a
-> scm>                     convenience. The effect is indistinguishable from removing
-> scm>                     the file and adding another with different name and the
-> scm>                     same content."
-> scm>                 </s>
-> 
-> This is of course NOT TRUE.  If the author bother checking (which
-> would be helped if there was available simple shell script, or simple
-> Perl script, testing 'intelligent_renames' criterion) he/she would
-> notice that git does apply change to renamed file, both if file
-> itself is renamed, and if directory it is in gets renamed.
-
-Sure. But it just demonstrates that the line of reasoning, which was
-clearly based on unstated assumption of how file-id tracking performs
-merge in this situation leads to the wrong conclusion for Git as it is
-the content tracking system, so Git does that differently.
-
-Perhaps, it would make sense to extend GitFaq to better cover that
-point, because people with other SCM background could easily conclude
-that Git cannot do "intelligent merge" after reading about git-mv.
-
-> scm>         <section id="changesets">
-> scm>             <title>Changesets' Support</title>
-> scm>             <expl>
-> scm>                 Does the repository support changesets? Changesets are a way
-> scm>                 to group a number of modifications that are relevant to each
-> scm>                 other in one atomic package, that can be cancelled or 
-> scm>                 propagated as needed.
-> scm>             </expl>
-> 
-> Here it is not entirely clean what creator of "Better SCM Initiative"
-> comparison table had on mind, what he meant by this.  Not all version
-> control systems are changeset based; some are snapshot based.  I guess
-> that for snapshot based SCM the above requirement is equivalent to
-> "Whole tree commits".
-
-Yes, it is irrelevant to being changeset or snapshot based. It is
-whether modification to more than one file can be commited (and
-propogated) atomically. I also suppose that those changes should be
-shown in history as a single change (not many changes too different
-files that took place in the same time and the same commit comment).
-
-However, the whole tree commit is a more strict requirement than
-just being able to commit a group of changes atomically. For example,
-"svn ci" creates a changeset and atomically store all its modification
-on the server. Yet, it is not the whole tree commit, because the result
-tree may differ from the tree that you commiting (files that are not
-modified by changeset may differ).
-
-> scm>                 <s id="git">
-> scm>                     Yes, Changesets are supported, 
-> scm>                     and there's some flexibility in creating them.
-> scm>                 </s>
-> scm>            </compare>
-> scm>         </section>
-> 
-> [Again, Git part was re-wrapped for better readibility]
-> 
-> In my opition, such an _empty_ addition ("there's some flexibility in
-> creating them") is totally unnecessary; it adds no solid information
-> (what does it mean "some flexibility") and should be removed.
-
-Agreed. I suspect the author implied by that Git allows to stage
-and commit separately chunk without commiting the whole file.
-Yet, as it is worded above, it is useless.
-
-> scm>         <section id="tracking_uncommited_changes">
-> scm>             <title>Tracking Uncommited Changes</title>
-> scm>             <expl>
-> scm>                 Does the software have an ability to track the changes in the
-> scm>                 working copy that were not yet committed to the repository?
-> scm>             </expl>
-> 
-> This also should be made more clean.  Does it mean for example ability
-> to tell which files have changed, or ability to diff working copy to
-> either last comitted changes, or to any revision available in repository?
-
-Also, ability to diff one or more specified files in the working copy to
-some specified revision.
-
-> scm>     <section id="technical_status">
-> scm>         <title>Technical Status</title>
-> scm>         <section id="documentation">
-> scm>             <title>Documentation</title>
-> scm>             <expl>
-> scm>                 How well is the system documented? How easy is it to
-> scm>                 get started using it?
-> scm>             </expl>
-> scm>             <compare>
-> scm>                 <s id="git">
-> scm>                     Medium. The short help is too terse and obscure.
-> scm>                     The man pages are extensive, but tend to be confusing.
-> scm>                     The are many tutorials.
-> scm>                 </s>
-> scm>             </compare>
-> scm>         </section>
-> 
-> That of course depends on your opinion.  I would say "Good", now that
-> there is "Git User's Manual" distributed with Git, and now that there
-> started semi-official "Git Community Book" (http://book.git-scm.com).
-
-Interesting that versioncontrolblog, which, if I am not mistaken, is
-Alexey's site, states for Git Documentation:
-
-| Good. There is extensive documentation for every command, and many
-| tutorials.
-
-http://www.versioncontrolblog.com/comparison/Git/index.html
-
-So, I am not sure were the word "Medium" came from.
-
-
-Dmitry
+SGksCgpJJ3ZlIHdyaXR0ZW4gdGhlIHZlcnNpb24gd2hpY2ggaXMgb24gaHR0cDovL3ZlcnNpb25j
+b250cm9sYmxvZy5jb20gYW5kCnNlbnQgaXQgdG8gTXIuIFNobG9taSBGaXNoIHNldmVyYWwgbW9u
+dGhzIGFnby4gICAgIEhlIGhhcyBleHRlbnNpdmVseQpyZS13cml0dGVuIG15IHRleHQsIG1ha2lu
+ZyBpdCBtb3JlICJuZXV0cmFsIiwgYW5kIHB1Ymxpc2hlZCBpdCBvbgpiZXR0ZXItc2NtLiAgSSBk
+byBub3QgYWdyZWUgd2l0aCBzb21lIG9mIHRoZSBjaGFuZ2VzIGhlIG1hZGUsIGJ1dCBJCmRpZCBu
+b3QgaW5zaXN0LiAgOikKCk9jY2FzaW9uYWxseSBJIHVwZGF0ZSBteSB0ZXh0IHdpdGggdGhlIGN1
+cnJlbnQgdmVyc2lvbiBhdCBiZXR0ZXItc2NtLApidXQgdGhpcyBoYXMgbm90IGhhcHBlbmVkIGZv
+ciBzb21lIHRpbWUsIGFuZCBpdCBzdGlsbCBjb250YWlucyBteQpvcmlnaW5hbCB2ZXJzaW9uLgoK
+SXMgdGhlcmUgYW55dGhpbmcgSSBjYW4gZG8gdG8gaW1wcm92ZSB0aGUgc3RhdGUgb2YgdGhpbmdz
+IGluIGFueSB3YXk/IDopCgpPbiBTdW4sIFNlcCAxNCwgMjAwOCBhdCA2OjQzIFBNLCBEbWl0cnkg
+UG90YXBvdiA8ZHBvdGFwb3ZAZ21haWwuY29tPiB3cm90ZToKPiBIZWxsbyBKYWt1YiwKPgo+IEkg
+aGF2ZSBhZGRlZCBBbGV4ZXkgTWFob3RraW4gaW4gQ0MsIHdobyBpcyBhbGxlZ2VkbHkgdGhlIGF1
+dGhvciBvZiB0aGF0Cj4gaW5mb3JtYXRpb24gYWJvdXQgR2l0IHRoYXQgeW91IGNhbiByZWFkIG9u
+IHRoZSBiZXR0ZXItc2NtIHNpdGUuCj4KPiBPbiBTYXQsIFNlcCAxMywgMjAwOCBhdCAwNzowNjox
+NlBNICswMjAwLCBKYWt1YiBOYXJlYnNraSB3cm90ZToKPj4KPj4gSSBoYXZlIHRob3VnaHQgYWJv
+dXQgdHJ5aW5nIHlldCBhbm90aGVyIHRpbWUuLi4gYnV0IEdpdCB3YXMgYWxyZWFkeQo+PiBhZGRl
+ZDsgc2VlIGh0dHA6Ly9iZXR0ZXItc2NtLmJlcmxpb3MuZGUvbmV3cy9jaGFuZ2VzLTIwMDgtMDgt
+MDcvCj4KPiBJbnRlcmVzdGluZywgdGhlIHNpdGUgc3RpbGwgbWVudGlvbnMgR2l0IGFzIG1pc3Np
+bmcgaW4gYSBmZXcgcGxhY2VzLgo+IEZvciBpbnN0YW5jZSwgd2hlbiB5b3UgY2xpY2sgb24gR2l0
+IGluIHRoZSBsaXN0IG9mIGFsdGVybmF0aXZlcywgeW91Cj4gZ2V0IHRoaXM6IGh0dHA6Ly9iZXR0
+ZXItc2NtLmJlcmxpb3MuZGUvYWx0ZXJuYXRpdmVzL2dpdC8KPiBhbmQgdGhlbiB3aGVuIHlvdSBn
+b3QgdG8gRkFRLCB5b3UgY2FuIHJlYWQgdGhpczoKPgo+IHwgVGhlIHJlYXNvbiBpdCdzIG5vdCB0
+aGVyZSBpcyB0aGF0IHdoaWxlIG1hbnkgcGVvcGxlIGhhdmUgY29tcGxhaW5lZAo+IHwgYWJvdXQg
+aXRzIGFic2Vuc2UsIG5vIG9uZSBzdWl0YWJsZSBoYXMgdm9sdW50ZWVyZWQgdG8gYmVjb21lIGl0
+cwo+IHwgY2hhbXBpb24gYW5kIHN1cHBsaWVkIGEgZ29vZCBlbm91Z2ggcGF0Y2guIElmIHlvdSBo
+YXZlIGEgc3Vic3RhbnRpYWwKPiB8IGFtb3VudCBvZiBnaXQgZXhwZXJ0aXNlLCBoYXZlIGdvb2Qg
+RW5nbGlzaCB3cml0aW5nIHNraWxscywgYW5kIHdpc2ggdG8KPiB8IHZvbHVudGVlciwgdGhlbiB3
+ZSdsbCBiZSBoYXBweSB0byBoZWFyIGZyb20geW91LiBJZiBub3QgLSBhdCBsZWFzdCBkb24ndAo+
+IHwgY29tcGxhaW4gYWJvdXQgaXQuCj4gfAo+IHwgSW4gYWRkaXRpb24gdG8gZXZlcnl0aGluZyB0
+aGF0IHdhcyBzYWlkIGhlcmUsIGl0IHNlZW1zIHRoYXQgdGhlCj4gfCBvcmlnaW5hdG9yIGFuZCBt
+YWludGFpbmVyIG9mIHRoZSBzaXRlIGFuZCBjb21wYXJpc29uIGlzIG5vdyBiYW5uZWQKPiB8IGZy
+b20gc2VuZGluZyBtZXNzYWdlcyB0byB2Z2VyLmtlcm5lbC5vcmcsIHdoaWNoIGhvc3RzIHNldmVy
+YWwKPiB8IExpbnV4LWtlcm5lbC1yZWxhdGVkIG1haWxpbmctbGlzdHMsIGluY2x1ZGluZyB0aGUg
+Z2l0IG9uZS4gVGhpcyBoYXMKPiB8IGludGVyZmVyZWQgd2l0aCBzb21lIG9mIGhpcyBMaW51eC1y
+ZWxhdGVkIG9wZW4tc291cmNlIHdvcmssIGluY2x1ZGluZwo+IHwgdHJ5aW5nIHRvIGZpbmQgYSAi
+QmV0dGVyIFNDTSIgbWFpbnRhaW5lciBmb3IgZ2l0LiBUaGlzIGlzIHVuZm9ydHVuYXRlLAo+IHwg
+YnV0IGNoYW5naW5nIHRoaXMgc2l0dWF0aW9uLCBpcyBjdXJyZW50bHkgYmV5b25kIGhpcyBjb250
+cm9sLgo+Cj4gU291cmNlOiBodHRwOi8vYmV0dGVyLXNjbS5iZXJsaW9zLmRlL2ZhcS8jZ2l0LW1p
+c3NpbmcKPgo+IEkgYW0gc3VycHJpc2VkIHRvIGhlYXIgdGhhdCBTaGxvbWkgRmlzaCBpcyBiYW5u
+ZWQuLi4KPgo+PiBzY20+ICAgICA8c2VjdGlvbiBpZD0icmVwb3Nfb3BlcmF0aW9ucyI+Cj4+IHNj
+bT4gICAgICAgICA8dGl0bGU+UmVwb3NpdG9yeSBPcGVyYXRpb25zPC90aXRsZT4KPj4gc2NtPiAg
+ICAgICAgIDxzZWN0aW9uIGlkPSJhdG9taWNfY29tbWl0cyI+Cj4+IHNjbT4gICAgICAgICAgICAg
+PHRpdGxlPkF0b21pYyBDb21taXRzPC90aXRsZT4KPj4gc2NtPiAgICAgICAgICAgICA8ZXhwbD4K
+Pj4gc2NtPiAgICAgICAgICAgICAgICAgU3VwcG9ydCBmb3IgYXRvbWljIGNvbW1pdHMgbWVhbnMg
+dGhhdCBpZiBhbgo+PiBzY20+ICAgICAgICAgICAgICAgICBvcGVyYXRpb24gb24gdGhlIHJlcG9z
+aXRvcnkgaXMgaW50ZXJydXB0ZWQKPj4gc2NtPiAgICAgICAgICAgICAgICAgaW4gdGhlIG1pZGRs
+ZSwgdGhlIHJlcG9zaXRvcnkgd2lsbCBub3QgYmUKPj4gc2NtPiAgICAgICAgICAgICAgICAgbGVm
+dCBpbiBhbiBpbmNvbnNpc3RlbnQgc3RhdGUuIEFyZSB0aGUKPj4gc2NtPiAgICAgICAgICAgICAg
+ICAgY2hlY2staW4gb3BlcmF0aW9ucyBhdG9taWMsIG9yIGNhbgo+PiBzY20+ICAgICAgICAgICAg
+ICAgICBpbnRlcnJ1cHRpbmcgYW4gb3BlcmF0aW9uIGxlYXZlIHRoZQo+PiBzY20+ICAgICAgICAg
+ICAgICAgICByZXBvc2l0b3J5IGluIGFuIGludGVybWVkaWF0ZSBzdGF0ZT8KPj4gc2NtPiAgICAg
+ICAgICAgICA8L2V4cGw+Cj4+Cj4+IEhlcmUgSSB0aGluayB0aGUgZXhwbGFuYXRpb24gb2YgYSBj
+cml0ZXJpb24gKGZlYXR1cmUpIGlzIGNsZWFyIGVub3VnaC4KPj4gSSBtaWdodCBoYXZlIGFkZGVk
+IHRoYXQgImludGVycnVwdGlvbiIgaW5jbHVkZSBraWxsaW5nIG9mIGEgcHJvY2Vzcwo+PiBkdXJp
+bmcgZm9yIGV4YW1wbGUgY29tbWl0LCBsYWNrIG9mIGRpc2sgc3BhY2UgZm9yIGEgZnVsbCBjb21t
+aXQsIG9yCj4+IGEgbmV0d29yayBmYWlsIGR1cmluZyBuZXR3b3JrIG9wZXJhdGlvbiAoZmV0Y2gg
+b3IgcHVzaCwgb3IgZXF1aXZhbGVudCkuCj4KPiBNeSBpbml0aWFsIHJlYWN0aW9uIHdhcyB0byBz
+YXkgdGhhdCBraWxsaW5nIGEgcHJvY2VzcyB3aXRoIC05IGlzIG5vdAo+IHdoYXQgeW91IGV4cGVj
+dCB0byBzZWUgaW4gcHJhY3RpY2UsIGJ1dCBhIHNlY29uZCBsYXRlciwgSSByZWFsaXplZCBob3cK
+PiB3cm9uZyBJIHdhcy4gTGFjayBvZiBtZW1vcnkgbWF5IGNhdXNlIHRoYXQgdGhlIHByb2Nlc3Mg
+Z2V0cyBraWxsZWQgd2l0aAo+IC05LCBhbmQgaXQgaGFzIGJlZW4gb2JzZXJ2ZWQgaW4gcHJhY3Rp
+Y2UgKGF0IGxlYXN0LCBpbiBjYXNlIG9mIE1lcmN1cnkKPiByZXBvKTogaHR0cDovL25vcm1hbi53
+YWxzaC5uYW1lLzIwMDcvMDgvMDkvbWVyY3VyaWFsCj4KPiBBbm90aGVyIHRoaW5nIHRoYXQgaXMg
+bm90IGNsZWFyIGluIHRoZSBhYm92ZSBjcml0ZXJpb24gaXMgd2hhdCBleGFjdGx5Cj4gImluY29u
+c2lzdGVudCBzdGF0ZSIgKG9yICJpbnRlcm1lZGlhdGUgc3RhdGUiKSBtZWFucy4gRm9yIGluc3Rh
+bmNlLCBpZgo+IEdpdCBnZXRzIGtpbGxlZCBkdXJpbmcgY29tbWl0LCB5b3UgbWF5IGhhdmUgdG8g
+cmVtb3ZlIC5naXQvaW5kZXgubG9jawo+IG1hbnVhbGx5LiBBRkFJSywgTWVyY3VyeSBsZWF2ZXMg
+dGhlICdqb3VybmFsJyBmaWxlIGFuZCB5b3UgaGF2ZSB0bwo+IHJ1biAiaGcgcmVjb3ZlcnkiLiBE
+b2VzIGl0IG1lYW4gdGhhdCB0aGUgY29tbWl0IGlzIG5vdCBhdG9taWM/Cj4KPiBBbm90aGVyIHRo
+aW5nIGhlcmUgaXMgdGhhdCAiZ2l0IGNvbW1pdCIgaXMgbG9jYWwsIHNvIEkgYW0gbm90IHN1cmUK
+PiBpZiB0aGlzIHF1ZXN0aW9uIGluY2x1ZGVzIG5ldHdvcmsgb3BlcmF0aW9ucy4uLgo+Cj4+IHNj
+bT4gICAgICAgICA8c2VjdGlvbiBpZD0ibW92ZSI+Cj4+IHNjbT4gICAgICAgICAgICAgPHRpdGxl
+PkZpbGVzIGFuZCBEaXJlY3RvcmllcyBNb3ZlcyBvciBSZW5hbWVzPC90aXRsZT4KPj4gc2NtPiAg
+ICAgICAgICAgICA8ZXhwbD4KPj4gc2NtPiAgICAgICAgICAgICAgICAgRG9lcyB0aGUgc3lzdGVt
+IHN1cHBvcnQgbW92aW5nIGEgZmlsZSBvciBkaXJlY3RvcnkgdG8KPj4gc2NtPiAgICAgICAgICAg
+ICAgICAgYSBkaWZmZXJlbnQgbG9jYXRpb24gd2hpbGUgc3RpbGwgcmV0YWluaW5nIHRoZSBoaXN0
+b3J5Cj4+IHNjbT4gICAgICAgICAgICAgICAgIG9mIHRoZSBmaWxlPyA8Yj5Ob3RlOjwvYj4gYWxz
+byBzZWUgdGhlIG5leHQgc2VjdGlvbgo+PiBzY20+ICAgICAgICAgICAgICAgICBhYm91dCBpbnRl
+bGxpZ2VudCBtZXJnaW5nIG9mIHJlbmFtZWQgcGF0aHMuCj4+IHNjbT4gICAgICAgICAgICAgPC9l
+eHBsPgo+Pgo+PiBJbiBteSBvcGluaW9uIHRoaXMgY3JpdGVyaW9uIGlzIG5leHQgdG8gd29ydGhl
+c3Mgd2l0aG91dCBtb3JlIGluIGRlcHRoCj4+IGNsYXJpZmljYXRpb24gb2Ygd2hhdCBkb2VzIGl0
+IG1lYW4gdG8gInN1cHBvcnQiIG1vdmVzIG9yIHJlbmFtZXM7IGFzCj4+IGVudHJpZXMgZm9yIGRp
+ZmZlcmVudCBzeXN0ZW1zIGFyZSB3cml0dGVuIGJ5IGRpZmZlcmVudCBwZW9wbGUsIGlmIGl0Cj4+
+IGlzIG5vdCBjbGVhciBob3cgdG8gY2hlY2sgaWYgc29tZSBmZWF0dXJlIGlzIHN1cHBvcnRlZCwg
+c29tZSBtaWdodAo+PiB3cml0ZSAnbm8nIGZvciBzb21lIHN5c3RlbSBBLCBhbmQgc29tZSBvdGhl
+ciBwZXJzb24gY2FuIHdyaXRlICd5ZXMnCj4+IGZvciBvdGhlciBzeXN0ZW0gQiwgZXZlbiBpZiB0
+aGUgc3VwcG9ydCBpcyBiZXR0ZXIgaW4gc3lzdGVtIEEgdGhhbiBpbgo+PiBzeXN0ZW0gQiAoYW5k
+IHdvdWxkIGJlIGNvbnNpZGVyZWQgZW5vdWdoLCBpLmUuICd5ZXMnIGFuc3dlciwgYnkgdGhlCj4+
+IGNyZWF0b3Igb2YgdGhpcyBjcml0ZXJpb24pLgo+Pgo+PiBGb3IgbWUgdGhlIHN1cHBvcnQgZm9y
+IHJlbmFtZXMvbW92ZXMgYW5kIGNvcHlpbmcgKHNlZSBuZXh0IHNlY3Rpb24pCj4+IG1lYW5zIHRo
+YXQ6Cj4+Cj4+ICAwLikgV2hlbiBleGFtaW5pbmcgb3IgZ29pbmcgdG8gc29tZSBwb2ludCBpbiB0
+aGUgaGlzdG9yeSAoc29tZSBvbGQKPj4gICAgICByZXZpc2lvbi92ZXJzaW9uIG9mIGEgcHJvamVj
+dCkgdGhlIHN0YXRlIHlvdSBnZXQgaXMgX2V4YWN0bHlfCj4+ICAgICAgdGhlIHNhbWUgYXMgaXQg
+d2FzIGF0IHRoYXQgdGltZSwgZXhhY3RseSB0aGUgc2FtZSBhcyBpdCB3YXMKPj4gICAgICByZWNv
+cmRlZCAoY29taXR0ZWQpIHRoZW4uCj4+Cj4+ICAgICAgRm9yIGV4YW1wbGUgdHJpY2tzIHdpdGgg
+bW92aW5nICosdiBmaWxlcyBpbiB0aGUgQ1ZTIHJlcG9zaXRvcnkKPj4gICAgICBicmVhayB0aGlz
+IGFzc2VydGlvbi4KPgo+IElNSE8sIHRoZSBhYm92ZSBhc3NlcnRpb24gaXMgYXNzdW1lZCB3aGVu
+IHdlIHRhbGsgYWJvdXQgcmVuYW1pbmcsIGFzCj4gdGhlIHN5c3RlbSB0aGF0IGlzIG5vdCBjYXBh
+YmxlIG9mIHRoYXQgd2lsbCBub3QgYmUgcXVhbGlmaWVkIGFzIGFuCj4gU0NNLiBZZXQsIHRoZXJl
+IGlzIHN0aWxsIHBsZW50eSB3YXkgdG8gaW50ZXJwcmV0IHRoZSBhYm92ZSBjcml0ZXJpb24uCj4g
+RXZlbiBpbiBDVlMsIHRoZSBoaXN0b3J5IG9mIHRoZSBmaWxlIGRvZXMgbm90IGRpc2FwcGVhciB3
+aGVuIHlvdSBtb3ZlCj4gYSBmaWxlLiBZb3UgY2FuIGp1c3Qgd3JpdGUsIHRoaXMgZmlsZSBtb3Zl
+IHdhcyByZW5hbWVkIGZyb20gb2xkLW5hbWUsCj4gc28gYW55b25lIGNhbiBnZXQgb2xkIGhpc3Rv
+cnkgd2l0aG91dCBhbnkgcHJvYmxlbS4gT2YgY291cnNlLCBpdCB3aWxsCj4gcmVxdWlyZSBzb21l
+IGFuIGFkZGl0aW9uYWwgc3RlcCB0YWtlbiBtYW51YWxseS4gQnV0IGlmIHRoZSByZXF1aXJlbWVu
+dAo+IGlzIHRvIHNlZSBhbGwgbG9nIGhpc3Rvcnkgd2l0aCBvbmUgJHNjbSBsb2cgY29tbWFuZCwg
+eW91IGNhbiBqdXN0IGNvcHkKPiBvbGQgbG9nIGludG8gbG9nIG9mIGEgbmV3bHkgYWRkZWQgZmls
+ZS4gT2YgY291cnNlLCB5b3UgY2Fubm90IHJ1biAkc2NtCj4gYW5ub3RhdGUgb24gdGhhdCBmaWxl
+IGFuZCBzZWUgd2hvIGNoYW5nZWQgd2hhdCBsaW5lLCBidXQgdGhlcmUgaXMgbm8KPiBzdWNoIGEg
+cmVxdWlyZW1lbnQgYWJvdmUuCj4KPiBTbywgSSBhZ3JlZSwgaXQgc2hvdWxkIGJlIGJldHRlciBk
+ZWZpbmVkLgo+Cj4+Cj4+ICAxLikgV2hlbiBleGFtaW5pbmcgaGlzdG9yeSBvZiBhIHByb2plY3Qg
+YXMgYSB3aG9sZSB2ZXJzaW9uIGNvbnRyb2wKPj4gICAgICBzeXN0ZW0gdGVsbHMgeW91IHRoYXQg
+ZmlsZSB3YXMgcmVuYW1lZCAobW92ZWQpLiBJIHdvdWxkIGNvbnNpZGVyCj4+ICAgICAgaGF2aW5n
+IHRoZXJlIHJlbmFtaW5nIHJlcHJlc2VudGVkIGFzIGNvcHkgKyBkZWxldGUgdG8gYmUgb25seQo+
+PiAgICAgIGEgcGFydGlhbCBzdXBwb3J0IG9mIHRoaXMgZmVhdHVyZS4KPgo+IElmIGZpbGVzIG1v
+dmluZyBpcyBpbnRlcnByZXRlZCBpbiB0aGUgc2Vuc2Ugb2YgcHJlc2VydmluZyB0aGUgb2xkIGhp
+c3RvcnkKPiB0aGVuIGNvcHkgKyBkZWxldGUgZnVsbHkgc2F0aXNmaWVzIHRoYXQgY3JpdGVyaW9u
+Lgo+Cj4gSG93ZXZlciwgaWYgeW91IGRlZmluZWQgc3VwcG9ydCBvZiBmaWxlIG1vdmVtZW50IGFz
+IGFiaWxpdHkgdG8gc2VlIHRoYXQKPiBzb21lIGZpbGUgd2hlbiB5b3UgbG9vayBhdCB0aGUgaGlz
+dG9yeSBvZiB0aGUgd2hvbGUgcHJvamVjdCB0aGVuCj4gY2VydGFpbmx5IGNvcHkgKyBkZWxldGUg
+cmVwcmVzZW50YXRpb24gd291bGQgbm90IHNhdGlzZnkgaXQuCj4KPiBTbywgcGVyaGFwcywgaXQg
+c2hvdWxkIGJlIHR3byBzZXBhcmF0ZSBwb2ludHM6Cj4gLSBhYmlsaXR5IHRvIHByZXNlcnZlIGhp
+c3Rvcnkgb2YgcmVuYW1lICh3aXRoIGRldGFpbCBjbGFyaWZpY2F0aW9uCj4gIG9mIHdoYXQgaXQg
+bWVhbnMpCj4gLSBhYmlsaXR5IHRvIHNob3cgcmVuYW1lcyBpbiB0aGUgcHJvamVjdCBoaXN0b3J5
+Cj4KPj4KPj4gc2NtPiAgICAgICAgICAgICAgICAgPHMgaWQ9ImdpdCI+Cj4+IHNjbT4gICAgICAg
+ICAgICAgICAgICAgICBSZW5hbWVzIGFyZSBzdXBwb3J0ZWQgZm9yIG1vc3QgcHJhY3RpY2FsCj4+
+IHNjbT4gICAgICAgICAgICAgICAgICAgICBwdXJwb3Nlcy4gIEdpdCBldmVuIGRldGVjdHMgcmVu
+YW1lcyB3aGVuIGEgZmlsZSBoYXMgYmVlbgo+PiBzY20+ICAgICAgICAgICAgICAgICAgICAgY2hh
+bmdlZCBhZnRlcndhcmQgdGhlIHJlbmFtZS4gIEhvd2V2ZXIsIGR1ZSB0byBhIHBlY3VsaWFyCj4+
+IHNjbT4gICAgICAgICAgICAgICAgICAgICByZXBvc2l0b3J5IHN0cnVjdHVyZSwgcmVuYW1lcyBh
+cmUgbm90IHJlY29yZGVkCj4+IHNjbT4gICAgICAgICAgICAgICAgICAgICBleHBsaWNpdGx5LCBh
+bmQgR2l0IGhhcyB0byBkZWR1Y2UgdGhlbSAod2hpY2ggd29ya3Mgd2VsbAo+PiBzY20+ICAgICAg
+ICAgICAgICAgICAgICAgaW4gcHJhY3RpY2UpLgo+PiBzY20+ICAgICAgICAgICAgICAgICA8L3M+
+Cj4+Cj4+IEZpcnN0LCBhIGNvcnJlY3Rpb24gdG8gYWJvdmUgc3RhdGVtZW50LiAgSXQgaXMgbm90
+IGR1ZSB0byAiYSBwZWN1bGlhcgo+PiByZXBvc2l0b3J5IHN0cnVjdHVyZSIsIGJ1dCBkdWUgdG8g
+ImEgZGVzaWduIGRlY2lzaW9uIiAocGVyaGFwcyB3aXRoCj4+IGxpbmsgdG8gc29tZSBleHBsYW5h
+dGlvbiB3aHkgaXQgd2FzIGltcGxlbWVudGVkIHRoaXMgd2F5OyBJIHBsYW5uZWQKPj4gdG8gbWFr
+ZSBhIHdpa2kgcGFnZSBhYm91dCAncmVuYW1lIHRyYWNraW5nJyB2cy4gJ3JlbmFtZSBkZXRlY3Rp
+b24nCj4+IHdpdGggcmVmZXJlbmNlcyB0byB2YXJpb3VzIG1haWxpbmcgbGlzdCBtZXNzYWdlcyBl
+dGMuLCBidXQgdG8gdGhpcwo+PiBkYXkgaXQgd2FzIG5vdCBjcmVhdGVkKS4KPgo+IEFncmVlZC4K
+Pgo+Pgo+Pgo+PiBTZWNvbmQsIHdlIGNhbiB0aGluayBhYm91dCBob3cgdGhlIGFib3ZlIHN0YXRl
+bWVudCBjb3VsZCBiZSBpbXByb3ZlZC4KPj4KPgo+IDxsb25nIGFuZCBkZXRhaWwgZXhwbGFuYXRp
+b24gb2YgaG93IGdpdCB3b3Jrcz4KPgo+Pgo+PiAuLi5Ob3cgb25seSBwdXQgdGhlIGFib3ZlIGlu
+IGEgZmV3IHNob3J0IHNlbnRlbmNlcyB0byBiZSB1c2VkIGluCj4+ICJCZXR0ZXIgU0NNIEluaXRp
+YXRpdmUiIGNvbXBhcmlzb24gdGFibGUuLi4KPgo+IEdpdCB0cmFja3MgY29udGVudCByYXRoZXIg
+dGhhbiBmaWxlLWlkcywgYW5kIHRoZXJlZm9yZSBpdCB1c2VzIGhldXJpc3RpY3MKPiBmb3IgcmVu
+YW1lIGRldGVjdGlvbi4gIFRoaXMgYXBwcm9hY2ggaGFzIGFuIGFkdmFudGFnZSBvZiBiZWluZyBh
+YmxlIHRvCj4gcHJlc2VydmUgaGlzdG9yeSBmb3IgY29kZSBsaW5lcyBiZXR3ZWVuIGZpbGVzLCB3
+aGljaCB1c3VhbGx5IGhhcHBlbnMgbXVjaAo+IG1vcmUgb2Z0ZW4gdGhhbiBmaWxlIHJlbmFtaW5n
+Lgo+Cj4+IHNjbT4gICAgICAgICAgICAgICAgIDxzIGlkPSJnaXQiPgo+PiBzY20+ICAgICAgICAg
+ICAgICAgICAgICAgTm8uIEFzIGRldGFpbGVkIGluIHRoZSA8YQo+PiBzY20+ICAgICAgICAgICAg
+ICAgICAgICAgICAgIGhyZWY9Imh0dHA6Ly9naXQub3IuY3ovZ2l0d2lraS9HaXRGYXEjcmVuYW1l
+LXRyYWNraW5nIj5HaXQKPj4gc2NtPiAgICAgICAgICAgICAgICAgICAgICAgICBGQVE8L2E+Ogo+
+PiBzY20+ICAgICAgICAgICAgICAgICAgICAgIkdpdCBoYXMgYSByZW5hbWUgY29tbWFuZCBnaXQg
+bXYsIGJ1dCB0aGF0IGlzIGp1c3QgYQo+PiBzY20+ICAgICAgICAgICAgICAgICAgICAgY29udmVu
+aWVuY2UuIFRoZSBlZmZlY3QgaXMgaW5kaXN0aW5ndWlzaGFibGUgZnJvbSByZW1vdmluZwo+PiBz
+Y20+ICAgICAgICAgICAgICAgICAgICAgdGhlIGZpbGUgYW5kIGFkZGluZyBhbm90aGVyIHdpdGgg
+ZGlmZmVyZW50IG5hbWUgYW5kIHRoZQo+PiBzY20+ICAgICAgICAgICAgICAgICAgICAgc2FtZSBj
+b250ZW50LiIKPj4gc2NtPiAgICAgICAgICAgICAgICAgPC9zPgo+Pgo+PiBUaGlzIGlzIG9mIGNv
+dXJzZSBOT1QgVFJVRS4gIElmIHRoZSBhdXRob3IgYm90aGVyIGNoZWNraW5nICh3aGljaAo+PiB3
+b3VsZCBiZSBoZWxwZWQgaWYgdGhlcmUgd2FzIGF2YWlsYWJsZSBzaW1wbGUgc2hlbGwgc2NyaXB0
+LCBvciBzaW1wbGUKPj4gUGVybCBzY3JpcHQsIHRlc3RpbmcgJ2ludGVsbGlnZW50X3JlbmFtZXMn
+IGNyaXRlcmlvbikgaGUvc2hlIHdvdWxkCj4+IG5vdGljZSB0aGF0IGdpdCBkb2VzIGFwcGx5IGNo
+YW5nZSB0byByZW5hbWVkIGZpbGUsIGJvdGggaWYgZmlsZQo+PiBpdHNlbGYgaXMgcmVuYW1lZCwg
+YW5kIGlmIGRpcmVjdG9yeSBpdCBpcyBpbiBnZXRzIHJlbmFtZWQuCj4KPiBTdXJlLiBCdXQgaXQg
+anVzdCBkZW1vbnN0cmF0ZXMgdGhhdCB0aGUgbGluZSBvZiByZWFzb25pbmcsIHdoaWNoIHdhcwo+
+IGNsZWFybHkgYmFzZWQgb24gdW5zdGF0ZWQgYXNzdW1wdGlvbiBvZiBob3cgZmlsZS1pZCB0cmFj
+a2luZyBwZXJmb3Jtcwo+IG1lcmdlIGluIHRoaXMgc2l0dWF0aW9uIGxlYWRzIHRvIHRoZSB3cm9u
+ZyBjb25jbHVzaW9uIGZvciBHaXQgYXMgaXQgaXMKPiB0aGUgY29udGVudCB0cmFja2luZyBzeXN0
+ZW0sIHNvIEdpdCBkb2VzIHRoYXQgZGlmZmVyZW50bHkuCj4KPiBQZXJoYXBzLCBpdCB3b3VsZCBt
+YWtlIHNlbnNlIHRvIGV4dGVuZCBHaXRGYXEgdG8gYmV0dGVyIGNvdmVyIHRoYXQKPiBwb2ludCwg
+YmVjYXVzZSBwZW9wbGUgd2l0aCBvdGhlciBTQ00gYmFja2dyb3VuZCBjb3VsZCBlYXNpbHkgY29u
+Y2x1ZGUKPiB0aGF0IEdpdCBjYW5ub3QgZG8gImludGVsbGlnZW50IG1lcmdlIiBhZnRlciByZWFk
+aW5nIGFib3V0IGdpdC1tdi4KPgo+PiBzY20+ICAgICAgICAgPHNlY3Rpb24gaWQ9ImNoYW5nZXNl
+dHMiPgo+PiBzY20+ICAgICAgICAgICAgIDx0aXRsZT5DaGFuZ2VzZXRzJyBTdXBwb3J0PC90aXRs
+ZT4KPj4gc2NtPiAgICAgICAgICAgICA8ZXhwbD4KPj4gc2NtPiAgICAgICAgICAgICAgICAgRG9l
+cyB0aGUgcmVwb3NpdG9yeSBzdXBwb3J0IGNoYW5nZXNldHM/IENoYW5nZXNldHMgYXJlIGEgd2F5
+Cj4+IHNjbT4gICAgICAgICAgICAgICAgIHRvIGdyb3VwIGEgbnVtYmVyIG9mIG1vZGlmaWNhdGlv
+bnMgdGhhdCBhcmUgcmVsZXZhbnQgdG8gZWFjaAo+PiBzY20+ICAgICAgICAgICAgICAgICBvdGhl
+ciBpbiBvbmUgYXRvbWljIHBhY2thZ2UsIHRoYXQgY2FuIGJlIGNhbmNlbGxlZCBvcgo+PiBzY20+
+ICAgICAgICAgICAgICAgICBwcm9wYWdhdGVkIGFzIG5lZWRlZC4KPj4gc2NtPiAgICAgICAgICAg
+ICA8L2V4cGw+Cj4+Cj4+IEhlcmUgaXQgaXMgbm90IGVudGlyZWx5IGNsZWFuIHdoYXQgY3JlYXRv
+ciBvZiAiQmV0dGVyIFNDTSBJbml0aWF0aXZlIgo+PiBjb21wYXJpc29uIHRhYmxlIGhhZCBvbiBt
+aW5kLCB3aGF0IGhlIG1lYW50IGJ5IHRoaXMuICBOb3QgYWxsIHZlcnNpb24KPj4gY29udHJvbCBz
+eXN0ZW1zIGFyZSBjaGFuZ2VzZXQgYmFzZWQ7IHNvbWUgYXJlIHNuYXBzaG90IGJhc2VkLiAgSSBn
+dWVzcwo+PiB0aGF0IGZvciBzbmFwc2hvdCBiYXNlZCBTQ00gdGhlIGFib3ZlIHJlcXVpcmVtZW50
+IGlzIGVxdWl2YWxlbnQgdG8KPj4gIldob2xlIHRyZWUgY29tbWl0cyIuCj4KPiBZZXMsIGl0IGlz
+IGlycmVsZXZhbnQgdG8gYmVpbmcgY2hhbmdlc2V0IG9yIHNuYXBzaG90IGJhc2VkLiBJdCBpcwo+
+IHdoZXRoZXIgbW9kaWZpY2F0aW9uIHRvIG1vcmUgdGhhbiBvbmUgZmlsZSBjYW4gYmUgY29tbWl0
+ZWQgKGFuZAo+IHByb3BvZ2F0ZWQpIGF0b21pY2FsbHkuIEkgYWxzbyBzdXBwb3NlIHRoYXQgdGhv
+c2UgY2hhbmdlcyBzaG91bGQgYmUKPiBzaG93biBpbiBoaXN0b3J5IGFzIGEgc2luZ2xlIGNoYW5n
+ZSAobm90IG1hbnkgY2hhbmdlcyB0b28gZGlmZmVyZW50Cj4gZmlsZXMgdGhhdCB0b29rIHBsYWNl
+IGluIHRoZSBzYW1lIHRpbWUgYW5kIHRoZSBzYW1lIGNvbW1pdCBjb21tZW50KS4KPgo+IEhvd2V2
+ZXIsIHRoZSB3aG9sZSB0cmVlIGNvbW1pdCBpcyBhIG1vcmUgc3RyaWN0IHJlcXVpcmVtZW50IHRo
+YW4KPiBqdXN0IGJlaW5nIGFibGUgdG8gY29tbWl0IGEgZ3JvdXAgb2YgY2hhbmdlcyBhdG9taWNh
+bGx5LiBGb3IgZXhhbXBsZSwKPiAic3ZuIGNpIiBjcmVhdGVzIGEgY2hhbmdlc2V0IGFuZCBhdG9t
+aWNhbGx5IHN0b3JlIGFsbCBpdHMgbW9kaWZpY2F0aW9uCj4gb24gdGhlIHNlcnZlci4gWWV0LCBp
+dCBpcyBub3QgdGhlIHdob2xlIHRyZWUgY29tbWl0LCBiZWNhdXNlIHRoZSByZXN1bHQKPiB0cmVl
+IG1heSBkaWZmZXIgZnJvbSB0aGUgdHJlZSB0aGF0IHlvdSBjb21taXRpbmcgKGZpbGVzIHRoYXQg
+YXJlIG5vdAo+IG1vZGlmaWVkIGJ5IGNoYW5nZXNldCBtYXkgZGlmZmVyKS4KPgo+PiBzY20+ICAg
+ICAgICAgICAgICAgICA8cyBpZD0iZ2l0Ij4KPj4gc2NtPiAgICAgICAgICAgICAgICAgICAgIFll
+cywgQ2hhbmdlc2V0cyBhcmUgc3VwcG9ydGVkLAo+PiBzY20+ICAgICAgICAgICAgICAgICAgICAg
+YW5kIHRoZXJlJ3Mgc29tZSBmbGV4aWJpbGl0eSBpbiBjcmVhdGluZyB0aGVtLgo+PiBzY20+ICAg
+ICAgICAgICAgICAgICA8L3M+Cj4+IHNjbT4gICAgICAgICAgICA8L2NvbXBhcmU+Cj4+IHNjbT4g
+ICAgICAgICA8L3NlY3Rpb24+Cj4+Cj4+IFtBZ2FpbiwgR2l0IHBhcnQgd2FzIHJlLXdyYXBwZWQg
+Zm9yIGJldHRlciByZWFkaWJpbGl0eV0KPj4KPj4gSW4gbXkgb3BpdGlvbiwgc3VjaCBhbiBfZW1w
+dHlfIGFkZGl0aW9uICgidGhlcmUncyBzb21lIGZsZXhpYmlsaXR5IGluCj4+IGNyZWF0aW5nIHRo
+ZW0iKSBpcyB0b3RhbGx5IHVubmVjZXNzYXJ5OyBpdCBhZGRzIG5vIHNvbGlkIGluZm9ybWF0aW9u
+Cj4+ICh3aGF0IGRvZXMgaXQgbWVhbiAic29tZSBmbGV4aWJpbGl0eSIpIGFuZCBzaG91bGQgYmUg
+cmVtb3ZlZC4KPgo+IEFncmVlZC4gSSBzdXNwZWN0IHRoZSBhdXRob3IgaW1wbGllZCBieSB0aGF0
+IEdpdCBhbGxvd3MgdG8gc3RhZ2UKPiBhbmQgY29tbWl0IHNlcGFyYXRlbHkgY2h1bmsgd2l0aG91
+dCBjb21taXRpbmcgdGhlIHdob2xlIGZpbGUuCj4gWWV0LCBhcyBpdCBpcyB3b3JkZWQgYWJvdmUs
+IGl0IGlzIHVzZWxlc3MuCj4KPj4gc2NtPiAgICAgICAgIDxzZWN0aW9uIGlkPSJ0cmFja2luZ191
+bmNvbW1pdGVkX2NoYW5nZXMiPgo+PiBzY20+ICAgICAgICAgICAgIDx0aXRsZT5UcmFja2luZyBV
+bmNvbW1pdGVkIENoYW5nZXM8L3RpdGxlPgo+PiBzY20+ICAgICAgICAgICAgIDxleHBsPgo+PiBz
+Y20+ICAgICAgICAgICAgICAgICBEb2VzIHRoZSBzb2Z0d2FyZSBoYXZlIGFuIGFiaWxpdHkgdG8g
+dHJhY2sgdGhlIGNoYW5nZXMgaW4gdGhlCj4+IHNjbT4gICAgICAgICAgICAgICAgIHdvcmtpbmcg
+Y29weSB0aGF0IHdlcmUgbm90IHlldCBjb21taXR0ZWQgdG8gdGhlIHJlcG9zaXRvcnk/Cj4+IHNj
+bT4gICAgICAgICAgICAgPC9leHBsPgo+Pgo+PiBUaGlzIGFsc28gc2hvdWxkIGJlIG1hZGUgbW9y
+ZSBjbGVhbi4gIERvZXMgaXQgbWVhbiBmb3IgZXhhbXBsZSBhYmlsaXR5Cj4+IHRvIHRlbGwgd2hp
+Y2ggZmlsZXMgaGF2ZSBjaGFuZ2VkLCBvciBhYmlsaXR5IHRvIGRpZmYgd29ya2luZyBjb3B5IHRv
+Cj4+IGVpdGhlciBsYXN0IGNvbWl0dGVkIGNoYW5nZXMsIG9yIHRvIGFueSByZXZpc2lvbiBhdmFp
+bGFibGUgaW4gcmVwb3NpdG9yeT8KPgo+IEFsc28sIGFiaWxpdHkgdG8gZGlmZiBvbmUgb3IgbW9y
+ZSBzcGVjaWZpZWQgZmlsZXMgaW4gdGhlIHdvcmtpbmcgY29weSB0bwo+IHNvbWUgc3BlY2lmaWVk
+IHJldmlzaW9uLgo+Cj4+IHNjbT4gICAgIDxzZWN0aW9uIGlkPSJ0ZWNobmljYWxfc3RhdHVzIj4K
+Pj4gc2NtPiAgICAgICAgIDx0aXRsZT5UZWNobmljYWwgU3RhdHVzPC90aXRsZT4KPj4gc2NtPiAg
+ICAgICAgIDxzZWN0aW9uIGlkPSJkb2N1bWVudGF0aW9uIj4KPj4gc2NtPiAgICAgICAgICAgICA8
+dGl0bGU+RG9jdW1lbnRhdGlvbjwvdGl0bGU+Cj4+IHNjbT4gICAgICAgICAgICAgPGV4cGw+Cj4+
+IHNjbT4gICAgICAgICAgICAgICAgIEhvdyB3ZWxsIGlzIHRoZSBzeXN0ZW0gZG9jdW1lbnRlZD8g
+SG93IGVhc3kgaXMgaXQgdG8KPj4gc2NtPiAgICAgICAgICAgICAgICAgZ2V0IHN0YXJ0ZWQgdXNp
+bmcgaXQ/Cj4+IHNjbT4gICAgICAgICAgICAgPC9leHBsPgo+PiBzY20+ICAgICAgICAgICAgIDxj
+b21wYXJlPgo+PiBzY20+ICAgICAgICAgICAgICAgICA8cyBpZD0iZ2l0Ij4KPj4gc2NtPiAgICAg
+ICAgICAgICAgICAgICAgIE1lZGl1bS4gVGhlIHNob3J0IGhlbHAgaXMgdG9vIHRlcnNlIGFuZCBv
+YnNjdXJlLgo+PiBzY20+ICAgICAgICAgICAgICAgICAgICAgVGhlIG1hbiBwYWdlcyBhcmUgZXh0
+ZW5zaXZlLCBidXQgdGVuZCB0byBiZSBjb25mdXNpbmcuCj4+IHNjbT4gICAgICAgICAgICAgICAg
+ICAgICBUaGUgYXJlIG1hbnkgdHV0b3JpYWxzLgo+PiBzY20+ICAgICAgICAgICAgICAgICA8L3M+
+Cj4+IHNjbT4gICAgICAgICAgICAgPC9jb21wYXJlPgo+PiBzY20+ICAgICAgICAgPC9zZWN0aW9u
+Pgo+Pgo+PiBUaGF0IG9mIGNvdXJzZSBkZXBlbmRzIG9uIHlvdXIgb3Bpbmlvbi4gIEkgd291bGQg
+c2F5ICJHb29kIiwgbm93IHRoYXQKPj4gdGhlcmUgaXMgIkdpdCBVc2VyJ3MgTWFudWFsIiBkaXN0
+cmlidXRlZCB3aXRoIEdpdCwgYW5kIG5vdyB0aGF0IHRoZXJlCj4+IHN0YXJ0ZWQgc2VtaS1vZmZp
+Y2lhbCAiR2l0IENvbW11bml0eSBCb29rIiAoaHR0cDovL2Jvb2suZ2l0LXNjbS5jb20pLgo+Cj4g
+SW50ZXJlc3RpbmcgdGhhdCB2ZXJzaW9uY29udHJvbGJsb2csIHdoaWNoLCBpZiBJIGFtIG5vdCBt
+aXN0YWtlbiwgaXMKPiBBbGV4ZXkncyBzaXRlLCBzdGF0ZXMgZm9yIEdpdCBEb2N1bWVudGF0aW9u
+Ogo+Cj4gfCBHb29kLiBUaGVyZSBpcyBleHRlbnNpdmUgZG9jdW1lbnRhdGlvbiBmb3IgZXZlcnkg
+Y29tbWFuZCwgYW5kIG1hbnkKPiB8IHR1dG9yaWFscy4KPgo+IGh0dHA6Ly93d3cudmVyc2lvbmNv
+bnRyb2xibG9nLmNvbS9jb21wYXJpc29uL0dpdC9pbmRleC5odG1sCj4KPiBTbywgSSBhbSBub3Qg
+c3VyZSB3ZXJlIHRoZSB3b3JkICJNZWRpdW0iIGNhbWUgZnJvbS4KPgo+Cj4gRG1pdHJ5Cj4KCgoK
+LS0gCtCQ0LvQtdC60YHQtdC5INCc0LDRhdC+0YLQutC40L0KaHR0cDovL3NxdWFkZXR0ZS5ydS8K
