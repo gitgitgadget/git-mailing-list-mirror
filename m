@@ -1,224 +1,114 @@
-From: =?utf-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-	<pclouds@gmail.com>
-Subject: [PATCH 16/16] ls-files: add --overlay option
-Date: Sun, 14 Sep 2008 20:08:05 +0700
-Message-ID: <1221397685-27715-17-git-send-email-pclouds@gmail.com>
-References: <1221397685-27715-1-git-send-email-pclouds@gmail.com>
- <1221397685-27715-2-git-send-email-pclouds@gmail.com>
- <1221397685-27715-3-git-send-email-pclouds@gmail.com>
- <1221397685-27715-4-git-send-email-pclouds@gmail.com>
- <1221397685-27715-5-git-send-email-pclouds@gmail.com>
- <1221397685-27715-6-git-send-email-pclouds@gmail.com>
- <1221397685-27715-7-git-send-email-pclouds@gmail.com>
- <1221397685-27715-8-git-send-email-pclouds@gmail.com>
- <1221397685-27715-9-git-send-email-pclouds@gmail.com>
- <1221397685-27715-10-git-send-email-pclouds@gmail.com>
- <1221397685-27715-11-git-send-email-pclouds@gmail.com>
- <1221397685-27715-12-git-send-email-pclouds@gmail.com>
- <1221397685-27715-13-git-send-email-pclouds@gmail.com>
- <1221397685-27715-14-git-send-email-pclouds@gmail.com>
- <1221397685-27715-15-git-send-email-pclouds@gmail.com>
- <1221397685-27715-16-git-send-email-pclouds@gmail.com>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: Git User's Survey 2008 partial summary, part 5 - other SCM
+Date: Sun, 14 Sep 2008 15:32:56 +0200
+Message-ID: <200809141532.58164.jnareb@gmail.com>
+References: <200809031607.19722.jnareb@gmail.com> <200809112214.18366.jnareb@gmail.com> <fcaeb9bf0809140345n11d41430ma9b4096c66776b0c@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: =?utf-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-	<pclouds@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Sep 14 15:11:30 2008
+Content-Type: text/plain;
+  charset="utf-8"
+Content-Transfer-Encoding: 8BIT
+Cc: git@vger.kernel.org
+To: "Nguyen Thai Ngoc Duy" <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Sep 14 15:34:21 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KerNs-00069e-JB
-	for gcvg-git-2@gmane.org; Sun, 14 Sep 2008 15:11:25 +0200
+	id 1Kerk3-0002O2-4z
+	for gcvg-git-2@gmane.org; Sun, 14 Sep 2008 15:34:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754270AbYINNKT convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 14 Sep 2008 09:10:19 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754269AbYINNKT
-	(ORCPT <rfc822;git-outgoing>); Sun, 14 Sep 2008 09:10:19 -0400
-Received: from wf-out-1314.google.com ([209.85.200.170]:21050 "EHLO
-	wf-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754270AbYINNKR (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 14 Sep 2008 09:10:17 -0400
-Received: by wf-out-1314.google.com with SMTP id 27so1590748wfd.4
-        for <git@vger.kernel.org>; Sun, 14 Sep 2008 06:10:17 -0700 (PDT)
+	id S1753950AbYINNdK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 14 Sep 2008 09:33:10 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754109AbYINNdK
+	(ORCPT <rfc822;git-outgoing>); Sun, 14 Sep 2008 09:33:10 -0400
+Received: from ey-out-2122.google.com ([74.125.78.24]:16578 "EHLO
+	ey-out-2122.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753472AbYINNdJ convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 14 Sep 2008 09:33:09 -0400
+Received: by ey-out-2122.google.com with SMTP id 6so720316eyi.37
+        for <git@vger.kernel.org>; Sun, 14 Sep 2008 06:33:07 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:received:from:to:cc:subject
-         :date:message-id:x-mailer:in-reply-to:references:mime-version
-         :content-type:content-transfer-encoding;
-        bh=vky8EDdKRZQVOIQlhXQvFxel9A1pYHeGYAmvWeS24K8=;
-        b=NBDUzVU8wi9OkOKL50L/Bc/2I7/QMIoqjSAcxSNoL8SeKO74PF8OFECIBNaI8M0sY7
-         kLrWwE7dAmiAViErCE8MAsWZlgOvtO05h8NsL15UdhxmN2J5LemFQsnE06FW98kN2t4j
-         jNxFOGg/CjWli3Qxt8X6TVO4jbWc7HxGNDmAg=
+        h=domainkey-signature:received:received:from:to:subject:date
+         :user-agent:cc:references:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:message-id;
+        bh=GeEl8iWURrQLocIfrU1Gm0BMLDHni61UjXiUrGGY0TQ=;
+        b=TgCUqLOO0Su4OOJEnZREVEXYCT5+rSXsww6GCfFvSX+l7kxnbayYT6yChuYwIcg3We
+         uMWmVpYw3mO/gWvBVVqssoPrIyK0MX3hUWBzcBnrfBSgS+QsFIC1oAJnIwOa0meggC0N
+         Mhnh4Ct1RwWG9XQS69tqqmHfwRRQ2JPmuwixU=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references
-         :mime-version:content-type:content-transfer-encoding;
-        b=xUeSAEqnRjN2BG06n/SoPp2X1KMRsMAly8lAPaGC/2F+YHvdD1/Lhd+7RrC4aXWRE2
-         MuacLoBSsrzVbauy8c7a50IDG480HQyDFKXqUFtFdXcouJZXAGQY1w32Re+lvIEUHuvp
-         kQkfpQsb6uXbF9E/DVtJfPUYfHQn2wUSIxYJw=
-Received: by 10.142.185.13 with SMTP id i13mr2255960wff.219.1221397817184;
-        Sun, 14 Sep 2008 06:10:17 -0700 (PDT)
-Received: from pclouds@gmail.com ( [117.5.40.147])
-        by mx.google.com with ESMTPS id 28sm19633922wfd.4.2008.09.14.06.10.13
+        h=from:to:subject:date:user-agent:cc:references:in-reply-to
+         :mime-version:content-type:content-transfer-encoding
+         :content-disposition:message-id;
+        b=gdEPb2NbAvZiUsG5VPrS8nnG798JHSM2rupRkNV7OiWEanqLEbEUvl3xQ2dUmn7dN7
+         Eb2nuxwUOC68hQxmY38voLpaTjDrLebv6wXDFJ6THcksWGoV9UhKtW9t4fweiPWdbG2A
+         sTzDII+bRLr1+VODmptR9w3GW3vSuGej3QK7M=
+Received: by 10.103.201.12 with SMTP id d12mr4599816muq.36.1221399186792;
+        Sun, 14 Sep 2008 06:33:06 -0700 (PDT)
+Received: from ?192.168.1.11? ( [83.8.251.193])
+        by mx.google.com with ESMTPS id u9sm27644985muf.9.2008.09.14.06.33.02
         (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Sun, 14 Sep 2008 06:10:15 -0700 (PDT)
-Received: by pclouds@gmail.com (sSMTP sendmail emulation); Sun, 14 Sep 2008 20:10:09 +0700
-X-Mailer: git-send-email 1.6.0.96.g2fad1.dirty
-In-Reply-To: <1221397685-27715-16-git-send-email-pclouds@gmail.com>
+        Sun, 14 Sep 2008 06:33:05 -0700 (PDT)
+User-Agent: KMail/1.9.3
+In-Reply-To: <fcaeb9bf0809140345n11d41430ma9b4096c66776b0c@mail.gmail.com>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/95843>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/95844>
 
-Narrow checkout mode introduces an interesting case: some files
-are not to be checked out (marked CE_NO_CHECKOUT in index) but still
-exist in working directory. Those files will be ignored by Git unless
-explicitly specified. In Clearcase, these files are called "eclipsed".
-I would call them "overlay" for now. Any better term is welcome.
+On Sun, 14 Sep 2008, Nguyen Thai Ngoc Duy wrote:
+> On 9/12/08, Jakub Narebski <jnareb@gmail.com> wrote:
+> >
+> >  15) Do you miss features in git that you know from other SCMs?
+> >     If yes, what features are these (and from which SCM)?
+> >     (Open ended text - Essay)
+> >
+> >  Total respondents       1046 (some/many of them wrote 'no')
+> >  skipped this question   1249
+> >
+> >  This is just a very quick summary, based on a first few pages of
+> >  responses, Full analysis is I think best left for after closing the
+> >  survey, because I think this would be a lot of work...
+> >
+> >  So here is preliminary list, or rather beginning of one:
+> >   * sparse/partial checkout and clone (e.g. Perforce)
+> 
+> Have not read the survey result, but do you recall what is the most
+> used term for sparse/partial checkout? What SCMs do sparse/partial
+> checkout? I think it could be usable as it is now in my
+> will-be-sent-again series, but I don't really know how people want it
+> to from that.
 
-The same situation happens for "assume unchanged" bit, but I would
-expect narrow checkout to be more user-friendly and should notify users
-these cases so users will not be confused. On this first step, users
-may check by themselves with "git ls-files --overlay", further steps
-may make the information visible from "git status".
+Well, I do not remember, and I think I haven't got original data now,
+only the above summary.  Besides, I haven't even began analysing data
+from question 34. about ideas for features, and I guess we would see
+'partial checkou' ide there too.
 
-Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
-=2Ecom>
----
- Documentation/git-ls-files.txt |    4 ++++
- builtin-ls-files.c             |   16 +++++++++++++---
- t/t2104-update-index-narrow.sh |    4 ++++
- 3 files changed, 21 insertions(+), 3 deletions(-)
+>From short discussion on #git channel, Abhijit Menon-Sen (crab) said
+that they are 'restricted views' in Perforce, but this terminology is
+completly alien to Git.  Bjorn Steinbrink (doener_) mentioned that
+Subversion 1.5 acquired something they call 'sparse directories':
 
-diff --git a/Documentation/git-ls-files.txt b/Documentation/git-ls-file=
-s.txt
-index 4f5a37e..9e749ef 100644
---- a/Documentation/git-ls-files.txt
-+++ b/Documentation/git-ls-files.txt
-@@ -56,6 +56,9 @@ OPTIONS
- --stage::
- 	Show staged contents' object name, mode bits and stage number in the =
-output.
-=20
-+--overlay::
-+	Show files that are marked no-checkout but exist in working directory=
-=2E
-+
- --directory::
- 	If a whole directory is classified as "other", show just its
- 	name (with a trailing slash) and not its whole contents.
-@@ -122,6 +125,7 @@ OPTIONS
- 	R::	removed/deleted
- 	C::	modified/changed
- 	K::	to be killed
-+	!::	overlay files
- 	?::	other
-=20
- -v::
-diff --git a/builtin-ls-files.c b/builtin-ls-files.c
-index f48a157..6e55207 100644
---- a/builtin-ls-files.c
-+++ b/builtin-ls-files.c
-@@ -20,6 +20,7 @@ static int show_others;
- static int show_stage;
- static int show_unmerged;
- static int show_modified;
-+static int show_overlay;
- static int show_killed;
- static int show_valid_bit;
- static int narrow_checkout;
-@@ -39,6 +40,7 @@ static const char *tag_removed =3D "";
- static const char *tag_other =3D "";
- static const char *tag_killed =3D "";
- static const char *tag_modified =3D "";
-+static const char *tag_overlay =3D "";
-=20
-=20
- /*
-@@ -256,7 +258,7 @@ static void show_files(struct dir_struct *dir, cons=
-t char *prefix)
- 			show_ce_entry(ce_stage(ce) ? tag_unmerged : tag_cached, ce);
- 		}
- 	}
--	if (show_deleted | show_modified) {
-+	if (show_deleted | show_modified | show_overlay) {
- 		for (i =3D 0; i < active_nr; i++) {
- 			struct cache_entry *ce =3D active_cache[i];
- 			struct stat st;
-@@ -265,6 +267,8 @@ static void show_files(struct dir_struct *dir, cons=
-t char *prefix)
- 			if (excluded(dir, ce->name, &dtype) !=3D dir->show_ignored)
- 				continue;
- 			err =3D lstat(ce->name, &st);
-+			if (show_overlay && ce_no_checkout(ce) && !err)
-+				show_ce_entry(tag_overlay, ce);
- 			if (show_deleted && err && ce_checkout(ce))
- 				show_ce_entry(tag_removed, ce);
- 			if (show_modified && ce_modified(ce, &st, 0))
-@@ -431,7 +435,7 @@ int report_path_error(const char *ps_matched, const=
- char **pathspec, int prefix_
- }
-=20
- static const char ls_files_usage[] =3D
--	"git ls-files [-z] [-t] [-v] (--[cached|deleted|others|stage|unmerged=
-|killed|modified])* "
-+	"git ls-files [-z] [-t] [-v] (--[cached|deleted|others|stage|unmerged=
-|killed|modified|overlay])* "
- 	"[ --narrow-checkout ] [--narrow-match=3D<narrow_spec>] "
- 	"[ --ignored ] [--exclude=3D<pattern>] [--exclude-from=3D<file>] "
- 	"[ --exclude-per-directory=3D<filename> ] [--exclude-standard] "
-@@ -466,6 +470,7 @@ int cmd_ls_files(int argc, const char **argv, const=
- char *prefix)
- 			tag_modified =3D "C ";
- 			tag_other =3D "? ";
- 			tag_killed =3D "K ";
-+			tag_overlay =3D "! ";
- 			if (arg[1] =3D=3D 'v')
- 				show_valid_bit =3D 1;
- 			continue;
-@@ -491,6 +496,11 @@ int cmd_ls_files(int argc, const char **argv, cons=
-t char *prefix)
- 			require_work_tree =3D 1;
- 			continue;
- 		}
-+		if (!strcmp(arg, "--overlay")) {
-+			show_overlay =3D 1;
-+			require_work_tree =3D 1;
-+			continue;
-+		}
- 		if (!strcmp(arg, "-o") || !strcmp(arg, "--others")) {
- 			show_others =3D 1;
- 			require_work_tree =3D 1;
-@@ -610,7 +620,7 @@ int cmd_ls_files(int argc, const char **argv, const=
- char *prefix)
-=20
- 	/* With no flags, we default to showing the cached files */
- 	if (!(show_stage | show_deleted | show_others | show_unmerged |
--	      show_killed | show_modified))
-+	      show_killed | show_modified | show_overlay))
- 		show_cached =3D 1;
-=20
- 	if (narrow_checkout && !show_cached && !show_stage)
-diff --git a/t/t2104-update-index-narrow.sh b/t/t2104-update-index-narr=
-ow.sh
-index 1a3acdd..79da418 100755
---- a/t/t2104-update-index-narrow.sh
-+++ b/t/t2104-update-index-narrow.sh
-@@ -31,6 +31,10 @@ test_expect_success 'ls-files --deleted ignores no-c=
-heckout entries' '
- 	touch 1
- '
-=20
-+test_expect_success 'there are overlay entries' '
-+	test "$(git ls-files --overlay|grep 1|wc -l)" =3D 2
-+'
-+
- test_expect_success 'update-index --checkout' '
- 	git update-index --checkout 1 sub/1 &&
- 	test "$(git ls-files)" =3D "$(git ls-files --narrow-checkout)"'
---=20
-1.6.0.96.g2fad1.dirty
+  http://blogs.open.collab.net/svn/2007/06/sparse-director.html
+
+(Sidenote: perhaps it would be worth to follow SVN UI for sparse 
+checkout here?).  In short, people on #git agreed that 'partial 
+checkout' is a good name; I think that 'sparse checkout' better renders 
+idea that one can checkout _set_ of files and directories, and it is 
+not only limited to single subdirectory ('subtree checkout' / 
+'subdirectory checkout') or a single file.
+
+Comparison table on Better SCM Initiative
+
+  http://better-scm.berlios.de/comparison/comparison.html
+
+names it "Ability to Work only on One Directory of the Repository" and 
+uses '"work_on_dir"' id.
+
+HTH
+-- 
+Jakub Narebski
+Poland
