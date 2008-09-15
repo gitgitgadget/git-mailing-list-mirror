@@ -1,71 +1,173 @@
-From: "Michael Wookey" <michaelwookey@gmail.com>
-Subject: Re: git-clone: path or ssh problem with git-upload-pack in 1.6.0?
-Date: Tue, 16 Sep 2008 08:39:47 +1000
-Message-ID: <d2e97e800809151539n1a074718h5c322ae757b65551@mail.gmail.com>
-References: <d3a045300809091929h18c3c447gb3d4e79131f66986@mail.gmail.com>
+From: Sergio Callegari <sergio.callegari@gmail.com>
+Subject: Management of opendocument (openoffice.org) files in git
+Date: Mon, 15 Sep 2008 22:40:01 +0000 (UTC)
+Message-ID: <loom.20080915T222909-709@post.gmane.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain; charset=us-ascii
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: "Paul Johnston" <pcj127@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Sep 16 00:41:17 2008
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Sep 16 00:41:33 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KfMku-0002uG-NB
-	for gcvg-git-2@gmane.org; Tue, 16 Sep 2008 00:41:17 +0200
+	id 1KfMlA-0002yY-MF
+	for gcvg-git-2@gmane.org; Tue, 16 Sep 2008 00:41:33 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756091AbYIOWjv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 15 Sep 2008 18:39:51 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755575AbYIOWjv
-	(ORCPT <rfc822;git-outgoing>); Mon, 15 Sep 2008 18:39:51 -0400
-Received: from gv-out-0910.google.com ([216.239.58.187]:61821 "EHLO
-	gv-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753537AbYIOWju (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 15 Sep 2008 18:39:50 -0400
-Received: by gv-out-0910.google.com with SMTP id e6so1205565gvc.37
-        for <git@vger.kernel.org>; Mon, 15 Sep 2008 15:39:49 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to
-         :subject:cc:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:references;
-        bh=MLewQUOvDONd5xTlVjnOCxi+EkMhorV3s8jgx21fP8c=;
-        b=mlsdP30ofkCTcQ+5lGjkd+JmLZu8Vu+gwyviSKFDUOFP3i+/NN+9RkPSfr87Gd2LOQ
-         kAK50PhYsdmhquhQpXWEIUdd/IafYQ9i12an8pbkQCxfCOkVWR3rzCrZW6WrISqLwRGc
-         1q8/y2l3Cz6z6/204ZX7YhtYgpgQNJxSK/9MU=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
-         :content-type:content-transfer-encoding:content-disposition
-         :references;
-        b=IUcHjtb4CoX6qjkMuzZBmxvBoZOQiCdn9yck8qw+nSI/db+0LQlXkDXOLmNOOC0o1d
-         /sCGBQVatT/vklt08AI8jebRUvH80kHnO3AXzU4cnpvod6KOAquBGXm6ZLhwklQztnR8
-         NbguZ84pH8gDRJdwN9yuIpP/OvImhqkoAf4mI=
-Received: by 10.103.222.12 with SMTP id z12mr169128muq.12.1221518388654;
-        Mon, 15 Sep 2008 15:39:48 -0700 (PDT)
-Received: by 10.103.134.19 with HTTP; Mon, 15 Sep 2008 15:39:47 -0700 (PDT)
-In-Reply-To: <d3a045300809091929h18c3c447gb3d4e79131f66986@mail.gmail.com>
-Content-Disposition: inline
+	id S1756016AbYIOWkO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 15 Sep 2008 18:40:14 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755575AbYIOWkO
+	(ORCPT <rfc822;git-outgoing>); Mon, 15 Sep 2008 18:40:14 -0400
+Received: from main.gmane.org ([80.91.229.2]:34574 "EHLO ciao.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1756093AbYIOWkM (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 15 Sep 2008 18:40:12 -0400
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1KfMjo-0000hC-VB
+	for git@vger.kernel.org; Mon, 15 Sep 2008 22:40:09 +0000
+Received: from c-71-197-224-64.hsd1.wa.comcast.net ([71.197.224.64])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Mon, 15 Sep 2008 22:40:08 +0000
+Received: from sergio.callegari by c-71-197-224-64.hsd1.wa.comcast.net with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Mon, 15 Sep 2008 22:40:08 +0000
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@ger.gmane.org
+X-Gmane-NNTP-Posting-Host: main.gmane.org
+User-Agent: Loom/3.14 (http://gmane.org/)
+X-Loom-IP: 71.197.224.64 (Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.8.1.16) Gecko/20080715 Ubuntu/7.10 (gutsy) Firefox/2.0.0.16)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/95950>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/95951>
 
-> I'm having trouble with git-clone and I'm wondering if there's
-> something I'm doing wrong or something wrong with git.  Probably the
-> former, hopefully someone can set me straight.
->
-> I'm an admittedly novice git user. I'm trying to clone a repository
-> over ssh. The host machine 'imac' is my mac osx 10.4 with git 1.6.0
-> installed from a macports package.  This installs into /opt/local/bin.
-> I also cloned git from HEAD and 'make; make install'ed into ~/bin,
-> this is the version shown below.  Either way, these are
-> nonstandard/non-system-wide installation locations, and it requires
-> that my shell PATH reflect this, obviously.
+Hi,
 
-The following might help..
+Management of opendocument files in git has been discussed a short time ago.
+Here is an helper script that may help achieving better density in git packs
+containg blobs from openoffice files.
 
-http://marc.info/?l=git&m=121378876831164&w=2
+To try it, save the following as "rezip" with execution permission:
+
+-----8<----------------------- 
+
+#! /bin/bash
+#
+# (c) 2008 Sergio Callegari
+#
+# Rewrites a zip archive, possibly changing the compression level
+
+USAGE='Usage: rezip [options] [file]
+with options:
+  [-h | --help]            Gives help
+  [-p ?]                   Lists known profiles
+  [--unzip_opts options]   Pass options to unzip helper to read zip file
+  [--zip_opts options]     Pass options to zip helper to write zip file
+  [-p | --profile profile] Get options for helpers from profile
+
+Rewrites a zip archive, possibily changing the compression level.
+If the archive name is unspecified, then the command operates like a filter,
+reading from standard input and writing to standard output.
+Options can be manually provided to the unzip process doing the read and to
+the zip process doing the write. Alternatively a profile can be used to set
+options automatically.'
+
+PROFILES="ODF_UNCOMPRESS ODF_COMPRESS"
+
+PROFILE_UNZIP_ODF_UNCOMPRESS='-b -qq -X'
+PROFILE_ZIP_ODF_UNCOMPRESS='-q -r -D -0'
+PROFILE_UNZIP_ODF_COMPRESS='-b -qq -X'
+PROFILE_ZIP_ODF_COMPRESS='-q -r -D -6'
+
+die()
+{
+    echo "$1" >&$2
+    exit $3
+}
+
+UNZIP_OPTS=""
+ZIP_OPTS=""
+
+while true ; do
+    case "$1" in
+        -h | --help)
+            die "$USAGE" 1 0 ;;
+        -p | --profile)
+            if [ "$2" = "?" ] ; then
+                die "Avalilable profiles: ${PROFILES}" 1 0 ;
+            else
+                profile=$2
+                shift
+                profile_unzip=PROFILE_UNZIP_${profile}
+                profile_zip=PROFILE_ZIP_${profile}
+                UNZIP_OPTS=${!profile_unzip}
+                ZIP_OPTS=${!profile_zip}
+            fi ;;
+        --unzip_opts)
+            UNZIP_OPTS=${UNZIP_OPTS} $2
+            shift ;;
+        --zip_opts)
+            ZIP_OPTS=${ZIP_OPTS} $2
+            shift ;;
+        -*)
+            die "$USAGE" 2 1 ;;
+        *)
+            break ;;
+    esac
+    shift
+done
+
+if [ $# = 0 ] ; then
+    tmpcopy=$(mktemp rezip.zip.XXXXXX)
+    cat > $tmpcopy
+    filename="$tmpcopy"
+else
+    tmpcopy=""
+    filename="$1"
+fi
+
+workdir=$(mktemp -d -t rezip.workdir.XXXXXX)
+curdir=$(pwd)
+
+cd $workdir
+unzip $UNZIP_OPTS "$curdir/$filename"
+zip $ZIP_OPTS "$curdir/$filename" .
+cd $curdir
+rm -fr $workdir
+if [ ! -z "$tmpcopy" ] ; then
+  cat $filename
+  rm $tmpcopy
+fi
+
+--------8<------------------------
+
+then put in your .git/config something like
+
+[filter "opendocument"]
+        clean = "rezip -p ODF_UNCOMPRESS"
+        smudge = "rezip -p ODF_COMPRESS"
+
+and finally set gitattributes as
+
+*.odt filter=opendocument
+*.ods filter=opendocument
+*.odp filter=opendocument
+
+Note:
+   with this you might experience some delay on operations like
+git status
+git add
+git commit -a
+git checkout
+
+depending on the size of the opendocument files being tracked.
+
+Before using on anything sensitive, please test that it does what it should.
+
+The script should probably be made more robust against unexpected situations.
+
+Hope it can be useful to someone.
+
+Sergio
