@@ -1,111 +1,118 @@
-From: "Lars Hjemli" <hjemli@gmail.com>
-Subject: Re: CGit and repository list
-Date: Tue, 16 Sep 2008 00:04:01 +0200
-Message-ID: <8c5c35580809151504r24e1b067ye0a085ad9e128bfb@mail.gmail.com>
-References: <19449377.post@talk.nabble.com>
-	 <20080912145804.GF10544@machine.or.cz>
-	 <8c5c35580809120810s69e8ec4fnf2a629d4cf575901@mail.gmail.com>
-	 <200809121812.40920.johan@herland.net>
-	 <20080912224817.GF10360@machine.or.cz>
-	 <8c5c35580809121620x2de1828cq498b3709f7b0bd1b@mail.gmail.com>
-	 <20080913194938.GI10360@machine.or.cz>
+From: Jeff King <peff@peff.net>
+Subject: Re: Diff-tree does not work for initial commit
+Date: Mon, 15 Sep 2008 18:34:43 -0400
+Message-ID: <20080915223442.GD20677@sigill.intra.peff.net>
+References: <3665a1a00809151301p7d8e6387g3cacfb879b45da2f@mail.gmail.com> <48CECA42.1050209@drmicha.warpmail.net> <bd6139dc0809151411p49f5adeaq4beff452574ca980@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: "Johan Herland" <johan@herland.net>, git@vger.kernel.org,
-	"Jakub Narebski" <jnareb@gmail.com>,
-	"=?UTF-8?Q?Kristian_H=C3=B8gsberg?=" <hoegsberg@gmail.com>
-To: "Petr Baudis" <pasky@suse.cz>
-X-From: git-owner@vger.kernel.org Tue Sep 16 00:05:56 2008
+Content-Type: text/plain; charset=utf-8
+Cc: Michael J Gruber <git@drmicha.warpmail.net>,
+	Anatol Pomozov <anatol.pomozov@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>
+To: sverre@rabbelier.nl
+X-From: git-owner@vger.kernel.org Tue Sep 16 00:36:06 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KfMC3-0001Fn-Iu
-	for gcvg-git-2@gmane.org; Tue, 16 Sep 2008 00:05:48 +0200
+	id 1KfMfs-0001ea-BT
+	for gcvg-git-2@gmane.org; Tue, 16 Sep 2008 00:36:04 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754139AbYIOWEG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 15 Sep 2008 18:04:06 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754087AbYIOWEF
-	(ORCPT <rfc822;git-outgoing>); Mon, 15 Sep 2008 18:04:05 -0400
-Received: from wf-out-1314.google.com ([209.85.200.173]:41461 "EHLO
-	wf-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752915AbYIOWEC (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 15 Sep 2008 18:04:02 -0400
-Received: by wf-out-1314.google.com with SMTP id 27so2224958wfd.4
-        for <git@vger.kernel.org>; Mon, 15 Sep 2008 15:04:02 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to
-         :subject:cc:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:references;
-        bh=aeltihQW/YnDnSxvxpPUFF6SkZTnLTiOrCo6u8DCUgQ=;
-        b=KtcutHc3M5R9MP21sIC44oUlTxZcbmJahlrax9kjnefI6vsyLKkXGvGo7AUht3LZXr
-         cK1IAaq55jLnSOakQzp1SRssCpn9AQprIbWI4kaRWvA+9gdAokjm0QvU5TwuPNZze/s3
-         sL+emkG7pt86VmGXhm3QYMU6KM8jUNh6yVuMs=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
-         :content-type:content-transfer-encoding:content-disposition
-         :references;
-        b=gye91nZcqDG/WvsOzUSdDUOzZYnLAarV9tKSitRwg/Z/YTBOsaQ/QunKhbdhrNAD7B
-         zD2qT4OotRgw0KuUgGXc4VMMS08nsxaQsSnjAwrsYkjJNeTDItkH2m5JJcMK37y3ly3u
-         6GaGndJGQetbyhkGZ8aUt5dRvapt84Yj7yGtQ=
-Received: by 10.114.66.2 with SMTP id o2mr132438waa.83.1221516241588;
-        Mon, 15 Sep 2008 15:04:01 -0700 (PDT)
-Received: by 10.114.166.20 with HTTP; Mon, 15 Sep 2008 15:04:01 -0700 (PDT)
-In-Reply-To: <20080913194938.GI10360@machine.or.cz>
+	id S1757209AbYIOWev (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 15 Sep 2008 18:34:51 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757196AbYIOWeu
+	(ORCPT <rfc822;git-outgoing>); Mon, 15 Sep 2008 18:34:50 -0400
+Received: from peff.net ([208.65.91.99]:3156 "EHLO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1757182AbYIOWet (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 15 Sep 2008 18:34:49 -0400
+Received: (qmail 18735 invoked by uid 111); 15 Sep 2008 22:34:48 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.32) with ESMTP; Mon, 15 Sep 2008 18:34:48 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 15 Sep 2008 18:34:43 -0400
 Content-Disposition: inline
+In-Reply-To: <bd6139dc0809151411p49f5adeaq4beff452574ca980@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/95948>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/95949>
 
-On Sat, Sep 13, 2008 at 9:49 PM, Petr Baudis <pasky@suse.cz> wrote:
-> On Sat, Sep 13, 2008 at 01:20:50AM +0200, Lars Hjemli wrote:
->> I guess I could add support for something like
->>
->>   scan-paths=/pub/git
->>
->> in cgitrc (and optionally store the result of the scan as another
->> cgitrc-file in the cache directory). Would that improve things for
->> you?
->
-> Yes, certainly.
+On Mon, Sep 15, 2008 at 11:11:30PM +0200, Sverre Rabbelier wrote:
 
-Ok, for now I've added a --scan-tree=<path> commandline option which
-will make cgit print a sorted list of the repositories found to
-stdout. If/when this does a reasonable job on repo.or.cz I can look
-into some form of automatic rescanning (enabled from cgitrc).
+> Some of my code uses "git rev-parse" on "HEAD^" to see if a commit has
+> a parent; I wouldn't be surprised if someone else has a script that
+> uses "git diff-tree" or such for that purpose, or at least assumes
+> that for a root commit it will complain. Anyway, as Junio said, for
+> "diff-tree" you can use the "--root" option. A better RFE would
+> perhaps be that "--root" be supported in more places.
 
+I posted this a week or so ago, but I am sure it is incomplete. If there
+is interest I can clean it up and do a proper submission.
 
->> > Unfortunately, the recommended RewriteRule is not working - it does not
->> > play well together with query parameters cgit is using, so e.g. browsing
->> > past commits does not work.
-
-I've also pushed support for PATH_INFO. This allows you to drop the
-rewriterules from httpd.conf and the 'virtual-url' option from cgitrc
-and still get the 'nice' urls.
-
-
-> I wonder why
->
->        http://repo.or.cz/c/libc.git/
->
-> has such a funny-looking summary page.
-
-It's due to cgits terrible functions for parsing commits and tags.
-I've pushed a reworked patch which should make the parsing more robust
-and thus also render glibc.git correctly.
-
-Finally, and probably more interesting for freedesktop.org than
-repo.or.cz, is the support for repolist filtering by url prefix
-(compare http://hjemli.net/git and http://hjemli.net/git/xorg for a
-minimal example).
-
-This is all available from the master branch in
-git://hjemli.net/pub/git/cgit, enjoy!
-
---
-larsh
+---
+diff --git a/builtin-diff.c b/builtin-diff.c
+index 76651bd..4151900 100644
+--- a/builtin-diff.c
++++ b/builtin-diff.c
+@@ -332,8 +332,11 @@ int cmd_diff(int argc, const char **argv, const char *prefix)
+ 				break;
+ 			else if (!strcmp(arg, "--cached")) {
+ 				add_head_to_pending(&rev);
+-				if (!rev.pending.nr)
+-					die("No HEAD commit to compare with (yet)");
++				if (!rev.pending.nr) {
++					if (!rev.show_root_diff)
++						die("No HEAD commit to compare with (yet)");
++					add_empty_to_pending(&rev);
++				}
+ 				break;
+ 			}
+ 		}
+diff --git a/revision.c b/revision.c
+index 2f646de..7ec3990 100644
+--- a/revision.c
++++ b/revision.c
+@@ -145,16 +145,27 @@ void add_pending_object(struct rev_info *revs, struct object *obj, const char *n
+ 	add_pending_object_with_mode(revs, obj, name, S_IFINVALID);
+ }
+ 
+-void add_head_to_pending(struct rev_info *revs)
++static void add_to_pending_by_name(struct rev_info *revs, const char *name)
+ {
+ 	unsigned char sha1[20];
+ 	struct object *obj;
+-	if (get_sha1("HEAD", sha1))
++	if (get_sha1(name, sha1))
+ 		return;
+ 	obj = parse_object(sha1);
+ 	if (!obj)
+ 		return;
+-	add_pending_object(revs, obj, "HEAD");
++	add_pending_object(revs, obj, name);
++}
++
++void add_head_to_pending(struct rev_info *revs)
++{
++	add_to_pending_by_name(revs, "HEAD");
++}
++
++void add_empty_to_pending(struct rev_info *revs)
++{
++	add_to_pending_by_name(revs,
++			"4b825dc642cb6eb9a060e54bf8d69288fbee4904");
+ }
+ 
+ static struct object *get_reference(struct rev_info *revs, const char *name, const unsigned char *sha1, unsigned int flags)
+diff --git a/revision.h b/revision.h
+index 2fdb2dd..8c990d5 100644
+--- a/revision.h
++++ b/revision.h
+@@ -152,6 +152,7 @@ extern void add_object(struct object *obj,
+ extern void add_pending_object(struct rev_info *revs, struct object *obj, const char *name);
+ 
+ extern void add_head_to_pending(struct rev_info *);
++extern void add_empty_to_pending(struct rev_info *);
+ 
+ enum commit_action {
+ 	commit_ignore,
