@@ -1,99 +1,78 @@
-From: Dhruva Krishnamurthy <dhruva@ymail.com>
-Subject: [PATCH] Optional shrinking of RCS keywords in git-p4
-Date: Mon, 15 Sep 2008 11:28:51 +0530
-Message-ID: <1221458331-8804-1-git-send-email-dhruva@ymail.com>
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Dhruva Krishnamurthy <dhruva@ymail.com>
-To: GIT SCM <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Mon Sep 15 08:00:29 2008
+From: dhruva <dhruva@ymail.com>
+Subject: Re: [PATCH] Modifying RCS keywords prevents submitting to p4 from git due to missing hunks. Optional shrinking of RCS keywords in git-p4. New option git-p4.kwstrip set to true or false controls the behavior
+Date: Mon, 15 Sep 2008 11:32:54 +0530 (IST)
+Message-ID: <640112.28035.qm@web95015.mail.in2.yahoo.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8BIT
+Cc: GIT SCM <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
+To: sverre@rabbelier.nl
+X-From: git-owner@vger.kernel.org Mon Sep 15 08:04:08 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Kf78P-0004le-0M
-	for gcvg-git-2@gmane.org; Mon, 15 Sep 2008 08:00:29 +0200
+	id 1Kf7Bu-0005HP-M8
+	for gcvg-git-2@gmane.org; Mon, 15 Sep 2008 08:04:07 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751009AbYIOF7T (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 15 Sep 2008 01:59:19 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751123AbYIOF7T
-	(ORCPT <rfc822;git-outgoing>); Mon, 15 Sep 2008 01:59:19 -0400
-Received: from mx2.netapp.com ([216.240.18.37]:28916 "EHLO mx2.netapp.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750873AbYIOF7T (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 15 Sep 2008 01:59:19 -0400
-X-IronPort-AV: E=Sophos;i="4.32,399,1217833200"; 
-   d="scan'208";a="53852765"
-Received: from smtp2.corp.netapp.com ([10.57.159.114])
-  by mx2-out.netapp.com with ESMTP; 14 Sep 2008 22:59:15 -0700
-Received: from svlexrs01.hq.netapp.com (svlexrs01.corp.netapp.com [10.57.156.158])
-	by smtp2.corp.netapp.com (8.13.1/8.13.1/NTAP-1.6) with ESMTP id m8F5xE86024296;
-	Sun, 14 Sep 2008 22:59:14 -0700 (PDT)
-Received: from exsvlrb02.hq.netapp.com ([10.56.8.63]) by svlexrs01.hq.netapp.com with Microsoft SMTPSVC(6.0.3790.1830);
-	 Sun, 14 Sep 2008 22:59:13 -0700
-Received: from exbtc01.hq.netapp.com ([10.72.128.65]) by exsvlrb02.hq.netapp.com with Microsoft SMTPSVC(6.0.3790.1830);
-	 Sun, 14 Sep 2008 22:59:13 -0700
-Received: from cycl01.eng.btc.netapp.in ([10.72.8.51]) by exbtc01.hq.netapp.com with Microsoft SMTPSVC(6.0.3790.1830);
-	 Mon, 15 Sep 2008 11:29:10 +0530
-Received: from localhost.localdomain (localhost [127.0.0.1])
-	by cycl01.eng.btc.netapp.in (8.13.1/8.13.1) with ESMTP id m8F5wp0H008850;
-	Mon, 15 Sep 2008 11:29:05 +0530
-X-Mailer: git-send-email 1.6.0.1.454.g63d55
-X-OriginalArrivalTime: 15 Sep 2008 05:59:10.0639 (UTC) FILETIME=[2C38CBF0:01C916F8]
+	id S1751229AbYIOGC6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 15 Sep 2008 02:02:58 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751222AbYIOGC6
+	(ORCPT <rfc822;git-outgoing>); Mon, 15 Sep 2008 02:02:58 -0400
+Received: from n2b.bullet.mail.in2.yahoo.com ([203.104.19.41]:39129 "HELO
+	n2b.bullet.mail.in2.yahoo.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with SMTP id S1751187AbYIOGC5 convert rfc822-to-8bit
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 15 Sep 2008 02:02:57 -0400
+Received: from [202.86.4.171] by n2.bullet.mail.in2.yahoo.com with NNFMP; 15 Sep 2008 06:02:54 -0000
+Received: from [203.104.18.52] by t2.bullet.in.yahoo.com with NNFMP; 15 Sep 2008 06:02:54 -0000
+Received: from [127.0.0.1] by omp113.mail.in2.yahoo.com with NNFMP; 15 Sep 2008 06:02:54 -0000
+X-Yahoo-Newman-Property: ymail-3
+X-Yahoo-Newman-Id: 738325.21908.bm@omp113.mail.in2.yahoo.com
+Received: (qmail 28446 invoked by uid 60001); 15 Sep 2008 06:02:54 -0000
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+  s=s1024; d=ymail.com;
+  h=X-YMail-OSG:Received:X-Mailer:Date:From:Subject:To:Cc:MIME-Version:Content-Type:Content-Transfer-Encoding:Message-ID;
+  b=ayw5hiHIo0ON95MDlERgyNcoGkdKoJuwIDyrkQibsYWDwdedHYb8GGQqnng2geue23yGYAsukCNq5YdrMFXU6ioHGu+6ooBXtm7uYnaF07ATy7pHTC+YxbnUu3bHFq/hTamICIchf+LPjztcM78ZLe+MhBTA0asZEcdVswTiQBw=;
+X-YMail-OSG: ZUul4QEVM1l5k0Sj1Z.yHYnxhXjR6F8YGMr_cujgHBL05wZ7Wo_39ysQc_JYN_6Maa2Y4csP6NDnQYAVxMQ8J0eMMmQmu46TTLRqcRJooLVRSoQwDW3jkoQYcbZNRjU-
+Received: from [202.3.112.9] by web95015.mail.in2.yahoo.com via HTTP; Mon, 15 Sep 2008 11:32:54 IST
+X-Mailer: YahooMailRC/1096.28 YahooMailWebService/0.7.218.2
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/95876>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/95877>
 
-Modifying RCS keywords prevents submitting to p4 from git due to missing hunks.
-New option git-p4.kwstrip set to true or false controls the behavior.
+I had a real tough time configuring 'git send-email'. Looks like I finally have something working... I am still finding it tough to handle identity. I am figuring it out now by trial and error (with more errors) basis
 
-Signed-off-by: Dhruva Krishnamurthy <dhruva@ymail.com>
----
- contrib/fast-import/git-p4 |   17 ++++++++++++++++-
- 1 files changed, 16 insertions(+), 1 deletions(-)
+-dhruva
 
-diff --git a/contrib/fast-import/git-p4 b/contrib/fast-import/git-p4
-index 2216cac..ac8b7f7 100755
---- a/contrib/fast-import/git-p4
-+++ b/contrib/fast-import/git-p4
-@@ -16,6 +16,9 @@ from sets import Set;
- 
- verbose = False
- 
-+# Handling of RCS keyowrds. To ensure backward compatibility, the default
-+# is to strip keywords. Default behavior is controlled here
-+kwstrip = True
- 
- def p4_build_cmd(cmd):
-     """Build a suitable p4 command line.
-@@ -975,7 +978,9 @@ class P4Sync(Command):
-                 sys.stderr.write("p4 print fails with: %s\n" % repr(stat))
-                 continue
- 
--            if stat['type'] in ('text+ko', 'unicode+ko', 'binary+ko'):
-+            if not kwstrip:
-+		pass
-+            elif stat['type'] in ('text+ko', 'unicode+ko', 'binary+ko'):
-                 text = re.sub(r'(?i)\$(Id|Header):[^$]*\$',r'$\1$', text)
-             elif stat['type'] in ('text+k', 'ktext', 'kxtext', 'unicode+k', 'binary+k'):
-                 text = re.sub(r'\$(Id|Header|Author|Date|DateTime|Change|File|Revision):[^$]*\$',r'$\1$', text)
-@@ -1850,6 +1855,16 @@ def main():
-         (cmd, args) = parser.parse_args(sys.argv[2:], cmd);
-     global verbose
-     verbose = cmd.verbose
-+
-+    global kwstrip
-+    kwval = gitConfig("git-p4.kwstrip")
-+    if len(kwval) > 0:
-+	kwval = kwval.lower();
-+        if kwval == "false":
-+            kwstrip = False
-+        elif kwval == "true":
-+            kwstrip = True
-+
-     if cmd.needsGit:
-         if cmd.gitdir == None:
-             cmd.gitdir = os.path.abspath(".git")
--- 
-1.6.0.1.454.g63d55
+
+
+----- Original Message ----
+> From: Sverre Rabbelier <alturin@gmail.com>
+> To: Dhruva Krishnamurthy <dhruva@ymail.com>
+> Cc: "GIT SCM <git@vger.kernel.org>, Junio C Hamano" <gitster@pobox.com>
+> Sent: Monday, 15 September, 2008 10:24:37 AM
+> Subject: Re: [PATCH] Modifying RCS keywords prevents submitting to p4 from git due to missing hunks. Optional shrinking of RCS keywords in git-p4. New option git-p4.kwstrip set to true or false controls the behavior
+> 
+> On Mon, Sep 15, 2008 at 06:16, Dhruva Krishnamurthy wrote:
+> >
+> > Signed-off-by: Dhruva Krishnamurthy 
+> 
+> I think something went wrong here, yes? The current title is way too
+> long, and there is no commit message, perhaps you meant to put (part
+> of) the title in the message instead?
+> 
+> "[PATCH] Modifying RCS keywords prevents submitting to p4 from git due
+> to missing hunks. Optional shrinking of RCS keywords in git-p4. New
+> option git-p4.kwstrip set to true or false controls the behavior"
+> 
+> -- 
+> Cheers,
+> 
+> Sverre Rabbelier
+
+
+
+      Unlimited freedom, unlimited storage. Get it now, on http://help.yahoo.com/l/in/yahoo/mail/yahoomail/tools/tools-08..html/
