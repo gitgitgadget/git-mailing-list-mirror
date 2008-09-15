@@ -1,49 +1,99 @@
-From: "Edward Z. Yang" <edwardzyang@thewritingpot.com>
-Subject: Re: git+ssh using 'plink' on windows
-Date: Mon, 15 Sep 2008 00:53:21 -0400
-Message-ID: <48CDEA41.8050308@thewritingpot.com>
-References: <206914.98935.qm@web95012.mail.in2.yahoo.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Sep 15 07:12:02 2008
+From: Dhruva Krishnamurthy <dhruva@ymail.com>
+Subject: [PATCH] Optional shrinking of RCS keywords in git-p4
+Date: Mon, 15 Sep 2008 11:28:51 +0530
+Message-ID: <1221458331-8804-1-git-send-email-dhruva@ymail.com>
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Dhruva Krishnamurthy <dhruva@ymail.com>
+To: GIT SCM <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Mon Sep 15 08:00:29 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Kf6NT-0004T3-10
-	for gcvg-git-2@gmane.org; Mon, 15 Sep 2008 07:11:59 +0200
+	id 1Kf78P-0004le-0M
+	for gcvg-git-2@gmane.org; Mon, 15 Sep 2008 08:00:29 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750873AbYIOFJH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 15 Sep 2008 01:09:07 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750850AbYIOFJG
-	(ORCPT <rfc822;git-outgoing>); Mon, 15 Sep 2008 01:09:06 -0400
-Received: from main.gmane.org ([80.91.229.2]:51919 "EHLO ciao.gmane.org"
+	id S1751009AbYIOF7T (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 15 Sep 2008 01:59:19 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751123AbYIOF7T
+	(ORCPT <rfc822;git-outgoing>); Mon, 15 Sep 2008 01:59:19 -0400
+Received: from mx2.netapp.com ([216.240.18.37]:28916 "EHLO mx2.netapp.com"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750833AbYIOFJF (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 15 Sep 2008 01:09:05 -0400
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1Kf6KX-0006jx-R1
-	for git@vger.kernel.org; Mon, 15 Sep 2008 05:08:57 +0000
-Received: from random-four-twenty-nine.mit.edu ([18.243.6.174])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Mon, 15 Sep 2008 05:08:57 +0000
-Received: from edwardzyang by random-four-twenty-nine.mit.edu with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Mon, 15 Sep 2008 05:08:57 +0000
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@ger.gmane.org
-X-Gmane-NNTP-Posting-Host: random-four-twenty-nine.mit.edu
-User-Agent: Thunderbird 2.0.0.16 (Windows/20080708)
-In-Reply-To: <206914.98935.qm@web95012.mail.in2.yahoo.com>
+	id S1750873AbYIOF7T (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 15 Sep 2008 01:59:19 -0400
+X-IronPort-AV: E=Sophos;i="4.32,399,1217833200"; 
+   d="scan'208";a="53852765"
+Received: from smtp2.corp.netapp.com ([10.57.159.114])
+  by mx2-out.netapp.com with ESMTP; 14 Sep 2008 22:59:15 -0700
+Received: from svlexrs01.hq.netapp.com (svlexrs01.corp.netapp.com [10.57.156.158])
+	by smtp2.corp.netapp.com (8.13.1/8.13.1/NTAP-1.6) with ESMTP id m8F5xE86024296;
+	Sun, 14 Sep 2008 22:59:14 -0700 (PDT)
+Received: from exsvlrb02.hq.netapp.com ([10.56.8.63]) by svlexrs01.hq.netapp.com with Microsoft SMTPSVC(6.0.3790.1830);
+	 Sun, 14 Sep 2008 22:59:13 -0700
+Received: from exbtc01.hq.netapp.com ([10.72.128.65]) by exsvlrb02.hq.netapp.com with Microsoft SMTPSVC(6.0.3790.1830);
+	 Sun, 14 Sep 2008 22:59:13 -0700
+Received: from cycl01.eng.btc.netapp.in ([10.72.8.51]) by exbtc01.hq.netapp.com with Microsoft SMTPSVC(6.0.3790.1830);
+	 Mon, 15 Sep 2008 11:29:10 +0530
+Received: from localhost.localdomain (localhost [127.0.0.1])
+	by cycl01.eng.btc.netapp.in (8.13.1/8.13.1) with ESMTP id m8F5wp0H008850;
+	Mon, 15 Sep 2008 11:29:05 +0530
+X-Mailer: git-send-email 1.6.0.1.454.g63d55
+X-OriginalArrivalTime: 15 Sep 2008 05:59:10.0639 (UTC) FILETIME=[2C38CBF0:01C916F8]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/95875>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/95876>
 
-This mailing list post may be of interest to you:
+Modifying RCS keywords prevents submitting to p4 from git due to missing hunks.
+New option git-p4.kwstrip set to true or false controls the behavior.
 
-http://www.mail-archive.com/msysgit@googlegroups.com/msg00977.html
+Signed-off-by: Dhruva Krishnamurthy <dhruva@ymail.com>
+---
+ contrib/fast-import/git-p4 |   17 ++++++++++++++++-
+ 1 files changed, 16 insertions(+), 1 deletions(-)
+
+diff --git a/contrib/fast-import/git-p4 b/contrib/fast-import/git-p4
+index 2216cac..ac8b7f7 100755
+--- a/contrib/fast-import/git-p4
++++ b/contrib/fast-import/git-p4
+@@ -16,6 +16,9 @@ from sets import Set;
+ 
+ verbose = False
+ 
++# Handling of RCS keyowrds. To ensure backward compatibility, the default
++# is to strip keywords. Default behavior is controlled here
++kwstrip = True
+ 
+ def p4_build_cmd(cmd):
+     """Build a suitable p4 command line.
+@@ -975,7 +978,9 @@ class P4Sync(Command):
+                 sys.stderr.write("p4 print fails with: %s\n" % repr(stat))
+                 continue
+ 
+-            if stat['type'] in ('text+ko', 'unicode+ko', 'binary+ko'):
++            if not kwstrip:
++		pass
++            elif stat['type'] in ('text+ko', 'unicode+ko', 'binary+ko'):
+                 text = re.sub(r'(?i)\$(Id|Header):[^$]*\$',r'$\1$', text)
+             elif stat['type'] in ('text+k', 'ktext', 'kxtext', 'unicode+k', 'binary+k'):
+                 text = re.sub(r'\$(Id|Header|Author|Date|DateTime|Change|File|Revision):[^$]*\$',r'$\1$', text)
+@@ -1850,6 +1855,16 @@ def main():
+         (cmd, args) = parser.parse_args(sys.argv[2:], cmd);
+     global verbose
+     verbose = cmd.verbose
++
++    global kwstrip
++    kwval = gitConfig("git-p4.kwstrip")
++    if len(kwval) > 0:
++	kwval = kwval.lower();
++        if kwval == "false":
++            kwstrip = False
++        elif kwval == "true":
++            kwstrip = True
++
+     if cmd.needsGit:
+         if cmd.gitdir == None:
+             cmd.gitdir = os.path.abspath(".git")
+-- 
+1.6.0.1.454.g63d55
