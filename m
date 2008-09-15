@@ -1,101 +1,134 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: Re: [GSoC] Git projects for Google Summer of Code 2008 final
-	evaluation
-Date: Mon, 15 Sep 2008 07:08:11 -0700
-Message-ID: <20080915140811.GA6320@spearce.org>
-References: <200809042315.58898.jnareb@gmail.com> <200809151413.37628.jnareb@gmail.com> <alpine.DEB.1.00.0809151434280.13830@pacific.mpi-cbg.de.mpi-cbg.de>
+From: "Alexander Gladysh" <agladysh@gmail.com>
+Subject: Re: Git Gui does not want to work on chunk level
+Date: Mon, 15 Sep 2008 18:21:17 +0400
+Message-ID: <c6c947f60809150721m1ec11f10xc68ce39559398659@mail.gmail.com>
+References: <c6c947f60808270216k2feb8f9ar765cdee1fc3910ee@mail.gmail.com>
+	 <c6c947f60809031223i575ca3fdya357588610bb72e8@mail.gmail.com>
+	 <20080903230814.GJ28315@spearce.org>
+	 <c6c947f60809040220t589e65bfkbd693fd335792069@mail.gmail.com>
+	 <20080904143723.GB23708@spearce.org>
+	 <c6c947f60809040754g34e60633lcd5f872ac5e80158@mail.gmail.com>
+	 <20080905045327.GA31166@spearce.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Jakub Narebski <jnareb@gmail.com>, git@vger.kernel.org,
-	Sam Vilain <sam@vilain.net>, Joshua Roys <roysjosh@gmail.com>,
-	Sverre Rabbelier <alturin@gmail.com>,
-	Sverre Rabbelier <sverre@rabbelier.nl>,
-	David Symonds <dsymonds@gmail.com>,
-	Lea Wiemann <LeWiemann@gmail.com>,
-	John Hawley <warthog19@eaglescrag.net>,
-	Marek Zawirski <marek.zawirski@gmail.com>,
-	Miklos Vajna <vmiklos@frugalware.org>,
-	Stephan Beyer <s-beyer@gmx.net>,
-	Christian Couder <chriscool@tuxfamily.org>,
-	Daniel Barkalow <barkalow@iabervon.org>,
-	Junio Hamano <gitster@pobox.com>
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Mon Sep 15 16:09:40 2008
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: git-users@googlegroups.com, git@vger.kernel.org
+To: "Shawn O. Pearce" <spearce@spearce.org>
+X-From: git-owner@vger.kernel.org Mon Sep 15 16:24:02 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KfElX-0006WD-FP
-	for gcvg-git-2@gmane.org; Mon, 15 Sep 2008 16:09:23 +0200
+	id 1KfEyB-0002Kr-Is
+	for gcvg-git-2@gmane.org; Mon, 15 Sep 2008 16:22:28 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753215AbYIOOIO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 15 Sep 2008 10:08:14 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753128AbYIOOIN
-	(ORCPT <rfc822;git-outgoing>); Mon, 15 Sep 2008 10:08:13 -0400
-Received: from george.spearce.org ([209.20.77.23]:56031 "EHLO
-	george.spearce.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752826AbYIOOIN (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 15 Sep 2008 10:08:13 -0400
-Received: by george.spearce.org (Postfix, from userid 1001)
-	id EEDFE3835F; Mon, 15 Sep 2008 14:08:11 +0000 (UTC)
+	id S1753200AbYIOOVT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 15 Sep 2008 10:21:19 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753392AbYIOOVS
+	(ORCPT <rfc822;git-outgoing>); Mon, 15 Sep 2008 10:21:18 -0400
+Received: from wf-out-1314.google.com ([209.85.200.168]:36929 "EHLO
+	wf-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752960AbYIOOVS (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 15 Sep 2008 10:21:18 -0400
+Received: by wf-out-1314.google.com with SMTP id 27so2065085wfd.4
+        for <git@vger.kernel.org>; Mon, 15 Sep 2008 07:21:17 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to
+         :subject:cc:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:references;
+        bh=4SKS0Qo3FBwbZiht523szDiYkZtjeWCytmUFRfkL3tM=;
+        b=pkhE4hLzVNPd2UBMjtPIgqqj5P/M9opGcknqU2vuDE7GDSxeUhOZ8Qzb0hTrV0oZOb
+         uUTSza0etKOrakjsdaWCFkptjzbhWBPVKv7cdh0hx8nd0I3do2Y7Eog7ElcU/TEsRw/b
+         65bwE+wfgy3lWEuy0cK9H58H3ogH7LokGCuys=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
+         :content-type:content-transfer-encoding:content-disposition
+         :references;
+        b=iaOa0d2Nr5u5Uha6pM/yyaVKhTOwIMFG19bpn/tAHjHNStqFUpdEPG0FuUkjZC0+r9
+         6fnzFBvr3mHEPuMyQFOEkiMD6HN0KLwdT/xmWknDl4zCkn21zdWahvz/MFTL+th6s079
+         B+Eag0Cze8vPParxkxiasK2JrTnTyM1aGTeW0=
+Received: by 10.141.106.14 with SMTP id i14mr4809095rvm.178.1221488477392;
+        Mon, 15 Sep 2008 07:21:17 -0700 (PDT)
+Received: by 10.141.48.15 with HTTP; Mon, 15 Sep 2008 07:21:17 -0700 (PDT)
+In-Reply-To: <20080905045327.GA31166@spearce.org>
 Content-Disposition: inline
-In-Reply-To: <alpine.DEB.1.00.0809151434280.13830@pacific.mpi-cbg.de.mpi-cbg.de>
-User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/95910>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/95911>
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
-> On Mon, 15 Sep 2008, Jakub Narebski wrote:
-> > On Thu, 4 Sep 2008, Jakub Narebski wrote:
-> > 
-> > > Mentors, could you tell us your side about how it was working as a 
-> > > mentor for Google Summer of Code? Perhaps some tricks of trade?
-> > 
-> > By the way, I have found via LWN that Perl has written nice summary of 
-> > theirs Google Summer of Code projects[1].  Among other they very much 
-> > praise that students did blogging about their progress:
-...
-> > What do you think about it (for example about doing it in a future
-> > if our informal Git Development Community would participate in next
-> > Google Summer of Code programs)?
-> 
-> I think that it is better to require frequent interaction on the mailing 
-> list, or at least on IRC.
+Hi, list!
 
-I agree with Dscho completely.  We are an email based community.
-Students should be involved by email, not by blogs.  If we were
-the Ruby community (which near as I can tell is blog based) then
-blogging might make more sense.  We're not.  We're an offshoot of
-the Linux community, which is very much email-centric.
+On Fri, Sep 5, 2008 at 8:53 AM, Shawn O. Pearce <spearce@spearce.org> wrote:
 
-> Blogging is nice for those who want to follow the progress of a project, 
-> but do not want to get involved.  In this case, it is even better than 
-> having the people discuss the issues of the project openly, as reading a 
-> blog does not require constant monitoring like the list does.
-> 
-> However, blogging costs time.
+> git-gui: Fix diff parsing for lines starting with "--" or "++"
 
-Exactly.  Email also costs time, but typically we don't see
-traffic on the list that is just broadcasting something pointless.
-In general people only start a topic if there is going to be
-worthwhile discussion attached to it, and often that results in a
-useful patch being applied at some point in the future.  IOW that
-time for email is just necessary in the course of development,
-so it isn't wasted.
+Somewhat related bug, but reproduceable event without "--". If I set
+diff context to none in git gui (by repeatedly clicking "show less
+context") I'm sometimes not able to stage hunk or line.
 
-If the community of semi-interested people really wants blogs to
-read, RSS scrape a news feed like Gmane.  Ohloh already has an
-RSS feed defined around the emails sent to git ML with the subject
-"[ANNOUNCE]".
+git version 1.6.0.GIT
+git-gui version 0.11.GITGUI
 
-I however prefer email, and dislike blogging, so I'll continue
-to use the git ML in the future, and so will any student I mentor
-in any potential future GSoC program.  FWIW I blogged here at new
-day-job on company internal blog for about a half day before I gave
-up and said "damn, that really is stupid".
+Steps to reproduce:
 
--- 
-Shawn.
+agladysh@agladysh-desktop:~$ mkdir test
+agladysh@agladysh-desktop:~$ cd test
+agladysh@agladysh-desktop:~/test$ git init
+Initialized empty Git repository in /home/agladysh/test/.git/
+agladysh@agladysh-desktop:~/test$ cat >file.ext
+-- 1
+-- 2
+-- 3
+-- 4
+-- 5
+agladysh@agladysh-desktop:~/test$ git add file.ext
+agladysh@agladysh-desktop:~/test$ git commit -m "one"
+Created initial commit aa4da16: one
+ 1 files changed, 5 insertions(+), 0 deletions(-)
+ create mode 100644 file.ext
+agladysh@agladysh-desktop:~/test$ cat >file.ext
+-- 1
+-- 2
+-- 33
+-- 4
+-- 5
+agladysh@agladysh-desktop:~/test$ git gui
+
+Reduce context to none, then do stage hunk. It fails with message:
+
+error: patch failed: file.ext:3
+error: file.ext: patch does not apply
+OK
+
+Dump (by your debuging dumper patch from the same tread):
+
+diff --git a/file.ext b/file.ext
+--- a/file.ext
++++ b/file.ext
+@@ -1,5 +1,5 @@
+ -- 1
+ -- 2
+--- 3
++-- 33
+ -- 4
+ -- 5
+
+Do stage line. It fails with message:
+
+fatal: corrupt patch at line 5
+
+Dump:
+
+diff --git a/file.ext b/file.ext
+--- a/file.ext
++++ b/file.ext
+@@ -3 +3 @@
+--- 3
++-- 33
+
+HTH,
+Alexander.
