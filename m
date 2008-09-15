@@ -1,75 +1,89 @@
 From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: [PATCH 14/16] clone: support narrow checkout with --path option
-Date: Mon, 15 Sep 2008 09:40:49 +0200
-Message-ID: <200809150940.50579.jnareb@gmail.com>
-References: <48cdd598c6cd9_12e03ff42d900428232ec@app02.zenbe.com.tmail>
+Subject: Re: [PATCH 10/16] grep: skip files that have not been checked out
+Date: Mon, 15 Sep 2008 09:48:45 +0200
+Message-ID: <200809150948.46139.jnareb@gmail.com>
+References: <48cdd6cb7415e_3c273fa85e999d2827466@app01.zenbe.com.tmail>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-2"
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: git@vger.kernel.org
 To: Duy Nguyen <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Sep 15 09:45:38 2008
+X-From: git-owner@vger.kernel.org Mon Sep 15 09:50:01 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Kf8m7-0005rY-Lg
-	for gcvg-git-2@gmane.org; Mon, 15 Sep 2008 09:45:36 +0200
+	id 1Kf8qO-0006gu-27
+	for gcvg-git-2@gmane.org; Mon, 15 Sep 2008 09:50:00 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752146AbYIOHk5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 15 Sep 2008 03:40:57 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752090AbYIOHk5
-	(ORCPT <rfc822;git-outgoing>); Mon, 15 Sep 2008 03:40:57 -0400
-Received: from gv-out-0910.google.com ([216.239.58.189]:11587 "EHLO
-	gv-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752018AbYIOHk4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 15 Sep 2008 03:40:56 -0400
-Received: by gv-out-0910.google.com with SMTP id e6so966250gvc.37
-        for <git@vger.kernel.org>; Mon, 15 Sep 2008 00:40:55 -0700 (PDT)
+	id S1752283AbYIOHsx convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 15 Sep 2008 03:48:53 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752112AbYIOHsx
+	(ORCPT <rfc822;git-outgoing>); Mon, 15 Sep 2008 03:48:53 -0400
+Received: from mail-gx0-f16.google.com ([209.85.217.16]:60436 "EHLO
+	mail-gx0-f16.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751884AbYIOHsw (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 15 Sep 2008 03:48:52 -0400
+Received: by gxk9 with SMTP id 9so24219375gxk.13
+        for <git@vger.kernel.org>; Mon, 15 Sep 2008 00:48:51 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:received:received:from:to:subject:date
          :user-agent:cc:references:in-reply-to:mime-version:content-type
          :content-transfer-encoding:content-disposition:message-id;
-        bh=RRxINXBY0rE3sTMdECc1HWVOEEb1HLjXY5PDMJ5qk1w=;
-        b=eAnZzfIvcXi3zeZuE8iFx8gv1rqKCKIpGIeoZJue4Ndvn7BKo3hpYrvIySxjexyUzC
-         mp2fC7fA+DhYpLXx5H7XsTjdAiwOIBrmE5e6XNnwjNTw/+iO9PXfFQ1eSDP14YI+2A5B
-         pOd5EnVsdqIZbfH5I99sP1fAsjhxhH1rVyMNY=
+        bh=XXwDEBCIIpfg7s7tdxfmq5MDryCKPu/85m3fA7elwwM=;
+        b=D1wFPqLhgkYYLq1/V5xz2ZEe7Dsl0AIfeezwozlpBS/MsBcioTKwUeY0B4TqwZfdYg
+         K9VFIk2CMuVvScnkj1phu/NGIUELCZOZYSmtH8E2xgAek3kkfZh+V1ZwZU4KDb/cJmM7
+         ZkW2lwphtuTvvZ+hT1d1Uvhjhoyd6JCTGEoMI=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=from:to:subject:date:user-agent:cc:references:in-reply-to
          :mime-version:content-type:content-transfer-encoding
          :content-disposition:message-id;
-        b=EynnQ+gBSaKhEaoo+Gvfkl0vurFfpqZ2Ka+jJHs6LxO2+mMEQb6D8BgPkAyvoRxBgv
-         ALxcsZ8S9nCYjOa8ES9hlJRUadQ5TwDSYEQHyxzgO1WFgIOj3pB5aayhvf2OPn3/ldA7
-         0lKotQKt4EDXVvaVFT/VEbNFJEh7c7PXiZPyM=
-Received: by 10.86.26.11 with SMTP id 11mr5631136fgz.71.1221464455326;
-        Mon, 15 Sep 2008 00:40:55 -0700 (PDT)
+        b=hgOzox641xlSj10N3m3UA4c0LArGz5z3zNibDrpPjJAivhqpl8Vjo04vpVQHXxiSYG
+         OXbBMjraebyZhb4qUTJcvjDc5GI+dVZwJCBsjqr6/FTlfZ+GYuR7Bf9B/6+J6Luo+Xs0
+         5cBuWNW0lzO6Q20VrZLqIXL5aQnl0leVe8JPg=
+Received: by 10.103.18.19 with SMTP id v19mr5182177mui.123.1221464931147;
+        Mon, 15 Sep 2008 00:48:51 -0700 (PDT)
 Received: from ?192.168.1.11? ( [83.8.248.215])
-        by mx.google.com with ESMTPS id 4sm16923036fgg.4.2008.09.15.00.40.53
+        by mx.google.com with ESMTPS id u9sm14865083muf.9.2008.09.15.00.48.49
         (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Mon, 15 Sep 2008 00:40:54 -0700 (PDT)
+        Mon, 15 Sep 2008 00:48:50 -0700 (PDT)
 User-Agent: KMail/1.9.3
-In-Reply-To: <48cdd598c6cd9_12e03ff42d900428232ec@app02.zenbe.com.tmail>
+In-Reply-To: <48cdd6cb7415e_3c273fa85e999d2827466@app01.zenbe.com.tmail>
 Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/95889>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/95890>
 
 Duy Nguyen wrote:
 > On 09/15/2008 "Jakub Narebski" <jnareb@gmail.com> wrote:
+> >Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail.com> writes=
+:
+> >=20
+> > > Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds=
+@gmail.com>
+> > > ---
+> > >  builtin-grep.c |    7 ++++++-
+> > >  1 files changed, 6 insertions(+), 1 deletions(-)
+> >=20
+> > No changes to Documentation/git-grep.txt?
+>=20
+> No, "git grep" should only grep files in working directories. In
+> narrow checkout mode, some files may be missing but current "git grep=
+"
+> does not know about that, hence this fix. =20
 
-> > 
-> > Second, how `--path=<narrow_spec>` interacts with `-n' (no checkout).
-> > Does it even have any sense? Perhaps those options should be mutually
-> > incompatibile (and --bare and this option too)?
-> 
-> Yes they are incompatible and won't work if either -n or --bare is provided with --path.
+Perhaps that should be stated explicitly, that git-grep searches only
+[intentionally] checked-out files when searching working directory,
+and only files without no-checkout bit set when searching index with
+"git grep --cached".
 
-Perhaps that should be stated explicitly? It is quite obvious, but...
--- 
+P.S. I think it should be [--cached|<tree>...] in git-grep synopsis,
+and not [--cached] ... [<tree>...], but that is unrelated thing, and
+doesn't matter to you.
+--=20
 Jakub Narebski
 Poland
