@@ -1,173 +1,126 @@
-From: Sergio Callegari <sergio.callegari@gmail.com>
-Subject: Management of opendocument (openoffice.org) files in git
-Date: Mon, 15 Sep 2008 22:40:01 +0000 (UTC)
-Message-ID: <loom.20080915T222909-709@post.gmane.org>
+From: Thomas Rast <trast@student.ethz.ch>
+Subject: [IRC/patches] Failed octopus merge does not clean up
+Date: Tue, 16 Sep 2008 00:48:19 +0200
+Message-ID: <200809160048.31443.trast@student.ethz.ch>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: multipart/signed;
+  boundary="nextPart5919478.CYHEWEmoMj";
+  protocol="application/pgp-signature";
+  micalg=pgp-sha1
 Content-Transfer-Encoding: 7bit
+Cc: Miklos Vajna <vmiklos@frugalware.org>,
+	Jakub Narebski <jnareb@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Sep 16 00:41:33 2008
+X-From: git-owner@vger.kernel.org Tue Sep 16 00:49:44 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KfMlA-0002yY-MF
-	for gcvg-git-2@gmane.org; Tue, 16 Sep 2008 00:41:33 +0200
+	id 1KfMt5-00056k-Qk
+	for gcvg-git-2@gmane.org; Tue, 16 Sep 2008 00:49:44 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756016AbYIOWkO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 15 Sep 2008 18:40:14 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755575AbYIOWkO
-	(ORCPT <rfc822;git-outgoing>); Mon, 15 Sep 2008 18:40:14 -0400
-Received: from main.gmane.org ([80.91.229.2]:34574 "EHLO ciao.gmane.org"
+	id S1754294AbYIOWsf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 15 Sep 2008 18:48:35 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753727AbYIOWsf
+	(ORCPT <rfc822;git-outgoing>); Mon, 15 Sep 2008 18:48:35 -0400
+Received: from xsmtp1.ethz.ch ([82.130.70.13]:21397 "EHLO xsmtp1.ethz.ch"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756093AbYIOWkM (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 15 Sep 2008 18:40:12 -0400
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1KfMjo-0000hC-VB
-	for git@vger.kernel.org; Mon, 15 Sep 2008 22:40:09 +0000
-Received: from c-71-197-224-64.hsd1.wa.comcast.net ([71.197.224.64])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Mon, 15 Sep 2008 22:40:08 +0000
-Received: from sergio.callegari by c-71-197-224-64.hsd1.wa.comcast.net with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Mon, 15 Sep 2008 22:40:08 +0000
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@ger.gmane.org
-X-Gmane-NNTP-Posting-Host: main.gmane.org
-User-Agent: Loom/3.14 (http://gmane.org/)
-X-Loom-IP: 71.197.224.64 (Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.8.1.16) Gecko/20080715 Ubuntu/7.10 (gutsy) Firefox/2.0.0.16)
+	id S1753308AbYIOWse (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 15 Sep 2008 18:48:34 -0400
+Received: from xfe2.d.ethz.ch ([82.130.124.42]) by xsmtp1.ethz.ch with Microsoft SMTPSVC(6.0.3790.3959);
+	 Tue, 16 Sep 2008 00:48:33 +0200
+Received: from [192.168.0.7] ([84.75.158.234]) by xfe2.d.ethz.ch over TLS secured channel with Microsoft SMTPSVC(6.0.3790.3959);
+	 Tue, 16 Sep 2008 00:48:33 +0200
+User-Agent: KMail/1.9.9
+X-OriginalArrivalTime: 15 Sep 2008 22:48:33.0144 (UTC) FILETIME=[2E49AF80:01C91785]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/95951>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/95952>
 
-Hi,
+--nextPart5919478.CYHEWEmoMj
+Content-Type: text/plain;
+  charset="utf-8"
+Content-Transfer-Encoding: quoted-printable
+Content-Disposition: inline
 
-Management of opendocument files in git has been discussed a short time ago.
-Here is an helper script that may help achieving better density in git packs
-containg blobs from openoffice files.
+Hi *
 
-To try it, save the following as "rezip" with execution permission:
+James "jammyd" Mulcahy pointed out on IRC that the octopus merge
+strategy doesn't properly clean up behind itself.  To wit:
 
------8<----------------------- 
+  git init
+  echo initial > foo
+  git add foo
+  git commit -m initial
+  echo a > foo
+  git commit -m a foo
+  git checkout -b b HEAD^
+  echo b > foo
+  git commit -m b foo
+  git checkout -b c HEAD^
+  echo c > foo
+  git commit -m c foo
+  git checkout master
+  git merge b c
 
-#! /bin/bash
-#
-# (c) 2008 Sergio Callegari
-#
-# Rewrites a zip archive, possibly changing the compression level
+The merge says
 
-USAGE='Usage: rezip [options] [file]
-with options:
-  [-h | --help]            Gives help
-  [-p ?]                   Lists known profiles
-  [--unzip_opts options]   Pass options to unzip helper to read zip file
-  [--zip_opts options]     Pass options to zip helper to write zip file
-  [-p | --profile profile] Get options for helpers from profile
+  Trying simple merge with 5b3e4bb1c2d88d6967fb575729fbfc86df5eaec9
+  Simple merge did not work, trying automatic merge.
+  Auto-merging foo
+  ERROR: Merge conflict in foo
+  fatal: merge program failed
+  Automated merge did not work.
+  Should not be doing an Octopus.
+  Merge with strategy octopus failed.
 
-Rewrites a zip archive, possibily changing the compression level.
-If the archive name is unspecified, then the command operates like a filter,
-reading from standard input and writing to standard output.
-Options can be manually provided to the unzip process doing the read and to
-the zip process doing the write. Alternatively a profile can be used to set
-options automatically.'
+So far so good.  However, 'git status' claims
 
-PROFILES="ODF_UNCOMPRESS ODF_COMPRESS"
+  #       unmerged:   foo
 
-PROFILE_UNZIP_ODF_UNCOMPRESS='-b -qq -X'
-PROFILE_ZIP_ODF_UNCOMPRESS='-q -r -D -0'
-PROFILE_UNZIP_ODF_COMPRESS='-b -qq -X'
-PROFILE_ZIP_ODF_COMPRESS='-q -r -D -6'
+and indeed the contents of 'foo' are the conflicted merge between
+'master' and 'b', yet there is no .git/MERGE_HEAD.  This behaviour is
+identical for 1.5.6 and 1.6.0.2, so it is not caused by the merge
+rewrite as a builtin.  Shouldn't it either really clean up, or really
+leave the repo in a conflicted merge state?  (I'm following up with a
+patch that turns the above into a test.  Octopus doesn't really have
+many tests, does it?)
 
-die()
-{
-    echo "$1" >&$2
-    exit $3
-}
+On the code path to the "Merge with strategy %s failed" message,
+builtin-merge.c:1134 runs restore_state() which runs reset_hard().
+But (as Miklos pointed out) that cannot actually do 'git reset --hard'
+because it is possible (though not recommended, see below) to start a
+merge with a dirty index.
 
-UNZIP_OPTS=""
-ZIP_OPTS=""
+Jakub mentioned that there are only three index stages for a three-way
+merge, so a conflicted n-way (simultaneous) merge is not really
+possible.
 
-while true ; do
-    case "$1" in
-        -h | --help)
-            die "$USAGE" 1 0 ;;
-        -p | --profile)
-            if [ "$2" = "?" ] ; then
-                die "Avalilable profiles: ${PROFILES}" 1 0 ;
-            else
-                profile=$2
-                shift
-                profile_unzip=PROFILE_UNZIP_${profile}
-                profile_zip=PROFILE_ZIP_${profile}
-                UNZIP_OPTS=${!profile_unzip}
-                ZIP_OPTS=${!profile_zip}
-            fi ;;
-        --unzip_opts)
-            UNZIP_OPTS=${UNZIP_OPTS} $2
-            shift ;;
-        --zip_opts)
-            ZIP_OPTS=${ZIP_OPTS} $2
-            shift ;;
-        -*)
-            die "$USAGE" 2 1 ;;
-        *)
-            break ;;
-    esac
-    shift
-done
+The merge manpage should warn about merging with uncommitted changes.
+It recommends 'git rebase --hard' to abort during conflicts, but does
+not mention that this throws away said changes.  I'm following up with
+a patch for this.
 
-if [ $# = 0 ] ; then
-    tmpcopy=$(mktemp rezip.zip.XXXXXX)
-    cat > $tmpcopy
-    filename="$tmpcopy"
-else
-    tmpcopy=""
-    filename="$1"
-fi
+=2D Thomas
 
-workdir=$(mktemp -d -t rezip.workdir.XXXXXX)
-curdir=$(pwd)
+=2D-=20
+Thomas Rast
+trast@student.ethz.ch
 
-cd $workdir
-unzip $UNZIP_OPTS "$curdir/$filename"
-zip $ZIP_OPTS "$curdir/$filename" .
-cd $curdir
-rm -fr $workdir
-if [ ! -z "$tmpcopy" ] ; then
-  cat $filename
-  rm $tmpcopy
-fi
 
---------8<------------------------
 
-then put in your .git/config something like
+--nextPart5919478.CYHEWEmoMj
+Content-Type: application/pgp-signature; name=signature.asc 
+Content-Description: This is a digitally signed message part.
 
-[filter "opendocument"]
-        clean = "rezip -p ODF_UNCOMPRESS"
-        smudge = "rezip -p ODF_COMPRESS"
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.0.9 (GNU/Linux)
 
-and finally set gitattributes as
+iEYEABECAAYFAkjO5j8ACgkQqUud07tmzP3r1QCfTdfbIjhN1Xspsi/mPFL+xAqn
+M/cAoJhXEYh/dDqzUDW3o0oOG9J1tqlB
+=V9tC
+-----END PGP SIGNATURE-----
 
-*.odt filter=opendocument
-*.ods filter=opendocument
-*.odp filter=opendocument
-
-Note:
-   with this you might experience some delay on operations like
-git status
-git add
-git commit -a
-git checkout
-
-depending on the size of the opendocument files being tracked.
-
-Before using on anything sensitive, please test that it does what it should.
-
-The script should probably be made more robust against unexpected situations.
-
-Hope it can be useful to someone.
-
-Sergio
+--nextPart5919478.CYHEWEmoMj--
