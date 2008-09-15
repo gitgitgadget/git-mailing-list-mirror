@@ -1,98 +1,250 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: How to replace a single corrupt, packed object?
-Date: Mon, 15 Sep 2008 17:34:12 +0100 (BST)
-Message-ID: <alpine.DEB.1.00.0809151733550.14329@racer>
-References: <alpine.DEB.1.00.0808081639490.24820@pacific.mpi-cbg.de.mpi-cbg.de> <alpine.LFD.1.10.0808102139050.22892@xanadu.home> <alpine.DEB.1.00.0809151603390.13830@pacific.mpi-cbg.de.mpi-cbg.de> <alpine.LFD.1.10.0809151223570.6279@xanadu.home>
+From: "Catalin Marinas" <catalin.marinas@gmail.com>
+Subject: Re: [StGit PATCH] Convert "sink" to the new infrastructure
+Date: Mon, 15 Sep 2008 17:44:38 +0100
+Message-ID: <b0943d9e0809150944o71acafe7ndeda500b1fba97df@mail.gmail.com>
+References: <20080912215613.10270.20599.stgit@localhost.localdomain>
+	 <20080914085118.GC30664@diana.vm.bytemark.co.uk>
+	 <b0943d9e0809141419q6facb21at627e658805f1d223@mail.gmail.com>
+	 <20080915075740.GB14452@diana.vm.bytemark.co.uk>
 Mime-Version: 1.0
-Content-Type: MULTIPART/MIXED; BOUNDARY="8323329-1726570547-1221496453=:14329"
+Content-Type: multipart/mixed; 
+	boundary="----=_Part_9941_19286525.1221497078660"
 Cc: git@vger.kernel.org
-To: Nicolas Pitre <nico@cam.org>
-X-From: git-owner@vger.kernel.org Mon Sep 15 18:35:39 2008
+To: "=?ISO-8859-1?Q?Karl_Hasselstr=F6m?=" <kha@treskal.com>
+X-From: git-owner@vger.kernel.org Mon Sep 15 18:45:56 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KfH2o-0000RZ-N3
-	for gcvg-git-2@gmane.org; Mon, 15 Sep 2008 18:35:23 +0200
+	id 1KfHCu-0003Ky-Hb
+	for gcvg-git-2@gmane.org; Mon, 15 Sep 2008 18:45:49 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753769AbYIOQeO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 15 Sep 2008 12:34:14 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753966AbYIOQeO
-	(ORCPT <rfc822;git-outgoing>); Mon, 15 Sep 2008 12:34:14 -0400
-Received: from mail.gmx.net ([213.165.64.20]:44419 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1753640AbYIOQeN (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 15 Sep 2008 12:34:13 -0400
-Received: (qmail invoked by alias); 15 Sep 2008 16:34:11 -0000
-Received: from cbg-off-client.mpi-cbg.de (EHLO racer.local) [141.5.11.5]
-  by mail.gmx.net (mp045) with SMTP; 15 Sep 2008 18:34:11 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1+u1ww7fh6u56s9Up5/IqfV9qq3k5jty15TWaaB9J
-	JHUsMdx+PyKajc
-X-X-Sender: gene099@racer
-In-Reply-To: <alpine.LFD.1.10.0809151223570.6279@xanadu.home>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.58
+	id S1753858AbYIOQok (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 15 Sep 2008 12:44:40 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753579AbYIOQok
+	(ORCPT <rfc822;git-outgoing>); Mon, 15 Sep 2008 12:44:40 -0400
+Received: from rv-out-0506.google.com ([209.85.198.224]:62512 "EHLO
+	rv-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753474AbYIOQoj (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 15 Sep 2008 12:44:39 -0400
+Received: by rv-out-0506.google.com with SMTP id k40so2232108rvb.1
+        for <git@vger.kernel.org>; Mon, 15 Sep 2008 09:44:38 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to
+         :subject:cc:in-reply-to:mime-version:content-type:references;
+        bh=vLHDNV4V6YhZjYtJkHz8NqXFOKlQUHgsg0KZkPapN40=;
+        b=RohQ6p4KOyE4D58C2s97pSxbxYJoV5OLNT0nIBHESt/EkvfuJWdE3hC+PpbfZgKhXe
+         8qLpDyXcCu5wIoE5plmtGDI42eMM5iAt6ktzOPMt9U6qd0ri2bSFvbyDoB/k0jEkHSoS
+         9zmt3if6qf+HufnCFq/1OElEAEON1e70MvHf0=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
+         :content-type:references;
+        b=CGl/L8OpUuVE56kD7WrRndGns/f6aajfRnhYOxljhBsrpkbM86jmQaEacRKu/IDEXq
+         07rm79a9U0mHiXL5DY/9eZHDfMAAy2vr/aLDD70n5U150FzBG+rcJ90w3sSEZBDxJmtf
+         9akEp4NWT6OcaXEYxi1/Df6YtuHWukECtdpHI=
+Received: by 10.141.171.1 with SMTP id y1mr4901169rvo.252.1221497078670;
+        Mon, 15 Sep 2008 09:44:38 -0700 (PDT)
+Received: by 10.140.199.1 with HTTP; Mon, 15 Sep 2008 09:44:38 -0700 (PDT)
+In-Reply-To: <20080915075740.GB14452@diana.vm.bytemark.co.uk>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/95923>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/95924>
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
+------=_Part_9941_19286525.1221497078660
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: quoted-printable
+Content-Disposition: inline
 
---8323329-1726570547-1221496453=:14329
-Content-Type: TEXT/PLAIN; charset=ISO-8859-15
-Content-Transfer-Encoding: 8BIT
+2008/9/15 Karl Hasselstr=F6m <kha@treskal.com>:
+> On 2008-09-14 22:19:41 +0100, Catalin Marinas wrote:
+>
+>> I wasn't used to reading documentation in StGit files :-). Thanks
+>> for the info, I'll repost.
+>
+> It was you who asked for in-code docs. :-) The new-infrastructure code
+> actually looks half decent in epydoc nowadays.
 
-Hi,
+Since we are talking about this, the transactions documentation
+doesn't explain when to use a iw and when to pass allow_conflicts. I
+kind of figured out but I'm not convinced. At a first look, passing
+allow_conflicts =3D True would seem that it may allow conflicts and not
+revert the changes, however, this only works if I pass an "iw". But
+passing it doesn't allow the default case where I want the changes
+reverted.
 
-On Mon, 15 Sep 2008, Nicolas Pitre wrote:
+Please have a look at the attached patch which is my last version of
+the sink command rewriting. I'm not that happy (or maybe I don't
+understand the reasons) with setting iw =3D None if not options.conflict
+but that's the way I could get it to work.
 
-> On Mon, 15 Sep 2008, Johannes Schindelin wrote:
-> 
-> > On Sun, 10 Aug 2008, Nicolas Pitre wrote:
-> > 
-> > > On Fri, 8 Aug 2008, Johannes Schindelin wrote:
-> > > 
-> > > > my auto gc kicked in, and shows this:
-> > > > 
-> > > > fatal: corrupt packed object for 2c1e128aa51e3a64bd61556c0cd488628b423ccf
-> > > > error: failed to run repack
-> > > > 
-> > > > Fortunately, I have the uncorrupted object somewhere else.  So I copy the 
-> > > > single object as a loose one, and all is fine.  Right?
-> > > > 
-> > > > Wrong.
-> > > 
-> > > Well, to be sure things are then right or wrong, just do a 
-> > > 
-> > > 	git show 2c1e128aa51e3a64bd61556c0cd488628b423ccf
-> > > 
-> > > If you can't see the object before, and are able to see it once it has 
-> > > been copied over, then things are "right".
-> > > 
-> > > > Repack still picks up the corrupt object instead of the good one.  
-> > > > What's the best way out?
-> > > 
-> > > How do you repack?  The only way to get rid of a corrupted object in 
-> > > that case is to 'git repack -a -f'.
-> > 
-> > Turns out I am a complete, utter moron.  And I am sure René will quote me 
-> > on that.
-> > 
-> > Git would probably have taken the copied-over object, and now took the 
-> > copied-over pack (finally!).
-> > 
-> > My mistake was to keep the .keep file.  And the corrupt object was -- you 
-> > guessed it -- in the corresponding .pack file.
-> 
-> OK.  Then I'll dig my patch out and write a test for it before 
-> submitting it to Junio.
+>> I'll make the default behaviour to cancel the transaction and revert
+>> to the original state unless an option is given to allow conflicts.
+>
+> What I've always wanted is "sink this patch as far as it will go
+> without conflicting". This comes awfully close.
 
-Thank you very much & sorry for the trouble,
-Dscho
+But this means that sink would try several consecutive sinks until it
+can't find one. Not that it is try to implement but I wouldn't
+complicate "sink" for this. I would rather add support for patch
+dependency tracking (which used to be on the long term wish list). It
+might be useful for other things as well like mailing a patch together
+with those on which it depends (like darcs).
 
---8323329-1726570547-1221496453=:14329--
+> BTW, this kind of flag might potentially be useful in many commands
+> (with default value on or off depending on the command). Maybe
+>
+>  --conflicts=3Droll-back|stop-before|allow
+
+ATM, I only added a --conflict option which has the "allow" meaning.
+
+--=20
+Catalin
+
+------=_Part_9941_19286525.1221497078660
+Content-Type: text/x-diff; name=convert-sink-to-the-new-infras.patch
+Content-Transfer-Encoding: base64
+X-Attachment-Id: f_fl5bs6ek0
+Content-Disposition: attachment;
+ filename=convert-sink-to-the-new-infras.patch
+
+Q29udmVydCAic2luayIgdG8gdGhlIG5ldyBpbmZyYXN0cnVjdHVyZQoKRnJvbTogQ2F0YWxpbiBN
+YXJpbmFzIDxjYXRhbGluLm1hcmluYXNAZ21haWwuY29tPgoKVGhpcyBwYXRjaCBjb252ZXJ0cyB0
+aGUgc2luayBjb21tYW5kIHRvIHVzZSBzdGdpdC5saWIuIEJ5IGRlZmF1bHQsIHRoZQpjb21tYW5k
+IGRvZXNuJ3QgYWxsb3cgY29uZmxpY3RzIGFuZCBpdCBjYW5jZWxzIHRoZSBvcGVyYXRpb25zIGlm
+IHBhdGNoZXMKY2Fubm90IGJlIHJlb3JkZXJlZCBjbGVhbmx5LiBXaXRoIHRoZSAtLWNvbmZsaWN0
+IG9wdGlvbnMsIHRoZSBjb21tYW5kCnN0b3BzIGFmdGVyIHRoZSBmaXJzdCBjb25mbGljdCBkdXJp
+bmcgdGhlIHB1c2ggb3BlcmF0aW9ucy4KClNpZ25lZC1vZmYtYnk6IENhdGFsaW4gTWFyaW5hcyA8
+Y2F0YWxpbi5tYXJpbmFzQGdtYWlsLmNvbT4KLS0tCiBzdGdpdC9jb21tYW5kcy9zaW5rLnB5IHwg
+ICA5MCArKysrKysrKysrKysrKysrKysrKysrKysrKysrKysrLS0tLS0tLS0tLS0tLS0tLS0KIHQv
+dDE1MDEtc2luay5zaCAgICAgICAgfCAgIDY1ICsrKysrKysrKysrKysrKysrKysrKysrKysrKysr
+LS0tLS0tCiAyIGZpbGVzIGNoYW5nZWQsIDExMiBpbnNlcnRpb25zKCspLCA0MyBkZWxldGlvbnMo
+LSkKCmRpZmYgLS1naXQgYS9zdGdpdC9jb21tYW5kcy9zaW5rLnB5IGIvc3RnaXQvY29tbWFuZHMv
+c2luay5weQppbmRleCBkOGY3OWI0Li5hNzk5NDMzIDEwMDY0NAotLS0gYS9zdGdpdC9jb21tYW5k
+cy9zaW5rLnB5CisrKyBiL3N0Z2l0L2NvbW1hbmRzL3NpbmsucHkKQEAgLTEsNiArMSw2IEBACiAK
+IF9fY29weXJpZ2h0X18gPSAiIiIKLUNvcHlyaWdodCAoQykgMjAwNywgWWFubiBEaXJzb24gPHlk
+aXJzb25AYWx0ZXJuLm9yZz4KK0NvcHlyaWdodCAoQykgMjAwOCwgQ2F0YWxpbiBNYXJpbmFzIDxj
+YXRhbGluLm1hcmluYXNAZ21haWwuY29tPgogCiBUaGlzIHByb2dyYW0gaXMgZnJlZSBzb2Z0d2Fy
+ZTsgeW91IGNhbiByZWRpc3RyaWJ1dGUgaXQgYW5kL29yIG1vZGlmeQogaXQgdW5kZXIgdGhlIHRl
+cm1zIG9mIHRoZSBHTlUgR2VuZXJhbCBQdWJsaWMgTGljZW5zZSB2ZXJzaW9uIDIgYXMKQEAgLTE2
+LDEzICsxNiwxMCBAQCBhbG9uZyB3aXRoIHRoaXMgcHJvZ3JhbTsgaWYgbm90LCB3cml0ZSB0byB0
+aGUgRnJlZSBTb2Z0d2FyZQogRm91bmRhdGlvbiwgSW5jLiwgNTkgVGVtcGxlIFBsYWNlLCBTdWl0
+ZSAzMzAsIEJvc3RvbiwgTUEgMDIxMTEtMTMwNyBVU0EKICIiIgogCi1pbXBvcnQgc3lzLCBvcwot
+ZnJvbSBvcHRwYXJzZSBpbXBvcnQgT3B0aW9uUGFyc2VyLCBtYWtlX29wdGlvbgotCi1mcm9tIHN0
+Z2l0LmNvbW1hbmRzLmNvbW1vbiBpbXBvcnQgKgotZnJvbSBzdGdpdC51dGlscyBpbXBvcnQgKgot
+ZnJvbSBzdGdpdCBpbXBvcnQgc3RhY2ssIGdpdAorZnJvbSBvcHRwYXJzZSBpbXBvcnQgbWFrZV9v
+cHRpb24KIAorZnJvbSBzdGdpdC5jb21tYW5kcyBpbXBvcnQgY29tbW9uCitmcm9tIHN0Z2l0Lmxp
+YiBpbXBvcnQgdHJhbnNhY3Rpb24KIAogaGVscCA9ICdzZW5kIHBhdGNoZXMgZGVlcGVyIGRvd24g
+dGhlIHN0YWNrJwogdXNhZ2UgPSAiIiIlcHJvZyBbLXQgPHRhcmdldCBwYXRjaD5dIFstbl0gWzxw
+YXRjaGVzPl0KQEAgLTMyLDQzICsyOSw3MiBAQCBwdXNoIHRoZSBzcGVjaWZpZWQgPHBhdGNoZXM+
+ICh0aGUgY3VycmVudCBwYXRjaCBieSBkZWZhdWx0KSwgYW5kCiB0aGVuIHB1c2ggYmFjayBpbnRv
+IHBsYWNlIHRoZSBmb3JtZXJseS1hcHBsaWVkIHBhdGNoZXMgKHVubGVzcyAtbgogaXMgYWxzbyBn
+aXZlbikuIiIiCiAKLWRpcmVjdG9yeSA9IERpcmVjdG9yeUdvdG9Ub3BsZXZlbCgpCitkaXJlY3Rv
+cnkgPSBjb21tb24uRGlyZWN0b3J5SGFzUmVwb3NpdG9yeUxpYigpCiBvcHRpb25zID0gW21ha2Vf
+b3B0aW9uKCctbicsICctLW5vcHVzaCcsCiAgICAgICAgICAgICAgICAgICAgICAgIGhlbHAgPSAn
+ZG8gbm90IHB1c2ggdGhlIHBhdGNoZXMgYmFjayBhZnRlciBzaW5raW5nJywKICAgICAgICAgICAg
+ICAgICAgICAgICAgYWN0aW9uID0gJ3N0b3JlX3RydWUnKSwKICAgICAgICAgICAgbWFrZV9vcHRp
+b24oJy10JywgJy0tdG8nLCBtZXRhdmFyID0gJ1RBUkdFVCcsCi0gICAgICAgICAgICAgICAgICAg
+ICAgIGhlbHAgPSAnc2luayBwYXRjaGVzIGJlbG93IFRBUkdFVCBwYXRjaCcpXQorICAgICAgICAg
+ICAgICAgICAgICAgICBoZWxwID0gJ3NpbmsgcGF0Y2hlcyBiZWxvdyBUQVJHRVQgcGF0Y2gnKSwK
+KyAgICAgICAgICAgbWFrZV9vcHRpb24oJy1jJywgJy0tY29uZmxpY3QnLAorICAgICAgICAgICAg
+ICAgICAgICAgICBoZWxwID0gJ2FsbG93IGNvbmZsaWN0cyBkdXJpbmcgdGhlIHB1c2ggb3BlcmF0
+aW9ucycsCisgICAgICAgICAgICAgICAgICAgICAgIGFjdGlvbiA9ICdzdG9yZV90cnVlJyldCiAK
+IGRlZiBmdW5jKHBhcnNlciwgb3B0aW9ucywgYXJncyk6CiAgICAgIiIiU2luayBwYXRjaGVzIGRv
+d24gdGhlIHN0YWNrLgogICAgICIiIgorICAgIHN0YWNrID0gZGlyZWN0b3J5LnJlcG9zaXRvcnku
+Y3VycmVudF9zdGFjawogCi0gICAgY2hlY2tfbG9jYWxfY2hhbmdlcygpCi0gICAgY2hlY2tfY29u
+ZmxpY3RzKCkKLSAgICBjaGVja19oZWFkX3RvcF9lcXVhbChjcnRfc2VyaWVzKQotCi0gICAgb2xk
+YXBwbGllZCA9IGNydF9zZXJpZXMuZ2V0X2FwcGxpZWQoKQotICAgIHVuYXBwbGllZCA9IGNydF9z
+ZXJpZXMuZ2V0X3VuYXBwbGllZCgpCi0gICAgYWxsID0gdW5hcHBsaWVkICsgb2xkYXBwbGllZAot
+Ci0gICAgaWYgb3B0aW9ucy50byBhbmQgbm90IG9wdGlvbnMudG8gaW4gb2xkYXBwbGllZDoKLSAg
+ICAgICAgcmFpc2UgQ21kRXhjZXB0aW9uKCdDYW5ub3Qgc2luayBiZWxvdyAlcywgc2luY2UgaXQg
+aXMgbm90IGFwcGxpZWQnCi0gICAgICAgICAgICAgICAgICAgICAgICAgICAlIG9wdGlvbnMudG8p
+CisgICAgaWYgb3B0aW9ucy50byBhbmQgbm90IG9wdGlvbnMudG8gaW4gc3RhY2sucGF0Y2hvcmRl
+ci5hcHBsaWVkOgorICAgICAgICByYWlzZSBjb21tb24uQ21kRXhjZXB0aW9uKCdDYW5ub3Qgc2lu
+ayBiZWxvdyAlcyBzaW5jZSBpdCBpcyBub3QgYXBwbGllZCcKKyAgICAgICAgICAgICAgICAgICAg
+ICAgICAgICAgICAgICAlIG9wdGlvbnMudG8pCiAKICAgICBpZiBsZW4oYXJncykgPiAwOgotICAg
+ICAgICBwYXRjaGVzID0gcGFyc2VfcGF0Y2hlcyhhcmdzLCBhbGwpCisgICAgICAgIHBhdGNoZXMg
+PSBjb21tb24ucGFyc2VfcGF0Y2hlcyhhcmdzLCBzdGFjay5wYXRjaG9yZGVyLmFsbCkKICAgICBl
+bHNlOgotICAgICAgICBjdXJyZW50ID0gY3J0X3Nlcmllcy5nZXRfY3VycmVudCgpCi0gICAgICAg
+IGlmIG5vdCBjdXJyZW50OgotICAgICAgICAgICAgcmFpc2UgQ21kRXhjZXB0aW9uKCdObyBwYXRj
+aCBhcHBsaWVkJykKLSAgICAgICAgcGF0Y2hlcyA9IFtjdXJyZW50XQorICAgICAgICAjIGN1cnJl
+bnQgcGF0Y2gKKyAgICAgICAgcGF0Y2hlcyA9IGxpc3Qoc3RhY2sucGF0Y2hvcmRlci5hcHBsaWVk
+Wy0xOl0pCiAKLSAgICBpZiBvbGRhcHBsaWVkOgotICAgICAgICBjcnRfc2VyaWVzLnBvcF9wYXRj
+aChvcHRpb25zLnRvIG9yIG9sZGFwcGxpZWRbMF0pCi0gICAgcHVzaF9wYXRjaGVzKGNydF9zZXJp
+ZXMsIHBhdGNoZXMpCisgICAgaWYgbm90IHBhdGNoZXM6CisgICAgICAgIHJhaXNlIGNvbW1vbi5D
+bWRFeGNlcHRpb24oJ05vIHBhdGNoZXMgdG8gc2luaycpCisgICAgaWYgb3B0aW9ucy50byBhbmQg
+b3B0aW9ucy50byBpbiBwYXRjaGVzOgorICAgICAgICByYWlzZSBjb21tb24uQ21kRXhjZXB0aW9u
+KCdDYW5ub3QgaGF2ZSBhIHNpbmtlZCBwYXRjaCBhcyB0YXJnZXQnKQorCisgICAgaWYgb3B0aW9u
+cy5jb25mbGljdDoKKyAgICAgICAgaXcgPSBzdGFjay5yZXBvc2l0b3J5LmRlZmF1bHRfaXcKKyAg
+ICBlbHNlOgorICAgICAgICBpdyA9IE5vbmUKKyAgICB0cmFucyA9IHRyYW5zYWN0aW9uLlN0YWNr
+VHJhbnNhY3Rpb24oc3RhY2ssICdzaW5rJykKKworICAgICMgcG9wIGFueSBwYXRjaGVzIHRvIGJl
+IHNpbmtlZCBpbiBjYXNlIHRoZXkgYXJlIGFwcGxpZWQKKyAgICB0b19wdXNoID0gdHJhbnMucG9w
+X3BhdGNoZXMobGFtYmRhIHBuOiBwbiBpbiBwYXRjaGVzKQorCisgICAgaWYgb3B0aW9ucy50bzoK
+KyAgICAgICAgaWYgb3B0aW9ucy50byBpbiB0b19wdXNoOgorICAgICAgICAgICAgIyB0aGlzIGlz
+IHRoZSBjYXNlIHdoZXJlIHNpbmtpbmcgYWN0dWFsbHkgYnJpbmdzIHNvbWUKKyAgICAgICAgICAg
+ICMgcGF0Y2hlcyBmb3J3YXJkCisgICAgICAgICAgICBmb3IgcCBpbiB0b19wdXNoOgorICAgICAg
+ICAgICAgICAgIGlmIHAgPT0gb3B0aW9ucy50bzoKKyAgICAgICAgICAgICAgICAgICAgZGVsIHRv
+X3B1c2hbOnRvX3B1c2guaW5kZXgocCldCisgICAgICAgICAgICAgICAgICAgIGJyZWFrCisgICAg
+ICAgICAgICAgICAgdHJhbnMucHVzaF9wYXRjaChwLCBpdykKKyAgICAgICAgZWxzZToKKyAgICAg
+ICAgICAgICMgdGFyZ2V0IHBhdGNoIGJlbG93IHBhdGNoZXMgdG8gYmUgc2lua2VkCisgICAgICAg
+ICAgICB0b19wb3AgPSB0cmFucy5hcHBsaWVkW3RyYW5zLmFwcGxpZWQuaW5kZXgob3B0aW9ucy50
+byk6XQorICAgICAgICAgICAgdG9fcHVzaCA9IHRvX3BvcCArIHRvX3B1c2gKKyAgICAgICAgICAg
+IHRyYW5zLnBvcF9wYXRjaGVzKGxhbWJkYSBwbjogcG4gaW4gdG9fcG9wKQorICAgIGVsc2U6Cisg
+ICAgICAgICMgcG9wIGFsbCB0aGUgcmVtYWluaW5nIHBhdGNoZXMKKyAgICAgICAgdG9fcHVzaCA9
+IHRyYW5zLmFwcGxpZWQgKyB0b19wdXNoCisgICAgICAgIHRyYW5zLnBvcF9wYXRjaGVzKGxhbWJk
+YSBwbjogVHJ1ZSkKIAorICAgICMgcHVzaCB0aGUgc2lua2VkIGFuZCBvdGhlciBwb3BwZWQgcGF0
+Y2hlcwogICAgIGlmIG5vdCBvcHRpb25zLm5vcHVzaDoKLSAgICAgICAgbmV3YXBwbGllZCA9IGNy
+dF9zZXJpZXMuZ2V0X2FwcGxpZWQoKQotICAgICAgICBkZWYgbm90X3JlYXBwbGllZF95ZXQocCk6
+Ci0gICAgICAgICAgICByZXR1cm4gbm90IHAgaW4gbmV3YXBwbGllZAotICAgICAgICBwdXNoX3Bh
+dGNoZXMoY3J0X3NlcmllcywgZmlsdGVyKG5vdF9yZWFwcGxpZWRfeWV0LCBvbGRhcHBsaWVkKSkK
+KyAgICAgICAgcGF0Y2hlcy5leHRlbmQodG9fcHVzaCkKKyAgICB0cnk6CisgICAgICAgIGZvciBw
+IGluIHBhdGNoZXM6CisgICAgICAgICAgICB0cmFucy5wdXNoX3BhdGNoKHAsIGl3KQorICAgIGV4
+Y2VwdCB0cmFuc2FjdGlvbi5UcmFuc2FjdGlvbkhhbHRlZDoKKyAgICAgICAgaWYgbm90IG9wdGlv
+bnMuY29uZmxpY3Q6CisgICAgICAgICAgICByYWlzZQorCisgICAgcmV0dXJuIHRyYW5zLnJ1bihp
+dykKZGlmZiAtLWdpdCBhL3QvdDE1MDEtc2luay5zaCBiL3QvdDE1MDEtc2luay5zaAppbmRleCAz
+MjkzMWNkLi5iM2UyZWIzIDEwMDc1NQotLS0gYS90L3QxNTAxLXNpbmsuc2gKKysrIGIvdC90MTUw
+MS1zaW5rLnNoCkBAIC01LDI0ICs1LDY3IEBAIHRlc3RfZGVzY3JpcHRpb249J1Rlc3QgInN0ZyBz
+aW5rIicKIC4gLi90ZXN0LWxpYi5zaAogCiB0ZXN0X2V4cGVjdF9zdWNjZXNzICdJbml0aWFsaXpl
+IFN0R2l0IHN0YWNrJyAnCi0gICAgZWNobyAwMDAgPj4geCAmJgotICAgIGdpdCBhZGQgeCAmJgor
+ICAgIGVjaG8gMCA+PiBmMCAmJgorICAgIGdpdCBhZGQgZjAgJiYKICAgICBnaXQgY29tbWl0IC1t
+IGluaXRpYWwgJiYKLSAgICBlY2hvIDAwMCA+PiB5ICYmCi0gICAgZ2l0IGFkZCB5ICYmCi0gICAg
+Z2l0IGNvbW1pdCAtbSB5ICYmCisgICAgZWNobyAxID4+IGYxICYmCisgICAgZ2l0IGFkZCBmMSAm
+JgorICAgIGdpdCBjb21taXQgLW0gcDEgJiYKKyAgICBlY2hvIDIgPj4gZjIgJiYKKyAgICBnaXQg
+YWRkIGYyICYmCisgICAgZ2l0IGNvbW1pdCAtbSBwMiAmJgorICAgIGVjaG8gMyA+PiBmMyAmJgor
+ICAgIGdpdCBhZGQgZjMgJiYKKyAgICBnaXQgY29tbWl0IC1tIHAzICYmCisgICAgZWNobyA0ID4+
+IGY0ICYmCisgICAgZ2l0IGFkZCBmNCAmJgorICAgIGdpdCBjb21taXQgLW0gcDQgJiYKKyAgICBl
+Y2hvIDIyID4+IGYyICYmCisgICAgZ2l0IGFkZCBmMiAmJgorICAgIGdpdCBjb21taXQgLW0gcDIy
+ICYmCiAgICAgc3RnIGluaXQgJiYKLSAgICBzdGcgdW5jb21taXQgJiYKLSAgICBzdGcgcG9wCisg
+ICAgc3RnIHVuY29tbWl0IHAyMiBwNCBwMyBwMiBwMSAmJgorICAgIHN0ZyBwb3AgLWEKICcKIAot
+dGVzdF9leHBlY3Rfc3VjY2VzcyAnc2luayB3aXRob3V0IGFwcGxpZWQgcGF0Y2hlcycgJwordGVz
+dF9leHBlY3Rfc3VjY2VzcyAnc2luayBkZWZhdWx0IHdpdGhvdXQgYXBwbGllZCBwYXRjaGVzJyAn
+CiAgICAgY29tbWFuZF9lcnJvciBzdGcgc2luawogJwogCi10ZXN0X2V4cGVjdF9zdWNjZXNzICdz
+aW5rIGEgc3BlY2lmaWMgcGF0Y2ggd2l0aG91dCBhcHBsaWVkIHBhdGNoZXMnICcKLSAgICBzdGcg
+c2luayB5ICYmCi0gICAgdGVzdCAkKGVjaG8gJChzdGcgc2VyaWVzIC0tYXBwbGllZCAtLW5vcHJl
+Zml4KSkgPSAieSIKK3Rlc3RfZXhwZWN0X3N1Y2Nlc3MgJ3NpbmsgYW5kIHJlb3JkZXIgc3BlY2lm
+aWVkIHdpdGhvdXQgYXBwbGllZCBwYXRjaGVzJyAnCisgICAgc3RnIHNpbmsgcDIgcDEgJiYKKyAg
+ICB0ZXN0ICIkKGVjaG8gJChzdGcgc2VyaWVzIC0tYXBwbGllZCAtLW5vcHJlZml4KSkiID0gInAy
+IHAxIgorJworCit0ZXN0X2V4cGVjdF9zdWNjZXNzICdzaW5rIHBhdGNoZXMgdG8gdGhlIGJvdHRv
+bSBvZiB0aGUgc3RhY2snICcKKyAgICBzdGcgc2luayBwNCBwMyBwMiAmJgorICAgIHRlc3QgIiQo
+ZWNobyAkKHN0ZyBzZXJpZXMgLS1hcHBsaWVkIC0tbm9wcmVmaXgpKSIgPSAicDQgcDMgcDIgcDEi
+CisnCisKK3Rlc3RfZXhwZWN0X3N1Y2Nlc3MgJ3NpbmsgY3VycmVudCBiZWxvdyBhIHRhcmdldCcg
+JworICAgIHN0ZyBzaW5rIC0tdG89cDIgJiYKKyAgICB0ZXN0ICIkKGVjaG8gJChzdGcgc2VyaWVz
+IC0tYXBwbGllZCAtLW5vcHJlZml4KSkiID0gInA0IHAzIHAxIHAyIgorJworCit0ZXN0X2V4cGVj
+dF9zdWNjZXNzICdicmluZyBwYXRjaGVzIGZvcndhcmQnICcKKyAgICBzdGcgc2luayAtLXRvPXAy
+IHAzIHA0ICYmCisgICAgdGVzdCAiJChlY2hvICQoc3RnIHNlcmllcyAtLWFwcGxpZWQgLS1ub3By
+ZWZpeCkpIiA9ICJwMSBwMyBwNCBwMiIKKycKKwordGVzdF9leHBlY3Rfc3VjY2VzcyAnc2luayBz
+cGVjaWZpZWQgcGF0Y2ggYmVsb3cgYSB0YXJnZXQnICcKKyAgICBzdGcgc2luayAtLXRvPXAzIHAy
+ICYmCisgICAgdGVzdCAiJChlY2hvICQoc3RnIHNlcmllcyAtLWFwcGxpZWQgLS1ub3ByZWZpeCkp
+IiA9ICJwMSBwMiBwMyBwNCIKKycKKwordGVzdF9leHBlY3Rfc3VjY2VzcyAnc2luayB3aXRoIGNv
+bmZsaWN0IGFuZCByZXN0b3JlIHRoZSBzdGFjaycgJworICAgIGNvbW1hbmRfZXJyb3Igc3RnIHNp
+bmsgLS10bz1wMiBwMjIgJiYKKyAgICB0ZXN0ICIkKGVjaG8gJChzdGcgc2VyaWVzIC0tYXBwbGll
+ZCAtLW5vcHJlZml4KSkiID0gInAxIHAyIHAzIHA0IgorJworCit0ZXN0X2V4cGVjdF9zdWNjZXNz
+ICdzaW5rIHdpdGggY29uZmxpY3QgYW5kIGRvIG5vdCByZXN0b3JlIHRoZSBzdGFjaycgJworICAg
+IGNvbmZsaWN0IHN0ZyBzaW5rIC0tY29uZmxpY3QgLS10bz1wMiBwMjIgJiYKKyAgICB0ZXN0ICIk
+KGVjaG8gJChzdGcgc2VyaWVzIC0tYXBwbGllZCAtLW5vcHJlZml4KSkiID0gInAxIHAyMiIgJiYK
+KyAgICB0ZXN0ICIkKGVjaG8gJChzdGcgc3RhdHVzIC0tY29uZmxpY3QpKSIgPSAiZjIiCiAnCiAK
+IHRlc3RfZG9uZQo=
+------=_Part_9941_19286525.1221497078660--
