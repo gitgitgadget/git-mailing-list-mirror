@@ -1,83 +1,73 @@
-From: Dmitry Potapov <dpotapov@gmail.com>
-Subject: Re: Help using Git(-svn) for specific use case
-Date: Tue, 16 Sep 2008 01:47:40 +0400
-Message-ID: <20080915214740.GI28210@dpotapov.dyndns.org>
-References: <aa2b76740809150550q724ab0f4x99a27fa21d90c0fb@mail.gmail.com> <37fcd2780809151255q278b1786ub4caec9022d7b082@mail.gmail.com> <bd6139dc0809151359i357987c5vb2544b1b5c99802f@mail.gmail.com> <48CED08F.5040602@drmicha.warpmail.net>
+From: "Anatol Pomozov" <anatol.pomozov@gmail.com>
+Subject: Re: Diff-tree does not work for initial commit
+Date: Mon, 15 Sep 2008 14:48:15 -0700
+Message-ID: <3665a1a00809151448l5a4449e4w3caa9986bc5dd26b@mail.gmail.com>
+References: <3665a1a00809151301p7d8e6387g3cacfb879b45da2f@mail.gmail.com>
+	 <48CECA42.1050209@drmicha.warpmail.net>
+	 <7vprn59lkd.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: sverre@rabbelier.nl, Pico Geyer <picogeyer@gmail.com>,
-	git@vger.kernel.org
-To: Michael J Gruber <git@drmicha.warpmail.net>
-X-From: git-owner@vger.kernel.org Mon Sep 15 23:49:00 2008
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: "Michael J Gruber" <git@drmicha.warpmail.net>,
+	"Git Mailing List" <git@vger.kernel.org>
+To: "Junio C Hamano" <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Sep 15 23:49:30 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KfLwG-0005II-3Q
-	for gcvg-git-2@gmane.org; Mon, 15 Sep 2008 23:48:56 +0200
+	id 1KfLwi-0005Q9-Vq
+	for gcvg-git-2@gmane.org; Mon, 15 Sep 2008 23:49:25 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753484AbYIOVrr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 15 Sep 2008 17:47:47 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752855AbYIOVrr
-	(ORCPT <rfc822;git-outgoing>); Mon, 15 Sep 2008 17:47:47 -0400
-Received: from gv-out-0910.google.com ([216.239.58.185]:56019 "EHLO
-	gv-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752671AbYIOVrq (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 15 Sep 2008 17:47:46 -0400
-Received: by gv-out-0910.google.com with SMTP id e6so1193128gvc.37
-        for <git@vger.kernel.org>; Mon, 15 Sep 2008 14:47:44 -0700 (PDT)
+	id S1754375AbYIOVsR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 15 Sep 2008 17:48:17 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754262AbYIOVsR
+	(ORCPT <rfc822;git-outgoing>); Mon, 15 Sep 2008 17:48:17 -0400
+Received: from wa-out-1112.google.com ([209.85.146.178]:20034 "EHLO
+	wa-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754087AbYIOVsQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 15 Sep 2008 17:48:16 -0400
+Received: by wa-out-1112.google.com with SMTP id j37so1493491waf.23
+        for <git@vger.kernel.org>; Mon, 15 Sep 2008 14:48:15 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:cc:subject
-         :message-id:references:mime-version:content-type:content-disposition
-         :in-reply-to:user-agent;
-        bh=9Tf80ikgYH/wGrzreIN00hSEnBp3wqbQwZQ5OlsY4eI=;
-        b=dltoItu8N9DHLg84Q+0boKTM/yN5epqUs3OTfRGO7NiA23H+rbU6RSkDIjz18tJcS1
-         eCz3TZbkSTeWts/IZPoQSBiCeEP8H/Emp6UFK7T3kVladLYXAZDJFb/mGEC8g6bP4YjR
-         ch495uTBAlTlAz4+Uwaeknmt0v1WYdIj+Fk58=
+        h=domainkey-signature:received:received:message-id:date:from:to
+         :subject:cc:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:references;
+        bh=gWsqf+thMEtALsswKE/7l8a30tbwwtEONoZfO2G37kE=;
+        b=SAKr/EQro6uQfM+DvCvCyliC0OaCICT1Gxmh+qo0KgXKirhDw8O/wiNSIV8ixoTQAQ
+         OI5NNrEXP7TuoUn9SvPvnASKWnDKhW6VvtAeNwf3w8vB5qbJf/hetubPKEAPl0Q4Pkh4
+         8N0DQkRWMQwteGKbgd909bqoOyFH5ORgRm8O8=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        b=kP+AVdazTthZnXpZpgf71gt43pjNUKCCkmbKE2UCLrHAjRGdbnWFjMLmueZd7cqGKy
-         w83uo2yjdBgSaYrLrMc8v8Ktjh4WMwYn9ktsST2v/0fvCxLmZkfNVZjG37JyPEp3O781
-         2gnCXbysY4gvQvzehjUIXwOTcPaCFMaeuJaao=
-Received: by 10.86.52.6 with SMTP id z6mr120628fgz.18.1221515264335;
-        Mon, 15 Sep 2008 14:47:44 -0700 (PDT)
-Received: from localhost ( [85.141.148.169])
-        by mx.google.com with ESMTPS id 12sm15660062fgg.0.2008.09.15.14.47.42
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Mon, 15 Sep 2008 14:47:43 -0700 (PDT)
+        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
+         :content-type:content-transfer-encoding:content-disposition
+         :references;
+        b=rUS+X6wRCNUBHyOVgULciWvW6cfja0JHiKUXUN0RwHHQPNmZBjk6Qdg6l4p2p3OQBV
+         7wGvQBe5O+a6azQaSsn44vDZVOLJzm89LwSW3nWaxrzVd7be6Wa+Aoarwubk3QuuI3EF
+         yCu+B5UPByfZduBmlzG6cEt0HIq0CZUqo4Pqk=
+Received: by 10.114.135.1 with SMTP id i1mr146890wad.5.1221515295798;
+        Mon, 15 Sep 2008 14:48:15 -0700 (PDT)
+Received: by 10.115.78.6 with HTTP; Mon, 15 Sep 2008 14:48:15 -0700 (PDT)
+In-Reply-To: <7vprn59lkd.fsf@gitster.siamese.dyndns.org>
 Content-Disposition: inline
-In-Reply-To: <48CED08F.5040602@drmicha.warpmail.net>
-User-Agent: Mutt/1.5.13 (2006-08-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/95946>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/95947>
 
-On Mon, Sep 15, 2008 at 11:15:59PM +0200, Michael J Gruber wrote:
-> Sverre Rabbelier venit, vidit, dixit 15.09.2008 22:59:
-> > 
-> > I thought this was fixed in a more recent version of git-svn? Didn't
-> > it even work both ways?
-> 
-> Kind of. You can't fake a different author when committing to svn.
+On Mon, Sep 15, 2008 at 1:54 PM, Junio C Hamano <gitster@pobox.com> wrote:
+>> The initial commit has no parent, so diff-tree does not know which tree
+>> to compare to.
+>
+> --root?
 
-This is not exactly correct as you can fake author if you have the right
-to change the svn:author property (or what is its name?), but by default
-this is not allowed to anyone, and git-svn does not support this method
-anyway.
+Oops my bad.
 
-> But
-> "--add-author-from" makes dcommit embed the author in the svn commit
-> message (if there's no from nor sob), and "--use-log-author" makes fetch
-> look for that info and use it.
+I overlooked this part of the manual. Thanks Junio.
 
-Yes, it works. And it is very useful especially you are going eventually
-convert your SVN repository in Git (so all authorship information will
-be retain). Probably, I should have mentioned this possibility.
+Taking back my words about bug.
 
-Thanks,
-Dmitry
+-- 
+anatol
