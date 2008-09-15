@@ -1,73 +1,111 @@
-From: "Anatol Pomozov" <anatol.pomozov@gmail.com>
-Subject: Re: Diff-tree does not work for initial commit
-Date: Mon, 15 Sep 2008 14:48:15 -0700
-Message-ID: <3665a1a00809151448l5a4449e4w3caa9986bc5dd26b@mail.gmail.com>
-References: <3665a1a00809151301p7d8e6387g3cacfb879b45da2f@mail.gmail.com>
-	 <48CECA42.1050209@drmicha.warpmail.net>
-	 <7vprn59lkd.fsf@gitster.siamese.dyndns.org>
+From: "Lars Hjemli" <hjemli@gmail.com>
+Subject: Re: CGit and repository list
+Date: Tue, 16 Sep 2008 00:04:01 +0200
+Message-ID: <8c5c35580809151504r24e1b067ye0a085ad9e128bfb@mail.gmail.com>
+References: <19449377.post@talk.nabble.com>
+	 <20080912145804.GF10544@machine.or.cz>
+	 <8c5c35580809120810s69e8ec4fnf2a629d4cf575901@mail.gmail.com>
+	 <200809121812.40920.johan@herland.net>
+	 <20080912224817.GF10360@machine.or.cz>
+	 <8c5c35580809121620x2de1828cq498b3709f7b0bd1b@mail.gmail.com>
+	 <20080913194938.GI10360@machine.or.cz>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-Cc: "Michael J Gruber" <git@drmicha.warpmail.net>,
-	"Git Mailing List" <git@vger.kernel.org>
-To: "Junio C Hamano" <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Sep 15 23:49:30 2008
+Cc: "Johan Herland" <johan@herland.net>, git@vger.kernel.org,
+	"Jakub Narebski" <jnareb@gmail.com>,
+	"=?UTF-8?Q?Kristian_H=C3=B8gsberg?=" <hoegsberg@gmail.com>
+To: "Petr Baudis" <pasky@suse.cz>
+X-From: git-owner@vger.kernel.org Tue Sep 16 00:05:56 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KfLwi-0005Q9-Vq
-	for gcvg-git-2@gmane.org; Mon, 15 Sep 2008 23:49:25 +0200
+	id 1KfMC3-0001Fn-Iu
+	for gcvg-git-2@gmane.org; Tue, 16 Sep 2008 00:05:48 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754375AbYIOVsR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 15 Sep 2008 17:48:17 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754262AbYIOVsR
-	(ORCPT <rfc822;git-outgoing>); Mon, 15 Sep 2008 17:48:17 -0400
-Received: from wa-out-1112.google.com ([209.85.146.178]:20034 "EHLO
-	wa-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754087AbYIOVsQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 15 Sep 2008 17:48:16 -0400
-Received: by wa-out-1112.google.com with SMTP id j37so1493491waf.23
-        for <git@vger.kernel.org>; Mon, 15 Sep 2008 14:48:15 -0700 (PDT)
+	id S1754139AbYIOWEG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 15 Sep 2008 18:04:06 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754087AbYIOWEF
+	(ORCPT <rfc822;git-outgoing>); Mon, 15 Sep 2008 18:04:05 -0400
+Received: from wf-out-1314.google.com ([209.85.200.173]:41461 "EHLO
+	wf-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752915AbYIOWEC (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 15 Sep 2008 18:04:02 -0400
+Received: by wf-out-1314.google.com with SMTP id 27so2224958wfd.4
+        for <git@vger.kernel.org>; Mon, 15 Sep 2008 15:04:02 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:received:received:message-id:date:from:to
          :subject:cc:in-reply-to:mime-version:content-type
          :content-transfer-encoding:content-disposition:references;
-        bh=gWsqf+thMEtALsswKE/7l8a30tbwwtEONoZfO2G37kE=;
-        b=SAKr/EQro6uQfM+DvCvCyliC0OaCICT1Gxmh+qo0KgXKirhDw8O/wiNSIV8ixoTQAQ
-         OI5NNrEXP7TuoUn9SvPvnASKWnDKhW6VvtAeNwf3w8vB5qbJf/hetubPKEAPl0Q4Pkh4
-         8N0DQkRWMQwteGKbgd909bqoOyFH5ORgRm8O8=
+        bh=aeltihQW/YnDnSxvxpPUFF6SkZTnLTiOrCo6u8DCUgQ=;
+        b=KtcutHc3M5R9MP21sIC44oUlTxZcbmJahlrax9kjnefI6vsyLKkXGvGo7AUht3LZXr
+         cK1IAaq55jLnSOakQzp1SRssCpn9AQprIbWI4kaRWvA+9gdAokjm0QvU5TwuPNZze/s3
+         sL+emkG7pt86VmGXhm3QYMU6KM8jUNh6yVuMs=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
          :content-type:content-transfer-encoding:content-disposition
          :references;
-        b=rUS+X6wRCNUBHyOVgULciWvW6cfja0JHiKUXUN0RwHHQPNmZBjk6Qdg6l4p2p3OQBV
-         7wGvQBe5O+a6azQaSsn44vDZVOLJzm89LwSW3nWaxrzVd7be6Wa+Aoarwubk3QuuI3EF
-         yCu+B5UPByfZduBmlzG6cEt0HIq0CZUqo4Pqk=
-Received: by 10.114.135.1 with SMTP id i1mr146890wad.5.1221515295798;
-        Mon, 15 Sep 2008 14:48:15 -0700 (PDT)
-Received: by 10.115.78.6 with HTTP; Mon, 15 Sep 2008 14:48:15 -0700 (PDT)
-In-Reply-To: <7vprn59lkd.fsf@gitster.siamese.dyndns.org>
+        b=gye91nZcqDG/WvsOzUSdDUOzZYnLAarV9tKSitRwg/Z/YTBOsaQ/QunKhbdhrNAD7B
+         zD2qT4OotRgw0KuUgGXc4VMMS08nsxaQsSnjAwrsYkjJNeTDItkH2m5JJcMK37y3ly3u
+         6GaGndJGQetbyhkGZ8aUt5dRvapt84Yj7yGtQ=
+Received: by 10.114.66.2 with SMTP id o2mr132438waa.83.1221516241588;
+        Mon, 15 Sep 2008 15:04:01 -0700 (PDT)
+Received: by 10.114.166.20 with HTTP; Mon, 15 Sep 2008 15:04:01 -0700 (PDT)
+In-Reply-To: <20080913194938.GI10360@machine.or.cz>
 Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/95947>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/95948>
 
-On Mon, Sep 15, 2008 at 1:54 PM, Junio C Hamano <gitster@pobox.com> wrote:
->> The initial commit has no parent, so diff-tree does not know which tree
->> to compare to.
+On Sat, Sep 13, 2008 at 9:49 PM, Petr Baudis <pasky@suse.cz> wrote:
+> On Sat, Sep 13, 2008 at 01:20:50AM +0200, Lars Hjemli wrote:
+>> I guess I could add support for something like
+>>
+>>   scan-paths=/pub/git
+>>
+>> in cgitrc (and optionally store the result of the scan as another
+>> cgitrc-file in the cache directory). Would that improve things for
+>> you?
 >
-> --root?
+> Yes, certainly.
 
-Oops my bad.
+Ok, for now I've added a --scan-tree=<path> commandline option which
+will make cgit print a sorted list of the repositories found to
+stdout. If/when this does a reasonable job on repo.or.cz I can look
+into some form of automatic rescanning (enabled from cgitrc).
 
-I overlooked this part of the manual. Thanks Junio.
 
-Taking back my words about bug.
+>> > Unfortunately, the recommended RewriteRule is not working - it does not
+>> > play well together with query parameters cgit is using, so e.g. browsing
+>> > past commits does not work.
 
--- 
-anatol
+I've also pushed support for PATH_INFO. This allows you to drop the
+rewriterules from httpd.conf and the 'virtual-url' option from cgitrc
+and still get the 'nice' urls.
+
+
+> I wonder why
+>
+>        http://repo.or.cz/c/libc.git/
+>
+> has such a funny-looking summary page.
+
+It's due to cgits terrible functions for parsing commits and tags.
+I've pushed a reworked patch which should make the parsing more robust
+and thus also render glibc.git correctly.
+
+Finally, and probably more interesting for freedesktop.org than
+repo.or.cz, is the support for repolist filtering by url prefix
+(compare http://hjemli.net/git and http://hjemli.net/git/xorg for a
+minimal example).
+
+This is all available from the master branch in
+git://hjemli.net/pub/git/cgit, enjoy!
+
+--
+larsh
