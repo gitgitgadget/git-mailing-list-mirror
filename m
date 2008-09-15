@@ -1,74 +1,59 @@
-From: "Sverre Rabbelier" <alturin@gmail.com>
-Subject: Re: Diff-tree does not work for initial commit
-Date: Mon, 15 Sep 2008 23:11:30 +0200
-Message-ID: <bd6139dc0809151411p49f5adeaq4beff452574ca980@mail.gmail.com>
-References: <3665a1a00809151301p7d8e6387g3cacfb879b45da2f@mail.gmail.com>
-	 <48CECA42.1050209@drmicha.warpmail.net>
-Reply-To: sverre@rabbelier.nl
+From: Michael J Gruber <git@drmicha.warpmail.net>
+Subject: Re: Help using Git(-svn) for specific use case
+Date: Mon, 15 Sep 2008 23:15:59 +0200
+Message-ID: <48CED08F.5040602@drmicha.warpmail.net>
+References: <aa2b76740809150550q724ab0f4x99a27fa21d90c0fb@mail.gmail.com>	 <37fcd2780809151255q278b1786ub4caec9022d7b082@mail.gmail.com> <bd6139dc0809151359i357987c5vb2544b1b5c99802f@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-Cc: "Anatol Pomozov" <anatol.pomozov@gmail.com>,
-	"Git Mailing List" <git@vger.kernel.org>
-To: "Michael J Gruber" <git@drmicha.warpmail.net>
-X-From: git-owner@vger.kernel.org Mon Sep 15 23:13:14 2008
+Cc: Dmitry Potapov <dpotapov@gmail.com>,
+	Pico Geyer <picogeyer@gmail.com>, git@vger.kernel.org
+To: sverre@rabbelier.nl
+X-From: git-owner@vger.kernel.org Mon Sep 15 23:17:25 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KfLNa-0002TZ-AL
-	for gcvg-git-2@gmane.org; Mon, 15 Sep 2008 23:13:06 +0200
+	id 1KfLRk-00044W-KE
+	for gcvg-git-2@gmane.org; Mon, 15 Sep 2008 23:17:25 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756759AbYIOVLe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 15 Sep 2008 17:11:34 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757892AbYIOVLd
-	(ORCPT <rfc822;git-outgoing>); Mon, 15 Sep 2008 17:11:33 -0400
-Received: from ey-out-2122.google.com ([74.125.78.24]:8175 "EHLO
-	ey-out-2122.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757884AbYIOVLc (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 15 Sep 2008 17:11:32 -0400
-Received: by ey-out-2122.google.com with SMTP id 6so1023425eyi.37
-        for <git@vger.kernel.org>; Mon, 15 Sep 2008 14:11:30 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:reply-to
-         :to:subject:cc:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:references;
-        bh=C/Us7AfimEW0O6yfbcnCSYpF8xzAMsGzex3y3HVxAhg=;
-        b=rDXGmA4HI/OngLOjkLb5v/McWOVcC+9FbvhmKKngeyh8xjFplInk4/0Fj+ZaLzRmXq
-         jdpTNhFU3rLP2HTqZgrT/MSbcArv4fDc0+CdRUPuqSLpudj7TZIn+dXEcW9SbNeChQOv
-         NaQsPeUgPWhJGEJq04V3t4npM8NkrSLFZ4pqo=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:reply-to:to:subject:cc:in-reply-to
-         :mime-version:content-type:content-transfer-encoding
-         :content-disposition:references;
-        b=OWmHjkfKFgFHlXqkGGijAPEdyCtVO/GeazTRncuRV80N2cLK2udQbz4zggVYwkL2g/
-         bDN7VdkbIgJQTNJCFTuNTEQqGvDBf3KKdIB94Yp/S73DSwkfHLC3lx4Z/svKnHzV1Rpl
-         8JEtKngSBogN+qC3iijX64g2QTwF+tAYzg2uU=
-Received: by 10.187.181.4 with SMTP id i4mr13114fap.54.1221513090109;
-        Mon, 15 Sep 2008 14:11:30 -0700 (PDT)
-Received: by 10.187.213.8 with HTTP; Mon, 15 Sep 2008 14:11:30 -0700 (PDT)
-In-Reply-To: <48CECA42.1050209@drmicha.warpmail.net>
-Content-Disposition: inline
+	id S1755765AbYIOVQI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 15 Sep 2008 17:16:08 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755973AbYIOVQH
+	(ORCPT <rfc822;git-outgoing>); Mon, 15 Sep 2008 17:16:07 -0400
+Received: from out2.smtp.messagingengine.com ([66.111.4.26]:59594 "EHLO
+	out2.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1754933AbYIOVQG (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 15 Sep 2008 17:16:06 -0400
+Received: from compute2.internal (compute2.internal [10.202.2.42])
+	by out1.messagingengine.com (Postfix) with ESMTP id 206BD1632CC;
+	Mon, 15 Sep 2008 17:16:04 -0400 (EDT)
+Received: from heartbeat1.messagingengine.com ([10.202.2.160])
+  by compute2.internal (MEProxy); Mon, 15 Sep 2008 17:16:04 -0400
+X-Sasl-enc: hdDr/+VvpvJLa21IKrbbVEl3fyLgbb8SnlU/PfdH5iV9 1221513363
+Received: from [139.174.44.12] (whitehead.math.tu-clausthal.de [139.174.44.12])
+	by mail.messagingengine.com (Postfix) with ESMTPSA id EA7C59C5B;
+	Mon, 15 Sep 2008 17:16:02 -0400 (EDT)
+User-Agent: Thunderbird 2.0.0.16 (X11/20080707)
+In-Reply-To: <bd6139dc0809151359i357987c5vb2544b1b5c99802f@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/95944>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/95945>
 
-On Mon, Sep 15, 2008 at 22:49, Michael J Gruber
-<git@drmicha.warpmail.net> wrote:
-> diff-tree is plumbing. Would this change break anything?
+Sverre Rabbelier venit, vidit, dixit 15.09.2008 22:59:
+> On Mon, Sep 15, 2008 at 21:55, Dmitry Potapov <dpotapov@gmail.com> wrote:
+>> [...] Another problem with
+>> this approach is that the author is not preserved. In SVN, all commits will
+>> look like all changes are done by the person who run "git svn dcommit".
+> 
+> I thought this was fixed in a more recent version of git-svn? Didn't
+> it even work both ways?
 
-Some of my code uses "git rev-parse" on "HEAD^" to see if a commit has
-a parent; I wouldn't be surprised if someone else has a script that
-uses "git diff-tree" or such for that purpose, or at least assumes
-that for a root commit it will complain. Anyway, as Junio said, for
-"diff-tree" you can use the "--root" option. A better RFE would
-perhaps be that "--root" be supported in more places.
+Kind of. You can't fake a different author when committing to svn. But
+"--add-author-from" makes dcommit embed the author in the svn commit
+message (if there's no from nor sob), and "--use-log-author" makes fetch
+look for that info and use it.
 
--- 
-Cheers,
-
-Sverre Rabbelier
+Michael
