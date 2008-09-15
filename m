@@ -1,97 +1,74 @@
-From: Michael J Gruber <git@drmicha.warpmail.net>
+From: "Sverre Rabbelier" <alturin@gmail.com>
 Subject: Re: Diff-tree does not work for initial commit
-Date: Mon, 15 Sep 2008 23:09:01 +0200
-Message-ID: <48CECEED.3080105@drmicha.warpmail.net>
-References: <3665a1a00809151301p7d8e6387g3cacfb879b45da2f@mail.gmail.com> <48CECA42.1050209@drmicha.warpmail.net>
+Date: Mon, 15 Sep 2008 23:11:30 +0200
+Message-ID: <bd6139dc0809151411p49f5adeaq4beff452574ca980@mail.gmail.com>
+References: <3665a1a00809151301p7d8e6387g3cacfb879b45da2f@mail.gmail.com>
+	 <48CECA42.1050209@drmicha.warpmail.net>
+Reply-To: sverre@rabbelier.nl
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Anatol Pomozov <anatol.pomozov@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Sep 15 23:11:24 2008
+Cc: "Anatol Pomozov" <anatol.pomozov@gmail.com>,
+	"Git Mailing List" <git@vger.kernel.org>
+To: "Michael J Gruber" <git@drmicha.warpmail.net>
+X-From: git-owner@vger.kernel.org Mon Sep 15 23:13:14 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KfLLv-0001uj-98
-	for gcvg-git-2@gmane.org; Mon, 15 Sep 2008 23:11:23 +0200
+	id 1KfLNa-0002TZ-AL
+	for gcvg-git-2@gmane.org; Mon, 15 Sep 2008 23:13:06 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757245AbYIOVJJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 15 Sep 2008 17:09:09 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756681AbYIOVJJ
-	(ORCPT <rfc822;git-outgoing>); Mon, 15 Sep 2008 17:09:09 -0400
-Received: from out2.smtp.messagingengine.com ([66.111.4.26]:38968 "EHLO
-	out2.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1757245AbYIOVJH (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 15 Sep 2008 17:09:07 -0400
-Received: from compute2.internal (compute2.internal [10.202.2.42])
-	by out1.messagingengine.com (Postfix) with ESMTP id B605A16378A;
-	Mon, 15 Sep 2008 17:09:06 -0400 (EDT)
-Received: from heartbeat2.messagingengine.com ([10.202.2.161])
-  by compute2.internal (MEProxy); Mon, 15 Sep 2008 17:09:06 -0400
-X-Sasl-enc: MSEVFiCIOxhRo3G36pVwGE9hkRxBAh+5SL40Qs5GJuUR 1221512946
-Received: from [139.174.44.12] (whitehead.math.tu-clausthal.de [139.174.44.12])
-	by mail.messagingengine.com (Postfix) with ESMTPSA id 264F9325BD;
-	Mon, 15 Sep 2008 17:09:06 -0400 (EDT)
-User-Agent: Thunderbird 2.0.0.16 (X11/20080707)
+	id S1756759AbYIOVLe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 15 Sep 2008 17:11:34 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757892AbYIOVLd
+	(ORCPT <rfc822;git-outgoing>); Mon, 15 Sep 2008 17:11:33 -0400
+Received: from ey-out-2122.google.com ([74.125.78.24]:8175 "EHLO
+	ey-out-2122.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757884AbYIOVLc (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 15 Sep 2008 17:11:32 -0400
+Received: by ey-out-2122.google.com with SMTP id 6so1023425eyi.37
+        for <git@vger.kernel.org>; Mon, 15 Sep 2008 14:11:30 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:reply-to
+         :to:subject:cc:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:references;
+        bh=C/Us7AfimEW0O6yfbcnCSYpF8xzAMsGzex3y3HVxAhg=;
+        b=rDXGmA4HI/OngLOjkLb5v/McWOVcC+9FbvhmKKngeyh8xjFplInk4/0Fj+ZaLzRmXq
+         jdpTNhFU3rLP2HTqZgrT/MSbcArv4fDc0+CdRUPuqSLpudj7TZIn+dXEcW9SbNeChQOv
+         NaQsPeUgPWhJGEJq04V3t4npM8NkrSLFZ4pqo=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:reply-to:to:subject:cc:in-reply-to
+         :mime-version:content-type:content-transfer-encoding
+         :content-disposition:references;
+        b=OWmHjkfKFgFHlXqkGGijAPEdyCtVO/GeazTRncuRV80N2cLK2udQbz4zggVYwkL2g/
+         bDN7VdkbIgJQTNJCFTuNTEQqGvDBf3KKdIB94Yp/S73DSwkfHLC3lx4Z/svKnHzV1Rpl
+         8JEtKngSBogN+qC3iijX64g2QTwF+tAYzg2uU=
+Received: by 10.187.181.4 with SMTP id i4mr13114fap.54.1221513090109;
+        Mon, 15 Sep 2008 14:11:30 -0700 (PDT)
+Received: by 10.187.213.8 with HTTP; Mon, 15 Sep 2008 14:11:30 -0700 (PDT)
 In-Reply-To: <48CECA42.1050209@drmicha.warpmail.net>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/95943>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/95944>
 
-Michael J Gruber venit, vidit, dixit 15.09.2008 22:49:
-> Anatol Pomozov venit, vidit, dixit 15.09.2008 22:01:
->> Hi, It looks like I found a bug in git.
->>
->> The problem: In my script I need to know what files were modified by 
->> given commit. I use diff-tree for it. Although it works for most 
->> cases, for initial commit it does not. Here is a sequence of actions.
->>
->>
->> anatol:~ $ mkdir mkdir initialcommitissue anatol:~ $ cd
->> initialcommitissue/ anatol:initialcommitissue $ git init Initialized
->> empty Git repository in /home/anatol/initialcommitissue/.git/ 
->> anatol:initialcommitissue $ echo "First commit" > 1.txt 
->> anatol:initialcommitissue $ git add 1.txt anatol:initialcommitissue $
->> git commit -m "First commit" Created initial commit 31ccc6a: First
->> commit 1 files changed, 1 insertions(+), 0 deletions(-) create mode
->> 100644 1.txt anatol:initialcommitissue $ git diff-tree HEAD     <<<<<
->> PROBLEM IS HERE
-> 
-> From the man page:
-> 
->        Compares the content and mode of the blobs found via two tree
-> objects.
-> 
->        If there is only one <tree-ish> given, the commit is compared
-> with its parents (see --stdin below).
-> 
->        Note that git-diff-tree can use the tree encapsulated in a commit
-> object.
-> 
-> 
-> The initial commit has no parent, so diff-tree does not know which tree
-> to compare to.
-> 
-> You can do
-> 
-> git diff-tree 4b825dc642cb6eb9a060e54bf8d69288fbee4904 HEAD
-> 
-> but I guess you suggest that diff-tree should do that automatically for
-> a single parentless treeish: bug -> RFE
-> 
+On Mon, Sep 15, 2008 at 22:49, Michael J Gruber
+<git@drmicha.warpmail.net> wrote:
 > diff-tree is plumbing. Would this change break anything?
-> 
-> Michael
 
-Ooops, that man page is just too long. Scrolling way down:
+Some of my code uses "git rev-parse" on "HEAD^" to see if a commit has
+a parent; I wouldn't be surprised if someone else has a script that
+uses "git diff-tree" or such for that purpose, or at least assumes
+that for a root commit it will complain. Anyway, as Junio said, for
+"diff-tree" you can use the "--root" option. A better RFE would
+perhaps be that "--root" be supported in more places.
 
-"git commit-tree --root" treats the root as a commit with an empty tree.
-So this does what you want.
+-- 
+Cheers,
 
-But you may want to look into porcelain like
-git show --pretty=format: --name-only
-
-Michael
+Sverre Rabbelier
