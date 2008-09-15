@@ -1,111 +1,77 @@
-From: Michael J Gruber <michaeljgruber+gmane@fastmail.fm>
-Subject: Re: Help using Git(-svn) for specific use case
-Date: Mon, 15 Sep 2008 17:12:49 +0200
-Message-ID: <48CE7B71.4090702@fastmail.fm>
-References: <aa2b76740809150550q724ab0f4x99a27fa21d90c0fb@mail.gmail.com>
+From: "Tor Arvid Lund" <torarvid@gmail.com>
+Subject: Re: [PATCH] Optional shrinking of RCS keywords in git-p4
+Date: Mon, 15 Sep 2008 17:27:53 +0200
+Message-ID: <1a6be5fa0809150827y6d52e240m24fd463549bd4971@mail.gmail.com>
+References: <263224.61965.qm@web95002.mail.in2.yahoo.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Pico Geyer <picogeyer@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Sep 15 17:14:18 2008
+Cc: "Junio C Hamano" <gitster@pobox.com>,
+	"David Brown" <git@davidb.org>, "GIT SCM" <git@vger.kernel.org>,
+	"Simon Hausmann" <simon@lst.de>
+To: dhruva <dhruva@ymail.com>
+X-From: git-owner@vger.kernel.org Mon Sep 15 17:29:11 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KfFm8-0001ft-Kg
-	for gcvg-git-2@gmane.org; Mon, 15 Sep 2008 17:14:05 +0200
+	id 1KfG0f-00062Q-K8
+	for gcvg-git-2@gmane.org; Mon, 15 Sep 2008 17:29:06 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754010AbYIOPMz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 15 Sep 2008 11:12:55 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753960AbYIOPMz
-	(ORCPT <rfc822;git-outgoing>); Mon, 15 Sep 2008 11:12:55 -0400
-Received: from out2.smtp.messagingengine.com ([66.111.4.26]:56744 "EHLO
-	out2.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1753998AbYIOPMy (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 15 Sep 2008 11:12:54 -0400
-Received: from compute1.internal (compute1.internal [10.202.2.41])
-	by out1.messagingengine.com (Postfix) with ESMTP id 135D2162CAB;
-	Mon, 15 Sep 2008 11:12:53 -0400 (EDT)
-Received: from heartbeat2.messagingengine.com ([10.202.2.161])
-  by compute1.internal (MEProxy); Mon, 15 Sep 2008 11:12:53 -0400
-X-Sasl-enc: EhEL/010LXZvzOjFNfzNNy4x1QpNU7m1pP9DX7K4XENN 1221491572
-Received: from [139.174.44.12] (whitehead.math.tu-clausthal.de [139.174.44.12])
-	by mail.messagingengine.com (Postfix) with ESMTPSA id 6A63828B0F;
-	Mon, 15 Sep 2008 11:12:52 -0400 (EDT)
-User-Agent: Thunderbird 2.0.0.16 (X11/20080707)
-In-Reply-To: <aa2b76740809150550q724ab0f4x99a27fa21d90c0fb@mail.gmail.com>
+	id S1754034AbYIOP14 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 15 Sep 2008 11:27:56 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753982AbYIOP14
+	(ORCPT <rfc822;git-outgoing>); Mon, 15 Sep 2008 11:27:56 -0400
+Received: from rn-out-0910.google.com ([64.233.170.190]:1278 "EHLO
+	rn-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753200AbYIOP1z (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 15 Sep 2008 11:27:55 -0400
+Received: by rn-out-0910.google.com with SMTP id k40so1300542rnd.17
+        for <git@vger.kernel.org>; Mon, 15 Sep 2008 08:27:54 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to
+         :subject:cc:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:references;
+        bh=lYr/c7uz68DAkz3EHEIE39MAeHCtLojwqG8ipwEi4Ns=;
+        b=e86pxSaE9SSgXnfNUW8ZK1r7d7Bfq93ZbP+0q/bS7+giEma7Wv3Toi89BYALmx+Y2o
+         QvaHtZhBRBqCXJuRZlOhoiassa1d09zR59UTL/oNWl6OaSrcdnaDEBeZr2nNRC+Dzp+1
+         1cHsi9HrvS/afq5notL5porKZrY8DOGRkIPzo=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
+         :content-type:content-transfer-encoding:content-disposition
+         :references;
+        b=QBkI3OMzVUdkJKNne8rjYE0vDj9GGcK2g4aOC0x4u1bijdJ19eA8MkzcZwVuyJnAWO
+         9jl3Khmkw5cX7prxjyfol2JV7wYgaD/5QawwHlo4LecI/xPPpuzJ0+R0SNAxr/Y66b8O
+         nYza3jE3kOURTeMEkAqZpXprsWIgLnFP/ypKA=
+Received: by 10.86.98.14 with SMTP id v14mr6047923fgb.74.1221492473751;
+        Mon, 15 Sep 2008 08:27:53 -0700 (PDT)
+Received: by 10.86.79.9 with HTTP; Mon, 15 Sep 2008 08:27:53 -0700 (PDT)
+In-Reply-To: <263224.61965.qm@web95002.mail.in2.yahoo.com>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/95913>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/95914>
 
-Pico Geyer venit, vidit, dixit 15.09.2008 14:50:
-> Hi all.
-> 
-> I'd like to start using Git within our company. I'm still trying to
-> determine if Git can work in our scenario.
-> May be someone can offer some advice.
-> Our scenario is as follows:
-> We have a handful of developers which work at a branch office. This
-> office has a rather slow internet connection.
-> At the head office, we are (still) using a Subversion server to host
-> our source code.
-> At the branch office, we would like to do the following:
-> * Fetch the latest code from the subversion server.
-> * Push changes that we have made at the remote office back to upstream
-> SVN server.
-> * Be able to share source code changes locally (at the branch office)
-> between developers.
-> 
-> The solution that I imagined is that we would setup a server (lets
-> call it A) at the branch office with a Git repository, that all the
-> developers can access.
-> Developers would then clone the server repository A, make mods and
-> then push changes back to A.
-> It would be nice if git users could commit to a subversion branch.
-> A merge master would then (as necessary) use svn dcommit to push the
-> changes up to the svn server.
-> Is this scenario possible?
-> 
-> From the git-svn man page: "git-clone does not clone branches under
-> the refs/remotes/ hierarchy or any git-svn metadata, or config. So
-> repositories created and managed with using git-svn should use rsync
-> for cloning, if cloning is to be done at all."
+On Mon, Sep 15, 2008 at 1:46 PM, dhruva <dhruva@ymail.com> wrote:
+> ----- Original Message ----
+>> From: Tor Arvid Lund <torarvid@gmail.com>
+------ >8 ------
+>> Hmm.. I thought this was not a p4 problem. I think however, that
+>> "git-p4 submit" tries to do git format-patch and then git apply that
+>> patch to the p4 directory. In other words, I believe that git apply
+>> fails since the file in the p4 dir has the keywords expanded, while
+>> the patch does not. I haven't done any careful investigation, but If
+>> my assumption is true, it sounds like dhruvas patch should work...
+>
+> Your assumption is true (from my understanding of the code). My doubt is, even the files in p4 folder will be from git with no RCS keyword expanded. The patch application must ideally be clean! I am confused here.
 
-That is true if you mean by "clone" a complete copy.
+Hmm, regarding the p4 folder - I'm pretty sure git-p4 calls "p4 sync
+<depotpath>/..." in that folder before applying the patch. So those
+files are whatever p4 says they are - which is with keywords
+expanded...
 
-> Does that mean that one should not push changes to a repository that
-> was created with "git svn clone ..."?
-
-What matters is which branches you push into.
-
-Your developers don't need to push/commit to svn, only into A, if I
-understood correctly. Do they need svn-metadata (besides svn revision
-numbers)?
-If not then the interaction between A and the developers can be a normal
-git workflow between git managed branches, and "git clone" will do fine.
-
-Merge master at A could do the following:
-- use git svn to keep the svn (remote) branches at A in sync with the
-central subversion server
-- push them to proper git branches in A, which get picked up by
-developers' " git clone"
-- maintain integration branches for integrating the changes coming fro
-the developers
-- dcommit the svn tracking branches back to the central svn server
-
-Disadvantage:
-If changes are dcommitted to svn, synced back with git svn fetch, and
-then fetched/pull by the developers their commit will look different
-(addition git svn info in the commit message). This is similar to a
-workflow where you submit by e-mail and your integrated patches get a
-different sha1.
-
-Advantage:
-For all developers, everything is just git. Only megre master needs to
-know git svn.
-
-Cheers,
-Michael
+-TAL-
