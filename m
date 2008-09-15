@@ -1,81 +1,87 @@
-From: "Tor Arvid Lund" <torarvid@gmail.com>
+From: dhruva <dhruva@ymail.com>
 Subject: Re: [PATCH] Optional shrinking of RCS keywords in git-p4
-Date: Mon, 15 Sep 2008 13:02:32 +0200
-Message-ID: <1a6be5fa0809150402m6020698ci9204109a0b615c1c@mail.gmail.com>
-References: <16219.81556.qm@web95005.mail.in2.yahoo.com>
-	 <20080915063521.GA1533@linode.davidb.org>
-	 <7vy71tetvt.fsf@gitster.siamese.dyndns.org>
+Date: Mon, 15 Sep 2008 17:16:28 +0530 (IST)
+Message-ID: <263224.61965.qm@web95002.mail.in2.yahoo.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: "David Brown" <git@davidb.org>, dhruva <dhruva@ymail.com>,
-	"GIT SCM" <git@vger.kernel.org>, "Simon Hausmann" <simon@lst.de>
-To: "Junio C Hamano" <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Sep 15 13:04:38 2008
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8BIT
+Cc: David Brown <git@davidb.org>, GIT SCM <git@vger.kernel.org>,
+	Simon Hausmann <simon@lst.de>
+To: Tor Arvid Lund <torarvid@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Sep 15 13:47:56 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KfBsW-0007kT-Fn
-	for gcvg-git-2@gmane.org; Mon, 15 Sep 2008 13:04:24 +0200
+	id 1KfCYP-0000Xg-9h
+	for gcvg-git-2@gmane.org; Mon, 15 Sep 2008 13:47:41 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752704AbYIOLCf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 15 Sep 2008 07:02:35 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752677AbYIOLCf
-	(ORCPT <rfc822;git-outgoing>); Mon, 15 Sep 2008 07:02:35 -0400
-Received: from an-out-0708.google.com ([209.85.132.243]:51703 "EHLO
-	an-out-0708.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752704AbYIOLCe (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 15 Sep 2008 07:02:34 -0400
-Received: by an-out-0708.google.com with SMTP id d40so197914and.103
-        for <git@vger.kernel.org>; Mon, 15 Sep 2008 04:02:33 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to
-         :subject:cc:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:references;
-        bh=x3DQx+3afGG1mwtGC7dlTHtXlTyNzYVstBcusMGyY3I=;
-        b=vaA4diCGJ/+sqB4jFFEOcHaa893edtZUpvhAJMhm5Cf8358w1GC4sQ50bVhTZVGLlb
-         LLKrQp4Wzxr22EA1Rfyyz/nBQpuh1CbNr/Egf9u2XX5wnCuAGhuorwx0pZD9hqJTGRmT
-         LEh4PKjAl3RYrtIUyeHcw1xNlYgC3JU9OjWhU=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
-         :content-type:content-transfer-encoding:content-disposition
-         :references;
-        b=b4r7cpJVz1BT4ej0++TVkkIhLod9ywtlt35J5Fr4CFbpfqtCj3iVOamxyXprQ3dJME
-         uNwMUS8OlQ9i+jAuNF46Ib16sRx7A5i6638N2hJZKRNSV/2M+1PuHPcj4Y8/rjFv6b/z
-         p6WhB9SdGKMjhUvy3a4PsmxJJUbZcvS05xY2g=
-Received: by 10.86.79.19 with SMTP id c19mr5797871fgb.79.1221476552806;
-        Mon, 15 Sep 2008 04:02:32 -0700 (PDT)
-Received: by 10.86.79.9 with HTTP; Mon, 15 Sep 2008 04:02:32 -0700 (PDT)
-In-Reply-To: <7vy71tetvt.fsf@gitster.siamese.dyndns.org>
-Content-Disposition: inline
+	id S1752883AbYIOLqb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 15 Sep 2008 07:46:31 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753171AbYIOLqb
+	(ORCPT <rfc822;git-outgoing>); Mon, 15 Sep 2008 07:46:31 -0400
+Received: from n2a.bullet.mail.in2.yahoo.com ([203.104.19.40]:41295 "HELO
+	n2a.bullet.mail.in2.yahoo.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with SMTP id S1752870AbYIOLqb convert rfc822-to-8bit
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 15 Sep 2008 07:46:31 -0400
+Received: from [202.86.4.170] by n2.bullet.mail.in2.yahoo.com with NNFMP; 15 Sep 2008 11:46:28 -0000
+Received: from [203.104.18.50] by t1.bullet.in.yahoo.com with NNFMP; 15 Sep 2008 11:46:28 -0000
+Received: from [127.0.0.1] by omp111.mail.in2.yahoo.com with NNFMP; 15 Sep 2008 11:46:28 -0000
+X-Yahoo-Newman-Property: ymail-3
+X-Yahoo-Newman-Id: 381048.12888.bm@omp111.mail.in2.yahoo.com
+Received: (qmail 9306 invoked by uid 60001); 15 Sep 2008 11:46:28 -0000
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+  s=s1024; d=ymail.com;
+  h=X-YMail-OSG:Received:X-Mailer:Date:From:Subject:To:Cc:MIME-Version:Content-Type:Content-Transfer-Encoding:Message-ID;
+  b=m6fCLxWenzg8FKraS5N4RW7ffDFlF6yIUnkYqYrZ2RXIcJdPdHsb04hHwB5StSrDGTQq91bTLdIDc8KEaQOR9NrIQ6eC0t22t8Mq4WpTbyUvRTjBKI2gQ/KnvdgXXDn0VBgHIjYDbgKewt93+EQzu0PQPG7TOHzelJcTqyUMGx8=;
+X-YMail-OSG: PHQD_OUVM1nlTyiPZ9lAety3_iMO6fckep14O4vWHBXacx4l4UYZrD3ykkNwL5iEimHMjyE_vf09exDL2dy24m5XsYwvp8Q1wHfcccNnbACr3ywWmmzwyUf7Ho15jkY-
+Received: from [202.3.112.9] by web95002.mail.in2.yahoo.com via HTTP; Mon, 15 Sep 2008 17:16:28 IST
+X-Mailer: YahooMailRC/1096.28 YahooMailWebService/0.7.218.2
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/95898>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/95899>
 
-On Mon, Sep 15, 2008 at 9:43 AM, Junio C Hamano <gitster@pobox.com> wrote:
-> David Brown <git@davidb.org> writes:
->
->> ...  As far as I can tell, P4 completely
->> ignores whatever the $Id: ...$ headers happen to be expanded to at the
->> time of checking.  You can put garbage there, and it check in fine.
->> ...
->> I guess it isn't a problem to make this optional in git-p4, but I
->> don't think this patch is solving the right problem.
->
-> Hmm.  I do not do p4, but what I am guessing is that there probably is a
-> configuration switch on the p4 side that lets you check in files with
-> "$Id: garbage $" in them, while dhruva hasn't turned that switch on.
+Hi,
+ I am going to use the patched version for sometime to see if the problem (RCS hunk) arises again. From a pure SCM interconnect perspective, it might still be good to have keyword expansion as an option. With this being an option, the data in git and p4 are same.
 
-Hmm.. I thought this was not a p4 problem. I think however, that
-"git-p4 submit" tries to do git format-patch and then git apply that
-patch to the p4 directory. In other words, I believe that git apply
-fails since the file in the p4 dir has the keywords expanded, while
-the patch does not. I haven't done any careful investigation, but If
-my assumption is true, it sounds like dhruvas patch should work...
 
--Tor Arvid Lund-
+
+----- Original Message ----
+> From: Tor Arvid Lund <torarvid@gmail.com>
+> To: Junio C Hamano <gitster@pobox.com>
+> Cc: David Brown <git@davidb.org>; dhruva <dhruva@ymail.com>; GIT SCM <git@vger.kernel.org>; Simon Hausmann <simon@lst.de>
+> Sent: Monday, 15 September, 2008 4:32:32 PM
+> Subject: Re: [PATCH] Optional shrinking of RCS keywords in git-p4
+> 
+> On Mon, Sep 15, 2008 at 9:43 AM, Junio C Hamano wrote:
+> > David Brown writes:
+> >
+> >> ...  As far as I can tell, P4 completely
+> >> ignores whatever the $Id: ...$ headers happen to be expanded to at the
+> >> time of checking.  You can put garbage there, and it check in fine.
+> >> ...
+> >> I guess it isn't a problem to make this optional in git-p4, but I
+> >> don't think this patch is solving the right problem.
+> >
+> > Hmm.  I do not do p4, but what I am guessing is that there probably is a
+> > configuration switch on the p4 side that lets you check in files with
+> > "$Id: garbage $" in them, while dhruva hasn't turned that switch on.
+> 
+> Hmm.. I thought this was not a p4 problem. I think however, that
+> "git-p4 submit" tries to do git format-patch and then git apply that
+> patch to the p4 directory. In other words, I believe that git apply
+> fails since the file in the p4 dir has the keywords expanded, while
+> the patch does not. I haven't done any careful investigation, but If
+> my assumption is true, it sounds like dhruvas patch should work...
+
+Your assumption is true (from my understanding of the code). My doubt is, even the files in p4 folder will be from git with no RCS keyword expanded. The patch application must ideally be clean! I am confused here.
+
+-dhruva
+
+
+
+      Get an email ID as yourname@ymail.com or yourname@rocketmail.com. Click here http://in.promos.yahoo.com/address
