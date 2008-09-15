@@ -1,88 +1,81 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 05/16] ls-files: add --narrow-checkout option to "will
- checkout" entries
-Date: Mon, 15 Sep 2008 13:20:16 -0700
-Message-ID: <7v3ak1b1q7.fsf@gitster.siamese.dyndns.org>
-References: <1221397685-27715-1-git-send-email-pclouds@gmail.com>
- <1221397685-27715-2-git-send-email-pclouds@gmail.com>
- <1221397685-27715-3-git-send-email-pclouds@gmail.com>
- <1221397685-27715-4-git-send-email-pclouds@gmail.com>
- <1221397685-27715-5-git-send-email-pclouds@gmail.com>
- <1221397685-27715-6-git-send-email-pclouds@gmail.com>
- <m34p4io8vt.fsf@localhost.localdomain>
+From: Michael J Gruber <git@drmicha.warpmail.net>
+Subject: Re: [PATCH] help git-upload-pack find git
+Date: Mon, 15 Sep 2008 22:22:19 +0200
+Message-ID: <48CEC3FB.5070101@drmicha.warpmail.net>
+References: <d3a045300809150130w6f78edd8xf599d1c7f639b77d@mail.gmail.com> <d3a045300809150130w6f78edd8xf599d1c7f639b77d@mail.gmail.com> <1221495891-12600-1-git-send-email-git@drmicha.warpmail.net> <7vzlm9b3v4.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
-	git@vger.kernel.org
-To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Sep 15 22:21:47 2008
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Sep 15 22:23:42 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KfKZn-0002mr-5a
-	for gcvg-git-2@gmane.org; Mon, 15 Sep 2008 22:21:39 +0200
+	id 1KfKbc-0003Q2-BP
+	for gcvg-git-2@gmane.org; Mon, 15 Sep 2008 22:23:32 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754425AbYIOUUa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 15 Sep 2008 16:20:30 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754444AbYIOUUa
-	(ORCPT <rfc822;git-outgoing>); Mon, 15 Sep 2008 16:20:30 -0400
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:64520 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754366AbYIOUUa (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 15 Sep 2008 16:20:30 -0400
-Received: from localhost.localdomain (localhost [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 5B87161B3F;
-	Mon, 15 Sep 2008 16:20:27 -0400 (EDT)
-Received: from pobox.com (ip68-225-240-211.oc.oc.cox.net [68.225.240.211])
- (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
- certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
- ESMTPSA id ECF1361B3D; Mon, 15 Sep 2008 16:20:22 -0400 (EDT)
-In-Reply-To: <m34p4io8vt.fsf@localhost.localdomain> (Jakub Narebski's message
- of "Sun, 14 Sep 2008 11:55:06 -0700 (PDT)")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: BC31FDBC-8363-11DD-9D5D-D0CFFE4BC1C1-77302942!a-sasl-fastnet.pobox.com
+	id S1754170AbYIOUWZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 15 Sep 2008 16:22:25 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754166AbYIOUWZ
+	(ORCPT <rfc822;git-outgoing>); Mon, 15 Sep 2008 16:22:25 -0400
+Received: from out2.smtp.messagingengine.com ([66.111.4.26]:35397 "EHLO
+	out2.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1754087AbYIOUWY (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 15 Sep 2008 16:22:24 -0400
+Received: from compute2.internal (compute2.internal [10.202.2.42])
+	by out1.messagingengine.com (Postfix) with ESMTP id 99E6F16212A;
+	Mon, 15 Sep 2008 16:22:23 -0400 (EDT)
+Received: from heartbeat2.messagingengine.com ([10.202.2.161])
+  by compute2.internal (MEProxy); Mon, 15 Sep 2008 16:22:23 -0400
+X-Sasl-enc: /0Y8xg+2YFGUuSkX6KN4o19Yx2g1SVn9izLZyaRKj0Lj 1221510143
+Received: from [139.174.44.12] (whitehead.math.tu-clausthal.de [139.174.44.12])
+	by mail.messagingengine.com (Postfix) with ESMTPSA id 158F12C490;
+	Mon, 15 Sep 2008 16:22:22 -0400 (EDT)
+User-Agent: Thunderbird 2.0.0.16 (X11/20080707)
+In-Reply-To: <7vzlm9b3v4.fsf@gitster.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/95937>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/95938>
 
-Jakub Narebski <jnareb@gmail.com> writes:
+Junio C Hamano venit, vidit, dixit 15.09.2008 21:34:
+> Michael J Gruber <git@drmicha.warpmail.net> writes:
+> 
+>> The corresponding bug was reported by Paul Johnston who wondered why
+>> "git clone" failed when specifying --upload-pack for an out-of-$PATH
+>> installation of git.  I'm not sure whether we should encourage this, but
+>> the --upload-pack option clearly gives the impression that
+>> git-upload-pack is all that is needed.
+> 
+> Another possibility would be to teach exec_cmd.c:setup_path() to add the
+> directory specified by $(bindir) to PATH after we add GIT_EXEC_PATH to
+> it.  That should cover the case David Miller reported, shouldn't it?
 
->> @@ -72,6 +73,11 @@ OPTIONS
->>  	to file/directory conflicts for checkout-index to
->>  	succeed.
->>  
->> +--narrow-checkout::
->> +	When narrow checkout is being used, this option together with other
->> +	index-based selection options like --cached or --stage, only narrowed
->> +	portion will be printed out.
->> +
->
-> I would rather say, that if git-ls-files is requested to show index
-> content (by using selection options like --cached or --stage), then
-> by default it shows all entries, also those marked "no checkout".
-> With this option git-ls-files would show only files that would get
-> checked out.
+Probably. I read that thread only after submitting my patch for
+upload-pack but suspected that other server side incarnations may suffer
+from the same problem.
 
-ls-files is a very low-level interrogator, and I have this queasy feeling
-in the stomach if it suddenly stopped showing half of the index without
-explicitly asked to with an option like this.  If somebody iterates over
-ls-files output (with or without pathspecs), most often it would be to do
-something interesting on the work tree files that correspond to these
-paths, and for that use case it would make sense to have a mode that shows
-only the paths marked for checkout.  But unless you can prove that "most
-often" above is "100%", you risk breaking somebody's script.  Maybe you
-are doing something similar [*1*] to the index-filter feature of
-filter-branch, starting from the current index that has no-checkout marks
-in its entries, and it wants to know all the paths in the index.  Who
-knows?
+I was actually surprised that setup_path() uses argv0_path without
+setting it, same as with argv_exec_path. I assumed this is for a good
+reason, I'm lacking the code base overview to judge this myself.
 
+In any case, git.c sets argv0_path early, messes a bit with argv[0] and
+calls setup_path afterwards anyways. So adding the path in setup_path()
+should not hurt any "git foo" command.
 
-[Footnote]
+One could construe situations where even that wouldn't help, because
+git-upload-pack can't pass --exec-dir to git and they can be in
+different locations - but I think that's crazy.
 
-*1* filter-branch happens to start with an empty index and does not know
-about the new 'narrow checkout' feature, so it is Ok, but it is plausible
-as an optimization for it to prime the initial index from the current
-"real" index, which may have the no-checkout marks.
+git.c, upload-pack.c, receive.pack.c and shell.c are the only callers.
+setup_path() needs to get a parameter. If shell.c should profit from the
+change then it needs to be taught how to pass an absolute path to
+do_{generic,cvs}_cmd().
+
+So, I guess the general approach (change setup() path and have every
+caller profit) is OK. OK with you?
+
+Michael
