@@ -1,155 +1,83 @@
-From: "Paul Johnston" <pcj127@gmail.com>
-Subject: git-clone: path or ssh problem with git-upload-pack in 1.6.0?
-Date: Mon, 15 Sep 2008 01:30:16 -0700
-Message-ID: <d3a045300809150130w6f78edd8xf599d1c7f639b77d@mail.gmail.com>
-References: <d3a045300809091929h18c3c447gb3d4e79131f66986@mail.gmail.com>
+From: Markus Wanner <markus@bluegap.ch>
+Subject: Re: [Monotone-devel] Re: [ANN] mtn2git v0.1
+Date: Mon, 15 Sep 2008 11:07:02 +0200
+Message-ID: <48CE25B6.40608@bluegap.ch>
+References: <94a0d4530809121559w5f644174j461ec61cb2327fd8@mail.gmail.com>	<m3d4j8nzy9.fsf@localhost.localdomain>	<94a0d4530809130352v5775be53sc14b354b8c1dae15@mail.gmail.com>	<200809131402.11413.jnareb@gmail.com>
+	<94a0d4530809130821h6f424695xe09386243c3213c3@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain; charset="us-ascii"
 Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Sep 15 10:31:31 2008
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git-2@gmane.org
-Received: from vger.kernel.org ([209.132.176.167])
+Cc: devel@pidgin.im, openembedded-devel@openembedded.org,
+	monotone-devel@nongnu.org, git@vger.kernel.org,
+	Jakub Narebski <jnareb@gmail.com>
+To: Felipe Contreras <felipe.contreras@gmail.com>
+X-From: devel-bounces@pidgin.im Mon Sep 15 11:08:14 2008
+Return-path: <devel-bounces@pidgin.im>
+Envelope-to: gcgg-gaim-devel-259@gmane.org
+Received: from homing.pidgin.im ([69.31.24.85])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Kf9UV-00019n-AS
-	for gcvg-git-2@gmane.org; Mon, 15 Sep 2008 10:31:27 +0200
-Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751094AbYIOIaW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 15 Sep 2008 04:30:22 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751241AbYIOIaU
-	(ORCPT <rfc822;git-outgoing>); Mon, 15 Sep 2008 04:30:20 -0400
-Received: from yx-out-2324.google.com ([74.125.44.30]:28209 "EHLO
-	yx-out-2324.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750999AbYIOIaR (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 15 Sep 2008 04:30:17 -0400
-Received: by yx-out-2324.google.com with SMTP id 8so594963yxm.1
-        for <git@vger.kernel.org>; Mon, 15 Sep 2008 01:30:16 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to
-         :subject:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:references;
-        bh=qR0uKJXIV6BsX02S09lhgga+hpVG4cn5rPZ0kR6xqEg=;
-        b=KLEI5T1gkTV3sRLf5ZQpu8X4ELb2kjOb9vd6q8p0Ab1W5mGIADmpveL6Av0JrF/ubJ
-         DT27pyT8Qy0qgCgnns08k85dSYjogFzwmWRE+H65BoitAM7aQgB1/8GN2gN9jPgGWsGV
-         GT4koPkiCrD01NlthbOm0GrzwJXPtlKSjeppU=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:in-reply-to:mime-version
-         :content-type:content-transfer-encoding:content-disposition
-         :references;
-        b=a9tT6vtyzr0SGm1ZakEf9snxIg7/XNRz422PIIGudnmMChprRrmpgBGw7Jh5vmV4Gt
-         RNSqrZ3y6r61xGL60AKLg/DcfQeHdPvJ4Cn7IdNJLDE2XAEuaN5e6d3Mo7DX1MiuWaO3
-         XJii1lakIwgX7EkjgzTjkSprnqY6yXtq819BE=
-Received: by 10.150.154.6 with SMTP id b6mr10302296ybe.92.1221467416691;
-        Mon, 15 Sep 2008 01:30:16 -0700 (PDT)
-Received: by 10.150.11.21 with HTTP; Mon, 15 Sep 2008 01:30:16 -0700 (PDT)
-In-Reply-To: <d3a045300809091929h18c3c447gb3d4e79131f66986@mail.gmail.com>
-Content-Disposition: inline
-Sender: git-owner@vger.kernel.org
-Precedence: bulk
-List-ID: <git.vger.kernel.org>
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/95892>
+	id 1KfA45-0002ko-RW
+	for gcgg-gaim-devel-259@gmane.org; Mon, 15 Sep 2008 11:08:14 +0200
+Received: from localhost (localhost [127.0.0.1])
+	by homing.pidgin.im (Postfix) with ESMTP id 81D6648F66;
+	Mon, 15 Sep 2008 05:07:09 -0400 (EDT)
+Received: from homing.pidgin.im ([127.0.0.1])
+	by localhost (homing.pidgin.im [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id 0bgVSqR3iVyP; Mon, 15 Sep 2008 05:07:08 -0400 (EDT)
+Received: from homing.pidgin.im (localhost [127.0.0.1])
+	by homing.pidgin.im (Postfix) with ESMTP id 6ED3E48F24;
+	Mon, 15 Sep 2008 05:07:08 -0400 (EDT)
+X-Original-To: devel@pidgin.im
+Delivered-To: devel@pidgin.im
+Received: from localhost (localhost [127.0.0.1])
+	by homing.pidgin.im (Postfix) with ESMTP id 4FCB048F24
+	for <devel@pidgin.im>; Mon, 15 Sep 2008 05:07:05 -0400 (EDT)
+Received: from homing.pidgin.im ([127.0.0.1])
+	by localhost (homing.pidgin.im [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id FkZdhjhwLGgX for <devel@pidgin.im>;
+	Mon, 15 Sep 2008 05:07:05 -0400 (EDT)
+Received: from nabagan.bluegap.ch (nabagan.bluegap.ch [88.198.58.248])
+	by homing.pidgin.im (Postfix) with ESMTP id 11DFD48F1D
+	for <devel@pidgin.im>; Mon, 15 Sep 2008 05:07:04 -0400 (EDT)
+Received: from [192.168.0.238] (berlin.programmfabrik.de
+	[::ffff:213.221.101.147]) (AUTH: CRAM-MD5 markus@bluegap.ch)
+	by nabagan.bluegap.ch with esmtp; Mon, 15 Sep 2008 11:07:03 +0200
+	id 006707CA.48CE25B7.00004EA6
+User-Agent: Thunderbird 2.0.0.16 (X11/20080724)
+In-Reply-To: <94a0d4530809130821h6f424695xe09386243c3213c3@mail.gmail.com>
+X-Pidgin-SpamProbe: GOOD 0.0000136 014f62d9d13d29b48c2cb97ea1f9a1e1
+X-Pidgin-Spam-Flag: Clean
+X-BeenThere: devel@pidgin.im
+X-Mailman-Version: 2.1.9
+Precedence: list
+List-Id: "Discussion about the development of Pidgin,
+	Finch and libpurple" <devel.pidgin.im>
+List-Unsubscribe: <http://pidgin.im/cgi-bin/mailman/listinfo/devel>,
+	<mailto:devel-request@pidgin.im?subject=unsubscribe>
+List-Archive: <http://pidgin.im/pipermail/devel>
+List-Post: <mailto:devel@pidgin.im>
+List-Help: <mailto:devel-request@pidgin.im?subject=help>
+List-Subscribe: <http://pidgin.im/cgi-bin/mailman/listinfo/devel>,
+	<mailto:devel-request@pidgin.im?subject=subscribe>
+Sender: devel-bounces@pidgin.im
+Errors-To: devel-bounces@pidgin.im
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/95893>
 
-I'm having trouble with git-clone and I'm wondering if there's
-something I'm doing wrong or something wrong with git.  Probably the
-former, hopefully someone can set me straight.
+Hi,
 
-I'm an admittedly novice git user. I'm trying to clone a repository
-over ssh. The host machine 'imac' is my mac osx 10.4 with git 1.6.0
-installed from a macports package.  This installs into /opt/local/bin.
-I also cloned git from HEAD and 'make; make install'ed into ~/bin,
-this is the version shown below.  Either way, these are
-nonstandard/non-system-wide installation locations, and it requires
-that my shell PATH reflect this, obviously.
+Felipe Contreras wrote:
+> Monotone can have multiple heads in one single branch, but from what I
+> understand that mostly happens locally (not on the published repo).
 
-----------------------------------------------
+Uh.. no, I'd say quite the opposite: if multiple developers work on the 
+same branch and do their commits, the first time both heads appear in 
+the same branch on the same machine will be the public repository.
 
-# About my installation
-imac:~ paul$ which git
-/Users/paul/bin/git
+> Anyway, If that happens the commits are still there, just dangling
+> temporarily in no branch.
 
-imac:~ paul$ git --version
-git version 1.6.0.1.285.g1070
+..for the mtn repo imported into git that is, right?
 
-imac:~ paul$ ls /opt/local/bin/git*
-/opt/local/bin/git
-/opt/local/bin/git-upload-archive       /opt/local/bin/gitk
-/opt/local/bin/git-receive-pack         /opt/local/bin/git-upload-pack
+Regards
 
-imac:~ paul$ ls ~/bin/git*
-/Users/paul/bin/git
-/Users/paul/bin/git-shell
-/Users/paul/bin/git-upload-pack
-/Users/paul/bin/git-receive-pack
-/Users/paul/bin/git-upload-archive
-
-# Make a simple reposirtory /tmp/test/.git
-imac:~ paul$ cd /tmp
-imac:/tmp paul$ mkdir test; cd test; echo 'Hello World' > README; git
-init; git add README; git commit -a -m'Initial import'; cd ..
-Initialized empty Git repository in /private/tmp/test/.git/
-Created initial commit 49c10e6: Initial import
- 1 files changed, 1 insertions(+), 0 deletions(-)
- create mode 100644 README
-
-# OK, this fails expectedly
-imac:/tmp paul$ cd ~
-imac:~ paul$ git clone ssh://localhost/tmp/test/.git
-Initialized empty Git repository in /Users/paul/test/.git/
-Password:
-bash: line 1: git-upload-pack: command not found
-fatal: The remote end hung up unexpectedly
-
-# This has been killing me...  Have tried numerous variants of the
-same with similar results...
-imac:~ paul$ git clone --upload-pack /opt/local/bin/git-upload-pack
-ssh://localhost/tmp/test/.git
-Initialized empty Git repository in /Users/paul/test/.git/
-Password:
-remote: fatal: exec pack-objects failed.
-error: git-upload-pack: git-pack-objects died with error.
-fatal: git-upload-pack: aborting due to possible repository corruption
-on the remote side.
-remote: aborting due to possible repository corruption on the remote side.
-fatal: early EOF
-fatal: index-pack failed
-
-# Fix it with symlinks in /usr/bin
-imac:~ paul$ cd /usr/bin/
-imac:/usr/bin paul$ sudo ln -s /opt/local/bin/git* .
-imac:/usr/bin paul$ ls -al git*
-lrwxr-xr-x   1 root  wheel  18 Sep  9 19:18 git -> /opt/local/bin/git
-lrwxr-xr-x   1 root  wheel  31 Sep  9 19:18 git-receive-pack ->
-/opt/local/bin/git-receive-pack
-lrwxr-xr-x   1 root  wheel  33 Sep  9 19:18 git-upload-archive ->
-/opt/local/bin/git-upload-archive
-lrwxr-xr-x   1 root  wheel  30 Sep  9 19:18 git-upload-pack ->
-/opt/local/bin/git-upload-pack
-lrwxr-xr-x   1 root  wheel  19 Sep  9 19:18 gitk -> /opt/local/bin/gitk
-
-# And now git-clone works as expected...
-imac:/usr/bin paul$ cd
-imac:~ paul$ git clone ssh://localhost/tmp/test/.git
-Initialized empty Git repository in /Users/paul/test/.git/
-Password:
-remote: Counting objects: 3, done.
-remote: Total 3 (delta 0), reused 0 (delta 0)
-Receiving objects: 100% (3/3), done.
-
-imac:~ paul$ find test/
-test/
-test//.git
-  { file listing removed for brevity... }
-test//README
-
--------------------------------------------
-
-OK, great, now it works. I suspect I'm not using the --upload-pack
-option correctly or my ssh installation is suboptimal, but as I could
-find no existing documentation on the subject, I am posting this
-message.  Any thoughts?
-
-Paul Johnston
+Markus Wanner (ne Schiltknecht)
