@@ -1,89 +1,92 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: [PATCH 10/16] grep: skip files that have not been checked out
-Date: Mon, 15 Sep 2008 09:48:45 +0200
-Message-ID: <200809150948.46139.jnareb@gmail.com>
-References: <48cdd6cb7415e_3c273fa85e999d2827466@app01.zenbe.com.tmail>
+From: Michael Radziej <mir@noris.de>
+Subject: Re: [ANNOUNCE] TopGit v0.3
+Date: Mon, 15 Sep 2008 10:01:31 +0200
+Message-ID: <20080915080131.GA30396@noris.de>
+References: <20080909231009.GD10544@machine.or.cz>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=iso-8859-1
 Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: git@vger.kernel.org
-To: Duy Nguyen <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Sep 15 09:50:01 2008
+To: Petr Baudis <pasky@suse.cz>
+X-From: git-owner@vger.kernel.org Mon Sep 15 10:08:24 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Kf8qO-0006gu-27
-	for gcvg-git-2@gmane.org; Mon, 15 Sep 2008 09:50:00 +0200
+	id 1Kf97s-0002u4-3H
+	for gcvg-git-2@gmane.org; Mon, 15 Sep 2008 10:08:04 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752283AbYIOHsx convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 15 Sep 2008 03:48:53 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752112AbYIOHsx
-	(ORCPT <rfc822;git-outgoing>); Mon, 15 Sep 2008 03:48:53 -0400
-Received: from mail-gx0-f16.google.com ([209.85.217.16]:60436 "EHLO
-	mail-gx0-f16.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751884AbYIOHsw (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 15 Sep 2008 03:48:52 -0400
-Received: by gxk9 with SMTP id 9so24219375gxk.13
-        for <git@vger.kernel.org>; Mon, 15 Sep 2008 00:48:51 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:subject:date
-         :user-agent:cc:references:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:message-id;
-        bh=XXwDEBCIIpfg7s7tdxfmq5MDryCKPu/85m3fA7elwwM=;
-        b=D1wFPqLhgkYYLq1/V5xz2ZEe7Dsl0AIfeezwozlpBS/MsBcioTKwUeY0B4TqwZfdYg
-         K9VFIk2CMuVvScnkj1phu/NGIUELCZOZYSmtH8E2xgAek3kkfZh+V1ZwZU4KDb/cJmM7
-         ZkW2lwphtuTvvZ+hT1d1Uvhjhoyd6JCTGEoMI=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=from:to:subject:date:user-agent:cc:references:in-reply-to
-         :mime-version:content-type:content-transfer-encoding
-         :content-disposition:message-id;
-        b=hgOzox641xlSj10N3m3UA4c0LArGz5z3zNibDrpPjJAivhqpl8Vjo04vpVQHXxiSYG
-         OXbBMjraebyZhb4qUTJcvjDc5GI+dVZwJCBsjqr6/FTlfZ+GYuR7Bf9B/6+J6Luo+Xs0
-         5cBuWNW0lzO6Q20VrZLqIXL5aQnl0leVe8JPg=
-Received: by 10.103.18.19 with SMTP id v19mr5182177mui.123.1221464931147;
-        Mon, 15 Sep 2008 00:48:51 -0700 (PDT)
-Received: from ?192.168.1.11? ( [83.8.248.215])
-        by mx.google.com with ESMTPS id u9sm14865083muf.9.2008.09.15.00.48.49
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Mon, 15 Sep 2008 00:48:50 -0700 (PDT)
-User-Agent: KMail/1.9.3
-In-Reply-To: <48cdd6cb7415e_3c273fa85e999d2827466@app01.zenbe.com.tmail>
+	id S1755807AbYIOIGo convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 15 Sep 2008 04:06:44 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753499AbYIOIGn
+	(ORCPT <rfc822;git-outgoing>); Mon, 15 Sep 2008 04:06:43 -0400
+Received: from mail04.noris.net ([62.128.1.224]:38471 "EHLO mail04.noris.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755495AbYIOIGj convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 15 Sep 2008 04:06:39 -0400
+X-Greylist: delayed 306 seconds by postgrey-1.27 at vger.kernel.org; Mon, 15 Sep 2008 04:06:39 EDT
+Received: from mail02.noris.net ([62.128.1.232])
+	by mail04.noris.net with esmtps (TLS-1.0:RSA_AES_256_CBC_SHA1:32)
+	(Exim 4.63)
+	(envelope-from <mir@noris.de>)
+	id 1Kf91o-0004Pa-9f
+	for git@vger.kernel.org; Mon, 15 Sep 2008 10:01:48 +0200
+Received: from mail-intern.backup.noris.net ([10.1.0.25] helo=mail.office.noris.de)
+	by mail02.noris.net with esmtps (TLS-1.0:RSA_AES_256_CBC_SHA1:32)
+	(Exim 4.63)
+	(envelope-from <mir@noris.de>)
+	id 1Kf91X-0005ZS-Tb; Mon, 15 Sep 2008 10:01:31 +0200
+Received: from mir.office.noris.de ([10.2.6.66])
+	by mail.office.noris.de with esmtp (Exim 4.63)
+	(envelope-from <mir@noris.de>)
+	id 1Kf91X-0000la-Qv; Mon, 15 Sep 2008 10:01:31 +0200
+Received: by mir.office.noris.de (Postfix, from userid 294)
+	id BED9E7976D3; Mon, 15 Sep 2008 10:01:31 +0200 (CEST)
 Content-Disposition: inline
+In-Reply-To: <20080909231009.GD10544@machine.or.cz>
+User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
+X-Noris-IP: 10.1.0.25
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/95890>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/95891>
 
-Duy Nguyen wrote:
-> On 09/15/2008 "Jakub Narebski" <jnareb@gmail.com> wrote:
-> >Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail.com> writes=
-:
-> >=20
-> > > Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds=
-@gmail.com>
-> > > ---
-> > >  builtin-grep.c |    7 ++++++-
-> > >  1 files changed, 6 insertions(+), 1 deletions(-)
-> >=20
-> > No changes to Documentation/git-grep.txt?
->=20
-> No, "git grep" should only grep files in working directories. In
-> narrow checkout mode, some files may be missing but current "git grep=
-"
-> does not know about that, hence this fix. =20
+Hi!
 
-Perhaps that should be stated explicitly, that git-grep searches only
-[intentionally] checked-out files when searching working directory,
-and only files without no-checkout bit set when searching index with
-"git grep --cached".
+I'm just starting to toy around with TopGit. Please excuse if I am simp=
+ly
+too naive :-)                                                =20
+                               =20
+I wonder about the .topmsg and .topdeps files. Why is this information
+within the topic branch? It tends to get into the way even though a spe=
+cial
+merge driver is provided. For example, you cannot do octopus merges (wh=
+ich I
+found very confusing as first-time user). And it might also confuse peo=
+ple
+cloning a TopGit repository and want to use a topgit branch. They might=
+ not
+be aware of these special TopGit things.
+                                                                       =
+                                                               =20
+I'd rather have a dedicated branched named e.g. 'TopGit' which includes=
+ the                                                          =20
+information that is currently in .topmsg and .topdeps, but for all bran=
+ches
+in a repository.
 
-P.S. I think it should be [--cached|<tree>...] in git-grep synopsis,
-and not [--cached] ... [<tree>...], but that is unrelated thing, and
-doesn't matter to you.
+
+Cheers,
+
+Michael Radziej
+
 --=20
-Jakub Narebski
-Poland
+noris network AG - Deutschherrnstra=DFe 15-19 - D-90429 N=FCrnberg -
+Tel +49-911-9352-0 - Fax +49-911-9352-100
+http://www.noris.de - The IT-Outsourcing Company
+=20
+Vorstand: Ingo Kraupa (Vorsitzender), Joachim Astel, Hansjochen Klenk -=
+=20
+Vorsitzender des Aufsichtsrats: Stefan Schnabel - AG N=FCrnberg HRB 176=
+89
