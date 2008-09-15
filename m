@@ -1,81 +1,81 @@
-From: Michael J Gruber <git@drmicha.warpmail.net>
-Subject: Re: [PATCH] help git-upload-pack find git
-Date: Mon, 15 Sep 2008 22:22:19 +0200
-Message-ID: <48CEC3FB.5070101@drmicha.warpmail.net>
-References: <d3a045300809150130w6f78edd8xf599d1c7f639b77d@mail.gmail.com> <d3a045300809150130w6f78edd8xf599d1c7f639b77d@mail.gmail.com> <1221495891-12600-1-git-send-email-git@drmicha.warpmail.net> <7vzlm9b3v4.fsf@gitster.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 14/16] clone: support narrow checkout with --path option
+Date: Mon, 15 Sep 2008 13:27:04 -0700
+Message-ID: <7vy71t9muf.fsf@gitster.siamese.dyndns.org>
+References: <1221397685-27715-1-git-send-email-pclouds@gmail.com>
+ <1221397685-27715-2-git-send-email-pclouds@gmail.com>
+ <1221397685-27715-3-git-send-email-pclouds@gmail.com>
+ <1221397685-27715-4-git-send-email-pclouds@gmail.com>
+ <1221397685-27715-5-git-send-email-pclouds@gmail.com>
+ <1221397685-27715-6-git-send-email-pclouds@gmail.com>
+ <1221397685-27715-7-git-send-email-pclouds@gmail.com>
+ <1221397685-27715-8-git-send-email-pclouds@gmail.com>
+ <1221397685-27715-9-git-send-email-pclouds@gmail.com>
+ <1221397685-27715-10-git-send-email-pclouds@gmail.com>
+ <1221397685-27715-11-git-send-email-pclouds@gmail.com>
+ <1221397685-27715-12-git-send-email-pclouds@gmail.com>
+ <1221397685-27715-13-git-send-email-pclouds@gmail.com>
+ <1221397685-27715-14-git-send-email-pclouds@gmail.com>
+ <1221397685-27715-15-git-send-email-pclouds@gmail.com>
+ <m3r67mmu0v.fsf@localhost.localdomain>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Sep 15 22:23:42 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
+	git@vger.kernel.org
+To: Jakub Narebski <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Sep 15 22:29:00 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KfKbc-0003Q2-BP
-	for gcvg-git-2@gmane.org; Mon, 15 Sep 2008 22:23:32 +0200
+	id 1KfKgo-0005BP-Tu
+	for gcvg-git-2@gmane.org; Mon, 15 Sep 2008 22:28:55 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754170AbYIOUWZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 15 Sep 2008 16:22:25 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754166AbYIOUWZ
-	(ORCPT <rfc822;git-outgoing>); Mon, 15 Sep 2008 16:22:25 -0400
-Received: from out2.smtp.messagingengine.com ([66.111.4.26]:35397 "EHLO
-	out2.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1754087AbYIOUWY (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 15 Sep 2008 16:22:24 -0400
-Received: from compute2.internal (compute2.internal [10.202.2.42])
-	by out1.messagingengine.com (Postfix) with ESMTP id 99E6F16212A;
-	Mon, 15 Sep 2008 16:22:23 -0400 (EDT)
-Received: from heartbeat2.messagingengine.com ([10.202.2.161])
-  by compute2.internal (MEProxy); Mon, 15 Sep 2008 16:22:23 -0400
-X-Sasl-enc: /0Y8xg+2YFGUuSkX6KN4o19Yx2g1SVn9izLZyaRKj0Lj 1221510143
-Received: from [139.174.44.12] (whitehead.math.tu-clausthal.de [139.174.44.12])
-	by mail.messagingengine.com (Postfix) with ESMTPSA id 158F12C490;
-	Mon, 15 Sep 2008 16:22:22 -0400 (EDT)
-User-Agent: Thunderbird 2.0.0.16 (X11/20080707)
-In-Reply-To: <7vzlm9b3v4.fsf@gitster.siamese.dyndns.org>
+	id S1756223AbYIOU1Q (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 15 Sep 2008 16:27:16 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756157AbYIOU1P
+	(ORCPT <rfc822;git-outgoing>); Mon, 15 Sep 2008 16:27:15 -0400
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:33293 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754166AbYIOU1O (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 15 Sep 2008 16:27:14 -0400
+Received: from localhost.localdomain (localhost [127.0.0.1])
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id A0CD261C8C;
+	Mon, 15 Sep 2008 16:27:11 -0400 (EDT)
+Received: from pobox.com (ip68-225-240-211.oc.oc.cox.net [68.225.240.211])
+ (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
+ certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
+ ESMTPSA id A013C61C8A; Mon, 15 Sep 2008 16:27:07 -0400 (EDT)
+In-Reply-To: <m3r67mmu0v.fsf@localhost.localdomain> (Jakub Narebski's message
+ of "Sun, 14 Sep 2008 12:01:22 -0700 (PDT)")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: AD2E7F60-8364-11DD-8823-D0CFFE4BC1C1-77302942!a-sasl-fastnet.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/95938>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/95939>
 
-Junio C Hamano venit, vidit, dixit 15.09.2008 21:34:
-> Michael J Gruber <git@drmicha.warpmail.net> writes:
-> 
->> The corresponding bug was reported by Paul Johnston who wondered why
->> "git clone" failed when specifying --upload-pack for an out-of-$PATH
->> installation of git.  I'm not sure whether we should encourage this, but
->> the --upload-pack option clearly gives the impression that
->> git-upload-pack is all that is needed.
-> 
-> Another possibility would be to teach exec_cmd.c:setup_path() to add the
-> directory specified by $(bindir) to PATH after we add GIT_EXEC_PATH to
-> it.  That should cover the case David Miller reported, shouldn't it?
+Jakub Narebski <jnareb@gmail.com> writes:
 
-Probably. I read that thread only after submitting my patch for
-upload-pack but suspected that other server side incarnations may suffer
-from the same problem.
+> Second, how `--path=<narrow_spec>` interacts with `-n' (no checkout).
+> Does it even have any sense? Perhaps those options should be mutually
+> incompatibile (and --bare and this option too)?
 
-I was actually surprised that setup_path() uses argv0_path without
-setting it, same as with argv_exec_path. I assumed this is for a good
-reason, I'm lacking the code base overview to judge this myself.
+Technically you could mark the index entries with no-checkout bits even
+with -n, so that later checkout or branch switching would honor that, but
+the branch switching would make paths that do not exist in the remote HEAD
+branch but do exist in the switched-to branch appear, which would be
+confusing.  So instead of supporting:
 
-In any case, git.c sets argv0_path early, messes a bit with argv[0] and
-calls setup_path afterwards anyways. So adding the path in setup_path()
-should not hurt any "git foo" command.
+	$ git clone -n --path=Documentation/ $there work
+        $ cd work
+        $ git checkout next
 
-One could construe situations where even that wouldn't help, because
-git-upload-pack can't pass --exec-dir to git and they can be in
-different locations - but I think that's crazy.
+we can support:
 
-git.c, upload-pack.c, receive.pack.c and shell.c are the only callers.
-setup_path() needs to get a parameter. If shell.c should profit from the
-change then it needs to be taught how to pass an absolute path to
-do_{generic,cvs}_cmd().
+	$ git clone -n $there work
+        $ cd work
+        $ git checkout --path=Documentation/ next
 
-So, I guess the general approach (change setup() path and have every
-caller profit) is OK. OK with you?
-
-Michael
+which is much easier to explain and understand.
