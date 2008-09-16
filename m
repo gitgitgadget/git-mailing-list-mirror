@@ -1,84 +1,91 @@
-From: "Nguyen Thai Ngoc Duy" <pclouds@gmail.com>
-Subject: Re: [PATCH 15/16] checkout: add new options to support narrow checkout
-Date: Tue, 16 Sep 2008 20:13:33 +0700
-Message-ID: <fcaeb9bf0809160613w3aed3db4g8ce2cb8cfc92818a@mail.gmail.com>
-References: <1221397685-27715-1-git-send-email-pclouds@gmail.com>
-	 <1221397685-27715-9-git-send-email-pclouds@gmail.com>
-	 <1221397685-27715-10-git-send-email-pclouds@gmail.com>
-	 <1221397685-27715-11-git-send-email-pclouds@gmail.com>
-	 <1221397685-27715-12-git-send-email-pclouds@gmail.com>
-	 <1221397685-27715-13-git-send-email-pclouds@gmail.com>
-	 <1221397685-27715-14-git-send-email-pclouds@gmail.com>
-	 <1221397685-27715-15-git-send-email-pclouds@gmail.com>
-	 <1221397685-27715-16-git-send-email-pclouds@gmail.com>
-	 <48CF879F.6020006@viscovery.net>
+From: Michael J Gruber <git@drmicha.warpmail.net>
+Subject: Re: [PATCH] help git-upload-pack find git
+Date: Tue, 16 Sep 2008 15:15:47 +0200
+Message-ID: <48CFB183.1090205@drmicha.warpmail.net>
+References: <d3a045300809150130w6f78edd8xf599d1c7f639b77d@mail.gmail.com> <d3a045300809150130w6f78edd8xf599d1c7f639b77d@mail.gmail.com> <1221495891-12600-1-git-send-email-git@drmicha.warpmail.net> <7vzlm9b3v4.fsf@gitster.siamese.dyndns.org> <48CEC3FB.5070101@drmicha.warpmail.net> <48CF4F6A.6080604@viscovery.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: base64
-Cc: git@vger.kernel.org
-To: "Johannes Sixt" <j.sixt@viscovery.net>
-X-From: git-owner@vger.kernel.org Tue Sep 16 15:17:24 2008
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Johannes Sixt <j.sixt@viscovery.net>
+X-From: git-owner@vger.kernel.org Tue Sep 16 15:20:35 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KfaOD-0000YE-2a
-	for gcvg-git-2@gmane.org; Tue, 16 Sep 2008 15:14:45 +0200
+	id 1KfaQQ-0001Jo-Be
+	for gcvg-git-2@gmane.org; Tue, 16 Sep 2008 15:17:02 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751574AbYIPNNg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 16 Sep 2008 09:13:36 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751463AbYIPNNg
-	(ORCPT <rfc822;git-outgoing>); Tue, 16 Sep 2008 09:13:36 -0400
-Received: from yx-out-2324.google.com ([74.125.44.28]:18066 "EHLO
-	yx-out-2324.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751428AbYIPNNg (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 16 Sep 2008 09:13:36 -0400
-Received: by yx-out-2324.google.com with SMTP id 8so785932yxm.1
-        for <git@vger.kernel.org>; Tue, 16 Sep 2008 06:13:34 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to
-         :subject:cc:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:references;
-        bh=pXSjHLyHjetyjTtRY5rxlIqP0NgMvDglZQDd73I9GGA=;
-        b=ikDUMAJWPno4UfrC1EzbVCV0Or8Y3tkBdi6gs/tQNtB7MpFDtpxeWkDcuLgPKc3z2p
-         dSN9nFd4W+MC3gQka28qhxTnXL32Ck/dx58z+Wnd6upw85L0gt22ja0qXJoRSrD9es1m
-         XUKA3SddNQGn1UQywe5xbPjNJASUOeyEPLz0o=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
-         :content-type:content-transfer-encoding:content-disposition
-         :references;
-        b=PkSJPgctNEQYXfIMULDEU8Oxb+NeqDRc55egS217Fonk0KuA34ir83E+o1pCQgKLkB
-         wC1o6s2PgH6GaKWQ+u1zvTw+vQx7SrRwzoipxjKupC53drPU7zCY2S8Nln4XMwwvMFwS
-         LY/k+joTLd8x1k2/FycoMeCpXMBTPi4dgd2SU=
-Received: by 10.86.93.19 with SMTP id q19mr769017fgb.4.1221570813858;
-        Tue, 16 Sep 2008 06:13:33 -0700 (PDT)
-Received: by 10.86.59.5 with HTTP; Tue, 16 Sep 2008 06:13:33 -0700 (PDT)
-In-Reply-To: <48CF879F.6020006@viscovery.net>
-Content-Disposition: inline
+	id S1754064AbYIPNPx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 16 Sep 2008 09:15:53 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753791AbYIPNPw
+	(ORCPT <rfc822;git-outgoing>); Tue, 16 Sep 2008 09:15:52 -0400
+Received: from out1.smtp.messagingengine.com ([66.111.4.25]:54284 "EHLO
+	out1.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1753214AbYIPNPv (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 16 Sep 2008 09:15:51 -0400
+Received: from compute2.internal (compute2.internal [10.202.2.42])
+	by out1.messagingengine.com (Postfix) with ESMTP id 3006B163178;
+	Tue, 16 Sep 2008 09:15:50 -0400 (EDT)
+Received: from heartbeat2.messagingengine.com ([10.202.2.161])
+  by compute2.internal (MEProxy); Tue, 16 Sep 2008 09:15:50 -0400
+X-Sasl-enc: +zRbZ+2ewI4R9zByvwxj3MorTJ024aCMb7DCEx8Vc3CJ 1221570949
+Received: from [139.174.44.12] (whitehead.math.tu-clausthal.de [139.174.44.12])
+	by mail.messagingengine.com (Postfix) with ESMTPSA id 6CC801FB33;
+	Tue, 16 Sep 2008 09:15:49 -0400 (EDT)
+User-Agent: Thunderbird 2.0.0.16 (X11/20080707)
+In-Reply-To: <48CF4F6A.6080604@viscovery.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/96000>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/96001>
 
-T24gOS8xNi8wOCwgSm9oYW5uZXMgU2l4dCA8ai5zaXh0QHZpc2NvdmVyeS5uZXQ+IHdyb3RlOgo+
-IE5ndXnhu4VuIFRow6FpIE5n4buNYyBEdXkgc2NocmllYjoKPgo+ID4gKy0tZnVsbDo6Cj4gID4g
-KyAgICAgUXVpdCBuYXJyb3cgY2hlY2tvdXQgbW9kZS4gUmV0dXJuIHRvIGZ1bGwgY2hlY2tvdXQu
-Cj4gID4gKwo+ICA+ICstLXBhdGg9PG5hcnJvd19zcGVjPjo6Cj4gID4gKyAgICAgUmUtYXBwbHkg
-bmV3IG5hcnJvdyBzcGVjIG9uIGN1cnJlbnQgd29ya2luZyBkaXJlY3RvcnkgdG8KPiAgPiArICAg
-ICBmb3JtIG5ldyBjaGVja291dCBhcmVhLgo+ICA+ICsKPiAgPiArLS1hZGQtcGF0aD08bmFycm93
-X3NwZWM+OjoKPiAgPiArICAgICBDaGVja291dCBtb3JlIGFyZWFzIHNwZWNpZmllZCBieSBuYXJy
-b3cgc3BlYyB0byBjdXJyZW50Cj4gID4gKyAgICAgY2hlY2tvdXQgYXJlYS4KPiAgPiArCj4gID4g
-Ky0tcmVtb3ZlLXBhdGg9PG5hcnJvd19zcGVjPjo6Cj4gID4gKyAgICAgTmFycm93IGNoZWNrb3V0
-IGFyZWEgYnkgcmVtb3ZpbmcgZmlsZXMgc3BlY2lmaWVkIGJ5IG5hcnJvdyBzcGVjCj4gID4gKyAg
-ICAgZnJvbSBjdXJyZW50IGNoZWNrb3V0IGFyZWEuIFRoaXMgb3BlcmF0aW9uIHdpbGwgZmFpbCBp
-ZiB0aGVyZQo+ICA+ICsgICAgIGlzIHVubWVyZ2VkIG9yIG1vZGlmaWVkIGZpbGVzIGluIHRoZSBy
-ZW1vdmluZyBhcmVhcy4KPgo+Cj4gVGhlIG9wdGlvbiAtLXBhdGggaXMgbmFtZWQgYSBiaXQgdG9v
-IGdlbmVyaWMgZm9yIG15IHRhc3RlLiBIb3cgYWJvdXQKPiAgLS1uYXJyb3c9Li4uPwoKLS1uYXJy
-b3cgb3IgLS1uYXJyb3ctdGVtcGxhdGUgKG9yIC0tY2hlY2tvdXQtdGVtcGxhdGU/KSBzZWVtcyBn
-b29kLgoKPiBBbmQgaG93IHdvdWxkIHlvdSBsaWtlIC0tbW9yZT0gaW5zdGVhZCBvZiAtLWFkZC1w
-YXRoPSBhbmQKPiAgLS1sZXNzPSBpbnN0ZWFkIG9mIC0tcmVtb3ZlLXBhdGg9PwoKTm93IHRoZXNl
-IC0tbW9yZS8tLWxlc3MgYXJlIHRvbyBnZW5lcmljIHRvIG1lIDspCgo+IEkgZG8gdGhpbmsgdGhh
-dCAtLWZ1bGwgaXMgT0suCj4KPiAgLS0gSGFubmVzCj4KPgoKCi0tIApEdXkK
+Johannes Sixt venit, vidit, dixit 16.09.2008 08:17:
+> Michael J Gruber schrieb:
+>> I was actually surprised that setup_path() uses argv0_path without
+>> setting it, same as with argv_exec_path. I assumed this is for a good
+>> reason, I'm lacking the code base overview to judge this myself.
+> 
+> It argv_exec_path comes from git --exec-path=..., hence, git (via git.c)
+> is the only caller of setup_path() that is able to set it. We can leave
+> that one out of the equation.
+> 
+>> In any case, git.c sets argv0_path early, messes a bit with argv[0] and
+>> calls setup_path afterwards anyways. So adding the path in setup_path()
+>> should not hurt any "git foo" command.
+>>
+>> One could construe situations where even that wouldn't help, because
+>> git-upload-pack can't pass --exec-dir to git and they can be in
+>> different locations - but I think that's crazy.
+>>
+>> git.c, upload-pack.c, receive.pack.c and shell.c are the only callers.
+>> setup_path() needs to get a parameter. If shell.c should profit from the
+>> change then it needs to be taught how to pass an absolute path to
+>> do_{generic,cvs}_cmd().
+>>
+>> So, I guess the general approach (change setup() path and have every
+>> caller profit) is OK. OK with you?
+> 
+> Have you studied the commit message of e1464ca7bb0d (Record the command
+> invocation path early) and the context in which this commit occurs? It's
+> about relocatable git installations and how system_path() derives various
+> other paths from argv[0].
+
+That is what I meant by my lack of overview ;)
+I might have implemented what amounts to a revert of e1464ca7bb0d otherwise.
+
+> Please show how you think you could change setup_path(), but keep in mind
+> that in git.c you neither can do the equivalent of git_set_argv0_path()
+> later nor setup_path() earlier.
+
+Well, I'd be happy with the change in upload-pack as submitted. Junio
+suggested the more general approach. In fact I'd prefer everyone set
+their path, but not everyone seems to be allowed to in their restricted
+environments.
+
+Why is it that setup_path() cannot be done before commit_pager_choice()?
+We need the pager in case list_common_cmds_help() is triggered, but why
+can't setup_path() be before that? Not because of "--", really.
+
+Michael
