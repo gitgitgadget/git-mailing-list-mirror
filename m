@@ -1,170 +1,197 @@
 From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: [JGIT PATCH 2/2] Add support for ~/.ssh/config BatchMode
-Date: Tue, 16 Sep 2008 08:44:29 -0700
-Message-ID: <1221579869-27835-2-git-send-email-spearce@spearce.org>
-References: <1221579869-27835-1-git-send-email-spearce@spearce.org>
+Subject: [JGIT PATCH 1/2 v2] Add support for ~/.ssh/config PreferredAuthentications
+Date: Tue, 16 Sep 2008 08:44:28 -0700
+Message-ID: <1221579869-27835-1-git-send-email-spearce@spearce.org>
 Cc: git@vger.kernel.org
 To: Robin Rosenberg <robin.rosenberg@dewire.com>
-X-From: git-owner@vger.kernel.org Tue Sep 16 17:46:11 2008
+X-From: git-owner@vger.kernel.org Tue Sep 16 17:46:18 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Kfckk-0002lb-8O
-	for gcvg-git-2@gmane.org; Tue, 16 Sep 2008 17:46:10 +0200
+	id 1Kfckj-0002lb-8R
+	for gcvg-git-2@gmane.org; Tue, 16 Sep 2008 17:46:09 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755980AbYIPPoe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 16 Sep 2008 11:44:34 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756307AbYIPPod
-	(ORCPT <rfc822;git-outgoing>); Tue, 16 Sep 2008 11:44:33 -0400
-Received: from george.spearce.org ([209.20.77.23]:48458 "EHLO
+	id S1755951AbYIPPoc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 16 Sep 2008 11:44:32 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755719AbYIPPoc
+	(ORCPT <rfc822;git-outgoing>); Tue, 16 Sep 2008 11:44:32 -0400
+Received: from george.spearce.org ([209.20.77.23]:48455 "EHLO
 	george.spearce.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755980AbYIPPob (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 16 Sep 2008 11:44:31 -0400
+	with ESMTP id S1755939AbYIPPoa (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 16 Sep 2008 11:44:30 -0400
 Received: by george.spearce.org (Postfix, from userid 1000)
-	id 949BE38360; Tue, 16 Sep 2008 15:44:30 +0000 (UTC)
+	id 2DFF738368; Tue, 16 Sep 2008 15:44:30 +0000 (UTC)
 X-Spam-Checker-Version: SpamAssassin 3.2.4 (2008-01-01) on george.spearce.org
 X-Spam-Level: 
 X-Spam-Status: No, score=-4.4 required=4.0 tests=ALL_TRUSTED,BAYES_00
 	autolearn=ham version=3.2.4
 Received: from localhost.localdomain (localhost [127.0.0.1])
-	by george.spearce.org (Postfix) with ESMTP id C657E3835F;
+	by george.spearce.org (Postfix) with ESMTP id 7DDCF3835A;
 	Tue, 16 Sep 2008 15:44:29 +0000 (UTC)
 X-Mailer: git-send-email 1.6.0.2.389.g421e0
-In-Reply-To: <1221579869-27835-1-git-send-email-spearce@spearce.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/96010>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/96011>
 
-Connections created through batch processes (e.g. those started by
-cron) don't have a terminal to interact with a user through.  A
-common way to disable password prompting with OpenSSH is to setup
-a Host block in ~/.ssh/config with "BatchMode yes" enabled, thus
-telling the client not to prompt for passphases or passwords.
+Some configurations may wish to disable interactive methods of
+authentication, such as when running from automated cron or batch
+style jobs that have no user available.
+
+Typically in an OpenSSH based system this would be configured on a
+per-host basis in the current user's ~/.ssh/config file, by setting
+PreferredAuthentications to the list of authentication methods
+(e.g. just "publickey") that are reasonable.
+
+JSch honors this configuration setting, but we need to transfer it
+from our own OpenSshConfig class, otherwise it has no knowledge of
+the setting.
+
+http://code.google.com/p/egit/issues/detail?id=33
 
 Signed-off-by: Shawn O. Pearce <spearce@spearce.org>
 ---
- .../spearce/egit/ui/EclipseSshSessionFactory.java  |    2 +-
- .../spearce/jgit/transport/OpenSshConfigTest.java  |   21 +++++++++++++++++++
- .../jgit/transport/DefaultSshSessionFactory.java   |    2 +-
- .../org/spearce/jgit/transport/OpenSshConfig.java  |   22 ++++++++++++++++++++
- 4 files changed, 45 insertions(+), 2 deletions(-)
+
+ This replaces my earlier patch of the same title from about 14
+ hours ago.  This v2 patch actually parses the data from the
+ config file and includes unit tests to verify it is parsing.
+
+ .../spearce/egit/ui/EclipseSshSessionFactory.java  |    4 +++
+ .../spearce/jgit/transport/OpenSshConfigTest.java  |   22 ++++++++++++++++-
+ .../jgit/transport/DefaultSshSessionFactory.java   |    4 +++
+ .../org/spearce/jgit/transport/OpenSshConfig.java  |   25 ++++++++++++++++++++
+ 4 files changed, 54 insertions(+), 1 deletions(-)
 
 diff --git a/org.spearce.egit.ui/src/org/spearce/egit/ui/EclipseSshSessionFactory.java b/org.spearce.egit.ui/src/org/spearce/egit/ui/EclipseSshSessionFactory.java
-index 67c5f16..098d234 100644
+index 640a165..67c5f16 100644
 --- a/org.spearce.egit.ui/src/org/spearce/egit/ui/EclipseSshSessionFactory.java
 +++ b/org.spearce.egit.ui/src/org/spearce/egit/ui/EclipseSshSessionFactory.java
-@@ -48,7 +48,7 @@ public Session getSession(String user, String pass, String host, int port)
- 			addIdentity(hc.getIdentityFile());
- 		if (pass != null)
+@@ -50,6 +50,10 @@ public Session getSession(String user, String pass, String host, int port)
  			session.setPassword(pass);
--		else
-+		else if (!hc.isBatchMode())
+ 		else
  			new UserInfoPrompter(session);
++
++		final String pauth = hc.getPreferredAuthentications();
++		if (pauth != null)
++			session.setConfig("PreferredAuthentications", pauth);
+ 		return session;
+ 	}
  
- 		final String pauth = hc.getPreferredAuthentications();
 diff --git a/org.spearce.jgit.test/tst/org/spearce/jgit/transport/OpenSshConfigTest.java b/org.spearce.jgit.test/tst/org/spearce/jgit/transport/OpenSshConfigTest.java
-index 1a71d08..959b6b7 100644
+index a250f9d..1a71d08 100644
 --- a/org.spearce.jgit.test/tst/org/spearce/jgit/transport/OpenSshConfigTest.java
 +++ b/org.spearce.jgit.test/tst/org/spearce/jgit/transport/OpenSshConfigTest.java
-@@ -148,4 +148,25 @@ config("Host orcz\n" + "\tHostName repo.or.cz\n" + "\n" + "Host *\n"
- 		assertNotNull(h);
- 		assertEquals("publickey,hostbased", h.getPreferredAuthentications());
+@@ -103,7 +103,6 @@ config("Host orcz\n" + "\tHostName repo.or.cz\n" + "\tPort 2222\n"
+ 		assertEquals(new File(home, ".ssh/id_jex"), h.getIdentityFile());
+ 	}
+ 
+-
+ 	public void testAlias_OptionsKeywordCaseInsensitive() throws Exception {
+ 		config("hOsT orcz\n" + "\thOsTnAmE repo.or.cz\n" + "\tPORT 2222\n"
+ 				+ "\tuser jex\n" + "\tidentityfile .ssh/id_jex\n"
+@@ -128,4 +127,25 @@ config("Host orcz\n" + "\tHostName repo.or.cz\n" + "\n" + "Host *\n"
+ 		assertEquals(2222, h.getPort());
+ 		assertEquals(new File(home, ".ssh/id_jex"), h.getIdentityFile());
  	}
 +
-+	public void testAlias_BatchModeDefault() throws Exception {
++	public void testAlias_PreferredAuthenticationsDefault() throws Exception {
 +		final Host h = osc.lookup("orcz");
 +		assertNotNull(h);
-+		assertEquals(false, h.isBatchMode());
++		assertNull(h.getPreferredAuthentications());
 +	}
 +
-+	public void testAlias_BatchModeYes() throws Exception {
-+		config("Host orcz\n" + "\tBatchMode yes\n");
++	public void testAlias_PreferredAuthentications() throws Exception {
++		config("Host orcz\n" + "\tPreferredAuthentications publickey\n");
 +		final Host h = osc.lookup("orcz");
 +		assertNotNull(h);
-+		assertEquals(true, h.isBatchMode());
++		assertEquals("publickey", h.getPreferredAuthentications());
 +	}
 +
-+	public void testAlias_InheritBatchMode() throws Exception {
++	public void testAlias_InheritPreferredAuthentications() throws Exception {
 +		config("Host orcz\n" + "\tHostName repo.or.cz\n" + "\n" + "Host *\n"
-+				+ "\tBatchMode yes\n");
++				+ "\tPreferredAuthentications publickey, hostbased\n");
 +		final Host h = osc.lookup("orcz");
 +		assertNotNull(h);
-+		assertEquals(true, h.isBatchMode());
++		assertEquals("publickey,hostbased", h.getPreferredAuthentications());
 +	}
  }
 diff --git a/org.spearce.jgit/src/org/spearce/jgit/transport/DefaultSshSessionFactory.java b/org.spearce.jgit/src/org/spearce/jgit/transport/DefaultSshSessionFactory.java
-index b6f58f0..89beab7 100644
+index 74fca66..b6f58f0 100644
 --- a/org.spearce.jgit/src/org/spearce/jgit/transport/DefaultSshSessionFactory.java
 +++ b/org.spearce.jgit/src/org/spearce/jgit/transport/DefaultSshSessionFactory.java
-@@ -101,7 +101,7 @@ public synchronized Session getSession(String user, String pass,
- 			addIdentity(hc.getIdentityFile());
- 		if (pass != null)
+@@ -103,6 +103,10 @@ public synchronized Session getSession(String user, String pass,
  			session.setPassword(pass);
--		else
-+		else if (!hc.isBatchMode())
+ 		else
  			session.setUserInfo(new AWT_UserInfo());
++
++		final String pauth = hc.getPreferredAuthentications();
++		if (pauth != null)
++			session.setConfig("PreferredAuthentications", pauth);
+ 		return session;
+ 	}
  
- 		final String pauth = hc.getPreferredAuthentications();
 diff --git a/org.spearce.jgit/src/org/spearce/jgit/transport/OpenSshConfig.java b/org.spearce.jgit/src/org/spearce/jgit/transport/OpenSshConfig.java
-index 2f41e56..df38e18 100644
+index cf7c388..2f41e56 100644
 --- a/org.spearce.jgit/src/org/spearce/jgit/transport/OpenSshConfig.java
 +++ b/org.spearce.jgit/src/org/spearce/jgit/transport/OpenSshConfig.java
-@@ -224,6 +224,10 @@ else if (sp < 0)
+@@ -220,6 +220,10 @@ else if (sp < 0)
  				for (final Host c : current)
- 					if (c.preferredAuthentications == null)
- 						c.preferredAuthentications = nows(dequote(argValue));
-+			} else if ("BatchMode".equalsIgnoreCase(keyword)) {
+ 					if (c.identityFile == null)
+ 						c.identityFile = toFile(dequote(argValue));
++			} else if ("PreferredAuthentications".equalsIgnoreCase(keyword)) {
 +				for (final Host c : current)
-+					if (c.batchMode == null)
-+						c.batchMode = yesno(dequote(argValue));
++					if (c.preferredAuthentications == null)
++						c.preferredAuthentications = nows(dequote(argValue));
  			}
  		}
  
-@@ -260,6 +264,12 @@ private static String nows(final String value) {
- 		return b.toString();
+@@ -247,6 +251,15 @@ private static String dequote(final String value) {
+ 		return value;
  	}
  
-+	private static Boolean yesno(final String value) {
-+		if ("yes".equalsIgnoreCase(value))
-+			return Boolean.TRUE;
-+		return Boolean.FALSE;
++	private static String nows(final String value) {
++		final StringBuilder b = new StringBuilder();
++		for (int i = 0; i < value.length(); i++) {
++			if (!Character.isSpaceChar(value.charAt(i)))
++				b.append(value.charAt(i));
++		}
++		return b.toString();
 +	}
 +
  	private File toFile(final String path) {
  		if (path.startsWith("~/"))
  			return new File(home, path.substring(2));
-@@ -293,6 +303,8 @@ private File toFile(final String path) {
+@@ -278,6 +291,8 @@ private File toFile(final String path) {
  
- 		String preferredAuthentications;
+ 		String user;
  
-+		Boolean batchMode;
++		String preferredAuthentications;
 +
  		void copyFrom(final Host src) {
  			if (hostName == null)
  				hostName = src.hostName;
-@@ -304,6 +316,8 @@ void copyFrom(final Host src) {
+@@ -287,6 +302,8 @@ void copyFrom(final Host src) {
+ 				identityFile = src.identityFile;
+ 			if (user == null)
  				user = src.user;
- 			if (preferredAuthentications == null)
- 				preferredAuthentications = src.preferredAuthentications;
-+			if (batchMode == null)
-+				batchMode = src.batchMode;
++			if (preferredAuthentications == null)
++				preferredAuthentications = src.preferredAuthentications;
  		}
  
  		/**
-@@ -342,5 +356,13 @@ public String getUser() {
- 		public String getPreferredAuthentications() {
- 			return preferredAuthentications;
+@@ -317,5 +334,13 @@ public File getIdentityFile() {
+ 		public String getUser() {
+ 			return user;
  		}
 +
 +		/**
-+		 * @return true if batch (non-interactive) mode is preferred for this
-+		 *         host connection.
++		 * @return the preferred authentication methods, separated by commas if
++		 *         more than one authentication method is preferred.
 +		 */
-+		public boolean isBatchMode() {
-+			return batchMode != null && batchMode.booleanValue();
++		public String getPreferredAuthentications() {
++			return preferredAuthentications;
 +		}
  	}
  }
