@@ -1,73 +1,81 @@
-From: Sergio Callegari <sergio.callegari@gmail.com>
+From: Johannes Sixt <j.sixt@viscovery.net>
 Subject: Re: Management of opendocument (openoffice.org) files in git
-Date: Tue, 16 Sep 2008 09:05:32 +0200
-Message-ID: <48CF5ABC.5060507@gmail.com>
-References: <48CF5127.5040507@gnu.org>
+Date: Tue, 16 Sep 2008 09:09:04 +0200
+Message-ID: <48CF5B90.5050800@viscovery.net>
+References: <loom.20080915T222909-709@post.gmane.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Paolo Bonzini <bonzini@gnu.org>
-X-From: git-owner@vger.kernel.org Tue Sep 16 09:08:22 2008
+Cc: git@vger.kernel.org
+To: Sergio Callegari <sergio.callegari@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Sep 16 09:10:32 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KfUeB-0002s7-9f
-	for gcvg-git-2@gmane.org; Tue, 16 Sep 2008 09:06:51 +0200
+	id 1KfUhX-0004IY-OQ
+	for gcvg-git-2@gmane.org; Tue, 16 Sep 2008 09:10:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752049AbYIPHFl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 16 Sep 2008 03:05:41 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751991AbYIPHFl
-	(ORCPT <rfc822;git-outgoing>); Tue, 16 Sep 2008 03:05:41 -0400
-Received: from rv-out-0506.google.com ([209.85.198.239]:9427 "EHLO
-	rv-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751945AbYIPHFk (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 16 Sep 2008 03:05:40 -0400
-Received: by rv-out-0506.google.com with SMTP id k40so2547226rvb.1
-        for <git@vger.kernel.org>; Tue, 16 Sep 2008 00:05:40 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from
-         :user-agent:mime-version:to:cc:subject:references:in-reply-to
-         :content-type:content-transfer-encoding;
-        bh=UHDjxEJHeeAxNUdhoXTPgI6HOtDu9ZiOnXG4R1g/oD0=;
-        b=V5X65XMmsGb+uGO5Io0Z50BR+B+AlyMOStJvVPYfBRxvvunBaZNZB9BwEnlpeuFz6Z
-         0TnD2VNYQ/urv7gUjD+C/mtbUQqZRfA5IyVwcwX1PqpT9LFQgOxmdAVKnI4UNtSWPveL
-         7TdJmf5LSkcZB/0FNw2BF51p+jY3KO2ilMFdg=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:user-agent:mime-version:to:cc:subject
-         :references:in-reply-to:content-type:content-transfer-encoding;
-        b=n2BbRWsviphbWXxSYiKaQxpRzPu9FKiCTkO+rhSkH1qsIZ01XJlr2VgHXY7qEqk7X1
-         tRvRkSGbzkS8Mab3/Z7sA0sgFQ++i3QS3usrh6DHsdg4AP3Oj1yM36sL14haOOrmwFIP
-         JDw3tGFMYEeuEUZ47AL09Eanx/fSkrBjQZ+kQ=
-Received: by 10.114.25.19 with SMTP id 19mr421542way.225.1221548739773;
-        Tue, 16 Sep 2008 00:05:39 -0700 (PDT)
-Received: from ?192.168.1.103? ( [71.197.224.64])
-        by mx.google.com with ESMTPS id n20sm31023003pof.0.2008.09.16.00.05.32
-        (version=SSLv3 cipher=RC4-MD5);
-        Tue, 16 Sep 2008 00:05:38 -0700 (PDT)
-User-Agent: Thunderbird 2.0.0.16 (X11/20080724)
-In-Reply-To: <48CF5127.5040507@gnu.org>
+	id S1752163AbYIPHJM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 16 Sep 2008 03:09:12 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752140AbYIPHJL
+	(ORCPT <rfc822;git-outgoing>); Tue, 16 Sep 2008 03:09:11 -0400
+Received: from lilzmailso01.liwest.at ([212.33.55.23]:45750 "EHLO
+	lilzmailso01.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752090AbYIPHJK (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 16 Sep 2008 03:09:10 -0400
+Received: from cm56-163-160.liwest.at ([86.56.163.160] helo=linz.eudaptics.com)
+	by lilzmailso01.liwest.at with esmtpa (Exim 4.66)
+	(envelope-from <j.sixt@viscovery.net>)
+	id 1KfUgL-0000bW-97; Tue, 16 Sep 2008 09:09:08 +0200
+Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.42])
+	by linz.eudaptics.com (Postfix) with ESMTP
+	id 01EF06EF; Tue, 16 Sep 2008 09:09:04 +0200 (CEST)
+User-Agent: Thunderbird 2.0.0.6 (Windows/20070728)
+In-Reply-To: <loom.20080915T222909-709@post.gmane.org>
+X-Spam-Score: 1.7 (+)
+X-Spam-Report: ALL_TRUSTED=-1.8, BAYES_99=3.5
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/95981>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/95982>
 
-Thanks for the fixes (particularly the missing quotation!) and the 
-suggestions.
+Sergio Callegari schrieb:
+> if [ $# = 0 ] ; then
+>     tmpcopy=$(mktemp rezip.zip.XXXXXX)
+>     cat > $tmpcopy
+>     filename="$tmpcopy"
+> else
+>     tmpcopy=""
+>     filename="$1"
+> fi
+> 
+> workdir=$(mktemp -d -t rezip.workdir.XXXXXX)
+> curdir=$(pwd)
+> 
+> cd $workdir
+> unzip $UNZIP_OPTS "$curdir/$filename"
+> zip $ZIP_OPTS "$curdir/$filename" .
+> cd $curdir
+> rm -fr $workdir
+> if [ ! -z "$tmpcopy" ] ; then
+>   cat $filename
+>   rm $tmpcopy
+> fi
 
-With regards to
+You don't need a temporay zip filename in filter mode:
 
-> And maybe -b,-qq,-X and -q,-r respectively could be added by default?
->
->   
-I would prefer not to do so:  if you do you get something that is 
-somehow "specialised", otherwise you have a totally generic "rezipper" 
-that might also find other applications (who knows).
-BTW, that is why I added the profiles, so that there was no need to type 
-repetitive stuff.
+  unzip $UNZIP_OPTS /dev/stdin  # works for me, but not 100% portable
+  zip $ZIP_OPTS - .             # writes to stdout
 
-Sergio
+> then put in your .git/config something like
+> 
+> [filter "opendocument"]
+>         clean = "rezip -p ODF_UNCOMPRESS"
+>         smudge = "rezip -p ODF_COMPRESS"
+
+Is the smudge filter really necessary? Can't OOo work with files at
+compression level 0?
+
+-- Hannes
