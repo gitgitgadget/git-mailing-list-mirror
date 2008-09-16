@@ -1,60 +1,75 @@
-From: "Jonathan del Strother" <maillist@steelskies.com>
-Subject: Submitting patches from unsubscribed authors?
-Date: Wed, 17 Sep 2008 00:24:48 +0100
-Message-ID: <57518fd10809161624u3b2937dmd36e0fc962ea7a7@mail.gmail.com>
+From: Boyd Lynn Gerber <gerberb@zenez.com>
+Subject: Re: [RFC/PATCH] Use compatibility regex library for OSX/Darwin
+Date: Tue, 16 Sep 2008 17:25:46 -0600
+Message-ID: <alpine.LNX.1.10.0809161722580.18110@suse104.zenez.com>
+References: <20080907184537.GA4148@regex.yaph.org> <W_emvcr7ijntBMNCDV17_XHXotGkm1Bn-9Bw-ZixcXmFyBWlDj5vYg@cipher.nrlssc.navy.mil>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-To: "Git Mailing List" <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Wed Sep 17 01:25:59 2008
+Content-Type: TEXT/PLAIN; charset=US-ASCII; format=flowed
+Cc: Arjen Laarhoven <arjen@yaph.org>, git@vger.kernel.org,
+	Mike Ralphson <mike.ralphson@gmail.com>,
+	Johannes Sixt <j.sixt@viscovery.net>,
+	Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>
+To: Brandon Casey <casey@nrlssc.navy.mil>
+X-From: git-owner@vger.kernel.org Wed Sep 17 01:27:01 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Kfjvi-0007zL-NU
-	for gcvg-git-2@gmane.org; Wed, 17 Sep 2008 01:25:59 +0200
+	id 1Kfjwc-0008IS-Km
+	for gcvg-git-2@gmane.org; Wed, 17 Sep 2008 01:26:55 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752190AbYIPXYu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 16 Sep 2008 19:24:50 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752308AbYIPXYu
-	(ORCPT <rfc822;git-outgoing>); Tue, 16 Sep 2008 19:24:50 -0400
-Received: from py-out-1112.google.com ([64.233.166.177]:46615 "EHLO
-	py-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751634AbYIPXYt (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 16 Sep 2008 19:24:49 -0400
-Received: by py-out-1112.google.com with SMTP id p76so2172403pyb.10
-        for <git@vger.kernel.org>; Tue, 16 Sep 2008 16:24:48 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:sender
-         :to:subject:mime-version:content-type:content-transfer-encoding
-         :content-disposition:x-google-sender-auth;
-        bh=N8AF2Jb0rJ2eDnGIiWPIJMoUtsjCXmcIKbeAMgNPNec=;
-        b=JkK3F5Yv1ZpTaoq2ALQegr2D3ixQ6/+jATJHPbZ/7yNrZBu7Rq6M/AfiBpu3Tx7npE
-         WAG3dtDSEAKe8va6ifoaWR+Aljm8OMTSRmkBBfugB75Lh0UqoKYQZf44+asmhXPPaztQ
-         gXfRVlOmjwT2h0WCf/KI07odTcGFwHP8G3yHI=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:sender:to:subject:mime-version:content-type
-         :content-transfer-encoding:content-disposition:x-google-sender-auth;
-        b=t7bd3xV/uexIyJ9bhOGcb5R5cqVPHMSCVUi4fcZ3bPGXfWVuZ273V+dJjiuaiqk9lN
-         h3AMKoH+cljmcMBfgoskFZg1hCqiDXf5BoOzaH09GVI72K+iLBFg4D1+Nrr/QVD+fG21
-         EZ8Y/FrP0BtTd7Mq1Q/7q0Vn8RPHNC/kEjRS0=
-Received: by 10.142.148.10 with SMTP id v10mr580356wfd.303.1221607488107;
-        Tue, 16 Sep 2008 16:24:48 -0700 (PDT)
-Received: by 10.143.6.3 with HTTP; Tue, 16 Sep 2008 16:24:48 -0700 (PDT)
-Content-Disposition: inline
-X-Google-Sender-Auth: 8c45430e4a4857e2
+	id S1754066AbYIPXZt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 16 Sep 2008 19:25:49 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752403AbYIPXZs
+	(ORCPT <rfc822;git-outgoing>); Tue, 16 Sep 2008 19:25:48 -0400
+Received: from suse104.zenez.com ([198.60.105.164]:27130 "EHLO
+	suse104.zenez.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752402AbYIPXZr (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 16 Sep 2008 19:25:47 -0400
+Received: by suse104.zenez.com (Postfix, from userid 1000)
+	id EA7A1A7C8E3; Tue, 16 Sep 2008 17:25:46 -0600 (MDT)
+Received: from localhost (localhost [127.0.0.1])
+	by suse104.zenez.com (Postfix) with ESMTP id DC5B3A7C8E1;
+	Tue, 16 Sep 2008 17:25:46 -0600 (MDT)
+In-Reply-To: <W_emvcr7ijntBMNCDV17_XHXotGkm1Bn-9Bw-ZixcXmFyBWlDj5vYg@cipher.nrlssc.navy.mil>
+User-Agent: Alpine 1.10 (LNX 962 2008-03-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/96044>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/96045>
 
-Is it possible to submit a patch to the mailing list, from an author
-that isn't subscribed?  Last time I submitted a patch I went via my
-throwaway email address, and so that was used as the commit author.
-It looks like "git am" is always going to just use the email address
-used to post to the mailing list as the email address, but I'm sure in
-the past that my patches have appeared under my real email.  Was that
-just manual intervention by the maintainer?
+Hello,
+
+On Tue, 16 Sep 2008, Brandon Casey wrote:
+> Arjen Laarhoven wrote:
+>> The standard libc regex library on OSX does not support alternation
+>> in POSIX Basic Regular Expression mode.  This breaks the diff.funcname
+>> functionality on OSX.
+>>
+>> To fix this, we use the GNU regex library which is already present in
+>> the compat/ diretory for the MinGW port.  However, simply adding compat/
+>> to the COMPAT_CFLAGS variable causes a conflict between the system
+>> fnmatch.h and the one present in compat/.  To remedy this, move the
+>> regex and fnmatch functionality to their own subdirectories in compat/
+>> so they can be included seperately.
+>
+> I wonder if this is the right fix? Right now the GNU regex library is
+> necessary for Darwin, FreeBSD and AIX. I can add IRIX6.5 and Solaris 7
+> to that list. Have newer Solaris's been tested yet? (Jeff?) I wonder if
+> the new test which triggers this flaw has been tested on the other
+> non-GNU platforms in the Makefile which have not been updated. Boyd
+> Lynn Gerber and his 12 platforms comes to mind.
+>
+> It seems POSIX only mentions alternation under Extended Regular Expressions.
+> Likewise for the vertical-line character '|'.
+
+Someone forwarded me this email and asked if I had tested it.  I have not. 
+Where is the easiest place to get it to test with the various platforms? 
+I will check it out on 3-5 of them.  I now have 1.6.0.2 on 5 platforms 
+running and working.  I have not had the time to get it on the other's 
+yet.
+
+--
+Boyd Gerber <gerberb@zenez.com>
+ZENEZ	1042 East Fort Union #135, Midvale Utah  84047
