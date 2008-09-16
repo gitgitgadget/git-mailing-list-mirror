@@ -1,130 +1,122 @@
-From: Joshua Williams <joshua.williams@qlogic.com>
-Subject: Re: [GIT-GUI PATCH] call prepare-commit-msg hook
-Date: Tue, 16 Sep 2008 17:05:13 -0500
-Message-ID: <48D02D99.9090102@qlogic.com>
-References: <48D02144.8030409@qlogic.com>
+From: "Michael Kerrisk" <mtk.manpages@googlemail.com>
+Subject: Getting correct tree layout when importing svn repo into git
+Date: Wed, 17 Sep 2008 00:05:24 +0200
+Message-ID: <cfd18e0f0809161505g4c04bd88vaf4fd7c40f67b243@mail.gmail.com>
+Reply-To: mtk.manpages@gmail.com
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org,
-	Jay Blakeborough <jay.blakeborough@qlogic.com>,
-	Bill Lohse <bill.lohse@qlogic.com>
-To: "Shawn O. Pearce" <spearce@spearce.org>
-X-From: git-owner@vger.kernel.org Wed Sep 17 00:06:33 2008
+Cc: michael.kerrisk@gmail.com
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Sep 17 00:06:41 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Kfigh-0007aI-1l
-	for gcvg-git-2@gmane.org; Wed, 17 Sep 2008 00:06:23 +0200
+	id 1Kfigt-0007fh-LV
+	for gcvg-git-2@gmane.org; Wed, 17 Sep 2008 00:06:36 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752068AbYIPWFP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 16 Sep 2008 18:05:15 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751671AbYIPWFP
-	(ORCPT <rfc822;git-outgoing>); Tue, 16 Sep 2008 18:05:15 -0400
-Received: from eppat.qlogic.com ([198.186.5.11]:15606 "EHLO EPEXCH1.qlogic.org"
-	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-	id S1751432AbYIPWFO (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 16 Sep 2008 18:05:14 -0400
-Received: from Enki2.local ([10.20.32.63]) by EPEXCH1.qlogic.org with Microsoft SMTPSVC(6.0.3790.1830);
-	 Tue, 16 Sep 2008 17:05:12 -0500
-User-Agent: Thunderbird 2.0.0.16 (Macintosh/20080707)
-In-Reply-To: <48D02144.8030409@qlogic.com>
-X-OriginalArrivalTime: 16 Sep 2008 22:05:12.0904 (UTC) FILETIME=[4AD64C80:01C91848]
+	id S1751823AbYIPWF0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 16 Sep 2008 18:05:26 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752163AbYIPWF0
+	(ORCPT <rfc822;git-outgoing>); Tue, 16 Sep 2008 18:05:26 -0400
+Received: from rv-out-0506.google.com ([209.85.198.228]:23744 "EHLO
+	rv-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751671AbYIPWFZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 16 Sep 2008 18:05:25 -0400
+Received: by rv-out-0506.google.com with SMTP id k40so2871963rvb.1
+        for <git@vger.kernel.org>; Tue, 16 Sep 2008 15:05:25 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=googlemail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:reply-to
+         :to:subject:cc:mime-version:content-type:content-transfer-encoding
+         :content-disposition;
+        bh=CajQk2RiTgM91tUrd7Q3+okeh5wDaEJ/pM3nr2WPE+0=;
+        b=fWTD55wXejCWvrUCqlPtXGkAkgGWsWFNOb3fLlVevMZPVuAB/QGCdVICLnslYdZbjO
+         X991PgReV2wn2g3QLpRmezY4VkZs135vAZ9Bmffnt024+CNKrVyWnFDySxdDmQp1vNXb
+         H2Vn4l3VO6kkVVZP/cGqcqrG0esPHIc1YjVHo=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=googlemail.com; s=gamma;
+        h=message-id:date:from:reply-to:to:subject:cc:mime-version
+         :content-type:content-transfer-encoding:content-disposition;
+        b=fH7+BOcndOh2XST+Zet6AEVgFbacRKAAMUgfoc4f/LMcTBbAZTQlM0x6afj4RIpTsV
+         pmWeM8OGkpGg4nSupfToPhnKRJclcPQky7X0918tIvhMmljLwXTnqDM4bREkbj1YwdGM
+         jCgXp9CoiGyKCbIJA4g1K9xOboBYo9MwPIfko=
+Received: by 10.141.29.18 with SMTP id g18mr6025246rvj.298.1221602724967;
+        Tue, 16 Sep 2008 15:05:24 -0700 (PDT)
+Received: by 10.141.176.2 with HTTP; Tue, 16 Sep 2008 15:05:24 -0700 (PDT)
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/96037>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/96038>
 
-Small change.  Still need to load MERGE_MSG and SQUASH_MSG
-if there's no prepare-commit-msg hook.  We now process the hook
-first and if it's not there, load MERGE_MSG or SQUASH_MSG.
+Hello,
 
-Signed-off-by: Joshua Williams <joshua.williams@qlogic.com>
----
-  git-gui/git-gui.sh |   64 
-++++++++++++++++++++++++++++++++++++++++++++++++++++
-  1 files changed, 64 insertions(+), 0 deletions(-)
+I'm currently trying to import an svn repository, along with its tags,
+into git, and everything seems okay except that after the import I
+expect to have the following structure to my checked out repository:
 
-diff --git a/git-gui/git-gui.sh b/git-gui/git-gui.sh
-index 10d8a44..8d06cd1 100755
---- a/git-gui/git-gui.sh
-+++ b/git-gui/git-gui.sh
-@@ -1131,6 +1131,7 @@ proc rescan {after {honor_trustmtime 1}} {
-  		|| [string trim [$ui_comm get 0.0 end]] eq {})} {
-  		if {[string match amend* $commit_type]} {
-  		} elseif {[load_message GITGUI_MSG]} {
-+		} elseif {[run_prepare_commit_msg_hook]} {
-  		} elseif {[load_message MERGE_MSG]} {
-  		} elseif {[load_message SQUASH_MSG]} {
-  		}
-@@ -1230,6 +1231,69 @@ proc load_message {file} {
-  	return 0
-  }
+    [root-dir]
+        .git
+        <checked-out-files>
 
-+proc run_prepare_commit_msg_hook {} {
-+	global pch_error
-+
-+	# prepare-commit-msg requires PREPARE_COMMIT_MSG exist.  From git-gui
-+	# it will be .git/MERGE_MSG (merge), .git/SQUASH_MSG (squash), or an
-+	# empty file but existant file.
-+
-+	set fd_pcm [open [gitdir PREPARE_COMMIT_MSG] a]
-+
-+	if {[file isfile [gitdir MERGE_MSG]]} {
-+		set pcm_source "merge"
-+		set fd_mm [open [gitdir MERGE_MSG] r]
-+		puts -nonewline $fd_pcm [read $fd_mm]
-+		close $fd_mm
-+	} elseif {[file isfile [gitdir SQUASH_MSG]]} {
-+		set pcm_source "squash"
-+		set fd_sm [open [gitdir SQUASH_MSG] r]
-+		puts -nonewline $fd_pcm [read $fd_sm]
-+		close $fd_sm
-+	} else {
-+		set pcm_source ""
-+	}
-+
-+	close $fd_pcm
-+
-+	set fd_ph [githook_read prepare-commit-msg \
-+			[gitdir PREPARE_COMMIT_MSG] $pcm_source]
-+	if {$fd_ph eq {}} {
-+		catch {file delete [gitdir PREPARE_COMMIT_MSG]}
-+		return 0;
-+	}
-+
-+	ui_status [mc "Calling prepare-commit-msg hook..."]
-+	set pch_error {}
-+
-+	fconfigure $fd_ph -blocking 0 -translation binary -eofchar {}
-+	fileevent $fd_ph readable \
-+		[list prepare_commit_msg_hook_wait $fd_ph]
-+
-+	return 1;
-+}
-+
-+proc prepare_commit_msg_hook_wait {fd_ph} {
-+	global pch_error
-+
-+	append pch_error [read $fd_ph]
-+	fconfigure $fd_ph -blocking 1
-+	if {[eof $fd_ph]} {
-+		if {[catch {close $fd_ph}]} {
-+			ui_status [mc "Commit declined by prepare-commit-msg hook."]
-+			hook_failed_popup prepare-commit-msg $pch_error
-+			exit 1
-+		} else {
-+			load_message PREPARE_COMMIT_MSG
-+		}
-+		set pch_error {}
-+		catch {file delete [gitdir PREPARE_COMMIT_MSG]}
-+		return
-+        }
-+	fconfigure $fd_ph -blocking 0
-+	catch {file delete [gitdir PREPARE_COMMIT_MSG]}
-+}
-+
-  proc read_diff_index {fd after} {
-  	global buf_rdi
+But instead I end up with
+
+    [root-dir]
+        .git
+        man-pages               <-- name of my svn project
+            <checked-out-files>
+
+I've tried out a few different command-line flag settings but so far I
+haven't managed to get the desired layout.  I guess that I'm missing
+something trivial, but I haven't worked out what it is so far.
+
+The commands I'm using to do the import are:
+
+$ git svn init file:///home/mtk/man-pages-rep/ -t tags -T trunk -b branches
+$ git svn fetch
+
+The svn tags are getting imported okay, since:
+
+git branch -a | head
+  tags/man-pages-2.00
+  tags/man-pages-2.01
+  ...
+  tags/man-pages-3.08
+  tags/man-pages-3.09
+  trunk
+
+The following commands show the layout of my svn repo, which is pretty
+much standard:
+
+$ svn list file:///home/mtk/man-pages-rep
+branches/
+tags/
+trunk/
+$ svn list file:///home/mtk/man-pages-rep/trunk
+man-pages/
+$ svn list file:///home/mtk/man-pages-rep/trunk/man-pages
+Changes
+Changes.old
+Makefile
+README
+man-pages-3.09.Announce
+...
+man7/
+man8/
+scripts/
+$ svn list file:///home/mtk/man-pages-rep/tags
+man-pages-2.00/
+man-pages-2.01/
+...
+man-pages-3.08/
+man-pages-3.09/
+
+What 'git svn init' command do I need to get the layout that I want
+for my imported git repo?
+
+Cheers,
+
+Michael
