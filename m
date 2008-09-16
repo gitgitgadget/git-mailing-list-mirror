@@ -1,85 +1,90 @@
-From: "Avery Pennarun" <apenwarr@gmail.com>
-Subject: Re: Management of opendocument (openoffice.org) files in git
-Date: Tue, 16 Sep 2008 12:04:44 -0400
-Message-ID: <32541b130809160904v7acc73cfm4856c33d40555e94@mail.gmail.com>
-References: <loom.20080915T222909-709@post.gmane.org>
-	 <48CF5B90.5050800@viscovery.net> <48CF630F.4090808@gmail.com>
+From: Michael J Gruber <git@drmicha.warpmail.net>
+Subject: Re: git-branch manpage question
+Date: Tue, 16 Sep 2008 18:25:50 +0200
+Message-ID: <48CFDE0E.4020806@drmicha.warpmail.net>
+References: <957350.34177.qm@web27803.mail.ukl.yahoo.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-Cc: "Johannes Sixt" <j.sixt@viscovery.net>, git@vger.kernel.org
-To: "Sergio Callegari" <sergio.callegari@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Sep 16 18:06:03 2008
+Cc: git@vger.kernel.org
+To: Mark Struberg <struberg@yahoo.de>
+X-From: git-owner@vger.kernel.org Tue Sep 16 18:27:38 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Kfd3r-0001fA-9n
-	for gcvg-git-2@gmane.org; Tue, 16 Sep 2008 18:05:55 +0200
+	id 1KfdOT-00012B-6G
+	for gcvg-git-2@gmane.org; Tue, 16 Sep 2008 18:27:13 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752518AbYIPQEr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 16 Sep 2008 12:04:47 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753187AbYIPQEr
-	(ORCPT <rfc822;git-outgoing>); Tue, 16 Sep 2008 12:04:47 -0400
-Received: from mail-gx0-f16.google.com ([209.85.217.16]:55360 "EHLO
-	mail-gx0-f16.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751705AbYIPQEq (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 16 Sep 2008 12:04:46 -0400
-Received: by gxk9 with SMTP id 9so27728301gxk.13
-        for <git@vger.kernel.org>; Tue, 16 Sep 2008 09:04:44 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to
-         :subject:cc:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:references;
-        bh=b3R5EB6diF97dyi1Frly2NSZpglgKHjXqcKTDYhBkpI=;
-        b=o0dakzSxfiKPCmIywMR/QOCuKl8A5aKWJWQFDmJlnnD9DwDZWXEqOG3uMHkkejEmRP
-         LUDYEmrj+e4epsQJA0MBA8vPMUJ4qkOpioLSRUoYfk5w48MRfdQVdvA+6XSIuT8wBO8V
-         FMaEl+ChluOwBJqjazBhszd0YBGxJnA/nkKj8=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
-         :content-type:content-transfer-encoding:content-disposition
-         :references;
-        b=D48u0py3h43tO7FENB1DbuQWpoQHJA6HUBR8k1kahsTKB2GRKCUh7iCRyWqU8nCpZi
-         CAvAoDUhDWgW3BHK3H5tliXuRjQd3sHv8nLKJVgL0NYvEsu4Ka93h0fqddYprQwYxntm
-         pPATON3EUJfoAtCr2rdNWwUYalGurWqQwLzsk=
-Received: by 10.150.151.20 with SMTP id y20mr1730661ybd.172.1221581084312;
-        Tue, 16 Sep 2008 09:04:44 -0700 (PDT)
-Received: by 10.150.96.5 with HTTP; Tue, 16 Sep 2008 09:04:44 -0700 (PDT)
-In-Reply-To: <48CF630F.4090808@gmail.com>
-Content-Disposition: inline
+	id S1755152AbYIPQZz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 16 Sep 2008 12:25:55 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754982AbYIPQZz
+	(ORCPT <rfc822;git-outgoing>); Tue, 16 Sep 2008 12:25:55 -0400
+Received: from out1.smtp.messagingengine.com ([66.111.4.25]:60946 "EHLO
+	out1.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1754483AbYIPQZy (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 16 Sep 2008 12:25:54 -0400
+Received: from compute1.internal (compute1.internal [10.202.2.41])
+	by out1.messagingengine.com (Postfix) with ESMTP id 2634C163196;
+	Tue, 16 Sep 2008 12:25:54 -0400 (EDT)
+Received: from heartbeat1.messagingengine.com ([10.202.2.160])
+  by compute1.internal (MEProxy); Tue, 16 Sep 2008 12:25:54 -0400
+X-Sasl-enc: qtXk6Lg52eir5Dgf1H9JArVH4fw9bCl1DcPtaucakF8l 1221582353
+Received: from [139.174.44.12] (whitehead.math.tu-clausthal.de [139.174.44.12])
+	by mail.messagingengine.com (Postfix) with ESMTPSA id 3DABF28453;
+	Tue, 16 Sep 2008 12:25:53 -0400 (EDT)
+User-Agent: Thunderbird 2.0.0.16 (X11/20080707)
+In-Reply-To: <957350.34177.qm@web27803.mail.ukl.yahoo.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/96013>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/96014>
 
-On Tue, Sep 16, 2008 at 3:41 AM, Sergio Callegari
-<sergio.callegari@gmail.com> wrote:
-> Johannes Sixt wrote:
->>
->> You don't need a temporay zip filename in filter mode:
->>
->>  unzip $UNZIP_OPTS /dev/stdin  # works for me, but not 100% portable
->>  zip $ZIP_OPTS - .             # writes to stdout
->>
->>
->
-> The unzip documentation says "Archives read from standard input are not yet
-> supported", so I was a bit worried about using the /dev/stdin thing.  Might
-> it be that there are subtle cases where unzip needs to seek or rewind?
+Mark Struberg venit, vidit, dixit 16.09.2008 16:46:
+> Hi!
+> 
+> I think i found an inconsistency in the documentation of the
+> git-branch command:
+> 
+> *snip* --track:: .... Set the branch.autosetupmerge configuration
+> variable to `false` if you want 'git-checkout' and 'git-branch' to
+> always behave as if '--no-track' were given... *snip*
+> 
+> and
+> 
+> *snip* --no-track:: Ignore the branch.autosetupmerge configuration
+> variable.
+> 
+> *snip*
+> 
+> So, the description of branch.autosetupmerge is referencing
+> --no-track and vice versa, thus the effective documentation is
+> essentially missing as far as I understand.
 
-IIRC zip files keep their index at the end of the file, which means
-zipping in a pipeline is efficient (you can write all the blocks
-first, then drop the final index at the end) but unzipping that way is
-really hard.
+Well, what's missing is the explanation that "--no-track" is the
+opposite of "--track".  Do we really need to stress that?
 
-unzipping from /dev/stdin seems to work if stdin is seekable, otherwise not.
+The explanation of "--track" is in the "....", you left it out in your
+quote.
 
-       unzip /dev/stdin <filename.zip    # works
-       cat filename.zip | unzip /dev/stdin    # doesn't work
+Maybe the formulation is a bit suboptimal because it's squeezed more or
+less forcibly into the option list concept. At "--track" there is a
+description of what is meant by a tracking branch configuration. Now,
+the logical flow is:
 
-Have fun,
+If --track is given, set up tracking.
+If --no-track is given, don't set up tracking.
+If none is given, check branch.autosetupmerge:
+If it is false, don't set up tracking.
+If it is always, set up tracking.
+If it is unset (or true), check what kind of start point we branch off from:
+If it is a remote, set up tracking.
+If it is not a remote, don't set up tracking.
 
-Avery
+Admittedly, the description at --track is a bit contrived. But if you
+read the DESCRIPTION section before the options things should become
+clear. Maybe git-branch(1) should reference git-config(1).
+
+Cheers,
+Michael
