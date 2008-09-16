@@ -1,72 +1,108 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 16/16] ls-files: add --overlay option
-Date: Tue, 16 Sep 2008 10:00:50 -0700
-Message-ID: <7v7i9c6n5p.fsf@gitster.siamese.dyndns.org>
-References: <1221397685-27715-1-git-send-email-pclouds@gmail.com>
- <1221397685-27715-10-git-send-email-pclouds@gmail.com>
- <1221397685-27715-11-git-send-email-pclouds@gmail.com>
- <1221397685-27715-12-git-send-email-pclouds@gmail.com>
- <1221397685-27715-13-git-send-email-pclouds@gmail.com>
- <1221397685-27715-14-git-send-email-pclouds@gmail.com>
- <1221397685-27715-15-git-send-email-pclouds@gmail.com>
- <1221397685-27715-16-git-send-email-pclouds@gmail.com>
- <1221397685-27715-17-git-send-email-pclouds@gmail.com>
- <7vljxtb3tf.fsf@gitster.siamese.dyndns.org>
- <fcaeb9bf0809160500y4b67c621g45b0c6ddf3745a84@mail.gmail.com>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: Git User's Survey 2008 partial summary, part 5 - other SCM
+Date: Tue, 16 Sep 2008 19:12:04 +0200
+Message-ID: <200809161912.06571.jnareb@gmail.com>
+References: <200809031607.19722.jnareb@gmail.com> <fcaeb9bf0809140345n11d41430ma9b4096c66776b0c@mail.gmail.com> <alpine.DEB.1.10.0809142038190.19489@asgard.lang.hm>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: "Nguyen Thai Ngoc Duy" <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Sep 16 19:02:19 2008
+Content-Type: text/plain; charset=iso-8859-2
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Nguyen Thai Ngoc Duy <pclouds@gmail.com>, git@vger.kernel.org
+To: David Lang <david@lang.hm>
+X-From: git-owner@vger.kernel.org Tue Sep 16 19:13:26 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KfdwG-0003Ya-Sn
-	for gcvg-git-2@gmane.org; Tue, 16 Sep 2008 19:02:09 +0200
+	id 1Kfe7B-0006qc-D8
+	for gcvg-git-2@gmane.org; Tue, 16 Sep 2008 19:13:25 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753939AbYIPRA7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 16 Sep 2008 13:00:59 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753568AbYIPRA6
-	(ORCPT <rfc822;git-outgoing>); Tue, 16 Sep 2008 13:00:58 -0400
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:64236 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753513AbYIPRA5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 16 Sep 2008 13:00:57 -0400
-Received: from localhost.localdomain (localhost [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 2476D60781;
-	Tue, 16 Sep 2008 13:00:56 -0400 (EDT)
-Received: from pobox.com (ip68-225-240-211.oc.oc.cox.net [68.225.240.211])
- (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
- certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
- ESMTPSA id 547E16077A; Tue, 16 Sep 2008 13:00:53 -0400 (EDT)
-In-Reply-To: <fcaeb9bf0809160500y4b67c621g45b0c6ddf3745a84@mail.gmail.com>
- (Nguyen Thai Ngoc Duy's message of "Tue, 16 Sep 2008 19:00:03 +0700")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: 073771CC-8411-11DD-9AE7-D0CFFE4BC1C1-77302942!a-sasl-fastnet.pobox.com
+	id S1752892AbYIPRMR convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 16 Sep 2008 13:12:17 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752876AbYIPRMQ
+	(ORCPT <rfc822;git-outgoing>); Tue, 16 Sep 2008 13:12:16 -0400
+Received: from mail-gx0-f16.google.com ([209.85.217.16]:37772 "EHLO
+	mail-gx0-f16.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752670AbYIPRMP (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 16 Sep 2008 13:12:15 -0400
+Received: by gxk9 with SMTP id 9so27918275gxk.13
+        for <git@vger.kernel.org>; Tue, 16 Sep 2008 10:12:14 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:from:to:subject:date
+         :user-agent:cc:references:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:message-id;
+        bh=SF8cSaHVghrqABzqw2AO+uuSD83sjB6kFrzvz7TEWKc=;
+        b=RAB0X2R8s29IukTAa4+v/68Z6A4cIvqA2Mm7b2ft0y/8aU3Sz+4L6BxqaFdFC1TxfC
+         igcCYZD5nKq2ZAUDXZ7ny755ctuTf2gQZdUV2ueVvzrq2wllyJeUIUu/t7CyPvCwoQOA
+         2G/gYor33pKD1FhYQFk385fF6bOCdMlLuLPY8=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=from:to:subject:date:user-agent:cc:references:in-reply-to
+         :mime-version:content-type:content-transfer-encoding
+         :content-disposition:message-id;
+        b=Vx9NtqbrjdZVAgRBGFSIfjTNu0HjR5c0QlemQpYrF2lCTiRAf8nLeaugDtM4OO79Ga
+         gOyh96Iq6hdl7Rl4jOdKUg/rPakNAQyR0E+ewvBsii89L6C58SlObki0mwht2XQLsFq1
+         dnqSx7MZbjZk+49Zfm32Orv8oqk8iAPqYo6ao=
+Received: by 10.86.26.1 with SMTP id 1mr982726fgz.35.1221585133900;
+        Tue, 16 Sep 2008 10:12:13 -0700 (PDT)
+Received: from ?192.168.1.11? ( [83.8.240.247])
+        by mx.google.com with ESMTPS id 3sm17072947fge.3.2008.09.16.10.12.10
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Tue, 16 Sep 2008 10:12:12 -0700 (PDT)
+User-Agent: KMail/1.9.3
+In-Reply-To: <alpine.DEB.1.10.0809142038190.19489@asgard.lang.hm>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/96017>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/96018>
 
-"Nguyen Thai Ngoc Duy" <pclouds@gmail.com> writes:
+On Mon, 15 Sep 2008, David Lang <david@lang.hm> napisa=B3:
+> On Sun, 14 Sep 2008, Nguyen Thai Ngoc Duy wrote:
+>> On 9/12/08, Jakub Narebski <jnareb@gmail.com> wrote:
+>>>  15) Do you miss features in git that you know from other SCMs?
+>>>     If yes, what features are these (and from which SCM)?
+>>>     (Open ended text - Essay)
+>>>
+>>>  Total respondents       1046 (some/many of them wrote 'no')
+>>>  skipped this question   1249
+>>>
+>>>  This is just a very quick summary, based on a first few pages of
+>>>  responses, Full analysis is I think best left for after closing th=
+e
+>>>  survey, because I think this would be a lot of work...
+>>>
+>>>  So here is preliminary list, or rather beginning of one:
+>>>   * sparse/partial checkout and clone (e.g. Perforce)
+>>
+>> Have not read the survey result, but do you recall what is the most
+>> used term for sparse/partial checkout? What SCMs do sparse/partial
+>> checkout? I think it could be usable as it is now in my
+>> will-be-sent-again series, but I don't really know how people want i=
+t
+>> to from that.
+>=20
+> the most common use-case is people who want to follow a project but
+> (at least think that they) don't need the history. so they want to
+> save time/bandwideth/disk space by not downloading things they don't
+> need.=20
 
->>  By the way, I do not see an easy way to review what paths are marked with
->>  no-checkout easily from your command set.  It might be worthwhile to add a
->>  new option that iterates over the index, finds a set of common prefixes to
->>  no-checkout entries and reports that set.
->
-> What is it for? I can only think of it (actually the opposite, find a
-> set of common prefixes to checkout entries) as a way to reconstruct
-> narrow spec (simple rules only).
+Errr... the idea is to implement partial (sparse, narrow) _checkout_,
+which is doable, not partial/lazy _clone_, which is very, very=20
+difficult.
 
-That's the list you can use as input to "find $them -type f" to see what
-stale files from previous unnarrowed checkout are on the filesystem.
+Partial checkout *might* help reduce disk space because usually=20
+repository database (which is compressed and deltaified) is smaller=20
+than checkout; and if it isn't you can always use _shallow_ clone (only=
+=20
+part of history) and/or remote alternates (with reference repository
+not on your quota, or on different filesystem).  And it might help
+checkout/commit/diff/status times (performance) on slow filesystems,=20
+with extremely large number of files in full checkout.  But contrary to
+centralized SCM, where server is usually net away from working area,
+partial checkout doesn't affect network usage _at all_.
 
-I agree that the opposite is also interesting and could be useful.  Only
-the individual index entries remember the area the user told us to check
-out, and I expect that "what's my narrow area right now?" would be a
-common question users may want to ask.  A full answer can be obtained with
-ls-files --narrow, but if we can summarize it into a more concise form, it
-would be a useful thing to do.
+--=20
+Jakub Narebski
+Poland
