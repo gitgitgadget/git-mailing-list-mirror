@@ -1,84 +1,63 @@
-From: Thomas Rast <trast@student.ethz.ch>
-Subject: [PATCH] Documentation: disable sub/superscript characters ^/~
-Date: Tue, 16 Sep 2008 14:47:18 +0200
-Message-ID: <1221569238-29263-1-git-send-email-trast@student.ethz.ch>
-References: <7vy71s7b26.fsf@gitster.siamese.dyndns.org>
-Cc: Junio C Hamano <junio@pobox.com>,
-	Avery Pennarun <apenwarr@gmail.com>
+From: =?UTF-8?B?Sm9uYXMgRmxvZMOpbg==?= <jonas.floden@gmail.com>
+Subject: [EGIT] Checking out signed tags fails
+Date: Tue, 16 Sep 2008 14:58:52 +0200
+Message-ID: <gaoaif$2up$1@ger.gmane.org>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Sep 16 14:49:46 2008
+X-From: git-owner@vger.kernel.org Tue Sep 16 15:01:59 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KfZyq-0000DL-5K
-	for gcvg-git-2@gmane.org; Tue, 16 Sep 2008 14:48:32 +0200
+	id 1KfaAJ-0004Rh-Jz
+	for gcvg-git-2@gmane.org; Tue, 16 Sep 2008 15:00:24 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751365AbYIPMrX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 16 Sep 2008 08:47:23 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751257AbYIPMrX
-	(ORCPT <rfc822;git-outgoing>); Tue, 16 Sep 2008 08:47:23 -0400
-Received: from xsmtp1.ethz.ch ([82.130.70.13]:12166 "EHLO xsmtp1.ethz.ch"
+	id S1754610AbYIPM7N (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 16 Sep 2008 08:59:13 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754589AbYIPM7L
+	(ORCPT <rfc822;git-outgoing>); Tue, 16 Sep 2008 08:59:11 -0400
+Received: from main.gmane.org ([80.91.229.2]:42429 "EHLO ciao.gmane.org"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751186AbYIPMrW (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 16 Sep 2008 08:47:22 -0400
-Received: from xfe2.d.ethz.ch ([82.130.124.42]) by xsmtp1.ethz.ch with Microsoft SMTPSVC(6.0.3790.3959);
-	 Tue, 16 Sep 2008 14:47:21 +0200
-Received: from localhost.localdomain ([129.132.153.233]) by xfe2.d.ethz.ch over TLS secured channel with Microsoft SMTPSVC(6.0.3790.3959);
-	 Tue, 16 Sep 2008 14:47:20 +0200
-X-Mailer: git-send-email 1.6.0.2.469.g5ab27
-In-Reply-To: <7vy71s7b26.fsf@gitster.siamese.dyndns.org>
-X-OriginalArrivalTime: 16 Sep 2008 12:47:20.0827 (UTC) FILETIME=[5BECACB0:01C917FA]
+	id S1753245AbYIPM7K (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 16 Sep 2008 08:59:10 -0400
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1Kfa91-00074r-L1
+	for git@vger.kernel.org; Tue, 16 Sep 2008 12:59:03 +0000
+Received: from c-d2c9e253.93-16-64736c12.cust.bredbandsbolaget.se ([83.226.201.210])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Tue, 16 Sep 2008 12:59:03 +0000
+Received: from jonas.floden by c-d2c9e253.93-16-64736c12.cust.bredbandsbolaget.se with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Tue, 16 Sep 2008 12:59:03 +0000
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@ger.gmane.org
+X-Gmane-NNTP-Posting-Host: c-d2c9e253.93-16-64736c12.cust.bredbandsbolaget.se
+User-Agent: Thunderbird 2.0.0.12 (X11/20080213)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/95997>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/95998>
 
-Disables the special meaning of ^ and ~ as per the Asciidoc FAQ,
+When trying to check-out a signed tag I get the following Error:
+Unable to switch branches
 
-  http://www.methods.co.nz/asciidoc/faq.html#_how_can_i_disable_a_quoted_text_substitution
+Reason:
+  Mapping commit: refs/tags/v1.3.1.1
 
-Signed-off-by: Thomas Rast <trast@student.ethz.ch>
+And in details:
+Object XXX is not a commit.
 
----
+The object ID shown is actually the id for the tag object and not the
+tagged commit.
 
-Junio C Hamano wrote:
-> Sorry, but this unfortunately does not seem to help asciidoc 8.2.5 on FC9
-> at all, which is the combination used at k.org machine that feeds the
-> html/man branches to everybody else.
+This was tested with the latest master. It seemed commit 1f460e2 (Tests
+and fixes for dereferencing tags in Repository.resolve(), 2008-09-12)
+would fix it, but it didn't.
 
-This seems to do the trick on 8.2.5 here.
+Thanks,
 
-Unfortunately, the changelog for 8.0 says that setting the quote
-character to an empty replacement is new in 8.0 (I can't test with
-7.x), and I cannot find a way to make an 'if version >= 8' block.
-(Why does it have ifdef but no if?)
-
-So maybe if someone sees a way to do this version-dependent, then we
-can combine the two approaches and work with both 7.x and 8.x.
-
-- Thomas
-
-
- Documentation/asciidoc.conf |    5 +++++
- 1 files changed, 5 insertions(+), 0 deletions(-)
-
-diff --git a/Documentation/asciidoc.conf b/Documentation/asciidoc.conf
-index 40d43b7..37bf195 100644
---- a/Documentation/asciidoc.conf
-+++ b/Documentation/asciidoc.conf
-@@ -15,6 +15,11 @@ startsb=&#91;
- endsb=&#93;
- tilde=&#126;
- 
-+# disable sub/superscripts -- they collide with our ref notation
-+[quotes]
-+^=
-+~=
-+
- ifdef::backend-docbook[]
- [linkgit-inlinemacro]
- {0%{target}}
--- 
-tg: (5ab2757..) t/doc-disable-tilde (depends on: next)
+Jonas
