@@ -1,80 +1,128 @@
 From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: [JGIT PATCH] Fix push to empty repository
-Date: Mon, 15 Sep 2008 22:38:04 -0700
-Message-ID: <1221543484-51295-1-git-send-email-spearce@spearce.org>
+Subject: [JGIT PATCH] Add support for ~/.ssh/config PreferredAuthentications
+Date: Mon, 15 Sep 2008 22:48:17 -0700
+Message-ID: <1221544097-51484-1-git-send-email-spearce@spearce.org>
 Cc: git@vger.kernel.org
 To: Robin Rosenberg <robin.rosenberg@dewire.com>
-X-From: git-owner@vger.kernel.org Tue Sep 16 07:39:31 2008
+X-From: git-owner@vger.kernel.org Tue Sep 16 07:49:30 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KfTHf-0001B0-7w
-	for gcvg-git-2@gmane.org; Tue, 16 Sep 2008 07:39:31 +0200
+	id 1KfTRH-0002wC-Rs
+	for gcvg-git-2@gmane.org; Tue, 16 Sep 2008 07:49:28 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751348AbYIPFiK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 16 Sep 2008 01:38:10 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751376AbYIPFiI
-	(ORCPT <rfc822;git-outgoing>); Tue, 16 Sep 2008 01:38:08 -0400
-Received: from george.spearce.org ([209.20.77.23]:34012 "EHLO
+	id S1751330AbYIPFsU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 16 Sep 2008 01:48:20 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751221AbYIPFsU
+	(ORCPT <rfc822;git-outgoing>); Tue, 16 Sep 2008 01:48:20 -0400
+Received: from george.spearce.org ([209.20.77.23]:41236 "EHLO
 	george.spearce.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751330AbYIPFiI (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 16 Sep 2008 01:38:08 -0400
+	with ESMTP id S1751203AbYIPFsT (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 16 Sep 2008 01:48:19 -0400
 Received: by george.spearce.org (Postfix, from userid 1000)
-	id 03EFD38360; Tue, 16 Sep 2008 05:38:05 +0000 (UTC)
+	id 12A0C38360; Tue, 16 Sep 2008 05:48:19 +0000 (UTC)
 X-Spam-Checker-Version: SpamAssassin 3.2.4 (2008-01-01) on george.spearce.org
 X-Spam-Level: 
 X-Spam-Status: No, score=-4.4 required=4.0 tests=ALL_TRUSTED,BAYES_00
 	autolearn=ham version=3.2.4
 Received: from localhost.localdomain (localhost [127.0.0.1])
-	by george.spearce.org (Postfix) with ESMTP id 0100C3835A;
-	Tue, 16 Sep 2008 05:38:04 +0000 (UTC)
+	by george.spearce.org (Postfix) with ESMTP id 548253835A;
+	Tue, 16 Sep 2008 05:48:18 +0000 (UTC)
 X-Mailer: git-send-email 1.6.0.1.337.g5c7d67
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/95973>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/95974>
 
-If the remote repository has no commits we received an exception
-about "capabilities^{} coming before capabilities".  This happens
-because we didn't correctly ignore the dummy capability ref line.
+Some configurations may wish to disable interactive methods of
+authentication, such as when running from automated cron or batch
+style jobs that have no user available.
 
-http://code.google.com/p/egit/issues/detail?id=34
+Typically in an OpenSSH based system this would be configured on a
+per-host basis in the current user's ~/.ssh/config file, by setting
+PreferredAuthentications to the list of authentication methods
+(e.g. just "publickey") that are reasonable.
+
+JSch honors this configuration setting, but we need to transfer it
+from our own OpenSshConfig class, otherwise it has no knowledge of
+the setting.
+
+http://code.google.com/p/egit/issues/detail?id=33
 
 Signed-off-by: Shawn O. Pearce <spearce@spearce.org>
 ---
- .../spearce/jgit/transport/BasePackConnection.java |   12 ++++++------
- 1 files changed, 6 insertions(+), 6 deletions(-)
+ .../spearce/egit/ui/EclipseSshSessionFactory.java  |    4 ++++
+ .../jgit/transport/DefaultSshSessionFactory.java   |    4 ++++
+ .../org/spearce/jgit/transport/OpenSshConfig.java  |   12 ++++++++++++
+ 3 files changed, 20 insertions(+), 0 deletions(-)
 
-diff --git a/org.spearce.jgit/src/org/spearce/jgit/transport/BasePackConnection.java b/org.spearce.jgit/src/org/spearce/jgit/transport/BasePackConnection.java
-index 184a5fd..2d145a6 100644
---- a/org.spearce.jgit/src/org/spearce/jgit/transport/BasePackConnection.java
-+++ b/org.spearce.jgit/src/org/spearce/jgit/transport/BasePackConnection.java
-@@ -147,18 +147,18 @@ for (String c : line.substring(nul + 1).split(" "))
- 						remoteCapablities.add(c);
- 					line = line.substring(0, nul);
- 				}
--
--				if (line.equals("capabilities^{}")) {
--					// special line from git-receive-pack to show
--					// capabilities when there are no refs to advertise
--					continue;
--				}
- 			}
- 
- 			if (line.length() == 0)
- 				break;
- 
- 			String name = line.substring(41, line.length());
-+			if (avail.isEmpty() && name.equals("capabilities^{}")) {
-+				// special line from git-receive-pack to show
-+				// capabilities when there are no refs to advertise
-+				continue;
-+			}
+diff --git a/org.spearce.egit.ui/src/org/spearce/egit/ui/EclipseSshSessionFactory.java b/org.spearce.egit.ui/src/org/spearce/egit/ui/EclipseSshSessionFactory.java
+index 640a165..67c5f16 100644
+--- a/org.spearce.egit.ui/src/org/spearce/egit/ui/EclipseSshSessionFactory.java
++++ b/org.spearce.egit.ui/src/org/spearce/egit/ui/EclipseSshSessionFactory.java
+@@ -50,6 +50,10 @@ if (pass != null)
+ 			session.setPassword(pass);
+ 		else
+ 			new UserInfoPrompter(session);
 +
- 			final ObjectId id = ObjectId.fromString(line.substring(0, 40));
- 			if (name.endsWith("^{}")) {
- 				name = name.substring(0, name.length() - 3);
++		final String pauth = hc.getPreferredAuthentications();
++		if (pauth != null)
++			session.setConfig("PreferredAuthentications", pauth);
+ 		return session;
+ 	}
+ 
+diff --git a/org.spearce.jgit/src/org/spearce/jgit/transport/DefaultSshSessionFactory.java b/org.spearce.jgit/src/org/spearce/jgit/transport/DefaultSshSessionFactory.java
+index 74fca66..b6f58f0 100644
+--- a/org.spearce.jgit/src/org/spearce/jgit/transport/DefaultSshSessionFactory.java
++++ b/org.spearce.jgit/src/org/spearce/jgit/transport/DefaultSshSessionFactory.java
+@@ -103,6 +103,10 @@ if (pass != null)
+ 			session.setPassword(pass);
+ 		else
+ 			session.setUserInfo(new AWT_UserInfo());
++
++		final String pauth = hc.getPreferredAuthentications();
++		if (pauth != null)
++			session.setConfig("PreferredAuthentications", pauth);
+ 		return session;
+ 	}
+ 
+diff --git a/org.spearce.jgit/src/org/spearce/jgit/transport/OpenSshConfig.java b/org.spearce.jgit/src/org/spearce/jgit/transport/OpenSshConfig.java
+index cf7c388..748199c 100644
+--- a/org.spearce.jgit/src/org/spearce/jgit/transport/OpenSshConfig.java
++++ b/org.spearce.jgit/src/org/spearce/jgit/transport/OpenSshConfig.java
+@@ -278,6 +278,8 @@ if (ret.isAbsolute())
+ 
+ 		String user;
+ 
++		String preferredAuthentications;
++
+ 		void copyFrom(final Host src) {
+ 			if (hostName == null)
+ 				hostName = src.hostName;
+@@ -287,6 +289,8 @@ if (identityFile == null)
+ 				identityFile = src.identityFile;
+ 			if (user == null)
+ 				user = src.user;
++			if (preferredAuthentications == null)
++				preferredAuthentications = src.preferredAuthentications;
+ 		}
+ 
+ 		/**
+@@ -317,5 +321,13 @@ public File getIdentityFile() {
+ 		public String getUser() {
+ 			return user;
+ 		}
++
++		/**
++		 * @return return the preferred authentication methods, separated by
++		 *         commas if more than one authentication method is preferred.
++		 */
++		public String getPreferredAuthentications() {
++			return preferredAuthentications;
++		}
+ 	}
+ }
 -- 
 1.6.0.1.337.g5c7d67
