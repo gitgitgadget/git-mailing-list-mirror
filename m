@@ -1,62 +1,72 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: Submitting patches from unsubscribed authors?
-Date: Tue, 16 Sep 2008 19:36:14 -0400
-Message-ID: <20080916233613.GA14251@coredump.intra.peff.net>
-References: <57518fd10809161624u3b2937dmd36e0fc962ea7a7@mail.gmail.com>
+From: Miklos Vajna <vmiklos@frugalware.org>
+Subject: Re: [PATCH] Teach git diff about Objective-C syntax
+Date: Wed, 17 Sep 2008 01:39:23 +0200
+Message-ID: <20080916233923.GF4829@genesis.frugalware.org>
+References: <1221607297-33212-1-git-send-email-jon.delStrother@bestbefore.tv>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Jonathan del Strother <maillist@steelskies.com>
-X-From: git-owner@vger.kernel.org Wed Sep 17 01:37:28 2008
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="PD84dSQJNgoRXpJr"
+Cc: git@vger.kernel.org
+To: Jonathan del Strother <jon.delStrother@bestbefore.tv>
+X-From: git-owner@vger.kernel.org Wed Sep 17 01:40:42 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Kfk6o-0003M6-TB
-	for gcvg-git-2@gmane.org; Wed, 17 Sep 2008 01:37:27 +0200
+	id 1Kfk9q-0004Cu-BV
+	for gcvg-git-2@gmane.org; Wed, 17 Sep 2008 01:40:34 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752362AbYIPXgT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 16 Sep 2008 19:36:19 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752354AbYIPXgT
-	(ORCPT <rfc822;git-outgoing>); Tue, 16 Sep 2008 19:36:19 -0400
-Received: from peff.net ([208.65.91.99]:4688 "EHLO peff.net"
+	id S1752411AbYIPXj0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 16 Sep 2008 19:39:26 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752443AbYIPXj0
+	(ORCPT <rfc822;git-outgoing>); Tue, 16 Sep 2008 19:39:26 -0400
+Received: from virgo.iok.hu ([193.202.89.103]:48673 "EHLO virgo.iok.hu"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752259AbYIPXgS (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 16 Sep 2008 19:36:18 -0400
-Received: (qmail 25353 invoked by uid 111); 16 Sep 2008 23:36:15 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.32) with SMTP; Tue, 16 Sep 2008 19:36:15 -0400
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Tue, 16 Sep 2008 19:36:14 -0400
+	id S1752373AbYIPXjZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 16 Sep 2008 19:39:25 -0400
+Received: from kag.elte.hu (kag.elte.hu [157.181.177.1])
+	by virgo.iok.hu (Postfix) with ESMTP id C5B5B1B2507;
+	Wed, 17 Sep 2008 01:39:23 +0200 (CEST)
+Received: from genesis.frugalware.org (frugalware.elte.hu [157.181.177.34])
+	by kag.elte.hu (Postfix) with ESMTP id 816B24465E;
+	Wed, 17 Sep 2008 01:39:23 +0200 (CEST)
+Received: by genesis.frugalware.org (Postfix, from userid 1000)
+	id 2060D11901A1; Wed, 17 Sep 2008 01:39:23 +0200 (CEST)
 Content-Disposition: inline
-In-Reply-To: <57518fd10809161624u3b2937dmd36e0fc962ea7a7@mail.gmail.com>
+In-Reply-To: <1221607297-33212-1-git-send-email-jon.delStrother@bestbefore.tv>
+User-Agent: Mutt/1.5.17 (2007-11-01)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/96048>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/96049>
 
-On Wed, Sep 17, 2008 at 12:24:48AM +0100, Jonathan del Strother wrote:
 
-> Is it possible to submit a patch to the mailing list, from an author
-> that isn't subscribed?  Last time I submitted a patch I went via my
+--PD84dSQJNgoRXpJr
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
 
-Yes. The list accepts mail from non-subscribers.
+On Wed, Sep 17, 2008 at 12:21:37AM +0100, Jonathan del Strother <jon.delStrother@bestbefore.tv> wrote:
+> +	{ "objc", "^[\t ]*\\([-+][\t ]*([\t ]*[A-Za-z_][A-Za-z_0-9]*.*).*\\)$"      // Objective-C methods
+> +			"\\|"
+> +			"^[\t ]*\\(\\([\t ]*[A-Za-z_][A-Za-z_0-9]*\\)\\{2,\\}[\t ]*([^;]*\\)$" // C functions
+> +			"\\|"
+> +			"^@\\(implementation\\|interface\\|protocol\\).*"   // Objective-C class/protocol definitions
 
-> throwaway email address, and so that was used as the commit author.
-> It looks like "git am" is always going to just use the email address
-> used to post to the mailing list as the email address, but I'm sure in
-> the past that my patches have appeared under my real email.  Was that
-> just manual intervention by the maintainer?
+Please avoid C++-style comments. Just use /* */.
 
-Yes, it pulls it from the From: header. However, you can override that
-by including
+Thanks.
 
-  From: Your Real Name <yourrealaddress>
+--PD84dSQJNgoRXpJr
+Content-Type: application/pgp-signature
+Content-Disposition: inline
 
-as the first line of the mail. git-send-email will do this for you
-automagically if the commit author and your email sending address are
-not the same.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.9 (GNU/Linux)
 
-Look at some of your previous patches to the list; they have this line.
+iEYEARECAAYFAkjQQ6sACgkQe81tAgORUJaR1wCgmnC2W6AbILCuIguEsm1Ziq98
+Lp4An3w6kUMqpUDhSzHEMOG9d5fcrFLb
+=s41Q
+-----END PGP SIGNATURE-----
 
--Peff
+--PD84dSQJNgoRXpJr--
