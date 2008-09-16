@@ -1,199 +1,109 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: [JGIT PATCH 1/2 v2] Add support for ~/.ssh/config PreferredAuthentications
-Date: Tue, 16 Sep 2008 08:44:28 -0700
-Message-ID: <1221579869-27835-1-git-send-email-spearce@spearce.org>
-Cc: git@vger.kernel.org
-To: Robin Rosenberg <robin.rosenberg@dewire.com>
-X-From: git-owner@vger.kernel.org Tue Sep 16 17:46:18 2008
+From: "Avery Pennarun" <apenwarr@gmail.com>
+Subject: Re: [PATCH] Documentation: replace [^~] with escapes everywhere
+Date: Tue, 16 Sep 2008 11:58:58 -0400
+Message-ID: <32541b130809160858k3c019f6pdc4831c831e22b55@mail.gmail.com>
+References: <1221470398-8698-1-git-send-email-trast@student.ethz.ch>
+	 <1221470398-8698-3-git-send-email-trast@student.ethz.ch>
+	 <32541b130809151656n4f39018fu2045eb6280d6da00@mail.gmail.com>
+	 <200809160205.23371.trast@student.ethz.ch>
+	 <32541b130809151710j59963af9id84b3c1553ec738d@mail.gmail.com>
+	 <7vy71s7b26.fsf@gitster.siamese.dyndns.org>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: "Thomas Rast" <trast@student.ethz.ch>, git@vger.kernel.org
+To: "Junio C Hamano" <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Sep 16 18:00:53 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Kfckj-0002lb-8R
-	for gcvg-git-2@gmane.org; Tue, 16 Sep 2008 17:46:09 +0200
+	id 1KfcyL-0008Mm-6O
+	for gcvg-git-2@gmane.org; Tue, 16 Sep 2008 18:00:13 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755951AbYIPPoc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 16 Sep 2008 11:44:32 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755719AbYIPPoc
-	(ORCPT <rfc822;git-outgoing>); Tue, 16 Sep 2008 11:44:32 -0400
-Received: from george.spearce.org ([209.20.77.23]:48455 "EHLO
-	george.spearce.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755939AbYIPPoa (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 16 Sep 2008 11:44:30 -0400
-Received: by george.spearce.org (Postfix, from userid 1000)
-	id 2DFF738368; Tue, 16 Sep 2008 15:44:30 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.2.4 (2008-01-01) on george.spearce.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-4.4 required=4.0 tests=ALL_TRUSTED,BAYES_00
-	autolearn=ham version=3.2.4
-Received: from localhost.localdomain (localhost [127.0.0.1])
-	by george.spearce.org (Postfix) with ESMTP id 7DDCF3835A;
-	Tue, 16 Sep 2008 15:44:29 +0000 (UTC)
-X-Mailer: git-send-email 1.6.0.2.389.g421e0
+	id S1754245AbYIPP7D (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 16 Sep 2008 11:59:03 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754208AbYIPP7C
+	(ORCPT <rfc822;git-outgoing>); Tue, 16 Sep 2008 11:59:02 -0400
+Received: from el-out-1112.google.com ([209.85.162.177]:12471 "EHLO
+	el-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751634AbYIPP7A (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 16 Sep 2008 11:59:00 -0400
+Received: by el-out-1112.google.com with SMTP id z25so1095778ele.1
+        for <git@vger.kernel.org>; Tue, 16 Sep 2008 08:58:58 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to
+         :subject:cc:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:references;
+        bh=8fkVz1t7/+338NBKbdRM2LOpQ+/tEPazUDa71MMC6g4=;
+        b=nYOf9syS01K/EjRwDktfnI7/dKkOYSYQ0/KLu3NtELIrfxAfTV8bFUoMRuMS1rC96B
+         LVIBra6wXw18X7VCXv0aTgaK5Dz5FwNDfswzoO6gA+MjM96lkAHfnc3/dtUF90LBrtZh
+         dyK3hoPdvBVkqBK3WhlLnc2hNTpUCFolvmfNI=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
+         :content-type:content-transfer-encoding:content-disposition
+         :references;
+        b=H6mhMJ7fCGFI5jLHu0maq4daRD9EuHS6RNXvYTnfHYkMYdfnnqtwS4kP4W9bh5LIUB
+         jJ6TtE2Pycw678V16cyrbqhKDGI6mFnmtzpRjaT9iI09rwIlRul+u8oLRp7dh215eHo2
+         WksaCEBsoLKJVUGklibgEZp1zvS68IqP/mAu0=
+Received: by 10.151.40.3 with SMTP id s3mr1699386ybj.238.1221580738333;
+        Tue, 16 Sep 2008 08:58:58 -0700 (PDT)
+Received: by 10.150.96.5 with HTTP; Tue, 16 Sep 2008 08:58:58 -0700 (PDT)
+In-Reply-To: <7vy71s7b26.fsf@gitster.siamese.dyndns.org>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/96011>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/96012>
 
-Some configurations may wish to disable interactive methods of
-authentication, such as when running from automated cron or batch
-style jobs that have no user available.
+On Tue, Sep 16, 2008 at 4:24 AM, Junio C Hamano <gitster@pobox.com> wrote:
+> Sorry, but this unfortunately does not seem to help asciidoc 8.2.5 on FC9
+> at all, which is the combination used at k.org machine that feeds the
+> html/man branches to everybody else.
+>
+> asciidoc 7.1.2 on Deb does not have the problem in git-bundle.html to
+> begin with, but it does have the same issue in git-show-ref.html, which
+> the patch does fix.
+>
+> diff --git a/Documentation/asciidoc.conf b/Documentation/asciidoc.conf
+> index 40d43b7..8fcdb54 100644
+> --- a/Documentation/asciidoc.conf
+> +++ b/Documentation/asciidoc.conf
+> @@ -15,6 +15,12 @@ startsb=&#91;
+>  endsb=&#93;
+>  tilde=&#126;
+>
+> +[replacements]
+> +# Disable superscripts.
+> +\^(.+?)\^=^\1^
+> +# Disable subscripts.
+> +~(.+?)~=~\1~
+> +
+>  ifdef::backend-docbook[]
+>  [linkgit-inlinemacro]
+>  {0%{target}}
 
-Typically in an OpenSSH based system this would be configured on a
-per-host basis in the current user's ~/.ssh/config file, by setting
-PreferredAuthentications to the list of authentication methods
-(e.g. just "publickey") that are reasonable.
+Hmm, browsing around through a newer asciidoc package from Ubuntu, it
+appears that in asciidoc 8, those lines are in an
+"ifdef::asciidoc7compatible[]" section.  But the quoting mechanism in
+8 appears to be improved.
 
-JSch honors this configuration setting, but we need to transfer it
-from our own OpenSshConfig class, otherwise it has no knowledge of
-the setting.
+Perhaps a section like this (guessing from the new
+/etc/asciidoc/asciidoc.conf) will do the job instead (or in addition,
+if we're trying to support both versions):
 
-http://code.google.com/p/egit/issues/detail?id=33
+[quotes]
+^=
+~=
 
-Signed-off-by: Shawn O. Pearce <spearce@spearce.org>
----
 
- This replaces my earlier patch of the same title from about 14
- hours ago.  This v2 patch actually parses the data from the
- config file and includes unit tests to verify it is parsing.
+HTH.  I don't have a real system with asciidoc 8 installed, and now's
+not a good time to risk breaking my asciidoc setup, so I definitely
+can't test the above.
 
- .../spearce/egit/ui/EclipseSshSessionFactory.java  |    4 +++
- .../spearce/jgit/transport/OpenSshConfigTest.java  |   22 ++++++++++++++++-
- .../jgit/transport/DefaultSshSessionFactory.java   |    4 +++
- .../org/spearce/jgit/transport/OpenSshConfig.java  |   25 ++++++++++++++++++++
- 4 files changed, 54 insertions(+), 1 deletions(-)
+Have fun,
 
-diff --git a/org.spearce.egit.ui/src/org/spearce/egit/ui/EclipseSshSessionFactory.java b/org.spearce.egit.ui/src/org/spearce/egit/ui/EclipseSshSessionFactory.java
-index 640a165..67c5f16 100644
---- a/org.spearce.egit.ui/src/org/spearce/egit/ui/EclipseSshSessionFactory.java
-+++ b/org.spearce.egit.ui/src/org/spearce/egit/ui/EclipseSshSessionFactory.java
-@@ -50,6 +50,10 @@ public Session getSession(String user, String pass, String host, int port)
- 			session.setPassword(pass);
- 		else
- 			new UserInfoPrompter(session);
-+
-+		final String pauth = hc.getPreferredAuthentications();
-+		if (pauth != null)
-+			session.setConfig("PreferredAuthentications", pauth);
- 		return session;
- 	}
- 
-diff --git a/org.spearce.jgit.test/tst/org/spearce/jgit/transport/OpenSshConfigTest.java b/org.spearce.jgit.test/tst/org/spearce/jgit/transport/OpenSshConfigTest.java
-index a250f9d..1a71d08 100644
---- a/org.spearce.jgit.test/tst/org/spearce/jgit/transport/OpenSshConfigTest.java
-+++ b/org.spearce.jgit.test/tst/org/spearce/jgit/transport/OpenSshConfigTest.java
-@@ -103,7 +103,6 @@ config("Host orcz\n" + "\tHostName repo.or.cz\n" + "\tPort 2222\n"
- 		assertEquals(new File(home, ".ssh/id_jex"), h.getIdentityFile());
- 	}
- 
--
- 	public void testAlias_OptionsKeywordCaseInsensitive() throws Exception {
- 		config("hOsT orcz\n" + "\thOsTnAmE repo.or.cz\n" + "\tPORT 2222\n"
- 				+ "\tuser jex\n" + "\tidentityfile .ssh/id_jex\n"
-@@ -128,4 +127,25 @@ config("Host orcz\n" + "\tHostName repo.or.cz\n" + "\n" + "Host *\n"
- 		assertEquals(2222, h.getPort());
- 		assertEquals(new File(home, ".ssh/id_jex"), h.getIdentityFile());
- 	}
-+
-+	public void testAlias_PreferredAuthenticationsDefault() throws Exception {
-+		final Host h = osc.lookup("orcz");
-+		assertNotNull(h);
-+		assertNull(h.getPreferredAuthentications());
-+	}
-+
-+	public void testAlias_PreferredAuthentications() throws Exception {
-+		config("Host orcz\n" + "\tPreferredAuthentications publickey\n");
-+		final Host h = osc.lookup("orcz");
-+		assertNotNull(h);
-+		assertEquals("publickey", h.getPreferredAuthentications());
-+	}
-+
-+	public void testAlias_InheritPreferredAuthentications() throws Exception {
-+		config("Host orcz\n" + "\tHostName repo.or.cz\n" + "\n" + "Host *\n"
-+				+ "\tPreferredAuthentications publickey, hostbased\n");
-+		final Host h = osc.lookup("orcz");
-+		assertNotNull(h);
-+		assertEquals("publickey,hostbased", h.getPreferredAuthentications());
-+	}
- }
-diff --git a/org.spearce.jgit/src/org/spearce/jgit/transport/DefaultSshSessionFactory.java b/org.spearce.jgit/src/org/spearce/jgit/transport/DefaultSshSessionFactory.java
-index 74fca66..b6f58f0 100644
---- a/org.spearce.jgit/src/org/spearce/jgit/transport/DefaultSshSessionFactory.java
-+++ b/org.spearce.jgit/src/org/spearce/jgit/transport/DefaultSshSessionFactory.java
-@@ -103,6 +103,10 @@ public synchronized Session getSession(String user, String pass,
- 			session.setPassword(pass);
- 		else
- 			session.setUserInfo(new AWT_UserInfo());
-+
-+		final String pauth = hc.getPreferredAuthentications();
-+		if (pauth != null)
-+			session.setConfig("PreferredAuthentications", pauth);
- 		return session;
- 	}
- 
-diff --git a/org.spearce.jgit/src/org/spearce/jgit/transport/OpenSshConfig.java b/org.spearce.jgit/src/org/spearce/jgit/transport/OpenSshConfig.java
-index cf7c388..2f41e56 100644
---- a/org.spearce.jgit/src/org/spearce/jgit/transport/OpenSshConfig.java
-+++ b/org.spearce.jgit/src/org/spearce/jgit/transport/OpenSshConfig.java
-@@ -220,6 +220,10 @@ else if (sp < 0)
- 				for (final Host c : current)
- 					if (c.identityFile == null)
- 						c.identityFile = toFile(dequote(argValue));
-+			} else if ("PreferredAuthentications".equalsIgnoreCase(keyword)) {
-+				for (final Host c : current)
-+					if (c.preferredAuthentications == null)
-+						c.preferredAuthentications = nows(dequote(argValue));
- 			}
- 		}
- 
-@@ -247,6 +251,15 @@ private static String dequote(final String value) {
- 		return value;
- 	}
- 
-+	private static String nows(final String value) {
-+		final StringBuilder b = new StringBuilder();
-+		for (int i = 0; i < value.length(); i++) {
-+			if (!Character.isSpaceChar(value.charAt(i)))
-+				b.append(value.charAt(i));
-+		}
-+		return b.toString();
-+	}
-+
- 	private File toFile(final String path) {
- 		if (path.startsWith("~/"))
- 			return new File(home, path.substring(2));
-@@ -278,6 +291,8 @@ private File toFile(final String path) {
- 
- 		String user;
- 
-+		String preferredAuthentications;
-+
- 		void copyFrom(final Host src) {
- 			if (hostName == null)
- 				hostName = src.hostName;
-@@ -287,6 +302,8 @@ void copyFrom(final Host src) {
- 				identityFile = src.identityFile;
- 			if (user == null)
- 				user = src.user;
-+			if (preferredAuthentications == null)
-+				preferredAuthentications = src.preferredAuthentications;
- 		}
- 
- 		/**
-@@ -317,5 +334,13 @@ public File getIdentityFile() {
- 		public String getUser() {
- 			return user;
- 		}
-+
-+		/**
-+		 * @return the preferred authentication methods, separated by commas if
-+		 *         more than one authentication method is preferred.
-+		 */
-+		public String getPreferredAuthentications() {
-+			return preferredAuthentications;
-+		}
- 	}
- }
--- 
-1.6.0.2.389.g421e0
+Avery
