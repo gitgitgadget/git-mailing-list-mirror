@@ -1,50 +1,78 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH] Documentation: replace [^~] with escapes everywhere
-Date: Tue, 16 Sep 2008 15:12:42 -0400
-Message-ID: <20080916191241.GB9870@sigill.intra.peff.net>
-References: <1221470398-8698-1-git-send-email-trast@student.ethz.ch> <1221470398-8698-3-git-send-email-trast@student.ethz.ch> <32541b130809151656n4f39018fu2045eb6280d6da00@mail.gmail.com> <200809160205.23371.trast@student.ethz.ch> <32541b130809151710j59963af9id84b3c1553ec738d@mail.gmail.com> <7vy71s7b26.fsf@gitster.siamese.dyndns.org> <32541b130809160858k3c019f6pdc4831c831e22b55@mail.gmail.com> <7vhc8g6nqt.fsf@gitster.siamese.dyndns.org>
+From: Sergio <sergio.callegari@gmail.com>
+Subject: Re: Grafts workflow for a
+Date: Tue, 16 Sep 2008 19:12:51 +0000 (UTC)
+Message-ID: <loom.20080916T190745-332@post.gmane.org>
+References: <46a038f90809152209l2230d9e3o442dac1f5047d2bd@mail.gmail.com> <20080916052425.GA14644@spearce.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org, Avery Pennarun <apenwarr@gmail.com>,
-	Thomas Rast <trast@student.ethz.ch>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Sep 16 21:14:09 2008
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Sep 16 21:14:37 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Kffzk-0005cG-Pj
-	for gcvg-git-2@gmane.org; Tue, 16 Sep 2008 21:13:53 +0200
+	id 1Kfg0B-0005pT-RT
+	for gcvg-git-2@gmane.org; Tue, 16 Sep 2008 21:14:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752989AbYIPTMp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 16 Sep 2008 15:12:45 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751057AbYIPTMo
-	(ORCPT <rfc822;git-outgoing>); Tue, 16 Sep 2008 15:12:44 -0400
-Received: from peff.net ([208.65.91.99]:2489 "EHLO peff.net"
+	id S1754053AbYIPTNL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 16 Sep 2008 15:13:11 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754072AbYIPTNL
+	(ORCPT <rfc822;git-outgoing>); Tue, 16 Sep 2008 15:13:11 -0400
+Received: from main.gmane.org ([80.91.229.2]:41816 "EHLO ciao.gmane.org"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752135AbYIPTMo (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 16 Sep 2008 15:12:44 -0400
-Received: (qmail 24034 invoked by uid 111); 16 Sep 2008 19:12:43 -0000
-Received: from lawn-128-61-126-143.lawn.gatech.edu (HELO sigill.intra.peff.net) (128.61.126.143)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.32) with ESMTP; Tue, 16 Sep 2008 15:12:43 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 16 Sep 2008 15:12:42 -0400
-Content-Disposition: inline
-In-Reply-To: <7vhc8g6nqt.fsf@gitster.siamese.dyndns.org>
+	id S1752953AbYIPTNK (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 16 Sep 2008 15:13:10 -0400
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1Kffyz-0004ln-HH
+	for git@vger.kernel.org; Tue, 16 Sep 2008 19:13:06 +0000
+Received: from D-69-91-163-33.dhcp4.washington.edu ([69.91.163.33])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Tue, 16 Sep 2008 19:13:05 +0000
+Received: from sergio.callegari by D-69-91-163-33.dhcp4.washington.edu with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Tue, 16 Sep 2008 19:13:05 +0000
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@ger.gmane.org
+X-Gmane-NNTP-Posting-Host: main.gmane.org
+User-Agent: Loom/3.14 (http://gmane.org/)
+X-Loom-IP: 69.91.163.33 (Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.8.1.16) Gecko/20080715 Ubuntu/7.10 (gutsy) Firefox/2.0.0.16)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/96027>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/96028>
 
-On Tue, Sep 16, 2008 at 09:48:10AM -0700, Junio C Hamano wrote:
+Shawn O. Pearce <spearce <at> spearce.org> writes:
 
-> Ok, how about this patch?  I do not have an access to the box with
-> AsciiDoc 8 handy right now, so I cannot test this myself, but there must
-> be somebody on the list who can give a quick test to this.
+> 
+> Martin Langhoff <martin.langhoff <at> gmail.com> wrote:
+> > Here is my attempt at a "let's publish a shallow repository for branch
+> > of moodle". Let me show you what I did...
+> ...
+> >  # 1.7 was a significant release, anything earlier than that
+> >  # is just not interesting -- even for pickaxe/annotate purposes
+> >  # so add a graft point right at the branching point.
+> ...
+> > Is this kind of workflow (or a variation of it) supported? For this to
+> > work, we should communicate the grafts in some push operations and
+> > read them in clone ops - and perhaps in fetch too.
+> 
+> Currently the grafts file isn't transferred over any transport
+> protocol as it is considered to be local only to the repository.
+> 
+> For one thing, grafts are a security risk.  Any user can graft
+> anything in at any position and log/blame operations will honor
+> the graft, rather than what is stored in the signed commit chain.
+> Its a low risk, but it allows a peer to lie to you and give you
+> something other than what you asked for.
+> 
 
-No, using this patch and your test procedure, +old and +new are
-identically broken with my version of asciidoc (8.2.7). Both contain
-<sub> tags.
+Would it make sense to differentiate two types of grafts, just like we
+differentiate two kind of tags?
 
--Peff
+Then there could be "annotated grafts objects" that could be optionally signed
+and that would get transferred on clones, fetches, pushes, etc.
+
+Sergio
