@@ -1,108 +1,92 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: Git User's Survey 2008 partial summary, part 5 - other SCM
-Date: Tue, 16 Sep 2008 19:12:04 +0200
-Message-ID: <200809161912.06571.jnareb@gmail.com>
-References: <200809031607.19722.jnareb@gmail.com> <fcaeb9bf0809140345n11d41430ma9b4096c66776b0c@mail.gmail.com> <alpine.DEB.1.10.0809142038190.19489@asgard.lang.hm>
+From: Daniel Barkalow <barkalow@iabervon.org>
+Subject: Re: [PATCH] Optional shrinking of RCS keywords in git-p4
+Date: Tue, 16 Sep 2008 13:12:31 -0400 (EDT)
+Message-ID: <alpine.LNX.1.00.0809161211440.19665@iabervon.org>
+References: <16219.81556.qm@web95005.mail.in2.yahoo.com> <20080915063521.GA1533@linode.davidb.org> <7vy71tetvt.fsf@gitster.siamese.dyndns.org> <alpine.LNX.1.00.0809151354040.19665@iabervon.org> <20080916041201.GA25033@linode.davidb.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-2
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Nguyen Thai Ngoc Duy <pclouds@gmail.com>, git@vger.kernel.org
-To: David Lang <david@lang.hm>
-X-From: git-owner@vger.kernel.org Tue Sep 16 19:13:26 2008
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Junio C Hamano <gitster@pobox.com>, dhruva <dhruva@ymail.com>,
+	GIT SCM <git@vger.kernel.org>, Simon Hausmann <simon@lst.de>
+To: David Brown <git@davidb.org>
+X-From: git-owner@vger.kernel.org Tue Sep 16 19:13:46 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Kfe7B-0006qc-D8
-	for gcvg-git-2@gmane.org; Tue, 16 Sep 2008 19:13:25 +0200
+	id 1Kfe7T-0006v8-6f
+	for gcvg-git-2@gmane.org; Tue, 16 Sep 2008 19:13:43 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752892AbYIPRMR convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 16 Sep 2008 13:12:17 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752876AbYIPRMQ
-	(ORCPT <rfc822;git-outgoing>); Tue, 16 Sep 2008 13:12:16 -0400
-Received: from mail-gx0-f16.google.com ([209.85.217.16]:37772 "EHLO
-	mail-gx0-f16.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752670AbYIPRMP (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 16 Sep 2008 13:12:15 -0400
-Received: by gxk9 with SMTP id 9so27918275gxk.13
-        for <git@vger.kernel.org>; Tue, 16 Sep 2008 10:12:14 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:subject:date
-         :user-agent:cc:references:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:message-id;
-        bh=SF8cSaHVghrqABzqw2AO+uuSD83sjB6kFrzvz7TEWKc=;
-        b=RAB0X2R8s29IukTAa4+v/68Z6A4cIvqA2Mm7b2ft0y/8aU3Sz+4L6BxqaFdFC1TxfC
-         igcCYZD5nKq2ZAUDXZ7ny755ctuTf2gQZdUV2ueVvzrq2wllyJeUIUu/t7CyPvCwoQOA
-         2G/gYor33pKD1FhYQFk385fF6bOCdMlLuLPY8=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=from:to:subject:date:user-agent:cc:references:in-reply-to
-         :mime-version:content-type:content-transfer-encoding
-         :content-disposition:message-id;
-        b=Vx9NtqbrjdZVAgRBGFSIfjTNu0HjR5c0QlemQpYrF2lCTiRAf8nLeaugDtM4OO79Ga
-         gOyh96Iq6hdl7Rl4jOdKUg/rPakNAQyR0E+ewvBsii89L6C58SlObki0mwht2XQLsFq1
-         dnqSx7MZbjZk+49Zfm32Orv8oqk8iAPqYo6ao=
-Received: by 10.86.26.1 with SMTP id 1mr982726fgz.35.1221585133900;
-        Tue, 16 Sep 2008 10:12:13 -0700 (PDT)
-Received: from ?192.168.1.11? ( [83.8.240.247])
-        by mx.google.com with ESMTPS id 3sm17072947fge.3.2008.09.16.10.12.10
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Tue, 16 Sep 2008 10:12:12 -0700 (PDT)
-User-Agent: KMail/1.9.3
-In-Reply-To: <alpine.DEB.1.10.0809142038190.19489@asgard.lang.hm>
-Content-Disposition: inline
+	id S1752962AbYIPRMd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 16 Sep 2008 13:12:33 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752966AbYIPRMd
+	(ORCPT <rfc822;git-outgoing>); Tue, 16 Sep 2008 13:12:33 -0400
+Received: from iabervon.org ([66.92.72.58]:51918 "EHLO iabervon.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752958AbYIPRMc (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 16 Sep 2008 13:12:32 -0400
+Received: (qmail 3790 invoked by uid 1000); 16 Sep 2008 17:12:31 -0000
+Received: from localhost (sendmail-bs@127.0.0.1)
+  by localhost with SMTP; 16 Sep 2008 17:12:31 -0000
+In-Reply-To: <20080916041201.GA25033@linode.davidb.org>
+User-Agent: Alpine 1.00 (LNX 882 2007-12-20)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/96018>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/96019>
 
-On Mon, 15 Sep 2008, David Lang <david@lang.hm> napisa=B3:
-> On Sun, 14 Sep 2008, Nguyen Thai Ngoc Duy wrote:
->> On 9/12/08, Jakub Narebski <jnareb@gmail.com> wrote:
->>>  15) Do you miss features in git that you know from other SCMs?
->>>     If yes, what features are these (and from which SCM)?
->>>     (Open ended text - Essay)
->>>
->>>  Total respondents       1046 (some/many of them wrote 'no')
->>>  skipped this question   1249
->>>
->>>  This is just a very quick summary, based on a first few pages of
->>>  responses, Full analysis is I think best left for after closing th=
-e
->>>  survey, because I think this would be a lot of work...
->>>
->>>  So here is preliminary list, or rather beginning of one:
->>>   * sparse/partial checkout and clone (e.g. Perforce)
->>
->> Have not read the survey result, but do you recall what is the most
->> used term for sparse/partial checkout? What SCMs do sparse/partial
->> checkout? I think it could be usable as it is now in my
->> will-be-sent-again series, but I don't really know how people want i=
-t
->> to from that.
->=20
-> the most common use-case is people who want to follow a project but
-> (at least think that they) don't need the history. so they want to
-> save time/bandwideth/disk space by not downloading things they don't
-> need.=20
+On Mon, 15 Sep 2008, David Brown wrote:
 
-Errr... the idea is to implement partial (sparse, narrow) _checkout_,
-which is doable, not partial/lazy _clone_, which is very, very=20
-difficult.
+> On Mon, Sep 15, 2008 at 03:22:33PM -0400, Daniel Barkalow wrote:
+>
+> >I think the right solution is for git-p4 to check that p4 thinks the file is
+> >the correct file and then simply replace it rather than trying to generate
+> >the right result by patching. To be a bit more careful, git-p4 could check
+> >that the contents it's replacing actually would exactly match the git
+> >contents if the keywords were callapsed (if the p4 setting is to use keywords
+> >in this file).
+> 
+> Part of the problem is that p4 isn't very good at knowing whether
+> files have changed or not.  'p4 sync' will update the file _if_ if
+> thinks your version is out of date, but it does nothing if someone has
+> locally modified the file, hence the need for the 'p4 sync -f'.
 
-Partial checkout *might* help reduce disk space because usually=20
-repository database (which is compressed and deltaified) is smaller=20
-than checkout; and if it isn't you can always use _shallow_ clone (only=
-=20
-part of history) and/or remote alternates (with reference repository
-not on your quota, or on different filesystem).  And it might help
-checkout/commit/diff/status times (performance) on slow filesystems,=20
-with extremely large number of files in full checkout.  But contrary to
-centralized SCM, where server is usually net away from working area,
-partial checkout doesn't affect network usage _at all_.
+I think losing those changes are what we're trying to be careful to avoid. 
+What matter for making the submission correctly is that p4 think that your 
+version is the version you want to replace, and that the file contents are 
+what you want it to end up with.
 
---=20
-Jakub Narebski
-Poland
+> A simple way to be paranoid would be something (shell-ish) like:
+> 
+>   p4 print filename | collapse-keywords | git hash-object --stdin
+> 
+> and make sure that is the version we think the file should have
+> started with.  I think we're really just making sure we didn't miss a
+> P4 change that someone else made underneath, and we're about to back
+> out.
+
+p4 keeps track of which revision of each file you have synced to in your 
+client (so that it can fail to update it sometimes, as you mention above), 
+and will complain if the synced-to version isn't the latest when you try 
+to submit. That's how it avoids having people accidentally back out each 
+other's changes in ordinary operation. As long as we can be sure that the 
+client hasn't been synced to a later version than what the parent of the 
+commit we're submitting is an import of, which should be done with "p4 
+sync <changenumber>", rather than trying to spot check for having 
+accidentally acknowledged more p4 history than we've accounted for.
+
+> Even this isn't robust from p4's point of view.  The p4 model is to do
+> a 'p4 edit' on the file, and then the later 'p4 submit' will give an
+> error if someone else has updated the file.  This would require using
+> p4's conflict resolution, and I'm guessing someone using git-p4 would
+> rather abort the submit and rebase.
+
+p4 doesn't let you submit files that you don't do a "p4 edit" on (or an 
+equivalent like add), so we can't help but do it correctly (assuming that 
+we haven't synced to a later version that the parent, of course). If you 
+get an error on the submit, you just revert everything you editted, rebase 
+the git side, and try again (sync to the new parent of the git commit, 
+edit the files, replace with the git content, and submit).
+
+	-Daniel
+*This .sig left intentionally blank*
