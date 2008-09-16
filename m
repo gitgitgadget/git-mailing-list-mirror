@@ -1,202 +1,84 @@
-From: "Nguyen Thai Ngoc Duy" <pclouds@gmail.com>
-Subject: Re: [PATCH 15/16] checkout: add new options to support narrow checkout
-Date: Tue, 16 Sep 2008 19:21:12 +0700
-Message-ID: <fcaeb9bf0809160521o24fd26e4l40f1798228d51712@mail.gmail.com>
-References: <48cdde2837b2d_12d73fc6eb2c355c27876@app02.zenbe.com.tmail>
-	 <200809151240.54495.jnareb@gmail.com>
-	 <fcaeb9bf0809150701j1161f87gcedef0013a244610@mail.gmail.com>
-	 <200809152205.15388.jnareb@gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: "Jakub Narebski" <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Sep 16 14:22:48 2008
+From: Thomas Rast <trast@student.ethz.ch>
+Subject: [PATCH] Documentation: disable sub/superscript characters ^/~
+Date: Tue, 16 Sep 2008 14:47:18 +0200
+Message-ID: <1221569238-29263-1-git-send-email-trast@student.ethz.ch>
+References: <7vy71s7b26.fsf@gitster.siamese.dyndns.org>
+Cc: Junio C Hamano <junio@pobox.com>,
+	Avery Pennarun <apenwarr@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Sep 16 14:49:46 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KfZZo-00012t-Js
-	for gcvg-git-2@gmane.org; Tue, 16 Sep 2008 14:22:41 +0200
+	id 1KfZyq-0000DL-5K
+	for gcvg-git-2@gmane.org; Tue, 16 Sep 2008 14:48:32 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750900AbYIPMVQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 16 Sep 2008 08:21:16 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753198AbYIPMVQ
-	(ORCPT <rfc822;git-outgoing>); Tue, 16 Sep 2008 08:21:16 -0400
-Received: from gv-out-0910.google.com ([216.239.58.190]:32535 "EHLO
-	gv-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751428AbYIPMVP (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 16 Sep 2008 08:21:15 -0400
-Received: by gv-out-0910.google.com with SMTP id e6so1276363gvc.37
-        for <git@vger.kernel.org>; Tue, 16 Sep 2008 05:21:13 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to
-         :subject:cc:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:references;
-        bh=5MAXxPhnsVotAQbbHPe6A8bkEBmtVLg3cFly+0YWutw=;
-        b=IDH/hZwgf8b5zCe6XyTDIv394PPMqPst1ydgW/jA6i2bPvTF0vlgoxsCGMM++PZ85g
-         UFx4WoIDqGRYx7hA/P9KSpnYyATyDTAB0bVOD56HC+B0q7fZvjovKoUM+vBzUquyEzku
-         LD7l9EDwNyEq/SQsqdTvMrkg9GPi5sZcHjr2Q=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
-         :content-type:content-transfer-encoding:content-disposition
-         :references;
-        b=dlfpS/cixDeclQMpfjW2sXvRj965RcQAdnGF8HXvisHJLpEQdfJ0tCOODdhDHKehdL
-         TsSv3Nry9JlTNwiN0dYJA7m9E8aI4IYh+SmAixzMEkNchXrm3JqwG6u/MjM2yLwf65bp
-         jtg1DQJHY4T3R8zfEwXkv0xMozKa8BTWJ/HhM=
-Received: by 10.86.28.2 with SMTP id b2mr700748fgb.31.1221567672858;
-        Tue, 16 Sep 2008 05:21:12 -0700 (PDT)
-Received: by 10.86.59.5 with HTTP; Tue, 16 Sep 2008 05:21:12 -0700 (PDT)
-In-Reply-To: <200809152205.15388.jnareb@gmail.com>
-Content-Disposition: inline
+	id S1751365AbYIPMrX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 16 Sep 2008 08:47:23 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751257AbYIPMrX
+	(ORCPT <rfc822;git-outgoing>); Tue, 16 Sep 2008 08:47:23 -0400
+Received: from xsmtp1.ethz.ch ([82.130.70.13]:12166 "EHLO xsmtp1.ethz.ch"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751186AbYIPMrW (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 16 Sep 2008 08:47:22 -0400
+Received: from xfe2.d.ethz.ch ([82.130.124.42]) by xsmtp1.ethz.ch with Microsoft SMTPSVC(6.0.3790.3959);
+	 Tue, 16 Sep 2008 14:47:21 +0200
+Received: from localhost.localdomain ([129.132.153.233]) by xfe2.d.ethz.ch over TLS secured channel with Microsoft SMTPSVC(6.0.3790.3959);
+	 Tue, 16 Sep 2008 14:47:20 +0200
+X-Mailer: git-send-email 1.6.0.2.469.g5ab27
+In-Reply-To: <7vy71s7b26.fsf@gitster.siamese.dyndns.org>
+X-OriginalArrivalTime: 16 Sep 2008 12:47:20.0827 (UTC) FILETIME=[5BECACB0:01C917FA]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/95996>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/95997>
 
-On 9/16/08, Jakub Narebski <jnareb@gmail.com> wrote:
->  >> Couldn't you simply escape ':', i.e. write for example Git\:\:Tag.3pm,
->  >> or Eichten_PRD21\:313,1980_erratum.tex, or \:0.log, or perhaps
->  >> kmail/jnareb@gmail.com\:@pop.gmail.com\:995, or even something like
->  >> Mail/inbox/cur/1194202360.32296.mprnq\:2,S, in the same way like you
->  >> can escape other special characters, for example wildcard characters
->  >> like '\*' for '*' and '\?' for '?', and of course '\\' for '\'?
->  >
->  > Sure. Somehow I forgot that.
->
->
-> Well, if it is possible, it should be stated in documentation.
->  Even if it is obvious.
+Disables the special meaning of ^ and ~ as per the Asciidoc FAQ,
 
-I mean it should be possible, but not yet implemented. Next time
-document will be updated when '\' escape is implemented.
+  http://www.methods.co.nz/asciidoc/faq.html#_how_can_i_disable_a_quoted_text_substitution
 
->  > --<--
->  > Narrow checkout
->  > ---------------
->  >
->  > Normally when you do checkout a branch, your working directory
->  > will be fully populated. In some situations, you just need to
->  > work on certain files, no full checkout is needed. Narrow
->  > checkout is a mode that limits checkout area according to your
->  > needs.
->
->
-> You have decided then on the term 'narrow checkout', and not
->  'partial checkout' or 'sparse checkout', then?
+Signed-off-by: Thomas Rast <trast@student.ethz.ch>
 
-Not yet. I tend to prefer partial/sparse checkout. Probably should
-have a look at how other SCMs do and what term they use. If Git's
-functionality is so different, a different term might notice people
-about that.
+---
 
->  > Because narrow checkout uses new index format, it will be
->  > incompatible with git prior to 1.6.0 regarding worktree operations.
->  > Repository-only operations such as clone, push, pull... should not be
->
->
-> s/pull/fetch/. pull affects working repository, and it can affect
->  narrow checkout unexpectedly by conflicts during merge part of pull.
+Junio C Hamano wrote:
+> Sorry, but this unfortunately does not seem to help asciidoc 8.2.5 on FC9
+> at all, which is the combination used at k.org machine that feeds the
+> html/man branches to everybody else.
 
-Bad writing. I mean pull/fetch from a narrow-checkout-ed repository to
-another fully populated one. Will fix.
+This seems to do the trick on 8.2.5 here.
 
->
->  > affected by narrow checkout. In order to make your working directory
->  > work again with those versions, you can use `git checkout --full` to
->  > return to normal mode (and compatible index format).
->
->
-> By the way, you have made "git checkout <file>" get file and mark
->  it "wanted", i.e. clear/zero "no-checkout" bit.  Wouldn't then
->  "git checkout ." be shorter equivalent to "git checkout --full"?
->  I'm not saying that '--full' option should be abandoned...
+Unfortunately, the changelog for 8.0 says that setting the quote
+character to an empty replacement is new in 8.0 (I can't test with
+7.x), and I cannot find a way to make an 'if version >= 8' block.
+(Why does it have ifdef but no if?)
 
-It is not equivalent. "git checkout ." will happily overwrite any
-modified files in your working directory.
+So maybe if someone sees a way to do this version-dependent, then we
+can combine the two approaches and work with both 7.x and 8.x.
 
->
->  >
->  > In narrow checkout mode, checkout status of every files in your
->  > working directory will be recorded in index. If a file is marked
->  > "no-checkout", it means that file is not needed to be present in
->  > working directory by user or any git command. When a new file is added
->  > to index, it will be marked "checkout" unless narrow spec is applied.
->  > Unmerged files are always "checkout". linkgit:git-update-index[1] can
->  > be used to update "checkout/no-checkout" status in index. When you
->  > checkout new files using "git checkout <file>" they will be
->  > automatically marked "checkout". Other commands such as "git apply"
->  > can also checkout new files if they are needed.
->  >
->  > "No-checkout" status is very similar to "assume-unchanged bit"
->  > (see linkgit:git-update-index[1]). The main difference between them
->  > is "assume unchanged" bit just ignores corresponding files in working
->  > directory while narrow checkout goes a bit farther, remove those files
->  > when it is safe to do so.
->
->
-> Good description (although probably could be improved even further).
+- Thomas
 
-Contributions are welcome   ;)
 
->
->  >
->  > When you apply new narrow spec to your working directory using either
->  > --path, --add-path or --remove-path, it will update "checkout" status
->  > in index accordingly. Moreover, if a file is marked "no-checkout" and
->  > is present in working directory, it will be removed. If a file is
->  > turned from "no-checkout" to "checkout", then it will be added again
->  > to working directory. Modified and unmerged entries can't bear
->  > "no-checkout" status, if narrow spec applies to them, "git checkout"
->  > will refuse to update working directory.
->
->
-> Do I understand correctly, that if one uses --path=<colon separated list>
->  _only_ filenames matching one of patterns specified would be checked out,
->  --add-path=<path> would additionally checkout given path and mark "wanted",
->  and  --remove-path=<path> would additionally mark "no-checkout" and remove
->  path?
+ Documentation/asciidoc.conf |    5 +++++
+ 1 files changed, 5 insertions(+), 0 deletions(-)
 
---add-path/--remove-path also use narrow spec, which could be more
-than one pattern.
-
->  What --add-path starts from, i.e. does
->
->   $ git checkout --add-path=.gitignore
->
->  starts from empty set if --add-path is first, or from full set as without
->  --add-path?
-
-I'm not sure I understand this.
-
->  And is <pathspec> matched against full pathname, or like .gitignore
->  rules, i.e. as full pathname if it has at least one '/' in it?
-
-like shell wildcard, full pathname must match. On my way back home, I
-thought I should have removed mention of "pathspec", which behaves a
-little bit different.
-
-Also those specs are relative to working directory though, so if you
-are in b/c and want to match d, you only need to type --add-path=d
-instead of --add-path=b/c/d. Will add this to doc.
-
->
->  >
->  > Narrow spec is not saved by "git checkout". You can form your checkout
->  > area on one go with --path option, or do it incrementally
->  > with --add-path and --remove-path.
->  > --<--
->
->
-> I would probably say that specification used to select which paths to
->  check out is not saved anywhere, and used only to mark paths in index
->  as "no-checkout" or not.  Or somehing like that.
->
-
-Thanks (as for other parts of your comments stripped by me)
-
+diff --git a/Documentation/asciidoc.conf b/Documentation/asciidoc.conf
+index 40d43b7..37bf195 100644
+--- a/Documentation/asciidoc.conf
++++ b/Documentation/asciidoc.conf
+@@ -15,6 +15,11 @@ startsb=&#91;
+ endsb=&#93;
+ tilde=&#126;
+ 
++# disable sub/superscripts -- they collide with our ref notation
++[quotes]
++^=
++~=
++
+ ifdef::backend-docbook[]
+ [linkgit-inlinemacro]
+ {0%{target}}
 -- 
-Duy
+tg: (5ab2757..) t/doc-disable-tilde (depends on: next)
