@@ -1,80 +1,172 @@
-From: Michael J Gruber <git@drmicha.warpmail.net>
-Subject: Re: [PATCH] help git-upload-pack find git
-Date: Tue, 16 Sep 2008 17:38:54 +0200
-Message-ID: <48CFD30E.7030206@drmicha.warpmail.net>
-References: <d3a045300809150130w6f78edd8xf599d1c7f639b77d@mail.gmail.com> <d3a045300809150130w6f78edd8xf599d1c7f639b77d@mail.gmail.com> <1221495891-12600-1-git-send-email-git@drmicha.warpmail.net> <7vzlm9b3v4.fsf@gitster.siamese.dyndns.org> <48CEC3FB.5070101@drmicha.warpmail.net> <48CF4F6A.6080604@viscovery.net> <48CFB183.1090205@drmicha.warpmail.net> <48CFB81A.5060108@viscovery.net>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Johannes Sixt <j.sixt@viscovery.net>
-X-From: git-owner@vger.kernel.org Tue Sep 16 17:42:24 2008
+From: "Shawn O. Pearce" <spearce@spearce.org>
+Subject: [JGIT PATCH 2/2] Add support for ~/.ssh/config BatchMode
+Date: Tue, 16 Sep 2008 08:44:29 -0700
+Message-ID: <1221579869-27835-2-git-send-email-spearce@spearce.org>
+References: <1221579869-27835-1-git-send-email-spearce@spearce.org>
+Cc: git@vger.kernel.org
+To: Robin Rosenberg <robin.rosenberg@dewire.com>
+X-From: git-owner@vger.kernel.org Tue Sep 16 17:46:11 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Kfch3-0001Y5-2d
-	for gcvg-git-2@gmane.org; Tue, 16 Sep 2008 17:42:21 +0200
+	id 1Kfckk-0002lb-8O
+	for gcvg-git-2@gmane.org; Tue, 16 Sep 2008 17:46:10 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752916AbYIPPi7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 16 Sep 2008 11:38:59 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752517AbYIPPi7
-	(ORCPT <rfc822;git-outgoing>); Tue, 16 Sep 2008 11:38:59 -0400
-Received: from out1.smtp.messagingengine.com ([66.111.4.25]:33958 "EHLO
-	out1.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1752064AbYIPPi7 (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 16 Sep 2008 11:38:59 -0400
-Received: from compute1.internal (compute1.internal [10.202.2.41])
-	by out1.messagingengine.com (Postfix) with ESMTP id 0827A1614CC;
-	Tue, 16 Sep 2008 11:38:58 -0400 (EDT)
-Received: from heartbeat2.messagingengine.com ([10.202.2.161])
-  by compute1.internal (MEProxy); Tue, 16 Sep 2008 11:38:58 -0400
-X-Sasl-enc: 8h8bLgoz2wHdh88f56vGKxCcWoLc1Y29URgEoMeazf7v 1221579537
-Received: from [139.174.44.12] (whitehead.math.tu-clausthal.de [139.174.44.12])
-	by mail.messagingengine.com (Postfix) with ESMTPSA id 563822A14E;
-	Tue, 16 Sep 2008 11:38:57 -0400 (EDT)
-User-Agent: Thunderbird 2.0.0.16 (X11/20080707)
-In-Reply-To: <48CFB81A.5060108@viscovery.net>
+	id S1755980AbYIPPoe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 16 Sep 2008 11:44:34 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756307AbYIPPod
+	(ORCPT <rfc822;git-outgoing>); Tue, 16 Sep 2008 11:44:33 -0400
+Received: from george.spearce.org ([209.20.77.23]:48458 "EHLO
+	george.spearce.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755980AbYIPPob (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 16 Sep 2008 11:44:31 -0400
+Received: by george.spearce.org (Postfix, from userid 1000)
+	id 949BE38360; Tue, 16 Sep 2008 15:44:30 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.2.4 (2008-01-01) on george.spearce.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-4.4 required=4.0 tests=ALL_TRUSTED,BAYES_00
+	autolearn=ham version=3.2.4
+Received: from localhost.localdomain (localhost [127.0.0.1])
+	by george.spearce.org (Postfix) with ESMTP id C657E3835F;
+	Tue, 16 Sep 2008 15:44:29 +0000 (UTC)
+X-Mailer: git-send-email 1.6.0.2.389.g421e0
+In-Reply-To: <1221579869-27835-1-git-send-email-spearce@spearce.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/96009>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/96010>
 
-Johannes Sixt venit, vidit, dixit 16.09.2008 15:43:
-> Michael J Gruber schrieb:
->> Why is it that setup_path() cannot be done before commit_pager_choice()?
->> We need the pager in case list_common_cmds_help() is triggered, but why
->> can't setup_path() be before that? Not because of "--", really.
-> 
-> I think that setup_path() must be called *after* handle_options() because
-> of this use-case:
-> 
->   $ git --exec-path=/some/where foo
-> 
-> and git_set_argv0_path() must be called *before* handle_options() because
-> of this use-case:
-> 
->   $ git --exec-path
-> 
-> -- Hannes
+Connections created through batch processes (e.g. those started by
+cron) don't have a terminal to interact with a user through.  A
+common way to disable password prompting with OpenSSH is to setup
+a Host block in ~/.ssh/config with "BatchMode yes" enabled, thus
+telling the client not to prompt for passphases or passwords.
 
-Tricky, I see. But still I'm getting more and more confused:
-handle_options() calls git_exec_path() in this case, which does (unless
-there is argv_exec_path or the variable):
-return system_path(GIT_EXEC_PATH)
-Duh, that comes from the Makefile, -DGIT_EXEC_PATH... Back to somewhat
-less confused state.
+Signed-off-by: Shawn O. Pearce <spearce@spearce.org>
+---
+ .../spearce/egit/ui/EclipseSshSessionFactory.java  |    2 +-
+ .../spearce/jgit/transport/OpenSshConfigTest.java  |   21 +++++++++++++++++++
+ .../jgit/transport/DefaultSshSessionFactory.java   |    2 +-
+ .../org/spearce/jgit/transport/OpenSshConfig.java  |   22 ++++++++++++++++++++
+ 4 files changed, 45 insertions(+), 2 deletions(-)
 
-OK, now how about
-
-A: path as submitted
-
-or
-
-B: leave git.c as is, except that setup_path(NULL) is used; have
-setup_path(argv0path) call git_set_argv0_path() unless the arg is NULL;
-tell upload-pack etc. to stuff (other setup_path() callers) their
-argv[0] into setup_path(). Junio, is that what you meant?
-
-Michael
+diff --git a/org.spearce.egit.ui/src/org/spearce/egit/ui/EclipseSshSessionFactory.java b/org.spearce.egit.ui/src/org/spearce/egit/ui/EclipseSshSessionFactory.java
+index 67c5f16..098d234 100644
+--- a/org.spearce.egit.ui/src/org/spearce/egit/ui/EclipseSshSessionFactory.java
++++ b/org.spearce.egit.ui/src/org/spearce/egit/ui/EclipseSshSessionFactory.java
+@@ -48,7 +48,7 @@ public Session getSession(String user, String pass, String host, int port)
+ 			addIdentity(hc.getIdentityFile());
+ 		if (pass != null)
+ 			session.setPassword(pass);
+-		else
++		else if (!hc.isBatchMode())
+ 			new UserInfoPrompter(session);
+ 
+ 		final String pauth = hc.getPreferredAuthentications();
+diff --git a/org.spearce.jgit.test/tst/org/spearce/jgit/transport/OpenSshConfigTest.java b/org.spearce.jgit.test/tst/org/spearce/jgit/transport/OpenSshConfigTest.java
+index 1a71d08..959b6b7 100644
+--- a/org.spearce.jgit.test/tst/org/spearce/jgit/transport/OpenSshConfigTest.java
++++ b/org.spearce.jgit.test/tst/org/spearce/jgit/transport/OpenSshConfigTest.java
+@@ -148,4 +148,25 @@ config("Host orcz\n" + "\tHostName repo.or.cz\n" + "\n" + "Host *\n"
+ 		assertNotNull(h);
+ 		assertEquals("publickey,hostbased", h.getPreferredAuthentications());
+ 	}
++
++	public void testAlias_BatchModeDefault() throws Exception {
++		final Host h = osc.lookup("orcz");
++		assertNotNull(h);
++		assertEquals(false, h.isBatchMode());
++	}
++
++	public void testAlias_BatchModeYes() throws Exception {
++		config("Host orcz\n" + "\tBatchMode yes\n");
++		final Host h = osc.lookup("orcz");
++		assertNotNull(h);
++		assertEquals(true, h.isBatchMode());
++	}
++
++	public void testAlias_InheritBatchMode() throws Exception {
++		config("Host orcz\n" + "\tHostName repo.or.cz\n" + "\n" + "Host *\n"
++				+ "\tBatchMode yes\n");
++		final Host h = osc.lookup("orcz");
++		assertNotNull(h);
++		assertEquals(true, h.isBatchMode());
++	}
+ }
+diff --git a/org.spearce.jgit/src/org/spearce/jgit/transport/DefaultSshSessionFactory.java b/org.spearce.jgit/src/org/spearce/jgit/transport/DefaultSshSessionFactory.java
+index b6f58f0..89beab7 100644
+--- a/org.spearce.jgit/src/org/spearce/jgit/transport/DefaultSshSessionFactory.java
++++ b/org.spearce.jgit/src/org/spearce/jgit/transport/DefaultSshSessionFactory.java
+@@ -101,7 +101,7 @@ public synchronized Session getSession(String user, String pass,
+ 			addIdentity(hc.getIdentityFile());
+ 		if (pass != null)
+ 			session.setPassword(pass);
+-		else
++		else if (!hc.isBatchMode())
+ 			session.setUserInfo(new AWT_UserInfo());
+ 
+ 		final String pauth = hc.getPreferredAuthentications();
+diff --git a/org.spearce.jgit/src/org/spearce/jgit/transport/OpenSshConfig.java b/org.spearce.jgit/src/org/spearce/jgit/transport/OpenSshConfig.java
+index 2f41e56..df38e18 100644
+--- a/org.spearce.jgit/src/org/spearce/jgit/transport/OpenSshConfig.java
++++ b/org.spearce.jgit/src/org/spearce/jgit/transport/OpenSshConfig.java
+@@ -224,6 +224,10 @@ else if (sp < 0)
+ 				for (final Host c : current)
+ 					if (c.preferredAuthentications == null)
+ 						c.preferredAuthentications = nows(dequote(argValue));
++			} else if ("BatchMode".equalsIgnoreCase(keyword)) {
++				for (final Host c : current)
++					if (c.batchMode == null)
++						c.batchMode = yesno(dequote(argValue));
+ 			}
+ 		}
+ 
+@@ -260,6 +264,12 @@ private static String nows(final String value) {
+ 		return b.toString();
+ 	}
+ 
++	private static Boolean yesno(final String value) {
++		if ("yes".equalsIgnoreCase(value))
++			return Boolean.TRUE;
++		return Boolean.FALSE;
++	}
++
+ 	private File toFile(final String path) {
+ 		if (path.startsWith("~/"))
+ 			return new File(home, path.substring(2));
+@@ -293,6 +303,8 @@ private File toFile(final String path) {
+ 
+ 		String preferredAuthentications;
+ 
++		Boolean batchMode;
++
+ 		void copyFrom(final Host src) {
+ 			if (hostName == null)
+ 				hostName = src.hostName;
+@@ -304,6 +316,8 @@ void copyFrom(final Host src) {
+ 				user = src.user;
+ 			if (preferredAuthentications == null)
+ 				preferredAuthentications = src.preferredAuthentications;
++			if (batchMode == null)
++				batchMode = src.batchMode;
+ 		}
+ 
+ 		/**
+@@ -342,5 +356,13 @@ public String getUser() {
+ 		public String getPreferredAuthentications() {
+ 			return preferredAuthentications;
+ 		}
++
++		/**
++		 * @return true if batch (non-interactive) mode is preferred for this
++		 *         host connection.
++		 */
++		public boolean isBatchMode() {
++			return batchMode != null && batchMode.booleanValue();
++		}
+ 	}
+ }
+-- 
+1.6.0.2.389.g421e0
