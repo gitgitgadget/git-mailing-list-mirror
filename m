@@ -1,68 +1,108 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: [JGIT PATCH 1/2] Paper bag fix RevWalk.reset after inMergeBase is used
-Date: Tue, 16 Sep 2008 12:34:36 -0700
-Message-ID: <1221593677-24481-1-git-send-email-spearce@spearce.org>
-Cc: git@vger.kernel.org
-To: Robin Rosenberg <robin.rosenberg@dewire.com>
-X-From: git-owner@vger.kernel.org Tue Sep 16 21:35:52 2008
+From: Nicolas Pitre <nico@cam.org>
+Subject: Re: upload-pack packfile caching
+Date: Tue, 16 Sep 2008 16:59:31 -0400 (EDT)
+Message-ID: <alpine.LFD.1.10.0809161549240.6279@xanadu.home>
+References: <d411cc4a0809161052h43b1be7dh9b322c8ec7d49add@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+Cc: git list <git@vger.kernel.org>
+To: Scott Chacon <schacon@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Sep 16 23:00:50 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KfgKx-0004uF-SV
-	for gcvg-git-2@gmane.org; Tue, 16 Sep 2008 21:35:48 +0200
+	id 1KfhfD-00035K-Cz
+	for gcvg-git-2@gmane.org; Tue, 16 Sep 2008 23:00:47 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753154AbYIPTej (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 16 Sep 2008 15:34:39 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752953AbYIPTej
-	(ORCPT <rfc822;git-outgoing>); Tue, 16 Sep 2008 15:34:39 -0400
-Received: from george.spearce.org ([209.20.77.23]:59768 "EHLO
-	george.spearce.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752443AbYIPTej (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 16 Sep 2008 15:34:39 -0400
-Received: by george.spearce.org (Postfix, from userid 1000)
-	id 6A57738368; Tue, 16 Sep 2008 19:34:38 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.2.4 (2008-01-01) on george.spearce.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-4.4 required=4.0 tests=ALL_TRUSTED,BAYES_00
-	autolearn=ham version=3.2.4
-Received: from localhost.localdomain (localhost [127.0.0.1])
-	by george.spearce.org (Postfix) with ESMTP id 999A03835A;
-	Tue, 16 Sep 2008 19:34:37 +0000 (UTC)
-X-Mailer: git-send-email 1.6.0.2.389.g421e0
+	id S1751260AbYIPU7j (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 16 Sep 2008 16:59:39 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751177AbYIPU7j
+	(ORCPT <rfc822;git-outgoing>); Tue, 16 Sep 2008 16:59:39 -0400
+Received: from relais.videotron.ca ([24.201.245.36]:41371 "EHLO
+	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751176AbYIPU7i (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 16 Sep 2008 16:59:38 -0400
+Received: from xanadu.home ([66.131.194.97]) by VL-MO-MR004.ip.videotron.ca
+ (Sun Java(tm) System Messaging Server 6.3-4.01 (built Aug  3 2007; 32bit))
+ with ESMTP id <0K7B00AZO3N7XP80@VL-MO-MR004.ip.videotron.ca> for
+ git@vger.kernel.org; Tue, 16 Sep 2008 16:59:32 -0400 (EDT)
+X-X-Sender: nico@xanadu.home
+In-reply-to: <d411cc4a0809161052h43b1be7dh9b322c8ec7d49add@mail.gmail.com>
+User-Agent: Alpine 1.10 (LFD 962 2008-03-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/96032>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/96033>
 
-We need to remove delayedFreeFlags from carryFlags anytime we
-mark those delayedFreeFlags as actually freeFlags.  In other
-words we do not want to continue carrying a flag which we have
-now freed and will recycle for a different use in the future,
-one which may not want to be carried automatically onto parent
-commits during revision traversal.
+On Tue, 16 Sep 2008, Scott Chacon wrote:
 
-I had the boolean expression incorrect (call it a typo).  The
-correct way to remove set b from a is "a &= ~b" not "a &= b".
+> I was wondering if it would be of general interest to have upload-pack
+> take an option to cache packfiles.  Unless I am mistaken, every clone
+> on a git server will recreate the same packfile until something new is
+> pushed into it, correct?  I thought it might be a good idea to pass an
+> option to have it cache the packfile that is created if
+> create_full_pack is set and re-use it until the repository is updated.
+>  If I patched upload-pack to do this, would there be any interest in
+> it?
 
-Signed-off-by: Shawn O. Pearce <spearce@spearce.org>
----
- .../src/org/spearce/jgit/revwalk/RevWalk.java      |    2 +-
- 1 files changed, 1 insertions(+), 1 deletions(-)
+Well, if you do that there are a few things to be careful about.
 
-diff --git a/org.spearce.jgit/src/org/spearce/jgit/revwalk/RevWalk.java b/org.spearce.jgit/src/org/spearce/jgit/revwalk/RevWalk.java
-index 079432c..5cd7f71 100644
---- a/org.spearce.jgit/src/org/spearce/jgit/revwalk/RevWalk.java
-+++ b/org.spearce.jgit/src/org/spearce/jgit/revwalk/RevWalk.java
-@@ -824,7 +824,7 @@ void freeFlag(final int mask) {
- 	private void finishDelayedFreeFlags() {
- 		if (delayFreeFlags != 0) {
- 			freeFlags |= delayFreeFlags;
--			carryFlags &= delayFreeFlags;
-+			carryFlags &= ~delayFreeFlags;
- 			delayFreeFlags = 0;
- 		}
- 	}
--- 
-1.6.0.2.389.g421e0
+First, having a server process able to write files is a security hazard.  
+If you want to create a pack cache then it is best if created manually 
+by the repository owner.  You don't want someone cloning a repository 
+actually messing with such cache.
+
+Secondly, the dynamic creation of a pack currently take into account the 
+capabilities of the client so not to produce a pack with features that 
+the client does not support.  So in order not to have to cache pack with 
+many feature combinations, this cache should probably only take effect 
+if pack capabilities of the server are also supported by the client.
+
+Now, the _only_ advantage of a cached pack file is in avoiding execution 
+of rev-list.  Otherwise creation of a pack for streaming is almost 
+identical to straight copying of data from disk due to pack data reuse.  
+The rev-list can be made faster by having the pack-objects process do 
+the object listing itself instead of piping the output from rev-list 
+into it ('git repack' does that but 'git-upload-pack' doesn't).  And I 
+believe that rev-list could be made much much faster with pack v4.
+
+That been said...
+
+What you could have is a simple file with 2 SHA1s: the first 
+corresponding to the output of 'git for-each-ref' and the second one 
+corresponding to the list of all objects reachable from those refs.
+
+For example:
+
+1) git for-each-ref --format="%(objectname)" --sort=objectname | sha1sum
+
+2) git for-each-ref --format="%(objectname)" | \
+   xargs git rev-list --objects | cut -c -40 | sort | sha1sum
+
+So, if you do the above in a freshly cloned repository, you'll find that 
+the SHA1 in 2) corresponds to this:
+
+3) git show-index < .git/objects/pack/pack-*.idx | cut -f2 -d' ' | sha1sum
+
+which means that all objects reachable from all refs are found in the 
+only pack you have.
+
+Now, if the SHA1 in 2) is computed over the binary representation of all 
+those object names, you'll find out that it corresponds to the actual 
+pack name in the .git/objects/pack/ directory.
+
+So what upload-pack could do is look for a special file with those 2 
+SHA1s, and if it exists then see if the first SHA1 matches the list of 
+values for all refs, if so then the name of the pack to send out 
+corresponds to the second SHA1.  If that pack is found in the repository 
+then you just have to stream it out.
+
+Creating that file is then just a matter of doing the equivalent of the 
+above commands and repacking your repository 
+into a single pack.
+
+
+Nicolas
