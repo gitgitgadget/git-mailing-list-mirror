@@ -1,78 +1,77 @@
-From: Johannes Sixt <j.sixt@viscovery.net>
-Subject: Re: [PATCH] help git-upload-pack find git
-Date: Tue, 16 Sep 2008 08:17:14 +0200
-Message-ID: <48CF4F6A.6080604@viscovery.net>
-References: <d3a045300809150130w6f78edd8xf599d1c7f639b77d@mail.gmail.com> <d3a045300809150130w6f78edd8xf599d1c7f639b77d@mail.gmail.com> <1221495891-12600-1-git-send-email-git@drmicha.warpmail.net> <7vzlm9b3v4.fsf@gitster.siamese.dyndns.org> <48CEC3FB.5070101@drmicha.warpmail.net>
+From: "Sverre Rabbelier" <alturin@gmail.com>
+Subject: Re: Diff-tree does not work for initial commit
+Date: Tue, 16 Sep 2008 08:19:37 +0200
+Message-ID: <bd6139dc0809152319m31a79877h5dc1b701a8210802@mail.gmail.com>
+References: <3665a1a00809151301p7d8e6387g3cacfb879b45da2f@mail.gmail.com>
+	 <48CECA42.1050209@drmicha.warpmail.net>
+	 <bd6139dc0809151411p49f5adeaq4beff452574ca980@mail.gmail.com>
+	 <20080915223442.GD20677@sigill.intra.peff.net>
+Reply-To: sverre@rabbelier.nl
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Michael J Gruber <git@drmicha.warpmail.net>
-X-From: git-owner@vger.kernel.org Tue Sep 16 08:21:11 2008
+Cc: "Michael J Gruber" <git@drmicha.warpmail.net>,
+	"Anatol Pomozov" <anatol.pomozov@gmail.com>,
+	"Git Mailing List" <git@vger.kernel.org>
+To: "Jeff King" <peff@peff.net>
+X-From: git-owner@vger.kernel.org Tue Sep 16 08:21:14 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KfTvx-0000zX-Ej
-	for gcvg-git-2@gmane.org; Tue, 16 Sep 2008 08:21:09 +0200
+	id 1KfTvy-0000zX-6g
+	for gcvg-git-2@gmane.org; Tue, 16 Sep 2008 08:21:10 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751678AbYIPGRU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 16 Sep 2008 02:17:20 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751671AbYIPGRU
-	(ORCPT <rfc822;git-outgoing>); Tue, 16 Sep 2008 02:17:20 -0400
-Received: from lilzmailso01.liwest.at ([212.33.55.23]:41803 "EHLO
-	lilzmailso01.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751574AbYIPGRT (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 16 Sep 2008 02:17:19 -0400
-Received: from cm56-163-160.liwest.at ([86.56.163.160] helo=linz.eudaptics.com)
-	by lilzmailso01.liwest.at with esmtpa (Exim 4.66)
-	(envelope-from <j.sixt@viscovery.net>)
-	id 1KfTsB-0007Q9-9X; Tue, 16 Sep 2008 08:17:15 +0200
-Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.42])
-	by linz.eudaptics.com (Postfix) with ESMTP
-	id E632D6EF; Tue, 16 Sep 2008 08:17:14 +0200 (CEST)
-User-Agent: Thunderbird 2.0.0.6 (Windows/20070728)
-In-Reply-To: <48CEC3FB.5070101@drmicha.warpmail.net>
-X-Spam-Score: 1.7 (+)
-X-Spam-Report: ALL_TRUSTED=-1.8, BAYES_99=3.5
+	id S1751747AbYIPGTk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 16 Sep 2008 02:19:40 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751745AbYIPGTk
+	(ORCPT <rfc822;git-outgoing>); Tue, 16 Sep 2008 02:19:40 -0400
+Received: from ey-out-2122.google.com ([74.125.78.24]:17722 "EHLO
+	ey-out-2122.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751714AbYIPGTj (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 16 Sep 2008 02:19:39 -0400
+Received: by ey-out-2122.google.com with SMTP id 6so1116907eyi.37
+        for <git@vger.kernel.org>; Mon, 15 Sep 2008 23:19:37 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:reply-to
+         :to:subject:cc:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:references;
+        bh=aARKWybGPLzkrfZVrMRLpmoAfX6gZSPDVgQVS+Sf0lM=;
+        b=uDrucG6S6aSBuwr5X11V5dz4TTEVYcFqlwz84Ob1tHYwDIteJApO/kxyjhiTt63c3F
+         c1DDt1jWjhm0r7vSHE4C8tHlFIcEHsgr1fJ3eP+nlgT8qCdXkhXNDKjNJVSxtRNIyNv0
+         f+U13U2KMQ8iSqMJF1CDTVUPH1GSTmmzVm7Ts=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:reply-to:to:subject:cc:in-reply-to
+         :mime-version:content-type:content-transfer-encoding
+         :content-disposition:references;
+        b=L6D7HnkreKLvNT1XerlZdWQFWQ87+6BF1MRMI9pWdzqYOl6WwDXm0lUwIOA1w48+QO
+         9aQmxuk57dCeEW3qhnT21ReatAnxPw0XM2K6xJe6jlZ3nKzVFu8fYY87K6StsbepqaNp
+         8IjK/+R6eBL72Agzu+bu7Nn5r1k9VxuCmYvFg=
+Received: by 10.187.232.14 with SMTP id j14mr64826far.85.1221545977752;
+        Mon, 15 Sep 2008 23:19:37 -0700 (PDT)
+Received: by 10.187.213.8 with HTTP; Mon, 15 Sep 2008 23:19:37 -0700 (PDT)
+In-Reply-To: <20080915223442.GD20677@sigill.intra.peff.net>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/95975>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/95976>
 
-Michael J Gruber schrieb:
-> I was actually surprised that setup_path() uses argv0_path without
-> setting it, same as with argv_exec_path. I assumed this is for a good
-> reason, I'm lacking the code base overview to judge this myself.
+On Tue, Sep 16, 2008 at 00:34, Jeff King <peff@peff.net> wrote:
+> I posted this a week or so ago, but I am sure it is incomplete. If there
+> is interest I can clean it up and do a proper submission.
 
-It argv_exec_path comes from git --exec-path=..., hence, git (via git.c)
-is the only caller of setup_path() that is able to set it. We can leave
-that one out of the equation.
+<patch snipped>
 
-> In any case, git.c sets argv0_path early, messes a bit with argv[0] and
-> calls setup_path afterwards anyways. So adding the path in setup_path()
-> should not hurt any "git foo" command.
-> 
-> One could construe situations where even that wouldn't help, because
-> git-upload-pack can't pass --exec-dir to git and they can be in
-> different locations - but I think that's crazy.
-> 
-> git.c, upload-pack.c, receive.pack.c and shell.c are the only callers.
-> setup_path() needs to get a parameter. If shell.c should profit from the
-> change then it needs to be taught how to pass an absolute path to
-> do_{generic,cvs}_cmd().
-> 
-> So, I guess the general approach (change setup() path and have every
-> caller profit) is OK. OK with you?
+I like it, although I think that if we add broader support for it, we
+should probably be consequent and add it everywhere where appropriate?
+(That is ofcourse, assuming that does not take too long to implement
+etc.)
 
-Have you studied the commit message of e1464ca7bb0d (Record the command
-invocation path early) and the context in which this commit occurs? It's
-about relocatable git installations and how system_path() derives various
-other paths from argv[0].
+-- 
+Cheers,
 
-Please show how you think you could change setup_path(), but keep in mind
-that in git.c you neither can do the equivalent of git_set_argv0_path()
-later nor setup_path() earlier.
-
--- Hannes
+Sverre Rabbelier
