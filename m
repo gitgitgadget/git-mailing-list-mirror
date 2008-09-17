@@ -1,55 +1,95 @@
-From: Karl =?iso-8859-1?Q?Hasselstr=F6m?= <kha@treskal.com>
-Subject: Re: [StGit PATCH] Convert "sink" to the new infrastructure
-Date: Wed, 17 Sep 2008 15:09:23 +0200
-Message-ID: <20080917130923.GB26365@diana.vm.bytemark.co.uk>
-References: <20080912215613.10270.20599.stgit@localhost.localdomain> <20080914085118.GC30664@diana.vm.bytemark.co.uk> <b0943d9e0809141419q6facb21at627e658805f1d223@mail.gmail.com> <20080915075740.GB14452@diana.vm.bytemark.co.uk> <b0943d9e0809150944o71acafe7ndeda500b1fba97df@mail.gmail.com> <20080916074024.GA2454@diana.vm.bytemark.co.uk> <b0943d9e0809160759w5c9be510t3b33d5d983bff5a7@mail.gmail.com> <20080916193647.GA12513@diana.vm.bytemark.co.uk> <b0943d9e0809170455m53eaf677t87e9ade3f001d044@mail.gmail.com> <20080917130432.GA26365@diana.vm.bytemark.co.uk>
+From: "Alexander Gavrilov" <angavrilov@gmail.com>
+Subject: Re: [PATCH/RFC 0/2] git-gui: issues with merge tool series
+Date: Wed, 17 Sep 2008 16:50:17 +0400
+Message-ID: <bb6f213e0809170550q5be339d1s825f95b1165e6507@mail.gmail.com>
+References: <200808310052.21595.angavrilov@gmail.com>
+	 <1221651652-3712-1-git-send-email-johannes.sixt@telecom.at>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Catalin Marinas <catalin.marinas@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Sep 17 14:48:30 2008
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: "Shawn O. Pearce" <spearce@spearce.org>, git@vger.kernel.org
+To: "Johannes Sixt" <johannes.sixt@telecom.at>
+X-From: git-owner@vger.kernel.org Wed Sep 17 14:51:43 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KfwSF-0005mf-7j
-	for gcvg-git-2@gmane.org; Wed, 17 Sep 2008 14:48:23 +0200
+	id 1KfwVJ-0006bS-JK
+	for gcvg-git-2@gmane.org; Wed, 17 Sep 2008 14:51:34 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752068AbYIQMrP convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 17 Sep 2008 08:47:15 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751979AbYIQMrP
-	(ORCPT <rfc822;git-outgoing>); Wed, 17 Sep 2008 08:47:15 -0400
-Received: from diana.vm.bytemark.co.uk ([80.68.90.142]:2204 "EHLO
-	diana.vm.bytemark.co.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751509AbYIQMrP (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 17 Sep 2008 08:47:15 -0400
-Received: from kha by diana.vm.bytemark.co.uk with local (Exim 3.36 #1 (Debian))
-	id 1KfwmZ-0006y7-00; Wed, 17 Sep 2008 14:09:23 +0100
+	id S1753830AbYIQMuW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 17 Sep 2008 08:50:22 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753701AbYIQMuV
+	(ORCPT <rfc822;git-outgoing>); Wed, 17 Sep 2008 08:50:21 -0400
+Received: from yx-out-2324.google.com ([74.125.44.30]:56878 "EHLO
+	yx-out-2324.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753479AbYIQMuT (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 17 Sep 2008 08:50:19 -0400
+Received: by yx-out-2324.google.com with SMTP id 8so933991yxm.1
+        for <git@vger.kernel.org>; Wed, 17 Sep 2008 05:50:17 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to
+         :subject:cc:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:references;
+        bh=ihp/jPMc0bbGq5fJHcZq64GFkcR8E5rv93OjnJW6p18=;
+        b=Qn5icCi2fbS0LOJN+nTv3AtGTGCxe61LFrtZOsjiWd+bHL+SzPq2LnQu0OHbOA+Prh
+         nBshllsjWzbE9UhyD2oDcldQMRP9rXjKF0MOIzdEcGEVX6ld3ewMuw/4wE6M1disyzsB
+         NBMIxeCKZJuQG1GFy+l+xSohl8E9FKw7FfhIs=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
+         :content-type:content-transfer-encoding:content-disposition
+         :references;
+        b=lXSDqvpeHxWxkWEgsBrp8hYpt7A1ElUqhGGkZ3AoJ4PIkvD5WhLARKNose0Hhkcxi0
+         Lx9ajV7OtweKhYvpQFWAD9GCRxIBOIOTYuq+DX/Osa5ZgE8nbBpyKqnBXezFfIccaiNd
+         Bz/2iGg+3zNYC4UCdy8nRIkYTLVoOj80M6UiU=
+Received: by 10.103.250.9 with SMTP id c9mr1781900mus.9.1221655817079;
+        Wed, 17 Sep 2008 05:50:17 -0700 (PDT)
+Received: by 10.103.251.10 with HTTP; Wed, 17 Sep 2008 05:50:17 -0700 (PDT)
+In-Reply-To: <1221651652-3712-1-git-send-email-johannes.sixt@telecom.at>
 Content-Disposition: inline
-In-Reply-To: <20080917130432.GA26365@diana.vm.bytemark.co.uk>
-X-Manual-Spam-Check: kha@treskal.com, clean
-User-Agent: Mutt/1.5.9i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/96104>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/96105>
 
-On 2008-09-17 15:04:32 +0200, Karl Hasselstr=F6m wrote:
+On Wed, Sep 17, 2008 at 3:40 PM, Johannes Sixt <johannes.sixt@telecom.at> wrote:
+> 1. The inability to stage a conflicted file by clicking the icon is
+>   *very* disruptive. The new menu entry "Stage Working Copy" is
+>   really only a workaround, and it shows.
 
-> Actually, the new infrastructure already uses apply (with fall-back
-> to merge-recursive).
+I can see two ways to fix it:
 
-Specifically, since
+1) Allow that icon to work only if the diff is currently displayed,
+and also ask for confirmation if there are any conflict markers
+present.
 
-  bc1ecd0b (Do simple in-index merge with diff+apply instead of
-            read-tree)
+   Problem: What should it do with modify/delete conflicts, which
+don't have any conflict markers?
 
-and
+2) Much harder: implement complete one-click undo. This involves
+saving information from the index somewhere, and forcing such items to
+remain in the 'staged' list, even if the index isn't different from
+the tree version any more.
 
-  afa3f9b9 (Reuse the same temp index in a transaction)
+   By the way, is there a simple way to re-create a conflict file from
+the saved multistage index entries?
 
---=20
-Karl Hasselstr=F6m, kha@treskal.com
-      www.treskal.com/kalle
+
+Probably the best fix is some combination of these two.
+
+
+> Furthermore, the operations "Use local version" and "Use remote
+> version" could be much more useful. They could serve as "merge
+> shortcuts": These operations should only use the "local" or "remote"
+> part inside the conflict markers, and not also reset the part that
+> is not visible. In the current form I found them useful only in the
+> modify/delete conflict cases, where I picked the "delete" part.
+
+That was simply a reimplementation of git-mergetool with proper GUI.
+It cannot do per-hunk resolution either...
+
+
+Alexander
