@@ -1,78 +1,101 @@
-From: Boyd Lynn Gerber <gerberb@zenez.com>
-Subject: Re: [RFC/PATCH] Use compatibility regex library for OSX/Darwin
-Date: Wed, 17 Sep 2008 08:48:18 -0600
-Message-ID: <alpine.LNX.1.10.0809170845240.17105@suse104.zenez.com>
-References: <20080907184537.GA4148@regex.yaph.org> <W_emvcr7ijntBMNCDV17_XHXotGkm1Bn-9Bw-ZixcXmFyBWlDj5vYg@cipher.nrlssc.navy.mil> <alpine.LNX.1.10.0809161722580.18110@suse104.zenez.com> <20080916233220.GA14173@coredump.intra.peff.net>
- <alpine.LNX.1.10.0809161738010.17105@suse104.zenez.com> <20080916234624.GA14405@coredump.intra.peff.net> <alpine.LNX.1.10.0809161900340.17105@suse104.zenez.com> <_MhavOIoKmx4_xVm-blejLMi-eFa1T8Huv94Uz9PxwJ3DyOMzuyUeg@cipher.nrlssc.navy.mil>
+From: Andreas Ericsson <ae@op5.se>
+Subject: Re: [PATCH] Teach git diff about Objective-C syntax
+Date: Wed, 17 Sep 2008 17:03:24 +0200
+Message-ID: <48D11C3C.5070707@op5.se>
+References: <57518fd10809170526i5c1e7dadgc38bb00e8073ba55@mail.gmail.com> <1221658141-75698-1-git-send-email-jon.delStrother@bestbefore.tv>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII; format=flowed
-Cc: Jeff King <peff@peff.net>, Arjen Laarhoven <arjen@yaph.org>,
-	git@vger.kernel.org, Mike Ralphson <mike.ralphson@gmail.com>,
-	Johannes Sixt <j.sixt@viscovery.net>,
-	Junio C Hamano <gitster@pobox.com>
-To: Brandon Casey <casey@nrlssc.navy.mil>
-X-From: git-owner@vger.kernel.org Wed Sep 17 16:49:41 2008
+Content-Type: text/plain; charset=ISO-8859-15; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, vmiklos@frugalware.org,
+	Johannes.Schindelin@gmx.de
+To: Jonathan del Strother <jon.delStrother@bestbefore.tv>
+X-From: git-owner@vger.kernel.org Wed Sep 17 17:04:57 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KfyLW-0001r7-Rd
-	for gcvg-git-2@gmane.org; Wed, 17 Sep 2008 16:49:35 +0200
+	id 1KfyaC-0006PJ-S9
+	for gcvg-git-2@gmane.org; Wed, 17 Sep 2008 17:04:45 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752610AbYIQOsU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 17 Sep 2008 10:48:20 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752733AbYIQOsU
-	(ORCPT <rfc822;git-outgoing>); Wed, 17 Sep 2008 10:48:20 -0400
-Received: from suse104.zenez.com ([198.60.105.164]:7208 "EHLO
-	suse104.zenez.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752416AbYIQOsT (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 17 Sep 2008 10:48:19 -0400
-Received: by suse104.zenez.com (Postfix, from userid 1000)
-	id 59CCEA7C861; Wed, 17 Sep 2008 08:48:18 -0600 (MDT)
-Received: from localhost (localhost [127.0.0.1])
-	by suse104.zenez.com (Postfix) with ESMTP id 4F05EA7C25F;
-	Wed, 17 Sep 2008 08:48:18 -0600 (MDT)
-In-Reply-To: <_MhavOIoKmx4_xVm-blejLMi-eFa1T8Huv94Uz9PxwJ3DyOMzuyUeg@cipher.nrlssc.navy.mil>
-User-Agent: Alpine 1.10 (LNX 962 2008-03-14)
+	id S1752848AbYIQPDg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 17 Sep 2008 11:03:36 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752822AbYIQPDg
+	(ORCPT <rfc822;git-outgoing>); Wed, 17 Sep 2008 11:03:36 -0400
+Received: from mail.op5.se ([193.201.96.20]:58749 "EHLO mail.op5.se"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752725AbYIQPDf (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 17 Sep 2008 11:03:35 -0400
+Received: from localhost (localhost.localdomain [127.0.0.1])
+	by mail.op5.se (Postfix) with ESMTP id 24A191B800AE;
+	Wed, 17 Sep 2008 16:53:28 +0200 (CEST)
+X-Virus-Scanned: amavisd-new at 
+X-Spam-Flag: NO
+X-Spam-Score: -2.499
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.499 tagged_above=-10 required=6.6
+	tests=[BAYES_00=-2.599, RDNS_NONE=0.1]
+Received: from mail.op5.se ([127.0.0.1])
+	by localhost (mail.op5.se [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id yxyHqKqhkHLq; Wed, 17 Sep 2008 16:53:25 +0200 (CEST)
+Received: from clix.int.op5.se (unknown [172.27.78.26])
+	by mail.op5.se (Postfix) with ESMTP id 946F71B8008F;
+	Wed, 17 Sep 2008 16:53:22 +0200 (CEST)
+User-Agent: Thunderbird 2.0.0.16 (X11/20080723)
+In-Reply-To: <1221658141-75698-1-git-send-email-jon.delStrother@bestbefore.tv>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/96118>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/96119>
 
-On Tue, 16 Sep 2008, Brandon Casey wrote:
-> Boyd Lynn Gerber wrote:
->> So with path set so my /usr/gnu/bin/ is before any others this is what I
->> get as the next failure.  After a long run...
->>
->> * FAIL 5: alternation in pattern
->>
->>                 git config diff.java.funcname "^[
->> ]*\(\(public\|static\).*\)$"
->>                 git diff --no-index Beer.java Beer-correct.java |
->>                 grep "^@@.*@@ public static void main("
->>
->>
->> * failed 1 among 5 test(s)
->> gmake[1]: *** [t4018-diff-funcname.sh] Error 1
->> gmake[1]: Leaving directory `/home/zenez/build/osr6/git-1.6.0.2/t'
->> gmake: *** [test] Error 2
->
-> That's the one, thanks.
->
-> And just so you know, this isn't a regression. It's just a new test that
-> was designed to reveal a shortcoming that no one knew existed before Arjen
-> discovered it.
+Jonathan del Strother wrote:
+> Add support for recognition of Objective-C class & instance methods, C functions, and class implementation/interfaces.
+> 
+> Signed-off-by: Jonathan del Strother <jon.delStrother@bestbefore.tv>
+> ---
+> This version anchors the negated match to the beginning of the line, and shuffles the comments around to avoid the excessively long lines.  Better?
+> 
 
-Six of the 12 all have the same problem.  I would say all 12 have it as my 
-experience has shown that if these have it then all have it.  The fixes I 
-did were so generic that once I got these first 6 working the others just 
-worked.  So I would say they all need the patch or fix.  Sorry I did not 
-follow the whole thread.  I read it from the archive what I could.  It 
-seems the archive is about 2 days behind.
+Why do you insist on touching surrounding patterns? I've left them in
+from your patch below so you can see where you're going wrong. Those
+changes provide no value and make your patch harder to read. If you
+want to make that cleanup, submit it separately, as it has nothing
+to do with teaching git diff about objective C methods.
 
-Good Luck,
 
---
-Boyd Gerber <gerberb@zenez.com>
-ZENEZ	1042 East Fort Union #135, Midvale Utah  84047
+> diff --git a/diff.c b/diff.c
+> index 998dcaa..e5ec503 100644
+> --- a/diff.c
+> +++ b/diff.c
+> @@ -1398,17 +1398,31 @@ static struct builtin_funcname_pattern {
+>  } builtin_funcname_pattern[] = {
+>  	{ "bibtex", "\\(@[a-zA-Z]\\{1,\\}[ \t]*{\\{0,1\\}[ \t]*[^ \t\"@',\\#}{~%]*\\).*$" },
+>  	{ "html", "^\\s*\\(<[Hh][1-6]\\s.*>.*\\)$" },
+> -	{ "java", "!^[ 	]*\\(catch\\|do\\|for\\|if\\|instanceof\\|"
+> +
+> +	{ "java", "!^[ \t]*\\(catch\\|do\\|for\\|if\\|instanceof\\|"
+>  			"new\\|return\\|switch\\|throw\\|while\\)\n"
+> -			"^[ 	]*\\(\\([ 	]*"
+> +			"^[ \t]*\\(\\([ \t]*"
+>  			"[A-Za-z_][A-Za-z_0-9]*\\)\\{2,\\}"
+> -			"[ 	]*([^;]*\\)$" },
+> +			"[ \t]*([^;]*\\)$" },
+> +
+
+The above should be in a separate patch.
+
+>  	{ "pascal", "^\\(\\(procedure\\|function\\|constructor\\|"
+>  			"destructor\\|interface\\|implementation\\|"
+>  			"initialization\\|finalization\\)[ \t]*.*\\)$"
+>  			"\\|"
+> -			"^\\(.*=[ \t]*\\(class\\|record\\).*\\)$"
+> -			},
+> +			"^\\(.*=[ \t]*\\(class\\|record\\).*\\)$"},
+> +
+
+This last change is just pure nonsense. Please remove it altogether.
+
+-- 
+Andreas Ericsson                   andreas.ericsson@op5.se
+OP5 AB                             www.op5.se
+Tel: +46 8-230225                  Fax: +46 8-230231
