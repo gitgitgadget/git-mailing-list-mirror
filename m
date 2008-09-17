@@ -1,116 +1,148 @@
-From: "k wayne" <pleexed@gmail.com>
-Subject: Project organisation and structure
-Date: Wed, 17 Sep 2008 15:49:19 +0200
-Message-ID: <bcf9fe2c0809170649x3f377c7erecc9f69a4a664d52@mail.gmail.com>
+From: "Nguyen Thai Ngoc Duy" <pclouds@gmail.com>
+Subject: Re: [PATCH 15/16] checkout: add new options to support narrow checkout
+Date: Wed, 17 Sep 2008 20:49:54 +0700
+Message-ID: <fcaeb9bf0809170649w418f4af5x3055c04994c694dc@mail.gmail.com>
+References: <48cdde2837b2d_12d73fc6eb2c355c27876@app02.zenbe.com.tmail>
+	 <200809152205.15388.jnareb@gmail.com>
+	 <fcaeb9bf0809160521o24fd26e4l40f1798228d51712@mail.gmail.com>
+	 <200809171107.35826.jnareb@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Sep 17 15:50:32 2008
+Cc: git@vger.kernel.org
+To: "Jakub Narebski" <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Sep 17 15:51:17 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KfxQN-0007o2-8i
-	for gcvg-git-2@gmane.org; Wed, 17 Sep 2008 15:50:31 +0200
+	id 1KfxQx-0007yj-65
+	for gcvg-git-2@gmane.org; Wed, 17 Sep 2008 15:51:07 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751634AbYIQNtW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 17 Sep 2008 09:49:22 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751507AbYIQNtW
-	(ORCPT <rfc822;git-outgoing>); Wed, 17 Sep 2008 09:49:22 -0400
-Received: from qb-out-0506.google.com ([72.14.204.224]:49938 "EHLO
-	qb-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751366AbYIQNtV (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 17 Sep 2008 09:49:21 -0400
-Received: by qb-out-0506.google.com with SMTP id f11so4720441qba.17
-        for <git@vger.kernel.org>; Wed, 17 Sep 2008 06:49:20 -0700 (PDT)
+	id S1752361AbYIQNt5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 17 Sep 2008 09:49:57 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752217AbYIQNt5
+	(ORCPT <rfc822;git-outgoing>); Wed, 17 Sep 2008 09:49:57 -0400
+Received: from gv-out-0910.google.com ([216.239.58.189]:7099 "EHLO
+	gv-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751875AbYIQNt4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 17 Sep 2008 09:49:56 -0400
+Received: by gv-out-0910.google.com with SMTP id e6so1587027gvc.37
+        for <git@vger.kernel.org>; Wed, 17 Sep 2008 06:49:54 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:received:received:message-id:date:from:to
-         :subject:mime-version:content-type:content-transfer-encoding
-         :content-disposition;
-        bh=qMVwhhne75EzUmhtffpX+hxxds3PVt49ALC/WSF6Owk=;
-        b=m+j7saM5QrlHgnaT4eBEO/QStKmfymqhuryjUWhSu85cJOViMrSv3tEtyhrYVYlT73
-         yhVvM/FBfZKIyd5VQkCSsD3EyE3kA1JhxA4ERcwXITE4LvfjDR2C1YjBNHsH9l28qPRc
-         tmzvea6BFZ1SwDyY8ktQ7x4kCWoJJDNYLzpxc=
+         :subject:cc:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:references;
+        bh=acH9kzgQl8SoE0vZBP++sSQdhtTxOlE81v79L9JsUDY=;
+        b=x0OidGOg1wUyPCIRV6ACwRxWJjMouKBqHg2Z+liKaBHTq3vIcBDEKP++9TQ+YqVCe1
+         5RBtg3YDj18cpGyEJvFAG8xHyBwzcK/4+By6/9KKN18zLN1RCOgl0Wysf/lltTI9EakB
+         CelL062CxKmOS+H6bEvANUhD8NSfGJ8nB9pLM=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:mime-version:content-type
-         :content-transfer-encoding:content-disposition;
-        b=Yw4Wu/662qp/M3/CPKBR1dXHU9taSObF+q8ZVVSxrukGEc8Goe720VfRXr9uNcn2f4
-         7TvpS9+CLYBrlqaKfY41kNmnvySOooeUVM3RZT7guiIVAJIbntJXQzrligV1LpL5mODf
-         Vv8Uh+793G5dWzR+6g5u7bkBnZ2jcv431orWU=
-Received: by 10.141.123.4 with SMTP id a4mr6512204rvn.172.1221659360323;
-        Wed, 17 Sep 2008 06:49:20 -0700 (PDT)
-Received: by 10.141.116.12 with HTTP; Wed, 17 Sep 2008 06:49:19 -0700 (PDT)
+        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
+         :content-type:content-transfer-encoding:content-disposition
+         :references;
+        b=PH/Fevyb7Vq6tUSqV3S08BsaWJwaVPmLJtgjalqMxaKjJDxrd/Q7KB+mkdk3ANyzc/
+         1VJKZFBaNXy/uJisEAD3VVI9FJq9j74ckaM/JXO964A3O3s34GoIszkQ6ux9AYraeqV1
+         b1QcxU33cvFcfRhFzKN7MkSlO8CxeMpFM8pLc=
+Received: by 10.86.59.2 with SMTP id h2mr1038828fga.40.1221659394515;
+        Wed, 17 Sep 2008 06:49:54 -0700 (PDT)
+Received: by 10.86.59.5 with HTTP; Wed, 17 Sep 2008 06:49:54 -0700 (PDT)
+In-Reply-To: <200809171107.35826.jnareb@gmail.com>
 Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/96113>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/96114>
 
-Hello,
-I'm new to git, and I hope this is the right mailinglist for what I'm
-going to ask; it was the only one I found on http://git.or.cz. Sorry
-if it's not or my question is remarkably stupid. I've read the git
-documentation, of course, but it wasn't always easy to wrap my head
-around all the concepts, so I might have missed an obvious solution to
-my problem.
+On 9/17/08, Jakub Narebski <jnareb@gmail.com> wrote:
+>  >> You have decided then on the term 'narrow checkout', and not
+>  >>  'partial checkout' or 'sparse checkout', then?
+>  >
+>  > Not yet. I tend to prefer partial/sparse checkout. Probably should
+>  > have a look at how other SCMs do and what term they use. If Git's
+>  > functionality is so different, a different term might notice people
+>  > about that.
+>
+>
+> Perhaps whip up a survey? Just kidding (or not).
 
-Currently, I've got a tree of self-written C++ source code for which I
-don't use any SCM, and I'd like to start using git on it. However,
-I've run into issues with my directory layout I cannot resolve on my
-own.
-I have a collection of libraries and programs, which aren't coupled
-too much, but aren't really independent either; for example, library X
-depends on Y, program Z on lib A and so forth. Since all of these libs
-and programs are logically connected to each other in some way, I
-would like to have them all in one central repository.
-So I heard that I could create kind of a "meta-repository" for the
-whole project, and have submodules for each library or program, which
-sounds exactly like what I want. However, I've been told that my
-current directory layout will not work this way with git.
+Well I've been asking about the name on this list long enough. I'm
+going with 'sparse checkout' as svn' sparse directories does not look
+too different from git's.
 
-This is how my project root directory (say it's ~) looks like:
-~/build - Build files which apply for the whole project, like doxygen
-build files.
-~/include/$submodule - Each library/program has an own directory here,
-in which all header files go.
-~/projects/$submodule - Files related to an individual project, like
-makefiles etc.
-~/src/$submodule - Like the above two, but for source files.
-~/test/$submodule - Again, a directory for each library/program,
-containing files for (unit)tests.
-~/doc - Documentation files for the project as a whole.
-~/doc/$submodule - Documentation files for individual libraries/programs.
+>  >>> When you apply new narrow spec to your working directory using either
+>  >>> --path, --add-path or --remove-path, it will update "checkout" status
+>  >>> in index accordingly. Moreover, if a file is marked "no-checkout" and
+>  >>> is present in working directory, it will be removed. If a file is
+>  >>> turned from "no-checkout" to "checkout", then it will be added again
+>  >>> to working directory. Modified and unmerged entries can't bear
+>  >>> "no-checkout" status, if narrow spec applies to them, "git checkout"
+>  >>> will refuse to update working directory.
+>  >>
+>  >>
+>  >> Do I understand correctly, that if one uses --path=<colon separated list>
+>  >>  _only_ filenames matching one of patterns specified would be checked out,
+>  >>  --add-path=<path> would additionally checkout given path and mark "wanted",
+>  >>  and  --remove-path=<path> would additionally mark "no-checkout" and remove
+>  >>  path?
+>  >
+>  > --add-path/--remove-path also use narrow spec, which could be more
+>  > than one pattern.
+>
+>
+> What is the difference then between --add-path and --path? The fact
+>  that --add-path can be incremental, and --path starts always from
+>  an empty set?
 
-These are the directories I would like git to track for me. There are
-some other dirs not listed here (e.g. for object files,) but I can
-easily add them to .gitignore.
+--path clears out all no-checkout bits and set again based on the
+given spec. --add-path adds more checkout entries based on the given
+spec, think of widening checkout area. --remove-path does narrow the
+checkout area. They are like '=', '+=' and '-=' operators
+respectively.
 
-So, the git structure as I imagine it would look like this: ~/.git
-contains the "meta-repository," in which all the submodules reside.
-Each submodule would have its .git directory in ~/projects/$submodule.
-Alternatively, ~/.git for the meta-repo and ~/.git-$subproject or
-something like this would be okay too.
+>
+>  >>  What --add-path starts from, i.e. does
+>  >>
+>  >>   $ git checkout --add-path=.gitignore
+>  >>
+>  >>  starts from empty set if --add-path is first, or from full set as without
+>  >>  --add-path?
+>  >
+>  > I'm not sure I understand this.
+>
+>
+> Well, what I wanted to ask is if --remove-path starts from fully
+>  checked out repository, for example if
+>
+>   $ git checkout --remove-path=some_large_file
+>
+>  would checkout all files _except_ 'some_large_file'.
 
-However, I have been told I cannot go to ~/projects/$submodule and do
-a "git add ../../{include,src,test,doc}/$submodule" there. I could add
-symlinks in ~/projects/$submodule to each of these dirs and add that
-link, but this would not work with windows, I guess (would it work
-with git, anyway?)
+No, there is no negative spec. Like I said above, --remove-path is to
+remove some files based on the given spec.
 
-So, how can I manage my code without having to restructure my tree?
+>
+>  >>  And is <pathspec> matched against full pathname, or like .gitignore
+>  >>  rules, i.e. as full pathname if it has at least one '/' in it?
+>  >
+>  > like shell wildcard, full pathname must match. On my way back home, I
+>  > thought I should have removed mention of "pathspec", which behaves a
+>  > little bit different.
+>  >
+>  > Also those specs are relative to working directory though, so if you
+>  > are in b/c and want to match d, you only need to type --add-path=d
+>  > instead of --add-path=b/c/d. Will add this to doc.
+>
+>
+> I would have thought that you follow the same rules (perhaps with
+>  exception of !path excluding rule) like for gitignore and gitattributes.
+>
 
-I'd like to keep it that way, because it is convenient to have only
-one directory to pass to the compiler as an additional include dir,
-and can include my header files as "submodule/someheader.hpp" which
-is, in my opinion, helpful in organizing the code.
-
-If there should be no way I can keep my directory setup the way it is
-with the current git, would a feature request be a good idea (and
-possibly implemented), or does my directory tree have a serious flaw I
-haven't stumbled across yet, which makes it unusable anyways?
-
-Thank you in advance.
+Um.. never thought of gitignores/gitattributes rules before. It's a
+good idea all narrowspec/gitignore/gitattributes using the same rules.
+Thanks.
+-- 
+Duy
