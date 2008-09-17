@@ -1,113 +1,74 @@
-From: "Catalin Marinas" <catalin.marinas@gmail.com>
-Subject: Re: [StGit PATCH] Convert "sink" to the new infrastructure
-Date: Wed, 17 Sep 2008 17:09:46 +0100
-Message-ID: <b0943d9e0809170909j4fce34acr8f0b844d0cb5281d@mail.gmail.com>
-References: <20080912215613.10270.20599.stgit@localhost.localdomain>
-	 <20080914085118.GC30664@diana.vm.bytemark.co.uk>
-	 <b0943d9e0809141419q6facb21at627e658805f1d223@mail.gmail.com>
-	 <20080915075740.GB14452@diana.vm.bytemark.co.uk>
-	 <b0943d9e0809150944o71acafe7ndeda500b1fba97df@mail.gmail.com>
-	 <20080916074024.GA2454@diana.vm.bytemark.co.uk>
-	 <b0943d9e0809160759w5c9be510t3b33d5d983bff5a7@mail.gmail.com>
-	 <20080916193647.GA12513@diana.vm.bytemark.co.uk>
+From: Johannes Sixt <j.sixt@viscovery.net>
+Subject: Re: [PATCH 15/16] checkout: add new options to support narrow checkout
+Date: Wed, 17 Sep 2008 18:32:40 +0200
+Message-ID: <48D13128.3000509@viscovery.net>
+References: <48cdde2837b2d_12d73fc6eb2c355c27876@app02.zenbe.com.tmail>	 <200809152205.15388.jnareb@gmail.com>	 <fcaeb9bf0809160521o24fd26e4l40f1798228d51712@mail.gmail.com>	 <200809171107.35826.jnareb@gmail.com> <fcaeb9bf0809170649w418f4af5x3055c04994c694dc@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: "=?ISO-8859-1?Q?Karl_Hasselstr=F6m?=" <kha@treskal.com>
-X-From: git-owner@vger.kernel.org Wed Sep 17 18:11:57 2008
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: Jakub Narebski <jnareb@gmail.com>, git@vger.kernel.org
+To: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Sep 17 18:34:03 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KfzdE-0002IQ-1N
-	for gcvg-git-2@gmane.org; Wed, 17 Sep 2008 18:11:56 +0200
+	id 1KfzyR-00016g-MS
+	for gcvg-git-2@gmane.org; Wed, 17 Sep 2008 18:33:52 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752711AbYIQQJs convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 17 Sep 2008 12:09:48 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752352AbYIQQJr
-	(ORCPT <rfc822;git-outgoing>); Wed, 17 Sep 2008 12:09:47 -0400
-Received: from rv-out-0506.google.com ([209.85.198.235]:57270 "EHLO
-	rv-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751801AbYIQQJr convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 17 Sep 2008 12:09:47 -0400
-Received: by rv-out-0506.google.com with SMTP id k40so3242562rvb.1
-        for <git@vger.kernel.org>; Wed, 17 Sep 2008 09:09:46 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to
-         :subject:cc:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:references;
-        bh=06HflCVsOx0GCF63E0hVp18vv/rxSQAzy7pOltlR6pU=;
-        b=sWWVkSWrsSjcnMGYESzzLz+8xRJnsDCEx51YTl5BlpagqMGWLl9DNEHbUcEa04HBuJ
-         YZWhgaLfW5T+4ePgbqMUBFx3tNSNIMsWJFPYYCPaVd4zLJeTFlkXOt9WcPE5dFauA/vQ
-         NJScF7NjK/GL8zx7qvtAQPpNp6m+VCPCvc+V0=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
-         :content-type:content-transfer-encoding:content-disposition
-         :references;
-        b=V/2qnWwMulvcq+jGE6Tm3gYkfeDq9UJDz49956STMfAzYniSK19Bx4LTHRcnYF9fmT
-         q8sczF9QOLYeURwRjDA7tLMkyQyEXvIwBLAyE7vXMWBGp1nj+aSmM7pIS4CTXJQ5zOqA
-         oq+bZtIGOj+tmGCEpHFRI+szCfzp3bavIjlXM=
-Received: by 10.140.134.15 with SMTP id h15mr6658849rvd.65.1221667786537;
-        Wed, 17 Sep 2008 09:09:46 -0700 (PDT)
-Received: by 10.140.199.1 with HTTP; Wed, 17 Sep 2008 09:09:46 -0700 (PDT)
-In-Reply-To: <20080916193647.GA12513@diana.vm.bytemark.co.uk>
-Content-Disposition: inline
+	id S1752916AbYIQQcn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 17 Sep 2008 12:32:43 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752736AbYIQQcn
+	(ORCPT <rfc822;git-outgoing>); Wed, 17 Sep 2008 12:32:43 -0400
+Received: from lilzmailso01.liwest.at ([212.33.55.23]:42492 "EHLO
+	lilzmailso01.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752589AbYIQQcm (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 17 Sep 2008 12:32:42 -0400
+Received: from cm56-163-160.liwest.at ([86.56.163.160] helo=linz.eudaptics.com)
+	by lilzmailso01.liwest.at with esmtpa (Exim 4.66)
+	(envelope-from <j.sixt@viscovery.net>)
+	id 1KfzxI-0000HZ-Ip; Wed, 17 Sep 2008 18:32:40 +0200
+Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.42])
+	by linz.eudaptics.com (Postfix) with ESMTP
+	id 4E8D0AFCC; Wed, 17 Sep 2008 18:32:40 +0200 (CEST)
+User-Agent: Thunderbird 2.0.0.6 (Windows/20070728)
+In-Reply-To: <fcaeb9bf0809170649w418f4af5x3055c04994c694dc@mail.gmail.com>
+X-Spam-Score: 1.7 (+)
+X-Spam-Report: ALL_TRUSTED=-1.8, BAYES_99=3.5
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/96125>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/96126>
 
-2008/9/16 Karl Hasselstr=F6m <kha@treskal.com>:
-> On 2008-09-16 15:59:31 +0100, Catalin Marinas wrote:
->
->> 2008/9/16 Karl Hasselstr=F6m <kha@treskal.com>:
->>
->> > iw is the index+worktree object. The idea is that you provide one
->> > if your branch is checked out, and not if not. Operations that
->> > have no need of index+worktree, like pop, and push in case
->> > automatic merging succeeds, will just work anyway, while
->> > operations that need index+worktree, such as a conflicting push,
->> > will cause the whole transaction to abort.
->>
->> Ah, that's the difference. I thought that even if iw isn't passed,
->> it uses the default one.
->
-> It wouldn't be clean of it to do that -- it would be accessing
-> non-local state it had no business knowing about. I try hard to avoid
-> that kind of thing.
+Nguyen Thai Ngoc Duy schrieb:
+> Well I've been asking about the name on this list long enough. I'm
+> going with 'sparse checkout' as svn' sparse directories does not look
+> too different from git's.
 
-I'm still confused by this and I don't think your new flag would help.
-The meaning of stop_before_conflict is that it won't push the
-conflicting patch but actually leave the stack with several patches
-pushed or popped.
+FWIW, /me likes 'sparse checkout'.
 
-What I want for sink (and float afterwards) is by default to cancel
-the whole transaction if there is a conflict and revert the stack to
-it's original state prior to the "stg sink" command. What I have in my
-code:
+> --path clears out all no-checkout bits and set again based on the
+> given spec. --add-path adds more checkout entries based on the given
+> spec, think of widening checkout area. --remove-path does narrow the
+> checkout area. They are like '=', '+=' and '-=' operators
+> respectively.
 
-    iw =3D stack.repository.default_iw
-    trans =3D transaction.StackTransaction(stack, 'sink')
+The still un-answered question was: In a full checkout, i.e. in a
+repository where the narrow/sparse checkout feature has never been used so
+far, is
 
-    try:
-        trans.reorder_patches(applied, unapplied, hidden, iw)
-    except transaction.TransactionHalted:
-        if not options.conflict:
-            ??? here it needs to check out the previous iw
-            raise
+   $ git checkout --add-path=foo
 
-    return trans.run(iw)
+a no-op, or is it equivalent to
 
-It runs as expected if --conflict is given but in the default case, if
-there is a conflict, it keeps the original patchorder (as expected)
-but the worktree isn't clean. What do I replace ??? with to clean the
-work tree?
+   $ git checkout --path=foo
 
-BTW, much shorter with reorder_patches.
+Or stated differently: In the sequence
 
---=20
-Catalin
+   $ git checkout --full
+   $ git checkout --add-path=foo
+
+is the second statement redundant?
+
+-- Hannes
