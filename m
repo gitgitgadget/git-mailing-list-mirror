@@ -1,65 +1,88 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+From: "Jonathan del Strother" <maillist@steelskies.com>
 Subject: Re: [PATCH] Teach git diff about Objective-C syntax
-Date: Wed, 17 Sep 2008 15:28:58 +0100 (BST)
-Message-ID: <alpine.DEB.1.00.0809171528120.14329@racer>
-References: <1221610063-33610-1-git-send-email-jon.delStrother@bestbefore.tv>  <1221648564-56239-1-git-send-email-jon.delStrother@bestbefore.tv>  <alpine.DEB.1.00.0809171205430.14329@racer> <57518fd10809170637n585afacbs94fdddc5b8bb61b6@mail.gmail.com>
+Date: Wed, 17 Sep 2008 15:32:29 +0100
+Message-ID: <57518fd10809170732g507bc60ar4427f940b4343c37@mail.gmail.com>
+References: <1221610063-33610-1-git-send-email-jon.delStrother@bestbefore.tv>
+	 <1221648564-56239-1-git-send-email-jon.delStrother@bestbefore.tv>
+	 <alpine.DEB.1.00.0809171205430.14329@racer>
+	 <57518fd10809170637n585afacbs94fdddc5b8bb61b6@mail.gmail.com>
+	 <alpine.DEB.1.00.0809171528120.14329@racer>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org, vmiklos@frugalware.org
-To: Jonathan del Strother <maillist@steelskies.com>
-X-From: git-owner@vger.kernel.org Wed Sep 17 16:34:19 2008
+To: "Johannes Schindelin" <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Wed Sep 17 16:36:53 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Kfy2k-0003D4-ES
-	for gcvg-git-2@gmane.org; Wed, 17 Sep 2008 16:30:10 +0200
+	id 1Kfy69-0004am-BY
+	for gcvg-git-2@gmane.org; Wed, 17 Sep 2008 16:33:41 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752321AbYIQO27 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 17 Sep 2008 10:28:59 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752399AbYIQO26
-	(ORCPT <rfc822;git-outgoing>); Wed, 17 Sep 2008 10:28:58 -0400
-Received: from mail.gmx.net ([213.165.64.20]:51064 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1752321AbYIQO26 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 17 Sep 2008 10:28:58 -0400
-Received: (qmail invoked by alias); 17 Sep 2008 14:28:56 -0000
-Received: from cbg-off-client.mpi-cbg.de (EHLO racer.local) [141.5.11.5]
-  by mail.gmx.net (mp067) with SMTP; 17 Sep 2008 16:28:56 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX18sNZRBJ8gshQLeSXSPtxxarugtx6BhQlzBS/kENF
-	P2zFullN7eRiNj
-X-X-Sender: gene099@racer
-In-Reply-To: <57518fd10809170637n585afacbs94fdddc5b8bb61b6@mail.gmail.com>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.67
+	id S1752463AbYIQOcc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 17 Sep 2008 10:32:32 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752325AbYIQOcc
+	(ORCPT <rfc822;git-outgoing>); Wed, 17 Sep 2008 10:32:32 -0400
+Received: from mail-gx0-f16.google.com ([209.85.217.16]:53747 "EHLO
+	mail-gx0-f16.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752068AbYIQOcc (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 17 Sep 2008 10:32:32 -0400
+Received: by gxk9 with SMTP id 9so29628376gxk.13
+        for <git@vger.kernel.org>; Wed, 17 Sep 2008 07:32:30 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:sender
+         :to:subject:cc:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:references
+         :x-google-sender-auth;
+        bh=NfHQ3tqIWlN6QofN3VOWGUpcI/7HyTu14JJR+zUwwCM=;
+        b=i5vfDSEJRoTRIxNVRhmwfzBS16Fndd7odTZ/906Visq1fKeESnuWRG7nBXuuN8w5Dp
+         SsbdVUnV3YtBH5qdSNJDvLU2SODLZqofKVTAuduUUw4hmPZHZujViT8zRmHq6UTXkCVm
+         uG7xw5ZsVUWdk9D7ZkAA+NDKf+umY6xC52lM4=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:sender:to:subject:cc:in-reply-to:mime-version
+         :content-type:content-transfer-encoding:content-disposition
+         :references:x-google-sender-auth;
+        b=Ty5gpaePpvLbjOmUQWLjkcRLiF7W6SVm5SeLr7UOVbp+6FtY+hyxeyO2nXcGaXmll6
+         G/3Cx6AYoaR9NkJJOpNQcwzR74ZnLNyEXtVgpGlK/mdJ7YXPyftu5U9NiBNUKYsXGJEN
+         U4BviXgrTGgfa4lSVfaBA8VPvIpTYVW1nLN00=
+Received: by 10.142.48.3 with SMTP id v3mr895950wfv.8.1221661949325;
+        Wed, 17 Sep 2008 07:32:29 -0700 (PDT)
+Received: by 10.143.6.3 with HTTP; Wed, 17 Sep 2008 07:32:29 -0700 (PDT)
+In-Reply-To: <alpine.DEB.1.00.0809171528120.14329@racer>
+Content-Disposition: inline
+X-Google-Sender-Auth: 4acd9e51c32d4a09
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/96116>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/96117>
 
-Hi,
+On Wed, Sep 17, 2008 at 3:28 PM, Johannes Schindelin
+<Johannes.Schindelin@gmx.de> wrote:
+> Hi,
+>
+> On Wed, 17 Sep 2008, Jonathan del Strother wrote:
+>
+>> On Wed, Sep 17, 2008 at 12:06 PM, Johannes Schindelin
+>> <Johannes.Schindelin@gmx.de> wrote:
+>> > Hi,
+>> >
+>> > On Wed, 17 Sep 2008, Jonathan del Strother wrote:
+>> >
+>> >> -                     "^[     ]*\\(\\([       ]*"
+>> >> +                     "^[ \t]*\\(\\([ \t]*"
+>> >
+>> > Why?
+>>
+>> Sorry - missed that in the original reply.  You really prefer having
+>> an invisible tab character to an explicit \t ?
+>
+> No.  But I prefer clear-cut commits, not sneaked-in changes.  This is a
+> change in the java part FYI.
+>
 
-On Wed, 17 Sep 2008, Jonathan del Strother wrote:
-
-> On Wed, Sep 17, 2008 at 12:06 PM, Johannes Schindelin
-> <Johannes.Schindelin@gmx.de> wrote:
-> > Hi,
-> >
-> > On Wed, 17 Sep 2008, Jonathan del Strother wrote:
-> >
-> >> -                     "^[     ]*\\(\\([       ]*"
-> >> +                     "^[ \t]*\\(\\([ \t]*"
-> >
-> > Why?
-> 
-> Sorry - missed that in the original reply.  You really prefer having
-> an invisible tab character to an explicit \t ?
-
-No.  But I prefer clear-cut commits, not sneaked-in changes.  This is a 
-change in the java part FYI.
-
-Ciao,
-Dscho
+Sorry, I considered it to be a formatting change & didn't think it
+would matter.  I'll separate them out & repost later
