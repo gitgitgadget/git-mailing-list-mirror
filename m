@@ -1,74 +1,112 @@
-From: Johannes Sixt <j.sixt@viscovery.net>
-Subject: Re: [PATCH 15/16] checkout: add new options to support narrow checkout
-Date: Wed, 17 Sep 2008 18:32:40 +0200
-Message-ID: <48D13128.3000509@viscovery.net>
-References: <48cdde2837b2d_12d73fc6eb2c355c27876@app02.zenbe.com.tmail>	 <200809152205.15388.jnareb@gmail.com>	 <fcaeb9bf0809160521o24fd26e4l40f1798228d51712@mail.gmail.com>	 <200809171107.35826.jnareb@gmail.com> <fcaeb9bf0809170649w418f4af5x3055c04994c694dc@mail.gmail.com>
+From: Andreas Ericsson <ae@op5.se>
+Subject: Re: [IRC/patches] Failed octopus merge does not clean up
+Date: Wed, 17 Sep 2008 18:40:55 +0200
+Message-ID: <48D13317.3090301@op5.se>
+References: <200809160048.31443.trast@student.ethz.ch> <200809170053.15341.jnareb@gmail.com> <48D0A776.1000009@op5.se> <200809171011.06714.jnareb@gmail.com> <20080917155933.GI4829@genesis.frugalware.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=ISO-8859-15; format=flowed
 Content-Transfer-Encoding: 7bit
-Cc: Jakub Narebski <jnareb@gmail.com>, git@vger.kernel.org
-To: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Sep 17 18:34:03 2008
+Cc: Jakub Narebski <jnareb@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>,
+	Thomas Rast <trast@student.ethz.ch>, git@vger.kernel.org
+To: Miklos Vajna <vmiklos@frugalware.org>
+X-From: git-owner@vger.kernel.org Wed Sep 17 18:42:44 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KfzyR-00016g-MS
-	for gcvg-git-2@gmane.org; Wed, 17 Sep 2008 18:33:52 +0200
+	id 1Kg06X-0004Ox-68
+	for gcvg-git-2@gmane.org; Wed, 17 Sep 2008 18:42:13 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752916AbYIQQcn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 17 Sep 2008 12:32:43 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752736AbYIQQcn
-	(ORCPT <rfc822;git-outgoing>); Wed, 17 Sep 2008 12:32:43 -0400
-Received: from lilzmailso01.liwest.at ([212.33.55.23]:42492 "EHLO
-	lilzmailso01.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752589AbYIQQcm (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 17 Sep 2008 12:32:42 -0400
-Received: from cm56-163-160.liwest.at ([86.56.163.160] helo=linz.eudaptics.com)
-	by lilzmailso01.liwest.at with esmtpa (Exim 4.66)
-	(envelope-from <j.sixt@viscovery.net>)
-	id 1KfzxI-0000HZ-Ip; Wed, 17 Sep 2008 18:32:40 +0200
-Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.42])
-	by linz.eudaptics.com (Postfix) with ESMTP
-	id 4E8D0AFCC; Wed, 17 Sep 2008 18:32:40 +0200 (CEST)
-User-Agent: Thunderbird 2.0.0.6 (Windows/20070728)
-In-Reply-To: <fcaeb9bf0809170649w418f4af5x3055c04994c694dc@mail.gmail.com>
-X-Spam-Score: 1.7 (+)
-X-Spam-Report: ALL_TRUSTED=-1.8, BAYES_99=3.5
+	id S1755337AbYIQQlG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 17 Sep 2008 12:41:06 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755324AbYIQQlG
+	(ORCPT <rfc822;git-outgoing>); Wed, 17 Sep 2008 12:41:06 -0400
+Received: from mail.op5.se ([193.201.96.20]:47773 "EHLO mail.op5.se"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755306AbYIQQlF (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 17 Sep 2008 12:41:05 -0400
+Received: from localhost (localhost.localdomain [127.0.0.1])
+	by mail.op5.se (Postfix) with ESMTP id D9FE524B0004;
+	Wed, 17 Sep 2008 18:30:56 +0200 (CEST)
+X-Virus-Scanned: amavisd-new at 
+X-Spam-Flag: NO
+X-Spam-Score: -2.499
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.499 tagged_above=-10 required=6.6
+	tests=[BAYES_00=-2.599, RDNS_NONE=0.1]
+Received: from mail.op5.se ([127.0.0.1])
+	by localhost (mail.op5.se [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id 7OWBlffP1mqo; Wed, 17 Sep 2008 18:30:54 +0200 (CEST)
+Received: from clix.int.op5.se (unknown [172.27.78.26])
+	by mail.op5.se (Postfix) with ESMTP id 9F11624B0005;
+	Wed, 17 Sep 2008 18:30:51 +0200 (CEST)
+User-Agent: Thunderbird 2.0.0.16 (X11/20080723)
+In-Reply-To: <20080917155933.GI4829@genesis.frugalware.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/96126>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/96127>
 
-Nguyen Thai Ngoc Duy schrieb:
-> Well I've been asking about the name on this list long enough. I'm
-> going with 'sparse checkout' as svn' sparse directories does not look
-> too different from git's.
+Miklos Vajna wrote:
+> On Wed, Sep 17, 2008 at 10:11:02AM +0200, Jakub Narebski <jnareb@gmail.com> wrote:
+>>>> BTW. does it mean that "git merge a b" might be not the same as
+>>>> "git merge b a"?
+>>>>
+>>> No. Git merges all the sub-things together and then merges the result
+>>> of that jumble into the branch you're on.
+>>>
+>>> Someone might have to correct me on that, but that's as far as I've
+>>> understood it.
+>> From what I understand from above explanation, and from thread on git
+>> mailing list about better implementation of and documenting finding
+>> merge bases for multiple heads, I think octopus merge is done by merging
+>> [reduced] heads one by one into given branch.
+>>
+>> This means that "git merge a b" does internally "git merge a; git merge b"
+>> as I understand it.
+> 
+> Sure, but given that both 'a' and 'b' merged (so none of them is subset
+> of the other, for example so that reduce_heads() would drop one of them)
+> the order of the parents will be different so the resulting commit will
+> differ. The resulting tree will no, I think.
 
-FWIW, /me likes 'sparse checkout'.
 
-> --path clears out all no-checkout bits and set again based on the
-> given spec. --add-path adds more checkout entries based on the given
-> spec, think of widening checkout area. --remove-path does narrow the
-> checkout area. They are like '=', '+=' and '-=' operators
-> respectively.
+I got it wrong (not wrt reduced heads, but still). My apologies.
 
-The still un-answered question was: In a full checkout, i.e. in a
-repository where the narrow/sparse checkout feature has never been used so
-far, is
+If octopus (the program/strategy/whatever) continues to merge after a
+branch conflicting against the currently checked out branch (let's call
+it "master"), the resulting tree may not differ, but then again, it might.
+OTOH, if octopus quits the merge after having encountered a conflict, the
+order the branches to merge were passed will always have an impact.
 
-   $ git checkout --add-path=foo
+Let's say you have two branches, "clean" and "conflict". Which one is
+which should be obvious here.
 
-a no-op, or is it equivalent to
+	git merge clean conflict
 
-   $ git checkout --path=foo
+will produce a tree with 'master', 'clean' and a conflicted merge of
+'conflict', while
 
-Or stated differently: In the sequence
+	git merge conflict clean
 
-   $ git checkout --full
-   $ git checkout --add-path=foo
+will produce a tree with 'master' and a conflicted merge of 'conflict'.
 
-is the second statement redundant?
+In short, backing out the entire merge in case of a conflict is almost
+certainly the only sane thing to do. If one branch depends on another
+to merge cleanly, a different approach should have been taken (depending
+branch should have been rebased onto the dependent one prior to merging),
+but the merge *might* succeed depending on in which order the other
+branches are given as arguments. It's not a very clever idea to merge
+something like that though, as bisection will invariably have to mark the
+entire depending branch as BAD, although the merge itself could obviously
+be a good one.
 
--- Hannes
+Clearly, an octopus merge should not be undertaken without knowing very
+well what it is one is merging in.
+
+-- 
+Andreas Ericsson                   andreas.ericsson@op5.se
+OP5 AB                             www.op5.se
+Tel: +46 8-230225                  Fax: +46 8-230231
