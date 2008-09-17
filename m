@@ -1,101 +1,191 @@
-From: Andreas Ericsson <ae@op5.se>
-Subject: Re: [PATCH] Teach git diff about Objective-C syntax
-Date: Wed, 17 Sep 2008 17:03:24 +0200
-Message-ID: <48D11C3C.5070707@op5.se>
-References: <57518fd10809170526i5c1e7dadgc38bb00e8073ba55@mail.gmail.com> <1221658141-75698-1-git-send-email-jon.delStrother@bestbefore.tv>
+From: Michael J Gruber <git@drmicha.warpmail.net>
+Subject: Mismatch between "git status" and "git ls-files" [was Re: Teach git
+ status to do "git diff --name-status HEAD"]
+Date: Wed, 17 Sep 2008 17:16:16 +0200
+Message-ID: <48D11F40.4000307@drmicha.warpmail.net>
+References: <aba84270809162340n4ea3f5feqc71d01fa6e035b79@mail.gmail.com>	<48D0C2DF.7010308@drmicha.warpmail.net> <m3ej3jm3ux.fsf@localhost.localdomain>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, vmiklos@frugalware.org,
-	Johannes.Schindelin@gmx.de
-To: Jonathan del Strother <jon.delStrother@bestbefore.tv>
-X-From: git-owner@vger.kernel.org Wed Sep 17 17:04:57 2008
+Content-Type: multipart/mixed;
+ boundary="------------090503070509000300010107"
+Cc: Martin Langhoff <martin@laptop.org>,
+	Git Mailing List <git@vger.kernel.org>
+To: Jakub Narebski <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Sep 17 17:17:41 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KfyaC-0006PJ-S9
-	for gcvg-git-2@gmane.org; Wed, 17 Sep 2008 17:04:45 +0200
+	id 1Kfyma-0001oP-Cx
+	for gcvg-git-2@gmane.org; Wed, 17 Sep 2008 17:17:32 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752848AbYIQPDg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 17 Sep 2008 11:03:36 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752822AbYIQPDg
-	(ORCPT <rfc822;git-outgoing>); Wed, 17 Sep 2008 11:03:36 -0400
-Received: from mail.op5.se ([193.201.96.20]:58749 "EHLO mail.op5.se"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752725AbYIQPDf (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 17 Sep 2008 11:03:35 -0400
-Received: from localhost (localhost.localdomain [127.0.0.1])
-	by mail.op5.se (Postfix) with ESMTP id 24A191B800AE;
-	Wed, 17 Sep 2008 16:53:28 +0200 (CEST)
-X-Virus-Scanned: amavisd-new at 
-X-Spam-Flag: NO
-X-Spam-Score: -2.499
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.499 tagged_above=-10 required=6.6
-	tests=[BAYES_00=-2.599, RDNS_NONE=0.1]
-Received: from mail.op5.se ([127.0.0.1])
-	by localhost (mail.op5.se [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id yxyHqKqhkHLq; Wed, 17 Sep 2008 16:53:25 +0200 (CEST)
-Received: from clix.int.op5.se (unknown [172.27.78.26])
-	by mail.op5.se (Postfix) with ESMTP id 946F71B8008F;
-	Wed, 17 Sep 2008 16:53:22 +0200 (CEST)
-User-Agent: Thunderbird 2.0.0.16 (X11/20080723)
-In-Reply-To: <1221658141-75698-1-git-send-email-jon.delStrother@bestbefore.tv>
+	id S1752418AbYIQPQY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 17 Sep 2008 11:16:24 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752661AbYIQPQX
+	(ORCPT <rfc822;git-outgoing>); Wed, 17 Sep 2008 11:16:23 -0400
+Received: from out1.smtp.messagingengine.com ([66.111.4.25]:52346 "EHLO
+	out1.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1752399AbYIQPQW (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 17 Sep 2008 11:16:22 -0400
+Received: from compute1.internal (compute1.internal [10.202.2.41])
+	by out1.messagingengine.com (Postfix) with ESMTP id EFE32163240;
+	Wed, 17 Sep 2008 11:16:21 -0400 (EDT)
+Received: from heartbeat1.messagingengine.com ([10.202.2.160])
+  by compute1.internal (MEProxy); Wed, 17 Sep 2008 11:16:21 -0400
+X-Sasl-enc: DZEBOlTRjxs2bjjBOUYZ4G6L6zlcPiINA21CgqjCjuYT 1221664580
+Received: from [139.174.44.12] (whitehead.math.tu-clausthal.de [139.174.44.12])
+	by mail.messagingengine.com (Postfix) with ESMTPSA id 8396615EB0;
+	Wed, 17 Sep 2008 11:16:20 -0400 (EDT)
+User-Agent: Thunderbird 2.0.0.16 (X11/20080707)
+In-Reply-To: <m3ej3jm3ux.fsf@localhost.localdomain>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/96119>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/96120>
 
-Jonathan del Strother wrote:
-> Add support for recognition of Objective-C class & instance methods, C functions, and class implementation/interfaces.
-> 
-> Signed-off-by: Jonathan del Strother <jon.delStrother@bestbefore.tv>
-> ---
-> This version anchors the negated match to the beginning of the line, and shuffles the comments around to avoid the excessively long lines.  Better?
-> 
+This is a multi-part message in MIME format.
+--------------090503070509000300010107
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
 
-Why do you insist on touching surrounding patterns? I've left them in
-from your patch below so you can see where you're going wrong. Those
-changes provide no value and make your patch harder to read. If you
-want to make that cleanup, submit it separately, as it has nothing
-to do with teaching git diff about objective C methods.
+Following up on the discussion about "git status" versus
+"youknowwhichscm status" and suggestions to use "git diff --name-status"
+or "git ls-files -d -m -o -t" I made a little test case, see the
+attached script and output (git version 1.6.0.2.249.g97d7f). Observations:
 
+- "git diff --name-status" and "git ls-files" use very similar form,
+even the same status letters, but with completely different meaning for
+C, M, R. That is highly confusing (this what I mean by mismatch).
 
-> diff --git a/diff.c b/diff.c
-> index 998dcaa..e5ec503 100644
-> --- a/diff.c
-> +++ b/diff.c
-> @@ -1398,17 +1398,31 @@ static struct builtin_funcname_pattern {
->  } builtin_funcname_pattern[] = {
->  	{ "bibtex", "\\(@[a-zA-Z]\\{1,\\}[ \t]*{\\{0,1\\}[ \t]*[^ \t\"@',\\#}{~%]*\\).*$" },
->  	{ "html", "^\\s*\\(<[Hh][1-6]\\s.*>.*\\)$" },
-> -	{ "java", "!^[ 	]*\\(catch\\|do\\|for\\|if\\|instanceof\\|"
-> +
-> +	{ "java", "!^[ \t]*\\(catch\\|do\\|for\\|if\\|instanceof\\|"
->  			"new\\|return\\|switch\\|throw\\|while\\)\n"
-> -			"^[ 	]*\\(\\([ 	]*"
-> +			"^[ \t]*\\(\\([ \t]*"
->  			"[A-Za-z_][A-Za-z_0-9]*\\)\\{2,\\}"
-> -			"[ 	]*([^;]*\\)$" },
-> +			"[ \t]*([^;]*\\)$" },
-> +
+- "git diff --name-status" has no way of showing ignored or untracked files
 
-The above should be in a separate patch.
+- "git status" has no way of showing ignored files
 
->  	{ "pascal", "^\\(\\(procedure\\|function\\|constructor\\|"
->  			"destructor\\|interface\\|implementation\\|"
->  			"initialization\\|finalization\\)[ \t]*.*\\)$"
->  			"\\|"
-> -			"^\\(.*=[ \t]*\\(class\\|record\\).*\\)$"
-> -			},
-> +			"^\\(.*=[ \t]*\\(class\\|record\\).*\\)$"},
-> +
+- "git ls-files -d -m -o -t" does not distinguish between ignored and
+untracked (all is ?)
 
-This last change is just pure nonsense. Please remove it altogether.
+- "git ls-files" is plumbing, one should not need plumbing to get status
+output.
 
--- 
-Andreas Ericsson                   andreas.ericsson@op5.se
-OP5 AB                             www.op5.se
-Tel: +46 8-230225                  Fax: +46 8-230231
+I guess what's needed would be a porcelain that:
+
+- shows state in concise form ("X filename" lines like --name-status or
+ls-files -t)
+- has options to show ignored and untracked file optionally
+
+To me the most direct approach would be: If "git diff" compares with the
+work-tree, teach it to include ignored resp. untracked files optionally.
+
+I guess I wouldn't care about the mismatch then. Are there specific
+reasons (other than evolution) for the conflicting status letters?
+
+Michael
+
+--------------090503070509000300010107
+Content-Type: text/plain;
+ name="stats.out"
+Content-Transfer-Encoding: 7bit
+Content-Disposition: inline;
+ filename="stats.out"
+
+Initialized empty Git repository in /tmp/mjg/stats/.git/
+Created initial commit 345adf7: files to be changed
+ 10 files changed, 10 insertions(+), 0 deletions(-)
+ create mode 100644 copied
+ create mode 100644 gitmoved
+ create mode 100644 gitremoved
+ create mode 100644 modified
+ create mode 100644 modifiedadded
+ create mode 100644 moved
+ create mode 100644 removed
+ create mode 100644 typechanged
+ create mode 100644 typechangedadded
+ create mode 100644 unchanged
+rm 'gitremoved'
+### git status ###
+# On branch master
+# Changes to be committed:
+#   (use "git reset HEAD <file>..." to unstage)
+#
+#	new file:   added
+#	new file:   copiedadded
+#	renamed:    gitmoved -> gitmoved2
+#	deleted:    gitremoved
+#	modified:   modifiedadded
+#	modified:   typechangedadded
+#
+# Changed but not updated:
+#   (use "git add/rm <file>..." to update what will be committed)
+#
+#	modified:   modified
+#	deleted:    moved
+#	deleted:    removed
+#	modified:   typechanged
+#
+# Untracked files:
+#   (use "git add <file>..." to include in what will be committed)
+#
+#	copiedonly
+#	moved2
+#	untracked
+### git diff ###
+M	modified
+D	moved
+D	removed
+M	typechanged
+### git diff HEAD ###
+A	added
+C100	copied	copiedadded
+R100	gitmoved	gitmoved2
+D	gitremoved
+M	modified
+M	modifiedadded
+D	moved
+D	removed
+M	typechanged
+M	typechangedadded
+### git diff --cached HEAD ###
+A	added
+C100	copied	copiedadded
+R100	gitmoved	gitmoved2
+D	gitremoved
+M	modifiedadded
+M	typechangedadded
+### git ls-files
+? copiedonly
+? ignored
+? moved2
+? untracked
+C modified
+R moved
+C moved
+R removed
+C removed
+C typechanged
+
+--------------090503070509000300010107
+Content-Type: application/x-shellscript;
+ name="stats.sh"
+Content-Transfer-Encoding: base64
+Content-Disposition: inline;
+ filename="stats.sh"
+
+IyEvYmluL2Jhc2gKcm0gLVJmIHN0YXRzICYmIG1rZGlyIHN0YXRzICYmIGNkIHN0YXRzCmdp
+dCBpbml0CmZvciBpIGluIGNvcGllZCBnaXRtb3ZlZCBtb3ZlZCBnaXRyZW1vdmVkIHJlbW92
+ZWQgbW9kaWZpZWQgbW9kaWZpZWRhZGRlZCB0eXBlY2hhbmdlZCB0eXBlY2hhbmdlZGFkZGVk
+IHVuY2hhbmdlZApkbwogIGVjaG8gJGkgPiAkaQogIGdpdCBhZGQgJGkKZG9uZQplY2hvIGln
+bm9yZWQgPiBpZ25vcmVkCmVjaG8gaWdub3JlZCA+PiAuZ2l0L2luZm8vZXhjbHVkZQpnaXQg
+Y29tbWl0IC1tICJmaWxlcyB0byBiZSBjaGFuZ2VkIgoKZWNobyBhZGRlZCA+IGFkZGVkCmdp
+dCBhZGQgYWRkZWQKCmNwIGNvcGllZCBjb3BpZWRvbmx5CmNwIGNvcGllZCBjb3BpZWRhZGRl
+ZApnaXQgYWRkIGNvcGllZGFkZGVkCgpnaXQgbXYgZ2l0bW92ZWQgZ2l0bW92ZWQyCm12IG1v
+dmVkIG1vdmVkMgoKZ2l0IHJtIGdpdHJlbW92ZWQKcm0gcmVtb3ZlZAoKZWNobyBtb2RpZmll
+ZCA+PiBtb2RpZmllZAplY2hvIG1vZGlmaWVkYWRkZWQgPj4gbW9kaWZpZWRhZGRlZApnaXQg
+YWRkIG1vZGlmaWVkYWRkZWQKCmNobW9kICt4IHR5cGVjaGFuZ2VkIHR5cGVjaGFuZ2VkYWRk
+ZWQKZ2l0IGFkZCB0eXBlY2hhbmdlZGFkZGVkCgplY2hvIHVudHJhY2tlZCA+IHVudHJhY2tl
+ZAoKZWNobyAiIyMjIGdpdCBzdGF0dXMgIyMjIgpnaXQgc3RhdHVzCmVjaG8gIiMjIyBnaXQg
+ZGlmZiAjIyMiCmdpdCBkaWZmIC0tbmFtZS1zdGF0dXMgLU0gLUMgLUMKZWNobyAiIyMjIGdp
+dCBkaWZmIEhFQUQgIyMjIgpnaXQgZGlmZiAtLW5hbWUtc3RhdHVzIC1NIC1DIC1DIEhFQUQK
+ZWNobyAiIyMjIGdpdCBkaWZmIC0tY2FjaGVkIEhFQUQgIyMjIgpnaXQgZGlmZiAtLW5hbWUt
+c3RhdHVzIC1NIC1DIC1DIC0tY2FjaGVkIEhFQUQKZWNobyAiIyMjIGdpdCBscy1maWxlcyIK
+Z2l0IGxzLWZpbGVzIC1kIC1tIC1vIC10Cg==
+--------------090503070509000300010107--
