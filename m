@@ -1,77 +1,103 @@
-From: "Jonathan del Strother" <maillist@steelskies.com>
+From: Junio C Hamano <gitster@pobox.com>
 Subject: Re: [PATCH] Teach git diff about Objective-C syntax
-Date: Wed, 17 Sep 2008 20:14:02 +0100
-Message-ID: <57518fd10809171214u3b5b3b96yc432c1c410faf8b4@mail.gmail.com>
+Date: Wed, 17 Sep 2008 13:44:02 -0700
+Message-ID: <7vljxq4i5p.fsf@gitster.siamese.dyndns.org>
 References: <57518fd10809170526i5c1e7dadgc38bb00e8073ba55@mail.gmail.com>
-	 <1221658141-75698-1-git-send-email-jon.delStrother@bestbefore.tv>
-	 <48D11C3C.5070707@op5.se>
-	 <57518fd10809170831x6d84aeb0m9b0b2c4095a1de70@mail.gmail.com>
-	 <20080917155505.GH4829@genesis.frugalware.org>
+ <1221658141-75698-1-git-send-email-jon.delStrother@bestbefore.tv>
+ <48D11C3C.5070707@op5.se>
+ <57518fd10809170831x6d84aeb0m9b0b2c4095a1de70@mail.gmail.com>
+ <20080917155505.GH4829@genesis.frugalware.org>
+ <57518fd10809171214u3b5b3b96yc432c1c410faf8b4@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: "Andreas Ericsson" <ae@op5.se>, git@vger.kernel.org,
+Content-Type: text/plain; charset=us-ascii
+Cc: "Miklos Vajna" <vmiklos@frugalware.org>,
+	"Andreas Ericsson" <ae@op5.se>, git@vger.kernel.org,
 	Johannes.Schindelin@gmx.de
-To: "Miklos Vajna" <vmiklos@frugalware.org>
-X-From: git-owner@vger.kernel.org Wed Sep 17 21:15:19 2008
+To: "Jonathan del Strother" <maillist@steelskies.com>
+X-From: git-owner@vger.kernel.org Wed Sep 17 22:50:14 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Kg2Ug-00069m-CJ
-	for gcvg-git-2@gmane.org; Wed, 17 Sep 2008 21:15:18 +0200
+	id 1Kg3yU-00023W-8z
+	for gcvg-git-2@gmane.org; Wed, 17 Sep 2008 22:50:10 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752513AbYIQTOI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 17 Sep 2008 15:14:08 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752411AbYIQTOH
-	(ORCPT <rfc822;git-outgoing>); Wed, 17 Sep 2008 15:14:07 -0400
-Received: from an-out-0708.google.com ([209.85.132.246]:52479 "EHLO
-	an-out-0708.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751823AbYIQTOE (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 17 Sep 2008 15:14:04 -0400
-Received: by an-out-0708.google.com with SMTP id d40so325391and.103
-        for <git@vger.kernel.org>; Wed, 17 Sep 2008 12:14:03 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:sender
-         :to:subject:cc:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:references
-         :x-google-sender-auth;
-        bh=Z8c/lY1FZC2FTKIstrsGmuFe9rph4CGWHbM7Y3qXpGY=;
-        b=a3dSWP3TD8VyzQ+m62c4ZvBez03xZOTd7DTqjStEBecWi1HdkT+CO5iFGTq1E2WV9u
-         VkqzfH2In9drzpyfB+3bcJF+aeAXbJuw9i+8ZlW7nXGu5YlkhXtttrhXuSLkOxc9db5H
-         hP1QEGGGDQ2vIBEw+u6CmctXw0SkWoOCPD87s=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:sender:to:subject:cc:in-reply-to:mime-version
-         :content-type:content-transfer-encoding:content-disposition
-         :references:x-google-sender-auth;
-        b=ECrP6PRcROEgPiN5V5ADk2FORzkbOYyIhQmpcIDcGuAO3F7NLuBfiLbvZ6awwM36f1
-         nGNrrSPNOFUnhS1iMHtMZOJNVhnG+GF5vru5uxehR1kig5NKrwR8sbB1nvxdY9BFOfh+
-         cYAJTdjzmZKVMcR1lXps1LPZOgpk4kvuFB3Mk=
-Received: by 10.142.147.20 with SMTP id u20mr1022266wfd.47.1221678842722;
-        Wed, 17 Sep 2008 12:14:02 -0700 (PDT)
-Received: by 10.143.6.3 with HTTP; Wed, 17 Sep 2008 12:14:02 -0700 (PDT)
-In-Reply-To: <20080917155505.GH4829@genesis.frugalware.org>
-Content-Disposition: inline
-X-Google-Sender-Auth: 389401ceea92f73d
+	id S1752489AbYIQUoP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 17 Sep 2008 16:44:15 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752352AbYIQUoP
+	(ORCPT <rfc822;git-outgoing>); Wed, 17 Sep 2008 16:44:15 -0400
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:42029 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751823AbYIQUoO (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 17 Sep 2008 16:44:14 -0400
+Received: from localhost.localdomain (localhost [127.0.0.1])
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id F350F62968;
+	Wed, 17 Sep 2008 16:44:12 -0400 (EDT)
+Received: from pobox.com (ip68-225-240-211.oc.oc.cox.net [68.225.240.211])
+ (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
+ certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
+ ESMTPSA id 0D39D62959; Wed, 17 Sep 2008 16:44:05 -0400 (EDT)
+In-Reply-To: <57518fd10809171214u3b5b3b96yc432c1c410faf8b4@mail.gmail.com>
+ (Jonathan del Strother's message of "Wed, 17 Sep 2008 20:14:02 +0100")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: 62C52EA6-84F9-11DD-A846-D0CFFE4BC1C1-77302942!a-sasl-fastnet.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/96134>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/96135>
 
-On Wed, Sep 17, 2008 at 4:55 PM, Miklos Vajna <vmiklos@frugalware.org> wrote:
-> On Wed, Sep 17, 2008 at 04:31:17PM +0100, Jonathan del Strother <maillist@steelskies.com> wrote:
->> I was changing it to match the style in the existing java pattern (and
->> my objc pattern).  You think the java one should be changed to match
->> the pascal one, then?
->
-> The point is that it's unrelated, so you should not change that part in
-> the same patch. Send a separate patch if you want to do something
-> unrelated to Objective-C.
+"Jonathan del Strother" <maillist@steelskies.com> writes:
 
-Johannes already convinced me to do it as a separate patch.  Andreas
-seems to think that even if that change were in a separate patch, it
-is pure nonsense.  I think it's pretty subjective - I was just making
-things consistent.
+> Johannes already convinced me to do it as a separate patch.  Andreas
+> seems to think that even if that change were in a separate patch, it
+> is pure nonsense.  I think it's pretty subjective - I was just making
+> things consistent.
+
+I think the discussion is getting into personal preference, but I do agree
+making things consistent is good.
+
+Short and simple ones can stay the same as before, but I'd actually prefer
+doing ones on multiple lines like this:
+
+	{ "java",
+	  /* Do not match these keywords */
+	  "!^[ \t]*\\(catch\\|do\\|for\\|if\\|instanceof\\|"
+		"new\\|return\\|switch\\|throw\\|while\\)\n"
+
+	  /* possibly indented "foo bar(..." */
+	  "^[ \t]*\\(\\([ \t]*[A-Za-z_][A-Za-z_0-9]*\\)\\{2,\\}[ \t]*([^;]*\\)$"
+	},
+
+	{ "objc",
+	  /* Do not match with these C statements */
+	  "!^[ \t]*\\(do\\|for\\|if\\|else\\|return\\|switch\\|while\\)\n"
+
+	  /* Objective-C methods "-(fo*&^)%*&%$^" or "+(bar&^)%$#$%" */
+	  "^[ \t]*\\([-+][ \t]*([ \t]*[A-Za-z_][A-Za-z_0-9]*.*).*\\)$"
+
+	  "\\|" /* C functions "foo bar(..." */
+	  "^[ \t]*\\(\\([ \t]*[A-Za-z_][A-Za-z_0-9]*\\)\\{2,\\}[ \t]*([^;]*\\)$"
+
+	  "\\|" /* Objective-C class/protocol definitions */
+	  "^@\\(implementation\\|interface\\|protocol\\).*"
+	},
+
+That is:
+
+ - The pattern string indented to align with the pattern name;
+ - Indent second and later lines of a single alternatives list that is
+   split over multiple physical lines;
+
+Are you sure the regexp you have for Objective-C methods quotes a dot "."
+correctly, by the way?  It appears to match almost anything enclosed in a
+pair of parentheses, as long as you have two alpha after open paren.
+
+Also I am not sure if you can do the pattern alternates the way you did.
+If you have this:
+
+	"...\\(A\\|B\\)$"
+        "\\|"
+        "...\\(C\\|D\\)$"
+
+A and B will be captured as $1 but wouldn't C or D captured as $2?
