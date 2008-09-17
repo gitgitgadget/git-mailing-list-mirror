@@ -1,65 +1,64 @@
-From: Michael Gebetsroither <gebi@sbox.tugraz.at>
-Subject: Re: Getting correct tree layout when importing svn repo into git
-Date: Wed, 17 Sep 2008 12:42:08 +0200
-Organization: www.grml.org
-Message-ID: <gaqmu0$4cf$1@ger.gmane.org>
-References: <cfd18e0f0809161505g4c04bd88vaf4fd7c40f67b243@mail.gmail.com> <37fcd2780809161620v38d9ade0sc1a2715f79501c6f@mail.gmail.com> <c49095e30809161640o21cb89b7x17a9ac1b5b18054f@mail.gmail.com> <20080917011816.GL28210@dpotapov.dyndns.org> <c49095e30809162216m5c7885dbibbb022e65f43231c@mail.gmail.com> <48D0AA1A.5060209@op5.se> <cfd18e0f0809170328pb039331m1c4dc42fd398a4d@mail.gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Sep 17 12:43:33 2008
+From: Jan Nieuwenhuizen <janneke-list@xs4all.nl>
+Subject: Re: [ANNOUNCE] TopGit v0.3
+Date: Wed, 17 Sep 2008 12:48:40 +0200
+Organization: lilypond-design.org
+Message-ID: <1221648520.30402.12.camel@heerbeest>
+References: <20080909231009.GD10544@machine.or.cz>
+	 <1221120192.8962.7.camel@heerbeest> <20080912110017.GW10360@machine.or.cz>
+	 <1221222433.29747.8.camel@heerbeest> <20080912131530.GZ10360@machine.or.cz>
+	 <20080912181442.GA5407@lapse.rw.madduck.net>
+Mime-Version: 1.0
+Content-Type: text/plain
+Content-Transfer-Encoding: 7bit
+Cc: Petr Baudis <pasky@suse.cz>, git@vger.kernel.org
+To: martin f krafft <madduck@madduck.net>
+X-From: git-owner@vger.kernel.org Wed Sep 17 12:49:53 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KfuVP-0005Ad-G9
-	for gcvg-git-2@gmane.org; Wed, 17 Sep 2008 12:43:31 +0200
+	id 1KfubY-0006gm-73
+	for gcvg-git-2@gmane.org; Wed, 17 Sep 2008 12:49:52 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752334AbYIQKmW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 17 Sep 2008 06:42:22 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752319AbYIQKmW
-	(ORCPT <rfc822;git-outgoing>); Wed, 17 Sep 2008 06:42:22 -0400
-Received: from main.gmane.org ([80.91.229.2]:41514 "EHLO ciao.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752266AbYIQKmW (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 17 Sep 2008 06:42:22 -0400
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1KfuUD-0008BG-Bu
-	for git@vger.kernel.org; Wed, 17 Sep 2008 10:42:17 +0000
-Received: from 84-119-24-190.dynamic.xdsl-line.inode.at ([84.119.24.190])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Wed, 17 Sep 2008 10:42:17 +0000
-Received: from gebi by 84-119-24-190.dynamic.xdsl-line.inode.at with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Wed, 17 Sep 2008 10:42:17 +0000
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@ger.gmane.org
-X-Gmane-NNTP-Posting-Host: 84-119-24-190.dynamic.xdsl-line.inode.at
-User-Agent: slrn/0.9.8.1pl1 (Debian)
+	id S1752416AbYIQKso (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 17 Sep 2008 06:48:44 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752361AbYIQKso
+	(ORCPT <rfc822;git-outgoing>); Wed, 17 Sep 2008 06:48:44 -0400
+Received: from edu-smtp-01.edutel.nl ([88.159.1.221]:46172 "EHLO
+	edu-smtp-01.edutel.nl" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752254AbYIQKsn (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 17 Sep 2008 06:48:43 -0400
+Received: from heerbeest (unknown [88.159.206.46])
+	by edu-smtp-01.edutel.nl (Postfix) with ESMTP id 00D166776B;
+	Wed, 17 Sep 2008 12:48:41 +0200 (CEST)
+Received: from [127.0.0.1] (localhost [127.0.0.1])
+	by heerbeest (Postfix) with ESMTP id 7A561DC07B;
+	Wed, 17 Sep 2008 12:48:41 +0200 (CEST)
+In-Reply-To: <20080912181442.GA5407@lapse.rw.madduck.net>
+X-Mailer: Evolution 2.23.91 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/96085>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/96086>
 
-* Michael Kerrisk <mtk.manpages@googlemail.com> wrote:
+On vr, 2008-09-12 at 19:14 +0100, martin f krafft wrote:
 
-> But, is it going to make this much difference to the run time?  By
-> now, the import using
->
-> $ git svn init file:///home/mtk/man-pages-rep/ -t tags -T
-> trunk/man-pages -b branches
->
-> has been running for over 2 days (and I still don't know if it will
-> give the layout I want), and seems to be slowing down exponentially as
-> it gets further along in the import process, so at this rate it looks
-> like it would take several more days to complete, whereas
+> I've considered this question a lot before and could not come up
+> with anything; you cannot undo a merge.
 
-git-svn conversions are _much_ faster here if done on tmpfs with
-occasional git gc runs (in parallel).
+Isn't that overly pessimistic?  Can't we have git create a merge
+commit that can be reverted with git revert?
 
-May be the fault of the xfs.
+For our ooo-build use case, I'm hoping to use [top]git as "a better 
+patch" and hope to have mostly orthogonal topic branches.  With patch,
+to "undo a merge" usually means patch -R and remove the patch from
+the dependency list.  I can hardly imagine something easily possible
+with patch is still impossible with git.
 
-cu,
-michael
+Greetings,
+Jan.
+
 -- 
-It's already too late!
+Jan Nieuwenhuizen <janneke@gnu.org> | GNU LilyPond - The music typesetter
+http://www.xs4all.nl/~jantien       | http://www.lilypond.org
