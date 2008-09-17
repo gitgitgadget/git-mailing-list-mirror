@@ -1,76 +1,84 @@
-From: =?iso-8859-1?Q?Bj=F6rn?= Steinbrink <B.Steinbrink@gmx.de>
-Subject: Re: git-svn checksum mismatch importing large file
-Date: Wed, 17 Sep 2008 12:07:59 +0200
-Message-ID: <20080917100759.GA11718@atjola.homenet>
-References: <48D0B77E.7010308@obry.net> <20080917082506.GA8849@atjola.homenet> <48D0D03B.4040108@obry.net>
+From: Petr Baudis <pasky@suse.cz>
+Subject: Re: [ANNOUNCE] TopGit v0.3
+Date: Wed, 17 Sep 2008 12:11:11 +0200
+Message-ID: <20080917101111.GR10360@machine.or.cz>
+References: <20080909231009.GD10544@machine.or.cz> <20080915080131.GA30396@noris.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git list <git@vger.kernel.org>, Eric Wong <normalperson@yhbt.net>,
-	Avery Pennarun <apenwarr@gmail.com>
-To: Pascal Obry <pascal@obry.net>
-X-From: git-owner@vger.kernel.org Wed Sep 17 12:09:17 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Michael Radziej <mir@noris.de>
+X-From: git-owner@vger.kernel.org Wed Sep 17 12:12:30 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KftyG-0005TB-2n
-	for gcvg-git-2@gmane.org; Wed, 17 Sep 2008 12:09:16 +0200
+	id 1Kfu1J-0006IC-8B
+	for gcvg-git-2@gmane.org; Wed, 17 Sep 2008 12:12:25 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751979AbYIQKIH convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 17 Sep 2008 06:08:07 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751671AbYIQKIG
-	(ORCPT <rfc822;git-outgoing>); Wed, 17 Sep 2008 06:08:06 -0400
-Received: from mail.gmx.net ([213.165.64.20]:41935 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751463AbYIQKIF (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 17 Sep 2008 06:08:05 -0400
-Received: (qmail invoked by alias); 17 Sep 2008 10:08:01 -0000
-Received: from i577B97D3.versanet.de (EHLO atjola.local) [87.123.151.211]
-  by mail.gmx.net (mp047) with SMTP; 17 Sep 2008 12:08:01 +0200
-X-Authenticated: #5039886
-X-Provags-ID: V01U2FsdGVkX18N8E1jlOcN/DrIAzSeJa7vEcilfjC/FD5RGfWLkT
-	1bq4I4OsfdsUJv
+	id S1751698AbYIQKLR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 17 Sep 2008 06:11:17 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751801AbYIQKLR
+	(ORCPT <rfc822;git-outgoing>); Wed, 17 Sep 2008 06:11:17 -0400
+Received: from w241.dkm.cz ([62.24.88.241]:48373 "EHLO machine.or.cz"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751610AbYIQKLR (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 17 Sep 2008 06:11:17 -0400
+Received: by machine.or.cz (Postfix, from userid 2001)
+	id BB921393A811; Wed, 17 Sep 2008 12:11:11 +0200 (CEST)
 Content-Disposition: inline
-In-Reply-To: <48D0D03B.4040108@obry.net>
-User-Agent: Mutt/1.5.18 (2008-05-17)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.6
+In-Reply-To: <20080915080131.GA30396@noris.de>
+User-Agent: Mutt/1.5.16 (2007-06-09)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/96081>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/96082>
 
-On 2008.09.17 11:39:07 +0200, Pascal Obry wrote:
-> > Your /tmp is probably to small to hold the temporary file that git-=
-svn
-> > creates. At least it doesn't fail for me unless I fill my /tmp firs=
-t.
->=20
-> Hum probably, I did not thought about this given the error message!
+  Hi,
 
-Yeah, I only came up with the idea because of the previous breakage,
-otherwise I'd not have guessed that either :-)
+On Mon, Sep 15, 2008 at 10:01:31AM +0200, Michael Radziej wrote:
+> I wonder about the .topmsg and .topdeps files. Why is this information
+> within the topic branch? It tends to get into the way even though a special
+> merge driver is provided. For example, you cannot do octopus merges (which I
+> found very confusing as first-time user).
 
-> > This should be fixed since 29c70e0b3e3183f86f93500882177d0c74069988=
-, at
-> > least it got me a useful error message when I tested it back then.
-> > Avery, any ideas?
->=20
-> I'm using Git on master. This commit is there, the error message is n=
-ot
-> that useful on my side :)
+  what do octopus merge have to do with that? If these files prevent
+octopus merges somehow, I think that'd be a Git bug. (TopGit making
+octopus merges whenever possible is deep on my mental TODO list.)
 
-Yeah, I tested with yesterday's master as well, thus I was asking Avery
-if he has any clue of what's going on. Should probably have mentioned
-that...
+> And it might also confuse people
+> cloning a TopGit repository and want to use a topgit branch. They might not
+> be aware of these special TopGit things.
 
-> Anyway, what's the best option? Is there a way to specify another tmp
-> directory to use with git-svn?
+  They need to be properly educated by whoever gives them the clone URL.
+Using TopGit branches outside of TopGit is still dangerous - they have
+*unholy* history and they are not really suitable for non-TopGit merging
+etc. If TopGit users want non-TopGit users to use their work, they
+should tg export.
 
-Looks like the code honors the TMPDIR environment variable, but I didn'=
-t
-actually try that.
+> I'd rather have a dedicated branched named e.g. 'TopGit' which includes the                                                           
+> information that is currently in .topmsg and .topdeps, but for all branches
+> in a repository.
 
-Bj=F6rn
+  This was indeed a difficult design decision, perhaps the most major
+one I had to make. Both approaches have their pros and cons, and in the
+end I chose the .top* files mainly to keep the changes atomicity - if
+you revert your branch to older version, your .topmsg and .topdeps are
+rewound appropriately as well, and if you change something in your
+branch that affects your topmessage, these changes are connected
+appropriately. Also, you do not need to use special tools to edit your
+top message and merges are much simpler than if you had to merge two
+people's work on a single branch (besides, the merge semantics of the
+TopGit branch would be really, really nasty, perhaps downright
+impossible to specify properly).
+
+  Hmm, well, oops. Merging of two people's work on a single branch is
+broken right now anyway, because we unconditionally use our 'ours' merge
+driver in these cases. I wonder how to fix this best... swapping two
+gitattributes files in .git/info/attributes during tg update seems like
+the only solution to me.
+
+-- 
+				Petr "Pasky" Baudis
+The next generation of interesting software will be done
+on the Macintosh, not the IBM PC.  -- Bill Gates
