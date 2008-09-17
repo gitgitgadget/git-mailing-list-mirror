@@ -1,98 +1,66 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: [IRC/patches] Failed octopus merge does not clean up
-Date: Wed, 17 Sep 2008 10:11:02 +0200
-Message-ID: <200809171011.06714.jnareb@gmail.com>
-References: <200809160048.31443.trast@student.ethz.ch> <200809170053.15341.jnareb@gmail.com> <48D0A776.1000009@op5.se>
+From: =?iso-8859-1?Q?Bj=F6rn?= Steinbrink <B.Steinbrink@gmx.de>
+Subject: Re: git-svn checksum mismatch importing large file
+Date: Wed, 17 Sep 2008 10:25:06 +0200
+Message-ID: <20080917082506.GA8849@atjola.homenet>
+References: <48D0B77E.7010308@obry.net>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="utf-8"
-Content-Transfer-Encoding: 8BIT
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Thomas Rast <trast@student.ethz.ch>, git@vger.kernel.org,
-	Miklos Vajna <vmiklos@frugalware.org>
-To: Andreas Ericsson <ae@op5.se>
-X-From: git-owner@vger.kernel.org Wed Sep 17 10:12:31 2008
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git list <git@vger.kernel.org>, Eric Wong <normalperson@yhbt.net>,
+	Avery Pennarun <apenwarr@gmail.com>
+To: Pascal Obry <pascal@obry.net>
+X-From: git-owner@vger.kernel.org Wed Sep 17 10:26:27 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Kfs9C-0000D4-OO
-	for gcvg-git-2@gmane.org; Wed, 17 Sep 2008 10:12:27 +0200
+	id 1KfsMh-0003Tc-Rq
+	for gcvg-git-2@gmane.org; Wed, 17 Sep 2008 10:26:24 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751397AbYIQILS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 17 Sep 2008 04:11:18 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751296AbYIQILS
-	(ORCPT <rfc822;git-outgoing>); Wed, 17 Sep 2008 04:11:18 -0400
-Received: from nf-out-0910.google.com ([64.233.182.185]:51016 "EHLO
-	nf-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751244AbYIQILQ convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 17 Sep 2008 04:11:16 -0400
-Received: by nf-out-0910.google.com with SMTP id d3so1712036nfc.21
-        for <git@vger.kernel.org>; Wed, 17 Sep 2008 01:11:14 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:subject:date
-         :user-agent:cc:references:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:message-id;
-        bh=QmdEwPVvXwQBF5a6qx35P0m1q5CVo0jJFshi00PFeAc=;
-        b=K55rqEDK2p3wWXrXT3qsyjrnWzLVdEjxpusb2rYJS0tjP83F0Y7U3kk2EuvCUy6Hp3
-         xqOsO+SxMH0W3DqLYwPtRK3HKONy4ZEFmbCG+zHQilnovpBt8fandGjHrhmTeRn6oxGu
-         6b9DHUc4aRQpKHte9tIIFV8kmBtQFOdvhuSdM=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=from:to:subject:date:user-agent:cc:references:in-reply-to
-         :mime-version:content-type:content-transfer-encoding
-         :content-disposition:message-id;
-        b=k0eyN386r05uIXVKVjHtHPzxdLAyTle5zXTn4IKznNjbbNYau9I+tYEBWSUwuspSx5
-         2mURMqvPe8hoZ5shRiVXma4tecZaD4bj4XPEJU6S7Z6/Hv9c0D33rc6rEGLhRyaKC5Z3
-         oKUJpfMpUdzSsx7R+JrDD8O80dXj93JSA56yE=
-Received: by 10.86.58.3 with SMTP id g3mr1648252fga.58.1221639074367;
-        Wed, 17 Sep 2008 01:11:14 -0700 (PDT)
-Received: from ?192.168.1.11? ( [83.8.250.173])
-        by mx.google.com with ESMTPS id l19sm17856537fgb.7.2008.09.17.01.11.11
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Wed, 17 Sep 2008 01:11:13 -0700 (PDT)
-User-Agent: KMail/1.9.3
-In-Reply-To: <48D0A776.1000009@op5.se>
+	id S1751509AbYIQIZM convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 17 Sep 2008 04:25:12 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751292AbYIQIZM
+	(ORCPT <rfc822;git-outgoing>); Wed, 17 Sep 2008 04:25:12 -0400
+Received: from mail.gmx.net ([213.165.64.20]:56507 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1751144AbYIQIZL (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 17 Sep 2008 04:25:11 -0400
+Received: (qmail invoked by alias); 17 Sep 2008 08:25:08 -0000
+Received: from i577B97D3.versanet.de (EHLO atjola.local) [87.123.151.211]
+  by mail.gmx.net (mp054) with SMTP; 17 Sep 2008 10:25:08 +0200
+X-Authenticated: #5039886
+X-Provags-ID: V01U2FsdGVkX18eXCI2E48epGknU1QNDY2Wx3EpBKWHxiW8QwGlU4
+	A4O1j/TV/AAd63
 Content-Disposition: inline
+In-Reply-To: <48D0B77E.7010308@obry.net>
+User-Agent: Mutt/1.5.18 (2008-05-17)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.65
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/96073>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/96074>
 
-Andreas Ericsson wrote:
-> Jakub Narebski wrote:
-> > Junio C Hamano wrote:
+On 2008.09.17 09:53:34 +0200, Pascal Obry wrote:
+> I get this error:
+>=20
+> Checksum mismatch: trunk/data
+> expected: 7c59e4dd67b5a9fde6c61cada070537b
+>     got: 3fcd9d077a5aa51a784a452c9d78d6e0
+>=20
+> To reproduce launch run.sh in attached archive.
+>=20
+> I have had this problem since some time now and I finally got some ti=
+me
+> to create a reproducer. I have reproduced this problem with yesterday
+> master Git version.
 
->>>  (1) while it merges other heads one-by-one, it gets conflicts on an
->>>      earlier one, before it even attempts to merge all of them.  Recording
->>>      the heads that it so far attempted to merge in MERGE_HEAD is wrong
->>>      (the result won't be an Octopus the end user wanted to carete), and
->>>      recording all the heads the user gave in MERGE_HEAD is even more
->>>      wrong (it hasn't even looked at the later heads yet, so there is no
->>>      way for the index or work tree to contain anything from them).
->>>
->>>      The above is hitting this case.
-[...] 
- 
->> BTW. does it mean that "git merge a b" might be not the same as
->> "git merge b a"?
->> 
-> 
-> No. Git merges all the sub-things together and then merges the result
-> of that jumble into the branch you're on.
-> 
-> Someone might have to correct me on that, but that's as far as I've
-> understood it.
+Your /tmp is probably to small to hold the temporary file that git-svn
+creates. At least it doesn't fail for me unless I fill my /tmp first.
 
->From what I understand from above explanation, and from thread on git
-mailing list about better implementation of and documenting finding
-merge bases for multiple heads, I think octopus merge is done by merging
-[reduced] heads one by one into given branch.
+This should be fixed since 29c70e0b3e3183f86f93500882177d0c74069988, at
+least it got me a useful error message when I tested it back then.
+Avery, any ideas?
 
-This means that "git merge a b" does internally "git merge a; git merge b"
-as I understand it.
--- 
-Jakub Narebski
-Poland
+Bj=F6rn
