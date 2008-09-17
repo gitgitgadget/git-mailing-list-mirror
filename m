@@ -1,68 +1,72 @@
-From: "Paolo Ciarrocchi" <paolo.ciarrocchi@gmail.com>
-Subject: GIT presentation
-Date: Wed, 17 Sep 2008 11:08:40 +0200
-Message-ID: <4d8e3fd30809170208t3730cde1t4cbcdb1e609d6be6@mail.gmail.com>
+From: Johan Herland <johan@herland.net>
+Subject: Re: GIT presentation
+Date: Wed, 17 Sep 2008 11:32:07 +0200
+Message-ID: <200809171132.07492.johan@herland.net>
+References: <4d8e3fd30809170208t3730cde1t4cbcdb1e609d6be6@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain;
+  charset="iso-8859-1"
 Content-Transfer-Encoding: 7bit
-To: "Git Mailing List" <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Wed Sep 17 11:09:59 2008
+Cc: git@vger.kernel.org
+To: "Paolo Ciarrocchi" <paolo.ciarrocchi@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Sep 17 11:33:33 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Kft2m-0006m5-VE
-	for gcvg-git-2@gmane.org; Wed, 17 Sep 2008 11:09:53 +0200
+	id 1KftPc-0004Ej-Oe
+	for gcvg-git-2@gmane.org; Wed, 17 Sep 2008 11:33:29 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752362AbYIQJIn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 17 Sep 2008 05:08:43 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752248AbYIQJIn
-	(ORCPT <rfc822;git-outgoing>); Wed, 17 Sep 2008 05:08:43 -0400
-Received: from wf-out-1314.google.com ([209.85.200.172]:31473 "EHLO
-	wf-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752172AbYIQJIm (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 17 Sep 2008 05:08:42 -0400
-Received: by wf-out-1314.google.com with SMTP id 27so2941047wfd.4
-        for <git@vger.kernel.org>; Wed, 17 Sep 2008 02:08:40 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to
-         :subject:mime-version:content-type:content-transfer-encoding
-         :content-disposition;
-        bh=jToNh4RbhVpOU+TPZbr5dV6FXjAYukJyM5B5mUSMc9s=;
-        b=ngwSmahOh3X5m9Y5oweqVPYepboCh4Yegs/HyqJb+dsnuESdqGrJ0VeQ90PKm8pcvo
-         2ffhBe3bcl72tkIvErWe8HGYhPqKpPiZIDRybznuxzo8hxfxXk7PKyfBebMKC4VweI1T
-         VF8W85aOazaKJqWdAYGPmHJnxxKUD4AoSHgPI=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:mime-version:content-type
-         :content-transfer-encoding:content-disposition;
-        b=dXb3hZl2uLYRbo+C22TVpAzOT+dwI3vjGBK4rzUbEVpPyjSR7gOBpViSOhB73nnni/
-         eLD+1djDoJz8YvARCoS/A2IcEyn4/Ppjs9yjMI3LqXwpNap2of4/JcDgRsM3D9bWky5n
-         WGS4HXdHxtcW0JKrYN//xuczJUOoKmBxGC+sY=
-Received: by 10.142.212.19 with SMTP id k19mr764594wfg.142.1221642520753;
-        Wed, 17 Sep 2008 02:08:40 -0700 (PDT)
-Received: by 10.142.177.15 with HTTP; Wed, 17 Sep 2008 02:08:40 -0700 (PDT)
+	id S1754422AbYIQJcV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 17 Sep 2008 05:32:21 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754419AbYIQJcV
+	(ORCPT <rfc822;git-outgoing>); Wed, 17 Sep 2008 05:32:21 -0400
+Received: from sam.opera.com ([213.236.208.81]:55109 "EHLO smtp.opera.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754316AbYIQJcS (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 17 Sep 2008 05:32:18 -0400
+Received: from pc107.coreteam.oslo.opera.com (pat-tdc.opera.com [213.236.208.22])
+	by smtp.opera.com (8.13.4/8.13.4/Debian-3sarge3) with ESMTP id m8H9W71Y011040
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
+	Wed, 17 Sep 2008 09:32:12 GMT
+User-Agent: KMail/1.9.9
+In-Reply-To: <4d8e3fd30809170208t3730cde1t4cbcdb1e609d6be6@mail.gmail.com>
 Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/96078>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/96079>
 
-Hi all,
-some friend part of a LUG asked me to do a quick
-presentation/introduction to GIT
-to a group of people  probably completely unaware of it.
+On Wednesday 17 September 2008, Paolo Ciarrocchi wrote:
+> Hi all,
+> some friend part of a LUG asked me to do a quick
+> presentation/introduction to GIT
+> to a group of people  probably completely unaware of it.
+>
+> Is there any available presentation that I can as a base for my
+> presentation?
 
-Is there any available presentation that I can as a base for my presentation?
+There are several:
 
-I'm of course, more then willing to publish the work a let everybody
-to use/modify it.
+Bart Trojanowski: Ottawa Group of Ruby Enthusiasts:
+http://excess.org/article/2008/07/ogre-git-tutorial/
 
-Thanks.
+Scott Chacon: RailsConf 2008 Git Tech Talk:
+http://www.gitcasts.com/git-talk
 
-Ciao,
+Randal Schwartz, Google Tech Talk:
+http://video.google.com/videoplay?docid=-3999952944619245780
+(can't seem to find the slides from this one...)
+
+There's also lots of resources on the Git Wiki: 
+http://git.or.cz/gitwiki/GitDocumentation
+
+
+Have fun!
+
+...Johan
+
 -- 
-Paolo
-http://paolo.ciarrocchi.googlepages.com/
+Johan Herland, <johan@herland.net>
+www.herland.net
