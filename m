@@ -1,75 +1,50 @@
-From: "Nguyen Thai Ngoc Duy" <pclouds@gmail.com>
-Subject: Re: [PATCH 15/16] checkout: add new options to support narrow checkout
-Date: Wed, 17 Sep 2008 23:43:06 +0700
-Message-ID: <fcaeb9bf0809170943k43e5b4adre80856d2b78cac99@mail.gmail.com>
-References: <48cdde2837b2d_12d73fc6eb2c355c27876@app02.zenbe.com.tmail>
-	 <200809152205.15388.jnareb@gmail.com>
-	 <fcaeb9bf0809160521o24fd26e4l40f1798228d51712@mail.gmail.com>
-	 <200809171107.35826.jnareb@gmail.com>
-	 <fcaeb9bf0809170649w418f4af5x3055c04994c694dc@mail.gmail.com>
-	 <48D13128.3000509@viscovery.net>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: combined diff, but not condensed, howto?
+Date: Wed, 17 Sep 2008 09:58:30 -0700
+Message-ID: <7vwsha6761.fsf@gitster.siamese.dyndns.org>
+References: <48D0B907.7040903@viscovery.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: "Jakub Narebski" <jnareb@gmail.com>, git@vger.kernel.org
-To: "Johannes Sixt" <j.sixt@viscovery.net>
-X-From: git-owner@vger.kernel.org Wed Sep 17 18:44:46 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Johannes Sixt <j.sixt@viscovery.net>
+X-From: git-owner@vger.kernel.org Wed Sep 17 19:00:01 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Kg08b-0005MX-BB
-	for gcvg-git-2@gmane.org; Wed, 17 Sep 2008 18:44:21 +0200
+	id 1Kg0Nc-0002Ik-KN
+	for gcvg-git-2@gmane.org; Wed, 17 Sep 2008 18:59:53 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753990AbYIQQnL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 17 Sep 2008 12:43:11 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753620AbYIQQnK
-	(ORCPT <rfc822;git-outgoing>); Wed, 17 Sep 2008 12:43:10 -0400
-Received: from ey-out-2122.google.com ([74.125.78.24]:58002 "EHLO
-	ey-out-2122.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753793AbYIQQnJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 17 Sep 2008 12:43:09 -0400
-Received: by ey-out-2122.google.com with SMTP id 6so1464291eyi.37
-        for <git@vger.kernel.org>; Wed, 17 Sep 2008 09:43:07 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to
-         :subject:cc:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:references;
-        bh=kFYbKPMrhZdVWbawXKUXxFSwpDS6wacYGFwfaq93hT0=;
-        b=DT2tcBMgi65dYlJN07QmOdP8/Ar+vL6AHXrE5MOsNgfBty8657zCY92rVL/RcWc50K
-         CB7+80M5QzI85Jxmpr7NqtxvUTWARp1HLVPb7UZmmhrRwETNdg2CY42Ib/qNNqlz0qqH
-         zJpBjl8yVJRO8XeBKJY6fjb87Ih6FdIGKJXok=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
-         :content-type:content-transfer-encoding:content-disposition
-         :references;
-        b=lixACq+bYwwkzSHXNZ1sI4AhgTAZ+fmhGCCkklR5mdZDhotbyj3h0KjJfM78TN61EV
-         68UfLn//sPRbXmmKIGM5l0ez2qL70B4LKlTba24RTdMeulAALDbSEpAXE10PRya1BvE4
-         qUIWHMwuc8tBGQeShJjTnZ47T591zYb66hv2g=
-Received: by 10.86.29.8 with SMTP id c8mr1204037fgc.23.1221669786838;
-        Wed, 17 Sep 2008 09:43:06 -0700 (PDT)
-Received: by 10.86.59.5 with HTTP; Wed, 17 Sep 2008 09:43:06 -0700 (PDT)
-In-Reply-To: <48D13128.3000509@viscovery.net>
-Content-Disposition: inline
+	id S1757387AbYIQQ6j (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 17 Sep 2008 12:58:39 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755918AbYIQQ6j
+	(ORCPT <rfc822;git-outgoing>); Wed, 17 Sep 2008 12:58:39 -0400
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:60363 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756288AbYIQQ6i (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 17 Sep 2008 12:58:38 -0400
+Received: from localhost.localdomain (localhost [127.0.0.1])
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 06F23627ED;
+	Wed, 17 Sep 2008 12:58:35 -0400 (EDT)
+Received: from pobox.com (ip68-225-240-211.oc.oc.cox.net [68.225.240.211])
+ (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
+ certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
+ ESMTPSA id 7F17E627E8; Wed, 17 Sep 2008 12:58:32 -0400 (EDT)
+In-Reply-To: <48D0B907.7040903@viscovery.net> (Johannes Sixt's message of
+ "Wed, 17 Sep 2008 10:00:07 +0200")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: DD83EEEA-84D9-11DD-A6E8-D0CFFE4BC1C1-77302942!a-sasl-fastnet.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/96128>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/96129>
 
-On 9/17/08, Johannes Sixt <j.sixt@viscovery.net> wrote:
-> The still un-answered question was: In a full checkout, i.e. in a
->  repository where the narrow/sparse checkout feature has never been used so
->  far, is
->
->    $ git checkout --add-path=foo
->
->  a no-op, or is it equivalent to
->
->    $ git checkout --path=foo
+Johannes Sixt <j.sixt@viscovery.net> writes:
 
-no-op.
--- 
-Duy
+> After a merge conflict, 'git diff' shows a combined diff, which presents
+> only the parts that conflicted or where there are near-by changes from
+> different parents (potential conflicts). Is there a command line switch so
+> that *all* changes are shown, even non-conflicting ones?
+
+Like "git diff HEAD"?
