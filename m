@@ -1,229 +1,102 @@
-From: Michael J Gruber <git@drmicha.warpmail.net>
-Subject: Re: Getting correct tree layout when importing svn repo into git
-Date: Wed, 17 Sep 2008 15:04:28 +0200
-Message-ID: <48D1005C.2090401@drmicha.warpmail.net>
-References: <cfd18e0f0809161505g4c04bd88vaf4fd7c40f67b243@mail.gmail.com>	 <48D0BEF1.10008@drmicha.warpmail.net>	 <cfd18e0f0809170338v168c2991ma3964392e44e0194@mail.gmail.com>	 <48D0E6A3.4040703@drmicha.warpmail.net> <cfd18e0f0809170600r79d883d3t96abb49e827d3178@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, michael.kerrisk@gmail.com,
-	=?ISO-8859-1?Q?Bj=F6r?= =?ISO-8859-1?Q?n_Steinbrink?= 
-	<B.Steinbrink@gmx.de>
-To: mtk.manpages@gmail.com
-X-From: git-owner@vger.kernel.org Wed Sep 17 15:24:22 2008
+From: Jonathan del Strother <jon.delStrother@bestbefore.tv>
+Subject: [PATCH] Teach git diff about Objective-C syntax
+Date: Wed, 17 Sep 2008 14:29:01 +0100
+Message-ID: <1221658141-75698-1-git-send-email-jon.delStrother@bestbefore.tv>
+References: <57518fd10809170526i5c1e7dadgc38bb00e8073ba55@mail.gmail.com>
+Cc: vmiklos@frugalware.org, Johannes.Schindelin@gmx.de,
+	Jonathan del Strother <jon.delStrother@bestbefore.tv>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Sep 17 15:31:09 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Kfx0I-00087a-Jq
-	for gcvg-git-2@gmane.org; Wed, 17 Sep 2008 15:23:35 +0200
+	id 1Kfx7a-0002GK-Ma
+	for gcvg-git-2@gmane.org; Wed, 17 Sep 2008 15:31:07 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752411AbYIQNWW convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 17 Sep 2008 09:22:22 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752423AbYIQNWW
-	(ORCPT <rfc822;git-outgoing>); Wed, 17 Sep 2008 09:22:22 -0400
-Received: from poseidon.rz.tu-clausthal.de ([139.174.2.21]:53670 "EHLO
-	poseidon.rz.tu-clausthal.de" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1752217AbYIQNWV (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 17 Sep 2008 09:22:21 -0400
-X-Greylist: delayed 1066 seconds by postgrey-1.27 at vger.kernel.org; Wed, 17 Sep 2008 09:22:21 EDT
-Received: from poseidon.rz.tu-clausthal.de (localhost [127.0.0.1])
-	by localhost (Postfix) with SMTP id CCC90212193;
-	Wed, 17 Sep 2008 15:04:32 +0200 (CEST)
-Received: from tu-clausthal.de (poseidon [139.174.2.21])
-	by poseidon.rz.tu-clausthal.de (Postfix) with ESMTP id 85FAF21218D;
-	Wed, 17 Sep 2008 15:04:32 +0200 (CEST)
-Received: from [139.174.44.12] (account mjg [139.174.44.12] verified)
-  by tu-clausthal.de (CommuniGate Pro SMTP 5.2.8)
-  with ESMTPSA id 37254747; Wed, 17 Sep 2008 15:04:32 +0200
-User-Agent: Thunderbird 2.0.0.16 (X11/20080707)
-In-Reply-To: <cfd18e0f0809170600r79d883d3t96abb49e827d3178@mail.gmail.com>
-X-Enigmail-Version: 0.95.7
-X-Virus-Scanned: by PureMessage V5.4 at tu-clausthal.de
+	id S1752769AbYIQN3f (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 17 Sep 2008 09:29:35 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752987AbYIQN3f
+	(ORCPT <rfc822;git-outgoing>); Wed, 17 Sep 2008 09:29:35 -0400
+Received: from cumberland.bestbefore.tv ([82.165.41.205]:50913 "EHLO
+	cumberland.bestbefore.tv" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753256AbYIQN3e (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 17 Sep 2008 09:29:34 -0400
+Received: (qmail 24384 invoked from network); 17 Sep 2008 14:29:32 +0100
+Received: from gir.mp.bestbefore.tv (HELO localhost.localdomain) (89.105.122.147)
+  by cumberland.bestbefore.tv with SMTP; 17 Sep 2008 14:29:32 +0100
+X-Mailer: git-send-email 1.6.0.2.250.ge7a3b.dirty
+In-Reply-To: <57518fd10809170526i5c1e7dadgc38bb00e8073ba55@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/96109>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/96110>
 
-Michael Kerrisk venit, vidit, dixit 17.09.2008 15:00:
-> Michael,
->=20
-> On Wed, Sep 17, 2008 at 4:14 AM, Michael J Gruber
-> <git@drmicha.warpmail.net> wrote:
->> Michael Kerrisk venit, vidit, dixit 17.09.2008 12:38:
->>> Hello Michael,
->>>
->>> On Wed, Sep 17, 2008 at 1:25 AM, Michael J Gruber
->>> <git@drmicha.warpmail.net> wrote:
->>>> Michael Kerrisk venit, vidit, dixit 17.09.2008 00:05:
->>>>> Hello,
->>>>>
->>>>> I'm currently trying to import an svn repository, along with its =
-tags,
->>>>> into git, and everything seems okay except that after the import =
-I
->>>>> expect to have the following structure to my checked out reposito=
-ry:
->>>>>
->>>>>     [root-dir]
->>>>>         .git
->>>>>         <checked-out-files>
->>>>>
->>>>> But instead I end up with
->>>>>
->>>>>     [root-dir]
->>>>>         .git
->>>>>         man-pages               <-- name of my svn project
->>>>>             <checked-out-files>
->>>>>
->>>>> I've tried out a few different command-line flag settings but so =
-far I
->>>>> haven't managed to get the desired layout.  I guess that I'm miss=
-ing
->>>>> something trivial, but I haven't worked out what it is so far.
->>>>>
->>>>> The commands I'm using to do the import are:
->>>>>
->>>>> $ git svn init file:///home/mtk/man-pages-rep/ -t tags -T trunk -=
-b branches
->>>>> $ git svn fetch
->>>>>
->>>>> The svn tags are getting imported okay, since:
->>>>>
->>>>> git branch -a | head
->>>>>   tags/man-pages-2.00
->>>>>   tags/man-pages-2.01
->>>>>   ...
->>>>>   tags/man-pages-3.08
->>>>>   tags/man-pages-3.09
->>>>>   trunk
->>>>>
->>>>> The following commands show the layout of my svn repo, which is p=
-retty
->>>>> much standard:
->>>>>
->>>>> $ svn list file:///home/mtk/man-pages-rep
->>>>> branches/
->>>>> tags/
->>>>> trunk/
->>>>> $ svn list file:///home/mtk/man-pages-rep/trunk
->>>>> man-pages/
->>>> That's the part that says that your layout is non-standard. What d=
-o your
->>>>  branches and tags look like? Do they have that superfluous "man-p=
-ages"
->>>> part as well?
->>> $ svn list file:///home/mtk/man-pages-rep/tags
->>> man-pages-2.00
->>> man-pages-2.01
->>> man-pages-2.02
->>> man-pages-2.03
->>> ...
->>> $ svn list file:///home/mtk/man-pages-rep/tags/man-pages-2.00
->>> man-pages
->>> $ svn list file:///home/mtk/man-pages-rep/tags/man-pages-2.01
->>> man-pages
->>> [and so on]
->> Bingo!
->>
->>> $ svn list file:///home/mtk/man-pages-rep/branches
->>> $
->>> (i.e., no branches, since this has been a linear svn repo.)
->> git-svn converts svn tags into git branches (because they can change=
-).
->> So you will get a git repo with lots of branches which are subsets (=
-HEAD
->> commit is in master/trunk) of master/trunk.
->>
->>>>> $ svn list file:///home/mtk/man-pages-rep/trunk/man-pages
->>>>> Changes
->>>>> Changes.old
->>>>> Makefile
->>>>> README
->>>>> man-pages-3.09.Announce
->>>>> ...
->>>>> man7/
->>>>> man8/
->>>>> scripts/
->>>>> $ svn list file:///home/mtk/man-pages-rep/tags
->>>>> man-pages-2.00/
->>>>> man-pages-2.01/
->>>>> ...
->>>>> man-pages-3.08/
->>>>> man-pages-3.09/
->>>>>
->>>>> What 'git svn init' command do I need to get the layout that I wa=
-nt
->>>>> for my imported git repo?
->>>> It depends on the structure of your branches and tags. My guess wo=
-uld be
->>>> that you have something like tags/man-pages-2.00/man-pages/ etc., =
-in
->>>> which case you would need a special configuration if you want to g=
-et rid
->>>> of the "man-pages" part. Tells us your structure, we'll tell you t=
-he
->>>> config ;)
->>> Do you now have enough info above?
->> Yes, thanks. If you use git-svn init -s (which is equivalent to -T t=
-runk
->> -t tags -b branches) you get an "exact" clone of your svn repo in
->> reasonable time, as you already noticed.
->>
->> In order to get rid of the "man-pages" path component you can either=
-:
->>
->> - remove it after the fact using git filter-branch
->>
->> or
->>
->> - remove it during the conversion process
->>
->> For the latter, do the following:
->>
->> git svn init -s file:///home/mtk/man-pages-rep/
->>
->> as usual. Then, before the first fetch, make sure your .git/config s=
-vn
->> section looks as follows:
->>
->> [svn-remote "svn"]
->>        url =3D file:///home/mtk/man-pages-rep/
->>        fetch =3D trunk/man-pages:refs/remotes/trunk
->>        branches =3D branches/*/man-pages:refs/remotes/*
->>        tags =3D tags/*/man-pages:refs/remotes/tags/*
->=20
-> I guess your solution here was equivalent to Bj=F6rn's, since after I
-> tried his suggestion, I ended up with an [svn-remote "svn"] that look=
-s
-> just as you describe.
->=20
-> Thanks,
->=20
-> Michael
+Add support for recognition of Objective-C class & instance methods, C functions, and class implementation/interfaces.
 
-Yes. You mentioned you used an old version. Newer ones accept the
-parameters in the way Bj=F6rn described. Older ones accepted the same
-config, just not as parameters.
+Signed-off-by: Jonathan del Strother <jon.delStrother@bestbefore.tv>
+---
+This version anchors the negated match to the beginning of the line, and shuffles the comments around to avoid the excessively long lines.  Better?
 
-That kind of config is well-suited for splitting large svn-repos which
-consist of well-separated subprojects.
 
-So, welcome among the happy svn->git converts ;)
+ Documentation/gitattributes.txt |    2 ++
+ diff.c                          |   24 +++++++++++++++++++-----
+ 2 files changed, 21 insertions(+), 5 deletions(-)
 
-Michael
-
->> That is, if you used "git svn init -s" you only have to add "/man-pa=
-ges"
->> three times on the left hand side of the refspecs. You can also do t=
-his
->> using "git config", of course, if you watch out for the shell quotin=
-g.
->>
->> Cheers,
->> Michael
->>
->=20
->=20
->=20
+diff --git a/Documentation/gitattributes.txt b/Documentation/gitattributes.txt
+index 6f3551d..c1f13e2 100644
+--- a/Documentation/gitattributes.txt
++++ b/Documentation/gitattributes.txt
+@@ -315,6 +315,8 @@ patterns are available:
+ 
+ - `java` suitable for source code in the Java language.
+ 
++- `objc` suitable for source code in the Objective-C language.
++
+ - `pascal` suitable for source code in the Pascal/Delphi language.
+ 
+ - `php` suitable for source code in the PHP language.
+diff --git a/diff.c b/diff.c
+index 998dcaa..e5ec503 100644
+--- a/diff.c
++++ b/diff.c
+@@ -1398,17 +1398,31 @@ static struct builtin_funcname_pattern {
+ } builtin_funcname_pattern[] = {
+ 	{ "bibtex", "\\(@[a-zA-Z]\\{1,\\}[ \t]*{\\{0,1\\}[ \t]*[^ \t\"@',\\#}{~%]*\\).*$" },
+ 	{ "html", "^\\s*\\(<[Hh][1-6]\\s.*>.*\\)$" },
+-	{ "java", "!^[ 	]*\\(catch\\|do\\|for\\|if\\|instanceof\\|"
++
++	{ "java", "!^[ \t]*\\(catch\\|do\\|for\\|if\\|instanceof\\|"
+ 			"new\\|return\\|switch\\|throw\\|while\\)\n"
+-			"^[ 	]*\\(\\([ 	]*"
++			"^[ \t]*\\(\\([ \t]*"
+ 			"[A-Za-z_][A-Za-z_0-9]*\\)\\{2,\\}"
+-			"[ 	]*([^;]*\\)$" },
++			"[ \t]*([^;]*\\)$" },
++
++	{ "objc",
++			/* Negate C statements that can look like functions */
++			"!^[ \t]*\\(do\\|for\\|if\\|else\\|return\\|switch\\|while\\)\n"
++			/* Objective-C methods */
++			"^[ \t]*\\([-+][ \t]*([ \t]*[A-Za-z_][A-Za-z_0-9]*.*).*\\)$"
++			"\\|"
++			/* C functions */
++			"^[ \t]*\\(\\([ \t]*[A-Za-z_][A-Za-z_0-9]*\\)\\{2,\\}[ \t]*([^;]*\\)$"
++			"\\|"
++			/* Objective-C class/protocol definitions */
++			"^@\\(implementation\\|interface\\|protocol\\).*"},
++
+ 	{ "pascal", "^\\(\\(procedure\\|function\\|constructor\\|"
+ 			"destructor\\|interface\\|implementation\\|"
+ 			"initialization\\|finalization\\)[ \t]*.*\\)$"
+ 			"\\|"
+-			"^\\(.*=[ \t]*\\(class\\|record\\).*\\)$"
+-			},
++			"^\\(.*=[ \t]*\\(class\\|record\\).*\\)$"},
++
+ 	{ "php", "^[\t ]*\\(\\(function\\|class\\).*\\)" },
+ 	{ "python", "^\\s*\\(\\(class\\|def\\)\\s.*\\)$" },
+ 	{ "ruby", "^\\s*\\(\\(class\\|module\\|def\\)\\s.*\\)$" },
+-- 
+1.6.0.2.250.ge7a3b.dirty
