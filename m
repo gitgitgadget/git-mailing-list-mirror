@@ -1,156 +1,106 @@
 From: Alexander Gavrilov <angavrilov@gmail.com>
-Subject: [PATCH (GIT-GUI,GITK) 3/8] git-gui: Allow forcing display encoding for diffs using a submenu.
-Date: Thu, 18 Sep 2008 01:07:34 +0400
-Message-ID: <1221685659-476-4-git-send-email-angavrilov@gmail.com>
+Subject: [PATCH (GIT-GUI,GITK) 5/8] git-gui: Support the encoding menu in gui blame.
+Date: Thu, 18 Sep 2008 01:07:36 +0400
+Message-ID: <1221685659-476-6-git-send-email-angavrilov@gmail.com>
 References: <1221685659-476-1-git-send-email-angavrilov@gmail.com>
  <1221685659-476-2-git-send-email-angavrilov@gmail.com>
  <1221685659-476-3-git-send-email-angavrilov@gmail.com>
+ <1221685659-476-4-git-send-email-angavrilov@gmail.com>
+ <1221685659-476-5-git-send-email-angavrilov@gmail.com>
 Cc: "Shawn O. Pearce" <spearce@spearce.org>,
 	Paul Mackerras <paulus@samba.org>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Sep 17 23:12:39 2008
+X-From: git-owner@vger.kernel.org Wed Sep 17 23:12:40 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Kg4IS-0003an-RY
-	for gcvg-git-2@gmane.org; Wed, 17 Sep 2008 23:10:49 +0200
+	id 1Kg4IT-0003an-Jr
+	for gcvg-git-2@gmane.org; Wed, 17 Sep 2008 23:10:50 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753802AbYIQVJI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 17 Sep 2008 17:09:08 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754086AbYIQVJH
-	(ORCPT <rfc822;git-outgoing>); Wed, 17 Sep 2008 17:09:07 -0400
-Received: from fg-out-1718.google.com ([72.14.220.159]:53356 "EHLO
+	id S1754086AbYIQVJL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 17 Sep 2008 17:09:11 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754114AbYIQVJL
+	(ORCPT <rfc822;git-outgoing>); Wed, 17 Sep 2008 17:09:11 -0400
+Received: from fg-out-1718.google.com ([72.14.220.158]:58531 "EHLO
 	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753094AbYIQVJA (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 17 Sep 2008 17:09:00 -0400
-Received: by fg-out-1718.google.com with SMTP id 19so2125237fgg.17
-        for <git@vger.kernel.org>; Wed, 17 Sep 2008 14:08:58 -0700 (PDT)
+	with ESMTP id S1753189AbYIQVJB (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 17 Sep 2008 17:09:01 -0400
+Received: by fg-out-1718.google.com with SMTP id 19so2125232fgg.17
+        for <git@vger.kernel.org>; Wed, 17 Sep 2008 14:09:00 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:received:received:from:to:cc:subject:date
          :message-id:x-mailer:in-reply-to:references;
-        bh=ki6sk+ZVe9ToscW1xpHSuhSr3EOOdHL19N8KSGK7dkY=;
-        b=bnMvLkiwMa78I2ECh8M2bD/33k9mJTlgRndhIuPQ9tmYiG4HhiP9z8LZxJK4+0AW6N
-         8OAnE63Kw8F0FyZpfmFh+nhRGvnWaUb2whWTe6YLXKuJ3Eb3v/ODVzVeJQruzuRxP6ax
-         dYpdVQVfyZsY00kfZ4EfY4MylzPAF3hrUYcLE=
+        bh=Gbpf4DiDtT/6e4uHsvstdi+5ZFJaif7Ul3oqetELUF8=;
+        b=d0Koc3WODLTJIlyyvipyezodcYsgVRwIKOmZuWCNJgTz3JHA4aRuubmrNIHG0okEL6
+         hSon9HfT8IpnnMAVDDuQQ8+/7DJnblTdqGTKlIkqfkIIrUVhUuRFFf+6tS2mgSa+P0jr
+         yC67Y7M90BjxA3KaCowFg3OHS+r+BoVBKKEt0=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        b=KQrwnPYM+7ucNAid8xHYehyfqFFAxode3HzyxMeYIv0vjXdwwpQW8/HR6oTUpj2Iyr
-         YZ/o2dpQcjUpLjgDLhe1Kwqn1aqQME5HqThC+ABxqRXdpkxMJmtDCGkstYZ0DzxPefCO
-         e0bwrHmzpWCkKjCeowGSIwLNdUcrePUYfpz4M=
-Received: by 10.180.215.9 with SMTP id n9mr2327851bkg.59.1221685738692;
-        Wed, 17 Sep 2008 14:08:58 -0700 (PDT)
+        b=sXwlurWfGYQmYhkhrYtTT1Rf1TyZiLbLr555UrzIeTzDmmnacT9/o7sZ3+DrZOWWfX
+         pL0f42tu4gzNQRaq+zJMH19AHyInTj573oFOYJCI5iMj2ySPJ0+dpL5+WTfH5dzVH1u/
+         83PKviPNQ+25DNtEbBLfGZof419x6I98mwt8I=
+Received: by 10.180.252.8 with SMTP id z8mr2320376bkh.82.1221685740739;
+        Wed, 17 Sep 2008 14:09:00 -0700 (PDT)
 Received: from localhost.localdomain ( [92.255.85.78])
-        by mx.google.com with ESMTPS id z10sm17426586fka.15.2008.09.17.14.08.57
+        by mx.google.com with ESMTPS id z10sm17426586fka.15.2008.09.17.14.08.59
         (version=SSLv3 cipher=RC4-MD5);
-        Wed, 17 Sep 2008 14:08:58 -0700 (PDT)
+        Wed, 17 Sep 2008 14:09:00 -0700 (PDT)
 X-Mailer: git-send-email 1.6.0.20.g6148bc
-In-Reply-To: <1221685659-476-3-git-send-email-angavrilov@gmail.com>
+In-Reply-To: <1221685659-476-5-git-send-email-angavrilov@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/96141>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/96142>
 
-Add a submenu to allow dynamically changing the encoding to use
-for diffs. Encoding settings are remembered while git-gui runs.
-The rules are:
-
-1) Encoding set for a specific file overrides gitattributes.
-2) Last explicitly set value of the encoding overrides gui.encoding
+Allow dynamically changing the encoding from the blame
+viewer as well.
 
 Signed-off-by: Alexander Gavrilov <angavrilov@gmail.com>
 ---
- git-gui.sh       |    8 ++++++++
- lib/diff.tcl     |    9 +++++++++
- lib/encoding.tcl |   29 +++++++++++++++++++++++++++--
- 3 files changed, 44 insertions(+), 2 deletions(-)
+ lib/blame.tcl |   17 +++++++++++++++++
+ 1 files changed, 17 insertions(+), 0 deletions(-)
 
-diff --git a/git-gui.sh b/git-gui.sh
-index 444990b..3bbb4f1 100755
---- a/git-gui.sh
-+++ b/git-gui.sh
-@@ -2937,6 +2937,14 @@ proc create_common_diff_popup {ctxm} {
- 		-command {incr_font_size font_diff 1}
- 	lappend diff_actions [list $ctxm entryconf [$ctxm index last] -state]
- 	$ctxm add separator
-+	set emenu $ctxm.enc
-+	menu $emenu
-+	build_encoding_menu $emenu [list force_diff_encoding]
-+	$ctxm add cascade \
+diff --git a/lib/blame.tcl b/lib/blame.tcl
+index 84d55b5..eb61374 100644
+--- a/lib/blame.tcl
++++ b/lib/blame.tcl
+@@ -256,9 +256,16 @@ constructor new {i_commit i_path i_jump} {
+ 	$w.ctxm add command \
+ 		-label [mc "Copy Commit"] \
+ 		-command [cb _copycommit]
++	$w.ctxm add separator
++	menu $w.ctxm.enc
++	build_encoding_menu $w.ctxm.enc [cb _setencoding]
++	$w.ctxm add cascade \
 +		-label [mc "Encoding"] \
-+		-menu $emenu
-+	lappend diff_actions [list $ctxm entryconf [$ctxm index last] -state]
-+	$ctxm add separator
- 	$ctxm add command -label [mc "Options..."] \
- 		-command do_options
- }
-diff --git a/lib/diff.tcl b/lib/diff.tcl
-index 8fefc5d..b616296 100644
---- a/lib/diff.tcl
-+++ b/lib/diff.tcl
-@@ -40,6 +40,15 @@ proc reshow_diff {} {
- 	}
++		-menu $w.ctxm.enc
+ 	$w.ctxm add command \
+ 		-label [mc "Do Full Copy Detection"] \
+ 		-command [cb _fullcopyblame]
++	$w.ctxm add separator
+ 	$w.ctxm add command \
+ 		-label [mc "Show History Context"] \
+ 		-command [cb _gitkcommit]
+@@ -791,6 +798,16 @@ method _click {cur_w pos} {
+ 	_showcommit $this $cur_w $lno
  }
  
-+proc force_diff_encoding {enc} {
-+	global current_diff_path
-+	
-+	if {$current_diff_path ne {}} {
-+		force_path_encoding $current_diff_path $enc
-+		reshow_diff
-+	}
++method _setencoding {enc} {
++	force_path_encoding $path $enc
++	_load $this [list \
++		$highlight_column \
++		$highlight_line \
++		[lindex [$w_file xview] 0] \
++		[lindex [$w_file yview] 0] \
++		]
 +}
 +
- proc handle_empty_diff {} {
- 	global current_diff_path file_states file_lists
- 
-diff --git a/lib/encoding.tcl b/lib/encoding.tcl
-index 2c1eda3..b2ee38c 100644
---- a/lib/encoding.tcl
-+++ b/lib/encoding.tcl
-@@ -321,13 +321,38 @@ proc tcl_encoding {enc} {
-     return {}
- }
- 
-+proc force_path_encoding {path enc} {
-+	global path_encoding_overrides last_encoding_override
-+
-+	set enc [tcl_encoding $enc]
-+	if {$enc eq {}} {
-+		catch { unset last_encoding_override }
-+		catch { unset path_encoding_overrides($path) }
-+	} else {
-+		set last_encoding_override $enc
-+		if {$path ne {}} {
-+			set path_encoding_overrides($path) $enc
-+		}
-+	}
-+}
-+
- proc get_path_encoding {path} {
--	set tcl_enc [tcl_encoding [get_config gui.encoding]]
-+	global path_encoding_overrides last_encoding_override
-+
-+	if {[info exists last_encoding_override]} {
-+		set tcl_enc $last_encoding_override
-+	} else {
-+		set tcl_enc [tcl_encoding [get_config gui.encoding]]
-+	}
- 	if {$tcl_enc eq {}} {
- 		set tcl_enc [encoding system]
- 	}
- 	if {$path ne {}} {
--		set enc2 [tcl_encoding [gitattr $path encoding $tcl_enc]]
-+		if {[info exists path_encoding_overrides($path)]} {
-+			set enc2 $path_encoding_overrides($path)
-+		} else {
-+			set enc2 [tcl_encoding [gitattr $path encoding $tcl_enc]]
-+		}
- 		if {$enc2 ne {}} {
- 			set tcl_enc $enc2
- 		}
+ method _load_commit {cur_w cur_d pos} {
+ 	upvar #0 $cur_d line_data
+ 	set lno [lindex [split [$cur_w index $pos] .] 0]
 -- 
 1.6.0.20.g6148bc
