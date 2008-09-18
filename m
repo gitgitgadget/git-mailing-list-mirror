@@ -1,72 +1,84 @@
-From: Karl =?iso-8859-1?Q?Hasselstr=F6m?= <kha@treskal.com>
-Subject: Re: [StGit PATCH] Convert "sink" to the new infrastructure
-Date: Thu, 18 Sep 2008 09:24:50 +0200
-Message-ID: <20080918072450.GB12550@diana.vm.bytemark.co.uk>
-References: <20080912215613.10270.20599.stgit@localhost.localdomain> <20080914085118.GC30664@diana.vm.bytemark.co.uk> <b0943d9e0809141419q6facb21at627e658805f1d223@mail.gmail.com> <20080915075740.GB14452@diana.vm.bytemark.co.uk> <b0943d9e0809150944o71acafe7ndeda500b1fba97df@mail.gmail.com> <20080916074024.GA2454@diana.vm.bytemark.co.uk> <b0943d9e0809160759w5c9be510t3b33d5d983bff5a7@mail.gmail.com> <20080916193647.GA12513@diana.vm.bytemark.co.uk> <b0943d9e0809170909j4fce34acr8f0b844d0cb5281d@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 2/4] diff.c: associate a flag with each pattern and use
+ it for compiling regex
+Date: Thu, 18 Sep 2008 00:12:47 -0700
+Message-ID: <7vod2myljk.fsf@gitster.siamese.dyndns.org>
+References: <7v3ak06jzj.fsf@gitster.siamese.dyndns.org>
+ <GZAEBf1BcP9-dznrIesxaE4Rb8bim6DpwDWCb9yWl99UVoQC9Dog0A@cipher.nrlssc.navy.mil> <7vod2m1464.fsf@gitster.siamese.dyndns.org> <48D1F80C.5030502@op5.se>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Catalin Marinas <catalin.marinas@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Sep 18 09:03:56 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: Brandon Casey <casey@nrlssc.navy.mil>,
+	Arjen Laarhoven <arjen@yaph.org>,
+	Mike Ralphson <mike.ralphson@gmail.com>,
+	Johannes Sixt <j.sixt@viscovery.net>,
+	Jeff King <peff@peff.net>,
+	Boyd Lynn Gerber <gerberb@zenez.com>,
+	Git Mailing List <git@vger.kernel.org>
+To: Andreas Ericsson <ae@op5.se>
+X-From: git-owner@vger.kernel.org Thu Sep 18 09:14:36 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KgDYR-0006aa-FA
-	for gcvg-git-2@gmane.org; Thu, 18 Sep 2008 09:03:56 +0200
+	id 1KgDil-0001T7-4v
+	for gcvg-git-2@gmane.org; Thu, 18 Sep 2008 09:14:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751626AbYIRHCr convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 18 Sep 2008 03:02:47 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751653AbYIRHCr
-	(ORCPT <rfc822;git-outgoing>); Thu, 18 Sep 2008 03:02:47 -0400
-Received: from diana.vm.bytemark.co.uk ([80.68.90.142]:1775 "EHLO
-	diana.vm.bytemark.co.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751576AbYIRHCq (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 18 Sep 2008 03:02:46 -0400
-Received: from kha by diana.vm.bytemark.co.uk with local (Exim 3.36 #1 (Debian))
-	id 1KgDsg-0003NG-00; Thu, 18 Sep 2008 08:24:50 +0100
-Content-Disposition: inline
-In-Reply-To: <b0943d9e0809170909j4fce34acr8f0b844d0cb5281d@mail.gmail.com>
-X-Manual-Spam-Check: kha@treskal.com, clean
-User-Agent: Mutt/1.5.9i
+	id S1755021AbYIRHNA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 18 Sep 2008 03:13:00 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754128AbYIRHNA
+	(ORCPT <rfc822;git-outgoing>); Thu, 18 Sep 2008 03:13:00 -0400
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:59067 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753851AbYIRHM7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 18 Sep 2008 03:12:59 -0400
+Received: from localhost.localdomain (localhost [127.0.0.1])
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 52D8862192;
+	Thu, 18 Sep 2008 03:12:58 -0400 (EDT)
+Received: from pobox.com (ip68-225-240-211.oc.oc.cox.net [68.225.240.211])
+ (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
+ certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
+ ESMTPSA id 6871A6218F; Thu, 18 Sep 2008 03:12:49 -0400 (EDT)
+In-Reply-To: <48D1F80C.5030502@op5.se> (Andreas Ericsson's message of "Thu,
+ 18 Sep 2008 08:41:16 +0200")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: 38D44124-8551-11DD-8AF3-D0CFFE4BC1C1-77302942!a-sasl-fastnet.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/96174>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/96175>
 
-On 2008-09-17 17:09:46 +0100, Catalin Marinas wrote:
+Andreas Ericsson <ae@op5.se> writes:
 
-> I'm still confused by this and I don't think your new flag would
-> help. The meaning of stop_before_conflict is that it won't push the
-> conflicting patch but actually leave the stack with several patches
-> pushed or popped.
+> Junio C Hamano wrote:
+> ...
+>>>  static struct funcname_pattern {
+>>>  	char *name;
+>>>  	char *pattern;
+>>> +	int cflags;
+>>
+>> What does "C" stand for?
 >
-> What I want for sink (and float afterwards) is by default to cancel
-> the whole transaction if there is a conflict and revert the stack to
-> it's original state prior to the "stg sink" command.
+> "compile". It's the same name as regcomp(3) uses for the flags being
+> used to compile the regular expression. The full mnemonic name would
+> be regex_compile_flag, which is a bit unwieldy. Perhaps regcomp_flags
+> would be a good compromise?
 
-Ah, OK. Then I think you want something like this:
+Ah, I see.
 
-  try:
-      trans.reorder_patches(applied, unapplied, hidden, iw)
-  except transaction.TransactionHalted:
-      if not options.conflict:
-          trans.abort(iw)
-          raise common.CmdException(
-              'Operation rolled back -- would result in conflicts')
-  return trans.run(iw)
+When I saw that new field for the first time, I didn't think it will be
+used to store the bare flag values regcomp/regexec library would accept
+directly (I expected we would see #define or enum to tweak our own set of
+features, not limiting ourselves EXTENDED/ICASE etc. that regcomp/regexec
+library supports)
 
-But with a better error message ...
+IOW, it just did not click for me to look at "man 3 regcomp" which says:
 
-StackTransaction.abort() doesn't have much in the way of
-documentation, unfortunately, but what it does is to check out the
-tree we started with. (Nothing else is necessary, since we never touch
-any refs and stuff until the end of StackTransaction.run(). And the
-only case where we touch the tree is when we need to fall back to
-merge-recursive.)
+    int regcomp(regex_t *preg, const char *regex, int cflags);
 
---=20
-Karl Hasselstr=F6m, kha@treskal.com
-      www.treskal.com/kalle
+So unless others feel that we might get a better layering separation by
+not storing REG_EXTENDED and stuff directly in that field (which was my
+initial reaction without looking at 4/4 which does store REG_EXTENDED
+there without our own enums), cflag is perfectly a good name here.
+
+Thanks --- I am bit under the weather and not thinking quite straight.
