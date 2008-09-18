@@ -1,117 +1,88 @@
-From: Leevi Graham <info@leevigraham.com>
-Subject: Help planning a git repo layout
-Date: Thu, 18 Sep 2008 18:37:12 +1000
-Message-ID: <938E7E5C-4FCB-4131-A5C4-254CEEC70673@leevigraham.com>
-Mime-Version: 1.0 (Apple Message framework v929.2)
-Content-Type: text/plain; charset=US-ASCII; format=flowed; delsp=yes
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Sep 18 10:39:56 2008
+From: Johan Herland <johan@herland.net>
+Subject: Re: [PATCH 4/4] diff.c: convert builtin funcname patterns to extended
+ regular expressions
+Date: Thu, 18 Sep 2008 10:39:46 +0200
+Message-ID: <200809181039.46954.johan@herland.net>
+References: <7v3ak06jzj.fsf@gitster.siamese.dyndns.org>
+ <-f-gqL4SkA8Uh7hSuKT-JDY0g26jHn3fDQCE24MB1nKWUMLZWuSseg@cipher.nrlssc.navy.mil>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: 7BIT
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Git Mailing List <git@vger.kernel.org>,
+	Giuseppe Bilotta <giuseppe.bilotta@gmail.com>,
+	Gustaf Hendeby <hendeby@isy.liu.se>
+To: Brandon Casey <casey@nrlssc.navy.mil>
+X-From: git-owner@vger.kernel.org Thu Sep 18 10:41:50 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KgF3G-00064e-GP
-	for gcvg-git-2@gmane.org; Thu, 18 Sep 2008 10:39:51 +0200
+	id 1KgF58-0006gs-5F
+	for gcvg-git-2@gmane.org; Thu, 18 Sep 2008 10:41:46 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752879AbYIRIil (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 18 Sep 2008 04:38:41 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752806AbYIRIil
-	(ORCPT <rfc822;git-outgoing>); Thu, 18 Sep 2008 04:38:41 -0400
-Received: from hapkido.dreamhost.com ([66.33.216.122]:57850 "EHLO
-	hapkido.dreamhost.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752800AbYIRIik (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 18 Sep 2008 04:38:40 -0400
-Received: from spunkymail-a10.g.dreamhost.com (sd-green-bigip-202.dreamhost.com [208.97.132.202])
-	by hapkido.dreamhost.com (Postfix) with ESMTP id B555C178491
-	for <git@vger.kernel.org>; Thu, 18 Sep 2008 01:38:38 -0700 (PDT)
-Received: from [192.168.1.2] (18.240.233.220.exetel.com.au [220.233.240.18])
-	(using TLSv1 with cipher AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by spunkymail-a10.g.dreamhost.com (Postfix) with ESMTP id D87951615DF
-	for <git@vger.kernel.org>; Thu, 18 Sep 2008 01:37:15 -0700 (PDT)
-X-Mailer: Apple Mail (2.929.2)
+	id S1753450AbYIRIkf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 18 Sep 2008 04:40:35 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753082AbYIRIkf
+	(ORCPT <rfc822;git-outgoing>); Thu, 18 Sep 2008 04:40:35 -0400
+Received: from smtp.getmail.no ([84.208.20.33]:40572 "EHLO smtp.getmail.no"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752773AbYIRIke (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 18 Sep 2008 04:40:34 -0400
+Received: from pmxchannel-daemon.no-osl-m323-srv-004-z2.isp.get.no by
+ no-osl-m323-srv-004-z2.isp.get.no
+ (Sun Java System Messaging Server 6.2-7.05 (built Sep  5 2006))
+ id <0K7D0051RURAV600@no-osl-m323-srv-004-z2.isp.get.no> for
+ git@vger.kernel.org; Thu, 18 Sep 2008 10:40:22 +0200 (CEST)
+Received: from smtp.getmail.no ([10.5.16.1])
+ by no-osl-m323-srv-004-z2.isp.get.no
+ (Sun Java System Messaging Server 6.2-7.05 (built Sep  5 2006))
+ with ESMTP id <0K7D00MKCUQBQTB0@no-osl-m323-srv-004-z2.isp.get.no> for
+ git@vger.kernel.org; Thu, 18 Sep 2008 10:39:47 +0200 (CEST)
+Received: from alpha.herland ([84.215.102.95])
+ by no-osl-m323-srv-009-z1.isp.get.no
+ (Sun Java System Messaging Server 6.2-7.05 (built Sep  5 2006))
+ with ESMTP id <0K7D003TMUQBF900@no-osl-m323-srv-009-z1.isp.get.no> for
+ git@vger.kernel.org; Thu, 18 Sep 2008 10:39:47 +0200 (CEST)
+In-reply-to: <-f-gqL4SkA8Uh7hSuKT-JDY0g26jHn3fDQCE24MB1nKWUMLZWuSseg@cipher.nrlssc.navy.mil>
+Content-disposition: inline
+User-Agent: KMail/1.9.9
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/96183>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/96184>
 
-Hey everyone,
+On Thursday 18 September 2008, Brandon Casey wrote:
+> This is a blind conversion removing \\ before ( and { etc.
+> and adding \\ before naked ( and { etc.
+>
+> I hope the authors who last touched these patterns will help with
+> testing:
+>
+> bibtex: Johan Herland
 
-I'm after some advice on how to layout my git repo(s).
+This was moved by Junio when he applied my patch; the line was originally 
+written by Gustaf Hendeby in 23b5beb28fdadbb1d80ebf686a35385609f7a180
 
-Here's my current situation:
+>   html: Johan Herland
 
-I am developing 10 different ExpressionEngine addons that all live  
-inside one ExpressionEngine installation. A simplified EE installation  
-has the following folders (all cruft removed):
+Works fine!
 
-|-root
-   |-ee-admin
-   |---extensions
-   |---language
-   |---modules
-   |-themes
-   |---site_themes
+>    tex: Johan Herland
 
-My addons are a combination of files located in the extensions,  
-language, modules and themes folders. An simple extension may look like:
+This was moved by Junio when he applied my patch; the line was last 
+rewritten by Giuseppe Bilotta in 807d86945336f676c9f650a6cbae9baa3191aaec
 
-|-root
-   |-ee-admin
-   |---extensions
-   |-----ext.lg_data_matrix.php
-   |---language
-   |-----english
-   |---------lang.lg_data_matrix.php
-   |---modules
-   |-themes
-   |---site_themes
 
-The extension above contains two files:
+...I just became a BIG fan of "git gui blame" ;)
 
-- /ee-admin/extensions/ext.lg_data_matrix.php
-- /ee-admin/language/english/ext.lg_data_matrix.php
 
-I will be developing multiple extensions in the one EE install to make  
-sure they all work with the core and do not conflict with each other.  
-So my directory will have more than one addon in it:
+Have fun!
 
-|-root
-   |-ee-admin
-   |---extensions
-   |-----ext.lg_data_matrix.php
-   |-----ext.lg_minify.php
-   |-----ext.lg_better_meta_ext.php
-   |---language
-   |-----english
-   |---------lang.lg_data_matrix.php
-   |---------lang.lg_minify.php
-   |---------lang.lg_better_meta.php
-   |---------lang.lg_better_meta_ext.php
-   |---modules
-   |-----lg_better_meta
-   |---------mcp.lg_better_meta.php
-   |---------mod.lg_better_meta.php
-   |-themes
-   |---site_themes
+...Johan
 
-My problem comes when I want to tag and release an individual addon  
-which is a collection of files in multiple folders.
 
-Just say I wanted to tag and release LG Better Meta. Ideally I would  
-like to export a folder structure like:
-
-- /ee-admin/extensions/ext.lg_better_meta.php
-- /ee-admin/language/english/ext.lg_better_meta.php
-- /ee-admin/language/english/ext.lg_better_meta_ext.php
-- /ee-admin/modules/lg_better_meta/mcp.lg_better_meta.php
-- /ee-admin/modules/lg_better_meta/mod.lg_better_meta.php
-
-I would also like to give people the ability to clone each of the  
-addons either as a full repo or part thereof.
-
-Any advice would be greatly appreciated.
-
-Cheers Leevi
+-- 
+Johan Herland, <johan@herland.net>
+www.herland.net
