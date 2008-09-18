@@ -1,79 +1,88 @@
-From: Dmitry Potapov <dpotapov@gmail.com>
-Subject: Re: [PATCH (GIT-GUI,GITK) 1/8] git-gui: Cleanup handling of the default encoding.
-Date: Thu, 18 Sep 2008 21:19:36 +0400
-Message-ID: <20080918171936.GE21650@dpotapov.dyndns.org>
-References: <1221685659-476-1-git-send-email-angavrilov@gmail.com> <1221685659-476-2-git-send-email-angavrilov@gmail.com> <20080918150238.GC21650@dpotapov.dyndns.org> <48D281E6.1070204@viscovery.net> <20080918165032.GD21650@dpotapov.dyndns.org> <bb6f213e0809181000l52c55e8ctdfa49a59002e60cf@mail.gmail.com>
+From: martin f krafft <madduck@madduck.net>
+Subject: Re: [TopGit PATCH] .gitignore += vim swap files
+Date: Thu, 18 Sep 2008 18:24:18 +0100
+Message-ID: <20080918172418.GA28942@lapse.rw.madduck.net>
+References: <1221755370-6817-1-git-send-email-kirr@landau.phys.spbu.ru> <1221755370-6817-2-git-send-email-kirr@landau.phys.spbu.ru>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Johannes Sixt <j.sixt@viscovery.net>, git@vger.kernel.org,
-	"Shawn O. Pearce" <spearce@spearce.org>,
-	Paul Mackerras <paulus@samba.org>
-To: Alexander Gavrilov <angavrilov@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Sep 18 19:20:57 2008
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="cNdxnHkX5QqsyA0e"
+To: Kirill Smelkov <kirr@landau.phys.spbu.ru>,
+	Petr Baudis <pasky@suse.cz>,
+	Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Thu Sep 18 19:25:58 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KgNBV-0002mT-5s
-	for gcvg-git-2@gmane.org; Thu, 18 Sep 2008 19:20:53 +0200
+	id 1KgNGP-0004u1-HW
+	for gcvg-git-2@gmane.org; Thu, 18 Sep 2008 19:25:58 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754715AbYIRRTp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 18 Sep 2008 13:19:45 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754631AbYIRRTp
-	(ORCPT <rfc822;git-outgoing>); Thu, 18 Sep 2008 13:19:45 -0400
-Received: from ug-out-1314.google.com ([66.249.92.169]:51006 "EHLO
-	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754627AbYIRRTo (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 18 Sep 2008 13:19:44 -0400
-Received: by ug-out-1314.google.com with SMTP id k3so785132ugf.37
-        for <git@vger.kernel.org>; Thu, 18 Sep 2008 10:19:41 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:cc:subject
-         :message-id:references:mime-version:content-type:content-disposition
-         :in-reply-to:user-agent;
-        bh=jR+JJr0Nhu+yCd3muNB1qN4VT23cvKdRX/5RdHWzxLs=;
-        b=DKCimnWToWvClnY2H9Si16Z7/Kpp6MnRbEvuRf1O6gbgAvXaI7sqcHVd/DBfiEc/hX
-         hhIdWm8j+zSKn/wKSwAMxZzolVGyn8kGMlbvz+1xdRWzOdQmm2Q+o1JmdkQHV7uJ/Pxb
-         8IvjcZQikZZ1PZ73+SHJNuV6fWAM31Szyr49g=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        b=hXH2KYSpZ40p8oTBGKt9af2KX0VjE9aIseYKFEneS7N3wN2a/f2RxU75ir3COSsOS/
-         ZaMIzU+ewgLBHePjbeV8IY6AFweODkUmCewtrI0J4t+KW+v4FgPY1HKwPVbovgT7r+W/
-         MVew2lKJAn4+o5vSMdzQHLMi8nqrO8RY/OXr8=
-Received: by 10.103.52.13 with SMTP id e13mr3118595muk.80.1221758381600;
-        Thu, 18 Sep 2008 10:19:41 -0700 (PDT)
-Received: from localhost ( [85.141.191.174])
-        by mx.google.com with ESMTPS id s10sm1415542muh.12.2008.09.18.10.19.38
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Thu, 18 Sep 2008 10:19:40 -0700 (PDT)
+	id S1754390AbYIRRYs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 18 Sep 2008 13:24:48 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754195AbYIRRYs
+	(ORCPT <rfc822;git-outgoing>); Thu, 18 Sep 2008 13:24:48 -0400
+Received: from clegg.madduck.net ([193.242.105.96]:32967 "EHLO
+	clegg.madduck.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753477AbYIRRYs (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 18 Sep 2008 13:24:48 -0400
+Received: from lapse.rw.madduck.net (lapse.rw.madduck.net [IPv6:2001:41e0:ff3a::1])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(Client CN "lapse.rw.madduck.net", Issuer "CAcert Class 3 Root" (verified OK))
+	by clegg.madduck.net (postfix) with ESMTPS id B58831D40A6;
+	Thu, 18 Sep 2008 19:24:21 +0200 (CEST)
+Received: by lapse.rw.madduck.net (Postfix, from userid 1000)
+	id 3480A80C3; Thu, 18 Sep 2008 18:24:18 +0100 (IST)
 Content-Disposition: inline
-In-Reply-To: <bb6f213e0809181000l52c55e8ctdfa49a59002e60cf@mail.gmail.com>
-User-Agent: Mutt/1.5.13 (2006-08-11)
+In-Reply-To: <1221755370-6817-2-git-send-email-kirr@landau.phys.spbu.ru>
+X-Motto: Keep the good times rollin'
+X-OS: Debian GNU/Linux lenny/sid kernel
+	2.6.24-etchnhalf.1+scoflowctrl.1-686 i686
+X-Spamtrap: madduck.bogus@madduck.net
+X-Subliminal-Message: debian/rules!
+User-Agent: Mutt/1.5.18 (2008-05-17)
+X-Virus-Scanned: ClamAV 0.94/8280/Thu Sep 18 16:52:56 2008 on clegg.madduck.net
+X-Virus-Status: Clean
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/96224>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/96225>
 
-On Thu, Sep 18, 2008 at 09:00:07PM +0400, Alexander Gavrilov wrote:
-> 
-> You are here missing the fact, that the actual current default for
-> git-gui is not utf-8, but 'binary', essentially equivalent to
-> ISO-8859-1.
 
-In this case, I was just confused by the comment to the patch, which was
-saying "Make diffs and blame default to the system (locale) encoding
-instead of hard-coding UTF-8."
+--cNdxnHkX5QqsyA0e
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-> UTF-8 was suggested by a patch that has been around in the
-> 'pu' branch since January, and which I took as a base for my series.
-> Gitk on the other hand uses the locale encoding.
+also sprach Kirill Smelkov <kirr@landau.phys.spbu.ru> [2008.09.18.1729 +010=
+0]:
+> +
+> +*.swp
 
-I see... Then your patch makes perfect sense regardless of Windows
-support, which was presented as the rationale for the patch.
+This should be .*.sw?
 
-Thanks,
-Dmitry
+--=20
+martin | http://madduck.net/ | http://two.sentenc.es/
+=20
+"and no one sings me lullabies,
+ and no one makes me close my eyes,
+ and so i throw the windows wide,
+ and call to you across the sky"
+                                                   -- pink floyd, 1971
+=20
+spamtraps: madduck.bogus@madduck.net
+
+--cNdxnHkX5QqsyA0e
+Content-Type: application/pgp-signature; name="digital_signature_gpg.asc"
+Content-Description: Digital signature (see http://martin-krafft.net/gpg/)
+Content-Disposition: inline
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.9 (GNU/Linux)
+
+iEYEARECAAYFAkjSjsEACgkQIgvIgzMMSnWoqgCg7nVhuJYA0gOtRBn/jtg4uFTC
+ersAniUmmRSep45SiDz8BNNJPdX9PSr8
+=joKK
+-----END PGP SIGNATURE-----
+
+--cNdxnHkX5QqsyA0e--
