@@ -1,69 +1,148 @@
-From: Marc Weber <marco-oweber@gmx.de>
-Subject: Re: You don't exist, Go away! although user.name has been set
-Date: Thu, 18 Sep 2008 13:47:35 +0200
-Message-ID: <20080918114735.GA14176@gmx.de>
-References: <20080916010529.GB22597@gmx.de> <48CF6277.4060807@op5.se>
+From: Boaz Harrosh <bharrosh@panasas.com>
+Subject: Re: Help planning a git repo layout
+Date: Thu, 18 Sep 2008 14:48:18 +0300
+Message-ID: <48D24002.70709@panasas.com>
+References: <938E7E5C-4FCB-4131-A5C4-254CEEC70673@leevigraham.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Sep 18 13:48:49 2008
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+To: Leevi Graham <info@leevigraham.com>,
+	Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Thu Sep 18 14:05:11 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KgI08-0005kD-3p
-	for gcvg-git-2@gmane.org; Thu, 18 Sep 2008 13:48:48 +0200
+	id 1KgIFY-0002gL-7g
+	for gcvg-git-2@gmane.org; Thu, 18 Sep 2008 14:04:44 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752846AbYIRLrj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 18 Sep 2008 07:47:39 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752769AbYIRLrj
-	(ORCPT <rfc822;git-outgoing>); Thu, 18 Sep 2008 07:47:39 -0400
-Received: from mail.gmx.net ([213.165.64.20]:60523 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1752513AbYIRLrj (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 18 Sep 2008 07:47:39 -0400
-Received: (qmail invoked by alias); 18 Sep 2008 11:47:35 -0000
-Received: from pD9E084EC.dip.t-dialin.net (EHLO nixos) [217.224.132.236]
-  by mail.gmx.net (mp041) with SMTP; 18 Sep 2008 13:47:35 +0200
-X-Authenticated: #9006135
-X-Provags-ID: V01U2FsdGVkX1+INiIE4i6INhhfUoDGOpPaca2hiUBQ4s9aJ0P9rZ
-	Bw91hHzSE0at/y
-Received: by nixos (sSMTP sendmail emulation); Thu, 18 Sep 2008 13:47:35 +0200
-Mail-Followup-To: Marc Weber <marco-oweber@gmx.de>, git@vger.kernel.org
-Content-Disposition: inline
-In-Reply-To: <48CF6277.4060807@op5.se>
-User-Agent: Mutt/1.5.15 (2007-04-06)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.71
+	id S1752773AbYIRMDe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 18 Sep 2008 08:03:34 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752673AbYIRMDe
+	(ORCPT <rfc822;git-outgoing>); Thu, 18 Sep 2008 08:03:34 -0400
+Received: from gw-ca.panasas.com ([66.104.249.162]:10212 "EHLO
+	laguna.int.panasas.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1751801AbYIRMDd (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 18 Sep 2008 08:03:33 -0400
+X-Greylist: delayed 910 seconds by postgrey-1.27 at vger.kernel.org; Thu, 18 Sep 2008 08:03:33 EDT
+Received: from daytona.int.panasas.com ([172.17.28.41]) by laguna.int.panasas.com with Microsoft SMTPSVC(6.0.3790.3959);
+	 Thu, 18 Sep 2008 04:47:23 -0700
+Received: from bh-buildlin2.bhalevy.com ([172.17.28.131]) by daytona.int.panasas.com with Microsoft SMTPSVC(6.0.3790.3959);
+	 Thu, 18 Sep 2008 07:47:21 -0400
+User-Agent: Thunderbird 2.0.0.14 (X11/20080501)
+In-Reply-To: <938E7E5C-4FCB-4131-A5C4-254CEEC70673@leevigraham.com>
+X-OriginalArrivalTime: 18 Sep 2008 11:47:22.0098 (UTC) FILETIME=[4FBDB520:01C91984]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/96194>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/96195>
 
->  I can assure you that people are capable of fetching, pulling and
->  committing with git. I do it all day long at least.
+Leevi Graham wrote:
+> Hey everyone,
 > 
->  Can you post your ~/.gitconfig (and/or .git/config) file, please?
->  In conjunction, I also need to know the exact username you're using
->  on your system.
+> I'm after some advice on how to layout my git repo(s).
+> 
+> Here's my current situation:
+> 
+> I am developing 10 different ExpressionEngine addons that all live  
+> inside one ExpressionEngine installation. A simplified EE installation  
+> has the following folders (all cruft removed):
+> 
+> |-root
+>    |-ee-admin
+>    |---extensions
+>    |---language
+>    |---modules
+>    |-themes
+>    |---site_themes
+> 
+> My addons are a combination of files located in the extensions,  
+> language, modules and themes folders. An simple extension may look like:
+> 
+> |-root
+>    |-ee-admin
+>    |---extensions
+>    |-----ext.lg_data_matrix.php
+>    |---language
+>    |-----english
+>    |---------lang.lg_data_matrix.php
+>    |---modules
+>    |-themes
+>    |---site_themes
+> 
+> The extension above contains two files:
+> 
+> - /ee-admin/extensions/ext.lg_data_matrix.php
+> - /ee-admin/language/english/ext.lg_data_matrix.php
+> 
+> I will be developing multiple extensions in the one EE install to make  
+> sure they all work with the core and do not conflict with each other.  
+> So my directory will have more than one addon in it:
+> 
+> |-root
+>    |-ee-admin
+>    |---extensions
+>    |-----ext.lg_data_matrix.php
+>    |-----ext.lg_minify.php
+>    |-----ext.lg_better_meta_ext.php
+>    |---language
+>    |-----english
+>    |---------lang.lg_data_matrix.php
+>    |---------lang.lg_minify.php
+>    |---------lang.lg_better_meta.php
+>    |---------lang.lg_better_meta_ext.php
+>    |---modules
+>    |-----lg_better_meta
+>    |---------mcp.lg_better_meta.php
+>    |---------mod.lg_better_meta.php
+>    |-themes
+>    |---site_themes
+> 
+> My problem comes when I want to tag and release an individual addon  
+> which is a collection of files in multiple folders.
+> 
+> Just say I wanted to tag and release LG Better Meta. Ideally I would  
+> like to export a folder structure like:
+> 
+> - /ee-admin/extensions/ext.lg_better_meta.php
+> - /ee-admin/language/english/ext.lg_better_meta.php
+> - /ee-admin/language/english/ext.lg_better_meta_ext.php
+> - /ee-admin/modules/lg_better_meta/mcp.lg_better_meta.php
+> - /ee-admin/modules/lg_better_meta/mod.lg_better_meta.php
+> 
+> I would also like to give people the ability to clone each of the  
+> addons either as a full repo or part thereof.
+> 
+> Any advice would be greatly appreciated.
+> 
+> Cheers Leevi
+> 
 
-Hmm I think it only occurs if you git clone the repo before adding the
-identity to your global config.
+Have branches with individual views of files like the above
+LG-Better-Meta starts from a clean tree and only adds
+- /ee-admin/extensions/ext.lg_better_meta.php
+- /ee-admin/language/english/ext.lg_better_meta.php
+- /ee-admin/language/english/ext.lg_better_meta_ext.php
+- /ee-admin/modules/lg_better_meta/mcp.lg_better_meta.php
+- /ee-admin/modules/lg_better_meta/mod.lg_better_meta.php
 
-If you clone the repository after having added your identity everything
-is fine..
+Other branches with other individual views of files.
+Commits will have to be on the individual branches.
+Lets call these product-branches
 
-/ksa > git fetch origin
-fatal: You don't exist. Go away!
+Then you have integration branches that merge from time
+to time the product-branches, master been the merge of
+all.
 
-~/.gitconfig:
-[user]
-        name = sadflkj-sa
-        email = info@dflkje.de
+Users that only need a single product-branch will checkout
+that one. Users needing all will checkout master.
 
-The repo config is unchanged  after cloning.
-The HEAD pointer is invalid. But this shouldn't matter
+For your convenience, you can locally clone the master
+git, and have checkouts of single product-branches so
+you can commit patches in parallel. Then push and merge.
 
-Sincerly
-Marc Weber
+Don't forget to give all empty branches at least one
+common ancestor before adding files. Like with .gitignore
+
+Boaz
