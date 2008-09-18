@@ -1,70 +1,69 @@
 From: Eric Wong <normalperson@yhbt.net>
-Subject: Re: [PATCH] git-svn: Always create a new RA when calling do_switch
-	for svn://
-Date: Wed, 17 Sep 2008 23:44:29 -0700
-Message-ID: <20080918064429.GB13328@untitled>
-References: <1221426856-2652-1-git-send-email-alec@thened.net>
+Subject: Re: [PATCH] git-svn: do a partial rebuild if rev_map is out-of-date
+Date: Wed, 17 Sep 2008 23:38:04 -0700
+Message-ID: <20080918063754.GA13328@untitled>
+References: <20080917031304.GA2505@riemann.deskinm.fdns.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Alec Berryman <alec@thened.net>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Sep 18 08:45:38 2008
+Cc: git@vger.kernel.org
+To: Deskin Miller <deskinm@umich.edu>
+X-From: git-owner@vger.kernel.org Thu Sep 18 08:49:06 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KgDGk-0001nn-Dd
-	for gcvg-git-2@gmane.org; Thu, 18 Sep 2008 08:45:38 +0200
+	id 1KgDK5-0002hn-Hf
+	for gcvg-git-2@gmane.org; Thu, 18 Sep 2008 08:49:06 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752701AbYIRGob (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 18 Sep 2008 02:44:31 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752673AbYIRGoa
-	(ORCPT <rfc822;git-outgoing>); Thu, 18 Sep 2008 02:44:30 -0400
-Received: from user-118bg0q.cable.mindspring.com ([66.133.192.26]:58464 "EHLO
+	id S1752710AbYIRGr5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 18 Sep 2008 02:47:57 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752673AbYIRGr5
+	(ORCPT <rfc822;git-outgoing>); Thu, 18 Sep 2008 02:47:57 -0400
+Received: from user-118bg0q.cable.mindspring.com ([66.133.192.26]:58479 "EHLO
 	untitled" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-	id S1751940AbYIRGoa (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 18 Sep 2008 02:44:30 -0400
-X-Greylist: delayed 383 seconds by postgrey-1.27 at vger.kernel.org; Thu, 18 Sep 2008 02:44:30 EDT
+	id S1751809AbYIRGr5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 18 Sep 2008 02:47:57 -0400
 Received: from localhost.localdomain (localhost [127.0.0.1])
-	by untitled (Postfix) with ESMTP id 3F4D133466B;
-	Thu, 18 Sep 2008 06:44:29 +0000 (UTC)
+	by untitled (Postfix) with ESMTP id E4C9E33466A;
+	Thu, 18 Sep 2008 06:38:05 +0000 (UTC)
 Content-Disposition: inline
-In-Reply-To: <1221426856-2652-1-git-send-email-alec@thened.net>
+In-Reply-To: <20080917031304.GA2505@riemann.deskinm.fdns.net>
 User-Agent: Mutt/1.5.18 (2008-05-17)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/96168>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/96169>
 
-Alec Berryman <alec@thened.net> wrote:
+Deskin Miller <deskinm@umich.edu> wrote:
+> This commit will have git-svn do a partial rebuild of the rev_map to
+> match the true state of the branch, if it ever is used to fetch again.
 > 
-> This was reported as Debian bug #464713.  An example repository can be
-> found at svn://svn.debian.org/chinese/packages/lunar-applet.  When I try
-> to clone it with 1.6.0.2.229.g1293c or 1.5.6.5, both using 1.5.1
-> libraries, I see the following:
+> This will only work for projects not using either noMetadata or
+> useSvmProps configuration options; if you are using these options,
+> git-svn will fall back to the previous behaviour.
 > 
-> r158 = 1107cff6309c979751e0841d40b9e2e471694b26 (git-svn@159)
->     M   debian/changelog
->     M   debian/rules
-> r159 = 010d0b481753bd32ce0255ce433d63e14114d3b6 (git-svn@159)
-> Found branch parent: (git-svn) 010d0b481753bd32ce0255ce433d63e14114d3b6
-> Following parent with do_switch
-> Malformed network data: Malformed network data at /home/alec/local/git/libexec/git-core//git-svn line 2360
-> 
-> It looks like the user made several commits and decided to undo them by
-> removing the directory and copying an older version in its place.
-> 
-> This appears to only affect access via svn:// and svn+ssh://; I tried
-> with file:// but not with http://.
-> 
-> The first patch is a minor refactoring of some test code, and the second
-> one actually fixes the issue for me.
+> Signed-off-by: Deskin Miller <deskinm@umich.edu>
+> ---
 
-Thanks Alec, and sorry for the latency.
+Hi Deskin,
 
-This series is:
-  Acked-by: Eric Wong <normalperson@yhbt.net>
+This seems to break the following test case for me:
+
+*** t9107-git-svn-migrate.sh ***
+*   ok 1: setup old-looking metadata
+*   ok 2: git-svn-HEAD is a real HEAD
+*   ok 3: initialize old-style (v0) git svn layout
+*   ok 4: initialize a multi-repository repo
+*   ok 5: multi-fetch works on partial urls + paths
+*   ok 6: migrate --minimize on old inited layout
+* FAIL 7: .rev_db auto-converted to .rev_map.UUID
+
+I haven't had time to diagnose it.  Also, can you add a test that
+demonstrates this functionality (and ensures things keeps working when
+future work is done on git-svn?)
+
+Thanks.
 
 -- 
 Eric Wong
