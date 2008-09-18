@@ -1,89 +1,87 @@
-From: "Alexander Gavrilov" <angavrilov@gmail.com>
-Subject: Re: [PATCH (GIT-GUI,GITK) 0/8] Encoding support in GUI
-Date: Thu, 18 Sep 2008 15:12:23 +0400
-Message-ID: <bb6f213e0809180412o4559ef95jfba29aa540afa06f@mail.gmail.com>
-References: <1221685659-476-1-git-send-email-angavrilov@gmail.com>
-	 <18641.31356.147503.708394@cargo.ozlabs.ibm.com>
+From: "Catalin Marinas" <catalin.marinas@gmail.com>
+Subject: Re: [StGit PATCH] Convert "sink" to the new infrastructure
+Date: Thu, 18 Sep 2008 12:24:41 +0100
+Message-ID: <b0943d9e0809180424s61eff16cl8e9911a04e1cca42@mail.gmail.com>
+References: <20080914085118.GC30664@diana.vm.bytemark.co.uk>
+	 <20080915075740.GB14452@diana.vm.bytemark.co.uk>
+	 <b0943d9e0809150944o71acafe7ndeda500b1fba97df@mail.gmail.com>
+	 <20080916074024.GA2454@diana.vm.bytemark.co.uk>
+	 <b0943d9e0809160759w5c9be510t3b33d5d983bff5a7@mail.gmail.com>
+	 <20080916193647.GA12513@diana.vm.bytemark.co.uk>
+	 <b0943d9e0809170455m53eaf677t87e9ade3f001d044@mail.gmail.com>
+	 <20080917130432.GA26365@diana.vm.bytemark.co.uk>
+	 <b0943d9e0809170901o15027408w439af4436cfea67c@mail.gmail.com>
+	 <20080918071020.GA12550@diana.vm.bytemark.co.uk>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, "Shawn O. Pearce" <spearce@spearce.org>
-To: "Paul Mackerras" <paulus@samba.org>
-X-From: git-owner@vger.kernel.org Thu Sep 18 13:14:28 2008
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: "=?ISO-8859-1?Q?Karl_Hasselstr=F6m?=" <kha@treskal.com>
+X-From: git-owner@vger.kernel.org Thu Sep 18 13:26:22 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KgHSu-00038z-1Q
-	for gcvg-git-2@gmane.org; Thu, 18 Sep 2008 13:14:28 +0200
+	id 1KgHeP-0006ab-Bw
+	for gcvg-git-2@gmane.org; Thu, 18 Sep 2008 13:26:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751801AbYIRLM0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 18 Sep 2008 07:12:26 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751738AbYIRLM0
-	(ORCPT <rfc822;git-outgoing>); Thu, 18 Sep 2008 07:12:26 -0400
-Received: from ey-out-2122.google.com ([74.125.78.25]:24724 "EHLO
-	ey-out-2122.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751588AbYIRLMZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 18 Sep 2008 07:12:25 -0400
-Received: by ey-out-2122.google.com with SMTP id 6so1614799eyi.37
-        for <git@vger.kernel.org>; Thu, 18 Sep 2008 04:12:24 -0700 (PDT)
+	id S1753107AbYIRLYn convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 18 Sep 2008 07:24:43 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754820AbYIRLYn
+	(ORCPT <rfc822;git-outgoing>); Thu, 18 Sep 2008 07:24:43 -0400
+Received: from rv-out-0506.google.com ([209.85.198.228]:45106 "EHLO
+	rv-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754313AbYIRLYm convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 18 Sep 2008 07:24:42 -0400
+Received: by rv-out-0506.google.com with SMTP id k40so3670923rvb.1
+        for <git@vger.kernel.org>; Thu, 18 Sep 2008 04:24:41 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:received:received:message-id:date:from:to
          :subject:cc:in-reply-to:mime-version:content-type
          :content-transfer-encoding:content-disposition:references;
-        bh=IGf2dGPNO8mFLYpSyIDhn6rrkLZTgSXlnuA02Mdew/g=;
-        b=jq2PTWovYFai51xkAdizF3yIVtpNWKzfvCQGYvucW/MAcNuFi1aFTN4XHe+t3OdKfv
-         ZaHc2IxOt+A9ImMms3LzIvXtZIQYIa94f/R+IxL/ZmqHjfSX4av4Du0FE5T+qpCMmQbm
-         LEpbBPSXASAz1SF3avDTaK339xw2D8I/t/R+o=
+        bh=s4t+RjQJnxftrV33bRNLSSDYD72Oeo/iCJu9cxdjpWU=;
+        b=E/tjK2BeNIZ4ZEpTvy+Pabo/xAZY5sk1SgMljv9QtuQ8BwkcrjW/NkLslELNGmRqxc
+         QCc7wGlwtpIddQ/Vpnhrs0+UZacJutnEZLkpS0VPOi4YedrXH5urCLsNbo2ys4Eyk1K/
+         pRJ/FKmPnfKq0AfJz6KYEgYlnmRMvX0rYIj3Q=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
          :content-type:content-transfer-encoding:content-disposition
          :references;
-        b=N6PcqQZa0Yzm8lfsaMtsLhPR0Kr+EYjEfLQYJpGu7w5vbD7tgziWzBEJQlijxnDAFm
-         KvviVB05+0yXU8+I1j0vOJIIjqPVNsabqUdL0pXZrf4MDndWiARiLLXxepUozHWENz4b
-         VUtD67lpwwkCcDG2h8pcnsyfGYLBJ/UPY/D+Y=
-Received: by 10.102.228.2 with SMTP id a2mr2775366muh.79.1221736343851;
-        Thu, 18 Sep 2008 04:12:23 -0700 (PDT)
-Received: by 10.103.251.10 with HTTP; Thu, 18 Sep 2008 04:12:23 -0700 (PDT)
-In-Reply-To: <18641.31356.147503.708394@cargo.ozlabs.ibm.com>
+        b=N6fgtyY0Eu63fAzZyrUn/tOLyqYgv6TRnNdg3CUgXYySYTkEKZrOLRa1ZubpcGItkB
+         nXwd9mrpx/3ZseggP5RsgyK8U1PthaALsORSxSmV9NzgWRS1teKlm7aDPYSg3OtOSF5y
+         BCzSizvyx19+oLcUO40JrOPcPI+JbasdLOwE4=
+Received: by 10.140.164.1 with SMTP id m1mr7350830rve.69.1221737081924;
+        Thu, 18 Sep 2008 04:24:41 -0700 (PDT)
+Received: by 10.140.199.1 with HTTP; Thu, 18 Sep 2008 04:24:41 -0700 (PDT)
+In-Reply-To: <20080918071020.GA12550@diana.vm.bytemark.co.uk>
 Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/96191>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/96192>
 
-On Thu, Sep 18, 2008 at 1:45 AM, Paul Mackerras <paulus@samba.org> wrote:
-> Alexander Gavrilov writes:
->> Currently GUI tools don't provide any support for
->> viewing files that contain non-ASCII characters.
+2008/9/18 Karl Hasselstr=F6m <kha@treskal.com>:
+> On 2008-09-17 17:01:22 +0100, Catalin Marinas wrote:
 >
-> Well, that's just not true, at least as far as gitk is concerned.
+>> 2008/9/17 Karl Hasselstr=F6m <kha@treskal.com>:
+>>
+>> > Have you tried the benchmarks I committed a while back?
+>>
+>> No, I wanted to see how some real patches behave and I'm pretty
+>> pleased with the result.
+>
+> In addition to the synthetic patch series you seem to have in mind,
+> there is also a more than 1000 patches long series from the kernel
+> history. Try running the setup.sh and take a look (it takes a few
+> minutes to run, but you'll only have to do it once because the
+> performance test script is careful not to wreck the repo it works on)=
+=2E
 
-Somehow being able to show files in the system encoding is not good
-enough for a tool that is supposed to be used for cross-platform
-projects. It is only marginally better than always using ISO-8859-1,
-as git-gui, in effect, did.
+OK, I thought we only had the synthetic patches and haven't bothered
+looking at the scripts.
 
-> If you feel there are deficiencies in how gitk handles encodings (and
-> I'm quite willing to believe there are, since ASCII is sufficient for
-> my needs), then please give us a detailed explanation of what you
-> would like it to do or specifically what is wrong with what it does at
-> the moment.  I'd like to see several paragraphs, not just the one or
-> two sentences you have put in the descriptions for patches 6-8.
-
-I did not combine this set of patches into a single group without a
-reason. This is a policy decision that spans the boundary of
-individual tools, although it is initially implemented and documented
-on the git-gui side. The gitk commits simply bring back changes to
-code originally copied from gitk, tie in new logic that supports
-per-file encoding, and fix some obvious breakage (of course, I can
-write longer descriptions for them). By the way, patch 4 will apply to
-gitk, if you replace 'lib/encoding.tcl' with 'gitk', and specify -C2.
-
-P.S. All changes are build on top of these two commits:
-http://repo.or.cz/w/git-gui.git?a=log;h=refs/heads/pu
-
-Alexander
+--=20
+Catalin
