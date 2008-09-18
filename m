@@ -1,71 +1,79 @@
-From: Johannes Sixt <j.sixt@viscovery.net>
-Subject: Re: combined diff, but not condensed, howto?
-Date: Thu, 18 Sep 2008 08:24:38 +0200
-Message-ID: <48D1F426.4040208@viscovery.net>
-References: <48D0B907.7040903@viscovery.net> <7vwsha6761.fsf@gitster.siamese.dyndns.org> <48D1EDB7.5070107@viscovery.net> <7vy71qyo9d.fsf@gitster.siamese.dyndns.org>
+From: Andreas Ericsson <ae@op5.se>
+Subject: Re: [PATCH 2/4] diff.c: associate a flag with each pattern and use
+ it for compiling regex
+Date: Thu, 18 Sep 2008 08:41:16 +0200
+Message-ID: <48D1F80C.5030502@op5.se>
+References: <7v3ak06jzj.fsf@gitster.siamese.dyndns.org> <GZAEBf1BcP9-dznrIesxaE4Rb8bim6DpwDWCb9yWl99UVoQC9Dog0A@cipher.nrlssc.navy.mil> <7vod2m1464.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain; charset=ISO-8859-15; format=flowed
 Content-Transfer-Encoding: 7bit
-Cc: Git Mailing List <git@vger.kernel.org>
+Cc: Brandon Casey <casey@nrlssc.navy.mil>,
+	Arjen Laarhoven <arjen@yaph.org>,
+	Mike Ralphson <mike.ralphson@gmail.com>,
+	Johannes Sixt <j.sixt@viscovery.net>,
+	Jeff King <peff@peff.net>,
+	Boyd Lynn Gerber <gerberb@zenez.com>,
+	Git Mailing List <git@vger.kernel.org>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Sep 18 08:25:59 2008
+X-From: git-owner@vger.kernel.org Thu Sep 18 08:42:43 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KgCxa-0004FS-Ea
-	for gcvg-git-2@gmane.org; Thu, 18 Sep 2008 08:25:50 +0200
+	id 1KgDDm-000138-Cb
+	for gcvg-git-2@gmane.org; Thu, 18 Sep 2008 08:42:34 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752106AbYIRGYm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 18 Sep 2008 02:24:42 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752081AbYIRGYm
-	(ORCPT <rfc822;git-outgoing>); Thu, 18 Sep 2008 02:24:42 -0400
-Received: from lilzmailso01.liwest.at ([212.33.55.23]:8554 "EHLO
-	lilzmailso01.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751854AbYIRGYl (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 18 Sep 2008 02:24:41 -0400
-Received: from cm56-163-160.liwest.at ([86.56.163.160] helo=linz.eudaptics.com)
-	by lilzmailso01.liwest.at with esmtpa (Exim 4.66)
-	(envelope-from <j.sixt@viscovery.net>)
-	id 1KgCwQ-0002mO-QA; Thu, 18 Sep 2008 08:24:39 +0200
-Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.42])
-	by linz.eudaptics.com (Postfix) with ESMTP
-	id 9006A4FB; Thu, 18 Sep 2008 08:24:38 +0200 (CEST)
-User-Agent: Thunderbird 2.0.0.6 (Windows/20070728)
-In-Reply-To: <7vy71qyo9d.fsf@gitster.siamese.dyndns.org>
-X-Enigmail-Version: 0.95.5
-X-Spam-Score: 1.7 (+)
-X-Spam-Report: ALL_TRUSTED=-1.8, BAYES_99=3.5
+	id S1751449AbYIRGlX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 18 Sep 2008 02:41:23 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751196AbYIRGlX
+	(ORCPT <rfc822;git-outgoing>); Thu, 18 Sep 2008 02:41:23 -0400
+Received: from mail.op5.se ([193.201.96.20]:58293 "EHLO mail.op5.se"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751146AbYIRGlX (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 18 Sep 2008 02:41:23 -0400
+Received: from localhost (localhost.localdomain [127.0.0.1])
+	by mail.op5.se (Postfix) with ESMTP id 5B5491B80078;
+	Thu, 18 Sep 2008 08:31:20 +0200 (CEST)
+X-Virus-Scanned: amavisd-new at 
+X-Spam-Flag: NO
+X-Spam-Score: -3.449
+X-Spam-Level: 
+X-Spam-Status: No, score=-3.449 tagged_above=-10 required=6.6
+	tests=[ALL_TRUSTED=-1.8, AWL=0.950, BAYES_00=-2.599]
+Received: from mail.op5.se ([127.0.0.1])
+	by localhost (mail.op5.se [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id uJG5t9vGzcB3; Thu, 18 Sep 2008 08:31:16 +0200 (CEST)
+Received: from clix.int.op5.se (unknown [192.168.1.171])
+	by mail.op5.se (Postfix) with ESMTP id CA6DF1B80081;
+	Thu, 18 Sep 2008 08:31:15 +0200 (CEST)
+User-Agent: Thunderbird 2.0.0.16 (X11/20080723)
+In-Reply-To: <7vod2m1464.fsf@gitster.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/96166>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/96167>
 
-Junio C Hamano schrieb:
-> Johannes Sixt <j.sixt@viscovery.net> writes:
+Junio C Hamano wrote:
+> Brandon Casey <casey@nrlssc.navy.mil> writes:
 > 
->> Junio C Hamano schrieb:
->>> Johannes Sixt <j.sixt@viscovery.net> writes:
->>>
->>>> After a merge conflict, 'git diff' shows a combined diff, which presents
->>>> only the parts that conflicted or where there are near-by changes from
->>>> different parents (potential conflicts). Is there a command line switch so
->>>> that *all* changes are shown, even non-conflicting ones?
->>> Like "git diff HEAD"?
->> No. Something that produces
-> ...
+>> This is in preparation for allowing extended regular expression patterns.
+>> ...
+>> @@ -100,10 +100,11 @@ static int parse_lldiff_command(const char *var, const char *ep, const char *val
+>>  static struct funcname_pattern {
+>>  	char *name;
+>>  	char *pattern;
+>> +	int cflags;
 > 
-> Ah, I see what you mean.
-> 
-> It all happens inside combine-diff.c::make_hunks().  If you pass dense==0,
-> you should be able to get all the uninteresting hunks, I think.
-> 
-> Perhaps
-> 
-> 	$ git diff --base -c
+> What does "C" stand for?
 
-Yes, that does it!
 
-Thanks,
--- Hannes
+"compile". It's the same name as regcomp(3) uses for the flags being
+used to compile the regular expression. The full mnemonic name would
+be regex_compile_flag, which is a bit unwieldy. Perhaps regcomp_flags
+would be a good compromise?
+
+-- 
+Andreas Ericsson                   andreas.ericsson@op5.se
+OP5 AB                             www.op5.se
+Tel: +46 8-230225                  Fax: +46 8-230231
