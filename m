@@ -1,73 +1,60 @@
-From: "Sverre Rabbelier" <alturin@gmail.com>
-Subject: Re: [PATCH 1/1] Make git archive respect core.autocrlf when creating ...
-Date: Thu, 18 Sep 2008 22:53:09 +0200
-Message-ID: <bd6139dc0809181353o26fb1ac2h7da63cf7da4bff1a@mail.gmail.com>
-References: <1a7cc4db062b7df0dae0f27b29dba66c9d917e59.1221767629.git.charles@hashpling.org>
-	 <20080918200120.GB8631@hashpling.org> <48D2B831.8080206@op5.se>
-	 <20080918202929.GA9948@hashpling.org>
-Reply-To: sverre@rabbelier.nl
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: "Andreas Ericsson" <ae@op5.se>, git@vger.kernel.org,
-	"Junio C Hamano" <gitster@pobox.com>
-To: "Charles Bailey" <charles@hashpling.org>
-X-From: git-owner@vger.kernel.org Thu Sep 18 22:54:25 2008
+From: Thomas Rast <trast@student.ethz.ch>
+Subject: [PATCH] sha1_file: link() returns -1 on failure, not errno
+Date: Fri, 19 Sep 2008 00:24:46 +0200
+Message-ID: <1221776686-13284-1-git-send-email-trast@student.ethz.ch>
+Cc: Junio C Hamano <junio@pobox.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Sep 19 00:26:16 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KgQW6-0006eq-Vi
-	for gcvg-git-2@gmane.org; Thu, 18 Sep 2008 22:54:23 +0200
+	id 1KgRwx-0007wa-2p
+	for gcvg-git-2@gmane.org; Fri, 19 Sep 2008 00:26:11 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754138AbYIRUxM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 18 Sep 2008 16:53:12 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754127AbYIRUxM
-	(ORCPT <rfc822;git-outgoing>); Thu, 18 Sep 2008 16:53:12 -0400
-Received: from mu-out-0910.google.com ([209.85.134.190]:7007 "EHLO
-	mu-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753892AbYIRUxK (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 18 Sep 2008 16:53:10 -0400
-Received: by mu-out-0910.google.com with SMTP id g7so65743muf.1
-        for <git@vger.kernel.org>; Thu, 18 Sep 2008 13:53:09 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:reply-to
-         :to:subject:cc:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:references;
-        bh=55jK8eG5yt+yAFe8BmYViOZMYvRGIBGWby2zcYB6Xvw=;
-        b=wgfBUFWRlLBYQF+qQWvI0FQEnDWosMFQ7w6+DNIBELHGFDDG41aAnoSegLMgX+aZ1p
-         MQKY3+E6WnqLQuEMUGgFOxmRbSpTJNNQ8uTZdNoOwGpspHD4GiPYwk/Uf6nS+AbMIYwy
-         kyyf8HjeaPRVZFXktl8ihdYBnVl1bO44wWEIo=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:reply-to:to:subject:cc:in-reply-to
-         :mime-version:content-type:content-transfer-encoding
-         :content-disposition:references;
-        b=O5Y/O9edjotXVyLHIKlbAeI+M9oK349bF5nBPsxtNN5yPHmA1fBcqERMLPptVVxGwd
-         vNSW/mkUfNZvQ99P7hU2eSiV57QDWECfEs4ODdvJpMdU1n7vBfIobSH3kamelE22aCpg
-         QnTX0HReAcumk3qVAmMEAiq7QR099yLfKYEtI=
-Received: by 10.187.203.4 with SMTP id f4mr574014faq.1.1221771189064;
-        Thu, 18 Sep 2008 13:53:09 -0700 (PDT)
-Received: by 10.187.213.8 with HTTP; Thu, 18 Sep 2008 13:53:09 -0700 (PDT)
-In-Reply-To: <20080918202929.GA9948@hashpling.org>
-Content-Disposition: inline
+	id S1757447AbYIRWZF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 18 Sep 2008 18:25:05 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757438AbYIRWZF
+	(ORCPT <rfc822;git-outgoing>); Thu, 18 Sep 2008 18:25:05 -0400
+Received: from xsmtp0.ethz.ch ([82.130.70.14]:8491 "EHLO XSMTP0.ethz.ch"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1756063AbYIRWZE (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 18 Sep 2008 18:25:04 -0400
+Received: from xfe1.d.ethz.ch ([82.130.124.41]) by XSMTP0.ethz.ch with Microsoft SMTPSVC(6.0.3790.3959);
+	 Fri, 19 Sep 2008 00:25:01 +0200
+Received: from localhost.localdomain ([84.75.157.245]) by xfe1.d.ethz.ch over TLS secured channel with Microsoft SMTPSVC(6.0.3790.3959);
+	 Fri, 19 Sep 2008 00:25:01 +0200
+X-Mailer: git-send-email 1.6.0.2.489.gb13a
+X-OriginalArrivalTime: 18 Sep 2008 22:25:01.0748 (UTC) FILETIME=[6444FF40:01C919DD]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/96245>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/96246>
 
-On Thu, Sep 18, 2008 at 22:29, Charles Bailey <charles@hashpling.org> wrote:
-> I thought that the patch (a single commit) didn't really warrant a patch
-> series - being a one liner - but I made the test 0 of 1 so that people
-> could see the test failure first before deciding whether my proposed
-> patch was good or not. Sorry for the confusion.
+5723fe7 changed the call to use link() directly instead of through a
+custom wrapper, but forgot that it returns 0 or -1, not 0 or errno.
 
-Shouldn't the tests be part of the patch? ;) To prevent it from being
-broken again that is.
+Signed-off-by: Thomas Rast <trast@student.ethz.ch>
 
+---
+ sha1_file.c |    4 +++-
+ 1 files changed, 3 insertions(+), 1 deletions(-)
+
+diff --git a/sha1_file.c b/sha1_file.c
+index 9ee1ed1..aec81bb 100644
+--- a/sha1_file.c
++++ b/sha1_file.c
+@@ -2136,7 +2136,9 @@ static void write_sha1_file_prepare(const void *buf, unsigned long len,
+  */
+ int move_temp_to_file(const char *tmpfile, const char *filename)
+ {
+-	int ret = link(tmpfile, filename);
++	int ret = 0;
++	if (link(tmpfile, filename))
++		ret = errno;
+ 
+ 	/*
+ 	 * Coda hack - coda doesn't like cross-directory links,
 -- 
-Cheers,
-
-Sverre Rabbelier
+tg: (97d7fee..) t/link-returns-minus1 (depends on: origin/master)
