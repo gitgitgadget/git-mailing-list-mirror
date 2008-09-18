@@ -1,71 +1,84 @@
-From: Gustaf Hendeby <hendeby@isy.liu.se>
-Subject: Re: [PATCH 4/4] diff.c: convert builtin funcname patterns to extended
- regular expressions
-Date: Thu, 18 Sep 2008 12:15:51 +0200
-Message-ID: <48D22A57.7070300@isy.liu.se>
-References: <7v3ak06jzj.fsf@gitster.siamese.dyndns.org> <-f-gqL4SkA8Uh7hSuKT-JDY0g26jHn3fDQCE24MB1nKWUMLZWuSseg@cipher.nrlssc.navy.mil> <200809181039.46954.johan@herland.net>
+From: "Jonathan del Strother" <maillist@steelskies.com>
+Subject: Re: [PATCH 4/4] diff.c: convert builtin funcname patterns to extended regular expressions
+Date: Thu, 18 Sep 2008 11:53:48 +0100
+Message-ID: <57518fd10809180353q2564d873k98e5f6d9041d0a7@mail.gmail.com>
+References: <7v3ak06jzj.fsf@gitster.siamese.dyndns.org>
+	 <-f-gqL4SkA8Uh7hSuKT-JDY0g26jHn3fDQCE24MB1nKWUMLZWuSseg@cipher.nrlssc.navy.mil>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-Cc: Brandon Casey <casey@nrlssc.navy.mil>,
-	Junio C Hamano <gitster@pobox.com>,
-	Git Mailing List <git@vger.kernel.org>,
-	Giuseppe Bilotta <giuseppe.bilotta@gmail.com>
-To: Johan Herland <johan@herland.net>
-X-From: git-owner@vger.kernel.org Thu Sep 18 12:17:23 2008
+Cc: "Junio C Hamano" <gitster@pobox.com>,
+	"Arjen Laarhoven" <arjen@yaph.org>,
+	"Mike Ralphson" <mike.ralphson@gmail.com>,
+	"Johannes Sixt" <j.sixt@viscovery.net>,
+	"Jeff King" <peff@peff.net>,
+	"Boyd Lynn Gerber" <gerberb@zenez.com>,
+	"Git Mailing List" <git@vger.kernel.org>,
+	"Avery Pennarun" <apenwarr@gmail.com>,
+	"Johan Herland" <johan@herland.net>,
+	"Andreas Ericsson" <ae@op5.se>, "Kirill Smelkov" <kirr@mns.spb.ru>,
+	"Giuseppe Bilotta" <giuseppe.bilotta@gmail.com>
+To: "Brandon Casey" <casey@nrlssc.navy.mil>
+X-From: git-owner@vger.kernel.org Thu Sep 18 12:55:03 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KgGZU-0001sk-Vv
-	for gcvg-git-2@gmane.org; Thu, 18 Sep 2008 12:17:13 +0200
+	id 1KgHA4-0005jW-R6
+	for gcvg-git-2@gmane.org; Thu, 18 Sep 2008 12:55:01 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755085AbYIRKP5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 18 Sep 2008 06:15:57 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754929AbYIRKP5
-	(ORCPT <rfc822;git-outgoing>); Thu, 18 Sep 2008 06:15:57 -0400
-Received: from bogotron.isy.liu.se ([130.236.48.26]:59450 "EHLO
-	bogotron.isy.liu.se" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754820AbYIRKP4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 18 Sep 2008 06:15:56 -0400
-Received: from spamotron.isy.liu.se (spamotron.isy.liu.se [130.236.48.19])
-	by bogotron.isy.liu.se (Postfix) with ESMTP id E9A9B25A44;
-	Thu, 18 Sep 2008 12:15:53 +0200 (MEST)
-Received: from bogotron.isy.liu.se ([130.236.48.26])
- by spamotron.isy.liu.se (spamotron.isy.liu.se [130.236.48.19]) (amavisd-new, port 10022)
- with ESMTP id 24942-04; Fri,  4 Jul 2008 02:08:55 +0200 (MEST)
-Received: from pluring.isy.liu.se (pluring.isy.liu.se [130.236.56.134])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by bogotron.isy.liu.se (Postfix) with ESMTP id 576F925A41;
-	Thu, 18 Sep 2008 12:15:53 +0200 (MEST)
-User-Agent: Thunderbird 2.0.0.12 (X11/20080213)
-In-Reply-To: <200809181039.46954.johan@herland.net>
-X-Enigmail-Version: 0.95.7
-X-Virus-Scanned: by amavisd-new at isy.liu.se
-X-Spam-Checker-Version: SpamAssassin 2.63-isy (2004-01-11) on spamotron.isy.liu.se
+	id S1754039AbYIRKxv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 18 Sep 2008 06:53:51 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753802AbYIRKxv
+	(ORCPT <rfc822;git-outgoing>); Thu, 18 Sep 2008 06:53:51 -0400
+Received: from rv-out-0506.google.com ([209.85.198.228]:41491 "EHLO
+	rv-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753446AbYIRKxt (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 18 Sep 2008 06:53:49 -0400
+Received: by rv-out-0506.google.com with SMTP id k40so3658914rvb.1
+        for <git@vger.kernel.org>; Thu, 18 Sep 2008 03:53:48 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:sender
+         :to:subject:cc:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:references
+         :x-google-sender-auth;
+        bh=yjm8rEaBJjN+iKbWLX3UZG6Lt9uSROoY3i4mhZStRJg=;
+        b=FwKe90PkPTMYiP55sL4sfjGzlEQHTk4uY+shUoBBUrD9yuPXkboCqSOuvDCM+TOAbB
+         T4yWD7sNtmPSAJ7WTzdO0jrd034JmFdJBoZ1ZUvKYHWeJ1aOS61xbl6hbqrmi/atRjfm
+         yG1pqIu7YTfLrQ0/FeYTjVWzu7REWIrAzaKGI=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:sender:to:subject:cc:in-reply-to:mime-version
+         :content-type:content-transfer-encoding:content-disposition
+         :references:x-google-sender-auth;
+        b=qVn1Tl/fVLPgMURLrX3HVDEUmALGo0FuZUy00MRBdkGCPTCiHd4xd26SBwjHKSO5y2
+         7GTCm9KtHAeN9O6M2OsFHpdt0I6nh3ufcBBuRywb/Z6rNFkeffX0HxOk0cQkLAlTHFNg
+         XeYvFv47oQ574Kl5p0hOHMTf73/Mf7ixlIa1c=
+Received: by 10.142.237.20 with SMTP id k20mr1318490wfh.225.1221735228908;
+        Thu, 18 Sep 2008 03:53:48 -0700 (PDT)
+Received: by 10.143.6.3 with HTTP; Thu, 18 Sep 2008 03:53:48 -0700 (PDT)
+In-Reply-To: <-f-gqL4SkA8Uh7hSuKT-JDY0g26jHn3fDQCE24MB1nKWUMLZWuSseg@cipher.nrlssc.navy.mil>
+Content-Disposition: inline
+X-Google-Sender-Auth: cdb10d04fa8c1548
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/96189>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/96190>
 
-On 09/18/2008 10:39 AM, Johan Herland wrote:
-> On Thursday 18 September 2008, Brandon Casey wrote:
->> This is a blind conversion removing \\ before ( and { etc.
->> and adding \\ before naked ( and { etc.
->>
->> I hope the authors who last touched these patterns will help with
->> testing:
->>
->> bibtex: Johan Herland
-> 
-> This was moved by Junio when he applied my patch; the line was originally 
-> written by Gustaf Hendeby in 23b5beb28fdadbb1d80ebf686a35385609f7a180
+On Thu, Sep 18, 2008 at 1:21 AM, Brandon Casey <casey@nrlssc.navy.mil> wrote:
+> Signed-off-by: Brandon Casey <casey@nrlssc.navy.mil>
+> ---
+>
+>
+> This is a blind conversion removing \\ before ( and { etc.
+> and adding \\ before naked ( and { etc.
+>
+> I hope the authors who last touched these patterns will help with testing:
 
-I'm on the road the rest of this week and don't have access to a
-suitable machine for testing until I get back.  Will put testing this on
-the list of things to do for Monday.  The patch looks good, though, but
-I haven't actually tested it.
 
-/Gustaf
+None of the patterns using \\s seem to work for me.  I had to replace
+them with [ \t] - is this a problem with the darwin regex
+compatibility library or something?  I applied the patches on master
+(97d7fee2cb), and am running OS X 10.5.5.
