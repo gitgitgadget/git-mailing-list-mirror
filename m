@@ -1,77 +1,79 @@
-From: David Brown <git@davidb.org>
-Subject: Help breaking up a large merge.
-Date: Thu, 18 Sep 2008 08:21:55 -0700
-Message-ID: <20080918152154.GA27019@linode.davidb.org>
+From: Karl =?iso-8859-1?Q?Hasselstr=F6m?= <kha@treskal.com>
+Subject: Re: [StGit PATCH] Convert "sink" to the new infrastructure
+Date: Thu, 18 Sep 2008 17:47:57 +0200
+Message-ID: <20080918154757.GA19868@diana.vm.bytemark.co.uk>
+References: <20080914085118.GC30664@diana.vm.bytemark.co.uk> <b0943d9e0809141419q6facb21at627e658805f1d223@mail.gmail.com> <20080915075740.GB14452@diana.vm.bytemark.co.uk> <b0943d9e0809150944o71acafe7ndeda500b1fba97df@mail.gmail.com> <20080916074024.GA2454@diana.vm.bytemark.co.uk> <b0943d9e0809160759w5c9be510t3b33d5d983bff5a7@mail.gmail.com> <20080916193647.GA12513@diana.vm.bytemark.co.uk> <b0943d9e0809170909j4fce34acr8f0b844d0cb5281d@mail.gmail.com> <20080918072450.GB12550@diana.vm.bytemark.co.uk> <b0943d9e0809180431x30c8f751g374732ee861ffe61@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii; format=flowed
-To: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Thu Sep 18 17:24:08 2008
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: Catalin Marinas <catalin.marinas@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Sep 18 17:27:14 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KgLML-0006QI-Uj
-	for gcvg-git-2@gmane.org; Thu, 18 Sep 2008 17:23:58 +0200
+	id 1KgLPR-0007id-Lx
+	for gcvg-git-2@gmane.org; Thu, 18 Sep 2008 17:27:10 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754592AbYIRPV4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 18 Sep 2008 11:21:56 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755527AbYIRPV4
-	(ORCPT <rfc822;git-outgoing>); Thu, 18 Sep 2008 11:21:56 -0400
-Received: from linode.davidb.org ([72.14.176.16]:55176 "EHLO mail.davidb.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754293AbYIRPVz (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 18 Sep 2008 11:21:55 -0400
-Received: from davidb by mail.davidb.org with local (Exim 4.69 #1 (Debian))
-	id 1KgLKN-0007K3-0R
-	for <git@vger.kernel.org>; Thu, 18 Sep 2008 08:21:55 -0700
+	id S1754236AbYIRPZ7 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 18 Sep 2008 11:25:59 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754128AbYIRPZ7
+	(ORCPT <rfc822;git-outgoing>); Thu, 18 Sep 2008 11:25:59 -0400
+Received: from diana.vm.bytemark.co.uk ([80.68.90.142]:2321 "EHLO
+	diana.vm.bytemark.co.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754219AbYIRPZ6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 18 Sep 2008 11:25:58 -0400
+Received: from kha by diana.vm.bytemark.co.uk with local (Exim 3.36 #1 (Debian))
+	id 1KgLjZ-0005CA-00; Thu, 18 Sep 2008 16:47:57 +0100
 Content-Disposition: inline
-User-Agent: Mutt/1.5.16 (2007-06-09)
+In-Reply-To: <b0943d9e0809180431x30c8f751g374732ee861ffe61@mail.gmail.com>
+X-Manual-Spam-Check: kha@treskal.com, clean
+User-Agent: Mutt/1.5.9i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/96201>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/96202>
 
-Say we have a tree that we've been working on for a few months.  An
-outside vendor has also been working on the same tree during this
-time, and we need to merge with their work.
+On 2008-09-18 12:31:35 +0100, Catalin Marinas wrote:
 
-The difficulty I'm having is that there are a lot of conflicts
-resulting from the merge (expected), and it would be nice to somehow
-be able to work on a smaller set of these conflicts at a time.
+> 2008/9/18 Karl Hasselstr=F6m <kha@treskal.com>:
+>
+> > Ah, OK. Then I think you want something like this:
+> >
+> >  try:
+> >      trans.reorder_patches(applied, unapplied, hidden, iw)
+> >  except transaction.TransactionHalted:
+> >      if not options.conflict:
+> >          trans.abort(iw)
+> >          raise common.CmdException(
+> >              'Operation rolled back -- would result in conflicts')
+> >  return trans.run(iw)
+>
+> I tried this before but trans.abort(iw) seems to check out the iw
+> index which is the one immediately after the push conflict, though
+> the stack is unmodified, i.e. stg status shows some missing files
+> (which are added by subsequent patches after the conflicting one)
+> and a conflict.
 
-Some of the conflicts are caused by a single change in the other tree.
-This is easy to cherry-pick into my tree, resolve, and then test those
-changes independently.
+Hmm, strange. That's not what I thought it was supposed to do. Look at
+how coalesce uses it, for example.
 
-But other conflicts are caused by groups of commits that are
-interleaved with others.
+> Or simply give up on the --conflict option and always stop after the
+> conflict (catch the exception and don't re-raise it). This way we
+> don't have to bother with checking out the initial state. With the
+> "undo" command in your branch, people could simply revert the stack
+> to the state prior to the sink command. Maybe that's a good idea so
+> that we don't complicate commands further with different conflict
+> behaviours.
 
-Ideally, I'd like to be able to divide this conflict resolution work
-up among a small group of people, have everybody work on part, test
-their part, and then I could bring all of the resolved versions
-together, test that, and make that the actual merge commit in our
-repo.  I've had a few ideas, but none really seem to work all that
-well.
+Yes, this is what every other command does, so it makes sense
+consistency-wise.
 
-   - Do "git merge -s ours their-tree".  Then, in another branch try
-     the merge, and resolve a group of files that go together.  Put
-     these into the 'ours' tree and ammend these changes to the merge
-     commit.  The problem here is that this misses all of the merges
-     that would happen automatically.
+But I liked the idea of your "roll-back-in-case-of-conflicts" flag; it
+would be nice to have in many commands.
 
-   - "git branch -b tmp $(git merge-base our-head their-tree)", and
-     then: "git checkout their-tree filenames" for a small group of
-     conflicting files.  Commit this, then in my regular tree, cherry
-     pick this change and resolve the conflict.  Then, when finally
-     doing the merge with their tree, these files can be resolved by
-     just using our version.  This still requires doing some tracking.
-
-Any other ideas?
-
-In the future, we're going to try and work more closely with the
-vendor, but we have to get to the point of having something common to
-start that.
-
-Thanks,
-David
+--=20
+Karl Hasselstr=F6m, kha@treskal.com
+      www.treskal.com/kalle
