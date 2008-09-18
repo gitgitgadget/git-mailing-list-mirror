@@ -1,89 +1,77 @@
-From: Linus Torvalds <torvalds@linux-foundation.org>
-Subject: Re: [PATCH] Documentation: warn against merging in a dirty tree
-Date: Thu, 18 Sep 2008 08:15:13 -0700 (PDT)
-Message-ID: <alpine.LFD.1.10.0809180804100.3337@nehalem.linux-foundation.org>
-References: <200809160048.31443.trast@student.ethz.ch>  <1221518994-26111-1-git-send-email-trast@student.ethz.ch>  <1221518994-26111-2-git-send-email-trast@student.ethz.ch>  <7vtzch7z7u.fsf@gitster.siamese.dyndns.org>
- <32541b130809151653w27d7876fp35e0967d597ae2a9@mail.gmail.com>
+From: David Brown <git@davidb.org>
+Subject: Help breaking up a large merge.
+Date: Thu, 18 Sep 2008 08:21:55 -0700
+Message-ID: <20080918152154.GA27019@linode.davidb.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Thomas Rast <trast@student.ethz.ch>, git@vger.kernel.org,
-	Jakub Narebski <jnareb@gmail.com>,
-	Miklos Vajna <vmiklos@frugalware.org>
-To: Avery Pennarun <apenwarr@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Sep 18 17:23:07 2008
+Content-Type: text/plain; charset=us-ascii; format=flowed
+To: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Thu Sep 18 17:24:08 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KgLLA-0005rJ-DV
-	for gcvg-git-2@gmane.org; Thu, 18 Sep 2008 17:22:44 +0200
+	id 1KgLML-0006QI-Uj
+	for gcvg-git-2@gmane.org; Thu, 18 Sep 2008 17:23:58 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756116AbYIRPVb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 18 Sep 2008 11:21:31 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755578AbYIRPVa
-	(ORCPT <rfc822;git-outgoing>); Thu, 18 Sep 2008 11:21:30 -0400
-Received: from smtp1.linux-foundation.org ([140.211.169.13]:42164 "EHLO
-	smtp1.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1755298AbYIRPV3 (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 18 Sep 2008 11:21:29 -0400
-Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [140.211.169.55])
-	by smtp1.linux-foundation.org (8.14.2/8.13.5/Debian-3ubuntu1.1) with ESMTP id m8IFFEdl025564
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Thu, 18 Sep 2008 08:15:15 -0700
-Received: from localhost (localhost [127.0.0.1])
-	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id m8IFFDVa005376;
-	Thu, 18 Sep 2008 08:15:13 -0700
-In-Reply-To: <32541b130809151653w27d7876fp35e0967d597ae2a9@mail.gmail.com>
-User-Agent: Alpine 1.10 (LFD 962 2008-03-14)
-X-Spam-Status: No, hits=-5.437 required=5 tests=AWL,BAYES_00,OSDL_HEADER_SUBJECT_BRACKETED,PATCH_SUBJECT_OSDL
-X-Spam-Checker-Version: SpamAssassin 3.2.4-osdl_revision__1.47__
-X-MIMEDefang-Filter: lf$Revision: 1.188 $
-X-Scanned-By: MIMEDefang 2.63 on 140.211.169.13
+	id S1754592AbYIRPV4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 18 Sep 2008 11:21:56 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755527AbYIRPV4
+	(ORCPT <rfc822;git-outgoing>); Thu, 18 Sep 2008 11:21:56 -0400
+Received: from linode.davidb.org ([72.14.176.16]:55176 "EHLO mail.davidb.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754293AbYIRPVz (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 18 Sep 2008 11:21:55 -0400
+Received: from davidb by mail.davidb.org with local (Exim 4.69 #1 (Debian))
+	id 1KgLKN-0007K3-0R
+	for <git@vger.kernel.org>; Thu, 18 Sep 2008 08:21:55 -0700
+Content-Disposition: inline
+User-Agent: Mutt/1.5.16 (2007-06-09)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/96200>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/96201>
 
+Say we have a tree that we've been working on for a few months.  An
+outside vendor has also been working on the same tree during this
+time, and we need to merge with their work.
 
+The difficulty I'm having is that there are a lot of conflicts
+resulting from the merge (expected), and it would be nice to somehow
+be able to work on a smaller set of these conflicts at a time.
 
-On Mon, 15 Sep 2008, Avery Pennarun wrote:
-> 
-> But how do you abort a *failed* merge in a situation like Linus's
-> example?  "git reset --hard HEAD" would destroy the unstaged Makefile
-> change.
+Some of the conflicts are caused by a single change in the other tree.
+This is easy to cherry-pick into my tree, resolve, and then test those
+changes independently.
 
-As mentioned by others, sometimes you are simply willing to take the risk. 
-If I have dirty data, I still want to merge, because (a) my dirty data is 
-a _convenience_ and (b) the risk of me having to do a "git reset" is 
-pretty low anyway.
+But other conflicts are caused by groups of commits that are
+interleaved with others.
 
-That said, it's actually kind of sad that we don't expose a real 
-capability that the git plumbing does have. Namely
+Ideally, I'd like to be able to divide this conflict resolution work
+up among a small group of people, have everybody work on part, test
+their part, and then I could bring all of the resolved versions
+together, test that, and make that the actual merge commit in our
+repo.  I've had a few ideas, but none really seem to work all that
+well.
 
-	git read-tree -u -m HEAD ORIG_HEAD
+   - Do "git merge -s ours their-tree".  Then, in another branch try
+     the merge, and resolve a group of files that go together.  Put
+     these into the 'ours' tree and ammend these changes to the merge
+     commit.  The problem here is that this misses all of the merges
+     that would happen automatically.
 
-should do the right thing if you want to undo a merge (except it doesn't 
-actually write ORIG_HEAD to be the new head: you could use "git reset" 
-with --soft to do that, or just git update-ref).
+   - "git branch -b tmp $(git merge-base our-head their-tree)", and
+     then: "git checkout their-tree filenames" for a small group of
+     conflicting files.  Commit this, then in my regular tree, cherry
+     pick this change and resolve the conflict.  Then, when finally
+     doing the merge with their tree, these files can be resolved by
+     just using our version.  This still requires doing some tracking.
 
-So it _may_ be that something like
+Any other ideas?
 
-	[alias]
-		undo = !git read-tree -u -m HEAD ORIG_HEAD && git reset --soft ORIG_HEAD
+In the future, we're going to try and work more closely with the
+vendor, but we have to get to the point of having something common to
+start that.
 
-would actually give you "git undo". 
-
-So we have the technology, and we just don't _expose_ that capability as a 
-"git reset" thing. And we probably should. In fact, that is often the 
-thing people really want, and it would have made sense to have it as the 
-default action, but the initial design for "git reset" was literally as a 
-way to get you out of a sticky corner when you had unmerged entries and 
-you just wanted to throw away crud.
-
-NOTE NOTE NOTE! I did _not_ test that the git read-tree thing actually 
-works, or that the above alias does the right thing. Caveat testor! You're 
-on your own. But I agree that we should have something like that.
-
-		Linus
+Thanks,
+David
