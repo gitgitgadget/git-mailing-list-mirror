@@ -1,64 +1,71 @@
-From: Johannes Sixt <j.sixt@viscovery.net>
-Subject: Re: [PATCH] diff/diff-files: do not use --cc too aggressively
-Date: Thu, 18 Sep 2008 11:30:26 +0200
-Message-ID: <48D21FB2.50700@viscovery.net>
-References: <48D0B907.7040903@viscovery.net> <7vwsha6761.fsf@gitster.siamese.dyndns.org> <48D1EDB7.5070107@viscovery.net> <7vy71qyo9d.fsf@gitster.siamese.dyndns.org> <48D1F426.4040208@viscovery.net> <7vskryym24.fsf@gitster.siamese.dyndns.org> <48D203B3.90807@viscovery.net> <7v7i99zuqh.fsf_-_@gitster.siamese.dyndns.org>
+From: Gustaf Hendeby <hendeby@isy.liu.se>
+Subject: Re: [PATCH 4/4] diff.c: convert builtin funcname patterns to extended
+ regular expressions
+Date: Thu, 18 Sep 2008 12:15:51 +0200
+Message-ID: <48D22A57.7070300@isy.liu.se>
+References: <7v3ak06jzj.fsf@gitster.siamese.dyndns.org> <-f-gqL4SkA8Uh7hSuKT-JDY0g26jHn3fDQCE24MB1nKWUMLZWuSseg@cipher.nrlssc.navy.mil> <200809181039.46954.johan@herland.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Sep 18 11:31:47 2008
+Cc: Brandon Casey <casey@nrlssc.navy.mil>,
+	Junio C Hamano <gitster@pobox.com>,
+	Git Mailing List <git@vger.kernel.org>,
+	Giuseppe Bilotta <giuseppe.bilotta@gmail.com>
+To: Johan Herland <johan@herland.net>
+X-From: git-owner@vger.kernel.org Thu Sep 18 12:17:23 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KgFrW-00055L-GB
-	for gcvg-git-2@gmane.org; Thu, 18 Sep 2008 11:31:46 +0200
+	id 1KgGZU-0001sk-Vv
+	for gcvg-git-2@gmane.org; Thu, 18 Sep 2008 12:17:13 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755538AbYIRJag (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 18 Sep 2008 05:30:36 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755503AbYIRJag
-	(ORCPT <rfc822;git-outgoing>); Thu, 18 Sep 2008 05:30:36 -0400
-Received: from lilzmailso02.liwest.at ([212.33.55.13]:26243 "EHLO
-	lilzmailso02.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754997AbYIRJaf (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 18 Sep 2008 05:30:35 -0400
-Received: from cm56-163-160.liwest.at ([86.56.163.160] helo=linz.eudaptics.com)
-	by lilzmailso02.liwest.at with esmtpa (Exim 4.66)
-	(envelope-from <j.sixt@viscovery.net>)
-	id 1KgFqE-0000wY-IU; Thu, 18 Sep 2008 11:30:26 +0200
-Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.42])
-	by linz.eudaptics.com (Postfix) with ESMTP
-	id 52E364FB; Thu, 18 Sep 2008 11:30:26 +0200 (CEST)
-User-Agent: Thunderbird 2.0.0.6 (Windows/20070728)
-In-Reply-To: <7v7i99zuqh.fsf_-_@gitster.siamese.dyndns.org>
-X-Enigmail-Version: 0.95.5
-X-Spam-Score: 1.7 (+)
-X-Spam-Report: ALL_TRUSTED=-1.8, BAYES_99=3.5
+	id S1755085AbYIRKP5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 18 Sep 2008 06:15:57 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754929AbYIRKP5
+	(ORCPT <rfc822;git-outgoing>); Thu, 18 Sep 2008 06:15:57 -0400
+Received: from bogotron.isy.liu.se ([130.236.48.26]:59450 "EHLO
+	bogotron.isy.liu.se" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754820AbYIRKP4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 18 Sep 2008 06:15:56 -0400
+Received: from spamotron.isy.liu.se (spamotron.isy.liu.se [130.236.48.19])
+	by bogotron.isy.liu.se (Postfix) with ESMTP id E9A9B25A44;
+	Thu, 18 Sep 2008 12:15:53 +0200 (MEST)
+Received: from bogotron.isy.liu.se ([130.236.48.26])
+ by spamotron.isy.liu.se (spamotron.isy.liu.se [130.236.48.19]) (amavisd-new, port 10022)
+ with ESMTP id 24942-04; Fri,  4 Jul 2008 02:08:55 +0200 (MEST)
+Received: from pluring.isy.liu.se (pluring.isy.liu.se [130.236.56.134])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by bogotron.isy.liu.se (Postfix) with ESMTP id 576F925A41;
+	Thu, 18 Sep 2008 12:15:53 +0200 (MEST)
+User-Agent: Thunderbird 2.0.0.12 (X11/20080213)
+In-Reply-To: <200809181039.46954.johan@herland.net>
+X-Enigmail-Version: 0.95.7
+X-Virus-Scanned: by amavisd-new at isy.liu.se
+X-Spam-Checker-Version: SpamAssassin 2.63-isy (2004-01-11) on spamotron.isy.liu.se
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/96188>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/96189>
 
-Junio C Hamano schrieb:
-> Textual diff output for unmerged paths was too eager to give condensed
-> combined diff.  This has two problems:
+On 09/18/2008 10:39 AM, Johan Herland wrote:
+> On Thursday 18 September 2008, Brandon Casey wrote:
+>> This is a blind conversion removing \\ before ( and { etc.
+>> and adding \\ before naked ( and { etc.
+>>
+>> I hope the authors who last touched these patterns will help with
+>> testing:
+>>
+>> bibtex: Johan Herland
 > 
->  (1) "diff --base/--ours/--theirs" (and "diff-files -p" with the same) is
->      a request to compare with the named stage.  We showed "-c -p" output
->      instead;
+> This was moved by Junio when he applied my patch; the line was originally 
+> written by Gustaf Hendeby in 23b5beb28fdadbb1d80ebf686a35385609f7a180
 
-I cannot reproduce what you describe here. "diff --base/--ours/--theirs"
-works as expected with and without this patch.
+I'm on the road the rest of this week and don't have access to a
+suitable machine for testing until I get back.  Will put testing this on
+the list of things to do for Monday.  The patch looks good, though, but
+I haven't actually tested it.
 
->  (2) "diff -c" (and "diff-files -c -p") is a request to view combined diff
->      without condensing (otherwise the user would have explicitly asked
->      for --cc, not -c).  We showed "--cc" output anyway.
-
-The patch fixes this:
-
-Tested-by: Johannes Sixt <johannes.sixt@telecom.at>
-
--- Hannes
+/Gustaf
