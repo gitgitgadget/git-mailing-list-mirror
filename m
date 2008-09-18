@@ -1,107 +1,98 @@
-From: Andreas Ericsson <ae@op5.se>
-Subject: Re: [PATCH 2/4] diff.c: associate a flag with each pattern and use
- it for compiling regex
-Date: Thu, 18 Sep 2008 10:06:28 +0200
-Message-ID: <48D20C04.1020703@op5.se>
-References: <7v3ak06jzj.fsf@gitster.siamese.dyndns.org> <GZAEBf1BcP9-dznrIesxaE4Rb8bim6DpwDWCb9yWl99UVoQC9Dog0A@cipher.nrlssc.navy.mil> <7vod2m1464.fsf@gitster.siamese.dyndns.org> <48D1F80C.5030502@op5.se> <7vod2myljk.fsf@gitster.siamese.dyndns.org>
+From: Thomas Rast <trast@student.ethz.ch>
+Subject: Re: [RFC] log(n)-transmissions common commit handshake
+Date: Thu, 18 Sep 2008 10:18:18 +0200
+Message-ID: <200809181018.52811.trast@student.ethz.ch>
+References: <200809180100.32626.trast@student.ethz.ch>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15; format=flowed
+Content-Type: multipart/signed;
+  boundary="nextPart8487783.o6CD4nvESd";
+  protocol="application/pgp-signature";
+  micalg=pgp-sha1
 Content-Transfer-Encoding: 7bit
-Cc: Brandon Casey <casey@nrlssc.navy.mil>,
-	Arjen Laarhoven <arjen@yaph.org>,
-	Mike Ralphson <mike.ralphson@gmail.com>,
-	Johannes Sixt <j.sixt@viscovery.net>,
-	Jeff King <peff@peff.net>,
-	Boyd Lynn Gerber <gerberb@zenez.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Sep 18 10:07:54 2008
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Sep 18 10:20:30 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KgEYA-0003fx-Ki
-	for gcvg-git-2@gmane.org; Thu, 18 Sep 2008 10:07:43 +0200
+	id 1KgEkX-0007dI-HK
+	for gcvg-git-2@gmane.org; Thu, 18 Sep 2008 10:20:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755944AbYIRIGh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 18 Sep 2008 04:06:37 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755937AbYIRIGg
-	(ORCPT <rfc822;git-outgoing>); Thu, 18 Sep 2008 04:06:36 -0400
-Received: from mail.op5.se ([193.201.96.20]:38446 "EHLO mail.op5.se"
+	id S1752769AbYIRIS4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 18 Sep 2008 04:18:56 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752789AbYIRIS4
+	(ORCPT <rfc822;git-outgoing>); Thu, 18 Sep 2008 04:18:56 -0400
+Received: from xsmtp0.ethz.ch ([82.130.70.14]:34006 "EHLO XSMTP0.ethz.ch"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751449AbYIRIGe (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 18 Sep 2008 04:06:34 -0400
-Received: from localhost (localhost.localdomain [127.0.0.1])
-	by mail.op5.se (Postfix) with ESMTP id BBE281B80077;
-	Thu, 18 Sep 2008 09:56:31 +0200 (CEST)
-X-Virus-Scanned: amavisd-new at 
-X-Spam-Flag: NO
-X-Spam-Score: -3.829
-X-Spam-Level: 
-X-Spam-Status: No, score=-3.829 tagged_above=-10 required=6.6
-	tests=[ALL_TRUSTED=-1.8, AWL=0.570, BAYES_00=-2.599]
-Received: from mail.op5.se ([127.0.0.1])
-	by localhost (mail.op5.se [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id oBEzgx1y56iv; Thu, 18 Sep 2008 09:56:29 +0200 (CEST)
-Received: from clix.int.op5.se (unknown [192.168.1.171])
-	by mail.op5.se (Postfix) with ESMTP id A0E581B80081;
-	Thu, 18 Sep 2008 09:56:27 +0200 (CEST)
-User-Agent: Thunderbird 2.0.0.16 (X11/20080723)
-In-Reply-To: <7vod2myljk.fsf@gitster.siamese.dyndns.org>
+	id S1752333AbYIRISy (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 18 Sep 2008 04:18:54 -0400
+Received: from xfe2.d.ethz.ch ([82.130.124.42]) by XSMTP0.ethz.ch with Microsoft SMTPSVC(6.0.3790.3959);
+	 Thu, 18 Sep 2008 10:18:52 +0200
+Received: from pcjremy.inf.ethz.ch ([129.132.153.233]) by xfe2.d.ethz.ch over TLS secured channel with Microsoft SMTPSVC(6.0.3790.3959);
+	 Thu, 18 Sep 2008 10:18:52 +0200
+User-Agent: KMail/1.9.9
+In-Reply-To: <200809180100.32626.trast@student.ethz.ch>
+X-OriginalArrivalTime: 18 Sep 2008 08:18:52.0620 (UTC) FILETIME=[2F82D8C0:01C91967]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/96180>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/96181>
 
-Junio C Hamano wrote:
-> Andreas Ericsson <ae@op5.se> writes:
-> 
->> Junio C Hamano wrote:
->> ...
->>>>  static struct funcname_pattern {
->>>>  	char *name;
->>>>  	char *pattern;
->>>> +	int cflags;
->>> What does "C" stand for?
->> "compile". It's the same name as regcomp(3) uses for the flags being
->> used to compile the regular expression. The full mnemonic name would
->> be regex_compile_flag, which is a bit unwieldy. Perhaps regcomp_flags
->> would be a good compromise?
-> 
-> Ah, I see.
-> 
-> When I saw that new field for the first time, I didn't think it will be
-> used to store the bare flag values regcomp/regexec library would accept
-> directly (I expected we would see #define or enum to tweak our own set of
-> features, not limiting ourselves EXTENDED/ICASE etc. that regcomp/regexec
-> library supports)
-> 
-> IOW, it just did not click for me to look at "man 3 regcomp" which says:
-> 
->     int regcomp(regex_t *preg, const char *regex, int cflags);
-> 
-> So unless others feel that we might get a better layering separation by
-> not storing REG_EXTENDED and stuff directly in that field (which was my
-> initial reaction without looking at 4/4 which does store REG_EXTENDED
-> there without our own enums), cflag is perfectly a good name here.
-> 
+--nextPart8487783.o6CD4nvESd
+Content-Type: text/plain;
+  charset="utf-8"
+Content-Transfer-Encoding: quoted-printable
+Content-Disposition: inline
 
-I think it makes perfect sense to use whatever we pass when compiling
-the regex. I wouldn't dare try to hack up something that pre-mangles
-a regular expression and assume it gets it right everywhere anyway, so
-I'm quite happy with leaving it all to regcomp(3) and friends.
+I wrote:
+> * Impact/clever use of refs
+>=20
+>   For some reason, current git sends all refs to the server, even if
+>   the server should already know about lots of them.  For example, in
+>   git.git, emitting v1.6.0.2 covers almost all tags in the repository
+>   by simple ancestor scanning.
+>=20
+>   Is there a reason for this behaviour?  Otherwise it would be better
+>   to emit them in date order and intelligently handle commons.  (In
+>   fact this does not depend on the discussed change.)
+
+As an addendum, I think the following would be a good way to cleverly
+use refs to reduce work:
+
+Cache a "reduced" DAG which just maps the ref'd commit relationships,
+i.e., shows the reachability of refs only.  This needs to be written
+out to disk between invocations.
+
+At the start of the protocol, the server announces all its refs.  We
+can use the reduced DAG to infer the minimal set of ref heads we need
+to announce to have the server know all common ones.  We can also mark
+all the other refs as "common but not announced yet", so that the
+backwards marking and searching routines know to stop there.
+
+This should reduce the number of refs listed back to the server to
+only a handful, and at the same time, stop the client from searching
+backwards through _all_ history (which can take a bit of time, and is
+one of the weaknesses of my proposal) in most cases.
+
+=2D Thomas
+
+=2D-=20
+Thomas Rast
+trast@student.ethz.ch
 
 
-> Thanks --- I am bit under the weather and not thinking quite straight.
-> 
 
-Mix 2cc's of 7yo Havana Club into a large cup of tea. Drink one such
-cup every hour and eat a fresh fruit with it. I haven't been ill a day
-in my life since I came up with that most excellent cure for absolutely
-everything. If nothing else, it makes it a bit less boring to be ill.
+--nextPart8487783.o6CD4nvESd
+Content-Type: application/pgp-signature; name=signature.asc 
+Content-Description: This is a digitally signed message part.
 
--- 
-Andreas Ericsson                   andreas.ericsson@op5.se
-OP5 AB                             www.op5.se
-Tel: +46 8-230225                  Fax: +46 8-230231
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.0.9 (GNU/Linux)
+
+iEYEABECAAYFAkjSDuwACgkQqUud07tmzP1f6QCgkTYq6tqUwG+qmGt07GUbnN7G
+cDYAoIV6lihai1dIKsRtYkFA3/ay14Jx
+=ptHv
+-----END PGP SIGNATURE-----
+
+--nextPart8487783.o6CD4nvESd--
