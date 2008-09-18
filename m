@@ -1,79 +1,107 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 4/4] diff.c: convert builtin funcname patterns to
- extended regular expressions
-Date: Thu, 18 Sep 2008 00:31:57 -0700
-Message-ID: <7vfxnxzz82.fsf@gitster.siamese.dyndns.org>
-References: <7v3ak06jzj.fsf@gitster.siamese.dyndns.org>
- <-f-gqL4SkA8Uh7hSuKT-JDY0g26jHn3fDQCE24MB1nKWUMLZWuSseg@cipher.nrlssc.navy.mil> <48D200D7.9080800@op5.se>
+From: Andreas Ericsson <ae@op5.se>
+Subject: Re: [PATCH 2/4] diff.c: associate a flag with each pattern and use
+ it for compiling regex
+Date: Thu, 18 Sep 2008 10:06:28 +0200
+Message-ID: <48D20C04.1020703@op5.se>
+References: <7v3ak06jzj.fsf@gitster.siamese.dyndns.org> <GZAEBf1BcP9-dznrIesxaE4Rb8bim6DpwDWCb9yWl99UVoQC9Dog0A@cipher.nrlssc.navy.mil> <7vod2m1464.fsf@gitster.siamese.dyndns.org> <48D1F80C.5030502@op5.se> <7vod2myljk.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=ISO-8859-15; format=flowed
+Content-Transfer-Encoding: 7bit
 Cc: Brandon Casey <casey@nrlssc.navy.mil>,
 	Arjen Laarhoven <arjen@yaph.org>,
 	Mike Ralphson <mike.ralphson@gmail.com>,
 	Johannes Sixt <j.sixt@viscovery.net>,
 	Jeff King <peff@peff.net>,
 	Boyd Lynn Gerber <gerberb@zenez.com>,
-	Git Mailing List <git@vger.kernel.org>,
-	Avery Pennarun <apenwarr@gmail.com>,
-	Johan Herland <johan@herland.net>,
-	Kirill Smelkov <kirr@mns.spb.ru>,
-	Giuseppe Bilotta <giuseppe.bilotta@gmail.com>
-To: Andreas Ericsson <ae@op5.se>
-X-From: git-owner@vger.kernel.org Thu Sep 18 09:36:51 2008
+	Git Mailing List <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Sep 18 10:07:54 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KgE0w-0000cW-7G
-	for gcvg-git-2@gmane.org; Thu, 18 Sep 2008 09:33:22 +0200
+	id 1KgEYA-0003fx-Ki
+	for gcvg-git-2@gmane.org; Thu, 18 Sep 2008 10:07:43 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752628AbYIRHcO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 18 Sep 2008 03:32:14 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752081AbYIRHcO
-	(ORCPT <rfc822;git-outgoing>); Thu, 18 Sep 2008 03:32:14 -0400
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:62622 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751917AbYIRHcO (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 18 Sep 2008 03:32:14 -0400
-Received: from localhost.localdomain (localhost [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id EFB3F62385;
-	Thu, 18 Sep 2008 03:32:12 -0400 (EDT)
-Received: from pobox.com (ip68-225-240-211.oc.oc.cox.net [68.225.240.211])
- (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
- certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
- ESMTPSA id 6EB2462381; Thu, 18 Sep 2008 03:31:59 -0400 (EDT)
-In-Reply-To: <48D200D7.9080800@op5.se> (Andreas Ericsson's message of "Thu,
- 18 Sep 2008 09:18:47 +0200")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: E90C93D2-8553-11DD-8AF3-D0CFFE4BC1C1-77302942!a-sasl-fastnet.pobox.com
+	id S1755944AbYIRIGh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 18 Sep 2008 04:06:37 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755937AbYIRIGg
+	(ORCPT <rfc822;git-outgoing>); Thu, 18 Sep 2008 04:06:36 -0400
+Received: from mail.op5.se ([193.201.96.20]:38446 "EHLO mail.op5.se"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751449AbYIRIGe (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 18 Sep 2008 04:06:34 -0400
+Received: from localhost (localhost.localdomain [127.0.0.1])
+	by mail.op5.se (Postfix) with ESMTP id BBE281B80077;
+	Thu, 18 Sep 2008 09:56:31 +0200 (CEST)
+X-Virus-Scanned: amavisd-new at 
+X-Spam-Flag: NO
+X-Spam-Score: -3.829
+X-Spam-Level: 
+X-Spam-Status: No, score=-3.829 tagged_above=-10 required=6.6
+	tests=[ALL_TRUSTED=-1.8, AWL=0.570, BAYES_00=-2.599]
+Received: from mail.op5.se ([127.0.0.1])
+	by localhost (mail.op5.se [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id oBEzgx1y56iv; Thu, 18 Sep 2008 09:56:29 +0200 (CEST)
+Received: from clix.int.op5.se (unknown [192.168.1.171])
+	by mail.op5.se (Postfix) with ESMTP id A0E581B80081;
+	Thu, 18 Sep 2008 09:56:27 +0200 (CEST)
+User-Agent: Thunderbird 2.0.0.16 (X11/20080723)
+In-Reply-To: <7vod2myljk.fsf@gitster.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/96179>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/96180>
 
-Andreas Ericsson <ae@op5.se> writes:
+Junio C Hamano wrote:
+> Andreas Ericsson <ae@op5.se> writes:
+> 
+>> Junio C Hamano wrote:
+>> ...
+>>>>  static struct funcname_pattern {
+>>>>  	char *name;
+>>>>  	char *pattern;
+>>>> +	int cflags;
+>>> What does "C" stand for?
+>> "compile". It's the same name as regcomp(3) uses for the flags being
+>> used to compile the regular expression. The full mnemonic name would
+>> be regex_compile_flag, which is a bit unwieldy. Perhaps regcomp_flags
+>> would be a good compromise?
+> 
+> Ah, I see.
+> 
+> When I saw that new field for the first time, I didn't think it will be
+> used to store the bare flag values regcomp/regexec library would accept
+> directly (I expected we would see #define or enum to tweak our own set of
+> features, not limiting ourselves EXTENDED/ICASE etc. that regcomp/regexec
+> library supports)
+> 
+> IOW, it just did not click for me to look at "man 3 regcomp" which says:
+> 
+>     int regcomp(regex_t *preg, const char *regex, int cflags);
+> 
+> So unless others feel that we might get a better layering separation by
+> not storing REG_EXTENDED and stuff directly in that field (which was my
+> initial reaction without looking at 4/4 which does store REG_EXTENDED
+> there without our own enums), cflag is perfectly a good name here.
+> 
 
-> Can we issue a deprecation heads-up for the current "funcname"
-> along with a "call for patterns" and then have "funcname" and
-> "ereg_funcname" mean the same for a while until we obsolete
-> ereg_funcname in favour of funcname, perhaps? I can't imagine
-> anyone wanting to use posix regular expressions if extended
-> ones are available everywhere.
+I think it makes perfect sense to use whatever we pass when compiling
+the regex. I wouldn't dare try to hack up something that pre-mangles
+a regular expression and assume it gets it right everywhere anyway, so
+I'm quite happy with leaving it all to regcomp(3) and friends.
 
-I prefer not to obsolete anything, and that is one of the larger reasons
-that I did not object to xfuncname at all.  It's shorter to spell than
-ereg_funcname (and sweeter to the eye).
 
-Even when in some future _everybody_ uses xfuncname and nobody you and I
-know personally uses funcname anymore, I do not think it is worth the
-hassle to change the semantics of "funcname".
+> Thanks --- I am bit under the weather and not thinking quite straight.
+> 
 
-For one thing, "xfuncname" is _not_ that ugly that people would wish they
-could spell it just "funcname".
+Mix 2cc's of 7yo Havana Club into a large cup of tea. Drink one such
+cup every hour and eat a fresh fruit with it. I haven't been ill a day
+in my life since I came up with that most excellent cure for absolutely
+everything. If nothing else, it makes it a bit less boring to be ill.
 
-This reminds me of what Eric did to "commit" vs "dcommit".  "commit" was
-renamed to "set-tree", and a command with a better semantics is called
-"dcommit".  Perhaps not many people use "set-tree" and everybody keeps
-typing "dcommit" these days, but it is not worth renaming it to "commit",
-ever.
+-- 
+Andreas Ericsson                   andreas.ericsson@op5.se
+OP5 AB                             www.op5.se
+Tel: +46 8-230225                  Fax: +46 8-230231
