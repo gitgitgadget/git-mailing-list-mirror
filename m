@@ -1,98 +1,77 @@
-From: Thomas Rast <trast@student.ethz.ch>
-Subject: Re: [RFC] log(n)-transmissions common commit handshake
-Date: Thu, 18 Sep 2008 10:18:18 +0200
-Message-ID: <200809181018.52811.trast@student.ethz.ch>
-References: <200809180100.32626.trast@student.ethz.ch>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 2/4] diff.c: associate a flag with each pattern and use
+ it for compiling regex
+Date: Thu, 18 Sep 2008 01:35:57 -0700
+Message-ID: <7vbpylzw9e.fsf@gitster.siamese.dyndns.org>
+References: <7v3ak06jzj.fsf@gitster.siamese.dyndns.org>
+ <GZAEBf1BcP9-dznrIesxaE4Rb8bim6DpwDWCb9yWl99UVoQC9Dog0A@cipher.nrlssc.navy.mil> <7vod2m1464.fsf@gitster.siamese.dyndns.org> <48D1F80C.5030502@op5.se> <7vod2myljk.fsf@gitster.siamese.dyndns.org> <48D20C04.1020703@op5.se>
 Mime-Version: 1.0
-Content-Type: multipart/signed;
-  boundary="nextPart8487783.o6CD4nvESd";
-  protocol="application/pgp-signature";
-  micalg=pgp-sha1
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Sep 18 10:20:30 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: Brandon Casey <casey@nrlssc.navy.mil>,
+	Arjen Laarhoven <arjen@yaph.org>,
+	Mike Ralphson <mike.ralphson@gmail.com>,
+	Johannes Sixt <j.sixt@viscovery.net>,
+	Jeff King <peff@peff.net>,
+	Boyd Lynn Gerber <gerberb@zenez.com>,
+	Git Mailing List <git@vger.kernel.org>
+To: Andreas Ericsson <ae@op5.se>
+X-From: git-owner@vger.kernel.org Thu Sep 18 10:38:03 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KgEkX-0007dI-HK
-	for gcvg-git-2@gmane.org; Thu, 18 Sep 2008 10:20:30 +0200
+	id 1KgF1T-0005V3-As
+	for gcvg-git-2@gmane.org; Thu, 18 Sep 2008 10:37:59 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752769AbYIRIS4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 18 Sep 2008 04:18:56 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752789AbYIRIS4
-	(ORCPT <rfc822;git-outgoing>); Thu, 18 Sep 2008 04:18:56 -0400
-Received: from xsmtp0.ethz.ch ([82.130.70.14]:34006 "EHLO XSMTP0.ethz.ch"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752333AbYIRISy (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 18 Sep 2008 04:18:54 -0400
-Received: from xfe2.d.ethz.ch ([82.130.124.42]) by XSMTP0.ethz.ch with Microsoft SMTPSVC(6.0.3790.3959);
-	 Thu, 18 Sep 2008 10:18:52 +0200
-Received: from pcjremy.inf.ethz.ch ([129.132.153.233]) by xfe2.d.ethz.ch over TLS secured channel with Microsoft SMTPSVC(6.0.3790.3959);
-	 Thu, 18 Sep 2008 10:18:52 +0200
-User-Agent: KMail/1.9.9
-In-Reply-To: <200809180100.32626.trast@student.ethz.ch>
-X-OriginalArrivalTime: 18 Sep 2008 08:18:52.0620 (UTC) FILETIME=[2F82D8C0:01C91967]
+	id S1752333AbYIRIgU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 18 Sep 2008 04:36:20 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752147AbYIRIgT
+	(ORCPT <rfc822;git-outgoing>); Thu, 18 Sep 2008 04:36:19 -0400
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:44142 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751854AbYIRIgT (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 18 Sep 2008 04:36:19 -0400
+Received: from localhost.localdomain (localhost [127.0.0.1])
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 9191762AB2;
+	Thu, 18 Sep 2008 04:36:14 -0400 (EDT)
+Received: from pobox.com (ip68-225-240-211.oc.oc.cox.net [68.225.240.211])
+ (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
+ certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
+ ESMTPSA id DB1FB62AB0; Thu, 18 Sep 2008 04:36:04 -0400 (EDT)
+In-Reply-To: <48D20C04.1020703@op5.se> (Andreas Ericsson's message of "Thu,
+ 18 Sep 2008 10:06:28 +0200")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: DAD412AA-855C-11DD-90A9-D0CFFE4BC1C1-77302942!a-sasl-fastnet.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/96181>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/96182>
 
---nextPart8487783.o6CD4nvESd
-Content-Type: text/plain;
-  charset="utf-8"
-Content-Transfer-Encoding: quoted-printable
-Content-Disposition: inline
+Andreas Ericsson <ae@op5.se> writes:
 
-I wrote:
-> * Impact/clever use of refs
->=20
->   For some reason, current git sends all refs to the server, even if
->   the server should already know about lots of them.  For example, in
->   git.git, emitting v1.6.0.2 covers almost all tags in the repository
->   by simple ancestor scanning.
->=20
->   Is there a reason for this behaviour?  Otherwise it would be better
->   to emit them in date order and intelligently handle commons.  (In
->   fact this does not depend on the discussed change.)
+> Junio C Hamano wrote:
+>> Andreas Ericsson <ae@op5.se> writes:
+> ...
+> I think it makes perfect sense to use whatever we pass when compiling
+> the regex. I wouldn't dare try to hack up something that pre-mangles
+> a regular expression and assume it gets it right everywhere anyway, so
+> I'm quite happy with leaving it all to regcomp(3) and friends.
 
-As an addendum, I think the following would be a good way to cleverly
-use refs to reduce work:
+Oh, I never meant pre-mangling or anything funky like that.
 
-Cache a "reduced" DAG which just maps the ref'd commit relationships,
-i.e., shows the reachability of refs only.  This needs to be written
-out to disk between invocations.
+What I was envisioning we might want to make more flexible was what we
+build on top of regexp, such as the way how these multi-line stuff is
+treated for example.  Currently more than one positive regexp concatenated
+with "\n" are ANDed together and the captured string from the last one is
+used, but it is plausible we might want to say "first positive capturing
+match yields result for this pattern string", or something like that.
 
-At the start of the protocol, the server announces all its refs.  We
-can use the reduced DAG to infer the minimal set of ref heads we need
-to announce to have the server know all common ones.  We can also mark
-all the other refs as "common but not announced yet", so that the
-backwards marking and searching routines know to stop there.
+>> Thanks --- I am bit under the weather and not thinking quite straight.
+>
+> Mix 2cc's of 7yo Havana Club into a large cup of tea. Drink one such
+> cup every hour and eat a fresh fruit with it. I haven't been ill a day
+> in my life since I came up with that most excellent cure for absolutely
+> everything. If nothing else, it makes it a bit less boring to be ill.
 
-This should reduce the number of refs listed back to the server to
-only a handful, and at the same time, stop the client from searching
-backwards through _all_ history (which can take a bit of time, and is
-one of the weaknesses of my proposal) in most cases.
-
-=2D Thomas
-
-=2D-=20
-Thomas Rast
-trast@student.ethz.ch
-
-
-
---nextPart8487783.o6CD4nvESd
-Content-Type: application/pgp-signature; name=signature.asc 
-Content-Description: This is a digitally signed message part.
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.0.9 (GNU/Linux)
-
-iEYEABECAAYFAkjSDuwACgkQqUud07tmzP1f6QCgkTYq6tqUwG+qmGt07GUbnN7G
-cDYAoIV6lihai1dIKsRtYkFA3/ay14Jx
-=ptHv
------END PGP SIGNATURE-----
-
---nextPart8487783.o6CD4nvESd--
+Heh, unfortunately I happen to live in the US.
