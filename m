@@ -1,86 +1,79 @@
-From: "Bert Wesarg" <bert.wesarg@googlemail.com>
+From: Kirill Smelkov <kirr@landau.phys.spbu.ru>
 Subject: Re: [TopGit RFC PATCH] tg mail: new command for mailing patches
-Date: Fri, 19 Sep 2008 12:20:49 +0200
-Message-ID: <36ca99e90809190320l4765e50eqe38bf1d2672cfcca@mail.gmail.com>
-References: <1221815301-25090-1-git-send-email-kirr@landau.phys.spbu.ru>
-	 <36ca99e90809190252q45f01eb2xd02b62b88f0cf3a9@mail.gmail.com>
-	 <20080919100441.GF4423@roro3>
+Date: Fri, 19 Sep 2008 14:23:55 +0400
+Organization: St.Petersburg State University
+Message-ID: <20080919102355.GG4423@roro3>
+References: <1221815301-25090-1-git-send-email-kirr@landau.phys.spbu.ru> <36ca99e90809190252q45f01eb2xd02b62b88f0cf3a9@mail.gmail.com> <20080919100441.GF4423@roro3> <36ca99e90809190320l4765e50eqe38bf1d2672cfcca@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: base64
-Cc: "Petr Baudis" <pasky@suse.cz>,
-	"Git Mailing List" <git@vger.kernel.org>
-To: "Kirill Smelkov" <kirr@landau.phys.spbu.ru>
-X-From: git-owner@vger.kernel.org Fri Sep 19 12:22:19 2008
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Kirill Smelkov <kirr@landau.phys.spbu.ru>,
+	Petr Baudis <pasky@suse.cz>,
+	Git Mailing List <git@vger.kernel.org>
+To: Bert Wesarg <bert.wesarg@googlemail.com>
+X-From: git-owner@vger.kernel.org Fri Sep 19 12:33:24 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Kgd7t-0006ms-Mm
-	for gcvg-git-2@gmane.org; Fri, 19 Sep 2008 12:22:14 +0200
+	id 1KgdIh-0001is-Ar
+	for gcvg-git-2@gmane.org; Fri, 19 Sep 2008 12:33:23 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751309AbYISKUv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 19 Sep 2008 06:20:51 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751250AbYISKUv
-	(ORCPT <rfc822;git-outgoing>); Fri, 19 Sep 2008 06:20:51 -0400
-Received: from wx-out-0506.google.com ([66.249.82.234]:22054 "EHLO
-	wx-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751306AbYISKUu (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 19 Sep 2008 06:20:50 -0400
-Received: by wx-out-0506.google.com with SMTP id h27so91058wxd.4
-        for <git@vger.kernel.org>; Fri, 19 Sep 2008 03:20:49 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlemail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to
-         :subject:cc:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:references;
-        bh=J8uz3p/zqCmmu68KskT0DO/b/MLQhbLf2XCJ71p+w9s=;
-        b=bCv0UjDANEJKoYR2ACbBgpRm50zY3HUQRgyMKAY8OicQ+T7y1crqNA8kyKnqWrLcph
-         ajEVdo543eiX7/HMbKq3qCQFm04p5LMv84QuREB8hOq/ZmfX57xgczIFrzMPR9dsOqTg
-         xSDWlkaRGJkghcLTDa0vzSxfijZjfhLC68M0g=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=googlemail.com; s=gamma;
-        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
-         :content-type:content-transfer-encoding:content-disposition
-         :references;
-        b=sZcXxItfM21XlsJ+mNvCi48c8BpmjzJfoSSTItWDqDbGsaZVzw49wONLI1L27Chxb9
-         G8FZiyRo8c/ULH5M5EUdCGdmVr+sFr8JVxejC7rqY4AK96ymAfC8dfol1aLz/sWlI3uw
-         QZejqa25flsZppeoMxyaCTxrFYloFpFSL91e8=
-Received: by 10.70.39.5 with SMTP id m5mr5811171wxm.22.1221819649398;
-        Fri, 19 Sep 2008 03:20:49 -0700 (PDT)
-Received: by 10.70.36.14 with HTTP; Fri, 19 Sep 2008 03:20:49 -0700 (PDT)
-In-Reply-To: <20080919100441.GF4423@roro3>
+	id S1751185AbYISKcP convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 19 Sep 2008 06:32:15 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751180AbYISKcO
+	(ORCPT <rfc822;git-outgoing>); Fri, 19 Sep 2008 06:32:14 -0400
+Received: from vs281.server4u.cz ([81.91.85.31]:52279 "EHLO vs281.server4u.cz"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751161AbYISKcO (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 19 Sep 2008 06:32:14 -0400
+Received: from localhost ([127.0.0.1] helo=roro3)
+	by vs281.server4u.cz with esmtp (Exim 4.69)
+	(envelope-from <kirr@landau.phys.spbu.ru>)
+	id 1KgdOB-0000io-Uj; Fri, 19 Sep 2008 12:39:04 +0200
+Received: from kirr by roro3 with local (Exim 4.69)
+	(envelope-from <kirr@roro3>)
+	id 1Kgd9X-0000w7-RM; Fri, 19 Sep 2008 14:23:55 +0400
 Content-Disposition: inline
+In-Reply-To: <36ca99e90809190320l4765e50eqe38bf1d2672cfcca@mail.gmail.com>
+User-Agent: Mutt/1.5.18 (2008-05-17)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/96275>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/96276>
 
-T24gRnJpLCBTZXAgMTksIDIwMDggYXQgMTI6MDQsIEtpcmlsbCBTbWVsa292IDxraXJyQGxhbmRh
-dS5waHlzLnNwYnUucnU+IHdyb3RlOgo+IE9uIEZyaSwgU2VwIDE5LCAyMDA4IGF0IDExOjUyOjAz
-QU0gKzAyMDAsIEJlcnQgV2VzYXJnIHdyb3RlOgo+PiBPbiBGcmksIFNlcCAxOSwgMjAwOCBhdCAx
-MTowOCwgS2lyaWxsIFNtZWxrb3YgPGtpcnJAbGFuZGF1LnBoeXMuc3BidS5ydT4gd3JvdGU6Cj4+
-ID4gUGV0ciwgc2luY2UgeW91J3ZlIGFza2VkIGZvciBoZWxwIG9uIHRoaXMsIGhlcmUgeW91IGFy
-ZToKPj4gPgo+PiA+ICAgICQgdGcgbWFpbCBbTkFNRV0KPj4gPgo+PiA+IGEgc2ltcGxlIHNjcmlw
-dCB0byBzZW5kIG9uZSBwYXRjaCBvdmVyIGVtYWlsLgo+PiA+Cj4+ID4KPj4gPiBBbGwgaXQgZG9l
-cyBpcwo+PiA+Cj4+ID4gICAgLSBjYWxsIGB0ZyBwYXRjaGAgZm9yIGFjdHVhbCBwYXRjaCBwcmVw
-YXJhdGlvbgo+PiA+ICAgIC0gZXh0cmFjdCBlbWFpbCBhZGRyZXNzZXMgZnJvbSB3aG9tIGFuZCB3
-aGVyZSB0byBzZW5kIGEgbWFpbAo+PiBUaGF0IHNob3VsZG4ndCBiZSBuZWVkZWQuIGdpdCBzZW5k
-LWVtYWlsIHBhcnNlcyBDYzogaGVhZGVycyBhbmQgdGhlCj4KPiBFeGFjdGx5IGZvciB0aGlzIHJl
-YXNvbiBJIGRvIG5vdCBleHRyYWN0IENjLiBBbmQgZ2l0IHNlbmQtbWFpbCBkb2VzIG5vdAo+IGV4
-dHJhY3QgRnJvbTogLS0gaXQganVzdCBhc2tzIHRvIGNvbmZpcm0gRnJvbSBpcyBHSVRfQ09NTUlU
-VEVSX0lERU5ULAo+IGFuZCB0aGVyZSBpcyBubyBvcHRpb24gdG8gc3RvcCBpdCBkb2luZyBzbyBl
-eGNlcHQgcHJvdmlkaW5nIGV4cGxpY2l0Cj4gLS1mcm9tIDxzb21lb25lPiAobWF5YmUgaSdtIG1p
-c3Npbmcgc29tZXRoaW5nPykuCkFoaCwgbXkgZmF1bHQsIEkgc2hvdWxkIHRha2UgYSBicmVhaywg
-c29ycnkgZm9yIHRoZSBub2lzZS4KCj4KPj4gVG86IGNvbWVzIGZyb20gJ2dpdCBjb25maWcgdG9w
-Z2l0LnRvJywgc28geW91IGNhbiByZS11c2UgdGhpcy4KPgo+IFllcywgaXQgY29tZXMgZGlyZWN0
-bHkgdG8gLnRvcG1zZyB3aGVuIGB0ZyBjcmVhdGVgIGlzIGRvbmUsIHNvIEkgdGhvdWdodAo+IHRo
-ZSBtYWluIHNvdXJjZSBvZiBpbmZvcm1hdGlvbiBpcyB0aGUgcGF0Y2ggaXRzZWxmIC0tIHVzZXJz
-IG1heSB3YW50IHRvCj4gZWRpdCB0aGF0IFRvOiBieSBoYW5kIG9yIGFkZCBhbm90aGVyIFRvOiBs
-aW5lcy4KWWVhaCwgbXkgZmF1bHQsIEkgbm90aWNlZCB0aGlzIHRvbywgaXRzIGp1c3QgYSB0ZW1w
-bGF0ZS4gYmV0dGVyIHRvCmV4dHJhY3QgaXQgZnJvbSB0aGUgcGF0Y2guCgo+Cj4gYW5kIHdoYXQg
-SWYgYSBwYXRjaCBpcyBhbHJlYWR5IGV4cG9ydGVkIGFzIGEgZmlsZSwgYW5kIEkgd2FudCB0bwo+
-IHNlbmQvcmVzZW5kIGl0IHVwc3RyZWFtIHJpZ2h0IGZyb20gdGhhdCBmaWxlPwo+Cj4gV2UgbWF5
-IHdhbnQgdG8gbG9vayBmb3IgdG9wZ2l0LnRvIHRvbyB0aG91Z2guCj4KPiAtLQo+ICAgINCS0YHQ
-tdCz0L4g0YXQvtGA0L7RiNC10LPQviwg0JrQuNGA0LjQu9C7Lgo+Cg==
+On Fri, Sep 19, 2008 at 12:20:49PM +0200, Bert Wesarg wrote:
+> On Fri, Sep 19, 2008 at 12:04, Kirill Smelkov <kirr@landau.phys.spbu.=
+ru> wrote:
+> > On Fri, Sep 19, 2008 at 11:52:03AM +0200, Bert Wesarg wrote:
+> >> On Fri, Sep 19, 2008 at 11:08, Kirill Smelkov <kirr@landau.phys.sp=
+bu.ru> wrote:
+> >> > Petr, since you've asked for help on this, here you are:
+> >> >
+> >> >    $ tg mail [NAME]
+> >> >
+> >> > a simple script to send one patch over email.
+> >> >
+> >> >
+> >> > All it does is
+> >> >
+> >> >    - call `tg patch` for actual patch preparation
+> >> >    - extract email addresses from whom and where to send a mail
+> >> That shouldn't be needed. git send-email parses Cc: headers and th=
+e
+> >
+> > Exactly for this reason I do not extract Cc. And git send-mail does=
+ not
+> > extract From: -- it just asks to confirm From is GIT_COMMITTER_IDEN=
+T,
+> > and there is no option to stop it doing so except providing explici=
+t
+> > --from <someone> (maybe i'm missing something?).
+> Ahh, my fault, I should take a break, sorry for the noise.
+
+No problem, your "noise" is welcome :)
+
+--=20
+    =D0=92=D1=81=D0=B5=D0=B3=D0=BE =D1=85=D0=BE=D1=80=D0=BE=D1=88=D0=B5=
+=D0=B3=D0=BE, =D0=9A=D0=B8=D1=80=D0=B8=D0=BB=D0=BB.
