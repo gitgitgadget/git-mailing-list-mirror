@@ -1,144 +1,154 @@
-From: Nicolas Pitre <nico@cam.org>
-Subject: [PATCH] fix openssl headers conflicting with custom SHA1
- implementations
-Date: Fri, 19 Sep 2008 16:11:20 -0400 (EDT)
-Message-ID: <alpine.LFD.1.10.0809191414000.6279@xanadu.home>
+From: Yann Dirson <ydirson@altern.org>
+Subject: [PATCH v2] Bust the ghost of long-defunct diffcore-pathspec.
+Date: Fri, 19 Sep 2008 22:12:53 +0200
+Message-ID: <20080919201012.1705.10446.stgit@gandelf.nowhere.earth>
+References: <7vbpz7tqsb.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: Robert Shearman <robertshearman@gmail.com>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Sep 19 22:12:40 2008
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Sep 19 22:12:54 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KgmLE-0000a8-Sc
-	for gcvg-git-2@gmane.org; Fri, 19 Sep 2008 22:12:37 +0200
+	id 1KgmLQ-0000ex-4d
+	for gcvg-git-2@gmane.org; Fri, 19 Sep 2008 22:12:48 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754033AbYISUL2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 19 Sep 2008 16:11:28 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754009AbYISUL2
-	(ORCPT <rfc822;git-outgoing>); Fri, 19 Sep 2008 16:11:28 -0400
-Received: from relais.videotron.ca ([24.201.245.36]:60602 "EHLO
-	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753931AbYISUL1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 19 Sep 2008 16:11:27 -0400
-Received: from xanadu.home ([66.131.194.97]) by VL-MO-MR005.ip.videotron.ca
- (Sun Java(tm) System Messaging Server 6.3-4.01 (built Aug  3 2007; 32bit))
- with ESMTP id <0K7G0090PLDZNLC0@VL-MO-MR005.ip.videotron.ca> for
- git@vger.kernel.org; Fri, 19 Sep 2008 16:10:48 -0400 (EDT)
-X-X-Sender: nico@xanadu.home
-User-Agent: Alpine 1.10 (LFD 962 2008-03-14)
+	id S1754137AbYISULg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 19 Sep 2008 16:11:36 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754135AbYISULg
+	(ORCPT <rfc822;git-outgoing>); Fri, 19 Sep 2008 16:11:36 -0400
+Received: from smtp3-g19.free.fr ([212.27.42.29]:55356 "EHLO smtp3-g19.free.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754009AbYISULf (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 19 Sep 2008 16:11:35 -0400
+Received: from smtp3-g19.free.fr (localhost.localdomain [127.0.0.1])
+	by smtp3-g19.free.fr (Postfix) with ESMTP id 5621A17B544
+	for <git@vger.kernel.org>; Fri, 19 Sep 2008 22:11:33 +0200 (CEST)
+Received: from gandelf.nowhere.earth (nan92-1-81-57-214-146.fbx.proxad.net [81.57.214.146])
+	by smtp3-g19.free.fr (Postfix) with ESMTP id 239A417B5AC
+	for <git@vger.kernel.org>; Fri, 19 Sep 2008 22:11:33 +0200 (CEST)
+Received: from gandelf.nowhere.earth (localhost [127.0.0.1])
+	by gandelf.nowhere.earth (Postfix) with ESMTP id 0AFAB1F00A
+	for <git@vger.kernel.org>; Fri, 19 Sep 2008 22:12:54 +0200 (CEST)
+In-Reply-To: <7vbpz7tqsb.fsf@gitster.siamese.dyndns.org>
+User-Agent: StGIT/0.14.3
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/96308>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/96309>
 
-On ARM I have the following compilation errors:
+This concept was retired by 77882f60d9df2fd410ba7d732b01738315643c05,
+more than 2 years ago.
 
-    CC fast-import.o
-In file included from cache.h:8,
-                 from builtin.h:6,
-                 from fast-import.c:142:
-arm/sha1.h:14: error: conflicting types for 'SHA_CTX'
-/usr/include/openssl/sha.h:105: error: previous declaration of 'SHA_CTX' was here
-arm/sha1.h:16: error: conflicting types for 'SHA1_Init'
-/usr/include/openssl/sha.h:115: error: previous declaration of 'SHA1_Init' was here
-arm/sha1.h:17: error: conflicting types for 'SHA1_Update'
-/usr/include/openssl/sha.h:116: error: previous declaration of 'SHA1_Update' was here
-arm/sha1.h:18: error: conflicting types for 'SHA1_Final'
-/usr/include/openssl/sha.h:117: error: previous declaration of 'SHA1_Final' was here
-make: *** [fast-import.o] Error 1
-
-This is because openssl header files are always included in 
-git-compat-util.h since commit 684ec6c63c whenever NO_OPENSSL is not 
-set, which somehow brings in <openssl/sha1.h> clashing with the custom 
-ARM version.  Compilation of git is probably broken on PPC too for the 
-same reason.
-
-Turns out that the only file requiring openssl/ssl.h and openssl/err.h 
-is imap-send.c.  But only moving those problematic includes there 
-doesn't solve the issue as it also includes cache.h which brings in the 
-conflicting header.  So also conditionally including SHA1_HEADER allows 
-for not including it when compiling imap-send.c.
-
-Signed-off-by: Nicolas Pitre <nico@cam.org>
-
+Signed-off-by: Yann Dirson <ydirson@altern.org>
 ---
 
-This is a bit ugly but given the rat nest of system includes we have I 
-don't know how to solve this any better.
+This new version ought to address all points in the comments to my
+original patch.
 
-diff --git a/Makefile b/Makefile
-index 3c0664a..a0f86dd 100644
---- a/Makefile
-+++ b/Makefile
-@@ -1242,6 +1242,9 @@ endif
- git-%$X: %.o $(GITLIBS)
- 	$(QUIET_LINK)$(CC) $(ALL_CFLAGS) -o $@ $(ALL_LDFLAGS) $(filter %.o,$^) $(LIBS)
+ Documentation/gitdiffcore.txt |   55 ++++++++++++++++-------------------------
+ diffcore.h                    |    1 -
+ 2 files changed, 22 insertions(+), 34 deletions(-)
+
+diff --git a/Documentation/gitdiffcore.txt b/Documentation/gitdiffcore.txt
+index 2bdbc3d..e8041bc 100644
+--- a/Documentation/gitdiffcore.txt
++++ b/Documentation/gitdiffcore.txt
+@@ -36,11 +36,25 @@ files:
  
-+imap-send.o: imap-send.c GIT-CFLAGS
-+	$(QUIET_CC)$(CC) -o $*.o -c $(ALL_CFLAGS) -USHA1_HEADER $<
+  - 'git-diff-tree' compares contents of two "tree" objects;
+ 
+-In all of these cases, the commands themselves compare
+-corresponding paths in the two sets of files.  The result of
+-comparison is passed from these commands to what is internally
+-called "diffcore", in a format similar to what is output when
+-the -p option is not used.  E.g.
++In all of these cases, the commands themselves first optionally limit
++the two sets of files by any pathspecs given on their command-lines,
++and compare corresponding paths in the two resulting sets of files.
 +
- git-imap-send$X: imap-send.o $(GITLIBS)
- 	$(QUIET_LINK)$(CC) $(ALL_CFLAGS) -o $@ $(ALL_LDFLAGS) $(filter %.o,$^) \
- 		$(LIBS) $(OPENSSL_LINK) $(OPENSSL_LIBSSL)
-diff --git a/cache.h b/cache.h
-index de8c2b6..d93e086 100644
---- a/cache.h
-+++ b/cache.h
-@@ -5,7 +5,10 @@
- #include "strbuf.h"
- #include "hash.h"
- 
-+#ifdef SHA1_HEADER
- #include SHA1_HEADER
-+#endif
++The pathspecs are used to limit the world diff operates in.  They remove
++the filepairs outside the specified sets of pathnames.  E.g. If the
++input set of filepairs included:
 +
- #include <zlib.h>
++------------------------------------------------
++:100644 100644 bcd1234... 0123456... M junkfile
++------------------------------------------------
++
++but the command invocation was `git diff-files myfile`, then the
++junkfile entry would be removed from the list because only "myfile"
++is under consideration.
++
++The result of comparison is passed from these commands to what is
++internally called "diffcore", in a format similar to what is output
++when the -p option is not used.  E.g.
  
- #if defined(NO_DEFLATE_BOUND) || ZLIB_VERNUM < 0x1200
-diff --git a/git-compat-util.h b/git-compat-util.h
-index db2836f..044f62b 100644
---- a/git-compat-util.h
-+++ b/git-compat-util.h
-@@ -99,11 +99,6 @@
- #include <iconv.h>
- #endif
+ ------------------------------------------------
+ in-place edit  :100644 100644 bcd1234... 0123456... M file0
+@@ -52,9 +66,8 @@ unmerged       :000000 000000 0000000... 0000000... U file6
+ The diffcore mechanism is fed a list of such comparison results
+ (each of which is called "filepair", although at this point each
+ of them talks about a single file), and transforms such a list
+-into another list.  There are currently 6 such transformations:
++into another list.  There are currently 5 such transformations:
  
--#ifndef NO_OPENSSL
--#include <openssl/ssl.h>
--#include <openssl/err.h>
--#endif
+-- diffcore-pathspec
+ - diffcore-break
+ - diffcore-rename
+ - diffcore-merge-broken
+@@ -62,38 +75,14 @@ into another list.  There are currently 6 such transformations:
+ - diffcore-order
+ 
+ These are applied in sequence.  The set of filepairs 'git-diff-{asterisk}'
+-commands find are used as the input to diffcore-pathspec, and
+-the output from diffcore-pathspec is used as the input to the
++commands find are used as the input to diffcore-break, and
++the output from diffcore-break is used as the input to the
+ next transformation.  The final result is then passed to the
+ output routine and generates either diff-raw format (see Output
+ format sections of the manual for 'git-diff-{asterisk}' commands) or
+ diff-patch format.
+ 
+ 
+-diffcore-pathspec: For Ignoring Files Outside Our Consideration
+----------------------------------------------------------------
 -
- /* On most systems <limits.h> would have given us this, but
-  * not on some systems (e.g. GNU/Hurd).
-  */
-diff --git a/imap-send.c b/imap-send.c
-index af7e08c..01f1c9a 100644
---- a/imap-send.c
-+++ b/imap-send.c
-@@ -22,11 +22,15 @@
-  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
-  */
+-The first transformation in the chain is diffcore-pathspec, and
+-is controlled by giving the pathname parameters to the
+-'git-diff-{asterisk}' commands on the command line.  The pathspec is used
+-to limit the world diff operates in.  It removes the filepairs
+-outside the specified set of pathnames.  E.g. If the input set
+-of filepairs included:
+-
+-------------------------------------------------
+-:100644 100644 bcd1234... 0123456... M junkfile
+-------------------------------------------------
+-
+-but the command invocation was `git diff-files myfile`, then the
+-junkfile entry would be removed from the list because only "myfile"
+-is under consideration.
+-
+-Implementation note.  For performance reasons, 'git-diff-tree'
+-uses the pathname parameters on the command line to cull set of
+-filepairs it feeds the diffcore mechanism itself, and does not
+-use diffcore-pathspec, but the end result is the same.
+-
+-
+ diffcore-break: For Splitting Up "Complete Rewrites"
+ ----------------------------------------------------
  
--#include "cache.h"
- #ifdef NO_OPENSSL
- typedef void *SSL;
-+#else
-+#include <openssl/ssl.h>
-+#include <openssl/err.h>
- #endif
+diff --git a/diffcore.h b/diffcore.h
+index cc96c20..8ae3578 100644
+--- a/diffcore.h
++++ b/diffcore.h
+@@ -92,7 +92,6 @@ extern struct diff_filepair *diff_queue(struct diff_queue_struct *,
+ 					struct diff_filespec *);
+ extern void diff_q(struct diff_queue_struct *, struct diff_filepair *);
  
-+#include "cache.h"
-+
- struct store_conf {
- 	char *name;
- 	const char *path; /* should this be here? its interpretation is driver-specific */
-
-
-
-
-Nicolas
+-extern void diffcore_pathspec(const char **pathspec);
+ extern void diffcore_break(int);
+ extern void diffcore_rename(struct diff_options *);
+ extern void diffcore_merge_broken(void);
