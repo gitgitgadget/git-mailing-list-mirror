@@ -1,104 +1,84 @@
-From: =?iso-8859-1?Q?Bj=F6rn?= Steinbrink <B.Steinbrink@gmx.de>
-Subject: Re: Get a copy of an old version of a file, using git gui/gitk
-Date: Fri, 19 Sep 2008 11:12:23 +0200
-Message-ID: <20080919091223.GA13778@atjola.homenet>
-References: <884843.41605.qm@web95002.mail.in2.yahoo.com>
+From: Michael J Gruber <git@drmicha.warpmail.net>
+Subject: Re: How to remove a commit object?
+Date: Fri, 19 Sep 2008 11:16:36 +0200
+Message-ID: <48D36DF4.3030607@drmicha.warpmail.net>
+References: <D53D127D-97DD-417C-9109-ABD46BBD4E18@midwinter.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Peter Krefting <peter@softwolves.pp.se>,
-	Git Mailing List <git@vger.kernel.org>
-To: dhruva <dhruva@ymail.com>
-X-From: git-owner@vger.kernel.org Fri Sep 19 11:14:50 2008
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: Git Users List <git@vger.kernel.org>
+To: Steven Grimm <koreth@midwinter.com>
+X-From: git-owner@vger.kernel.org Fri Sep 19 11:17:59 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Kgc3U-0000YU-Gt
-	for gcvg-git-2@gmane.org; Fri, 19 Sep 2008 11:13:37 +0200
+	id 1Kgc7i-0002FA-9T
+	for gcvg-git-2@gmane.org; Fri, 19 Sep 2008 11:17:58 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750927AbYISJM2 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 19 Sep 2008 05:12:28 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750868AbYISJM2
-	(ORCPT <rfc822;git-outgoing>); Fri, 19 Sep 2008 05:12:28 -0400
-Received: from mail.gmx.net ([213.165.64.20]:51798 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1750709AbYISJM1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 19 Sep 2008 05:12:27 -0400
-Received: (qmail invoked by alias); 19 Sep 2008 09:12:25 -0000
-Received: from i577B8FFC.versanet.de (EHLO atjola.local) [87.123.143.252]
-  by mail.gmx.net (mp012) with SMTP; 19 Sep 2008 11:12:25 +0200
-X-Authenticated: #5039886
-X-Provags-ID: V01U2FsdGVkX18czvZs7A8cHov2Ls99rq/8u1x7tuuvlzmaUVmhnP
-	mL6kzKR1lzkKYC
-Content-Disposition: inline
-In-Reply-To: <884843.41605.qm@web95002.mail.in2.yahoo.com>
-User-Agent: Mutt/1.5.18 (2008-05-17)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.53
+	id S1751333AbYISJQs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 19 Sep 2008 05:16:48 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751228AbYISJQs
+	(ORCPT <rfc822;git-outgoing>); Fri, 19 Sep 2008 05:16:48 -0400
+Received: from out1.smtp.messagingengine.com ([66.111.4.25]:49840 "EHLO
+	out1.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751161AbYISJQr (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 19 Sep 2008 05:16:47 -0400
+Received: from compute1.internal (compute1.internal [10.202.2.41])
+	by out1.messagingengine.com (Postfix) with ESMTP id 81691165AD2;
+	Fri, 19 Sep 2008 05:16:46 -0400 (EDT)
+Received: from heartbeat2.messagingengine.com ([10.202.2.161])
+  by compute1.internal (MEProxy); Fri, 19 Sep 2008 05:16:46 -0400
+X-Sasl-enc: T1kBva5RIrPOKxD2oVOvsWCbJkRUyJ3CtwNdCP+KNUeD 1221815806
+Received: from [139.174.44.12] (whitehead.math.tu-clausthal.de [139.174.44.12])
+	by mail.messagingengine.com (Postfix) with ESMTPSA id 0ED612A715;
+	Fri, 19 Sep 2008 05:16:45 -0400 (EDT)
+User-Agent: Thunderbird 2.0.0.16 (X11/20080707)
+In-Reply-To: <D53D127D-97DD-417C-9109-ABD46BBD4E18@midwinter.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/96268>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/96269>
 
-[Fixed that top-posting for you...]
+Steven Grimm venit, vidit, dixit 19.09.2008 01:41:
+> I maintain a shared repository a bunch of my coworkers push to for  
+> code reviews. It has accumulated a lot of packfiles, so I want to  
+> shrink it down a bit, but there's a problem:
+> 
+> % git repack -A -d
+> Counting objects: ...
+> error: Could not read 125bf191b65189aaec7a6aa24ff26460d141d587
+> fatal: bad tree object 125bf191b65189aaec7a6aa24ff26460d141d587
+> 
+> "git fsck" confirms that the tree object is missing:
+> 
+> % git fsck
+> broken link from  commit 1b2f0595bb4a6c2e17ca43a9cc41feec88c72a47
+>                to    tree 125bf191b65189aaec7a6aa24ff26460d141d587
+> ...
+> missing tree 125bf191b65189aaec7a6aa24ff26460d141d587
+> 
+> This is a dangling commit, but that's fine; for this particular  
+> repository we actually *want* lots of dangling commits since they  
+> represent the history of people's code review requests. (Hence me  
+> running git-repack with -A instead of -a.)
+> 
+> Given that it's dangling, it seems like it'd be safe to just remove  
+> entirely (we lose that little bit of code-review history but we've  
+> lost it already anyway with the tree object missing). But I'm not sure  
+> how to do it. Is it possible to delete a commit object, and if so, how?
+> 
+> I don't know how the corruption happened in the first place. There was  
+> a short time at one point where the permissions on the object  
+> directories were inconsistent, so it's possible someone pushed during  
+> that period and managed to create the commit object file in .git/ 
+> objects but didn't have permission to create the tree object. That's  
+> just speculation on my part, though. This is the only corrupt object  
+> in the repository according to git-fsck, so at this point I just want  
+> to know how to get rid of it so I can do the repack.
 
-On 2008.09.19 14:02:30 +0530, dhruva wrote:
-> From: Bj=F6rn Steinbrink <B.Steinbrink@gmx.de>
-> > On 2008.09.19 08:58:04 +0100, Peter Krefting wrote:
-> > > From the command line, I would try to find the SHA-1 and use git
-> > > cat-file, but I can't figure out how to do it from the GUIs. Or, =
-to
-> > > fall back to the command-line, how to get the SHA-1 for the objec=
-t out
-> > > of git gui/gitk.
-> >=20
-> > You don't need the sha1 of the blob object, just the revision and t=
-he
-> > filename, and then you can reference the blob using the
-> > :syntax.
-> >=20
-> > For example:
-> >     git cat-file blob HEAD^^^:some/file.c
-> > or less plumb-ish:
-> >     git show HEAD^^^:some/file.c
-> >=20
-> > I've been told that neither cares about the CRLF conversion, and I =
-don't
-> > know if there's anything except "git checkout" that actually does c=
-are
-> > about it. With checkout, you would do:
-> >=20
-> > git checkout HEAD^^^ -- some/file.c
-> >=20
-> > But that replaces the current version of that file in your working =
-tree
-> > and index with the version from the HEAD^^^ revision, so that might=
- not
-> > be exactly what you were looking for.
->
-> Using gitk, you can branch at the change that has the file (and
-> content, I am not using version as git does not version files) you
-> want. Check out that branch and you will have that file (and all othe=
-r
-> files at that changeset). When you are done, you can just delete that
-> branch... branching is _cheap_
+git prune should delete dangling commits. Is that commit already in a
+pack? Then the -f option to repack may help.
 
-Yeah, that works, but only if you have no uncommitted changes (which
-git would try to apply to the version you check out). And that obviousl=
-y
-replaces _all_ files in your working tree and index, so that doesn't
-have any advantages compared to the "git checkout $commit -- file"
-approach. The disadvantage is just shifted from "uncommitted changes to
-that file are lost" to "uncommitted changes to that file are kept", so
-you don't even get the actual version of that file that you wanted to
-have in the first place.
-
-Besides that, why even bother with branch creation at all? Just checkou=
-t
-that revision (puts you on a detached HEAD), do whatever you want, and
-checkout the branch you were working on again. No need to create a
-branch if you don't intend to create commits you want to keep...
-
-Bj=F6rn
+Michael
