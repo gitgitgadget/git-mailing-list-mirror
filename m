@@ -1,59 +1,142 @@
-From: Peter Krefting <peter@softwolves.pp.se>
-Subject: Get a copy of an old version of a file, using git gui/gitk
-Date: Fri, 19 Sep 2008 08:58:04 +0100 (CET)
-Organization: /universe/earth/europe/norway/oslo
-Message-ID: <Pine.LNX.4.64.0809190855060.17960@ds9.cixit.se>
+From: Kirill Smelkov <kirr@landau.phys.spbu.ru>
+Subject: Re: [TopGit PATCH] .gitignore += vim swap files
+Date: Fri, 19 Sep 2008 11:52:13 +0400
+Organization: St.Petersburg State University
+Message-ID: <20080919075213.GE4423@roro3>
+References: <1221755370-6817-1-git-send-email-kirr@landau.phys.spbu.ru> <1221755370-6817-2-git-send-email-kirr@landau.phys.spbu.ru> <36ca99e90809181038o74c73121j59849b3f24fe6469@mail.gmail.com> <alpine.LNX.1.00.0809181526190.19665@iabervon.org> <20080919050612.GA4423@roro3> <36ca99e90809190010n40d0a4w26975e87e17a822e@mail.gmail.com> <20080919072851.GD4423@roro3> <48D359FD.90203@op5.se>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-To: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Fri Sep 19 09:59:24 2008
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Kirill Smelkov <kirr@landau.phys.spbu.ru>,
+	Bert Wesarg <bert.wesarg@googlemail.com>,
+	Daniel Barkalow <barkalow@iabervon.org>,
+	Petr Baudis <pasky@suse.cz>,
+	Git Mailing List <git@vger.kernel.org>
+To: Andreas Ericsson <ae@op5.se>
+X-From: git-owner@vger.kernel.org Fri Sep 19 10:01:51 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Kgate-0007UY-Sr
-	for gcvg-git-2@gmane.org; Fri, 19 Sep 2008 09:59:23 +0200
+	id 1Kgaw1-0008AN-Mg
+	for gcvg-git-2@gmane.org; Fri, 19 Sep 2008 10:01:50 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750995AbYISH6J (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 19 Sep 2008 03:58:09 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750876AbYISH6I
-	(ORCPT <rfc822;git-outgoing>); Fri, 19 Sep 2008 03:58:08 -0400
-Received: from ds9.cixit.se ([193.15.169.228]:45680 "EHLO ds9.cixit.se"
+	id S1750933AbYISIAk convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 19 Sep 2008 04:00:40 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750977AbYISIAk
+	(ORCPT <rfc822;git-outgoing>); Fri, 19 Sep 2008 04:00:40 -0400
+Received: from vs281.server4u.cz ([81.91.85.31]:41657 "EHLO vs281.server4u.cz"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750908AbYISH6H (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 19 Sep 2008 03:58:07 -0400
-Received: from ds9.cixit.se (peter@localhost [127.0.0.1])
-	by ds9.cixit.se (8.12.3/8.12.3/Debian-7.2) with ESMTP id m8J7w5Y1025090
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Fri, 19 Sep 2008 09:58:05 +0200
-Received: from localhost (peter@localhost)
-	by ds9.cixit.se (8.12.3/8.12.3/Debian-7.2) with ESMTP id m8J7w4Jc025085;
-	Fri, 19 Sep 2008 09:58:04 +0200
-X-Authentication-Warning: ds9.cixit.se: peter owned process doing -bs
-Accept: text/plain
-X-Warning: Junk / bulk email will be reported
-X-Rating: This message is not to be eaten by humans
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-3.0 (ds9.cixit.se [127.0.0.1]); Fri, 19 Sep 2008 09:58:05 +0200 (CEST)
+	id S1750876AbYISIAj (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 19 Sep 2008 04:00:39 -0400
+Received: from localhost ([127.0.0.1] helo=roro3)
+	by vs281.server4u.cz with esmtp (Exim 4.69)
+	(envelope-from <kirr@landau.phys.spbu.ru>)
+	id 1Kgb1N-0000gZ-Cy; Fri, 19 Sep 2008 10:07:21 +0200
+Received: from kirr by roro3 with local (Exim 4.69)
+	(envelope-from <kirr@roro3>)
+	id 1Kgamj-0004kX-Sm; Fri, 19 Sep 2008 11:52:13 +0400
+Content-Disposition: inline
+In-Reply-To: <48D359FD.90203@op5.se>
+User-Agent: Mutt/1.5.18 (2008-05-17)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/96264>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/96265>
 
-Hi!
+On Fri, Sep 19, 2008 at 09:51:25AM +0200, Andreas Ericsson wrote:
+> Kirill Smelkov wrote:
+>> On Fri, Sep 19, 2008 at 09:10:24AM +0200, Bert Wesarg wrote:
+>>> On Fri, Sep 19, 2008 at 07:06, Kirill Smelkov <kirr@landau.phys.spb=
+u.ru> wrote:
+>>>> On Thu, Sep 18, 2008 at 03:30:35PM -0400, Daniel Barkalow wrote:
+>>>>> On Thu, 18 Sep 2008, Bert Wesarg wrote:
+>>>>>
+>>>>>> On Thu, Sep 18, 2008 at 18:29, Kirill Smelkov <kirr@landau.phys.=
+spbu.ru> wrote:
+>>>>>>> Signed-off-by: Kirill Smelkov <kirr@landau.phys.spbu.ru>
+>>>>>>> ---
+>>>>>>>  .gitignore |    2 ++
+>>>>>>>  1 files changed, 2 insertions(+), 0 deletions(-)
+>>>>>>>
+>>>>>>> diff --git a/.gitignore b/.gitignore
+>>>>>>> index 8868f2d..aa39db4 100644
+>>>>>>> --- a/.gitignore
+>>>>>>> +++ b/.gitignore
+>>>>>>> @@ -18,3 +18,5 @@ tg-import.txt
+>>>>>>>  tg-remote
+>>>>>>>  tg-remote.txt
+>>>>>>>  tg
+>>>>>>> +
+>>>>>>> +*.swp
+>>>>>> can't you do this in your .git/info/excludes?
+>>>>> It's generally better to put a core.excludesfile entry in your
+>>>>> ~/.gitconfig pointing to a ignore file with editor temporaries fo=
+r the
+>>>>> editor(s) you personally use. This will then apply to all git pro=
+jects you
+>>>>> work on.
+>>>> Yes, this makes sense, thanks.
+>>>>
+>>>> I've had to add the following to my ~/.gitconfig
+>>>>
+>>>> [core]
+>>>>    excludesfile=3D /home/kirr/.gitignore-kirr
+>>>>
+>>>>
+>>>> because it does not work when '~' is used for $HOME
+>>>>
+>>>> [core]
+>>>>    excludesfile=3D ~/.gitignore-kirr # does not work
+>>> Have you tried:
+>>>
+>>>   [core]
+>>>      excludesfile =3D .gitignore-kirr
+>>> There was a discussion about relative files in config. but I didn't=
+ tried this.
+>>
+>> It does not work for me -- it picks ./.gitignore-kirr instead of
+>> ~/.gitignore-kirr
+>>
+>>> Anyway, I think this is the best solution. Don't globber the repos =
+with this.
+>>
+>> Don't you care more about machines than humans? :)
+>>
+>> I think when we work on a tree, all the autogenerated files should b=
+e
+>> ignored. This includes *.o and friends for sure, but since we also u=
+se
+>> editors, and most people use same editors it makes sense to tune rep=
+o to
+>> be ready to hack on with common setups.
+>>
+>
+> Most people do not use same editors. In our office there's 8 programm=
+ers
+> and 6 editors in use (geany, jed, vim, nedit, zend studio, kate).
+>
+>> And I think this
+>>
+>> http://git.kernel.org/?p=3Dlinux/kernel/git/torvalds/linux-2.6.git;a=
+=3Dcommitdiff;h=3D7088655477b51a5a248fa54190388e1283ba7ebf
+>>
+>> just justifies my words.
+>>
+>
+> If topgit had 4374 contributors since 10 minor versions back, I'd be
+> more inclined to agree with you. Even so, you'll have to accept that
+> this patch gets dropped[1] and stop trying to argue for it after it's
+> already been discussed (at length).
+>
+> [1]
+> I'm not too sure who the topgit maintainer actually is, but the major=
+ity
+> seem to be against this patch.
 
-I am trying to introduce new people to Git, and am primarily showing
-how to use the GUI tools (git gui/gitk), since the project is running
-on Windows. A question that I couldn't answer arose:
+I'm ok with this patch being dropped.
 
-How do I save a copy of an older version of a file (one that has either
-been modified locally, or an earlier version in the project history),
-from git gui or gitk?
-
->From the command line, I would try to find the SHA-1 and use git
-cat-file, but I can't figure out how to do it from the GUIs. Or, to
-fall back to the command-line, how to get the SHA-1 for the object out
-of git gui/gitk.
-
--- 
-\\// Peter - http://www.softwolves.pp.se/
+--=20
+    =D0=92=D1=81=D0=B5=D0=B3=D0=BE =D1=85=D0=BE=D1=80=D0=BE=D1=88=D0=B5=
+=D0=B3=D0=BE, =D0=9A=D0=B8=D1=80=D0=B8=D0=BB=D0=BB.
