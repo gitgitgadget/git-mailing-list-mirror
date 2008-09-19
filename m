@@ -1,126 +1,139 @@
-From: =?utf-8?q?Uwe=20Kleine-K=C3=B6nig?= <ukleinek@strlen.de>
-Subject: [PATCH] [TOPGIT] Use git-mailinfo to extract author informations from .topmsg
-Date: Fri, 19 Sep 2008 23:27:57 +0200
-Message-ID: <1221859677-8558-1-git-send-email-ukleinek@strlen.de>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [RFC Redux] strbuf: Add method to convert byte-size to human
+ readable form
+Date: Fri, 19 Sep 2008 14:55:03 -0700
+Message-ID: <7v1vzfrebs.fsf@gitster.siamese.dyndns.org>
+References: <1221279997-9336-1-git-send-email-marcus@griep.us>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Sep 19 23:29:18 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Marcus Griep <marcus@griep.us>
+X-From: git-owner@vger.kernel.org Fri Sep 19 23:57:25 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KgnXO-0003aB-Hn
-	for gcvg-git-2@gmane.org; Fri, 19 Sep 2008 23:29:15 +0200
+	id 1KgnyZ-0003Hz-Se
+	for gcvg-git-2@gmane.org; Fri, 19 Sep 2008 23:57:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751421AbYISV2G convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 19 Sep 2008 17:28:06 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751306AbYISV2F
-	(ORCPT <rfc822;git-outgoing>); Fri, 19 Sep 2008 17:28:05 -0400
-Received: from Chamillionaire.breakpoint.cc ([85.10.199.196]:56407 "EHLO
-	Chamillionaire.breakpoint.cc" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751263AbYISV2E (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 19 Sep 2008 17:28:04 -0400
-Received: id: ukleinek by Chamillionaire.breakpoint.cc authenticated by ukleinek with local
-	(easymta 1.00 BETA 1)
-	id 1KgnWD-0003Xr-7M; Fri, 19 Sep 2008 23:28:01 +0200
-X-Mailer: git-send-email 1.5.6.5
+	id S1750880AbYISVzL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 19 Sep 2008 17:55:11 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750945AbYISVzL
+	(ORCPT <rfc822;git-outgoing>); Fri, 19 Sep 2008 17:55:11 -0400
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:39291 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750846AbYISVzK (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 19 Sep 2008 17:55:10 -0400
+Received: from localhost.localdomain (localhost [127.0.0.1])
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id E60356269E;
+	Fri, 19 Sep 2008 17:55:07 -0400 (EDT)
+Received: from pobox.com (ip68-225-240-211.oc.oc.cox.net [68.225.240.211])
+ (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
+ certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
+ ESMTPSA id 1C6A26269D; Fri, 19 Sep 2008 17:55:04 -0400 (EDT)
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: 9FBE44F8-8695-11DD-81D5-D0CFFE4BC1C1-77302942!a-sasl-fastnet.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/96317>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/96318>
 
-This has the benefit that the [PATCH] prefixes are stripped and so it
-might help to prevent you sending mails with two prefixes.  (As happend
-to me after I git-format-patch'd an exported series and sent it out wit=
-h
-git-send-email.)
+Marcus Griep <marcus@griep.us> writes:
 
-Moreover it should make the code more robust and it allows to remove a
-helper function.
-And it allows you to set add a Date: line to .topmsg which is then used
-as author date.
+>  This is a redux of a prior patch as part of a series on count-objects
+>  but is now split off and submitted on its own as an RFC for a library
+>  function to be added to strbuf.
 
-Signed-off-by: Uwe Kleine-K=C3=B6nig <ukleinek@strlen.de>
----
- tg-export.sh |   45 +++++++++++++--------------------------------
- 1 files changed, 13 insertions(+), 32 deletions(-)
+Ok, so I looked at the patch again.
 
-diff --git a/tg-export.sh b/tg-export.sh
-index 654b38b..335f698 100644
---- a/tg-export.sh
-+++ b/tg-export.sh
-@@ -38,17 +38,6 @@ trap 'rm -rf "$playground"' EXIT
-=20
- ## Collapse driver
-=20
--# Trusty Cogito code:
--load_author()
--{
--	if [ -z "$GIT_AUTHOR_NAME" ] && echo "$1" | grep -q '^[^< ]'; then
--		export GIT_AUTHOR_NAME=3D"$(echo "$1" | sed 's/ *<.*//')"
--	fi
--	if [ -z "$GIT_AUTHOR_EMAIL" ] && echo "$1" | grep -q '<.*>'; then
--		export GIT_AUTHOR_EMAIL=3D"$(echo "$1" | sed 's/.*<\(.*\)>.*/\1/')"
--	fi
--}
--
- # pretty_tree NAME
- # Output tree ID of a cleaned-up tree without tg's artifacts.
- pretty_tree()
-@@ -69,19 +58,16 @@ collapsed_commit()
- 	>"$playground/^body"
-=20
- 	# Get commit message and authorship information
--	git cat-file blob "$name:.topmsg" >"$playground/^msg"
--	while read line; do
--		if [ -z "$line" ]; then
--			# end of header
--			cat >"$playground/^body"
--			break
--		fi
--		case "$line" in
--		From:*) load_author "${line#From: }";;
--		Subject:*) echo "${line#Subject: }" >>"$playground/^pre";;
--		*) echo "$line" >>"$playground/^post";;
--		esac
--	done <"$playground/^msg"
-+	git cat-file blob "$name:.topmsg" | git mailinfo "$playground/^msg" /=
-dev/null > "$playground/^info"
-+
-+	GIT_AUTHOR_NAME=3D"$(sed -n '/^Author/ s/Author: //p' "$playground/^i=
-nfo")"
-+	GIT_AUTHOR_EMAIL=3D"$(sed -n '/^Email/ s/Email: //p' "$playground/^in=
-fo")"
-+	GIT_AUTHOR_DATE=3D"$(sed -n '/^Date/ s/Date: //p' "$playground/^info"=
-)"
-+	SUBJECT=3D"$(sed -n '/^Subject/ s/Subject: //p' "$playground/^info")"
-+
-+	test -n "$GIT_AUTHOR_NAME" && export GIT_AUTHOR_NAME
-+	test -n "$GIT_AUTHOR_EMAIL" && export GIT_AUTHOR_EMAIL
-+	test -n "$GIT_AUTHOR_DATE" && export GIT_AUTHOR_DATE
-=20
- 	# Determine parent
- 	parent=3D"$(cut -f 1 "$playground/$name^parents")"
-@@ -95,14 +81,9 @@ collapsed_commit()
- 			$(for p in $parent; do echo -p $p; done))"
- 	fi
-=20
--	{
--		if [ -s "$playground/^pre" ]; then
--			cat "$playground/^pre"
--			echo
--		fi
--		cat "$playground/^body"
--		[ ! -s "$playground/^post" ] || cat "$playground/^post"
--	} | git commit-tree "$(pretty_tree "$name")" -p "$parent"
-+	(printf '%s\n\n' "$SUBJECT"; cat "$playground/^msg") |
-+	git stripspace |
-+	git commit-tree "$(pretty_tree "$name")" -p "$parent"
-=20
- 	echo "$name" >>"$playground/^ticker"
- }
---=20
-1.5.6.5
+> diff --git a/.gitignore b/.gitignore
+> index bbaf9de..251537b 100644
+> --- a/.gitignore
+> +++ b/.gitignore
+> @@ -147,6 +147,7 @@ test-date
+>  test-delta
+>  test-dump-cache-tree
+>  test-genrandom
+> +test-human-read
+>  test-match-trees
+>  test-parse-options
+>  test-path-utils
+
+Is it just me or should the test called "test-human-readable"?
+
+> diff --git a/strbuf.c b/strbuf.c
+> index 720737d..d9888fb 100644
+> --- a/strbuf.c
+> +++ b/strbuf.c
+> @@ -308,3 +308,95 @@ int strbuf_read_file(struct strbuf *sb, const char *path, size_t hint)
+> ...
+> +{
+> +	const int maxscale = 7;
+
+This is unused as far as I can tell.
+
+> +	strbuf_addf(sb, "%f", sign * val);
+> +
+> +	if (maxlen) {
+> +		int signlen = sign == -1 ? 1 : 0;
+> +		maxlen -= (sb->buf[maxlen-1+signlen] == '.' ? 1 : 0);
+> +		if (maxlen <= 0) {
+> +			strbuf_setlen(sb, 0);
+> +			retval = maxlen - 1;
+> +		} else {
+> +			strbuf_setlen(sb, maxlen + signlen);
+> +		}
+> +	}
+
+This means you print to the buffer and then _truncate_ down to precision,
+doesn't it?  Shouldn't you be rounding (possibly up if it is above the
+midway point)?
+
+For example, if I hand 1638 to you, you would give 1.599Ki back to me, but
+if I give you only 4 digits to work with, you do not want to say 1.59Ki;
+instead you would rather say 1.60Ki, right?
+
+You would need to compute the number of digits you would want to see
+upfront and format the value using "%.*f" with appropriate precision.
+
+> diff --git a/test-human-read.c b/test-human-read.c
+> new file mode 100644
+> index 0000000..7890922
+> --- /dev/null
+> +++ b/test-human-read.c
+> @@ -0,0 +1,23 @@
+> +#include "builtin.h"
+> +#include "strbuf.h"
+> +
+> +int main(int argc, char **argv) {
+> +	if (argc != 6) {
+> +		exit(-1);
+> +	}
+> +
+> +	struct strbuf sb;
+
+Decl after statement.
+
+> +	strbuf_init(&sb, 0);
+> +
+> +	int retval = strbuf_append_human_readable(&sb,
+> +		atof(argv[1]), atoi(argv[2]), atoi(argv[3]), atoi(argv[4]));
+> +
+> +	int failed = strcmp(sb.buf, argv[5]);
+> +
+> +	fprintf( stderr, failed ? "Failure" : "Success" );
+> +	fprintf( stderr, ": Act '%s'; Exp '%s'\n", sb.buf, argv[5] );
+> +	fprintf( stderr, "Return Value: %d\n", retval );
+
+Style.
+
+> +
+> +	if(failed) return -1;
+
+Style.
+
+> +	return retval;
+> +}
+> -- 
+> 1.6.0.1.451.gc8d31
