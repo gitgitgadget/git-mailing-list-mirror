@@ -1,70 +1,67 @@
-From: Johannes Sixt <j.sixt@viscovery.net>
-Subject: Re: [PATCH (GIT-GUI,GITK) 6/8] gitk: Port new encoding logic from
- git-gui.
-Date: Fri, 19 Sep 2008 14:10:16 +0200
-Message-ID: <48D396A8.4050607@viscovery.net>
-References: <1221685659-476-1-git-send-email-angavrilov@gmail.com> <1221685659-476-2-git-send-email-angavrilov@gmail.com> <1221685659-476-3-git-send-email-angavrilov@gmail.com> <1221685659-476-4-git-send-email-angavrilov@gmail.com> <1221685659-476-5-git-send-email-angavrilov@gmail.com> <1221685659-476-6-git-send-email-angavrilov@gmail.com> <1221685659-476-7-git-send-email-angavrilov@gmail.com>
+From: Michael J Gruber <git@drmicha.warpmail.net>
+Subject: Re: Branches with git-svn
+Date: Fri, 19 Sep 2008 14:35:07 +0200
+Message-ID: <48D39C7B.9020709@drmicha.warpmail.net>
+References: <1221819302.6784.4.camel@zdra-laptop>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-15
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, "Shawn O. Pearce" <spearce@spearce.org>,
-	Paul Mackerras <paulus@samba.org>
-To: Alexander Gavrilov <angavrilov@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Sep 19 14:11:33 2008
+Cc: git@vger.kernel.org
+To: Xavier Claessens <xclaesse@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Sep 19 14:36:36 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Kgepf-0001xw-4p
-	for gcvg-git-2@gmane.org; Fri, 19 Sep 2008 14:11:31 +0200
+	id 1KgfDq-0002h8-ND
+	for gcvg-git-2@gmane.org; Fri, 19 Sep 2008 14:36:31 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751495AbYISMKV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 19 Sep 2008 08:10:21 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751333AbYISMKV
-	(ORCPT <rfc822;git-outgoing>); Fri, 19 Sep 2008 08:10:21 -0400
-Received: from lilzmailso01.liwest.at ([212.33.55.23]:38725 "EHLO
-	lilzmailso01.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751235AbYISMKU (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 19 Sep 2008 08:10:20 -0400
-Received: from cm56-163-160.liwest.at ([86.56.163.160] helo=linz.eudaptics.com)
-	by lilzmailso01.liwest.at with esmtpa (Exim 4.66)
-	(envelope-from <j.sixt@viscovery.net>)
-	id 1KgeoS-0005Pg-TS; Fri, 19 Sep 2008 14:10:17 +0200
-Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.42])
-	by linz.eudaptics.com (Postfix) with ESMTP
-	id 5B58454D; Fri, 19 Sep 2008 14:10:16 +0200 (CEST)
-User-Agent: Thunderbird 2.0.0.6 (Windows/20070728)
-In-Reply-To: <1221685659-476-7-git-send-email-angavrilov@gmail.com>
-X-Spam-Score: 1.2 (+)
-X-Spam-Report: ALL_TRUSTED=-1.8, BAYES_95=3
+	id S1751287AbYISMfN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 19 Sep 2008 08:35:13 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752054AbYISMfN
+	(ORCPT <rfc822;git-outgoing>); Fri, 19 Sep 2008 08:35:13 -0400
+Received: from out1.smtp.messagingengine.com ([66.111.4.25]:33857 "EHLO
+	out1.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1750880AbYISMfM (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 19 Sep 2008 08:35:12 -0400
+Received: from compute1.internal (compute1.internal [10.202.2.41])
+	by out1.messagingengine.com (Postfix) with ESMTP id D7B37165F3B;
+	Fri, 19 Sep 2008 08:35:10 -0400 (EDT)
+Received: from heartbeat1.messagingengine.com ([10.202.2.160])
+  by compute1.internal (MEProxy); Fri, 19 Sep 2008 08:35:10 -0400
+X-Sasl-enc: k4KdkpAW+pLJfRSnxhVAsJd/eDZw3JF2npKHobNRufQu 1221827710
+Received: from [139.174.44.12] (whitehead.math.tu-clausthal.de [139.174.44.12])
+	by mail.messagingengine.com (Postfix) with ESMTPSA id 2199719A72;
+	Fri, 19 Sep 2008 08:35:10 -0400 (EDT)
+User-Agent: Thunderbird 2.0.0.16 (X11/20080707)
+In-Reply-To: <1221819302.6784.4.camel@zdra-laptop>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/96278>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/96279>
 
-Alexander Gavrilov schrieb:
-> Add functions that implement the same logic for file
-> contents encoding as git-gui uses:
+Xavier Claessens venit, vidit, dixit 19.09.2008 12:15:
+> Hi,
 > 
-> - Defaults to the system encoding.
-> - Overridden by setting the gui.encoding option.
-> - Further overridden on per-file basis by gitattributes.
+> I created a git repository using "git-svn clone <url>" a long time ago.
+> But now I realise that I don't get SVN branches into my git repository.
+> I see that the doc tells to use "git clone -t tags -b branches -T trunk
+> <url>" to create the repository. If I create a new repository with that
+> command, I get branches and tags.
 > 
-> Also extends the range of supported encoding names.
+> However I have lots of contributors having branches based on my git
+> repository. Is there a way to add SVN branch to my existing git repo?
 
-If I run
+If you haven't use those options back then, then what was the svn repo
+structure - no trunk, just main?
+Did you change the structure now?
 
-  $ LANG=C gitk 146ed90
+If you git-svn fetch from that new structure then all your new branches
+etc. will show up as subdirectories, which is most certainly not what
+you want.
 
-with this series on the git-gui repository, then I hoped to see the text
-in the patches in the right encoding. But I understand that I expected too
-much - the patch text is just a stream of bytes that comes from different
-files, and the best you can do is to apply the system encoding.
+So, what was the structure in svn like before, and have your
+contributors based their branches on the mis-imported new structure already?
 
-But if the view is switched to the tree view, and file contents are
-inspected, then this patch should help. But it doesn't. If you look at
-po/ja.po, it is appearent that the file was not read as UTF-8, which is
-dictated by .gitattributes.
-
--- Hannes
+Michael
