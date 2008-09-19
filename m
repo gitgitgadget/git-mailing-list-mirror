@@ -1,89 +1,75 @@
 From: Brandon Casey <casey@nrlssc.navy.mil>
-Subject: Re: [PATCH 3/4] diff.*.xfuncname which uses "extended" regex's for
- hunk header selection
-Date: Fri, 19 Sep 2008 13:14:51 -0500
-Message-ID: <UnIVj68wrBMolSCdIK6HiPbWuYW_tHaOLLRXg8Om13cHwLqzQ8QNNw@cipher.nrlssc.navy.mil>
-References: <7v3ak06jzj.fsf@gitster.siamese.dyndns.org> <wgfIh_UVzwhXaVTN46Io8UDAq72MVwOkk7CobrAvp0330VRzwT2fuA@cipher.nrlssc.navy.mil> <7vd4j212gb.fsf@gitster.siamese.dyndns.org>
+Subject: Re: [PATCH v2 1/4] diff.c: return pattern entry pointer rather than
+ just the hunk header pattern
+Date: Fri, 19 Sep 2008 14:11:59 -0500
+Message-ID: <IWyC0OwsyyNa-yfA29138St-i1ziYm_Ijietm8MzVB8@cipher.nrlssc.navy.mil>
+References: <7vskry1485.fsf@gitster.siamese.dyndns.org> <hvD4CKeY-shT7TB0JLaQn02KLTvzB720kcwBxBfYbo3S2ySzNzsn9g@cipher.nrlssc.navy.mil> <alpine.LNX.1.10.0809191209450.10710@suse104.zenez.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-Cc: Arjen Laarhoven <arjen@yaph.org>,
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Arjen Laarhoven <arjen@yaph.org>,
 	Mike Ralphson <mike.ralphson@gmail.com>,
 	Johannes Sixt <j.sixt@viscovery.net>,
 	Jeff King <peff@peff.net>,
-	Git Mailing List <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Sep 19 20:16:33 2008
+	Git Mailing List <git@vger.kernel.org>,
+	Avery Pennarun <apenwarr@gmail.com>,
+	Johan Herland <johan@herland.net>,
+	Andreas Ericsson <ae@op5.se>, Kirill Smelkov <kirr@mns.spb.ru>,
+	Giuseppe Bilotta <giuseppe.bilotta@gmail.com>,
+	Gustaf Hendeby <hendeby@isy.liu.se>,
+	Jonathan del Strother <maillist@steelskies.com>
+To: Boyd Lynn Gerber <gerberb@zenez.com>
+X-From: git-owner@vger.kernel.org Fri Sep 19 21:14:57 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KgkWt-0003EZ-6e
-	for gcvg-git-2@gmane.org; Fri, 19 Sep 2008 20:16:31 +0200
+	id 1KglRI-00077s-H1
+	for gcvg-git-2@gmane.org; Fri, 19 Sep 2008 21:14:49 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752129AbYISSPX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 19 Sep 2008 14:15:23 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751808AbYISSPX
-	(ORCPT <rfc822;git-outgoing>); Fri, 19 Sep 2008 14:15:23 -0400
-Received: from mail1.nrlssc.navy.mil ([128.160.35.1]:39602 "EHLO
+	id S1753624AbYISTNj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 19 Sep 2008 15:13:39 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753512AbYISTNj
+	(ORCPT <rfc822;git-outgoing>); Fri, 19 Sep 2008 15:13:39 -0400
+Received: from mail1.nrlssc.navy.mil ([128.160.35.1]:43870 "EHLO
 	mail.nrlssc.navy.mil" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751164AbYISSPX (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 19 Sep 2008 14:15:23 -0400
-Received: by mail.nrlssc.navy.mil id m8JIEpLJ023022; Fri, 19 Sep 2008 13:14:51 -0500
-In-Reply-To: <7vd4j212gb.fsf@gitster.siamese.dyndns.org>
-X-OriginalArrivalTime: 19 Sep 2008 18:14:51.0598 (UTC) FILETIME=[9BEF9EE0:01C91A83]
+	with ESMTP id S1753198AbYISTNi (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 19 Sep 2008 15:13:38 -0400
+Received: by mail.nrlssc.navy.mil id m8JJC082032139; Fri, 19 Sep 2008 14:12:00 -0500
+In-Reply-To: <alpine.LNX.1.10.0809191209450.10710@suse104.zenez.com>
+X-OriginalArrivalTime: 19 Sep 2008 19:12:00.0417 (UTC) FILETIME=[97ABE110:01C91A8B]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/96306>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/96307>
 
-Junio C Hamano wrote:
+Boyd Lynn Gerber wrote:
+> So on these patches,
+> What do you want me to do?  I applied them and things kinda worked.
 
-> I personally think it was a mistake that the loop returns failure when
-> there is any pattern that does not match (it is a useful feature that a
-> match with a negated one forces an early return, though).
-> 
-> We may want to fix the semantics to be something like:
-> 
-> 	for (i = 0; i < regs->nr; i++) {
->         	struct ff_reg *reg = &regs->array[i];
->                 if (!regexec(&reg->re, line_buffer, 2, pmatch, 0)) {
-> 			if (reg->negate) {
-> 	                	free(line_buffer);
-> 	                	return -1;
-> 			}
->                         break;
-> 		}
-> 	}
->         if (regs->nr <= i) {
->         	free(line_buffer);
-> 		return -1;
-> 	}
-> 	... use pmatch() ...
-> 
-> I.e. (1) negative match forces an early return (useful for catching
-> language keywords), (2) first positive match is used, and (3) no match is
-> a failure.
-> 
-> Of course, by definition the above "fix" changes the semantics, and will
-> break people's existing setup if somebody has an existing custom pattern
-> string that does use more than one positive regexp anded together with
-> "\n", but I somehow suspect nobody sane depends on the current broken
-> semantics.
-> 
-> It would help making JdS's ObjC alternates easier to write.  You can say:
-> 
-> 
-> 	/* A or B */
-> 	"...(A|B)$"
->         "\n" /* or C or D */
->         "...(C|D)$"
-> 
-> and both captures around A|B and C|D would be saved in $1.
+Test t4018-diff-funcname.sh should pass. As Johan mentioned, in the
+last patch '\\s' should have been converted to '[ \t]', rather than
+to just ' ', but that should not affect the test and should only
+affect html, python, and ruby patterns.
 
-Just to let you know another pair of eyes has given the above a
-once over, I agree with your proposal. "or" semantics makes more sense
-than "and".
+It would be nice if the tests were expanded.
+
+>  The
+> problem is pine/alpine messes them up a bit and it is not easy to
+> manually fix them.  It would be easier to git clone/pull them from
+> either a site or the trees.  
+
+I expect they will be in Junio's tree soon, most likely the master
+branch.
+
+>I do think that on some we should use the
+> actual charact vers the C-syntax.  "\t" for example.
+
+"\t" is safe to use since it is interpreted by git in config.c: parse_value(),
+not by the regex library. I was also concerned about that character until I
+traced the code to parse_value(). Junio is right that better documentation of
+this feature is needed.
 
 -brandon
