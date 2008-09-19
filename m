@@ -1,60 +1,81 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: GitTogether topics status
-Date: Fri, 19 Sep 2008 12:11:52 +0200 (CEST)
-Message-ID: <alpine.DEB.1.00.0809191209550.13830@pacific.mpi-cbg.de.mpi-cbg.de>
-References: <200809182207.21448.chriscool@tuxfamily.org>  <m363otmb8p.fsf@localhost.localdomain>  <200809190703.11969.chriscool@tuxfamily.org> <d411cc4a0809182303x365e2280r3fc8a9a3534d8890@mail.gmail.com>
+From: Kirill Smelkov <kirr@landau.phys.spbu.ru>
+Subject: Re: [TopGit RFC PATCH] tg mail: new command for mailing patches
+Date: Fri, 19 Sep 2008 14:04:41 +0400
+Organization: St.Petersburg State University
+Message-ID: <20080919100441.GF4423@roro3>
+References: <1221815301-25090-1-git-send-email-kirr@landau.phys.spbu.ru> <36ca99e90809190252q45f01eb2xd02b62b88f0cf3a9@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Christian Couder <chriscool@tuxfamily.org>,
-	Jakub Narebski <jnareb@gmail.com>, git@vger.kernel.org,
-	"Shawn O. Pearce" <spearce@spearce.org>
-To: Scott Chacon <schacon@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Sep 19 12:07:23 2008
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Kirill Smelkov <kirr@landau.phys.spbu.ru>,
+	Petr Baudis <pasky@suse.cz>,
+	Git Mailing List <git@vger.kernel.org>
+To: Bert Wesarg <bert.wesarg@googlemail.com>
+X-From: git-owner@vger.kernel.org Fri Sep 19 12:14:11 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KgctM-0002BA-Tm
-	for gcvg-git-2@gmane.org; Fri, 19 Sep 2008 12:07:13 +0200
+	id 1Kgd04-0004LA-9a
+	for gcvg-git-2@gmane.org; Fri, 19 Sep 2008 12:14:08 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751017AbYISKGF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 19 Sep 2008 06:06:05 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750908AbYISKGE
-	(ORCPT <rfc822;git-outgoing>); Fri, 19 Sep 2008 06:06:04 -0400
-Received: from mail.gmx.net ([213.165.64.20]:49208 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1750836AbYISKGC (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 19 Sep 2008 06:06:02 -0400
-Received: (qmail invoked by alias); 19 Sep 2008 10:06:00 -0000
-Received: from pacific.mpi-cbg.de (EHLO [141.5.10.38]) [141.5.10.38]
-  by mail.gmx.net (mp014) with SMTP; 19 Sep 2008 12:06:00 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX18wEScEB/Uwyay4/QEfIyO+9LACuAuNA4qV/bWHWF
-	a8m7Nsf0vaBsU0
-X-X-Sender: schindelin@pacific.mpi-cbg.de.mpi-cbg.de
-In-Reply-To: <d411cc4a0809182303x365e2280r3fc8a9a3534d8890@mail.gmail.com>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.71
+	id S1751093AbYISKNA convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 19 Sep 2008 06:13:00 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751099AbYISKNA
+	(ORCPT <rfc822;git-outgoing>); Fri, 19 Sep 2008 06:13:00 -0400
+Received: from vs281.server4u.cz ([81.91.85.31]:58610 "EHLO vs281.server4u.cz"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750980AbYISKM7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 19 Sep 2008 06:12:59 -0400
+Received: from localhost ([127.0.0.1] helo=roro3)
+	by vs281.server4u.cz with esmtp (Exim 4.69)
+	(envelope-from <kirr@landau.phys.spbu.ru>)
+	id 1Kgd5Z-0000iP-7F; Fri, 19 Sep 2008 12:19:49 +0200
+Received: from kirr by roro3 with local (Exim 4.69)
+	(envelope-from <kirr@roro3>)
+	id 1Kgcqv-0000m0-5q; Fri, 19 Sep 2008 14:04:41 +0400
+Content-Disposition: inline
+In-Reply-To: <36ca99e90809190252q45f01eb2xd02b62b88f0cf3a9@mail.gmail.com>
+User-Agent: Mutt/1.5.18 (2008-05-17)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/96272>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/96273>
 
-Hi,
+On Fri, Sep 19, 2008 at 11:52:03AM +0200, Bert Wesarg wrote:
+> On Fri, Sep 19, 2008 at 11:08, Kirill Smelkov <kirr@landau.phys.spbu.=
+ru> wrote:
+> > Petr, since you've asked for help on this, here you are:
+> >
+> >    $ tg mail [NAME]
+> >
+> > a simple script to send one patch over email.
+> >
+> >
+> > All it does is
+> >
+> >    - call `tg patch` for actual patch preparation
+> >    - extract email addresses from whom and where to send a mail
+> That shouldn't be needed. git send-email parses Cc: headers and the
 
-On Thu, 18 Sep 2008, Scott Chacon wrote:
+Exactly for this reason I do not extract Cc. And git send-mail does not
+extract From: -- it just asks to confirm From is GIT_COMMITTER_IDENT,
+and there is no option to stop it doing so except providing explicit
+--from <someone> (maybe i'm missing something?).
 
-> I very much want to see a library that provides basic Git object access 
-> that we can use to write proper bindings in Ruby/Python/Perl.  If the 
-> current Git code is too difficult to libify properly, then perhaps an 
-> alternate C implementation that is built only for that purpose is 
-> preferable to having a re-implementation in _every_ language.  Looking 
-> forward to the discussion.
+> To: comes from 'git config topgit.to', so you can re-use this.
 
-libgit-thin.  What is missing is somebody taking this forward (and this 
-includes making it more public on the Git mailing list).
+Yes, it comes directly to .topmsg when `tg create` is done, so I though=
+t
+the main source of information is the patch itself -- users may want to
+edit that To: by hand or add another To: lines.
 
-Hth,
-Dscho
+and what If a patch is already exported as a file, and I want to
+send/resend it upstream right from that file?
+
+We may want to look for topgit.to too though.
+
+--=20
+    =D0=92=D1=81=D0=B5=D0=B3=D0=BE =D1=85=D0=BE=D1=80=D0=BE=D1=88=D0=B5=
+=D0=B3=D0=BE, =D0=9A=D0=B8=D1=80=D0=B8=D0=BB=D0=BB.
