@@ -2,121 +2,105 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: *
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=1.6 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RP_MATCHES_RCVD shortcircuit=no
+X-Spam-Status: No, score=1.7 required=3.0 tests=AWL,BAYES_00,
+	DKIM_ADSP_CUSTOM_MED,DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no
 	autolearn=unavailable autolearn_force=no version=3.4.0
-Received: (qmail 15241 invoked by uid 111); 19 Sep 2008 09:16:56 -0000
+Received: (qmail 15406 invoked by uid 111); 19 Sep 2008 09:55:24 -0000
 Received: from vger.kernel.org (HELO vger.kernel.org) (209.132.176.167)
-    by peff.net (qpsmtpd/0.32) with ESMTP; Fri, 19 Sep 2008 05:16:44 -0400
+    by peff.net (qpsmtpd/0.32) with ESMTP; Fri, 19 Sep 2008 05:55:17 -0400
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751017AbYISJQl (ORCPT <rfc822;peff@peff.net>);
-	Fri, 19 Sep 2008 05:16:41 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750914AbYISJQk
-	(ORCPT <rfc822;git-outgoing>); Fri, 19 Sep 2008 05:16:40 -0400
-Received: from vs281.server4u.cz ([81.91.85.31]:52937 "EHLO vs281.server4u.cz"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750709AbYISJQj (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 19 Sep 2008 05:16:39 -0400
-Received: from localhost ([127.0.0.1] helo=roro3)
-	by vs281.server4u.cz with esmtp (Exim 4.69)
-	(envelope-from <kirr@landau.phys.spbu.ru>)
-	id 1KgcD3-0000hj-LE; Fri, 19 Sep 2008 11:23:29 +0200
-Received: from kirr by roro3 with local (Exim 4.69)
-	(envelope-from <kirr@roro3>)
-	id 1KgbyP-0006XM-Rv; Fri, 19 Sep 2008 13:08:21 +0400
-From:	Kirill Smelkov <kirr@landau.phys.spbu.ru>
+	id S1751182AbYISJzN (ORCPT <rfc822;peff@peff.net>);
+	Fri, 19 Sep 2008 05:55:13 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751161AbYISJzN
+	(ORCPT <rfc822;git-outgoing>); Fri, 19 Sep 2008 05:55:13 -0400
+Received: from mu-out-0910.google.com ([209.85.134.185]:21749 "EHLO
+	mu-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751139AbYISJzK (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 19 Sep 2008 05:55:10 -0400
+Received: by mu-out-0910.google.com with SMTP id g7so284997muf.1
+        for <git@vger.kernel.org>; Fri, 19 Sep 2008 02:55:07 -0700 (PDT)
+DKIM-Signature:	v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=googlemail.com; s=gamma;
+        h=domainkey-signature:received:received:from:to:cc:subject:date
+         :message-id:x-mailer:to;
+        bh=i7TdXZjGHGii3M/BctlVXNH1uZg0SNSaz5zTI2xd1pQ=;
+        b=LmGm54AlxYOHpHkhVF3czdIyczAcEnhhP5hc5pUpu+5UPHwJ0/xrcris/kBBHe7b9m
+         hkVf9+O5Yg1vYEbGjIVIlSJzxdYiO86X/yOWecfFSTIEhDp1zMTucQwGcQXdibOwlKsH
+         yqY0N76vmGDMud7RowkwwYbMHQrNYflMySk9g=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=googlemail.com; s=gamma;
+        h=from:to:cc:subject:date:message-id:x-mailer;
+        b=aoJFHhBr6Pl9lQuCCyaQ7d+tlA6VmxlfSuxOwjvjh730LpAhsNtYBR7YdRb8bSJQJb
+         AaSRjWFohUyi4F7GXOqhCDU5AK2an69m1IQR5iflRd3uBe1ui58n2XnstwwiqSy+d3oQ
+         Uxjdw/vl2P/1qOqGPfxePStGwDSVoprxh8Yho=
+Received: by 10.103.176.2 with SMTP id d2mr3801651mup.112.1221818107376;
+        Fri, 19 Sep 2008 02:55:07 -0700 (PDT)
+Received: from localhost ( [91.15.64.191])
+        by mx.google.com with ESMTPS id u9sm3486841muf.9.2008.09.19.02.55.05
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Fri, 19 Sep 2008 02:55:06 -0700 (PDT)
+From:	Bert Wesarg <bert.wesarg@googlemail.com>
 To:	Petr Baudis <pasky@suse.cz>
-Cc:	Kirill Smelkov <kirr@landau.phys.spbu.ru>,
-	Git Mailing List <git@vger.kernel.org>
-Subject: [TopGit RFC PATCH] tg mail: new command for mailing patches
-Date:	Fri, 19 Sep 2008 13:08:21 +0400
-Message-Id: <1221815301-25090-1-git-send-email-kirr@landau.phys.spbu.ru>
-X-Mailer: git-send-email 1.6.0.2.250.g965aa
+Cc:	Bert Wesarg <bert.wesarg@googlemail.com>, git@vger.kernel.org
+Subject: [TopGit PATCH] prev/next/tsort: commands to explore dependencies
+Date:	Fri, 19 Sep 2008 11:55:00 +0200
+Message-Id: <1221818101-14333-1-git-send-email-bert.wesarg@googlemail.com>
+X-Mailer: git-send-email 1.6.0.1
 To:	Petr Baudis <pasky@suse.cz>
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-Petr, since you've asked for help on this, here you are:
+I hacked 3 commands to explore the dependencies of TopGit patches:
 
-    $ tg mail [NAME]
+  I) tg prev [NAME]
+     outputs the dependencies of NAME
 
-a simple script to send one patch over email.
+ II) tg next [NAME]
+     outputs patches that depends on NAME
 
+III) tg tsort [PATTERN]
+     outputs a topological order of all patches starting with PATTERN
 
-All it does is
+I'm more than open for improvments.
 
-    - call `tg patch` for actual patch preparation
-    - extract email addresses from whom and where to send a mail
-    - boils down to `git send-email`
-
-
-It is self-hosted -- this mail was send by me with
-
-    $ tg mail t/tg-mail
-
-
-P.S. I'm not a bash guy, please do not beat me too much...
-
-Signed-off-by: Kirill Smelkov <kirr@landau.phys.spbu.ru>
+Regards
+Bert
+   
+Signed-off-by: Bert Wesarg <bert.wesarg@googlemail.com>
 
 ---
- .gitignore |    2 ++
- README     |   18 ++++++++++++++++++
- tg-mail.sh |   53 +++++++++++++++++++++++++++++++++++++++++++++++++++++
- 3 files changed, 73 insertions(+), 0 deletions(-)
+ .gitignore  |    6 ++++++
+ tg-next.sh  |   33 +++++++++++++++++++++++++++++++++
+ tg-prev.sh  |   27 +++++++++++++++++++++++++++
+ tg-tsort.sh |   57 +++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ 4 files changed, 123 insertions(+), 0 deletions(-)
 
 diff --git a/.gitignore b/.gitignore
-index aa39db4..df4a662 100644
+index 8868f2d..b7fb70b 100644
 --- a/.gitignore
 +++ b/.gitignore
-@@ -5,6 +5,8 @@ tg-delete
- tg-delete.txt
- tg-info
- tg-info.txt
-+tg-mail
-+tg-mail.txt
- tg-patch
- tg-patch.txt
- tg-summary
-diff --git a/README b/README
-index b99b036..1a001a6 100644
---- a/README
-+++ b/README
-@@ -272,6 +272,24 @@ tg patch
- 	TODO: tg patch -i to base at index instead of branch,
- 		-w for working tree
- 
-+tg mail
-+~~~~~~~
-+	Send a patch from the current or specified topic branch as
-+	email.
-+
-+	Takes the patch given on the command line and emails it out.
-+	Destination addresses such as To, Cc and Bcc are taken from the
-+	patch header.
-+
-+	Since it actually boils down to `git send-email` please refer to
-+	it's documentation for details on how to setup email for git.
-+
-+
-+	TODO: tg mail patchfile  to mail an already exported patch
-+	TODO: mailing patch series
-+	TODO: specifying additional options and addresses on command
-+	      line
-+
- tg remote
- ~~~~~~~~~
- 	Register given remote as TopGit-controlled. This will create
-diff --git a/tg-mail.sh b/tg-mail.sh
+@@ -18,3 +18,9 @@ tg-import.txt
+ tg-remote
+ tg-remote.txt
+ tg
++tg-next
++tg-next.txt
++tg-prev
++tg-prev.txt
++tg-tsort
++tg-tsort.txt
+diff --git a/tg-next.sh b/tg-next.sh
 new file mode 100644
-index 0000000..f3abd2c
+index 0000000..8e17226
 --- /dev/null
-+++ b/tg-mail.sh
-@@ -0,0 +1,53 @@
++++ b/tg-next.sh
+@@ -0,0 +1,33 @@
 +#!/bin/sh
 +# TopGit - A different patch queue manager
++# (c) Petr Baudis <pasky@suse.cz>  2008
 +# GPLv2
 +
 +name=
@@ -128,7 +112,7 @@ index 0000000..f3abd2c
 +	arg="$1"; shift
 +	case "$arg" in
 +	-*)
-+		echo "Usage: tg [...] mail [NAME]" >&2
++		echo "Usage: tg next [NAME]" >&2
 +		exit 1;;
 +	*)
 +		[ -z "$name" ] || die "name already specified ($name)"
@@ -136,37 +120,112 @@ index 0000000..f3abd2c
 +	esac
 +done
 +
-+# TODO refactor me into something common?
 +[ -n "$name" ] || name="$(git symbolic-ref HEAD | sed 's#^refs/heads/##')"
 +base_rev="$(git rev-parse --short --verify "refs/top-bases/$name" 2>/dev/null)" ||
 +	die "not a TopGit-controlled branch"
 +
++git for-each-ref --format='%(refname)' refs/top-bases |
++	while read topic; do
++		topic="${topic#refs/top-bases/}"
++		if git show "${topic}":.topdeps 2>/dev/null | grep -q "^${name}\$"; then
++			echo "${topic}"
++		fi
++	done
+diff --git a/tg-prev.sh b/tg-prev.sh
+new file mode 100644
+index 0000000..801fb3e
+--- /dev/null
++++ b/tg-prev.sh
+@@ -0,0 +1,27 @@
++#!/bin/sh
++# TopGit - A different patch queue manager
++# (c) Petr Baudis <pasky@suse.cz>  2008
++# GPLv2
 +
-+patchfile="$(mktemp -t tg-mail.XXXXXX)"
-+
-+$tg patch $name >"$patchfile"
-+
-+hlines=$(grep -n -m 1 '^---' "$patchfile" | sed 's/:---//')
-+header=$(head -$(($hlines - 1)) "$patchfile")
-+
-+
-+
-+from="$(echo "$header" | grep '^From:' | sed 's/From:\s*//')"
-+to="$(echo "$header" | grep '^To:' | sed 's/To:\s*//')"
-+
-+
-+# XXX I can't get quoting right without arrays
-+[ -n "$from" ] && from=(--from "$from")
-+[ -n "$to"   ] && to=(--to "$to") # FIXME there could be multimple To
-+
-+people=()
-+[ -n "$from" ] && people=("${people[@]}" "${from[@]}")
-+[ -n "$to" ]   && people=("${people[@]}" "${to[@]}")
++name=
 +
 +
-+# NOTE git-send-email handles cc itself
-+git send-email "${people[@]}" "$patchfile"
++## Parse options
 +
-+rm "$patchfile"
++while [ -n "$1" ]; do
++	arg="$1"; shift
++	case "$arg" in
++	-*)
++		echo "Usage: tg next [NAME]" >&2
++		exit 1;;
++	*)
++		[ -z "$name" ] || die "name already specified ($name)"
++		name="$arg";;
++	esac
++done
++
++[ -n "$name" ] || name="$(git symbolic-ref HEAD | sed 's#^refs/heads/##')"
++base_rev="$(git rev-parse --short --verify "refs/top-bases/$name" 2>/dev/null)" ||
++	die "not a TopGit-controlled branch"
++
++git show "$name:.topdeps"
+diff --git a/tg-tsort.sh b/tg-tsort.sh
+new file mode 100644
+index 0000000..8a7376a
+--- /dev/null
++++ b/tg-tsort.sh
+@@ -0,0 +1,57 @@
++#!/bin/sh
++# TopGit - A different patch queue manager
++# (c) Petr Baudis <pasky@suse.cz>  2008
++# GPLv2
++
++pattern=
++
++## Parse options
++
++while [ -n "$1" ]; do
++	arg="$1"; shift
++	case "$arg" in
++	-*)
++		echo "Usage: tg tsort [PATTERN]" >&2
++		exit 1;;
++	*)
++		[ -z "$pattern" ] || die "pattern already specified ($pattern)"
++		pattern="$arg";;
++	esac
++done
++
++# remove trailing /, they wont work with for-each-ref
++pattern="$(echo "refs/top-bases/$pattern" | sed -re 's#/+$##g')"
++
++name="$(git symbolic-ref HEAD | sed 's#^refs/heads/##')"
++base_rev="$(git rev-parse --short --verify "refs/top-bases/$name" 2>/dev/null)" ||
++	die "not a TopGit-controlled branch"
++
++rev_map="$(mktemp)"
++rev_map_uniq="$(mktemp)"
++rev_map_sed="$(mktemp)"
++tsort_out="$(mktemp)"
++trap 'rm -f "$rev_map" "$rev_map_uniq" "$rev_map_sed" "$tsort_out"' EXIT
++
++(
++	exec 3>"$rev_map"
++	cd "$git_dir"
++	git for-each-ref --format='%(refname)' $pattern |
++		while read topic; do
++			topic="${topic#refs/top-bases/}"
++			topic_rev="$(git rev-parse --verify "${topic}" 2>/dev/null)"
++			printf "%s\t%q\n" "${topic_rev}" "${topic}" >&3
++			git show "${topic}":.topdeps 2>/dev/null |
++				while read dep; do
++					dep_rev="$(git rev-parse --verify "${dep}" 2>/dev/null)"
++					printf "%s\t%q\n" "${dep_rev}" "${dep}" >&3
++					printf "%s\t%s\n" "${topic_rev}" "${dep_rev}"
++				done
++		done
++) | tsort | tac > "$tsort_out"
++
++LC_ALL=C sort "$rev_map" | uniq > "$rev_map_uniq"
++while read sha1 rev; do
++	printf "s#%s#%s#\n" "$sha1" "$rev"
++done < "$rev_map_uniq" > "$rev_map_sed"
++
++sed -f "$rev_map_sed" "$tsort_out"
 -- 
-tg: (6b5d0b8..) t/tg-mail (depends on: kirr)
+tg: (370a0fd..) t/queue-movement (depends on: master)
