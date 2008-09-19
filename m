@@ -1,115 +1,123 @@
-From: =?utf-8?q?SZEDER=20G=C3=A1bor?= <szeder@ira.uka.de>
-Subject: [PATCH] bash: use for-each-ref format 'refname:short'
-Date: Sat, 20 Sep 2008 00:15:25 +0200
-Message-ID: <1221862525-20574-1-git-send-email-szeder@ira.uka.de>
+From: Thomas Rast <trast@student.ethz.ch>
+Subject: Re: What's cooking in git.git (Sep 2008, #03; Fri, 19)
+Date: Sat, 20 Sep 2008 00:20:24 +0200
+Message-ID: <200809200020.32285.trast@student.ethz.ch>
+References: <7vprmzrh7w.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org,
-	=?utf-8?q?SZEDER=20G=C3=A1bor?= <szeder@ira.uka.de>
-To: Junio C Hamano <gitster@pobox.com>,
-	"Shawn O. Pearce" <spearce@spearce.org>
-X-From: git-owner@vger.kernel.org Sat Sep 20 00:17:10 2008
+Content-Type: multipart/signed;
+  boundary="nextPart12004202.v1J1DuQGEx";
+  protocol="application/pgp-signature";
+  micalg=pgp-sha1
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sat Sep 20 00:21:45 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KgoHj-0000OG-7Y
-	for gcvg-git-2@gmane.org; Sat, 20 Sep 2008 00:17:07 +0200
+	id 1KgoMC-0001eQ-3d
+	for gcvg-git-2@gmane.org; Sat, 20 Sep 2008 00:21:44 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751421AbYISWP5 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 19 Sep 2008 18:15:57 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751503AbYISWP5
-	(ORCPT <rfc822;git-outgoing>); Fri, 19 Sep 2008 18:15:57 -0400
-Received: from moutng.kundenserver.de ([212.227.126.187]:60573 "EHLO
-	moutng.kundenserver.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751344AbYISWP5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 19 Sep 2008 18:15:57 -0400
-Received: from [127.0.1.1] (p5B1335D9.dip0.t-ipconnect.de [91.19.53.217])
-	by mrelayeu.kundenserver.de (node=mrelayeu1) with ESMTP (Nemesis)
-	id 0MKwpI-1KgoG51yov-00071X; Sat, 20 Sep 2008 00:15:26 +0200
-X-Mailer: git-send-email 1.6.0.2.294.g50836f
-X-Provags-ID: V01U2FsdGVkX1/bIxP8xlvoJuGD+kjmBGgZFyLIwR2pydjw4zn
- dpqyT0b1ioiYkuIxOqyjxA24uoZNC697QDH2Kjfen4MRlB1HFP
- ltF6nqyp/AkK9R00K8ejw==
+	id S1751881AbYISWUd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 19 Sep 2008 18:20:33 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752482AbYISWUd
+	(ORCPT <rfc822;git-outgoing>); Fri, 19 Sep 2008 18:20:33 -0400
+Received: from xsmtp0.ethz.ch ([82.130.70.14]:45111 "EHLO XSMTP0.ethz.ch"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751725AbYISWUd (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 19 Sep 2008 18:20:33 -0400
+Received: from xfe0.d.ethz.ch ([82.130.124.40]) by XSMTP0.ethz.ch with Microsoft SMTPSVC(6.0.3790.3959);
+	 Sat, 20 Sep 2008 00:20:31 +0200
+Received: from [192.168.0.8] ([77.56.223.244]) by xfe0.d.ethz.ch over TLS secured channel with Microsoft SMTPSVC(6.0.3790.3959);
+	 Sat, 20 Sep 2008 00:20:31 +0200
+User-Agent: KMail/1.9.9
+In-Reply-To: <7vprmzrh7w.fsf@gitster.siamese.dyndns.org>
+X-OriginalArrivalTime: 19 Sep 2008 22:20:31.0114 (UTC) FILETIME=[ED5F46A0:01C91AA5]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/96319>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/96320>
 
-Using this format simplifies the code for completing refs and (in some
-cases) improves performance significantly.
+--nextPart12004202.v1J1DuQGEx
+Content-Type: text/plain;
+  charset="utf-8"
+Content-Transfer-Encoding: quoted-printable
+Content-Disposition: inline
 
-=46or repositories like the current git.git (with more than 200 refs)
-there is no real performance difference, but for a repository with 2000
-refs the total time needed to complete the refs is reduced by ~25% (fro=
-m
-around 400ms to around 305ms).
+Junio C Hamano wrote:
+> * tr/workflow-doc (Sat Sep 13 18:11:01 2008 +0200) 2 commits
+>  + Documentation: Refer to git-rebase(1) to warn against rewriting
+>  + Documentation: new upstream rebase recovery section in git-rebase
+>=20
+> I think the last one on "recommended practice" needs discussion.  I do not
+> think it describes _the_ recommended workflow, although I think (1) what
+> is recommended in the draft does make sense within its own scope, and (2)
+> it may be impossible to come up with _the_ recommended workflow anyway.
 
-Signed-off-by: SZEDER G=C3=A1bor <szeder@ira.uka.de>
----
+[The patch referred to is
 
- OK, so after the refname:short patch hit master, here is the updated
- patch to use it in bash completion.  The patch itself is the same as
- the original one, except, of course, the for-each-ref format name.  I
- have also adjusted the performance numbers in the commit message.
+  http://article.gmane.org/gmane.comp.version-control.git/95806
 
- contrib/completion/git-completion.bash |   26 ++++++------------------=
---
- 1 files changed, 6 insertions(+), 20 deletions(-)
+and the only response so far, to an earlier version,
 
-diff --git a/contrib/completion/git-completion.bash b/contrib/completio=
-n/git-completion.bash
-index d3fb6ae..fccb499 100755
---- a/contrib/completion/git-completion.bash
-+++ b/contrib/completion/git-completion.bash
-@@ -154,11 +154,8 @@ __git_heads ()
- {
- 	local cmd i is_hash=3Dy dir=3D"$(__gitdir "$1")"
- 	if [ -d "$dir" ]; then
--		for i in $(git --git-dir=3D"$dir" \
--			for-each-ref --format=3D'%(refname)' \
--			refs/heads ); do
--			echo "${i#refs/heads/}"
--		done
-+		git --git-dir=3D"$dir" for-each-ref --format=3D'%(refname:short)' \
-+			refs/heads
- 		return
- 	fi
- 	for i in $(git ls-remote "$1" 2>/dev/null); do
-@@ -175,11 +172,8 @@ __git_tags ()
- {
- 	local cmd i is_hash=3Dy dir=3D"$(__gitdir "$1")"
- 	if [ -d "$dir" ]; then
--		for i in $(git --git-dir=3D"$dir" \
--			for-each-ref --format=3D'%(refname)' \
--			refs/tags ); do
--			echo "${i#refs/tags/}"
--		done
-+		git --git-dir=3D"$dir" for-each-ref --format=3D'%(refname:short)' \
-+			refs/tags
- 		return
- 	fi
- 	for i in $(git ls-remote "$1" 2>/dev/null); do
-@@ -197,16 +191,8 @@ __git_refs ()
- 	local cmd i is_hash=3Dy dir=3D"$(__gitdir "$1")"
- 	if [ -d "$dir" ]; then
- 		if [ -e "$dir/HEAD" ]; then echo HEAD; fi
--		for i in $(git --git-dir=3D"$dir" \
--			for-each-ref --format=3D'%(refname)' \
--			refs/tags refs/heads refs/remotes); do
--			case "$i" in
--				refs/tags/*)    echo "${i#refs/tags/}" ;;
--				refs/heads/*)   echo "${i#refs/heads/}" ;;
--				refs/remotes/*) echo "${i#refs/remotes/}" ;;
--				*)              echo "$i" ;;
--			esac
--		done
-+		git --git-dir=3D"$dir" for-each-ref --format=3D'%(refname:short)' \
-+			refs/tags refs/heads refs/remotes
- 		return
- 	fi
- 	for i in $(git ls-remote "$dir" 2>/dev/null); do
---=20
-1.6.0.2.294.g50836f
+  http://article.gmane.org/gmane.comp.version-control.git/95620 ]
+
+I was hoping for more feedback, but maybe the list is not the right
+audience: the intended readers of the document probably aren't as
+active on the list and confident about patch review.
+
+Regarding _the_ recommended workflow, I can think of a few possible
+approaches:
+
+a) Authoritative: either because we really believe it's the One True
+   Workflow, or just because we want to sound so.
+
+b) Descriptive: describe it as the workflow "we" use (presumably this
+   includes linux.git which may be worth mentioning; I haven't touched
+   the kernel though).
+
+c) Encyclopedic: describe and classify as many recipes (building
+   blocks) and workflows as possible in an attempt to build a
+   complete reference of sorts.
+
+d) Blind eye: we're just the tool.  Others can devise workflows.
+
+I certainly aimed the patch at (a), since I wanted to be able to point
+people at it (mostly on #git).  The resources I learned Git with,
+except for the videos, just show simple examples of pull/push usage,
+which I found both unsatisfactory (e.g. I want to know _why_ it's a
+good idea to make topic branches) and incomplete.  This list is an
+excellent place to learn, but I doubt that's an effort the average
+user is willing to put in.
+
+That being said, I'm certainly willing to rewrite it in the direction
+of (b), and possibly help with the writeup (though not brainstorming)
+of (c), if either of those is the list consensus.
+
+=2D Thomas
+
+PS: Anyone else noticed the striking number of "we have <setup>, what
+is the best workflow and how do I implement it" mails in the past few
+days?  Is that just a statistical anomaly, or another need for
+documentation?
+
+=2D-=20
+Thomas Rast
+trast@student.ethz.ch
+
+
+--nextPart12004202.v1J1DuQGEx
+Content-Type: application/pgp-signature; name=signature.asc 
+Content-Description: This is a digitally signed message part.
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.0.9 (GNU/Linux)
+
+iEYEABECAAYFAkjUJa8ACgkQqUud07tmzP31IwCeMmte/PWYfIYamOV0mnP+drir
+VksAniyvJafmy6SBZP1GHRzGQXswtHVT
+=ONcL
+-----END PGP SIGNATURE-----
+
+--nextPart12004202.v1J1DuQGEx--
