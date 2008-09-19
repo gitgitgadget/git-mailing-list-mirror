@@ -1,73 +1,60 @@
-From: "Bert Wesarg" <bert.wesarg@googlemail.com>
-Subject: Re: [TopGit RFC PATCH] tg mail: new command for mailing patches
-Date: Fri, 19 Sep 2008 11:52:03 +0200
-Message-ID: <36ca99e90809190252q45f01eb2xd02b62b88f0cf3a9@mail.gmail.com>
-References: <1221815301-25090-1-git-send-email-kirr@landau.phys.spbu.ru>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: GitTogether topics status
+Date: Fri, 19 Sep 2008 12:11:52 +0200 (CEST)
+Message-ID: <alpine.DEB.1.00.0809191209550.13830@pacific.mpi-cbg.de.mpi-cbg.de>
+References: <200809182207.21448.chriscool@tuxfamily.org>  <m363otmb8p.fsf@localhost.localdomain>  <200809190703.11969.chriscool@tuxfamily.org> <d411cc4a0809182303x365e2280r3fc8a9a3534d8890@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: "Petr Baudis" <pasky@suse.cz>,
-	"Git Mailing List" <git@vger.kernel.org>
-To: "Kirill Smelkov" <kirr@landau.phys.spbu.ru>
-X-From: git-owner@vger.kernel.org Fri Sep 19 11:53:29 2008
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Christian Couder <chriscool@tuxfamily.org>,
+	Jakub Narebski <jnareb@gmail.com>, git@vger.kernel.org,
+	"Shawn O. Pearce" <spearce@spearce.org>
+To: Scott Chacon <schacon@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Sep 19 12:07:23 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Kgcfr-0005n7-4C
-	for gcvg-git-2@gmane.org; Fri, 19 Sep 2008 11:53:17 +0200
+	id 1KgctM-0002BA-Tm
+	for gcvg-git-2@gmane.org; Fri, 19 Sep 2008 12:07:13 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750980AbYISJwF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 19 Sep 2008 05:52:05 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750868AbYISJwF
-	(ORCPT <rfc822;git-outgoing>); Fri, 19 Sep 2008 05:52:05 -0400
-Received: from wx-out-0506.google.com ([66.249.82.227]:13831 "EHLO
-	wx-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750836AbYISJwE (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 19 Sep 2008 05:52:04 -0400
-Received: by wx-out-0506.google.com with SMTP id h27so89234wxd.4
-        for <git@vger.kernel.org>; Fri, 19 Sep 2008 02:52:03 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlemail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to
-         :subject:cc:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:references;
-        bh=PeN36njE9N3DMQ6GcTJW2p0x0HUPog4A/bzq+mO5Cm0=;
-        b=Uo8CI1A9tHfT4kg//7Y+6nZO6fDSKpzFBoMY1/mNkzxYhfWHENlW1PaRwkU6eMNcMf
-         1TOi5eXHTiy9lf0syKc+dIBIOKL84MD/59Npn16CC9TY5y4fgCb/qw99fWhDNNNWV197
-         uKfjp6l1+klfuEjtyU80l1CMoCXi657IV8VGQ=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=googlemail.com; s=gamma;
-        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
-         :content-type:content-transfer-encoding:content-disposition
-         :references;
-        b=JS7/CfbqbnATMniX9LqQfKXMKyMB+mjNdB69nL41g3vezffAIDL5Fx08b/7yRO4F+u
-         mpjezGwhjG6D8+eB+yQktobS0TTCNqqaEnONsXtaig0wvLc6jj2G0h/0k+grtsyWgc9B
-         rIkPESwXyB+1F48KZeGSoG7j6x2OZtvLwiCfk=
-Received: by 10.70.49.9 with SMTP id w9mr5754670wxw.55.1221817923133;
-        Fri, 19 Sep 2008 02:52:03 -0700 (PDT)
-Received: by 10.70.36.14 with HTTP; Fri, 19 Sep 2008 02:52:03 -0700 (PDT)
-In-Reply-To: <1221815301-25090-1-git-send-email-kirr@landau.phys.spbu.ru>
-Content-Disposition: inline
+	id S1751017AbYISKGF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 19 Sep 2008 06:06:05 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750908AbYISKGE
+	(ORCPT <rfc822;git-outgoing>); Fri, 19 Sep 2008 06:06:04 -0400
+Received: from mail.gmx.net ([213.165.64.20]:49208 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1750836AbYISKGC (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 19 Sep 2008 06:06:02 -0400
+Received: (qmail invoked by alias); 19 Sep 2008 10:06:00 -0000
+Received: from pacific.mpi-cbg.de (EHLO [141.5.10.38]) [141.5.10.38]
+  by mail.gmx.net (mp014) with SMTP; 19 Sep 2008 12:06:00 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX18wEScEB/Uwyay4/QEfIyO+9LACuAuNA4qV/bWHWF
+	a8m7Nsf0vaBsU0
+X-X-Sender: schindelin@pacific.mpi-cbg.de.mpi-cbg.de
+In-Reply-To: <d411cc4a0809182303x365e2280r3fc8a9a3534d8890@mail.gmail.com>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.71
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/96271>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/96272>
 
-On Fri, Sep 19, 2008 at 11:08, Kirill Smelkov <kirr@landau.phys.spbu.ru> wrote:
-> Petr, since you've asked for help on this, here you are:
->
->    $ tg mail [NAME]
->
-> a simple script to send one patch over email.
->
->
-> All it does is
->
->    - call `tg patch` for actual patch preparation
->    - extract email addresses from whom and where to send a mail
-That shouldn't be needed. git send-email parses Cc: headers and the
-To: comes from 'git config topgit.to', so you can re-use this.
+Hi,
 
-Bert
+On Thu, 18 Sep 2008, Scott Chacon wrote:
+
+> I very much want to see a library that provides basic Git object access 
+> that we can use to write proper bindings in Ruby/Python/Perl.  If the 
+> current Git code is too difficult to libify properly, then perhaps an 
+> alternate C implementation that is built only for that purpose is 
+> preferable to having a re-implementation in _every_ language.  Looking 
+> forward to the discussion.
+
+libgit-thin.  What is missing is somebody taking this forward (and this 
+includes making it more public on the Git mailing list).
+
+Hth,
+Dscho
