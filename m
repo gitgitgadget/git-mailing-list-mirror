@@ -1,8 +1,8 @@
 From: =?utf-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
 	<pclouds@gmail.com>
-Subject: [PATCH 07/14] Prevent diff machinery from examining worktree outside sparse checkout
-Date: Sat, 20 Sep 2008 17:01:46 +0700
-Message-ID: <1221904913-25887-8-git-send-email-pclouds@gmail.com>
+Subject: [PATCH 09/14] grep: skip files outside sparse checkout area
+Date: Sat, 20 Sep 2008 17:01:48 +0700
+Message-ID: <1221904913-25887-10-git-send-email-pclouds@gmail.com>
 References: <1221904913-25887-1-git-send-email-pclouds@gmail.com>
  <1221904913-25887-2-git-send-email-pclouds@gmail.com>
  <1221904913-25887-3-git-send-email-pclouds@gmail.com>
@@ -10,118 +10,113 @@ References: <1221904913-25887-1-git-send-email-pclouds@gmail.com>
  <1221904913-25887-5-git-send-email-pclouds@gmail.com>
  <1221904913-25887-6-git-send-email-pclouds@gmail.com>
  <1221904913-25887-7-git-send-email-pclouds@gmail.com>
+ <1221904913-25887-8-git-send-email-pclouds@gmail.com>
+ <1221904913-25887-9-git-send-email-pclouds@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: =?utf-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
 	<pclouds@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Sep 20 12:04:13 2008
+X-From: git-owner@vger.kernel.org Sat Sep 20 12:04:25 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KgzJy-0001Fq-Ar
-	for gcvg-git-2@gmane.org; Sat, 20 Sep 2008 12:04:10 +0200
+	id 1KgzKB-0001Il-DT
+	for gcvg-git-2@gmane.org; Sat, 20 Sep 2008 12:04:23 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751390AbYITKDE convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 20 Sep 2008 06:03:04 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751021AbYITKDE
-	(ORCPT <rfc822;git-outgoing>); Sat, 20 Sep 2008 06:03:04 -0400
+	id S1751415AbYITKDS convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 20 Sep 2008 06:03:18 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751162AbYITKDR
+	(ORCPT <rfc822;git-outgoing>); Sat, 20 Sep 2008 06:03:17 -0400
 Received: from wf-out-1314.google.com ([209.85.200.169]:21281 "EHLO
 	wf-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751334AbYITKDC (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 20 Sep 2008 06:03:02 -0400
+	with ESMTP id S1751415AbYITKDR (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 20 Sep 2008 06:03:17 -0400
 Received: by wf-out-1314.google.com with SMTP id 27so880198wfd.4
-        for <git@vger.kernel.org>; Sat, 20 Sep 2008 03:03:01 -0700 (PDT)
+        for <git@vger.kernel.org>; Sat, 20 Sep 2008 03:03:16 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:received:received:received:from:to:cc:subject
          :date:message-id:x-mailer:in-reply-to:references:mime-version
          :content-type:content-transfer-encoding;
-        bh=phFapAsAbk17g69qWnAox/s9GhWeG7ORfo6WMQaZDYY=;
-        b=ZpZeAf3iarwhDVGpTKoHNvxkHZhPc+xzvKVUVUe78OKz8J6ZEVutM/lf+R/z1kw6R7
-         Us/PjKhsCsT55gATWQ5EaCnnkPNOnURtm8u1el12OYyO/w082XW5wB5UpMaWsUhL09Je
-         5eBROBvtRtLERdwNDdTIayq/B3eE1xOVMjjUQ=
+        bh=A+QEaJfLJ9zwRnDfgtgIg+pUYXoIDBJ9HdO0tPV+iJY=;
+        b=T2zMum2A1qIghGElgmLV7dyvtSt6lY/VrKg1fBCiwJKCoRReLelS95oPJa2/TKWdil
+         kZ8+lA31RK8w1txGN/I4tcF5D/EzuyA/82bEC1Sihgw+qh4SB5pLJFHSEfkGXB2XULeK
+         iHzHf/L28ch54tPnSvzlKpggY/6oyIGKPo0+A=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references
          :mime-version:content-type:content-transfer-encoding;
-        b=Hn6RE6E1Lzja8rKk7Aywioi3KmNN5Vyatl3XETS9iy7yWt29/tlYIgrA+2JkVQ5y9/
-         R+IkqLjcmlqdEHbrKAYS7J63uTpV3GGsPsmTr2Viwd9qAuf1Oy9OD4KzVJpYsUEBqWvc
-         0YLWkBMw2Xg85s+tAC6W+ky9r1dJ+0NqRNBtg=
-Received: by 10.142.222.4 with SMTP id u4mr444011wfg.250.1221904981733;
-        Sat, 20 Sep 2008 03:03:01 -0700 (PDT)
+        b=OjsrFhY6+YQUrV7sKzn55cAt1RwdFc1b/0HLSt3/1WwqIId1ecuTcNR/kcxM4B0SZX
+         zKJglsDV3g0xx5D6Jqtc9u6MbUZ+871MZuGTIn2Ev3qioV0Dthc6uHygdF4q0fq5Tao/
+         SJ/4h8uGdIs92j2bZ/s+ljujVKc8zZYCRTg9E=
+Received: by 10.142.139.19 with SMTP id m19mr459524wfd.25.1221904996725;
+        Sat, 20 Sep 2008 03:03:16 -0700 (PDT)
 Received: from pclouds@gmail.com ( [117.5.36.54])
-        by mx.google.com with ESMTPS id 27sm3600388wff.3.2008.09.20.03.02.58
+        by mx.google.com with ESMTPS id 30sm3610141wfc.5.2008.09.20.03.03.13
         (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Sat, 20 Sep 2008 03:03:00 -0700 (PDT)
-Received: by pclouds@gmail.com (sSMTP sendmail emulation); Sat, 20 Sep 2008 17:02:51 +0700
+        Sat, 20 Sep 2008 03:03:15 -0700 (PDT)
+Received: by pclouds@gmail.com (sSMTP sendmail emulation); Sat, 20 Sep 2008 17:03:06 +0700
 X-Mailer: git-send-email 1.6.0.96.g2fad1.dirty
-In-Reply-To: <1221904913-25887-7-git-send-email-pclouds@gmail.com>
+In-Reply-To: <1221904913-25887-9-git-send-email-pclouds@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/96345>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/96346>
 
 
 Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
 =2Ecom>
 ---
- diff-lib.c |    5 +++--
- diff.c     |    4 +++-
- 2 files changed, 6 insertions(+), 3 deletions(-)
+ Documentation/git-grep.txt |    4 +++-
+ builtin-grep.c             |    7 ++++++-
+ 2 files changed, 9 insertions(+), 2 deletions(-)
 
-diff --git a/diff-lib.c b/diff-lib.c
-index ae96c64..992280b 100644
---- a/diff-lib.c
-+++ b/diff-lib.c
-@@ -161,7 +161,7 @@ int run_diff_files(struct rev_info *revs, unsigned =
-int option)
- 				continue;
- 		}
+diff --git a/Documentation/git-grep.txt b/Documentation/git-grep.txt
+index fa4d133..ee359c9 100644
+--- a/Documentation/git-grep.txt
++++ b/Documentation/git-grep.txt
+@@ -24,7 +24,9 @@ SYNOPSIS
+ DESCRIPTION
+ -----------
+ Look for specified patterns in the working tree files, blobs
+-registered in the index file, or given tree objects.
++registered in the index file, or given tree objects. By default
++it will search in the working tree files. When in sparse checkout
++mode, it only searches checked-out files.
 =20
--		if (ce_uptodate(ce))
-+		if (ce_uptodate(ce) || ce_no_checkout(ce))
+=20
+ OPTIONS
+diff --git a/builtin-grep.c b/builtin-grep.c
+index 3a51662..d5507d7 100644
+--- a/builtin-grep.c
++++ b/builtin-grep.c
+@@ -343,6 +343,8 @@ static int external_grep(struct grep_opt *opt, cons=
+t char **paths, int cached)
  			continue;
-=20
- 		changed =3D check_removed(ce, &st);
-@@ -348,6 +348,8 @@ static void do_oneway_diff(struct unpack_trees_opti=
-ons *o,
- 	struct rev_info *revs =3D cbdata->revs;
- 	int match_missing, cached;
-=20
-+	/* if the entry is not checked out, don't examine work tree */
-+	cached =3D o->index_only || (idx && ce_no_checkout(idx));
- 	/*
- 	 * Backward compatibility wart - "diff-index -m" does
- 	 * not mean "do not ignore merges", but "match_missing".
-@@ -355,7 +357,6 @@ static void do_oneway_diff(struct unpack_trees_opti=
-ons *o,
- 	 * But with the revision flag parsing, that's found in
- 	 * "!revs->ignore_merges".
- 	 */
--	cached =3D o->index_only;
- 	match_missing =3D !revs->ignore_merges;
-=20
- 	if (cached && idx && ce_stage(idx)) {
-diff --git a/diff.c b/diff.c
-index a2dd931..b5b7249 100644
---- a/diff.c
-+++ b/diff.c
-@@ -1793,8 +1793,10 @@ static int reuse_worktree_file(const char *name,=
- const unsigned char *sha1, int
-=20
- 	/*
- 	 * If ce matches the file in the work tree, we can reuse it.
-+	 * For sparse checkout case, ce_uptodate() may be true although
-+	 * the file may or may not exist in the work tree.
- 	 */
--	if (ce_uptodate(ce) ||
-+	if ((ce_uptodate(ce) && ce_checkout(ce)) ||
- 	    (!lstat(name, &st) && !ce_match_stat(ce, &st, 0)))
- 		return 1;
-=20
+ 		if (!pathspec_matches(paths, ce->name))
+ 			continue;
++		if (ce_no_checkout(ce))
++			continue;
+ 		name =3D ce->name;
+ 		if (name[0] =3D=3D '-') {
+ 			int len =3D ce_namelen(ce);
+@@ -404,8 +406,11 @@ static int grep_cache(struct grep_opt *opt, const =
+char **paths, int cached)
+ 				continue;
+ 			hit |=3D grep_sha1(opt, ce->sha1, ce->name, 0);
+ 		}
+-		else
++		else {
++			if (ce_no_checkout(ce))
++				continue;
+ 			hit |=3D grep_file(opt, ce->name);
++		}
+ 		if (ce_stage(ce)) {
+ 			do {
+ 				nr++;
 --=20
 1.6.0.96.g2fad1.dirty
