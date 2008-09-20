@@ -1,9 +1,10 @@
 From: =?utf-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
 	<pclouds@gmail.com>
-Subject: [PATCH 01/14] Extend index to save more flags
-Date: Sat, 20 Sep 2008 17:01:40 +0700
-Message-ID: <1221904913-25887-2-git-send-email-pclouds@gmail.com>
+Subject: [PATCH 02/14] Introduce CE_NO_CHECKOUT bit
+Date: Sat, 20 Sep 2008 17:01:41 +0700
+Message-ID: <1221904913-25887-3-git-send-email-pclouds@gmail.com>
 References: <1221904913-25887-1-git-send-email-pclouds@gmail.com>
+ <1221904913-25887-2-git-send-email-pclouds@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
@@ -15,294 +16,174 @@ Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KgzJK-00016z-32
-	for gcvg-git-2@gmane.org; Sat, 20 Sep 2008 12:03:30 +0200
+	id 1KgzJL-00016z-2n
+	for gcvg-git-2@gmane.org; Sat, 20 Sep 2008 12:03:31 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751316AbYITKCP convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 20 Sep 2008 06:02:15 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751289AbYITKCP
-	(ORCPT <rfc822;git-outgoing>); Sat, 20 Sep 2008 06:02:15 -0400
+	id S1751320AbYITKCX convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 20 Sep 2008 06:02:23 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751266AbYITKCX
+	(ORCPT <rfc822;git-outgoing>); Sat, 20 Sep 2008 06:02:23 -0400
 Received: from rv-out-0506.google.com ([209.85.198.227]:18345 "EHLO
 	rv-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751259AbYITKCO (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 20 Sep 2008 06:02:14 -0400
+	with ESMTP id S1751289AbYITKCW (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 20 Sep 2008 06:02:22 -0400
 Received: by rv-out-0506.google.com with SMTP id k40so808244rvb.1
-        for <git@vger.kernel.org>; Sat, 20 Sep 2008 03:02:13 -0700 (PDT)
+        for <git@vger.kernel.org>; Sat, 20 Sep 2008 03:02:21 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:received:received:received:from:to:cc:subject
          :date:message-id:x-mailer:in-reply-to:references:mime-version
          :content-type:content-transfer-encoding;
-        bh=N+c1fBNJqu9SuzAdna/yh8IaJrhxhhC65JPVTf4f3gs=;
-        b=vZd54JS19zbtwJGTxxiegoQTE9Ng2PPwuQDIk3Hpok+3D1i1F6G6HreTVK02a0mJwm
-         cT6ieQxHJw72Y5stYCoAVQ37AiwKo7nJKCPOgjiLGJu1h8s9URejfbpuS93zNVYv6Hql
-         iTE++EVqcB1t3eHOZfBuHjG88tfj8koFKA/V0=
+        bh=OHbpmlo+RtBkV66KNFBHfYl1ijUlClERWYCue01lshA=;
+        b=T45fE7UUBNkiN4jsC2zWf8TQkhwKeqLISX06wUTujqUnXN9CFXsxUuAwE20ElKVrBL
+         QxbL/lhgO8q1xjrHCYx1u7/YNGGSSx52hhMHn9NLa2A7S/j8e95aRCHHbUj5d9QV8uf5
+         YiyJTAKEtHw9Ebwd/ZQkoZcU+icG/lyjnB0DY=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references
          :mime-version:content-type:content-transfer-encoding;
-        b=AxGSWvNiJRUYvV1gujd42Prpv5gXoVd6CGZtrFNkJXmMmrz8SopuafIUl5K12j91UC
-         VgKccUI5wDz89aQcdVc+FoDVyIDRnuaqBf+YWRUvwleoP2GWW4XgynyNKZyYYbx/+npm
-         4m846ciG9Xig0s1HEPNEOjWA4ru55KMdmY4ZQ=
-Received: by 10.141.168.16 with SMTP id v16mr617255rvo.233.1221904933400;
-        Sat, 20 Sep 2008 03:02:13 -0700 (PDT)
+        b=NiLR42/26P2eQwcj/N/XmNFpBExkS92xdMlrGk/8lMV6i9INiks9qzgJOdxnQOWk1Y
+         9P0wBH4SJgk2sDSStQUPEFhEtseUQFuRjmDVTrUo/aYs3b7slWfgYGGaW8Fa5J8hCkOw
+         aNat506JmjwewF0rhGH7II7fRUUPvlw7x7Gw4=
+Received: by 10.141.113.6 with SMTP id q6mr639553rvm.36.1221904941762;
+        Sat, 20 Sep 2008 03:02:21 -0700 (PDT)
 Received: from pclouds@gmail.com ( [117.5.36.54])
-        by mx.google.com with ESMTPS id b39sm2548807rvf.0.2008.09.20.03.02.09
+        by mx.google.com with ESMTPS id c20sm2542093rvf.3.2008.09.20.03.02.18
         (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Sat, 20 Sep 2008 03:02:11 -0700 (PDT)
-Received: by pclouds@gmail.com (sSMTP sendmail emulation); Sat, 20 Sep 2008 17:02:02 +0700
+        Sat, 20 Sep 2008 03:02:20 -0700 (PDT)
+Received: by pclouds@gmail.com (sSMTP sendmail emulation); Sat, 20 Sep 2008 17:02:10 +0700
 X-Mailer: git-send-email 1.6.0.96.g2fad1.dirty
-In-Reply-To: <1221904913-25887-1-git-send-email-pclouds@gmail.com>
+In-Reply-To: <1221904913-25887-2-git-send-email-pclouds@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/96339>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/96340>
 
-The on-disk format of index only saves 16 bit flags, nearly all have
-been used. The last bit (CE_EXTENDED) is used to for future extension.
-
-This patch extends index entry format to save more flags in future.
-The new entry format will be used when CE_EXTENDED bit is 1.
-
-Because older implementation may not understand CE_EXTENDED bit and
-misread the new format, if there is any extended entry in index, index
-header version will turn 3, which makes it incompatible for older git.
-If there is none, header version will return to 2 again.
+This bit is the basis of sparse checkout. If this bit is on, the entry
+is outside sparse checkout and therefore should be ignored (similar
+to CE_VALID)
 
 Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
 =2Ecom>
 ---
- cache.h      |   58 ++++++++++++++++++++++++++++++++++++++++++++++++++=
-++++----
- read-cache.c |   51 +++++++++++++++++++++++++++++++++++++++++---------=
--
- 2 files changed, 95 insertions(+), 14 deletions(-)
+ Documentation/git-checkout.txt |   33 ++++++++++++++++++++++++++++++++=
++
+ cache.h                        |   10 +++++++++-
+ read-cache.c                   |    6 +++---
+ 3 files changed, 45 insertions(+), 4 deletions(-)
 
+diff --git a/Documentation/git-checkout.txt b/Documentation/git-checkou=
+t.txt
+index 82e154d..4bd9eba 100644
+--- a/Documentation/git-checkout.txt
++++ b/Documentation/git-checkout.txt
+@@ -171,6 +171,39 @@ the reflog for HEAD where you were, e.g.
+ $ git log -g -2 HEAD
+ ------------
+=20
++Sparse checkout
++---------------
++
++Normally when you checkout a branch, your working directory
++will be fully populated. In some situations, you just need to
++work on certain files, no full checkout is needed. Sparse
++checkout is a mode that limits the checkout area according to your
++needs. With sparse checkout, you can work on a single file, a
++collection of files, a subdirectory or a collection of separated
++subdirectories.
++
++Because sparse checkout uses a new index format, it will be
++incompatible with git prior to 1.6.0 regarding worktree operations.
++Operations that only need access to the repository itself, such as
++clone, push, or pull/fetch from another (normal) repository... should
++not be affected by sparse checkout.
++
++In sparse checkout mode, checkout status of every files in your
++working directory will be recorded in index. If a file is marked
++"no-checkout", it means that file is not needed to be present in
++working directory by user or any git command. When a new file is added
++to index, it will be marked "checkout" unless sparse patterns are
++applied.  Unmerged files are always "checkout". When you checkout new
++files using "git checkout <file>" they will be automatically marked
++"checkout". Other commands such as "git apply" can also checkout new
++files if they are needed.
++
++"No-checkout" status is very similar to "assume-unchanged bit"
++(see linkgit:git-update-index[1]). The main difference between them
++is "assume unchanged" bit just ignores corresponding files in working
++directory while sparse checkout goes a bit farther, remove those files
++when it is safe to do so.
++
+=20
+ EXAMPLES
+ --------
 diff --git a/cache.h b/cache.h
-index f4b8ddf..77b6eb3 100644
+index 77b6eb3..6e875d5 100644
 --- a/cache.h
 +++ b/cache.h
-@@ -109,6 +109,26 @@ struct ondisk_cache_entry {
- 	char name[FLEX_ARRAY]; /* more */
- };
+@@ -170,10 +170,11 @@ struct cache_entry {
+ /*
+  * Extended on-disk flags
+  */
++#define CE_NO_CHECKOUT 0x40000000
+ /* CE_EXTENDED2 is for future extension */
+ #define CE_EXTENDED2 0x80000000
 =20
-+/*
-+ * This struct is used when CE_EXTENDED bit is 1
-+ * The struct must match ondisk_cache_entry exactly from
-+ * ctime till flags
-+ */
-+struct ondisk_cache_entry_extended {
-+	struct cache_time ctime;
-+	struct cache_time mtime;
-+	unsigned int dev;
-+	unsigned int ino;
-+	unsigned int mode;
-+	unsigned int uid;
-+	unsigned int gid;
-+	unsigned int size;
-+	unsigned char sha1[20];
-+	unsigned short flags;
-+	unsigned short flags2;
-+	char name[FLEX_ARRAY]; /* more */
-+};
-+
- struct cache_entry {
- 	unsigned int ce_ctime;
- 	unsigned int ce_mtime;
-@@ -130,7 +150,15 @@ struct cache_entry {
- #define CE_VALID     (0x8000)
- #define CE_STAGESHIFT 12
-=20
--/* In-memory only */
-+/*
-+ * Range 0xFFFF0000 in ce_flags is divided into
-+ * two parts: in-memory flags and on-disk ones.
-+ * Flags in CE_EXTENDED_FLAGS will get saved on-disk
-+ * if you want to save a new flag, add it in
-+ * CE_EXTENDED_FLAGS
-+ *
-+ * In-memory only flags
-+ */
- #define CE_UPDATE    (0x10000)
- #define CE_REMOVE    (0x20000)
- #define CE_UPTODATE  (0x40000)
-@@ -140,6 +168,24 @@ struct cache_entry {
- #define CE_UNHASHED  (0x200000)
+-#define CE_EXTENDED_FLAGS (0)
++#define CE_EXTENDED_FLAGS (CE_NO_CHECKOUT)
 =20
  /*
-+ * Extended on-disk flags
-+ */
-+/* CE_EXTENDED2 is for future extension */
-+#define CE_EXTENDED2 0x80000000
+  * Safeguard to avoid saving wrong flags:
+@@ -185,6 +186,9 @@ struct cache_entry {
+ #error "CE_EXTENDED_FLAGS out of range"
+ #endif
+=20
++/* "Assume unchanged" mask */
++#define CE_VALID_MASK (CE_VALID | CE_NO_CHECKOUT)
 +
-+#define CE_EXTENDED_FLAGS (0)
-+
-+/*
-+ * Safeguard to avoid saving wrong flags:
-+ *  - CE_EXTENDED2 won't get saved until its semantic is known
-+ *  - Bits in 0x0000FFFF have been saved in ce_flags already
-+ *  - Bits in 0x003F0000 are currently in-memory flags
-+ */
-+#if CE_EXTENDED_FLAGS & 0x80CFFFFF
-+#error "CE_EXTENDED_FLAGS out of range"
-+#endif
-+
-+/*
+ /*
   * Copy the sha1 and stat state of a cache entry from one to
   * another. But we never change the name, or the hash state!
-  */
-@@ -171,7 +217,9 @@ static inline size_t ce_namelen(const struct cache_=
-entry *ce)
- }
-=20
- #define ce_size(ce) cache_entry_size(ce_namelen(ce))
--#define ondisk_ce_size(ce) ondisk_cache_entry_size(ce_namelen(ce))
-+#define ondisk_ce_size(ce) (((ce)->ce_flags & CE_EXTENDED) ? \
-+			    ondisk_cache_entry_extended_size(ce_namelen(ce)) : \
-+			    ondisk_cache_entry_size(ce_namelen(ce)))
+@@ -222,6 +226,10 @@ static inline size_t ce_namelen(const struct cache=
+_entry *ce)
+ 			    ondisk_cache_entry_size(ce_namelen(ce)))
  #define ce_stage(ce) ((CE_STAGEMASK & (ce)->ce_flags) >> CE_STAGESHIFT=
 )
  #define ce_uptodate(ce) ((ce)->ce_flags & CE_UPTODATE)
++#define ce_no_checkout(ce) ((ce)->ce_flags & CE_NO_CHECKOUT)
++#define ce_checkout(ce) (!ce_no_checkout(ce))
++#define ce_mark_no_checkout(ce) ((ce)->ce_flags |=3D CE_NO_CHECKOUT)
++#define ce_mark_checkout(ce) ((ce)->ce_flags &=3D ~CE_NO_CHECKOUT)
  #define ce_mark_uptodate(ce) ((ce)->ce_flags |=3D CE_UPTODATE)
-@@ -214,8 +262,10 @@ static inline int ce_to_dtype(const struct cache_e=
-ntry *ce)
- 	(S_ISREG(mode) ? (S_IFREG | ce_permissions(mode)) : \
- 	S_ISLNK(mode) ? S_IFLNK : S_ISDIR(mode) ? S_IFDIR : S_IFGITLINK)
 =20
--#define cache_entry_size(len) ((offsetof(struct cache_entry,name) + (l=
-en) + 8) & ~7)
--#define ondisk_cache_entry_size(len) ((offsetof(struct ondisk_cache_en=
-try,name) + (len) + 8) & ~7)
-+#define flexible_size(STRUCT,len) ((offsetof(struct STRUCT,name) + (le=
-n) + 8) & ~7)
-+#define cache_entry_size(len) flexible_size(cache_entry,len)
-+#define ondisk_cache_entry_size(len) flexible_size(ondisk_cache_entry,=
-len)
-+#define ondisk_cache_entry_extended_size(len) flexible_size(ondisk_cac=
-he_entry_extended,len)
-=20
- struct index_state {
- 	struct cache_entry **cache;
+ #define ce_permissions(mode) (((mode) & 0100) ? 0755 : 0644)
 diff --git a/read-cache.c b/read-cache.c
-index c5a8659..667c36b 100644
+index 667c36b..e965a4c 100644
 --- a/read-cache.c
 +++ b/read-cache.c
-@@ -1096,7 +1096,7 @@ static int verify_hdr(struct cache_header *hdr, u=
-nsigned long size)
-=20
- 	if (hdr->hdr_signature !=3D htonl(CACHE_SIGNATURE))
- 		return error("bad signature");
--	if (hdr->hdr_version !=3D htonl(2))
-+	if (hdr->hdr_version !=3D htonl(2) && hdr->hdr_version !=3D htonl(3))
- 		return error("bad index version");
- 	SHA1_Init(&c);
- 	SHA1_Update(&c, hdr, size - 20);
-@@ -1131,6 +1131,7 @@ int read_index(struct index_state *istate)
- static void convert_from_disk(struct ondisk_cache_entry *ondisk, struc=
-t cache_entry *ce)
- {
- 	size_t len;
-+	const char *name;
-=20
- 	ce->ce_ctime =3D ntohl(ondisk->ctime.sec);
- 	ce->ce_mtime =3D ntohl(ondisk->mtime.sec);
-@@ -1143,19 +1144,31 @@ static void convert_from_disk(struct ondisk_cac=
-he_entry *ondisk, struct cache_en
- 	/* On-disk flags are just 16 bits */
- 	ce->ce_flags =3D ntohs(ondisk->flags);
-=20
--	/* For future extension: we do not understand this entry yet */
--	if (ce->ce_flags & CE_EXTENDED)
--		die("Unknown index entry format");
- 	hashcpy(ce->sha1, ondisk->sha1);
-=20
- 	len =3D ce->ce_flags & CE_NAMEMASK;
-+
-+	if (ce->ce_flags & CE_EXTENDED) {
-+		struct ondisk_cache_entry_extended *ondisk2;
-+		int extended_flags;
-+		ondisk2 =3D (struct ondisk_cache_entry_extended *)ondisk;
-+		extended_flags =3D ntohs(ondisk2->flags2) << 16;
-+		/* We do not yet understand any bit out of CE_EXTENDED_FLAGS */
-+		if (extended_flags & ~CE_EXTENDED_FLAGS)
-+			die("Unknown index entry format %08x", extended_flags);
-+		ce->ce_flags |=3D extended_flags;
-+		name =3D ondisk2->name;
-+	}
-+	else
-+		name =3D ondisk->name;
-+
- 	if (len =3D=3D CE_NAMEMASK)
--		len =3D strlen(ondisk->name);
-+		len =3D strlen(name);
- 	/*
- 	 * NEEDSWORK: If the original index is crafted, this copy could
- 	 * go unchecked.
+@@ -254,7 +254,7 @@ int ie_match_stat(const struct index_state *istate,
+ 	 * If it's marked as always valid in the index, it's
+ 	 * valid whatever the checked-out copy says.
  	 */
--	memcpy(ce->name, ondisk->name, len + 1);
-+	memcpy(ce->name, name, len + 1);
- }
+-	if (!ignore_valid && (ce->ce_flags & CE_VALID))
++	if (!ignore_valid && (ce->ce_flags & CE_VALID_MASK))
+ 		return 0;
 =20
- static inline size_t estimate_cache_size(size_t ondisk_size, unsigned =
-int entries)
-@@ -1415,6 +1428,7 @@ static int ce_write_entry(SHA_CTX *c, int fd, str=
-uct cache_entry *ce)
- {
- 	int size =3D ondisk_ce_size(ce);
- 	struct ondisk_cache_entry *ondisk =3D xcalloc(1, size);
-+	char *name;
+ 	changed =3D ce_match_stat_basic(ce, st);
+@@ -962,10 +962,10 @@ static struct cache_entry *refresh_cache_ent(stru=
+ct index_state *istate,
+ 		return ce;
 =20
- 	ondisk->ctime.sec =3D htonl(ce->ce_ctime);
- 	ondisk->ctime.nsec =3D 0;
-@@ -1428,7 +1442,15 @@ static int ce_write_entry(SHA_CTX *c, int fd, st=
-ruct cache_entry *ce)
- 	ondisk->size =3D htonl(ce->ce_size);
- 	hashcpy(ondisk->sha1, ce->sha1);
- 	ondisk->flags =3D htons(ce->ce_flags);
--	memcpy(ondisk->name, ce->name, ce_namelen(ce));
-+	if (ce->ce_flags & CE_EXTENDED) {
-+		struct ondisk_cache_entry_extended *ondisk2;
-+		ondisk2 =3D (struct ondisk_cache_entry_extended *)ondisk;
-+		ondisk2->flags2 =3D htons((ce->ce_flags & CE_EXTENDED_FLAGS) >> 16);
-+		name =3D ondisk2->name;
-+	}
-+	else
-+		name =3D ondisk->name;
-+	memcpy(name, ce->name, ce_namelen(ce));
-=20
- 	return ce_write(c, fd, ondisk, size);
- }
-@@ -1437,16 +1459,25 @@ int write_index(const struct index_state *istat=
-e, int newfd)
- {
- 	SHA_CTX c;
- 	struct cache_header hdr;
--	int i, err, removed;
-+	int i, err, removed, extended;
- 	struct cache_entry **cache =3D istate->cache;
- 	int entries =3D istate->cache_nr;
-=20
--	for (i =3D removed =3D 0; i < entries; i++)
-+	for (i =3D removed =3D extended =3D 0; i < entries; i++) {
- 		if (cache[i]->ce_flags & CE_REMOVE)
- 			removed++;
-=20
-+		/* reduce extended entries if possible */
-+		cache[i]->ce_flags &=3D ~CE_EXTENDED;
-+		if (cache[i]->ce_flags & CE_EXTENDED_FLAGS) {
-+			extended++;
-+			cache[i]->ce_flags |=3D CE_EXTENDED;
-+		}
-+	}
-+
- 	hdr.hdr_signature =3D htonl(CACHE_SIGNATURE);
--	hdr.hdr_version =3D htonl(2);
-+	/* for extended format, increase version so older git won't try to re=
-ad it */
-+	hdr.hdr_version =3D htonl(extended ? 3 : 2);
- 	hdr.hdr_entries =3D htonl(entries - removed);
-=20
- 	SHA1_Init(&c);
+ 	/*
+-	 * CE_VALID means the user promised us that the change to
++	 * CE_VALID_MASK means the user promised us that the change to
+ 	 * the work tree does not matter and told us not to worry.
+ 	 */
+-	if (!ignore_valid && (ce->ce_flags & CE_VALID)) {
++	if (!ignore_valid && (ce->ce_flags & CE_VALID_MASK)) {
+ 		ce_mark_uptodate(ce);
+ 		return ce;
+ 	}
 --=20
 1.6.0.96.g2fad1.dirty
