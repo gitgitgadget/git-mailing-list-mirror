@@ -1,79 +1,62 @@
-From: "Sean Davis" <sdavis2@mail.nih.gov>
-Subject: Re: Problems with git over http
-Date: Sat, 20 Sep 2008 18:27:04 -0400
-Message-ID: <264855a00809201527l1b5d99bdr85d96771d8a9efd4@mail.gmail.com>
-References: <264855a00809201013h6003abbfr9bbdd20c92e9201d@mail.gmail.com>
-	 <m3wsh6lck1.fsf@localhost.localdomain>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v2 4/4] diff.c: convert builtin funcname patterns to
+ non-GNU extended regex syntax
+Date: Sat, 20 Sep 2008 15:29:15 -0700
+Message-ID: <7vmyi21mf8.fsf@gitster.siamese.dyndns.org>
+References: <7vskry1485.fsf@gitster.siamese.dyndns.org>
+ <4i0Mu795rKpv37JoHytmE6kODBjwgwITn0-DuKdZiFs3ZnUlyJC-Fw@cipher.nrlssc.navy.mil> <7v7i97swv3.fsf@gitster.siamese.dyndns.org> <7vy71n482x.fsf@gitster.siamese.dyndns.org> <loom.20080920T200157-713@post.gmane.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-To: "Jakub Narebski" <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Sep 21 00:28:22 2008
+To: Brandon Casey <drafnel@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Sep 21 00:30:33 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KhAw5-0005NK-7N
-	for gcvg-git-2@gmane.org; Sun, 21 Sep 2008 00:28:17 +0200
+	id 1KhAyD-0005xV-E9
+	for gcvg-git-2@gmane.org; Sun, 21 Sep 2008 00:30:29 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751678AbYITW1J (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 20 Sep 2008 18:27:09 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751707AbYITW1I
-	(ORCPT <rfc822;git-outgoing>); Sat, 20 Sep 2008 18:27:08 -0400
-Received: from hs-out-0708.google.com ([64.233.178.248]:3921 "EHLO
-	hs-out-0708.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751675AbYITW1H (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 20 Sep 2008 18:27:07 -0400
-Received: by hs-out-0708.google.com with SMTP id 4so196505hsl.5
-        for <git@vger.kernel.org>; Sat, 20 Sep 2008 15:27:04 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:sender
-         :to:subject:cc:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:references
-         :x-google-sender-auth;
-        bh=CK0xLhQuQB0gIlh1X6I/5Q9H2UR7AdkWU72O61hxQY4=;
-        b=xl6tD5hzKwfWltaPvN4YQpSuCZeWJgCkuSvgwSxCZEDxZDsVhaYcVNSMqAqFfEMkoS
-         p72rw9PQARGnNiGk7Qn33sMEOsIje2efWcUxIxScyHacfDVMKLLpP/LJMoc0jJVAr3Me
-         ub1XEGRsm+M0hbL50nmW0BEgQmyBcMWq7+STk=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:sender:to:subject:cc:in-reply-to:mime-version
-         :content-type:content-transfer-encoding:content-disposition
-         :references:x-google-sender-auth;
-        b=DClQ+QxsHZHez5r75puM9SEECN6UBGplfIj8qtUby1u7egeRoI4NqBc7OP0QqRNclR
-         VT2vXNO+S6FR7xLUvU2c7Xxhi1To3YSI/r+9B0sguXp0m/v2nToYeYQfSRicAx5sOQPx
-         iwuNSWrouMYvx6DL4hmcCQOkFlHfAPjcsADFA=
-Received: by 10.100.173.9 with SMTP id v9mr1587921ane.82.1221949624073;
-        Sat, 20 Sep 2008 15:27:04 -0700 (PDT)
-Received: by 10.100.197.2 with HTTP; Sat, 20 Sep 2008 15:27:04 -0700 (PDT)
-In-Reply-To: <m3wsh6lck1.fsf@localhost.localdomain>
-Content-Disposition: inline
-X-Google-Sender-Auth: f839515df4408a14
+	id S1751715AbYITW3Y (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 20 Sep 2008 18:29:24 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751707AbYITW3X
+	(ORCPT <rfc822;git-outgoing>); Sat, 20 Sep 2008 18:29:23 -0400
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:48589 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751658AbYITW3W (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 20 Sep 2008 18:29:22 -0400
+Received: from localhost.localdomain (localhost [127.0.0.1])
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id E492665C7F;
+	Sat, 20 Sep 2008 18:29:20 -0400 (EDT)
+Received: from pobox.com (ip68-225-240-211.oc.oc.cox.net [68.225.240.211])
+ (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
+ certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
+ ESMTPSA id 2CE5065C7E; Sat, 20 Sep 2008 18:29:17 -0400 (EDT)
+In-Reply-To: <loom.20080920T200157-713@post.gmane.org> (Brandon Casey's
+ message of "Sat, 20 Sep 2008 21:03:24 +0000 (UTC)")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: 91D66CF2-8763-11DD-9E70-D0CFFE4BC1C1-77302942!a-sasl-fastnet.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/96374>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/96375>
 
-On Sat, Sep 20, 2008 at 5:42 PM, Jakub Narebski <jnareb@gmail.com> wrote:
-> "Sean Davis" <sdavis2@mail.nih.gov> writes:
+Brandon Casey <drafnel@gmail.com> writes:
+
+> Junio C Hamano <gitster <at> pobox.com> writes:
 >
->> I am new to git and trying to set up a remote repository over http.  I
->> have configured apache2 and the bare, empty repository.  Using curl, I
->> can get the file HEAD without a password (seems .netrc is correct?).
->> However, when I try to push to the repository, I get the following:
->>
->> sdavis@lestrade:/tmp/testing> git push
->> http://sdavis@watson.nci.nih.gov/git/sean_git.git/ master
->> fatal: exec http-push failed.
->> error: failed to push some refs to
->> 'http://sdavis@watson.nci.nih.gov/git/sean_git.git/'
+>> Here is [1/2] to be applied on top of 45d9414 (diff.*.xfuncname which uses
+>> "extended" regex's for hunk header selection, 2008-09-18).
+>> 
+>> Testing appreciated.
 >
-> Errr... to _push_ via https you have to enable WebDAV.
-> See Documentation/howto/setup-git-server-over-http.txt
+>> +	{ "bibtex", "(@[a-zA-Z]{1,}[ \t]*\{{0,1}[ \t]*[^ \t\"@',\\#}{~%]*).*$",
+>> +	  REG_EXTENDED },
+>> +	{ "tex",
+>> +	  "^(\\\\((sub)*section|chapter|part)\\*{0,1}\{.*)$",
+>
+> I think you need double backslash '\\' before '{' in the two places in these
+> patterns where you only have a single backslash.
 
-WebDAV is enabled and authentication is working.
-
-Sean
+Thanks.  Any other nits?
