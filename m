@@ -1,83 +1,105 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: Problems with git over http
-Date: Sat, 20 Sep 2008 14:42:08 -0700 (PDT)
-Message-ID: <m3wsh6lck1.fsf@localhost.localdomain>
-References: <264855a00809201013h6003abbfr9bbdd20c92e9201d@mail.gmail.com>
+From: Jonas Fonseca <fonseca@diku.dk>
+Subject: [JGIT PATCH] Add test for OpenSshConfig separator parsing
+Date: Sat, 20 Sep 2008 23:48:08 +0200
+Message-ID: <20080920214808.GA7426@diku.dk>
+References: <12219428213749-git-send-email-ggoudsmit@shebang.nl>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: "Sean Davis" <sdavis2@mail.nih.gov>
-X-From: git-owner@vger.kernel.org Sat Sep 20 23:43:23 2008
+Cc: git@vger.kernel.org, spearce@spearce.org
+To: Gilion Goudsmit <ggoudsmit@shebang.nl>
+X-From: git-owner@vger.kernel.org Sat Sep 20 23:49:52 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KhAEc-0001FV-7f
-	for gcvg-git-2@gmane.org; Sat, 20 Sep 2008 23:43:22 +0200
+	id 1KhAKq-0003Bp-Jl
+	for gcvg-git-2@gmane.org; Sat, 20 Sep 2008 23:49:49 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751510AbYITVmN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 20 Sep 2008 17:42:13 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751490AbYITVmN
-	(ORCPT <rfc822;git-outgoing>); Sat, 20 Sep 2008 17:42:13 -0400
-Received: from fg-out-1718.google.com ([72.14.220.154]:8344 "EHLO
-	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751128AbYITVmM (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 20 Sep 2008 17:42:12 -0400
-Received: by fg-out-1718.google.com with SMTP id 19so940993fgg.17
-        for <git@vger.kernel.org>; Sat, 20 Sep 2008 14:42:09 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:received:received
-         :x-authentication-warning:to:cc:subject:references:from:in-reply-to
-         :message-id:lines:user-agent:mime-version:content-type:date;
-        bh=Eh7Sem3r3itPN3L2xkbQDRVv+Nv3csRYoy7wmYwjNO0=;
-        b=Y2szAVgKcYgsA674W3Lts9y3rnMuJDmODGBa/qcnJ/MqRsNRsBDqV324YuChzDIDtJ
-         fclFryb34ECn9/Al57F7m3l4pBXxCYCH/tSB+2oS9/4Dyui7VBDCHWxJZbTteb884z/0
-         yv7ZwP4RfiS68CzRoaXVCPZF9mb27gK8tfla4=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=x-authentication-warning:to:cc:subject:references:from:in-reply-to
-         :message-id:lines:user-agent:mime-version:content-type:date;
-        b=o0PC8Lr3qKEdRwYJCK6SIxVbVGmwiePY3ZXb7uAEtwIUbXq+jniU64vX1Ov8n/DYcq
-         DLDjtT9plqRy87Sw2F618mlzl1zavEYdhOFd9O6EGsp29wEos81R5gFCg+EY4e/C/857
-         QqhlgaQ+MiookRdUnRGJc0q2hL3zFJED5A7BU=
-Received: by 10.86.68.1 with SMTP id q1mr3440132fga.2.1221946929583;
-        Sat, 20 Sep 2008 14:42:09 -0700 (PDT)
-Received: from localhost.localdomain (abvc201.neoplus.adsl.tpnet.pl [83.8.200.201])
-        by mx.google.com with ESMTPS id 4sm3742845fge.8.2008.09.20.14.42.07
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Sat, 20 Sep 2008 14:42:08 -0700 (PDT)
-Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id m8KLg8N7001221;
-	Sat, 20 Sep 2008 23:42:08 +0200
-Received: (from jnareb@localhost)
-	by localhost.localdomain (8.13.4/8.13.4/Submit) id m8KLg70A001218;
-	Sat, 20 Sep 2008 23:42:07 +0200
-X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
-In-Reply-To: <264855a00809201013h6003abbfr9bbdd20c92e9201d@mail.gmail.com>
-User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
+	id S1754025AbYITVsi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 20 Sep 2008 17:48:38 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754105AbYITVsh
+	(ORCPT <rfc822;git-outgoing>); Sat, 20 Sep 2008 17:48:37 -0400
+Received: from mgw2.diku.dk ([130.225.96.92]:36108 "EHLO mgw2.diku.dk"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752152AbYITVsM (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 20 Sep 2008 17:48:12 -0400
+Received: from localhost (localhost [127.0.0.1])
+	by mgw2.diku.dk (Postfix) with ESMTP id D19BB19BCBB;
+	Sat, 20 Sep 2008 23:48:09 +0200 (CEST)
+Received: from mgw2.diku.dk ([127.0.0.1])
+ by localhost (mgw2.diku.dk [127.0.0.1]) (amavisd-new, port 10024) with ESMTP
+ id 28370-08; Sat, 20 Sep 2008 23:48:08 +0200 (CEST)
+Received: from nhugin.diku.dk (nhugin.diku.dk [130.225.96.140])
+	by mgw2.diku.dk (Postfix) with ESMTP id 748AE19BC5F;
+	Sat, 20 Sep 2008 23:48:08 +0200 (CEST)
+Received: from tyr.diku.dk (tyr.diku.dk [130.225.96.226])
+	by nhugin.diku.dk (Postfix) with ESMTP
+	id D20296DF823; Sat, 20 Sep 2008 23:47:41 +0200 (CEST)
+Received: by tyr.diku.dk (Postfix, from userid 3873)
+	id 5B7351DE6D9; Sat, 20 Sep 2008 23:48:08 +0200 (CEST)
+Content-Disposition: inline
+In-Reply-To: <12219428213749-git-send-email-ggoudsmit@shebang.nl>
+User-Agent: Mutt/1.5.16 (2007-06-09)
+X-Virus-Scanned: amavisd-new at diku.dk
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/96367>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/96368>
 
-"Sean Davis" <sdavis2@mail.nih.gov> writes:
+Signed-off-by: Jonas Fonseca <fonseca@diku.dk>
+---
+ .../spearce/jgit/transport/OpenSshConfigTest.java  |   22 ++++++++++++++++++++
+ 1 files changed, 22 insertions(+), 0 deletions(-)
 
-> I am new to git and trying to set up a remote repository over http.  I
-> have configured apache2 and the bare, empty repository.  Using curl, I
-> can get the file HEAD without a password (seems .netrc is correct?).
-> However, when I try to push to the repository, I get the following:
-> 
-> sdavis@lestrade:/tmp/testing> git push
-> http://sdavis@watson.nci.nih.gov/git/sean_git.git/ master
-> fatal: exec http-push failed.
-> error: failed to push some refs to
-> 'http://sdavis@watson.nci.nih.gov/git/sean_git.git/'
+ Gilion Goudsmit <ggoudsmit@shebang.nl> wrote Sat, Sep 20, 2008:
+ > Having only tab-characters separating a key and value in the
+ > users ~/.ssh/config would cause the config-parser to fail with
+ > a "String index out of range: -1" exception. Also simplified
+ > the line parsing code my using a two argument split.
+ > 
+ > Signed-off-by: Gilion Goudsmit <ggoudsmit@shebang.nl>
 
-Errr... to _push_ via https you have to enable WebDAV.
-See Documentation/howto/setup-git-server-over-http.txt
+ A small test for this bug and FWIW:
+
+ Tested-by: Jonas Fonseca <fonseca@diku.dk>
+
+diff --git a/org.spearce.jgit.test/tst/org/spearce/jgit/transport/OpenSshConfigTest.java b/org.spearce.jgit.test/tst/org/spearce/jgit/transport/OpenSshConfigTest.java
+index 959b6b7..927c350 100644
+--- a/org.spearce.jgit.test/tst/org/spearce/jgit/transport/OpenSshConfigTest.java
++++ b/org.spearce.jgit.test/tst/org/spearce/jgit/transport/OpenSshConfigTest.java
+@@ -81,6 +81,28 @@ public void testNoConfig() {
+ 		assertNull(h.getIdentityFile());
+ 	}
+ 
++	public void testSeparatorParsing() throws Exception {
++		config("Host\tfirst\n" +
++		       "\tHostName\tfirst.tld\n" +
++		       "\n" +
++		       "Host second\n" +
++		       " HostName\tsecond.tld\n" +
++		       "Host=third\n" +
++		       "HostName=third.tld\n\n\n" +
++		       "\t Host = fourth\n\n\n" +
++		       " \t HostName\t=fourth.tld\n" +
++		       "Host\t =     last\n" +
++		       "HostName  \t    last.tld");
++		assertNotNull(osc.lookup("first"));
++		assertEquals("first.tld", osc.lookup("first").getHostName());
++		assertNotNull(osc.lookup("second"));
++		assertEquals("second.tld", osc.lookup("second").getHostName());
++		assertNotNull(osc.lookup("third"));
++		assertEquals("third.tld", osc.lookup("third").getHostName());
++		assertNotNull(osc.lookup("last"));
++		assertEquals("last.tld", osc.lookup("last").getHostName());
++	}
++
+ 	public void testAlias_DoesNotMatch() throws Exception {
+ 		config("Host orcz\n" + "\tHostName repo.or.cz\n");
+ 		final Host h = osc.lookup("repo.or.cz");
 -- 
-Jakub Narebski
-Poland
-ShadeHawk on #git
+1.6.0.1.451.gc8d31
+
+
+-- 
+Jonas Fonseca
