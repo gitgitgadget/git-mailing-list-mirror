@@ -1,181 +1,308 @@
 From: =?utf-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
 	<pclouds@gmail.com>
-Subject: [PATCH v2 00/14] Sparse checkout
-Date: Sat, 20 Sep 2008 17:01:39 +0700
-Message-ID: <1221904913-25887-1-git-send-email-pclouds@gmail.com>
+Subject: [PATCH 01/14] Extend index to save more flags
+Date: Sat, 20 Sep 2008 17:01:40 +0700
+Message-ID: <1221904913-25887-2-git-send-email-pclouds@gmail.com>
+References: <1221904913-25887-1-git-send-email-pclouds@gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=ISO-8859-1
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: =?utf-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
 	<pclouds@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Sep 20 12:03:17 2008
+X-From: git-owner@vger.kernel.org Sat Sep 20 12:03:31 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KgzJ6-00013g-GJ
-	for gcvg-git-2@gmane.org; Sat, 20 Sep 2008 12:03:17 +0200
+	id 1KgzJK-00016z-32
+	for gcvg-git-2@gmane.org; Sat, 20 Sep 2008 12:03:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751305AbYITKCI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 20 Sep 2008 06:02:08 -0400
-X-Warning: Original message contained 8-bit characters, however during
-	   the SMTP transport session the receiving system did not announce
-	   capability of receiving 8-bit SMTP (RFC 1651-1653), and as this
-	   message does not have MIME headers (RFC 2045-2049) to enable
-	   encoding change, we had very little choice.
-X-Warning: We ASSUME it is less harmful to add the MIME headers, and
-	   convert the text to Quoted-Printable, than not to do so,
-	   and to strip the message to 7-bits.. (RFC 1428 Appendix A)
-X-Warning: We don't know what character set the user used, thus we had to
-	   write these MIME-headers with our local system default value.
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751259AbYITKCH
-	(ORCPT <rfc822;git-outgoing>); Sat, 20 Sep 2008 06:02:07 -0400
-Received: from wf-out-1314.google.com ([209.85.200.169]:21281 "EHLO
-	wf-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751305AbYITKCG (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 20 Sep 2008 06:02:06 -0400
-Received: by wf-out-1314.google.com with SMTP id 27so880198wfd.4
-        for <git@vger.kernel.org>; Sat, 20 Sep 2008 03:02:04 -0700 (PDT)
+	id S1751316AbYITKCP convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 20 Sep 2008 06:02:15 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751289AbYITKCP
+	(ORCPT <rfc822;git-outgoing>); Sat, 20 Sep 2008 06:02:15 -0400
+Received: from rv-out-0506.google.com ([209.85.198.227]:18345 "EHLO
+	rv-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751259AbYITKCO (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 20 Sep 2008 06:02:14 -0400
+Received: by rv-out-0506.google.com with SMTP id k40so808244rvb.1
+        for <git@vger.kernel.org>; Sat, 20 Sep 2008 03:02:13 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:received:received:received:from:to:cc:subject
-         :date:message-id:x-mailer;
-        bh=f0rBYsI3x6nllFNF16BXMFSwFqlwg1fD/TtpsVqljZg=;
-        b=uqZlgPymzH9HktpTdSqCYfKBNw489/tyGj9+qUSlY/56eB0K8zYJ2XW99k7arHREX7
-         yImXMUcGM5njUSmK30+JOpLuqPXH3BV6vewPJnBAw4MlPBNI9+miabBStnuqAn410xBA
-         mPI+7y+SbRKuRU/2GQIy1htlKO85c1t67oXtw=
+         :date:message-id:x-mailer:in-reply-to:references:mime-version
+         :content-type:content-transfer-encoding;
+        bh=N+c1fBNJqu9SuzAdna/yh8IaJrhxhhC65JPVTf4f3gs=;
+        b=vZd54JS19zbtwJGTxxiegoQTE9Ng2PPwuQDIk3Hpok+3D1i1F6G6HreTVK02a0mJwm
+         cT6ieQxHJw72Y5stYCoAVQ37AiwKo7nJKCPOgjiLGJu1h8s9URejfbpuS93zNVYv6Hql
+         iTE++EVqcB1t3eHOZfBuHjG88tfj8koFKA/V0=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer;
-        b=u5s/gFsGdbwjN3SUcIJcjEM/nJV/Vi7F4zvc8sL/i4GVgBhiJmQ7FXWxCKJiRsNw6C
-         Ei1tgliNwhC8GqIczl4AwXET5OosPD0hjzJKKgQRniUJ3amVhkLIu4S6GIOuBkE11ct1
-         caTW9VDLDxrpAyzoBMWXbyLkcDIHWeK5s8gMY=
-Received: by 10.143.12.19 with SMTP id p19mr449890wfi.171.1221904924780;
-        Sat, 20 Sep 2008 03:02:04 -0700 (PDT)
+        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references
+         :mime-version:content-type:content-transfer-encoding;
+        b=AxGSWvNiJRUYvV1gujd42Prpv5gXoVd6CGZtrFNkJXmMmrz8SopuafIUl5K12j91UC
+         VgKccUI5wDz89aQcdVc+FoDVyIDRnuaqBf+YWRUvwleoP2GWW4XgynyNKZyYYbx/+npm
+         4m846ciG9Xig0s1HEPNEOjWA4ru55KMdmY4ZQ=
+Received: by 10.141.168.16 with SMTP id v16mr617255rvo.233.1221904933400;
+        Sat, 20 Sep 2008 03:02:13 -0700 (PDT)
 Received: from pclouds@gmail.com ( [117.5.36.54])
-        by mx.google.com with ESMTPS id 27sm3585450wfa.2.2008.09.20.03.02.01
+        by mx.google.com with ESMTPS id b39sm2548807rvf.0.2008.09.20.03.02.09
         (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Sat, 20 Sep 2008 03:02:03 -0700 (PDT)
-Received: by pclouds@gmail.com (sSMTP sendmail emulation); Sat, 20 Sep 2008 17:01:53 +0700
+        Sat, 20 Sep 2008 03:02:11 -0700 (PDT)
+Received: by pclouds@gmail.com (sSMTP sendmail emulation); Sat, 20 Sep 2008 17:02:02 +0700
 X-Mailer: git-send-email 1.6.0.96.g2fad1.dirty
+In-Reply-To: <1221904913-25887-1-git-send-email-pclouds@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/96338>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/96339>
 
-Main changes from the last round are:
- - The name is now "sparse checkout"
- - "git clone --path" =3D> "git clone --narrow-path"
- - "git checkout --path" =3D> "git checkout --reset-path"
- - New narrow spec (or "sparse patterns" from now) resembles
-   .gitignore patterns
- - "git ls-files" now supports more fine-grained listing. It can now
-   list checkout files, no-checkout files or orphaned (previously
-   "overlay") files. --overlay is gone
- - "git status" shows orphaned entries and remedies
- - Documentation has been restructured to accompany code changes.
-   Thanks to Jakub, Baz for lots of input.
+The on-disk format of index only saves 16 bit flags, nearly all have
+been used. The last bit (CE_EXTENDED) is used to for future extension.
 
-=46or code changes, significant changes are:
-  [03/14] ls-files: add options to support sparse checkout
-  [10/14] ls-files: support "sparse patterns", used to form sparse chec=
-kout areas
+This patch extends index entry format to save more flags in future.
+The new entry format will be used when CE_EXTENDED bit is 1.
 
-I hope I have addressed all the issues. If I miss anything, please spea=
-k up.
+Because older implementation may not understand CE_EXTENDED bit and
+misread the new format, if there is any extended entry in index, index
+header version will turn 3, which makes it incompatible for older git.
+If there is none, header version will return to 2 again.
 
-Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy (14):
-  Extend index to save more flags
-  Introduce CE_NO_CHECKOUT bit
-  ls-files: add options to support sparse checkout
-  update-index: refactor mark_valid() in preparation for new options
-  update-index: add --checkout/--no-checkout to update CE_NO_CHECKOUT b=
-it
-  ls-files: Add tests for --sparse and friends
-  Prevent diff machinery from examining worktree outside sparse checkou=
-t
-  checkout_entry(): CE_NO_CHECKOUT on checked out entries.
-  grep: skip files outside sparse checkout area
-  ls-files: support "sparse patterns", used to form sparse checkout are=
-as
-  unpack_trees(): add support for sparse checkout
-  clone: support sparse checkout with --narrow-path option
-  checkout: add new options to support sparse checkout
-  wt-status: Show orphaned entries in "git status" output
+Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
+=2Ecom>
+---
+ cache.h      |   58 ++++++++++++++++++++++++++++++++++++++++++++++++++=
+++++----
+ read-cache.c |   51 +++++++++++++++++++++++++++++++++++++++++---------=
+-
+ 2 files changed, 95 insertions(+), 14 deletions(-)
 
- .gitignore                            |    1 +
- Documentation/git-checkout.txt        |  131 ++++++++++++++++++++-
- Documentation/git-clone.txt           |   10 ++-
- Documentation/git-grep.txt            |    4 +-
- Documentation/git-ls-files.txt        |   30 +++++-
- Documentation/git-update-index.txt    |   13 ++
- Makefile                              |    2 +-
- builtin-checkout.c                    |   37 ++++++
- builtin-clone.c                       |   13 ++
- builtin-grep.c                        |    7 +-
- builtin-ls-files.c                    |   60 +++++++++-
- builtin-update-index.c                |   40 ++++---
- cache.h                               |   69 ++++++++++-
- diff-lib.c                            |    5 +-
- diff.c                                |    4 +-
- entry.c                               |    1 +
- read-cache.c                          |   57 +++++++--
- t/t2011-checkout-sparse.sh            |  108 +++++++++++++++++
- t/t2104-update-index-no-checkout.sh   |   36 ++++++
- t/t3003-ls-files-narrow-match.sh      |   39 ++++++
- t/t3003/1                             |    3 +
- t/t3003/12                            |    6 +
- t/t3003/clone-escape                  |    4 +
- t/t3003/cur-12                        |    2 +
- t/t3003/root-sub-1                    |    1 +
- t/t3003/slash-1                       |    1 +
- t/t3003/sub-1                         |    2 +
- t/t3003/sub-only                      |    3 +
- t/t3003/subsub-slash                  |    3 +
- t/t3004-ls-files-sparse.sh            |   40 ++++++
- t/t3004/cached.expected               |    5 +
- t/t3004/deleted.expected              |    1 +
- t/t3004/everything.expected           |   10 ++
- t/t3004/modified.expected             |    2 +
- t/t3004/no-checkout.expected          |    2 +
- t/t3004/orphaned-no-checkout.expected |    3 +
- t/t3004/orphaned.expected             |    1 +
- t/t3004/others.expected               |    2 +
- t/t3004/sparse-cached.expected        |    3 +
- t/t3004/sparse-everything.expected    |   11 ++
- t/t5703-clone-narrow.sh               |   39 ++++++
- test-index-version.c                  |   14 ++
- unpack-trees.c                        |  210 +++++++++++++++++++++++++=
-+++++++-
- unpack-trees.h                        |   22 ++++
- wt-status.c                           |   39 ++++++
- wt-status.h                           |    1 +
- 46 files changed, 1047 insertions(+), 50 deletions(-)
- create mode 100755 t/t2011-checkout-sparse.sh
- create mode 100755 t/t2104-update-index-no-checkout.sh
- create mode 100755 t/t3003-ls-files-narrow-match.sh
- create mode 100644 t/t3003/1
- create mode 100644 t/t3003/12
- create mode 100644 t/t3003/clone-escape
- create mode 100644 t/t3003/cur-12
- create mode 100644 t/t3003/root-sub-1
- create mode 100644 t/t3003/slash-1
- create mode 100644 t/t3003/sub
- create mode 100644 t/t3003/sub-1
- create mode 100644 t/t3003/sub-only
- create mode 100644 t/t3003/subsub-slash
- create mode 100755 t/t3004-ls-files-sparse.sh
- create mode 100644 t/t3004/cached.expected
- create mode 100644 t/t3004/deleted.expected
- create mode 100644 t/t3004/everything.expected
- create mode 100644 t/t3004/modified.expected
- create mode 100644 t/t3004/no-checkout.expected
- create mode 100644 t/t3004/orphaned-no-checkout.expected
- create mode 100644 t/t3004/orphaned.expected
- create mode 100644 t/t3004/others.expected
- create mode 100644 t/t3004/sparse-cached.expected
- create mode 100644 t/t3004/sparse-everything.expected
- create mode 100755 t/t5703-clone-narrow.sh
- create mode 100644 test-index-version.c
+diff --git a/cache.h b/cache.h
+index f4b8ddf..77b6eb3 100644
+--- a/cache.h
++++ b/cache.h
+@@ -109,6 +109,26 @@ struct ondisk_cache_entry {
+ 	char name[FLEX_ARRAY]; /* more */
+ };
+=20
++/*
++ * This struct is used when CE_EXTENDED bit is 1
++ * The struct must match ondisk_cache_entry exactly from
++ * ctime till flags
++ */
++struct ondisk_cache_entry_extended {
++	struct cache_time ctime;
++	struct cache_time mtime;
++	unsigned int dev;
++	unsigned int ino;
++	unsigned int mode;
++	unsigned int uid;
++	unsigned int gid;
++	unsigned int size;
++	unsigned char sha1[20];
++	unsigned short flags;
++	unsigned short flags2;
++	char name[FLEX_ARRAY]; /* more */
++};
++
+ struct cache_entry {
+ 	unsigned int ce_ctime;
+ 	unsigned int ce_mtime;
+@@ -130,7 +150,15 @@ struct cache_entry {
+ #define CE_VALID     (0x8000)
+ #define CE_STAGESHIFT 12
+=20
+-/* In-memory only */
++/*
++ * Range 0xFFFF0000 in ce_flags is divided into
++ * two parts: in-memory flags and on-disk ones.
++ * Flags in CE_EXTENDED_FLAGS will get saved on-disk
++ * if you want to save a new flag, add it in
++ * CE_EXTENDED_FLAGS
++ *
++ * In-memory only flags
++ */
+ #define CE_UPDATE    (0x10000)
+ #define CE_REMOVE    (0x20000)
+ #define CE_UPTODATE  (0x40000)
+@@ -140,6 +168,24 @@ struct cache_entry {
+ #define CE_UNHASHED  (0x200000)
+=20
+ /*
++ * Extended on-disk flags
++ */
++/* CE_EXTENDED2 is for future extension */
++#define CE_EXTENDED2 0x80000000
++
++#define CE_EXTENDED_FLAGS (0)
++
++/*
++ * Safeguard to avoid saving wrong flags:
++ *  - CE_EXTENDED2 won't get saved until its semantic is known
++ *  - Bits in 0x0000FFFF have been saved in ce_flags already
++ *  - Bits in 0x003F0000 are currently in-memory flags
++ */
++#if CE_EXTENDED_FLAGS & 0x80CFFFFF
++#error "CE_EXTENDED_FLAGS out of range"
++#endif
++
++/*
+  * Copy the sha1 and stat state of a cache entry from one to
+  * another. But we never change the name, or the hash state!
+  */
+@@ -171,7 +217,9 @@ static inline size_t ce_namelen(const struct cache_=
+entry *ce)
+ }
+=20
+ #define ce_size(ce) cache_entry_size(ce_namelen(ce))
+-#define ondisk_ce_size(ce) ondisk_cache_entry_size(ce_namelen(ce))
++#define ondisk_ce_size(ce) (((ce)->ce_flags & CE_EXTENDED) ? \
++			    ondisk_cache_entry_extended_size(ce_namelen(ce)) : \
++			    ondisk_cache_entry_size(ce_namelen(ce)))
+ #define ce_stage(ce) ((CE_STAGEMASK & (ce)->ce_flags) >> CE_STAGESHIFT=
+)
+ #define ce_uptodate(ce) ((ce)->ce_flags & CE_UPTODATE)
+ #define ce_mark_uptodate(ce) ((ce)->ce_flags |=3D CE_UPTODATE)
+@@ -214,8 +262,10 @@ static inline int ce_to_dtype(const struct cache_e=
+ntry *ce)
+ 	(S_ISREG(mode) ? (S_IFREG | ce_permissions(mode)) : \
+ 	S_ISLNK(mode) ? S_IFLNK : S_ISDIR(mode) ? S_IFDIR : S_IFGITLINK)
+=20
+-#define cache_entry_size(len) ((offsetof(struct cache_entry,name) + (l=
+en) + 8) & ~7)
+-#define ondisk_cache_entry_size(len) ((offsetof(struct ondisk_cache_en=
+try,name) + (len) + 8) & ~7)
++#define flexible_size(STRUCT,len) ((offsetof(struct STRUCT,name) + (le=
+n) + 8) & ~7)
++#define cache_entry_size(len) flexible_size(cache_entry,len)
++#define ondisk_cache_entry_size(len) flexible_size(ondisk_cache_entry,=
+len)
++#define ondisk_cache_entry_extended_size(len) flexible_size(ondisk_cac=
+he_entry_extended,len)
+=20
+ struct index_state {
+ 	struct cache_entry **cache;
+diff --git a/read-cache.c b/read-cache.c
+index c5a8659..667c36b 100644
+--- a/read-cache.c
++++ b/read-cache.c
+@@ -1096,7 +1096,7 @@ static int verify_hdr(struct cache_header *hdr, u=
+nsigned long size)
+=20
+ 	if (hdr->hdr_signature !=3D htonl(CACHE_SIGNATURE))
+ 		return error("bad signature");
+-	if (hdr->hdr_version !=3D htonl(2))
++	if (hdr->hdr_version !=3D htonl(2) && hdr->hdr_version !=3D htonl(3))
+ 		return error("bad index version");
+ 	SHA1_Init(&c);
+ 	SHA1_Update(&c, hdr, size - 20);
+@@ -1131,6 +1131,7 @@ int read_index(struct index_state *istate)
+ static void convert_from_disk(struct ondisk_cache_entry *ondisk, struc=
+t cache_entry *ce)
+ {
+ 	size_t len;
++	const char *name;
+=20
+ 	ce->ce_ctime =3D ntohl(ondisk->ctime.sec);
+ 	ce->ce_mtime =3D ntohl(ondisk->mtime.sec);
+@@ -1143,19 +1144,31 @@ static void convert_from_disk(struct ondisk_cac=
+he_entry *ondisk, struct cache_en
+ 	/* On-disk flags are just 16 bits */
+ 	ce->ce_flags =3D ntohs(ondisk->flags);
+=20
+-	/* For future extension: we do not understand this entry yet */
+-	if (ce->ce_flags & CE_EXTENDED)
+-		die("Unknown index entry format");
+ 	hashcpy(ce->sha1, ondisk->sha1);
+=20
+ 	len =3D ce->ce_flags & CE_NAMEMASK;
++
++	if (ce->ce_flags & CE_EXTENDED) {
++		struct ondisk_cache_entry_extended *ondisk2;
++		int extended_flags;
++		ondisk2 =3D (struct ondisk_cache_entry_extended *)ondisk;
++		extended_flags =3D ntohs(ondisk2->flags2) << 16;
++		/* We do not yet understand any bit out of CE_EXTENDED_FLAGS */
++		if (extended_flags & ~CE_EXTENDED_FLAGS)
++			die("Unknown index entry format %08x", extended_flags);
++		ce->ce_flags |=3D extended_flags;
++		name =3D ondisk2->name;
++	}
++	else
++		name =3D ondisk->name;
++
+ 	if (len =3D=3D CE_NAMEMASK)
+-		len =3D strlen(ondisk->name);
++		len =3D strlen(name);
+ 	/*
+ 	 * NEEDSWORK: If the original index is crafted, this copy could
+ 	 * go unchecked.
+ 	 */
+-	memcpy(ce->name, ondisk->name, len + 1);
++	memcpy(ce->name, name, len + 1);
+ }
+=20
+ static inline size_t estimate_cache_size(size_t ondisk_size, unsigned =
+int entries)
+@@ -1415,6 +1428,7 @@ static int ce_write_entry(SHA_CTX *c, int fd, str=
+uct cache_entry *ce)
+ {
+ 	int size =3D ondisk_ce_size(ce);
+ 	struct ondisk_cache_entry *ondisk =3D xcalloc(1, size);
++	char *name;
+=20
+ 	ondisk->ctime.sec =3D htonl(ce->ce_ctime);
+ 	ondisk->ctime.nsec =3D 0;
+@@ -1428,7 +1442,15 @@ static int ce_write_entry(SHA_CTX *c, int fd, st=
+ruct cache_entry *ce)
+ 	ondisk->size =3D htonl(ce->ce_size);
+ 	hashcpy(ondisk->sha1, ce->sha1);
+ 	ondisk->flags =3D htons(ce->ce_flags);
+-	memcpy(ondisk->name, ce->name, ce_namelen(ce));
++	if (ce->ce_flags & CE_EXTENDED) {
++		struct ondisk_cache_entry_extended *ondisk2;
++		ondisk2 =3D (struct ondisk_cache_entry_extended *)ondisk;
++		ondisk2->flags2 =3D htons((ce->ce_flags & CE_EXTENDED_FLAGS) >> 16);
++		name =3D ondisk2->name;
++	}
++	else
++		name =3D ondisk->name;
++	memcpy(name, ce->name, ce_namelen(ce));
+=20
+ 	return ce_write(c, fd, ondisk, size);
+ }
+@@ -1437,16 +1459,25 @@ int write_index(const struct index_state *istat=
+e, int newfd)
+ {
+ 	SHA_CTX c;
+ 	struct cache_header hdr;
+-	int i, err, removed;
++	int i, err, removed, extended;
+ 	struct cache_entry **cache =3D istate->cache;
+ 	int entries =3D istate->cache_nr;
+=20
+-	for (i =3D removed =3D 0; i < entries; i++)
++	for (i =3D removed =3D extended =3D 0; i < entries; i++) {
+ 		if (cache[i]->ce_flags & CE_REMOVE)
+ 			removed++;
+=20
++		/* reduce extended entries if possible */
++		cache[i]->ce_flags &=3D ~CE_EXTENDED;
++		if (cache[i]->ce_flags & CE_EXTENDED_FLAGS) {
++			extended++;
++			cache[i]->ce_flags |=3D CE_EXTENDED;
++		}
++	}
++
+ 	hdr.hdr_signature =3D htonl(CACHE_SIGNATURE);
+-	hdr.hdr_version =3D htonl(2);
++	/* for extended format, increase version so older git won't try to re=
+ad it */
++	hdr.hdr_version =3D htonl(extended ? 3 : 2);
+ 	hdr.hdr_entries =3D htonl(entries - removed);
+=20
+ 	SHA1_Init(&c);
+--=20
+1.6.0.96.g2fad1.dirty
