@@ -1,103 +1,58 @@
-From: martin f krafft <madduck@madduck.net>
-Subject: Re: TopGit: how to deal with upstream inclusion
-Date: Fri, 19 Sep 2008 18:04:06 +0100
-Message-ID: <20080919170406.GA22849@lapse.rw.madduck.net>
-References: <20080914203043.GA4872@lapse.rw.madduck.net> <20080914210316.GJ10360@machine.or.cz>
+From: "=?ISO-8859-1?Q?Santi_B=E9jar?=" <santi@agolina.net>
+Subject: Re: [PATCH v2 00/14] Sparse checkout
+Date: Sat, 20 Sep 2008 12:48:32 +0200
+Message-ID: <adf1fd3d0809200348h1170e8cm302e92043da8995d@mail.gmail.com>
+References: <1221904913-25887-1-git-send-email-pclouds@gmail.com>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="tThc/1wpZn/ma/RB"
-To: Petr Baudis <pasky@suse.cz>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Sep 20 12:29:25 2008
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: base64
+Cc: git@vger.kernel.org
+To: "=?UTF-8?Q?Nguy=E1=BB=85n_Th=C3=A1i_Ng=E1=BB=8Dc_Duy?=" 
+	<pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Sep 20 12:49:49 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KgziH-0007Pa-WF
-	for gcvg-git-2@gmane.org; Sat, 20 Sep 2008 12:29:18 +0200
+	id 1Kh024-0003Nq-WA
+	for gcvg-git-2@gmane.org; Sat, 20 Sep 2008 12:49:45 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751319AbYITK2I (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 20 Sep 2008 06:28:08 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751320AbYITK2H
-	(ORCPT <rfc822;git-outgoing>); Sat, 20 Sep 2008 06:28:07 -0400
-Received: from seamus.madduck.net ([213.203.238.82]:38791 "EHLO
-	seamus.madduck.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751191AbYITK2F (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 20 Sep 2008 06:28:05 -0400
-X-Greylist: delayed 551 seconds by postgrey-1.27 at vger.kernel.org; Sat, 20 Sep 2008 06:28:05 EDT
-Received: from lapse.rw.madduck.net (host81-151-148-227.range81-151.btcentralplus.com [81.151.148.227])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(Client CN "lapse.rw.madduck.net", Issuer "CAcert Class 3 Root" (verified OK))
-	by seamus.madduck.net (postfix) with ESMTPS id CDC4445AACD;
-	Sat, 20 Sep 2008 12:18:46 +0200 (CEST)
-Received: by lapse.rw.madduck.net (Postfix, from userid 1000)
-	id CD3C280C3; Fri, 19 Sep 2008 18:04:06 +0100 (IST)
+	id S1751343AbYITKsg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 20 Sep 2008 06:48:36 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751322AbYITKsg
+	(ORCPT <rfc822;git-outgoing>); Sat, 20 Sep 2008 06:48:36 -0400
+Received: from mu-out-0910.google.com ([209.85.134.186]:39273 "EHLO
+	mu-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751319AbYITKsf (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 20 Sep 2008 06:48:35 -0400
+Received: by mu-out-0910.google.com with SMTP id g7so659113muf.1
+        for <git@vger.kernel.org>; Sat, 20 Sep 2008 03:48:32 -0700 (PDT)
+Received: by 10.103.238.4 with SMTP id p4mr934306mur.66.1221907712621;
+        Sat, 20 Sep 2008 03:48:32 -0700 (PDT)
+Received: by 10.102.247.10 with HTTP; Sat, 20 Sep 2008 03:48:32 -0700 (PDT)
+In-Reply-To: <1221904913-25887-1-git-send-email-pclouds@gmail.com>
 Content-Disposition: inline
-In-Reply-To: <20080914210316.GJ10360@machine.or.cz>
-X-Motto: Keep the good times rollin'
-X-OS: Debian GNU/Linux lenny/sid kernel
-	2.6.24-etchnhalf.1+scoflowctrl.1-686 i686
-X-Spamtrap: madduck.bogus@madduck.net
-X-Subliminal-Message: debian/rules!
-User-Agent: Mutt/1.5.18 (2008-05-17)
-X-Virus-Scanned: ClamAV 0.94/8290/Sat Sep 20 03:23:09 2008 on seamus.madduck.net
-X-Virus-Status: Clean
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/96353>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/96354>
 
-
---tThc/1wpZn/ma/RB
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
-
-also sprach Petr Baudis <pasky@suse.cz> [2008.09.14.2203 +0100]:
-> 	tg depend fold RETIRED VANILLA
->=20
->   (i) Take the RETIRED _base_ branch
->=20
->   (ii) Merge in VANILLA
->=20
->   (iii) Merge in RETIRED head branch with -s ours
->=20
->   (iv) Now we have a commit that contains RETIRED topic branch, but with
-> the RETIRED's changes taken from VANILLA instead of RETIRED
->=20
->   (v) Merge this into the base of your current branch
->=20
->   (vi) Merge base to the head of your current branch, replacing RETIRED
-> with VANILLA (if not already there) in the .topdeps
->=20
->   (vii) You do not have to add VANILLA if you depend on it recursively
-> and ran tg update before to get it from your dependencies
->=20
->   Maybe in your case this could be even simpler but this should be the
-> general process. Does that sound right?
-
-Yes, it does. One might want to consider to make the use of -s ours
-in (iiii) configurable, but otherwise that's it.
-
---=20
-martin | http://madduck.net/ | http://two.sentenc.es/
-=20
-all information contained in the above is false,
-for reasons of military security.
-=20
-spamtraps: madduck.bogus@madduck.net
-
---tThc/1wpZn/ma/RB
-Content-Type: application/pgp-signature; name="digital_signature_gpg.asc"
-Content-Description: Digital signature (see http://martin-krafft.net/gpg/)
-Content-Disposition: inline
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.9 (GNU/Linux)
-
-iEYEARECAAYFAkjT24MACgkQIgvIgzMMSnWfPQCgvhk9tkeSw4ZQHjgPOvyAOFrn
-K+cAoIWDpEbjf0+75oZOPDVCRsmYemjC
-=DAY6
------END PGP SIGNATURE-----
-
---tThc/1wpZn/ma/RB--
+T24gU2F0LCBTZXAgMjAsIDIwMDggYXQgMTI6MDEgUE0sIE5ndXnhu4VuIFRow6FpIE5n4buNYyBE
+dXkKPHBjbG91ZHNAZ21haWwuY29tPiB3cm90ZToKPgo+IE5ndXnhu4VuIFRow6FpIE5n4buNYyBE
+dXkgKDE0KToKPiAgRXh0ZW5kIGluZGV4IHRvIHNhdmUgbW9yZSBmbGFncwo+ICBJbnRyb2R1Y2Ug
+Q0VfTk9fQ0hFQ0tPVVQgYml0Cj4gIGxzLWZpbGVzOiBhZGQgb3B0aW9ucyB0byBzdXBwb3J0IHNw
+YXJzZSBjaGVja291dAo+ICB1cGRhdGUtaW5kZXg6IHJlZmFjdG9yIG1hcmtfdmFsaWQoKSBpbiBw
+cmVwYXJhdGlvbiBmb3IgbmV3IG9wdGlvbnMKPiAgdXBkYXRlLWluZGV4OiBhZGQgLS1jaGVja291
+dC8tLW5vLWNoZWNrb3V0IHRvIHVwZGF0ZSBDRV9OT19DSEVDS09VVCBiaXQKPiAgbHMtZmlsZXM6
+IEFkZCB0ZXN0cyBmb3IgLS1zcGFyc2UgYW5kIGZyaWVuZHMKPiAgUHJldmVudCBkaWZmIG1hY2hp
+bmVyeSBmcm9tIGV4YW1pbmluZyB3b3JrdHJlZSBvdXRzaWRlIHNwYXJzZSBjaGVja291dAo+ICBj
+aGVja291dF9lbnRyeSgpOiBDRV9OT19DSEVDS09VVCBvbiBjaGVja2VkIG91dCBlbnRyaWVzLgo+
+ICBncmVwOiBza2lwIGZpbGVzIG91dHNpZGUgc3BhcnNlIGNoZWNrb3V0IGFyZWEKPiAgbHMtZmls
+ZXM6IHN1cHBvcnQgInNwYXJzZSBwYXR0ZXJucyIsIHVzZWQgdG8gZm9ybSBzcGFyc2UgY2hlY2tv
+dXQgYXJlYXMKPiAgdW5wYWNrX3RyZWVzKCk6IGFkZCBzdXBwb3J0IGZvciBzcGFyc2UgY2hlY2tv
+dXQKPiAgY2xvbmU6IHN1cHBvcnQgc3BhcnNlIGNoZWNrb3V0IHdpdGggLS1uYXJyb3ctcGF0aCBv
+cHRpb24KPiAgY2hlY2tvdXQ6IGFkZCBuZXcgb3B0aW9ucyB0byBzdXBwb3J0IHNwYXJzZSBjaGVj
+a291dAo+ICB3dC1zdGF0dXM6IFNob3cgb3JwaGFuZWQgZW50cmllcyBpbiAiZ2l0IHN0YXR1cyIg
+b3V0cHV0Cj4KCkkgd291bGQgbGlrZSB0byB0ZXN0IGl0LCBkbyB5b3UgaGF2ZSBhIHB1YmxpYyBy
+ZXBvIHRvIGZldGNoIGl0PwoKU2FudGkK
