@@ -1,106 +1,89 @@
-From: "Nguyen Thai Ngoc Duy" <pclouds@gmail.com>
-Subject: Re: [PATCH v2 00/14] Sparse checkout
-Date: Sun, 21 Sep 2008 02:48:44 +0700
-Message-ID: <fcaeb9bf0809201248w2850a243n50596dda3121f2c@mail.gmail.com>
-References: <1221904913-25887-1-git-send-email-pclouds@gmail.com>
-	 <m31vzen4v5.fsf@localhost.localdomain>
-	 <fcaeb9bf0809201033o1e9298a8ob135c68228b77218@mail.gmail.com>
-	 <200809202001.28383.jnareb@gmail.com>
+From: "Sean Davis" <sdavis2@mail.nih.gov>
+Subject: Re: Problems with git over http
+Date: Sat, 20 Sep 2008 16:40:11 -0400
+Message-ID: <264855a00809201340r397d2901h14a7e33a3eed5f06@mail.gmail.com>
+References: <264855a00809201013h6003abbfr9bbdd20c92e9201d@mail.gmail.com>
+	 <20080920184257.GD18932@strlen.de>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: base64
 Cc: git@vger.kernel.org
-To: "Jakub Narebski" <jnareb@gmail.com>,
-	"Junio C Hamano" <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Sep 20 22:01:37 2008
+To: "=?UTF-8?Q?Uwe_Kleine-K=C3=B6nig?=" <ukleinek@strlen.de>
+X-From: git-owner@vger.kernel.org Sat Sep 20 22:41:27 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Kh8e4-0006DE-Qa
-	for gcvg-git-2@gmane.org; Sat, 20 Sep 2008 22:01:33 +0200
+	id 1Kh9Ge-0008Ht-3k
+	for gcvg-git-2@gmane.org; Sat, 20 Sep 2008 22:41:24 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751387AbYITTss (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 20 Sep 2008 15:48:48 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751289AbYITTsr
-	(ORCPT <rfc822;git-outgoing>); Sat, 20 Sep 2008 15:48:47 -0400
-Received: from fg-out-1718.google.com ([72.14.220.159]:38046 "EHLO
-	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751266AbYITTsr (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 20 Sep 2008 15:48:47 -0400
-Received: by fg-out-1718.google.com with SMTP id 19so921933fgg.17
-        for <git@vger.kernel.org>; Sat, 20 Sep 2008 12:48:44 -0700 (PDT)
+	id S1751392AbYITUkQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 20 Sep 2008 16:40:16 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751490AbYITUkP
+	(ORCPT <rfc822;git-outgoing>); Sat, 20 Sep 2008 16:40:15 -0400
+Received: from an-out-0708.google.com ([209.85.132.247]:30995 "EHLO
+	an-out-0708.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751470AbYITUkO (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 20 Sep 2008 16:40:14 -0400
+Received: by an-out-0708.google.com with SMTP id d40so79520and.103
+        for <git@vger.kernel.org>; Sat, 20 Sep 2008 13:40:11 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to
-         :subject:cc:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:references;
-        bh=/EFGLaeZ+sqxNhYqs5SGIZtxTssl1dEZUCtNMuhcDdk=;
-        b=vk43WHeJ5qbeP8yjNTU6/0+btLQE2XeHyXLMwRUcIrQNUsxYXgFVFEAsyGYHub+7dP
-         oDc8QI6rzDZjmS22av5qzzUPtnGa7PWxC83CcbSjMU1Ipe6pVWO4IXWgFOhNwPufpXNi
-         2Iv0UAPx+T0Gpb2SR1/puqhhjdXxl5r+AoIAQ=
+        h=domainkey-signature:received:received:message-id:date:from:sender
+         :to:subject:cc:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:references
+         :x-google-sender-auth;
+        bh=prfW5/l18ZsXDhWbm+IFgJ/X3DMB+8MRBi2uFbYUDow=;
+        b=QoRo+tzxVPcwawtdHguPeKph7/ZSaZPOWaRrDN/7mEfjMtq9wE0rzbbUn7HtqcwcL/
+         1f/4Ucn5XvsDKJIr//+Hj4oHsE0UsedPx4nQ94XAk2q61RceYd0IL+m7mqbsW60qqewR
+         6s1c7EisCe6NNovk2ybvIgdsxkyZFh0T+eggE=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
+        h=message-id:date:from:sender:to:subject:cc:in-reply-to:mime-version
          :content-type:content-transfer-encoding:content-disposition
-         :references;
-        b=TcmbE4i7yz1HAf1Tf24RcGr61DTO/J5Hf1zkpxD9+8hFb/Y6j7e6Qmi7z+w8dJPP10
-         FwHbKZHyhlYJiygglS37+GgyAHWVvI6maw2PXA9z6EgWz/HroPI+3c1iSs1+QU1IrcpN
-         CPfGcb21FkJGr8rgemcG2oFDEsMHsJcB8R0gM=
-Received: by 10.86.52.6 with SMTP id z6mr3365653fgz.18.1221940124544;
-        Sat, 20 Sep 2008 12:48:44 -0700 (PDT)
-Received: by 10.86.59.5 with HTTP; Sat, 20 Sep 2008 12:48:44 -0700 (PDT)
-In-Reply-To: <200809202001.28383.jnareb@gmail.com>
+         :references:x-google-sender-auth;
+        b=OSWPukDd7ieqZ27YAtuXT3K0rA2VnaZovPsYsW0lh19mXahRX+ChNn67PtaiCfPZNt
+         YdPPjiI7KMotQ1DWx2L3dF+zGOxsZM+BmtpAto/Vp3RV8+5pnRQnjKZwcRgo34Y624To
+         42dhSwbcyu0SiKacWSAft137O1LHb2GQAcGME=
+Received: by 10.100.12.2 with SMTP id 2mr1506904anl.143.1221943211508;
+        Sat, 20 Sep 2008 13:40:11 -0700 (PDT)
+Received: by 10.100.197.2 with HTTP; Sat, 20 Sep 2008 13:40:11 -0700 (PDT)
+In-Reply-To: <20080920184257.GD18932@strlen.de>
 Content-Disposition: inline
+X-Google-Sender-Auth: d8c7c5ff6997de89
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/96363>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/96364>
 
-On 9/21/08, Jakub Narebski <jnareb@gmail.com> wrote:
->  > "--reset-path", I think, is a better name though. It would express the
->  > relation compared to --add-path and --remove-path.
->
->
-> I don't like very much '--reset-path' option name, because it is not
->  about 'reset' or 'resetting', but about limiting checkout to specified
->  paths.  Unfortunately --include / --exclude looks like are for ignoring
->  files, not marking files with "no-checkout" bit etc.
->
->  But I am not native English speaker.
->
->  Further proposals: --only ("git checkout --only <pattern>") with
->  --checkout-only as counterpart in git-clone; --limit-to, --sparse.
->
->
->  GNU tar uses --exclude and --exclude-file (with --no-recurse,
->  --no-wildcards, --no-wildcards-match-slash). wget uses --accept
->  and --reject for filename patterns, and --include / --exclude for
->  directories.  Neither looks right for sparse checkout in Git.
-
-I think --exclude and --include are quite good. With Junio's
-suggestion "foo-X", how about this?
-
-git clone --sparse-checkout=<patterns> [1]
-git checkout --set-sparse=<patterns>
-git checkout --include-sparse=<patterns>
-git checkout --exclude-sparse=<patterns> [2]
-
-[1] "checkout" is there to avoid being interpreted as "sparse clone"
-[2] --narrow-sparse IMO does not tell how the following patterns are
-used (is it the set that will be excluded or the target set?),
-"exclude" does better.
-
->  >>  BTW I think that the same rules are used in gitattributes, aren't
->  >>  they?
->  >
->  > They have different implementations. Though the rules may be the same.
->
->
-> Were you able to reuse either one?
-
-No. .gitignore is tied to read_directory() while .gitattributes has
-attributes attached. So I rolled out another one for index.
--- 
-Duy
+T24gU2F0LCBTZXAgMjAsIDIwMDggYXQgMjo0MiBQTSwgVXdlIEtsZWluZS1Lw7ZuaWcgPHVrbGVp
+bmVrQHN0cmxlbi5kZT4gd3JvdGU6Cj4gSGVsbG8gU2VhbiwKPgo+IE9uIFNhdCwgU2VwIDIwLCAy
+MDA4IGF0IDAxOjEzOjUzUE0gLTA0MDAsIFNlYW4gRGF2aXMgd3JvdGU6Cj4+IEkgYW0gbmV3IHRv
+IGdpdCBhbmQgdHJ5aW5nIHRvIHNldCB1cCBhIHJlbW90ZSByZXBvc2l0b3J5IG92ZXIgaHR0cC4g
+IEkKPj4gaGF2ZSBjb25maWd1cmVkIGFwYWNoZTIgYW5kIHRoZSBiYXJlLCBlbXB0eSByZXBvc2l0
+b3J5LiAgVXNpbmcgY3VybCwgSQo+PiBjYW4gZ2V0IHRoZSBmaWxlIEhFQUQgd2l0aG91dCBhIHBh
+c3N3b3JkIChzZWVtcyAubmV0cmMgaXMgY29ycmVjdD8pLgo+PiBIb3dldmVyLCB3aGVuIEkgdHJ5
+IHRvIHB1c2ggdG8gdGhlIHJlcG9zaXRvcnksIEkgZ2V0IHRoZSBmb2xsb3dpbmc6Cj4+Cj4+IHNk
+YXZpc0BsZXN0cmFkZTovdG1wL3Rlc3Rpbmc+IGdpdCBwdXNoCj4+IGh0dHA6Ly9zZGF2aXNAd2F0
+c29uLm5jaS5uaWguZ292L2dpdC9zZWFuX2dpdC5naXQvIG1hc3Rlcgo+PiBmYXRhbDogZXhlYyBo
+dHRwLXB1c2ggZmFpbGVkLgo+PiBlcnJvcjogZmFpbGVkIHRvIHB1c2ggc29tZSByZWZzIHRvCj4+
+ICdodHRwOi8vc2RhdmlzQHdhdHNvbi5uY2kubmloLmdvdi9naXQvc2Vhbl9naXQuZ2l0LycKPj4K
+Pj4gV2hhdCBjYW4gSSBkbyB0byB0cnkgdG8gZGVidWcgdGhpcywgYXMgdGhlIGVycm9yIG1lc3Nh
+Z2UgaXNuJ3QgaGVscGluZwo+PiBtZSB0byBzb3J0IG91dCB3aGF0IGlzIHdyb25nLiAgVGhlIGNs
+aWVudCBhbmQgc2VydmVyIGFyZSBib3RoIHJ1bm5pbmcKPj4gZ2l0LTEuNS54IChhbHRob3VnaCB0
+aGUgbWlub3IgdmVyc2lvbnMgYXJlIGEgYml0IGRpZmZlcmVudCkuICBBbnkKPj4gc3VnZ2VzdGlv
+bnM/Cj4gVHJ5IGNsb25pbmcgZmlyc3QuICBBbmQgY2hlY2sgdGhlIGVycm9yIGxvZyBvZiBhcGFj
+aGUuICBJIGRvbid0IGtub3cgaG93Cj4gcHVzaGluZyBvdmVyIGh0dHAgd29ya3MsIGJ1dCBtYXli
+ZSB5b3UgaW5zdGFsbGVkIGdpdCBpbnRvIC91c3IvbG9jYWwgYW5kCj4gL3Vzci9sb2NhbC9iaW4g
+aXMgbm90IGluIHRoZSBQQVRIIGZvciB0aGUgYXBhY2hlIHVzZXI/CgpUaGFua3MsIFV3ZS4gIEdv
+b2QgaWRlYS4gIE9uIHRoZSBjbGllbnQ6CgpvcmYtMDE1NjkwNDk6L3RtcCBzZGF2aXMkIGdpdCBj
+bG9uZQpodHRwOi8vc2RhdmlzQHdhdHNvbi5uY2kubmloLmdvdi9naXQvc2Vhbl9naXQuZ2l0LwpJ
+bml0aWFsaXplZCBlbXB0eSBHaXQgcmVwb3NpdG9yeSBpbiAvdG1wL3NlYW5fZ2l0Ly5naXQvCmNh
+dDogL3RtcC9zZWFuX2dpdC8uZ2l0L3JlZnMvcmVtb3Rlcy9vcmlnaW4vbWFzdGVyOiBObyBzdWNo
+IGZpbGUgb3IgZGlyZWN0b3J5Ci91c3IvbG9jYWwvYmluL2dpdC1jbG9uZTogbGluZSA0OiBjZDoK
+L3RtcC9zZWFuX2dpdC8uZ2l0L3JlZnMvcmVtb3Rlcy9vcmlnaW46IE5vIHN1Y2ggZmlsZSBvciBk
+aXJlY3RvcnkKZmF0YWw6IE5vdCBhIHZhbGlkIG9iamVjdCBuYW1lIEhFQUQKCk5vdGhpbmcgaW4g
+dGhlIGVycm9yX2xvZyBvbiBhcGFjaGUuICBXaHkgd291bGQgZ2l0IGJlIGxvb2tpbmcgZm9yIGEK
+cmVtb3RlcyBvcmlnaW4gc2luY2UgSSBhbSBjbG9uaW5nIGZyb20gYSByZW1vdGUgc291cmNlPwoK
+U2Vhbgo=
