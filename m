@@ -1,83 +1,79 @@
-From: "Sean Davis" <sdavis2@mail.nih.gov>
-Subject: Re: Problems with git over http
-Date: Sun, 21 Sep 2008 16:51:21 -0400
-Message-ID: <264855a00809211351j1392ad97xf2cd98944014edc@mail.gmail.com>
-References: <264855a00809201013h6003abbfr9bbdd20c92e9201d@mail.gmail.com>
-	 <vpqskrto48n.fsf@bauges.imag.fr>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: "Matthieu Moy" <Matthieu.Moy@imag.fr>
-X-From: git-owner@vger.kernel.org Sun Sep 21 22:52:35 2008
+From: Giuseppe Bilotta <giuseppe.bilotta@gmail.com>
+Subject: [PATCHv2 0/6] gitweb pathinfo improvements
+Date: Sun, 21 Sep 2008 22:57:37 +0200
+Message-ID: <1222030663-22540-1-git-send-email-giuseppe.bilotta@gmail.com>
+Cc: Jakub Narebski <jnareb@gmail.com>, Petr Baudis <pasky@ucw.cz>,
+	Lea Wiemann <lewiemann@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>,
+	Giuseppe Bilotta <giuseppe.bilotta@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Sep 21 22:58:49 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KhVv1-0001HV-3o
-	for gcvg-git-2@gmane.org; Sun, 21 Sep 2008 22:52:35 +0200
+	id 1KhW13-0002jI-EJ
+	for gcvg-git-2@gmane.org; Sun, 21 Sep 2008 22:58:49 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752493AbYIUUvY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 21 Sep 2008 16:51:24 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752536AbYIUUvX
-	(ORCPT <rfc822;git-outgoing>); Sun, 21 Sep 2008 16:51:23 -0400
-Received: from mail-gx0-f16.google.com ([209.85.217.16]:33029 "EHLO
-	mail-gx0-f16.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752114AbYIUUvW (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 21 Sep 2008 16:51:22 -0400
-Received: by gxk9 with SMTP id 9so2365857gxk.13
-        for <git@vger.kernel.org>; Sun, 21 Sep 2008 13:51:21 -0700 (PDT)
+	id S1752425AbYIUU5a (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 21 Sep 2008 16:57:30 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752505AbYIUU5a
+	(ORCPT <rfc822;git-outgoing>); Sun, 21 Sep 2008 16:57:30 -0400
+Received: from nf-out-0910.google.com ([64.233.182.187]:19442 "EHLO
+	nf-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751534AbYIUU53 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 21 Sep 2008 16:57:29 -0400
+Received: by nf-out-0910.google.com with SMTP id d3so407275nfc.21
+        for <git@vger.kernel.org>; Sun, 21 Sep 2008 13:57:27 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:sender
-         :to:subject:cc:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:references
-         :x-google-sender-auth;
-        bh=rACqQO3eqeb5tGjDSktgF3pI88Ad+5Lhk2cQYbzpdFM=;
-        b=Pj7wkIFVFAcZTE/VmPFPWC4pSqi072WtzI9kq9Vzj1XaFwN5OavXRGrLA7eJHi9EWF
-         WDkPuNmPFG0kUjcGsCHGsfgc53rHPpGZjfMcgiGSdQKTaWDRjpF3SlE4GvfN4PxPEVCU
-         NuLD/ePdrgwkyjcJB3On86LQgOmizWH/e191o=
+        h=domainkey-signature:received:received:from:to:cc:subject:date
+         :message-id:x-mailer;
+        bh=/eZQgr8xDvt6l7YfIBTuwJu4z1H79hzgPq7Ie7E2SPc=;
+        b=FYdE4GOgPUK6nECgC5a/TImcjx33WB2eC239y5fO4X8YlbS5zlG4we2aewsciF/kIn
+         I1T0/fSrO8v/5+wq71Q1pp+0bx9NILDlTSO+hRWm7VUhxvE9vUeZRBVt0Ykn1ELTRIml
+         C8kIjl+7oLHuV1dJohi4HZb24Wgxx6ZDS0eCI=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=message-id:date:from:sender:to:subject:cc:in-reply-to:mime-version
-         :content-type:content-transfer-encoding:content-disposition
-         :references:x-google-sender-auth;
-        b=AwY5KuN0ffuoQ7XUFVBCKt3YbX7+t2F8VaHyth0vuxiqszjWU9+LIRESlh33WKrC2e
-         39uKTAytaqft1imjAb4beCetaZ2VfpvVEzUIRSfYeENddqff6DaXgITCXpAPmFanGzcZ
-         7xNA9IKDnW1KLHTaQ5BSnnT2avGrnOhnUmIU0=
-Received: by 10.100.140.10 with SMTP id n10mr2210499and.115.1222030281226;
-        Sun, 21 Sep 2008 13:51:21 -0700 (PDT)
-Received: by 10.100.197.2 with HTTP; Sun, 21 Sep 2008 13:51:21 -0700 (PDT)
-In-Reply-To: <vpqskrto48n.fsf@bauges.imag.fr>
-Content-Disposition: inline
-X-Google-Sender-Auth: d02b2c1661ec1874
+        h=from:to:cc:subject:date:message-id:x-mailer;
+        b=n9HbNr66FvMzCM41vAvujxzviEs4fxk+V7h2B7KrfW4Bsw3/I1xcb19N6vgdaJPbeq
+         FDjBttEbNVcr2kgI+QEvWsWKuszQ2wRQw+SvtMfuwU8LcL0EjP4asrSegNlMS7ssZyWb
+         5PajK/Q5/Fq26Jer0y1hb4N3NlmDocrDmxKfk=
+Received: by 10.210.120.17 with SMTP id s17mr3823357ebc.85.1222030647738;
+        Sun, 21 Sep 2008 13:57:27 -0700 (PDT)
+Received: from localhost ( [94.37.17.250])
+        by mx.google.com with ESMTPS id 3sm6423610eyi.5.2008.09.21.13.57.25
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Sun, 21 Sep 2008 13:57:26 -0700 (PDT)
+X-Mailer: git-send-email 1.5.6.5
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/96431>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/96432>
 
-On Sun, Sep 21, 2008 at 12:25 PM, Matthieu Moy <Matthieu.Moy@imag.fr> wrote:
-> "Sean Davis" <sdavis2@mail.nih.gov> writes:
->
->> I am new to git and trying to set up a remote repository over http.  I
->> have configured apache2 and the bare, empty repository.  Using curl, I
->> can get the file HEAD without a password (seems .netrc is correct?).
->> However, when I try to push to the repository, I get the following:
->>
->> sdavis@lestrade:/tmp/testing> git push
->> http://sdavis@watson.nci.nih.gov/git/sean_git.git/ master
->> fatal: exec http-push failed.
->
-> Do you have git-http-push somewhere? What does "git http-push" say?
->
-> Probably you have a version of Git compiled with a too old libcurl
-> (IIRC, it could have "worked", but a bug in the old libcurl could
-> cause repository corruption, and therefore, git refuses to build
-> http-push with such version of libcurl).
+This is a resend, with some improvements and a proper cover
+letter, of my patchset to extend PATH_INFO support in gitweb.
+Hopefully I'm doing it the right way this time :)
 
-That was dumb on my part.  That is, indeed, an issue.  Both the mac
-binary that I found and the rpm for opensuse do not include
-git-http-push.
+The basic idea is to have gitweb support paths in the form of
+project/action/parent:/filename..hash:/filename
+(modulo missing parameters) and to generate them when use_pathinfo
+is enabled.
 
-Sean
+For backwards compatibility, old-style urls $project/$hash are
+still supported (unless $hash is a named ref that happens to
+coincide with a gitweb action). Also, CGI parameters are still
+used when the path_info form would be ambiguous (e.g. filenames
+with two consecutive dots in their name).
+
+Giuseppe Bilotta (6):
+  gitweb: action in path with use_pathinfo
+  gitweb: use_pathinfo filenames start with /
+  gitweb: parse parent..current syntax from pathinfo
+  gitweb: use_pathinfo creates parent..current paths
+  gitweb: remove PATH_INFO from $my_url and $my_uri
+  gitweb: prevent double slashes in PATH_INFO hrefs
+
+ gitweb/gitweb.perl |  161 +++++++++++++++++++++++++++++++++++++++-------------
+ 1 files changed, 122 insertions(+), 39 deletions(-)
