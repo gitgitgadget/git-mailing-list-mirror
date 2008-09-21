@@ -1,74 +1,152 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: [funny] "git checkout -t origin/xyzzy" seems to misbehave
-Date: Sun, 21 Sep 2008 01:23:00 -0700
-Message-ID: <7v1vzd29i3.fsf@gitster.siamese.dyndns.org>
+From: "Nguyen Thai Ngoc Duy" <pclouds@gmail.com>
+Subject: Re: [PATCH v2 00/14] Sparse checkout
+Date: Sun, 21 Sep 2008 17:11:52 +0700
+Message-ID: <fcaeb9bf0809210311x7e9337fbmd978e95aa7998525@mail.gmail.com>
+References: <1221904913-25887-1-git-send-email-pclouds@gmail.com>
+	 <m31vzen4v5.fsf@localhost.localdomain>
+	 <fcaeb9bf0809201033o1e9298a8ob135c68228b77218@mail.gmail.com>
+	 <200809202001.28383.jnareb@gmail.com>
+	 <fcaeb9bf0809201248w2850a243n50596dda3121f2c@mail.gmail.com>
+	 <7vzlm21n83.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Daniel Barkalow <barkalow@iabervon.org>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Sep 21 10:32:37 2008
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: "Jakub Narebski" <jnareb@gmail.com>, git@vger.kernel.org
+To: "Junio C Hamano" <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sun Sep 21 12:17:58 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KhKMu-0000Ng-T7
-	for gcvg-git-2@gmane.org; Sun, 21 Sep 2008 10:32:37 +0200
+	id 1KhM0r-000851-5g
+	for gcvg-git-2@gmane.org; Sun, 21 Sep 2008 12:17:57 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751199AbYIUIXR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 21 Sep 2008 04:23:17 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750877AbYIUIXQ
-	(ORCPT <rfc822;git-outgoing>); Sun, 21 Sep 2008 04:23:16 -0400
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:43156 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750795AbYIUIXP (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 21 Sep 2008 04:23:15 -0400
-Received: from localhost.localdomain (localhost [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 762F463B4E;
-	Sun, 21 Sep 2008 04:23:12 -0400 (EDT)
-Received: from pobox.com (ip68-225-240-211.oc.oc.cox.net [68.225.240.211])
- (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
- certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
- ESMTPSA id DD60963B4D; Sun, 21 Sep 2008 04:23:07 -0400 (EDT)
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: 87D545A4-87B6-11DD-A068-D0CFFE4BC1C1-77302942!a-sasl-fastnet.pobox.com
+	id S1751116AbYIUKLz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 21 Sep 2008 06:11:55 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751128AbYIUKLz
+	(ORCPT <rfc822;git-outgoing>); Sun, 21 Sep 2008 06:11:55 -0400
+Received: from fg-out-1718.google.com ([72.14.220.159]:47396 "EHLO
+	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751000AbYIUKLy (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 21 Sep 2008 06:11:54 -0400
+Received: by fg-out-1718.google.com with SMTP id 19so1036145fgg.17
+        for <git@vger.kernel.org>; Sun, 21 Sep 2008 03:11:52 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to
+         :subject:cc:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:references;
+        bh=86JPdVRwNKmY1OkYaCS0hemnXq6JApF23Z0es6OL/OM=;
+        b=LpE7AfD6XllvcUWu92JdPNueEy1Y07C7vUWuJjp+8V8pUY6RB6rzL3dxFm3iL2X7TZ
+         lxT7ucanluVL/vWF0lTsApY3RBFqL1LHuBNa1ejhCjaVWNMigfIlry3kuMAjUMVl+8Xy
+         nUhuWHaslrTjjEbNJKkic/0Rkmz/bnRINWgAo=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
+         :content-type:content-transfer-encoding:content-disposition
+         :references;
+        b=gXp/3lAzPiemxdlp9ySJ1rpPrK3Eab7cXVkuHPIO84xMy9AJHaKvliwC4oJyKoaGgY
+         U/Fbv4KT34K3MXHIFPSTtW4FE7M4pd7A4vJbF30pjo+HOcyWp/Ar6IDOq3RhCdrBdq6d
+         G8H20CQPJfS/PrheEB6S9NCk6injlkNL7b6pE=
+Received: by 10.86.79.19 with SMTP id c19mr3755263fgb.5.1221991912829;
+        Sun, 21 Sep 2008 03:11:52 -0700 (PDT)
+Received: by 10.86.59.5 with HTTP; Sun, 21 Sep 2008 03:11:52 -0700 (PDT)
+In-Reply-To: <7vzlm21n83.fsf@gitster.siamese.dyndns.org>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/96385>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/96386>
 
-When you
+On 9/21/08, Junio C Hamano <gitster@pobox.com> wrote:
+> "Nguyen Thai Ngoc Duy" <pclouds@gmail.com> writes:
+>
+>  > On 9/21/08, Jakub Narebski <jnareb@gmail.com> wrote:
+>
+> > ...
+>
+> >>  >>  BTW I think that the same rules are used in gitattributes, aren't
+>  >>  >>  they?
+>  >>  >
+>  >>  > They have different implementations. Though the rules may be the same.
+>  >>
+>  >> Were you able to reuse either one?
+>  >
+>  > No. .gitignore is tied to read_directory() while .gitattributes has
+>  > attributes attached. So I rolled out another one for index.
+>
+>
+> I am sorry, but that sounds like a rather lame excuse.  It certainly is
+>  possible to introduce an "ignored" attribute and have .gitattributes file
+>  specify that, instead of having an entry in .gitignore file, if you teach
+>  read_directory() to pay attention to the attributes mechanism.  If we had
+>  from day one that a more generic gitattributes mechanism, I would imagine
+>  we wouldn't even had a separate .gitignore codepath but used the attribute
+>  mechanism throughout the system.
+>
+>  Now I do not think we are ever going to deprecate gitignore and move
+>  everybody to "ignored" attributes, because such a transition would not buy
+>  the end users anything, but it technically is possible and would have been
+>  the right thing to do, if we were building the system from scratch.  We
+>  still could add it as an optional feature (i.e. if a path has the
+>  attribute that says "ignored" or "not ignored", then that determines the
+>  fate of the path, otherwise we look at gitignore).
+>
+>  I wouldn't be surprised if an alternative implementation of your code to
+>  assign "sparseness" to each path internally used "to-be-checked-out"
+>  attribute, and used that attribute to control how ls-files filters its
+>  output.
+>
+>  A better excuse might have been that "I am not reading these patterns from
+>  anywhere but command line", but that got me thinking further.
 
- * are on a branch "foo" that is not "bar",
- * have "origin/bar",
- * and already have a local branch "bar",
+That "from command line" piece makes a bit of difference. For example
+patterns separated by colons and backslash escape, but that does not
+stop it from reusing attr.c.
 
-"git checkout -t origin/bar" seems to misbehave.
+>  How would that --narrow-match that is not stored anywhere on the
+>  filesystem but used only for filtering the output be any more useful than
+>  a grep that filters ls-files output in practice?
 
-    $ git clone -s git.junio victim-002
-    $ cd victim-002
-    $ git branch
-    * master
-    $ git checkout -t origin/next
-    Branch next set up to track remote branch refs/remotes/origin/next.
-    Switched to a new branch "next"
-    $ git checkout -t origin/master
-    fatal: A branch named 'master' already exists.
-    $ git branch
-      master
-    * next
-    $ git diff --cached --shortstat
-     60 files changed, 2378 insertions(+), 3412 deletions(-)
-    $ git diff --cached master
-    $ exit
+Well, it works exactly like 'grep' internally.
 
-The first "checkout -t" is fine.  The failed one seems to have already
-updated the index and the work tree when it notices that it cannot create
-a new branch.
+>  I would imagine it would be much more useful if .git/info/attributes can
+>  specify "checkout" attribute that is defined like this:
+>
+>         `checkout`
+>         ^^^^^^^^^^
+>
+>         This attribute controls if the path can be left not checked-out to the
+>         working tree.
+>
+>         Unset::
+>                 Unsetting the `checkout` marks the path not to be checked out.
+>
+>         Unspecified::
+>                 A path which does not have any `checkout` attribute specified is
+>                 handled in no special way.
+>
+>         Any value set to `checkout` is ignored, and git acts as if the
+>         attribute is left unspecified.
+>
+>  Then whenever a new path enters the index, you _could_ check with the
+>  attribute mechanism to set the CE_NOCHECKOUT flag.  Just like an already
+>  tracked path is not ignored even if it matches .gitignore pattern, a path
+>  without CE_NOCHECKOUT that is in the index is checked out even if it has
+>  checkout attribute Unset.
+>
+>  Hmm?
 
-I suspect "-t" does not have to be in effect to trigger this; in other
-words, "git checkout -b master origin/master" would have the same issue.
+Well I think people would want to save no-checkout rules eventually.
+But I don't know how they want to use it. Will the saved rules be hard
+restriction, that no files can be checked out outside defined areas?
+Will it be to save a couple of keystrokes,   that is, instead of
+typing "--reset-sparse=blah" all the time, now just "--reset-sparse"
+and default rules will be applied? Your suggestion would be the third,
+applying on new files only.
 
-I'm reporting this before digging it further myself, because I may not be
-able to diagnose this before I leave for a vacation.
+Anyway I will try to extend attr.c a bit to take input from command
+line, then move "sparse patterns" over to use attr.c.
+-- 
+Duy
