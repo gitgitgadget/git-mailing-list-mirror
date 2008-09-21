@@ -1,146 +1,119 @@
-From: Jonas Fonseca <fonseca@diku.dk>
-Subject: [JGIT PATCH]  Test and fix handling of quotes in ~/.ssh/config
-Date: Sun, 21 Sep 2008 13:25:19 +0200
-Message-ID: <20080921112519.GA24200@diku.dk>
-References: <12219428213749-git-send-email-ggoudsmit@shebang.nl> <20080920222958.GA18981@diku.dk> <bd6139dc0809201819o5d6eb5b1r7bf0e46702c711d7@mail.gmail.com>
+From: "Nguyen Thai Ngoc Duy" <pclouds@gmail.com>
+Subject: Re: [PATCH v2 00/14] Sparse checkout
+Date: Sun, 21 Sep 2008 18:32:56 +0700
+Message-ID: <fcaeb9bf0809210432x500cf586k877d07b335bf33de@mail.gmail.com>
+References: <1221904913-25887-1-git-send-email-pclouds@gmail.com>
+	 <7vzlm21n83.fsf@gitster.siamese.dyndns.org>
+	 <fcaeb9bf0809210311x7e9337fbmd978e95aa7998525@mail.gmail.com>
+	 <200809211249.10016.jnareb@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Robin Rosenberg <robin.rosenberg@dewire.com>,
-	"Shawn O. Pearce" <spearce@spearce.org>, git@vger.kernel.org
-To: sverre@rabbelier.nl
-X-From: git-owner@vger.kernel.org Sun Sep 21 13:34:01 2008
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: "Junio C Hamano" <gitster@pobox.com>, git@vger.kernel.org
+To: "Jakub Narebski" <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Sep 21 13:40:57 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KhNCP-0008CT-3K
-	for gcvg-git-2@gmane.org; Sun, 21 Sep 2008 13:33:57 +0200
+	id 1KhNJ9-0001Pu-JU
+	for gcvg-git-2@gmane.org; Sun, 21 Sep 2008 13:40:56 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751052AbYIULZX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 21 Sep 2008 07:25:23 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751128AbYIULZX
-	(ORCPT <rfc822;git-outgoing>); Sun, 21 Sep 2008 07:25:23 -0400
-Received: from mgw1.diku.dk ([130.225.96.91]:38302 "EHLO mgw1.diku.dk"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750996AbYIULZW (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 21 Sep 2008 07:25:22 -0400
-Received: from localhost (localhost [127.0.0.1])
-	by mgw1.diku.dk (Postfix) with ESMTP id 0E64452C319;
-	Sun, 21 Sep 2008 13:25:21 +0200 (CEST)
-X-Virus-Scanned: amavisd-new at diku.dk
-Received: from mgw1.diku.dk ([127.0.0.1])
-	by localhost (mgw1.diku.dk [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id Gqty8-dNrj4p; Sun, 21 Sep 2008 13:25:19 +0200 (CEST)
-Received: from nhugin.diku.dk (nhugin.diku.dk [130.225.96.140])
-	by mgw1.diku.dk (Postfix) with ESMTP id 5BEC152C2FE;
-	Sun, 21 Sep 2008 13:25:19 +0200 (CEST)
-Received: from tyr.diku.dk (tyr.diku.dk [130.225.96.226])
-	by nhugin.diku.dk (Postfix) with ESMTP
-	id C94B06DF823; Sun, 21 Sep 2008 13:24:51 +0200 (CEST)
-Received: by tyr.diku.dk (Postfix, from userid 3873)
-	id 3178C1DE6F3; Sun, 21 Sep 2008 13:25:19 +0200 (CEST)
+	id S1751406AbYIULeZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 21 Sep 2008 07:34:25 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751385AbYIULeZ
+	(ORCPT <rfc822;git-outgoing>); Sun, 21 Sep 2008 07:34:25 -0400
+Received: from fg-out-1718.google.com ([72.14.220.159]:7854 "EHLO
+	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751383AbYIULeY (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 21 Sep 2008 07:34:24 -0400
+Received: by fg-out-1718.google.com with SMTP id 19so1047627fgg.17
+        for <git@vger.kernel.org>; Sun, 21 Sep 2008 04:32:56 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to
+         :subject:cc:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:references;
+        bh=yzrwty2lYRboWWVa/MfMzMp4mLLjbT+OB5tgrgiGp9o=;
+        b=k9eDN6814tdbuyzr4xaRdUkSRxOQPvuAv0YxT1qSTA2yIxXVzELJD4cKmsauPfdO86
+         EF10KQiP5mohOta0rNn/+M2VFhaHdJYre1kTF4s9QS3zYTlTihHgm5KIF9on1Wrhd7Pw
+         VFhBBcrM9AJKT3LWKgBJswCJDJy42EQTO0yww=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
+         :content-type:content-transfer-encoding:content-disposition
+         :references;
+        b=tNd9vTKL74pP3n65hz9+m/eOb0c7Cm5rHoq2rTe1lPg5r74TiBkuFkAuMl1SlZzBfm
+         tCBxCS1fP3U6kFJnDyIJgpnrZxID/YBK55DTNkGBRlhIH9nmCv/BAFgyEJsdegOlLRe1
+         YERVH7DxHQ1jk4gh3uEtkcmnr+8cfOK+T3HtM=
+Received: by 10.86.68.1 with SMTP id q1mr3797917fga.2.1221996776504;
+        Sun, 21 Sep 2008 04:32:56 -0700 (PDT)
+Received: by 10.86.59.5 with HTTP; Sun, 21 Sep 2008 04:32:56 -0700 (PDT)
+In-Reply-To: <200809211249.10016.jnareb@gmail.com>
 Content-Disposition: inline
-In-Reply-To: <bd6139dc0809201819o5d6eb5b1r7bf0e46702c711d7@mail.gmail.com>
-User-Agent: Mutt/1.5.16 (2007-06-09)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/96391>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/96392>
 
-Removal of quoting had an off-by-one error, and was not handled for the
-patterns used for the Host entry.
+On 9/21/08, Jakub Narebski <jnareb@gmail.com> wrote:
+> On Sun, 21 Sep 2008, Nguyen Thai Ngoc Duy wrote:
+>  > On 9/21/08, Junio C Hamano <gitster@pobox.com> wrote:
+>
+>
+> > >  How would that --narrow-match that is not stored anywhere on the
+>  > >  filesystem but used only for filtering the output be any more useful than
+>  > >  a grep that filters ls-files output in practice?
+>  >
+>  > Well, it works exactly like 'grep' internally.
+>  >
+>  > >  I would imagine it would be much more useful if .git/info/attributes can
+>  > >  specify "checkout" attribute that is defined like this:
+>  > >
+>  > >         `checkout`
+>  > >         ^^^^^^^^^^
+>
+> [...]
+>
+>
+>  > >  Then whenever a new path enters the index, you _could_ check with the
+>  > >  attribute mechanism to set the CE_NOCHECKOUT flag.  Just like an already
+>  > >  tracked path is not ignored even if it matches .gitignore pattern, a path
+>  > >  without CE_NOCHECKOUT that is in the index is checked out even if it has
+>  > >  checkout attribute Unset.
+>  > >
+>  > >  Hmm?
+>  >
+>  > Well I think people would want to save no-checkout rules eventually.
+>  > But I don't know how they want to use it. Will the saved rules be hard
+>  > restriction, that no files can be checked out outside defined areas?
+>  > Will it be to save a couple of keystrokes,   that is, instead of
+>  > typing "--reset-sparse=blah" all the time, now just "--reset-sparse"
+>  > and default rules will be applied? Your suggestion would be the third,
+>  > applying on new files only.
+>  >
+>  > Anyway I will try to extend attr.c a bit to take input from command
+>  > line, then move "sparse patterns" over to use attr.c.
+>
+>
+> First, I think that this was Junio asking for discussion more than
+>  for changing the design.
 
-Signed-off-by: Jonas Fonseca <fonseca@diku.dk>
----
- .../spearce/jgit/transport/OpenSshConfigTest.java  |   26 ++++++++++++++++++++
- .../org/spearce/jgit/transport/OpenSshConfig.java  |    5 ++-
- 2 files changed, 29 insertions(+), 2 deletions(-)
+I just tried to see if it was feasible. Checking the source again, I
+misunderstood  gitattributes/gitingore's leading '/' notion (in a good
+way). Leading '/' means './' and that would be fine for
+.git{attributes,ignore}. In sparse patterns, leading '/' means
+toplevel directory because you may want to checkout some more from a
+subdirectory without moving up to toplevel directory. Now
+.git{ignore,attributes} and sparse patterns are incompatible, gaah...
 
- Sverre Rabbelier <alturin@gmail.com> wrote Sun, Sep 21, 2008:
- > Heya,
- 
- Allo, 
- 
- > I'm not involved with JGit, so feel free to discared this mail :).
- 
- Thanks, it made me dig a bit further, and find a bug.
- 
- > On Sun, Sep 21, 2008 at 00:29, Jonas Fonseca <fonseca@diku.dk> wrote:
- > > -                       final String[] parts = line.split("[ \t=]", 2);
- > > +                       final String[] parts = line.split("[ \t]*[= \t]", 2);
- > 
- > Unless I'm guessing the purpose of this split wrong, wouldn't it be
- > even better to go for "[ \t]*=[ \t]+", or something like that (e.g.,
- > to allow for multiple tabs/spaces at the end as well).
- 
- The code using the split result trims tabs and spaces at the end, so the
- main purpose of the regex is to find something that splits. This
- something can be tabs/spaces or _optionally_ one '='. 
+>  Second, while unifying the "check the match" part of gitignore,
+>  gitattribute and sparse checkout would be IMVHO a good idea, I'm
 
-diff --git a/org.spearce.jgit.test/tst/org/spearce/jgit/transport/OpenSshConfigTest.java b/org.spearce.jgit.test/tst/org/spearce/jgit/transport/OpenSshConfigTest.java
-index 8c1133d..ad6e79c 100644
---- a/org.spearce.jgit.test/tst/org/spearce/jgit/transport/OpenSshConfigTest.java
-+++ b/org.spearce.jgit.test/tst/org/spearce/jgit/transport/OpenSshConfigTest.java
-@@ -105,6 +105,32 @@ config("Host\tfirst\n" +
- 		assertEquals("last.tld", osc.lookup("last").getHostName());
- 	}
- 
-+	public void testQuoteParsing() throws Exception {
-+		config("Host \"good\"\n" +
-+			" HostName=\"good.tld\"\n" +
-+			" Port=\"6007\"\n" +
-+			" User=\"gooduser\"\n" +
-+			"Host multiple unquoted and \"quoted\" \"hosts\"\n" +
-+			" Port=\"2222\"\n" +
-+			"Host \"spaced\"\n" +
-+			"# Bad host name, but testing preservation of spaces\n" +
-+			" HostName=\" spaced\ttld \"\n" +
-+			"# Misbalanced quotes\n" +
-+			"Host \"bad\"\n" +
-+			"# OpenSSH doesn't allow this but ...\n" +
-+			" HostName=bad.tld\"\n");
-+		assertEquals("good.tld", osc.lookup("good").getHostName());
-+		assertEquals("gooduser", osc.lookup("good").getUser());
-+		assertEquals(6007, osc.lookup("good").getPort());
-+		assertEquals(2222, osc.lookup("multiple").getPort());
-+		assertEquals(2222, osc.lookup("quoted").getPort());
-+		assertEquals(2222, osc.lookup("and").getPort());
-+		assertEquals(2222, osc.lookup("unquoted").getPort());
-+		assertEquals(2222, osc.lookup("hosts").getPort());
-+		assertEquals(" spaced\ttld ", osc.lookup("spaced").getHostName());
-+		assertEquals("bad.tld\"", osc.lookup("bad").getHostName());
-+	}
-+
- 	public void testAlias_DoesNotMatch() throws Exception {
- 		config("Host orcz\n" + "\tHostName repo.or.cz\n");
- 		final Host h = osc.lookup("repo.or.cz");
-diff --git a/org.spearce.jgit/src/org/spearce/jgit/transport/OpenSshConfig.java b/org.spearce.jgit/src/org/spearce/jgit/transport/OpenSshConfig.java
-index a9c6c12..b08d5c6 100644
---- a/org.spearce.jgit/src/org/spearce/jgit/transport/OpenSshConfig.java
-+++ b/org.spearce.jgit/src/org/spearce/jgit/transport/OpenSshConfig.java
-@@ -173,7 +173,8 @@ public Host lookup(final String hostName) {
- 
- 			if ("Host".equalsIgnoreCase(keyword)) {
- 				current.clear();
--				for (final String name : argValue.split("[ \t]")) {
-+				for (final String pattern : argValue.split("[ \t]")) {
-+					final String name = dequote(pattern);
- 					Host c = m.get(name);
- 					if (c == null) {
- 						c = new Host();
-@@ -243,7 +244,7 @@ private static boolean isHostMatch(final String pattern, final String name) {
- 
- 	private static String dequote(final String value) {
- 		if (value.startsWith("\"") && value.endsWith("\""))
--			return value.substring(1, value.length() - 2);
-+			return value.substring(1, value.length() - 1);
- 		return value;
- 	}
- 
+It is surely good. Optimization like 68492fc (Speedup scanning for
+excluded files.) could be applied to .gitattributes too. Now I know
+why I was confused when reading the matching part of
+.git{attributes,ignore}.
 -- 
-1.6.0.2.444.gf2494
-
-
--- 
-Jonas Fonseca
+Duy
