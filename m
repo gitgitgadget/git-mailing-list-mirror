@@ -1,170 +1,71 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: What's cooking in gitweb (20 Sep 2008)
-Date: Sun, 21 Sep 2008 01:38:00 +0200
-Message-ID: <200809210138.01874.jnareb@gmail.com>
+From: John Freeman <jfreeman@cs.tamu.edu>
+Subject: clone fails: Could not get the current working directory
+Date: Sat, 20 Sep 2008 19:49:52 -0500
+Message-ID: <48D59A30.5020403@cs.tamu.edu>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-2"
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Cc: Giuseppe Bilotta <giuseppe.bilotta@gmail.com>,
-	Lea Wiemann <lewiemann@gmail.com>,
-	"J.H." <warthog19@eaglescrag.net>,
-	"Gustavo Sverzut Barbieri" <barbieri@profusion.mobi>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Sep 21 01:39:30 2008
+X-From: git-owner@vger.kernel.org Sun Sep 21 03:01:26 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KhC2t-0008Dq-5e
-	for gcvg-git-2@gmane.org; Sun, 21 Sep 2008 01:39:23 +0200
+	id 1KhDKH-0002H3-6w
+	for gcvg-git-2@gmane.org; Sun, 21 Sep 2008 03:01:25 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751579AbYITXiO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 20 Sep 2008 19:38:14 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751583AbYITXiO
-	(ORCPT <rfc822;git-outgoing>); Sat, 20 Sep 2008 19:38:14 -0400
-Received: from fg-out-1718.google.com ([72.14.220.159]:44826 "EHLO
-	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751539AbYITXiM (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 20 Sep 2008 19:38:12 -0400
-Received: by fg-out-1718.google.com with SMTP id 19so957861fgg.17
-        for <git@vger.kernel.org>; Sat, 20 Sep 2008 16:38:10 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:subject:date
-         :user-agent:cc:mime-version:content-type:content-transfer-encoding
-         :content-disposition:message-id;
-        bh=uGsOi2Cyl7LY6LRhRStgsFWaTc9BRZJuhhd2nPzrO40=;
-        b=Kk2xWtD9nLIRZ/WTZIRiBvm+j9y4laUZSqG6e8CgmnlriIsgv0VnyMtN0oe/9CvCOD
-         meKGfvCWeKEcSO7u1xNNdX6T6xMeJoHRdItvKDTfA89dCbR6EeTs+jVcZ8ClwH1othyi
-         lLNty6astHck+cDEFoB7plL7SSTFVNkFJeifE=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=from:to:subject:date:user-agent:cc:mime-version:content-type
-         :content-transfer-encoding:content-disposition:message-id;
-        b=DZF5CWr5FBiV+lKsINdJnFKqQ762G2+LDlIxvFy/TtulFR0N2Xe+YGES8Z/kaZGnEY
-         VnKbbKznuG051/dQfwL2+L9VE7GIwblqOaROBNDXfPWPiVAI0fCxvep8zvbVIiFNzq94
-         7fnoKHXrVI2Xd+jAsf2+mGJC/EjRDTnGdgw0g=
-Received: by 10.86.79.19 with SMTP id c19mr3457557fgb.67.1221953889894;
-        Sat, 20 Sep 2008 16:38:09 -0700 (PDT)
-Received: from ?192.168.1.11? (abvc201.neoplus.adsl.tpnet.pl [83.8.200.201])
-        by mx.google.com with ESMTPS id 4sm3882803fge.8.2008.09.20.16.38.07
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Sat, 20 Sep 2008 16:38:08 -0700 (PDT)
-User-Agent: KMail/1.9.3
-Content-Disposition: inline
+	id S1751413AbYIUBAJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 20 Sep 2008 21:00:09 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751301AbYIUBAJ
+	(ORCPT <rfc822;git-outgoing>); Sat, 20 Sep 2008 21:00:09 -0400
+Received: from smtp-relay.tamu.edu ([165.91.22.120]:19590 "EHLO
+	sr-7-int.cis.tamu.edu" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1751259AbYIUBAI (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 20 Sep 2008 21:00:08 -0400
+X-Greylist: delayed 645 seconds by postgrey-1.27 at vger.kernel.org; Sat, 20 Sep 2008 21:00:08 EDT
+Received: from localhost (localhost.tamu.edu [127.0.0.1])
+	by sr-7-int.cis.tamu.edu (Postfix) with ESMTP id 7AE7758326
+	for <git@vger.kernel.org>; Sat, 20 Sep 2008 19:49:22 -0500 (CDT)
+X-Virus-Scanned: amavisd-new at tamu.edu
+Received: from b2.local (r74-192-200-91.bcstcmta02.clsttx.tl.dh.suddenlink.net [74.192.200.91])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by sr-7-int.cis.tamu.edu (Postfix) with ESMTPSA id 1ABF1582E4
+	for <git@vger.kernel.org>; Sat, 20 Sep 2008 19:49:22 -0500 (CDT)
+User-Agent: Thunderbird 2.0.0.16 (Macintosh/20080707)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/96378>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/96379>
 
-This is short summary of not-applied (and not ready to be applied)
-gitweb patches, in reverse chronological order, with most recent
-entries on top (first). Patches which probably should be resend, now
-that we are after 1.6.0 release
+Howdy,
 
-Junio, what about "[PATCH] avoid gitweb uninitialized value warning"
-(http://thread.gmane.org/gmane.comp.version-control.git/95028)? This
-is pure bugfix (well, warning fix, and failrly rare one, but warning
-which goes to web server logs).
+I'm trying to clone a remote repository.  Here's the background:
 
-$gmane=thread.gmane.org/gmane.comp.version-control.git
+- The repository is bare, under Bob's home directory on a remote Sun system.
+- Bob has set the group permissions for the repo directory to repogroup.
+- I have an account on the remote system that is in repogroup.
 
+I am trying to clone the repo on my home machine, using
 
-1. "gitweb pathinfo improvements" by Giuseppe Bilotta
-   Message-ID: <1220435839-29360-1-git-send-email-giuseppe.bilotta@gmail.com>
-   http://$gmane/94779
+ > git clone ssh://john@remote.system.edu/home/bob/path/to/repo
 
-   Table of contents:
-   ==================
-    * [PATCH 1/5] gitweb: action in path with use_pathinfo
-    * [PATCH 2/5] gitweb: use_pathinfo filenames start with /
-    * [PATCH 3/5] gitweb: parse parent..current syntax from pathinfo
-    * [PATCH 4/5] gitweb: use_pathinfo creates parent..current paths
-    * [PATCH 5/5] gitweb: remove PATH_INFO from $my_url and $my_uri
+It fails with
 
-   Need some refinement, especially with respect to _generating_
-   path_info URLs inside gitweb.  Some patches (2 and 5) does not
-   need correction, and probably should be sent as separate series.
-   Author promised to resend series, if I remember correctly.
+remote: fatal: Could not get the current working directory
+error: git-upload-pack: git-pack-objects died with error.
+fatal: git-upload-pack: aborting due to possible repository corruption 
+on the remote side.
+remote: aborting due to possible repository corruption on the remote side.
+fatal: early EOF
+fatal: index-pack failed
 
+Checking the source code, this error is triggered after getcwd() returns 
+a null pointer in setup.c:set_work_tree(), which is called at only one 
+place, in setup.c:setup_git_directory_gently().
 
-2. "[PATCH] gitweb: shortlog now also obeys $hash_parent" by Giuseppe Bilotta
-   Message-ID: <1218204731-9931-1-git-send-email-giuseppe.bilotta@gmail.com>
-   http://$gmane/91666
+Can anyone provide any insight as to why am I seeing this error?
 
-   Very good idea, but for the following two caveats.  The name
-   '$commit_hash' is a bit strange to mean also revision range; passing
-   "a..b" to parse_commits()... well, it is a good solution, but for me it
-   feels a bit hacky.  But this is not something serious.
-
-   More importnat fact is that I'd very much like for _all_ log-like views
-   (perhaps with exception of feeds: Atom and RSS) to implement this
-   feature.  This could be done by either doing it all in the same commit,
-   doing commit series changing 'shortlog', 'log' and 'history' separately,
-   or what I would prefer actually, to refactor generation of log-like views
-   to use single worker/engine subroutine.
-
-
-3. "[PATCH 1/1] Add "git" link to the end of project line on the
-   project_list page." by John 'Warthog9' Hawley
-   Message-ID: <1217815217-11329-2-git-send-email-warthog19@eaglescrag.net>
-   http://$gmane/91305
-   See also: http://$gmane/90778
-
-   As it was said in the commit message (which should be line-wrapped by
-   the way) it makes the assumption that each repository is available from
-   unique location.  Both per-repo cloneurl and gitweb.url, and per
-   instllation @git_base_url_list allow for multiple repository URLs.
-
-   The problem of course is _which_ of those to choose for the targer of
-   'git' links on projects list page.  And I don't think adding yet another
-   prefix to generate $project URL is a good dolution; better to simply
-   use first of URLs, and mention it both in comments in gitweb, and in
-   gitweb/README.  Perhaps simply use first entry in @git_base_url_list.
-
-   Commit message could be improved too.
-
-
-3. "Re: [PATCH 0/3] Git::Repo API and gitweb caching" by Lea Wiemann
-   Message-ID: <48A9CEC0.2020100@gmail.com>
-   http://$gmane/92726
-   Demo: http://odin3.kernel.org/git-lewiemann/
-
-   Result of "gitweb caching" Google Summer of Code 2008 project.
-   This is second resend of gitweb patch; the patches adding Mechanize
-   test of gitweb output, and Git::Repo api had more revisions (reviews)
-   on git mailing list.
-
-   Quote (perhaps it is simply not possible...):
-   > I unfortunately didn't end up being able to split up the third patch
-   > (use Perl API in Gitweb, and add caching layer), since the two changes
-   > are too intricately linked to be properly separated (I actually tried
-   > splitting it two times, two different ways, and it just didn't work).
-
-   Those patches, in particular the gitweb one, needs some review I think,
-   as they affect quite a bit of code.
-
-
-4. "[PATCH 0/2] gitweb use sections" by Gustavo Sverzut Barbieri
-   Message-ID: <1217298868-16513-1-git-send-email-barbieri@profusion.mobi>
-   http://$gmane/90553
-   Demo: http://staff.get-e.org/
-
-   Patches overview:
-   ==================
-   * [PATCH 1/2] gitweb: sort projects by path.
-   * [PATCH 2/2] gitweb: add section support to gitweb project listing.
-
-   What I'd like to have for first patch is at least estimating
-   performance hit (if there is any), and an example where original old
-   code sorts paths wrongly.
-
-   Nevetheless I think it is a good idea to have.  I didn't reviewed the
-   code though...
-
-
--- 
-Jakub Narebski
-Poland
+Thank you,
+John
