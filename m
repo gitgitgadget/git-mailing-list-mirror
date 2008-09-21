@@ -1,80 +1,128 @@
-From: Dmitry Potapov <dpotapov@gmail.com>
-Subject: Re: ignoring files/directories in git
-Date: Sun, 21 Sep 2008 21:42:55 +0400
-Message-ID: <20080921174255.GF21650@dpotapov.dyndns.org>
-References: <19596152.post@talk.nabble.com>
+From: "Alexander Gavrilov" <angavrilov@gmail.com>
+Subject: Re: Git-1.6.0.2-preview20080921 on Windows
+Date: Sun, 21 Sep 2008 22:19:59 +0400
+Message-ID: <bb6f213e0809211119t3c2bc6e8x3342bd33bef38916@mail.gmail.com>
+References: <82166911-C34F-439C-A2F3-CEBD7346A1D6@zib.de>
+Reply-To: ANGavrilov@gmail.com
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: mwolfe38 <mwolfe38@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Sep 21 19:44:15 2008
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git-2@gmane.org
-Received: from vger.kernel.org ([209.132.176.167])
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: msysGit <msysgit@googlegroups.com>, "Git Mailing List" <git@vger.kernel.org>
+To: "Steffen Prohaska" <prohaska@zib.de>
+X-From: grbounce-SUPTvwUAAABqUyiVh9Fi-Slj5a_0adWQ=gcvm-msysgit=m.gmane.org@googlegroups.com Sun Sep 21 20:21:14 2008
+Return-path: <grbounce-SUPTvwUAAABqUyiVh9Fi-Slj5a_0adWQ=gcvm-msysgit=m.gmane.org@googlegroups.com>
+Envelope-to: gcvm-msysgit@m.gmane.org
+Received: from wa-out-0708.google.com ([209.85.146.242])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KhSyj-0004Za-Ko
-	for gcvg-git-2@gmane.org; Sun, 21 Sep 2008 19:44:14 +0200
-Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751457AbYIURnE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 21 Sep 2008 13:43:04 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751443AbYIURnD
-	(ORCPT <rfc822;git-outgoing>); Sun, 21 Sep 2008 13:43:03 -0400
-Received: from mu-out-0910.google.com ([209.85.134.186]:34826 "EHLO
-	mu-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751435AbYIURnB (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 21 Sep 2008 13:43:01 -0400
-Received: by mu-out-0910.google.com with SMTP id g7so1018396muf.1
-        for <git@vger.kernel.org>; Sun, 21 Sep 2008 10:42:59 -0700 (PDT)
+	id 1KhTYW-0006Z5-9k
+	for gcvm-msysgit@m.gmane.org; Sun, 21 Sep 2008 20:21:12 +0200
+Received: by wa-out-0708.google.com with SMTP id n36so3069832wag.21
+        for <gcvm-msysgit@m.gmane.org>; Sun, 21 Sep 2008 11:20:07 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:cc:subject
-         :message-id:references:mime-version:content-type:content-disposition
-         :in-reply-to:user-agent;
-        bh=pxkFPaeiDMIRV3BluJiOWkhcXPDGbzcdLoG/iU7Bgho=;
-        b=t27L6KSK0iuqpBhpflI7gNeBR/O7cIRyVJHvUzRi36ruBJ+eRTvo7mtMb/0wRjXicZ
-         mc56roePXbhVH053dC5iS0X8wfhmyQf6dUc6OmykyiLabX2yCZSE/LThstjn5MprMzG3
-         9zD9wUJCYKIIuqj0zLK0IFj5olqropLizBGsI=
+        d=googlegroups.com; s=beta;
+        h=domainkey-signature:received:received:x-sender:x-apparently-to
+         :received:received:received-spf:authentication-results:received
+         :dkim-signature:domainkey-signature:received:received:message-id
+         :date:from:to:subject:cc:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:references:reply-to
+         :sender:precedence:x-google-loop:mailing-list:list-id:list-post
+         :list-help:list-unsubscribe:x-beenthere-env:x-beenthere;
+        bh=Zk+g/t7OprhbnXYtIeTl2liVS1aXnyweZRL0rw0PFa8=;
+        b=lcRMwACe/3PRczSYA6eZJrh/WdvW9HPbWWFnX/AZh/JGKLmVhoVPdnmMVJnhk9jN2I
+         LEXaEnO1BpXjfnTWJIqipHWIgyrF/g/cehGUGSgc0rSATCLQdY3035vqrzrwViZHpUSZ
+         9vIOE+DLiuEl7xN/F0e/nfD8HuyzUHz4slX64=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        b=SXTQDptXmJUHrEOfzeXm6VjqksQwgFE+/TgguzzWzoaOW1aovkdsrtCNhYKLuUYW3G
-         XKODUPy1Xcm4OezPphqtgx2VMm8GSgab7tB+QuLSQwJG0gNukvDHSPXVOJ7B00nDNqNn
-         b1pdhyffmMD90xAZEORKGsLxv5ILvR2P/SX1g=
-Received: by 10.103.221.13 with SMTP id y13mr2010604muq.41.1222018979841;
-        Sun, 21 Sep 2008 10:42:59 -0700 (PDT)
-Received: from localhost ( [85.140.171.157])
-        by mx.google.com with ESMTPS id g1sm20185024muf.8.2008.09.21.10.42.57
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Sun, 21 Sep 2008 10:42:58 -0700 (PDT)
+        d=googlegroups.com; s=beta;
+        h=x-sender:x-apparently-to:received-spf:authentication-results
+         :dkim-signature:domainkey-signature:message-id:date:from:to:subject
+         :cc:in-reply-to:mime-version:content-type:content-transfer-encoding
+         :content-disposition:references:reply-to:sender:precedence
+         :x-google-loop:mailing-list:list-id:list-post:list-help
+         :list-unsubscribe:x-beenthere-env:x-beenthere;
+        b=y21Viam8pBZstl4oDyzXfSqVemUw7ddNZRgMdc71PWbqSw3/+JV53rjR+maAtA6nWs
+         +TBv6Wx0Ppbtssn7Z+NR2cGCNNSvvg3R/wmHzoQ8cf+1CyQIwMjTkX2S+NXP8lS2Djiu
+         iEFfYwVQs93mWMXjImMgt/H1aEkI5xoSaYpyI=
+Received: by 10.141.175.5 with SMTP id c5mr154841rvp.22.1222021201335;
+        Sun, 21 Sep 2008 11:20:01 -0700 (PDT)
+Received: by 10.107.67.19 with SMTP id u19gr2943prk.0;
+	Sun, 21 Sep 2008 11:20:01 -0700 (PDT)
+X-Sender: angavrilov@gmail.com
+X-Apparently-To: msysgit@googlegroups.com
+Received: by 10.151.100.17 with SMTP id c17mr3489700ybm.21.1222021200844; Sun, 21 Sep 2008 11:20:00 -0700 (PDT)
+Received: from fg-out-1718.google.com (fg-out-1718.google.com [72.14.220.152]) by mx.google.com with ESMTP id 39si6468043yxd.2.2008.09.21.11.19.59; Sun, 21 Sep 2008 11:20:00 -0700 (PDT)
+Received-SPF: pass (google.com: domain of angavrilov@gmail.com designates 72.14.220.152 as permitted sender) client-ip=72.14.220.152;
+Authentication-Results: mx.google.com; spf=pass (google.com: domain of angavrilov@gmail.com designates 72.14.220.152 as permitted sender) smtp.mail=angavrilov@gmail.com; dkim=pass (test mode) header.i=@gmail.com
+Received: by fg-out-1718.google.com with SMTP id d23so1522262fga.14 for <msysgit@googlegroups.com>; Sun, 21 Sep 2008 11:19:59 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=gamma; h=domainkey-signature:received:received:message-id:date:from:to :subject:cc:in-reply-to:mime-version:content-type :content-transfer-encoding:content-disposition:references; bh=DTCYA/VuSKrtk09/8laAwUZSbvJb2PpDLNxdbPwH7cI=; b=t6KuvieofFa/GJH9TeX3iDFnkekpQXXAx57z6H1BZ5E2LyvWClsKhoJI8/p5Lrz1YM V1zHa9JwT7wEl5endtz4MioAwPXiadfHYni35TTSZJuKsEl4z66DUyZILXr/zFcGmOyw F932ltQUNdDLQvvTJ6Hygf2ZZzsMVcEQ5xRAk=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=gmail.com; s=gamma; h=message-id:date:from:to:subject:cc:in-reply-to:mime-version :content-type:content-transfer-encoding:content-disposition :references; b=Set7BrPYC9ZkaoGlPs9J1plxcoPi3WNhSteM3gMNe2g2M7e1tLPj1iS6qJ5p5+9Ugs lJ+0lb8rMU1kz4YodQCLgmy50eG4Xc2DNaEyIlmkWIMvHQOwcHnybWSHVRrvdAxUW/RE H3B7yhYskFbQNIMqhssWwWUcHVMLlWeR0krAU=
+Received: by 10.103.243.9 with SMTP id v9mr2028642mur.44.1222021199083; Sun, 21 Sep 2008 11:19:59 -0700 (PDT)
+Received: by 10.103.251.10 with HTTP; Sun, 21 Sep 2008 11:19:59 -0700 (PDT)
+In-Reply-To: <82166911-C34F-439C-A2F3-CEBD7346A1D6@zib.de>
 Content-Disposition: inline
-In-Reply-To: <19596152.post@talk.nabble.com>
-User-Agent: Mutt/1.5.13 (2006-08-11)
-Sender: git-owner@vger.kernel.org
+Sender: msysgit@googlegroups.com
 Precedence: bulk
-List-ID: <git.vger.kernel.org>
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/96417>
+X-Google-Loop: groups
+Mailing-List: list msysgit@googlegroups.com;
+	contact msysgit+owner@googlegroups.com
+List-Id: <msysgit.googlegroups.com>
+List-Post: <mailto:msysgit@googlegroups.com>
+List-Help: <mailto:msysgit+help@googlegroups.com>
+List-Unsubscribe: <http://googlegroups.com/group/msysgit/subscribe>,
+	<mailto:msysgit+unsubscribe@googlegroups.com>
+X-BeenThere-Env: msysgit@googlegroups.com
+X-BeenThere: msysgit@googlegroups.com
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/96418>
 
-On Sun, Sep 21, 2008 at 09:54:38AM -0700, mwolfe38 wrote:
-> 
-> I've added them to the .gitignore file which I have in the initial directory
-> of the repository
-> The contents of my gitignore are:
-> 
-> .settings
-> .cache
-> cache/
-> log/
-> .project
-> 
-> However, if I do 
-> git add .
-> It will add the files from cache and log anyways.
-> I know git add . will add anything that hasn't been added but shouldn't it
-> ignore files in .gitignore?
 
-It does ignore files in .gitignore. What version of Git do you use?
-IIRC, some old ones did not like the slash at the end of name.
+On Sun, Sep 21, 2008 at 9:30 PM, Steffen Prohaska <prohaska@zib.de> wrote:
+> Git-1.6.0.2-preview20080921 for Windows is available at
+>
+>    http://code.google.com/p/msysgit/downloads
+>
+> The version installed is based on Junio's current 'maint' (cc185a6a8a)
+> plus the patch series I sent today, see
+>
+>   http://article.gmane.org/gmane.comp.version-control.git/92605
+>
+> The new installer is not yet featured on the msysgit homepage, because
+> the installer contains the new "libexec/git-core" layout, which has not
+> been tested much.  I'll wait a few days to see if the new layout works.
+> If hear nothing bad, I'll move the "Featured" flag to 1.6.0.2.
 
-Dmitry
+You forgot to merge my build of the Cygwin kill utility for MSys.
+Available here:
+
+http://repo.or.cz/w/msysgit.git?a=log;h=refs/heads/mob
+
+
+Also, when I start git-gui from an empty repository, or try to amend
+the root commit, I get:
+
+
+Assertion failed: argv0_path, file exec_cmd.c, line 15
+
+This application has requested the Runtime to terminate it in an unusual way.
+Please contact the application's support team for more information.
+Assertion failed: argv0_path, file exec_cmd.c, line 15
+
+This application has requested the Runtime to terminate it in an unusual way.
+Please contact the application's support team for more information.
+    while executing
+"exec {C:/Program Files/Git/libexec/git-core/git-mktree.exe} << {}"
+    ("eval" body line 1)
+    invoked from within
+"eval exec $opt $cmdp $args"
+    (procedure "git" line 23)
+    invoked from within
+"git mktree << {}"
+    (procedure "PARENT" line 9)
+    invoked from within
+"PARENT"
+    (procedure "rescan_stage2" line 25)
+    invoked from within
+"rescan_stage2 filebf7840 ui_ready"
+
+
+I get the same error if I simply run 'git mktree' as well.
+
+Alexander
