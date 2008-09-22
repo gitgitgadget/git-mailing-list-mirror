@@ -1,133 +1,59 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: Re* [RFC/PATCH] extend meaning of "--root" option to index
-	comparisons
-Date: Mon, 22 Sep 2008 09:32:30 -0400
-Message-ID: <20080922133230.GB7133@sigill.intra.peff.net>
-References: <bd6139dc0809151411p49f5adeaq4beff452574ca980@mail.gmail.com> <20080915223442.GD20677@sigill.intra.peff.net> <bd6139dc0809152319m31a79877h5dc1b701a8210802@mail.gmail.com> <20080916062105.GA12708@coredump.intra.peff.net> <20080918092152.GA18732@coredump.intra.peff.net> <3665a1a00809180931t191b5a24wd58554cdb761535@mail.gmail.com> <20080919142537.GA1287@coredump.intra.peff.net> <7vskrvswxp.fsf@gitster.siamese.dyndns.org> <20080921135616.GA25238@sigill.intra.peff.net> <7v63opz66t.fsf@gitster.siamese.dyndns.org>
+From: Petr Baudis <pasky@suse.cz>
+Subject: Re: [ANNOUNCE] TopGit v0.3
+Date: Mon, 22 Sep 2008 17:27:12 +0200
+Message-ID: <20080922152712.GN10360@machine.or.cz>
+References: <20080909231009.GD10544@machine.or.cz> <1221120192.8962.7.camel@heerbeest> <20080912110017.GW10360@machine.or.cz> <1221222433.29747.8.camel@heerbeest> <20080912131530.GZ10360@machine.or.cz> <20080912181442.GA5407@lapse.rw.madduck.net> <1221648520.30402.12.camel@heerbeest> <20080921142445.GJ10360@machine.or.cz> <1222074825.6698.13.camel@heerbeest>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Anatol Pomozov <anatol.pomozov@gmail.com>, sverre@rabbelier.nl,
-	Git Mailing List <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Sep 22 15:33:54 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: martin f krafft <madduck@madduck.net>, git@vger.kernel.org
+To: Jan Nieuwenhuizen <janneke-list@xs4all.nl>
+X-From: git-owner@vger.kernel.org Mon Sep 22 17:28:28 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KhlXx-0008TH-Ai
-	for gcvg-git-2@gmane.org; Mon, 22 Sep 2008 15:33:49 +0200
+	id 1KhnKs-0000OO-Ah
+	for gcvg-git-2@gmane.org; Mon, 22 Sep 2008 17:28:26 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752109AbYIVNci (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 22 Sep 2008 09:32:38 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752105AbYIVNci
-	(ORCPT <rfc822;git-outgoing>); Mon, 22 Sep 2008 09:32:38 -0400
-Received: from peff.net ([208.65.91.99]:1478 "EHLO peff.net"
+	id S1752645AbYIVP1Q (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 22 Sep 2008 11:27:16 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752638AbYIVP1Q
+	(ORCPT <rfc822;git-outgoing>); Mon, 22 Sep 2008 11:27:16 -0400
+Received: from w241.dkm.cz ([62.24.88.241]:46358 "EHLO machine.or.cz"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751765AbYIVNch (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 22 Sep 2008 09:32:37 -0400
-Received: (qmail 6690 invoked by uid 111); 22 Sep 2008 13:32:36 -0000
-Received: from c-75-75-5-148.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (75.75.5.148)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.32) with ESMTP; Mon, 22 Sep 2008 09:32:36 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 22 Sep 2008 09:32:30 -0400
+	id S1752635AbYIVP1P (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 22 Sep 2008 11:27:15 -0400
+Received: by machine.or.cz (Postfix, from userid 2001)
+	id 7C868393A370; Mon, 22 Sep 2008 17:27:12 +0200 (CEST)
 Content-Disposition: inline
-In-Reply-To: <7v63opz66t.fsf@gitster.siamese.dyndns.org>
+In-Reply-To: <1222074825.6698.13.camel@heerbeest>
+User-Agent: Mutt/1.5.16 (2007-06-09)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/96480>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/96481>
 
-On Sun, Sep 21, 2008 at 11:48:10AM -0700, Junio C Hamano wrote:
-
-> > What about index comparisons? What should an index comparison to a
-> > branch yet-to-be-born look like? Right now it is an error.
+On Mon, Sep 22, 2008 at 11:13:45AM +0200, Jan Nieuwenhuizen wrote:
+> On zo, 2008-09-21 at 16:24 +0200, Petr Baudis wrote:
 > 
-> It should be an error, because that is _not_ even an comparison.  At least
-> at diff-index level.
+> > The problem is that you can undo the merge content, but not the history
+> > information. So this revert can e.g. propagate even into branches which
+> > still *should* depend on the other branch, you get into trouble when you
+> > want to make your branch depend on the other one anyway, etc.
 > 
-> The diff wrapper UI could do something different, though.  And an obvious
-> thing to do is to give a fake creation event.
-
-So is that an implicit endorsement of my "diff --cached --root" patch,
-which does exactly that?
-
-> The current output feels perfectly sensible to me.
+> Ah, yes.  I see.  Does this mean that functionality for easy adding and
+> removing dependencies/patches from a branch can only be provided through
+> some sort of [unpublishable] patch based mechanism like stgit?
 > 
-> 	$ mkdir d; cd d; tar xf .../t.tar; git init; git add .
-> 	$ git diff --cached
->         fatal: No HEAD commit to compare with (yet)
+> Possibly we'd need a kind of setup where stgit-like patch branches
+> can be "finalized" into topgit branches.  Hmm.
 
-Sure. I don't think any behavior should be changed without a "please
-treat branch-to-be-born as an empty tree" flag.
+Do you really expect you will need this kind of functionality often,
+though? Adding dependencies is easy, and note that removing whole topic
+branches or deleting dependencies that were merged upstream _is_ doable.
 
-> The alternative is no different from "find . -type f | xargs cat" from the
-> point of view of reviewability.  To make sure you have what you want in
-
-Interesting comparison. The find example you give has a problem if there
-are no files. But my patch is more akin to adding a --no-run-if-empty
-flag to xargs here.
-
-> By allowing an auto-fallback to the comparison with an empty tree object, 
-> you are giving these possibilities:
-> 
-> 	$ git diff --cached --stat
-> 	$ git diff --cached --name-only
-> 
-> but the latter is already available from ls-files anyway, and the former
-> does not feel so interesting.  
-
-I didn't think we are introducing any new possibilities anyway, since
-one can always just compare against the empty tree manually (though I
-think "git diff --cached --stat" might be useful for a "status"-like
-script).
-
-The advantage is saving callers from having to do two _different_ things
-for the initial and regular commit cases.
-
-And for interactive users, seeing the error and saying "Oh, I really
-would like to see the diff against the empty tree, but I can't remember
-the SHA-1 of the empty tree" (though for that, I have also been running
-with a fake ref "EMPTY" which is just simpler to remember). So instead
-they can just repeat the command with "--root".
-
-> In exchange, we lose the reminder to the user that this is a creation
-> event.  An interactive user (remember, I am not talking about diff-index
-> here, but diff front-end) may want to treat it specially perhaps by being
-> extra careful.  If there were no downsides like this in "fall back to
-> comparing with an empty tree" approach, I wouldn't hesitate to agree it is
-> a good idea, though.
-
-You seem to be arguing against doing this by default, which I am not
-really advocating (to be honest, I am not 100% sure I am advocating
-"diff --cached --root", but this discussion is helping me sort out the
-positives and negatives). It only makes sense to me with an extra flag
-that explicitly says "and if there is no HEAD, do this fallback."
-
-> To this, I am inclined to agree.  We could do something like the attached
-> patch, but there is a caveat.
-
-I do think this approach makes sense (and it mirrors what I just
-explained in my last mail to Anatol, which is that we are really talking
-about identifying non-existent branches in symrefs).
-
-But I agree there will be a big fallout as we break many of the callers
-who expect the barfing. I can try to look at some of the implications,
-but expect a delay there from me due to real life concerns.
-
-> +		} else if (!revs->require_valid_def &&
-> +			   !strcmp(revs->def, "HEAD") &&
-> +			   resolve_ref(revs->def, sha1, 0, &flag) &&
-> +			   (flag & REF_ISSYMREF)) {
-
-I wonder if this should be restricted to HEAD and not simply all
-symrefs. The thing we are really pointing out is that something points
-to a non-existing ref, and because that something is on disk and not
-typed in by the user, we are assuming it is not just a mistake.
-
-The only other example I can think of is a refs/remotes/$foo/HEAD, which
-we might access via "$foo", can point to an unborn branch.
-
-But maybe it is best to be conservative at first and stick with "HEAD".
-
--Peff
+-- 
+				Petr "Pasky" Baudis
+The next generation of interesting software will be done
+on the Macintosh, not the IBM PC.  -- Bill Gates
