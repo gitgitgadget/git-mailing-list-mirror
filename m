@@ -1,106 +1,94 @@
-From: Boaz Harrosh <bharrosh@panasas.com>
-Subject: Re: ignoring files/directories in git
-Date: Mon, 22 Sep 2008 10:37:00 +0300
-Message-ID: <48D74B1C.6020408@panasas.com>
-References: <19596152.post@talk.nabble.com> <19599905.post@talk.nabble.com>
+From: Johannes Sixt <j.sixt@viscovery.net>
+Subject: Re: [PATCH (GIT-GUI,GITK) 6/8] gitk: Port new encoding logic from
+ git-gui.
+Date: Mon, 22 Sep 2008 09:46:49 +0200
+Message-ID: <48D74D69.4010802@viscovery.net>
+References: <1221685659-476-1-git-send-email-angavrilov@gmail.com> <bb6f213e0809190538m5bbfeb38o5510d06fa6757dd1@mail.gmail.com> <48D3A376.30905@viscovery.net> <200809212252.35769.angavrilov@gmail.com> <48D74877.9050607@viscovery.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: mwolfe38 <mwolfe38@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Sep 22 09:38:20 2008
+Cc: git@vger.kernel.org, "Shawn O. Pearce" <spearce@spearce.org>,
+	Paul Mackerras <paulus@samba.org>
+To: Alexander Gavrilov <angavrilov@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Sep 22 09:48:00 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Khfzs-0001N1-Kp
-	for gcvg-git-2@gmane.org; Mon, 22 Sep 2008 09:38:17 +0200
+	id 1Khg9G-0003kO-Nu
+	for gcvg-git-2@gmane.org; Mon, 22 Sep 2008 09:47:59 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751048AbYIVHhH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 22 Sep 2008 03:37:07 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750764AbYIVHhH
-	(ORCPT <rfc822;git-outgoing>); Mon, 22 Sep 2008 03:37:07 -0400
-Received: from ey-out-2122.google.com ([74.125.78.24]:21809 "EHLO
-	ey-out-2122.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751165AbYIVHhG (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 22 Sep 2008 03:37:06 -0400
-Received: by ey-out-2122.google.com with SMTP id 6so378496eyi.37
-        for <git@vger.kernel.org>; Mon, 22 Sep 2008 00:37:04 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from
-         :user-agent:mime-version:to:cc:subject:references:in-reply-to
-         :content-type:content-transfer-encoding:sender;
-        bh=RfVpejLuAnvumA1uHvo+Q6CsUVUTaz0qChOwYmmnhy4=;
-        b=CXUAEX233RzUypZCaMvKdJlX0/oB4/ARZX3rSXH2/VOKGlPzc8PGi40ThhFTUVZPwE
-         QIlyGvsyfnBZTq1BLPKTQhb0Ik19gzjuO2j1NPG6sbR0C6jGHiZnc97a/PH4sZ+Bm0Jp
-         D4Ya+jFLFauVhU/qOmroThm+6RRj6r2vjBWvY=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:user-agent:mime-version:to:cc:subject
-         :references:in-reply-to:content-type:content-transfer-encoding
-         :sender;
-        b=Z8/+vh0h56H08Wjw4AJlzz/CGSJmUTc4QNTVIhTCobUld+IC/gm7B93pdJvkJnL3ow
-         khXgLe6ZVk2V1lXP19SJi7tcjBOg0T0fxc44tO/RLJXu4fnld7pshxLTqBu3YL3baeQC
-         3Hlz1Mg8znPT/y1GWAwIfO0TbTjwulvrMlJLE=
-Received: by 10.210.124.15 with SMTP id w15mr4484187ebc.81.1222069023999;
-        Mon, 22 Sep 2008 00:37:03 -0700 (PDT)
-Received: from bh-buildlin2.bhalevy.com ( [212.235.53.3])
-        by mx.google.com with ESMTPS id 7sm6932372eyb.1.2008.09.22.00.37.02
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Mon, 22 Sep 2008 00:37:03 -0700 (PDT)
-User-Agent: Thunderbird 2.0.0.14 (X11/20080501)
-In-Reply-To: <19599905.post@talk.nabble.com>
+	id S1751645AbYIVHqu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 22 Sep 2008 03:46:50 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751733AbYIVHqu
+	(ORCPT <rfc822;git-outgoing>); Mon, 22 Sep 2008 03:46:50 -0400
+Received: from lilzmailso02.liwest.at ([212.33.55.13]:30907 "EHLO
+	lilzmailso02.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751629AbYIVHqt (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 22 Sep 2008 03:46:49 -0400
+Received: from cm56-163-160.liwest.at ([86.56.163.160] helo=linz.eudaptics.com)
+	by lilzmailso02.liwest.at with esmtpa (Exim 4.66)
+	(envelope-from <j.sixt@viscovery.net>)
+	id 1Khg88-0002S8-2f; Mon, 22 Sep 2008 09:46:48 +0200
+Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.42])
+	by linz.eudaptics.com (Postfix) with ESMTP
+	id D09496EF; Mon, 22 Sep 2008 09:46:47 +0200 (CEST)
+User-Agent: Thunderbird 2.0.0.6 (Windows/20070728)
+In-Reply-To: <48D74877.9050607@viscovery.net>
+X-Enigmail-Version: 0.95.5
+X-Spam-Score: 1.7 (+)
+X-Spam-Report: ALL_TRUSTED=-1.8, BAYES_99=3.5
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/96454>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/96455>
 
-mwolfe38 wrote:
-> I just thought that I would add that the reason is a bug in the 1.5.4.3
-> version that I am using which is the ubuntu 8.04 repository version.
-> According to some developers, the current version should fix this issue.
+Johannes Sixt schrieb:
+> Alexander Gavrilov schrieb:
+>> Subject: [PATCH] gitk: Implement batch lookup and caching of encoding attrs.
+>>
+>> When the diff contains thousands of files, calling git-check-attr
+>> once per file is very slow. With this patch gitk does attribute
+>> lookup in batches of 30 files while reading the diff file list,
+>> which leads to a very noticeable speedup.
 > 
+> This one does not work for me: The correct is not picked up anymore,
+
+The correct _encoding_ is not picked up anymore...
+
+> neither in Patch mode nor Tree mode. (It works as expected without this
+> patch.)
 > 
-[Please don't top-post]
-
-I have 1.6.0.1 I compiled here, and it has the same problem. So it is
-a very recent fix
-
-> mwolfe38 wrote:
->> I'm working on a project by myself and using git mostly just to learn
->> about it.
->> In my project I have several directories I want to have git ignore. One of
->> them being
->> cache/ and the other log/
->> I've added them to the .gitignore file which I have in the initial
->> directory of the repository
->> The contents of my gitignore are:
->>
->> .settings
->> .cache
->> cache/
->> log/
->> .project
->>
->> However, if I do 
->> git add .
->> It will add the files from cache and log anyways.
->> I know git add . will add anything that hasn't been added but shouldn't it
->> ignore files in .gitignore?
->> If not, what is the point, I would just ignore them manually anyways. 
->> The main reason i like doing git add .
->> is because i'm using symfony php framework which makes good use of scripts
->> which generates lots if initial files for you and thus adding one at a
->> time would be a pain.
->>
->> Any idea what might be going on here?  I thought maybe I had added those
->> directories before putting them in .gitignore so i used git rm -r to
->> remove them but they still show back up with doing git add .
->>
->> Thanks in advance
->>
+>> +proc cache_gitattr {attr pathlist} {
+>> +	global path_attr_cache
+>> +	set newlist {}
+>> +	foreach path $pathlist {
+>> +		if {[info exists path_attr_cache($attr,$path)]} continue
+>> +		lappend newlist $path
+>> +	}
+>> +	while {$newlist ne {}} {
+>> +		set head [lrange $newlist 0 29]
+>> +		set newlist [lrange $newlist 30 end]
+>> +		if {![catch {set rlist [eval exec git check-attr $attr -- $head]}]} {
+>> +			foreach row [split $rlist "\n"] {
+>> +				set cols [split $row :]
 > 
+> This colon made me nervous (because of the drive-colon combination on
+> Windows), but as long as you feed relative paths into 'git check-attr',
+> this should not matter (in my case).
 
-Boaz
+This comment does not imply that I debugged this code. I just noticed the
+colon while reading the patch.
+
+>> +				set path [lindex $cols 0]
+>> +				set value [join [lrange $cols 2 end] :]
+>> +				if {[string index $path 0] eq "\""} {
+>> +					set path [encoding convertfrom [lindex $path 0]]
+>> +				}
+>> +				set path_attr_cache($attr,$path) $value
+>> +			}
+>> +		}
+>> +		update
+>> +	}
+>> +}
