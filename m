@@ -1,118 +1,110 @@
-From: Todd Zullinger <tmz@pobox.com>
-Subject: Re: [PATCH] Use dashless git commands in setgitperms.perl
-Date: Mon, 22 Sep 2008 07:30:08 -0400
-Message-ID: <20080922113008.GO2939@inocybe.teonanacatl.org>
-References: <20080919234234.GL2939@inocybe.teonanacatl.org>
- <gb1ej9$bg2$1@ger.gmane.org> <20080920004814.GM2939@inocybe.teonanacatl.org>
- <7v4p4b7gjr.fsf@gitster.siamese.dyndns.org>
+From: Andreas Ericsson <ae@op5.se>
+Subject: Re: ignoring files/directories in git
+Date: Mon, 22 Sep 2008 13:53:45 +0200
+Message-ID: <48D78749.3030509@op5.se>
+References: <19596152.post@talk.nabble.com> <19599905.post@talk.nabble.com> <48D74B1C.6020408@panasas.com> <20080922085200.GI21650@dpotapov.dyndns.org> <48D77643.1090908@panasas.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Jakub Narebski <jnareb@gmail.com>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Sep 22 13:31:30 2008
+Content-Type: text/plain; charset=ISO-8859-15; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: Dmitry Potapov <dpotapov@gmail.com>, mwolfe38 <mwolfe38@gmail.com>,
+	git@vger.kernel.org
+To: Boaz Harrosh <bharrosh@panasas.com>
+X-From: git-owner@vger.kernel.org Mon Sep 22 13:55:25 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KhjdV-00020A-9S
-	for gcvg-git-2@gmane.org; Mon, 22 Sep 2008 13:31:25 +0200
+	id 1Khk0c-0000Xx-Ks
+	for gcvg-git-2@gmane.org; Mon, 22 Sep 2008 13:55:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752026AbYIVLaQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 22 Sep 2008 07:30:16 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752077AbYIVLaQ
-	(ORCPT <rfc822;git-outgoing>); Mon, 22 Sep 2008 07:30:16 -0400
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:35045 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751857AbYIVLaP (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 22 Sep 2008 07:30:15 -0400
-Received: from localhost.localdomain (localhost [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 7333A63AC2;
-	Mon, 22 Sep 2008 07:30:13 -0400 (EDT)
-Received: from inocybe.teonanacatl.org (c-69-248-23-23.hsd1.pa.comcast.net
- [69.248.23.23]) (using TLSv1 with cipher AES128-SHA (128/128 bits)) (No
- client certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix)
- with ESMTPSA id 9B5B963AC1; Mon, 22 Sep 2008 07:30:10 -0400 (EDT)
-Content-Disposition: inline
-In-Reply-To: <7v4p4b7gjr.fsf@gitster.siamese.dyndns.org>
-X-Listening-To: Ray LaMontagne - How Come
-User-Agent: Mutt/1.5.18 (2008-05-17)
-X-Pobox-Relay-ID: D289AADE-8899-11DD-8656-D0CFFE4BC1C1-09356542!a-sasl-fastnet.pobox.com
+	id S1753132AbYIVLxz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 22 Sep 2008 07:53:55 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753162AbYIVLxy
+	(ORCPT <rfc822;git-outgoing>); Mon, 22 Sep 2008 07:53:54 -0400
+Received: from mail.op5.se ([193.201.96.20]:39626 "EHLO mail.op5.se"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753132AbYIVLxx (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 22 Sep 2008 07:53:53 -0400
+Received: from localhost (localhost.localdomain [127.0.0.1])
+	by mail.op5.se (Postfix) with ESMTP id 627461B80079;
+	Mon, 22 Sep 2008 13:44:18 +0200 (CEST)
+X-Virus-Scanned: amavisd-new at 
+X-Spam-Flag: NO
+X-Spam-Score: -3.924
+X-Spam-Level: 
+X-Spam-Status: No, score=-3.924 tagged_above=-10 required=6.6
+	tests=[ALL_TRUSTED=-1.8, AWL=0.475, BAYES_00=-2.599]
+Received: from mail.op5.se ([127.0.0.1])
+	by localhost (mail.op5.se [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id x8J-56PJGIHm; Mon, 22 Sep 2008 13:44:17 +0200 (CEST)
+Received: from clix.int.op5.se (unknown [192.168.1.20])
+	by mail.op5.se (Postfix) with ESMTP id DC3D51B80078;
+	Mon, 22 Sep 2008 13:44:16 +0200 (CEST)
+User-Agent: Thunderbird 2.0.0.16 (X11/20080723)
+In-Reply-To: <48D77643.1090908@panasas.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/96473>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/96474>
 
-Signed-off-by: Todd Zullinger <tmz@pobox.com>
----
- contrib/hooks/setgitperms.perl |    4 ++--
- 1 files changed, 2 insertions(+), 2 deletions(-)
-
-Junio C Hamano wrote:
-> The patch is wrong on one point, and should be unnecessary.
+Boaz Harrosh wrote:
+> Dmitry Potapov wrote:
+>> On Mon, Sep 22, 2008 at 10:37:00AM +0300, Boaz Harrosh wrote:
+>>> I have 1.6.0.1 I compiled here, and it has the same problem. So it is
+>>> a very recent fix
+>> I certainly tested 1.6.0.1 and does not have this problem, and it was
+>> fixed a long time ago:
+>>
+>> ===
+>> commit d6b8fc303b389b026f2bf9918f6f83041488989b
+>> Author: Junio C Hamano <gitster@pobox.com>
+>> Date:   Thu Jan 31 01:17:48 2008 -0800
+>>
+>>     gitignore(5): Allow "foo/" in ignore list to match directory "foo"
+>>
+>>     A pattern "foo/" in the exclude list did not match directory
+>>     "foo", but a pattern "foo" did.  This attempts to extend the
+>>     exclude mechanism so that it would while not matching a regular
+>>     file or a symbolic link "foo".  In order to differentiate a
+>>     directory and non directory, this passes down the type of path
+>>     being checked to excluded() function.
+>>
+>>     A downside is that the recursive directory walk may need to run
+>>     lstat(2) more often on systems whose "struct dirent" do not give
+>>     the type of the entry; earlier it did not have to do so for an
+>>     excluded path, but we now need to figure out if a path is a
+>>     directory before deciding to exclude it.  This is especially bad
+>>     because an idea similar to the earlier CE_UPTODATE optimization
+>>     to reduce number of lstat(2) calls would by definition not apply
+>>     to the codepaths involved, as (1) directories will not be
+>>     registered in the index, and (2) excluded paths will not be in
+>>     the index anyway.
+>> ===
+>>
+>> The patch is included in 1.5.5.
+>>
+>> Dmitry
+>> --
 > 
-> First of all, you do not understand what "."  does in shell ;-)
-> That is the "wrong" part.
-
-Ugh, that was embarrassing to miss (bad enough to miss it on my own,
-but worse to not notice it after Jakub questioned it).
-
-> About the "unnecessary" part, a hook should run under an environment
-> where exec-path is already added to the $PATH, so it should be able
-> to find git-sh-setup just fine without your change.
+> Ok I found it. Regular subdirectories it works as you said,
+> but soft-link to a folder does not. Sorry for the noise i didn't
+> realize that in my test it was a simlink and not a full directory.
 > 
-> But I think the politically correct way would be:
+> Please don't fix it if it will hurt performance, I'm happy with
+> current solution as it is. Just maybe a small addition to the
+> .gitignore documentation perhaps.
 > 
-> 	#!/bin/sh
-> 	PATH=$(git --exec-path):$PATH
->       SUBDIRECTORY_OK=1 . git-sh-setup
-> 	$GIT_DIR/hooks/setgitperms.perl -r
-> 
-> especially if we envision that somebody may run the script by
-> itself, not from the hook.
 
-Since that chunk is only in a comment explaining what to add to the
-hook the user wants to run this script from, it seems like that really
-is unnecessary.
-
-I was in fact running .git/hooks/setgitperms.perl directly (to create
-an initial .gitmeta file) which is why I noticed it used git-*
-commands and was failing.  Using "git " makes that work for me.
-
-> The change to the perl script should not be strictly necessary
-> (because this is expected to be run from a hook), but to set a
-> better example, I think it is a good idea to do these s/git-/git /
-> substitutions.
-
-Sounds good.  Here is a patch with just those changes.
-
-diff --git a/contrib/hooks/setgitperms.perl b/contrib/hooks/setgitperms.perl
-index dab7c8e..a577ad0 100644
---- a/contrib/hooks/setgitperms.perl
-+++ b/contrib/hooks/setgitperms.perl
-@@ -50,7 +50,7 @@ if ((@ARGV < 0) || !GetOptions(
- 			      )) { die $usage; }
- die $usage unless ($read_mode xor $write_mode);
- 
--my $topdir = `git-rev-parse --show-cdup` or die "\n"; chomp $topdir;
-+my $topdir = `git rev-parse --show-cdup` or die "\n"; chomp $topdir;
- my $gitdir = $topdir . '.git';
- my $gitmeta = $topdir . '.gitmeta';
- 
-@@ -155,7 +155,7 @@ elsif ($read_mode) {
- 	open (OUT, ">$gitmeta.tmp") or die "Could not open $gitmeta.tmp for writing: $!\n";
-     }
- 
--    my @files = `git-ls-files`;
-+    my @files = `git ls-files`;
-     my %dirs;
- 
-     foreach my $path (@files) {
--- 
-1.6.0.2
+It wouldn't hurt performance (noticeably) to change the lstat()
+call to a stat() call. It's slightly more work for the kernel,
+but assuming you don't have tens of thousands of symlinks it
+really won't make a difference. I'm not sure what other things
+would break from using stat() instead of lstat() in the exclude
+matching code though, so it's not so simple as just replacing
+it.
 
 -- 
-Todd        OpenPGP -> KeyID: 0xBEAF0CE3 | URL: www.pobox.com/~tmz/pgp
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-Careful. We don't want to learn from this.
-    -- Calvin
+Andreas Ericsson                   andreas.ericsson@op5.se
+OP5 AB                             www.op5.se
+Tel: +46 8-230225                  Fax: +46 8-230231
