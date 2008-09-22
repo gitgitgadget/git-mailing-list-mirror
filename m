@@ -1,82 +1,70 @@
-From: mwolfe38 <mwolfe38@gmail.com>
-Subject: Re: ignoring files/directories in git
-Date: Sun, 21 Sep 2008 17:06:54 -0700 (PDT)
-Message-ID: <19599905.post@talk.nabble.com>
-References: <19596152.post@talk.nabble.com>
+From: Eric Wong <normalperson@yhbt.net>
+Subject: Re: [PATCH v2 0/1] git-svn: testcase for partial rebuild
+Date: Sun, 21 Sep 2008 21:12:34 -0700
+Message-ID: <20080922041128.GA23848@untitled>
+References: <20080917031304.GA2505@riemann.deskinm.fdns.net> <20080918063754.GA13328@untitled> <20080921024538.GB2505@riemann.deskinm.fdns.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Sep 22 02:08:10 2008
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>,
+	Deskin Miller <deskinm@umich.edu>
+X-From: git-owner@vger.kernel.org Mon Sep 22 06:16:00 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KhYyD-0005W4-Ay
-	for gcvg-git-2@gmane.org; Mon, 22 Sep 2008 02:08:05 +0200
+	id 1Khcq4-0004re-P3
+	for gcvg-git-2@gmane.org; Mon, 22 Sep 2008 06:15:57 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752822AbYIVAG4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 21 Sep 2008 20:06:56 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752800AbYIVAG4
-	(ORCPT <rfc822;git-outgoing>); Sun, 21 Sep 2008 20:06:56 -0400
-Received: from kuber.nabble.com ([216.139.236.158]:35412 "EHLO
-	kuber.nabble.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752668AbYIVAGz (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 21 Sep 2008 20:06:55 -0400
-Received: from isper.nabble.com ([192.168.236.156])
-	by kuber.nabble.com with esmtp (Exim 4.63)
-	(envelope-from <lists@nabble.com>)
-	id 1KhYx4-0005ji-TK
-	for git@vger.kernel.org; Sun, 21 Sep 2008 17:06:54 -0700
-In-Reply-To: <19596152.post@talk.nabble.com>
-X-Nabble-From: mwolfe38@gmail.com
+	id S1750870AbYIVEMg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 22 Sep 2008 00:12:36 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750794AbYIVEMg
+	(ORCPT <rfc822;git-outgoing>); Mon, 22 Sep 2008 00:12:36 -0400
+Received: from hand.yhbt.net ([66.150.188.102]:40548 "EHLO hand.yhbt.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750764AbYIVEMf (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 22 Sep 2008 00:12:35 -0400
+Received: from localhost.localdomain (localhost [127.0.0.1])
+	by hand.yhbt.net (Postfix) with ESMTP id 8E1892DC01A;
+	Sun, 21 Sep 2008 21:12:34 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <20080921024538.GB2505@riemann.deskinm.fdns.net>
+User-Agent: Mutt/1.5.18 (2008-05-17)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/96446>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/96447>
 
+Deskin Miller <deskinm@umich.edu> wrote:
+> ---
+> On Wed, Sep 17, 2008 at 11:38:04PM -0700, Eric Wong wrote:
+> > This seems to break the following test case for me:
+> > 
+> > *** t9107-git-svn-migrate.sh ***
+> > *   ok 1: setup old-looking metadata
+> > *   ok 2: git-svn-HEAD is a real HEAD
+> > *   ok 3: initialize old-style (v0) git svn layout
+> > *   ok 4: initialize a multi-repository repo
+> > *   ok 5: multi-fetch works on partial urls + paths
+> > *   ok 6: migrate --minimize on old inited layout
+> > * FAIL 7: .rev_db auto-converted to .rev_map.UUID
+> > 
+> > I haven't had time to diagnose it.  Also, can you add a test that
+> > demonstrates this functionality (and ensures things keeps working when
+> > future work is done on git-svn?)
+> 
+> Thanks for the response; I had a bug in my Perl that my testing hadn't caught.
+> Gave me an opportunity to learn how the git testsuites work!
+> 
+> This testcase fails for me when applied to master, and passes with patch 1/1 in
+> the series.
 
-I just thought that I would add that the reason is a bug in the 1.5.4.3
-version that I am using which is the ubuntu 8.04 repository version.
-According to some developers, the current version should fix this issue.
+Thanks Deskin, this series is
+  Acked-by: Eric Wong <normalperson@yhbt.net>
 
-
-mwolfe38 wrote:
-> 
-> I'm working on a project by myself and using git mostly just to learn
-> about it.
-> In my project I have several directories I want to have git ignore. One of
-> them being
-> cache/ and the other log/
-> I've added them to the .gitignore file which I have in the initial
-> directory of the repository
-> The contents of my gitignore are:
-> 
-> .settings
-> .cache
-> cache/
-> log/
-> .project
-> 
-> However, if I do 
-> git add .
-> It will add the files from cache and log anyways.
-> I know git add . will add anything that hasn't been added but shouldn't it
-> ignore files in .gitignore?
-> If not, what is the point, I would just ignore them manually anyways. 
-> The main reason i like doing git add .
-> is because i'm using symfony php framework which makes good use of scripts
-> which generates lots if initial files for you and thus adding one at a
-> time would be a pain.
-> 
-> Any idea what might be going on here?  I thought maybe I had added those
-> directories before putting them in .gitignore so i used git rm -r to
-> remove them but they still show back up with doing git add .
-> 
-> Thanks in advance
-> 
+Junio: I would apply the patch series in reverse order to not break
+tests on potential bisections, however.
 
 -- 
-View this message in context: http://www.nabble.com/ignoring-files-directories-in-git-tp19596152p19599905.html
-Sent from the git mailing list archive at Nabble.com.
+Eric Wong
