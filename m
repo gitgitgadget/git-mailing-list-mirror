@@ -2,112 +2,114 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: *
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=1.2 required=3.0 tests=AWL,BAYES_00,
-	DKIM_ADSP_CUSTOM_MED,DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no
-	autolearn=ham autolearn_force=no version=3.4.0
-Received: (qmail 15424 invoked by uid 111); 19 Sep 2008 09:55:32 -0000
+X-Spam-Status: No, score=1.6 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RP_MATCHES_RCVD shortcircuit=no
+	autolearn=unavailable autolearn_force=no version=3.4.0
+Received: (qmail 7773 invoked by uid 111); 22 Sep 2008 17:20:58 -0000
 Received: from vger.kernel.org (HELO vger.kernel.org) (209.132.176.167)
-    by peff.net (qpsmtpd/0.32) with ESMTP; Fri, 19 Sep 2008 05:55:25 -0400
+    by peff.net (qpsmtpd/0.32) with ESMTP; Mon, 22 Sep 2008 13:20:49 -0400
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751245AbYISJzP (ORCPT <rfc822;peff@peff.net>);
-	Fri, 19 Sep 2008 05:55:15 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751227AbYISJzO
-	(ORCPT <rfc822;git-outgoing>); Fri, 19 Sep 2008 05:55:14 -0400
-Received: from fk-out-0910.google.com ([209.85.128.185]:27502 "EHLO
-	fk-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751089AbYISJzM (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 19 Sep 2008 05:55:12 -0400
-Received: by fk-out-0910.google.com with SMTP id 18so336219fkq.5
-        for <git@vger.kernel.org>; Fri, 19 Sep 2008 02:55:10 -0700 (PDT)
-DKIM-Signature:	v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlemail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:cc:subject:date
-         :message-id:x-mailer:in-reply-to:references:to;
-        bh=PW/BBDp7ty75UYn60/YeyUFtAxuJOBIYqgjrZXu4q+8=;
-        b=e/jFjLwM2gMbAQCKTIl3QynrNxrJMHQsOQizwtp6FIajEL5mdk4NNPBH5+mG9rp93c
-         WPyIDiHtjcKsWdC1jHEPi4Y4ykOR3K0weOpXeqHjWT7Grm9Ur9hPsQ7TGdKNmpIDfL4G
-         VhUcbOkzzMJGBgIwhAaswhcogAPvozmzdZlXA=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=googlemail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        b=Cp4IeZc+2cMltWpd4C2eRJ9l79l59f6uYDByCEogMW1d2jANP7wVV9RnFQ6i68FFli
-         pkxSMhnso8+Xlqnge0KdX4LZUsc4Vsg4lfD1KsQ85t/6FpxyRluW+fxTTH7rI2HpGrq/
-         7EABQ37k1cVAus62H8si8Tu4oXO3YwpKhvRks=
-Received: by 10.103.203.15 with SMTP id f15mr3801596muq.130.1221818110517;
-        Fri, 19 Sep 2008 02:55:10 -0700 (PDT)
-Received: from localhost ( [91.15.64.191])
-        by mx.google.com with ESMTPS id y2sm3490341mug.2.2008.09.19.02.55.09
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Fri, 19 Sep 2008 02:55:09 -0700 (PDT)
-From:	Bert Wesarg <bert.wesarg@googlemail.com>
-To:	Petr Baudis <pasky@suse.cz>
-Cc:	Bert Wesarg <bert.wesarg@googlemail.com>, git@vger.kernel.org
-Subject: [TopGit PATCH] tg-patch: add From/Date: line to header and print to file
-Date:	Fri, 19 Sep 2008 11:55:01 +0200
-Message-Id: <1221818101-14333-2-git-send-email-bert.wesarg@googlemail.com>
-X-Mailer: git-send-email 1.6.0.1
-In-Reply-To: <1221818101-14333-1-git-send-email-bert.wesarg@googlemail.com>
-References: <1221818101-14333-1-git-send-email-bert.wesarg@googlemail.com>
-To:	Petr Baudis <pasky@suse.cz>
+	id S1751573AbYIVRUc (ORCPT <rfc822;peff@peff.net>);
+	Mon, 22 Sep 2008 13:20:32 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751549AbYIVRUc
+	(ORCPT <rfc822;git-outgoing>); Mon, 22 Sep 2008 13:20:32 -0400
+Received: from [212.249.11.140] ([212.249.11.140]:57875 "EHLO pixie.suse.cz"
+	rhost-flags-FAIL-FAIL-OK-FAIL) by vger.kernel.org with ESMTP
+	id S1751517AbYIVRUb (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 22 Sep 2008 13:20:31 -0400
+Received: by pixie.suse.cz (Postfix, from userid 2001)
+	id 65EC02AC8E4; Mon, 22 Sep 2008 19:20:21 +0200 (CEST)
+From:	Petr Baudis <pasky@suse.cz>
+To:	git@vger.kernel.org
+Cc:	gitster@pobox.com
+Subject: [PATCH] Do not perform cross-directory renames when creating packs
+Date:	Mon, 22 Sep 2008 19:20:21 +0200
+Message-Id: <1222104021-28277-1-git-send-email-pasky@suse.cz>
+X-Mailer: git-send-email 1.5.6.3.392.g292f1
+To:	git@vger.kernel.org
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-To make this more similar to git format-patch, I added a 'From' and
-a 'Date:' header and let 'tg patch' print to a file (which is shown as output).
+A comment on top of create_tmpfile() describes caveats ('can have
+problems on various systems (FAT, NFS, Coda)') that should apply
+in this situation as well.  This in the end did not end up solving
+any of my personal problems, but it might be a useful cleanup patch
+nevertheless.
 
-Regards
-Bert
-
-Signed-off-by: Bert Wesarg <bert.wesarg@googlemail.com>
+Signed-off-by: Petr Baudis <pasky@suse.cz>
 
 ---
- tg-patch.sh |   25 ++++++++++++++++++++++++-
- 1 files changed, 24 insertions(+), 1 deletions(-)
 
-diff --git a/tg-patch.sh b/tg-patch.sh
-index 7a24718..5fc5cfd 100644
---- a/tg-patch.sh
-+++ b/tg-patch.sh
-@@ -24,7 +24,26 @@ done
- base_rev="$(git rev-parse --short --verify "refs/top-bases/$name" 2>/dev/null)" ||
- 	die "not a TopGit-controlled branch"
+If this one gets dropped now, I don't intend pursuing it further.
+
+ builtin-pack-objects.c |    2 +-
+ fast-import.c          |    4 ++--
+ index-pack.c           |    2 +-
+ pack-write.c           |    2 +-
+ 4 files changed, 5 insertions(+), 5 deletions(-)
+
+diff --git a/builtin-pack-objects.c b/builtin-pack-objects.c
+index 5fc1b8c..1158e42 100644
+--- a/builtin-pack-objects.c
++++ b/builtin-pack-objects.c
+@@ -465,7 +465,7 @@ static void write_pack_file(void)
+ 			char tmpname[PATH_MAX];
+ 			int fd;
+ 			snprintf(tmpname, sizeof(tmpname),
+-				 "%s/tmp_pack_XXXXXX", get_object_directory());
++				 "%s/pack/tmp_pack_XXXXXX", get_object_directory());
+ 			fd = xmkstemp(tmpname);
+ 			pack_tmp_name = xstrdup(tmpname);
+ 			f = sha1fd(fd, pack_tmp_name);
+diff --git a/fast-import.c b/fast-import.c
+index ccdf2e5..ab6689a 100644
+--- a/fast-import.c
++++ b/fast-import.c
+@@ -816,7 +816,7 @@ static void start_packfile(void)
+ 	int pack_fd;
  
--git cat-file blob "$name:.topmsg"
-+subject="$(git cat-file blob "$name:.topmsg" | grep '^Subject: ' | sed -e 's/^Subject: //' -e 's/\[.*\] //')"
-+file_name="$(echo "$subject" | tr -c '[[:alnum:]_.]' '_').patch"
-+rev="$(git rev-parse --verify "refs/heads/$name" 2>/dev/null)"
-+
-+echo "$file_name"
-+exec 3>&1
-+exec 1>"$file_name"
-+
-+printf "From %s Mon Sep 17 00:00:00 2001\n" "$rev"
-+now="$(date --rfc-2822)"
-+git cat-file blob "$name:.topmsg" |
-+	awk '
-+		{
-+			print
-+			if (/^From:/ && !date_printed) {
-+				printf "Date: %s\n", "'"$now"'"
-+				date_printed = 1
-+			}
-+		}
-+	'
- echo
- [ -n "$(git grep '^[-]--' "$name" -- ".topmsg")" ] || echo '---'
+ 	snprintf(tmpfile, sizeof(tmpfile),
+-		"%s/tmp_pack_XXXXXX", get_object_directory());
++		"%s/pack/tmp_pack_XXXXXX", get_object_directory());
+ 	pack_fd = xmkstemp(tmpfile);
+ 	p = xcalloc(1, sizeof(*p) + strlen(tmpfile) + 2);
+ 	strcpy(p->pack_name, tmpfile);
+@@ -878,7 +878,7 @@ static char *create_index(void)
+ 	}
  
-@@ -42,5 +61,9 @@ rm "$git_is_stupid"
- 
- echo '-- '
- echo "tg: ($base_rev..) $name (depends on: $(git cat-file blob "$name:.topdeps" | paste -s -d' '))"
-+
-+exec 1>&3
-+exec 3>&-
-+
- branch_contains "$name" "$base_rev" ||
- 	echo "tg: The patch is out-of-date wrt. the base! Run \`$tg update\`."
+ 	snprintf(tmpfile, sizeof(tmpfile),
+-		"%s/tmp_idx_XXXXXX", get_object_directory());
++		"%s/pack/tmp_idx_XXXXXX", get_object_directory());
+ 	idx_fd = xmkstemp(tmpfile);
+ 	f = sha1fd(idx_fd, tmpfile);
+ 	sha1write(f, array, 256 * sizeof(int));
+diff --git a/index-pack.c b/index-pack.c
+index a6e91fe..530d820 100644
+--- a/index-pack.c
++++ b/index-pack.c
+@@ -172,7 +172,7 @@ static char *open_pack_file(char *pack_name)
+ 		if (!pack_name) {
+ 			static char tmpfile[PATH_MAX];
+ 			snprintf(tmpfile, sizeof(tmpfile),
+-				 "%s/tmp_pack_XXXXXX", get_object_directory());
++				 "%s/pack/tmp_pack_XXXXXX", get_object_directory());
+ 			output_fd = xmkstemp(tmpfile);
+ 			pack_name = xstrdup(tmpfile);
+ 		} else
+diff --git a/pack-write.c b/pack-write.c
+index 939ed56..3621f1d 100644
+--- a/pack-write.c
++++ b/pack-write.c
+@@ -45,7 +45,7 @@ char *write_idx_file(char *index_name, struct pack_idx_entry **objects,
+ 	if (!index_name) {
+ 		static char tmpfile[PATH_MAX];
+ 		snprintf(tmpfile, sizeof(tmpfile),
+-			 "%s/tmp_idx_XXXXXX", get_object_directory());
++			 "%s/pack/tmp_idx_XXXXXX", get_object_directory());
+ 		fd = xmkstemp(tmpfile);
+ 		index_name = xstrdup(tmpfile);
+ 	} else {
 -- 
-tg: (7ec3927..) t/patch (depends on: t/queue-movement)
+tg: (fe33b33..) t/pack/crossdir (depends on: vanilla/master)
