@@ -1,95 +1,103 @@
-From: Dmitry Potapov <dpotapov@gmail.com>
-Subject: Re: ignoring files/directories in git
-Date: Mon, 22 Sep 2008 12:52:00 +0400
-Message-ID: <20080922085200.GI21650@dpotapov.dyndns.org>
-References: <19596152.post@talk.nabble.com> <19599905.post@talk.nabble.com> <48D74B1C.6020408@panasas.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: mwolfe38 <mwolfe38@gmail.com>, git@vger.kernel.org
-To: Boaz Harrosh <bharrosh@panasas.com>
-X-From: git-owner@vger.kernel.org Mon Sep 22 10:53:19 2008
+From: Michael J Gruber <git@drmicha.warpmail.net>
+Subject: [PATCH v2] make "git remote" report multiple URLs
+Date: Mon, 22 Sep 2008 10:57:51 +0200
+Message-ID: <1222073871-495-1-git-send-email-git@drmicha.warpmail.net>
+References: <7vej3fswwe.fsf@gitster.siamese.dyndns.org>
+Cc: Michael J Gruber <git@drmicha.warpmail.net>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Sep 22 10:59:32 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KhhAS-0003im-Ng
-	for gcvg-git-2@gmane.org; Mon, 22 Sep 2008 10:53:17 +0200
+	id 1KhhGP-0005I0-Br
+	for gcvg-git-2@gmane.org; Mon, 22 Sep 2008 10:59:25 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751849AbYIVIwH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 22 Sep 2008 04:52:07 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751877AbYIVIwH
-	(ORCPT <rfc822;git-outgoing>); Mon, 22 Sep 2008 04:52:07 -0400
-Received: from fg-out-1718.google.com ([72.14.220.155]:39400 "EHLO
-	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751629AbYIVIwG (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 22 Sep 2008 04:52:06 -0400
-Received: by fg-out-1718.google.com with SMTP id 19so1294568fgg.17
-        for <git@vger.kernel.org>; Mon, 22 Sep 2008 01:52:04 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:cc:subject
-         :message-id:references:mime-version:content-type:content-disposition
-         :in-reply-to:user-agent;
-        bh=7BW2MCuuiyWBS8XWXMK2Y+E3uX9AoRv8W4h5cq3UOt4=;
-        b=Jiwsednu5z/4cFeevdy/NUtjcRuKvQDjllHDlpz6lpGsqVHdmqrIw0i5jtGm/CIBh0
-         7J4V0UbIhlC50cd6T2m0IiH5CkpLr7576A8P7SqeajKzMEy9trnMBFn2c1OUc8dqV8G6
-         bOmxODSeS+yCwMypeBvuNTujyNxV75Bs6CEmQ=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        b=FY7MyUOmKiZZaB9Z6A6Xa3vQ0Tm6qhQBA6qX7INE7+yyJ0fklEwS/84nC90aQjMmHz
-         D/fMS5wX01N4GNeSrn8Ph3bAf5IISv4Dq1g3UWvV25E+Pgic5hS/CNVZJQF3hXl4QkSc
-         cNoJSL/qPfrz+BcK+6i4GO5fKwkDjEr1felTY=
-Received: by 10.86.36.11 with SMTP id j11mr4554483fgj.7.1222073524316;
-        Mon, 22 Sep 2008 01:52:04 -0700 (PDT)
-Received: from localhost (ppp85-140-171-157.pppoe.mtu-net.ru [85.140.171.157])
-        by mx.google.com with ESMTPS id l19sm5110364fgb.7.2008.09.22.01.52.02
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Mon, 22 Sep 2008 01:52:03 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <48D74B1C.6020408@panasas.com>
-User-Agent: Mutt/1.5.13 (2006-08-11)
+	id S1751669AbYIVI6M (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 22 Sep 2008 04:58:12 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751760AbYIVI6M
+	(ORCPT <rfc822;git-outgoing>); Mon, 22 Sep 2008 04:58:12 -0400
+Received: from out1.smtp.messagingengine.com ([66.111.4.25]:47350 "EHLO
+	out1.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751648AbYIVI6L (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 22 Sep 2008 04:58:11 -0400
+Received: from compute1.internal (compute1.internal [10.202.2.41])
+	by out1.messagingengine.com (Postfix) with ESMTP id 9BD391632AA
+	for <git@vger.kernel.org>; Mon, 22 Sep 2008 04:58:10 -0400 (EDT)
+Received: from heartbeat2.messagingengine.com ([10.202.2.161])
+  by compute1.internal (MEProxy); Mon, 22 Sep 2008 04:58:10 -0400
+X-Sasl-enc: TjV5kCHeIQuy46jvOlAtueWPw+mEp0pSBkutQdKaLjNm 1222073889
+Received: from localhost (whitehead.math.tu-clausthal.de [139.174.44.12])
+	by mail.messagingengine.com (Postfix) with ESMTPSA id B9E462E890;
+	Mon, 22 Sep 2008 04:58:09 -0400 (EDT)
+X-Mailer: git-send-email 1.6.0.2.287.g3791f
+In-Reply-To: <7vej3fswwe.fsf@gitster.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/96460>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/96461>
 
-On Mon, Sep 22, 2008 at 10:37:00AM +0300, Boaz Harrosh wrote:
-> 
-> I have 1.6.0.1 I compiled here, and it has the same problem. So it is
-> a very recent fix
+This patch makes "git remote -v" and "git remote show" report multiple URLs
+rather than warn about them. Multiple URLs are OK for pushing into
+multiple repos simultaneously. Without "-v" each repo is shown once only.
 
-I certainly tested 1.6.0.1 and does not have this problem, and it was
-fixed a long time ago:
+Signed-off-by: Michael J Gruber <git@drmicha.warpmail.net>
+---
+ builtin-remote.c |   23 +++++++++++++++--------
+ 1 files changed, 15 insertions(+), 8 deletions(-)
 
-===
-commit d6b8fc303b389b026f2bf9918f6f83041488989b
-Author: Junio C Hamano <gitster@pobox.com>
-Date:   Thu Jan 31 01:17:48 2008 -0800
+Change in v2: report each repo once only if "-v" is not used (i.e. URL is not shown),
+as requested by JC.
 
-    gitignore(5): Allow "foo/" in ignore list to match directory "foo"
+JC wrote:
+> MJG wrote:
+>> This passes all tests, so I think the new output does not break anything.
 
-    A pattern "foo/" in the exclude list did not match directory
-    "foo", but a pattern "foo" did.  This attempts to extend the
-    exclude mechanism so that it would while not matching a regular
-    file or a symbolic link "foo".  In order to differentiate a
-    directory and non directory, this passes down the type of path
-    being checked to excluded() function.
+> Or just there is no existing tests that verify the output from this command.
 
-    A downside is that the recursive directory walk may need to run
-    lstat(2) more often on systems whose "struct dirent" do not give
-    the type of the entry; earlier it did not have to do so for an
-    excluded path, but we now need to figure out if a path is a
-    directory before deciding to exclude it.  This is especially bad
-    because an idea similar to the earlier CE_UPTODATE optimization
-    to reduce number of lstat(2) calls would by definition not apply
-    to the codepaths involved, as (1) directories will not be
-    registered in the index, and (2) excluded paths will not be in
-    the index anyway.
-===
+JC, sounds as if you're a mathematician, as well ;)
 
-The patch is included in 1.5.5.
-
-Dmitry
+diff --git a/builtin-remote.c b/builtin-remote.c
+index 01945a8..1e2edc2 100644
+--- a/builtin-remote.c
++++ b/builtin-remote.c
+@@ -652,10 +652,13 @@ static int get_one_entry(struct remote *remote, void *priv)
+ {
+ 	struct string_list *list = priv;
+ 
+-	string_list_append(remote->name, list)->util = remote->url_nr ?
+-		(void *)remote->url[0] : NULL;
+-	if (remote->url_nr > 1)
+-		warning("Remote %s has more than one URL", remote->name);
++	if (remote->url_nr > 0) {
++		int i;
++
++		for (i = 0; i < remote->url_nr; i++)
++			string_list_append(remote->name, list)->util = (void *)remote->url[i];
++	} else
++		string_list_append(remote->name, list)->util = NULL;
+ 
+ 	return 0;
+ }
+@@ -671,10 +674,14 @@ static int show_all(void)
+ 		sort_string_list(&list);
+ 		for (i = 0; i < list.nr; i++) {
+ 			struct string_list_item *item = list.items + i;
+-			printf("%s%s%s\n", item->string,
+-				verbose ? "\t" : "",
+-				verbose && item->util ?
+-					(const char *)item->util : "");
++			if (verbose)
++				printf("%s\t%s\n", item->string,
++					item->util ? (const char *)item->util : "");
++			else {
++				if (i && !strcmp((item - 1)->string, item->string))
++					continue;
++				printf("%s\n", item->string);
++			}
+ 		}
+ 	}
+ 	return result;
+-- 
+1.6.0.2.287.g3791f
