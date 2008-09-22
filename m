@@ -1,106 +1,118 @@
-From: Johannes Sixt <johannes.sixt@telecom.at>
-Subject: [PATCH] git-remote: do not use user input in a printf format string
-Date: Mon, 22 Sep 2008 13:03:25 +0200
-Message-ID: <1222081405-12113-1-git-send-email-johannes.sixt@telecom.at>
-Cc: git@vger.kernel.org, Johannes Sixt <johannes.sixt@telecom.at>
-To: Junio C Hamano <gitster@pobox.com>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Mon Sep 22 13:06:03 2008
+From: Todd Zullinger <tmz@pobox.com>
+Subject: Re: [PATCH] Use dashless git commands in setgitperms.perl
+Date: Mon, 22 Sep 2008 07:30:08 -0400
+Message-ID: <20080922113008.GO2939@inocybe.teonanacatl.org>
+References: <20080919234234.GL2939@inocybe.teonanacatl.org>
+ <gb1ej9$bg2$1@ger.gmane.org> <20080920004814.GM2939@inocybe.teonanacatl.org>
+ <7v4p4b7gjr.fsf@gitster.siamese.dyndns.org>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: Jakub Narebski <jnareb@gmail.com>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Sep 22 13:31:30 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KhjEn-0002gJ-8f
-	for gcvg-git-2@gmane.org; Mon, 22 Sep 2008 13:05:53 +0200
+	id 1KhjdV-00020A-9S
+	for gcvg-git-2@gmane.org; Mon, 22 Sep 2008 13:31:25 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752522AbYIVLDa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 22 Sep 2008 07:03:30 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752444AbYIVLDa
-	(ORCPT <rfc822;git-outgoing>); Mon, 22 Sep 2008 07:03:30 -0400
-Received: from lilzmailso02.liwest.at ([212.33.55.13]:45059 "EHLO
-	lilzmailso02.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751894AbYIVLD3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 22 Sep 2008 07:03:29 -0400
-Received: from cm56-163-160.liwest.at ([86.56.163.160] helo=linz.eudaptics.com)
-	by lilzmailso02.liwest.at with esmtpa (Exim 4.66)
-	(envelope-from <j.sixt@eudaptics.com>)
-	id 1KhjCQ-0003eW-Dg; Mon, 22 Sep 2008 13:03:26 +0200
-Received: from srv.linz.viscovery (srv.linz.viscovery [192.168.1.4])
-	by linz.eudaptics.com (Postfix) with ESMTP
-	id 27F166EF; Mon, 22 Sep 2008 13:03:26 +0200 (CEST)
-Received: by srv.linz.viscovery (Postfix, from userid 1000)
-	id F3110FA46; Mon, 22 Sep 2008 13:03:25 +0200 (CEST)
-X-Mailer: git-send-email 1.6.0.1.281.g8a3c6
-X-Spam-Score: 1.2 (+)
-X-Spam-Report: ALL_TRUSTED=-1.8, BAYES_95=3
+	id S1752026AbYIVLaQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 22 Sep 2008 07:30:16 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752077AbYIVLaQ
+	(ORCPT <rfc822;git-outgoing>); Mon, 22 Sep 2008 07:30:16 -0400
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:35045 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751857AbYIVLaP (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 22 Sep 2008 07:30:15 -0400
+Received: from localhost.localdomain (localhost [127.0.0.1])
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 7333A63AC2;
+	Mon, 22 Sep 2008 07:30:13 -0400 (EDT)
+Received: from inocybe.teonanacatl.org (c-69-248-23-23.hsd1.pa.comcast.net
+ [69.248.23.23]) (using TLSv1 with cipher AES128-SHA (128/128 bits)) (No
+ client certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix)
+ with ESMTPSA id 9B5B963AC1; Mon, 22 Sep 2008 07:30:10 -0400 (EDT)
+Content-Disposition: inline
+In-Reply-To: <7v4p4b7gjr.fsf@gitster.siamese.dyndns.org>
+X-Listening-To: Ray LaMontagne - How Come
+User-Agent: Mutt/1.5.18 (2008-05-17)
+X-Pobox-Relay-ID: D289AADE-8899-11DD-8656-D0CFFE4BC1C1-09356542!a-sasl-fastnet.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/96472>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/96473>
 
-'git remote show' substituted the remote name into a string that was later
-used as a printf format string. If a remote name contains a printf format
-specifier like this:
-
-   $ git remote add foo%sbar .
-
-then the command
-
-   $ git remote show foo%sbar
-
-would print garbage (if you are lucky) or crash. This fixes it.
-
-Signed-off-by: Johannes Sixt <johannes.sixt@telecom.at>
+Signed-off-by: Todd Zullinger <tmz@pobox.com>
 ---
- builtin-remote.c |   17 ++++++++---------
- 1 files changed, 8 insertions(+), 9 deletions(-)
+ contrib/hooks/setgitperms.perl |    4 ++--
+ 1 files changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/builtin-remote.c b/builtin-remote.c
-index 01945a8..890a680 100644
---- a/builtin-remote.c
-+++ b/builtin-remote.c
-@@ -407,14 +407,15 @@ static int rm(int argc, const char **argv)
- 	return i;
- }
+Junio C Hamano wrote:
+> The patch is wrong on one point, and should be unnecessary.
+> 
+> First of all, you do not understand what "."  does in shell ;-)
+> That is the "wrong" part.
+
+Ugh, that was embarrassing to miss (bad enough to miss it on my own,
+but worse to not notice it after Jakub questioned it).
+
+> About the "unnecessary" part, a hook should run under an environment
+> where exec-path is already added to the $PATH, so it should be able
+> to find git-sh-setup just fine without your change.
+> 
+> But I think the politically correct way would be:
+> 
+> 	#!/bin/sh
+> 	PATH=$(git --exec-path):$PATH
+>       SUBDIRECTORY_OK=1 . git-sh-setup
+> 	$GIT_DIR/hooks/setgitperms.perl -r
+> 
+> especially if we envision that somebody may run the script by
+> itself, not from the hook.
+
+Since that chunk is only in a comment explaining what to add to the
+hook the user wants to run this script from, it seems like that really
+is unnecessary.
+
+I was in fact running .git/hooks/setgitperms.perl directly (to create
+an initial .gitmeta file) which is why I noticed it used git-*
+commands and was failing.  Using "git " makes that work for me.
+
+> The change to the perl script should not be strictly necessary
+> (because this is expected to be run from a hook), but to set a
+> better example, I think it is a good idea to do these s/git-/git /
+> substitutions.
+
+Sounds good.  Here is a patch with just those changes.
+
+diff --git a/contrib/hooks/setgitperms.perl b/contrib/hooks/setgitperms.perl
+index dab7c8e..a577ad0 100644
+--- a/contrib/hooks/setgitperms.perl
++++ b/contrib/hooks/setgitperms.perl
+@@ -50,7 +50,7 @@ if ((@ARGV < 0) || !GetOptions(
+ 			      )) { die $usage; }
+ die $usage unless ($read_mode xor $write_mode);
  
--static void show_list(const char *title, struct string_list *list)
-+static void show_list(const char *title, struct string_list *list,
-+		      const char *extra_arg)
- {
- 	int i;
+-my $topdir = `git-rev-parse --show-cdup` or die "\n"; chomp $topdir;
++my $topdir = `git rev-parse --show-cdup` or die "\n"; chomp $topdir;
+ my $gitdir = $topdir . '.git';
+ my $gitmeta = $topdir . '.gitmeta';
  
- 	if (!list->nr)
- 		return;
+@@ -155,7 +155,7 @@ elsif ($read_mode) {
+ 	open (OUT, ">$gitmeta.tmp") or die "Could not open $gitmeta.tmp for writing: $!\n";
+     }
  
--	printf(title, list->nr > 1 ? "es" : "");
-+	printf(title, list->nr > 1 ? "es" : "", extra_arg);
- 	printf("\n    ");
- 	for (i = 0; i < list->nr; i++)
- 		printf("%s%s", i ? " " : "", list->items[i].string);
-@@ -503,18 +504,16 @@ static int show(int argc, const char **argv)
- 		}
+-    my @files = `git-ls-files`;
++    my @files = `git ls-files`;
+     my %dirs;
  
- 		if (!no_query) {
--			strbuf_init(&buf, 0);
--			strbuf_addf(&buf, "  New remote branch%%s (next fetch "
--				"will store in remotes/%s)", states.remote->name);
--			show_list(buf.buf, &states.new);
--			strbuf_release(&buf);
-+			show_list("  New remote branch%s (next fetch "
-+				"will store in remotes/%s)",
-+				&states.new, states.remote->name);
- 			show_list("  Stale tracking branch%s (use 'git remote "
--				"prune')", &states.stale);
-+				"prune')", &states.stale, "");
- 		}
- 
- 		if (no_query)
- 			for_each_ref(append_ref_to_tracked_list, &states);
--		show_list("  Tracked remote branch%s", &states.tracked);
-+		show_list("  Tracked remote branch%s", &states.tracked, "");
- 
- 		if (states.remote->push_refspec_nr) {
- 			printf("  Local branch%s pushed with 'git push'\n   ",
+     foreach my $path (@files) {
 -- 
-1.6.0.1.281.g8a3c6
+1.6.0.2
+
+-- 
+Todd        OpenPGP -> KeyID: 0xBEAF0CE3 | URL: www.pobox.com/~tmz/pgp
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Careful. We don't want to learn from this.
+    -- Calvin
