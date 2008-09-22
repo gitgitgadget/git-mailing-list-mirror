@@ -1,65 +1,182 @@
-From: Johan Herland <johan@herland.net>
-Subject: Re: [CORRECTION] Git-1.6.0.2-preview20080921 on Windows
-Date: Mon, 22 Sep 2008 17:56:52 +0200
-Message-ID: <200809221756.52900.johan@herland.net>
-References: <82166911-C34F-439C-A2F3-CEBD7346A1D6@zib.de> <691F01A6-CA78-46DA-8388-C8339A3F0F04@zib.de>
-Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, msysGit <msysgit@googlegroups.com>
-To: Steffen Prohaska <prohaska@zib.de>
-X-From: git-owner@vger.kernel.org Mon Sep 22 17:59:33 2008
+From: Michael Witten <mfwitten@MIT.EDU>
+Subject: [PATCH RFC 3/6] Docs: send-email usage text much sexier
+Date: Mon, 22 Sep 2008 10:58:12 -0500
+Message-ID: <1222099095-50360-3-git-send-email-mfwitten@mit.edu>
+References: <1222099095-50360-1-git-send-email-mfwitten@mit.edu>
+ <1222099095-50360-2-git-send-email-mfwitten@mit.edu>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Sep 22 18:01:20 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Khnnn-00039r-3R
-	for gcvg-git-2@gmane.org; Mon, 22 Sep 2008 17:58:19 +0200
+	id 1KhnpH-0003t2-A3
+	for gcvg-git-2@gmane.org; Mon, 22 Sep 2008 17:59:51 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752890AbYIVP5H (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 22 Sep 2008 11:57:07 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752762AbYIVP5G
-	(ORCPT <rfc822;git-outgoing>); Mon, 22 Sep 2008 11:57:06 -0400
-Received: from sam.opera.com ([213.236.208.81]:47348 "EHLO smtp.opera.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752784AbYIVP5F (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 22 Sep 2008 11:57:05 -0400
-Received: from pc107.coreteam.oslo.opera.com (pat-tdc.opera.com [213.236.208.22])
-	by smtp.opera.com (8.13.4/8.13.4/Debian-3sarge3) with ESMTP id m8MFurJ9029907
+	id S1753145AbYIVP6c (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 22 Sep 2008 11:58:32 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753143AbYIVP6c
+	(ORCPT <rfc822;git-outgoing>); Mon, 22 Sep 2008 11:58:32 -0400
+Received: from BISCAYNE-ONE-STATION.MIT.EDU ([18.7.7.80]:32885 "EHLO
+	biscayne-one-station.mit.edu" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1752848AbYIVP63 (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 22 Sep 2008 11:58:29 -0400
+Received: from outgoing.mit.edu (OUTGOING-AUTH.MIT.EDU [18.7.22.103])
+	by biscayne-one-station.mit.edu (8.13.6/8.9.2) with ESMTP id m8MFwRSg013056;
+	Mon, 22 Sep 2008 11:58:27 -0400 (EDT)
+Received: from localhost.localdomain (97-116-112-224.mpls.qwest.net [97.116.112.224])
+	(authenticated bits=0)
+        (User authenticated as mfwitten@ATHENA.MIT.EDU)
+	by outgoing.mit.edu (8.13.6/8.12.4) with ESMTP id m8MFwGo4024990
 	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
-	Mon, 22 Sep 2008 15:56:58 GMT
-User-Agent: KMail/1.9.9
-In-Reply-To: <691F01A6-CA78-46DA-8388-C8339A3F0F04@zib.de>
-Content-Disposition: inline
+	Mon, 22 Sep 2008 11:58:26 -0400 (EDT)
+X-Mailer: git-send-email 1.6.0.2.302.ge6cbd1
+In-Reply-To: <1222099095-50360-2-git-send-email-mfwitten@mit.edu>
+X-Scanned-By: MIMEDefang 2.42
+X-Spam-Flag: NO
+X-Spam-Score: 0.00
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/96486>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/96487>
 
-On Sunday 21 September 2008, Steffen Prohaska wrote:
-> Git-1.6.0.2-preview20080921 for Windows is available at
->
-> [...]
+All of the descriptions are aligned, and no
+line is greater than 78 columns.
 
-This version fails for me when trying to use the bundled ssh.exe. I get 
-a dialog saying:
+Signed-off-by: Michael Witten <mfwitten@mit.edu>
+---
+ git-send-email.perl |   94 +++++++++++++++++++++++++++------------------------
+ 1 files changed, 50 insertions(+), 44 deletions(-)
 
-	This application has failed to start because msys-crypto-0.9.8.dll
-	was not found. Re-installing the application may fix the problem.
-
-I get this both when starting ssh manually, and when started from 
-e.g. "git clone".
-
-Before installing the above version, I _uninstalled_ the previous 
-version. If i _don't_ uninstall the previous version, and instead 
-install this one on top of the old one, everything seems to work 
-correctly.
-
-
-...Johan
-
+diff --git a/git-send-email.perl b/git-send-email.perl
+index d390364..b86a3f3 100755
+--- a/git-send-email.perl
++++ b/git-send-email.perl
+@@ -40,74 +40,80 @@ sub usage {
+ 	print <<EOT;
+ git send-email [options] <file | directory>...
+ Options:
+-   --from         Specify the "From:" line of the email to be sent.
++   --from                  Specify the "From:" line of the email to be sent.
+ 
+-   --to           Specify the primary "To:" line of the email.
++   --to                    Specify the primary "To:" line of the email.
+ 
+-   --cc           Specify an initial "Cc:" list for the entire series
+-                  of emails.
++   --cc                    Specify an initial "Cc:" list for the entire series
++                           of emails.
+ 
+-   --cc-cmd       Specify a command to execute per file which adds
+-                  per file specific cc address entries
++   --cc-cmd                Specify a command to execute per file which adds
++                           per file specific cc address entries
+ 
+-   --bcc          Specify a list of email addresses that should be Bcc:
+-                  on all the emails.
++   --bcc                   Specify a list of email addresses that should be
++                           Bcc: on all the emails.
+ 
+-   --compose      Use \$GIT_EDITOR, core.editor, \$EDITOR, or \$VISUAL to edit
+-                  an introductory message for the patch series.
++   --compose               Use \$GIT_EDITOR, core.editor, \$EDITOR, or
++                           \$VISUAL to edit an introductory message for the
++                           patch series.
+ 
+-   --subject      Specify the initial "Subject:" line.
+-                  Only necessary if --compose is also set.  If --compose
+-                  is not set, this will be prompted for.
++   --subject               Specify the initial "Subject:" line. Only necessary
++                           if --compose is also set.  If --compose is not set,
++                           this will be prompted for.
+ 
+-   --in-reply-to  Specify the first "In-Reply-To:" header line.
+-                  Only used if --compose is also set.  If --compose is not
+-                  set, this will be prompted for.
++   --in-reply-to           Specify the first "In-Reply-To:" header line. Only
++                           used if --compose is also set.  If --compose is not
++                           set, this will be prompted for.
+ 
+-   --[no-]chain-reply-to If set, the replies will all be to the previous
+-                         email sent, rather than to the first email sent.
+-                         Defaults to on.
++   --[no-]chain-reply-to   If set, the replies will all be to the previous
++                           email sent, rather than to the first email sent.
++                           Defaults to on.
+ 
+    --[no-]signed-off-by-cc Automatically add email addresses that appear in
+-                           Signed-off-by: or Cc: lines to the cc: list. Defaults to on.
++                           Signed-off-by: or Cc: lines to the cc: list.
++                           Defaults to on.
+ 
+-   --identity     The configuration identity, a subsection to prioritise over
+-                  the default section.
++   --identity              The configuration identity to use.
+ 
+-   --smtp-server  If set, specifies the outgoing SMTP server to use.
+-                  Defaults to localhost.  Port number can be specified here with
+-                  hostname:port format or by using --smtp-server-port option.
++   --smtp-server           If set, specifies the outgoing SMTP server to use.
++                           Defaults to localhost.  Port number can be
++                           specified here with hostname:port format or by
++                           using --smtp-server-port option.
+ 
+-   --smtp-server-port Specify a port on the outgoing SMTP server to connect to.
++   --smtp-server-port      Specify a port on the outgoing SMTP server to
++                           connect to.
+ 
+-   --smtp-user    The username for SMTP-AUTH.
++   --smtp-user             The username for SMTP-AUTH.
+ 
+-   --smtp-pass    The password for SMTP-AUTH.
++   --smtp-pass             The password for SMTP-AUTH.
+ 
+-   --smtp-encryption Specify 'tls' for STARTTLS encryption, or 'ssl' for SSL.
+-                     Any other value disables the feature.
++   --smtp-encryption       Specify 'tls' for STARTTLS encryption, or 'ssl' for
++                           SSL. Any other value disables the feature.
+ 
+-   --smtp-ssl     Synonym for '--smtp-encryption=ssl'.  Deprecated.
++   --smtp-ssl              Synonym for '--smtp-encryption=ssl'.  Deprecated.
+ 
+-   --suppress-cc  Suppress the specified category of auto-CC.  The category
+-                  can be one of 'author' for the patch author, 'self' to
+-                  avoid copying yourself, 'sob' for Signed-off-by lines,
+-                  'cccmd' for the output of the cccmd, or 'all' to suppress
+-                  all of these.
++   --suppress-cc           Suppress the specified category of auto-CC.  The
++                           category can be one of 'author' for the patch
++                           author, 'self' to avoid copying yourself, 'sob'
++                           for Signed-off-by lines, 'cccmd' for the output
++                           of the cccmd, or 'all' to suppress all of these.
++                           (Note: Linus uses 'self' and 'sob' interchangeably)
+ 
+-   --[no-]suppress-from Suppress sending emails to yourself. Defaults to off.
++   --[no-]suppress-from    Suppress sending emails to yourself. Defaults to
++                           off.
+ 
+-   --[no-]thread       Specify that the "In-Reply-To:" header should be set on all
+-                       emails. Defaults to on.
++   --[no-]thread           Specify that the "In-Reply-To:" header should be
++                           set on all emails. Defaults to on.
+ 
+-   --quiet Make git-send-email less verbose.  One line per email
+-           should be all that is output.
++   --quiet                 Make git-send-email less verbose.  One line per
++                           email should be all that is output.
+ 
+-   --dry-run Do everything except actually send the emails.
++   --dry-run               Do everything except actually send the emails.
+ 
+-   --envelope-sender Specify the envelope sender used to send the emails.
++   --envelope-sender       Specify the envelope sender used to send the
++                           emails.
+ 
+-   --no-validate Don't perform any sanity checks on patches.
++   --no-validate           Don't perform any sanity checks on patches.
+ 
+ EOT
+ 	exit(1);
 -- 
-Johan Herland, <johan@herland.net>
-www.herland.net
+1.6.0.2.302.ge6cbd1
