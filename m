@@ -1,54 +1,65 @@
-From: Johannes Sixt <j.sixt@viscovery.net>
-Subject: Re: [PATCH (GIT-GUI,GITK) 6/8] gitk: Port new encoding logic from
- git-gui.
-Date: Mon, 22 Sep 2008 11:18:36 +0200
-Message-ID: <48D762EC.2030009@viscovery.net>
-References: <1221685659-476-1-git-send-email-angavrilov@gmail.com> <200809221201.35507.angavrilov@gmail.com> <48D7554C.4020601@viscovery.net> <200809221302.52424.angavrilov@gmail.com>
+From: Jan Nieuwenhuizen <janneke-list@xs4all.nl>
+Subject: Re: [ANNOUNCE] TopGit v0.3
+Date: Mon, 22 Sep 2008 11:13:45 +0200
+Organization: lilypond-design.org
+Message-ID: <1222074825.6698.13.camel@heerbeest>
+References: <20080909231009.GD10544@machine.or.cz>
+	 <1221120192.8962.7.camel@heerbeest> <20080912110017.GW10360@machine.or.cz>
+	 <1221222433.29747.8.camel@heerbeest> <20080912131530.GZ10360@machine.or.cz>
+	 <20080912181442.GA5407@lapse.rw.madduck.net>
+	 <1221648520.30402.12.camel@heerbeest>
+	 <20080921142445.GJ10360@machine.or.cz>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, "Shawn O. Pearce" <spearce@spearce.org>,
-	Paul Mackerras <paulus@samba.org>
-To: Alexander Gavrilov <angavrilov@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Sep 22 11:19:51 2008
+Cc: martin f krafft <madduck@madduck.net>, git@vger.kernel.org
+To: Petr Baudis <pasky@suse.cz>
+X-From: git-owner@vger.kernel.org Mon Sep 22 11:20:56 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Khha7-0001xi-8F
-	for gcvg-git-2@gmane.org; Mon, 22 Sep 2008 11:19:47 +0200
+	id 1KhhbB-0002JJ-24
+	for gcvg-git-2@gmane.org; Mon, 22 Sep 2008 11:20:53 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751604AbYIVJSj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 22 Sep 2008 05:18:39 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751600AbYIVJSj
-	(ORCPT <rfc822;git-outgoing>); Mon, 22 Sep 2008 05:18:39 -0400
-Received: from lilzmailso02.liwest.at ([212.33.55.13]:37902 "EHLO
-	lilzmailso02.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751592AbYIVJSi (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 22 Sep 2008 05:18:38 -0400
-Received: from cm56-163-160.liwest.at ([86.56.163.160] helo=linz.eudaptics.com)
-	by lilzmailso02.liwest.at with esmtpa (Exim 4.66)
-	(envelope-from <j.sixt@viscovery.net>)
-	id 1KhhYz-0006vP-1a; Mon, 22 Sep 2008 11:18:37 +0200
-Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.42])
-	by linz.eudaptics.com (Postfix) with ESMTP
-	id C57136EF; Mon, 22 Sep 2008 11:18:36 +0200 (CEST)
-User-Agent: Thunderbird 2.0.0.6 (Windows/20070728)
-In-Reply-To: <200809221302.52424.angavrilov@gmail.com>
-X-Enigmail-Version: 0.95.5
-X-Spam-Score: 1.2 (+)
-X-Spam-Report: ALL_TRUSTED=-1.8, BAYES_95=3
+	id S1751645AbYIVJTp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 22 Sep 2008 05:19:45 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751543AbYIVJTp
+	(ORCPT <rfc822;git-outgoing>); Mon, 22 Sep 2008 05:19:45 -0400
+Received: from edu-smtp-01.edutel.nl ([88.159.1.221]:49690 "EHLO
+	edu-smtp-01.edutel.nl" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751354AbYIVJTo (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 22 Sep 2008 05:19:44 -0400
+Received: from heerbeest (unknown [88.159.206.46])
+	by edu-smtp-01.edutel.nl (Postfix) with ESMTP id 16FB367873;
+	Mon, 22 Sep 2008 11:19:42 +0200 (CEST)
+Received: from [127.0.0.1] (localhost [127.0.0.1])
+	by heerbeest (Postfix) with ESMTP id 927CCDC24E;
+	Mon, 22 Sep 2008 11:19:42 +0200 (CEST)
+In-Reply-To: <20080921142445.GJ10360@machine.or.cz>
+X-Mailer: Evolution 2.23.91 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/96467>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/96468>
 
-Alexander Gavrilov schrieb:
-> You can also try applying this patch (originally made for git-gui). It may save
-> additional 0.3 sec, especially for obscure legacy encodings.
+On zo, 2008-09-21 at 16:24 +0200, Petr Baudis wrote:
 
-Is this about startup time? Personally, I don't care about 0.3 sec startup
-time. I close my primary gitk and git-gui Windows only once a week. ;-)
+> The problem is that you can undo the merge content, but not the history
+> information. So this revert can e.g. propagate even into branches which
+> still *should* depend on the other branch, you get into trouble when you
+> want to make your branch depend on the other one anyway, etc.
 
--- Hannes
+Ah, yes.  I see.  Does this mean that functionality for easy adding and
+removing dependencies/patches from a branch can only be provided through
+some sort of [unpublishable] patch based mechanism like stgit?
+
+Possibly we'd need a kind of setup where stgit-like patch branches
+can be "finalized" into topgit branches.  Hmm.
+
+Jan.
+
+-- 
+Jan Nieuwenhuizen <janneke@gnu.org> | GNU LilyPond - The music typesetter
+http://www.xs4all.nl/~jantien       | http://www.lilypond.org
