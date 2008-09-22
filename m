@@ -1,203 +1,232 @@
-From: Alexander Gavrilov <angavrilov@gmail.com>
-Subject: Re: [PATCH (GIT-GUI,GITK) 6/8] gitk: Port new encoding logic from git-gui.
-Date: Mon, 22 Sep 2008 13:02:52 +0400
-Organization: HOME
-Message-ID: <200809221302.52424.angavrilov@gmail.com>
-References: <1221685659-476-1-git-send-email-angavrilov@gmail.com> <200809221201.35507.angavrilov@gmail.com> <48D7554C.4020601@viscovery.net>
-Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, "Shawn O. Pearce" <spearce@spearce.org>,
-	Paul Mackerras <paulus@samba.org>
-To: Johannes Sixt <j.sixt@viscovery.net>
-X-From: git-owner@vger.kernel.org Mon Sep 22 11:06:00 2008
+From: Bert Wesarg <bert.wesarg@googlemail.com>
+Subject: [PATCH 1/3] for-each-ref: utilize core.warnambiguousrefs for strict refname:short format
+Date: Mon, 22 Sep 2008 11:09:49 +0200
+Message-ID: <1222074591-26548-1-git-send-email-bert.wesarg@googlemail.com>
+Cc: git@vger.kernel.org, szeder@ira.uka.de,
+	"Shawn O. Pearce" <spearce@spearce.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Sep 22 11:11:12 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KhhMF-0006js-8p
-	for gcvg-git-2@gmane.org; Mon, 22 Sep 2008 11:05:52 +0200
+	id 1KhhRl-0008Ll-95
+	for gcvg-git-2@gmane.org; Mon, 22 Sep 2008 11:11:10 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751835AbYIVJES (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 22 Sep 2008 05:04:18 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751815AbYIVJES
-	(ORCPT <rfc822;git-outgoing>); Mon, 22 Sep 2008 05:04:18 -0400
-Received: from fk-out-0910.google.com ([209.85.128.188]:51793 "EHLO
-	fk-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751760AbYIVJER (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 22 Sep 2008 05:04:17 -0400
-Received: by fk-out-0910.google.com with SMTP id 18so1461493fkq.5
-        for <git@vger.kernel.org>; Mon, 22 Sep 2008 02:04:15 -0700 (PDT)
+	id S1751815AbYIVJJ6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 22 Sep 2008 05:09:58 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751630AbYIVJJ6
+	(ORCPT <rfc822;git-outgoing>); Mon, 22 Sep 2008 05:09:58 -0400
+Received: from fg-out-1718.google.com ([72.14.220.156]:40802 "EHLO
+	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751760AbYIVJJ5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 22 Sep 2008 05:09:57 -0400
+Received: by fg-out-1718.google.com with SMTP id 19so1299170fgg.17
+        for <git@vger.kernel.org>; Mon, 22 Sep 2008 02:09:55 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:organization:to:subject
-         :date:user-agent:cc:references:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:message-id;
-        bh=NIPJxHs43OvrO3xonbHtvKL5g2EBwgfuudbR24VexKk=;
-        b=f/toyuj98/YN2uHYl+2onaF5HpHWUy6JBHl9e/XuMg9t8XiTUl4mUNVyGCYla/glko
-         YTIQhoZ/uDcHfuAzCDFgN4VJi4QplbBCVKiMQqjIb0EcM3VQ4PMUDGoKNHhH1+cDPQWL
-         1Fo9/MZI3SCPFV/9Rq0uwgfH09ULjUrj2MErI=
+        d=googlemail.com; s=gamma;
+        h=domainkey-signature:received:received:from:to:cc:subject:date
+         :message-id:x-mailer;
+        bh=6C2eF35nldYrSkMaUFM83kyR+smnwHUiDZ9HVljiojM=;
+        b=Pex1n8DRz6Ysb1qvNkncjxgBYjDRdY3zMp41EVciZATfNGXQH8xk9Saiuoads2ZO9L
+         L+Hifgux9WdTnVkRC1e/Hg0iu4o0NFiQXpFRgQRpTz1fEuh2rwhPdTFqtuZD8RixZyRz
+         roJ83aftiZ2uLYxgok9TxsEK5VqvcVZgeSyLs=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=from:organization:to:subject:date:user-agent:cc:references
-         :in-reply-to:mime-version:content-type:content-transfer-encoding
-         :content-disposition:message-id;
-        b=jnLVR8o050zkQcIZ6KcZCwHdBZpINOPmkowuTA1KotVt5f2aqP4UXJkRbHQfoBjXrd
-         o1HdoLEP/Hoa2+iXMwa6OIybmZLPz8Kwhm73zJ07gqR31UL0VRUoewhFjKpSbTGVEOeu
-         1AOU6AIvJ3+E/dEIWaHK+wy2shCRougRKNIcE=
-Received: by 10.180.241.8 with SMTP id o8mr2041799bkh.60.1222074255774;
-        Mon, 22 Sep 2008 02:04:15 -0700 (PDT)
-Received: from keydesk.localnet ( [92.255.85.78])
-        by mx.google.com with ESMTPS id 35sm4219415fkt.12.2008.09.22.02.04.14
-        (version=SSLv3 cipher=RC4-MD5);
-        Mon, 22 Sep 2008 02:04:15 -0700 (PDT)
-User-Agent: KMail/1.10.1 (Linux/2.6.26.3-29.fc9.i686; KDE/4.1.0; i686; ; )
-In-Reply-To: <48D7554C.4020601@viscovery.net>
-Content-Disposition: inline
+        d=googlemail.com; s=gamma;
+        h=from:to:cc:subject:date:message-id:x-mailer;
+        b=BjsbBRU0KkaHgFKZxi7d1HkS54bxjli3KZ64avA5PrjfgYtJ85BaQDf0coYvi3r9X6
+         joO+Kp9egzC/fCIf07n82hdRfqKZ99fa7h81NCYjdFfyRaZbMvvQgUJIruEMoIiyU3SE
+         U2Pei+iOTTwFe7wGWYt2owTeCXNmbtWxTgdfI=
+Received: by 10.86.26.11 with SMTP id 11mr4526088fgz.71.1222074595119;
+        Mon, 22 Sep 2008 02:09:55 -0700 (PDT)
+Received: from localhost (p5B0F5781.dip.t-dialin.net [91.15.87.129])
+        by mx.google.com with ESMTPS id l19sm5149671fgb.7.2008.09.22.02.09.53
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Mon, 22 Sep 2008 02:09:54 -0700 (PDT)
+X-Mailer: git-send-email 1.6.0.1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/96463>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/96464>
 
-On Monday 22 September 2008 12:20:28 Johannes Sixt wrote:
-> Alexander Gavrilov schrieb:
-> > On Monday 22 September 2008 11:25:43 Johannes Sixt wrote:
-> >> Alexander Gavrilov schrieb:
-> >>> Subject: [PATCH] gitk: Implement batch lookup and caching of encoding attrs.
-> >>>
-> >>> When the diff contains thousands of files, calling git-check-attr
-> >>> once per file is very slow. With this patch gitk does attribute
-> >>> lookup in batches of 30 files while reading the diff file list,
-> >>> which leads to a very noticeable speedup.
-> >> This one does not work for me: The correct is not picked up anymore,
-> >> neither in Patch mode nor Tree mode. (It works as expected without this
-> >> patch.)
-> >>
-> > 
-> > OOPS, I forgot to copy the line that removes leading whitespace:
-> 
-> Thanks, with this it works now. The delay for a 1000 file patch is
-> bearable (on Windows, but y'know, Windows types are masochists :-).
+core.warnambiguousrefs is used to enable strict mode for the
+abbreviation.
 
-You can also try applying this patch (originally made for git-gui). It may save
-additional 0.3 sec, especially for obscure legacy encodings.
+In strict mode, the abbreviated ref will never trigger the
+'warn_ambiguous_refs' warning. I.e. for these refs:
 
-P.S. I do believe there is a place for a library shared between gitk & git-gui.
-This code duplication is ugly and annoying; moreover, they have different
-indentation conventions, which get messed up...
+  refs/heads/xyzzy
+  refs/tags/xyzzy
 
---- >8 --- 
-From: Alexander Gavrilov <angavrilov@gmail.com>
-Subject: [PATCH] git-gui: Optimize encoding name resolution using a lookup table.
+the abbreviated forms are:
 
-Encoding menu construction does almost a hundred of encoding
-resolutions, which with the old implementation led to a
-small but noticeable delay.
+  heads/xyzzy
+  tags/xyzzy
 
-Signed-off-by: Alexander Gavrilov <angavrilov@gmail.com>
+
+Signed-off-by: Bert Wesarg <bert.wesarg@googlemail.com>
+
 ---
- gitk |   84 ++++++++++++++++++++++++++++++++++++++++++-----------------------
- 1 files changed, 54 insertions(+), 30 deletions(-)
 
-diff --git a/gitk b/gitk
-index 254faa1..1355aa2 100755
---- a/gitk
-+++ b/gitk
-@@ -9779,39 +9779,63 @@ set encoding_aliases {
-     { Big5 csBig5 }
- }
+On Tue, Sep 9, 2008 at 10:05, Junio C Hamano <gitster@pobox.com> wrote:
+> "Bert Wesarg" <bert.wesarg@googlemail.com> writes:
+>
+>> Any opinions, whether we want the 'strict' mode? i.e.:
+>>
+>> for refs/heads/xyzzy and refs/tags/xyzzy:
+>>
+>> loose mode (current implementation):
+>>
+>>   refs/heads/xyzzy => heads/xyzzy
+>>   refs/tags/xyzzy  => xyzzy
+>>
+>> there would be a ambiguous warning (if enabled) if you use xyzzy as a
+>> tag, but it resolves correctly to the tag.
+>>
+>> strict mode:
+>>
+>>   refs/heads/xyzzy => heads/xyzzy
+>>   refs/tags/xyzzy  => tags/xyzzy
+>>
+>> will always produce a non-ambiguous short forms.
+>
+> I have no strong opinions either way, but if we want to pick only one, I
+> suspect that the loose mode would be more appropriate for bash completion
+> purposes exactly because:
+>
+>  (1) the shorter form would match the users' expectations, and;
+>
+>  (2) if it triggers ambiguity warning to use that result that matches
+>     users' expectations, it is a *good thing* --- it reminds the user
+>     that s/he is playing with fire _if_ the user is of careful type who
+>     enables the ambiguity warning.
+>
+> Thinking about it from a different angle, it would make more sense to use
+> loose mode if the user does not have ambiguity warning configured, and use
+> strict mode if the warning is enabled.  Then people who will get warnings
+> from ambiguity will not get an ambiguous completion, and people who won't
+> will get shorter but still unambiguous completion.
+
+Cc: git@vger.kernel.org
+Cc: szeder@ira.uka.de
+Cc: "Shawn O. Pearce" <spearce@spearce.org>
+
+ Documentation/git-for-each-ref.txt |    2 +
+ builtin-for-each-ref.c             |   43 ++++++++++++++++++++++-------------
+ 2 files changed, 29 insertions(+), 16 deletions(-)
+
+diff --git a/Documentation/git-for-each-ref.txt b/Documentation/git-for-each-ref.txt
+index 5061d3e..265bbf3 100644
+--- a/Documentation/git-for-each-ref.txt
++++ b/Documentation/git-for-each-ref.txt
+@@ -75,6 +75,8 @@ For all objects, the following names can be used:
+ refname::
+ 	The name of the ref (the part after $GIT_DIR/).
+ 	For a non-ambiguous short name of the ref append `:short`.
++	The option core.warnambiguousrefs is used to enable the strict mode
++	for the abbretiation.
  
--proc tcl_encoding {enc} {
--    global encoding_aliases
--    set names [encoding names]
--    set lcnames [string tolower $names]
--    set enc [string tolower $enc]
--    set i [lsearch -exact $lcnames $enc]
--    if {$i < 0} {
--	# look for "isonnn" instead of "iso-nnn" or "iso_nnn"
--	if {[regsub {^(iso|cp|ibm|jis)[-_]} $enc {\1} encx]} {
--	    set i [lsearch -exact $lcnames $encx]
-+proc build_encoding_table {} {
-+	global encoding_aliases encoding_lookup_table
-+
-+	# Prepare the lookup list; cannot use lsort -nocase because
-+	# of compatibility issues with older Tcl (e.g. in msysgit)
-+	set names [list]
-+	foreach item [encoding names] {
-+		lappend names [list [string tolower $item] $item]
-+	}
-+	set names [lsort -ascii -index 0 $names]
-+	# neither can we use lsearch -index
-+	set lnames [list]
-+	foreach item $names {
-+		lappend lnames [lindex $item 0]
-+	}
-+
-+	foreach grp $encoding_aliases {
-+		set target {}
-+		foreach item $grp {
-+			set i [lsearch -sorted -ascii $lnames \
-+					[string tolower $item]]
-+			if {$i >= 0} {
-+				set target [lindex $names $i 1]
-+				break
-+			}
-+		}
-+		if {$target eq {}} continue
-+		foreach item $grp {
-+			set encoding_lookup_table([string tolower $item]) $target
-+		}
- 	}
--    }
--    if {$i < 0} {
--	foreach l $encoding_aliases {
--	    set ll [string tolower $l]
--	    if {[lsearch -exact $ll $enc] < 0} continue
--	    # look through the aliases for one that tcl knows about
--	    foreach e $ll {
--		set i [lsearch -exact $lcnames $e]
--		if {$i < 0} {
--		    if {[regsub {^(iso|cp|ibm|jis)[-_]} $e {\1} ex]} {
--			set i [lsearch -exact $lcnames $ex]
--		    }
-+
-+	foreach item $names {
-+		set encoding_lookup_table([lindex $item 0]) [lindex $item 1]
-+	}
-+}
-+
-+proc tcl_encoding {enc} {
-+	global encoding_lookup_table
-+	if {$enc eq {}} {
-+		return {}
-+	}
-+	if {![info exists encoding_lookup_table]} {
-+		build_encoding_table
-+	}
-+	set enc [string tolower $enc]
-+	if {![info exists encoding_lookup_table($enc)]} {
-+		# look for "isonnn" instead of "iso-nnn" or "iso_nnn"
-+		if {[regsub {^(iso|cp|ibm|jis)[-_]} $enc {\1} encx]} {
-+			set enc $encx
+ objecttype::
+ 	The type of the object (`blob`, `tree`, `commit`, `tag`).
+diff --git a/builtin-for-each-ref.c b/builtin-for-each-ref.c
+index 9b44092..e7b7712 100644
+--- a/builtin-for-each-ref.c
++++ b/builtin-for-each-ref.c
+@@ -571,7 +571,7 @@ static void gen_scanf_fmt(char *scanf_fmt, const char *rule)
+ /*
+  * Shorten the refname to an non-ambiguous form
+  */
+-static char *get_short_ref(struct refinfo *ref)
++static void get_short_ref(struct refinfo *ref, int strict, char **short_ref)
+ {
+ 	int i;
+ 	static char **scanf_fmts;
+@@ -598,16 +598,16 @@ static char *get_short_ref(struct refinfo *ref)
  		}
--		if {$i >= 0} break
--	    }
--	    break
  	}
--    }
--    if {$i >= 0} {
--	return [lindex $names $i]
--    }
--    return {}
-+	if {[info exists encoding_lookup_table($enc)]} {
-+		return $encoding_lookup_table($enc)
-+	} else {
-+		return {}
-+	}
+ 
+-	/* bail out if there are no rules */
+-	if (!nr_rules)
+-		return ref->refname;
+-
+ 	/* buffer for scanf result, at most ref->refname must fit */
+ 	short_name = xstrdup(ref->refname);
++	*short_ref = short_name;
+ 
+-	/* skip first rule, it will always match */
+-	for (i = nr_rules - 1; i > 0 ; --i) {
+-		int j;
++	/* bail out if there are no rules */
++	if (!nr_rules)
++		return;
++
++	for (i = nr_rules - 1; i >= 0 ; --i) {
++		int j, rules_to_fail = i;
+ 		int short_name_len;
+ 
+ 		if (1 != sscanf(ref->refname, scanf_fmts[i], short_name))
+@@ -616,13 +616,23 @@ static char *get_short_ref(struct refinfo *ref)
+ 		short_name_len = strlen(short_name);
+ 
+ 		/*
++		 * in strict mode, all (except the matched one) rules
++		 * must fail to resolve to a valid ref
++		 */
++		if (strict)
++			rules_to_fail = nr_rules;
++		/*
+ 		 * check if the short name resolves to a valid ref,
+ 		 * but use only rules prior to the matched one
+ 		 */
+-		for (j = 0; j < i; j++) {
++		for (j = 0; j < rules_to_fail; j++) {
+ 			const char *rule = ref_rev_parse_rules[j];
+ 			unsigned char short_objectname[20];
+ 
++			/* skip matched rule */
++			if (i == j)
++				continue;
++
+ 			/*
+ 			 * the short name is ambiguous, if it resolves
+ 			 * (with this previous rule) to a valid ref
+@@ -635,14 +645,14 @@ static char *get_short_ref(struct refinfo *ref)
+ 
+ 		/*
+ 		 * short name is non-ambiguous if all previous rules
+-		 * haven't resolved to a valid ref
++		 * doesn't resolved to a valid ref
+ 		 */
+-		if (j == i)
+-			return short_name;
++		if (j == rules_to_fail)
++			return;
+ 	}
+ 
+-	free(short_name);
+-	return ref->refname;
++	/* can't abbreviate refname, return full name */
++	strcpy(short_name, ref->refname);
  }
  
- proc gitattr {path attr default} {
+ 
+@@ -678,13 +688,14 @@ static void populate_value(struct refinfo *ref)
+ 		}
+ 		if (!prefixcmp(name, "refname")) {
+ 			const char *formatp = strchr(name, ':');
+-			const char *refname = ref->refname;
++			char *refname = ref->refname;
+ 
+ 			/* look for "short" refname format */
+ 			if (formatp) {
+ 				formatp++;
+ 				if (!strcmp(formatp, "short"))
+-					refname = get_short_ref(ref);
++					get_short_ref(ref, warn_ambiguous_refs,
++						      &refname);
+ 				else
+ 					die("unknown refname format %s",
+ 					    formatp);
 -- 
-1.6.0.20.g6148bc
+1.6.0.1
