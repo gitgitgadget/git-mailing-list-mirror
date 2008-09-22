@@ -1,168 +1,313 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: What's in git.git (Sep 2008, #03; Mon, 22)
-Date: Mon, 22 Sep 2008 12:40:31 -0700
-Message-ID: <7vy71kvuj4.fsf@gitster.siamese.dyndns.org>
+Subject: What's cooking in git.git (Sep 2008, #04; Mon, 22)
+Date: Mon, 22 Sep 2008 12:40:55 -0700
+Message-ID: <7vwsh4vuig.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Sep 22 21:41:55 2008
+X-From: git-owner@vger.kernel.org Mon Sep 22 21:42:24 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KhrIA-0008A2-Is
-	for gcvg-git-2@gmane.org; Mon, 22 Sep 2008 21:41:55 +0200
+	id 1KhrIY-0008LU-SX
+	for gcvg-git-2@gmane.org; Mon, 22 Sep 2008 21:42:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751080AbYIVTkq convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 22 Sep 2008 15:40:46 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751166AbYIVTkp
-	(ORCPT <rfc822;git-outgoing>); Mon, 22 Sep 2008 15:40:45 -0400
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:45537 "EHLO
+	id S1751816AbYIVTlJ convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 22 Sep 2008 15:41:09 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751754AbYIVTlI
+	(ORCPT <rfc822;git-outgoing>); Mon, 22 Sep 2008 15:41:08 -0400
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:45891 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750950AbYIVTkp convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 22 Sep 2008 15:40:45 -0400
+	with ESMTP id S1751709AbYIVTlF convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 22 Sep 2008 15:41:05 -0400
 Received: from localhost.localdomain (localhost [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 7FDC76302A;
-	Mon, 22 Sep 2008 15:40:43 -0400 (EDT)
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 359B863031;
+	Mon, 22 Sep 2008 15:41:04 -0400 (EDT)
 Received: from pobox.com (ip68-225-240-211.oc.oc.cox.net [68.225.240.211])
  (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
  certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
- ESMTPSA id A99E363021; Mon, 22 Sep 2008 15:40:40 -0400 (EDT)
-X-maint-at: 8b4eb6b6cd65042c6ecb4f06f19c1f2441899ed6
-X-master-at: c76dc9592d1c770212d50ee7a7028a74f472f23b
+ ESMTPSA id DF3E76302F; Mon, 22 Sep 2008 15:40:58 -0400 (EDT)
 User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: 58373AFE-88DE-11DD-B83B-D0CFFE4BC1C1-77302942!a-sasl-fastnet.pobox.com
+X-Pobox-Relay-ID: 648CFABE-88DE-11DD-85EF-D0CFFE4BC1C1-77302942!a-sasl-fastnet.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/96507>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/96508>
 
-I think 'maint' has all the known fixes and is ready to become 1.6.0.3
-(but I may not have enough time or energy to do the release engineering
-before I leave for two weeks).
+Here are the topics that have been cooking.  Commits prefixed
+with '-' are only in 'pu' while commits prefixed with '+' are
+in 'next'.
 
-* The 'maint' branch has these fixes since the last announcement.
+The topics list the commits in reverse chronological order.  The topics
+meant to be merged to the maintenance series have "maint-" in their nam=
+es.
 
-Alec Berryman (2):
-  git-svn: factor out svnserve test code for later use
-  git-svn: Always create a new RA when calling do_switch for svn://
+I'll be on vacation til Oct 08; proposal/review/discussion/improvement
+cycle based on e-mails and the distributed nature of git mean that it
+shouldn't keep the participants from further improving the system.  I'v=
+e
+asked Shawn to look after in-flight patches during the time, so hopeful=
+ly
+when I come back I'll see a much better git ;-).
 
-Brandon Casey (2):
-  t9700/test.pl: avoid bareword 'STDERR' in 3-argument open()
-  t9700/test.pl: remove File::Temp requirement
+----------------------------------------------------------------
+[New Topics]
 
-Charles Bailey (2):
-  Add new test to demonstrate git archive core.autocrlf inconsistency
-  Make git archive respect core.autocrlf when creating zip format archi=
-ves
+* nd/narrow (Sun Sep 14 20:07:59 2008 +0700) 9 commits
+ - grep: skip files that have not been checked out
+ - checkout_entry(): CE_NO_CHECKOUT on checked out entries.
+ - Prevent diff machinery from examining worktree outside narrow
+   checkout
+ - Add tests for updating no-checkout entries in index
+ - ls-files: add --narrow-checkout option to "will checkout" entries
+ - update-index: add --checkout/--no-checkout to update
+   CE_NO_CHECKOUT bit
+ - update-index: refactor mark_valid() in preparation for new options
+ - Introduce CE_NO_CHECKOUT bit
+ - Extend index to save more flags
 
-Dmitry Potapov (2):
-  git-rebase-interactive: do not squash commits on abort
-  git-rebase--interactive: auto amend only edited commit
+This is an early half of the earlier series (I haven't had chance to lo=
+ok
+at the updated series yet), and should be replaced with the updated one
+posted recently.
 
-Eric Raible (1):
-  completion: git commit should list --interactive
+----------------------------------------------------------------
+[Stalled -- Needs Action to Proceed (or to be dropped)]
 
-Eric Wong (1):
-  git-svn: fix handling of even funkier branch names
+* pb/submodule (Fri Sep 12 23:09:19 2008 +0200) 1 commit
+ - t7400: Add short "git submodule add" testsuite
 
-=46abrizio Chiarello (1):
-  builtin-clone: fix typo
+Waiting for a reroll.
 
-Garry Dolley (1):
-  Clarified gitattributes documentation regarding custom hunk header.
+* bd/blame (Thu Aug 21 18:22:01 2008 -0500) 5 commits
+ - Use xdiff caching to improve git blame performance
+ - Allow xdiff machinery to cache hash results for a file
+ - Always initialize xpparam_t to 0
+ - Bypass textual patch generation and parsing in git blame
+ - Allow alternate "low-level" emit function from xdl_diff
 
-Heikki Orsila (3):
-  Start conforming code to "git subcmd" style part 2
-  Start conforming code to "git subcmd" style part 3
-  Cosmetical command name fix
+R=C3=A9ne had good comments on how the callback should be structured.
 
-Jeff King (1):
-  Use compatibility regex library also on FreeBSD
+* kb/am-directory (Fri Aug 29 15:27:50 2008 -0700) 1 commit
+ - git-am: Pass the --directory option through to git-apply
 
-Joey Hess (1):
-  gitweb: avoid warnings for commits without body
+I think this is still buggy and drops the option when am stops with
+conflicts.
 
-Johannes Sixt (2):
-  Use compatibility regex library also on AIX
-  git-remote: do not use user input in a printf format string
+----------------------------------------------------------------
+[Will be merged to 'master/maint' soon]
 
-Junio C Hamano (9):
-  discard_cache: reset lazy name_hash bit
-  diff Porcelain: do not disable auto index refreshing on -C -C
-  diff --quiet: make it synonym to --exit-code >/dev/null
-  Don't verify host name in SSL certs when GIT_SSL_NO_VERIFY is set
-  Fix permission bits on sources checked out with an overtight umask
-  checkout: do not lose staged removal
-  GIT 1.6.0.2
-  diff/diff-files: do not use --cc too aggressively
-  Start draft release notes for 1.6.0.3
+* mv/merge-recursive (Sat Sep 6 18:29:49 2008 +0200) 11 commits
+ + builtin-merge: release the lockfile in try_merge_strategy()
+ + merge-recursive: get rid of virtual_id
+ + merge-recursive: move current_{file,directory}_set to struct
+   merge_options
+ + merge-recursive: move the global obuf to struct merge_options
+ + merge-recursive: get rid of the index_only global variable
+ + merge-recursive: move call_depth to struct merge_options
+ + cherry-pick/revert: make direct internal call to merge_tree()
+ + builtin-merge: avoid run_command_v_opt() for recursive and subtree
+ + merge-recursive: introduce merge_options
+ + merge-recursive.c: Add more generic merge_recursive_generic()
+ + Split out merge_recursive() to merge-recursive.c
 
-Mikael Magnusson (2):
-  Typo "bogos" in format-patch error message.
-  git-repack uses --no-repack-object, not --no-repack-delta.
+(Tip at 4271666)
 
-Petr Baudis (1):
-  Do not perform cross-directory renames when creating packs
+* ho/dirstat-by-file (Fri Sep 5 22:27:35 2008 +0300) 1 commit
+ + diff --dirstat-by-file: count changed files, not lines
 
-Ralf Wildenhues (1):
-  Fix some manual typos.
+(Tip at fd33777)
 
-Thomas Rast (1):
-  sha1_file: link() returns -1 on failure, not errno
+* jc/safe-c-l-d (Tue Sep 2 14:10:15 2008 -0700) 1 commit
+ + safe_create_leading_directories(): make it about "leading"
+   directories
 
-Todd Zullinger (1):
-  Use dashless git commands in setgitperms.perl
+(Tip at 5f0bdf5)
 
-Yann Dirson (1):
-  Bust the ghost of long-defunct diffcore-pathspec.
+* jc/apply-include-exclude (Mon Aug 25 01:05:31 2008 -0700) 1 commit
+ + git-apply:--include=3Dpathspec
 
+(Tip at 6ecb1ee)
 
-* The 'master' branch has these since the last announcement
-  in addition to the above.
+* mv/commit-tree (Wed Sep 10 22:10:33 2008 +0200) 3 commits
+ + t7603: add new testcases to ensure builtin-commit uses
+   reduce_heads()
+ + builtin-commit: use commit_tree()
+ + commit_tree(): add a new author parameter
 
-Bert Wesarg (1):
-  for-each-ref: `:short` format for `refname`
+(Tip at 7a172b0)
 
-Christian Couder (3):
-  bisect: test merge base if good rev is not an ancestor of bad rev
-  bisect: only check merge bases when needed
-  bisect: remove "checkout_done" variable used when checking merge base=
-s
+* pb/autocorrect-wrapper (Wed Sep 10 17:54:28 2008 +0200) 1 commit
+ + git wrapper: also use aliases to correct mistyped commands
 
-Daniel Barkalow (1):
-  Check early that a new branch is new and valid
+(Tip at 746c221)
 
-Deskin Miler (1):
-  git-svn: testcase for partial rebuild
+* jc/better-conflict-resolution (Thu Sep 4 23:48:48 2008 +0200) 15 comm=
+its
+ + Fix AsciiDoc errors in merge documentation
+ + git-merge documentation: describe how conflict is presented
+ + checkout --conflict=3D<style>: recreate merge in a non-default style
+ + checkout -m: recreate merge when checking out of unmerged index
+ + Merge branch 'jc/maint-checkout-fix' into 'jc/better-conflict-
+   resolution'
+ + git-merge-recursive: learn to honor merge.conflictstyle
+ + merge.conflictstyle: choose between "merge" and "diff3 -m" styles
+ + rerere: understand "diff3 -m" style conflicts with the original
+ + rerere.c: use symbolic constants to keep track of parsing states
+ + xmerge.c: "diff3 -m" style clips merge reduction level to EAGER or
+   less
+ + xmerge.c: minimum readability fixups
+ + xdiff-merge: optionally show conflicts in "diff3 -m" style
+ + xdl_fill_merge_buffer(): separate out a too deeply nested function
+ + checkout --ours/--theirs: allow checking out one side of a
+   conflicting merge
+ + checkout -f: allow ignoring unmerged paths when checking out of
+   the index
 
-Deskin Miller (1):
-  git-svn: do a partial rebuild if rev_map is out-of-date
+(Tip at 3407a7a)
 
-Junio C Hamano (4):
-  diff: vary default prefix depending on what are compared
-  daemon.c: avoid setlinebuf()
-  Update draft release notes to 1.6.1
-  t5510: test "git fetch" following tags minimally
+* jc/alternate-push (Tue Sep 9 01:27:10 2008 -0700) 4 commits
+ + push: receiver end advertises refs from alternate repositories
+ + push: prepare sender to receive extended ref information from the
+   receiver
+ + receive-pack: make it a builtin
+ + is_directory(): a generic helper function
 
-Nicolas Pitre (3):
-  sha1write: don't copy full sized buffers
-  pack-objects: don't include missing preferred base objects
-  t5300: improve SHA1 collision test
+(Tip at d79796b)
 
-Quy Tonthat (1):
-  Update RPM spec for the new location of git-cvsserver.
+* bc/master-diff-hunk-header-fix (Sat Sep 20 18:36:22 2008 -0700) 10 co=
+mmits
+ + Merge branch 'bc/maint-diff-hunk-header-fix' into bc/master-diff-
+   hunk-header-fix
+ + diff hunk pattern: fix misconverted "\{" tex macro introducers
+ + diff: fix "multiple regexp" semantics to find hunk header comment
+ + diff: use extended regexp to find hunk headers
+ + Merge branch 'bc/maint-diff-hunk-header-fix' into bc/master-diff-
+   hunk-header-fix
+ + diff: use extended regexp to find hunk headers
+ + Merge branch 'bc/maint-diff-hunk-header-fix' into bc/master-diff-
+   hunk-header-fix
+ + diff.*.xfuncname which uses "extended" regex's for hunk header
+   selection
+ + diff.c: associate a flag with each pattern and use it for
+   compiling regex
+ + diff.c: return pattern entry pointer rather than just the hunk
+   header pattern
 
-Ren=C3=A9 Scharfe (3):
-  log: add load_ref_decorations()
-  move load_ref_decorations() to log-tree.c and export it
-  add '%d' pretty format specifier to show decoration
+(Tip at 92bb978)
 
-SZEDER G=C3=A1bor (1):
-  bash: use for-each-ref format 'refname:short'
+* am/status (Mon Sep 8 00:05:03 2008 +0200) 2 commits
+ + wt-status: Teach how to discard changes in the working directory
+ + wt-status: Split header generation into three functions
 
-Thomas Rast (2):
-  rev-list: fix --reverse interaction with --parents
-  t6013: replace use of 'tac' with equivalent Perl
+(Tip at 4d6e4c4)
+
+I think the above are all ready for 'master'.
+
+* mg/maint-remote-fix (Mon Sep 22 10:57:51 2008 +0200) 1 commit
+ + make "git remote" report multiple URLs
+
+(Tip at 7d20e21)
+
+* bc/maint-diff-hunk-header-fix (Sat Sep 20 15:30:12 2008 -0700) 5 comm=
+its
+ + diff hunk pattern: fix misconverted "\{" tex macro introducers
+ + diff: use extended regexp to find hunk headers
+ + diff.*.xfuncname which uses "extended" regex's for hunk header
+   selection
+ + diff.c: associate a flag with each pattern and use it for
+   compiling regex
+ + diff.c: return pattern entry pointer rather than just the hunk
+   header pattern
+
+(Tip at 96d1a8e)
+
+The above two are ready for 'maint'.
+
+----------------------------------------------------------------
+[Actively Cooking]
+
+* tr/workflow-doc (Sat Sep 13 18:11:01 2008 +0200) 2 commits
+ + Documentation: Refer to git-rebase(1) to warn against rewriting
+ + Documentation: new upstream rebase recovery section in git-rebase
+
+My impression from the last round of discusson on the third patch in th=
+is
+series (not queued here) was that as long as we do not present it as "O=
+ne
+True Workflow", the description was a good starting point, possibly oth=
+ers
+to add other recommended flows later.
+
+* pb/commit-where (Mon Sep 8 01:05:41 2008 +0200) 1 commit
+ + builtin-commit.c: show on which branch a commit was added
+
+Tentatively kicked back to "still cooking" status after Jeff voiced his
+annoyance.  I personally do not like making this multi-line as Jeff
+suggested as an alternative (the message already is too verbose to my
+taste).
+
+* lt/time-reject-fractional-seconds (Sat Aug 16 21:25:40 2008 -0700) 1 =
+commit
+ + date/time: do not get confused by fractional seconds
+
+* jc/add-ita (Thu Aug 21 01:44:53 2008 -0700) 1 commit
+ + git-add --intent-to-add (-N)
+
+Teaches "git add" to record only the intent to add a path later.
+I rerolled this without the fake empty blob object.
+
+* jc/post-simplify (Fri Aug 15 01:34:51 2008 -0700) 2 commits
+ - revision --simplify-merges: incremental simplification
+ - revision --simplify-merges: prepare for incremental simplification
+
+I started making this incremental but the progress is not so great.
+
+----------------------------------------------------------------
+[On Hold]
+
+* jc/stripspace (Sun Mar 9 00:30:35 2008 -0800) 6 commits
+ - git-am --forge: add Signed-off-by: line for the author
+ - git-am: clean-up Signed-off-by: lines
+ - stripspace: add --log-clean option to clean up signed-off-by:
+   lines
+ - stripspace: use parse_options()
+ - Add "git am -s" test
+ - git-am: refactor code to add signed-off-by line for the committer
+
+The one at second from the tip needs reworking.
+
+* jc/send-pack-tell-me-more (Thu Mar 20 00:44:11 2008 -0700) 1 commit
+ - "git push": tellme-more protocol extension
+
+* jc/merge-whitespace (Sun Feb 24 23:29:36 2008 -0800) 1 commit
+ - WIP: start teaching the --whitespace=3Dfix to merge machinery
+
+* jc/blame (Wed Jun 4 22:58:40 2008 -0700) 2 commits
+ - blame: show "previous" information in --porcelain/--incremental
+   format
+ - git-blame: refactor code to emit "porcelain format" output
+
+* sg/merge-options (Sun Apr 6 03:23:47 2008 +0200) 1 commit
+ + merge: remove deprecated summary and diffstat options and config
+   variables
+
+This was previously in "will be in master soon" category, but it turns =
+out
+that the synonyms to the ones this one deletes are fairly new invention
+that happend in 1.5.6 timeframe, and we cannot do this just yet.  Perha=
+ps
+in 1.7.0, but with the loud whining about moving git-foo out of $PATH w=
+e
+have been hearing, it might not be a bad idea to drop this.
+
+* jk/renamelimit (Sat May 3 13:58:42 2008 -0700) 1 commit
+ - diff: enable "too large a rename" warning when -M/-C is explicitly
+   asked for
+
+This would be the right thing to do for command line use, but gitk will=
+ be
+hit due to tcl/tk's limitation, so I am holding this back for now.
