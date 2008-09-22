@@ -1,80 +1,107 @@
-From: "Alexander Gavrilov" <angavrilov@gmail.com>
-Subject: Re: [PATCH (GIT-GUI,GITK) 6/8] gitk: Port new encoding logic from git-gui.
-Date: Mon, 22 Sep 2008 14:18:10 +0400
-Message-ID: <bb6f213e0809220318k7e505281n53a3948540869894@mail.gmail.com>
-References: <1221685659-476-1-git-send-email-angavrilov@gmail.com>
-	 <200809221201.35507.angavrilov@gmail.com>
-	 <48D7554C.4020601@viscovery.net>
-	 <200809221302.52424.angavrilov@gmail.com>
-	 <48D762EC.2030009@viscovery.net>
+From: Boaz Harrosh <bharrosh@panasas.com>
+Subject: Re: ignoring files/directories in git
+Date: Mon, 22 Sep 2008 13:41:07 +0300
+Message-ID: <48D77643.1090908@panasas.com>
+References: <19596152.post@talk.nabble.com> <19599905.post@talk.nabble.com> <48D74B1C.6020408@panasas.com> <20080922085200.GI21650@dpotapov.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, "Shawn O. Pearce" <spearce@spearce.org>,
-	"Paul Mackerras" <paulus@samba.org>
-To: "Johannes Sixt" <j.sixt@viscovery.net>
-X-From: git-owner@vger.kernel.org Mon Sep 22 12:19:47 2008
+Cc: mwolfe38 <mwolfe38@gmail.com>, git@vger.kernel.org
+To: Dmitry Potapov <dpotapov@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Sep 22 12:46:50 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KhiW5-000254-Ob
-	for gcvg-git-2@gmane.org; Mon, 22 Sep 2008 12:19:42 +0200
+	id 1Khis2-0002ar-J0
+	for gcvg-git-2@gmane.org; Mon, 22 Sep 2008 12:42:23 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752079AbYIVKSN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 22 Sep 2008 06:18:13 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752069AbYIVKSM
-	(ORCPT <rfc822;git-outgoing>); Mon, 22 Sep 2008 06:18:12 -0400
-Received: from fg-out-1718.google.com ([72.14.220.153]:65389 "EHLO
-	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751849AbYIVKSL (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 22 Sep 2008 06:18:11 -0400
-Received: by fg-out-1718.google.com with SMTP id 19so1316927fgg.17
-        for <git@vger.kernel.org>; Mon, 22 Sep 2008 03:18:10 -0700 (PDT)
+	id S1751904AbYIVKlO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 22 Sep 2008 06:41:14 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751899AbYIVKlO
+	(ORCPT <rfc822;git-outgoing>); Mon, 22 Sep 2008 06:41:14 -0400
+Received: from ug-out-1314.google.com ([66.249.92.170]:56426 "EHLO
+	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751894AbYIVKlN (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 22 Sep 2008 06:41:13 -0400
+Received: by ug-out-1314.google.com with SMTP id k3so1332167ugf.37
+        for <git@vger.kernel.org>; Mon, 22 Sep 2008 03:41:11 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to
-         :subject:cc:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:references;
-        bh=AP4lA7qlvjpxG/9VN8UUejDUajVLVC76zsHbH9sloiY=;
-        b=tQ9qjocX7W8lqMI+afnkYus8DaekbUSr0y1Eo9a4/XucB3I+972julHm0GO7HghVm6
-         qvPkBu0MMUA2EZDqa4Tc97aH9lJs32Qm01QkzNNpvl/jRgHgRR7SBdOctAnGHkG21aDA
-         U1r3Byo/13BDwblpq0/v7ZGrq7E5g76tuLg14=
+        h=domainkey-signature:received:received:message-id:date:from
+         :user-agent:mime-version:to:cc:subject:references:in-reply-to
+         :content-type:content-transfer-encoding:sender;
+        bh=+tEPzEHiMiqnIjH9o2kvX5Bbb2T69jflvlNZ/1ulDI4=;
+        b=I+XW0aWOPoAop5pZdlyJDL1abzuIczPCTF5LvJA5tI7oBEPsxsoRfOj5EG1M6V9pPi
+         DJgJtCNcZ4hGNVWdRBlkEA/WIYLm0d/7pUSnxJ3X3/fXYGRblMM6JZR/gnI2Lidf41CH
+         glVgi4iPsy7vlLlX9C4rfmEABkGjMs+jxYUOk=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
-         :content-type:content-transfer-encoding:content-disposition
-         :references;
-        b=UupWWZDK4/hBLdABoI2MgGGMqwtj1EB4pGK1REQQ1WgGu4xkgI3fgyXVOnMn/8Q2KE
-         FpQ4t6EkO6JRbSmtajkzu9mbypWmSu3C3MI2rkuxy3zvZmknAvC9uoZRYCqvAktbt8ws
-         xyhuZNtQr1BCf47dQLUSMhlQaIIZarD6w9Uz0=
-Received: by 10.103.170.13 with SMTP id x13mr2484613muo.52.1222078690240;
-        Mon, 22 Sep 2008 03:18:10 -0700 (PDT)
-Received: by 10.103.251.10 with HTTP; Mon, 22 Sep 2008 03:18:10 -0700 (PDT)
-In-Reply-To: <48D762EC.2030009@viscovery.net>
-Content-Disposition: inline
+        h=message-id:date:from:user-agent:mime-version:to:cc:subject
+         :references:in-reply-to:content-type:content-transfer-encoding
+         :sender;
+        b=v01J03mVaVY2uiGEPUKKs9aJr58PSC1DyoiI/Dl6EymuMNUwsamBsQNWpVX4ER+znn
+         LKEcPTavlR599AwyOl3tjM2Tn43tibyk3O4pzOg9Ks4aQ1VE5R1unRnzZZaqShPZlBiE
+         ek4dZzFN2GpujvivkCyg52L9mp6O7WCFRvg+g=
+Received: by 10.210.19.4 with SMTP id 4mr4721932ebs.45.1222080071376;
+        Mon, 22 Sep 2008 03:41:11 -0700 (PDT)
+Received: from bh-buildlin2.bhalevy.com ( [212.235.53.3])
+        by mx.google.com with ESMTPS id 5sm7134888eyh.2.2008.09.22.03.41.09
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Mon, 22 Sep 2008 03:41:10 -0700 (PDT)
+User-Agent: Thunderbird 2.0.0.14 (X11/20080501)
+In-Reply-To: <20080922085200.GI21650@dpotapov.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/96470>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/96471>
 
-On Mon, Sep 22, 2008 at 1:18 PM, Johannes Sixt <j.sixt@viscovery.net> wrote:
-> Alexander Gavrilov schrieb:
->> You can also try applying this patch (originally made for git-gui). It may save
->> additional 0.3 sec, especially for obscure legacy encodings.
->
-> Is this about startup time? Personally, I don't care about 0.3 sec startup
-> time. I close my primary gitk and git-gui Windows only once a week. ;-)
+Dmitry Potapov wrote:
+> On Mon, Sep 22, 2008 at 10:37:00AM +0300, Boaz Harrosh wrote:
+>> I have 1.6.0.1 I compiled here, and it has the same problem. So it is
+>> a very recent fix
+> 
+> I certainly tested 1.6.0.1 and does not have this problem, and it was
+> fixed a long time ago:
+> 
+> ===
+> commit d6b8fc303b389b026f2bf9918f6f83041488989b
+> Author: Junio C Hamano <gitster@pobox.com>
+> Date:   Thu Jan 31 01:17:48 2008 -0800
+> 
+>     gitignore(5): Allow "foo/" in ignore list to match directory "foo"
+> 
+>     A pattern "foo/" in the exclude list did not match directory
+>     "foo", but a pattern "foo" did.  This attempts to extend the
+>     exclude mechanism so that it would while not matching a regular
+>     file or a symbolic link "foo".  In order to differentiate a
+>     directory and non directory, this passes down the type of path
+>     being checked to excluded() function.
+> 
+>     A downside is that the recursive directory walk may need to run
+>     lstat(2) more often on systems whose "struct dirent" do not give
+>     the type of the entry; earlier it did not have to do so for an
+>     excluded path, but we now need to figure out if a path is a
+>     directory before deciding to exclude it.  This is especially bad
+>     because an idea similar to the earlier CE_UPTODATE optimization
+>     to reduce number of lstat(2) calls would by definition not apply
+>     to the codepaths involved, as (1) directories will not be
+>     registered in the index, and (2) excluded paths will not be in
+>     the index anyway.
+> ===
+> 
+> The patch is included in 1.5.5.
+> 
+> Dmitry
+> --
 
-As encoding lookups are currently cached, all this discussion is about
-the first viewing.
+Ok I found it. Regular subdirectories it works as you said,
+but soft-link to a folder does not. Sorry for the noise i didn't
+realize that in my test it was a simlink and not a full directory.
 
-This patch addresses the time necessary to convert an arbitrary
-encoding name to a name that is known to Tcl, or determine that it is
-not supported. Without the patch it is done using a linear search
-through a large table of aliases. In git-gui it caused a noticeable
-delay before the Encoding submenu, which lists all available
-encodings, was displayed.
+Please don't fix it if it will hurt performance, I'm happy with
+current solution as it is. Just maybe a small addition to the
+.gitignore documentation perhaps.
 
-Alexander
+Boaz
