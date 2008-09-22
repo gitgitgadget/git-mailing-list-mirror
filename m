@@ -1,59 +1,112 @@
-From: Petr Baudis <pasky@suse.cz>
-Subject: Re: [ANNOUNCE] TopGit v0.3
-Date: Mon, 22 Sep 2008 17:27:12 +0200
-Message-ID: <20080922152712.GN10360@machine.or.cz>
-References: <20080909231009.GD10544@machine.or.cz> <1221120192.8962.7.camel@heerbeest> <20080912110017.GW10360@machine.or.cz> <1221222433.29747.8.camel@heerbeest> <20080912131530.GZ10360@machine.or.cz> <20080912181442.GA5407@lapse.rw.madduck.net> <1221648520.30402.12.camel@heerbeest> <20080921142445.GJ10360@machine.or.cz> <1222074825.6698.13.camel@heerbeest>
+From: "Shawn O. Pearce" <spearce@spearce.org>
+Subject: Re: [PATCH 3/3] git abbref-ref: new porcelain for abbreviate_ref()
+Date: Mon, 22 Sep 2008 08:32:22 -0700
+Message-ID: <20080922153222.GD3669@spearce.org>
+References: <1222074591-26548-1-git-send-email-bert.wesarg@googlemail.com> <1222074591-26548-2-git-send-email-bert.wesarg@googlemail.com> <1222074591-26548-3-git-send-email-bert.wesarg@googlemail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: martin f krafft <madduck@madduck.net>, git@vger.kernel.org
-To: Jan Nieuwenhuizen <janneke-list@xs4all.nl>
-X-From: git-owner@vger.kernel.org Mon Sep 22 17:28:28 2008
+Content-Type: text/plain; charset=utf-8
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+	szeder@ira.uka.de
+To: Bert Wesarg <bert.wesarg@googlemail.com>
+X-From: git-owner@vger.kernel.org Mon Sep 22 17:33:33 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KhnKs-0000OO-Ah
-	for gcvg-git-2@gmane.org; Mon, 22 Sep 2008 17:28:26 +0200
+	id 1KhnPm-0002AP-Nb
+	for gcvg-git-2@gmane.org; Mon, 22 Sep 2008 17:33:31 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752645AbYIVP1Q (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 22 Sep 2008 11:27:16 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752638AbYIVP1Q
-	(ORCPT <rfc822;git-outgoing>); Mon, 22 Sep 2008 11:27:16 -0400
-Received: from w241.dkm.cz ([62.24.88.241]:46358 "EHLO machine.or.cz"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752635AbYIVP1P (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 22 Sep 2008 11:27:15 -0400
-Received: by machine.or.cz (Postfix, from userid 2001)
-	id 7C868393A370; Mon, 22 Sep 2008 17:27:12 +0200 (CEST)
+	id S1753795AbYIVPcZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 22 Sep 2008 11:32:25 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753044AbYIVPcY
+	(ORCPT <rfc822;git-outgoing>); Mon, 22 Sep 2008 11:32:24 -0400
+Received: from george.spearce.org ([209.20.77.23]:55203 "EHLO
+	george.spearce.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753768AbYIVPcX (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 22 Sep 2008 11:32:23 -0400
+Received: by george.spearce.org (Postfix, from userid 1001)
+	id CB04A3835F; Mon, 22 Sep 2008 15:32:22 +0000 (UTC)
 Content-Disposition: inline
-In-Reply-To: <1222074825.6698.13.camel@heerbeest>
-User-Agent: Mutt/1.5.16 (2007-06-09)
+In-Reply-To: <1222074591-26548-3-git-send-email-bert.wesarg@googlemail.com>
+User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/96481>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/96482>
 
-On Mon, Sep 22, 2008 at 11:13:45AM +0200, Jan Nieuwenhuizen wrote:
-> On zo, 2008-09-21 at 16:24 +0200, Petr Baudis wrote:
+Bert Wesarg <bert.wesarg@googlemail.com> wrote:
+> This gives direct access to the abbreviate_ref() function. The operation
+> mode defaults to the core.warnambiguousrefs value, like the refname:short
+> format, but can be explicitly changed with the --{,no}-strict option.
 > 
-> > The problem is that you can undo the merge content, but not the history
-> > information. So this revert can e.g. propagate even into branches which
-> > still *should* depend on the other branch, you get into trouble when you
-> > want to make your branch depend on the other one anyway, etc.
-> 
-> Ah, yes.  I see.  Does this mean that functionality for easy adding and
-> removing dependencies/patches from a branch can only be provided through
-> some sort of [unpublishable] patch based mechanism like stgit?
-> 
-> Possibly we'd need a kind of setup where stgit-like patch branches
-> can be "finalized" into topgit branches.  Hmm.
+> The bash completion script utilizes this new command.
 
-Do you really expect you will need this kind of functionality often,
-though? Adding dependencies is easy, and note that removing whole topic
-branches or deleting dependencies that were merged upstream _is_ doable.
+And it slows down too, doesn't it?  Now we are doing a fork per
+branch during completion.  Yikes.  Didn't you just post a series
+about making completion faster?
+ 
+> Junio, if this is not a porcelain, tell me.
+
+IMHO its plumbing.  Porcelain is used by a human.  Plumbing is the
+bits needed to make human interfaces.
+ 
+> diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
+> index 93f0881..7f002c0 100755
+> --- a/contrib/completion/git-completion.bash
+> +++ b/contrib/completion/git-completion.bash
+> @@ -112,9 +112,9 @@ __git_ps1 ()
+>  		fi
+>  
+>  		if [ -n "$1" ]; then
+> -			printf "$1" "${b##refs/heads/}$r"
+> +			printf "$1" "$(git abbrev-ref $b)$r"
+>  		else
+> -			printf " (%s)" "${b##refs/heads/}$r"
+> +			printf " (%s)" "$(git abbrev-ref $b)$r"
+>  		fi
+>  	fi
+>  }
+> @@ -162,7 +162,7 @@ __git_heads ()
+>  		case "$is_hash,$i" in
+>  		y,*) is_hash=n ;;
+>  		n,*^{}) is_hash=y ;;
+> -		n,refs/heads/*) is_hash=y; echo "${i#refs/heads/}" ;;
+> +		n,refs/heads/*) is_hash=y; echo "$(git abbrev-ref $i)" ;;
+>  		n,*) is_hash=y; echo "$i" ;;
+>  		esac
+>  	done
+> @@ -180,7 +180,7 @@ __git_tags ()
+>  		case "$is_hash,$i" in
+>  		y,*) is_hash=n ;;
+>  		n,*^{}) is_hash=y ;;
+> -		n,refs/tags/*) is_hash=y; echo "${i#refs/tags/}" ;;
+> +		n,refs/tags/*) is_hash=y; echo "$(git abbrev-ref $i)" ;;
+>  		n,*) is_hash=y; echo "$i" ;;
+>  		esac
+>  	done
+> @@ -199,9 +199,9 @@ __git_refs ()
+>  		case "$is_hash,$i" in
+>  		y,*) is_hash=n ;;
+>  		n,*^{}) is_hash=y ;;
+> -		n,refs/tags/*) is_hash=y; echo "${i#refs/tags/}" ;;
+> -		n,refs/heads/*) is_hash=y; echo "${i#refs/heads/}" ;;
+> -		n,refs/remotes/*) is_hash=y; echo "${i#refs/remotes/}" ;;
+> +		n,refs/tags/*) is_hash=y; echo "$(git abbrev-ref $i)" ;;
+> +		n,refs/heads/*) is_hash=y; echo "$(git abbrev-ref $i)" ;;
+> +		n,refs/remotes/*) is_hash=y; echo "$(git abbrev-ref $i)" ;;
+>  		n,*) is_hash=y; echo "$i" ;;
+>  		esac
+>  	done
+> @@ -222,7 +222,7 @@ __git_refs_remotes ()
+>  		case "$is_hash,$i" in
+>  		n,refs/heads/*)
+>  			is_hash=y
+> -			echo "$i:refs/remotes/$1/${i#refs/heads/}"
+> +			echo "$i:refs/remotes/$1/$(git abbrev-ref $i)"
+>  			;;
+>  		y,*) is_hash=n ;;
+>  		n,*^{}) is_hash=y ;;
 
 -- 
-				Petr "Pasky" Baudis
-The next generation of interesting software will be done
-on the Macintosh, not the IBM PC.  -- Bill Gates
+Shawn.
