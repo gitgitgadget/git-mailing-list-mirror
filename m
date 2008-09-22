@@ -1,69 +1,96 @@
-From: Linus Torvalds <torvalds@linux-foundation.org>
-Subject: Re: [PATCH] Do not perform cross-directory renames when creating
- packs
-Date: Mon, 22 Sep 2008 10:31:47 -0700 (PDT)
-Message-ID: <alpine.LFD.1.10.0809221029240.3265@nehalem.linux-foundation.org>
-References: <1222104021-28277-1-git-send-email-pasky@suse.cz>
+From: "Bert Wesarg" <bert.wesarg@googlemail.com>
+Subject: Re: [TopGit PATCH] prev/next/tsort: commands to explore dependencies
+Date: Mon, 22 Sep 2008 19:32:50 +0200
+Message-ID: <36ca99e90809221032x3003c1f7q8ef09cb92a0473ad@mail.gmail.com>
+References: <1221818101-14333-1-git-send-email-bert.wesarg@googlemail.com>
+	 <20080922153614.GO10360@machine.or.cz>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Git Mailing List <git@vger.kernel.org>,
-	Junio C Hamano <gitster@pobox.com>
-To: Petr Baudis <pasky@suse.cz>
-X-From: git-owner@vger.kernel.org Mon Sep 22 19:34:07 2008
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: "Petr Baudis" <pasky@suse.cz>
+X-From: git-owner@vger.kernel.org Mon Sep 22 19:34:08 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KhpIM-0003vM-QE
-	for gcvg-git-2@gmane.org; Mon, 22 Sep 2008 19:33:59 +0200
+	id 1KhpIN-0003vM-I5
+	for gcvg-git-2@gmane.org; Mon, 22 Sep 2008 19:34:00 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751672AbYIVRct (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 22 Sep 2008 13:32:49 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751632AbYIVRct
-	(ORCPT <rfc822;git-outgoing>); Mon, 22 Sep 2008 13:32:49 -0400
-Received: from smtp1.linux-foundation.org ([140.211.169.13]:40244 "EHLO
-	smtp1.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751100AbYIVRcs (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 22 Sep 2008 13:32:48 -0400
-Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [140.211.169.55])
-	by smtp1.linux-foundation.org (8.14.2/8.13.5/Debian-3ubuntu1.1) with ESMTP id m8MHVmCl027284
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Mon, 22 Sep 2008 10:31:49 -0700
-Received: from localhost (localhost [127.0.0.1])
-	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id m8MHVmJa020900;
-	Mon, 22 Sep 2008 10:31:48 -0700
-In-Reply-To: <1222104021-28277-1-git-send-email-pasky@suse.cz>
-User-Agent: Alpine 1.10 (LFD 962 2008-03-14)
-X-Spam-Status: No, hits=-5.434 required=5 tests=AWL,BAYES_00,OSDL_HEADER_SUBJECT_BRACKETED,PATCH_SUBJECT_OSDL
-X-Spam-Checker-Version: SpamAssassin 3.2.4-osdl_revision__1.47__
-X-MIMEDefang-Filter: lf$Revision: 1.188 $
-X-Scanned-By: MIMEDefang 2.63 on 140.211.169.13
+	id S1752029AbYIVRcy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 22 Sep 2008 13:32:54 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751985AbYIVRcy
+	(ORCPT <rfc822;git-outgoing>); Mon, 22 Sep 2008 13:32:54 -0400
+Received: from yw-out-2324.google.com ([74.125.46.28]:15499 "EHLO
+	yw-out-2324.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751796AbYIVRcv (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 22 Sep 2008 13:32:51 -0400
+Received: by yw-out-2324.google.com with SMTP id 9so248187ywe.1
+        for <git@vger.kernel.org>; Mon, 22 Sep 2008 10:32:50 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=googlemail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to
+         :subject:cc:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:references;
+        bh=OhDl5Xm+hg+QE6UNMqLRzBiEplwDC0TokXsplVweU5o=;
+        b=bsA8oD87hxCePz4Fvu3WfBfmLpKhfSURIQ9eWSqNecyYrgPf1MKbUKJT3k513mIDNx
+         wsIDeGHGwYdM6TjakYVC+7VG+1wNOUXeJsGO61N+daPBY/O9DQbTOOZQ7sP3gIzBPbUV
+         ybIaqw+OY1qy2dDLS8gpNFhP6Rlv/AEApU7p0=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=googlemail.com; s=gamma;
+        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
+         :content-type:content-transfer-encoding:content-disposition
+         :references;
+        b=XH3tIH+IhbYFiy1U3ECTuKb6BkFo4xKr0RkIKVy+igZZ+RANkSeZziYDqgAmDmATa5
+         1FSb/OrFEi4tT1gbYWPdlndYxViNLXHbYjqliu0LPLAi+eVeyf0FcwCk+/Qg+aw3bGdk
+         L83GfWfSf6pj7Xhx+wd5kZBxBWX39GA5ZiUMI=
+Received: by 10.151.13.7 with SMTP id q7mr7665835ybi.123.1222104770223;
+        Mon, 22 Sep 2008 10:32:50 -0700 (PDT)
+Received: by 10.150.204.17 with HTTP; Mon, 22 Sep 2008 10:32:50 -0700 (PDT)
+In-Reply-To: <20080922153614.GO10360@machine.or.cz>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/96499>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/96500>
 
-
-
-On Mon, 22 Sep 2008, Petr Baudis wrote:
+On Mon, Sep 22, 2008 at 17:36, Petr Baudis <pasky@suse.cz> wrote:
+>  Hi,
 >
-> A comment on top of create_tmpfile() describes caveats ('can have
-> problems on various systems (FAT, NFS, Coda)') that should apply
-> in this situation as well.  This in the end did not end up solving
-> any of my personal problems, but it might be a useful cleanup patch
-> nevertheless.
+> On Fri, Sep 19, 2008 at 11:55:00AM +0200, Bert Wesarg wrote:
+>> I hacked 3 commands to explore the dependencies of TopGit patches:
+>
+>  thanks, the idea of all three commands is good,
+>
+>>   I) tg prev [NAME]
+>>      outputs the dependencies of NAME
+>>
+>>  II) tg next [NAME]
+>>      outputs patches that depends on NAME
+>
+>  but I think it would be cleaner to add this functionality to
+> tg info...
+Right, but 'tg next' is shorter than any 'tg info --next'.
 
-Side note: the cross-directory avoidance for loose object creation _did_ 
-seem to clear up the original problems reported on NFS, so yes, this is 
-worth doing. Even if pack-file creation is such a heavy event that I 
-suspect that none of the timing/caching/whatever issues that were present 
-for loose objects really ever trigger in practice.
+>
+>> III) tg tsort [PATTERN]
+>>      outputs a topological order of all patches starting with PATTERN
+>
+> ...and tg summary (overally, to have a tree view of branches).
+Maybe something like the graph output from git rev-log --graph?
 
-> Signed-off-by: Petr Baudis <pasky@suse.cz>
+>> +                                     printf "%s\t%q\n" "${dep_rev}" "${dep}" >&3
+>> +                                     printf "%s\t%s\n" "${topic_rev}" "${dep_rev}"
+>
+> %q?
 
-Looks obvious enough. So:
+"and %q causes printf to output the corresponding argument in  a
+format that can be reused as shell input."
 
-Acked-by: Linus Torvalds <torvalds@linux-foundation.org>
+I thought that this would be needed.
 
-		Linus
+Bert
+>
+> --
+>                                Petr "Pasky" Baudis
