@@ -1,103 +1,70 @@
-From: Michael J Gruber <git@drmicha.warpmail.net>
-Subject: [PATCH v2] make "git remote" report multiple URLs
-Date: Mon, 22 Sep 2008 10:57:51 +0200
-Message-ID: <1222073871-495-1-git-send-email-git@drmicha.warpmail.net>
-References: <7vej3fswwe.fsf@gitster.siamese.dyndns.org>
-Cc: Michael J Gruber <git@drmicha.warpmail.net>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Sep 22 10:59:32 2008
+From: Dmitry Potapov <dpotapov@gmail.com>
+Subject: Re: [PATCH (GIT-GUI,GITK) 6/8] gitk: Port new encoding logic from git-gui.
+Date: Mon, 22 Sep 2008 13:01:51 +0400
+Message-ID: <20080922090151.GJ21650@dpotapov.dyndns.org>
+References: <1221685659-476-1-git-send-email-angavrilov@gmail.com> <bb6f213e0809190538m5bbfeb38o5510d06fa6757dd1@mail.gmail.com> <48D3A376.30905@viscovery.net> <200809212252.35769.angavrilov@gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: Johannes Sixt <j.sixt@viscovery.net>, git@vger.kernel.org,
+	"Shawn O. Pearce" <spearce@spearce.org>,
+	Paul Mackerras <paulus@samba.org>
+To: Alexander Gavrilov <angavrilov@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Sep 22 11:03:08 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KhhGP-0005I0-Br
-	for gcvg-git-2@gmane.org; Mon, 22 Sep 2008 10:59:25 +0200
+	id 1KhhJx-0006FM-VB
+	for gcvg-git-2@gmane.org; Mon, 22 Sep 2008 11:03:06 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751669AbYIVI6M (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 22 Sep 2008 04:58:12 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751760AbYIVI6M
-	(ORCPT <rfc822;git-outgoing>); Mon, 22 Sep 2008 04:58:12 -0400
-Received: from out1.smtp.messagingengine.com ([66.111.4.25]:47350 "EHLO
-	out1.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751648AbYIVI6L (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 22 Sep 2008 04:58:11 -0400
-Received: from compute1.internal (compute1.internal [10.202.2.41])
-	by out1.messagingengine.com (Postfix) with ESMTP id 9BD391632AA
-	for <git@vger.kernel.org>; Mon, 22 Sep 2008 04:58:10 -0400 (EDT)
-Received: from heartbeat2.messagingengine.com ([10.202.2.161])
-  by compute1.internal (MEProxy); Mon, 22 Sep 2008 04:58:10 -0400
-X-Sasl-enc: TjV5kCHeIQuy46jvOlAtueWPw+mEp0pSBkutQdKaLjNm 1222073889
-Received: from localhost (whitehead.math.tu-clausthal.de [139.174.44.12])
-	by mail.messagingengine.com (Postfix) with ESMTPSA id B9E462E890;
-	Mon, 22 Sep 2008 04:58:09 -0400 (EDT)
-X-Mailer: git-send-email 1.6.0.2.287.g3791f
-In-Reply-To: <7vej3fswwe.fsf@gitster.siamese.dyndns.org>
+	id S1751749AbYIVJB6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 22 Sep 2008 05:01:58 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751664AbYIVJB6
+	(ORCPT <rfc822;git-outgoing>); Mon, 22 Sep 2008 05:01:58 -0400
+Received: from fg-out-1718.google.com ([72.14.220.158]:45304 "EHLO
+	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751497AbYIVJB5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 22 Sep 2008 05:01:57 -0400
+Received: by fg-out-1718.google.com with SMTP id 19so1296998fgg.17
+        for <git@vger.kernel.org>; Mon, 22 Sep 2008 02:01:55 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:date:from:to:cc:subject
+         :message-id:references:mime-version:content-type:content-disposition
+         :in-reply-to:user-agent;
+        bh=Cun81zqjHewVjy5WmyKc0VDreICQSfWm2wOsAOXaops=;
+        b=KScr6tMCdvcSG32if60OjfjupqfRMo53nxnPXflmYTTantPW+l1RxLoMWZmTDpaISw
+         ta2UCQEGf0Ll4Qrg8UrOqiV1VjMAfirSrxPriFpJBCR1qIessrryBiiobAhYK53ZPx+6
+         SOo6xnltfVttZB6GaidJX352rIpkP+Y7dR5Gg=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        b=Ng0rUXCizIKA9mXeHw67D4JE8SrOYvqCK7lWoDkbpLEgIkVYjgV6IgFn04jJxUjeiz
+         INnJRc7EU9UQKuEI4mfePugnif2gdsOSEZzWm30UOdVRLLH+06PiqRIMyAciTQZisBun
+         wONj3tRKiVGcf3juxlFN8ErZ1Cv1wvV1Ac+mQ=
+Received: by 10.86.80.17 with SMTP id d17mr4537043fgb.24.1222074115959;
+        Mon, 22 Sep 2008 02:01:55 -0700 (PDT)
+Received: from localhost (ppp85-140-171-157.pppoe.mtu-net.ru [85.140.171.157])
+        by mx.google.com with ESMTPS id l19sm5078715fgb.7.2008.09.22.02.01.53
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Mon, 22 Sep 2008 02:01:54 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <200809212252.35769.angavrilov@gmail.com>
+User-Agent: Mutt/1.5.13 (2006-08-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/96461>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/96462>
 
-This patch makes "git remote -v" and "git remote show" report multiple URLs
-rather than warn about them. Multiple URLs are OK for pushing into
-multiple repos simultaneously. Without "-v" each repo is shown once only.
+On Sun, Sep 21, 2008 at 10:52:35PM +0400, Alexander Gavrilov wrote:
+> 
+> I made a patch to optimize attribute lookup. I'm afraid that further optimization
+> is impossible without interface changes in git-check-attr, or reimplementing
+> the attribute parser in Tcl.
 
-Signed-off-by: Michael J Gruber <git@drmicha.warpmail.net>
----
- builtin-remote.c |   23 +++++++++++++++--------
- 1 files changed, 15 insertions(+), 8 deletions(-)
+I wonder would not make sense to add --stdin-paths option to git
+check-attr in the same way as we have for git hash-object?
 
-Change in v2: report each repo once only if "-v" is not used (i.e. URL is not shown),
-as requested by JC.
-
-JC wrote:
-> MJG wrote:
->> This passes all tests, so I think the new output does not break anything.
-
-> Or just there is no existing tests that verify the output from this command.
-
-JC, sounds as if you're a mathematician, as well ;)
-
-diff --git a/builtin-remote.c b/builtin-remote.c
-index 01945a8..1e2edc2 100644
---- a/builtin-remote.c
-+++ b/builtin-remote.c
-@@ -652,10 +652,13 @@ static int get_one_entry(struct remote *remote, void *priv)
- {
- 	struct string_list *list = priv;
- 
--	string_list_append(remote->name, list)->util = remote->url_nr ?
--		(void *)remote->url[0] : NULL;
--	if (remote->url_nr > 1)
--		warning("Remote %s has more than one URL", remote->name);
-+	if (remote->url_nr > 0) {
-+		int i;
-+
-+		for (i = 0; i < remote->url_nr; i++)
-+			string_list_append(remote->name, list)->util = (void *)remote->url[i];
-+	} else
-+		string_list_append(remote->name, list)->util = NULL;
- 
- 	return 0;
- }
-@@ -671,10 +674,14 @@ static int show_all(void)
- 		sort_string_list(&list);
- 		for (i = 0; i < list.nr; i++) {
- 			struct string_list_item *item = list.items + i;
--			printf("%s%s%s\n", item->string,
--				verbose ? "\t" : "",
--				verbose && item->util ?
--					(const char *)item->util : "");
-+			if (verbose)
-+				printf("%s\t%s\n", item->string,
-+					item->util ? (const char *)item->util : "");
-+			else {
-+				if (i && !strcmp((item - 1)->string, item->string))
-+					continue;
-+				printf("%s\n", item->string);
-+			}
- 		}
- 	}
- 	return result;
--- 
-1.6.0.2.287.g3791f
+Dmitry
