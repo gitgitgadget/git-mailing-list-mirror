@@ -1,110 +1,102 @@
-From: Brandon Casey <casey@nrlssc.navy.mil>
-Subject: [PATCH] builtin-prune.c: prune temporary packs in <object_dir>/pack
- directory
-Date: Mon, 22 Sep 2008 18:34:26 -0500
-Message-ID: <KKSursEoVthEbqc_O82_QIafgU9zgb4bQYP7w6x9ulU85L2Nixe_9g@cipher.nrlssc.navy.mil>
-References: <1222104021-28277-1-git-send-email-pasky@suse.cz>
+From: "Sean Davis" <sdavis2@mail.nih.gov>
+Subject: git http-push and MKCOL error (22/409)
+Date: Mon, 22 Sep 2008 19:51:02 -0400
+Message-ID: <264855a00809221651i170c7f93o4f063f0cedeae13c@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-Cc: Git Mailing List <git@vger.kernel.org>,
-	Junio C Hamano <gitster@pobox.com>
-To: Petr Baudis <pasky@suse.cz>
-X-From: git-owner@vger.kernel.org Tue Sep 23 01:35:47 2008
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Sep 23 01:52:27 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KhuwU-0003z8-7i
-	for gcvg-git-2@gmane.org; Tue, 23 Sep 2008 01:35:46 +0200
+	id 1KhvCW-0001Oq-PT
+	for gcvg-git-2@gmane.org; Tue, 23 Sep 2008 01:52:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754031AbYIVXeh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 22 Sep 2008 19:34:37 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753751AbYIVXeh
-	(ORCPT <rfc822;git-outgoing>); Mon, 22 Sep 2008 19:34:37 -0400
-Received: from mail1.nrlssc.navy.mil ([128.160.35.1]:56932 "EHLO
-	mail.nrlssc.navy.mil" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753341AbYIVXeg (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 22 Sep 2008 19:34:36 -0400
-Received: by mail.nrlssc.navy.mil id m8MNYQ3A025142; Mon, 22 Sep 2008 18:34:27 -0500
-In-Reply-To: <1222104021-28277-1-git-send-email-pasky@suse.cz>
-X-OriginalArrivalTime: 22 Sep 2008 23:34:26.0792 (UTC) FILETIME=[C07B4680:01C91D0B]
+	id S1754142AbYIVXvI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 22 Sep 2008 19:51:08 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754172AbYIVXvG
+	(ORCPT <rfc822;git-outgoing>); Mon, 22 Sep 2008 19:51:06 -0400
+Received: from rn-out-0910.google.com ([64.233.170.189]:56934 "EHLO
+	rn-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754104AbYIVXvE (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 22 Sep 2008 19:51:04 -0400
+Received: by rn-out-0910.google.com with SMTP id k40so572080rnd.17
+        for <git@vger.kernel.org>; Mon, 22 Sep 2008 16:51:03 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:sender
+         :to:subject:mime-version:content-type:content-transfer-encoding
+         :content-disposition:x-google-sender-auth;
+        bh=lCLPGkqTixOTEia0BY1+Xh1PPtn4B0jQg/IVuNV3L1o=;
+        b=FppIGfNFqGynlMQyjel8DCy6UjSs9BXKp05oEzI27WVPKYphwQ69Axc2DtY93W+iWs
+         A2YxLg3uVqNL+5KFmM8feI8P53ZDwFFgbKvkGoxusbWykVyR4Qt786AzJYyApXhfq6rY
+         8FQWJwz1t49tzw/M0DpHJRfYxXZLRL4/C4TuA=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:sender:to:subject:mime-version:content-type
+         :content-transfer-encoding:content-disposition:x-google-sender-auth;
+        b=ZcMMpAxQXQlbEmXV5NA0LqW1/52Ikd5ajHd4k4IiC6yVNZezP3SQsGUTW/FCDThQ3w
+         GSiFZPvF54FQHiwdfLzB41K2iokchKgm6iIE7PyD9ijtbpUPmi+XFSbt9gLOPifF7ZlK
+         qEQpIkGoAl2GvqNLuos9PQgCVZctMgfUoAG+c=
+Received: by 10.100.132.2 with SMTP id f2mr3798375and.36.1222127462959;
+        Mon, 22 Sep 2008 16:51:02 -0700 (PDT)
+Received: by 10.100.197.2 with HTTP; Mon, 22 Sep 2008 16:51:02 -0700 (PDT)
+Content-Disposition: inline
+X-Google-Sender-Auth: 9146d682dc6ef6b0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/96516>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/96517>
 
-Signed-off-by: Brandon Casey <casey@nrlssc.navy.mil>
----
+I built git from source for mac os and after updating curl to the
+latest version and installing the latest expat (both from source), I
+have git-http-push installed.  I have a bare repository in the webDAV
+directory (which was placed there over a webDAV mount, so it appears
+that webDAV is working).  When I try to push to it, I get the
+following:
 
-Re: [PATCH] Do not perform cross-directory renames when creating packs
+sdavis$ git push http://sdavis@example.com/git/stuff.git master
+Fetching remote heads...
+  refs/
+  refs/heads/
+updating 'refs/heads/master'
+  from 0000000000000000000000000000000000000000
+  to   f1ea50f8f60497ea3eca2355c10c141734db6451
+    sending 3070 objects
+MKCOL d7a940ff6c7bbc924f6e2d2c319aea22b8b0fdac failed, aborting (22/409)
+MKCOL c9ac4c17871308e520a9944e12d846be9f24f91d failed, aborting (22/409)
+MKCOL 1ac1bf55510deade68b14debd71357e3d929fe1c failed, aborting (22/409)
+MKCOL da5e8ff9649c2b6ee0fde2280163ab4b399a1f1a failed, aborting (22/409)
+MKCOL 87fc8ecfa98c36e0f9e44ed772d49d02378fc191 failed, aborting (22/409)
+UNLOCK HTTP error 500
+error: failed to push some refs to 'http://sdavis@example.com/git/stuff.git'
 
-I think something like this should be applied on top.
+The apache error log shows:
 
--brandon
+[Mon Sep 22 19:48:53 2008] [error] [client 156.40.148.25] File does
+not exist: /home/www/git/stuff.git/info
+[Mon Sep 22 19:48:53 2008] [error] [client 156.40.148.25] File does
+not exist: /home/www/git/stuff.git/objects
+[Mon Sep 22 19:49:47 2008] [error] [client 156.40.148.25] (2)No such
+file or directory: Cannot create collection; intermediate collection
+does not exist.  [409, #0]
+[Mon Sep 22 19:49:47 2008] [error] [client 156.40.148.25] (2)No such
+file or directory: Cannot create collection; intermediate collection
+does not exist.  [409, #0]
+[Mon Sep 22 19:49:47 2008] [error] [client 156.40.148.25] (2)No such
+file or directory: Cannot create collection; intermediate collection
+does not exist.  [409, #0]
+[Mon Sep 22 19:49:47 2008] [error] [client 156.40.148.25] (2)No such
+file or directory: Cannot create collection; intermediate collection
+does not exist.  [409, #0]
+[Mon Sep 22 19:49:47 2008] [error] [client 156.40.148.25] (2)No such
+file or directory: Cannot create collection; intermediate collection
+does not exist.  [409, #0]
 
+Any ideas?
 
- builtin-prune.c |   18 ++++++++++--------
- 1 files changed, 10 insertions(+), 8 deletions(-)
-
-diff --git a/builtin-prune.c b/builtin-prune.c
-index c767a0a..fc8be45 100644
---- a/builtin-prune.c
-+++ b/builtin-prune.c
-@@ -13,7 +13,7 @@ static const char * const prune_usage[] = {
- static int show_only;
- static unsigned long expire;
- 
--static int prune_tmp_object(char *path, const char *filename)
-+static int prune_tmp_object(const char *path, const char *filename)
- {
- 	const char *fullpath = mkpath("%s/%s", path, filename);
- 	if (expire) {
-@@ -113,21 +113,19 @@ static void prune_object_dir(const char *path)
-  * files begining with "tmp_") accumulating in the
-  * object directory.
-  */
--static void remove_temporary_files(void)
-+static void remove_temporary_files(const char *path)
- {
- 	DIR *dir;
- 	struct dirent *de;
--	char* dirname=get_object_directory();
- 
--	dir = opendir(dirname);
-+	dir = opendir(path);
- 	if (!dir) {
--		fprintf(stderr, "Unable to open object directory %s\n",
--			dirname);
-+		fprintf(stderr, "Unable to open directory %s\n", path);
- 		return;
- 	}
- 	while ((de = readdir(dir)) != NULL)
- 		if (!prefixcmp(de->d_name, "tmp_"))
--			prune_tmp_object(dirname, de->d_name);
-+			prune_tmp_object(path, de->d_name);
- 	closedir(dir);
- }
- 
-@@ -141,6 +139,7 @@ int cmd_prune(int argc, const char **argv, const char *prefix)
- 			 "expire objects older than <time>"),
- 		OPT_END()
- 	};
-+	char *s;
- 
- 	save_commit_buffer = 0;
- 	init_revisions(&revs, prefix);
-@@ -163,6 +162,9 @@ int cmd_prune(int argc, const char **argv, const char *prefix)
- 	prune_object_dir(get_object_directory());
- 
- 	prune_packed_objects(show_only);
--	remove_temporary_files();
-+	remove_temporary_files(get_object_directory());
-+	s = xstrdup(mkpath("%s/pack", get_object_directory()));
-+	remove_temporary_files(s);
-+	free(s);
- 	return 0;
- }
--- 
-1.6.0.1.244.gdc19
+Thanks,
+Sean
