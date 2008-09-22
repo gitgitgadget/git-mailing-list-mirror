@@ -1,66 +1,82 @@
-From: Guo Tang <tangguo77@gmail.com>
-Subject: out of memory problem
-Date: Sun, 21 Sep 2008 15:59:30 -0700 (PDT)
-Message-ID: <alpine.LFD.2.00.0809211556030.19373@homelinux>
+From: mwolfe38 <mwolfe38@gmail.com>
+Subject: Re: ignoring files/directories in git
+Date: Sun, 21 Sep 2008 17:06:54 -0700 (PDT)
+Message-ID: <19599905.post@talk.nabble.com>
+References: <19596152.post@talk.nabble.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-To: Git mailing list <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Mon Sep 22 01:01:03 2008
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Sep 22 02:08:10 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KhXvA-0006Qo-GT
-	for gcvg-git-2@gmane.org; Mon, 22 Sep 2008 01:00:53 +0200
+	id 1KhYyD-0005W4-Ay
+	for gcvg-git-2@gmane.org; Mon, 22 Sep 2008 02:08:05 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752911AbYIUW7l (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 21 Sep 2008 18:59:41 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752921AbYIUW7k
-	(ORCPT <rfc822;git-outgoing>); Sun, 21 Sep 2008 18:59:40 -0400
-Received: from wf-out-1314.google.com ([209.85.200.172]:61567 "EHLO
-	wf-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752897AbYIUW7h (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 21 Sep 2008 18:59:37 -0400
-Received: by wf-out-1314.google.com with SMTP id 27so1326319wfd.4
-        for <git@vger.kernel.org>; Sun, 21 Sep 2008 15:59:37 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:x-x-sender:to:subject
-         :message-id:user-agent:mime-version:content-type:from;
-        bh=NRW7Oei3zG+12sAk/uXmb+XvwnI79Nwv+W/40KR145k=;
-        b=Pby2SqjYagTIsHLeCW5XgYMZFGMEyHDUC7azsPegdVdTnO7n7L82w+AoXMzroDul+X
-         2yosoPDzSjAXeufeQIIz4QgOtGn280t3WRu5+n6XI1ULUunq55oDqXSdK0+YLeZ2wINM
-         VvXnMqFspMj+5zY819sAgfg4O72hUxTQAQ++4=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=date:x-x-sender:to:subject:message-id:user-agent:mime-version
-         :content-type:from;
-        b=OUXNbezytJoP13aSyNyj0bMNnx2niIwDEudQFm80yTAtxrbM9G2XwSlnvM67Gv/gtY
-         UxIuOnJi/Va/7K+6o4MiUiVbnrzVgln7wglxgyPV4AyDcW9seTZzh+v6bEo2abXwPRM9
-         XkLGjmFytgmRTatzfvolTFIvZqFiYkgeTCfdg=
-Received: by 10.142.223.4 with SMTP id v4mr1098277wfg.172.1222037977275;
-        Sun, 21 Sep 2008 15:59:37 -0700 (PDT)
-Received: from ?192.168.0.103? ( [71.112.83.225])
-        by mx.google.com with ESMTPS id 31sm6185974wff.16.2008.09.21.15.59.35
-        (version=SSLv3 cipher=RC4-MD5);
-        Sun, 21 Sep 2008 15:59:36 -0700 (PDT)
-X-X-Sender: gtang@homelinux
-User-Agent: Alpine 2.00 (LFD 1167 2008-08-23)
+	id S1752822AbYIVAG4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 21 Sep 2008 20:06:56 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752800AbYIVAG4
+	(ORCPT <rfc822;git-outgoing>); Sun, 21 Sep 2008 20:06:56 -0400
+Received: from kuber.nabble.com ([216.139.236.158]:35412 "EHLO
+	kuber.nabble.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752668AbYIVAGz (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 21 Sep 2008 20:06:55 -0400
+Received: from isper.nabble.com ([192.168.236.156])
+	by kuber.nabble.com with esmtp (Exim 4.63)
+	(envelope-from <lists@nabble.com>)
+	id 1KhYx4-0005ji-TK
+	for git@vger.kernel.org; Sun, 21 Sep 2008 17:06:54 -0700
+In-Reply-To: <19596152.post@talk.nabble.com>
+X-Nabble-From: mwolfe38@gmail.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/96445>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/96446>
 
-Gentlemen,
 
-I try to run "git gc" on linux kernel tree. The virtual memory keeps 
-going up until over 3GB, then crash. 
-Tried twice with the v1.6.0.2, same result.
-Then I used the git coming with FC9 (v1.5.5.1), the peak virutal memory 
-usage is about 1.5GB. "git gc" finished without any trouble. 
+I just thought that I would add that the reason is a bug in the 1.5.4.3
+version that I am using which is the ubuntu 8.04 repository version.
+According to some developers, the current version should fix this issue.
 
-Could there be a memory leak in v1.6.0.2?
 
-Thanks,
-Guo
+mwolfe38 wrote:
+> 
+> I'm working on a project by myself and using git mostly just to learn
+> about it.
+> In my project I have several directories I want to have git ignore. One of
+> them being
+> cache/ and the other log/
+> I've added them to the .gitignore file which I have in the initial
+> directory of the repository
+> The contents of my gitignore are:
+> 
+> .settings
+> .cache
+> cache/
+> log/
+> .project
+> 
+> However, if I do 
+> git add .
+> It will add the files from cache and log anyways.
+> I know git add . will add anything that hasn't been added but shouldn't it
+> ignore files in .gitignore?
+> If not, what is the point, I would just ignore them manually anyways. 
+> The main reason i like doing git add .
+> is because i'm using symfony php framework which makes good use of scripts
+> which generates lots if initial files for you and thus adding one at a
+> time would be a pain.
+> 
+> Any idea what might be going on here?  I thought maybe I had added those
+> directories before putting them in .gitignore so i used git rm -r to
+> remove them but they still show back up with doing git add .
+> 
+> Thanks in advance
+> 
+
+-- 
+View this message in context: http://www.nabble.com/ignoring-files-directories-in-git-tp19596152p19599905.html
+Sent from the git mailing list archive at Nabble.com.
