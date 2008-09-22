@@ -1,67 +1,71 @@
-From: Frederik Hohlfeld <frederik.hohlfeld@googlemail.com>
-Subject: Re: [CORRECTION] Git-1.6.0.2-preview20080921 on Windows
-Date: Mon, 22 Sep 2008 10:18:05 +0000 (UTC)
-Message-ID: <loom.20080922T101605-640@post.gmane.org>
-References: <82166911-C34F-439C-A2F3-CEBD7346A1D6@zib.de> <691F01A6-CA78-46DA-8388-C8339A3F0F04@zib.de> <Pine.LNX.4.64.0809220939140.20111@ds9.cixit.se>
+From: Dmitry Potapov <dpotapov@gmail.com>
+Subject: Re: ignoring files/directories in git
+Date: Mon, 22 Sep 2008 16:19:20 +0400
+Message-ID: <20080922121920.GL21650@dpotapov.dyndns.org>
+References: <19596152.post@talk.nabble.com> <19599905.post@talk.nabble.com> <48D74B1C.6020408@panasas.com> <20080922085200.GI21650@dpotapov.dyndns.org> <48D77643.1090908@panasas.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Sep 22 14:16:17 2008
+Cc: mwolfe38 <mwolfe38@gmail.com>, git@vger.kernel.org
+To: Boaz Harrosh <bharrosh@panasas.com>
+X-From: git-owner@vger.kernel.org Mon Sep 22 14:20:55 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KhkKu-0000Wb-Fs
-	for gcvg-git-2@gmane.org; Mon, 22 Sep 2008 14:16:16 +0200
+	id 1KhkP5-0001x3-Vq
+	for gcvg-git-2@gmane.org; Mon, 22 Sep 2008 14:20:36 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751815AbYIVMPI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 22 Sep 2008 08:15:08 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751840AbYIVMPH
-	(ORCPT <rfc822;git-outgoing>); Mon, 22 Sep 2008 08:15:07 -0400
-Received: from main.gmane.org ([80.91.229.2]:34432 "EHLO ciao.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751749AbYIVMPG (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 22 Sep 2008 08:15:06 -0400
-Received: from root by ciao.gmane.org with local (Exim 4.43)
-	id 1KhkJj-0000zZ-AJ
-	for git@vger.kernel.org; Mon, 22 Sep 2008 12:15:03 +0000
-Received: from e179247195.adsl.alicedsl.de ([85.179.247.195])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Mon, 22 Sep 2008 12:15:03 +0000
-Received: from frederik.hohlfeld by e179247195.adsl.alicedsl.de with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Mon, 22 Sep 2008 12:15:03 +0000
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@ger.gmane.org
-X-Gmane-NNTP-Posting-Host: main.gmane.org
-User-Agent: Loom/3.14 (http://gmane.org/)
-X-Loom-IP: 85.179.247.195 (Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9.0.1) Gecko/2008070206 Firefox/3.0.1)
+	id S1751909AbYIVMT2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 22 Sep 2008 08:19:28 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751895AbYIVMT1
+	(ORCPT <rfc822;git-outgoing>); Mon, 22 Sep 2008 08:19:27 -0400
+Received: from fg-out-1718.google.com ([72.14.220.157]:39125 "EHLO
+	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751878AbYIVMT1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 22 Sep 2008 08:19:27 -0400
+Received: by fg-out-1718.google.com with SMTP id 19so1349053fgg.17
+        for <git@vger.kernel.org>; Mon, 22 Sep 2008 05:19:24 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:date:from:to:cc:subject
+         :message-id:references:mime-version:content-type:content-disposition
+         :in-reply-to:user-agent;
+        bh=Pk8OvV2HysCz/GgDvpOfQgNM96yAQtx2GiGcdxf75BI=;
+        b=Bv2Dkdbj3QA48S7bWO1HJBEUWs9iBaP4VPdhe5sBrokgEuvEuLk6z5wXAJrXhx/a4E
+         hGeA0p+tlC5EfuLIxycURDVwnOq3Rue8udnM1a3y2nLS0JKsbC3JmObVWjhEe9wqCcTF
+         eRfTGVavxz1ZFdvavIhEOs+/ysZFq4eK+AlLU=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        b=gZyyIcIMsgiF0Qz5nKuuFRZkYMPfhdb3G4TKO6t2ioj+Vvrz7BHlXADESC5gL/4XXA
+         8bBloWoGxW/ndKpPSn7ViA+5wjm33WE9ACUeK7CBKz5SYPwBADikQRNs3JnT2XW+LY35
+         e8HQ87C8Y1i9bx4uaEvsrAeBg5XCEtIzw9VYw=
+Received: by 10.86.95.8 with SMTP id s8mr4708672fgb.6.1222085964472;
+        Mon, 22 Sep 2008 05:19:24 -0700 (PDT)
+Received: from localhost (ppp85-141-148-201.pppoe.mtu-net.ru [85.141.148.201])
+        by mx.google.com with ESMTPS id l19sm5291255fgb.7.2008.09.22.05.19.22
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Mon, 22 Sep 2008 05:19:23 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <48D77643.1090908@panasas.com>
+User-Agent: Mutt/1.5.13 (2006-08-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/96475>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/96476>
 
-Hi
-
-Peter Krefting <peter <at> softwolves.pp.se> writes:
-
+On Mon, Sep 22, 2008 at 01:41:07PM +0300, Boaz Harrosh wrote:
 > 
-> Steffen Prohaska:
-> 
-> > Git-1.6.0.2-preview20080921 for Windows is available at
-> >    http://code.google.com/p/msysgit/downloads
-> 
-> Thank you!
-> 
-> After installing and running some simple tests (some command line
-> commands, git gui, gitk), everything seems to be working just fine.
+> Ok I found it. Regular subdirectories it works as you said,
+> but soft-link to a folder does not.
 
-Do I understand it right, that this is also without working git-svn (or maybe
-even without git-svn at all)?
+Why should it? Git does not follow symbolic links regardless whether
+they point to files or directories. In fact, Git does extra checks to
+avoid something like: symlink-to-dir/normal-file to be added as a
+normal file. There was some discussion about it a couple months ago
+("Not going beyond symbolic links").
 
-Thanks anyway to the msysgit people for the new Windows build.
 
-Frederik Hohlfeld
+Dmitry
