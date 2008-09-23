@@ -1,79 +1,150 @@
-From: Dmitry Potapov <dpotapov@gmail.com>
-Subject: Re: Locking binary files
-Date: Wed, 24 Sep 2008 00:46:16 +0400
-Message-ID: <20080923204616.GS21650@dpotapov.dyndns.org>
-References: <94c1db200809222333q4953a6b9g8ce0c1cd4b8f5eb4@mail.gmail.com> <94c1db200809222339t7d65081eq7471fef86fb5ec73@mail.gmail.com> <48D8983C.7070506@op5.se> <94c1db200809230054t20e7e61dh5022966d4112eee6@mail.gmail.com> <48D8A97E.8070003@op5.se> <94c1db200809230656q4a9a765dw2354c0058b1d940c@mail.gmail.com>
+From: Andreas Ericsson <ae@op5.se>
+Subject: [PATCH 1/3] Prepare for non-interactive merge-preserving rebase
+Date: Tue, 23 Sep 2008 22:57:26 +0200
+Message-ID: <48D95836.6040200@op5.se>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Andreas Ericsson <ae@op5.se>,
-	Git Mailing List <git@vger.kernel.org>
-To: Mario Pareja <mpareja.dev@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Sep 23 22:47:49 2008
+Content-Type: text/plain; charset=ISO-8859-15; format=flowed
+Content-Transfer-Encoding: 7bit
+To: Git Mailing List <git@vger.kernel.org>,
+	Junio C Hamano <gitster@pobox.com>,
+	Stephen Haberman <stephen@exigencecorp.com>
+X-From: git-owner@vger.kernel.org Tue Sep 23 22:58:48 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KiEnO-0003Ln-5N
-	for gcvg-git-2@gmane.org; Tue, 23 Sep 2008 22:47:42 +0200
+	id 1KiEy7-00081W-F2
+	for gcvg-git-2@gmane.org; Tue, 23 Sep 2008 22:58:47 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753127AbYIWUqY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 23 Sep 2008 16:46:24 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753196AbYIWUqX
-	(ORCPT <rfc822;git-outgoing>); Tue, 23 Sep 2008 16:46:23 -0400
-Received: from ey-out-2122.google.com ([74.125.78.26]:57520 "EHLO
-	ey-out-2122.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755206AbYIWUqW (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 23 Sep 2008 16:46:22 -0400
-Received: by ey-out-2122.google.com with SMTP id 6so672599eyi.37
-        for <git@vger.kernel.org>; Tue, 23 Sep 2008 13:46:20 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:cc:subject
-         :message-id:references:mime-version:content-type:content-disposition
-         :in-reply-to:user-agent;
-        bh=hJ5voK6SEcjd72xMTg0kVSNCwLHikFwHCCBtuDV3s28=;
-        b=IihqpDPAupSRXOpXJbOaU1nXoBPMjLbn54I4djmIs6T2gPMHQ+q3gxUixqpOTMdja9
-         QHr7oMLEWtOibNQaVaT/Ozz/yBcYrtsXIsvnWYy1WQj5vs3T9PE5/tJpCK9g5I4rgdld
-         ZQ5sWw+KhrDdtPibmPcuYr4RIYRXqi0BwW74w=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        b=cWkBzjgZMVWGJwE7IX0ozMKO+ABdFLn4eyUpXDSn8V5PVcmxh+aTBy6L1xjHDyNlj0
-         UMsD0J/iVQy7stQyZSC0uPDeSyECX1FMwTVaNT23YMbl8VDln0tTDECW9U66xEUCdlf1
-         I14qPpA2k4U9/tpsDJmGfGzSO+gedb5gG48+4=
-Received: by 10.210.104.20 with SMTP id b20mr7232192ebc.30.1222202780241;
-        Tue, 23 Sep 2008 13:46:20 -0700 (PDT)
-Received: from localhost (ppp85-140-170-49.pppoe.mtu-net.ru [85.140.170.49])
-        by mx.google.com with ESMTPS id 10sm3504499eyd.6.2008.09.23.13.46.17
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Tue, 23 Sep 2008 13:46:18 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <94c1db200809230656q4a9a765dw2354c0058b1d940c@mail.gmail.com>
-User-Agent: Mutt/1.5.13 (2006-08-11)
+	id S1752505AbYIWU5f (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 23 Sep 2008 16:57:35 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752381AbYIWU5f
+	(ORCPT <rfc822;git-outgoing>); Tue, 23 Sep 2008 16:57:35 -0400
+Received: from mail.op5.se ([193.201.96.20]:55920 "EHLO mail.op5.se"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751972AbYIWU5e (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 23 Sep 2008 16:57:34 -0400
+Received: from localhost (localhost.localdomain [127.0.0.1])
+	by mail.op5.se (Postfix) with ESMTP id 5CD9D24B0013;
+	Tue, 23 Sep 2008 22:48:08 +0200 (CEST)
+X-Virus-Scanned: amavisd-new at 
+X-Spam-Flag: NO
+X-Spam-Score: -3.281
+X-Spam-Level: 
+X-Spam-Status: No, score=-3.281 tagged_above=-10 required=6.6
+	tests=[AWL=-0.782, BAYES_00=-2.599, RDNS_NONE=0.1]
+Received: from mail.op5.se ([127.0.0.1])
+	by localhost (mail.op5.se [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id w15WE93N4onq; Tue, 23 Sep 2008 22:48:02 +0200 (CEST)
+Received: from clix.int.op5.se (unknown [172.27.78.6])
+	by mail.op5.se (Postfix) with ESMTP id 75AB21B8004D;
+	Tue, 23 Sep 2008 22:48:01 +0200 (CEST)
+User-Agent: Thunderbird 2.0.0.16 (X11/20080723)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/96592>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/96593>
 
-On Tue, Sep 23, 2008 at 09:56:57AM -0400, Mario Pareja wrote:
-> 
-> The SVN client will make locked files read-only until a lock is
-> obtained for them.  This helps "remind" you that a lock should be
-> obtained before editing such a file. Requiring the developer to obtain
-> a lock ensures that nobody else is editing the file and prevents
-> wasted work.  Upon commit, the file is marked as unlocked and the
-> local file is once again read-only.
+This patch adds two tests (really three, but one of
+them just handles setup) which we currently expect
+to fail.
 
-The approach that SVN takes is not only impossible for distributed
-environment, it does not work even in a _single_ repository where you
-have branching and merging. If you have a topic branch then your lock
-will have a zero effect on other developers or lock of other developers
-on you. Obviously, you are going to have the binary merge conflict at
-the end. But it is even worse than that. Somebody locked a file on the
-master branch and you clone from it. Now, this somebody unlocked this
-file, but this file on your branch remains locked but this person, and
-this person may even not aware that about your branch. That is insane!
+One of them tests "git rebase -p", without the -i flag,
+to make sure it works without phony editors and suchlike.
 
-Dmitry
+The other tests "git pull --rebase --preserve-merges"
+to make sure that the same functionality exists there.
+
+The test was originally written by Stephen Habermann
+<stephen@exigencecorp.com> but has been significantly
+modified since its creation.
+
+Signed-off-by: Andreas Ericsson <ae@op5.se>
+---
+
+Stephen, I had to modify the tests a bit to get them to work with
+how I implemented the merge-preserving rebase, and also to remove
+a lot of the cruft that was previously in there. Hope you're ok
+with the attribution in the commit message.
+
+ t/t3409-rebase-preserve-merges.sh |   68 +++++++++++++++++++++++++++++++++++++
+ 1 files changed, 68 insertions(+), 0 deletions(-)
+ create mode 100644 t/t3409-rebase-preserve-merges.sh
+
+diff --git a/t/t3409-rebase-preserve-merges.sh b/t/t3409-rebase-preserve-merges.sh
+new file mode 100644
+index 0000000..532b220
+--- /dev/null
++++ b/t/t3409-rebase-preserve-merges.sh
+@@ -0,0 +1,68 @@
++#!/bin/sh
++#
++# Copyright(C) 2008 Stephen Habermann & Andreas Ericsson
++#
++test_description='git rebase -p should preserve merges
++
++This test runs various incantations of "git rebase -p" and checks
++that merges are properly carried along
++'
++. ./test-lib.sh
++
++GIT_AUTHOR_EMAIL=bogus_email_address
++export GIT_AUTHOR_EMAIL
++
++#echo 'Setting up:
++#
++#A1--A2  <-- origin/master
++# \   \
++#  B1--M  <-- topic
++#   \
++#    B2  <-- origin/topic
++#
++#'
++
++test_expect_success 'setup for merge-preserving rebase' \
++	'echo First > A &&
++	git add A &&
++	git-commit -m "Add A1" &&
++	git checkout -b topic &&
++	echo Second > B &&
++	git add B &&
++	git-commit -m "Add B1" &&
++	git checkout -f master &&
++	echo Third >> A &&
++	git-commit -a -m "Modify A2" &&
++
++	git clone ./. clone1 &&
++	cd clone1 &&
++	git checkout -b topic origin/topic &&
++	git merge origin/master &&
++	cd ..
++
++	git clone ./. clone2
++	cd clone2 &&
++	git checkout -b topic origin/topic &&
++	git merge origin/master &&
++	cd .. &&
++
++	git checkout topic &&
++	echo Fourth >> B &&
++	git commit -a -m "Modify B2"
++'
++
++test_expect_failure 'git pull --rebase -p on moved topic' '
++	cd clone1 &&
++	git pull --rebase --preserve-merges &&
++	test $(git rev-list --all --pretty=oneline | grep "Modify A" | wc -l) = 1
++'
++
++test_expect_failure 'rebase -p merge on moved topic' '
++	cd ../clone2 &&
++	git fetch &&
++	git rebase -p origin/topic &&
++	test 1 = $(git rev-list --all --pretty=oneline | grep "Modify A" | wc -l) &&
++	test 1 = $(git rev-list --all --pretty=oneline | grep "Merge commit" | wc -l)
++'
++
++test_done
+-- 
+1.6.0.2.307.gc4275.dirty
