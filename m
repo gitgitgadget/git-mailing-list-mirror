@@ -1,117 +1,97 @@
-From: Andreas Ericsson <ae@op5.se>
-Subject: [PATCH 3/3] git pull: Support --preserve-merges as a flag to rebase
-Date: Tue, 23 Sep 2008 22:58:20 +0200
-Message-ID: <48D9586C.4010102@op5.se>
+From: Dmitry Potapov <dpotapov@gmail.com>
+Subject: Re: [PATCH] add GIT_FAST_STAT mode for Cygwin
+Date: Wed, 24 Sep 2008 01:11:24 +0400
+Message-ID: <20080923211124.GT21650@dpotapov.dyndns.org>
+References: <20080923140144.GN21650@dpotapov.dyndns.org> <200809232103.09133.johannes.sixt@telecom.at> <20080923194802.GQ21650@dpotapov.dyndns.org> <200809232241.42649.johannes.sixt@telecom.at>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15; format=flowed
-Content-Transfer-Encoding: 7bit
-To: Git Mailing List <git@vger.kernel.org>,
-	Junio C Hamano <gitster@pobox.com>,
-	Stephen Haberman <stephen@exigencecorp.com>
-X-From: git-owner@vger.kernel.org Tue Sep 23 22:59:38 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+	Steffen Prohaska <prohaska@zib.de>
+To: Johannes Sixt <johannes.sixt@telecom.at>
+X-From: git-owner@vger.kernel.org Tue Sep 23 23:12:41 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KiEyp-0008Ke-2Z
-	for gcvg-git-2@gmane.org; Tue, 23 Sep 2008 22:59:31 +0200
+	id 1KiFBZ-00056P-10
+	for gcvg-git-2@gmane.org; Tue, 23 Sep 2008 23:12:41 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754789AbYIWU6Z (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 23 Sep 2008 16:58:25 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754786AbYIWU6Z
-	(ORCPT <rfc822;git-outgoing>); Tue, 23 Sep 2008 16:58:25 -0400
-Received: from mail.op5.se ([193.201.96.20]:34474 "EHLO mail.op5.se"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754788AbYIWU6Y (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 23 Sep 2008 16:58:24 -0400
-Received: from localhost (localhost.localdomain [127.0.0.1])
-	by mail.op5.se (Postfix) with ESMTP id AEE651B8004D;
-	Tue, 23 Sep 2008 22:48:58 +0200 (CEST)
-X-Virus-Scanned: amavisd-new at 
-X-Spam-Flag: NO
-X-Spam-Score: -3.199
-X-Spam-Level: 
-X-Spam-Status: No, score=-3.199 tagged_above=-10 required=6.6
-	tests=[AWL=-0.700, BAYES_00=-2.599, RDNS_NONE=0.1]
-Received: from mail.op5.se ([127.0.0.1])
-	by localhost (mail.op5.se [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id 5zerPG0AfWwr; Tue, 23 Sep 2008 22:48:55 +0200 (CEST)
-Received: from clix.int.op5.se (unknown [172.27.78.6])
-	by mail.op5.se (Postfix) with ESMTP id 6E90324B0D2C;
-	Tue, 23 Sep 2008 22:48:55 +0200 (CEST)
-User-Agent: Thunderbird 2.0.0.16 (X11/20080723)
+	id S1752747AbYIWVLa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 23 Sep 2008 17:11:30 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752736AbYIWVLa
+	(ORCPT <rfc822;git-outgoing>); Tue, 23 Sep 2008 17:11:30 -0400
+Received: from ug-out-1314.google.com ([66.249.92.170]:17205 "EHLO
+	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751322AbYIWVL3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 23 Sep 2008 17:11:29 -0400
+Received: by ug-out-1314.google.com with SMTP id k3so1725889ugf.37
+        for <git@vger.kernel.org>; Tue, 23 Sep 2008 14:11:28 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:date:from:to:cc:subject
+         :message-id:references:mime-version:content-type:content-disposition
+         :in-reply-to:user-agent;
+        bh=NAQayZ63z2JqVRcr9lbx8geBICI9As37ICXgKjn59Xg=;
+        b=iS9TvkSXRgwDxPj60epUYXYTsyku/yQy/LpPEcW3uf5WlKArTTNElaHNhLadZJHIHb
+         4w4+GLxedUAJYmPTW6Dnci8Ac1UNM/Fan50BB2TzAw65xaZh/cwlno1ZscZOPzHKy4RL
+         Sp+SB7qQKMlWzajY6k+jGSawCjoVz3PBaURxc=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        b=SLOKC2p+P7wyPyZ07WXvycKyTPHkh6IjpdU/lxHh0FBot1rNj19Zgyqcjuc2Mvj0qV
+         lUPD1fbIYgBx3jLV4R4zYmr0Cg0Fg6pZQB2KbH9LScW6dEseoPEcEMRC1cSfDd7eMwch
+         qdMYbKiAhWDQvw91zbCUPPf1oWA0qHwELEIKw=
+Received: by 10.86.97.20 with SMTP id u20mr6662160fgb.15.1222204287763;
+        Tue, 23 Sep 2008 14:11:27 -0700 (PDT)
+Received: from localhost (ppp85-140-170-49.pppoe.mtu-net.ru [85.140.170.49])
+        by mx.google.com with ESMTPS id d4sm9796076fga.5.2008.09.23.14.11.25
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Tue, 23 Sep 2008 14:11:26 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <200809232241.42649.johannes.sixt@telecom.at>
+User-Agent: Mutt/1.5.13 (2006-08-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/96595>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/96596>
 
-Now that "git rebase" supports non-interactive rebases
-preserving merges, this patch is the next logical step
-for those who wish to use such a workflow.
+On Tue, Sep 23, 2008 at 10:41:42PM +0200, Johannes Sixt wrote:
+> 
+> You copied the function from compat/mingw.c. There it has the meaning "Fill in 
+> struct stat using Win32 API" and nothing else. Here it has the meaning "Fill 
+> in struct stat using Win32 API if you can, and using cygstat() in certain 
+> exceptional cases". If you stayed with the original meaning, it would be 
+> slightly easier to factor out common code.
 
-Since this patch makes the last test marked as expecting
-failure in t3409-rebase-preserve-merges, we now alter it
-to expect success.
+do_stat() always fills in the structure, but it can do that fast using
+Win32 API or fallback on cygstat() in exceptional cases. So, I don't
+think I change its meaning much, its implementation certainly differs.
 
-Signed-off-by: Andreas Ericsson <ae@op5.se>
----
- Documentation/git-pull.txt        |    4 ++++
- git-pull.sh                       |    6 +++++-
- t/t3409-rebase-preserve-merges.sh |    2 +-
- 3 files changed, 10 insertions(+), 2 deletions(-)
+> > > You do duplicate a lot of code here. Any chances to factor out the
+> > > common parts?
+> >
+> > I don't see much common code here. Initialization of 5 variables where
+> > four of them are just constants? Perhaps, the biggest common part here
+> > is conversion of dwFileAttributes to st_mode, but it is still 5 lines of
+> > trivial code.
+> 
+> Sigh. I gave a pointer how to unify the two functions (although I missed the 
+> fact that the member variables are named differently). I'd appreciate if you 
+> did not make it more difficult than necessary to factor out common code.
 
-diff --git a/Documentation/git-pull.txt b/Documentation/git-pull.txt
-index 7578623..333fc55 100644
---- a/Documentation/git-pull.txt
-+++ b/Documentation/git-pull.txt
-@@ -47,6 +47,10 @@ unless you have read linkgit:git-rebase[1] carefully.
- --no-rebase::
- 	Override earlier --rebase.
- 
-+--preserve-merges::
-+	Preserves merge commits when rebasing. Implies --rebase,
-+	so the same warnings naturally apply.
-+
- include::fetch-options.txt[]
- 
- include::pull-fetch-param.txt[]
-diff --git a/git-pull.sh b/git-pull.sh
-index 75c3610..270a50d 100755
---- a/git-pull.sh
-+++ b/git-pull.sh
-@@ -58,6 +58,10 @@ do
- 	-r|--r|--re|--reb|--reba|--rebas|--rebase)
- 		rebase=true
- 		;;
-+	--preserve-merges) # no short option for this
-+		preserve_merges="--preserve-merges"
-+		rebase=true
-+		;;
- 	--no-r|--no-re|--no-reb|--no-reba|--no-rebas|--no-rebase)
- 		rebase=false
- 		;;
-@@ -179,7 +183,7 @@ fi
- 
- merge_name=$(git fmt-merge-msg $log_arg <"$GIT_DIR/FETCH_HEAD") || exit
- test true = "$rebase" &&
--	exec git-rebase $strategy_args --onto $merge_head \
-+	exec git-rebase $preserve_merges $strategy_args --onto $merge_head \
- 	${oldremoteref:-$merge_head}
- exec git-merge $no_stat $no_commit $squash $no_ff $log_arg $strategy_args \
- 	"$merge_name" HEAD $merge_head
-diff --git a/t/t3409-rebase-preserve-merges.sh b/t/t3409-rebase-preserve-merges.sh
-index 21b8c79..9a376ef 100644
---- a/t/t3409-rebase-preserve-merges.sh
-+++ b/t/t3409-rebase-preserve-merges.sh
-@@ -51,7 +51,7 @@ test_expect_success 'setup for merge-preserving rebase' \
- 	git commit -a -m "Modify B2"
- '
- 
--test_expect_failure 'git pull --rebase -p on moved topic' '
-+test_expect_success 'git pull --rebase -p on moved topic' '
- 	cd clone1 &&
- 	git pull --rebase --preserve-merges &&
- 	test $(git rev-list --all --pretty=oneline | grep "Modify A" | wc -l) = 1
--- 
-1.6.0.2.307.gc4275.dirty
+Because the stat structure is different and handling exceptional
+situation is different, I don't think we can have a single do_stat
+function for Cygwin and MinGW. Yet, perhaps, it is possible to
+move some code in common functions even if it is just a few lines.
+
+The first candidate is win_attr_to_st_mode(), which converts
+dwFileAttributes returned by GetFileAttributesExA to st_mode.
+Another possible function is that obtains and converts Win32 error
+code to errno value. These function can be placed into some common
+header (for example, win32.h), which will included by both
+implementations. Does it make sense?
+
+
+Dmitry
