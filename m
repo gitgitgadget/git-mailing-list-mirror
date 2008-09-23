@@ -1,77 +1,123 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Locking binary files
-Date: Tue, 23 Sep 2008 12:49:24 -0700
-Message-ID: <7v7i92tzgb.fsf@gitster.siamese.dyndns.org>
-References: <94c1db200809222333q4953a6b9g8ce0c1cd4b8f5eb4@mail.gmail.com>
- <94c1db200809222339t7d65081eq7471fef86fb5ec73@mail.gmail.com>
- <48D8983C.7070506@op5.se>
- <94c1db200809230054t20e7e61dh5022966d4112eee6@mail.gmail.com>
- <48D8A97E.8070003@op5.se>
- <94c1db200809230656q4a9a765dw2354c0058b1d940c@mail.gmail.com>
- <alpine.LNX.1.00.0809231216350.19665@iabervon.org>
+From: Dmitry Potapov <dpotapov@gmail.com>
+Subject: Re: [PATCH] add GIT_FAST_STAT mode for Cygwin
+Date: Wed, 24 Sep 2008 00:04:56 +0400
+Message-ID: <20080923200456.GR21650@dpotapov.dyndns.org>
+References: <20080923140144.GN21650@dpotapov.dyndns.org> <20080923153148.GI3669@spearce.org> <20080923171209.GP21650@dpotapov.dyndns.org> <20080923190637.GJ3669@spearce.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Mario Pareja <mpareja.dev@gmail.com>, Andreas Ericsson <ae@op5.se>,
-	Git Mailing List <git@vger.kernel.org>
-To: Daniel Barkalow <barkalow@iabervon.org>
-X-From: git-owner@vger.kernel.org Tue Sep 23 21:51:26 2008
+Cc: git@vger.kernel.org, Johannes Sixt <johannes.sixt@telecom.at>,
+	Junio C Hamano <gitster@pobox.com>,
+	Steffen Prohaska <prohaska@zib.de>
+To: "Shawn O. Pearce" <spearce@spearce.org>
+X-From: git-owner@vger.kernel.org Tue Sep 23 22:08:30 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KiDua-0002BE-5S
-	for gcvg-git-2@gmane.org; Tue, 23 Sep 2008 21:51:04 +0200
+	id 1KiE9G-0000sd-Aw
+	for gcvg-git-2@gmane.org; Tue, 23 Sep 2008 22:06:14 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755561AbYIWTti (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 23 Sep 2008 15:49:38 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755539AbYIWTth
-	(ORCPT <rfc822;git-outgoing>); Tue, 23 Sep 2008 15:49:37 -0400
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:46385 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755526AbYIWTtg (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 23 Sep 2008 15:49:36 -0400
-Received: from localhost.localdomain (localhost [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id E90E9641C1;
-	Tue, 23 Sep 2008 15:49:34 -0400 (EDT)
-Received: from pobox.com (ip68-225-240-211.oc.oc.cox.net [68.225.240.211])
- (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
- certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
- ESMTPSA id C2099641BB; Tue, 23 Sep 2008 15:49:27 -0400 (EDT)
-In-Reply-To: <alpine.LNX.1.00.0809231216350.19665@iabervon.org> (Daniel
- Barkalow's message of "Tue, 23 Sep 2008 13:32:15 -0400 (EDT)")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: BF62ECA8-89A8-11DD-BDD7-D0CFFE4BC1C1-77302942!a-sasl-fastnet.pobox.com
+	id S1751798AbYIWUFE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 23 Sep 2008 16:05:04 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752040AbYIWUFE
+	(ORCPT <rfc822;git-outgoing>); Tue, 23 Sep 2008 16:05:04 -0400
+Received: from ey-out-2122.google.com ([74.125.78.24]:50205 "EHLO
+	ey-out-2122.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751700AbYIWUFC (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 23 Sep 2008 16:05:02 -0400
+Received: by ey-out-2122.google.com with SMTP id 6so664858eyi.37
+        for <git@vger.kernel.org>; Tue, 23 Sep 2008 13:05:01 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:date:from:to:cc:subject
+         :message-id:references:mime-version:content-type:content-disposition
+         :in-reply-to:user-agent;
+        bh=O91vW0d0KZ/pwl5Wg9JTzmCakpU852Fdd8hnEis2j7c=;
+        b=ppTXVVrRi0afhrNIWDk1oQIyQ/SK5Vpju8OMN4n07HiEj3Oq10ETp1/r5YJiiUK9Zx
+         3RopUxW3EctJCdSTP8mmML6ZTU/IU/r7XYM7dy/sog1uTHhDBXjXdYz9JNIAaJJyE8X+
+         cc2XJ6W/7E07hMQdFhVd/80rzkAumCJvjihrQ=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        b=kMCNA1BdL2vugizN9BO6FybOarnQGHBWPIJxKtl5Gigcnnrywl+7O5n4bTFMVykqKD
+         NsanPzXZbJNRiJMAtYlGSb2Wge2992iAtLmmztSAI61TjVUiiYFPffgxWEVMmXF+hEMY
+         4L/mcr5HHJaK2H/5cmWYEeaug42GoYyEs/o7E=
+Received: by 10.210.90.8 with SMTP id n8mr7138387ebb.128.1222200300958;
+        Tue, 23 Sep 2008 13:05:00 -0700 (PDT)
+Received: from localhost (ppp85-140-170-49.pppoe.mtu-net.ru [85.140.170.49])
+        by mx.google.com with ESMTPS id 10sm3398904eyd.6.2008.09.23.13.04.58
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Tue, 23 Sep 2008 13:05:00 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <20080923190637.GJ3669@spearce.org>
+User-Agent: Mutt/1.5.13 (2006-08-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/96587>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/96588>
 
-Daniel Barkalow <barkalow@iabervon.org> writes:
+On Tue, Sep 23, 2008 at 12:06:37PM -0700, Shawn O. Pearce wrote:
+> 
+> and then disable it on a per-repository basis if you and a specific
+> repository which has this inner mount problem:
+> 
+>   git config core.cygwinnativestat false
+> 
+> Which is a lot more powerful than an environment variable.
 
-> I think the right tool on the git side is actually a "smudge/clean" 
-> script. When you check something out, git converts it from the 
-> repository-stored form to a working tree form using a script (if there is 
-> one configured); this could check whether you've got the appropriate lock, 
-> and make the file unwritable if you don't.
+I already said that I completely agree that is a good idea even I don't
+know the real need for having per-repository configuration in practice.
 
-An obvious question is "how would such a script check the lock when you
-are 30,000 ft above ground"; in other words, this "locking mechanism"
-contradicts the very nature of distributed development theme.  The best
-mechanism should always be on the human side.  An SCM auguments
-inter-developer communication, but it is not a _substitute_ for
-communication.
+>  
+> > However, this option is Cygwin specific, so I am not sure where it
+> > should be read. Should I place it in git_default_core_config like
+> > this:
+> > 
+> > #ifdef __CYGWIN__
+> > 	if (!strcmp(var, "core.cygwinnativestat")) {
+> > 		cygwin_native_stat = git_config_bool(var, value);
+> > 		return 0;
+> > 	}
+> > #endif
+> 
+> I would have the two initial stat functions swap themselves out with
+> the default Cygin stat implementations, run a parse over the config
+> to load that one bool, then install the proper implementations based
+> upon its value.  Hence all Cygwin code is kept inside of the Cygwin
+> compat code, and no #ifdef is necessary
 
-But if you limit the use case to an always tightly connected environment
-(aka "not distributed at all"), I agree the above would be a very
-reasonable approach.
+Do I understand you correctly that you propose to add the code like
+this in compat/cygwin.c:
 
-Such a setup would need a separate locking infrastructure and an end user
-command that grabs the lock and when successful makes the file in the work
-tree read/write.  The user butchers the contents after taking the lock,
-saves, and then when running "git commit", probably the post-commit hook
-would release any relevant locks.
+static int native_stat;
 
-All these can be left outside the scope of git, as they can be hooked into
-git with the existing infrastructure. Once a BCP materializes it could be
-added to contrib/ just like the "paranoid" update hook.
+static int git_cygwin_config(const char *var, const char *value, void
+*cb)
+{
+	if (!strcmp(var, "core.cygwinnativestat"))
+		cygwin_native_stat = git_config_bool(var, value);
+	return 0;
+}
+
+static void init_stat(void)
+{
+	git_config(git_cygwin_config, NULL);
+	cygwin_stat_fn = native_stat ? cygwin_stat : stat;
+	cygwin_lstat_fn = native_stat ? cygwin_lstat : lstat;
+}
+
+static int cygwin_stat_choice(const char *file_name, struct stat *buf)
+{
+	init_stat();
+	return (*cygwin_stat_fn)(file_name, buf);
+}
+
+static int cygwin_lstat_choice(const char *file_name, struct stat *buf)
+{
+	init_stat();
+	return (*cygwin_lstat_fn)(file_name, buf);
+}
+
+Dmitry
