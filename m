@@ -1,83 +1,145 @@
 From: Andreas Ericsson <ae@op5.se>
 Subject: Re: rebasing merges
-Date: Tue, 23 Sep 2008 10:06:09 +0200
-Message-ID: <48D8A371.4030909@op5.se>
-References: <20080922155749.c8070681.stephen@exigencecorp.com>	<20080922231927.ef18f420.stephen@exigencecorp.com>	<48D88813.9060400@viscovery.net> <2008-09-23-09-30-47+trackit+sam@rfc1149.net>
+Date: Tue, 23 Sep 2008 10:20:58 +0200
+Message-ID: <48D8A6EA.4020805@op5.se>
+References: <20080922155749.c8070681.stephen@exigencecorp.com>	<20080922231927.ef18f420.stephen@exigencecorp.com>	<48D88813.9060400@viscovery.net> <20080923024653.a3bb8666.stephen@exigencecorp.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-15; format=flowed
 Content-Transfer-Encoding: 7bit
-Cc: Johannes Sixt <j.sixt@viscovery.net>,
-	Stephen Haberman <stephen@exigencecorp.com>,
-	git@vger.kernel.org
-To: Samuel Tardieu <sam@rfc1149.net>
-X-From: git-owner@vger.kernel.org Tue Sep 23 10:07:40 2008
+Cc: Johannes Sixt <j.sixt@viscovery.net>, git@vger.kernel.org
+To: Stephen Haberman <stephen@exigencecorp.com>
+X-From: git-owner@vger.kernel.org Tue Sep 23 10:22:19 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Ki2vj-0006z2-Lm
-	for gcvg-git-2@gmane.org; Tue, 23 Sep 2008 10:07:32 +0200
+	id 1Ki39z-0002WC-Ng
+	for gcvg-git-2@gmane.org; Tue, 23 Sep 2008 10:22:16 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751422AbYIWIGW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 23 Sep 2008 04:06:22 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750943AbYIWIGV
-	(ORCPT <rfc822;git-outgoing>); Tue, 23 Sep 2008 04:06:21 -0400
-Received: from mail.op5.se ([193.201.96.20]:54303 "EHLO mail.op5.se"
+	id S1751714AbYIWIVG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 23 Sep 2008 04:21:06 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751652AbYIWIVG
+	(ORCPT <rfc822;git-outgoing>); Tue, 23 Sep 2008 04:21:06 -0400
+Received: from mail.op5.se ([193.201.96.20]:57581 "EHLO mail.op5.se"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751084AbYIWIGU (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 23 Sep 2008 04:06:20 -0400
+	id S1751683AbYIWIVE (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 23 Sep 2008 04:21:04 -0400
 Received: from localhost (localhost.localdomain [127.0.0.1])
-	by mail.op5.se (Postfix) with ESMTP id 117CA1B80051;
-	Tue, 23 Sep 2008 09:56:50 +0200 (CEST)
+	by mail.op5.se (Postfix) with ESMTP id 01C891B80081;
+	Tue, 23 Sep 2008 10:11:33 +0200 (CEST)
 X-Virus-Scanned: amavisd-new at 
 X-Spam-Flag: NO
-X-Spam-Score: -4.241
+X-Spam-Score: -4.263
 X-Spam-Level: 
-X-Spam-Status: No, score=-4.241 tagged_above=-10 required=6.6
-	tests=[ALL_TRUSTED=-1.8, AWL=0.158, BAYES_00=-2.599]
+X-Spam-Status: No, score=-4.263 tagged_above=-10 required=6.6
+	tests=[ALL_TRUSTED=-1.8, AWL=0.136, BAYES_00=-2.599]
 Received: from mail.op5.se ([127.0.0.1])
 	by localhost (mail.op5.se [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id KlNm+O6J7YOS; Tue, 23 Sep 2008 09:56:40 +0200 (CEST)
+	with ESMTP id 9U+Lxf-BmqFJ; Tue, 23 Sep 2008 10:11:30 +0200 (CEST)
 Received: from clix.int.op5.se (unknown [192.168.1.20])
-	by mail.op5.se (Postfix) with ESMTP id BB9C31B8004D;
-	Tue, 23 Sep 2008 09:56:40 +0200 (CEST)
+	by mail.op5.se (Postfix) with ESMTP id C4FD41B80051;
+	Tue, 23 Sep 2008 10:11:29 +0200 (CEST)
 User-Agent: Thunderbird 2.0.0.16 (X11/20080723)
-In-Reply-To: <2008-09-23-09-30-47+trackit+sam@rfc1149.net>
+In-Reply-To: <20080923024653.a3bb8666.stephen@exigencecorp.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/96536>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/96537>
 
-Samuel Tardieu wrote:
+Stephen Haberman wrote:
+>> This is the expected behavior and not up for debate.
 > 
-> Btw, would it be a good idea to unconditionally enable "rerere"
-> conflict resolution *recording*, and add an option to "rebase" and
-> "merge" to use "rerere" even when it is not enabled in the
-> configuration file? I can't think of any drawback.
+> Cool, thanks for the reply. However, I debate... :-)
+> 
+>>   ---o--o--o--o--o--o         <-- origin
+>>                      \
+>>                       A'--B'  <-- master
+> 
+> Nice. That makes sense in your scenario.
+> 
+> Here is mine:
+> 
+>  ---A--B--C--D           <-- origin/stable
+>      \       |
+>       E--F   |           <-- origin/topica
+>           \  |
+>              g--h        <-- topica
+> 
+> All the upper case commits have been published to origin. Other
+> devs, etc., know about them, their hashes are in the bug tracking
+> system.
+> 
+> I'm bringing topica up to date, but with a merge because I have
+> published history already on topica, so I merge stable and get a
+> new merge commit: g. And maybe make another change: h.
 > 
 
-I'm all for that. I actually thought (4 months ago) that that was
-how it worked.
+Why do you merge stable at this point?
 
-It would be a backwards incompatible change though, as we currently
-fall back to "does rr-cache exist?" to determine if rerere is enabled
-in case it isn't explicitly so in the configuration. Perhaps print
-a warning if !rerere.enabled but $GIT_DIR/rr-cache exists. OTOH,
-that will create a lot of warnings since we'd have to create that
-rr-cache directory to record the resolutions.
+If you want the latest and greatest for testing/conflict resolution
+purposes, you can simply throw away the merge later and just know
+that it works.
+If you need some bugfix on stable but not everything else, cherrypick
+only that change. Otherwise you're applying a huge patch to fix a
+small problem.
 
-To maintain backwards compatibility, we could ofcourse do like this;
-* move rr-cache to rere ("recorded resolutions"; bikeshed color goes here)
-* if rr-cache exists, implicitly enable rerere
-* if rr-cache holds resolutions when setting up rerere, move them
-  to rere
-OR
-* look for resolutions in both rr-cache and rere indefinitely.
+> Everything's cool...now, with surprising frequency, someone beats
+> me to moving origin/topica:
+> 
+>  ---A--B--C--D           <-- origin/stable
+>      \       |
+>       E--F---|--I        <-- origin/topica
+>           \  |
+>              g--h        <-- topica
+> 
+> Pushing h gets rejected as a rewind. Good. I want to pull, which
+> we had previously always used "--rebase" for, and the desired output
+> of a pull --rebase, to me, would be:
+> 
+>  ---A--B--C--D           <-- origin/stable
+>      \        \
+>       E--F--I |          <-- origin/topica
+>              \|
+>               g'--h'     <-- topica
+> 
+> Instead, I get:
+> 
+>  ---A--B--C--D           <-- origin/stable
+>      \
+>       E--F--I            <-- origin/topica
+>              \
+>               B'-C'-D'-h'<-- topica
+> 
+> So, yes, linearized history with no merges. However, this leads
+> to quizzical looks when B'/C'/D' hit the email list, bug tracker, etc.
+> as new commits.
+> 
+> Currently I just try to pull/merge/push in quick succession, but
+> it's a manual collaboration hack ("okay, I'm merging now, no
+> committing...") that would be nice to not have to worry about.
+> 
 
-It's not exactly performance critical, so swapping the pattern from
-O(n) (or whatever it is now) to O(2n) for replaying resolutions
-probably won't make that much of a difference.
+I think you just need to ask yourself *why* you're doing that
+first merge of "stable" into your topic. If they aren't really
+separate, using a topic-branch doesn't make so much sense. If
+they *are* separate, doing the merge doesn't make much sense,
+unless you're integration testing a snapshot build, but in that
+case you'd want to throw away the merge once it's done and
+tested.
+
+> I need to investigate the interactive rebase more, but my hesitant
+> assertion is that it's parent rewriting seems smart enough to handle
+> this. Perhaps not, and I admit our desired DAG output may not be
+> attainable without manual intervention.
+> 
+> I apologize--I should have included the example DAGs in my first
+> post, but since I didn't I felt the need to clarify. So, humoring
+> me, is the B'/C'/D' from this example really the expected behavior?
+> 
+
+Assuming the person who did "h" doesn't have the merge commit, then
+yes.
 
 -- 
 Andreas Ericsson                   andreas.ericsson@op5.se
