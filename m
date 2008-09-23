@@ -1,73 +1,107 @@
-From: "Alex Riesen" <raa.lkml@gmail.com>
+From: Boaz Harrosh <bharrosh@panasas.com>
 Subject: Re: Locking binary files
-Date: Tue, 23 Sep 2008 16:28:00 +0200
-Message-ID: <81b0412b0809230728p4e81572bg67a3bec4c32c7dfb@mail.gmail.com>
-References: <94c1db200809222333q4953a6b9g8ce0c1cd4b8f5eb4@mail.gmail.com>
-	 <94c1db200809222339t7d65081eq7471fef86fb5ec73@mail.gmail.com>
-	 <48D8983C.7070506@op5.se>
-	 <94c1db200809230054t20e7e61dh5022966d4112eee6@mail.gmail.com>
-	 <48D8A97E.8070003@op5.se>
-	 <94c1db200809230656q4a9a765dw2354c0058b1d940c@mail.gmail.com>
+Date: Tue, 23 Sep 2008 17:35:49 +0300
+Message-ID: <48D8FEC5.3060503@panasas.com>
+References: <94c1db200809222333q4953a6b9g8ce0c1cd4b8f5eb4@mail.gmail.com>	 <94c1db200809222339t7d65081eq7471fef86fb5ec73@mail.gmail.com>	 <48D8CFF1.8030403@panasas.com> <94c1db200809230714k6b007919yfd8ad1b86cbcd385@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-Cc: "Andreas Ericsson" <ae@op5.se>,
-	"Git Mailing List" <git@vger.kernel.org>
-To: "Mario Pareja" <mpareja.dev@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Sep 23 16:29:19 2008
+Cc: git@vger.kernel.org
+To: Mario Pareja <mpareja.dev@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Sep 23 16:37:15 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Ki8t8-0006Wy-1Z
-	for gcvg-git-2@gmane.org; Tue, 23 Sep 2008 16:29:14 +0200
+	id 1Ki90l-00017X-CX
+	for gcvg-git-2@gmane.org; Tue, 23 Sep 2008 16:37:07 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751535AbYIWO2E (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 23 Sep 2008 10:28:04 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751438AbYIWO2E
-	(ORCPT <rfc822;git-outgoing>); Tue, 23 Sep 2008 10:28:04 -0400
-Received: from yx-out-2324.google.com ([74.125.44.30]:17471 "EHLO
-	yx-out-2324.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751216AbYIWO2B (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 23 Sep 2008 10:28:01 -0400
-Received: by yx-out-2324.google.com with SMTP id 8so316041yxm.1
-        for <git@vger.kernel.org>; Tue, 23 Sep 2008 07:28:00 -0700 (PDT)
+	id S1751912AbYIWOf4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 23 Sep 2008 10:35:56 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751672AbYIWOf4
+	(ORCPT <rfc822;git-outgoing>); Tue, 23 Sep 2008 10:35:56 -0400
+Received: from ug-out-1314.google.com ([66.249.92.170]:22248 "EHLO
+	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751662AbYIWOfz (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 23 Sep 2008 10:35:55 -0400
+Received: by ug-out-1314.google.com with SMTP id k3so1626795ugf.37
+        for <git@vger.kernel.org>; Tue, 23 Sep 2008 07:35:53 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to
-         :subject:cc:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:references;
-        bh=6QLuqJ2XW/Z7dYOMQrbDTFogg04Y6575rvWw9fkhl/s=;
-        b=cXLoaDfJntDa/c3AwldJ2PLgeyudGDMlSG6RD3wJ7DgrgESsfDsES9YV57FZSweS58
-         oTZbyzv5Rvl6s1w2AP4coK/ZbKBDo20mcF3PWOg8w/kKiv9VDydn8dsAAbRJV7FZOVq+
-         vIapiXPWiGayeevNYFpIBmuoEKNKal2NQbUPc=
+        h=domainkey-signature:received:received:message-id:date:from
+         :user-agent:mime-version:to:cc:subject:references:in-reply-to
+         :content-type:content-transfer-encoding:sender;
+        bh=gFJNWYVPUg+qdrhsLpJ1/QSVydFMTwjNgPIZUumGg/U=;
+        b=Wv4lboP70XuiBQdUAUWB9pvFfR7QEYJX8Wzmq0PKsKtQPYd3TYfEa0BBALdYMwbdR4
+         l2ryjmZL5SWiZoc85pViZxrtbTm/gHtbe4QfIUvJqj9tXT0fA4Fkmo70T0aQBpOwmVym
+         4JnUk2gH1vaEd1XiWgfBgpZeoRAQfDKvdgtsE=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
-         :content-type:content-transfer-encoding:content-disposition
-         :references;
-        b=g6yUKzgqZbfcUR8YYNqQYy6inyQi6iQ0wIzcVCxeeyVTYEgX1fSpyDGh5EWZ197Tvc
-         j78pWVNQOWwaqvV5uFg+PyUcBXk4oC9zUP7yYNILLNVpaRw3bD2kXWdgGBiZJ+cn7lPs
-         0NLSCMH17f63GWMYYNwm+5CmQnMVzskYws9g0=
-Received: by 10.151.143.3 with SMTP id v3mr9278862ybn.159.1222180080652;
-        Tue, 23 Sep 2008 07:28:00 -0700 (PDT)
-Received: by 10.151.107.13 with HTTP; Tue, 23 Sep 2008 07:28:00 -0700 (PDT)
-In-Reply-To: <94c1db200809230656q4a9a765dw2354c0058b1d940c@mail.gmail.com>
-Content-Disposition: inline
+        h=message-id:date:from:user-agent:mime-version:to:cc:subject
+         :references:in-reply-to:content-type:content-transfer-encoding
+         :sender;
+        b=g/+7XrcUnJnQMZfXDTNgHxpycfC8KaYBNwgYJtA+Rs0RcmzxSPKddZsX1StG9gIvYX
+         vsBJLySJ6kRWfd0uudl1KtWqycHpmfJzSW8lfvGq5pau+WnjmbxdMaSXBevmcFhXSDFm
+         k88rRGo6aW+6TwkxrfQJBgFKqWzRnnpWas93s=
+Received: by 10.86.52.1 with SMTP id z1mr6158631fgz.63.1222180553074;
+        Tue, 23 Sep 2008 07:35:53 -0700 (PDT)
+Received: from bh-buildlin2.bhalevy.com (DSL212-235-53-3.bb.netvision.net.il [212.235.53.3])
+        by mx.google.com with ESMTPS id e20sm7615039fga.1.2008.09.23.07.35.51
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Tue, 23 Sep 2008 07:35:52 -0700 (PDT)
+User-Agent: Thunderbird 2.0.0.14 (X11/20080501)
+In-Reply-To: <94c1db200809230714k6b007919yfd8ad1b86cbcd385@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/96569>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/96570>
 
-2008/9/23 Mario Pareja <mpareja.dev@gmail.com>:
->> So it's a communication issue then.
->
-> Yes, but I think the communication of this information needs to happen
-> as part of a developers normal work-flow rather than requiring them to
-> remember to check an external system.
+Mario Pareja wrote:
+>> It should be easy for a company to set a policy where a couple of scripts
+>> must be run for particular type of files. Given that, the implementation
+>> of such scripts is easy:
+>>
+>> For every foo.bin there is possibly a foo.bin.lock file.
+>>
+>> Lock-script look for absence of the lock-file at upstream then git-add
+>> the file (With some info that tells users things like who has the file).
+>> If git-push fails, since I'm adding a file and someone already added
+>> it while I was pushing, then the lock is not granted.
+>>
+>> Unlock-script will git-rm the lock-file and push.
+>>
+>> In both scripts mod-bits of original file can be toggled for
+>> read-only/write signaling to the user. (At upstream the file is always
+>> read-only)
+>>
+>> This can also work in a distributed system with more then one tier of
+>> servers. (Locks pushed to the most upstream server)
+>>
+>> Combine that with git's mail notifications for commits and you have a
+>> system far more robust then svn will ever want to be
+>>
+>> My $0.017
+>> Boaz
+>>
+> 
+> This is a reasonable approach to obtaining the desired functionality.
+> Unfortunately, I have not seen any third-party packages implementing
+> such a feature.  It seems to me the problem is general enough to be
+> solved once rather than requiring organizations wishing to use git to
+> implement an in-house locking system. It simply creates more friction.
+> Perhaps, when I have the time, I will come up with something others
+> can use.  For now, unfortunately, it seems I am out of luck?
+> 
+> Mario
+> --
 
-Look at pre-receive and update hooks. They can deny a push operation and
-get enough information to notice a change to the path of your unlucky file.
+The open-source my friend. First comes first implements. More and more
+development platforms use XML files in where they used a binary file
+format before. Just for these cases. Git is mostly used with open-source
+and/or very new systems that don't have binary file formats. OK graphics is
+another thing, I guess.
 
-And yes, *you* have to do that yourself.
+So you are welcome to it. "git-lock" is available
+
+Boaz
