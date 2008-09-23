@@ -1,66 +1,64 @@
-From: Peter Krefting <peter@softwolves.pp.se>
-Subject: Re: [ANNOUNCE] Git-1.6.0.2-preview20080923
-Date: Tue, 23 Sep 2008 08:57:10 +0100 (CET)
-Organization: /universe/earth/europe/norway/oslo
-Message-ID: <Pine.LNX.4.64.0809230855230.11851@ds9.cixit.se>
-References: <82166911-C34F-439C-A2F3-CEBD7346A1D6@zib.de>
- <691F01A6-CA78-46DA-8388-C8339A3F0F04@zib.de> <B463062F-DD48-44A7-B2BB-8E5E0D177616@zib.de>
+From: Johannes Sixt <j.sixt@viscovery.net>
+Subject: Re: rebasing merges
+Date: Tue, 23 Sep 2008 10:00:09 +0200
+Message-ID: <48D8A209.6090708@viscovery.net>
+References: <20080922155749.c8070681.stephen@exigencecorp.com>	<20080922231927.ef18f420.stephen@exigencecorp.com>	<48D88813.9060400@viscovery.net> <20080923024653.a3bb8666.stephen@exigencecorp.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: msysGit <msysgit@googlegroups.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: Steffen Prohaska <prohaska@zib.de>
-X-From: git-owner@vger.kernel.org Tue Sep 23 09:58:45 2008
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Stephen Haberman <stephen@exigencecorp.com>
+X-From: git-owner@vger.kernel.org Tue Sep 23 10:01:43 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Ki2my-0003pm-6X
-	for gcvg-git-2@gmane.org; Tue, 23 Sep 2008 09:58:28 +0200
+	id 1Ki2q2-0004i1-3x
+	for gcvg-git-2@gmane.org; Tue, 23 Sep 2008 10:01:38 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751459AbYIWH5Q (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 23 Sep 2008 03:57:16 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750943AbYIWH5Q
-	(ORCPT <rfc822;git-outgoing>); Tue, 23 Sep 2008 03:57:16 -0400
-Received: from ds9.cixit.se ([193.15.169.228]:43571 "EHLO ds9.cixit.se"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750839AbYIWH5P (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 23 Sep 2008 03:57:15 -0400
-Received: from ds9.cixit.se (peter@localhost [127.0.0.1])
-	by ds9.cixit.se (8.12.3/8.12.3/Debian-7.2) with ESMTP id m8N7vBY1021618
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Tue, 23 Sep 2008 09:57:11 +0200
-Received: from localhost (peter@localhost)
-	by ds9.cixit.se (8.12.3/8.12.3/Debian-7.2) with ESMTP id m8N7vAZ7021613;
-	Tue, 23 Sep 2008 09:57:10 +0200
-X-Authentication-Warning: ds9.cixit.se: peter owned process doing -bs
-In-Reply-To: <B463062F-DD48-44A7-B2BB-8E5E0D177616@zib.de>
-Accept: text/plain
-X-Warning: Junk / bulk email will be reported
-X-Rating: This message is not to be eaten by humans
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-3.0 (ds9.cixit.se [127.0.0.1]); Tue, 23 Sep 2008 09:57:11 +0200 (CEST)
+	id S1752916AbYIWIAN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 23 Sep 2008 04:00:13 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752906AbYIWIAN
+	(ORCPT <rfc822;git-outgoing>); Tue, 23 Sep 2008 04:00:13 -0400
+Received: from lilzmailso02.liwest.at ([212.33.55.13]:44349 "EHLO
+	lilzmailso02.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752848AbYIWIAL (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 23 Sep 2008 04:00:11 -0400
+Received: from cm56-163-160.liwest.at ([86.56.163.160] helo=linz.eudaptics.com)
+	by lilzmailso02.liwest.at with esmtpa (Exim 4.66)
+	(envelope-from <j.sixt@viscovery.net>)
+	id 1Ki2ob-0003t8-Im; Tue, 23 Sep 2008 10:00:10 +0200
+Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.42])
+	by linz.eudaptics.com (Postfix) with ESMTP
+	id 5423CAFCC; Tue, 23 Sep 2008 10:00:09 +0200 (CEST)
+User-Agent: Thunderbird 2.0.0.6 (Windows/20070728)
+In-Reply-To: <20080923024653.a3bb8666.stephen@exigencecorp.com>
+X-Enigmail-Version: 0.95.5
+X-Spam-Score: 1.7 (+)
+X-Spam-Report: ALL_TRUSTED=-1.8, BAYES_99=3.5
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/96534>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/96535>
 
-Steffen Prohaska:
+Stephen Haberman schrieb:
+>> This is the expected behavior and not up for debate.
+> 
+> Cool, thanks for the reply. However, I debate... :-)
+> 
+>>   ---o--o--o--o--o--o         <-- origin
+>>                      \
+>>                       A'--B'  <-- master
+> 
+> Nice. That makes sense in your scenario.
+> 
+> Here is mine:
 
-> The problems reported on the mailing list during the last two days
-> should be fixed.
+I understand your problem very well. pull --rebase does not help your case
+because it was not designed for your workflow (it was designed to help the
+one that I sketched).
 
-Works without crashing for me now. The installer issue is still there,
-but I guess it takes another iteration to get to work (i.e, next time I
-install?)
+You are probably better served using fetch + rebase -i -p.
 
-> I apologize for the quality of Git-1.6.0.2-preview20080921.
-> It was unacceptable.
-
-Nah, that's the joy of being first to test software :-) Nothing broke,
-just a few things that didn't quite work as expected, so no worries.
-
-Thanks for doing the job of publishing, fixing and republishing!
-
--- 
-\\// Peter - http://www.softwolves.pp.se/
+-- Hannes
