@@ -1,90 +1,102 @@
-From: Brandon Casey <casey@nrlssc.navy.mil>
-Subject: Re: Stash missing, but not.  Can apply, but not drop or list the
- stash.
-Date: Tue, 23 Sep 2008 18:08:55 -0500
-Message-ID: <klevRMI-z5Id8iuqn2rqrKQZ8LdPNE4lABeC502X9y1Es5wwQ-s8GA@cipher.nrlssc.navy.mil>
-References: <1222204981.28575.1275592473@webmail.messagingengine.com>
+From: Dmitry Potapov <dpotapov@gmail.com>
+Subject: Re: Locking binary files
+Date: Wed, 24 Sep 2008 03:21:54 +0400
+Message-ID: <20080923232154.GW21650@dpotapov.dyndns.org>
+References: <94c1db200809222339t7d65081eq7471fef86fb5ec73@mail.gmail.com> <48D8983C.7070506@op5.se> <94c1db200809230054t20e7e61dh5022966d4112eee6@mail.gmail.com> <48D8A97E.8070003@op5.se> <94c1db200809230656q4a9a765dw2354c0058b1d940c@mail.gmail.com> <alpine.LNX.1.00.0809231216350.19665@iabervon.org> <7v7i92tzgb.fsf@gitster.siamese.dyndns.org> <alpine.LNX.1.00.0809231551320.19665@iabervon.org> <20080923215422.GV21650@dpotapov.dyndns.org> <alpine.LNX.1.00.0809231811560.19665@iabervon.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: mattjackets <mattlist@fastmail.fm>
-X-From: git-owner@vger.kernel.org Wed Sep 24 01:11:35 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Mario Pareja <mpareja.dev@gmail.com>,
+	Andreas Ericsson <ae@op5.se>,
+	Git Mailing List <git@vger.kernel.org>
+To: Daniel Barkalow <barkalow@iabervon.org>
+X-From: git-owner@vger.kernel.org Wed Sep 24 01:23:18 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KiH2c-00013n-MT
-	for gcvg-git-2@gmane.org; Wed, 24 Sep 2008 01:11:35 +0200
+	id 1KiHDv-0004YU-Qi
+	for gcvg-git-2@gmane.org; Wed, 24 Sep 2008 01:23:16 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752048AbYIWXI7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 23 Sep 2008 19:08:59 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751635AbYIWXI7
-	(ORCPT <rfc822;git-outgoing>); Tue, 23 Sep 2008 19:08:59 -0400
-Received: from mail1.nrlssc.navy.mil ([128.160.35.1]:55968 "EHLO
-	mail.nrlssc.navy.mil" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750884AbYIWXI6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 23 Sep 2008 19:08:58 -0400
-Received: by mail.nrlssc.navy.mil id m8NN8tGb000492; Tue, 23 Sep 2008 18:08:55 -0500
-In-Reply-To: <1222204981.28575.1275592473@webmail.messagingengine.com>
-X-OriginalArrivalTime: 23 Sep 2008 23:08:55.0673 (UTC) FILETIME=[5A46CE90:01C91DD1]
+	id S1751452AbYIWXWF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 23 Sep 2008 19:22:05 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751424AbYIWXWE
+	(ORCPT <rfc822;git-outgoing>); Tue, 23 Sep 2008 19:22:04 -0400
+Received: from fg-out-1718.google.com ([72.14.220.156]:23173 "EHLO
+	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750884AbYIWXWC (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 23 Sep 2008 19:22:02 -0400
+Received: by fg-out-1718.google.com with SMTP id 19so1885247fgg.17
+        for <git@vger.kernel.org>; Tue, 23 Sep 2008 16:21:59 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:date:from:to:cc:subject
+         :message-id:references:mime-version:content-type:content-disposition
+         :in-reply-to:user-agent;
+        bh=s9BO7qdp289Fq0HSnqo57GGa4GHANx7vEHa7ohb+ICE=;
+        b=jNXG3h2798AwKfqT8F4FtN7y0QSe4QwyT+xhW9xtdWMJg/mwXCbUHzc+sIXusg6KmH
+         bX3QTUoX4fVVoT57F2ZsVuZRGDvrn0KdOTS0NjZ/6DhKIhG2E2xHP+u15CfkzZdgVr2n
+         wVPe26HJA3dq2PK2T5Ke0hLUD/uFz1wfpjq58=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        b=bKhkRiXUiUX4mFs4pqulMy+CKeM+63N2FmIp/gwRI6TVNMKEC4TXzZMtPE0SRqONJ7
+         Nu2r/lSOW6/cPcqDMyKBFXcxVIWWlYYEajq8Xri92ybixbFr/EQkM9bKs48uF3zm3+6/
+         8THeXmVyeD1POdWv6gNzCzF1aJJD66lAx83sc=
+Received: by 10.86.74.4 with SMTP id w4mr1990578fga.25.1222212119031;
+        Tue, 23 Sep 2008 16:21:59 -0700 (PDT)
+Received: from localhost (ppp85-140-170-49.pppoe.mtu-net.ru [85.140.170.49])
+        by mx.google.com with ESMTPS id l19sm8443260fgb.7.2008.09.23.16.21.56
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Tue, 23 Sep 2008 16:21:58 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <alpine.LNX.1.00.0809231811560.19665@iabervon.org>
+User-Agent: Mutt/1.5.13 (2006-08-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/96610>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/96611>
 
-mattjackets wrote:
-> I have a strange stash problem.  There is a single stash in the repo.
+On Tue, Sep 23, 2008 at 06:29:53PM -0400, Daniel Barkalow wrote:
+> On Wed, 24 Sep 2008, Dmitry Potapov wrote:
 > 
-> git stash apply 0  --  works, but results in a conflict.
-
-The correct form is 'git stash apply stash@{0}'
-
-'git stash apply 0' is doing the right thing for the wrong reason.
-For example, 'git stash apply 1' would not do the right thing.
-
-This is unrelated to your issue, but it seems you have uncovered
-a flaw which should be fixed.
-
-In git stash, when your command line above is used, eventually
-the following command is executed:
-
-    git rev-parse --revs-only --no-flags --default refs/stash 0
-
-'git rev-parse' fails to resolve revision "0" and prints out nothing
-and then falls back to printing the revision of "refs/stash". This
-is not what is desired by stash.
-
-Either rev-parse needs to error out in this case, or 'git stash' needs
-to be changed so that '--default refs/stash' is not used here. Possibly,
-something like what is done inside drop_stash().
-
->  Lets just go
-> ahead and drop the stash...
+> > It still will happen if developers work on topic branches, and it is not
+> > a rate situation with Git. Thus locking some particular path is stupid.
+> > What you may want instead is too mark SHA-1 of this file as being edited
+> > and later maybe as being replaced with another one. In this case, anyone
+> > who has the access to the central information storage will get warning
+> > about attempt to edit a file that is edited or already replaced with a
+> > new version.
 > 
-> git stash list  --  shows nothing.  huh?  Lets go ahead with the drop
-> anyway and hope it works...
-> 
-> $ git stash drop stash@{0}
-> fatal: Log .git/logs/refs/stash is empty.
-> stash@{0}: not a valid stashed state
-> 
-> sure enough, .git/logs/refs/stash is empty
+> No, your goal is to avoid having to do a merge in order to do a particular 
+> push. That push is the push to the shared location. It doesn't matter if 
+> you use topic branches, because your eventual goal is still to push to the 
+> shared location (or, possibly, to have the project maintainer push to the 
+> shared location with some sort of interesting delegation), so you lock the 
+> shared location, not your topic branch.
 
-Right, it must exist since you actually got the error message
-'fatal: Log .git/logs/refs/stash is empty', but it contains
-nothing. Not sure how that happened.
+What are you saying is that when I am locking some file on the current
+branch, Git (or whatever script that performs this locking) should figure
+out what is the original shared branch for it and lock the file there.
+When you have finished to edit and push changes then the lock should be
+removed if changes are pushed to this shared branch, otherwise it should
+be some token of delegation to the project maintainer who is going to
+push (or probably first merge, because other files may need that) to
+this branch.
 
-> git stash clear  --  does nothing
+Maybe, it can work, but it sounds too complex to me. I believe that my
+idea using SHA-1 is better. After all, what is file? It is its content.
+At least, in Git, we always identify files by their content. Thus if you
+lock some file, you put a lock on certain SHA-1. Now, regardless of
+branches and paths, this lock can work provided that you have access to
+some shared location. Of course, this lock is purely advisory, but it is
+good, because you may want to ignore it in some case. For instance, you
+want to created a new branch based on the current shared location and
+have no plan to ever merge it back. In this case, the lock on the shared
+branch should not matter to you. This is true regardless how you
+implement locking, and in your scheme it will another special case.
 
-It correctly removes .git/refs/stash for me.
 
-> I'm at a loss.  I can apply the stash cleanly to older revisions, and
-> gitk still shows the stash branch.  How can I fix this?  is it safe to
-> simply delete the stash branch as if it was any other branch?
-
-In this case yes it would be safe to just do 'rm .git/refs/stash', but
-like I said, 'git stash clear' worked for me.
-
--brandon
+Dmitry
