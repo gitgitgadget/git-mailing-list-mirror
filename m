@@ -1,78 +1,69 @@
-From: Dmitry Potapov <dpotapov@gmail.com>
-Subject: Re: Locking binary files
-Date: Wed, 24 Sep 2008 01:54:22 +0400
-Message-ID: <20080923215422.GV21650@dpotapov.dyndns.org>
-References: <94c1db200809222333q4953a6b9g8ce0c1cd4b8f5eb4@mail.gmail.com> <94c1db200809222339t7d65081eq7471fef86fb5ec73@mail.gmail.com> <48D8983C.7070506@op5.se> <94c1db200809230054t20e7e61dh5022966d4112eee6@mail.gmail.com> <48D8A97E.8070003@op5.se> <94c1db200809230656q4a9a765dw2354c0058b1d940c@mail.gmail.com> <alpine.LNX.1.00.0809231216350.19665@iabervon.org> <7v7i92tzgb.fsf@gitster.siamese.dyndns.org> <alpine.LNX.1.00.0809231551320.19665@iabervon.org>
+From: "Shawn O. Pearce" <spearce@spearce.org>
+Subject: Re: [PATCH] add GIT_FAST_STAT mode for Cygwin
+Date: Tue, 23 Sep 2008 14:58:58 -0700
+Message-ID: <20080923215858.GL3669@spearce.org>
+References: <20080923140144.GN21650@dpotapov.dyndns.org> <20080923153148.GI3669@spearce.org> <20080923171209.GP21650@dpotapov.dyndns.org> <20080923190637.GJ3669@spearce.org> <20080923200456.GR21650@dpotapov.dyndns.org> <20080923201739.GK3669@spearce.org> <20080923212858.GU21650@dpotapov.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Mario Pareja <mpareja.dev@gmail.com>,
-	Andreas Ericsson <ae@op5.se>,
-	Git Mailing List <git@vger.kernel.org>
-To: Daniel Barkalow <barkalow@iabervon.org>
-X-From: git-owner@vger.kernel.org Tue Sep 23 23:55:51 2008
+Content-Type: text/plain; charset=utf-8
+Cc: git@vger.kernel.org, Johannes Sixt <johannes.sixt@telecom.at>,
+	Junio C Hamano <gitster@pobox.com>,
+	Steffen Prohaska <prohaska@zib.de>
+To: Dmitry Potapov <dpotapov@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Sep 24 00:00:33 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KiFrB-00071M-5v
-	for gcvg-git-2@gmane.org; Tue, 23 Sep 2008 23:55:41 +0200
+	id 1KiFvT-0000wL-I2
+	for gcvg-git-2@gmane.org; Wed, 24 Sep 2008 00:00:08 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754847AbYIWVy3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 23 Sep 2008 17:54:29 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752542AbYIWVy3
-	(ORCPT <rfc822;git-outgoing>); Tue, 23 Sep 2008 17:54:29 -0400
-Received: from ey-out-2122.google.com ([74.125.78.27]:21455 "EHLO
-	ey-out-2122.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753813AbYIWVy2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 23 Sep 2008 17:54:28 -0400
-Received: by ey-out-2122.google.com with SMTP id 6so683893eyi.37
-        for <git@vger.kernel.org>; Tue, 23 Sep 2008 14:54:26 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:cc:subject
-         :message-id:references:mime-version:content-type:content-disposition
-         :in-reply-to:user-agent;
-        bh=CMtHSTi5q9iRV/slrpz4IYpIhyJDxWaPo45wVlsk6R4=;
-        b=OV3aW8BQflet0bSQfGH2nFCJ/hwYP8dWu/e5Y8VkGZ7YSh3QwPUgUgBxGySN9r0u4d
-         pwJwYS+DruqyLrSVF8Ojjz8kyLqShBu6RMKmyguyWqmRCtiBPKqHX3E5M5aTiZ4zeLbp
-         FPg2nPA2PsaESc8g3Rz7qwIWCKdi4O94wcInw=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        b=u2WlFzj5G/mbuSMOqXR5M2StzxzJ4QZBAVfjkhzhVtEj/mP8TfGJEWLtXJUd+B+PvV
-         +x0/t6Z13STy9+3uSux/nBl/VXfHo/vYKQ6z7twKBT5GvKVzSH9ickj/KI5xPNA9jWQF
-         lYFyYQn2mcb7iTwbdkRqG2v9yRr7EuPMaYrHk=
-Received: by 10.210.125.13 with SMTP id x13mr7245099ebc.187.1222206866047;
-        Tue, 23 Sep 2008 14:54:26 -0700 (PDT)
-Received: from localhost (ppp85-140-170-49.pppoe.mtu-net.ru [85.140.170.49])
-        by mx.google.com with ESMTPS id 5sm3620899eyh.2.2008.09.23.14.54.24
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Tue, 23 Sep 2008 14:54:25 -0700 (PDT)
+	id S1750849AbYIWV67 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 23 Sep 2008 17:58:59 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750838AbYIWV67
+	(ORCPT <rfc822;git-outgoing>); Tue, 23 Sep 2008 17:58:59 -0400
+Received: from george.spearce.org ([209.20.77.23]:57447 "EHLO
+	george.spearce.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750807AbYIWV66 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 23 Sep 2008 17:58:58 -0400
+Received: by george.spearce.org (Postfix, from userid 1001)
+	id 369743835F; Tue, 23 Sep 2008 21:58:58 +0000 (UTC)
 Content-Disposition: inline
-In-Reply-To: <alpine.LNX.1.00.0809231551320.19665@iabervon.org>
-User-Agent: Mutt/1.5.13 (2006-08-11)
+In-Reply-To: <20080923212858.GU21650@dpotapov.dyndns.org>
+User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/96606>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/96607>
 
-On Tue, Sep 23, 2008 at 05:13:29PM -0400, Daniel Barkalow wrote:
+Dmitry Potapov <dpotapov@gmail.com> wrote:
+> I am not sure that I understand what you are trying to do here.
+...
+> Did you mean this:
+...
+> if (have_git_dir()) {
+> 	git_config(git_cygwin_config, NULL);
+> 	cygwin_stat_fn = native_stat ? cygwin_stat : stat;
+> 	cygwin_lstat_fn = native_stat ? cygwin_lstat : lstat;
+> }
+
+Err, yes, something more like that.
+ 
+> > > static int cygwin_stat_choice(const char *file_name, struct stat *buf)
+> > > {
+> > > 	init_stat();
+> > > 	return (*cygwin_stat_fn)(file_name, buf);
 > 
-> The lock needs to last until you push to the repository the lock is for; 
-> otherwise you have the exclusive ability to make changes, but someone who 
-> grabs the lock right after you release it will still be working on the 
-> version without your change, which is what the lock is supposed to 
-> prevent.
+> change the above line to:
+> 	return (cygwin_stat_fn ? cygwin_stat_fn : stat) (file_name, buf);
 
-It still will happen if developers work on topic branches, and it is not
-a rate situation with Git. Thus locking some particular path is stupid.
-What you may want instead is too mark SHA-1 of this file as being edited
-and later maybe as being replaced with another one. In this case, anyone
-who has the access to the central information storage will get warning
-about attempt to edit a file that is edited or already replaced with a
-new version.
+Right.
+ 
+> so init_stat may be called a few times outside of git directory and then
+> use the default cygwin function, and once we enter to it then load the
+> configuration option and act accordingly.
 
-Dmitry
+Yup, exactly.  Sorry I wasn't being very clear earlier.
+
+-- 
+Shawn.
