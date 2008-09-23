@@ -1,145 +1,98 @@
 From: Andreas Ericsson <ae@op5.se>
-Subject: Re: rebasing merges
-Date: Tue, 23 Sep 2008 10:20:58 +0200
-Message-ID: <48D8A6EA.4020805@op5.se>
-References: <20080922155749.c8070681.stephen@exigencecorp.com>	<20080922231927.ef18f420.stephen@exigencecorp.com>	<48D88813.9060400@viscovery.net> <20080923024653.a3bb8666.stephen@exigencecorp.com>
+Subject: Re: Locking binary files
+Date: Tue, 23 Sep 2008 10:31:58 +0200
+Message-ID: <48D8A97E.8070003@op5.se>
+References: <94c1db200809222333q4953a6b9g8ce0c1cd4b8f5eb4@mail.gmail.com>	 <94c1db200809222339t7d65081eq7471fef86fb5ec73@mail.gmail.com>	 <48D8983C.7070506@op5.se> <94c1db200809230054t20e7e61dh5022966d4112eee6@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-15; format=flowed
 Content-Transfer-Encoding: 7bit
-Cc: Johannes Sixt <j.sixt@viscovery.net>, git@vger.kernel.org
-To: Stephen Haberman <stephen@exigencecorp.com>
-X-From: git-owner@vger.kernel.org Tue Sep 23 10:22:19 2008
+To: Mario Pareja <mpareja.dev@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Tue Sep 23 10:33:30 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Ki39z-0002WC-Ng
-	for gcvg-git-2@gmane.org; Tue, 23 Sep 2008 10:22:16 +0200
+	id 1Ki3Kg-0005jK-W2
+	for gcvg-git-2@gmane.org; Tue, 23 Sep 2008 10:33:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751714AbYIWIVG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 23 Sep 2008 04:21:06 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751652AbYIWIVG
-	(ORCPT <rfc822;git-outgoing>); Tue, 23 Sep 2008 04:21:06 -0400
-Received: from mail.op5.se ([193.201.96.20]:57581 "EHLO mail.op5.se"
+	id S1752823AbYIWIcJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 23 Sep 2008 04:32:09 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752425AbYIWIcJ
+	(ORCPT <rfc822;git-outgoing>); Tue, 23 Sep 2008 04:32:09 -0400
+Received: from mail.op5.se ([193.201.96.20]:45986 "EHLO mail.op5.se"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751683AbYIWIVE (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 23 Sep 2008 04:21:04 -0400
+	id S1752070AbYIWIcH (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 23 Sep 2008 04:32:07 -0400
 Received: from localhost (localhost.localdomain [127.0.0.1])
-	by mail.op5.se (Postfix) with ESMTP id 01C891B80081;
-	Tue, 23 Sep 2008 10:11:33 +0200 (CEST)
+	by mail.op5.se (Postfix) with ESMTP id 8739D1B80048;
+	Tue, 23 Sep 2008 10:22:33 +0200 (CEST)
 X-Virus-Scanned: amavisd-new at 
 X-Spam-Flag: NO
-X-Spam-Score: -4.263
+X-Spam-Score: -4.28
 X-Spam-Level: 
-X-Spam-Status: No, score=-4.263 tagged_above=-10 required=6.6
-	tests=[ALL_TRUSTED=-1.8, AWL=0.136, BAYES_00=-2.599]
+X-Spam-Status: No, score=-4.28 tagged_above=-10 required=6.6
+	tests=[ALL_TRUSTED=-1.8, AWL=0.119, BAYES_00=-2.599]
 Received: from mail.op5.se ([127.0.0.1])
 	by localhost (mail.op5.se [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id 9U+Lxf-BmqFJ; Tue, 23 Sep 2008 10:11:30 +0200 (CEST)
+	with ESMTP id yiKi15CdwCun; Tue, 23 Sep 2008 10:22:30 +0200 (CEST)
 Received: from clix.int.op5.se (unknown [192.168.1.20])
-	by mail.op5.se (Postfix) with ESMTP id C4FD41B80051;
-	Tue, 23 Sep 2008 10:11:29 +0200 (CEST)
+	by mail.op5.se (Postfix) with ESMTP id BF41C1B80051;
+	Tue, 23 Sep 2008 10:22:29 +0200 (CEST)
 User-Agent: Thunderbird 2.0.0.16 (X11/20080723)
-In-Reply-To: <20080923024653.a3bb8666.stephen@exigencecorp.com>
+In-Reply-To: <94c1db200809230054t20e7e61dh5022966d4112eee6@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/96537>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/96538>
 
-Stephen Haberman wrote:
->> This is the expected behavior and not up for debate.
+Mario, please don't reply in private. That way your mails won't
+get indexed and you don't have a chance to get help from others
+on the mailing list.
+
+While we're at it; don't top-post. Most people who frequent email
+lists with moderate to high traffic read hundreds of emails every
+day, so a quick reminder of what the discussion was about is useful
+when getting a reply. That reminder gets a lot trickier to get to
+if you first have to scroll down and then back up. Besides that,
+it feels totally backwards.
+
+Mario Pareja wrote:
+> Andreas,
 > 
-> Cool, thanks for the reply. However, I debate... :-)
-> 
->>   ---o--o--o--o--o--o         <-- origin
->>                      \
->>                       A'--B'  <-- master
-> 
-> Nice. That makes sense in your scenario.
-> 
-> Here is mine:
-> 
->  ---A--B--C--D           <-- origin/stable
->      \       |
->       E--F   |           <-- origin/topica
->           \  |
->              g--h        <-- topica
-> 
-> All the upper case commits have been published to origin. Other
-> devs, etc., know about them, their hashes are in the bug tracking
-> system.
-> 
-> I'm bringing topica up to date, but with a merge because I have
-> published history already on topica, so I merge stable and get a
-> new merge commit: g. And maybe make another change: h.
+> Thanks for the quick reply.  You asked how I thought locking could
+> have helped. I think locking helps notify a developer that a file is
+> being modified _before_ the developer begins his/her own
+> modifications. If I followed your example correctly, the conflict is
+> identified after the work has been done - this is too late if you ask
+> me.
 > 
 
-Why do you merge stable at this point?
+So it's a communication issue then. The way I understand locks in svn
+and cvs is that they also only bother you when you want to check in the
+file you've just recently modified, or if multiple people want to lock
+the same file at the same time.
 
-If you want the latest and greatest for testing/conflict resolution
-purposes, you can simply throw away the merge later and just know
-that it works.
-If you need some bugfix on stable but not everything else, cherrypick
-only that change. Otherwise you're applying a huge patch to fix a
-small problem.
+If that's the case, I see no problem what so ever with teaching specific
+git commands to interact with a locking server. git lock (and git unlock)
+would have to be coupled with a git-lock-daemon with wich everyone
+communicates. It should probably have the ability to run a hook or
+something (centrally) when a lock is obtained and released, so as to be
+able to notify others that a lock is held.
 
-> Everything's cool...now, with surprising frequency, someone beats
-> me to moving origin/topica:
-> 
->  ---A--B--C--D           <-- origin/stable
->      \       |
->       E--F---|--I        <-- origin/topica
->           \  |
->              g--h        <-- topica
-> 
-> Pushing h gets rejected as a rewind. Good. I want to pull, which
-> we had previously always used "--rebase" for, and the desired output
-> of a pull --rebase, to me, would be:
-> 
->  ---A--B--C--D           <-- origin/stable
->      \        \
->       E--F--I |          <-- origin/topica
->              \|
->               g'--h'     <-- topica
-> 
-> Instead, I get:
-> 
->  ---A--B--C--D           <-- origin/stable
->      \
->       E--F--I            <-- origin/topica
->              \
->               B'-C'-D'-h'<-- topica
-> 
-> So, yes, linearized history with no merges. However, this leads
-> to quizzical looks when B'/C'/D' hit the email list, bug tracker, etc.
-> as new commits.
-> 
-> Currently I just try to pull/merge/push in quick succession, but
-> it's a manual collaboration hack ("okay, I'm merging now, no
-> committing...") that would be nice to not have to worry about.
-> 
+I might write this for fun some day, but it's really not my itch to
+scratch, and it would be a terrible mistake to add something like a
+central repository to take care of it when a single rather stupid
+daemon and an equally stupid program could do the same work but much
+more efficiently.
 
-I think you just need to ask yourself *why* you're doing that
-first merge of "stable" into your topic. If they aren't really
-separate, using a topic-branch doesn't make so much sense. If
-they *are* separate, doing the merge doesn't make much sense,
-unless you're integration testing a snapshot build, but in that
-case you'd want to throw away the merge once it's done and
-tested.
-
-> I need to investigate the interactive rebase more, but my hesitant
-> assertion is that it's parent rewriting seems smart enough to handle
-> this. Perhaps not, and I admit our desired DAG output may not be
-> attainable without manual intervention.
-> 
-> I apologize--I should have included the example DAGs in my first
-> post, but since I didn't I felt the need to clarify. So, humoring
-> me, is the B'/C'/D' from this example really the expected behavior?
-> 
-
-Assuming the person who did "h" doesn't have the merge commit, then
-yes.
+Note that locking would be completely advisory though, and nothing
+would prevent people from committing changes to a locked file. Then
+again, insofar as I understand SVN/CVS locking, that's how those
+work too, except that an SVN "checkin" would be the equivalent of
+"git commit && git push" (the push part of the git sequence won't
+work).
 
 -- 
 Andreas Ericsson                   andreas.ericsson@op5.se
