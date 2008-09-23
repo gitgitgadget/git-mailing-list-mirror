@@ -1,190 +1,77 @@
-From: Dmitry Potapov <dpotapov@gmail.com>
-Subject: Re: [PATCH] add GIT_FAST_STAT mode for Cygwin
-Date: Tue, 23 Sep 2008 23:48:02 +0400
-Message-ID: <20080923194802.GQ21650@dpotapov.dyndns.org>
-References: <20080923140144.GN21650@dpotapov.dyndns.org> <200809232103.09133.johannes.sixt@telecom.at>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: Locking binary files
+Date: Tue, 23 Sep 2008 12:49:24 -0700
+Message-ID: <7v7i92tzgb.fsf@gitster.siamese.dyndns.org>
+References: <94c1db200809222333q4953a6b9g8ce0c1cd4b8f5eb4@mail.gmail.com>
+ <94c1db200809222339t7d65081eq7471fef86fb5ec73@mail.gmail.com>
+ <48D8983C.7070506@op5.se>
+ <94c1db200809230054t20e7e61dh5022966d4112eee6@mail.gmail.com>
+ <48D8A97E.8070003@op5.se>
+ <94c1db200809230656q4a9a765dw2354c0058b1d940c@mail.gmail.com>
+ <alpine.LNX.1.00.0809231216350.19665@iabervon.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-	Steffen Prohaska <prohaska@zib.de>
-To: Johannes Sixt <johannes.sixt@telecom.at>
-X-From: git-owner@vger.kernel.org Tue Sep 23 21:49:44 2008
+Cc: Mario Pareja <mpareja.dev@gmail.com>, Andreas Ericsson <ae@op5.se>,
+	Git Mailing List <git@vger.kernel.org>
+To: Daniel Barkalow <barkalow@iabervon.org>
+X-From: git-owner@vger.kernel.org Tue Sep 23 21:51:26 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KiDsy-0001Nc-ET
-	for gcvg-git-2@gmane.org; Tue, 23 Sep 2008 21:49:25 +0200
+	id 1KiDua-0002BE-5S
+	for gcvg-git-2@gmane.org; Tue, 23 Sep 2008 21:51:04 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752728AbYIWTsM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 23 Sep 2008 15:48:12 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752380AbYIWTsL
-	(ORCPT <rfc822;git-outgoing>); Tue, 23 Sep 2008 15:48:11 -0400
-Received: from fg-out-1718.google.com ([72.14.220.156]:18647 "EHLO
-	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751840AbYIWTsJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 23 Sep 2008 15:48:09 -0400
-Received: by fg-out-1718.google.com with SMTP id 19so1831005fgg.17
-        for <git@vger.kernel.org>; Tue, 23 Sep 2008 12:48:07 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:cc:subject
-         :message-id:references:mime-version:content-type:content-disposition
-         :in-reply-to:user-agent;
-        bh=IgY6Q1jMjcPmDLewAp1DYhOtqfLVpYQaZyyj787Erwc=;
-        b=sFjogf+Y62LUAcSVu0XtUuIZAejn1kUJQc9bHRqS7NwP16+qwE+Asvt39cVKga0/7q
-         +FnLa7Lkvnxavm0o8+HHlfzAJpkg3rMNT+ZKKmFat1tdOnWdNQ7JY6wEtpT5MyhJd7hW
-         Q6NLBQ2VAkpldRDw9hCh1gs5ThffvCrym9vf0=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        b=BM74CeZ+BEahW//7X84oIwbKX8HhOGC36R6HHCoEVdhpMTooticgJCMbj+ePXRFFen
-         iFd2wwZauAXOGKK5Jc5GhseeoUbFdf2iaYktg0pV8yY9QBqtla17+67v21MBdirjSoHu
-         cZjmkgXdgS3YMQPvMRiMa1wi8hzZNbLKQtAZk=
-Received: by 10.86.62.3 with SMTP id k3mr6579974fga.1.1222199287235;
-        Tue, 23 Sep 2008 12:48:07 -0700 (PDT)
-Received: from localhost (ppp85-140-170-49.pppoe.mtu-net.ru [85.140.170.49])
-        by mx.google.com with ESMTPS id 4sm9691799fge.8.2008.09.23.12.48.04
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Tue, 23 Sep 2008 12:48:05 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <200809232103.09133.johannes.sixt@telecom.at>
-User-Agent: Mutt/1.5.13 (2006-08-11)
+	id S1755561AbYIWTti (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 23 Sep 2008 15:49:38 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755539AbYIWTth
+	(ORCPT <rfc822;git-outgoing>); Tue, 23 Sep 2008 15:49:37 -0400
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:46385 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755526AbYIWTtg (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 23 Sep 2008 15:49:36 -0400
+Received: from localhost.localdomain (localhost [127.0.0.1])
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id E90E9641C1;
+	Tue, 23 Sep 2008 15:49:34 -0400 (EDT)
+Received: from pobox.com (ip68-225-240-211.oc.oc.cox.net [68.225.240.211])
+ (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
+ certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
+ ESMTPSA id C2099641BB; Tue, 23 Sep 2008 15:49:27 -0400 (EDT)
+In-Reply-To: <alpine.LNX.1.00.0809231216350.19665@iabervon.org> (Daniel
+ Barkalow's message of "Tue, 23 Sep 2008 13:32:15 -0400 (EDT)")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: BF62ECA8-89A8-11DD-BDD7-D0CFFE4BC1C1-77302942!a-sasl-fastnet.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/96586>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/96587>
 
-On Tue, Sep 23, 2008 at 09:03:08PM +0200, Johannes Sixt wrote:
-> On Dienstag, 23. September 2008, Dmitry Potapov wrote:
-> > +static inline void filetime_to_timespec(const FILETIME *ft, struct timespec *ts)
-> > +{ 
-> > +	long long winTime = ((long long)ft->dwHighDateTime << 32) + ft->dwLowDateTime;
-> > +	winTime -= 116444736000000000LL; /* Windows to Unix  Epoch conversion */
-> > +	ts->tv_sec = (time_t)(winTime/10000000); /* 100-nanosecond interval to seconds */
-> > +	ts->tv_nsec = (long)(winTime - ts->tv_sec) * 100; /* nanoseconds */ +}
-> 
-> +	ts->tv_nsec = (long)(winTime - ts->tv_sec*10000000LL) * 100;
+Daniel Barkalow <barkalow@iabervon.org> writes:
 
-Thanks.... What was I thought about when wrote this....
+> I think the right tool on the git side is actually a "smudge/clean" 
+> script. When you check something out, git converts it from the 
+> repository-stored form to a working tree form using a script (if there is 
+> one configured); this could check whether you've got the appropriate lock, 
+> and make the file unwritable if you don't.
 
-> 
-> > +static int do_stat(const char *file_name, struct stat *buf, stat_fn_t cygstat)
-> > +{ 
-> > +	WIN32_FILE_ATTRIBUTE_DATA fdata;
-> > +
-> > +	if (file_name[0] == '/')
-> > +		return cygstat (file_name, buf);
-> 
-> You should do this in the caller; it would make this function's
-> semantics much clearer.
+An obvious question is "how would such a script check the lock when you
+are 30,000 ft above ground"; in other words, this "locking mechanism"
+contradicts the very nature of distributed development theme.  The best
+mechanism should always be on the human side.  An SCM auguments
+inter-developer communication, but it is not a _substitute_ for
+communication.
 
-IMHO, the semantic of this function is clear: do_stat performs stat/lstat
-using Windows API with falling back on Cygwin implementation in those
-rare cases that it cannot handle correctly. Absolute path is just one of
-those cases. So, I am not sure what you win by moving this two lines out.
+But if you limit the use case to an always tightly connected environment
+(aka "not distributed at all"), I agree the above would be a very
+reasonable approach.
 
+Such a setup would need a separate locking infrastructure and an end user
+command that grabs the lock and when successful makes the file in the work
+tree read/write.  The user butchers the contents after taking the lock,
+saves, and then when running "git commit", probably the post-commit hook
+would release any relevant locks.
 
-> > +	if (GetFileAttributesExA(file_name, GetFileExInfoStandard, &fdata)) {
-> > +		int fMode = S_IREAD;
-> > +		/*
-> > +		 * If the system attribute is set and it is not a directory then
-> > +		 * it could be a symbol link created in the nowinsymlinks mode.
-> > +		 * Normally, Cygwin works in the winsymlinks mode, so this situation
-> > +		 * is very unlikely. For the sake of simplicity of our code, let's
-> > +		 * Cygwin to handle it.
-> > +		 */
-> > +		if ((fdata.dwFileAttributes & FILE_ATTRIBUTE_SYSTEM) &&
-> > +		    !(fdata.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY))
-> > +			return cygstat (file_name, buf);
-
-This is specific to cygwin.
-
-> > +
-> > +		if (fdata.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY)
-> > +			fMode |= S_IFDIR;
-> > +		else
-> > +			fMode |= S_IFREG;
-> > +		if (!(fdata.dwFileAttributes & FILE_ATTRIBUTE_READONLY))
-> > +			fMode |= S_IWRITE;
-
-These lines the same as mingw
-
-> > +
-> > +		/* st_dev, st_rdev are not used by Git */
-> > +		buf->st_dev = buf->st_rdev = 0;
-
-I set this to 0, while MinGW Git uses _getdrive(). I have no idea why
-it does so. Git does not use this field, and if it did, adding the
-_current_ drive number is useless at best when we are trying to
-determine whether the file is changed or not.
-
-> > +		/* it is difficult to obtain the inode number on Windows,
-> > +		 * so let's set it to zero as MinGW Git does. */
-> > +		buf->st_ino = 0;
-> > +		buf->st_mode = fMode;
-> > +		buf->st_nlink = 1;
-> > +		buf->st_uid = buf->st_gid = 0;
-
-This is the same as for MinGW
-
-> > +#ifdef __CYGWIN_USE_BIG_TYPES__
-> > +		buf->st_size = ((_off64_t)fdata.nFileSizeHigh << 32) +
-> > +			fdata.nFileSizeLow;
-> > +#else
-> > +		buf->st_size = (off_t)fdata.nFileSizeLow;
-> > +#endif
-> > +		buf->st_blocks = size_to_blocks(buf->st_size);
-> > +		filetime_to_timespec(&fdata.ftLastAccessTime, &buf->st_atim);
-> > +		filetime_to_timespec(&fdata.ftLastWriteTime, &buf->st_mtim);
-> > +		filetime_to_timespec(&fdata.ftCreationTime, &buf->st_ctim);
-
-This is different: using 64-bit version for st_size, st_blocks does not
-exist in MinGW, and finally filetime_to_timespec instead of filetime_to_time_t,
-as well as the name of fields is different (st_ctim instead of st_ctime, etc).
-
-> > +		errno = 0;
-> > +		return 0;
-> > +	}
-> > +
-> > +	switch (GetLastError()) {
-> > +	case ERROR_ACCESS_DENIED:
-> > +	case ERROR_SHARING_VIOLATION:
-> > +	case ERROR_LOCK_VIOLATION:
-> > +	case ERROR_SHARING_BUFFER_EXCEEDED:
-> > +		errno = EACCES;
-> > +		break;
-> > +	case ERROR_BUFFER_OVERFLOW:
-> > +		errno = ENAMETOOLONG;
-> > +		break;
-> > +	case ERROR_NOT_ENOUGH_MEMORY:
-> > +		errno = ENOMEM;
-> > +		break;
-> > +	default:
-> > +		/* In the winsymlinks mode (which is the default), Cygwin
-> > +		 * emulates symbol links using Windows shortcut files. These
-> > +		 * files are formed by adding .lnk extension. So, if we have
-> > +		 * not found the specified file name, it could be that it is
-> > +		 * a symbol link. Let's Cygwin to deal with that.
-> > +		 */
-> > +		return cygstat (file_name, buf);
-> > +	}
-
-This is the same as in MinGW, except the default case, where MinGW
-returns error immediately while this version calls the fallback
-function.
-
-
-> > +	return -1;
-> 
-> You do duplicate a lot of code here. Any chances to factor out the
-> common parts?
-
-I don't see much common code here. Initialization of 5 variables where
-four of them are just constants? Perhaps, the biggest common part here
-is conversion of dwFileAttributes to st_mode, but it is still 5 lines of
-trivial code.
-
-Dmitry
+All these can be left outside the scope of git, as they can be hooked into
+git with the existing infrastructure. Once a BCP materializes it could be
+added to contrib/ just like the "paranoid" update hook.
