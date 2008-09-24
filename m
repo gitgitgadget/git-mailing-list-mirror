@@ -1,92 +1,89 @@
-From: Yann Dirson <ydirson@altern.org>
-Subject: stg 0.14.3 breakage on push after moving hunk
-Date: Thu, 25 Sep 2008 01:26:54 +0200
-Message-ID: <20080924232654.GY4985@nan92-1-81-57-214-146.fbx.proxad.net>
+From: Jonas Fonseca <fonseca@diku.dk>
+Subject: Re: [JGIT PATCH]  Test and fix handling of quotes in ~/.ssh/config
+Date: Thu, 25 Sep 2008 01:25:19 +0200
+Message-ID: <20080924232519.GA15318@diku.dk>
+References: <12219428213749-git-send-email-ggoudsmit@shebang.nl> <bd6139dc0809201819o5d6eb5b1r7bf0e46702c711d7@mail.gmail.com> <20080921112519.GA24200@diku.dk> <200809222242.29165.robin.rosenberg.lists@dewire.com> <20080922210734.GE3669@spearce.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: GIT list <git@vger.kernel.org>
-To: Catalin Marinas <catalin.marinas@gmail.com>,
-	Karl =?iso-8859-1?Q?Hasselstr=F6m?= <kha@treskal.com>
-X-From: git-owner@vger.kernel.org Thu Sep 25 01:26:31 2008
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Robin Rosenberg <robin.rosenberg.lists@dewire.com>,
+	sverre@rabbelier.nl, git@vger.kernel.org
+To: "Shawn O. Pearce" <spearce@spearce.org>
+X-From: git-owner@vger.kernel.org Thu Sep 25 01:26:37 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Kidkc-0005y1-6u
-	for gcvg-git-2@gmane.org; Thu, 25 Sep 2008 01:26:30 +0200
+	id 1Kidkd-0005y1-0Q
+	for gcvg-git-2@gmane.org; Thu, 25 Sep 2008 01:26:31 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752593AbYIXXZV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 24 Sep 2008 19:25:21 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752202AbYIXXZU
-	(ORCPT <rfc822;git-outgoing>); Wed, 24 Sep 2008 19:25:20 -0400
-Received: from smtp6-g19.free.fr ([212.27.42.36]:42145 "EHLO smtp6-g19.free.fr"
+	id S1752243AbYIXXZY convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 24 Sep 2008 19:25:24 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752645AbYIXXZY
+	(ORCPT <rfc822;git-outgoing>); Wed, 24 Sep 2008 19:25:24 -0400
+Received: from mgw1.diku.dk ([130.225.96.91]:60709 "EHLO mgw1.diku.dk"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751882AbYIXXZT (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 24 Sep 2008 19:25:19 -0400
-Received: from smtp6-g19.free.fr (localhost.localdomain [127.0.0.1])
-	by smtp6-g19.free.fr (Postfix) with ESMTP id 5016E19717;
-	Thu, 25 Sep 2008 01:25:16 +0200 (CEST)
-Received: from gandelf.nowhere.earth (nan92-1-81-57-214-146.fbx.proxad.net [81.57.214.146])
-	by smtp6-g19.free.fr (Postfix) with ESMTP id E04D71970B;
-	Thu, 25 Sep 2008 01:25:15 +0200 (CEST)
-Received: by gandelf.nowhere.earth (Postfix, from userid 1000)
-	id 95D4E1F0C2; Thu, 25 Sep 2008 01:26:54 +0200 (CEST)
+	id S1752202AbYIXXZX (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 24 Sep 2008 19:25:23 -0400
+Received: from localhost (localhost [127.0.0.1])
+	by mgw1.diku.dk (Postfix) with ESMTP id C889152C376;
+	Thu, 25 Sep 2008 01:25:21 +0200 (CEST)
+X-Virus-Scanned: amavisd-new at diku.dk
+Received: from mgw1.diku.dk ([127.0.0.1])
+	by localhost (mgw1.diku.dk [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id 9bAi9G21yx+X; Thu, 25 Sep 2008 01:25:19 +0200 (CEST)
+Received: from nhugin.diku.dk (nhugin.diku.dk [130.225.96.140])
+	by mgw1.diku.dk (Postfix) with ESMTP id C817952C32D;
+	Thu, 25 Sep 2008 01:25:19 +0200 (CEST)
+Received: from ask.diku.dk (ask.diku.dk [130.225.96.225])
+	by nhugin.diku.dk (Postfix) with ESMTP
+	id E76F26DF845; Thu, 25 Sep 2008 01:24:46 +0200 (CEST)
+Received: by ask.diku.dk (Postfix, from userid 3873)
+	id A48204F9FA1; Thu, 25 Sep 2008 01:25:19 +0200 (CEST)
 Content-Disposition: inline
-User-Agent: Mutt/1.5.18 (2008-05-17)
+In-Reply-To: <20080922210734.GE3669@spearce.org>
+User-Agent: Mutt/1.5.16 (2007-06-09)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/96711>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/96712>
 
-Just saw the following problem - ever saw that ?
+Shawn O. Pearce <spearce@spearce.org> wrote Mon, Sep 22, 2008:
+> Robin Rosenberg <robin.rosenberg.lists@dewire.com> wrote:
+> > s=F6ndagen den 21 september 2008 13.25.19 skrev Jonas Fonseca:
+> > > +		assertEquals("bad.tld\"", osc.lookup("bad").getHostName());
+> > This one is really (as you noted) bad so we shouldn't allow it at a=
+ll. A new=20
+> > subclass of TransportExcpeption should be thrown to indicate a seri=
+ous
+> > configuration problem when attempting to use the option.
+>
+> Probably so.
+>=20
+> But then we need to mark that the Host is invalid, because we
+> are serving requests from a cache, not from the file itself.
+> And TransportException isn't something that the SshSessionFactory
+> knows about.  Probably better to use a a subclass of IOException.
 
-Getting into context: split changes affecting a particular file into
-another patch
+Sorry, for not following up on this. I was trying to cook up a patch fo=
+r
+this today. Now, it is somehow sad that testing "forces" us to waste
+time on these stupid corner cases. ;-) On the other hand, this problem
+might exist (.git/config) or turn up again, so it would be good to have
+a design principle.
 
-$ stg --version
-Stacked GIT 0.14.3
-git version 1.6.0.1
-Python version 2.5.2 (r252:60911, Aug  8 2008, 09:22:44)
-[GCC 4.3.1]
+Using exceptions seems a bit harsh, since the quote is not really fatal
+in anyway. Also, for badly formatted Port values the value is simply
+ignored. So for bad quoting encountered during non-Host values, I think
+it is fair to just ignore the value. For Host values it is a bit more
+non-obvious to me. In terms of invalidating hosts, the API ensures that
+a lookup will always return a host, so invalid hosts should not return
+null. I propose to simply remove these hosts from the host map and clea=
+r
+the current host list so that no values will be saved, effectively
+causing invalid hosts to result in the same as unknown hosts.
 
-$ stg pop
-Checking for changes in the working directory ... done
-Popping patch "factorize" ... done
-Now at patch "x-dummy"
-$ stg new -m test
-$ stg-fold-files-from factorize 't/*'
-Checking for changes in the working directory ... done
-Folding patch from stdin ... done
-$ stg ref
-Checking for changes in the working directory ... done
-Refreshing patch "test" ... done
-
-... then attempting to push to get rid of the now-duplicated changes
-from orig patch (which has been how I have used stg-fold-files-from
-ever since I wrote it, so I'm pretty sure it used to work, but then,
-it's been a couple of months since I did not use it ;):
-
-$ stg push
-Checking for changes in the working directory ... done
-Pushing patch "factorize" ... Traceback (most recent call last):
-  File "/usr/bin/stg", line 43, in <module>
-    main()
-  File "/var/lib/python-support/python2.5/stgit/main.py", line 281, in main
-    command.func(parser, options, args)   
-  File "/var/lib/python-support/python2.5/stgit/commands/push.py", line 102, in func
-    push_patches(crt_series, patches, options.merged)
-  File "/var/lib/python-support/python2.5/stgit/commands/common.py", line 202, in push_patches
-    modified = crt_series.push_patch(p)
-  File "/var/lib/python-support/python2.5/stgit/stack.py", line 1112, in push_patch
-    git.merge(bottom, head, top, recursive = True)
-  File "/var/lib/python-support/python2.5/stgit/git.py", line 790, in merge
-    stages['2'][0], stages['3'][0]) != 0:
-  File "/var/lib/python-support/python2.5/stgit/gitmergeonefile.py", line 268, in merge
-    % path)
-TypeError: not all arguments converted during string formatting
-
-Best regards,
--- 
-Yann
+--=20
+Jonas Fonseca
