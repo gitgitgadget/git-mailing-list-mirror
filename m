@@ -1,52 +1,96 @@
-From: John Freeman <jfreeman@cs.tamu.edu>
-Subject: Re: clone fails: Could not get the current working directory
-Date: Wed, 24 Sep 2008 08:30:50 -0500
-Message-ID: <48DA410A.2080504@cs.tamu.edu>
-References: <48D59A30.5020403@cs.tamu.edu>	 <81b0412b0809230539x340bd579q3489d5e257b9740@mail.gmail.com>	 <48D8EDDA.3050804@cs.tamu.edu>	 <81b0412b0809230712u4a1cbe0fo69f558cbe9a26aae@mail.gmail.com>	 <48D90125.3090703@cs.tamu.edu>	 <81b0412b0809230801l2e6b1a71v1210317fe636aeba@mail.gmail.com>	 <48D95C96.4030906@cs.tamu.edu> <81b0412b0809240430y682d6dd9wef801c33a6ee2f85@mail.gmail.com>
+From: Dmitry Potapov <dpotapov@gmail.com>
+Subject: Re: [PATCH] add GIT_FAST_STAT mode for Cygwin
+Date: Wed, 24 Sep 2008 18:03:58 +0400
+Message-ID: <20080924140358.GX21650@dpotapov.dyndns.org>
+References: <20080923140144.GN21650@dpotapov.dyndns.org> <81b0412b0809230737s7498e214w4c58991e79f76507@mail.gmail.com> <20080923165247.GO21650@dpotapov.dyndns.org> <81b0412b0809240425t63a2a28cw1cc0c0d95b3290f7@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Johannes Sixt <johannes.sixt@telecom.at>,
+	Junio C Hamano <gitster@pobox.com>,
+	Steffen Prohaska <prohaska@zib.de>,
+	"Shawn O. Pearce" <spearce@spearce.org>
 To: Alex Riesen <raa.lkml@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Sep 24 15:32:40 2008
+X-From: git-owner@vger.kernel.org Wed Sep 24 16:06:29 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KiUTf-0002rb-NF
-	for gcvg-git-2@gmane.org; Wed, 24 Sep 2008 15:32:24 +0200
+	id 1KiUzX-0007Pd-HQ
+	for gcvg-git-2@gmane.org; Wed, 24 Sep 2008 16:05:43 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751839AbYIXNbN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 24 Sep 2008 09:31:13 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751878AbYIXNbN
-	(ORCPT <rfc822;git-outgoing>); Wed, 24 Sep 2008 09:31:13 -0400
-Received: from smtp-relay.tamu.edu ([165.91.22.120]:14196 "EHLO
-	sr-2-int.cis.tamu.edu" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1751704AbYIXNbM (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 24 Sep 2008 09:31:12 -0400
-Received: from localhost (localhost.tamu.edu [127.0.0.1])
-	by sr-2-int.cis.tamu.edu (Postfix) with ESMTP id 3FCA8266A4;
-	Wed, 24 Sep 2008 08:31:11 -0500 (CDT)
-X-Virus-Scanned: amavisd-new at tamu.edu
-Received: from [192.168.10.200] (r74-192-200-91.bcstcmta02.clsttx.tl.dh.suddenlink.net [74.192.200.91])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by sr-2-int.cis.tamu.edu (Postfix) with ESMTPSA id 75B96263D6;
-	Wed, 24 Sep 2008 08:31:10 -0500 (CDT)
-User-Agent: Thunderbird 2.0.0.16 (Windows/20080708)
-In-Reply-To: <81b0412b0809240430y682d6dd9wef801c33a6ee2f85@mail.gmail.com>
+	id S1751685AbYIXOEI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 24 Sep 2008 10:04:08 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751704AbYIXOEH
+	(ORCPT <rfc822;git-outgoing>); Wed, 24 Sep 2008 10:04:07 -0400
+Received: from fg-out-1718.google.com ([72.14.220.154]:59214 "EHLO
+	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751630AbYIXOEF (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 24 Sep 2008 10:04:05 -0400
+Received: by fg-out-1718.google.com with SMTP id 19so2091084fgg.17
+        for <git@vger.kernel.org>; Wed, 24 Sep 2008 07:04:03 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:date:from:to:cc:subject
+         :message-id:references:mime-version:content-type:content-disposition
+         :in-reply-to:user-agent;
+        bh=0v+fQsKuab2nqhAPO4HQSlLQjgrQY0k65jsqYzlyu5o=;
+        b=BniV++q11b9tXTnqg8VtJnzEcKeAVZNQFqZvYF/dxDt70kDYxENleqDXkFsvBmDrSi
+         ztQbvPDAznxSLAzkXxT5RHB78Wfcc+BXc5sPSJPTyxeZdLoTZq6Rp5oAmh24g/0n2HNX
+         faKwmYTnu6V6gECmg3wnaCN1xXfCs/7Rra+zI=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        b=S7R+W/1SlaiMGpq+v2882X6RCplTQ7QYjr8QHIXdQFleMulpL8T9XaLvpKk+IMeUv3
+         W9UZMng4FKvR9md4a6ZMRGjXO1VZDMBqUGU8mWj8kV/8BuE0KVuu7fX9r0UfJKHB6n8E
+         lJEEjsiVhC+qbDVnh2UDI2k9i0THYowDseGhA=
+Received: by 10.86.26.11 with SMTP id 11mr7394752fgz.71.1222265043339;
+        Wed, 24 Sep 2008 07:04:03 -0700 (PDT)
+Received: from localhost (ppp85-141-236-118.pppoe.mtu-net.ru [85.141.236.118])
+        by mx.google.com with ESMTPS id e20sm9379315fga.1.2008.09.24.07.04.00
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Wed, 24 Sep 2008 07:04:02 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <81b0412b0809240425t63a2a28cw1cc0c0d95b3290f7@mail.gmail.com>
+User-Agent: Mutt/1.5.13 (2006-08-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/96632>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/96633>
 
-Alex Riesen wrote:
-> General question: What does Sun's pwd do?
->   
+On Wed, Sep 24, 2008 at 01:25:06PM +0200, Alex Riesen wrote:
+> 2008/9/23 Dmitry Potapov <dpotapov@gmail.com>:
+> >
+> > I thought that in rather unusual circumstances (such as using Cygwin
+> > mount to connect separately directories in one tree), this fast version
+> > may not work. So, I made it conditional. It is runtime conditional,
+> > because most users do not build Git themselves but install a ready
+> > Cygwin package.
+> 
+> So? How about make the fast version _always_ work? We don't seem
+> to fallback to copy+unlink everytime the POSIX rename fails.
 
-It works like you'd expect.  There are no permission problems.  Even in 
-directories for which I don't have read access, it will show the path.
+I am not sure that I understand your analogue here. First, rename has
+never meant to work as copy+unlink. Second, I don't fall back on some
+other code when the implementation provided by Cygwin fails. I replace
+the Cygwin implementation with a faster but a bit hackish version. Yes,
+it works fine in almost all practical cases I aware of, but I cannot
+guarantee identical behavior in _all_ cases.
 
-- John
+Frankly, I don't have strong preference here neither for making this
+fast version always work nor leave it conditional (perhaps, with the
+default setting use-fast-version). So, whatever the majority decides
+is fine with me.
+
+> Besides it will remove your setup code, which looks bigger and provoked
+> more discussion than the real subject itself.
+
+I believe Shawn wanted it to be configurable on per-repository basis.
+I have just finished re-writing the code in the way he suggested, so I
+hope all objections with the setup code are resolved now. I will send
+the new version a bit later, I did not have time to test it yet.
+
+
+Dmitry
