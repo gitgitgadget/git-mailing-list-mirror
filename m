@@ -1,114 +1,119 @@
-From: pasky@suse.cz
-Subject: [PATCH 4/5] git-gui: Add support for removing remotes
-Date: Wed, 24 Sep 2008 22:44:02 +0200
-Message-ID: <20080924204616.189163849@suse.cz>
-References: <20080924204358.144077183@suse.cz>
-Cc: spearce@spearce.org
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Sep 24 22:48:17 2008
+From: Robin Rosenberg <robin.rosenberg@dewire.com>
+Subject: [EGIT PATCH 2/3] Add create support to the branch command
+Date: Wed, 24 Sep 2008 23:56:22 +0200
+Message-ID: <1222293383-26016-2-git-send-email-robin.rosenberg@dewire.com>
+References: <1222293383-26016-1-git-send-email-robin.rosenberg@dewire.com>
+Cc: git@vger.kernel.org, Robin Rosenberg <robin.rosenberg@dewire.com>
+To: spearce@spearce.org
+X-From: git-owner@vger.kernel.org Wed Sep 24 23:59:26 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KibHQ-0002ti-P3
-	for gcvg-git-2@gmane.org; Wed, 24 Sep 2008 22:48:13 +0200
+	id 1KicO9-0000DW-O6
+	for gcvg-git-2@gmane.org; Wed, 24 Sep 2008 23:59:14 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752632AbYIXUqh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 24 Sep 2008 16:46:37 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752587AbYIXUqf
-	(ORCPT <rfc822;git-outgoing>); Wed, 24 Sep 2008 16:46:35 -0400
-Received: from [212.249.11.140] ([212.249.11.140]:46831 "EHLO pixie.suse.cz"
-	rhost-flags-FAIL-FAIL-OK-FAIL) by vger.kernel.org with ESMTP
-	id S1752424AbYIXUq2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 24 Sep 2008 16:46:28 -0400
-Received: by pixie.suse.cz (Postfix, from userid 2001)
-	id A789A2AC955; Wed, 24 Sep 2008 22:46:16 +0200 (CEST)
-User-Agent: quilt/0.46_cvs20080326-19.1
-Content-Disposition: inline; filename=t/git-gui/remote-rm.diff
+	id S1752095AbYIXV5l (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 24 Sep 2008 17:57:41 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752114AbYIXV5k
+	(ORCPT <rfc822;git-outgoing>); Wed, 24 Sep 2008 17:57:40 -0400
+Received: from av8-2-sn3.vrr.skanova.net ([81.228.9.184]:34421 "EHLO
+	av8-2-sn3.vrr.skanova.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752061AbYIXV5h (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 24 Sep 2008 17:57:37 -0400
+Received: by av8-2-sn3.vrr.skanova.net (Postfix, from userid 502)
+	id 159E9390A5; Wed, 24 Sep 2008 23:57:24 +0200 (CEST)
+Received: from smtp3-1-sn3.vrr.skanova.net (smtp3-1-sn3.vrr.skanova.net [81.228.9.101])
+	by av8-2-sn3.vrr.skanova.net (Postfix) with ESMTP
+	id CA70638B23; Wed, 24 Sep 2008 23:57:23 +0200 (CEST)
+Received: from localhost.localdomain (h250n1fls32o811.telia.com [213.67.100.250])
+	by smtp3-1-sn3.vrr.skanova.net (Postfix) with ESMTP id A229437E44;
+	Wed, 24 Sep 2008 23:57:23 +0200 (CEST)
+X-Mailer: git-send-email 1.6.0.1.310.gf789d0.dirty
+In-Reply-To: <1222293383-26016-1-git-send-email-robin.rosenberg@dewire.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/96694>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/96695>
 
-We introduce new submenu Remote -> Remove Remote, allowing to remove
-remotes. In the future, we might consider a confirmation popup to avoid
-misclicks, but removing a remote is not very lossy operation.
+The help string hinted it could create branches, but it was not implemented.
 
-This patch has been sponsored by Novartis.
-
-Signed-off-by: Petr Baudis <pasky@suse.cz>
-
+Signed-off-by: Robin Rosenberg <robin.rosenberg@dewire.com>
 ---
- git-gui/lib/remote.tcl |   37 +++++++++++++++++++++++++++++++++++++
- 1 files changed, 37 insertions(+), 0 deletions(-)
+ .../src/org/spearce/jgit/pgm/Branch.java           |   38 ++++++++++++++++++--
+ 1 files changed, 35 insertions(+), 3 deletions(-)
 
-diff --git a/git-gui/lib/remote.tcl b/git-gui/lib/remote.tcl
-index 643f0bc..1852247 100644
---- a/git-gui/lib/remote.tcl
-+++ b/git-gui/lib/remote.tcl
-@@ -137,6 +137,7 @@ proc add_fetch_entry {r} {
- 	set remote_m .mbar.remote
- 	set fetch_m $remote_m.fetch
- 	set prune_m $remote_m.prune
-+	set remove_m $remote_m.remove
- 	set enable 0
- 	if {![catch {set a $repo_config(remote.$r.url)}]} {
- 		if {![catch {set a $repo_config(remote.$r.fetch)}]} {
-@@ -157,6 +158,11 @@ proc add_fetch_entry {r} {
+diff --git a/org.spearce.jgit.pgm/src/org/spearce/jgit/pgm/Branch.java b/org.spearce.jgit.pgm/src/org/spearce/jgit/pgm/Branch.java
+index a266244..db0aab8 100644
+--- a/org.spearce.jgit.pgm/src/org/spearce/jgit/pgm/Branch.java
++++ b/org.spearce.jgit.pgm/src/org/spearce/jgit/pgm/Branch.java
+@@ -45,13 +45,16 @@
+ import java.util.Map.Entry;
  
- 	if {$enable} {
- 		if {![winfo exists $fetch_m]} {
-+			menu $remove_m
-+			$remote_m insert 0 cascade \
-+				-label [mc "Remove Remote"] \
-+				-menu $remove_m
+ import org.kohsuke.args4j.Argument;
++import org.kohsuke.args4j.ExampleMode;
+ import org.kohsuke.args4j.Option;
+ import org.spearce.jgit.lib.Constants;
+ import org.spearce.jgit.lib.ObjectId;
+ import org.spearce.jgit.lib.Ref;
+ import org.spearce.jgit.lib.RefComparator;
+ import org.spearce.jgit.lib.RefUpdate;
++import org.spearce.jgit.lib.Repository;
+ import org.spearce.jgit.lib.RefUpdate.Result;
++import org.spearce.jgit.pgm.opt.CmdLineParser;
+ import org.spearce.jgit.revwalk.RevWalk;
+ 
+ @Command(common = true, usage = "List, create, or delete branches")
+@@ -69,6 +72,9 @@
+ 	@Option(name = "--delete-force", aliases = { "-D" }, usage = "delete branch (even if not merged)")
+ 	private boolean deleteForce = false;
+ 
++	@Option(name = "--create-force", aliases = { "-f" }, usage = "force create branch even exists")
++	private boolean createForce = false;
 +
- 			menu $prune_m
- 			$remote_m insert 0 cascade \
- 				-label [mc "Prune from"] \
-@@ -174,6 +180,9 @@ proc add_fetch_entry {r} {
- 		$prune_m add command \
- 			-label $r \
- 			-command [list prune_from $r]
-+		$remove_m add command \
-+			-label $r \
-+			-command [list remove_remote $r]
+ 	@Option(name = "--verbose", aliases = { "-v" }, usage = "be verbose")
+ 	private boolean verbose = false;
+ 
+@@ -87,9 +93,35 @@ protected void run() throws Exception {
+ 		if (delete || deleteForce)
+ 			delete(deleteForce);
+ 		else {
+-			if (verbose)
+-				rw = new RevWalk(db);
+-			list();
++			if (branches.size() > 2)
++				throw die("Too many refs given\n" + new CmdLineParser(this).printExample(ExampleMode.ALL));
++
++			if (branches.size() > 0) {
++				String newHead = branches.get(0);
++				ObjectId startAt;
++				if (branches.size() == 2)
++					startAt = db.resolve(branches.get(1) + "^0");
++				else
++					startAt = db.resolve(Constants.HEAD + "^0");
++
++				String newRefName = newHead;
++				if (!newRefName.startsWith(Constants.R_HEADS))
++					newRefName = Constants.R_HEADS + newRefName;
++				if (!Repository.isValidRefName(newRefName))
++					throw die(String.format("%s is not a valid ref name", newRefName));
++				if (!createForce && db.resolve(newRefName) != null)
++					throw die(String.format("branch %s already exists", newHead));
++				RefUpdate updateRef = db.updateRef(newRefName);
++				updateRef.setNewObjectId(startAt);
++				updateRef.setForceUpdate(createForce);
++				Result update = updateRef.update();
++				if (update == Result.REJECTED)
++					throw die(String.format("Could not create branch %s: %s", newHead, update.toString()));
++			} else {
++				if (verbose)
++					rw = new RevWalk(db);
++				list();
++			}
+ 		}
  	}
- }
  
-@@ -236,3 +245,31 @@ proc add_single_remote {name location} {
- 	add_fetch_entry $name
- 	add_push_entry $name
- }
-+
-+proc delete_from_menu {menu name} {
-+	if {[winfo exists $menu]} {
-+		$menu delete $name
-+	}
-+}
-+
-+proc remove_remote {name} {
-+	global all_remotes repo_config
-+
-+	git remote rm $name
-+
-+	catch {
-+		# Missing values are ok
-+		unset repo_config(remote.$name.url)
-+		unset repo_config(remote.$name.fetch)
-+		unset repo_config(remote.$name.push)
-+	}
-+
-+	set i [lsearch -exact all_remotes $name]
-+	lreplace all_remotes $i $i
-+
-+	set remote_m .mbar.remote
-+	delete_from_menu $remote_m.fetch $name
-+	delete_from_menu $remote_m.prune $name
-+	delete_from_menu $remote_m.remove $name
-+	delete_from_menu $remote_m.push $name
-+}
 -- 
-tg: (f30d624..) t/git-gui/remote-rm (depends on: t/git-gui/remote-add)
+1.6.0.1.310.gf789d0.dirty
