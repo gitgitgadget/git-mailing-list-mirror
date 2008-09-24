@@ -1,144 +1,123 @@
-From: Deskin Miller <deskinm@umich.edu>
-Subject: Re: [PATCH v2] maint: check return of split_cmdline to avoid bad
-	config strings
-Date: Wed, 24 Sep 2008 10:50:29 -0400
-Message-ID: <20080924145029.GA3052@riemann.deskinm.fdns.net>
-References: <20080924061028.GA2792@riemann.deskinm.fdns.net> <20080924092847.GD23137@genesis.frugalware.org>
+From: Dmitry Potapov <dpotapov@gmail.com>
+Subject: Re: Locking binary files
+Date: Wed, 24 Sep 2008 19:00:56 +0400
+Message-ID: <20080924150056.GY21650@dpotapov.dyndns.org>
+References: <94c1db200809230054t20e7e61dh5022966d4112eee6@mail.gmail.com> <48D8A97E.8070003@op5.se> <94c1db200809230656q4a9a765dw2354c0058b1d940c@mail.gmail.com> <alpine.LNX.1.00.0809231216350.19665@iabervon.org> <7v7i92tzgb.fsf@gitster.siamese.dyndns.org> <alpine.LNX.1.00.0809231551320.19665@iabervon.org> <20080923215422.GV21650@dpotapov.dyndns.org> <alpine.LNX.1.00.0809231811560.19665@iabervon.org> <20080923232154.GW21650@dpotapov.dyndns.org> <alpine.LNX.1.00.0809232330050.19665@iabervon.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, gitster@pobox.com
-To: Miklos Vajna <vmiklos@frugalware.org>
-X-From: git-owner@vger.kernel.org Wed Sep 24 16:53:34 2008
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Mario Pareja <mpareja.dev@gmail.com>,
+	Andreas Ericsson <ae@op5.se>,
+	Git Mailing List <git@vger.kernel.org>
+To: Daniel Barkalow <barkalow@iabervon.org>
+X-From: git-owner@vger.kernel.org Wed Sep 24 17:02:42 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KiVjI-0000rI-FN
-	for gcvg-git-2@gmane.org; Wed, 24 Sep 2008 16:52:36 +0200
+	id 1KiVsf-0005Dj-Ma
+	for gcvg-git-2@gmane.org; Wed, 24 Sep 2008 17:02:18 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752211AbYIXOv1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 24 Sep 2008 10:51:27 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751665AbYIXOv1
-	(ORCPT <rfc822;git-outgoing>); Wed, 24 Sep 2008 10:51:27 -0400
-Received: from yx-out-2324.google.com ([74.125.44.28]:37330 "EHLO
-	yx-out-2324.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751280AbYIXOv0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 24 Sep 2008 10:51:26 -0400
-Received: by yx-out-2324.google.com with SMTP id 8so407477yxm.1
-        for <git@vger.kernel.org>; Wed, 24 Sep 2008 07:51:25 -0700 (PDT)
+	id S1752097AbYIXPBF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 24 Sep 2008 11:01:05 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752070AbYIXPBE
+	(ORCPT <rfc822;git-outgoing>); Wed, 24 Sep 2008 11:01:04 -0400
+Received: from gv-out-0910.google.com ([216.239.58.184]:52447 "EHLO
+	gv-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751867AbYIXPBD (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 24 Sep 2008 11:01:03 -0400
+Received: by gv-out-0910.google.com with SMTP id e6so219680gvc.37
+        for <git@vger.kernel.org>; Wed, 24 Sep 2008 08:01:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:received:received:date:from:to:cc:subject
          :message-id:references:mime-version:content-type:content-disposition
-         :in-reply-to:user-agent:sender;
-        bh=68SonweEugmUOsLOnF92RmcVPxzy0K2KKEj1gVOxldE=;
-        b=MbX7EneXXQgDvvxKzPPt0i6wnr15AU/hjo1v+5dOyeN+uGpp10mPjV08t0S/xCgUsl
-         rTSeRb2v9C5AqFJklVFhaj8BuKDCBkVKc9BLoXWBdS3tI9+MTIFEpwfw0NO0tB2qZLTz
-         W2HiT8UsUecBwJNsi8jNwhKFQvnWxQugCXeOY=
+         :in-reply-to:user-agent;
+        bh=MbdtQijJVUOGhr+mKrZQtVm23T/sCEOHuRGNIo5AVmY=;
+        b=RARcSZXg4KC2rYfVp55v5a0BmYJsx3SoYYP9KiCyNHIQ/kXMCG7V662mULIHXx6TTW
+         RR5qjGN0GU8p0O9+HR7LgUIxzUOuBRc6P2jTgaRdqLjCXETB3qfWR39IYQpbZHgSWpxV
+         ZNw2lDNHED5ZFFUSQnNgOmM7ndQO9xoG8n6BY=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent:sender;
-        b=lv/6z2V9qQ2/i2v1uWaEZxtHQoWMttnpwG/r2NFr1mgYTEw0J3Qblg+c2nTd6fMWlY
-         ECZ9mWuLnc5uwxPL/Di0xK3LwmMk9a4X8Mgm5cmAQxgQDUSbVnRHP253wj6tVbRqgQx8
-         wCqzOz52QtpcGgdjI5iv3vgedfZJHtcQappYY=
-Received: by 10.90.81.19 with SMTP id e19mr8350772agb.24.1222267885576;
-        Wed, 24 Sep 2008 07:51:25 -0700 (PDT)
-Received: from riemann.deskinm.fdns.net ([68.40.49.130])
-        by mx.google.com with ESMTPS id p60sm2229173hsa.8.2008.09.24.07.51.23
+         :content-type:content-disposition:in-reply-to:user-agent;
+        b=FEfTUY4Hr3AquVJsXkr1RxIyY8a5fLGlyBMxXOX5EsH8r17c3PudHkMbbZHRnnCfuy
+         RP+etp0tkjpyxIEPXaK+gtH4sn+zBQj3WEWWsctvwJrciFOPP1aDj+G/ut6ftzDpvsUQ
+         QB1KfSC3UO1AFvaHOPhO+CGo3HrFFZVMZFsxo=
+Received: by 10.103.16.14 with SMTP id t14mr4875482mui.25.1222268461445;
+        Wed, 24 Sep 2008 08:01:01 -0700 (PDT)
+Received: from localhost (ppp85-141-236-118.pppoe.mtu-net.ru [85.141.236.118])
+        by mx.google.com with ESMTPS id y37sm3807732mug.13.2008.09.24.08.00.58
         (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Wed, 24 Sep 2008 07:51:24 -0700 (PDT)
+        Wed, 24 Sep 2008 08:00:59 -0700 (PDT)
 Content-Disposition: inline
-In-Reply-To: <20080924092847.GD23137@genesis.frugalware.org>
-User-Agent: Mutt/1.5.17 (2007-11-01)
+In-Reply-To: <alpine.LNX.1.00.0809232330050.19665@iabervon.org>
+User-Agent: Mutt/1.5.13 (2006-08-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/96641>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/96642>
 
->From 0d52afa86d757220fefa2440c78c81bd2c8b790a Mon Sep 17 00:00:00 2001
-From: Deskin Miller <deskinm@umich.edu>
-Date: Mon, 22 Sep 2008 11:06:41 -0400
-Subject: [PATCH] maint: check return of split_cmdline to avoid bad config strings
-
-As the testcase demonstrates, it's possible for split_cmdline to return -1 and
-deallocate any memory it's allocated, if the config string is missing an end
-quote.  In both the cases below, which are the only calling sites, the return
-isn't checked, and using the pointer causes a pretty immediate segfault.
-
-Signed-off-by: Deskin Miller <deskinm@umich.edu>
----
-On Wed, Sep 24, 2008 at 11:28:47AM +0200, Miklos Vajna wrote:
-> On Wed, Sep 24, 2008 at 02:10:28AM -0400, Deskin Miller <deskinm@umich.edu> wrote:
-> > As the testcase demonstrates, it's possible to have split_cmdline return -1 and
-> > deallocate any memory it's allocated, if the config string is missing an end
-> > quote.  In both the cases below, the return isn't checked, causing a pretty
-> > immediate segfault.
+On Wed, Sep 24, 2008 at 12:15:39AM -0400, Daniel Barkalow wrote:
+> On Wed, 24 Sep 2008, Dmitry Potapov wrote:
 > 
-> I think this could go to the commit message.
-
-Done in v2.
-
-> > +	git merge master || test \$? = 128
-> > +	"
+> > 
+> > What are you saying is that when I am locking some file on the current
+> > branch, Git (or whatever script that performs this locking) should figure
+> > out what is the original shared branch for it and lock the file there.
 > 
-> Why don't you use test_must_fail here?
+> Or you should have to say. But "git lock <filename>" should probably 
+> put the lock on whatever branch "git push" would push to, and similarly 
+> for the other argument combinations that "git push" permits.
 
-Didn't know about it.  Fixed in v2.
+It seems to me very fragile to rely on the push configuration in deciding
+what can be locked and what cannot. Besides this configuration can change
+over time. So what is going to happen with locks then? Another problem:
+what if I don't push anyway but usually send pull-requests?
 
-Thanks for the advice.
+The fact is if you cannot get your locking working in _one_ repository
+then any hope that it will work when you have more than one is nothing
+but a pipe dream.
 
- builtin-merge.c        |    2 ++
- git.c                  |    2 ++
- t/t1300-repo-config.sh |   10 ++++++++++
- 3 files changed, 14 insertions(+), 0 deletions(-)
+> 
+> > Maybe, it can work, but it sounds too complex to me. I believe that my
+> > idea using SHA-1 is better. After all, what is file? It is its content.
+> > At least, in Git, we always identify files by their content.
+> 
+> Not at all; there are plenty of cases where what matters is the path, and 
+> some things are relevant by virtue of the form of the filename which names 
+> that content.
 
-diff --git a/builtin-merge.c b/builtin-merge.c
-index b280444..dcaf368 100644
---- a/builtin-merge.c
-+++ b/builtin-merge.c
-@@ -442,6 +442,8 @@ static int git_merge_config(const char *k, const char *v, void *cb)
- 
- 		buf = xstrdup(v);
- 		argc = split_cmdline(buf, &argv);
-+		if (argc < 0)
-+			die("Bad branch.%s.mergeoptions string", branch);
- 		argv = xrealloc(argv, sizeof(*argv) * (argc + 2));
- 		memmove(argv + 1, argv, sizeof(*argv) * (argc + 1));
- 		argc++;
-diff --git a/git.c b/git.c
-index fdb0f71..5582c51 100644
---- a/git.c
-+++ b/git.c
-@@ -162,6 +162,8 @@ static int handle_alias(int *argcp, const char ***argv)
- 			    alias_string + 1, alias_command);
- 		}
- 		count = split_cmdline(alias_string, &new_argv);
-+		if (count < 0)
-+			die("Bad alias.%s string", alias_command);
- 		option_count = handle_options(&new_argv, &count, &envchanged);
- 		if (envchanged)
- 			die("alias '%s' changes environment variables\n"
-diff --git a/t/t1300-repo-config.sh b/t/t1300-repo-config.sh
-index 64567fb..11b82f4 100755
---- a/t/t1300-repo-config.sh
-+++ b/t/t1300-repo-config.sh
-@@ -741,4 +741,14 @@ test_expect_success 'symlinked configuration' '
- 
- '
- 
-+test_expect_success 'check split_cmdline return' "
-+	git config alias.split-cmdline-fix 'echo \"' &&
-+	test_must_fail git split-cmdline-fix &&
-+	echo foo > foo &&
-+	git add foo &&
-+	git commit -m 'initial commit' &&
-+	git config branch.master.mergeoptions 'echo \"' &&
-+	test_must_fail git merge master
-+	"
-+
- test_done
--- 
-1.6.0.2.GIT
+Whether it matters or not depends on a particular workflow and what the
+developer wants to achieve. Such decisions should be taken by human
+being, otherwise you are prone to do the wrong things too often.
+
+> 
+> > Thus if you lock some file, you put a lock on certain SHA-1. Now, 
+> > regardless of branches and paths, this lock can work provided that you 
+> > have access to some shared location. Of course, this lock is purely 
+> > advisory, but it is good, because you may want to ignore it in some 
+> > case.
+> 
+> In my design, the lock (on the shared repository) is not advisory; if 
+> someone else has it, you can't push if the new commit doesn't match the 
+> old commit for that path.
+
+Hey, if someone wants to push this file, it means it is already late,
+because you _already_ have the situation where two people have edited
+exactly the same binary file. Isn't the situation that the lock was
+intended to prevent?
+
+So, the goal should be to warn someone who is going to edit file locked
+by someone else. You cannot prevent him/her from doing so, only to warn
+about that.
+
+As to pushing, it can be different policies. IMHO, the update hook is
+the best place to express what push you want to allow and what not, but
+some workflow may not use push at all, yet ability to lock (perhaps,
+'synchronize' would be a better word here) may still be needed.
+
+
+Dmitry
