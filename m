@@ -1,99 +1,64 @@
-From: Peter Krefting <peter@softwolves.pp.se>
-Subject: Re: [PATCH] gitk: Update swedish translation.
-Date: Wed, 24 Sep 2008 15:31:48 +0100 (CET)
-Organization: /universe/earth/europe/norway/oslo
-Message-ID: <Pine.LNX.4.64.0809241527170.22419@ds9.cixit.se>
-References: <237967ef0809232333y40e36d6bs3205091e3baa701c@mail.gmail.com>
+From: Heiko Voigt <heiko.voigt@mahr.de>
+Subject: Partial tree export and merging
+Date: Wed, 24 Sep 2008 15:58:07 +0200
+Message-ID: <48DA476F.1070700@mahr.de>
+References: <ACF330629DFB034AB290061C320F43460836E082@GOEMAILBE02.europe.mahr.lan> <48D9FACB.20901@mahr.de>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Paul Mackerras <paulus@samba.org>,
-	Git Mailing List <git@vger.kernel.org>
-To: Mikael Magnusson <mikachu@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Sep 24 16:33:35 2008
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: Jens Lehmann <Jens.Lehmann@mahr.de>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Sep 24 16:36:08 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KiVQp-0001WC-5y
-	for gcvg-git-2@gmane.org; Wed, 24 Sep 2008 16:33:31 +0200
+	id 1KiVTE-0002U1-Ac
+	for gcvg-git-2@gmane.org; Wed, 24 Sep 2008 16:36:00 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751280AbYIXOcP convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 24 Sep 2008 10:32:15 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751418AbYIXOcP
-	(ORCPT <rfc822;git-outgoing>); Wed, 24 Sep 2008 10:32:15 -0400
-Received: from ds9.cixit.se ([193.15.169.228]:50878 "EHLO ds9.cixit.se"
+	id S1751878AbYIXOev (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 24 Sep 2008 10:34:51 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751733AbYIXOev
+	(ORCPT <rfc822;git-outgoing>); Wed, 24 Sep 2008 10:34:51 -0400
+Received: from mail.mahr.de ([193.158.246.156]:16505 "EHLO mail.mahr.de"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750875AbYIXOcO (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 24 Sep 2008 10:32:14 -0400
-Received: from ds9.cixit.se (peter@localhost [127.0.0.1])
-	by ds9.cixit.se (8.12.3/8.12.3/Debian-7.2) with ESMTP id m8OEVnY1007881
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Wed, 24 Sep 2008 16:31:49 +0200
-Received: from localhost (peter@localhost)
-	by ds9.cixit.se (8.12.3/8.12.3/Debian-7.2) with ESMTP id m8OEVm1H007876;
-	Wed, 24 Sep 2008 16:31:48 +0200
-X-Authentication-Warning: ds9.cixit.se: peter owned process doing -bs
-In-Reply-To: <237967ef0809232333y40e36d6bs3205091e3baa701c@mail.gmail.com>
-Accept: text/plain
-X-Warning: Junk / bulk email will be reported
-X-Rating: This message is not to be eaten by humans
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-3.0 (ds9.cixit.se [127.0.0.1]); Wed, 24 Sep 2008 16:31:49 +0200 (CEST)
+	id S1750991AbYIXOev (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 24 Sep 2008 10:34:51 -0400
+X-Greylist: delayed 2201 seconds by postgrey-1.27 at vger.kernel.org; Wed, 24 Sep 2008 10:34:50 EDT
+Received: from [172.20.12.218] ([172.20.12.218]) by mail.mahr.de with Microsoft SMTPSVC(6.0.3790.1830);
+	 Wed, 24 Sep 2008 15:58:07 +0200
+User-Agent: Thunderbird 2.0.0.16 (Windows/20080708)
+In-Reply-To: <48D9FACB.20901@mahr.de>
+X-OriginalArrivalTime: 24 Sep 2008 13:58:07.0881 (UTC) FILETIME=[92ABAF90:01C91E4D]
+X-TM-AS-Product-Ver: SMEX-8.0.0.1259-5.500.1027-16176.006
+X-TM-AS-Result: No-2.212200-0.000000-31
+X-TM-AS-User-Approved-Sender: Yes
+X-TM-AS-User-Blocked-Sender: No
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/96634>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/96635>
 
-Mikael Magnusson:
+Hallo,
 
-Looks good! A few corrections:
+I am currently facing a challenge for adding limited access to a git 
+repository for the i18n and documentation (language) team. Our 
+repository contains *.html and *.loc files which are located along with 
+the code. The language team should not see the code. At the same time a 
+developer using the full tree needs to be able to contribute to the i8n 
+files.
 
-> +#: gitk:327
-> +msgid "Error executing --argscmd command:"
-> +msgstr "Fel vid k=F6rning av --argscmd kommando:"
+To archieve this I would like to extract a repository that only contains 
+the documentation and localization files which can be used by the i8n 
+and doc team. This should be regularly merged into the development (with 
+code) repository.
 
-The word is incorrectly split (s=E4rskrivning).
+My idea of a solution would be to export patches only for the specific 
+files and import them into a seperate empty repository/branch using 
+git-format-patch and git-am. This seperate repository then itself then
+could be imported again with a normal merge operation. Has a anyone 
+already solved such a problem or other ideas how to solve this ?
 
-  "Fel vid k=F6rning av --argscmd-kommandot:"
-
-would be better (note the change to determined form).
-
-> +#: gitk:2218
-> +msgid "Blame parent commit"
-> +msgstr "K=F6r blame p=E5 f=F6reg=E5ende incheckning"
-
-"Blame" should probably be translated. git-gui uses "annotate", which
-is easier to understand, so possible:
-
-  "Annotera f=F6reg=E5ende incheckning"
-
-> +#: gitk:2997 gitk:3006
-> +#, tcl-format
-> +msgid "Error creating temporary directory %s:"
-> +msgstr "Fel vid skapande av tillf=E4llig katalog %s:"
-
-The "-ande" form makes reading strange.
-
-  "Fel n=E4r tillf=E4llig katalog %s skapades:"
-
-or something similar
-
-> +#: gitk:3039
-> +msgid "No such commit"
-> +msgstr "Ingen s=E5dan incheckning finns"
-
-It looks like it is constrained for space, but you should check that.
-If it is, something like "Incheckning saknas" would work.
-
-> +#: gitk:3044
-> +msgid "git gui blame: command failed:"
-> +msgstr "git gui blame: kommando misslyckades"
-
-Your missing a final colon, and it should be determined form:
-
-  "git gui blame: kommandot misslyckades:"
-
---=20
-\\// Peter - http://www.softwolves.pp.se/
+cheers Heiko
