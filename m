@@ -1,102 +1,99 @@
-From: Robin Rosenberg <robin.rosenberg@dewire.com>
-Subject: [EGIT PATCH 1/3] Include a print command line usage string utility
-Date: Wed, 24 Sep 2008 23:56:21 +0200
-Message-ID: <1222293383-26016-1-git-send-email-robin.rosenberg@dewire.com>
-Cc: git@vger.kernel.org, Robin Rosenberg <robin.rosenberg@dewire.com>
-To: spearce@spearce.org
-X-From: git-owner@vger.kernel.org Wed Sep 24 23:59:31 2008
+From: pasky@suse.cz
+Subject: [PATCH 1/5] git-gui: Avoid using the term URL when specifying repositories
+Date: Thu, 25 Sep 2008 00:12:50 +0200
+Message-ID: <20080924221731.236909653@suse.cz>
+References: <20080924221249.037449176@suse.cz>
+Cc: spearce@spearce.org
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Sep 25 00:19:12 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KicO8-0000DW-5N
-	for gcvg-git-2@gmane.org; Wed, 24 Sep 2008 23:59:12 +0200
+	id 1KichR-0008KG-UF
+	for gcvg-git-2@gmane.org; Thu, 25 Sep 2008 00:19:10 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752099AbYIXV5i (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 24 Sep 2008 17:57:38 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752090AbYIXV5h
-	(ORCPT <rfc822;git-outgoing>); Wed, 24 Sep 2008 17:57:37 -0400
-Received: from av8-2-sn3.vrr.skanova.net ([81.228.9.184]:34422 "EHLO
-	av8-2-sn3.vrr.skanova.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752082AbYIXV5g (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 24 Sep 2008 17:57:36 -0400
-Received: by av8-2-sn3.vrr.skanova.net (Postfix, from userid 502)
-	id E6A3138F3B; Wed, 24 Sep 2008 23:57:23 +0200 (CEST)
-Received: from smtp3-1-sn3.vrr.skanova.net (smtp3-1-sn3.vrr.skanova.net [81.228.9.101])
-	by av8-2-sn3.vrr.skanova.net (Postfix) with ESMTP
-	id 9A3B7389BC; Wed, 24 Sep 2008 23:57:23 +0200 (CEST)
-Received: from localhost.localdomain (h250n1fls32o811.telia.com [213.67.100.250])
-	by smtp3-1-sn3.vrr.skanova.net (Postfix) with ESMTP id 64F1337E44;
-	Wed, 24 Sep 2008 23:57:23 +0200 (CEST)
-X-Mailer: git-send-email 1.6.0.1.310.gf789d0.dirty
+	id S1753100AbYIXWRq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 24 Sep 2008 18:17:46 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752992AbYIXWRp
+	(ORCPT <rfc822;git-outgoing>); Wed, 24 Sep 2008 18:17:45 -0400
+Received: from 132-201.104-92.cust.bluewin.ch ([92.104.201.132]:49859 "EHLO
+	pixie.suse.cz" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1752583AbYIXWRn (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 24 Sep 2008 18:17:43 -0400
+Received: by pixie.suse.cz (Postfix, from userid 2001)
+	id B0E1C2AC8AA; Thu, 25 Sep 2008 00:17:31 +0200 (CEST)
+User-Agent: quilt/0.46_cvs20080326-19.1
+Content-Disposition: inline; filename=t/git-gui/avoid-url.diff
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/96697>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/96698>
 
-Signed-off-by: Robin Rosenberg <robin.rosenberg@dewire.com>
+Instead, 'Location' is used to label such inputs; in the Clone dialog,
+'Source' and 'Target' are also introduced to further clarify the situation.
+The intent is to increase GUI consistency in the case location templates
+(upcoming) are used - then, other locators than URL may be used.
+
+This patch has been sponsored by Novartis.
+
+Signed-off-by: Petr Baudis <pasky@suse.cz>
+
 ---
- .../src/org/spearce/jgit/pgm/TextBuiltin.java      |   40 +++++++++++++++-----
- 1 files changed, 30 insertions(+), 10 deletions(-)
+ git-gui/lib/choose_repository.tcl    |    4 ++--
+ git-gui/lib/remote_branch_delete.tcl |    2 +-
+ git-gui/lib/transport.tcl            |    2 +-
+ 3 files changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/org.spearce.jgit.pgm/src/org/spearce/jgit/pgm/TextBuiltin.java b/org.spearce.jgit.pgm/src/org/spearce/jgit/pgm/TextBuiltin.java
-index 0746eb3..d0fe4af 100644
---- a/org.spearce.jgit.pgm/src/org/spearce/jgit/pgm/TextBuiltin.java
-+++ b/org.spearce.jgit.pgm/src/org/spearce/jgit/pgm/TextBuiltin.java
-@@ -127,22 +127,42 @@ protected void parseArguments(final String[] args) {
- 		}
+diff --git a/git-gui/lib/choose_repository.tcl b/git-gui/lib/choose_repository.tcl
+index 3180786..f54d88a 100644
+--- a/git-gui/lib/choose_repository.tcl
++++ b/git-gui/lib/choose_repository.tcl
+@@ -463,7 +463,7 @@ method _do_clone {} {
+ 	frame $w_body.args
+ 	pack $args -fill both
  
- 		if (help) {
--			System.err.print("jgit ");
--			System.err.print(commandName);
--			clp.printSingleLineUsage(System.err);
--			System.err.println();
--
--			System.err.println();
--			clp.printUsage(System.err);
--			System.err.println();
--
--			System.exit(1);
-+			printUsageAndExit(clp);
- 		}
+-	label $args.origin_l -text [mc "URL:"]
++	label $args.origin_l -text [mc "Source Location:"]
+ 	entry $args.origin_t \
+ 		-textvariable @origin_url \
+ 		-font font_diff \
+@@ -473,7 +473,7 @@ method _do_clone {} {
+ 		-command [cb _open_origin]
+ 	grid $args.origin_l $args.origin_t $args.origin_b -sticky ew
  
- 		argWalk = clp.getRevWalkGently();
+-	label $args.where_l -text [mc "Directory:"]
++	label $args.where_l -text [mc "Target Directory:"]
+ 	entry $args.where_t \
+ 		-textvariable @local_path \
+ 		-font font_diff \
+diff --git a/git-gui/lib/remote_branch_delete.tcl b/git-gui/lib/remote_branch_delete.tcl
+index c7b8148..a09b9ad 100644
+--- a/git-gui/lib/remote_branch_delete.tcl
++++ b/git-gui/lib/remote_branch_delete.tcl
+@@ -63,7 +63,7 @@ constructor dialog {} {
+ 		set urltype url
  	}
- 
- 	/**
-+	 * Print the usage line
-+	 *
-+	 * @param clp
-+	 */
-+	public void printUsageAndExit(final CmdLineParser clp) {
-+		printUsageAndExit("", clp);
-+	}
-+
-+	/**
-+	 * Print an error message and the usage line
-+	 *
-+	 * @param message
-+	 * @param clp
-+	 */
-+	public void printUsageAndExit(final String message, final CmdLineParser clp) {
-+		System.err.println(message);
-+		System.err.print("jgit ");
-+		System.err.print(commandName);
-+		clp.printSingleLineUsage(System.err);
-+		System.err.println();
-+
-+		System.err.println();
-+		clp.printUsage(System.err);
-+		System.err.println();
-+
-+		System.exit(1);
-+	}
-+
-+	/**
- 	 * Perform the actions of this command.
- 	 * <p>
- 	 * This method should only be invoked by {@link #execute(String[])}.
+ 	radiobutton $w.dest.url_r \
+-		-text [mc "Arbitrary URL:"] \
++		-text [mc "Arbitrary Location:"] \
+ 		-value url \
+ 		-variable @urltype
+ 	entry $w.dest.url_t \
+diff --git a/git-gui/lib/transport.tcl b/git-gui/lib/transport.tcl
+index 8e6a9d0..e419d78 100644
+--- a/git-gui/lib/transport.tcl
++++ b/git-gui/lib/transport.tcl
+@@ -135,7 +135,7 @@ proc do_push_anywhere {} {
+ 		set push_urltype url
+ 	}
+ 	radiobutton $w.dest.url_r \
+-		-text [mc "Arbitrary URL:"] \
++		-text [mc "Arbitrary Location:"] \
+ 		-value url \
+ 		-variable push_urltype
+ 	entry $w.dest.url_t \
 -- 
-1.6.0.1.310.gf789d0.dirty
+tg: (c427559..) t/git-gui/avoid-url (depends on: vanilla/master)
