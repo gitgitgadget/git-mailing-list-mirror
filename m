@@ -1,57 +1,48 @@
-From: Petr Baudis <pasky@suse.cz>
-Subject: On Sponsor Notices
-Date: Thu, 25 Sep 2008 00:51:20 +0200
-Message-ID: <20080924225120.GL10544@machine.or.cz>
-References: <20080924204358.144077183@suse.cz>
+From: Heikki Orsila <shdl@zakalwe.fi>
+Subject: Re: On Sponsor Notices
+Date: Thu, 25 Sep 2008 01:55:12 +0300
+Message-ID: <20080924225512.GF16289@zakalwe.fi>
+References: <20080924204358.144077183@suse.cz> <20080924225120.GL10544@machine.or.cz>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: spearce@spearce.org
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Sep 25 00:52:34 2008
+Content-Type: text/plain; charset=iso-8859-1
+Cc: git@vger.kernel.org, spearce@spearce.org
+To: Petr Baudis <pasky@suse.cz>
+X-From: git-owner@vger.kernel.org Thu Sep 25 00:56:40 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KidDj-0002t5-G8
-	for gcvg-git-2@gmane.org; Thu, 25 Sep 2008 00:52:32 +0200
+	id 1KidHj-0004C1-ON
+	for gcvg-git-2@gmane.org; Thu, 25 Sep 2008 00:56:40 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751699AbYIXWvW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 24 Sep 2008 18:51:22 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751621AbYIXWvW
-	(ORCPT <rfc822;git-outgoing>); Wed, 24 Sep 2008 18:51:22 -0400
-Received: from w241.dkm.cz ([62.24.88.241]:36190 "EHLO machine.or.cz"
+	id S1752099AbYIXWzR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 24 Sep 2008 18:55:17 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753302AbYIXWzR
+	(ORCPT <rfc822;git-outgoing>); Wed, 24 Sep 2008 18:55:17 -0400
+Received: from zakalwe.fi ([80.83.5.154]:55615 "EHLO zakalwe.fi"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750892AbYIXWvW (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 24 Sep 2008 18:51:22 -0400
-Received: by machine.or.cz (Postfix, from userid 2001)
-	id 856543939B21; Thu, 25 Sep 2008 00:51:20 +0200 (CEST)
+	id S1753908AbYIXWzO (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 24 Sep 2008 18:55:14 -0400
+Received: by zakalwe.fi (Postfix, from userid 1023)
+	id 612D22BC73; Thu, 25 Sep 2008 01:55:12 +0300 (EEST)
 Content-Disposition: inline
-In-Reply-To: <20080924204358.144077183@suse.cz>
-User-Agent: Mutt/1.5.16 (2007-06-09)
+In-Reply-To: <20080924225120.GL10544@machine.or.cz>
+User-Agent: Mutt/1.5.11
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/96707>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/96708>
 
-  Hi,
+On Thu, Sep 25, 2008 at 12:51:20AM +0200, Petr Baudis wrote:
+> Now, Shawn has proposed 'Sponsored-by:' line
+> at the header footer, which is also an interesting possibility.
 
-  to follow up a little on the "This patch has been sponsored by
-Novartis" messages - I have been on a summer internship at Novartis busy
-deploying Git and these patches (still quite a few more to come, mostly
-for gitweb) have been one of the main outputs of that work.
-
-  However, I'm not sure if acknowledging the Novartis-originated patches
-in the log message like this is the best practice and we will understand
-if the maintainers will decide to strip these notices when applying the
-patches. Usually, this kind of acknowledgement is made by using
-"sponsored" email addresses, however mine will probably stop working
-shortly after I leave and the only way to read it is, shall we say,
-utmostly inconvenient. ;-) Now, Shawn has proposed 'Sponsored-by:' line
-at the header footer, which is also an interesting possibility.
+In my opinion, one should aim for minimum amount of technically 
+irrelevant information. Extra lines cause penalty for reading logs.
 
 -- 
-				Petr "Pasky" Baudis
-People who take cold baths never have rheumatism, but they have
-cold baths.
+Heikki Orsila
+heikki.orsila@iki.fi
+http://www.iki.fi/shd
