@@ -1,72 +1,73 @@
-From: "Lars Hjemli" <hjemli@gmail.com>
-Subject: Re: Git submodule enhancements
-Date: Wed, 24 Sep 2008 11:46:09 +0200
-Message-ID: <8c5c35580809240246p1aede11n31cb693d7393b6ee@mail.gmail.com>
-References: <200809241100.30758.p_christ@hol.gr>
-	 <8c5c35580809240213v5198d2abh489915dc1133c75@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: "Git Mailing List" <git@vger.kernel.org>
-To: "P. Christeas" <p_christ@hol.gr>
-X-From: git-owner@vger.kernel.org Wed Sep 24 11:47:21 2008
+From: Garry Dolley <gdolley@ucla.edu>
+Subject: [PATCH] Fixed some grammatical errors in git-rebase.txt documentation.
+Date: Wed, 24 Sep 2008 02:51:27 -0700
+Message-ID: <1222249887-11793-1-git-send-email-gdolley@ucla.edu>
+Cc: Garry Dolley <gdolley@ucla.edu>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Sep 24 11:52:46 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KiQxs-00074U-5I
-	for gcvg-git-2@gmane.org; Wed, 24 Sep 2008 11:47:20 +0200
+	id 1KiR32-0000fo-2Y
+	for gcvg-git-2@gmane.org; Wed, 24 Sep 2008 11:52:40 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751665AbYIXJqL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 24 Sep 2008 05:46:11 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751867AbYIXJqL
-	(ORCPT <rfc822;git-outgoing>); Wed, 24 Sep 2008 05:46:11 -0400
-Received: from wa-out-1112.google.com ([209.85.146.176]:46614 "EHLO
-	wa-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751648AbYIXJqJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 24 Sep 2008 05:46:09 -0400
-Received: by wa-out-1112.google.com with SMTP id j37so1852173waf.23
-        for <git@vger.kernel.org>; Wed, 24 Sep 2008 02:46:09 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to
-         :subject:cc:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:references;
-        bh=n8ljEhB0rrXEn1tIOESGqrRW3Uw2rG54070XrkKaB4c=;
-        b=AusC0ha1ETeK0MC41KmdsG+gQLv6KKaPZJxKrL/2f8Mxm50jf8rt/FYF9aTqcUZDcg
-         bBmMoX5qHIgu7ZCMM1224MVdjvretqxOtkqjP1oOOHKYWipe9FqT5qQ4MGFdlHo70jkB
-         iOpFoQZvHCMBYDRdHki5yWabSjFCCLC0zNbGg=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
-         :content-type:content-transfer-encoding:content-disposition
-         :references;
-        b=L+eVHP/LyYnxvIwVsKulOSnkl6JdHoYGZcnK+qdF0tijuinVYt8NTW0Z4gGw/oo5j1
-         7YdoYthX7qLZRXV40JLYvPdh0511/MrLb9uSeEZ57V29o+ejLUXIUPLRD7Q4G2HmLcsh
-         yvoBtD4XVcZFjxO8X3/LlOQxhkGd8mPzehSaM=
-Received: by 10.114.15.1 with SMTP id 1mr7752253wao.184.1222249569242;
-        Wed, 24 Sep 2008 02:46:09 -0700 (PDT)
-Received: by 10.114.166.20 with HTTP; Wed, 24 Sep 2008 02:46:09 -0700 (PDT)
-In-Reply-To: <8c5c35580809240213v5198d2abh489915dc1133c75@mail.gmail.com>
-Content-Disposition: inline
+	id S1751732AbYIXJva (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 24 Sep 2008 05:51:30 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751766AbYIXJva
+	(ORCPT <rfc822;git-outgoing>); Wed, 24 Sep 2008 05:51:30 -0400
+Received: from mail.arpnetworks.com ([205.134.237.79]:41758 "HELO
+	penguin.filetron.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with SMTP id S1751545AbYIXJva (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 24 Sep 2008 05:51:30 -0400
+Received: (qmail 20985 invoked from network); 24 Sep 2008 09:49:36 -0000
+Received: from cpe-98-151-11-125.socal.res.rr.com (HELO garry-thinkpad) (gdolley@arpnetworks.com@98.151.11.125)
+  by mail.arpnetworks.com with SMTP; 24 Sep 2008 09:49:36 -0000
+Received: by garry-thinkpad (sSMTP sendmail emulation); Wed, 24 Sep 2008 02:51:27 -0700
+X-Mailer: git-send-email 1.6.0.1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/96626>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/96627>
 
-On Wed, Sep 24, 2008 at 11:13 AM, Lars Hjemli <hjemli@gmail.com> wrote:
-> On Wed, Sep 24, 2008 at 10:00 AM, P. Christeas <p_christ@hol.gr> wrote:
-> Subject: [PATCH] Git submodule archive: create series of archives, for
-> each module
+Generally, the dependent clause "for example" is suffixed with a comma.
+Used present tense where appropriate to be consistent with the other
+paragraphs.
 
-Btw: why doesn't
+Rewrote the paragraph in the second hunk to be more clear.
 
-  $ git submodule foreach 'git archive HEAD > somewhere/$path.tar'
+Signed-off-by: Garry Dolley <gdolley@ucla.edu>
+---
+ Documentation/git-rebase.txt |    8 ++++----
+ 1 files changed, 4 insertions(+), 4 deletions(-)
 
-work for you?
-
-
---
-larsh
+diff --git a/Documentation/git-rebase.txt b/Documentation/git-rebase.txt
+index 59c1b02..32f0f12 100644
+--- a/Documentation/git-rebase.txt
++++ b/Documentation/git-rebase.txt
+@@ -92,7 +92,7 @@ branch to another, to pretend that you forked the topic branch
+ from the latter branch, using `rebase --onto`.
+ 
+ First let's assume your 'topic' is based on branch 'next'.
+-For example feature developed in 'topic' depends on some
++For example, a feature developed in 'topic' depends on some
+ functionality which is found in 'next'.
+ 
+ ------------
+@@ -103,9 +103,9 @@ functionality which is found in 'next'.
+                             o---o---o  topic
+ ------------
+ 
+-We would want to make 'topic' forked from branch 'master',
+-for example because the functionality 'topic' branch depend on
+-got merged into more stable 'master' branch, like this:
++We want to make 'topic' forked from branch 'master'; for example,
++because the functionality on which 'topic' depends was merged into the
++more stable 'master' branch. We want our tree to look like this:
+ 
+ ------------
+     o---o---o---o---o  master
+-- 
+1.6.0.1
