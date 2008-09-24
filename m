@@ -1,75 +1,56 @@
-From: "Alex Riesen" <raa.lkml@gmail.com>
-Subject: Re: clone fails: Could not get the current working directory
-Date: Wed, 24 Sep 2008 16:43:11 +0200
-Message-ID: <81b0412b0809240743l4ef88c51o8aebc496ca16e7c4@mail.gmail.com>
-References: <48D59A30.5020403@cs.tamu.edu>
-	 <81b0412b0809230539x340bd579q3489d5e257b9740@mail.gmail.com>
-	 <48D8EDDA.3050804@cs.tamu.edu>
-	 <81b0412b0809230712u4a1cbe0fo69f558cbe9a26aae@mail.gmail.com>
-	 <48D90125.3090703@cs.tamu.edu>
-	 <81b0412b0809230801l2e6b1a71v1210317fe636aeba@mail.gmail.com>
-	 <48D95C96.4030906@cs.tamu.edu>
-	 <81b0412b0809240430y682d6dd9wef801c33a6ee2f85@mail.gmail.com>
-	 <48DA410A.2080504@cs.tamu.edu>
+From: Tom Schutzer-Weissmann <tom.weissmann@siscog.pt>
+Subject: Applying changes across divergent branches
+Date: Wed, 24 Sep 2008 15:40:14 +0100
+Message-ID: <48DA514E.6060904@siscog.pt>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: "John Freeman" <jfreeman@cs.tamu.edu>
-X-From: git-owner@vger.kernel.org Wed Sep 24 16:45:42 2008
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Sep 24 16:47:12 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KiVbi-0005wn-3o
-	for gcvg-git-2@gmane.org; Wed, 24 Sep 2008 16:44:46 +0200
+	id 1KiVdM-0006hu-7H
+	for gcvg-git-2@gmane.org; Wed, 24 Sep 2008 16:46:28 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752189AbYIXOnO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 24 Sep 2008 10:43:14 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752136AbYIXOnO
-	(ORCPT <rfc822;git-outgoing>); Wed, 24 Sep 2008 10:43:14 -0400
-Received: from mail-gx0-f16.google.com ([209.85.217.16]:34873 "EHLO
-	mail-gx0-f16.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752118AbYIXOnN (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 24 Sep 2008 10:43:13 -0400
-Received: by gxk9 with SMTP id 9so5679591gxk.13
-        for <git@vger.kernel.org>; Wed, 24 Sep 2008 07:43:11 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to
-         :subject:cc:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:references;
-        bh=+bkhC2PdbhX8zLLGS6Fu7IXorMUAUfWMQ8xmT+0g0fA=;
-        b=iaThPk7hpsrTtJVgeVE54T951tXBRVuWxNUml6BrcFU2fefp0GnshCCAT5X5sR2qnF
-         9kA1RVVy6dOHaGv9UBEBmb56wbgQj7QH2wA1OYwmeuRIYZgOLM0pbMKlFa67jaKPLxTy
-         eoDR3byrgA1Z6dauQEvJLZKjBhyNrMYMzLPI0=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
-         :content-type:content-transfer-encoding:content-disposition
-         :references;
-        b=Mo89I1RydyxqESOprBNCUIr21yu5yhyb4at76QInkbmH2F+Vrxa60NzaDIrvEGMvMj
-         xI1O//XbcTbcGsWRLSM18DYuiFi3KrdGK+MO/YxSg9rCJ0BqMVzl6EvjHU+RTlZyjsdZ
-         6njZ/DWR8AR7RY6F0ZKXo76nGijBaB8CyOd6Q=
-Received: by 10.151.143.14 with SMTP id v14mr11148459ybn.144.1222267391513;
-        Wed, 24 Sep 2008 07:43:11 -0700 (PDT)
-Received: by 10.151.107.13 with HTTP; Wed, 24 Sep 2008 07:43:11 -0700 (PDT)
-In-Reply-To: <48DA410A.2080504@cs.tamu.edu>
-Content-Disposition: inline
+	id S1752034AbYIXOpS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 24 Sep 2008 10:45:18 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752000AbYIXOpS
+	(ORCPT <rfc822;git-outgoing>); Wed, 24 Sep 2008 10:45:18 -0400
+Received: from mail2.siscog.pt ([195.22.30.41]:34261 "EHLO mail2.siscog.pt"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751337AbYIXOpR (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 24 Sep 2008 10:45:17 -0400
+X-Greylist: delayed 300 seconds by postgrey-1.27 at vger.kernel.org; Wed, 24 Sep 2008 10:45:17 EDT
+Received: from [194.100.100.174] ([::ffff:194.100.100.174])
+  (AUTH: LOGIN trmsw)
+  by mail2.siscog.pt with esmtp; Wed, 24 Sep 2008 15:40:15 +0100
+  id 000A5FC4.48DA514F.0000254A
+User-Agent: Thunderbird 2.0.0.16 (Windows/20080708)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/96638>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/96639>
 
-2008/9/24 John Freeman <jfreeman@cs.tamu.edu>:
-> Alex Riesen wrote:
->>
->> General question: What does Sun's pwd do?
->
-> It works like you'd expect.  There are no permission problems.  Even in
-> directories for which I don't have read access, it will show the path.
+Hello all,
 
-No, not what it shows. What does it call? Which syscalls it uses so we
-can use them also. Or is /bin/pwd root-SUID?
+I am looking into how to apply git to some current working methods.
+
+We tend to have two or three main branches: the development branch, and 
+one or two product branches. The development branch is the cutting edge, 
+and each product branches off from it.
+
+While the product branch shares history with the development branch, not 
+all changes to the development branch will get applied to the product 
+branch. We tend to maintain two versions of a product at any time, 
+meaning two divergent product branches.
+
+Could we use git, or a tool based on git, to change on the development 
+branch and selectively apply changes to the other branches - is it as 
+simple as using git cherry-pick?
+
+Thanks in advance,
+Tom SW
