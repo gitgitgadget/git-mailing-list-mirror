@@ -1,92 +1,93 @@
-From: "P. Christeas" <p_christ@hol.gr>
-Subject: Re: Git submodule enhancements
-Date: Wed, 24 Sep 2008 13:14:27 +0300
-Message-ID: <200809241314.29661.p_christ@hol.gr>
-References: <200809241100.30758.p_christ@hol.gr> <8c5c35580809240213v5198d2abh489915dc1133c75@mail.gmail.com>
+From: martin f krafft <madduck@madduck.net>
+Subject: Re: TopGit: how to deal with upstream inclusion
+Date: Wed, 24 Sep 2008 13:21:15 +0200
+Message-ID: <20080924112115.GA14841@piper.oerlikon.madduck.net>
+References: <20080914203043.GA4872@lapse.rw.madduck.net> <20080914210316.GJ10360@machine.or.cz> <20080919170406.GA22849@lapse.rw.madduck.net> <20080921141924.GI10360@machine.or.cz> <20080923063550.GC19084@piper.oerlikon.madduck.net> <20080923095528.GR10360@machine.or.cz>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Cc: "Git Mailing List" <git@vger.kernel.org>
-To: "Lars Hjemli" <hjemli@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Sep 24 12:30:18 2008
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="PEIAKu/WMn1b1Hv9"
+To: Petr Baudis <pasky@suse.cz>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Sep 24 13:22:41 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KiRdO-0005Ea-76
-	for gcvg-git-2@gmane.org; Wed, 24 Sep 2008 12:30:14 +0200
+	id 1KiSS3-00068N-O5
+	for gcvg-git-2@gmane.org; Wed, 24 Sep 2008 13:22:36 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751878AbYIXK3E (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 24 Sep 2008 06:29:04 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751704AbYIXK3E
-	(ORCPT <rfc822;git-outgoing>); Wed, 24 Sep 2008 06:29:04 -0400
-Received: from outgoing.holservices.gr ([62.38.2.44]:54181 "HELO
-	outgoing.holservices.gr" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with SMTP id S1751467AbYIXK3C (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 24 Sep 2008 06:29:02 -0400
-X-Greylist: delayed 400 seconds by postgrey-1.27 at vger.kernel.org; Wed, 24 Sep 2008 06:29:01 EDT
-Received: (qmail 16493 invoked from network); 24 Sep 2008 10:20:32 -0000
-Received: from unknown (HELO deliver.mail.dc.hol.net) (192.168.20.70)
-  by arete.mail.dc.hol.net with SMTP; 24 Sep 2008 10:20:32 -0000
-Received: from auth-smtp.hol.gr (takeit01.mail.dc.hol.net [192.168.20.71])
-	by deliver.hol.gr (8.12.11/8.11.6) with ESMTP id m8OAEUS8001894
-	(using TLSv1/SSLv3 with cipher DHE-RSA-AES256-SHA (256 bits) verified OK);
-	Wed, 24 Sep 2008 13:14:30 +0300
-Received: from pfn1.pefnos (ppp079166044220.dsl.hol.gr [79.166.44.220])
-	by auth-smtp.hol.gr (8.13.1/8.13.1) with ESMTP id m8OAEV0b023258;
-	Wed, 24 Sep 2008 13:14:31 +0300
-Received: from xorhgos2 (cpe-77-83-142-185-dsl.netone.gr [77.83.142.185])
+	id S1751665AbYIXLV1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 24 Sep 2008 07:21:27 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751647AbYIXLV0
+	(ORCPT <rfc822;git-outgoing>); Wed, 24 Sep 2008 07:21:26 -0400
+Received: from clegg.madduck.net ([193.242.105.96]:55008 "EHLO
+	clegg.madduck.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751602AbYIXLV0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 24 Sep 2008 07:21:26 -0400
+Received: from wall.oerlikon.madduck.net (wall.oerlikon.madduck.net [IPv6:2001:41e0:ff12::1])
 	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by pfn1.pefnos (Postfix) with ESMTP id 865CDFB02;
-	Wed, 24 Sep 2008 13:14:31 +0300 (EEST)
-User-Agent: KMail/1.9.9
-In-Reply-To: <8c5c35580809240213v5198d2abh489915dc1133c75@mail.gmail.com>
+	(Client CN "wall.oerlikon.madduck.net", Issuer "CAcert Class 3 Root" (verified OK))
+	by clegg.madduck.net (postfix) with ESMTPS id AEAE91D40A6;
+	Wed, 24 Sep 2008 13:21:16 +0200 (CEST)
+Received: from piper.oerlikon.madduck.net (piper.oerlikon.madduck.net [IPv6:2001:41e0:ff12:0:211:2fff:fe6b:c869])
+	by wall.oerlikon.madduck.net (Postfix) with ESMTP id C08E69F207;
+	Wed, 24 Sep 2008 13:21:15 +0200 (CEST)
+Received: by piper.oerlikon.madduck.net (Postfix, from userid 1000)
+	id 8B54144B3; Wed, 24 Sep 2008 13:21:15 +0200 (CEST)
 Content-Disposition: inline
-X-Virus-Scanned: ClamAV 0.93.3/8323/Wed Sep 24 10:57:37 2008 on takeit01.mail.dc.hol.net
+In-Reply-To: <20080923095528.GR10360@machine.or.cz>
+X-Motto: Keep the good times rollin'
+X-OS: Debian GNU/Linux lenny/sid kernel 2.6.26-1-amd64 x86_64
+X-Spamtrap: madduck.bogus@madduck.net
+X-Subliminal-Message: debian/rules!
+User-Agent: Mutt/1.5.18 (2008-05-17)
+X-Virus-Scanned: ClamAV 0.94/8323/Wed Sep 24 09:57:37 2008 on clegg.madduck.net
 X-Virus-Status: Clean
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/96628>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/96629>
 
-On Wednesday 24 September 2008, Lars Hjemli wrote:
-> It looks like --cloned requires the downstream to know which
-> submodules are available from the same remote as the supermodule (and
-> with the same path as registered in the supermodule), i.e. quite a
-> specific configuration. Is this really common enough to justify a
-> special option to `submodule init`?
-I agree. My patch is only a temporary fix for the situation and may not cover 
-all needs.
 
-> Maybe the .gitmodules file could be extended to contain multiple urls
-> instead (i.e. both absolute and relative ones)? Then `submodule init`
-> could get options like --prefer-relative-url, --prefer-absolute-url
-> and --interactive. What do you think?
-I guess there is much room for improvement wrt. with the .gitmodules . For 
-one, they should try to mimic the 'git clone' refspec logic, instead of being 
-a static file. (in fact, the hooks could let us do that using scripts alone)
+--PEIAKu/WMn1b1Hv9
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-> Hmm, after reading through this once more I guess you're trying to
-> clone a non-bare repository, possibly also lacking a .gitmodules file
-> (hence the --force)?
-Not really. I was trying to have the git-submodule script re-write the conf 
-with a different url. Merely like running a 'submodule sync' at the same 
-time.
+also sprach Petr Baudis <pasky@suse.cz> [2008.09.23.1155 +0200]:
+> > Well, but what if upstream implemented our solution slightly
+> > differently, and if it's only because they used tabs instead of
+> > spaces? We wouldn't want -s ours then, huh?
+>=20
+> You still would want to get tabs in other patches that depended on
+> the merged one, no? Otherwise tg patch output will produce patches
+> that do not apply and tg export will change the tabs back to
+> spaces.
 
-> Btw: why doesn't
->   $ git submodule foreach 'git archive HEAD > somewhere/$path.tar'
-> work for you?
-In fact, it could. You could also replace HEAD with the $sha1 ..
+I would want to have to resolve all dependent branches and change
+them to use tabs, right. But since I used spaces and they used tabs,
+using -s ours would give preference to spaces, no?
 
-In general, my comment on submodules is that it is a very powerful concept, 
-but still lacks many real-life features. Reading the C code, I realized that 
-we would have to rework all the core plumbing of git in order to have it work 
-accross different git repos inside the same C process. That is a stopper. 
-Otherwise, if we could only have read_tree_recursive() span to different gits, 
-we could do really beautiful things.
+--=20
+martin | http://madduck.net/ | http://two.sentenc.es/
+=20
+the reason the mainstream is thought of as a stream
+is because it is so shallow.
+=20
+spamtraps: madduck.bogus@madduck.net
 
-Sorry for posting many ideas and only few patches!
+--PEIAKu/WMn1b1Hv9
+Content-Type: application/pgp-signature; name="digital_signature_gpg.asc"
+Content-Description: Digital signature (see http://martin-krafft.net/gpg/)
+Content-Disposition: inline
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.9 (GNU/Linux)
+
+iEYEARECAAYFAkjaIqsACgkQIgvIgzMMSnWSHACg1wXyS8NeoFofKLnfXTIksDeR
+KPYAoLVUfyJ4T2bFuNaHGd10DM4p3uol
+=23Tv
+-----END PGP SIGNATURE-----
+
+--PEIAKu/WMn1b1Hv9--
