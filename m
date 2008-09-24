@@ -1,66 +1,92 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: Re: [JGIT PATCH]  Test and fix handling of quotes in ~/.ssh/config
-Date: Wed, 24 Sep 2008 16:31:04 -0700
-Message-ID: <20080924233104.GG3669@spearce.org>
-References: <12219428213749-git-send-email-ggoudsmit@shebang.nl> <bd6139dc0809201819o5d6eb5b1r7bf0e46702c711d7@mail.gmail.com> <20080921112519.GA24200@diku.dk> <200809222242.29165.robin.rosenberg.lists@dewire.com> <20080922210734.GE3669@spearce.org> <20080924232519.GA15318@diku.dk>
+From: "Martin Langhoff" <martin.langhoff@gmail.com>
+Subject: Re: On Sponsor Notices
+Date: Thu, 25 Sep 2008 11:43:52 +1200
+Message-ID: <46a038f90809241643i1e366dfbtea8dbdd9a1bc1de5@mail.gmail.com>
+References: <20080924204358.144077183@suse.cz>
+	 <20080924225120.GL10544@machine.or.cz>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Robin Rosenberg <robin.rosenberg.lists@dewire.com>,
-	sverre@rabbelier.nl, git@vger.kernel.org
-To: Jonas Fonseca <fonseca@diku.dk>
-X-From: git-owner@vger.kernel.org Thu Sep 25 01:32:19 2008
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, spearce@spearce.org
+To: "Petr Baudis" <pasky@suse.cz>
+X-From: git-owner@vger.kernel.org Thu Sep 25 01:45:37 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KidqD-0007kI-DD
-	for gcvg-git-2@gmane.org; Thu, 25 Sep 2008 01:32:17 +0200
+	id 1Kie2Z-0006Dt-Q3
+	for gcvg-git-2@gmane.org; Thu, 25 Sep 2008 01:45:04 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752293AbYIXXbH convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 24 Sep 2008 19:31:07 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752237AbYIXXbG
-	(ORCPT <rfc822;git-outgoing>); Wed, 24 Sep 2008 19:31:06 -0400
-Received: from george.spearce.org ([209.20.77.23]:34222 "EHLO
-	george.spearce.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750875AbYIXXbF (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 24 Sep 2008 19:31:05 -0400
-Received: by george.spearce.org (Postfix, from userid 1001)
-	id 38D8E3835F; Wed, 24 Sep 2008 23:31:04 +0000 (UTC)
+	id S1752549AbYIXXny (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 24 Sep 2008 19:43:54 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752506AbYIXXny
+	(ORCPT <rfc822;git-outgoing>); Wed, 24 Sep 2008 19:43:54 -0400
+Received: from wf-out-1314.google.com ([209.85.200.171]:16864 "EHLO
+	wf-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752434AbYIXXnx (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 24 Sep 2008 19:43:53 -0400
+Received: by wf-out-1314.google.com with SMTP id 27so199812wfd.4
+        for <git@vger.kernel.org>; Wed, 24 Sep 2008 16:43:52 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to
+         :subject:cc:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:references;
+        bh=PaUy8i1AKLwUmiemkMqXwN4bnyQC7er471SrA0eOfSQ=;
+        b=CdD1lBCFmRxjL3DC2qm6YGPgFAn1Sm+wJQl69Wcagpiayh1md4ZXvOcLshG9snTzxn
+         8/mq6mB52r5IA1Ph0tdxza5cEB8DG5upgg/H3uT2K1HjoXk/Dej3nfDRqvbueCZtUr8y
+         duQlMmNkGvqy/RS0Rb87BoQ0q2rI3NcaYPkX0=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
+         :content-type:content-transfer-encoding:content-disposition
+         :references;
+        b=hzVYCUUh4LwtjcqfKzh3Go2WTUO0gVDtbVasOEINgkm4mkdgOKkh7iqAYcnNTzF7mg
+         Go3VDLk6fAWxEeszM9oGQxm+dA2XrI9WxwQYEepLBSUG1KGPykoNsg0t8qktV1K+M3zq
+         7xEb03+HUoK85yKp5xadE8b3ipPLbEDcWEBJk=
+Received: by 10.143.43.7 with SMTP id v7mr2803580wfj.234.1222299832395;
+        Wed, 24 Sep 2008 16:43:52 -0700 (PDT)
+Received: by 10.142.223.21 with HTTP; Wed, 24 Sep 2008 16:43:52 -0700 (PDT)
+In-Reply-To: <20080924225120.GL10544@machine.or.cz>
 Content-Disposition: inline
-In-Reply-To: <20080924232519.GA15318@diku.dk>
-User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/96713>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/96714>
 
-Jonas Fonseca <fonseca@diku.dk> wrote:
-> Shawn O. Pearce <spearce@spearce.org> wrote Mon, Sep 22, 2008:
-> > Robin Rosenberg <robin.rosenberg.lists@dewire.com> wrote:
-> > > s=C3=B6ndagen den 21 september 2008 13.25.19 skrev Jonas Fonseca:
-> > > > +		assertEquals("bad.tld\"", osc.lookup("bad").getHostName());
-=2E..
-> > > This one is really (as you noted) bad so we shouldn't allow it at=
- all.
->=20
-> Using exceptions seems a bit harsh, since the quote is not really fat=
-al
-> in anyway.
-=2E..
-> I propose to simply remove these hosts from the host map and clear
-> the current host list so that no values will be saved, effectively
-> causing invalid hosts to result in the same as unknown hosts.
+On Thu, Sep 25, 2008 at 10:51 AM, Petr Baudis <pasky@suse.cz> wrote:
+>  to follow up a little on the "This patch has been sponsored by
+> Novartis" messages - I have been on a summer internship at Novartis busy
+> deploying Git and these patches (still quite a few more to come, mostly
+> for gitweb) have been one of the main outputs of that work.
 
-Yea, that seems quite reasonable.
+In my case, if the contribution is done at the behest of a client the
+copyright is theirs (they paid for my work, and it's a "work for hire"
+in legal terms). So
 
-If you want more debugging than that on your ~/.ssh/config file then
-run OpenSSH tools on it.  Hell, I can't count the number of times
-I've made typos in there and couldn't figure out why it was still
-asking for a password, etc.  And that's just the OpenSSH command
-line tools.
+ - if the contribution is large, I tend to add a copyright line (see
+git-cvsserver: copyright != authors, though that's out of date now)
 
---=20
-Shawn.
+ - they probably have to provide sign-off, so s-o-b line is appropriate
+
+>  However, I'm not sure if acknowledging the Novartis-originated patches
+> in the log message like this is the best practice and we will understand
+> if the maintainers will decide to strip these notices when applying the
+> patches.
+
+AIUI, the signed-off-by line is meant to track this, and it serves
+both legal purposes and a as recognition.
+
+cheers,
+
+
+
+m
+-- 
+ martin.langhoff@gmail.com
+ martin@laptop.org -- School Server Architect
+ - ask interesting questions
+ - don't get distracted with shiny stuff - working code first
+ - http://wiki.laptop.org/go/User:Martinlanghoff
