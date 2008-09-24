@@ -1,58 +1,68 @@
-From: Petr Baudis <pasky@suse.cz>
+From: "Shawn O. Pearce" <spearce@spearce.org>
 Subject: Re: Files that want to delete themselves
-Date: Wed, 24 Sep 2008 20:04:36 +0200
-Message-ID: <20080924180436.GJ10544@machine.or.cz>
+Date: Wed, 24 Sep 2008 11:05:47 -0700
+Message-ID: <20080924180547.GA3669@spearce.org>
 References: <19654453.post@talk.nabble.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Cc: git@vger.kernel.org
 To: Andrew Vit <andrew@avit.ca>
-X-From: git-owner@vger.kernel.org Wed Sep 24 20:06:19 2008
+X-From: git-owner@vger.kernel.org Wed Sep 24 20:07:04 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KiYkH-0008Et-EZ
-	for gcvg-git-2@gmane.org; Wed, 24 Sep 2008 20:05:49 +0200
+	id 1KiYlR-0000Q1-3e
+	for gcvg-git-2@gmane.org; Wed, 24 Sep 2008 20:07:01 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751602AbYIXSEj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 24 Sep 2008 14:04:39 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752341AbYIXSEj
-	(ORCPT <rfc822;git-outgoing>); Wed, 24 Sep 2008 14:04:39 -0400
-Received: from w241.dkm.cz ([62.24.88.241]:48568 "EHLO machine.or.cz"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751318AbYIXSEi (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 24 Sep 2008 14:04:38 -0400
-Received: by machine.or.cz (Postfix, from userid 2001)
-	id 9F22C3939B21; Wed, 24 Sep 2008 20:04:36 +0200 (CEST)
+	id S1752065AbYIXSFt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 24 Sep 2008 14:05:49 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752043AbYIXSFs
+	(ORCPT <rfc822;git-outgoing>); Wed, 24 Sep 2008 14:05:48 -0400
+Received: from george.spearce.org ([209.20.77.23]:42804 "EHLO
+	george.spearce.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751996AbYIXSFs (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 24 Sep 2008 14:05:48 -0400
+Received: by george.spearce.org (Postfix, from userid 1001)
+	id 998BA38360; Wed, 24 Sep 2008 18:05:47 +0000 (UTC)
 Content-Disposition: inline
 In-Reply-To: <19654453.post@talk.nabble.com>
-User-Agent: Mutt/1.5.16 (2007-06-09)
+User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/96673>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/96674>
 
-  Hi,
-
-On Wed, Sep 24, 2008 at 10:55:02AM -0700, Andrew Vit wrote:
+Andrew Vit <andrew@avit.ca> wrote:
+> 
 > I have a Rails project that I'm managing with git and I have a strange
 > problem with one of the plugin directories. Every time I do `git add .` it
 > tries to delete itself... Any idea what might be happening?
+> 
+> andrew$ git status
+> # On branch master
+> # Changes to be committed:
+> #   (use "git reset HEAD <file>..." to unstage)
+> #
+> #	new file:   vendor/plugins/restful_authentication
+> #	deleted:    vendor/plugins/restful_authentication/CHANGELOG
+> #	deleted:    vendor/plugins/restful_authentication/README.textile
+> #	deleted:    vendor/plugins/restful_authentication/Rakefile
+> #	deleted:    vendor/plugins/restful_authentication/TODO
 
-  so how does that look like in git diff? My guess is you have a .git/
-subdirectory there and thus Git assumes that it is a submodule? I don't
-think we actually have a way to specify that some directory should NOT
-be considered a submodule even if it is a git checkout... So you will
-probably either have to actually convert this to a submodule in your
-project (probably the sanest thing to do), move the .git subdirectory
-away or submit a patch that will add say a .gitattributes flag not to
-consider this subdirectory to be a submodule (which might make some
-sense).
+Are you on a case-insensitive filesystem like HFS+?
+
+Is it possible that restful_authentication exists as a file in
+your working directory, but as a directory in Git, but with a
+different case?
+
+What does `git ls-tree HEAD:vendor/plugins` show you as the last
+committed contents of vendor/plugins?
+
+I'm a little stumped, but it sounds like the issues that have come
+up before due to a case-insensitive filesystem.
 
 -- 
-				Petr "Pasky" Baudis
-People who take cold baths never have rheumatism,
-but they have cold baths.
+Shawn.
