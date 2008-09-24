@@ -2,28 +2,29 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: *
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=1.6 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
-Received: (qmail 24250 invoked by uid 111); 24 Sep 2008 21:52:58 -0000
+X-Spam-Status: No, score=1.3 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RP_MATCHES_RCVD shortcircuit=no
+	autolearn=unavailable autolearn_force=no version=3.4.0
+Received: (qmail 24282 invoked by uid 111); 24 Sep 2008 21:57:32 -0000
 Received: from vger.kernel.org (HELO vger.kernel.org) (209.132.176.167)
-    by peff.net (qpsmtpd/0.32) with ESMTP; Wed, 24 Sep 2008 17:52:56 -0400
+    by peff.net (qpsmtpd/0.32) with ESMTP; Wed, 24 Sep 2008 17:57:31 -0400
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751699AbYIXVww (ORCPT <rfc822;peff@peff.net>);
-	Wed, 24 Sep 2008 17:52:52 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751705AbYIXVww
-	(ORCPT <rfc822;git-outgoing>); Wed, 24 Sep 2008 17:52:52 -0400
-Received: from 132-201.104-92.cust.bluewin.ch ([92.104.201.132]:64798 "EHLO
+	id S1751748AbYIXV52 (ORCPT <rfc822;peff@peff.net>);
+	Wed, 24 Sep 2008 17:57:28 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751891AbYIXV52
+	(ORCPT <rfc822;git-outgoing>); Wed, 24 Sep 2008 17:57:28 -0400
+Received: from 132-201.104-92.cust.bluewin.ch ([92.104.201.132]:65016 "EHLO
 	pixie.suse.cz" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1751651AbYIXVwv (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 24 Sep 2008 17:52:51 -0400
+	with ESMTP id S1751651AbYIXV51 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 24 Sep 2008 17:57:27 -0400
 Received: by pixie.suse.cz (Postfix, from userid 2001)
-	id 9D2332AC8FA; Wed, 24 Sep 2008 23:52:39 +0200 (CEST)
+	id 719F72AC8FA; Wed, 24 Sep 2008 23:57:16 +0200 (CEST)
 From:	Petr Baudis <pasky@suse.cz>
 To:	git@vger.kernel.org
-Subject: [PATCH] git-web--browse: Support for using /bin/start on MinGW
-Date:	Wed, 24 Sep 2008 23:52:39 +0200
-Message-Id: <1222293159-2068-1-git-send-email-pasky@suse.cz>
+Cc:	spearce@spearce.org
+Subject: [PATCH] git-gui: Use git web--browser for web browsing
+Date:	Wed, 24 Sep 2008 23:57:16 +0200
+Message-Id: <1222293436-6245-1-git-send-email-pasky@suse.cz>
 X-Mailer: git-send-email 1.5.6.3.392.g292f1
 To:	git@vger.kernel.org
 Sender:	git-owner@vger.kernel.org
@@ -31,62 +32,76 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-In the future, I think we should also default to xdg-open on Linux instead
-of having a KDE-specific hack.
+This patch removes git-gui specific webbrowser guessing and instead
+relies on git web--browser to do the right thing, removing unnecessary
+code duplication. New function start_browser encapsulates the browser
+execution, for usage from other parts of code. This will also make
+git-gui show the documentation menu item even in cases it might not
+be able to start up a browser, these cases should be however only
+very rare.
 
 This patch has been sponsored by Novartis.
 
 Signed-off-by: Petr Baudis <pasky@suse.cz>
 
 ---
- Documentation/git-web--browse.txt |    1 +
- git-web--browse.sh                |    8 ++++++--
- 2 files changed, 7 insertions(+), 2 deletions(-)
+ git-gui/git-gui.sh |   30 +++++++-----------------------
+ 1 files changed, 7 insertions(+), 23 deletions(-)
 
-diff --git a/Documentation/git-web--browse.txt b/Documentation/git-web--browse.txt
-index 7f7a45b..278cf73 100644
---- a/Documentation/git-web--browse.txt
-+++ b/Documentation/git-web--browse.txt
-@@ -26,6 +26,7 @@ The following browsers (or commands) are currently supported:
- * lynx
- * dillo
- * open (this is the default under Mac OS X GUI)
-+* start (this is the default under MinGW)
+diff --git a/git-gui/git-gui.sh b/git-gui/git-gui.sh
+index 10d8a44..fc67eb8 100755
+--- a/git-gui/git-gui.sh
++++ b/git-gui/git-gui.sh
+@@ -2345,8 +2345,7 @@ if {![is_MacOSX]} {
+ 		-command do_about
+ }
  
- Custom commands may also be specified.
+-set browser {}
+-catch {set browser $repo_config(instaweb.browser)}
++
+ set doc_path [file dirname [gitexec]]
+ set doc_path [file join $doc_path Documentation index.html]
  
-diff --git a/git-web--browse.sh b/git-web--browse.sh
-index 384148a..78d236b 100755
---- a/git-web--browse.sh
-+++ b/git-web--browse.sh
-@@ -31,7 +31,7 @@ valid_custom_tool()
+@@ -2354,34 +2353,19 @@ if {[is_Cygwin]} {
+ 	set doc_path [exec cygpath --mixed $doc_path]
+ }
  
- valid_tool() {
- 	case "$1" in
--		firefox | iceweasel | konqueror | w3m | links | lynx | dillo | open)
-+		firefox | iceweasel | konqueror | w3m | links | lynx | dillo | open | start)
- 			;; # happy
- 		*)
- 			valid_custom_tool "$1" || return 1
-@@ -114,6 +114,10 @@ if test -z "$browser" ; then
-     if test -n "$SECURITYSESSIONID"; then
- 	browser_candidates="open $browser_candidates"
-     fi
-+    # /bin/start indicates MinGW
-+    if test -n /bin/start; then
-+	browser_candidates="start $browser_candidates"
-+    fi
+-if {$browser eq {}} {
+-	if {[is_MacOSX]} {
+-		set browser open
+-	} elseif {[is_Cygwin]} {
+-		set program_files [file dirname [exec cygpath --windir]]
+-		set program_files [file join $program_files {Program Files}]
+-		set firefox [file join $program_files {Mozilla Firefox} firefox.exe]
+-		set ie [file join $program_files {Internet Explorer} IEXPLORE.EXE]
+-		if {[file exists $firefox]} {
+-			set browser $firefox
+-		} elseif {[file exists $ie]} {
+-			set browser $ie
+-		}
+-		unset program_files firefox ie
+-	}
+-}
+-
+ if {[file isfile $doc_path]} {
+ 	set doc_url "file:$doc_path"
+ } else {
+ 	set doc_url {http://www.kernel.org/pub/software/scm/git/docs/}
+ }
  
-     for i in $browser_candidates; do
- 	init_browser_path $i
-@@ -157,7 +161,7 @@ case "$browser" in
- 		;;
- 	esac
- 	;;
--    w3m|links|lynx|open)
-+    w3m|links|lynx|open|start)
- 	eval "$browser_path" "$@"
- 	;;
-     dillo)
+-if {$browser ne {}} {
+-	.mbar.help add command -label [mc "Online Documentation"] \
+-		-command [list exec $browser $doc_url &]
++proc start_browser {url} {
++	git "web--browse" $url
+ }
+-unset browser doc_path doc_url
++
++.mbar.help add command -label [mc "Online Documentation"] \
++	-command [list start_browser $doc_url]
++unset doc_path doc_url
+ 
+ # -- Standard bindings
+ #
 -- 
-tg: (c427559..) t/web--browse/mingw (depends on: vanilla/master)
+tg: (c427559..) t/git-gui/web-browse (depends on: vanilla/master)
