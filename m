@@ -1,93 +1,82 @@
-From: martin f krafft <madduck@madduck.net>
-Subject: Re: TopGit: how to deal with upstream inclusion
-Date: Wed, 24 Sep 2008 13:21:15 +0200
-Message-ID: <20080924112115.GA14841@piper.oerlikon.madduck.net>
-References: <20080914203043.GA4872@lapse.rw.madduck.net> <20080914210316.GJ10360@machine.or.cz> <20080919170406.GA22849@lapse.rw.madduck.net> <20080921141924.GI10360@machine.or.cz> <20080923063550.GC19084@piper.oerlikon.madduck.net> <20080923095528.GR10360@machine.or.cz>
+From: "Alex Riesen" <raa.lkml@gmail.com>
+Subject: Re: [PATCH] add GIT_FAST_STAT mode for Cygwin
+Date: Wed, 24 Sep 2008 13:25:06 +0200
+Message-ID: <81b0412b0809240425t63a2a28cw1cc0c0d95b3290f7@mail.gmail.com>
+References: <20080923140144.GN21650@dpotapov.dyndns.org>
+	 <81b0412b0809230737s7498e214w4c58991e79f76507@mail.gmail.com>
+	 <20080923165247.GO21650@dpotapov.dyndns.org>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="PEIAKu/WMn1b1Hv9"
-To: Petr Baudis <pasky@suse.cz>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Sep 24 13:22:41 2008
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, "Johannes Sixt" <johannes.sixt@telecom.at>,
+	"Junio C Hamano" <gitster@pobox.com>,
+	"Steffen Prohaska" <prohaska@zib.de>
+To: "Dmitry Potapov" <dpotapov@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Sep 24 13:26:21 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KiSS3-00068N-O5
-	for gcvg-git-2@gmane.org; Wed, 24 Sep 2008 13:22:36 +0200
+	id 1KiSVh-0007NU-3L
+	for gcvg-git-2@gmane.org; Wed, 24 Sep 2008 13:26:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751665AbYIXLV1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 24 Sep 2008 07:21:27 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751647AbYIXLV0
-	(ORCPT <rfc822;git-outgoing>); Wed, 24 Sep 2008 07:21:26 -0400
-Received: from clegg.madduck.net ([193.242.105.96]:55008 "EHLO
-	clegg.madduck.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751602AbYIXLV0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 24 Sep 2008 07:21:26 -0400
-Received: from wall.oerlikon.madduck.net (wall.oerlikon.madduck.net [IPv6:2001:41e0:ff12::1])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(Client CN "wall.oerlikon.madduck.net", Issuer "CAcert Class 3 Root" (verified OK))
-	by clegg.madduck.net (postfix) with ESMTPS id AEAE91D40A6;
-	Wed, 24 Sep 2008 13:21:16 +0200 (CEST)
-Received: from piper.oerlikon.madduck.net (piper.oerlikon.madduck.net [IPv6:2001:41e0:ff12:0:211:2fff:fe6b:c869])
-	by wall.oerlikon.madduck.net (Postfix) with ESMTP id C08E69F207;
-	Wed, 24 Sep 2008 13:21:15 +0200 (CEST)
-Received: by piper.oerlikon.madduck.net (Postfix, from userid 1000)
-	id 8B54144B3; Wed, 24 Sep 2008 13:21:15 +0200 (CEST)
+	id S1751437AbYIXLZL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 24 Sep 2008 07:25:11 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751239AbYIXLZL
+	(ORCPT <rfc822;git-outgoing>); Wed, 24 Sep 2008 07:25:11 -0400
+Received: from wr-out-0506.google.com ([64.233.184.226]:51555 "EHLO
+	wr-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750806AbYIXLZJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 24 Sep 2008 07:25:09 -0400
+Received: by wr-out-0506.google.com with SMTP id 69so935925wri.5
+        for <git@vger.kernel.org>; Wed, 24 Sep 2008 04:25:06 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to
+         :subject:cc:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:references;
+        bh=9mIrqrQgFSRFCRQ+NKrpoCkl9hfURDQ7S1qIbRBTX7w=;
+        b=SC7HXSp8Y0/hAi3YF2xJyMgyqlTacuxaVvnAsWGzI0Bft2SXKjSVXO4XRv1HuualIk
+         p/Go0JbEa1XGd+YM0IsNS/HUebEIr4U7TPzkvXFcsMSbjBIFYrkgGVN3LAl7VHiSJGy3
+         46ac6mCXA3PvVya7jIItX4E+Jz8w/slmdbrXo=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
+         :content-type:content-transfer-encoding:content-disposition
+         :references;
+        b=ULb4KlY8erVK7ppDIZBal2TMTl4JR+nzRppPI8kCVxoWuEn3TAa3DofAl6d1qVLBVJ
+         SPmnAPhz6O8vOw3k0Qh3hGOJM9Grzf4zWihZhV4dQ3JGf8wgCY3KjwUVoOlOIA4lr9NR
+         eBTWCihd32iHIN0Q09iZWNlzyX31hwIGDHEcA=
+Received: by 10.151.141.16 with SMTP id t16mr10849633ybn.167.1222255506281;
+        Wed, 24 Sep 2008 04:25:06 -0700 (PDT)
+Received: by 10.151.107.13 with HTTP; Wed, 24 Sep 2008 04:25:06 -0700 (PDT)
+In-Reply-To: <20080923165247.GO21650@dpotapov.dyndns.org>
 Content-Disposition: inline
-In-Reply-To: <20080923095528.GR10360@machine.or.cz>
-X-Motto: Keep the good times rollin'
-X-OS: Debian GNU/Linux lenny/sid kernel 2.6.26-1-amd64 x86_64
-X-Spamtrap: madduck.bogus@madduck.net
-X-Subliminal-Message: debian/rules!
-User-Agent: Mutt/1.5.18 (2008-05-17)
-X-Virus-Scanned: ClamAV 0.94/8323/Wed Sep 24 09:57:37 2008 on clegg.madduck.net
-X-Virus-Status: Clean
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/96629>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/96630>
 
+2008/9/23 Dmitry Potapov <dpotapov@gmail.com>:
+> On Tue, Sep 23, 2008 at 04:37:14PM +0200, Alex Riesen wrote:
+>> 2008/9/23 Dmitry Potapov <dpotapov@gmail.com>:
+>> >
+>> > This fast mode works only for relative paths. It is assumed that the
+>> > whole repository is located inside one directory without using Cygwin
+>> > mount to bind external paths inside of the current tree.
+>>
+>> Why runtime conditional? Why conditional at all?
+>
+> I thought that in rather unusual circumstances (such as using Cygwin
+> mount to connect separately directories in one tree), this fast version
+> may not work. So, I made it conditional. It is runtime conditional,
+> because most users do not build Git themselves but install a ready
+> Cygwin package.
 
---PEIAKu/WMn1b1Hv9
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+So? How about make the fast version _always_ work? We don't seem
+to fallback to copy+unlink everytime the POSIX rename fails.
 
-also sprach Petr Baudis <pasky@suse.cz> [2008.09.23.1155 +0200]:
-> > Well, but what if upstream implemented our solution slightly
-> > differently, and if it's only because they used tabs instead of
-> > spaces? We wouldn't want -s ours then, huh?
->=20
-> You still would want to get tabs in other patches that depended on
-> the merged one, no? Otherwise tg patch output will produce patches
-> that do not apply and tg export will change the tabs back to
-> spaces.
-
-I would want to have to resolve all dependent branches and change
-them to use tabs, right. But since I used spaces and they used tabs,
-using -s ours would give preference to spaces, no?
-
---=20
-martin | http://madduck.net/ | http://two.sentenc.es/
-=20
-the reason the mainstream is thought of as a stream
-is because it is so shallow.
-=20
-spamtraps: madduck.bogus@madduck.net
-
---PEIAKu/WMn1b1Hv9
-Content-Type: application/pgp-signature; name="digital_signature_gpg.asc"
-Content-Description: Digital signature (see http://martin-krafft.net/gpg/)
-Content-Disposition: inline
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.9 (GNU/Linux)
-
-iEYEARECAAYFAkjaIqsACgkQIgvIgzMMSnWSHACg1wXyS8NeoFofKLnfXTIksDeR
-KPYAoLVUfyJ4T2bFuNaHGd10DM4p3uol
-=23Tv
------END PGP SIGNATURE-----
-
---PEIAKu/WMn1b1Hv9--
+Besides it will remove your setup code, which looks bigger and provoked
+more discussion than the real subject itself.
