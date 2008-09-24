@@ -2,65 +2,63 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=0.7 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=0.5 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
-Received: (qmail 25098 invoked by uid 111); 24 Sep 2008 23:33:05 -0000
+Received: (qmail 25131 invoked by uid 111); 24 Sep 2008 23:39:30 -0000
 Received: from vger.kernel.org (HELO vger.kernel.org) (209.132.176.167)
-    by peff.net (qpsmtpd/0.32) with ESMTP; Wed, 24 Sep 2008 19:33:04 -0400
+    by peff.net (qpsmtpd/0.32) with ESMTP; Wed, 24 Sep 2008 19:39:28 -0400
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752632AbYIXXdA (ORCPT <rfc822;peff@peff.net>);
-	Wed, 24 Sep 2008 19:33:00 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752434AbYIXXdA
-	(ORCPT <rfc822;git-outgoing>); Wed, 24 Sep 2008 19:33:00 -0400
-Received: from 132-201.104-92.cust.bluewin.ch ([92.104.201.132]:50348 "EHLO
+	id S1752458AbYIXXjZ (ORCPT <rfc822;peff@peff.net>);
+	Wed, 24 Sep 2008 19:39:25 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752407AbYIXXjZ
+	(ORCPT <rfc822;git-outgoing>); Wed, 24 Sep 2008 19:39:25 -0400
+Received: from 132-201.104-92.cust.bluewin.ch ([92.104.201.132]:50360 "EHLO
 	pixie.suse.cz" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1752278AbYIXXc7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 24 Sep 2008 19:32:59 -0400
+	with ESMTP id S1752082AbYIXXjY (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 24 Sep 2008 19:39:24 -0400
 Received: by pixie.suse.cz (Postfix, from userid 2001)
-	id 543FB2AC8DA; Thu, 25 Sep 2008 01:32:47 +0200 (CEST)
+	id 9A0732AC8DA; Thu, 25 Sep 2008 01:39:13 +0200 (CEST)
 From:	Petr Baudis <pasky@suse.cz>
 To:	git@vger.kernel.org
 Cc:	spearce@spearce.org
-Subject: [PATCH] Fix removing non-pushable remotes
-Date:	Thu, 25 Sep 2008 01:32:47 +0200
-Message-Id: <1222299167-4305-1-git-send-email-pasky@suse.cz>
+Subject: [PATCH] git-gui: Fix fetching from remotes when adding them
+Date:	Thu, 25 Sep 2008 01:39:13 +0200
+Message-Id: <1222299553-5217-1-git-send-email-pasky@suse.cz>
 X-Mailer: git-send-email 1.5.6.3.392.g292f1
-In-Reply-To: <20080924204616.189163849@suse.cz>
-References: <20080924204616.189163849@suse.cz>
+In-Reply-To: <20080924204615.625864882@suse.cz>
+References: <20080924204615.625864882@suse.cz>
 To:	git@vger.kernel.org
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-Git-gui does not add most of the remotes to the 'push' menu
-since they are missing the "Push" line in their remotespec.
-In that case, removing the remote would end up with an error.
+As you can see, this particular code branch did not see a lot
+of testing for some time now. Apologies for that.
 
 Signed-off-by: Petr Baudis <pasky@suse.cz>
 
 ---
+ git-gui/lib/remote_add.tcl |    6 +++---
+ 1 files changed, 3 insertions(+), 3 deletions(-)
 
-Note that I think this should be abandoned and all remotes
-added to the push menu. Having the push part of the remotespec
-is actually a very rare situation and it is just not there
-in most of the cases, relying on default git push behaviour.
-
- git-gui/lib/remote.tcl |    3 ++-
- 1 files changed, 2 insertions(+), 1 deletions(-)
-
-diff --git a/git-gui/lib/remote.tcl b/git-gui/lib/remote.tcl
-index 1852247..b92b429 100644
---- a/git-gui/lib/remote.tcl
-+++ b/git-gui/lib/remote.tcl
-@@ -271,5 +271,6 @@ proc remove_remote {name} {
- 	delete_from_menu $remote_m.fetch $name
- 	delete_from_menu $remote_m.prune $name
- 	delete_from_menu $remote_m.remove $name
--	delete_from_menu $remote_m.push $name
-+	# Not all remotes are in the push menu
-+	catch { delete_from_menu $remote_m.push $name }
- }
+diff --git a/git-gui/lib/remote_add.tcl b/git-gui/lib/remote_add.tcl
+index 8e3ad16..fb29422 100644
+--- a/git-gui/lib/remote_add.tcl
++++ b/git-gui/lib/remote_add.tcl
+@@ -130,9 +130,9 @@ method _add {} {
+ 	switch -- $opt_action {
+ 	fetch {
+ 		set c [console::new \
+-			[mc "fetch %s" $remote] \
+-			[mc "Fetching the %s" $remote]]
+-		console::exec $c [list git fetch --all $name]
++			[mc "fetch %s" $name] \
++			[mc "Fetching the %s" $name]]
++		console::exec $c [list git fetch $name]
+ 	}
+ 	push {
+ 		set cmds [list]
 -- 
-tg: (17f0c43..) t/git-gui/remove-push (depends on: git-gui/remotes)
+tg: (17f0c43..) t/git-gui/remote-fetch (depends on: git-gui/remotes)
