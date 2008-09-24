@@ -1,67 +1,83 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: Re: Partial tree export and merging
-Date: Wed, 24 Sep 2008 07:39:45 -0700
-Message-ID: <20080924143945.GN3669@spearce.org>
-References: <ACF330629DFB034AB290061C320F43460836E082@GOEMAILBE02.europe.mahr.lan> <48D9FACB.20901@mahr.de> <48DA476F.1070700@mahr.de>
+From: "Alex Riesen" <raa.lkml@gmail.com>
+Subject: Re: [PATCH] add GIT_FAST_STAT mode for Cygwin
+Date: Wed, 24 Sep 2008 16:42:03 +0200
+Message-ID: <81b0412b0809240742g2918b300h9114579c4ebf05b4@mail.gmail.com>
+References: <20080923140144.GN21650@dpotapov.dyndns.org>
+	 <81b0412b0809230737s7498e214w4c58991e79f76507@mail.gmail.com>
+	 <20080923165247.GO21650@dpotapov.dyndns.org>
+	 <81b0412b0809240425t63a2a28cw1cc0c0d95b3290f7@mail.gmail.com>
+	 <20080924140358.GX21650@dpotapov.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org, Jens Lehmann <Jens.Lehmann@mahr.de>
-To: Heiko Voigt <heiko.voigt@mahr.de>
-X-From: git-owner@vger.kernel.org Wed Sep 24 16:41:18 2008
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, "Johannes Sixt" <johannes.sixt@telecom.at>,
+	"Junio C Hamano" <gitster@pobox.com>,
+	"Steffen Prohaska" <prohaska@zib.de>,
+	"Shawn O. Pearce" <spearce@spearce.org>
+To: "Dmitry Potapov" <dpotapov@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Sep 24 16:43:57 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KiVY1-0004R9-O4
-	for gcvg-git-2@gmane.org; Wed, 24 Sep 2008 16:40:58 +0200
+	id 1KiVaH-0005ND-Ft
+	for gcvg-git-2@gmane.org; Wed, 24 Sep 2008 16:43:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752023AbYIXOjq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 24 Sep 2008 10:39:46 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752000AbYIXOjq
-	(ORCPT <rfc822;git-outgoing>); Wed, 24 Sep 2008 10:39:46 -0400
-Received: from george.spearce.org ([209.20.77.23]:44642 "EHLO
-	george.spearce.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751960AbYIXOjp (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 24 Sep 2008 10:39:45 -0400
-Received: by george.spearce.org (Postfix, from userid 1001)
-	id 485163835F; Wed, 24 Sep 2008 14:39:45 +0000 (UTC)
+	id S1751996AbYIXOmI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 24 Sep 2008 10:42:08 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751733AbYIXOmH
+	(ORCPT <rfc822;git-outgoing>); Wed, 24 Sep 2008 10:42:07 -0400
+Received: from mail-gx0-f16.google.com ([209.85.217.16]:49200 "EHLO
+	mail-gx0-f16.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751648AbYIXOmG (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 24 Sep 2008 10:42:06 -0400
+Received: by gxk9 with SMTP id 9so5677673gxk.13
+        for <git@vger.kernel.org>; Wed, 24 Sep 2008 07:42:03 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to
+         :subject:cc:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:references;
+        bh=HL/UjsAZibotUnwZlCf2oTzu25qym4mhXyKxt9RSc9k=;
+        b=fgRgMohenLutJkP8Dybd/cnv1G++5VWBagekqNwJKLoBlXXLZ4aVpXUnnryZOML+66
+         mTsef0qPjZlG0fHHuPGrSBqzfX+Ll+hK4cY9Ax9JOJ/Jvcy6STYFRIGodh8w8y2r51iS
+         QhlKRKpITppR2MmYUjsh5IjUR6viOxv/PbWcI=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
+         :content-type:content-transfer-encoding:content-disposition
+         :references;
+        b=ge+WfQ+oA+uSoSokq6tuK7M9RB1GwDe9SfKsPIxo9a/zcLw6gEKm2CeQpA8bMP3t8T
+         5qaxpSHWIE3Xtv4JAqrs5b4vdav32QBolpbfT8VzR4DxFh1ZKCArRUVpEXVNVGH3ZOF3
+         U80GhcoUEZaZmnZn7BnH2IsYUY9wEYKYF76BM=
+Received: by 10.150.155.13 with SMTP id c13mr11131671ybe.164.1222267323908;
+        Wed, 24 Sep 2008 07:42:03 -0700 (PDT)
+Received: by 10.151.107.13 with HTTP; Wed, 24 Sep 2008 07:42:03 -0700 (PDT)
+In-Reply-To: <20080924140358.GX21650@dpotapov.dyndns.org>
 Content-Disposition: inline
-In-Reply-To: <48DA476F.1070700@mahr.de>
-User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/96636>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/96637>
 
-Heiko Voigt <heiko.voigt@mahr.de> wrote:
+2008/9/24 Dmitry Potapov <dpotapov@gmail.com>:
+> it works fine in almost all practical cases I aware of, but I cannot
+> guarantee identical behavior in _all_ cases.
+
+Well, make it as good as MSys/Cygwin's and no one asks for your guarantee.
+
+> Frankly, I don't have strong preference here neither for making this
+> fast version always work nor leave it conditional (perhaps, with the
+> default setting use-fast-version). So, whatever the majority decides
+> is fine with me.
+
+I'm voting for compile-time configuration then.
+
+>> Besides it will remove your setup code, which looks bigger and provoked
+>> more discussion than the real subject itself.
 >
-> I am currently facing a challenge for adding limited access to a git  
-> repository for the i18n and documentation (language) team.
-...
-> To archieve this I would like to extract a repository that only contains  
-> the documentation and localization files which can be used by the i8n  
-> and doc team. This should be regularly merged into the development (with  
-> code) repository.
->
-> My idea of a solution would be to export patches only for the specific  
-> files and import them into a seperate empty repository/branch using  
-> git-format-patch and git-am. This seperate repository then itself then
-> could be imported again with a normal merge operation. Has a anyone  
-> already solved such a problem or other ideas how to solve this ?
+> I believe Shawn wanted it to be configurable on per-repository basis.
 
-See git-filter-branch.  You can use it to slice the history down
-to only contain these files, but still show the full change history
-of them (assuming that is what you are trying to get).
-
-Once the history is split into a new "doc+html" repository have
-developers _only_ edit the docs/html in the doc+html repository,
-don't make more edits in the source code repository.
-
-You can use git-submodule or git-merge with the subtree strategy
-to pull changes from the doc+html repository into the main source
-repository.
-
--- 
-Shawn.
+which, I believe, is pointless.
