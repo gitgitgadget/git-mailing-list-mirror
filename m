@@ -1,87 +1,92 @@
-From: Chris Frey <cdfrey@foursquare.net>
-Subject: [PATCH] Documentation: clarify the details of overriding LESS via core.pager
-Date: Wed, 24 Sep 2008 19:21:28 -0400
-Message-ID: <20080924232128.GA29929@foursquare.net>
-References: <20080918232207.GA31193@foursquare.net>
+From: Yann Dirson <ydirson@altern.org>
+Subject: stg 0.14.3 breakage on push after moving hunk
+Date: Thu, 25 Sep 2008 01:26:54 +0200
+Message-ID: <20080924232654.GY4985@nan92-1-81-57-214-146.fbx.proxad.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-To: git@vger.kernel.org, gitster@pobox.com
-X-From: git-owner@vger.kernel.org Thu Sep 25 01:23:22 2008
+Cc: GIT list <git@vger.kernel.org>
+To: Catalin Marinas <catalin.marinas@gmail.com>,
+	Karl =?iso-8859-1?Q?Hasselstr=F6m?= <kha@treskal.com>
+X-From: git-owner@vger.kernel.org Thu Sep 25 01:26:31 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KidhW-00054K-7d
-	for gcvg-git-2@gmane.org; Thu, 25 Sep 2008 01:23:18 +0200
+	id 1Kidkc-0005y1-6u
+	for gcvg-git-2@gmane.org; Thu, 25 Sep 2008 01:26:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752602AbYIXXWG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 24 Sep 2008 19:22:06 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752559AbYIXXWF
-	(ORCPT <rfc822;git-outgoing>); Wed, 24 Sep 2008 19:22:05 -0400
-Received: from nic.NetDirect.CA ([216.16.235.2]:39815 "EHLO
-	rubicon.netdirect.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752476AbYIXXWE (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 24 Sep 2008 19:22:04 -0400
-X-Originating-Ip: 216.16.235.2
-Received: from localhost (rubicon.netdirect.ca [216.16.235.2])
-	by rubicon.netdirect.ca (8.13.1/8.13.1) with ESMTP id m8ONLSoY030499;
-	Wed, 24 Sep 2008 19:21:29 -0400
+	id S1752593AbYIXXZV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 24 Sep 2008 19:25:21 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752202AbYIXXZU
+	(ORCPT <rfc822;git-outgoing>); Wed, 24 Sep 2008 19:25:20 -0400
+Received: from smtp6-g19.free.fr ([212.27.42.36]:42145 "EHLO smtp6-g19.free.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751882AbYIXXZT (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 24 Sep 2008 19:25:19 -0400
+Received: from smtp6-g19.free.fr (localhost.localdomain [127.0.0.1])
+	by smtp6-g19.free.fr (Postfix) with ESMTP id 5016E19717;
+	Thu, 25 Sep 2008 01:25:16 +0200 (CEST)
+Received: from gandelf.nowhere.earth (nan92-1-81-57-214-146.fbx.proxad.net [81.57.214.146])
+	by smtp6-g19.free.fr (Postfix) with ESMTP id E04D71970B;
+	Thu, 25 Sep 2008 01:25:15 +0200 (CEST)
+Received: by gandelf.nowhere.earth (Postfix, from userid 1000)
+	id 95D4E1F0C2; Thu, 25 Sep 2008 01:26:54 +0200 (CEST)
 Content-Disposition: inline
-In-Reply-To: <20080918232207.GA31193@foursquare.net>
-User-Agent: Mutt/1.4.1i
-X-Net-Direct-Inc-MailScanner-Information: Please contact the ISP for more information
-X-Net-Direct-Inc-MailScanner: Found to be clean
-X-Net-Direct-Inc-MailScanner-SpamCheck: not spam (whitelisted),
-	SpamAssassin (not cached, score=-16.8, required 5,
-	autolearn=not spam, ALL_TRUSTED -1.80, BAYES_00 -15.00)
-X-Net-Direct-Inc-MailScanner-From: <cdfrey@netdirect.ca>
-X-Spam-Status: No
+User-Agent: Mutt/1.5.18 (2008-05-17)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/96710>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/96711>
 
-The process of overriding the default LESS options using only
-git-specific methods is rather obscure.  Show the end user how
-to do it in a step-by-step manner.
+Just saw the following problem - ever saw that ?
 
-Signed-off-by: Chris Frey <cdfrey@foursquare.net>
----
+Getting into context: split changes affecting a particular file into
+another patch
 
-No comments on this patch last week, so sending again, to be
-applied.
+$ stg --version
+Stacked GIT 0.14.3
+git version 1.6.0.1
+Python version 2.5.2 (r252:60911, Aug  8 2008, 09:22:44)
+[GCC 4.3.1]
 
-Thanks,
-- Chris
+$ stg pop
+Checking for changes in the working directory ... done
+Popping patch "factorize" ... done
+Now at patch "x-dummy"
+$ stg new -m test
+$ stg-fold-files-from factorize 't/*'
+Checking for changes in the working directory ... done
+Folding patch from stdin ... done
+$ stg ref
+Checking for changes in the working directory ... done
+Refreshing patch "test" ... done
 
- Documentation/config.txt |   13 +++++++++++--
- 1 files changed, 11 insertions(+), 2 deletions(-)
+... then attempting to push to get rid of the now-duplicated changes
+from orig patch (which has been how I have used stg-fold-files-from
+ever since I wrote it, so I'm pretty sure it used to work, but then,
+it's been a couple of months since I did not use it ;):
 
-diff --git a/Documentation/config.txt b/Documentation/config.txt
-index 922ac7b..9493621 100644
---- a/Documentation/config.txt
-+++ b/Documentation/config.txt
-@@ -363,8 +363,17 @@ core.pager::
- 	variable.  Note that git sets the `LESS` environment
- 	variable to `FRSX` if it is unset when it runs the
- 	pager.  One can change these settings by setting the
--	`LESS` variable to some other value or by giving the
--	`core.pager` option a value such as "`less -+FRSX`".
-+	`LESS` variable to some other value.  Alternately,
-+	these settings can be overridden on a project or
-+	global basis by setting the `core.pager` option.
-+	Setting `core.pager` has no affect on the `LESS`
-+	environment variable behaviour above, so if you want
-+	to override git's default settings this way, you need
-+	to be explicit.  For example, to disable the S option
-+	in a backward compatible manner, set `core.pager`
-+	to "`less -+$LESS -FRX`".  This will be passed to the
-+	shell by git, which will translate the final command to
-+	"`LESS=FRSX less -+FRSX -FRX`".
- 
- core.whitespace::
- 	A comma separated list of common whitespace problems to
+$ stg push
+Checking for changes in the working directory ... done
+Pushing patch "factorize" ... Traceback (most recent call last):
+  File "/usr/bin/stg", line 43, in <module>
+    main()
+  File "/var/lib/python-support/python2.5/stgit/main.py", line 281, in main
+    command.func(parser, options, args)   
+  File "/var/lib/python-support/python2.5/stgit/commands/push.py", line 102, in func
+    push_patches(crt_series, patches, options.merged)
+  File "/var/lib/python-support/python2.5/stgit/commands/common.py", line 202, in push_patches
+    modified = crt_series.push_patch(p)
+  File "/var/lib/python-support/python2.5/stgit/stack.py", line 1112, in push_patch
+    git.merge(bottom, head, top, recursive = True)
+  File "/var/lib/python-support/python2.5/stgit/git.py", line 790, in merge
+    stages['2'][0], stages['3'][0]) != 0:
+  File "/var/lib/python-support/python2.5/stgit/gitmergeonefile.py", line 268, in merge
+    % path)
+TypeError: not all arguments converted during string formatting
+
+Best regards,
 -- 
-1.6.0.2
+Yann
