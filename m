@@ -1,80 +1,81 @@
-From: Petr Baudis <pasky@suse.cz>
-Subject: Re: [RFC] gitweb wishlist and TODO list (templating)
-Date: Thu, 25 Sep 2008 19:10:29 +0200
-Message-ID: <20080925171029.GQ10360@machine.or.cz>
-References: <200809251230.11342.jnareb@gmail.com> <B3B6996F-EC51-49DC-8ECE-DBA25E8F61DE@wincent.com> <20080925133320.GK10360@machine.or.cz> <200809251852.23315.jnareb@gmail.com>
+From: "Scott Chacon" <schacon@gmail.com>
+Subject: re-licensing pkt-line.c code
+Date: Thu, 25 Sep 2008 10:17:52 -0700
+Message-ID: <d411cc4a0809251017h5509bbdmaef935c61cc0929@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Wincent Colaiuta <win@wincent.com>, git@vger.kernel.org
-To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Sep 25 19:12:52 2008
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+To: "git list" <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Thu Sep 25 19:19:18 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KiuNS-0005Ch-2Z
-	for gcvg-git-2@gmane.org; Thu, 25 Sep 2008 19:11:42 +0200
+	id 1KiuUn-0000I8-P0
+	for gcvg-git-2@gmane.org; Thu, 25 Sep 2008 19:19:18 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754966AbYIYRKc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 25 Sep 2008 13:10:32 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754209AbYIYRKc
-	(ORCPT <rfc822;git-outgoing>); Thu, 25 Sep 2008 13:10:32 -0400
-Received: from w241.dkm.cz ([62.24.88.241]:44368 "EHLO machine.or.cz"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754150AbYIYRKb (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 25 Sep 2008 13:10:31 -0400
-Received: by machine.or.cz (Postfix, from userid 2001)
-	id 58F9A3939B43; Thu, 25 Sep 2008 19:10:29 +0200 (CEST)
+	id S1754556AbYIYRRy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 25 Sep 2008 13:17:54 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753859AbYIYRRy
+	(ORCPT <rfc822;git-outgoing>); Thu, 25 Sep 2008 13:17:54 -0400
+Received: from wf-out-1314.google.com ([209.85.200.169]:40158 "EHLO
+	wf-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752792AbYIYRRx (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 25 Sep 2008 13:17:53 -0400
+Received: by wf-out-1314.google.com with SMTP id 27so590088wfd.4
+        for <git@vger.kernel.org>; Thu, 25 Sep 2008 10:17:53 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to
+         :subject:mime-version:content-type:content-transfer-encoding
+         :content-disposition;
+        bh=uHLF3vWWeNiGjQ4y5SYlh1AnJGXaHYWhLapdyqhu6ZA=;
+        b=ifw8qeKNVyut9uHDHpniD1+LTt2mTLxoVPOGpypnIFwrPxLhI6pb8rBB+oXSHFM9Oo
+         em6DmlDFHpiW8dLu5aCUPq1RThOxMZnH3fF+ivKaPWum5f+XvuFR8J2UANX4fqrQuO2p
+         C5fbwzM/lsJOLmoilZFn1GlZ3cS1cxdDICf7A=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:to:subject:mime-version:content-type
+         :content-transfer-encoding:content-disposition;
+        b=RJ+7GtgMK0KVmOHYiqwgVm/XbvyQsQtSUaeaVcjjiJsNawL6DpHdxRxIdAOjm0HzLC
+         iDTYXiaTPWSMOg+2IyGdU6XPfna65V+LMAGEv2FIvfj9J8OEedPqaYwmjhoBisu2Djm3
+         zH/j6wlhPGN/PHdOCnqwJcSRdnim/94Mmnj5s=
+Received: by 10.114.46.6 with SMTP id t6mr49765wat.39.1222363073039;
+        Thu, 25 Sep 2008 10:17:53 -0700 (PDT)
+Received: by 10.115.22.20 with HTTP; Thu, 25 Sep 2008 10:17:52 -0700 (PDT)
 Content-Disposition: inline
-In-Reply-To: <200809251852.23315.jnareb@gmail.com>
-User-Agent: Mutt/1.5.16 (2007-06-09)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/96784>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/96785>
 
-On Thu, Sep 25, 2008 at 06:52:22PM +0200, Jakub Narebski wrote:
-> I think that making gitweb use something like Gitweb::Template, where
-> action appearance is governed by templates, be it something like
-> git-for-each-ref --format or StGit *.tmpl files, or XSLT / XSL,
-> could be a good idea.  But I think _that_ would require almost writing
-> from scratch, certainly making it long-term gitweb fork, perhaps even
-> with different name (and not residing inside git.git repository).
-> 
-> We can discuss this idea here in this subthread.  For example: do
-> create Gitweb::Template like HTML::Template or use Template Toolkit;
-> which parts put in template and which in "gitweb" driver, etc.
+Hey all,
 
-Actually, my implementation works quite differently - the idea of the
-templates is that you just specify data from which files to show and
-whether to take them right away or tabulate them in some way - so it is
-something very abstract, and agnostic to _presentation_ layer, which is
-still provided by gitweb. An example of made-up template configuration
-file would look something like:
+I am writing a partial implementation of git in Objective-C so I can
+get a git server running on an iphone, and hopefully it could
+eventually be used in a mac desktop app that could be distributed
+without the git binary. If anyone is interested in the project, you
+can get it here:
 
-[action "summary"]
-	sections = metadata overview README shortlog forks
+http://github.com/schacon/objective-git
 
-[section "overview"]
-	type = csv
-	row = Project Title,(info.txt:title)
-	row = Project Authors,(info.txt:authors)
-	row = Bussiness Impact,(info.txt:bizimpact)
-	row = Base Equation,[formula.png]
+There are about 20-25 lines of code from pkt-line.c that I think were
+originally written back in 2005 that I would like to use so I don't
+have to re-implement them.  It is pretty generic - it is just the code
+that converts an int into a 4 char hex and back that is placed at the
+beginning of several of the network protocol lines.
 
-[section "README"]
-	type = html
-	content = (README.html)
+http://github.com/schacon/objective-git/tree/master/ObjGitServerHandler.m#L554
 
-(where info.txt is another gitconfig-ish file in tree root, one that
-the user actually touches).
+I have to relicense this, since I can't legally distribute my source
+code for the iphone app due to Apples f**king NDA.  I would like to
+release my ObjectiveGit project under the MIT (or, alternately, LGPL).
+ Is Linus the right person to ask for this permission?  What is the
+best way to do so?  I could come up with an alternate way to
+accomplish the same thing, but it seems like a waste of time to do so,
+and helpful to nobody.
 
-When I post the patch, I will probably apply it to repo.or.cz too so
-that I can show-case this in practice.
-
--- 
-				Petr "Pasky" Baudis
-People who take cold baths never have rheumatism, but they have
-cold baths.
+Thanks,
+Scott
