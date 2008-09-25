@@ -1,65 +1,64 @@
-From: Nicolas Pitre <nico@cam.org>
-Subject: Re: On Sponsor Notices
-Date: Wed, 24 Sep 2008 22:36:41 -0400 (EDT)
-Message-ID: <alpine.LFD.1.10.0809242233360.14631@xanadu.home>
-References: <20080924204358.144077183@suse.cz>
- <20080924225120.GL10544@machine.or.cz>
+From: "Li Frank-B20596" <Frank.Li@freescale.com>
+Subject: [QGit] Some suggestion
+Date: Thu, 25 Sep 2008 13:24:11 +0800
+Message-ID: <7FD1F85C96D70C4A89DA1DF7667EAE96079EDF@zch01exm23.fsl.freescale.net>
+References: <gbak2u$v9b$1@ger.gmane.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: git@vger.kernel.org, spearce@spearce.org
-To: Petr Baudis <pasky@suse.cz>
-X-From: git-owner@vger.kernel.org Thu Sep 25 04:38:23 2008
+Content-Type: text/plain;
+	charset="US-ASCII"
+Content-Transfer-Encoding: 8BIT
+To: <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Thu Sep 25 07:25:33 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KigkD-0004Vt-Rg
-	for gcvg-git-2@gmane.org; Thu, 25 Sep 2008 04:38:18 +0200
+	id 1KijM1-0002YP-OR
+	for gcvg-git-2@gmane.org; Thu, 25 Sep 2008 07:25:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752418AbYIYChE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 24 Sep 2008 22:37:04 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752671AbYIYChE
-	(ORCPT <rfc822;git-outgoing>); Wed, 24 Sep 2008 22:37:04 -0400
-Received: from relais.videotron.ca ([24.201.245.36]:58383 "EHLO
-	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752418AbYIYChD (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 24 Sep 2008 22:37:03 -0400
-Received: from xanadu.home ([66.131.194.97]) by VL-MO-MR001.ip.videotron.ca
- (Sun Java(tm) System Messaging Server 6.3-4.01 (built Aug  3 2007; 32bit))
- with ESMTP id <0K7Q00KPVCL6YP40@VL-MO-MR001.ip.videotron.ca> for
- git@vger.kernel.org; Wed, 24 Sep 2008 22:36:42 -0400 (EDT)
-X-X-Sender: nico@xanadu.home
-In-reply-to: <20080924225120.GL10544@machine.or.cz>
-User-Agent: Alpine 1.10 (LFD 962 2008-03-14)
+	id S1752437AbYIYFYS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 25 Sep 2008 01:24:18 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751784AbYIYFYS
+	(ORCPT <rfc822;git-outgoing>); Thu, 25 Sep 2008 01:24:18 -0400
+Received: from az33egw01.freescale.net ([192.88.158.102]:59202 "EHLO
+	az33egw01.freescale.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752179AbYIYFYS convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 25 Sep 2008 01:24:18 -0400
+Received: from az33smr02.freescale.net (az33smr02.freescale.net [10.64.34.200])
+	by az33egw01.freescale.net (8.12.11/az33egw01) with ESMTP id m8P5OE6r015472
+	for <git@vger.kernel.org>; Wed, 24 Sep 2008 22:24:15 -0700 (MST)
+Received: from zch01exm23.fsl.freescale.net (zch01exm23.ap.freescale.net [10.192.129.207])
+	by az33smr02.freescale.net (8.13.1/8.13.0) with ESMTP id m8P5OCbL024297
+	for <git@vger.kernel.org>; Thu, 25 Sep 2008 00:24:13 -0500 (CDT)
+X-MimeOLE: Produced By Microsoft Exchange V6.5
+Content-class: urn:content-classes:message
+In-Reply-To: <gbak2u$v9b$1@ger.gmane.org>
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+Thread-Topic: [QGit] Some suggestion
+Thread-Index: AckdcBFdO/OpsisJQUWm9urho5xfXABXVWLg
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/96723>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/96724>
 
-On Thu, 25 Sep 2008, Petr Baudis wrote:
+Can add below function at qgit?
+===Difference other version===
+	1. user choose a commit, 
+	2. right click 
+		Check working dir
+		View patch
+		....
+		[Diff with other commit]
 
->   Hi,
-> 
->   to follow up a little on the "This patch has been sponsored by
-> Novartis" messages - I have been on a summer internship at Novartis busy
-> deploying Git and these patches (still quite a few more to come, mostly
-> for gitweb) have been one of the main outputs of that work.
-> 
->   However, I'm not sure if acknowledging the Novartis-originated patches
-> in the log message like this is the best practice and we will understand
-> if the maintainers will decide to strip these notices when applying the
-> patches. Usually, this kind of acknowledgement is made by using
-> "sponsored" email addresses, however mine will probably stop working
-> shortly after I leave and the only way to read it is, shall we say,
-> utmostly inconvenient. ;-) Now, Shawn has proposed 'Sponsored-by:' line
-> at the header footer, which is also an interesting possibility.
+	3. change icon +
+	4. user choose other commit
 
-I'd suggest you do like some people working on the Linux kernel, i.e. 
-use your employer's email address for the Signed-off-by line but use 
-whatever address you prefer for the from/author line.
+	QGit show list of changed files. 
+	click one files, call extern diff tool show difference. 
 
-
-Nicolas
+=== file view ===
+	Can use different color to high light current commit change. 	
+	
