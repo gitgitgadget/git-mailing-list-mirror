@@ -1,84 +1,102 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: [PATCH] usage.c: remove unused functions
-Date: Thu, 25 Sep 2008 14:53:01 +0200
-Organization: At home
-Message-ID: <gbg1jc$hjm$1@ger.gmane.org>
-References: <20080925184104.6117@nanako3.lavabit.com> <200809251348.42789.trast@student.ethz.ch>
+From: Petr Baudis <pasky@suse.cz>
+Subject: [ANNOUNCE] TopGit v0.4
+Date: Thu, 25 Sep 2008 15:19:10 +0200
+Message-ID: <20080925131910.GM10544@machine.or.cz>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7Bit
+Content-Type: text/plain; charset=iso-8859-2
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Sep 25 14:54:31 2008
+X-From: git-owner@vger.kernel.org Thu Sep 25 15:20:29 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KiqMY-0002cM-SK
-	for gcvg-git-2@gmane.org; Thu, 25 Sep 2008 14:54:31 +0200
+	id 1Kiqlc-0003O9-UL
+	for gcvg-git-2@gmane.org; Thu, 25 Sep 2008 15:20:25 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752999AbYIYMxQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 25 Sep 2008 08:53:16 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753223AbYIYMxQ
-	(ORCPT <rfc822;git-outgoing>); Thu, 25 Sep 2008 08:53:16 -0400
-Received: from main.gmane.org ([80.91.229.2]:60976 "EHLO ciao.gmane.org"
+	id S1753286AbYIYNTN convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 25 Sep 2008 09:19:13 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753216AbYIYNTN
+	(ORCPT <rfc822;git-outgoing>); Thu, 25 Sep 2008 09:19:13 -0400
+Received: from w241.dkm.cz ([62.24.88.241]:53525 "EHLO machine.or.cz"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752965AbYIYMxP (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 25 Sep 2008 08:53:15 -0400
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1KiqLE-0005UV-Fb
-	for git@vger.kernel.org; Thu, 25 Sep 2008 12:53:08 +0000
-Received: from abwl56.neoplus.adsl.tpnet.pl ([83.8.235.56])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Thu, 25 Sep 2008 12:53:08 +0000
-Received: from jnareb by abwl56.neoplus.adsl.tpnet.pl with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Thu, 25 Sep 2008 12:53:08 +0000
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@ger.gmane.org
-X-Gmane-NNTP-Posting-Host: abwl56.neoplus.adsl.tpnet.pl
-Mail-Copies-To: Jakub Narebski <jnareb@gmail.com>
-User-Agent: KNode/0.10.2
+	id S1753209AbYIYNTM (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 25 Sep 2008 09:19:12 -0400
+Received: by machine.or.cz (Postfix, from userid 2001)
+	id 48A5B3939B42; Thu, 25 Sep 2008 15:19:10 +0200 (CEST)
+Content-Disposition: inline
+User-Agent: Mutt/1.5.16 (2007-06-09)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/96759>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/96760>
 
-Thomas Rast wrote:
+  Hi!
 
-> Nanako Shiraishi wrote:
->> This removes three functions that are not used anywhere.
-> [...]
->> -void set_usage_routine(void (*routine)(const char *err) NORETURN)
-> [...]
->> -void set_error_routine(void (*routine)(const char *err, va_list params))
-> [...]
->> -void set_warn_routine(void (*routine)(const char *warn, va_list params))
-> 
-> These blame to the following commit:
-> 
->   commit 39a3f5ea7c0352a530338d30d4e618f6b4db84e4
->   Author: Petr Baudis <pasky@suse.cz>
->   Date:   Sat Jun 24 04:34:38 2006 +0200
-> 
->       Customizable error handlers
->       
->       This patch makes the usage(), die() and error() handlers customizable.
->       Nothing in the git code itself uses that but many other libgit users
->       (like Git.pm) will.
->   [...]
-> 
-> So apparently the intent was that they would only be used from outside
-> Git.  I don't know whether anyone still plans to do that, but they're
-> certainly not "just" unused.
+  This is TopGit v0.4, continuing the mission of practical usability.
+I have managed to somehow use this to actually manage a rather large
+and non-trivial system of git-gui patches, recently submitted to git@.
+(I send out the mail series using tg export --quilt and quilt mail
+so far though, and I'm actually finding that quite convenient.)
 
-By the way, those functions could be used to implement 
-"git --silent <cmd>", which is equivalent of "git <cmd> 2>/dev/null"
-(which you don't always can do easily).
 
--- 
-Jakub Narebski
-Warsaw, Poland
-ShadeHawk on #git
+  TopGit is meant as a fresh start in the steps of StGIT, quilt-in-git
+and others, of course in an attempt to Get It Right this time around.
+TopGit is absolutely minimal porcelain layer that will manage your
+patch queue for you using topic branches, one patch per branch,
+never rewriting the history in order to enable fully distributed
+workflow.  You can get TopGit at
+
+	http://repo.or.cz/w/topgit.git
+
+and read up on its design, usage and implementation at:
+
+	http://repo.or.cz/w/topgit.git?a=3Dblob;f=3DREADME
+
+
+  The nicest thing about this release is Kirill's new 'tg mail' command=
+,
+'tg export --quilt -b' to create quilt series from arbitrary set of
+topic branches and 'tg depend add', which has actually quite trivial
+implementation, though. Then there's the usual bunch of small
+enhancements and fixes.
+
+Kirill Smelkov (3):
+      tg help: <something>: improve readability
+      tg import: fix + make more robust
+      tg mail: new command for mailing patches
+
+Petr Baudis (19):
+      tg.sh: Typo fix (incanation -> incantation)
+      .gitignore: Add tg-import, tg-remote
+      Makefile: Changing Makefile means executables need to be regenera=
+ted too
+      tg import: Require clean working tree and index
+      tg import: Check out new files as we go
+      tg delete: Allow branch delete if we aren't on symbolic HEAD
+      tg remote README: Add 'git push --all' caveat warning
+      tg info: Carry over missing Subject line in topmsg
+      tg info, tg patch: Work on top-base HEAD too
+      Ignore vim swp files
+      tg mail: Tidyup
+      tg mail: Simplify array usage
+      tg export: Fix exporting remote-based branches
+      tg delete: Fix spurious output
+      tg depend add: Add dependency
+      tg update: Fix resume message
+      tg mail -s SEND_EMAIL_ARGS: Pass arguments to git send-email
+      tg export: With quilt driver, accept explicit list of branches
+      TopGit-0.4
+
+Uwe Kleine-K=C4=82=C5=9Bnig (1):
+      Use git-mailinfo to extract author informations from .topmsg
+
+
+  Have fun,
+
+--=20
+				Petr "Pasky" Baudis
+The next generation of interesting software will be done
+on the Macintosh, not the IBM PC.  -- Bill Gates
