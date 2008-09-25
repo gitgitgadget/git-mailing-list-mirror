@@ -1,102 +1,46 @@
-From: Nanako Shiraishi <nanako3@lavabit.com>
-Subject: [PATCH] usage.c: remove unused functions
-Date: Thu, 25 Sep 2008 18:41:04 +0900
-Message-ID: <20080925184104.6117@nanako3.lavabit.com>
+From: Petr Baudis <pasky@suse.cz>
+Subject: Re: On Sponsor Notices
+Date: Thu, 25 Sep 2008 12:15:58 +0200
+Message-ID: <20080925101558.GF10360@machine.or.cz>
+References: <20080924204358.144077183@suse.cz> <20080924225120.GL10544@machine.or.cz> <alpine.LFD.1.10.0809242233360.14631@xanadu.home>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Cc: git@vger.kernel.org
-To: "Junio C Hamano" <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Sep 25 11:43:04 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, spearce@spearce.org
+To: Nicolas Pitre <nico@cam.org>
+X-From: git-owner@vger.kernel.org Thu Sep 25 12:17:40 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KinN0-0006NZ-Q9
-	for gcvg-git-2@gmane.org; Thu, 25 Sep 2008 11:42:47 +0200
+	id 1Kinul-0000HW-PR
+	for gcvg-git-2@gmane.org; Thu, 25 Sep 2008 12:17:40 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752872AbYIYJlh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 25 Sep 2008 05:41:37 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752862AbYIYJlh
-	(ORCPT <rfc822;git-outgoing>); Thu, 25 Sep 2008 05:41:37 -0400
-Received: from karen.lavabit.com ([72.249.41.33]:43295 "EHLO karen.lavabit.com"
+	id S1753018AbYIYKQB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 25 Sep 2008 06:16:01 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752910AbYIYKQB
+	(ORCPT <rfc822;git-outgoing>); Thu, 25 Sep 2008 06:16:01 -0400
+Received: from w241.dkm.cz ([62.24.88.241]:49107 "EHLO machine.or.cz"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752750AbYIYJlg (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 25 Sep 2008 05:41:36 -0400
-Received: from f.earth.lavabit.com (f.earth.lavabit.com [192.168.111.15])
-	by karen.lavabit.com (Postfix) with ESMTP id BD4B1C8A48;
-	Thu, 25 Sep 2008 04:41:35 -0500 (CDT)
-Received: from 2236.lavabit.com (212.62.97.23)
-	by lavabit.com with ESMTP id FAY8RJ6LF0EY; Thu, 25 Sep 2008 04:41:35 -0500
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws; s=lavabit; d=lavabit.com;
-  b=pioyN94W81sVc/nqBRBRUpmaqnLOSMJ8Bnv4AlhlhF3jmwtrrl+FBcliwhCT2F6VIXNgnZzXqom1sPpdYIkAo6QBAeE0JYKUx5aP8Ts2QXyhtadmquZxLSPIUPgUXwhOp+WhCC64r48X0sFgkgrBvGQMtf9fIFVmji/85AHGFxA=;
-  h=From:To:Cc:Date:Subject:MIME-Version:Content-Type:Content-Transfer-Encoding:Message-Id;
+	id S1752790AbYIYKQA (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 25 Sep 2008 06:16:00 -0400
+Received: by machine.or.cz (Postfix, from userid 2001)
+	id E12C83939B43; Thu, 25 Sep 2008 12:15:58 +0200 (CEST)
+Content-Disposition: inline
+In-Reply-To: <alpine.LFD.1.10.0809242233360.14631@xanadu.home>
+User-Agent: Mutt/1.5.16 (2007-06-09)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/96740>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/96741>
 
-This removes three functions that are not used anywhere.
+On Wed, Sep 24, 2008 at 10:36:41PM -0400, Nicolas Pitre wrote:
+> I'd suggest you do like some people working on the Linux kernel, i.e. 
+> use your employer's email address for the Signed-off-by line but use 
+> whatever address you prefer for the from/author line.
 
-Signed-off-by: Nanako Shiraishi <nanako3@lavabit.com>
----
- git-compat-util.h |    3 ---
- usage.c           |   16 ----------------
- 2 files changed, 0 insertions(+), 19 deletions(-)
+Even if the employer's email address is basically bogus? Can you point
+to some examples of Linux kernel patches doing that, please?
 
-diff --git a/git-compat-util.h b/git-compat-util.h
-index db2836f..2ac832f 100644
---- a/git-compat-util.h
-+++ b/git-compat-util.h
-@@ -154,10 +154,7 @@ extern void die(const char *err, ...) NORETURN __attribute__((format (printf, 1,
- extern int error(const char *err, ...) __attribute__((format (printf, 1, 2)));
- extern void warning(const char *err, ...) __attribute__((format (printf, 1, 2)));
- 
--extern void set_usage_routine(void (*routine)(const char *err) NORETURN);
- extern void set_die_routine(void (*routine)(const char *err, va_list params) NORETURN);
--extern void set_error_routine(void (*routine)(const char *err, va_list params));
--extern void set_warn_routine(void (*routine)(const char *warn, va_list params));
- 
- extern int prefixcmp(const char *str, const char *prefix);
- extern time_t tm_to_time_t(const struct tm *tm);
-diff --git a/usage.c b/usage.c
-index a5fc4ec..24f5fc0 100644
---- a/usage.c
-+++ b/usage.c
-@@ -41,27 +41,11 @@ static void (*die_routine)(const char *err, va_list params) NORETURN = die_built
- static void (*error_routine)(const char *err, va_list params) = error_builtin;
- static void (*warn_routine)(const char *err, va_list params) = warn_builtin;
- 
--void set_usage_routine(void (*routine)(const char *err) NORETURN)
--{
--	usage_routine = routine;
--}
--
- void set_die_routine(void (*routine)(const char *err, va_list params) NORETURN)
- {
- 	die_routine = routine;
- }
- 
--void set_error_routine(void (*routine)(const char *err, va_list params))
--{
--	error_routine = routine;
--}
--
--void set_warn_routine(void (*routine)(const char *warn, va_list params))
--{
--	warn_routine = routine;
--}
--
--
- void usage(const char *err)
- {
- 	usage_routine(err);
-
--- 
-1.6.0.2
-
--- 
-Nanako Shiraishi
-http://ivory.ap.teacup.com/nanako3/
+				Petr "Pasky" Baudis
