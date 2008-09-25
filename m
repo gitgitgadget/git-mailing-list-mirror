@@ -1,88 +1,81 @@
-From: Petr Baudis <pasky@suse.cz>
-Subject: Re: [PATCH 0/3] [RFC] Support for publishing projects at central
-	site
-Date: Thu, 25 Sep 2008 12:24:47 +0200
-Message-ID: <20080925102447.GG10360@machine.or.cz>
-References: <20080924235734.697978308@suse.cz> <Pine.LNX.4.64.0809250951090.5683@ds9.cixit.se>
+From: "Mikael Magnusson" <mikachu@gmail.com>
+Subject: Re: [PATCH] gitk: Update swedish translation.
+Date: Thu, 25 Sep 2008 12:28:31 +0200
+Message-ID: <237967ef0809250328q630dc36dj8aa3d3a9bc1f63ca@mail.gmail.com>
+References: <237967ef0809232333y40e36d6bs3205091e3baa701c@mail.gmail.com>
+	 <Pine.LNX.4.64.0809241527170.22419@ds9.cixit.se>
+	 <237967ef0809240746n25c74e9ambb2c512e96e006ca@mail.gmail.com>
+	 <Pine.LNX.4.64.0809250940120.5683@ds9.cixit.se>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, spearce@spearce.org
-To: Peter Krefting <peter@softwolves.pp.se>
-X-From: git-owner@vger.kernel.org Thu Sep 25 12:25:59 2008
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: base64
+Cc: "Paul Mackerras" <paulus@samba.org>,
+	"Git Mailing List" <git@vger.kernel.org>
+To: "Peter Krefting" <peter@softwolves.pp.se>
+X-From: git-owner@vger.kernel.org Thu Sep 25 12:29:57 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Kio2o-0002gL-RD
-	for gcvg-git-2@gmane.org; Thu, 25 Sep 2008 12:25:59 +0200
+	id 1Kio6e-0003np-Ix
+	for gcvg-git-2@gmane.org; Thu, 25 Sep 2008 12:29:57 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753043AbYIYKYu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 25 Sep 2008 06:24:50 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753080AbYIYKYu
-	(ORCPT <rfc822;git-outgoing>); Thu, 25 Sep 2008 06:24:50 -0400
-Received: from w241.dkm.cz ([62.24.88.241]:45029 "EHLO machine.or.cz"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753022AbYIYKYt (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 25 Sep 2008 06:24:49 -0400
-Received: by machine.or.cz (Postfix, from userid 2001)
-	id 8FD083939B42; Thu, 25 Sep 2008 12:24:47 +0200 (CEST)
+	id S1753123AbYIYK2s (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 25 Sep 2008 06:28:48 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753127AbYIYK2r
+	(ORCPT <rfc822;git-outgoing>); Thu, 25 Sep 2008 06:28:47 -0400
+Received: from ey-out-2122.google.com ([74.125.78.27]:28473 "EHLO
+	ey-out-2122.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753104AbYIYK2r (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 25 Sep 2008 06:28:47 -0400
+Received: by ey-out-2122.google.com with SMTP id 6so111366eyi.37
+        for <git@vger.kernel.org>; Thu, 25 Sep 2008 03:28:31 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to
+         :subject:cc:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:references;
+        bh=PiNaPOELRGYQJXrXbiX6+H1vlzEuw0zPoHqM6u5MSK4=;
+        b=thWC1auBIzP+6CY33Q0hqLZGdxn97tNta+tVoV4xZnNNcJgqc1UTBSTPlN65v5qvAI
+         g9dGZ34yXtq1BEUjbv/ifQWwCTQ/SdTwEipbY4iL+VlYXkEpIH5RaD2t2Kjs+1pFVMdV
+         IM3krlHEqGVkWWABNnPZ3i9idrkqIgqgN1ho4=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
+         :content-type:content-transfer-encoding:content-disposition
+         :references;
+        b=X4G7C1riyuuYJXtf38mtcPiotZAJbTlrrCwOGda2t/K5a2kNDFIDy252NzJRB5Kv5u
+         BJxgMWhlFODBBamtq5R4c1v+zKABZKSzGXEoVuJSmLB9SNsnewrigItutNsL5S14Jr7d
+         hSjfeT6bIuHebYNMouZaYPjp6kW8Svzhygg7g=
+Received: by 10.210.104.20 with SMTP id b20mr9960475ebc.127.1222338511228;
+        Thu, 25 Sep 2008 03:28:31 -0700 (PDT)
+Received: by 10.210.19.20 with HTTP; Thu, 25 Sep 2008 03:28:31 -0700 (PDT)
+In-Reply-To: <Pine.LNX.4.64.0809250940120.5683@ds9.cixit.se>
 Content-Disposition: inline
-In-Reply-To: <Pine.LNX.4.64.0809250951090.5683@ds9.cixit.se>
-User-Agent: Mutt/1.5.16 (2007-06-09)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/96742>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/96743>
 
-Hi!
-
-On Thu, Sep 25, 2008 at 09:56:18AM +0100, Peter Krefting wrote:
-> pasky@suse.cz:
-> 
-> > This is not really meant for as-is application, of course, but more
-> > to see if people think it is good idea to have this kind of
-> > functionality in git-gui at all and how generic it should be. This
-> > mini-series depends on pretty much all the other patches I have
-> > submitted tonight.
-> 
-> As long as it is easy to implement the server-side back-end needed to
-> automatically accept projects that you publish through this hook, then
-> this is something that would really help out in this conext.
-
-Well, the example URL points to a Girocco script - Girocco is cleaned up
-and modernized version of the repo.or.cz duct tape, that should be easy
-to reconfigure for any kind of deployment and then simply make
-install-able. But any kind of CGI script can be in principle hooked up
-to this, so you can just write short shell thing that will do the magic
-and then
-
-	echo -e 'Content-type: text/plain\n\nRegistration succeeded!'
-
-> I currently need to perform some "magic" on the server-side to set up
-> new projects, it would be nice if all the people using it have to do is
-> to select a menu option saying "publish". Preferrably through the git
-> protocol, so that I don't have to set up ssh on people's machines
-> (working in a Windows environment here, so all central repositories are
-> set up to use the git protocol for both pull and push).
-
-Which protocol do you use does not really matter, just set up the
-locators right (or don't use them if you don't want to). I ended up
-using samba exports mapped to Windows drives, but just using the git
-protocol might make more sense in many scenarios.
-
-> How do you envision discovering the location to publish to? Some kind
-> of automatic configuration option would be nice. Perhaps be able to
-> point git gui at some magic URI that would download an XML (or text)
-> file describing the central server, perhaps?
-
-I provide customized MSysGit package with tweaked installer and with
-custom /etc/gitconfig. I think in these deployments there is either this
-possibility or the machines are centrally administrated so the sysadmin
-can adjust /etc/gitconfigs.
-
--- 
-				Petr "Pasky" Baudis
-People who take cold baths never have rheumatism, but they have
-cold baths.
+MjAwOC85LzI1IFBldGVyIEtyZWZ0aW5nIDxwZXRlckBzb2Z0d29sdmVzLnBwLnNlPjoKPiBIaSEK
+PiBNaWthZWwgTWFnbnVzc29uOgo+Cj4gWW91ciBtYWlsIGNhbWUgb3V0IHdlaXJkIHdpdGhvdXQg
+bGluZS1icmVha3MgaGVyZSwgdHJ5aW5nIHRvIHJlY292ZXIKPiB5b3VyIGNvbW1lbnRzLi4uIDot
+KQoKU29ycnkgYWJvdXQgdGhhdCwgcHJvYmFibHkgZ21haWwgYmVpbmcgd2VpcmQgc29tZWhvdy4u
+Cgo+PiBUaGlzIGlzIHNvcnQgb2YgaW5jb3JyZWN0LCBzaW5jZSB0aGVyZSB3YXMgYW4gZXJyb3Ig
+dGhlIGRpcmVjdG9yeQo+PiB3YXMgcHJlc3VtYWJseSBuZXZlciBjcmVhdGVkLgo+Cj4gQWgsIHll
+cy4KPgo+PiBCdHcsIGFjY29yZGluZyB0byBnb29nbGUgY29kZSBzZWFyY2gsIHRoZSBjb21tb24g
+Y2FzZSBzZWVtcyB0byBiZQo+PiB3aGF0IEkgd3JvdGUsIHRob3VnaCBJIGRpZG4ndCBjaGVjayBi
+ZWZvcmUgd3JpdGluZwo+PiBpdDoKPj4gaHR0cDovL3d3dy5nb29nbGUuY29tL2NvZGVzZWFyY2g/
+aGw9ZW4mbHI9JnE9ZXJyb3IrY3JlYXRpbmcuKmRpcmVjdG9yeStmaWxlJTNBc3YlNUMucG8mc2J0
+bj1TZWFyY2gKPj4gSG93IGFib3V0ICJGZWwgdmlkIHNrYXBhbmRlIGF2IGRlbiB0aWxsZsOkbGxp
+Z2Ega2F0YWxvZ2VuICVzOiI/Cj4KPiBUaGF0IGlzIGJhY2sgdG8gdGhlIC1hbmRlIGZvcm0uIEl0
+J3Mgbm90IHdyb25nLCBwZXIgc2UsIGl0IGp1c3QgZG9lc24ndAo+IGxvb2sgdGhhdCBnb29kIChJ
+TUhPIGF0IGxlYXN0KS4KCmIzNDQ5YWVhIChQZXRlciBLYXJsc3NvbiAgIDIwMDgtMDMtMTQgMTY6
+MTM6MTcgKzAxMDAgNzAyKSBtc2dpZCAiRXJyb3IKY3JlYXRpbmcgdGFnOiIKYjM0NDlhZWEgKFBl
+dGVyIEthcmxzc29uICAgMjAwOC0wMy0xNCAxNjoxMzoxNyArMDEwMCA3MDMpIG1zZ3N0ciAiRmVs
+CnZpZCBza2FwYW5kZSBhdiB0YWdnOiIKCldhbnQgbWUgdG8gY2hhbmdlIHRoYXQgb25lIHRvbz8g
+SSBwZXJzb25hbGx5IHRoaW5rCiJGZWwgdmlkIHNrYXBhbmRlIGF2IH4iCmlzIGJldHRlciB0aGFu
+CiJGZWwgbsOkciB+IHNrdWxsZSBza2FwYXMiCmJ1dCB3ZSBzaG91bGQgcHJvYmFibHkgZGVjaWRl
+IG9uIG9uZSBvciB0aGUgb3RoZXIgOikuCgotLSAKTWlrYWVsIE1hZ251c3Nvbgo=
