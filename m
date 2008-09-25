@@ -1,125 +1,95 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: [RFC] gitweb wishlist and TODO list
-Date: Thu, 25 Sep 2008 14:23:56 +0200
-Message-ID: <200809251423.56983.jnareb@gmail.com>
-References: <200809251230.11342.jnareb@gmail.com> <CCF9B7B7-4D85-4704-9363-2CE41B048828@simplicidade.org>
+From: SZEDER =?iso-8859-1?Q?G=E1bor?= <szeder@ira.uka.de>
+Subject: Re: [RFC/PATCH] remove vim syntax highlighting in favor of upstream
+Date: Thu, 25 Sep 2008 14:48:17 +0200
+Message-ID: <20080925124817.GC6816@neumann>
+References: <1222269726-15632-1-git-send-email-szeder@ira.uka.de>
+	<20080924155745.GA3908@coredump.intra.peff.net>
+	<20080924170154.GA6816@neumann>
+	<20080924175315.GA10337@coredump.intra.peff.net>
+	<20080924195658.GB6816@neumann>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, Petr Baudis <pasky@suse.cz>
-To: Pedro Melo <melo@simplicidade.org>
-X-From: git-owner@vger.kernel.org Thu Sep 25 14:25:59 2008
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: "Shawn O. Pearce" <spearce@spearce.org>, git@vger.kernel.org
+To: Jeff King <peff@peff.net>, vim@tpope.info
+X-From: git-owner@vger.kernel.org Thu Sep 25 14:50:05 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Kipul-0008Mt-K4
-	for gcvg-git-2@gmane.org; Thu, 25 Sep 2008 14:25:48 +0200
+	id 1KiqI9-000126-VG
+	for gcvg-git-2@gmane.org; Thu, 25 Sep 2008 14:49:58 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754676AbYIYMYM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 25 Sep 2008 08:24:12 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754796AbYIYMYL
-	(ORCPT <rfc822;git-outgoing>); Thu, 25 Sep 2008 08:24:11 -0400
-Received: from fg-out-1718.google.com ([72.14.220.159]:59020 "EHLO
-	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753379AbYIYMYJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 25 Sep 2008 08:24:09 -0400
-Received: by fg-out-1718.google.com with SMTP id 19so286205fgg.17
-        for <git@vger.kernel.org>; Thu, 25 Sep 2008 05:24:07 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:subject:date
-         :user-agent:cc:references:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:message-id;
-        bh=QY2+phJCs2A6RLmSB9oP0xxrfE3gn0LRsoSgPFagoRs=;
-        b=qD3UPPsP6uR3PlWfDz6MIMcG6qoTD1yYdbGgWHh3DNIbZ+N3E6qpgqeAmMlKKxUc5n
-         mBh/ULGvNdNeR4amUPxdscqQv6qakgH9Ew2kzeWEcWFoNx1CQp69+w92FYOxxjDFayrc
-         PVSnBAHTTMrmkxQ17411tWzxu0QG9zowTD0dk=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=from:to:subject:date:user-agent:cc:references:in-reply-to
-         :mime-version:content-type:content-transfer-encoding
-         :content-disposition:message-id;
-        b=q0EQCEL5EYlB3xi0V9IAlz+xy9xS+idy7tfHQA5pKuAwqpNlnPUwa+Bleo+G9MUYxM
-         fv1c6JM1HFF75i++orYPLvZYT1e8fiyEsQAGGMPhd90EriEjAtb3uebDyn0e8UqtLkS2
-         IO5ubbzYtgDLJ8RJokjYJsl1H93nANmxApxNU=
-Received: by 10.86.52.1 with SMTP id z1mr8649293fgz.63.1222345446762;
-        Thu, 25 Sep 2008 05:24:06 -0700 (PDT)
-Received: from ?192.168.1.11? ( [83.8.235.56])
-        by mx.google.com with ESMTPS id l12sm681184fgb.6.2008.09.25.05.24.04
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Thu, 25 Sep 2008 05:24:05 -0700 (PDT)
-User-Agent: KMail/1.9.3
-In-Reply-To: <CCF9B7B7-4D85-4704-9363-2CE41B048828@simplicidade.org>
+	id S1752371AbYIYMsU convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 25 Sep 2008 08:48:20 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752201AbYIYMsU
+	(ORCPT <rfc822;git-outgoing>); Thu, 25 Sep 2008 08:48:20 -0400
+Received: from francis.fzi.de ([141.21.7.5]:33202 "EHLO exchange.fzi.de"
+	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+	id S1751395AbYIYMsT (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 25 Sep 2008 08:48:19 -0400
+Received: from [127.0.1.1] ([141.21.4.196]) by exchange.fzi.de with Microsoft SMTPSVC(6.0.3790.3959);
+	 Thu, 25 Sep 2008 14:48:17 +0200
 Content-Disposition: inline
+In-Reply-To: <20080924195658.GB6816@neumann>
+User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
+X-OriginalArrivalTime: 25 Sep 2008 12:48:17.0545 (UTC) FILETIME=[FB72E790:01C91F0C]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/96756>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/96757>
 
-Pedro Melo wrote:
-> On Sep 25, 2008, at 11:30 AM, Jakub Narebski wrote:
-> 
-> > * Support for FastCGI (via CGI::Fast or FCGI).
-> >
-> >  Unfortunately I don't use FastCGI.  This has to be done in a very
-> >  un-intruisive way, and without performance penalties for "ordinary"
-> >  CGI and mod_perl.
-> >
-> >  Suggested: input reading and validation refactoring.
-> 
-> Is it ok to require CPAN modules? If yes, then using HTTP::Engine as a  
-> base could be helpful here.
+Hi,
 
-No, it is not.  Some gitweb installations (kernel.org, IIRC) are on
-tightly managed machines, where installation is severely restricted.
-If it is distributed together with Perl package it is best, if it can
-be found in distribution packages it is good, if it can be found in
-distribution extras it is quite good, if it can be found in trusted
-package repository, it is manageable.  Installing untested packages
-from CPAN is usually out of the question.
+OK, so I'm complaining a bit.
 
-That said...
- 
-> It supports standalone deployments as well as FastCGI, CGI, mod_perl,  
-> POE and others.
-> 
-> And it acts as a very simple HTTP-layer, without any "framework"
-> logic. 
+On Wed, Sep 24, 2008 at 09:56:58PM +0200, SZEDER G=E1bor wrote:
+> +To install:
+> +
+> +  1. Copy these files to vim's syntax directory $HOME/.vim/syntax
+> +  2. Auto-detect the editing of various git-related filetypes:
+> +	$ cat >>$HOME/.vimrc <<'EOF'
+> +	autocmd BufNewFile,BufRead *.git/COMMIT_EDITMSG    setf gitcommit
+> +	autocmd BufNewFile,BufRead *.git/config,.gitconfig setf gitconfig
+> +	autocmd BufNewFile,BufRead git-rebase-todo         setf gitrebase
+> +	autocmd BufNewFile,BufRead .msg.[0-9]*
+> +		\ if getline(1) =3D~ '^From.*# This line is ignored.$' |
+> +		\   setf gitsendemail |
+> +		\ endif
+> +	autocmd BufNewFile,BufRead *.git/**
+> +		\ if getline(1) =3D~ '^\x\{40\}\>\|^ref: ' |
+> +		\   setf git |
+> +		\ endif
+> +	EOF
 
-...if we could make it conditional on HTTP::Engine being installed,
-and fallback on current code easily, it could be done, I think, without
-problems.
+There are issues with this second step.  If I append this code to my
+=2Evimrc, then vim sometimes overrides the filetype with conf.
 
-Thanks for the pointer. 
+vim has a guessing rule for detecting conf files, which triggers if
+one of the first five lines of the file begins with a '#'.  So if I
+start to write a new commit message or I interactively rebase 4 or
+less commits, then this rule triggers and vim overrides the git
+filetype with filetype conf.  If I do a commit --amend with a long
+enough original commit message or an interactive rebase with more than
+4 commit, then this rule no more triggers and everything is fine.
 
-> > * Committags support
-> >
-> >   Support expansion of "tags" in commit messages, like gitweb now
-> >   does for (shortened) SHA-1, converting them to 'object' view link.
-> >   It should be done in a way to make it easy configurable,
-> >   preferebly having to configure only variable part, and not having
-> >   to write whole replacement rule.
-> >
-> >   Possible committags include: _BUG(n)_, bug _#n_, _FEATURE(n),
-> >   Message-Id, plain text URL e.g. _http://repo.or.cz_, spam  
-> >   protecting of  email addresses, "rich text formatting" like *bold*
-> >   and _underline_, syntax highlighting of signoff lines.
-> 
-> If this part is modular, we can even use a full blown text markup  
-> tool, like Markdown or Textile, to generate the HTML version of the  
-> commits.
+But what's really puzzling is that if I insert the above code into
+$VIMRUNTIME/filetype.vim (at the spot where it can be found in vim
+7.2's filetype.vim), then everything works as expected, git filetypes
+are never overridden.
 
-I don't think it is a good idea.  The main target of git commit
-messages is command line, so fixed width format is expected.  Commit
-mesages are also shown in commit tools and history viewers (git-gui,
-gitk, QGit) and in intergration with IDE/editors (KDevelop, Eclipse,
-Emacs, Vim).  Unless unprocessed code doesn't loose anything, I think
-that advanced markup is a bad, bad idea.
+This is not related to the changes in this patch.  git's original vim
+syntax highlight for commit messages has the exact same behaviour.
 
--- 
-Jakub Narebski
-Poland
+The first step is OK: it doesn't matter whether I put git-related
+syntax files under $HOME/.vim/syntax/ or under $VIMRUNTIME/syntax/.
+
+I'm using vim 7.1.138 in Ubuntu 8.04.
+
+Anyone have a clue?
+
+
+Thanks,
+G=E1bor
