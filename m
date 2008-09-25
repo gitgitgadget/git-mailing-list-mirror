@@ -1,96 +1,72 @@
-From: Thomas Rast <trast@student.ethz.ch>
-Subject: Re: [PATCH] usage.c: remove unused functions
-Date: Thu, 25 Sep 2008 13:48:37 +0200
-Message-ID: <200809251348.42789.trast@student.ethz.ch>
-References: <20080925184104.6117@nanako3.lavabit.com>
+From: Peter Krefting <peter@softwolves.pp.se>
+Subject: Re: [PATCH] gitk: Update swedish translation.
+Date: Thu, 25 Sep 2008 12:49:48 +0100 (CET)
+Organization: /universe/earth/europe/norway/oslo
+Message-ID: <Pine.LNX.4.64.0809251247450.5683@ds9.cixit.se>
+References: <237967ef0809232333y40e36d6bs3205091e3baa701c@mail.gmail.com> 
+ <Pine.LNX.4.64.0809241527170.22419@ds9.cixit.se> 
+ <237967ef0809240746n25c74e9ambb2c512e96e006ca@mail.gmail.com> 
+ <Pine.LNX.4.64.0809250940120.5683@ds9.cixit.se>
+ <237967ef0809250328q630dc36dj8aa3d3a9bc1f63ca@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: multipart/signed;
-  boundary="nextPart4834973.hLIXnAAbJv";
-  protocol="application/pgp-signature";
-  micalg=pgp-sha1
-Content-Transfer-Encoding: 7bit
-Cc: "Junio C Hamano" <gitster@pobox.com>, git@vger.kernel.org,
-	Petr Baudis <pasky@suse.cz>
-To: Nanako Shiraishi <nanako3@lavabit.com>
-X-From: git-owner@vger.kernel.org Thu Sep 25 13:49:52 2008
+Content-Type: TEXT/PLAIN; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Paul Mackerras <paulus@samba.org>,
+	Git Mailing List <git@vger.kernel.org>
+To: Mikael Magnusson <mikachu@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Sep 25 13:51:10 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KipM0-0004bD-9O
-	for gcvg-git-2@gmane.org; Thu, 25 Sep 2008 13:49:52 +0200
+	id 1KipNA-0004v4-S9
+	for gcvg-git-2@gmane.org; Thu, 25 Sep 2008 13:51:05 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753273AbYIYLso (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 25 Sep 2008 07:48:44 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753223AbYIYLsn
-	(ORCPT <rfc822;git-outgoing>); Thu, 25 Sep 2008 07:48:43 -0400
-Received: from xsmtp1.ethz.ch ([82.130.70.13]:51514 "EHLO xsmtp1.ethz.ch"
+	id S1753356AbYIYLt4 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 25 Sep 2008 07:49:56 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753352AbYIYLt4
+	(ORCPT <rfc822;git-outgoing>); Thu, 25 Sep 2008 07:49:56 -0400
+Received: from ds9.cixit.se ([193.15.169.228]:44189 "EHLO ds9.cixit.se"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753216AbYIYLsn (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 25 Sep 2008 07:48:43 -0400
-Received: from xfe0.d.ethz.ch ([82.130.124.40]) by xsmtp1.ethz.ch with Microsoft SMTPSVC(6.0.3790.3959);
-	 Thu, 25 Sep 2008 13:48:42 +0200
-Received: from pcjremy.inf.ethz.ch ([129.132.153.233]) by xfe0.d.ethz.ch over TLS secured channel with Microsoft SMTPSVC(6.0.3790.3959);
-	 Thu, 25 Sep 2008 13:48:42 +0200
-User-Agent: KMail/1.9.9
-In-Reply-To: <20080925184104.6117@nanako3.lavabit.com>
-X-OriginalArrivalTime: 25 Sep 2008 11:48:42.0166 (UTC) FILETIME=[A85B5D60:01C91F04]
+	id S1753325AbYIYLt4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 25 Sep 2008 07:49:56 -0400
+Received: from ds9.cixit.se (peter@localhost [127.0.0.1])
+	by ds9.cixit.se (8.12.3/8.12.3/Debian-7.2) with ESMTP id m8PBnnY1026715
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Thu, 25 Sep 2008 13:49:49 +0200
+Received: from localhost (peter@localhost)
+	by ds9.cixit.se (8.12.3/8.12.3/Debian-7.2) with ESMTP id m8PBnmhU026710;
+	Thu, 25 Sep 2008 13:49:48 +0200
+X-Authentication-Warning: ds9.cixit.se: peter owned process doing -bs
+In-Reply-To: <237967ef0809250328q630dc36dj8aa3d3a9bc1f63ca@mail.gmail.com>
+Accept: text/plain
+X-Warning: Junk / bulk email will be reported
+X-Rating: This message is not to be eaten by humans
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-3.0 (ds9.cixit.se [127.0.0.1]); Thu, 25 Sep 2008 13:49:49 +0200 (CEST)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/96751>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/96752>
 
---nextPart4834973.hLIXnAAbJv
-Content-Type: text/plain;
-  charset="utf-8"
-Content-Transfer-Encoding: quoted-printable
-Content-Disposition: inline
+Mikael Magnusson:
 
-Nanako Shiraishi wrote:
-> This removes three functions that are not used anywhere.
-[...]
-> -void set_usage_routine(void (*routine)(const char *err) NORETURN)
-[...]
-> -void set_error_routine(void (*routine)(const char *err, va_list params))
-[...]
-> -void set_warn_routine(void (*routine)(const char *warn, va_list params))
+> Want me to change that one too?
 
-These blame to the following commit:
+Yeah, most probably should do that, if we change the other.
 
-  commit 39a3f5ea7c0352a530338d30d4e618f6b4db84e4
-  Author: Petr Baudis <pasky@suse.cz>
-  Date:   Sat Jun 24 04:34:38 2006 +0200
+> I personally think "Fel vid skapande av ~"is better than "Fel n=E4r ~
+> skulle skapas" but we should probably decide on one or the other :).
 
-      Customizable error handlers
-     =20
-      This patch makes the usage(), die() and error() handlers customizable.
-      Nothing in the git code itself uses that but many other libgit users
-      (like Git.pm) will.
-  [...]
+as long as it is consistent, it should probably be good enough.
 
-So apparently the intent was that they would only be used from outside
-Git.  I don't know whether anyone still plans to do that, but they're
-certainly not "just" unused.
+> -- Mikael Magnusson???{.n?+???????+%?????=FF=FF=17??w??{.n?+???????^n=
+?r??z?=1A??h????&???z??z?=FF=FF?+??+zf???h???~????i????????z_?=0F?j:+v?=
+??)=FF=FF?m
 
-=2D Thomas
+Something weird is happening with your e-mail messages, not sure if it
+is on your end or mine...
 
-=2D-=20
-Thomas Rast
-trast@student.ethz.ch
-
-
---nextPart4834973.hLIXnAAbJv
-Content-Type: application/pgp-signature; name=signature.asc 
-Content-Description: This is a digitally signed message part.
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.0.9 (GNU/Linux)
-
-iEYEABECAAYFAkjbepoACgkQqUud07tmzP3bxwCfQF1lMqSDzwaYtrnNiZoY+DV/
-e8kAn0CDk8/kfztswf7nvy5xtxFoQg/l
-=RTHl
------END PGP SIGNATURE-----
-
---nextPart4834973.hLIXnAAbJv--
+--=20
+\\// Peter - http://www.softwolves.pp.se/
