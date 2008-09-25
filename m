@@ -1,38 +1,42 @@
 From: Michael Witten <mfwitten@MIT.EDU>
-Subject: [PATCH RFC 1/6] Docs: send-email's usage text and man page mention same options
-Date: Thu, 25 Sep 2008 15:44:31 -0500
-Message-ID: <1222375476-32911-1-git-send-email-mfwitten@mit.edu>
+Subject: [PATCH RFC 5/6] Docs: send-email: change --no-validate to boolean --[no-]validate
+Date: Thu, 25 Sep 2008 15:44:35 -0500
+Message-ID: <1222375476-32911-5-git-send-email-mfwitten@mit.edu>
 References: <1222099095-50360-1-git-send-email-mfwitten@mit.edu>
+ <1222375476-32911-1-git-send-email-mfwitten@mit.edu>
+ <1222375476-32911-2-git-send-email-mfwitten@mit.edu>
+ <1222375476-32911-3-git-send-email-mfwitten@mit.edu>
+ <1222375476-32911-4-git-send-email-mfwitten@mit.edu>
 Cc: git@vger.kernel.org
 To: gitster@pobox.com
-X-From: git-owner@vger.kernel.org Thu Sep 25 22:46:28 2008
+X-From: git-owner@vger.kernel.org Thu Sep 25 22:46:31 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KixjF-0007Oy-UN
-	for gcvg-git-2@gmane.org; Thu, 25 Sep 2008 22:46:26 +0200
+	id 1KixjE-0007Oy-Bm
+	for gcvg-git-2@gmane.org; Thu, 25 Sep 2008 22:46:24 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754663AbYIYUpT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 25 Sep 2008 16:45:19 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754619AbYIYUpS
-	(ORCPT <rfc822;git-outgoing>); Thu, 25 Sep 2008 16:45:18 -0400
-Received: from BISCAYNE-ONE-STATION.MIT.EDU ([18.7.7.80]:61442 "EHLO
+	id S1753956AbYIYUpH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 25 Sep 2008 16:45:07 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753838AbYIYUpH
+	(ORCPT <rfc822;git-outgoing>); Thu, 25 Sep 2008 16:45:07 -0400
+Received: from BISCAYNE-ONE-STATION.MIT.EDU ([18.7.7.80]:61353 "EHLO
 	biscayne-one-station.mit.edu" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1754515AbYIYUpR (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 25 Sep 2008 16:45:17 -0400
+	by vger.kernel.org with ESMTP id S1753164AbYIYUpF (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 25 Sep 2008 16:45:05 -0400
 Received: from outgoing.mit.edu (OUTGOING-AUTH.MIT.EDU [18.7.22.103])
-	by biscayne-one-station.mit.edu (8.13.6/8.9.2) with ESMTP id m8PKimTT003875;
-	Thu, 25 Sep 2008 16:44:49 -0400 (EDT)
+	by biscayne-one-station.mit.edu (8.13.6/8.9.2) with ESMTP id m8PKirhO003931;
+	Thu, 25 Sep 2008 16:44:53 -0400 (EDT)
 Received: from localhost.localdomain (97-116-112-224.mpls.qwest.net [97.116.112.224])
 	(authenticated bits=0)
         (User authenticated as mfwitten@ATHENA.MIT.EDU)
-	by outgoing.mit.edu (8.13.6/8.12.4) with ESMTP id m8PKibJY008003
+	by outgoing.mit.edu (8.13.6/8.12.4) with ESMTP id m8PKibJc008003
 	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
-	Thu, 25 Sep 2008 16:44:42 -0400 (EDT)
+	Thu, 25 Sep 2008 16:44:52 -0400 (EDT)
 X-Mailer: git-send-email 1.6.0.2.302.ge6cbd1
-In-Reply-To: <1222099095-50360-1-git-send-email-mfwitten@mit.edu>
+In-Reply-To: <1222375476-32911-4-git-send-email-mfwitten@mit.edu>
 X-Scanned-By: MIMEDefang 2.42
 X-Spam-Flag: NO
 X-Spam-Score: 0.00
@@ -40,111 +44,99 @@ Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/96797>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/96798>
 
-Specifically, boolean options are now listed in the form
+There is also now a configuration variable:
 
-    --[no-]option
-
-and both forms of documentation now consistently use
-
-    --[no-]signed-off-by-cc
+    sendemail[.<identity>].validate
 
 Signed-off-by: Michael Witten <mfwitten@mit.edu>
 ---
- Documentation/git-send-email.txt |   21 +++++++++++++--------
- git-send-email.perl              |    8 ++++----
- 2 files changed, 17 insertions(+), 12 deletions(-)
+ Documentation/git-send-email.txt |    9 +++++++--
+ git-send-email.perl              |   10 ++++++----
+ 2 files changed, 13 insertions(+), 6 deletions(-)
 
 diff --git a/Documentation/git-send-email.txt b/Documentation/git-send-email.txt
-index 3c3e1b0..9b31626 100644
+index 6031eb7..fe53e9b 100644
 --- a/Documentation/git-send-email.txt
 +++ b/Documentation/git-send-email.txt
-@@ -40,8 +40,7 @@ The --cc option must be repeated for each user you want on the cc list.
- 	Output of this command must be single email address per line.
- 	Default is the value of 'sendemail.cccmd' configuration value.
- 
----chain-reply-to::
----no-chain-reply-to::
-+--[no-]chain-reply-to::
- 	If this is set, each email will be sent as a reply to the previous
- 	email sent.  If disabled with "--no-chain-reply-to", all emails after
- 	the first will be sent as replies to the first email sent.  When using
-@@ -66,8 +65,7 @@ The --cc option must be repeated for each user you want on the cc list.
- 	Only necessary if --compose is also set.  If --compose
- 	is not set, this will be prompted for.
- 
----signed-off-by-cc::
----no-signed-off-by-cc::
-+--[no-]signed-off-by-cc::
-         If this is set, add emails found in Signed-off-by: or Cc: lines to the
-         cc list.
-         Default is the value of 'sendemail.signedoffcc' configuration value;
-@@ -146,8 +144,7 @@ user is prompted for a password while the input is masked for privacy.
- 	Only necessary if --compose is also set.  If --compose
- 	is not set, this will be prompted for.
- 
----suppress-from::
----no-suppress-from::
-+--[no-]suppress-from::
-         If this is set, do not add the From: address to the cc: list.
-         Default is the value of 'sendemail.suppressfrom' configuration value;
-         if that is unspecified, default to --no-suppress-from.
-@@ -163,8 +160,7 @@ user is prompted for a password while the input is masked for privacy.
- 	if that is unspecified, default to 'self' if --suppress-from is
- 	specified, as well as 'sob' if --no-signed-off-cc is specified.
- 
----thread::
----no-thread::
-+--[no-]thread::
- 	If this is set, the In-Reply-To header will be set on each email sent.
- 	If disabled with "--no-thread", no emails will have the In-Reply-To
- 	header set.
-@@ -183,6 +179,15 @@ user is prompted for a password while the input is masked for privacy.
+@@ -189,14 +189,16 @@ user is prompted for a password while the input is masked for privacy.
  	variable; if that is unspecified, choosing the envelope sender is left
  	to your MTA.
  
-+--no-validate::
-+	Don't perform any sanity checks on patches.
-+	Currently, validation means the following:
+---no-validate::
+-	Don't perform any sanity checks on patches.
++--[no-]validate::
++	Perform sanity checks on patches.
+ 	Currently, validation means the following:
+ +
+ --
+ 		*	Warn of patches that contain lines longer than 998 characters; this
+ 			is due to SMTP limits as described by http://www.ietf.org/rfc/rfc2821.txt.
+ --
 ++
-+--
-+		*	Warn of patches that contain lines longer than 998 characters; this
-+			is due to SMTP limits as described by http://www.ietf.org/rfc/rfc2821.txt.
-+--
++This option can be set with sendemail[.<identity>].validate; default to --validate
+ 
+ 
+ CONFIGURATION
+@@ -249,6 +251,9 @@ sendemail.smtpencryption::
+ sendemail.smtpssl::
+ 	Legacy boolean that sets 'smtpencryption=ssl' if enabled.
+ 
++sendemail.validate::
++    Boolean override for --[no-]validate.
 +
- --to::
- 	Specify the primary recipient of the emails generated.
- 	Generally, this will be the upstream maintainer of the
+ Author
+ ------
+ Written by Ryan Anderson <ryan@michonline.com>
 diff --git a/git-send-email.perl b/git-send-email.perl
-index d2fd899..9f56162 100755
+index b86a3f3..8bc204f 100755
 --- a/git-send-email.perl
 +++ b/git-send-email.perl
-@@ -64,11 +64,11 @@ Options:
-                   Only used if --compose is also set.  If --compose is not
- 		  set, this will be prompted for.
+@@ -113,7 +113,8 @@ Options:
+    --envelope-sender       Specify the envelope sender used to send the
+                            emails.
  
--   --chain-reply-to If set, the replies will all be to the previous
-+   --[no-]chain-reply-to If set, the replies will all be to the previous
-                   email sent, rather than to the first email sent.
-                   Defaults to on.
+-   --no-validate           Don't perform any sanity checks on patches.
++   --[no-]validate         Perform any sanity checks on patches.
++                           Default to on.
  
--   --signed-off-cc Automatically add email addresses that appear in
-+   --[no-]signed-off-by-cc Automatically add email addresses that appear in
-                  Signed-off-by: or Cc: lines to the cc: list. Defaults to on.
+ EOT
+ 	exit(1);
+@@ -195,7 +196,7 @@ my ($quiet, $dry_run) = (0, 0);
+ my ($thread, $chain_reply_to, $suppress_from, $signed_off_cc, $cc_cmd);
+ my ($smtp_server, $smtp_server_port, $smtp_authuser, $smtp_encryption);
+ my ($identity, $aliasfiletype, @alias_files, @smtp_host_parts);
+-my ($no_validate);
++my ($validate);
+ my (@suppress_cc);
  
-    --identity     The configuration identity, a subsection to prioritise over
-@@ -95,9 +95,9 @@ Options:
- 		  'cccmd' for the output of the cccmd, or 'all' to suppress
- 		  all of these.
+ my %config_bool_settings = (
+@@ -203,6 +204,7 @@ my %config_bool_settings = (
+     "chainreplyto" => [\$chain_reply_to, 1],
+     "suppressfrom" => [\$suppress_from, undef],
+     "signedoffcc" => [\$signed_off_cc, undef],
++    "validate" => [\$validate, 1],
+ );
  
--   --suppress-from Suppress sending emails to yourself. Defaults to off.
-+   --[no-]suppress-from Suppress sending emails to yourself. Defaults to off.
+ my %config_settings = (
+@@ -269,7 +271,7 @@ my $rc = GetOptions("sender|from=s" => \$sender,
+ 		    "dry-run" => \$dry_run,
+ 		    "envelope-sender=s" => \$envelope_sender,
+ 		    "thread!" => \$thread,
+-		    "no-validate" => \$no_validate,
++		    "validate!" => \$validate,
+ 	 );
  
--   --thread       Specify that the "In-Reply-To:" header should be set on all
-+   --[no-]thread       Specify that the "In-Reply-To:" header should be set on all
-                   emails. Defaults to on.
+ unless ($rc) {
+@@ -422,7 +424,7 @@ for my $f (@ARGV) {
+ 	}
+ }
  
-    --quiet	  Make git-send-email less verbose.  One line per email
+-if (!$no_validate) {
++if ($validate) {
+ 	foreach my $f (@files) {
+ 		unless (-p $f) {
+ 			my $error = validate_patch($f);
 -- 
 1.6.0.2.302.ge6cbd1
