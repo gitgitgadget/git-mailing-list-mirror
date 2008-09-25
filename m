@@ -1,90 +1,72 @@
-From: "Nguyen Thai Ngoc Duy" <pclouds@gmail.com>
-Subject: Re: Partial tree export and merging
-Date: Thu, 25 Sep 2008 21:51:10 +0700
-Message-ID: <fcaeb9bf0809250751x403a4b31vf05cdaba04563bbc@mail.gmail.com>
-References: <ACF330629DFB034AB290061C320F43460836E082@GOEMAILBE02.europe.mahr.lan>
-	 <48D9FACB.20901@mahr.de> <48DA476F.1070700@mahr.de>
-	 <fcaeb9bf0809241051se24bcf7tb836d1b820e288d6@mail.gmail.com>
-	 <48DBA1DF.3050502@mahr.de>
+From: "Shawn O. Pearce" <spearce@spearce.org>
+Subject: Re: [PATCH] usage.c: remove unused functions
+Date: Thu, 25 Sep 2008 07:51:34 -0700
+Message-ID: <20080925145134.GL3669@spearce.org>
+References: <20080925184104.6117@nanako3.lavabit.com> <200809251348.42789.trast@student.ethz.ch> <20080925124836.GI10360@machine.or.cz>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, "Jens Lehmann" <Jens.Lehmann@mahr.de>
-To: "Heiko Voigt" <heiko.voigt@mahr.de>
-X-From: git-owner@vger.kernel.org Thu Sep 25 16:52:34 2008
+Content-Type: text/plain; charset=utf-8
+Cc: Thomas Rast <trast@student.ethz.ch>,
+	Nanako Shiraishi <nanako3@lavabit.com>,
+	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Petr Baudis <pasky@suse.cz>, Jonas Fonseca <fonseca@diku.dk>,
+	Lars Hjemli <hjemli@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Sep 25 16:53:16 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KisCe-0005nc-AI
-	for gcvg-git-2@gmane.org; Thu, 25 Sep 2008 16:52:24 +0200
+	id 1KisD6-000615-2k
+	for gcvg-git-2@gmane.org; Thu, 25 Sep 2008 16:52:52 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752596AbYIYOvO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 25 Sep 2008 10:51:14 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752511AbYIYOvO
-	(ORCPT <rfc822;git-outgoing>); Thu, 25 Sep 2008 10:51:14 -0400
-Received: from fg-out-1718.google.com ([72.14.220.159]:43008 "EHLO
-	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751471AbYIYOvN (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 25 Sep 2008 10:51:13 -0400
-Received: by fg-out-1718.google.com with SMTP id 19so324344fgg.17
-        for <git@vger.kernel.org>; Thu, 25 Sep 2008 07:51:11 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to
-         :subject:cc:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:references;
-        bh=P9jm2akQtX/r4rQVqsG6YIvTHoeKJdlVfOUQU9lAL6A=;
-        b=piRWWJCiQJ4O/hx9zRPmhzoAIjnMg/3S0b0GcQI/O5md4F7eLsIRAkmGS7OkY8aXVG
-         sTegTItDtMR3Xy5gCEBpO6sI2AaHym/Oqg8y5mBL4TcoOpLjf/1wIvA8qcHih9gCFbnj
-         XEGQP/1KwQVhJshRwwP5VTzMxNhZKr87G83y0=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
-         :content-type:content-transfer-encoding:content-disposition
-         :references;
-        b=upQExD+eplTV10e+4zAyUUGpQIE6l+W1QrJ1mGg7EKrGS/Ak9JOUqXCbkRH1llzFE2
-         qqm8SoRu99K49VOuJK5t8y5+WEC2PFGzwvEPmDvllHfp0lXwnJjxiqEJiuBkoxO55Tk/
-         g6+kiCrOYukjVAZWANJUuFyJpEmPFoNhvIzwQ=
-Received: by 10.86.94.11 with SMTP id r11mr80332fgb.0.1222354271009;
-        Thu, 25 Sep 2008 07:51:11 -0700 (PDT)
-Received: by 10.86.95.9 with HTTP; Thu, 25 Sep 2008 07:51:10 -0700 (PDT)
-In-Reply-To: <48DBA1DF.3050502@mahr.de>
+	id S1753311AbYIYOvg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 25 Sep 2008 10:51:36 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753247AbYIYOvf
+	(ORCPT <rfc822;git-outgoing>); Thu, 25 Sep 2008 10:51:35 -0400
+Received: from george.spearce.org ([209.20.77.23]:40491 "EHLO
+	george.spearce.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753226AbYIYOvf (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 25 Sep 2008 10:51:35 -0400
+Received: by george.spearce.org (Postfix, from userid 1001)
+	id B806B3835F; Thu, 25 Sep 2008 14:51:34 +0000 (UTC)
 Content-Disposition: inline
+In-Reply-To: <20080925124836.GI10360@machine.or.cz>
+User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/96772>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/96773>
 
-On 9/25/08, Heiko Voigt <heiko.voigt@mahr.de> wrote:
-> Nguyen Thai Ngoc Duy schrieb:
->
-> > That could be done with (under-developing) sparse checkout. Basically
-> > language team's people do "git clone
-> --sparse-checkout='*.loc:*.html'
-> > your-repo.git". Then they only have *.loc and *.html files in working
-> > directory. When they commit, all other files are unchanged. Developers
-> > merge to have updated *.log/html as usual.
-> >
->
->  Where is that option ? Or are you suggesting me to implement it ?
+Petr Baudis <pasky@suse.cz> wrote:
+> On Thu, Sep 25, 2008 at 01:48:37PM +0200, Thomas Rast wrote:
+> > Nanako Shiraishi wrote:
+> > > This removes three functions that are not used anywhere.
+> > [...]
+> > > -void set_usage_routine(void (*routine)(const char *err) NORETURN)
+> > > -void set_error_routine(void (*routine)(const char *err, va_list params))
+> > > -void set_warn_routine(void (*routine)(const char *warn, va_list params))
+> > 
+> > These blame to the following commit:
+> > 
+> >   commit 39a3f5ea7c0352a530338d30d4e618f6b4db84e4
+> >   Author: Petr Baudis <pasky@suse.cz>
+> > 
+> >       Customizable error handlers
+...
+> > So apparently the intent was that they would only be used from outside
+> > Git.  I don't know whether anyone still plans to do that, but they're
+> > certainly not "just" unused.
+> 
+> I don't think it will be a big deal to remove these functions, though it
+> does feel like a little bit of a step backwards in the libgit efforts.
+> There are some programs that already link to Git, like CGit - I wonder
+> if some of them don't use them (CGit itself doesn't).
 
-As I said, it is being developed. It should not be used in production
-environment yet but if you want to try, you can get it from here
+IMHO these are useless for a "libgit".  However both tig and
+cgit link to the non-existant libgit.a, so they may be using
+these routines.  I've CC'd their authors and am not applying this
+particular change without an ACK from them.
 
-http://repo.or.cz/w/git/pclouds.git in branch sparse-checkout
-
-> > I have a question though: is language team allowed to checkout/modify
-> > files other than *.loc and *.html?
-> >
->
->  Well in an ideal world they should only have access to the "language"
-> files. But it is not crucial for us if they get access to the source. Its
-> more an issue of user friendlyness. The revision control which is in place
-> at the moment does allow them to selectively check out those files.
-
-Thanks. Just wanted to know the scenario that sparse checkout could be used.
 -- 
-Duy
+Shawn.
