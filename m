@@ -1,60 +1,60 @@
-From: Petr Baudis <pasky@suse.cz>
-Subject: Re: gitweb tags feed, Re: New version announcements?
-Date: Thu, 25 Sep 2008 17:31:08 +0200
-Message-ID: <20080925153108.GO10360@machine.or.cz>
-References: <3B8DB770-5ADC-4B99-9A12-F1DABA20C34D@bunster.org> <20080724144939.GI10151@machine.or.cz> <Pine.LNX.4.64.0807241600190.7093@reaper.quantumfyre.co.uk>
+From: Robin Rosenberg <robin.rosenberg.lists@dewire.com>
+Subject: Re: [JGIT PATCH]  Test and fix handling of quotes in ~/.ssh/config
+Date: Thu, 25 Sep 2008 08:26:56 +0200
+Message-ID: <200809250826.59765.robin.rosenberg.lists@dewire.com>
+References: <12219428213749-git-send-email-ggoudsmit@shebang.nl> <20080922210734.GE3669@spearce.org> <20080924232519.GA15318@diku.dk>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Jordi Bunster <jordi@bunster.org>, git@vger.kernel.org,
-	gitster@pobox.com
-To: Julian Phillips <julian@quantumfyre.co.uk>
-X-From: git-owner@vger.kernel.org Thu Sep 25 17:33:21 2008
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
+Cc: "Shawn O. Pearce" <spearce@spearce.org>, sverre@rabbelier.nl,
+	git@vger.kernel.org
+To: Jonas Fonseca <fonseca@diku.dk>
+X-From: git-owner@vger.kernel.org Thu Sep 25 17:41:28 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KispM-0006Dv-PL
-	for gcvg-git-2@gmane.org; Thu, 25 Sep 2008 17:32:25 +0200
+	id 1Kisxd-0001lh-OF
+	for gcvg-git-2@gmane.org; Thu, 25 Sep 2008 17:40:58 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753143AbYIYPbM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 25 Sep 2008 11:31:12 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752776AbYIYPbL
-	(ORCPT <rfc822;git-outgoing>); Thu, 25 Sep 2008 11:31:11 -0400
-Received: from w241.dkm.cz ([62.24.88.241]:33583 "EHLO machine.or.cz"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753143AbYIYPbL (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 25 Sep 2008 11:31:11 -0400
-Received: by machine.or.cz (Postfix, from userid 2001)
-	id 22E933939B43; Thu, 25 Sep 2008 17:31:08 +0200 (CEST)
+	id S1753040AbYIYPjs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 25 Sep 2008 11:39:48 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751734AbYIYPjs
+	(ORCPT <rfc822;git-outgoing>); Thu, 25 Sep 2008 11:39:48 -0400
+Received: from av12-1-sn2.hy.skanova.net ([81.228.8.185]:48166 "EHLO
+	av12-1-sn2.hy.skanova.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750875AbYIYPjs (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 25 Sep 2008 11:39:48 -0400
+Received: by av12-1-sn2.hy.skanova.net (Postfix, from userid 502)
+	id 561A538943; Thu, 25 Sep 2008 17:39:46 +0200 (CEST)
+Received: from smtp4-1-sn2.hy.skanova.net (smtp4-1-sn2.hy.skanova.net [81.228.8.92])
+	by av12-1-sn2.hy.skanova.net (Postfix) with ESMTP
+	id 17AC138A6C; Thu, 25 Sep 2008 17:39:46 +0200 (CEST)
+Received: from [10.3.4.244] (h250n1fls32o811.telia.com [213.67.100.250])
+	by smtp4-1-sn2.hy.skanova.net (Postfix) with ESMTP id 9F0BB37E49;
+	Thu, 25 Sep 2008 17:39:45 +0200 (CEST)
+User-Agent: KMail/1.9.10
+In-Reply-To: <20080924232519.GA15318@diku.dk>
 Content-Disposition: inline
-In-Reply-To: <Pine.LNX.4.64.0807241600190.7093@reaper.quantumfyre.co.uk>
-User-Agent: Mutt/1.5.16 (2007-06-09)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/96778>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/96779>
 
-On Thu, Jul 24, 2008 at 04:04:03PM +0100, Julian Phillips wrote:
-> On Thu, 24 Jul 2008, Petr Baudis wrote:
->> On Thu, Jul 24, 2008 at 10:38:24AM -0400, Jordi Bunster wrote:
->>> I've been following the git mailing list to stay on top of new releases,
->>> but the traffic got too high.
->>>
->>> Any way that a git-announce list could be created for security fixes and
->>> new releases? Or maybe an RSS feed on the website?
->
-> An RSS feed already exists, have a look at http://gitrss.q42.co.uk/.
+torsdagen den 25 september 2008 01.25.19 skrev Jonas Fonseca:
+> Using exceptions seems a bit harsh, since the quote is not really fatal
+> in anyway. Also, for badly formatted Port values the value is simply ignored.
 
-Thanks, I have added the RSS feeds to the git.or.cz homepage.
+For this case OpenSSH complains about a missing parameter. It does not
+even attempt to look up the host. For malformed port numbers I get "Bad number"
+(and no attempt to connect. I think an exception is the right way to solve the
+problem si nce the caller doesn't have to do the error checking. and the error
+is more obvious to the user. OpenSSH also gives the line number. Maybe we
+should too. 
 
->  ---
-> Peter's hungry, time to eat lunch.
+The OpenSSH i'm referencing is openssh-5.1p1-1mdv2009.0
 
-Mmm...
-
--- 
-				Petr "Pasky" Baudis
-People who take cold baths never have rheumatism, but they have
-cold baths.
+-- robin
