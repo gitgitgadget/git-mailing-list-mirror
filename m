@@ -1,68 +1,80 @@
-From: Gustaf Hendeby <hendeby@isy.liu.se>
-Subject: [PATCH] git-gui: Help identify aspell version on Windows too
-Date: Thu, 25 Sep 2008 23:31:22 +0200
-Message-ID: <1222378282-21757-1-git-send-email-hendeby@isy.liu.se>
-Cc: spearce@spearce.org, Gustaf Hendeby <hendeby@isy.liu.se>
+From: "Tom Sgouros" <tomfool@as220.org>
+Subject: mysterious error message
+Date: Thu, 25 Sep 2008 17:33:38 -0400
+Message-ID: <20593.1222378418@as220.org>
+Reply-To: "Tom Sgouros" <tomfool@as220.org>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Sep 25 23:32:43 2008
+X-From: git-owner@vger.kernel.org Thu Sep 25 23:43:45 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KiyRu-0007YK-Cc
-	for gcvg-git-2@gmane.org; Thu, 25 Sep 2008 23:32:34 +0200
+	id 1Kiyce-0002ay-Ip
+	for gcvg-git-2@gmane.org; Thu, 25 Sep 2008 23:43:41 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753997AbYIYVbZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 25 Sep 2008 17:31:25 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753602AbYIYVbZ
-	(ORCPT <rfc822;git-outgoing>); Thu, 25 Sep 2008 17:31:25 -0400
-Received: from bogotron.isy.liu.se ([130.236.48.26]:59838 "EHLO
-	bogotron.isy.liu.se" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752823AbYIYVbY (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 25 Sep 2008 17:31:24 -0400
-Received: from spamotron.isy.liu.se (spamotron.isy.liu.se [130.236.48.19])
-	by bogotron.isy.liu.se (Postfix) with ESMTP id 19AF225947;
-	Thu, 25 Sep 2008 23:31:23 +0200 (MEST)
-Received: from bogotron.isy.liu.se ([130.236.48.26])
- by spamotron.isy.liu.se (spamotron.isy.liu.se [130.236.48.19]) (amavisd-new, port 10022)
- with ESMTP id 16109-08; Fri,  4 Jul 2008 02:08:54 +0200 (MEST)
-Received: from pluring.isy.liu.se (pluring.isy.liu.se [130.236.56.134])
-	by bogotron.isy.liu.se (Postfix) with ESMTP id 6D32C2591C;
-	Thu, 25 Sep 2008 23:31:22 +0200 (MEST)
-Received: by pluring.isy.liu.se (Postfix, from userid 2087)
-	id 48FF22ED78; Thu, 25 Sep 2008 23:31:22 +0200 (CEST)
-X-Mailer: git-send-email 1.6.0.2.509.g4def
-X-Virus-Scanned: by amavisd-new at isy.liu.se
-X-Spam-Checker-Version: SpamAssassin 2.63-isy (2004-01-11) on spamotron.isy.liu.se
+	id S1754392AbYIYVmb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 25 Sep 2008 17:42:31 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754306AbYIYVmb
+	(ORCPT <rfc822;git-outgoing>); Thu, 25 Sep 2008 17:42:31 -0400
+Received: from as220.org ([198.7.230.15]:46932 "EHLO ironzilla.as220.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754175AbYIYVma (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 25 Sep 2008 17:42:30 -0400
+X-Greylist: delayed 527 seconds by postgrey-1.27 at vger.kernel.org; Thu, 25 Sep 2008 17:42:30 EDT
+Received: from localhost (localhost [127.0.0.1])
+	by ironzilla.as220.org (Postfix) with ESMTP id 7DE4CAAB17
+	for <git@vger.kernel.org>; Thu, 25 Sep 2008 17:33:42 -0400 (EDT)
+X-Virus-Scanned: amavisd-new at as220.org
+Received: from ironzilla.as220.org ([127.0.0.1])
+	by localhost (as220.org [127.0.0.1]) (amavisd-new, port 10024)
+	with LMTP id tlMDozHdWbc0 for <git@vger.kernel.org>;
+	Thu, 25 Sep 2008 17:33:38 -0400 (EDT)
+Received: from as220.org (localhost [127.0.0.1])
+	by ironzilla.as220.org (Postfix) with ESMTP id 7FC7CAAB13
+	for <git@vger.kernel.org>; Thu, 25 Sep 2008 17:33:38 -0400 (EDT)
+X-Mailer: MH-E 8.0.3; nmh 1.1; GNU Emacs 22.2.1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/96805>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/96806>
 
-On windows, git gui fails to correctly extract the aspell version
-(experienced with aspell version 0.50.3) due to scilent white space at
-the end of the version string.  Trim the obtained version string to
-work around this.
 
-Signed-off-by: Gustaf Hendeby <hendeby@isy.liu.se>
----
- lib/spellcheck.tcl |    2 +-
- 1 files changed, 1 insertions(+), 1 deletions(-)
+Hello all:
 
-diff --git a/lib/spellcheck.tcl b/lib/spellcheck.tcl
-index 78f344f..c8cc030 100644
---- a/lib/spellcheck.tcl
-+++ b/lib/spellcheck.tcl
-@@ -80,7 +80,7 @@ method _connect {pipe_fd} {
- 		error_popup [strcat [mc "Unrecognized spell checker"] ":\n\n$s_version"]
- 		return
- 	}
--	set s_version [string range $s_version 5 end]
-+			set s_version [string range [string trim $s_version] 5 end]
- 	regexp \
- 		{International Ispell Version .* \(but really (Aspell .*?)\)$} \
- 		$s_version _junk s_version
+I receive the following error message when I try to do a 'git push':
+
+  tomfool@toms-box:hpl$ git push
+  updating 'refs/heads/master'
+    from ad4ae7925d3dd23798e7c5b733d2d8f930f7410f
+    to   5b5f5fae014a4f3535fa10b0f6e28b4bf3225dc3
+   Also local refs/remotes/origin/master
+  Generating pack...
+  Done counting 10 objects.
+  Deltifying 10 objects...
+  error: pack-objects died with strange error
+  unpack eof before pack header was fully read
+  ng refs/heads/master n/a (unpacker error)
+  error: failed to push to 'ssh://tomfool@as220.org/home/tomfool/hpl.git'
+  tomfool@toms-box:hpl$
+
+I haven't been able to interpret this message, and haven't found it in
+the documentation, and google has let me down, too.  Can anyone tell me
+what is causing it?
+
+I'm a new git user, and this is a new git archive.  I've successfully
+done a couple of git push operations before, though.  The connection I'm
+making is via ssh.  I'm working on a Mac OS X (10.4.9) machine over here
+and the server to which I'm trying to push is a Linux box
+(2.6.22-gentoo-r6).
+
+Many thanks,
+
+ -tom
+
 -- 
-1.6.0.2.509.g4def
+ ------------------------
+ tomfool at as220 dot org
+ http://sgouros.com  
+ http://whatcheer.net
