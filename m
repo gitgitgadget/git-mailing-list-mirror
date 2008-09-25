@@ -1,111 +1,69 @@
-From: David Aguilar <davvid@gmail.com>
-Subject: [PATCH] git-submodule: remove unnecessary exits when calling resolve_relative_url
-Date: Thu, 25 Sep 2008 04:21:49 -0700
-Message-ID: <17c3c33dd7aa6803d7ac046f3e4dc0d5bb4c7234.1222341013.git.davvid@gmail.com>
-References: <200809221808.31730.johan@herland.net>
-Cc: git@vger.kernel.org, johan@herland.net, spearce@spearce.org,
-	mlevedahl@gmail.com, David Aguilar <davvid@gmail.com>
-To: gitster@pobox.com
-X-From: git-owner@vger.kernel.org Thu Sep 25 13:29:20 2008
+From: "Robin Rosenberg" <robin.rosenberg@dewire.com>
+Subject: Re: [JGIT PATCH] Add tests for handling of parsing errors in OpenSshConfig
+Date: Thu, 25 Sep 2008 11:33:14 +0000
+Message-ID: <tQAHDMR4.1222342394.9002900.roro@localhost>
+References: <20080925083934.GB10273@diku.dk>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+Cc: "Robin Rosenberg" <robin.rosenberg.lists@dewire.com>,
+	"sverre@rabbelier.nl" <sverre@rabbelier.nl>,
+	"git@vger.kernel.org" <git@vger.kernel.org>
+To: "Jonas Fonseca" <fonseca@diku.dk>,
+	"Shawn O. Pearce" <spearce@spearce.org>
+X-From: git-owner@vger.kernel.org Thu Sep 25 13:34:50 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Kip1u-0005jn-G8
-	for gcvg-git-2@gmane.org; Thu, 25 Sep 2008 13:29:07 +0200
+	id 1Kip7J-00082g-MV
+	for gcvg-git-2@gmane.org; Thu, 25 Sep 2008 13:34:42 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753254AbYIYL16 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 25 Sep 2008 07:27:58 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753233AbYIYL15
-	(ORCPT <rfc822;git-outgoing>); Thu, 25 Sep 2008 07:27:57 -0400
-Received: from rv-out-0506.google.com ([209.85.198.233]:52966 "EHLO
-	rv-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753223AbYIYL15 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 25 Sep 2008 07:27:57 -0400
-Received: by rv-out-0506.google.com with SMTP id k40so405566rvb.1
-        for <git@vger.kernel.org>; Thu, 25 Sep 2008 04:27:56 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:cc:subject:date
-         :message-id:x-mailer:in-reply-to:references;
-        bh=aka9JvtbKuF5gY/fc8wa7BKGNMftWZAsdFnJbr4fbVQ=;
-        b=RSo1in2+2mzWWYUaBHhGMx2rgaeXFSxXwybPaSywoSfM70FmOn8xYqej16hPblqAQk
-         MdFyzZMG/NLMbOj84BI7naZLPwEWlu+9k0jzoB72PPWbjoECtJ0ewwrdWnYgevorZIig
-         uWPV2z5Fe74n0nOywWwQISCMxDAK9Yj7OZybo=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        b=btIiEEVSL/qgVAPFaRlPl5zYuvyLGqH+X2ZDqBvdJjqqxYxeIQLsiyrFfCFflSVR/E
-         59XplV/QQqBh5SIdRLMtUS6lwWQh4T3fIl0iMeyFx54eBxpB8va/gQbk7KJ6ApO22BQR
-         EeXesP3MDs3DKxou9pnKMU3igVgt7/w5dr+oE=
-Received: by 10.140.178.17 with SMTP id a17mr4047651rvf.156.1222342076107;
-        Thu, 25 Sep 2008 04:27:56 -0700 (PDT)
-Received: from localhost ( [208.106.56.2])
-        by mx.google.com with ESMTPS id k2sm578176rvb.1.2008.09.25.04.27.54
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Thu, 25 Sep 2008 04:27:55 -0700 (PDT)
-X-Mailer: git-send-email 1.6.0.2.307.gc4275
-In-Reply-To: <200809221808.31730.johan@herland.net>
+	id S1753080AbYIYLdc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 25 Sep 2008 07:33:32 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753173AbYIYLdc
+	(ORCPT <rfc822;git-outgoing>); Thu, 25 Sep 2008 07:33:32 -0400
+Received: from [83.140.172.130] ([83.140.172.130]:3165 "EHLO dewire.com"
+	rhost-flags-FAIL-FAIL-OK-OK) by vger.kernel.org with ESMTP
+	id S1753062AbYIYLdb convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 25 Sep 2008 07:33:31 -0400
+Received: from localhost (localhost [127.0.0.1])
+	by dewire.com (Postfix) with ESMTP id E0FA5800252;
+	Thu, 25 Sep 2008 13:33:29 +0200 (CEST)
+X-Virus-Scanned: by amavisd-new at dewire.com
+Received: from dewire.com ([127.0.0.1])
+	by localhost (torino.dewire.com [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id QPHPaZE235rc; Thu, 25 Sep 2008 13:33:15 +0200 (CEST)
+Received: from dewire.com (torino.dewire.com [10.1.2.98])
+	by dewire.com (Postfix) with SMTP id E638F80008B;
+	Thu, 25 Sep 2008 13:33:14 +0200 (CEST)
+Received: from 194.68.56.35 (auth. user roro@localhost)
+          by dewire.com with HTTP; Thu, 25 Sep 2008 11:33:14 +0000
+X-Mailer: IlohaMail/0.8.14 (On: dewire.com)
+In-Reply-To: <20080925083934.GB10273@diku.dk>
+Bounce-To: "Robin Rosenberg" <robin.rosenberg@dewire.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/96748>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/96749>
 
-resolve_relative_url calls die() when no remote url exists so these calls to
-exit can be removed.
+Den 9/25/2008, skrev "Jonas Fonseca" <fonseca@diku.dk>:
 
-Signed-off-by: David Aguilar <davvid@gmail.com>
----
+>Badly quoted entries are now ignored similar to how bad port number are
+>currently ignored. A check for negative port numbers is now performed
+>so that they also will be ignored.
 
-This applies on top of the first
-"Fix submodule sync with relative submodule URLs" patch by Johan Herland.
-Shawn's comments made me realize that the resolve_relative_url callers
-could be cleaned up.
+Nooo. We should really give some feedback on bad entries. OpenSSH
+(version 5.1) complains and refuses to connect if I give it a bad port
+number or hostname. It complains about "missing parameter" and bad
+port number for these cases. OpenSSH doesn't simply ignore them.
 
- git-submodule.sh |    8 ++++----
- 1 files changed, 4 insertions(+), 4 deletions(-)
+HostName=bad"
+Port=hubba
 
-diff --git a/git-submodule.sh b/git-submodule.sh
-index 92be0fe..533d1cc 100755
---- a/git-submodule.sh
-+++ b/git-submodule.sh
-@@ -155,7 +155,7 @@ cmd_add()
- 	case "$repo" in
- 	./*|../*)
- 		# dereference source url relative to parent's url
--		realrepo=$(resolve_relative_url "$repo") || exit
-+		realrepo=$(resolve_relative_url "$repo")
- 		;;
- 	*:*|/*)
- 		# absolute url
-@@ -184,7 +184,7 @@ cmd_add()
- 
- 		case "$repo" in
- 		./*|../*)
--			url=$(resolve_relative_url "$repo") || exit
-+			url=$(resolve_relative_url "$repo")
- 		    ;;
- 		*)
- 			url="$repo"
-@@ -270,7 +270,7 @@ cmd_init()
- 		# Possibly a url relative to parent
- 		case "$url" in
- 		./*|../*)
--			url=$(resolve_relative_url "$url") || exit
-+			url=$(resolve_relative_url "$url")
- 			;;
- 		esac
- 
-@@ -638,7 +638,7 @@ cmd_sync()
- 		# Possibly a url relative to parent
- 		case "$url" in
- 		./*|../*)
--			url=$(resolve_relative_url "$url") || exit
-+			url=$(resolve_relative_url "$url")
- 			;;
- 		esac
- 
--- 
-1.6.0.2.307.gc4275
+Even if openssh would ignore them I'd think it would be bad if we did,
+unless there was some serious compatibility issue here.
+
+-- robin
