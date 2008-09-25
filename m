@@ -1,80 +1,73 @@
-From: "Tom Sgouros" <tomfool@as220.org>
-Subject: mysterious error message
-Date: Thu, 25 Sep 2008 17:33:38 -0400
-Message-ID: <20593.1222378418@as220.org>
-Reply-To: "Tom Sgouros" <tomfool@as220.org>
+From: Yann Dirson <ydirson@altern.org>
+Subject: [RFC PATCH] detection of directory renames
+Date: Thu, 25 Sep 2008 23:47:01 +0200
+Message-ID: <20080925213819.27029.47944.stgit@gandelf.nowhere.earth>
+References: <7vfxojtr9t.fsf@gitster.siamese.dyndns.org>
+Mime-Version: 1.0
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Sep 25 23:43:45 2008
+X-From: git-owner@vger.kernel.org Thu Sep 25 23:46:31 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Kiyce-0002ay-Ip
-	for gcvg-git-2@gmane.org; Thu, 25 Sep 2008 23:43:41 +0200
+	id 1KiyfP-0003V3-2G
+	for gcvg-git-2@gmane.org; Thu, 25 Sep 2008 23:46:31 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754392AbYIYVmb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 25 Sep 2008 17:42:31 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754306AbYIYVmb
-	(ORCPT <rfc822;git-outgoing>); Thu, 25 Sep 2008 17:42:31 -0400
-Received: from as220.org ([198.7.230.15]:46932 "EHLO ironzilla.as220.org"
+	id S1753596AbYIYVpW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 25 Sep 2008 17:45:22 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753465AbYIYVpW
+	(ORCPT <rfc822;git-outgoing>); Thu, 25 Sep 2008 17:45:22 -0400
+Received: from smtp8-g19.free.fr ([212.27.42.65]:51396 "EHLO smtp8-g19.free.fr"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754175AbYIYVma (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 25 Sep 2008 17:42:30 -0400
-X-Greylist: delayed 527 seconds by postgrey-1.27 at vger.kernel.org; Thu, 25 Sep 2008 17:42:30 EDT
-Received: from localhost (localhost [127.0.0.1])
-	by ironzilla.as220.org (Postfix) with ESMTP id 7DE4CAAB17
-	for <git@vger.kernel.org>; Thu, 25 Sep 2008 17:33:42 -0400 (EDT)
-X-Virus-Scanned: amavisd-new at as220.org
-Received: from ironzilla.as220.org ([127.0.0.1])
-	by localhost (as220.org [127.0.0.1]) (amavisd-new, port 10024)
-	with LMTP id tlMDozHdWbc0 for <git@vger.kernel.org>;
-	Thu, 25 Sep 2008 17:33:38 -0400 (EDT)
-Received: from as220.org (localhost [127.0.0.1])
-	by ironzilla.as220.org (Postfix) with ESMTP id 7FC7CAAB13
-	for <git@vger.kernel.org>; Thu, 25 Sep 2008 17:33:38 -0400 (EDT)
-X-Mailer: MH-E 8.0.3; nmh 1.1; GNU Emacs 22.2.1
+	id S1753196AbYIYVpV (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 25 Sep 2008 17:45:21 -0400
+Received: from smtp8-g19.free.fr (localhost [127.0.0.1])
+	by smtp8-g19.free.fr (Postfix) with ESMTP id 2657432A7FB
+	for <git@vger.kernel.org>; Thu, 25 Sep 2008 23:45:20 +0200 (CEST)
+Received: from gandelf.nowhere.earth (nan92-1-81-57-214-146.fbx.proxad.net [81.57.214.146])
+	by smtp8-g19.free.fr (Postfix) with ESMTP id 1286532A7EC
+	for <git@vger.kernel.org>; Thu, 25 Sep 2008 23:45:20 +0200 (CEST)
+Received: from gandelf.nowhere.earth (localhost [127.0.0.1])
+	by gandelf.nowhere.earth (Postfix) with ESMTP id 749BF1F0C1
+	for <git@vger.kernel.org>; Thu, 25 Sep 2008 23:47:02 +0200 (CEST)
+In-Reply-To: <7vfxojtr9t.fsf@gitster.siamese.dyndns.org>
+User-Agent: StGIT/0.14.3
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/96806>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/96807>
 
+This is a first very preliminar patch, mostly so people can comment
+early on the big picture.  It has a number of limitations, many but
+not all already listed as FIXME's in the patch itself.  If anything in
+this patch seems so wrong it is not worth polishing it, it's the
+perfect time to say so :)
 
-Hello all:
+The idea is to add a new pass to diffcore-rename, to group file renames
+looking like a full directory move, and then to hide those file
+renames which do not carry any additionnal information.
 
-I receive the following error message when I try to do a 'git push':
+Here is a sample run:
 
-  tomfool@toms-box:hpl$ git push
-  updating 'refs/heads/master'
-    from ad4ae7925d3dd23798e7c5b733d2d8f930f7410f
-    to   5b5f5fae014a4f3535fa10b0f6e28b4bf3225dc3
-   Also local refs/remotes/origin/master
-  Generating pack...
-  Done counting 10 objects.
-  Deltifying 10 objects...
-  error: pack-objects died with strange error
-  unpack eof before pack header was fully read
-  ng refs/heads/master n/a (unpacker error)
-  error: failed to push to 'ssh://tomfool@as220.org/home/tomfool/hpl.git'
-  tomfool@toms-box:hpl$
-
-I haven't been able to interpret this message, and haven't found it in
-the documentation, and google has let me down, too.  Can anyone tell me
-what is causing it?
-
-I'm a new git user, and this is a new git archive.  I've successfully
-done a couple of git push operations before, though.  The connection I'm
-making is via ssh.  I'm working on a Mac OS X (10.4.9) machine over here
-and the server to which I'm trying to push is a Linux box
-(2.6.22-gentoo-r6).
-
-Many thanks,
-
- -tom
+$ ./git-diff-tree ee491 --factorize-renames -r 
+[DBG] possible rename from arm/ to bar/
+[DBG] possible rename from ppc/ to moved/
+[DBG] discarding dir rename of arm/, mixing moved/ and bar/
+[DBG] ppc/* -> moved/* makes ppc/sha1ppc.S -> moved/sha1ppc.S uninteresting
+[DBG] ppc/* -> moved/* makes ppc/sha1.c -> moved/sha1.c uninteresting
+ee491a42190ec6e716f46a55fa0a7f4e307f1629
+:040000 040000 0000000000000000000000000000000000000000 0000000000000000000000000000000000000000 R100   ppc/    moved/
+:100644 100644 9e3ae038e818f4e21bc50f864fc5204f6fa44daa 9e3ae038e818f4e21bc50f864fc5204f6fa44daa R100   arm/sha1.c      bar/sha1.c
+:100644 100644 3952646349cf9d033177e69ba9433652a378c0e9 3952646349cf9d033177e69ba9433652a378c0e9 R100   arm/sha1.h      bar/sha1.h
+:100644 100644 c3c51aa4d487f2e85c02b0257c1f0b57d6158d76 c065eeef7d68ea91863431788e20cd814c5ac52c R099   ppc/sha1.h      moved/sha1.h
+:100644 100644 8c1cb99fb403875af85e4d1524d21f7eb818f59b 8c1cb99fb403875af85e4d1524d21f7eb818f59b R100   arm/sha1_arm.S  moved/sha1_arm.S
 
 -- 
- ------------------------
- tomfool at as220 dot org
- http://sgouros.com  
- http://whatcheer.net
+Yann Dirson    <ydirson@altern.org> |
+Debian-related: <dirson@debian.org> |   Support Debian GNU/Linux:
+                                    |  Freedom, Power, Stability, Gratis
+     http://ydirson.free.fr/        | Check <http://www.debian.org/>
