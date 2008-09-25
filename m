@@ -1,185 +1,78 @@
-From: Michael Witten <mfwitten@MIT.EDU>
-Subject: [PATCH RFC 3/6] Docs: send-email usage text much sexier
-Date: Thu, 25 Sep 2008 15:44:33 -0500
-Message-ID: <1222375476-32911-3-git-send-email-mfwitten@mit.edu>
-References: <1222099095-50360-1-git-send-email-mfwitten@mit.edu>
- <1222375476-32911-1-git-send-email-mfwitten@mit.edu>
- <1222375476-32911-2-git-send-email-mfwitten@mit.edu>
-Cc: git@vger.kernel.org
-To: gitster@pobox.com
-X-From: git-owner@vger.kernel.org Thu Sep 25 22:48:08 2008
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: [RFC] gitweb wishlist and TODO list
+Date: Thu, 25 Sep 2008 23:23:26 +0200
+Message-ID: <200809252323.27290.jnareb@gmail.com>
+References: <200809251230.11342.jnareb@gmail.com> <200809251423.56983.jnareb@gmail.com> <BC7F2CB5-A31A-40C8-A22F-F0AAECB091C6@simplicidade.org>
+Mime-Version: 1.0
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, Petr Baudis <pasky@suse.cz>
+To: Pedro Melo <melo@simplicidade.org>
+X-From: git-owner@vger.kernel.org Thu Sep 25 23:24:52 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Kixkl-0008DU-AM
-	for gcvg-git-2@gmane.org; Thu, 25 Sep 2008 22:47:59 +0200
+	id 1KiyKR-00053d-US
+	for gcvg-git-2@gmane.org; Thu, 25 Sep 2008 23:24:52 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755933AbYIYUqq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 25 Sep 2008 16:46:46 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754485AbYIYUqp
-	(ORCPT <rfc822;git-outgoing>); Thu, 25 Sep 2008 16:46:45 -0400
-Received: from BISCAYNE-ONE-STATION.MIT.EDU ([18.7.7.80]:61855 "EHLO
-	biscayne-one-station.mit.edu" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1755903AbYIYUqn (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 25 Sep 2008 16:46:43 -0400
-Received: from outgoing.mit.edu (OUTGOING-AUTH.MIT.EDU [18.7.22.103])
-	by biscayne-one-station.mit.edu (8.13.6/8.9.2) with ESMTP id m8PKipCb003906;
-	Thu, 25 Sep 2008 16:44:52 -0400 (EDT)
-Received: from localhost.localdomain (97-116-112-224.mpls.qwest.net [97.116.112.224])
-	(authenticated bits=0)
-        (User authenticated as mfwitten@ATHENA.MIT.EDU)
-	by outgoing.mit.edu (8.13.6/8.12.4) with ESMTP id m8PKibJa008003
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
-	Thu, 25 Sep 2008 16:44:50 -0400 (EDT)
-X-Mailer: git-send-email 1.6.0.2.302.ge6cbd1
-In-Reply-To: <1222375476-32911-2-git-send-email-mfwitten@mit.edu>
-X-Scanned-By: MIMEDefang 2.42
-X-Spam-Flag: NO
-X-Spam-Score: 0.00
+	id S1753830AbYIYVXk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 25 Sep 2008 17:23:40 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753529AbYIYVXk
+	(ORCPT <rfc822;git-outgoing>); Thu, 25 Sep 2008 17:23:40 -0400
+Received: from ug-out-1314.google.com ([66.249.92.173]:2289 "EHLO
+	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752114AbYIYVXj (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 25 Sep 2008 17:23:39 -0400
+Received: by ug-out-1314.google.com with SMTP id k3so280049ugf.37
+        for <git@vger.kernel.org>; Thu, 25 Sep 2008 14:23:38 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:from:to:subject:date
+         :user-agent:cc:references:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:message-id;
+        bh=GArtbSzB+cCQ747WufWsxJHT+iRX8/Hx6UjzemBeLyA=;
+        b=v9sLGmb/g/L3fhxRQy/l3sqbMMKoPe9L9fAQAV5OS1a1upFtk4LFEEI18tPNBheS0O
+         l8UzO9+qTunPlelXD5MgTH8AAY5fyx7vWZCE1DYFOYmPTyQgcr+5HnAGem2s82mTgfLz
+         qVSnLzxKH/YW1+Exu4gfR1i/YefTZHUKhU3Gc=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=from:to:subject:date:user-agent:cc:references:in-reply-to
+         :mime-version:content-type:content-transfer-encoding
+         :content-disposition:message-id;
+        b=bYgNujeifTBWluV/trB8phkvBtrV118AIhw0XNgP7ld+IWUg1jmzr0e51V98NnXwsu
+         +lHCLeVMEsXEjuKxQqeYiAR85GOkxq6CzR7yRzAqQ3FnsK79uZOdi2UzTDjNDKmCPe/q
+         +FT/s9qK6Nqkr571H2dI2J9bfyCazQOknTgOk=
+Received: by 10.102.228.10 with SMTP id a10mr245011muh.109.1222377817698;
+        Thu, 25 Sep 2008 14:23:37 -0700 (PDT)
+Received: from ?192.168.1.11? ( [83.8.235.56])
+        by mx.google.com with ESMTPS id w5sm2378783mue.10.2008.09.25.14.23.34
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Thu, 25 Sep 2008 14:23:36 -0700 (PDT)
+User-Agent: KMail/1.9.3
+In-Reply-To: <BC7F2CB5-A31A-40C8-A22F-F0AAECB091C6@simplicidade.org>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/96802>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/96803>
 
-All of the descriptions are aligned, and no
-line is greater than 78 columns.
+Pedro Melo wrote:
 
-Signed-off-by: Michael Witten <mfwitten@mit.edu>
----
- git-send-email.perl |   94 +++++++++++++++++++++++++++------------------------
- 1 files changed, 50 insertions(+), 44 deletions(-)
+> While researching HTTP::Engine (I use Catalyst and they where talking  
+> about moving to it), I also came across a new HTTP layer, called  
+> Mango. Also on CPAN, so same conditional code applies.
+> 
+> Right now, I'm not sure what the Cat team is thinking, HTTP::Engine or  
+> Mango, or other, but I suggest the use of the stack then end up  
+> choosing. The Cat team has a very good test-driven way-of-doing  
+> things, and the modules they use tend to stabilize very quickly.
 
-diff --git a/git-send-email.perl b/git-send-email.perl
-index d390364..b86a3f3 100755
---- a/git-send-email.perl
-+++ b/git-send-email.perl
-@@ -40,74 +40,80 @@ sub usage {
- 	print <<EOT;
- git send-email [options] <file | directory>...
- Options:
--   --from         Specify the "From:" line of the email to be sent.
-+   --from                  Specify the "From:" line of the email to be sent.
- 
--   --to           Specify the primary "To:" line of the email.
-+   --to                    Specify the primary "To:" line of the email.
- 
--   --cc           Specify an initial "Cc:" list for the entire series
--                  of emails.
-+   --cc                    Specify an initial "Cc:" list for the entire series
-+                           of emails.
- 
--   --cc-cmd       Specify a command to execute per file which adds
--                  per file specific cc address entries
-+   --cc-cmd                Specify a command to execute per file which adds
-+                           per file specific cc address entries
- 
--   --bcc          Specify a list of email addresses that should be Bcc:
--                  on all the emails.
-+   --bcc                   Specify a list of email addresses that should be
-+                           Bcc: on all the emails.
- 
--   --compose      Use \$GIT_EDITOR, core.editor, \$EDITOR, or \$VISUAL to edit
--                  an introductory message for the patch series.
-+   --compose               Use \$GIT_EDITOR, core.editor, \$EDITOR, or
-+                           \$VISUAL to edit an introductory message for the
-+                           patch series.
- 
--   --subject      Specify the initial "Subject:" line.
--                  Only necessary if --compose is also set.  If --compose
--                  is not set, this will be prompted for.
-+   --subject               Specify the initial "Subject:" line. Only necessary
-+                           if --compose is also set.  If --compose is not set,
-+                           this will be prompted for.
- 
--   --in-reply-to  Specify the first "In-Reply-To:" header line.
--                  Only used if --compose is also set.  If --compose is not
--                  set, this will be prompted for.
-+   --in-reply-to           Specify the first "In-Reply-To:" header line. Only
-+                           used if --compose is also set.  If --compose is not
-+                           set, this will be prompted for.
- 
--   --[no-]chain-reply-to If set, the replies will all be to the previous
--                         email sent, rather than to the first email sent.
--                         Defaults to on.
-+   --[no-]chain-reply-to   If set, the replies will all be to the previous
-+                           email sent, rather than to the first email sent.
-+                           Defaults to on.
- 
-    --[no-]signed-off-by-cc Automatically add email addresses that appear in
--                           Signed-off-by: or Cc: lines to the cc: list. Defaults to on.
-+                           Signed-off-by: or Cc: lines to the cc: list.
-+                           Defaults to on.
- 
--   --identity     The configuration identity, a subsection to prioritise over
--                  the default section.
-+   --identity              The configuration identity to use.
- 
--   --smtp-server  If set, specifies the outgoing SMTP server to use.
--                  Defaults to localhost.  Port number can be specified here with
--                  hostname:port format or by using --smtp-server-port option.
-+   --smtp-server           If set, specifies the outgoing SMTP server to use.
-+                           Defaults to localhost.  Port number can be
-+                           specified here with hostname:port format or by
-+                           using --smtp-server-port option.
- 
--   --smtp-server-port Specify a port on the outgoing SMTP server to connect to.
-+   --smtp-server-port      Specify a port on the outgoing SMTP server to
-+                           connect to.
- 
--   --smtp-user    The username for SMTP-AUTH.
-+   --smtp-user             The username for SMTP-AUTH.
- 
--   --smtp-pass    The password for SMTP-AUTH.
-+   --smtp-pass             The password for SMTP-AUTH.
- 
--   --smtp-encryption Specify 'tls' for STARTTLS encryption, or 'ssl' for SSL.
--                     Any other value disables the feature.
-+   --smtp-encryption       Specify 'tls' for STARTTLS encryption, or 'ssl' for
-+                           SSL. Any other value disables the feature.
- 
--   --smtp-ssl     Synonym for '--smtp-encryption=ssl'.  Deprecated.
-+   --smtp-ssl              Synonym for '--smtp-encryption=ssl'.  Deprecated.
- 
--   --suppress-cc  Suppress the specified category of auto-CC.  The category
--                  can be one of 'author' for the patch author, 'self' to
--                  avoid copying yourself, 'sob' for Signed-off-by lines,
--                  'cccmd' for the output of the cccmd, or 'all' to suppress
--                  all of these.
-+   --suppress-cc           Suppress the specified category of auto-CC.  The
-+                           category can be one of 'author' for the patch
-+                           author, 'self' to avoid copying yourself, 'sob'
-+                           for Signed-off-by lines, 'cccmd' for the output
-+                           of the cccmd, or 'all' to suppress all of these.
-+                           (Note: Linus uses 'self' and 'sob' interchangeably)
- 
--   --[no-]suppress-from Suppress sending emails to yourself. Defaults to off.
-+   --[no-]suppress-from    Suppress sending emails to yourself. Defaults to
-+                           off.
- 
--   --[no-]thread       Specify that the "In-Reply-To:" header should be set on all
--                       emails. Defaults to on.
-+   --[no-]thread           Specify that the "In-Reply-To:" header should be
-+                           set on all emails. Defaults to on.
- 
--   --quiet Make git-send-email less verbose.  One line per email
--           should be all that is output.
-+   --quiet                 Make git-send-email less verbose.  One line per
-+                           email should be all that is output.
- 
--   --dry-run Do everything except actually send the emails.
-+   --dry-run               Do everything except actually send the emails.
- 
--   --envelope-sender Specify the envelope sender used to send the emails.
-+   --envelope-sender       Specify the envelope sender used to send the
-+                           emails.
- 
--   --no-validate Don't perform any sanity checks on patches.
-+   --no-validate           Don't perform any sanity checks on patches.
- 
- EOT
- 	exit(1);
+I think I'll wait for results of your/Catalyst research then... ;-)
+
 -- 
-1.6.0.2.302.ge6cbd1
+Jakub Narebski
+Poland
