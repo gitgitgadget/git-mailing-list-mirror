@@ -1,150 +1,105 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: Re: [JGIT RFC PATCH] Improve handling of parsing errors in
-	OpenSshConfig
-Date: Thu, 25 Sep 2008 08:16:32 -0700
-Message-ID: <20080925151632.GN3669@spearce.org>
-References: <20080925083934.GB10273@diku.dk> <tQAHDMR4.1222342394.9002900.roro@localhost> <20080925132937.GA16151@diku.dk>
+From: "Li Frank-B20596" <Frank.Li@freescale.com>
+Subject: RE: [QGit] Some suggestion
+Date: Thu, 25 Sep 2008 23:20:53 +0800
+Message-ID: <7FD1F85C96D70C4A89DA1DF7667EAE96079FBB@zch01exm23.fsl.freescale.net>
+References: <gbak2u$v9b$1@ger.gmane.org> <7FD1F85C96D70C4A89DA1DF7667EAE96079EDF@zch01exm23.fsl.freescale.net> <e5bfff550809250451q578b8e10r75c043d307a63f28@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Robin Rosenberg <robin.rosenberg.lists@dewire.com>,
-	"sverre@rabbelier.nl" <sverre@rabbelier.nl>,
-	"git@vger.kernel.org" <git@vger.kernel.org>
-To: Jonas Fonseca <fonseca@diku.dk>
-X-From: git-owner@vger.kernel.org Thu Sep 25 17:18:14 2008
+Content-Type: text/plain;
+	charset="US-ASCII"
+Content-Transfer-Encoding: 8BIT
+Cc: <git@vger.kernel.org>
+To: "Marco Costalba" <mcostalba@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Sep 25 17:24:40 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KisbN-0007Mk-W2
-	for gcvg-git-2@gmane.org; Thu, 25 Sep 2008 17:17:58 +0200
+	id 1KisfX-0000wc-FI
+	for gcvg-git-2@gmane.org; Thu, 25 Sep 2008 17:22:15 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752721AbYIYPQe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 25 Sep 2008 11:16:34 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752732AbYIYPQe
-	(ORCPT <rfc822;git-outgoing>); Thu, 25 Sep 2008 11:16:34 -0400
-Received: from george.spearce.org ([209.20.77.23]:60895 "EHLO
-	george.spearce.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752435AbYIYPQd (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 25 Sep 2008 11:16:33 -0400
-Received: by george.spearce.org (Postfix, from userid 1001)
-	id ADF393835F; Thu, 25 Sep 2008 15:16:32 +0000 (UTC)
-Content-Disposition: inline
-In-Reply-To: <20080925132937.GA16151@diku.dk>
-User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
+	id S1755370AbYIYPVG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 25 Sep 2008 11:21:06 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754590AbYIYPVF
+	(ORCPT <rfc822;git-outgoing>); Thu, 25 Sep 2008 11:21:05 -0400
+Received: from az33egw02.freescale.net ([192.88.158.103]:51786 "EHLO
+	az33egw02.freescale.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755370AbYIYPVD convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 25 Sep 2008 11:21:03 -0400
+Received: from az33smr01.freescale.net (az33smr01.freescale.net [10.64.34.199])
+	by az33egw02.freescale.net (8.12.11/az33egw02) with ESMTP id m8PFL0Rd002277
+	for <git@vger.kernel.org>; Thu, 25 Sep 2008 08:21:01 -0700 (MST)
+Received: from zch01exm23.fsl.freescale.net (zch01exm23.ap.freescale.net [10.192.129.207])
+	by az33smr01.freescale.net (8.13.1/8.13.0) with ESMTP id m8PFKx0r001095
+	for <git@vger.kernel.org>; Thu, 25 Sep 2008 10:21:00 -0500 (CDT)
+X-MimeOLE: Produced By Microsoft Exchange V6.5
+Content-class: urn:content-classes:message
+In-Reply-To: <e5bfff550809250451q578b8e10r75c043d307a63f28@mail.gmail.com>
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+Thread-Topic: [QGit] Some suggestion
+Thread-Index: AckfBSEkKljxd+ksTW6m/8UF1bKfQwAGt5Vg
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/96776>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/96777>
 
-Jonas Fonseca <fonseca@diku.dk> wrote:
-> Badly quoted entries are now ignored similar to how bad port number are
-> currently ignored. A check for negative port numbers is now performed
-> so that they also will be ignored.
-> 
-> Signed-off-by: Jonas Fonseca <fonseca@diku.dk>
-> 
-> ---
->  .../spearce/jgit/transport/OpenSshConfigTest.java  |   46 +++++++++++++++---
->  .../jgit/transport/DefaultSshSessionFactory.java   |   10 +++-
->  .../org/spearce/jgit/transport/OpenSshConfig.java  |   51 ++++++++++++-------
->  3 files changed, 79 insertions(+), 28 deletions(-)
+Marco:
+	
+	Yes, it is really work although it is not nature way.
+	This way don't work at file view. 
 
-Well, at first glance the new OpenSshConfigException is missing
-from the patch.  We need that class to compile correctly.  ;-)
- 
-> diff --git a/org.spearce.jgit/src/org/spearce/jgit/transport/DefaultSshSessionFactory.java b/org.spearce.jgit/src/org/spearce/jgit/transport/DefaultSshSessionFactory.java
-> index 89beab7..123a9b5 100644
-> --- a/org.spearce.jgit/src/org/spearce/jgit/transport/DefaultSshSessionFactory.java
-> +++ b/org.spearce.jgit/src/org/spearce/jgit/transport/DefaultSshSessionFactory.java
-> @@ -89,7 +90,12 @@
->  	@Override
->  	public synchronized Session getSession(String user, String pass,
->  			String host, int port) throws JSchException {
-> -		final OpenSshConfig.Host hc = getConfig().lookup(host);
-> +		final OpenSshConfig.Host hc;
-> +		try {
-> +			hc = getConfig().lookup(host);
-> +		} catch (OpenSshConfigException osce) {
-> +			throw new JSchException(osce.getMessage());
-> +		}
+	Ctrl +/- change font size, but how to change source code view
+font size. 
+	
+	12. Marcor Costalba  10 #include <QProcess>
+	12. Marcor Costalba  10 #include <QRegExp>
 
-I would perfer to chain the OpenSshConfigException as the cause of
-the JSchException.  That way the caller has a chance to give us a
-complete stack trace, including the cause of the OSCE being the
-inner NumberFormatException or ParseException.
 
-Robin or I will need to edit the EclipseSshSessionFactory to add
-this same sort of try/catch.  To keep the tree buildable we'll
-want to squash that into your patch.  Yea, sorry, this is where
-the egit+jgit within one repository is going to bite us.
+Best regards
+Frank Li 
 
-> diff --git a/org.spearce.jgit/src/org/spearce/jgit/transport/OpenSshConfig.java b/org.spearce.jgit/src/org/spearce/jgit/transport/OpenSshConfig.java
-> index b08d5c6..95a37f5 100644
-> --- a/org.spearce.jgit/src/org/spearce/jgit/transport/OpenSshConfig.java
-> +++ b/org.spearce.jgit/src/org/spearce/jgit/transport/OpenSshConfig.java
-> @@ -146,6 +149,10 @@ public Host lookup(final String hostName) {
->  				} finally {
->  					in.close();
->  				}
-> +			} catch (NumberFormatException nfe) {
-> +				throw new OpenSshConfigException("Parse error", nfe);
-> +			} catch (ParseException pe) {
-> +				throw new OpenSshConfigException("Parse error", pe);
->  			} catch (FileNotFoundException none) {
->  				hosts = Collections.emptyMap();
->  			} catch (IOException err) {
+-----Original Message-----
+From: Marco Costalba [mailto:mcostalba@gmail.com] 
+Sent: Thursday, September 25, 2008 7:52 PM
+To: Li Frank-B20596
+Cc: git@vger.kernel.org
+Subject: Re: [QGit] Some suggestion
 
-If we are really going to this level of effort, can we please have
-the file path and line number of the invalid line in the exception?
+On Thu, Sep 25, 2008 at 7:24 AM, Li Frank-B20596
+<Frank.Li@freescale.com> wrote:
+> Can add below function at qgit?
+> ===Difference other version===
+>        1. user choose a commit,
+>        2. right click
+>                Check working dir
+>                View patch
+>                ....
+>                [Diff with other commit]
+>
+>        3. change icon +
+>        4. user choose other commit
+>
+>        QGit show list of changed files.
+>        click one files, call extern diff tool show difference.
+>
+> === file view ===
+>        Can use different color to high light current commit change.
+>
 
-We rarely parse the ~/.ssh/config.  In general its parsed only once
-during startup.  Going through a bit more work at parse time to get
-more accurate error messages is acceptable.
+You can _already_ do this.
 
-I think it may be a good idea to have the exception thrown only
-when a bad Host block is accessed, or if we try to access an unknown
-host and there is an unreadable Host block.
+ 1. user choose a commit
 
-So I'm thinking more like we stuff an OSCE instance into the Host
-block if the host has a bad entry, and during get() or lookup()
-we test for the exception and rethrow the exception.
+ 2. user choose other commit with CTRL + RIGHT CLICK
 
-E.g. lets say my config file is this:
 
-	$ cat ~/.ssh/config
-	Host work
-		Hostname internal.google.com"
-		Port -1
+One of the problems of qgit is that the features are not immediately
+visible. This is a conscious choice to avoid cluttering the GUI.
 
-	Host orcz
-		Hostname repo.or.cz
-		User spearce
-		Port 22
+Currently the _best_ way to have a  complete idea of qgit is to read the
+handbook (press F1 key): it takes only 5 minutes and you can find
+interesting features otherwise very difficult to find by accident.
 
-then:
-
-  jgit fetch orcz:foo.git;        # works without error
-  jgit fetch work:foo.git;        # throws OSCE due to bad Hostname
-  jgit fetch kernel.org:foo.git;  # works as no Host matched
-
-However if my config was more bogus, e.g.:
-
-	$ cat ~/.ssh/config
-	Host work"
-		User sop
-
-	Host orcz
-		Hostname repo.or.cz
-		User spearce
-		Port 22
-
-then:
-
-  jgit fetch orcz:foo.git;        # still works without error
-  jgit fetch work:foo.git;        # fails due to bad Host header
-  jgit fetch kernel.org:foo.git;  # fails due to bad Host header
-
--- 
-Shawn.
+Marco
