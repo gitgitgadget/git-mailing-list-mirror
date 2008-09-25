@@ -1,102 +1,73 @@
-From: Petr Baudis <pasky@suse.cz>
-Subject: [ANNOUNCE] TopGit v0.4
-Date: Thu, 25 Sep 2008 15:19:10 +0200
-Message-ID: <20080925131910.GM10544@machine.or.cz>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-2
+From: Wincent Colaiuta <win@wincent.com>
+Subject: Re: [RFC] gitweb wishlist and TODO list
+Date: Thu, 25 Sep 2008 15:19:09 +0200
+Message-ID: <B3B6996F-EC51-49DC-8ECE-DBA25E8F61DE@wincent.com>
+References: <200809251230.11342.jnareb@gmail.com>
+Mime-Version: 1.0 (Apple Message framework v926)
+Content-Type: text/plain; charset=ISO-8859-1;
+	format=flowed	delsp=yes
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Sep 25 15:20:29 2008
+Cc: git@vger.kernel.org, Petr Baudis <pasky@suse.cz>
+To: Jakub Narebski <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Sep 25 15:21:16 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Kiqlc-0003O9-UL
-	for gcvg-git-2@gmane.org; Thu, 25 Sep 2008 15:20:25 +0200
+	id 1Kiqld-0003O9-Oo
+	for gcvg-git-2@gmane.org; Thu, 25 Sep 2008 15:20:26 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753286AbYIYNTN convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 25 Sep 2008 09:19:13 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753216AbYIYNTN
-	(ORCPT <rfc822;git-outgoing>); Thu, 25 Sep 2008 09:19:13 -0400
-Received: from w241.dkm.cz ([62.24.88.241]:53525 "EHLO machine.or.cz"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753209AbYIYNTM (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 25 Sep 2008 09:19:12 -0400
-Received: by machine.or.cz (Postfix, from userid 2001)
-	id 48A5B3939B42; Thu, 25 Sep 2008 15:19:10 +0200 (CEST)
-Content-Disposition: inline
-User-Agent: Mutt/1.5.16 (2007-06-09)
+	id S1753412AbYIYNTU convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 25 Sep 2008 09:19:20 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753429AbYIYNTU
+	(ORCPT <rfc822;git-outgoing>); Thu, 25 Sep 2008 09:19:20 -0400
+Received: from wincent1.inetu.net ([209.235.192.161]:34801 "EHLO
+	wincent1.inetu.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753216AbYIYNTT convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 25 Sep 2008 09:19:19 -0400
+Received: from cuzco.lan (142.pool85-53-5.dynamic.orange.es [85.53.5.142])
+	(authenticated bits=0)
+	by wincent1.inetu.net (8.13.8/8.13.8) with ESMTP id m8PDJ97f018726
+	(version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NO);
+	Thu, 25 Sep 2008 09:19:11 -0400
+In-Reply-To: <200809251230.11342.jnareb@gmail.com>
+X-Mailer: Apple Mail (2.926)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/96760>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/96761>
 
-  Hi!
+El 25/9/2008, a las 12:30, Jakub Narebski escribi=F3:
 
-  This is TopGit v0.4, continuing the mission of practical usability.
-I have managed to somehow use this to actually manage a rather large
-and non-trivial system of git-gui patches, recently submitted to git@.
-(I send out the mail series using tg export --quilt and quilt mail
-so far though, and I'm actually finding that quite convenient.)
+> This is yet another series of planned gitweb features. It expands mor=
+e
+> on new user-visible features than on improving gitweb code (therefore
+> for example using Git.pm/Git::Repo, gitweb caching, and list form of
+> open for pipelines are not mentioned here).
+>
+> Which tasks / features are most requested?  Which tasks should be don=
+e
+> first?  What do you have on your gitweb TODO list?
 
+One which I'm looking at doing is supporting reading the "README.html" =
+=20
+from the tree indicated by the current HEAD instead of reading it from =
+=20
+a file in the .git directory.
 
-  TopGit is meant as a fresh start in the steps of StGIT, quilt-in-git
-and others, of course in an attempt to Get It Right this time around.
-TopGit is absolutely minimal porcelain layer that will manage your
-patch queue for you using topic branches, one patch per branch,
-never rewriting the history in order to enable fully distributed
-workflow.  You can get TopGit at
+This should make tracking and updating such READMEs a little easier as =
+=20
+all that'll be required is a "push" to advance the HEAD and the new =20
+README goes live.
 
-	http://repo.or.cz/w/topgit.git
+Obviously, will have to make this optional and configurable. I'm =20
+thinking of providing a means of specifying the filename to look for =20
+(no filename, the default, means don't look), and also a setting to =20
+indicate the content type of the file (either plain text, which would =20
+be wrapped in a <pre></pre> block with HTML entities used where =20
+appropriate, or HTML which would be included verbatim).
 
-and read up on its design, usage and implementation at:
-
-	http://repo.or.cz/w/topgit.git?a=3Dblob;f=3DREADME
-
-
-  The nicest thing about this release is Kirill's new 'tg mail' command=
-,
-'tg export --quilt -b' to create quilt series from arbitrary set of
-topic branches and 'tg depend add', which has actually quite trivial
-implementation, though. Then there's the usual bunch of small
-enhancements and fixes.
-
-Kirill Smelkov (3):
-      tg help: <something>: improve readability
-      tg import: fix + make more robust
-      tg mail: new command for mailing patches
-
-Petr Baudis (19):
-      tg.sh: Typo fix (incanation -> incantation)
-      .gitignore: Add tg-import, tg-remote
-      Makefile: Changing Makefile means executables need to be regenera=
-ted too
-      tg import: Require clean working tree and index
-      tg import: Check out new files as we go
-      tg delete: Allow branch delete if we aren't on symbolic HEAD
-      tg remote README: Add 'git push --all' caveat warning
-      tg info: Carry over missing Subject line in topmsg
-      tg info, tg patch: Work on top-base HEAD too
-      Ignore vim swp files
-      tg mail: Tidyup
-      tg mail: Simplify array usage
-      tg export: Fix exporting remote-based branches
-      tg delete: Fix spurious output
-      tg depend add: Add dependency
-      tg update: Fix resume message
-      tg mail -s SEND_EMAIL_ARGS: Pass arguments to git send-email
-      tg export: With quilt driver, accept explicit list of branches
-      TopGit-0.4
-
-Uwe Kleine-K=C4=82=C5=9Bnig (1):
-      Use git-mailinfo to extract author informations from .topmsg
-
-
-  Have fun,
-
---=20
-				Petr "Pasky" Baudis
-The next generation of interesting software will be done
-on the Macintosh, not the IBM PC.  -- Bill Gates
+Cheers,
+Wincent
