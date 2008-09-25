@@ -1,102 +1,103 @@
-From: Yann Dirson <ydirson@altern.org>
-Subject: Re: stg 0.14.3 breakage on push after moving hunk
-Date: Thu, 25 Sep 2008 20:54:14 +0200
-Message-ID: <20080925185414.GB17458@nan92-1-81-57-214-146.fbx.proxad.net>
-References: <20080924232654.GY4985@nan92-1-81-57-214-146.fbx.proxad.net> <20080925072322.GA27632@diana.vm.bytemark.co.uk> <20080925075732.GA17458@nan92-1-81-57-214-146.fbx.proxad.net> <20080925083747.GC27632@diana.vm.bytemark.co.uk>
+From: Alex Riesen <raa.lkml@gmail.com>
+Subject: [PATCH] Remove empty directories in recursive merge
+Date: Thu, 25 Sep 2008 22:12:45 +0200
+Message-ID: <20080925201245.GB3959@blimp.localhost>
+References: <87k5d1v71l.fsf@cup.kalibalik.dk>
+Reply-To: Alex Riesen <raa.lkml@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Catalin Marinas <catalin.marinas@gmail.com>,
-	GIT list <git@vger.kernel.org>
-To: Karl =?iso-8859-1?Q?Hasselstr=F6m?= <kha@treskal.com>
-X-From: git-owner@vger.kernel.org Thu Sep 25 20:53:50 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: Anders Melchiorsen <mail@cup.kalibalik.dk>,
+	"Shawn O. Pearce" <spearce@spearce.org>,
+	Junio C Hamano <gitster@pobox.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Sep 25 22:14:05 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KivyE-0003Wy-Qi
-	for gcvg-git-2@gmane.org; Thu, 25 Sep 2008 20:53:47 +0200
+	id 1KixDu-0002gi-PK
+	for gcvg-git-2@gmane.org; Thu, 25 Sep 2008 22:14:03 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753636AbYIYSwh convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 25 Sep 2008 14:52:37 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754748AbYIYSwh
-	(ORCPT <rfc822;git-outgoing>); Thu, 25 Sep 2008 14:52:37 -0400
-Received: from smtp7-g19.free.fr ([212.27.42.64]:50340 "EHLO smtp7-g19.free.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754596AbYIYSwf (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 25 Sep 2008 14:52:35 -0400
-Received: from smtp7-g19.free.fr (localhost [127.0.0.1])
-	by smtp7-g19.free.fr (Postfix) with ESMTP id 6330EB01A6;
-	Thu, 25 Sep 2008 20:52:33 +0200 (CEST)
-Received: from gandelf.nowhere.earth (nan92-1-81-57-214-146.fbx.proxad.net [81.57.214.146])
-	by smtp7-g19.free.fr (Postfix) with ESMTP id 34D7BB0165;
-	Thu, 25 Sep 2008 20:52:33 +0200 (CEST)
-Received: by gandelf.nowhere.earth (Postfix, from userid 1000)
-	id 1BB591F0C2; Thu, 25 Sep 2008 20:54:15 +0200 (CEST)
+	id S1753917AbYIYUMt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 25 Sep 2008 16:12:49 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753714AbYIYUMs
+	(ORCPT <rfc822;git-outgoing>); Thu, 25 Sep 2008 16:12:48 -0400
+Received: from mo-p05-ob.rzone.de ([81.169.146.182]:16770 "EHLO
+	mo-p05-ob.rzone.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753541AbYIYUMs (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 25 Sep 2008 16:12:48 -0400
+X-RZG-CLASS-ID: mo05
+X-RZG-AUTH: :Pm0FVUW6aauhRGJJc5OfA4AU8DM8ZlijdmJYxKn/UQvEQQx8AE81p7LJ
+Received: from tigra.home (Fab79.f.strato-dslnet.de [195.4.171.121])
+	by post.webmailer.de (mrclete mo44) (RZmta 17.4)
+	with ESMTP id j0485fk8PIDEUb ; Thu, 25 Sep 2008 22:12:46 +0200 (MEST)
+	(envelope-from: <raa.lkml@gmail.com>)
+Received: from blimp (unknown [192.168.0.8])
+	by tigra.home (Postfix) with ESMTP id C5CDD277AE;
+	Thu, 25 Sep 2008 22:12:45 +0200 (CEST)
+Received: by blimp (Postfix, from userid 1000)
+	id BAF1736D1E; Thu, 25 Sep 2008 22:12:45 +0200 (CEST)
 Content-Disposition: inline
-In-Reply-To: <20080925083747.GC27632@diana.vm.bytemark.co.uk>
-User-Agent: Mutt/1.5.18 (2008-05-17)
+In-Reply-To: <87k5d1v71l.fsf@cup.kalibalik.dk>
+User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/96790>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/96791>
 
-On Thu, Sep 25, 2008 at 10:37:47AM +0200, Karl Hasselstr=F6m wrote:
-> On 2008-09-25 09:57:32 +0200, Yann Dirson wrote:
->=20
-> > Thanks, it does fix the exception - I feel a bit ashamed of not
-> > having looked at the code myself ;)
->=20
-> :-)
->=20
-> > Nevertheless, that error was only hiding another more annoying
-> > problem:
-> >
-> > $ ../stgit/stg push
-> > Checking for changes in the working directory ... done
-> > Pushing patch "factorize" ...
-> >   Error: File "t/t4030-diff-rename-factorize.sh" added in both, per=
-missions conflict
-> >   Error: The merge failed during "push". =20
-> >          Use "refresh" after fixing the conflicts or revert the ope=
-ration with "push --undo".
-> >   stg push: GIT index merging failed (possible conflicts)
-> > $ md5sum t/t4030-diff-rename-factorize.sh*
-> > cc313acd2824036556128b3e0879dd07  t/t4030-diff-rename-factorize.sh
-> > cc313acd2824036556128b3e0879dd07  t/t4030-diff-rename-factorize.sh.=
-current
-> > cc313acd2824036556128b3e0879dd07  t/t4030-diff-rename-factorize.sh.=
-patched
-> >
-> > AFAICT, adding the same file in 2 branches used not to produce a
-> > conflict at all. Is that intended ?
->=20
-> "permissions conflict" sounds like it was added with the exec bit in
-> one branch, and without in the other. Is that right? And
->   1. Does it work if there's no permissions conflict?
+The code was actually supposed to do that, but was accidentally broken.
+Noticed by Anders Melchiorsen.
 
-Doh.  Sure, it does work, and as expected.  Some days really deserve to
-be spent sleeping :}
+Signed-off-by: Alex Riesen <raa.lkml@gmail.com>
+---
+Anders Melchiorsen, Wed, Sep 24, 2008 18:32:22 +0200:
+> I got an empty directory left over today, and have reduced the problem
+> to this sequence. If I leave out the second add (so the merge is a
+> fast forward), the directory is removed as I would expect.
 
->   2. Did it work before if there was a permissions conflict?
->=20
-> Just a guess, but it's entirely plausible that this case never worked=
-,
-> and you're the first to hit it.
+Ach, an old bug. Thanks for reminding!
 
-I is also entirely plausible that I lacked sleep enough not to read
-correctly what was printed, and that the behaviour was indeed correct :=
->
+ builtin-merge-recursive.c  |    4 +---
+ t/t3030-merge-recursive.sh |   11 +++++++++++
+ 2 files changed, 12 insertions(+), 3 deletions(-)
 
-The problem is mostly a limitation of the way stg-fold-files-from works=
-,
-relying on patchutils which do not know about git extensions to the dif=
-f
-format.  And since I mostly used it in the past on a git-cvsimport'ed
-tree, permissions never bothered me.
-
-Best regards,
---=20
-Yann
+diff --git a/builtin-merge-recursive.c b/builtin-merge-recursive.c
+index dfb363e..a29b47f 100644
+--- a/builtin-merge-recursive.c
++++ b/builtin-merge-recursive.c
+@@ -444,10 +444,8 @@ static int remove_file(int clean, const char *path, int no_wd)
+ 			return -1;
+ 	}
+ 	if (update_working_directory) {
+-		unlink(path);
+-		if (errno != ENOENT || errno != EISDIR)
++		if (remove_path(path) && errno != ENOENT)
+ 			return -1;
+-		remove_path(path);
+ 	}
+ 	return 0;
+ }
+diff --git a/t/t3030-merge-recursive.sh b/t/t3030-merge-recursive.sh
+index de0cdb1..0de613d 100755
+--- a/t/t3030-merge-recursive.sh
++++ b/t/t3030-merge-recursive.sh
+@@ -535,4 +535,15 @@ test_expect_success 'reset and bind merge' '
+ 
+ '
+ 
++test_expect_success 'merge removes empty directories' '
++
++	git reset --hard master &&
++	git checkout -b rm &&
++	git rm d/e &&
++	git commit -mremoved-d/e &&
++	git checkout master &&
++	git merge -s recursive rm &&
++	test_must_fail test -d d
++'
++
+ test_done
+-- 
+1.6.0.2.328.g14651
