@@ -1,59 +1,60 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: Re: On Sponsor Notices
-Date: Thu, 25 Sep 2008 07:35:09 -0700
-Message-ID: <20080925143509.GK3669@spearce.org>
-References: <20080924204358.144077183@suse.cz> <20080924225120.GL10544@machine.or.cz> <alpine.LFD.1.10.0809242233360.14631@xanadu.home> <20080925101558.GF10360@machine.or.cz> <alpine.LFD.2.00.0809251016420.3635@xanadu.home> <20080925143252.GN10360@machine.or.cz>
+From: Heiko Voigt <heiko.voigt@mahr.de>
+Subject: Re: Partial tree export and merging
+Date: Thu, 25 Sep 2008 16:36:15 +0200
+Message-ID: <48DBA1DF.3050502@mahr.de>
+References: <ACF330629DFB034AB290061C320F43460836E082@GOEMAILBE02.europe.mahr.lan>	 <48D9FACB.20901@mahr.de> <48DA476F.1070700@mahr.de> <fcaeb9bf0809241051se24bcf7tb836d1b820e288d6@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Nicolas Pitre <nico@cam.org>, git@vger.kernel.org
-To: Petr Baudis <pasky@suse.cz>
-X-From: git-owner@vger.kernel.org Thu Sep 25 16:37:23 2008
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, Jens Lehmann <Jens.Lehmann@mahr.de>
+To: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Sep 25 16:39:01 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Kirxt-0008Gt-Se
-	for gcvg-git-2@gmane.org; Thu, 25 Sep 2008 16:37:10 +0200
+	id 1Kirzb-0000Zm-Ui
+	for gcvg-git-2@gmane.org; Thu, 25 Sep 2008 16:38:56 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753113AbYIYOfL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 25 Sep 2008 10:35:11 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753115AbYIYOfK
-	(ORCPT <rfc822;git-outgoing>); Thu, 25 Sep 2008 10:35:10 -0400
-Received: from george.spearce.org ([209.20.77.23]:38016 "EHLO
-	george.spearce.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753026AbYIYOfJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 25 Sep 2008 10:35:09 -0400
-Received: by george.spearce.org (Postfix, from userid 1001)
-	id 344DE3835F; Thu, 25 Sep 2008 14:35:09 +0000 (UTC)
-Content-Disposition: inline
-In-Reply-To: <20080925143252.GN10360@machine.or.cz>
-User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
+	id S1753125AbYIYOgO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 25 Sep 2008 10:36:14 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752922AbYIYOgO
+	(ORCPT <rfc822;git-outgoing>); Thu, 25 Sep 2008 10:36:14 -0400
+Received: from mail.mahr.com.tr ([193.158.246.156]:17957 "EHLO mail.mahr.de"
+	rhost-flags-OK-FAIL-OK-OK) by vger.kernel.org with ESMTP
+	id S1752760AbYIYOgN (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 25 Sep 2008 10:36:13 -0400
+Received: from [172.20.12.218] ([172.20.12.218]) by mail.mahr.de with Microsoft SMTPSVC(6.0.3790.1830);
+	 Thu, 25 Sep 2008 16:36:11 +0200
+User-Agent: Thunderbird 2.0.0.16 (Windows/20080708)
+In-Reply-To: <fcaeb9bf0809241051se24bcf7tb836d1b820e288d6@mail.gmail.com>
+X-OriginalArrivalTime: 25 Sep 2008 14:36:11.0683 (UTC) FILETIME=[0E55F730:01C91F1C]
+X-TM-AS-Product-Ver: SMEX-8.0.0.1259-5.500.1027-16178.007
+X-TM-AS-Result: No--12.038200-0.000000-31
+X-TM-AS-User-Approved-Sender: Yes
+X-TM-AS-User-Blocked-Sender: No
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/96769>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/96770>
 
-Petr Baudis <pasky@suse.cz> wrote:
-> On Thu, Sep 25, 2008 at 10:20:23AM -0400, Nicolas Pitre wrote:
-> > 
-> > See commit 6c3a158316.  If you send a mail to npitre@mvista.com at this 
-> > point, it most likely won't reach me.
-> 
-> Hmm, perhaps that makes the most sense then. I'm not sure if Shawn
-> already applied my patches or which part of them - they don't see to be
-> pushed out yet. Shawn, if it's convenient for you, could you please
-> 
-> 	s/This patch has been sponsored by Novartis.
-> 
-> Signed-off-by: Petr Baudis <pasky@suse.cz>/Signed-off-by: Petr Baudis
-> <petr.baudis@novartis.com>/ them?
+Nguyen Thai Ngoc Duy schrieb:
+> That could be done with (under-developing) sparse checkout. Basically
+> language team's people do "git clone --sparse-checkout='*.loc:*.html'
+> your-repo.git". Then they only have *.loc and *.html files in working
+> directory. When they commit, all other files are unchanged. Developers
+> merge to have updated *.log/html as usual.
 
-Yup.  I only pushed them to my pu branch because I suspected
-something like this was going to happen.  ;-)
+Where is that option ? Or are you suggesting me to implement it ?
 
-One filter-branch script coming up...
+> I have a question though: is language team allowed to checkout/modify
+> files other than *.loc and *.html?
 
--- 
-Shawn.
+Well in an ideal world they should only have access to the "language" 
+files. But it is not crucial for us if they get access to the source. 
+Its more an issue of user friendlyness. The revision control which is in 
+place at the moment does allow them to selectively check out those files.
+
+Heiko
