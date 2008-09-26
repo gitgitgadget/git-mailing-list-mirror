@@ -1,86 +1,62 @@
-From: "Li Frank-B20596" <Frank.Li@freescale.com>
-Subject: RE: [QGit] Some suggestion
-Date: Fri, 26 Sep 2008 22:57:52 +0800
-Message-ID: <7FD1F85C96D70C4A89DA1DF7667EAE9607A1DA@zch01exm23.fsl.freescale.net>
-References: <gbak2u$v9b$1@ger.gmane.org> <7FD1F85C96D70C4A89DA1DF7667EAE96079EDF@zch01exm23.fsl.freescale.net> <e5bfff550809250451q578b8e10r75c043d307a63f28@mail.gmail.com> <7FD1F85C96D70C4A89DA1DF7667EAE96079FBB@zch01exm23.fsl.freescale.net> <e5bfff550809250934l47c48440m332764491ff5391@mail.gmail.com> <7FD1F85C96D70C4A89DA1DF7667EAE9607A00A@zch01exm23.fsl.freescale.net> <e5bfff550809252215v72bb4633s17b5c1a8c39f55ff@mail.gmail.com> <7FD1F85C96D70C4A89DA1DF7667EAE9607A0D9@zch01exm23.fsl.freescale.net> <e5bfff550809260337o1523995ele3333c0de9295393@mail.gmail.com>
+From: Johannes Sixt <j.sixt@viscovery.net>
+Subject: Re: [PATCH] git-gui: Help identify aspell version on Windows too
+Date: Fri, 26 Sep 2008 17:06:53 +0200
+Message-ID: <48DCFA8D.7080905@viscovery.net>
+References: <1222378282-21757-1-git-send-email-hendeby@isy.liu.se> <48DC815C.6030401@viscovery.net> <48DCA5F3.4090009@isy.liu.se> <48DCAC08.9060004@viscovery.net> <20080926143119.GX3669@spearce.org>
 Mime-Version: 1.0
-Content-Type: text/plain;
-	charset="US-ASCII"
-Content-Transfer-Encoding: 8BIT
-Cc: <git@vger.kernel.org>
-To: "Marco Costalba" <mcostalba@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Sep 26 17:00:30 2008
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: Gustaf Hendeby <hendeby@isy.liu.se>, git@vger.kernel.org
+To: "Shawn O. Pearce" <spearce@spearce.org>
+X-From: git-owner@vger.kernel.org Fri Sep 26 17:08:13 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KjEmu-0007Hh-QK
-	for gcvg-git-2@gmane.org; Fri, 26 Sep 2008 16:59:21 +0200
+	id 1KjEvP-0002CW-Um
+	for gcvg-git-2@gmane.org; Fri, 26 Sep 2008 17:08:08 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752707AbYIZO6K (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 26 Sep 2008 10:58:10 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752522AbYIZO6J
-	(ORCPT <rfc822;git-outgoing>); Fri, 26 Sep 2008 10:58:09 -0400
-Received: from de01egw02.freescale.net ([192.88.165.103]:53316 "EHLO
-	de01egw02.freescale.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752497AbYIZO6I convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 26 Sep 2008 10:58:08 -0400
-Received: from de01smr01.freescale.net (de01smr01.freescale.net [10.208.0.31])
-	by de01egw02.freescale.net (8.12.11/de01egw02) with ESMTP id m8QEvrxF004984
-	for <git@vger.kernel.org>; Fri, 26 Sep 2008 07:57:54 -0700 (MST)
-Received: from zch01exm23.fsl.freescale.net (zch01exm23.ap.freescale.net [10.192.129.207])
-	by de01smr01.freescale.net (8.13.1/8.13.0) with ESMTP id m8QEvpsl027788
-	for <git@vger.kernel.org>; Fri, 26 Sep 2008 09:57:52 -0500 (CDT)
-X-MimeOLE: Produced By Microsoft Exchange V6.5
-Content-class: urn:content-classes:message
-In-Reply-To: <e5bfff550809260337o1523995ele3333c0de9295393@mail.gmail.com>
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-Thread-Topic: [QGit] Some suggestion
-Thread-Index: Ackfw+qPedz+9lIWQDO9TR1nTh/RvwAIbFQg
+	id S1752923AbYIZPG6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 26 Sep 2008 11:06:58 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752924AbYIZPG6
+	(ORCPT <rfc822;git-outgoing>); Fri, 26 Sep 2008 11:06:58 -0400
+Received: from lilzmailso02.liwest.at ([212.33.55.13]:57581 "EHLO
+	lilzmailso02.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752922AbYIZPG6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 26 Sep 2008 11:06:58 -0400
+Received: from cm56-163-160.liwest.at ([86.56.163.160] helo=linz.eudaptics.com)
+	by lilzmailso02.liwest.at with esmtpa (Exim 4.66)
+	(envelope-from <j.sixt@viscovery.net>)
+	id 1KjEuE-0007IM-BK; Fri, 26 Sep 2008 17:06:54 +0200
+Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.42])
+	by linz.eudaptics.com (Postfix) with ESMTP
+	id 0C5E26B7; Fri, 26 Sep 2008 17:06:54 +0200 (CEST)
+User-Agent: Thunderbird 2.0.0.6 (Windows/20070728)
+In-Reply-To: <20080926143119.GX3669@spearce.org>
+X-Enigmail-Version: 0.95.5
+X-Spam-Score: 1.7 (+)
+X-Spam-Report: ALL_TRUSTED=-1.8, BAYES_99=3.5
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/96863>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/96864>
 
-Option 1: 
-	Telling user just filted is better than nothing. Is it possible
-add tool button tip. 
-	When mouse over 'Rev list [Felted]", show what filtering.
+Shawn O. Pearce schrieb:
+> Johannes Sixt <j.sixt@viscovery.net> wrote:
+>> My situation is this: I fire up git-gui, and because I have some stale
+>> .git/GITGUI_MSG file, the commit message box is not empty. Aspell begins
+>> its work, and git-gui correctly marks spelling mistakes in the first line.
+>> Even if I type new text, delete old text, or change the whole text by
+>> clicking "Amend", no new spelling mistakes are marked for the whole session.
+> 
+> Hmm.  Sounds to me like aspell crashes and dies after a while.
+> 
+> When aspell terminates on its own git-gui doesn't try to restart it.
+> I've never seen it abort on my Mac, or my Linux systems.  Or even
+> on Windows when I was using the Cygwin version of aspell.
 
-Best regards
-Frank Li 
+No, it does not abort. It's still running, but sitting there idly.
 
------Original Message-----
-From: Marco Costalba [mailto:mcostalba@gmail.com] 
-Sent: Friday, September 26, 2008 6:38 PM
-To: Li Frank-B20596
-Cc: git@vger.kernel.org
-Subject: Re: [QGit] Some suggestion
-
-On Fri, Sep 26, 2008 at 7:43 AM, Li Frank-B20596
-<Frank.Li@freescale.com> wrote:
->
-> I have some suggestions.
->        Option 1: Change "Rev List" to "Rev List Filtered"
-
-This is the more correct but we don't have the space to write on what
-files it is filtering
-
-
->        Option 2: Change "Short Log"  to "Short Log Filter On 
-> <Lib/blame.tcl>"
-
-This is less correct because short log has nothing to do with filtering,
-but here there is more space...
-
-
->        Option 3: Add bar between tab and list, show current filter 
-> information
->
-
-Too complicated and space wasteful IMO.
-
-Marco
+-- Hannes
