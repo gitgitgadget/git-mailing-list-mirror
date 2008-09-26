@@ -1,105 +1,74 @@
-From: SZEDER =?iso-8859-1?Q?G=E1bor?= <szeder@ira.uka.de>
-Subject: Re: [PATCH] builtin-commit: avoid using reduce_heads()
-Date: Fri, 26 Sep 2008 03:03:12 +0200
-Message-ID: <20080926010312.GE6816@neumann>
-References: <20080925235029.GA15837@neumann>
-	<1222389359-22191-1-git-send-email-vmiklos@frugalware.org>
+From: "Li Frank-B20596" <Frank.Li@freescale.com>
+Subject: RE: [QGit] Some suggestion
+Date: Fri, 26 Sep 2008 09:55:16 +0800
+Message-ID: <7FD1F85C96D70C4A89DA1DF7667EAE9607A00A@zch01exm23.fsl.freescale.net>
+References: <gbak2u$v9b$1@ger.gmane.org> <7FD1F85C96D70C4A89DA1DF7667EAE96079EDF@zch01exm23.fsl.freescale.net> <e5bfff550809250451q578b8e10r75c043d307a63f28@mail.gmail.com> <7FD1F85C96D70C4A89DA1DF7667EAE96079FBB@zch01exm23.fsl.freescale.net> <e5bfff550809250934l47c48440m332764491ff5391@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Miklos Vajna <vmiklos@frugalware.org>
-X-From: git-owner@vger.kernel.org Fri Sep 26 03:04:47 2008
+Content-Type: text/plain;
+	charset="US-ASCII"
+Content-Transfer-Encoding: 8BIT
+Cc: <git@vger.kernel.org>
+To: "Marco Costalba" <mcostalba@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Sep 26 03:56:34 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Kj1lD-0001Yh-9C
-	for gcvg-git-2@gmane.org; Fri, 26 Sep 2008 03:04:43 +0200
+	id 1Kj2ZN-0006Wq-Fe
+	for gcvg-git-2@gmane.org; Fri, 26 Sep 2008 03:56:33 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752982AbYIZBDQ convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 25 Sep 2008 21:03:16 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752853AbYIZBDQ
-	(ORCPT <rfc822;git-outgoing>); Thu, 25 Sep 2008 21:03:16 -0400
-Received: from moutng.kundenserver.de ([212.227.126.186]:59062 "EHLO
-	moutng.kundenserver.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753004AbYIZBDP (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 25 Sep 2008 21:03:15 -0400
-Received: from [127.0.1.1] (p5B13352D.dip0.t-ipconnect.de [91.19.53.45])
-	by mrelayeu.kundenserver.de (node=mrelayeu5) with ESMTP (Nemesis)
-	id 0ML25U-1Kj1jl1W4T-00068S; Fri, 26 Sep 2008 03:03:13 +0200
-Content-Disposition: inline
-In-Reply-To: <1222389359-22191-1-git-send-email-vmiklos@frugalware.org>
-User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
-X-Provags-ID: V01U2FsdGVkX182Mje+QtvUHJ66iLiSvFksS1hyV6trc6XP4p2
- fxOadFs74z+NB90TYtpWQQZAMe2gcrAl5xrHuXzut2tjX8/0Hg
- 6MUOF6h3QT3ATQtiSsBGw==
+	id S1752848AbYIZBzV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 25 Sep 2008 21:55:21 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752768AbYIZBzU
+	(ORCPT <rfc822;git-outgoing>); Thu, 25 Sep 2008 21:55:20 -0400
+Received: from de01egw01.freescale.net ([192.88.165.102]:60675 "EHLO
+	de01egw01.freescale.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752555AbYIZBzU convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 25 Sep 2008 21:55:20 -0400
+Received: from de01smr01.freescale.net (de01smr01.freescale.net [10.208.0.31])
+	by de01egw01.freescale.net (8.12.11/az33egw01) with ESMTP id m8Q1tFkW029327
+	for <git@vger.kernel.org>; Thu, 25 Sep 2008 18:55:16 -0700 (MST)
+Received: from zch01exm23.fsl.freescale.net (zch01exm23.ap.freescale.net [10.192.129.207])
+	by de01smr01.freescale.net (8.13.1/8.13.0) with ESMTP id m8Q1tEsD027506
+	for <git@vger.kernel.org>; Thu, 25 Sep 2008 20:55:15 -0500 (CDT)
+X-MimeOLE: Produced By Microsoft Exchange V6.5
+Content-class: urn:content-classes:message
+In-Reply-To: <e5bfff550809250934l47c48440m332764491ff5391@mail.gmail.com>
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+Thread-Topic: [QGit] Some suggestion
+Thread-Index: AckfLJT4OAkbVLyLSq2i7P6wA85+bgATfZ+w
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/96823>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/96824>
 
-Szia Mikl=F3s,
+Thank you for your support!
+Can I compare with other version at file view?
+I think highlight author at file view is not high light, can use
+different color? 
 
-On Fri, Sep 26, 2008 at 02:35:59AM +0200, Miklos Vajna wrote:
-> reduce_heads() can filter "duplicated" parents, where "duplicated"
-> means: A is duplicated if both A and B are parent candidates and A is
-> reachable from B. Doing so in builtin-merge makes sense, but not in
-> builtin-commit, because this breaks git merge --no-commit --no-ff.
+-----Original Message-----
+From: Marco Costalba [mailto:mcostalba@gmail.com] 
+Sent: Friday, September 26, 2008 12:34 AM
+To: Li Frank-B20596
+Cc: git@vger.kernel.org
+Subject: Re: [QGit] Some suggestion
 
-> Here is a patch that fixes the problem for me.
+On Thu, Sep 25, 2008 at 4:20 PM, Li Frank-B20596
+<Frank.Li@freescale.com> wrote:
+> Marco:
+>
+>        Ctrl +/- change font size, but how to change source code view 
+> font size.
+>
 
-Thanks for the quick response.  While your patch does fix the bug I
-reported, unfortunately it introduces a new one:  t7502-commit.sh
-fails at me with the following:
+Edit->Settings->Fixed width font
 
+You can choose size, font family, bolding, etc...
 
-*   ok 17: a SIGTERM should break locks
-
-* expecting success:=20
-
-        git rev-parse second master >expect &&
-        test_must_fail git merge second master &&
-        git checkout master g &&
-        EDITOR=3D: git commit -a &&
-        git cat-file commit HEAD | sed -n -e "s/^parent //p" -e
-"/^$/q" >actual &&
-        test_cmp expect actual
-
-
-Already up-to-date with 1ae92d674ba95768a00bace571f5ef295ff1696b
-Trying simple merge with 9af21aa779d9e148680be525ce161baa37e4bdec
-Simple merge did not work, trying automatic merge.
-Auto-merging g
-ERROR: Merge conflict in g
-fatal: merge program failed
-Automatic merge failed; fix conflicts and then commit the result.
-Created commit 45a4b2b: Merge branches 'second' and 'master' into
-second
---- expect      2008-09-26 00:59:42.000000000 +0000
-+++ actual      2008-09-26 00:59:42.000000000 +0000
-@@ -1,2 +1,3 @@
- 1ae92d674ba95768a00bace571f5ef295ff1696b
-+1ae92d674ba95768a00bace571f5ef295ff1696b
- 9af21aa779d9e148680be525ce161baa37e4bdec
-* FAIL 18: Hand committing of a redundant merge removes dups
-       =20
-       =20
-                git rev-parse second master >expect &&
-                test_must_fail git merge second master &&
-                git checkout master g &&
-                EDITOR=3D: git commit -a &&
-                git cat-file commit HEAD | sed -n -e "s/^parent //p"
--e "/^$/q" >actual &&
-                test_cmp expect actual
-       =20
-       =20
-
-* failed 1 among 18 test(s)
-make: *** [t7502-commit.sh] Error 1
-
-
-Regards,
-G=E1bor
+File view and diff view are optimized for source code viewing so use
+fixed pitch fonts, not system default one that normally it is not fixed
+pitch.
