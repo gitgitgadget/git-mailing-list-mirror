@@ -1,62 +1,86 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: Re: No "pull" in git gui?
-Date: Fri, 26 Sep 2008 07:49:55 -0700
-Message-ID: <20080926144955.GB3669@spearce.org>
-References: <588192970809260737i46ce0c30y191e29156bbf6396@mail.gmail.com>
+From: "Li Frank-B20596" <Frank.Li@freescale.com>
+Subject: RE: [QGit] Some suggestion
+Date: Fri, 26 Sep 2008 22:57:52 +0800
+Message-ID: <7FD1F85C96D70C4A89DA1DF7667EAE9607A1DA@zch01exm23.fsl.freescale.net>
+References: <gbak2u$v9b$1@ger.gmane.org> <7FD1F85C96D70C4A89DA1DF7667EAE96079EDF@zch01exm23.fsl.freescale.net> <e5bfff550809250451q578b8e10r75c043d307a63f28@mail.gmail.com> <7FD1F85C96D70C4A89DA1DF7667EAE96079FBB@zch01exm23.fsl.freescale.net> <e5bfff550809250934l47c48440m332764491ff5391@mail.gmail.com> <7FD1F85C96D70C4A89DA1DF7667EAE9607A00A@zch01exm23.fsl.freescale.net> <e5bfff550809252215v72bb4633s17b5c1a8c39f55ff@mail.gmail.com> <7FD1F85C96D70C4A89DA1DF7667EAE9607A0D9@zch01exm23.fsl.freescale.net> <e5bfff550809260337o1523995ele3333c0de9295393@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org
-To: Steve Hoelzer <shoelzer@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Sep 26 16:52:26 2008
+Content-Type: text/plain;
+	charset="US-ASCII"
+Content-Transfer-Encoding: 8BIT
+Cc: <git@vger.kernel.org>
+To: "Marco Costalba" <mcostalba@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Sep 26 17:00:30 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KjEev-0003Nm-V3
-	for gcvg-git-2@gmane.org; Fri, 26 Sep 2008 16:51:06 +0200
+	id 1KjEmu-0007Hh-QK
+	for gcvg-git-2@gmane.org; Fri, 26 Sep 2008 16:59:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752607AbYIZOt4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 26 Sep 2008 10:49:56 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752522AbYIZOt4
-	(ORCPT <rfc822;git-outgoing>); Fri, 26 Sep 2008 10:49:56 -0400
-Received: from george.spearce.org ([209.20.77.23]:36546 "EHLO
-	george.spearce.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752476AbYIZOt4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 26 Sep 2008 10:49:56 -0400
-Received: by george.spearce.org (Postfix, from userid 1001)
-	id CB3123835F; Fri, 26 Sep 2008 14:49:55 +0000 (UTC)
-Content-Disposition: inline
-In-Reply-To: <588192970809260737i46ce0c30y191e29156bbf6396@mail.gmail.com>
-User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
+	id S1752707AbYIZO6K (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 26 Sep 2008 10:58:10 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752522AbYIZO6J
+	(ORCPT <rfc822;git-outgoing>); Fri, 26 Sep 2008 10:58:09 -0400
+Received: from de01egw02.freescale.net ([192.88.165.103]:53316 "EHLO
+	de01egw02.freescale.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752497AbYIZO6I convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 26 Sep 2008 10:58:08 -0400
+Received: from de01smr01.freescale.net (de01smr01.freescale.net [10.208.0.31])
+	by de01egw02.freescale.net (8.12.11/de01egw02) with ESMTP id m8QEvrxF004984
+	for <git@vger.kernel.org>; Fri, 26 Sep 2008 07:57:54 -0700 (MST)
+Received: from zch01exm23.fsl.freescale.net (zch01exm23.ap.freescale.net [10.192.129.207])
+	by de01smr01.freescale.net (8.13.1/8.13.0) with ESMTP id m8QEvpsl027788
+	for <git@vger.kernel.org>; Fri, 26 Sep 2008 09:57:52 -0500 (CDT)
+X-MimeOLE: Produced By Microsoft Exchange V6.5
+Content-class: urn:content-classes:message
+In-Reply-To: <e5bfff550809260337o1523995ele3333c0de9295393@mail.gmail.com>
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+Thread-Topic: [QGit] Some suggestion
+Thread-Index: Ackfw+qPedz+9lIWQDO9TR1nTh/RvwAIbFQg
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/96862>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/96863>
 
-Steve Hoelzer <shoelzer@gmail.com> wrote:
-> Why isn't there a pull command in git gui's remote menu?
+Option 1: 
+	Telling user just filted is better than nothing. Is it possible
+add tool button tip. 
+	When mouse over 'Rev list [Felted]", show what filtering.
 
-I got lazy and didn't write support for it.  Before today nobody has
-really asked me why it was missing so it seemed to be unimportant.
+Best regards
+Frank Li 
 
-> Am I supposed to fetch and then merge?
+-----Original Message-----
+From: Marco Costalba [mailto:mcostalba@gmail.com] 
+Sent: Friday, September 26, 2008 6:38 PM
+To: Li Frank-B20596
+Cc: git@vger.kernel.org
+Subject: Re: [QGit] Some suggestion
 
-Yes, that works.
+On Fri, Sep 26, 2008 at 7:43 AM, Li Frank-B20596
+<Frank.Li@freescale.com> wrote:
+>
+> I have some suggestions.
+>        Option 1: Change "Rev List" to "Rev List Filtered"
 
-> Is that preferred over pull for some reason?
+This is the more correct but we don't have the space to write on what
+files it is filtering
 
-I find it easier to teach new Git users "fetch + merge" rather
-than pull.  It helps to reinforce the idea of having your own
-local state that differs from the state on the upstream repository.
-I consider pull to be more of a power-user feature.  But many in the
-Git community disagree with me and find teaching pull is easier, with
-fetch+merge being power user features.
 
-So patches to add pull to git-gui would be accepted, but they won't
-be getting written by me anytime soon.  I've got too much other
-stuff going on to write a feature that isn't very interesting to me.
+>        Option 2: Change "Short Log"  to "Short Log Filter On 
+> <Lib/blame.tcl>"
 
--- 
-Shawn.
+This is less correct because short log has nothing to do with filtering,
+but here there is more space...
+
+
+>        Option 3: Add bar between tab and list, show current filter 
+> information
+>
+
+Too complicated and space wasteful IMO.
+
+Marco
