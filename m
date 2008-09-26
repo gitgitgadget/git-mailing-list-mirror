@@ -1,85 +1,69 @@
-From: "Leo Razoumov" <slonik.az@gmail.com>
-Subject: status letters consistency in log and ls-files
-Date: Fri, 26 Sep 2008 14:28:50 -0400
-Message-ID: <ee2a733e0809261128h4c50d27bq3942bd1b3b66d3ee@mail.gmail.com>
-Reply-To: SLONIK.AZ@gmail.com
+From: Yann Dirson <ydirson@altern.org>
+Subject: Re: [RFC PATCH] detection of directory renames
+Date: Fri, 26 Sep 2008 21:06:14 +0200
+Message-ID: <20080926190614.GA4985@nan92-1-81-57-214-146.fbx.proxad.net>
+References: <7vfxojtr9t.fsf@gitster.siamese.dyndns.org> <20080925213819.27029.47944.stgit@gandelf.nowhere.earth> <m3bpyb3jci.fsf@localhost.localdomain>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-To: "Git Mailing List" <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Fri Sep 26 20:30:25 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Jakub Narebski <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Sep 26 21:06:29 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KjI4o-0001zl-SI
-	for gcvg-git-2@gmane.org; Fri, 26 Sep 2008 20:30:03 +0200
+	id 1KjIdW-0006QP-25
+	for gcvg-git-2@gmane.org; Fri, 26 Sep 2008 21:05:54 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752229AbYIZS2x (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 26 Sep 2008 14:28:53 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752050AbYIZS2x
-	(ORCPT <rfc822;git-outgoing>); Fri, 26 Sep 2008 14:28:53 -0400
-Received: from mu-out-0910.google.com ([209.85.134.184]:12172 "EHLO
-	mu-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751922AbYIZS2w (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 26 Sep 2008 14:28:52 -0400
-Received: by mu-out-0910.google.com with SMTP id g7so862669muf.1
-        for <git@vger.kernel.org>; Fri, 26 Sep 2008 11:28:50 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:reply-to
-         :to:subject:mime-version:content-type:content-transfer-encoding
-         :content-disposition;
-        bh=fO1kQoGdkNBmYwWnhoeHfyVZRkF5pesvgZFUBqqgEdM=;
-        b=Ux5VZkRuHGlLalg4HsKZ4LzF0TtEGRLZn+RINOqu1TAjDC+OB0zVMEO2+4un/a/STW
-         V5V6CMQLzj1m1CIdTVDbJTGjNhGXlFN5m+dcHgSLr68oLGEb0LotQejNiESHfz18ZKEe
-         gsYtlSFgv24SW6k1EaG6H6Qg+Id722ijGsoIw=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:reply-to:to:subject:mime-version:content-type
-         :content-transfer-encoding:content-disposition;
-        b=WO3UFHvZemscVbgjk4wWrjY5r5RWc+i3zxaL7Bkaq7BDjZcpo9NNfRq3/pera9uMkQ
-         +ApIIpTIFTK9+vzGyh+vSSOF7RNgdip/C8jda13H7l2DvhEv+xWWa85ytdMmWN/rCr0d
-         h8FQeqwXfbO6qdG/OUqezBOo0uY3PnfKx+Dxg=
-Received: by 10.187.158.11 with SMTP id k11mr257048fao.54.1222453730054;
-        Fri, 26 Sep 2008 11:28:50 -0700 (PDT)
-Received: by 10.187.162.17 with HTTP; Fri, 26 Sep 2008 11:28:50 -0700 (PDT)
+	id S1752463AbYIZTEc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 26 Sep 2008 15:04:32 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752642AbYIZTEc
+	(ORCPT <rfc822;git-outgoing>); Fri, 26 Sep 2008 15:04:32 -0400
+Received: from smtp3-g19.free.fr ([212.27.42.29]:50141 "EHLO smtp3-g19.free.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752311AbYIZTEb (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 26 Sep 2008 15:04:31 -0400
+Received: from smtp3-g19.free.fr (localhost.localdomain [127.0.0.1])
+	by smtp3-g19.free.fr (Postfix) with ESMTP id ECE6917B5B2;
+	Fri, 26 Sep 2008 21:04:28 +0200 (CEST)
+Received: from gandelf.nowhere.earth (nan92-1-81-57-214-146.fbx.proxad.net [81.57.214.146])
+	by smtp3-g19.free.fr (Postfix) with ESMTP id C75E517B5BD;
+	Fri, 26 Sep 2008 21:04:28 +0200 (CEST)
+Received: by gandelf.nowhere.earth (Postfix, from userid 1000)
+	id 5C5981F0C2; Fri, 26 Sep 2008 21:06:14 +0200 (CEST)
 Content-Disposition: inline
+In-Reply-To: <m3bpyb3jci.fsf@localhost.localdomain>
+User-Agent: Mutt/1.5.18 (2008-05-17)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/96882>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/96883>
 
-Hi Everyone,
-I am new yo git and there are few things I find quite odd. For example,
+On Thu, Sep 25, 2008 at 04:19:20PM -0700, Jakub Narebski wrote:
+> Wonderfull!!!
 
-command "git log --name-status" uses the following letters to indicate
-file's status
-A  -- Added
-B  -- have had their pairing Broken
-C  -- Copied
-D  -- Deleted
-M  -- Modified
-R  -- Renamed
-T  -- Type changed (mode, time stamp)
-U  -- Unmerged
-X  -- Unknown
+Wow, I love this feedback :)
 
-At the same time command "git ls-files -v" use different letters to
-indicate the same
-H  --  cached
-M  -- unmerged
-R  -- removed/deleted
-C  -- modified/changed
-K  -- to be killed
-?  -- other
+> I like it very much, and hope that it would get improved. And that you
+> would be able to use it in merges too, to allow for example for new
+> files to be created in renamed directory instead of old one which does
+> not exist any longer (c.f. http://www.markshuttleworth.com/archives/123
+> and following articles).
 
-So, depending on which of the commands above are used status "R" could
-mean either Renamed or Removed, "M" is either Modified or unMerged,
-"C" is either Copied or Changed.
+Yes, that's one of planned things.  Along the same line (once renames
+are stabilized), I think about extending things so that "split dirs"
+are detected as well, so merge can flag a conflict when there is a
+doubt that a file would really be added in a "split directory".  The
+situation may be obvious in my example (arm/ contents dispatched into
+bar/ and moved/), but may also be useful when we can detect that a
+significant number of files have been moved out of a directory.
 
-Is it possible to make it consistent across related commands?
+> For the future, could you show examples with --abbrev option in use? TIA.
 
---Leo--
+Good idea.
+
+Best regards,
+-- 
+Yann
