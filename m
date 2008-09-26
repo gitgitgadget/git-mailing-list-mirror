@@ -1,121 +1,150 @@
 From: Miklos Vajna <vmiklos@frugalware.org>
-Subject: Re: [PATCH] builtin-commit: avoid using reduce_heads()
-Date: Fri, 26 Sep 2008 21:31:22 +0200
-Message-ID: <20080926193122.GW23137@genesis.frugalware.org>
-References: <20080925235029.GA15837@neumann> <1222389359-22191-1-git-send-email-vmiklos@frugalware.org> <20080926010312.GE6816@neumann> <20080926151517.GV23137@genesis.frugalware.org> <m37i8y3mqt.fsf@localhost.localdomain>
-Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="l3ej7W/Jb2pB3qL2"
-Cc: SZEDER =?iso-8859-1?Q?G=E1bor?= <szeder@ira.uka.de>,
-	git@vger.kernel.org, "Shawn O. Pearce" <spearce@spearce.org>,
-	Johannes.Schindelin@gmx.de
-To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Sep 26 21:33:05 2008
+Subject: [PATCH] builtin-commit: avoid always using reduce_heads()
+Date: Fri, 26 Sep 2008 21:37:48 +0200
+Message-ID: <1222457868-9864-1-git-send-email-vmiklos@frugalware.org>
+References: <20080926155204.GD17584@spearce.org>
+Cc: SZEDER Gabor <szeder@ira.uka.de>, jnareb@gmail.com,
+	Johannes.Schindelin@gmx.de, git@vger.kernel.org
+To: spearce@spearce.org
+X-From: git-owner@vger.kernel.org Fri Sep 26 21:38:48 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KjJ3K-0008Ub-Jb
-	for gcvg-git-2@gmane.org; Fri, 26 Sep 2008 21:32:35 +0200
+	id 1KjJ9E-0002MR-Py
+	for gcvg-git-2@gmane.org; Fri, 26 Sep 2008 21:38:41 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752862AbYIZTbZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 26 Sep 2008 15:31:25 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752821AbYIZTbY
-	(ORCPT <rfc822;git-outgoing>); Fri, 26 Sep 2008 15:31:24 -0400
-Received: from virgo.iok.hu ([193.202.89.103]:36774 "EHLO virgo.iok.hu"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751927AbYIZTbY (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 26 Sep 2008 15:31:24 -0400
-Received: from kag.elte.hu (kag.elte.hu [157.181.177.1])
-	by virgo.iok.hu (Postfix) with ESMTP id E3D8358070;
-	Fri, 26 Sep 2008 21:31:22 +0200 (CEST)
-Received: from genesis.frugalware.org (frugalware.elte.hu [157.181.177.34])
-	by kag.elte.hu (Postfix) with ESMTP id CA9F24465E;
-	Fri, 26 Sep 2008 21:31:22 +0200 (CEST)
-Received: by genesis.frugalware.org (Postfix, from userid 1000)
-	id B3AC311901A1; Fri, 26 Sep 2008 21:31:22 +0200 (CEST)
-Content-Disposition: inline
-In-Reply-To: <m37i8y3mqt.fsf@localhost.localdomain>
-User-Agent: Mutt/1.5.17 (2007-11-01)
+	id S1752418AbYIZThb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 26 Sep 2008 15:37:31 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752900AbYIZThb
+	(ORCPT <rfc822;git-outgoing>); Fri, 26 Sep 2008 15:37:31 -0400
+Received: from yugo.dsd.sztaki.hu ([195.111.2.114]:59244 "EHLO
+	yugo.frugalware.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752323AbYIZThb (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 26 Sep 2008 15:37:31 -0400
+Received: from vmobile.example.net (dsl5401CBF6.pool.t-online.hu [84.1.203.246])
+	by yugo.frugalware.org (Postfix) with ESMTPA id 59871149C60;
+	Fri, 26 Sep 2008 21:37:29 +0200 (CEST)
+Received: by vmobile.example.net (Postfix, from userid 1003)
+	id 6747419E7C3; Fri, 26 Sep 2008 21:37:48 +0200 (CEST)
+X-Mailer: git-send-email 1.6.0.2
+In-Reply-To: <20080926155204.GD17584@spearce.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/96885>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/96886>
 
+In case git merge --no-ff is used with --no-commit or we have a
+conflict, write info about if fast forwards are allowed or not to
+$GIT_DIR/MERGE_MODE.
 
---l3ej7W/Jb2pB3qL2
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Based on this info, don't run reduce_heads() in case fast-forwards are
+denied, to avoid turning a 'merge --no-ff' to a non-merge commit.
 
-On Fri, Sep 26, 2008 at 09:17:39AM -0700, Jakub Narebski <jnareb@gmail.com>=
- wrote:
-> 1. As proposed above save git-merge options, for example in MERGE_MODE
->    or MERGE_OPTS file, so git-commit knows what options to use if it
->    was invoked to finish a merge.
+Test case by SZEDER Gabor <szeder@ira.uka.de>
 
-First, thank you for the detailed description, I'm really bad in them.
-:)
+Signed-off-by: Miklos Vajna <vmiklos@frugalware.org>
+---
 
-ACK, that's why I implemented this one.
+On Fri, Sep 26, 2008 at 08:52:04AM -0700, "Shawn O. Pearce" <spearce@spearce.org> wrote:
+> > +                   printf("debug, deny fast forward\n");
+>
+> Left over debugging.
 
-> 2. git-merge saves _reduced_ heads in MERGE_HEAD, and git-commit
->    reduces only HEAD, unless it is in MERGE_HEAD.  This means that
->    git-commit uses the following pseudo-code
->=20
->      if (resolve_ref(HEAD) =3D=3D MERGE_HEAD[0]) {
->         /* non fast-forward case */
->         merge HEAD + MERGE_HEAD
->      } else {
->         reduce_HEAD_maybe()
->         merge [HEAD] + MERGE_HEAD
->      }
->=20
->    This has the advantage that it doesn't change MERGE_HEAD semantic
->    for simple merge which did not began as octopus
+Ugh. Removed.
 
-This is wrong IMHO. You can write the reduced heads to MERGE_HEAD but
-you can't know if you can omit the HEAD in case it is reachable already
-=66rom one of the heads or not. That depends on if the user used --no-ff
-or not.
+> > +           if (!allow_fast_forward)
+> > +                   strbuf_addf(&buf, "deny_fast_forward");
+>
+> I wonder if the option in the file shouldn't be more related to
+> the merge command line option.  Its --no-ff to the user.  Maybe we
+> should call it "no-ff" here?  Or "no-fast-forward" if we want to go
+> with a longer name that is less likely to be ambiguous in the future?
 
-> 3. Remove reduce_heads() from git-commit entirely, and record in
->    MERGE_HEAD (or rather now MERGE_HEADS) _all_ _reduced_ heads.
->    _All_ means that HEAD is included in MERGE_HEAD if it is not
->    reduced, _reduced_ means that only non-dependent heads are in
->    MERGE_HEAD.  This for example means that for simple non-octopus
->    merge case MERGE_HEAD/MERGE_HEADS now contain _all_ parents,
->    and not only other side of merge.
->=20
->    This solution has the advantage of being clear solution, clarifying
->    semantic of MERGE_HEAD (currently HEAD is used both as target, i.e.
->    where merge is to be recorded, and as one of heads to merge/to
->    consider), and making it possible to separate layers: git-merge
->    is about merging, git-commit doesn't need to know anything about
->    merging.
->=20
->    The disadvantage is that it changes format (well, semantic) of
->    MERGE_HEAD, possibly breaking users' scripts; perhaps some of
->    git commands like "git log --merge" or "git diff --merge" should
->    be updated on such change.
+I changed it to "no-ff" so that it's consistent with the option naming.
 
-Actually I think this would be ugly. MERGE_HEAD is about you can see
-what will be merged once you commit the merge, but once you include HEAD
-there, you can't easily check that. Maybe it's just me who sometimes
-have a look at that file myself directly... :-)
+ builtin-commit.c |   13 ++++++++++++-
+ builtin-merge.c  |    9 +++++++++
+ t/t7600-merge.sh |    9 +++++++++
+ 3 files changed, 30 insertions(+), 1 deletions(-)
 
---l3ej7W/Jb2pB3qL2
-Content-Type: application/pgp-signature
-Content-Disposition: inline
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.9 (GNU/Linux)
-
-iEYEARECAAYFAkjdOIoACgkQe81tAgORUJZPSwCdHlApb3WvUaeecnaqXgAG6EGA
-4OEAn1iZA2PlToJd2Glkavk/Xfh1JdiJ
-=LK6q
------END PGP SIGNATURE-----
-
---l3ej7W/Jb2pB3qL2--
+diff --git a/builtin-commit.c b/builtin-commit.c
+index 55e1087..f546cf7 100644
+--- a/builtin-commit.c
++++ b/builtin-commit.c
+@@ -937,6 +937,8 @@ int cmd_commit(int argc, const char **argv, const char *prefix)
+ 	unsigned char commit_sha1[20];
+ 	struct ref_lock *ref_lock;
+ 	struct commit_list *parents = NULL, **pptr = &parents;
++	struct stat statbuf;
++	int allow_fast_forward = 1;
+ 
+ 	git_config(git_commit_config, NULL);
+ 
+@@ -988,7 +990,15 @@ int cmd_commit(int argc, const char **argv, const char *prefix)
+ 		reflog_msg = "commit";
+ 		pptr = &commit_list_insert(lookup_commit(head_sha1), pptr)->next;
+ 	}
+-	parents = reduce_heads(parents);
++	strbuf_reset(&sb);
++	if (!stat(git_path("MERGE_MODE"), &statbuf)) {
++		if (strbuf_read_file(&sb, git_path("MERGE_MODE"), 0) < 0)
++			die("could not read MERGE_MODE: %s", strerror(errno));
++		if (!strcmp(sb.buf, "no-ff"))
++			allow_fast_forward = 0;
++	}
++	if (allow_fast_forward)
++		parents = reduce_heads(parents);
+ 
+ 	/* Finally, get the commit message */
+ 	strbuf_init(&sb, 0);
+@@ -1040,6 +1050,7 @@ int cmd_commit(int argc, const char **argv, const char *prefix)
+ 
+ 	unlink(git_path("MERGE_HEAD"));
+ 	unlink(git_path("MERGE_MSG"));
++	unlink(git_path("MERGE_MODE"));
+ 	unlink(git_path("SQUASH_MSG"));
+ 
+ 	if (commit_index_files())
+diff --git a/builtin-merge.c b/builtin-merge.c
+index 5c65a58..20102a0 100644
+--- a/builtin-merge.c
++++ b/builtin-merge.c
+@@ -1210,6 +1210,15 @@ int cmd_merge(int argc, const char **argv, const char *prefix)
+ 			merge_msg.len)
+ 			die("Could not write to %s", git_path("MERGE_MSG"));
+ 		close(fd);
++		fd = open(git_path("MERGE_MODE"), O_WRONLY | O_CREAT, 0666);
++		if (fd < 0)
++			die("Could open %s for writing", git_path("MERGE_MODE"));
++		strbuf_reset(&buf);
++		if (!allow_fast_forward)
++			strbuf_addf(&buf, "no-ff");
++		if (write_in_full(fd, buf.buf, buf.len) != buf.len)
++			die("Could not write to %s", git_path("MERGE_MODE"));
++		close(fd);
+ 	}
+ 
+ 	if (merge_was_ok) {
+diff --git a/t/t7600-merge.sh b/t/t7600-merge.sh
+index 9516f54..98cfc53 100755
+--- a/t/t7600-merge.sh
++++ b/t/t7600-merge.sh
+@@ -511,4 +511,13 @@ test_expect_success 'in-index merge' '
+ 
+ test_debug 'gitk --all'
+ 
++test_expect_success 'merge --no-ff --no-commit && commit' '
++	git reset --hard c0 &&
++	git merge --no-ff --no-commit c1 &&
++	EDITOR=: git commit &&
++	verify_parents $c0 $c1
++'
++
++test_debug 'gitk --all'
++
+ test_done
+-- 
+1.6.0.2
