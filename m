@@ -1,92 +1,78 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: Re: [RFC PATCH (GIT-GUI)] git-gui: Add more integration options to
-	citool.
-Date: Fri, 26 Sep 2008 07:45:36 -0700
-Message-ID: <20080926144536.GA3669@spearce.org>
-References: <200809122243.50007.angavrilov@gmail.com> <20080924165201.GV3669@spearce.org> <200809261419.41392.angavrilov@gmail.com>
+From: Andreas Ericsson <ae@op5.se>
+Subject: Re: No "pull" in git gui?
+Date: Fri, 26 Sep 2008 16:47:17 +0200
+Message-ID: <48DCF5F5.3040409@op5.se>
+References: <588192970809260737i46ce0c30y191e29156bbf6396@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=ISO-8859-15; format=flowed
+Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org
-To: Alexander Gavrilov <angavrilov@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Sep 26 16:47:07 2008
+To: Steve Hoelzer <shoelzer@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Sep 26 16:48:46 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KjEal-0001iQ-T2
-	for gcvg-git-2@gmane.org; Fri, 26 Sep 2008 16:46:48 +0200
+	id 1KjEcY-0002Qy-TW
+	for gcvg-git-2@gmane.org; Fri, 26 Sep 2008 16:48:39 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752511AbYIZOph (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 26 Sep 2008 10:45:37 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752716AbYIZOph
-	(ORCPT <rfc822;git-outgoing>); Fri, 26 Sep 2008 10:45:37 -0400
-Received: from george.spearce.org ([209.20.77.23]:53082 "EHLO
-	george.spearce.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751135AbYIZOph (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 26 Sep 2008 10:45:37 -0400
-Received: by george.spearce.org (Postfix, from userid 1001)
-	id 873B13835F; Fri, 26 Sep 2008 14:45:36 +0000 (UTC)
-Content-Disposition: inline
-In-Reply-To: <200809261419.41392.angavrilov@gmail.com>
-User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
+	id S1752716AbYIZOr2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 26 Sep 2008 10:47:28 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752476AbYIZOr2
+	(ORCPT <rfc822;git-outgoing>); Fri, 26 Sep 2008 10:47:28 -0400
+Received: from mail.op5.se ([193.201.96.20]:43082 "EHLO mail.op5.se"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751900AbYIZOr1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 26 Sep 2008 10:47:27 -0400
+Received: from localhost (localhost.localdomain [127.0.0.1])
+	by mail.op5.se (Postfix) with ESMTP id 7E90624B0042;
+	Fri, 26 Sep 2008 16:38:17 +0200 (CEST)
+X-Virus-Scanned: amavisd-new at 
+X-Spam-Flag: NO
+X-Spam-Score: -4.399
+X-Spam-Level: 
+X-Spam-Status: No, score=-4.399 tagged_above=-10 required=6.6
+	tests=[ALL_TRUSTED=-1.8, BAYES_00=-2.599]
+Received: from mail.op5.se ([127.0.0.1])
+	by localhost (mail.op5.se [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id vq-YFU0OeOEn; Fri, 26 Sep 2008 16:38:12 +0200 (CEST)
+Received: from clix.int.op5.se (unknown [192.168.1.20])
+	by mail.op5.se (Postfix) with ESMTP id C4E561B80046;
+	Fri, 26 Sep 2008 16:38:11 +0200 (CEST)
+User-Agent: Thunderbird 2.0.0.16 (X11/20080723)
+In-Reply-To: <588192970809260737i46ce0c30y191e29156bbf6396@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/96860>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/96861>
 
-Alexander Gavrilov <angavrilov@gmail.com> wrote:
-> On Wednesday 24 September 2008 20:52:01 Shawn O. Pearce wrote:
-> > 
-> > --8<--
-> > git-gui: Hide commit related UI during citool --nocommit
+Steve Hoelzer wrote:
+> Why isn't there a pull command in git gui's remote menu? Am I supposed
+> to fetch and then merge? Is that preferred over pull for some reason?
 > 
-> I believe that the 'Sign Off' button should better be controlled by the nocommitmsg
-> option; otherwise this looks good to me. But I'm not the best thinker at the
-> moment (had a cold).
 
-Since I've already pushed that patch in both git-gui.git and git.git
-how is this as a followup?
+Yes, it is. Blind "git pull" without knowing what you're going to
+fetch is not recommended, because it tends to create tons and tons
+of "useless" merges, where all commits are on one branch and there's
+no clear distinction between them. Such merges are useless because
+you'd be better off with a linearized history (bisection turns out
+slightly easier, fe).
 
---8<--
-git-gui: Show/hide "Sign Off" based on nocommitmsg option
+"git pull" is primarily intended for
+* people like Linus, who merge in a lot of other people's code.
+* bleeding-edge *users* that just want the latest and greatest.
+* "vcs = cvs" users, that never care about history
 
-If citool --nocommit is invoked we hide the Sign Off features, as
-the commit message area is not editable.  But we really want the
-selection tied to the message area's editing ability.
-
-Suggested-by: Alexander Gavrilov <angavrilov@gmail.com>
-Signed-off-by: Shawn O. Pearce <spearce@spearce.org>
----
- git-gui.sh |    4 ++--
- 1 files changed, 2 insertions(+), 2 deletions(-)
-
-diff --git a/git-gui.sh b/git-gui.sh
-index 4085e8f..09ce410 100755
---- a/git-gui.sh
-+++ b/git-gui.sh
-@@ -2413,7 +2413,7 @@ if {[is_enabled multicommit] || [is_enabled singlecommit]} {
- 
- 	.mbar.commit add separator
- 
--	if {![is_enabled nocommit]} {
-+	if {![is_enabled nocommitmsg]} {
- 		.mbar.commit add command -label [mc "Sign Off"] \
- 			-command do_signoff \
- 			-accelerator $M1T-S
-@@ -2743,7 +2743,7 @@ pack .vpane.lower.commarea.buttons.incall -side top -fill x
- lappend disable_on_lock \
- 	{.vpane.lower.commarea.buttons.incall conf -state}
- 
--if {![is_enabled nocommit]} {
-+if {![is_enabled nocommitmsg]} {
- 	button .vpane.lower.commarea.buttons.signoff -text [mc "Sign Off"] \
- 		-command do_signoff
- 	pack .vpane.lower.commarea.buttons.signoff -side top -fill x
--- 
-1.6.0.2.508.g2bf53a
-
+For all other workflows I've ever encountered, doing "git pull"
+blindly always ends up being worse than
+* developing on topic-branches and merging those when ready.
+* doing 'git pull --rebase', to linearize a series of small
+  fixes before pushing them back up.
+* 'git fetch' + manually inspect new code + 'git merge'.
 
 -- 
-Shawn.
+Andreas Ericsson                   andreas.ericsson@op5.se
+OP5 AB                             www.op5.se
+Tel: +46 8-230225                  Fax: +46 8-230231
