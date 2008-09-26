@@ -1,81 +1,105 @@
-From: Linus Torvalds <torvalds@linux-foundation.org>
-Subject: Re: gitk: Turn short SHA1 names into links too
-Date: Thu, 25 Sep 2008 17:37:10 -0700 (PDT)
-Message-ID: <alpine.LFD.1.10.0809251729440.3265@nehalem.linux-foundation.org>
-References: <alpine.LFD.1.10.0809251657080.3265@nehalem.linux-foundation.org>
+From: SZEDER =?iso-8859-1?Q?G=E1bor?= <szeder@ira.uka.de>
+Subject: Re: [PATCH] builtin-commit: avoid using reduce_heads()
+Date: Fri, 26 Sep 2008 03:03:12 +0200
+Message-ID: <20080926010312.GE6816@neumann>
+References: <20080925235029.GA15837@neumann>
+	<1222389359-22191-1-git-send-email-vmiklos@frugalware.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Paul Mackerras <paulus@samba.org>
-X-From: git-owner@vger.kernel.org Fri Sep 26 02:38:25 2008
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: Miklos Vajna <vmiklos@frugalware.org>
+X-From: git-owner@vger.kernel.org Fri Sep 26 03:04:47 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Kj1Lk-0003CQ-49
-	for gcvg-git-2@gmane.org; Fri, 26 Sep 2008 02:38:24 +0200
+	id 1Kj1lD-0001Yh-9C
+	for gcvg-git-2@gmane.org; Fri, 26 Sep 2008 03:04:43 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751684AbYIZAhP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 25 Sep 2008 20:37:15 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752158AbYIZAhP
-	(ORCPT <rfc822;git-outgoing>); Thu, 25 Sep 2008 20:37:15 -0400
-Received: from smtp1.linux-foundation.org ([140.211.169.13]:52916 "EHLO
-	smtp1.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751556AbYIZAhO (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 25 Sep 2008 20:37:14 -0400
-Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [140.211.169.55])
-	by smtp1.linux-foundation.org (8.14.2/8.13.5/Debian-3ubuntu1.1) with ESMTP id m8Q0bBgV003249
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Thu, 25 Sep 2008 17:37:12 -0700
-Received: from localhost (localhost [127.0.0.1])
-	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id m8Q0bAlk016515;
-	Thu, 25 Sep 2008 17:37:11 -0700
-In-Reply-To: <alpine.LFD.1.10.0809251657080.3265@nehalem.linux-foundation.org>
-User-Agent: Alpine 1.10 (LFD 962 2008-03-14)
-X-Spam-Status: No, hits=-3.432 required=5 tests=AWL,BAYES_00
-X-Spam-Checker-Version: SpamAssassin 3.2.4-osdl_revision__1.47__
-X-MIMEDefang-Filter: lf$Revision: 1.188 $
-X-Scanned-By: MIMEDefang 2.63 on 140.211.169.13
+	id S1752982AbYIZBDQ convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 25 Sep 2008 21:03:16 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752853AbYIZBDQ
+	(ORCPT <rfc822;git-outgoing>); Thu, 25 Sep 2008 21:03:16 -0400
+Received: from moutng.kundenserver.de ([212.227.126.186]:59062 "EHLO
+	moutng.kundenserver.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753004AbYIZBDP (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 25 Sep 2008 21:03:15 -0400
+Received: from [127.0.1.1] (p5B13352D.dip0.t-ipconnect.de [91.19.53.45])
+	by mrelayeu.kundenserver.de (node=mrelayeu5) with ESMTP (Nemesis)
+	id 0ML25U-1Kj1jl1W4T-00068S; Fri, 26 Sep 2008 03:03:13 +0200
+Content-Disposition: inline
+In-Reply-To: <1222389359-22191-1-git-send-email-vmiklos@frugalware.org>
+User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
+X-Provags-ID: V01U2FsdGVkX182Mje+QtvUHJ66iLiSvFksS1hyV6trc6XP4p2
+ fxOadFs74z+NB90TYtpWQQZAMe2gcrAl5xrHuXzut2tjX8/0Hg
+ 6MUOF6h3QT3ATQtiSsBGw==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/96822>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/96823>
+
+Szia Mikl=F3s,
+
+On Fri, Sep 26, 2008 at 02:35:59AM +0200, Miklos Vajna wrote:
+> reduce_heads() can filter "duplicated" parents, where "duplicated"
+> means: A is duplicated if both A and B are parent candidates and A is
+> reachable from B. Doing so in builtin-merge makes sense, but not in
+> builtin-commit, because this breaks git merge --no-commit --no-ff.
+
+> Here is a patch that fixes the problem for me.
+
+Thanks for the quick response.  While your patch does fix the bug I
+reported, unfortunately it introduces a new one:  t7502-commit.sh
+fails at me with the following:
 
 
+*   ok 17: a SIGTERM should break locks
 
-On Thu, 25 Sep 2008, Linus Torvalds wrote:
-> 
-> And the thing I wanted to work was to have the abbreviated SHA1's that 
-> have started to get more common in the kernel commit logs work as links in 
-> gitk too, just the way a full 40-character SHA1 link works.
+* expecting success:=20
 
-For a test-case, I just pushed out my current top-of-tree that finally 
-pushed me over the edge. I've seen this before, but I couldn't really 
-force me to do anything about it until now.
+        git rev-parse second master >expect &&
+        test_must_fail git merge second master &&
+        git checkout master g &&
+        EDITOR=3D: git commit -a &&
+        git cat-file commit HEAD | sed -n -e "s/^parent //p" -e
+"/^$/q" >actual &&
+        test_cmp expect actual
 
-So to see this in action, do
 
-	gitk v2.6.26..6ef190c
+Already up-to-date with 1ae92d674ba95768a00bace571f5ef295ff1696b
+Trying simple merge with 9af21aa779d9e148680be525ce161baa37e4bdec
+Simple merge did not work, trying automatic merge.
+Auto-merging g
+ERROR: Merge conflict in g
+fatal: merge program failed
+Automatic merge failed; fix conflicts and then commit the result.
+Created commit 45a4b2b: Merge branches 'second' and 'master' into
+second
+--- expect      2008-09-26 00:59:42.000000000 +0000
++++ actual      2008-09-26 00:59:42.000000000 +0000
+@@ -1,2 +1,3 @@
+ 1ae92d674ba95768a00bace571f5ef295ff1696b
++1ae92d674ba95768a00bace571f5ef295ff1696b
+ 9af21aa779d9e148680be525ce161baa37e4bdec
+* FAIL 18: Hand committing of a redundant merge removes dups
+       =20
+       =20
+                git rev-parse second master >expect &&
+                test_must_fail git merge second master &&
+                git checkout master g &&
+                EDITOR=3D: git commit -a &&
+                git cat-file commit HEAD | sed -n -e "s/^parent //p"
+-e "/^$/q" >actual &&
+                test_cmp expect actual
+       =20
+       =20
 
-on the current kernel repo, and notice that "Commit ee1e2c82 ("IPoIB: 
-Refresh paths .." thing, where we want that 'ee1e2c82' to be a link even 
-though it's not a full SHA1.
+* failed 1 among 18 test(s)
+make: *** [t7502-commit.sh] Error 1
 
-Of course, the matching could be better, it will now accept any random 6+ 
-character sequence of hex characters, even if they are surrounded by 
-characters that make it clear that it's not a SHA1 ("Haahahhaaaaaa!" 
-would find the 'aaaaaa' and if you have a commit that starts with that, 
-link to it ;)
 
-And because it's the top commit, you can also easily see the behavior that 
-it doesn't turn out to be a link immediately, and you have to do 
-cursor-down + cursor-up to get the link. The "it points to the wrong line" 
-bug is much harder to trigger, and possibly impossible with that 
-particular case (to trigger it, you need a setup where the first layout of 
-the target commit then gets changed by the topo-sort, I'm not sure that 
-will happen at all, and if it does, I'm not sure you could time it just 
-right either, but I _have_ seen it in real life).
-
-			Linus
+Regards,
+G=E1bor
