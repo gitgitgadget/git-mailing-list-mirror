@@ -1,86 +1,53 @@
-From: tom sgouros <tomfool@as220.org>
-Subject: Re: mysterious error message
-Date: Fri, 26 Sep 2008 10:29:29 -0400
-Message-ID: <30774.1222439369@as220.org>
-References: <20593.1222378418@as220.org> <20080926082003.GA6772@strlen.de>
-Cc: git@vger.kernel.org
-To: Uwe =?iso-8859-1?Q?Kleine-K=F6nig?= <ukleinek@strlen.de>
-X-From: git-owner@vger.kernel.org Fri Sep 26 16:30:54 2008
+From: "Shawn O. Pearce" <spearce@spearce.org>
+Subject: Re: [PATCH] git-gui: Help identify aspell version on Windows too
+Date: Fri, 26 Sep 2008 07:31:19 -0700
+Message-ID: <20080926143119.GX3669@spearce.org>
+References: <1222378282-21757-1-git-send-email-hendeby@isy.liu.se> <48DC815C.6030401@viscovery.net> <48DCA5F3.4090009@isy.liu.se> <48DCAC08.9060004@viscovery.net>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Cc: Gustaf Hendeby <hendeby@isy.liu.se>, git@vger.kernel.org
+To: Johannes Sixt <j.sixt@viscovery.net>
+X-From: git-owner@vger.kernel.org Fri Sep 26 16:32:38 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KjELE-0003Xw-Hw
-	for gcvg-git-2@gmane.org; Fri, 26 Sep 2008 16:30:45 +0200
+	id 1KjEMv-0004D3-7g
+	for gcvg-git-2@gmane.org; Fri, 26 Sep 2008 16:32:29 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752372AbYIZO3f (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 26 Sep 2008 10:29:35 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752391AbYIZO3f
-	(ORCPT <rfc822;git-outgoing>); Fri, 26 Sep 2008 10:29:35 -0400
-Received: from as220.org ([198.7.230.15]:55543 "EHLO ironzilla.as220.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752270AbYIZO3e (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 26 Sep 2008 10:29:34 -0400
-Received: from localhost (localhost [127.0.0.1])
-	by ironzilla.as220.org (Postfix) with ESMTP id A2A34AAB11;
-	Fri, 26 Sep 2008 10:29:33 -0400 (EDT)
-X-Virus-Scanned: amavisd-new at as220.org
-Received: from ironzilla.as220.org ([127.0.0.1])
-	by localhost (as220.org [127.0.0.1]) (amavisd-new, port 10024)
-	with LMTP id UXw5ck2nmR9g; Fri, 26 Sep 2008 10:29:29 -0400 (EDT)
-Received: from as220.org (localhost [127.0.0.1])
-	by ironzilla.as220.org (Postfix) with ESMTP id 7EEBFAAB02;
-	Fri, 26 Sep 2008 10:29:29 -0400 (EDT)
-In-reply-to: <20080926082003.GA6772@strlen.de> 
-Comments: In-reply-to Uwe =?iso-8859-1?Q?Kleine-K=F6nig?= <ukleinek@strlen.de>
-   message dated "Fri, 26 Sep 2008 10:20:03 +0200."
-X-Mailer: MH-E 8.0.3; nmh 1.1; GNU Emacs 22.2.1
+	id S1752468AbYIZObU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 26 Sep 2008 10:31:20 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752463AbYIZObU
+	(ORCPT <rfc822;git-outgoing>); Fri, 26 Sep 2008 10:31:20 -0400
+Received: from george.spearce.org ([209.20.77.23]:46931 "EHLO
+	george.spearce.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752462AbYIZObT (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 26 Sep 2008 10:31:19 -0400
+Received: by george.spearce.org (Postfix, from userid 1001)
+	id 4CE7F3835F; Fri, 26 Sep 2008 14:31:19 +0000 (UTC)
+Content-Disposition: inline
+In-Reply-To: <48DCAC08.9060004@viscovery.net>
+User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/96854>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/96855>
 
-
-> Hello,
+Johannes Sixt <j.sixt@viscovery.net> wrote:
 > 
-> On Thu, Sep 25, 2008 at 05:33:38PM -0400, Tom Sgouros wrote:
-> > I receive the following error message when I try to do a 'git push':
-> > 
-> >   tomfool@toms-box:hpl$ git push
-> >   updating 'refs/heads/master'
-> >     from ad4ae7925d3dd23798e7c5b733d2d8f930f7410f
-> >     to   5b5f5fae014a4f3535fa10b0f6e28b4bf3225dc3
-> >    Also local refs/remotes/origin/master
-> >   Generating pack...
-> >   Done counting 10 objects.
-> >   Deltifying 10 objects...
-> >   error: pack-objects died with strange error
-> >   unpack eof before pack header was fully read
-> >   ng refs/heads/master n/a (unpacker error)
-> >   error: failed to push to 'ssh://tomfool@as220.org/home/tomfool/hpl.git'
-> >   tomfool@toms-box:hpl$
-> > 
-> > I haven't been able to interpret this message, and haven't found it in
-> > the documentation, and google has let me down, too.  Can anyone tell me
-> > what is causing it?
-> I think it's a problem on the pushing side.  Maybe out of disk space (in
-> $GIT_DIR or $TMP_DIR)?  Does git repack work?
-> 
+> My situation is this: I fire up git-gui, and because I have some stale
+> .git/GITGUI_MSG file, the commit message box is not empty. Aspell begins
+> its work, and git-gui correctly marks spelling mistakes in the first line.
+> Even if I type new text, delete old text, or change the whole text by
+> clicking "Amend", no new spelling mistakes are marked for the whole session.
 
-I did have a disk space issue on the pushing side, but have cleared it
-up.  Is there something that needs to be reset, do you think?
+Hmm.  Sounds to me like aspell crashes and dies after a while.
 
-Yes, git repack seems to work fine.  "Counting 215 objects, Deltifying
-215 objects."  But I still get the same error message afterwards.
-
-Thanks,
-
- -tom
+When aspell terminates on its own git-gui doesn't try to restart it.
+I've never seen it abort on my Mac, or my Linux systems.  Or even
+on Windows when I was using the Cygwin version of aspell.
 
 -- 
- ------------------------
- tomfool at as220 dot org
- http://sgouros.com  
- http://whatcheer.net
+Shawn.
