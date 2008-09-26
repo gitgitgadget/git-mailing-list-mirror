@@ -1,96 +1,85 @@
-From: Johan Herland <johan@herland.net>
-Subject: Re: Internal, corporate, shared hosting solutions
-Date: Fri, 26 Sep 2008 20:17:15 +0200
-Message-ID: <200809262017.15916.johan@herland.net>
-References: <8B29890D-C03B-4ECE-9BEF-0A8E8EF7233E@netspot.com.au>
+From: "Leo Razoumov" <slonik.az@gmail.com>
+Subject: status letters consistency in log and ls-files
+Date: Fri, 26 Sep 2008 14:28:50 -0400
+Message-ID: <ee2a733e0809261128h4c50d27bq3942bd1b3b66d3ee@mail.gmail.com>
+Reply-To: SLONIK.AZ@gmail.com
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-Cc: Tom Lanyon <tom@netspot.com.au>, pasky@suse.cz
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Sep 26 20:18:49 2008
+To: "Git Mailing List" <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Fri Sep 26 20:30:25 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KjHtp-0006UW-CO
-	for gcvg-git-2@gmane.org; Fri, 26 Sep 2008 20:18:41 +0200
+	id 1KjI4o-0001zl-SI
+	for gcvg-git-2@gmane.org; Fri, 26 Sep 2008 20:30:03 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752323AbYIZSRc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 26 Sep 2008 14:17:32 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752372AbYIZSRc
-	(ORCPT <rfc822;git-outgoing>); Fri, 26 Sep 2008 14:17:32 -0400
-Received: from sam.opera.com ([213.236.208.81]:53192 "EHLO smtp.opera.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752209AbYIZSRb (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 26 Sep 2008 14:17:31 -0400
-Received: from pc107.coreteam.oslo.opera.com (pat-tdc.opera.com [213.236.208.22])
-	by smtp.opera.com (8.13.4/8.13.4/Debian-3sarge3) with ESMTP id m8QIHGDL008405
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
-	Fri, 26 Sep 2008 18:17:21 GMT
-User-Agent: KMail/1.9.9
-In-Reply-To: <8B29890D-C03B-4ECE-9BEF-0A8E8EF7233E@netspot.com.au>
+	id S1752229AbYIZS2x (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 26 Sep 2008 14:28:53 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752050AbYIZS2x
+	(ORCPT <rfc822;git-outgoing>); Fri, 26 Sep 2008 14:28:53 -0400
+Received: from mu-out-0910.google.com ([209.85.134.184]:12172 "EHLO
+	mu-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751922AbYIZS2w (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 26 Sep 2008 14:28:52 -0400
+Received: by mu-out-0910.google.com with SMTP id g7so862669muf.1
+        for <git@vger.kernel.org>; Fri, 26 Sep 2008 11:28:50 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:reply-to
+         :to:subject:mime-version:content-type:content-transfer-encoding
+         :content-disposition;
+        bh=fO1kQoGdkNBmYwWnhoeHfyVZRkF5pesvgZFUBqqgEdM=;
+        b=Ux5VZkRuHGlLalg4HsKZ4LzF0TtEGRLZn+RINOqu1TAjDC+OB0zVMEO2+4un/a/STW
+         V5V6CMQLzj1m1CIdTVDbJTGjNhGXlFN5m+dcHgSLr68oLGEb0LotQejNiESHfz18ZKEe
+         gsYtlSFgv24SW6k1EaG6H6Qg+Id722ijGsoIw=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:reply-to:to:subject:mime-version:content-type
+         :content-transfer-encoding:content-disposition;
+        b=WO3UFHvZemscVbgjk4wWrjY5r5RWc+i3zxaL7Bkaq7BDjZcpo9NNfRq3/pera9uMkQ
+         +ApIIpTIFTK9+vzGyh+vSSOF7RNgdip/C8jda13H7l2DvhEv+xWWa85ytdMmWN/rCr0d
+         h8FQeqwXfbO6qdG/OUqezBOo0uY3PnfKx+Dxg=
+Received: by 10.187.158.11 with SMTP id k11mr257048fao.54.1222453730054;
+        Fri, 26 Sep 2008 11:28:50 -0700 (PDT)
+Received: by 10.187.162.17 with HTTP; Fri, 26 Sep 2008 11:28:50 -0700 (PDT)
 Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/96881>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/96882>
 
-On Friday 26 September 2008, Tom Lanyon wrote:
-> Hi list,
->
-> I'm struggling. There's been a recent adoption of git here by our
-> development staff, which is great. However, from an administrative
-> point of view, I'm having trouble finding a solution to provide some
-> kind of easy, shared, secure and accessible hosting solution to our
-> developers.
->
-> [...]
+Hi Everyone,
+I am new yo git and there are few things I find quite odd. For example,
 
-I'm pretty much in the exact same situation at $dayjob, and I'm 
-researching some alternatives as well. So far there seems to be a 
-couple of options:
+command "git log --name-status" uses the following letters to indicate
+file's status
+A  -- Added
+B  -- have had their pairing Broken
+C  -- Copied
+D  -- Deleted
+M  -- Modified
+R  -- Renamed
+T  -- Type changed (mode, time stamp)
+U  -- Unmerged
+X  -- Unknown
 
-1. Gitosis [1]. This is a fairly thin layer of Python scripts running as 
-a non-privileged "git" user on the server. All users authenticate by 
-registering their SSH key with Gitosis, and then access repos using 
-this one "git" user over SSH. Further access control (i.e. read/write 
-access to each repo) is done by Gitosis itself, and administered by 
-cloning a gitosis-admin repo, changing some configuration files and 
-pushing the result back to the server.
+At the same time command "git ls-files -v" use different letters to
+indicate the same
+H  --  cached
+M  -- unmerged
+R  -- removed/deleted
+C  -- modified/changed
+K  -- to be killed
+?  -- other
 
-2. Gitorious [2]. Don't confuse this with the repo hosting service at 
-gitorious.org. You can clone the software that runs gitorious.org and 
-set it up on your own server. This is a much more heavy-weight 
-Ruby-on-Rails application that provides a nice web interface for 
-publishing and interacting with repositories. However, it is based on 
-the same underlying principle of registering your SSH-keys with 
-Gitorious, and running everything as a non-privileged "git" user.
+So, depending on which of the commands above are used status "R" could
+mean either Renamed or Removed, "M" is either Modified or unMerged,
+"C" is either Copied or Changed.
 
-3. repo.or.cz. I don't know much about how this work, and if it's easily 
-deployed on an in-house server. However, the repo.or.cz admin (Petr 
-Baudis, CCed) is active on this list, and can probably fill in the 
-details.
+Is it possible to make it consistent across related commands?
 
-
-Feel free to keep me updated on your progress.
-
-
-Have fun! :)
-
-...Johan
-
-
-[1]: Gitosis: 
-http://scie.nti.st/2007/11/14/hosting-git-repositories-the-easy-and-secure-way
-Get it at http://eagain.net/gitweb/?p=gitosis.git;a=summary
-
-[2]: Gitorious: http://gitorious.org/
-Get it at http://gitorious.org/projects/gitorious
-
--- 
-Johan Herland, <johan@herland.net>
-www.herland.net
+--Leo--
