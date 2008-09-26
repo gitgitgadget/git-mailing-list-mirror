@@ -1,56 +1,86 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: Re: [PATCH] git-gui: Help identify aspell version on Windows too
-Date: Fri, 26 Sep 2008 07:28:18 -0700
-Message-ID: <20080926142818.GW3669@spearce.org>
-References: <1222378282-21757-1-git-send-email-hendeby@isy.liu.se> <48DC815C.6030401@viscovery.net> <48DCA5F3.4090009@isy.liu.se>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Johannes Sixt <j.sixt@viscovery.net>, git@vger.kernel.org
-To: Gustaf Hendeby <hendeby@isy.liu.se>
-X-From: git-owner@vger.kernel.org Fri Sep 26 16:29:35 2008
+From: tom sgouros <tomfool@as220.org>
+Subject: Re: mysterious error message
+Date: Fri, 26 Sep 2008 10:29:29 -0400
+Message-ID: <30774.1222439369@as220.org>
+References: <20593.1222378418@as220.org> <20080926082003.GA6772@strlen.de>
+Cc: git@vger.kernel.org
+To: Uwe =?iso-8859-1?Q?Kleine-K=F6nig?= <ukleinek@strlen.de>
+X-From: git-owner@vger.kernel.org Fri Sep 26 16:30:54 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KjEK0-000359-Gm
-	for gcvg-git-2@gmane.org; Fri, 26 Sep 2008 16:29:29 +0200
+	id 1KjELE-0003Xw-Hw
+	for gcvg-git-2@gmane.org; Fri, 26 Sep 2008 16:30:45 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752346AbYIZO2T (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 26 Sep 2008 10:28:19 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752316AbYIZO2T
-	(ORCPT <rfc822;git-outgoing>); Fri, 26 Sep 2008 10:28:19 -0400
-Received: from george.spearce.org ([209.20.77.23]:46919 "EHLO
-	george.spearce.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752206AbYIZO2T (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 26 Sep 2008 10:28:19 -0400
-Received: by george.spearce.org (Postfix, from userid 1001)
-	id C246E3835F; Fri, 26 Sep 2008 14:28:18 +0000 (UTC)
-Content-Disposition: inline
-In-Reply-To: <48DCA5F3.4090009@isy.liu.se>
-User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
+	id S1752372AbYIZO3f (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 26 Sep 2008 10:29:35 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752391AbYIZO3f
+	(ORCPT <rfc822;git-outgoing>); Fri, 26 Sep 2008 10:29:35 -0400
+Received: from as220.org ([198.7.230.15]:55543 "EHLO ironzilla.as220.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752270AbYIZO3e (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 26 Sep 2008 10:29:34 -0400
+Received: from localhost (localhost [127.0.0.1])
+	by ironzilla.as220.org (Postfix) with ESMTP id A2A34AAB11;
+	Fri, 26 Sep 2008 10:29:33 -0400 (EDT)
+X-Virus-Scanned: amavisd-new at as220.org
+Received: from ironzilla.as220.org ([127.0.0.1])
+	by localhost (as220.org [127.0.0.1]) (amavisd-new, port 10024)
+	with LMTP id UXw5ck2nmR9g; Fri, 26 Sep 2008 10:29:29 -0400 (EDT)
+Received: from as220.org (localhost [127.0.0.1])
+	by ironzilla.as220.org (Postfix) with ESMTP id 7EEBFAAB02;
+	Fri, 26 Sep 2008 10:29:29 -0400 (EDT)
+In-reply-to: <20080926082003.GA6772@strlen.de> 
+Comments: In-reply-to Uwe =?iso-8859-1?Q?Kleine-K=F6nig?= <ukleinek@strlen.de>
+   message dated "Fri, 26 Sep 2008 10:20:03 +0200."
+X-Mailer: MH-E 8.0.3; nmh 1.1; GNU Emacs 22.2.1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/96853>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/96854>
 
-Gustaf Hendeby <hendeby@isy.liu.se> wrote:
-> >>  	}
-> >> -	set s_version [string range $s_version 5 end]
-> >> +			set s_version [string range [string trim $s_version] 5 end]
-> > 
-> > A strange indentation you have here.
+
+> Hello,
 > 
-> Yep, sorry about that, seems I had a nonstandard tab-width setting.  Too
-> bad not all projects can decide on the same tab width. :(  Will resend
-> if there are no other comments to this, and at the same time fix the
-> spelling in the commit message...
+> On Thu, Sep 25, 2008 at 05:33:38PM -0400, Tom Sgouros wrote:
+> > I receive the following error message when I try to do a 'git push':
+> > 
+> >   tomfool@toms-box:hpl$ git push
+> >   updating 'refs/heads/master'
+> >     from ad4ae7925d3dd23798e7c5b733d2d8f930f7410f
+> >     to   5b5f5fae014a4f3535fa10b0f6e28b4bf3225dc3
+> >    Also local refs/remotes/origin/master
+> >   Generating pack...
+> >   Done counting 10 objects.
+> >   Deltifying 10 objects...
+> >   error: pack-objects died with strange error
+> >   unpack eof before pack header was fully read
+> >   ng refs/heads/master n/a (unpacker error)
+> >   error: failed to push to 'ssh://tomfool@as220.org/home/tomfool/hpl.git'
+> >   tomfool@toms-box:hpl$
+> > 
+> > I haven't been able to interpret this message, and haven't found it in
+> > the documentation, and google has let me down, too.  Can anyone tell me
+> > what is causing it?
+> I think it's a problem on the pushing side.  Maybe out of disk space (in
+> $GIT_DIR or $TMP_DIR)?  Does git repack work?
+> 
 
-I fixed the indentation, but didn't notice the spelling error in
-the commit message.  Anyway, its too late, I have already pushed
-this fix out to my maint and master branches in git-gui.  I'm not
-going to rewind 'em.
+I did have a disk space issue on the pushing side, but have cleared it
+up.  Is there something that needs to be reset, do you think?
+
+Yes, git repack seems to work fine.  "Counting 215 objects, Deltifying
+215 objects."  But I still get the same error message afterwards.
+
+Thanks,
+
+ -tom
 
 -- 
-Shawn.
+ ------------------------
+ tomfool at as220 dot org
+ http://sgouros.com  
+ http://whatcheer.net
