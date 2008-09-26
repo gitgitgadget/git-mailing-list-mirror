@@ -1,81 +1,57 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: Re: mysterious error message
-Date: Fri, 26 Sep 2008 07:37:26 -0700
-Message-ID: <20080926143726.GZ3669@spearce.org>
-References: <20593.1222378418@as220.org> <alpine.DEB.1.00.0809261400400.13830@pacific.mpi-cbg.de.mpi-cbg.de> <30988.1222439568@as220.org>
+From: "Steve Hoelzer" <shoelzer@gmail.com>
+Subject: No "pull" in git gui?
+Date: Fri, 26 Sep 2008 09:37:57 -0500
+Message-ID: <588192970809260737i46ce0c30y191e29156bbf6396@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	git@vger.kernel.org
-To: tom sgouros <tomfool@as220.org>
-X-From: git-owner@vger.kernel.org Fri Sep 26 16:39:04 2008
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Sep 26 16:39:51 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KjESr-0006fv-Rq
-	for gcvg-git-2@gmane.org; Fri, 26 Sep 2008 16:38:38 +0200
+	id 1KjETR-0006wq-0b
+	for gcvg-git-2@gmane.org; Fri, 26 Sep 2008 16:39:13 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751762AbYIZOh2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 26 Sep 2008 10:37:28 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752588AbYIZOh2
-	(ORCPT <rfc822;git-outgoing>); Fri, 26 Sep 2008 10:37:28 -0400
-Received: from george.spearce.org ([209.20.77.23]:34280 "EHLO
-	george.spearce.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751734AbYIZOh1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 26 Sep 2008 10:37:27 -0400
-Received: by george.spearce.org (Postfix, from userid 1001)
-	id F029B3835F; Fri, 26 Sep 2008 14:37:26 +0000 (UTC)
+	id S1752721AbYIZOiA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 26 Sep 2008 10:38:00 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752716AbYIZOiA
+	(ORCPT <rfc822;git-outgoing>); Fri, 26 Sep 2008 10:38:00 -0400
+Received: from wf-out-1314.google.com ([209.85.200.175]:44873 "EHLO
+	wf-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751802AbYIZOiA (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 26 Sep 2008 10:38:00 -0400
+Received: by wf-out-1314.google.com with SMTP id 27so1134975wfd.4
+        for <git@vger.kernel.org>; Fri, 26 Sep 2008 07:37:59 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to
+         :subject:mime-version:content-type:content-transfer-encoding
+         :content-disposition;
+        bh=/AIm0YFg72rYHnRnlUcWkRgUAyyS/bdQOgcZuZ5/EWU=;
+        b=mBq+uHW2g9kYcoUtKf0PacgHt2zZ6L0coCmLxpfN+1ENyf9mX6/hqQSFZ8S0oS81JQ
+         2kunjKZr/euZqTblYk4OoeGhyjBWHeoCT8Z+hOZSvTZmBWk7IfeAaMiaJwAwehhzUASH
+         CNI4GKu737J49it5o2uy6fIBqntFjflUWbQuA=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:to:subject:mime-version:content-type
+         :content-transfer-encoding:content-disposition;
+        b=uYIrTWC7NpjUYkJIBV5icNsLJsx9KFouJMfZsrx+DX3JiC+Kx4HZ9dRuRl5Ejs19dx
+         7VMp10g1iNUPKlBBTHDCwqiCFi/kWJf6u1DfuOzR3rRW53FtfZuEpAeEcIhofcc1PDGp
+         Xbc9FCPlrG3dg4Q+ixiUwqxfaxJJClFkcZXd8=
+Received: by 10.114.39.5 with SMTP id m5mr1451542wam.113.1222439877345;
+        Fri, 26 Sep 2008 07:37:57 -0700 (PDT)
+Received: by 10.114.153.17 with HTTP; Fri, 26 Sep 2008 07:37:57 -0700 (PDT)
 Content-Disposition: inline
-In-Reply-To: <30988.1222439568@as220.org>
-User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/96858>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/96859>
 
-tom sgouros <tomfool@as220.org> wrote:
-> > On Thu, 25 Sep 2008, Tom Sgouros wrote:
-> > > I receive the following error message when I try to do a 'git push':
-> > > 
-> > >   tomfool@toms-box:hpl$ git push
-> > >   updating 'refs/heads/master'
-> > >     from ad4ae7925d3dd23798e7c5b733d2d8f930f7410f
-> > >     to   5b5f5fae014a4f3535fa10b0f6e28b4bf3225dc3
-> > >    Also local refs/remotes/origin/master
-> > >   Generating pack...
-> > >   Done counting 10 objects.
-> > >   Deltifying 10 objects...
-> > >   error: pack-objects died with strange error
-> > >   unpack eof before pack header was fully read
-> > >   ng refs/heads/master n/a (unpacker error)
-> > >   error: failed to push to 'ssh://tomfool@as220.org/home/tomfool/hpl.git'
-> > >   tomfool@toms-box:hpl$
-> > 
-> > I got this message when I tried to push a project with submodules to a 
-> > server which had submodule-ignorant git installed.  Maybe it's that?
-> 
-> I'm not sure which versions are submodule-ignorant, but it's version
-> 1.5.3.6 on the pusher and version 1.5.4.5 on the server.  I installed
-> git via the fink package manager.  Could there be some other
-> incompatibility? 
+Why isn't there a pull command in git gui's remote menu? Am I supposed
+to fetch and then merge? Is that preferred over pull for some reason?
 
-This change came after 1.5.3.6 and I think its what you are
-tripping over:
-
-  commit 481f0ee60eef2c34b891e5d04b7e6e5a955eedf4
-  Author: Linus Torvalds <torvalds@linux-foundation.org>
-  Date:   Sun Nov 11 23:35:23 2007 +0000
-
-    Fix rev-list when showing objects involving submodules
-
-rev-list aborting because it cannot mark a submodule commit
-as uninteresting should cause pack-objects to abort too since
-the list of objects wasn't completely produced.
-
-That fix is in 1.5.3.7 or later.
-
--- 
-Shawn.
+Steve
