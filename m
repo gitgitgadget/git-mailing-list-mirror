@@ -1,57 +1,87 @@
-From: Paul Mackerras <paulus@samba.org>
-Subject: Re: gitk: Turn short SHA1 names into links too
-Date: Sat, 27 Sep 2008 13:18:04 +1000
-Message-ID: <18653.42476.355550.345797@cargo.ozlabs.ibm.com>
-References: <alpine.LFD.1.10.0809251657080.3265@nehalem.linux-foundation.org>
-	<alpine.LFD.1.10.0809251729440.3265@nehalem.linux-foundation.org>
-	<BD7D0F18-32BD-4059-9190-A2C1B101B4C1@wincent.com>
+From: "Leo Razoumov" <slonik.az@gmail.com>
+Subject: Re: status letters consistency in log and ls-files
+Date: Fri, 26 Sep 2008 23:20:03 -0400
+Message-ID: <ee2a733e0809262020l318b0ac3v560400d95a5ba2b7@mail.gmail.com>
+References: <ee2a733e0809261128h4c50d27bq3942bd1b3b66d3ee@mail.gmail.com>
+	 <20080926224546.GB24817@coredump.intra.peff.net>
+	 <ee2a733e0809261624y72dcfb8fw7910feb2542f501c@mail.gmail.com>
+	 <20080927002949.GA25586@coredump.intra.peff.net>
+Reply-To: SLONIK.AZ@gmail.com
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-Cc: Linus Torvalds <torvalds@linux-foundation.org>,
-	Git Mailing List <git@vger.kernel.org>
-To: Wincent Colaiuta <win@wincent.com>
-X-From: git-owner@vger.kernel.org Sat Sep 27 05:19:27 2008
+To: "Jeff King" <peff@peff.net>,
+	"Git Mailing List" <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Sat Sep 27 05:21:20 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KjQL7-0000cA-Dw
-	for gcvg-git-2@gmane.org; Sat, 27 Sep 2008 05:19:25 +0200
+	id 1KjQMt-0000wY-S6
+	for gcvg-git-2@gmane.org; Sat, 27 Sep 2008 05:21:16 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751243AbYI0DSP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 26 Sep 2008 23:18:15 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751138AbYI0DSO
-	(ORCPT <rfc822;git-outgoing>); Fri, 26 Sep 2008 23:18:14 -0400
-Received: from ozlabs.org ([203.10.76.45]:39352 "EHLO ozlabs.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751134AbYI0DSN (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 26 Sep 2008 23:18:13 -0400
-Received: by ozlabs.org (Postfix, from userid 1003)
-	id 6E93ADDDEA; Sat, 27 Sep 2008 13:18:11 +1000 (EST)
-In-Reply-To: <BD7D0F18-32BD-4059-9190-A2C1B101B4C1@wincent.com>
-X-Mailer: VM 8.0.9 under Emacs 22.2.1 (i486-pc-linux-gnu)
+	id S1751658AbYI0DUG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 26 Sep 2008 23:20:06 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751700AbYI0DUG
+	(ORCPT <rfc822;git-outgoing>); Fri, 26 Sep 2008 23:20:06 -0400
+Received: from fk-out-0910.google.com ([209.85.128.190]:19997 "EHLO
+	fk-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751611AbYI0DUF (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 26 Sep 2008 23:20:05 -0400
+Received: by fk-out-0910.google.com with SMTP id 18so1171623fkq.5
+        for <git@vger.kernel.org>; Fri, 26 Sep 2008 20:20:03 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:reply-to
+         :to:subject:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:references;
+        bh=+H3DpwqxFUdveKN0Z/T6R8sHBGMJJ2aMgpJylW7Md0Y=;
+        b=qsZkCkAsw8+r10pARehLsxA05oWdfQ+T3MruaxvA/HHCpAfbyopf9w806EENhVxVXy
+         ZuU+DjSuc8sIqA3+42/Q7qBoh0AFYOmWlTDtndKbrB7EDfbDJ/NON6T+wrFKX/shFMzg
+         em4hN4tS0+1TpBleTVRTIKwondtH0KvqmPxak=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:reply-to:to:subject:in-reply-to:mime-version
+         :content-type:content-transfer-encoding:content-disposition
+         :references;
+        b=W+dSdWHBI+X1d6YngBO/63V8pXAQgZfYsxxpUB/ZVm8i/TDsyvWQhZk9uYx9m4kDjx
+         DFNN6yIm9IG0gkl9slljjvlxz1iSWOTm8AcNUIycgwMKFmiu2eBd0AnsP2w5zAw438Q+
+         YBbn+IkB0CsOZCYbotORWkioEEdtsQwJdwvFI=
+Received: by 10.187.201.15 with SMTP id d15mr319431faq.32.1222485603481;
+        Fri, 26 Sep 2008 20:20:03 -0700 (PDT)
+Received: by 10.187.162.17 with HTTP; Fri, 26 Sep 2008 20:20:03 -0700 (PDT)
+In-Reply-To: <20080927002949.GA25586@coredump.intra.peff.net>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/96898>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/96899>
 
-Wincent Colaiuta writes:
+On 9/26/08, Jeff King <peff@peff.net> wrote:
+> On Fri, Sep 26, 2008 at 07:24:11PM -0400, Leo Razoumov wrote:
+>
+>  > Another script takes output of
+>  >   git ls-files -v -c -d -m -o -k
+>  > and for each file pulls together all the file status letters in one record.
+>
+>
+> OK. I was thinking I could suggest just using "git diff" here instead.
+>  E.g.,:
+>
+>   git diff --name-status
+>
+>  will show you the modified and deleted files. But since you are using
+>  "-c" to show _all_ cached files, I think only ls-files can do that
+>  (since diff is, obviously, about files with differences).
+>
+>  So I'm not sure there is a straight-forward solution short of
+>  translating the status codes.
+>
+>  -Peff
 
-> It's a shame that tcl/tk regular expressions don't appear to support  
-> anchoring matches against word boundaries (ie. "\b").
+Moreover, git diff would not show untracked files while git ls-files
+will include them and label '?'
 
-They do.  From the re_syntax (3tcl) man page:
-
-         \m    matches only at the beginning of a word
-
-         \M    matches only at the end of a word
-
-         \y    matches only at the beginning or end of a word
-
-         \Y    matches only at a point that is not the beginning or end  of  a
-               word
-
-Paul.
+--Leo--
