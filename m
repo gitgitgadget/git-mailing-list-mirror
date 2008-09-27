@@ -1,80 +1,128 @@
-From: "Marco Costalba" <mcostalba@gmail.com>
-Subject: Re: [QGit] [PATCH] Modify Highlight Color at File Context View.
-Date: Sat, 27 Sep 2008 13:47:34 +0100
-Message-ID: <e5bfff550809270547n15a210e3y386278db00966945@mail.gmail.com>
-References: <gbak2u$v9b$1@ger.gmane.org>
-	 <7FD1F85C96D70C4A89DA1DF7667EAE96079EDF@zch01exm23.fsl.freescale.net>
-	 <e5bfff550809250451q578b8e10r75c043d307a63f28@mail.gmail.com>
-	 <7FD1F85C96D70C4A89DA1DF7667EAE96079FBB@zch01exm23.fsl.freescale.net>
-	 <e5bfff550809250934l47c48440m332764491ff5391@mail.gmail.com>
-	 <7FD1F85C96D70C4A89DA1DF7667EAE9607A00A@zch01exm23.fsl.freescale.net>
-	 <e5bfff550809252215v72bb4633s17b5c1a8c39f55ff@mail.gmail.com>
-	 <7FD1F85C96D70C4A89DA1DF7667EAE9607A0D9@zch01exm23.fsl.freescale.net>
-	 <e5bfff550809260337o1523995ele3333c0de9295393@mail.gmail.com>
-	 <7FD1F85C96D70C4A89DA1DF7667EAE9607A217@zch01exm23.fsl.freescale.net>
+From: Thomas Rast <trast@student.ethz.ch>
+Subject: Re: having to pull twice
+Date: Sat, 27 Sep 2008 16:16:29 +0200
+Message-ID: <200809271616.32082.trast@student.ethz.ch>
+References: <fb6605670809241758r186eef51sc6ed6d334a64495d@mail.gmail.com> <200809250905.09646.trast@student.ethz.ch> <20080925232525.GP23137@genesis.frugalware.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: multipart/signed;
+  boundary="nextPart1570916.tXdLe5F6mi";
+  protocol="application/pgp-signature";
+  micalg=pgp-sha1
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: "Li Frank-B20596" <Frank.Li@freescale.com>
-X-From: git-owner@vger.kernel.org Sat Sep 27 14:48:57 2008
+Cc: "Shawn O. Pearce" <spearce@spearce.org>,
+	"Michael P. Soulier" <msoulier@digitaltorque.ca>,
+	git@vger.kernel.org
+To: Miklos Vajna <vmiklos@frugalware.org>
+X-From: git-owner@vger.kernel.org Sat Sep 27 17:54:49 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KjZE5-0006PS-Uw
-	for gcvg-git-2@gmane.org; Sat, 27 Sep 2008 14:48:46 +0200
+	id 1Kjc80-0001HL-PH
+	for gcvg-git-2@gmane.org; Sat, 27 Sep 2008 17:54:41 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752421AbYI0Mrg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 27 Sep 2008 08:47:36 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752391AbYI0Mrg
-	(ORCPT <rfc822;git-outgoing>); Sat, 27 Sep 2008 08:47:36 -0400
-Received: from fg-out-1718.google.com ([72.14.220.155]:44264 "EHLO
-	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752115AbYI0Mrg (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 27 Sep 2008 08:47:36 -0400
-Received: by fg-out-1718.google.com with SMTP id 19so910585fgg.17
-        for <git@vger.kernel.org>; Sat, 27 Sep 2008 05:47:34 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to
-         :subject:cc:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:references;
-        bh=yqW7X1l9/R1/1J0d1FRt0bTDPs9I/Zf4rW0OQCxWu6Q=;
-        b=ZpO3Pcl1YJnk7ZlfhsUaHLElYsb9hYKM9OSNqTnyB8xE6PHP5JKb3pmaBYvBLOLbPH
-         jMApDGYDwvfUdU7o1MgT/y33bVNuKCGilTlGop7Aauwu0Ic612bFiVh9XOpb7VP2xdPp
-         N+PTlJuCys+vgIdj09YVV72E2M9/ZyV068BDg=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
-         :content-type:content-transfer-encoding:content-disposition
-         :references;
-        b=IFn5OG6wSPTqN1G3kufsLFuOKvSw0e25Va2SkV+uYm8hD1Kl9RFVBJl2YIH8B6ziXe
-         btapB/oq9vAjZVQlFsYf7WjJulzCjTvT7v9KAbDCdSbXg09o6B+hah2pSTQDw4XP/z7m
-         ItLeGZ5M6tXb1drT5kv6sT9VPhOAQra7yK+4c=
-Received: by 10.180.220.5 with SMTP id s5mr1313678bkg.5.1222519654329;
-        Sat, 27 Sep 2008 05:47:34 -0700 (PDT)
-Received: by 10.180.220.15 with HTTP; Sat, 27 Sep 2008 05:47:34 -0700 (PDT)
-In-Reply-To: <7FD1F85C96D70C4A89DA1DF7667EAE9607A217@zch01exm23.fsl.freescale.net>
-Content-Disposition: inline
+	id S1752044AbYI0Pw6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 27 Sep 2008 11:52:58 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752133AbYI0Pw6
+	(ORCPT <rfc822;git-outgoing>); Sat, 27 Sep 2008 11:52:58 -0400
+Received: from xsmtp0.ethz.ch ([82.130.70.14]:23895 "EHLO XSMTP0.ethz.ch"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751711AbYI0Pw5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 27 Sep 2008 11:52:57 -0400
+Received: from xfe2.d.ethz.ch ([82.130.124.42]) by XSMTP0.ethz.ch with Microsoft SMTPSVC(6.0.3790.3959);
+	 Sat, 27 Sep 2008 17:52:55 +0200
+Received: from [192.168.0.8] ([77.56.223.244]) by xfe2.d.ethz.ch over TLS secured channel with Microsoft SMTPSVC(6.0.3790.3959);
+	 Sat, 27 Sep 2008 17:52:55 +0200
+User-Agent: KMail/1.9.9
+In-Reply-To: <20080925232525.GP23137@genesis.frugalware.org>
+X-OriginalArrivalTime: 27 Sep 2008 15:52:55.0882 (UTC) FILETIME=[1B7A7AA0:01C920B9]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/96912>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/96913>
 
-On Sat, Sep 27, 2008 at 4:44 AM, Li Frank-B20596 <Frank.Li@freescale.com> wrote:
-> From 3507b3f0b13287c5a25a31b238527b5920555c5c Mon Sep 17 00:00:00 2001
-> From: Frank Li <Frank.li@freescale.com>
-> Date: Sat, 27 Sep 2008 11:41:03 +0800
-> Subject: [PATCH] Modify Highlight Color at File Context View.
-> Author and line number can be easily found when choose special commit.
->
-> Signed-off-by: Frank Li <Frank.li@freescale.com>
-> ---
+--nextPart1570916.tXdLe5F6mi
+Content-Type: text/plain;
+  charset="utf-8"
+Content-Transfer-Encoding: quoted-printable
+Content-Disposition: inline
 
-Patch applied.
+Miklos Vajna wrote:
+> On Thu, Sep 25, 2008 at 09:05:02AM +0200, Thomas Rast <trast@student.ethz=
+=2Ech> wrote:
+> > On the other hand, as near as I can tell this is a regression in
+> > builtin-merge.  Miklos, do you know if/how this can be fixed?
+>=20
+> I think Junio already fixed this in 446247d (merge: fix numerus bugs
+> around "trivial merge" area, 2008-08-23), so 1.6.0.1 or 1.6.0.2 should
+> not have this bug.
+>=20
+> Michael, could you please upgrade frm 1.6.0 and confirm your problem
+> goes away?
 
-Thanks
-Marco
+That won't help.  I decided this was a good opportunity to learn about
+'git bisect run', and bisected it to 1c7b76b (Build in merge,
+2008-07-07).  This was with bad =3D 47a765d (pulled from Shawn's repo
+this week) and good =3D v1.5.6.
+
+In case you want to check my logic, the commands are below.
+
+=2D Thomas
+
+
+* Setup:
+
+  mkdir $temp_repo
+  cd $temp_repo
+  git init
+  echo foo > foo
+  git add foo
+  git commit -m initial
+  echo a > foo
+  git commit -m a foo
+  git checkout -b side HEAD^
+  echo b > foo
+  git commit -m b foo
+  git checkout master
+
+* Bisection script:
+
+=2D- 8< --
+#!/bin/sh
+
+rm -rf $temp_repo/{bin,libexec}
+make -j3 prefix=3D$temp_repo install
+
+PATH=3D$temp_repo/bin:$PATH
+cd $temp_repo
+touch foo
+git merge side
+test -f .git/MERGE_HEAD
+s=3D$?
+git reset --hard
+if test $s !=3D 0; then
+    echo did not work
+    exit 1
+else
+    echo worked
+    exit 0
+fi
+=2D- >8 --
+
+
+
+--nextPart1570916.tXdLe5F6mi
+Content-Type: application/pgp-signature; name=signature.asc 
+Content-Description: This is a digitally signed message part.
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.0.9 (GNU/Linux)
+
+iEYEABECAAYFAkjeQEAACgkQqUud07tmzP2t9QCghBXVy5avHzkl6VFjSlzoIoW6
+hw4AnR8niEQTgPY3AojzmGblkEp9iOcz
+=qNds
+-----END PGP SIGNATURE-----
+
+--nextPart1570916.tXdLe5F6mi--
