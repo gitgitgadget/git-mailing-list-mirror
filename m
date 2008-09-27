@@ -1,83 +1,53 @@
-From: Stephen Haberman <stephen@exigencecorp.com>
-Subject: Re: [PATCH 1/3] Prepare for non-interactive merge-preserving rebase
-Date: Sat, 27 Sep 2008 14:20:07 -0500
-Organization: Exigence
-Message-ID: <20080927142007.a75a31a0.stephen@exigencecorp.com>
-References: <48D95836.6040200@op5.se>
-	<20080923162211.d4b15373.stephen@exigencecorp.com>
-	<48DE7386.2080808@op5.se>
+From: Johannes Sixt <johannes.sixt@telecom.at>
+Subject: Re: [PATCH 1/4] mingw: remove use of _getdrive() from lstat/fstat
+Date: Sat, 27 Sep 2008 21:38:10 +0200
+Message-ID: <200809272138.11305.johannes.sixt@telecom.at>
+References: <20080927083945.GZ21650@dpotapov.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
+Content-Type: text/plain;
+  charset="iso-8859-1"
 Content-Transfer-Encoding: 7bit
-Cc: Git Mailing List <git@vger.kernel.org>,
-	Junio C Hamano <gitster@pobox.com>,
-	Shawn Pearce <spearce@spearce.org>
-To: Andreas Ericsson <ae@op5.se>
-X-From: git-owner@vger.kernel.org Sat Sep 27 21:21:31 2008
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+	"Shawn O. Pearce" <spearce@spearce.org>,
+	Alex Riesen <raa.lkml@gmail.com>,
+	Marcus Griep <marcus@griep.us>
+To: Dmitry Potapov <dpotapov@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Sep 27 21:40:39 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KjfM9-0005Wc-IA
-	for gcvg-git-2@gmane.org; Sat, 27 Sep 2008 21:21:30 +0200
+	id 1Kjfef-0001tD-Ij
+	for gcvg-git-2@gmane.org; Sat, 27 Sep 2008 21:40:38 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753697AbYI0TUU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 27 Sep 2008 15:20:20 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753593AbYI0TUU
-	(ORCPT <rfc822;git-outgoing>); Sat, 27 Sep 2008 15:20:20 -0400
-Received: from smtp142.sat.emailsrvr.com ([66.216.121.142]:56362 "EHLO
-	smtp142.sat.emailsrvr.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753531AbYI0TUT (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 27 Sep 2008 15:20:19 -0400
-Received: from relay4.relay.sat.mlsrvr.com (localhost [127.0.0.1])
-	by relay4.relay.sat.mlsrvr.com (SMTP Server) with ESMTP id 5A03A27B101;
-	Sat, 27 Sep 2008 15:20:17 -0400 (EDT)
-Received: by relay4.relay.sat.mlsrvr.com (Authenticated sender: stephen-AT-exigencecorp.com) with ESMTP id BCCA3277A1F;
-	Sat, 27 Sep 2008 15:20:16 -0400 (EDT)
-In-Reply-To: <48DE7386.2080808@op5.se>
-X-Mailer: Sylpheed 2.5.0beta3 (GTK+ 2.10.14; i686-pc-mingw32)
+	id S1752970AbYI0TiP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 27 Sep 2008 15:38:15 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752681AbYI0TiP
+	(ORCPT <rfc822;git-outgoing>); Sat, 27 Sep 2008 15:38:15 -0400
+Received: from smtp5.srv.eunet.at ([193.154.160.227]:48398 "EHLO
+	smtp5.srv.eunet.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752595AbYI0TiO (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 27 Sep 2008 15:38:14 -0400
+Received: from dx.sixt.local (at00d01-adsl-194-118-045-019.nextranet.at [194.118.45.19])
+	by smtp5.srv.eunet.at (Postfix) with ESMTP id 5226D13A30C;
+	Sat, 27 Sep 2008 21:38:12 +0200 (CEST)
+Received: from localhost (localhost [IPv6:::1])
+	by dx.sixt.local (Postfix) with ESMTP id 0EBB328EB9;
+	Sat, 27 Sep 2008 21:38:11 +0200 (CEST)
+User-Agent: KMail/1.9.9
+In-Reply-To: <20080927083945.GZ21650@dpotapov.dyndns.org>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/96918>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/96919>
 
+On Samstag, 27. September 2008, Dmitry Potapov wrote:
+> The field device is not used by Git, and putting the number of the
+> current device is meaningless anyway.
 
-> Stephen, are you using this in production?
+Acked-by: Johannes Sixt <johannes.sixt@telecom.at>
 
-Kind of--I have not distributed a patched version of pull. But I have
-written test cases on our side and manually executing `GIT_EDITOR=:
-git rebase -i -p` works very well.
-
-Past occurrences aside, no one has needed to rebase a local merge yet.
-
-> How's it turning out?
-
-I think it's great, but the primary problem will be getting devs to
-actually remember to use it. E.g. I don't think they will type out:
-
-    git pull --rebase --preserve-rebase
-
-Every time they pull. And they definitely don't do our current hack:
-
-    git fetch
-    GIT_EDITOR=: git rebase -i -p
-
-I do have a wrapper shell script for people to use, but it hasn't seen
-wide adoption yet. We have a draconian hook script that tries to
-detect merges that should have been rebases and reject them, but
-it's disabled for tweaking right now--when it gets turned back on,
-I think more people will use the script.
-
-In the long term, having "branch.name.preservemerges" and
-"branch.autosetuppreservemerges" config options to parallel the
-"branch.name.rebase" option and get us back to just "git pull"
-would be great.
-
-I've been meaning to submit patches for these two config options--I
-figure I can hunt down how "branch.name.rebase" works and do the
-appropriate copy/paste, but I haven't dedicated any time to it yet.
-
-Thanks,
-Stephen
+-- Hannes
