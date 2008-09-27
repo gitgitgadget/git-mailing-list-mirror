@@ -1,108 +1,67 @@
-From: Dmitry Potapov <dpotapov@gmail.com>
-Subject: Re: [PATCH 4/4] cygwin: Use native Win32 API for stat
-Date: Sun, 28 Sep 2008 01:54:06 +0400
-Message-ID: <20080927215406.GG21650@dpotapov.dyndns.org>
-References: <20080927084349.GC21650@dpotapov.dyndns.org> <200809272035.03833.johannes.sixt@telecom.at>
+From: Nanako Shiraishi <nanako3@lavabit.com>
+Subject: Re: [PATCH] for-each-ref: Fix --format=%(subject) for log message without newlines
+Date: Sun, 28 Sep 2008 07:08:58 +0900
+Message-ID: <20080928070858.6117@nanako3.lavabit.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-	"Shawn O. Pearce" <spearce@spearce.org>,
-	Alex Riesen <raa.lkml@gmail.com>,
-	Marcus Griep <marcus@griep.us>
-To: Johannes Sixt <johannes.sixt@telecom.at>
-X-From: git-owner@vger.kernel.org Sat Sep 27 23:55:23 2008
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Cc: git@vger.kernel.org, "Shawn O. Pearce" <spearce@spearce.org>
+To: Johan Herland <johan@herland.net>
+X-From: git-owner@vger.kernel.org Sun Sep 28 00:12:42 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Kjhl3-0004y8-M3
-	for gcvg-git-2@gmane.org; Sat, 27 Sep 2008 23:55:22 +0200
+	id 1Kji1m-0000T4-JW
+	for gcvg-git-2@gmane.org; Sun, 28 Sep 2008 00:12:39 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753030AbYI0VyN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 27 Sep 2008 17:54:13 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753040AbYI0VyN
-	(ORCPT <rfc822;git-outgoing>); Sat, 27 Sep 2008 17:54:13 -0400
-Received: from nf-out-0910.google.com ([64.233.182.191]:35880 "EHLO
-	nf-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752364AbYI0VyM (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 27 Sep 2008 17:54:12 -0400
-Received: by nf-out-0910.google.com with SMTP id d3so500678nfc.21
-        for <git@vger.kernel.org>; Sat, 27 Sep 2008 14:54:10 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:cc:subject
-         :message-id:references:mime-version:content-type:content-disposition
-         :in-reply-to:user-agent;
-        bh=Wu7TBr7Q7i6ix+37wgvFTPSUDil6o3AdmPY5W+gKzs4=;
-        b=AgEasRh0MFpZTTa/Nr1gst4ntIqNf7LR85M6KwjzFSJdfH/IsKF86mp+NVUl8bu7Cm
-         yGcviiJWj0SJ7i4ZVDD/CjNWnnJApotVbYpgi9l3gd/i9AiZxJllwdM7EjNAba9isPzy
-         qs40NcN7yYkSLaLwfaVQI7v+Ze6fIOfXDKMi8=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        b=pYJSO+0x7KbiToYaekdmmpjR1yu8jKQmep3Q7QEMxDVOH7tW86/iT3MLyOm/cGsQJ0
-         Wv0wTyZF41s5VYa1suH9f0nYeHxzNOx9she2Icnz8gzz3tlgHZgYbMV1PvmoGVOeUQmc
-         Bj0/hAuPfJTi4kcTXxVo9R/aJf9/1uBS9hAt8=
-Received: by 10.210.82.7 with SMTP id f7mr3666902ebb.194.1222552450641;
-        Sat, 27 Sep 2008 14:54:10 -0700 (PDT)
-Received: from localhost (ppp85-141-151-122.pppoe.mtu-net.ru [85.141.151.122])
-        by mx.google.com with ESMTPS id 23sm826069eya.7.2008.09.27.14.54.08
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Sat, 27 Sep 2008 14:54:09 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <200809272035.03833.johannes.sixt@telecom.at>
-User-Agent: Mutt/1.5.13 (2006-08-11)
+	id S1752532AbYI0WJc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 27 Sep 2008 18:09:32 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753366AbYI0WJc
+	(ORCPT <rfc822;git-outgoing>); Sat, 27 Sep 2008 18:09:32 -0400
+Received: from karen.lavabit.com ([72.249.41.33]:60583 "EHLO karen.lavabit.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751670AbYI0WJb (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 27 Sep 2008 18:09:31 -0400
+Received: from c.earth.lavabit.com (c.earth.lavabit.com [192.168.111.12])
+	by karen.lavabit.com (Postfix) with ESMTP id 221EDC7B61;
+	Sat, 27 Sep 2008 17:09:31 -0500 (CDT)
+Received: from 2699.lavabit.com (212.62.97.20)
+	by lavabit.com with ESMTP id K1UREYFU2TF1; Sat, 27 Sep 2008 17:09:31 -0500
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws; s=lavabit; d=lavabit.com;
+  b=KpLCqdQ5ru9tn5oH3fDrvJbGelTqZkqMKQm+DeydbXHqwfXPkilGR/MQ7B/duXt9eRhgxZCUKKaTyjMkFYPjdYNEMR4rfuTFP6rrLDVNGfowNE1LHsh1PSGpivP9KQkw9adTfPRmVKLqWZCRcsPIpx7N9J3vTCEiP8wX7kkiT7g=;
+  h=From:To:Cc:Date:Subject:MIME-Version:Content-Type:Content-Transfer-Encoding:Message-Id;
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/96921>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/96922>
 
-On Sat, Sep 27, 2008 at 08:35:03PM +0200, Johannes Sixt wrote:
-> 
-> > +core.cygwinNativeStat::
-> 
-> This name is *really* odd, for two reasons:
-> 
-> - If I read "native" in connection with Windows, I would understand Windows's 
-> implementation as "native". Cygwin is not native - it's a bolted-on feature.
-> 
-> - This name talks about the implementation, not about its effect.
-> 
-> Perhaps a better name would be core.ignoreCygwinFSFeatures, and the 
-> description would only mention that setting this to true (the default) makes 
-> many operations much faster, but makes it impossible to use File System 
-> Features A and B and C in the repository. "If you need one of these features, 
-> set this to false."
-> 
-> (And after writing above paragraphs I notice, that you actually really meant 
-> Windows's "native" stat; see how confusing the name is?)
+Johan Herland <johan@herland.net> writes:
 
-It was Shawn's suggestion. I don't care much about the name as long as
-it is explained in the documentation... Therefore, I accepted what Shawn
-said without giving it any thought. Now, when you bring this name to my
-attention, I believe core.useCygwinStat (in the opposite to the current
-core.cygwinNativeStat) would be a better name. Your name is okay too,
-but a bit too long for my taste and not specific enough (I suppose
-Cygwin does many FS related tricks). Anyway, I don't have a strong
-opinion here, so just whatever most people like is fine with me :)
+>  builtin-for-each-ref.c |    4 ++--
+>  1 files changed, 2 insertions(+), 2 deletions(-)
+>
+> diff --git a/builtin-for-each-ref.c b/builtin-for-each-ref.c
+> index 9b44092..e59bd80 100644
+> --- a/builtin-for-each-ref.c
+> +++ b/builtin-for-each-ref.c
+> @@ -321,8 +321,8 @@ static const char *find_wholine(const char *who, int wholen, const char *buf, un
+>  static const char *copy_line(const char *buf)
+>  {
+>  	const char *eol = strchr(buf, '\n');
+> -	if (!eol)
+> -		return "";
+> +	if (!eol) // simulate strchrnul()
+> +		eol = buf + strlen(buf);
+>  	return xmemdupz(buf, eol - buf);
+>  }
 
-> 
-> > +static inline void filetime_to_timespec(const FILETIME *ft, struct
-> > timespec *ts) +{
-> > +	long long winTime = ((long long)ft->dwHighDateTime << 32) +
-> > ft->dwLowDateTime; +	winTime -= 116444736000000000LL; /* Windows to Unix
-> > Epoch conversion */ +	ts->tv_sec = (time_t)(winTime/10000000); /*
-> > 100-nanosecond interval to seconds */ +	ts->tv_nsec = (long)(winTime -
-> > ts->tv_sec*10000000LL) * 100; /* nanoseconds */ +}
-> 
-> Shorter lines in this function would be appreciated (and not just because my 
-> MUA can't deal with them ;).
+Why does this C++ style comment talk about "simulate"?
 
-I am sorry, I did not notice that the line got longer than 80 columns.
-I will resent the patch once the issue with the name of the option is
-resolved.
+Don't other parts of git already use strchrnul()?
 
-Dmitry
+-- 
+Nanako Shiraishi
+http://ivory.ap.teacup.com/nanako3/
