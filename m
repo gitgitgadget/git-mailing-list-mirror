@@ -1,91 +1,83 @@
-From: Johannes Sixt <johannes.sixt@telecom.at>
-Subject: Re: [PATCH 4/4] cygwin: Use native Win32 API for stat
-Date: Sat, 27 Sep 2008 20:35:03 +0200
-Message-ID: <200809272035.03833.johannes.sixt@telecom.at>
-References: <20080927084349.GC21650@dpotapov.dyndns.org>
+From: Stephen Haberman <stephen@exigencecorp.com>
+Subject: Re: [PATCH 1/3] Prepare for non-interactive merge-preserving rebase
+Date: Sat, 27 Sep 2008 14:20:07 -0500
+Organization: Exigence
+Message-ID: <20080927142007.a75a31a0.stephen@exigencecorp.com>
+References: <48D95836.6040200@op5.se>
+	<20080923162211.d4b15373.stephen@exigencecorp.com>
+	<48DE7386.2080808@op5.se>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
+Content-Type: text/plain; charset=US-ASCII
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-	"Shawn O. Pearce" <spearce@spearce.org>,
-	Alex Riesen <raa.lkml@gmail.com>,
-	Marcus Griep <marcus@griep.us>
-To: Dmitry Potapov <dpotapov@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Sep 27 20:36:22 2008
+Cc: Git Mailing List <git@vger.kernel.org>,
+	Junio C Hamano <gitster@pobox.com>,
+	Shawn Pearce <spearce@spearce.org>
+To: Andreas Ericsson <ae@op5.se>
+X-From: git-owner@vger.kernel.org Sat Sep 27 21:21:31 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KjeeT-0002LW-Ac
-	for gcvg-git-2@gmane.org; Sat, 27 Sep 2008 20:36:21 +0200
+	id 1KjfM9-0005Wc-IA
+	for gcvg-git-2@gmane.org; Sat, 27 Sep 2008 21:21:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753445AbYI0SfK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 27 Sep 2008 14:35:10 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753427AbYI0SfK
-	(ORCPT <rfc822;git-outgoing>); Sat, 27 Sep 2008 14:35:10 -0400
-Received: from smtp1.srv.eunet.at ([193.154.160.119]:39730 "EHLO
-	smtp1.srv.eunet.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753383AbYI0SfJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 27 Sep 2008 14:35:09 -0400
-Received: from dx.sixt.local (at00d01-adsl-194-118-045-019.nextranet.at [194.118.45.19])
-	by smtp1.srv.eunet.at (Postfix) with ESMTP id 9C91333B4C;
-	Sat, 27 Sep 2008 20:35:04 +0200 (CEST)
-Received: from localhost (localhost [IPv6:::1])
-	by dx.sixt.local (Postfix) with ESMTP id E3553280CD;
-	Sat, 27 Sep 2008 20:35:03 +0200 (CEST)
-User-Agent: KMail/1.9.9
-In-Reply-To: <20080927084349.GC21650@dpotapov.dyndns.org>
-Content-Disposition: inline
+	id S1753697AbYI0TUU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 27 Sep 2008 15:20:20 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753593AbYI0TUU
+	(ORCPT <rfc822;git-outgoing>); Sat, 27 Sep 2008 15:20:20 -0400
+Received: from smtp142.sat.emailsrvr.com ([66.216.121.142]:56362 "EHLO
+	smtp142.sat.emailsrvr.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753531AbYI0TUT (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 27 Sep 2008 15:20:19 -0400
+Received: from relay4.relay.sat.mlsrvr.com (localhost [127.0.0.1])
+	by relay4.relay.sat.mlsrvr.com (SMTP Server) with ESMTP id 5A03A27B101;
+	Sat, 27 Sep 2008 15:20:17 -0400 (EDT)
+Received: by relay4.relay.sat.mlsrvr.com (Authenticated sender: stephen-AT-exigencecorp.com) with ESMTP id BCCA3277A1F;
+	Sat, 27 Sep 2008 15:20:16 -0400 (EDT)
+In-Reply-To: <48DE7386.2080808@op5.se>
+X-Mailer: Sylpheed 2.5.0beta3 (GTK+ 2.10.14; i686-pc-mingw32)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/96917>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/96918>
 
-On Samstag, 27. September 2008, Dmitry Potapov wrote:
-> lstat/stat functions in Cygwin are very slow, because they try to emulate
-> some *nix things that Git does not actually need. This patch adds Win32
-> specific implementation of these functions for Cygwin.
->
-> This implementation handles most situation directly but in some rare cases
-> it falls back on the implementation provided for Cygwin.
 
-Even though I was concerned about code duplication earlier, with the 
-factorization that you do in this series this is acceptable, in particular, 
-since working out at a solution that deals with the time_t vs. timespec 
-difference we would need dirty tricks that are not worth it.
+> Stephen, are you using this in production?
 
-(But see my comment about get_file_attr() in a separate mail.)
+Kind of--I have not distributed a patched version of pull. But I have
+written test cases on our side and manually executing `GIT_EDITOR=:
+git rebase -i -p` works very well.
 
-> +core.cygwinNativeStat::
+Past occurrences aside, no one has needed to rebase a local merge yet.
 
-This name is *really* odd, for two reasons:
+> How's it turning out?
 
-- If I read "native" in connection with Windows, I would understand Windows's 
-implementation as "native". Cygwin is not native - it's a bolted-on feature.
+I think it's great, but the primary problem will be getting devs to
+actually remember to use it. E.g. I don't think they will type out:
 
-- This name talks about the implementation, not about its effect.
+    git pull --rebase --preserve-rebase
 
-Perhaps a better name would be core.ignoreCygwinFSFeatures, and the 
-description would only mention that setting this to true (the default) makes 
-many operations much faster, but makes it impossible to use File System 
-Features A and B and C in the repository. "If you need one of these features, 
-set this to false."
+Every time they pull. And they definitely don't do our current hack:
 
-(And after writing above paragraphs I notice, that you actually really meant 
-Windows's "native" stat; see how confusing the name is?)
+    git fetch
+    GIT_EDITOR=: git rebase -i -p
 
-> +static inline void filetime_to_timespec(const FILETIME *ft, struct
-> timespec *ts) +{
-> +	long long winTime = ((long long)ft->dwHighDateTime << 32) +
-> ft->dwLowDateTime; +	winTime -= 116444736000000000LL; /* Windows to Unix
-> Epoch conversion */ +	ts->tv_sec = (time_t)(winTime/10000000); /*
-> 100-nanosecond interval to seconds */ +	ts->tv_nsec = (long)(winTime -
-> ts->tv_sec*10000000LL) * 100; /* nanoseconds */ +}
+I do have a wrapper shell script for people to use, but it hasn't seen
+wide adoption yet. We have a draconian hook script that tries to
+detect merges that should have been rebases and reject them, but
+it's disabled for tweaking right now--when it gets turned back on,
+I think more people will use the script.
 
-Shorter lines in this function would be appreciated (and not just because my 
-MUA can't deal with them ;).
+In the long term, having "branch.name.preservemerges" and
+"branch.autosetuppreservemerges" config options to parallel the
+"branch.name.rebase" option and get us back to just "git pull"
+would be great.
 
--- Hannes
+I've been meaning to submit patches for these two config options--I
+figure I can hunt down how "branch.name.rebase" works and do the
+appropriate copy/paste, but I haven't dedicated any time to it yet.
+
+Thanks,
+Stephen
