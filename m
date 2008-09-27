@@ -1,93 +1,113 @@
-From: Dmitry Potapov <dpotapov@gmail.com>
-Subject: Re: [PATCH v2] Add a "fast stat" mode for Cygwin
-Date: Sat, 27 Sep 2008 14:39:11 +0400
-Message-ID: <20080927103911.GD21650@dpotapov.dyndns.org>
-References: <20080923140144.GN21650@dpotapov.dyndns.org> <1222498926-30635-1-git-send-email-marcus@griep.us>
+From: Nanako Shiraishi <nanako3@lavabit.com>
+Subject: [PATCH] Add contrib/rerere-train script
+Date: Sat, 27 Sep 2008 20:44:15 +0900
+Message-ID: <20080927204415.6117@nanako3.lavabit.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Git Mailing List <git@vger.kernel.org>,
-	Junio C Hamano <gitster@pobox.com>,
-	"Shawn O. Pearce" <spearce@spearce.org>,
-	Alex Riesen <raa.lkml@gmail.com>,
-	Johannes Sixt <johannes.sixt@telecom.at>
-To: Marcus Griep <marcus@griep.us>
-X-From: git-owner@vger.kernel.org Sat Sep 27 12:40:40 2008
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Cc: git@vger.kernel.org
+To: "Shawn O. Pearce" <spearce@spearce.org>
+X-From: git-owner@vger.kernel.org Sat Sep 27 13:49:13 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KjXE7-0007GZ-Uy
-	for gcvg-git-2@gmane.org; Sat, 27 Sep 2008 12:40:40 +0200
+	id 1KjYIN-0005sr-9A
+	for gcvg-git-2@gmane.org; Sat, 27 Sep 2008 13:49:07 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752284AbYI0KjS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 27 Sep 2008 06:39:18 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752139AbYI0KjS
-	(ORCPT <rfc822;git-outgoing>); Sat, 27 Sep 2008 06:39:18 -0400
-Received: from ey-out-2122.google.com ([74.125.78.27]:29909 "EHLO
-	ey-out-2122.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752074AbYI0KjR (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 27 Sep 2008 06:39:17 -0400
-Received: by ey-out-2122.google.com with SMTP id 6so403673eyi.37
-        for <git@vger.kernel.org>; Sat, 27 Sep 2008 03:39:15 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:cc:subject
-         :message-id:references:mime-version:content-type:content-disposition
-         :in-reply-to:user-agent;
-        bh=MlVBWzjnn8J/oDaMiANN6VMSiq+wjR1mguDmXjyeOFc=;
-        b=mg4AnSTcfuJABTgWg5Xtw6DKba0tT8Vm54njL9a6x8wSshX9l03aD9RTnkS2uj8Lbl
-         blOYHQbpN/ijHhgrQi6HYwGugd7YeVXtSwMp32RnCSyeBXY6zTKFw/2Bj/p35s0AwwrX
-         R5z9NSVqDTZksl9XDic9zbuWvT3xct6XG5kz0=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        b=NfMk7wjrWhVq64NaKOGrj37mrRPEXul0FlOI/9d5C7OKc9jgqoqSdfFW6SL5aeX62k
-         OWrgMIUdhPD2T4ZIajkrrbuHsybx4Ske5eH4yfnBh9Rpj7CLZ47LtkqJbgagOen267tz
-         3fm8Crvh1/f0ud3Ntti8weo51AEXqn2VqtWng=
-Received: by 10.210.16.16 with SMTP id 16mr2902404ebp.35.1222511955037;
-        Sat, 27 Sep 2008 03:39:15 -0700 (PDT)
-Received: from localhost ( [85.141.151.122])
-        by mx.google.com with ESMTPS id 7sm5574286eyg.0.2008.09.27.03.39.13
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Sat, 27 Sep 2008 03:39:14 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <1222498926-30635-1-git-send-email-marcus@griep.us>
-User-Agent: Mutt/1.5.13 (2006-08-11)
+	id S1751708AbYI0Loz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 27 Sep 2008 07:44:55 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751557AbYI0Loz
+	(ORCPT <rfc822;git-outgoing>); Sat, 27 Sep 2008 07:44:55 -0400
+Received: from karen.lavabit.com ([72.249.41.33]:50309 "EHLO karen.lavabit.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751152AbYI0Loy (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 27 Sep 2008 07:44:54 -0400
+Received: from d.earth.lavabit.com (d.earth.lavabit.com [192.168.111.13])
+	by karen.lavabit.com (Postfix) with ESMTP id E6B32C7B1E;
+	Sat, 27 Sep 2008 06:44:53 -0500 (CDT)
+Received: from 9957.lavabit.com (212.62.97.21)
+	by lavabit.com with ESMTP id XBF8SR5KDID2; Sat, 27 Sep 2008 06:44:53 -0500
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws; s=lavabit; d=lavabit.com;
+  b=Umd850C0GoD/UBKIdw9/9iJuf8G8gRXgK2r+D+O4QsETMxDbiRgLg0OFwR0xAMpdxieo2KT8AdGutp6b6lNuMhI7JUjLMziDIeBA/mJQUHXc5pWWFsKtTrW1mP7PsSEv4nfO5gbNebWfFDjlQUGnwfwNoChbd/VygcKj9ctTxfs=;
+  h=From:To:Cc:Date:Subject:MIME-Version:Content-Type:Content-Transfer-Encoding:Message-Id;
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/96910>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/96911>
 
-Hi Marcus,
+This script takes a range of commits (e.g. maint..next) as its arguments,
+recreates merge commits in the range to prime rr-cache database.
 
-On Sat, Sep 27, 2008 at 03:02:06AM -0400, Marcus Griep wrote:
-> 
->  This is a substitute patch that takes care of many of the concerns already
->  posted to this thread regarding the patch.  Sorry if it steps on your toes,
->  Dmitry.  You began scratching my itch, so I wanted to jump in and scratch
->  some more.
+Signed-off-by: Nanako Shiraishi <nanako3@lavabit.com>
+---
+ contrib/rerere-train.sh |   52 +++++++++++++++++++++++++++++++++++++++++++++++
+ 1 files changed, 52 insertions(+), 0 deletions(-)
+ create mode 100755 contrib/rerere-train.sh
 
-I am sorry I was not able to send my patches earlier. I had them ready
-by the end of the day when we had the discussion, but I have not had an
-opportunity to test it on Windows till today.
+diff --git a/contrib/rerere-train.sh b/contrib/rerere-train.sh
+new file mode 100755
+index 0000000..2cfe1b9
+--- /dev/null
++++ b/contrib/rerere-train.sh
+@@ -0,0 +1,52 @@
++#!/bin/sh
++# Copyright (c) 2008, Nanako Shiraishi
++# Prime rerere database from existing merge commits
++
++me=rerere-train
++USAGE="$me rev-list-args"
++
++SUBDIRECTORY_OK=Yes
++OPTIONS_SPEC=
++. git-sh-setup
++require_work_tree
++cd_to_toplevel
++
++# Remember original branch
++branch=$(git symbolic-ref -q HEAD) ||
++original_HEAD=$(git rev-parse --verify HEAD) || {
++	echo >&2 "Not on any branch and no commit yet?"
++	exit 1
++}
++
++mkdir -p "$GIT_DIR/rr-cache" || exit
++
++git rev-list --parents "$@" |
++while read commit parent1 other_parents
++do
++	if test -z "$other_parents"
++	then
++		# Skip non-merges
++		continue
++	fi
++	git checkout -q "$parent1^0"
++	if git merge $other_parents >/dev/null 2>&1
++	then
++		# Cleanly merges
++		continue
++	fi
++	if test -s "$GIT_DIR/MERGE_RR"
++	then
++		git show -s --pretty=format:"Learning from %h %s" "$commit"
++		git rerere
++		git checkout -q $commit -- .
++		git rerere
++	fi
++	git reset -q --hard
++done
++
++if test -z "$branch"
++then
++	git checkout "$original_HEAD"
++else
++	git checkout "${branch#refs/heads/}"
++fi
+-- 
+1.6.0.2
 
-I have only skimmed over your patch, but there are a few changes that
-I really dislike about your patch. You changed the semantic of _choice
-functions. While I use it as stubs to choose what implementation to use,
-you make them part of implementation, which is always called. So I do
-not understand why you left the comment saying that they are only stubs
-and then why you need function pointers at all then.
-
-Also, you made some changes to MinGW (I don't know if you tested it),
-but any change like removing _getdrive() from MinGW version is better
-to move into separately patch (or, at least, clearly state them in the
-commit comment).
-
-Anyway, thanks for your efforts, but if you want to go ahead with some
-other match of mine (especially Windows related), please, let me know,
-so we can avoid stepping on each other toes.
-
-Dmitry
+-- 
+Nanako Shiraishi
+http://ivory.ap.teacup.com/nanako3/
