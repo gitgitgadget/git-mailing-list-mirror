@@ -1,73 +1,93 @@
-From: "Jonathan del Strother" <maillist@steelskies.com>
-Subject: Re: [PATCH] Add OS X support to the pre-auto-gc example hook
-Date: Sat, 27 Sep 2008 10:53:31 +0100
-Message-ID: <57518fd10809270253s4c07318bjd54c7d86460ce7d7@mail.gmail.com>
-References: <1222209803-4401-1-git-send-email-jon.delStrother@bestbefore.tv>
-	 <20080925232008.GO23137@genesis.frugalware.org>
+From: Dmitry Potapov <dpotapov@gmail.com>
+Subject: Re: [PATCH v2] Add a "fast stat" mode for Cygwin
+Date: Sat, 27 Sep 2008 14:39:11 +0400
+Message-ID: <20080927103911.GD21650@dpotapov.dyndns.org>
+References: <20080923140144.GN21650@dpotapov.dyndns.org> <1222498926-30635-1-git-send-email-marcus@griep.us>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-2
-Content-Transfer-Encoding: base64
-Cc: git@vger.kernel.org
-To: "Miklos Vajna" <vmiklos@frugalware.org>
-X-From: git-owner@vger.kernel.org Sat Sep 27 11:55:04 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: Git Mailing List <git@vger.kernel.org>,
+	Junio C Hamano <gitster@pobox.com>,
+	"Shawn O. Pearce" <spearce@spearce.org>,
+	Alex Riesen <raa.lkml@gmail.com>,
+	Johannes Sixt <johannes.sixt@telecom.at>
+To: Marcus Griep <marcus@griep.us>
+X-From: git-owner@vger.kernel.org Sat Sep 27 12:40:40 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KjWVz-0003lG-EN
-	for gcvg-git-2@gmane.org; Sat, 27 Sep 2008 11:55:03 +0200
+	id 1KjXE7-0007GZ-Uy
+	for gcvg-git-2@gmane.org; Sat, 27 Sep 2008 12:40:40 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752133AbYI0Jxd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 27 Sep 2008 05:53:33 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752103AbYI0Jxd
-	(ORCPT <rfc822;git-outgoing>); Sat, 27 Sep 2008 05:53:33 -0400
-Received: from wf-out-1314.google.com ([209.85.200.171]:54585 "EHLO
-	wf-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752000AbYI0Jxc (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 27 Sep 2008 05:53:32 -0400
-Received: by wf-out-1314.google.com with SMTP id 27so1472985wfd.4
-        for <git@vger.kernel.org>; Sat, 27 Sep 2008 02:53:31 -0700 (PDT)
+	id S1752284AbYI0KjS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 27 Sep 2008 06:39:18 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752139AbYI0KjS
+	(ORCPT <rfc822;git-outgoing>); Sat, 27 Sep 2008 06:39:18 -0400
+Received: from ey-out-2122.google.com ([74.125.78.27]:29909 "EHLO
+	ey-out-2122.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752074AbYI0KjR (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 27 Sep 2008 06:39:17 -0400
+Received: by ey-out-2122.google.com with SMTP id 6so403673eyi.37
+        for <git@vger.kernel.org>; Sat, 27 Sep 2008 03:39:15 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:sender
-         :to:subject:cc:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:references
-         :x-google-sender-auth;
-        bh=PIM7eltF+/e4rcMRJ8wU79PBKNRNbvdvjc9CNPxwyL4=;
-        b=Q37hXUdWaq6hqChu6QH7kmct7j+F2FOMQoIe8eWC1HosuuuhZRvRTkT4y6VWMwh0b7
-         id2Ds9TDeuKcoi0W7hISb9c85J8qE50fWaQvNTr/hUD2Xy5OOiBAk3L8VP1GljStgWsC
-         sMjx9BDXHepPUzq4O/QzpWxl9oupt9JwqsBqg=
+        h=domainkey-signature:received:received:date:from:to:cc:subject
+         :message-id:references:mime-version:content-type:content-disposition
+         :in-reply-to:user-agent;
+        bh=MlVBWzjnn8J/oDaMiANN6VMSiq+wjR1mguDmXjyeOFc=;
+        b=mg4AnSTcfuJABTgWg5Xtw6DKba0tT8Vm54njL9a6x8wSshX9l03aD9RTnkS2uj8Lbl
+         blOYHQbpN/ijHhgrQi6HYwGugd7YeVXtSwMp32RnCSyeBXY6zTKFw/2Bj/p35s0AwwrX
+         R5z9NSVqDTZksl9XDic9zbuWvT3xct6XG5kz0=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=message-id:date:from:sender:to:subject:cc:in-reply-to:mime-version
-         :content-type:content-transfer-encoding:content-disposition
-         :references:x-google-sender-auth;
-        b=snLXGPXQbvsb62g8q/quMs2IGQrw51H779VjUQ2zQQFOzzgAHmeu9smMPkNMUj+yqY
-         /B7EtOy1LbUZWqC2b8Tw1Ce0x/d0zhxT7Wd2iVRXFo4ZtSunimvYHEinXvA7WUImBgFX
-         nUcp8jxATGacXj0xL/qPNo759AFwTFLL2I4Eg=
-Received: by 10.143.37.20 with SMTP id p20mr1078335wfj.252.1222509211546;
-        Sat, 27 Sep 2008 02:53:31 -0700 (PDT)
-Received: by 10.143.6.3 with HTTP; Sat, 27 Sep 2008 02:53:31 -0700 (PDT)
-In-Reply-To: <20080925232008.GO23137@genesis.frugalware.org>
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        b=NfMk7wjrWhVq64NaKOGrj37mrRPEXul0FlOI/9d5C7OKc9jgqoqSdfFW6SL5aeX62k
+         OWrgMIUdhPD2T4ZIajkrrbuHsybx4Ske5eH4yfnBh9Rpj7CLZ47LtkqJbgagOen267tz
+         3fm8Crvh1/f0ud3Ntti8weo51AEXqn2VqtWng=
+Received: by 10.210.16.16 with SMTP id 16mr2902404ebp.35.1222511955037;
+        Sat, 27 Sep 2008 03:39:15 -0700 (PDT)
+Received: from localhost ( [85.141.151.122])
+        by mx.google.com with ESMTPS id 7sm5574286eyg.0.2008.09.27.03.39.13
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Sat, 27 Sep 2008 03:39:14 -0700 (PDT)
 Content-Disposition: inline
-X-Google-Sender-Auth: 1a611a6be5507548
+In-Reply-To: <1222498926-30635-1-git-send-email-marcus@griep.us>
+User-Agent: Mutt/1.5.13 (2006-08-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/96909>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/96910>
 
-T24gRnJpLCBTZXAgMjYsIDIwMDggYXQgMTI6MjAgQU0sIE1pa2xvcyBWYWpuYSA8dm1pa2xvc0Bm
-cnVnYWx3YXJlLm9yZz4gd3JvdGU6Cj4gT24gVHVlLCBTZXAgMjMsIDIwMDggYXQgMTE6NDM6MjNQ
-TSArMDEwMCwgSm9uYXRoYW4gZGVsIFN0cm90aGVyIDxqb24uZGVsU3Ryb3RoZXJAYmVzdGJlZm9y
-ZS50dj4gd3JvdGU6Cj4+IFNoZWxsIHNjcmlwdGluZyBpc24ndCBteSBmb3J0w6ksIHN1Z2dlc3Rp
-b25zIGZvciBpbXByb3ZlbWVudHMgd291bGQgYmUKPj4gd2VsY29tZS4KPj4KPj4gK2VsaWYgdGVz
-dCAteCAvdXNyL2Jpbi9wbXNldCAmJiAoISAvdXNyL2Jpbi9wbXNldCAtZyBiYXR0IHwgZ3JlcCAt
-cSAnQmF0dGVyeSBQb3dlcicgKQo+Cj4gV2hhdCBhYm91dAo+Cj4gK2VsaWYgdGVzdCAteCAvdXNy
-L2Jpbi9wbXNldCAmJiAvdXNyL2Jpbi9wbXNldCAtZyBiYXR0IHwgZ3JlcCAtcSAnQUMgUG93ZXIn
-Cj4KPiA/Ckkgd2FzIHRyeWluZyB0byBoYW5kbGUgcG1zZXQgcmVwb3J0aW5nIGFueXRoaW5nIG90
-aGVyIHRoYW4gQmF0dGVyeQpQb3dlciAoY3VycmVudGx5IGl0IHJlcG9ydHMgZWl0aGVyIEJhdHRl
-cnksIFVQUywgb3IgQUMpLCBidXQgdGhpbmtpbmcKYWJvdXQgaXQsIGlmIHlvdSdyZSBvbiBVUFMs
-IHlvdSBwcm9iYWJseSBkb24ndCB3YW50IGdpdCBnYyBlYXRpbmcgaW50bwp5b3VyIHJlbWFpbmlu
-ZyBwb3dlci4uLgpJJ2xsIHBvc3QgYW4gdXBkYXRlZCB2ZXJzaW9uIG9uIE1vbmRheS4K
+Hi Marcus,
+
+On Sat, Sep 27, 2008 at 03:02:06AM -0400, Marcus Griep wrote:
+> 
+>  This is a substitute patch that takes care of many of the concerns already
+>  posted to this thread regarding the patch.  Sorry if it steps on your toes,
+>  Dmitry.  You began scratching my itch, so I wanted to jump in and scratch
+>  some more.
+
+I am sorry I was not able to send my patches earlier. I had them ready
+by the end of the day when we had the discussion, but I have not had an
+opportunity to test it on Windows till today.
+
+I have only skimmed over your patch, but there are a few changes that
+I really dislike about your patch. You changed the semantic of _choice
+functions. While I use it as stubs to choose what implementation to use,
+you make them part of implementation, which is always called. So I do
+not understand why you left the comment saying that they are only stubs
+and then why you need function pointers at all then.
+
+Also, you made some changes to MinGW (I don't know if you tested it),
+but any change like removing _getdrive() from MinGW version is better
+to move into separately patch (or, at least, clearly state them in the
+commit comment).
+
+Anyway, thanks for your efforts, but if you want to go ahead with some
+other match of mine (especially Windows related), please, let me know,
+so we can avoid stepping on each other toes.
+
+Dmitry
