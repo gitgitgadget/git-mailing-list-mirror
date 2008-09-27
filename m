@@ -1,77 +1,80 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: status letters consistency in log and ls-files
-Date: Fri, 26 Sep 2008 23:30:05 -0400
-Message-ID: <20080927033004.GA2477@coredump.intra.peff.net>
-References: <ee2a733e0809261128h4c50d27bq3942bd1b3b66d3ee@mail.gmail.com> <20080926224546.GB24817@coredump.intra.peff.net> <ee2a733e0809261624y72dcfb8fw7910feb2542f501c@mail.gmail.com> <20080927002949.GA25586@coredump.intra.peff.net> <ee2a733e0809262020l318b0ac3v560400d95a5ba2b7@mail.gmail.com>
+From: "Li Frank-B20596" <Frank.Li@freescale.com>
+Subject: [QGit] [PATCH] Modify Highlight Color at File Context View.
+Date: Sat, 27 Sep 2008 11:44:46 +0800
+Message-ID: <7FD1F85C96D70C4A89DA1DF7667EAE9607A217@zch01exm23.fsl.freescale.net>
+References: <gbak2u$v9b$1@ger.gmane.org> <7FD1F85C96D70C4A89DA1DF7667EAE96079EDF@zch01exm23.fsl.freescale.net> <e5bfff550809250451q578b8e10r75c043d307a63f28@mail.gmail.com> <7FD1F85C96D70C4A89DA1DF7667EAE96079FBB@zch01exm23.fsl.freescale.net> <e5bfff550809250934l47c48440m332764491ff5391@mail.gmail.com> <7FD1F85C96D70C4A89DA1DF7667EAE9607A00A@zch01exm23.fsl.freescale.net> <e5bfff550809252215v72bb4633s17b5c1a8c39f55ff@mail.gmail.com> <7FD1F85C96D70C4A89DA1DF7667EAE9607A0D9@zch01exm23.fsl.freescale.net> <e5bfff550809260337o1523995ele3333c0de9295393@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Leo Razoumov <slonik.az@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Sep 27 05:33:23 2008
+Content-Type: text/plain;
+	charset="US-ASCII"
+Content-Transfer-Encoding: 8BIT
+Cc: <git@vger.kernel.org>
+To: "Marco Costalba" <mcostalba@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Sep 27 05:46:04 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KjQYd-0002zb-8f
-	for gcvg-git-2@gmane.org; Sat, 27 Sep 2008 05:33:23 +0200
+	id 1KjQkt-0005DO-8D
+	for gcvg-git-2@gmane.org; Sat, 27 Sep 2008 05:46:03 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751726AbYI0DaJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 26 Sep 2008 23:30:09 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751772AbYI0DaJ
-	(ORCPT <rfc822;git-outgoing>); Fri, 26 Sep 2008 23:30:09 -0400
-Received: from peff.net ([208.65.91.99]:3254 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750912AbYI0DaI (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 26 Sep 2008 23:30:08 -0400
-Received: (qmail 10430 invoked by uid 111); 27 Sep 2008 03:30:06 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.32) with SMTP; Fri, 26 Sep 2008 23:30:06 -0400
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Fri, 26 Sep 2008 23:30:05 -0400
-Content-Disposition: inline
-In-Reply-To: <ee2a733e0809262020l318b0ac3v560400d95a5ba2b7@mail.gmail.com>
+	id S1751983AbYI0Dox (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 26 Sep 2008 23:44:53 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751942AbYI0Dox
+	(ORCPT <rfc822;git-outgoing>); Fri, 26 Sep 2008 23:44:53 -0400
+Received: from az33egw01.freescale.net ([192.88.158.102]:60115 "EHLO
+	az33egw01.freescale.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751818AbYI0Dow convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 26 Sep 2008 23:44:52 -0400
+Received: from az33smr01.freescale.net (az33smr01.freescale.net [10.64.34.199])
+	by az33egw01.freescale.net (8.12.11/az33egw01) with ESMTP id m8R3in52024392
+	for <git@vger.kernel.org>; Fri, 26 Sep 2008 20:44:50 -0700 (MST)
+Received: from zch01exm23.fsl.freescale.net (zch01exm23.ap.freescale.net [10.192.129.207])
+	by az33smr01.freescale.net (8.13.1/8.13.0) with ESMTP id m8R3imbM024635
+	for <git@vger.kernel.org>; Fri, 26 Sep 2008 22:44:48 -0500 (CDT)
+X-MimeOLE: Produced By Microsoft Exchange V6.5
+Content-class: urn:content-classes:message
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+Thread-Topic: [QGit] [PATCH] Modify Highlight Color at File Context View.
+Thread-Index: Ackfw+qPedz+9lIWQDO9TR1nTh/RvwAIbFQgABtiaJA=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/96900>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/96901>
 
-On Fri, Sep 26, 2008 at 11:20:03PM -0400, Leo Razoumov wrote:
+>From 3507b3f0b13287c5a25a31b238527b5920555c5c Mon Sep 17 00:00:00 2001
+From: Frank Li <Frank.li@freescale.com>
+Date: Sat, 27 Sep 2008 11:41:03 +0800
+Subject: [PATCH] Modify Highlight Color at File Context View.
+Author and line number can be easily found when choose special commit.
 
-> >   git diff --name-status
-> >
-> >  will show you the modified and deleted files. But since you are using
-> >  "-c" to show _all_ cached files, I think only ls-files can do that
-> >  (since diff is, obviously, about files with differences).
-> 
-> Moreover, git diff would not show untracked files while git ls-files
-> will include them and label '?'
+Signed-off-by: Frank Li <Frank.li@freescale.com>
+---
+ src/filecontent.cpp |    6 ++++--
+ 1 files changed, 4 insertions(+), 2 deletions(-)
 
-Yes, but that is somewhat simpler to fix, since we know that they cannot
-be part of the "git diff" output. That is, you can just append the "git
-ls-files -v -o" output. Actually, since cached files use the 'H' tag
-which doesn't conflict with git-diff, and since your goal was to combine
-the multiple output anyway, I wonder if something like this would make
-you happy:
-
-  (
-    git ls-files --exclude-standard -v -c -o &&
-    git diff --name-status --cached
-  ) |
-  perl -e '
-    my %h;
-    while(<>) {
-      chomp;
-      my ($status, $name) = split / /, $_, 2;
-      $h{$name} .= $status;
-    }
-    print "$h{$_} $_\n" foreach sort keys(%h);
-  '
-
-?
-
-Personally, I find listing every cached file makes the output hard to
-read, since any modified ones will be lost in the noise. But that is
-what you said you wanted...
-
--Peff
+diff --git a/src/filecontent.cpp b/src/filecontent.cpp
+index 28e0f91..23c2e95 100644
+--- a/src/filecontent.cpp
++++ b/src/filecontent.cpp
+@@ -576,12 +576,14 @@ void FileContent::setAnnList() {
+ 	listWidgetAnn->clear();
+ 	listWidgetAnn->addItems(sl);
+ 
+-	QBrush b(Qt::darkGray);
++	QBrush fore(Qt::darkRed);
++	QBrush back(Qt::lightGray);
+ 	QFont f(listWidgetAnn->font());
+ 	f.setBold(true);
+ 	FOREACH (QVector<int>, it, curIdLines) {
+ 		QListWidgetItem* item = listWidgetAnn->item(*it);
+-		item->setForeground(b);
++		item->setForeground(fore);
++		item->setBackground(back);
+ 		item->setFont(f);
+ 	}
+ 	/* When listWidgetAnn get focus for the first time the current
+-- 
+1.6.0.2.1172.ga5ed0
