@@ -1,67 +1,91 @@
-From: Nanako Shiraishi <nanako3@lavabit.com>
-Subject: Re: [PATCH] for-each-ref: Fix --format=%(subject) for log message without newlines
-Date: Sun, 28 Sep 2008 07:08:58 +0900
-Message-ID: <20080928070858.6117@nanako3.lavabit.com>
+From: Johan Herland <johan@herland.net>
+Subject: [PATCH] Use strchrnul() instead of strchr() plus manual workaround
+Date: Sun, 28 Sep 2008 00:24:36 +0200
+Message-ID: <200809280024.36190.johan@herland.net>
+References: <20080928070858.6117@nanako3.lavabit.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Cc: git@vger.kernel.org, "Shawn O. Pearce" <spearce@spearce.org>
-To: Johan Herland <johan@herland.net>
-X-From: git-owner@vger.kernel.org Sun Sep 28 00:12:42 2008
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 7BIT
+Cc: git@vger.kernel.org
+To: Nanako Shiraishi <nanako3@lavabit.com>,
+	"Shawn O. Pearce" <spearce@spearce.org>
+X-From: git-owner@vger.kernel.org Sun Sep 28 00:26:58 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Kji1m-0000T4-JW
-	for gcvg-git-2@gmane.org; Sun, 28 Sep 2008 00:12:39 +0200
+	id 1KjiFc-0003Fg-3g
+	for gcvg-git-2@gmane.org; Sun, 28 Sep 2008 00:26:56 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752532AbYI0WJc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 27 Sep 2008 18:09:32 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753366AbYI0WJc
-	(ORCPT <rfc822;git-outgoing>); Sat, 27 Sep 2008 18:09:32 -0400
-Received: from karen.lavabit.com ([72.249.41.33]:60583 "EHLO karen.lavabit.com"
+	id S1753424AbYI0WYu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 27 Sep 2008 18:24:50 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753425AbYI0WYu
+	(ORCPT <rfc822;git-outgoing>); Sat, 27 Sep 2008 18:24:50 -0400
+Received: from smtp.getmail.no ([84.208.20.33]:35238 "EHLO smtp.getmail.no"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751670AbYI0WJb (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 27 Sep 2008 18:09:31 -0400
-Received: from c.earth.lavabit.com (c.earth.lavabit.com [192.168.111.12])
-	by karen.lavabit.com (Postfix) with ESMTP id 221EDC7B61;
-	Sat, 27 Sep 2008 17:09:31 -0500 (CDT)
-Received: from 2699.lavabit.com (212.62.97.20)
-	by lavabit.com with ESMTP id K1UREYFU2TF1; Sat, 27 Sep 2008 17:09:31 -0500
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws; s=lavabit; d=lavabit.com;
-  b=KpLCqdQ5ru9tn5oH3fDrvJbGelTqZkqMKQm+DeydbXHqwfXPkilGR/MQ7B/duXt9eRhgxZCUKKaTyjMkFYPjdYNEMR4rfuTFP6rrLDVNGfowNE1LHsh1PSGpivP9KQkw9adTfPRmVKLqWZCRcsPIpx7N9J3vTCEiP8wX7kkiT7g=;
-  h=From:To:Cc:Date:Subject:MIME-Version:Content-Type:Content-Transfer-Encoding:Message-Id;
+	id S1753412AbYI0WYt (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 27 Sep 2008 18:24:49 -0400
+Received: from pmxchannel-daemon.no-osl-m323-srv-009-z2.isp.get.no by
+ no-osl-m323-srv-009-z2.isp.get.no
+ (Sun Java System Messaging Server 6.2-7.05 (built Sep  5 2006))
+ id <0K7V00A01KX1FO00@no-osl-m323-srv-009-z2.isp.get.no> for
+ git@vger.kernel.org; Sun, 28 Sep 2008 00:24:37 +0200 (CEST)
+Received: from smtp.getmail.no ([10.5.16.1])
+ by no-osl-m323-srv-009-z2.isp.get.no
+ (Sun Java System Messaging Server 6.2-7.05 (built Sep  5 2006))
+ with ESMTP id <0K7V00JKHKX0Y3A0@no-osl-m323-srv-009-z2.isp.get.no> for
+ git@vger.kernel.org; Sun, 28 Sep 2008 00:24:36 +0200 (CEST)
+Received: from alpha.herland ([84.215.102.95])
+ by no-osl-m323-srv-004-z1.isp.get.no
+ (Sun Java System Messaging Server 6.2-7.05 (built Sep  5 2006))
+ with ESMTP id <0K7V00JVQKX0WH10@no-osl-m323-srv-004-z1.isp.get.no> for
+ git@vger.kernel.org; Sun, 28 Sep 2008 00:24:36 +0200 (CEST)
+In-reply-to: <20080928070858.6117@nanako3.lavabit.com>
+Content-disposition: inline
+User-Agent: KMail/1.9.9
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/96922>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/96923>
 
-Johan Herland <johan@herland.net> writes:
+Also gets rid of a C++ comment.
 
->  builtin-for-each-ref.c |    4 ++--
->  1 files changed, 2 insertions(+), 2 deletions(-)
+Signed-off-by: Johan Herland <johan@herland.net>
+---
+
+On Sunday 28 September 2008, Nanako Shiraishi wrote:
+> Why does this C++ style comment talk about "simulate"?
 >
-> diff --git a/builtin-for-each-ref.c b/builtin-for-each-ref.c
-> index 9b44092..e59bd80 100644
-> --- a/builtin-for-each-ref.c
-> +++ b/builtin-for-each-ref.c
-> @@ -321,8 +321,8 @@ static const char *find_wholine(const char *who, int wholen, const char *buf, un
->  static const char *copy_line(const char *buf)
->  {
->  	const char *eol = strchr(buf, '\n');
-> -	if (!eol)
-> -		return "";
-> +	if (!eol) // simulate strchrnul()
-> +		eol = buf + strlen(buf);
->  	return xmemdupz(buf, eol - buf);
->  }
+> Don't other parts of git already use strchrnul()?
 
-Why does this C++ style comment talk about "simulate"?
+Oops. Sorry about that. The man page for strchrnul() says that it is
+a GNU extension, so I stayed away from it. Of course, I should have
+grepped the git source instead...
 
-Don't other parts of git already use strchrnul()?
+This should fix it.
 
+
+...Johan
+
+ builtin-for-each-ref.c |    4 +---
+ 1 files changed, 1 insertions(+), 3 deletions(-)
+
+diff --git a/builtin-for-each-ref.c b/builtin-for-each-ref.c
+index e59bd80..fa6c1ed 100644
+--- a/builtin-for-each-ref.c
++++ b/builtin-for-each-ref.c
+@@ -320,9 +320,7 @@ static const char *find_wholine(const char *who, int wholen, const char *buf, un
+ 
+ static const char *copy_line(const char *buf)
+ {
+-	const char *eol = strchr(buf, '\n');
+-	if (!eol) // simulate strchrnul()
+-		eol = buf + strlen(buf);
++	const char *eol = strchrnul(buf, '\n');
+ 	return xmemdupz(buf, eol - buf);
+ }
+ 
 -- 
-Nanako Shiraishi
-http://ivory.ap.teacup.com/nanako3/
+1.6.0.2.471.g47a76
