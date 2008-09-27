@@ -1,113 +1,80 @@
-From: Nanako Shiraishi <nanako3@lavabit.com>
-Subject: [PATCH] Add contrib/rerere-train script
-Date: Sat, 27 Sep 2008 20:44:15 +0900
-Message-ID: <20080927204415.6117@nanako3.lavabit.com>
+From: "Marco Costalba" <mcostalba@gmail.com>
+Subject: Re: [QGit] [PATCH] Modify Highlight Color at File Context View.
+Date: Sat, 27 Sep 2008 13:47:34 +0100
+Message-ID: <e5bfff550809270547n15a210e3y386278db00966945@mail.gmail.com>
+References: <gbak2u$v9b$1@ger.gmane.org>
+	 <7FD1F85C96D70C4A89DA1DF7667EAE96079EDF@zch01exm23.fsl.freescale.net>
+	 <e5bfff550809250451q578b8e10r75c043d307a63f28@mail.gmail.com>
+	 <7FD1F85C96D70C4A89DA1DF7667EAE96079FBB@zch01exm23.fsl.freescale.net>
+	 <e5bfff550809250934l47c48440m332764491ff5391@mail.gmail.com>
+	 <7FD1F85C96D70C4A89DA1DF7667EAE9607A00A@zch01exm23.fsl.freescale.net>
+	 <e5bfff550809252215v72bb4633s17b5c1a8c39f55ff@mail.gmail.com>
+	 <7FD1F85C96D70C4A89DA1DF7667EAE9607A0D9@zch01exm23.fsl.freescale.net>
+	 <e5bfff550809260337o1523995ele3333c0de9295393@mail.gmail.com>
+	 <7FD1F85C96D70C4A89DA1DF7667EAE9607A217@zch01exm23.fsl.freescale.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org
-To: "Shawn O. Pearce" <spearce@spearce.org>
-X-From: git-owner@vger.kernel.org Sat Sep 27 13:49:13 2008
+To: "Li Frank-B20596" <Frank.Li@freescale.com>
+X-From: git-owner@vger.kernel.org Sat Sep 27 14:48:57 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KjYIN-0005sr-9A
-	for gcvg-git-2@gmane.org; Sat, 27 Sep 2008 13:49:07 +0200
+	id 1KjZE5-0006PS-Uw
+	for gcvg-git-2@gmane.org; Sat, 27 Sep 2008 14:48:46 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751708AbYI0Loz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 27 Sep 2008 07:44:55 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751557AbYI0Loz
-	(ORCPT <rfc822;git-outgoing>); Sat, 27 Sep 2008 07:44:55 -0400
-Received: from karen.lavabit.com ([72.249.41.33]:50309 "EHLO karen.lavabit.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751152AbYI0Loy (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 27 Sep 2008 07:44:54 -0400
-Received: from d.earth.lavabit.com (d.earth.lavabit.com [192.168.111.13])
-	by karen.lavabit.com (Postfix) with ESMTP id E6B32C7B1E;
-	Sat, 27 Sep 2008 06:44:53 -0500 (CDT)
-Received: from 9957.lavabit.com (212.62.97.21)
-	by lavabit.com with ESMTP id XBF8SR5KDID2; Sat, 27 Sep 2008 06:44:53 -0500
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws; s=lavabit; d=lavabit.com;
-  b=Umd850C0GoD/UBKIdw9/9iJuf8G8gRXgK2r+D+O4QsETMxDbiRgLg0OFwR0xAMpdxieo2KT8AdGutp6b6lNuMhI7JUjLMziDIeBA/mJQUHXc5pWWFsKtTrW1mP7PsSEv4nfO5gbNebWfFDjlQUGnwfwNoChbd/VygcKj9ctTxfs=;
-  h=From:To:Cc:Date:Subject:MIME-Version:Content-Type:Content-Transfer-Encoding:Message-Id;
+	id S1752421AbYI0Mrg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 27 Sep 2008 08:47:36 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752391AbYI0Mrg
+	(ORCPT <rfc822;git-outgoing>); Sat, 27 Sep 2008 08:47:36 -0400
+Received: from fg-out-1718.google.com ([72.14.220.155]:44264 "EHLO
+	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752115AbYI0Mrg (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 27 Sep 2008 08:47:36 -0400
+Received: by fg-out-1718.google.com with SMTP id 19so910585fgg.17
+        for <git@vger.kernel.org>; Sat, 27 Sep 2008 05:47:34 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to
+         :subject:cc:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:references;
+        bh=yqW7X1l9/R1/1J0d1FRt0bTDPs9I/Zf4rW0OQCxWu6Q=;
+        b=ZpO3Pcl1YJnk7ZlfhsUaHLElYsb9hYKM9OSNqTnyB8xE6PHP5JKb3pmaBYvBLOLbPH
+         jMApDGYDwvfUdU7o1MgT/y33bVNuKCGilTlGop7Aauwu0Ic612bFiVh9XOpb7VP2xdPp
+         N+PTlJuCys+vgIdj09YVV72E2M9/ZyV068BDg=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
+         :content-type:content-transfer-encoding:content-disposition
+         :references;
+        b=IFn5OG6wSPTqN1G3kufsLFuOKvSw0e25Va2SkV+uYm8hD1Kl9RFVBJl2YIH8B6ziXe
+         btapB/oq9vAjZVQlFsYf7WjJulzCjTvT7v9KAbDCdSbXg09o6B+hah2pSTQDw4XP/z7m
+         ItLeGZ5M6tXb1drT5kv6sT9VPhOAQra7yK+4c=
+Received: by 10.180.220.5 with SMTP id s5mr1313678bkg.5.1222519654329;
+        Sat, 27 Sep 2008 05:47:34 -0700 (PDT)
+Received: by 10.180.220.15 with HTTP; Sat, 27 Sep 2008 05:47:34 -0700 (PDT)
+In-Reply-To: <7FD1F85C96D70C4A89DA1DF7667EAE9607A217@zch01exm23.fsl.freescale.net>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/96911>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/96912>
 
-This script takes a range of commits (e.g. maint..next) as its arguments,
-recreates merge commits in the range to prime rr-cache database.
+On Sat, Sep 27, 2008 at 4:44 AM, Li Frank-B20596 <Frank.Li@freescale.com> wrote:
+> From 3507b3f0b13287c5a25a31b238527b5920555c5c Mon Sep 17 00:00:00 2001
+> From: Frank Li <Frank.li@freescale.com>
+> Date: Sat, 27 Sep 2008 11:41:03 +0800
+> Subject: [PATCH] Modify Highlight Color at File Context View.
+> Author and line number can be easily found when choose special commit.
+>
+> Signed-off-by: Frank Li <Frank.li@freescale.com>
+> ---
 
-Signed-off-by: Nanako Shiraishi <nanako3@lavabit.com>
----
- contrib/rerere-train.sh |   52 +++++++++++++++++++++++++++++++++++++++++++++++
- 1 files changed, 52 insertions(+), 0 deletions(-)
- create mode 100755 contrib/rerere-train.sh
+Patch applied.
 
-diff --git a/contrib/rerere-train.sh b/contrib/rerere-train.sh
-new file mode 100755
-index 0000000..2cfe1b9
---- /dev/null
-+++ b/contrib/rerere-train.sh
-@@ -0,0 +1,52 @@
-+#!/bin/sh
-+# Copyright (c) 2008, Nanako Shiraishi
-+# Prime rerere database from existing merge commits
-+
-+me=rerere-train
-+USAGE="$me rev-list-args"
-+
-+SUBDIRECTORY_OK=Yes
-+OPTIONS_SPEC=
-+. git-sh-setup
-+require_work_tree
-+cd_to_toplevel
-+
-+# Remember original branch
-+branch=$(git symbolic-ref -q HEAD) ||
-+original_HEAD=$(git rev-parse --verify HEAD) || {
-+	echo >&2 "Not on any branch and no commit yet?"
-+	exit 1
-+}
-+
-+mkdir -p "$GIT_DIR/rr-cache" || exit
-+
-+git rev-list --parents "$@" |
-+while read commit parent1 other_parents
-+do
-+	if test -z "$other_parents"
-+	then
-+		# Skip non-merges
-+		continue
-+	fi
-+	git checkout -q "$parent1^0"
-+	if git merge $other_parents >/dev/null 2>&1
-+	then
-+		# Cleanly merges
-+		continue
-+	fi
-+	if test -s "$GIT_DIR/MERGE_RR"
-+	then
-+		git show -s --pretty=format:"Learning from %h %s" "$commit"
-+		git rerere
-+		git checkout -q $commit -- .
-+		git rerere
-+	fi
-+	git reset -q --hard
-+done
-+
-+if test -z "$branch"
-+then
-+	git checkout "$original_HEAD"
-+else
-+	git checkout "${branch#refs/heads/}"
-+fi
--- 
-1.6.0.2
-
--- 
-Nanako Shiraishi
-http://ivory.ap.teacup.com/nanako3/
+Thanks
+Marco
