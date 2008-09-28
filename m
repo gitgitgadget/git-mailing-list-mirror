@@ -1,95 +1,71 @@
-From: Thomas Rast <trast@student.ethz.ch>
-Subject: Re: having to pull twice
-Date: Sun, 28 Sep 2008 17:26:20 +0200
-Message-ID: <200809281726.23062.trast@student.ethz.ch>
-References: <fb6605670809241758r186eef51sc6ed6d334a64495d@mail.gmail.com> <200809271616.32082.trast@student.ethz.ch> <20080928151135.GF23137@genesis.frugalware.org>
+From: Jeff King <peff@peff.net>
+Subject: Re: Implementation of a "textconv" filter for easy custom diff.
+Date: Sun, 28 Sep 2008 12:11:07 -0400
+Message-ID: <20080928161106.GA30199@coredump.intra.peff.net>
+References: <1222567618-22156-1-git-send-email-Matthieu.Moy@imag.fr> <20080928041040.GA24214@coredump.intra.peff.net> <vpqd4io1tla.fsf@bauges.imag.fr>
 Mime-Version: 1.0
-Content-Type: multipart/signed;
-  boundary="nextPart2519246.Y42fZX4XQK";
-  protocol="application/pgp-signature";
-  micalg=pgp-sha1
-Content-Transfer-Encoding: 7bit
-Cc: "Shawn O. Pearce" <spearce@spearce.org>,
-	"Michael P. Soulier" <msoulier@digitaltorque.ca>,
-	git@vger.kernel.org
-To: Miklos Vajna <vmiklos@frugalware.org>
-X-From: git-owner@vger.kernel.org Sun Sep 28 17:28:48 2008
+Content-Type: text/plain; charset=utf-8
+Cc: git@vger.kernel.org
+To: Matthieu Moy <Matthieu.Moy@imag.fr>
+X-From: git-owner@vger.kernel.org Sun Sep 28 18:12:25 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KjyCR-0004S3-Gd
-	for gcvg-git-2@gmane.org; Sun, 28 Sep 2008 17:28:44 +0200
+	id 1Kjysh-0008MZ-0R
+	for gcvg-git-2@gmane.org; Sun, 28 Sep 2008 18:12:23 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750974AbYI1P0Y (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 28 Sep 2008 11:26:24 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751134AbYI1P0Y
-	(ORCPT <rfc822;git-outgoing>); Sun, 28 Sep 2008 11:26:24 -0400
-Received: from xsmtp0.ethz.ch ([82.130.70.14]:35592 "EHLO XSMTP0.ethz.ch"
+	id S1751730AbYI1QLL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 28 Sep 2008 12:11:11 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751786AbYI1QLK
+	(ORCPT <rfc822;git-outgoing>); Sun, 28 Sep 2008 12:11:10 -0400
+Received: from peff.net ([208.65.91.99]:4175 "EHLO peff.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750855AbYI1P0Y (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 28 Sep 2008 11:26:24 -0400
-Received: from xfe2.d.ethz.ch ([82.130.124.42]) by XSMTP0.ethz.ch with Microsoft SMTPSVC(6.0.3790.3959);
-	 Sun, 28 Sep 2008 17:26:22 +0200
-Received: from [192.168.0.8] ([77.56.223.244]) by xfe2.d.ethz.ch over TLS secured channel with Microsoft SMTPSVC(6.0.3790.3959);
-	 Sun, 28 Sep 2008 17:26:22 +0200
-User-Agent: KMail/1.9.9
-In-Reply-To: <20080928151135.GF23137@genesis.frugalware.org>
-X-OriginalArrivalTime: 28 Sep 2008 15:26:22.0447 (UTC) FILETIME=[902157F0:01C9217E]
+	id S1751670AbYI1QLK (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 28 Sep 2008 12:11:10 -0400
+Received: (qmail 7127 invoked by uid 111); 28 Sep 2008 16:11:08 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+    by peff.net (qpsmtpd/0.32) with SMTP; Sun, 28 Sep 2008 12:11:08 -0400
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Sun, 28 Sep 2008 12:11:07 -0400
+Content-Disposition: inline
+In-Reply-To: <vpqd4io1tla.fsf@bauges.imag.fr>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/96976>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/96977>
 
---nextPart2519246.Y42fZX4XQK
-Content-Type: text/plain;
-  charset="utf-8"
-Content-Transfer-Encoding: quoted-printable
-Content-Disposition: inline
+On Sun, Sep 28, 2008 at 11:57:05AM +0200, Matthieu Moy wrote:
 
-Miklos Vajna wrote:
->=20
-> Oh, the racy git problem. ;-)
->=20
-> $ git reset --hard; touch foo; git merge side
+> > Neat. I started on something like this quite a while ago,
+> 
+> Did you publish/send it anywhere?
 
-IIUC, this is not the same as "racy git".  The racy case is if you
-manage to get a file changed immediately after its index entry was
-updated, so that it will look unchanged.  In this case, it's simply
-the same file with a new mtime, which means it looks changed
-superficially but still has the same contents.
+No, I was waiting to clean it up and test it a bit more.
 
-Granted, you could call my test "racy" because it relies on 'make
-install' taking at least one second, which by Moore's law should
-happen sometime around 2019 ;-)
+> Well, OTOH, one could argue that "blame" is based on diff-ing, and
+> therefore it's natural to define a diff filter to tell how "blame"
+> should work.
 
-> Thanks for the reproducer, I'll write a proper testcase for this and try =
-to
-> provide a fix for it as well.
+Yes, I would have made that argument. ;)
 
-Thanks.
+> >     [diff "foo"]
+> >     xfuncname = "some regex"
+> >     binary = auto
+> 
+> No sure that would actually be useful in real life, but it doesn't
+> harm to have it. And the argument "better path forward for defining
+> sets of diff tweaks" is a good one IMO.
 
-=2D Thomas
+Yes, I think currently most diff options supersede the decision about
+whether or not it's binary (like textconv, in which you probably assume
+the result is diff-able as text). xfuncname doesn't, but the example is
+perhaps a bit contrived. So I do think of it as more of a way for future
+expansion.
 
-=2D-=20
-Thomas Rast
-trast@student.ethz.ch
+I seem to recall actually running into this as part of the textconv work
+I was doing, but now I can't remember the exact details.  So that's not
+that compelling an argumen.t :)
 
-
-
-
---nextPart2519246.Y42fZX4XQK
-Content-Type: application/pgp-signature; name=signature.asc 
-Content-Description: This is a digitally signed message part.
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.0.9 (GNU/Linux)
-
-iEYEABECAAYFAkjfoh8ACgkQqUud07tmzP0PEQCfR1HRVjrR+shEJL4HDP4aWkUd
-Y8EAn0ewCNBQBUS5CmwUoIq1y/TxMIzT
-=MhBM
------END PGP SIGNATURE-----
-
---nextPart2519246.Y42fZX4XQK--
+-Peff
