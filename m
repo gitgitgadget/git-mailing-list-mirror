@@ -1,73 +1,104 @@
-From: "=?ISO-8859-1?Q?Santi_B=E9jar?=" <santi@agolina.net>
-Subject: Re: strange "git clone" behavior wrt an active branch
-Date: Sun, 28 Sep 2008 14:37:30 +0200
-Message-ID: <adf1fd3d0809280537k7adffe3dte9579fe70c7f990e@mail.gmail.com>
-References: <ee2a733e0809280505n69f62e0fy89667c175bcc16c@mail.gmail.com>
+From: Matthieu Moy <Matthieu.Moy@imag.fr>
+Subject: Re: [PATCH] Document the textconv filter.
+Date: Sun, 28 Sep 2008 14:29:52 +0200
+Message-ID: <vpq7i8wzc5b.fsf@bauges.imag.fr>
+References: <1222567618-22156-1-git-send-email-Matthieu.Moy@imag.fr>
+	<1222567618-22156-4-git-send-email-Matthieu.Moy@imag.fr>
+	<1222567618-22156-5-git-send-email-Matthieu.Moy@imag.fr>
+	<200809281307.21409.johannes.sixt@telecom.at>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: "Git Mailing List" <git@vger.kernel.org>
-To: SLONIK.AZ@gmail.com
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Johannes Sixt <johannes.sixt@telecom.at>
 X-From: git-owner@vger.kernel.org Sun Sep 28 14:39:38 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KjvYm-0001bp-7a
-	for gcvg-git-2@gmane.org; Sun, 28 Sep 2008 14:39:36 +0200
+	id 1KjvYl-0001bp-ER
+	for gcvg-git-2@gmane.org; Sun, 28 Sep 2008 14:39:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751968AbYI1Mhd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 28 Sep 2008 08:37:33 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751962AbYI1Mhd
-	(ORCPT <rfc822;git-outgoing>); Sun, 28 Sep 2008 08:37:33 -0400
-Received: from fg-out-1718.google.com ([72.14.220.153]:28318 "EHLO
-	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751959AbYI1Mhc (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 28 Sep 2008 08:37:32 -0400
-Received: by fg-out-1718.google.com with SMTP id 19so1123175fgg.17
-        for <git@vger.kernel.org>; Sun, 28 Sep 2008 05:37:30 -0700 (PDT)
-Received: by 10.103.203.4 with SMTP id f4mr2785163muq.8.1222605450618;
-        Sun, 28 Sep 2008 05:37:30 -0700 (PDT)
-Received: by 10.102.247.10 with HTTP; Sun, 28 Sep 2008 05:37:30 -0700 (PDT)
-In-Reply-To: <ee2a733e0809280505n69f62e0fy89667c175bcc16c@mail.gmail.com>
-Content-Disposition: inline
+	id S1751907AbYI1McP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 28 Sep 2008 08:32:15 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751896AbYI1McP
+	(ORCPT <rfc822;git-outgoing>); Sun, 28 Sep 2008 08:32:15 -0400
+Received: from imag.imag.fr ([129.88.30.1]:43346 "EHLO imag.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751873AbYI1McO (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 28 Sep 2008 08:32:14 -0400
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by imag.imag.fr (8.13.8/8.13.8) with ESMTP id m8SCTrkQ008152
+	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
+	Sun, 28 Sep 2008 14:29:54 +0200 (CEST)
+Received: from bauges.imag.fr ([129.88.43.5])
+	by mail-veri.imag.fr with esmtps (TLS-1.0:RSA_AES_256_CBC_SHA:32)
+	(Exim 4.50)
+	id 1KjvPM-0007GA-Ij; Sun, 28 Sep 2008 14:29:52 +0200
+Received: from moy by bauges.imag.fr with local (Exim 4.63)
+	(envelope-from <moy@imag.fr>)
+	id 1KjvPM-0001Sx-GL; Sun, 28 Sep 2008 14:29:52 +0200
+In-Reply-To: <200809281307.21409.johannes.sixt@telecom.at> (Johannes Sixt's message of "Sun\, 28 Sep 2008 13\:07\:21 +0200")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/23.0.60 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-3.0 (imag.imag.fr [129.88.30.1]); Sun, 28 Sep 2008 14:29:54 +0200 (CEST)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM for more information
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: moy@imag.fr
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/96961>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/96962>
 
-On Sun, Sep 28, 2008 at 2:05 PM, Leo Razoumov <slonik.az@gmail.com> wrote:
-> Hi All,
-> I am using the latest stable version git-1.6.0.2.
+Johannes Sixt <johannes.sixt@telecom.at> writes:
+
+> On Sonntag, 28. September 2008, Matthieu Moy wrote:
+>> +Converting files to text before a diff
+>> +~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+>> +
+>> +The attribute `textconv` affects 'git diff' in a way similar to the
+>> +`diff` attribute, but with `textconv`, the user provides only a way to
+>> +convert the file into text, and git takes care of doing the diff as
+>> +usual (i.e. other options of 'git diff' such as '--color' remain
+>> +available).
+>> +
+>> +The value of `textconv` must be a string, which is the textconv
+>> +driver.
 >
-> The man page for git-clone states explicitly that "git clone"
+> Wouldn't it be much more useful to have git parse stdout of the custom diff 
+> tool in order to colorize it?
+
+That would do it for --color, but not --color-words for example. The
+problem with the GIT_EXTERNAL_DIFF is that the diff tool has to
+re-implement everything that "git diff" already do.
+
+Take my opendocument diff script :
+
+http://www-verimag.imag.fr/~moy/opendocument/git-oodiff
+
+That's 77 lines of code as a wrapper to odt2txt and diff. With the
+"textconv" attribute, it's one line in .gitattributes, and two in
+~/.gitconfig.
+
+> Of course, this would mean that external diff tools are more
+> complicated and their stdout has to conform mostly to the git diff
+> syntax. But:
 >
-> " Clones a repository into a newly created directory, ...[snip]...
->  and creates and checks out an initial branch equal to the
->  cloned repository's currently active branch. "
+>> +To tell git to use the `exif` filter for jpeg images, use:
+>> +
+>> +----------------------------------------------------------------
+>> +*.jpg   textconv=exif
+>> +----------------------------------------------------------------
 >
-> I noticed that while my active branch "My" happens to point to the
-> same commit as the "master" the git clone will check out master
-> instead of My (currently active branch). Is it a bug?
->
+> In this very example it would be possible that the external diff driver shows 
+> the differences in the image in a window and also produces EXIF information 
+> on stdout.
 
-Currently it is only guessed which is the active branch (with a
-preference for the master branch as it is the default), as the current
-protocol does not allow tranfering the ref links:
+Yes, but that's really a specific example. Having git colorize the
+diff would be a little extra, but that wouldn't reduce the effort to
+write the external diff tool itself, and doesn't give you _all_ of
+git-diff, just --color.
 
-$ git ls-remote $url
-$sha1 HEAD
-$sha1 $branchname
-...
-
-instead of:
-ref: refs/heads/master HEAD
-$sha1 $branchname
-...
-
-So, I think it is a current limitation that maybe should be documented.
-
-HTH,
-Santi
+-- 
+Matthieu
