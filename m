@@ -1,82 +1,72 @@
-From: Matthieu Moy <Matthieu.Moy@imag.fr>
-Subject: Re: [PATCH] Implement a textconv filter for "git diff"
-Date: Sun, 28 Sep 2008 12:00:44 +0200
-Message-ID: <vpq8wtc1tf7.fsf@bauges.imag.fr>
-References: <1222567618-22156-1-git-send-email-Matthieu.Moy@imag.fr>
-	<1222567618-22156-2-git-send-email-Matthieu.Moy@imag.fr>
-	<1222567618-22156-3-git-send-email-Matthieu.Moy@imag.fr>
-	<1222567618-22156-4-git-send-email-Matthieu.Moy@imag.fr>
-	<20080928041526.GB24214@coredump.intra.peff.net>
+From: Johannes Sixt <johannes.sixt@telecom.at>
+Subject: Re: [PATCH] Document the textconv filter.
+Date: Sun, 28 Sep 2008 13:07:21 +0200
+Message-ID: <200809281307.21409.johannes.sixt@telecom.at>
+References: <1222567618-22156-1-git-send-email-Matthieu.Moy@imag.fr> <1222567618-22156-4-git-send-email-Matthieu.Moy@imag.fr> <1222567618-22156-5-git-send-email-Matthieu.Moy@imag.fr>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain;
+  charset="iso-8859-15"
+Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Sun Sep 28 12:04:49 2008
+To: Matthieu Moy <Matthieu.Moy@imag.fr>
+X-From: git-owner@vger.kernel.org Sun Sep 28 13:08:41 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Kjt8x-0006uy-QP
-	for gcvg-git-2@gmane.org; Sun, 28 Sep 2008 12:04:48 +0200
+	id 1Kju8i-0005X3-7M
+	for gcvg-git-2@gmane.org; Sun, 28 Sep 2008 13:08:36 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751896AbYI1KDi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 28 Sep 2008 06:03:38 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751892AbYI1KDi
-	(ORCPT <rfc822;git-outgoing>); Sun, 28 Sep 2008 06:03:38 -0400
-Received: from imag.imag.fr ([129.88.30.1]:41464 "EHLO imag.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751868AbYI1KDi (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 28 Sep 2008 06:03:38 -0400
-Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by imag.imag.fr (8.13.8/8.13.8) with ESMTP id m8SA0isQ015677
-	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
-	Sun, 28 Sep 2008 12:00:44 +0200 (CEST)
-Received: from bauges.imag.fr ([129.88.43.5])
-	by mail-veri.imag.fr with esmtps (TLS-1.0:RSA_AES_256_CBC_SHA:32)
-	(Exim 4.50)
-	id 1Kjt52-00060l-5b; Sun, 28 Sep 2008 12:00:44 +0200
-Received: from moy by bauges.imag.fr with local (Exim 4.63)
-	(envelope-from <moy@imag.fr>)
-	id 1Kjt52-0004we-39; Sun, 28 Sep 2008 12:00:44 +0200
-In-Reply-To: <20080928041526.GB24214@coredump.intra.peff.net> (Jeff King's message of "Sun\, 28 Sep 2008 00\:15\:26 -0400")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/23.0.60 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-3.0 (imag.imag.fr [129.88.30.1]); Sun, 28 Sep 2008 12:00:45 +0200 (CEST)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM for more information
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: moy@imag.fr
+	id S1752744AbYI1LHZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 28 Sep 2008 07:07:25 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752700AbYI1LHY
+	(ORCPT <rfc822;git-outgoing>); Sun, 28 Sep 2008 07:07:24 -0400
+Received: from smtp2.srv.eunet.at ([193.154.160.116]:35672 "EHLO
+	smtp2.srv.eunet.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752579AbYI1LHX (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 28 Sep 2008 07:07:23 -0400
+Received: from dx.sixt.local (at00d01-adsl-194-118-045-019.nextranet.at [194.118.45.19])
+	by smtp2.srv.eunet.at (Postfix) with ESMTP id C7547BEE07;
+	Sun, 28 Sep 2008 13:07:21 +0200 (CEST)
+Received: from localhost (localhost [IPv6:::1])
+	by dx.sixt.local (Postfix) with ESMTP id 7FF52118E3;
+	Sun, 28 Sep 2008 13:07:21 +0200 (CEST)
+User-Agent: KMail/1.9.9
+In-Reply-To: <1222567618-22156-5-git-send-email-Matthieu.Moy@imag.fr>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/96956>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/96957>
 
-Jeff King <peff@peff.net> writes:
+On Sonntag, 28. September 2008, Matthieu Moy wrote:
+> +Converting files to text before a diff
+> +~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+> +
+> +The attribute `textconv` affects 'git diff' in a way similar to the
+> +`diff` attribute, but with `textconv`, the user provides only a way to
+> +convert the file into text, and git takes care of doing the diff as
+> +usual (i.e. other options of 'git diff' such as '--color' remain
+> +available).
+> +
+> +The value of `textconv` must be a string, which is the textconv
+> +driver.
 
-> On Sun, Sep 28, 2008 at 04:06:56AM +0200, Matthieu Moy wrote:
->
->> +static int textconv_two_files(const char *textconv,
->> +			      const char *name_a,
->> +			      const char *name_b,
->> +			      mmfile_t *mf1,
->> +			      mmfile_t *mf2,
->> +			      struct diff_filespec *one,
->> +			      struct diff_filespec *two)
->> +{
->
-> Must we always be textconv'ing two files? What if I am comparing
-> "v1.5:foo.odf" to "foo.txt" in the working tree?
+Wouldn't it be much more useful to have git parse stdout of the custom diff 
+tool in order to colorize it? Of course, this would mean that external diff 
+tools are more complicated and their stdout has to conform mostly to the git 
+diff syntax. But:
 
-Hmm, why not, and the textconv could be different (like comparing
-old:foo.doc with ./foo.odt).
+> +To tell git to use the `exif` filter for jpeg images, use:
+> +
+> +----------------------------------------------------------------
+> +*.jpg   textconv=exif
+> +----------------------------------------------------------------
 
-> In my implementation, I textconv one at a time. I just did so from
-> fill_mmfile, so all of diff automagically just sees the converted text.
+In this very example it would be possible that the external diff driver shows 
+the differences in the image in a window and also produces EXIF information 
+on stdout.
 
-One has to be carefull not to call textconv for plumbing commands,
-since the generated patches are not applicable, and only for the eyes
-of the reader.
-
--- 
-Matthieu
+-- Hannes
