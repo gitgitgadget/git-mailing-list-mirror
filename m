@@ -1,55 +1,61 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH] Implement a textconv filter for "git diff"
-Date: Sun, 28 Sep 2008 12:12:50 -0400
-Message-ID: <20080928161250.GB30199@coredump.intra.peff.net>
-References: <1222567618-22156-1-git-send-email-Matthieu.Moy@imag.fr> <1222567618-22156-2-git-send-email-Matthieu.Moy@imag.fr> <1222567618-22156-3-git-send-email-Matthieu.Moy@imag.fr> <1222567618-22156-4-git-send-email-Matthieu.Moy@imag.fr> <20080928041526.GB24214@coredump.intra.peff.net> <vpq8wtc1tf7.fsf@bauges.imag.fr>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+From: Michael Witten <mfwitten@MIT.EDU>
+Subject: Re: [PATCH 3/8] Docs: send-email: Man page option ordering
+Date: Sun, 28 Sep 2008 14:04:36 -0500
+Message-ID: <FB3A852B-728F-4183-A5AF-BA8F8D995AD7@mit.edu>
+References: <1222564196-84202-1-git-send-email-mfwitten@mit.edu> <1222564196-84202-2-git-send-email-mfwitten@mit.edu> <1222564196-84202-3-git-send-email-mfwitten@mit.edu> <gbne1a$8g2$1@ger.gmane.org>
+Mime-Version: 1.0 (Apple Message framework v929.2)
+Content-Type: text/plain; charset=US-ASCII; format=flowed
+Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org
-To: Matthieu Moy <Matthieu.Moy@imag.fr>
-X-From: git-owner@vger.kernel.org Sun Sep 28 18:14:03 2008
+To: Jakub Narebski <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Sep 28 21:06:00 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KjyuI-0000Kr-Vd
-	for gcvg-git-2@gmane.org; Sun, 28 Sep 2008 18:14:03 +0200
+	id 1Kk1aa-0005rj-Ac
+	for gcvg-git-2@gmane.org; Sun, 28 Sep 2008 21:05:52 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752037AbYI1QMx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 28 Sep 2008 12:12:53 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752019AbYI1QMx
-	(ORCPT <rfc822;git-outgoing>); Sun, 28 Sep 2008 12:12:53 -0400
-Received: from peff.net ([208.65.91.99]:4262 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751983AbYI1QMw (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 28 Sep 2008 12:12:52 -0400
-Received: (qmail 7154 invoked by uid 111); 28 Sep 2008 16:12:51 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.32) with SMTP; Sun, 28 Sep 2008 12:12:51 -0400
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Sun, 28 Sep 2008 12:12:50 -0400
-Content-Disposition: inline
-In-Reply-To: <vpq8wtc1tf7.fsf@bauges.imag.fr>
+	id S1752318AbYI1TEk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 28 Sep 2008 15:04:40 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752311AbYI1TEk
+	(ORCPT <rfc822;git-outgoing>); Sun, 28 Sep 2008 15:04:40 -0400
+Received: from BISCAYNE-ONE-STATION.MIT.EDU ([18.7.7.80]:37975 "EHLO
+	biscayne-one-station.mit.edu" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1752255AbYI1TEj (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 28 Sep 2008 15:04:39 -0400
+Received: from outgoing.mit.edu (OUTGOING-AUTH.MIT.EDU [18.7.22.103])
+	by biscayne-one-station.mit.edu (8.13.6/8.9.2) with ESMTP id m8SJ4bHL027161;
+	Sun, 28 Sep 2008 15:04:37 -0400 (EDT)
+Received: from [192.168.0.65] (97-116-104-112.mpls.qwest.net [97.116.104.112])
+	(authenticated bits=0)
+        (User authenticated as mfwitten@ATHENA.MIT.EDU)
+	by outgoing.mit.edu (8.13.6/8.12.4) with ESMTP id m8SJ3K6F015113
+	(version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NOT);
+	Sun, 28 Sep 2008 15:04:36 -0400 (EDT)
+In-Reply-To: <gbne1a$8g2$1@ger.gmane.org>
+X-Mailer: Apple Mail (2.929.2)
+X-Scanned-By: MIMEDefang 2.42
+X-Spam-Flag: NO
+X-Spam-Score: 0.00
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/96978>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/96979>
 
-On Sun, Sep 28, 2008 at 12:00:44PM +0200, Matthieu Moy wrote:
 
-> Hmm, why not, and the textconv could be different (like comparing
-> old:foo.doc with ./foo.odt).
+On 28 Sep 2008, at 3:08 AM, Jakub Narebski wrote:
 
-Exactly.
+> Michael Witten wrote:
+>
+>> Now the man page lists the options in alphabetical
+>> order (in terms of the 'main' part of an option's
+>> name).
+>
+> I know it is a matter of taste, but I prefer having options
+> on man page in functional order, grouped by function, perhaps
+> with subsections to group them (c.f. git-rev-list man page).
 
-> One has to be carefull not to call textconv for plumbing commands,
-> since the generated patches are not applicable, and only for the eyes
-> of the reader.
-
-Right, but that is prevented by not loading the appropriate diff driver
-config, I believe (and I didn't look closely at your implementation in
-that respect, but I believe it is the same as mine, because both
-porcelain and plumbing use the code in diff.c).
-
--Peff
+See: http://marc.info/?l=git&m=122246885210923&w=2
