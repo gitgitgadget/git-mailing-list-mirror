@@ -1,8 +1,9 @@
 From: Michael Witten <mfwitten@MIT.EDU>
-Subject: [PATCH 2/8] Docs: send-email usage text much sexier
-Date: Sat, 27 Sep 2008 20:09:50 -0500
-Message-ID: <1222564196-84202-2-git-send-email-mfwitten@mit.edu>
+Subject: [PATCH 3/8] Docs: send-email: Man page option ordering
+Date: Sat, 27 Sep 2008 20:09:51 -0500
+Message-ID: <1222564196-84202-3-git-send-email-mfwitten@mit.edu>
 References: <1222564196-84202-1-git-send-email-mfwitten@mit.edu>
+ <1222564196-84202-2-git-send-email-mfwitten@mit.edu>
 Cc: git@vger.kernel.org
 To: gitster@pobox.com
 X-From: git-owner@vger.kernel.org Sun Sep 28 03:11:42 2008
@@ -11,28 +12,28 @@ Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Kjkoy-000293-8w
-	for gcvg-git-2@gmane.org; Sun, 28 Sep 2008 03:11:36 +0200
+	id 1Kjkov-000293-0w
+	for gcvg-git-2@gmane.org; Sun, 28 Sep 2008 03:11:33 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751648AbYI1BK2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 27 Sep 2008 21:10:28 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751629AbYI1BK1
-	(ORCPT <rfc822;git-outgoing>); Sat, 27 Sep 2008 21:10:27 -0400
-Received: from BISCAYNE-ONE-STATION.MIT.EDU ([18.7.7.80]:48428 "EHLO
+	id S1751172AbYI1BKL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 27 Sep 2008 21:10:11 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751138AbYI1BKL
+	(ORCPT <rfc822;git-outgoing>); Sat, 27 Sep 2008 21:10:11 -0400
+Received: from BISCAYNE-ONE-STATION.MIT.EDU ([18.7.7.80]:48376 "EHLO
 	biscayne-one-station.mit.edu" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751183AbYI1BKY (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 27 Sep 2008 21:10:24 -0400
+	by vger.kernel.org with ESMTP id S1751130AbYI1BKJ (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 27 Sep 2008 21:10:09 -0400
 Received: from outgoing.mit.edu (OUTGOING-AUTH.MIT.EDU [18.7.22.103])
-	by biscayne-one-station.mit.edu (8.13.6/8.9.2) with ESMTP id m8S1A4jk006868;
-	Sat, 27 Sep 2008 21:10:04 -0400 (EDT)
+	by biscayne-one-station.mit.edu (8.13.6/8.9.2) with ESMTP id m8S1A5Em006887;
+	Sat, 27 Sep 2008 21:10:05 -0400 (EDT)
 Received: from localhost.localdomain (97-116-110-244.mpls.qwest.net [97.116.110.244])
 	(authenticated bits=0)
         (User authenticated as mfwitten@ATHENA.MIT.EDU)
-	by outgoing.mit.edu (8.13.6/8.12.4) with ESMTP id m8S19usD017501
+	by outgoing.mit.edu (8.13.6/8.12.4) with ESMTP id m8S19usE017501
 	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
-	Sat, 27 Sep 2008 21:10:03 -0400 (EDT)
+	Sat, 27 Sep 2008 21:10:04 -0400 (EDT)
 X-Mailer: git-send-email 1.6.0.2.304.g577ee
-In-Reply-To: <1222564196-84202-1-git-send-email-mfwitten@mit.edu>
+In-Reply-To: <1222564196-84202-2-git-send-email-mfwitten@mit.edu>
 X-Scanned-By: MIMEDefang 2.42
 X-Spam-Flag: NO
 X-Spam-Score: 0.00
@@ -40,121 +41,230 @@ Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/96927>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/96928>
 
-All of the descriptions are aligned, shorter,
-better arranged, and no line is greater than
-78 columns.
+Now the man page lists the options in alphabetical
+order (in terms of the 'main' part of an option's
+name).
 
 Signed-off-by: Michael Witten <mfwitten@mit.edu>
 ---
- git-send-email.perl |   94 ++++++++++++++-------------------------------------
- 1 files changed, 26 insertions(+), 68 deletions(-)
+ Documentation/git-send-email.txt |  138 ++++++++++++++++++--------------------
+ 1 files changed, 66 insertions(+), 72 deletions(-)
 
-diff --git a/git-send-email.perl b/git-send-email.perl
-index 9f56162..2c31a25 100755
---- a/git-send-email.perl
-+++ b/git-send-email.perl
-@@ -40,74 +40,32 @@ sub usage {
- 	print <<EOT;
- git send-email [options] <file | directory>...
- Options:
--   --from         Specify the "From:" line of the email to be sent.
--
--   --to           Specify the primary "To:" line of the email.
--
--   --cc           Specify an initial "Cc:" list for the entire series
--                  of emails.
--
--   --cc-cmd       Specify a command to execute per file which adds
--                  per file specific cc address entries
--
--   --bcc          Specify a list of email addresses that should be Bcc:
--		  on all the emails.
--
--   --compose      Use \$GIT_EDITOR, core.editor, \$EDITOR, or \$VISUAL to edit
--		  an introductory message for the patch series.
--
--   --subject      Specify the initial "Subject:" line.
--                  Only necessary if --compose is also set.  If --compose
--		  is not set, this will be prompted for.
--
--   --in-reply-to  Specify the first "In-Reply-To:" header line.
--                  Only used if --compose is also set.  If --compose is not
--		  set, this will be prompted for.
--
--   --[no-]chain-reply-to If set, the replies will all be to the previous
--                  email sent, rather than to the first email sent.
--                  Defaults to on.
--
--   --[no-]signed-off-by-cc Automatically add email addresses that appear in
--                 Signed-off-by: or Cc: lines to the cc: list. Defaults to on.
--
--   --identity     The configuration identity, a subsection to prioritise over
--                  the default section.
--
--   --smtp-server  If set, specifies the outgoing SMTP server to use.
--                  Defaults to localhost.  Port number can be specified here with
--                  hostname:port format or by using --smtp-server-port option.
--
--   --smtp-server-port Specify a port on the outgoing SMTP server to connect to.
--
--   --smtp-user    The username for SMTP-AUTH.
--
--   --smtp-pass    The password for SMTP-AUTH.
--
--   --smtp-encryption Specify 'tls' for STARTTLS encryption, or 'ssl' for SSL.
--                  Any other value disables the feature.
--
--   --smtp-ssl     Synonym for '--smtp-encryption=ssl'.  Deprecated.
--
--   --suppress-cc  Suppress the specified category of auto-CC.  The category
--		  can be one of 'author' for the patch author, 'self' to
--		  avoid copying yourself, 'sob' for Signed-off-by lines,
--		  'cccmd' for the output of the cccmd, or 'all' to suppress
--		  all of these.
--
--   --[no-]suppress-from Suppress sending emails to yourself. Defaults to off.
--
--   --[no-]thread       Specify that the "In-Reply-To:" header should be set on all
--                  emails. Defaults to on.
--
--   --quiet	  Make git-send-email less verbose.  One line per email
--                  should be all that is output.
--
--   --dry-run	  Do everything except actually send the emails.
--
--   --envelope-sender	Specify the envelope sender used to send the emails.
--
--   --no-validate	Don't perform any sanity checks on patches.
-+   --identity              <str>  * Use the sendemail.<id> options.
-+   --from                  <str>  * Email From:
-+   --envelope-sender       <str>  * Email envelope sender.
-+   --to                    <str>  * Email To:
-+   --cc                    <str>  * Email Cc:
-+   --cc-cmd                <str>  * Email Cc: via `<str> \$patch_path`
-+   --bcc                   <str>  * Email Bcc:
-+   --subject               <str>  * Email "Subject:" (only if --compose).
-+   --compose                      * Open an editor for introduction.
-+   --in-reply-to           <str>  * First "In-Reply-To:" (only if --compose).
-+   --[no-]chain-reply-to          * Chain In-Reply-To: fields. Default on.
-+   --[no-]thread                  * Use In-Reply-To: field. Default on.
-+   --[no-]signed-off-by-cc        * Actually send to Cc: and Signed-off-by:
-+                                    addresses. Default on.
-+   --suppress-cc           <str>  * author, self, sob, cccmd, all.
-+   --[no-]suppress-from           * Don't send email to self. Default off.
-+   --smtp-server       <str:int>  * Outgoing SMTP server to use. The port
-+                                    is optional. Default 'localhost'.
-+   --smtp-server-port      <int>  * Outgoing SMTP server port.
-+   --smtp-user             <str>  * The username for SMTP-AUTH.
-+   --smtp-pass             <str>  * The password for SMTP-AUTH; not necessary.
-+   --smtp-encryption       <str>  * tls or ssl; anything else disables.
-+   --smtp-ssl                     * Deprecated. Use '--smtp-encryption ssl'.
-+   --quiet                        * Output one line of info per email.
-+   --dry-run                      * Don't actually send the emails.
-+   --no-validate                  * Don't perform sanity checks on patches.
+diff --git a/Documentation/git-send-email.txt b/Documentation/git-send-email.txt
+index 9b31626..0c6dbf6 100644
+--- a/Documentation/git-send-email.txt
++++ b/Documentation/git-send-email.txt
+@@ -11,7 +11,6 @@ SYNOPSIS
+ 'git send-email' [options] <file|directory> [... file|directory]
  
- EOT
- 	exit(1);
+ 
+-
+ DESCRIPTION
+ -----------
+ Takes the patches given on the command line and emails them out.
+@@ -45,19 +44,35 @@ The --cc option must be repeated for each user you want on the cc list.
+ 	email sent.  If disabled with "--no-chain-reply-to", all emails after
+ 	the first will be sent as replies to the first email sent.  When using
+ 	this, it is recommended that the first file given be an overview of the
+-	entire patch series.
+-	Default is the value of the 'sendemail.chainreplyto' configuration
+-	value; if that is unspecified, default to --chain-reply-to.
++	entire patch series. Default is the value of the 'sendemail.chainreplyto'
++	configuration value; if that is unspecified, default to --chain-reply-to.
+ 
+ --compose::
+ 	Use $GIT_EDITOR, core.editor, $VISUAL, or $EDITOR to edit an
+ 	introductory message for the patch series.
+ 
++--dry-run::
++	Do everything except actually send the emails.
++
++--envelope-sender::
++	Specify the envelope sender used to send the emails.
++	This is useful if your default address is not the address that is
++	subscribed to a list. If you use the sendmail binary, you must have
++	suitable privileges for the -f parameter. Default is the value of
++	the 'sendemail.envelopesender' configuration variable; if that is
++	unspecified, choosing the envelope sender is left to your MTA.
++
+ --from::
+ 	Specify the sender of the emails.  This will default to
+ 	the value GIT_COMMITTER_IDENT, as returned by "git var -l".
+ 	The user will still be prompted to confirm this entry.
+ 
++--identity::
++	A configuration identity. When given, causes values in the
++	'sendemail.<identity>' subsection to take precedence over
++	values in the 'sendemail' section. The default identity is
++	the value of 'sendemail.identity'.
++
+ --in-reply-to::
+ 	Specify the contents of the first In-Reply-To header.
+ 	Subsequent emails will refer to the previous email
+@@ -65,21 +80,40 @@ The --cc option must be repeated for each user you want on the cc list.
+ 	Only necessary if --compose is also set.  If --compose
+ 	is not set, this will be prompted for.
+ 
+---[no-]signed-off-by-cc::
+-        If this is set, add emails found in Signed-off-by: or Cc: lines to the
+-        cc list.
+-        Default is the value of 'sendemail.signedoffcc' configuration value;
+-        if that is unspecified, default to --signed-off-by-cc.
+-
+ --quiet::
+ 	Make git-send-email less verbose.  One line per email should be
+ 	all that is output.
+ 
+---identity::
+-	A configuration identity. When given, causes values in the
+-	'sendemail.<identity>' subsection to take precedence over
+-	values in the 'sendemail' section. The default identity is
+-	the value of 'sendemail.identity'.
++--[no-]signed-off-by-cc::
++        If this is set, add emails found in Signed-off-by: or Cc: lines to the
++        cc list. Default is the value of 'sendemail.signedoffcc' configuration
++        value; if that is unspecified, default to --signed-off-by-cc.
++
++--smtp-encryption::
++	Specify the encryption to use, either 'ssl' or 'tls'.  Any other
++	value reverts to plain SMTP.  Default is the value of
++	'sendemail.smtpencryption'.
++
++--smtp-pass::
++	Password for SMTP-AUTH. The argument is optional: If no
++	argument is specified, then the empty string is used as
++	the password.
+++
++In place of this option, the following configuration variables
++can be specified:
+++
++--
++		* sendemail.smtppass
++		* sendemail.<identity>.smtppass (see sendemail.identity).
++--
+++
++However, --smtp-pass always overrides these variables.
+++
++Furthermore, passwords need not be specified in configuration files
++or on the command line. If a username has been specified (with
++--smtp-user or a configuration variable), but no password has been
++specified (with --smtp-pass or a configuration variable), then the
++user is prompted for a password while the input is masked for privacy.
+ 
+ --smtp-server::
+ 	If set, specifies the outgoing SMTP server to use (e.g.
+@@ -96,6 +130,9 @@ The --cc option must be repeated for each user you want on the cc list.
+ 	servers typically listen to smtp port 25 and ssmtp port
+ 	465).
+ 
++--smtp-ssl::
++	Legacy alias for '--smtp-encryption=ssl'.
++
+ --smtp-user::
+ 	Username for SMTP-AUTH. In place of this option, the following
+ 	configuration variables can be specified:
+@@ -110,45 +147,11 @@ However, --smtp-user always overrides these variables.
+ If a username is not specified (with --smtp-user or a
+ configuration variable), then authentication is not attempted.
+ 
+---smtp-pass::
+-	Password for SMTP-AUTH. The argument is optional: If no
+-	argument is specified, then the empty string is used as
+-	the password.
+-+
+-In place of this option, the following configuration variables
+-can be specified:
+-+
+---
+-		* sendemail.smtppass
+-		* sendemail.<identity>.smtppass (see sendemail.identity).
+---
+-+
+-However, --smtp-pass always overrides these variables.
+-+
+-Furthermore, passwords need not be specified in configuration files
+-or on the command line. If a username has been specified (with
+---smtp-user or a configuration variable), but no password has been
+-specified (with --smtp-pass or a configuration variable), then the
+-user is prompted for a password while the input is masked for privacy.
+-
+---smtp-encryption::
+-	Specify the encryption to use, either 'ssl' or 'tls'.  Any other
+-	value reverts to plain SMTP.  Default is the value of
+-	'sendemail.smtpencryption'.
+-
+---smtp-ssl::
+-	Legacy alias for '--smtp-encryption=ssl'.
+-
+ --subject::
+ 	Specify the initial subject of the email thread.
+ 	Only necessary if --compose is also set.  If --compose
+ 	is not set, this will be prompted for.
+ 
+---[no-]suppress-from::
+-        If this is set, do not add the From: address to the cc: list.
+-        Default is the value of 'sendemail.suppressfrom' configuration value;
+-        if that is unspecified, default to --no-suppress-from.
+-
+ --suppress-cc::
+ 	Specify an additional category of recipients to suppress the
+ 	auto-cc of.  'self' will avoid including the sender, 'author' will
+@@ -160,24 +163,24 @@ user is prompted for a password while the input is masked for privacy.
+ 	if that is unspecified, default to 'self' if --suppress-from is
+ 	specified, as well as 'sob' if --no-signed-off-cc is specified.
+ 
++--[no-]suppress-from::
++	If this is set, do not add the From: address to the cc: list.
++	Default is the value of 'sendemail.suppressfrom' configuration
++	value; if that is unspecified, default to --no-suppress-from.
++
+ --[no-]thread::
+ 	If this is set, the In-Reply-To header will be set on each email sent.
+ 	If disabled with "--no-thread", no emails will have the In-Reply-To
+-	header set.
+-	Default is the value of the 'sendemail.thread' configuration value;
+-	if that is unspecified, default to --thread.
++	header set. Default is the value of the 'sendemail.thread' configuration
++	value; if that is unspecified, default to --thread.
+ 
+---dry-run::
+-	Do everything except actually send the emails.
+-
+---envelope-sender::
+-	Specify the envelope sender used to send the emails.
+-	This is useful if your default address is not the address that is
+-	subscribed to a list. If you use the sendmail binary, you must have
+-	suitable privileges for the -f parameter.
+-	Default is the value of the 'sendemail.envelopesender' configuration
+-	variable; if that is unspecified, choosing the envelope sender is left
+-	to your MTA.
++--to::
++	Specify the primary recipient of the emails generated. Generally, this
++	will be the upstream maintainer of the project involved. Default is the
++	value of the 'sendemail.to' configuration value; if that is unspecified,
++	this will be prompted for.
+++
++The --to option must be repeated for each user you want on the to list.
+ 
+ --no-validate::
+ 	Don't perform any sanity checks on patches.
+@@ -188,15 +191,6 @@ user is prompted for a password while the input is masked for privacy.
+ 			is due to SMTP limits as described by http://www.ietf.org/rfc/rfc2821.txt.
+ --
+ 
+---to::
+-	Specify the primary recipient of the emails generated.
+-	Generally, this will be the upstream maintainer of the
+-	project involved.
+-	Default is the value of the 'sendemail.to' configuration value;
+-	if that is unspecified, this will be prompted for.
+-+
+-The --to option must be repeated for each user you want on the to list.
+-
+ 
+ CONFIGURATION
+ -------------
 -- 
 1.6.0.2.304.g577ee
