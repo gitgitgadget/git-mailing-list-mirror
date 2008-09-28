@@ -1,61 +1,57 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: [PATCH 3/8] Docs: send-email: Man page option ordering
-Date: Sun, 28 Sep 2008 10:08:09 +0200
-Organization: At home
-Message-ID: <gbne1a$8g2$1@ger.gmane.org>
-References: <1222564196-84202-1-git-send-email-mfwitten@mit.edu> <1222564196-84202-2-git-send-email-mfwitten@mit.edu> <1222564196-84202-3-git-send-email-mfwitten@mit.edu>
+From: Johannes Sixt <johannes.sixt@telecom.at>
+Subject: Re: [PATCH 3/4] mingw: move common functionality to win32.h
+Date: Sun, 28 Sep 2008 11:10:48 +0200
+Message-ID: <200809281110.48256.johannes.sixt@telecom.at>
+References: <20080927084301.GB21650@dpotapov.dyndns.org> <200809272034.04931.johannes.sixt@telecom.at> <20080927215102.GF21650@dpotapov.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7Bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Sep 28 10:09:40 2008
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+	"Shawn O. Pearce" <spearce@spearce.org>,
+	Alex Riesen <raa.lkml@gmail.com>,
+	Marcus Griep <marcus@griep.us>
+To: Dmitry Potapov <dpotapov@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Sep 28 11:12:08 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KjrLY-00051a-1d
-	for gcvg-git-2@gmane.org; Sun, 28 Sep 2008 10:09:40 +0200
+	id 1KjsK0-00032U-2S
+	for gcvg-git-2@gmane.org; Sun, 28 Sep 2008 11:12:08 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751281AbYI1IIW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 28 Sep 2008 04:08:22 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751258AbYI1IIV
-	(ORCPT <rfc822;git-outgoing>); Sun, 28 Sep 2008 04:08:21 -0400
-Received: from main.gmane.org ([80.91.229.2]:43611 "EHLO ciao.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751208AbYI1IIU (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 28 Sep 2008 04:08:20 -0400
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1KjrKD-0003Re-9U
-	for git@vger.kernel.org; Sun, 28 Sep 2008 08:08:17 +0000
-Received: from abvg103.neoplus.adsl.tpnet.pl ([83.8.204.103])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Sun, 28 Sep 2008 08:08:17 +0000
-Received: from jnareb by abvg103.neoplus.adsl.tpnet.pl with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Sun, 28 Sep 2008 08:08:17 +0000
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@ger.gmane.org
-X-Gmane-NNTP-Posting-Host: abvg103.neoplus.adsl.tpnet.pl
-Mail-Copies-To: Jakub Narebski <jnareb@gmail.com>
-User-Agent: KNode/0.10.2
+	id S1752141AbYI1JKy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 28 Sep 2008 05:10:54 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752098AbYI1JKy
+	(ORCPT <rfc822;git-outgoing>); Sun, 28 Sep 2008 05:10:54 -0400
+Received: from smtp5.srv.eunet.at ([193.154.160.227]:36950 "EHLO
+	smtp5.srv.eunet.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752003AbYI1JKw (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 28 Sep 2008 05:10:52 -0400
+Received: from dx.sixt.local (at00d01-adsl-194-118-045-019.nextranet.at [194.118.45.19])
+	by smtp5.srv.eunet.at (Postfix) with ESMTP id DFAD213A29D;
+	Sun, 28 Sep 2008 11:10:48 +0200 (CEST)
+Received: from localhost (localhost [IPv6:::1])
+	by dx.sixt.local (Postfix) with ESMTP id 6DCD41D225;
+	Sun, 28 Sep 2008 11:10:48 +0200 (CEST)
+User-Agent: KMail/1.9.9
+In-Reply-To: <20080927215102.GF21650@dpotapov.dyndns.org>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/96945>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/96946>
 
-Michael Witten wrote:
+On Samstag, 27. September 2008, Dmitry Potapov wrote:
+> win32_to_errno was the first thing that implemented but then released
+> that translation of Win32 errors to errno cannot be in general case.
+> For instance, ERROR_BUFFER_OVERFLOW means ENAMETOOLONG here, but it
+> can be translated to ETOOSMALL in other cases. How do you propose to
+> deal with that?
 
-> Now the man page lists the options in alphabetical
-> order (in terms of the 'main' part of an option's
-> name).
+We deal with that when the need arises, in an evolutionary manner. The first 
+step is to *have* an error code translation routine.
 
-I know it is a matter of taste, but I prefer having options
-on man page in functional order, grouped by function, perhaps
-with subsections to group them (c.f. git-rev-list man page).
--- 
-Jakub Narebski
-Warsaw, Poland
-ShadeHawk on #git
+-- Hannes
