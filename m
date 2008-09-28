@@ -1,99 +1,87 @@
-From: Miklos Vajna <vmiklos@frugalware.org>
-Subject: Re: having to pull twice
-Date: Sun, 28 Sep 2008 17:11:35 +0200
-Message-ID: <20080928151135.GF23137@genesis.frugalware.org>
-References: <fb6605670809241758r186eef51sc6ed6d334a64495d@mail.gmail.com> <200809250905.09646.trast@student.ethz.ch> <20080925232525.GP23137@genesis.frugalware.org> <200809271616.32082.trast@student.ethz.ch>
+From: Pierre Habouzit <madcoder@debian.org>
+Subject: [PATCH] doc: enhance git describe --tags help
+Date: Sun, 28 Sep 2008 17:12:59 +0200
+Message-ID: <20080928151259.GJ5302@artemis.corp>
+References: <ce513bcc0809280648s352cda3fj5eb35b6e9cd40af9@mail.gmail.com> <20080928135526.GG5302@artemis.corp> <ce513bcc0809280729p47cc3790nb77b3cae8b805221@mail.gmail.com> <20080928143949.GH5302@artemis.corp> <20080928150318.GI5302@artemis.corp>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="CSNFvL6ilyiKL/Hs"
-Cc: "Shawn O. Pearce" <spearce@spearce.org>,
-	"Michael P. Soulier" <msoulier@digitaltorque.ca>,
-	git@vger.kernel.org
-To: Thomas Rast <trast@student.ethz.ch>
-X-From: git-owner@vger.kernel.org Sun Sep 28 17:12:48 2008
+Content-Type: multipart/signed; boundary="pWOmaDnDlrCGjNh4";
+	protocol="application/pgp-signature"; micalg=SHA1
+Cc: "git@vger.kernel.org" <git@vger.kernel.org>,
+	open-iscsi@googlegroups.com, spearce@spearce.org,
+	Junio C Hamano <gitster@pobox.com>
+To: Erez Zilber <erezzi.list@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Sep 28 17:14:16 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Kjxx1-00009q-Jl
-	for gcvg-git-2@gmane.org; Sun, 28 Sep 2008 17:12:48 +0200
+	id 1KjxyP-0000Vt-CQ
+	for gcvg-git-2@gmane.org; Sun, 28 Sep 2008 17:14:13 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751868AbYI1PLi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 28 Sep 2008 11:11:38 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751816AbYI1PLi
-	(ORCPT <rfc822;git-outgoing>); Sun, 28 Sep 2008 11:11:38 -0400
-Received: from virgo.iok.hu ([193.202.89.103]:35980 "EHLO virgo.iok.hu"
+	id S1751897AbYI1PNE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 28 Sep 2008 11:13:04 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751816AbYI1PND
+	(ORCPT <rfc822;git-outgoing>); Sun, 28 Sep 2008 11:13:03 -0400
+Received: from pan.madism.org ([88.191.52.104]:57342 "EHLO hermes.madism.org"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751786AbYI1PLh (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 28 Sep 2008 11:11:37 -0400
-Received: from kag.elte.hu (kag.elte.hu [157.181.177.1])
-	by virgo.iok.hu (Postfix) with ESMTP id 3B39C580B9;
-	Sun, 28 Sep 2008 17:11:36 +0200 (CEST)
-Received: from genesis.frugalware.org (frugalware.elte.hu [157.181.177.34])
-	by kag.elte.hu (Postfix) with ESMTP id 863B84465E;
-	Sun, 28 Sep 2008 17:11:35 +0200 (CEST)
-Received: by genesis.frugalware.org (Postfix, from userid 1000)
-	id 505A311901A1; Sun, 28 Sep 2008 17:11:35 +0200 (CEST)
+	id S1751772AbYI1PNC (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 28 Sep 2008 11:13:02 -0400
+Received: from madism.org (olympe.madism.org [82.243.245.108])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(Client CN "artemis.madism.org", Issuer "madism.org" (verified OK))
+	by hermes.madism.org (Postfix) with ESMTPS id 8BC5E3B345;
+	Sun, 28 Sep 2008 17:13:00 +0200 (CEST)
+Received: by madism.org (Postfix, from userid 1000)
+	id 663E42AC9C; Sun, 28 Sep 2008 17:12:59 +0200 (CEST)
 Content-Disposition: inline
-In-Reply-To: <200809271616.32082.trast@student.ethz.ch>
-User-Agent: Mutt/1.5.17 (2007-11-01)
+In-Reply-To: <20080928150318.GI5302@artemis.corp>
+X-Face: $(^e[V4D-[`f2EmMGz@fgWK!e.B~2g.{08lKPU(nc1J~z\4B>*JEVq:E]7G-\6$Ycr4<;Z!|VY6Grt]+RsS$IMV)f>2)M="tY:ZPcU;&%it2D81X^kNya0=L]"vZmLP+UmKhgq+u*\.dJ8G!N&=EvlD
+User-Agent: Madmutt/devel (Linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/96973>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/96974>
 
 
---CSNFvL6ilyiKL/Hs
+--pWOmaDnDlrCGjNh4
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-On Sat, Sep 27, 2008 at 04:16:29PM +0200, Thomas Rast <trast@student.ethz.c=
-h> wrote:
-> * Setup:
->=20
->   mkdir $temp_repo
->   cd $temp_repo
->   git init
->   echo foo > foo
->   git add foo
->   git commit -m initial
->   echo a > foo
->   git commit -m a foo
->   git checkout -b side HEAD^
->   echo b > foo
->   git commit -m b foo
->   git checkout master
+Signed-off-by: Pierre Habouzit <madcoder@debian.org>
+---
+ Documentation/git-describe.txt |    3 ++-
+ 1 files changed, 2 insertions(+), 1 deletions(-)
 
-Oh, the racy git problem. ;-)
+diff --git a/Documentation/git-describe.txt b/Documentation/git-describe.txt
+index c4dbc2a..9cc8c2f 100644
+--- a/Documentation/git-describe.txt
++++ b/Documentation/git-describe.txt
+@@ -30,7 +30,8 @@ OPTIONS
+=20
+ --tags::
+ 	Instead of using only the annotated tags, use any tag
+-	found in `.git/refs/tags`.
++	found in `.git/refs/tags`. Though if an annotated tag is found in the
++	ancestry, it will always be preferred to lightweight tags.
+=20
+ --contains::
+ 	Instead of finding the tag that predates the commit, find
+--=20
+1.6.0.2.516.g12936.dirty
 
-$ git reset --hard; touch foo; git merge side
-HEAD is now at 5bafc63 a
-Auto-merging foo
-CONFLICT (content): Merge conflict in foo
-Automatic merge failed; fix conflicts and then commit the result.
-
-$ git reset --hard; sleep 1; touch foo;git merge side
-HEAD is now at 5bafc63 a
-error: Entry 'foo' not uptodate. Cannot merge.
-fatal: merging of trees 86de5e13286a8449a8a706a58e63be6781770b12 and 9ee610=
-433fb8854e497d62c648a612b5deb090cf failed
-
-Thanks for the reproducer, I'll write a proper testcase for this and try to
-provide a fix for it as well.
-
---CSNFvL6ilyiKL/Hs
+--pWOmaDnDlrCGjNh4
 Content-Type: application/pgp-signature
 Content-Disposition: inline
 
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1.4.9 (GNU/Linux)
 
-iEYEARECAAYFAkjfnqcACgkQe81tAgORUJbc7ACfWt9JtlSOCu5B2utRsM27Z/Oh
-RvsAn2m9EoG92ZBbQzQIDdR6Ghl33CGH
-=96aI
+iEYEABECAAYFAkjfnvsACgkQvGr7W6HudhxvxQCdHsafraFgDiQCo2l+D0m1Pd1a
+L34AnRCzTlW2JvhQ6STF9jI+esyJ3zvC
+=MuDp
 -----END PGP SIGNATURE-----
 
---CSNFvL6ilyiKL/Hs--
+--pWOmaDnDlrCGjNh4--
