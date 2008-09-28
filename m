@@ -1,105 +1,95 @@
-From: tom sgouros <tomfool@as220.org>
-Subject: Re: mysterious error message
-Date: Sun, 28 Sep 2008 11:18:35 -0400
-Message-ID: <31976.1222615115@as220.org>
-References: <20593.1222378418@as220.org> <alpine.DEB.1.00.0809261400400.13830@pacific.mpi-cbg.de.mpi-cbg.de> <30988.1222439568@as220.org> <20080926143726.GZ3669@spearce.org>
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+From: Thomas Rast <trast@student.ethz.ch>
+Subject: Re: having to pull twice
+Date: Sun, 28 Sep 2008 17:26:20 +0200
+Message-ID: <200809281726.23062.trast@student.ethz.ch>
+References: <fb6605670809241758r186eef51sc6ed6d334a64495d@mail.gmail.com> <200809271616.32082.trast@student.ethz.ch> <20080928151135.GF23137@genesis.frugalware.org>
+Mime-Version: 1.0
+Content-Type: multipart/signed;
+  boundary="nextPart2519246.Y42fZX4XQK";
+  protocol="application/pgp-signature";
+  micalg=pgp-sha1
+Content-Transfer-Encoding: 7bit
+Cc: "Shawn O. Pearce" <spearce@spearce.org>,
+	"Michael P. Soulier" <msoulier@digitaltorque.ca>,
 	git@vger.kernel.org
-To: "Shawn O. Pearce" <spearce@spearce.org>
-X-From: git-owner@vger.kernel.org Sun Sep 28 17:19:52 2008
+To: Miklos Vajna <vmiklos@frugalware.org>
+X-From: git-owner@vger.kernel.org Sun Sep 28 17:28:48 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Kjy3r-00029G-EV
-	for gcvg-git-2@gmane.org; Sun, 28 Sep 2008 17:19:51 +0200
+	id 1KjyCR-0004S3-Gd
+	for gcvg-git-2@gmane.org; Sun, 28 Sep 2008 17:28:44 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752008AbYI1PSl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 28 Sep 2008 11:18:41 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751949AbYI1PSl
-	(ORCPT <rfc822;git-outgoing>); Sun, 28 Sep 2008 11:18:41 -0400
-Received: from as220.org ([198.7.230.15]:42771 "EHLO ironzilla.as220.org"
+	id S1750974AbYI1P0Y (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 28 Sep 2008 11:26:24 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751134AbYI1P0Y
+	(ORCPT <rfc822;git-outgoing>); Sun, 28 Sep 2008 11:26:24 -0400
+Received: from xsmtp0.ethz.ch ([82.130.70.14]:35592 "EHLO XSMTP0.ethz.ch"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751786AbYI1PSk (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 28 Sep 2008 11:18:40 -0400
-Received: from localhost (localhost [127.0.0.1])
-	by ironzilla.as220.org (Postfix) with ESMTP id 4427EAAB09;
-	Sun, 28 Sep 2008 11:18:39 -0400 (EDT)
-X-Virus-Scanned: amavisd-new at as220.org
-Received: from ironzilla.as220.org ([127.0.0.1])
-	by localhost (as220.org [127.0.0.1]) (amavisd-new, port 10024)
-	with LMTP id RkqPxWrJlYe7; Sun, 28 Sep 2008 11:18:35 -0400 (EDT)
-Received: from as220.org (localhost [127.0.0.1])
-	by ironzilla.as220.org (Postfix) with ESMTP id 295DFAAB02;
-	Sun, 28 Sep 2008 11:18:35 -0400 (EDT)
-In-reply-to: <20080926143726.GZ3669@spearce.org> 
-Comments: In-reply-to "Shawn O. Pearce" <spearce@spearce.org>
-   message dated "Fri, 26 Sep 2008 07:37:26 -0700."
-X-Mailer: MH-E 8.0.3; nmh 1.1; GNU Emacs 22.2.1
+	id S1750855AbYI1P0Y (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 28 Sep 2008 11:26:24 -0400
+Received: from xfe2.d.ethz.ch ([82.130.124.42]) by XSMTP0.ethz.ch with Microsoft SMTPSVC(6.0.3790.3959);
+	 Sun, 28 Sep 2008 17:26:22 +0200
+Received: from [192.168.0.8] ([77.56.223.244]) by xfe2.d.ethz.ch over TLS secured channel with Microsoft SMTPSVC(6.0.3790.3959);
+	 Sun, 28 Sep 2008 17:26:22 +0200
+User-Agent: KMail/1.9.9
+In-Reply-To: <20080928151135.GF23137@genesis.frugalware.org>
+X-OriginalArrivalTime: 28 Sep 2008 15:26:22.0447 (UTC) FILETIME=[902157F0:01C9217E]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/96975>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/96976>
 
+--nextPart2519246.Y42fZX4XQK
+Content-Type: text/plain;
+  charset="utf-8"
+Content-Transfer-Encoding: quoted-printable
+Content-Disposition: inline
 
-I have upgraded and the problem has disappeared.  Many thanks for the
-advice.
+Miklos Vajna wrote:
+>=20
+> Oh, the racy git problem. ;-)
+>=20
+> $ git reset --hard; touch foo; git merge side
 
- -tom
+IIUC, this is not the same as "racy git".  The racy case is if you
+manage to get a file changed immediately after its index entry was
+updated, so that it will look unchanged.  In this case, it's simply
+the same file with a new mtime, which means it looks changed
+superficially but still has the same contents.
 
-Shawn O. Pearce <spearce@spearce.org> wrote:
+Granted, you could call my test "racy" because it relies on 'make
+install' taking at least one second, which by Moore's law should
+happen sometime around 2019 ;-)
 
-> tom sgouros <tomfool@as220.org> wrote:
-> > > On Thu, 25 Sep 2008, Tom Sgouros wrote:
-> > > > I receive the following error message when I try to do a 'git push':
-> > > > 
-> > > >   tomfool@toms-box:hpl$ git push
-> > > >   updating 'refs/heads/master'
-> > > >     from ad4ae7925d3dd23798e7c5b733d2d8f930f7410f
-> > > >     to   5b5f5fae014a4f3535fa10b0f6e28b4bf3225dc3
-> > > >    Also local refs/remotes/origin/master
-> > > >   Generating pack...
-> > > >   Done counting 10 objects.
-> > > >   Deltifying 10 objects...
-> > > >   error: pack-objects died with strange error
-> > > >   unpack eof before pack header was fully read
-> > > >   ng refs/heads/master n/a (unpacker error)
-> > > >   error: failed to push to 'ssh://tomfool@as220.org/home/tomfool/hpl.git'
-> > > >   tomfool@toms-box:hpl$
-> > > 
-> > > I got this message when I tried to push a project with submodules to a 
-> > > server which had submodule-ignorant git installed.  Maybe it's that?
-> > 
-> > I'm not sure which versions are submodule-ignorant, but it's version
-> > 1.5.3.6 on the pusher and version 1.5.4.5 on the server.  I installed
-> > git via the fink package manager.  Could there be some other
-> > incompatibility? 
-> 
-> This change came after 1.5.3.6 and I think its what you are
-> tripping over:
-> 
->   commit 481f0ee60eef2c34b891e5d04b7e6e5a955eedf4
->   Author: Linus Torvalds <torvalds@linux-foundation.org>
->   Date:   Sun Nov 11 23:35:23 2007 +0000
-> 
->     Fix rev-list when showing objects involving submodules
-> 
-> rev-list aborting because it cannot mark a submodule commit
-> as uninteresting should cause pack-objects to abort too since
-> the list of objects wasn't completely produced.
-> 
-> That fix is in 1.5.3.7 or later.
-> 
-> -- 
-> Shawn.
-> 
+> Thanks for the reproducer, I'll write a proper testcase for this and try =
+to
+> provide a fix for it as well.
+
+Thanks.
+
+=2D Thomas
+
+=2D-=20
+Thomas Rast
+trast@student.ethz.ch
 
 
 
--- 
- ------------------------
- tomfool at as220 dot org
- http://sgouros.com  
- http://whatcheer.net
+
+--nextPart2519246.Y42fZX4XQK
+Content-Type: application/pgp-signature; name=signature.asc 
+Content-Description: This is a digitally signed message part.
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.0.9 (GNU/Linux)
+
+iEYEABECAAYFAkjfoh8ACgkQqUud07tmzP0PEQCfR1HRVjrR+shEJL4HDP4aWkUd
+Y8EAn0ewCNBQBUS5CmwUoIq1y/TxMIzT
+=MhBM
+-----END PGP SIGNATURE-----
+
+--nextPart2519246.Y42fZX4XQK--
