@@ -1,129 +1,99 @@
-From: "Erez Zilber" <erezzi.list@gmail.com>
-Subject: Re: git-describe doesn't show the most recent tag
-Date: Sun, 28 Sep 2008 18:05:51 +0300
-Message-ID: <ce513bcc0809280805wb0598b7r8d5e89c1187b080d@mail.gmail.com>
-References: <ce513bcc0809280648s352cda3fj5eb35b6e9cd40af9@mail.gmail.com>
-	 <20080928135526.GG5302@artemis.corp>
-	 <ce513bcc0809280729p47cc3790nb77b3cae8b805221@mail.gmail.com>
-	 <20080928143949.GH5302@artemis.corp>
+From: Miklos Vajna <vmiklos@frugalware.org>
+Subject: Re: having to pull twice
+Date: Sun, 28 Sep 2008 17:11:35 +0200
+Message-ID: <20080928151135.GF23137@genesis.frugalware.org>
+References: <fb6605670809241758r186eef51sc6ed6d334a64495d@mail.gmail.com> <200809250905.09646.trast@student.ethz.ch> <20080925232525.GP23137@genesis.frugalware.org> <200809271616.32082.trast@student.ethz.ch>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: "git@vger.kernel.org" <git@vger.kernel.org>,
-	open-iscsi@googlegroups.com
-To: "Pierre Habouzit" <madcoder@debian.org>
-X-From: git-owner@vger.kernel.org Sun Sep 28 17:07:02 2008
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="CSNFvL6ilyiKL/Hs"
+Cc: "Shawn O. Pearce" <spearce@spearce.org>,
+	"Michael P. Soulier" <msoulier@digitaltorque.ca>,
+	git@vger.kernel.org
+To: Thomas Rast <trast@student.ethz.ch>
+X-From: git-owner@vger.kernel.org Sun Sep 28 17:12:48 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KjxrR-0007CK-I1
-	for gcvg-git-2@gmane.org; Sun, 28 Sep 2008 17:07:02 +0200
+	id 1Kjxx1-00009q-Jl
+	for gcvg-git-2@gmane.org; Sun, 28 Sep 2008 17:12:48 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751670AbYI1PFw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 28 Sep 2008 11:05:52 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751460AbYI1PFw
-	(ORCPT <rfc822;git-outgoing>); Sun, 28 Sep 2008 11:05:52 -0400
-Received: from rv-out-0506.google.com ([209.85.198.226]:26197 "EHLO
-	rv-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751453AbYI1PFw (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 28 Sep 2008 11:05:52 -0400
-Received: by rv-out-0506.google.com with SMTP id k40so1821860rvb.1
-        for <git@vger.kernel.org>; Sun, 28 Sep 2008 08:05:51 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to
-         :subject:cc:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:references;
-        bh=KkqybRDuvZaqxcgMkkuD1MAfo4Hu8twhfUh/SeTi50U=;
-        b=P4wkc1Hv+lMuRlzdFad3+63B1HuxQ6h4tEKsyO6l43azC5s0hzM4m2a71XcVwqtTiD
-         9TSOSL9IwBF9iYCctjiqPClESNP9tMTwy8ZP3tiv5WHJ/PziTyxJMaN2KXD2Z6iYSU5k
-         n927jTmMoPKKjb/WKb1cOHK6F9KaxLy4H6WAM=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
-         :content-type:content-transfer-encoding:content-disposition
-         :references;
-        b=jr2h7rlX8Zf4HxHLVoDEdhfQvQv9SIk6jygw0ygNC7gaTl53D6W3wrc04HSDEE5pZ8
-         +3GA3peq8RPGk2/ZHOoj4M0kLuZ54UFdlC0U01GAAiCngONbfzvqqCRsmZw7xQ/EA5QH
-         PqiGsi0ce+CotLliyGRRO1Zvgnb2iv1UmY2Mg=
-Received: by 10.141.206.13 with SMTP id i13mr1870528rvq.211.1222614351482;
-        Sun, 28 Sep 2008 08:05:51 -0700 (PDT)
-Received: by 10.141.91.21 with HTTP; Sun, 28 Sep 2008 08:05:51 -0700 (PDT)
-In-Reply-To: <20080928143949.GH5302@artemis.corp>
+	id S1751868AbYI1PLi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 28 Sep 2008 11:11:38 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751816AbYI1PLi
+	(ORCPT <rfc822;git-outgoing>); Sun, 28 Sep 2008 11:11:38 -0400
+Received: from virgo.iok.hu ([193.202.89.103]:35980 "EHLO virgo.iok.hu"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751786AbYI1PLh (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 28 Sep 2008 11:11:37 -0400
+Received: from kag.elte.hu (kag.elte.hu [157.181.177.1])
+	by virgo.iok.hu (Postfix) with ESMTP id 3B39C580B9;
+	Sun, 28 Sep 2008 17:11:36 +0200 (CEST)
+Received: from genesis.frugalware.org (frugalware.elte.hu [157.181.177.34])
+	by kag.elte.hu (Postfix) with ESMTP id 863B84465E;
+	Sun, 28 Sep 2008 17:11:35 +0200 (CEST)
+Received: by genesis.frugalware.org (Postfix, from userid 1000)
+	id 505A311901A1; Sun, 28 Sep 2008 17:11:35 +0200 (CEST)
 Content-Disposition: inline
+In-Reply-To: <200809271616.32082.trast@student.ethz.ch>
+User-Agent: Mutt/1.5.17 (2007-11-01)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/96972>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/96973>
 
-On Sun, Sep 28, 2008 at 5:39 PM, Pierre Habouzit <madcoder@debian.org> wrote:
-> On Sun, Sep 28, 2008 at 02:29:21PM +0000, Erez Zilber wrote:
->> On Sun, Sep 28, 2008 at 4:55 PM, Pierre Habouzit <madcoder@debian.org> wrote:
->> > On Sun, Sep 28, 2008 at 01:48:42PM +0000, Erez Zilber wrote:
->> >> Why is this happening?
->> >
->> >       --tags
->> >           Instead of using only the annotated tags, use any tag found in
->> >           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
->> >           .git/refs/tags.
->> >
->>
->> I'm not sure that I understand the difference between tags and annotated tags.
->
->  a lightweight tag is just a reference. an annotated tag has a message
-> associated. Usually tags are meant as local help, whereas annotated tags
-> are the ones pushed to the repositories and that never change. That's
-> why many tools ignore non annotated tags by default unless you pass
-> --tags to them.
 
-Thanks for the explanation.
+--CSNFvL6ilyiKL/Hs
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
->
->> Anyway, if I move to the master branch, I see the following tags:
->>
->> [erez.zilber@erez-lx:/tmp/open-iscsi.git]$ ls .git/refs/tags/
->> 2.0-868-rc1  2.0-869  2.0-869.1  2.0-869.2  2.0-869-rc2  2.0-869-rc3
->> 2.0-869-rc4  2.0-870-rc1
->> [erez.zilber@erez-lx:/tmp/open-iscsi.git]$ git-tag
->> 2.0-868-rc1
->> 2.0-869
->> 2.0-869-rc2
->> 2.0-869-rc3
->> 2.0-869-rc4
->> 2.0-869.1
->> 2.0-869.2
->> 2.0-870-rc1
->>
->> However:
->> [erez.zilber@erez-lx:/tmp/open-iscsi.git]$ git-describe --tags
->> 2.0-868-rc1-81-g31c9d42
->>
->> I was expecting to see 2.0-870-rc1 here.
->
->  That's because master is not at -rc1 exactly, but some commits
-> afterwards. Please read the git-describe manpage fully, it's _really_
-> well explained:
->
->       The command finds the most recent tag that is reachable from a commit.
->       If the tag points to the commit, then only the tag is shown. Otherwise,
->       it suffixes the tag name with the number of additional commits on top
->       of the tagged object and the abbreviated object name of the most recent
->       commit.
->
->
-> Which means that your master is 81 commits ahead of the exact 2.0-860-rc1 tag,
-> at sha1 31c9d42
+On Sat, Sep 27, 2008 at 04:16:29PM +0200, Thomas Rast <trast@student.ethz.c=
+h> wrote:
+> * Setup:
+>=20
+>   mkdir $temp_repo
+>   cd $temp_repo
+>   git init
+>   echo foo > foo
+>   git add foo
+>   git commit -m initial
+>   echo a > foo
+>   git commit -m a foo
+>   git checkout -b side HEAD^
+>   echo b > foo
+>   git commit -m b foo
+>   git checkout master
 
-I read that, but I still don't understand what happens in the open-iscsi tree:
+Oh, the racy git problem. ;-)
 
-[erez.zilber@erez-lx:/tmp/open-iscsi.git]$ cat .git/refs/tags/2.0-870-rc1
-5e80c8167c112687ae7b30b1e40af6f03088c56c
+$ git reset --hard; touch foo; git merge side
+HEAD is now at 5bafc63 a
+Auto-merging foo
+CONFLICT (content): Merge conflict in foo
+Automatic merge failed; fix conflicts and then commit the result.
 
-The head is 12 commits from the 2.0-870-rc1 tag. Therefore, I expected
-to see something like 2.0-870-rc1-12-some_hash (not
-2.0-868-rc1-81-g31c9d42).
+$ git reset --hard; sleep 1; touch foo;git merge side
+HEAD is now at 5bafc63 a
+error: Entry 'foo' not uptodate. Cannot merge.
+fatal: merging of trees 86de5e13286a8449a8a706a58e63be6781770b12 and 9ee610=
+433fb8854e497d62c648a612b5deb090cf failed
 
-Erez
+Thanks for the reproducer, I'll write a proper testcase for this and try to
+provide a fix for it as well.
+
+--CSNFvL6ilyiKL/Hs
+Content-Type: application/pgp-signature
+Content-Disposition: inline
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.9 (GNU/Linux)
+
+iEYEARECAAYFAkjfnqcACgkQe81tAgORUJbc7ACfWt9JtlSOCu5B2utRsM27Z/Oh
+RvsAn2m9EoG92ZBbQzQIDdR6Ghl33CGH
+=96aI
+-----END PGP SIGNATURE-----
+
+--CSNFvL6ilyiKL/Hs--
