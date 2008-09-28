@@ -1,87 +1,105 @@
-From: Pierre Habouzit <madcoder@debian.org>
-Subject: [PATCH] doc: enhance git describe --tags help
-Date: Sun, 28 Sep 2008 17:12:59 +0200
-Message-ID: <20080928151259.GJ5302@artemis.corp>
-References: <ce513bcc0809280648s352cda3fj5eb35b6e9cd40af9@mail.gmail.com> <20080928135526.GG5302@artemis.corp> <ce513bcc0809280729p47cc3790nb77b3cae8b805221@mail.gmail.com> <20080928143949.GH5302@artemis.corp> <20080928150318.GI5302@artemis.corp>
-Mime-Version: 1.0
-Content-Type: multipart/signed; boundary="pWOmaDnDlrCGjNh4";
-	protocol="application/pgp-signature"; micalg=SHA1
-Cc: "git@vger.kernel.org" <git@vger.kernel.org>,
-	open-iscsi@googlegroups.com, spearce@spearce.org,
-	Junio C Hamano <gitster@pobox.com>
-To: Erez Zilber <erezzi.list@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Sep 28 17:14:16 2008
+From: tom sgouros <tomfool@as220.org>
+Subject: Re: mysterious error message
+Date: Sun, 28 Sep 2008 11:18:35 -0400
+Message-ID: <31976.1222615115@as220.org>
+References: <20593.1222378418@as220.org> <alpine.DEB.1.00.0809261400400.13830@pacific.mpi-cbg.de.mpi-cbg.de> <30988.1222439568@as220.org> <20080926143726.GZ3669@spearce.org>
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	git@vger.kernel.org
+To: "Shawn O. Pearce" <spearce@spearce.org>
+X-From: git-owner@vger.kernel.org Sun Sep 28 17:19:52 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KjxyP-0000Vt-CQ
-	for gcvg-git-2@gmane.org; Sun, 28 Sep 2008 17:14:13 +0200
+	id 1Kjy3r-00029G-EV
+	for gcvg-git-2@gmane.org; Sun, 28 Sep 2008 17:19:51 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751897AbYI1PNE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 28 Sep 2008 11:13:04 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751816AbYI1PND
-	(ORCPT <rfc822;git-outgoing>); Sun, 28 Sep 2008 11:13:03 -0400
-Received: from pan.madism.org ([88.191.52.104]:57342 "EHLO hermes.madism.org"
+	id S1752008AbYI1PSl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 28 Sep 2008 11:18:41 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751949AbYI1PSl
+	(ORCPT <rfc822;git-outgoing>); Sun, 28 Sep 2008 11:18:41 -0400
+Received: from as220.org ([198.7.230.15]:42771 "EHLO ironzilla.as220.org"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751772AbYI1PNC (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 28 Sep 2008 11:13:02 -0400
-Received: from madism.org (olympe.madism.org [82.243.245.108])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(Client CN "artemis.madism.org", Issuer "madism.org" (verified OK))
-	by hermes.madism.org (Postfix) with ESMTPS id 8BC5E3B345;
-	Sun, 28 Sep 2008 17:13:00 +0200 (CEST)
-Received: by madism.org (Postfix, from userid 1000)
-	id 663E42AC9C; Sun, 28 Sep 2008 17:12:59 +0200 (CEST)
-Content-Disposition: inline
-In-Reply-To: <20080928150318.GI5302@artemis.corp>
-X-Face: $(^e[V4D-[`f2EmMGz@fgWK!e.B~2g.{08lKPU(nc1J~z\4B>*JEVq:E]7G-\6$Ycr4<;Z!|VY6Grt]+RsS$IMV)f>2)M="tY:ZPcU;&%it2D81X^kNya0=L]"vZmLP+UmKhgq+u*\.dJ8G!N&=EvlD
-User-Agent: Madmutt/devel (Linux)
+	id S1751786AbYI1PSk (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 28 Sep 2008 11:18:40 -0400
+Received: from localhost (localhost [127.0.0.1])
+	by ironzilla.as220.org (Postfix) with ESMTP id 4427EAAB09;
+	Sun, 28 Sep 2008 11:18:39 -0400 (EDT)
+X-Virus-Scanned: amavisd-new at as220.org
+Received: from ironzilla.as220.org ([127.0.0.1])
+	by localhost (as220.org [127.0.0.1]) (amavisd-new, port 10024)
+	with LMTP id RkqPxWrJlYe7; Sun, 28 Sep 2008 11:18:35 -0400 (EDT)
+Received: from as220.org (localhost [127.0.0.1])
+	by ironzilla.as220.org (Postfix) with ESMTP id 295DFAAB02;
+	Sun, 28 Sep 2008 11:18:35 -0400 (EDT)
+In-reply-to: <20080926143726.GZ3669@spearce.org> 
+Comments: In-reply-to "Shawn O. Pearce" <spearce@spearce.org>
+   message dated "Fri, 26 Sep 2008 07:37:26 -0700."
+X-Mailer: MH-E 8.0.3; nmh 1.1; GNU Emacs 22.2.1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/96974>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/96975>
 
 
---pWOmaDnDlrCGjNh4
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+I have upgraded and the problem has disappeared.  Many thanks for the
+advice.
 
-Signed-off-by: Pierre Habouzit <madcoder@debian.org>
----
- Documentation/git-describe.txt |    3 ++-
- 1 files changed, 2 insertions(+), 1 deletions(-)
+ -tom
 
-diff --git a/Documentation/git-describe.txt b/Documentation/git-describe.txt
-index c4dbc2a..9cc8c2f 100644
---- a/Documentation/git-describe.txt
-+++ b/Documentation/git-describe.txt
-@@ -30,7 +30,8 @@ OPTIONS
-=20
- --tags::
- 	Instead of using only the annotated tags, use any tag
--	found in `.git/refs/tags`.
-+	found in `.git/refs/tags`. Though if an annotated tag is found in the
-+	ancestry, it will always be preferred to lightweight tags.
-=20
- --contains::
- 	Instead of finding the tag that predates the commit, find
---=20
-1.6.0.2.516.g12936.dirty
+Shawn O. Pearce <spearce@spearce.org> wrote:
 
---pWOmaDnDlrCGjNh4
-Content-Type: application/pgp-signature
-Content-Disposition: inline
+> tom sgouros <tomfool@as220.org> wrote:
+> > > On Thu, 25 Sep 2008, Tom Sgouros wrote:
+> > > > I receive the following error message when I try to do a 'git push':
+> > > > 
+> > > >   tomfool@toms-box:hpl$ git push
+> > > >   updating 'refs/heads/master'
+> > > >     from ad4ae7925d3dd23798e7c5b733d2d8f930f7410f
+> > > >     to   5b5f5fae014a4f3535fa10b0f6e28b4bf3225dc3
+> > > >    Also local refs/remotes/origin/master
+> > > >   Generating pack...
+> > > >   Done counting 10 objects.
+> > > >   Deltifying 10 objects...
+> > > >   error: pack-objects died with strange error
+> > > >   unpack eof before pack header was fully read
+> > > >   ng refs/heads/master n/a (unpacker error)
+> > > >   error: failed to push to 'ssh://tomfool@as220.org/home/tomfool/hpl.git'
+> > > >   tomfool@toms-box:hpl$
+> > > 
+> > > I got this message when I tried to push a project with submodules to a 
+> > > server which had submodule-ignorant git installed.  Maybe it's that?
+> > 
+> > I'm not sure which versions are submodule-ignorant, but it's version
+> > 1.5.3.6 on the pusher and version 1.5.4.5 on the server.  I installed
+> > git via the fink package manager.  Could there be some other
+> > incompatibility? 
+> 
+> This change came after 1.5.3.6 and I think its what you are
+> tripping over:
+> 
+>   commit 481f0ee60eef2c34b891e5d04b7e6e5a955eedf4
+>   Author: Linus Torvalds <torvalds@linux-foundation.org>
+>   Date:   Sun Nov 11 23:35:23 2007 +0000
+> 
+>     Fix rev-list when showing objects involving submodules
+> 
+> rev-list aborting because it cannot mark a submodule commit
+> as uninteresting should cause pack-objects to abort too since
+> the list of objects wasn't completely produced.
+> 
+> That fix is in 1.5.3.7 or later.
+> 
+> -- 
+> Shawn.
+> 
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.9 (GNU/Linux)
 
-iEYEABECAAYFAkjfnvsACgkQvGr7W6HudhxvxQCdHsafraFgDiQCo2l+D0m1Pd1a
-L34AnRCzTlW2JvhQ6STF9jI+esyJ3zvC
-=MuDp
------END PGP SIGNATURE-----
 
---pWOmaDnDlrCGjNh4--
+-- 
+ ------------------------
+ tomfool at as220 dot org
+ http://sgouros.com  
+ http://whatcheer.net
