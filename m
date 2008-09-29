@@ -1,72 +1,59 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: Re: [RFC/PATCH] remove vim syntax highlighting in favor of upstream
-Date: Mon, 29 Sep 2008 07:55:42 -0700
-Message-ID: <20080929145542.GA18340@spearce.org>
-References: <1222269726-15632-1-git-send-email-szeder@ira.uka.de> <20080924155745.GA3908@coredump.intra.peff.net> <20080924170154.GA6816@neumann> <20080924175315.GA10337@coredump.intra.peff.net> <20080924195658.GB6816@neumann>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Jeff King <peff@peff.net>, vim@tpope.info, git@vger.kernel.org
-To: SZEDER GGGbor <szeder@ira.uka.de>
-X-From: git-owner@vger.kernel.org Mon Sep 29 16:58:25 2008
+From: Miklos Vajna <vmiklos@frugalware.org>
+Subject: [PATCH] Fix typo in release notes for 1.6.0.3
+Date: Mon, 29 Sep 2008 16:58:08 +0200
+Message-ID: <1222700288-29717-1-git-send-email-vmiklos@frugalware.org>
+Cc: git@vger.kernel.org
+To: spearce@spearce.org
+X-From: git-owner@vger.kernel.org Mon Sep 29 17:00:35 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KkKBB-0007dt-AD
-	for gcvg-git-2@gmane.org; Mon, 29 Sep 2008 16:56:53 +0200
+	id 1KkKDb-0000OH-Gx
+	for gcvg-git-2@gmane.org; Mon, 29 Sep 2008 16:59:24 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751772AbYI2Ozo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 29 Sep 2008 10:55:44 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751868AbYI2Ozn
-	(ORCPT <rfc822;git-outgoing>); Mon, 29 Sep 2008 10:55:43 -0400
-Received: from george.spearce.org ([209.20.77.23]:37422 "EHLO
-	george.spearce.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751748AbYI2Ozn (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 29 Sep 2008 10:55:43 -0400
-Received: by george.spearce.org (Postfix, from userid 1001)
-	id D7C3D3835F; Mon, 29 Sep 2008 14:55:42 +0000 (UTC)
-Content-Disposition: inline
-In-Reply-To: <20080924195658.GB6816@neumann>
-User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
+	id S1751083AbYI2O6M (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 29 Sep 2008 10:58:12 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751087AbYI2O6L
+	(ORCPT <rfc822;git-outgoing>); Mon, 29 Sep 2008 10:58:11 -0400
+Received: from virgo.iok.hu ([193.202.89.103]:60108 "EHLO virgo.iok.hu"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750940AbYI2O6K (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 29 Sep 2008 10:58:10 -0400
+Received: from kag.elte.hu (kag.elte.hu [157.181.177.1])
+	by virgo.iok.hu (Postfix) with ESMTP id 253AA58134;
+	Mon, 29 Sep 2008 16:58:09 +0200 (CEST)
+Received: from genesis.frugalware.org (frugalware.elte.hu [157.181.177.34])
+	by kag.elte.hu (Postfix) with ESMTP id 197F94465E;
+	Mon, 29 Sep 2008 16:58:09 +0200 (CEST)
+Received: by genesis.frugalware.org (Postfix, from userid 1000)
+	id 0A73D11901A1; Mon, 29 Sep 2008 16:58:09 +0200 (CEST)
+X-Mailer: git-send-email 1.6.0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/97014>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/97015>
 
-SZEDER GGGbor <szeder@ira.uka.de> wrote:
-> remove vim syntax highlighting in favor of upstream
-> 
-> As of version 7.2, vim ships with its own syntax
-> highlighting for git commit messages, which is:
-> 
->   1. more comprehensive in splitting up the various
->      components of the file
-> 
->   2. in accordance with the usual vim behavior for syntax
->      highlighting (e.g., respecting b:current_syntax)
-> 
->   3. presumably better maintained (I have not been using
->      what's in git's contrib/ directory for some time in
->      favor of the upstream version)
-> 
-> Furthermore, vim 7.2 also provides syntax highlighting for
-> other git filetypes (gitconfig, rebase, send-email).
-> 
-> This patch gets rid of our local version and just points
-> interested parties to the upstream version.
-> 
-> The code for auto-detecting filetypes is taken from vim 7.2's
-> runtime/filetype.vim.
-> 
-> ---
->  contrib/vim/README               |   38 ++++++++++++++++++++++++++++++--------
->  contrib/vim/syntax/gitcommit.vim |   18 ------------------
->  2 files changed, 30 insertions(+), 26 deletions(-)
->  delete mode 100644 contrib/vim/syntax/gitcommit.vim
+Signed-off-by: Miklos Vajna <vmiklos@frugalware.org>
+---
 
-Missing SBO line?
+ Documentation/RelNotes-1.6.0.3.txt |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
+
+diff --git a/Documentation/RelNotes-1.6.0.3.txt b/Documentation/RelNotes-1.6.0.3.txt
+index 46e13a4..a374690 100644
+--- a/Documentation/RelNotes-1.6.0.3.txt
++++ b/Documentation/RelNotes-1.6.0.3.txt
+@@ -16,7 +16,7 @@ Fixes since v1.6.0.2
+ * Behaviour of "git diff --quiet" was inconsistent with "diff --exit-code"
+   with the output redirected to /dev/null.
  
+-* "git stash apply sash@{1}" was fixed to error out.  Prior versions
++* "git stash apply stash@{1}" was fixed to error out.  Prior versions
+   would have applied stash@{0} incorrectly.
+ 
+ * "git for-each-ref --format=%(subject)" fixed for commits with no
 -- 
-Shawn.
+1.6.0
