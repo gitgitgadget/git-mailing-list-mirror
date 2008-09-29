@@ -1,122 +1,83 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: [PATCH 5/6] gitweb: remove PATH_INFO from $my_url and $my_uri
-Date: Mon, 29 Sep 2008 10:33:33 +0200
-Message-ID: <200809291033.34588.jnareb@gmail.com>
-References: <1222030663-22540-1-git-send-email-giuseppe.bilotta@gmail.com> <1222030663-22540-5-git-send-email-giuseppe.bilotta@gmail.com> <1222030663-22540-6-git-send-email-giuseppe.bilotta@gmail.com>
+From: Stephen Haberman <stephen@exigencecorp.com>
+Subject: [PATCH] Clarify how the user can satisfy stash's 'dirty state'
+ check.
+Date: Mon, 29 Sep 2008 04:12:04 -0500
+Organization: Exigence
+Message-ID: <20080929041204.846ba617.stephen@exigencecorp.com>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-2"
+Content-Type: text/plain; charset=US-ASCII
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, Petr Baudis <pasky@ucw.cz>,
-	Lea Wiemann <lewiemann@gmail.com>,
-	"Shawn O. Pearce (interim Git maintainer)" <spearce@spearce.org>
-To: Giuseppe Bilotta <giuseppe.bilotta@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Sep 29 10:34:55 2008
+Cc: spearce@spearce.org
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Sep 29 11:13:30 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KkEDT-0006OA-R4
-	for gcvg-git-2@gmane.org; Mon, 29 Sep 2008 10:34:52 +0200
+	id 1KkEon-0008VO-Tt
+	for gcvg-git-2@gmane.org; Mon, 29 Sep 2008 11:13:26 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752088AbYI2Idl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 29 Sep 2008 04:33:41 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752058AbYI2Idl
-	(ORCPT <rfc822;git-outgoing>); Mon, 29 Sep 2008 04:33:41 -0400
-Received: from fg-out-1718.google.com ([72.14.220.159]:34433 "EHLO
-	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752050AbYI2Idk (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 29 Sep 2008 04:33:40 -0400
-Received: by fg-out-1718.google.com with SMTP id 19so1354817fgg.17
-        for <git@vger.kernel.org>; Mon, 29 Sep 2008 01:33:39 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:subject:date
-         :user-agent:cc:references:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:message-id;
-        bh=swFrphvrTMME/e+ijOrOV08PfqhnDfmO9vsvTcDNQXc=;
-        b=xsOqQ1AaNn8loLnuXS+kYz+VL2pygZnSgiJ+FSgJ9UIP8lpYv/3JGwyofisrmqB0dC
-         /+5S+cUf//ix7lfvJCudTMXPWhDbJyBOObhLHkCPpwwTU71ITEhtb4VVvtuRHGeN1UrW
-         3n0aJrTEy9yzoLbo0UnX7slFRH3h5o0MShOwU=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=from:to:subject:date:user-agent:cc:references:in-reply-to
-         :mime-version:content-type:content-transfer-encoding
-         :content-disposition:message-id;
-        b=IPEWflx5OCAtda0UMEjYh7We3A9gT7VTab8J36O09HfaCRd4msC1iPUdKITg5TVHb5
-         7elZeDqUogLIRr2Uw/5+rBxsiZ9Igyf7hASQCHDp2GwoKD3PEq/Vm1cfL/RPWNYJ5QeH
-         DK8jDX8/ewRD7dUX7J8tzzcKK8g72pWT0OzEk=
-Received: by 10.86.98.14 with SMTP id v14mr3941415fgb.74.1222677219586;
-        Mon, 29 Sep 2008 01:33:39 -0700 (PDT)
-Received: from ?192.168.1.11? (abvx193.neoplus.adsl.tpnet.pl [83.8.221.193])
-        by mx.google.com with ESMTPS id l19sm2766534fgb.7.2008.09.29.01.33.36
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Mon, 29 Sep 2008 01:33:38 -0700 (PDT)
-User-Agent: KMail/1.9.3
-In-Reply-To: <1222030663-22540-6-git-send-email-giuseppe.bilotta@gmail.com>
-Content-Disposition: inline
+	id S1752468AbYI2JMM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 29 Sep 2008 05:12:12 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752428AbYI2JMM
+	(ORCPT <rfc822;git-outgoing>); Mon, 29 Sep 2008 05:12:12 -0400
+Received: from smtp112.sat.emailsrvr.com ([66.216.121.112]:46962 "EHLO
+	smtp112.sat.emailsrvr.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752160AbYI2JML (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 29 Sep 2008 05:12:11 -0400
+Received: from relay1.relay.sat.mlsrvr.com (localhost [127.0.0.1])
+	by relay1.relay.sat.mlsrvr.com (SMTP Server) with ESMTP id B582824DD24;
+	Mon, 29 Sep 2008 05:12:08 -0400 (EDT)
+Received: by relay1.relay.sat.mlsrvr.com (Authenticated sender: stephen-AT-exigencecorp.com) with ESMTP id 51E3124CC96;
+	Mon, 29 Sep 2008 05:12:08 -0400 (EDT)
+X-Mailer: Sylpheed 2.5.0beta3 (GTK+ 2.10.14; i686-pc-mingw32)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/97001>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/97002>
 
-On Sun, 21 Sep 2008, Giuseppe Bilotta wrote:
+Clarify how the user can satisfy stash's 'dirty state' check.
 
-> This patch (combined with appropriate server configuration) allows usage
-> of the gitweb CGI script as DirectoryIndex for the server root even when
-> the pathinfo feature is enabled.
->
+Signed-off-by: Stephen Haberman <stephen@exigencecorp.com>
+---
 
-This is IMHO a bugfix for a path_info handling bug, for which there
-was an ugly workaround of specifying base URL ($my_url and $my_uri)
-explicitly in gitweb configuration (GITWEB_CONFIG).
+Feel free to tweak the wording, but we had a false assumption that you
+could not apply multiple stashes in a row due to this confusing error
+message. I.e. "dirty state" was taken as "dirty working tree and/or
+index" instead of just "dirty working tree".
 
-Therefore I think that this patch should have been sent outside of
-the rest of "new path_info features" series, as a separate single
-patch, and now that it is there it really should be applied, perhaps
-even to the 'maint' branch.
+I don't have any tests, but t3903-stash.sh runs the same ("10: stash
+branch" is failing both before and after my change change).
 
-> Signed-off-by: Giuseppe Bilotta <giuseppe.bilotta@gmail.com>
+Looking into it more, I dislike that t3903's "3: apply needs clean
+working directory" uses test_must_fail because without actively
+asserting that the expected error message comes back, we can't be sure
+the boundary condition that was originally tested for is still being met
+(e.g. `git stash` could be returning non-zero for some entirely
+different reason now--not likely, yes, but possible). test_must_fail
+mentions a "segv" reason, which I'll somewhat blindly accept as good,
+but it would be nice if I could pass in/grep against/something the error
+message. Perhaps on another line/invocation?
 
-Acked-by: Jakub Narebski <jnareb@gmail.com>
-(for what is worth)
+Anyway...the patch:
 
-> ---
->  gitweb/gitweb.perl |    4 ++++
->  1 files changed, 4 insertions(+), 0 deletions(-)
-> 
-> diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
-> index 0dd2526..4a91d07 100755
-> --- a/gitweb/gitweb.perl
-> +++ b/gitweb/gitweb.perl
-> @@ -26,6 +26,10 @@ our $cgi = new CGI;
->  our $version = "++GIT_VERSION++";
->  our $my_url = $cgi->url();
->  our $my_uri = $cgi->url(-absolute => 1);
+ git-stash.sh |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
 
-Perhaps some comment here?
-
-> +if (my $path_info = $ENV{"PATH_INFO"}) {
-> +	$my_url =~ s,$path_info$,,;
-> +	$my_uri =~ s,$path_info$,,;
-
-+	$my_url =~ s,\Q$path_info\E$,,;
-+	$my_uri =~ s,\Q$path_info\E$,,;
-
-Just in case.
-
-> +}
->  
->  # core git executable to use
->  # this can just be "git" if your webserver has a sensible PATH
-
-I was wondering if $path_info should be global variable, but then
-I checked that $path_info is local to evaluate_path_info() subroutine.
-So it is good as it is now, but with quoting regular expression
-metacharacters.
-
+diff --git a/git-stash.sh b/git-stash.sh
+index e15c12a..a932ca7 100755
+--- a/git-stash.sh
++++ b/git-stash.sh
+@@ -151,7 +151,7 @@ show_stash () {
+ 
+ apply_stash () {
+ 	git diff-files --quiet --ignore-submodules ||
+-		die 'Cannot restore on top of a dirty state'
++		die 'Cannot apply to a dirty working tree, please stage your changes'
+ 
+ 	unstash_index=
+ 	case "$1" in
 -- 
-Jakub Narebski
-Poland
+1.6.0.2
