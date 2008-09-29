@@ -1,71 +1,83 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH] Add contrib/rerere-train script
-Date: Mon, 29 Sep 2008 14:39:26 +0200 (CEST)
-Message-ID: <alpine.DEB.1.00.0809291430050.16478@pacific.mpi-cbg.de.mpi-cbg.de>
-References: <20080927204415.6117@nanako3.lavabit.com>
+From: "Giuseppe Bilotta" <giuseppe.bilotta@gmail.com>
+Subject: Re: [PATCH 5/6] gitweb: remove PATH_INFO from $my_url and $my_uri
+Date: Mon, 29 Sep 2008 15:05:16 +0200
+Message-ID: <cb7bb73a0809290605o106a34bbxc3e5e48f4b1a45f4@mail.gmail.com>
+References: <1222030663-22540-1-git-send-email-giuseppe.bilotta@gmail.com>
+	 <1222030663-22540-5-git-send-email-giuseppe.bilotta@gmail.com>
+	 <1222030663-22540-6-git-send-email-giuseppe.bilotta@gmail.com>
+	 <200809291033.34588.jnareb@gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: "Shawn O. Pearce" <spearce@spearce.org>, git@vger.kernel.org
-To: Nanako Shiraishi <nanako3@lavabit.com>
-X-From: git-owner@vger.kernel.org Mon Sep 29 14:35:22 2008
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, "Petr Baudis" <pasky@ucw.cz>,
+	"Lea Wiemann" <lewiemann@gmail.com>,
+	"Shawn O. Pearce (interim Git maintainer)" <spearce@spearce.org>
+To: "Jakub Narebski" <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Sep 29 15:06:36 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KkHyA-000169-9A
-	for gcvg-git-2@gmane.org; Mon, 29 Sep 2008 14:35:18 +0200
+	id 1KkISL-0001pF-IK
+	for gcvg-git-2@gmane.org; Mon, 29 Sep 2008 15:06:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751980AbYI2MdS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 29 Sep 2008 08:33:18 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751923AbYI2MdS
-	(ORCPT <rfc822;git-outgoing>); Mon, 29 Sep 2008 08:33:18 -0400
-Received: from mail.gmx.net ([213.165.64.20]:34625 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751763AbYI2MdS (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 29 Sep 2008 08:33:18 -0400
-Received: (qmail invoked by alias); 29 Sep 2008 12:33:15 -0000
-Received: from pacific.mpi-cbg.de (EHLO [141.5.10.38]) [141.5.10.38]
-  by mail.gmx.net (mp056) with SMTP; 29 Sep 2008 14:33:15 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX19up1Qxpspu513fa5q+sKpJSi0ZouTgdulkHeAi3I
-	NbxLUK7F7pj2ov
-X-X-Sender: schindelin@pacific.mpi-cbg.de.mpi-cbg.de
-In-Reply-To: <20080927204415.6117@nanako3.lavabit.com>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.7
+	id S1751793AbYI2NFT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 29 Sep 2008 09:05:19 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751780AbYI2NFT
+	(ORCPT <rfc822;git-outgoing>); Mon, 29 Sep 2008 09:05:19 -0400
+Received: from yx-out-2324.google.com ([74.125.44.28]:55355 "EHLO
+	yx-out-2324.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751502AbYI2NFS (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 29 Sep 2008 09:05:18 -0400
+Received: by yx-out-2324.google.com with SMTP id 8so304943yxm.1
+        for <git@vger.kernel.org>; Mon, 29 Sep 2008 06:05:16 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to
+         :subject:cc:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:references;
+        bh=bSwPOGiFx5csI13SmpCUGx1ScwbUd15rDH172sQtTl0=;
+        b=mIoyuq8xnoMt+gjJhP3ECod/0EPt6xWbY0o/tFyzTONxOzQ3xripx4i2cRTBIh30RN
+         CThDFBdlsUw5YnESg7M119QHWFh4Dpupbw4W1eKoHp+8eNCTu166paba+udjYvYXnJ2k
+         wa6fbk5dRtpZKaDGtMzePJd5Pb4ToAur4FF8c=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
+         :content-type:content-transfer-encoding:content-disposition
+         :references;
+        b=XDAv+PZxdvSLvZiwD5ovgtUw4ZfYKEVDQJzyJQVOeVQ9ij9U+mgf/f0Eye1bwWR+Dd
+         ffHnHLBieapycXGllzQ0UTtkAcSi5T4ruADgnXRBjAkpcHDgmxfnrL0WmirBmShxnrvM
+         CoffaCCW5fKf3TOcLbzU6D4QK2sDjwNiia1T0=
+Received: by 10.151.7.4 with SMTP id k4mr7833504ybi.128.1222693516878;
+        Mon, 29 Sep 2008 06:05:16 -0700 (PDT)
+Received: by 10.150.155.12 with HTTP; Mon, 29 Sep 2008 06:05:16 -0700 (PDT)
+In-Reply-To: <200809291033.34588.jnareb@gmail.com>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/97007>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/97008>
 
-Hi,
+On Mon, Sep 29, 2008 at 10:33 AM, Jakub Narebski <jnareb@gmail.com> wrote:
+> On Sun, 21 Sep 2008, Giuseppe Bilotta wrote:
+>
+>> This patch (combined with appropriate server configuration) allows usage
+>> of the gitweb CGI script as DirectoryIndex for the server root even when
+>> the pathinfo feature is enabled.
+>>
+>
+> This is IMHO a bugfix for a path_info handling bug, for which there
+> was an ugly workaround of specifying base URL ($my_url and $my_uri)
+> explicitly in gitweb configuration (GITWEB_CONFIG).
+>
+> Therefore I think that this patch should have been sent outside of
+> the rest of "new path_info features" series, as a separate single
+> patch, and now that it is there it really should be applied, perhaps
+> even to the 'maint' branch.
 
-On Sat, 27 Sep 2008, Nanako Shiraishi wrote:
+Ok, I'll resend it separately, with the suggested fix.
 
-> This script takes a range of commits (e.g. maint..next) as its 
-> arguments, recreates merge commits in the range to prime rr-cache 
-> database.
-
-Cute idea.  However, I would _love_ to have this as an option to 
-git-rerere, which would work in memory only.
-
-This is how I would do it (if I had enough time to play with Git):
-
-- teach merge_recursive_options not to write anything to the working 
-  directory (should be relatively easy, as many parts of merge-recursive.c 
-  already have no_wd/update_wd/!o->call_depth checks for that),
-
-- refactor handle_file() in rerere.c to provide an in-memory-only version,
-
-- teach rerere to call merge_recursive() with the in-memory-only option, 
-  and then call the in-memory version of the handle_file() function for 
-  all unmerged paths, using the resolutions from the given merge commit.
-
-- then teach this new function to take an arbitrary commit range (but only 
-  handling the two-parent merges within it).
-
-Ciao,
-Dscho
+-- 
+Giuseppe "Oblomov" Bilotta
