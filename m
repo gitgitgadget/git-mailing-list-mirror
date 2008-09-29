@@ -1,153 +1,214 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: [PATCH] builtin-commit: avoid using reduce_heads()
-Date: Mon, 29 Sep 2008 20:44:24 +0200
-Message-ID: <200809292044.24799.jnareb@gmail.com>
-References: <20080925235029.GA15837@neumann> <20080929150722.GU23137@genesis.frugalware.org> <20080929181856.GX23137@genesis.frugalware.org>
+From: "Shawn O. Pearce" <spearce@spearce.org>
+Subject: What's in git/spearce.git (Sep 2008, #04; Mon, 29)
+Date: Mon, 29 Sep 2008 11:46:29 -0700
+Message-ID: <20080929184629.GA21310@spearce.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-2
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: SZEDER =?iso-8859-2?q?G=E1bor?= <szeder@ira.uka.de>,
-	git@vger.kernel.org, "Shawn O. Pearce" <spearce@spearce.org>,
-	Johannes.Schindelin@gmx.de
-To: Miklos Vajna <vmiklos@frugalware.org>
-X-From: git-owner@vger.kernel.org Mon Sep 29 20:45:47 2008
+Content-Type: text/plain; charset=utf-8
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Sep 29 20:47:43 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KkNkg-0006at-No
-	for gcvg-git-2@gmane.org; Mon, 29 Sep 2008 20:45:47 +0200
+	id 1KkNmX-0007Gq-1M
+	for gcvg-git-2@gmane.org; Mon, 29 Sep 2008 20:47:41 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751464AbYI2Sog convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 29 Sep 2008 14:44:36 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751377AbYI2Sog
-	(ORCPT <rfc822;git-outgoing>); Mon, 29 Sep 2008 14:44:36 -0400
-Received: from ey-out-2122.google.com ([74.125.78.24]:13553 "EHLO
-	ey-out-2122.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750819AbYI2Sof (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 29 Sep 2008 14:44:35 -0400
-Received: by ey-out-2122.google.com with SMTP id 6so618905eyi.37
-        for <git@vger.kernel.org>; Mon, 29 Sep 2008 11:44:33 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:subject:date
-         :user-agent:cc:references:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:message-id;
-        bh=F6xFwsn5u7zbsphJK6092+NqFQ/OmzORsahgLTuz4o8=;
-        b=CrQDKITgeisZ8zHRLhVRfrj01YarCld0dptaexgBA7pNFkB0/DUgDpYLif0a1gkQOQ
-         2tjaGbiqUCmS6tM0HZIzLBDoBtDRZvnRD2u1MLUiEcyIAZ9HiCyVS8UYllCayqzOB+iC
-         vCMIJtIi9IQC0K0dOEI5LJIs33jlfXkuwyBM0=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=from:to:subject:date:user-agent:cc:references:in-reply-to
-         :mime-version:content-type:content-transfer-encoding
-         :content-disposition:message-id;
-        b=SaiNh0B4Zz+bbJ3WozR7J+pyqcbZ9610ddDw5N57/Ee0e7IEcVckIoS1ZfXfSIxEn4
-         GnUXPk08p/EPZOeHQbMYg6SXPwt21YbnZLY0a9N+Cehv1npZWdXZEZAl3mEnXU/VVQof
-         fp46/3w0kBVy1LU3xXopz0wUyNO/rnLH/wwow=
-Received: by 10.103.170.13 with SMTP id x13mr4065857muo.27.1222713873380;
-        Mon, 29 Sep 2008 11:44:33 -0700 (PDT)
-Received: from ?192.168.1.11? (abvx193.neoplus.adsl.tpnet.pl [83.8.221.193])
-        by mx.google.com with ESMTPS id u26sm1477527mug.5.2008.09.29.11.44.27
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Mon, 29 Sep 2008 11:44:31 -0700 (PDT)
-User-Agent: KMail/1.9.3
-In-Reply-To: <20080929181856.GX23137@genesis.frugalware.org>
+	id S1751818AbYI2Sqb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 29 Sep 2008 14:46:31 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751786AbYI2Sqb
+	(ORCPT <rfc822;git-outgoing>); Mon, 29 Sep 2008 14:46:31 -0400
+Received: from george.spearce.org ([209.20.77.23]:54092 "EHLO
+	george.spearce.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751411AbYI2Sqa (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 29 Sep 2008 14:46:30 -0400
+Received: by george.spearce.org (Postfix, from userid 1001)
+	id 8F1193835F; Mon, 29 Sep 2008 18:46:29 +0000 (UTC)
 Content-Disposition: inline
+X-maint-at: edb7e82f72106add9f2fbaf9d99d9532a72e3f91
+X-master-at: 9800c0df412869c7949935b61581b9361fc49bd1
+X-maint-was: db87e3960c5a770db13c9ba9602b5e88848e2d1a
+X-master-was: c4275591fbb7d582c397b228e38dbb8419c89330
+User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/97043>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/97044>
 
-Dnia poniedzia=B3ek 29. wrze=B6nia 2008 20:18, Miklos Vajna napisa=B3:
-> On Mon, Sep 29, 2008 at 05:07:22PM +0200, Miklos Vajna <vmiklos@fruga=
-lware.org> wrote:
+What's in git/spearce.git (Sep 2008, #04; Mon, 29)
 
-> > > Currently parents of merge commits are 'reduce(HEAD + MERGE_HEAD)=
-'
-> > > in symbolic equation; I propose they would be simply 'MERGE_HEAD'=
-=2E
-> > > then we set this branch to new commit
-> >=20
-> > Yes. Currently - after a merge conflict - you are able to check wha=
-t
-> > heads caused were merged, which caused the conflict, but with this
-> > approach you would not be able to. I think this would be a step bac=
-k...
->=20
-> Uh, I should read my mail before sending it next time.
->=20
-> I just wanted to say that in case, for example, I merge A^ and A, but=
- I
-> get a conflict after octopus tried to merge A^ then it can be a usefu=
-l
-> info to see that A^ was a head. Putting reduce(HEAD + MERGE_HEAD) to
-> MERGE_HEAD would hide this info, which would make the situation worse=
-,
-> IMHO.
+  maint edb7e82 (Merge branch 'bc/maint-diff-hunk-header-fix' into maint)
+ master 9800c0d (Merge branch 'bc/master-diff-hunk-header-fix')
+------------------------------------------------------------------------
 
-I don't understand: I thought that merge strategy gets _reduced_ heads.
-Moreover, if head reduction reduces number of heads to two, you would
-use twohead merge (recursive) instead of octopus, and fast-forward if
-there is only one head after reduction.
+With Junio offline for another week we won't see a 1.6.0.3 until
+probably mid-October.  With that in mind I've merged a number of
+topics and trivial patches to maint so we can shake these out
+before the 1.6.0.3 release.
 
-All that I proposed is to put those reduced heads into MERGE_HEAD.
-I did not proposed to put yet unresolved heads in MERGE_HEAD in case
-of octopus merge conflict. I think either you misunderstood me, or
-I misunderstood you.
+* The 'maint' branch has these fixes since the last announcement.
 
-Take for example the following case of
-[H@repo]$ git merge a b c
+Alex Riesen (3):
+  Remove empty directories in recursive merge
+  Add remove_path: a function to remove as much as possible of a path
+  Use remove_path from dir.c instead of own implementation
 
-   .---.---.---.---H                   <-- H <-- HEAD
-                    \
-                     \.---.---.---a    <-- a
-                           \
-                            \-b        <-- b
-                               \                             =20
-                                \--c   <-- c
+Brandon Casey (5):
+  diff.c: return pattern entry pointer rather than just the hunk header
+    pattern
+  diff.c: associate a flag with each pattern and use it for compiling regex
+  diff.*.xfuncname which uses "extended" regex's for hunk header selection
+  t4018-diff-funcname: test syntax of builtin xfuncname patterns
+  git-stash.sh: don't default to refs/stash if invalid ref supplied
 
-Currently after failed merge we have:
-HEAD:=20
-  refs: refs/heads/H
-MERGE_HEAD
-  sha1(a)
-  sha1(b)
-  sha1(c)
+Chris Frey (1):
+  Documentation: clarify the details of overriding LESS via core.pager
 
-I propose it to be
-HEAD:
-  refs: refs/heads/H
-MERGE_HEAD
-  sha1(a)
-  sha1(c)
+Deskin Miller (1):
+  maint: check return of split_cmdline to avoid bad config strings
 
-And merge strategy chosen would be twohead one (recursive).
+Johan Herland (2):
+  for-each-ref: Fix --format=%(subject) for log message without newlines
+  Use strchrnul() instead of strchr() plus manual workaround
+
+Jonas Fonseca (1):
+  checkout: Do not show local changes when in quiet mode
+
+Junio C Hamano (2):
+  diff: use extended regexp to find hunk headers
+  diff hunk pattern: fix misconverted "\{" tex macro introducers
+
+Michael J Gruber (1):
+  make "git remote" report multiple URLs
+
+Ping Yin (1):
+  git-submodule: Fix "Unable to checkout" for the initial 'update'
+
+Rafael Garcia-Suarez (1):
+  Clarify commit error message for unmerged files
+
+Shawn O. Pearce (1):
+  Update release notes for 1.6.0.3
+
+Stephen Haberman (1):
+  Clarify how the user can satisfy stash's 'dirty state' check.
 
 
-If the situation was slightly different
+* The 'master' branch has these since the last announcement
+  in addition to the above.
 
-   .---.---.---.---.--.---.---.---H    <-- H <-- HEAD
-                    \
-                     \.---.---.---a    <-- a
-                           \
-                            \-b        <-- b
-                               \                             =20
-                                \--c   <-- c
+Alex Riesen (1):
+  Cleanup remove_path
+
+Alexander Gavrilov (9):
+  git-gui: Fix Blame Parent & Context for working copy lines.
+  git-gui: Restore ability to Stage Working Copy for conflicts.
+  git-gui: Add more integration options to citool.
+  git-gui: Cleanup handling of the default encoding.
+  git-gui: Add a menu of available encodings.
+  git-gui: Allow forcing display encoding for diffs using a submenu.
+  git-gui: Optimize encoding name resolution using a lookup table.
+  git-gui: Support the encoding menu in gui blame.
+  git-gui: Reenable staging unmerged files by clicking the icon.
+
+Anders Melchiorsen (2):
+  wt-status: Split header generation into three functions
+  wt-status: Teach how to discard changes in the working directory
+
+Brandon Casey (1):
+  t4018-diff-funcname: test syntax of builtin xfuncname patterns
+
+Christian Stimming (2):
+  git-gui: I18n fix sentence parts into full sentences for translation
+    again.
+  git-gui: Updated German translation.
+
+Dmitry Potapov (1):
+  mingw: remove use of _getdrive() from lstat/fstat
+
+Garry Dolley (1):
+  Fixed some grammatical errors in git-rebase.txt documentation.
+
+Giuseppe Bilotta (1):
+  gitweb: shortlog now also obeys $hash_parent
+
+Heikki Orsila (1):
+  diff --dirstat-by-file: count changed files, not lines
+
+Johan Herland (2):
+  Fix AsciiDoc errors in merge documentation
+  Fix submodule sync with relative submodule URLs
+
+Johannes Sixt (1):
+  compat/mingw: Support a timeout in the poll emulation if no fds are given
+
+Joshua Williams (1):
+  git-gui: Add support for calling out to the prepare-commit-msg hook
+
+Junio C Hamano (21):
+  checkout -f: allow ignoring unmerged paths when checking out of the index
+  checkout --ours/--theirs: allow checking out one side of a conflicting
+    merge
+  xdl_fill_merge_buffer(): separate out a too deeply nested function
+  xdiff-merge: optionally show conflicts in "diff3 -m" style
+  xmerge.c: minimum readability fixups
+  xmerge.c: "diff3 -m" style clips merge reduction level to EAGER or less
+  rerere.c: use symbolic constants to keep track of parsing states
+  rerere: understand "diff3 -m" style conflicts with the original
+  merge.conflictstyle: choose between "merge" and "diff3 -m" styles
+  git-merge-recursive: learn to honor merge.conflictstyle
+  checkout -m: recreate merge when checking out of unmerged index
+  checkout --conflict=<style>: recreate merge in a non-default style
+  git-merge documentation: describe how conflict is presented
+  safe_create_leading_directories(): make it about "leading" directories
+  git-apply:--include=pathspec
+  is_directory(): a generic helper function
+  receive-pack: make it a builtin
+  push: prepare sender to receive extended ref information from the
+    receiver
+  push: receiver end advertises refs from alternate repositories
+  diff: use extended regexp to find hunk headers
+  diff: fix "multiple regexp" semantics to find hunk header comment
+
+Miklos Vajna (13):
+  Split out merge_recursive() to merge-recursive.c
+  merge-recursive: introduce merge_options
+  builtin-merge: avoid run_command_v_opt() for recursive and subtree
+  cherry-pick/revert: make direct internal call to merge_tree()
+  merge-recursive: move call_depth to struct merge_options
+  merge-recursive: get rid of the index_only global variable
+  merge-recursive: move the global obuf to struct merge_options
+  merge-recursive: move current_{file,directory}_set to struct
+    merge_options
+  merge-recursive: get rid of virtual_id
+  builtin-merge: release the lockfile in try_merge_strategy()
+  commit_tree(): add a new author parameter
+  builtin-commit: use commit_tree()
+  t7603: add new testcases to ensure builtin-commit uses reduce_heads()
+
+Nanako Shiraishi (4):
+  remote.c: make free_ref(), parse_push_refspec() and free_refspecs()
+    static.
+  graph.c: make many functions static
+  usage.c: remove unused functions
+  Add contrib/rerere-train script
+
+Petr Baudis (1):
+  git-web--browse: Support for using /bin/start on MinGW
+
+Pieter de Bie (1):
+  git wrapper: also use aliases to correct mistyped commands
+
+Shawn O. Pearce (3):
+  git-gui: Hide commit related UI during citool --nocommit
+  git-gui: Use gitattribute "encoding" for file content display
+  git-gui: Assume `blame --incremental` output is in UTF-8
+
+Stephan Beyer (1):
+  merge-recursive.c: Add more generic merge_recursive_generic()
 
 
-I propose it to be
-HEAD:
-  refs: refs/heads/H
-MERGE_HEAD
-  sha1(H)
-  sha1(a)
-  sha1(c)
 
-And merge strategy chosen would be octopus.
-
---=20
-Jakub Narebski
-Poland
+-- 
+Shawn.
