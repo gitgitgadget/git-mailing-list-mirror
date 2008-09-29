@@ -1,49 +1,112 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [RFC2 9/9] send-email: signedoffcc -> signedoffbycc, but
-	handle both
-Date: Mon, 29 Sep 2008 13:44:45 -0400
-Message-ID: <20080929174445.GA6015@coredump.intra.peff.net>
-References: <20080929162935.GA2628@coredump.intra.peff.net> <1222710066-57768-1-git-send-email-mfwitten@mit.edu> <1222710066-57768-2-git-send-email-mfwitten@mit.edu>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: [PATCH 6/6] gitweb: prevent double slashes in PATH_INFO hrefs
+Date: Mon, 29 Sep 2008 20:12:08 +0200
+Message-ID: <200809292012.09460.jnareb@gmail.com>
+References: <1222030663-22540-1-git-send-email-giuseppe.bilotta@gmail.com> <1222030663-22540-6-git-send-email-giuseppe.bilotta@gmail.com> <1222030663-22540-7-git-send-email-giuseppe.bilotta@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org
-To: Michael Witten <mfwitten@MIT.EDU>
-X-From: git-owner@vger.kernel.org Mon Sep 29 19:45:58 2008
+Content-Type: text/plain;
+  charset="iso-8859-2"
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, Petr Baudis <pasky@ucw.cz>,
+	Lea Wiemann <lewiemann@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>
+To: Giuseppe Bilotta <giuseppe.bilotta@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Sep 29 20:14:50 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KkMon-0001nC-9O
-	for gcvg-git-2@gmane.org; Mon, 29 Sep 2008 19:45:57 +0200
+	id 1KkNGi-00048S-IU
+	for gcvg-git-2@gmane.org; Mon, 29 Sep 2008 20:14:49 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751411AbYI2Ros (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 29 Sep 2008 13:44:48 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751377AbYI2Ros
-	(ORCPT <rfc822;git-outgoing>); Mon, 29 Sep 2008 13:44:48 -0400
-Received: from peff.net ([208.65.91.99]:3742 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751337AbYI2Ror (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 29 Sep 2008 13:44:47 -0400
-Received: (qmail 25924 invoked by uid 111); 29 Sep 2008 17:44:46 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.32) with SMTP; Mon, 29 Sep 2008 13:44:46 -0400
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Mon, 29 Sep 2008 13:44:45 -0400
+	id S1756607AbYI2SMX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 29 Sep 2008 14:12:23 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756600AbYI2SMW
+	(ORCPT <rfc822;git-outgoing>); Mon, 29 Sep 2008 14:12:22 -0400
+Received: from ey-out-2122.google.com ([74.125.78.25]:5981 "EHLO
+	ey-out-2122.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756595AbYI2SMV (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 29 Sep 2008 14:12:21 -0400
+Received: by ey-out-2122.google.com with SMTP id 6so613104eyi.37
+        for <git@vger.kernel.org>; Mon, 29 Sep 2008 11:12:19 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:from:to:subject:date
+         :user-agent:cc:references:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:message-id;
+        bh=SqS3P12ljD6Kq7X1npUpwl3u56CTfPtksLjcdTr9Kzo=;
+        b=phGRnAU32oBet2JVSm5DtFhprQhmdQw0BnnCcq6CvWlW+YKKJbAK+dxIBKlquZDwI+
+         WhJ5qa367LYFHtdd3f6rz+LWUr0QFZyALktwHgh1aPhiBMkaubni3Pp6rGnZV2Jwts4/
+         zwcZMw9jZKWP1BfmRrcdhUDlNof7vrXS5coDc=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=from:to:subject:date:user-agent:cc:references:in-reply-to
+         :mime-version:content-type:content-transfer-encoding
+         :content-disposition:message-id;
+        b=qqkms+s66+UDhg+DNlCcGD+5btUOdOA3sAwfherNDUUGMo2gxJcRLKaTtyB0oM6ZJu
+         Hc95aRX8j7i1ieStj9nrxM+2r9jJ3egzZNi8sCMJu3wAYCgJfU37QZ24JOYjk2p12I9e
+         TKd5RngS9/kKo822ytQsJbIyLgsbA53Yf6vsk=
+Received: by 10.86.80.17 with SMTP id d17mr4598704fgb.33.1222711939331;
+        Mon, 29 Sep 2008 11:12:19 -0700 (PDT)
+Received: from ?192.168.1.11? (abvx193.neoplus.adsl.tpnet.pl [83.8.221.193])
+        by mx.google.com with ESMTPS id l19sm1058838fgb.7.2008.09.29.11.12.14
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Mon, 29 Sep 2008 11:12:17 -0700 (PDT)
+User-Agent: KMail/1.9.3
+In-Reply-To: <1222030663-22540-7-git-send-email-giuseppe.bilotta@gmail.com>
 Content-Disposition: inline
-In-Reply-To: <1222710066-57768-2-git-send-email-mfwitten@mit.edu>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/97037>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/97038>
 
-On Mon, Sep 29, 2008 at 12:41:06PM -0500, Michael Witten wrote:
+On Sun, 21 Sep 2008, Giuseppe Bilotta wrote:
 
-> The documentation now mentions sendemail.signedoffbycc instead
-> of sendemail.signedoffcc in order to match with the options
-> --signed-off-by-cc; the code has been updated to reflect this
-> as well, but sendemail.signedoffcc is still handled.
+> When using PATH_INFO in combination with a rewrite rule that hides the
+> cgi script name, links to projects and/or actions without projects might
+> be generated with a double slash.
+> 
 
-This new series looks fine to me.
+You mean here that base URL ends with '/'?
 
--Peff
+> Fix by removing the trailing slash (if present) from $href before
+> appending PATH_INFO data.
+> 
+> Signed-off-by: Giuseppe Bilotta <giuseppe.bilotta@gmail.com>
+
+Acked-by: Jakub Narebski <jnareb@gmail.com>
+
+This is a good change, and worth applying even before the rest of
+series (which probably would go through a few rounds of review).
+I'm not sure if it applies cleanly, but conceptually it does not
+depend on the rest of patches in this series.
+
+> ---
+>  gitweb/gitweb.perl |    2 ++
+>  1 files changed, 2 insertions(+), 0 deletions(-)
+> 
+> diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
+> index 4a91d07..ebab86b 100755
+> --- a/gitweb/gitweb.perl
+> +++ b/gitweb/gitweb.perl
+> @@ -675,6 +675,8 @@ sub href (%) {
+>  
+>  	my ($use_pathinfo) = gitweb_check_feature('pathinfo');
+>  	if ($use_pathinfo) {
+> +		$href =~ s,/$,,;
+> +
+>  		# use PATH_INFO for project name
+>  		$href .= "/".esc_url($params{'project'}) if defined $params{'project'};
+>  		delete $params{'project'};
+> -- 
+> 1.5.6.5
+> 
+> 
+
+Should not go wrong...
+
+-- 
+Jakub Narebski
+Poland
