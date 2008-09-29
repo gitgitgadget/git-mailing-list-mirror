@@ -1,112 +1,68 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: [PATCH 6/6] gitweb: prevent double slashes in PATH_INFO hrefs
-Date: Mon, 29 Sep 2008 20:12:08 +0200
-Message-ID: <200809292012.09460.jnareb@gmail.com>
-References: <1222030663-22540-1-git-send-email-giuseppe.bilotta@gmail.com> <1222030663-22540-6-git-send-email-giuseppe.bilotta@gmail.com> <1222030663-22540-7-git-send-email-giuseppe.bilotta@gmail.com>
+From: Miklos Vajna <vmiklos@frugalware.org>
+Subject: Re: [PATCH] Fix typo in release notes for 1.6.0.3
+Date: Mon, 29 Sep 2008 20:15:20 +0200
+Message-ID: <20080929181520.GW23137@genesis.frugalware.org>
+References: <1222700288-29717-1-git-send-email-vmiklos@frugalware.org> <20080929150858.GH17584@spearce.org>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-2"
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, Petr Baudis <pasky@ucw.cz>,
-	Lea Wiemann <lewiemann@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>
-To: Giuseppe Bilotta <giuseppe.bilotta@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Sep 29 20:14:50 2008
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="8sQsHfNlXZNubEnG"
+Cc: git@vger.kernel.org
+To: "Shawn O. Pearce" <spearce@spearce.org>
+X-From: git-owner@vger.kernel.org Mon Sep 29 20:16:55 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KkNGi-00048S-IU
-	for gcvg-git-2@gmane.org; Mon, 29 Sep 2008 20:14:49 +0200
+	id 1KkNIk-0004kQ-Hf
+	for gcvg-git-2@gmane.org; Mon, 29 Sep 2008 20:16:55 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756607AbYI2SMX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 29 Sep 2008 14:12:23 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756600AbYI2SMW
-	(ORCPT <rfc822;git-outgoing>); Mon, 29 Sep 2008 14:12:22 -0400
-Received: from ey-out-2122.google.com ([74.125.78.25]:5981 "EHLO
-	ey-out-2122.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756595AbYI2SMV (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 29 Sep 2008 14:12:21 -0400
-Received: by ey-out-2122.google.com with SMTP id 6so613104eyi.37
-        for <git@vger.kernel.org>; Mon, 29 Sep 2008 11:12:19 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:subject:date
-         :user-agent:cc:references:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:message-id;
-        bh=SqS3P12ljD6Kq7X1npUpwl3u56CTfPtksLjcdTr9Kzo=;
-        b=phGRnAU32oBet2JVSm5DtFhprQhmdQw0BnnCcq6CvWlW+YKKJbAK+dxIBKlquZDwI+
-         WhJ5qa367LYFHtdd3f6rz+LWUr0QFZyALktwHgh1aPhiBMkaubni3Pp6rGnZV2Jwts4/
-         zwcZMw9jZKWP1BfmRrcdhUDlNof7vrXS5coDc=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=from:to:subject:date:user-agent:cc:references:in-reply-to
-         :mime-version:content-type:content-transfer-encoding
-         :content-disposition:message-id;
-        b=qqkms+s66+UDhg+DNlCcGD+5btUOdOA3sAwfherNDUUGMo2gxJcRLKaTtyB0oM6ZJu
-         Hc95aRX8j7i1ieStj9nrxM+2r9jJ3egzZNi8sCMJu3wAYCgJfU37QZ24JOYjk2p12I9e
-         TKd5RngS9/kKo822ytQsJbIyLgsbA53Yf6vsk=
-Received: by 10.86.80.17 with SMTP id d17mr4598704fgb.33.1222711939331;
-        Mon, 29 Sep 2008 11:12:19 -0700 (PDT)
-Received: from ?192.168.1.11? (abvx193.neoplus.adsl.tpnet.pl [83.8.221.193])
-        by mx.google.com with ESMTPS id l19sm1058838fgb.7.2008.09.29.11.12.14
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Mon, 29 Sep 2008 11:12:17 -0700 (PDT)
-User-Agent: KMail/1.9.3
-In-Reply-To: <1222030663-22540-7-git-send-email-giuseppe.bilotta@gmail.com>
+	id S1754529AbYI2SPZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 29 Sep 2008 14:15:25 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757243AbYI2SPX
+	(ORCPT <rfc822;git-outgoing>); Mon, 29 Sep 2008 14:15:23 -0400
+Received: from virgo.iok.hu ([193.202.89.103]:47562 "EHLO virgo.iok.hu"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1756006AbYI2SPW (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 29 Sep 2008 14:15:22 -0400
+Received: from kag.elte.hu (kag.elte.hu [157.181.177.1])
+	by virgo.iok.hu (Postfix) with ESMTP id 87F5958142;
+	Mon, 29 Sep 2008 20:15:20 +0200 (CEST)
+Received: from genesis.frugalware.org (frugalware.elte.hu [157.181.177.34])
+	by kag.elte.hu (Postfix) with ESMTP id 7CE954465E;
+	Mon, 29 Sep 2008 20:15:20 +0200 (CEST)
+Received: by genesis.frugalware.org (Postfix, from userid 1000)
+	id 28A6711901A1; Mon, 29 Sep 2008 20:15:20 +0200 (CEST)
 Content-Disposition: inline
+In-Reply-To: <20080929150858.GH17584@spearce.org>
+User-Agent: Mutt/1.5.17 (2007-11-01)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/97038>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/97039>
 
-On Sun, 21 Sep 2008, Giuseppe Bilotta wrote:
 
-> When using PATH_INFO in combination with a rewrite rule that hides the
-> cgi script name, links to projects and/or actions without projects might
-> be generated with a double slash.
-> 
+--8sQsHfNlXZNubEnG
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
 
-You mean here that base URL ends with '/'?
+On Mon, Sep 29, 2008 at 08:08:58AM -0700, "Shawn O. Pearce" <spearce@spearce.org> wrote:
+> Actually maybe that typo was a good thing.  The commit was about
+> erroring out on typos rather than silently applying stash@{0}.
 
-> Fix by removing the trailing slash (if present) from $href before
-> appending PATH_INFO data.
-> 
-> Signed-off-by: Giuseppe Bilotta <giuseppe.bilotta@gmail.com>
+Aah. Sorry for the noise, then.
 
-Acked-by: Jakub Narebski <jnareb@gmail.com>
+--8sQsHfNlXZNubEnG
+Content-Type: application/pgp-signature
+Content-Disposition: inline
 
-This is a good change, and worth applying even before the rest of
-series (which probably would go through a few rounds of review).
-I'm not sure if it applies cleanly, but conceptually it does not
-depend on the rest of patches in this series.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.9 (GNU/Linux)
 
-> ---
->  gitweb/gitweb.perl |    2 ++
->  1 files changed, 2 insertions(+), 0 deletions(-)
-> 
-> diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
-> index 4a91d07..ebab86b 100755
-> --- a/gitweb/gitweb.perl
-> +++ b/gitweb/gitweb.perl
-> @@ -675,6 +675,8 @@ sub href (%) {
->  
->  	my ($use_pathinfo) = gitweb_check_feature('pathinfo');
->  	if ($use_pathinfo) {
-> +		$href =~ s,/$,,;
-> +
->  		# use PATH_INFO for project name
->  		$href .= "/".esc_url($params{'project'}) if defined $params{'project'};
->  		delete $params{'project'};
-> -- 
-> 1.5.6.5
-> 
-> 
+iEYEARECAAYFAkjhGzgACgkQe81tAgORUJYLlQCeKrPGMe+ijwbMeRRHNsu+mPQo
+m6MAoKuAhW9xazbBSfzDqJROVhU6h9No
+=LHaJ
+-----END PGP SIGNATURE-----
 
-Should not go wrong...
-
--- 
-Jakub Narebski
-Poland
+--8sQsHfNlXZNubEnG--
