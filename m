@@ -1,119 +1,82 @@
-From: Giuseppe Bilotta <giuseppe.bilotta@gmail.com>
-Subject: [PATCHv3] gitweb: generate parent..current URLs
-Date: Mon, 29 Sep 2008 17:26:57 +0200
-Message-ID: <1222702017-4496-5-git-send-email-giuseppe.bilotta@gmail.com>
-References: <1222702017-4496-1-git-send-email-giuseppe.bilotta@gmail.com>
- <1222702017-4496-2-git-send-email-giuseppe.bilotta@gmail.com>
- <1222702017-4496-3-git-send-email-giuseppe.bilotta@gmail.com>
- <1222702017-4496-4-git-send-email-giuseppe.bilotta@gmail.com>
-Cc: Jakub Narebski <jnareb@gmail.com>,
+From: "Shawn O. Pearce" <spearce@spearce.org>
+Subject: Re: [PATCH 4/4] cygwin: Use native Win32 API for stat
+Date: Mon, 29 Sep 2008 08:34:00 -0700
+Message-ID: <20080929153400.GJ17584@spearce.org>
+References: <20080927084349.GC21650@dpotapov.dyndns.org> <200809272035.03833.johannes.sixt@telecom.at> <20080927215406.GG21650@dpotapov.dyndns.org> <200809281124.08364.johannes.sixt@telecom.at>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Cc: Dmitry Potapov <dpotapov@gmail.com>, git@vger.kernel.org,
 	Junio C Hamano <gitster@pobox.com>,
-	"Shawn O. Pearce" <spearce@spearce.org>,
-	Giuseppe Bilotta <giuseppe.bilotta@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Sep 29 17:28:42 2008
+	Alex Riesen <raa.lkml@gmail.com>,
+	Marcus Griep <marcus@griep.us>
+To: Johannes Sixt <johannes.sixt@telecom.at>
+X-From: git-owner@vger.kernel.org Mon Sep 29 17:35:38 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KkKfT-0003ZN-Po
-	for gcvg-git-2@gmane.org; Mon, 29 Sep 2008 17:28:12 +0200
+	id 1KkKmH-0006M7-Vp
+	for gcvg-git-2@gmane.org; Mon, 29 Sep 2008 17:35:14 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751896AbYI2P0x (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 29 Sep 2008 11:26:53 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751890AbYI2P0x
-	(ORCPT <rfc822;git-outgoing>); Mon, 29 Sep 2008 11:26:53 -0400
-Received: from mu-out-0910.google.com ([209.85.134.188]:41049 "EHLO
-	mu-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751868AbYI2P0w (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 29 Sep 2008 11:26:52 -0400
-Received: by mu-out-0910.google.com with SMTP id g7so1774491muf.1
-        for <git@vger.kernel.org>; Mon, 29 Sep 2008 08:26:49 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:cc:subject:date
-         :message-id:x-mailer:in-reply-to:references;
-        bh=OW7JT+VSrpsP7NBK5hQP0xJW8VDUfgXxhQmINNsIVaM=;
-        b=cd7Zf1X06MLWj4CgR0jXyZMaQYqYB+/mATUFbLreqoBeQ/sH3qD83hHKkLZIXykzs2
-         Z/jyak4G6L0OYhU4MJOO+SooR9AN0/InYcfQHEpBhbBYMvDR18hGhJy6ICjam8JJ1LDm
-         p62iWRiE2lnPH2EDCQJRwsZlAdjn4rjO09wH4=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        b=Jy+tjtpy/CqdAGSvxExtbWhtrqEPZik43lqx/9dCqFA6WjdA5QJni7B8HukDD00I01
-         ZciP+V2DDlNfKbmNHMcn8auciDcF0s9HTunqhVbSWZnZAVVPCojnr1zx+9EKfKmEQEZK
-         KHPq7KgMBzLf/IIQ5RDHIMI+mxPp8s//Ht2/Q=
-Received: by 10.180.213.14 with SMTP id l14mr2401298bkg.55.1222702009080;
-        Mon, 29 Sep 2008 08:26:49 -0700 (PDT)
-Received: from localhost ([78.15.6.228])
-        by mx.google.com with ESMTPS id 28sm359874fkx.1.2008.09.29.08.26.47
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Mon, 29 Sep 2008 08:26:48 -0700 (PDT)
-X-Mailer: git-send-email 1.5.6.5
-In-Reply-To: <1222702017-4496-4-git-send-email-giuseppe.bilotta@gmail.com>
+	id S1751868AbYI2PeE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 29 Sep 2008 11:34:04 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751658AbYI2PeD
+	(ORCPT <rfc822;git-outgoing>); Mon, 29 Sep 2008 11:34:03 -0400
+Received: from george.spearce.org ([209.20.77.23]:44796 "EHLO
+	george.spearce.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751838AbYI2PeB (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 29 Sep 2008 11:34:01 -0400
+Received: by george.spearce.org (Postfix, from userid 1001)
+	id 7E6A43835F; Mon, 29 Sep 2008 15:34:00 +0000 (UTC)
+Content-Disposition: inline
+In-Reply-To: <200809281124.08364.johannes.sixt@telecom.at>
+User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/97025>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/97026>
 
-If use_pathinfo is enabled, href now creates links that contain paths in
-the form $project/$action/oldhash:/oldname..newhash:/newname for actions
-that use hash_parent etc.
+Johannes Sixt <johannes.sixt@telecom.at> wrote:
+> On Samstag, 27. September 2008, Dmitry Potapov wrote:
+> > On Sat, Sep 27, 2008 at 08:35:03PM +0200, Johannes Sixt wrote:
+> > > > +core.cygwinNativeStat::
+> > >
+> > > This name is *really* odd, for two reasons:
+> ...
+> > It was Shawn's suggestion. I don't care much about the name as long as
+> > it is explained in the documentation... Therefore, I accepted what Shawn
+> > said without giving it any thought.
+> 
+> Shawn is an importen git-o-maniac, but it's certainly not blasphemy to 
+> question his words of wisdom ;)
 
-If any of the filename contains two consecutive dots, it's kept as a CGI
-parameter since the resulting path would otherwise be ambiguous.
+As Hannes points out, blindly accepting anything I say might not
+be a good idea.  I have my moments of sanity, but I'm far, far
+from perfect.  ;-)
 
-Signed-off-by: Giuseppe Bilotta <giuseppe.bilotta@gmail.com>
----
- gitweb/gitweb.perl |   27 +++++++++++++++++++++++----
- 1 files changed, 23 insertions(+), 4 deletions(-)
+> My point is that emphasis on "stat" in the name is wrong: That's about 
+> implementation, but not about the effect. Why wouldn't 'ignoreCygwinFSTricks' 
+> be specific enough?
 
-diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
-index 7b4f2d3..4fa4364 100755
---- a/gitweb/gitweb.perl
-+++ b/gitweb/gitweb.perl
-@@ -700,17 +700,36 @@ sub href (%) {
- 			delete $params{'action'};
- 		}
- 
--		# Finally, we put either hash_base:/file_name or hash
-+		# Next, we put hash_parent_base:/file_parent..hash_base:/file_name,
-+		# stripping nonexistent or useless pieces
-+		$href .= "/" if ($params{'hash_base'} || $params{'hash_parent_base'}
-+			|| $params{'hash_parent'} || $params{'hash'});
- 		if (defined $params{'hash_base'}) {
--			$href .= "/".esc_url($params{'hash_base'});
--			if (defined $params{'file_name'}) {
-+			if (defined $params{'hash_parent_base'}) {
-+				$href .= esc_url($params{'hash_parent_base'});
-+				# skip the file_parent if it's the same as the file_name
-+				delete $params{'file_parent'} if $params{'file_parent'} eq $params{'file_name'};
-+				if (defined $params{'file_parent'} && $params{'file_parent'} !~ /\.\./) {
-+					$href .= ":/".esc_url($params{'file_parent'});
-+					delete $params{'file_parent'};
-+				}
-+				$href .= "..";
-+				delete $params{'hash_parent'};
-+				delete $params{'hash_parent_base'};
-+			} elsif (defined $params{'hash_parent'}) {
-+				$href .= esc_url($params{'hash_parent'}). "..";
-+				delete $params{'hash_parent'};
-+			}
-+
-+			$href .= esc_url($params{'hash_base'});
-+			if (defined $params{'file_name'} && $params{'file_name'} !~ /\.\./) {
- 				$href .= ":/".esc_url($params{'file_name'});
- 				delete $params{'file_name'};
- 			}
- 			delete $params{'hash'};
- 			delete $params{'hash_base'};
- 		} elsif (defined $params{'hash'}) {
--			$href .= "/".esc_url($params{'hash'});
-+			$href .= esc_url($params{'hash'});
- 			delete $params{'hash'};
- 		}
- 	}
+I like this a lot better.  I could see us also bypassing other Cygwin
+functions like open() in order to get faster system calls for Git.
+Since it would be byassing the same Cygwin path name translation
+code it should be controlled by the same flag.
+
+> (And the length of the name doesn't 
+> worry me, considering how many people would want to change the default.)
+
+Agreed.  Most people setting it would copy and paste from the
+documentation anyway.
+
+I wonder though if we can't automatically implement it by grabbing
+a copy of the Cygwin mount table and comparing those paths to
+$GIT_DIR or $GIT_WORK_TREE.  If any mount table entry is contained
+within either of them then we know we can't use the native stat.
+Its rather common for neither of these to contain a mount point,
+and it is therefore easy to enable the native stat.
+
 -- 
-1.5.6.5
+Shawn.
