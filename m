@@ -1,82 +1,59 @@
-From: Pieter de Bie <pdebie@ai.rug.nl>
-Subject: Re: [PATCH] Builtin-commit: show on which branch a commit was added
-Date: Mon, 29 Sep 2008 22:09:17 +0200
-Message-ID: <A36A4B61-D223-4821-9969-FA76EAECD1EC@ai.rug.nl>
-References: <4C04A26E-5829-4A39-AD89-F5A68E606AA3@ai.rug.nl> <1220634785-55543-1-git-send-email-pdebie@ai.rug.nl> <7vzlmkpltb.fsf@gitster.siamese.dyndns.org> <20080921104238.GA9217@sigill.intra.peff.net>
-Mime-Version: 1.0 (Apple Message framework v929.2)
-Content-Type: text/plain; charset=US-ASCII; format=flowed; delsp=yes
-Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Git Mailinglist <git@vger.kernel.org>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Mon Sep 29 22:10:46 2008
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH] remove vim syntax highlighting in favor of upstream
+Date: Mon, 29 Sep 2008 16:12:21 -0400
+Message-ID: <20080929201221.GA20944@coredump.intra.peff.net>
+References: <1222269726-15632-1-git-send-email-szeder@ira.uka.de> <20080924155745.GA3908@coredump.intra.peff.net> <20080924170154.GA6816@neumann> <20080924175315.GA10337@coredump.intra.peff.net> <20080924195658.GB6816@neumann> <20080929145542.GA18340@spearce.org> <20080929200814.GA19840@neumann>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: "Shawn O. Pearce" <spearce@spearce.org>, git@vger.kernel.org
+To: SZEDER =?utf-8?B?R8OhYm9y?= <szeder@ira.uka.de>
+X-From: git-owner@vger.kernel.org Mon Sep 29 22:13:38 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KkP4t-0004dl-55
-	for gcvg-git-2@gmane.org; Mon, 29 Sep 2008 22:10:43 +0200
+	id 1KkP7e-0005c9-V7
+	for gcvg-git-2@gmane.org; Mon, 29 Sep 2008 22:13:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752096AbYI2UJe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 29 Sep 2008 16:09:34 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752021AbYI2UJd
-	(ORCPT <rfc822;git-outgoing>); Mon, 29 Sep 2008 16:09:33 -0400
-Received: from frim.nl ([87.230.85.232]:48187 "EHLO
-	lvps87-230-85-232.dedicated.hosteurope.de" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751980AbYI2UJd (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 29 Sep 2008 16:09:33 -0400
-Received: from s5591931c.adsl.wanadoo.nl ([85.145.147.28] helo=[192.168.1.11])
-	by lvps87-230-85-232.dedicated.hosteurope.de with esmtpsa (TLS-1.0:RSA_AES_128_CBC_SHA1:16)
-	(Exim 4.63)
-	(envelope-from <pdebie@ai.rug.nl>)
-	id 1KkP3c-0007nW-9Z; Mon, 29 Sep 2008 22:09:24 +0200
-In-Reply-To: <20080921104238.GA9217@sigill.intra.peff.net>
-X-Mailer: Apple Mail (2.929.2)
+	id S1752141AbYI2UMY convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 29 Sep 2008 16:12:24 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751986AbYI2UMY
+	(ORCPT <rfc822;git-outgoing>); Mon, 29 Sep 2008 16:12:24 -0400
+Received: from peff.net ([208.65.91.99]:4043 "EHLO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751974AbYI2UMX (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 29 Sep 2008 16:12:23 -0400
+Received: (qmail 26908 invoked by uid 111); 29 Sep 2008 20:12:22 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+    by peff.net (qpsmtpd/0.32) with SMTP; Mon, 29 Sep 2008 16:12:22 -0400
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Mon, 29 Sep 2008 16:12:21 -0400
+Content-Disposition: inline
+In-Reply-To: <20080929200814.GA19840@neumann>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/97049>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/97050>
 
-(Sorry for a late response)
+On Mon, Sep 29, 2008 at 10:08:14PM +0200, SZEDER G=C3=A1bor wrote:
 
-On 21 sep 2008, at 12:42, Jeff King wrote:
+> Here it is.  Since significant parts of the patch and the commit
+> message are from Jeff, maybe he should sign off, too?
 
-> OK, I have lived with it for a little while, and I am still  
-> annoyed. ;)
->
-> My complaints are:
->
->  1. It wastes more horizontal screen real estate, making it more  
-> likely
->     that the line will wrap.
->
->  2. In almost all of my projects (including git), I use the subject
->     line convention of "subsystem: one line summary". So you end up
->     with the visually confusing:
->
->       Created commit abcd1234 on master: subsystem: one line summary
->
->     which is even worse on a topic branch which is meaningful to the
->     project:
->
->       Created commit abcd1234 on widget: subwidget: one line summary
->
->     which has literally left me scratching my head wondering why I put
->     "widget" into the commit message.
+I think all of my changes were deletions, so I'm not sure there is any
+copyright to claim. ;) But:
 
-How about something like
+Signed-off-by: Jeff King <peff@peff.net>
 
-	Created commit abcd1234 on widget -- "subwidget: one line summary"
+> Note, that this patch is slightly different from the previous one, as
+> it proposes writing the auto-detect commands into ~/.vim/filetype.vim
+> instead of ~/.vimrc.  It's not quite clear to me why, but it seems to
+> resolve the filetype confusion I mentioned in my previous email.
 
-?
-> Maybe it is better to simply break the line, which solves both  
-> problems.
-> Something like:
+I haven't really tested this at all, as I have been running vim 7.2 for
+a while now. But presumably it works for you, and hey, it's only
+contrib/. :)
 
-I don't like a multi-line approach.. I tried it myself, and the second  
-line
-makes the first line easier to overlook
-
-- Pieter
+-Peff
