@@ -1,59 +1,287 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH 3/8] Docs: send-email: Man page option ordering
-Date: Sun, 28 Sep 2008 20:36:36 -0400
-Message-ID: <20080929003636.GA18552@coredump.intra.peff.net>
-References: <1222564196-84202-1-git-send-email-mfwitten@mit.edu> <gbne1a$8g2$1@ger.gmane.org> <FB3A852B-728F-4183-A5AF-BA8F8D995AD7@mit.edu> <200809290210.33880.jnareb@gmail.com>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: [PATCH 1/6] gitweb: action in path with use_pathinfo
+Date: Mon, 29 Sep 2008 03:03:20 +0200
+Message-ID: <200809290303.21290.jnareb@gmail.com>
+References: <1222030663-22540-1-git-send-email-giuseppe.bilotta@gmail.com> <1222030663-22540-2-git-send-email-giuseppe.bilotta@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Michael Witten <mfwitten@mit.edu>, git@vger.kernel.org
-To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Sep 29 02:44:28 2008
+Content-Type: text/plain;
+  charset="iso-8859-2"
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, Petr Baudis <pasky@ucw.cz>,
+	Lea Wiemann <lewiemann@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>
+To: Giuseppe Bilotta <giuseppe.bilotta@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Sep 29 03:06:59 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Kk6sE-00041E-BG
-	for gcvg-git-2@gmane.org; Mon, 29 Sep 2008 02:44:26 +0200
+	id 1Kk7Dz-0007Ul-4o
+	for gcvg-git-2@gmane.org; Mon, 29 Sep 2008 03:06:55 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752992AbYI2Agk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 28 Sep 2008 20:36:40 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752982AbYI2Agk
-	(ORCPT <rfc822;git-outgoing>); Sun, 28 Sep 2008 20:36:40 -0400
-Received: from peff.net ([208.65.91.99]:1616 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752969AbYI2Agk (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 28 Sep 2008 20:36:40 -0400
-Received: (qmail 20229 invoked by uid 111); 29 Sep 2008 00:36:37 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.32) with SMTP; Sun, 28 Sep 2008 20:36:37 -0400
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Sun, 28 Sep 2008 20:36:36 -0400
+	id S1753029AbYI2BDb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 28 Sep 2008 21:03:31 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752969AbYI2BDb
+	(ORCPT <rfc822;git-outgoing>); Sun, 28 Sep 2008 21:03:31 -0400
+Received: from fk-out-0910.google.com ([209.85.128.187]:19244 "EHLO
+	fk-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752463AbYI2BDa (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 28 Sep 2008 21:03:30 -0400
+Received: by fk-out-0910.google.com with SMTP id 18so1794017fkq.5
+        for <git@vger.kernel.org>; Sun, 28 Sep 2008 18:03:28 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:from:to:subject:date
+         :user-agent:cc:references:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:message-id;
+        bh=KV7kZUxfYvQkKhjOwY6LddA/e6VH9Bv4sqrI8jI+AHo=;
+        b=SPyYZ3xOZ7bYZ4re82tO/NtmTzFlw7wM/NSThipDyIp7r1HXW+Vh3Tjhg+cGxgmsKC
+         DWIixqiAtXhtLXa9arOPtexdBiCJCXE1wXTT0pNFUHp/H1yUMHdPLBo75C/fY/PQkHWG
+         n4hpORCVJHNG1wxxNEjr7TEqc+OE7cQ2Rx4w4=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=from:to:subject:date:user-agent:cc:references:in-reply-to
+         :mime-version:content-type:content-transfer-encoding
+         :content-disposition:message-id;
+        b=wO3HmDAq6k6AEbGa9ZWkN2ax6YoJSSnfZSvfVBUxRG2/Uqve+tx+qR57HLfwKmRlYU
+         ciL3ZgSfvDhz0CsYOqNZjkj92LRBu7bYNU4FXuSJSYtx9JhMp8K1LL+oVCfT4zkU3JPB
+         biuYYQMyhaLUtACyCbumaW0Vxvk0d5XELqHOk=
+Received: by 10.103.18.19 with SMTP id v19mr3217684mui.113.1222650208565;
+        Sun, 28 Sep 2008 18:03:28 -0700 (PDT)
+Received: from ?192.168.1.11? (abvx193.neoplus.adsl.tpnet.pl [83.8.221.193])
+        by mx.google.com with ESMTPS id u26sm4341441mug.5.2008.09.28.18.03.24
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Sun, 28 Sep 2008 18:03:26 -0700 (PDT)
+User-Agent: KMail/1.9.3
+In-Reply-To: <1222030663-22540-2-git-send-email-giuseppe.bilotta@gmail.com>
 Content-Disposition: inline
-In-Reply-To: <200809290210.33880.jnareb@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/96990>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/96991>
 
-On Mon, Sep 29, 2008 at 02:10:31AM +0200, Jakub Narebski wrote:
+I'm sorry for the delay reviewing those patches.
 
-> peff>    The manpage, on the other hand, is a comprehensive reference
-> peff>    and so should probably be alphabetized for easy reading.
+On Sun, 21 Sep 2008, Giuseppe Bilotta wrote:
+
+> When using path info, reduce the number of CGI parameters by embedding
+> the action in the path. The typicial cgiweb path is thus
+> $project/$action/$hash_base:$file_name or $project/$action/$hash
+
+cgiweb?
+
 > 
-> [...]
+> This is mostly backwards compatible with the old-style gitweb paths,
+> except when $project/$branch was used to access a branch whose name
+> matches a gitweb action.
+
+I would also state that gitweb _generates_ such pathinfo links if
+configured (or if coming from pahinfo URL), and that this change
+allow to represent wider number of gitweb links (gitweb URLs) in
+pathinfo form.
+
+Also, from what I understand, generated pathinfo links now always
+use action, so they are a tiny little bit longer.
+
+> Signed-off-by: Giuseppe Bilotta <giuseppe.bilotta@gmail.com>
+> ---
+>  gitweb/gitweb.perl |  109 ++++++++++++++++++++++++++++++++++------------------
+>  1 files changed, 72 insertions(+), 37 deletions(-)
 > 
-> Second, large manpages with large number of options are usually divided
-> into sections, see git-rev-list(1) manpage, or rpmbuild(8) manpage. So
-> there is precedent for that. And I think it is good precedent.
+> diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
+> index da474d0..e783d12 100755
+> --- a/gitweb/gitweb.perl
+> +++ b/gitweb/gitweb.perl
+> @@ -488,6 +488,37 @@ if (defined $searchtext) {
+>  	$search_regexp = $search_use_regexp ? $searchtext : quotemeta $searchtext;
+>  }
+>  
+> +# dispatch
+> +my %actions = (
+> +	"blame" => \&git_blame,
+> +	"blobdiff" => \&git_blobdiff,
+> +	"blobdiff_plain" => \&git_blobdiff_plain,
+> +	"blob" => \&git_blob,
+> +	"blob_plain" => \&git_blob_plain,
+> +	"commitdiff" => \&git_commitdiff,
+> +	"commitdiff_plain" => \&git_commitdiff_plain,
+> +	"commit" => \&git_commit,
+> +	"forks" => \&git_forks,
+> +	"heads" => \&git_heads,
+> +	"history" => \&git_history,
+> +	"log" => \&git_log,
+> +	"rss" => \&git_rss,
+> +	"atom" => \&git_atom,
+> +	"search" => \&git_search,
+> +	"search_help" => \&git_search_help,
+> +	"shortlog" => \&git_shortlog,
+> +	"summary" => \&git_summary,
+> +	"tag" => \&git_tag,
+> +	"tags" => \&git_tags,
+> +	"tree" => \&git_tree,
+> +	"snapshot" => \&git_snapshot,
+> +	"object" => \&git_object,
+> +	# those below don't need $project
+> +	"opml" => \&git_opml,
+> +	"project_list" => \&git_project_list,
+> +	"project_index" => \&git_project_index,
+> +);
+> +
 
-I am not opposed to dividing it into sections, with options alphabetized
-in each section, as long as the section divisions make sense (e.g., in
-rev-list, an obvious section is "commit formatting options"). I just
-didn't think we had enough here to bother subdividing.
+This is as I understand simply moving %actions hash around?
+Well, you could instead split hash declaration from defining it,
+in the form of
 
-Either way will be in improvement on the current status, which is
-apparently random (it looks like it was probably alphabetized at one
-point, and then new options were added to the end).
+   my %actions = ();
+   ...
+   %actions = (
+        ...
+   );
 
--Peff
+but I guess moving declaration earlier is good solution.
+
+>  # now read PATH_INFO and use it as alternative to parameters
+>  sub evaluate_path_info {
+>  	return if defined $project;
+> @@ -512,6 +543,16 @@ sub evaluate_path_info {
+>  	# do not change any parameters if an action is given using the query string
+>  	return if $action;
+>  	$path_info =~ s,^\Q$project\E/*,,;
+> +
+> +	# next comes the action
+> +	$action = $path_info;
+> +	$action =~ s,/.*$,,;
+
+I would use perhaps "$action = ($path_info =~ m!^([^/]+)/!;"
+But that is Perl, so TIMTOWDI.
+
+> +	if (exists $actions{$action}) {
+> +		$path_info =~ s,^\Q$action\E/*,,;
+> +	} else {
+> +		$action  = undef;
+> +	}
+> +
+
+I don't think you need quoting pattern metacharacters; valid actions
+should not contain regexp metacharacters.  Defensive programming?
+
+>  	my ($refname, $pathname) = split(/:/, $path_info, 2);
+>  	if (defined $pathname) {
+>  		# we got "project.git/branch:filename" or "project.git/branch:dir/"
+> @@ -525,10 +566,12 @@ sub evaluate_path_info {
+>  		}
+>  		$hash_base ||= validate_refname($refname);
+>  		$file_name ||= validate_pathname($pathname);
+> +		$hash      ||= git_get_hash_by_path($hash_base, $file_name);
+
+I don't understand why you feel that you need to do this (this is
+additional git command fork, as git_get_hash_by_path calls Git, to
+be more exact it calls git-ls-tree (it could call git-rev-parse
+instead).  Moreover, I don't understand why you need to do this _here_,
+instead of just before where you would have to have $hash variable set.
+
+>  	} elsif (defined $refname) {
+>  		# we got "project.git/branch"
+> -		$action ||= "shortlog";
+> -		$hash   ||= validate_refname($refname);
+> +		$action    ||= "shortlog";
+> +		$hash      ||= validate_refname($refname);
+> +		$hash_base ||= validate_refname($refname);
+>  	}
+>  }
+>  evaluate_path_info();
+> @@ -624,8 +636,13 @@ sub href (%) {
+>  	if ($params{-replay}) {
+>  		while (my ($name, $symbol) = each %mapping) {
+>  			if (!exists $params{$name}) {
+> -				# to allow for multivalued params we use arrayref form
+> -				$params{$name} = [ $cgi->param($symbol) ];
+> +				if ($cgi->param($symbol)) {
+> +					# to allow for multivalued params we use arrayref form
+> +					$params{$name} = [ $cgi->param($symbol) ];
+> +				} else {
+> +					no strict 'refs';
+> +					$params{$name} = $$name if $$name;
+> +				}
+>  			}
+>  		}
+>  	}
+
+What this change is about? And why this change is _here_, in this
+commit? It is I think unrelated, and wrong change. 
+
+href(..., -replay=>1) is all about reusing current URL, perhaps with
+a few parameters changed, like for example pagination links differ only
+in page number param change.  For example if we had only hb= and f=
+parameters, -replay=>1 links should use only those, and not add h=
+parameter because somewhere we felt that we need $hash to be calculated.
+
+> @@ -636,10 +653,28 @@ sub href (%) {
+
+This hunk is about generating pathinfo URL, isn't it?
+
+You probably would want to change comment at the top of this part
+of href() subroutine, namely
+
+  	if ($use_pathinfo) {
+		# use PATH_INFO for project name
+
+as you now try to use PATH_INFO for more than project name. Please do
+not leave comments to get out of sync with the code.
+
+>  		$href .= "/".esc_url($params{'project'}) if defined $params{'project'};
+>  		delete $params{'project'};
+>  
+> -		# Summary just uses the project path URL
+> -		if (defined $params{'action'} && $params{'action'} eq 'summary') {
+> +		# Summary just uses the project path URL, any other action come next
+> +		# in the URL
+> +		if (defined $params{'action'}) {
+> +			$href .= "/".esc_url($params{'action'}) unless $params{'action'} eq 'summary';
+>  			delete $params{'action'};
+>  		}
+> +
+> +		# next, we put either hash_base:file_name or hash
+> +		if (defined $params{'hash_base'}) {
+> +			$href .= "/".esc_url($params{'hash_base'});
+> +			if (defined $params{'file_name'}) {
+> +				$href .= ":".esc_url($params{'file_name'});
+> +				delete $params{'hash'} if $params{'hash'} eq git_get_hash_by_path($params{'hash_base'},$params{'file_name'});
+
+First, this page has around 140 characters. That is too long, much too long.
+Please try to wrap code around 80-characters.
+
+Second, following Petr 'Pasky' Baudis suggestion of reducing complexity
+and shortening gitweb URLs, we could unconditionally remove redundant
+'hash' parameter if we have both 'hash_base' and 'file_name'
+parameters.  This would also simplify and speed up (lack of extra fork)
+gitweb code.
+
+> +				delete $params{'file_name'};
+> +			} else {
+> +				delete $params{'hash'} if $params{'hash'} eq $params{'hash_base'};
+> +			}
+> +			delete $params{'hash_base'};
+> +		} elsif (defined $params{'hash'}) {
+> +			$href .= "/".esc_url($params{'hash'});
+> +			delete $params{'hash'};
+> +		}
+
+O.K.... I think.
+
+Did you test this, preferably also using Mechanize test, with gitweb
+configuration turning path_info on by default.?
+
+>  	}
+>  
+>  	# now encode the parameters explicitly
+
+Hmmm... now I am not so sure if it wouldn't be better to split this
+patch in pathinfo parsing and pathinfo generation. The first part
+would be obvious, the second part would be smaller and easier to review.
+
+-- 
+Jakub Narebski
+Poland
