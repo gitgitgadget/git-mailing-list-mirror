@@ -1,88 +1,71 @@
-From: Hinko Kocevar <hinko.kocevar@cetrtapot.si>
-Subject: Re: git can't find none
-Date: Mon, 29 Sep 2008 14:13:53 +0200
-Message-ID: <48E0C681.1090502@cetrtapot.si>
-References: <48E0B8FE.6060203@cetrtapot.si> <48E0BD38.6070602@viscovery.net>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH] Add contrib/rerere-train script
+Date: Mon, 29 Sep 2008 14:39:26 +0200 (CEST)
+Message-ID: <alpine.DEB.1.00.0809291430050.16478@pacific.mpi-cbg.de.mpi-cbg.de>
+References: <20080927204415.6117@nanako3.lavabit.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-2
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Johannes Sixt <j.sixt@viscovery.net>
-X-From: git-owner@vger.kernel.org Mon Sep 29 14:16:56 2008
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: "Shawn O. Pearce" <spearce@spearce.org>, git@vger.kernel.org
+To: Nanako Shiraishi <nanako3@lavabit.com>
+X-From: git-owner@vger.kernel.org Mon Sep 29 14:35:22 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KkHgC-00042i-5A
-	for gcvg-git-2@gmane.org; Mon, 29 Sep 2008 14:16:44 +0200
+	id 1KkHyA-000169-9A
+	for gcvg-git-2@gmane.org; Mon, 29 Sep 2008 14:35:18 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751915AbYI2MPb convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 29 Sep 2008 08:15:31 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751876AbYI2MPb
-	(ORCPT <rfc822;git-outgoing>); Mon, 29 Sep 2008 08:15:31 -0400
-Received: from zimbra-mta.cetrtapot.si ([89.212.80.172]:55920 "EHLO
-	zimbra-mta.cetrtapot.si" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751763AbYI2MPa (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 29 Sep 2008 08:15:30 -0400
-Received: from localhost (localhost.localdomain [127.0.0.1])
-	by zimbra-mta.cetrtapot.si (Postfix) with ESMTP id F187619F9CE;
-	Mon, 29 Sep 2008 14:15:28 +0200 (CEST)
-X-Virus-Scanned: amavisd-new at 
-X-Spam-Flag: NO
-X-Spam-Score: -4.292
-X-Spam-Level: 
-X-Spam-Status: No, score=-4.292 tagged_above=-10 required=5
-	tests=[ALL_TRUSTED=-1.8, AWL=0.107, BAYES_00=-2.599]
-Received: from zimbra-mta.cetrtapot.si ([127.0.0.1])
-	by localhost (zimbra-mta.cetrtapot.si [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id swNtFJjWKcMh; Mon, 29 Sep 2008 14:15:22 +0200 (CEST)
-Received: from [172.31.65.135] (unknown [192.168.66.2])
-	by zimbra-mta.cetrtapot.si (Postfix) with ESMTP id 6485919F9CB;
-	Mon, 29 Sep 2008 14:15:22 +0200 (CEST)
-User-Agent: Thunderbird 2.0.0.16 (X11/20080707)
-In-Reply-To: <48E0BD38.6070602@viscovery.net>
+	id S1751980AbYI2MdS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 29 Sep 2008 08:33:18 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751923AbYI2MdS
+	(ORCPT <rfc822;git-outgoing>); Mon, 29 Sep 2008 08:33:18 -0400
+Received: from mail.gmx.net ([213.165.64.20]:34625 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1751763AbYI2MdS (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 29 Sep 2008 08:33:18 -0400
+Received: (qmail invoked by alias); 29 Sep 2008 12:33:15 -0000
+Received: from pacific.mpi-cbg.de (EHLO [141.5.10.38]) [141.5.10.38]
+  by mail.gmx.net (mp056) with SMTP; 29 Sep 2008 14:33:15 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX19up1Qxpspu513fa5q+sKpJSi0ZouTgdulkHeAi3I
+	NbxLUK7F7pj2ov
+X-X-Sender: schindelin@pacific.mpi-cbg.de.mpi-cbg.de
+In-Reply-To: <20080927204415.6117@nanako3.lavabit.com>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.7
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/97006>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/97007>
 
-Johannes Sixt wrote:
-> Hinko Kocevar schrieb:
->> Hi,
->>
->> I've recently discovered that some git command stopped working. I'm =
-not sure if this is related to my git tree or not, it happens on other =
-trees too:
->> $ git blame Makefile=20
->> sh: none: command not found
->>
->> 'none' ?
->=20
-> Try
->=20
->    $ git --no-pager blame Makefile
+Hi,
 
-It works! yes.
+On Sat, 27 Sep 2008, Nanako Shiraishi wrote:
 
->=20
-> and if that works, correct your setting of PAGER or GIT_PAGER, e.g.
->=20
->    $ export GIT_PAGER=3Dcat
+> This script takes a range of commits (e.g. maint..next) as its 
+> arguments, recreates merge commits in the range to prime rr-cache 
+> database.
 
-I don't want any pager. I've set the config property to 'none' instead =
-to "":
-$ git-config core.pager ""
+Cute idea.  However, I would _love_ to have this as an option to 
+git-rerere, which would work in memory only.
 
-Thank you,
-Hinko
+This is how I would do it (if I had enough time to play with Git):
 
---=20
-=C8ETRTA POT, d.o.o., Kranj
-Planina 3
-4000 Kranj
-Slovenia, Europe
-Tel. +386 (0) 4 280 66 03
-E-mail: hinko.kocevar@cetrtapot.si
-Http: www.cetrtapot.si
+- teach merge_recursive_options not to write anything to the working 
+  directory (should be relatively easy, as many parts of merge-recursive.c 
+  already have no_wd/update_wd/!o->call_depth checks for that),
+
+- refactor handle_file() in rerere.c to provide an in-memory-only version,
+
+- teach rerere to call merge_recursive() with the in-memory-only option, 
+  and then call the in-memory version of the handle_file() function for 
+  all unmerged paths, using the resolutions from the given merge commit.
+
+- then teach this new function to take an arbitrary commit range (but only 
+  handling the two-parent merges within it).
+
+Ciao,
+Dscho
