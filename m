@@ -1,101 +1,94 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: [PATCH 2/6] gitweb: use_pathinfo filenames start with /
-Date: Tue, 30 Sep 2008 01:20:01 +0200
-Message-ID: <200809300120.02492.jnareb@gmail.com>
-References: <1222030663-22540-1-git-send-email-giuseppe.bilotta@gmail.com> <200809290308.09312.jnareb@gmail.com> <cb7bb73a0809290712g324ec015r70fd868b91673645@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, "Petr Baudis" <pasky@ucw.cz>,
-	"Lea Wiemann" <lewiemann@gmail.com>
-To: "Giuseppe Bilotta" <giuseppe.bilotta@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Sep 30 01:21:24 2008
+From: Michael Prokop <mika@grml.org>
+Subject: [PATCH 1/1] Replace svn.foo.org with svn.example.com in git-svn docs (RFC 2606)
+Date: Tue, 30 Sep 2008 01:01:34 +0200
+Message-ID: <1222729294-20649-1-git-send-email-mika@grml.org>
+Cc: Michael Prokop <mika@grml.org>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Sep 30 01:31:40 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KkS3L-0004vo-Sg
-	for gcvg-git-2@gmane.org; Tue, 30 Sep 2008 01:21:20 +0200
+	id 1KkSDI-00080v-T3
+	for gcvg-git-2@gmane.org; Tue, 30 Sep 2008 01:31:37 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752052AbYI2XUH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 29 Sep 2008 19:20:07 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751915AbYI2XUG
-	(ORCPT <rfc822;git-outgoing>); Mon, 29 Sep 2008 19:20:06 -0400
-Received: from fg-out-1718.google.com ([72.14.220.154]:7618 "EHLO
-	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751974AbYI2XUF (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 29 Sep 2008 19:20:05 -0400
-Received: by fg-out-1718.google.com with SMTP id 19so1586347fgg.17
-        for <git@vger.kernel.org>; Mon, 29 Sep 2008 16:20:03 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:subject:date
-         :user-agent:cc:references:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:message-id;
-        bh=15pifbWjV6Z61YmgfstMyXlyHY1wufK2oMjGKR32aMo=;
-        b=jcqQuVg8/S1lOeoPxNCCuTlNApmLevsKmpeGmK48Xm+zGp0ORLtV0wn0ZrEM2+CMLr
-         wJ6qIscr7QsunXeK3AgBHulWJwP3IY8GkYodh6szusAiJMuBVRacbUrQKfOjdjG5fMbC
-         sWxlz3rkaP756WqwQmN3uzVEXo2cAD7VOKtyk=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=from:to:subject:date:user-agent:cc:references:in-reply-to
-         :mime-version:content-type:content-transfer-encoding
-         :content-disposition:message-id;
-        b=byp+CJIuZVWaBXYWfKE1AgbRqO2OQSMUKWsoxVrgvMHrDrIc61MlyGXrgj0qLjqu1B
-         HFMnjpj/EEXrCvI1/EbL117pDN4mLVq7s0TJ9zjWi0ZAtBDMQpJiTuWt41B4qTIyQ4/x
-         mjAxxn4JAMYIgQbSphh55aWCTnKjSmijT4rH8=
-Received: by 10.86.80.5 with SMTP id d5mr4924231fgb.26.1222730403735;
-        Mon, 29 Sep 2008 16:20:03 -0700 (PDT)
-Received: from ?192.168.1.11? (abvy102.neoplus.adsl.tpnet.pl [83.8.222.102])
-        by mx.google.com with ESMTPS id 4sm1777855fge.8.2008.09.29.16.20.01
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Mon, 29 Sep 2008 16:20:02 -0700 (PDT)
-User-Agent: KMail/1.9.3
-In-Reply-To: <cb7bb73a0809290712g324ec015r70fd868b91673645@mail.gmail.com>
-Content-Disposition: inline
+	id S1752101AbYI2XaX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 29 Sep 2008 19:30:23 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751896AbYI2XaX
+	(ORCPT <rfc822;git-outgoing>); Mon, 29 Sep 2008 19:30:23 -0400
+Received: from mail.michael-prokop.at ([88.198.6.110]:48442 "EHLO
+	mail.michael-prokop.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751482AbYI2XaW (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 29 Sep 2008 19:30:22 -0400
+X-Greylist: delayed 1714 seconds by postgrey-1.27 at vger.kernel.org; Mon, 29 Sep 2008 19:30:22 EDT
+Received: from mail.michael-prokop.at (grmlvrs [127.0.0.1])
+	by mail.michael-prokop.at (Postfix) with ESMTP id 9FB65434265;
+	Tue, 30 Sep 2008 01:01:45 +0200 (CEST)
+Received: by mail.michael-prokop.at (Postfix, from userid 5001)
+	id 928584341FA; Tue, 30 Sep 2008 01:01:45 +0200 (CEST)
+X-Spam-Checker-Version: SpamAssassin 3.2.5 (2008-06-10) on grmlvrs
+X-Spam-Level: 
+X-Spam-Status: No, score=-4.0 required=4.5 tests=ALL_TRUSTED,AWL,BAYES_00,
+	WHOIS_NETSOLPR autolearn=ham version=3.2.5
+Received: from localhost (grml.org [88.198.6.110])
+	by mail.michael-prokop.at (Postfix) with ESMTP id 661EB4341FA;
+	Tue, 30 Sep 2008 01:01:39 +0200 (CEST)
+X-Mailer: git-send-email 1.5.6.5
+X-Virus-Scanned: ClamAV using ClamSMTP
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/97057>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/97058>
 
-On Mon, 29 Sep 2008, Giuseppe Bilotta wrote:
-> On Mon, Sep 29, 2008 at 3:08 AM, Jakub Narebski <jnareb@gmail.com> wrote:
->> On Sun, 21 Sep 2008, Giuseppe Bilotta wrote:
+foo.org is an existing domain, use RFC 2606 complying example.com instead
+as used in other docs as well.
 
->>> diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
->>> index e783d12..18da484 100755
->>> --- a/gitweb/gitweb.perl
->>> +++ b/gitweb/gitweb.perl
->>> @@ -664,7 +664,7 @@ sub href (%) {
->>>               if (defined $params{'hash_base'}) {
->>>                       $href .= "/".esc_url($params{'hash_base'});
->>>                       if (defined $params{'file_name'}) {
->>> -                             $href .= ":".esc_url($params{'file_name'});
->>> +                             $href .= ":/".esc_url($params{'file_name'});
->>>                               delete $params{'hash'} if $params{'hash'} eq git_get_hash_by_path($params{'hash_base'},$params{'file_name'});
->>>                               delete $params{'file_name'};
->>>                       } else {
->>> --
->>> 1.5.6.5
->>
->> Is there reason why this change is separate (not squashed) from
->> previous commit?
-> 
-> Historical reason (i.e. I came up with the idea later on). I'll squash it.
+Signed-off-by: Michael Prokop <mika@grml.org>
+---
+ Documentation/git-svn.txt |    8 ++++----
+ 1 files changed, 4 insertions(+), 4 deletions(-)
 
-Hn. Now I am not sure if it should be squashed, or should be separate.
-
-
-Good change.
-
-Please don't forget to describe this decision, i.e. why gitweb is
-using "branch:/filename" when creating path_info links instead of
-simple "branch:name" for relative URLs in HTML in 'raw' ('blob_plain')
-view, in the commit message.  Thanks in advance.
-
+diff --git a/Documentation/git-svn.txt b/Documentation/git-svn.txt
+index 1e644ca..82d03b4 100644
+--- a/Documentation/git-svn.txt
++++ b/Documentation/git-svn.txt
+@@ -473,7 +473,7 @@ Tracking and contributing to the trunk of a Subversion-managed project:
+ 
+ ------------------------------------------------------------------------
+ # Clone a repo (like git clone):
+-	git svn clone http://svn.foo.org/project/trunk
++	git svn clone http://svn.example.com/project/trunk
+ # Enter the newly cloned directory:
+ 	cd trunk
+ # You should be on master branch, double-check with git-branch
+@@ -495,7 +495,7 @@ Tracking and contributing to an entire Subversion-managed project
+ 
+ ------------------------------------------------------------------------
+ # Clone a repo (like git clone):
+-	git svn clone http://svn.foo.org/project -T trunk -b branches -t tags
++	git svn clone http://svn.example.com/project -T trunk -b branches -t tags
+ # View all branches and tags you have cloned:
+ 	git branch -r
+ # Reset your master to trunk (or any other branch, replacing 'trunk'
+@@ -514,7 +514,7 @@ have each person clone that repository with 'git-clone':
+ 
+ ------------------------------------------------------------------------
+ # Do the initial import on a server
+-	ssh server "cd /pub && git svn clone http://svn.foo.org/project
++	ssh server "cd /pub && git svn clone http://svn.example.com/project
+ # Clone locally - make sure the refs/remotes/ space matches the server
+ 	mkdir project
+ 	cd project
+@@ -523,7 +523,7 @@ have each person clone that repository with 'git-clone':
+ 	git config --add remote.origin.fetch '+refs/remotes/*:refs/remotes/*'
+ 	git fetch
+ # Initialize git-svn locally (be sure to use the same URL and -T/-b/-t options as were used on server)
+-	git svn init http://svn.foo.org/project
++	git svn init http://svn.example.com/project
+ # Pull the latest changes from Subversion
+ 	git svn rebase
+ ------------------------------------------------------------------------
 -- 
-Jakub Narebski
-Poland
+1.5.6.5
