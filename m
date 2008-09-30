@@ -1,113 +1,106 @@
-From: Alan Jenkins <alan-jenkins@tuffmail.co.uk>
-Subject: [GUILT] Use git_editor
-Date: Tue, 30 Sep 2008 19:43:50 +0100
-Message-ID: <48E27366.3080503@tuffmail.co.uk>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: How Blobs Work ( Blobs Vs. Deltas)
+Date: Tue, 30 Sep 2008 11:54:21 -0700 (PDT)
+Message-ID: <m3y719qxc9.fsf@localhost.localdomain>
+References: <16946e800809300814v134a42dft37becdbd8aa7669a@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-To: Josef 'Jeff' Sipek <jeffpc@josefsipek.net>
-X-From: git-owner@vger.kernel.org Tue Sep 30 20:45:08 2008
+To: "Feanil Patel" <feanil@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Sep 30 20:55:49 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KkkDb-0006g8-Eg
-	for gcvg-git-2@gmane.org; Tue, 30 Sep 2008 20:45:07 +0200
+	id 1KkkNk-00026c-TY
+	for gcvg-git-2@gmane.org; Tue, 30 Sep 2008 20:55:37 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752624AbYI3Sn5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 30 Sep 2008 14:43:57 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751838AbYI3Sn5
-	(ORCPT <rfc822;git-outgoing>); Tue, 30 Sep 2008 14:43:57 -0400
-Received: from ik-out-1112.google.com ([66.249.90.176]:4246 "EHLO
-	ik-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752588AbYI3Sn4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 30 Sep 2008 14:43:56 -0400
-Received: by ik-out-1112.google.com with SMTP id c30so130906ika.5
-        for <git@vger.kernel.org>; Tue, 30 Sep 2008 11:43:54 -0700 (PDT)
+	id S1752675AbYI3SyZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 30 Sep 2008 14:54:25 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752444AbYI3SyZ
+	(ORCPT <rfc822;git-outgoing>); Tue, 30 Sep 2008 14:54:25 -0400
+Received: from ey-out-2122.google.com ([74.125.78.25]:32100 "EHLO
+	ey-out-2122.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752097AbYI3SyY (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 30 Sep 2008 14:54:24 -0400
+Received: by ey-out-2122.google.com with SMTP id 6so69511eyi.37
+        for <git@vger.kernel.org>; Tue, 30 Sep 2008 11:54:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlemail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from
-         :user-agent:mime-version:to:cc:subject:content-type
-         :content-transfer-encoding:sender;
-        bh=OpRMe81nJVgkIz8zvF2L6oD3kmq6Pj2mTxuzI1XlHK0=;
-        b=f9MS/J8wIlGxG1lua0vH6sj1tGDi+LhrZM0+awEBBaQZNGd8VGmFG/HIYWNE1cgOBK
-         nCNM6e5tmvlLqaykM5UskpxiZ+L1aOaHZWcoZRLE4DIbN+h5wbt+jr/AXWapjHYoSQi4
-         2PsgmRrB4cFaool7tB5RrcwL79dauQt6+DX7c=
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:received:received
+         :x-authentication-warning:to:cc:subject:references:from:in-reply-to
+         :message-id:lines:user-agent:mime-version:content-type:date;
+        bh=dtIu+pSThP5v9Mvt8QTH7CzgbkWFZ+yGgaY5ijKsMDs=;
+        b=Y9GXVrH0Llb6wO3EsZA/pSSUXuZrTiKmd/z+3MAguc5oHbHFkkYM9v4ahKkLmEyz39
+         dDLcfdpCQ1VIirZGr/Og+saltjWrBTgeOlZXKeB43zyPXsmZWl9VS1hF9CdHc6Cr4i1i
+         bD3eeRdYfmkEg6Lm9kNIUs1RZpq/EjzPe/Vsk=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=googlemail.com; s=gamma;
-        h=message-id:date:from:user-agent:mime-version:to:cc:subject
-         :content-type:content-transfer-encoding:sender;
-        b=iOtBYd8JK28z4DPCFljEmaV8v6P3kB/Uxapw0TVE8nsCdVNx0Rh70iJFZOnodLA4Hk
-         Q6FLaIzBQQw3mR31wt+3J09jh0j3bg66WKmGAu0fiRE5b+mJURuhTarpy1cv2ItiqZ6l
-         3ZrJnHq8PuSAyQybZ/1CsWhsXvr0BIbQAcWx4=
-Received: by 10.210.54.19 with SMTP id c19mr6888483eba.106.1222800234478;
-        Tue, 30 Sep 2008 11:43:54 -0700 (PDT)
-Received: from ?10.222.147.176? ([86.53.68.233])
-        by mx.google.com with ESMTPS id 7sm3185500eyb.1.2008.09.30.11.43.52
-        (version=SSLv3 cipher=RC4-MD5);
-        Tue, 30 Sep 2008 11:43:53 -0700 (PDT)
-User-Agent: Thunderbird 2.0.0.17 (X11/20080925)
+        d=gmail.com; s=gamma;
+        h=x-authentication-warning:to:cc:subject:references:from:in-reply-to
+         :message-id:lines:user-agent:mime-version:content-type:date;
+        b=N0qBwEZVg+UB8nnzuWuOquupuRiSVWlBpZlup3vpBPvxeXuYTVzbGEX8szKpSXSA5L
+         0r7EsXkp6H2vnWVgDDrZSMU+Y7mHVl+bLonz8dZ4YGX3H6MR/dzIzBA3Hkz1yXRO6PzP
+         GCk67Qcv/wVpnitATU/upKM+l5aDwvNaVS/oI=
+Received: by 10.86.33.19 with SMTP id g19mr6141108fgg.13.1222800862883;
+        Tue, 30 Sep 2008 11:54:22 -0700 (PDT)
+Received: from localhost.localdomain (abvo173.neoplus.adsl.tpnet.pl [83.8.212.173])
+        by mx.google.com with ESMTPS id l12sm4965243fgb.6.2008.09.30.11.54.20
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Tue, 30 Sep 2008 11:54:21 -0700 (PDT)
+Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
+	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id m8UIrsNE010739;
+	Tue, 30 Sep 2008 20:54:05 +0200
+Received: (from jnareb@localhost)
+	by localhost.localdomain (8.13.4/8.13.4/Submit) id m8UIrhm5010735;
+	Tue, 30 Sep 2008 20:53:43 +0200
+X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
+In-Reply-To: <16946e800809300814v134a42dft37becdbd8aa7669a@mail.gmail.com>
+User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/97141>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/97142>
 
-Signed-off-by: Alan Jenkins <alan-jenkins@tuffmail.co.uk>
+"Feanil Patel" <feanil@gmail.com> writes:
 
-diff --git a/guilt b/guilt
-index 1cef7b9..8d023e9 100755
---- a/guilt
-+++ b/guilt
-@@ -693,10 +693,6 @@ fi
- series="$GUILT_DIR/$branch/series"
- applied="$GUILT_DIR/$branch/status"
- 
--# determine an editor to use for anything interactive (fall back to vi)
--editor="vi"
--[ ! -z "$EDITOR" ] && editor="$EDITOR"
--
- # determine a pager to use for anything interactive (fall back to more)
- pager="more"
- [ ! -z "$PAGER" ] && pager="$PAGER"
-diff --git a/guilt-header b/guilt-header
-index da46c82..66521ac 100755
---- a/guilt-header
-+++ b/guilt-header
-@@ -46,7 +46,7 @@ if [ -z "$edit" ]; then
- else
- 	do_get_full_header "$GUILT_DIR/$branch/$patch" > "$TMP_MSG"
- 	do_get_patch "$GUILT_DIR/$branch/$patch" > "$TMP_DIFF"
--	$editor "$TMP_MSG"
-+	git_editor "$TMP_MSG"
- 	mv "$GUILT_DIR/$branch/$patch" "$GUILT_DIR/$branch/$patch~"
- 
- 	(
-diff --git a/guilt-new b/guilt-new
-index 05318a5..7845d00 100755
---- a/guilt-new
-+++ b/guilt-new
-@@ -77,7 +77,7 @@ mkdir_dir=`dirname "$GUILT_DIR/$branch/$patch"`
- ) >> "$GUILT_DIR/$branch/$patch"
- 
- # edit -e ?
--[ "$edit" = "t" ] && $editor "$GUILT_DIR/$branch/$patch"
-+[ "$edit" = "t" ] && git_editor "$GUILT_DIR/$branch/$patch"
- 
- if [ ! -z "$force" ]; then
- 	(
-diff --git a/guilt-series b/guilt-series
-index 7d8f8e9..4f24ffd 100755
---- a/guilt-series
-+++ b/guilt-series
-@@ -22,7 +22,7 @@ do
- done
- 
- if [ ! -z "$edit" ]; then 
--	$editor "$series"
-+	git_editor "$series"
- elif [ ! -z "$gui" ]; then
- 	[ -z "`get_top`" ] && die "No patches applied."
- 	bottom=`git rev-parse refs/patches/$branch/$(head -1 $applied)`
+> Hello,
+> 
+> I was reading about git objects in "The Git Community Book"
+> (http://book.git-scm.com/1_the_git_object_model.html), which was
+> posted on the mailing list a while back, and I was wondering something
+> about blobs and how files are stored in any particular version.  If
+> file A is changed from version one to version two there are two
+> different blobs that exist for the two versions of the file, is that
+> correct?  The Book was saying Git does not use delta storage so does
+> this mean that there are two almost identical copies of the file with
+> the difference being the change that was put in from version one to
+> version two?
+
+In Git there are two kinds of storage: loose objects and packs. Each
+object generally starts as a loose object; for those it is like you
+wrote: if you have two versions of some file, you would have both
+of those contents of a file stored as separate objects (blobs).  Note
+that those 'blob' objects are compressed, so they usually don't take
+more time than current version of file and its backup.
+
+But there exists also other type of storage, namely packed.  In the
+past you had to pack (repack) objects by invoking "git repack" and
+"git prune", and in more modern times by calling "git gc"; nowadays
+this should be taken care of by git using "git gc --auto" behind.
+When packing git tries to find objects which are close contents,
+and store them as base object and binary delta (based on LibXDiff).
+So you get benefits of delta storage, while on the API and script
+level you always see single objects.
+
+Note that explicit repacking allow git to not only consider versions
+of the same file to diff against, tree and not only linear chains of
+deltas (think branches), and while recency order is preferred it is
+not enforced; objects and deltas are then compressed individually.
+
+HTH
+-- 
+Jakub Narebski
+Poland
+ShadeHawk on #git
