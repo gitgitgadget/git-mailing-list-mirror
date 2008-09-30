@@ -1,54 +1,71 @@
-From: Tom Lanyon <tom@netspot.com.au>
-Subject: Git config not expanding user home directories
-Date: Tue, 30 Sep 2008 20:16:06 +0930
-Message-ID: <F90667E7-6B06-4B34-B655-3C42ED236D9A@netspot.com.au>
-Mime-Version: 1.0 (Apple Message framework v929.2)
-Content-Type: text/plain; charset=US-ASCII; format=flowed; delsp=yes
+From: Andreas Ericsson <ae@op5.se>
+Subject: Re: Git config not expanding user home directories
+Date: Tue, 30 Sep 2008 12:49:30 +0200
+Message-ID: <48E2043A.4000501@op5.se>
+References: <F90667E7-6B06-4B34-B655-3C42ED236D9A@netspot.com.au>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-15; format=flowed
 Content-Transfer-Encoding: 7bit
-To: Git Mailinglist <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Tue Sep 30 12:47:38 2008
+Cc: Git Mailinglist <git@vger.kernel.org>
+To: Tom Lanyon <tom@netspot.com.au>
+X-From: git-owner@vger.kernel.org Tue Sep 30 12:50:52 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KkclF-00045L-L3
-	for gcvg-git-2@gmane.org; Tue, 30 Sep 2008 12:47:22 +0200
+	id 1KkcoX-00053B-Cz
+	for gcvg-git-2@gmane.org; Tue, 30 Sep 2008 12:50:45 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752097AbYI3KqL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 30 Sep 2008 06:46:11 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751937AbYI3KqJ
-	(ORCPT <rfc822;git-outgoing>); Tue, 30 Sep 2008 06:46:09 -0400
-Received: from kuat-e0.netspot.com.au ([203.30.161.145]:52004 "EHLO
-	kuat.netspot.com.au" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751596AbYI3KqJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 30 Sep 2008 06:46:09 -0400
-Received: by kuat.netspot.com.au (Postfix, from userid 1004)
-	id 8818F2800DD65; Tue, 30 Sep 2008 20:16:06 +0930 (CST)
-X-Spam-Checker-Version: SpamAssassin 3.1.8-gr1 (2007-02-13) on
-	kuat.netspot.com.au
+	id S1751845AbYI3Ktg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 30 Sep 2008 06:49:36 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752208AbYI3Ktg
+	(ORCPT <rfc822;git-outgoing>); Tue, 30 Sep 2008 06:49:36 -0400
+Received: from mail.op5.se ([193.201.96.20]:37501 "EHLO mail.op5.se"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751596AbYI3Ktf (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 30 Sep 2008 06:49:35 -0400
+Received: from localhost (localhost.localdomain [127.0.0.1])
+	by mail.op5.se (Postfix) with ESMTP id 70E811B80049;
+	Tue, 30 Sep 2008 12:40:52 +0200 (CEST)
+X-Virus-Scanned: amavisd-new at 
+X-Spam-Flag: NO
+X-Spam-Score: -2.499
 X-Spam-Level: 
-X-Spam-Status: No, score=-4.3 required=4.0 tests=ALL_TRUSTED,AWL,BAYES_00
-	autolearn=ham version=3.1.8-gr1
-Received: from [192.168.13.59] (ppp121-45-78-218.lns10.adl6.internode.on.net [121.45.78.218])
-	(Authenticated sender: tom)
-	by kuat.netspot.com.au (Postfix) with ESMTP id 5C2A8280030D4
-	for <git@vger.kernel.org>; Tue, 30 Sep 2008 20:16:06 +0930 (CST)
-X-Mailer: Apple Mail (2.929.2)
+X-Spam-Status: No, score=-2.499 tagged_above=-10 required=6.6
+	tests=[BAYES_00=-2.599, RDNS_NONE=0.1]
+Received: from mail.op5.se ([127.0.0.1])
+	by localhost (mail.op5.se [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id BxxOlBpCXw4P; Tue, 30 Sep 2008 12:40:49 +0200 (CEST)
+Received: from clix.int.op5.se (unknown [172.27.78.22])
+	by mail.op5.se (Postfix) with ESMTP id 3F80224B0008;
+	Tue, 30 Sep 2008 12:40:49 +0200 (CEST)
+User-Agent: Thunderbird 2.0.0.16 (X11/20080723)
+In-Reply-To: <F90667E7-6B06-4B34-B655-3C42ED236D9A@netspot.com.au>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/97093>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/97094>
 
-Hi all,
+Tom Lanyon wrote:
+> Hi all,
+> 
+> Is it normal behavior that git (well at least git-svn) won't expand 
+> ~user from .gitconfig?
+> 
 
-Is it normal behavior that git (well at least git-svn) won't expand  
-~user from .gitconfig?
+Yes. You could add a patch for that though. git-daemon does ~user
+expansion since quite a long time back, so there's a function ready
+for it. I'd do it by doing something like:
 
-I was trying to set the svn.authorsfile config key to  
-~tom/.gitauthors; I received an error until changing it to read /home/ 
-tom/.gitauthors.
+   git config --path section.key
 
-Regards,
-Tom
+so that scripts can get the user-expanded version as well. In-core
+applications can call expand_path() or some such on their own, I
+think.
+
+-- 
+Andreas Ericsson                   andreas.ericsson@op5.se
+OP5 AB                             www.op5.se
+Tel: +46 8-230225                  Fax: +46 8-230231
