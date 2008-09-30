@@ -1,155 +1,149 @@
-From: Alexander Gavrilov <angavrilov@gmail.com>
-Subject: [PATCH (GIT-GUI)] git-gui: Make Ctrl-T safe to use for conflicting files.
-Date: Tue, 30 Sep 2008 12:12:16 +0400
-Organization: HOME
-Message-ID: <200809301212.17080.angavrilov@gmail.com>
+From: Michael J Gruber <git@drmicha.warpmail.net>
+Subject: Re: [PATCH] remove vim syntax highlighting in favor of upstream
+Date: Tue, 30 Sep 2008 10:29:37 +0200
+Message-ID: <48E1E371.30804@drmicha.warpmail.net>
+References: <1222269726-15632-1-git-send-email-szeder@ira.uka.de>	<20080924155745.GA3908@coredump.intra.peff.net>	<20080924170154.GA6816@neumann>	<20080924175315.GA10337@coredump.intra.peff.net>	<20080924195658.GB6816@neumann>	<20080929145542.GA18340@spearce.org> <20080929200814.GA19840@neumann>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="us-ascii"
-Content-Transfer-Encoding: 7bit
-Cc: "Shawn O. Pearce" <spearce@spearce.org>,
-	Johannes Sixt <j.sixt@viscovery.net>
-To: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Tue Sep 30 10:19:25 2008
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: "Shawn O. Pearce" <spearce@spearce.org>, Jeff King <peff@peff.net>,
+	vim@tpope.info, git@vger.kernel.org
+To: =?ISO-8859-1?Q?SZEDER_G=E1bor?= <szeder@ira.uka.de>
+X-From: git-owner@vger.kernel.org Tue Sep 30 10:31:01 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KkaNv-0004UH-1n
-	for gcvg-git-2@gmane.org; Tue, 30 Sep 2008 10:15:07 +0200
+	id 1KkadB-0000vf-5G
+	for gcvg-git-2@gmane.org; Tue, 30 Sep 2008 10:30:53 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751829AbYI3INw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 30 Sep 2008 04:13:52 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751596AbYI3INv
-	(ORCPT <rfc822;git-outgoing>); Tue, 30 Sep 2008 04:13:51 -0400
-Received: from ug-out-1314.google.com ([66.249.92.171]:37608 "EHLO
-	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751491AbYI3INu (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 30 Sep 2008 04:13:50 -0400
-Received: by ug-out-1314.google.com with SMTP id k3so520337ugf.37
-        for <git@vger.kernel.org>; Tue, 30 Sep 2008 01:13:48 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:organization:to:subject
-         :date:user-agent:cc:mime-version:content-type
-         :content-transfer-encoding:content-disposition:message-id;
-        bh=VLxHCfaja+muGWNGyo1zjOVXSjyhGV1lL8buLMt3RIc=;
-        b=DZZx3pBEqWCZk3Fj9wh6DDhHjW3PaTXHZZJOY8zct7fLskzS+m0C/fybiMrWXzIZya
-         5VtkfMLT3D0Ro7eysaX47JUgwXc1gtzrz0oiXr7nYgxaaO9Fs1oJEiz9W5vEPxY7TNqA
-         VSe5P00GEs/Hqz5P5T7LyMqBE4AYUZhoi+nKE=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=from:organization:to:subject:date:user-agent:cc:mime-version
-         :content-type:content-transfer-encoding:content-disposition
-         :message-id;
-        b=tRSRJWb6+Wrz1TfRBzIJDpXHfGM4Rr8xTx87SJjcTcwIg0YNdCIYsramccM17F0ENY
-         gYWIojMD5q/3vokwK19IU1dPObAYwz9kLEor6/wmdCl2BMBq0IeRkNdt0MBxv+ry5x8o
-         ag0rmbIlYIdeeIPjaQDblZWvDBfER+jRktgmI=
-Received: by 10.103.203.4 with SMTP id f4mr4608000muq.8.1222762428294;
-        Tue, 30 Sep 2008 01:13:48 -0700 (PDT)
-Received: from keydesk.localnet ([92.255.85.78])
-        by mx.google.com with ESMTPS id w5sm6685566mue.10.2008.09.30.01.13.47
-        (version=SSLv3 cipher=RC4-MD5);
-        Tue, 30 Sep 2008 01:13:47 -0700 (PDT)
-User-Agent: KMail/1.10.1 (Linux/2.6.26.3-29.fc9.i686; KDE/4.1.1; i686; ; )
-Content-Disposition: inline
+	id S1752141AbYI3I3m convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 30 Sep 2008 04:29:42 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751642AbYI3I3m
+	(ORCPT <rfc822;git-outgoing>); Tue, 30 Sep 2008 04:29:42 -0400
+Received: from out3.smtp.messagingengine.com ([66.111.4.27]:38952 "EHLO
+	out3.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1752139AbYI3I3l (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 30 Sep 2008 04:29:41 -0400
+Received: from compute2.internal (compute2.internal [10.202.2.42])
+	by out1.messagingengine.com (Postfix) with ESMTP id 994FF170DC2;
+	Tue, 30 Sep 2008 04:29:40 -0400 (EDT)
+Received: from heartbeat1.messagingengine.com ([10.202.2.160])
+  by compute2.internal (MEProxy); Tue, 30 Sep 2008 04:29:40 -0400
+X-Sasl-enc: 6QN6enw9NxPGmRTDdYfMXInab3uQSRokovMrjvjQCSzW 1222763380
+Received: from [139.174.44.12] (whitehead.math.tu-clausthal.de [139.174.44.12])
+	by mail.messagingengine.com (Postfix) with ESMTPSA id 5DF17134AD;
+	Tue, 30 Sep 2008 04:29:39 -0400 (EDT)
+User-Agent: Thunderbird 2.0.0.17 (X11/20080914)
+In-Reply-To: <20080929200814.GA19840@neumann>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/97079>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/97080>
 
-A previous patch added a check for conflict markers, which
-is done when the file is about to be staged due to a click
-on the icon. However, pressing Ctrl-T still immediately
-stages the file without confirmation. This patch fixes it.
+SZEDER G=E1bor venit, vidit, dixit 29.09.2008 22:08:
+> As of version 7.2, vim ships with its own syntax
+> highlighting for git commit messages, which is:
+>=20
+>   1. more comprehensive in splitting up the various
+>      components of the file
+>=20
+>   2. in accordance with the usual vim behavior for syntax
+>      highlighting (e.g., respecting b:current_syntax)
+>=20
+>   3. presumably better maintained (I have not been using
+>      what's in git's contrib/ directory for some time in
+>      favor of the upstream version)
+>=20
+> Furthermore, vim upsream also provides syntax highlighting
+> for other git filetypes (gitconfig, rebase, send-email).
+>=20
+> This patch gets rid of our local version and just points
+> interested parties to the upstream version.
+>=20
+> The code for auto-detecting filetypes is taken from vim's
+> runtime/filetype.vim.
+>=20
+> Signed-off-by: SZEDER G=E1bor <szeder@ira.uka.de>
+> ---
+>=20
+> On Mon, Sep 29, 2008 at 07:55:42AM -0700, Shawn O. Pearce wrote:
+>> Missing SBO line?
+> Here it is.  Since significant parts of the patch and the commit
+> message are from Jeff, maybe he should sign off, too?
+>=20
+> Note, that this patch is slightly different from the previous one, as
+> it proposes writing the auto-detect commands into ~/.vim/filetype.vim
+> instead of ~/.vimrc.  It's not quite clear to me why, but it seems to
+> resolve the filetype confusion I mentioned in my previous email.
+>=20
+>=20
+>  contrib/vim/README               |   38 ++++++++++++++++++++++++++++=
+++--------
+>  contrib/vim/syntax/gitcommit.vim |   18 ------------------
+>  2 files changed, 30 insertions(+), 26 deletions(-)
+>  delete mode 100644 contrib/vim/syntax/gitcommit.vim
+>=20
+> diff --git a/contrib/vim/README b/contrib/vim/README
+> index 9e7881f..c487346 100644
+> --- a/contrib/vim/README
+> +++ b/contrib/vim/README
+> @@ -1,8 +1,30 @@
+> -To syntax highlight git's commit messages, you need to:
+> -  1. Copy syntax/gitcommit.vim to vim's syntax directory:
+> -     $ mkdir -p $HOME/.vim/syntax
+> -     $ cp syntax/gitcommit.vim $HOME/.vim/syntax
+> -  2. Auto-detect the editing of git commit files:
+> -     $ cat >>$HOME/.vimrc <<'EOF'
+> -     autocmd BufNewFile,BufRead COMMIT_EDITMSG set filetype=3Dgitcom=
+mit
+> -     EOF
+> +Syntax highlighting for git commit messages, config files, etc. is
+> +included with the vim distribution as of vim 7.2, and should work
+> +automatically.
+> +
+> +If you have an older version of vim, you can get the latest syntax
+> +files from the vim project:
+> +
+> +  http://vim.svn.sourceforge.net/viewvc/vim/trunk/runtime/syntax/git=
+=2Evim
+> +  http://vim.svn.sourceforge.net/viewvc/vim/trunk/runtime/syntax/git=
+commit.vim
+> +  http://vim.svn.sourceforge.net/viewvc/vim/trunk/runtime/syntax/git=
+config.vim
+> +  http://vim.svn.sourceforge.net/viewvc/vim/trunk/runtime/syntax/git=
+rebase.vim
+> +  http://vim.svn.sourceforge.net/viewvc/vim/trunk/runtime/syntax/git=
+sendemail.vim
+> +
+> +To install:
+> +
+> +  1. Copy these files to vim's syntax directory $HOME/.vim/syntax
+> +  2. To auto-detect the editing of various git-related filetypes:
+> +	$ cat >>$HOME/.vim/filetype.vim <<'EOF'
+> +	autocmd BufNewFile,BufRead *.git/COMMIT_EDITMSG    setf gitcommit
+> +	autocmd BufNewFile,BufRead *.git/config,.gitconfig setf gitconfig
+> +	autocmd BufNewFile,BufRead git-rebase-todo         setf gitrebase
+> +	autocmd BufNewFile,BufRead .msg.[0-9]*
+> +		\ if getline(1) =3D~ '^From.*# This line is ignored.$' |
+> +		\   setf gitsendemail |
+> +		\ endif
+> +	autocmd BufNewFile,BufRead *.git/**
+> +		\ if getline(1) =3D~ '^\x\{40\}\>\|^ref: ' |
+> +		\   setf git |
+> +		\ endif
+> +	EOF
 
-The check requires a loaded diff, so staging multiple files
-at once won't work if they are unmerged.
+Works as described with vim 7.1.
 
-Signed-off-by: Alexander Gavrilov <angavrilov@gmail.com>
----
+How about creating a syntax file for editing the files generated by
+format-patch, especially 0000-cover-letter.patch? Should be mostly a
+combination of "git.vim" and "gitsendemail.vim", but I didn't find any
+syntax defs for the diffstat.
 
- git-gui.sh        |    4 +++-
- lib/index.tcl     |   11 +++++++++--
- lib/merge.tcl     |    1 +
- lib/mergetool.tcl |    7 ++++---
- 4 files changed, 17 insertions(+), 6 deletions(-)
+Michael
 
-diff --git a/git-gui.sh b/git-gui.sh
-index 4085e8f..717817e 100755
---- a/git-gui.sh
-+++ b/git-gui.sh
-@@ -2090,7 +2090,9 @@ proc toggle_or_diff {w x y} {
- 	if {$col == 0 && $y > 1} {
- 		# Conflicts need special handling
- 		if {[string first {U} $state] >= 0} {
--			merge_stage_workdir $path $w $lno
-+			# $w must always be $ui_workdir, but...
-+			if {$w ne $ui_workdir} { set lno {} }
-+			merge_stage_workdir $path $lno
- 			return
- 		}
- 
-diff --git a/lib/index.tcl b/lib/index.tcl
-index b045219..d33896a 100644
---- a/lib/index.tcl
-+++ b/lib/index.tcl
-@@ -298,11 +298,18 @@ proc add_helper {txt paths} {
- 	set after {}
- 	foreach path $paths {
- 		switch -glob -- [lindex $file_states($path) 0] {
-+		_U -
-+		U? {
-+			if {$path eq $current_diff_path} {
-+				unlock_index
-+				merge_stage_workdir $path
-+				return
-+			}
-+		}
- 		_O -
- 		?M -
- 		?D -
--		?T -
--		U? {
-+		?T {
- 			lappend pathList $path
- 			if {$path eq $current_diff_path} {
- 				set after {reshow_diff;}
-diff --git a/lib/merge.tcl b/lib/merge.tcl
-index 5c01875..ac4c7de 100644
---- a/lib/merge.tcl
-+++ b/lib/merge.tcl
-@@ -40,6 +40,7 @@ The rescan will be automatically started now.
- 		_O {
- 			continue; # and pray it works!
- 		}
-+		_U
- 		U? {
- 			error_popup [mc "You are in the middle of a conflicted merge.
- 
-diff --git a/lib/mergetool.tcl b/lib/mergetool.tcl
-index 6ab5701..1984c64 100644
---- a/lib/mergetool.tcl
-+++ b/lib/mergetool.tcl
-@@ -23,13 +23,14 @@ This operation can be undone only by restarting the merge." \
- 	}
- }
- 
--proc merge_stage_workdir {path w lno} {
-+proc merge_stage_workdir {path {lno {}}} {
- 	global current_diff_path diff_active
-+	global current_diff_side ui_workdir
- 
- 	if {$diff_active} return
- 
--	if {$path ne $current_diff_path} {
--		show_diff $path $w $lno {} [list do_merge_stage_workdir $path]
-+	if {$path ne $current_diff_path || $ui_workdir ne $current_diff_side} {
-+		show_diff $path $ui_workdir $lno {} [list do_merge_stage_workdir $path]
- 	} else {
- 		do_merge_stage_workdir $path
- 	}
--- 
-1.6.0.20.g6148bc
+P.S.: What? Git doc linking to an svn repo? Someone needs to set up a
+git mirror ;)
