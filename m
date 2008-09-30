@@ -2,55 +2,171 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: *
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=1.7 required=3.0 tests=AWL,BAYES_00,
-	DKIM_ADSP_CUSTOM_MED,DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no
-	autolearn=ham autolearn_force=no version=3.4.0
-Received: (qmail 4446 invoked by uid 111); 26 Sep 2008 08:11:25 -0000
+X-Spam-Status: No, score=1.1 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RP_MATCHES_RCVD shortcircuit=no
+	autolearn=unavailable autolearn_force=no version=3.4.0
+Received: (qmail 10520 invoked by uid 111); 30 Sep 2008 16:52:05 -0000
 Received: from vger.kernel.org (HELO vger.kernel.org) (209.132.176.167)
-    by peff.net (qpsmtpd/0.32) with ESMTP; Fri, 26 Sep 2008 04:11:24 -0400
+    by peff.net (qpsmtpd/0.32) with ESMTP; Tue, 30 Sep 2008 12:52:01 -0400
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752503AbYIZILU (ORCPT <rfc822;peff@peff.net>);
-	Fri, 26 Sep 2008 04:11:20 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752270AbYIZILU
-	(ORCPT <rfc822;git-outgoing>); Fri, 26 Sep 2008 04:11:20 -0400
-Received: from rv-out-0506.google.com ([209.85.198.225]:46830 "EHLO
-	rv-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751243AbYIZILT (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 26 Sep 2008 04:11:19 -0400
-Received: by rv-out-0506.google.com with SMTP id k40so890256rvb.1
-        for <git@vger.kernel.org>; Fri, 26 Sep 2008 01:11:18 -0700 (PDT)
-DKIM-Signature:	v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to
-         :subject:mime-version:content-type:content-transfer-encoding
-         :content-disposition;
-        bh=7mbM0yKjbyDpTVlY3SygizTLc7hBBQl5UD9g+obTCb0=;
-        b=Tx/fcg1EGURu6VjSw3DssNgDuoDKJmebLw23+gXvkmucdqrYdNLLS1kM1ridQkNWEq
-         0OetVmCpLMxDFUO0yZq/Ldb5YaAP1JdGZ/rPQJSFbLHrxvCAhU6I+tdKql59WkmTqcah
-         50DbusFKN3PnDnHBh60nZUcL9S6KatWcg5xPM=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:mime-version:content-type
-         :content-transfer-encoding:content-disposition;
-        b=aBlByBd08xb1LJtMW38hMCdJp0rS96v62KVd9VhIbgcEEz2OzCLZo+Iu82aHQW6TkR
-         1KnoMg4oarHQ5nHUeuzs5/nK/+Movk6L+xQHrVMVwJwh4xIKUkNVQW9ibmjmWvpSAHPV
-         nwVNq9YOFecOXt6P0iclM4D4fL/T0D472QqJQ=
-Received: by 10.140.193.15 with SMTP id q15mr484779rvf.191.1222416678478;
-        Fri, 26 Sep 2008 01:11:18 -0700 (PDT)
-Received: by 10.140.164.9 with HTTP; Fri, 26 Sep 2008 01:11:18 -0700 (PDT)
-Message-ID: <aa2b76740809260111hfafd35bsa640f10bfaea2cbd@mail.gmail.com>
-Date:	Fri, 26 Sep 2008 10:11:18 +0200
-From:	"Pico Geyer" <picogeyer@gmail.com>
+	id S1752446AbYI3Qv5 (ORCPT <rfc822;peff@peff.net>);
+	Tue, 30 Sep 2008 12:51:57 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752546AbYI3Qv5
+	(ORCPT <rfc822;git-outgoing>); Tue, 30 Sep 2008 12:51:57 -0400
+Received: from [212.249.11.140] ([212.249.11.140]:11177 "EHLO pixie.suse.cz"
+	rhost-flags-FAIL-FAIL-OK-FAIL) by vger.kernel.org with ESMTP
+	id S1751705AbYI3Qv4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 30 Sep 2008 12:51:56 -0400
+Received: by pixie.suse.cz (Postfix, from userid 2001)
+	id B11712AC8E5; Tue, 30 Sep 2008 18:51:41 +0200 (CEST)
+From:	Petr Baudis <pasky@suse.cz>
 To:	git@vger.kernel.org
-Subject: bye
-MIME-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Content-Disposition: inline
+Cc:	spearce@spearce.org, Petr Baudis <petr.baudis@novartis.com>
+Subject: [PATCH] git-gui: Implement a 'clone' subcommand
+Date:	Tue, 30 Sep 2008 18:51:41 +0200
+Message-Id: <1222793501-17997-1-git-send-email-pasky@suse.cz>
+X-Mailer: git-send-email 1.5.6.3.392.g292f1
+To:	git@vger.kernel.org
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-unsubscribe git
+This enables git-gui to be started with the clone dialog opened right
+away, possibly with the URL prefilled when it is passed as another
+argument. git-gui can then be e.g. registered as the git:// protocol
+handler.
+
+This is just a simple implementation - we construct the front actions
+page, then throw it away immediately; I wanted to avoid unnecessary
+refactoring and complication of the code, though.
+
+Signed-off-by: Petr Baudis <petr.baudis@novartis.com>
+
+---
+ Documentation/git-gui.txt         |    5 +++++
+ git-gui/git-gui.sh                |   21 ++++++++++++++++++---
+ git-gui/lib/choose_repository.tcl |   11 ++++++++++-
+ 3 files changed, 33 insertions(+), 4 deletions(-)
+
+diff --git a/Documentation/git-gui.txt b/Documentation/git-gui.txt
+index 0e650f4..9ce63be 100644
+--- a/Documentation/git-gui.txt
++++ b/Documentation/git-gui.txt
+@@ -43,6 +43,11 @@ citool::
+ 	to only commit actions, slightly reducing the application's
+ 	startup time and simplifying the menubar.
+ 
++clone::
++	Start the 'git-gui' clone dialog, optionally taking
++	a source location as an extra argument to pre-fill
++	in the dialog.
++
+ version::
+ 	Display the currently running version of 'git-gui'.
+ 
+diff --git a/git-gui/git-gui.sh b/git-gui/git-gui.sh
+index 4085e8f..86f0151 100755
+--- a/git-gui/git-gui.sh
++++ b/git-gui/git-gui.sh
+@@ -950,6 +950,8 @@ enable_option multicommit
+ enable_option branch
+ enable_option transport
+ disable_option bare
++set init_action {}
++set clone_url {}
+ 
+ switch -- $subcommand {
+ browser -
+@@ -960,6 +962,13 @@ blame {
+ 	disable_option branch
+ 	disable_option transport
+ }
++clone {
++	set init_action "clone"
++	if {[llength $argv] > 0} {
++		set clone_url [lindex $argv 0]
++		set argv [lrange $argv 1 end]
++	}
++}
+ citool {
+ 	enable_option singlecommit
+ 	enable_option retcode
+@@ -995,7 +1004,12 @@ citool {
+ ##
+ ## repository setup
+ 
+-if {[catch {
++if {$init_action != ""} {
++	load_config 1
++	apply_config
++	choose_repository::pick $init_action
++
++} elseif {[catch {
+ 		set _gitdir $env(GIT_DIR)
+ 		set _prefix {}
+ 		}]
+@@ -1005,7 +1019,7 @@ if {[catch {
+ 	} err]} {
+ 	load_config 1
+ 	apply_config
+-	choose_repository::pick
++	choose_repository::pick {}
+ }
+ if {![file isdirectory $_gitdir] && [is_Cygwin]} {
+ 	catch {set _gitdir [exec cygpath --windows $_gitdir]}
+@@ -2622,6 +2636,7 @@ blame {
+ 	return
+ }
+ citool -
++clone -
+ gui {
+ 	if {[llength $argv] != 0} {
+ 		puts -nonewline stderr "usage: $argv0"
+@@ -2635,7 +2650,7 @@ gui {
+ 	# fall through to setup UI for commits
+ }
+ default {
+-	puts stderr "usage: $argv0 \[{blame|browser|citool}\]"
++	puts stderr "usage: $argv0 \[{blame|browser|citool|clone}\]"
+ 	exit 1
+ }
+ }
+diff --git a/git-gui/lib/choose_repository.tcl b/git-gui/lib/choose_repository.tcl
+index 3180786..290fbc0 100644
+--- a/git-gui/lib/choose_repository.tcl
++++ b/git-gui/lib/choose_repository.tcl
+@@ -21,7 +21,7 @@ field clone_type hardlink ; # Type of clone to construct
+ field readtree_err        ; # Error output from read-tree (if any)
+ field sorted_recent       ; # recent repositories (sorted)
+ 
+-constructor pick {} {
++constructor pick {action} {
+ 	global M1T M1B
+ 
+ 	make_toplevel top w
+@@ -195,6 +195,11 @@ constructor pick {} {
+ 		bind $top <Visibility> {}
+ 	"
+ 	wm deiconify $top
++
++	if {$action != ""} {
++		_next $this $action
++	}
++
+ 	tkwait variable @done
+ 
+ 	if {$top eq {.}} {
+@@ -447,6 +452,10 @@ proc _new_ok {p} {
+ ## Clone Existing Repository
+ 
+ method _do_clone {} {
++	if {$::clone_url != ""} {
++		set origin_url $::clone_url
++	}
++
+ 	$w_next conf \
+ 		-state disabled \
+ 		-command [cb _do_clone2] \
+-- 
+tg: (9800c0d..) t/git-gui/clonecmd (depends on: vanilla/master)
