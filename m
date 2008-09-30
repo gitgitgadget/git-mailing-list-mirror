@@ -1,71 +1,87 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: Re: [PATCH] parse-opt: migrate fmt-merge-msg.
-Date: Tue, 30 Sep 2008 12:10:14 -0700
-Message-ID: <20080930191014.GH21310@spearce.org>
-References: <1222595139-32087-1-git-send-email-madcoder@debian.org> <1222595139-32087-2-git-send-email-madcoder@debian.org> <20080929163523.GC18340@spearce.org> <20080930084019.GB11453@artemis.corp>
+From: Alan Jenkins <alan-jenkins@tuffmail.co.uk>
+Subject: Re: [GUILT] Use git_editor
+Date: Tue, 30 Sep 2008 20:14:15 +0100
+Message-ID: <48E27A87.9060205@tuffmail.co.uk>
+References: <48E27366.3080503@tuffmail.co.uk> <20080930190744.GO32444@josefsipek.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org, gitster@pobox.com
-To: Pierre Habouzit <madcoder@debian.org>
-X-From: git-owner@vger.kernel.org Tue Sep 30 21:11:34 2008
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Josef 'Jeff' Sipek <jeffpc@josefsipek.net>
+X-From: git-owner@vger.kernel.org Tue Sep 30 21:16:18 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Kkkd4-0008AZ-6o
-	for gcvg-git-2@gmane.org; Tue, 30 Sep 2008 21:11:26 +0200
+	id 1Kkkh3-0001Sh-Ok
+	for gcvg-git-2@gmane.org; Tue, 30 Sep 2008 21:15:34 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753254AbYI3TKQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 30 Sep 2008 15:10:16 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753066AbYI3TKQ
-	(ORCPT <rfc822;git-outgoing>); Tue, 30 Sep 2008 15:10:16 -0400
-Received: from george.spearce.org ([209.20.77.23]:57462 "EHLO
-	george.spearce.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752739AbYI3TKP (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 30 Sep 2008 15:10:15 -0400
-Received: by george.spearce.org (Postfix, from userid 1001)
-	id 73BB53835F; Tue, 30 Sep 2008 19:10:14 +0000 (UTC)
-Content-Disposition: inline
-In-Reply-To: <20080930084019.GB11453@artemis.corp>
-User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
+	id S1753482AbYI3TOW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 30 Sep 2008 15:14:22 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753495AbYI3TOW
+	(ORCPT <rfc822;git-outgoing>); Tue, 30 Sep 2008 15:14:22 -0400
+Received: from nf-out-0910.google.com ([64.233.182.189]:63125 "EHLO
+	nf-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753830AbYI3TOU (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 30 Sep 2008 15:14:20 -0400
+Received: by nf-out-0910.google.com with SMTP id d3so87589nfc.21
+        for <git@vger.kernel.org>; Tue, 30 Sep 2008 12:14:19 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=googlemail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from
+         :user-agent:mime-version:to:cc:subject:references:in-reply-to
+         :content-type:content-transfer-encoding:sender;
+        bh=/2Za+x4Dmf3P9R5RxuLFYFjTf6iUHPOt7R2egKELH6M=;
+        b=PQfMrpCcnl7SawTOH1KITJ57YJdX6LMv9QgTO69EdaXnosZIoJM9VxrU04zoOonIm0
+         lC1wbj74Gce9fymQGV0LlsAcjbDKAslLQM4GCeS6TeDeeeaibQrCQoq3DcR2yco+xIBv
+         xMQTjvQa3BKhzh+XYePaGQ1wm88KlHdT/dA3g=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=googlemail.com; s=gamma;
+        h=message-id:date:from:user-agent:mime-version:to:cc:subject
+         :references:in-reply-to:content-type:content-transfer-encoding
+         :sender;
+        b=cnWJSQHEmQmNR+uACkvkQD8v+jVqNLruaRWA6AETiZbgSehuxkP4Rhhl+l8Kgc51VR
+         ED+EYJohHhvH0p83PHUbkEe9kQva5cqid2DkNlScbAIvJWQu2WD4oCAy4/BGarfK9J6a
+         DgajuWwgM+tUN6gFuI571uLvYutcooPLjgUh8=
+Received: by 10.210.50.5 with SMTP id x5mr469275ebx.34.1222802058972;
+        Tue, 30 Sep 2008 12:14:18 -0700 (PDT)
+Received: from ?10.222.147.176? ([86.53.68.233])
+        by mx.google.com with ESMTPS id 5sm3399418eyf.8.2008.09.30.12.14.17
+        (version=SSLv3 cipher=RC4-MD5);
+        Tue, 30 Sep 2008 12:14:17 -0700 (PDT)
+User-Agent: Thunderbird 2.0.0.17 (X11/20080925)
+In-Reply-To: <20080930190744.GO32444@josefsipek.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/97145>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/97146>
 
-Pierre Habouzit <madcoder@debian.org> wrote:
-> On Mon, Sep 29, 2008 at 04:35:23PM +0000, Shawn O. Pearce wrote:
-> > Pierre Habouzit <madcoder@debian.org> wrote:
-> > > Also fix an inefficient printf("%s", ...) where we can use write_in_full.
-> > 
-> > Near as I can tell, this is based upon a merge commit in next.
-> 
-> Hmm I've always sent my patches this way, and I believe you can git am
-> -3 them on top of master easily. I can send you the updated series if
-> you want.
+Josef 'Jeff' Sipek wrote:
+> On Tue, Sep 30, 2008 at 07:43:50PM +0100, Alan Jenkins wrote:
+>   
+>> Signed-off-by: Alan Jenkins <alan-jenkins@tuffmail.co.uk>
+>>
+>> diff --git a/guilt b/guilt
+>> index 1cef7b9..8d023e9 100755
+>> --- a/guilt
+>> +++ b/guilt
+>> @@ -693,10 +693,6 @@ fi
+>>  series="$GUILT_DIR/$branch/series"
+>>  applied="$GUILT_DIR/$branch/status"
+>>  
+>> -# determine an editor to use for anything interactive (fall back to vi)
+>> -editor="vi"
+>> -[ ! -z "$EDITOR" ] && editor="$EDITOR"
+>> -
+>>     
+>
+> Looks good from a quick glance. Any chance there's a git_pager?
+>
+> Josef 'Jeff' Sipek.
+>   
 
-I'd appreciate an updated series if you can send it.  am -3 isn't
-"easily" applying it.  Here I define "easy" as "the patch applies
-without me needing to resolve conflicts":
+Not in git-sh-setup.  I did check :-).
 
- $ git co -b ph/parseopt master
- $ git am -3 -s X
- Applying: parse-opt: migrate fmt-merge-msg.
- error: patch failed: builtin-fmt-merge-msg.c:5
- error: builtin-fmt-merge-msg.c: patch does not apply
- Using index info to reconstruct a base tree...
- Falling back to patching base and 3-way merge...
- CONFLICT (content): Merge conflict in builtin-fmt-merge-msg.c
- Recorded preimage for 'builtin-fmt-merge-msg.c'
- Failed to merge in the changes.
- Patch failed at 0001.
- When you have resolved this problem run "git am -3 --resolved".
- If you would prefer to skip this patch, instead run "git am -3 --skip".
- To restore the original branch and stop patching run "git am -3 --abort".
-
-:-\
-
--- 
-Shawn.
+Alan
