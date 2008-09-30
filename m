@@ -1,174 +1,74 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: [PATCH 1/6] gitweb: action in path with use_pathinfo
-Date: Tue, 30 Sep 2008 10:48:38 +0200
-Message-ID: <200809301048.40046.jnareb@gmail.com>
-References: <1222030663-22540-1-git-send-email-giuseppe.bilotta@gmail.com> <200809300221.25094.jnareb@gmail.com> <cb7bb73a0809300105s24706d79hb40e147739ec6f05@mail.gmail.com>
+From: Andreas Ericsson <ae@op5.se>
+Subject: Re: [PATCH] Builtin-commit: show on which branch a commit was added
+Date: Tue, 30 Sep 2008 11:45:50 +0200
+Message-ID: <48E1F54E.20401@op5.se>
+References: <4C04A26E-5829-4A39-AD89-F5A68E606AA3@ai.rug.nl> <1220634785-55543-1-git-send-email-pdebie@ai.rug.nl> <7vzlmkpltb.fsf@gitster.siamese.dyndns.org> <20080921104238.GA9217@sigill.intra.peff.net> <A36A4B61-D223-4821-9969-FA76EAECD1EC@ai.rug.nl> <20080929224430.GA11545@sigill.intra.peff.net> <48E1C39F.4070906@op5.se> <20080930061654.GA14584@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
+Content-Type: text/plain; charset=ISO-8859-15; format=flowed
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, "Petr Baudis" <pasky@ucw.cz>,
-	"Lea Wiemann" <lewiemann@gmail.com>
-To: "Giuseppe Bilotta" <giuseppe.bilotta@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Sep 30 10:50:54 2008
+Cc: Pieter de Bie <pdebie@ai.rug.nl>,
+	Junio C Hamano <gitster@pobox.com>,
+	Git Mailinglist <git@vger.kernel.org>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Tue Sep 30 11:47:15 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Kkavs-0007KU-ET
-	for gcvg-git-2@gmane.org; Tue, 30 Sep 2008 10:50:13 +0200
+	id 1Kkbou-0000xY-Up
+	for gcvg-git-2@gmane.org; Tue, 30 Sep 2008 11:47:05 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752107AbYI3Ist (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 30 Sep 2008 04:48:49 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751442AbYI3Ist
-	(ORCPT <rfc822;git-outgoing>); Tue, 30 Sep 2008 04:48:49 -0400
-Received: from ey-out-2122.google.com ([74.125.78.25]:46892 "EHLO
-	ey-out-2122.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752060AbYI3Iss (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 30 Sep 2008 04:48:48 -0400
-Received: by ey-out-2122.google.com with SMTP id 6so702092eyi.37
-        for <git@vger.kernel.org>; Tue, 30 Sep 2008 01:48:46 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:subject:date
-         :user-agent:cc:references:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:message-id;
-        bh=xKpiFRqYy+IX1jykEZnRFjh/Aynxc0vAMViUGlRkL3Y=;
-        b=fMETCjkSmQQDx9XtQfbIVXTQLZhRnmcsxUjaGMCpNY4Sszfxj38JYSyMjehmGRpHIl
-         RchoEuEqAg1/0mxXqKwF/+8xxmG34y5ti2OUoQofJlaZMtATIuTKeHtIgQ40q0cb58IO
-         ffKjP9T+XBPo/FLuBvNrN25Ed6ISCrOxVOGi4=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=from:to:subject:date:user-agent:cc:references:in-reply-to
-         :mime-version:content-type:content-transfer-encoding
-         :content-disposition:message-id;
-        b=svijj+ty5s3gNsbZcQ2bgcl/HqwO//Vp1H3QUAqsJUEMoh39RNqx9vUW4s0EdaUXQ9
-         ul6rVi+0tPwVGXH3dNduKXSUJ2C8/1PQIfcjjq6HjSuHcJMVdLs0W9OBujkiYU0Ngkw1
-         Ci02FSD5/gArojQ9F1gcHyEJHI0kHALVDvkME=
-Received: by 10.103.223.20 with SMTP id a20mr4589476mur.86.1222764526010;
-        Tue, 30 Sep 2008 01:48:46 -0700 (PDT)
-Received: from ?192.168.1.11? (abvy102.neoplus.adsl.tpnet.pl [83.8.222.102])
-        by mx.google.com with ESMTPS id i5sm6923686mue.11.2008.09.30.01.48.43
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Tue, 30 Sep 2008 01:48:44 -0700 (PDT)
-User-Agent: KMail/1.9.3
-In-Reply-To: <cb7bb73a0809300105s24706d79hb40e147739ec6f05@mail.gmail.com>
-Content-Disposition: inline
+	id S1753184AbYI3Jp4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 30 Sep 2008 05:45:56 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753173AbYI3Jp4
+	(ORCPT <rfc822;git-outgoing>); Tue, 30 Sep 2008 05:45:56 -0400
+Received: from mail.op5.se ([193.201.96.20]:50766 "EHLO mail.op5.se"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753168AbYI3Jpz (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 30 Sep 2008 05:45:55 -0400
+Received: from localhost (localhost.localdomain [127.0.0.1])
+	by mail.op5.se (Postfix) with ESMTP id AE0C924B0007;
+	Tue, 30 Sep 2008 11:37:11 +0200 (CEST)
+X-Virus-Scanned: amavisd-new at 
+X-Spam-Flag: NO
+X-Spam-Score: -2.499
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.499 tagged_above=-10 required=6.6
+	tests=[BAYES_00=-2.599, RDNS_NONE=0.1]
+Received: from mail.op5.se ([127.0.0.1])
+	by localhost (mail.op5.se [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id fifUXrDZ+TT1; Tue, 30 Sep 2008 11:37:09 +0200 (CEST)
+Received: from clix.int.op5.se (unknown [172.27.78.22])
+	by mail.op5.se (Postfix) with ESMTP id A46C724B0002;
+	Tue, 30 Sep 2008 11:37:08 +0200 (CEST)
+User-Agent: Thunderbird 2.0.0.16 (X11/20080723)
+In-Reply-To: <20080930061654.GA14584@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/97083>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/97084>
 
-On Tue, 30 Sep 2008, Giuseppe Bilotta wrote:
-> On Tue, Sep 30, 2008 at 2:21 AM, Jakub Narebski <jnareb@gmail.com> wrote:
-
-[...]
->> Ah.  Now I understand.
->>
->> When creating code for href(..., -replay=>1), which by the way I thought
->> would be more useful than actually is, I have forgot that parameters to
->> gitweb could be passed in other way that through CGI parameters
->> (CGI query)[1].
->>
->> Using
->>
->>        $params{$name} = [ $cgi->param($symbol) ];
->>
->> is a cute hack, but it doesn't work for arguments passed via path_info
->> (was: project, hash_base and file_name; while now it is project, action,
->> hash_base (in full) and file_name).
-[...]
-
->> The solution I thought about and abandoned in favor of this cute hack
->> was to have additional hash (in addition to %mapping), which would map
->> action names to references to variables holding the value for parameter.
-[...]
-
->> I am talking there about the following solution:
->>
->>        my %action_vars = (
->>                project => \$project,
->>                action => \$action,
->>                # ...
->>                extra_options => \@extra_options,
->>        );
->>        # ...
->>        while (my ($name, $symbol) = each %mapping) {
->>                if (!exists $params{$name}) {
->>                          $params{$name} = ${$action_vars{$name}};
->>                }
->>        }
->>
->>
->> This avoids cure hack of (from your code)
->>
->>                } else {
->>                           no strict 'refs';
->>                           $params{$name} = $$name if $$name;
->>                }
->>
->> I think that gitweb should use single source, not CGI query parameters
->> or variable saving [sanitized] value.
+Jeff King wrote:
+> On Tue, Sep 30, 2008 at 08:13:51AM +0200, Andreas Ericsson wrote:
 > 
-> The alternative I've been thinking about would be to have an
-> %input_parameters hash that holds all input parameters regardless of
-> hash; thus CGI query parameters and data extracted from PATH_INFO,
-> presently, but also command line options in the future, or whatever
-> else.
+>> Created 6207abc (subwidget: one quite long line of sum...) on <branch>
+>>
+>> "commit" is just noise. Parentheses are often used to extemporize when
+>> using normal written language so it should work well here too.
 > 
-> This is somewhat different from your %action_vars alternative, in the
-> sense that it isolates _input_ data, whereas if I understand correctly
-> the approach you suggest would isolate _output_ data (in the sense of
-> data to be used during link creation and whatnot).
+> I do like that better, and there is some precedent in the way we mention
+> commits in emails (I know Junio even has an alias that formats it as
+> $hash ($subject)).
 > 
-> Presently, the gitweb code defines some $variables from the input
-> parameters, and then overwrites them for output. Keeping the input
-> stuff clearly separate from the output stuff would mean that any
-> routine can retrieve the input data regardless of the subsequent
-> mangling and without any need to make ad-hoc backups or other tricks.
+> By your "..." are you suggesting to truncate the subject?
 > 
-> So my proposal is that I implement this %input_params stuff as the
-> first patch for the pathinfo series, and use %input_params all around
-> where cgi parameters are used currently (of course, %input_params is
-> initialized with the CGI parameters at first). The next patch would be
-> the extraction of parameters from PATH_INFO. And thirdly the PATH_INFO
-> URL generation (with or without the /-before-filename thing, at your
-> preference)
 
-I presume that you would want to replace for example $hash_base
-everywhere by %input_params{'hash_base'}?
-
-
-I can think of yet another solution, namely to abstract getting
-parameters from CGI query string, from path_info, and possibly in the
-future also from command line options, and use this mechanism in
-the getting parameters and validation part.
-
-The %params hash would be filled from CGI parameters by using simply
-"%params = $cgi->Vars;", then added to in evaluate_path_info instead
-of directly modifying global parameters variables.  The input validation
-and dispatch part would be modified to use %params (taking care of
-multivalued parameters as described in CGI(3pm)), like below:
-
-  our $action = $params{'a'} || $params{'action'};
-  if (defined $action) {
-  	if ($action =~ m/[^0-9a-zA-Z\.\-_]/) {
-  		die_error(400, "Invalid action parameter");
-  	}
-  }
-
-That is just for consideration: each approach has its advantages and
-disadvantages.  Your proposal, as I understand it, is similar to the
-way described in "Storing options in a hash" subsection of 
-Getopt::Long(3pm) manpage.
-
-
-Or we could just scrap and revert adding href(..., -replay=>1).
-There is much trouble with getting it right and performing well,
-and it is less useful than I thought (at least now).
+Yes, although that can be added later. I'm sending a format fix to the
+list in a minute or two.
 
 -- 
-Jakub Narebski
-Poland
+Andreas Ericsson                   andreas.ericsson@op5.se
+OP5 AB                             www.op5.se
+Tel: +46 8-230225                  Fax: +46 8-230231
