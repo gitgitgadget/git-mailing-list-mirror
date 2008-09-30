@@ -1,89 +1,174 @@
-From: Pierre Habouzit <madcoder@debian.org>
-Subject: Re: [PATCH] parse-opt: migrate fmt-merge-msg.
-Date: Tue, 30 Sep 2008 10:40:20 +0200
-Message-ID: <20080930084019.GB11453@artemis.corp>
-References: <1222595139-32087-1-git-send-email-madcoder@debian.org> <1222595139-32087-2-git-send-email-madcoder@debian.org> <20080929163523.GC18340@spearce.org>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: [PATCH 1/6] gitweb: action in path with use_pathinfo
+Date: Tue, 30 Sep 2008 10:48:38 +0200
+Message-ID: <200809301048.40046.jnareb@gmail.com>
+References: <1222030663-22540-1-git-send-email-giuseppe.bilotta@gmail.com> <200809300221.25094.jnareb@gmail.com> <cb7bb73a0809300105s24706d79hb40e147739ec6f05@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: multipart/signed; boundary="5/uDoXvLw7AC5HRs";
-	protocol="application/pgp-signature"; micalg=SHA1
-Cc: git@vger.kernel.org, gitster@pobox.com
-To: "Shawn O. Pearce" <spearce@spearce.org>
-X-From: git-owner@vger.kernel.org Tue Sep 30 10:41:39 2008
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, "Petr Baudis" <pasky@ucw.cz>,
+	"Lea Wiemann" <lewiemann@gmail.com>
+To: "Giuseppe Bilotta" <giuseppe.bilotta@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Sep 30 10:50:54 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KkanX-00045L-G6
-	for gcvg-git-2@gmane.org; Tue, 30 Sep 2008 10:41:35 +0200
+	id 1Kkavs-0007KU-ET
+	for gcvg-git-2@gmane.org; Tue, 30 Sep 2008 10:50:13 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753330AbYI3IkY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 30 Sep 2008 04:40:24 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753199AbYI3IkX
-	(ORCPT <rfc822;git-outgoing>); Tue, 30 Sep 2008 04:40:23 -0400
-Received: from pan.madism.org ([88.191.52.104]:43561 "EHLO hermes.madism.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753029AbYI3IkW (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 30 Sep 2008 04:40:22 -0400
-Received: from madism.org (def92-12-88-177-251-208.fbx.proxad.net [88.177.251.208])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(Client CN "artemis.madism.org", Issuer "madism.org" (verified OK))
-	by hermes.madism.org (Postfix) with ESMTPS id 0EC433B797;
-	Tue, 30 Sep 2008 10:40:21 +0200 (CEST)
-Received: by madism.org (Postfix, from userid 1000)
-	id 4296D2AF00; Tue, 30 Sep 2008 10:40:20 +0200 (CEST)
+	id S1752107AbYI3Ist (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 30 Sep 2008 04:48:49 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751442AbYI3Ist
+	(ORCPT <rfc822;git-outgoing>); Tue, 30 Sep 2008 04:48:49 -0400
+Received: from ey-out-2122.google.com ([74.125.78.25]:46892 "EHLO
+	ey-out-2122.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752060AbYI3Iss (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 30 Sep 2008 04:48:48 -0400
+Received: by ey-out-2122.google.com with SMTP id 6so702092eyi.37
+        for <git@vger.kernel.org>; Tue, 30 Sep 2008 01:48:46 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:from:to:subject:date
+         :user-agent:cc:references:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:message-id;
+        bh=xKpiFRqYy+IX1jykEZnRFjh/Aynxc0vAMViUGlRkL3Y=;
+        b=fMETCjkSmQQDx9XtQfbIVXTQLZhRnmcsxUjaGMCpNY4Sszfxj38JYSyMjehmGRpHIl
+         RchoEuEqAg1/0mxXqKwF/+8xxmG34y5ti2OUoQofJlaZMtATIuTKeHtIgQ40q0cb58IO
+         ffKjP9T+XBPo/FLuBvNrN25Ed6ISCrOxVOGi4=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=from:to:subject:date:user-agent:cc:references:in-reply-to
+         :mime-version:content-type:content-transfer-encoding
+         :content-disposition:message-id;
+        b=svijj+ty5s3gNsbZcQ2bgcl/HqwO//Vp1H3QUAqsJUEMoh39RNqx9vUW4s0EdaUXQ9
+         ul6rVi+0tPwVGXH3dNduKXSUJ2C8/1PQIfcjjq6HjSuHcJMVdLs0W9OBujkiYU0Ngkw1
+         Ci02FSD5/gArojQ9F1gcHyEJHI0kHALVDvkME=
+Received: by 10.103.223.20 with SMTP id a20mr4589476mur.86.1222764526010;
+        Tue, 30 Sep 2008 01:48:46 -0700 (PDT)
+Received: from ?192.168.1.11? (abvy102.neoplus.adsl.tpnet.pl [83.8.222.102])
+        by mx.google.com with ESMTPS id i5sm6923686mue.11.2008.09.30.01.48.43
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Tue, 30 Sep 2008 01:48:44 -0700 (PDT)
+User-Agent: KMail/1.9.3
+In-Reply-To: <cb7bb73a0809300105s24706d79hb40e147739ec6f05@mail.gmail.com>
 Content-Disposition: inline
-In-Reply-To: <20080929163523.GC18340@spearce.org>
-X-Face: $(^e[V4D-[`f2EmMGz@fgWK!e.B~2g.{08lKPU(nc1J~z\4B>*JEVq:E]7G-\6$Ycr4<;Z!|VY6Grt]+RsS$IMV)f>2)M="tY:ZPcU;&%it2D81X^kNya0=L]"vZmLP+UmKhgq+u*\.dJ8G!N&=EvlD
-User-Agent: Madmutt/devel (Linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/97082>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/97083>
+
+On Tue, 30 Sep 2008, Giuseppe Bilotta wrote:
+> On Tue, Sep 30, 2008 at 2:21 AM, Jakub Narebski <jnareb@gmail.com> wrote:
+
+[...]
+>> Ah.  Now I understand.
+>>
+>> When creating code for href(..., -replay=>1), which by the way I thought
+>> would be more useful than actually is, I have forgot that parameters to
+>> gitweb could be passed in other way that through CGI parameters
+>> (CGI query)[1].
+>>
+>> Using
+>>
+>>        $params{$name} = [ $cgi->param($symbol) ];
+>>
+>> is a cute hack, but it doesn't work for arguments passed via path_info
+>> (was: project, hash_base and file_name; while now it is project, action,
+>> hash_base (in full) and file_name).
+[...]
+
+>> The solution I thought about and abandoned in favor of this cute hack
+>> was to have additional hash (in addition to %mapping), which would map
+>> action names to references to variables holding the value for parameter.
+[...]
+
+>> I am talking there about the following solution:
+>>
+>>        my %action_vars = (
+>>                project => \$project,
+>>                action => \$action,
+>>                # ...
+>>                extra_options => \@extra_options,
+>>        );
+>>        # ...
+>>        while (my ($name, $symbol) = each %mapping) {
+>>                if (!exists $params{$name}) {
+>>                          $params{$name} = ${$action_vars{$name}};
+>>                }
+>>        }
+>>
+>>
+>> This avoids cure hack of (from your code)
+>>
+>>                } else {
+>>                           no strict 'refs';
+>>                           $params{$name} = $$name if $$name;
+>>                }
+>>
+>> I think that gitweb should use single source, not CGI query parameters
+>> or variable saving [sanitized] value.
+> 
+> The alternative I've been thinking about would be to have an
+> %input_parameters hash that holds all input parameters regardless of
+> hash; thus CGI query parameters and data extracted from PATH_INFO,
+> presently, but also command line options in the future, or whatever
+> else.
+> 
+> This is somewhat different from your %action_vars alternative, in the
+> sense that it isolates _input_ data, whereas if I understand correctly
+> the approach you suggest would isolate _output_ data (in the sense of
+> data to be used during link creation and whatnot).
+> 
+> Presently, the gitweb code defines some $variables from the input
+> parameters, and then overwrites them for output. Keeping the input
+> stuff clearly separate from the output stuff would mean that any
+> routine can retrieve the input data regardless of the subsequent
+> mangling and without any need to make ad-hoc backups or other tricks.
+> 
+> So my proposal is that I implement this %input_params stuff as the
+> first patch for the pathinfo series, and use %input_params all around
+> where cgi parameters are used currently (of course, %input_params is
+> initialized with the CGI parameters at first). The next patch would be
+> the extraction of parameters from PATH_INFO. And thirdly the PATH_INFO
+> URL generation (with or without the /-before-filename thing, at your
+> preference)
+
+I presume that you would want to replace for example $hash_base
+everywhere by %input_params{'hash_base'}?
 
 
---5/uDoXvLw7AC5HRs
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+I can think of yet another solution, namely to abstract getting
+parameters from CGI query string, from path_info, and possibly in the
+future also from command line options, and use this mechanism in
+the getting parameters and validation part.
 
-On Mon, Sep 29, 2008 at 04:35:23PM +0000, Shawn O. Pearce wrote:
-> Pierre Habouzit <madcoder@debian.org> wrote:
-> > Also fix an inefficient printf("%s", ...) where we can use write_in_ful=
-l.
-> >=20
-> > Signed-off-by: Pierre Habouzit <madcoder@debian.org>
-> > ---
-> >  builtin-fmt-merge-msg.c |   50 +++++++++++++++++++++------------------=
--------
-> >  1 files changed, 23 insertions(+), 27 deletions(-)
->=20
-> Near as I can tell, this is based upon a merge commit in next.
->=20
-> We can't do that.  Patches need to be based on master, or worst-case
-> on a topic head that is in next or pu (in which case the name of
-> the topic, or its tip commit, is helpful in the note).
+The %params hash would be filled from CGI parameters by using simply
+"%params = $cgi->Vars;", then added to in evaluate_path_info instead
+of directly modifying global parameters variables.  The input validation
+and dispatch part would be modified to use %params (taking care of
+multivalued parameters as described in CGI(3pm)), like below:
 
-Hmm I've always sent my patches this way, and I believe you can git am
--3 them on top of master easily. I can send you the updated series if
-you want.
---=20
-=C2=B7O=C2=B7  Pierre Habouzit
-=C2=B7=C2=B7O                                                madcoder@debia=
-n.org
-OOO                                                http://www.madism.org
+  our $action = $params{'a'} || $params{'action'};
+  if (defined $action) {
+  	if ($action =~ m/[^0-9a-zA-Z\.\-_]/) {
+  		die_error(400, "Invalid action parameter");
+  	}
+  }
 
---5/uDoXvLw7AC5HRs
-Content-Type: application/pgp-signature
-Content-Disposition: inline
+That is just for consideration: each approach has its advantages and
+disadvantages.  Your proposal, as I understand it, is similar to the
+way described in "Storing options in a hash" subsection of 
+Getopt::Long(3pm) manpage.
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.9 (GNU/Linux)
 
-iEYEABECAAYFAkjh5fMACgkQvGr7W6HudhzsJQCeP3AJ+QSbyEOSa1MTUkZbCBSa
-PIMAn1qMRzOubpyn9a+5ImK711S5j3ik
-=2wne
------END PGP SIGNATURE-----
+Or we could just scrap and revert adding href(..., -replay=>1).
+There is much trouble with getting it right and performing well,
+and it is less useful than I thought (at least now).
 
---5/uDoXvLw7AC5HRs--
+-- 
+Jakub Narebski
+Poland
