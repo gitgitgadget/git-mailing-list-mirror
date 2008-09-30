@@ -1,68 +1,60 @@
-From: astubbs <antony.stubbs@gmail.com>
-Subject: Re: git gui rescane_stage2 error on windows
-Date: Tue, 30 Sep 2008 10:43:54 -0700 (PDT)
-Message-ID: <1222796634378-1129570.post@n2.nabble.com>
-References: <1222796473795-1129562.post@n2.nabble.com>
+From: "Shawn O. Pearce" <spearce@spearce.org>
+Subject: Re: What's cooking in git/spearce.git (Sep 2008, #04; Mon, 22)
+Date: Tue, 30 Sep 2008 11:28:40 -0700
+Message-ID: <20080930182840.GD21310@spearce.org>
+References: <20080929184709.GB21310@spearce.org> <81b0412b0809300400i164525ealce8a3ff8dabf783@mail.gmail.com> <81b0412b0809300545m7bc39fb8v2a724c05141d8d37@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Sep 30 19:45:07 2008
+Content-Type: text/plain; charset=utf-8
+Cc: git@vger.kernel.org
+To: Alex Riesen <raa.lkml@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Sep 30 20:29:56 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KkjHW-0000T7-E0
-	for gcvg-git-2@gmane.org; Tue, 30 Sep 2008 19:45:06 +0200
+	id 1Kkjyr-0001Lt-5F
+	for gcvg-git-2@gmane.org; Tue, 30 Sep 2008 20:29:53 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753115AbYI3Rn4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 30 Sep 2008 13:43:56 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753072AbYI3Rn4
-	(ORCPT <rfc822;git-outgoing>); Tue, 30 Sep 2008 13:43:56 -0400
-Received: from kuber.nabble.com ([216.139.236.158]:53057 "EHLO
-	kuber.nabble.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751792AbYI3Rn4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 30 Sep 2008 13:43:56 -0400
-Received: from tervel.nabble.com ([192.168.236.150])
-	by kuber.nabble.com with esmtp (Exim 4.63)
-	(envelope-from <lists+1217463532682-661346@n2.nabble.com>)
-	id 1KkjGM-0001nt-CR
-	for git@vger.kernel.org; Tue, 30 Sep 2008 10:43:54 -0700
-In-Reply-To: <1222796473795-1129562.post@n2.nabble.com>
-X-Nabble-From: antony.stubbs@gmail.com
+	id S1752601AbYI3S2m (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 30 Sep 2008 14:28:42 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752900AbYI3S2l
+	(ORCPT <rfc822;git-outgoing>); Tue, 30 Sep 2008 14:28:41 -0400
+Received: from george.spearce.org ([209.20.77.23]:37137 "EHLO
+	george.spearce.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752389AbYI3S2l (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 30 Sep 2008 14:28:41 -0400
+Received: by george.spearce.org (Postfix, from userid 1001)
+	id BF8723835F; Tue, 30 Sep 2008 18:28:40 +0000 (UTC)
+Content-Disposition: inline
+In-Reply-To: <81b0412b0809300545m7bc39fb8v2a724c05141d8d37@mail.gmail.com>
+User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/97136>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/97138>
 
-
-Ok, that's odd. nabble and chrome ate the line breaks
-
-Fresh install and fresh repository on Vista.
-Getting this error when launching git gui:
-child process exited abnormally
-child process exited abnormally    
-while executing"close $fd"
-    (procedure "rescan_stage2" line 7)
-    invoked from within"rescan_stage2
- file1192de8 ui_ready"
-
-Any ideas?git version 1.6.0.2
-
-git version 1.6.0.2
-
-
-astubbs wrote:
+Alex Riesen <raa.lkml@gmail.com> wrote:
+> 2008/9/30 Alex Riesen <raa.lkml@gmail.com>:
+> > 2008/9/29 Shawn O. Pearce <spearce@spearce.org>:
+> >> Here are the topics that have been cooking.  Commits prefixed
+> >> with '-' are only in 'pu' while commits prefixed with '+' are
+> >> in 'next'.
+> >
+> > Would you mind adding the remove_path factorization patches
+> > in there somewhere?
+> >
+> > http://marc.info/?l=git&m=122246984212129&w=4
+> > http://marc.info/?l=git&m=122246997012269&w=4
 > 
-> Fresh install and fresh repository on Vista.Getting this error when
-> launching git gui:child process exited abnormallychild process exited
-> abnormally    while executing"close $fd"    (procedure "rescan_stage2"
-> line 7)    invoked from within"rescan_stage2 file1192de8 ui_ready"Any
-> ideas?git version 1.6.0.2
-> 
+> Oh, I see: they're in your master
+
+Yea.  They were trivial enough that I didn't see a reason to hold
+off on applying them.  That section of code has been difficult to
+deal with merge conflicts on, due to all of the code moving around.
+Ironically enough, its the merge code itself that is ugly to
+merge... ;-)
 
 -- 
-View this message in context: http://n2.nabble.com/git-gui-rescane_stage2-error-on-windows-tp1129562p1129570.html
-Sent from the git mailing list archive at Nabble.com.
+Shawn.
