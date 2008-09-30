@@ -1,45 +1,41 @@
 From: Michael Witten <mfwitten@MIT.EDU>
-Subject: [PATCH 8/9] Docs: send-email: Create logical groupings for man text
-Date: Tue, 30 Sep 2008 07:58:31 -0500
-Message-ID: <1222779512-58936-8-git-send-email-mfwitten@mit.edu>
+Subject: [PATCH 4/9] send-email: change --no-validate to boolean --[no-]validate
+Date: Tue, 30 Sep 2008 07:58:27 -0500
+Message-ID: <1222779512-58936-4-git-send-email-mfwitten@mit.edu>
 References: <20080929174445.GA6015@coredump.intra.peff.net>
  <1222779512-58936-1-git-send-email-mfwitten@mit.edu>
  <1222779512-58936-2-git-send-email-mfwitten@mit.edu>
  <1222779512-58936-3-git-send-email-mfwitten@mit.edu>
- <1222779512-58936-4-git-send-email-mfwitten@mit.edu>
- <1222779512-58936-5-git-send-email-mfwitten@mit.edu>
- <1222779512-58936-6-git-send-email-mfwitten@mit.edu>
- <1222779512-58936-7-git-send-email-mfwitten@mit.edu>
 Cc: git@vger.kernel.org
 To: spearce@spearce.org
-X-From: git-owner@vger.kernel.org Tue Sep 30 15:00:19 2008
+X-From: git-owner@vger.kernel.org Tue Sep 30 15:00:43 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Kkepu-0005KF-9e
-	for gcvg-git-2@gmane.org; Tue, 30 Sep 2008 15:00:18 +0200
+	id 1KkeqG-0005SS-JS
+	for gcvg-git-2@gmane.org; Tue, 30 Sep 2008 15:00:41 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752327AbYI3M7L (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 30 Sep 2008 08:59:11 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752395AbYI3M7K
-	(ORCPT <rfc822;git-outgoing>); Tue, 30 Sep 2008 08:59:10 -0400
-Received: from BISCAYNE-ONE-STATION.MIT.EDU ([18.7.7.80]:52320 "EHLO
+	id S1752789AbYI3M7T (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 30 Sep 2008 08:59:19 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752699AbYI3M7T
+	(ORCPT <rfc822;git-outgoing>); Tue, 30 Sep 2008 08:59:19 -0400
+Received: from BISCAYNE-ONE-STATION.MIT.EDU ([18.7.7.80]:52378 "EHLO
 	biscayne-one-station.mit.edu" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751551AbYI3M7J (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 30 Sep 2008 08:59:09 -0400
+	by vger.kernel.org with ESMTP id S1752446AbYI3M7S (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 30 Sep 2008 08:59:18 -0400
 Received: from outgoing.mit.edu (OUTGOING-AUTH.MIT.EDU [18.7.22.103])
-	by biscayne-one-station.mit.edu (8.13.6/8.9.2) with ESMTP id m8UCwjFd010343;
-	Tue, 30 Sep 2008 08:58:45 -0400 (EDT)
+	by biscayne-one-station.mit.edu (8.13.6/8.9.2) with ESMTP id m8UCweGQ010288;
+	Tue, 30 Sep 2008 08:58:40 -0400 (EDT)
 Received: from localhost.localdomain (97-116-104-2.mpls.qwest.net [97.116.104.2])
 	(authenticated bits=0)
         (User authenticated as mfwitten@ATHENA.MIT.EDU)
-	by outgoing.mit.edu (8.13.6/8.12.4) with ESMTP id m8UCwWOR010491
+	by outgoing.mit.edu (8.13.6/8.12.4) with ESMTP id m8UCwWON010491
 	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
-	Tue, 30 Sep 2008 08:58:43 -0400 (EDT)
+	Tue, 30 Sep 2008 08:58:39 -0400 (EDT)
 X-Mailer: git-send-email 1.6.0.2.304.gdcf23.dirty
-In-Reply-To: <1222779512-58936-7-git-send-email-mfwitten@mit.edu>
+In-Reply-To: <1222779512-58936-3-git-send-email-mfwitten@mit.edu>
 X-Scanned-By: MIMEDefang 2.42
 X-Spam-Flag: NO
 X-Spam-Score: 0.00
@@ -47,210 +43,98 @@ Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/97112>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/97113>
 
-The options are partitioned into more digestible groups.
-Within these groups, the options are sorted alphabetically.
+There is also now a configuration variable:
+
+    sendemail[.<identity>].validate
 
 Signed-off-by: Michael Witten <mfwitten@mit.edu>
 ---
- Documentation/git-send-email.txt |  119 ++++++++++++++++++++++----------------
- 1 files changed, 69 insertions(+), 50 deletions(-)
+ Documentation/git-send-email.txt |    9 +++++++--
+ git-send-email.perl              |    9 +++++----
+ 2 files changed, 12 insertions(+), 6 deletions(-)
 
 diff --git a/Documentation/git-send-email.txt b/Documentation/git-send-email.txt
-index 0d6ac4a..d566c34 100644
+index 0c6dbf6..81970f3 100644
 --- a/Documentation/git-send-email.txt
 +++ b/Documentation/git-send-email.txt
-@@ -19,9 +19,12 @@ The header of the email is configurable by command line options.  If not
- specified on the command line, the user will be prompted with a ReadLine
- enabled interface to provide the necessary information.
- 
-+
- OPTIONS
- -------
--The options available are:
-+
-+Composing
-+~~~~~~~~~
- 
- --bcc::
- 	Specify a "Bcc:" value for each email. Default is the value of
-@@ -34,46 +37,15 @@ The --bcc option must be repeated for each user you want on the bcc list.
+@@ -182,14 +182,16 @@ configuration variable), then authentication is not attempted.
  +
- The --cc option must be repeated for each user you want on the cc list.
+ The --to option must be repeated for each user you want on the to list.
  
----cc-cmd::
--	Specify a command to execute once per patch file which
--	should generate patch file specific "Cc:" entries.
--	Output of this command must be single email address per line.
--	Default is the value of 'sendemail.cccmd' configuration value.
--
----[no-]chain-reply-to::
--	If this is set, each email will be sent as a reply to the previous
--	email sent.  If disabled with "--no-chain-reply-to", all emails after
--	the first will be sent as replies to the first email sent.  When using
--	this, it is recommended that the first file given be an overview of the
--	entire patch series. Default is the value of the 'sendemail.chainreplyto'
--	configuration value; if that is unspecified, default to --chain-reply-to.
--
- --compose::
- 	Use $GIT_EDITOR, core.editor, $VISUAL, or $EDITOR to edit an
- 	introductory message for the patch series.
- 
----dry-run::
--	Do everything except actually send the emails.
--
----envelope-sender::
--	Specify the envelope sender used to send the emails.
--	This is useful if your default address is not the address that is
--	subscribed to a list. If you use the sendmail binary, you must have
--	suitable privileges for the -f parameter. Default is the value of
--	the 'sendemail.envelopesender' configuration variable; if that is
--	unspecified, choosing the envelope sender is left to your MTA.
--
- --from::
- 	Specify the sender of the emails.  This will default to
- 	the value GIT_COMMITTER_IDENT, as returned by "git var -l".
- 	The user will still be prompted to confirm this entry.
- 
----identity::
--	A configuration identity. When given, causes values in the
--	'sendemail.<identity>' subsection to take precedence over
--	values in the 'sendemail' section. The default identity is
--	the value of 'sendemail.identity'.
--
- --in-reply-to::
- 	Specify the contents of the first In-Reply-To header.
- 	Subsequent emails will refer to the previous email
-@@ -81,14 +53,30 @@ The --cc option must be repeated for each user you want on the cc list.
- 	Only necessary if --compose is also set.  If --compose
- 	is not set, this will be prompted for.
- 
----quiet::
--	Make git-send-email less verbose.  One line per email should be
--	all that is output.
-+--subject::
-+	Specify the initial subject of the email thread.
-+	Only necessary if --compose is also set.  If --compose
-+	is not set, this will be prompted for.
- 
----[no-]signed-off-by-cc::
--	If this is set, add emails found in Signed-off-by: or Cc: lines to the
--	cc list. Default is the value of 'sendemail.signedoffcc' configuration
--	value; if that is unspecified, default to --signed-off-by-cc.
-+--to::
-+	Specify the primary recipient of the emails generated. Generally, this
-+	will be the upstream maintainer of the project involved. Default is the
-+	value of the 'sendemail.to' configuration value; if that is unspecified,
-+	this will be prompted for.
+---no-validate::
+-	Don't perform any sanity checks on patches.
++--[no-]validate::
++	Perform sanity checks on patches.
+ 	Currently, validation means the following:
+ +
+ --
+ 		*	Warn of patches that contain lines longer than 998 characters; this
+ 			is due to SMTP limits as described by http://www.ietf.org/rfc/rfc2821.txt.
+ --
 ++
-+The --to option must be repeated for each user you want on the to list.
-+
-+
-+Sending
-+~~~~~~~
-+
-+--envelope-sender::
-+	Specify the envelope sender used to send the emails.
-+	This is useful if your default address is not the address that is
-+	subscribed to a list. If you use the sendmail binary, you must have
-+	suitable privileges for the -f parameter. Default is the value of
-+	the 'sendemail.envelopesender' configuration variable; if that is
-+	unspecified, choosing the envelope sender is left to your MTA.
++This option can be set with sendemail[.<identity>].validate; default to --validate
  
- --smtp-encryption::
- 	Specify the encryption to use, either 'ssl' or 'tls'.  Any other
-@@ -130,10 +118,34 @@ user is prompted for a password while the input is masked for privacy.
- 	if a username is not specified (with '--smtp-user' or 'sendemail.smtpuser'),
- 	then authentication is not attempted.
- 
----subject::
--	Specify the initial subject of the email thread.
--	Only necessary if --compose is also set.  If --compose
--	is not set, this will be prompted for.
-+
-+Automating
-+~~~~~~~~~~
-+
-+--cc-cmd::
-+	Specify a command to execute once per patch file which
-+	should generate patch file specific "Cc:" entries.
-+	Output of this command must be single email address per line.
-+	Default is the value of 'sendemail.cccmd' configuration value.
-+
-+--[no-]chain-reply-to::
-+	If this is set, each email will be sent as a reply to the previous
-+	email sent.  If disabled with "--no-chain-reply-to", all emails after
-+	the first will be sent as replies to the first email sent.  When using
-+	this, it is recommended that the first file given be an overview of the
-+	entire patch series. Default is the value of the 'sendemail.chainreplyto'
-+	configuration value; if that is unspecified, default to --chain-reply-to.
-+
-+--identity::
-+	A configuration identity. When given, causes values in the
-+	'sendemail.<identity>' subsection to take precedence over
-+	values in the 'sendemail' section. The default identity is
-+	the value of 'sendemail.identity'.
-+
-+--[no-]signed-off-by-cc::
-+	If this is set, add emails found in Signed-off-by: or Cc: lines to the
-+	cc list. Default is the value of 'sendemail.signedoffcc' configuration
-+	value; if that is unspecified, default to --signed-off-by-cc.
- 
- --suppress-cc::
- 	Specify an additional category of recipients to suppress the
-@@ -157,13 +169,16 @@ user is prompted for a password while the input is masked for privacy.
- 	header set. Default is the value of the 'sendemail.thread' configuration
- 	value; if that is unspecified, default to --thread.
- 
----to::
--	Specify the primary recipient of the emails generated. Generally, this
--	will be the upstream maintainer of the project involved. Default is the
--	value of the 'sendemail.to' configuration value; if that is unspecified,
--	this will be prompted for.
--+
--The --to option must be repeated for each user you want on the to list.
-+
-+Administering
-+~~~~~~~~~~~~~
-+
-+--dry-run::
-+	Do everything except actually send the emails.
-+
-+--quiet::
-+	Make git-send-email less verbose.  One line per email should be
-+	all that is output.
- 
- --[no-]validate::
- 	Perform sanity checks on patches.
-@@ -180,6 +195,7 @@ default to '--validate'.
  
  CONFIGURATION
- -------------
-+
- sendemail.aliasesfile::
- 	To avoid typing long email addresses, point this to one or more
- 	email aliases files.  You must also supply 'sendemail.aliasfiletype'.
-@@ -188,6 +204,7 @@ sendemail.aliasfiletype::
- 	Format of the file(s) specified in sendemail.aliasesfile. Must be
- 	one of 'mutt', 'mailrc', 'pine', or 'gnus'.
+@@ -242,6 +244,9 @@ sendemail.smtpencryption::
+ sendemail.smtpssl::
+ 	Legacy boolean that sets 'smtpencryption=ssl' if enabled.
  
++sendemail.validate::
++    Boolean override for --[no-]validate.
 +
  Author
  ------
  Written by Ryan Anderson <ryan@michonline.com>
-@@ -195,10 +212,12 @@ Written by Ryan Anderson <ryan@michonline.com>
- git-send-email is originally based upon
- send_lots_of_email.pl by Greg Kroah-Hartman.
+diff --git a/git-send-email.perl b/git-send-email.perl
+index 2c31a25..3467cf1 100755
+--- a/git-send-email.perl
++++ b/git-send-email.perl
+@@ -65,7 +65,7 @@ Options:
+    --smtp-ssl                     * Deprecated. Use '--smtp-encryption ssl'.
+    --quiet                        * Output one line of info per email.
+    --dry-run                      * Don't actually send the emails.
+-   --no-validate                  * Don't perform sanity checks on patches.
++   --[no-]validate                * Perform patch sanity checks. Default on.
  
-+
- Documentation
- --------------
- Documentation by Ryan Anderson
+ EOT
+ 	exit(1);
+@@ -147,7 +147,7 @@ my ($quiet, $dry_run) = (0, 0);
+ my ($thread, $chain_reply_to, $suppress_from, $signed_off_cc, $cc_cmd);
+ my ($smtp_server, $smtp_server_port, $smtp_authuser, $smtp_encryption);
+ my ($identity, $aliasfiletype, @alias_files, @smtp_host_parts);
+-my ($no_validate);
++my ($validate);
+ my (@suppress_cc);
  
-+
- GIT
- ---
- Part of the linkgit:git[1] suite
+ my %config_bool_settings = (
+@@ -155,6 +155,7 @@ my %config_bool_settings = (
+     "chainreplyto" => [\$chain_reply_to, 1],
+     "suppressfrom" => [\$suppress_from, undef],
+     "signedoffcc" => [\$signed_off_cc, undef],
++    "validate" => [\$validate, 1],
+ );
+ 
+ my %config_settings = (
+@@ -221,7 +222,7 @@ my $rc = GetOptions("sender|from=s" => \$sender,
+ 		    "dry-run" => \$dry_run,
+ 		    "envelope-sender=s" => \$envelope_sender,
+ 		    "thread!" => \$thread,
+-		    "no-validate" => \$no_validate,
++		    "validate!" => \$validate,
+ 	 );
+ 
+ unless ($rc) {
+@@ -374,7 +375,7 @@ for my $f (@ARGV) {
+ 	}
+ }
+ 
+-if (!$no_validate) {
++if ($validate) {
+ 	foreach my $f (@files) {
+ 		unless (-p $f) {
+ 			my $error = validate_patch($f);
 -- 
 1.6.0.2.304.gdcf23.dirty
