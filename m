@@ -1,195 +1,87 @@
-From: Jeff King <peff@peff.net>
-Subject: [PATCH] tests: grep portability fixes
-Date: Tue, 30 Sep 2008 04:03:55 -0400
-Message-ID: <20080930080355.GA19605@sigill.intra.peff.net>
+From: Alexander Gavrilov <angavrilov@gmail.com>
+Subject: Re: [PATCH] git-gui: Do not automatically stage file after merge tool finishes
+Date: Tue, 30 Sep 2008 12:00:57 +0400
+Organization: HOME
+Message-ID: <200809301200.57353.angavrilov@gmail.com>
+References: <48E1CA7F.5050501@viscovery.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org
-To: "Shawn O. Pearce" <spearce@spearce.org>
-X-From: git-owner@vger.kernel.org Tue Sep 30 10:11:43 2008
+Content-Type: text/plain;
+  charset="iso-8859-15"
+Content-Transfer-Encoding: 7bit
+Cc: "Shawn O. Pearce" <spearce@spearce.org>,
+	Git Mailing List <git@vger.kernel.org>
+To: Johannes Sixt <j.sixt@viscovery.net>
+X-From: git-owner@vger.kernel.org Tue Sep 30 10:12:17 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KkaEK-00017w-C3
-	for gcvg-git-2@gmane.org; Tue, 30 Sep 2008 10:05:42 +0200
+	id 1KkaCv-0000eP-H5
+	for gcvg-git-2@gmane.org; Tue, 30 Sep 2008 10:03:46 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752446AbYI3ID7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 30 Sep 2008 04:03:59 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752087AbYI3ID7
-	(ORCPT <rfc822;git-outgoing>); Tue, 30 Sep 2008 04:03:59 -0400
-Received: from peff.net ([208.65.91.99]:1401 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752035AbYI3ID5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 30 Sep 2008 04:03:57 -0400
-Received: (qmail 31259 invoked by uid 111); 30 Sep 2008 08:03:56 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.32) with ESMTP; Tue, 30 Sep 2008 04:03:56 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 30 Sep 2008 04:03:55 -0400
+	id S1751838AbYI3ICd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 30 Sep 2008 04:02:33 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751596AbYI3ICd
+	(ORCPT <rfc822;git-outgoing>); Tue, 30 Sep 2008 04:02:33 -0400
+Received: from ik-out-1112.google.com ([66.249.90.178]:2223 "EHLO
+	ik-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751446AbYI3ICc (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 30 Sep 2008 04:02:32 -0400
+Received: by ik-out-1112.google.com with SMTP id c30so1393030ika.5
+        for <git@vger.kernel.org>; Tue, 30 Sep 2008 01:02:30 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:from:organization:to:subject
+         :date:user-agent:cc:references:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:message-id;
+        bh=krXbwdEIiXUu/RiASsX9b3kyMTBzAMoQ33k0xjL0SY0=;
+        b=e+DPx0DCficQKooCE8MfUXHvILU4qUvCEXpjFmXLJTMv1/RLa9qXbODFfum2EPSxFN
+         jD2CWpS4gEvENLP1dcsRx6AyuSg5rqlEtn+VJULuFsRdndHo5Hgaw4iYs64JqCuyjDgk
+         YwsvZibkxz0ZY4nO5IWQ3IoX4/Hc6jWlZH15w=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=from:organization:to:subject:date:user-agent:cc:references
+         :in-reply-to:mime-version:content-type:content-transfer-encoding
+         :content-disposition:message-id;
+        b=FQuMMLGMS6Sh31iJiwrfazSAGAGzzOPDoX7MQTceC/vATuidNP+60LxnyaugADKZGe
+         s4Gek1vLK7AhtzI/ez/YED5y3FxwrybPKIW5wG+CDaLMr5pILHB6AHhAkaNrmkXhXW12
+         gozpmWq6jJdiRy1rl0nSh/QohB6XKV/3NM/WA=
+Received: by 10.103.222.12 with SMTP id z12mr4591507muq.12.1222761750352;
+        Tue, 30 Sep 2008 01:02:30 -0700 (PDT)
+Received: from keydesk.localnet ([92.255.85.78])
+        by mx.google.com with ESMTPS id e8sm3690203muf.6.2008.09.30.01.02.27
+        (version=SSLv3 cipher=RC4-MD5);
+        Tue, 30 Sep 2008 01:02:28 -0700 (PDT)
+User-Agent: KMail/1.10.1 (Linux/2.6.26.3-29.fc9.i686; KDE/4.1.1; i686; ; )
+In-Reply-To: <48E1CA7F.5050501@viscovery.net>
 Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/97076>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/97077>
 
-We try to avoid using the "-q" or "-e" options, as they are
-largely useless, as explained in aadbe44f.
+On Tuesday 30 September 2008 10:43:11 Johannes Sixt wrote:
+> From: Johannes Sixt <johannes.sixt@telecom.at>
+> 
+> If a merge tool was invoked on a conflicted file and the tool completed,
+> then the conflicted file was staged automatically. However, the fact that
+> the user closed the merge tool cannot be understood as the unequivocal
+> sign that the conflict was completely resolved. For example, the user
+> could have decided to postpone the resolution of the conflict, or could
+> have accidentally closed the tool. We better leave the file unstaged and
+> let the user stage it explicitly.
+> 
+> Since the file is not staged anyway, the check for an unmodified
+> timestamp is pointless and removed.
+> 
+> Signed-off-by: Johannes Sixt <johannes.sixt@telecom.at>
+> ---
+>  I had sent this patch last week (but marked as RFC). Here it is again
+>  without 'RFC' because I think it is a necessary change.
 
-There is one exception for "-e" here, which is in t7701 used
-to produce an "or" of patterns. This can be rewritten as an
-egrep pattern.
+Now that the issue with staging of working copy files is more or less
+resolved, I agree that it is better to disable automatic staging.
 
-This patch also removes use of "grep -F" in favor of the
-more widely available "fgrep".
-
-Signed-off-by: Jeff King <peff@peff.net>
----
-These are fallouts from getting (most of) the tests to pass
-on Solaris.
-
- t/t0002-gitfile.sh                     |    4 ++--
- t/t1501-worktree.sh                    |    2 +-
- t/t3700-add.sh                         |    2 +-
- t/t4150-am.sh                          |    2 +-
- t/t6040-tracking-info.sh               |    4 ++--
- t/t7002-grep.sh                        |    2 +-
- t/t7701-repack-unpack-unreachable.sh   |    4 ++--
- t/t9500-gitweb-standalone-no-errors.sh |    2 +-
- 8 files changed, 11 insertions(+), 11 deletions(-)
-
-diff --git a/t/t0002-gitfile.sh b/t/t0002-gitfile.sh
-index 4db4ac4..cb14425 100755
---- a/t/t0002-gitfile.sh
-+++ b/t/t0002-gitfile.sh
-@@ -32,7 +32,7 @@ test_expect_success 'bad setup: invalid .git file format' '
- 		echo "git rev-parse accepted an invalid .git file"
- 		false
- 	fi &&
--	if ! grep -qe "Invalid gitfile format" .err
-+	if ! grep "Invalid gitfile format" .err
- 	then
- 		echo "git rev-parse returned wrong error"
- 		false
-@@ -46,7 +46,7 @@ test_expect_success 'bad setup: invalid .git file path' '
- 		echo "git rev-parse accepted an invalid .git file path"
- 		false
- 	fi &&
--	if ! grep -qe "Not a git repository" .err
-+	if ! grep "Not a git repository" .err
- 	then
- 		echo "git rev-parse returned wrong error"
- 		false
-diff --git a/t/t1501-worktree.sh b/t/t1501-worktree.sh
-index c039ee3..f6a6f83 100755
---- a/t/t1501-worktree.sh
-+++ b/t/t1501-worktree.sh
-@@ -171,7 +171,7 @@ test_expect_success 'git diff' '
- 
- test_expect_success 'git grep' '
- 	(cd repo.git/work/sub &&
--	GIT_DIR=../.. GIT_WORK_TREE=.. git grep -l changed | grep -q dir/tracked)
-+	GIT_DIR=../.. GIT_WORK_TREE=.. git grep -l changed | grep dir/tracked)
- '
- 
- test_done
-diff --git a/t/t3700-add.sh b/t/t3700-add.sh
-index 2ac93a3..9f6454d 100755
---- a/t/t3700-add.sh
-+++ b/t/t3700-add.sh
-@@ -226,7 +226,7 @@ test_expect_success 'git add '\''fo\[ou\]bar'\'' ignores foobar' '
- 	git reset --hard &&
- 	touch fo\[ou\]bar foobar &&
- 	git add '\''fo\[ou\]bar'\'' &&
--	git ls-files fo\[ou\]bar | grep -F fo\[ou\]bar &&
-+	git ls-files fo\[ou\]bar | fgrep fo\[ou\]bar &&
- 	! ( git ls-files foobar | grep foobar )
- '
- 
-diff --git a/t/t4150-am.sh b/t/t4150-am.sh
-index 1be5fb3..796f795 100755
---- a/t/t4150-am.sh
-+++ b/t/t4150-am.sh
-@@ -165,7 +165,7 @@ test_expect_success 'am --keep really keeps the subject' '
- 	git am --keep patch4 &&
- 	! test -d .git/rebase-apply &&
- 	git cat-file commit HEAD |
--		grep -q -F "Re: Re: Re: [PATCH 1/5 v2] third"
-+		fgrep "Re: Re: Re: [PATCH 1/5 v2] third"
- '
- 
- test_expect_success 'am -3 falls back to 3-way merge' '
-diff --git a/t/t6040-tracking-info.sh b/t/t6040-tracking-info.sh
-index aac212e..ba90601 100755
---- a/t/t6040-tracking-info.sh
-+++ b/t/t6040-tracking-info.sh
-@@ -53,7 +53,7 @@ test_expect_success 'checkout' '
- 	(
- 		cd test && git checkout b1
- 	) >actual &&
--	grep -e "have 1 and 1 different" actual
-+	grep "have 1 and 1 different" actual
- '
- 
- test_expect_success 'status' '
-@@ -63,7 +63,7 @@ test_expect_success 'status' '
- 		# reports nothing to commit
- 		test_must_fail git status
- 	) >actual &&
--	grep -e "have 1 and 1 different" actual
-+	grep "have 1 and 1 different" actual
- '
- 
- 
-diff --git a/t/t7002-grep.sh b/t/t7002-grep.sh
-index 5e359cb..18fe6f2 100755
---- a/t/t7002-grep.sh
-+++ b/t/t7002-grep.sh
-@@ -109,7 +109,7 @@ do
- 	'
- 
- 	test_expect_success "grep -c $L (no /dev/null)" '
--		! git grep -c test $H | grep -q /dev/null
-+		! git grep -c test $H | grep /dev/null
-         '
- 
- done
-diff --git a/t/t7701-repack-unpack-unreachable.sh b/t/t7701-repack-unpack-unreachable.sh
-index 531dac0..b48046e 100755
---- a/t/t7701-repack-unpack-unreachable.sh
-+++ b/t/t7701-repack-unpack-unreachable.sh
-@@ -29,7 +29,7 @@ test_expect_success '-A option leaves unreachable objects unpacked' '
- 	git repack -A -d -l &&
- 	# verify objects are packed in repository
- 	test 3 = $(git verify-pack -v -- .git/objects/pack/*.idx |
--		   grep -e "^$fsha1 " -e "^$csha1 " -e "^$tsha1 " |
-+		   egrep "^($fsha1|$csha1|$tsha1) " |
- 		   sort | uniq | wc -l) &&
- 	git show $fsha1 &&
- 	git show $csha1 &&
-@@ -41,7 +41,7 @@ test_expect_success '-A option leaves unreachable objects unpacked' '
- 	git repack -A -d -l &&
- 	# verify objects are retained unpacked
- 	test 0 = $(git verify-pack -v -- .git/objects/pack/*.idx |
--		   grep -e "^$fsha1 " -e "^$csha1 " -e "^$tsha1 " |
-+		   egrep "^($fsha1|$csha1|$tsha1) " |
- 		   sort | uniq | wc -l) &&
- 	git show $fsha1 &&
- 	git show $csha1 &&
-diff --git a/t/t9500-gitweb-standalone-no-errors.sh b/t/t9500-gitweb-standalone-no-errors.sh
-index 46ba19b..07117a8 100755
---- a/t/t9500-gitweb-standalone-no-errors.sh
-+++ b/t/t9500-gitweb-standalone-no-errors.sh
-@@ -56,7 +56,7 @@ gitweb_run () {
- 	rm -f gitweb.log &&
- 	perl -- "$TEST_DIRECTORY/../gitweb/gitweb.perl" \
- 		>/dev/null 2>gitweb.log &&
--	if grep -q -s "^[[]" gitweb.log >/dev/null; then false; else true; fi
-+	if grep "^[[]" gitweb.log >/dev/null 2>&1; then false; else true; fi
- 
- 	# gitweb.log is left for debugging
- }
--- 
-1.6.0.2.517.g4d51
+Alexander
