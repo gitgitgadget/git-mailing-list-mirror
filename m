@@ -1,149 +1,99 @@
-From: Michael J Gruber <git@drmicha.warpmail.net>
-Subject: Re: [PATCH] remove vim syntax highlighting in favor of upstream
-Date: Tue, 30 Sep 2008 10:29:37 +0200
-Message-ID: <48E1E371.30804@drmicha.warpmail.net>
-References: <1222269726-15632-1-git-send-email-szeder@ira.uka.de>	<20080924155745.GA3908@coredump.intra.peff.net>	<20080924170154.GA6816@neumann>	<20080924175315.GA10337@coredump.intra.peff.net>	<20080924195658.GB6816@neumann>	<20080929145542.GA18340@spearce.org> <20080929200814.GA19840@neumann>
+From: Pierre Habouzit <madcoder@debian.org>
+Subject: Re: [PATCH] doc: enhance git describe --tags help
+Date: Tue, 30 Sep 2008 10:39:40 +0200
+Message-ID: <20080930083940.GA11453@artemis.corp>
+References: <ce513bcc0809280648s352cda3fj5eb35b6e9cd40af9@mail.gmail.com> <20080928135526.GG5302@artemis.corp> <ce513bcc0809280729p47cc3790nb77b3cae8b805221@mail.gmail.com> <20080928143949.GH5302@artemis.corp> <20080928150318.GI5302@artemis.corp> <20080928151259.GJ5302@artemis.corp> <20080929150127.GB18340@spearce.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: "Shawn O. Pearce" <spearce@spearce.org>, Jeff King <peff@peff.net>,
-	vim@tpope.info, git@vger.kernel.org
-To: =?ISO-8859-1?Q?SZEDER_G=E1bor?= <szeder@ira.uka.de>
-X-From: git-owner@vger.kernel.org Tue Sep 30 10:31:01 2008
+Content-Type: multipart/signed; boundary="k+w/mQv8wyuph6w0";
+	protocol="application/pgp-signature"; micalg=SHA1
+Cc: Erez Zilber <erezzi.list@gmail.com>,
+	"git@vger.kernel.org" <git@vger.kernel.org>,
+	open-iscsi@googlegroups.com, Junio C Hamano <gitster@pobox.com>
+To: "Shawn O. Pearce" <spearce@spearce.org>
+X-From: git-owner@vger.kernel.org Tue Sep 30 10:40:57 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KkadB-0000vf-5G
-	for gcvg-git-2@gmane.org; Tue, 30 Sep 2008 10:30:53 +0200
+	id 1Kkams-0003uu-4K
+	for gcvg-git-2@gmane.org; Tue, 30 Sep 2008 10:40:54 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752141AbYI3I3m convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 30 Sep 2008 04:29:42 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751642AbYI3I3m
-	(ORCPT <rfc822;git-outgoing>); Tue, 30 Sep 2008 04:29:42 -0400
-Received: from out3.smtp.messagingengine.com ([66.111.4.27]:38952 "EHLO
-	out3.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1752139AbYI3I3l (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 30 Sep 2008 04:29:41 -0400
-Received: from compute2.internal (compute2.internal [10.202.2.42])
-	by out1.messagingengine.com (Postfix) with ESMTP id 994FF170DC2;
-	Tue, 30 Sep 2008 04:29:40 -0400 (EDT)
-Received: from heartbeat1.messagingengine.com ([10.202.2.160])
-  by compute2.internal (MEProxy); Tue, 30 Sep 2008 04:29:40 -0400
-X-Sasl-enc: 6QN6enw9NxPGmRTDdYfMXInab3uQSRokovMrjvjQCSzW 1222763380
-Received: from [139.174.44.12] (whitehead.math.tu-clausthal.de [139.174.44.12])
-	by mail.messagingengine.com (Postfix) with ESMTPSA id 5DF17134AD;
-	Tue, 30 Sep 2008 04:29:39 -0400 (EDT)
-User-Agent: Thunderbird 2.0.0.17 (X11/20080914)
-In-Reply-To: <20080929200814.GA19840@neumann>
+	id S1751602AbYI3Ijo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 30 Sep 2008 04:39:44 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751489AbYI3Ijo
+	(ORCPT <rfc822;git-outgoing>); Tue, 30 Sep 2008 04:39:44 -0400
+Received: from pan.madism.org ([88.191.52.104]:43549 "EHLO hermes.madism.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751358AbYI3Ijn (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 30 Sep 2008 04:39:43 -0400
+Received: from madism.org (def92-12-88-177-251-208.fbx.proxad.net [88.177.251.208])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(Client CN "artemis.madism.org", Issuer "madism.org" (verified OK))
+	by hermes.madism.org (Postfix) with ESMTPS id 88FD022346;
+	Tue, 30 Sep 2008 10:39:41 +0200 (CEST)
+Received: by madism.org (Postfix, from userid 1000)
+	id 6A4A42AF00; Tue, 30 Sep 2008 10:39:40 +0200 (CEST)
+Content-Disposition: inline
+In-Reply-To: <20080929150127.GB18340@spearce.org>
+X-Face: $(^e[V4D-[`f2EmMGz@fgWK!e.B~2g.{08lKPU(nc1J~z\4B>*JEVq:E]7G-\6$Ycr4<;Z!|VY6Grt]+RsS$IMV)f>2)M="tY:ZPcU;&%it2D81X^kNya0=L]"vZmLP+UmKhgq+u*\.dJ8G!N&=EvlD
+User-Agent: Madmutt/devel (Linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/97080>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/97081>
 
-SZEDER G=E1bor venit, vidit, dixit 29.09.2008 22:08:
-> As of version 7.2, vim ships with its own syntax
-> highlighting for git commit messages, which is:
->=20
->   1. more comprehensive in splitting up the various
->      components of the file
->=20
->   2. in accordance with the usual vim behavior for syntax
->      highlighting (e.g., respecting b:current_syntax)
->=20
->   3. presumably better maintained (I have not been using
->      what's in git's contrib/ directory for some time in
->      favor of the upstream version)
->=20
-> Furthermore, vim upsream also provides syntax highlighting
-> for other git filetypes (gitconfig, rebase, send-email).
->=20
-> This patch gets rid of our local version and just points
-> interested parties to the upstream version.
->=20
-> The code for auto-detecting filetypes is taken from vim's
-> runtime/filetype.vim.
->=20
-> Signed-off-by: SZEDER G=E1bor <szeder@ira.uka.de>
-> ---
->=20
-> On Mon, Sep 29, 2008 at 07:55:42AM -0700, Shawn O. Pearce wrote:
->> Missing SBO line?
-> Here it is.  Since significant parts of the patch and the commit
-> message are from Jeff, maybe he should sign off, too?
->=20
-> Note, that this patch is slightly different from the previous one, as
-> it proposes writing the auto-detect commands into ~/.vim/filetype.vim
-> instead of ~/.vimrc.  It's not quite clear to me why, but it seems to
-> resolve the filetype confusion I mentioned in my previous email.
->=20
->=20
->  contrib/vim/README               |   38 ++++++++++++++++++++++++++++=
-++--------
->  contrib/vim/syntax/gitcommit.vim |   18 ------------------
->  2 files changed, 30 insertions(+), 26 deletions(-)
->  delete mode 100644 contrib/vim/syntax/gitcommit.vim
->=20
-> diff --git a/contrib/vim/README b/contrib/vim/README
-> index 9e7881f..c487346 100644
-> --- a/contrib/vim/README
-> +++ b/contrib/vim/README
-> @@ -1,8 +1,30 @@
-> -To syntax highlight git's commit messages, you need to:
-> -  1. Copy syntax/gitcommit.vim to vim's syntax directory:
-> -     $ mkdir -p $HOME/.vim/syntax
-> -     $ cp syntax/gitcommit.vim $HOME/.vim/syntax
-> -  2. Auto-detect the editing of git commit files:
-> -     $ cat >>$HOME/.vimrc <<'EOF'
-> -     autocmd BufNewFile,BufRead COMMIT_EDITMSG set filetype=3Dgitcom=
-mit
-> -     EOF
-> +Syntax highlighting for git commit messages, config files, etc. is
-> +included with the vim distribution as of vim 7.2, and should work
-> +automatically.
-> +
-> +If you have an older version of vim, you can get the latest syntax
-> +files from the vim project:
-> +
-> +  http://vim.svn.sourceforge.net/viewvc/vim/trunk/runtime/syntax/git=
-=2Evim
-> +  http://vim.svn.sourceforge.net/viewvc/vim/trunk/runtime/syntax/git=
-commit.vim
-> +  http://vim.svn.sourceforge.net/viewvc/vim/trunk/runtime/syntax/git=
-config.vim
-> +  http://vim.svn.sourceforge.net/viewvc/vim/trunk/runtime/syntax/git=
-rebase.vim
-> +  http://vim.svn.sourceforge.net/viewvc/vim/trunk/runtime/syntax/git=
-sendemail.vim
-> +
-> +To install:
-> +
-> +  1. Copy these files to vim's syntax directory $HOME/.vim/syntax
-> +  2. To auto-detect the editing of various git-related filetypes:
-> +	$ cat >>$HOME/.vim/filetype.vim <<'EOF'
-> +	autocmd BufNewFile,BufRead *.git/COMMIT_EDITMSG    setf gitcommit
-> +	autocmd BufNewFile,BufRead *.git/config,.gitconfig setf gitconfig
-> +	autocmd BufNewFile,BufRead git-rebase-todo         setf gitrebase
-> +	autocmd BufNewFile,BufRead .msg.[0-9]*
-> +		\ if getline(1) =3D~ '^From.*# This line is ignored.$' |
-> +		\   setf gitsendemail |
-> +		\ endif
-> +	autocmd BufNewFile,BufRead *.git/**
-> +		\ if getline(1) =3D~ '^\x\{40\}\>\|^ref: ' |
-> +		\   setf git |
-> +		\ endif
-> +	EOF
 
-Works as described with vim 7.1.
+--k+w/mQv8wyuph6w0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-How about creating a syntax file for editing the files generated by
-format-patch, especially 0000-cover-letter.patch? Should be mostly a
-combination of "git.vim" and "gitsendemail.vim", but I didn't find any
-syntax defs for the diffstat.
+On Mon, Sep 29, 2008 at 03:01:27PM +0000, Shawn O. Pearce wrote:
+> Pierre Habouzit <madcoder@debian.org> wrote:
+> > diff --git a/Documentation/git-describe.txt b/Documentation/git-describ=
+e.txt
+> > index c4dbc2a..9cc8c2f 100644
+> > --- a/Documentation/git-describe.txt
+> > +++ b/Documentation/git-describe.txt
+> > @@ -30,7 +30,8 @@ OPTIONS
+> > =20
+> >  --tags::
+> >  	Instead of using only the annotated tags, use any tag
+> > -	found in `.git/refs/tags`.
+> > +	found in `.git/refs/tags`. Though if an annotated tag is found in the
+> > +	ancestry, it will always be preferred to lightweight tags.
+>=20
+> As technically correct as the statement is, I read this and go
+> "why do we even have --tags?".
+>=20
+> If I read builtin-describe.c right we only honor --tags on an exact
+> match, or if there are no annotated tags at all in the history.
+> I wonder if docs like this aren't better for --tags:
+>=20
+> --tags::
+> 	If a lightweight tag exactly matches, output it.  If no
+> 	annotated tag is found in the ancestry but a lightweight
+> 	tag is found, output the lightweight tag.
 
-Michael
+sounds better indeed.
+--=20
+=C2=B7O=C2=B7  Pierre Habouzit
+=C2=B7=C2=B7O                                                madcoder@debia=
+n.org
+OOO                                                http://www.madism.org
 
-P.S.: What? Git doc linking to an svn repo? Someone needs to set up a
-git mirror ;)
+--k+w/mQv8wyuph6w0
+Content-Type: application/pgp-signature
+Content-Disposition: inline
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.9 (GNU/Linux)
+
+iEYEABECAAYFAkjh5coACgkQvGr7W6HudhwSjQCgnJSiU5rdqYP8qT3tAcbYsyDc
+11QAn1fQryuqUQNLbAfdvBXoQh28MU1a
+=lXwn
+-----END PGP SIGNATURE-----
+
+--k+w/mQv8wyuph6w0--
