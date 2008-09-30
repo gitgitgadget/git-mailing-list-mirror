@@ -1,71 +1,68 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH] Builtin-commit: show on which branch a commit was added
-Date: Tue, 30 Sep 2008 03:09:38 -0400
-Message-ID: <20080930070938.GA14757@sigill.intra.peff.net>
-References: <4C04A26E-5829-4A39-AD89-F5A68E606AA3@ai.rug.nl> <1220634785-55543-1-git-send-email-pdebie@ai.rug.nl> <7vzlmkpltb.fsf@gitster.siamese.dyndns.org> <20080921104238.GA9217@sigill.intra.peff.net> <A36A4B61-D223-4821-9969-FA76EAECD1EC@ai.rug.nl> <20080929224430.GA11545@sigill.intra.peff.net> <48E1C39F.4070906@op5.se> <836C204F-F5AF-4887-99C9-04E70FEEB998@wincent.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Andreas Ericsson <ae@op5.se>, Pieter de Bie <pdebie@ai.rug.nl>,
-	Junio C Hamano <gitster@pobox.com>,
-	Git Mailinglist <git@vger.kernel.org>
-To: Wincent Colaiuta <win@wincent.com>
-X-From: git-owner@vger.kernel.org Tue Sep 30 09:11:01 2008
+From: "Shawn O. Pearce" <spearce@spearce.org>
+Subject: [JGIT PATCH 1/2] Fix the UnpackedObjectCache hash function to prevent overflow
+Date: Tue, 30 Sep 2008 00:47:50 -0700
+Message-ID: <1222760871-58768-1-git-send-email-spearce@spearce.org>
+Cc: git@vger.kernel.org
+To: Robin Rosenberg <robin.rosenberg@dewire.com>
+X-From: git-owner@vger.kernel.org Tue Sep 30 09:49:30 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KkZNp-0001Cf-Ng
-	for gcvg-git-2@gmane.org; Tue, 30 Sep 2008 09:10:58 +0200
+	id 1KkZyz-0003MS-TT
+	for gcvg-git-2@gmane.org; Tue, 30 Sep 2008 09:49:22 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752545AbYI3HJp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 30 Sep 2008 03:09:45 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752287AbYI3HJo
-	(ORCPT <rfc822;git-outgoing>); Tue, 30 Sep 2008 03:09:44 -0400
-Received: from peff.net ([208.65.91.99]:4715 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752502AbYI3HJo (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 30 Sep 2008 03:09:44 -0400
-Received: (qmail 29770 invoked by uid 111); 30 Sep 2008 07:09:39 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.32) with ESMTP; Tue, 30 Sep 2008 03:09:39 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 30 Sep 2008 03:09:38 -0400
-Content-Disposition: inline
-In-Reply-To: <836C204F-F5AF-4887-99C9-04E70FEEB998@wincent.com>
+	id S1754837AbYI3Hrz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 30 Sep 2008 03:47:55 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753439AbYI3Hry
+	(ORCPT <rfc822;git-outgoing>); Tue, 30 Sep 2008 03:47:54 -0400
+Received: from george.spearce.org ([209.20.77.23]:49747 "EHLO
+	george.spearce.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754831AbYI3Hrx (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 30 Sep 2008 03:47:53 -0400
+Received: by george.spearce.org (Postfix, from userid 1000)
+	id 2EA4838268; Tue, 30 Sep 2008 07:47:53 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.2.4 (2008-01-01) on george.spearce.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-4.4 required=4.0 tests=ALL_TRUSTED,BAYES_00
+	autolearn=ham version=3.2.4
+Received: from localhost.localdomain (localhost [127.0.0.1])
+	by george.spearce.org (Postfix) with ESMTP id 36D7438268;
+	Tue, 30 Sep 2008 07:47:52 +0000 (UTC)
+X-Mailer: git-send-email 1.6.0.2.463.g7f0eb
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/97070>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/97071>
 
-On Tue, Sep 30, 2008 at 08:37:00AM +0200, Wincent Colaiuta wrote:
+Sometimes we got negative array indexes inside of the cache due
+to WindowedFile.hash having a negative value assigned by the JVM.
+We now use only the lower 8 bits as the cache is fixed to at most
+256 entries.
 
->> "commit" is just noise.
->
-> Excellent point on the noise. Independently of whether the branch info  
-> gets added the word "commit" should probably be dropped.
+Signed-off-by: Shawn O. Pearce <spearce@spearce.org>
+---
+ .../org/spearce/jgit/lib/UnpackedObjectCache.java  |    6 +++---
+ 1 files changed, 3 insertions(+), 3 deletions(-)
 
-The branch info has already been added, if you count it being in next
-(in the form of "on $branch: ").
-
-> As far as long-line-wrapping goes, I don't really think this is a problem 
-> for Git to solve (by truncation or any other means); it's more of a user 
-> behaviour thing where one would hope that users would get into the habit 
-> of using concise subject lines and branch names.
-
-How concise must we be? I wrap my commit messages at 60 characters,
-which I consider quite conservative. But
-
-  Created commit abcd1234 on jk/my-topic-branch:
-
-takes up over half of an 80-column terminal. Is that a long branch name?
-Browsing "git log --grep=Merge.branch --pretty=format:%s origin/next"
-suggests it's not terribly out of line (at least by Junio's standards).
-
-Dropping "commit " will help some. But given how much width is still
-used, and the fact that this message is really just to say "yes, I
-confirm that we just created the commit you asked for", I think
-truncating (with dots) to keep it within 80 characters is reasonable.
-
--Peff
+diff --git a/org.spearce.jgit/src/org/spearce/jgit/lib/UnpackedObjectCache.java b/org.spearce.jgit/src/org/spearce/jgit/lib/UnpackedObjectCache.java
+index 03cf674..ee6a680 100644
+--- a/org.spearce.jgit/src/org/spearce/jgit/lib/UnpackedObjectCache.java
++++ b/org.spearce.jgit/src/org/spearce/jgit/lib/UnpackedObjectCache.java
+@@ -48,9 +48,9 @@
+ 
+ 	private static int hash(final WindowedFile pack, final long position) {
+ 		int h = pack.hash + (int) position;
+-		h += h >> 16;
+-		h += h >> 8;
+-		return h % CACHE_SZ;
++		h += h >>> 16;
++		h += h >>> 8;
++		return h & (CACHE_SZ - 1);
+ 	}
+ 
+ 	private static int maxByteCount;
+-- 
+1.6.0.2.463.g7f0eb
