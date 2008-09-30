@@ -1,106 +1,102 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: How Blobs Work ( Blobs Vs. Deltas)
-Date: Tue, 30 Sep 2008 11:54:21 -0700 (PDT)
-Message-ID: <m3y719qxc9.fsf@localhost.localdomain>
-References: <16946e800809300814v134a42dft37becdbd8aa7669a@mail.gmail.com>
+From: "Shawn O. Pearce" <spearce@spearce.org>
+Subject: Re: [PATCH] doc: enhance git describe --tags help
+Date: Tue, 30 Sep 2008 12:04:49 -0700
+Message-ID: <20080930190449.GG21310@spearce.org>
+References: <ce513bcc0809280648s352cda3fj5eb35b6e9cd40af9@mail.gmail.com> <20080928135526.GG5302@artemis.corp> <ce513bcc0809280729p47cc3790nb77b3cae8b805221@mail.gmail.com> <20080928143949.GH5302@artemis.corp> <20080928150318.GI5302@artemis.corp> <20080928151259.GJ5302@artemis.corp> <20080929150127.GB18340@spearce.org> <20080930095641.GA9001@strlen.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: "Feanil Patel" <feanil@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Sep 30 20:55:49 2008
+Content-Type: text/plain; charset=utf-8
+Cc: Pierre Habouzit <madcoder@debian.org>,
+	Erez Zilber <erezzi.list@gmail.com>,
+	"git@vger.kernel.org" <git@vger.kernel.org>,
+	open-iscsi@googlegroups.com, Junio C Hamano <gitster@pobox.com>
+To: Uwe Kleine-KKKnig <ukleinek@strlen.de>
+X-From: git-owner@vger.kernel.org Tue Sep 30 21:06:21 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KkkNk-00026c-TY
-	for gcvg-git-2@gmane.org; Tue, 30 Sep 2008 20:55:37 +0200
+	id 1KkkXr-0005lk-IX
+	for gcvg-git-2@gmane.org; Tue, 30 Sep 2008 21:06:04 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752675AbYI3SyZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 30 Sep 2008 14:54:25 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752444AbYI3SyZ
-	(ORCPT <rfc822;git-outgoing>); Tue, 30 Sep 2008 14:54:25 -0400
-Received: from ey-out-2122.google.com ([74.125.78.25]:32100 "EHLO
-	ey-out-2122.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752097AbYI3SyY (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 30 Sep 2008 14:54:24 -0400
-Received: by ey-out-2122.google.com with SMTP id 6so69511eyi.37
-        for <git@vger.kernel.org>; Tue, 30 Sep 2008 11:54:23 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:received:received
-         :x-authentication-warning:to:cc:subject:references:from:in-reply-to
-         :message-id:lines:user-agent:mime-version:content-type:date;
-        bh=dtIu+pSThP5v9Mvt8QTH7CzgbkWFZ+yGgaY5ijKsMDs=;
-        b=Y9GXVrH0Llb6wO3EsZA/pSSUXuZrTiKmd/z+3MAguc5oHbHFkkYM9v4ahKkLmEyz39
-         dDLcfdpCQ1VIirZGr/Og+saltjWrBTgeOlZXKeB43zyPXsmZWl9VS1hF9CdHc6Cr4i1i
-         bD3eeRdYfmkEg6Lm9kNIUs1RZpq/EjzPe/Vsk=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=x-authentication-warning:to:cc:subject:references:from:in-reply-to
-         :message-id:lines:user-agent:mime-version:content-type:date;
-        b=N0qBwEZVg+UB8nnzuWuOquupuRiSVWlBpZlup3vpBPvxeXuYTVzbGEX8szKpSXSA5L
-         0r7EsXkp6H2vnWVgDDrZSMU+Y7mHVl+bLonz8dZ4YGX3H6MR/dzIzBA3Hkz1yXRO6PzP
-         GCk67Qcv/wVpnitATU/upKM+l5aDwvNaVS/oI=
-Received: by 10.86.33.19 with SMTP id g19mr6141108fgg.13.1222800862883;
-        Tue, 30 Sep 2008 11:54:22 -0700 (PDT)
-Received: from localhost.localdomain (abvo173.neoplus.adsl.tpnet.pl [83.8.212.173])
-        by mx.google.com with ESMTPS id l12sm4965243fgb.6.2008.09.30.11.54.20
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Tue, 30 Sep 2008 11:54:21 -0700 (PDT)
-Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id m8UIrsNE010739;
-	Tue, 30 Sep 2008 20:54:05 +0200
-Received: (from jnareb@localhost)
-	by localhost.localdomain (8.13.4/8.13.4/Submit) id m8UIrhm5010735;
-	Tue, 30 Sep 2008 20:53:43 +0200
-X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
-In-Reply-To: <16946e800809300814v134a42dft37becdbd8aa7669a@mail.gmail.com>
-User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
+	id S1753101AbYI3TEv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 30 Sep 2008 15:04:51 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752965AbYI3TEu
+	(ORCPT <rfc822;git-outgoing>); Tue, 30 Sep 2008 15:04:50 -0400
+Received: from george.spearce.org ([209.20.77.23]:55312 "EHLO
+	george.spearce.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752720AbYI3TEu (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 30 Sep 2008 15:04:50 -0400
+Received: by george.spearce.org (Postfix, from userid 1001)
+	id 788F73835F; Tue, 30 Sep 2008 19:04:49 +0000 (UTC)
+Content-Disposition: inline
+In-Reply-To: <20080930095641.GA9001@strlen.de>
+User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/97142>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/97143>
 
-"Feanil Patel" <feanil@gmail.com> writes:
-
-> Hello,
+Uwe Kleine-KKKnig <ukleinek@strlen.de> wrote:
+> On Mon, Sep 29, 2008 at 08:01:27AM -0700, Shawn O. Pearce wrote:
+> > --tags::
+> > 	If a lightweight tag exactly matches, output it.  If no
+> > 	annotated tag is found in the ancestry but a lightweight
+> > 	tag is found, output the lightweight tag.
+>
+> IMHO --tags should behave as Erez expected (because it's what I
+> expected, too).  As --tags currently behaves it's only usable in very
+> rare cases (most of the time it only makes a difference on repos without
+> any annotated tag).
 > 
-> I was reading about git objects in "The Git Community Book"
-> (http://book.git-scm.com/1_the_git_object_model.html), which was
-> posted on the mailing list a while back, and I was wondering something
-> about blobs and how files are stored in any particular version.  If
-> file A is changed from version one to version two there are two
-> different blobs that exist for the two versions of the file, is that
-> correct?  The Book was saying Git does not use delta storage so does
-> this mean that there are two almost identical copies of the file with
-> the difference being the change that was put in from version one to
-> version two?
+> When do you pass --tags?  Only if a lightweight tag is OK for an answer.
+> And then I would prefer a "near" lightweight tag to a "farer" annotated
+> one.
 
-In Git there are two kinds of storage: loose objects and packs. Each
-object generally starts as a loose object; for those it is like you
-wrote: if you have two versions of some file, you would have both
-of those contents of a file stored as separate objects (blobs).  Note
-that those 'blob' objects are compressed, so they usually don't take
-more time than current version of file and its backup.
+I don't disagree.  I've been tempted to write a patch to change the
+behavior of git-describe so that --tags and --all control what names
+are inserted into the candidate list, but don't control the ordering
+of their selection.
 
-But there exists also other type of storage, namely packed.  In the
-past you had to pack (repack) objects by invoking "git repack" and
-"git prune", and in more modern times by calling "git gc"; nowadays
-this should be taken care of by git using "git gc --auto" behind.
-When packing git tries to find objects which are close contents,
-and store them as base object and binary delta (based on LibXDiff).
-So you get benefits of delta storage, while on the API and script
-level you always see single objects.
+I think this is all that is needed to make the behavior do what you
+and Erez expected.  But its a pretty big change in the results if
+you are passing in --all or --tags today.
 
-Note that explicit repacking allow git to not only consider versions
-of the same file to diff against, tree and not only linear chains of
-deltas (think branches), and while recency order is preferred it is
-not enforced; objects and deltas are then compressed individually.
+--8<--
+[WIP] Change meaning of --tags and --all
 
-HTH
+---
+ builtin-describe.c |    6 ++----
+ 1 files changed, 2 insertions(+), 4 deletions(-)
+
+diff --git a/builtin-describe.c b/builtin-describe.c
+index ec404c8..fd54fec 100644
+--- a/builtin-describe.c
++++ b/builtin-describe.c
+@@ -15,8 +15,8 @@ static const char * const describe_usage[] = {
+ };
+ 
+ static int debug;	/* Display lots of verbose info */
+-static int all;	/* Default to annotated tags only */
+-static int tags;	/* But allow any tags if --tags is specified */
++static int all;	/* Any valid ref can be used */
++static int tags;	/* Either lightweight or annotated tags */
+ static int longformat;
+ static int abbrev = DEFAULT_ABBREV;
+ static int max_candidates = 10;
+@@ -112,8 +112,6 @@ static int compare_pt(const void *a_, const void *b_)
+ {
+ 	struct possible_tag *a = (struct possible_tag *)a_;
+ 	struct possible_tag *b = (struct possible_tag *)b_;
+-	if (a->name->prio != b->name->prio)
+-		return b->name->prio - a->name->prio;
+ 	if (a->depth != b->depth)
+ 		return a->depth - b->depth;
+ 	if (a->found_order != b->found_order)
 -- 
-Jakub Narebski
-Poland
-ShadeHawk on #git
+1.6.0.2.513.g6dbd
+
+
+-- 
+Shawn.
