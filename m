@@ -1,201 +1,155 @@
-From: "Giuseppe Bilotta" <giuseppe.bilotta@gmail.com>
-Subject: Re: [PATCH 1/6] gitweb: action in path with use_pathinfo
-Date: Tue, 30 Sep 2008 10:05:59 +0200
-Message-ID: <cb7bb73a0809300105s24706d79hb40e147739ec6f05@mail.gmail.com>
-References: <1222030663-22540-1-git-send-email-giuseppe.bilotta@gmail.com>
-	 <200809290303.21290.jnareb@gmail.com>
-	 <cb7bb73a0809290722w5ed92171v98d6b83a7dae8f8b@mail.gmail.com>
-	 <200809300221.25094.jnareb@gmail.com>
+From: Alexander Gavrilov <angavrilov@gmail.com>
+Subject: [PATCH (GIT-GUI)] git-gui: Make Ctrl-T safe to use for conflicting files.
+Date: Tue, 30 Sep 2008 12:12:16 +0400
+Organization: HOME
+Message-ID: <200809301212.17080.angavrilov@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain;
+  charset="us-ascii"
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, "Petr Baudis" <pasky@ucw.cz>,
-	"Lea Wiemann" <lewiemann@gmail.com>
-To: "Jakub Narebski" <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Sep 30 10:17:48 2008
+Cc: "Shawn O. Pearce" <spearce@spearce.org>,
+	Johannes Sixt <j.sixt@viscovery.net>
+To: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Tue Sep 30 10:19:25 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KkaGJ-0001i7-C6
-	for gcvg-git-2@gmane.org; Tue, 30 Sep 2008 10:07:16 +0200
+	id 1KkaNv-0004UH-1n
+	for gcvg-git-2@gmane.org; Tue, 30 Sep 2008 10:15:07 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752812AbYI3IGF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 30 Sep 2008 04:06:05 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752787AbYI3IGE
-	(ORCPT <rfc822;git-outgoing>); Tue, 30 Sep 2008 04:06:04 -0400
-Received: from mail-gx0-f16.google.com ([209.85.217.16]:44517 "EHLO
-	mail-gx0-f16.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752729AbYI3IGB (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 30 Sep 2008 04:06:01 -0400
-Received: by gxk9 with SMTP id 9so11501984gxk.13
-        for <git@vger.kernel.org>; Tue, 30 Sep 2008 01:06:00 -0700 (PDT)
+	id S1751829AbYI3INw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 30 Sep 2008 04:13:52 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751596AbYI3INv
+	(ORCPT <rfc822;git-outgoing>); Tue, 30 Sep 2008 04:13:51 -0400
+Received: from ug-out-1314.google.com ([66.249.92.171]:37608 "EHLO
+	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751491AbYI3INu (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 30 Sep 2008 04:13:50 -0400
+Received: by ug-out-1314.google.com with SMTP id k3so520337ugf.37
+        for <git@vger.kernel.org>; Tue, 30 Sep 2008 01:13:48 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to
-         :subject:cc:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:references;
-        bh=rSRnbo2YQUeHP9paevafM3IBqFoKqAszgmnhVP1idIY=;
-        b=kGxNk4T4q3wRfdPovVOG3jpU2im+lWJvBu60mzTfdUvBXZQOdj67sBUWkdL/YGCLjP
-         ynob3Wu4u4bmu39MrWZLapdjEc2dX/XI9hx4TmImT+AWZcahpYo2Hzr+o3MsB1Xrfilm
-         t/8CiTcw5mO+va3Vv0C1odQO5ydLl3TDgj404=
+        h=domainkey-signature:received:received:from:organization:to:subject
+         :date:user-agent:cc:mime-version:content-type
+         :content-transfer-encoding:content-disposition:message-id;
+        bh=VLxHCfaja+muGWNGyo1zjOVXSjyhGV1lL8buLMt3RIc=;
+        b=DZZx3pBEqWCZk3Fj9wh6DDhHjW3PaTXHZZJOY8zct7fLskzS+m0C/fybiMrWXzIZya
+         5VtkfMLT3D0Ro7eysaX47JUgwXc1gtzrz0oiXr7nYgxaaO9Fs1oJEiz9W5vEPxY7TNqA
+         VSe5P00GEs/Hqz5P5T7LyMqBE4AYUZhoi+nKE=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
+        h=from:organization:to:subject:date:user-agent:cc:mime-version
          :content-type:content-transfer-encoding:content-disposition
-         :references;
-        b=Ody2s9vHpAkve6u0Xegy+Y4WsifiGPfgeELJslEew+DtbVdAmFOc/VXwdh54GM35Hk
-         39dlafgr9cI+xBjQuPhHvhTRMfkMPaot5K0G061Dz6ZHCTruZjc7CqwqClikDDWb/z98
-         zzO3NgFRwveh/2xMDCNTiyvr6/PL559iZGovQ=
-Received: by 10.151.145.11 with SMTP id x11mr9492373ybn.218.1222761959766;
-        Tue, 30 Sep 2008 01:05:59 -0700 (PDT)
-Received: by 10.150.155.12 with HTTP; Tue, 30 Sep 2008 01:05:59 -0700 (PDT)
-In-Reply-To: <200809300221.25094.jnareb@gmail.com>
+         :message-id;
+        b=tRSRJWb6+Wrz1TfRBzIJDpXHfGM4Rr8xTx87SJjcTcwIg0YNdCIYsramccM17F0ENY
+         gYWIojMD5q/3vokwK19IU1dPObAYwz9kLEor6/wmdCl2BMBq0IeRkNdt0MBxv+ry5x8o
+         ag0rmbIlYIdeeIPjaQDblZWvDBfER+jRktgmI=
+Received: by 10.103.203.4 with SMTP id f4mr4608000muq.8.1222762428294;
+        Tue, 30 Sep 2008 01:13:48 -0700 (PDT)
+Received: from keydesk.localnet ([92.255.85.78])
+        by mx.google.com with ESMTPS id w5sm6685566mue.10.2008.09.30.01.13.47
+        (version=SSLv3 cipher=RC4-MD5);
+        Tue, 30 Sep 2008 01:13:47 -0700 (PDT)
+User-Agent: KMail/1.10.1 (Linux/2.6.26.3-29.fc9.i686; KDE/4.1.1; i686; ; )
 Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/97078>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/97079>
 
-On Tue, Sep 30, 2008 at 2:21 AM, Jakub Narebski <jnareb@gmail.com> wrote:
-> Perhaps not in so large and detailed form... I guess explanation of
-> using ':/' as separator should be put there as well, if you plan to
-> squash those patches.
+A previous patch added a check for conflict markers, which
+is done when the file is about to be staged due to a click
+on the icon. However, pressing Ctrl-T still immediately
+stages the file without confirmation. This patch fixes it.
 
-I will add the explanation for the :/ separator in the patch for URL
-generation (forgot it in v3)
+The check requires a loaded diff, so staging multiple files
+at once won't work if they are unmerged.
 
->>>> @@ -624,8 +636,13 @@ sub href (%) {
->>>>       if ($params{-replay}) {
->>>>               while (my ($name, $symbol) = each %mapping) {
->>>>                       if (!exists $params{$name}) {
->>>> -                             # to allow for multivalued params we use arrayref form
->>>> -                             $params{$name} = [ $cgi->param($symbol) ];
->>>> +                             if ($cgi->param($symbol)) {
->>>> +                                     # to allow for multivalued params we use arrayref form
->>>> +                                     $params{$name} = [ $cgi->param($symbol) ];
->>>> +                             } else {
->>>> +                                     no strict 'refs';
->>>> +                                     $params{$name} = $$name if $$name;
->>>> +                             }
->>>>                       }
->>>>               }
->>>>       }
->>>
->>> What this change is about? And why this change is _here_, in this
->>> commit? It is I think unrelated, and wrong change.
->>
->> This is about being able to recycle CGI parameters that came through
->> as part of path_info instead of the CGI parameter list. It might not
->> be the best way to recover it, though. I *did* have a few thoughts
->> about an alternative way that consisted of build a parameter list
->> merging CGI and path-info parameter, but since this approach seemed to
->> work, I went with it.
->
-> Fact, I have totally forgot about this.
+Signed-off-by: Alexander Gavrilov <angavrilov@gmail.com>
+---
 
-Me too actually (the first version of this patch is almost a year old,
-and since I forgot to write down why I did a few things ... taught me
-that I should start putting more comments, though 8-D)
+ git-gui.sh        |    4 +++-
+ lib/index.tcl     |   11 +++++++++--
+ lib/merge.tcl     |    1 +
+ lib/mergetool.tcl |    7 ++++---
+ 4 files changed, 17 insertions(+), 6 deletions(-)
 
->>> href(..., -replay=>1) is all about reusing current URL, perhaps with
->>> a few parameters changed, like for example pagination links differ only
->>> in page number param change.  For example if we had only hb= and f=
->>> parameters, -replay=>1 links should use only those, and not add h=
->>> parameter because somewhere we felt that we need $hash to be calculated.
->>
->> Assume for example that you are to an url such as
->>
->> http://git.oblomov.eu/git/tree/refs/remotes/origin/master:gitweb
->>
->> Without this patch, the 'history' link on the second header line links
->> to ARRAY(0xblah)ARRAY(0xblah). With this patch, it shows the proper
->> link. So either replay is being abused somewhere in the link
->> generation code, or this CGI+path_info parameter retrieval is
->> necessary, one way or the other.
->
-> Ah.  Now I understand.
->
-> When creating code for href(..., -replay=>1), which by the way I thought
-> would be more useful than actually is, I have forgot that parameters to
-> gitweb could be passed in other way that through CGI parameters
-> (CGI query)[1].
->
-> Using
->
->        $params{$name} = [ $cgi->param($symbol) ];
->
-> is a cute hack, but it doesn't work for arguments passed via path_info
-> (was: project, hash_base and file_name; while now it is project, action,
-> hash_base (in full) and file_name).
-
-Exactly.
-
-> The solution I thought about and abandoned in favor of this cute hack
-> was to have additional hash (in addition to %mapping), which would map
-> action names to references to variables holding the value for parameter.
->
-> This has the same problem as your proposed solution of putting some
-> parameters which didn't come from URL but were filled from other info.
-> $hash parameter is most likely to be culprit here.
->
-> On the other hand it is more generic and doesn't rely on knowledge that
-> there is no multi-valued parameter which can be expressed in path_info
-> (currently only 'opt' parameter can be multi-valued, and requires
-> arrayref, but also 'opt' parameter is and cannot be put in path_info).
->
-> I am talking there about the following solution:
->
->        my %action_vars = (
->                project => \$project,
->                action => \$action,
->                # ...
->                extra_options => \@extra_options,
->        );
->        # ...
->        while (my ($name, $symbol) = each %mapping) {
->                if (!exists $params{$name}) {
->                          $params{$name} = ${$action_vars{$name}};
->                }
->        }
->
->
-> This avoids cure hack of (from your code)
->
->                } else {
->                           no strict 'refs';
->                           $params{$name} = $$name if $$name;
->                }
->
-> I think that gitweb should use single source, not CGI query parameters
-> or variable saving [sanitized] value.
-
-The alternative I've been thinking about would be to have an
-%input_parameters hash that holds all input parameters regardless of
-hash; thus CGI query parameters and data extracted from PATH_INFO,
-presently, but also command line options in the future, or whatever
-else.
-
-This is somewhat different from your %action_vars alternative, in the
-sense that it isolates _input_ data, whereas if I understand correctly
-the approach you suggest would isolate _output_ data (in the sense of
-data to be used during link creation and whatnot).
-
-Presently, the gitweb code defines some $variables from the input
-parameters, and then overwrites them for output. Keeping the input
-stuff clearly separate from the output stuff would mean that any
-routine can retrieve the input data regardless of the subsequent
-mangling and without any need to make ad-hoc backups or other tricks.
-
-So my proposal is that I implement this %input_params stuff as the
-first patch for the pathinfo series, and use %input_params all around
-where cgi parameters are used currently (of course, %input_params is
-initialized with the CGI parameters at first). The next patch would be
-the extraction of parameters from PATH_INFO. And thirdly the PATH_INFO
-URL generation (with or without the /-before-filename thing, at your
-preference)
-
+diff --git a/git-gui.sh b/git-gui.sh
+index 4085e8f..717817e 100755
+--- a/git-gui.sh
++++ b/git-gui.sh
+@@ -2090,7 +2090,9 @@ proc toggle_or_diff {w x y} {
+ 	if {$col == 0 && $y > 1} {
+ 		# Conflicts need special handling
+ 		if {[string first {U} $state] >= 0} {
+-			merge_stage_workdir $path $w $lno
++			# $w must always be $ui_workdir, but...
++			if {$w ne $ui_workdir} { set lno {} }
++			merge_stage_workdir $path $lno
+ 			return
+ 		}
+ 
+diff --git a/lib/index.tcl b/lib/index.tcl
+index b045219..d33896a 100644
+--- a/lib/index.tcl
++++ b/lib/index.tcl
+@@ -298,11 +298,18 @@ proc add_helper {txt paths} {
+ 	set after {}
+ 	foreach path $paths {
+ 		switch -glob -- [lindex $file_states($path) 0] {
++		_U -
++		U? {
++			if {$path eq $current_diff_path} {
++				unlock_index
++				merge_stage_workdir $path
++				return
++			}
++		}
+ 		_O -
+ 		?M -
+ 		?D -
+-		?T -
+-		U? {
++		?T {
+ 			lappend pathList $path
+ 			if {$path eq $current_diff_path} {
+ 				set after {reshow_diff;}
+diff --git a/lib/merge.tcl b/lib/merge.tcl
+index 5c01875..ac4c7de 100644
+--- a/lib/merge.tcl
++++ b/lib/merge.tcl
+@@ -40,6 +40,7 @@ The rescan will be automatically started now.
+ 		_O {
+ 			continue; # and pray it works!
+ 		}
++		_U
+ 		U? {
+ 			error_popup [mc "You are in the middle of a conflicted merge.
+ 
+diff --git a/lib/mergetool.tcl b/lib/mergetool.tcl
+index 6ab5701..1984c64 100644
+--- a/lib/mergetool.tcl
++++ b/lib/mergetool.tcl
+@@ -23,13 +23,14 @@ This operation can be undone only by restarting the merge." \
+ 	}
+ }
+ 
+-proc merge_stage_workdir {path w lno} {
++proc merge_stage_workdir {path {lno {}}} {
+ 	global current_diff_path diff_active
++	global current_diff_side ui_workdir
+ 
+ 	if {$diff_active} return
+ 
+-	if {$path ne $current_diff_path} {
+-		show_diff $path $w $lno {} [list do_merge_stage_workdir $path]
++	if {$path ne $current_diff_path || $ui_workdir ne $current_diff_side} {
++		show_diff $path $ui_workdir $lno {} [list do_merge_stage_workdir $path]
+ 	} else {
+ 		do_merge_stage_workdir $path
+ 	}
 -- 
-Giuseppe "Oblomov" Bilotta
+1.6.0.20.g6148bc
