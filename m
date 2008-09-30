@@ -1,105 +1,84 @@
-From: Pierre Habouzit <madcoder@debian.org>
-Subject: Re: [PATCH] parse-opt: migrate fmt-merge-msg.
-Date: Tue, 30 Sep 2008 23:16:45 +0200
-Message-ID: <20080930211643.GA16879@artemis.corp>
-References: <1222595139-32087-1-git-send-email-madcoder@debian.org> <1222595139-32087-2-git-send-email-madcoder@debian.org> <20080929163523.GC18340@spearce.org> <20080930084019.GB11453@artemis.corp> <20080930191014.GH21310@spearce.org>
+From: Uwe =?iso-8859-1?Q?Kleine-K=F6nig?= <ukleinek@strlen.de>
+Subject: Re: [PATCH] doc: enhance git describe --tags help
+Date: Wed, 1 Oct 2008 00:14:53 +0200
+Message-ID: <20080930221453.GA13659@strlen.de>
+References: <ce513bcc0809280648s352cda3fj5eb35b6e9cd40af9@mail.gmail.com> <20080928135526.GG5302@artemis.corp> <ce513bcc0809280729p47cc3790nb77b3cae8b805221@mail.gmail.com> <20080928143949.GH5302@artemis.corp> <20080928150318.GI5302@artemis.corp> <20080928151259.GJ5302@artemis.corp> <20080929150127.GB18340@spearce.org> <20080930095641.GA9001@strlen.de> <20080930190449.GG21310@spearce.org>
 Mime-Version: 1.0
-Content-Type: multipart/signed; boundary="a8Wt8u1KmwUX3Y2C";
-	protocol="application/pgp-signature"; micalg=SHA1
-Cc: git@vger.kernel.org, gitster@pobox.com
+Content-Type: text/plain; charset=us-ascii
+Cc: Pierre Habouzit <madcoder@debian.org>,
+	Erez Zilber <erezzi.list@gmail.com>,
+	"git@vger.kernel.org" <git@vger.kernel.org>,
+	open-iscsi@googlegroups.com, Junio C Hamano <gitster@pobox.com>,
+	Andreas Ericsson <ae@op5.se>
 To: "Shawn O. Pearce" <spearce@spearce.org>
-X-From: git-owner@vger.kernel.org Tue Sep 30 23:18:33 2008
+X-From: git-owner@vger.kernel.org Wed Oct 01 00:16:10 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Kkmc2-0003kc-JE
-	for gcvg-git-2@gmane.org; Tue, 30 Sep 2008 23:18:31 +0200
+	id 1KknVq-00038D-7r
+	for gcvg-git-2@gmane.org; Wed, 01 Oct 2008 00:16:10 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754026AbYI3VQ4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 30 Sep 2008 17:16:56 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754304AbYI3VQy
-	(ORCPT <rfc822;git-outgoing>); Tue, 30 Sep 2008 17:16:54 -0400
-Received: from pan.madism.org ([88.191.52.104]:33918 "EHLO hermes.madism.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754273AbYI3VQw (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 30 Sep 2008 17:16:52 -0400
-Received: from madism.org (olympe.madism.org [82.243.245.108])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(Client CN "artemis.madism.org", Issuer "madism.org" (verified OK))
-	by hermes.madism.org (Postfix) with ESMTPS id 106A63B8B9;
-	Tue, 30 Sep 2008 23:16:50 +0200 (CEST)
-Received: by madism.org (Postfix, from userid 1000)
-	id 243F794A270; Tue, 30 Sep 2008 23:16:45 +0200 (CEST)
+	id S1752971AbYI3WPA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 30 Sep 2008 18:15:00 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753165AbYI3WPA
+	(ORCPT <rfc822;git-outgoing>); Tue, 30 Sep 2008 18:15:00 -0400
+Received: from Chamillionaire.breakpoint.cc ([85.10.199.196]:51345 "EHLO
+	Chamillionaire.breakpoint.cc" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1752957AbYI3WO7 (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 30 Sep 2008 18:14:59 -0400
+Received: id: ukleinek by Chamillionaire.breakpoint.cc authenticated by ukleinek with local
+	(easymta 1.00 BETA 1)
+	id 1KknUb-0003Zg-Mx; Wed, 01 Oct 2008 00:14:53 +0200
 Content-Disposition: inline
-In-Reply-To: <20080930191014.GH21310@spearce.org>
-X-Face: $(^e[V4D-[`f2EmMGz@fgWK!e.B~2g.{08lKPU(nc1J~z\4B>*JEVq:E]7G-\6$Ycr4<;Z!|VY6Grt]+RsS$IMV)f>2)M="tY:ZPcU;&%it2D81X^kNya0=L]"vZmLP+UmKhgq+u*\.dJ8G!N&=EvlD
-User-Agent: Madmutt/devel (Linux)
+In-Reply-To: <20080930190449.GG21310@spearce.org>
+User-Agent: Mutt/1.5.16 (2007-06-09)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/97163>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/97164>
 
+Hi Shawn,
 
---a8Wt8u1KmwUX3Y2C
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+On Tue, Sep 30, 2008 at 12:04:49PM -0700, Shawn O. Pearce wrote:
+> Uwe Kleine-KKKnig <ukleinek@strlen.de> wrote:
+> > On Mon, Sep 29, 2008 at 08:01:27AM -0700, Shawn O. Pearce wrote:
+> > > --tags::
+> > > 	If a lightweight tag exactly matches, output it.  If no
+> > > 	annotated tag is found in the ancestry but a lightweight
+> > > 	tag is found, output the lightweight tag.
+> >
+> > IMHO --tags should behave as Erez expected (because it's what I
+> > expected, too).  As --tags currently behaves it's only usable in very
+> > rare cases (most of the time it only makes a difference on repos without
+> > any annotated tag).
+> > 
+> > When do you pass --tags?  Only if a lightweight tag is OK for an answer.
+> > And then I would prefer a "near" lightweight tag to a "farer" annotated
+> > one.
+> 
+> I don't disagree.  I've been tempted to write a patch to change the
+> behavior of git-describe so that --tags and --all control what names
+> are inserted into the candidate list, but don't control the ordering
+> of their selection.
+> 
+> I think this is all that is needed to make the behavior do what you
+> and Erez expected.  But its a pretty big change in the results if
+> you are passing in --all or --tags today.
+But it matches the documentation, and the expectations of Erez, me and
+(at least initially) Pierre.
 
-On Tue, Sep 30, 2008 at 07:10:14PM +0000, Shawn O. Pearce wrote:
-> Pierre Habouzit <madcoder@debian.org> wrote:
-> > On Mon, Sep 29, 2008 at 04:35:23PM +0000, Shawn O. Pearce wrote:
-> > > Pierre Habouzit <madcoder@debian.org> wrote:
-> > > > Also fix an inefficient printf("%s", ...) where we can use write_in=
-_full.
-> > >=20
-> > > Near as I can tell, this is based upon a merge commit in next.
-> >=20
-> > Hmm I've always sent my patches this way, and I believe you can git am
-> > -3 them on top of master easily. I can send you the updated series if
-> > you want.
->=20
-> I'd appreciate an updated series if you can send it.  am -3 isn't
-> "easily" applying it.  Here I define "easy" as "the patch applies
-> without me needing to resolve conflicts":
->=20
->  $ git co -b ph/parseopt master
->  $ git am -3 -s X
->  Applying: parse-opt: migrate fmt-merge-msg.
->  error: patch failed: builtin-fmt-merge-msg.c:5
->  error: builtin-fmt-merge-msg.c: patch does not apply
->  Using index info to reconstruct a base tree...
->  Falling back to patching base and 3-way merge...
->  CONFLICT (content): Merge conflict in builtin-fmt-merge-msg.c
->  Recorded preimage for 'builtin-fmt-merge-msg.c'
->  Failed to merge in the changes.
->  Patch failed at 0001.
->  When you have resolved this problem run "git am -3 --resolved".
->  If you would prefer to skip this patch, instead run "git am -3 --skip".
->  To restore the original branch and stop patching run "git am -3 --abort".
+My POV is still:  If you pass --all or --tags you have to be able to
+handle if a lw tag is used in the answer.
 
-Okay, I will then, but FWIW it means that when you'll try to merge this
-in next it'll conflict at that time, so I'm not sure there's a huge win
-for you at that point.
+> -static int all;	/* Default to annotated tags only */
+> -static int tags;	/* But allow any tags if --tags is specified */
+> +static int all;	/* Any valid ref can be used */
+> +static int tags;	/* Either lightweight or annotated tags */
+Mmmh, IMHO the comment for tags is misleading, its either annotated only
+or both.
 
---=20
-=C2=B7O=C2=B7  Pierre Habouzit
-=C2=B7=C2=B7O                                                madcoder@debia=
-n.org
-OOO                                                http://www.madism.org
-
---a8Wt8u1KmwUX3Y2C
-Content-Type: application/pgp-signature
-Content-Disposition: inline
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.9 (GNU/Linux)
-
-iEYEABECAAYFAkjilzoACgkQvGr7W6Hudhx1HwCfQ2nTxGpPl/vSWIBGo8ezsT+8
-VYUAnRLSS0g8V9CT+jQRMiO0IGnjWIP/
-=yt/h
------END PGP SIGNATURE-----
-
---a8Wt8u1KmwUX3Y2C--
+Best regards and thanks,
+Uwe
