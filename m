@@ -1,132 +1,105 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: [PATCH 1/6] gitweb: action in path with use_pathinfo
-Date: Tue, 30 Sep 2008 23:00:45 +0200
-Message-ID: <200809302300.46786.jnareb@gmail.com>
-References: <1222030663-22540-1-git-send-email-giuseppe.bilotta@gmail.com> <200809301322.58280.jnareb@gmail.com> <cb7bb73a0809300553o7496f4c1me14ddf55b31fe4a6@mail.gmail.com>
+From: Pierre Habouzit <madcoder@debian.org>
+Subject: Re: [PATCH] parse-opt: migrate fmt-merge-msg.
+Date: Tue, 30 Sep 2008 23:16:45 +0200
+Message-ID: <20080930211643.GA16879@artemis.corp>
+References: <1222595139-32087-1-git-send-email-madcoder@debian.org> <1222595139-32087-2-git-send-email-madcoder@debian.org> <20080929163523.GC18340@spearce.org> <20080930084019.GB11453@artemis.corp> <20080930191014.GH21310@spearce.org>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, "Petr Baudis" <pasky@ucw.cz>,
-	"Lea Wiemann" <lewiemann@gmail.com>
-To: "Giuseppe Bilotta" <giuseppe.bilotta@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Sep 30 23:02:15 2008
+Content-Type: multipart/signed; boundary="a8Wt8u1KmwUX3Y2C";
+	protocol="application/pgp-signature"; micalg=SHA1
+Cc: git@vger.kernel.org, gitster@pobox.com
+To: "Shawn O. Pearce" <spearce@spearce.org>
+X-From: git-owner@vger.kernel.org Tue Sep 30 23:18:33 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KkmMC-00075n-Sg
-	for gcvg-git-2@gmane.org; Tue, 30 Sep 2008 23:02:09 +0200
+	id 1Kkmc2-0003kc-JE
+	for gcvg-git-2@gmane.org; Tue, 30 Sep 2008 23:18:31 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753195AbYI3VA6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 30 Sep 2008 17:00:58 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753174AbYI3VA6
-	(ORCPT <rfc822;git-outgoing>); Tue, 30 Sep 2008 17:00:58 -0400
-Received: from nf-out-0910.google.com ([64.233.182.185]:19183 "EHLO
-	nf-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751813AbYI3VA5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 30 Sep 2008 17:00:57 -0400
-Received: by nf-out-0910.google.com with SMTP id d3so110655nfc.21
-        for <git@vger.kernel.org>; Tue, 30 Sep 2008 14:00:55 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:subject:date
-         :user-agent:cc:references:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:message-id;
-        bh=aRwDY4v1pGGTlHlS2Jf9wrMALAsz7VShVT1Ux2xjcds=;
-        b=cvuHHlTCiJrnQwN/P0bztbyYES7RH38fWekfQJv/LCPV5+Hgutr7o34EGJClY7bxI5
-         m68UnakdcMT1+TwKY+mLUj/SdvnDnTEXcG+IsFgsgAz8/UPN/vL9VIRtauu6d8YXiL9y
-         nm4rVY2PBH9RnTE9HHprB5vqFfUVwZihE5D1E=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=from:to:subject:date:user-agent:cc:references:in-reply-to
-         :mime-version:content-type:content-transfer-encoding
-         :content-disposition:message-id;
-        b=VCEHlUgbhg8St8ZDz5F52ISRpsn241N3egSRK+2ejzRr7p4hV4mGWj5MxesA0lzmEC
-         8GKjLLEa40DbVxTj0/aU+SyVpsmdjDGIrEL8fDXD9tZ1KEXcVbRRMlvXd8wh08iAEW2T
-         e0MpTOIEnMJtz2Q91FutlnCBimzbeIj9eMuyk=
-Received: by 10.210.23.3 with SMTP id 3mr8496672ebw.188.1222808455387;
-        Tue, 30 Sep 2008 14:00:55 -0700 (PDT)
-Received: from ?192.168.1.11? (abvo173.neoplus.adsl.tpnet.pl [83.8.212.173])
-        by mx.google.com with ESMTPS id 20sm3641890eyk.4.2008.09.30.14.00.52
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Tue, 30 Sep 2008 14:00:53 -0700 (PDT)
-User-Agent: KMail/1.9.3
-In-Reply-To: <cb7bb73a0809300553o7496f4c1me14ddf55b31fe4a6@mail.gmail.com>
+	id S1754026AbYI3VQ4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 30 Sep 2008 17:16:56 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754304AbYI3VQy
+	(ORCPT <rfc822;git-outgoing>); Tue, 30 Sep 2008 17:16:54 -0400
+Received: from pan.madism.org ([88.191.52.104]:33918 "EHLO hermes.madism.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754273AbYI3VQw (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 30 Sep 2008 17:16:52 -0400
+Received: from madism.org (olympe.madism.org [82.243.245.108])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(Client CN "artemis.madism.org", Issuer "madism.org" (verified OK))
+	by hermes.madism.org (Postfix) with ESMTPS id 106A63B8B9;
+	Tue, 30 Sep 2008 23:16:50 +0200 (CEST)
+Received: by madism.org (Postfix, from userid 1000)
+	id 243F794A270; Tue, 30 Sep 2008 23:16:45 +0200 (CEST)
 Content-Disposition: inline
+In-Reply-To: <20080930191014.GH21310@spearce.org>
+X-Face: $(^e[V4D-[`f2EmMGz@fgWK!e.B~2g.{08lKPU(nc1J~z\4B>*JEVq:E]7G-\6$Ycr4<;Z!|VY6Grt]+RsS$IMV)f>2)M="tY:ZPcU;&%it2D81X^kNya0=L]"vZmLP+UmKhgq+u*\.dJ8G!N&=EvlD
+User-Agent: Madmutt/devel (Linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/97162>
-
-On Tue, 30 September 2008, Giuseppe Bilotta wrote:
-> On Tue, Sep 30, 2008 at 1:22 PM, Jakub Narebski <jnareb@gmail.com> wrote:
->> On Tue, 30 Sep 2008, Giuseppe "Oblomov" Bilotta wrote:
->>> On Tue, Sep 30, 2008 at 10:48 AM, Jakub Narebski <jnareb@gmail.com> wrote:
-
->>>> Or we could just scrap and revert adding href(..., -replay=>1).
->>>> There is much trouble with getting it right and performing well,
->>>> and it is less useful than I thought (at least now).
->>>
->>> Dunno, the idea in itself is not bad. We just have to get it right ;)
->>
->> It is not easy to get it right, especially that there are multivalued
->> parameters like @extra_options, see e.g. commit 7863c612
-> 
-> So we just let values be arrays. Or isn't this enough?
-
-I don't think it would be that simple.
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/97163>
 
 
-Let me elaborate a bit about complications and difficulties
-within href() code.
+--a8Wt8u1KmwUX3Y2C
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-First there are two names of parameters: the short name like 'a',
-or 'h', or 'f' which is used in links to make them short (and
-which is a bit historical legacy), and the long names like 'action',
-'hash' or 'file_name' which are used for readability; then there are
-also variables which hold values of parameters, like $action,
-$hash and $file_name (which were source of long names for parameters).
-href() has to provide translation between those two (well, three)
-names; long names are used as names of "named parameters" to href(),
-while short names are used when generating URL; %mapping provides
-mapping between those two.
+On Tue, Sep 30, 2008 at 07:10:14PM +0000, Shawn O. Pearce wrote:
+> Pierre Habouzit <madcoder@debian.org> wrote:
+> > On Mon, Sep 29, 2008 at 04:35:23PM +0000, Shawn O. Pearce wrote:
+> > > Pierre Habouzit <madcoder@debian.org> wrote:
+> > > > Also fix an inefficient printf("%s", ...) where we can use write_in=
+_full.
+> > >=20
+> > > Near as I can tell, this is based upon a merge commit in next.
+> >=20
+> > Hmm I've always sent my patches this way, and I believe you can git am
+> > -3 them on top of master easily. I can send you the updated series if
+> > you want.
+>=20
+> I'd appreciate an updated series if you can send it.  am -3 isn't
+> "easily" applying it.  Here I define "easy" as "the patch applies
+> without me needing to resolve conflicts":
+>=20
+>  $ git co -b ph/parseopt master
+>  $ git am -3 -s X
+>  Applying: parse-opt: migrate fmt-merge-msg.
+>  error: patch failed: builtin-fmt-merge-msg.c:5
+>  error: builtin-fmt-merge-msg.c: patch does not apply
+>  Using index info to reconstruct a base tree...
+>  Falling back to patching base and 3-way merge...
+>  CONFLICT (content): Merge conflict in builtin-fmt-merge-msg.c
+>  Recorded preimage for 'builtin-fmt-merge-msg.c'
+>  Failed to merge in the changes.
+>  Patch failed at 0001.
+>  When you have resolved this problem run "git am -3 --resolved".
+>  If you would prefer to skip this patch, instead run "git am -3 --skip".
+>  To restore the original branch and stop patching run "git am -3 --abort".
 
-Second, href() must distinguish between gitweb options/parameters
-like 'file_name'=>$file_name and extra options like '-full'=>1
-or '-replay'=>1; additionally we want to have options output in
-some definite order, with more important options first.  This
-is provided by %mapping (to filter out) and @mapping (to sort).
+Okay, I will then, but FWIW it means that when you'll try to merge this
+in next it'll conflict at that time, so I'm not sure there's a huge win
+for you at that point.
 
-Third, there are various sources of values of parameters, and
-parameters used.  There are parameters specified explicitly in
-href() call, and there are also implicit parameters: 'project'
-parameter is implicitly added as it is needed in almost all
-gitweb links (you can override it and generate projectless link by
-using 'project'=>undef), and for '-replay'=>1 all parameters from
-current URL are added.  Parameters specified explicitly have preference
-over implicit or '-replay' ones.  
+--=20
+=C2=B7O=C2=B7  Pierre Habouzit
+=C2=B7=C2=B7O                                                madcoder@debia=
+n.org
+OOO                                                http://www.madism.org
 
-Now for '-replay' parameters might come from CGI query string, from
-path_info part of URL, and perhaps in the future also from command
-line.  To avoid duplicated code and other problems we should either
-get parameters from variables (like in your code, but which doesn't
-cover @extra_options well, but it could; or using "long name" to
-variable ref mapping), or have some place where we save parameters
-as we extract it from CGI query string, from path_info part of URL,
-and in the future probably also from command line options/parameters.
+--a8Wt8u1KmwUX3Y2C
+Content-Type: application/pgp-signature
+Content-Disposition: inline
 
-Fourth, there is a little matter of _some_ parameters be multivalued;
-currently it is only @extra_options / 'opt', but this may change in
-the future, while _most_ are ordinary scalar values.  Printing arrayref
-isn't something we want to do...
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.9 (GNU/Linux)
 
+iEYEABECAAYFAkjilzoACgkQvGr7W6Hudhx1HwCfQ2nTxGpPl/vSWIBGo8ezsT+8
+VYUAnRLSS0g8V9CT+jQRMiO0IGnjWIP/
+=yt/h
+-----END PGP SIGNATURE-----
 
-That is third and fourth which caused problems in the past with
-href(..., -replay=>1)...
-
--- 
-Jakub Narebski
-Poland
+--a8Wt8u1KmwUX3Y2C--
