@@ -1,313 +1,80 @@
-From: Dmitry Potapov <dpotapov@gmail.com>
-Subject: [PATCH 4/4 v2] cygwin: Use native Win32 API for stat
-Date: Tue, 30 Sep 2008 17:53:47 +0400
-Message-ID: <20080930135347.GK21650@dpotapov.dyndns.org>
-References: <20080927084349.GC21650@dpotapov.dyndns.org> <200809272035.03833.johannes.sixt@telecom.at> <20080927215406.GG21650@dpotapov.dyndns.org> <200809281124.08364.johannes.sixt@telecom.at> <20080929153400.GJ17584@spearce.org>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Johannes Sixt <johannes.sixt@telecom.at>, git@vger.kernel.org,
-	Junio C Hamano <gitster@pobox.com>,
-	Alex Riesen <raa.lkml@gmail.com>,
-	Marcus Griep <marcus@griep.us>
-To: "Shawn O. Pearce" <spearce@spearce.org>
-X-From: git-owner@vger.kernel.org Tue Sep 30 15:55:27 2008
+From: "martin f. krafft" <madduck@madduck.net>
+Subject: [PATCH] Improve git-log documentation wrt file filters
+Date: Tue, 30 Sep 2008 16:36:12 +0200
+Message-ID: <1222785372-32336-1-git-send-email-madduck@madduck.net>
+Cc: "martin f. krafft" <madduck@madduck.net>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Sep 30 16:37:48 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KkfhB-00075U-KJ
-	for gcvg-git-2@gmane.org; Tue, 30 Sep 2008 15:55:22 +0200
+	id 1KkgME-00051Z-Jb
+	for gcvg-git-2@gmane.org; Tue, 30 Sep 2008 16:37:47 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753244AbYI3Nx5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 30 Sep 2008 09:53:57 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753035AbYI3Nx5
-	(ORCPT <rfc822;git-outgoing>); Tue, 30 Sep 2008 09:53:57 -0400
-Received: from gv-out-0910.google.com ([216.239.58.186]:60008 "EHLO
-	gv-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752301AbYI3Nx4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 30 Sep 2008 09:53:56 -0400
-Received: by gv-out-0910.google.com with SMTP id e6so8616gvc.37
-        for <git@vger.kernel.org>; Tue, 30 Sep 2008 06:53:54 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:cc:subject
-         :message-id:references:mime-version:content-type:content-disposition
-         :in-reply-to:user-agent;
-        bh=rzCYiioHirPnRlUV48ggvleH1P0ij3kE26hvnnc65Cs=;
-        b=WKR+7TZNc7BD9z9491TcWn0G+bg5DC3R8PD8phn/l/ZiHXfHBp+3QfedL8RJfPvNkf
-         tcjjAMaiHGWyRoB+5vI+SQOy3eLtztwtfot5cRie2q3rrv4NxPsQbi7KQTxClvSvtwZF
-         rJzRb5JL4zgzyY+BXXTUu8cqZCbe/qfKDsIgU=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        b=EwofOXiXaPQOncDi3DrFWHx0haXK1ufoEwC0UVRXSNwps5UoObo6RSeK8gP0eDDwEg
-         4tx6yrV+L2+KK0nboSJR9VnBn1LV8Rd9c2I/45kR540seTqrHjwjDKRAnB7pMsu+t4pc
-         JGz+XAQLwSa6OIcHzSomtC+BgN0HO9OGj+frs=
-Received: by 10.103.173.5 with SMTP id a5mr4840529mup.117.1222782833973;
-        Tue, 30 Sep 2008 06:53:53 -0700 (PDT)
-Received: from localhost (ppp85-141-239-224.pppoe.mtu-net.ru [85.141.239.224])
-        by mx.google.com with ESMTPS id j10sm3577641muh.1.2008.09.30.06.53.50
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Tue, 30 Sep 2008 06:53:52 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <20080929153400.GJ17584@spearce.org>
-User-Agent: Mutt/1.5.13 (2006-08-11)
+	id S1752822AbYI3Oge (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 30 Sep 2008 10:36:34 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752424AbYI3Oge
+	(ORCPT <rfc822;git-outgoing>); Tue, 30 Sep 2008 10:36:34 -0400
+Received: from clegg.madduck.net ([193.242.105.96]:47300 "EHLO
+	clegg.madduck.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752097AbYI3Ogd (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 30 Sep 2008 10:36:33 -0400
+Received: from wall.oerlikon.madduck.net (wall.oerlikon.madduck.net [IPv6:2001:41e0:ff12::1])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(Client CN "wall.oerlikon.madduck.net", Issuer "CAcert Class 3 Root" (verified OK))
+	by clegg.madduck.net (postfix) with ESMTPS id 4A04B1D40A6;
+	Tue, 30 Sep 2008 16:36:21 +0200 (CEST)
+Received: from piper.oerlikon.madduck.net (piper.oerlikon.madduck.net [IPv6:2001:41e0:ff12:0:211:2fff:fe6b:c869])
+	by wall.oerlikon.madduck.net (Postfix) with ESMTP id 889649F247;
+	Tue, 30 Sep 2008 16:36:12 +0200 (CEST)
+Received: by piper.oerlikon.madduck.net (Postfix, from userid 1000)
+	id 30F5A44B7; Tue, 30 Sep 2008 16:36:12 +0200 (CEST)
+X-Mailer: git-send-email 1.5.6.5
+X-Virus-Scanned: ClamAV 0.94/8359/Tue Sep 30 15:29:02 2008 on clegg.madduck.net
+X-Virus-Status: Clean
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/97121>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/97122>
 
-lstat/stat functions in Cygwin are very slow, because they try to emulate
-some *nix things that Git does not actually need. This patch adds Win32
-specific implementation of these functions for Cygwin.
+The need for "--" in the git-log synopsis was previously unclear and
+confusing. This patch makes it a little clearer.
 
-This implementation handles most situation directly but in some rare cases
-it falls back on the implementation provided for Cygwin. This is necessary
-for two reasons:
+Thanks to hyy <yiyihu@gmail.com> for his help.
 
-- Cygwin has its own file hierarchy, so absolute paths used in Cygwin is
-  not suitable to be used Win32 API. cygwin_conv_to_win32_path can not be
-  used because it automatically dereference Cygwin symbol links, also it
-  causes extra syscall. Fortunately Git rarely use absolute paths, so we
-  always use Cygwin implementation for absolute paths.
-
-- Support of symbol links. Cygwin stores symbol links as ordinary using
-  one of two possible formats. Therefore, the fast implementation falls
-  back to Cygwin functions if it detects potential use of symbol links.
-
-The speed of this implementation should be the same as mingw_lstat for
-common cases, but it is considerable slower when the specified file name
-does not exist.
-
-Despite all efforts to make the fast implementation as robust as possible,
-it may not work well for some very rare situations. I am aware only one
-situation: use Cygwin mount to bind unrelated paths inside repository
-together.  Therefore, the core.ignoreCygwinFSTricks configuration option is
-provided, which controls whether native or Cygwin version of stat is used.
-
-Signed-off-by: Dmitry Potapov <dpotapov@gmail.com>
+Signed-off-by: martin f. krafft <madduck@madduck.net>
 ---
+ Documentation/git-log.txt |    8 +++++---
+ 1 files changed, 5 insertions(+), 3 deletions(-)
 
-This version of patch has the following correction:
-
-1. cygwinNativeStat renamed as ignoreCygwinFSTricks
-2. lines in filetime_to_timespec are reformatted to fit in 80 columns
-3. extra spaces after function names are removed
-
-
- Documentation/config.txt |    9 +++
- Makefile                 |    4 ++
- compat/cygwin.c          |  127 ++++++++++++++++++++++++++++++++++++++++++++++
- compat/cygwin.h          |    9 +++
- git-compat-util.h        |    1 +
- 5 files changed, 150 insertions(+), 0 deletions(-)
- create mode 100644 compat/cygwin.c
- create mode 100644 compat/cygwin.h
-
-diff --git a/Documentation/config.txt b/Documentation/config.txt
-index bea867d..61437fe 100644
---- a/Documentation/config.txt
-+++ b/Documentation/config.txt
-@@ -117,6 +117,15 @@ core.fileMode::
- 	the working copy are ignored; useful on broken filesystems like FAT.
- 	See linkgit:git-update-index[1]. True by default.
+diff --git a/Documentation/git-log.txt b/Documentation/git-log.txt
+index 0446bad..b7409f8 100644
+--- a/Documentation/git-log.txt
++++ b/Documentation/git-log.txt
+@@ -8,7 +8,7 @@ git-log - Show commit logs
  
-+core.ignoreCygwinFSTricks::
-+	This option is only used by Cygwin implementation of Git. If false,
-+	the Cygwin stat() and lstat() functions are used. This may be useful
-+	if your repository consists of a few separate directories joined in
-+	one hierarchy using Cygwin mount. If true, Git uses native Win32 API
-+	whenever it is possible and falls back to Cygwin functions only to
-+	handle symbol links. The native mode is more than twice faster than
-+	normal Cygwin l/stat() functions. True by default.
-+
- core.trustctime::
- 	If false, the ctime differences between the index and the
- 	working copy are ignored; useful when the inode change time
-diff --git a/Makefile b/Makefile
-index 3c0664a..0708390 100644
---- a/Makefile
-+++ b/Makefile
-@@ -347,6 +347,7 @@ LIB_H += cache.h
- LIB_H += cache-tree.h
- LIB_H += commit.h
- LIB_H += compat/mingw.h
-+LIB_H += compat/cygwin.h
- LIB_H += csum-file.h
- LIB_H += decorate.h
- LIB_H += delta.h
-@@ -747,6 +748,9 @@ ifeq ($(uname_S),HP-UX)
- 	NO_SYS_SELECT_H = YesPlease
- 	SNPRINTF_RETURNS_BOGUS = YesPlease
- endif
-+ifneq (,$(findstring CYGWIN,$(uname_S)))
-+	COMPAT_OBJS += compat/cygwin.o
-+endif
- ifneq (,$(findstring MINGW,$(uname_S)))
- 	NO_MMAP = YesPlease
- 	NO_PREAD = YesPlease
-diff --git a/compat/cygwin.c b/compat/cygwin.c
-new file mode 100644
-index 0000000..423ff20
---- /dev/null
-+++ b/compat/cygwin.c
-@@ -0,0 +1,127 @@
-+#define WIN32_LEAN_AND_MEAN
-+#include "../git-compat-util.h"
-+#include "win32.h"
-+#include "../cache.h" /* to read configuration */
-+
-+static inline void filetime_to_timespec(const FILETIME *ft, struct timespec *ts)
-+{
-+	long long winTime = ((long long)ft->dwHighDateTime << 32) +
-+			ft->dwLowDateTime;
-+	winTime -= 116444736000000000LL; /* Windows to Unix Epoch conversion */
-+	/* convert 100-nsecond interval to seconds and nanoseconds */
-+	ts->tv_sec = (time_t)(winTime/10000000);
-+	ts->tv_nsec = (long)(winTime - ts->tv_sec*10000000LL) * 100;
-+}
-+
-+#define size_to_blocks(s) (((s)+511)/512)
-+
-+/* do_stat is a common implementation for cygwin_lstat and cygwin_stat.
-+ *
-+ * To simplify its logic, in the case of cygwin symlinks, this implementation
-+ * falls back to the cygwin version of stat/lstat, which is provided as the
-+ * last argument.
-+ */
-+static int do_stat(const char *file_name, struct stat *buf, stat_fn_t cygstat)
-+{
-+	WIN32_FILE_ATTRIBUTE_DATA fdata;
-+
-+	if (file_name[0] == '/')
-+		return cygstat (file_name, buf);
-+
-+	if (!(errno = get_file_attr(file_name, &fdata))) {
-+		/*
-+		 * If the system attribute is set and it is not a directory then
-+		 * it could be a symbol link created in the nowinsymlinks mode.
-+		 * Normally, Cygwin works in the winsymlinks mode, so this situation
-+		 * is very unlikely. For the sake of simplicity of our code, let's
-+		 * Cygwin to handle it.
-+		 */
-+		if ((fdata.dwFileAttributes & FILE_ATTRIBUTE_SYSTEM) &&
-+		    !(fdata.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY))
-+			return cygstat(file_name, buf);
-+
-+		/* fill out the stat structure */
-+		buf->st_dev = buf->st_rdev = 0; /* not used by Git */
-+		buf->st_ino = 0;
-+		buf->st_mode = file_attr_to_st_mode(fdata.dwFileAttributes);
-+		buf->st_nlink = 1;
-+		buf->st_uid = buf->st_gid = 0;
-+#ifdef __CYGWIN_USE_BIG_TYPES__
-+		buf->st_size = ((_off64_t)fdata.nFileSizeHigh << 32) +
-+			fdata.nFileSizeLow;
-+#else
-+		buf->st_size = (off_t)fdata.nFileSizeLow;
-+#endif
-+		buf->st_blocks = size_to_blocks(buf->st_size);
-+		filetime_to_timespec(&fdata.ftLastAccessTime, &buf->st_atim);
-+		filetime_to_timespec(&fdata.ftLastWriteTime, &buf->st_mtim);
-+		filetime_to_timespec(&fdata.ftCreationTime, &buf->st_ctim);
-+		return 0;
-+	} else if (errno == ENOENT) {
-+		/*
-+		 * In the winsymlinks mode (which is the default), Cygwin
-+		 * emulates symbol links using Windows shortcut files. These
-+		 * files are formed by adding .lnk extension. So, if we have
-+		 * not found the specified file name, it could be that it is
-+		 * a symbol link. Let's Cygwin to deal with that.
-+		 */
-+		return cygstat(file_name, buf);
-+	}
-+	return -1;
-+}
-+
-+/* We provide our own lstat/stat functions, since the provided Cygwin versions
-+ * of these functions are too slow. These stat functions are tailored for Git's
-+ * usage, and therefore they are not meant to be complete and correct emulation
-+ * of lstat/stat functionality.
-+ */
-+static int cygwin_lstat(const char *path, struct stat *buf)
-+{
-+	return do_stat(path, buf, lstat);
-+}
-+
-+static int cygwin_stat(const char *path, struct stat *buf)
-+{
-+	return do_stat(path, buf, stat);
-+}
-+
-+
-+/*
-+ * At start up, we are trying to determine whether Win32 API or cygwin stat
-+ * functions should be used. The choice is determined by core.ignorecygwinfstricks.
-+ * Reading this option is not always possible immediately as git_dir may be
-+ * not be set yet. So until it is set, use cygwin lstat/stat functions.
-+ */
-+static int native_stat = 1;
-+
-+static int git_cygwin_config(const char *var, const char *value, void *cb)
-+{
-+	if (!strcmp(var, "core.ignorecygwinfstricks"))
-+		native_stat = git_config_bool(var, value);
-+	return 0;
-+}
-+
-+static int init_stat(void)
-+{
-+	if (have_git_dir()) {
-+		git_config(git_cygwin_config, NULL);
-+		cygwin_stat_fn = native_stat ? cygwin_stat : stat;
-+		cygwin_lstat_fn = native_stat ? cygwin_lstat : lstat;
-+		return 0;
-+	}
-+	return 1;
-+}
-+
-+static int cygwin_stat_stub(const char *file_name, struct stat *buf)
-+{
-+	return (init_stat() ? stat : *cygwin_stat_fn)(file_name, buf);
-+}
-+
-+static int cygwin_lstat_stub(const char *file_name, struct stat *buf)
-+{
-+	return (init_stat() ? lstat : *cygwin_lstat_fn)(file_name, buf);
-+}
-+
-+stat_fn_t cygwin_stat_fn = cygwin_stat_stub;
-+stat_fn_t cygwin_lstat_fn = cygwin_lstat_stub;
-+
-diff --git a/compat/cygwin.h b/compat/cygwin.h
-new file mode 100644
-index 0000000..a3229f5
---- /dev/null
-+++ b/compat/cygwin.h
-@@ -0,0 +1,9 @@
-+#include <sys/types.h>
-+#include <sys/stat.h>
-+
-+typedef int (*stat_fn_t)(const char*, struct stat*);
-+extern stat_fn_t cygwin_stat_fn;
-+extern stat_fn_t cygwin_lstat_fn;
-+
-+#define stat(path, buf) (*cygwin_stat_fn)(path, buf)
-+#define lstat(path, buf) (*cygwin_lstat_fn)(path, buf)
-diff --git a/git-compat-util.h b/git-compat-util.h
-index db2836f..cd9752c 100644
---- a/git-compat-util.h
-+++ b/git-compat-util.h
-@@ -85,6 +85,7 @@
- #undef _XOPEN_SOURCE
- #include <grp.h>
- #define _XOPEN_SOURCE 600
-+#include "compat/cygwin.h"
- #else
- #undef _ALL_SOURCE /* AIX 5.3L defines a struct list with _ALL_SOURCE. */
- #include <grp.h>
+ SYNOPSIS
+ --------
+-'git log' <option>...
++'git log' [<options>] [<since>..<until>] [[--] <path>...]
+ 
+ DESCRIPTION
+ -----------
+@@ -57,8 +57,10 @@ include::diff-options.txt[]
+ 	Note that only message is considered, if also a diff is shown
+ 	its size is not included.
+ 
+-<path>...::
+-	Show only commits that affect any of the specified paths.
++-- <path>...::
++	Show only commits that affect any of the specified paths. To
++        prevent confusion with options and branch names, paths should be
++        prefixed with "-- " to separate them from options or refnames.
+ 
+ 
+ include::rev-list-options.txt[]
 -- 
-1.6.0
+1.5.6.5
