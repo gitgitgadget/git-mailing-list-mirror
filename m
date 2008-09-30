@@ -1,145 +1,59 @@
-From: Nicolas Pitre <nico@cam.org>
-Subject: [PATCH, resent] fix openssl headers conflicting with custom SHA1
- implementations
-Date: Tue, 30 Sep 2008 16:22:45 -0400 (EDT)
-Message-ID: <alpine.LFD.2.00.0809301621091.3635@xanadu.home>
+From: "Shawn O. Pearce" <spearce@spearce.org>
+Subject: Re: [PATCH 4/4 v2] cygwin: Use native Win32 API for stat
+Date: Tue, 30 Sep 2008 13:26:25 -0700
+Message-ID: <20080930202625.GM21310@spearce.org>
+References: <20080927084349.GC21650@dpotapov.dyndns.org> <200809272035.03833.johannes.sixt@telecom.at> <20080927215406.GG21650@dpotapov.dyndns.org> <200809281124.08364.johannes.sixt@telecom.at> <20080929153400.GJ17584@spearce.org> <20080930135347.GK21650@dpotapov.dyndns.org> <48E23E5B.7020404@griep.us>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: git@vger.kernel.org
-To: "Shawn O. Pearce" <spearce@spearce.org>
-X-From: git-owner@vger.kernel.org Tue Sep 30 22:24:16 2008
+Content-Type: text/plain; charset=utf-8
+Cc: Dmitry Potapov <dpotapov@gmail.com>,
+	Johannes Sixt <johannes.sixt@telecom.at>, git@vger.kernel.org,
+	Junio C Hamano <gitster@pobox.com>,
+	Alex Riesen <raa.lkml@gmail.com>
+To: Marcus Griep <marcus@griep.us>
+X-From: git-owner@vger.kernel.org Tue Sep 30 22:27:43 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KkllW-0002e8-LC
-	for gcvg-git-2@gmane.org; Tue, 30 Sep 2008 22:24:15 +0200
+	id 1Kkloo-0003rU-15
+	for gcvg-git-2@gmane.org; Tue, 30 Sep 2008 22:27:38 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753976AbYI3UWx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 30 Sep 2008 16:22:53 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752749AbYI3UWw
-	(ORCPT <rfc822;git-outgoing>); Tue, 30 Sep 2008 16:22:52 -0400
-Received: from relais.videotron.ca ([24.201.245.36]:11876 "EHLO
-	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752768AbYI3UWv (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 30 Sep 2008 16:22:51 -0400
-Received: from xanadu.home ([66.131.194.97]) by VL-MO-MR005.ip.videotron.ca
- (Sun Java(tm) System Messaging Server 6.3-4.01 (built Aug  3 2007; 32bit))
- with ESMTP id <0K8000ATRZ90YXI0@VL-MO-MR005.ip.videotron.ca> for
- git@vger.kernel.org; Tue, 30 Sep 2008 16:22:12 -0400 (EDT)
-X-X-Sender: nico@xanadu.home
-User-Agent: Alpine 2.00 (LFD 1167 2008-08-23)
+	id S1752044AbYI3U00 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 30 Sep 2008 16:26:26 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752749AbYI3U00
+	(ORCPT <rfc822;git-outgoing>); Tue, 30 Sep 2008 16:26:26 -0400
+Received: from george.spearce.org ([209.20.77.23]:35158 "EHLO
+	george.spearce.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751731AbYI3U00 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 30 Sep 2008 16:26:26 -0400
+Received: by george.spearce.org (Postfix, from userid 1001)
+	id 4CCED3835F; Tue, 30 Sep 2008 20:26:25 +0000 (UTC)
+Content-Disposition: inline
+In-Reply-To: <48E23E5B.7020404@griep.us>
+User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/97156>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/97157>
 
-On ARM I have the following compilation errors:
+Marcus Griep <marcus@griep.us> wrote:
+> Dmitry Potapov wrote:
+> > lstat/stat functions in Cygwin are very slow, because they try to emulate
+> > some *nix things that Git does not actually need. This patch adds Win32
+> > specific implementation of these functions for Cygwin.
+> 
+> Can't wait to see this patch in next or master!  If you recall my benchmarks
+> from earlier, the speed-up is pretty good for cygwin users working with
+> large repositories.
+> 
+> > Signed-off-by: Dmitry Potapov <dpotapov@gmail.com>
+> 
+> Thanks for the work, Dmitry!
 
-    CC fast-import.o
-In file included from cache.h:8,
-                 from builtin.h:6,
-                 from fast-import.c:142:
-arm/sha1.h:14: error: conflicting types for 'SHA_CTX'
-/usr/include/openssl/sha.h:105: error: previous declaration of 'SHA_CTX' was here
-arm/sha1.h:16: error: conflicting types for 'SHA1_Init'
-/usr/include/openssl/sha.h:115: error: previous declaration of 'SHA1_Init' was here
-arm/sha1.h:17: error: conflicting types for 'SHA1_Update'
-/usr/include/openssl/sha.h:116: error: previous declaration of 'SHA1_Update' was here
-arm/sha1.h:18: error: conflicting types for 'SHA1_Final'
-/usr/include/openssl/sha.h:117: error: previous declaration of 'SHA1_Final' was here
-make: *** [fast-import.o] Error 1
+Thanks folks.  I'm scheduling this for 'next'.  Lets see how
+it goes...
 
-This is because openssl header files are always included in 
-git-compat-util.h since commit 684ec6c63c whenever NO_OPENSSL is not 
-set, which somehow brings in <openssl/sha1.h> clashing with the custom 
-ARM version.  Compilation of git is probably broken on PPC too for the 
-same reason.
-
-Turns out that the only file requiring openssl/ssl.h and openssl/err.h 
-is imap-send.c.  But only moving those problematic includes there 
-doesn't solve the issue as it also includes cache.h which brings in the 
-conflicting header.  So also conditionally including SHA1_HEADER allows 
-for not including it when compiling imap-send.c.
-
-Signed-off-by: Nicolas Pitre <nico@cam.org>
-
----
-
-This is a bit ugly but given the rat nest of system includes we have I 
-don't know how to solve this any better.
-
-diff --git a/Makefile b/Makefile
-index 3c0664a..a0f86dd 100644
---- a/Makefile
-+++ b/Makefile
-@@ -1242,6 +1242,9 @@ endif
- git-%$X: %.o $(GITLIBS)
- 	$(QUIET_LINK)$(CC) $(ALL_CFLAGS) -o $@ $(ALL_LDFLAGS) $(filter %.o,$^) $(LIBS)
- 
-+imap-send.o: imap-send.c GIT-CFLAGS
-+	$(QUIET_CC)$(CC) -o $*.o -c $(ALL_CFLAGS) -USHA1_HEADER $<
-+
- git-imap-send$X: imap-send.o $(GITLIBS)
- 	$(QUIET_LINK)$(CC) $(ALL_CFLAGS) -o $@ $(ALL_LDFLAGS) $(filter %.o,$^) \
- 		$(LIBS) $(OPENSSL_LINK) $(OPENSSL_LIBSSL)
-diff --git a/cache.h b/cache.h
-index de8c2b6..d93e086 100644
---- a/cache.h
-+++ b/cache.h
-@@ -5,7 +5,10 @@
- #include "strbuf.h"
- #include "hash.h"
- 
-+#ifdef SHA1_HEADER
- #include SHA1_HEADER
-+#endif
-+
- #include <zlib.h>
- 
- #if defined(NO_DEFLATE_BOUND) || ZLIB_VERNUM < 0x1200
-diff --git a/git-compat-util.h b/git-compat-util.h
-index db2836f..044f62b 100644
---- a/git-compat-util.h
-+++ b/git-compat-util.h
-@@ -99,11 +99,6 @@
- #include <iconv.h>
- #endif
- 
--#ifndef NO_OPENSSL
--#include <openssl/ssl.h>
--#include <openssl/err.h>
--#endif
--
- /* On most systems <limits.h> would have given us this, but
-  * not on some systems (e.g. GNU/Hurd).
-  */
-diff --git a/imap-send.c b/imap-send.c
-index af7e08c..01f1c9a 100644
---- a/imap-send.c
-+++ b/imap-send.c
-@@ -22,11 +22,15 @@
-  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
-  */
- 
--#include "cache.h"
- #ifdef NO_OPENSSL
- typedef void *SSL;
-+#else
-+#include <openssl/ssl.h>
-+#include <openssl/err.h>
- #endif
- 
-+#include "cache.h"
-+
- struct store_conf {
- 	char *name;
- 	const char *path; /* should this be here? its interpretation is driver-specific */
-
-
-
-
-Nicolas
+-- 
+Shawn.
