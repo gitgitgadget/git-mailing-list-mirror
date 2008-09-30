@@ -1,97 +1,71 @@
-From: Johannes Sixt <j.sixt@viscovery.net>
-Subject: [PATCH] git-gui: Do not automatically stage file after merge tool
- finishes
-Date: Tue, 30 Sep 2008 08:43:11 +0200
-Message-ID: <48E1CA7F.5050501@viscovery.net>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH] Builtin-commit: show on which branch a commit was added
+Date: Tue, 30 Sep 2008 03:09:38 -0400
+Message-ID: <20080930070938.GA14757@sigill.intra.peff.net>
+References: <4C04A26E-5829-4A39-AD89-F5A68E606AA3@ai.rug.nl> <1220634785-55543-1-git-send-email-pdebie@ai.rug.nl> <7vzlmkpltb.fsf@gitster.siamese.dyndns.org> <20080921104238.GA9217@sigill.intra.peff.net> <A36A4B61-D223-4821-9969-FA76EAECD1EC@ai.rug.nl> <20080929224430.GA11545@sigill.intra.peff.net> <48E1C39F.4070906@op5.se> <836C204F-F5AF-4887-99C9-04E70FEEB998@wincent.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15
-Content-Transfer-Encoding: 7bit
-Cc: Alexander Gavrilov <angavrilov@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: "Shawn O. Pearce" <spearce@spearce.org>
-X-From: git-owner@vger.kernel.org Tue Sep 30 08:44:23 2008
+Content-Type: text/plain; charset=utf-8
+Cc: Andreas Ericsson <ae@op5.se>, Pieter de Bie <pdebie@ai.rug.nl>,
+	Junio C Hamano <gitster@pobox.com>,
+	Git Mailinglist <git@vger.kernel.org>
+To: Wincent Colaiuta <win@wincent.com>
+X-From: git-owner@vger.kernel.org Tue Sep 30 09:11:01 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KkYy7-0002lC-79
-	for gcvg-git-2@gmane.org; Tue, 30 Sep 2008 08:44:23 +0200
+	id 1KkZNp-0001Cf-Ng
+	for gcvg-git-2@gmane.org; Tue, 30 Sep 2008 09:10:58 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751489AbYI3GnO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 30 Sep 2008 02:43:14 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751442AbYI3GnO
-	(ORCPT <rfc822;git-outgoing>); Tue, 30 Sep 2008 02:43:14 -0400
-Received: from lilzmailso01.liwest.at ([212.33.55.23]:18225 "EHLO
-	lilzmailso01.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751188AbYI3GnN (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 30 Sep 2008 02:43:13 -0400
-Received: from cm56-163-160.liwest.at ([86.56.163.160] helo=linz.eudaptics.com)
-	by lilzmailso01.liwest.at with esmtpa (Exim 4.66)
-	(envelope-from <j.sixt@viscovery.net>)
-	id 1KkYwx-00060Z-Ei; Tue, 30 Sep 2008 08:43:12 +0200
-Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.42])
-	by linz.eudaptics.com (Postfix) with ESMTP
-	id 33F954FB; Tue, 30 Sep 2008 08:43:11 +0200 (CEST)
-User-Agent: Thunderbird 2.0.0.6 (Windows/20070728)
-X-Enigmail-Version: 0.95.5
-X-Spam-Score: 1.7 (+)
-X-Spam-Report: ALL_TRUSTED=-1.8, BAYES_99=3.5
+	id S1752545AbYI3HJp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 30 Sep 2008 03:09:45 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752287AbYI3HJo
+	(ORCPT <rfc822;git-outgoing>); Tue, 30 Sep 2008 03:09:44 -0400
+Received: from peff.net ([208.65.91.99]:4715 "EHLO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752502AbYI3HJo (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 30 Sep 2008 03:09:44 -0400
+Received: (qmail 29770 invoked by uid 111); 30 Sep 2008 07:09:39 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.32) with ESMTP; Tue, 30 Sep 2008 03:09:39 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 30 Sep 2008 03:09:38 -0400
+Content-Disposition: inline
+In-Reply-To: <836C204F-F5AF-4887-99C9-04E70FEEB998@wincent.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/97069>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/97070>
 
-From: Johannes Sixt <johannes.sixt@telecom.at>
+On Tue, Sep 30, 2008 at 08:37:00AM +0200, Wincent Colaiuta wrote:
 
-If a merge tool was invoked on a conflicted file and the tool completed,
-then the conflicted file was staged automatically. However, the fact that
-the user closed the merge tool cannot be understood as the unequivocal
-sign that the conflict was completely resolved. For example, the user
-could have decided to postpone the resolution of the conflict, or could
-have accidentally closed the tool. We better leave the file unstaged and
-let the user stage it explicitly.
+>> "commit" is just noise.
+>
+> Excellent point on the noise. Independently of whether the branch info  
+> gets added the word "commit" should probably be dropped.
 
-Since the file is not staged anyway, the check for an unmodified
-timestamp is pointless and removed.
+The branch info has already been added, if you count it being in next
+(in the form of "on $branch: ").
 
-Signed-off-by: Johannes Sixt <johannes.sixt@telecom.at>
----
- I had sent this patch last week (but marked as RFC). Here it is again
- without 'RFC' because I think it is a necessary change.
+> As far as long-line-wrapping goes, I don't really think this is a problem 
+> for Git to solve (by truncation or any other means); it's more of a user 
+> behaviour thing where one would hope that users would get into the habit 
+> of using concise subject lines and branch names.
 
- -- Hannes
+How concise must we be? I wrap my commit messages at 60 characters,
+which I consider quite conservative. But
 
- lib/mergetool.tcl |   10 +---------
- 1 files changed, 1 insertions(+), 9 deletions(-)
+  Created commit abcd1234 on jk/my-topic-branch:
 
-diff --git a/lib/mergetool.tcl b/lib/mergetool.tcl
-index 6ab5701..8d1ee5b 100644
---- a/lib/mergetool.tcl
-+++ b/lib/mergetool.tcl
-@@ -375,14 +375,6 @@ proc merge_tool_finish {fd} {
- 		}
- 	}
+takes up over half of an 80-column terminal. Is that a long branch name?
+Browsing "git log --grep=Merge.branch --pretty=format:%s origin/next"
+suggests it's not terribly out of line (at least by Junio's standards).
 
--	# Check the modification time of the target file
--	if {!$failed && [file mtime $mtool_target] eq $mtool_mtime} {
--		if {[ask_popup [mc "File %s unchanged, still accept as resolved?" \
--				[short_path $mtool_target]]] ne {yes}} {
--			set failed 1
--		}
--	}
--
- 	# Finish
- 	if {$failed} {
- 		file rename -force -- $backup $mtool_target
-@@ -395,6 +387,6 @@ proc merge_tool_finish {fd} {
+Dropping "commit " will help some. But given how much width is still
+used, and the fact that this message is really just to say "yes, I
+confirm that we just created the commit you asked for", I think
+truncating (with dots) to keep it within 80 characters is reasonable.
 
- 		delete_temp_files $mtool_tmpfiles
-
--		merge_add_resolution $mtool_target
-+		reshow_diff
- 	}
- }
--- 
-1.6.0.2.1262.ge466e
+-Peff
