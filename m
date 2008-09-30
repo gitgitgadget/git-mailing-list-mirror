@@ -1,88 +1,95 @@
 From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: [PATCH 1/6] gitweb: action in path with use_pathinfo
-Date: Tue, 30 Sep 2008 13:22:56 +0200
-Message-ID: <200809301322.58280.jnareb@gmail.com>
-References: <1222030663-22540-1-git-send-email-giuseppe.bilotta@gmail.com> <200809301048.40046.jnareb@gmail.com> <cb7bb73a0809300340t79a497fey4ededd960223fcdd@mail.gmail.com>
+Subject: Re: Git config not expanding user home directories
+Date: Tue, 30 Sep 2008 04:38:46 -0700 (PDT)
+Message-ID: <m33ajhsw24.fsf@localhost.localdomain>
+References: <F90667E7-6B06-4B34-B655-3C42ED236D9A@netspot.com.au>
+	<48E2043A.4000501@op5.se>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, "Petr Baudis" <pasky@ucw.cz>,
-	"Lea Wiemann" <lewiemann@gmail.com>
-To: "Giuseppe Bilotta" <giuseppe.bilotta@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Sep 30 13:24:25 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: Tom Lanyon <tom@netspot.com.au>,
+	Git Mailinglist <git@vger.kernel.org>
+To: Andreas Ericsson <ae@op5.se>
+X-From: git-owner@vger.kernel.org Tue Sep 30 13:40:20 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KkdL2-0006wY-RY
-	for gcvg-git-2@gmane.org; Tue, 30 Sep 2008 13:24:21 +0200
+	id 1KkdaD-0003vu-41
+	for gcvg-git-2@gmane.org; Tue, 30 Sep 2008 13:40:01 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752265AbYI3LXJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 30 Sep 2008 07:23:09 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753477AbYI3LXJ
-	(ORCPT <rfc822;git-outgoing>); Tue, 30 Sep 2008 07:23:09 -0400
-Received: from nf-out-0910.google.com ([64.233.182.191]:62035 "EHLO
+	id S1752252AbYI3Liu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 30 Sep 2008 07:38:50 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752185AbYI3Liu
+	(ORCPT <rfc822;git-outgoing>); Tue, 30 Sep 2008 07:38:50 -0400
+Received: from nf-out-0910.google.com ([64.233.182.186]:2268 "EHLO
 	nf-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753753AbYI3LXG (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 30 Sep 2008 07:23:06 -0400
-Received: by nf-out-0910.google.com with SMTP id d3so841982nfc.21
-        for <git@vger.kernel.org>; Tue, 30 Sep 2008 04:23:05 -0700 (PDT)
+	with ESMTP id S1751958AbYI3Lit (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 30 Sep 2008 07:38:49 -0400
+Received: by nf-out-0910.google.com with SMTP id d3so844943nfc.21
+        for <git@vger.kernel.org>; Tue, 30 Sep 2008 04:38:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:subject:date
-         :user-agent:cc:references:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:message-id;
-        bh=yVLGiWtaqQy2m2ajmkmBS1wbud+/qzn8chd+AYz0FV8=;
-        b=IZprqomBfJ4+GwbBYdczuGHwN3ohaet4vEtaJ4BnjCzdBOonQWCPwoqo763hOmZFlb
-         tJD790ize6YHcuxBXyeWvWf4bw+2VeQ6/zKCctvR61AZEYp9VSyF1v+88DdZKGEYbFpN
-         FYhw3s5u2HEHTHUQhWxLsTzYrAwCeEPa1a5ho=
+        h=domainkey-signature:received:received:received:received
+         :x-authentication-warning:to:cc:subject:references:from:in-reply-to
+         :message-id:lines:user-agent:mime-version:content-type:date;
+        bh=BmFr+7YRbchKKOx3BpE6hmDiZmAYq5my75kkSSnZ8TQ=;
+        b=Mle8YttibTghKJuLjGGYP+aAaAHl77X0FUdyBJi0Ls37KMyy7tY6tH2wHTLdyyAf6s
+         8ASeqdQjS7aVDE/K0lzR1dvdxEzCq5IZDO4J/gwoe5Yf4N3dlyIMk/tcsBDLeZQWUrjr
+         QNSc/FQGXH0XO2YzbCgt5eYbZvUUeNfWQKK/g=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=from:to:subject:date:user-agent:cc:references:in-reply-to
-         :mime-version:content-type:content-transfer-encoding
-         :content-disposition:message-id;
-        b=nnHUserAdkZTpA4XuqEhEo7AJ51ssTVRntZrLDwlFAyDC7f7Qe3vqyzXKSzg3INrmv
-         XnFPgbQ5nq88r8WxcYbAt8s+pTF6hzpYN9vaZpw4Sj8P7/T8ehLBdCtIxJtGFoCHschP
-         4tPiP88vrnAjfapW3EgxufqLJE8TDaGm39duM=
-Received: by 10.103.11.7 with SMTP id o7mr4701987mui.103.1222773785006;
-        Tue, 30 Sep 2008 04:23:05 -0700 (PDT)
-Received: from ?192.168.1.11? (abvy102.neoplus.adsl.tpnet.pl [83.8.222.102])
-        by mx.google.com with ESMTPS id j9sm4729502mue.3.2008.09.30.04.23.01
+        h=x-authentication-warning:to:cc:subject:references:from:in-reply-to
+         :message-id:lines:user-agent:mime-version:content-type:date;
+        b=gyAkFdEXxPAddRmMSXEdwZbuIdC7/weaEqjq3z76mi4oLJAKmXqe6AurCes1yApWwh
+         Ix9bAfxnX4pvRH7BxGCb5A0m1EAChmNjen3KQczKEtKT/UTqyXTCkHKO9UQI8u9pjzeQ
+         1z/OwNhtOa2bO4ogFpIAZ4rZ9Dswn2OEsk6eM=
+Received: by 10.103.222.12 with SMTP id z12mr4713401muq.95.1222774727441;
+        Tue, 30 Sep 2008 04:38:47 -0700 (PDT)
+Received: from localhost.localdomain (abvy102.neoplus.adsl.tpnet.pl [83.8.222.102])
+        by mx.google.com with ESMTPS id s10sm1727285muh.12.2008.09.30.04.38.45
         (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Tue, 30 Sep 2008 04:23:03 -0700 (PDT)
-User-Agent: KMail/1.9.3
-In-Reply-To: <cb7bb73a0809300340t79a497fey4ededd960223fcdd@mail.gmail.com>
-Content-Disposition: inline
+        Tue, 30 Sep 2008 04:38:46 -0700 (PDT)
+Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
+	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id m8UBcXYZ007855;
+	Tue, 30 Sep 2008 13:38:40 +0200
+Received: (from jnareb@localhost)
+	by localhost.localdomain (8.13.4/8.13.4/Submit) id m8UBcS81007849;
+	Tue, 30 Sep 2008 13:38:28 +0200
+X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
+In-Reply-To: <48E2043A.4000501@op5.se>
+User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/97102>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/97103>
 
-On Tue, 30 Sep 2008, Giuseppe "Oblomov" Bilotta wrote:
-> On Tue, Sep 30, 2008 at 10:48 AM, Jakub Narebski <jnareb@gmail.com> wrote:
+Andreas Ericsson <ae@op5.se> writes:
 
-> > Or we could just scrap and revert adding href(..., -replay=>1).
-> > There is much trouble with getting it right and performing well,
-> > and it is less useful than I thought (at least now).
+> Tom Lanyon wrote:
+> > 
+> > Is it normal behavior that git (well at least git-svn) won't expand
+> > ~user from .gitconfig?
+> >
 > 
-> Dunno, the idea in itself is not bad. We just have to get it right ;)
+> Yes. You could add a patch for that though. git-daemon does ~user
+> expansion since quite a long time back, so there's a function ready
+> for it. I'd do it by doing something like:
+> 
+>    git config --path section.key
+> 
+> so that scripts can get the user-expanded version as well. In-core
+> applications can call expand_path() or some such on their own, I
+> think.
 
-It is not easy to get it right, especially that there are multivalued
-parameters like @extra_options, see e.g. commit 7863c612
- 
-> In a way, I actually think that -replay=>1 should be the default, I
-> suspect it makes sense in most cases.
+There was a patch send to git mailing list adding basic '~' support
+(I think via $ENV{HOME}), and IIRC even ~user support. I don't know
+what happened to those patches (check mailing list archive), but
+most probably it was not accepted because it didn't provide a way
+for scripts to use this functionality, for example via --path option.
 
-Well, -replay=>1 was meant to be used for "alternate view" links, like
-for example 'next page' link, or 'raw view' link, or 'sorted by' link;
-it would be stretch and feature abuse to use it for "item" links, like
-entries in 'tree' view, or commits in log-like views, or changed files
-links in 'commitdiff' and 'blobdiff'  views.
-
-I guess it would be half the cases, not most cases.
 -- 
 Jakub Narebski
 Poland
+ShadeHawk on #git
