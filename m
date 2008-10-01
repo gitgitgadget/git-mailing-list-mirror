@@ -1,91 +1,112 @@
-From: Francois Pepin <fpepin@cs.mcgill.ca>
-Subject: corrupted repository?
-Date: Wed, 01 Oct 2008 17:29:38 -0400
-Message-ID: <48E3EBC2.7090107@cs.mcgill.ca>
+From: Jeff King <jrk@wrek.org>
+Subject: Re: [PATCH] git commit: Repaint the output format bikeshed (again)
+Date: Wed, 1 Oct 2008 18:06:04 -0400
+Message-ID: <20081001220604.GB18058@coredump.intra.peff.net>
+References: <20081001154425.GE21310@spearce.org> <48E3E66E.7020501@op5.se>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Oct 01 23:38:20 2008
+Content-Type: text/plain; charset=utf-8
+Cc: Shawn Pearce <spearce@spearce.org>,
+	Git Mailing List <git@vger.kernel.org>
+To: Andreas Ericsson <ae@op5.se>
+X-From: git-owner@vger.kernel.org Thu Oct 02 00:14:02 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Kl9Ns-0000is-1S
-	for gcvg-git-2@gmane.org; Wed, 01 Oct 2008 23:37:24 +0200
+	id 1Kl9xH-0004ZF-Tx
+	for gcvg-git-2@gmane.org; Thu, 02 Oct 2008 00:14:00 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753608AbYJAVgJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 1 Oct 2008 17:36:09 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753604AbYJAVgI
-	(ORCPT <rfc822;git-outgoing>); Wed, 1 Oct 2008 17:36:08 -0400
-Received: from trickle.CC.McGill.CA ([132.206.27.51]:63632 "EHLO
-	trickle.cc.mcgill.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753413AbYJAVgH (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 1 Oct 2008 17:36:07 -0400
-X-Greylist: delayed 379 seconds by postgrey-1.27 at vger.kernel.org; Wed, 01 Oct 2008 17:36:07 EDT
-Received: from torrent.cc.mcgill.ca (torrent.CC.McGill.CA [132.206.27.49])
-	by trickle.cc.mcgill.ca (8.13.6/8.12.3) with ESMTP id m91La4nk003048
-	for <git@vger.kernel.org>; Wed, 1 Oct 2008 17:36:04 -0400 (EDT)
-Received: from mailscan1.ncs.mcgill.ca (mailscan1.NCS.McGill.CA [132.216.77.248])
-	by torrent.cc.mcgill.ca (8.12.11.20060308/8.12.3) with ESMTP id m91LTix7031727;
-	Wed, 1 Oct 2008 17:29:44 -0400
-Received: from mailscan1.ncs.mcgill.ca (localhost [127.0.0.1])
-	by localhost (Postfix) with SMTP id 1D709400F;
-	Wed,  1 Oct 2008 17:29:39 -0400 (EDT)
-Received: from monch.mcb.mcgill.ca (monch.MCB.McGill.CA [132.206.211.134])
-	by mailscan1.ncs.mcgill.ca (Postfix) with ESMTP id EFB493A17;
-	Wed,  1 Oct 2008 17:29:38 -0400 (EDT)
-User-Agent: Thunderbird 2.0.0.12 (X11/20080213)
-X-PMX-Version: 5.4.2.338381, Antispam-Engine: 2.6.0.325393, Antispam-Data: 2008.9.28.155531
-X-McGill-WhereFrom: Internal
+	id S1753511AbYJAWMs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 1 Oct 2008 18:12:48 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753386AbYJAWMs
+	(ORCPT <rfc822;git-outgoing>); Wed, 1 Oct 2008 18:12:48 -0400
+Received: from peff.net ([208.65.91.99]:4791 "EHLO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753369AbYJAWMs (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 1 Oct 2008 18:12:48 -0400
+X-Greylist: delayed 400 seconds by postgrey-1.27 at vger.kernel.org; Wed, 01 Oct 2008 18:12:47 EDT
+Received: (qmail 22193 invoked by uid 111); 1 Oct 2008 22:06:05 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+    by peff.net (qpsmtpd/0.32) with SMTP; Wed, 01 Oct 2008 18:06:05 -0400
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Wed, 01 Oct 2008 18:06:04 -0400
+Content-Disposition: inline
+In-Reply-To: <48E3E66E.7020501@op5.se>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/97272>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/97276>
 
-Hi,
+On Wed, Oct 01, 2008 at 11:06:54PM +0200, Andreas Ericsson wrote:
 
-The repository on my OS X machine (10.5.5) seems to have been suddenly 
-become corrupted in a strange way.
+> of the commit result output. To make it read properly
+> we get rid of "Created", which I just can't fit into
+> a sentence without putting the branch-name last.
 
-Everything seems to be working properly there (git fsck --full returns 
-normally with no output), but I cannot clone or pull from my other machines:
+All of the other proposals indicate the hash and subject as the object
+of creation. IOW, "created: <hash>: subject" or similar.
 
-(iduna is the name of the OS X machine)
-[francois@monch ~]$ git clone iduna:git iduna2
-Initialized empty Git repository in /bioinfo/home/francois/iduna2/.git/
-Password:
-error: git upload-pack: git-pack-objects died with error.
-fatal: git upload-pack: aborting due to possible repository corruption 
-on the remote side.
-remote: fatal: exec pack-objects failed.
-remote: aborting due to possible repository corruption on the remote side.
-fatal: early EOF
-fatal: index-pack failed
+> Having taken inspiration from the "git reset" command,
+> output for the three conceivable cases now look thus:
+>
+>  normal commit
+>  <branch> is now at b930c4a (i386: Snib the sprock)
 
-I have the same issue from the same machine:
-[francois@Iduna ~]$ git clone localhost:git git2
-Initialized empty Git repository in /Users/francois/git2/.git/
-remote: fatal: exec pack-objects failed.
-error: git upload-pack: git-pack-objects died with error.
-fatal: git upload-pack: aborting due to possible repository corruption 
-on the remote side.
-remote: aborting due to possible repository corruption on the remote side.
-fatal: early EOF
-fatal: index-pack failed
+I think I still like your other proposal:
 
-But not if I just do it locally:
-[francois@Iduna ~]$ git clone git git2
-Initialized empty Git repository in /Users/francois/git2/.git/
-Checking out files:   2% (140/5273)
-[I cancelled it at this point]
+  [branch] created b930c4a: "i386: Snib the sprock"
 
-I am running git 1.6.0.2 on the mac, and have only recently updated it 
-so that might have a role to play.
+better. But in the interests of just agreeing on something, I am willing
+to accept this. FWIW, the git-reset command doesn't use any delimiter
+for the message:
 
-Any suggestion would be welcome to fix this issue, and I'll be more than 
-happy to provide whatever more information could useful.
+   <branch> is now at <hash> <subject>
 
-Francois
+So perhaps they should be the same. I don't think it overly matters.
+
+>  detached commit
+>  DETACHED HEAD is now at b930c4a (i386: Snib the sprock)
+
+You mentioned the shouty caps before. I think "detached HEAD" is
+probably caps enough, but not enough to argue for it (I just want to
+mention as an informal vote if Shawn wants to mark it up while
+applying).
+
+>  initial commit
+>  History has begun anew. Root-commit created.
+>  <branch> is now at bc930c4a (i386: Snib the sprock)
+
+Heh.
+
+> "Created" is a problem when one wants to put branch-name before the
+> subject line, because the subject has to follow the hash (it doesn't
+> describe the pre-state of the branch/detached head), but the newly
+> added commit. "Created, on branch, hash (subject)" just looks
+> stilted and stupid, so I had to change it. Hopefully this can be
+> accepted. If not, count me out.
+
+That was the reason for the helper function that was deleted. It
+actually created a format string like "Created %h on <branch>: %s" and
+properly escaped the percents in <branch>. So you would have to keep it
+if you wanted to interleave the data (but I think what you have is
+better -- the branch name or the detached status is the thing that
+should be first).
+
+> I'm not sure if the last "else" case setting branch = head; can
+> ever happen, but I figured it can't hurt to make sure. Feel free
+> to modify commentary around it or the entire section when applying.
+
+It should definitely be there, if only for the sanity of future
+expansion (and because I can technically put whatever ref I want into
+HEAD :) ).
+
+> -		printf("%s\n", buf.buf);
+> -		strbuf_release(&buf);
+> +		printf("%s\n", strbuf_detach(&buf, NULL));
+
+This change is bogus. "release" frees a strbuf. "detach" says "Give me
+the buffer, and I will take care of freeing it later myself". So you
+introduced a leak.
+
+-Peff
