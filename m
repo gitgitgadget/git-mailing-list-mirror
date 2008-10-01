@@ -1,93 +1,109 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: Re: [PATCH] Builtin-commit: show on which branch a commit was added
-Date: Wed, 1 Oct 2008 08:36:37 -0700
-Message-ID: <20081001153637.GC21310@spearce.org>
-References: <A36A4B61-D223-4821-9969-FA76EAECD1EC@ai.rug.nl> <20080929224430.GA11545@sigill.intra.peff.net> <48E1C39F.4070906@op5.se> <836C204F-F5AF-4887-99C9-04E70FEEB998@wincent.com> <20080930070938.GA14757@sigill.intra.peff.net> <48E1F87D.2010906@op5.se> <20081001031400.GA24513@coredump.intra.peff.net> <48E3312E.4090601@op5.se> <20081001151011.GA21310@spearce.org> <20081001152546.GB4962@coredump.intra.peff.net>
+From: Jeff King <peff@peff.net>
+Subject: Re: obscure platform autobuilders
+Date: Wed, 1 Oct 2008 11:37:03 -0400
+Message-ID: <20081001153703.GC4962@coredump.intra.peff.net>
+References: <20080924154632.GR3669@spearce.org> <e2b179460809260624n4b329345q3610069af5af75c2@mail.gmail.com> <20080926225423.GA25502@coredump.intra.peff.net> <e2b179460809290051q8ca76a4k7cf0af2748a5f0fc@mail.gmail.com> <20081001071653.GA21174@sigill.intra.peff.net> <e2b179460810010346j23617764i8134c1f24b2746f0@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Cc: Andreas Ericsson <ae@op5.se>, Wincent Colaiuta <win@wincent.com>,
-	Pieter de Bie <pdebie@ai.rug.nl>,
-	Junio C Hamano <gitster@pobox.com>,
-	Git Mailinglist <git@vger.kernel.org>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Wed Oct 01 17:38:08 2008
+Cc: git@vger.kernel.org
+To: Mike Ralphson <mike.ralphson@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Oct 01 17:38:58 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Kl3lt-0005Vw-LN
-	for gcvg-git-2@gmane.org; Wed, 01 Oct 2008 17:37:50 +0200
+	id 1Kl3mh-0005tU-5X
+	for gcvg-git-2@gmane.org; Wed, 01 Oct 2008 17:38:39 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752411AbYJAPgj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 1 Oct 2008 11:36:39 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752206AbYJAPgj
-	(ORCPT <rfc822;git-outgoing>); Wed, 1 Oct 2008 11:36:39 -0400
-Received: from george.spearce.org ([209.20.77.23]:54954 "EHLO
-	george.spearce.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751724AbYJAPgi (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 1 Oct 2008 11:36:38 -0400
-Received: by george.spearce.org (Postfix, from userid 1001)
-	id A3F983835F; Wed,  1 Oct 2008 15:36:37 +0000 (UTC)
+	id S1752206AbYJAPhH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 1 Oct 2008 11:37:07 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752179AbYJAPhH
+	(ORCPT <rfc822;git-outgoing>); Wed, 1 Oct 2008 11:37:07 -0400
+Received: from peff.net ([208.65.91.99]:2512 "EHLO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752206AbYJAPhF (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 1 Oct 2008 11:37:05 -0400
+Received: (qmail 19487 invoked by uid 111); 1 Oct 2008 15:37:04 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+    by peff.net (qpsmtpd/0.32) with SMTP; Wed, 01 Oct 2008 11:37:04 -0400
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Wed, 01 Oct 2008 11:37:03 -0400
 Content-Disposition: inline
-In-Reply-To: <20081001152546.GB4962@coredump.intra.peff.net>
-User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
+In-Reply-To: <e2b179460810010346j23617764i8134c1f24b2746f0@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/97238>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/97239>
 
-Jeff King <peff@peff.net> wrote:
-> On Wed, Oct 01, 2008 at 08:10:11AM -0700, Shawn O. Pearce wrote:
-> 
-> > Actually I rather like the patch you submitted yesterday:
-> > 
-> >         normal case
-> >         Created abc9056 (i386: Snib the sprock) on i386
-> > 
-> >         detached head
-> >         Created DETACHED commit abc9056 (i386: Snib the sprock)
-> > 
-> >         initial commit
-> >         Created root-commit abc9056 (i386: Snib the sprock) on i386
-> > 
-> > The detached HEAD and root-commit cases are clearly denoted at the
-> > very start of the line, where your eyes are likely to start scanning
-> 
-> I agree with your assumption that people scan the line from left to
-> right, and that the most important stuff should come first. So that
-> format covers _those_ cases, but not the case of "oops, I committed on
-> a different branch than I intended." So I think it really makes sense
-> to keep the branch name on the left side, and the commit subject last.
+On Wed, Oct 01, 2008 at 11:46:43AM +0100, Mike Ralphson wrote:
 
-I briefly considered a format like this while replying above, but
-at prior day-job I used rather long branch names (sometimes with
-common prefixes) so it would truncate alot:
+> My googling led me to think that INTERNAL_QSORT would be a good idea
+> on at least some versions of Solaris... it may depend on the fs
+> though.
 
-  normal case
-  On i386           abc9056 (i386: Snib the sprock)
+I thought it was purely a performance enhancement. Should it affect the
+test results?
 
-  detached head
-  On DETACHED HEAD  abc9056 (i386: Snib the sprock)
+> How about this - let me know if ok, and I'll push it.
 
-  initial commit
-  On i386
-  Root commit       abc9056 (i386: Snib the sprock)
+It mostly looks good, though I would have split it into several distinct
+commits for readability. A few comments below.
 
-With the branch name field set at about 15 characters and truncated.
-The initial commit case is very infrequent so burning two lines
-for it to help make it stand out *and* make the branch name clear
-isn't really a problem.
- 
-> > Right now I'm happy with your patch in next.  I don't like taking
-> > the paint brush away from folks, but I also don't want to be applying
-> > a ton of commit message reformatting patches over the next week.  ;-)
-> 
-> Welcome to maintainership. ;P
+> -  - 'branches', a list of branches, one per line, to build and test
+> +  - 'branches', a list of branches, one per line, to build and test.
+> +    Lines starting with # are treated as comments
 
-*sigh*  And I just took up the #@*#@!&!*!@ paintbrush myself.
-Dammit.  I'm putting it down now.  Really.  :-)
+Makes sense.
 
--- 
-Shawn.
+>    - 'config.mak'; if this file exists, it will be used as the config.mak
+> -    file for building git
+> +    file for building git. If it is not present, but there is a
+> +    config.mak file in your project directory, it is copied here to
+> +    prevent it being removed by 'git clean'
+
+I'm not sure I agree with this. My goal was to treat the project
+directory as nothing more than a cache, with the gitbuild repo as the
+master source driving the tests. So this works backwards to that.
+
+One of the things I was (and am) considering is rather than doing
+checkout/clean, to simply export each branch to a new directory and
+build from there. Then the "project" repo could actually be bare.
+
+How is this feature intended to be used? It looks like it would
+basically be invoked one time, when running this script on an existing
+gitbuild setup. So it saves one manual step of copying your config.mak
+to the platform directory. But you still have to manually inspect, add,
+and commit that config.mak file.
+
+> +  - 'catch', a shell script sourced by the build script if an error
+> +    occurs. It is passed the failing command-line in its arguments
+> +
+> +  - 'finally', a shell script sourced by the build script at the end
+> +    of the process. It is passed the exit code of build.sh as its
+> +    argument
+
+These look like sensible hooks.
+
+> +  - project; the path to the directory to build in. If not set, defaults
+> +             to ./project relative to the starting directory
+> +
+
+I am accomplishing the same thing with a symlink, but I think this is
+probably cleaner.
+
+> +if ! test -d $project; then
+> +  try mkdir $project
+> +  try cd $project
+
+Quotes around $project? I'm not sure how robust the rest of the script
+is to paths with spaces (which I personally consider insane).
+
+> -  for i in `cat "$root/branches"`; do
+> +  for i in `cat "$root/branches" | grep -v '^#'`; do
+
+Useless use of cat. :)
+
+  grep -v ^# < "$root/branches"
+
+-Peff
