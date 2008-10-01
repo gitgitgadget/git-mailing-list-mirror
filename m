@@ -1,123 +1,91 @@
-From: =?utf-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-	<pclouds@gmail.com>
-Subject: [PATCH 9/9] grep: skip files outside sparse checkout area
-Date: Wed,  1 Oct 2008 11:04:09 +0700
-Message-ID: <1222833849-22129-10-git-send-email-pclouds@gmail.com>
-References: <1222833849-22129-1-git-send-email-pclouds@gmail.com>
- <1222833849-22129-2-git-send-email-pclouds@gmail.com>
- <1222833849-22129-3-git-send-email-pclouds@gmail.com>
- <1222833849-22129-4-git-send-email-pclouds@gmail.com>
- <1222833849-22129-5-git-send-email-pclouds@gmail.com>
- <1222833849-22129-6-git-send-email-pclouds@gmail.com>
- <1222833849-22129-7-git-send-email-pclouds@gmail.com>
- <1222833849-22129-8-git-send-email-pclouds@gmail.com>
- <1222833849-22129-9-git-send-email-pclouds@gmail.com>
+From: Stephen Haberman <stephen@exigencecorp.com>
+Subject: Re: interactive rebase not rebasing
+Date: Wed, 1 Oct 2008 01:03:06 -0500
+Organization: Exigence
+Message-ID: <20081001010306.01cc34eb.stephen@exigencecorp.com>
+References: <20080928235013.5c749c6e.stephen@exigencecorp.com>
+	<48E078BF.5030806@op5.se>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: =?utf-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-	<pclouds@gmail.com>
-To: git@vger.kernel.org, "Shawn O. Pearce" <spearce@spearce.org>
-X-From: git-owner@vger.kernel.org Wed Oct 01 06:07:26 2008
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Andreas Ericsson <ae@op5.se>
+X-From: git-owner@vger.kernel.org Wed Oct 01 08:04:26 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Kkszj-0001Sc-5B
-	for gcvg-git-2@gmane.org; Wed, 01 Oct 2008 06:07:23 +0200
+	id 1Kkuox-0000KU-SX
+	for gcvg-git-2@gmane.org; Wed, 01 Oct 2008 08:04:24 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751537AbYJAEGO convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 1 Oct 2008 00:06:14 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751516AbYJAEGN
-	(ORCPT <rfc822;git-outgoing>); Wed, 1 Oct 2008 00:06:13 -0400
-Received: from rv-out-0506.google.com ([209.85.198.229]:63785 "EHLO
-	rv-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751458AbYJAEGL (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 1 Oct 2008 00:06:11 -0400
-Received: by rv-out-0506.google.com with SMTP id k40so384855rvb.1
-        for <git@vger.kernel.org>; Tue, 30 Sep 2008 21:06:11 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:received:from:to:cc:subject
-         :date:message-id:x-mailer:in-reply-to:references:mime-version
-         :content-type:content-transfer-encoding;
-        bh=hiI1dP6wQq9eW+eROAbkg3wxMkZkm4A6tlCqFuQhc1k=;
-        b=H+BF1ARF3xOX9Rhi4aaY8+ldrsd1EG66xxhc4250UPF6F6VrRcDxxEamXdg6DQXapt
-         lA/X+97JxBvvjiqYuUbbSnZmBuo6Ln/p9/UaFnRQRfzlep1SnMObok2D5qyMmXgY6t6j
-         ZDu/OQ/cIVJ6COwcSoTe7VgrcikER8MrUBFGI=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references
-         :mime-version:content-type:content-transfer-encoding;
-        b=wPQQMIEau6z5/HGO9nwB8OXCLNBv93/1jlSXz1cz/uDFbrjtAwbXQ/1SnkQNT2uKQc
-         cJRNgwtk+gt4t4YIunpD45hIGQwFreMQiK429F1Jq7LXc7EBnbt4D1+iwoNpHIXPmgxI
-         NFH5PZ6AUvKJyUlAo4nQYkkQL8m6CX3Gdd1ak=
-Received: by 10.142.192.11 with SMTP id p11mr3157710wff.111.1222833971317;
-        Tue, 30 Sep 2008 21:06:11 -0700 (PDT)
-Received: from pclouds@gmail.com ([117.5.46.240])
-        by mx.google.com with ESMTPS id 30sm4717941wfc.5.2008.09.30.21.06.07
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Tue, 30 Sep 2008 21:06:09 -0700 (PDT)
-Received: by pclouds@gmail.com (sSMTP sendmail emulation); Wed,  1 Oct 2008 11:06:03 +0700
-X-Mailer: git-send-email 1.6.0.2.488.gf604a
-In-Reply-To: <1222833849-22129-9-git-send-email-pclouds@gmail.com>
+	id S1751945AbYJAGDM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 1 Oct 2008 02:03:12 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751928AbYJAGDM
+	(ORCPT <rfc822;git-outgoing>); Wed, 1 Oct 2008 02:03:12 -0400
+Received: from smtp172.sat.emailsrvr.com ([66.216.121.172]:46174 "EHLO
+	smtp172.sat.emailsrvr.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751864AbYJAGDL (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 1 Oct 2008 02:03:11 -0400
+Received: from relay7.relay.sat.mlsrvr.com (localhost [127.0.0.1])
+	by relay7.relay.sat.mlsrvr.com (SMTP Server) with ESMTP id BFBDA9B0B77;
+	Wed,  1 Oct 2008 02:03:09 -0400 (EDT)
+Received: by relay7.relay.sat.mlsrvr.com (Authenticated sender: stephen-AT-exigencecorp.com) with ESMTP id 5B6F85B38BD;
+	Wed,  1 Oct 2008 02:03:09 -0400 (EDT)
+In-Reply-To: <48E078BF.5030806@op5.se>
+X-Mailer: Sylpheed 2.5.0beta3 (GTK+ 2.10.14; i686-pc-mingw32)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/97200>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/97201>
 
 
-Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
-=2Ecom>
----
- Documentation/git-grep.txt |    4 +++-
- builtin-grep.c             |    7 ++++++-
- 2 files changed, 9 insertions(+), 2 deletions(-)
+> > # A --C------            <-- origin/stable
+> > #  \  |      \
+> > #   B -- D -- E -- F     <-- origin/topic2
+> > #    \|
+> > #     g -- h             <-- topic2
+> > 
+> > Nothing has changed. g & h haven't moved...I can keep executing this
+> > operation and the commits never make it on top of origin/topic2's F. 
+> > 
+> > Frustratingly, if I run non-interactive rebase, it works perfectly.
+> 
+> I can imagine. Since you don't want to preserve the merges in this
+> case, you shouldn't be using the -p flag.
 
-diff --git a/Documentation/git-grep.txt b/Documentation/git-grep.txt
-index fa4d133..ee359c9 100644
---- a/Documentation/git-grep.txt
-+++ b/Documentation/git-grep.txt
-@@ -24,7 +24,9 @@ SYNOPSIS
- DESCRIPTION
- -----------
- Look for specified patterns in the working tree files, blobs
--registered in the index file, or given tree objects.
-+registered in the index file, or given tree objects. By default
-+it will search in the working tree files. When in sparse checkout
-+mode, it only searches checked-out files.
-=20
-=20
- OPTIONS
-diff --git a/builtin-grep.c b/builtin-grep.c
-index 3a51662..d5507d7 100644
---- a/builtin-grep.c
-+++ b/builtin-grep.c
-@@ -343,6 +343,8 @@ static int external_grep(struct grep_opt *opt, cons=
-t char **paths, int cached)
- 			continue;
- 		if (!pathspec_matches(paths, ce->name))
- 			continue;
-+		if (ce_no_checkout(ce))
-+			continue;
- 		name =3D ce->name;
- 		if (name[0] =3D=3D '-') {
- 			int len =3D ce_namelen(ce);
-@@ -404,8 +406,11 @@ static int grep_cache(struct grep_opt *opt, const =
-char **paths, int cached)
- 				continue;
- 			hit |=3D grep_sha1(opt, ce->sha1, ce->name, 0);
- 		}
--		else
-+		else {
-+			if (ce_no_checkout(ce))
-+				continue;
- 			hit |=3D grep_file(opt, ce->name);
-+		}
- 		if (ce_stage(ce)) {
- 			do {
- 				nr++;
---=20
-1.6.0.2.488.gf604a
+No, I do want to preserve most merges. This "most" qualification is
+because the merge "g", if rebased, would have been a no-op, so `rebase
+-i -p` correctly kept it out of the TODO file.
+
+Which is cool, except that later on, when rewriting the other TODO
+commits, some of which were children of "g", it did not remember that
+"g" had gone away, so did nothing to take "g" out of the rewritten
+children's parent list.
+
+> In fact, for this particular scenario (assuming "h" is really the only
+> commit on topic2), you probably want to just cherry-pick that commit
+> into origin/topic2:
+> 
+>    git checkout topic2
+>    git reset --hard origin/topic2
+>    git cherry-pick ORIG_HEAD
+
+Agreed. This makes a lot of sense for me, who has been hacking around in
+git-rebase--interactive fixing things, but I'd really like the other
+people on my team to just have to run `git rebase -i -p`.
+
+> I don't think you can have a single command that does all the things
+> you want, because the possible differences in input makes it very
+> nearly impossible to always do "the right thing".
+
+Ah, you are too pessimistic. :-)
+
+> Assuming you're passing a correct input file to rebase -i; yes. At the
+> very least, "h" should be moved to the tip of origin/topic2.
+
+Cool, agreed. I've got a patch that gets `rebase -i -p` to do this. I'll
+send it to the list soon.
+
+- Stephen
