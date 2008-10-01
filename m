@@ -1,75 +1,174 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: Re: [PATCH, resent] fix openssl headers conflicting with custom
-	SHA1 implementations
-Date: Wed, 1 Oct 2008 09:10:47 -0700
-Message-ID: <20081001161047.GG21310@spearce.org>
-References: <alpine.LFD.2.00.0809301621091.3635@xanadu.home> <20080930203928.GN21310@spearce.org> <alpine.LFD.2.00.0809301645340.3635@xanadu.home> <20080930205122.GO21310@spearce.org> <20081001034712.GE24513@coredump.intra.peff.net> <20081001155458.GF21310@spearce.org> <20081001160418.GA13917@coredump.intra.peff.net>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Nicolas Pitre <nico@cam.org>, git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Wed Oct 01 18:12:30 2008
+From: Raphael Zimmerer <killekulla@rdrz.de>
+Subject: [PATCH v2] git grep: Add "-z/--null" option as in GNU's grep.
+Date: Wed,  1 Oct 2008 18:11:15 +0200
+Message-ID: <1222877475-2699-1-git-send-email-killekulla@rdrz.de>
+References: <1222816390-9141-1-git-send-email-killekulla@rdrz.de>
+Cc: git@vger.kernel.org, Johannes.Schindelin@gmx.de,
+	madcoder@debian.org
+To: spearce@spearce.org
+X-From: git-owner@vger.kernel.org Wed Oct 01 18:13:33 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Kl4Iw-0002uE-MA
-	for gcvg-git-2@gmane.org; Wed, 01 Oct 2008 18:11:59 +0200
+	id 1Kl4JY-0003Au-Ni
+	for gcvg-git-2@gmane.org; Wed, 01 Oct 2008 18:12:37 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751284AbYJAQKt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 1 Oct 2008 12:10:49 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751489AbYJAQKs
-	(ORCPT <rfc822;git-outgoing>); Wed, 1 Oct 2008 12:10:48 -0400
-Received: from george.spearce.org ([209.20.77.23]:51316 "EHLO
-	george.spearce.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750901AbYJAQKs (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 1 Oct 2008 12:10:48 -0400
-Received: by george.spearce.org (Postfix, from userid 1001)
-	id C24B03835F; Wed,  1 Oct 2008 16:10:47 +0000 (UTC)
-Content-Disposition: inline
-In-Reply-To: <20081001160418.GA13917@coredump.intra.peff.net>
-User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
+	id S1753234AbYJAQLT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 1 Oct 2008 12:11:19 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753200AbYJAQLS
+	(ORCPT <rfc822;git-outgoing>); Wed, 1 Oct 2008 12:11:18 -0400
+Received: from rdrz.de ([217.160.107.209]:41223 "HELO rdrz.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1752018AbYJAQLR (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 1 Oct 2008 12:11:17 -0400
+Received: (qmail 2740 invoked by uid 89); 1 Oct 2008 16:11:16 -0000
+Received: from unknown (HELO localhost.localdomain) (killekulla@127.0.0.1)
+  by localhost with SMTP; 1 Oct 2008 16:11:16 -0000
+X-Mailer: git-send-email 1.5.6.5
+In-Reply-To: <1222816390-9141-1-git-send-email-killekulla@rdrz.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/97244>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/97245>
 
-Jeff King <peff@peff.net> wrote:
-> On Wed, Oct 01, 2008 at 08:54:58AM -0700, Shawn O. Pearce wrote:
-> 
-> > I think its easy enough to just rename our SHA_CTX and SHA_*
-> > functions to something more git specific.  Since its mostly a global
-> 
-> I think that is the cleanest and simplest solution. As for merging pain,
-> I think Junio would generally do a mechanical change like this as the
-> first thing after a release. However, in this case, I think we might
-> want it sooner if the conflict is causing breakage.
+Here's a trivial patch that adds "-z" and "--null" options to "git
+grep". It was discussed on the mailing-list that git's "-z"
+convention should be used instead of GNU grep's "-Z".
+So things like 'git grep -l -z "$FOO" | xargs -0 sed -i "s/$FOO/$BOO/"'
+do work now.
 
-Oh, yea, that's probably true.  But with ARM broken according to
-Nico I'd almost just want this fixed in the upcoming 1.6.1 release.
-Its simple enough to do.  We can even do something like this during
-the transition period until right before the 1.6.1 final:
+Signed-off-by: Raphael Zimmerer <killekulla@rdrz.de>
+---
 
-diff --git a/cache.h b/cache.h
-index 46f82bd..e77adf9 100644
---- a/cache.h
-+++ b/cache.h
-@@ -5,6 +5,10 @@
- #include "strbuf.h"
- #include "hash.h"
+Changes from first patch:
+    * "-Z" -> "-z"
+    * use '\0' instead of 0
+Regards
+  Raphael
+
+ Documentation/git-grep.txt |    6 ++++++
+ builtin-grep.c             |    8 ++++++++
+ grep.c                     |   14 +++++++++++---
+ grep.h                     |    1 +
+ 4 files changed, 26 insertions(+), 3 deletions(-)
+
+diff --git a/Documentation/git-grep.txt b/Documentation/git-grep.txt
+index fa4d133..553da6c 100644
+--- a/Documentation/git-grep.txt
++++ b/Documentation/git-grep.txt
+@@ -15,6 +15,7 @@ SYNOPSIS
+ 	   [-E | --extended-regexp] [-G | --basic-regexp]
+ 	   [-F | --fixed-strings] [-n]
+ 	   [-l | --files-with-matches] [-L | --files-without-match]
++	   [-z | --null]
+ 	   [-c | --count] [--all-match]
+ 	   [-A <post-context>] [-B <pre-context>] [-C <context>]
+ 	   [-f <file>] [-e] <pattern>
+@@ -94,6 +95,11 @@ OPTIONS
+ 	For better compatibility with 'git-diff', --name-only is a
+ 	synonym for --files-with-matches.
  
-+#define SHA_CTX     not_the_SHA_CTX_you_are_looking_for
-+#define SHA1_Init   not_the_SHA1_Init_you_are_looking_for
-+#define SHA1_Update not_the_SHA1_Update_you_are_looking_for
-+#define SHA1_Final  not_the_SHA1_Final_you_are_looking_for
- #include SHA1_HEADER
- #include <zlib.h>
-
-and we'll catch anything using the old symbol name.  Only cache.h
-includes the SHA1_HEADER so anyone using the (old) SHA_* functions
-would hit these #defines and fall over the undefined symbol.
-
++-z::
++--null::
++	Output \0 instead of the character that normally follows a
++	file name.
++
+ -c::
+ --count::
+ 	Instead of showing every matched line, show the number of
+diff --git a/builtin-grep.c b/builtin-grep.c
+index 3a51662..2241324 100644
+--- a/builtin-grep.c
++++ b/builtin-grep.c
+@@ -295,6 +295,9 @@ static int external_grep(struct grep_opt *opt, const char **paths, int cached)
+ 		push_arg("-l");
+ 	if (opt->unmatch_name_only)
+ 		push_arg("-L");
++	if (opt->null_following_name)
++		// in GNU grep git's "-z" translates to "-Z"
++		push_arg("-Z");
+ 	if (opt->count)
+ 		push_arg("-c");
+ 	if (opt->post_context || opt->pre_context) {
+@@ -599,6 +602,11 @@ int cmd_grep(int argc, const char **argv, const char *prefix)
+ 			opt.unmatch_name_only = 1;
+ 			continue;
+ 		}
++		if (!strcmp("-z", arg) ||
++		    !strcmp("--null", arg)) {
++			opt.null_following_name = 1;
++			continue;
++		}
+ 		if (!strcmp("-c", arg) ||
+ 		    !strcmp("--count", arg)) {
+ 			opt.count = 1;
+diff --git a/grep.c b/grep.c
+index 7063511..e2c190a 100644
+--- a/grep.c
++++ b/grep.c
+@@ -239,6 +239,8 @@ static int word_char(char ch)
+ static void show_line(struct grep_opt *opt, const char *bol, const char *eol,
+ 		      const char *name, unsigned lno, char sign)
+ {
++	if (opt->null_following_name)
++		sign = '\0';
+ 	if (opt->pathname)
+ 		printf("%s%c", name, sign);
+ 	if (opt->linenum)
+@@ -246,6 +248,11 @@ static void show_line(struct grep_opt *opt, const char *bol, const char *eol,
+ 	printf("%.*s\n", (int)(eol-bol), bol);
+ }
+ 
++static void show_name(struct grep_opt *opt, const char *name)
++{
++	printf("%s%c", name, opt->null_following_name ? '\0' : '\n');
++}
++
+ static int fixmatch(const char *pattern, char *line, regmatch_t *match)
+ {
+ 	char *hit = strstr(line, pattern);
+@@ -489,7 +496,7 @@ static int grep_buffer_1(struct grep_opt *opt, const char *name,
+ 				return 1;
+ 			}
+ 			if (opt->name_only) {
+-				printf("%s\n", name);
++				show_name(opt, name);
+ 				return 1;
+ 			}
+ 			/* Hit at this line.  If we haven't shown the
+@@ -555,7 +562,7 @@ static int grep_buffer_1(struct grep_opt *opt, const char *name,
+ 		return 0;
+ 	if (opt->unmatch_name_only) {
+ 		/* We did not see any hit, so we want to show this */
+-		printf("%s\n", name);
++		show_name(opt, name);
+ 		return 1;
+ 	}
+ 
+@@ -565,7 +572,8 @@ static int grep_buffer_1(struct grep_opt *opt, const char *name,
+ 	 * make it another option?  For now suppress them.
+ 	 */
+ 	if (opt->count && count)
+-		printf("%s:%u\n", name, count);
++		printf("%s%c%u\n", name,
++		       opt->null_following_name ? '\0' : ':', count);
+ 	return !!last_hit;
+ }
+ 
+diff --git a/grep.h b/grep.h
+index 59b3f87..45a222d 100644
+--- a/grep.h
++++ b/grep.h
+@@ -74,6 +74,7 @@ struct grep_opt {
+ 	unsigned extended:1;
+ 	unsigned relative:1;
+ 	unsigned pathname:1;
++	unsigned null_following_name:1;
+ 	int regflags;
+ 	unsigned pre_context;
+ 	unsigned post_context;
 -- 
-Shawn.
+1.5.6.5
