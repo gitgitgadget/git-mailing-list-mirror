@@ -2,171 +2,122 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: *
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=1.1 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RP_MATCHES_RCVD shortcircuit=no
+X-Spam-Status: No, score=1.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no
 	autolearn=unavailable autolearn_force=no version=3.4.0
-Received: (qmail 10520 invoked by uid 111); 30 Sep 2008 16:52:05 -0000
+Received: (qmail 18685 invoked by uid 111); 1 Oct 2008 14:08:17 -0000
 Received: from vger.kernel.org (HELO vger.kernel.org) (209.132.176.167)
-    by peff.net (qpsmtpd/0.32) with ESMTP; Tue, 30 Sep 2008 12:52:01 -0400
+    by peff.net (qpsmtpd/0.32) with ESMTP; Wed, 01 Oct 2008 10:08:16 -0400
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752446AbYI3Qv5 (ORCPT <rfc822;peff@peff.net>);
-	Tue, 30 Sep 2008 12:51:57 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752546AbYI3Qv5
-	(ORCPT <rfc822;git-outgoing>); Tue, 30 Sep 2008 12:51:57 -0400
-Received: from [212.249.11.140] ([212.249.11.140]:11177 "EHLO pixie.suse.cz"
-	rhost-flags-FAIL-FAIL-OK-FAIL) by vger.kernel.org with ESMTP
-	id S1751705AbYI3Qv4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 30 Sep 2008 12:51:56 -0400
-Received: by pixie.suse.cz (Postfix, from userid 2001)
-	id B11712AC8E5; Tue, 30 Sep 2008 18:51:41 +0200 (CEST)
-From:	Petr Baudis <pasky@suse.cz>
-To:	git@vger.kernel.org
-Cc:	spearce@spearce.org, Petr Baudis <petr.baudis@novartis.com>
-Subject: [PATCH] git-gui: Implement a 'clone' subcommand
-Date:	Tue, 30 Sep 2008 18:51:41 +0200
-Message-Id: <1222793501-17997-1-git-send-email-pasky@suse.cz>
-X-Mailer: git-send-email 1.5.6.3.392.g292f1
-To:	git@vger.kernel.org
+	id S1751744AbYJAOIL (ORCPT <rfc822;peff@peff.net>);
+	Wed, 1 Oct 2008 10:08:11 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751291AbYJAOIK
+	(ORCPT <rfc822;git-outgoing>); Wed, 1 Oct 2008 10:08:10 -0400
+Received: from fg-out-1718.google.com ([72.14.220.159]:55342 "EHLO
+	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750785AbYJAOIJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 1 Oct 2008 10:08:09 -0400
+Received: by fg-out-1718.google.com with SMTP id 19so409891fgg.17
+        for <git@vger.kernel.org>; Wed, 01 Oct 2008 07:08:06 -0700 (PDT)
+DKIM-Signature:	v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:from:to:cc:subject:date
+         :message-id:x-mailer:to:sender;
+        bh=JPlSzw47yQLH76mdMqY8PJRMdVegC20oDgl0rYFMftg=;
+        b=Dut7UQCm1q3mZH/3jaaC5bCiQ1DLZEXKAzhAzzfWWtfK0oyVcroM9GB8bhTD2Uxf+c
+         aaInWKuYufCXdvZHzSY0SRlA7hfwD3Lh4KTIfhU1cIoDMsZrslfpLvpji9k+1zCsBXHT
+         at5YrwCPifvbdnFqfZ73Ws3/i9963+61YBh5M=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=from:to:cc:subject:date:message-id:x-mailer:sender;
+        b=X1F/YMRAgFqAOQ/w62qpEN0JzvzLRhE2Ms63FRWxOrvxt0vOGuQfAbqj8N4nqWvNTG
+         H7WxhBtOqO+bS0ciND8SrABGQKQ94jRtZNNKmD2OIslipcuccgS0BFYDwX0WMaoWgI9X
+         uF2i93M4Y81BLOT499pMSvg5OzFgO6aZgD/vY=
+Received: by 10.180.222.14 with SMTP id u14mr4254170bkg.47.1222870085968;
+        Wed, 01 Oct 2008 07:08:05 -0700 (PDT)
+Received: from localhost.localdomain (shr01.u.parknet.dk [84.238.113.244])
+        by mx.google.com with ESMTPS id p10sm5501477gvf.7.2008.10.01.07.07.48
+        (version=SSLv3 cipher=RC4-MD5);
+        Wed, 01 Oct 2008 07:07:54 -0700 (PDT)
+From:	Jonas Fonseca <fonseca@diku.dk>
+To:	Petr Baudis <pasky@suse.cz>
+Cc:	git@vger.kernel.org
+Subject: [TG PATCH] README: Fix spelling and reflect recent depend support
+Date:	Wed,  1 Oct 2008 16:07:39 +0200
+Message-Id: <1222870059-22077-1-git-send-email-fonseca@diku.dk>
+X-Mailer: git-send-email 1.6.0.2.569.g798a2a
+To:	Petr Baudis <pasky@suse.cz>
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-This enables git-gui to be started with the clone dialog opened right
-away, possibly with the URL prefilled when it is passed as another
-argument. git-gui can then be e.g. registered as the git:// protocol
-handler.
-
-This is just a simple implementation - we construct the front actions
-page, then throw it away immediately; I wanted to avoid unnecessary
-refactoring and complication of the code, though.
-
-Signed-off-by: Petr Baudis <petr.baudis@novartis.com>
+Signed-off-by: Jonas Fonseca <fonseca@diku.dk>
 
 ---
- Documentation/git-gui.txt         |    5 +++++
- git-gui/git-gui.sh                |   21 ++++++++++++++++++---
- git-gui/lib/choose_repository.tcl |   11 ++++++++++-
- 3 files changed, 33 insertions(+), 4 deletions(-)
+ README |   14 +++++++-------
+ 1 files changed, 7 insertions(+), 7 deletions(-)
 
-diff --git a/Documentation/git-gui.txt b/Documentation/git-gui.txt
-index 0e650f4..9ce63be 100644
---- a/Documentation/git-gui.txt
-+++ b/Documentation/git-gui.txt
-@@ -43,6 +43,11 @@ citool::
- 	to only commit actions, slightly reducing the application's
- 	startup time and simplifying the menubar.
+diff --git a/README b/README
+index 35a9f98..903face 100644
+--- a/README
++++ b/README
+@@ -22,7 +22,7 @@ version control of patches (reordering of patches is not
+ version-controlled at all). But there are several disadvantages -
+ for one, these tools (especially StGIT) do not actually fit well
+ with plain Git at all: it is basically impossible to take advantage
+-of the index efectively when using StGIT. But more importantly,
++of the index effectively when using StGIT. But more importantly,
+ these tools horribly fail in the face of distributed environment.
  
-+clone::
-+	Start the 'git-gui' clone dialog, optionally taking
-+	a source location as an extra argument to pre-fill
-+	in the dialog.
-+
- version::
- 	Display the currently running version of 'git-gui'.
+ TopGit has been designed around three main tenets:
+@@ -45,7 +45,7 @@ them.
  
-diff --git a/git-gui/git-gui.sh b/git-gui/git-gui.sh
-index 4085e8f..86f0151 100755
---- a/git-gui/git-gui.sh
-+++ b/git-gui/git-gui.sh
-@@ -950,6 +950,8 @@ enable_option multicommit
- enable_option branch
- enable_option transport
- disable_option bare
-+set init_action {}
-+set clone_url {}
+ As mentioned above, the main intended use-case for TopGit is tracking
+ third-party patches, where each patch is effectively a single topic
+-branch.  In order to flexibly accomodate even complex scenarios when
++branch.  In order to flexibly accommodate even complex scenarios when
+ you track many patches where many are independent but some depend
+ on others, TopGit ignores the ancient Quilt heritage of patch series
+ and instead allows the patches to freely form graphs (DAGs just like
+@@ -252,6 +252,7 @@ tg delete
+ 	depending on it.
  
- switch -- $subcommand {
- browser -
-@@ -960,6 +962,13 @@ blame {
- 	disable_option branch
- 	disable_option transport
- }
-+clone {
-+	set init_action "clone"
-+	if {[llength $argv] > 0} {
-+		set clone_url [lindex $argv 0]
-+		set argv [lrange $argv 1 end]
-+	}
-+}
- citool {
- 	enable_option singlecommit
- 	enable_option retcode
-@@ -995,7 +1004,12 @@ citool {
- ##
- ## repository setup
+ 	TODO: '-a' to delete all empty branches, depfix, revert
++	TODO: subcommand removing dependencies smoothly
  
--if {[catch {
-+if {$init_action != ""} {
-+	load_config 1
-+	apply_config
-+	choose_repository::pick $init_action
-+
-+} elseif {[catch {
- 		set _gitdir $env(GIT_DIR)
- 		set _prefix {}
- 		}]
-@@ -1005,7 +1019,7 @@ if {[catch {
- 	} err]} {
- 	load_config 1
- 	apply_config
--	choose_repository::pick
-+	choose_repository::pick {}
- }
- if {![file isdirectory $_gitdir] && [is_Cygwin]} {
- 	catch {set _gitdir [exec cygpath --windows $_gitdir]}
-@@ -2622,6 +2636,7 @@ blame {
- 	return
- }
- citool -
-+clone -
- gui {
- 	if {[llength $argv] != 0} {
- 		puts -nonewline stderr "usage: $argv0"
-@@ -2635,7 +2650,7 @@ gui {
- 	# fall through to setup UI for commits
- }
- default {
--	puts stderr "usage: $argv0 \[{blame|browser|citool}\]"
-+	puts stderr "usage: $argv0 \[{blame|browser|citool|clone}\]"
- 	exit 1
- }
- }
-diff --git a/git-gui/lib/choose_repository.tcl b/git-gui/lib/choose_repository.tcl
-index 3180786..290fbc0 100644
---- a/git-gui/lib/choose_repository.tcl
-+++ b/git-gui/lib/choose_repository.tcl
-@@ -21,7 +21,7 @@ field clone_type hardlink ; # Type of clone to construct
- field readtree_err        ; # Error output from read-tree (if any)
- field sorted_recent       ; # recent repositories (sorted)
+ tg depend
+ ~~~~~~~~~
+@@ -344,7 +345,7 @@ tg export
+ 	in the cleaned up history (corresponding basically exactly
+ 	to `tg patch` output for the topic branch).
  
--constructor pick {} {
-+constructor pick {action} {
- 	global M1T M1B
+-	The command has two posible outputs now - either a Git branch
++	The command has two possible outputs now - either a Git branch
+ 	with the collapsed history, or a quilt series in new directory.
  
- 	make_toplevel top w
-@@ -195,6 +195,11 @@ constructor pick {} {
- 		bind $top <Visibility> {}
- 	"
- 	wm deiconify $top
-+
-+	if {$action != ""} {
-+		_next $this $action
-+	}
-+
- 	tkwait variable @done
+ 	In case of producing collapsed history in new branch,
+@@ -449,7 +450,6 @@ tg update
  
- 	if {$top eq {.}} {
-@@ -447,6 +452,10 @@ proc _new_ok {p} {
- ## Clone Existing Repository
+ 	TODO: tg update -a for updating all topic branches
  
- method _do_clone {} {
-+	if {$::clone_url != ""} {
-+		set origin_url $::clone_url
-+	}
-+
- 	$w_next conf \
- 		-state disabled \
- 		-command [cb _do_clone2] \
+-TODO: tg depend for adding/removing dependencies smoothly
+ TODO: tg rename
+ 
+ 
+@@ -479,10 +479,10 @@ whatever Cc headers you choose or the post-three-dashes message.
+ When mailing out your patch, basically only few extra headers
+ mail headers are inserted and the patch itself is appended.
+ Thus, as your patches evolve, you can record nuances like whether
+-the paricular patch should have To-list/Cc-maintainer or vice
++the particular patch should have To-list/Cc-maintainer or vice
+ versa and similar nuances, if your project is into that.
+-From is prefilled from your current GIT_AUTHOR_IDENT, other headers
+-can be prefilled from various optional topgit.* config options.
++From is pre-filled from your current GIT_AUTHOR_IDENT, other headers
++can be pre-filled from various optional topgit.* config options.
+ 
+ 	.topdeps: Contains the one-per-line list of branches
+ your patch depends on, pre-seeded with `tg create`. (Continuously
 -- 
-tg: (9800c0d..) t/git-gui/clonecmd (depends on: vanilla/master)
+tg: (67ae5b2..) jf/readme-update (depends on: master)
