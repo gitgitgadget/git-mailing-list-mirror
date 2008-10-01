@@ -1,88 +1,91 @@
-From: Andreas Ericsson <ae@op5.se>
-Subject: Re: interactive rebase not rebasing
-Date: Wed, 01 Oct 2008 23:26:01 +0200
-Message-ID: <48E3EAE9.5070207@op5.se>
-References: <20080928235013.5c749c6e.stephen@exigencecorp.com>	<48E078BF.5030806@op5.se>	<20081001010306.01cc34eb.stephen@exigencecorp.com>	<48E32BD4.1050107@op5.se>	<20081001095225.d28de16a.stephen@exigencecorp.com>	<48E396AF.2000100@op5.se> <20081001121321.5761fc7e.stephen@exigencecorp.com>
+From: Francois Pepin <fpepin@cs.mcgill.ca>
+Subject: corrupted repository?
+Date: Wed, 01 Oct 2008 17:29:38 -0400
+Message-ID: <48E3EBC2.7090107@cs.mcgill.ca>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15; format=flowed
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Stephen Haberman <stephen@exigencecorp.com>
-X-From: git-owner@vger.kernel.org Wed Oct 01 23:27:26 2008
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Oct 01 23:38:20 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Kl9EC-00049D-JY
-	for gcvg-git-2@gmane.org; Wed, 01 Oct 2008 23:27:25 +0200
+	id 1Kl9Ns-0000is-1S
+	for gcvg-git-2@gmane.org; Wed, 01 Oct 2008 23:37:24 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752729AbYJAV0O (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 1 Oct 2008 17:26:14 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752378AbYJAV0O
-	(ORCPT <rfc822;git-outgoing>); Wed, 1 Oct 2008 17:26:14 -0400
-Received: from mail.op5.se ([193.201.96.20]:57671 "EHLO mail.op5.se"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750769AbYJAV0O (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 1 Oct 2008 17:26:14 -0400
-Received: from localhost (localhost.localdomain [127.0.0.1])
-	by mail.op5.se (Postfix) with ESMTP id 0A5A01B8005F;
-	Wed,  1 Oct 2008 23:17:39 +0200 (CEST)
-X-Virus-Scanned: amavisd-new at 
-X-Spam-Flag: NO
-X-Spam-Score: -2.77
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.77 tagged_above=-10 required=6.6
-	tests=[AWL=-0.271, BAYES_00=-2.599, RDNS_NONE=0.1]
-Received: from mail.op5.se ([127.0.0.1])
-	by localhost (mail.op5.se [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id lOvJQVZhZFYq; Wed,  1 Oct 2008 23:17:31 +0200 (CEST)
-Received: from clix.int.op5.se (unknown [172.27.78.22])
-	by mail.op5.se (Postfix) with ESMTP id 1B1FF1B80046;
-	Wed,  1 Oct 2008 23:17:30 +0200 (CEST)
-User-Agent: Thunderbird 2.0.0.16 (X11/20080723)
-In-Reply-To: <20081001121321.5761fc7e.stephen@exigencecorp.com>
+	id S1753608AbYJAVgJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 1 Oct 2008 17:36:09 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753604AbYJAVgI
+	(ORCPT <rfc822;git-outgoing>); Wed, 1 Oct 2008 17:36:08 -0400
+Received: from trickle.CC.McGill.CA ([132.206.27.51]:63632 "EHLO
+	trickle.cc.mcgill.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753413AbYJAVgH (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 1 Oct 2008 17:36:07 -0400
+X-Greylist: delayed 379 seconds by postgrey-1.27 at vger.kernel.org; Wed, 01 Oct 2008 17:36:07 EDT
+Received: from torrent.cc.mcgill.ca (torrent.CC.McGill.CA [132.206.27.49])
+	by trickle.cc.mcgill.ca (8.13.6/8.12.3) with ESMTP id m91La4nk003048
+	for <git@vger.kernel.org>; Wed, 1 Oct 2008 17:36:04 -0400 (EDT)
+Received: from mailscan1.ncs.mcgill.ca (mailscan1.NCS.McGill.CA [132.216.77.248])
+	by torrent.cc.mcgill.ca (8.12.11.20060308/8.12.3) with ESMTP id m91LTix7031727;
+	Wed, 1 Oct 2008 17:29:44 -0400
+Received: from mailscan1.ncs.mcgill.ca (localhost [127.0.0.1])
+	by localhost (Postfix) with SMTP id 1D709400F;
+	Wed,  1 Oct 2008 17:29:39 -0400 (EDT)
+Received: from monch.mcb.mcgill.ca (monch.MCB.McGill.CA [132.206.211.134])
+	by mailscan1.ncs.mcgill.ca (Postfix) with ESMTP id EFB493A17;
+	Wed,  1 Oct 2008 17:29:38 -0400 (EDT)
+User-Agent: Thunderbird 2.0.0.12 (X11/20080213)
+X-PMX-Version: 5.4.2.338381, Antispam-Engine: 2.6.0.325393, Antispam-Data: 2008.9.28.155531
+X-McGill-WhereFrom: Internal
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/97271>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/97272>
 
-Stephen Haberman wrote:
->>> I've attempted to do that. Now that I sent in the patch, if you could
->>> review it, I would appreciate your feedback.
->> I'm heading home from work now. I'll look it over tonight or tomorrow
->> morning.
-> 
-> Cool, thanks.
-> 
-> Question: how taboo is it to just add another test file?
-> 
+Hi,
 
-Not so taboo. Especially not if there are compelling technical reasons
-not to add stuff to an existing one.
+The repository on my OS X machine (10.5.5) seems to have been suddenly 
+become corrupted in a strange way.
 
-> I'm attempting to integrate my test into t3404, which is the existing
-> interactive rebase test. The two test_expect_success's I added worked
-> when I ran them at the start of the test and then reset --hard the
-> branches back for the other tests, but if I paste my tests where they
-> should probably be, in the middle after the other -p tests, they break
-> because the 10 or tests before this have screwed with the DAG already.
-> 
+Everything seems to be working properly there (git fsck --full returns 
+normally with no output), but I cannot clone or pull from my other machines:
 
-Where you add the tests doesn't matter much. Many tests are grouped by
-feature simply because they were added along with the feature they're
-testing. There's no other value of grouping tests together.
+(iduna is the name of the OS X machine)
+[francois@monch ~]$ git clone iduna:git iduna2
+Initialized empty Git repository in /bioinfo/home/francois/iduna2/.git/
+Password:
+error: git upload-pack: git-pack-objects died with error.
+fatal: git upload-pack: aborting due to possible repository corruption 
+on the remote side.
+remote: fatal: exec pack-objects failed.
+remote: aborting due to possible repository corruption on the remote side.
+fatal: early EOF
+fatal: index-pack failed
 
-> I can suffer through getting it to work, but a t3409 would be much
-> easier, and probably easier to read as well as a I could setup my own
-> DAG instead of hacking onto 3404s.
-> 
+I have the same issue from the same machine:
+[francois@Iduna ~]$ git clone localhost:git git2
+Initialized empty Git repository in /Users/francois/git2/.git/
+remote: fatal: exec pack-objects failed.
+error: git upload-pack: git-pack-objects died with error.
+fatal: git upload-pack: aborting due to possible repository corruption 
+on the remote side.
+remote: aborting due to possible repository corruption on the remote side.
+fatal: early EOF
+fatal: index-pack failed
 
-t3409 is already in spearce.git's next branch. You should be able to
-add stuff to that, or add t3410 if that doesn't work so good.
+But not if I just do it locally:
+[francois@Iduna ~]$ git clone git git2
+Initialized empty Git repository in /Users/francois/git2/.git/
+Checking out files:   2% (140/5273)
+[I cancelled it at this point]
 
--- 
-Andreas Ericsson                   andreas.ericsson@op5.se
-OP5 AB                             www.op5.se
-Tel: +46 8-230225                  Fax: +46 8-230231
+I am running git 1.6.0.2 on the mac, and have only recently updated it 
+so that might have a role to play.
+
+Any suggestion would be welcome to fix this issue, and I'll be more than 
+happy to provide whatever more information could useful.
+
+Francois
