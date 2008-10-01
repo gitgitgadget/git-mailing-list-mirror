@@ -1,90 +1,66 @@
-From: Stephen Haberman <stephen@exigencecorp.com>
-Subject: Re: interactive rebase not rebasing
-Date: Wed, 1 Oct 2008 09:52:25 -0500
-Organization: Exigence
-Message-ID: <20081001095225.d28de16a.stephen@exigencecorp.com>
-References: <20080928235013.5c749c6e.stephen@exigencecorp.com>
-	<48E078BF.5030806@op5.se>
-	<20081001010306.01cc34eb.stephen@exigencecorp.com>
-	<48E32BD4.1050107@op5.se>
+From: "Shawn O. Pearce" <spearce@spearce.org>
+Subject: Re: [PATCH 1/3] parse-opt: migrate fmt-merge-msg.
+Date: Wed, 1 Oct 2008 07:56:06 -0700
+Message-ID: <20081001145606.GX21310@spearce.org>
+References: <20080930224623.GQ21310@spearce.org> <1222841106-26148-1-git-send-email-madcoder@debian.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Andreas Ericsson <ae@op5.se>
-X-From: git-owner@vger.kernel.org Wed Oct 01 16:53:45 2008
+Content-Type: text/plain; charset=utf-8
+Cc: git@vger.kernel.org, gitster@pobox.com
+To: Pierre Habouzit <madcoder@debian.org>
+X-From: git-owner@vger.kernel.org Wed Oct 01 16:57:29 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Kl35D-0004tn-6p
-	for gcvg-git-2@gmane.org; Wed, 01 Oct 2008 16:53:43 +0200
+	id 1Kl38g-0006M2-Fo
+	for gcvg-git-2@gmane.org; Wed, 01 Oct 2008 16:57:18 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753398AbYJAOw3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 1 Oct 2008 10:52:29 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752992AbYJAOw3
-	(ORCPT <rfc822;git-outgoing>); Wed, 1 Oct 2008 10:52:29 -0400
-Received: from smtp132.sat.emailsrvr.com ([66.216.121.132]:50027 "EHLO
-	smtp132.sat.emailsrvr.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751174AbYJAOw2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 1 Oct 2008 10:52:28 -0400
-Received: from relay3.relay.sat.mlsrvr.com (localhost [127.0.0.1])
-	by relay3.relay.sat.mlsrvr.com (SMTP Server) with ESMTP id 8FFCF24D788;
-	Wed,  1 Oct 2008 10:52:27 -0400 (EDT)
-Received: by relay3.relay.sat.mlsrvr.com (Authenticated sender: stephen-AT-exigencecorp.com) with ESMTP id 261A224DA1E;
-	Wed,  1 Oct 2008 10:52:27 -0400 (EDT)
-In-Reply-To: <48E32BD4.1050107@op5.se>
-X-Mailer: Sylpheed 2.5.0beta3 (GTK+ 2.10.14; i686-pc-mingw32)
+	id S1751516AbYJAO4I (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 1 Oct 2008 10:56:08 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751559AbYJAO4H
+	(ORCPT <rfc822;git-outgoing>); Wed, 1 Oct 2008 10:56:07 -0400
+Received: from george.spearce.org ([209.20.77.23]:54197 "EHLO
+	george.spearce.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751516AbYJAO4H (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 1 Oct 2008 10:56:07 -0400
+Received: by george.spearce.org (Postfix, from userid 1001)
+	id 59AA53835F; Wed,  1 Oct 2008 14:56:06 +0000 (UTC)
+Content-Disposition: inline
+In-Reply-To: <1222841106-26148-1-git-send-email-madcoder@debian.org>
+User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/97227>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/97228>
+
+Pierre Habouzit <madcoder@debian.org> wrote:
+> @@ -347,38 +349,32 @@ int fmt_merge_msg(int merge_summary, struct strbuf *in, struct strbuf *out) {
+>  
+>  int cmd_fmt_merge_msg(int argc, const char **argv, const char *prefix)
+>  {
+> +	const char *inpath = NULL;
+> +	struct option options[] = {
+> +		OPT_BOOLEAN(0, "log",     &merge_summary, "populate log with the shortlog"),
+> +		OPT_BOOLEAN(0, "summary", &merge_summary, "alias for --log"),
+> +		OPT_STRING('F', "file",   &inpath, "file", "file to read from"),
+> +		OPT_END()
 
 
-> >> I don't think you can have a single command that does all the
-> >> things you want, because the possible differences in input makes it
-> >> very nearly impossible to always do "the right thing".
-> > 
-> > Ah, you are too pessimistic. :-)
-> > 
-> 
-> Perhaps, although I think you're being overly optimistic if you think
-> rebase can do all of this intelligently while still retaining clear
-> semantics. I'd start with writing a separate tool for it, probably
-> based on git sequencer.
+> +	argc = parse_options(argc, argv, options, fmt_merge_msg_usage, 0);
+> +	if (argc > 0)
+> +		usage_with_options(fmt_merge_msg_usage, options);
+> +
+> +	if (!inpath || strcmp(inpath, "-"))
+> +		in = stdin;
+> +	else {
+> +		fclose(in);
+> +		in = fopen(argv[2], "r");
+> +		if (!in)
+> +			die("cannot open %s", argv[2]);
 
-I would agree with this, except that --preserve-merges is already in
-the codebase and does what we want. I'm not fundamentally changing how
-it works (e.g. how it decides what commits to keep/rewrite/etc.), I just
-found and patched a bug in it.
+Really argv[2]?  Shouldn't that be inpath?
 
-> When that works out ok, get it to do what rebase does today and then
-> incorporate the new tool as an option to rebase and get ready to
-> answer complex questions for the cases where it doesn't do what the
-> user wanted it to do.
-
-Yeah, I'm sorry, I did not mean my "pessimistic" comment that
-seriously. I understand `git rebase` can never do what everyone wants
-in all scenarios.
-
-But given /this/ scenario (hehe), with the implementation's existing
-explicit usage of "--left-right --cherry-pick" to drop no-op commits,
-but then it's forgetting of this information later, leading to `git
-rebase` not performing a rebase at all, I think it is an obvious bug,
-and one that can be fixed without changing any of `git rebase`s
-existing semantics.
-
-> Merely that you should think hard about it and then make sure it
-> doesn't break anything people are already doing today with the current
-> toolset.
-
-I've attempted to do that. Now that I sent in the patch, if you could
-review it, I would appreciate your feedback. I do need to rework the
-test case because I realized including the origin/pull aspects (which
-is what caused us to find it) is just noise and the bug can be
-reproduced with just local branches.
-
-Thanks,
-Stephen
+-- 
+Shawn.
