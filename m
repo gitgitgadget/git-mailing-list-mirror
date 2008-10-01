@@ -1,160 +1,99 @@
-From: Brandon Casey <casey@nrlssc.navy.mil>
-Subject: regression: stash show -p (was [PATCH maint] git-stash.sh: don't
- default to refs/stash if invalid ref supplied)
-Date: Wed, 01 Oct 2008 14:53:55 -0500
-Message-ID: <DDpCKmlWUqX7hHbNNF45UGo81L7NuUHMbU3vXSfhHU60An5PUqIvRA@cipher.nrlssc.navy.mil>
-References: <klevRMI-z5Id8iuqn2rqrKQZ8LdPNE4lABeC502X9y1Es5wwQ-s8GA@cipher.nrlssc.navy.mil> <twy9P1UnbmZHs2ZDeFBjSzrleLQ225-I7ESNrFkwoXZL-mJCTf4hYw@cipher.nrlssc.navy.mil>
+From: Linus Torvalds <torvalds@linux-foundation.org>
+Subject: Help with a tcl/tk gui thing..
+Date: Wed, 1 Oct 2008 12:54:44 -0700 (PDT)
+Message-ID: <alpine.LFD.2.00.0810011240390.3575@nehalem.linux-foundation.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: Git Mailing List <git@vger.kernel.org>
-To: mattjackets <mattlist@fastmail.fm>
-X-From: git-owner@vger.kernel.org Wed Oct 01 21:55:26 2008
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+To: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Wed Oct 01 21:56:41 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Kl7n3-0006mo-F6
-	for gcvg-git-2@gmane.org; Wed, 01 Oct 2008 21:55:17 +0200
+	id 1Kl7oO-0007JN-RR
+	for gcvg-git-2@gmane.org; Wed, 01 Oct 2008 21:56:41 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753706AbYJATyE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 1 Oct 2008 15:54:04 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753680AbYJATyE
-	(ORCPT <rfc822;git-outgoing>); Wed, 1 Oct 2008 15:54:04 -0400
-Received: from mail1.nrlssc.navy.mil ([128.160.35.1]:36914 "EHLO
-	mail.nrlssc.navy.mil" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753501AbYJATyB (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 1 Oct 2008 15:54:01 -0400
-Received: by mail.nrlssc.navy.mil id m91Jrt2m002203; Wed, 1 Oct 2008 14:53:56 -0500
-In-Reply-To: <twy9P1UnbmZHs2ZDeFBjSzrleLQ225-I7ESNrFkwoXZL-mJCTf4hYw@cipher.nrlssc.navy.mil>
-X-OriginalArrivalTime: 01 Oct 2008 19:53:55.0900 (UTC) FILETIME=[6FF91FC0:01C923FF]
+	id S1753786AbYJATzS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 1 Oct 2008 15:55:18 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753886AbYJATzS
+	(ORCPT <rfc822;git-outgoing>); Wed, 1 Oct 2008 15:55:18 -0400
+Received: from smtp1.linux-foundation.org ([140.211.169.13]:36325 "EHLO
+	smtp1.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1753770AbYJATzR (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 1 Oct 2008 15:55:17 -0400
+Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [140.211.169.55])
+	by smtp1.linux-foundation.org (8.14.2/8.13.5/Debian-3ubuntu1.1) with ESMTP id m91JsjcT019834
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO)
+	for <git@vger.kernel.org>; Wed, 1 Oct 2008 12:54:46 -0700
+Received: from localhost (localhost [127.0.0.1])
+	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id m91JsiTj001114
+	for <git@vger.kernel.org>; Wed, 1 Oct 2008 12:54:44 -0700
+User-Agent: Alpine 2.00 (LFD 1167 2008-08-23)
+X-Spam-Status: No, hits=-3.432 required=5 tests=AWL,BAYES_00
+X-Spam-Checker-Version: SpamAssassin 3.2.4-osdl_revision__1.47__
+X-MIMEDefang-Filter: lf$Revision: 1.188 $
+X-Scanned-By: MIMEDefang 2.63 on 140.211.169.13
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/97259>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/97260>
 
 
-Thanks to the patch referenced in the subject, 'git stash show -p'
-no longer works if a revision is _not_ supplied.
+Ok, this is ridiculous, and has nothing to do with git apart from being 
+hosted in it, but I thought I'd send out an email about it since the git 
+community is the only one I know that does any GUI work at all...
 
-This is because the argument list passed to show_stash() is not empty,
-so the default $ref_stash@{0} is not appended.
+I've got three girls, all wasting their time on their computer, and we set 
+up this rule that they get to have a maximum of an hour of internet time 
+each day. Of course, being the geek I am, I wrote a stupid time tracker 
+for that purpose, and then totally forgot about it.
 
-This brings me back to an unanswered question, "Should rev-parse fall
-back to its --default argument when an invalid ref is supplied?". The
-documentation does not imply that it should.
+Until the harddisk in their computer broke down, and I had to re-install, 
+and realized that I didn't have a copy of my stupid tracker sources 
+anywhere. So I had to re-write it, and to make sure that I didn't lose it 
+_again_, I put it in a git repo this time, and now have it on my desktop 
+machine.
 
->From Documentation/git-rev-parse.txt:
+I _also_ have it on kernel.org, because I tend to change machines often 
+enough that files get lost because I decide that switching machines is 
+also a great way of doing "generational GC" on my home directory.
 
-   --default <arg>::
-        If there is no parameter given by the user, use `<arg>`
-        instead.
+[ iow, I copy my old home directory as "old-home" when I switch machines, 
+  and anything I didn't end up copying by the time I switch machines 
+  again, just gets deleted. Very neat, and a great way to lose things that 
+  you only care about every other year or so. ]
 
-Currently a rev-parse invocation like:
+Whatever.
 
-    $ git rev-parse --default HEAD a_non_existent_ref
+To make a long story short, I have a very small program that does all the 
+tracking, and I have no problems with that. It doesn't have much of a 
+admin interface, but I can do "echo 3600 > /var/log/tracker/celeste" to 
+reset the time etc. _I_ have no need for pretty GUI's.
 
-will fall back to operating on HEAD. Is this correct? Could there be
-some part of git that depends on this behavior? filter-branch is now
-the only script which uses the --default option of rev-parse, not sure
-about the c code.
+But I also have a UI that the kids can run to _see_ how much time they 
+have left, so that getting thrown off the machine doesn't come as a total 
+surprise. And yesterday Patricia asked why it has to be that ugly. And I 
+had to admit that her dad is just not very good at UI's - and my 
+re-implementation may in fact have been EVEN UGLIER than my original 
+version. If that is even possible.
 
--brandon
+But hey, I'm not above impressing my kids with pretty bling if I can get 
+somebody else who actually knows what they are doing to enhance my wish 
+scripts to something reasonable.
 
+Anybody?
 
+The repository is at
 
-Brandon Casey wrote:
-> apply_stash() and show_stash() each call rev-parse with
-> '--default refs/stash' as an argument. This option causes rev-parse to
-> operate on refs/stash if it is not able to successfully operate on any
-> element of the command line. This includes failure to supply a "valid"
-> revision. This has the effect of causing 'stash apply' and 'stash show'
-> to operate as if stash@{0} had been supplied when an invalid revision is
-> supplied.
-> 
-> e.g. 'git stash apply stahs@{1}' would fall back to
->      'git stash apply stash@{0}'
-> 
-> This patch modifies these two functions so that they avoid using the
-> --default option of rev-parse.
-> 
-> Signed-off-by: Brandon Casey <casey@nrlssc.navy.mil>
-> ---
-> 
-> 
-> This should fix the case I mention above, but it does not fix the
-> case where a non-existent reflog entry is specified. In this case
-> the last entry will be selected.
-> 
-> 	$ git stash list
-> 	stash@{0}: WIP on master: c050772... small java change
-> 	stash@{1}: WIP on master: c050772... small java change
-> 	stash@{2}: WIP on master: c050772... small java change
-> 	stash@{3}: WIP on master: c050772... small java change
-> 	$ git stash apply stash@{10}
-> 	warning: Log for 'stash' only has 4 entries.
-> 	# On branch master
-> 	# Changed but not updated:
-> 	... etc.
-> 
-> stash@{3} was applied.
-> 
-> Luckily, the dangerous case has no effect.
-> 
-> 	$ git stash drop stash@{10}
-> 	Dropped stash@{10} (b7a2467e58109c92d799d059f508f35853d0bff7)
-> 	$ git stash list
-> 	stash@{0}: WIP on master: c050772... small java change
-> 	stash@{1}: WIP on master: c050772... small java change
-> 	stash@{2}: WIP on master: c050772... small java change
-> 	stash@{3}: WIP on master: c050772... small java change
-> 
-> -brandon
-> 
-> 
->  git-stash.sh |   17 +++++++++++++++--
->  1 files changed, 15 insertions(+), 2 deletions(-)
-> 
-> diff --git a/git-stash.sh b/git-stash.sh
-> index d799c76..6bd2572 100755
-> --- a/git-stash.sh
-> +++ b/git-stash.sh
-> @@ -144,7 +144,14 @@ show_stash () {
->  	then
->  		flags=--stat
->  	fi
-> -	s=$(git rev-parse --revs-only --no-flags --default $ref_stash "$@")
-> +
-> +	if test $# = 0
-> +	then
-> +		set x "$ref_stash@{0}"
-> +		shift
-> +	fi
-> +
-> +	s=$(git rev-parse --revs-only --no-flags "$@")
->  
->  	w_commit=$(git rev-parse --verify "$s") &&
->  	b_commit=$(git rev-parse --verify "$s^") &&
-> @@ -163,13 +170,19 @@ apply_stash () {
->  		shift
->  	esac
->  
-> +	if test $# = 0
-> +	then
-> +		set x "$ref_stash@{0}"
-> +		shift
-> +	fi
-> +
->  	# current index state
->  	c_tree=$(git write-tree) ||
->  		die 'Cannot apply a stash in the middle of a merge'
->  
->  	# stash records the work tree, and is a merge between the
->  	# base commit (first parent) and the index tree (second parent).
-> -	s=$(git rev-parse --revs-only --no-flags --default $ref_stash "$@") &&
-> +	s=$(git rev-parse --revs-only --no-flags "$@") &&
->  	w_tree=$(git rev-parse --verify "$s:") &&
->  	b_tree=$(git rev-parse --verify "$s^1:") &&
->  	i_tree=$(git rev-parse --verify "$s^2:") ||
+	git://git.kernel.org/pub/scm/linux/kernel/git/torvalds/tracker.git
+
+if somebody knows how to make the text turn red when the end is near 
+and/or make it have some nice graphical bar that fills up as time is about 
+to expire.
+
+And if nobody does, no worries. At least I tried. My kids can continue to 
+watch ugly/small/monochrome fonts with just a count-down clock.
+
+			Linus
