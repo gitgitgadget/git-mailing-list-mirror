@@ -1,135 +1,172 @@
-From: "Mikael Magnusson" <mikachu@gmail.com>
-Subject: Re: Help with a tcl/tk gui thing..
-Date: Wed, 1 Oct 2008 23:03:50 +0200
-Message-ID: <237967ef0810011403i2b18255and988df29a71798bf@mail.gmail.com>
-References: <alpine.LFD.2.00.0810011240390.3575@nehalem.linux-foundation.org>
+From: Andreas Ericsson <ae@op5.se>
+Subject: [PATCH] git commit: Repaint the output format bikeshed (again)
+Date: Wed, 01 Oct 2008 23:06:54 +0200
+Message-ID: <48E3E66E.7020501@op5.se>
+References: <20081001154425.GE21310@spearce.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=ISO-8859-15; format=flowed
 Content-Transfer-Encoding: 7bit
-Cc: "Git Mailing List" <git@vger.kernel.org>
-To: "Linus Torvalds" <torvalds@linux-foundation.org>
-X-From: git-owner@vger.kernel.org Wed Oct 01 23:06:05 2008
+To: Shawn Pearce <spearce@spearce.org>,
+	Git Mailing List <git@vger.kernel.org>,
+	Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Wed Oct 01 23:08:27 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Kl8sZ-0005Kw-RW
-	for gcvg-git-2@gmane.org; Wed, 01 Oct 2008 23:05:14 +0200
+	id 1Kl8vl-0006Zv-PK
+	for gcvg-git-2@gmane.org; Wed, 01 Oct 2008 23:08:22 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752318AbYJAVDx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 1 Oct 2008 17:03:53 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752619AbYJAVDx
-	(ORCPT <rfc822;git-outgoing>); Wed, 1 Oct 2008 17:03:53 -0400
-Received: from ey-out-2122.google.com ([74.125.78.26]:2097 "EHLO
-	ey-out-2122.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752318AbYJAVDw (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 1 Oct 2008 17:03:52 -0400
-Received: by ey-out-2122.google.com with SMTP id 6so270494eyi.37
-        for <git@vger.kernel.org>; Wed, 01 Oct 2008 14:03:50 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to
-         :subject:cc:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:references;
-        bh=iBe3bivuCPWmPqRKPJhRsnRSUaN28huuDiEBF/z+X5w=;
-        b=jb7iE+9aKRRY7eW2JNXtU/whdTfqpiFOfG+hc9h6PyZoZnnKTd1hPfGUOt6sS7/h1e
-         umzI4z3DqH4y7AucCLVNZjPSLRSDKcYEQe0tP8B1ihe/LqECi95+rAnXlKK+6uHsXtoU
-         ZfCjlzLTwbrRV/pFb1ANWHAfJu7WTxBbE8ktw=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
-         :content-type:content-transfer-encoding:content-disposition
-         :references;
-        b=PmXdXLxdo7qB+Ahidlvf1lbnQfqiOcgry70hCl6W0Or2UbDqUp4nFOp2r+afcb6KGf
-         T3AmMlkarPwE3ry3rOiVgl5dOAoE5KZ5nMdgZiJrk2FxkT9MHPOLhW4U+ep0qurUchgM
-         Ero3I8nHHVn97oTi1Q6gK0N9prJk6G2Kvn5sY=
-Received: by 10.210.124.15 with SMTP id w15mr10252478ebc.143.1222895030065;
-        Wed, 01 Oct 2008 14:03:50 -0700 (PDT)
-Received: by 10.210.19.20 with HTTP; Wed, 1 Oct 2008 14:03:50 -0700 (PDT)
-In-Reply-To: <alpine.LFD.2.00.0810011240390.3575@nehalem.linux-foundation.org>
-Content-Disposition: inline
+	id S1752645AbYJAVHI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 1 Oct 2008 17:07:08 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752539AbYJAVHI
+	(ORCPT <rfc822;git-outgoing>); Wed, 1 Oct 2008 17:07:08 -0400
+Received: from mail.op5.se ([193.201.96.20]:59709 "EHLO mail.op5.se"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752503AbYJAVHG (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 1 Oct 2008 17:07:06 -0400
+Received: from localhost (localhost.localdomain [127.0.0.1])
+	by mail.op5.se (Postfix) with ESMTP id 385E61B80063;
+	Wed,  1 Oct 2008 22:58:31 +0200 (CEST)
+X-Virus-Scanned: amavisd-new at 
+X-Spam-Flag: NO
+X-Spam-Score: -2.78
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.78 tagged_above=-10 required=6.6
+	tests=[AWL=-0.281, BAYES_00=-2.599, RDNS_NONE=0.1]
+Received: from mail.op5.se ([127.0.0.1])
+	by localhost (mail.op5.se [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id NJrjwLm9Fd13; Wed,  1 Oct 2008 22:58:25 +0200 (CEST)
+Received: from clix.int.op5.se (unknown [172.27.78.22])
+	by mail.op5.se (Postfix) with ESMTP id CD5711B8005F;
+	Wed,  1 Oct 2008 22:58:23 +0200 (CEST)
+User-Agent: Thunderbird 2.0.0.16 (X11/20080723)
+In-Reply-To: <20081001154425.GE21310@spearce.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/97268>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/97269>
 
-How's this?
+Since we want the most important information furthest
+left while at the same time preserving valuable screen
+estate, we move the branch-name to the leftmost side
+of the commit result output. To make it read properly
+we get rid of "Created", which I just can't fit into
+a sentence without putting the branch-name last.
 
-git clone git://mika.l3ib.org/tracker.git
+Having taken inspiration from the "git reset" command,
+output for the three conceivable cases now look thus:
 
-I wrote it in pygtk since I know zero to no tcl/tk, hope that's okay.
-It has a label with the time remaining (simply read from the daemon file),
-and shows the text in red if less than 10% is remaining. You'll need to
-change the ./ in cb_function to /var/log/tracker since I forgot to change
-that and I'm lazy :).
+  normal commit
+  <branch> is now at b930c4a (i386: Snib the sprock)
 
-2008/10/1 Linus Torvalds <torvalds@linux-foundation.org>:
->
-> Ok, this is ridiculous, and has nothing to do with git apart from being
-> hosted in it, but I thought I'd send out an email about it since the git
-> community is the only one I know that does any GUI work at all...
->
-> I've got three girls, all wasting their time on their computer, and we set
-> up this rule that they get to have a maximum of an hour of internet time
-> each day. Of course, being the geek I am, I wrote a stupid time tracker
-> for that purpose, and then totally forgot about it.
->
-> Until the harddisk in their computer broke down, and I had to re-install,
-> and realized that I didn't have a copy of my stupid tracker sources
-> anywhere. So I had to re-write it, and to make sure that I didn't lose it
-> _again_, I put it in a git repo this time, and now have it on my desktop
-> machine.
->
-> I _also_ have it on kernel.org, because I tend to change machines often
-> enough that files get lost because I decide that switching machines is
-> also a great way of doing "generational GC" on my home directory.
->
-> [ iow, I copy my old home directory as "old-home" when I switch machines,
->  and anything I didn't end up copying by the time I switch machines
->  again, just gets deleted. Very neat, and a great way to lose things that
->  you only care about every other year or so. ]
->
-> Whatever.
->
-> To make a long story short, I have a very small program that does all the
-> tracking, and I have no problems with that. It doesn't have much of a
-> admin interface, but I can do "echo 3600 > /var/log/tracker/celeste" to
-> reset the time etc. _I_ have no need for pretty GUI's.
->
-> But I also have a UI that the kids can run to _see_ how much time they
-> have left, so that getting thrown off the machine doesn't come as a total
-> surprise. And yesterday Patricia asked why it has to be that ugly. And I
-> had to admit that her dad is just not very good at UI's - and my
-> re-implementation may in fact have been EVEN UGLIER than my original
-> version. If that is even possible.
->
-> But hey, I'm not above impressing my kids with pretty bling if I can get
-> somebody else who actually knows what they are doing to enhance my wish
-> scripts to something reasonable.
->
-> Anybody?
->
-> The repository is at
->
->        git://git.kernel.org/pub/scm/linux/kernel/git/torvalds/tracker.git
->
-> if somebody knows how to make the text turn red when the end is near
-> and/or make it have some nice graphical bar that fills up as time is about
-> to expire.
->
-> And if nobody does, no worries. At least I tried. My kids can continue to
-> watch ugly/small/monochrome fonts with just a count-down clock.
->
->                        Linus
-> --
-> To unsubscribe from this list: send the line "unsubscribe git" in
-> the body of a message to majordomo@vger.kernel.org
-> More majordomo info at  http://vger.kernel.org/majordomo-info.html
->
+  detached commit
+  DETACHED HEAD is now at b930c4a (i386: Snib the sprock)
 
+  initial commit
+  History has begun anew. Root-commit created.
+  <branch> is now at bc930c4a (i386: Snib the sprock)
 
+As a nice side-effect, we can get rid of the get_commit_format
+helper function and thereby remove more code than we add.
 
+This is a substantial rewrite of a patch originally sent by
+Jeff King <peff@peff.net>.
+
+Signed-off-by: Andreas Ericsson <ae@op5.se>
+---
+
+"Created" is a problem when one wants to put branch-name before the
+subject line, because the subject has to follow the hash (it doesn't
+describe the pre-state of the branch/detached head), but the newly
+added commit. "Created, on branch, hash (subject)" just looks
+stilted and stupid, so I had to change it. Hopefully this can be
+accepted. If not, count me out.
+
+I'm not sure if the last "else" case setting branch = head; can
+ever happen, but I figured it can't hurt to make sure. Feel free
+to modify commentary around it or the entire section when applying.
+
+This is based on current next (798a2a426a).
+
+ builtin-commit.c |   47 ++++++++++++++++++-----------------------------
+ 1 files changed, 18 insertions(+), 29 deletions(-)
+
+diff --git a/builtin-commit.c b/builtin-commit.c
+index e4e1448..3b43344 100644
+--- a/builtin-commit.c
++++ b/builtin-commit.c
+@@ -878,35 +878,12 @@ int cmd_status(int argc, const char **argv, const char *prefix)
+ 	return commitable ? 0 : 1;
+ }
+ 
+-static char *get_commit_format_string(void)
+-{
+-	unsigned char sha[20];
+-	const char *head = resolve_ref("HEAD", sha, 0, NULL);
+-	struct strbuf buf = STRBUF_INIT;
+-
+-	/* use shouty-caps if we're on detached HEAD */
+-	strbuf_addf(&buf, "format:%s", strcmp("HEAD", head) ? "" : "DETACHED commit");
+-	strbuf_addstr(&buf, "%h (%s)");
+-
+-	if (!prefixcmp(head, "refs/heads/")) {
+-		const char *cp;
+-		strbuf_addstr(&buf, " on ");
+-		for (cp = head + 11; *cp; cp++) {
+-			if (*cp == '%')
+-				strbuf_addstr(&buf, "%x25");
+-			else
+-				strbuf_addch(&buf, *cp);
+-		}
+-	}
+-
+-	return strbuf_detach(&buf, NULL);
+-}
+-
+ static void print_summary(const char *prefix, const unsigned char *sha1)
+ {
+ 	struct rev_info rev;
+ 	struct commit *commit;
+-	char *format = get_commit_format_string();
++	unsigned char head_sha1[20];
++	const char *branch, *head, *format = "format:%h (%s)";
+ 
+ 	commit = lookup_commit(sha1);
+ 	if (!commit)
+@@ -931,15 +908,27 @@ static void print_summary(const char *prefix, const unsigned char *sha1)
+ 	rev.diffopt.break_opt = 0;
+ 	diff_setup_done(&rev.diffopt);
+ 
+-	printf("Created %s", initial_commit ? "root-commit " : "");
++	/* a pretty rare occurrance, so let's celebrate it specially */
++	if (initial_commit)
++		printf("History has begun anew. Root-commit created.\n");
++
++	head = resolve_ref("HEAD", head_sha1, 0, NULL);
++	if (!strcmp(head, "HEAD"))
++		branch = "DETACHED HEAD";
++	else if (!prefixcmp(head, "refs/heads/"))
++		branch = &head[strlen("refs/heads/")];
++	else {
++		/* refs/git-svn, fe */
++		branch = head;
++	}
++
++	printf("%s is now at ", branch);
+ 
+ 	if (!log_tree_commit(&rev, commit)) {
+ 		struct strbuf buf = STRBUF_INIT;
+ 		format_commit_message(commit, format + 7, &buf, DATE_NORMAL);
+-		printf("%s\n", buf.buf);
+-		strbuf_release(&buf);
++		printf("%s\n", strbuf_detach(&buf, NULL));
+ 	}
+-	free(format);
+ }
+ 
+ static int git_commit_config(const char *k, const char *v, void *cb)
 -- 
-Mikael Magnusson
+1.6.0.2.529.g37dbc.dirty
