@@ -1,91 +1,110 @@
-From: Stephen Haberman <stephen@exigencecorp.com>
-Subject: Re: interactive rebase not rebasing
-Date: Wed, 1 Oct 2008 01:03:06 -0500
-Organization: Exigence
-Message-ID: <20081001010306.01cc34eb.stephen@exigencecorp.com>
-References: <20080928235013.5c749c6e.stephen@exigencecorp.com>
-	<48E078BF.5030806@op5.se>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Andreas Ericsson <ae@op5.se>
-X-From: git-owner@vger.kernel.org Wed Oct 01 08:04:26 2008
+From: Pierre Habouzit <madcoder@debian.org>
+Subject: [PATCH 2/3] parse-opt: migrate git-merge-base.
+Date: Wed,  1 Oct 2008 08:05:05 +0200
+Message-ID: <1222841106-26148-2-git-send-email-madcoder@debian.org>
+References: <20080930224623.GQ21310@spearce.org>
+ <1222841106-26148-1-git-send-email-madcoder@debian.org>
+Cc: git@vger.kernel.org, gitster@pobox.com,
+	Pierre Habouzit <madcoder@debian.org>
+To: spearce@spearce.org
+X-From: git-owner@vger.kernel.org Wed Oct 01 08:06:34 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Kkuox-0000KU-SX
-	for gcvg-git-2@gmane.org; Wed, 01 Oct 2008 08:04:24 +0200
+	id 1Kkuqz-0000sL-Jm
+	for gcvg-git-2@gmane.org; Wed, 01 Oct 2008 08:06:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751945AbYJAGDM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 1 Oct 2008 02:03:12 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751928AbYJAGDM
-	(ORCPT <rfc822;git-outgoing>); Wed, 1 Oct 2008 02:03:12 -0400
-Received: from smtp172.sat.emailsrvr.com ([66.216.121.172]:46174 "EHLO
-	smtp172.sat.emailsrvr.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751864AbYJAGDL (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 1 Oct 2008 02:03:11 -0400
-Received: from relay7.relay.sat.mlsrvr.com (localhost [127.0.0.1])
-	by relay7.relay.sat.mlsrvr.com (SMTP Server) with ESMTP id BFBDA9B0B77;
-	Wed,  1 Oct 2008 02:03:09 -0400 (EDT)
-Received: by relay7.relay.sat.mlsrvr.com (Authenticated sender: stephen-AT-exigencecorp.com) with ESMTP id 5B6F85B38BD;
-	Wed,  1 Oct 2008 02:03:09 -0400 (EDT)
-In-Reply-To: <48E078BF.5030806@op5.se>
-X-Mailer: Sylpheed 2.5.0beta3 (GTK+ 2.10.14; i686-pc-mingw32)
+	id S1752052AbYJAGFQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 1 Oct 2008 02:05:16 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752038AbYJAGFQ
+	(ORCPT <rfc822;git-outgoing>); Wed, 1 Oct 2008 02:05:16 -0400
+Received: from pan.madism.org ([88.191.52.104]:50327 "EHLO hermes.madism.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751850AbYJAGFP (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 1 Oct 2008 02:05:15 -0400
+Received: from madism.org (olympe.madism.org [82.243.245.108])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(Client CN "artemis.madism.org", Issuer "madism.org" (verified OK))
+	by hermes.madism.org (Postfix) with ESMTPS id 56D443BA2C;
+	Wed,  1 Oct 2008 08:05:13 +0200 (CEST)
+Received: by madism.org (Postfix, from userid 1000)
+	id 8690B2ACE1; Wed,  1 Oct 2008 08:05:06 +0200 (CEST)
+X-Mailer: git-send-email 1.6.0.2.415.g9800c0.dirty
+In-Reply-To: <1222841106-26148-1-git-send-email-madcoder@debian.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/97201>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/97202>
 
+Signed-off-by: Pierre Habouzit <madcoder@debian.org>
+---
+ builtin-merge-base.c |   37 ++++++++++++++++---------------------
+ 1 files changed, 16 insertions(+), 21 deletions(-)
 
-> > # A --C------            <-- origin/stable
-> > #  \  |      \
-> > #   B -- D -- E -- F     <-- origin/topic2
-> > #    \|
-> > #     g -- h             <-- topic2
-> > 
-> > Nothing has changed. g & h haven't moved...I can keep executing this
-> > operation and the commits never make it on top of origin/topic2's F. 
-> > 
-> > Frustratingly, if I run non-interactive rebase, it works perfectly.
-> 
-> I can imagine. Since you don't want to preserve the merges in this
-> case, you shouldn't be using the -p flag.
-
-No, I do want to preserve most merges. This "most" qualification is
-because the merge "g", if rebased, would have been a no-op, so `rebase
--i -p` correctly kept it out of the TODO file.
-
-Which is cool, except that later on, when rewriting the other TODO
-commits, some of which were children of "g", it did not remember that
-"g" had gone away, so did nothing to take "g" out of the rewritten
-children's parent list.
-
-> In fact, for this particular scenario (assuming "h" is really the only
-> commit on topic2), you probably want to just cherry-pick that commit
-> into origin/topic2:
-> 
->    git checkout topic2
->    git reset --hard origin/topic2
->    git cherry-pick ORIG_HEAD
-
-Agreed. This makes a lot of sense for me, who has been hacking around in
-git-rebase--interactive fixing things, but I'd really like the other
-people on my team to just have to run `git rebase -i -p`.
-
-> I don't think you can have a single command that does all the things
-> you want, because the possible differences in input makes it very
-> nearly impossible to always do "the right thing".
-
-Ah, you are too pessimistic. :-)
-
-> Assuming you're passing a correct input file to rebase -i; yes. At the
-> very least, "h" should be moved to the tip of origin/topic2.
-
-Cool, agreed. I've got a patch that gets `rebase -i -p` to do this. I'll
-send it to the list soon.
-
-- Stephen
+diff --git a/builtin-merge-base.c b/builtin-merge-base.c
+index b08da51..03fc1c2 100644
+--- a/builtin-merge-base.c
++++ b/builtin-merge-base.c
+@@ -1,6 +1,7 @@
+ #include "builtin.h"
+ #include "cache.h"
+ #include "commit.h"
++#include "parse-options.h"
+ 
+ static int show_merge_base(struct commit **rev, int rev_nr, int show_all)
+ {
+@@ -21,8 +22,10 @@ static int show_merge_base(struct commit **rev, int rev_nr, int show_all)
+ 	return 0;
+ }
+ 
+-static const char merge_base_usage[] =
+-"git merge-base [--all] <commit-id> <commit-id>...";
++static const char * const merge_base_usage[] = {
++	"git merge-base [--all] <commit-id> <commit-id>...",
++	NULL
++};
+ 
+ static struct commit *get_commit_reference(const char *arg)
+ {
+@@ -44,25 +47,17 @@ int cmd_merge_base(int argc, const char **argv, const char *prefix)
+ 	int rev_nr = 0;
+ 	int show_all = 0;
+ 
+-	git_config(git_default_config, NULL);
+-
+-	while (1 < argc && argv[1][0] == '-') {
+-		const char *arg = argv[1];
+-		if (!strcmp(arg, "-a") || !strcmp(arg, "--all"))
+-			show_all = 1;
+-		else
+-			usage(merge_base_usage);
+-		argc--; argv++;
+-	}
+-	if (argc < 3)
+-		usage(merge_base_usage);
+-
+-	rev = xmalloc((argc - 1) * sizeof(*rev));
+-
+-	do {
+-		rev[rev_nr++] = get_commit_reference(argv[1]);
+-		argc--; argv++;
+-	} while (argc > 1);
++	struct option options[] = {
++		OPT_BOOLEAN('a', "all", &show_all, "outputs all common ancestors"),
++		OPT_END()
++	};
+ 
++	git_config(git_default_config, NULL);
++	argc = parse_options(argc, argv, options, merge_base_usage, 0);
++	if (argc < 2)
++		usage_with_options(merge_base_usage, options);
++	rev = xmalloc(argc * sizeof(*rev));
++	while (argc-- > 0)
++		rev[rev_nr++] = get_commit_reference(*argv++);
+ 	return show_merge_base(rev, rev_nr, show_all);
+ }
+-- 
+1.6.0.2.415.g9800c0.dirty
