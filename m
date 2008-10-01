@@ -1,102 +1,199 @@
-From: "=?ISO-8859-1?Q?Santi_B=E9jar?=" <santi@agolina.net>
-Subject: Re: [PATCH/resent 0/9] Sparse checkout (first half)
-Date: Wed, 1 Oct 2008 12:20:25 +0200
-Message-ID: <adf1fd3d0810010320v340230f0jb443bafc1ef05d6f@mail.gmail.com>
-References: <1222833849-22129-1-git-send-email-pclouds@gmail.com>
+From: "Mike Ralphson" <mike.ralphson@gmail.com>
+Subject: Re: obscure platform autobuilders
+Date: Wed, 1 Oct 2008 11:46:43 +0100
+Message-ID: <e2b179460810010346j23617764i8134c1f24b2746f0@mail.gmail.com>
+References: <20080924154632.GR3669@spearce.org>
+	 <e2b179460809260624n4b329345q3610069af5af75c2@mail.gmail.com>
+	 <20080926225423.GA25502@coredump.intra.peff.net>
+	 <e2b179460809290051q8ca76a4k7cf0af2748a5f0fc@mail.gmail.com>
+	 <20081001071653.GA21174@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: base64
-Cc: git@vger.kernel.org, "Shawn O. Pearce" <spearce@spearce.org>
-To: "=?UTF-8?Q?Nguy=E1=BB=85n_Th=C3=A1i_Ng=E1=BB=8Dc_Duy?=" 
-	<pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Oct 01 12:21:41 2008
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: "Jeff King" <peff@peff.net>
+X-From: git-owner@vger.kernel.org Wed Oct 01 12:48:03 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Kkypu-0005sQ-3I
-	for gcvg-git-2@gmane.org; Wed, 01 Oct 2008 12:21:38 +0200
+	id 1KkzFN-0005Gx-ID
+	for gcvg-git-2@gmane.org; Wed, 01 Oct 2008 12:47:58 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751705AbYJAKU2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 1 Oct 2008 06:20:28 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751980AbYJAKU2
-	(ORCPT <rfc822;git-outgoing>); Wed, 1 Oct 2008 06:20:28 -0400
-Received: from fg-out-1718.google.com ([72.14.220.159]:44628 "EHLO
-	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751581AbYJAKU1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 1 Oct 2008 06:20:27 -0400
-Received: by fg-out-1718.google.com with SMTP id 19so350460fgg.17
-        for <git@vger.kernel.org>; Wed, 01 Oct 2008 03:20:25 -0700 (PDT)
-Received: by 10.103.24.11 with SMTP id b11mr5644308muj.77.1222856425214;
-        Wed, 01 Oct 2008 03:20:25 -0700 (PDT)
-Received: by 10.102.247.10 with HTTP; Wed, 1 Oct 2008 03:20:25 -0700 (PDT)
-In-Reply-To: <1222833849-22129-1-git-send-email-pclouds@gmail.com>
+	id S1752349AbYJAKqr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 1 Oct 2008 06:46:47 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752315AbYJAKqr
+	(ORCPT <rfc822;git-outgoing>); Wed, 1 Oct 2008 06:46:47 -0400
+Received: from qw-out-2122.google.com ([74.125.92.27]:49874 "EHLO
+	qw-out-2122.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752196AbYJAKqq (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 1 Oct 2008 06:46:46 -0400
+Received: by qw-out-2122.google.com with SMTP id 3so109969qwe.37
+        for <git@vger.kernel.org>; Wed, 01 Oct 2008 03:46:44 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to
+         :subject:cc:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:references;
+        bh=3uOIGKhtvGOUou9leJDthbUCnO4sY0VR01p3vkH/Xks=;
+        b=RNr7JioxVHx07wxQLKS5jlDAhMZxQvrkI79nddMg3LzxTTVayS0xnVe+YpFahv5URF
+         P/Q0d4zxq/EHYHN103vPXH33UOAGXm7a5HDL8POQ31RHnaV56jVaZP5S1KxA/SFu+fHf
+         RpG64mfaVsHmPqrfN9a1w4hDWUx0VOOdVdoxE=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
+         :content-type:content-transfer-encoding:content-disposition
+         :references;
+        b=ZhCS2ZsnBq/5vTJJESZ48tIXcuOZn8zzHc32t+zXxMNOqJyRm3Q/f7Nfqr0FgeHJNa
+         NC+lyqaaE9qzY9atk3BLLmtfEiwxVZ1cV8Uf1CzmCv5Qf4JaLUXHlwu30MByHiib4TcX
+         4CeCpNoVatfi7Ga8rQgEzaal8AXCF9VWQwVrI=
+Received: by 10.215.41.10 with SMTP id t10mr7972723qaj.62.1222858004134;
+        Wed, 01 Oct 2008 03:46:44 -0700 (PDT)
+Received: by 10.214.215.10 with HTTP; Wed, 1 Oct 2008 03:46:43 -0700 (PDT)
+In-Reply-To: <20081001071653.GA21174@sigill.intra.peff.net>
 Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/97215>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/97216>
 
-Tm90IGluIHRoaXMgaGFsZiBidXQgSSd2ZSBzZWVuIHRoYXQgeW91IGFkZGVkIGEgLS1kZWZhdWx0
-LXNwYXJzZSBmbGFnCnRvICJnaXQgY2xvbmUiLiBJIHRoaW5rIGl0IGlzIHVzZWxlc3MgYXMgbW9z
-dGx5IGFsd2F5cyB0aGUgb25lIGdpdmVuCmluIC1zcGFyc2UtY2hlY2tvdXQgc2hvdWxkIGJlIHVz
-ZWQuCgpUaGFua3MKClNhbnRpCgpPbiBXZWQsIE9jdCAxLCAyMDA4IGF0IDY6MDQgQU0sIE5ndXnh
-u4VuIFRow6FpIE5n4buNYyBEdXkgPHBjbG91ZHNAZ21haWwuY29tPiB3cm90ZToKPiBUaGlzIGlz
-IHRoZSBmaXJzdCBoYWxmIG9mIHRoZSBzZXJpZXMsIG1ha2luZyBnaXQgcmVhZHkgZm9yIHNwYXJz
-ZQo+IGNoZWNrb3V0LiBUaGUgb25seSBkaWZmZXJlbmNlIGZyb20gdGhlIGxhc3QgKGZpcnN0IGhh
-bGYpIHNlbnQKPiBzZXJpZXMgaXMgc2FmZWd1YXJkIGJpdG1hc2sgZml4IGluIDEvOQo+Cj4gTmd1
-eeG7hW4gVGjDoWkgTmfhu41jIER1eSAoOSk6Cj4gIEV4dGVuZCBpbmRleCB0byBzYXZlIG1vcmUg
-ZmxhZ3MKPiAgSW50cm9kdWNlIENFX05PX0NIRUNLT1VUIGJpdAo+ICBscy1maWxlczogYWRkIG9w
-dGlvbnMgdG8gc3VwcG9ydCBzcGFyc2UgY2hlY2tvdXQKPiAgdXBkYXRlLWluZGV4OiByZWZhY3Rv
-ciBtYXJrX3ZhbGlkKCkgaW4gcHJlcGFyYXRpb24gZm9yIG5ldyBvcHRpb25zCj4gIHVwZGF0ZS1p
-bmRleDogYWRkIC0tY2hlY2tvdXQvLS1uby1jaGVja291dCB0byB1cGRhdGUgQ0VfTk9fQ0hFQ0tP
-VVQKPiAgICBiaXQKPiAgbHMtZmlsZXM6IEFkZCB0ZXN0cyBmb3IgLS1zcGFyc2UgYW5kIGZyaWVu
-ZHMKPiAgUHJldmVudCBkaWZmIG1hY2hpbmVyeSBmcm9tIGV4YW1pbmluZyB3b3JrdHJlZSBvdXRz
-aWRlIHNwYXJzZQo+ICAgIGNoZWNrb3V0Cj4gIGNoZWNrb3V0X2VudHJ5KCk6IENFX05PX0NIRUNL
-T1VUIG9uIGNoZWNrZWQgb3V0IGVudHJpZXMuCj4gIGdyZXA6IHNraXAgZmlsZXMgb3V0c2lkZSBz
-cGFyc2UgY2hlY2tvdXQgYXJlYQo+Cj4gIC5naXRpZ25vcmUgICAgICAgICAgICAgICAgICAgICAg
-ICAgICAgfCAgICAxICsKPiAgRG9jdW1lbnRhdGlvbi9naXQtY2hlY2tvdXQudHh0ICAgICAgICB8
-ICAgMzQgKysrKysrKysrKysrKysrKysKPiAgRG9jdW1lbnRhdGlvbi9naXQtZ3JlcC50eHQgICAg
-ICAgICAgICB8ICAgIDQgKy0KPiAgRG9jdW1lbnRhdGlvbi9naXQtbHMtZmlsZXMudHh0ICAgICAg
-ICB8ICAgMjQgKysrKysrKysrKystCj4gIERvY3VtZW50YXRpb24vZ2l0LXVwZGF0ZS1pbmRleC50
-eHQgICAgfCAgIDEzICsrKysrKwo+ICBNYWtlZmlsZSAgICAgICAgICAgICAgICAgICAgICAgICAg
-ICAgIHwgICAgMiArLQo+ICBidWlsdGluLWdyZXAuYyAgICAgICAgICAgICAgICAgICAgICAgIHwg
-ICAgNyArKystCj4gIGJ1aWx0aW4tbHMtZmlsZXMuYyAgICAgICAgICAgICAgICAgICAgfCAgIDQx
-ICsrKysrKysrKysrKysrKysrKy0tCj4gIGJ1aWx0aW4tdXBkYXRlLWluZGV4LmMgICAgICAgICAg
-ICAgICAgfCAgIDQwICsrKysrKysrKysrKy0tLS0tLS0KPiAgY2FjaGUuaCAgICAgICAgICAgICAg
-ICAgICAgICAgICAgICAgICB8ICAgNjYgKysrKysrKysrKysrKysrKysrKysrKysrKysrKysrKy0t
-Cj4gIGRpZmYtbGliLmMgICAgICAgICAgICAgICAgICAgICAgICAgICAgfCAgICA1ICstCj4gIGRp
-ZmYuYyAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgfCAgICA0ICstCj4gIGVudHJ5LmMg
-ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgfCAgICAxICsKPiAgcmVhZC1jYWNoZS5jICAg
-ICAgICAgICAgICAgICAgICAgICAgICB8ICAgNTcgKysrKysrKysrKysrKysrKysrKysrKy0tLS0t
-LQo+ICB0L3QyMTA0LXVwZGF0ZS1pbmRleC1uby1jaGVja291dC5zaCAgIHwgICAzNiArKysrKysr
-KysrKysrKysrKysKPiAgdC90MzAwNC1scy1maWxlcy1zcGFyc2Uuc2ggICAgICAgICAgICB8ICAg
-NDAgKysrKysrKysrKysrKysrKysrKysKPiAgdC90MzAwNC9jYWNoZWQuZXhwZWN0ZWQgICAgICAg
-ICAgICAgICB8ICAgIDUgKysKPiAgdC90MzAwNC9kZWxldGVkLmV4cGVjdGVkICAgICAgICAgICAg
-ICB8ICAgIDEgKwo+ICB0L3QzMDA0L2V2ZXJ5dGhpbmcuZXhwZWN0ZWQgICAgICAgICAgIHwgICAx
-MCArKysrKwo+ICB0L3QzMDA0L21vZGlmaWVkLmV4cGVjdGVkICAgICAgICAgICAgIHwgICAgMiAr
-Cj4gIHQvdDMwMDQvbm8tY2hlY2tvdXQuZXhwZWN0ZWQgICAgICAgICAgfCAgICAyICsKPiAgdC90
-MzAwNC9vcnBoYW5lZC1uby1jaGVja291dC5leHBlY3RlZCB8ICAgIDMgKwo+ICB0L3QzMDA0L29y
-cGhhbmVkLmV4cGVjdGVkICAgICAgICAgICAgIHwgICAgMSArCj4gIHQvdDMwMDQvb3RoZXJzLmV4
-cGVjdGVkICAgICAgICAgICAgICAgfCAgICAyICsKPiAgdC90MzAwNC9zcGFyc2UtY2FjaGVkLmV4
-cGVjdGVkICAgICAgICB8ICAgIDMgKwo+ICB0L3QzMDA0L3NwYXJzZS1ldmVyeXRoaW5nLmV4cGVj
-dGVkICAgIHwgICAxMSArKysrKwo+ICB0ZXN0LWluZGV4LXZlcnNpb24uYyAgICAgICAgICAgICAg
-ICAgIHwgICAxNCArKysrKysrCj4gIDI3IGZpbGVzIGNoYW5nZWQsIDM4NSBpbnNlcnRpb25zKCsp
-LCA0NCBkZWxldGlvbnMoLSkKPiAgY3JlYXRlIG1vZGUgMTAwNzU1IHQvdDIxMDQtdXBkYXRlLWlu
-ZGV4LW5vLWNoZWNrb3V0LnNoCj4gIGNyZWF0ZSBtb2RlIDEwMDc1NSB0L3QzMDA0LWxzLWZpbGVz
-LXNwYXJzZS5zaAo+ICBjcmVhdGUgbW9kZSAxMDA2NDQgdC90MzAwNC9jYWNoZWQuZXhwZWN0ZWQK
-PiAgY3JlYXRlIG1vZGUgMTAwNjQ0IHQvdDMwMDQvZGVsZXRlZC5leHBlY3RlZAo+ICBjcmVhdGUg
-bW9kZSAxMDA2NDQgdC90MzAwNC9ldmVyeXRoaW5nLmV4cGVjdGVkCj4gIGNyZWF0ZSBtb2RlIDEw
-MDY0NCB0L3QzMDA0L21vZGlmaWVkLmV4cGVjdGVkCj4gIGNyZWF0ZSBtb2RlIDEwMDY0NCB0L3Qz
-MDA0L25vLWNoZWNrb3V0LmV4cGVjdGVkCj4gIGNyZWF0ZSBtb2RlIDEwMDY0NCB0L3QzMDA0L29y
-cGhhbmVkLW5vLWNoZWNrb3V0LmV4cGVjdGVkCj4gIGNyZWF0ZSBtb2RlIDEwMDY0NCB0L3QzMDA0
-L29ycGhhbmVkLmV4cGVjdGVkCj4gIGNyZWF0ZSBtb2RlIDEwMDY0NCB0L3QzMDA0L290aGVycy5l
-eHBlY3RlZAo+ICBjcmVhdGUgbW9kZSAxMDA2NDQgdC90MzAwNC9zcGFyc2UtY2FjaGVkLmV4cGVj
-dGVkCj4gIGNyZWF0ZSBtb2RlIDEwMDY0NCB0L3QzMDA0L3NwYXJzZS1ldmVyeXRoaW5nLmV4cGVj
-dGVkCj4gIGNyZWF0ZSBtb2RlIDEwMDY0NCB0ZXN0LWluZGV4LXZlcnNpb24uYwo+Cj4gLS0KPiBU
-byB1bnN1YnNjcmliZSBmcm9tIHRoaXMgbGlzdDogc2VuZCB0aGUgbGluZSAidW5zdWJzY3JpYmUg
-Z2l0IiBpbgo+IHRoZSBib2R5IG9mIGEgbWVzc2FnZSB0byBtYWpvcmRvbW9Admdlci5rZXJuZWwu
-b3JnCj4gTW9yZSBtYWpvcmRvbW8gaW5mbyBhdCAgaHR0cDovL3ZnZXIua2VybmVsLm9yZy9tYWpv
-cmRvbW8taW5mby5odG1sCj4K
+2008/10/1 Jeff King <peff@peff.net>:
+> On Mon, Sep 29, 2008 at 08:51:29AM +0100, Mike Ralphson wrote:
+>> Feel free to push changes to gitbuild.sh, including getting rid of
+>> anything which looks environment-specific.
+>
+> I actually went a step further and revamped the architecture a bit.
+> Check out the "platform" branch in gitbuild.git. My goal was to try to
+> include more information in the gitbuild repository about exactly what
+> goes into the test setup for each platform.
+
+Very nice!
+
+> I'm currently building, testing, and pushing FreeBSD 6.1 and Solaris 2.8
+> with it (you can see the copious tests I am skipping in
+> jk/solaris/config).
+
+My googling led me to think that INTERNAL_QSORT would be a good idea
+on at least some versions of Solaris... it may depend on the fs
+though.
+
+> If you like this approach, please go ahead and add an "mr/aix" profile
+> with your setup. See the README for details, and let me know if you have
+> questions.  The script is a mish-mash of yours, mine, and some extra
+> rewrites. I wouldn't be surprised if it needs a tweak or two. :)
+
+How about this - let me know if ok, and I'll push it.
+
+diff --git a/README b/README
+index 184de11..e91037f 100644
+--- a/README
++++ b/README
+@@ -10,7 +10,8 @@ several files:
+   - 'config', a shell script sourced by the build script to override any
+     variables. See below for more information.
+
+-  - 'branches', a list of branches, one per line, to build and test
++  - 'branches', a list of branches, one per line, to build and test.
++    Lines starting with # are treated as comments
+
+   - 'gitconfig'; if this file exists, it will be used as the .git/config
+     of the built and tested repository. This file should define a remote
+@@ -18,7 +19,16 @@ several files:
+     should be published (i.e., repo.or.cz:/srv/git/git/gitbuild.git).
+
+   - 'config.mak'; if this file exists, it will be used as the config.mak
+-    file for building git
++    file for building git. If it is not present, but there is a
++    config.mak file in your project directory, it is copied here to
++    prevent it being removed by 'git clean'
++
++  - 'catch', a shell script sourced by the build script if an error
++    occurs. It is passed the failing command-line in its arguments
++
++  - 'finally', a shell script sourced by the build script at the end
++    of the process. It is passed the exit code of build.sh as its
++    argument
+
+ The convention for platform directory names is "$initials/$platform".  A
+ build should be initiated from the platform directory. E.g., by putting
+@@ -42,6 +52,9 @@ the variables are:
+
+   - make; the command to invoke make. If not set, defaults to "gmake".
+
++  - project; the path to the directory to build in. If not set, defaults
++             to ./project relative to the starting directory
++
+   - path_build; the PATH to use while building git. If not set, the
+                 PATH is left alone.
+
+@@ -52,8 +65,8 @@ Invoking build.sh
+ =================
+
+ Generally build.sh is invoked without any options, which means it should
+-build all branches one after the other. However, it can be invoked with
+-a branch name to build and test just a single branch.
++build all specified branches one after the other. However, it can be
++invoked with a branch name to build and test just a single branch.
+
+ The 'project' directory need not be set up beforehand. If it does not
+ exist, it will be created as an empty git repository automatically. As
+ diff --git a/build.sh b/build.sh
+index b318af2..0967ff3 100755
+--- a/build.sh
++++ b/build.sh
+@@ -9,6 +9,7 @@ root=$PWD
+ initials=`dirname $PWD 2>/dev/null`; initials=`basename $initials 2>/dev/null`
+ name=`basename $PWD 2>/dev/null`
+ make=gmake
++project=project
+ . ./config
+ name=`echo $name | sed 's/[^A-Za-z0-9.-]/-/g'`
+
+@@ -19,6 +20,8 @@ try() {
+    0) ;;
+    *) echo >&2 "build failed: $*"
+       cat >&2 "$log"
++      test -f $root/catch && . $root/catch $*
++      test -f $root/finally && . $root/finally 1
+       exit 1
+       ;;
+  esac
+@@ -36,6 +39,7 @@ build_branch() {
+   rm -f "$log"
+
+   try git checkout -f -q $branch
++  test -f config.mak && test ! -f $root/config.mak && try cp config.mak $root/
+   try git clean -d -f -q -x
+   test -f $root/config.mak && try cp $root/config.mak config.mak
+
+@@ -59,22 +63,23 @@ build_branch() {
+ log=$root/log.build
+ rm -f "$log"
+
+-if ! test -d project; then
+-  try mkdir project
+-  try cd project
++if ! test -d $project; then
++  try mkdir $project
++  try cd $project
+   try git init
+ else
+-  try cd project
++  try cd $project
+ fi
+
+ test -f $root/gitconfig && try cp $root/gitconfig .git/config
+ try git remote update
+
+ if test -z "$1"; then
+-  for i in `cat "$root/branches"`; do
++  for i in `cat "$root/branches" | grep -v '^#'`; do
+     build_branch $i || exit 1
+   done
+ else
+   build_branch $1
+ fi
++test -f $root/finally && . $root/finally 0
+ exit 0
