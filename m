@@ -1,77 +1,81 @@
-From: Pierre Habouzit <madcoder@debian.org>
-Subject: Re: [PATCH] git grep: Add "-Z/--null" option as in GNU's grep.
-Date: Wed, 01 Oct 2008 08:12:49 +0200
-Message-ID: <20081001061249.GC22363@artemis.corp>
-References: <1222816390-9141-1-git-send-email-killekulla@rdrz.de>
+From: "Marco Costalba" <mcostalba@gmail.com>
+Subject: Re: [QGit] [PATCH] Modify Highlight Color at File Context View.
+Date: Wed, 1 Oct 2008 08:47:40 +0200
+Message-ID: <e5bfff550809302347r59621e09sdea5c679ef3794c8@mail.gmail.com>
+References: <gbak2u$v9b$1@ger.gmane.org>
+	 <7FD1F85C96D70C4A89DA1DF7667EAE96079FBB@zch01exm23.fsl.freescale.net>
+	 <e5bfff550809250934l47c48440m332764491ff5391@mail.gmail.com>
+	 <7FD1F85C96D70C4A89DA1DF7667EAE9607A00A@zch01exm23.fsl.freescale.net>
+	 <e5bfff550809252215v72bb4633s17b5c1a8c39f55ff@mail.gmail.com>
+	 <7FD1F85C96D70C4A89DA1DF7667EAE9607A0D9@zch01exm23.fsl.freescale.net>
+	 <e5bfff550809260337o1523995ele3333c0de9295393@mail.gmail.com>
+	 <7FD1F85C96D70C4A89DA1DF7667EAE9607A217@zch01exm23.fsl.freescale.net>
+	 <e5bfff550809270547n15a210e3y386278db00966945@mail.gmail.com>
+	 <7FD1F85C96D70C4A89DA1DF7667EAE9605EA4E@zch01exm23.fsl.freescale.net>
 Mime-Version: 1.0
-Content-Type: multipart/signed; boundary="iFRdW5/EC4oqxDHL";
-	protocol="application/pgp-signature"; micalg=SHA1
-Cc: spearce@spearce.org, git@vger.kernel.org
-To: Raphael Zimmerer <killekulla@rdrz.de>
-X-From: git-owner@vger.kernel.org Wed Oct 01 08:14:08 2008
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: "Li Frank-B20596" <Frank.Li@freescale.com>
+X-From: git-owner@vger.kernel.org Wed Oct 01 08:53:28 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KkuyK-0002yX-GL
-	for gcvg-git-2@gmane.org; Wed, 01 Oct 2008 08:14:04 +0200
+	id 1KkvW9-0005VS-7w
+	for gcvg-git-2@gmane.org; Wed, 01 Oct 2008 08:49:01 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751684AbYJAGMy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 1 Oct 2008 02:12:54 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752013AbYJAGMy
-	(ORCPT <rfc822;git-outgoing>); Wed, 1 Oct 2008 02:12:54 -0400
-Received: from pan.madism.org ([88.191.52.104]:47416 "EHLO hermes.madism.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751603AbYJAGMx (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 1 Oct 2008 02:12:53 -0400
-Received: from madism.org (olympe.madism.org [82.243.245.108])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(Client CN "artemis.madism.org", Issuer "madism.org" (verified OK))
-	by hermes.madism.org (Postfix) with ESMTPS id A48063BAE5;
-	Wed,  1 Oct 2008 08:12:52 +0200 (CEST)
-Received: by madism.org (Postfix, from userid 1000)
-	id D64DA94A270; Wed,  1 Oct 2008 08:12:49 +0200 (CEST)
+	id S1751939AbYJAGrn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 1 Oct 2008 02:47:43 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751516AbYJAGrn
+	(ORCPT <rfc822;git-outgoing>); Wed, 1 Oct 2008 02:47:43 -0400
+Received: from fg-out-1718.google.com ([72.14.220.156]:37642 "EHLO
+	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751126AbYJAGrm (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 1 Oct 2008 02:47:42 -0400
+Received: by fg-out-1718.google.com with SMTP id 19so298353fgg.17
+        for <git@vger.kernel.org>; Tue, 30 Sep 2008 23:47:40 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to
+         :subject:cc:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:references;
+        bh=ApZR4sYSUxRopQ+56Q9y6vJRb2+Mz0qvMEsZANY/wQI=;
+        b=pDjPOeL7kI/+7jIeFQfwhXIk5rfIWda0meEK4hdauXeYdiqbmTA4e/MQebn1N5Sv2Z
+         agrPqSN793EOIrKm5UMBvWfaR0NaLNLVK22swJNAGQouNLaszWBJnRnDAfdwRh80pl/8
+         2z/Lg53rdGHs53ZJoCGozs/w++MtxPpW5AXqc=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
+         :content-type:content-transfer-encoding:content-disposition
+         :references;
+        b=K+xyVv/MwzV44ISQbbjVLiMqvtyqHQ4bXhj3sNw69e5oKQybp5TjWNH4C11BC4QAbp
+         QxHDa16CQV/qsShZkkNbUys7CGTjFan5JN2jzKbukiOazNBOtUNyljAixJqsMBt4l3oi
+         dO/0tEWBllmd+IZgDrNtYyi0TCP1Tn/oJZG4o=
+Received: by 10.180.227.2 with SMTP id z2mr3779562bkg.12.1222843660768;
+        Tue, 30 Sep 2008 23:47:40 -0700 (PDT)
+Received: by 10.180.220.15 with HTTP; Tue, 30 Sep 2008 23:47:40 -0700 (PDT)
+In-Reply-To: <7FD1F85C96D70C4A89DA1DF7667EAE9605EA4E@zch01exm23.fsl.freescale.net>
 Content-Disposition: inline
-In-Reply-To: <1222816390-9141-1-git-send-email-killekulla@rdrz.de>
-X-Face: $(^e[V4D-[`f2EmMGz@fgWK!e.B~2g.{08lKPU(nc1J~z\4B>*JEVq:E]7G-\6$Ycr4<;Z!|VY6Grt]+RsS$IMV)f>2)M="tY:ZPcU;&%it2D81X^kNya0=L]"vZmLP+UmKhgq+u*\.dJ8G!N&=EvlD
-User-Agent: Madmutt/devel (Linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/97206>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/97207>
 
+On Mon, Sep 29, 2008 at 3:27 AM, Li Frank-B20596 <Frank.Li@freescale.com> wrote:
+> Marco:
+>
+>          I don't get my patch by git-pull.
+>          There are not my patch at
+> http://git.kernel.org/?p=qgit/qgit4.git;a=summary.
+>
+> best regards
+> Frank Li
+> ________________________________
 
---iFRdW5/EC4oqxDHL
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+I have pushed to my local repo, I will be able to push to public repo
+only this week end.
 
-On Tue, Sep 30, 2008 at 11:13:10PM +0000, Raphael Zimmerer wrote:
-> +	printf("%s%c", name, opt->null_following_name ? 0 : '\n');
-
-I know I'm nitpicking and I don't know what the git custom on this
-really is, but I tend to prefer '\0' when in the context of a char.
-There is no confusion here of course, but I believe it to be a sane
-habit. (In the same vein that it's ugly to use 0 for NULL ;p).
-
---=20
-=C2=B7O=C2=B7  Pierre Habouzit
-=C2=B7=C2=B7O                                                madcoder@debia=
-n.org
-OOO                                                http://www.madism.org
-
---iFRdW5/EC4oqxDHL
-Content-Type: application/pgp-signature
-Content-Disposition: inline
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.9 (GNU/Linux)
-
-iEYEABECAAYFAkjjFOEACgkQvGr7W6HudhzS6wCeMj4c1xAvxr5X7AQF/BO1NZlB
-TnoAn3F8ZF/CB0KAAw9sAGlJ9+75y5v5
-=7Mzo
------END PGP SIGNATURE-----
-
---iFRdW5/EC4oqxDHL--
+Marco
