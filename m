@@ -1,78 +1,88 @@
-From: =?iso-8859-1?Q?Bj=F6rn?= Steinbrink <B.Steinbrink@gmx.de>
-Subject: [PATCH] GUI: Add a progressbar to visualize the time that is left
-Date: Wed, 1 Oct 2008 23:09:01 +0200
-Message-ID: <20081001210901.GA5731@atjola.homenet>
-References: <alpine.LFD.2.00.0810011240390.3575@nehalem.linux-foundation.org>
+From: Andreas Ericsson <ae@op5.se>
+Subject: Re: interactive rebase not rebasing
+Date: Wed, 01 Oct 2008 23:26:01 +0200
+Message-ID: <48E3EAE9.5070207@op5.se>
+References: <20080928235013.5c749c6e.stephen@exigencecorp.com>	<48E078BF.5030806@op5.se>	<20081001010306.01cc34eb.stephen@exigencecorp.com>	<48E32BD4.1050107@op5.se>	<20081001095225.d28de16a.stephen@exigencecorp.com>	<48E396AF.2000100@op5.se> <20081001121321.5761fc7e.stephen@exigencecorp.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+Content-Type: text/plain; charset=ISO-8859-15; format=flowed
+Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org
-To: Linus Torvalds <torvalds@linux-foundation.org>
-X-From: git-owner@vger.kernel.org Wed Oct 01 23:10:25 2008
+To: Stephen Haberman <stephen@exigencecorp.com>
+X-From: git-owner@vger.kernel.org Wed Oct 01 23:27:26 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Kl8xd-00073M-TO
-	for gcvg-git-2@gmane.org; Wed, 01 Oct 2008 23:10:18 +0200
+	id 1Kl9EC-00049D-JY
+	for gcvg-git-2@gmane.org; Wed, 01 Oct 2008 23:27:25 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754089AbYJAVJH convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 1 Oct 2008 17:09:07 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754053AbYJAVJG
-	(ORCPT <rfc822;git-outgoing>); Wed, 1 Oct 2008 17:09:06 -0400
-Received: from mail.gmx.net ([213.165.64.20]:41493 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1754009AbYJAVJE (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 1 Oct 2008 17:09:04 -0400
-Received: (qmail invoked by alias); 01 Oct 2008 21:09:02 -0000
-Received: from i577BAFAB.versanet.de (EHLO atjola.local) [87.123.175.171]
-  by mail.gmx.net (mp020) with SMTP; 01 Oct 2008 23:09:02 +0200
-X-Authenticated: #5039886
-X-Provags-ID: V01U2FsdGVkX1/zc6M3JTbzT+GY9YM8I8hxW5aNsAT9giqd+EI99D
-	WVbzhxGVUSAms1
-Content-Disposition: inline
-In-Reply-To: <alpine.LFD.2.00.0810011240390.3575@nehalem.linux-foundation.org>
-User-Agent: Mutt/1.5.18 (2008-05-17)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.53
+	id S1752729AbYJAV0O (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 1 Oct 2008 17:26:14 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752378AbYJAV0O
+	(ORCPT <rfc822;git-outgoing>); Wed, 1 Oct 2008 17:26:14 -0400
+Received: from mail.op5.se ([193.201.96.20]:57671 "EHLO mail.op5.se"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750769AbYJAV0O (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 1 Oct 2008 17:26:14 -0400
+Received: from localhost (localhost.localdomain [127.0.0.1])
+	by mail.op5.se (Postfix) with ESMTP id 0A5A01B8005F;
+	Wed,  1 Oct 2008 23:17:39 +0200 (CEST)
+X-Virus-Scanned: amavisd-new at 
+X-Spam-Flag: NO
+X-Spam-Score: -2.77
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.77 tagged_above=-10 required=6.6
+	tests=[AWL=-0.271, BAYES_00=-2.599, RDNS_NONE=0.1]
+Received: from mail.op5.se ([127.0.0.1])
+	by localhost (mail.op5.se [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id lOvJQVZhZFYq; Wed,  1 Oct 2008 23:17:31 +0200 (CEST)
+Received: from clix.int.op5.se (unknown [172.27.78.22])
+	by mail.op5.se (Postfix) with ESMTP id 1B1FF1B80046;
+	Wed,  1 Oct 2008 23:17:30 +0200 (CEST)
+User-Agent: Thunderbird 2.0.0.16 (X11/20080723)
+In-Reply-To: <20081001121321.5761fc7e.stephen@exigencecorp.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/97270>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/97271>
 
-Signed-off-by: Bj=F6rn Steinbrink <B.Steinbrink@gmx.de>
----
-OK, this bar doesn't fill up as you requested, but instead gets empty,
-that's just how I feel it should be ;-)
+Stephen Haberman wrote:
+>>> I've attempted to do that. Now that I sent in the patch, if you could
+>>> review it, I would appreciate your feedback.
+>> I'm heading home from work now. I'll look it over tonight or tomorrow
+>> morning.
+> 
+> Cool, thanks.
+> 
+> Question: how taboo is it to just add another test file?
+> 
 
-Might require Tcl/Tk 8.5...
+Not so taboo. Especially not if there are compelling technical reasons
+not to add stuff to an existing one.
 
- tracker-ui.tcl |    6 ++++++
- 1 files changed, 6 insertions(+), 0 deletions(-)
+> I'm attempting to integrate my test into t3404, which is the existing
+> interactive rebase test. The two test_expect_success's I added worked
+> when I ran them at the start of the test and then reset --hard the
+> branches back for the other tests, but if I paste my tests where they
+> should probably be, in the middle after the other -p tests, they break
+> because the 10 or tests before this have screwed with the DAG already.
+> 
 
-diff --git a/tracker-ui.tcl b/tracker-ui.tcl
-index 16d00d7..5314c57 100755
---- a/tracker-ui.tcl
-+++ b/tracker-ui.tcl
-@@ -8,6 +8,7 @@ proc every {ms body} {
- set user $env(USER)
-=20
- pack [label .tracker -textvariable time]
-+pack [ttk::progressbar .bar]
-=20
- every 1000 {
- 	global user
-@@ -17,4 +18,9 @@ every 1000 {
- 	gets $f l3
- 	close $f
- 	set ::time "$l3"
-+	set times [split "$l1" " "]
-+	set max [lindex $times 0]
-+	set cur [lindex $times 1]
-+	set left [expr $max - $cur]
-+	.bar configure -max $max -value $left
- }
---=20
-1.6.0.2.307.gc427
+Where you add the tests doesn't matter much. Many tests are grouped by
+feature simply because they were added along with the feature they're
+testing. There's no other value of grouping tests together.
+
+> I can suffer through getting it to work, but a t3409 would be much
+> easier, and probably easier to read as well as a I could setup my own
+> DAG instead of hacking onto 3404s.
+> 
+
+t3409 is already in spearce.git's next branch. You should be able to
+add stuff to that, or add t3410 if that doesn't work so good.
+
+-- 
+Andreas Ericsson                   andreas.ericsson@op5.se
+OP5 AB                             www.op5.se
+Tel: +46 8-230225                  Fax: +46 8-230231
