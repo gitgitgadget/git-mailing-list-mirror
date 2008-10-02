@@ -1,55 +1,55 @@
 From: David Aguilar <davvid@gmail.com>
-Subject: [PATCH v2] tests: add a testcase for "git submodule sync"
-Date: Thu,  2 Oct 2008 01:55:12 -0700
-Message-ID: <5ec2a738cfc257358c29ea08ceb37b01cf4fe4a0.1222937671.git.davvid@gmail.com>
+Subject: [PATCH v3] tests: add a testcase for "git submodule sync"
+Date: Thu,  2 Oct 2008 02:11:55 -0700
+Message-ID: <4383bf658ddce38cedd33bf388039cb10c004940.1222938595.git.davvid@gmail.com>
 Cc: git@vger.kernel.org, mlevedahl@gmail.com, gitster@pobox.com,
 	David Aguilar <davvid@gmail.com>
 To: spearce@spearce.org
-X-From: git-owner@vger.kernel.org Thu Oct 02 11:02:21 2008
+X-From: git-owner@vger.kernel.org Thu Oct 02 11:18:59 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KlK4b-0001KF-HY
-	for gcvg-git-2@gmane.org; Thu, 02 Oct 2008 11:02:14 +0200
+	id 1KlKKg-0006OG-UW
+	for gcvg-git-2@gmane.org; Thu, 02 Oct 2008 11:18:51 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753025AbYJBJA5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 2 Oct 2008 05:00:57 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753029AbYJBJA5
-	(ORCPT <rfc822;git-outgoing>); Thu, 2 Oct 2008 05:00:57 -0400
-Received: from wa-out-1112.google.com ([209.85.146.176]:7598 "EHLO
+	id S1752527AbYJBJRk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 2 Oct 2008 05:17:40 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752623AbYJBJRk
+	(ORCPT <rfc822;git-outgoing>); Thu, 2 Oct 2008 05:17:40 -0400
+Received: from wa-out-1112.google.com ([209.85.146.182]:4491 "EHLO
 	wa-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752892AbYJBJA4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 2 Oct 2008 05:00:56 -0400
-Received: by wa-out-1112.google.com with SMTP id v27so478725wah.21
-        for <git@vger.kernel.org>; Thu, 02 Oct 2008 02:00:55 -0700 (PDT)
+	with ESMTP id S1752393AbYJBJRj (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 2 Oct 2008 05:17:39 -0400
+Received: by wa-out-1112.google.com with SMTP id v27so480973wah.21
+        for <git@vger.kernel.org>; Thu, 02 Oct 2008 02:17:38 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:received:received:from:to:cc:subject:date
          :message-id:x-mailer;
-        bh=m/LXzVND3ziQp054WsiDKWoopeng546+xg9Us6A1HR0=;
-        b=cRZNY+aPfvJRpQelP23S5jTB5f1vZT95zyjxEhMabCqjx7pLGU906OX6QWI0XGMlRo
-         vW32lOIBpArsqeDPHFf71fUrRHPFzrbh6FpzlzrUtRtcgM61H11S1fQHHyckCCx13Rke
-         eIyJVgzeMcEGJmf23uRfL7Rhuxlh7OTOwgiws=
+        bh=0qgNf+Q4TudfUQiG/WnGF6nOy0hSuIn5TS6ammwrud0=;
+        b=FXOyRbg5koovU+DG6JIm7bOSvZwM84S0B3l4gskpJjsoRE7SdDNL/C9u3UuJPu0KqR
+         0NU+dZIztgUmN/LdkD2+95+uWJGtV+SpZIaSXxX+ZX35z0c+Ua5OOvdUpA1G2cBcSoi1
+         Abb4Gx3PZPEaCsyrc8CVTRJlyN0msIGUBsCK4=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=from:to:cc:subject:date:message-id:x-mailer;
-        b=hBQJk980ohfKdFNAEy6TuKHH5P2jJ6OHjHCuyFVXjwRd7vilpZM5JEX8oKAdGDInkP
-         AAEW2e3gMPR5h5UmiHaxqgXOePNy/y65iwuK3gHvpripQ+BKQCMpbA9H9vMuBrn2BaD6
-         bff9vH01Bv9AZV2QS3M5T1Iw5KKdYCFuMF6bo=
-Received: by 10.114.124.1 with SMTP id w1mr10473134wac.73.1222938055733;
-        Thu, 02 Oct 2008 02:00:55 -0700 (PDT)
+        b=kNBgzAtUs1jZ2KiCwD3FCuFuVSoVVMZthmo6LEXXMmcr3ZPDzlB3HJB+G6IZkS+YP5
+         aDPD/yjv5r5kuXDIPT0k5ZIVFlW1/JNem8TomXLvLmLEMHSdnhZCjw0+qEN8EX6iBKZT
+         97+iDAv9hsxi6tbdF4QvompyWYxvc6u7gIrYo=
+Received: by 10.115.32.8 with SMTP id k8mr10480366waj.89.1222939058712;
+        Thu, 02 Oct 2008 02:17:38 -0700 (PDT)
 Received: from localhost (208-106-56-2.static.dsltransport.net [208.106.56.2])
-        by mx.google.com with ESMTPS id l37sm4349421waf.23.2008.10.02.02.00.54
+        by mx.google.com with ESMTPS id m34sm4439688waf.20.2008.10.02.02.17.37
         (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Thu, 02 Oct 2008 02:00:54 -0700 (PDT)
+        Thu, 02 Oct 2008 02:17:38 -0700 (PDT)
 X-Mailer: git-send-email 1.6.0.2.428.g5e22e
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/97298>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/97299>
 
 This testcase ensures that upstream changes to submodule properties
 can be updated using the sync subcommand.  This particular test
@@ -58,15 +58,18 @@ an existing checkout.
 
 Signed-off-by: David Aguilar <davvid@gmail.com>
 ---
- t/t7403-submodule-sync.sh |   71 +++++++++++++++++++++++++++++++++++++++++++++
- 1 files changed, 71 insertions(+), 0 deletions(-)
+
+ sorry for the noise, :-/ please disregard the last two emails
+
+ t/t7403-submodule-sync.sh |   64 +++++++++++++++++++++++++++++++++++++++++++++
+ 1 files changed, 64 insertions(+), 0 deletions(-)
 
 diff --git a/t/t7403-submodule-sync.sh b/t/t7403-submodule-sync.sh
 new file mode 100755
-index 0000000..c034c9e
+index 0000000..d9e04d4
 --- /dev/null
 +++ b/t/t7403-submodule-sync.sh
-@@ -0,0 +1,71 @@
+@@ -0,0 +1,64 @@
 +#!/bin/sh
 +#
 +# Copyright (c) 2008 David Aguilar
@@ -80,18 +83,15 @@ index 0000000..c034c9e
 +. ./test-lib.sh
 +
 +test_expect_success setup '
-+	mkdir upstream &&
-+	(cd upstream &&
-+	 git init &&
-+	 echo file > file &&
-+	 git add file &&
-+	 test_tick &&
-+	 git commit -m upstream
-+	) &&
-+	git clone upstream super &&
++	echo file > file &&
++	git add file &&
++	test_tick &&
++	git commit -m upstream
++	git clone . super &&
 +	git clone super submodule &&
 +	(cd super &&
 +	 git submodule add ../submodule submodule &&
++	 test_tick &&
 +	 git commit -m "submodule"
 +	) &&
 +	git clone super super-clone &&
@@ -110,7 +110,6 @@ index 0000000..c034c9e
 +	(cd super &&
 +	 cd submodule &&
 +	 git checkout master && 
-+	 test_tick &&
 +	 git pull
 +	) &&
 +	mv submodule moved-submodule &&
@@ -124,15 +123,12 @@ index 0000000..c034c9e
 +test_expect_success '"git submodule sync" should update submodule URLs' '
 +	(cd super-clone &&
 +	 git pull &&
-+	 test_tick &&
 +	 git submodule sync
 +	) &&
-+	test_tick &&
 +	test -d "$(git config -f super-clone/submodule/.git/config \
 +	                        remote.origin.url)" &&
 +	(cd super-clone/submodule &&
 +	 git checkout master &&
-+	 test_tick &&
 +	 git pull
 +	)
 +'
