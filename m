@@ -1,82 +1,85 @@
 From: Nanako Shiraishi <nanako3@lavabit.com>
-Subject: [PATCH] run-command.c: remove run_command_v_opt_cd()
-Date: Thu, 02 Oct 2008 19:14:25 +0900
-Message-ID: <20081002191425.6117@nanako3.lavabit.com>
+Subject: [PATCH] dir.c: make dir_add_name() and dir_add_ignored() static
+Date: Thu, 02 Oct 2008 19:14:23 +0900
+Message-ID: <20081002191423.6117@nanako3.lavabit.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Cc: git@vger.kernel.org
 To: "Shawn O. Pearce" <spearce@spearce.org>
-X-From: git-owner@vger.kernel.org Thu Oct 02 12:16:03 2008
+X-From: git-owner@vger.kernel.org Thu Oct 02 12:16:02 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KlLE0-00070F-MW
-	for gcvg-git-2@gmane.org; Thu, 02 Oct 2008 12:16:01 +0200
+	id 1KlLDz-00070F-UE
+	for gcvg-git-2@gmane.org; Thu, 02 Oct 2008 12:16:00 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753235AbYJBKOx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 2 Oct 2008 06:14:53 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753222AbYJBKOx
-	(ORCPT <rfc822;git-outgoing>); Thu, 2 Oct 2008 06:14:53 -0400
-Received: from karen.lavabit.com ([72.249.41.33]:41921 "EHLO karen.lavabit.com"
+	id S1753195AbYJBKOt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 2 Oct 2008 06:14:49 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753166AbYJBKOs
+	(ORCPT <rfc822;git-outgoing>); Thu, 2 Oct 2008 06:14:48 -0400
+Received: from karen.lavabit.com ([72.249.41.33]:41919 "EHLO karen.lavabit.com"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753166AbYJBKOu (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 2 Oct 2008 06:14:50 -0400
+	id S1752662AbYJBKOs (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 2 Oct 2008 06:14:48 -0400
 Received: from d.earth.lavabit.com (d.earth.lavabit.com [192.168.111.13])
-	by karen.lavabit.com (Postfix) with ESMTP id 0DD2AC7B30;
-	Thu,  2 Oct 2008 05:14:50 -0500 (CDT)
+	by karen.lavabit.com (Postfix) with ESMTP id 55580C7B30;
+	Thu,  2 Oct 2008 05:14:47 -0500 (CDT)
 Received: from 6138.lavabit.com (212.62.97.21)
-	by lavabit.com with ESMTP id 274ASYW96FKG; Thu, 02 Oct 2008 05:14:50 -0500
+	by lavabit.com with ESMTP id TXW4K4S5UMQ5; Thu, 02 Oct 2008 05:14:47 -0500
 DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws; s=lavabit; d=lavabit.com;
-  b=J967heZ3tzYkIrFiyN+dA+CpLNyvDzVq9q7v47RAE8O/Mb0kN4eA70Ov5mzm8I9WvliPzqq3c/m7DxUcxRM8grpD2I2DodF8Bw4KEocLdHLtrKVGgURZxnwSCEwbdcvqJKFEe1HUQjq73utLeX7oe41HZLJcfWkQwyS7ip3hZaI=;
+  b=26szGyu6otlRl8VPW11oKu/rO+Ba7ms9CKuBq53pbIhBr3Rblgxe6+4qm8uu/yJPtiJYqin9pjvTIdGXan+9/LRVZmgxg2/7n7JZEFTSwV1C5g8OPGnOjsFtBFk/74ZuwVAQtPUhvfoIXyxd3sGaeudmzmEJhTmxVUeJ7muM7+0=;
   h=From:To:Cc:Date:Subject:MIME-Version:Content-Type:Content-Transfer-Encoding:Message-Id;
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/97304>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/97305>
 
-This function is not used anywhere.
+These functions are not used by any other file.
 
 Signed-off-by: Nanako Shiraishi <nanako3@lavabit.com>
 ---
- run-command.c |    8 --------
- run-command.h |    1 -
- 2 files changed, 0 insertions(+), 9 deletions(-)
+ dir.c |    4 ++--
+ dir.h |    1 -
+ 2 files changed, 2 insertions(+), 3 deletions(-)
 
-diff --git a/run-command.c b/run-command.c
-index caab374..c90cdc5 100644
---- a/run-command.c
-+++ b/run-command.c
-@@ -273,14 +273,6 @@ int run_command_v_opt(const char **argv, int opt)
- 	return run_command(&cmd);
+diff --git a/dir.c b/dir.c
+index acf1001..f79ec61 100644
+--- a/dir.c
++++ b/dir.c
+@@ -382,7 +382,7 @@ static struct dir_entry *dir_entry_new(const char *pathname, int len)
+ 	return ent;
  }
  
--int run_command_v_opt_cd(const char **argv, int opt, const char *dir)
--{
--	struct child_process cmd;
--	prepare_run_command_v_opt(&cmd, argv, opt);
--	cmd.dir = dir;
--	return run_command(&cmd);
--}
--
- int run_command_v_opt_cd_env(const char **argv, int opt, const char *dir, const char *const *env)
+-struct dir_entry *dir_add_name(struct dir_struct *dir, const char *pathname, int len)
++static struct dir_entry *dir_add_name(struct dir_struct *dir, const char *pathname, int len)
  {
- 	struct child_process cmd;
-diff --git a/run-command.h b/run-command.h
-index 4f2b7d7..a8b0c20 100644
---- a/run-command.h
-+++ b/run-command.h
-@@ -53,7 +53,6 @@ int run_command(struct child_process *);
- #define RUN_GIT_CMD	     2	/*If this is to be git sub-command */
- #define RUN_COMMAND_STDOUT_TO_STDERR 4
- int run_command_v_opt(const char **argv, int opt);
--int run_command_v_opt_cd(const char **argv, int opt, const char *dir);
+ 	if (cache_name_exists(pathname, len, ignore_case))
+ 		return NULL;
+@@ -391,7 +391,7 @@ struct dir_entry *dir_add_name(struct dir_struct *dir, const char *pathname, int
+ 	return dir->entries[dir->nr++] = dir_entry_new(pathname, len);
+ }
  
- /*
-  * env (the environment) is to be formatted like environ: "VAR=VALUE".
+-struct dir_entry *dir_add_ignored(struct dir_struct *dir, const char *pathname, int len)
++static struct dir_entry *dir_add_ignored(struct dir_struct *dir, const char *pathname, int len)
+ {
+ 	if (cache_name_pos(pathname, len) >= 0)
+ 		return NULL;
+diff --git a/dir.h b/dir.h
+index 2df15de..c98ad98 100644
+--- a/dir.h
++++ b/dir.h
+@@ -73,7 +73,6 @@ extern void add_excludes_from_file(struct dir_struct *, const char *fname);
+ extern void add_exclude(const char *string, const char *base,
+ 			int baselen, struct exclude_list *which);
+ extern int file_exists(const char *);
+-extern struct dir_entry *dir_add_name(struct dir_struct *dir, const char *pathname, int len);
+ 
+ extern char *get_relative_cwd(char *buffer, int size, const char *dir);
+ extern int is_inside_dir(const char *dir);
 -- 
 1.6.0.2
 
