@@ -1,94 +1,86 @@
 From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: How to remove a commit object?
-Date: Thu, 02 Oct 2008 07:02:32 -0700 (PDT)
-Message-ID: <m3ljx7qemk.fsf@localhost.localdomain>
-References: <D53D127D-97DD-417C-9109-ABD46BBD4E18@midwinter.com>
-	<48D36DF4.3030607@drmicha.warpmail.net>
-	<33f4f4d70810020636g77f4180cm7aa6b7de07ae5beb@mail.gmail.com>
+Subject: Re: [PATCH] format-patch: autonumber by default
+Date: Thu, 2 Oct 2008 16:08:53 +0200
+Message-ID: <200810021608.54287.jnareb@gmail.com>
+References: <alpine.DEB.1.00.0810021541470.22125@pacific.mpi-cbg.de.mpi-cbg.de> <1222955278-16908-1-git-send-email-giuseppe.bilotta@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: "Michael J Gruber" <git@drmicha.warpmail.net>,
-	"Steven Grimm" <koreth@midwinter.com>,
-	"Git Users List" <git@vger.kernel.org>
-To: "Klas Lindberg" <klas.lindberg@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Oct 02 16:09:43 2008
+Content-Type: text/plain;
+  charset="iso-8859-2"
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	"Shawn O. Pearce" <spearce@spearce.org>
+To: Giuseppe Bilotta <giuseppe.bilotta@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Oct 02 16:13:03 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KlOmh-0000Q0-4q
-	for gcvg-git-2@gmane.org; Thu, 02 Oct 2008 16:04:03 +0200
+	id 1KlOsd-0002iZ-K1
+	for gcvg-git-2@gmane.org; Thu, 02 Oct 2008 16:10:12 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753992AbYJBOCh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 2 Oct 2008 10:02:37 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752327AbYJBOCh
-	(ORCPT <rfc822;git-outgoing>); Thu, 2 Oct 2008 10:02:37 -0400
-Received: from ug-out-1314.google.com ([66.249.92.168]:35740 "EHLO
-	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752025AbYJBOCf (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 2 Oct 2008 10:02:35 -0400
-Received: by ug-out-1314.google.com with SMTP id k3so1022782ugf.37
-        for <git@vger.kernel.org>; Thu, 02 Oct 2008 07:02:34 -0700 (PDT)
+	id S1752516AbYJBOJA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 2 Oct 2008 10:09:00 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752508AbYJBOJA
+	(ORCPT <rfc822;git-outgoing>); Thu, 2 Oct 2008 10:09:00 -0400
+Received: from nf-out-0910.google.com ([64.233.182.190]:55929 "EHLO
+	nf-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752501AbYJBOI7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 2 Oct 2008 10:08:59 -0400
+Received: by nf-out-0910.google.com with SMTP id d3so425077nfc.21
+        for <git@vger.kernel.org>; Thu, 02 Oct 2008 07:08:57 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:received:received
-         :x-authentication-warning:to:cc:subject:references:from:in-reply-to
-         :message-id:lines:user-agent:mime-version:content-type:date;
-        bh=5/KDWe+L8Y81jgXdticpp1qE9pXKlVxo5C/vlug3ym0=;
-        b=kwPLNQr7+rOd7MZa05rXMei91j8iYXAHJFxbdwNxlkF4CHZJHNuMMl4PXWOYj5v1CE
-         5cfLp4BWjAn4dxfN0115VvM+mVPOfxiv8g9n9IGSwCpUd4qDM8i5D+atdzkokhDRYVke
-         snt4Fp0a7aLapwRAkaGrZGcguRx1+HHmlfX4A=
+        h=domainkey-signature:received:received:from:to:subject:date
+         :user-agent:cc:references:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:message-id;
+        bh=JCaz2FUI4Mofe8sRtk70j8oT/Ch2RN6PFTMe3CuLTFk=;
+        b=lsy5mxh4SKIhU+G2Lgo8ok8pYGRjZdz+2n9GZj2pkkfNQw/+e3jcW/IUnenM5c2VAv
+         Kxs+QqPHdYFdD/HMJ83Ly+s660SjW7RVHeGoFt/+wlCvKanPI3sKGg/mL7bFiDE4bTC8
+         2muUlunrcBYlusK09KQdpGal0cRW41UWf8bZ0=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=x-authentication-warning:to:cc:subject:references:from:in-reply-to
-         :message-id:lines:user-agent:mime-version:content-type:date;
-        b=HE2Yz2cgPk+MvRWZ9Q2oNR5+QrH4NiFPilVNGbprx4mQ93A6eXaMka8/gUpVEtxQW2
-         79w+7xzmH+e01OTw1bFyCC0+m74dGRVfMfPIfS2gplMGIOBZLy5d1otByATkM8lZUWox
-         0FfisS0HRAXVz//ta62gnLIGQzOshcfEfa/4o=
-Received: by 10.67.15.15 with SMTP id s15mr3998519ugi.28.1222956153746;
-        Thu, 02 Oct 2008 07:02:33 -0700 (PDT)
-Received: from localhost.localdomain (abwk221.neoplus.adsl.tpnet.pl [83.8.234.221])
-        by mx.google.com with ESMTPS id q1sm12001595uge.48.2008.10.02.07.02.31
+        h=from:to:subject:date:user-agent:cc:references:in-reply-to
+         :mime-version:content-type:content-transfer-encoding
+         :content-disposition:message-id;
+        b=e79i1nZmaA0taIYbp05gitqH2gjZAW6URx1QPYBi77Pl/GcLtu9yZIYzed30KUfmmZ
+         GWRA06x/UudJQZ8ChQWRDuPepAG1heGfy7LsFUGUwaD5Bv/bNOAqrTWPCz24i1QuAjQh
+         AGCzdwSAL+ppiJDNm85f9fMzFllsliA3SKzWo=
+Received: by 10.210.113.16 with SMTP id l16mr11468180ebc.85.1222956537913;
+        Thu, 02 Oct 2008 07:08:57 -0700 (PDT)
+Received: from ?192.168.1.11? (abwk221.neoplus.adsl.tpnet.pl [83.8.234.221])
+        by mx.google.com with ESMTPS id z33sm1913421ikz.0.2008.10.02.07.08.55
         (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Thu, 02 Oct 2008 07:02:32 -0700 (PDT)
-Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id m92E2Tjv018345;
-	Thu, 2 Oct 2008 16:02:30 +0200
-Received: (from jnareb@localhost)
-	by localhost.localdomain (8.13.4/8.13.4/Submit) id m92E2Rck018342;
-	Thu, 2 Oct 2008 16:02:27 +0200
-X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
-In-Reply-To: <33f4f4d70810020636g77f4180cm7aa6b7de07ae5beb@mail.gmail.com>
-User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
+        Thu, 02 Oct 2008 07:08:56 -0700 (PDT)
+User-Agent: KMail/1.9.3
+In-Reply-To: <1222955278-16908-1-git-send-email-giuseppe.bilotta@gmail.com>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/97335>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/97336>
 
-"Klas Lindberg" <klas.lindberg@gmail.com> writes:
+Giuseppe Bilotta wrote:
+> format-patch is most commoly used for multiple patches at once when
 
-> This doesn't seem to work for me. I will soon be in a situation where
-> I need to selectively delete commits in such a way that they become
-> completely irrecoverable. I.e. it is not enough to revert a commit.
-> The *original* commit must be removed. And of course, the repo history
-> is too complex to allow for rebasing followed by garbage collection or
-> something like that.
-[...]
+s/commoly/commonly/;
 
-> Would it be feasible to write a tool that can selectively replace a
-> specific commit in the commit DAG, or would that automatically
-> invalidate every SHA key for every commit that follows the replaced
-> original?
+I'm not sure about 'most' there...
 
-It would invalidate SHA1 for every commit after first rewritten.
-There are two tools which you can use to rewrite large parts of
-history automatically: git-filter-branch, and git-fast-export +
-git-fast-import.
+> sending a patchset, in which case we want to number the patches; on the
+> other hand, single-patches are not usually expected to be numbered.
+> 
+> The typical behavior expected by format-patch is therefore the one
+> obtained by enabling autonumber, which should therefore be the default.
+> 
+> Users that want to disable numbering for a particular patchset can do so
+> with the existing -N command-line switch. For users that want to change
+> the default behavior we provide a 'noauto' option for the
+> format.numbering config key.
 
-HTH
+Nice. I like it.
 -- 
 Jakub Narebski
 Poland
-ShadeHawk on #git
