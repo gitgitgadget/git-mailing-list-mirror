@@ -1,71 +1,65 @@
-From: =?iso-8859-1?Q?Bj=F6rn?= Steinbrink <B.Steinbrink@gmx.de>
-Subject: Re: git svn bug?
-Date: Thu, 2 Oct 2008 16:49:16 +0200
-Message-ID: <20081002144916.GA3644@atjola.homenet>
-References: <36C9BCCC-875A-4C65-98E2-0AD486FF8F61@gmail.com>
+From: Linus Torvalds <torvalds@linux-foundation.org>
+Subject: Re: Help with a tcl/tk gui thing..
+Date: Thu, 2 Oct 2008 07:49:09 -0700 (PDT)
+Message-ID: <alpine.LFD.2.00.0810020746480.3341@nehalem.linux-foundation.org>
+References: <alpine.LFD.2.00.0810011240390.3575@nehalem.linux-foundation.org>  <237967ef0810011403i2b18255and988df29a71798bf@mail.gmail.com>  <alpine.LFD.2.00.0810011605001.3341@nehalem.linux-foundation.org>
+ <237967ef0810012218i28d41573s6bb7866e0be485f2@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Ark Xu <ark.work@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Oct 02 16:52:58 2008
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Mikael Magnusson <mikachu@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Oct 02 16:54:25 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KlPVZ-0001ij-ML
-	for gcvg-git-2@gmane.org; Thu, 02 Oct 2008 16:50:26 +0200
+	id 1KlPVz-0001v3-LR
+	for gcvg-git-2@gmane.org; Thu, 02 Oct 2008 16:50:52 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753580AbYJBOtO convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 2 Oct 2008 10:49:14 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753368AbYJBOtO
-	(ORCPT <rfc822;git-outgoing>); Thu, 2 Oct 2008 10:49:14 -0400
-Received: from mail.gmx.net ([213.165.64.20]:52266 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1752514AbYJBOtO (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 2 Oct 2008 10:49:14 -0400
-Received: (qmail invoked by alias); 02 Oct 2008 14:49:11 -0000
-Received: from i577B8F08.versanet.de (EHLO atjola.local) [87.123.143.8]
-  by mail.gmx.net (mp057) with SMTP; 02 Oct 2008 16:49:11 +0200
-X-Authenticated: #5039886
-X-Provags-ID: V01U2FsdGVkX18wNuVisr8w2nib8SEwxzoYM70Tn33sCIPp6RQjIt
-	q2t+kPJaQcAiKy
-Content-Disposition: inline
-In-Reply-To: <36C9BCCC-875A-4C65-98E2-0AD486FF8F61@gmail.com>
-User-Agent: Mutt/1.5.18 (2008-05-17)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.61
+	id S1753843AbYJBOtl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 2 Oct 2008 10:49:41 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753805AbYJBOtl
+	(ORCPT <rfc822;git-outgoing>); Thu, 2 Oct 2008 10:49:41 -0400
+Received: from smtp1.linux-foundation.org ([140.211.169.13]:48971 "EHLO
+	smtp1.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1753527AbYJBOtk (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 2 Oct 2008 10:49:40 -0400
+Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [140.211.169.55])
+	by smtp1.linux-foundation.org (8.14.2/8.13.5/Debian-3ubuntu1.1) with ESMTP id m92EnAej020163
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Thu, 2 Oct 2008 07:49:11 -0700
+Received: from localhost (localhost [127.0.0.1])
+	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id m92En9EM011523;
+	Thu, 2 Oct 2008 07:49:09 -0700
+In-Reply-To: <237967ef0810012218i28d41573s6bb7866e0be485f2@mail.gmail.com>
+User-Agent: Alpine 2.00 (LFD 1167 2008-08-23)
+X-Spam-Status: No, hits=-3.432 required=5 tests=AWL,BAYES_00
+X-Spam-Checker-Version: SpamAssassin 3.2.4-osdl_revision__1.47__
+X-MIMEDefang-Filter: lf$Revision: 1.188 $
+X-Scanned-By: MIMEDefang 2.63 on 140.211.169.13
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/97344>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/97345>
 
-On 2008.10.02 16:50:45 +0800, Ark Xu wrote:
-> Hi guys,
->
->   I like git very much so I also use git svn for subversion repo.
->
->   Now I got a tough problem which stopping me for any svn related =20
-> operations. There is a file log4j.xml that is somehow strange because=
- =20
-> when I fetch it, i got the following message:
->
-> tms-service/src/test/resources/log4j.xml has mode 120000 but is not a=
- =20
-> link at /opt/local/bin/git-svn line 3230.
-> M	tms-service/src/test/resources/log4j.xml
->
->   And then, all the operation will lead to :
-> Checksum mismatch: branches/5.3/tms-service/src/test/resources/log4j.=
-xml=20
-> 51031cbb0e1a2e878e4a3836cf0baa9b80a037a5
-> expected: fab6daef9fc355b9342e26047f5d0141
->      got: 0e7e9081d608c80d2de0340ba5cd1600
->
-> Could anybody help?
 
-Which git version? And is your /tmp large enough to store that file?
 
-Bj=F6rn
+On Thu, 2 Oct 2008, Mikael Magnusson wrote:
+> 
+> Heh, sorry, I'm an idiot. I forgot to put '#!/usr/bin/python' on the first
+> line. I was running 'python tracker-ui.py' then did chmod +x just before
+> committing :). So the cross is coming from running 'import time'.
+
+Ahh. It did _something_, so I assumed it was working, just not well. Being 
+confused about the language would do it ;)
+
+I fixed it up and merged it as an alternate UI. It doesn't react well to a 
+tracker file that has just been initialized with the timeout (but without 
+any of the extra information that gets filled out once you actually start 
+getting tracked), but it's certainly prettier than my original one.
+
+Thanks,
+
+		Linus
