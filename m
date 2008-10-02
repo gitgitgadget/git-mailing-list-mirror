@@ -1,84 +1,159 @@
-From: "Mikael Magnusson" <mikachu@gmail.com>
-Subject: Re: Help with a tcl/tk gui thing..
-Date: Thu, 2 Oct 2008 07:18:15 +0200
-Message-ID: <237967ef0810012218i28d41573s6bb7866e0be485f2@mail.gmail.com>
-References: <alpine.LFD.2.00.0810011240390.3575@nehalem.linux-foundation.org>
-	 <237967ef0810011403i2b18255and988df29a71798bf@mail.gmail.com>
-	 <alpine.LFD.2.00.0810011605001.3341@nehalem.linux-foundation.org>
+From: Andreas Ericsson <ae@op5.se>
+Subject: Re: [PATCH] git commit: Repaint the output format bikeshed (again)
+Date: Thu, 02 Oct 2008 07:40:28 +0200
+Message-ID: <48E45ECC.8070104@op5.se>
+References: <20081001154425.GE21310@spearce.org> <48E3E66E.7020501@op5.se> <20081001220604.GB18058@coredump.intra.peff.net> <20081001223125.GA25267@coredump.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=ISO-8859-15; format=flowed
 Content-Transfer-Encoding: 7bit
-Cc: "Git Mailing List" <git@vger.kernel.org>
-To: "Linus Torvalds" <torvalds@linux-foundation.org>
-X-From: git-owner@vger.kernel.org Thu Oct 02 07:19:28 2008
+Cc: Shawn Pearce <spearce@spearce.org>,
+	Git Mailing List <git@vger.kernel.org>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Thu Oct 02 07:41:48 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KlGb1-0007W3-Ki
-	for gcvg-git-2@gmane.org; Thu, 02 Oct 2008 07:19:28 +0200
+	id 1KlGwd-0003bJ-Tb
+	for gcvg-git-2@gmane.org; Thu, 02 Oct 2008 07:41:48 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751941AbYJBFSR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 2 Oct 2008 01:18:17 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751552AbYJBFSR
-	(ORCPT <rfc822;git-outgoing>); Thu, 2 Oct 2008 01:18:17 -0400
-Received: from wa-out-1112.google.com ([209.85.146.182]:48069 "EHLO
-	wa-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751474AbYJBFSQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 2 Oct 2008 01:18:16 -0400
-Received: by wa-out-1112.google.com with SMTP id v27so450284wah.21
-        for <git@vger.kernel.org>; Wed, 01 Oct 2008 22:18:15 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to
-         :subject:cc:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:references;
-        bh=LgM6dQyLBeNJRN0KvVavYFaOW4TDv+V/tWqld33FMnw=;
-        b=VD7d15HRJA2jBRYTgsCi2vwjbltraFhEDwtLUzNPlS44j44J5FbCpNR7vzspRjlZ/0
-         BdgKJkhS39MYXE1qapKvu70tRujKBt2mgQIgCxcXTLtUCU0xtHuMB13Qjte/k9TtyhEZ
-         Qk352y86kaWi9r1bPWrwToUFDadIP0WqDT/Y4=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
-         :content-type:content-transfer-encoding:content-disposition
-         :references;
-        b=n50nFtTFbdtY1/dPGruCTI9qN5XwwKffVgIakX0fsj7i3AuKO2j5XXyhJYeR7+w8xG
-         Ez2OvZXWlyQCQ86URRdMbeB87GnS3IT93Z5MhvwEq6tjdTh7daIzEhcHaYc828Pl8e62
-         4xpEjggtZEj/ChjRSn7XZ57dsPwMRqTosNZMk=
-Received: by 10.115.107.5 with SMTP id j5mr10250675wam.193.1222924695201;
-        Wed, 01 Oct 2008 22:18:15 -0700 (PDT)
-Received: by 10.114.112.17 with HTTP; Wed, 1 Oct 2008 22:18:15 -0700 (PDT)
-In-Reply-To: <alpine.LFD.2.00.0810011605001.3341@nehalem.linux-foundation.org>
-Content-Disposition: inline
+	id S1751992AbYJBFkg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 2 Oct 2008 01:40:36 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751628AbYJBFkg
+	(ORCPT <rfc822;git-outgoing>); Thu, 2 Oct 2008 01:40:36 -0400
+Received: from mail.op5.se ([193.201.96.20]:53226 "EHLO mail.op5.se"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751278AbYJBFkf (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 2 Oct 2008 01:40:35 -0400
+Received: from localhost (localhost.localdomain [127.0.0.1])
+	by mail.op5.se (Postfix) with ESMTP id 76AD224B0008;
+	Thu,  2 Oct 2008 07:32:03 +0200 (CEST)
+X-Virus-Scanned: amavisd-new at 
+X-Spam-Flag: NO
+X-Spam-Score: -2.499
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.499 tagged_above=-10 required=6.6
+	tests=[BAYES_00=-2.599, RDNS_NONE=0.1]
+Received: from mail.op5.se ([127.0.0.1])
+	by localhost (mail.op5.se [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id 3bSFcetqwaln; Thu,  2 Oct 2008 07:31:59 +0200 (CEST)
+Received: from clix.int.op5.se (unknown [172.27.78.18])
+	by mail.op5.se (Postfix) with ESMTP id 419FA1B80048;
+	Thu,  2 Oct 2008 07:31:59 +0200 (CEST)
+User-Agent: Thunderbird 2.0.0.16 (X11/20080723)
+In-Reply-To: <20081001223125.GA25267@coredump.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/97289>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/97290>
 
-2008/10/2 Linus Torvalds <torvalds@linux-foundation.org>:
->
->
-> On Wed, 1 Oct 2008, Mikael Magnusson wrote:
+Jeff King wrote:
+> On Wed, Oct 01, 2008 at 06:06:04PM -0400, Jeff King wrote:
+> 
+>> I think I still like your other proposal:
 >>
->> git clone git://mika.l3ib.org/tracker.git
->>
->> I wrote it in pygtk since I know zero to no tcl/tk, hope that's okay.
->> It has a label with the time remaining (simply read from the daemon file),
->> and shows the text in red if less than 10% is remaining. You'll need to
->> change the ./ in cb_function to /var/log/tracker since I forgot to change
->> that and I'm lazy :).
->
-> Well, it doesn't do anything at all for me except change the cursor to a
-> cross, and if I'm a n00b with tcl/tk, I'm even more of one with pygtk.
->
-> I merged the two other suggestions, though. And am open to seeing that
-> pygtk thing too as an alternative, but only if it actually works for me ;)
+>>   [branch] created b930c4a: "i386: Snib the sprock"
+> 
+> And here is the patch, since it was sitting uncommitted in my working
+> tree. Feel free to ignore.
+> 
+> BTW, we should apply _something_ since what is currently in next has a
+> bug: it lacks a space between "DETACHED commit" and the hash:
+> 
+>   Created DETACHED commit4fde0d0 (subject line)
+> 
+> -- >8 --
+> reformat informational commit message
+> 
+> When committing, we print a message like:
+> 
+>   Created [DETACHED commit] <hash> (<subject>) on <branch>
+> 
+> The most useful bit of information there (besides the
+> detached status, if it is present) is which branch you made
+> the commit on. However,  it is sometimes hard to see because
+> the subject dominates the line.
+> 
+> Instead, let's put the most useful information (detached
+> status and commit branch) on the far left, with the subject
+> (which is least likely to be interesting) on the far right.
+> 
+> We'll use brackets to offset the branch name so the line is
+> not mistaken for an error line of the form "program: some
+> sort of error". E.g.,:
+> 
+>   [jk/bikeshed] created bd8098f: "reformat informational commit message"
+> ---
 
-Heh, sorry, I'm an idiot. I forgot to put '#!/usr/bin/python' on the first
-line. I was running 'python tracker-ui.py' then did chmod +x just before
-committing :). So the cross is coming from running 'import time'.
+No sign-off.
+
+>  builtin-commit.c |   37 ++++++++++---------------------------
+>  1 files changed, 10 insertions(+), 27 deletions(-)
+> 
+> diff --git a/builtin-commit.c b/builtin-commit.c
+> index e4e1448..7a66e5a 100644
+> --- a/builtin-commit.c
+> +++ b/builtin-commit.c
+> @@ -878,35 +878,13 @@ int cmd_status(int argc, const char **argv, const char *prefix)
+>  	return commitable ? 0 : 1;
+>  }
+>  
+> -static char *get_commit_format_string(void)
+> -{
+> -	unsigned char sha[20];
+> -	const char *head = resolve_ref("HEAD", sha, 0, NULL);
+> -	struct strbuf buf = STRBUF_INIT;
+> -
+> -	/* use shouty-caps if we're on detached HEAD */
+> -	strbuf_addf(&buf, "format:%s", strcmp("HEAD", head) ? "" : "DETACHED commit");
+> -	strbuf_addstr(&buf, "%h (%s)");
+> -
+> -	if (!prefixcmp(head, "refs/heads/")) {
+> -		const char *cp;
+> -		strbuf_addstr(&buf, " on ");
+> -		for (cp = head + 11; *cp; cp++) {
+> -			if (*cp == '%')
+> -				strbuf_addstr(&buf, "%x25");
+> -			else
+> -				strbuf_addch(&buf, *cp);
+> -		}
+> -	}
+> -
+> -	return strbuf_detach(&buf, NULL);
+> -}
+> -
+>  static void print_summary(const char *prefix, const unsigned char *sha1)
+>  {
+>  	struct rev_info rev;
+>  	struct commit *commit;
+> -	char *format = get_commit_format_string();
+> +	static const char *format = "format:%h: \"%s\"";
+> +	unsigned char junk_sha1[20];
+> +	const char *head = resolve_ref("HEAD", junk_sha1, 0, NULL);
+>  
+>  	commit = lookup_commit(sha1);
+>  	if (!commit)
+> @@ -931,7 +909,13 @@ static void print_summary(const char *prefix, const unsigned char *sha1)
+>  	rev.diffopt.break_opt = 0;
+>  	diff_setup_done(&rev.diffopt);
+>  
+> -	printf("Created %s", initial_commit ? "root-commit " : "");
+> +	printf("[%s%s]: created ",
+> +		!prefixcmp(head, "refs/heads/") ?
+> +			head + 11 :
+> +			!strcmp(head, "HEAD") ?
+> +				"detached HEAD" :
+> +				head,
+> +		initial_commit ? " (root-commit)" : "");
+>  
+
+Personally, I'm not overly fond of things like
+   something ? yay : nay_but_try ? worked_now : still_no_go
+since I find them hard to read without thinking a lot.
 
 -- 
-Mikael Magnusson
+Andreas Ericsson                   andreas.ericsson@op5.se
+OP5 AB                             www.op5.se
+Tel: +46 8-230225                  Fax: +46 8-230231
