@@ -1,83 +1,94 @@
-From: "Giovanni Funchal" <gafunchal@gmail.com>
-Subject: Files with colons under Cygwin
-Date: Thu, 2 Oct 2008 16:02:23 +0200
-Message-ID: <c475e2e60810020702q573570dcp31a5dc18bf98ef30@mail.gmail.com>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: How to remove a commit object?
+Date: Thu, 02 Oct 2008 07:02:32 -0700 (PDT)
+Message-ID: <m3ljx7qemk.fsf@localhost.localdomain>
+References: <D53D127D-97DD-417C-9109-ABD46BBD4E18@midwinter.com>
+	<48D36DF4.3030607@drmicha.warpmail.net>
+	<33f4f4d70810020636g77f4180cm7aa6b7de07ae5beb@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Oct 02 16:09:12 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: "Michael J Gruber" <git@drmicha.warpmail.net>,
+	"Steven Grimm" <koreth@midwinter.com>,
+	"Git Users List" <git@vger.kernel.org>
+To: "Klas Lindberg" <klas.lindberg@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Oct 02 16:09:43 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KlOmK-0000Fu-S7
-	for gcvg-git-2@gmane.org; Thu, 02 Oct 2008 16:03:41 +0200
+	id 1KlOmh-0000Q0-4q
+	for gcvg-git-2@gmane.org; Thu, 02 Oct 2008 16:04:03 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752143AbYJBOCZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 2 Oct 2008 10:02:25 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753635AbYJBOCZ
-	(ORCPT <rfc822;git-outgoing>); Thu, 2 Oct 2008 10:02:25 -0400
-Received: from fk-out-0910.google.com ([209.85.128.188]:19580 "EHLO
-	fk-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751684AbYJBOCY (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 2 Oct 2008 10:02:24 -0400
-Received: by fk-out-0910.google.com with SMTP id 18so613364fkq.5
-        for <git@vger.kernel.org>; Thu, 02 Oct 2008 07:02:23 -0700 (PDT)
+	id S1753992AbYJBOCh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 2 Oct 2008 10:02:37 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752327AbYJBOCh
+	(ORCPT <rfc822;git-outgoing>); Thu, 2 Oct 2008 10:02:37 -0400
+Received: from ug-out-1314.google.com ([66.249.92.168]:35740 "EHLO
+	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752025AbYJBOCf (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 2 Oct 2008 10:02:35 -0400
+Received: by ug-out-1314.google.com with SMTP id k3so1022782ugf.37
+        for <git@vger.kernel.org>; Thu, 02 Oct 2008 07:02:34 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to
-         :subject:mime-version:content-type:content-transfer-encoding
-         :content-disposition;
-        bh=BqdYsmvSZX3IdKBftIFt9hPQCh7n6dXV5+XsGGbQpB4=;
-        b=bBSiMjNFppDN458FGanicP1Mjw1kNhAtkaUMs+/HohhbV8f+Kqcl16xsrPdFKGBX6+
-         EySSh5GFClvq3FKjLOurxVNNOBOeYhlubRuR+AvQZAmcG9ck2AsQBK/Hugwz2OgPnvca
-         79gAoKmM8ClV0L2Q0xKv8x7paHdJemJFnFfOk=
+        h=domainkey-signature:received:received:received:received
+         :x-authentication-warning:to:cc:subject:references:from:in-reply-to
+         :message-id:lines:user-agent:mime-version:content-type:date;
+        bh=5/KDWe+L8Y81jgXdticpp1qE9pXKlVxo5C/vlug3ym0=;
+        b=kwPLNQr7+rOd7MZa05rXMei91j8iYXAHJFxbdwNxlkF4CHZJHNuMMl4PXWOYj5v1CE
+         5cfLp4BWjAn4dxfN0115VvM+mVPOfxiv8g9n9IGSwCpUd4qDM8i5D+atdzkokhDRYVke
+         snt4Fp0a7aLapwRAkaGrZGcguRx1+HHmlfX4A=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:mime-version:content-type
-         :content-transfer-encoding:content-disposition;
-        b=aCDwj3zYiKNAEdWYvTKgiix48nvabUVhWm+0NZ9BVKaQ8EbFMbp88mInPNxR8rt6CA
-         ibkc4gToreudTPi39/z/j9JEtKO++3Mppz/r6naAMYHmIGlYx49Ja9Om3WhAYnC0acoT
-         magOfeD+606sDitA9ANcShySS/+E17+OFHgbU=
-Received: by 10.187.224.14 with SMTP id b14mr1949807far.4.1222956143073;
-        Thu, 02 Oct 2008 07:02:23 -0700 (PDT)
-Received: by 10.187.245.17 with HTTP; Thu, 2 Oct 2008 07:02:23 -0700 (PDT)
-Content-Disposition: inline
+        h=x-authentication-warning:to:cc:subject:references:from:in-reply-to
+         :message-id:lines:user-agent:mime-version:content-type:date;
+        b=HE2Yz2cgPk+MvRWZ9Q2oNR5+QrH4NiFPilVNGbprx4mQ93A6eXaMka8/gUpVEtxQW2
+         79w+7xzmH+e01OTw1bFyCC0+m74dGRVfMfPIfS2gplMGIOBZLy5d1otByATkM8lZUWox
+         0FfisS0HRAXVz//ta62gnLIGQzOshcfEfa/4o=
+Received: by 10.67.15.15 with SMTP id s15mr3998519ugi.28.1222956153746;
+        Thu, 02 Oct 2008 07:02:33 -0700 (PDT)
+Received: from localhost.localdomain (abwk221.neoplus.adsl.tpnet.pl [83.8.234.221])
+        by mx.google.com with ESMTPS id q1sm12001595uge.48.2008.10.02.07.02.31
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Thu, 02 Oct 2008 07:02:32 -0700 (PDT)
+Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
+	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id m92E2Tjv018345;
+	Thu, 2 Oct 2008 16:02:30 +0200
+Received: (from jnareb@localhost)
+	by localhost.localdomain (8.13.4/8.13.4/Submit) id m92E2Rck018342;
+	Thu, 2 Oct 2008 16:02:27 +0200
+X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
+In-Reply-To: <33f4f4d70810020636g77f4180cm7aa6b7de07ae5beb@mail.gmail.com>
+User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/97334>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/97335>
 
-Hello,
+"Klas Lindberg" <klas.lindberg@gmail.com> writes:
 
-Cygwin does not allow files with colons, I think this is Windows stuff
-one just can't avoid. If you have files with colons in a git
-repository and try pulling them on cygwin, the file is empty, its name
-is truncated and the status is wrong.
+> This doesn't seem to work for me. I will soon be in a situation where
+> I need to selectively delete commits in such a way that they become
+> completely irrecoverable. I.e. it is not enough to revert a commit.
+> The *original* commit must be removed. And of course, the repo history
+> is too complex to allow for rebasing followed by garbage collection or
+> something like that.
+[...]
 
-linux $ date > a:b
-linux $ git init
-linux $ git add a:b
-linux $ git commit -m test
-linux $ git push
-cygwin $ git pull
-cygwin $ ls
--rw-r--r-- 1 funchal funchal        0 Oct  2 15:15 a
-cygwin $ git status
-# On branch master
-# Untracked files:
-#   (use "git add <file>..." to include in what will be committed)
-#
-#       a
-nothing added to commit but untracked files present (use "git add" to track)
+> Would it be feasible to write a tool that can selectively replace a
+> specific commit in the commit DAG, or would that automatically
+> invalidate every SHA key for every commit that follows the replaced
+> original?
 
-Any ideas on what should be done? (for instance, warn when pulling
-this kind of files on Cygwin)
+It would invalidate SHA1 for every commit after first rewritten.
+There are two tools which you can use to rewrite large parts of
+history automatically: git-filter-branch, and git-fast-export +
+git-fast-import.
 
-Has anyone noticed this before?
-
-Regards,
--- Giovanni
+HTH
+-- 
+Jakub Narebski
+Poland
+ShadeHawk on #git
