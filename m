@@ -1,66 +1,68 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: Re: corrupted repository?
-Date: Thu, 2 Oct 2008 07:29:52 -0700
-Message-ID: <20081002142952.GP21310@spearce.org>
-References: <48E3EBC2.7090107@cs.mcgill.ca>
+From: Michael J Gruber <git@drmicha.warpmail.net>
+Subject: Re: How to remove a commit object?
+Date: Thu, 02 Oct 2008 16:30:57 +0200
+Message-ID: <48E4DB21.7020304@drmicha.warpmail.net>
+References: <D53D127D-97DD-417C-9109-ABD46BBD4E18@midwinter.com>	 <48D36DF4.3030607@drmicha.warpmail.net>	 <33f4f4d70810020636g77f4180cm7aa6b7de07ae5beb@mail.gmail.com>	 <m3ljx7qemk.fsf@localhost.localdomain> <33f4f4d70810020726g71c6f39eq16585269fb268322@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org
-To: Francois Pepin <fpepin@cs.mcgill.ca>
-X-From: git-owner@vger.kernel.org Thu Oct 02 16:31:54 2008
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: Jakub Narebski <jnareb@gmail.com>,
+	Steven Grimm <koreth@midwinter.com>,
+	Git Users List <git@vger.kernel.org>
+To: Klas Lindberg <klas.lindberg@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Oct 02 16:33:19 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KlPCp-0002NK-UW
-	for gcvg-git-2@gmane.org; Thu, 02 Oct 2008 16:31:04 +0200
+	id 1KlPES-00030V-Rs
+	for gcvg-git-2@gmane.org; Thu, 02 Oct 2008 16:32:45 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753516AbYJBO3y (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 2 Oct 2008 10:29:54 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752209AbYJBO3y
-	(ORCPT <rfc822;git-outgoing>); Thu, 2 Oct 2008 10:29:54 -0400
-Received: from george.spearce.org ([209.20.77.23]:57439 "EHLO
-	george.spearce.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751949AbYJBO3x (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 2 Oct 2008 10:29:53 -0400
-Received: by george.spearce.org (Postfix, from userid 1001)
-	id C38E63835F; Thu,  2 Oct 2008 14:29:52 +0000 (UTC)
-Content-Disposition: inline
-In-Reply-To: <48E3EBC2.7090107@cs.mcgill.ca>
-User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
+	id S1754160AbYJBObF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 2 Oct 2008 10:31:05 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754091AbYJBObE
+	(ORCPT <rfc822;git-outgoing>); Thu, 2 Oct 2008 10:31:04 -0400
+Received: from out3.smtp.messagingengine.com ([66.111.4.27]:41042 "EHLO
+	out3.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1754105AbYJBObB (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 2 Oct 2008 10:31:01 -0400
+Received: from compute1.internal (compute1.internal [10.202.2.41])
+	by out1.messagingengine.com (Postfix) with ESMTP id 14F0B17146B;
+	Thu,  2 Oct 2008 10:31:01 -0400 (EDT)
+Received: from heartbeat1.messagingengine.com ([10.202.2.160])
+  by compute1.internal (MEProxy); Thu, 02 Oct 2008 10:31:01 -0400
+X-Sasl-enc: PyJf75JoB9uV245wvuT41HMJraPmWAPCI8lccS88Dsnr 1222957860
+Received: from [139.174.44.12] (whitehead.math.tu-clausthal.de [139.174.44.12])
+	by mail.messagingengine.com (Postfix) with ESMTPSA id 3C17FA11F;
+	Thu,  2 Oct 2008 10:31:00 -0400 (EDT)
+User-Agent: Thunderbird 2.0.0.17 (X11/20080914)
+In-Reply-To: <33f4f4d70810020726g71c6f39eq16585269fb268322@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/97342>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/97343>
 
-Francois Pepin <fpepin@cs.mcgill.ca> wrote:
-> Everything seems to be working properly there (git fsck --full returns  
-> normally with no output), but I cannot clone or pull from my other 
-> machines:
-...
-> [francois@Iduna ~]$ git clone localhost:git git2
-> Initialized empty Git repository in /Users/francois/git2/.git/
-> remote: fatal: exec pack-objects failed.
+Klas Lindberg venit, vidit, dixit 02.10.2008 16:26:
+> Repo size is a problem too, actually.
+> 
+> A solution to both problems seemed to be to use git-filter-branch to
+> create a new repo by filtering out all the unwanted files. The
+> astonishing result was that, for the subdirectory I tried it on, 90%
+> or so of the commits on that subdirectory just disappeared. It didn't
+> look right at all. Although I can't say for sure exactly what I did
+> with filter-branch, I would appreciate some guidance for using it. It
 
-Your git-upload-pack cannot find git-pack-objects.  It sounds like
-Git was incorrectly installed on your system.
+I don't know about others, but I would appreciate more info:
+Do you want to remove commits (as stated earlier) or files (as stated here)?
+What are the boundary conditions? Rewriting history seems to be OK now.
 
-  which git-upload-pack ?
-  which git ?
-  are they in the same directory?
-  did you possibly move git after installing it?
+> basically seemed to do exactly what I wanted (recreate the repo, minus
+> some explicit stuff, with history intact otherwise), except the result
+> looked crazy.
 
-  git --exec-path?
-  does that exist?
-  does it have git-pack-objects inside it?
+That may be due to the filter-branch incarnation, i.e. which refs did
+you rewrite (--all or HEAD)?
 
-> I am running git 1.6.0.2 on the mac, and have only recently updated it  
-> so that might have a role to play.
-
-I think it is the upgrade.  It sounds like its not installed correcly
-because the helpers in libexec/git-core cannot be found.
-
--- 
-Shawn.
+Michael
