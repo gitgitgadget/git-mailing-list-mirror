@@ -1,112 +1,142 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: [PATCHv4] gitweb: PATH_INFO support improvements
-Date: Thu, 2 Oct 2008 10:19:26 +0200
-Message-ID: <200810021019.27383.jnareb@gmail.com>
-References: <1222906234-8182-1-git-send-email-giuseppe.bilotta@gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-2"
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, Petr Baudis <pasky@suse.cz>,
-	Junio C Hamano <gitster@pobox.com>,
-	"Shawn O. Pearce" <spearce@spearce.org>
-To: Giuseppe Bilotta <giuseppe.bilotta@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Oct 02 10:21:03 2008
+From: David Aguilar <davvid@gmail.com>
+Subject: [PATCH] tests: add a testcase for "git submodule sync"
+Date: Thu,  2 Oct 2008 01:29:25 -0700
+Message-ID: <7531595ee46ce7a772cd34857019bcd7d9ce6dc1.1222936021.git.davvid@gmail.com>
+Cc: git@vger.kernel.org, mlevedahl@gmail.com, gitster@pobox.com,
+	David Aguilar <davvid@gmail.com>
+To: spearce@spearce.org
+X-From: git-owner@vger.kernel.org Thu Oct 02 10:36:27 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KlJQi-0006ER-TP
-	for gcvg-git-2@gmane.org; Thu, 02 Oct 2008 10:21:01 +0200
+	id 1KlJfd-00020g-NT
+	for gcvg-git-2@gmane.org; Thu, 02 Oct 2008 10:36:26 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752335AbYJBITq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 2 Oct 2008 04:19:46 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752419AbYJBITp
-	(ORCPT <rfc822;git-outgoing>); Thu, 2 Oct 2008 04:19:45 -0400
-Received: from mu-out-0910.google.com ([209.85.134.190]:6558 "EHLO
-	mu-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752223AbYJBITo (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 2 Oct 2008 04:19:44 -0400
-Received: by mu-out-0910.google.com with SMTP id g7so758114muf.1
-        for <git@vger.kernel.org>; Thu, 02 Oct 2008 01:19:41 -0700 (PDT)
+	id S1752748AbYJBIfN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 2 Oct 2008 04:35:13 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752674AbYJBIfM
+	(ORCPT <rfc822;git-outgoing>); Thu, 2 Oct 2008 04:35:12 -0400
+Received: from wa-out-1112.google.com ([209.85.146.176]:5298 "EHLO
+	wa-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752458AbYJBIfL (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 2 Oct 2008 04:35:11 -0400
+Received: by wa-out-1112.google.com with SMTP id v27so475052wah.21
+        for <git@vger.kernel.org>; Thu, 02 Oct 2008 01:35:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:subject:date
-         :user-agent:cc:references:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:message-id;
-        bh=/3meHHz2zJjaHXPar8+X1ONEV0+ILCDwiDD7gUQhdQM=;
-        b=rsO/uL5zW/3G6gA0Aej3gpPyh604946V37xGibYdErcD2uMtX2ZsF1vD5Q2w86MNyc
-         gVNMn/F9/OJibBq4jFc0rXLHU2l1mYOFNH4eVTqrfGCZiEm8bblVHdkPB6xxgQfOb71h
-         Gl97/VUpi+Xebl/72YxpnifidRG5tha4nzbSo=
+        h=domainkey-signature:received:received:from:to:cc:subject:date
+         :message-id:x-mailer;
+        bh=m/LXzVND3ziQp054WsiDKWoopeng546+xg9Us6A1HR0=;
+        b=YWCRiIB0uWhNEkFErhz7Vs/QX0hlnr7kXXfS6mLziF6VDVvLvaGP45TMT84pQp7V9e
+         Vs/Ziduke4wITajFbsM0S0F5jjAIi2ji3sOoy928tqXjeVZCdzY6SHHyvq1uLV8IaPVR
+         kRcuUBsj0s1y87MiN1JUlOhVUnioVn7hIzF+I=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=from:to:subject:date:user-agent:cc:references:in-reply-to
-         :mime-version:content-type:content-transfer-encoding
-         :content-disposition:message-id;
-        b=RupWrhpspQnmB5v0S4RIIbbvfwBrji2lkHJmYhj3im8mYgzdsOrTEzwKBazHmzIe7C
-         OMniemh2FOVhwiBoss3d48Y4Js1qFOR9fwPCi8DfDHM0eVfp1zvSc0ZbF9SwL7sPzW6L
-         0gu5HmxYPBaBL5WPjAVZF4qA7FjuxatYluwUI=
-Received: by 10.103.222.12 with SMTP id z12mr6614766muq.12.1222935580989;
-        Thu, 02 Oct 2008 01:19:40 -0700 (PDT)
-Received: from ?192.168.1.11? (abwk221.neoplus.adsl.tpnet.pl [83.8.234.221])
-        by mx.google.com with ESMTPS id s10sm1704055mue.15.2008.10.02.01.19.38
+        h=from:to:cc:subject:date:message-id:x-mailer;
+        b=coMhu2t2zSCP9KHs8mRBp/Wq+AR26O+XZwaIigpcZcfkDLdgH0D6fTnz47cVIt3jWT
+         NbbatEoCjgoLyQ8EbICBdtyO73Vuntwws5HLBaOdYS6oAj/7AJ310ZQy6TB6KDULDuRk
+         AdqdeDKXAgXNi4d8j7zWlMEugqFFgV6sbw5NU=
+Received: by 10.114.89.1 with SMTP id m1mr10437417wab.126.1222936509008;
+        Thu, 02 Oct 2008 01:35:09 -0700 (PDT)
+Received: from localhost (208-106-56-2.static.dsltransport.net [208.106.56.2])
+        by mx.google.com with ESMTPS id l30sm4278634waf.25.2008.10.02.01.35.06
         (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Thu, 02 Oct 2008 01:19:39 -0700 (PDT)
-User-Agent: KMail/1.9.3
-In-Reply-To: <1222906234-8182-1-git-send-email-giuseppe.bilotta@gmail.com>
-Content-Disposition: inline
+        Thu, 02 Oct 2008 01:35:08 -0700 (PDT)
+X-Mailer: git-send-email 1.6.0.2.428.g5e22e
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/97291>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/97292>
 
-Giuseppe Bilotta wrote:
+This testcase ensures that upstream changes to submodule properties
+can be updated using the sync subcommand.  This particular test
+changes the submodule URL upstream and uses the sync command to update
+an existing checkout.
 
-> Fourth version of my gitweb PATH_INFO patchset, whose purpose is to
-> reduce the use of CGI parameters by embedding as many parameters as
-> possible in the URL path itself, provided the pathinfo feature is
-> enabled.
+Signed-off-by: David Aguilar <davvid@gmail.com>
+---
+ t/t7403-submodule-sync.sh |   71 +++++++++++++++++++++++++++++++++++++++++++++
+ 1 files changed, 71 insertions(+), 0 deletions(-)
 
-A nit: when sending longer patch series you should use numbered
-format in the form of [PATCH m/n] or [PATCH m/n vX] prefix.
-
-> 
-> The new typical gitweb URL is therefore in the form
-> 
-> $project/$action/$parent:$file..$hash:$file
-> 
-> (with useless parts stripped). Backwards compatibility for old-style
-> $project/$hash URLs is kept, as long as $hash is not a refname whose
-> name happens to match a git action.
-
-Minor nit: there was also old-style $project/$hash_base:$file_name
-path_info format.
-
->
-> The main implementation is provided by paired patches (#1#3, #5#6)
-> that implement parsing and generation of the new style URLs.
-> 
-> Patch #2 deals with a refactoring of the input parameters parsing and
-> validation, so that the rest of gitweb can be agnostic wrt to the
-> parameters' origin (CGI vs PATH_INFO vs possible other future inputs
-> such as CLI).
-> 
-> Patch #4 is a minor improvement to the URL syntax that allows web
-> documents to be properly browsable in raw mode.
-
-Very nice summary of patchset and patch  coverage in this cover letter.
-
->
-> Giuseppe Bilotta (6):
->   gitweb: parse project/action/hash_base:filename PATH_INFO
->   gitweb: refactor input parameters parse/validation
->   gitweb: generate project/action/hash URLs
->   gitweb: use_pathinfo filenames start with /
->   gitweb: parse parent..current syntax from pathinfo
->   gitweb: generate parent..current URLs
-
+diff --git a/t/t7403-submodule-sync.sh b/t/t7403-submodule-sync.sh
+new file mode 100755
+index 0000000..c034c9e
+--- /dev/null
++++ b/t/t7403-submodule-sync.sh
+@@ -0,0 +1,71 @@
++#!/bin/sh
++#
++# Copyright (c) 2008 David Aguilar
++#
++
++test_description='git submodule sync
++
++These tests exercise the "git submodule sync" subcommand.
++'
++
++. ./test-lib.sh
++
++test_expect_success setup '
++	mkdir upstream &&
++	(cd upstream &&
++	 git init &&
++	 echo file > file &&
++	 git add file &&
++	 test_tick &&
++	 git commit -m upstream
++	) &&
++	git clone upstream super &&
++	git clone super submodule &&
++	(cd super &&
++	 git submodule add ../submodule submodule &&
++	 git commit -m "submodule"
++	) &&
++	git clone super super-clone &&
++	(cd super-clone && git submodule update --init)
++'
++
++test_expect_success 'change submodule' '
++	(cd submodule &&
++	 echo second line >> file &&
++	 test_tick &&
++	 git commit -a -m "change submodule"
++	)
++'
++
++test_expect_success 'change submodule url' '
++	(cd super &&
++	 cd submodule &&
++	 git checkout master && 
++	 test_tick &&
++	 git pull
++	) &&
++	mv submodule moved-submodule &&
++	(cd super &&
++	 git config -f .gitmodules submodule.submodule.url ../moved-submodule
++	 test_tick &&
++	 git commit -a -m moved-submodule
++	)
++'
++
++test_expect_success '"git submodule sync" should update submodule URLs' '
++	(cd super-clone &&
++	 git pull &&
++	 test_tick &&
++	 git submodule sync
++	) &&
++	test_tick &&
++	test -d "$(git config -f super-clone/submodule/.git/config \
++	                        remote.origin.url)" &&
++	(cd super-clone/submodule &&
++	 git checkout master &&
++	 test_tick &&
++	 git pull
++	)
++'
++
++test_done
 -- 
-Jakub Narebski
-Poland
+1.6.0.2.428.g5e22e
