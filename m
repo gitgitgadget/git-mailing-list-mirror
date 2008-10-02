@@ -1,90 +1,134 @@
 From: Brian Gernhardt <benji@silverinsanity.com>
-Subject: Re: [PATCH] format-patch: autonumber by default
-Date: Thu, 2 Oct 2008 16:17:46 -0400
-Message-ID: <91634D16-B28A-4458-97A9-C469B5AF4E5D@silverinsanity.com>
-References: <48E4D73B.9090508@op5.se> <1222970291-5337-1-git-send-email-giuseppe.bilotta@gmail.com>
-Mime-Version: 1.0 (Apple Message framework v929.2)
-Content-Type: text/plain; charset=US-ASCII; format=flowed; delsp=yes
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, Jakub Narebski <jnareb@gmail.com>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	"Shawn O. Pearce" <spearce@spearce.org>,
-	Andreas Ericsson <ae@op5.se>
-To: Giuseppe Bilotta <giuseppe.bilotta@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Oct 02 22:19:10 2008
+Subject: [PATCH] format-patch: autonumber by default
+Date: Thu,  2 Oct 2008 16:36:42 -0400
+Message-ID: <1222979802-98319-1-git-send-email-benji@silverinsanity.com>
+References: <91634D16-B28A-4458-97A9-C469B5AF4E5D@silverinsanity.com>
+Cc: Shawn O Pearce <spearce@spearce.org>
+To: Git List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Thu Oct 02 22:38:04 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KlUda-0006oQ-BV
-	for gcvg-git-2@gmane.org; Thu, 02 Oct 2008 22:19:02 +0200
+	id 1KlUvw-0005rq-CZ
+	for gcvg-git-2@gmane.org; Thu, 02 Oct 2008 22:38:00 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753953AbYJBURw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 2 Oct 2008 16:17:52 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753880AbYJBURw
-	(ORCPT <rfc822;git-outgoing>); Thu, 2 Oct 2008 16:17:52 -0400
-Received: from vs072.rosehosting.com ([216.114.78.72]:58892 "EHLO
+	id S1754120AbYJBUgt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 2 Oct 2008 16:36:49 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754104AbYJBUgt
+	(ORCPT <rfc822;git-outgoing>); Thu, 2 Oct 2008 16:36:49 -0400
+Received: from vs072.rosehosting.com ([216.114.78.72]:38875 "EHLO
 	silverinsanity.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753511AbYJBURv (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 2 Oct 2008 16:17:51 -0400
+	with ESMTP id S1754092AbYJBUgs (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 2 Oct 2008 16:36:48 -0400
 Received: by silverinsanity.com (Postfix, from userid 5001)
-	id 919111FFC4C0; Thu,  2 Oct 2008 20:17:44 +0000 (UTC)
+	id 382E61FFC4C0; Thu,  2 Oct 2008 20:36:41 +0000 (UTC)
 X-Spam-Checker-Version: SpamAssassin 3.1.7-deb (2006-10-05) on 
 	silverinsanity.com
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.6 required=5.0 tests=BAYES_00,RCVD_IN_PBL,
-	RCVD_IN_SORBS_DUL autolearn=no version=3.1.7-deb
-Received: from [192.168.1.109] (cpe-69-205-127-75.rochester.res.rr.com [69.205.127.75])
-	(using TLSv1 with cipher AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by silverinsanity.com (Postfix) with ESMTP id A554C1FFC438;
-	Thu,  2 Oct 2008 20:17:40 +0000 (UTC)
-In-Reply-To: <1222970291-5337-1-git-send-email-giuseppe.bilotta@gmail.com>
-X-Mailer: Apple Mail (2.929.2)
+X-Spam-Status: No, score=-1.0 required=5.0 tests=AWL,BAYES_00,
+	FORGED_RCVD_HELO,RCVD_IN_PBL,RCVD_IN_SORBS_DUL autolearn=no 
+	version=3.1.7-deb
+Received: from localhost.localdomain (cpe-69-205-127-75.rochester.res.rr.com [69.205.127.75])
+	by silverinsanity.com (Postfix) with ESMTP id 17E6C1FFC438;
+	Thu,  2 Oct 2008 20:36:36 +0000 (UTC)
+X-Mailer: git-send-email 1.6.0.2.589.gcd70
+In-Reply-To: <91634D16-B28A-4458-97A9-C469B5AF4E5D@silverinsanity.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/97369>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/97370>
 
+format-patch is most commonly used for multiple patches at once when
+sending a patchset, in which case we want to number the patches; on
+the other hand, single patches are not usually expected to be
+numbered.
 
-On Oct 2, 2008, at 1:58 PM, Giuseppe Bilotta wrote:
+In other words, the typical behavior expected from format-patch is the
+one obtained by enabling autonumber, so we set it to be the default.
 
-> diff --git a/builtin-log.c b/builtin-log.c
-> index fc5e4da..5187dc2 100644
-> --- a/builtin-log.c
-> +++ b/builtin-log.c
-> @@ -426,7 +426,7 @@ static int istitlechar(char c)
->
-> static const char *fmt_patch_suffix = ".patch";
-> static int numbered = 0;
-> -static int auto_number = 0;
-> +static int auto_number = 1;
->
-> static char **extra_hdr;
-> static int extra_hdr_nr;
-> @@ -484,6 +484,10 @@ static int git_format_config(const char *var,  
-> const char *value, void *cb)
->  			auto_number = 1;
->  			return 0;
->  		}
-> +		if (value && !strcasecmp(value, "noauto")) {
-> +			auto_number = 0;
-> +			return 0;
-> +		}
->  		numbered = git_config_bool(var, value);
->  		return 0;
->  	}
+Users that want to disable numbering for a particular patchset can do
+so with the existing -N command-line switch.  Users that want to
+change the default behavior can use the format.numbering config key.
 
-format.numbered is a tri-state config option right now: {yes, no,  
-auto}.  With this patch, if you add "[format] numbered = false" into  
-your config, you still get auto-numbering.
+Signed-off-by: Brian Gernhardt <benji@silverinsanity.com>
+---
 
-A better way to do this might be to default both numbered and  
-auto_number to true and only use auto_number is numbered is true.  Or  
-turn off auto-numbering when numbering is turned off just below your  
-hunk.
+ This is what I was talking about.  The appropriate setting to turn it off is
+ "false", not "noauto".
 
-Either way, "noauto" is a bad idea.  It's spelled "no" or "false".
+ Documentation/config.txt           |    9 +++++----
+ Documentation/git-format-patch.txt |    8 +++++---
+ builtin-log.c                      |    3 ++-
+ 3 files changed, 12 insertions(+), 8 deletions(-)
 
-~~ Brian Gernhardt
+diff --git a/Documentation/config.txt b/Documentation/config.txt
+index da18a54..5ba3ffa 100644
+--- a/Documentation/config.txt
++++ b/Documentation/config.txt
+@@ -640,10 +640,11 @@ fetch.unpackLimit::
+ 	`transfer.unpackLimit` is used instead.
+ 
+ format.numbered::
+-	A boolean which can enable sequence numbers in patch subjects.
+-	Setting this option to "auto" will enable it only if there is
+-	more than one patch.  See --numbered option in
+-	linkgit:git-format-patch[1].
++	A boolean which can enable or disable sequence numbers in patch
++	subjects.  It defaults to "auto" which enables it only if there
++	is more than one patch.  It can be enabled or disabled for all
++	messages by setting it to "true" or "false".  See --numbered
++	option in linkgit:git-format-patch[1].
+ 
+ format.headers::
+ 	Additional email headers to include in a patch to be submitted
+diff --git a/Documentation/git-format-patch.txt b/Documentation/git-format-patch.txt
+index adb4ea7..ac36ce8 100644
+--- a/Documentation/git-format-patch.txt
++++ b/Documentation/git-format-patch.txt
+@@ -58,8 +58,10 @@ output, unless the --stdout option is specified.
+ If -o is specified, output files are created in <dir>.  Otherwise
+ they are created in the current working directory.
+ 
+-If -n is specified, instead of "[PATCH] Subject", the first line
+-is formatted as "[PATCH n/m] Subject".
++By default, the subject of a single patch is "[PATCH] First Line" and
++the subject when multiple patches are output is "[PATCH n/m] First
++Line". To force 1/1 to be added for a single patch, use -n.  To omit
++patch numbers from the subject, use -N
+ 
+ If given --thread, 'git-format-patch' will generate In-Reply-To and
+ References headers to make the second and subsequent patch mails appear
+@@ -81,7 +83,7 @@ include::diff-options.txt[]
+ 
+ -n::
+ --numbered::
+-	Name output in '[PATCH n/m]' format.
++	Name output in '[PATCH n/m]' format, even with a single patch.
+ 
+ -N::
+ --no-numbered::
+diff --git a/builtin-log.c b/builtin-log.c
+index fc5e4da..93987ee 100644
+--- a/builtin-log.c
++++ b/builtin-log.c
+@@ -426,7 +426,7 @@ static int istitlechar(char c)
+ 
+ static const char *fmt_patch_suffix = ".patch";
+ static int numbered = 0;
+-static int auto_number = 0;
++static int auto_number = 1;
+ 
+ static char **extra_hdr;
+ static int extra_hdr_nr;
+@@ -485,6 +485,7 @@ static int git_format_config(const char *var, const char *value, void *cb)
+ 			return 0;
+ 		}
+ 		numbered = git_config_bool(var, value);
++		auto_number &&= numbered;
+ 		return 0;
+ 	}
+ 
+-- 
+1.6.0.2.589.gcd70
