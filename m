@@ -1,78 +1,96 @@
-From: Ark Xu <ark.work@gmail.com>
-Subject: git svn bug?
-Date: Thu, 2 Oct 2008 16:50:45 +0800
-Message-ID: <36C9BCCC-875A-4C65-98E2-0AD486FF8F61@gmail.com>
-Mime-Version: 1.0 (Apple Message framework v929.2)
-Content-Type: text/plain; charset=US-ASCII; format=flowed; delsp=yes
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Oct 02 10:52:08 2008
+From: martin f krafft <madduck@madduck.net>
+Subject: Git commit hash clash prevention
+Date: Thu, 2 Oct 2008 10:53:58 +0200
+Message-ID: <20081002085358.GA5342@lapse.rw.madduck.net>
+Mime-Version: 1.0
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="Dxnq1zWXvFF0Q93v"
+To: git discussion list <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Thu Oct 02 10:55:36 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KlJul-0006fX-4c
-	for gcvg-git-2@gmane.org; Thu, 02 Oct 2008 10:52:03 +0200
+	id 1KlJy8-0007l7-9F
+	for gcvg-git-2@gmane.org; Thu, 02 Oct 2008 10:55:32 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752235AbYJBIux (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 2 Oct 2008 04:50:53 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752481AbYJBIux
-	(ORCPT <rfc822;git-outgoing>); Thu, 2 Oct 2008 04:50:53 -0400
-Received: from ti-out-0910.google.com ([209.85.142.186]:5188 "EHLO
-	ti-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751740AbYJBIuw (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 2 Oct 2008 04:50:52 -0400
-Received: by ti-out-0910.google.com with SMTP id b6so407323tic.23
-        for <git@vger.kernel.org>; Thu, 02 Oct 2008 01:50:49 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:from:to
-         :content-type:content-transfer-encoding:mime-version:subject:date
-         :x-mailer;
-        bh=+/pSZRUVYVTo93EwEnPlxoi1HgUXRb4boNVq0JGo+fY=;
-        b=rkE6DbfyxMWmNWh2SlsmEMgaJQr+VvyEb1HkgZBrb4Gr5kw/GYVgcEGQcV4rJa56FC
-         8+mOJq62pV3ZpViUabcQ5QdGj6okerJBD0QBNxpLOnxviQwkJakCQl2/pm39Sr0b8I+o
-         uz0BVfIQTbk0+PBZv2DPmsv8B+OAnUAaP4y0s=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:from:to:content-type:content-transfer-encoding
-         :mime-version:subject:date:x-mailer;
-        b=tSY7dPyVVUTE99Fm8HeGLIizNY+PtoEbqJ8h2n3G3JQSxjrhOnGBUH+SWFzhbYAHeh
-         /Ci0P9Guia0QJesU2VVAYTUSzytVM2bIUSFRYNI/LYmw7LOHA4Yd8JKcSSdjT2vrLcTW
-         8X6pdMKYxDuvP36HiyNGplmfkbCV/BYdsal1I=
-Received: by 10.110.52.1 with SMTP id z1mr13645386tiz.19.1222937449170;
-        Thu, 02 Oct 2008 01:50:49 -0700 (PDT)
-Received: from ?192.168.1.222? ([61.171.68.52])
-        by mx.google.com with ESMTPS id 2sm3541390tif.0.2008.10.02.01.50.47
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Thu, 02 Oct 2008 01:50:48 -0700 (PDT)
-X-Mailer: Apple Mail (2.929.2)
+	id S1754010AbYJBIxy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 2 Oct 2008 04:53:54 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753987AbYJBIxy
+	(ORCPT <rfc822;git-outgoing>); Thu, 2 Oct 2008 04:53:54 -0400
+Received: from clegg.madduck.net ([193.242.105.96]:38330 "EHLO
+	clegg.madduck.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754010AbYJBIxx (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 2 Oct 2008 04:53:53 -0400
+Received: from lapse.rw.madduck.net (unknown [IPv6:2001:a60:f069:0:20a:e4ff:fe30:4316])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(Client CN "lapse.rw.madduck.net", Issuer "CAcert Class 3 Root" (verified OK))
+	by clegg.madduck.net (postfix) with ESMTPS id DEF011D40A6
+	for <git@vger.kernel.org>; Thu,  2 Oct 2008 10:53:47 +0200 (CEST)
+Received: by lapse.rw.madduck.net (Postfix, from userid 1000)
+	id A3B9280C3; Thu,  2 Oct 2008 09:53:58 +0100 (IST)
+Content-Disposition: inline
+X-Motto: Keep the good times rollin'
+X-OS: Debian GNU/Linux lenny/sid kernel
+	2.6.24-etchnhalf.1+scoflowctrl.1-686 i686
+X-Spamtrap: madduck.bogus@madduck.net
+X-Subliminal-Message: debian/rules!
+User-Agent: Mutt/1.5.18 (2008-05-17)
+X-Virus-Scanned: ClamAV 0.94/8370/Thu Oct  2 05:51:47 2008 on clegg.madduck.net
+X-Virus-Status: Clean
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/97295>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/97296>
 
-Hi guys,
 
-   I like git very much so I also use git svn for subversion repo.
+--Dxnq1zWXvFF0Q93v
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-   Now I got a tough problem which stopping me for any svn related  
-operations. There is a file log4j.xml that is somehow strange because  
-when I fetch it, i got the following message:
+Hi folks,
 
-tms-service/src/test/resources/log4j.xml has mode 120000 but is not a  
-link at /opt/local/bin/git-svn line 3230.
-M	tms-service/src/test/resources/log4j.xml
+the other day during a workshop on Git, one of the attendants asked
+about the scenario when two developers, Jane and David, both working
+on the same project, both create a commit and the two just so happen
+to have the same SHA-1. I realise that the likelihood of this
+happening is about as high as the chance of <insert witty joke
+here>, but it *is* possible, isn't it? Even though this is thus
+somewhat academic, I am still very curious about it.
 
-   And then, all the operation will lead to :
-Checksum mismatch: branches/5.3/tms-service/src/test/resources/ 
-log4j.xml 51031cbb0e1a2e878e4a3836cf0baa9b80a037a5
-expected: fab6daef9fc355b9342e26047f5d0141
-      got: 0e7e9081d608c80d2de0340ba5cd1600
+What happens when David now pulls from Jane? How does Git deal with
+this?
 
-Could anybody help?
+I imagine it'll be able to distinguish the two commits based on
+metadata, but won't the DAG get corrupted?
 
-regards,
-Ark
+Cheers,
+
+--=20
+martin | http://madduck.net/ | http://two.sentenc.es/
+=20
+"and no one sings me lullabies,
+ and no one makes me close my eyes,
+ and so i throw the windows wide,
+ and call to you across the sky"
+                                                   -- pink floyd, 1971
+=20
+spamtraps: madduck.bogus@madduck.net
+
+--Dxnq1zWXvFF0Q93v
+Content-Type: application/pgp-signature; name="digital_signature_gpg.asc"
+Content-Description: Digital signature (see http://martin-krafft.net/gpg/)
+Content-Disposition: inline
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.9 (GNU/Linux)
+
+iEYEARECAAYFAkjkjCYACgkQIgvIgzMMSnUwOwCcC74x9gISyf1Ly4tVK7V1OE/P
+YsIAoLE3czWviDDP+CRMIWHBu7Rg4MK+
+=aCTX
+-----END PGP SIGNATURE-----
+
+--Dxnq1zWXvFF0Q93v--
