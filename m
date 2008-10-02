@@ -1,75 +1,83 @@
-From: Michael J Gruber <git@drmicha.warpmail.net>
-Subject: Re: How to remove a commit object?
-Date: Thu, 02 Oct 2008 16:00:09 +0200
-Message-ID: <48E4D3E9.8020906@drmicha.warpmail.net>
-References: <D53D127D-97DD-417C-9109-ABD46BBD4E18@midwinter.com>	 <48D36DF4.3030607@drmicha.warpmail.net> <33f4f4d70810020636g77f4180cm7aa6b7de07ae5beb@mail.gmail.com>
+From: "Giovanni Funchal" <gafunchal@gmail.com>
+Subject: Files with colons under Cygwin
+Date: Thu, 2 Oct 2008 16:02:23 +0200
+Message-ID: <c475e2e60810020702q573570dcp31a5dc18bf98ef30@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-Cc: Steven Grimm <koreth@midwinter.com>,
-	Git Users List <git@vger.kernel.org>
-To: Klas Lindberg <klas.lindberg@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Oct 02 16:07:30 2008
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Oct 02 16:09:12 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KlOkB-0007sp-TX
-	for gcvg-git-2@gmane.org; Thu, 02 Oct 2008 16:01:28 +0200
+	id 1KlOmK-0000Fu-S7
+	for gcvg-git-2@gmane.org; Thu, 02 Oct 2008 16:03:41 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753026AbYJBOAP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 2 Oct 2008 10:00:15 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753625AbYJBOAP
-	(ORCPT <rfc822;git-outgoing>); Thu, 2 Oct 2008 10:00:15 -0400
-Received: from out3.smtp.messagingengine.com ([66.111.4.27]:44577 "EHLO
-	out3.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1753026AbYJBOAO (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 2 Oct 2008 10:00:14 -0400
-Received: from compute2.internal (compute2.internal [10.202.2.42])
-	by out1.messagingengine.com (Postfix) with ESMTP id 5A7FE17255F;
-	Thu,  2 Oct 2008 10:00:13 -0400 (EDT)
-Received: from heartbeat2.messagingengine.com ([10.202.2.161])
-  by compute2.internal (MEProxy); Thu, 02 Oct 2008 10:00:13 -0400
-X-Sasl-enc: SkYklt6/dZtdWJbuRxg7r5AUykrm+/Vi9cCI1EYHmkvu 1222956012
-Received: from [139.174.44.12] (whitehead.math.tu-clausthal.de [139.174.44.12])
-	by mail.messagingengine.com (Postfix) with ESMTPSA id 8CF3A2A6B8;
-	Thu,  2 Oct 2008 10:00:12 -0400 (EDT)
-User-Agent: Thunderbird 2.0.0.17 (X11/20080914)
-In-Reply-To: <33f4f4d70810020636g77f4180cm7aa6b7de07ae5beb@mail.gmail.com>
+	id S1752143AbYJBOCZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 2 Oct 2008 10:02:25 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753635AbYJBOCZ
+	(ORCPT <rfc822;git-outgoing>); Thu, 2 Oct 2008 10:02:25 -0400
+Received: from fk-out-0910.google.com ([209.85.128.188]:19580 "EHLO
+	fk-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751684AbYJBOCY (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 2 Oct 2008 10:02:24 -0400
+Received: by fk-out-0910.google.com with SMTP id 18so613364fkq.5
+        for <git@vger.kernel.org>; Thu, 02 Oct 2008 07:02:23 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to
+         :subject:mime-version:content-type:content-transfer-encoding
+         :content-disposition;
+        bh=BqdYsmvSZX3IdKBftIFt9hPQCh7n6dXV5+XsGGbQpB4=;
+        b=bBSiMjNFppDN458FGanicP1Mjw1kNhAtkaUMs+/HohhbV8f+Kqcl16xsrPdFKGBX6+
+         EySSh5GFClvq3FKjLOurxVNNOBOeYhlubRuR+AvQZAmcG9ck2AsQBK/Hugwz2OgPnvca
+         79gAoKmM8ClV0L2Q0xKv8x7paHdJemJFnFfOk=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:to:subject:mime-version:content-type
+         :content-transfer-encoding:content-disposition;
+        b=aCDwj3zYiKNAEdWYvTKgiix48nvabUVhWm+0NZ9BVKaQ8EbFMbp88mInPNxR8rt6CA
+         ibkc4gToreudTPi39/z/j9JEtKO++3Mppz/r6naAMYHmIGlYx49Ja9Om3WhAYnC0acoT
+         magOfeD+606sDitA9ANcShySS/+E17+OFHgbU=
+Received: by 10.187.224.14 with SMTP id b14mr1949807far.4.1222956143073;
+        Thu, 02 Oct 2008 07:02:23 -0700 (PDT)
+Received: by 10.187.245.17 with HTTP; Thu, 2 Oct 2008 07:02:23 -0700 (PDT)
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/97333>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/97334>
 
-Klas Lindberg venit, vidit, dixit 02.10.2008 15:36:
-> This doesn't seem to work for me. I will soon be in a situation where
-> I need to selectively delete commits in such a way that they become
-> completely irrecoverable. I.e. it is not enough to revert a commit.
-> The *original* commit must be removed. And of course, the repo history
-> is too complex to allow for rebasing followed by garbage collection or
-> something like that.
-> 
-> The reason is that we consider opening a repository to external
-> participants, but some commits contain stuff that we'd really rather
-> not show to anyone else. Making the repository public without loosing
-> history would then force us to either
-> 
->  1. Recreate every commit in a new repo, sans the offending commits.
-> Seems like hard work.
->  2. ?
-> 
-> Would it be feasible to write a tool that can selectively replace a
-> specific commit in the commit DAG, or would that automatically
-> invalidate every SHA key for every commit that follows the replaced
-> original?
+Hello,
 
-Yes, on the or part: If you change a commit then all commits "after"
-that one (in terms of DAG connectedness) will need to be changed: each
-contains a "backpointer" (to the parent commit(s)) which is changed.
+Cygwin does not allow files with colons, I think this is Windows stuff
+one just can't avoid. If you have files with colons in a git
+repository and try pulling them on cygwin, the file is empty, its name
+is truncated and the status is wrong.
 
-I'm a bit confused: You rule out rebasing but don't mind recreating a
-new repo. So repo size is not a problem, is it?
+linux $ date > a:b
+linux $ git init
+linux $ git add a:b
+linux $ git commit -m test
+linux $ git push
+cygwin $ git pull
+cygwin $ ls
+-rw-r--r-- 1 funchal funchal        0 Oct  2 15:15 a
+cygwin $ git status
+# On branch master
+# Untracked files:
+#   (use "git add <file>..." to include in what will be committed)
+#
+#       a
+nothing added to commit but untracked files present (use "git add" to track)
 
-Michael
+Any ideas on what should be done? (for instance, warn when pulling
+this kind of files on Cygwin)
+
+Has anyone noticed this before?
+
+Regards,
+-- Giovanni
