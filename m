@@ -1,92 +1,143 @@
-From: Petr Baudis <pasky@suse.cz>
-Subject: Re: [PATCHv4] gitweb: parse project/action/hash_base:filename
-	PATH_INFO
-Date: Thu, 2 Oct 2008 22:56:03 +0200
-Message-ID: <20081002205603.GW10360@machine.or.cz>
-References: <1222906234-8182-1-git-send-email-giuseppe.bilotta@gmail.com> <1222906234-8182-2-git-send-email-giuseppe.bilotta@gmail.com> <20081002153403.GQ10360@machine.or.cz> <cb7bb73a0810021230u2ec512c0l577b3146cffccb3e@mail.gmail.com>
+From: Brian Gernhardt <benji@silverinsanity.com>
+Subject: [PATCH v2] format-patch: autonumber by default
+Date: Thu, 2 Oct 2008 16:55:39 -0400
+Message-ID: <20081002205539.GA36768@Hermes>
+References: <91634D16-B28A-4458-97A9-C469B5AF4E5D@silverinsanity.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Jakub Narebski <jnareb@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>,
-	"Shawn O. Pearce" <spearce@spearce.org>
-To: Giuseppe Bilotta <giuseppe.bilotta@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Oct 02 22:57:25 2008
+Cc: Giuseppe Bilotta <giuseppe.bilotta@gmail.com>,
+	Jakub Narebski <jnareb@gmail.com>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	"Shawn O. Pearce" <spearce@spearce.org>,
+	Andreas Ericsson <ae@op5.se>
+To: Git List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Thu Oct 02 22:57:26 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KlVEb-0005iD-Gg
-	for gcvg-git-2@gmane.org; Thu, 02 Oct 2008 22:57:18 +0200
+	id 1KlVEa-0005iD-Og
+	for gcvg-git-2@gmane.org; Thu, 02 Oct 2008 22:57:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754152AbYJBU4H (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 2 Oct 2008 16:56:07 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754121AbYJBU4G
-	(ORCPT <rfc822;git-outgoing>); Thu, 2 Oct 2008 16:56:06 -0400
-Received: from w241.dkm.cz ([62.24.88.241]:38169 "EHLO machine.or.cz"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753827AbYJBU4F (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 2 Oct 2008 16:56:05 -0400
-Received: by machine.or.cz (Postfix, from userid 2001)
-	id 55D703939B47; Thu,  2 Oct 2008 22:56:03 +0200 (CEST)
+	id S1753781AbYJBUzn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 2 Oct 2008 16:55:43 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753827AbYJBUzn
+	(ORCPT <rfc822;git-outgoing>); Thu, 2 Oct 2008 16:55:43 -0400
+Received: from vs072.rosehosting.com ([216.114.78.72]:35880 "EHLO
+	silverinsanity.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752400AbYJBUzm (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 2 Oct 2008 16:55:42 -0400
+Received: by silverinsanity.com (Postfix, from userid 5001)
+	id 5AD971FFC4C0; Thu,  2 Oct 2008 20:55:35 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.1.7-deb (2006-10-05) on 
+	silverinsanity.com
+X-Spam-Level: 
+X-Spam-Status: No, score=-1.0 required=5.0 tests=AWL,BAYES_00,
+	FORGED_RCVD_HELO,RCVD_IN_PBL,RCVD_IN_SORBS_DUL,UNPARSEABLE_RELAY 
+	autolearn=no version=3.1.7-deb
+Received: from localhost.localdomain (cpe-69-205-127-75.rochester.res.rr.com [69.205.127.75])
+	by silverinsanity.com (Postfix) with ESMTP id 186721FFC438;
+	Thu,  2 Oct 2008 20:55:34 +0000 (UTC)
+Received: from Mutt by mutt-smtp-wrapper.pl 1.2  (www.zdo.com/articles/mutt-smtp-wrapper.shtml)
 Content-Disposition: inline
-In-Reply-To: <cb7bb73a0810021230u2ec512c0l577b3146cffccb3e@mail.gmail.com>
-User-Agent: Mutt/1.5.16 (2007-06-09)
+In-Reply-To: <91634D16-B28A-4458-97A9-C469B5AF4E5D@silverinsanity.com>
+User-Agent: Mutt/1.5.18 (2008-05-17)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/97373>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/97374>
 
-On Thu, Oct 02, 2008 at 09:30:42PM +0200, Giuseppe Bilotta wrote:
-> On Thu, Oct 2, 2008 at 5:34 PM, Petr Baudis <pasky@suse.cz> wrote:
-> 
-> > Just nits...
-> >> +     }
-> >> +
-> >>       my ($refname, $pathname) = split(/:/, $path_info, 2);
-> >>       if (defined $pathname) {
-> >> -             # we got "project.git/branch:filename" or "project.git/branch:dir/"
-> >> +             # we got "project.git/action/branch:filename" or "project.git/action/branch:dir/"
-> >>               # we could use git_get_type(branch:pathname), but it needs $git_dir
-> >>               $pathname =~ s,^/+,,;
-> >>               if (!$pathname || substr($pathname, -1) eq "/") {
-> >
-> > But the old variant is still possible, maybe the comments should
-> > indicate that the action/ part is optional.
-> 
-> I put the action/ part in square brackets. (e.g.
-> project.git/[action/]branch:filename). Is this good enough?
+format-patch is most commonly used for multiple patches at once when
+sending a patchset, in which case we want to number the patches; on
+the other hand, single patches are not usually expected to be
+numbered.
 
-That's perfect.
+In other words, the typical behavior expected from format-patch is the
+one obtained by enabling autonumber, so we set it to be the default.
 
-> >> @@ -534,8 +575,9 @@ sub evaluate_path_info {
-> >>               $file_name ||= validate_pathname($pathname);
-> >>       } elsif (defined $refname) {
-> >>               # we got "project.git/branch"
-> >> -             $action ||= "shortlog";
-> >> -             $hash   ||= validate_refname($refname);
-> >> +             $action    ||= "shortlog";
-> >> +             $hash      ||= validate_refname($refname);
-> >> +             $hash_base ||= validate_refname($refname);
-> >>       }
-> >>  }
-> >>  evaluate_path_info();
-> >
-> > What is this good for?
-> 
-> The purpose of what? setting both $hash and $hash_base was something
-> that I found was needed in some extreme cases, as discussed with
-> Jakub. Proposals for recommended cleaner but equally fast way to
-> handle it. If you're referring to the whitespace, I was just lining up
-> the entries. Should I do it in a separate patch?
+Users that want to disable numbering for a particular patchset can do
+so with the existing -N command-line switch.  Users that want to
+change the default behavior can use the format.numbering config key.
 
-I refer to the setting of $hash_base (I'm not huge fan of the whitespace
-aligning, but I don't really care). What extreme cases are these?
-I think you should describe that in the code since it's not really
-obvious. Maybe I could find it in older threads but I should understand
-the code just from reading it. :-)
+Signed-off-by: Brian Gernhardt <benji@silverinsanity.com>
+---
 
+ _This_ patch changes the default and makes the config variable act
+ properly.  Does not pass tests.  4014 and 4021 would have to be
+ updated for the new defaults.
+
+ Documentation/config.txt           |    9 +++++----
+ Documentation/git-format-patch.txt |    8 +++++---
+ builtin-log.c                      |    3 ++-
+ 3 files changed, 12 insertions(+), 8 deletions(-)
+
+diff --git a/Documentation/config.txt b/Documentation/config.txt
+index da18a54..5ba3ffa 100644
+--- a/Documentation/config.txt
++++ b/Documentation/config.txt
+@@ -640,10 +640,11 @@ fetch.unpackLimit::
+ 	`transfer.unpackLimit` is used instead.
+ 
+ format.numbered::
+-	A boolean which can enable sequence numbers in patch subjects.
+-	Setting this option to "auto" will enable it only if there is
+-	more than one patch.  See --numbered option in
+-	linkgit:git-format-patch[1].
++	A boolean which can enable or disable sequence numbers in patch
++	subjects.  It defaults to "auto" which enables it only if there
++	is more than one patch.  It can be enabled or disabled for all
++	messages by setting it to "true" or "false".  See --numbered
++	option in linkgit:git-format-patch[1].
+ 
+ format.headers::
+ 	Additional email headers to include in a patch to be submitted
+diff --git a/Documentation/git-format-patch.txt b/Documentation/git-format-patch.txt
+index adb4ea7..ac36ce8 100644
+--- a/Documentation/git-format-patch.txt
++++ b/Documentation/git-format-patch.txt
+@@ -58,8 +58,10 @@ output, unless the --stdout option is specified.
+ If -o is specified, output files are created in <dir>.  Otherwise
+ they are created in the current working directory.
+ 
+-If -n is specified, instead of "[PATCH] Subject", the first line
+-is formatted as "[PATCH n/m] Subject".
++By default, the subject of a single patch is "[PATCH] First Line" and
++the subject when multiple patches are output is "[PATCH n/m] First
++Line". To force 1/1 to be added for a single patch, use -n.  To omit
++patch numbers from the subject, use -N
+ 
+ If given --thread, 'git-format-patch' will generate In-Reply-To and
+ References headers to make the second and subsequent patch mails appear
+@@ -81,7 +83,7 @@ include::diff-options.txt[]
+ 
+ -n::
+ --numbered::
+-	Name output in '[PATCH n/m]' format.
++	Name output in '[PATCH n/m]' format, even with a single patch.
+ 
+ -N::
+ --no-numbered::
+diff --git a/builtin-log.c b/builtin-log.c
+index fc5e4da..ee7c34e 100644
+--- a/builtin-log.c
++++ b/builtin-log.c
+@@ -426,7 +426,7 @@ static int istitlechar(char c)
+ 
+ static const char *fmt_patch_suffix = ".patch";
+ static int numbered = 0;
+-static int auto_number = 0;
++static int auto_number = 1;
+ 
+ static char **extra_hdr;
+ static int extra_hdr_nr;
+@@ -485,6 +485,7 @@ static int git_format_config(const char *var, const char *value, void *cb)
+ 			return 0;
+ 		}
+ 		numbered = git_config_bool(var, value);
++		auto_number = auto_number && numbered;
+ 		return 0;
+ 	}
+ 
 -- 
-				Petr "Pasky" Baudis
-People who take cold baths never have rheumatism, but they have
-cold baths.
+1.6.0.2.589.gcd70
