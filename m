@@ -1,129 +1,126 @@
 From: "Jonathan del Strother" <maillist@steelskies.com>
-Subject: Re: [PATCH] xdiff-interface.c: strip newline (and cr) from line before pattern matching
-Date: Thu, 2 Oct 2008 11:29:27 +0100
-Message-ID: <57518fd10810020329w257d91f1u3e2205fdaed888eb@mail.gmail.com>
-References: <mJtumbyBuR0sRaFjwb6O5_D_ps0fVfz6APTAAjYMixV0MvzP8nEZRw@cipher.nrlssc.navy.mil>
-	 <o5dqpNECJusQHKCTvRWiIqN2ZJ7w-fyC-0vM99FajJIgLsOwP3RNug@cipher.nrlssc.navy.mil>
+Subject: Re: [PATCH v2] Teach git diff about Objective-C syntax
+Date: Thu, 2 Oct 2008 11:40:14 +0100
+Message-ID: <57518fd10810020340t15d9441av521b7ef088ea09ca@mail.gmail.com>
+References: <57518fd10809171630v97485aalcc5089f96082c0fc@mail.gmail.com>
+	 <1222818394-11547-1-git-send-email-jon.delStrother@bestbefore.tv>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-Cc: "Git Mailing List" <git@vger.kernel.org>,
-	"Miklos Vajna" <vmiklos@frugalware.org>,
+Cc: "Miklos Vajna" <vmiklos@frugalware.org>,
 	"Johannes Schindelin" <Johannes.Schindelin@gmx.de>,
 	"Junio C Hamano" <gitster@pobox.com>,
-	"Andreas Ericsson" <ae@op5.se>
-To: "Brandon Casey" <casey@nrlssc.navy.mil>
-X-From: git-owner@vger.kernel.org Thu Oct 02 12:30:50 2008
+	"Andreas Ericsson" <ae@op5.se>,
+	"Jonathan del Strother" <jon.delStrother@bestbefore.tv>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Oct 02 12:41:32 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KlLSB-0002gO-B9
-	for gcvg-git-2@gmane.org; Thu, 02 Oct 2008 12:30:39 +0200
+	id 1KlLch-0005tJ-Ir
+	for gcvg-git-2@gmane.org; Thu, 02 Oct 2008 12:41:32 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752847AbYJBK33 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 2 Oct 2008 06:29:29 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752794AbYJBK33
-	(ORCPT <rfc822;git-outgoing>); Thu, 2 Oct 2008 06:29:29 -0400
-Received: from wf-out-1314.google.com ([209.85.200.171]:55115 "EHLO
+	id S1753246AbYJBKkR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 2 Oct 2008 06:40:17 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753204AbYJBKkR
+	(ORCPT <rfc822;git-outgoing>); Thu, 2 Oct 2008 06:40:17 -0400
+Received: from wf-out-1314.google.com ([209.85.200.170]:55378 "EHLO
 	wf-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752061AbYJBK32 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 2 Oct 2008 06:29:28 -0400
-Received: by wf-out-1314.google.com with SMTP id 27so1028727wfd.4
-        for <git@vger.kernel.org>; Thu, 02 Oct 2008 03:29:27 -0700 (PDT)
+	with ESMTP id S1752794AbYJBKkP (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 2 Oct 2008 06:40:15 -0400
+Received: by wf-out-1314.google.com with SMTP id 27so1032510wfd.4
+        for <git@vger.kernel.org>; Thu, 02 Oct 2008 03:40:14 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:received:received:message-id:date:from:sender
          :to:subject:cc:in-reply-to:mime-version:content-type
          :content-transfer-encoding:content-disposition:references
          :x-google-sender-auth;
-        bh=fkvzhD+69YSmn3dHgH6QFK1n4kDzIgSzkqSn8VrT/1A=;
-        b=HhmiGP3Qx8vL74iBSJuHw2PQ+VJbl1mczbvnNJKtRLD/xCBBqxoTX9o7MIret0lYju
-         FVExsaQm5PzhY7Kd7nQ9MnepjFRxjm9z+eHoyejPXt+VPDcgtLoYvfCFv/rd76+WZ6WM
-         F4ETZfW8r6YpbISUae2MM+uiQKICYiUEiwEMQ=
+        bh=GUBBkz5VbawlMMw4kzYZFd3tVUuy2IkTLUk4yA+1B98=;
+        b=DreeFBYaNV3e+fMb2Rx9uZ3sWKc8ykDAiGLV+vvgfmS8MZRxvV0JdohjKzkhK4Tqmg
+         OhlQpVGYmdZFEReMmjldcdU5aS64VXdGbIRADcZVF4qvtYdf/3zhZ2tgnsJrSMUnQeuz
+         h4KnfSeqxDpBIOKRuFLl3Lht3wl/5kwblywv4=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=message-id:date:from:sender:to:subject:cc:in-reply-to:mime-version
          :content-type:content-transfer-encoding:content-disposition
          :references:x-google-sender-auth;
-        b=qDLyDWkSfVUSbEU38c1uBsvPVZerxgR1mPHhoSS9sZWY7KTLGlN7yvTDRkT0aAaNr7
-         Qh8GIzDWQVv/ZXMXSzowmN0ix5Yu/GJgoEHSbUSxlGqNHTGCqKUrAtwFBA6Dq3b8S6ls
-         XjwIJYUN0CETKLuxKGWdDclMarYVdy5fmQB04=
-Received: by 10.142.188.4 with SMTP id l4mr3805756wff.183.1222943367526;
-        Thu, 02 Oct 2008 03:29:27 -0700 (PDT)
-Received: by 10.143.6.3 with HTTP; Thu, 2 Oct 2008 03:29:27 -0700 (PDT)
-In-Reply-To: <o5dqpNECJusQHKCTvRWiIqN2ZJ7w-fyC-0vM99FajJIgLsOwP3RNug@cipher.nrlssc.navy.mil>
+        b=ZFniXqM3Jd/ZNpx3OxgsyAjHrm+nO8WCJlpg9SWiBP7hibdW7WqgM4NISBnYN9t1Jz
+         EhPLHCZI7vv37EhM1FGc8Ulg6V3v710Hd5/5XxZR2iqgx+nQQ2oukp2TkMGrCVg3IhT4
+         UqNwWS/KaGaMa3Bd+Qu5xrOZADJeLV0ps3Yos=
+Received: by 10.142.107.1 with SMTP id f1mr3807232wfc.267.1222944014494;
+        Thu, 02 Oct 2008 03:40:14 -0700 (PDT)
+Received: by 10.143.6.3 with HTTP; Thu, 2 Oct 2008 03:40:14 -0700 (PDT)
+In-Reply-To: <1222818394-11547-1-git-send-email-jon.delStrother@bestbefore.tv>
 Content-Disposition: inline
-X-Google-Sender-Auth: 55e3b7d9800bea0a
+X-Google-Sender-Auth: 8410267818c77393
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/97310>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/97311>
 
-On Wed, Oct 1, 2008 at 8:28 PM, Brandon Casey <casey@nrlssc.navy.mil> wrote:
-> POSIX doth sayeth:
+On Wed, Oct 1, 2008 at 12:46 AM, Jonathan del Strother
+<jon.delStrother@bestbefore.tv> wrote:
+> Add support for recognition of Objective-C class & instance methods, C functions, and class implementation/interfaces.
 >
->   "In the regular expression processing described in IEEE Std 1003.1-2001,
->    the <newline> is regarded as an ordinary character and both a period and
->    a non-matching list can match one. ... Those utilities (like grep) that
->    do not allow <newline>s to match are responsible for eliminating any
->    <newline> from strings before matching against the RE."
->
-> Thus far git has not been removing the trailing newline from strings matched
-> against regular expression patterns. This has the effect that (quoting
-> Jonathan del Strother) "... a line containing just 'FUNCNAME' (terminated by
-> a newline) will be matched by the pattern '^(FUNCNAME.$)' but not
-> '^(FUNCNAME$)'", and more simply not '^FUNCNAME$'.
->
-> Signed-off-by: Brandon Casey <casey@nrlssc.navy.mil>
+> Signed-off-by: Jonathan del Strother <jon.delStrother@bestbefore.tv>
 > ---
+> This version is much the same, but rebuilt on top of 1883a0d3b to use the extended regexp stuff, and it doesn't attempt to tidy up other patterns.
 >
+>  Documentation/gitattributes.txt |    2 ++
+>  diff.c                          |   10 ++++++++++
+>  2 files changed, 12 insertions(+), 0 deletions(-)
 >
-> This could be a little simpler if I knew what was guaranteed from xdiff.
-> Such as whether the len elements of line were guaranteed to be newline
-> terminated, or be greater than zero. But, the code in def_ff() in xemit.c
-> is wrapped in 'if (len > 0)', so..
+> diff --git a/Documentation/gitattributes.txt b/Documentation/gitattributes.txt
+> index 2ae771f..2694559 100644
+> --- a/Documentation/gitattributes.txt
+> +++ b/Documentation/gitattributes.txt
+> @@ -315,6 +315,8 @@ patterns are available:
 >
-> -brandon
+>  - `java` suitable for source code in the Java language.
 >
->
->  xdiff-interface.c |   12 +++++++++++-
->  1 files changed, 11 insertions(+), 1 deletions(-)
->
-> diff --git a/xdiff-interface.c b/xdiff-interface.c
-> index 8bab82e..61f5dab 100644
-> --- a/xdiff-interface.c
-> +++ b/xdiff-interface.c
-> @@ -191,12 +191,22 @@ struct ff_regs {
->  static long ff_regexp(const char *line, long len,
->                char *buffer, long buffer_size, void *priv)
->  {
-> -       char *line_buffer = xstrndup(line, len); /* make NUL terminated */
-> +       char *line_buffer;
->        struct ff_regs *regs = priv;
->        regmatch_t pmatch[2];
->        int i;
->        int result = -1;
->
-> +       /* Exclude terminating newline (and cr) from matching */
-> +       if (len > 0 && line[len-1] == '\n') {
-> +               if (len > 1 && line[len-2] == '\r')
-> +                       len -= 2;
-> +               else
-> +                       len--;
-> +       }
+> +- `objc` suitable for source code in the Objective-C language.
 > +
-> +       line_buffer = xstrndup(line, len); /* make NUL terminated */
-> +
->        for (i = 0; i < regs->nr; i++) {
->                struct ff_reg *reg = regs->array + i;
->                if (!regexec(&reg->re, line_buffer, 2, pmatch, 0)) {
+>  - `pascal` suitable for source code in the Pascal/Delphi language.
+>
+>  - `php` suitable for source code in the PHP language.
+> diff --git a/diff.c b/diff.c
+> index b001d7b..3694602 100644
+> --- a/diff.c
+> +++ b/diff.c
+> @@ -1429,6 +1429,16 @@ static const struct funcname_pattern_entry builtin_funcname_pattern[] = {
+>          "!^[ \t]*(catch|do|for|if|instanceof|new|return|switch|throw|while)\n"
+>          "^[ \t]*(([ \t]*[A-Za-z_][A-Za-z_0-9]*){2,}[ \t]*\\([^;]*)$",
+>          REG_EXTENDED },
+> +       { "objc",
+> +         /* Negate C statements that can look like functions */
+> +         "!^[ \t]*(do|for|if|else|return|switch|while)\n"
+> +         /* Objective-C methods */
+> +         "^[ \t]*([-+][ \t]*\\([ \t]*[A-Za-z_][A-Za-z_0-9* \t]*\\)[ \t]*[A-Za-z_].*)$\n"
+> +         /* C functions */
+> +         "^[ \t]*(([ \t]*[A-Za-z_][A-Za-z_0-9]*){2,}[ \t]*\\([^;]*)$\n"
+> +         /* Objective-C class/protocol definitions */
+> +         "^(@(implementation|interface|protocol)[ \t].*)$",
+> +         REG_EXTENDED },
+>        { "pascal",
+>          "^((procedure|function|constructor|destructor|interface|"
+>                "implementation|initialization|finalization)[ \t]*.*)$"
 > --
-> 1.6.0.2.323.g7c850
->
->
 
-Looks good to me, or at least, works as advertised with a bunch of my
-funcname patterns.
+
+Given Brandon's "strip newline (and cr) from line before pattern
+matching" patch, the objective C line could be changed to
+"^[ \t]*([-+][ \t]*\\([ \t]*[A-Za-z_][A-Za-z_0-9* \t]*\\)[
+\t]*[A-Za-z_][A-Za-z_0-9:{()*& \t]*)$\n"
+to be more specific about what's allowed to occur on a method line.
+Depends how often we really care about getting the funcname right -
+for instance, do we want to deal with cases like :
+
+-(void)doStuff:(NSString*)foo {    // TODO : This is a %@^$#@ method
+name, change it.
+
+?   I suspect the additional complexity that would be added to the
+regex isn't worth the small gain - any thoughts?
