@@ -2,29 +2,29 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=0.2 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=0.9 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
-Received: (qmail 21486 invoked by uid 111); 1 Oct 2008 20:13:22 -0000
+Received: (qmail 27453 invoked by uid 111); 2 Oct 2008 14:25:36 -0000
 Received: from vger.kernel.org (HELO vger.kernel.org) (209.132.176.167)
-    by peff.net (qpsmtpd/0.32) with ESMTP; Wed, 01 Oct 2008 16:13:21 -0400
+    by peff.net (qpsmtpd/0.32) with ESMTP; Thu, 02 Oct 2008 10:25:34 -0400
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753060AbYJAUNS (ORCPT <rfc822;peff@peff.net>);
-	Wed, 1 Oct 2008 16:13:18 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752318AbYJAUNS
-	(ORCPT <rfc822;git-outgoing>); Wed, 1 Oct 2008 16:13:18 -0400
-Received: from 132-201.104-92.cust.bluewin.ch ([92.104.201.132]:59307 "EHLO
-	pixie.suse.cz" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1751915AbYJAUNR (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 1 Oct 2008 16:13:17 -0400
+	id S1753088AbYJBOZX (ORCPT <rfc822;peff@peff.net>);
+	Thu, 2 Oct 2008 10:25:23 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753522AbYJBOZW
+	(ORCPT <rfc822;git-outgoing>); Thu, 2 Oct 2008 10:25:22 -0400
+Received: from [212.249.11.140] ([212.249.11.140]:29132 "EHLO pixie.suse.cz"
+	rhost-flags-FAIL-FAIL-OK-FAIL) by vger.kernel.org with ESMTP
+	id S1753056AbYJBOZW (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 2 Oct 2008 10:25:22 -0400
 Received: by pixie.suse.cz (Postfix, from userid 2001)
-	id B64C52AC8DE; Wed,  1 Oct 2008 22:13:02 +0200 (CEST)
+	id 946072AC954; Thu,  2 Oct 2008 16:25:05 +0200 (CEST)
 From:	Petr Baudis <pasky@suse.cz>
 To:	git@vger.kernel.org
 Cc:	Petr Baudis <petr.baudis@novartis.com>
-Subject: [PATCH] config.c: Tolerate UTF8 BOM at the beginning of config file
-Date:	Wed,  1 Oct 2008 22:13:02 +0200
-Message-Id: <1222891982-24193-1-git-send-email-pasky@suse.cz>
+Subject: [PATCH] gitweb: Identify all summary metadata table rows
+Date:	Thu,  2 Oct 2008 16:25:05 +0200
+Message-Id: <1222957505-5150-1-git-send-email-pasky@suse.cz>
 X-Mailer: git-send-email 1.5.6.3.392.g292f1
 To:	git@vger.kernel.org
 Sender:	git-owner@vger.kernel.org
@@ -32,49 +32,46 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-Unfortunately, the abomination of Windows Notepad likes to scatted
-non-sensical UTF8 BOM marks across text files it edits. This is
-especially troublesome when editing the Git configuration file,
-and it does not appear to be particularly harmful to teach Git
-to deal with this poo in the configfile.
+In the metadata table of the summary page, all rows have their
+id (or class in case of URL) set now. This for example lets sites
+easily disable fields they do not want to show in their custom
+stylesheet (e.g. they are overly technical or irrelevant for the site).
+
+Many of my other patches depend on this, so I would appreciate to hear
+as soon as possible if someone has an issue with this patch.
 
 Signed-off-by: Petr Baudis <petr.baudis@novartis.com>
 
 ---
- config.c |   19 +++++++++++++++++++
- 1 files changed, 19 insertions(+), 0 deletions(-)
+ gitweb/gitweb.perl |    8 ++++----
+ 1 files changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/config.c b/config.c
-index 53f04a0..1d30120 100644
---- a/config.c
-+++ b/config.c
-@@ -205,8 +205,27 @@ static int git_parse_file(config_fn_t fn, void *data)
- 	int baselen = 0;
- 	static char var[MAXNAME];
+diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
+index da474d0..bd8124a 100755
+--- a/gitweb/gitweb.perl
++++ b/gitweb/gitweb.perl
+@@ -4070,10 +4070,10 @@ sub git_summary {
  
-+	/* U+FEFF Byte Order Mark in UTF8 */
-+	static const unsigned char *utf8_bom = (unsigned char *) "\xef\xbb\xbf";
-+	const unsigned char *bomptr = utf8_bom;
-+
- 	for (;;) {
- 		int c = get_next_char();
-+		if (bomptr && *bomptr) {
-+			/* We are at the file beginning; skip UTF8-encoded BOM
-+			 * if present. Sane editors won't put this in on their
-+			 * own, but e.g. Windows Notepad will do it happily. */
-+			if ((unsigned char) c == *bomptr) {
-+				bomptr++;
-+				continue;
-+			} else {
-+				/* Do not tolerate partial BOM. */
-+				if (bomptr != utf8_bom)
-+					break;
-+				/* No BOM at file beginning. Cool. */
-+				bomptr = NULL;
-+			}
-+		}
- 		if (c == '\n') {
- 			if (config_file_eof)
- 				return 0;
+ 	print "<div class=\"title\">&nbsp;</div>\n";
+ 	print "<table class=\"projects_list\">\n" .
+-	      "<tr><td>description</td><td>" . esc_html($descr) . "</td></tr>\n" .
+-	      "<tr><td>owner</td><td>" . esc_html($owner) . "</td></tr>\n";
++	      "<tr id=\"metadata_desc\"><td>description</td><td>" . esc_html($descr) . "</td></tr>\n" .
++	      "<tr id=\"metadata_owner\"><td>owner</td><td>" . esc_html($owner) . "</td></tr>\n";
+ 	if (defined $cd{'rfc2822'}) {
+-		print "<tr><td>last change</td><td>$cd{'rfc2822'}</td></tr>\n";
++		print "<tr id=\"metadata_lchange\"><td>last change</td><td>$cd{'rfc2822'}</td></tr>\n";
+ 	}
+ 
+ 	# use per project git URL list in $projectroot/$project/cloneurl
+@@ -4083,7 +4083,7 @@ sub git_summary {
+ 	@url_list = map { "$_/$project" } @git_base_url_list unless @url_list;
+ 	foreach my $git_url (@url_list) {
+ 		next unless $git_url;
+-		print "<tr><td>$url_tag</td><td>$git_url</td></tr>\n";
++		print "<tr class=\"metadata_url\"><td>$url_tag</td><td>$git_url</td></tr>\n";
+ 		$url_tag = "";
+ 	}
+ 	print "</table>\n";
 -- 
-tg: (9800c0d..) t/config/utf8-bom (depends on: vanilla/master)
+tg: (c427559..) t/summary/css-metadata (depends on: vanilla/master)
