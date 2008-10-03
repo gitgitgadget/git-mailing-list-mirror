@@ -1,86 +1,107 @@
-From: "Ed Schofield" <edschofield@gmail.com>
-Subject: Re: Git newbie question: permissions
-Date: Thu, 9 Oct 2008 23:59:40 +0100
-Message-ID: <1b5a37350810091559y151e244t43710d4e4c3dabcf@mail.gmail.com>
-References: <1b5a37350810091320l72ae0a86m39db4258c9f4827e@mail.gmail.com>
-	 <2008-10-09-23-41-14+trackit+sam@rfc1149.net>
+From: Johannes Sixt <j.sixt@viscovery.net>
+Subject: [PATCH] git-gui: Mark-up strings in show_{other,unmerged}_diff()
+ for localization
+Date: Fri, 03 Oct 2008 13:13:42 +0200
+Message-ID: <48E5FE66.4020704@viscovery.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain; charset=ISO-8859-15
 Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Oct 10 01:01:01 2008
+Cc: Git Mailing List <git@vger.kernel.org>
+To: "Shawn O. Pearce" <spearce@spearce.org>
+X-From: git-owner@vger.kernel.org Fri Oct 03 13:15:08 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Ko4V4-0006Nx-Hn
-	for gcvg-git-2@gmane.org; Fri, 10 Oct 2008 01:00:55 +0200
+	id 1Klice-0007vL-7v
+	for gcvg-git-2@gmane.org; Fri, 03 Oct 2008 13:15:00 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750903AbYJIW7n (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 9 Oct 2008 18:59:43 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750826AbYJIW7n
-	(ORCPT <rfc822;git-outgoing>); Thu, 9 Oct 2008 18:59:43 -0400
-Received: from ti-out-0910.google.com ([209.85.142.191]:63633 "EHLO
-	ti-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750816AbYJIW7n (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 9 Oct 2008 18:59:43 -0400
-Received: by ti-out-0910.google.com with SMTP id b6so88606tic.23
-        for <git@vger.kernel.org>; Thu, 09 Oct 2008 15:59:40 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to
-         :subject:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:references;
-        bh=nJvw6nbQzqBgZiVW5rFXCHuX2MLZ0zBLQgk5AoBM1o4=;
-        b=neOULVctnaF38ECLHypBdugBlAg+ocQZyaBAcP/lAd/SvXGFEEiDONRw/v0/93Kkjh
-         wPoiZ7EfB7apTSEVb5OWDjSz+uiTxKmRV3QgabmEuY/cuN0L/wRSldppLpJE5ePnb4ZE
-         FEirlPRQAw8d85gTQcM5B/VsTjvSZtEAzReGw=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:in-reply-to:mime-version
-         :content-type:content-transfer-encoding:content-disposition
-         :references;
-        b=L7NJlCCvaxav6PSwes94m0nN23AAw694qwXuHHrq5reASTqjqRblFmFb4LrxybczRB
-         zlRjOyqvR2k5a12S8V88T9VAcy+ts0TXI2B1WQKuf9GJZ9NT+kYgtvv1AEQIV65QgEdr
-         EjBNCQbuWg7Z3cA92/RncgxZvjkQ+jMZwOp20=
-Received: by 10.110.49.2 with SMTP id w2mr598605tiw.48.1223593180178;
-        Thu, 09 Oct 2008 15:59:40 -0700 (PDT)
-Received: by 10.110.31.7 with HTTP; Thu, 9 Oct 2008 15:59:40 -0700 (PDT)
-In-Reply-To: <2008-10-09-23-41-14+trackit+sam@rfc1149.net>
-Content-Disposition: inline
+	id S1752467AbYJCLNq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 3 Oct 2008 07:13:46 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752240AbYJCLNq
+	(ORCPT <rfc822;git-outgoing>); Fri, 3 Oct 2008 07:13:46 -0400
+Received: from lilzmailso01.liwest.at ([212.33.55.23]:36931 "EHLO
+	lilzmailso01.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751837AbYJCLNp (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 3 Oct 2008 07:13:45 -0400
+Received: from cm56-163-160.liwest.at ([86.56.163.160] helo=linz.eudaptics.com)
+	by lilzmailso01.liwest.at with esmtpa (Exim 4.66)
+	(envelope-from <j.sixt@viscovery.net>)
+	id 1KlibO-0003EA-K2; Fri, 03 Oct 2008 13:13:42 +0200
+Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.42])
+	by linz.eudaptics.com (Postfix) with ESMTP
+	id 5DAFC69F; Fri,  3 Oct 2008 13:13:42 +0200 (CEST)
+User-Agent: Thunderbird 2.0.0.6 (Windows/20070728)
+X-Enigmail-Version: 0.95.5
+X-Spam-Score: 1.7 (+)
+X-Spam-Report: ALL_TRUSTED=-1.8, BAYES_99=3.5
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/97901>
 
-On Thu, Oct 9, 2008 at 10:41 PM, Samuel Tardieu <sam@rfc1149.net> wrote:
->>>>>> "Ed" == Ed Schofield <edschofield@gmail.com> writes:
->
-> Ed> I have now run "git --bare init --shared=group" to reinitialize
-> Ed> the repository. This seems to have changed the directories to be
-> Ed> g+sx. (Is this all it did?). There are still some objects
-> Ed> directories with 755 permissions rather than 770, which I presume
-> Ed> I want, and the group ownership of these is wrong. Shall I change
-> Ed> these by hand? The sha1 files all have 444 permissions; is this
-> Ed> right?
->
-> Ed> The last question I have is how to ensure that git creates object
-> Ed> files etc. with the right permissions when users push in future.
->
-> As Marc said, you should first make sure that "config" contains
-> "sharedrepository = 1" in the "[core]" section.
->
-> Then you can do the following:
->
->  - remove all permissions for "others":  chmod -R o-rwx .
->  - mirror "user" permissions to "group": chmod -R g=u .
->  - add +s flag to directories:           find . -type d | xargs chmod g+s
->
-> This should fix your current situation. The "sharedrepository = 1"
-> will tell git to maintain a proper shared state in the future
-> on objects it creates (i.e. mirror "user" permission to "group" ones).
+From: Johannes Sixt <johannes.sixt@telecom.at>
 
-This worked beautifully. Thanks Sam, thanks Marc!
+Signed-off-by: Johannes Sixt <johannes.sixt@telecom.at>
+---
+ lib/diff.tcl |   22 +++++++++++-----------
+ 1 files changed, 11 insertions(+), 11 deletions(-)
 
--- Ed
+diff --git a/lib/diff.tcl b/lib/diff.tcl
+index abe502d..484ebb4 100644
+--- a/lib/diff.tcl
++++ b/lib/diff.tcl
+@@ -117,22 +117,22 @@ proc show_unmerged_diff {cont_info} {
+ 	if {$merge_stages(2) eq {}} {
+ 		set is_conflict_diff 1
+ 		lappend current_diff_queue \
+-			[list "LOCAL: deleted\nREMOTE:\n" d======= \
++			[list [mc "LOCAL: deleted\nREMOTE:\n"] d======= \
+ 			    [list ":1:$current_diff_path" ":3:$current_diff_path"]]
+ 	} elseif {$merge_stages(3) eq {}} {
+ 		set is_conflict_diff 1
+ 		lappend current_diff_queue \
+-			[list "REMOTE: deleted\nLOCAL:\n" d======= \
++			[list [mc "REMOTE: deleted\nLOCAL:\n"] d======= \
+ 			    [list ":1:$current_diff_path" ":2:$current_diff_path"]]
+ 	} elseif {[lindex $merge_stages(1) 0] eq {120000}
+ 		|| [lindex $merge_stages(2) 0] eq {120000}
+ 		|| [lindex $merge_stages(3) 0] eq {120000}} {
+ 		set is_conflict_diff 1
+ 		lappend current_diff_queue \
+-			[list "LOCAL:\n" d======= \
++			[list [mc "LOCAL:\n"] d======= \
+ 			    [list ":1:$current_diff_path" ":2:$current_diff_path"]]
+ 		lappend current_diff_queue \
+-			[list "REMOTE:\n" d======= \
++			[list [mc "REMOTE:\n"] d======= \
+ 			    [list ":1:$current_diff_path" ":3:$current_diff_path"]]
+ 	} else {
+ 		start_show_diff $cont_info
+@@ -218,17 +218,17 @@ proc show_other_diff {path w m cont_info} {
+ 				d_@
+ 		} else {
+ 			if {$sz > $max_sz} {
+-				$ui_diff insert end \
+-"* Untracked file is $sz bytes.
+-* Showing only first $max_sz bytes.
+-" d_@
++				$ui_diff insert end [mc \
++"* Untracked file is %d bytes.
++* Showing only first %d bytes.
++" $sz $max_sz] d_@
+ 			}
+ 			$ui_diff insert end $content
+ 			if {$sz > $max_sz} {
+-				$ui_diff insert end "
+-* Untracked file clipped here by [appname].
++				$ui_diff insert end [mc "
++* Untracked file clipped here by %s.
+ * To see the entire file, use an external editor.
+-" d_@
++" [appname]] d_@
+ 			}
+ 		}
+ 		$ui_diff conf -state disabled
+-- 
+1.6.0.2.319.gffa7c
