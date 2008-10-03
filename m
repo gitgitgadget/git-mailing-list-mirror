@@ -1,81 +1,79 @@
-From: Johannes Sixt <j.sixt@viscovery.net>
-Subject: [PATCH] git-gui: Show a round number of bytes of large untracked
- text files
-Date: Fri, 03 Oct 2008 10:28:49 +0200
-Message-ID: <48E5D7C1.7050404@viscovery.net>
+From: Andreas Ericsson <ae@op5.se>
+Subject: Re: [PATCH] git-gui: Add a search command to the blame viewer.
+Date: Fri, 03 Oct 2008 10:29:29 +0200
+Message-ID: <48E5D7E9.6060302@op5.se>
+References: <1223019414-24643-1-git-send-email-angavrilov@gmail.com> <1223019414-24643-2-git-send-email-angavrilov@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15
+Content-Type: text/plain; charset=ISO-8859-15; format=flowed
 Content-Transfer-Encoding: 7bit
-Cc: Git Mailing List <git@vger.kernel.org>
-To: "Shawn O. Pearce" <spearce@spearce.org>
-X-From: git-owner@vger.kernel.org Fri Oct 03 10:30:08 2008
+Cc: git@vger.kernel.org, "Shawn O. Pearce" <spearce@spearce.org>
+To: Alexander Gavrilov <angavrilov@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Oct 03 10:30:49 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Klg33-00078X-3o
-	for gcvg-git-2@gmane.org; Fri, 03 Oct 2008 10:30:05 +0200
+	id 1Klg3i-0007Lr-Fq
+	for gcvg-git-2@gmane.org; Fri, 03 Oct 2008 10:30:47 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751793AbYJCI2x (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 3 Oct 2008 04:28:53 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751978AbYJCI2x
-	(ORCPT <rfc822;git-outgoing>); Fri, 3 Oct 2008 04:28:53 -0400
-Received: from lilzmailso01.liwest.at ([212.33.55.23]:24861 "EHLO
-	lilzmailso01.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751682AbYJCI2w (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 3 Oct 2008 04:28:52 -0400
-Received: from cm56-163-160.liwest.at ([86.56.163.160] helo=linz.eudaptics.com)
-	by lilzmailso01.liwest.at with esmtpa (Exim 4.66)
-	(envelope-from <j.sixt@viscovery.net>)
-	id 1Klg1q-00050M-1j; Fri, 03 Oct 2008 10:28:50 +0200
-Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.42])
-	by linz.eudaptics.com (Postfix) with ESMTP
-	id AF54A69F; Fri,  3 Oct 2008 10:28:49 +0200 (CEST)
-User-Agent: Thunderbird 2.0.0.6 (Windows/20070728)
-X-Enigmail-Version: 0.95.5
-X-Spam-Score: 1.7 (+)
-X-Spam-Report: ALL_TRUSTED=-1.8, BAYES_99=3.5
+	id S1752574AbYJCI3e (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 3 Oct 2008 04:29:34 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752539AbYJCI3e
+	(ORCPT <rfc822;git-outgoing>); Fri, 3 Oct 2008 04:29:34 -0400
+Received: from mail.op5.se ([193.201.96.20]:59813 "EHLO mail.op5.se"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752223AbYJCI3d (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 3 Oct 2008 04:29:33 -0400
+Received: from localhost (localhost.localdomain [127.0.0.1])
+	by mail.op5.se (Postfix) with ESMTP id A1AEB1B8005E;
+	Fri,  3 Oct 2008 10:21:08 +0200 (CEST)
+X-Virus-Scanned: amavisd-new at 
+X-Spam-Flag: NO
+X-Spam-Score: -2.499
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.499 tagged_above=-10 required=6.6
+	tests=[AWL=0.000, BAYES_00=-2.599, RDNS_NONE=0.1]
+Received: from mail.op5.se ([127.0.0.1])
+	by localhost (mail.op5.se [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id ogudSCLnM5gV; Fri,  3 Oct 2008 10:21:07 +0200 (CEST)
+Received: from clix.int.op5.se (unknown [172.27.78.14])
+	by mail.op5.se (Postfix) with ESMTP id 006F21B80048;
+	Fri,  3 Oct 2008 10:21:06 +0200 (CEST)
+User-Agent: Thunderbird 2.0.0.16 (X11/20080723)
+In-Reply-To: <1223019414-24643-2-git-send-email-angavrilov@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/97404>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/97405>
 
-From: Johannes Sixt <johannes.sixt@telecom.at>
+Alexander Gavrilov wrote:
+> One of the largest deficiencies in the blame viewer at
+> the moment is the impossibility to search for a text
+> string. This commit fixes it by adding a Firefox-like
+> search panel to the viewer.
+> 
+> The panel can be shown by pressing F7 or clicking a
+> menu entry, and is hidden by pressing Esc. Find Next
+> is available through the F3 key.
+> 
+> Implementation is based on the gitk code, but heavily
+> refactored. It now also supports case-insensitive
+> searches, and uses the text box background color to
+> signal success or failure of the search.
+> 
+> Signed-off-by: Alexander Gavrilov <angavrilov@gmail.com>
+> ---
+> 
 
-If an untracked text file is selected, then its contents are displayed
-instead of a diff. If the file is large, then the following hint is
-inserted at the top:
+What with me being a total tcl nubling, I can't comment on the
+patch, but the intentions are clearly full of win and awesome.
+I was utterly surprised to notice this functionality wasn't in
+there the first time I needed it.
 
-  * Untracked file is 14774881 bytes.
-  * Showing only first 131072 bytes.
+Thanks.
 
-Why exactly 131072 bytes? With this patch it is 100000 bytes.
-
-Signed-off-by: Johannes Sixt <johannes.sixt@telecom.at>
----
- Another bikeshed to paint. ;)
-
- Every now and then I stumble over this number, and I ask myself,
- why are those h4x3rs so binary?
-
- -- Hannes
-
- lib/diff.tcl |    2 +-
- 1 files changed, 1 insertions(+), 1 deletions(-)
-
-diff --git a/lib/diff.tcl b/lib/diff.tcl
-index abe502d..6e08704 100644
---- a/lib/diff.tcl
-+++ b/lib/diff.tcl
-@@ -164,7 +164,7 @@ proc show_other_diff {path w m cont_info} {
- 	# - Git won't give us the diff, there's nothing to compare to!
- 	#
- 	if {$m eq {_O}} {
--		set max_sz [expr {128 * 1024}]
-+		set max_sz 100000
- 		set type unknown
- 		if {[catch {
- 				set type [file type $path]
 -- 
-1.6.0.2.319.gffa7c
+Andreas Ericsson                   andreas.ericsson@op5.se
+OP5 AB                             www.op5.se
+Tel: +46 8-230225                  Fax: +46 8-230231
