@@ -1,107 +1,69 @@
-From: Johannes Sixt <j.sixt@viscovery.net>
-Subject: [PATCH] git-gui: Mark-up strings in show_{other,unmerged}_diff()
- for localization
-Date: Fri, 03 Oct 2008 13:13:42 +0200
-Message-ID: <48E5FE66.4020704@viscovery.net>
+From: Jeff King <peff@peff.net>
+Subject: Re: Numeric Revision Names?
+Date: Fri, 3 Oct 2008 13:14:34 -0400
+Message-ID: <20081003171434.GC30592@coredump.intra.peff.net>
+References: <19796862.post@talk.nabble.com> <m3d4ihr7as.fsf@localhost.localdomain> <20081003115557.08d80c2f.stephen@exigencecorp.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15
-Content-Transfer-Encoding: 7bit
-Cc: Git Mailing List <git@vger.kernel.org>
-To: "Shawn O. Pearce" <spearce@spearce.org>
-X-From: git-owner@vger.kernel.org Fri Oct 03 13:15:08 2008
+Content-Type: text/plain; charset=utf-8
+Cc: Jakub Narebski <jnareb@gmail.com>,
+	marceloribeiro <marcelo@sonnay.com>, git@vger.kernel.org
+To: Stephen Haberman <stephen@exigencecorp.com>
+X-From: git-owner@vger.kernel.org Fri Oct 03 19:17:31 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Klice-0007vL-7v
-	for gcvg-git-2@gmane.org; Fri, 03 Oct 2008 13:15:00 +0200
+	id 1KloFn-0004La-7M
+	for gcvg-git-2@gmane.org; Fri, 03 Oct 2008 19:15:47 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752467AbYJCLNq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 3 Oct 2008 07:13:46 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752240AbYJCLNq
-	(ORCPT <rfc822;git-outgoing>); Fri, 3 Oct 2008 07:13:46 -0400
-Received: from lilzmailso01.liwest.at ([212.33.55.23]:36931 "EHLO
-	lilzmailso01.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751837AbYJCLNp (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 3 Oct 2008 07:13:45 -0400
-Received: from cm56-163-160.liwest.at ([86.56.163.160] helo=linz.eudaptics.com)
-	by lilzmailso01.liwest.at with esmtpa (Exim 4.66)
-	(envelope-from <j.sixt@viscovery.net>)
-	id 1KlibO-0003EA-K2; Fri, 03 Oct 2008 13:13:42 +0200
-Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.42])
-	by linz.eudaptics.com (Postfix) with ESMTP
-	id 5DAFC69F; Fri,  3 Oct 2008 13:13:42 +0200 (CEST)
-User-Agent: Thunderbird 2.0.0.6 (Windows/20070728)
-X-Enigmail-Version: 0.95.5
-X-Spam-Score: 1.7 (+)
-X-Spam-Report: ALL_TRUSTED=-1.8, BAYES_99=3.5
+	id S1753204AbYJCROh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 3 Oct 2008 13:14:37 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753199AbYJCROh
+	(ORCPT <rfc822;git-outgoing>); Fri, 3 Oct 2008 13:14:37 -0400
+Received: from peff.net ([208.65.91.99]:2543 "EHLO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753115AbYJCROh (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 3 Oct 2008 13:14:37 -0400
+Received: (qmail 7881 invoked by uid 111); 3 Oct 2008 17:14:36 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+    by peff.net (qpsmtpd/0.32) with SMTP; Fri, 03 Oct 2008 13:14:36 -0400
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Fri, 03 Oct 2008 13:14:34 -0400
+Content-Disposition: inline
+In-Reply-To: <20081003115557.08d80c2f.stephen@exigencecorp.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Johannes Sixt <johannes.sixt@telecom.at>
+On Fri, Oct 03, 2008 at 11:55:57AM -0500, Stephen Haberman wrote:
 
-Signed-off-by: Johannes Sixt <johannes.sixt@telecom.at>
----
- lib/diff.tcl |   22 +++++++++++-----------
- 1 files changed, 11 insertions(+), 11 deletions(-)
+> For projects that do have a central authority (e.g. internal corporate
+> projects), revision numbers make more sense.
+> 
+> Granted, they are on separate branches (like svn), but the nice thing
+> about them is that they are monotonically increasing. E.g. our qa
+> people love numbers--the bug fix ticket says dev just put in
+> r100...qa/production box says it is on r95. Doesn't matter the
+> branch/whatever, they know the box doesn't have r100. Now, right, if
+> its r105, it is trickier, although we also throw in branch name (e.g.
+> topica-r100) which means no false positives but can lead to false
+> negatives.
 
-diff --git a/lib/diff.tcl b/lib/diff.tcl
-index abe502d..484ebb4 100644
---- a/lib/diff.tcl
-+++ b/lib/diff.tcl
-@@ -117,22 +117,22 @@ proc show_unmerged_diff {cont_info} {
- 	if {$merge_stages(2) eq {}} {
- 		set is_conflict_diff 1
- 		lappend current_diff_queue \
--			[list "LOCAL: deleted\nREMOTE:\n" d======= \
-+			[list [mc "LOCAL: deleted\nREMOTE:\n"] d======= \
- 			    [list ":1:$current_diff_path" ":3:$current_diff_path"]]
- 	} elseif {$merge_stages(3) eq {}} {
- 		set is_conflict_diff 1
- 		lappend current_diff_queue \
--			[list "REMOTE: deleted\nLOCAL:\n" d======= \
-+			[list [mc "REMOTE: deleted\nLOCAL:\n"] d======= \
- 			    [list ":1:$current_diff_path" ":2:$current_diff_path"]]
- 	} elseif {[lindex $merge_stages(1) 0] eq {120000}
- 		|| [lindex $merge_stages(2) 0] eq {120000}
- 		|| [lindex $merge_stages(3) 0] eq {120000}} {
- 		set is_conflict_diff 1
- 		lappend current_diff_queue \
--			[list "LOCAL:\n" d======= \
-+			[list [mc "LOCAL:\n"] d======= \
- 			    [list ":1:$current_diff_path" ":2:$current_diff_path"]]
- 		lappend current_diff_queue \
--			[list "REMOTE:\n" d======= \
-+			[list [mc "REMOTE:\n"] d======= \
- 			    [list ":1:$current_diff_path" ":3:$current_diff_path"]]
- 	} else {
- 		start_show_diff $cont_info
-@@ -218,17 +218,17 @@ proc show_other_diff {path w m cont_info} {
- 				d_@
- 		} else {
- 			if {$sz > $max_sz} {
--				$ui_diff insert end \
--"* Untracked file is $sz bytes.
--* Showing only first $max_sz bytes.
--" d_@
-+				$ui_diff insert end [mc \
-+"* Untracked file is %d bytes.
-+* Showing only first %d bytes.
-+" $sz $max_sz] d_@
- 			}
- 			$ui_diff insert end $content
- 			if {$sz > $max_sz} {
--				$ui_diff insert end "
--* Untracked file clipped here by [appname].
-+				$ui_diff insert end [mc "
-+* Untracked file clipped here by %s.
- * To see the entire file, use an external editor.
--" d_@
-+" [appname]] d_@
- 			}
- 		}
- 		$ui_diff conf -state disabled
--- 
-1.6.0.2.319.gffa7c
+If you are constraining yourself to a central repo, then you could just
+add a receive hook that tags each new commit with a monotonically
+increasing revision number. Clients would get the tags upon fetch.
+
+Something like the following (totally untested, and probably needs to
+handle locking and errors more sanely) in the post-receive hook:
+
+  n=`cat revnumber 2>/dev/null || echo 0`
+  while read old new branch; do
+    git rev-list $old..$new |
+      while read rev; do
+        n=$(($n+1))
+        git tag r$n $rev
+      done
+  done
+  echo $n >revnumber
+
+-Peff
