@@ -1,104 +1,102 @@
-From: Alexander Gavrilov <angavrilov@gmail.com>
-Subject: [RFC PATCH (BUG)] builtin-blame: Fix blame -C -C with submodules.
-Date: Fri, 3 Oct 2008 20:23:50 +0400
-Organization: HOME
-Message-ID: <200810032023.50559.angavrilov@gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="us-ascii"
-Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>,
+From: Thomas Rast <trast@student.ethz.ch>
+Subject: [FYI PATCH] bash completion: alias 'g' to 'git' with completion
+Date: Fri,  3 Oct 2008 18:35:05 +0200
+Message-ID: <1223051705-30347-1-git-send-email-trast@student.ethz.ch>
+References: <fc113d400810030825l75f9451dwc4cbf68807be0b5b@mail.gmail.com>
+Cc: Rob Sanheim <rsanheim@gmail.com>,
 	"Shawn O. Pearce" <spearce@spearce.org>
-To: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Fri Oct 03 18:26:43 2008
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Oct 03 18:36:22 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KlnUE-0000T8-D6
-	for gcvg-git-2@gmane.org; Fri, 03 Oct 2008 18:26:38 +0200
+	id 1Klndd-0004GZ-1A
+	for gcvg-git-2@gmane.org; Fri, 03 Oct 2008 18:36:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752623AbYJCQZ1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 3 Oct 2008 12:25:27 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752645AbYJCQZ1
-	(ORCPT <rfc822;git-outgoing>); Fri, 3 Oct 2008 12:25:27 -0400
-Received: from fg-out-1718.google.com ([72.14.220.157]:10963 "EHLO
-	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752623AbYJCQZ0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 3 Oct 2008 12:25:26 -0400
-Received: by fg-out-1718.google.com with SMTP id 19so1135354fgg.17
-        for <git@vger.kernel.org>; Fri, 03 Oct 2008 09:25:24 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:organization:to:subject
-         :date:user-agent:cc:mime-version:content-type
-         :content-transfer-encoding:content-disposition:message-id;
-        bh=OeJVbIQpgRuSAaadxYWLsIEq3kTazcX4pTO7X9JhbJw=;
-        b=EqjyODljC0O0ulTvR7i+obKn/rlIImqIGg1Z1eTyue/75TrZzSSqCDRYJbacjq0NbH
-         GTW3JVqbI5+hwwqlCxICK+68WdL8J9Xd0IZBR07aqlkRZFBmz1138PBgWYU+ecmUTGew
-         mu/EE00pBW7arUJjltCpmkioiFXiIN7v6oAGQ=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=from:organization:to:subject:date:user-agent:cc:mime-version
-         :content-type:content-transfer-encoding:content-disposition
-         :message-id;
-        b=QwPY4CACDUWU523yIJZl1Q7HYA/gf+EWcjdC5pTFW4zzaFT8zM/3Uy/aCU5TKwYWkK
-         /eb+ZT9xRA+HH/cSXV1e3ZPk09JINzy8Kfg00NY2YAJ+NE2zs+bf2LovhtJZVqvf0moq
-         NhAaLNUmTXEWKghLwazys6VDuIrNokWLr6r9M=
-Received: by 10.180.230.6 with SMTP id c6mr918259bkh.27.1223051124101;
-        Fri, 03 Oct 2008 09:25:24 -0700 (PDT)
-Received: from keydesk.localnet ([92.255.85.78])
-        by mx.google.com with ESMTPS id 13sm5146957fks.6.2008.10.03.09.25.22
-        (version=SSLv3 cipher=RC4-MD5);
-        Fri, 03 Oct 2008 09:25:23 -0700 (PDT)
-User-Agent: KMail/1.10.1 (Linux/2.6.26.3-29.fc9.i686; KDE/4.1.1; i686; ; )
-Content-Disposition: inline
+	id S1752818AbYJCQfL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 3 Oct 2008 12:35:11 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752774AbYJCQfK
+	(ORCPT <rfc822;git-outgoing>); Fri, 3 Oct 2008 12:35:10 -0400
+Received: from xsmtp1.ethz.ch ([82.130.70.13]:39600 "EHLO xsmtp1.ethz.ch"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752533AbYJCQfJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 3 Oct 2008 12:35:09 -0400
+Received: from xfe1.d.ethz.ch ([82.130.124.41]) by xsmtp1.ethz.ch with Microsoft SMTPSVC(6.0.3790.3959);
+	 Fri, 3 Oct 2008 18:35:05 +0200
+Received: from localhost.localdomain ([84.75.157.245]) by xfe1.d.ethz.ch over TLS secured channel with Microsoft SMTPSVC(6.0.3790.3959);
+	 Fri, 3 Oct 2008 18:35:05 +0200
+X-Mailer: git-send-email 1.6.0.2.771.g3967
+In-Reply-To: <fc113d400810030825l75f9451dwc4cbf68807be0b5b@mail.gmail.com>
+X-OriginalArrivalTime: 03 Oct 2008 16:35:05.0068 (UTC) FILETIME=[FD7822C0:01C92575]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/97435>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/97436>
 
-When performing copy detection, git-blame tries to
-read gitlinks as blobs, which causes it to die.
-
-This patch adds a check to skip them.
-
-Signed-off-by: Alexander Gavrilov <angavrilov@gmail.com>
 ---
 
-	I don't know if this is enough for all cases, but it fixes mine.
+Rob Sanheim wrote:
+> On Thu, Oct 2, 2008 at 11:10 PM, Shawn O. Pearce <spearce@spearce.org> wrote:
+> > No, you'll need to alias 'g' to git in bash, and then if you still
+> > want completion you'll need to also register the compgen to call
+> > _git completion routine.  Its two lines:
+> >
+> >        alias g=git
+> >        complete -o default -o nospace -F _git g
+>
+> Thanks, that did it.
 
-	-- Alexander
+Actually it's not enough, you need to teach fetch, pull and push to
+recognise the new alias too, as in this patch.  I do wonder if there's
+a better approach to those functions however, so that the "obvious"
+fix suggested by Shawn would work.
+
+- Thomas
 
 
-	$ git blame --incremental -C -C ImpactMessages.cpp
-	767f36d1ce2f361e9148bb23155e6aafad034f4b 6 6 10                      
-	...
-	767f36d1ce2f361e9148bb23155e6aafad034f4b 49 49 7                     
-	filename BackEnd/Impact/ImpactMessages.cpp                           
-	767f36d1ce2f361e9148bb23155e6aafad034f4b 57 57 1                     
-	filename BackEnd/Impact/ImpactMessages.cpp                           
-	767f36d1ce2f361e9148bb23155e6aafad034f4b 59 59 14                    
-	filename BackEnd/Impact/ImpactMessages.cpp                           
-	fatal: Cannot read blob 27152bb4f8b10d4ce5f9fa584c14511dceba3c06 for path BackEnd/Boost
+ contrib/completion/git-completion.bash |    7 ++++---
+ 1 files changed, 4 insertions(+), 3 deletions(-)
 
-
- builtin-blame.c |    2 ++
- 1 files changed, 2 insertions(+), 0 deletions(-)
-
-diff --git a/builtin-blame.c b/builtin-blame.c
-index 9bc901c..101c416 100644
---- a/builtin-blame.c
-+++ b/builtin-blame.c
-@@ -1136,6 +1136,8 @@ static int find_copy_in_parent(struct scoreboard *sb,
+diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
+index 7284c3b..547e735 100755
+--- a/contrib/completion/git-completion.bash
++++ b/contrib/completion/git-completion.bash
+@@ -789,7 +789,7 @@ _git_fetch ()
+ 	git-fetch*,1)
+ 		__gitcomp "$(__git_remotes)"
+ 		;;
+-	git,2)
++	git,2|g,2)
+ 		__gitcomp "$(__git_remotes)"
+ 		;;
+ 	*)
+@@ -1053,7 +1053,7 @@ _git_pull ()
+ 	git-pull*,1)
+ 		__gitcomp "$(__git_remotes)"
+ 		;;
+-	git,2)
++	git,2|g,2)
+ 		__gitcomp "$(__git_remotes)"
+ 		;;
+ 	*)
+@@ -1075,7 +1075,7 @@ _git_push ()
+ 	git-push*,1)
+ 		__gitcomp "$(__git_remotes)"
+ 		;;
+-	git,2)
++	git,2|g,2)
+ 		__gitcomp "$(__git_remotes)"
+ 		;;
+ 	*)
+@@ -1717,6 +1717,7 @@ _gitk ()
+ }
  
- 			if (!DIFF_FILE_VALID(p->one))
- 				continue; /* does not exist in parent */
-+			if (S_ISGITLINK(p->one->mode))
-+				continue; /* ignore git links */
- 			if (porigin && !strcmp(p->one->path, porigin->path))
- 				/* find_move already dealt with this path */
- 				continue;
+ complete -o default -o nospace -F _git git
++complete -o default -o nospace -F _git g
+ complete -o default -o nospace -F _gitk gitk
+ 
+ # The following are necessary only for Cygwin, and only are needed
 -- 
-1.6.0.20.g6148bc
+1.6.0.2.771.g3967
