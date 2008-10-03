@@ -1,97 +1,55 @@
-From: "Giuseppe Bilotta" <giuseppe.bilotta@gmail.com>
-Subject: Re: [PATCHv4] gitweb: parse project/action/hash_base:filename PATH_INFO
-Date: Fri, 3 Oct 2008 07:54:58 +0200
-Message-ID: <cb7bb73a0810022254v7dd3af5cwc315a2b4a67f10ba@mail.gmail.com>
-References: <1222906234-8182-1-git-send-email-giuseppe.bilotta@gmail.com>
-	 <cb7bb73a0810021405j68b0a164i9469e64afc543ebf@mail.gmail.com>
-	 <20081002220439.GX10360@machine.or.cz>
-	 <200810030041.54563.jnareb@gmail.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH] rebase -i: proper prepare-commit-msg hook argument
+	when squashing
+Date: Fri, 3 Oct 2008 02:01:10 -0400
+Message-ID: <20081003060110.GA4473@coredump.intra.peff.net>
+References: <1222992501-943-1-git-send-email-szeder@ira.uka.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: "Petr Baudis" <pasky@suse.cz>, git@vger.kernel.org,
-	"Junio C Hamano" <gitster@pobox.com>,
-	"Shawn O. Pearce" <spearce@spearce.org>
-To: "Jakub Narebski" <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Oct 03 07:56:16 2008
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: "Shawn O. Pearce" <spearce@spearce.org>, git@vger.kernel.org
+To: SZEDER =?utf-8?B?R8OhYm9y?= <szeder@ira.uka.de>
+X-From: git-owner@vger.kernel.org Fri Oct 03 08:02:30 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KldeA-0004ij-Un
-	for gcvg-git-2@gmane.org; Fri, 03 Oct 2008 07:56:15 +0200
+	id 1Kldk7-0006b3-3X
+	for gcvg-git-2@gmane.org; Fri, 03 Oct 2008 08:02:23 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752020AbYJCFzA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 3 Oct 2008 01:55:00 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751555AbYJCFzA
-	(ORCPT <rfc822;git-outgoing>); Fri, 3 Oct 2008 01:55:00 -0400
-Received: from yx-out-2324.google.com ([74.125.44.29]:47439 "EHLO
-	yx-out-2324.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751315AbYJCFy7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 3 Oct 2008 01:54:59 -0400
-Received: by yx-out-2324.google.com with SMTP id 8so237397yxm.1
-        for <git@vger.kernel.org>; Thu, 02 Oct 2008 22:54:58 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to
-         :subject:cc:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:references;
-        bh=JLMw0i9H2FMzshtvvvuu5z2HZA/JtnyBPTeXmEEZkEw=;
-        b=ZMMbaRSI1vmgYNx66raypnpwn1jmqbpQ4Ss5raf4QOrXZt0WwOKlj8Ahda3KwxuUR3
-         m8EJbkCn3NGGGYUbD6CV3iDitZGc5OfqvF5v+jic/9PELjn3YFvGYFaUdozgsw4C6WDi
-         8iAtXdLSYIaxThfB8LUkB4Appd/R+T9ujj49k=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
-         :content-type:content-transfer-encoding:content-disposition
-         :references;
-        b=BE4yg0X8+1J1hXg/GrzXTxwxq9yfetSm0XWCjC1m1eVztSlmsirnNaq6+LaR8XmuWO
-         eVa+ZjKNsicKTnPhThzfmfC4SGDfEj/rY+Z3xjtE5btgQvuyle7u53f68gheUVdSuMCc
-         xN2d7I2t1fzpUds6saoj0UUds15DB16VFkpEU=
-Received: by 10.150.57.5 with SMTP id f5mr1206379yba.152.1223013298352;
-        Thu, 02 Oct 2008 22:54:58 -0700 (PDT)
-Received: by 10.150.155.12 with HTTP; Thu, 2 Oct 2008 22:54:58 -0700 (PDT)
-In-Reply-To: <200810030041.54563.jnareb@gmail.com>
+	id S1752703AbYJCGBN convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 3 Oct 2008 02:01:13 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752398AbYJCGBN
+	(ORCPT <rfc822;git-outgoing>); Fri, 3 Oct 2008 02:01:13 -0400
+Received: from peff.net ([208.65.91.99]:3340 "EHLO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751315AbYJCGBM (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 3 Oct 2008 02:01:12 -0400
+Received: (qmail 4165 invoked by uid 111); 3 Oct 2008 06:01:11 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+    by peff.net (qpsmtpd/0.32) with SMTP; Fri, 03 Oct 2008 02:01:11 -0400
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Fri, 03 Oct 2008 02:01:10 -0400
 Content-Disposition: inline
+In-Reply-To: <1222992501-943-1-git-send-email-szeder@ira.uka.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/97396>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/97397>
 
-On Fri, Oct 3, 2008 at 12:41 AM, Jakub Narebski <jnareb@gmail.com> wrote:
-> Petr Baudis wrote:
->> On Thu, Oct 02, 2008 at 11:05:18PM +0200, Giuseppe Bilotta wrote:
->> >
->> > In preparing the new patchset, I've put a big comment block explaining
->> > why we need to set both $hash and $hash_base in this code-path:
->> >
->> > # we got "project.git/[action/]branch". in this case
->> > # we set both $hash and $hash_base because different actions
->> > # need one or the other to be set to behave correctly.
->> > #
->> > # For example, if $hash_base is not set then the blob and
->
-> 'blob' without $file_name doesn't have sense, but 'tree' does.
-> Probably should be s/blob/tree/ above.
->
->> > # history links on the page project.git/tree/somebranch will
->> > # assume a $hash_base of HEAD instead of the correct
->> > # somebranch.
+On Fri, Oct 03, 2008 at 02:08:21AM +0200, SZEDER G=C3=A1bor wrote:
 
-Note: the blob and history links _in a tree page_ are wrong. The page
-itself is correct.
-What this means is that if you go to project.git/tree/somebranch you
-get the correct list of files and directories for the project at
-somebranch's HEAD, but all the links IN that page will point to the
-wrong version, because they will have no $hash_base set and will thus
-default to HEAD.
+> +			cp -v "$MSG" "$GIT_DIR"/SQUASH_MSG
 
-You can see this effect for example by going to
-http://repo.or.cz/w/git.git/v1.4.0?a=tree <- this hand-crafted path
-would never be generated by the old pathinfo code, but it show exactly
-what would happen with my pahtinfo code on
-http://repo.or.cz/w/git.git/tree/v1.4.0 if $hash_base wasn't set.
+Sorry, but "cp -v" is not portable. It's not in POSIX, and this breaks
+the script for (at least) Solaris.
 
--- 
-Giuseppe "Oblomov" Bilotta
+However, it's not even clear to me why "-v" is used at all, considering
+that the "squash" case above does not use it. Is it a debugging
+leftover? Am I missing something?
+
+[Aside: My Solaris 8 autobuilder is now running, which was a huge pain.
+However, it is very satisfying to catch things like this in "next"
+before they hit a wider audience.]
+
+-Peff
