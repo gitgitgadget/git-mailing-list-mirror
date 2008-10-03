@@ -1,81 +1,68 @@
-From: Daniel Barkalow <barkalow@iabervon.org>
-Subject: Re: [PATCH] Fix argument handling for fetch-pack call when stdout
- is connected and -q/--quiet is supplied.
-Date: Fri, 3 Oct 2008 15:50:34 -0400 (EDT)
-Message-ID: <alpine.LNX.1.00.0810031548260.19665@iabervon.org>
-References: <4ac8254d0810031234x26ebc96cy7cf5dcae2ef516e0@mail.gmail.com>
+From: "Constantine Plotnikov" <constantine.plotnikov@gmail.com>
+Subject: Forcing progerss output for clone
+Date: Sat, 4 Oct 2008 00:01:14 +0400
+Message-ID: <85647ef50810031301k641c5f24n65fb213c2b481e7@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org, davej@codemonkey.org.uk
-To: Tuncer Ayaz <tuncer.ayaz@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Oct 03 21:52:11 2008
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Oct 03 22:02:30 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Klqh8-0007CD-C8
-	for gcvg-git-2@gmane.org; Fri, 03 Oct 2008 21:52:10 +0200
+	id 1Klqr6-0002OJ-UA
+	for gcvg-git-2@gmane.org; Fri, 03 Oct 2008 22:02:29 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753476AbYJCTug (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 3 Oct 2008 15:50:36 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751754AbYJCTug
-	(ORCPT <rfc822;git-outgoing>); Fri, 3 Oct 2008 15:50:36 -0400
-Received: from iabervon.org ([66.92.72.58]:51971 "EHLO iabervon.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750951AbYJCTuf (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 3 Oct 2008 15:50:35 -0400
-Received: (qmail 8324 invoked by uid 1000); 3 Oct 2008 19:50:34 -0000
-Received: from localhost (sendmail-bs@127.0.0.1)
-  by localhost with SMTP; 3 Oct 2008 19:50:34 -0000
-In-Reply-To: <4ac8254d0810031234x26ebc96cy7cf5dcae2ef516e0@mail.gmail.com>
-User-Agent: Alpine 1.00 (LNX 882 2007-12-20)
+	id S1752880AbYJCUBR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 3 Oct 2008 16:01:17 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752722AbYJCUBR
+	(ORCPT <rfc822;git-outgoing>); Fri, 3 Oct 2008 16:01:17 -0400
+Received: from fk-out-0910.google.com ([209.85.128.191]:7277 "EHLO
+	fk-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751952AbYJCUBQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 3 Oct 2008 16:01:16 -0400
+Received: by fk-out-0910.google.com with SMTP id 18so1199665fkq.5
+        for <git@vger.kernel.org>; Fri, 03 Oct 2008 13:01:14 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to
+         :subject:mime-version:content-type:content-transfer-encoding
+         :content-disposition;
+        bh=M70s/KgxmLOfJO8YKLC05QCgee69Tm49vNA4XoBEDU4=;
+        b=K7N/u5d0akO3EQ95m5a81soTcABN+4QOaPSZyTqtDMPI0q/Z/lxgkHDHuY8cyqpL0s
+         C4ZoS9nP+XtmmDjcsGfK9eGC0gtiDrSxnbDSglJWGkXCfhW4fp7jZQ/PV0PYX0uvTAVk
+         /OGABhY/YZLUetLmdWLjq/F4cq4Yx35r4FugU=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:to:subject:mime-version:content-type
+         :content-transfer-encoding:content-disposition;
+        b=mqCQh7i+oP5fB6a8VMvjVsTYmh3ws+xx7lDQ0GsXCwZ41OxMx66IHKH/Yf4fvkiY6w
+         BRuQhfLVIDFdHu5anlIsifXgI3RNQMZzFyDqNdInsLrF4tnVcL6E3yCMvYU7eyIO5b+r
+         8L8s0nRpCYUyX1vhSUuzI88v8dz3sQADmiY6c=
+Received: by 10.181.34.1 with SMTP id m1mr1234710bkj.85.1223064074620;
+        Fri, 03 Oct 2008 13:01:14 -0700 (PDT)
+Received: by 10.180.230.10 with HTTP; Fri, 3 Oct 2008 13:01:14 -0700 (PDT)
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/97447>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/97448>
 
-On Fri, 3 Oct 2008, Tuncer Ayaz wrote:
+Hello!
 
-> Following is a patch to complete the changes discussed
-> here http://marc.info/?l=git&m=121529226023180&w=2.
-> 
-> I hope it makes sense and doesn't break something else.
-> 
-> With this simple one-liner patch applied I no longer see
-> the following remote messages as no-progress is correctly
-> sent to the remote site:
-> remote: Counting objects: 84102, done.
-> remote: Compressing objects: 100% (24720/24720), done.
-> remote: Total 84102 (delta 60949), reused 80810 (delta 57900)
-> 
-> Regards,
-> 
->         Tuncer Ayaz
-> 
-> Signed-off-by: Tuncer Ayaz <tuncer.ayaz@gmail.com>
-> ---
->  transport.c |    2 +-
->  1 files changed, 1 insertions(+), 1 deletions(-)
-> 
-> diff --git a/transport.c b/transport.c
-> index 71433d9..1f24011 100644
-> --- a/transport.c
-> +++ b/transport.c
-> @@ -644,7 +644,7 @@ static int fetch_refs_via_pack(struct transport *transport,
->     args.include_tag = data->followtags;
->     args.verbose = (transport->verbose > 0);
->     args.quiet = args.no_progress = (transport->verbose < 0);
-> -   args.no_progress = !isatty(1);
-> +   args.no_progress = args.quiet || !isatty(1);
+Is there a way to force a progress output on stderr for git clone
+preferably using options or environment variables?
 
-If you're doing that, remove the "args.no_progress =" from the previous 
-line, which was there to have that effect (but not so clearly). Aside from 
-that, it looks good to me.
+The clone command in the git 1.6.0.2 does not print a progress
+information to stderr if stdout and stderr are redirected (even if no
+"-q" option is specified).
 
->     args.depth = data->depth;
-> 
->     for (i = 0; i < nr_heads; i++)
-> -- 
-> 1.6.0.2
-> 
+Such information would have been useful for displaying progress
+information when cloning from IDE. IDE run git with streams
+redirected, and this progress information could have been displayed to
+user to indicate current status of operation.
+
+Best Regards,
+Constantine
