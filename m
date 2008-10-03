@@ -1,122 +1,97 @@
-From: Andreas Ericsson <ae@op5.se>
-Subject: Re: [PATCH] Use "git_config_string" to simplify "remote.c" code in
- "handle_config"
-Date: Fri, 03 Oct 2008 07:28:42 +0200
-Message-ID: <48E5AD8A.4070301@op5.se>
-References: <20081003033937.GA11594@eratosthenes.cryptobackpack.org>
+From: "Giuseppe Bilotta" <giuseppe.bilotta@gmail.com>
+Subject: Re: [PATCHv4] gitweb: parse project/action/hash_base:filename PATH_INFO
+Date: Fri, 3 Oct 2008 07:54:58 +0200
+Message-ID: <cb7bb73a0810022254v7dd3af5cwc315a2b4a67f10ba@mail.gmail.com>
+References: <1222906234-8182-1-git-send-email-giuseppe.bilotta@gmail.com>
+	 <cb7bb73a0810021405j68b0a164i9469e64afc543ebf@mail.gmail.com>
+	 <20081002220439.GX10360@machine.or.cz>
+	 <200810030041.54563.jnareb@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15; format=flowed
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: David Bryson <david@statichacks.org>
-X-From: git-owner@vger.kernel.org Fri Oct 03 07:30:00 2008
+Cc: "Petr Baudis" <pasky@suse.cz>, git@vger.kernel.org,
+	"Junio C Hamano" <gitster@pobox.com>,
+	"Shawn O. Pearce" <spearce@spearce.org>
+To: "Jakub Narebski" <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Oct 03 07:56:16 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KldEl-000719-FN
-	for gcvg-git-2@gmane.org; Fri, 03 Oct 2008 07:29:59 +0200
+	id 1KldeA-0004ij-Un
+	for gcvg-git-2@gmane.org; Fri, 03 Oct 2008 07:56:15 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752818AbYJCF2t (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 3 Oct 2008 01:28:49 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752802AbYJCF2t
-	(ORCPT <rfc822;git-outgoing>); Fri, 3 Oct 2008 01:28:49 -0400
-Received: from mail.op5.se ([193.201.96.20]:50748 "EHLO mail.op5.se"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752704AbYJCF2s (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 3 Oct 2008 01:28:48 -0400
-Received: from localhost (localhost.localdomain [127.0.0.1])
-	by mail.op5.se (Postfix) with ESMTP id 7802324B0006;
-	Fri,  3 Oct 2008 07:20:22 +0200 (CEST)
-X-Virus-Scanned: amavisd-new at 
-X-Spam-Flag: NO
-X-Spam-Score: -2.499
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.499 tagged_above=-10 required=6.6
-	tests=[BAYES_00=-2.599, RDNS_NONE=0.1]
-Received: from mail.op5.se ([127.0.0.1])
-	by localhost (mail.op5.se [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id C7kFaNIZUkTV; Fri,  3 Oct 2008 07:20:19 +0200 (CEST)
-Received: from clix.int.op5.se (unknown [172.27.78.14])
-	by mail.op5.se (Postfix) with ESMTP id 1B1D324B004E;
-	Fri,  3 Oct 2008 07:20:18 +0200 (CEST)
-User-Agent: Thunderbird 2.0.0.16 (X11/20080723)
-In-Reply-To: <20081003033937.GA11594@eratosthenes.cryptobackpack.org>
+	id S1752020AbYJCFzA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 3 Oct 2008 01:55:00 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751555AbYJCFzA
+	(ORCPT <rfc822;git-outgoing>); Fri, 3 Oct 2008 01:55:00 -0400
+Received: from yx-out-2324.google.com ([74.125.44.29]:47439 "EHLO
+	yx-out-2324.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751315AbYJCFy7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 3 Oct 2008 01:54:59 -0400
+Received: by yx-out-2324.google.com with SMTP id 8so237397yxm.1
+        for <git@vger.kernel.org>; Thu, 02 Oct 2008 22:54:58 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to
+         :subject:cc:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:references;
+        bh=JLMw0i9H2FMzshtvvvuu5z2HZA/JtnyBPTeXmEEZkEw=;
+        b=ZMMbaRSI1vmgYNx66raypnpwn1jmqbpQ4Ss5raf4QOrXZt0WwOKlj8Ahda3KwxuUR3
+         m8EJbkCn3NGGGYUbD6CV3iDitZGc5OfqvF5v+jic/9PELjn3YFvGYFaUdozgsw4C6WDi
+         8iAtXdLSYIaxThfB8LUkB4Appd/R+T9ujj49k=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
+         :content-type:content-transfer-encoding:content-disposition
+         :references;
+        b=BE4yg0X8+1J1hXg/GrzXTxwxq9yfetSm0XWCjC1m1eVztSlmsirnNaq6+LaR8XmuWO
+         eVa+ZjKNsicKTnPhThzfmfC4SGDfEj/rY+Z3xjtE5btgQvuyle7u53f68gheUVdSuMCc
+         xN2d7I2t1fzpUds6saoj0UUds15DB16VFkpEU=
+Received: by 10.150.57.5 with SMTP id f5mr1206379yba.152.1223013298352;
+        Thu, 02 Oct 2008 22:54:58 -0700 (PDT)
+Received: by 10.150.155.12 with HTTP; Thu, 2 Oct 2008 22:54:58 -0700 (PDT)
+In-Reply-To: <200810030041.54563.jnareb@gmail.com>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/97395>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/97396>
 
-David Bryson wrote:
-> Signed-off-by: David Bryson <david@statichacks.org>
-> 
-> I tried to keep with the naming/coding conventions that I found in
-> remote.c.  Feedback welcome.
-> 
-> ---
->  remote.c |   19 ++++++++++---------
->  1 files changed, 10 insertions(+), 9 deletions(-)
-> 
-> diff --git a/remote.c b/remote.c
-> index 3f3c789..893a739 100644
-> --- a/remote.c
-> +++ b/remote.c
-> @@ -305,6 +305,7 @@ static int handle_config(const char *key, const char *value, void *cb)
->  {
->  	const char *name;
->  	const char *subkey;
-> +	const char *v;
+On Fri, Oct 3, 2008 at 12:41 AM, Jakub Narebski <jnareb@gmail.com> wrote:
+> Petr Baudis wrote:
+>> On Thu, Oct 02, 2008 at 11:05:18PM +0200, Giuseppe Bilotta wrote:
+>> >
+>> > In preparing the new patchset, I've put a big comment block explaining
+>> > why we need to set both $hash and $hash_base in this code-path:
+>> >
+>> > # we got "project.git/[action/]branch". in this case
+>> > # we set both $hash and $hash_base because different actions
+>> > # need one or the other to be set to behave correctly.
+>> > #
+>> > # For example, if $hash_base is not set then the blob and
+>
+> 'blob' without $file_name doesn't have sense, but 'tree' does.
+> Probably should be s/blob/tree/ above.
+>
+>> > # history links on the page project.git/tree/somebranch will
+>> > # assume a $hash_base of HEAD instead of the correct
+>> > # somebranch.
 
+Note: the blob and history links _in a tree page_ are wrong. The page
+itself is correct.
+What this means is that if you go to project.git/tree/somebranch you
+get the correct list of files and directories for the project at
+somebranch's HEAD, but all the links IN that page will point to the
+wrong version, because they will have no $hash_base set and will thus
+default to HEAD.
 
-Not very mnemonic. I'm sure you can think up a better name, even if it's
-a long one. Git is notoriously sparse when it comes to comments. We rely
-instead on self-explanatory code.
-
-
->  	struct remote *remote;
->  	struct branch *branch;
->  	if (!prefixcmp(key, "branch.")) {
-> @@ -314,15 +315,15 @@ static int handle_config(const char *key, const char *value, void *cb)
->  			return 0;
->  		branch = make_branch(name, subkey - name);
->  		if (!strcmp(subkey, ".remote")) {
-> -			if (!value)
-> -				return config_error_nonbool(key);
-> -			branch->remote_name = xstrdup(value);
-> +			if (git_config_string(&v, key, value) ) 
-> +				return -1;
-> +			branch->remote_name = v;
->  			if (branch == current_branch)
->  				default_remote_name = branch->remote_name;
->  		} else if (!strcmp(subkey, ".merge")) {
-> -			if (!value)
-> -				return config_error_nonbool(key);
-> -			add_merge(branch, xstrdup(value));
-> +			if (git_config_string(&v, key, value )) 
-> +				return 	-1;
-> +			add_merge(branch, v);
->  		}
->  		return 0;
->  	}
-> @@ -334,9 +335,9 @@ static int handle_config(const char *key, const char *value, void *cb)
->  			return 0;
->  		rewrite = make_rewrite(name, subkey - name);
->  		if (!strcmp(subkey, ".insteadof")) {
-> -			if (!value)
-> -				return config_error_nonbool(key);
-> -			add_instead_of(rewrite, xstrdup(value));
-> +			if (git_config_string(&v, key, value )) 
-> +				return 	-1;
-> +			add_instead_of(rewrite, v);
->  		}
->  	}
->  	if (prefixcmp(key,  "remote."))
-
-
-Other than that, the patch looks good.
+You can see this effect for example by going to
+http://repo.or.cz/w/git.git/v1.4.0?a=tree <- this hand-crafted path
+would never be generated by the old pathinfo code, but it show exactly
+what would happen with my pahtinfo code on
+http://repo.or.cz/w/git.git/tree/v1.4.0 if $hash_base wasn't set.
 
 -- 
-Andreas Ericsson                   andreas.ericsson@op5.se
-OP5 AB                             www.op5.se
-Tel: +46 8-230225                  Fax: +46 8-230231
+Giuseppe "Oblomov" Bilotta
