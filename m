@@ -1,81 +1,104 @@
-From: Thomas Rast <trast@student.ethz.ch>
-Subject: Re: [PATCH] bash: remove fetch, push, pull dashed form leftovers
-Date: Fri, 3 Oct 2008 22:13:01 +0200
-Message-ID: <200810032213.06005.trast@student.ethz.ch>
-References: <fc113d400810030825l75f9451dwc4cbf68807be0b5b@mail.gmail.com> <1223051705-30347-1-git-send-email-trast@student.ethz.ch> <20081003193449.GA24821@neumann>
+From: "Tuncer Ayaz" <tuncer.ayaz@gmail.com>
+Subject: Re: [PATCH] Fix argument handling for fetch-pack call when stdout is connected and -q/--quiet is supplied.
+Date: Fri, 3 Oct 2008 22:18:55 +0200
+Message-ID: <4ac8254d0810031318j3e0f326ewc4bf250c51681670@mail.gmail.com>
+References: <4ac8254d0810031234x26ebc96cy7cf5dcae2ef516e0@mail.gmail.com>
+	 <alpine.LNX.1.00.0810031548260.19665@iabervon.org>
 Mime-Version: 1.0
-Content-Type: multipart/signed;
-  boundary="nextPart2142877.5Sv8fH2FVr";
-  protocol="application/pgp-signature";
-  micalg=pgp-sha1
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, Rob Sanheim <rsanheim@gmail.com>,
-	"Shawn O. Pearce" <spearce@spearce.org>
-To: SZEDER =?utf-8?q?G=C3=A1bor?= <szeder@ira.uka.de>
-X-From: git-owner@vger.kernel.org Fri Oct 03 22:14:28 2008
+Cc: git@vger.kernel.org, davej@codemonkey.org.uk
+To: "Daniel Barkalow" <barkalow@iabervon.org>
+X-From: git-owner@vger.kernel.org Fri Oct 03 22:20:10 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Klr2Y-0006er-Di
-	for gcvg-git-2@gmane.org; Fri, 03 Oct 2008 22:14:18 +0200
+	id 1Klr8B-0000GU-Cy
+	for gcvg-git-2@gmane.org; Fri, 03 Oct 2008 22:20:07 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752044AbYJCUNI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 3 Oct 2008 16:13:08 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750904AbYJCUNI
-	(ORCPT <rfc822;git-outgoing>); Fri, 3 Oct 2008 16:13:08 -0400
-Received: from xsmtp1.ethz.ch ([82.130.70.13]:12583 "EHLO xsmtp1.ethz.ch"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750785AbYJCUNH (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 3 Oct 2008 16:13:07 -0400
-Received: from xfe1.d.ethz.ch ([82.130.124.41]) by xsmtp1.ethz.ch with Microsoft SMTPSVC(6.0.3790.3959);
-	 Fri, 3 Oct 2008 22:13:04 +0200
-Received: from [192.168.0.7] ([84.75.157.245]) by xfe1.d.ethz.ch over TLS secured channel with Microsoft SMTPSVC(6.0.3790.3959);
-	 Fri, 3 Oct 2008 22:13:03 +0200
-User-Agent: KMail/1.9.9
-In-Reply-To: <20081003193449.GA24821@neumann>
-X-OriginalArrivalTime: 03 Oct 2008 20:13:03.0796 (UTC) FILETIME=[70FFA740:01C92594]
+	id S1752840AbYJCUS5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 3 Oct 2008 16:18:57 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752534AbYJCUS5
+	(ORCPT <rfc822;git-outgoing>); Fri, 3 Oct 2008 16:18:57 -0400
+Received: from wr-out-0506.google.com ([64.233.184.233]:51857 "EHLO
+	wr-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751977AbYJCUS4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 3 Oct 2008 16:18:56 -0400
+Received: by wr-out-0506.google.com with SMTP id 69so736605wri.5
+        for <git@vger.kernel.org>; Fri, 03 Oct 2008 13:18:55 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to
+         :subject:cc:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:references;
+        bh=7V02p0hBvgZ7vc8hSb8m9JCmtUsXXTOL2iadPpCwbnE=;
+        b=kJM2D3SLAtKdijxV+/l7qitkai+khLQydhFCyJvkG0pwo/gZiz09aH2VhTdgM5RFxZ
+         qImDo4oAbQoVDHilQ8RIK0xY6wPr3WMsE/uNvd0Y34m3XcbWSSa7+GFsmDxtYzgb/fYg
+         VXPT/Cx2XAsnPK1n20FDha06VDwsuf2xKy2BU=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
+         :content-type:content-transfer-encoding:content-disposition
+         :references;
+        b=wL16EpqG3qiNCGHxZ1UuNlCV5yJ+IFe67F+W8sxveO4Z2jVwhC529SBiK+6UULECFc
+         HhqyDsryhDZ35NLlM0re8wF92fL0d2HJ7zsrW9hD8XNlBElZvdsbpSBpqoApJfLz4kpa
+         05eDLTkobnPmljmqASlQzYnH4WULac2HFgzSE=
+Received: by 10.151.155.9 with SMTP id h9mr2275515ybo.8.1223065135662;
+        Fri, 03 Oct 2008 13:18:55 -0700 (PDT)
+Received: by 10.65.251.6 with HTTP; Fri, 3 Oct 2008 13:18:55 -0700 (PDT)
+In-Reply-To: <alpine.LNX.1.00.0810031548260.19665@iabervon.org>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/97450>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/97451>
 
---nextPart2142877.5Sv8fH2FVr
-Content-Type: text/plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: quoted-printable
-Content-Disposition: inline
+On Fri, Oct 3, 2008 at 9:50 PM, Daniel Barkalow <barkalow@iabervon.org> wrote:
+> On Fri, 3 Oct 2008, Tuncer Ayaz wrote:
 
-SZEDER G=E1bor wrote:
-> We don't provide complation for git-commands in dashed form anymore,
-> so there is no need to keep those cases.
-[...]
-> On Fri, Oct 03, 2008 at 06:35:05PM +0200, Thomas Rast wrote:
-> > I do wonder if there's a better approach to those functions
-> > however, so that the "obvious" fix suggested by Shawn would work.
->=20
-> Maybe something like this?
+<snip>
 
-That's indeed much simpler and better.  FWIW,
+>> diff --git a/transport.c b/transport.c
+>> index 71433d9..1f24011 100644
+>> --- a/transport.c
+>> +++ b/transport.c
+>> @@ -644,7 +644,7 @@ static int fetch_refs_via_pack(struct transport *transport,
+>>     args.include_tag = data->followtags;
+>>     args.verbose = (transport->verbose > 0);
+>>     args.quiet = args.no_progress = (transport->verbose < 0);
+>> -   args.no_progress = !isatty(1);
+>> +   args.no_progress = args.quiet || !isatty(1);
+>
+> If you're doing that, remove the "args.no_progress =" from the previous
+> line, which was there to have that effect (but not so clearly). Aside from
+> that, it looks good to me.
+>
 
-Tested-by: Thomas Rast <trast@student.ethz.ch>
+<snip>
 
-=2D-=20
-Thomas Rast
-trast@{inf,student}.ethz.ch
+Thanks Daniel, that makes a lot of sense.
 
+Signed-off-by: Tuncer Ayaz <tuncer.ayaz@gmail.com>
+---
+ transport.c |    4 ++--
+ 1 files changed, 2 insertions(+), 2 deletions(-)
 
---nextPart2142877.5Sv8fH2FVr
-Content-Type: application/pgp-signature; name=signature.asc 
-Content-Description: This is a digitally signed message part.
+diff --git a/transport.c b/transport.c
+index 71433d9..35cac44 100644
+--- a/transport.c
++++ b/transport.c
+@@ -643,8 +643,8 @@ static int fetch_refs_via_pack(struct transport *transport,
+        args.use_thin_pack = data->thin;
+        args.include_tag = data->followtags;
+        args.verbose = (transport->verbose > 0);
+-       args.quiet = args.no_progress = (transport->verbose < 0);
+-       args.no_progress = !isatty(1);
++       args.quiet = (transport->verbose < 0);
++       args.no_progress = args.quiet || !isatty(1);
+        args.depth = data->depth;
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.0.9 (GNU/Linux)
-
-iEYEABECAAYFAkjmfNEACgkQqUud07tmzP0BzwCgo2Mmy1w5UDvaSa6Cb2zed5AE
-SfwAn2T9tSzlwjtH1iytuZxb4UTl7z9f
-=+HXg
------END PGP SIGNATURE-----
-
---nextPart2142877.5Sv8fH2FVr--
+        for (i = 0; i < nr_heads; i++)
+-- 
+1.6.0.2
