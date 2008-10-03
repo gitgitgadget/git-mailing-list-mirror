@@ -1,227 +1,101 @@
-From: Stephen Haberman <stephen@exigencecorp.com>
+From: Thomas Rast <trast@student.ethz.ch>
 Subject: Re: Numeric Revision Names?
-Date: Fri, 3 Oct 2008 11:55:57 -0500
-Organization: Exigence
-Message-ID: <20081003115557.08d80c2f.stephen@exigencecorp.com>
-References: <19796862.post@talk.nabble.com>
-	<m3d4ihr7as.fsf@localhost.localdomain>
+Date: Fri, 3 Oct 2008 19:13:52 +0200
+Message-ID: <200810031913.55594.trast@student.ethz.ch>
+References: <19796862.post@talk.nabble.com> <m3d4ihr7as.fsf@localhost.localdomain> <20081003115557.08d80c2f.stephen@exigencecorp.com>
 Mime-Version: 1.0
-Content-Type: multipart/mixed;
- boundary="Multipart=_Fri__3_Oct_2008_11_55_57_-0500_MlWnByYA0LTUqE/r"
-Cc: marceloribeiro <marcelo@sonnay.com>, git@vger.kernel.org
-To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Oct 03 18:57:29 2008
+Content-Type: multipart/signed;
+  boundary="nextPart1861496.es48cj1Ivm";
+  protocol="application/pgp-signature";
+  micalg=pgp-sha1
+Content-Transfer-Encoding: 7bit
+Cc: Jakub Narebski <jnareb@gmail.com>,
+	marceloribeiro <marcelo@sonnay.com>, git@vger.kernel.org
+To: Stephen Haberman <stephen@exigencecorp.com>
+X-From: git-owner@vger.kernel.org Fri Oct 03 19:16:14 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Klnxq-0004Un-Ck
-	for gcvg-git-2@gmane.org; Fri, 03 Oct 2008 18:57:15 +0200
+	id 1KloFA-00043C-Pf
+	for gcvg-git-2@gmane.org; Fri, 03 Oct 2008 19:15:09 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753117AbYJCQ4D (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 3 Oct 2008 12:56:03 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752911AbYJCQ4B
-	(ORCPT <rfc822;git-outgoing>); Fri, 3 Oct 2008 12:56:01 -0400
-Received: from smtp172.sat.emailsrvr.com ([66.216.121.172]:38864 "EHLO
-	smtp172.sat.emailsrvr.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752843AbYJCQ4A (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 3 Oct 2008 12:56:00 -0400
-Received: from relay7.relay.sat.mlsrvr.com (localhost [127.0.0.1])
-	by relay7.relay.sat.mlsrvr.com (SMTP Server) with ESMTP id BC5B49B2A62;
-	Fri,  3 Oct 2008 12:55:59 -0400 (EDT)
-Received: by relay7.relay.sat.mlsrvr.com (Authenticated sender: stephen-AT-exigencecorp.com) with ESMTP id 2595F9B2A25;
-	Fri,  3 Oct 2008 12:55:59 -0400 (EDT)
-In-Reply-To: <m3d4ihr7as.fsf@localhost.localdomain>
-X-Mailer: Sylpheed 2.5.0beta3 (GTK+ 2.10.14; i686-pc-mingw32)
+	id S1753019AbYJCRN5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 3 Oct 2008 13:13:57 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752911AbYJCRN5
+	(ORCPT <rfc822;git-outgoing>); Fri, 3 Oct 2008 13:13:57 -0400
+Received: from xsmtp0.ethz.ch ([82.130.70.14]:52294 "EHLO XSMTP0.ethz.ch"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752594AbYJCRN4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 3 Oct 2008 13:13:56 -0400
+Received: from xfe1.d.ethz.ch ([82.130.124.41]) by XSMTP0.ethz.ch with Microsoft SMTPSVC(6.0.3790.3959);
+	 Fri, 3 Oct 2008 19:13:53 +0200
+Received: from [192.168.0.7] ([84.75.157.245]) by xfe1.d.ethz.ch over TLS secured channel with Microsoft SMTPSVC(6.0.3790.3959);
+	 Fri, 3 Oct 2008 19:13:53 +0200
+User-Agent: KMail/1.9.9
+In-Reply-To: <20081003115557.08d80c2f.stephen@exigencecorp.com>
+X-OriginalArrivalTime: 03 Oct 2008 17:13:53.0412 (UTC) FILETIME=[69453C40:01C9257B]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/97437>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/97438>
 
-This is a multi-part message in MIME format.
+--nextPart1861496.es48cj1Ivm
+Content-Type: text/plain;
+  charset="utf-8"
+Content-Transfer-Encoding: quoted-printable
+Content-Disposition: inline
 
---Multipart=_Fri__3_Oct_2008_11_55_57_-0500_MlWnByYA0LTUqE/r
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
+Stephen Haberman wrote:
+>=20
+> > Second, in my opinion revision numbers are not that useful for
+> > projects with large number of commits (where revision number might be
+> > something like r4321), and nonlinear history (you don't know how r4555
+> > relates to r4556: they might be on different branches).
+>=20
+> For projects that do have a central authority (e.g. internal corporate
+> projects), revision numbers make more sense.
+>=20
+> Granted, they are on separate branches (like svn), but the nice thing
+> about them is that they are monotonically increasing. E.g. our qa
+> people love numbers--the bug fix ticket says dev just put in
+> r100...qa/production box says it is on r95. Doesn't matter the
+> branch/whatever, they know the box doesn't have r100. Now, right, if
+> its r105, it is trickier, although we also throw in branch name (e.g.
+> topica-r100) which means no false positives but can lead to false
+> negatives.
+
+I wonder how that constitutes an argument for revision numbers.
+
+=46irst, the _only_ guarantee you get out of monotonically increasing
+revision numbers is that they're ... monotonically increasing.  You
+might as well use the commit (not author!) timestamp for that purpose
+(assuming your clocks are all synced).  They do not convey history
+membership, only history non-membership, for the same obvious reason
+that commit timestamps do.
+
+Second, Git can do the check you mention above much more accurately.
+If you tell QA that the fix is in 123abc, then 'git branch --contains
+123abc' lists all local branches that have the fix, 'git describe
+=2D-contains 123abc' gives you the nearest tag (i.e. usually the
+lowest-numbered release version number) having the fix, etc.
+
+=2D-=20
+Thomas Rast
+trast@{inf,student}.ethz.ch
 
 
-> Second, in my opinion revision numbers are not that useful for
-> projects with large number of commits (where revision number might be
-> something like r4321), and nonlinear history (you don't know how r4555
-> relates to r4556: they might be on different branches).
+--nextPart1861496.es48cj1Ivm
+Content-Type: application/pgp-signature; name=signature.asc 
+Content-Description: This is a digitally signed message part.
 
-For projects that do have a central authority (e.g. internal corporate
-projects), revision numbers make more sense.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.0.9 (GNU/Linux)
 
-Granted, they are on separate branches (like svn), but the nice thing
-about them is that they are monotonically increasing. E.g. our qa
-people love numbers--the bug fix ticket says dev just put in
-r100...qa/production box says it is on r95. Doesn't matter the
-branch/whatever, they know the box doesn't have r100. Now, right, if
-its r105, it is trickier, although we also throw in branch name (e.g.
-topica-r100) which means no false positives but can lead to false
-negatives.
+iEYEABECAAYFAkjmUtMACgkQqUud07tmzP0cawCdHA3QaERZrxK6va+dNSnWVrqN
+c8AAn3+66ztiAswkNfE06oE0yd2/btfP
+=cu2e
+-----END PGP SIGNATURE-----
 
-Per Robin's response and then a thread on the list a year+ ago, a
-hook+tags can be used to fake this, and we're doing that now. I've been
-meaning to put our hooks repo up somewhere, as we've got several fun
-hooks that are focused on an internal/centralized workflow, but I
-haven't gotten to it yet. For now I've just attached the commit
-numbers script.
-
-For our team, lack of monotonic version numbers was a big deal--as in
-can't use git sort of big deal. I wouldn't be surprised if it is a
-contributing factor that keeps other people, especially internal teams,
-from git. I understand all of the reasons it can't be in git proper,
-but an FAQ entry about the hook/tag hack or link to a contrib script
-might be useful (not necessarily the one attached, given its
-functions/etc. baggage).
-
-- Stephen
-
-
---Multipart=_Fri__3_Oct_2008_11_55_57_-0500_MlWnByYA0LTUqE/r
-Content-Type: application/octet-stream;
- name="functions"
-Content-Disposition: attachment;
- filename="functions"
-Content-Transfer-Encoding: base64
-
-IyEvYmluL3NoCgojIFNldHM6IG5ld19jb21taXRzCiMgQXNzdW1lczogJG9sZHJldiAkbmV3cmV2
-ICRyZWZuYW1lCiMKIyBUaGlzIGlzIGZvciB1c2UgaW4gcG9zdCByZWNlaXZlIGhvb2tzLCBhcyBp
-dCBhc3N1bWVzIHRoZSByZWZuYW1lIGhhcyBtb3ZlZCBhbmQKIyBpcyBub3cgbmV3cmV2LCB3ZSBu
-ZWVkIHRvIGRpc2NhcmQgaXQuIFRoaXMgaXMgZG93biB3aXRoIGJhc2ggc3RyaW5nIHJlcGxhY2Us
-CiMgYXMgaXQgd2lsbCByZXBsYWNlIG9ubHkgdGhlIGZpcnN0IG1hdGNoLCBjb21wYXJlZCB0byB0
-aGUgY2Fub25pY2FsICJncmVwIC12IgojIGFwcHJvYWNoIHdoaWNoIHdpbGwgdGhyb3cgb3V0IG11
-bHRpcGxlIG1hdGNoZXMgaWYgdGhlIHNhbWUgY29tbWl0IGlzIHJlZmVycmVkCiMgdG8gYnkgbXVs
-dGlwbGUgYnJhbmNoZXMuCiMKIyBFeGNlbGxlbnQsIGV4Y2VsbGVudCBkb2NzIGZyb20gQW5keSBQ
-YXJraW4ncyBlbWFpbCBzY3JpcHQKIwojIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMj
-IyMjIyMjIyMjIyMjIyMjIwojCiMgQ29uc2lkZXIgdGhpczoKIyAgIDEgLS0tIDIgLS0tIE8gLS0t
-IFggLS0tIDMgLS0tIDQgLS0tIE4KIwojIE8gaXMgJG9sZHJldiBmb3IgJHJlZm5hbWUKIyBOIGlz
-ICRuZXdyZXYgZm9yICRyZWZuYW1lCiMgWCBpcyBhIHJldmlzaW9uIHBvaW50ZWQgdG8gYnkgc29t
-ZSBvdGhlciByZWYsIGZvciB3aGljaCB3ZSBtYXkKIyAgIGFzc3VtZSB0aGF0IGFuIGVtYWlsIGhh
-cyBhbHJlYWR5IGJlZW4gZ2VuZXJhdGVkLgojIEluIHRoaXMgY2FzZSB3ZSB3YW50IHRvIGlzc3Vl
-IGFuIGVtYWlsIGNvbnRhaW5pbmcgb25seSByZXZpc2lvbnMKIyAzLCA0LCBhbmQgTi4gIEdpdmVu
-IChhbG1vc3QpIGJ5CiMKIyAgZ2l0IHJldi1saXN0IE4gXk8gLS1ub3QgLS1hbGwKIwojIFRoZSBy
-ZWFzb24gZm9yIHRoZSAiYWxtb3N0IiwgaXMgdGhhdCB0aGUgIi0tbm90IC0tYWxsIiB3aWxsIHRh
-a2UKIyBwcmVjZWRlbmNlIG92ZXIgdGhlICJOIiwgYW5kIGVmZmVjdGl2ZWx5IHdpbGwgdHJhbnNs
-YXRlIHRvCiMKIyAgZ2l0IHJldi1saXN0IE4gXk8gXlggXk4KIwojIFNvLCB3ZSBuZWVkIHRvIGJ1
-aWxkIHVwIHRoZSBsaXN0IG1vcmUgY2FyZWZ1bGx5LiAgZ2l0IHJldi1wYXJzZQojIHdpbGwgZ2Vu
-ZXJhdGUgYSBsaXN0IG9mIHJldnMgdGhhdCBtYXkgYmUgZmVkIGludG8gZ2l0IHJldi1saXN0Lgoj
-IFdlIGNhbiBnZXQgaXQgdG8gbWFrZSB0aGUgIi0tbm90IC0tYWxsIiBwYXJ0IGFuZCB0aGVuIGZp
-bHRlciBvdXQKIyB0aGUgIl5OIiB3aXRoOgojCiMgIGdpdCByZXYtcGFyc2UgLS1ub3QgLS1hbGwg
-fCBncmVwIC12IE4KIwojIFRoZW4sIHVzaW5nIHRoZSAtLXN0ZGluIHN3aXRjaCB0byBnaXQgcmV2
-LWxpc3Qgd2UgaGF2ZSBlZmZlY3RpdmVseQojIG1hbnVmYWN0dXJlZAojCiMgIGdpdCByZXYtbGlz
-dCBOIF5PIF5YCiMKIyBUaGlzIGxlYXZlcyBhIHByb2JsZW0gd2hlbiBzb21lb25lIGVsc2UgdXBk
-YXRlcyB0aGUgcmVwb3NpdG9yeQojIHdoaWxlIHRoaXMgc2NyaXB0IGlzIHJ1bm5pbmcuICBUaGVp
-ciBuZXcgdmFsdWUgb2YgdGhlIHJlZiB3ZSdyZQojIHdvcmtpbmcgb24gd291bGQgYmUgaW5jbHVk
-ZWQgaW4gdGhlICItLW5vdCAtLWFsbCIgb3V0cHV0OyBhbmQgYXMKIyBvdXIgJG5ld3JldiB3b3Vs
-ZCBiZSBhbiBhbmNlc3RvciBvZiB0aGF0IGNvbW1pdCwgaXQgd291bGQgZXhjbHVkZQojIGFsbCBv
-ZiBvdXIgY29tbWl0cy4gIFdoYXQgd2UgcmVhbGx5IHdhbnQgaXMgdG8gZXhjbHVkZSB0aGUgY3Vy
-cmVudAojIHZhbHVlIG9mICRyZWZuYW1lIGZyb20gdGhlIC0tbm90IGxpc3QsIHJhdGhlciB0aGFu
-IE4gaXRzZWxmLiAgU286CiMKIyAgZ2l0IHJldi1wYXJzZSAtLW5vdCAtLWFsbCB8IGdyZXAgLXYg
-JChnaXQgcmV2LXBhcnNlICRyZWZuYW1lKQojCiMgR2V0J3MgdXMgdG8gc29tZXRoaW5nIHByZXR0
-eSBzYWZlIChhcGFydCBmcm9tIHRoZSBzbWFsbCB0aW1lCiMgYmV0d2VlbiByZWZuYW1lIGJlaW5n
-IHJlYWQsIGFuZCBnaXQgcmV2LXBhcnNlIHJ1bm5pbmcgLSBmb3IgdGhhdCwKIyBJIGdpdmUgdXAp
-CiMKIwojIE5leHQgcHJvYmxlbSwgY29uc2lkZXIgdGhpczoKIyAgICogLS0tIEIgLS0tICogLS0t
-IE8gKCRvbGRyZXYpCiMgICAgICAgICAgXAojICAgICAgICAgICAqIC0tLSBYIC0tLSAqIC0tLSBO
-ICgkbmV3cmV2KQojCiMgVGhhdCBpcyB0byBzYXksIHRoZXJlIGlzIG5vIGd1YXJhbnRlZSB0aGF0
-IG9sZHJldiBpcyBhIHN0cmljdAojIHN1YnNldCBvZiBuZXdyZXYgKGl0IHdvdWxkIGhhdmUgcmVx
-dWlyZWQgYSAtLWZvcmNlLCBidXQgdGhhdCdzCiMgYWxsb3dlZCkuICBTbywgd2UgY2FuJ3Qgc2lt
-cGx5IHNheSByZXYtbGlzdCAkb2xkcmV2Li4kbmV3cmV2LgojIEluc3RlYWQgd2UgZmluZCB0aGUg
-Y29tbW9uIGJhc2Ugb2YgdGhlIHR3byByZXZzIGFuZCBsaXN0IGZyb20KIyB0aGVyZS4KIwojIEFz
-IGFib3ZlLCB3ZSBuZWVkIHRvIHRha2UgaW50byBhY2NvdW50IHRoZSBwcmVzZW5jZSBvZiBYOyBp
-ZgojIGFub3RoZXIgYnJhbmNoIGlzIGFscmVhZHkgaW4gdGhlIHJlcG9zaXRvcnkgYW5kIHBvaW50
-cyBhdCBzb21lIG9mCiMgdGhlIHJldmlzaW9ucyB0aGF0IHdlIGFyZSBhYm91dCB0byBvdXRwdXQg
-LSB3ZSBkb24ndCB3YW50IHRoZW0uCiMgVGhlIHNvbHV0aW9uIGlzIGFzIGJlZm9yZTogZ2l0IHJl
-di1wYXJzZSBvdXRwdXQgZmlsdGVyZWQuCiMKIyBGaW5hbGx5LCB0YWdzOiAxIC0tLSAyIC0tLSBP
-IC0tLSBUIC0tLSAzIC0tLSA0IC0tLSBOCiMKIyBUYWdzIHB1c2hlZCBpbnRvIHRoZSByZXBvc2l0
-b3J5IGdlbmVyYXRlIG5pY2Ugc2hvcnRsb2cgZW1haWxzIHRoYXQKIyBzdW1tYXJpc2UgdGhlIGNv
-bW1pdHMgYmV0d2VlbiB0aGVtIGFuZCB0aGUgcHJldmlvdXMgdGFnLiAgSG93ZXZlciwKIyB0aG9z
-ZSBlbWFpbHMgZG9uJ3QgaW5jbHVkZSB0aGUgZnVsbCBjb21taXQgbWVzc2FnZXMgdGhhdCB3ZSBv
-dXRwdXQKIyBmb3IgYSBicmFuY2ggdXBkYXRlLiAgVGhlcmVmb3JlIHdlIHN0aWxsIHdhbnQgdG8g
-b3V0cHV0IHJldmlzaW9ucwojIHRoYXQgaGF2ZSBiZWVuIG91dHB1dCBvbiBhIHRhZyBlbWFpbC4K
-IwojIEx1Y2tpbHksIGdpdCByZXYtcGFyc2UgaW5jbHVkZXMganVzdCB0aGUgdG9vbC4gIEluc3Rl
-YWQgb2YgdXNpbmcKIyAiLS1hbGwiIHdlIHVzZSAiLS1icmFuY2hlcyI7IHRoaXMgaGFzIHRoZSBh
-ZGRlZCBiZW5lZml0IHRoYXQKIyAicmVtb3Rlcy8iIHdpbGwgYmUgaWdub3JlZCBhcyB3ZWxsLgoj
-CiMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjCmZ1bmN0
-aW9uIHNldF9uZXdfY29tbWl0cygpIHsKCW5sPSQnXG4nCgoJIyBHZXQgYWxsIHRoZSBjdXJyZW50
-IGJyYW5jaGVzLCBub3QnZCBhcyB3ZSB3YW50IG9ubHkgbmV3IG9uZXMKCW5ld19jb21taXRzPSQo
-Z2l0IHJldi1wYXJzZSAtLW5vdCAtLWJyYW5jaGVzKQoKCSMgU3RyaXAgb2ZmIHRoZSBub3QgY3Vy
-cmVudCBicmFuY2gKCW5ld19oYXNoPSQoZ2l0IHJldi1wYXJzZSAkcmVmbmFtZSkKCW5ld19jb21t
-aXRzPSR7bmV3X2NvbW1pdHMvXiRuZXdfaGFzaC99CgoJIyBQdXQgYmFjayBuZXdyZXYgd2l0aG91
-dCB0aGUgbm90CgluZXdfY29tbWl0cz0ke25ld19jb21taXRzfSR7bmx9JHtuZXdyZXZ9CgoJIyBQ
-dXQgaW4gXm9sZHJldiBpZiBpdCdzIG5vdCBhIG5ldyBicmFuY2gKCWlmIFsgIiRvbGRyZXYiICE9
-ICIwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwIiBdIDsgdGhlbgoJCW5l
-d19jb21taXRzPSR7bmV3X2NvbW1pdHN9JHtubH1eJHtvbGRyZXZ9CglmaQoKCW5ld19jb21taXRz
-PSR7bmV3X2NvbW1pdHMvJG5sJG5sLyRubH0KCW5ld19jb21taXRzPSR7bmV3X2NvbW1pdHMvIyRu
-bC99Cn0KCiMgU2V0czogJGNoYW5nZV90eXBlCiMgQXNzdW1lczogJG9sZHJldiAkbmV3cmV2CiMK
-IyAtLS0gSW50ZXJwcmV0CiMgMDAwMC0+MTIzNCAoY3JlYXRlKQojIDEyMzQtPjIzNDUgKHVwZGF0
-ZSkKIyAyMzQ1LT4wMDAwIChkZWxldGUpCmZ1bmN0aW9uIHNldF9jaGFuZ2VfdHlwZSgpIHsKCWlm
-IFsgIiRvbGRyZXYiID09ICIwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAw
-IiBdIDsgdGhlbgoJCWNoYW5nZV90eXBlPSJjcmVhdGUiCgllbHNlCgkJaWYgWyAiJG5ld3JldiIg
-PT0gIjAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAiIF0gOyB0aGVuCgkJ
-CWNoYW5nZV90eXBlPSJkZWxldGUiCgkJZWxzZQoJCQljaGFuZ2VfdHlwZT0idXBkYXRlIgoJCWZp
-CglmaQp9CgojIFNldHM6ICRuZXdyZXZfdHlwZSAkb2xkcmV2X3R5cGUgJHJldiAkcmV2X3R5cGUK
-IyBBc3N1bWVzOiAkbmV3cmV2ICRvbGRyZXYKIyAtLS0gR2V0IHRoZSByZXZpc2lvbiB0eXBlcwpm
-dW5jdGlvbiBzZXRfcmV2X3R5cGVzKCkgewoJbmV3cmV2X3R5cGU9JChnaXQgY2F0LWZpbGUgLXQg
-IiRuZXdyZXYiIDI+IC9kZXYvbnVsbCkKCW9sZHJldl90eXBlPSQoZ2l0IGNhdC1maWxlIC10ICIk
-b2xkcmV2IiAyPiAvZGV2L251bGwpCglpZiBbICIkbmV3cmV2IiA9PSAiMDAwMDAwMDAwMDAwMDAw
-MDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMCIgXSA7IHRoZW4KCQlyZXZfdHlwZT0iJG9sZHJldl90
-eXBlIgoJCXJldj0iJG9sZHJldiIKCWVsc2UKCQlyZXZfdHlwZT0iJG5ld3Jldl90eXBlIgoJCXJl
-dj0iJG5ld3JldiIKCWZpCn0KCiMgU2V0czogJGRlc2NyaWJlCiMgQXNzdW1lczogJHJldgojCiMg
-VGhlIGVtYWlsIHN1YmplY3Qgd2lsbCBjb250YWluIHRoZSBiZXN0IGRlc2NyaXB0aW9uIG9mIHRo
-ZSByZWYgdGhhdCB3ZSBjYW4gYnVpbGQgZnJvbSB0aGUgcGFyYW1ldGVycwpmdW5jdGlvbiBzZXRf
-ZGVzY3JpYmUoKSB7CglyZXZfdG9fZGVzY3JpYmU9IiRyZXYiCglpZiBbICIkMSIgIT0gIiIgXSA7
-IHRoZW4KCQlyZXZfdG9fZGVzY3JpYmU9IiQxIgoJZmkKCglkZXNjcmliZT0kKGdpdCBkZXNjcmli
-ZSAkcmV2X3RvX2Rlc2NyaWJlIDI+L2Rldi9udWxsKQoJaWYgWyAteiAiJGRlc2NyaWJlIiBdOyB0
-aGVuCgkJZGVzY3JpYmU9JHJldl90b19kZXNjcmliZQoJZmkKfQoKIyBTZXRzOiAkZGVzY3JpYmVf
-dGFncwojIEFzc3VtZXM6ICRyZXYKIwojIFRoZSBlbWFpbCBzdWJqZWN0IHdpbGwgY29udGFpbiB0
-aGUgYmVzdCBkZXNjcmlwdGlvbiBvZiB0aGUgcmVmIHRoYXQgd2UgY2FuIGJ1aWxkIGZyb20gdGhl
-IHBhcmFtZXRlcnMKZnVuY3Rpb24gc2V0X2Rlc2NyaWJlX3RhZ3MoKSB7CglyZXZfdG9fZGVzY3Jp
-YmU9IiRyZXYiCglpZiBbICIkMSIgIT0gIiIgXSA7IHRoZW4KCQlyZXZfdG9fZGVzY3JpYmU9IiQx
-IgoJZmkKCglkZXNjcmliZV90YWdzPSQoZ2l0IGRlc2NyaWJlIC0tdGFncyAkcmV2X3RvX2Rlc2Ny
-aWJlIDI+L2Rldi9udWxsKQoJaWYgWyAteiAiJGRlc2NyaWJlX3RhZ3MiIF07IHRoZW4KCQlkZXNj
-cmliZV90YWdzPSRyZXZfdG9fZGVzY3JpYmUKCWZpCn0KCiMgVGFrZXMgYSBsb2NrZmlsZSBwYXRo
-IGFuZCBjb21tYW5kIHRvIGV4ZWN1dGUgb25jZSB0aGUgbG9jayBpcyBhY3F1aXJlZC4KIwojIFJl
-dHJpZXMgZXZlcnkgc2Vjb25kIGZvciA1IG1pbnV0ZXMuCiMKIyB3aXRoX2xvY2sgImZvby5sb2Nr
-IiAiZWNobyBhIiAgICAgICAgICAgICAjIFdvcmtzCiMgd2l0aF9sb2NrICJmb28ubG9jayIgImVj
-aG8gYjEgOyBlY2hvIGIyIiAgIyBXb3JrCiMgZnVuY3Rpb24gc2V2ZXJhbCgpIHsKIyBlY2hvIHNl
-dmVyYWwxIDsgZWNobyBzZXZlcmFsMgojIH0KIyB3aXRoX2xvY2sgImZvby5sb2NrIiBzZXZlcmFs
-ICAgICAgICAgICAgICAjIFdvcmtzCiMKZnVuY3Rpb24gd2l0aF9sb2NrKCkgewoJbG9ja2ZpbGU9
-IiQxIgoJYmxvY2s9IiQyIgoJd2l0aF9sb2NrX2hhc19sb2NrPTEKCgl0cmFwIHdpdGhfbG9ja191
-bmxvY2tfaWZfaGVsZCBJTlQgVEVSTSBFWElUCglsb2NrZmlsZSAtMSAtciAzMDAgIiRsb2NrZmls
-ZSIKCXdpdGhfbG9ja19oYXNfbG9jaz0kPwoJaWYgWyAkd2l0aF9sb2NrX2hhc19sb2NrIC1uZSAw
-IF0gOyB0aGVuCgkJZXhpdCAkPwoJZmkKCWV2YWwgIiRibG9jayIKCXJtIC1mICIkbG9ja2ZpbGUi
-Cgl3aXRoX2xvY2tfaGFzX2xvY2s9MQp9CgpmdW5jdGlvbiB3aXRoX2xvY2tfdW5sb2NrX2lmX2hl
-bGQoKSB7CglpZiBbWyAiJHdpdGhfbG9ja19oYXNfbG9jayIgLWVxIDAgXV0gOyB0aGVuCgkJcm0g
-LWYgIiRsb2NrZmlsZSIKCWZpCn0KCmZ1bmN0aW9uIGRpc3BsYXlfZXJyb3JfbWVzc2FnZSgpIHsK
-CWVjaG8gIi0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
-LS0iID4mMgoJZWNobyAiIiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAg
-ICAgICAgICAgICAgPiYyCgllY2hvICIiICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAg
-ICAgICAgICAgICAgICAgICAgICA+JjIKCWZvciAoKGk9MTtpPD0kIztpKz0xKSk7IGRvCglldmFs
-IG1lc3NhZ2U9IiQiJGkKCWVjaG8gIiRtZXNzYWdlIiAgICAgICAgICAgICAgICAgICAgICAgICAg
-ICAgICAgICAgICAgICAgICAgID4mMgoJZG9uZQoJZWNobyAiIiAgICAgICAgICAgICAgICAgICAg
-ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgPiYyCgllY2hvICIiICAgICAgICAgICAg
-ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICA+JjIKCWVjaG8gIi0tLS0t
-LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0iID4mMgp9Cgo=
-
---Multipart=_Fri__3_Oct_2008_11_55_57_-0500_MlWnByYA0LTUqE/r
-Content-Type: application/octet-stream;
- name="post-receive-assign-commit-numbers"
-Content-Disposition: attachment;
- filename="post-receive-assign-commit-numbers"
-Content-Transfer-Encoding: base64
-
-IyEvYmluL3NoCgouICQoZGlybmFtZSAkMCkvZnVuY3Rpb25zCgp3aGlsZSByZWFkIG9sZHJldiBu
-ZXdyZXYgcmVmbmFtZSA7IGRvCglzZXRfbmV3X2NvbW1pdHMKCWVjaG8gIiRuZXdfY29tbWl0cyIg
-fCBnaXQgcmV2LWxpc3QgLS1yZXZlcnNlIC0tc3RkaW4gfCB3aGlsZSByZWFkIGNvbW1pdCA7IGRv
-CgkJaWYgW1sgJChncmVwICIkY29tbWl0IiAiJEdJVF9ESVIvY29tbWl0bnVtYmVycyIgMj4vZGV2
-L251bGwpID09ICIiIF1dIDsgdGhlbgoJCQl3aXRoX2xvY2sgIiRHSVRfRElSL2NvbW1pdG51bWJl
-cnMubG9jayIgJ2VjaG8gIiRjb21taXQgJHJlZm5hbWUiID4+ICIkR0lUX0RJUi9jb21taXRudW1i
-ZXJzIicKCQkJbnVtYmVyPSQoZ3JlcCAtLW1heC1jb3VudD0xIC0tbGluZS1udW1iZXIgIiRjb21t
-aXQiICIkR0lUX0RJUi9jb21taXRudW1iZXJzIiB8IGdyZXAgLW9QICJeXGQrKD89OikiKQoJCQln
-aXQgdGFnICJyLyRudW1iZXIiICIkY29tbWl0IgoJCWZpCglkb25lCmRvbmUKCg==
-
---Multipart=_Fri__3_Oct_2008_11_55_57_-0500_MlWnByYA0LTUqE/r--
+--nextPart1861496.es48cj1Ivm--
