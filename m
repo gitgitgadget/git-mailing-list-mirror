@@ -1,119 +1,81 @@
-From: Alexander Gavrilov <angavrilov@gmail.com>
-Subject: [PATCH] git-gui: Fix the blame window shape.
-Date: Fri,  3 Oct 2008 11:36:52 +0400
-Message-ID: <1223019414-24643-1-git-send-email-angavrilov@gmail.com>
-Cc: "Shawn O. Pearce" <spearce@spearce.org>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Oct 03 09:39:59 2008
+From: Johannes Sixt <j.sixt@viscovery.net>
+Subject: [PATCH] git-gui: Show a round number of bytes of large untracked
+ text files
+Date: Fri, 03 Oct 2008 10:28:49 +0200
+Message-ID: <48E5D7C1.7050404@viscovery.net>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-15
+Content-Transfer-Encoding: 7bit
+Cc: Git Mailing List <git@vger.kernel.org>
+To: "Shawn O. Pearce" <spearce@spearce.org>
+X-From: git-owner@vger.kernel.org Fri Oct 03 10:30:08 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KlfGP-0008FF-Gh
-	for gcvg-git-2@gmane.org; Fri, 03 Oct 2008 09:39:50 +0200
+	id 1Klg33-00078X-3o
+	for gcvg-git-2@gmane.org; Fri, 03 Oct 2008 10:30:05 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754248AbYJCHic (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 3 Oct 2008 03:38:32 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754161AbYJCHic
-	(ORCPT <rfc822;git-outgoing>); Fri, 3 Oct 2008 03:38:32 -0400
-Received: from fk-out-0910.google.com ([209.85.128.187]:35367 "EHLO
-	fk-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754185AbYJCHia (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 3 Oct 2008 03:38:30 -0400
-Received: by fk-out-0910.google.com with SMTP id 18so982302fkq.5
-        for <git@vger.kernel.org>; Fri, 03 Oct 2008 00:38:27 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:cc:subject:date
-         :message-id:x-mailer;
-        bh=RRRhLZ5lJMQ2M3WI8X+CNR40nYyO9hVKDyALL6Y3ItA=;
-        b=oTVTukSIAqcXRLb6JMb/IbcOz3I2ysygkMkMW+E2cVf+DIu1NbXxppL44Hm2GAstje
-         ul/9g21JJCycMZUwe31jG3pU7LSb7ZzJaiI+/M6MLicyxFOF95nqOOu3LLcKgatfIHvZ
-         22aBaiolBr/3hU+TJ6A95LJavN8RN+SVjWoVY=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer;
-        b=RUqyNP7nt8ZGojZaxZV7CGY/UThPfua6rF8QeFI4e9ODv/go6j0+P9VVTWPZdB6zNo
-         qmOqhhD7v7/kkihd5Mzi/ciBRh6t5VxowgJ1rY/aYSEXKK471G1Ry0W/RhYSmRZyGyoM
-         PYfivmlvsq450Ciht7MKSNFRwtcyhfD2cNqCI=
-Received: by 10.180.246.10 with SMTP id t10mr264158bkh.104.1223019507698;
-        Fri, 03 Oct 2008 00:38:27 -0700 (PDT)
-Received: from localhost.localdomain ([92.255.85.78])
-        by mx.google.com with ESMTPS id 31sm3873133fkt.3.2008.10.03.00.38.26
-        (version=SSLv3 cipher=RC4-MD5);
-        Fri, 03 Oct 2008 00:38:27 -0700 (PDT)
-X-Mailer: git-send-email 1.6.0.20.g6148bc
+	id S1751793AbYJCI2x (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 3 Oct 2008 04:28:53 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751978AbYJCI2x
+	(ORCPT <rfc822;git-outgoing>); Fri, 3 Oct 2008 04:28:53 -0400
+Received: from lilzmailso01.liwest.at ([212.33.55.23]:24861 "EHLO
+	lilzmailso01.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751682AbYJCI2w (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 3 Oct 2008 04:28:52 -0400
+Received: from cm56-163-160.liwest.at ([86.56.163.160] helo=linz.eudaptics.com)
+	by lilzmailso01.liwest.at with esmtpa (Exim 4.66)
+	(envelope-from <j.sixt@viscovery.net>)
+	id 1Klg1q-00050M-1j; Fri, 03 Oct 2008 10:28:50 +0200
+Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.42])
+	by linz.eudaptics.com (Postfix) with ESMTP
+	id AF54A69F; Fri,  3 Oct 2008 10:28:49 +0200 (CEST)
+User-Agent: Thunderbird 2.0.0.6 (Windows/20070728)
+X-Enigmail-Version: 0.95.5
+X-Spam-Score: 1.7 (+)
+X-Spam-Report: ALL_TRUSTED=-1.8, BAYES_99=3.5
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/97403>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/97404>
 
-On modern high-resolution monitors the blame viewer
-window is very high, yet too narrow. This patch
-makes it gravitate to a more sane resolution, which
-takes the font size into account.
+From: Johannes Sixt <johannes.sixt@telecom.at>
 
-It also changes the default text view size to 80% of
-the window, and slightly modifies the border decorations
-for better appearance.
+If an untracked text file is selected, then its contents are displayed
+instead of a diff. If the file is large, then the following hint is
+inserted at the top:
 
-Signed-off-by: Alexander Gavrilov <angavrilov@gmail.com>
+  * Untracked file is 14774881 bytes.
+  * Showing only first 131072 bytes.
+
+Why exactly 131072 bytes? With this patch it is 100000 bytes.
+
+Signed-off-by: Johannes Sixt <johannes.sixt@telecom.at>
 ---
- lib/blame.tcl |   19 +++++++++++++------
- 1 files changed, 13 insertions(+), 6 deletions(-)
+ Another bikeshed to paint. ;)
 
-diff --git a/lib/blame.tcl b/lib/blame.tcl
-index eb61374..221313c 100644
---- a/lib/blame.tcl
-+++ b/lib/blame.tcl
-@@ -69,6 +69,8 @@ constructor new {i_commit i_path i_jump} {
- 	make_toplevel top w
- 	wm title $top [append "[appname] ([reponame]): " [mc "File Viewer"]]
- 
-+	set font_w [font measure font_diff "0"]
-+
- 	frame $w.header -background gold
- 	label $w.header.commit_l \
- 		-text [mc "Commit:"] \
-@@ -114,9 +116,9 @@ constructor new {i_commit i_path i_jump} {
- 	pack $w_path -fill x -side right
- 	pack $w.header.path_l -side right
- 
--	panedwindow $w.file_pane -orient vertical
--	frame $w.file_pane.out
--	frame $w.file_pane.cm
-+	panedwindow $w.file_pane -orient vertical -borderwidth 0 -sashwidth 3
-+	frame $w.file_pane.out -relief flat -borderwidth 1
-+	frame $w.file_pane.cm -relief sunken -borderwidth 1
- 	$w.file_pane add $w.file_pane.out \
- 		-sticky nsew \
- 		-minsize 100 \
-@@ -328,9 +330,14 @@ constructor new {i_commit i_path i_jump} {
- 
- 	set req_w [winfo reqwidth  $top]
- 	set req_h [winfo reqheight $top]
--	set scr_h [expr {[winfo screenheight $top] - 100}]
--	if {$req_w < 600} {set req_w 600}
-+	set scr_w [expr {[winfo screenwidth $top] - 40}]
-+	set scr_h [expr {[winfo screenheight $top] - 120}]
-+	set opt_w [expr {$font_w * (80 + 5*3 + 3)}]
-+	if {$req_w < $opt_w} {set req_w $opt_w}
-+	if {$req_w > $scr_w} {set req_w $scr_w}
-+	set opt_h [expr {$req_w*4/3}]
- 	if {$req_h < $scr_h} {set req_h $scr_h}
-+	if {$req_h > $opt_h} {set req_h $opt_h}
- 	set g "${req_w}x${req_h}"
- 	wm geometry $top $g
- 	update
-@@ -338,7 +345,7 @@ constructor new {i_commit i_path i_jump} {
- 	set old_height [winfo height $w.file_pane]
- 	$w.file_pane sash place 0 \
- 		[lindex [$w.file_pane sash coord 0] 0] \
--		[expr {int($old_height * 0.70)}]
-+		[expr {int($old_height * 0.80)}]
- 	bind $w.file_pane <Configure> \
- 	"if {{$w.file_pane} eq {%W}} {[cb _resize %h]}"
- 
+ Every now and then I stumble over this number, and I ask myself,
+ why are those h4x3rs so binary?
+
+ -- Hannes
+
+ lib/diff.tcl |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
+
+diff --git a/lib/diff.tcl b/lib/diff.tcl
+index abe502d..6e08704 100644
+--- a/lib/diff.tcl
++++ b/lib/diff.tcl
+@@ -164,7 +164,7 @@ proc show_other_diff {path w m cont_info} {
+ 	# - Git won't give us the diff, there's nothing to compare to!
+ 	#
+ 	if {$m eq {_O}} {
+-		set max_sz [expr {128 * 1024}]
++		set max_sz 100000
+ 		set type unknown
+ 		if {[catch {
+ 				set type [file type $path]
 -- 
-1.6.0.20.g6148bc
+1.6.0.2.319.gffa7c
