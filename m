@@ -1,76 +1,77 @@
-From: "Rob Sanheim" <rsanheim@gmail.com>
-Subject: Re: alias g to git in .gitconfig?
-Date: Fri, 3 Oct 2008 11:25:53 -0400
-Message-ID: <fc113d400810030825l75f9451dwc4cbf68807be0b5b@mail.gmail.com>
-References: <fc113d400810021951hf95ff35qb1ccb4af45a71abe@mail.gmail.com>
-	 <20081003031014.GA24367@spearce.org>
+From: Rogan Dawes <lists@dawes.za.net>
+Subject: Re: [FYI][PATCH] Execute testsuite on existing Git installation
+Date: Fri, 03 Oct 2008 17:59:49 +0200
+Message-ID: <48E64175.5090709@dawes.za.net>
+References: <20081003131314.GS10544@machine.or.cz> <48E6314B.3090609@dawes.za.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
 Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Oct 03 17:27:26 2008
+Cc: Petr Baudis <pasky@suse.cz>, git@vger.kernel.org
+To: unlisted-recipients:; (no To-header on input)
+X-From: git-owner@vger.kernel.org Fri Oct 03 18:03:34 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KlmYb-0007lO-56
-	for gcvg-git-2@gmane.org; Fri, 03 Oct 2008 17:27:05 +0200
+	id 1Kln6F-0006cG-Nt
+	for gcvg-git-2@gmane.org; Fri, 03 Oct 2008 18:01:52 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751427AbYJCPZz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 3 Oct 2008 11:25:55 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751277AbYJCPZz
-	(ORCPT <rfc822;git-outgoing>); Fri, 3 Oct 2008 11:25:55 -0400
-Received: from wa-out-1112.google.com ([209.85.146.179]:60595 "EHLO
-	wa-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750775AbYJCPZy (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 3 Oct 2008 11:25:54 -0400
-Received: by wa-out-1112.google.com with SMTP id v27so824810wah.21
-        for <git@vger.kernel.org>; Fri, 03 Oct 2008 08:25:53 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to
-         :subject:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:references;
-        bh=h5CwlVJW1lVvF8cG2JTvhKm2rXdQNVTf5nSUhKxBrVc=;
-        b=Vtt7Pqlb+x0z8vLrjEhdc1iv4S+4xNdDxIJzmaCgn2rLggcfTo/LZvOJMORaQB2XdS
-         kDvg5QANGuZV4T4E6E6HY59QBIo7zv6nR/gTCQJDd4E/jTbREAGCxvosgkMMZ45IMkNh
-         WuDicslMtgk9Z3R+oipRKt6cn8MMrhLnazLys=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:in-reply-to:mime-version
-         :content-type:content-transfer-encoding:content-disposition
-         :references;
-        b=Ep0m3/ICPdMlSv5g+J+G1Z84hp5O29nwSMwQN3OtU4PXnDWuehVojJu96i03K3fZSr
-         uz5jbtTnFbg5sxGL3Cl6RWoaU1YgRSU5ntflAff0jl2T+hqJh7ZwUD/p+E+SWTEoxqvm
-         WICsJ2m9YR1DSdh60KlOs6IxnB4Oo3W6oUPRw=
-Received: by 10.114.13.10 with SMTP id 10mr1367559wam.106.1223047553465;
-        Fri, 03 Oct 2008 08:25:53 -0700 (PDT)
-Received: by 10.115.79.2 with HTTP; Fri, 3 Oct 2008 08:25:53 -0700 (PDT)
-In-Reply-To: <20081003031014.GA24367@spearce.org>
-Content-Disposition: inline
+	id S1752094AbYJCQAk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 3 Oct 2008 12:00:40 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752246AbYJCQAk
+	(ORCPT <rfc822;git-outgoing>); Fri, 3 Oct 2008 12:00:40 -0400
+Received: from sd-green-bigip-145.dreamhost.com ([208.97.132.145]:38902 "EHLO
+	spunkymail-a10.g.dreamhost.com" rhost-flags-OK-OK-OK-FAIL)
+	by vger.kernel.org with ESMTP id S1750904AbYJCQAj (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 3 Oct 2008 12:00:39 -0400
+X-Greylist: delayed 4139 seconds by postgrey-1.27 at vger.kernel.org; Fri, 03 Oct 2008 12:00:39 EDT
+Received: from [192.168.201.101] (dsl-243-205-139.telkomadsl.co.za [41.243.205.139])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by spunkymail-a10.g.dreamhost.com (Postfix) with ESMTP id 7E3911614CB;
+	Fri,  3 Oct 2008 09:00:37 -0700 (PDT)
+User-Agent: Thunderbird 2.0.0.17 (Windows/20080914)
+In-Reply-To: <48E6314B.3090609@dawes.za.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/97432>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/97433>
 
-Thanks, that did it.
-
-On Thu, Oct 2, 2008 at 11:10 PM, Shawn O. Pearce <spearce@spearce.org> wrote:
-> Rob Sanheim <rsanheim@gmail.com> wrote:
->> This is pretty trivial, but I'm a lazy typist.
+Rogan Dawes wrote:
+> Petr Baudis wrote:
+>> When I joined here, one of the first tasks I had was to "verify if the
+>> existing system-wide Git installation works fine on the local Linux
+>> setup (of unknown qualities)". I couldn't think of anything better than
+>> to run the Git testsuite, but using the system-wide Git instead of
+>> locally compiled one.
 >>
->> Is it possible to alias 'g' to git via git config, instead of via
->> bash?  If I do a plain bash alias then none of the nice autocompletion
->> from git-contrib work with 'g'.
->
-> No, you'll need to alias 'g' to git in bash, and then if you still
-> want completion you'll need to also register the compgen to call
-> _git completion routine.  Its two lines:
->
->        alias g=git
->        complete -o default -o nospace -F _git g
->
-> --
-> Shawn.
->
+>> This extremely dirty patch achieves this; patch testsuite of Git version
+>> corresponding to the system-wide installation, of course. You will still
+>> need to make the test helpers.
+>>
+>> I don't have any real interest on developing this further or tidying it
+>> up, but I have thought that someone might find this useful to just use
+>> or push forward, so here it goes.
+>>
+>> Signed-off-by: Petr Baudis <petr.baudis@novartis.com>
+>>
+> 
+> Perhaps a stupid question, but might it not be easier to add the git 
+> build dir to the front of the PATH, and then remove the explicit paths?
+> 
+> I realise that if the build was unsuccessful, you may end up executing a 
+> different version of git than you expect, though.
+> 
+> Rogan
+> 
+
+Or, make a "BUILD_DIR" variable, and replace ../git with ${BUILD_DIR}git 
+throughout, and make BUILD_DIR == '../' for the normal case, and '' for 
+the less common case of testing the existing installation.
+
+Or, make ../git a symlink to the installed git binary. This is probably 
+the simplest, in fact, requiring the least surgery - i.e. none for those 
+who don't need this functionality.
+
+Rogan
