@@ -1,79 +1,81 @@
-From: David Bryson <david@statichacks.org>
-Subject: Re: [PATCH] Use "git_config_string" to simplify "remote.c" code in
-	"handle_config"
-Date: Fri, 3 Oct 2008 13:06:13 -0700
-Message-ID: <20081003200613.GO20571@eratosthenes.cryptobackpack.org>
-References: <20081003033937.GA11594@eratosthenes.cryptobackpack.org> <48E5AD8A.4070301@op5.se>
-Reply-To: David Bryson <david@statichacks.org>
+From: Thomas Rast <trast@student.ethz.ch>
+Subject: Re: [PATCH] bash: remove fetch, push, pull dashed form leftovers
+Date: Fri, 3 Oct 2008 22:13:01 +0200
+Message-ID: <200810032213.06005.trast@student.ethz.ch>
+References: <fc113d400810030825l75f9451dwc4cbf68807be0b5b@mail.gmail.com> <1223051705-30347-1-git-send-email-trast@student.ethz.ch> <20081003193449.GA24821@neumann>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Andreas Ericsson <ae@op5.se>
-X-From: git-owner@vger.kernel.org Fri Oct 03 22:07:39 2008
+Content-Type: multipart/signed;
+  boundary="nextPart2142877.5Sv8fH2FVr";
+  protocol="application/pgp-signature";
+  micalg=pgp-sha1
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, Rob Sanheim <rsanheim@gmail.com>,
+	"Shawn O. Pearce" <spearce@spearce.org>
+To: SZEDER =?utf-8?q?G=C3=A1bor?= <szeder@ira.uka.de>
+X-From: git-owner@vger.kernel.org Fri Oct 03 22:14:28 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Klqvv-00042Y-Ae
-	for gcvg-git-2@gmane.org; Fri, 03 Oct 2008 22:07:27 +0200
+	id 1Klr2Y-0006er-Di
+	for gcvg-git-2@gmane.org; Fri, 03 Oct 2008 22:14:18 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753072AbYJCUGP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 3 Oct 2008 16:06:15 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753116AbYJCUGP
-	(ORCPT <rfc822;git-outgoing>); Fri, 3 Oct 2008 16:06:15 -0400
-Received: from cryptobackpack.org ([64.105.32.74]:56994 "EHLO
-	mail.cryptobackpack.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752980AbYJCUGO (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 3 Oct 2008 16:06:14 -0400
-Received: by mail.cryptobackpack.org (Postfix, from userid 1000)
-	id 428D610D0248; Fri,  3 Oct 2008 13:06:14 -0700 (PDT)
-X-Spam-Checker-Version: SpamAssassin 3.2.1-gr1 (2007-05-02) on
-	ptolemy.cryptobackpack.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-4.1 required=5.0 tests=ALL_TRUSTED,AWL,BAYES_00
-	autolearn=ham version=3.2.1-gr1
-Received: from eratosthenes.statichacks.org (heliosphan.cryptobackpack.org [10.6.6.6])
-	by mail.cryptobackpack.org (Postfix) with ESMTP id 7839110D0023;
-	Fri,  3 Oct 2008 13:06:13 -0700 (PDT)
-Received: by eratosthenes.statichacks.org (Postfix, from userid 1000)
-	id 5F87E983B9; Fri,  3 Oct 2008 13:06:13 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <48E5AD8A.4070301@op5.se>
-User-Agent: Mutt/1.5.16 (2007-06-09)
+	id S1752044AbYJCUNI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 3 Oct 2008 16:13:08 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750904AbYJCUNI
+	(ORCPT <rfc822;git-outgoing>); Fri, 3 Oct 2008 16:13:08 -0400
+Received: from xsmtp1.ethz.ch ([82.130.70.13]:12583 "EHLO xsmtp1.ethz.ch"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750785AbYJCUNH (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 3 Oct 2008 16:13:07 -0400
+Received: from xfe1.d.ethz.ch ([82.130.124.41]) by xsmtp1.ethz.ch with Microsoft SMTPSVC(6.0.3790.3959);
+	 Fri, 3 Oct 2008 22:13:04 +0200
+Received: from [192.168.0.7] ([84.75.157.245]) by xfe1.d.ethz.ch over TLS secured channel with Microsoft SMTPSVC(6.0.3790.3959);
+	 Fri, 3 Oct 2008 22:13:03 +0200
+User-Agent: KMail/1.9.9
+In-Reply-To: <20081003193449.GA24821@neumann>
+X-OriginalArrivalTime: 03 Oct 2008 20:13:03.0796 (UTC) FILETIME=[70FFA740:01C92594]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/97449>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/97450>
 
-On Fri, Oct 03, 2008 at 07:28:42AM +0200 or thereabouts, Andreas Ericsson wrote:
-> David Bryson wrote:
->> Signed-off-by: David Bryson <david@statichacks.org>
->> I tried to keep with the naming/coding conventions that I found in
->> remote.c.  Feedback welcome.
->> ---
->>  remote.c |   19 ++++++++++---------
->>  1 files changed, 10 insertions(+), 9 deletions(-)
->> diff --git a/remote.c b/remote.c
->> index 3f3c789..893a739 100644
->> --- a/remote.c
->> +++ b/remote.c
->> @@ -305,6 +305,7 @@ static int handle_config(const char *key, const char 
->> *value, void *cb)
->>  {
->>  	const char *name;
->>  	const char *subkey;
->> +	const char *v;
->
->
-> Not very mnemonic. I'm sure you can think up a better name, even if it's
-> a long one. Git is notoriously sparse when it comes to comments. We rely
-> instead on self-explanatory code.
->
+--nextPart2142877.5Sv8fH2FVr
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: quoted-printable
+Content-Disposition: inline
 
-Oh I agree entirely, it is quite vague, however like I mentioned I tried
-to keep to the conventios in the file.  This strategy(v) is used in several
-other places in remote.c, if this is Bad Code, then I have no problem
-changing it.
+SZEDER G=E1bor wrote:
+> We don't provide complation for git-commands in dashed form anymore,
+> so there is no need to keep those cases.
+[...]
+> On Fri, Oct 03, 2008 at 06:35:05PM +0200, Thomas Rast wrote:
+> > I do wonder if there's a better approach to those functions
+> > however, so that the "obvious" fix suggested by Shawn would work.
+>=20
+> Maybe something like this?
 
-Thoughts from anybody else ?
+That's indeed much simpler and better.  FWIW,
+
+Tested-by: Thomas Rast <trast@student.ethz.ch>
+
+=2D-=20
+Thomas Rast
+trast@{inf,student}.ethz.ch
+
+
+--nextPart2142877.5Sv8fH2FVr
+Content-Type: application/pgp-signature; name=signature.asc 
+Content-Description: This is a digitally signed message part.
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.0.9 (GNU/Linux)
+
+iEYEABECAAYFAkjmfNEACgkQqUud07tmzP0BzwCgo2Mmy1w5UDvaSa6Cb2zed5AE
+SfwAn2T9tSzlwjtH1iytuZxb4UTl7z9f
+=+HXg
+-----END PGP SIGNATURE-----
+
+--nextPart2142877.5Sv8fH2FVr--
