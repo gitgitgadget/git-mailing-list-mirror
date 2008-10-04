@@ -1,185 +1,133 @@
-From: Linus Torvalds <torvalds@linux-foundation.org>
-Subject: Re: How to list versioned files with modification status
-Date: Sat, 4 Oct 2008 16:10:17 -0700 (PDT)
-Message-ID: <alpine.LFD.2.00.0810041608150.3208@nehalem.linux-foundation.org>
-References: <20081004131256.586a5fbf@smartavionics.com> <81b0412b0810041440w131647aeo9c14f55cd38da635@mail.gmail.com> <loom.20081004T215458-15@post.gmane.org>
+From: Dmitry Potapov <dpotapov@gmail.com>
+Subject: Re: Files with colons under Cygwin
+Date: Sun, 5 Oct 2008 03:39:45 +0400
+Message-ID: <20081004233945.GM21650@dpotapov.dyndns.org>
+References: <c475e2e60810020702q573570dcp31a5dc18bf98ef30@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org
-To: Mark Burton <markb@ordern.com>
-X-From: git-owner@vger.kernel.org Sun Oct 05 01:12:10 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, "Shawn O. Pearce" <spearce@spearce.org>
+To: Giovanni Funchal <gafunchal@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Oct 05 01:41:10 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KmGI6-0001jK-Os
-	for gcvg-git-2@gmane.org; Sun, 05 Oct 2008 01:12:03 +0200
+	id 1KmGkH-0007qD-MT
+	for gcvg-git-2@gmane.org; Sun, 05 Oct 2008 01:41:10 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754765AbYJDXKf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 4 Oct 2008 19:10:35 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754756AbYJDXKf
-	(ORCPT <rfc822;git-outgoing>); Sat, 4 Oct 2008 19:10:35 -0400
-Received: from smtp1.linux-foundation.org ([140.211.169.13]:40633 "EHLO
-	smtp1.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1754633AbYJDXKe (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 4 Oct 2008 19:10:34 -0400
-Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [140.211.169.55])
-	by smtp1.linux-foundation.org (8.14.2/8.13.5/Debian-3ubuntu1.1) with ESMTP id m94NAHQw021217
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Sat, 4 Oct 2008 16:10:19 -0700
-Received: from localhost (localhost [127.0.0.1])
-	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id m94NAH2O004394;
-	Sat, 4 Oct 2008 16:10:17 -0700
-In-Reply-To: <loom.20081004T215458-15@post.gmane.org>
-User-Agent: Alpine 2.00 (LFD 1167 2008-08-23)
-X-Spam-Status: No, hits=-3.434 required=5 tests=AWL,BAYES_00
-X-Spam-Checker-Version: SpamAssassin 3.2.4-osdl_revision__1.47__
-X-MIMEDefang-Filter: lf$Revision: 1.188 $
-X-Scanned-By: MIMEDefang 2.63 on 140.211.169.13
+	id S1754825AbYJDXjw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 4 Oct 2008 19:39:52 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754813AbYJDXjw
+	(ORCPT <rfc822;git-outgoing>); Sat, 4 Oct 2008 19:39:52 -0400
+Received: from fg-out-1718.google.com ([72.14.220.155]:29163 "EHLO
+	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754752AbYJDXjv (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 4 Oct 2008 19:39:51 -0400
+Received: by fg-out-1718.google.com with SMTP id 19so1481539fgg.17
+        for <git@vger.kernel.org>; Sat, 04 Oct 2008 16:39:49 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:date:from:to:cc:subject
+         :message-id:references:mime-version:content-type:content-disposition
+         :in-reply-to:user-agent;
+        bh=9NDOMMHzkRSPP8n6Jnifwq27uz/BHFW+nSEUbHD02lQ=;
+        b=mjitnWEGlzwgVQWl9DMmEGeCi++m8L9eHAOk56eajqqWnAF+TfggPz2DkawZP0SB2A
+         ls4i8NhZ6EUhmIeXyQw0HcW7Sp1XK/1BK+8MVZJkrwtB19qgT/XNyav6Al3pbwVJR4Qr
+         hYUAE6pkbHtcTerkLzlRcIEIdvgEMrmsncaEM=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        b=b69oPHplOeRSz/2HYT+raEFCUzBXWf8oZdWalIrqQUFfxv0a5HEys8HaDrRJOvMcxX
+         2mrpi7yEdVie+HKRVLBf6tpfjoT8H85/weYSqdezw7ZNWtIyZ63BuZVo5sqyi1UeRBfp
+         U/4cfK27UBCasGqfJXh0QqZ74z39PzIFUN1vU=
+Received: by 10.86.57.9 with SMTP id f9mr2849367fga.66.1223163589498;
+        Sat, 04 Oct 2008 16:39:49 -0700 (PDT)
+Received: from localhost (ppp83-237-185-144.pppoe.mtu-net.ru [83.237.185.144])
+        by mx.google.com with ESMTPS id e20sm7385979fga.1.2008.10.04.16.39.47
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Sat, 04 Oct 2008 16:39:48 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <c475e2e60810020702q573570dcp31a5dc18bf98ef30@mail.gmail.com>
+User-Agent: Mutt/1.5.13 (2006-08-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/97487>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/97488>
 
+On Thu, Oct 02, 2008 at 04:02:23PM +0200, Giovanni Funchal wrote:
+> 
+> Cygwin does not allow files with colons, I think this is Windows stuff
+> one just can't avoid. 
 
-On Sat, 4 Oct 2008, Mark Burton wrote:
->
-> 'git diff --name-status' looks useful but it only shows the files that have
-> changed - I would like to see the names of the files that haven't changed. Even
-> svn could do that (svn status).
+At least, you cannot use colon in Win32 API. They say Windows "native"
+API has less restrictions over what symbols are not allowed in file
+names, but I guess it is still not allowed.
 
-Nobody has ever asked for such a crazy thing, but here's a test-patch to 
-teach 'git ls-files' the '--unmodified' flag.
+> If you have files with colons in a git
+> repository and try pulling them on cygwin, the file is empty, its name
+> is truncated and the status is wrong.
+> 
+> linux $ date > a:b
+> linux $ git init
+> linux $ git add a:b
+> linux $ git commit -m test
+> linux $ git push
+> cygwin $ git pull
 
-It's strictly bigger than need be, partly because ls-files is a horror, 
-partly because it needed that 'name_status()' helper function to make it 
-not turn into something even worse.
+Strange...  What version of Cygwin did you use?  When I tried this with
+Cygwin 1.5.25, I got the following error:
 
-I also fixed a git ls-files buglet: a deleted file implies modification, 
-so if you ask for --deleted _and_ --modified at the same time, you'll see 
-a deleted file listed twice. Use '-v' to see the type. This makes it 
-only show it once - as deleted if you asked for that information, 
-otherwise as modified.
+  error: git checkout-index: unable to create file a:b (No medium found)
 
-So with something like this, you can do
+Apparently, Git tried to create 'b' file on the drive 'a', and creating
+files outside of the working tree is not a very good thing to do from
+the security point of view, as it can easily overwrite anything in
+c:/windows/.
 
-	git ls-files -v --modified --deleted --unmodified
+So, here is a patch. It basically disallow backslashes and colons in
+file names on Windows (whether it is MinGW or Cygwin).
 
-and you'll see all files with a tag in front (the tag for unmodified is 
-empty).
+I wonder if the problem exists on Mac OS X too. From what I heard, it
+does not treat ':' as a normal symbol. But I have no access to Mac OS X,
+so here is a patch for Windows only.
 
-Not very well tested (aka "Hey, it's a patch from Linus, caveat emptor!")
+-- >8 --
+From: Dmitry Potapov <dpotapov@gmail.com>
+Date: Sat, 4 Oct 2008 22:57:19 +0400
+Subject: [PATCH] correct verify_path for Windows
 
-		Linus
+Colon and backslash in names may be used on Windows to overwrite files
+outside of the working directory.
 
+Signed-off-by: Dmitry Potapov <dpotapov@gmail.com>
 ---
- builtin-ls-files.c |   48 +++++++++++++++++++++++++++++++++++++++---------
- 1 files changed, 39 insertions(+), 9 deletions(-)
+ read-cache.c |   10 ++++++++++
+ 1 files changed, 10 insertions(+), 0 deletions(-)
 
-diff --git a/builtin-ls-files.c b/builtin-ls-files.c
-index 068f424..27a318a 100644
---- a/builtin-ls-files.c
-+++ b/builtin-ls-files.c
-@@ -18,6 +18,7 @@ static int show_others;
- static int show_stage;
- static int show_unmerged;
- static int show_modified;
-+static int show_unmodified;
- static int show_killed;
- static int show_valid_bit;
- static int line_terminator = '\n';
-@@ -35,6 +36,7 @@ static const char *tag_removed = "";
- static const char *tag_other = "";
- static const char *tag_killed = "";
- static const char *tag_modified = "";
-+static const char *tag_unmodified = "";
- 
- 
- /*
-@@ -218,6 +220,20 @@ static void show_ce_entry(const char *tag, struct cache_entry *ce)
- 	write_name_quoted(ce->name + offset, stdout, line_terminator);
- }
- 
-+enum show_state {
-+	unmodified, deleted, modified
-+};
-+
-+static enum show_state name_status(struct cache_entry *ce)
-+{
-+	struct stat st;
-+	int err = lstat(ce->name, &st);
-+
-+	if (err)
-+		return deleted;
-+	return ce_modified(ce, &st, 0) ? modified : unmodified;
-+}
-+
- static void show_files(struct dir_struct *dir, const char *prefix)
- {
- 	int i;
-@@ -248,19 +264,27 @@ static void show_files(struct dir_struct *dir, const char *prefix)
- 			show_ce_entry(ce_stage(ce) ? tag_unmerged : tag_cached, ce);
+diff --git a/read-cache.c b/read-cache.c
+index 901064b..972592e 100644
+--- a/read-cache.c
++++ b/read-cache.c
+@@ -701,6 +701,16 @@ inside:
+ 			}
+ 			return 0;
  		}
- 	}
--	if (show_deleted | show_modified) {
-+	if (show_deleted | show_modified | show_unmodified) {
- 		for (i = 0; i < active_nr; i++) {
- 			struct cache_entry *ce = active_cache[i];
--			struct stat st;
--			int err;
- 			int dtype = ce_to_dtype(ce);
- 			if (excluded(dir, ce->name, &dtype) != dir->show_ignored)
- 				continue;
--			err = lstat(ce->name, &st);
--			if (show_deleted && err)
--				show_ce_entry(tag_removed, ce);
--			if (show_modified && ce_modified(ce, &st, 0))
--				show_ce_entry(tag_modified, ce);
-+			switch (name_status(ce)) {
-+			default:
-+				if (show_unmodified)
-+					show_ce_entry(tag_unmodified, ce);
-+				break;
-+			case deleted:
-+				if (show_deleted) {
-+					show_ce_entry(tag_removed, ce);
-+					break;
-+				}
-+				/* Fall through */
-+			case modified:
-+				if (show_modified)
-+					show_ce_entry(tag_modified, ce);
-+			}
- 		}
++#if defined(_WIN32) || defined(__CYGWIN__)
++		/*
++		 * There is a bunch of other characters that are not allowed
++		 * in Win32 API, but the following two create a security hole
++		 * by allowing to overwrite files outside of the working tree,
++		 * therefore they are explicitly prohibited.
++		 */
++		else if (c == ':' || c == '\\')
++			return 0;
++#endif
+ 		c = *path++;
  	}
  }
-@@ -457,6 +481,7 @@ int cmd_ls_files(int argc, const char **argv, const char *prefix)
- 			tag_modified = "C ";
- 			tag_other = "? ";
- 			tag_killed = "K ";
-+			tag_unmodified = "  ";
- 			if (arg[1] == 'v')
- 				show_valid_bit = 1;
- 			continue;
-@@ -474,6 +499,11 @@ int cmd_ls_files(int argc, const char **argv, const char *prefix)
- 			require_work_tree = 1;
- 			continue;
- 		}
-+		if (!strcmp(arg, "--unmodified")) {
-+			show_unmodified = 1;
-+			require_work_tree = 1;
-+			continue;
-+		}
- 		if (!strcmp(arg, "-o") || !strcmp(arg, "--others")) {
- 			show_others = 1;
- 			require_work_tree = 1;
-@@ -593,7 +623,7 @@ int cmd_ls_files(int argc, const char **argv, const char *prefix)
- 
- 	/* With no flags, we default to showing the cached files */
- 	if (!(show_stage | show_deleted | show_others | show_unmerged |
--	      show_killed | show_modified))
-+	      show_killed | show_modified | show_unmodified))
- 		show_cached = 1;
- 
- 	read_cache();
+-- 
+1.6.0.2.445.g1198
+
+-- >8 --
