@@ -1,68 +1,75 @@
-From: Linus Torvalds <torvalds@linux-foundation.org>
-Subject: Re: Broken index file - any hope?
-Date: Fri, 3 Oct 2008 20:08:48 -0700 (PDT)
-Message-ID: <alpine.LFD.2.00.0810032002240.3208@nehalem.linux-foundation.org>
-References: <48E693E9.708@gmx.de> <20081003215319.GX21310@spearce.org> <48E696CB.6040405@gmx.de>
+From: Jeff King <peff@peff.net>
+Subject: Re: git apply: git diff header lacks filename information for git
+	diff --no-index patch
+Date: Sat, 4 Oct 2008 00:17:14 -0400
+Message-ID: <20081004041714.GA12413@coredump.intra.peff.net>
+References: <500f3d130810021127j570bb540p901f6a73f58a6cb1@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: "Shawn O. Pearce" <spearce@spearce.org>, git@vger.kernel.org
-To: Jonas Schneider <JonasSchneider@gmx.de>
-X-From: git-owner@vger.kernel.org Sat Oct 04 05:12:31 2008
+Content-Type: text/plain; charset=utf-8
+Cc: Linus Torvalds <torvalds@linux-foundation.org>, git@vger.kernel.org
+To: Imre Deak <imre.deak@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Oct 04 06:24:11 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KlxZG-0007hT-TI
-	for gcvg-git-2@gmane.org; Sat, 04 Oct 2008 05:12:31 +0200
+	id 1Klygd-0002ZM-4N
+	for gcvg-git-2@gmane.org; Sat, 04 Oct 2008 06:24:11 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752025AbYJDDIz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 3 Oct 2008 23:08:55 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752075AbYJDDIz
-	(ORCPT <rfc822;git-outgoing>); Fri, 3 Oct 2008 23:08:55 -0400
-Received: from smtp1.linux-foundation.org ([140.211.169.13]:39673 "EHLO
-	smtp1.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1752025AbYJDDIy (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 3 Oct 2008 23:08:54 -0400
-Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [140.211.169.55])
-	by smtp1.linux-foundation.org (8.14.2/8.13.5/Debian-3ubuntu1.1) with ESMTP id m9438nLx027861
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Fri, 3 Oct 2008 20:08:50 -0700
-Received: from localhost (localhost [127.0.0.1])
-	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id m9438mgE028747;
-	Fri, 3 Oct 2008 20:08:48 -0700
-In-Reply-To: <48E696CB.6040405@gmx.de>
-User-Agent: Alpine 2.00 (LFD 1167 2008-08-23)
-X-Spam-Status: No, hits=-3.435 required=5 tests=AWL,BAYES_00
-X-Spam-Checker-Version: SpamAssassin 3.2.4-osdl_revision__1.47__
-X-MIMEDefang-Filter: lf$Revision: 1.188 $
-X-Scanned-By: MIMEDefang 2.63 on 140.211.169.13
+	id S1750770AbYJDERS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 4 Oct 2008 00:17:18 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750758AbYJDERS
+	(ORCPT <rfc822;git-outgoing>); Sat, 4 Oct 2008 00:17:18 -0400
+Received: from peff.net ([208.65.91.99]:4498 "EHLO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750749AbYJDERR (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 4 Oct 2008 00:17:17 -0400
+Received: (qmail 10049 invoked by uid 111); 4 Oct 2008 04:17:15 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+    by peff.net (qpsmtpd/0.32) with SMTP; Sat, 04 Oct 2008 00:17:15 -0400
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Sat, 04 Oct 2008 00:17:14 -0400
+Content-Disposition: inline
+In-Reply-To: <500f3d130810021127j570bb540p901f6a73f58a6cb1@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/97463>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/97464>
 
+On Thu, Oct 02, 2008 at 09:27:36PM +0300, Imre Deak wrote:
 
+> $ git apply patch
+> fatal: git diff header lacks filename information (line 4)
+> $ cat patch
+> diff --git a/dev/null b/a
+> new file mode 100644
+> index 0000000000000000000000000000000000000000..1f2a4f5ef3df7f7456d91c961da36fc58904f2f1
+> GIT binary patch
 
-On Sat, 4 Oct 2008, Jonas Schneider wrote:
+Hmm. The problem is that "git apply" doesn't accept that "a/dev/null"
+and "b/a" are the same, so it rejects them as a name. I guess on a text
+patch, we would just pull that information from the "---" and "+++"
+lines, so we don't care that it's not on the diff commandline.
 
-> Shawn O. Pearce schrieb:
-> >   git read-tree --reset HEAD
-> Sadly, this doesnt help. I still get the same error.
-> But, if I remove the corrupt index file, I get this:
-> 
-> fatal: just how do you expect me to merge 0 trees?
+However, a _non_ --no-index patch doesn't produce the same output. It
+will actually produce the line:
 
-Sounds like you didn't recreate the whole .git directory - not only was 
-your index file corrupt, but apparently your .git/HEAD file is too.
+  diff --git a/a b/a
 
-The index is just a cache (apart from when you stage things into it 
-and/or do merges), and the git read-tree should have recreated it for you. 
-The fact that it doesn't work implies that HEAD is corrupt or missing too.
+even if it is a creation patch. So I'm not sure which piece of code is
+at fault. Either:
 
-Does "git branch" work for you? And what does .git/HEAD contain (normally 
-it would just contain a single line saying "ref: refs/heads/master", but 
-it obviously depends on which branch you were on, and it could just be a 
-detached head that just points directly to a SHA1).
+  1. git apply is right to reject, and "git diff --no-index" should be
+     putting the actual filename on the commandline of a binary patch
+     instead of /dev/null, even if it is a creation patch.
 
-		Linus
+     or
+
+  2. git apply should accept this construct. Perhaps we should relax the
+     "both names must be the same" rule if one of the names is /dev/null
+     (and we would take the other)?
+
+Linus, the "both names must be the same" code in git_header_name blames
+to you (5041aa70). Thoughts on number 2?
+
+-Peff
