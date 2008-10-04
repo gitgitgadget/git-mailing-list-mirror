@@ -1,100 +1,126 @@
-From: "Li Frank-B20596" <Frank.Li@freescale.com>
-Subject: RE: [QGit] [PATCH] Modify Highlight Color at File Context View.
-Date: Sat, 4 Oct 2008 22:32:09 +0800
-Message-ID: <7FD1F85C96D70C4A89DA1DF7667EAE9607A45A@zch01exm23.fsl.freescale.net>
-References: <gbak2u$v9b$1@ger.gmane.org> <e5bfff550809250934l47c48440m332764491ff5391@mail.gmail.com> <7FD1F85C96D70C4A89DA1DF7667EAE9607A00A@zch01exm23.fsl.freescale.net> <e5bfff550809252215v72bb4633s17b5c1a8c39f55ff@mail.gmail.com> <7FD1F85C96D70C4A89DA1DF7667EAE9607A0D9@zch01exm23.fsl.freescale.net> <e5bfff550809260337o1523995ele3333c0de9295393@mail.gmail.com> <7FD1F85C96D70C4A89DA1DF7667EAE9607A217@zch01exm23.fsl.freescale.net> <e5bfff550809270547n15a210e3y386278db00966945@mail.gmail.com> <7FD1F85C96D70C4A89DA1DF7667EAE9605EA4E@zch01exm23.fsl.freescale.net> <e5bfff550809302347r59621e09sdea5c679ef3794c8@mail.gmail.com> <e5bfff550810032319s57a0cd52m37aeb8d801019150@mail.gmail.com>
+From: Christian Couder <chriscool@tuxfamily.org>
+Subject: GitTogether topics status (4th of October)
+Date: Sat, 4 Oct 2008 18:16:40 +0200
+Message-ID: <200810041816.41026.chriscool@tuxfamily.org>
 Mime-Version: 1.0
 Content-Type: text/plain;
-	charset="US-ASCII"
-Content-Transfer-Encoding: 8BIT
-Cc: <git@vger.kernel.org>
-To: "Marco Costalba" <mcostalba@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Oct 04 16:34:32 2008
+  charset="us-ascii"
+Content-Transfer-Encoding: 7bit
+Cc: "Shawn O. Pearce" <spearce@spearce.org>,
+	Junio C Hamano <gitster@pobox.com>,
+	Scott Chacon <schacon@gmail.com>,
+	Sam Vilain <sam.vilain@catalyst.net.nz>,
+	Petr Baudis <pasky@suse.cz>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Oct 04 18:16:18 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Km8DH-0008GQ-KS
-	for gcvg-git-2@gmane.org; Sat, 04 Oct 2008 16:34:32 +0200
+	id 1Km9na-0005Q8-Ud
+	for gcvg-git-2@gmane.org; Sat, 04 Oct 2008 18:16:07 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752992AbYJDOcT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 4 Oct 2008 10:32:19 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752979AbYJDOcT
-	(ORCPT <rfc822;git-outgoing>); Sat, 4 Oct 2008 10:32:19 -0400
-Received: from az33egw01.freescale.net ([192.88.158.102]:50261 "EHLO
-	az33egw01.freescale.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752967AbYJDOcS convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 4 Oct 2008 10:32:18 -0400
-Received: from az33smr02.freescale.net (az33smr02.freescale.net [10.64.34.200])
-	by az33egw01.freescale.net (8.12.11/az33egw01) with ESMTP id m94EWFGa001277
-	for <git@vger.kernel.org>; Sat, 4 Oct 2008 07:32:15 -0700 (MST)
-Received: from zch01exm23.fsl.freescale.net (zch01exm23.ap.freescale.net [10.192.129.207])
-	by az33smr02.freescale.net (8.13.1/8.13.0) with ESMTP id m94EWDY4007161
-	for <git@vger.kernel.org>; Sat, 4 Oct 2008 09:32:14 -0500 (CDT)
-X-MimeOLE: Produced By Microsoft Exchange V6.5
-Content-class: urn:content-classes:message
-In-Reply-To: <e5bfff550810032319s57a0cd52m37aeb8d801019150@mail.gmail.com>
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-Thread-Topic: [QGit] [PATCH] Modify Highlight Color at File Context View.
-Thread-Index: Ackl6TWRP3Y1ctl/TP6sWVep+nffvAARERkw
+	id S1751427AbYJDQNr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 4 Oct 2008 12:13:47 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751349AbYJDQNr
+	(ORCPT <rfc822;git-outgoing>); Sat, 4 Oct 2008 12:13:47 -0400
+Received: from smtp4-g19.free.fr ([212.27.42.30]:57490 "EHLO smtp4-g19.free.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751285AbYJDQNq (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 4 Oct 2008 12:13:46 -0400
+Received: from smtp4-g19.free.fr (localhost.localdomain [127.0.0.1])
+	by smtp4-g19.free.fr (Postfix) with ESMTP id 229DB3EA114;
+	Sat,  4 Oct 2008 18:13:39 +0200 (CEST)
+Received: from bureau.boubyland (gre92-7-82-243-130-161.fbx.proxad.net [82.243.130.161])
+	by smtp4-g19.free.fr (Postfix) with ESMTP id 5DD193EA0EB;
+	Sat,  4 Oct 2008 18:13:38 +0200 (CEST)
+User-Agent: KMail/1.9.9
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/97471>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/97472>
 
- 
-Marco:
-	
-	It is difference between my patch and you applied patch. 
+Hi,
 
-Git diff HEAD^
--	item->setForeground(b);
-+		item->setForeground(fore);
-+		item->setForeground(back);
- 		item->setFont(f);
+As can be seen on the GitTogether page on the wiki: 
 
-In my patch:
+http://git.or.cz/gitwiki/GitTogether
 
--		item->setForeground(b);
-+		item->setForeground(fore);
-+		item->setBackground(back);
+the planned speakers/topics changed a lot during the last weeks and are now:
 
-It should be setBackground(back), not setForeground(back);
+- Johannes Schindelin (Google Tech Talk, 1 hour):
+	Contributing with Git (or: all your rebase are belong to us)
 
+- Shawn O. Pearce (Talk + Brainstorm, 1 hour):
+	Introduce the secret bundle project
 
-Best regards
-Frank Li
+- Shawn O. Pearce (Talk + Debate, 0.5 hour):
+	JGit, where is it going?
 
------Original Message-----
-From: Marco Costalba [mailto:mcostalba@gmail.com] 
-Sent: Saturday, October 04, 2008 2:20 PM
-To: Li Frank-B20596
-Cc: git@vger.kernel.org
-Subject: Re: [QGit] [PATCH] Modify Highlight Color at File Context View.
+- Shawn O. Pearce (Talk + Plan Hacking, 1 hour):
+	Pack v4, what's stopping you?
 
-On Wed, Oct 1, 2008 at 8:47 AM, Marco Costalba <mcostalba@gmail.com>
-wrote:
-> On Mon, Sep 29, 2008 at 3:27 AM, Li Frank-B20596
-<Frank.Li@freescale.com> wrote:
->> Marco:
->>
->>          I don't get my patch by git-pull.
->>          There are not my patch at
->> http://git.kernel.org/?p=qgit/qgit4.git;a=summary.
->>
->> best regards
->> Frank Li
->> ________________________________
->
-> I have pushed to my local repo, I will be able to push to public repo 
-> only this week end.
->
+- Sam Vilain (?):
+	GitTorrent, Git as a DB backend, perl.git conversion
 
-Ok. Now is pushed to public repo.
+- Junio C Hamano (Talk, 1 hour):
+	Git Chronicle, Recent Additions to Git
 
-Frank, are you sure it works? for me it does not seem to make any
-difference.
+- Scott Chacon (Talk/Discussion, 1 hour):
+	Linkable library, Scriptability
 
-Marco
+- Scott Chacon (Hack Session(proposed)):
+	Architecting / Building a usable linkable library
+
+- Scott Chacon (Lightning Talk, 10 min):
+	iGitHub - git daemon and repository browser on the iPhone
+
+- Tom Preston-Werner (Talk/Discussion, 1 hour)
+	Git ideas from GitHub
+
+- ? (Talk/Discussion, 1 hour):
+	New git homepage hammering out
+
+- ? (Talk/Discussion, 1 hour):
+	Git GUI that even a designer would use
+
+There are still many things that are not clear or undecided. So more input 
+is welcome.
+
+The topics suggested on the wiki are:
+
+ * GitTorrent: current state, security considerations, future direction
+ * Submodules: how to make a UI for this important feature that is intuitive 
+and complete
+ * PackV4
+ * JGit, quo vadis?
+ * Using Git for everything but source (Git as a backup tool, how to handle 
+large blobs, using as a DB back-end, etc)
+ * How to make Git more attractive to the Google Code folks?
+ * Success/War stories (big wanking session for Gits)
+ * perl.git - the joy of grokking Perforce metadata using Postgres, and 
+writing a transactional git-fastimport exporter SamV
+ * Linkable library for basic object access (libification or new library)
+ * Scriptability, using git in other languages (using interfaces vs calling 
+plumbing vs reimplementting) 
+ * Git GUI that even a designer could use (GitCheetah, AKA TortoiseGit?) (UI 
+session?)
+ * Git integration with IDE, RAD, and editors (UI session?)
+ * New Git Homepage hammering-out (UI session?)
+ * Shawn's current bundle related secret project
+ * TopGit introduction/design/integration(?)
+ * Pasky's current pickaxe related "secret project" (if tangible by then)
+ * Extending Git with volatile metadata database (see 
+[http://mid.gmane.org/20080910164045.GL10360@machine.or.cz 
+20080910164045.GL10360@machine.or.cz])
+ * Git improvement ideas gleaned from creating and running Git``Hub as a 
+social layer on top of Git
+ * Git Survey 2008 results and discussion
+ * Free form "We tried to use git in our project this way, didn't work very 
+well" session, where participants are not allowed to say "Your workflow is 
+broken".
+
+Thanks,
+Christian.
