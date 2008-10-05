@@ -1,78 +1,77 @@
-From: Nanako Shiraishi <nanako3@lavabit.com>
-Subject: Re: git rebase -- a suggestion
-Date: Sun, 05 Oct 2008 22:26:54 +0900
-Message-ID: <20081005222654.6117@nanako3.lavabit.com>
-References: <b19eae4e0810021710v14a3901an1f793de00c439ba1@mail.gmail.com>
+From: bain <bain@devslashzero.com>
+Subject: Re: teamGit v0.0.3
+Date: Sun, 5 Oct 2008 08:13:50 -0700 (PDT)
+Message-ID: <22717858-31ce-4979-9d8e-167601f0e82e@i24g2000prf.googlegroups.com>
+References: <8ce0dfd6-2bd7-4e94-901f-b7c9bbd114aa@w39g2000prb.googlegroups.com> 
+	<m38wt3qrij.fsf@localhost.localdomain>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Cc: git@vger.kernel.org
-To: "Robin Burchell" <w00t@inspircd.org>,
-	"Shawn O. Pearce" <spearce@spearce.org>
-X-From: git-owner@vger.kernel.org Sun Oct 05 15:28:51 2008
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Oct 05 17:15:08 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KmTfD-0000u1-B9
-	for gcvg-git-2@gmane.org; Sun, 05 Oct 2008 15:28:47 +0200
+	id 1KmVK2-0008Qc-VH
+	for gcvg-git-2@gmane.org; Sun, 05 Oct 2008 17:15:03 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752796AbYJEN1g (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 5 Oct 2008 09:27:36 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752687AbYJEN1g
-	(ORCPT <rfc822;git-outgoing>); Sun, 5 Oct 2008 09:27:36 -0400
-Received: from karen.lavabit.com ([72.249.41.33]:55055 "EHLO karen.lavabit.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752015AbYJEN1f (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 5 Oct 2008 09:27:35 -0400
-Received: from d.earth.lavabit.com (d.earth.lavabit.com [192.168.111.13])
-	by karen.lavabit.com (Postfix) with ESMTP id E030BC840E;
-	Sun,  5 Oct 2008 08:27:34 -0500 (CDT)
-Received: from 8144.lavabit.com (212.62.97.21)
-	by lavabit.com with ESMTP id ONBG4L2XY09Z; Sun, 05 Oct 2008 08:27:34 -0500
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws; s=lavabit; d=lavabit.com;
-  b=ncLpOr5/nMY6A8RG2pz/blQ80bUQPR+C8uSRPXsFJuO8QCuW7gUcEm4N6e+YrQqBqvZs11N+xMaDZZe7KrLRWXDnZOd4uyv3fSpyhFR5wQG0e/N5oPr3QxYV0Jhw6MtyZGhiUz0mk7sBMJ4Mft71DkHZpJe/DIsX+Oo8Ws+XbI4=;
-  h=From:To:Cc:Date:Subject:In-reply-to:References:MIME-Version:Content-Type:Content-Transfer-Encoding:Message-Id;
-In-reply-to: <b19eae4e0810021710v14a3901an1f793de00c439ba1@mail.gmail.com>
+	id S1753867AbYJEPNx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 5 Oct 2008 11:13:53 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753669AbYJEPNx
+	(ORCPT <rfc822;git-outgoing>); Sun, 5 Oct 2008 11:13:53 -0400
+Received: from yx-out-2122.google.com ([74.125.44.26]:12203 "EHLO
+	yx-out-2122.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753543AbYJEPNw (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 5 Oct 2008 11:13:52 -0400
+Received: by yx-out-2122.google.com with SMTP id 35so1174821yxh.1
+        for <git@vger.kernel.org>; Sun, 05 Oct 2008 08:13:50 -0700 (PDT)
+Received: by 10.151.155.10 with SMTP id h10mr115480ybo.15.1223219630940; Sun, 
+	05 Oct 2008 08:13:50 -0700 (PDT)
+In-Reply-To: <m38wt3qrij.fsf@localhost.localdomain>
+X-IP: 59.95.10.32
+User-Agent: G2/1.0
+X-HTTP-UserAgent: Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9.0.1) 
+	Gecko/2008072820 Firefox/3.0.1,gzip(gfe),gzip(gfe)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/97508>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/97509>
 
-Documentation/git-rebase.txt talks about pre-rebase hook, but
-it appears that Documentation/git-hooks.txt does not have corresponding
-entry for it.
+> Could you please add info about teamGit to the git wiki pagehttp://git.or.cz/gitwiki/InterfacesFrontendsAndTools? I think
+> just below now defunct and unmaintained KGit (or just above) would
+> be best.
+Will do ASAP
 
-Signed-off-by: Nanako Shiraishi <nanako3@lavabit.com>
----
- "Robin Burchell" <w00t@inspircd.org> writes:
+> P.S. How it differs from othe Git GUIs, like gitk+git-gui, qgit
+> or git-cola?It differs from
+1. gitk and git-gui : its not as ugly :p, well actually neither of
+them fulfilled speed requirements on my 'not so old' but 'ancient by
+computer standards' p4 laptop.
+2. qgit4 : actually its not very different except that i don't find
+interface of qgit too friendly. Neway i would have used qgit instead
+if it was at the stage its now two years back. i also tried to base my
+code off qgit's plumbing unfortunately it wasn't easy to rip it. I
+didn't like the complicated unreadable typical c++ code design so
+chose not to participate in there. (to make things clear qgit is
+excellent, and wonderfully coded. Marc has done real good job of using
+c++ to its fullest and this is not a comment on his coding
+capabilities. Its only that i am just too poor a c++ developer and
+consider c++ too confusing for active contirbution in core design by
+others.) So one of the aims i have in teamGit is to keep it as clean
+and simple as possible (not easy goal i must add and i might already
+be off).
+3. git-cola: i hate scirpting used as mainstay applications.
 
- > would it perhaps be an idea to have a way to mark a tree 'public', and
- > disallow rebase *unless* --force was passed, or it was a public tree?
+Besides all of the above teamGit differes drastically in its end
+roadmap.
+It will ultimately be complete project management tool. A developer
+should be able to completely manage his coding activities from inside
+teamGit, plus a team collaberation added as an advantage.
 
- Documentation/githooks.txt |    7 +++++++
- 1 files changed, 7 insertions(+), 0 deletions(-)
+But these are reallllyyyyyy lloooonnngg term goals, if it ever gets
+there.
 
-diff --git a/Documentation/githooks.txt b/Documentation/githooks.txt
-index 046a2a7..567ec03 100644
---- a/Documentation/githooks.txt
-+++ b/Documentation/githooks.txt
-@@ -130,6 +130,13 @@ parameter, and is invoked after a commit is made.
- This hook is meant primarily for notification, and cannot affect
- the outcome of 'git-commit'.
- 
-+pre-rebase
-+----------
-+
-+This hook is called by 'git-rebase' and can be used to prevent a branch
-+from getting rebased.
-+
-+
- post-checkout
- -----------
- 
-
--- 
-Nanako Shiraishi
-http://ivory.ap.teacup.com/nanako3/
+Thanks,
+BAIN
