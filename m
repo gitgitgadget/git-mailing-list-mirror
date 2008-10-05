@@ -1,79 +1,82 @@
-From: Miklos Vajna <vmiklos@frugalware.org>
-Subject: Re: [PATCH] builtin-commit: use reduce_heads() only when
-	appropriate
-Date: Sun, 5 Oct 2008 21:43:40 +0200
-Message-ID: <20081005194340.GT23137@genesis.frugalware.org>
-References: <20081003023518.GA3291@spearce.org> <1223035487-2576-1-git-send-email-vmiklos@frugalware.org> <20081003150927.GG6839@neumann>
+From: "Mikael Magnusson" <mikachu@gmail.com>
+Subject: Re: git svn: Bad URL passed to RA layer: Unrecognized URL scheme
+Date: Sun, 5 Oct 2008 21:44:38 +0200
+Message-ID: <237967ef0810051244m51156925x26ae51db038dad49@mail.gmail.com>
+References: <pan.2008.10.05.17.24.02.167465@yahoo.com>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="7aLy7NWYeEog7w9O"
-Cc: "Shawn O. Pearce" <spearce@spearce.org>, jnareb@gmail.com,
-	Johannes.Schindelin@gmx.de, git@vger.kernel.org
-To: SZEDER =?iso-8859-1?Q?G=E1bor?= <szeder@ira.uka.de>
-X-From: git-owner@vger.kernel.org Sun Oct 05 21:44:54 2008
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: "Jeff Kowalczyk" <jtk@yahoo.com>
+X-From: git-owner@vger.kernel.org Sun Oct 05 21:45:52 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KmZXC-0005zr-5C
-	for gcvg-git-2@gmane.org; Sun, 05 Oct 2008 21:44:54 +0200
+	id 1KmZY6-0006EH-Vw
+	for gcvg-git-2@gmane.org; Sun, 05 Oct 2008 21:45:51 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755331AbYJETnn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 5 Oct 2008 15:43:43 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754558AbYJETnn
-	(ORCPT <rfc822;git-outgoing>); Sun, 5 Oct 2008 15:43:43 -0400
-Received: from virgo.iok.hu ([193.202.89.103]:54378 "EHLO virgo.iok.hu"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753148AbYJETnm (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 5 Oct 2008 15:43:42 -0400
-Received: from kag.elte.hu (kag.elte.hu [157.181.177.1])
-	by virgo.iok.hu (Postfix) with ESMTP id F2005580D0;
-	Sun,  5 Oct 2008 21:43:40 +0200 (CEST)
-Received: from genesis.frugalware.org (frugalware.elte.hu [157.181.177.34])
-	by kag.elte.hu (Postfix) with ESMTP id 99C534465E;
-	Sun,  5 Oct 2008 21:43:40 +0200 (CEST)
-Received: by genesis.frugalware.org (Postfix, from userid 1000)
-	id 824EC11901A1; Sun,  5 Oct 2008 21:43:40 +0200 (CEST)
+	id S1755676AbYJETol (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 5 Oct 2008 15:44:41 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755560AbYJETol
+	(ORCPT <rfc822;git-outgoing>); Sun, 5 Oct 2008 15:44:41 -0400
+Received: from nf-out-0910.google.com ([64.233.182.188]:27256 "EHLO
+	nf-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755555AbYJETok (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 5 Oct 2008 15:44:40 -0400
+Received: by nf-out-0910.google.com with SMTP id d3so913831nfc.21
+        for <git@vger.kernel.org>; Sun, 05 Oct 2008 12:44:38 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to
+         :subject:cc:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:references;
+        bh=IBZnp4Ukjdbq9VuwstxNxyHcl4XjgsyfSSQenNK4eOA=;
+        b=fPlT85oB8c+WiZis5zAI4o6YZvl3IbH7HzOpUDsk0cSxFJzTFb+PfLHfVhBaSpbiQa
+         FuLP6nQiN2E37sAJqXBqqG1hFfTaP/kyfidECGSkD64SpNrL/SBoEAMSFgyRvtGglsWx
+         vICMtpa13RVwAvHbJ7g3LgqG7VqEWFEfFc2OE=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
+         :content-type:content-transfer-encoding:content-disposition
+         :references;
+        b=Znta/LGJ5/MXOsKdEjAFxB0cls4XPmE2tCY/zXjXXvaGIrv6nrzZOnsBZCujmy+xFC
+         dMKR0Jblvs1UYDdDgwFKWkPsfPVoAW9PvdaiYAkBaRFQOUM6wvp/j+TGdqov5Mi9vI/P
+         tNBqepYBfxUtokQaNck1wr5pGExh3JZo7uN4I=
+Received: by 10.210.76.19 with SMTP id y19mr5101942eba.111.1223235878768;
+        Sun, 05 Oct 2008 12:44:38 -0700 (PDT)
+Received: by 10.210.19.20 with HTTP; Sun, 5 Oct 2008 12:44:38 -0700 (PDT)
+In-Reply-To: <pan.2008.10.05.17.24.02.167465@yahoo.com>
 Content-Disposition: inline
-In-Reply-To: <20081003150927.GG6839@neumann>
-User-Agent: Mutt/1.5.17 (2007-11-01)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/97528>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/97529>
 
+2008/10/5 Jeff Kowalczyk <jtk@yahoo.com>:
+> I made an ill-advised upgrade to from subversion-1.4.6 to
+> subversion-1.5.2. While I had subversion-1.5.2 installed, git svn rebase
+> ended with a 'segmentation fault' error.
+>
+> Now back at subversion-1.4.6, git repositories with svn remotes updated
+> during the aforentioned upgrade now give an error:
+>
+> (master) $ git svn fetch
+> Bad URL passed to RA layer: Unrecognized URL scheme for 'http://code.djangoproject.com/svn' at /usr/libexec/git-core/git-svn line 1400
+>
+> (master) $ git svn rebase
+> Bad URL passed to RA layer: Unrecognized URL scheme for 'http://code.djangoproject.com/svn' at /usr/libexec/git-core/git-svn line 1909
+>
+> Others which were not updated recently work fine for git svn operations.
+>
+> How can I repair the affected git repositories?
+>
+> Thanks.
 
---7aLy7NWYeEog7w9O
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+That somehow looks more like an svn error than a git error, does
+svn checkout http://code.djangoproject.com/svn
+work?
 
-On Fri, Oct 03, 2008 at 05:09:27PM +0200, SZEDER G=E1bor <szeder@ira.uka.de=
-> wrote:
->   I think this should be squashed onto Mikl=F3s' patch.
-
-I'll resend a squashed patch with your signoff included.
-
->   I'm not sure about putting these two new test into t7600-merge.sh.
->   Although the infrastructure to keep these tests very short (repo with
->   branches already set up, verify_parents) is there available, the first
->   test tests not only merge, but the cooperation of merge and commit,
->   and this second one tests only commit.
-
-Given that originally it was git-merge.sh that did this reduction, I
-think it's OK.
-
---7aLy7NWYeEog7w9O
-Content-Type: application/pgp-signature
-Content-Disposition: inline
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.9 (GNU/Linux)
-
-iEYEARECAAYFAkjpGOwACgkQe81tAgORUJb70gCfR1EQvT36ogLXsiGYTAK0FrOB
-6NgAoIpHbdxvVGLTev/CgM4uyiCIS9+S
-=NXau
------END PGP SIGNATURE-----
-
---7aLy7NWYeEog7w9O--
+-- 
+Mikael Magnusson
