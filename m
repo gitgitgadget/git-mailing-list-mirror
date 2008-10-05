@@ -1,105 +1,77 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH 2] renaming git add -i [r]evert -> reset and adding
-	gitt add -i [c]heckout
-Date: Sun, 5 Oct 2008 18:11:50 -0400
-Message-ID: <20081005221150.GA22007@coredump.intra.peff.net>
-References: <20081005152654.GA13618@gmx.de> <20081005164124.GA31903@coredump.intra.peff.net> <20081005214644.GB32727@gmx.de>
+From: "Lars Hjemli" <hjemli@gmail.com>
+Subject: Re: [ANNOUNCE] cgit 0.8
+Date: Mon, 6 Oct 2008 00:22:21 +0200
+Message-ID: <8c5c35580810051522l3c8fcfe4md8b78b569f287246@mail.gmail.com>
+References: <8c5c35580810051310u60859afcvf38845244308cd23@mail.gmail.com>
+	 <alpine.DEB.2.00.0810051346290.27691@alchemy.localdomain>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org
-To: Marc Weber <marco-oweber@gmx.de>
-X-From: git-owner@vger.kernel.org Mon Oct 06 00:13:35 2008
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: "Git Mailing List" <git@vger.kernel.org>
+To: "Asheesh Laroia" <git@asheesh.org>
+X-From: git-owner@vger.kernel.org Mon Oct 06 00:23:35 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Kmbr1-0000OI-U2
-	for gcvg-git-2@gmane.org; Mon, 06 Oct 2008 00:13:32 +0200
+	id 1Kmc0k-0002tH-FS
+	for gcvg-git-2@gmane.org; Mon, 06 Oct 2008 00:23:34 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754887AbYJEWLw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 5 Oct 2008 18:11:52 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754548AbYJEWLw
-	(ORCPT <rfc822;git-outgoing>); Sun, 5 Oct 2008 18:11:52 -0400
-Received: from peff.net ([208.65.91.99]:2360 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754733AbYJEWLw (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 5 Oct 2008 18:11:52 -0400
-Received: (qmail 18025 invoked by uid 111); 5 Oct 2008 22:11:51 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.32) with SMTP; Sun, 05 Oct 2008 18:11:51 -0400
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Sun, 05 Oct 2008 18:11:50 -0400
+	id S1755103AbYJEWWX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 5 Oct 2008 18:22:23 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755053AbYJEWWX
+	(ORCPT <rfc822;git-outgoing>); Sun, 5 Oct 2008 18:22:23 -0400
+Received: from rv-out-0506.google.com ([209.85.198.227]:64286 "EHLO
+	rv-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754548AbYJEWWW (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 5 Oct 2008 18:22:22 -0400
+Received: by rv-out-0506.google.com with SMTP id k40so2625925rvb.1
+        for <git@vger.kernel.org>; Sun, 05 Oct 2008 15:22:21 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to
+         :subject:cc:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:references;
+        bh=r1kSgm+BA9D1d0Vl++cr1QrOLn16sh3/Zr+SXZ6ApD0=;
+        b=TMwyV4ehT+RQhtB8hPYVxkoItzt685/4EZeIC7JqGopO5S2CWL4rXnA3aDliCTEgiu
+         P7Gdqomz6yarPRCnFcMDeN5UT239RpYHr1tePKWgo+NBIRDYvJw/5UEO2RGxnK3b7jjS
+         RCr++2e6FzziHLBA0LiW7Hh+g1Wrk2KMjTYU4=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
+         :content-type:content-transfer-encoding:content-disposition
+         :references;
+        b=gZWbE/IWe2LeKPWDnAQ7hwsBVjpCDW6LFOutMFrprrMU9xyO95AWGOhbUajt8Fjqa3
+         mgq1hd62eH3N9Wqe+gxp0dC+mP0Y+BlLdMCb5/lK9G9mq8Qkvhy4gR3YzNmV35FrCK2d
+         KfLsG9h6U3VE9AHAjLoS4ALJPEE8LBFqy0Pls=
+Received: by 10.115.74.1 with SMTP id b1mr4605454wal.169.1223245341661;
+        Sun, 05 Oct 2008 15:22:21 -0700 (PDT)
+Received: by 10.114.166.20 with HTTP; Sun, 5 Oct 2008 15:22:21 -0700 (PDT)
+In-Reply-To: <alpine.DEB.2.00.0810051346290.27691@alchemy.localdomain>
 Content-Disposition: inline
-In-Reply-To: <20081005214644.GB32727@gmx.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/97544>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/97545>
 
-On Sun, Oct 05, 2008 at 11:46:44PM +0200, Marc Weber wrote:
+On Sun, Oct 5, 2008 at 22:49, Asheesh Laroia <git@asheesh.org> wrote:
+> On Sun, 5 Oct 2008, Lars Hjemli wrote:
+>
+>> cgit-0.8, another webinterface for git, is now available.
+>>
+> I'm curious - is there any interest in the cgit world in providing gitweb
+> URL compatibility?
 
-> I'll try to do it better now (not sure who is the mantainer though,
-> I've seen that you've commited some lines to this file)..
+Well, it's a request that's popped up a few times, but no patches so
+far. It would probably be a nice feature if it could be done cleanly.
 
-The usual git maintainer is Junio Hamano <gitster@pobox.com>.
 
-But he is out of touch for a few weeks, so the interim maintainer is
-Shawn Pearce <spearce@spearce.org>.
+> Either way, thanks a bundle to all who work on cgit!  (And is this the
+> canonical place to discuss it?)
 
-> ============= attachement git show output ============================
+You're welcome. And yes, I think this is the place (cgit doesn't have
+a mailinglist of its own).
 
-The usual way of mailing patches is a bit different:
-
- - send one patch per email; if multiple patches are meant to be applied
-   in series, number them [PATCH i/n]. In this case, I think you would
-   want your patches applied in series (since the second one will
-   textually depend on the first).
-
- - use "git format-patch" to generate the patches. This generates an
-   email format that can be applied on the other end by "git am".
-
- - use "git send-email" to send the patches generated by format-patch.
-   You can also send the patches directly from your mail reader, but you
-   will want to merge your regular mail headers with those generated by
-   format-patch (e.g., the Subject line generated by format-patch should
-   become the subject line of your message).
-
-> commit 852b21bf88b1de784244a6e99de9a53a5c61dd8c
-> Author: Marc Weber <marco-oweber@gmx.de>
-> Date:   Sun Oct 5 23:09:04 2008 +0200
-> 
->     rename the git add -i [r]evert command to [r]eset to use the same term as in git reset
->     purpose: decrease possibility of confusion for users with svn background (svn revert = git checkout)
-
-Please follow the usual "subject\n\nbody" convention for commit
-messages. And if the patch touches just one subsystem, we usually say
-"subsystem: what the patch does." So something like:
-
-  add--interactive: rename [r]evert command to [r]eset
-
-followed by a newline, then your explanation.
-
-I think you may want to note on this patch, too, that "revert" is also
-confusing for git users. Maybe like:
-
-  The term "revert" is used very confusingly here. In git, to "revert"
-  is to take the changes made by a previous commit and un-apply them,
-  creating a new commit. The act of changing what is in the index to
-  match HEAD is called "reset".
-
-  Furthermore, incoming svn users will also find this confusing, since
-  to them, "revert" means to reset the working tree, which corresponds
-  to "checkout" in git.
-
-> commit b3d438764a7429e1dfacef8f499a0126076ed2bc
-> Author: Marc Weber <marco-oweber@gmx.de>
-> Date:   Sun Oct 5 15:15:38 2008 +0000
-> 
->     renamed revert in ga -i to reset, added [c]heckout
-
-The first patch has been split out, and then this one contains the
-changes for both. So I think what you want to do is to rebase this
-change on top of the previous one, so that it should then have just the
-"checkout" changes, and then write an appropriate commit message for it.
-
--Peff
+--
+larsh
