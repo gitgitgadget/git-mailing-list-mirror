@@ -1,231 +1,253 @@
-From: Dmitry Potapov <dpotapov@gmail.com>
-Subject: [PATCH 2/2] check-attr: Add --stdin-paths option
-Date: Sun,  5 Oct 2008 06:30:55 +0400
-Message-ID: <1223173855-6173-2-git-send-email-dpotapov@gmail.com>
-References: <bb6f213e0809220312m6cb8022csa3843cfaccc5b69b@mail.gmail.com>
- <1223173855-6173-1-git-send-email-dpotapov@gmail.com>
-Cc: "Shawn O. Pearce" <spearce@spearce.org>,
-	Paul Mackerras <paulus@samba.org>,
-	Dmitry Potapov <dpotapov@gmail.com>
-To: Alexander Gavrilov <angavrilov@gmail.com>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Oct 05 04:32:18 2008
+From: Eric Wong <normalperson@yhbt.net>
+Subject: Re: [PATCH v3] Add git-svn branch to allow branch creation in SVN
+	repositories
+Date: Sat, 4 Oct 2008 19:35:17 -0700
+Message-ID: <20081005023517.GA14078@untitled>
+References: <20081004142444.GC3052@riemann.deskinm.fdns.net>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: rafl@debian.org, spearce@spearce.org, git@vger.kernel.org
+To: Deskin Miller <deskinm@umich.edu>
+X-From: git-owner@vger.kernel.org Sun Oct 05 04:36:55 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KmJPs-0008UG-85
-	for gcvg-git-2@gmane.org; Sun, 05 Oct 2008 04:32:16 +0200
+	id 1KmJUK-0000hv-J0
+	for gcvg-git-2@gmane.org; Sun, 05 Oct 2008 04:36:53 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753363AbYJECbI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 4 Oct 2008 22:31:08 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753353AbYJECbH
-	(ORCPT <rfc822;git-outgoing>); Sat, 4 Oct 2008 22:31:07 -0400
-Received: from mu-out-0910.google.com ([209.85.134.191]:17795 "EHLO
-	mu-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753292AbYJECbF (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 4 Oct 2008 22:31:05 -0400
-Received: by mu-out-0910.google.com with SMTP id g7so1788782muf.1
-        for <git@vger.kernel.org>; Sat, 04 Oct 2008 19:31:03 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:cc:subject:date
-         :message-id:x-mailer:in-reply-to:references;
-        bh=+o/j38MydrJlQomoMF1KhjXN165i1l/KiTb5o2B5cLQ=;
-        b=HJLRRBA3X7GlgBg5s3EEz0amKelO+dJJuKrn5bmZc0yK9GR8jWqt5DOku429CpRLV7
-         a4UL0aVoV8IgfChYfSRQITBz1V2xkwc/a3rH6RfPxbQxGMF2KtQ7lIuunlg48o0AHX8v
-         Q2gQ3IAMFdJCKQ8grs7dfOrHdTeU9OFeHo/mw=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        b=GcDBEcWr57mi+iphSo0M+IXRcSx4KR4nVtq6mSZnpm4V2U15jFDUPTywazUsE1DWXQ
-         OZB7LL/lTpPsLQH4G/K+iwKsDKPrBXGFjH89B7iscmdGmF2auvbu6vi8hKJcspDzSK4e
-         09zXKP5vKDwbP+0ZblVlcrPn+1qhVehIJIdkg=
-Received: by 10.103.2.14 with SMTP id e14mr1788578mui.104.1223173863443;
-        Sat, 04 Oct 2008 19:31:03 -0700 (PDT)
-Received: from localhost (ppp83-237-185-144.pppoe.mtu-net.ru [83.237.185.144])
-        by mx.google.com with ESMTPS id j2sm21017942mue.4.2008.10.04.19.31.00
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Sat, 04 Oct 2008 19:31:02 -0700 (PDT)
-X-Mailer: git-send-email 1.6.0
-In-Reply-To: <1223173855-6173-1-git-send-email-dpotapov@gmail.com>
+	id S1753846AbYJECfW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 4 Oct 2008 22:35:22 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753722AbYJECfV
+	(ORCPT <rfc822;git-outgoing>); Sat, 4 Oct 2008 22:35:21 -0400
+Received: from hand.yhbt.net ([66.150.188.102]:35600 "EHLO hand.yhbt.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753643AbYJECfU (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 4 Oct 2008 22:35:20 -0400
+Received: from localhost.localdomain (localhost [127.0.0.1])
+	by hand.yhbt.net (Postfix) with ESMTP id 656CA2DC01A;
+	Sat,  4 Oct 2008 19:35:18 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <20081004142444.GC3052@riemann.deskinm.fdns.net>
+User-Agent: Mutt/1.5.18 (2008-05-17)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/97494>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/97495>
 
-This allows multiple paths to be specified on stdin.
+Thanks Deskin, one small fix to quiet the warning that was
+making t9108 fail.
 
-Signed-off-by: Dmitry Potapov <dpotapov@gmail.com>
+>From c7e48f128865823a4c5024eb4f67b69231d1d5dc Mon Sep 17 00:00:00 2001
+From: Florian Ragwitz <rafl@debian.org>
+Date: Tue, 2 Sep 2008 14:20:39 +0000
+Subject: [PATCH] Add git-svn branch to allow branch creation in SVN repositories
+
+[ew: fixed a warning to stderr causing t9108 to fail]
+
+Signed-off-by: Florian Ragwitz <rafl@debian.org>
+Signed-off-by: Deskin Miller <deskinm@umich.edu>
+Acked-by: Eric Wong <normalperson@yhbt.net>
 ---
- Documentation/git-check-attr.txt |    4 ++
- builtin-check-attr.c             |   66 ++++++++++++++++++++++++++++++++------
- t/t0003-attributes.sh            |   17 ++++++++++
- 3 files changed, 77 insertions(+), 10 deletions(-)
+ Documentation/git-svn.txt     |   24 ++++++++++++++++-
+ git-svn.perl                  |   47 ++++++++++++++++++++++++++++++++-
+ t/t9128-git-svn-cmd-branch.sh |   59 +++++++++++++++++++++++++++++++++++++++++
+ 3 files changed, 128 insertions(+), 2 deletions(-)
+ create mode 100755 t/t9128-git-svn-cmd-branch.sh
 
-diff --git a/Documentation/git-check-attr.txt b/Documentation/git-check-attr.txt
-index 2b821f2..0839a57 100644
---- a/Documentation/git-check-attr.txt
-+++ b/Documentation/git-check-attr.txt
-@@ -9,6 +9,7 @@ git-check-attr - Display gitattributes information.
- SYNOPSIS
- --------
- 'git check-attr' attr... [--] pathname...
-+'git check-attr' --stdin-paths attr... < <list-of-paths
+diff --git a/Documentation/git-svn.txt b/Documentation/git-svn.txt
+index 82d03b4..84c8f3c 100644
+--- a/Documentation/git-svn.txt
++++ b/Documentation/git-svn.txt
+@@ -149,6 +149,22 @@ and have no uncommitted changes.
+ 	is very strongly discouraged.
+ --
  
- DESCRIPTION
- -----------
-@@ -17,6 +18,9 @@ For every pathname, this command will list if each attr is 'unspecified',
- 
- OPTIONS
- -------
-+--stdin-paths::
-+	Read file names from stdin instead of from the command-line.
++'branch'::
++	Create a branch in the SVN repository.
 +
- \--::
- 	Interpret all preceding arguments as attributes, and all following
- 	arguments as path names. If not supplied, only the first argument will
-diff --git a/builtin-check-attr.c b/builtin-check-attr.c
-index 5a2e329..821eb5e 100644
---- a/builtin-check-attr.c
-+++ b/builtin-check-attr.c
-@@ -2,9 +2,19 @@
- #include "cache.h"
- #include "attr.h"
- #include "quote.h"
-+#include "parse-options.h"
- 
--static const char check_attr_usage[] =
--"git check-attr attr... [--] pathname...";
-+static int stdin_paths;
-+static const char * const check_attr_usage[] = {
-+"git check-attr attr... [--] pathname...",
-+"git check-attr --stdin-paths attr... < <list-of-paths>",
-+NULL
-+};
++-m;;
++--message;;
++	Allows to specify the commit message.
 +
-+static const struct option check_attr_options[] = {
-+	OPT_BOOLEAN(0 , "stdin-paths", &stdin_paths, "read file names from stdin"),
-+	OPT_END()
-+};
++-t;;
++--tag;;
++	Create a tag by using the tags_subdir instead of the branches_subdir
++	specified during git svn init.
++
++'tag'::
++	Create a tag in the SVN repository. This is a shorthand for
++	'branch -t'.
++
+ 'log'::
+ 	This should make it easy to look up svn log messages when svn
+ 	users refer to -r/--revision numbers.
+@@ -372,7 +388,8 @@ Passed directly to 'git-rebase' when using 'dcommit' if a
+ -n::
+ --dry-run::
  
- static void check_attr(int cnt, struct git_attr_check *check,
- 	const char** name, const char *file)
-@@ -27,17 +37,43 @@ static void check_attr(int cnt, struct git_attr_check *check,
- 	}
+-This can be used with the 'dcommit' and 'rebase' commands.
++This can be used with the 'dcommit', 'rebase', 'branch' and 'tag'
++commands.
+ 
+ For 'dcommit', print out the series of git arguments that would show
+ which diffs would be committed to SVN.
+@@ -381,6 +398,9 @@ For 'rebase', display the local branch associated with the upstream svn
+ repository associated with the current branch and the URL of svn
+ repository that will be fetched from.
+ 
++For 'branch' and 'tag', display the urls that will be used for copying when
++creating the branch or tag.
++
+ --
+ 
+ ADVANCED OPTIONS
+@@ -498,6 +518,8 @@ Tracking and contributing to an entire Subversion-managed project
+ 	git svn clone http://svn.example.com/project -T trunk -b branches -t tags
+ # View all branches and tags you have cloned:
+ 	git branch -r
++# Create a new branch in SVN
++    git svn branch waldo
+ # Reset your master to trunk (or any other branch, replacing 'trunk'
+ # with the appropriate name):
+ 	git reset --hard remotes/trunk
+diff --git a/git-svn.perl b/git-svn.perl
+index 7609a83..ef6d773 100755
+--- a/git-svn.perl
++++ b/git-svn.perl
+@@ -66,7 +66,7 @@ my ($_stdin, $_help, $_edit,
+ 	$_version, $_fetch_all, $_no_rebase,
+ 	$_merge, $_strategy, $_dry_run, $_local,
+ 	$_prefix, $_no_checkout, $_url, $_verbose,
+-	$_git_format, $_commit_url);
++	$_git_format, $_commit_url, $_tag);
+ $Git::SVN::_follow_parent = 1;
+ my %remote_opts = ( 'username=s' => \$Git::SVN::Prompt::_username,
+                     'config-dir=s' => \$Git::SVN::Ra::config_dir,
+@@ -131,6 +131,15 @@ my %cmd = (
+ 			  'revision|r=i' => \$_revision,
+ 			  'no-rebase' => \$_no_rebase,
+ 			%cmt_opts, %fc_opts } ],
++	branch => [ \&cmd_branch,
++	            'Create a branch in the SVN repository',
++	            { 'message|m=s' => \$_message,
++	              'dry-run|n' => \$_dry_run,
++		      'tag|t' => \$_tag } ],
++	tag => [ sub { $_tag = 1; cmd_branch(@_) },
++	         'Create a tag in the SVN repository',
++	         { 'message|m=s' => \$_message,
++	           'dry-run|n' => \$_dry_run } ],
+ 	'set-tree' => [ \&cmd_set_tree,
+ 	                "Set an SVN repository to a git tree-ish",
+ 			{ 'stdin|' => \$_stdin, %cmt_opts, %fc_opts, } ],
+@@ -537,6 +546,42 @@ sub cmd_dcommit {
+ 	unlink $gs->{index};
  }
  
-+static void check_attr_stdin_paths(int cnt, struct git_attr_check *check,
-+	const char** name)
-+{
-+	struct strbuf buf, nbuf;
++sub cmd_branch {
++	my ($branch_name, $head) = @_;
 +
-+	strbuf_init(&buf, 0);
-+	strbuf_init(&nbuf, 0);
-+	while (strbuf_getline(&buf, stdin, '\n') != EOF) {
-+		if (buf.buf[0] == '"') {
-+			strbuf_reset(&nbuf);
-+			if (unquote_c_style(&nbuf, buf.buf, NULL))
-+				die("line is badly quoted");
-+			strbuf_swap(&buf, &nbuf);
-+		}
-+		check_attr(cnt, check, name, buf.buf);
++	unless (defined $branch_name && length $branch_name) {
++		die(($_tag ? "tag" : "branch") . " name required\n");
 +	}
-+	strbuf_release(&buf);
-+	strbuf_release(&nbuf);
++	$head ||= 'HEAD';
++
++	my ($src, $rev, undef, $gs) = working_head_info($head);
++
++	my $remote = Git::SVN::read_all_remotes()->{svn};
++	my $glob = $remote->{ $_tag ? 'tags' : 'branches' };
++	my ($lft, $rgt) = @{ $glob->{path} }{qw/left right/};
++	my $dst = join '/', $remote->{url}, $lft, $branch_name, ($rgt || ());
++
++	my $ctx = SVN::Client->new(
++		auth    => Git::SVN::Ra::_auth_providers(),
++		log_msg => sub {
++			${ $_[0] } = defined $_message
++				? $_message
++				: 'Create ' . ($_tag ? 'tag ' : 'branch ' )
++				. $branch_name;
++		},
++	);
++
++	eval {
++		$ctx->ls($dst, 'HEAD', 0);
++	} and die "branch ${branch_name} already exists\n";
++
++	print "Copying ${src} at r${rev} to ${dst}...\n";
++	$ctx->copy($src, $rev, $dst)
++		unless $_dry_run;
++
++	$gs->fetch_all;
 +}
 +
- int cmd_check_attr(int argc, const char **argv, const char *prefix)
- {
- 	struct git_attr_check *check;
- 	int cnt, i, doubledash;
-+	const char *errstr = NULL;
+ sub cmd_find_rev {
+ 	my $revision_or_hash = shift or die "SVN or git revision required ",
+ 	                                    "as a command-line argument\n";
+diff --git a/t/t9128-git-svn-cmd-branch.sh b/t/t9128-git-svn-cmd-branch.sh
+new file mode 100755
+index 0000000..47c4d4d
+--- /dev/null
++++ b/t/t9128-git-svn-cmd-branch.sh
+@@ -0,0 +1,59 @@
++#!/bin/sh
++#
++# Copyright (c) 2008 Deskin Miller
++#
 +
-+	argc = parse_options(argc, argv, check_attr_options, check_attr_usage,
-+		PARSE_OPT_KEEP_DASHDASH);
-+	if (!argc)
-+		usage_with_options(check_attr_usage, check_attr_options);
- 
- 	if (read_cache() < 0) {
- 		die("invalid cache");
- 	}
- 
- 	doubledash = -1;
--	for (i = 1; doubledash < 0 && i < argc; i++) {
-+	for (i = 0; doubledash < 0 && i < argc; i++) {
- 		if (!strcmp(argv[i], "--"))
- 			doubledash = i;
- 	}
-@@ -45,25 +81,35 @@ int cmd_check_attr(int argc, const char **argv, const char *prefix)
- 	/* If there is no double dash, we handle only one attribute */
- 	if (doubledash < 0) {
- 		cnt = 1;
--		doubledash = 1;
-+		doubledash = 0;
- 	} else
--		cnt = doubledash - 1;
-+		cnt = doubledash;
- 	doubledash++;
- 
--	if (cnt <= 0 || argc < doubledash)
--		usage(check_attr_usage);
-+	if (cnt <= 0)
-+		errstr = "No attribute specified";
-+	else if (stdin_paths && doubledash < argc)
-+		errstr = "Can't specify files with --stdin-paths";
-+	if (errstr) {
-+		error (errstr);
-+		usage_with_options(check_attr_usage, check_attr_options);
-+	}
++test_description='git svn partial-rebuild tests'
++. ./lib-git-svn.sh
 +
- 	check = xcalloc(cnt, sizeof(*check));
- 	for (i = 0; i < cnt; i++) {
- 		const char *name;
- 		struct git_attr *a;
--		name = argv[i + 1];
-+		name = argv[i];
- 		a = git_attr(name, strlen(name));
- 		if (!a)
- 			return error("%s: not a valid attribute name", name);
- 		check[i].attr = a;
- 	}
- 
--	for (i = doubledash; i < argc; i++)
--		check_attr(cnt, check, argv+1, argv[i]);
-+	if (stdin_paths)
-+		check_attr_stdin_paths(cnt, check, argv);
-+	else
-+		for (i = doubledash; i < argc; i++)
-+			check_attr(cnt, check, argv, argv[i]);
- 	return 0;
- }
-diff --git a/t/t0003-attributes.sh b/t/t0003-attributes.sh
-index 3d8e06a..f6901b4 100755
---- a/t/t0003-attributes.sh
-+++ b/t/t0003-attributes.sh
-@@ -47,6 +47,23 @@ test_expect_success 'attribute test' '
- 
- '
- 
-+test_expect_success 'attribute test: read paths from stdin' '
-+
-+	cat <<EOF > expect
-+f: test: f
-+a/f: test: f
-+a/c/f: test: f
-+a/g: test: a/g
-+a/b/g: test: a/b/g
-+b/g: test: unspecified
-+a/b/h: test: a/b/h
-+a/b/d/g: test: a/b/d/*
-+EOF
-+
-+	sed -e "s/:.*//" < expect | git check-attr --stdin-paths test > actual &&
-+	test_cmp expect actual
++test_expect_success 'initialize svnrepo' '
++	mkdir import &&
++	(
++		cd import &&
++		mkdir trunk branches tags &&
++		cd trunk &&
++		echo foo > foo &&
++		cd .. &&
++		svn import -m "import for git-svn" . "$svnrepo" >/dev/null &&
++		cd .. &&
++		rm -rf import &&
++		svn co "$svnrepo"/trunk trunk &&
++		cd trunk &&
++		echo bar >> foo &&
++		svn ci -m "updated trunk" &&
++		cd .. &&
++		rm -rf trunk
++	)
 +'
 +
- test_expect_success 'root subdir attribute test' '
- 
- 	attr_check a/i a/i &&
++test_expect_success 'import into git' '
++	git svn init --stdlayout "$svnrepo" &&
++	git svn fetch &&
++	git checkout remotes/trunk
++'
++
++test_expect_success 'git svn branch tests' '
++	git svn branch a &&
++	base=$(git rev-parse HEAD:) &&
++	test $base = $(git rev-parse remotes/a:) &&
++	git svn branch -m "created branch b blah" b &&
++	test $base = $(git rev-parse remotes/b:) &&
++	test_must_fail git branch -m "no branchname" &&
++	git svn branch -n c &&
++	test_must_fail git rev-parse remotes/c &&
++	test_must_fail git svn branch a &&
++	git svn branch -t tag1 &&
++	test $base = $(git rev-parse remotes/tags/tag1:) &&
++	git svn branch --tag tag2 &&
++	test $base = $(git rev-parse remotes/tags/tag2:) &&
++	git svn tag tag3 &&
++	test $base = $(git rev-parse remotes/tags/tag3:) &&
++	git svn tag -m "created tag4 foo" tag4 &&
++	test $base = $(git rev-parse remotes/tags/tag4:) &&
++	test_must_fail git svn tag -m "no tagname" &&
++	git svn tag -n tag5 &&
++	test_must_fail git rev-parse remotes/tags/tag5 &&
++	test_must_fail git svn tag tag1
++'
++
++test_done
 -- 
-1.6.0.2.447.g3befd
+Eric Wong
