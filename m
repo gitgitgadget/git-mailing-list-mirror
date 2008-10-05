@@ -1,149 +1,197 @@
-From: Deskin Miller <deskinm@umich.edu>
-Subject: [PATCH] git init: --bare/--shared overrides system/global config
-Date: Sun, 5 Oct 2008 15:44:12 -0400
-Message-ID: <20081005194412.GE3052@riemann.deskinm.fdns.net>
+From: Miklos Vajna <vmiklos@frugalware.org>
+Subject: [PATCH] builtin-commit: avoid always using reduce_heads()
+Date: Sun,  5 Oct 2008 21:51:40 +0200
+Message-ID: <1223236300-2170-1-git-send-email-vmiklos@frugalware.org>
+References: <20081003145915.GB3291@spearce.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: spearce@spearce.org
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Oct 05 21:47:34 2008
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: jnareb@gmail.com, Johannes.Schindelin@gmx.de, git@vger.kernel.org,
+	=?utf-8?q?SZEDER=20G=C3=A1bor?= <szeder@ira.uka.de>
+To: "Shawn O. Pearce" <spearce@spearce.org>
+X-From: git-owner@vger.kernel.org Sun Oct 05 21:52:30 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KmZZk-0006jr-K7
-	for gcvg-git-2@gmane.org; Sun, 05 Oct 2008 21:47:33 +0200
+	id 1KmZeV-00086L-Du
+	for gcvg-git-2@gmane.org; Sun, 05 Oct 2008 21:52:27 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755951AbYJETqW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 5 Oct 2008 15:46:22 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755946AbYJETqW
-	(ORCPT <rfc822;git-outgoing>); Sun, 5 Oct 2008 15:46:22 -0400
-Received: from wr-out-0506.google.com ([64.233.184.238]:15484 "EHLO
-	wr-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755819AbYJETqV (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 5 Oct 2008 15:46:21 -0400
-Received: by wr-out-0506.google.com with SMTP id 69so1111824wri.5
-        for <git@vger.kernel.org>; Sun, 05 Oct 2008 12:46:17 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:cc:subject
-         :message-id:mime-version:content-type:content-disposition:user-agent
-         :sender;
-        bh=/hDAaOop9rqDhbf3TMRvDELyyGZbPHUZyY5az+HoKBc=;
-        b=cYxQXGxCSJZHlA1R8q1dIGQyA/PQVL3Lzs+Ba4/qlBnKJuFoNgekp1e2w4Qw6Fbrrp
-         ELs5MmDLmVI6A/Q18X3zaPmlqy9rOkPuyLXys3moZpzIyokLOMT7cWRQIqfXYpJv23zh
-         bkFFx1GP4MIW9SqY9PKelhHPFq/vmQxhsXtnc=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:mime-version:content-type
-         :content-disposition:user-agent:sender;
-        b=yFUAB2YmzKHb9jgBTkWuXf9kuLp6CIgNgI19HURdMSnFVsvXMjtmS1OyzipFJmeOOh
-         LOASvNt+ZFmMZHlIF3ln3E7eTmfDNw5Vbn/nDKS3EsNPyez4mq2IkH2BdY8ssaPtg1PY
-         xCqUn/x+oJbvWsxoFLcSL8/RAgVG0fQ/BbYrU=
-Received: by 10.64.195.20 with SMTP id s20mr6548055qbf.20.1223235977344;
-        Sun, 05 Oct 2008 12:46:17 -0700 (PDT)
-Received: from riemann.deskinm.fdns.net ([68.40.49.130])
-        by mx.google.com with ESMTPS id k8sm9652222qba.5.2008.10.05.12.46.15
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Sun, 05 Oct 2008 12:46:16 -0700 (PDT)
-Content-Disposition: inline
-User-Agent: Mutt/1.5.17 (2007-11-01)
+	id S1754954AbYJETvR convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 5 Oct 2008 15:51:17 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754810AbYJETvR
+	(ORCPT <rfc822;git-outgoing>); Sun, 5 Oct 2008 15:51:17 -0400
+Received: from yugo.dsd.sztaki.hu ([195.111.2.114]:45776 "EHLO
+	yugo.frugalware.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753148AbYJETvQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 5 Oct 2008 15:51:16 -0400
+Received: from vmobile.example.net (dsl5401C49A.pool.t-online.hu [84.1.196.154])
+	by yugo.frugalware.org (Postfix) with ESMTPA id 611F8149C60;
+	Sun,  5 Oct 2008 21:51:14 +0200 (CEST)
+Received: by vmobile.example.net (Postfix, from userid 1003)
+	id E00D019E7C3; Sun,  5 Oct 2008 21:51:40 +0200 (CEST)
+X-Mailer: git-send-email 1.6.0.2
+In-Reply-To: <20081003145915.GB3291@spearce.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/97530>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/97531>
 
->From b6144562983703079a1eba8cdac3506c18d751a3 Mon Sep 17 00:00:00 2001
-From: Deskin Miller <deskinm@umich.edu>
-Date: Sat, 4 Oct 2008 20:07:44 -0400
+In case git merge --no-ff is used with --no-commit or we have a
+conflict, write info about if fast forwards are allowed or not to
+$GIT_DIR/MERGE_MODE.
 
-If core.bare or core.sharedRepository are set in /etc/gitconfig or
-~/.gitconfig, then 'git init' will read the values when constructing a
-new config file; reading them, however, will override the values
-specified on the command line.  In the case of --bare, this ends up
-causing a segfault, without the repository being properly initialised;
-in the case of --shared, the permissions are set according to the
-existing config settings, not what was specified on the command line.
+Based on this info, don't run reduce_heads() in case fast-forwards are
+denied, to avoid turning a 'merge --no-ff' to a non-merge commit.
 
-This fix saves any specified values for --bare and --shared prior to
-reading existing config settings, and restores them after reading but
-before writing the new config file.
-
-Also includes a testcase which has a specified global config file
-override, demonstrating the former failure scenario.
-
-Signed-off-by: Deskin Miller <deskinm@umich.edu>
+Signed-off-by: Miklos Vajna <vmiklos@frugalware.org>
+Signed-off-by: SZEDER G=C3=A1bor <szeder@ira.uka.de>
 ---
-I'm not a great fan of the method I took to save and restore the values
-specified to init, but it works.  Also, I think the testcase is nice (but I'm
-biased, seeing how I wrote it): in general I'd argue for more testcases which
-deal with issues caused by the user's complete installation.
 
-I based this off of maint, because I think it should be applied there, but it
-applies cleanly to master if you feel that's better.
- builtin-init-db.c |    8 ++++++++
- t/t0001-init.sh   |   17 +++++++++++++++++
- 2 files changed, 25 insertions(+), 0 deletions(-)
+On Fri, Oct 03, 2008 at 07:59:15AM -0700, "Shawn O. Pearce" <spearce@sp=
+earce.org> wrote:
+> ./test-lib.sh: line 237:   362 Segmentation fault      git commit -m
+> initial
+> * FAIL 1: setup
+>
+> I leave the debugging to you.  ;-)
 
-diff --git a/builtin-init-db.c b/builtin-init-db.c
-index 8140c12..38e282c 100644
---- a/builtin-init-db.c
-+++ b/builtin-init-db.c
-@@ -17,6 +17,9 @@
- #define TEST_FILEMODE 1
- #endif
- 
-+static int init_is_bare_repository = 0;
-+static int init_shared_repository = PERM_UMASK;
-+
- static void safe_create_dir(const char *dir, int share)
+That's weird, make test passed for me before I sent this patch. It was
+based on 15dc66a.
+
+Now I squashed in Gabor's patch and rebased it against 52e8370, I hope
+it fixed the issue (make test still passes for me).
+
+ branch.c         |    1 +
+ builtin-commit.c |   16 ++++++++++++++--
+ builtin-merge.c  |   10 ++++++++++
+ t/t7600-merge.sh |   16 ++++++++++++++++
+ 4 files changed, 41 insertions(+), 2 deletions(-)
+
+diff --git a/branch.c b/branch.c
+index b1e59f2..205b89d 100644
+--- a/branch.c
++++ b/branch.c
+@@ -168,5 +168,6 @@ void remove_branch_state(void)
+ 	unlink(git_path("MERGE_HEAD"));
+ 	unlink(git_path("MERGE_RR"));
+ 	unlink(git_path("MERGE_MSG"));
++	unlink(git_path("MERGE_MODE"));
+ 	unlink(git_path("SQUASH_MSG"));
+ }
+diff --git a/builtin-commit.c b/builtin-commit.c
+index b920257..93f360f 100644
+--- a/builtin-commit.c
++++ b/builtin-commit.c
+@@ -937,6 +937,8 @@ int cmd_commit(int argc, const char **argv, const c=
+har *prefix)
+ 	unsigned char commit_sha1[20];
+ 	struct ref_lock *ref_lock;
+ 	struct commit_list *parents =3D NULL, **pptr =3D &parents;
++	struct stat statbuf;
++	int allow_fast_forward =3D 1;
+=20
+ 	git_config(git_commit_config, NULL);
+=20
+@@ -951,6 +953,7 @@ int cmd_commit(int argc, const char **argv, const c=
+har *prefix)
+ 		return 1;
+ 	}
+=20
++	strbuf_init(&sb, 0);
+ 	/* Determine parents */
+ 	if (initial_commit) {
+ 		reflog_msg =3D "commit (initial)";
+@@ -984,14 +987,22 @@ int cmd_commit(int argc, const char **argv, const=
+ char *prefix)
+ 		}
+ 		fclose(fp);
+ 		strbuf_release(&m);
++		if (!stat(git_path("MERGE_MODE"), &statbuf)) {
++			if (strbuf_read_file(&sb, git_path("MERGE_MODE"), 0) < 0)
++				die("could not read MERGE_MODE: %s",
++						strerror(errno));
++			if (!strcmp(sb.buf, "no-ff"))
++				allow_fast_forward =3D 0;
++		}
++		if (allow_fast_forward)
++			parents =3D reduce_heads(parents);
+ 	} else {
+ 		reflog_msg =3D "commit";
+ 		pptr =3D &commit_list_insert(lookup_commit(head_sha1), pptr)->next;
+ 	}
+-	parents =3D reduce_heads(parents);
+=20
+ 	/* Finally, get the commit message */
+-	strbuf_init(&sb, 0);
++	strbuf_reset(&sb);
+ 	if (strbuf_read_file(&sb, git_path(commit_editmsg), 0) < 0) {
+ 		rollback_index_files();
+ 		die("could not read commit message");
+@@ -1040,6 +1051,7 @@ int cmd_commit(int argc, const char **argv, const=
+ char *prefix)
+=20
+ 	unlink(git_path("MERGE_HEAD"));
+ 	unlink(git_path("MERGE_MSG"));
++	unlink(git_path("MERGE_MODE"));
+ 	unlink(git_path("SQUASH_MSG"));
+=20
+ 	if (commit_index_files())
+diff --git a/builtin-merge.c b/builtin-merge.c
+index 5c65a58..4c9ed5d 100644
+--- a/builtin-merge.c
++++ b/builtin-merge.c
+@@ -180,6 +180,7 @@ static void drop_save(void)
  {
- 	if (mkdir(dir, 0777) < 0) {
-@@ -191,6 +194,8 @@ static int create_default_files(const char *template_path)
- 	copy_templates(template_path);
- 
- 	git_config(git_default_config, NULL);
-+	is_bare_repository_cfg = init_is_bare_repository;
-+	shared_repository = init_shared_repository;
- 
- 	/*
- 	 * We would have created the above under user's umask -- under
-@@ -277,6 +282,9 @@ int init_db(const char *template_dir, unsigned int flags)
- 
- 	safe_create_dir(get_git_dir(), 0);
- 
-+	init_is_bare_repository = is_bare_repository();
-+	init_shared_repository = shared_repository;
-+
- 	/* Check to see if the repository version is right.
- 	 * Note that a newly created repository does not have
- 	 * config file, so this will not fail.  What we are catching
-diff --git a/t/t0001-init.sh b/t/t0001-init.sh
-index 620da5b..6a6bca0 100755
---- a/t/t0001-init.sh
-+++ b/t/t0001-init.sh
-@@ -167,4 +167,21 @@ test_expect_success 'init with --template (blank)' '
- 	! test -f template-blank/.git/info/exclude
- '
- 
-+test_expect_success 'init --bare/--shared overrides system/global config' '
-+	(
-+		HOME="`pwd`" &&
-+		export HOME &&
-+		test_config="$HOME"/.gitconfig &&
-+		unset GIT_CONFIG_NOGLOBAL &&
-+		git config -f "$test_config" core.bare false &&
-+		git config -f "$test_config" core.sharedRepository 0640 &&
-+		mkdir init-bare-shared-override &&
-+		cd init-bare-shared-override &&
-+		git init --bare --shared=0666
-+	) &&
-+	check_config init-bare-shared-override true unset &&
-+	test 0666 = \
-+	`git config -f init-bare-shared-override/config core.sharedRepository`
+ 	unlink(git_path("MERGE_HEAD"));
+ 	unlink(git_path("MERGE_MSG"));
++	unlink(git_path("MERGE_MODE"));
+ }
+=20
+ static void save_state(void)
+@@ -1210,6 +1211,15 @@ int cmd_merge(int argc, const char **argv, const=
+ char *prefix)
+ 			merge_msg.len)
+ 			die("Could not write to %s", git_path("MERGE_MSG"));
+ 		close(fd);
++		fd =3D open(git_path("MERGE_MODE"), O_WRONLY | O_CREAT | O_TRUNC, 06=
+66);
++		if (fd < 0)
++			die("Could open %s for writing", git_path("MERGE_MODE"));
++		strbuf_reset(&buf);
++		if (!allow_fast_forward)
++			strbuf_addf(&buf, "no-ff");
++		if (write_in_full(fd, buf.buf, buf.len) !=3D buf.len)
++			die("Could not write to %s", git_path("MERGE_MODE"));
++		close(fd);
+ 	}
+=20
+ 	if (merge_was_ok) {
+diff --git a/t/t7600-merge.sh b/t/t7600-merge.sh
+index 9516f54..209d7cd 100755
+--- a/t/t7600-merge.sh
++++ b/t/t7600-merge.sh
+@@ -511,4 +511,20 @@ test_expect_success 'in-index merge' '
+=20
+ test_debug 'gitk --all'
+=20
++test_expect_success 'merge --no-ff --no-commit && commit' '
++	git reset --hard c0 &&
++	git merge --no-ff --no-commit c1 &&
++	EDITOR=3D: git commit &&
++	verify_parents $c0 $c1
 +'
 +
++test_debug 'gitk --all'
++
++test_expect_success 'amending no-ff merge commit' '
++	EDITOR=3D: git commit --amend &&
++	verify_parents $c0 $c1
++'
++
++test_debug 'gitk --all'
++
  test_done
--- 
-1.6.0.2.307.gc427
+--=20
+1.6.0.2
