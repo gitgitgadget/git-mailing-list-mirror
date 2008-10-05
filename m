@@ -1,99 +1,100 @@
 From: Dmitry Potapov <dpotapov@gmail.com>
-Subject: [PATCH] make prefix_path() never return NULL
-Date: Sun, 5 Oct 2008 04:40:36 +0400
-Message-ID: <20081005004036.GO21650@dpotapov.dyndns.org>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Subject: [PATCH] error out if path is invalid
+Date: Sun,  5 Oct 2008 06:14:41 +0400
+Message-ID: <1223172881-4948-2-git-send-email-dpotapov@gmail.com>
+References: <20081005004036.GO21650@dpotapov.dyndns.org>
+ <1223172881-4948-1-git-send-email-dpotapov@gmail.com>
+Cc: Dmitry Potapov <dpotapov@gmail.com>
 To: "Shawn O. Pearce" <spearce@spearce.org>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Oct 05 02:41:54 2008
+X-From: git-owner@vger.kernel.org Sun Oct 05 04:16:02 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KmHh3-0003Co-AH
-	for gcvg-git-2@gmane.org; Sun, 05 Oct 2008 02:41:53 +0200
+	id 1KmJA9-0005Yy-60
+	for gcvg-git-2@gmane.org; Sun, 05 Oct 2008 04:16:01 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754048AbYJEAkm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 4 Oct 2008 20:40:42 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754003AbYJEAkm
-	(ORCPT <rfc822;git-outgoing>); Sat, 4 Oct 2008 20:40:42 -0400
-Received: from fg-out-1718.google.com ([72.14.220.157]:43845 "EHLO
-	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751893AbYJEAkm (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 4 Oct 2008 20:40:42 -0400
-Received: by fg-out-1718.google.com with SMTP id 19so1490634fgg.17
-        for <git@vger.kernel.org>; Sat, 04 Oct 2008 17:40:39 -0700 (PDT)
+	id S1753336AbYJECOx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 4 Oct 2008 22:14:53 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753329AbYJECOx
+	(ORCPT <rfc822;git-outgoing>); Sat, 4 Oct 2008 22:14:53 -0400
+Received: from fk-out-0910.google.com ([209.85.128.190]:3115 "EHLO
+	fk-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753293AbYJECOw (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 4 Oct 2008 22:14:52 -0400
+Received: by fk-out-0910.google.com with SMTP id 18so1660507fkq.5
+        for <git@vger.kernel.org>; Sat, 04 Oct 2008 19:14:49 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:subject
-         :message-id:mime-version:content-type:content-disposition:user-agent;
-        bh=LvfVGR8VMVoGJA8BZ9PVF0t66bGAwnNV8ZQ+rq/Zg1c=;
-        b=Hm7n29prUGRB4BEzA2y8bcDxMEM0YMroPZSbRTE+4HBiUKFy+/Hz5sl4PBELr4tDe7
-         Zqz7etMgmRB3BNk46TZzggKQSCagA/Z0xA6pFE8aLVJEuXBH9+UFN63bSsjuhv264h3+
-         ofkzxCvIr9CyrstSFm4FRGOrbFO0QZjKxsU7Q=
+        h=domainkey-signature:received:received:from:to:cc:subject:date
+         :message-id:x-mailer:in-reply-to:references;
+        bh=DYHhf+B6P/a4T1aRIse9zjbqIrGSf8dIxxZdCdEt+PA=;
+        b=OmIR6e1z29W57qJhweU0ATAw1mhwnkKlEa9tie6Derv4tleD0m18deZ8pLBpVyTb3j
+         sDj5lUh/yg5i4NjxOxW9okDrJY1woS0VwCTnXNkke0l4tNGyLpw1M3Hw2URB05Cwo02V
+         SwhwnYEH0gs8bA+4L/6mJmXZE4GxLN6EkjBvY=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=date:from:to:subject:message-id:mime-version:content-type
-         :content-disposition:user-agent;
-        b=fcNDJdBSOv8AC6jiXMMim+wVzf1RZUcemskuYiHJ8Rq0WSUA0ukdoPIM4e3RNoC+tV
-         mDB5FuuQiwt0rhctcOK1Me3IKVfpl/GDDYbyhBlyxOI3Qw3DUy5u74k46OUPMcbTn/WX
-         I+rU0qckSN3NtbtvEi9Rrde5a2xdnqdLYdTLo=
-Received: by 10.86.1.1 with SMTP id 1mr2889742fga.61.1223167239887;
-        Sat, 04 Oct 2008 17:40:39 -0700 (PDT)
+        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
+        b=Fcx58OyXUH1pjm2C2qxbGbcmYJjNJ2dr5rl8/VRQIO43YR6AReS2HrGkuRBnTVuG7b
+         ha77lJ1uUeQH7WFyQYSHZXyWYvd0V1rKc9/4PsNMpsBVcTCZrB8xoro/SfpxGepAfaFu
+         Q370aWElLVq378jW+kn0EDz52EUlJROcju7JU=
+Received: by 10.103.226.20 with SMTP id d20mr1818751mur.10.1223172889911;
+        Sat, 04 Oct 2008 19:14:49 -0700 (PDT)
 Received: from localhost (ppp83-237-185-144.pppoe.mtu-net.ru [83.237.185.144])
-        by mx.google.com with ESMTPS id d4sm8824099fga.5.2008.10.04.17.40.38
+        by mx.google.com with ESMTPS id j2sm20980735mue.4.2008.10.04.19.14.47
         (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Sat, 04 Oct 2008 17:40:39 -0700 (PDT)
-Content-Disposition: inline
-User-Agent: Mutt/1.5.13 (2006-08-11)
+        Sat, 04 Oct 2008 19:14:48 -0700 (PDT)
+X-Mailer: git-send-email 1.6.0
+In-Reply-To: <1223172881-4948-1-git-send-email-dpotapov@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/97490>
-
-There are 9 places where prefix_path is called, and only in one of
-them the returned pointer was checked to be non-zero and only to
-call exit(128) as it is usually done by die(). In other 8 places,
-the returned value was not checked and it caused SIGSEGV when a
-path outside of the working tree was used. For instance, running
-  git update-index --add /some/path/outside
-caused SIGSEGV.
-
-This patch changes prefix_path() to die if the path is outside of
-the repository, so it never returns NULL.
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/97491>
 
 Signed-off-by: Dmitry Potapov <dpotapov@gmail.com>
 ---
- setup.c |    9 ++-------
- 1 files changed, 2 insertions(+), 7 deletions(-)
+ builtin-update-index.c |    2 +-
+ read-cache.c           |    6 ++++--
+ 2 files changed, 5 insertions(+), 3 deletions(-)
 
-diff --git a/setup.c b/setup.c
-index 2e3248a..78a8041 100644
---- a/setup.c
-+++ b/setup.c
-@@ -110,9 +110,7 @@ const char *prefix_path(const char *prefix, int len, const char *path)
- 		if (strncmp(sanitized, work_tree, len) ||
- 		    (sanitized[len] != '\0' && sanitized[len] != '/')) {
- 		error_out:
--			error("'%s' is outside repository", orig);
--			free(sanitized);
--			return NULL;
-+			die("'%s' is outside repository", orig);
- 		}
- 		if (sanitized[len] == '/')
- 			len++;
-@@ -216,10 +214,7 @@ const char **get_pathspec(const char *prefix, const char **pathspec)
- 	prefixlen = prefix ? strlen(prefix) : 0;
- 	while (*src) {
- 		const char *p = prefix_path(prefix, prefixlen, *src);
--		if (p)
--			*(dst++) = p;
--		else
--			exit(128); /* error message already given */
-+		*(dst++) = p;
- 		src++;
- 	}
- 	*dst = NULL;
+diff --git a/builtin-update-index.c b/builtin-update-index.c
+index 417f972..3a2291b 100644
+--- a/builtin-update-index.c
++++ b/builtin-update-index.c
+@@ -218,7 +218,7 @@ static int add_cacheinfo(unsigned int mode, const unsigned char *sha1,
+ 	struct cache_entry *ce;
+ 
+ 	if (!verify_path(path))
+-		return -1;
++		return error("Invalid path '%s'", path);
+ 
+ 	len = strlen(path);
+ 	size = cache_entry_size(len);
+diff --git a/read-cache.c b/read-cache.c
+index 972592e..43dc338 100644
+--- a/read-cache.c
++++ b/read-cache.c
+@@ -591,8 +591,10 @@ struct cache_entry *make_cache_entry(unsigned int mode,
+ 	int size, len;
+ 	struct cache_entry *ce;
+ 
+-	if (!verify_path(path))
++	if (!verify_path(path)) {
++		error("Invalid path '%s'", path);
+ 		return NULL;
++	}
+ 
+ 	len = strlen(path);
+ 	size = cache_entry_size(len);
+@@ -884,7 +886,7 @@ static int add_index_entry_with_check(struct index_state *istate, struct cache_e
+ 	if (!ok_to_add)
+ 		return -1;
+ 	if (!verify_path(ce->name))
+-		return -1;
++		return error("Invalid path '%s'", ce->name);
+ 
+ 	if (!skip_df_check &&
+ 	    check_file_directory_conflict(istate, ce, pos, ok_to_replace)) {
 -- 
-1.6.0.2.445.g1198
+1.6.0
