@@ -1,48 +1,70 @@
-From: "Tjernlund" <tjernlund@tjernlund.se>
-Subject: gitweb improvements
-Date: Sun, 5 Oct 2008 17:45:01 +0200
-Message-ID: <00a201c92701$54ec6980$fec53c80$@se>
+From: Karl =?utf-8?q?Hasselstr=C3=B6m?= <kha@treskal.com>
+Subject: [StGit PATCH 0/6] Documentation updates
+Date: Sun, 05 Oct 2008 18:01:28 +0200
+Message-ID: <20081005155450.19886.43748.stgit@yoghurt>
 Mime-Version: 1.0
-Content-Type: text/plain;
-	charset="us-ascii"
-Content-Transfer-Encoding: 7bit
-To: "'git'" <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Sun Oct 05 17:53:43 2008
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: Catalin Marinas <catalin.marinas@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Oct 05 18:02:48 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KmVvQ-0003K3-96
-	for gcvg-git-2@gmane.org; Sun, 05 Oct 2008 17:53:40 +0200
+	id 1KmW4F-00063u-Dx
+	for gcvg-git-2@gmane.org; Sun, 05 Oct 2008 18:02:47 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754318AbYJEPwQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 5 Oct 2008 11:52:16 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754310AbYJEPwP
-	(ORCPT <rfc822;git-outgoing>); Sun, 5 Oct 2008 11:52:15 -0400
-Received: from csmtp2.b-one.net ([195.47.247.206]:47636 "EHLO csmtp2.b-one.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754048AbYJEPwP (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 5 Oct 2008 11:52:15 -0400
-X-Greylist: delayed 392 seconds by postgrey-1.27 at vger.kernel.org; Sun, 05 Oct 2008 11:52:15 EDT
-Received: from jockexp (84-217-5-146.tn.glocalnet.net [84.217.5.146])
-	by csmtp2.b-one.net (Postfix) with ESMTP id D3D6516001428
-	for <git@vger.kernel.org>; Sun,  5 Oct 2008 17:45:41 +0200 (CEST)
-X-Mailer: Microsoft Office Outlook 12.0
-Thread-Index: AcknAVQF7lxhQhZjRg2aDKnAU2Mr5A==
-Content-Language: sv
+	id S1754315AbYJEQBg convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 5 Oct 2008 12:01:36 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754258AbYJEQBg
+	(ORCPT <rfc822;git-outgoing>); Sun, 5 Oct 2008 12:01:36 -0400
+Received: from diana.vm.bytemark.co.uk ([80.68.90.142]:1867 "EHLO
+	diana.vm.bytemark.co.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753897AbYJEQBf (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 5 Oct 2008 12:01:35 -0400
+Received: from localhost ([127.0.0.1] helo=[127.0.1.1])
+	by diana.vm.bytemark.co.uk with esmtp (Exim 3.36 #1 (Debian))
+	id 1KmW2y-0007X5-00; Sun, 05 Oct 2008 17:01:28 +0100
+User-Agent: StGIT/0.14.3.236.g0c611
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/97512>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/97513>
 
-When I browse a repo using gitweb, I miss two things:
-1) looking at the history for a file or directory I really want
-   to see the tags there too.
+We're approaching a new StGit release (yay!), and the docs are rather
+outdated. This is an attempt to refresh the main stg man page and the
+tutorial (but I ran out of time for this weekend, so the second half
+of the tutorial is incomplete).
 
-2) looking at a merge like:
-http://git.kernel.org/?p=linux/kernel/git/torvalds/linux-2.6.git;a=commit;h=66120005e65eed8a05b14a36ab448bdec42f0d6b
-   is somewhat confusing. It really doesn't tell you which commits that is
-   included in the merge.
+Comments & helping hands much appreciated.
 
- Jocke
+Since I touch almost every line, the patches are kind of a nuisance to
+read. It's probably easiest to just fetch the branch:
+
+  git://repo.or.cz/stgit/kha.git doc
+
+---
+
+Karl Hasselstr=C3=B6m (6):
+      Refresh and expand the tutorial (not finished)
+      Refresh the main stg man page
+      Add 1.0 TODO items from recent discussion by private mail
+      We're half-way there with the separate indexes
+      Remove TODO items that have already been addressed
+      Remove unused variable
+
+
+ Documentation/Makefile      |   11 -
+ Documentation/asciidoc.conf |   22 +
+ Documentation/stg.txt       |  150 +++++---
+ Documentation/tutorial.txt  |  794 ++++++++++++++++++++++++++---------=
+--------
+ TODO                        |   26 +
+ stgit/argparse.py           |    2=20
+ 6 files changed, 603 insertions(+), 402 deletions(-)
+
+--=20
+Karl Hasselstr=C3=B6m, kha@treskal.com
+      www.treskal.com/kalle
