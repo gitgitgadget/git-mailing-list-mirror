@@ -1,66 +1,97 @@
-From: Ed Avis <eda@waniasset.com>
-Subject: Re: Build bug report: 'make check' needs sparse, but configure doesn't check it
-Date: Sun, 5 Oct 2008 09:46:57 +0000 (UTC)
-Message-ID: <loom.20081005T094301-345@post.gmane.org>
-References: <loom.20081004T131652-828@post.gmane.org> <20081005003446.GN21650@dpotapov.dyndns.org>
+From: bain <bain@devslashzero.com>
+Subject: [Announce] teamGit v0.0.3
+Date: Sun, 5 Oct 2008 02:39:53 -0700 (PDT)
+Message-ID: <8ce0dfd6-2bd7-4e94-901f-b7c9bbd114aa@w39g2000prb.googlegroups.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
+Cc: bain@devslashzero.com
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Oct 05 11:49:04 2008
+X-From: git-owner@vger.kernel.org Sun Oct 05 11:50:40 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KmQEA-0008Qc-55
-	for gcvg-git-2@gmane.org; Sun, 05 Oct 2008 11:48:38 +0200
+	id 1KmQFs-0000g9-76
+	for gcvg-git-2@gmane.org; Sun, 05 Oct 2008 11:50:24 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753256AbYJEJrO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 5 Oct 2008 05:47:14 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753168AbYJEJrO
-	(ORCPT <rfc822;git-outgoing>); Sun, 5 Oct 2008 05:47:14 -0400
-Received: from main.gmane.org ([80.91.229.2]:37987 "EHLO ciao.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753092AbYJEJrN (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 5 Oct 2008 05:47:13 -0400
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1KmQCi-0006me-FM
-	for git@vger.kernel.org; Sun, 05 Oct 2008 09:47:08 +0000
-Received: from dsl-217-155-72-22.zen.co.uk ([217.155.72.22])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Sun, 05 Oct 2008 09:47:08 +0000
-Received: from eda by dsl-217-155-72-22.zen.co.uk with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Sun, 05 Oct 2008 09:47:08 +0000
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@ger.gmane.org
-X-Gmane-NNTP-Posting-Host: main.gmane.org
-User-Agent: Loom/3.14 (http://gmane.org/)
-X-Loom-IP: 217.155.72.22 (Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.0.2) Gecko/2008092318 Fedora/3.0.2-1.fc9 Firefox/3.0.2)
+	id S1753328AbYJEJtO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 5 Oct 2008 05:49:14 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753289AbYJEJtO
+	(ORCPT <rfc822;git-outgoing>); Sun, 5 Oct 2008 05:49:14 -0400
+Received: from mail-gx0-f62.google.com ([209.85.217.62]:60564 "EHLO
+	mail-gx0-f62.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753253AbYJEJtN (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 5 Oct 2008 05:49:13 -0400
+X-Greylist: delayed 558 seconds by postgrey-1.27 at vger.kernel.org; Sun, 05 Oct 2008 05:49:12 EDT
+Received: by gxk22 with SMTP id 22so8109572gxk.21
+        for <git@vger.kernel.org>; Sun, 05 Oct 2008 02:49:12 -0700 (PDT)
+Received: by 10.150.49.2 with SMTP id w2mr107022ybw.17.1223199593856; Sun, 05 
+	Oct 2008 02:39:53 -0700 (PDT)
+X-IP: 59.95.16.13
+User-Agent: G2/1.0
+X-HTTP-UserAgent: Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9.0.1) 
+	Gecko/2008072820 Firefox/3.0.1,gzip(gfe),gzip(gfe)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/97505>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/97506>
 
-Dmitry Potapov <dpotapov <at> gmail.com> writes:
+Hi all,
 
->The whole point of 'make check' is to run 'sparce' on all files.
+This is an announcement for a small project to create a functional git
+gui.
+This project was born as kgit a couple of years back when i needed a
+ui commit tool and none other were mature.
+My ambitions have grown since then and I recoded it in pure QT4.
 
->If you want to build
->and to test the resulting binaries then you run 'make test'.
+The short description of the application :-
 
-Thanks, I didn't realize that.  I assumed that 'make check' was to run the test
-suite.
+Currently it is of course in very early alpha stage.
+It works stable to do following things,
 
-That is the convention used by most autoconf-based programs: for example if you
-download coreutils then 'make check' runs the tests, so the normal way to build
-and install is something like 'configure && make check && make install'.
+1. Its a pretty good commit tool. Just double click on unstaged files
+to stage them. It supports staging hunks (just double click on the
+hunk you want to stage in diff pane)  and the related stuff.  You can
+optionally view untracked files and stage them for inclusion as well.
+2. Its a preliminary repository viewer, it does not support graphical
+representation for want of performance.
+3. It has few other git command implemented, a quick issue of pull/
+push, a reset command, cherry pick command and some branch management
+implemented.
 
-To reduce confusion I suggest renaming the target to 'make sparse'.  Then it's
-obvious what it does and it can't get confused with the more common usage of
-'make check'.
+Known problems,
+1. Icons make no sense i just dumped kde icons dir to the project
+resources and picked the ones i could match or just at random (e.g.
+checkout is a smilie)
+2. No documentation, will be addressed soon.
+3. All git commands can not be canceled in between. But with git thats
+not usually a big issue.
 
--- 
-Ed Avis <eda@waniasset.com>
+Long description:
+
+You can find the info on
+http://www.devslashzero.com/teamgit
+
+Download
+http://www.devslashzero.com/teamgit/download (you will need qt-dev >
+4.4)
+
+This is so far tested only on ubuntu 8.04 with backports repo enabled
+and qt update installed.
+
+Ultimate goal of the project is to add much more than just version
+control on top of git. But giving git a ui will always remain an
+important goal.
+You can view continually evolving roadmap at
+http://www.devslashzero.com/teamgit/roadmap
+
+With this announcement i am looking for feedback on the overall
+interface design (commit procedure dialogs etc.) and feature requests.
+
+WARNING: never been used out side controlled environment. Use at your
+own risk.
+
+
+Abhijit Bhopatkar - BAIN
