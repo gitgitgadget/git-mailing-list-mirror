@@ -1,132 +1,79 @@
-From: Jeff King <peff@peff.net>
-Subject: [PATCH] fix bogus "diff --git" header from "diff --no-index"
-Date: Sun, 5 Oct 2008 15:35:15 -0400
-Message-ID: <20081005193515.GA29022@coredump.intra.peff.net>
+From: Miklos Vajna <vmiklos@frugalware.org>
+Subject: Re: [PATCH] builtin-commit: use reduce_heads() only when
+	appropriate
+Date: Sun, 5 Oct 2008 21:43:40 +0200
+Message-ID: <20081005194340.GT23137@genesis.frugalware.org>
+References: <20081003023518.GA3291@spearce.org> <1223035487-2576-1-git-send-email-vmiklos@frugalware.org> <20081003150927.GG6839@neumann>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Linus Torvalds <torvalds@linux-foundation.org>,
-	Imre Deak <imre.deak@gmail.com>, git@vger.kernel.org
-To: "Shawn O. Pearce" <spearce@spearce.org>
-X-From: git-owner@vger.kernel.org Sun Oct 05 21:36:49 2008
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="7aLy7NWYeEog7w9O"
+Cc: "Shawn O. Pearce" <spearce@spearce.org>, jnareb@gmail.com,
+	Johannes.Schindelin@gmx.de, git@vger.kernel.org
+To: SZEDER =?iso-8859-1?Q?G=E1bor?= <szeder@ira.uka.de>
+X-From: git-owner@vger.kernel.org Sun Oct 05 21:44:54 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KmZP6-00030O-B1
-	for gcvg-git-2@gmane.org; Sun, 05 Oct 2008 21:36:32 +0200
+	id 1KmZXC-0005zr-5C
+	for gcvg-git-2@gmane.org; Sun, 05 Oct 2008 21:44:54 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755395AbYJETfU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 5 Oct 2008 15:35:20 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754833AbYJETfT
-	(ORCPT <rfc822;git-outgoing>); Sun, 5 Oct 2008 15:35:19 -0400
-Received: from peff.net ([208.65.91.99]:1514 "EHLO peff.net"
+	id S1755331AbYJETnn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 5 Oct 2008 15:43:43 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754558AbYJETnn
+	(ORCPT <rfc822;git-outgoing>); Sun, 5 Oct 2008 15:43:43 -0400
+Received: from virgo.iok.hu ([193.202.89.103]:54378 "EHLO virgo.iok.hu"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754558AbYJETfS (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 5 Oct 2008 15:35:18 -0400
-Received: (qmail 17192 invoked by uid 111); 5 Oct 2008 19:35:16 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.32) with SMTP; Sun, 05 Oct 2008 15:35:16 -0400
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Sun, 05 Oct 2008 15:35:15 -0400
+	id S1753148AbYJETnm (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 5 Oct 2008 15:43:42 -0400
+Received: from kag.elte.hu (kag.elte.hu [157.181.177.1])
+	by virgo.iok.hu (Postfix) with ESMTP id F2005580D0;
+	Sun,  5 Oct 2008 21:43:40 +0200 (CEST)
+Received: from genesis.frugalware.org (frugalware.elte.hu [157.181.177.34])
+	by kag.elte.hu (Postfix) with ESMTP id 99C534465E;
+	Sun,  5 Oct 2008 21:43:40 +0200 (CEST)
+Received: by genesis.frugalware.org (Postfix, from userid 1000)
+	id 824EC11901A1; Sun,  5 Oct 2008 21:43:40 +0200 (CEST)
 Content-Disposition: inline
+In-Reply-To: <20081003150927.GG6839@neumann>
+User-Agent: Mutt/1.5.17 (2007-11-01)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/97527>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/97528>
 
-From: Linus Torvalds <torvalds@linux-foundation.org>
 
-When "git diff --no-index" is given an absolute pathname, it
-would generate a diff header with the absolute path
-prepended by the prefix, like:
+--7aLy7NWYeEog7w9O
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-  diff --git a/dev/null b/foo
+On Fri, Oct 03, 2008 at 05:09:27PM +0200, SZEDER G=E1bor <szeder@ira.uka.de=
+> wrote:
+>   I think this should be squashed onto Mikl=F3s' patch.
 
-Not only is this nonsensical, and not only does it violate
-the description of diffs given in git-diff(1), but it would
-produce broken binary diffs. Unlike text diffs, the binary
-diffs don't contain the filenames anywhere else, and so "git
-apply" relies on this header to figure out the filename.
+I'll resend a squashed patch with your signoff included.
 
-This patch just refuses to use an invalid name for anything
-visible in the diff.
+>   I'm not sure about putting these two new test into t7600-merge.sh.
+>   Although the infrastructure to keep these tests very short (repo with
+>   branches already set up, verify_parents) is there available, the first
+>   test tests not only merge, but the cooperation of merge and commit,
+>   and this second one tests only commit.
 
-Now, this fixes the "git diff --no-index --binary a
-/dev/null" kind of case (and we'll end up using "a" as the
-basename), but some other insane cases are impossible to
-handle. If you do
+Given that originally it was git-merge.sh that did this reduction, I
+think it's OK.
 
-	git diff --no-index --binary a /bin/echo
+--7aLy7NWYeEog7w9O
+Content-Type: application/pgp-signature
+Content-Disposition: inline
 
-you'll still get a patch like
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.9 (GNU/Linux)
 
-	diff --git a/a b/bin/echo
-	old mode 100644
-	new mode 100755
-	index ...
+iEYEARECAAYFAkjpGOwACgkQe81tAgORUJb70gCfR1EQvT36ogLXsiGYTAK0FrOB
+6NgAoIpHbdxvVGLTev/CgM4uyiCIS9+S
+=NXau
+-----END PGP SIGNATURE-----
 
-and "git apply" will refuse to apply it for a couple of
-reasons, and the diff is simply bogus.
-
-And that, btw, is no longer a bug, I think. It's impossible
-to know whethe the user meant for the patch to be a rename
-or not. And as such, refusing to apply it because you don't
-know what name you should use is probably _exactly_ the
-right thing to do!
-
-Original problem reported by Imre Deak. Test script and problem
-description by Jeff King.
-
-Signed-off-by: Jeff King <peff@peff.net>
----
- diff.c                 |    4 ++++
- t/t4012-diff-binary.sh |   21 +++++++++++++++++++++
- 2 files changed, 25 insertions(+), 0 deletions(-)
-
-diff --git a/diff.c b/diff.c
-index 4e4e439..02e948c 100644
---- a/diff.c
-+++ b/diff.c
-@@ -1509,6 +1509,10 @@ static void builtin_diff(const char *name_a,
- 		b_prefix = o->b_prefix;
- 	}
- 
-+	/* Never use a non-valid filename anywhere if at all possible */
-+	name_a = DIFF_FILE_VALID(one) ? name_a : name_b;
-+	name_b = DIFF_FILE_VALID(two) ? name_b : name_a;
-+
- 	a_one = quote_two(a_prefix, name_a + (*name_a == '/'));
- 	b_two = quote_two(b_prefix, name_b + (*name_b == '/'));
- 	lbl[0] = DIFF_FILE_VALID(one) ? a_one : "/dev/null";
-diff --git a/t/t4012-diff-binary.sh b/t/t4012-diff-binary.sh
-index b8ec6e9..421f4bb 100755
---- a/t/t4012-diff-binary.sh
-+++ b/t/t4012-diff-binary.sh
-@@ -77,4 +77,25 @@ test_expect_success 'apply binary patch' \
- 	 tree1=`git write-tree` &&
- 	 test "$tree1" = "$tree0"'
- 
-+q_to_nul() {
-+	perl -pe 'y/Q/\000/'
-+}
-+
-+nul_to_q() {
-+	perl -pe 'y/\000/Q/'
-+}
-+
-+test_expect_success 'diff --no-index with binary creation' '
-+	echo Q | q_to_nul >binary &&
-+	(:# hide error code from diff, which just indicates differences
-+	 git diff --binary --no-index /dev/null binary >current ||
-+	 true
-+	) &&
-+	rm binary &&
-+	git apply --binary <current &&
-+	echo Q >expected &&
-+	nul_to_q <binary >actual &&
-+	test_cmp expected actual
-+'
-+
- test_done
--- 
-1.6.0.2.638.g50eb2
+--7aLy7NWYeEog7w9O--
