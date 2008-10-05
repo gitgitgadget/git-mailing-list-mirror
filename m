@@ -1,196 +1,70 @@
-From: Marc Weber <marco-oweber@gmx.de>
-Subject: [PATCH 2] renaming git add -i [r]evert -> reset and adding gitt
-	add -i [c]heckout
-Date: Sun, 5 Oct 2008 23:46:44 +0200
-Message-ID: <20081005214644.GB32727@gmx.de>
-References: <20081005152654.GA13618@gmx.de> <20081005164124.GA31903@coredump.intra.peff.net>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: [PATCH 0/4] diff text conversion filter
+Date: Mon, 06 Oct 2008 00:03:48 +0200
+Organization: At home
+Message-ID: <gcbdk1$kpe$1@ger.gmane.org>
+References: <1222567618-22156-1-git-send-email-Matthieu.Moy@imag.fr> <20080928041040.GA24214@coredump.intra.peff.net> <vpqd4io1tla.fsf@bauges.imag.fr> <20080928161106.GA30199@coredump.intra.peff.net> <vpqk5ctfyp6.fsf@bauges.imag.fr> <20080930164545.GA20305@sigill.intra.peff.net> <20081005214114.GA21875@coredump.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7Bit
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Oct 05 23:48:06 2008
+X-From: git-owner@vger.kernel.org Mon Oct 06 00:06:01 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KmbSK-0002gi-OI
-	for gcvg-git-2@gmane.org; Sun, 05 Oct 2008 23:48:01 +0200
+	id 1Kmbis-0006fw-H4
+	for gcvg-git-2@gmane.org; Mon, 06 Oct 2008 00:05:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754902AbYJEVqt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 5 Oct 2008 17:46:49 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754823AbYJEVqt
-	(ORCPT <rfc822;git-outgoing>); Sun, 5 Oct 2008 17:46:49 -0400
-Received: from mail.gmx.net ([213.165.64.20]:55772 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1754685AbYJEVqs (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 5 Oct 2008 17:46:48 -0400
-Received: (qmail invoked by alias); 05 Oct 2008 21:46:44 -0000
-Received: from pD9E0B72A.dip.t-dialin.net (EHLO nixos) [217.224.183.42]
-  by mail.gmx.net (mp047) with SMTP; 05 Oct 2008 23:46:44 +0200
-X-Authenticated: #9006135
-X-Provags-ID: V01U2FsdGVkX18XjF80cxsXuFXmVYxbdDV+iTNavrMlCnSBFFgk9P
-	rGnmh08RasUDgD
-Received: by nixos (sSMTP sendmail emulation); Sun, 05 Oct 2008 23:46:44 +0200
-Mail-Followup-To: Marc Weber <marco-oweber@gmx.de>, git@vger.kernel.org
-Content-Disposition: inline
-In-Reply-To: <20081005164124.GA31903@coredump.intra.peff.net>
-User-Agent: Mutt/1.5.15 (2007-04-06)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.46
+	id S1755085AbYJEWD4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 5 Oct 2008 18:03:56 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754967AbYJEWD4
+	(ORCPT <rfc822;git-outgoing>); Sun, 5 Oct 2008 18:03:56 -0400
+Received: from main.gmane.org ([80.91.229.2]:38130 "EHLO ciao.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754887AbYJEWDz (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 5 Oct 2008 18:03:55 -0400
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1Kmbhh-0008ST-NM
+	for git@vger.kernel.org; Sun, 05 Oct 2008 22:03:53 +0000
+Received: from abwo50.neoplus.adsl.tpnet.pl ([83.8.238.50])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Sun, 05 Oct 2008 22:03:53 +0000
+Received: from jnareb by abwo50.neoplus.adsl.tpnet.pl with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Sun, 05 Oct 2008 22:03:53 +0000
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@ger.gmane.org
+X-Gmane-NNTP-Posting-Host: abwo50.neoplus.adsl.tpnet.pl
+Mail-Copies-To: Jakub Narebski <jnareb@gmail.com>
+User-Agent: KNode/0.10.2
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/97542>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/97543>
 
-Hi Jeff, thanks!
-I'll try to do it better now (not sure who is the mantainer though, I've
-seen that you've commited some lines to this file)..
+Jeff King wrote:
 
-Both patches apply cleanly against c427559 (master).
-You can push enhancements directly to 
+> On Tue, Sep 30, 2008 at 12:45:45PM -0400, Jeff King wrote:
+> 
+>> I am about 90% done cleaning it up for preparation (there is a bit of
+>> refactoring, and I want to make sure I get that just right). I'll post
+>> it in the next day or so.
+> 
+> Sorry, I didn't get a chance to look at this until today. Patch series
+> will follow. It is still missing documentation updates and tests, but I
+> wanted to get you something to look at (and as I am proposing a new
+> meaning for "diff driver", I would be curious to hear the general
+> comments).
+> 
+> This is on top of 'next', because it would otherwise conflict with the
+> funcname pattern changes there.
 
-git://mawercer.de/git_my_patches 
-topic branches: 
-        renaming_revert_to_reset
-        revert_to_reset_renaming
+Documentation, pretty please?
 
-Sincerly
-Marc Weber
-
-============= attachement git show output ============================
-
-commit 852b21bf88b1de784244a6e99de9a53a5c61dd8c
-Author: Marc Weber <marco-oweber@gmx.de>
-Date:   Sun Oct 5 23:09:04 2008 +0200
-
-    rename the git add -i [r]evert command to [r]eset to use the same term as in git reset
-    purpose: decrease possibility of confusion for users with svn background (svn revert = git checkout)
-    
-    Signed-off-by: Marc Weber <marco-oweber@gmx.de>
-
-diff --git a/git-add--interactive.perl b/git-add--interactive.perl
-index da768ee..5352d16 100755
---- a/git-add--interactive.perl
-+++ b/git-add--interactive.perl
-@@ -498,8 +498,8 @@ sub update_cmd {
-        print "\n";
- }
- 
--sub revert_cmd {
--       my @update = list_and_choose({ PROMPT => 'Revert',
-+sub reset_cmd {
-+       my @update = list_and_choose({ PROMPT => 'Reset',
-                                       HEADER => $status_head, },
-                                     list_modified());
-        if (@update) {
-@@ -527,7 +527,7 @@ sub revert_cmd {
-                        }
-                }
-                refresh();
--               say_n_paths('reverted', @update);
-+               say_n_paths('reset', @update);
-        }
-        print "\n";
- }
-@@ -1046,7 +1046,7 @@ sub help_cmd {
-        print colored $help_color, <<\EOF ;
- status        - show paths with changes
- update        - add working tree state to the staged set of changes
--revert        - revert staged set of changes back to the HEAD version
-+reset         - reset staged set of changes back to the HEAD version
- patch         - pick hunks and update selectively
- diff         - view diff between HEAD and index
- add untracked - add contents of untracked files to the staged set of changes
-@@ -1070,7 +1070,7 @@ sub process_args {
- sub main_loop {
-        my @cmd = ([ 'status', \&status_cmd, ],
-                   [ 'update', \&update_cmd, ],
--                  [ 'revert', \&revert_cmd, ],
-+                  [ 'reset', \&reset_cmd, ],
-                   [ 'add untracked', \&add_untracked_cmd, ],
-                   [ 'patch', \&patch_update_cmd, ],
-                   [ 'diff', \&diff_cmd, ],
-
-
-
-
-
-
-
-
-commit b3d438764a7429e1dfacef8f499a0126076ed2bc
-Author: Marc Weber <marco-oweber@gmx.de>
-Date:   Sun Oct 5 15:15:38 2008 +0000
-
-    renamed revert in ga -i to reset, added [c]heckout
-
-diff --git a/git-add--interactive.perl b/git-add--interactive.perl
-index da768ee..32c300f 100755
---- a/git-add--interactive.perl
-+++ b/git-add--interactive.perl
-@@ -498,8 +498,8 @@ sub update_cmd {
-        print "\n";
- }
- 
--sub revert_cmd {
--       my @update = list_and_choose({ PROMPT => 'Revert',
-+sub reset_cmd {
-+       my @update = list_and_choose({ PROMPT => 'Reset',
-                                       HEADER => $status_head, },
-                                     list_modified());
-        if (@update) {
-@@ -527,7 +527,31 @@ sub revert_cmd {
-                        }
-                }
-                refresh();
--               say_n_paths('reverted', @update);
-+               say_n_paths('reset', @update);
-+       }
-+       print "\n";
-+}
-+
-+sub checkout_cmd {
-+       my @update = list_and_choose({ PROMPT => 'Checkout',
-+                                      HEADER => $status_head, },
-+                                    list_modified());
-+       if (@update) {
-+               if (is_initial_commit()) {
-+                        # should never be executed because there can't
-be modified files
-+                        print "error: no revision in repo yet\n";
-+               }
-+               else {
-+                       for (@update) {
-+                               if ($_->{INDEX_ADDDEL} &&
-+                                   $_->{INDEX_ADDDEL} eq 'create') {
-+                                       system(qw(git checkout --),
-+                                              $_->{VALUE});
-+                               }
-+                       }
-+               }
-+               refresh();
-+               say_n_paths('checked out', @update);
-        }
-        print "\n";
- }
-@@ -1046,7 +1070,8 @@ sub help_cmd {
-        print colored $help_color, <<\EOF ;
- status        - show paths with changes
- update        - add working tree state to the staged set of changes
--revert        - revert staged set of changes back to the HEAD version
-+reset         - reset staged set of changes back to the HEAD version
-+checkout      - reset working copy file back to the HEAD version
- patch         - pick hunks and update selectively
- diff         - view diff between HEAD and index
- add untracked - add contents of untracked files to the staged set of
-changes
-@@ -1070,7 +1095,8 @@ sub process_args {
- sub main_loop {
-        my @cmd = ([ 'status', \&status_cmd, ],
-                   [ 'update', \&update_cmd, ],
--                  [ 'revert', \&revert_cmd, ],
-+                  [ 'reset', \&reset_cmd, ],
-+                  [ 'checkout', \&checkout_cmd, ],
-                   [ 'add untracked', \&add_untracked_cmd, ],
-                   [ 'patch', \&patch_update_cmd, ],
-                   [ 'diff', \&diff_cmd, ],
+-- 
+Jakub Narebski
+Warsaw, Poland
+ShadeHawk on #git
