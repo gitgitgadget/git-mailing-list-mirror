@@ -1,66 +1,65 @@
-From: Ed Avis <eda@waniasset.com>
-Subject: Re: Build bug report: 'make check' needs sparse, but =?utf-8?b?Y29uZmlndXJlCWRvZXNuJ3Q=?= check it
-Date: Mon, 6 Oct 2008 11:28:25 +0000 (UTC)
-Message-ID: <loom.20081006T112601-258@post.gmane.org>
-References: <loom.20081004T131652-828@post.gmane.org> <20081005003446.GN21650@dpotapov.dyndns.org> <loom.20081005T094301-345@post.gmane.org> <20081006065847.GA27516@spearce.org>
+From: "Dilip M" <dilipm79@gmail.com>
+Subject: how to restrict commit for a repo
+Date: Mon, 6 Oct 2008 17:39:39 +0530
+Message-ID: <c94f8e120810060509w5eaa9138m92f1df36c9c36db6@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Oct 06 13:29:59 2008
+To: "Git Mailing List" <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Mon Oct 06 14:11:06 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KmoHg-00027u-NE
-	for gcvg-git-2@gmane.org; Mon, 06 Oct 2008 13:29:53 +0200
+	id 1KmovM-0006oR-C4
+	for gcvg-git-2@gmane.org; Mon, 06 Oct 2008 14:10:52 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752248AbYJFL2l (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 6 Oct 2008 07:28:41 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752295AbYJFL2k
-	(ORCPT <rfc822;git-outgoing>); Mon, 6 Oct 2008 07:28:40 -0400
-Received: from main.gmane.org ([80.91.229.2]:52914 "EHLO ciao.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752248AbYJFL2k (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 6 Oct 2008 07:28:40 -0400
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1KmoGR-0002eU-T3
-	for git@vger.kernel.org; Mon, 06 Oct 2008 11:28:35 +0000
-Received: from 80.169.169.174 ([80.169.169.174])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Mon, 06 Oct 2008 11:28:35 +0000
-Received: from eda by 80.169.169.174 with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Mon, 06 Oct 2008 11:28:35 +0000
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@ger.gmane.org
-X-Gmane-NNTP-Posting-Host: main.gmane.org
-User-Agent: Loom/3.14 (http://gmane.org/)
-X-Loom-IP: 80.169.169.174 (Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US) AppleWebKit/525.13 (KHTML, like Gecko) Chrome/0.2.149.30 Safari/525.13)
+	id S1752757AbYJFMJl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 6 Oct 2008 08:09:41 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752606AbYJFMJl
+	(ORCPT <rfc822;git-outgoing>); Mon, 6 Oct 2008 08:09:41 -0400
+Received: from yx-out-2324.google.com ([74.125.44.29]:32857 "EHLO
+	yx-out-2324.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752442AbYJFMJk (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 6 Oct 2008 08:09:40 -0400
+Received: by yx-out-2324.google.com with SMTP id 8so407769yxm.1
+        for <git@vger.kernel.org>; Mon, 06 Oct 2008 05:09:39 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to
+         :subject:mime-version:content-type:content-transfer-encoding
+         :content-disposition;
+        bh=+7blD29L/xXSahnqunU4zJLmLXdbUrd5tDKPtthuAuM=;
+        b=Iv3mOovbk7HYo09VmWI2mmImqVGlnY3MweZYpQtxfJKxpqPdATfP3qjC3Y270msg+D
+         WJC08o9jKrETFuDQ74VftoKKT+6Dy6gGeFQJl2LQjWt7QS8mLcTP2FlKhSI1loOtYf75
+         xJuOlPjUqqutrHKv4rX5ii3DXV9E+fIHwzN64=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:to:subject:mime-version:content-type
+         :content-transfer-encoding:content-disposition;
+        b=k7nBtTZ6XoichmvbnlmRu5s9P0cGXD0/fmW++WTTPFKG9Iz/hgXSGrNjykLBr3h0s7
+         2IMEK1SjDEGYzCu/fwEBPkDpJb54Ae+x0Fs82kiw8qp1P2wgTe9zEO6sxKLXq8CtLrth
+         JT/L3LuRGI6jPwmAOuXiiBvOSi9jzT/o63KrI=
+Received: by 10.90.71.15 with SMTP id t15mr5670491aga.19.1223294979221;
+        Mon, 06 Oct 2008 05:09:39 -0700 (PDT)
+Received: by 10.90.52.15 with HTTP; Mon, 6 Oct 2008 05:09:39 -0700 (PDT)
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/97577>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/97578>
 
-Shawn O. Pearce <spearce <at> spearce.org> writes:
+Hi all,
 
->Nah.  We're not going to rename the target to "make sparse".
+I am a new user to GIT. Read few docs in web ..I want to know few things..
 
-Fair enough.  Can I suggest a one line patch to avoid any misunderstanding in 
-the future?
+If I have a repository, how to prevent push from other repo's into
+mine master's? I want to prevent the commits from all developers and
+allow only few ppl to commit to masters..
 
-diff --git a/Makefile b/Makefile
-index 3c0664a..c98b921 100644
---- a/Makefile
-+++ b/Makefile
-@@ -1354,6 +1354,7 @@ check-sha1:: test-sha1$X
-        ./test-sha1.sh
+Thanks for sharing the info on this...
 
- check: common-cmds.h
-+       @echo "'make check' runs the 'sparse' tool on all source files; say 
-'make test' to run the test suite."
-        for i in *.c; do sparse $(ALL_CFLAGS) $(SPARSE_FLAGS) $$i || exit; done
 
- remove-dashes:
+-- 
+dm
