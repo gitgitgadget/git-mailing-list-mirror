@@ -1,85 +1,66 @@
-From: Thomas Rast <trast@student.ethz.ch>
-Subject: Re: git svn: Bad URL passed to RA layer: Unrecognized URL scheme
-Date: Mon, 6 Oct 2008 11:47:25 +0200
-Message-ID: <200810061147.28986.trast@student.ethz.ch>
-References: <pan.2008.10.05.17.24.02.167465@yahoo.com> <237967ef0810051244m51156925x26ae51db038dad49@mail.gmail.com> <pan.2008.10.06.02.28.35.643705@yahoo.com>
+From: Ed Avis <eda@waniasset.com>
+Subject: Re: Build bug report: 'make check' needs sparse, but =?utf-8?b?Y29uZmlndXJlCWRvZXNuJ3Q=?= check it
+Date: Mon, 6 Oct 2008 11:28:25 +0000 (UTC)
+Message-ID: <loom.20081006T112601-258@post.gmane.org>
+References: <loom.20081004T131652-828@post.gmane.org> <20081005003446.GN21650@dpotapov.dyndns.org> <loom.20081005T094301-345@post.gmane.org> <20081006065847.GA27516@spearce.org>
 Mime-Version: 1.0
-Content-Type: multipart/signed;
-  boundary="nextPart7038765.L41bstWhzI";
-  protocol="application/pgp-signature";
-  micalg=pgp-sha1
+Content-Type: text/plain; charset=us-ascii
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Jeff Kowalczyk <jtk@yahoo.com>
-X-From: git-owner@vger.kernel.org Mon Oct 06 11:49:19 2008
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Oct 06 13:29:59 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Kmmho-0001ui-7L
-	for gcvg-git-2@gmane.org; Mon, 06 Oct 2008 11:48:44 +0200
+	id 1KmoHg-00027u-NE
+	for gcvg-git-2@gmane.org; Mon, 06 Oct 2008 13:29:53 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752320AbYJFJrc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 6 Oct 2008 05:47:32 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752295AbYJFJrc
-	(ORCPT <rfc822;git-outgoing>); Mon, 6 Oct 2008 05:47:32 -0400
-Received: from xsmtp1.ethz.ch ([82.130.70.13]:37774 "EHLO xsmtp1.ethz.ch"
+	id S1752248AbYJFL2l (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 6 Oct 2008 07:28:41 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752295AbYJFL2k
+	(ORCPT <rfc822;git-outgoing>); Mon, 6 Oct 2008 07:28:40 -0400
+Received: from main.gmane.org ([80.91.229.2]:52914 "EHLO ciao.gmane.org"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752193AbYJFJrb (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 6 Oct 2008 05:47:31 -0400
-Received: from xfe0.d.ethz.ch ([82.130.124.40]) by xsmtp1.ethz.ch with Microsoft SMTPSVC(6.0.3790.3959);
-	 Mon, 6 Oct 2008 11:47:27 +0200
-Received: from pcjremy.inf.ethz.ch ([129.132.153.233]) by xfe0.d.ethz.ch over TLS secured channel with Microsoft SMTPSVC(6.0.3790.3959);
-	 Mon, 6 Oct 2008 11:47:26 +0200
-User-Agent: KMail/1.9.9
-In-Reply-To: <pan.2008.10.06.02.28.35.643705@yahoo.com>
-X-OriginalArrivalTime: 06 Oct 2008 09:47:26.0936 (UTC) FILETIME=[8A869D80:01C92798]
+	id S1752248AbYJFL2k (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 6 Oct 2008 07:28:40 -0400
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1KmoGR-0002eU-T3
+	for git@vger.kernel.org; Mon, 06 Oct 2008 11:28:35 +0000
+Received: from 80.169.169.174 ([80.169.169.174])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Mon, 06 Oct 2008 11:28:35 +0000
+Received: from eda by 80.169.169.174 with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Mon, 06 Oct 2008 11:28:35 +0000
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@ger.gmane.org
+X-Gmane-NNTP-Posting-Host: main.gmane.org
+User-Agent: Loom/3.14 (http://gmane.org/)
+X-Loom-IP: 80.169.169.174 (Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US) AppleWebKit/525.13 (KHTML, like Gecko) Chrome/0.2.149.30 Safari/525.13)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/97576>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/97577>
 
---nextPart7038765.L41bstWhzI
-Content-Type: text/plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: quoted-printable
-Content-Disposition: inline
+Shawn O. Pearce <spearce <at> spearce.org> writes:
 
-Jeff Kowalczyk wrote:
-> However, each operation ends with a segmentation fault. This is the case
-> with all git svn repositories (e.g. several different svn remote hosts).
->=20
->   (master) $ git svn rebase
->      M  django/core/management/commands/makemessages.py
->      M  docs/topics/i18n.txt
->   r9155 =3D 4c86e60f62366ac9c3fd9369c17c54801a8f2ea0 (trunk)
->   First, rewinding head to replay your work on top of it...
->   Fast-forwarded master to refs/remotes/trunk.
->   Segmentation fault
+>Nah.  We're not going to rename the target to "make sparse".
 
-Can you try to find out what exactly segfaults here? git-svn is
-implemented in Perl, so that means it's either Perl itself (unlikely),
-the SVN libraries hooked into Perl, or some git command run by
-git-svn.
+Fair enough.  Can I suggest a one line patch to avoid any misunderstanding in 
+the future?
 
-=2D Thomas
+diff --git a/Makefile b/Makefile
+index 3c0664a..c98b921 100644
+--- a/Makefile
++++ b/Makefile
+@@ -1354,6 +1354,7 @@ check-sha1:: test-sha1$X
+        ./test-sha1.sh
 
-=2D-=20
-Thomas Rast
-trast@{inf,student}.ethz.ch
+ check: common-cmds.h
++       @echo "'make check' runs the 'sparse' tool on all source files; say 
+'make test' to run the test suite."
+        for i in *.c; do sparse $(ALL_CFLAGS) $(SPARSE_FLAGS) $$i || exit; done
 
-
---nextPart7038765.L41bstWhzI
-Content-Type: application/pgp-signature; name=signature.asc 
-Content-Description: This is a digitally signed message part.
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.0.9 (GNU/Linux)
-
-iEYEABECAAYFAkjp3rAACgkQqUud07tmzP2RGQCgj0+HCItEAlsUWH4Z6LPC/p87
-G+AAn3GAMkDWnYCTDHag7B6qFSt6M7Ex
-=yB3J
------END PGP SIGNATURE-----
-
---nextPart7038765.L41bstWhzI--
+ remove-dashes:
