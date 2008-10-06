@@ -1,77 +1,137 @@
-From: "Adam Mercer" <ramercer@gmail.com>
-Subject: files missing after converting a cvs repository to git
-Date: Mon, 6 Oct 2008 17:02:44 -0500
-Message-ID: <799406d60810061502y417ec53o1a1f5cef800dfe45@mail.gmail.com>
+From: "Shawn O. Pearce" <spearce@spearce.org>
+Subject: Re: [EGIT PATCH 4/6] Add tags to the graphical history display.
+Date: Mon, 6 Oct 2008 15:14:21 -0700
+Message-ID: <20081006221421.GA13687@spearce.org>
+References: <1223249802-9959-1-git-send-email-robin.rosenberg@dewire.com> <1223249802-9959-5-git-send-email-robin.rosenberg@dewire.com> <20081006080834.GC27516@spearce.org> <200810062358.44954.robin.rosenberg@dewire.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-To: "=?UTF-8?B?77u/R0lU77u/77u/77u/77u/?=" <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Tue Oct 07 00:04:03 2008
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: Robin Rosenberg <robin.rosenberg@dewire.com>
+X-From: git-owner@vger.kernel.org Tue Oct 07 00:15:36 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KmyBP-00065b-1W
-	for gcvg-git-2@gmane.org; Tue, 07 Oct 2008 00:04:03 +0200
+	id 1KmyMY-0001QG-Lb
+	for gcvg-git-2@gmane.org; Tue, 07 Oct 2008 00:15:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754606AbYJFWCs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 6 Oct 2008 18:02:48 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752738AbYJFWCr
-	(ORCPT <rfc822;git-outgoing>); Mon, 6 Oct 2008 18:02:47 -0400
-Received: from wf-out-1314.google.com ([209.85.200.168]:50531 "EHLO
-	wf-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754580AbYJFWCq (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 6 Oct 2008 18:02:46 -0400
-Received: by wf-out-1314.google.com with SMTP id 27so2984271wfd.4
-        for <git@vger.kernel.org>; Mon, 06 Oct 2008 15:02:44 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to
-         :subject:mime-version:content-type:content-transfer-encoding
-         :content-disposition;
-        bh=LUfL5pOZUCjvwelSLMeAl72P0Z6crTsclYtyD2jWJ88=;
-        b=rTeGoZh9KvM1JCL1USe5dyr7OhEDuWUchChse5jgb7wKb49+AWVaaQT0ucdIvd+a9J
-         CJx8OI7zPBAgoeRfpPcVM9kkFr1W9fXxWQTIxRVriRPt/N+BJNeeUs90zk7uXL+ZU+x7
-         mUSqZm9f/1+Tzou044SWYDXHX4SBpqLfSMN2U=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:mime-version:content-type
-         :content-transfer-encoding:content-disposition;
-        b=l/nIhseORFrCz6YrpRDNhukk7lnOv8OdFminhXrdvjpBVhOqwrtV7BFJJyGmEUehN0
-         mKAN39HkIYyxjzBQzHrJEf99c5xZyOUYZsEW914pSb1U/bmvgYBGUUO/7TDWmKnVszne
-         syrCcKQAdvJjtPmujOWxrWO3KdFq61YAqegxk=
-Received: by 10.140.188.19 with SMTP id l19mr3414219rvf.79.1223330564318;
-        Mon, 06 Oct 2008 15:02:44 -0700 (PDT)
-Received: by 10.141.28.18 with HTTP; Mon, 6 Oct 2008 15:02:44 -0700 (PDT)
+	id S1753495AbYJFWOW convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 6 Oct 2008 18:14:22 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752545AbYJFWOW
+	(ORCPT <rfc822;git-outgoing>); Mon, 6 Oct 2008 18:14:22 -0400
+Received: from george.spearce.org ([209.20.77.23]:41627 "EHLO
+	george.spearce.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753184AbYJFWOW (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 6 Oct 2008 18:14:22 -0400
+Received: by george.spearce.org (Postfix, from userid 1001)
+	id 16BE53835F; Mon,  6 Oct 2008 22:14:21 +0000 (UTC)
 Content-Disposition: inline
+In-Reply-To: <200810062358.44954.robin.rosenberg@dewire.com>
+User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/97636>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/97637>
 
-Hi
+Robin Rosenberg <robin.rosenberg@dewire.com> wrote:
+> m=C3=A5ndagen den 6 oktober 2008 10.08.34 skrev Shawn O. Pearce:
+> > Maybe PlotWalk should override next() [...]
+>=20
+> I missed something here I think. Thanks. Maybe I thought... doesn't m=
+atter.
+> I'll rewrite the changes in and related to this completely.
 
-One of the prrojects I am involved with is currently looking into
-migrating from cvs to git, therefore we have been investigating this
-by setting up a git repository that tracks cvs, however there are some
-very strange things going on and I was hoping someone could offer some
-insight into what is going on.
+OK, looking forward to the changes.
+=20
+> > > @@ -54,6 +66,7 @@
+> > >  	public PlotWalk(final Repository repo) {
+> > >  		super(repo);
+> > >  		super.sort(RevSort.TOPO, true);
+> > > +		reverseRefMap =3D repo.getAllRefsByPeeledObjectId();
+> >=20
+> > I wonder if this shouldn't be done as part of the StartGenerator
+> > (or something like it but specialized for PlotWalk).  I only say
+> > that because a reused PlotWalk may want to make sure its ref map
+> > is current with the repository its about to walk against.
+>
+> noted.
 
-I use the following git cvsimport command to import the repository:
+Be careful.  StartGenerator is package access only and I think
+PlotWalk is in a different package.
 
-$ git cvsimport -v -a -i -k
--d:pserver:user@server:port/path/to/cvs/repo -C /path/to/new/git/repo
-module
+IMHO binding into the StartGenerator (by subclassing it and replacing
+it) feels like the right thing to me, but it means making a bunch
+of changes to RevWalk and StartGenerator to make that type public
+and allow PlotWalk to inject a different subclass of StartGenerator
+for itself.
 
-this ran successfully with no warnings or errors. However, when I
-checkout the new git repository that are several files missing from
-the git checkout that are present in the cvs checkout.
+The StartGenerator trick is very useful though; it allows the RevWalk
+to perform init activity only on the first invocation of next()
+and then removes the init code entirely from the call path.  It is a
+virtual dispatch, but I figured its a virtual dispatch anyway due to
+the way the other generators are chained together based the filters
+so we at least avoid a "if (first) {...}" test on every call to next.
+=20
+> > You are inside of a PlotWalk, which extends RevWalk, which has very
+> > aggressive caching of RevCommit and RevTag data instances, and very
+> > fast parsers.  Much faster than the legacy Commit and Tag classes.
+>
+> Maybe we should rid us of them completely and make new commit from
+> these classes of possible more lightweight ones. The old classes were
+> straightforward but are on overtime now.
 
-Does anyone know why this would happen, or how to find out? This is a
-major problem because we will be unable to migrate to cvs until this
-can be solved.
+I'm trying to go in that direction.  However there are three reasons
+why we aren't ready yet:
 
-Cheers
+- Commits can only be made by the old-style Commit class.
+- Tags can only be made by the old-style Tag class.
+- Trees can only be made by the old-style Tree class.
 
-Adam
+I have some experimental code in my merge branch to solve the last
+one by teaching DirCache how to write out the index and update the
+cache trees with the ObjectIds of the newly created trees, but I
+have not had a chance to clean the patches up with test cases and
+docs to submit to the git ML yet.
+
+So I'm actively working on fixing the last item.
+
+Oh, and of course existing callers have to be converted.  But I am
+trying to avoid introducing new callers.
+=20
+> As you noted earlier we usually have at most one ref per commit to so=
+rt.
+> Not much to optimize for speed here with current repos. For a one-ele=
+ment=20
+> list the compare routine wil not even be invoked.
+
+Oh, good point.
+=20
+> > In hindsight those RevCommit[] probably should be a List<RevCommit>
+> > with different list implementations based on the number of parents
+> > needed:
+> >=20
+> > 	0 parents:  Collections.emptyList()
+> > 	1 parent:   Collections.singletonList()
+> > 	2 parents:  some especialized AbstractList subclass
+> > 	3 parents:  ArrayList
+>
+> I guess measuring is the right way. For these small arrays, my bet
+> is that List is way faster because we do not need any bounds checking=
+=2E
+> Hotspot is reasonably good at optimizing those away, but that won't
+> help for much small arrays.
+
+Yup.  Its something to explore.  But I lack the time right now so
+I'm going going to be making any changes and measuring it anytime
+soon.  ;-)
+
+Maybe someone who wants to get involved can look at this.  Or any
+other number of issues we still have open.
+
+But without measurements to back up the code either way I won't be
+making changes to what we have right now.
+=20
+--=20
+Shawn.
