@@ -1,73 +1,56 @@
-From: "Catalin Marinas" <catalin.marinas@gmail.com>
-Subject: Re: [StGit PATCH 4/6] Add 1.0 TODO items from recent discussion by private mail
-Date: Mon, 6 Oct 2008 21:50:32 +0100
-Message-ID: <b0943d9e0810061350k6b90328cqe49db4b0d3f6c87e@mail.gmail.com>
-References: <20081005155450.19886.43748.stgit@yoghurt>
-	 <20081005160151.19886.30979.stgit@yoghurt>
+From: Jeff King <peff@peff.net>
+Subject: Re: What's cooking in git/spearce.git (Oct 2008, #01; Mon, 06)
+Date: Mon, 6 Oct 2008 17:03:03 -0400
+Message-ID: <20081006210303.GA30812@coredump.intra.peff.net>
+References: <20081006165943.GG8203@spearce.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+Content-Type: text/plain; charset=utf-8
 Cc: git@vger.kernel.org
-To: "=?ISO-8859-1?Q?Karl_Hasselstr=F6m?=" <kha@treskal.com>
-X-From: git-owner@vger.kernel.org Mon Oct 06 22:52:07 2008
+To: "Shawn O. Pearce" <spearce@spearce.org>
+X-From: git-owner@vger.kernel.org Mon Oct 06 23:04:32 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Kmx3R-00050U-JD
-	for gcvg-git-2@gmane.org; Mon, 06 Oct 2008 22:51:46 +0200
+	id 1KmxFc-0001Wk-Sf
+	for gcvg-git-2@gmane.org; Mon, 06 Oct 2008 23:04:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754337AbYJFUue convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 6 Oct 2008 16:50:34 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754279AbYJFUue
-	(ORCPT <rfc822;git-outgoing>); Mon, 6 Oct 2008 16:50:34 -0400
-Received: from wf-out-1314.google.com ([209.85.200.175]:36610 "EHLO
-	wf-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753855AbYJFUud convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 6 Oct 2008 16:50:33 -0400
-Received: by wf-out-1314.google.com with SMTP id 27so2956555wfd.4
-        for <git@vger.kernel.org>; Mon, 06 Oct 2008 13:50:33 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to
-         :subject:cc:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:references;
-        bh=ZeRO/Ib49DmaT9HXkE+HkI15/GOdjD6dpVXCO0824hs=;
-        b=gvM75TMgrRTNKU5jhjc2/KvBGEJ3EaHz6ZjPPi+WtDdj6E5yAkw5+8vPv6iNevhUt5
-         TfkFhHW9SCkfHDpV52udGAi1dq0pCRRxb35hMviyzWUKHPJXm0Ru1lBwy87ByZDzJ+FF
-         SSkzS2D8514ZHrTJoVPtleQXe7wQrRzcVFctQ=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
-         :content-type:content-transfer-encoding:content-disposition
-         :references;
-        b=TttsIKM/L+YevyP8CyZL5Ma3/Gu6dDI0oS91v+cjtqCnHZz405noEroqbQpYA5JvqE
-         1EAqwhWBp86bEKSbXVCI1U8Zvc/bSI5j2fFoH/EKgEVluXFNpLjnSYGvIfesvvwAdfqN
-         7ZB+kvtECn8l3A9RmORvYu1TuYC01TrtK/ZlI=
-Received: by 10.140.201.21 with SMTP id y21mr3346794rvf.259.1223326233063;
-        Mon, 06 Oct 2008 13:50:33 -0700 (PDT)
-Received: by 10.141.201.12 with HTTP; Mon, 6 Oct 2008 13:50:32 -0700 (PDT)
-In-Reply-To: <20081005160151.19886.30979.stgit@yoghurt>
+	id S1752422AbYJFVDJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 6 Oct 2008 17:03:09 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752401AbYJFVDI
+	(ORCPT <rfc822;git-outgoing>); Mon, 6 Oct 2008 17:03:08 -0400
+Received: from peff.net ([208.65.91.99]:2405 "EHLO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752392AbYJFVDH (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 6 Oct 2008 17:03:07 -0400
+Received: (qmail 25304 invoked by uid 111); 6 Oct 2008 21:03:04 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+    by peff.net (qpsmtpd/0.32) with SMTP; Mon, 06 Oct 2008 17:03:04 -0400
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Mon, 06 Oct 2008 17:03:03 -0400
 Content-Disposition: inline
+In-Reply-To: <20081006165943.GG8203@spearce.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/97628>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/97629>
 
-2008/10/5 Karl Hasselstr=F6m <kha@treskal.com>:
-> +- Convert the remaining commands to the new infrastructure.
-> +
-> +- Go through the design of the UI and make sure there's nothing hard
-> +  to change in there that we'll regret later.
-> +
-> +- Write a user guide. I'm thinking a document on the order of 10-30
-> +  pages that'll explain why one would want to use StGit, and how.
-> +
-> +- Make sure the rest of the documentation is in good shape.
+On Mon, Oct 06, 2008 at 09:59:43AM -0700, Shawn O. Pearce wrote:
 
-Actually, at least for these kind of things we should still keep this
-file. We could drop it after 1.0.
+> * jk/diff-convfilter (Sun Oct 5 17:43:45 2008 -0400) 4 commits
+>  - diff: add filter for converting binary to text
+>  - diff: introduce diff.<driver>.binary
+>  - diff: unify external diff and funcname parsing code
+>  - t4012: use test_cmp instead of cmp
+> 
+> A general cleanup on how diff drivers are implemented.  Its still
+> missing documentation updates and tests but doesn't break anything
+> current as far as I can tell.  It needs more review before it can
+> be slated for 'next'.
 
---=20
-Catalin
+I should note, too, that this is in direct competition with Matthieu
+Moy's "Implementation of a textconv filter for easy custom diff" posted
+about a week ago. So if you are reviewing this series, please review
+both and decide which you think is more sensible.
+
+-Peff
