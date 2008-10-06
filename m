@@ -1,89 +1,256 @@
-From: Kristis Makris <kristis.makris-tTJs1oqo2yY@public.gmane.org>
-Subject: Git and tagging hook
-Date: Sun, 05 Oct 2008 21:45:32 -0700
-Message-ID: <1223268332.4072.7.camel@localhost>
+From: Nanako Shiraishi <nanako3@lavabit.com>
+Subject: [PATCH] Teach rebase -i to honor pre-rebase hook
+Date: Mon, 06 Oct 2008 14:14:24 +0900
+Message-ID: <20081006141424.6117@nanako3.lavabit.com>
+References: <20081005222654.6117@nanako3.lavabit.com> <b19eae4e0810021710v14a3901an1f793de00c439ba1@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: multipart/mixed; boundary="=_talos-24295-1223268494-0001-2"
-Cc: scmbug-users-G8y9j4K4DsPiwOUmbS1EgQ@public.gmane.org
-To: git-u79uwXL29TY76Z2rM5mHXA@public.gmane.org
-X-From: scmbug-users-bounces-G8y9j4K4DsPiwOUmbS1EgQ@public.gmane.org Mon Oct 06 06:46:52 2008
-Return-path: <scmbug-users-bounces-G8y9j4K4DsPiwOUmbS1EgQ@public.gmane.org>
-Envelope-to: gcbsu-scmbug-users@m.gmane.org
-Received: from 11-74-162-69.static.reverse.lstn.net ([69.162.74.11] helo=mail.loomcm.com)
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Cc: git@vger.kernel.org
+To: "Shawn O. Pearce" <spearce@spearce.org>
+X-From: git-owner@vger.kernel.org Mon Oct 06 07:18:49 2008
+Return-path: <git-owner@vger.kernel.org>
+Envelope-to: gcvg-git-2@gmane.org
+Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Kmhze-000807-KA
-	for gcbsu-scmbug-users@m.gmane.org; Mon, 06 Oct 2008 06:46:50 +0200
-Received: from [69.162.74.11] ([::ffff:127.0.0.1])
-  by talos with esmtp; Sun, 05 Oct 2008 21:48:14 -0700
-  id 06320616.48E9988E.00005EE7
-Received: from [192.168.0.70] ([::ffff:67.40.69.52])
-	by talos with esmtp; Sun, 05 Oct 2008 21:48:08 -0700
-	id 063205F8.48E99889.00005EB3
-X-Mailer: Evolution 2.6.3 
-X-BeenThere: scmbug-users-G8y9j4K4DsPiwOUmbS1EgQ@public.gmane.org
-X-Mailman-Version: 2.1.9
-Precedence: list
-List-Id: General Scmbug list <scmbug-users.lists.mkgnu.net>
-List-Unsubscribe: <http://lists.mkgnu.net/cgi-bin/mailman/listinfo/scmbug-users>, 
-	<mailto:scmbug-users-request-G8y9j4K4DsPiwOUmbS1EgQ@public.gmane.org?subject=unsubscribe>
-List-Archive: <http://lists.mkgnu.net/pipermail/scmbug-users>
-List-Post: <mailto:scmbug-users-G8y9j4K4DsPiwOUmbS1EgQ@public.gmane.org>
-List-Help: <mailto:scmbug-users-request-G8y9j4K4DsPiwOUmbS1EgQ@public.gmane.org?subject=help>
-List-Subscribe: <http://lists.mkgnu.net/cgi-bin/mailman/listinfo/scmbug-users>, 
-	<mailto:scmbug-users-request-G8y9j4K4DsPiwOUmbS1EgQ@public.gmane.org?subject=subscribe>
-Sender: scmbug-users-bounces-G8y9j4K4DsPiwOUmbS1EgQ@public.gmane.org
-Errors-To: scmbug-users-bounces-G8y9j4K4DsPiwOUmbS1EgQ@public.gmane.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/97560>
+	id 1KmiUa-0005T3-8q
+	for gcvg-git-2@gmane.org; Mon, 06 Oct 2008 07:18:49 +0200
+Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
+	id S1751875AbYJFFOr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 6 Oct 2008 01:14:47 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751450AbYJFFOr
+	(ORCPT <rfc822;git-outgoing>); Mon, 6 Oct 2008 01:14:47 -0400
+Received: from karen.lavabit.com ([72.249.41.33]:39034 "EHLO karen.lavabit.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750832AbYJFFOq (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 6 Oct 2008 01:14:46 -0400
+Received: from f.earth.lavabit.com (f.earth.lavabit.com [192.168.111.15])
+	by karen.lavabit.com (Postfix) with ESMTP id 9DF5BC7AC5;
+	Mon,  6 Oct 2008 00:14:45 -0500 (CDT)
+Received: from 5936.lavabit.com (212.62.97.23)
+	by lavabit.com with ESMTP id 8WD9CSYJ3LJO; Mon, 06 Oct 2008 00:14:45 -0500
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws; s=lavabit; d=lavabit.com;
+  b=xaFD18aDNOQVJbpzqPZCg9cmw3PGbCNNIuck+8+av49cOVXjKoaCggb7PHbyVHXYorF2pDb1WtOGVwFAvdFpyCNedv54xwwthwNb0HxYs436Ul2XitcnEIhurmTwkpQgdgxX3A7Eui1fh9R4a3vqP2WQsuxSSjAzBu389g7I2c4=;
+  h=From:To:Cc:Date:Subject:In-reply-to:References:MIME-Version:Content-Type:Content-Transfer-Encoding:Message-Id;
+In-reply-to: <20081005222654.6117@nanako3.lavabit.com>
+Sender: git-owner@vger.kernel.org
+Precedence: bulk
+List-ID: <git.vger.kernel.org>
+X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/97561>
 
-This is a MIME-formatted message.  If you see this text it means that your
-E-mail software does not support MIME-formatted messages.
+The original git-rebase honored pre-rebase hook so that public branches
+can be protected from getting rebased, but rebase --interactive ignored
+the hook entirely.  This fixes it.
 
---=_talos-24295-1223268494-0001-2
-Content-Type: multipart/signed; micalg=pgp-sha1; protocol="application/pgp-signature"; boundary="=_talos-24295-1223268494-0001-3"
+Signed-off-by: Nanako Shiraishi <nanako3@lavabit.com>
+---
+ git-rebase--interactive.sh |   11 ++++
+ git-rebase.sh              |   18 ++++---
+ t/t3409-rebase-hook.sh     |  126 ++++++++++++++++++++++++++++++++++++++++++++
+ 3 files changed, 148 insertions(+), 7 deletions(-)
+ create mode 100755 t/t3409-rebase-hook.sh
 
-This is a MIME-formatted message.  If you see this text it means that your
-E-mail software does not support MIME-formatted messages.
+diff --git a/git-rebase--interactive.sh b/git-rebase--interactive.sh
+index edb6ec6..3350f90 100755
+--- a/git-rebase--interactive.sh
++++ b/git-rebase--interactive.sh
+@@ -65,6 +65,16 @@ output () {
+ 	esac
+ }
+ 
++run_pre_rebase_hook () {
++	if test -x "$GIT_DIR/hooks/pre-rebase"
++	then
++		"$GIT_DIR/hooks/pre-rebase" ${1+"$@"} || {
++			echo >&2 "The pre-rebase hook refused to rebase."
++			exit 1
++		}
++	fi
++}
++
+ require_clean_work_tree () {
+ 	# test if working tree is dirty
+ 	git rev-parse --verify HEAD > /dev/null &&
+@@ -507,6 +517,7 @@ first and then run 'git rebase --continue' again."
+ 		;;
+ 	--)
+ 		shift
++		run_pre_rebase_hook ${1+"$@"}
+ 		test $# -eq 1 -o $# -eq 2 || usage
+ 		test -d "$DOTEST" &&
+ 			die "Interactive rebase already started"
+diff --git a/git-rebase.sh b/git-rebase.sh
+index 528b604..a30d40c 100755
+--- a/git-rebase.sh
++++ b/git-rebase.sh
+@@ -144,6 +144,16 @@ is_interactive () {
+ 	done && test -n "$1"
+ }
+ 
++run_pre_rebase_hook () {
++	if test -x "$GIT_DIR/hooks/pre-rebase"
++	then
++		"$GIT_DIR/hooks/pre-rebase" ${1+"$@"} || {
++			echo >&2 "The pre-rebase hook refused to rebase."
++			exit 1
++		}
++	fi
++}
++
+ test -f "$GIT_DIR"/rebase-apply/applying &&
+ 	die 'It looks like git-am is in progress. Cannot rebase.'
+ 
+@@ -320,13 +330,7 @@ onto_name=${newbase-"$upstream_name"}
+ onto=$(git rev-parse --verify "${onto_name}^0") || exit
+ 
+ # If a hook exists, give it a chance to interrupt
+-if test -x "$GIT_DIR/hooks/pre-rebase"
+-then
+-	"$GIT_DIR/hooks/pre-rebase" ${1+"$@"} || {
+-		echo >&2 "The pre-rebase hook refused to rebase."
+-		exit 1
+-	}
+-fi
++run_pre_rebase_hook ${1+"$@"}
+ 
+ # If the branch to rebase is given, that is the branch we will rebase
+ # $branch_name -- branch being rebased, or HEAD (already detached)
+diff --git a/t/t3409-rebase-hook.sh b/t/t3409-rebase-hook.sh
+new file mode 100755
+index 0000000..bc93dda
+--- /dev/null
++++ b/t/t3409-rebase-hook.sh
+@@ -0,0 +1,126 @@
++#!/bin/sh
++
++test_description='git rebase with its hook(s)'
++
++. ./test-lib.sh
++
++test_expect_success setup '
++	echo hello >file &&
++	git add file &&
++	test_tick &&
++	git commit -m initial &&
++	echo goodbye >file &&
++	git add file &&
++	test_tick &&
++	git commit -m second &&
++	git checkout -b side HEAD^ &&
++	echo world >git &&
++	git add git &&
++	test_tick &&
++	git commit -m side &&
++	git checkout master &&
++	git log --pretty=oneline --abbrev-commit --graph --all &&
++	git branch test side
++'
++
++test_expect_success 'rebase' '
++	git checkout test &&
++	git reset --hard side &&
++	git rebase master &&
++	test "z$(cat git)" = zworld
++'
++
++test_expect_success 'rebase -i' '
++	git checkout test &&
++	git reset --hard side &&
++	EDITOR=true git rebase -i master &&
++	test "z$(cat git)" = zworld
++'
++
++test_expect_success 'setup pre-rebase hook' '
++	mkdir -p .git/hooks &&
++	cat >.git/hooks/pre-rebase <<EOF &&
++#!$SHELL_PATH
++echo "\$1,\$2" >.git/PRE-REBASE-INPUT
++EOF
++	chmod +x .git/hooks/pre-rebase
++'
++
++test_expect_success 'pre-rebase hook gets correct input (1)' '
++	git checkout test &&
++	git reset --hard side &&
++	git rebase master &&
++	test "z$(cat git)" = zworld &&
++	test "z$(cat .git/PRE-REBASE-INPUT)" = zmaster,
++
++'
++
++test_expect_success 'pre-rebase hook gets correct input (2)' '
++	git checkout test &&
++	git reset --hard side &&
++	git rebase master test &&
++	test "z$(cat git)" = zworld &&
++	test "z$(cat .git/PRE-REBASE-INPUT)" = zmaster,test
++'
++
++test_expect_success 'pre-rebase hook gets correct input (3)' '
++	git checkout test &&
++	git reset --hard side &&
++	git checkout master &&
++	git rebase master test &&
++	test "z$(cat git)" = zworld &&
++	test "z$(cat .git/PRE-REBASE-INPUT)" = zmaster,test
++'
++
++test_expect_success 'pre-rebase hook gets correct input (4)' '
++	git checkout test &&
++	git reset --hard side &&
++	EDITOR=true git rebase -i master &&
++	test "z$(cat git)" = zworld &&
++	test "z$(cat .git/PRE-REBASE-INPUT)" = zmaster,
++
++'
++
++test_expect_success 'pre-rebase hook gets correct input (5)' '
++	git checkout test &&
++	git reset --hard side &&
++	EDITOR=true git rebase -i master test &&
++	test "z$(cat git)" = zworld &&
++	test "z$(cat .git/PRE-REBASE-INPUT)" = zmaster,test
++'
++
++test_expect_success 'pre-rebase hook gets correct input (6)' '
++	git checkout test &&
++	git reset --hard side &&
++	git checkout master &&
++	EDITOR=true git rebase -i master test &&
++	test "z$(cat git)" = zworld &&
++	test "z$(cat .git/PRE-REBASE-INPUT)" = zmaster,test
++'
++
++test_expect_success 'setup pre-rebase hook that fails' '
++	mkdir -p .git/hooks &&
++	cat >.git/hooks/pre-rebase <<EOF &&
++#!$SHELL_PATH
++false
++EOF
++	chmod +x .git/hooks/pre-rebase
++'
++
++test_expect_success 'pre-rebase hook stops rebase (1)' '
++	git checkout test &&
++	git reset --hard side &&
++	test_must_fail git rebase master &&
++	test "z$(git symbolic-ref HEAD)" = zrefs/heads/test &&
++	test 0 = $(git rev-list HEAD...side | wc -l)
++'
++
++test_expect_success 'pre-rebase hook stops rebase (2)' '
++	git checkout test &&
++	git reset --hard side &&
++	EDITOR=true test_must_fail git rebase -i master &&
++	test "z$(git symbolic-ref HEAD)" = zrefs/heads/test &&
++	test 0 = $(git rev-list HEAD...side | wc -l)
++'
++
++test_done
+-- 
+1.6.0.2
 
---=_talos-24295-1223268494-0001-3
-Content-Type: text/plain
-Content-Transfer-Encoding: quoted-printable
-
-Hello,
-
-It seems that Git (at least v1.5.6) does not offer hooks on tag creation
-(a pre-tag and a post-tag hook). I need such a hook for integrating tag
-activities with an issue-tracker. Is it possible to add this hook ?
-
-I had asked about this in the past, but did not receive a response.
-
-http://bugzilla.mkgnu.net/show_bug.cgi?id=3D991
-
-Thanks,
-Kristis
-
---=_talos-24295-1223268494-0001-3
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Transfer-Encoding: 7bit
-Content-Description: This is a digitally signed message part
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.6 (GNU/Linux)
-
-iD8DBQBI6Zfs/KuTDwnYLxERArizAJ9qoX1fyfOxnzSv6iUmCxJXdwytywCgoKR0
-R6k+TP1wZXWPme1MP6ZgwVU=
-=Oo8P
------END PGP SIGNATURE-----
-
---=_talos-24295-1223268494-0001-3--
-
---=_talos-24295-1223268494-0001-2
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
-Content-Disposition: inline
-
-_______________________________________________
-scmbug-users mailing list
-scmbug-users-G8y9j4K4DsPiwOUmbS1EgQ@public.gmane.org
-http://lists.mkgnu.net/cgi-bin/mailman/listinfo/scmbug-users
-
---=_talos-24295-1223268494-0001-2--
+-- 
+Nanako Shiraishi
+http://ivory.ap.teacup.com/nanako3/
