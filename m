@@ -1,75 +1,71 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: [PATCHv4] gitweb: generate parent..current URLs
-Date: Mon, 6 Oct 2008 02:17:34 +0200
-Message-ID: <200810060217.36233.jnareb@gmail.com>
-References: <1222906234-8182-1-git-send-email-giuseppe.bilotta@gmail.com> <1222906234-8182-6-git-send-email-giuseppe.bilotta@gmail.com> <1222906234-8182-7-git-send-email-giuseppe.bilotta@gmail.com>
+From: Stephan Beyer <s-beyer@gmx.net>
+Subject: git UI feature matrix (was: Re: teamGit v0.0.3)
+Date: Mon, 6 Oct 2008 03:33:03 +0200
+Message-ID: <20081006013303.GB25639@leksak.fem-net>
+References: <8ce0dfd6-2bd7-4e94-901f-b7c9bbd114aa@w39g2000prb.googlegroups.com> <m38wt3qrij.fsf@localhost.localdomain> <22717858-31ce-4979-9d8e-167601f0e82e@i24g2000prf.googlegroups.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: git@vger.kernel.org, Petr Baudis <pasky@suse.cz>,
-	Junio C Hamano <gitster@pobox.com>,
-	"Shawn O. Pearce" <spearce@spearce.org>
-To: Giuseppe Bilotta <giuseppe.bilotta@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Oct 06 02:18:53 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: bain <bain@devslashzero.com>
+X-From: git-owner@vger.kernel.org Mon Oct 06 03:34:27 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KmdoJ-0002lb-Or
-	for gcvg-git-2@gmane.org; Mon, 06 Oct 2008 02:18:52 +0200
+	id 1KmezP-0000V9-FH
+	for gcvg-git-2@gmane.org; Mon, 06 Oct 2008 03:34:23 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751555AbYJFARk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 5 Oct 2008 20:17:40 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751361AbYJFARk
-	(ORCPT <rfc822;git-outgoing>); Sun, 5 Oct 2008 20:17:40 -0400
-Received: from ey-out-2122.google.com ([74.125.78.24]:9002 "EHLO
-	ey-out-2122.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751214AbYJFARj convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 5 Oct 2008 20:17:39 -0400
-Received: by ey-out-2122.google.com with SMTP id 6so764079eyi.37
-        for <git@vger.kernel.org>; Sun, 05 Oct 2008 17:17:38 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:subject:date
-         :user-agent:cc:references:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:message-id;
-        bh=NmRpvLPVlIXSEA6s0rr+/fsWY4A7stV9AtbN+xBfaQs=;
-        b=hzFj0REA28bG3qE6hMxyl1kW0KQZKcv+V5jS2/VRC796SbjbeJBFPk1GPCyB6qqVVj
-         /YYHG0d4Gkm7MTxuhjXRJ8YlUsJGTmzN/nMVeIfItNXdS4jjV+2TZ86FyC0L35eL5l2Z
-         IG12kkHOA7kv+a3PE6+V1L1CnS5e/kkVgnXfQ=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=from:to:subject:date:user-agent:cc:references:in-reply-to
-         :mime-version:content-type:content-transfer-encoding
-         :content-disposition:message-id;
-        b=RzZg8qydGdaQATVC8qgFNcOY9VDDHmBMSToaDSN8yUuCP9luX5009PnTcDvx/nG9qo
-         UknhZZq43BudyyxF9ZxEvyeypAEP7TuLpbADyZTYInbjG5s5bHGxRCnj/PD/0kgDfh2D
-         sOsqxH5NpgIF6jYcz6XEW4naCrB7lXYjt2IsQ=
-Received: by 10.210.23.3 with SMTP id 3mr5440862ebw.54.1223252258140;
-        Sun, 05 Oct 2008 17:17:38 -0700 (PDT)
-Received: from ?192.168.1.11? (abwo50.neoplus.adsl.tpnet.pl [83.8.238.50])
-        by mx.google.com with ESMTPS id u7sm11147469uge.40.2008.10.05.17.17.35
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Sun, 05 Oct 2008 17:17:36 -0700 (PDT)
-User-Agent: KMail/1.9.3
-In-Reply-To: <1222906234-8182-7-git-send-email-giuseppe.bilotta@gmail.com>
+	id S1751756AbYJFBdN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 5 Oct 2008 21:33:13 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751601AbYJFBdN
+	(ORCPT <rfc822;git-outgoing>); Sun, 5 Oct 2008 21:33:13 -0400
+Received: from mail.gmx.net ([213.165.64.20]:58080 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1751186AbYJFBdM (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 5 Oct 2008 21:33:12 -0400
+Received: (qmail invoked by alias); 06 Oct 2008 01:33:09 -0000
+Received: from q137.fem.tu-ilmenau.de (EHLO leksak.fem-net) [141.24.46.137]
+  by mail.gmx.net (mp041) with SMTP; 06 Oct 2008 03:33:09 +0200
+X-Authenticated: #1499303
+X-Provags-ID: V01U2FsdGVkX1+CnNp6eByCSJXCqKNOm7hB9jBjzwsvvSKq4HalT1
+	i6qSU/zOXbUzgH
+Received: from sbeyer by leksak.fem-net with local (Exim 4.69)
+	(envelope-from <s-beyer@gmx.net>)
+	id 1Kmey7-0003ve-PC; Mon, 06 Oct 2008 03:33:03 +0200
 Content-Disposition: inline
+In-Reply-To: <22717858-31ce-4979-9d8e-167601f0e82e@i24g2000prf.googlegroups.com>
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.67
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/97555>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/97556>
 
-On Thu, 2 Oct 2008, Giuseppe Bilotta wrote:
+Hi,
 
-> If use_pathinfo is enabled, href now creates links that contain paths in
-> the form $project/$action/oldhash:/oldname..newhash:/newname for actions
-> that use hash_parent etc.
-[cut]
+bain wrote:
+> > Could you please add info about teamGit to the git wiki page
+> > http://git.or.cz/gitwiki/InterfacesFrontendsAndTools? I think
+> > just below now defunct and unmaintained KGit (or just above) would
+> > be best.
+> Will do ASAP
 
->From the first glance, it looks good. I just worry a bit about
-complicated issue of hash_parent vs hash_parent_base etc.
+Because there are a lot of UIs and GUIs for git I thought a "feature
+matrix" could be cool.  I created a stub on the mentioned wiki page.
+
+So it'd be nice if you could add a column for teamGit there and perhaps
+some rows for features that are worth mentioning (if those already exist
+in teamGit).
+I was unsure what features are useful to mention, because I do not really
+use git GUIs. (I only use gitk for history viewing, but only when I'm
+too lazy to type "git log --decorate --graph".)
+
+Regards,
+  Stephan
+
+PS: Such a feature matrix could also be useful for the git web
+    interfaces.
 
 -- 
-Jakub Narebski
-Poland
+Stephan Beyer <s-beyer@gmx.net>, PGP 0x6EDDD207FCC5040F
