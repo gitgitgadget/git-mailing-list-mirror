@@ -1,73 +1,71 @@
-From: "Dilip M" <dilipm79@gmail.com>
-Subject: Re: how to restrict commit for a repo
-Date: Mon, 6 Oct 2008 22:42:06 +0530
-Message-ID: <c94f8e120810061012p29210247sfd3c1b3c05e871ee@mail.gmail.com>
-References: <c94f8e120810060509w5eaa9138m92f1df36c9c36db6@mail.gmail.com>
-	 <20081006130042.GQ23137@genesis.frugalware.org>
+From: Linus Torvalds <torvalds@linux-foundation.org>
+Subject: Re: git://oss.sgi.com broke
+Date: Mon, 6 Oct 2008 10:14:06 -0700 (PDT)
+Message-ID: <alpine.LFD.2.00.0810061005540.3208@nehalem.linux-foundation.org>
+References: <20081003121903.6c9a7ebc.akpm@linux-foundation.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: "Git Mailing List" <git@vger.kernel.org>
-To: "Miklos Vajna" <vmiklos@frugalware.org>
-X-From: git-owner@vger.kernel.org Mon Oct 06 19:18:09 2008
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: xfs-masters@oss.sgi.com, git@vger.kernel.org
+To: Andrew Morton <akpm@linux-foundation.org>
+X-From: git-owner@vger.kernel.org Mon Oct 06 19:19:37 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KmteA-0001g0-65
-	for gcvg-git-2@gmane.org; Mon, 06 Oct 2008 19:13:26 +0200
+	id 1KmtgT-0002ct-GG
+	for gcvg-git-2@gmane.org; Mon, 06 Oct 2008 19:15:50 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753472AbYJFRMN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 6 Oct 2008 13:12:13 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753449AbYJFRMN
-	(ORCPT <rfc822;git-outgoing>); Mon, 6 Oct 2008 13:12:13 -0400
-Received: from mail-gx0-f16.google.com ([209.85.217.16]:40473 "EHLO
-	mail-gx0-f16.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753319AbYJFRMM (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 6 Oct 2008 13:12:12 -0400
-Received: by gxk9 with SMTP id 9so5246211gxk.13
-        for <git@vger.kernel.org>; Mon, 06 Oct 2008 10:12:11 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to
-         :subject:cc:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:references;
-        bh=mPM/wJ0ATrF8/frf1nkePbyUGjkvNCxFmN7OW0uZNmI=;
-        b=ry7TkSwJw4KjYCYu1Yui/xhjemv21631UiNBocHYpg90/AmokCxZViIwsk++tUOU+6
-         VT56VrKie7wS07bgQu1MCTzQBkcCQ07wU94wRUMDx3fCrDgGDAXaqN7O9soAL+85ARXP
-         zesuN998ut3rQhUJuxmRJBqcC4mGBKAuJhASY=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
-         :content-type:content-transfer-encoding:content-disposition
-         :references;
-        b=L+eaMOZzvUFzSDIMmUN6vh3ODGxemNmxxpM+K1oKvxOxZNqelbQA6yB+mIqcZQflHf
-         g7hneev7t5rR7Zx9NacvsB15JM40UIFF9SQBQ/AUjopsGkll4nmicXDqXmOZlMkq+H+Z
-         LGyxTpRKVyRNgFf1ZWMaJmAO7w3M3VJsTd6js=
-Received: by 10.90.100.20 with SMTP id x20mr6018396agb.85.1223313126926;
-        Mon, 06 Oct 2008 10:12:06 -0700 (PDT)
-Received: by 10.90.52.15 with HTTP; Mon, 6 Oct 2008 10:12:06 -0700 (PDT)
-In-Reply-To: <20081006130042.GQ23137@genesis.frugalware.org>
-Content-Disposition: inline
+	id S1753109AbYJFROi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 6 Oct 2008 13:14:38 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752802AbYJFROi
+	(ORCPT <rfc822;git-outgoing>); Mon, 6 Oct 2008 13:14:38 -0400
+Received: from smtp1.linux-foundation.org ([140.211.169.13]:40382 "EHLO
+	smtp1.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1752641AbYJFROh (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 6 Oct 2008 13:14:37 -0400
+Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [140.211.169.55])
+	by smtp1.linux-foundation.org (8.14.2/8.13.5/Debian-3ubuntu1.1) with ESMTP id m96HE6Ac029134
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Mon, 6 Oct 2008 10:14:07 -0700
+Received: from localhost (localhost [127.0.0.1])
+	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id m96HE6CN028836;
+	Mon, 6 Oct 2008 10:14:06 -0700
+In-Reply-To: <20081003121903.6c9a7ebc.akpm@linux-foundation.org>
+User-Agent: Alpine 2.00 (LFD 1167 2008-08-23)
+X-Spam-Status: No, hits=-2.891 required=5 tests=AWL,BAYES_00,WEIRD_PORT
+X-Spam-Checker-Version: SpamAssassin 3.2.4-osdl_revision__1.47__
+X-MIMEDefang-Filter: lf$Revision: 1.188 $
+X-Scanned-By: MIMEDefang 2.63 on 140.211.169.13
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/97605>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/97606>
 
-2008/10/6 Miklos Vajna <vmiklos@frugalware.org>:
-> On Mon, Oct 06, 2008 at 05:39:39PM +0530, Dilip M <dilipm79@gmail.com> wrote:
->> If I have a repository, how to prevent push from other repo's into
->> mine master's? I want to prevent the commits from all developers and
->> allow only few ppl to commit to masters..
+
+
+On Fri, 3 Oct 2008, Andrew Morton wrote:
 >
-> Have you seen contrib/hooks/update-paranoid?
+> y:/usr/src/git26> git --version
+> git version 1.5.6.rc0
+> 
+> y:/usr/src/git26> cat .git/branches/git-xfs
+> git://oss.sgi.com:8090/xfs/xfs-2.6.git#master
 
-Miklos,  I am totally new to this tool ( don't know SVN too) . Can you
-please consider giving some more info...or guiding me to some good
-links...:)
+Hmm. That's the really old and deprecated branch format.
 
-Thanks in advance..
+I'm getting a "Connection refused" from oss.sgi.com, and I think there's 
+possibly something broken there, but quite independently of that, maybe we 
+can try to teach you another way to set up remote branches?
 
--- 
-dm
+In your .git/config file, use
+
+	[remote "git-xfs"]
+		url = git://oss.sgi.com:8090/xfs/xfs-2.6.git
+		fetch = master
+
+because the whole .git/branches/<branch-name> thing is fairly deprecated, 
+and cannot handle some things that the .git/config file format can (like 
+saying where to fetch into, or how to push back etc).
+
+		Linus
