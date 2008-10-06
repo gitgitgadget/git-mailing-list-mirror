@@ -1,253 +1,163 @@
 From: Nanako Shiraishi <nanako3@lavabit.com>
-Subject: [PATCH] Teach rebase -i to honor pre-rebase hook
-Date: Mon, 06 Oct 2008 14:14:24 +0900
-Message-ID: <20081006141424.6117@nanako3.lavabit.com>
+Subject: [PATCH] rebase --no-verify
+Date: Mon, 06 Oct 2008 14:14:29 +0900
+Message-ID: <20081006141429.6117@nanako3.lavabit.com>
 References: <20081005222654.6117@nanako3.lavabit.com> <b19eae4e0810021710v14a3901an1f793de00c439ba1@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Cc: git@vger.kernel.org
 To: "Shawn O. Pearce" <spearce@spearce.org>
-X-From: git-owner@vger.kernel.org Mon Oct 06 07:18:49 2008
+X-From: git-owner@vger.kernel.org Mon Oct 06 07:18:54 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KmiUa-0005T3-8q
+	id 1KmiUb-0005T3-90
 	for gcvg-git-2@gmane.org; Mon, 06 Oct 2008 07:18:49 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751875AbYJFFOr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 6 Oct 2008 01:14:47 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751450AbYJFFOr
-	(ORCPT <rfc822;git-outgoing>); Mon, 6 Oct 2008 01:14:47 -0400
-Received: from karen.lavabit.com ([72.249.41.33]:39034 "EHLO karen.lavabit.com"
+	id S1752333AbYJFFOx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 6 Oct 2008 01:14:53 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752137AbYJFFOx
+	(ORCPT <rfc822;git-outgoing>); Mon, 6 Oct 2008 01:14:53 -0400
+Received: from karen.lavabit.com ([72.249.41.33]:39039 "EHLO karen.lavabit.com"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750832AbYJFFOq (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 6 Oct 2008 01:14:46 -0400
+	id S1751450AbYJFFOw (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 6 Oct 2008 01:14:52 -0400
 Received: from f.earth.lavabit.com (f.earth.lavabit.com [192.168.111.15])
-	by karen.lavabit.com (Postfix) with ESMTP id 9DF5BC7AC5;
-	Mon,  6 Oct 2008 00:14:45 -0500 (CDT)
+	by karen.lavabit.com (Postfix) with ESMTP id 00737C7AC5;
+	Mon,  6 Oct 2008 00:14:52 -0500 (CDT)
 Received: from 5936.lavabit.com (212.62.97.23)
-	by lavabit.com with ESMTP id 8WD9CSYJ3LJO; Mon, 06 Oct 2008 00:14:45 -0500
+	by lavabit.com with ESMTP id D9520QBOPCYW; Mon, 06 Oct 2008 00:14:51 -0500
 DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws; s=lavabit; d=lavabit.com;
-  b=xaFD18aDNOQVJbpzqPZCg9cmw3PGbCNNIuck+8+av49cOVXjKoaCggb7PHbyVHXYorF2pDb1WtOGVwFAvdFpyCNedv54xwwthwNb0HxYs436Ul2XitcnEIhurmTwkpQgdgxX3A7Eui1fh9R4a3vqP2WQsuxSSjAzBu389g7I2c4=;
+  b=grxqX/Q0U/8maQleOwgsF+Jt9cmAou0acmVw6soMoEAFYQpW1qqPRSK0eXyUOxkW3EnjuDLOvpKuxsP8wrpFkSiC5Xn9R4jDUXXlxyCHs4sWMlp31A4dw5euGBSJ0vItnMZzmTYx11/6nqw+6cH4l0V2eTHTH6ODBsSAVgOzjk4=;
   h=From:To:Cc:Date:Subject:In-reply-to:References:MIME-Version:Content-Type:Content-Transfer-Encoding:Message-Id;
 In-reply-to: <20081005222654.6117@nanako3.lavabit.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/97561>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/97562>
 
-The original git-rebase honored pre-rebase hook so that public branches
-can be protected from getting rebased, but rebase --interactive ignored
-the hook entirely.  This fixes it.
+It is sometimes desirable to disable the safety net of pre-rebase hook
+when the user knows what he is doing (for example, when the original
+changes on the branch have not been shown to the public yet).
+
+This teaches --no-verify option to git-rebase, which is similar to the way
+pre-commit hook is bypassed by git-commit.
 
 Signed-off-by: Nanako Shiraishi <nanako3@lavabit.com>
 ---
- git-rebase--interactive.sh |   11 ++++
- git-rebase.sh              |   18 ++++---
- t/t3409-rebase-hook.sh     |  126 ++++++++++++++++++++++++++++++++++++++++++++
- 3 files changed, 148 insertions(+), 7 deletions(-)
- create mode 100755 t/t3409-rebase-hook.sh
+
+    It probably is better to fix "rebase -i" to share more code with the main
+    "rebase" script to avoid duplicated run-pre-rebase-hook function, but it
+    is beyond what I can do right now.  Perhaps people more smart and
+    beautiful than me can help (^_^;)
+
+ git-rebase--interactive.sh |   10 +++++++++-
+ git-rebase.sh              |    7 ++++++-
+ t/t3409-rebase-hook.sh     |   16 ++++++++++++++++
+ 3 files changed, 31 insertions(+), 2 deletions(-)
 
 diff --git a/git-rebase--interactive.sh b/git-rebase--interactive.sh
-index edb6ec6..3350f90 100755
+index 3350f90..b0d757d 100755
 --- a/git-rebase--interactive.sh
 +++ b/git-rebase--interactive.sh
-@@ -65,6 +65,16 @@ output () {
- 	esac
+@@ -26,6 +26,7 @@ i,interactive      always used (no-op)
+ continue           continue rebasing process
+ abort              abort rebasing process and restore original branch
+ skip               skip current patch and continue rebasing process
++no-verify          override pre-rebase hook from stopping the operation
+ "
+ 
+ . git-sh-setup
+@@ -41,6 +42,7 @@ PRESERVE_MERGES=
+ STRATEGY=
+ ONTO=
+ VERBOSE=
++OK_TO_SKIP_PRE_REBASE=
+ 
+ GIT_CHERRY_PICK_HELP="  After resolving the conflicts,
+ mark the corrected paths with 'git add <paths>', and
+@@ -66,7 +68,8 @@ output () {
  }
  
-+run_pre_rebase_hook () {
-+	if test -x "$GIT_DIR/hooks/pre-rebase"
-+	then
-+		"$GIT_DIR/hooks/pre-rebase" ${1+"$@"} || {
-+			echo >&2 "The pre-rebase hook refused to rebase."
-+			exit 1
-+		}
-+	fi
-+}
-+
- require_clean_work_tree () {
- 	# test if working tree is dirty
- 	git rev-parse --verify HEAD > /dev/null &&
-@@ -507,6 +517,7 @@ first and then run 'git rebase --continue' again."
- 		;;
- 	--)
- 		shift
-+		run_pre_rebase_hook ${1+"$@"}
- 		test $# -eq 1 -o $# -eq 2 || usage
- 		test -d "$DOTEST" &&
- 			die "Interactive rebase already started"
+ run_pre_rebase_hook () {
+-	if test -x "$GIT_DIR/hooks/pre-rebase"
++	if test -z "$OK_TO_SKIP_PRE_REBASE" &&
++	   test -x "$GIT_DIR/hooks/pre-rebase"
+ 	then
+ 		"$GIT_DIR/hooks/pre-rebase" ${1+"$@"} || {
+ 			echo >&2 "The pre-rebase hook refused to rebase."
+@@ -416,6 +419,11 @@ get_saved_options () {
+ while test $# != 0
+ do
+ 	case "$1" in
++	--no-verify)
++		OK_TO_SKIP_PRE_REBASE=yes
++		;;
++	--verify)
++		;;
+ 	--continue)
+ 		is_standalone "$@" || usage
+ 		get_saved_options
 diff --git a/git-rebase.sh b/git-rebase.sh
-index 528b604..a30d40c 100755
+index a30d40c..f2742aa 100755
 --- a/git-rebase.sh
 +++ b/git-rebase.sh
-@@ -144,6 +144,16 @@ is_interactive () {
- 	done && test -n "$1"
+@@ -34,6 +34,7 @@ set_reflog_action rebase
+ require_work_tree
+ cd_to_toplevel
+ 
++OK_TO_SKIP_PRE_REBASE=
+ RESOLVEMSG="
+ When you have resolved this problem run \"git rebase --continue\".
+ If you would prefer to skip this patch, instead run \"git rebase --skip\".
+@@ -145,7 +146,8 @@ is_interactive () {
  }
  
-+run_pre_rebase_hook () {
-+	if test -x "$GIT_DIR/hooks/pre-rebase"
-+	then
-+		"$GIT_DIR/hooks/pre-rebase" ${1+"$@"} || {
-+			echo >&2 "The pre-rebase hook refused to rebase."
-+			exit 1
-+		}
-+	fi
-+}
-+
- test -f "$GIT_DIR"/rebase-apply/applying &&
- 	die 'It looks like git-am is in progress. Cannot rebase.'
- 
-@@ -320,13 +330,7 @@ onto_name=${newbase-"$upstream_name"}
- onto=$(git rev-parse --verify "${onto_name}^0") || exit
- 
- # If a hook exists, give it a chance to interrupt
--if test -x "$GIT_DIR/hooks/pre-rebase"
--then
--	"$GIT_DIR/hooks/pre-rebase" ${1+"$@"} || {
--		echo >&2 "The pre-rebase hook refused to rebase."
--		exit 1
--	}
--fi
-+run_pre_rebase_hook ${1+"$@"}
- 
- # If the branch to rebase is given, that is the branch we will rebase
- # $branch_name -- branch being rebased, or HEAD (already detached)
+ run_pre_rebase_hook () {
+-	if test -x "$GIT_DIR/hooks/pre-rebase"
++	if test -z "$OK_TO_SKIP_PRE_REBASE" &&
++	   test -x "$GIT_DIR/hooks/pre-rebase"
+ 	then
+ 		"$GIT_DIR/hooks/pre-rebase" ${1+"$@"} || {
+ 			echo >&2 "The pre-rebase hook refused to rebase."
+@@ -170,6 +172,9 @@ fi
+ while test $# != 0
+ do
+ 	case "$1" in
++	--no-verify)
++		OK_TO_SKIP_PRE_REBASE=yes
++		;;
+ 	--continue)
+ 		test -d "$dotest" -o -d "$GIT_DIR"/rebase-apply ||
+ 			die "No rebase in progress?"
 diff --git a/t/t3409-rebase-hook.sh b/t/t3409-rebase-hook.sh
-new file mode 100755
-index 0000000..bc93dda
---- /dev/null
+index bc93dda..1f1b850 100755
+--- a/t/t3409-rebase-hook.sh
 +++ b/t/t3409-rebase-hook.sh
-@@ -0,0 +1,126 @@
-+#!/bin/sh
-+
-+test_description='git rebase with its hook(s)'
-+
-+. ./test-lib.sh
-+
-+test_expect_success setup '
-+	echo hello >file &&
-+	git add file &&
-+	test_tick &&
-+	git commit -m initial &&
-+	echo goodbye >file &&
-+	git add file &&
-+	test_tick &&
-+	git commit -m second &&
-+	git checkout -b side HEAD^ &&
-+	echo world >git &&
-+	git add git &&
-+	test_tick &&
-+	git commit -m side &&
-+	git checkout master &&
-+	git log --pretty=oneline --abbrev-commit --graph --all &&
-+	git branch test side
-+'
-+
-+test_expect_success 'rebase' '
+@@ -123,4 +123,20 @@ test_expect_success 'pre-rebase hook stops rebase (2)' '
+ 	test 0 = $(git rev-list HEAD...side | wc -l)
+ '
+ 
++test_expect_success 'rebase --no-verify overrides pre-rebase (1)' '
 +	git checkout test &&
 +	git reset --hard side &&
-+	git rebase master &&
++	git rebase --no-verify master &&
++	test "z$(git symbolic-ref HEAD)" = zrefs/heads/test &&
 +	test "z$(cat git)" = zworld
 +'
 +
-+test_expect_success 'rebase -i' '
++test_expect_success 'rebase --no-verify overrides pre-rebase (2)' '
 +	git checkout test &&
 +	git reset --hard side &&
-+	EDITOR=true git rebase -i master &&
++	EDITOR=true git rebase --no-verify -i master &&
++	test "z$(git symbolic-ref HEAD)" = zrefs/heads/test &&
 +	test "z$(cat git)" = zworld
 +'
 +
-+test_expect_success 'setup pre-rebase hook' '
-+	mkdir -p .git/hooks &&
-+	cat >.git/hooks/pre-rebase <<EOF &&
-+#!$SHELL_PATH
-+echo "\$1,\$2" >.git/PRE-REBASE-INPUT
-+EOF
-+	chmod +x .git/hooks/pre-rebase
-+'
-+
-+test_expect_success 'pre-rebase hook gets correct input (1)' '
-+	git checkout test &&
-+	git reset --hard side &&
-+	git rebase master &&
-+	test "z$(cat git)" = zworld &&
-+	test "z$(cat .git/PRE-REBASE-INPUT)" = zmaster,
-+
-+'
-+
-+test_expect_success 'pre-rebase hook gets correct input (2)' '
-+	git checkout test &&
-+	git reset --hard side &&
-+	git rebase master test &&
-+	test "z$(cat git)" = zworld &&
-+	test "z$(cat .git/PRE-REBASE-INPUT)" = zmaster,test
-+'
-+
-+test_expect_success 'pre-rebase hook gets correct input (3)' '
-+	git checkout test &&
-+	git reset --hard side &&
-+	git checkout master &&
-+	git rebase master test &&
-+	test "z$(cat git)" = zworld &&
-+	test "z$(cat .git/PRE-REBASE-INPUT)" = zmaster,test
-+'
-+
-+test_expect_success 'pre-rebase hook gets correct input (4)' '
-+	git checkout test &&
-+	git reset --hard side &&
-+	EDITOR=true git rebase -i master &&
-+	test "z$(cat git)" = zworld &&
-+	test "z$(cat .git/PRE-REBASE-INPUT)" = zmaster,
-+
-+'
-+
-+test_expect_success 'pre-rebase hook gets correct input (5)' '
-+	git checkout test &&
-+	git reset --hard side &&
-+	EDITOR=true git rebase -i master test &&
-+	test "z$(cat git)" = zworld &&
-+	test "z$(cat .git/PRE-REBASE-INPUT)" = zmaster,test
-+'
-+
-+test_expect_success 'pre-rebase hook gets correct input (6)' '
-+	git checkout test &&
-+	git reset --hard side &&
-+	git checkout master &&
-+	EDITOR=true git rebase -i master test &&
-+	test "z$(cat git)" = zworld &&
-+	test "z$(cat .git/PRE-REBASE-INPUT)" = zmaster,test
-+'
-+
-+test_expect_success 'setup pre-rebase hook that fails' '
-+	mkdir -p .git/hooks &&
-+	cat >.git/hooks/pre-rebase <<EOF &&
-+#!$SHELL_PATH
-+false
-+EOF
-+	chmod +x .git/hooks/pre-rebase
-+'
-+
-+test_expect_success 'pre-rebase hook stops rebase (1)' '
-+	git checkout test &&
-+	git reset --hard side &&
-+	test_must_fail git rebase master &&
-+	test "z$(git symbolic-ref HEAD)" = zrefs/heads/test &&
-+	test 0 = $(git rev-list HEAD...side | wc -l)
-+'
-+
-+test_expect_success 'pre-rebase hook stops rebase (2)' '
-+	git checkout test &&
-+	git reset --hard side &&
-+	EDITOR=true test_must_fail git rebase -i master &&
-+	test "z$(git symbolic-ref HEAD)" = zrefs/heads/test &&
-+	test 0 = $(git rev-list HEAD...side | wc -l)
-+'
-+
-+test_done
+ test_done
 -- 
 1.6.0.2
 
