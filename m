@@ -1,98 +1,74 @@
 From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: gitweb improvements
-Date: Mon, 6 Oct 2008 01:54:06 +0200
-Message-ID: <200810060154.06934.jnareb@gmail.com>
-References: <00a201c92701$54ec6980$fec53c80$@se> <m34p3rq7og.fsf@localhost.localdomain> <00b201c92739$36585eb0$a3091c10$@se>
+Subject: Re: [PATCHv4] gitweb: generate parent..current URLs
+Date: Mon, 6 Oct 2008 02:17:34 +0200
+Message-ID: <200810060217.36233.jnareb@gmail.com>
+References: <1222906234-8182-1-git-send-email-giuseppe.bilotta@gmail.com> <1222906234-8182-6-git-send-email-giuseppe.bilotta@gmail.com> <1222906234-8182-7-git-send-email-giuseppe.bilotta@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: 7bit
-Cc: "'git'" <git@vger.kernel.org>
-To: "Tjernlund" <tjernlund@tjernlund.se>
-X-From: git-owner@vger.kernel.org Mon Oct 06 01:55:22 2008
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+Cc: git@vger.kernel.org, Petr Baudis <pasky@suse.cz>,
+	Junio C Hamano <gitster@pobox.com>,
+	"Shawn O. Pearce" <spearce@spearce.org>
+To: Giuseppe Bilotta <giuseppe.bilotta@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Oct 06 02:18:53 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KmdRZ-0006qd-Cn
-	for gcvg-git-2@gmane.org; Mon, 06 Oct 2008 01:55:21 +0200
+	id 1KmdoJ-0002lb-Or
+	for gcvg-git-2@gmane.org; Mon, 06 Oct 2008 02:18:52 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751173AbYJEXyL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 5 Oct 2008 19:54:11 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751087AbYJEXyK
-	(ORCPT <rfc822;git-outgoing>); Sun, 5 Oct 2008 19:54:10 -0400
-Received: from ug-out-1314.google.com ([66.249.92.175]:11923 "EHLO
-	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750881AbYJEXyJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 5 Oct 2008 19:54:09 -0400
-Received: by ug-out-1314.google.com with SMTP id k3so1544175ugf.37
-        for <git@vger.kernel.org>; Sun, 05 Oct 2008 16:54:07 -0700 (PDT)
+	id S1751555AbYJFARk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 5 Oct 2008 20:17:40 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751361AbYJFARk
+	(ORCPT <rfc822;git-outgoing>); Sun, 5 Oct 2008 20:17:40 -0400
+Received: from ey-out-2122.google.com ([74.125.78.24]:9002 "EHLO
+	ey-out-2122.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751214AbYJFARj convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 5 Oct 2008 20:17:39 -0400
+Received: by ey-out-2122.google.com with SMTP id 6so764079eyi.37
+        for <git@vger.kernel.org>; Sun, 05 Oct 2008 17:17:38 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:received:received:from:to:subject:date
          :user-agent:cc:references:in-reply-to:mime-version:content-type
          :content-transfer-encoding:content-disposition:message-id;
-        bh=T7dNGOL3quUiyo1lPYbro0CXHugqfReoRAWU99U0yqw=;
-        b=LIkCFuqSWR4GzHLWIR9uUTvIUyAICZw0Pf+qcJQm7PRmeJ/t6oRnw9jxnWsbGLMfeH
-         rGy+7b8dleTJss2MwN0ly2Oa87JLxdN/K74Jk2oiN2VcSJbfVeP0PofA7oe8LotOoCmS
-         cLdv2OVwNrEKrRUDI1NTIe9dWWzh8x538zqCI=
+        bh=NmRpvLPVlIXSEA6s0rr+/fsWY4A7stV9AtbN+xBfaQs=;
+        b=hzFj0REA28bG3qE6hMxyl1kW0KQZKcv+V5jS2/VRC796SbjbeJBFPk1GPCyB6qqVVj
+         /YYHG0d4Gkm7MTxuhjXRJ8YlUsJGTmzN/nMVeIfItNXdS4jjV+2TZ86FyC0L35eL5l2Z
+         IG12kkHOA7kv+a3PE6+V1L1CnS5e/kkVgnXfQ=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=from:to:subject:date:user-agent:cc:references:in-reply-to
          :mime-version:content-type:content-transfer-encoding
          :content-disposition:message-id;
-        b=acleEiA5GlqMAFdgzKpC09PEXKiLFz2ug644Km28gr936YL+KPJYo1nU4dFLM2kjA3
-         FTsO3eEbB6gDSoOb6leYbRaDBuKlGxNXvLVkbIYbuyikUvNTvVPmKoqKhfWh4bLjW9qx
-         SfJz2GiMQcQ4DS4yM0WrCCdnvDwkXw4d05wU4=
-Received: by 10.210.120.7 with SMTP id s7mr5398273ebc.76.1223250847463;
-        Sun, 05 Oct 2008 16:54:07 -0700 (PDT)
+        b=RzZg8qydGdaQATVC8qgFNcOY9VDDHmBMSToaDSN8yUuCP9luX5009PnTcDvx/nG9qo
+         UknhZZq43BudyyxF9ZxEvyeypAEP7TuLpbADyZTYInbjG5s5bHGxRCnj/PD/0kgDfh2D
+         sOsqxH5NpgIF6jYcz6XEW4naCrB7lXYjt2IsQ=
+Received: by 10.210.23.3 with SMTP id 3mr5440862ebw.54.1223252258140;
+        Sun, 05 Oct 2008 17:17:38 -0700 (PDT)
 Received: from ?192.168.1.11? (abwo50.neoplus.adsl.tpnet.pl [83.8.238.50])
-        by mx.google.com with ESMTPS id 23sm10353209eya.7.2008.10.05.16.54.05
+        by mx.google.com with ESMTPS id u7sm11147469uge.40.2008.10.05.17.17.35
         (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Sun, 05 Oct 2008 16:54:06 -0700 (PDT)
+        Sun, 05 Oct 2008 17:17:36 -0700 (PDT)
 User-Agent: KMail/1.9.3
-In-Reply-To: <00b201c92739$36585eb0$a3091c10$@se>
+In-Reply-To: <1222906234-8182-7-git-send-email-giuseppe.bilotta@gmail.com>
 Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/97554>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/97555>
 
-On Mon, 6 Oct 2008, Tjernlund wrote:
-> Jakub Narebski wrote:
->> "Tjernlund" <tjernlund@tjernlund.se> writes:
+On Thu, 2 Oct 2008, Giuseppe Bilotta wrote:
 
->>> 2) looking at a merge like:
->>> http://git.kernel.org/?p=linux/kernel/git/torvalds/linux-2.6.git;a=commit;h=66120005e65eed8a05b14a36ab448bdec42f0d6b
->>>    is somewhat confusing. It really doesn't tell you which commits that is
->>>    included in the merge.
->> 
->> I don't understand you there. First, you have "(merge: 0d0f3ef 9778e9a)"
->> in the navbar, so you can easily go to commit view for parents. Second,
->> among commit headers you have two "parent", where SHA-1 of a commit is
->> hidden link, and there are also 'commit' and 'diff' link for those.
-> 
-> hmm, looks like I overlooked "(merge: 0d0f3ef 9778e9a)" part. However, I can't
-> find the "ALSA: make the CS4270 driver a new-style I2C driver" from within
-> this page.
+> If use_pathinfo is enabled, href now creates links that contain paths in
+> the form $project/$action/oldhash:/oldname..newhash:/newname for actions
+> that use hash_parent etc.
+[cut]
 
-I think you don't quite understand the situation. The history looks
-like this:
-
-    M      Merge branch 'for-linus' of git://git.kernel.org/pub/scm/linux/kernel/git/tiwai/sound-2.6
-    |\
-    | 2    ALSA: ASoC: Fix another cs4270 error path
-    | *    ALSA: make the CS4270 driver a new-style I2C driver
-    | |
-    1 |    Merge git://git.kernel.org/pub/scm/linux/kernel/git/jejb/scsi-rc-fixes-2.6  
-
-Parents of commit 'M' (for merge) are '1' and '2', not 2,* or 1,2,*.
-
-Now the fact that commit message for merge contains shortlog of merged
-branch does not mean that there must be direct link to such shortlog.
-You can go to shortlog (well, kind of) if you click on second parent,
-_then_ click on shortlog link at top of the page.
+>From the first glance, it looks good. I just worry a bit about
+complicated issue of hash_parent vs hash_parent_base etc.
 
 -- 
 Jakub Narebski
