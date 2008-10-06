@@ -1,106 +1,70 @@
-From: Peter Waller <peter.waller@gmail.com>
-Subject: Git filter branch - removing empty commits
-Date: Mon, 6 Oct 2008 07:57:22 -0700 (PDT)
-Message-ID: <19839587.post@talk.nabble.com>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [msysGit] [FYI][PATCH] Customizing the WinGit installer
+Date: Mon, 6 Oct 2008 17:23:19 +0200 (CEST)
+Message-ID: <alpine.DEB.1.00.0810061718240.22125@pacific.mpi-cbg.de.mpi-cbg.de>
+References: <20081003122727.GE10360@machine.or.cz> <alpine.DEB.1.00.0810061621110.22125@pacific.mpi-cbg.de.mpi-cbg.de> <20081006141840.GO10360@machine.or.cz>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Oct 06 17:02:21 2008
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: msysgit@googlegroups.com, git@vger.kernel.org
+To: Petr Baudis <pasky@suse.cz>
+X-From: git-owner@vger.kernel.org Mon Oct 06 17:29:07 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KmrXb-0002sv-WB
-	for gcvg-git-2@gmane.org; Mon, 06 Oct 2008 16:58:32 +0200
+	id 1KmrqY-0001na-2y
+	for gcvg-git-2@gmane.org; Mon, 06 Oct 2008 17:18:07 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752939AbYJFO5Z (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 6 Oct 2008 10:57:25 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752842AbYJFO5Z
-	(ORCPT <rfc822;git-outgoing>); Mon, 6 Oct 2008 10:57:25 -0400
-Received: from kuber.nabble.com ([216.139.236.158]:48281 "EHLO
-	kuber.nabble.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752701AbYJFO5Y (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 6 Oct 2008 10:57:24 -0400
-Received: from isper.nabble.com ([192.168.236.156])
-	by kuber.nabble.com with esmtp (Exim 4.63)
-	(envelope-from <lists@nabble.com>)
-	id 1KmrWU-0004t5-V6
-	for git@vger.kernel.org; Mon, 06 Oct 2008 07:57:22 -0700
-X-Nabble-From: peter.waller@gmail.com
+	id S1752439AbYJFPQz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 6 Oct 2008 11:16:55 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752503AbYJFPQz
+	(ORCPT <rfc822;git-outgoing>); Mon, 6 Oct 2008 11:16:55 -0400
+Received: from mail.gmx.net ([213.165.64.20]:36148 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1752401AbYJFPQy (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 6 Oct 2008 11:16:54 -0400
+Received: (qmail invoked by alias); 06 Oct 2008 15:16:52 -0000
+Received: from pacific.mpi-cbg.de (EHLO [141.5.10.38]) [141.5.10.38]
+  by mail.gmx.net (mp034) with SMTP; 06 Oct 2008 17:16:52 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX18kX8I2E6Akm/ldCtdMkEPTamUEFCus/wi2oQGPmw
+	RWOiMApIxVgO8L
+X-X-Sender: schindelin@pacific.mpi-cbg.de.mpi-cbg.de
+In-Reply-To: <20081006141840.GO10360@machine.or.cz>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.64
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/97592>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/97593>
 
+Hi,
 
-Dear List,
+On Mon, 6 Oct 2008, Petr Baudis wrote:
 
-I have removed lots of files from my history with a procedure something like
-this:
+>   Hi,
+> 
+> On Mon, Oct 06, 2008 at 04:22:08PM +0200, Johannes Schindelin wrote:
+> > On Fri, 3 Oct 2008, Petr Baudis wrote:
+> > 
+> > > -InfoBeforeFile=gpl-2.0.rtf
+> > 
+> > I'd rather keep it in, especially in a corporate environment.
+> 
+>   why? How is it relevant for the users?
 
-1) Clone repository
+To give them an idea about their _rights_.  Because they are entitled by 
+the GPL to get -- in source -- the changes that were done to that 
+particular distributions.
 
-2) git filter-branch --index-filter 'git rm --quiet -r Archive; git ls-files
--z '\''*.png'\'' '\''*.eps'\'' | xargs -0r git rm --quiet; true'
+Speaking from experience, companies usually do not want to tell you about 
+your rights with regard to free software.
 
-3) git reflog expire --expire=0 --all
+And in this case, I have a personal interest.  I feel that my efforts to 
+the msysGit project are not really rewarded.  People like to use it, but 
+they hardly give anything back (you being a very notable exception).
 
-4) git prune; git gc
-
-The problem is that this leaves many empty commits.
-
-The helpful people over at #git advised I do:
-
-git filter-branch --commit-filter 'if [ z$1 = z`git rev-parse $3^{tree} 2>
-/dev/null` ]; then skip_commit "$@"; else git commit-tree "$@"; fi'
-
-But this gets to about commit 70/1300 and grinds to a halt. I modified
-/usr/libexec/git-core/git-filter-branch to say #!/bin/sh -x, and the result
-was over 80mb in a few seconds.
-
-I have pasted the last few lines here:
-http://rafb.net/p/ABWvCy44.html
-
-It is like it is following some exponential behaviour and not getting
-anywhere.
-
-Any ideas what is wrong?
-
-I have tried a couple of scripts I have found around that should do the same
-thing, for example:
-
-skip_commit()
-{
-        shift
-        while [[ -n $1 ]] ; do
-                shift
-                map "$1"
-                shift
-        done
-}
-
-our_tree="$1"
-our_parent_tree=$(map $3)
-
-if [[ ${our_tree} == $(git rev-parse $(map $3)) ]]; then
-        git commit-tree "$@"
-else
-        skip_commit "$@"
-fi
-
-This goes much faster, but when it reaches the final commit, it says this:
-Ref 'refs/heads/master' was deleted
-fatal: Not a valid object name HEAD
-
-And not much useful seems to have happened.
-
-Any help appreciated.
-
-Regards,
-
-- Peter
--- 
-View this message in context: http://www.nabble.com/Git-filter-branch---removing-empty-commits-tp19839587p19839587.html
-Sent from the git mailing list archive at Nabble.com.
+Ciao,
+Dscho
