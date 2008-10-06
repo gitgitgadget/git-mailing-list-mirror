@@ -1,91 +1,85 @@
-From: Abdelrazak Younes <younes@lyx.org>
-Subject: [QGIT PATCH] Rework the commit confirmation box a bit
-Date: Mon, 06 Oct 2008 11:11:53 +0200
-Message-ID: <48E9D659.1090503@lyx.org>
+From: Thomas Rast <trast@student.ethz.ch>
+Subject: Re: git svn: Bad URL passed to RA layer: Unrecognized URL scheme
+Date: Mon, 6 Oct 2008 11:47:25 +0200
+Message-ID: <200810061147.28986.trast@student.ethz.ch>
+References: <pan.2008.10.05.17.24.02.167465@yahoo.com> <237967ef0810051244m51156925x26ae51db038dad49@mail.gmail.com> <pan.2008.10.06.02.28.35.643705@yahoo.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: multipart/signed;
+  boundary="nextPart7038765.L41bstWhzI";
+  protocol="application/pgp-signature";
+  micalg=pgp-sha1
 Content-Transfer-Encoding: 7bit
-To: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Mon Oct 06 11:13:19 2008
+Cc: git@vger.kernel.org
+To: Jeff Kowalczyk <jtk@yahoo.com>
+X-From: git-owner@vger.kernel.org Mon Oct 06 11:49:19 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Kmm9W-00064i-6s
-	for gcvg-git-2@gmane.org; Mon, 06 Oct 2008 11:13:18 +0200
+	id 1Kmmho-0001ui-7L
+	for gcvg-git-2@gmane.org; Mon, 06 Oct 2008 11:48:44 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751451AbYJFJMG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 6 Oct 2008 05:12:06 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751327AbYJFJMF
-	(ORCPT <rfc822;git-outgoing>); Mon, 6 Oct 2008 05:12:05 -0400
-Received: from smtp4-g19.free.fr ([212.27.42.30]:39096 "EHLO smtp4-g19.free.fr"
+	id S1752320AbYJFJrc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 6 Oct 2008 05:47:32 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752295AbYJFJrc
+	(ORCPT <rfc822;git-outgoing>); Mon, 6 Oct 2008 05:47:32 -0400
+Received: from xsmtp1.ethz.ch ([82.130.70.13]:37774 "EHLO xsmtp1.ethz.ch"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751403AbYJFJME (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 6 Oct 2008 05:12:04 -0400
-Received: from smtp4-g19.free.fr (localhost.localdomain [127.0.0.1])
-	by smtp4-g19.free.fr (Postfix) with ESMTP id 397853EA12D
-	for <git@vger.kernel.org>; Mon,  6 Oct 2008 11:11:59 +0200 (CEST)
-Received: from [192.168.0.10] (gre92-10-88-181-30-42.fbx.proxad.net [88.181.30.42])
-	by smtp4-g19.free.fr (Postfix) with ESMTP id 1693C3EA0B1
-	for <git@vger.kernel.org>; Mon,  6 Oct 2008 11:11:59 +0200 (CEST)
-User-Agent: Mozilla/5.0 (Windows; U; Windows NT 6.0; en-US; rv:1.9.1b1pre) Gecko/20080918110343 Shredder/3.0b1pre
+	id S1752193AbYJFJrb (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 6 Oct 2008 05:47:31 -0400
+Received: from xfe0.d.ethz.ch ([82.130.124.40]) by xsmtp1.ethz.ch with Microsoft SMTPSVC(6.0.3790.3959);
+	 Mon, 6 Oct 2008 11:47:27 +0200
+Received: from pcjremy.inf.ethz.ch ([129.132.153.233]) by xfe0.d.ethz.ch over TLS secured channel with Microsoft SMTPSVC(6.0.3790.3959);
+	 Mon, 6 Oct 2008 11:47:26 +0200
+User-Agent: KMail/1.9.9
+In-Reply-To: <pan.2008.10.06.02.28.35.643705@yahoo.com>
+X-OriginalArrivalTime: 06 Oct 2008 09:47:26.0936 (UTC) FILETIME=[8A869D80:01C92798]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/97575>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/97576>
 
-The problem was that the dialog was too big for my whenever too many files
-were changed. Now, the list of changed files is only shown whenever they are
-less than 20; otherwise it is shown in the detailed text accessible though
-the 'Show Detail' button.
----
-  src/commitimpl.cpp |   25 ++++++++++++++++++++-----
-  1 files changed, 20 insertions(+), 5 deletions(-)
+--nextPart7038765.L41bstWhzI
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: quoted-printable
+Content-Disposition: inline
 
-diff --git a/src/commitimpl.cpp b/src/commitimpl.cpp
-index 1540947..def5209 100644
---- a/src/commitimpl.cpp
-+++ b/src/commitimpl.cpp
-@@ -236,17 +236,32 @@ bool CommitImpl::checkConfirm(SCRef msg, SCRef 
-patchName, SCList selFiles, bool
-          (git->isStGITStack() ? "refresh top patch with" :
-                          "amend last commit with") :
-          (git->isStGITStack() ? "create a new patch with" : "commit");
--    QString text("Do you want to " + whatToDo + " the following 
-file(s)?\n\n" +
--                 selFiles.join("\n") + "\n\nwith the message:\n\n");
-+    QString text("Do you want to " + whatToDo);
-+
-+    bool const fullList = selFiles.size() < 20;
-+    if (fullList) {
-+        text.append(" the following file(s)?\n\n" + selFiles.join("\n")
-+            + "\n\nwith the message:\n\n");
-+    } else {
-+        text.append(" those " + QString::number(selFiles.size())
-+            + " files the with the message:\n\n");
-+    }
-+
-      text.append(msg);
-      if (git->isStGITStack())
-          text.append("\n\nAnd patch name: " + patchName);
+Jeff Kowalczyk wrote:
+> However, each operation ends with a segmentation fault. This is the case
+> with all git svn repositories (e.g. several different svn remote hosts).
+>=20
+>   (master) $ git svn rebase
+>      M  django/core/management/commands/makemessages.py
+>      M  docs/topics/i18n.txt
+>   r9155 =3D 4c86e60f62366ac9c3fd9369c17c54801a8f2ea0 (trunk)
+>   First, rewinding head to replay your work on top of it...
+>   Fast-forwarded master to refs/remotes/trunk.
+>   Segmentation fault
 
-      QTextCodec::setCodecForCStrings(tc);
+Can you try to find out what exactly segfaults here? git-svn is
+implemented in Perl, so that means it's either Perl itself (unlikely),
+the SVN libraries hooked into Perl, or some git command run by
+git-svn.
 
--    int but = QMessageBox::question(this, "Commit changes - QGit",
--                                    text, "&Yes", "&No", QString(), 0, 1);
--    return (but != 1);
-+    QMessageBox msgBox(this);
-+    msgBox.setWindowTitle("Commit changes - QGit");
-+    msgBox.setText(text);
-+    if (!fullList)
-+        msgBox.setDetailedText(selFiles.join("\n"));
-+    msgBox.setStandardButtons(QMessageBox::Yes | QMessageBox::No);
-+    msgBox.setDefaultButton(QMessageBox::Yes);
-+
-+    return msgBox.exec() != QMessageBox::No;
-  }
+=2D Thomas
 
-  void CommitImpl::pushButtonSettings_clicked() {
--- 
-1.6.0.2.1172.ga5ed0
+=2D-=20
+Thomas Rast
+trast@{inf,student}.ethz.ch
+
+
+--nextPart7038765.L41bstWhzI
+Content-Type: application/pgp-signature; name=signature.asc 
+Content-Description: This is a digitally signed message part.
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.0.9 (GNU/Linux)
+
+iEYEABECAAYFAkjp3rAACgkQqUud07tmzP2RGQCgj0+HCItEAlsUWH4Z6LPC/p87
+G+AAn3GAMkDWnYCTDHag7B6qFSt6M7Ex
+=yB3J
+-----END PGP SIGNATURE-----
+
+--nextPart7038765.L41bstWhzI--
