@@ -1,84 +1,79 @@
-From: Abdelrazak Younes <younes@lyx.org>
-Subject: Re: [FYI][PATCH] Customizing the WinGit installer
-Date: Mon, 06 Oct 2008 23:19:16 +0200
-Message-ID: <48EA80D4.5030209@lyx.org>
-References: <20081003122727.GE10360@machine.or.cz> <alpine.DEB.1.00.0810061621110.22125@pacific.mpi-cbg.de.mpi-cbg.de> <20081006141840.GO10360@machine.or.cz> <alpine.DEB.1.00.0810061718240.22125@pacific.mpi-cbg.de.mpi-cbg.de> <m3zllhpvby.fsf@localhost.localdomain> <alpine.DEB.1.00.0810061810360.22125@pacific.mpi-cbg.de.mpi-cbg.de> <alpine.LFD.2.00.0810061031380.3208@nehalem.linux-foundation.org> <alpine.DEB.1.00.0810061959280.22125@pacific.mpi-cbg.de.mpi-cbg.de>
+From: "Catalin Marinas" <catalin.marinas@gmail.com>
+Subject: Re: [StGit PATCH 6/6] Refresh and expand the tutorial (not finished)
+Date: Mon, 6 Oct 2008 22:25:45 +0100
+Message-ID: <b0943d9e0810061425u3ead1de5re1a252f03c2d09b3@mail.gmail.com>
+References: <20081005155450.19886.43748.stgit@yoghurt>
+	 <20081005160203.19886.33463.stgit@yoghurt>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: Linus Torvalds <torvalds@linux-foundation.org>,
-	Jakub Narebski <jnareb@gmail.com>, Petr Baudis <pasky@suse.cz>,
-	msysgit@googlegroups.com, git@vger.kernel.org
-To: Johannes.Schindelin@gmx.de
-X-From: git-owner@vger.kernel.org Mon Oct 06 23:20:55 2008
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: "=?ISO-8859-1?Q?Karl_Hasselstr=F6m?=" <kha@treskal.com>
+X-From: git-owner@vger.kernel.org Mon Oct 06 23:27:04 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KmxVO-0007nB-8U
-	for gcvg-git-2@gmane.org; Mon, 06 Oct 2008 23:20:38 +0200
+	id 1KmxbV-0001eJ-4J
+	for gcvg-git-2@gmane.org; Mon, 06 Oct 2008 23:26:57 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755665AbYJFVT0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 6 Oct 2008 17:19:26 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755638AbYJFVTZ
-	(ORCPT <rfc822;git-outgoing>); Mon, 6 Oct 2008 17:19:25 -0400
-Received: from smtp8-g19.free.fr ([212.27.42.65]:51991 "EHLO smtp8-g19.free.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755585AbYJFVTY (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 6 Oct 2008 17:19:24 -0400
-Received: from smtp8-g19.free.fr (localhost [127.0.0.1])
-	by smtp8-g19.free.fr (Postfix) with ESMTP id E745B32A7BE;
-	Mon,  6 Oct 2008 23:19:22 +0200 (CEST)
-Received: from [192.168.0.10] (gre92-10-88-181-30-42.fbx.proxad.net [88.181.30.42])
-	by smtp8-g19.free.fr (Postfix) with ESMTP id 3E08F32A817;
-	Mon,  6 Oct 2008 23:19:22 +0200 (CEST)
-User-Agent: Mozilla/5.0 (Windows; U; Windows NT 6.0; en-US; rv:1.9.1b1pre) Gecko/20080918110343 Shredder/3.0b1pre
-In-Reply-To: <alpine.DEB.1.00.0810061959280.22125@pacific.mpi-cbg.de.mpi-cbg.de>
+	id S1753234AbYJFVZq convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 6 Oct 2008 17:25:46 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753190AbYJFVZq
+	(ORCPT <rfc822;git-outgoing>); Mon, 6 Oct 2008 17:25:46 -0400
+Received: from rv-out-0506.google.com ([209.85.198.226]:41973 "EHLO
+	rv-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752513AbYJFVZp convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 6 Oct 2008 17:25:45 -0400
+Received: by rv-out-0506.google.com with SMTP id k40so3156223rvb.1
+        for <git@vger.kernel.org>; Mon, 06 Oct 2008 14:25:45 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to
+         :subject:cc:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:references;
+        bh=QUFehjW9fOq89Uo8Qd9NCSd31s8mi90jApZD8yzDSak=;
+        b=B0y7jujIVIt/Oa5E+yEEL4PU0EH148+dvqmqnGSwgxpJDE0DkTLX7k9HqQpn8dEUC+
+         Gig7CP4YIX1fMlGgEYxwaRL+eNnoGzrO6nOyJrM8MxeqiQIJHxF31RWY9uGIEQVLEXYL
+         0/8FpPz0Xy1p2fnEP6VfYnh5xyIAcIcNTSa8U=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
+         :content-type:content-transfer-encoding:content-disposition
+         :references;
+        b=utLDzovg+x5zudxUHKAVRhw0CIwveRJhj8BkcRm3L3f12dPabn3halaNAhMtTjOpjS
+         D/7Hh/lheYJ9EbhrauJA5Rqv8zlmdOvaeg8r347TrwZx3ozmUM+6QjerN6DE32vECyeW
+         M1jOI3bi3doqKOQb9Uel4J1aDdLR50LZNlXGc=
+Received: by 10.140.250.14 with SMTP id x14mr626393rvh.1.1223328345106;
+        Mon, 06 Oct 2008 14:25:45 -0700 (PDT)
+Received: by 10.141.201.12 with HTTP; Mon, 6 Oct 2008 14:25:45 -0700 (PDT)
+In-Reply-To: <20081005160203.19886.33463.stgit@yoghurt>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/97632>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/97633>
 
-On 06/10/2008 20:01, Johannes Schindelin wrote:
-> Hi,
+2008/10/5 Karl Hasselstr=F6m <kha@treskal.com>:
+> This is a first pass at expanding the tutorial, fixing its formatting=
+,
+> and updating it with the new things that have happened in StGit.
 >
-> On Mon, 6 Oct 2008, Linus Torvalds wrote:
->
->> On Mon, 6 Oct 2008, Johannes Schindelin wrote:
->>> Well, I consider it a courtesy to the msysGit people to leave it where
->>> it is.
->> Umm. I consider it to be UNACCEPTABLY STUPID to claim "courtesy" if it
->> actually makes something just more irritating to users.
->>
->> I absolutely detest clicking through EULA's or other self-serving crap.
->> I hate software that bothers me with their license details. Nobody reads
->> those things anyway, and an extra click or an extra window I didn't ask
->> for - _especially_ in open source software - is just a bug.
->>
->> Bugs aren't "courtesy". Not to the user, and certainly not to the
->> developer.
->
-> It is not a bug.  It is a message that tells the Windows user that this is
-> GPLed software, and that they are free to copy it.  Windows users (and
-> developers on Windows are more of users than developers) are often not
-> aware of that fact.
+> There are a number of things still left to do in the second half of
+> the document; they are tagged with "TODO".
 
-Well, maybe so called "Windows pseudo-developers" do not feel welcome to 
-participate to this particular project? Or maybe this project has not 
-reached yet the minimum visibility threshold? git has a lot of 
-contributors on Linux because it is visible there. Do you think all 
-users of git on Linux systematically contributes?
+Thanks for this. Even with the TODOs, I think we can merge them into
+the master branch so that I have the same copy as you. Do you plan to
+do more work on the tutorial (so that we don't duplicate)?
 
-Don't get me wrong, I am truly thankful for msysgit but, IMHO, if you 
-produce and publish a free software you should just accept and be glad 
-that it is used. Otherwise, just don't publish it.
+> -Layout of the .git directory
 
-> That is the reason why many Open Source projects do not bother on Linux,
-> but do bother on Windows.
+Should we mention the metadata storage somewhere? This is probably too
+advanced for the tutorial but might be useful to have it in a
+development document (for other to understand where we keep things).
+Actually, is the automatically generated documentation from the new
+infrastructure enough?
 
-And a lot other projects do not bother with this even on Windows and Mac 
-too.
-
-Regards,
-Abdel.
+--=20
+Catalin
