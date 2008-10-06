@@ -1,76 +1,60 @@
-From: Stephan Beyer <s-beyer@gmx.net>
-Subject: Re: [PATCH] rebase --no-verify
-Date: Mon, 6 Oct 2008 18:07:16 +0200
-Message-ID: <20081006160716.GC14479@leksak.fem-net>
-References: <20081005222654.6117@nanako3.lavabit.com> <b19eae4e0810021710v14a3901an1f793de00c439ba1@mail.gmail.com> <20081006141429.6117@nanako3.lavabit.com> <20081006143028.GC7684@spearce.org>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [msysGit] [FYI][PATCH] Customizing the WinGit installer
+Date: Mon, 6 Oct 2008 18:12:15 +0200 (CEST)
+Message-ID: <alpine.DEB.1.00.0810061810360.22125@pacific.mpi-cbg.de.mpi-cbg.de>
+References: <20081003122727.GE10360@machine.or.cz> <alpine.DEB.1.00.0810061621110.22125@pacific.mpi-cbg.de.mpi-cbg.de> <20081006141840.GO10360@machine.or.cz> <alpine.DEB.1.00.0810061718240.22125@pacific.mpi-cbg.de.mpi-cbg.de>
+ <m3zllhpvby.fsf@localhost.localdomain>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Nanako Shiraishi <nanako3@lavabit.com>, git@vger.kernel.org
-To: "Shawn O. Pearce" <spearce@spearce.org>
-X-From: git-owner@vger.kernel.org Mon Oct 06 18:10:36 2008
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Petr Baudis <pasky@suse.cz>, msysgit@googlegroups.com,
+	git@vger.kernel.org
+To: Jakub Narebski <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Oct 06 18:12:00 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KmsdS-0007Zh-NX
-	for gcvg-git-2@gmane.org; Mon, 06 Oct 2008 18:08:39 +0200
+	id 1Kmsbu-0006ro-5n
+	for gcvg-git-2@gmane.org; Mon, 06 Oct 2008 18:07:02 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752828AbYJFQH2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 6 Oct 2008 12:07:28 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752798AbYJFQH2
-	(ORCPT <rfc822;git-outgoing>); Mon, 6 Oct 2008 12:07:28 -0400
-Received: from mail.gmx.net ([213.165.64.20]:44973 "HELO mail.gmx.net"
+	id S1753539AbYJFQFw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 6 Oct 2008 12:05:52 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753478AbYJFQFv
+	(ORCPT <rfc822;git-outgoing>); Mon, 6 Oct 2008 12:05:51 -0400
+Received: from mail.gmx.net ([213.165.64.20]:37759 "HELO mail.gmx.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1752501AbYJFQH1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 6 Oct 2008 12:07:27 -0400
-Received: (qmail invoked by alias); 06 Oct 2008 16:07:25 -0000
-Received: from q137.fem.tu-ilmenau.de (EHLO leksak.fem-net) [141.24.46.137]
-  by mail.gmx.net (mp005) with SMTP; 06 Oct 2008 18:07:25 +0200
-X-Authenticated: #1499303
-X-Provags-ID: V01U2FsdGVkX1/VODQegFzV7NyaP+EE/8xa6ICL/pKQkXmzh8A94d
-	F54PSxn9V7/f78
-Received: from sbeyer by leksak.fem-net with local (Exim 4.69)
-	(envelope-from <s-beyer@gmx.net>)
-	id 1Kmsc8-0003PN-EA; Mon, 06 Oct 2008 18:07:16 +0200
-Content-Disposition: inline
-In-Reply-To: <20081006143028.GC7684@spearce.org>
+	id S1753336AbYJFQFv (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 6 Oct 2008 12:05:51 -0400
+Received: (qmail invoked by alias); 06 Oct 2008 16:05:49 -0000
+Received: from pacific.mpi-cbg.de (EHLO [141.5.10.38]) [141.5.10.38]
+  by mail.gmx.net (mp047) with SMTP; 06 Oct 2008 18:05:49 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1+uUWB4oJiuvR2PQ2ksqax0Msx+CVIhEHgqJiMnCt
+	orWDo88gFP0xlg
+X-X-Sender: schindelin@pacific.mpi-cbg.de.mpi-cbg.de
+In-Reply-To: <m3zllhpvby.fsf@localhost.localdomain>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
 X-Y-GMX-Trusted: 0
 X-FuHaFi: 0.66
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/97599>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/97600>
 
 Hi,
 
-Shawn O. Pearce wrote:
-> >     It probably is better to fix "rebase -i" to share more code with the main
-> >     "rebase" script to avoid duplicated run-pre-rebase-hook function, but it
-> >     is beyond what I can do right now.  Perhaps people more smart and
-> >     beautiful than me can help (^_^;)
-> 
-> True.  But its already a mess.  git-sequencer is probably the
-> right approach to merge it all together.
+On Mon, 6 Oct 2008, Jakub Narebski wrote:
 
-Hmm, I don't think I like the pre-rebase hook in sequencer. The user
-scripts (git-rebase--interactive.sh and git-rebase.sh) should run them;
-that's ok.
+> Wouldn't it be better to keep it [showing the GPL], but move it from 
+> EULA position to for example 'License' item in 'Help' entry (below 
+> 'About') in gitk and git-gui?  IIRC there was a lot of controversy about 
+> Firefox using EULA, although MS Windows users are most probably used to 
+> it...
 
-I think, for the moment it is ok to have the code duplicated.  After
-sequencer has merged into master[1], I will probably take a look at
-merging git-rebase.sh and git-rebase--interactive.sh if somebody
-else is interested in it and if there is a good way to achieve that.
+Well, I consider it a courtesy to the msysGit people to leave it where it 
+is.  Of course, this is free software and you are free to disregard my 
+wish.
 
-Regards,
-  Stephan
-
-Footnotes:
- 1. For the *very* interested ones of you,
- 	http://repo.or.cz/w/git/sbeyer.git
-    is the way to go. seq-builtin-dev is the active development branch
-    and git's master is frequently merged into it. seq-builtin-rfc^ is
-    an approach to possible patchsets (for review).
-
--- 
-Stephan Beyer <s-beyer@gmx.net>, PGP 0x6EDDD207FCC5040F
+Ciao,
+Dscho
