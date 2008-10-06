@@ -1,91 +1,128 @@
-From: "Tjernlund" <tjernlund@tjernlund.se>
-Subject: RE: gitweb improvements
-Date: Tue, 7 Oct 2008 00:17:00 +0200
-Message-ID: <013b01c92801$40f5f8f0$c2e1ead0$@se>
-References: <00a201c92701$54ec6980$fec53c80$@se> <m34p3rq7og.fsf@localhost.localdomain> <00b201c92739$36585eb0$a3091c10$@se> <200810060154.06934.jnareb@gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain;
-	charset="us-ascii"
-Content-Transfer-Encoding: 7bit
-Cc: "'git'" <git@vger.kernel.org>
-To: "'Jakub Narebski'" <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Oct 07 00:19:08 2008
+From: Miklos Vajna <vmiklos@frugalware.org>
+Subject: [PATCH] Implement git clone -v
+Date: Tue,  7 Oct 2008 00:19:50 +0200
+Message-ID: <1223331590-22138-1-git-send-email-vmiklos@frugalware.org>
+References: <81b0412b0810041442i3aa29628lf66ef9b188fe8ce7@mail.gmail.com>
+Cc: Constantine Plotnikov <constantine.plotnikov@gmail.com>,
+	git@vger.kernel.org
+To: Alex Riesen <raa.lkml@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Oct 07 00:21:04 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KmyPn-0002U9-2o
-	for gcvg-git-2@gmane.org; Tue, 07 Oct 2008 00:18:55 +0200
+	id 1KmyRR-0003Cw-JM
+	for gcvg-git-2@gmane.org; Tue, 07 Oct 2008 00:20:38 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753190AbYJFWRo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 6 Oct 2008 18:17:44 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752879AbYJFWRo
-	(ORCPT <rfc822;git-outgoing>); Mon, 6 Oct 2008 18:17:44 -0400
-Received: from csmtp2.b-one.net ([195.47.247.206]:42097 "EHLO csmtp2.b-one.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752618AbYJFWRn (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 6 Oct 2008 18:17:43 -0400
-Received: from jockexp (84-217-5-146.tn.glocalnet.net [84.217.5.146])
-	by csmtp2.b-one.net (Postfix) with ESMTP id E7A88160005D4;
-	Tue,  7 Oct 2008 00:17:41 +0200 (CEST)
-In-Reply-To: <200810060154.06934.jnareb@gmail.com>
-X-Mailer: Microsoft Office Outlook 12.0
-Thread-Index: AcknRafonoKHaJ0eRpy2e4yfw9LUGQAup+wQ
-Content-Language: sv
+	id S1753105AbYJFWT1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 6 Oct 2008 18:19:27 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753358AbYJFWT0
+	(ORCPT <rfc822;git-outgoing>); Mon, 6 Oct 2008 18:19:26 -0400
+Received: from yugo.dsd.sztaki.hu ([195.111.2.114]:37693 "EHLO
+	yugo.frugalware.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752879AbYJFWT0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 6 Oct 2008 18:19:26 -0400
+Received: from vmobile.example.net (dsl5401CAE3.pool.t-online.hu [84.1.202.227])
+	by yugo.frugalware.org (Postfix) with ESMTPA id 00FE6149C60;
+	Tue,  7 Oct 2008 00:19:23 +0200 (CEST)
+Received: by vmobile.example.net (Postfix, from userid 1003)
+	id E64FA19E7C3; Tue,  7 Oct 2008 00:19:50 +0200 (CEST)
+X-Mailer: git-send-email 1.6.0.2
+In-Reply-To: <81b0412b0810041442i3aa29628lf66ef9b188fe8ce7@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/97638>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/97639>
 
-> -----Original Message-----
-> From: Jakub Narebski [mailto:jnareb@gmail.com]
-> Sent: den 6 oktober 2008 01:54
-> To: Tjernlund
-> Cc: 'git'
-> Subject: Re: gitweb improvements
-> 
-> On Mon, 6 Oct 2008, Tjernlund wrote:
-> > Jakub Narebski wrote:
-> >> "Tjernlund" <tjernlund@tjernlund.se> writes:
-> 
-> >>> 2) looking at a merge like:
-> >>> http://git.kernel.org/?p=linux/kernel/git/torvalds/linux-
-> 2.6.git;a=commit;h=66120005e65eed8a05b14a36ab448bdec42f0d6b
-> >>>    is somewhat confusing. It really doesn't tell you which commits that is
-> >>>    included in the merge.
-> >>
-> >> I don't understand you there. First, you have "(merge: 0d0f3ef 9778e9a)"
-> >> in the navbar, so you can easily go to commit view for parents. Second,
-> >> among commit headers you have two "parent", where SHA-1 of a commit is
-> >> hidden link, and there are also 'commit' and 'diff' link for those.
-> >
-> > hmm, looks like I overlooked "(merge: 0d0f3ef 9778e9a)" part. However, I can't
-> > find the "ALSA: make the CS4270 driver a new-style I2C driver" from within
-> > this page.
-> 
-> I think you don't quite understand the situation. The history looks
-> like this:
-> 
->     M      Merge branch 'for-linus' of git://git.kernel.org/pub/scm/linux/kernel/git/tiwai/sound-2.6
->     |\
->     | 2    ALSA: ASoC: Fix another cs4270 error path
->     | *    ALSA: make the CS4270 driver a new-style I2C driver
->     | |
->     1 |    Merge git://git.kernel.org/pub/scm/linux/kernel/git/jejb/scsi-rc-fixes-2.6
-> 
-> Parents of commit 'M' (for merge) are '1' and '2', not 2,* or 1,2,*.
-> 
-> Now the fact that commit message for merge contains shortlog of merged
-> branch does not mean that there must be direct link to such shortlog.
-> You can go to shortlog (well, kind of) if you click on second parent,
-> _then_ click on shortlog link at top of the page.
+The new -v option forces the progressbar, even in case the output is not
+a terminal.
 
-You are quite right, I didn't quite follow the situation. I do however have one
-observation, would it be possible to list the commits in a merge the same way
-you list commits on the top level, that is, more or less make the headings
- "ALSA: ASoC: Fix another cs4270 error path"
- "ALSA: make the CS4270 driver a new-style I2C driver"
-links one can follow?
+Signed-off-by: Miklos Vajna <vmiklos@frugalware.org>
+---
 
- Jocke
+On Sat, Oct 04, 2008 at 11:42:15PM +0200, Alex Riesen <raa.lkml@gmail.com> wrote:
+> 2008/10/3 Constantine Plotnikov <constantine.plotnikov@gmail.com>:
+> > Is there a way to force a progress output on stderr for git clone
+> > preferably using options or environment variables?
+>
+> No, but "-v" option is not used for anything yet, so you are free to
+> implement it.
+
+Something like this?
+
+ Documentation/git-clone.txt |    5 +++++
+ builtin-clone.c             |    4 ++++
+ transport.c                 |    2 +-
+ transport.h                 |    2 ++
+ 4 files changed, 12 insertions(+), 1 deletions(-)
+
+diff --git a/Documentation/git-clone.txt b/Documentation/git-clone.txt
+index 0e14e73..95f08b9 100644
+--- a/Documentation/git-clone.txt
++++ b/Documentation/git-clone.txt
+@@ -90,6 +90,11 @@ then the cloned repository will become corrupt.
+ 	Operate quietly.  This flag is also passed to the `rsync'
+ 	command when given.
+ 
++--verbose::
++-v::
++	Display the progressbar, even in case the standard output is not
++	a terminal.
++
+ --no-checkout::
+ -n::
+ 	No checkout of HEAD is performed after the clone is complete.
+diff --git a/builtin-clone.c b/builtin-clone.c
+index 49d2eb9..df71b23 100644
+--- a/builtin-clone.c
++++ b/builtin-clone.c
+@@ -38,9 +38,11 @@ static int option_local, option_no_hardlinks, option_shared;
+ static char *option_template, *option_reference, *option_depth;
+ static char *option_origin = NULL;
+ static char *option_upload_pack = "git-upload-pack";
++static int option_verbose;
+ 
+ static struct option builtin_clone_options[] = {
+ 	OPT__QUIET(&option_quiet),
++	OPT__VERBOSE(&option_verbose),
+ 	OPT_BOOLEAN('n', "no-checkout", &option_no_checkout,
+ 		    "don't create a checkout"),
+ 	OPT_BOOLEAN(0, "bare", &option_bare, "create a bare repository"),
+@@ -506,6 +508,8 @@ int cmd_clone(int argc, const char **argv, const char *prefix)
+ 
+ 		if (option_quiet)
+ 			transport->verbose = -1;
++		else if (option_verbose)
++			transport->progress = 1;
+ 
+ 		if (option_upload_pack)
+ 			transport_set_option(transport, TRANS_OPT_UPLOADPACK,
+diff --git a/transport.c b/transport.c
+index 5110c56..1c510a3 100644
+--- a/transport.c
++++ b/transport.c
+@@ -644,7 +644,7 @@ static int fetch_refs_via_pack(struct transport *transport,
+ 	args.include_tag = data->followtags;
+ 	args.verbose = (transport->verbose > 0);
+ 	args.quiet = (transport->verbose < 0);
+-	args.no_progress = args.quiet || !isatty(1);
++	args.no_progress = args.quiet || (!transport->progress && !isatty(1));
+ 	args.depth = data->depth;
+ 
+ 	for (i = 0; i < nr_heads; i++)
+diff --git a/transport.h b/transport.h
+index d0b5205..6bbc1a8 100644
+--- a/transport.h
++++ b/transport.h
+@@ -25,6 +25,8 @@ struct transport {
+ 	int (*disconnect)(struct transport *connection);
+ 	char *pack_lockfile;
+ 	signed verbose : 2;
++	/* Force progress even if the output is not a tty */
++	unsigned progress : 1;
+ };
+ 
+ #define TRANSPORT_PUSH_ALL 1
+-- 
+1.6.0.2
