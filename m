@@ -1,85 +1,73 @@
-From: Russell Cattelan <cattelan@thebarn.com>
-Subject: Re: [xfs-masters] git://oss.sgi.com broke
-Date: Mon, 06 Oct 2008 11:31:31 -0500
-Message-ID: <48EA3D63.2080703@thebarn.com>
-References: <20081003121903.6c9a7ebc.akpm@linux-foundation.org>
+From: "Dilip M" <dilipm79@gmail.com>
+Subject: Re: how to restrict commit for a repo
+Date: Mon, 6 Oct 2008 22:42:06 +0530
+Message-ID: <c94f8e120810061012p29210247sfd3c1b3c05e871ee@mail.gmail.com>
+References: <c94f8e120810060509w5eaa9138m92f1df36c9c36db6@mail.gmail.com>
+	 <20081006130042.GQ23137@genesis.frugalware.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, Andrew Morton <akpm@linux-foundation.org>
-To: xfs-masters@oss.sgi.com
-X-From: git-owner@vger.kernel.org Mon Oct 06 19:07:53 2008
+Cc: "Git Mailing List" <git@vger.kernel.org>
+To: "Miklos Vajna" <vmiklos@frugalware.org>
+X-From: git-owner@vger.kernel.org Mon Oct 06 19:18:09 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KmtTA-0005bU-2s
-	for gcvg-git-2@gmane.org; Mon, 06 Oct 2008 19:02:04 +0200
+	id 1KmteA-0001g0-65
+	for gcvg-git-2@gmane.org; Mon, 06 Oct 2008 19:13:26 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753741AbYJFRAt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 6 Oct 2008 13:00:49 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753711AbYJFRAs
-	(ORCPT <rfc822;git-outgoing>); Mon, 6 Oct 2008 13:00:48 -0400
-Received: from cattelan-host202.dsl.visi.com ([208.42.117.202]:53874 "EHLO
-	slurp.thebarn.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1753177AbYJFRAs (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 6 Oct 2008 13:00:48 -0400
-X-Greylist: delayed 1714 seconds by postgrey-1.27 at vger.kernel.org; Mon, 06 Oct 2008 13:00:47 EDT
-Received: from funky.thebarn.com (slurp.thebarn.com [208.42.117.201])
-	(authenticated bits=0)
-	by slurp.thebarn.com (8.14.0/8.13.8) with ESMTP id m96GVVmt015316;
-	Mon, 6 Oct 2008 11:31:32 -0500 (CDT)
-	(envelope-from cattelan@thebarn.com)
-User-Agent: Thunderbird 2.0.0.6 (Macintosh/20070728)
-In-Reply-To: <20081003121903.6c9a7ebc.akpm@linux-foundation.org>
-X-Virus-Scanned: ClamAV 0.91.2/8378/Mon Oct  6 07:51:03 2008 on slurp.thebarn.com
-X-Virus-Status: Clean
+	id S1753472AbYJFRMN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 6 Oct 2008 13:12:13 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753449AbYJFRMN
+	(ORCPT <rfc822;git-outgoing>); Mon, 6 Oct 2008 13:12:13 -0400
+Received: from mail-gx0-f16.google.com ([209.85.217.16]:40473 "EHLO
+	mail-gx0-f16.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753319AbYJFRMM (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 6 Oct 2008 13:12:12 -0400
+Received: by gxk9 with SMTP id 9so5246211gxk.13
+        for <git@vger.kernel.org>; Mon, 06 Oct 2008 10:12:11 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to
+         :subject:cc:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:references;
+        bh=mPM/wJ0ATrF8/frf1nkePbyUGjkvNCxFmN7OW0uZNmI=;
+        b=ry7TkSwJw4KjYCYu1Yui/xhjemv21631UiNBocHYpg90/AmokCxZViIwsk++tUOU+6
+         VT56VrKie7wS07bgQu1MCTzQBkcCQ07wU94wRUMDx3fCrDgGDAXaqN7O9soAL+85ARXP
+         zesuN998ut3rQhUJuxmRJBqcC4mGBKAuJhASY=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
+         :content-type:content-transfer-encoding:content-disposition
+         :references;
+        b=L+eaMOZzvUFzSDIMmUN6vh3ODGxemNmxxpM+K1oKvxOxZNqelbQA6yB+mIqcZQflHf
+         g7hneev7t5rR7Zx9NacvsB15JM40UIFF9SQBQ/AUjopsGkll4nmicXDqXmOZlMkq+H+Z
+         LGyxTpRKVyRNgFf1ZWMaJmAO7w3M3VJsTd6js=
+Received: by 10.90.100.20 with SMTP id x20mr6018396agb.85.1223313126926;
+        Mon, 06 Oct 2008 10:12:06 -0700 (PDT)
+Received: by 10.90.52.15 with HTTP; Mon, 6 Oct 2008 10:12:06 -0700 (PDT)
+In-Reply-To: <20081006130042.GQ23137@genesis.frugalware.org>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/97604>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/97605>
 
-Andrew Morton wrote:
-> y:/usr/src/git26> git --version
-> git version 1.5.6.rc0
+2008/10/6 Miklos Vajna <vmiklos@frugalware.org>:
+> On Mon, Oct 06, 2008 at 05:39:39PM +0530, Dilip M <dilipm79@gmail.com> wrote:
+>> If I have a repository, how to prevent push from other repo's into
+>> mine master's? I want to prevent the commits from all developers and
+>> allow only few ppl to commit to masters..
 >
-> y:/usr/src/git26> cat .git/branches/git-xfs
-> git://oss.sgi.com:8090/xfs/xfs-2.6.git#master
->
-> y:/usr/src/git26> git-fetch git-xfs        
-> remote: usage: git-pack-objects [{ -q | --progress | --all-progress }] 
-> remote:         [--max-pack-size=N] [--local] [--incremental] 
-> remote:         [--window=N] [-remote: -window-memory=N] [--depth=N] 
-> remote:         [--no-reuse-delta] [--no-reuse-object] [--delta-base-offset] 
-> remote:         [--threads=N] [--non-empty] [--reremote: vs [--unpacked | --all]*] [--reflog] 
-> remote:         [--stdout | base-name] [--keep-unreachable] [<ref-list | <object-list]
-> remote: aborting due to possible repository corruption on the remote side.
-> fatal: protocol error: bad pack header
->
-> It was OK yesterday.
->   
+> Have you seen contrib/hooks/update-paranoid?
 
-Hmm sees to work for me.
-oss is running a newer version of git 1.6.0.2,  I wonder if there some 
-version incomparability happening?
-I'm using 1.5.6.4 on my remote client and it did a clone just fine.
-Ahh but indeed a fetch failed ...
-But it also fails with using v1.5.6.5 of git-daemon ...
+Miklos,  I am totally new to this tool ( don't know SVN too) . Can you
+please consider giving some more info...or guiding me to some good
+links...:)
 
-So I don't know what is going on.
+Thanks in advance..
 
-I'll keep digging into it.
-
-Ohh and BTW we finally got the firewall set up to allow native git traffic
-so you can drop port 8090 from the url.
-
-
-
-
-
-> (cc'ing the git list in case this is an faq?)
->
-> The last two error messages there look wrong/misleading?
->
->   
+-- 
+dm
