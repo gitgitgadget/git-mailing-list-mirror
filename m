@@ -1,94 +1,65 @@
-From: Samuel Tardieu <sam@rfc1149.net>
-Subject: Re: [xfs-masters] git://oss.sgi.com broke
-Date: Mon, 06 Oct 2008 19:34:30 +0200
-Organization: RFC 1149 (see http://www.rfc1149.net/)
-Message-ID: <2008-10-06-19-34-30+trackit+sam@rfc1149.net>
-References: <20081003121903.6c9a7ebc.akpm@linux-foundation.org>
-	<48EA3D63.2080703@thebarn.com>
+From: Linus Torvalds <torvalds@linux-foundation.org>
+Subject: Re: [msysGit] [FYI][PATCH] Customizing the WinGit installer
+Date: Mon, 6 Oct 2008 10:34:23 -0700 (PDT)
+Message-ID: <alpine.LFD.2.00.0810061031380.3208@nehalem.linux-foundation.org>
+References: <20081003122727.GE10360@machine.or.cz> <alpine.DEB.1.00.0810061621110.22125@pacific.mpi-cbg.de.mpi-cbg.de> <20081006141840.GO10360@machine.or.cz> <alpine.DEB.1.00.0810061718240.22125@pacific.mpi-cbg.de.mpi-cbg.de> <m3zllhpvby.fsf@localhost.localdomain>
+ <alpine.DEB.1.00.0810061810360.22125@pacific.mpi-cbg.de.mpi-cbg.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 8bit
-Cc: xfs-masters@oss.sgi.com, git@vger.kernel.org,
-	Andrew Morton <akpm@linux-foundation.org>,
-	Daniel Berlin <"dberlin atdberlindotorg"@rfc1149.net>
-To: Russell Cattelan <cattelan@thebarn.com>
-X-From: git-owner@vger.kernel.org Mon Oct 06 19:39:05 2008
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Jakub Narebski <jnareb@gmail.com>, Petr Baudis <pasky@suse.cz>,
+	msysgit@googlegroups.com, git@vger.kernel.org
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Mon Oct 06 19:39:43 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Kmu03-0002CH-HA
-	for gcvg-git-2@gmane.org; Mon, 06 Oct 2008 19:36:04 +0200
+	id 1Kmu02-0002CH-P1
+	for gcvg-git-2@gmane.org; Mon, 06 Oct 2008 19:36:03 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753197AbYJFRen (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 6 Oct 2008 13:34:43 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752679AbYJFRen
-	(ORCPT <rfc822;git-outgoing>); Mon, 6 Oct 2008 13:34:43 -0400
-Received: from zaphod.rfc1149.net ([88.191.14.223]:42830 "EHLO
-	mail.rfc1149.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752664AbYJFRem (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 6 Oct 2008 13:34:42 -0400
+	id S1752769AbYJFRed (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 6 Oct 2008 13:34:33 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752612AbYJFRed
+	(ORCPT <rfc822;git-outgoing>); Mon, 6 Oct 2008 13:34:33 -0400
+Received: from smtp1.linux-foundation.org ([140.211.169.13]:33061 "EHLO
+	smtp1.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1752599AbYJFRec (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 6 Oct 2008 13:34:32 -0400
+Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [140.211.169.55])
+	by smtp1.linux-foundation.org (8.14.2/8.13.5/Debian-3ubuntu1.1) with ESMTP id m96HYNCh030746
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Mon, 6 Oct 2008 10:34:24 -0700
 Received: from localhost (localhost [127.0.0.1])
-	by mail.rfc1149.net (Postfix) with ESMTP id BB028E04D4;
-	Mon,  6 Oct 2008 19:34:39 +0200 (CEST)
-X-Virus-Scanned: amavisd-new at rfc1149.net
-Received: from mail.rfc1149.net ([127.0.0.1])
-	by localhost (zaphod.rfc1149.net [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id hc7dvM2dEO4T; Mon,  6 Oct 2008 19:34:31 +0200 (CEST)
-Received: from mail2.rfc1149.net (unknown [IPv6:2a01:e35:1382:f950::3])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(Client CN "mail2.rfc1149.net", Issuer "rfc1149.net" (verified OK))
-	by mail.rfc1149.net (Postfix) with ESMTPS id 3EDF7E0BCC;
-	Mon,  6 Oct 2008 19:34:31 +0200 (CEST)
-Received: from localhost (localhost [127.0.0.1])
-	by mail2.rfc1149.net (Postfix) with ESMTP id 55421C40BC;
-	Mon,  6 Oct 2008 19:34:30 +0200 (CEST)
-Received: from mail2.rfc1149.net ([127.0.0.1])
-	by localhost (localhost [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id O3kk2N1TSijV; Mon,  6 Oct 2008 19:34:30 +0200 (CEST)
-Received: by mail2.rfc1149.net (Postfix, from userid 1000)
-	id 2B1E9C40BD; Mon,  6 Oct 2008 19:34:30 +0200 (CEST)
-In-Reply-To: <48EA3D63.2080703@thebarn.com> (Russell Cattelan's message of "Mon\, 06 Oct 2008 11\:31\:31 -0500")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-WWW: http://www.rfc1149.net/sam
-X-Jabber: <sam@rfc1149.net> (see http://www.jabber.org/)
-X-OpenPGP-Fingerprint: 79C0 AE3C CEA8 F17B 0EF1  45A5 F133 2241 1B80 ADE6 (see http://www.gnupg.org/)
+	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id m96HYNDn029751;
+	Mon, 6 Oct 2008 10:34:23 -0700
+In-Reply-To: <alpine.DEB.1.00.0810061810360.22125@pacific.mpi-cbg.de.mpi-cbg.de>
+User-Agent: Alpine 2.00 (LFD 1167 2008-08-23)
+X-Spam-Status: No, hits=-5.435 required=5 tests=AWL,BAYES_00,OSDL_HEADER_SUBJECT_BRACKETED,PATCH_SUBJECT_OSDL
+X-Spam-Checker-Version: SpamAssassin 3.2.4-osdl_revision__1.47__
+X-MIMEDefang-Filter: lf$Revision: 1.188 $
+X-Scanned-By: MIMEDefang 2.63 on 140.211.169.13
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/97609>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/97610>
 
->>>>> "Russell" == Russell Cattelan <cattelan@thebarn.com> writes:
 
-Russell> I'm using 1.5.6.4 on my remote client and it did a clone
-Russell> just fine.  Ahh but indeed a fetch failed ...  But it also
-Russell> fails with using v1.5.6.5 of git-daemon ...
 
-I also have an error with "fetch" (while it works with "clone") on
+On Mon, 6 Oct 2008, Johannes Schindelin wrote:
+> 
+> Well, I consider it a courtesy to the msysGit people to leave it where 
+> it is.
 
-  git://gcc.gnu.org/git/gcc.git
+Umm. I consider it to be UNACCEPTABLY STUPID to claim "courtesy" if it 
+actually makes something just more irritating to users.
 
-The error I get is from index-pack.c:get_index_from_pack():
+I absolutely detest clicking through EULA's or other self-serving crap. I 
+hate software that bothers me with their license details. Nobody reads 
+those things anyway, and an extra click or an extra window I didn't ask 
+for - _especially_ in open source software - is just a bug.
 
-% git fetch
-remote: Generating pack...
-remote: Done counting 6230 objects.
-remote: Result has 3856 objects.
-remote: Deltifying 3856 objects...
-remote:  100% (3856/3856) done
-remote: Total 3856 (delta 3234), reused 7 (delta 5)
-Receiving objects: 100% (3856/3856), 6.99 MiB | 50 KiB/s, done.
-fatal: premature end of pack file, 1858 bytes missing
-fatal: index-pack failed
+Bugs aren't "courtesy". Not to the user, and certainly not to the 
+developer.
 
-(the "premature end of pack file" message comes from a patch I
-just submitted, before that it was a bogus error message due
-to an improper use of errno)
-
-I am using the latest spearce/next GIT, I don't know what version
-runs on the FSF machine. Daniel, do you have this info?
-
-  Sam
--- 
-Samuel Tardieu -- sam@rfc1149.net -- http://www.rfc1149.net/
+			Linus
