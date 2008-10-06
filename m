@@ -1,81 +1,108 @@
-From: Matthieu Moy <Matthieu.Moy@imag.fr>
-Subject: Re: [PATCH 0/4] diff text conversion filter
-Date: Mon, 06 Oct 2008 17:15:22 +0200
-Message-ID: <vpqtzbpwy9h.fsf@bauges.imag.fr>
-References: <1222567618-22156-1-git-send-email-Matthieu.Moy@imag.fr>
-	<20080928041040.GA24214@coredump.intra.peff.net>
-	<vpqd4io1tla.fsf@bauges.imag.fr>
-	<20080928161106.GA30199@coredump.intra.peff.net>
-	<vpqk5ctfyp6.fsf@bauges.imag.fr>
-	<20080930164545.GA20305@sigill.intra.peff.net>
-	<20081005214114.GA21875@coredump.intra.peff.net>
-	<48E9B036.6090805@viscovery.net>
+From: Marc Weber <marco-oweber@gmx.de>
+Subject: Re: [PATCH 1/2] add--interactive: rename [r]evert command to
+	[r]eset
+Date: Mon, 6 Oct 2008 17:51:41 +0200
+Message-ID: <20081006155141.GA28582@gmx.de>
+References: <20081005152654.GA13618@gmx.de> <20081005164124.GA31903@coredump.intra.peff.net> <20081005214644.GB32727@gmx.de> <20081005221150.GA22007@coredump.intra.peff.net> <b41e1729a8817f0d3cba2be1edc37513a72901dd.1223304141.git.marco-oweber@gmx.de> <20081006145509.GD8203@spearce.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Jeff King <peff@peff.net>, git@vger.kernel.org
-To: Johannes Sixt <j.sixt@viscovery.net>
-X-From: git-owner@vger.kernel.org Mon Oct 06 17:56:08 2008
+Content-Type: text/plain; charset=utf-8
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Oct 06 17:57:52 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KmsMr-0008Pd-Ct
-	for gcvg-git-2@gmane.org; Mon, 06 Oct 2008 17:51:29 +0200
+	id 1KmsOG-0000et-Ed
+	for gcvg-git-2@gmane.org; Mon, 06 Oct 2008 17:52:56 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752641AbYJFPuR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 6 Oct 2008 11:50:17 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752606AbYJFPuR
-	(ORCPT <rfc822;git-outgoing>); Mon, 6 Oct 2008 11:50:17 -0400
-Received: from harmonie.imag.fr ([147.171.130.40]:62943 "EHLO harmonie.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751117AbYJFPuQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 6 Oct 2008 11:50:16 -0400
-Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by harmonie.imag.fr (8.13.8/8.13.8) with ESMTP id m96FkkiC010851;
-	Mon, 6 Oct 2008 17:46:56 +0200 (CEST)
-Received: from bauges.imag.fr ([129.88.43.5])
-	by mail-veri.imag.fr with esmtps (TLS-1.0:RSA_AES_256_CBC_SHA:32)
-	(Exim 4.50)
-	id 1Kmrnv-0001JX-1s; Mon, 06 Oct 2008 17:15:23 +0200
-Received: from moy by bauges.imag.fr with local (Exim 4.63)
-	(envelope-from <moy@imag.fr>)
-	id 1Kmrnu-0001ki-Vn; Mon, 06 Oct 2008 17:15:22 +0200
-In-Reply-To: <48E9B036.6090805@viscovery.net> (Johannes Sixt's message of "Mon\, 06 Oct 2008 08\:29\:10 +0200")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/23.0.60 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-3.0 (harmonie.imag.fr [147.171.130.40]); Mon, 06 Oct 2008 17:46:57 +0200 (CEST)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM for more information
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: moy@imag.fr
+	id S1752928AbYJFPvp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 6 Oct 2008 11:51:45 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752845AbYJFPvp
+	(ORCPT <rfc822;git-outgoing>); Mon, 6 Oct 2008 11:51:45 -0400
+Received: from mail.gmx.net ([213.165.64.20]:46474 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1752664AbYJFPvp (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 6 Oct 2008 11:51:45 -0400
+Received: (qmail invoked by alias); 06 Oct 2008 15:51:42 -0000
+Received: from pD9E0B45E.dip.t-dialin.net (EHLO nixos) [217.224.180.94]
+  by mail.gmx.net (mp053) with SMTP; 06 Oct 2008 17:51:42 +0200
+X-Authenticated: #9006135
+X-Provags-ID: V01U2FsdGVkX1+rXYAGxT2rnaXF0xAuKvNuH1PMm+tqerpMKREe9y
+	Y0Tk5aNgXg+cqD
+Received: by nixos (sSMTP sendmail emulation); Mon, 06 Oct 2008 17:51:41 +0200
+Mail-Followup-To: Marc Weber <marco-oweber@gmx.de>, git@vger.kernel.org
+Content-Disposition: inline
+In-Reply-To: <20081006145509.GD8203@spearce.org>
+User-Agent: Mutt/1.5.15 (2007-04-06)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.5
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/97595>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/97596>
 
-Johannes Sixt <j.sixt@viscovery.net> writes:
+> This patch is mangled.  The context line immediately above is
+Sorry, I thought set paste sets noexpandtab as well, I was wrong.
 
-> Does the series in any way change whether plumbing and porcelain invoke
-> the external diff drivers? I have this particular use-case, which I'd like
-> that still works:
->
-> - In .git/info/attributes I have specified a diff driver:
->
->     *.doc   diff=docdiff
->
->   The driver runs a script that literally loads the two version of the
->   file into MS Word and uses Word's diffing capability.
->
-> - git-gui should not use the diff driver. That is, plumbing should bypass
->   the diff driver and say "Binary files differ". [*]
 
-Actually, I understand you don't want git gui and gitk to load MS-Word
-anytime you click something, but I'd love to see the textconv+diff in
-gitk.
+============= patch starting at commit message =======================
+The term "revert" is used very confusingly here. In git, to "revert"
+is to take the changes made by a previous commit and un-apply them,
+creating a new commit. The act of changing what is in the index to
+match HEAD is called "reset".
 
-(yeah, that's pretty hard to specify right, the ideal requirement
-seems to be "in a gui, use the good part of the diff driver, but not
-the other" :-\).
+Furthermore, incoming svn users will also find this confusing, since
+to them, "revert" means to reset the working tree, which corresponds
+to "checkout" in git.
 
+Signed-off-by: Marc Weber <marco-oweber@gmx.de>
+commit message rewritten by: Jeff King <peff@peff.net>
+---
+ git-add--interactive.perl |   10 +++++-----
+ 1 files changed, 5 insertions(+), 5 deletions(-)
+
+diff --git a/git-add--interactive.perl b/git-add--interactive.perl
+index da768ee..5352d16 100755
+--- a/git-add--interactive.perl
++++ b/git-add--interactive.perl
+@@ -498,8 +498,8 @@ sub update_cmd {
+ 	print "\n";
+ }
+ 
+-sub revert_cmd {
+-	my @update = list_and_choose({ PROMPT => 'Revert',
++sub reset_cmd {
++	my @update = list_and_choose({ PROMPT => 'Reset',
+ 				       HEADER => $status_head, },
+ 				     list_modified());
+ 	if (@update) {
+@@ -527,7 +527,7 @@ sub revert_cmd {
+ 			}
+ 		}
+ 		refresh();
+-		say_n_paths('reverted', @update);
++		say_n_paths('reset', @update);
+ 	}
+ 	print "\n";
+ }
+@@ -1046,7 +1046,7 @@ sub help_cmd {
+ 	print colored $help_color, <<\EOF ;
+ status        - show paths with changes
+ update        - add working tree state to the staged set of changes
+-revert        - revert staged set of changes back to the HEAD version
++reset         - reset staged set of changes back to the HEAD version
+ patch         - pick hunks and update selectively
+ diff	      - view diff between HEAD and index
+ add untracked - add contents of untracked files to the staged set of changes
+@@ -1070,7 +1070,7 @@ sub process_args {
+ sub main_loop {
+ 	my @cmd = ([ 'status', \&status_cmd, ],
+ 		   [ 'update', \&update_cmd, ],
+-		   [ 'revert', \&revert_cmd, ],
++		   [ 'reset', \&reset_cmd, ],
+ 		   [ 'add untracked', \&add_untracked_cmd, ],
+ 		   [ 'patch', \&patch_update_cmd, ],
+ 		   [ 'diff', \&diff_cmd, ],
 -- 
-Matthieu
+1.6.0.2.GIT
