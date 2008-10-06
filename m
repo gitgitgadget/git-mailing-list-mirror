@@ -1,95 +1,83 @@
-From: David Bryson <david@statichacks.org>
-Subject: Re: [PATCH] Use "git_config_string" to simplify "remote.c" code in
-	"handle_config"
-Date: Mon, 6 Oct 2008 12:53:52 -0700
-Message-ID: <20081006195352.GS5774@eratosthenes.cryptobackpack.org>
-References: <20081003033937.GA11594@eratosthenes.cryptobackpack.org> <alpine.DEB.1.00.0810061610400.22125@pacific.mpi-cbg.de.mpi-cbg.de>
-Reply-To: David Bryson <david@statichacks.org>
+From: Miklos Vajna <vmiklos@frugalware.org>
+Subject: Re: how to restrict commit for a repo
+Date: Mon, 6 Oct 2008 21:58:56 +0200
+Message-ID: <20081006195856.GS23137@genesis.frugalware.org>
+References: <c94f8e120810060509w5eaa9138m92f1df36c9c36db6@mail.gmail.com> <20081006130042.GQ23137@genesis.frugalware.org> <c94f8e120810061012p29210247sfd3c1b3c05e871ee@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Mon Oct 06 21:55:10 2008
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="5eYgouiXv72wBrai"
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Dilip M <dilipm79@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Oct 06 22:00:34 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KmwAb-0008Jg-PI
-	for gcvg-git-2@gmane.org; Mon, 06 Oct 2008 21:55:06 +0200
+	id 1KmwFa-0001vK-Sr
+	for gcvg-git-2@gmane.org; Mon, 06 Oct 2008 22:00:15 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753107AbYJFTxz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 6 Oct 2008 15:53:55 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752738AbYJFTxy
-	(ORCPT <rfc822;git-outgoing>); Mon, 6 Oct 2008 15:53:54 -0400
-Received: from cryptobackpack.org ([64.105.32.74]:38527 "EHLO
-	mail.cryptobackpack.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753092AbYJFTxy (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 6 Oct 2008 15:53:54 -0400
-Received: by mail.cryptobackpack.org (Postfix, from userid 1000)
-	id C90C410D0271; Mon,  6 Oct 2008 12:53:53 -0700 (PDT)
-X-Spam-Checker-Version: SpamAssassin 3.2.1-gr1 (2007-05-02) on
-	ptolemy.cryptobackpack.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-4.0 required=5.0 tests=ALL_TRUSTED,AWL,BAYES_00,
-	DNS_FROM_SECURITYSAGE autolearn=no version=3.2.1-gr1
-Received: from eratosthenes.statichacks.org (heliosphan.cryptobackpack.org [10.6.6.6])
-	by mail.cryptobackpack.org (Postfix) with ESMTP id 1AC1610D00B6;
-	Mon,  6 Oct 2008 12:53:53 -0700 (PDT)
-Received: by eratosthenes.statichacks.org (Postfix, from userid 1000)
-	id CF6BF14464; Mon,  6 Oct 2008 12:53:52 -0700 (PDT)
+	id S1753122AbYJFT67 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 6 Oct 2008 15:58:59 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753446AbYJFT67
+	(ORCPT <rfc822;git-outgoing>); Mon, 6 Oct 2008 15:58:59 -0400
+Received: from virgo.iok.hu ([193.202.89.103]:59241 "EHLO virgo.iok.hu"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752927AbYJFT66 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 6 Oct 2008 15:58:58 -0400
+Received: from kag.elte.hu (kag.elte.hu [157.181.177.1])
+	by virgo.iok.hu (Postfix) with ESMTP id 0FE995809E;
+	Mon,  6 Oct 2008 21:58:57 +0200 (CEST)
+Received: from genesis.frugalware.org (frugalware.elte.hu [157.181.177.34])
+	by kag.elte.hu (Postfix) with ESMTP id C5BD04465E;
+	Mon,  6 Oct 2008 21:58:56 +0200 (CEST)
+Received: by genesis.frugalware.org (Postfix, from userid 1000)
+	id AC78311901A1; Mon,  6 Oct 2008 21:58:56 +0200 (CEST)
 Content-Disposition: inline
-In-Reply-To: <alpine.DEB.1.00.0810061610400.22125@pacific.mpi-cbg.de.mpi-cbg.de>
-User-Agent: Mutt/1.5.16 (2007-06-09)
+In-Reply-To: <c94f8e120810061012p29210247sfd3c1b3c05e871ee@mail.gmail.com>
+User-Agent: Mutt/1.5.17 (2007-11-01)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/97620>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/97621>
 
-Johannes,
 
-On Mon, Oct 06, 2008 at 04:13:17PM +0200 or thereabouts, Johannes Schindelin wrote:
-> Hi,
-> 
-> On Thu, 2 Oct 2008, David Bryson wrote:
-> 
-> > 
-> > Signed-off-by: David Bryson <david@statichacks.org>
-> > 
-> > I tried to keep with the naming/coding conventions that I found in
-> > remote.c.  Feedback welcome.
-> > 
-> > ---
-> 
-> Usually this comment goes after the --- but other than that, the form is 
-> as perfect as you can wish for.
+--5eYgouiXv72wBrai
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-I see, still trying to remember all the little tricks for proper
-submission, thanks.
+On Mon, Oct 06, 2008 at 10:42:06PM +0530, Dilip M <dilipm79@gmail.com> wrot=
+e:
+> > Have you seen contrib/hooks/update-paranoid?
+>=20
+> Miklos,  I am totally new to this tool ( don't know SVN too).
 
-> > @@ -314,15 +315,15 @@ static int handle_config(const char *key, const char *value, void *cb)
-> >  			return 0;
-> >  		branch = make_branch(name, subkey - name);
-> >  		if (!strcmp(subkey, ".remote")) {
-> > -			if (!value)
-> > -				return config_error_nonbool(key);
-> > -			branch->remote_name = xstrdup(value);
-> > +			if (git_config_string(&v, key, value) ) 
-> > +				return -1;
-> > +			branch->remote_name = v;
-> 
-> What is the reason not to write
-> 
-> 			if (git_config_string(&branch->remote_name, key, value))
-> 				return -1;
+That's good, since your mind is clear yet. :)
 
-The only reason is it did not come to mind ;-)  But it does make the
-statement somewhat clearer.
+> Can you please consider giving some more info...or guiding me to some
+> good links...:)
+>=20
+> Thanks in advance..
 
-> ?  (Also note that we do not like the space between the two closing 
-> parentheses.)
+In general, I would suggest reading the user manual and everyday.txt,
+both are under Documentation/.
 
-An oversight to be sure and not intentional, I read the CodingGuidelines
-very carefully ;-)
+Second, read man githooks, and then you'll understand how to use the
+mentioned hook.
 
-Dave
+HTH
+
+--5eYgouiXv72wBrai
+Content-Type: application/pgp-signature
+Content-Disposition: inline
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.9 (GNU/Linux)
+
+iEYEARECAAYFAkjqbgAACgkQe81tAgORUJbtewCfTQhbVzT7vFCJ4MJSPg2so7p1
+IdYAoJaej+o4L1397ZEmUHLZMrhTyKB2
+=RYu1
+-----END PGP SIGNATURE-----
+
+--5eYgouiXv72wBrai--
