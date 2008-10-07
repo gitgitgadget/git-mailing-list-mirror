@@ -1,118 +1,78 @@
-From: Johannes Sixt <j.sixt@viscovery.net>
-Subject: Re: [PATCH 3/4] diff: introduce diff.<driver>.binary
-Date: Tue, 07 Oct 2008 17:54:52 +0200
-Message-ID: <48EB864C.6020000@viscovery.net>
-References: <20081005214114.GA21875@coredump.intra.peff.net> <20081005214336.GC21925@coredump.intra.peff.net> <48EB7D74.40302@viscovery.net> <20081007153543.GA26531@coredump.intra.peff.net>
+From: "Adam Mercer" <ramercer@gmail.com>
+Subject: Re: files missing after converting a cvs repository to git
+Date: Tue, 7 Oct 2008 10:58:22 -0500
+Message-ID: <799406d60810070858peb97434p9c9fb0c1128dc8e9@mail.gmail.com>
+References: <799406d60810061502y417ec53o1a1f5cef800dfe45@mail.gmail.com>
+	 <48EAFCEF.8030907@op5.se> <gcfcrg$ubc$1@ger.gmane.org>
+	 <48EB3E06.70100@alum.mit.edu>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-Cc: Matthieu Moy <Matthieu.Moy@imag.fr>, git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Tue Oct 07 18:01:40 2008
+Cc: "Jakub Narebski" <jnareb@gmail.com>, git@vger.kernel.org
+To: "Michael Haggerty" <mhagger@alum.mit.edu>
+X-From: git-owner@vger.kernel.org Tue Oct 07 18:04:47 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KnEut-00011L-PV
-	for gcvg-git-2@gmane.org; Tue, 07 Oct 2008 17:56:08 +0200
+	id 1KnEyE-0002hf-Sv
+	for gcvg-git-2@gmane.org; Tue, 07 Oct 2008 17:59:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753216AbYJGPy5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 7 Oct 2008 11:54:57 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753063AbYJGPy5
-	(ORCPT <rfc822;git-outgoing>); Tue, 7 Oct 2008 11:54:57 -0400
-Received: from lilzmailso01.liwest.at ([212.33.55.23]:41827 "EHLO
-	lilzmailso01.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752617AbYJGPy4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 7 Oct 2008 11:54:56 -0400
-Received: from cm56-163-160.liwest.at ([86.56.163.160] helo=linz.eudaptics.com)
-	by lilzmailso01.liwest.at with esmtpa (Exim 4.66)
-	(envelope-from <j.sixt@viscovery.net>)
-	id 1KnEti-0004wn-9D; Tue, 07 Oct 2008 17:54:55 +0200
-Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.42])
-	by linz.eudaptics.com (Postfix) with ESMTP
-	id E202554D; Tue,  7 Oct 2008 17:54:52 +0200 (CEST)
-User-Agent: Thunderbird 2.0.0.6 (Windows/20070728)
-In-Reply-To: <20081007153543.GA26531@coredump.intra.peff.net>
-X-Enigmail-Version: 0.95.5
-X-Spam-Score: 1.7 (+)
-X-Spam-Report: ALL_TRUSTED=-1.8, BAYES_99=3.5
+	id S1752714AbYJGP6Y (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 7 Oct 2008 11:58:24 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751235AbYJGP6Y
+	(ORCPT <rfc822;git-outgoing>); Tue, 7 Oct 2008 11:58:24 -0400
+Received: from rv-out-0506.google.com ([209.85.198.231]:5358 "EHLO
+	rv-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751182AbYJGP6X (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 7 Oct 2008 11:58:23 -0400
+Received: by rv-out-0506.google.com with SMTP id k40so3634429rvb.1
+        for <git@vger.kernel.org>; Tue, 07 Oct 2008 08:58:22 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to
+         :subject:cc:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:references;
+        bh=0F/7e8jWrTHv998OnDFXtwCnvBmhGGBMlfGmnE9IAGU=;
+        b=VHBGenWg4KzIaZaviCFG9GrpWar9epNW5fFVx3/alQt2FBFDsbPFhUyUQuckeQHtoG
+         5FMnuquXLKwqcgTzkFMSbySVKnPMb1iPFeYkaEo/rR7ON8OOUt9pxviBH+XEiqi1va1+
+         BJGmOaWzVUyMoz0eEAJ4r3w80n/QhKu33uvwo=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
+         :content-type:content-transfer-encoding:content-disposition
+         :references;
+        b=h27isJvY0Zjfwi/rxmirRP7/SM7fu9Mb6uZbv4hhxeZmRgWxA8KtIuvHV7Skyf+85k
+         EKpYZZSW+7izgw7l7HOccr/hWaxEemxVhMarlS/8OddkmkGQ8lXfdv70UyEeCfUsx48y
+         m7+fffcnciNhwjY/43Vz0UKcirRKelbSyljT4=
+Received: by 10.141.75.17 with SMTP id c17mr4013551rvl.212.1223395102523;
+        Tue, 07 Oct 2008 08:58:22 -0700 (PDT)
+Received: by 10.141.28.18 with HTTP; Tue, 7 Oct 2008 08:58:22 -0700 (PDT)
+In-Reply-To: <48EB3E06.70100@alum.mit.edu>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/97721>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/97722>
 
-Jeff King schrieb:
-> On Tue, Oct 07, 2008 at 05:17:08PM +0200, Johannes Sixt wrote:
-> 
->>> However, there is at least one conflicting situation: there
->>> is no way to say "use the regular rules to determine whether
->>> this file is binary, but if we do diff it textually, use
->>> this funcname pattern." That is, currently setting diff=foo
->>> indicates that the file is definitely text.
->> I don't get your point. Can you provide an example?
-> 
-> Let's say I have a subdirectory of files, some of which are binary. But
-> for those that _aren't_ binary, I want to use a particular funcname
-> pattern. So I do this:
-> 
->   echo '* diff=foo' >subdir/.gitattributes
->   git config diff.foo.funcname some-regex
-> 
-> Under the old behavior, I have just claimed all of the subdir as text.
-> But that's not necessarily what I wanted.
+On Tue, Oct 7, 2008 at 05:46, Michael Haggerty <mhagger@alum.mit.edu> wrote:
+> Jakub Narebski wrote:
 
-No, you claimed that all of the files are of type "foo". If this is not
-what you wanted, be more specific.
+>>> cvs2svn is apparently quite good at getting even the weirdest history
+>>> right. Perhaps you can try that and then running "git svn" on the
+>>> resulting svn repo?
+>>
+>> cvs2svn has git output now (I think it is actually fast-import output)
+>
+> Correct.  See http://cvs2svn.tigris.org/cvs2git.html for more info.  I
+> suggest using the trunk version of cvs2svn for conversions to git.
+>
+> Please note, however, that cvs2svn can only handle one-time conversions
+> (i.e., not tracking a live CVS repository incrementally).
 
-> In practice, this doesn't happen much, because funcname tends to follow
-> the file extension, as does binary-ness. So you get "*.java diff=java",
-> and you really would be insane to have binary files named *.java. But I
-> think it makes the concept clearer to explain, and the code simpler, if
-> the various facets of a diff driver are orthogonal. In particular, I
-> think this makes things cleaner for adding new driver properties in the
-> future.
+Thanks, I'll look into this for creating the final git repos.
 
-I tend to disagree. "Binaryness" is subordinate to the "type" of the file,
-which is what the diff attribute basically specifies.
+Cheers
 
-> As to your complaint (which I think is valid)...
-> 
->> The reason why I'd like to understand the issue is because I like the
->> diff.foo.textconv that you introduce in patch 4/4, but I dislike that I
->> have to set diff.foo.binary to false in order to use the textconv. So, why
->> is this .binary needed?
-> 
-> I think this .binary is something we can and should get rid of; as it
-> stands now, you always end up having to set it along with .textconv. I
-> have considered two ways:
-> 
->   - because textconv is for converting binary to text for diffing, the
->     result should always be text. So whenever we do the conversion, we
->     should note that it is no longer binary, and automatically treat the
->     result as a text diff. So in this case, we are explicitly saying
->     that binaryness is _not_ orthogonal to this property of the diff
->     driver.
-> 
->   - textconv should arguably just be "canonicalize" or similar. That is,
->     there is no reason you couldn't take something like text XML and
->     canonicalize it for a more readable diff. Or even canonicalize a
->     binary file to get a smaller or more sensible binary diff, if you
->     wanted to.
-> 
->     In that case, I think the right thing is to set it back to "unknown,
->     check the file contents" if .binary is not set. So you really are
->     saying "this is just a conversion, treat the canonicalized contents
->     exactly as you would have treated the actual contents, including
->     binary detection magic".
-
-I see your point. But this second item goes too far, in particular,
-canonicalizing binary files to some other binary form is certainly not
-something that should happen under 'git diff' porcelain. (We already have
-clean/smudge filters for this purpose.)
-
-For the purpose of generating diffs at the porcelain level (*not*
-generating patches to be applied, aka format-patch), we can safely stay
-with the interpretation in the first item above.
-
--- Hannes
+Adam
