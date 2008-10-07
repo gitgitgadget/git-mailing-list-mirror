@@ -1,68 +1,62 @@
-From: Petr Baudis <pasky@suse.cz>
-Subject: Re: [msysGit] Re: [FYI][PATCH] Customizing the WinGit installer
-Date: Tue, 7 Oct 2008 11:28:19 +0200
-Message-ID: <20081007092819.GW10360@machine.or.cz>
-References: <alpine.DEB.1.00.0810061621110.22125@pacific.mpi-cbg.de.mpi-cbg.de> <20081006141840.GO10360@machine.or.cz> <alpine.DEB.1.00.0810061718240.22125@pacific.mpi-cbg.de.mpi-cbg.de> <m3zllhpvby.fsf@localhost.localdomain> <alpine.DEB.1.00.0810061810360.22125@pacific.mpi-cbg.de.mpi-cbg.de> <alpine.LFD.2.00.0810061031380.3208@nehalem.linux-foundation.org> <alpine.DEB.1.00.0810061959280.22125@pacific.mpi-cbg.de.mpi-cbg.de> <alpine.LFD.2.00.0810061246460.3208@nehalem.linux-foundation.org> <20081007015336.GU21650@dpotapov.dyndns.org> <alpine.LFD.2.00.0810061909260.3208@nehalem.linux-foundation.org>
+From: Avi Kivity <avi@redhat.com>
+Subject: Re: [PATCH RFC] rebase--interactive: if preserving merges, use first-parent
+ to limit what is shown.
+Date: Tue, 07 Oct 2008 11:57:56 +0200
+Message-ID: <48EB32A4.80809@redhat.com>
+References: <48E8DD7E.9040706@redhat.com>	<20081006102118.3e817a0f.stephen@exigencecorp.com> <20081006212021.04ba9214.stephen@exigencecorp.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Dmitry Potapov <dpotapov@gmail.com>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Jakub Narebski <jnareb@gmail.com>, msysgit@googlegroups.com,
-	git@vger.kernel.org
-To: Linus Torvalds <torvalds@linux-foundation.org>
-X-From: git-owner@vger.kernel.org Tue Oct 07 11:29:41 2008
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Stephen Haberman <stephen@exigencecorp.com>
+X-From: git-owner@vger.kernel.org Tue Oct 07 12:00:21 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Kn8so-0001NF-2e
-	for gcvg-git-2@gmane.org; Tue, 07 Oct 2008 11:29:34 +0200
+	id 1Kn9Lb-0003fv-P9
+	for gcvg-git-2@gmane.org; Tue, 07 Oct 2008 11:59:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752206AbYJGJ2W (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 7 Oct 2008 05:28:22 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751827AbYJGJ2W
-	(ORCPT <rfc822;git-outgoing>); Tue, 7 Oct 2008 05:28:22 -0400
-Received: from w241.dkm.cz ([62.24.88.241]:60475 "EHLO machine.or.cz"
+	id S1752560AbYJGJ6E (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 7 Oct 2008 05:58:04 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751081AbYJGJ6D
+	(ORCPT <rfc822;git-outgoing>); Tue, 7 Oct 2008 05:58:03 -0400
+Received: from mx2.redhat.com ([66.187.237.31]:54456 "EHLO mx2.redhat.com"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751373AbYJGJ2V (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 7 Oct 2008 05:28:21 -0400
-Received: by machine.or.cz (Postfix, from userid 2001)
-	id 9474B3939B44; Tue,  7 Oct 2008 11:28:19 +0200 (CEST)
-Content-Disposition: inline
-In-Reply-To: <alpine.LFD.2.00.0810061909260.3208@nehalem.linux-foundation.org>
-User-Agent: Mutt/1.5.16 (2007-06-09)
+	id S1751185AbYJGJ6B (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 7 Oct 2008 05:58:01 -0400
+Received: from int-mx2.corp.redhat.com (int-mx2.corp.redhat.com [172.16.27.26])
+	by mx2.redhat.com (8.13.8/8.13.8) with ESMTP id m979vxSs018835;
+	Tue, 7 Oct 2008 05:57:59 -0400
+Received: from ns3.rdu.redhat.com (ns3.rdu.redhat.com [10.11.255.199])
+	by int-mx2.corp.redhat.com (8.13.1/8.13.1) with ESMTP id m979vwBp027049;
+	Tue, 7 Oct 2008 05:57:58 -0400
+Received: from balrog.qumranet.com (vpn-12-104.rdu.redhat.com [10.11.12.104])
+	by ns3.rdu.redhat.com (8.13.8/8.13.8) with ESMTP id m979vubr022318;
+	Tue, 7 Oct 2008 05:57:57 -0400
+User-Agent: Thunderbird 2.0.0.16 (X11/20080723)
+In-Reply-To: <20081006212021.04ba9214.stephen@exigencecorp.com>
+X-Scanned-By: MIMEDefang 2.58 on 172.16.27.26
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/97685>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/97686>
 
-On Mon, Oct 06, 2008 at 07:10:37PM -0700, Linus Torvalds wrote:
-> On Tue, 7 Oct 2008, Dmitry Potapov wrote:
-> > 
-> > It looks like you have changed your opinion since what you wrote half
-> > a year ago.
-> 
-> Back then, nobody had really complained and sent in a patch to make it 
-> optional.
-> 
-> That changes things. Once some user actually complains, and sends in a 
-> fix to make the whole dialog optional, I don't see why anybody would ever 
-> argue against such a patch being accepted.
+Stephen Haberman wrote:
+> However, t3404 makes a good point that if the right hand of the merge
+> has parents that are going to get rebased, the right hand side does
+> need to be included/shown/rewritten.
+>
+>   
 
-Note that as mentioned in the original mail, my patch was not meant
-for application upstream, just as an example for others who would like
-to customize the Git installer for a particular environment. We wanted
-to make Git installation/usage as simple as possible, reducing any
-unnecessary steps we could - and this was an easy one.
+But, won't those commits get linearized?  Won't git rebase pick the 
+commits into the left-hand side of the merge instead of into the right 
+hand side?
 
-I don't think the idea of showing GPL during installation makes
-a lot of sense on its own, but I don't care much either and clicking
-through licences and EULAs in wizards is a fact of life on Windows,
-sadly. At least it doesn't require you to scroll down through the
-licence as IIRC OpenOffice or GIMP or a similar beast did.
+If git rebase is to handle nonlinear history, it needs much more 
+expressive commands; not only saying which commit to pick, but also what 
+the commit's parents shall be.
 
 -- 
-				Petr "Pasky" Baudis
-People who take cold baths never have rheumatism, but they have
-cold baths.
+error compiling committee.c: too many arguments to function
