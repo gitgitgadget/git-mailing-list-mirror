@@ -1,103 +1,77 @@
-From: Matthieu Moy <Matthieu.Moy@imag.fr>
-Subject: Re: [PATCH 0/4] diff text conversion filter
-Date: Tue, 07 Oct 2008 08:15:45 +0200
-Message-ID: <vpqprmdlylq.fsf@bauges.imag.fr>
-References: <20080928041040.GA24214@coredump.intra.peff.net>
-	<vpqd4io1tla.fsf@bauges.imag.fr>
-	<20080928161106.GA30199@coredump.intra.peff.net>
-	<vpqk5ctfyp6.fsf@bauges.imag.fr>
-	<20080930164545.GA20305@sigill.intra.peff.net>
-	<20081005214114.GA21875@coredump.intra.peff.net>
-	<48E9B036.6090805@viscovery.net> <vpqtzbpwy9h.fsf@bauges.imag.fr>
-	<20081007012044.GA4217@coredump.intra.peff.net>
-	<48EAF902.3040402@viscovery.net>
-	<20081007060014.GA7965@coredump.intra.peff.net>
+From: "Alex Riesen" <raa.lkml@gmail.com>
+Subject: Re: [PATCH] Implement git clone -v
+Date: Tue, 7 Oct 2008 08:21:28 +0200
+Message-ID: <81b0412b0810062321h33abe076kd87b60bffdaf218b@mail.gmail.com>
+References: <81b0412b0810041442i3aa29628lf66ef9b188fe8ce7@mail.gmail.com>
+	 <1223331590-22138-1-git-send-email-vmiklos@frugalware.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Johannes Sixt <j.sixt@viscovery.net>, git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Tue Oct 07 08:22:26 2008
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: "Constantine Plotnikov" <constantine.plotnikov@gmail.com>,
+	git@vger.kernel.org
+To: "Miklos Vajna" <vmiklos@frugalware.org>
+X-From: git-owner@vger.kernel.org Tue Oct 07 08:22:46 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Kn5xe-0002ZV-K5
-	for gcvg-git-2@gmane.org; Tue, 07 Oct 2008 08:22:23 +0200
+	id 1Kn5xv-0002go-SV
+	for gcvg-git-2@gmane.org; Tue, 07 Oct 2008 08:22:40 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751362AbYJGGVN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 7 Oct 2008 02:21:13 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751294AbYJGGVM
-	(ORCPT <rfc822;git-outgoing>); Tue, 7 Oct 2008 02:21:12 -0400
-Received: from harmonie.imag.fr ([147.171.130.40]:32945 "EHLO harmonie.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751245AbYJGGVM (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 7 Oct 2008 02:21:12 -0400
-Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by harmonie.imag.fr (8.13.8/8.13.8) with ESMTP id m976JDiG000297;
-	Tue, 7 Oct 2008 08:19:14 +0200 (CEST)
-Received: from bauges.imag.fr ([129.88.43.5])
-	by mail-veri.imag.fr with esmtps (TLS-1.0:RSA_AES_256_CBC_SHA:32)
-	(Exim 4.50)
-	id 1Kn5rF-0001co-VY; Tue, 07 Oct 2008 08:15:45 +0200
-Received: from moy by bauges.imag.fr with local (Exim 4.63)
-	(envelope-from <moy@imag.fr>)
-	id 1Kn5rF-00069r-TI; Tue, 07 Oct 2008 08:15:45 +0200
-In-Reply-To: <20081007060014.GA7965@coredump.intra.peff.net> (Jeff King's message of "Tue\, 7 Oct 2008 02\:00\:14 -0400")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/23.0.60 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-3.0 (harmonie.imag.fr [147.171.130.40]); Tue, 07 Oct 2008 08:19:14 +0200 (CEST)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM for more information
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: moy@imag.fr
+	id S1751495AbYJGGVa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 7 Oct 2008 02:21:30 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751488AbYJGGV3
+	(ORCPT <rfc822;git-outgoing>); Tue, 7 Oct 2008 02:21:29 -0400
+Received: from yx-out-2324.google.com ([74.125.44.28]:35475 "EHLO
+	yx-out-2324.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751408AbYJGGV3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 7 Oct 2008 02:21:29 -0400
+Received: by yx-out-2324.google.com with SMTP id 8so506238yxm.1
+        for <git@vger.kernel.org>; Mon, 06 Oct 2008 23:21:28 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to
+         :subject:cc:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:references;
+        bh=YZT4LOGRK+X/efiVKfHjUxLmedCPpIX90GoxpBFTBu4=;
+        b=Lu7O7C+s/KN+o29XCgPqtLp0WUdv6LxQxRk2NJXhCJ/O9YX0mluI2InhjZfZt5NVrj
+         g3JtdRfKjP2icz4WmKIKZ8Orpn2E13D//SD/P+jozcqsMAIL3L4TPTQE1HI4YT063BEp
+         ffGvetLTkxtsVKpulJdvCRx95ZC0lmV8xmxWw=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
+         :content-type:content-transfer-encoding:content-disposition
+         :references;
+        b=vboZZHWMGzbpeLCrshFbImDwlo4JPB9lp27aKFb5lmn/vwy1+DPRuPb5qj9x6lybaB
+         J71byZkUSm3f5Bpk0fwCTlAgWX5SNm0eHYMhYr4tahBH9hkuBwnB2+dLGJMBinFPwDk3
+         /XOh4r5qS4imqrwAQs+jDKmmPlhfsMkSsp3pk=
+Received: by 10.100.171.16 with SMTP id t16mr2635856ane.48.1223360488202;
+        Mon, 06 Oct 2008 23:21:28 -0700 (PDT)
+Received: by 10.100.91.8 with HTTP; Mon, 6 Oct 2008 23:21:28 -0700 (PDT)
+In-Reply-To: <1223331590-22138-1-git-send-email-vmiklos@frugalware.org>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/97672>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/97673>
 
-Jeff King <peff@peff.net> writes:
-
-> On Tue, Oct 07, 2008 at 07:52:02AM +0200, Johannes Sixt wrote:
+2008/10/7 Miklos Vajna <vmiklos@frugalware.org>:
+> The new -v option forces the progressbar, even in case the output is not
+> a terminal.
 >
->> How about this: If I run 'git show -- foo.doc' (foo.doc resolves to a
->> single path, obviously), I want MS Word, but for other uses of 'git show'
->> I don't. I think that heuristics could be very effective: With a plain
->> 'git show' I get the overview of the change, and with 'git show --
->> foo.doc' I drill down into a single document.
+> Signed-off-by: Miklos Vajna <vmiklos@frugalware.org>
+> ---
 >
-> Hrm. I am not opposed to heuristics, but in this case, I don't like the
-> one you have proposed. ;P
+> On Sat, Oct 04, 2008 at 11:42:15PM +0200, Alex Riesen <raa.lkml@gmail.com> wrote:
+>> 2008/10/3 Constantine Plotnikov <constantine.plotnikov@gmail.com>:
+>> > Is there a way to force a progress output on stderr for git clone
+>> > preferably using options or environment variables?
+>>
+>> No, but "-v" option is not used for anything yet, so you are free to
+>> implement it.
 >
-> My specific case that prompted this work is a repository full of
-> pictures and videos, where I rarely (if ever) change the media content,
-> but frequently change exif tags. So my "usual" case is to want to see
-> "git log -p" with the textconv'd version. The commit diffs are otherwise
-> totally meaningless.
+> Something like this?
+>
 
-So, you disagree about "git log" not showing the textconv, but you
-still agree with half of the proposal :-P. When the user explicitely
-requests a single file, he does want textconv (requesting a diff for a
-single file and be happy with "binary files differ" would be
-strange ...).
-
-It seems quite clear to me that we won't get a heuristic right for
-everybody (some diff driver are fast, some are slow, some require an
-external GUI, some don't, ...). Better let the thing be nicely
-configurable IMHO.
-
-One proposal: have a diff.<driver>.activate with several values:
-
-* "always": activate the diff driver in any porcelain
-* "diff": activate it only for "git diff", as currently
-* "singlefile": Johannes's heuristic proposal
-
-That way, one could say easily "activate exiftags filter all the time,
-but MS-Word only when I request a diff for a single file", and this
-leaves room for other values if the need be. Well, there's no room for
-"use MS-Word native diff tool in git-gui but antiword/catdoc +
-textconv in 'git log -p'" here, but do we want it?
-
-Or is all that just overkill?
-
--- 
-Matthieu
+Yes. Does it work? :)
