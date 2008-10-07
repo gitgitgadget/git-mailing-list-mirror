@@ -1,61 +1,63 @@
-From: Nicolas Pitre <nico@cam.org>
-Subject: Re: GitTogether topics status (4th of October)
-Date: Mon, 06 Oct 2008 23:46:41 -0400 (EDT)
-Message-ID: <alpine.LFD.2.00.0810062343000.3045@xanadu.home>
-References: <200810041816.41026.chriscool@tuxfamily.org>
- <20081007031509.GA6031@coredump.intra.peff.net>
+From: Andreas Ericsson <ae@op5.se>
+Subject: Re: [PATCH] Replace xmalloc/memset(0) pairs with xcalloc
+Date: Tue, 07 Oct 2008 07:12:14 +0200
+Message-ID: <48EAEFAE.3010504@op5.se>
+References: <48R7WYLSZ5lElWvJbfurso2ZPBQbzSCmtOgIsqTWyaA8yfW6Ndq1aA@cipher.nrlssc.navy.mil>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: Christian Couder <chriscool@tuxfamily.org>, git@vger.kernel.org,
-	"Shawn O. Pearce" <spearce@spearce.org>,
-	Junio C Hamano <gitster@pobox.com>,
-	Scott Chacon <schacon@gmail.com>,
-	Sam Vilain <sam.vilain@catalyst.net.nz>,
-	Petr Baudis <pasky@suse.cz>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Tue Oct 07 05:48:00 2008
+Content-Type: text/plain; charset=ISO-8859-15; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Brandon Casey <casey@nrlssc.navy.mil>
+X-From: git-owner@vger.kernel.org Tue Oct 07 07:13:38 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Kn3YF-0003Yv-3L
-	for gcvg-git-2@gmane.org; Tue, 07 Oct 2008 05:47:59 +0200
+	id 1Kn4t5-0003Gg-LA
+	for gcvg-git-2@gmane.org; Tue, 07 Oct 2008 07:13:36 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753726AbYJGDqt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 6 Oct 2008 23:46:49 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753816AbYJGDqt
-	(ORCPT <rfc822;git-outgoing>); Mon, 6 Oct 2008 23:46:49 -0400
-Received: from relais.videotron.ca ([24.201.245.36]:55996 "EHLO
-	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753012AbYJGDqr (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 6 Oct 2008 23:46:47 -0400
-Received: from xanadu.home ([66.131.194.97]) by VL-MO-MR002.ip.videotron.ca
- (Sun Java(tm) System Messaging Server 6.3-4.01 (built Aug  3 2007; 32bit))
- with ESMTP id <0K8C009P6NTTX9G0@VL-MO-MR002.ip.videotron.ca> for
- git@vger.kernel.org; Mon, 06 Oct 2008 23:46:41 -0400 (EDT)
-X-X-Sender: nico@xanadu.home
-In-reply-to: <20081007031509.GA6031@coredump.intra.peff.net>
-User-Agent: Alpine 2.00 (LFD 1167 2008-08-23)
+	id S1750995AbYJGFMY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 7 Oct 2008 01:12:24 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751104AbYJGFMX
+	(ORCPT <rfc822;git-outgoing>); Tue, 7 Oct 2008 01:12:23 -0400
+Received: from mail.op5.se ([193.201.96.20]:43260 "EHLO mail.op5.se"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750960AbYJGFMX (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 7 Oct 2008 01:12:23 -0400
+Received: from localhost (localhost.localdomain [127.0.0.1])
+	by mail.op5.se (Postfix) with ESMTP id D82201B80061;
+	Tue,  7 Oct 2008 07:04:22 +0200 (CEST)
+X-Virus-Scanned: amavisd-new at 
+X-Spam-Flag: NO
+X-Spam-Score: -2.816
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.816 tagged_above=-10 required=6.6
+	tests=[AWL=-0.317, BAYES_00=-2.599, RDNS_NONE=0.1]
+Received: from mail.op5.se ([127.0.0.1])
+	by localhost (mail.op5.se [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id 00O5LE3KObTJ; Tue,  7 Oct 2008 07:04:19 +0200 (CEST)
+Received: from clix.int.op5.se (unknown [172.27.78.6])
+	by mail.op5.se (Postfix) with ESMTP id 1495B1B80046;
+	Tue,  7 Oct 2008 07:04:18 +0200 (CEST)
+User-Agent: Thunderbird 2.0.0.16 (X11/20080723)
+In-Reply-To: <48R7WYLSZ5lElWvJbfurso2ZPBQbzSCmtOgIsqTWyaA8yfW6Ndq1aA@cipher.nrlssc.navy.mil>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/97663>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/97664>
 
-On Mon, 6 Oct 2008, Jeff King wrote:
-
->   2. What needs refactoring?
+Brandon Casey wrote:
+> Many call sites immediately initialize allocated memory with zero after
+> calling xmalloc. A single call to xcalloc can replace this two-call
+> sequence.
 > 
->      I occasionally run up against parts of the code that just make my
->      eyes bleed everytime I touch them. I think we've made significant
->      progress in maintanability and bug-avoidance with things like the
->      strbuf library, refactoring of remote and transport handling, etc.
->      What areas might still benefit from such refactoring?
 
-Tree object walking and commit object parsing. This is what's holding 
-pack v4 performances back. But I think that Shawn will cover this 
-already (I won't be there but I sent my thoughts about this to him).
+Nicely done. Apart from reducing LoC count, this is also a slight
+optimization as we'll no longer bzero() memory handed to us directly
+by the kernel (which is already nul'ed out).
 
-
-Nicolas
+-- 
+Andreas Ericsson                   andreas.ericsson@op5.se
+OP5 AB                             www.op5.se
+Tel: +46 8-230225                  Fax: +46 8-230231
