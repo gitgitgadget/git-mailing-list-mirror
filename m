@@ -1,79 +1,64 @@
-From: Kristis Makris <kristis.makris@asu.edu>
+From: Jakub Narebski <jnareb@gmail.com>
 Subject: Re: Git and tagging hook
-Date: Tue, 07 Oct 2008 10:13:33 -0700
-Message-ID: <1223399613.20250.1.camel@localhost>
-References: <1223268332.4072.7.camel@localhost>  <48E9BB72.2080008@op5.se>
+Date: Tue, 07 Oct 2008 19:28:13 +0200
+Organization: At home
+Message-ID: <gcg67d$4o2$1@ger.gmane.org>
+References: <1223268332.4072.7.camel@localhost> <48E9BB72.2080008@op5.se> <1223399613.20250.1.camel@localhost>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1; protocol="application/pgp-signature"; boundary="=_talos-15623-1223399773-0001-2"
-Cc: git@vger.kernel.org, scmbug-users@lists.mkgnu.net
-To: Andreas Ericsson <ae@op5.se>
-X-From: git-owner@vger.kernel.org Tue Oct 07 19:16:03 2008
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7Bit
+Cc: scmbug-users@lists.mkgnu.net
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Oct 07 19:29:53 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KnG92-0000nC-RG
-	for gcvg-git-2@gmane.org; Tue, 07 Oct 2008 19:14:49 +0200
+	id 1KnGNS-0007Dw-6h
+	for gcvg-git-2@gmane.org; Tue, 07 Oct 2008 19:29:42 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755509AbYJGRNj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 7 Oct 2008 13:13:39 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753403AbYJGRNj
-	(ORCPT <rfc822;git-outgoing>); Tue, 7 Oct 2008 13:13:39 -0400
-Received: from 11-74-162-69.static.reverse.lstn.net ([69.162.74.11]:39838 "EHLO
-	mail.loomcm.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755509AbYJGRNj (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 7 Oct 2008 13:13:39 -0400
-Received: from [192.168.0.71] ([::ffff:67.40.69.52])
-  by talos with esmtp; Tue, 07 Oct 2008 10:16:12 -0700
-  id 076D0006.48EB995C.00003D07
-In-Reply-To: <48E9BB72.2080008@op5.se>
-X-Mailer: Evolution 2.6.3 
+	id S1753403AbYJGR2b (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 7 Oct 2008 13:28:31 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752865AbYJGR2b
+	(ORCPT <rfc822;git-outgoing>); Tue, 7 Oct 2008 13:28:31 -0400
+Received: from main.gmane.org ([80.91.229.2]:36272 "EHLO ciao.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751303AbYJGR2a (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 7 Oct 2008 13:28:30 -0400
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1KnGMC-0008EJ-M9
+	for git@vger.kernel.org; Tue, 07 Oct 2008 17:28:24 +0000
+Received: from abww108.neoplus.adsl.tpnet.pl ([83.8.246.108])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Tue, 07 Oct 2008 17:28:24 +0000
+Received: from jnareb by abww108.neoplus.adsl.tpnet.pl with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Tue, 07 Oct 2008 17:28:24 +0000
+X-Injected-Via-Gmane: http://gmane.org/
+Followup-To: gmane.comp.version-control.git
+X-Complaints-To: usenet@ger.gmane.org
+X-Gmane-NNTP-Posting-Host: abww108.neoplus.adsl.tpnet.pl
+Mail-Copies-To: Jakub Narebski <jnareb@gmail.com>
+User-Agent: KNode/0.10.2
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/97731>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/97732>
 
-This is a MIME-formatted message.  If you see this text it means that your
-E-mail software does not support MIME-formatted messages.
+Kristis Makris wrote:
 
---=_talos-15623-1223399773-0001-2
-Content-Type: text/plain
-Content-Transfer-Encoding: quoted-printable
+> But the post-receive is NOT executed when I apply a tag.
+> 
+> I want the integration when I apply the tag to a local repository, NOT
+> only when I push/pull.
 
-But the post-receive is NOT executed when I apply a tag.
+If you are talking about taging locally, you can simply make an alias
+or do something after tagging. Search archives for description when
+it is worth to add a hook, and when it is not.
 
-I want the integration when I apply the tag to a local repository, NOT
-only when I push/pull.
-
-On Mon, 2008-10-06 at 09:17 +0200, Andreas Ericsson wrote:
-> Kristis Makris wrote:
-> > Hello,
-> >=20
-> > It seems that Git (at least v1.5.6) does not offer hooks on tag creatio=
-n
-> > (a pre-tag and a post-tag hook). I need such a hook for integrating tag
-> > activities with an issue-tracker. Is it possible to add this hook ?
-> >=20
->=20
-> What you want is probably the post-receive or 'update' hooks on whatever
-> repository you consider your public watering hole for your project.
-> Integrating with an issue-tracker from the developers machine would be
-> utterly stupid, as it would prevent tagging from happening while not
-> connected.
->=20
-
---=_talos-15623-1223399773-0001-2
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Transfer-Encoding: 7bit
-Content-Description: This is a digitally signed message part
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.6 (GNU/Linux)
-
-iD8DBQBI65i9/KuTDwnYLxERAsgvAKCqGtq5W408mgFQjVXezITY+ZTM1ACdG432
-T/xvOE+yUjYBqjKsK2yS5+A=
-=ZowG
------END PGP SIGNATURE-----
-
---=_talos-15623-1223399773-0001-2--
+-- 
+Jakub Narebski
+Warsaw, Poland
+ShadeHawk on #git
