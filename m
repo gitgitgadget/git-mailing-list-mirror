@@ -1,120 +1,62 @@
-From: Johannes Sixt <j.sixt@viscovery.net>
-Subject: [PATCH] git-push.txt: Describe --repo option in more detail
-Date: Tue, 07 Oct 2008 16:26:20 +0200
-Message-ID: <48EB718C.9060402@viscovery.net>
+From: "Shawn O. Pearce" <spearce@spearce.org>
+Subject: Re: [PATCH RFC] rebase--interactive: if preserving merges, use
+	first-parent to limit what is shown.
+Date: Tue, 7 Oct 2008 07:38:02 -0700
+Message-ID: <20081007143802.GI8203@spearce.org>
+References: <48E8DD7E.9040706@redhat.com> <20081006102118.3e817a0f.stephen@exigencecorp.com> <20081006212021.04ba9214.stephen@exigencecorp.com> <20081007013654.274e5cf6.stephen@exigencecorp.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15
-Content-Transfer-Encoding: 7bit
-Cc: Git Mailing List <git@vger.kernel.org>,
-	Junio C Hamano <gitster@pobox.com>,
-	Daniel Barkalow <barkalow@iabervon.org>
-To: "Shawn O. Pearce" <spearce@spearce.org>
-X-From: git-owner@vger.kernel.org Tue Oct 07 16:28:56 2008
+Content-Type: text/plain; charset=utf-8
+Cc: Avi Kivity <avi@redhat.com>, git@vger.kernel.org
+To: Stephen Haberman <stephen@exigencecorp.com>
+X-From: git-owner@vger.kernel.org Tue Oct 07 16:40:25 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KnDXF-00064L-JO
-	for gcvg-git-2@gmane.org; Tue, 07 Oct 2008 16:27:38 +0200
+	id 1KnDiX-00028E-Lq
+	for gcvg-git-2@gmane.org; Tue, 07 Oct 2008 16:39:18 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752404AbYJGO01 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 7 Oct 2008 10:26:27 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751426AbYJGO01
-	(ORCPT <rfc822;git-outgoing>); Tue, 7 Oct 2008 10:26:27 -0400
-Received: from lilzmailso02.liwest.at ([212.33.55.13]:53662 "EHLO
-	lilzmailso02.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750878AbYJGO00 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 7 Oct 2008 10:26:26 -0400
-Received: from cm56-163-160.liwest.at ([86.56.163.160] helo=linz.eudaptics.com)
-	by lilzmailso02.liwest.at with esmtpa (Exim 4.66)
-	(envelope-from <j.sixt@viscovery.net>)
-	id 1KnDW0-0007Bq-Vn; Tue, 07 Oct 2008 16:26:21 +0200
-Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.42])
-	by linz.eudaptics.com (Postfix) with ESMTP
-	id B55DC54D; Tue,  7 Oct 2008 16:26:20 +0200 (CEST)
-User-Agent: Thunderbird 2.0.0.6 (Windows/20070728)
-X-Enigmail-Version: 0.95.5
-X-Spam-Score: 1.7 (+)
-X-Spam-Report: ALL_TRUSTED=-1.8, BAYES_99=3.5
+	id S1752333AbYJGOiG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 7 Oct 2008 10:38:06 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752304AbYJGOiF
+	(ORCPT <rfc822;git-outgoing>); Tue, 7 Oct 2008 10:38:05 -0400
+Received: from george.spearce.org ([209.20.77.23]:52184 "EHLO
+	george.spearce.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751991AbYJGOiE (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 7 Oct 2008 10:38:04 -0400
+Received: by george.spearce.org (Postfix, from userid 1001)
+	id 62A743835F; Tue,  7 Oct 2008 14:38:02 +0000 (UTC)
+Content-Disposition: inline
+In-Reply-To: <20081007013654.274e5cf6.stephen@exigencecorp.com>
+User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/97708>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/97709>
 
-From: Johannes Sixt <johannes.sixt@telecom.at>
+Stephen Haberman <stephen@exigencecorp.com> wrote:
+> However, lest I burn my "PATCH v2" opportunity, I'm holding off on
+> posting the updated patch. It works and passes tests but I'm sure I'll
+> tinker with it some more over the next few days. It will also likely
+> conflict with my pu sh/maint-rebase3 patch, so I don't know whether to
+> base it on top of that one or not (guessing not).
 
-The --repo option was described in a way that the reader would have to
-assume that it is the same as the <repository> parameter. But it actually
-servers a purpose, which is now written down.
+When a patch series is in `pu` it can be rebased/replaced/amended
+at any time.  That's why I parked it there.  The pu branch rewinds
+and is rebuilt on a daily basis.  Any commits not yet merged into
+maint, master or next are automatically rebased onto the latest
+maint or master branch and get merged into that day's pu.
 
-Furthermore, the --mirror option was missing from the synopsis.
+So don't hold back on posting patches.  Folks expect to see
+patches on this list; talking is less productive than posting code.
+Showing code that purports to solve a problem, or that at least
+displays a problem concretely is worthy of discussion.
 
-Signed-off-by: Johannes Sixt <johannes.sixt@telecom.at>
----
- I do not have the toolchain to format the documentation, so please take
- this with a grain of salt.
-
- -- Hannes
-
- Documentation/git-push.txt |   24 +++++++++++++++++++-----
- builtin-push.c             |    2 +-
- 2 files changed, 20 insertions(+), 6 deletions(-)
-
-diff --git a/Documentation/git-push.txt b/Documentation/git-push.txt
-index 45c9643..6150b1b 100644
---- a/Documentation/git-push.txt
-+++ b/Documentation/git-push.txt
-@@ -9,8 +9,8 @@ git-push - Update remote refs along with associated objects
- SYNOPSIS
- --------
- [verse]
--'git push' [--all] [--dry-run] [--tags] [--receive-pack=<git-receive-pack>]
--	   [--repo=all] [-f | --force] [-v | --verbose]
-+'git push' [--all | --mirror] [--dry-run] [--tags] [--receive-pack=<git-receive-pack>]
-+	   [--repo=<repository>] [-f | --force] [-v | --verbose]
- 	   [<repository> <refspec>...]
-
- DESCRIPTION
-@@ -101,9 +101,23 @@ nor in any Push line of the corresponding remotes file---see below).
- 	This flag disables the check.  This can cause the
- 	remote repository to lose commits; use it with care.
-
----repo=<repo>::
--	When no repository is specified the command defaults to
--	"origin"; this overrides it.
-+--repo=<repository>::
-+	This option is only relevant if no <repository> argument is
-+	passed in the invocation. In this case, 'git-push' derives the
-+	remote name from the current branch: If it tracks a remote
-+	branch, then that remote repository is pushed to. Otherwise,
-+	the name "origin" is used. For this latter case, this option
-+	can be used to override the name "origin". In other words,
-+	the difference between these two commands
-++
-+--------------------------
-+git push public         #1
-+git push --repo=public  #2
-+--------------------------
-++
-+is that #1 always pushes to "public" whereas #2 pushes to "public"
-+only if the current branch does not track a remote branch. This is
-+useful if you write an alias or script around 'git-push'.
-
- --thin::
- --no-thin::
-diff --git a/builtin-push.c b/builtin-push.c
-index cc6666f..122fdcf 100644
---- a/builtin-push.c
-+++ b/builtin-push.c
-@@ -10,7 +10,7 @@
- #include "parse-options.h"
-
- static const char * const push_usage[] = {
--	"git push [--all | --mirror] [--dry-run] [--tags] [--receive-pack=<git-receive-pack>] [--repo=all] [-f | --force] [-v] [<repository> <refspec>...]",
-+	"git push [--all | --mirror] [--dry-run] [--tags] [--receive-pack=<git-receive-pack>] [--repo=<repository>] [-f | --force] [-v] [<repository> <refspec>...]",
- 	NULL,
- };
-
+And don't worry about replacing what is currently in pu.  Its easily
+done by the maintainer.  However don't expect daily updates to a
+topic in pu.  Junio (and I) just don't have the bandwidth to keep
+replacing patches every day.
+ 
 -- 
-1.6.0.2.651.gd07df
+Shawn.
