@@ -1,65 +1,65 @@
-From: Matthieu Moy <Matthieu.Moy@imag.fr>
-Subject: Re: Git pager woes
-Date: Tue, 07 Oct 2008 16:30:41 +0200
-Message-ID: <vpqbpxwxysu.fsf@bauges.imag.fr>
-References: <3aaafc130810070643m352ea2ufa1069dc149f0d9e@mail.gmail.com>
+From: "Shawn O. Pearce" <spearce@spearce.org>
+Subject: Re: GitTogether topics status (4th of October)
+Date: Tue, 7 Oct 2008 07:46:43 -0700
+Message-ID: <20081007144643.GK8203@spearce.org>
+References: <200810041816.41026.chriscool@tuxfamily.org> <20081007031509.GA6031@coredump.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: "J.R. Mauro" <jrm8005@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Oct 07 16:49:24 2008
+Content-Type: text/plain; charset=utf-8
+Cc: Christian Couder <chriscool@tuxfamily.org>, git@vger.kernel.org,
+	Junio C Hamano <gitster@pobox.com>,
+	Scott Chacon <schacon@gmail.com>,
+	Sam Vilain <sam.vilain@catalyst.net.nz>,
+	Petr Baudis <pasky@suse.cz>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Tue Oct 07 16:50:29 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KnDqO-00057M-Dh
-	for gcvg-git-2@gmane.org; Tue, 07 Oct 2008 16:47:24 +0200
+	id 1KnDr4-0005PE-Qw
+	for gcvg-git-2@gmane.org; Tue, 07 Oct 2008 16:48:07 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755260AbYJGOpp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 7 Oct 2008 10:45:45 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752664AbYJGOpp
-	(ORCPT <rfc822;git-outgoing>); Tue, 7 Oct 2008 10:45:45 -0400
-Received: from harmonie.imag.fr ([147.171.130.40]:59406 "EHLO harmonie.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755219AbYJGOpo (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 7 Oct 2008 10:45:44 -0400
-Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by harmonie.imag.fr (8.13.8/8.13.8) with ESMTP id m97EhWLT020503;
-	Tue, 7 Oct 2008 16:43:33 +0200 (CEST)
-Received: from bauges.imag.fr ([129.88.43.5])
-	by mail-veri.imag.fr with esmtps (TLS-1.0:RSA_AES_256_CBC_SHA:32)
-	(Exim 4.50)
-	id 1KnDaD-0002sX-TT; Tue, 07 Oct 2008 16:30:41 +0200
-Received: from moy by bauges.imag.fr with local (Exim 4.63)
-	(envelope-from <moy@imag.fr>)
-	id 1KnDaD-00061V-R3; Tue, 07 Oct 2008 16:30:41 +0200
-In-Reply-To: <3aaafc130810070643m352ea2ufa1069dc149f0d9e@mail.gmail.com> (J. R. Mauro's message of "Tue\, 7 Oct 2008 09\:43\:12 -0400")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/23.0.60 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-3.0 (harmonie.imag.fr [147.171.130.40]); Tue, 07 Oct 2008 16:43:33 +0200 (CEST)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM for more information
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: moy@imag.fr
+	id S1752928AbYJGOqp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 7 Oct 2008 10:46:45 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752754AbYJGOqo
+	(ORCPT <rfc822;git-outgoing>); Tue, 7 Oct 2008 10:46:44 -0400
+Received: from george.spearce.org ([209.20.77.23]:42622 "EHLO
+	george.spearce.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752612AbYJGOqo (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 7 Oct 2008 10:46:44 -0400
+Received: by george.spearce.org (Postfix, from userid 1001)
+	id 29E823835F; Tue,  7 Oct 2008 14:46:43 +0000 (UTC)
+Content-Disposition: inline
+In-Reply-To: <20081007031509.GA6031@coredump.intra.peff.net>
+User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/97712>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/97713>
 
-"J.R. Mauro" <jrm8005@gmail.com> writes:
+Jeff King <peff@peff.net> wrote:
+> I just added two proposed half-hour meetings, both of which I intend to
+> be a few minutes of me talking followed by group discussion. The topics
+> are:
+> 
+>   1. Helping new developers join the git community
 
-> Git doesn't set special options to it's pager command if the LESS
-> environment variable is set.
+Oh, this is a good idea.  Yesterday I myself had trouble with
+a new contributor not being familiar with the patching process.
+Partly also my fault of still being a green maintainer.  ;-)
+ 
+>   2. What needs refactoring?
+> 
+>      I occasionally run up against parts of the code that just make my
+>      eyes bleed everytime I touch them. I think we've made significant
+>      progress in maintanability and bug-avoidance with things like the
+>      strbuf library, refactoring of remote and transport handling, etc.
+>      What areas might still benefit from such refactoring?
 
-Yes, this is by design: if you customized less, git obeys the
-configuration you've set. Otherwise, it takes a default wich is more
-appropriate to git that what "less" does without $LESS set.
-
-That policy isn't perfect, but I think any other would be worse: I
-wouldn'l like git to change my configuration if I did set $LESS
-myself, and I also prefer git's default to LESS default when it comes
-to paging git commands (but I like less's default for other uses, for
-example, I like the man page to disapear when I close it).
+Also a good idea.  I imagine Junio may have some interest in this.
+I certainly do.  Some of the code is just bloodly aweful to work
+with.  I guess those are the parts that make your eyes bleed.
 
 -- 
-Matthieu
+Shawn.
