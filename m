@@ -1,61 +1,103 @@
-From: Johannes Sixt <j.sixt@viscovery.net>
-Subject: Re: [PATCH v2] correct verify_path for Windows
-Date: Tue, 07 Oct 2008 08:18:11 +0200
-Message-ID: <48EAFF23.1020607@viscovery.net>
-References: <c475e2e60810020702q573570dcp31a5dc18bf98ef30@mail.gmail.com> <20081004233945.GM21650@dpotapov.dyndns.org> <B985AE98-F6E2-4C23-8D34-5A22A9F89FA7@gmail.com> <20081007032623.GX21650@dpotapov.dyndns.org>
+From: Matthieu Moy <Matthieu.Moy@imag.fr>
+Subject: Re: [PATCH 0/4] diff text conversion filter
+Date: Tue, 07 Oct 2008 08:15:45 +0200
+Message-ID: <vpqprmdlylq.fsf@bauges.imag.fr>
+References: <20080928041040.GA24214@coredump.intra.peff.net>
+	<vpqd4io1tla.fsf@bauges.imag.fr>
+	<20080928161106.GA30199@coredump.intra.peff.net>
+	<vpqk5ctfyp6.fsf@bauges.imag.fr>
+	<20080930164545.GA20305@sigill.intra.peff.net>
+	<20081005214114.GA21875@coredump.intra.peff.net>
+	<48E9B036.6090805@viscovery.net> <vpqtzbpwy9h.fsf@bauges.imag.fr>
+	<20081007012044.GA4217@coredump.intra.peff.net>
+	<48EAF902.3040402@viscovery.net>
+	<20081007060014.GA7965@coredump.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: Joshua Juran <jjuran@gmail.com>,
-	Giovanni Funchal <gafunchal@gmail.com>, git@vger.kernel.org,
-	"Shawn O. Pearce" <spearce@spearce.org>
-To: Dmitry Potapov <dpotapov@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Oct 07 08:19:26 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: Johannes Sixt <j.sixt@viscovery.net>, git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Tue Oct 07 08:22:26 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Kn5un-0001xA-2h
-	for gcvg-git-2@gmane.org; Tue, 07 Oct 2008 08:19:25 +0200
+	id 1Kn5xe-0002ZV-K5
+	for gcvg-git-2@gmane.org; Tue, 07 Oct 2008 08:22:23 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751263AbYJGGSN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 7 Oct 2008 02:18:13 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751245AbYJGGSN
-	(ORCPT <rfc822;git-outgoing>); Tue, 7 Oct 2008 02:18:13 -0400
-Received: from lilzmailso01.liwest.at ([212.33.55.23]:59650 "EHLO
-	lilzmailso01.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751197AbYJGGSN (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 7 Oct 2008 02:18:13 -0400
-Received: from cm56-163-160.liwest.at ([86.56.163.160] helo=linz.eudaptics.com)
-	by lilzmailso01.liwest.at with esmtpa (Exim 4.66)
-	(envelope-from <j.sixt@viscovery.net>)
-	id 1Kn5tb-0006sJ-EW; Tue, 07 Oct 2008 08:18:11 +0200
-Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.42])
-	by linz.eudaptics.com (Postfix) with ESMTP
-	id 328AC54D; Tue,  7 Oct 2008 08:18:11 +0200 (CEST)
-User-Agent: Thunderbird 2.0.0.6 (Windows/20070728)
-In-Reply-To: <20081007032623.GX21650@dpotapov.dyndns.org>
-X-Enigmail-Version: 0.95.5
-X-Spam-Score: 0.2 (/)
-X-Spam-Report: ALL_TRUSTED=-1.8, BAYES_80=2
+	id S1751362AbYJGGVN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 7 Oct 2008 02:21:13 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751294AbYJGGVM
+	(ORCPT <rfc822;git-outgoing>); Tue, 7 Oct 2008 02:21:12 -0400
+Received: from harmonie.imag.fr ([147.171.130.40]:32945 "EHLO harmonie.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751245AbYJGGVM (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 7 Oct 2008 02:21:12 -0400
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by harmonie.imag.fr (8.13.8/8.13.8) with ESMTP id m976JDiG000297;
+	Tue, 7 Oct 2008 08:19:14 +0200 (CEST)
+Received: from bauges.imag.fr ([129.88.43.5])
+	by mail-veri.imag.fr with esmtps (TLS-1.0:RSA_AES_256_CBC_SHA:32)
+	(Exim 4.50)
+	id 1Kn5rF-0001co-VY; Tue, 07 Oct 2008 08:15:45 +0200
+Received: from moy by bauges.imag.fr with local (Exim 4.63)
+	(envelope-from <moy@imag.fr>)
+	id 1Kn5rF-00069r-TI; Tue, 07 Oct 2008 08:15:45 +0200
+In-Reply-To: <20081007060014.GA7965@coredump.intra.peff.net> (Jeff King's message of "Tue\, 7 Oct 2008 02\:00\:14 -0400")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/23.0.60 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-3.0 (harmonie.imag.fr [147.171.130.40]); Tue, 07 Oct 2008 08:19:14 +0200 (CEST)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM for more information
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: moy@imag.fr
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/97671>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/97672>
 
-Dmitry Potapov schrieb:
-> +#if defined(_WIN32) || defined(__CYGWIN__)
+Jeff King <peff@peff.net> writes:
 
-I think that for consistency you should use __MINGW32__ instead of _WIN32.
+> On Tue, Oct 07, 2008 at 07:52:02AM +0200, Johannes Sixt wrote:
+>
+>> How about this: If I run 'git show -- foo.doc' (foo.doc resolves to a
+>> single path, obviously), I want MS Word, but for other uses of 'git show'
+>> I don't. I think that heuristics could be very effective: With a plain
+>> 'git show' I get the overview of the change, and with 'git show --
+>> foo.doc' I drill down into a single document.
+>
+> Hrm. I am not opposed to heuristics, but in this case, I don't like the
+> one you have proposed. ;P
+>
+> My specific case that prompted this work is a repository full of
+> pictures and videos, where I rarely (if ever) change the media content,
+> but frequently change exif tags. So my "usual" case is to want to see
+> "git log -p" with the textconv'd version. The commit diffs are otherwise
+> totally meaningless.
 
-> +	/* On Windows, file names are case-insensitive */
-> +	case 'G':
-> +		if ((rest[1]|0x20) != 'i')
-> +			break;
-> +		if ((rest[2]|0x20) != 't')
-> +			break;
+So, you disagree about "git log" not showing the textconv, but you
+still agree with half of the proposal :-P. When the user explicitely
+requests a single file, he does want textconv (requesting a diff for a
+single file and be happy with "binary files differ" would be
+strange ...).
 
-We have tolower().
+It seems quite clear to me that we won't get a heuristic right for
+everybody (some diff driver are fast, some are slow, some require an
+external GUI, some don't, ...). Better let the thing be nicely
+configurable IMHO.
 
--- Hannes
+One proposal: have a diff.<driver>.activate with several values:
+
+* "always": activate the diff driver in any porcelain
+* "diff": activate it only for "git diff", as currently
+* "singlefile": Johannes's heuristic proposal
+
+That way, one could say easily "activate exiftags filter all the time,
+but MS-Word only when I request a diff for a single file", and this
+leaves room for other values if the need be. Well, there's no room for
+"use MS-Word native diff tool in git-gui but antiword/catdoc +
+textconv in 'git log -p'" here, but do we want it?
+
+Or is all that just overkill?
+
+-- 
+Matthieu
