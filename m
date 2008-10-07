@@ -1,73 +1,79 @@
-From: "Alex Riesen" <raa.lkml@gmail.com>
-Subject: Re: [PATCH v2] correct verify_path for Windows
-Date: Tue, 7 Oct 2008 08:25:05 +0200
-Message-ID: <81b0412b0810062325o818c2f0g65de4f7811d5b8ee@mail.gmail.com>
-References: <c475e2e60810020702q573570dcp31a5dc18bf98ef30@mail.gmail.com>
-	 <20081004233945.GM21650@dpotapov.dyndns.org>
-	 <B985AE98-F6E2-4C23-8D34-5A22A9F89FA7@gmail.com>
-	 <20081007032623.GX21650@dpotapov.dyndns.org>
+From: Stephen Haberman <stephen@exigencecorp.com>
+Subject: Re: [PATCH RFC] rebase--interactive: if preserving merges, use
+ first-parent to limit what is shown.
+Date: Tue, 7 Oct 2008 01:36:54 -0500
+Organization: Exigence
+Message-ID: <20081007013654.274e5cf6.stephen@exigencecorp.com>
+References: <48E8DD7E.9040706@redhat.com>
+	<20081006102118.3e817a0f.stephen@exigencecorp.com>
+	<20081006212021.04ba9214.stephen@exigencecorp.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=US-ASCII
 Content-Transfer-Encoding: 7bit
-Cc: "Joshua Juran" <jjuran@gmail.com>,
-	"Giovanni Funchal" <gafunchal@gmail.com>, git@vger.kernel.org,
-	"Shawn O. Pearce" <spearce@spearce.org>,
-	"Johannes Sixt" <j.sixt@viscovery.net>
-To: "Dmitry Potapov" <dpotapov@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Oct 07 08:26:42 2008
+Cc: git@vger.kernel.org
+To: Avi Kivity <avi@redhat.com>
+X-From: git-owner@vger.kernel.org Tue Oct 07 08:38:14 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Kn61X-0003ci-MY
-	for gcvg-git-2@gmane.org; Tue, 07 Oct 2008 08:26:24 +0200
+	id 1Kn6Ct-0007AB-O2
+	for gcvg-git-2@gmane.org; Tue, 07 Oct 2008 08:38:08 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751408AbYJGGZI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 7 Oct 2008 02:25:08 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751373AbYJGGZI
-	(ORCPT <rfc822;git-outgoing>); Tue, 7 Oct 2008 02:25:08 -0400
-Received: from an-out-0708.google.com ([209.85.132.244]:20918 "EHLO
-	an-out-0708.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751333AbYJGGZG (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 7 Oct 2008 02:25:06 -0400
-Received: by an-out-0708.google.com with SMTP id d40so170732and.103
-        for <git@vger.kernel.org>; Mon, 06 Oct 2008 23:25:05 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to
-         :subject:cc:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:references;
-        bh=9oPWrHxs7u0XKzq7M8OgROCBkjksF7klCEwONyM3rds=;
-        b=CkxaFsBAvBzt5MUBqjrOo7R3n+vTO655UVuy0k8wmStCNVkWKhEbXn683Yg7MBEFW9
-         Se8T1QqBzVr/O2VUE6f3BXBtKhy8mRzaebf/f5QDVFXqAtzDzv5o5k48ey+zdRG33a4w
-         nXZ/vQ66jdpbbjHdE5zxioqELA4pRAYf/eiDM=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
-         :content-type:content-transfer-encoding:content-disposition
-         :references;
-        b=ePJEepjqn0emM5jGtyLFfXIXMQ9HQGBfL9uvq5zp83dvCbUymcQHsDB2rYPV4/oZ+y
-         UiSqoQZj1DUgcs/4Nw0Si8zrZUNQzj5t/bneoYN3EzMCKiLK97PXqV7VIltt8THeRdKT
-         c8LaENNxszp86WFnlMmqzmbEkRTCQky3wDpJo=
-Received: by 10.100.205.15 with SMTP id c15mr6138095ang.67.1223360705745;
-        Mon, 06 Oct 2008 23:25:05 -0700 (PDT)
-Received: by 10.100.91.8 with HTTP; Mon, 6 Oct 2008 23:25:05 -0700 (PDT)
-In-Reply-To: <20081007032623.GX21650@dpotapov.dyndns.org>
-Content-Disposition: inline
+	id S1750960AbYJGGg5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 7 Oct 2008 02:36:57 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751488AbYJGGg5
+	(ORCPT <rfc822;git-outgoing>); Tue, 7 Oct 2008 02:36:57 -0400
+Received: from smtp202.sat.emailsrvr.com ([66.216.121.202]:50499 "EHLO
+	smtp202.sat.emailsrvr.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750933AbYJGGg4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 7 Oct 2008 02:36:56 -0400
+Received: from relay10.relay.sat.mlsrvr.com (localhost [127.0.0.1])
+	by relay10.relay.sat.mlsrvr.com (SMTP Server) with ESMTP id D935B11B0D0F;
+	Tue,  7 Oct 2008 02:36:55 -0400 (EDT)
+Received: by relay10.relay.sat.mlsrvr.com (Authenticated sender: stephen-AT-exigencecorp.com) with ESMTP id 757F49B2464;
+	Tue,  7 Oct 2008 02:36:55 -0400 (EDT)
+In-Reply-To: <20081006212021.04ba9214.stephen@exigencecorp.com>
+X-Mailer: Sylpheed 2.5.0beta3 (GTK+ 2.10.14; i686-pc-mingw32)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/97674>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/97675>
 
-2008/10/7 Dmitry Potapov <dpotapov@gmail.com>:
-> +#if defined(_WIN32) || defined(__CYGWIN__)
-> +       /* On Windows, file names are case-insensitive */
-> +       case 'G':
-> +               if ((rest[1]|0x20) != 'i')
-> +                       break;
-> +               if ((rest[2]|0x20) != 't')
-> +                       break;
-> +#else
 
-Maybe it is already time for FILESYSTEM_CASEINSENSITIVE?
+> So, unless I think of something else, I'm done hacking on this and am
+> withdrawing the patch.
+>
+> Though I am curious--with the sequencer, is the Avi/my request of not
+> listing out-of-band commits in the todo file going to be handled?
+> 
+> Some sort of "--first-parent-unless-included-in-rebase" flag.
+
+Okay, I lied--I have a patch that implements this behavior, passes Avi's
+script-turned-test, and passes t3404. It implements the above algorithm
+of, if in preserving merges mode, start with only first parents in the
+todo list, and then recursively prepend right hand side commits to the
+todo list only if their parents are going to be rewritten. This drops a
+lot of cruft from rebase-i-p with large merges and is very cool, IMHO.
+
+However, lest I burn my "PATCH v2" opportunity, I'm holding off on
+posting the updated patch. It works and passes tests but I'm sure I'll
+tinker with it some more over the next few days. It will also likely
+conflict with my pu sh/maint-rebase3 patch, so I don't know whether to
+base it on top of that one or not (guessing not).
+
+Also, I think the patch itself is less interesting than the discussion
+of whether this "first parent only" behavior is desired or not.
+
+Obviously I think so--do others agree/disagree?
+
+I've read more into the sequencer, and from what I can tell it still
+just drives off a todo of pick/etc. input, and does not generate the
+todo itself. So I think my patch is still fair game in terms of how to
+generate either the current or the next generation rebase-i-p todo list.
+
+I could be wrong on that though.
+
+Thanks,
+Stephen
