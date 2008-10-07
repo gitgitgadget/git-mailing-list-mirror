@@ -1,97 +1,81 @@
-From: David Bryson <david@statichacks.org>
-Subject: proper flags for make check ?
-Date: Tue, 7 Oct 2008 08:46:43 -0700
-Message-ID: <20081007154643.GA5774@eratosthenes.cryptobackpack.org>
-Reply-To: David Bryson <david@statichacks.org>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH 0/4] diff text conversion filter
+Date: Tue, 7 Oct 2008 11:46:46 -0400
+Message-ID: <20081007154646.GB26531@coredump.intra.peff.net>
+References: <20080928161106.GA30199@coredump.intra.peff.net> <vpqk5ctfyp6.fsf@bauges.imag.fr> <20080930164545.GA20305@sigill.intra.peff.net> <20081005214114.GA21875@coredump.intra.peff.net> <48E9B036.6090805@viscovery.net> <vpqtzbpwy9h.fsf@bauges.imag.fr> <20081007012044.GA4217@coredump.intra.peff.net> <48EAF902.3040402@viscovery.net> <20081007060014.GA7965@coredump.intra.peff.net> <vpqprmdlylq.fsf@bauges.imag.fr>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="/ZYM6PqDyfNytx60"
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Oct 07 17:53:54 2008
+Content-Type: text/plain; charset=utf-8
+Cc: Johannes Sixt <j.sixt@viscovery.net>, git@vger.kernel.org
+To: Matthieu Moy <Matthieu.Moy@imag.fr>
+X-From: git-owner@vger.kernel.org Tue Oct 07 17:55:33 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KnEmz-0005Uf-7Y
-	for gcvg-git-2@gmane.org; Tue, 07 Oct 2008 17:47:57 +0200
+	id 1KnEmz-0005Uf-Vw
+	for gcvg-git-2@gmane.org; Tue, 07 Oct 2008 17:47:58 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753319AbYJGPqp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 7 Oct 2008 11:46:45 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753302AbYJGPqp
-	(ORCPT <rfc822;git-outgoing>); Tue, 7 Oct 2008 11:46:45 -0400
-Received: from cryptobackpack.org ([64.105.32.74]:53944 "EHLO
-	mail.cryptobackpack.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753275AbYJGPqo (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 7 Oct 2008 11:46:44 -0400
-Received: by mail.cryptobackpack.org (Postfix, from userid 1000)
-	id 5071210D0271; Tue,  7 Oct 2008 08:46:44 -0700 (PDT)
-X-Spam-Checker-Version: SpamAssassin 3.2.1-gr1 (2007-05-02) on
-	ptolemy.cryptobackpack.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-4.0 required=5.0 tests=ALL_TRUSTED,AWL,BAYES_00,
-	DNS_FROM_SECURITYSAGE autolearn=no version=3.2.1-gr1
-Received: from eratosthenes.statichacks.org (heliosphan.cryptobackpack.org [10.6.6.6])
-	by mail.cryptobackpack.org (Postfix) with ESMTP id C47FA10D01EE
-	for <git@vger.kernel.org>; Tue,  7 Oct 2008 08:46:43 -0700 (PDT)
-Received: by eratosthenes.statichacks.org (Postfix, from userid 1000)
-	id 8C72514464; Tue,  7 Oct 2008 08:46:43 -0700 (PDT)
+	id S1753675AbYJGPqt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 7 Oct 2008 11:46:49 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753661AbYJGPqt
+	(ORCPT <rfc822;git-outgoing>); Tue, 7 Oct 2008 11:46:49 -0400
+Received: from peff.net ([208.65.91.99]:4040 "EHLO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753302AbYJGPqs (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 7 Oct 2008 11:46:48 -0400
+Received: (qmail 2411 invoked by uid 111); 7 Oct 2008 15:46:47 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+    by peff.net (qpsmtpd/0.32) with SMTP; Tue, 07 Oct 2008 11:46:47 -0400
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Tue, 07 Oct 2008 11:46:46 -0400
 Content-Disposition: inline
-User-Agent: Mutt/1.5.16 (2007-06-09)
+In-Reply-To: <vpqprmdlylq.fsf@bauges.imag.fr>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/97718>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/97719>
 
+On Tue, Oct 07, 2008 at 08:15:45AM +0200, Matthieu Moy wrote:
 
---/ZYM6PqDyfNytx60
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+> One proposal: have a diff.<driver>.activate with several values:
+> 
+> * "always": activate the diff driver in any porcelain
+> * "diff": activate it only for "git diff", as currently
+> * "singlefile": Johannes's heuristic proposal
+> 
+> That way, one could say easily "activate exiftags filter all the time,
+> but MS-Word only when I request a diff for a single file", and this
+> leaves room for other values if the need be. Well, there's no room for
+> "use MS-Word native diff tool in git-gui but antiword/catdoc +
+> textconv in 'git log -p'" here, but do we want it?
+> 
+> Or is all that just overkill?
 
+Actually, as soon as I read the first part of your mail I thought of the
+"ms-word vs antiword" situation. The example you gave seems plausible.
+And it seems to me that it is really a superset of the problem we are
+discussing. That is, gitattributes is really just saying "this is a
+'foo' type file". And if we have a mechanism flexible enough to say "in
+this situation, this is how you handle 'foo' type files", then that
+would work as the basis for implementing these heuristics.
 
-After the recent discussion about make check I decided to give it a try
-and see what happens.
+For example, maybe you could set up some mapping like:
 
-I installed sparse, took a look at the source and it appears to want
-something along the following lines for a intel processor:
+  git diff --diffdriver=foo,bar
 
--D__LITTLE_ENDIAN__ -D__i386__=1
+where a file with gitattribute diff=x would look for the driver config
+for x.foo, then x.bar, and then finally fall back to just x. Then you
+could easily have (ignoring the fact that I'm not sure about the config
+syntax for having _3_ section parts):
 
-I then type 'make check' and get about 30 seconds of errors printing out
-for kerberos headers.
+  git config diff.doc.graphical.command ms-word-diff-script
+  git config diff.doc.textconv antiword
 
-The errors look a lot like this:
+and then git-gui would be configured to diff with:
 
-/usr/include/krb5/krb5.h:1166:18: error: got *
-/usr/include/krb5/krb5.h:1167:18: error: Expected ; at end of
-declaration
-/usr/include/krb5/krb5.h:1167:18: error: got *
-/usr/include/krb5/krb5.h:1168:20: error: Expected ; at end of
-declaration
-/usr/include/krb5/krb5.h:1168:20: error: got *
-/usr/include/krb5/krb5.h:1169:1: error: Expected ; end of type
-declaration
-/usr/include/krb5/krb5.h:1169:1: error: got }
-/usr/include/krb5/krb5.h:1173:17: error: expected ; at end of
-declaration
-/usr/include/krb5/krb5.h:1173:17: error: Expected } at end of
-struct-union-enum-specifier
+  git diff --diffdriver=graphical
 
-What is the proper way to run sparse on the git sources ?
+whereas a regular "git diff" would always fall back to
+"diff.doc.textconv". Make sense?
 
-Dave
-
-
---/ZYM6PqDyfNytx60
-Content-Type: application/pgp-signature
-Content-Disposition: inline
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.0.9 (GNU/Linux)
-
-iEYEARECAAYFAkjrhGMACgkQLfsM4nS2FiA9zQCgqW+7o2y/gHbegGxnfklKZBaz
-gcwAn3Y1jCg6F//2etNfcbMHXAapBLfO
-=wWO/
------END PGP SIGNATURE-----
-
---/ZYM6PqDyfNytx60--
+-Peff
