@@ -1,115 +1,65 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: [PATCH] gitweb: refactor input parameters parse/validation
-Date: Tue, 7 Oct 2008 16:39:24 +0200
-Message-ID: <200810071639.25324.jnareb@gmail.com>
-References: <1223054356-17643-1-git-send-email-giuseppe.bilotta@gmail.com> <200810071257.38423.jnareb@gmail.com> <cb7bb73a0810070542v4c8a9820x4d91ea20597ddf01@mail.gmail.com>
+From: Matthieu Moy <Matthieu.Moy@imag.fr>
+Subject: Re: Git pager woes
+Date: Tue, 07 Oct 2008 16:30:41 +0200
+Message-ID: <vpqbpxwxysu.fsf@bauges.imag.fr>
+References: <3aaafc130810070643m352ea2ufa1069dc149f0d9e@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, "Shawn O. Pearce" <spearce@spearce.org>
-To: "Giuseppe Bilotta" <giuseppe.bilotta@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Oct 07 16:42:21 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: "J.R. Mauro" <jrm8005@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Oct 07 16:49:24 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KnDk0-0002ig-M7
-	for gcvg-git-2@gmane.org; Tue, 07 Oct 2008 16:40:49 +0200
+	id 1KnDqO-00057M-Dh
+	for gcvg-git-2@gmane.org; Tue, 07 Oct 2008 16:47:24 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752465AbYJGOji (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 7 Oct 2008 10:39:38 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752455AbYJGOji
-	(ORCPT <rfc822;git-outgoing>); Tue, 7 Oct 2008 10:39:38 -0400
-Received: from ug-out-1314.google.com ([66.249.92.175]:33052 "EHLO
-	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751373AbYJGOjh (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 7 Oct 2008 10:39:37 -0400
-Received: by ug-out-1314.google.com with SMTP id k3so252784ugf.37
-        for <git@vger.kernel.org>; Tue, 07 Oct 2008 07:39:35 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:subject:date
-         :user-agent:cc:references:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:message-id;
-        bh=uwRfdIdmjOf88h+g5gRqhZWRFQGNQlhQtHrg6n0CFm8=;
-        b=deXV6H5qOv1B1e7GKPc4BwMwmItKFI2RynHiEZNW9CQdzLjs1YtbGXPy6ZkbCnJ/nf
-         DxRNNYG1RRFoapZJzB+N1PiKv1JpKEr4c1kqhwpJB7WCP35i2928BKl55kaj9BofNKfd
-         r5vLeyeyEe0IDYvJRe45Jp9Uly1xOJI1GweFo=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=from:to:subject:date:user-agent:cc:references:in-reply-to
-         :mime-version:content-type:content-transfer-encoding
-         :content-disposition:message-id;
-        b=CGsvZc99aTIkfBMewdyi8v2jCOjl3ClVdQHY4w1ZyXKSCi6jyziAbiNpDi3lMEk2aF
-         jKxCk2KHrIxPv89f+yV13kWVoEoFj6NOfMLxzXeqWVJOj85FTVAZGJPTmz+C/M8KyusR
-         NbAadmQn3glvAw2Ezl7yqEn3oiRYBFLfd9cv8=
-Received: by 10.210.11.13 with SMTP id 13mr4273800ebk.13.1223390375698;
-        Tue, 07 Oct 2008 07:39:35 -0700 (PDT)
-Received: from ?192.168.1.11? (abww108.neoplus.adsl.tpnet.pl [83.8.246.108])
-        by mx.google.com with ESMTPS id 7sm14458317eyg.0.2008.10.07.07.39.33
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Tue, 07 Oct 2008 07:39:34 -0700 (PDT)
-User-Agent: KMail/1.9.3
-In-Reply-To: <cb7bb73a0810070542v4c8a9820x4d91ea20597ddf01@mail.gmail.com>
-Content-Disposition: inline
+	id S1755260AbYJGOpp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 7 Oct 2008 10:45:45 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752664AbYJGOpp
+	(ORCPT <rfc822;git-outgoing>); Tue, 7 Oct 2008 10:45:45 -0400
+Received: from harmonie.imag.fr ([147.171.130.40]:59406 "EHLO harmonie.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755219AbYJGOpo (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 7 Oct 2008 10:45:44 -0400
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by harmonie.imag.fr (8.13.8/8.13.8) with ESMTP id m97EhWLT020503;
+	Tue, 7 Oct 2008 16:43:33 +0200 (CEST)
+Received: from bauges.imag.fr ([129.88.43.5])
+	by mail-veri.imag.fr with esmtps (TLS-1.0:RSA_AES_256_CBC_SHA:32)
+	(Exim 4.50)
+	id 1KnDaD-0002sX-TT; Tue, 07 Oct 2008 16:30:41 +0200
+Received: from moy by bauges.imag.fr with local (Exim 4.63)
+	(envelope-from <moy@imag.fr>)
+	id 1KnDaD-00061V-R3; Tue, 07 Oct 2008 16:30:41 +0200
+In-Reply-To: <3aaafc130810070643m352ea2ufa1069dc149f0d9e@mail.gmail.com> (J. R. Mauro's message of "Tue\, 7 Oct 2008 09\:43\:12 -0400")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/23.0.60 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-3.0 (harmonie.imag.fr [147.171.130.40]); Tue, 07 Oct 2008 16:43:33 +0200 (CEST)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM for more information
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: moy@imag.fr
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/97711>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/97712>
 
-Giuseppe Bilotta wrote:
-> On Tue, Oct 7, 2008 at 12:57 PM, Jakub Narebski <jnareb@gmail.com> wrote:
->> On Fri, 3 Oct 2008, Giuseppe Bilotta wrote:
+"J.R. Mauro" <jrm8005@gmail.com> writes:
 
->>> +     # find which part of PATH_INFO is project
->>> +     my $project = $path_info;
->>
->> Hmmm... now $project is local (lexically) here.
-> 
-> Yes, itt's only used temporarily here, to see if  a proper $project
-> can be defined. It gets redefined outside. It just made sense to name
-> it like this 8-)
+> Git doesn't set special options to it's pager command if the LESS
+> environment variable is set.
 
-Well, if $project is local in evaluate_path_info(), so could be
-$path_info...
- 
->>> +     $project =~ s,/+$,,;
->>> +     while ($project && !check_head_link("$projectroot/$project")) {
->>> +             $project =~ s,/*[^/]*$,,;
->>> +     }
->>> +     # validate project
->>> +     $project = validate_project($project);
->>
->> I'm not sure if it is worth worrying over, but I think you repeat
->> check_head_link() check here.
->>
->> [After examining code further].  But I think you do double validation;
->> once you do it here, and once you do it copying to global variables
->> such as $action or $project, and double checking check_head_link()
->> won't be easy to avoid; fortunately it is cheap filesystem-level check
->> (might be slow only when stat is extremely slow, and is not cached).
-> 
-> I know. This is actually the reason why I had interleaved path_info
-> definition and global validation in my previous version of the patch.
-> The big issue here is that path_info evaluation _needs_ (partial)
-> validation.
-> 
-> A possible alternative could be to only put validated parameters into
-> %input_params. This would completely separate the validation for cgi
-> and path_info (modulo shared subs).
-> 
-> Of course, the check_head_link would still be repeated inside
-> evaluate_path_info, but the other params could skip a double
-> validation.
+Yes, this is by design: if you customized less, git obeys the
+configuration you've set. Otherwise, it takes a default wich is more
+appropriate to git that what "less" does without $LESS set.
 
-Wouldn't it be simpler and as good solution to just leave validation
-off evaluate_path_info() (well, of course except check_head_link() test),
-and allow it to be validated when assigning global 'params' variables?
-check_head_link() would be repeated for path_info links, but that
-should not affect performance much.
+That policy isn't perfect, but I think any other would be worse: I
+wouldn'l like git to change my configuration if I did set $LESS
+myself, and I also prefer git's default to LESS default when it comes
+to paging git commands (but I like less's default for other uses, for
+example, I like the man page to disapear when I close it).
 
 -- 
-Jakub Narebski
-Poland
+Matthieu
