@@ -1,58 +1,120 @@
-From: "J.R. Mauro" <jrm8005@gmail.com>
-Subject: Re: Git pager woes
-Date: Tue, 7 Oct 2008 10:24:13 -0400
-Message-ID: <3aaafc130810070724q2621a90ey2435fec3ef6e15a0@mail.gmail.com>
-References: <3aaafc130810070643m352ea2ufa1069dc149f0d9e@mail.gmail.com>
-	 <48EB70C4.1070001@op5.se>
+From: Johannes Sixt <j.sixt@viscovery.net>
+Subject: [PATCH] git-push.txt: Describe --repo option in more detail
+Date: Tue, 07 Oct 2008 16:26:20 +0200
+Message-ID: <48EB718C.9060402@viscovery.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain; charset=ISO-8859-15
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: "Andreas Ericsson" <ae@op5.se>
-X-From: git-owner@vger.kernel.org Tue Oct 07 16:26:47 2008
+Cc: Git Mailing List <git@vger.kernel.org>,
+	Junio C Hamano <gitster@pobox.com>,
+	Daniel Barkalow <barkalow@iabervon.org>
+To: "Shawn O. Pearce" <spearce@spearce.org>
+X-From: git-owner@vger.kernel.org Tue Oct 07 16:28:56 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KnDV9-0005EA-MV
-	for gcvg-git-2@gmane.org; Tue, 07 Oct 2008 16:25:28 +0200
+	id 1KnDXF-00064L-JO
+	for gcvg-git-2@gmane.org; Tue, 07 Oct 2008 16:27:38 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753374AbYJGOYR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 7 Oct 2008 10:24:17 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753459AbYJGOYR
-	(ORCPT <rfc822;git-outgoing>); Tue, 7 Oct 2008 10:24:17 -0400
-Received: from rv-out-0506.google.com ([209.85.198.238]:62238 "EHLO
-	rv-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752304AbYJGOYQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 7 Oct 2008 10:24:16 -0400
-Received: by rv-out-0506.google.com with SMTP id k40so3591712rvb.1
-        for <git@vger.kernel.org>; Tue, 07 Oct 2008 07:24:13 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to
-         :subject:cc:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:references;
-        bh=XDcAbNMBhlslra8nKo0XgU71HF5QMqK1+SHEbsgooSA=;
-        b=a5WowzSsdbWunrw9dNzY09eYLWU4S8Qc4xMYE1BWPEtFyoEad7TfSapld5cVtd2gYv
-         qbNdgk7qbDLrW4H8rBytGIVy1+YpCuYNaCRxeAaWUc5UctgU7CP6RAoc3le0IZZFcvpv
-         /pdf9m+MZXvYv5XLU25kX5/PU2kwzlaPtHodM=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
-         :content-type:content-transfer-encoding:content-disposition
-         :references;
-        b=m7qbwAKLHa33qShyLjxV5BN2xp/2XWO+3HJKqcBgRZCPDaKDVEargzUIgGno7gzffX
-         Ke4WH3O4TxmK2DCBZEE6u0fzpvHrHObv6Ui9iXJwUtJ6BpkXbIU4idUplq14Zcjfc1Kc
-         O2Xvd146j4qp6JnhHIFLVqC+ErJVCBvGGg1jY=
-Received: by 10.141.68.5 with SMTP id v5mr3908206rvk.179.1223389453551;
-        Tue, 07 Oct 2008 07:24:13 -0700 (PDT)
-Received: by 10.141.201.20 with HTTP; Tue, 7 Oct 2008 07:24:13 -0700 (PDT)
-In-Reply-To: <48EB70C4.1070001@op5.se>
-Content-Disposition: inline
+	id S1752404AbYJGO01 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 7 Oct 2008 10:26:27 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751426AbYJGO01
+	(ORCPT <rfc822;git-outgoing>); Tue, 7 Oct 2008 10:26:27 -0400
+Received: from lilzmailso02.liwest.at ([212.33.55.13]:53662 "EHLO
+	lilzmailso02.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750878AbYJGO00 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 7 Oct 2008 10:26:26 -0400
+Received: from cm56-163-160.liwest.at ([86.56.163.160] helo=linz.eudaptics.com)
+	by lilzmailso02.liwest.at with esmtpa (Exim 4.66)
+	(envelope-from <j.sixt@viscovery.net>)
+	id 1KnDW0-0007Bq-Vn; Tue, 07 Oct 2008 16:26:21 +0200
+Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.42])
+	by linz.eudaptics.com (Postfix) with ESMTP
+	id B55DC54D; Tue,  7 Oct 2008 16:26:20 +0200 (CEST)
+User-Agent: Thunderbird 2.0.0.6 (Windows/20070728)
+X-Enigmail-Version: 0.95.5
+X-Spam-Score: 1.7 (+)
+X-Spam-Report: ALL_TRUSTED=-1.8, BAYES_99=3.5
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/97707>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/97708>
 
-Ok. Thanks.
+From: Johannes Sixt <johannes.sixt@telecom.at>
+
+The --repo option was described in a way that the reader would have to
+assume that it is the same as the <repository> parameter. But it actually
+servers a purpose, which is now written down.
+
+Furthermore, the --mirror option was missing from the synopsis.
+
+Signed-off-by: Johannes Sixt <johannes.sixt@telecom.at>
+---
+ I do not have the toolchain to format the documentation, so please take
+ this with a grain of salt.
+
+ -- Hannes
+
+ Documentation/git-push.txt |   24 +++++++++++++++++++-----
+ builtin-push.c             |    2 +-
+ 2 files changed, 20 insertions(+), 6 deletions(-)
+
+diff --git a/Documentation/git-push.txt b/Documentation/git-push.txt
+index 45c9643..6150b1b 100644
+--- a/Documentation/git-push.txt
++++ b/Documentation/git-push.txt
+@@ -9,8 +9,8 @@ git-push - Update remote refs along with associated objects
+ SYNOPSIS
+ --------
+ [verse]
+-'git push' [--all] [--dry-run] [--tags] [--receive-pack=<git-receive-pack>]
+-	   [--repo=all] [-f | --force] [-v | --verbose]
++'git push' [--all | --mirror] [--dry-run] [--tags] [--receive-pack=<git-receive-pack>]
++	   [--repo=<repository>] [-f | --force] [-v | --verbose]
+ 	   [<repository> <refspec>...]
+
+ DESCRIPTION
+@@ -101,9 +101,23 @@ nor in any Push line of the corresponding remotes file---see below).
+ 	This flag disables the check.  This can cause the
+ 	remote repository to lose commits; use it with care.
+
+---repo=<repo>::
+-	When no repository is specified the command defaults to
+-	"origin"; this overrides it.
++--repo=<repository>::
++	This option is only relevant if no <repository> argument is
++	passed in the invocation. In this case, 'git-push' derives the
++	remote name from the current branch: If it tracks a remote
++	branch, then that remote repository is pushed to. Otherwise,
++	the name "origin" is used. For this latter case, this option
++	can be used to override the name "origin". In other words,
++	the difference between these two commands
+++
++--------------------------
++git push public         #1
++git push --repo=public  #2
++--------------------------
+++
++is that #1 always pushes to "public" whereas #2 pushes to "public"
++only if the current branch does not track a remote branch. This is
++useful if you write an alias or script around 'git-push'.
+
+ --thin::
+ --no-thin::
+diff --git a/builtin-push.c b/builtin-push.c
+index cc6666f..122fdcf 100644
+--- a/builtin-push.c
++++ b/builtin-push.c
+@@ -10,7 +10,7 @@
+ #include "parse-options.h"
+
+ static const char * const push_usage[] = {
+-	"git push [--all | --mirror] [--dry-run] [--tags] [--receive-pack=<git-receive-pack>] [--repo=all] [-f | --force] [-v] [<repository> <refspec>...]",
++	"git push [--all | --mirror] [--dry-run] [--tags] [--receive-pack=<git-receive-pack>] [--repo=<repository>] [-f | --force] [-v] [<repository> <refspec>...]",
+ 	NULL,
+ };
+
+-- 
+1.6.0.2.651.gd07df
