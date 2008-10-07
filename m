@@ -1,116 +1,59 @@
-From: Dmitry Potapov <dpotapov@gmail.com>
-Subject: Re: Files with colons under Cygwin
-Date: Tue, 7 Oct 2008 04:53:27 +0400
-Message-ID: <20081007005327.GT21650@dpotapov.dyndns.org>
-References: <c475e2e60810020702q573570dcp31a5dc18bf98ef30@mail.gmail.com> <20081004233945.GM21650@dpotapov.dyndns.org> <48E9B634.6040909@viscovery.net>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH 0/4] diff text conversion filter
+Date: Mon, 6 Oct 2008 21:20:44 -0400
+Message-ID: <20081007012044.GA4217@coredump.intra.peff.net>
+References: <1222567618-22156-1-git-send-email-Matthieu.Moy@imag.fr> <20080928041040.GA24214@coredump.intra.peff.net> <vpqd4io1tla.fsf@bauges.imag.fr> <20080928161106.GA30199@coredump.intra.peff.net> <vpqk5ctfyp6.fsf@bauges.imag.fr> <20080930164545.GA20305@sigill.intra.peff.net> <20081005214114.GA21875@coredump.intra.peff.net> <48E9B036.6090805@viscovery.net> <vpqtzbpwy9h.fsf@bauges.imag.fr>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Giovanni Funchal <gafunchal@gmail.com>, git@vger.kernel.org,
-	"Shawn O. Pearce" <spearce@spearce.org>
-To: Johannes Sixt <j.sixt@viscovery.net>
-X-From: git-owner@vger.kernel.org Tue Oct 07 02:54:56 2008
+Content-Type: text/plain; charset=utf-8
+Cc: Johannes Sixt <j.sixt@viscovery.net>, git@vger.kernel.org
+To: Matthieu Moy <Matthieu.Moy@imag.fr>
+X-From: git-owner@vger.kernel.org Tue Oct 07 03:22:01 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Kn0qf-0002TE-1x
-	for gcvg-git-2@gmane.org; Tue, 07 Oct 2008 02:54:49 +0200
+	id 1Kn1Gy-0000WD-HS
+	for gcvg-git-2@gmane.org; Tue, 07 Oct 2008 03:22:01 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757397AbYJGAxi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 6 Oct 2008 20:53:38 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759345AbYJGAxh
-	(ORCPT <rfc822;git-outgoing>); Mon, 6 Oct 2008 20:53:37 -0400
-Received: from fg-out-1718.google.com ([72.14.220.157]:50289 "EHLO
-	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1758672AbYJGAxf (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 6 Oct 2008 20:53:35 -0400
-Received: by fg-out-1718.google.com with SMTP id 19so2136776fgg.17
-        for <git@vger.kernel.org>; Mon, 06 Oct 2008 17:53:32 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:cc:subject
-         :message-id:references:mime-version:content-type:content-disposition
-         :in-reply-to:user-agent;
-        bh=6ZGaAbWef0Gag0SESzeNHu6aEhoiQEjguQ9wTvPpO/w=;
-        b=DA6sNfL9QPvhav6xqgtvdWeGe1G7NU/z4JfjbPSWUXYPYblxNYY897xA+I6y6eXtlX
-         FzoUMTk+SHmR7NLyVbpbC/7QUp/XkL89kwhPs/vY1Rk9NPudK8OiPlg6WxjkUhu578Fd
-         b4N76scRDOzr0rSiaQ2WacZqH4M1fTgPTj2To=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        b=IE8rt4/W6GPcZwCppTU5OjKmwD2P1xAFn8OodVx5Q8lf1jVjQR9fWC4Pii8T/pux5T
-         C5ahjXH3NABQt0nC/ekkAvQcB/15wNEwCPMwgMr7zSZlz8ZuPQD8LfGzLgK583Csr6pA
-         oBL1ABRpSrer2+XW6wWw+uyr7Wv5oj3EOKpmk=
-Received: by 10.86.33.19 with SMTP id g19mr5213272fgg.13.1223340812544;
-        Mon, 06 Oct 2008 17:53:32 -0700 (PDT)
-Received: from localhost (ppp91-77-160-5.pppoe.mtu-net.ru [91.77.160.5])
-        by mx.google.com with ESMTPS id 12sm12458900fgg.0.2008.10.06.17.53.29
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Mon, 06 Oct 2008 17:53:30 -0700 (PDT)
+	id S1754570AbYJGBUt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 6 Oct 2008 21:20:49 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754415AbYJGBUt
+	(ORCPT <rfc822;git-outgoing>); Mon, 6 Oct 2008 21:20:49 -0400
+Received: from peff.net ([208.65.91.99]:4829 "EHLO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752565AbYJGBUs (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 6 Oct 2008 21:20:48 -0400
+Received: (qmail 26701 invoked by uid 111); 7 Oct 2008 01:20:46 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+    by peff.net (qpsmtpd/0.32) with SMTP; Mon, 06 Oct 2008 21:20:46 -0400
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Mon, 06 Oct 2008 21:20:44 -0400
 Content-Disposition: inline
-In-Reply-To: <48E9B634.6040909@viscovery.net>
-User-Agent: Mutt/1.5.13 (2006-08-11)
+In-Reply-To: <vpqtzbpwy9h.fsf@bauges.imag.fr>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/97649>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/97650>
 
-On Mon, Oct 06, 2008 at 08:54:44AM +0200, Johannes Sixt wrote:
+On Mon, Oct 06, 2008 at 05:15:22PM +0200, Matthieu Moy wrote:
+
+> Actually, I understand you don't want git gui and gitk to load MS-Word
+> anytime you click something, but I'd love to see the textconv+diff in
+> gitk.
 > 
-> IIUC, verify_path() checks paths that were found in the database or the
-> index.
+> (yeah, that's pretty hard to specify right, the ideal requirement
+> seems to be "in a gui, use the good part of the diff driver, but not
+> the other" :-\).
 
-It also checks paths that was given to git add and other commands to
-prevent an invalid path to enter to the index. If I am not mistaken,
-if invalid path has entered in the index then it will be committed to
-the database without any further checks.
+I think it is even more complex than that. Sometimes when doing "git
+show" I want to see the textconv'd version, and sometimes I don't. So I
+really want a command-line flag or environment variable that I can use
+to control it (with a sane default).
 
-> As such, it checks for the integrity of the database. And paths
-> with backslashes or colons certainly do not violate the database integrity.
+So probably the way forward is to stop relying on "oh, we just didn't
+parse some of the config, so it won't get used" to just parsing the
+config all the time and having a diffopt for "do textconv, do external
+diff, etc". And then plumbing can make sure that those flags never get
+set, and porcelain can tie them to command-line options.
 
-No, it has nothing to do with the database. You can run git fsck --full
-on a repository that contains '..' or '.' or '.git', and there will be
-no error. Having those names does not violate the database integrity,
-as the database is concerned all names are just bytes separated by '/',
-so having name '.' is not a problem for it. However, names '.' and '..'
-have special meaning for the filesystem, and paths starting with .git/
-have special meaning for Git repository. If you work in a bare repo
-then those names are not a problem, but once you have a working tree,
-you want make sure that there is nothing wrong with it.
-
-> 
-> More precisely, the exchange of path names between the index and tree
-> objects (both directions) should not do this new check, nor if a path is
-> added to the index. The check is only meaningful[*] when a path is read
-> from the index or a tree object and "applied" to the working directory.
-> Unfortunately, I think there are lots of places where this happens.
-> 
-> [*] I say "meaningful" and not "necessary" because the situation is just
-> like when you grab some random SoftwarePackage.tar.gz, and run ./configure
-> without looking first what it is going to do.
-
-When I grab any tar, I can look at its context without myself of any
-risk that some files can be overwritten on my file system. And when
-I want to look at some remote git repository, I usually do:
-
-   git clone URL
-
-If it can overwrite some files behind my back, it is security a hole.
-
-BTW, it was the reason why the idea of allowing .gitconfig to be stored
-in git repository (similar to .gitignore) was stroke down about a year ago
-though it could help some clueless users...
-
-On Linux (or other sane file systems), we have all required checks to
-prevent that from happening, and they are places in verify_path, which
-prevents malicious names entering into the index and thus to the file
-system too. So, we should do all required checks on Windows too.
-
-Now, I've realized that my checks were not sufficient (due to Windows
-being case-insensitive), so I will add more checks and resend this
-patch later.
-
-
-Dmitry
+-Peff
