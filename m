@@ -1,78 +1,71 @@
-From: Abdelrazak Younes <younes@lyx.org>
-Subject: Re: [QGit bug] git user settings not retrieved when launched for
- Windows explorer
-Date: Tue, 07 Oct 2008 14:08:09 +0200
-Message-ID: <48EB5129.2010407@lyx.org>
-References: <48EB10C8.4070009@lyx.org>	 <e5bfff550810070410t1097ace4pf401821292fd7565@mail.gmail.com>	 <48EB49B3.1090509@lyx.org> <e5bfff550810070457i702c2935lfcc0b60ae3df4dc4@mail.gmail.com>
+From: Avi Kivity <avi@redhat.com>
+Subject: Re: [PATCH RFC] rebase--interactive: if preserving merges, use	first-parent
+ to limit what is shown.
+Date: Tue, 07 Oct 2008 14:22:26 +0200
+Message-ID: <48EB5482.7050207@redhat.com>
+References: <48E8DD7E.9040706@redhat.com> <20081006102118.3e817a0f.stephen@exigencecorp.com> <20081006212021.04ba9214.stephen@exigencecorp.com> <48EB32A4.80809@redhat.com> <20081007120700.GC7209@leksak.fem-net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
 Content-Transfer-Encoding: 7bit
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Marco Costalba <mcostalba@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Oct 07 14:09:53 2008
+Cc: Stephen Haberman <stephen@exigencecorp.com>, git@vger.kernel.org
+To: Stephan Beyer <s-beyer@gmx.net>
+X-From: git-owner@vger.kernel.org Tue Oct 07 14:24:36 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KnBNq-00051y-BY
-	for gcvg-git-2@gmane.org; Tue, 07 Oct 2008 14:09:46 +0200
+	id 1KnBbP-0001dP-5q
+	for gcvg-git-2@gmane.org; Tue, 07 Oct 2008 14:23:47 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753064AbYJGMIe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 7 Oct 2008 08:08:34 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753031AbYJGMIe
-	(ORCPT <rfc822;git-outgoing>); Tue, 7 Oct 2008 08:08:34 -0400
-Received: from smtp6-g19.free.fr ([212.27.42.36]:57252 "EHLO smtp6-g19.free.fr"
+	id S1753258AbYJGMWe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 7 Oct 2008 08:22:34 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753252AbYJGMWe
+	(ORCPT <rfc822;git-outgoing>); Tue, 7 Oct 2008 08:22:34 -0400
+Received: from mx2.redhat.com ([66.187.237.31]:44763 "EHLO mx2.redhat.com"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753064AbYJGMId (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 7 Oct 2008 08:08:33 -0400
-Received: from smtp6-g19.free.fr (localhost.localdomain [127.0.0.1])
-	by smtp6-g19.free.fr (Postfix) with ESMTP id 6C8641725D;
-	Tue,  7 Oct 2008 14:08:32 +0200 (CEST)
-Received: from [192.168.0.10] (gre92-10-88-181-30-42.fbx.proxad.net [88.181.30.42])
-	by smtp6-g19.free.fr (Postfix) with ESMTP id D029A19725;
-	Tue,  7 Oct 2008 14:08:23 +0200 (CEST)
-User-Agent: Mozilla/5.0 (Windows; U; Windows NT 6.0; en-US; rv:1.9.1b1pre) Gecko/20080918110343 Shredder/3.0b1pre
-In-Reply-To: <e5bfff550810070457i702c2935lfcc0b60ae3df4dc4@mail.gmail.com>
+	id S1753209AbYJGMWd (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 7 Oct 2008 08:22:33 -0400
+Received: from int-mx2.corp.redhat.com (int-mx2.corp.redhat.com [172.16.27.26])
+	by mx2.redhat.com (8.13.8/8.13.8) with ESMTP id m97CMUgv013235;
+	Tue, 7 Oct 2008 08:22:30 -0400
+Received: from ns3.rdu.redhat.com (ns3.rdu.redhat.com [10.11.255.199])
+	by int-mx2.corp.redhat.com (8.13.1/8.13.1) with ESMTP id m97CMT1P024872;
+	Tue, 7 Oct 2008 08:22:29 -0400
+Received: from balrog.qumranet.com (vpn-12-27.rdu.redhat.com [10.11.12.27])
+	by ns3.rdu.redhat.com (8.13.8/8.13.8) with ESMTP id m97CMQYh005233;
+	Tue, 7 Oct 2008 08:22:27 -0400
+User-Agent: Thunderbird 2.0.0.16 (X11/20080723)
+In-Reply-To: <20081007120700.GC7209@leksak.fem-net>
+X-Scanned-By: MIMEDefang 2.58 on 172.16.27.26
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/97700>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/97701>
 
-On 07/10/2008 13:57, Marco Costalba wrote:
-> On Tue, Oct 7, 2008 at 1:36 PM, Abdelrazak Younes<younes@lyx.org>  wrote:
->    
->>> Sound like a problem of startup directory: on the command line you
->>> start from the right directory...when you double click on which repo
->>> qgit is open ?
->>>
->>>        
->> None of course. But when I open a repository manually I would expect that
->> this is properly filled in.
->>
->>      
+Stephan Beyer wrote:
+> Hi,
 >
-> In git.cpp, Git::userInfo() function get info about user by means of
-> 'git config' calls, my guess (I cannot it test now) is that 'git
-> config' does not work if we are not in a git directory.
->    
-
-OK, I'll have a look, thanks.
-
+> Avi Kivity wrote:
+>   
+>> If git rebase is to handle nonlinear history, it needs much more
+>> expressive commands; not only saying which commit to pick, but also what  
+>> the commit's parents shall be.
+>>     
 >
->    
->> And if I launch qgit with the context menu (right clicking a directory in
->> the Explorer), qgit never managed to open the repository.
->>
->>      
+> git-sequencer has a "merge" command for that. I'm really sorry that this has
+> not been sent to the list yet. Nevertheless I'm always glad to find testers
+> for sequencer, so if you like, fetch
+> 	git://repo.or.cz/git/sbeyer.git seq-builtin-dev
 >
-> This is a bug that I never managed to get rid of :-(
->
-> It is strange because it works if you try in a subdirectory, as
-> example try right clicking on 'src' directory of qgit project.
->    
+>   
 
-I tried and it doesn't work this way either; the statusbar tells me that 
-this is 'Not a git archive' :-(
+But this isn't a merge; it's more of a 'pick into this branch' instead.
 
-Abdel.
+Maybe 'merge' can do this, but we also need to populate the todo with 
+the required information (otherwise, git rebase -i without changes to 
+the todo file will not be a no-op).
+
+
+-- 
+error compiling committee.c: too many arguments to function
