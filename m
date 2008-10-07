@@ -1,85 +1,62 @@
-From: "Marco Costalba" <mcostalba@gmail.com>
-Subject: Re: [QGit bug] git user settings not retrieved when launched for Windows explorer
-Date: Tue, 7 Oct 2008 13:57:42 +0200
-Message-ID: <e5bfff550810070457i702c2935lfcc0b60ae3df4dc4@mail.gmail.com>
-References: <48EB10C8.4070009@lyx.org>
-	 <e5bfff550810070410t1097ace4pf401821292fd7565@mail.gmail.com>
-	 <48EB49B3.1090509@lyx.org>
+From: Stephan Beyer <s-beyer@gmx.net>
+Subject: Re: [PATCH RFC] rebase--interactive: if preserving merges, use
+	first-parent to limit what is shown.
+Date: Tue, 7 Oct 2008 14:07:00 +0200
+Message-ID: <20081007120700.GC7209@leksak.fem-net>
+References: <48E8DD7E.9040706@redhat.com> <20081006102118.3e817a0f.stephen@exigencecorp.com> <20081006212021.04ba9214.stephen@exigencecorp.com> <48EB32A4.80809@redhat.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: "Git Mailing List" <git@vger.kernel.org>
-To: "Abdelrazak Younes" <younes@lyx.org>
-X-From: git-owner@vger.kernel.org Tue Oct 07 13:59:27 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: Stephen Haberman <stephen@exigencecorp.com>, git@vger.kernel.org
+To: Avi Kivity <avi@redhat.com>
+X-From: git-owner@vger.kernel.org Tue Oct 07 14:08:33 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KnBDd-0001ad-Pf
-	for gcvg-git-2@gmane.org; Tue, 07 Oct 2008 13:59:14 +0200
+	id 1KnBMQ-0004XU-H0
+	for gcvg-git-2@gmane.org; Tue, 07 Oct 2008 14:08:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753072AbYJGL5q (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 7 Oct 2008 07:57:46 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753109AbYJGL5p
-	(ORCPT <rfc822;git-outgoing>); Tue, 7 Oct 2008 07:57:45 -0400
-Received: from fk-out-0910.google.com ([209.85.128.188]:49530 "EHLO
-	fk-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752884AbYJGL5o (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 7 Oct 2008 07:57:44 -0400
-Received: by fk-out-0910.google.com with SMTP id 18so2761595fkq.5
-        for <git@vger.kernel.org>; Tue, 07 Oct 2008 04:57:43 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to
-         :subject:cc:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:references;
-        bh=SNh8ONRprTxAqjP6oEZ2SZDFldZfYlgdvOeBu5KjXis=;
-        b=Zn+CkbqHwmNa9/cRFNQxTzjEv+/aWT5yyx3RODlvt59KBp6rh6DHiWYAACJoZdhkg8
-         Ipt0UGQLgkcqvALdACXqkjfFYoUUuquuc4cZuLAC3L/qA2teKH9IRhrRQNPszNzegzCX
-         iJjPjob6JbG4eyMoDTEsNwtR8lTK6HrJmgEDU=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
-         :content-type:content-transfer-encoding:content-disposition
-         :references;
-        b=G0s/hGu/Qj81nLK1H1EyZ6FewCYP0D/2Q3NBjN62x5Q7G/A5cilkMMK06QmCXDTlGO
-         i3hR35CujzE2vmW3XInK28wwltUwMxM5HZXHCIUDJkXQDxgj5tVeTrIkTV4Zh68mdBaW
-         63a7TR6e4v92hOCd1pqOzx3drUamHFM/OQ1M4=
-Received: by 10.181.23.2 with SMTP id a2mr4701488bkj.24.1223380662986;
-        Tue, 07 Oct 2008 04:57:42 -0700 (PDT)
-Received: by 10.180.220.15 with HTTP; Tue, 7 Oct 2008 04:57:42 -0700 (PDT)
-In-Reply-To: <48EB49B3.1090509@lyx.org>
+	id S1753152AbYJGMHH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 7 Oct 2008 08:07:07 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753063AbYJGMHH
+	(ORCPT <rfc822;git-outgoing>); Tue, 7 Oct 2008 08:07:07 -0400
+Received: from mail.gmx.net ([213.165.64.20]:54804 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1752718AbYJGMHF (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 7 Oct 2008 08:07:05 -0400
+Received: (qmail invoked by alias); 07 Oct 2008 12:07:01 -0000
+Received: from q137.fem.tu-ilmenau.de (EHLO leksak.fem-net) [141.24.46.137]
+  by mail.gmx.net (mp041) with SMTP; 07 Oct 2008 14:07:01 +0200
+X-Authenticated: #1499303
+X-Provags-ID: V01U2FsdGVkX1+d0FdPyIWdBBBGj5ttSA5EHWPABSKzTxKVOXEo/Y
+	7rVHntey5wgRwg
+Received: from sbeyer by leksak.fem-net with local (Exim 4.69)
+	(envelope-from <s-beyer@gmx.net>)
+	id 1KnBLA-0003vJ-8N; Tue, 07 Oct 2008 14:07:00 +0200
 Content-Disposition: inline
+In-Reply-To: <48EB32A4.80809@redhat.com>
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.74
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/97698>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/97699>
 
-On Tue, Oct 7, 2008 at 1:36 PM, Abdelrazak Younes <younes@lyx.org> wrote:
->
->> Sound like a problem of startup directory: on the command line you
->> start from the right directory...when you double click on which repo
->> qgit is open ?
->>
->
-> None of course. But when I open a repository manually I would expect that
-> this is properly filled in.
->
+Hi,
 
-In git.cpp, Git::userInfo() function get info about user by means of
-'git config' calls, my guess (I cannot it test now) is that 'git
-config' does not work if we are not in a git directory.
+Avi Kivity wrote:
+> If git rebase is to handle nonlinear history, it needs much more
+> expressive commands; not only saying which commit to pick, but also what  
+> the commit's parents shall be.
 
+git-sequencer has a "merge" command for that. I'm really sorry that this has
+not been sent to the list yet. Nevertheless I'm always glad to find testers
+for sequencer, so if you like, fetch
+	git://repo.or.cz/git/sbeyer.git seq-builtin-dev
 
-> And if I launch qgit with the context menu (right clicking a directory in
-> the Explorer), qgit never managed to open the repository.
->
+Regards,
+  Stephan
 
-This is a bug that I never managed to get rid of :-(
-
-It is strange because it works if you try in a subdirectory, as
-example try right clicking on 'src' directory of qgit project.
-
-Thanks
-Marco
+-- 
+Stephan Beyer <s-beyer@gmx.net>, PGP 0x6EDDD207FCC5040F
