@@ -1,74 +1,69 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [msysGit] Re: [FYI][PATCH] Customizing the WinGit installer
-Date: Wed, 08 Oct 2008 00:38:42 -0700
-Message-ID: <7vd4ibr0xp.fsf@gitster.siamese.dyndns.org>
-References: <alpine.DEB.1.00.0810061621110.22125@pacific.mpi-cbg.de.mpi-cbg.de>
- <20081006141840.GO10360@machine.or.cz>
- <alpine.DEB.1.00.0810061718240.22125@pacific.mpi-cbg.de.mpi-cbg.de>
- <m3zllhpvby.fsf@localhost.localdomain>
- <alpine.DEB.1.00.0810061810360.22125@pacific.mpi-cbg.de.mpi-cbg.de>
- <alpine.LFD.2.00.0810061031380.3208@nehalem.linux-foundation.org>
- <alpine.DEB.1.00.0810061959280.22125@pacific.mpi-cbg.de.mpi-cbg.de>
- <alpine.LFD.2.00.0810061246460.3208@nehalem.linux-foundation.org>
- <20081007015336.GU21650@dpotapov.dyndns.org>
- <alpine.LFD.2.00.0810061909260.3208@nehalem.linux-foundation.org>
- <20081007092819.GW10360@machine.or.cz>
+From: Johannes Sixt <j.sixt@viscovery.net>
+Subject: [PATCH] git-gui: Fix switch statement in lib/merge.tcl
+Date: Wed, 08 Oct 2008 10:03:54 +0200
+Message-ID: <48EC696A.1000300@viscovery.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Linus Torvalds <torvalds@linux-foundation.org>,
-	Dmitry Potapov <dpotapov@gmail.com>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Jakub Narebski <jnareb@gmail.com>, msysgit@googlegroups.com,
-	git@vger.kernel.org
-To: Petr Baudis <pasky@suse.cz>
-X-From: git-owner@vger.kernel.org Wed Oct 08 09:40:15 2008
+Content-Type: text/plain; charset=ISO-8859-15
+Content-Transfer-Encoding: 7bit
+Cc: Alexander Gavrilov <angavrilov@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>
+To: "Shawn O. Pearce" <spearce@spearce.org>
+X-From: git-owner@vger.kernel.org Wed Oct 08 10:07:05 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KnTeV-0007iU-1J
-	for gcvg-git-2@gmane.org; Wed, 08 Oct 2008 09:40:11 +0200
+	id 1KnU3L-000772-PA
+	for gcvg-git-2@gmane.org; Wed, 08 Oct 2008 10:05:54 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754140AbYJHHi7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 8 Oct 2008 03:38:59 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754031AbYJHHi7
-	(ORCPT <rfc822;git-outgoing>); Wed, 8 Oct 2008 03:38:59 -0400
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:51641 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753795AbYJHHi6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 8 Oct 2008 03:38:58 -0400
-Received: from localhost.localdomain (localhost [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id BDAF46C3F1;
-	Wed,  8 Oct 2008 03:38:56 -0400 (EDT)
-Received: from pobox.com (ip68-225-240-211.oc.oc.cox.net [68.225.240.211])
- (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
- certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
- ESMTPSA id 30A126C3F0; Wed,  8 Oct 2008 03:38:44 -0400 (EDT)
-In-Reply-To: <20081007092819.GW10360@machine.or.cz> (Petr Baudis's message of
- "Tue, 7 Oct 2008 11:28:19 +0200")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: 29FE16AA-950C-11DD-A546-C355E785EAEE-77302942!a-sasl-fastnet.pobox.com
+	id S1752244AbYJHID7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 8 Oct 2008 04:03:59 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753730AbYJHID6
+	(ORCPT <rfc822;git-outgoing>); Wed, 8 Oct 2008 04:03:58 -0400
+Received: from lilzmailso02.liwest.at ([212.33.55.13]:40367 "EHLO
+	lilzmailso02.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752244AbYJHID5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 8 Oct 2008 04:03:57 -0400
+Received: from cm56-163-160.liwest.at ([86.56.163.160] helo=linz.eudaptics.com)
+	by lilzmailso02.liwest.at with esmtpa (Exim 4.66)
+	(envelope-from <j.sixt@viscovery.net>)
+	id 1KnU1S-0001p6-Mi; Wed, 08 Oct 2008 10:03:54 +0200
+Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.42])
+	by linz.eudaptics.com (Postfix) with ESMTP
+	id 70A576B7; Wed,  8 Oct 2008 10:03:54 +0200 (CEST)
+User-Agent: Thunderbird 2.0.0.6 (Windows/20070728)
+X-Enigmail-Version: 0.95.5
+X-Spam-Score: 1.7 (+)
+X-Spam-Report: ALL_TRUSTED=-1.8, BAYES_99=3.5
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/97783>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/97784>
 
-Petr Baudis <pasky@suse.cz> writes:
+From: Johannes Sixt <johannes.sixt@telecom.at>
 
-> Note that as mentioned in the original mail, my patch was not meant
-> for application upstream, just as an example for others who would like
-> to customize the Git installer for a particular environment. We wanted
-> to make Git installation/usage as simple as possible, reducing any
-> unnecessary steps we could - and this was an easy one.
+0aea2842 (Make Ctrl-T safe to use for conflicting files) introduced a new
+case, but forgot the '-' to indicate that it shares the body with the
+subsequent case label.
 
-I do not personally think showing the license is necessary in the
-installer, but unlike the earlier one that refused to proceed until the
-user says "I Accept" (which was just plain silly), I think the current one
-is Ok.
+Signed-off-by: Johannes Sixt <johannes.sixt@telecom.at>
+---
+ lib/merge.tcl |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
 
-The details are entirely up to people who have actually been involved in
-msysgit packaging work, but it may be possible to package an installer
-that can be used for installing multiple machines with minimum
-interaction, and make the process of extracting that installer show
-notices on licensing and legalese.
+diff --git a/lib/merge.tcl b/lib/merge.tcl
+index ac4c7de..283e491 100644
+--- a/lib/merge.tcl
++++ b/lib/merge.tcl
+@@ -40,7 +40,7 @@ The rescan will be automatically started now.
+ 		_O {
+ 			continue; # and pray it works!
+ 		}
+-		_U
++		_U -
+ 		U? {
+ 			error_popup [mc "You are in the middle of a conflicted merge.
+
+-- 
+1.6.0.2.1596.g729fb
