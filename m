@@ -1,82 +1,75 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: [PATCH] gitweb: refactor input parameters parse/validation
-Date: Wed, 8 Oct 2008 11:45:37 +0200
-Message-ID: <200810081145.37983.jnareb@gmail.com>
-References: <1223054356-17643-1-git-send-email-giuseppe.bilotta@gmail.com> <200810071639.25324.jnareb@gmail.com> <cb7bb73a0810080210s49d1683dj4e2fef8072522abd@mail.gmail.com>
+From: "Rotem Yaari" <vmalloc@gmail.com>
+Subject: Feature Request: Branch Annotations
+Date: Wed, 8 Oct 2008 12:49:12 +0200
+Message-ID: <d2115f4f0810080349o30b6bc2labc2745b8d981e0d@mail.gmail.com>
+References: <d2115f4f0810080341m27c4ca9bv9b1e9b66704ef3fa@mail.gmail.com>
+	 <d2115f4f0810080348t62e18b14x1dfe798974332b05@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, "Shawn O. Pearce" <spearce@spearce.org>
-To: "Giuseppe Bilotta" <giuseppe.bilotta@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Oct 08 11:47:05 2008
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Oct 08 12:51:50 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KnVdB-0002Ts-KR
-	for gcvg-git-2@gmane.org; Wed, 08 Oct 2008 11:46:58 +0200
+	id 1KnWce-00078y-F9
+	for gcvg-git-2@gmane.org; Wed, 08 Oct 2008 12:50:28 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753932AbYJHJpp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 8 Oct 2008 05:45:45 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753657AbYJHJpp
-	(ORCPT <rfc822;git-outgoing>); Wed, 8 Oct 2008 05:45:45 -0400
-Received: from ug-out-1314.google.com ([66.249.92.171]:43676 "EHLO
-	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753133AbYJHJpo (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 8 Oct 2008 05:45:44 -0400
-Received: by ug-out-1314.google.com with SMTP id k3so512189ugf.37
-        for <git@vger.kernel.org>; Wed, 08 Oct 2008 02:45:42 -0700 (PDT)
+	id S1754907AbYJHKtP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 8 Oct 2008 06:49:15 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754910AbYJHKtP
+	(ORCPT <rfc822;git-outgoing>); Wed, 8 Oct 2008 06:49:15 -0400
+Received: from fg-out-1718.google.com ([72.14.220.155]:36597 "EHLO
+	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753764AbYJHKtN (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 8 Oct 2008 06:49:13 -0400
+Received: by fg-out-1718.google.com with SMTP id 19so2665770fgg.17
+        for <git@vger.kernel.org>; Wed, 08 Oct 2008 03:49:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:subject:date
-         :user-agent:cc:references:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:message-id;
-        bh=73xyNgLn5pceYtdbQyVOcGTnzrz1+PQXu6Va4nQiM0w=;
-        b=qxeznzwzwWiwVvrCMw20onlCXh4B7jdc2z8KFJk2c4x3J/EH+Zf+w0tCfWqNGX5n4y
-         3LgD9qZnarPZMNvAYAE2HrhDDcRU3SR5UFp1j98RD9NfAEj8JmLiSfz2CnwzrVZ+Bbnh
-         r2bwK7K2ThKhJb81jp06NzjUHpDjRC2uLY7LQ=
+        h=domainkey-signature:received:received:message-id:date:from:to
+         :subject:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:references;
+        bh=yDGObEd+8V5uZ3vfLiouyL+rr1hBb8+Az15eLipxEjE=;
+        b=EjIz/09Qr0nu/OHRORGJQbLRE1Dn8DMSqMG2q31UQdfgURaBRixTiLsXmx5YrfSofk
+         lqdDPExR2gVlgpZuZFcaG0Vvjk5R8lutm1iozUQIbYqA7N0GZAvmiktIPLDWAIALTlSX
+         twMdfcxgAPKpdFJp9HpGL6ke2MYQilap3lliQ=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=from:to:subject:date:user-agent:cc:references:in-reply-to
-         :mime-version:content-type:content-transfer-encoding
-         :content-disposition:message-id;
-        b=crO8BcxaZQKKhrK6wqnVuSBGLL4dy4qTy9Gnf5W/aUyu80mUFWpOVJLhUpr9vYaH8P
-         M9tq0axsZq+rPvZY+6ghvZxSFsOAldFmFUrkRfvRr1CB85vpJ6Y9iJCerZQieqTNSgEP
-         4s4tZBQxBZc1DgN5nfIV1nf7A5g9KSAcG/uTU=
-Received: by 10.67.25.9 with SMTP id c9mr1989643ugj.29.1223459142485;
-        Wed, 08 Oct 2008 02:45:42 -0700 (PDT)
-Received: from ?192.168.1.11? (abww108.neoplus.adsl.tpnet.pl [83.8.246.108])
-        by mx.google.com with ESMTPS id 32sm1511047ugf.9.2008.10.08.02.45.40
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Wed, 08 Oct 2008 02:45:41 -0700 (PDT)
-User-Agent: KMail/1.9.3
-In-Reply-To: <cb7bb73a0810080210s49d1683dj4e2fef8072522abd@mail.gmail.com>
+        h=message-id:date:from:to:subject:in-reply-to:mime-version
+         :content-type:content-transfer-encoding:content-disposition
+         :references;
+        b=aK8egvFTSGKBfWMC6ZVz5STHowsqti/pl8mCKLzCL93BS2JmamfQ1vkpxz5sLpVL73
+         p3qB3biNdgwHVJXMXMKEgMCmnBeEE1E7aseT3Uxn2bhgjTW4WqtYH0TgK6QeHTfOMy+P
+         ApYs0M47+0IsymoEJrcIox0H9seND+F7WNRoM=
+Received: by 10.187.160.1 with SMTP id m1mr1507360fao.72.1223462952534;
+        Wed, 08 Oct 2008 03:49:12 -0700 (PDT)
+Received: by 10.187.243.11 with HTTP; Wed, 8 Oct 2008 03:49:12 -0700 (PDT)
+In-Reply-To: <d2115f4f0810080348t62e18b14x1dfe798974332b05@mail.gmail.com>
 Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/97792>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/97793>
 
-Giuseppe Bilotta wrote:
-> On Tue, Oct 7, 2008 at 4:39 PM, Jakub Narebski <jnareb@gmail.com> wrote:
-> > Giuseppe Bilotta wrote:
+Hi,
 
-> > Wouldn't it be simpler and as good solution to just leave validation
-> > off evaluate_path_info() (well, of course except check_head_link() test),
-> > and allow it to be validated when assigning global 'params' variables?
-> > check_head_link() would be repeated for path_info links, but that
-> > should not affect performance much.
-> 
-> Well, it does have a performance hit in the case of invalid $project
-> since it spends time working on the rest of the URL before bailing
-> out, but it's probably the cleanest solution. I'll do it this way.
+I usually work with many branches in git, each of which represents a
+different state of development/stability, but also development tasks
+assigned to me.
+Sometimes, besides the name of the branch, it could be useful to have
+a short description of a branch which quickly reminds me what that
+branch is intended for.
 
-I have forgot about this fact, that parameter validation serves also
-as early escape. But I don't think it is much performance hit in
-practice; it is performance (optimization) vs. maintability tradeoff.
+Currently I see no way in git to achieve this (there's a description
+for a repository, but not for individual branches).
 
--- 
-Jakub Narebski
-Poland
+Any opinions on this?
+
+
+Thanks in advance,
+
+--
+Rotem
