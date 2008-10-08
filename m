@@ -1,74 +1,99 @@
-From: Uwe =?iso-8859-1?Q?Kleine-K=F6nig?= <ukleinek@strlen.de>
-Subject: Re: [RFC] git rev-contains [Was: merge -s ffonly]
-Date: Wed, 8 Oct 2008 17:41:06 +0200
-Message-ID: <20081008154106.GA18549@strlen.de>
-References: <20081006235611.GA17662@spearce.org> <20081007185815.GA10744@strlen.de> <20081008143050.GG3052@riemann.deskinm.fdns.net>
+From: Kristis Makris <kristis.makris-tTJs1oqo2yY@public.gmane.org>
+Subject: Re: Git and tagging hook
+Date: Wed, 08 Oct 2008 09:47:25 -0700
+Message-ID: <1223484445.4055.8.camel@localhost>
+References: <1223268332.4072.7.camel@localhost> <48E9BB72.2080008@op5.se>
+	<1223399613.20250.1.camel@localhost>  <gcg67d$4o2$1@ger.gmane.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: "Shawn O. Pearce" <spearce@spearce.org>, git@vger.kernel.org,
-	"Randal L. Schwartz" <merlyn@stonehenge.com>
-To: Deskin Miller <deskinm@umich.edu>
-X-From: git-owner@vger.kernel.org Wed Oct 08 17:53:54 2008
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git-2@gmane.org
-Received: from vger.kernel.org ([209.132.176.167])
+Content-Type: multipart/mixed; boundary="=_talos-13708-1223484613-0001-2"
+Cc: git-u79uwXL29TY76Z2rM5mHXA@public.gmane.org, scmbug-users-G8y9j4K4DsPiwOUmbS1EgQ@public.gmane.org
+To: Jakub Narebski <jnareb-Re5JQEeQqe8AvxtiuMwx3w@public.gmane.org>
+X-From: scmbug-users-bounces-G8y9j4K4DsPiwOUmbS1EgQ@public.gmane.org Wed Oct 08 18:51:04 2008
+Return-path: <scmbug-users-bounces-G8y9j4K4DsPiwOUmbS1EgQ@public.gmane.org>
+Envelope-to: gcbsu-scmbug-users@m.gmane.org
+Received: from 11-74-162-69.static.reverse.lstn.net ([69.162.74.11] helo=mail.loomcm.com)
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KnbB9-0004oe-KK
-	for gcvg-git-2@gmane.org; Wed, 08 Oct 2008 17:42:24 +0200
-Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753996AbYJHPlM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 8 Oct 2008 11:41:12 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754011AbYJHPlL
-	(ORCPT <rfc822;git-outgoing>); Wed, 8 Oct 2008 11:41:11 -0400
-Received: from Chamillionaire.breakpoint.cc ([85.10.199.196]:52551 "EHLO
-	Chamillionaire.breakpoint.cc" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1753167AbYJHPlL (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 8 Oct 2008 11:41:11 -0400
-Received: id: ukleinek by Chamillionaire.breakpoint.cc authenticated by ukleinek with local
-	(easymta 1.00 BETA 1)
-	id 1Knb9u-0004qf-Va; Wed, 08 Oct 2008 17:41:07 +0200
+	id 1KncDG-0002JP-Eh
+	for gcbsu-scmbug-users@m.gmane.org; Wed, 08 Oct 2008 18:48:38 +0200
+Received: from [69.162.74.11] ([::ffff:127.0.0.1])
+  by talos with esmtp; Wed, 08 Oct 2008 09:50:13 -0700
+  id 06171194.48ECE4C5.0000358C
+Received: from [192.168.0.71] ([::ffff:67.40.69.52])
+	by talos with esmtp; Wed, 08 Oct 2008 09:50:11 -0700
+	id 06170BD2.48ECE4C3.00003566
+In-Reply-To: <gcg67d$4o2$1@ger.gmane.org>
+X-Mailer: Evolution 2.6.3 
+X-BeenThere: scmbug-users-G8y9j4K4DsPiwOUmbS1EgQ@public.gmane.org
+X-Mailman-Version: 2.1.9
+Precedence: list
+List-Id: General Scmbug list <scmbug-users.lists.mkgnu.net>
+List-Unsubscribe: <http://lists.mkgnu.net/cgi-bin/mailman/listinfo/scmbug-users>, 
+	<mailto:scmbug-users-request-G8y9j4K4DsPiwOUmbS1EgQ@public.gmane.org?subject=unsubscribe>
+List-Archive: <http://lists.mkgnu.net/pipermail/scmbug-users>
+List-Post: <mailto:scmbug-users-G8y9j4K4DsPiwOUmbS1EgQ@public.gmane.org>
+List-Help: <mailto:scmbug-users-request-G8y9j4K4DsPiwOUmbS1EgQ@public.gmane.org?subject=help>
+List-Subscribe: <http://lists.mkgnu.net/cgi-bin/mailman/listinfo/scmbug-users>, 
+	<mailto:scmbug-users-request-G8y9j4K4DsPiwOUmbS1EgQ@public.gmane.org?subject=subscribe>
+Sender: scmbug-users-bounces-G8y9j4K4DsPiwOUmbS1EgQ@public.gmane.org
+Errors-To: scmbug-users-bounces-G8y9j4K4DsPiwOUmbS1EgQ@public.gmane.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/97804>
+
+This is a MIME-formatted message.  If you see this text it means that your
+E-mail software does not support MIME-formatted messages.
+
+--=_talos-13708-1223484613-0001-2
+Content-Type: multipart/signed; micalg=pgp-sha1; protocol="application/pgp-signature"; boundary="=_talos-13708-1223484613-0001-3"
+
+This is a MIME-formatted message.  If you see this text it means that your
+E-mail software does not support MIME-formatted messages.
+
+--=_talos-13708-1223484613-0001-3
+Content-Type: text/plain
+Content-Transfer-Encoding: quoted-printable
+
+On Tue, 2008-10-07 at 19:28 +0200, Jakub Narebski wrote:
+> Kristis Makris wrote:
+>=20
+> > But the post-receive is NOT executed when I apply a tag.
+> >=20
+> > I want the integration when I apply the tag to a local repository, NOT
+> > only when I push/pull.
+>=20
+> If you are talking about taging locally, you can simply make an alias
+> or do something after tagging. Search archives for description when
+> it is worth to add a hook, and when it is not.
+
+I am looking for a guarantee that is better than casually saying
+"simply". I will be providing the integration work to users that may not
+be as comfortable with making aliases.=20
+
+I still don't see why a hook on local tagging is not available. Is it
+possible to add support in Git for such a hook ? Both pre-tag and
+post-tag.
+
+--=_talos-13708-1223484613-0001-3
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Transfer-Encoding: 7bit
+Content-Description: This is a digitally signed message part
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.6 (GNU/Linux)
+
+iD8DBQBI7OQd/KuTDwnYLxERAooWAKCefDbWUfWOPCpIV7C7Cpu76BebCQCggsOI
+Zadoa7DA1mzOzai58aiU3VQ=
+=xwVw
+-----END PGP SIGNATURE-----
+
+--=_talos-13708-1223484613-0001-3--
+
+--=_talos-13708-1223484613-0001-2
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7bit
 Content-Disposition: inline
-In-Reply-To: <20081008143050.GG3052@riemann.deskinm.fdns.net>
-User-Agent: Mutt/1.5.16 (2007-06-09)
-Sender: git-owner@vger.kernel.org
-Precedence: bulk
-List-ID: <git.vger.kernel.org>
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/97803>
 
-Hello Deskin,
+_______________________________________________
+scmbug-users mailing list
+scmbug-users-G8y9j4K4DsPiwOUmbS1EgQ@public.gmane.org
+http://lists.mkgnu.net/cgi-bin/mailman/listinfo/scmbug-users
 
-On Wed, Oct 08, 2008 at 10:30:50AM -0400, Deskin Miller wrote:
-> On Tue, Oct 07, 2008 at 08:58:15PM +0200, =?ISO-8859-1?Q?Uwe_Kleine-K=F6nig_ wrote:
-> > > +	if test -n "$(git rev-list $1..HEAD)"
-> > I already wrote similar tests and I wonder if this couldn't be done in a
-> > new builtin command more effectively.  Something like
-> > 
-> > 	git rev-contains HEAD "$1"
-> > 
-> > .  I expect it to be faster and maybe it prevents a command line
-> > overflow?! [...]
->  
-> I'm not sure this warrants a builtin; seems like test is perfectly capable of
-> doing what you want:
-> 
-> if test '(' -n "$(git rev-list --max-count=1 $1..HEAD)" ')' -a \
-> 	'(' -z "$(git rev-list --max-count=1 HEAD..$1)" ')'
-> 
-> The second check is needed to ensure that the commits actually have an
-> ancestor-descendant relationship.
-This is needed for the original patch, too, isn't it.
-
->                                    And --max-count means your command line
-> won't overflow.
-ah, --max-count is a nice idea.  Topgit could benefit from it.
- 
-> Or what about this:
-> 
-> if test "$(git merge-base $1 HEAD)" = "$(git rev-parse $1)"
-
-It's not entirely clear to me, this works in general, because a
-merge-base isn't unique.  It should work in this case, though.
-
-Best regards
-Uwe
+--=_talos-13708-1223484613-0001-2--
