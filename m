@@ -1,91 +1,70 @@
-From: Linus Torvalds <torvalds@linux-foundation.org>
-Subject: Re: git-who
-Date: Wed, 8 Oct 2008 11:35:53 -0700 (PDT)
-Message-ID: <alpine.LFD.2.00.0810081119490.3208@nehalem.linux-foundation.org>
-References: <DE2CF127-A7FD-4765-A8E4-5235C5F1B9A9@gmail.com> <48EC4F9D.4020202@viscovery.net>
-Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: "Rhodes, Kate" <masukomi@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: Johannes Sixt <j.sixt@viscovery.net>
-X-From: git-owner@vger.kernel.org Wed Oct 08 20:38:05 2008
+From: Imre Deak <imre.deak@gmail.com>
+Subject: [PATCH] builtin-apply: fix typo leading to stack corruption
+Date: Thu, 9 Oct 2008 00:24:16 +0300
+Message-ID: <48ed30f5.0707d00a.2994.6f1e@mx.google.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Oct 09 00:16:34 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Knduj-0000Vd-SJ
-	for gcvg-git-2@gmane.org; Wed, 08 Oct 2008 20:37:38 +0200
+	id 1KnhKb-00040V-Kx
+	for gcvg-git-2@gmane.org; Thu, 09 Oct 2008 00:16:34 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754649AbYJHSg0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 8 Oct 2008 14:36:26 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754582AbYJHSg0
-	(ORCPT <rfc822;git-outgoing>); Wed, 8 Oct 2008 14:36:26 -0400
-Received: from smtp1.linux-foundation.org ([140.211.169.13]:38772 "EHLO
-	smtp1.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1754580AbYJHSgZ (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 8 Oct 2008 14:36:25 -0400
-Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [140.211.169.55])
-	by smtp1.linux-foundation.org (8.14.2/8.13.5/Debian-3ubuntu1.1) with ESMTP id m98IZsMI007734
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Wed, 8 Oct 2008 11:35:55 -0700
-Received: from localhost (localhost [127.0.0.1])
-	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id m98IZrk3001418;
-	Wed, 8 Oct 2008 11:35:54 -0700
-In-Reply-To: <48EC4F9D.4020202@viscovery.net>
-User-Agent: Alpine 2.00 (LFD 1167 2008-08-23)
-X-Spam-Status: No, hits=-3.435 required=5 tests=AWL,BAYES_00
-X-Spam-Checker-Version: SpamAssassin 3.2.4-osdl_revision__1.47__
-X-MIMEDefang-Filter: lf$Revision: 1.188 $
-X-Scanned-By: MIMEDefang 2.63 on 140.211.169.13
+	id S1753737AbYJHWPV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 8 Oct 2008 18:15:21 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752740AbYJHWPV
+	(ORCPT <rfc822;git-outgoing>); Wed, 8 Oct 2008 18:15:21 -0400
+Received: from ey-out-2122.google.com ([74.125.78.26]:8666 "EHLO
+	ey-out-2122.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752602AbYJHWPU (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 8 Oct 2008 18:15:20 -0400
+Received: by ey-out-2122.google.com with SMTP id 6so1326666eyi.37
+        for <git@vger.kernel.org>; Wed, 08 Oct 2008 15:15:18 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:from:to:date:subject
+         :message-id;
+        bh=+fEC7Jguci+FoyuZmqBlU9HDJ+dp/8IttKZCmNZ5I3Y=;
+        b=xaWsXu21IS+DFl3d0kDsZSikDKWzAXszJzDV/AodzAvCfruJQ7nEHNRpBQtP5WGmNq
+         RTYtKDj/NrAaYFR4u0bcVqEUUAp8LRYXvfOzvFErqDdFu9GmXrK1bKX79EkhzmGeksIP
+         bujWjrSy+joIEC72oK59+IBpcSUVucjFQ6eZs=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=from:to:date:subject:message-id;
+        b=jW8N0QyWEsQEwQenFw7pY3v34h/WOiBLYs5F/OTHCqb+RXhPuecLoYIUNNZ3sDAqso
+         YJIXS2CGReBVomaIEWe7t1YZpmqSmNe1clN0J5lc2nzJ3g8+FbwMAggouq5zxmYzTMLE
+         Zb1Mp5WHiPE0YQdbOJ/ElaasJfjyunSsqGdTQ=
+Received: by 10.210.90.10 with SMTP id n10mr10603913ebb.49.1223504118780;
+        Wed, 08 Oct 2008 15:15:18 -0700 (PDT)
+Received: from localhost (teleca.fi [212.213.55.210])
+        by mx.google.com with ESMTPS id 7sm17811433eyg.0.2008.10.08.15.15.16
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Wed, 08 Oct 2008 15:15:17 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/97806>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/97807>
 
+This typo led to stack corruption for lines with whitespace fixes
+and length > 1024.
+---
+ builtin-apply.c |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
 
-
-On Wed, 8 Oct 2008, Johannes Sixt wrote:
-> 
-> Wouldn't
-> 
->    git shortlog -s -- path/to/file
-
-I suspect "-sn" is better. It sorts by number rather than by name, and if 
-you're interested in who has touched a file, you probably wants to know 
-who has touched it _most_.
-
-And as usual, the nice thing about it is that all the normal git rules 
-apply, so you can do it by multiple files or subdirectories, and you can 
-filter by time. And ignore merges, since they tend to be about upper-level 
-maintainers than about the people doing patches.
-
-So for the kernel, you can do something like
-
-	git shortlog -ns --no-merges --since=6.months.ago drivers/scsi include/scsi
-
-and see who has been doing scsi-related stuff lately.
-
-Of course, when it comes to relevance, it may be more interesting to just 
-look at 'git blame' output, and then you're limited to single files at a  
-time. And performance is going to be a problem, especially if you enable 
-movement detection. 
-
-But we don't have anything special for that. You can do it with something 
-like
-
-	git blame -M -w kernel/sched.c |
-		grep -v '^^' |
-		cut -d'(' -f2- |
-		cut -c1-20 |
-		sort |
-		uniq -c |
-		sort -n
-
-which will ignore the root commit (so as not to give me all the credit for 
-old history), but it would probably be better (but more complex - need 
-perl or some other "real" language with associative arrays etc to remember 
-the commit information) to parse the output of "git blame --incremental" 
-instead.
-
-		Linus
+diff --git a/builtin-apply.c b/builtin-apply.c
+index 20bef1f..720dc7f 100644
+--- a/builtin-apply.c
++++ b/builtin-apply.c
+@@ -1696,7 +1696,7 @@ static int match_fragment(struct image *img,
+ 		fixlen = ws_fix_copy(buf, orig, oldlen, ws_rule, NULL);
+ 
+ 		/* Try fixing the line in the target */
+-		if (sizeof(tgtfixbuf) < tgtlen)
++		if (sizeof(tgtfixbuf) > tgtlen)
+ 			tgtfix = tgtfixbuf;
+ 		else
+ 			tgtfix = xmalloc(tgtlen);
+-- 
+1.6.0.2.308.g754c
