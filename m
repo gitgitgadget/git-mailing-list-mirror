@@ -1,99 +1,82 @@
-From: Kristis Makris <kristis.makris-tTJs1oqo2yY@public.gmane.org>
+From: Andreas Ericsson <ae@op5.se>
 Subject: Re: Git and tagging hook
-Date: Wed, 08 Oct 2008 09:47:25 -0700
-Message-ID: <1223484445.4055.8.camel@localhost>
-References: <1223268332.4072.7.camel@localhost> <48E9BB72.2080008@op5.se>
-	<1223399613.20250.1.camel@localhost>  <gcg67d$4o2$1@ger.gmane.org>
+Date: Wed, 08 Oct 2008 19:40:02 +0200
+Message-ID: <48ECF072.3000506@op5.se>
+References: <1223268332.4072.7.camel@localhost> <48E9BB72.2080008@op5.se>	 <1223399613.20250.1.camel@localhost>  <gcg67d$4o2$1@ger.gmane.org> <1223484445.4055.8.camel@localhost>
 Mime-Version: 1.0
-Content-Type: multipart/mixed; boundary="=_talos-13708-1223484613-0001-2"
-Cc: git-u79uwXL29TY76Z2rM5mHXA@public.gmane.org, scmbug-users-G8y9j4K4DsPiwOUmbS1EgQ@public.gmane.org
-To: Jakub Narebski <jnareb-Re5JQEeQqe8AvxtiuMwx3w@public.gmane.org>
-X-From: scmbug-users-bounces-G8y9j4K4DsPiwOUmbS1EgQ@public.gmane.org Wed Oct 08 18:51:04 2008
-Return-path: <scmbug-users-bounces-G8y9j4K4DsPiwOUmbS1EgQ@public.gmane.org>
-Envelope-to: gcbsu-scmbug-users@m.gmane.org
-Received: from 11-74-162-69.static.reverse.lstn.net ([69.162.74.11] helo=mail.loomcm.com)
+Content-Type: text/plain; charset=ISO-8859-15; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: Jakub Narebski <jnareb@gmail.com>, git@vger.kernel.org
+To: Kristis Makris <kristis.makris@asu.edu>
+X-From: git-owner@vger.kernel.org Wed Oct 08 19:41:39 2008
+Return-path: <git-owner@vger.kernel.org>
+Envelope-to: gcvg-git-2@gmane.org
+Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KncDG-0002JP-Eh
-	for gcbsu-scmbug-users@m.gmane.org; Wed, 08 Oct 2008 18:48:38 +0200
-Received: from [69.162.74.11] ([::ffff:127.0.0.1])
-  by talos with esmtp; Wed, 08 Oct 2008 09:50:13 -0700
-  id 06171194.48ECE4C5.0000358C
-Received: from [192.168.0.71] ([::ffff:67.40.69.52])
-	by talos with esmtp; Wed, 08 Oct 2008 09:50:11 -0700
-	id 06170BD2.48ECE4C3.00003566
-In-Reply-To: <gcg67d$4o2$1@ger.gmane.org>
-X-Mailer: Evolution 2.6.3 
-X-BeenThere: scmbug-users-G8y9j4K4DsPiwOUmbS1EgQ@public.gmane.org
-X-Mailman-Version: 2.1.9
-Precedence: list
-List-Id: General Scmbug list <scmbug-users.lists.mkgnu.net>
-List-Unsubscribe: <http://lists.mkgnu.net/cgi-bin/mailman/listinfo/scmbug-users>, 
-	<mailto:scmbug-users-request-G8y9j4K4DsPiwOUmbS1EgQ@public.gmane.org?subject=unsubscribe>
-List-Archive: <http://lists.mkgnu.net/pipermail/scmbug-users>
-List-Post: <mailto:scmbug-users-G8y9j4K4DsPiwOUmbS1EgQ@public.gmane.org>
-List-Help: <mailto:scmbug-users-request-G8y9j4K4DsPiwOUmbS1EgQ@public.gmane.org?subject=help>
-List-Subscribe: <http://lists.mkgnu.net/cgi-bin/mailman/listinfo/scmbug-users>, 
-	<mailto:scmbug-users-request-G8y9j4K4DsPiwOUmbS1EgQ@public.gmane.org?subject=subscribe>
-Sender: scmbug-users-bounces-G8y9j4K4DsPiwOUmbS1EgQ@public.gmane.org
-Errors-To: scmbug-users-bounces-G8y9j4K4DsPiwOUmbS1EgQ@public.gmane.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/97804>
+	id 1Knd2K-0001KV-GO
+	for gcvg-git-2@gmane.org; Wed, 08 Oct 2008 19:41:24 +0200
+Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
+	id S1754585AbYJHRkN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 8 Oct 2008 13:40:13 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754582AbYJHRkN
+	(ORCPT <rfc822;git-outgoing>); Wed, 8 Oct 2008 13:40:13 -0400
+Received: from mail.op5.se ([193.201.96.20]:37822 "EHLO mail.op5.se"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754580AbYJHRkM (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 8 Oct 2008 13:40:12 -0400
+Received: from localhost (localhost.localdomain [127.0.0.1])
+	by mail.op5.se (Postfix) with ESMTP id B550E1B800F5;
+	Wed,  8 Oct 2008 19:32:21 +0200 (CEST)
+X-Virus-Scanned: amavisd-new at 
+X-Spam-Flag: NO
+X-Spam-Score: -2.655
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.655 tagged_above=-10 required=6.6
+	tests=[AWL=-0.156, BAYES_00=-2.599, RDNS_NONE=0.1]
+Received: from mail.op5.se ([127.0.0.1])
+	by localhost (mail.op5.se [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id SKW3gxlKXoPK; Wed,  8 Oct 2008 19:32:15 +0200 (CEST)
+Received: from clix.int.op5.se (unknown [172.27.78.6])
+	by mail.op5.se (Postfix) with ESMTP id CAFED1B800AF;
+	Wed,  8 Oct 2008 19:32:14 +0200 (CEST)
+User-Agent: Thunderbird 2.0.0.16 (X11/20080723)
+In-Reply-To: <1223484445.4055.8.camel@localhost>
+Sender: git-owner@vger.kernel.org
+Precedence: bulk
+List-ID: <git.vger.kernel.org>
+X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/97805>
 
-This is a MIME-formatted message.  If you see this text it means that your
-E-mail software does not support MIME-formatted messages.
+Kristis Makris wrote:
+> On Tue, 2008-10-07 at 19:28 +0200, Jakub Narebski wrote:
+>> Kristis Makris wrote:
+>>
+>>> But the post-receive is NOT executed when I apply a tag.
+>>>
+>>> I want the integration when I apply the tag to a local repository, NOT
+>>> only when I push/pull.
+>> If you are talking about taging locally, you can simply make an alias
+>> or do something after tagging. Search archives for description when
+>> it is worth to add a hook, and when it is not.
+> 
+> I am looking for a guarantee that is better than casually saying
+> "simply". I will be providing the integration work to users that may not
+> be as comfortable with making aliases. 
+> 
+> I still don't see why a hook on local tagging is not available. Is it
+> possible to add support in Git for such a hook ? Both pre-tag and
+> post-tag.
 
---=_talos-13708-1223484613-0001-2
-Content-Type: multipart/signed; micalg=pgp-sha1; protocol="application/pgp-signature"; boundary="=_talos-13708-1223484613-0001-3"
+Because noone's ever needed one before. If aliases can't do what you
+want, write a patch to support it and hope Junio accepts it. It's really
+quite straight-forward. Make sure you read Documentation/SubmittingPatches
+before you send it.
 
-This is a MIME-formatted message.  If you see this text it means that your
-E-mail software does not support MIME-formatted messages.
+Note though that use of tags on the developer's side will still be up
+to the developer and not something you can force through other means
+than policy or convention.
 
---=_talos-13708-1223484613-0001-3
-Content-Type: text/plain
-Content-Transfer-Encoding: quoted-printable
-
-On Tue, 2008-10-07 at 19:28 +0200, Jakub Narebski wrote:
-> Kristis Makris wrote:
->=20
-> > But the post-receive is NOT executed when I apply a tag.
-> >=20
-> > I want the integration when I apply the tag to a local repository, NOT
-> > only when I push/pull.
->=20
-> If you are talking about taging locally, you can simply make an alias
-> or do something after tagging. Search archives for description when
-> it is worth to add a hook, and when it is not.
-
-I am looking for a guarantee that is better than casually saying
-"simply". I will be providing the integration work to users that may not
-be as comfortable with making aliases.=20
-
-I still don't see why a hook on local tagging is not available. Is it
-possible to add support in Git for such a hook ? Both pre-tag and
-post-tag.
-
---=_talos-13708-1223484613-0001-3
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Transfer-Encoding: 7bit
-Content-Description: This is a digitally signed message part
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.6 (GNU/Linux)
-
-iD8DBQBI7OQd/KuTDwnYLxERAooWAKCefDbWUfWOPCpIV7C7Cpu76BebCQCggsOI
-Zadoa7DA1mzOzai58aiU3VQ=
-=xwVw
------END PGP SIGNATURE-----
-
---=_talos-13708-1223484613-0001-3--
-
---=_talos-13708-1223484613-0001-2
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
-Content-Disposition: inline
-
-_______________________________________________
-scmbug-users mailing list
-scmbug-users-G8y9j4K4DsPiwOUmbS1EgQ@public.gmane.org
-http://lists.mkgnu.net/cgi-bin/mailman/listinfo/scmbug-users
-
---=_talos-13708-1223484613-0001-2--
+-- 
+Andreas Ericsson                   andreas.ericsson@op5.se
+OP5 AB                             www.op5.se
+Tel: +46 8-230225                  Fax: +46 8-230231
