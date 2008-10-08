@@ -1,192 +1,80 @@
 From: Stephen Haberman <stephen@exigencecorp.com>
-Subject: [PATCH v2 RFC] rebase-i-p: test to exclude commits from todo based on its parents
-Date: Wed,  8 Oct 2008 01:41:51 -0500
-Message-ID: <e5ababa1de420b6460fd856679990c9dd2caf1d1.1223445353.git.stephen@exigencecorp.com>
+Subject: [PATCH v2 RFC] rebase-i-p: delay saving current-commit to REWRITTEN if squashing
+Date: Wed,  8 Oct 2008 01:41:53 -0500
+Message-ID: <90b5c351699999b5b4e4aa33475993661c26ee4c.1223445353.git.stephen@exigencecorp.com>
 References: <cover.1223445353.git.stephen@exigencecorp.com>
+ <e5ababa1de420b6460fd856679990c9dd2caf1d1.1223445353.git.stephen@exigencecorp.com>
+ <e1cac64070f53f4f217a3b8e8c0f855f23691725.1223445353.git.stephen@exigencecorp.com>
 Cc: spearce@spearce.org, Stephen Haberman <stephen@exigencecorp.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Oct 08 08:43:45 2008
+X-From: git-owner@vger.kernel.org Wed Oct 08 08:43:55 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KnSlP-0006jp-J2
-	for gcvg-git-2@gmane.org; Wed, 08 Oct 2008 08:43:16 +0200
+	id 1KnSlv-0006wy-PT
+	for gcvg-git-2@gmane.org; Wed, 08 Oct 2008 08:43:48 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752306AbYJHGmG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 8 Oct 2008 02:42:06 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753381AbYJHGmE
-	(ORCPT <rfc822;git-outgoing>); Wed, 8 Oct 2008 02:42:04 -0400
-Received: from smtp132.sat.emailsrvr.com ([66.216.121.132]:60990 "EHLO
+	id S1753127AbYJHGmM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 8 Oct 2008 02:42:12 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753479AbYJHGmK
+	(ORCPT <rfc822;git-outgoing>); Wed, 8 Oct 2008 02:42:10 -0400
+Received: from smtp132.sat.emailsrvr.com ([66.216.121.132]:61000 "EHLO
 	smtp132.sat.emailsrvr.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751469AbYJHGmA (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 8 Oct 2008 02:42:00 -0400
+	with ESMTP id S1752788AbYJHGmD (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 8 Oct 2008 02:42:03 -0400
 Received: from relay3.relay.sat.mlsrvr.com (localhost [127.0.0.1])
-	by relay3.relay.sat.mlsrvr.com (SMTP Server) with ESMTP id 1158F253450;
+	by relay3.relay.sat.mlsrvr.com (SMTP Server) with ESMTP id 94A7D25342F;
+	Wed,  8 Oct 2008 02:42:01 -0400 (EDT)
+Received: by relay3.relay.sat.mlsrvr.com (Authenticated sender: stephen-AT-exigencecorp.com) with ESMTP id F1394253461;
 	Wed,  8 Oct 2008 02:42:00 -0400 (EDT)
-Received: by relay3.relay.sat.mlsrvr.com (Authenticated sender: stephen-AT-exigencecorp.com) with ESMTP id 87259253018;
-	Wed,  8 Oct 2008 02:41:59 -0400 (EDT)
 X-Mailer: git-send-email 1.6.0.2
-In-Reply-To: <cover.1223445353.git.stephen@exigencecorp.com>
+In-Reply-To: <e1cac64070f53f4f217a3b8e8c0f855f23691725.1223445353.git.stephen@exigencecorp.com>
 In-Reply-To: <cover.1223445353.git.stephen@exigencecorp.com>
 References: <cover.1223445353.git.stephen@exigencecorp.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/97767>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/97768>
 
-The first case was based off a script from Avi Kivity <avi@redhat.com>.
-
-The second case includes a merge-of-a-merge to ensure both are included in todo.
+If the current-commit was dumped to REWRITTEN, but then we squash the next
+commit in to it, we have invalidated the HEAD was just written to REWRITTEN.
+Instead, append the squash hash to current-commit and save both of them the next
+time around.
 
 Signed-off-by: Stephen Haberman <stephen@exigencecorp.com>
 ---
- t/t3411-rebase-preserve-around-merges.sh |  136 ++++++++++++++++++++++++++++++
- 1 files changed, 136 insertions(+), 0 deletions(-)
- create mode 100644 t/t3411-rebase-preserve-around-merges.sh
+ git-rebase--interactive.sh |   15 ++++++++++-----
+ 1 files changed, 10 insertions(+), 5 deletions(-)
 
-diff --git a/t/t3411-rebase-preserve-around-merges.sh b/t/t3411-rebase-preserve-around-merges.sh
-new file mode 100644
-index 0000000..18202fb
---- /dev/null
-+++ b/t/t3411-rebase-preserve-around-merges.sh
-@@ -0,0 +1,136 @@
-+#!/bin/sh
-+#
-+# Copyright (c) 2008 Stephen Haberman
-+#
-+
-+test_description='git rebase preserve merges
-+
-+This test runs git rebase with and tries to squash a commit from after a merge
-+to before the merge.
-+'
-+. ./test-lib.sh
-+
-+# Copy/paste from t3404-rebase-interactive.sh
-+echo "#!$SHELL_PATH" >fake-editor.sh
-+cat >> fake-editor.sh <<\EOF
-+case "$1" in
-+*/COMMIT_EDITMSG)
-+	test -z "$FAKE_COMMIT_MESSAGE" || echo "$FAKE_COMMIT_MESSAGE" > "$1"
-+	test -z "$FAKE_COMMIT_AMEND" || echo "$FAKE_COMMIT_AMEND" >> "$1"
-+	exit
-+	;;
-+esac
-+test -z "$EXPECT_COUNT" ||
-+	test "$EXPECT_COUNT" = $(sed -e '/^#/d' -e '/^$/d' < "$1" | wc -l) ||
-+	exit
-+test -z "$FAKE_LINES" && exit
-+grep -v '^#' < "$1" > "$1".tmp
-+rm -f "$1"
-+cat "$1".tmp
-+action=pick
-+for line in $FAKE_LINES; do
-+	case $line in
-+	squash|edit)
-+		action="$line";;
-+	*)
-+		echo sed -n "${line}s/^pick/$action/p"
-+		sed -n "${line}p" < "$1".tmp
-+		sed -n "${line}s/^pick/$action/p" < "$1".tmp >> "$1"
-+		action=pick;;
-+	esac
-+done
-+EOF
-+
-+test_set_editor "$(pwd)/fake-editor.sh"
-+chmod a+x fake-editor.sh
-+
-+# set up two branches like this:
-+#
-+# A1 - B1 - D1 - E1 - F1
-+#       \        /
-+#        -- C1 --
-+
-+test_expect_success 'setup' '
-+	touch a &&
-+	touch b &&
-+	git add a &&
-+	git commit -m A1 &&
-+	git tag A1
-+	git add b &&
-+	git commit -m B1 &&
-+	git tag B1 &&
-+	git checkout -b branch &&
-+	touch c &&
-+	git add c &&
-+	git commit -m C1 &&
-+	git checkout master &&
-+	touch d &&
-+	git add d &&
-+	git commit -m D1 &&
-+	git merge branch &&
-+	touch f &&
-+	git add f &&
-+	git commit -m F1 &&
-+	git tag F1
-+'
-+
-+# Should result in:
-+#
-+# A1 - B1 - D2 - E2
-+#       \        /
-+#        -- C1 --
-+#
-+test_expect_success 'squash F1 into D1' '
-+	FAKE_LINES="1 squash 3 2" git rebase -i -p B1 &&
-+	test "$(git rev-parse HEAD^2)" = "$(git rev-parse branch)" &&
-+	test "$(git rev-parse HEAD~2)" = "$(git rev-parse B1)" &&
-+	git tag E2
-+'
-+
-+# Start with:
-+#
-+# A1 - B1 - D2 - E2
-+#  \
-+#   G1 ---- L1 ---- M1
-+#    \             /
-+#     H1 -- J1 -- K1
-+#      \         /
-+#        -- I1 --
-+#
-+# And rebase G1..M1 onto E3
-+
-+test_expect_success 'rebase two levels of merge' '
-+	git checkout -b branch2 A1 &&
-+	touch g &&
-+	git add g &&
-+	git commit -m G1 &&
-+	git checkout -b branch3 &&
-+	touch h
-+	git add h &&
-+	git commit -m H1 &&
-+	git checkout -b branch4 &&
-+	touch i &&
-+	git add i &&
-+	git commit -m I1 &&
-+	git tag I1 &&
-+	git checkout branch3 &&
-+	touch j &&
-+	git add j &&
-+	git commit -m J1 &&
-+	git merge I1 --no-commit &&
-+	git commit -m K1 &&
-+	git tag K1 &&
-+	git checkout branch2 &&
-+	touch l &&
-+	git add l &&
-+	git commit -m L1 &&
-+	git merge K1 --no-commit &&
-+	git commit -m M1 &&
-+	GIT_EDITOR=: git rebase -i -p E2 &&
-+	test "$(git rev-parse HEAD~3)" = "$(git rev-parse E2)" &&
-+	test "$(git rev-parse HEAD~2)" = "$(git rev-parse HEAD^2^2~2)" &&
-+	test "$(git rev-parse HEAD^2^1^1)" = "$(git rev-parse HEAD^2^2^1)"
-+'
-+
-+test_done
-+
+diff --git a/git-rebase--interactive.sh b/git-rebase--interactive.sh
+index b7eda66..8af425d 100755
+--- a/git-rebase--interactive.sh
++++ b/git-rebase--interactive.sh
+@@ -159,13 +159,18 @@ pick_one_preserving_merges () {
+ 
+ 	if test -f "$DOTEST"/current-commit
+ 	then
+-		current_commit=$(cat "$DOTEST"/current-commit) &&
+-		git rev-parse HEAD > "$REWRITTEN"/$current_commit &&
+-		rm "$DOTEST"/current-commit ||
+-		die "Cannot write current commit's replacement sha1"
++		if [ "$fast_forward" == "t" ]
++		then
++			cat "$DOTEST"/current-commit | while read current_commit
++			do
++				git rev-parse HEAD > "$REWRITTEN"/$current_commit
++			done
++			rm "$DOTEST"/current-commit ||
++			die "Cannot write current commit's replacement sha1"
++		fi
+ 	fi
+ 
+-	echo $sha1 > "$DOTEST"/current-commit
++	echo $sha1 >> "$DOTEST"/current-commit
+ 
+ 	# rewrite parents; if none were rewritten, we can fast-forward.
+ 	new_parents=
 -- 
 1.6.0.2
