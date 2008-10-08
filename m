@@ -1,103 +1,121 @@
-From: Michael J Gruber <git@drmicha.warpmail.net>
-Subject: Re: Different svn-id URLs in history
-Date: Wed, 08 Oct 2008 10:32:34 +0200
-Message-ID: <48EC7022.7030707@drmicha.warpmail.net>
-References: <48EB40E1.40506@3d-radar.com> <48EB79D8.6090908@drmicha.warpmail.net> <48EC546F.7060106@3d-radar.com>
+From: "Giuseppe Bilotta" <giuseppe.bilotta@gmail.com>
+Subject: Re: [PATCH] gitweb: refactor input parameters parse/validation
+Date: Wed, 8 Oct 2008 11:10:23 +0200
+Message-ID: <cb7bb73a0810080210s49d1683dj4e2fef8072522abd@mail.gmail.com>
+References: <1223054356-17643-1-git-send-email-giuseppe.bilotta@gmail.com>
+	 <200810071257.38423.jnareb@gmail.com>
+	 <cb7bb73a0810070542v4c8a9820x4d91ea20597ddf01@mail.gmail.com>
+	 <200810071639.25324.jnareb@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Knut Eldhuset <knut@3d-radar.com>
-X-From: git-owner@vger.kernel.org Wed Oct 08 10:34:29 2008
+Cc: git@vger.kernel.org, "Shawn O. Pearce" <spearce@spearce.org>
+To: "Jakub Narebski" <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Oct 08 11:12:48 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KnUUZ-0000Y1-1W
-	for gcvg-git-2@gmane.org; Wed, 08 Oct 2008 10:33:59 +0200
+	id 1KnV4y-0006Xw-DJ
+	for gcvg-git-2@gmane.org; Wed, 08 Oct 2008 11:11:36 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752152AbYJHIcs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 8 Oct 2008 04:32:48 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751495AbYJHIcs
-	(ORCPT <rfc822;git-outgoing>); Wed, 8 Oct 2008 04:32:48 -0400
-Received: from out3.smtp.messagingengine.com ([66.111.4.27]:39273 "EHLO
-	out3.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751307AbYJHIcr (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 8 Oct 2008 04:32:47 -0400
-Received: from compute2.internal (compute2.internal [10.202.2.42])
-	by out1.messagingengine.com (Postfix) with ESMTP id 1B694177D7D;
-	Wed,  8 Oct 2008 04:32:46 -0400 (EDT)
-Received: from heartbeat2.messagingengine.com ([10.202.2.161])
-  by compute2.internal (MEProxy); Wed, 08 Oct 2008 04:32:46 -0400
-X-Sasl-enc: nR0p3GgMtjmJif5+d7HkNaSRauFVGL4PwR4me79CJUL8 1223454765
-Received: from [139.174.44.12] (whitehead.math.tu-clausthal.de [139.174.44.12])
-	by mail.messagingengine.com (Postfix) with ESMTPSA id 6686D35545;
-	Wed,  8 Oct 2008 04:32:45 -0400 (EDT)
-User-Agent: Thunderbird 2.0.0.17 (X11/20080914)
-In-Reply-To: <48EC546F.7060106@3d-radar.com>
+	id S1753610AbYJHJKZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 8 Oct 2008 05:10:25 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754259AbYJHJKZ
+	(ORCPT <rfc822;git-outgoing>); Wed, 8 Oct 2008 05:10:25 -0400
+Received: from wx-out-0506.google.com ([66.249.82.232]:57926 "EHLO
+	wx-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752257AbYJHJKY (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 8 Oct 2008 05:10:24 -0400
+Received: by wx-out-0506.google.com with SMTP id h27so857446wxd.4
+        for <git@vger.kernel.org>; Wed, 08 Oct 2008 02:10:23 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to
+         :subject:cc:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:references;
+        bh=eIesiRHWmb5/ldsVxPhIrCj4jE8Vawf/nIws9tNFz60=;
+        b=wghCFIqeI1IOYPAkgxW0aXV0XuMZIqZ4KZ00n7gZZc78i6QuCXUlvF80WJWpRyU+z+
+         NgWWiwRW9fLrKjAtZ8sEsNqOLkSp6s9U7vE03EtKHXIUGh9arh5PeH+pFkQTtY8E3+sn
+         XmrOULJhhYth36gPv7YGKGpq6L4KH2KFOcgws=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
+         :content-type:content-transfer-encoding:content-disposition
+         :references;
+        b=MmJ3w0uMCPod3Rq0a9XErlBh5rXSqsokRYHHv+/Uy6yAV7h8GdjECl26usWewyWo3y
+         T1qkvvUQonIQo7uAwQ1jvnNsTSxP07hllgudtVNifOVZDbg5+40HRLPixsSO0lIVQQ8g
+         cBe3+bNxNfFiA+h6cd8g8TcWKEsZDTKkTfNaI=
+Received: by 10.151.43.19 with SMTP id v19mr2752942ybj.84.1223457023074;
+        Wed, 08 Oct 2008 02:10:23 -0700 (PDT)
+Received: by 10.150.145.2 with HTTP; Wed, 8 Oct 2008 02:10:23 -0700 (PDT)
+In-Reply-To: <200810071639.25324.jnareb@gmail.com>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/97786>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/97787>
 
-Knut Eldhuset venit, vidit, dixit 08.10.2008 08:34:
-> Michael J Gruber wrote:
->> Knut Eldhuset venit, vidit, dixit 07.10.2008 12:58:
->>> Hi,
+On Tue, Oct 7, 2008 at 4:39 PM, Jakub Narebski <jnareb@gmail.com> wrote:
+> Giuseppe Bilotta wrote:
+>> On Tue, Oct 7, 2008 at 12:57 PM, Jakub Narebski <jnareb@gmail.com> wrote:
+>>> On Fri, 3 Oct 2008, Giuseppe Bilotta wrote:
+>
+>>>> +     # find which part of PATH_INFO is project
+>>>> +     my $project = $path_info;
 >>>
->>> After cloning my svn repository, I notice that the svn-id URL is 
->>> different when going back in history:
->>>
->>> git-svn-id: https://server/trunk@300
->>>
->>> vs
->>>
->>> git-svn-id: https://server/trunk/some_folder/project/src@250
->>>
->> I take this is as an invitation for guesswork (given the amount of
->> details)...
-> 
-> Sorry about that... I'm confused.
->> You probably have commits which don't follow your usual svn repo layout
->> (trunk/some_folder/project/src) but commit to trunk/ directly. The output of
+>>> Hmmm... now $project is local (lexically) here.
 >>
->> svn log -v -r300 https://server/trunk@300
->> svn log -v -r250 https://server/trunk/some_folder/project/src@250
+>> Yes, itt's only used temporarily here, to see if  a proper $project
+>> can be defined. It gets redefined outside. It just made sense to name
+>> it like this 8-)
+>
+> Well, if $project is local in evaluate_path_info(), so could be
+> $path_info...
+
+But $path_info in evaluate_path_info() has the same purpose and the
+same (initial) data as $path_info outside of evaluate_path_info(), the
+same is not true for $project.
+
+>>>> +     $project =~ s,/+$,,;
+>>>> +     while ($project && !check_head_link("$projectroot/$project")) {
+>>>> +             $project =~ s,/*[^/]*$,,;
+>>>> +     }
+>>>> +     # validate project
+>>>> +     $project = validate_project($project);
+>>>
+>>> I'm not sure if it is worth worrying over, but I think you repeat
+>>> check_head_link() check here.
+>>>
+>>> [After examining code further].  But I think you do double validation;
+>>> once you do it here, and once you do it copying to global variables
+>>> such as $action or $project, and double checking check_head_link()
+>>> won't be easy to avoid; fortunately it is cheap filesystem-level check
+>>> (might be slow only when stat is extremely slow, and is not cached).
 >>
->> should give some clues.
+>> I know. This is actually the reason why I had interleaved path_info
+>> definition and global validation in my previous version of the patch.
+>> The big issue here is that path_info evaluation _needs_ (partial)
+>> validation.
 >>
-> 
-> Svn log shows that the same path has been modified in both cases. I see 
+>> A possible alternative could be to only put validated parameters into
+>> %input_params. This would completely separate the validation for cgi
+>> and path_info (modulo shared subs).
+>>
+>> Of course, the check_head_link would still be repeated inside
+>> evaluate_path_info, but the other params could skip a double
+>> validation.
+>
+> Wouldn't it be simpler and as good solution to just leave validation
+> off evaluate_path_info() (well, of course except check_head_link() test),
+> and allow it to be validated when assigning global 'params' variables?
+> check_head_link() would be repeated for path_info links, but that
+> should not affect performance much.
 
-Does "same path" mean:
-- same relative to the above paths or
-- same absolute path?
+Well, it does have a performance hit in the case of invalid $project
+since it spends time working on the rest of the URL before bailing
+out, but it's probably the cleanest solution. I'll do it this way.
 
-> something strange in git, though. Our svn repository has about 6500 
-> commits, but git shows over 10.000. Further investigation shows that a 
-> lot of svn commits have two entries in git. Some branches off of trunk 
-> do not start at r1, but off of a duplicate rNNNN. Could this be due to 
-> our unhealthy practice of creating branches off of subtrees in svn? By 
-> this I mean create a branch off of 
-> https://server/trunk/some_folder/project/src instead of 
-> https://server/trunk. If so, what can be done to fix this?
-> 
-> As a sidenote, during git svn clone, I noticed that each time a new 
-> branch or tag was discovered, the "scanning" started back at r1. Is this 
-> normal? I would think the history before the branch was already 
-> imported. Of course, this could maybe be due to the bad branching 
-> practice described above.
-
-svn is typically "abused" in the sense that one svn repo is used for
-separate projects (your subtrees). git-svn can deal with non-standard
-repo layouts.
-
-I assume you can't share the svn repo publically, can you?
-So, in order to help you, we would need to know
-
-- the layout of your svn repo: where are trunk, branches and tags, how
-did you create branches and tags in svn, are "projects" entirely separate
-- your incarnation of git-svn
-
-Michael
+-- 
+Giuseppe "Oblomov" Bilotta
