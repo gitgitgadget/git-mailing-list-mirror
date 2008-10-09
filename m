@@ -1,63 +1,60 @@
-From: Stephen Haberman <stephen@exigencecorp.com>
-Subject: Re: [PATCH v2 RFC] rebase-i-p: test to exclude commits from todo
- based on its parents
-Date: Wed, 8 Oct 2008 20:58:43 -0500
-Organization: Exigence
-Message-ID: <20081008205843.bd6c297b.stephen@exigencecorp.com>
-References: <cover.1223445353.git.stephen@exigencecorp.com>
-	<e5ababa1de420b6460fd856679990c9dd2caf1d1.1223445353.git.stephen@exigencecorp.com>
-	<7vmyhfr1lb.fsf@gitster.siamese.dyndns.org>
+From: "Caleb Cushing" <xenoterracide@gmail.com>
+Subject: git status options feature suggestion
+Date: Thu, 9 Oct 2008 01:34:41 -0400
+Message-ID: <81bfc67a0810082234p55e2fb9jb2a10f837eea7de0@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, spearce@spearce.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Oct 09 03:59:58 2008
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Oct 09 07:35:56 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Knkom-0006hd-Qf
-	for gcvg-git-2@gmane.org; Thu, 09 Oct 2008 03:59:57 +0200
+	id 1KnoBo-00031D-1b
+	for gcvg-git-2@gmane.org; Thu, 09 Oct 2008 07:35:56 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751690AbYJIB6p (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 8 Oct 2008 21:58:45 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753287AbYJIB6p
-	(ORCPT <rfc822;git-outgoing>); Wed, 8 Oct 2008 21:58:45 -0400
-Received: from smtp142.sat.emailsrvr.com ([66.216.121.142]:53697 "EHLO
-	smtp142.sat.emailsrvr.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751595AbYJIB6p (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 8 Oct 2008 21:58:45 -0400
-Received: from relay4.relay.sat.mlsrvr.com (localhost [127.0.0.1])
-	by relay4.relay.sat.mlsrvr.com (SMTP Server) with ESMTP id B65A427B2AE;
-	Wed,  8 Oct 2008 21:58:44 -0400 (EDT)
-Received: by relay4.relay.sat.mlsrvr.com (Authenticated sender: stephen-AT-exigencecorp.com) with ESMTP id 389BE27B07E;
-	Wed,  8 Oct 2008 21:58:44 -0400 (EDT)
-In-Reply-To: <7vmyhfr1lb.fsf@gitster.siamese.dyndns.org>
-X-Mailer: Sylpheed 2.5.0 (GTK+ 2.10.14; i686-pc-mingw32)
+	id S1752800AbYJIFen (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 9 Oct 2008 01:34:43 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754021AbYJIFen
+	(ORCPT <rfc822;git-outgoing>); Thu, 9 Oct 2008 01:34:43 -0400
+Received: from rv-out-0506.google.com ([209.85.198.239]:64361 "EHLO
+	rv-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751000AbYJIFem (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 9 Oct 2008 01:34:42 -0400
+Received: by rv-out-0506.google.com with SMTP id k40so4629338rvb.1
+        for <git@vger.kernel.org>; Wed, 08 Oct 2008 22:34:42 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to
+         :subject:mime-version:content-type:content-transfer-encoding
+         :content-disposition;
+        bh=qh+cEwPjuve8j6/UIip6H49ADaQwuCvMYRK8XGLH6tE=;
+        b=ELvfWjVHTIxdQ8PFvxFbvwnJ8tsPQ2jK4GcYlOnNm/bXuwVDfHtetdjS/JzqJZZVqF
+         nW0V9sv3X71QQ0CEboRqKaiqWxj/1tnZ4UvfTyE9ah0cgb/17dFPMWZ3srSsHeJJ265a
+         Gnh6AXOLMORIfgoL0t0QgqCluZZzkHmcLBhuA=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:to:subject:mime-version:content-type
+         :content-transfer-encoding:content-disposition;
+        b=kN0tkYUljk90g9xh2j8d3r4wNg610dgYIzNrm97VBbuF/0lhn8VgB70g6OZWmNgODm
+         e0kYVbJh1hdQDlN7qsnBZGTy2YPbLTqhpqnmUxEtCMhpox8REQ/sLhugtdlk9BxNnH7K
+         E6WOHTcFahl1LzAM+sPJ6r7mCtldYt9btx5ho=
+Received: by 10.140.141.16 with SMTP id o16mr5781196rvd.209.1223530481942;
+        Wed, 08 Oct 2008 22:34:41 -0700 (PDT)
+Received: by 10.141.145.7 with HTTP; Wed, 8 Oct 2008 22:34:41 -0700 (PDT)
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/97819>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/97820>
 
+I was just doing a git status for a large add and all I really wanted
+to see was the untracked files maybe git status could have options
+like --new --untracked --modified to only show those.
 
-> > +# And rebase G1..M1 onto E3
-> 
-> I think s/E3/E2/ is what you meant.
+I'm not on the list.
 
-Ah, yes.
-
-> If this is the first one in the series, you may want to mark these tests
-> with test_expect_failure and make a later patch that changes the behaviour
-> of rebase-i-p include updates to the test script to turn expect-failure
-> into expect-success.
-
-Sounds good, I will do that.
-
-I haven't seen any other feedback yet--should I repost the series with
-these two minor changes right now or wait and see if other feedback
-comes up?
-
-Thanks,
-Stephen
+--
+Caleb Cushing
