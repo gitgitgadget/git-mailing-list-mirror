@@ -1,85 +1,79 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: Re: Implementing commit signing
-Date: Thu, 9 Oct 2008 11:00:26 -0700
-Message-ID: <20081009180026.GX8203@spearce.org>
-References: <E74D836C8B2CEF4A89F47E8ACECEEF9B748DCD@maildub1.misys.global.ad>
+From: marcreddist@aim.com
+Subject: Really remove a file ?
+Date: Thu, 09 Oct 2008 14:12:28 -0400
+Message-ID: <8CAF851B91FEF07-660-20E9@webmail-da15.sysops.aol.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Git Mailing List <git@vger.kernel.org>
-To: "Balasubramaniam, Arunan" <Arunan.Balasubramaniam@misys.com>
-X-From: git-owner@vger.kernel.org Thu Oct 09 20:02:00 2008
+Content-Type: text/plain; charset="us-ascii"; format=flowed
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Oct 09 20:22:16 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KnzpT-0003P8-PT
-	for gcvg-git-2@gmane.org; Thu, 09 Oct 2008 20:01:40 +0200
+	id 1Ko09M-0003NK-A6
+	for gcvg-git-2@gmane.org; Thu, 09 Oct 2008 20:22:12 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754327AbYJISA2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 9 Oct 2008 14:00:28 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754141AbYJISA1
-	(ORCPT <rfc822;git-outgoing>); Thu, 9 Oct 2008 14:00:27 -0400
-Received: from george.spearce.org ([209.20.77.23]:45095 "EHLO
-	george.spearce.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754310AbYJISA1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 9 Oct 2008 14:00:27 -0400
-Received: by george.spearce.org (Postfix, from userid 1001)
-	id 7F1813835F; Thu,  9 Oct 2008 18:00:26 +0000 (UTC)
-Content-Disposition: inline
-In-Reply-To: <E74D836C8B2CEF4A89F47E8ACECEEF9B748DCD@maildub1.misys.global.ad>
-User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
+	id S1754251AbYJISUy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 9 Oct 2008 14:20:54 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754301AbYJISUx
+	(ORCPT <rfc822;git-outgoing>); Thu, 9 Oct 2008 14:20:53 -0400
+Received: from imo-m23.mx.aol.com ([64.12.137.4]:42151 "EHLO
+	imo-m23.mx.aol.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753793AbYJISUx (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 9 Oct 2008 14:20:53 -0400
+X-Greylist: delayed 482 seconds by postgrey-1.27 at vger.kernel.org; Thu, 09 Oct 2008 14:20:53 EDT
+Received: from marcreddist@aim.com
+	by imo-m23.mx.aol.com  (mail_out_v39.1.) id x.d41.27c40f55 (34921)
+	 for <git@vger.kernel.org>; Thu, 9 Oct 2008 14:12:42 -0400 (EDT)
+Received: from smtprly-da03.mx.aol.com (smtprly-da03.mx.aol.com [205.188.249.146]) by cia-da03.mx.aol.com (v121_r3.13) with ESMTP id MAILCIADA036-886948ee499a7; Thu, 09 Oct 2008 14:12:42 -0400
+Received: from webmail-da15 (webmail-da15.webmail.aol.com [205.188.212.210]) by smtprly-da03.mx.aol.com (v121_r3.13) with ESMTP id MAILSMTPRLYDA032-5bbb48ee498b117; Thu, 09 Oct 2008 14:12:27 -0400
+X-MB-Message-Source: WebUI
+X-AOL-IP: 62.23.145.195
+X-MB-Message-Type: User
+X-Mailer: AIM WebMail 39155-STANDARD
+Received: from 62.23.145.195 by webmail-da15.sysops.aol.com (205.188.212.210) with HTTP (WebMailUI); Thu, 09 Oct 2008 14:12:28 -0400
+X-Spam-Flag: NO
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/97870>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/97872>
 
-"Balasubramaniam, Arunan" <Arunan.Balasubramaniam@misys.com> wrote:
-> Shawn O. Pearce wrote:
-> 
-> > But as I think about it more, if you signed the diff, excluding the
-> > line offsets in the hunk headers (so file paths, context and -/+
-> > lines), the "author" line and the message, leaving out the other
-> > fields of the commit message, it may be possible to still include
-> > the signature in an email formatted patch and carry it through a
-> > "git format-patch | git am" pipeline and still have it verify.
-> 
-> Would this be dangerous? If you were to leave out the parent fields in
-> the commit message, surely you could then reapply an old commit (that
-> say introduced a bug)?
+Hi,
 
-Well, the idea was to sign the diff, but in a way that would
-reasonably allow it to be applied with limited fuzz, such as what
-git-apply would accept.  Thus signed changes could be emailed out
-by git format-patch and git send-email, and applied with git am,
-and the signature is still valid so long as the committer didn't
-mess with the patch.
 
-Obviously if a commit was reverted and then reapplied again later,
-yes, the signature on the reapply may actually be valid, as the
-parents weren't taken into consideration.
 
-If the format-patch output was modified to include the parent when
-the signature was included then git am could be trained to verify
-HEAD == parent before applying the commit.  Then you can include
-the parent as part of the signature, but still enable a format-patch
-and am based workflow.
- 
-> > Yes, absolutely, so long as the implementation in Java was reasonably
-> > sane.  E.g. we'd prefer you used a pure Java implementation of
-> > GnuPG
-> 
-> I don't think that there is a Java GPG implementation about, some
-> searching
-> didn't find any live looking projects .
 
-Bouncy Castle:  http://www.bouncycastle.org/java.html
 
-> Would a JNI wrapper to say GPGME
-> (http://www.gnupg.org/related_software/gpgme/index.en.html) be
-> acceptable?
+I'm a new git user for some weeks or so and well i think git is 
+awesome. I didn't read all the online docs and mans yet, but i'm 
+already really impressed by it's power. Thanks everyone for this 
+helpful tool.
 
-No, JNI isn't "pure Java".
 
--- 
-Shawn.
+
+Right now i think i need some help. I started to work for a project, 
+and everything went fine. But I noticed someone placed a huge data file 
+in the repository. This file shouldn't have been here at the first 
+place. So I deleted it with git-rm. But that wasn't clever because now, 
+"git log -p" or "git log -S'something'" are really really slow. Also 
+diffs are huge and lots of command results are hard to read.
+
+
+
+So is there a way to really remove a file in the git repository so that 
+it never existed (I mean not having the diff in the logs and the data 
+stored somewhere in the .git directory) ? Or if it's not the was git is 
+supposed to be used, is there a way to hide the diff (even from 
+git-log) or something ?
+
+
+
+
+
+Thank you again,
+
+--
+
+Marc R.
