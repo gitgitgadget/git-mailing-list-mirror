@@ -1,73 +1,79 @@
-From: Nicolas Pitre <nico@cam.org>
-Subject: Re: [RFC PATCH 1/2] Replace memset(0) with static initialization where
- possible
-Date: Thu, 09 Oct 2008 17:12:36 -0400 (EDT)
-Message-ID: <alpine.LFD.2.00.0810091701380.26244@xanadu.home>
-References: <NveF6_7LIvvEmRZEvLeTO5lw7EzzmOQkz1WGEMYGSFKDWqSwAeLwBw@cipher.nrlssc.navy.mil>
- <alpine.LFD.2.00.0810091534430.26244@xanadu.home>
- <CqZt8k7g-Uov2ItkgRw6K65RC0ee37ZAckIrbwPLNwDiaHtigtevnA@cipher.nrlssc.navy.mil>
+From: Miklos Vajna <vmiklos@frugalware.org>
+Subject: Re: [PATCH] Implement git clone -v
+Date: Thu, 9 Oct 2008 23:26:44 +0200
+Message-ID: <20081009212644.GX536@genesis.frugalware.org>
+References: <20081008060257.GA15240@spearce.org> <1223509232-3520-1-git-send-email-vmiklos@frugalware.org> <7vr66qown3.fsf@gitster.siamese.dyndns.org> <20081009152028.GA29829@spearce.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Brandon Casey <casey@nrlssc.navy.mil>
-X-From: git-owner@vger.kernel.org Thu Oct 09 23:13:56 2008
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="TMgB3/Ch1aWgZB1L"
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Alex Riesen <raa.lkml@gmail.com>,
+	Constantine Plotnikov <constantine.plotnikov@gmail.com>,
+	git@vger.kernel.org
+To: "Shawn O. Pearce" <spearce@spearce.org>
+X-From: git-owner@vger.kernel.org Thu Oct 09 23:28:02 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Ko2pX-0001n3-JY
-	for gcvg-git-2@gmane.org; Thu, 09 Oct 2008 23:13:56 +0200
+	id 1Ko33B-0006kn-2O
+	for gcvg-git-2@gmane.org; Thu, 09 Oct 2008 23:28:01 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755149AbYJIVMn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 9 Oct 2008 17:12:43 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754960AbYJIVMn
-	(ORCPT <rfc822;git-outgoing>); Thu, 9 Oct 2008 17:12:43 -0400
-Received: from relais.videotron.ca ([24.201.245.36]:14586 "EHLO
-	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754165AbYJIVMm (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 9 Oct 2008 17:12:42 -0400
-Received: from xanadu.home ([66.131.194.97]) by VL-MO-MR005.ip.videotron.ca
- (Sun Java(tm) System Messaging Server 6.3-4.01 (built Aug  3 2007; 32bit))
- with ESMTP id <0K8H006Z0PK06WS0@VL-MO-MR005.ip.videotron.ca> for
- git@vger.kernel.org; Thu, 09 Oct 2008 17:12:01 -0400 (EDT)
-X-X-Sender: nico@xanadu.home
-In-reply-to: <CqZt8k7g-Uov2ItkgRw6K65RC0ee37ZAckIrbwPLNwDiaHtigtevnA@cipher.nrlssc.navy.mil>
-User-Agent: Alpine 2.00 (LFD 1167 2008-08-23)
+	id S1755337AbYJIV0t (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 9 Oct 2008 17:26:49 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755316AbYJIV0t
+	(ORCPT <rfc822;git-outgoing>); Thu, 9 Oct 2008 17:26:49 -0400
+Received: from virgo.iok.hu ([193.202.89.103]:50702 "EHLO virgo.iok.hu"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753802AbYJIV0s (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 9 Oct 2008 17:26:48 -0400
+Received: from kag.elte.hu (kag.elte.hu [157.181.177.1])
+	by virgo.iok.hu (Postfix) with ESMTP id 5309A5811D;
+	Thu,  9 Oct 2008 23:26:47 +0200 (CEST)
+Received: from genesis.frugalware.org (frugalware.elte.hu [157.181.177.34])
+	by kag.elte.hu (Postfix) with ESMTP id 15DEE4465E;
+	Thu,  9 Oct 2008 23:26:45 +0200 (CEST)
+Received: by genesis.frugalware.org (Postfix, from userid 1000)
+	id ED45011901A1; Thu,  9 Oct 2008 23:26:44 +0200 (CEST)
+Content-Disposition: inline
+In-Reply-To: <20081009152028.GA29829@spearce.org>
+User-Agent: Mutt/1.5.17 (2007-11-01)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/97885>
-
-On Thu, 9 Oct 2008, Brandon Casey wrote:
-
-> Nicolas Pitre wrote:
-> > So when claiming flexibility for the compiler to better optimize things, 
-> > please make sure this is really what is happening through assembly dump 
-> > inspection.
-> 
-> I didn't claim the compiler _would_ do a better job at optimizing if
-> memset wasn't used (though my expectation is that it would do no worse,
-> and I don't have assembly dumps to back that up).
-
-My point is that such expectation might not always be true.
-
-> I suggested it could
-> give the compiler more flexibility. In some strange way you seem to
-> agree with me and have given 3 examples of ways that compilers may
-> optimize static initialization. :)
-
-Actually the first example was a case of making things worse.
-
-> Anyway, this is a nothing patch. There is no functional change.
-> If readability is not improved, it is not worth applying. Of course, I
-> don't plan on scanning through and converting all of the existing assignments
-> which use { 0, } to use memset. I find a single step declaration/initialization
-> simpler. Not sure why that seems to be the case in the git source for simple
-> variables but not structures.
-
-... because of that possible gcc making things worse I mentioned.
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/97886>
 
 
-Nicolas
+--TMgB3/Ch1aWgZB1L
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
+
+On Thu, Oct 09, 2008 at 08:20:28AM -0700, "Shawn O. Pearce" <spearce@spearc=
+e.org> wrote:
+> I'm amending the message as the following:
+>=20
+> --8<--
+> Implement git clone -v
+>=20
+> The new -v option forces the progressbar, even in case the output
+> is not a terminal.  This can be useful if the caller is an IDE or
+> wrapper which wants to scrape the progressbar from stderr and show
+> its information in a different format.
+
+Thanks!
+
+--TMgB3/Ch1aWgZB1L
+Content-Type: application/pgp-signature
+Content-Disposition: inline
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.9 (GNU/Linux)
+
+iEYEARECAAYFAkjudxQACgkQe81tAgORUJYIdwCfZbT0jKfKnvVoSlu8Jz/AWsev
+PhQAnjVvVz8mOazOXq4WNC7w9FqpFRnS
+=9tfo
+-----END PGP SIGNATURE-----
+
+--TMgB3/Ch1aWgZB1L--
