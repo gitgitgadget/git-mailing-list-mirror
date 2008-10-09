@@ -1,67 +1,85 @@
-From: Miklos Vajna <vmiklos@frugalware.org>
-Subject: [PATCH] test-lib: fix color reset in say_color()
-Date: Fri, 10 Oct 2008 00:07:10 +0200
-Message-ID: <1223590030-7464-1-git-send-email-vmiklos@frugalware.org>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Oct 10 00:08:28 2008
+From: Jonas Fonseca <fonseca@diku.dk>
+Subject: [JGIT PATCH] Fix ObjectLoader.getBytes to really return the
+	created copy
+Date: Fri, 10 Oct 2008 00:09:36 +0200
+Message-ID: <20081009220932.GA30350@diku.dk>
+References: <1222824690-7632-1-git-send-email-spearce@spearce.org> <1222824690-7632-2-git-send-email-spearce@spearce.org> <1222824690-7632-3-git-send-email-spearce@spearce.org> <2c6b72b30810091446y22cb2e00te7a25676ee21ddac@mail.gmail.com> <20081009214926.GA8203@spearce.org>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: Jonas Fonseca <jonas.fonseca@gmail.com>,
+	Robin Rosenberg <robin.rosenberg@dewire.com>,
+	git@vger.kernel.org
+To: "Shawn O. Pearce" <spearce@spearce.org>
+X-From: git-owner@vger.kernel.org Fri Oct 10 00:10:52 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Ko3fk-0004Kv-WB
-	for gcvg-git-2@gmane.org; Fri, 10 Oct 2008 00:07:53 +0200
+	id 1Ko3id-0005OF-Go
+	for gcvg-git-2@gmane.org; Fri, 10 Oct 2008 00:10:52 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756074AbYJIWGm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 9 Oct 2008 18:06:42 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755570AbYJIWGl
-	(ORCPT <rfc822;git-outgoing>); Thu, 9 Oct 2008 18:06:41 -0400
-Received: from yugo.dsd.sztaki.hu ([195.111.2.114]:32976 "EHLO
-	yugo.frugalware.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754866AbYJIWGl (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 9 Oct 2008 18:06:41 -0400
-Received: from vmobile.example.net (dsl5401C654.pool.t-online.hu [84.1.198.84])
-	by yugo.frugalware.org (Postfix) with ESMTPA id A4FF8149C60
-	for <git@vger.kernel.org>; Fri, 10 Oct 2008 00:06:39 +0200 (CEST)
-Received: by vmobile.example.net (Postfix, from userid 1003)
-	id 30A9E19D922; Fri, 10 Oct 2008 00:07:10 +0200 (CEST)
-X-Mailer: git-send-email 1.6.0.2
+	id S1753353AbYJIWJk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 9 Oct 2008 18:09:40 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753348AbYJIWJk
+	(ORCPT <rfc822;git-outgoing>); Thu, 9 Oct 2008 18:09:40 -0400
+Received: from mgw2.diku.dk ([130.225.96.92]:49058 "EHLO mgw2.diku.dk"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753272AbYJIWJj (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 9 Oct 2008 18:09:39 -0400
+Received: from localhost (localhost [127.0.0.1])
+	by mgw2.diku.dk (Postfix) with ESMTP id 586B619BCB5;
+	Fri, 10 Oct 2008 00:09:38 +0200 (CEST)
+Received: from mgw2.diku.dk ([127.0.0.1])
+ by localhost (mgw2.diku.dk [127.0.0.1]) (amavisd-new, port 10024) with ESMTP
+ id 27291-06; Fri, 10 Oct 2008 00:09:37 +0200 (CEST)
+Received: from nhugin.diku.dk (nhugin.diku.dk [130.225.96.140])
+	by mgw2.diku.dk (Postfix) with ESMTP id 06B3B19BCB3;
+	Fri, 10 Oct 2008 00:09:37 +0200 (CEST)
+Received: from tyr.diku.dk (tyr.diku.dk [130.225.96.226])
+	by nhugin.diku.dk (Postfix) with ESMTP
+	id D2C056DFBB6; Fri, 10 Oct 2008 00:08:40 +0200 (CEST)
+Received: by tyr.diku.dk (Postfix, from userid 3873)
+	id E00081A4001; Fri, 10 Oct 2008 00:09:36 +0200 (CEST)
+Content-Disposition: inline
+In-Reply-To: <20081009214926.GA8203@spearce.org>
+User-Agent: Mutt/1.5.16 (2007-06-09)
+X-Virus-Scanned: amavisd-new at diku.dk
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/97896>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/97897>
 
-When executing a single test with colors enabled, the cursor was not set
-back to the previous one, and you had to hit an extra enter to get it
-back.
+The bug was carried over from the original code in PackedObjectLoader by
+commit 4c49ab5a4ec8555681ceabf17142a15bf90c2c24.
 
-Work around this problem by calling 'tput sgr0' before printing the
-final newline.
-
-Signed-off-by: Miklos Vajna <vmiklos@frugalware.org>
+Signed-off-by: Jonas Fonseca <fonseca@diku.dk>
 ---
+ .../src/org/spearce/jgit/lib/ObjectLoader.java     |    2 +-
 
-Actually I'm not 100% sure about how many users are affected. I have a
-black background in konsole with white letters, and after the test I get
-a green cursor, and once I hit enter, I get the white one back.
+ Shawn O. Pearce <spearce@spearce.org> wrote Thu, Oct 09, 2008:
+ > I think its already committed to master too.  Can you send a patch
+ > along to fix, and point out how stupid I am?
 
- t/test-lib.sh |    3 ++-
- 1 files changed, 2 insertions(+), 1 deletions(-)
+ Yes, I noticed it has already been applied. I am lagging behind a bit.
+ Anyway, here is a trivial patch.
 
-diff --git a/t/test-lib.sh b/t/test-lib.sh
-index e2b106c..fb89741 100644
---- a/t/test-lib.sh
-+++ b/t/test-lib.sh
-@@ -112,8 +112,9 @@ if test -n "$color"; then
- 			*) test -n "$quiet" && return;;
- 		esac
- 		shift
--		echo "* $*"
-+		printf "* $*"
- 		tput sgr0
-+		echo
- 		)
+diff --git a/org.spearce.jgit/src/org/spearce/jgit/lib/ObjectLoader.java b/org.spearce.jgit/src/org/spearce/jgit/lib/ObjectLoader.java
+index 87e861f..8d745dd 100644
+--- a/org.spearce.jgit/src/org/spearce/jgit/lib/ObjectLoader.java
++++ b/org.spearce.jgit/src/org/spearce/jgit/lib/ObjectLoader.java
+@@ -109,7 +109,7 @@ protected void setId(final ObjectId id) {
+ 		final byte[] data = getCachedBytes();
+ 		final byte[] copy = new byte[data.length];
+ 		System.arraycopy(data, 0, copy, 0, data.length);
+-		return data;
++		return copy;
  	}
- else
+ 
+ 	/**
 -- 
-1.6.0.2
+1.6.0.2.665.g48ddf
+
+
+-- 
+Jonas Fonseca
