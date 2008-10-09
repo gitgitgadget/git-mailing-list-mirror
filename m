@@ -1,66 +1,69 @@
-From: "Alex Riesen" <raa.lkml@gmail.com>
-Subject: Re: Really remove a file ?
-Date: Thu, 9 Oct 2008 20:56:35 +0200
-Message-ID: <81b0412b0810091156v15dea27an95050a06cfb4f8df@mail.gmail.com>
-References: <8CAF851B91FEF07-660-20E9@webmail-da15.sysops.aol.com>
+From: "Leonardo Sobral Cunha" <sobral@gmail.com>
+Subject: Different behaviour of rebase -i
+Date: Thu, 9 Oct 2008 16:04:32 -0300
+Message-ID: <6beb92080810091204n6df4338fs3b182194a8d6454e@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: marcreddist@aim.com
-X-From: git-owner@vger.kernel.org Thu Oct 09 20:58:01 2008
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Oct 09 21:06:25 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Ko0hp-0002K1-7H
-	for gcvg-git-2@gmane.org; Thu, 09 Oct 2008 20:57:49 +0200
+	id 1Ko0pa-0005Wr-Hy
+	for gcvg-git-2@gmane.org; Thu, 09 Oct 2008 21:05:51 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755591AbYJIS4h (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 9 Oct 2008 14:56:37 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754474AbYJIS4h
-	(ORCPT <rfc822;git-outgoing>); Thu, 9 Oct 2008 14:56:37 -0400
-Received: from hs-out-0708.google.com ([64.233.178.244]:25924 "EHLO
-	hs-out-0708.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755341AbYJIS4g (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 9 Oct 2008 14:56:36 -0400
-Received: by hs-out-0708.google.com with SMTP id 4so48459hsl.5
-        for <git@vger.kernel.org>; Thu, 09 Oct 2008 11:56:35 -0700 (PDT)
+	id S1760746AbYJITEf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 9 Oct 2008 15:04:35 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760737AbYJITEf
+	(ORCPT <rfc822;git-outgoing>); Thu, 9 Oct 2008 15:04:35 -0400
+Received: from mail-gx0-f16.google.com ([209.85.217.16]:55825 "EHLO
+	mail-gx0-f16.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1760722AbYJITEd (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 9 Oct 2008 15:04:33 -0400
+Received: by gxk9 with SMTP id 9so483592gxk.13
+        for <git@vger.kernel.org>; Thu, 09 Oct 2008 12:04:32 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:received:received:message-id:date:from:to
-         :subject:cc:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:references;
-        bh=2z/6sToiwSz3XpELO/+5dNEGTCBDgL3okqwAKBfv5/4=;
-        b=NaSr37tmhuJb8+RCOhRvHEgMwaq2d03ahqYRLzVC2SKG/9x0WtQxJmNHXmCJEkKW/z
-         +iJWRKGLzmm1BaR3Oc2S5c3iG53YKHf9y96q6U8+y8RA1TDkRmfjEsPUPMIlmrdZIsR6
-         ZIaBGvmPnhYunXD04CdGIRq1pVmhicYWCyY3o=
+         :subject:mime-version:content-type:content-transfer-encoding
+         :content-disposition;
+        bh=0X2JG/4XfUNF5q+odoykAux53FE7zJ/5yIXUpN4UW0w=;
+        b=gEa5HWq1guAPCodHA3V21B9A7avb1XH/rNWNi5RMo8WPWI5PB8Qsezbvwe5CV7eetw
+         SueRuJ2YnTq75eU82oEeMX/6x1Mh69xycRxRbY6c9j3stF8QXmzp/ieSCoKApYWXMPM8
+         EX5YxuRMPlswWgoorKeOLeAYc3SZ1m9AxXfEY=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
-         :content-type:content-transfer-encoding:content-disposition
-         :references;
-        b=PLxW7QJTh1zn+6DklhYeVHCNA1ERThqn7pl1o0QNtmaAM9I1ti81b2kYHVxZi+Y/rF
-         o+uuzIRd7RU/6Ayt6uuuOLIYBL46r6dChvBWTmm9nGATWkd5qkm7ZvC+QLmu9cHraH1K
-         uQXXHVzk05CkYgEqIpD3+qZCJvNgI2EaFi3kk=
-Received: by 10.100.212.6 with SMTP id k6mr787220ang.0.1223578595185;
-        Thu, 09 Oct 2008 11:56:35 -0700 (PDT)
-Received: by 10.100.91.8 with HTTP; Thu, 9 Oct 2008 11:56:35 -0700 (PDT)
-In-Reply-To: <8CAF851B91FEF07-660-20E9@webmail-da15.sysops.aol.com>
+        h=message-id:date:from:to:subject:mime-version:content-type
+         :content-transfer-encoding:content-disposition;
+        b=Q1qwzh02/gdlwgakEMvStIrYhRdr20QZ++7sIvLYLQacdTJnF/BxtArHzOzS2AM3jP
+         Gwzg5SJTb+bC7yn+q4vEAa8+LxZI9JXhPUgoQFGpMEwbeBZzRPSBQXlm6XDt3iCcZsgv
+         AMqZDjvoWktk/DYT6xFyGUqsO9QlC+umrWU1E=
+Received: by 10.90.101.7 with SMTP id y7mr350860agb.44.1223579072546;
+        Thu, 09 Oct 2008 12:04:32 -0700 (PDT)
+Received: by 10.90.25.7 with HTTP; Thu, 9 Oct 2008 12:04:32 -0700 (PDT)
 Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/97873>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/97874>
 
-2008/10/9  <marcreddist@aim.com>:
-> So is there a way to really remove a file in the git repository so that it
-> never existed (I mean not having the diff in the logs and the data stored
-> somewhere in the .git directory) ? Or if it's not the was git is supposed to
-> be used, is there a way to hide the diff (even from git-log) or something ?
+hi,
 
-Yes. But you'll change the whole history (of course, it should _never_
-mention the file).
-See git filter-branch (there is even an example at the end of its man page.
-Replace mv with rm)
+While doing a git rebase with my upstream branch ahead of my local
+branch, first git rewinds my local branch to point to the upstream and
+then prints "Nothing to do". As expected, my local branch ends
+pointing to the upstream head.
+
+But when I use the same command with the same branches using git
+rebase -i, nothing happens  and my local branch does not point to
+upstream (the behaviour is different).
+
+Is this different behaviour of rebase -i expected or is this a bug?
+This is still happening in git version 1.6.0.2.443.g52e83
+
+br,
+-- 
+// leo
