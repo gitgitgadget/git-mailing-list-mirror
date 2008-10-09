@@ -1,66 +1,94 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: Re: [JGIT PATCH 2/5] Fix UnpackedObjectLoader.getBytes to return a
-	copy
-Date: Thu, 9 Oct 2008 14:49:26 -0700
-Message-ID: <20081009214926.GA8203@spearce.org>
-References: <1222824690-7632-1-git-send-email-spearce@spearce.org> <1222824690-7632-2-git-send-email-spearce@spearce.org> <1222824690-7632-3-git-send-email-spearce@spearce.org> <2c6b72b30810091446y22cb2e00te7a25676ee21ddac@mail.gmail.com>
+From: Lars Stoltenow <penma@derf.homelinux.org>
+Subject: [PATCH] git-daemon: Worked around uclibc buffer problem
+Date: Thu, 9 Oct 2008 23:34:48 +0200
+Message-ID: <20081009213448.GA11204@derf.homelinux.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Robin Rosenberg <robin.rosenberg@dewire.com>, git@vger.kernel.org
-To: Jonas Fonseca <jonas.fonseca@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Oct 09 23:50:45 2008
+Content-Type: text/plain; charset=us-ascii
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Oct 10 00:01:05 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Ko3P3-0006qo-O2
-	for gcvg-git-2@gmane.org; Thu, 09 Oct 2008 23:50:38 +0200
+	id 1Ko3Ye-0001pY-0N
+	for gcvg-git-2@gmane.org; Fri, 10 Oct 2008 00:00:32 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755672AbYJIVt1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 9 Oct 2008 17:49:27 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755517AbYJIVt1
-	(ORCPT <rfc822;git-outgoing>); Thu, 9 Oct 2008 17:49:27 -0400
-Received: from george.spearce.org ([209.20.77.23]:42828 "EHLO
-	george.spearce.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755501AbYJIVt0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 9 Oct 2008 17:49:26 -0400
-Received: by george.spearce.org (Postfix, from userid 1001)
-	id 6077A3835F; Thu,  9 Oct 2008 21:49:26 +0000 (UTC)
+	id S1756077AbYJIV7U (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 9 Oct 2008 17:59:20 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755950AbYJIV7U
+	(ORCPT <rfc822;git-outgoing>); Thu, 9 Oct 2008 17:59:20 -0400
+Received: from p508BE19A.dip.t-dialin.net ([80.139.225.154]:58430 "EHLO
+	aneurysm.local" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1753348AbYJIV7T (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 9 Oct 2008 17:59:19 -0400
+X-Greylist: delayed 1468 seconds by postgrey-1.27 at vger.kernel.org; Thu, 09 Oct 2008 17:59:19 EDT
+Received: from penma by aneurysm.local with local (Exim 4.69)
+	(envelope-from <penma@derf.homelinux.org>)
+	id 1Ko39k-00037l-Tq
+	for git@vger.kernel.org; Thu, 09 Oct 2008 23:34:48 +0200
 Content-Disposition: inline
-In-Reply-To: <2c6b72b30810091446y22cb2e00te7a25676ee21ddac@mail.gmail.com>
-User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
+User-Agent: Mutt/1.5.18 (2008-05-17)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/97894>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/97895>
 
-Jonas Fonseca <jonas.fonseca@gmail.com> wrote:
-> On Wed, Oct 1, 2008 at 03:31, Shawn O. Pearce <spearce@spearce.org> wrote:
-> > diff --git a/org.spearce.jgit/src/org/spearce/jgit/lib/ObjectLoader.java b/org.spearce.jgit/src/org/spearce/jgit/lib/ObjectLoader.java
-> > index 5282491..87e861f 100644
-> > --- a/org.spearce.jgit/src/org/spearce/jgit/lib/ObjectLoader.java
-> > +++ b/org.spearce.jgit/src/org/spearce/jgit/lib/ObjectLoader.java
-> > @@ -105,7 +105,12 @@ protected void setId(final ObjectId id) {
-> >         * @throws IOException
-> >         *             the object cannot be read.
-> >         */
-> > -       public abstract byte[] getBytes() throws IOException;
-> > +       public final byte[] getBytes() throws IOException {
-> > +               final byte[] data = getCachedBytes();
-> > +               final byte[] copy = new byte[data.length];
-> > +               System.arraycopy(data, 0, copy, 0, data.length);
-> > +               return data;
-> > +       }
-> 
-> If I understand correctly, shouldn't this return the copy variable?
+uclibc immediately write()s every string argument to fprintf, which causes
+superfluous 'remote: ' strings to appear when cloning repos. This patch
+makes it write the message in one shot.
 
-F&@!#*@#&@!#*@!@!&#@#@*@!
+Signed-off-by: Lars Stoltenow <penma@penma.de>
+---
+ builtin-pack-objects.c |    7 +++++--
+ progress.c             |    8 ++++++--
+ 2 files changed, 11 insertions(+), 4 deletions(-)
 
-Yes.  :-)
-
-I think its already committed to master too.  Can you send a patch
-along to fix, and point out how stupid I am?
-
+diff --git a/builtin-pack-objects.c b/builtin-pack-objects.c
+index 1158e42..94f7404 100644
+--- a/builtin-pack-objects.c
++++ b/builtin-pack-objects.c
+@@ -2232,9 +2232,12 @@ int cmd_pack_objects(int argc, const char **argv, const char *prefix)
+ 	if (nr_result)
+ 		prepare_pack(window, depth);
+ 	write_pack_file();
+-	if (progress)
+-		fprintf(stderr, "Total %"PRIu32" (delta %"PRIu32"),"
++	if (progress) {
++		char message[128];
++		snprintf(message, sizeof(message), "Total %"PRIu32" (delta %"PRIu32"),"
+ 			" reused %"PRIu32" (delta %"PRIu32")\n",
+ 			written, written_delta, reused, reused_delta);
++		fputs(message, stderr);
++	}
+ 	return 0;
+ }
+diff --git a/progress.c b/progress.c
+index 55a8687..56c9134 100644
+--- a/progress.c
++++ b/progress.c
+@@ -94,16 +94,20 @@ static int display(struct progress *progress, unsigned n, const char *done)
+ 	if (progress->total) {
+ 		unsigned percent = n * 100 / progress->total;
+ 		if (percent != progress->last_percent || progress_update) {
++			char message[128];
+ 			progress->last_percent = percent;
+-			fprintf(stderr, "%s: %3u%% (%u/%u)%s%s",
++			snprintf(message, sizeof(message), "%s: %3u%% (%u/%u)%s%s",
+ 				progress->title, percent, n,
+ 				progress->total, tp, eol);
++			fputs(message, stderr);
+ 			fflush(stderr);
+ 			progress_update = 0;
+ 			return 1;
+ 		}
+ 	} else if (progress_update) {
+-		fprintf(stderr, "%s: %u%s%s", progress->title, n, tp, eol);
++		char message[128];
++		snprintf(message, sizeof(message), "%s: %u%s%s", progress->title, n, tp, eol);
++		fputs(message, stderr);
+ 		fflush(stderr);
+ 		progress_update = 0;
+ 		return 1;
 -- 
-Shawn.
+1.6.0.2.GIT
