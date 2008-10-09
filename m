@@ -1,67 +1,65 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: Re: [RFC PATCH 1/2] Replace memset(0) with static initialization
-	where possible
-Date: Thu, 9 Oct 2008 12:17:27 -0700
-Message-ID: <20081009191727.GY8203@spearce.org>
+From: Nicolas Pitre <nico@cam.org>
+Subject: Re: [RFC PATCH 1/2] Replace memset(0) with static initialization where
+ possible
+Date: Thu, 09 Oct 2008 15:47:52 -0400 (EDT)
+Message-ID: <alpine.LFD.2.00.0810091534430.26244@xanadu.home>
 References: <NveF6_7LIvvEmRZEvLeTO5lw7EzzmOQkz1WGEMYGSFKDWqSwAeLwBw@cipher.nrlssc.navy.mil>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
 Cc: Git Mailing List <git@vger.kernel.org>
 To: Brandon Casey <casey@nrlssc.navy.mil>
-X-From: git-owner@vger.kernel.org Thu Oct 09 21:18:49 2008
+X-From: git-owner@vger.kernel.org Thu Oct 09 21:49:37 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Ko123-00032P-Hr
-	for gcvg-git-2@gmane.org; Thu, 09 Oct 2008 21:18:44 +0200
+	id 1Ko1Vn-0008Ol-DB
+	for gcvg-git-2@gmane.org; Thu, 09 Oct 2008 21:49:27 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752348AbYJITR3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 9 Oct 2008 15:17:29 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752701AbYJITR2
-	(ORCPT <rfc822;git-outgoing>); Thu, 9 Oct 2008 15:17:28 -0400
-Received: from george.spearce.org ([209.20.77.23]:46673 "EHLO
-	george.spearce.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752309AbYJITR2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 9 Oct 2008 15:17:28 -0400
-Received: by george.spearce.org (Postfix, from userid 1001)
-	id B52613835F; Thu,  9 Oct 2008 19:17:27 +0000 (UTC)
-Content-Disposition: inline
-In-Reply-To: <NveF6_7LIvvEmRZEvLeTO5lw7EzzmOQkz1WGEMYGSFKDWqSwAeLwBw@cipher.nrlssc.navy.mil>
-User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
+	id S1756577AbYJITsO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 9 Oct 2008 15:48:14 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755683AbYJITsO
+	(ORCPT <rfc822;git-outgoing>); Thu, 9 Oct 2008 15:48:14 -0400
+Received: from relais.videotron.ca ([24.201.245.36]:10901 "EHLO
+	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753211AbYJITsN (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 9 Oct 2008 15:48:13 -0400
+Received: from xanadu.home ([66.131.194.97]) by VL-MH-MR001.ip.videotron.ca
+ (Sun Java(tm) System Messaging Server 6.3-4.01 (built Aug  3 2007; 32bit))
+ with ESMTP id <0K8H00JHJLNS4PI1@VL-MH-MR001.ip.videotron.ca> for
+ git@vger.kernel.org; Thu, 09 Oct 2008 15:47:52 -0400 (EDT)
+X-X-Sender: nico@xanadu.home
+In-reply-to: <NveF6_7LIvvEmRZEvLeTO5lw7EzzmOQkz1WGEMYGSFKDWqSwAeLwBw@cipher.nrlssc.navy.mil>
+User-Agent: Alpine 2.00 (LFD 1167 2008-08-23)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/97877>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/97878>
 
-Brandon Casey <casey@nrlssc.navy.mil> wrote:
-> Is there interest in a patch like this?
+On Thu, 9 Oct 2008, Brandon Casey wrote:
 
-I think this is not a worthwhile change.
- 
 > "Possible" benefits:
 > 
 >   1) more concise, so it improves readability in most cases
-
-I'm not sure.
-
-Maybe I'm just too used to reading memset(&foo, 0, sizeof(foo)),
-but {{0},} seems very difficult to read.
-
 >   2) gives compiler more flexibility when optimizing
 
-Shouldn't a good C compiler notice something like a memset and inline
-it when possible?  They already can inline strlen on a constant.
+Beware beware.  At some point this wasn't a gain at all with some gcc 
+versions as it was stupid enough to construct a temporary object on the 
+stack corresponding to "{ 0, }" and afterward do the assignment by 
+*copying* this object to a different stack slot corresponding to the 
+actual variable instead of constructing the initial value in place.
 
-> Drawbacks:
-> 
->   1) many lines touched for no functional change
+Also note that, on the other hand, gcc is smart enough to optimize a 
+memset() using a constant size and value already by doing appropriate 
+code replacement inline.  I've also seen cases where gcc did the 
+opposite and replaced an explicit assignment like your patch does with 
+an actual call to memset() when optimizing for size.
 
-That's a pretty big drawback.
+So when claiming flexibility for the compiler to better optimize things, 
+please make sure this is really what is happening through assembly dump 
+inspection.
 
-What happens when a struct gets a struct as its first member?
-Do all the {0,} inits for it have to change to {{0,},} ?
 
--- 
-Shawn.
+Nicolas
