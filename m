@@ -1,62 +1,65 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH maint] builtin-merge.c: fix memory under-allocation
-Date: Thu, 09 Oct 2008 04:12:52 -0700
-Message-ID: <7vmyheowcr.fsf@gitster.siamese.dyndns.org>
-References: <ZuhLzndR5Uvj7-_NyasP-FHF3AqTyLx-0sjNHMd0BC3LXC8LdLqBeQ@cipher.nrlssc.navy.mil> <20081009001727.GP536@genesis.frugalware.org> <0LPLRUZaEHuEZTri_v38ySJHqYAhrfOpOkyUviUH9eOrx8IXBEAzYA@cipher.nrlssc.navy.mil>
+Subject: Re: [PATCH/RFC] Add post-init hook
+Date: Thu, 09 Oct 2008 04:24:29 -0700
+Message-ID: <7viqs2ovte.fsf@gitster.siamese.dyndns.org>
+References: <1223421033-22340-1-git-send-email-jon.delStrother@bestbefore.tv>
+ <20081008015352.GA29313@coredump.intra.peff.net>
+ <57518fd10810080116gd876f9bv169f575087baccd7@mail.gmail.com>
+ <20081009014146.GA14204@coredump.intra.peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Miklos Vajna <vmiklos@frugalware.org>,
-	"Shawn O. Pearce" <spearce@spearce.org>,
-	Git Mailing List <git@vger.kernel.org>
-To: Brandon Casey <casey@nrlssc.navy.mil>
-X-From: git-owner@vger.kernel.org Thu Oct 09 13:14:25 2008
+Cc: Jonathan del Strother <jon.delStrother@bestbefore.tv>,
+	git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Thu Oct 09 13:26:12 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KntTG-0007Sp-SI
-	for gcvg-git-2@gmane.org; Thu, 09 Oct 2008 13:14:19 +0200
+	id 1Kntel-0003PK-AM
+	for gcvg-git-2@gmane.org; Thu, 09 Oct 2008 13:26:11 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756323AbYJILNG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 9 Oct 2008 07:13:06 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756401AbYJILNF
-	(ORCPT <rfc822;git-outgoing>); Thu, 9 Oct 2008 07:13:05 -0400
-Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:46511 "EHLO
+	id S1758938AbYJILYn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 9 Oct 2008 07:24:43 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758941AbYJILYm
+	(ORCPT <rfc822;git-outgoing>); Thu, 9 Oct 2008 07:24:42 -0400
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:65023 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756323AbYJILNF (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 9 Oct 2008 07:13:05 -0400
+	with ESMTP id S1758928AbYJILYl (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 9 Oct 2008 07:24:41 -0400
 Received: from localhost.localdomain (localhost [127.0.0.1])
-	by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id 78CFF88B81;
-	Thu,  9 Oct 2008 07:13:03 -0400 (EDT)
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 81FBC6C4EB;
+	Thu,  9 Oct 2008 07:24:40 -0400 (EDT)
 Received: from pobox.com (ip68-225-240-211.oc.oc.cox.net [68.225.240.211])
  (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
- certificate requested) by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with
- ESMTPSA id 7AE0288B80; Thu,  9 Oct 2008 07:12:54 -0400 (EDT)
-In-Reply-To: <0LPLRUZaEHuEZTri_v38ySJHqYAhrfOpOkyUviUH9eOrx8IXBEAzYA@cipher.nrlssc.navy.mil> (Brandon Casey's message of "Wed, 08 Oct 2008 19:27:40 -0500")
+ certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
+ ESMTPSA id 4C7496C4E5; Thu,  9 Oct 2008 07:24:30 -0400 (EDT)
+In-Reply-To: <20081009014146.GA14204@coredump.intra.peff.net> (Jeff King's
+ message of "Wed, 8 Oct 2008 21:41:46 -0400")
 User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: 3DA56A0E-95F3-11DD-8C28-FA2D76724C3F-77302942!a-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: DD1CC540-95F4-11DD-A4E5-9364E785EAEE-77302942!a-sasl-fastnet.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/97841>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/97842>
 
-Brandon Casey <casey@nrlssc.navy.mil> writes:
+Jeff King <peff@peff.net> writes:
 
-> Miklos Vajna wrote:
->> On Wed, Oct 08, 2008 at 07:07:54PM -0500, Brandon Casey <casey@nrlssc.navy.mil> wrote:
->>> While we're at it, change the allocation to reference the variable it is
->>> allocating memory for to try to prevent a similar mistake if the type is
->>> changed in the future.
->> 
->> If this is really a problem, then I think it would be good to mention
->> this in Documentation/CodingGuidelines.
+> On Wed, Oct 08, 2008 at 09:16:56AM +0100, Jonathan del Strother wrote:
+> ...
+>> I want symlinks so I only have to edit my hooks in one place whenever
+>> I change them)
 >
-> That's fine. Though I didn't mean to imply that the memory under-allocation
-> was caused by a change in variable type in this case. Re-reading my commit
-> message, maybe it sounds like that.
+> This makes a lot of sense to me as a best-practice. I wonder if we
+> wouldn't do better to add a core.symlink-templates option?
 
-Yeah, it does.  I was scratching my head and had to read the patch three
-times until I got it (yes, I am especially slower than usual today, as the
-reason I am reading mails right now is because I am jetlagged and cannot
-sleep).
+AFAIR, "git init" copies symlinks in templates as symlinks, so I do not
+see why you would even want to have such an option.
+
+Wouldn't it be better if users and installations with such a special
+set of templates specified by core.template or --template prepare a
+template directory with files and symbolic links of their liking?  If
+they want some hooks to point at the latest copy of installation specific
+standard hook script, templates/hooks/$that_hook can be a symlink to the
+real location, no?
