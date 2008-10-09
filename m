@@ -1,2078 +1,1547 @@
 From: Brandon Casey <casey@nrlssc.navy.mil>
-Subject: [RFC PATCH 1/2] Replace memset(0) with static initialization where
- possible
-Date: Thu, 09 Oct 2008 14:09:16 -0500
-Message-ID: <NveF6_7LIvvEmRZEvLeTO5lw7EzzmOQkz1WGEMYGSFKDWqSwAeLwBw@cipher.nrlssc.navy.mil>
+Subject: [RFC PATCH 2/2] Replace calls to strbuf_init(&foo, 0) with static
+ STRBUF_INIT initializer
+Date: Thu, 09 Oct 2008 14:12:12 -0500
+Message-ID: <UUi8gSMV6CruoYIkVNOQZ4FNzsbqZcSNu6jdYH8GqIo@cipher.nrlssc.navy.mil>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
 To: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Thu Oct 09 21:10:41 2008
+X-From: git-owner@vger.kernel.org Thu Oct 09 21:13:51 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Ko0uC-0007pW-DM
-	for gcvg-git-2@gmane.org; Thu, 09 Oct 2008 21:10:37 +0200
+	id 1Ko0wz-0000g8-O8
+	for gcvg-git-2@gmane.org; Thu, 09 Oct 2008 21:13:31 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755067AbYJITJW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 9 Oct 2008 15:09:22 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754428AbYJITJW
-	(ORCPT <rfc822;git-outgoing>); Thu, 9 Oct 2008 15:09:22 -0400
-Received: from mail1.nrlssc.navy.mil ([128.160.35.1]:33084 "EHLO
+	id S1753424AbYJITMQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 9 Oct 2008 15:12:16 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752701AbYJITMQ
+	(ORCPT <rfc822;git-outgoing>); Thu, 9 Oct 2008 15:12:16 -0400
+Received: from mail1.nrlssc.navy.mil ([128.160.35.1]:57135 "EHLO
 	mail.nrlssc.navy.mil" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754742AbYJITJS (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 9 Oct 2008 15:09:18 -0400
-Received: by mail.nrlssc.navy.mil id m99J9GqO024228; Thu, 9 Oct 2008 14:09:17 -0500
-X-OriginalArrivalTime: 09 Oct 2008 19:09:17.0034 (UTC) FILETIME=[868C9CA0:01C92A42]
+	with ESMTP id S1752309AbYJITMN (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 9 Oct 2008 15:12:13 -0400
+Received: by mail.nrlssc.navy.mil id m99JCC2n025107; Thu, 9 Oct 2008 14:12:12 -0500
+X-OriginalArrivalTime: 09 Oct 2008 19:12:12.0775 (UTC) FILETIME=[EF4C8F70:01C92A42]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/97875>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/97876>
 
-Many call sites use memset to initialize a local variable which has not
-been accessed since its declaration. This call to memset is unnecessary
-(even though it may not evaluate to an actual function call). Replacing
-these calls with static initialization may be optimal on some platforms
-and increases readability in many cases.
+Many call sites use strbuf_init(&foo, 0) to initialize local strbuf variable
+"foo" which has not been accessed since its declaration. These can be
+replaced with a static initialization using the STRBUF_INIT macro which is
+just as readable, saves a function call, and takes up fewer lines.
 
 Signed-off-by: Brandon Casey <casey@nrlssc.navy.mil>
 ---
 
 
-Is there interest in a patch like this?
+This does the same thing for strbuf_init() that the last one did for memset().
 
-"Possible" benefits:
-
-  1) more concise, so it improves readability in most cases
-  2) gives compiler more flexibility when optimizing
-
-Drawbacks:
-
-  1) many lines touched for no functional change
-  2) other?
-
-
-Most of these changes boil down to something of the from:
-
-   some_struct foo;
-   memset(&foo, 0, sizeof(foo));
-
-to
-
-   some_struct foo = { 0, };
-
-where the declaration and the memset have very little code separating
-them and are contained in the same hunk. A few are separated by more
-code and are in different hunks, but it is straight-forward to check
-those cases.
+comments?
 
 -brandon
 
 
- archive-tar.c            |    3 +--
- archive-zip.c            |    3 +--
- branch.c                 |    3 +--
- builtin-apply.c          |   10 +++-------
- builtin-blame.c          |    9 +++------
+ archive-tar.c            |    7 ++-----
+ archive.c                |    6 ++----
+ builtin-apply.c          |   26 ++++++++------------------
+ builtin-blame.c          |    3 +--
  builtin-branch.c         |    3 +--
- builtin-bundle.c         |    3 +--
- builtin-checkout.c       |   23 ++++++++---------------
- builtin-clean.c          |    3 +--
- builtin-clone.c          |    3 +--
- builtin-commit.c         |    9 +++------
- builtin-fetch-pack.c     |    6 ++----
- builtin-fetch.c          |    3 +--
- builtin-for-each-ref.c   |    3 +--
- builtin-gc.c             |    3 +--
- builtin-grep.c           |    3 +--
- builtin-help.c           |    3 +--
- builtin-log.c            |    3 +--
- builtin-ls-files.c       |    3 +--
- builtin-merge.c          |   28 +++++++++-------------------
- builtin-pack-objects.c   |   10 +++-------
- builtin-read-tree.c      |    3 +--
- builtin-receive-pack.c   |    9 +++------
- builtin-reflog.c         |   20 ++++++--------------
- builtin-remote.c         |   15 +++++----------
- builtin-rerere.c         |    3 +--
- builtin-reset.c          |    3 +--
- builtin-send-pack.c      |    6 ++----
+ builtin-cat-file.c       |    3 +--
+ builtin-checkout-index.c |    4 +---
+ builtin-checkout.c       |   12 ++++--------
+ builtin-clean.c          |    6 ++----
+ builtin-clone.c          |    9 +++------
+ builtin-commit.c         |   15 +++++----------
+ builtin-fetch--tool.c    |    3 +--
+ builtin-fmt-merge-msg.c  |    4 +---
+ builtin-help.c           |    4 +---
+ builtin-log.c            |   13 ++++---------
+ builtin-merge.c          |   27 +++++++++------------------
+ builtin-remote.c         |    8 ++------
+ builtin-rev-list.c       |    3 +--
+ builtin-rev-parse.c      |    4 +---
+ builtin-show-branch.c    |    3 +--
+ builtin-stripspace.c     |    3 +--
  builtin-tag.c            |    3 +--
- builtin-unpack-objects.c |    4 +---
- builtin-verify-tag.c     |    3 +--
- bundle.c                 |    9 +++------
- combine-diff.c           |    6 ++----
- connect.c                |    6 ++----
- convert.c                |    6 ++----
- daemon.c                 |   12 ++++--------
- date.c                   |    3 +--
- diff-lib.c               |    6 ++----
- diff.c                   |   30 ++++++++++--------------------
- fast-import.c            |    6 ++----
- help.c                   |    4 +---
- http-push.c              |    3 +--
- imap-send.c              |    7 ++-----
- index-pack.c             |    9 +++------
- ll-merge.c               |    6 ++----
- merge-file.c             |    6 ++----
- merge-index.c            |    3 +--
+ builtin-update-index.c   |   10 +++-------
+ combine-diff.c           |    3 +--
+ config.c                 |    6 ++----
+ convert.c                |    3 +--
+ diff.c                   |   15 +++++----------
+ editor.c                 |    3 +--
+ exec_cmd.c               |    4 +---
+ fsck.c                   |    3 +--
+ git.c                    |    3 +--
+ graph.c                  |   13 ++++---------
+ hash-object.c            |    4 +---
+ imap-send.c              |    3 +--
+ log-tree.c               |    3 +--
  merge-recursive.c        |    3 +--
- merge-tree.c             |    3 +--
- pack-refs.c              |    3 +--
+ mktag.c                  |    3 +--
+ mktree.c                 |    6 ++----
  pretty.c                 |    3 +--
- progress.c               |    3 +--
- sha1_file.c              |    9 +++------
- transport.c              |   16 +++++-----------
- unpack-trees.c           |    3 +--
- upload-pack.c            |    3 +--
- wt-status.c              |    6 ++----
+ read-cache.c             |    3 +--
+ remote.c                 |    3 +--
+ rerere.c                 |    4 +---
+ sha1_file.c              |    6 ++----
+ walker.c                 |    3 +--
+ ws.c                     |    3 +--
+ wt-status.c              |   11 +++--------
  xdiff-interface.c        |    3 +--
- 58 files changed, 125 insertions(+), 258 deletions(-)
+ 47 files changed, 92 insertions(+), 201 deletions(-)
 
 diff --git a/archive-tar.c b/archive-tar.c
-index 1302961..e3170fb 100644
+index e3170fb..ca0a12c 100644
 --- a/archive-tar.c
 +++ b/archive-tar.c
-@@ -123,11 +123,10 @@ static int write_tar_entry(struct archiver_args *args,
- 		const unsigned char *sha1, const char *path, size_t pathlen,
+@@ -124,11 +124,9 @@ static int write_tar_entry(struct archiver_args *args,
  		unsigned int mode, void *buffer, unsigned long size)
  {
--	struct ustar_header header;
-+	struct ustar_header header = { { 0, }, };
- 	struct strbuf ext_header;
+ 	struct ustar_header header = { { 0, }, };
+-	struct strbuf ext_header;
++	struct strbuf ext_header = STRBUF_INIT;
  	int err = 0;
  
--	memset(&header, 0, sizeof(header));
- 	strbuf_init(&ext_header, 0);
- 
+-	strbuf_init(&ext_header, 0);
+-
  	if (!sha1) {
-diff --git a/archive-zip.c b/archive-zip.c
-index cf28504..6196e5f 100644
---- a/archive-zip.c
-+++ b/archive-zip.c
-@@ -90,12 +90,11 @@ static void copy_le32(unsigned char *dest, unsigned int n)
- static void *zlib_deflate(void *data, unsigned long size,
- 		int compression_level, unsigned long *compressed_size)
+ 		*header.typeflag = TYPEFLAG_GLOBAL_HEADER;
+ 		mode = 0100666;
+@@ -210,10 +208,9 @@ static int write_tar_entry(struct archiver_args *args,
+ static int write_global_extended_header(struct archiver_args *args)
  {
--	z_stream stream;
-+	z_stream stream = { 0, };
- 	unsigned long maxsize;
- 	void *buffer;
- 	int result;
+ 	const unsigned char *sha1 = args->commit_sha1;
+-	struct strbuf ext_header;
++	struct strbuf ext_header = STRBUF_INIT;
+ 	int err;
  
--	memset(&stream, 0, sizeof(stream));
- 	deflateInit(&stream, compression_level);
- 	maxsize = deflateBound(&stream, size);
- 	buffer = xmalloc(maxsize);
-diff --git a/branch.c b/branch.c
-index b1e59f2..057f0a3 100644
---- a/branch.c
-+++ b/branch.c
-@@ -56,13 +56,12 @@ static int setup_tracking(const char *new_ref, const char *orig_ref,
-                           enum branch_track track)
+-	strbuf_init(&ext_header, 0);
+ 	strbuf_append_ext_header(&ext_header, "comment", sha1_to_hex(sha1), 40);
+ 	err = write_tar_entry(args, NULL, NULL, 0, 0, ext_header.buf,
+ 			ext_header.len);
+diff --git a/archive.c b/archive.c
+index 44ab008..849eed5 100644
+--- a/archive.c
++++ b/archive.c
+@@ -29,11 +29,10 @@ static void format_subst(const struct commit *commit,
+                          struct strbuf *buf)
  {
- 	char key[1024];
--	struct tracking tracking;
-+	struct tracking tracking = { { 0, }, };
+ 	char *to_free = NULL;
+-	struct strbuf fmt;
++	struct strbuf fmt = STRBUF_INIT;
  
- 	if (strlen(new_ref) > 1024 - 7 - 7 - 1)
- 		return error("Tracking not set up: name too long: %s",
- 				new_ref);
+ 	if (src == buf->buf)
+ 		to_free = strbuf_detach(buf, NULL);
+-	strbuf_init(&fmt, 0);
+ 	for (;;) {
+ 		const char *b, *c;
  
--	memset(&tracking, 0, sizeof(tracking));
- 	tracking.spec.dst = (char *)orig_ref;
- 	if (for_each_remote(find_tracked_branch, &tracking))
- 		return 1;
+@@ -65,10 +64,9 @@ static void *sha1_file_to_archive(const char *path, const unsigned char *sha1,
+ 
+ 	buffer = read_sha1_file(sha1, type, sizep);
+ 	if (buffer && S_ISREG(mode)) {
+-		struct strbuf buf;
++		struct strbuf buf = STRBUF_INIT;
+ 		size_t size = 0;
+ 
+-		strbuf_init(&buf, 0);
+ 		strbuf_attach(&buf, buffer, *sizep, *sizep + 1);
+ 		convert_to_working_tree(path, buf.buf, buf.len, &buf);
+ 		if (commit)
 diff --git a/builtin-apply.c b/builtin-apply.c
-index 342f2fe..945616e 100644
+index 945616e..72da0b0 100644
 --- a/builtin-apply.c
 +++ b/builtin-apply.c
-@@ -1241,12 +1241,10 @@ static inline int metadata_changes(struct patch *patch)
- static char *inflate_it(const void *data, unsigned long size,
- 			unsigned long inflated_size)
- {
--	z_stream stream;
-+	z_stream stream = { 0, };
- 	void *out;
- 	int st;
+@@ -321,13 +321,12 @@ static char *find_name(const char *line, char *def, int p_value, int terminate)
+ 	const char *start = line;
  
--	memset(&stream, 0, sizeof(stream));
+ 	if (*line == '"') {
+-		struct strbuf name;
++		struct strbuf name = STRBUF_INIT;
+ 
+ 		/*
+ 		 * Proposed "new-style" GNU patch/diff format; see
+ 		 * http://marc.theaimsgroup.com/?l=git&m=112927316408690&w=2
+ 		 */
+-		strbuf_init(&name, 0);
+ 		if (!unquote_c_style(&name, line, NULL)) {
+ 			char *cp;
+ 
+@@ -675,11 +674,8 @@ static char *git_header_name(char *line, int llen)
+ 
+ 	if (*line == '"') {
+ 		const char *cp;
+-		struct strbuf first;
+-		struct strbuf sp;
 -
- 	stream.next_in = (unsigned char *)data;
- 	stream.avail_in = size;
- 	stream.next_out = out = xmalloc(inflated_size);
-@@ -1891,11 +1889,9 @@ static int apply_one_fragment(struct image *img, struct fragment *frag,
- 	int new_blank_lines_at_end = 0;
- 	unsigned long leading, trailing;
- 	int pos, applied_pos;
--	struct image preimage;
--	struct image postimage;
-+	struct image preimage = { 0, };
-+	struct image postimage = { 0, };
+-		strbuf_init(&first, 0);
+-		strbuf_init(&sp, 0);
++		struct strbuf first = STRBUF_INIT;
++		struct strbuf sp = STRBUF_INIT;
  
--	memset(&preimage, 0, sizeof(preimage));
--	memset(&postimage, 0, sizeof(postimage));
- 	oldlines = xmalloc(size);
- 	newlines = xmalloc(size);
+ 		if (unquote_c_style(&first, line, &second))
+ 			goto free_and_fail1;
+@@ -741,10 +737,9 @@ static char *git_header_name(char *line, int llen)
+ 	 */
+ 	for (second = name; second < line + llen; second++) {
+ 		if (*second == '"') {
+-			struct strbuf sp;
++			struct strbuf sp = STRBUF_INIT;
+ 			const char *np;
  
+-			strbuf_init(&sp, 0);
+ 			if (unquote_c_style(&sp, second, NULL))
+ 				goto free_and_fail2;
+ 
+@@ -1506,11 +1501,10 @@ static const char minuses[]=
+ 
+ static void show_stats(struct patch *patch)
+ {
+-	struct strbuf qname;
++	struct strbuf qname = STRBUF_INIT;
+ 	char *cp = patch->new_name ? patch->new_name : patch->old_name;
+ 	int max, add, del;
+ 
+-	strbuf_init(&qname, 0);
+ 	quote_c_style(cp, &qname, NULL, 0);
+ 
+ 	/*
+@@ -2288,14 +2282,12 @@ static void add_to_fn_table(struct patch *patch)
+ 
+ static int apply_data(struct patch *patch, struct stat *st, struct cache_entry *ce)
+ {
+-	struct strbuf buf;
++	struct strbuf buf = STRBUF_INIT;
+ 	struct image image;
+ 	size_t len;
+ 	char *img;
+ 	struct patch *tpatch;
+ 
+-	strbuf_init(&buf, 0);
+-
+ 	if (!(patch->is_copy || patch->is_rename) &&
+ 	    ((tpatch = in_fn_table(patch->old_name)) != NULL)) {
+ 		if (tpatch == (struct patch *) -1) {
+@@ -2775,7 +2767,7 @@ static void add_index_file(const char *path, unsigned mode, void *buf, unsigned
+ static int try_create_file(const char *path, unsigned int mode, const char *buf, unsigned long size)
+ {
+ 	int fd;
+-	struct strbuf nbuf;
++	struct strbuf nbuf = STRBUF_INIT;
+ 
+ 	if (S_ISGITLINK(mode)) {
+ 		struct stat st;
+@@ -2794,7 +2786,6 @@ static int try_create_file(const char *path, unsigned int mode, const char *buf,
+ 	if (fd < 0)
+ 		return -1;
+ 
+-	strbuf_init(&nbuf, 0);
+ 	if (convert_to_working_tree(path, buf, size, &nbuf)) {
+ 		size = nbuf.len;
+ 		buf  = nbuf.buf;
+@@ -3056,13 +3047,12 @@ static void prefix_patches(struct patch *p)
+ static int apply_patch(int fd, const char *filename, int options)
+ {
+ 	size_t offset;
+-	struct strbuf buf;
++	struct strbuf buf = STRBUF_INIT;
+ 	struct patch *list = NULL, **listp = &list;
+ 	int skipped_patch = 0;
+ 
+ 	/* FIXME - memory leak when using multiple patch files as inputs */
+ 	memset(&fn_table, 0, sizeof(struct string_list));
+-	strbuf_init(&buf, 0);
+ 	patch_input_file = filename;
+ 	read_patch_file(&buf, fd);
+ 	offset = 0;
 diff --git a/builtin-blame.c b/builtin-blame.c
-index df53759..93d2daf 100644
+index 93d2daf..a94b335 100644
 --- a/builtin-blame.c
 +++ b/builtin-blame.c
-@@ -518,15 +518,13 @@ static void process_u_diff(void *state_, char *line, unsigned long len)
- static struct patch *compare_buffer(mmfile_t *file_p, mmfile_t *file_o,
- 				    int context)
- {
--	struct blame_diff_state state;
-+	struct blame_diff_state state = { 0, };
- 	xpparam_t xpp;
--	xdemitconf_t xecfg;
-+	xdemitconf_t xecfg = { 0, };
- 	xdemitcb_t ecb;
+@@ -2060,7 +2060,7 @@ static struct commit *fake_working_tree_commit(const char *path, const char *con
+ 	struct commit *commit;
+ 	struct origin *origin;
+ 	unsigned char head_sha1[20];
+-	struct strbuf buf;
++	struct strbuf buf = STRBUF_INIT;
+ 	const char *ident;
+ 	time_t now;
+ 	int size, len;
+@@ -2080,7 +2080,6 @@ static struct commit *fake_working_tree_commit(const char *path, const char *con
  
- 	xpp.flags = xdl_opts;
--	memset(&xecfg, 0, sizeof(xecfg));
- 	xecfg.ctxlen = context;
--	memset(&state, 0, sizeof(state));
- 	state.ret = xmalloc(sizeof(struct patch));
- 	state.ret->chunks = NULL;
- 	state.ret->num = 0;
-@@ -2279,7 +2277,7 @@ int cmd_blame(int argc, const char **argv, const char *prefix)
- {
- 	struct rev_info revs;
- 	const char *path;
--	struct scoreboard sb;
-+	struct scoreboard sb = { 0, };
- 	struct origin *o;
- 	struct blame_entry *ent;
- 	long dashdash_pos, bottom, top, lno;
-@@ -2405,7 +2403,6 @@ parse_done:
- 	}
+ 	origin = make_origin(commit, path);
  
- 	setup_revisions(argc, argv, &revs, NULL);
--	memset(&sb, 0, sizeof(sb));
- 
- 	sb.revs = &revs;
- 	if (!reverse)
+-	strbuf_init(&buf, 0);
+ 	if (!contents_from || strcmp("-", contents_from)) {
+ 		struct stat st;
+ 		const char *read_from;
 diff --git a/builtin-branch.c b/builtin-branch.c
-index b1a2ad7..6e2c614 100644
+index 6e2c614..bb49827 100644
 --- a/builtin-branch.c
 +++ b/builtin-branch.c
-@@ -379,10 +379,9 @@ static int calc_maxwidth(struct ref_list *refs)
- static void print_ref_list(int kinds, int detached, int verbose, int abbrev, struct commit_list *with_commit)
- {
- 	int i;
--	struct ref_list ref_list;
-+	struct ref_list ref_list = { { 0, }, };
- 	struct commit *head_commit = lookup_commit_reference_gently(head_sha1, 1);
- 
--	memset(&ref_list, 0, sizeof(ref_list));
- 	ref_list.kinds = kinds;
- 	ref_list.with_commit = with_commit;
- 	if (merge_filter != NO_FILTER)
-diff --git a/builtin-bundle.c b/builtin-bundle.c
-index 9b58152..fa2b6e6 100644
---- a/builtin-bundle.c
-+++ b/builtin-bundle.c
-@@ -13,7 +13,7 @@ static const char *bundle_usage="git bundle (create <bundle> <git rev-list args>
- 
- int cmd_bundle(int argc, const char **argv, const char *prefix)
- {
--	struct bundle_header header;
-+	struct bundle_header header = { { 0, }, };
- 	int nongit;
- 	const char *cmd, *bundle_file;
- 	int bundle_fd = -1;
-@@ -33,7 +33,6 @@ int cmd_bundle(int argc, const char **argv, const char *prefix)
- 		bundle_file = buffer;
+@@ -334,11 +334,10 @@ static void print_ref_item(struct ref_item *item, int maxwidth, int verbose,
  	}
  
--	memset(&header, 0, sizeof(header));
- 	if (strcmp(cmd, "create") && (bundle_fd =
- 				read_bundle_header(bundle_file, &header)) < 0)
- 		return 1;
+ 	if (verbose) {
+-		struct strbuf subject;
++		struct strbuf subject = STRBUF_INIT;
+ 		const char *sub = " **** invalid ref ****";
+ 		char stat[128];
+ 
+-		strbuf_init(&subject, 0);
+ 		stat[0] = '\0';
+ 
+ 		commit = item->commit;
+diff --git a/builtin-cat-file.c b/builtin-cat-file.c
+index 3fba6b9..30d00a6 100644
+--- a/builtin-cat-file.c
++++ b/builtin-cat-file.c
+@@ -189,9 +189,8 @@ static int batch_one_object(const char *obj_name, int print_contents)
+ 
+ static int batch_objects(int print_contents)
+ {
+-	struct strbuf buf;
++	struct strbuf buf = STRBUF_INIT;
+ 
+-	strbuf_init(&buf, 0);
+ 	while (strbuf_getline(&buf, stdin, '\n') != EOF) {
+ 		int error = batch_one_object(buf.buf, print_contents);
+ 		if (error)
+diff --git a/builtin-checkout-index.c b/builtin-checkout-index.c
+index 55b7aaf..4ba2702 100644
+--- a/builtin-checkout-index.c
++++ b/builtin-checkout-index.c
+@@ -268,13 +268,11 @@ int cmd_checkout_index(int argc, const char **argv, const char *prefix)
+ 	}
+ 
+ 	if (read_from_stdin) {
+-		struct strbuf buf, nbuf;
++		struct strbuf buf = STRBUF_INIT, nbuf = STRBUF_INIT;
+ 
+ 		if (all)
+ 			die("git checkout-index: don't mix '--all' and '--stdin'");
+ 
+-		strbuf_init(&buf, 0);
+-		strbuf_init(&nbuf, 0);
+ 		while (strbuf_getline(&buf, stdin, line_termination) != EOF) {
+ 			const char *p;
+ 			if (line_termination && buf.buf[0] == '"') {
 diff --git a/builtin-checkout.c b/builtin-checkout.c
-index 3762f71..f167a98 100644
+index f167a98..03b9b53 100644
 --- a/builtin-checkout.c
 +++ b/builtin-checkout.c
-@@ -38,14 +38,13 @@ struct checkout_opts {
- static int post_checkout_hook(struct commit *old, struct commit *new,
- 			      int changed)
+@@ -308,8 +308,7 @@ static void show_local_changes(struct object *head)
+ 
+ static void describe_detached_head(char *msg, struct commit *commit)
  {
--	struct child_process proc;
-+	struct child_process proc = { 0, };
- 	const char *name = git_path("hooks/post-checkout");
- 	const char *argv[5];
+-	struct strbuf sb;
+-	strbuf_init(&sb, 0);
++	struct strbuf sb = STRBUF_INIT;
+ 	parse_commit(commit);
+ 	pretty_print_commit(CMIT_FMT_ONELINE, commit, &sb, 0, NULL, NULL, 0, 0);
+ 	fprintf(stderr, "%s %s... %s\n", msg,
+@@ -357,8 +356,7 @@ struct branch_info {
  
- 	if (access(name, X_OK) < 0)
- 		return 0;
- 
--	memset(&proc, 0, sizeof(proc));
- 	argv[0] = name;
- 	argv[1] = xstrdup(sha1_to_hex(old->object.sha1));
- 	argv[2] = xstrdup(sha1_to_hex(new->object.sha1));
-@@ -216,7 +215,7 @@ static int checkout_paths(struct tree *source_tree, const char **pathspec,
- 			  struct checkout_opts *opts)
+ static void setup_branch_path(struct branch_info *branch)
  {
- 	int pos;
--	struct checkout state;
-+	struct checkout state = { 0, };
- 	static char *ps_matched;
- 	unsigned char rev[20];
- 	int flag;
-@@ -268,7 +267,6 @@ static int checkout_paths(struct tree *source_tree, const char **pathspec,
- 		return 1;
- 
- 	/* Now we are committed to check them out */
--	memset(&state, 0, sizeof(state));
- 	state.force = 1;
- 	state.refresh_cache = 1;
- 	for (pos = 0; pos < active_nr; pos++) {
-@@ -321,10 +319,9 @@ static void describe_detached_head(char *msg, struct commit *commit)
- 
- static int reset_tree(struct tree *tree, struct checkout_opts *o, int worktree)
+-	struct strbuf buf;
+-	strbuf_init(&buf, 0);
++	struct strbuf buf = STRBUF_INIT;
+ 	strbuf_addstr(&buf, "refs/heads/");
+ 	strbuf_addstr(&buf, branch->name);
+ 	branch->path = strbuf_detach(&buf, NULL);
+@@ -480,7 +478,7 @@ static void update_refs_for_switch(struct checkout_opts *opts,
+ 				   struct branch_info *old,
+ 				   struct branch_info *new)
  {
--	struct unpack_trees_options opts;
-+	struct unpack_trees_options opts = { 0, };
- 	struct tree_desc tree_desc;
+-	struct strbuf msg;
++	struct strbuf msg = STRBUF_INIT;
+ 	const char *old_desc;
+ 	if (opts->new_branch) {
+ 		create_branch(old->name, opts->new_branch, new->name, 0,
+@@ -489,7 +487,6 @@ static void update_refs_for_switch(struct checkout_opts *opts,
+ 		setup_branch_path(new);
+ 	}
  
--	memset(&opts, 0, sizeof(opts));
- 	opts.head_idx = -1;
- 	opts.update = worktree;
- 	opts.skip_unmerged = !worktree;
-@@ -382,9 +379,8 @@ static int merge_working_tree(struct checkout_opts *opts,
- 	} else {
- 		struct tree_desc trees[2];
- 		struct tree *tree;
--		struct unpack_trees_options topts;
-+		struct unpack_trees_options topts = { 0, };
+-	strbuf_init(&msg, 0);
+ 	old_desc = old->name;
+ 	if (!old_desc)
+ 		old_desc = sha1_to_hex(old->commit->object.sha1);
+@@ -731,8 +728,7 @@ no_reference:
+ 	}
  
--		memset(&topts, 0, sizeof(topts));
- 		topts.head_idx = -1;
- 		topts.src_index = &the_index;
- 		topts.dst_index = &the_index;
-@@ -529,10 +525,10 @@ static void update_refs_for_switch(struct checkout_opts *opts,
- static int switch_branches(struct checkout_opts *opts, struct branch_info *new)
- {
- 	int ret = 0;
--	struct branch_info old;
-+	struct branch_info old = { 0, };
- 	unsigned char rev[20];
- 	int flag;
--	memset(&old, 0, sizeof(old));
-+
- 	old.path = resolve_ref("HEAD", rev, 0, &flag);
- 	old.commit = lookup_commit_reference_gently(rev, 1);
- 	if (!(flag & REF_ISSYMREF))
-@@ -582,10 +578,10 @@ static int git_checkout_config(const char *var, const char *value, void *cb)
- 
- int cmd_checkout(int argc, const char **argv, const char *prefix)
- {
--	struct checkout_opts opts;
-+	struct checkout_opts opts = { 0, };
- 	unsigned char rev[20];
- 	const char *arg;
--	struct branch_info new;
-+	struct branch_info new = { 0, };
- 	struct tree *source_tree = NULL;
- 	char *conflict_style = NULL;
- 	struct option options[] = {
-@@ -606,9 +602,6 @@ int cmd_checkout(int argc, const char **argv, const char *prefix)
- 	};
- 	int has_dash_dash;
- 
--	memset(&opts, 0, sizeof(opts));
--	memset(&new, 0, sizeof(new));
--
- 	git_config(git_checkout_config, NULL);
- 
- 	opts.track = BRANCH_TRACK_UNSPECIFIED;
+ 	if (opts.new_branch) {
+-		struct strbuf buf;
+-		strbuf_init(&buf, 0);
++		struct strbuf buf = STRBUF_INIT;
+ 		strbuf_addstr(&buf, "refs/heads/");
+ 		strbuf_addstr(&buf, opts.new_branch);
+ 		if (!get_sha1(buf.buf, rev))
 diff --git a/builtin-clean.c b/builtin-clean.c
-index 48bf29f..357d398 100644
+index 357d398..d998394 100644
 --- a/builtin-clean.c
 +++ b/builtin-clean.c
-@@ -32,7 +32,7 @@ int cmd_clean(int argc, const char **argv, const char *prefix)
+@@ -31,11 +31,11 @@ int cmd_clean(int argc, const char **argv, const char *prefix)
+ 	int i;
  	int show_only = 0, remove_directories = 0, quiet = 0, ignored = 0;
  	int ignored_only = 0, baselen = 0, config_set = 0, errors = 0;
- 	struct strbuf directory;
--	struct dir_struct dir;
-+	struct dir_struct dir = { 0, };
+-	struct strbuf directory;
++	struct strbuf directory = STRBUF_INIT;
+ 	struct dir_struct dir = { 0, };
  	const char *path, *base;
  	static const char **pathspec;
- 	struct strbuf buf;
-@@ -59,7 +59,6 @@ int cmd_clean(int argc, const char **argv, const char *prefix)
+-	struct strbuf buf;
++	struct strbuf buf = STRBUF_INIT;
+ 	const char *qname;
+ 	char *seen = NULL;
+ 	struct option options[] = {
+@@ -58,7 +58,6 @@ int cmd_clean(int argc, const char **argv, const char *prefix)
+ 
  	argc = parse_options(argc, argv, options, builtin_clean_usage, 0);
  
- 	strbuf_init(&buf, 0);
--	memset(&dir, 0, sizeof(dir));
+-	strbuf_init(&buf, 0);
  	if (ignored_only)
  		dir.show_ignored = 1;
  
+@@ -87,7 +86,6 @@ int cmd_clean(int argc, const char **argv, const char *prefix)
+ 	if (baselen)
+ 		path = base = xmemdupz(*pathspec, baselen);
+ 	read_directory(&dir, path, base, baselen, pathspec);
+-	strbuf_init(&directory, 0);
+ 
+ 	if (pathspec)
+ 		seen = xmalloc(argc > 0 ? argc : 1);
 diff --git a/builtin-clone.c b/builtin-clone.c
-index 49d2eb9..d1d5fe8 100644
+index d1d5fe8..964d40d 100644
 --- a/builtin-clone.c
 +++ b/builtin-clone.c
-@@ -572,7 +572,7 @@ int cmd_clone(int argc, const char **argv, const char *prefix)
+@@ -264,10 +264,9 @@ pid_t junk_pid;
  
- 	if (!option_no_checkout) {
- 		struct lock_file *lock_file = xcalloc(1, sizeof(struct lock_file));
--		struct unpack_trees_options opts;
-+		struct unpack_trees_options opts = { 0, };
- 		struct tree *tree;
- 		struct tree_desc t;
- 		int fd;
-@@ -582,7 +582,6 @@ int cmd_clone(int argc, const char **argv, const char *prefix)
+ static void remove_junk(void)
+ {
+-	struct strbuf sb;
++	struct strbuf sb = STRBUF_INIT;
+ 	if (getpid() != junk_pid)
+ 		return;
+-	strbuf_init(&sb, 0);
+ 	if (junk_git_dir) {
+ 		strbuf_addstr(&sb, junk_git_dir);
+ 		remove_dir_recursively(&sb, 0);
+@@ -354,7 +353,7 @@ int cmd_clone(int argc, const char **argv, const char *prefix)
+ 	char *path, *dir;
+ 	const struct ref *refs, *head_points_at, *remote_head, *mapped_refs;
+ 	char branch_top[256], key[256], value[256];
+-	struct strbuf reflog_msg;
++	struct strbuf reflog_msg = STRBUF_INIT;
+ 	struct transport *transport = NULL;
+ 	char *src_ref_prefix = "refs/heads/";
  
- 		fd = hold_locked_index(lock_file, 1);
+@@ -404,7 +403,6 @@ int cmd_clone(int argc, const char **argv, const char *prefix)
+ 	if (!stat(dir, &buf))
+ 		die("destination directory '%s' already exists.", dir);
  
--		memset(&opts, 0, sizeof opts);
- 		opts.update = 1;
- 		opts.merge = 1;
- 		opts.fn = oneway_merge;
+-	strbuf_init(&reflog_msg, 0);
+ 	strbuf_addf(&reflog_msg, "clone: from %s", repo);
+ 
+ 	if (option_bare)
+@@ -526,7 +524,7 @@ int cmd_clone(int argc, const char **argv, const char *prefix)
+ 		create_symref("HEAD", head_points_at->name, NULL);
+ 
+ 		if (!option_bare) {
+-			struct strbuf head_ref;
++			struct strbuf head_ref = STRBUF_INIT;
+ 			const char *head = head_points_at->name;
+ 
+ 			if (!prefixcmp(head, "refs/heads/"))
+@@ -539,7 +537,6 @@ int cmd_clone(int argc, const char **argv, const char *prefix)
+ 				   head_points_at->old_sha1,
+ 				   NULL, 0, DIE_ON_ERR);
+ 
+-			strbuf_init(&head_ref, 0);
+ 			strbuf_addstr(&head_ref, branch_top);
+ 			strbuf_addstr(&head_ref, "HEAD");
+ 
 diff --git a/builtin-commit.c b/builtin-commit.c
-index b920257..69d8492 100644
+index 69d8492..d079293 100644
 --- a/builtin-commit.c
 +++ b/builtin-commit.c
-@@ -192,7 +192,7 @@ static void add_remove_files(struct string_list *list)
- static void create_base_index(void)
+@@ -445,7 +445,7 @@ static int prepare_to_commit(const char *index_file, const char *prefix)
  {
- 	struct tree *tree;
--	struct unpack_trees_options opts;
-+	struct unpack_trees_options opts = { 0, };
- 	struct tree_desc t;
- 
- 	if (initial_commit) {
-@@ -200,7 +200,6 @@ static void create_base_index(void)
- 		return;
- 	}
- 
--	memset(&opts, 0, sizeof(opts));
- 	opts.head_idx = 1;
- 	opts.index_only = 1;
- 	opts.merge = 1;
-@@ -220,7 +219,7 @@ static void create_base_index(void)
- static char *prepare_index(int argc, const char **argv, const char *prefix)
- {
- 	int fd;
--	struct string_list partial;
-+	struct string_list partial = { 0, };
- 	const char **pathspec = NULL;
- 
- 	if (interactive) {
-@@ -303,7 +302,6 @@ static char *prepare_index(int argc, const char **argv, const char *prefix)
- 	if (file_exists(git_path("MERGE_HEAD")))
- 		die("cannot do a partial commit during a merge.");
- 
--	memset(&partial, 0, sizeof(partial));
- 	partial.strdup_strings = 1;
- 	if (list_paths(&partial, initial_commit ? NULL : "HEAD", prefix, pathspec))
- 		exit(1);
-@@ -361,7 +359,7 @@ static int run_status(FILE *fp, const char *index_file, const char *prefix, int
- 
- static int run_hook(const char *index_file, const char *name, ...)
- {
--	struct child_process hook;
-+	struct child_process hook = { 0, };
- 	const char *argv[10], *env[2];
- 	char index[PATH_MAX];
- 	va_list args;
-@@ -384,7 +382,6 @@ static int run_hook(const char *index_file, const char *name, ...)
- 	if (access(argv[0], X_OK) < 0)
+ 	struct stat statbuf;
+ 	int commitable, saved_color_setting;
+-	struct strbuf sb;
++	struct strbuf sb = STRBUF_INIT;
+ 	char *buffer;
+ 	FILE *fp;
+ 	const char *hook_arg1 = NULL;
+@@ -455,7 +455,6 @@ static int prepare_to_commit(const char *index_file, const char *prefix)
+ 	if (!no_verify && run_hook(index_file, "pre-commit", NULL))
  		return 0;
  
--	memset(&hook, 0, sizeof(hook));
- 	hook.argv = argv;
- 	hook.no_stdin = 1;
- 	hook.stdout_to_stderr = 1;
-diff --git a/builtin-fetch-pack.c b/builtin-fetch-pack.c
-index fa3c936..efd7a56 100644
---- a/builtin-fetch-pack.c
-+++ b/builtin-fetch-pack.c
-@@ -488,15 +488,14 @@ static int sideband_demux(int fd, void *data)
+-	strbuf_init(&sb, 0);
+ 	if (message.len) {
+ 		strbuf_addbuf(&sb, &message);
+ 		hook_arg1 = "message";
+@@ -508,10 +507,9 @@ static int prepare_to_commit(const char *index_file, const char *prefix)
+ 		stripspace(&sb, 0);
  
- static int get_pack(int xd[2], char **pack_lockfile)
- {
--	struct async demux;
-+	struct async demux = { 0, };
- 	const char *argv[20];
- 	char keep_arg[256];
- 	char hdr_arg[256];
- 	const char **av;
- 	int do_keep = args.keep_pack;
--	struct child_process cmd;
-+	struct child_process cmd = { 0, };
+ 	if (signoff) {
+-		struct strbuf sob;
++		struct strbuf sob = STRBUF_INIT;
+ 		int i;
  
--	memset(&demux, 0, sizeof(demux));
- 	if (use_sideband) {
- 		/* xd[] is talking with upload-pack; subprocess reads from
- 		 * xd[0], spits out band#2 to stderr, and feeds us band#1
-@@ -511,7 +510,6 @@ static int get_pack(int xd[2], char **pack_lockfile)
- 	else
- 		demux.out = xd[0];
- 
--	memset(&cmd, 0, sizeof(cmd));
- 	cmd.argv = argv;
- 	av = argv;
- 	*hdr_arg = 0;
-diff --git a/builtin-fetch.c b/builtin-fetch.c
-index ee93d3a..16e04dd 100644
---- a/builtin-fetch.c
-+++ b/builtin-fetch.c
-@@ -404,7 +404,7 @@ static int store_updated_refs(const char *url, const char *remote_name,
+-		strbuf_init(&sob, 0);
+ 		strbuf_addstr(&sob, sign_off_header);
+ 		strbuf_addstr(&sob, fmt_name(getenv("GIT_COMMITTER_NAME"),
+ 					     getenv("GIT_COMMITTER_EMAIL")));
+@@ -669,7 +667,7 @@ static int prepare_to_commit(const char *index_file, const char *prefix)
   */
- static int quickfetch(struct ref *ref_map)
+ static int message_is_empty(struct strbuf *sb)
  {
--	struct child_process revlist;
-+	struct child_process revlist = { 0, };
- 	struct ref *ref;
- 	char **argv;
- 	int i, err;
-@@ -435,7 +435,6 @@ static int quickfetch(struct ref *ref_map)
- 	argv[i++] = xstrdup("--all");
- 	argv[i++] = NULL;
+-	struct strbuf tmpl;
++	struct strbuf tmpl = STRBUF_INIT;
+ 	const char *nl;
+ 	int eol, i, start = 0;
  
--	memset(&revlist, 0, sizeof(revlist));
- 	revlist.argv = (const char**)argv;
- 	revlist.git_cmd = 1;
- 	revlist.no_stdin = 1;
-diff --git a/builtin-for-each-ref.c b/builtin-for-each-ref.c
-index fa6c1ed..ea60ec9 100644
---- a/builtin-for-each-ref.c
-+++ b/builtin-for-each-ref.c
-@@ -964,7 +964,7 @@ int cmd_for_each_ref(int argc, const char **argv, const char *prefix)
- 	struct ref_sort *sort = NULL, **sort_tail = &sort;
- 	int maxcount = 0, quote_style = 0;
- 	struct refinfo **refs;
--	struct grab_ref_cbdata cbdata;
-+	struct grab_ref_cbdata cbdata = { 0, };
+@@ -677,7 +675,6 @@ static int message_is_empty(struct strbuf *sb)
+ 		return 0;
  
- 	struct option opts[] = {
- 		OPT_BIT('s', "shell", &quote_style,
-@@ -1000,7 +1000,6 @@ int cmd_for_each_ref(int argc, const char **argv, const char *prefix)
- 		sort = default_sort();
- 	sort_atom_limit = used_atom_cnt;
+ 	/* See if the template is just a prefix of the message. */
+-	strbuf_init(&tmpl, 0);
+ 	if (template_file && strbuf_read_file(&tmpl, template_file, 0) > 0) {
+ 		stripspace(&tmpl, cleanup_mode == CLEANUP_ALL);
+ 		if (start + tmpl.len <= sb->len &&
+@@ -928,7 +925,7 @@ static const char commit_utf8_warn[] =
  
--	memset(&cbdata, 0, sizeof(cbdata));
- 	cbdata.grab_pattern = argv;
- 	for_each_ref(grab_single_ref, &cbdata);
- 	refs = cbdata.grab_array;
-diff --git a/builtin-gc.c b/builtin-gc.c
-index 7af65bb..78e9bbd 100644
---- a/builtin-gc.c
-+++ b/builtin-gc.c
-@@ -157,7 +157,7 @@ static int too_many_packs(void)
- static int run_hook(void)
+ int cmd_commit(int argc, const char **argv, const char *prefix)
  {
- 	const char *argv[2];
--	struct child_process hook;
-+	struct child_process hook = { 0, };
+-	struct strbuf sb;
++	struct strbuf sb = STRBUF_INIT;
+ 	const char *index_file, *reflog_msg;
+ 	char *nl, *p;
+ 	unsigned char commit_sha1[20];
+@@ -963,12 +960,11 @@ int cmd_commit(int argc, const char **argv, const char *prefix)
+ 		for (c = commit->parents; c; c = c->next)
+ 			pptr = &commit_list_insert(c->item, pptr)->next;
+ 	} else if (in_merge) {
+-		struct strbuf m;
++		struct strbuf m = STRBUF_INIT;
+ 		FILE *fp;
+ 
+ 		reflog_msg = "commit (merge)";
+ 		pptr = &commit_list_insert(lookup_commit(head_sha1), pptr)->next;
+-		strbuf_init(&m, 0);
+ 		fp = fopen(git_path("MERGE_HEAD"), "r");
+ 		if (fp == NULL)
+ 			die("could not open %s for reading: %s",
+@@ -988,7 +984,6 @@ int cmd_commit(int argc, const char **argv, const char *prefix)
+ 	parents = reduce_heads(parents);
+ 
+ 	/* Finally, get the commit message */
+-	strbuf_init(&sb, 0);
+ 	if (strbuf_read_file(&sb, git_path(commit_editmsg), 0) < 0) {
+ 		rollback_index_files();
+ 		die("could not read commit message");
+diff --git a/builtin-fetch--tool.c b/builtin-fetch--tool.c
+index 7460ab7..469b07e 100644
+--- a/builtin-fetch--tool.c
++++ b/builtin-fetch--tool.c
+@@ -5,8 +5,7 @@
+ 
+ static char *get_stdin(void)
+ {
+-	struct strbuf buf;
+-	strbuf_init(&buf, 0);
++	struct strbuf buf = STRBUF_INIT;
+ 	if (strbuf_read(&buf, 0, 1024) < 0) {
+ 		die("error reading standard input: %s", strerror(errno));
+ 	}
+diff --git a/builtin-fmt-merge-msg.c b/builtin-fmt-merge-msg.c
+index df02ba7..1f39667 100644
+--- a/builtin-fmt-merge-msg.c
++++ b/builtin-fmt-merge-msg.c
+@@ -348,7 +348,7 @@ int fmt_merge_msg(int merge_summary, struct strbuf *in, struct strbuf *out) {
+ int cmd_fmt_merge_msg(int argc, const char **argv, const char *prefix)
+ {
+ 	FILE *in = stdin;
+-	struct strbuf input, output;
++	struct strbuf input = STRBUF_INIT, output = STRBUF_INIT;
  	int ret;
  
- 	argv[0] = git_path("hooks/pre-auto-gc");
-@@ -166,7 +166,6 @@ static int run_hook(void)
- 	if (access(argv[0], X_OK) < 0)
- 		return 0;
+ 	git_config(fmt_merge_msg_config, NULL);
+@@ -379,10 +379,8 @@ int cmd_fmt_merge_msg(int argc, const char **argv, const char *prefix)
+ 	if (argc > 1)
+ 		usage(fmt_merge_msg_usage);
  
--	memset(&hook, 0, sizeof(hook));
- 	hook.argv = argv;
- 	hook.no_stdin = 1;
- 	hook.stdout_to_stderr = 1;
-diff --git a/builtin-grep.c b/builtin-grep.c
-index 3a51662..8ac09fb 100644
---- a/builtin-grep.c
-+++ b/builtin-grep.c
-@@ -512,12 +512,11 @@ int cmd_grep(int argc, const char **argv, const char *prefix)
- 	int hit = 0;
- 	int cached = 0;
- 	int seen_dashdash = 0;
--	struct grep_opt opt;
-+	struct grep_opt opt = { 0, };
- 	struct object_array list = { 0, 0, NULL };
- 	const char **paths = NULL;
- 	int i;
+-	strbuf_init(&input, 0);
+ 	if (strbuf_read(&input, fileno(in), 0) < 0)
+ 		die("could not read input file %s", strerror(errno));
+-	strbuf_init(&output, 0);
  
--	memset(&opt, 0, sizeof(opt));
- 	opt.prefix_length = (prefix && *prefix) ? strlen(prefix) : 0;
- 	opt.relative = 1;
- 	opt.pathname = 1;
+ 	ret = fmt_merge_msg(merge_summary, &input, &output);
+ 	if (ret)
 diff --git a/builtin-help.c b/builtin-help.c
-index 64207cb..cb97f52 100644
+index cb97f52..783f3a8 100644
 --- a/builtin-help.c
 +++ b/builtin-help.c
-@@ -71,12 +71,11 @@ static const char *get_man_viewer_info(const char *name)
- static int check_emacsclient_version(void)
- {
- 	struct strbuf buffer = STRBUF_INIT;
--	struct child_process ec_process;
-+	struct child_process ec_process = { 0, };
- 	const char *argv_ec[] = { "emacsclient", "--version", NULL };
- 	int version;
+@@ -321,11 +321,9 @@ static const char *cmd_to_page(const char *git_cmd)
  
- 	/* emacsclient prints its version number on stderr */
--	memset(&ec_process, 0, sizeof(ec_process));
- 	ec_process.argv = argv_ec;
- 	ec_process.err = -1;
- 	ec_process.stdout_to_stderr = 1;
+ static void setup_man_path(void)
+ {
+-	struct strbuf new_path;
++	struct strbuf new_path = STRBUF_INIT;
+ 	const char *old_path = getenv("MANPATH");
+ 
+-	strbuf_init(&new_path, 0);
+-
+ 	/* We should always put ':' after our path. If there is no
+ 	 * old_path, the ':' at the end will let 'man' to try
+ 	 * system-wide paths after ours to find the manual page. If
 diff --git a/builtin-log.c b/builtin-log.c
-index fc5e4da..4f4b15d 100644
+index 4f4b15d..a5122f5 100644
 --- a/builtin-log.c
 +++ b/builtin-log.c
-@@ -143,7 +143,7 @@ static void early_output(int signal)
- 
- static void setup_early_output(struct rev_info *rev)
- {
--	struct sigaction sa;
-+	struct sigaction sa = { { 0, }, };
- 
- 	/*
- 	 * Set up the signal handler, minimally intrusively:
-@@ -152,7 +152,6 @@ static void setup_early_output(struct rev_info *rev)
- 	 * system dependencies and headers), and using
- 	 * SA_RESTART.
- 	 */
--	memset(&sa, 0, sizeof(sa));
- 	sa.sa_handler = early_output;
- 	sigemptyset(&sa.sa_mask);
- 	sa.sa_flags = SA_RESTART;
-diff --git a/builtin-ls-files.c b/builtin-ls-files.c
-index 068f424..45ca899 100644
---- a/builtin-ls-files.c
-+++ b/builtin-ls-files.c
-@@ -432,9 +432,8 @@ int cmd_ls_files(int argc, const char **argv, const char *prefix)
- {
+@@ -627,10 +627,9 @@ static void gen_message_id(struct rev_info *info, char *base)
+ 	const char *committer = git_committer_info(IDENT_WARN_ON_NO_NAME);
+ 	const char *email_start = strrchr(committer, '<');
+ 	const char *email_end = strrchr(committer, '>');
+-	struct strbuf buf;
++	struct strbuf buf = STRBUF_INIT;
+ 	if (!email_start || !email_end || email_start > email_end - 1)
+ 		die("Could not extract email from committer identity.");
+-	strbuf_init(&buf, 0);
+ 	strbuf_addf(&buf, "%s.%lu.git.%.*s", base,
+ 		    (unsigned long) time(NULL),
+ 		    (int)(email_end - email_start - 1), email_start + 1);
+@@ -649,7 +648,7 @@ static void make_cover_letter(struct rev_info *rev, int use_stdout,
+ 	const char *msg;
+ 	const char *extra_headers = rev->extra_headers;
+ 	struct shortlog log;
+-	struct strbuf sb;
++	struct strbuf sb = STRBUF_INIT;
  	int i;
- 	int exc_given = 0, require_work_tree = 0;
--	struct dir_struct dir;
-+	struct dir_struct dir = { 0, };
+ 	const char *encoding = "utf-8";
+ 	struct diff_options opts;
+@@ -670,7 +669,6 @@ static void make_cover_letter(struct rev_info *rev, int use_stdout,
+ 	committer = git_committer_info(0);
  
--	memset(&dir, 0, sizeof(dir));
- 	if (prefix)
- 		prefix_offset = strlen(prefix);
- 	git_config(git_default_config, NULL);
+ 	msg = body;
+-	strbuf_init(&sb, 0);
+ 	pp_user_info(NULL, CMIT_FMT_EMAIL, &sb, committer, DATE_RFC2822,
+ 		     encoding);
+ 	pp_title_line(CMIT_FMT_EMAIL, &msg, &sb, subject_start, extra_headers,
+@@ -752,7 +750,7 @@ int cmd_format_patch(int argc, const char **argv, const char *prefix)
+ 	const char *in_reply_to = NULL;
+ 	struct patch_ids ids;
+ 	char *add_signoff = NULL;
+-	struct strbuf buf;
++	struct strbuf buf = STRBUF_INIT;
+ 
+ 	git_config(git_format_config, NULL);
+ 	init_revisions(&rev, prefix);
+@@ -860,8 +858,6 @@ int cmd_format_patch(int argc, const char **argv, const char *prefix)
+ 	}
+ 	argc = j;
+ 
+-	strbuf_init(&buf, 0);
+-
+ 	for (i = 0; i < extra_hdr_nr; i++) {
+ 		strbuf_addstr(&buf, extra_hdr[i]);
+ 		strbuf_addch(&buf, '\n');
+@@ -1138,8 +1134,7 @@ int cmd_cherry(int argc, const char **argv, const char *prefix)
+ 			sign = '-';
+ 
+ 		if (verbose) {
+-			struct strbuf buf;
+-			strbuf_init(&buf, 0);
++			struct strbuf buf = STRBUF_INIT;
+ 			pretty_print_commit(CMIT_FMT_ONELINE, commit,
+ 			                    &buf, 0, NULL, NULL, 0, 0);
+ 			printf("%c %s %s\n", sign,
 diff --git a/builtin-merge.c b/builtin-merge.c
-index dcf8987..ef96078 100644
+index ef96078..fec88b7 100644
 --- a/builtin-merge.c
 +++ b/builtin-merge.c
-@@ -91,10 +91,9 @@ static struct strategy *get_strategy(const char *name)
- 			return &all_strategy[i];
+@@ -224,7 +224,7 @@ static void reset_hard(unsigned const char *sha1, int verbose)
  
- 	if (!loaded) {
--		struct cmdnames not_strategies;
-+		struct cmdnames not_strategies = { 0, };
- 		loaded = 1;
- 
--		memset(&not_strategies, 0, sizeof(struct cmdnames));
- 		load_command_list("git-merge-", &main_cmds, &other_cmds);
- 		for (i = 0; i < main_cmds.cnt; i++) {
- 			int j, found = 0;
-@@ -184,11 +183,10 @@ static void drop_save(void)
- static void save_state(void)
+ static void restore_state(void)
  {
- 	int len;
--	struct child_process cp;
-+	struct child_process cp = { 0, };
- 	struct strbuf buffer = STRBUF_INIT;
- 	const char *argv[] = {"stash", "create", NULL};
+-	struct strbuf sb;
++	struct strbuf sb = STRBUF_INIT;
+ 	const char *args[] = { "stash", "apply", NULL, NULL };
  
--	memset(&cp, 0, sizeof(cp));
- 	cp.argv = argv;
- 	cp.out = -1;
- 	cp.git_cmd = 1;
-@@ -298,7 +296,7 @@ static void squash_message(void)
+ 	if (is_null_sha1(stash))
+@@ -232,7 +232,6 @@ static void restore_state(void)
  
- static int run_hook(const char *name)
+ 	reset_hard(head, 1);
+ 
+-	strbuf_init(&sb, 0);
+ 	args[2] = sha1_to_hex(stash);
+ 
+ 	/*
+@@ -256,7 +255,7 @@ static void squash_message(void)
  {
--	struct child_process hook;
-+	struct child_process hook = { 0, };
- 	const char *argv[3], *env[2];
- 	char index[PATH_MAX];
+ 	struct rev_info rev;
+ 	struct commit *commit;
+-	struct strbuf out;
++	struct strbuf out = STRBUF_INIT;
+ 	struct commit_list *j;
+ 	int fd;
  
-@@ -316,7 +314,6 @@ static int run_hook(const char *name)
- 		argv[1] = "0";
- 	argv[2] = NULL;
+@@ -280,7 +279,6 @@ static void squash_message(void)
+ 	if (prepare_revision_walk(&rev))
+ 		die("revision walk setup failed");
  
--	memset(&hook, 0, sizeof(hook));
- 	hook.argv = argv;
- 	hook.no_stdin = 1;
- 	hook.stdout_to_stderr = 1;
-@@ -379,12 +376,11 @@ static void finish(const unsigned char *new_head, const char *msg)
- static void merge_name(const char *remote, struct strbuf *msg)
+-	strbuf_init(&out, 0);
+ 	strbuf_addstr(&out, "Squashed commit of the following:\n");
+ 	while ((commit = get_revision(&rev)) != NULL) {
+ 		strbuf_addch(&out, '\n');
+@@ -324,9 +322,8 @@ static int run_hook(const char *name)
+ 
+ static void finish(const unsigned char *new_head, const char *msg)
+ {
+-	struct strbuf reflog_message;
++	struct strbuf reflog_message = STRBUF_INIT;
+ 
+-	strbuf_init(&reflog_message, 0);
+ 	if (!msg)
+ 		strbuf_addstr(&reflog_message, getenv("GIT_REFLOG_ACTION"));
+ 	else {
+@@ -377,7 +374,7 @@ static void merge_name(const char *remote, struct strbuf *msg)
  {
  	struct object *remote_head;
--	unsigned char branch_head[20], buf_sha[20];
-+	unsigned char branch_head[20] = { 0, }, buf_sha[20];
- 	struct strbuf buf;
+ 	unsigned char branch_head[20] = { 0, }, buf_sha[20];
+-	struct strbuf buf;
++	struct strbuf buf = STRBUF_INIT;
  	const char *ptr;
  	int len, early;
  
--	memset(branch_head, 0, sizeof(branch_head));
- 	remote_head = peel_to_type(remote, 0, NULL, OBJ_COMMIT);
+@@ -385,7 +382,6 @@ static void merge_name(const char *remote, struct strbuf *msg)
  	if (!remote_head)
  		die("'%s' does not point to a commit", remote);
-@@ -503,9 +499,8 @@ static int read_tree_trivial(unsigned char *common, unsigned char *head,
- 	int i, nr_trees = 0;
- 	struct tree *trees[MAX_UNPACK_TREES];
- 	struct tree_desc t[MAX_UNPACK_TREES];
--	struct unpack_trees_options opts;
-+	struct unpack_trees_options opts = { 0, };
  
--	memset(&opts, 0, sizeof(opts));
- 	opts.head_idx = 2;
- 	opts.src_index = &the_index;
- 	opts.dst_index = &the_index;
-@@ -630,21 +625,17 @@ static int count_unmerged_entries(void)
+-	strbuf_init(&buf, 0);
+ 	strbuf_addstr(&buf, "refs/heads/");
+ 	strbuf_addstr(&buf, remote);
+ 	resolve_ref(buf.buf, branch_head, 0, 0);
+@@ -440,10 +436,9 @@ static void merge_name(const char *remote, struct strbuf *msg)
+ 	if (!strcmp(remote, "FETCH_HEAD") &&
+ 			!access(git_path("FETCH_HEAD"), R_OK)) {
+ 		FILE *fp;
+-		struct strbuf line;
++		struct strbuf line = STRBUF_INIT;
+ 		char *ptr;
  
- static int checkout_fast_forward(unsigned char *head, unsigned char *remote)
+-		strbuf_init(&line, 0);
+ 		fp = fopen(git_path("FETCH_HEAD"), "r");
+ 		if (!fp)
+ 			die("could not open %s for reading: %s",
+@@ -540,7 +535,7 @@ static int try_merge_strategy(const char *strategy, struct commit_list *common,
+ 	const char **args;
+ 	int i = 0, ret;
+ 	struct commit_list *j;
+-	struct strbuf buf;
++	struct strbuf buf = STRBUF_INIT;
+ 
+ 	if (!strcmp(strategy, "recursive") || !strcmp(strategy, "subtree")) {
+ 		int clean;
+@@ -577,7 +572,6 @@ static int try_merge_strategy(const char *strategy, struct commit_list *common,
+ 	} else {
+ 		args = xmalloc((4 + commit_list_count(common) +
+ 					commit_list_count(remoteheads)) * sizeof(char *));
+-		strbuf_init(&buf, 0);
+ 		strbuf_addf(&buf, "merge-%s", strategy);
+ 		args[i++] = buf.buf;
+ 		for (j = common; j; j = j->next)
+@@ -827,7 +821,7 @@ static int evaluate_result(void)
+ int cmd_merge(int argc, const char **argv, const char *prefix)
  {
--	struct tree *trees[MAX_UNPACK_TREES];
--	struct unpack_trees_options opts;
--	struct tree_desc t[MAX_UNPACK_TREES];
-+	struct tree *trees[MAX_UNPACK_TREES] = { 0, };
-+	struct unpack_trees_options opts = { 0, };
-+	struct tree_desc t[MAX_UNPACK_TREES] = { { 0, }, };
- 	int i, fd, nr_trees = 0;
--	struct dir_struct dir;
-+	struct dir_struct dir = { 0, };
- 	struct lock_file *lock_file = xcalloc(1, sizeof(struct lock_file));
- 
- 	refresh_cache(REFRESH_QUIET);
- 
- 	fd = hold_locked_index(lock_file, 1);
- 
--	memset(&trees, 0, sizeof(trees));
--	memset(&opts, 0, sizeof(opts));
--	memset(&t, 0, sizeof(t));
--	memset(&dir, 0, sizeof(dir));
- 	dir.show_ignored = 1;
- 	dir.exclude_per_dir = ".gitignore";
- 	opts.dir = &dir;
-@@ -706,7 +697,6 @@ static void add_strategies(const char *string, unsigned attr)
- 	struct strategy *list = NULL;
- 	int list_alloc = 0, list_nr = 0, i;
- 
--	memset(&list, 0, sizeof(list));
- 	split_merge_strategies(string, &list, &list_nr, &list_alloc);
- 	if (list) {
- 		for (i = 0; i < list_nr; i++)
-diff --git a/builtin-pack-objects.c b/builtin-pack-objects.c
-index 59c30d1..c9b37c2 100644
---- a/builtin-pack-objects.c
-+++ b/builtin-pack-objects.c
-@@ -128,11 +128,10 @@ static void *get_delta(struct object_entry *entry)
- 
- static unsigned long do_compress(void **pptr, unsigned long size)
- {
--	z_stream stream;
-+	z_stream stream = { 0, };
- 	void *in, *out;
- 	unsigned long maxsize;
- 
--	memset(&stream, 0, sizeof(stream));
- 	deflateInit(&stream, pack_compression_level);
- 	maxsize = deflateBound(&stream, size);
- 
-@@ -189,11 +188,10 @@ static int check_pack_inflate(struct packed_git *p,
- 		off_t len,
- 		unsigned long expect)
- {
--	z_stream stream;
-+	z_stream stream = { 0, };
- 	unsigned char fakebuf[4096], *in;
- 	int st;
- 
--	memset(&stream, 0, sizeof(stream));
- 	inflateInit(&stream);
- 	do {
- 		in = use_pack(p, w_curs, offset, &stream.avail_in);
-@@ -1896,11 +1894,9 @@ static int ofscmp(const void *a_, const void *b_)
- static void add_objects_in_unpacked_packs(struct rev_info *revs)
- {
- 	struct packed_git *p;
--	struct in_pack in_pack;
-+	struct in_pack in_pack = { 0, };
- 	uint32_t i;
- 
--	memset(&in_pack, 0, sizeof(in_pack));
--
- 	for (p = packed_git; p; p = p->next) {
- 		const unsigned char *sha1;
- 		struct object *o;
-diff --git a/builtin-read-tree.c b/builtin-read-tree.c
-index 0706c95..d518bc4 100644
---- a/builtin-read-tree.c
-+++ b/builtin-read-tree.c
-@@ -73,9 +73,8 @@ int cmd_read_tree(int argc, const char **argv, const char *unused_prefix)
- 	int i, newfd, stage = 0;
- 	unsigned char sha1[20];
- 	struct tree_desc t[MAX_UNPACK_TREES];
--	struct unpack_trees_options opts;
-+	struct unpack_trees_options opts = { 0, };
- 
--	memset(&opts, 0, sizeof(opts));
- 	opts.head_idx = -1;
- 	opts.src_index = &the_index;
- 	opts.dst_index = &the_index;
-diff --git a/builtin-receive-pack.c b/builtin-receive-pack.c
-index 45e3cd9..2a26851 100644
---- a/builtin-receive-pack.c
-+++ b/builtin-receive-pack.c
-@@ -107,7 +107,7 @@ static int run_hook(const char *hook_name)
- {
- 	static char buf[sizeof(commands->old_sha1) * 2 + PATH_MAX + 4];
- 	struct command *cmd;
--	struct child_process proc;
-+	struct child_process proc = { 0, };
- 	const char *argv[2];
- 	int have_input = 0, code;
- 
-@@ -122,7 +122,6 @@ static int run_hook(const char *hook_name)
- 	argv[0] = hook_name;
- 	argv[1] = NULL;
- 
--	memset(&proc, 0, sizeof(proc));
- 	proc.argv = argv;
- 	proc.in = -1;
- 	proc.stdout_to_stderr = 1;
-@@ -147,7 +146,7 @@ static int run_hook(const char *hook_name)
- static int run_update_hook(struct command *cmd)
- {
- 	static const char update_hook[] = "hooks/update";
--	struct child_process proc;
-+	struct child_process proc = { 0, };
- 	const char *argv[5];
- 
- 	if (access(update_hook, X_OK) < 0)
-@@ -159,7 +158,6 @@ static int run_update_hook(struct command *cmd)
- 	argv[3] = sha1_to_hex(cmd->new_sha1);
- 	argv[4] = NULL;
- 
--	memset(&proc, 0, sizeof(proc));
- 	proc.argv = argv;
- 	proc.no_stdin = 1;
- 	proc.stdout_to_stderr = 1;
-@@ -407,7 +405,7 @@ static const char *unpack(void)
- 		const char *keeper[7];
- 		int s, status, i = 0;
- 		char keep_arg[256];
--		struct child_process ip;
-+		struct child_process ip = { 0, };
- 
- 		s = sprintf(keep_arg, "--keep=receive-pack %"PRIuMAX" on ", (uintmax_t) getpid());
- 		if (gethostname(keep_arg + s, sizeof(keep_arg) - s))
-@@ -421,7 +419,6 @@ static const char *unpack(void)
- 		keeper[i++] = hdr_arg;
- 		keeper[i++] = keep_arg;
- 		keeper[i++] = NULL;
--		memset(&ip, 0, sizeof(ip));
- 		ip.argv = keeper;
- 		ip.out = -1;
- 		ip.git_cmd = 1;
-diff --git a/builtin-reflog.c b/builtin-reflog.c
-index 6b3667e..0bde849 100644
---- a/builtin-reflog.c
-+++ b/builtin-reflog.c
-@@ -98,8 +98,8 @@ static int tree_is_complete(const unsigned char *sha1)
- 
- static int commit_is_complete(struct commit *commit)
- {
--	struct object_array study;
--	struct object_array found;
-+	struct object_array study = { 0, };
-+	struct object_array found = { 0, };
- 	int is_incomplete = 0;
- 	int i;
- 
-@@ -115,8 +115,6 @@ static int commit_is_complete(struct commit *commit)
- 	 * If some of the objects that are needed to complete this
- 	 * commit are missing, mark this commit as INCOMPLETE.
+ 	unsigned char result_tree[20];
+-	struct strbuf buf;
++	struct strbuf buf = STRBUF_INIT;
+ 	const char *head_arg;
+ 	int flag, head_invalid = 0, i;
+ 	int best_cnt = -1, merge_was_ok = 0, automerge_was_ok = 0;
+@@ -876,7 +870,6 @@ int cmd_merge(int argc, const char **argv, const char *prefix)
+ 	 * Traditional format never would have "-m" so it is an
+ 	 * additional safety measure to check for it.
  	 */
--	memset(&study, 0, sizeof(study));
--	memset(&found, 0, sizeof(found));
- 	add_object_array(&commit->object, NULL, &study);
- 	add_object_array(&commit->object, NULL, &found);
- 	commit->object.flags |= STUDYING;
-@@ -263,13 +261,11 @@ static int expire_reflog_ent(unsigned char *osha1, unsigned char *nsha1,
- static int expire_reflog(const char *ref, const unsigned char *sha1, int unused, void *cb_data)
- {
- 	struct cmd_reflog_expire_cb *cmd = cb_data;
--	struct expire_reflog_cb cb;
-+	struct expire_reflog_cb cb = { 0, };
- 	struct ref_lock *lock;
- 	char *log_file, *newlog_path = NULL;
- 	int status = 0;
+-	strbuf_init(&buf, 0);
  
--	memset(&cb, 0, sizeof(cb));
--
- 	/*
- 	 * we take the lock for the ref itself to prevent it from
- 	 * getting updated.
-@@ -461,7 +457,7 @@ static void set_reflog_expiry_param(struct cmd_reflog_expire_cb *cb, int slot, c
+ 	if (!have_message && is_old_style_invocation(argc, argv)) {
+ 		strbuf_addstr(&merge_msg, argv[0]);
+@@ -906,7 +899,7 @@ int cmd_merge(int argc, const char **argv, const char *prefix)
+ 		reset_hard(remote_head->sha1, 0);
+ 		return 0;
+ 	} else {
+-		struct strbuf msg;
++		struct strbuf msg = STRBUF_INIT;
  
- static int cmd_reflog_expire(int argc, const char **argv, const char *prefix)
- {
--	struct cmd_reflog_expire_cb cb;
-+	struct cmd_reflog_expire_cb cb = { { 0, }, };
- 	unsigned long now = time(NULL);
- 	int i, status, do_all;
- 	int explicit_expiry = 0;
-@@ -470,7 +466,6 @@ static int cmd_reflog_expire(int argc, const char **argv, const char *prefix)
+ 		/* We are invoked directly as the first-class UI. */
+ 		head_arg = "HEAD";
+@@ -919,7 +912,6 @@ int cmd_merge(int argc, const char **argv, const char *prefix)
+ 		 * codepath so we discard the error in this
+ 		 * loop.
+ 		 */
+-		strbuf_init(&msg, 0);
+ 		for (i = 0; i < argc; i++)
+ 			merge_name(argv[i], &msg);
+ 		fmt_merge_msg(option_log, &msg, &merge_msg);
+@@ -994,7 +986,7 @@ int cmd_merge(int argc, const char **argv, const char *prefix)
+ 			!common->next &&
+ 			!hashcmp(common->item->object.sha1, head)) {
+ 		/* Again the most common case of merging one remote. */
+-		struct strbuf msg;
++		struct strbuf msg = STRBUF_INIT;
+ 		struct object *o;
+ 		char hex[41];
  
- 	save_commit_buffer = 0;
- 	do_all = status = 0;
--	memset(&cb, 0, sizeof(cb));
- 
- 	if (!default_reflog_expire_unreachable)
- 		default_reflog_expire_unreachable = now - 30 * 24 * 3600;
-@@ -526,10 +521,9 @@ static int cmd_reflog_expire(int argc, const char **argv, const char *prefix)
- 	}
- 
- 	if (do_all) {
--		struct collect_reflog_cb collected;
-+		struct collect_reflog_cb collected = { 0, };
- 		int i;
- 
--		memset(&collected, 0, sizeof(collected));
- 		for_each_reflog(collect_reflog, &collected);
- 		for (i = 0; i < collected.nr; i++) {
- 			struct collected_reflog *e = collected.e[i];
-@@ -565,11 +559,9 @@ static int count_reflog_ent(unsigned char *osha1, unsigned char *nsha1,
- 
- static int cmd_reflog_delete(int argc, const char **argv, const char *prefix)
- {
--	struct cmd_reflog_expire_cb cb;
-+	struct cmd_reflog_expire_cb cb = { { 0, }, };
- 	int i, status = 0;
- 
--	memset(&cb, 0, sizeof(cb));
--
- 	for (i = 1; i < argc; i++) {
- 		const char *arg = argv[i];
- 		if (!strcmp(arg, "--dry-run") || !strcmp(arg, "-n"))
+@@ -1004,7 +996,6 @@ int cmd_merge(int argc, const char **argv, const char *prefix)
+ 			hex,
+ 			find_unique_abbrev(remoteheads->item->object.sha1,
+ 			DEFAULT_ABBREV));
+-		strbuf_init(&msg, 0);
+ 		strbuf_addstr(&msg, "Fast forward");
+ 		if (have_message)
+ 			strbuf_addstr(&msg,
 diff --git a/builtin-remote.c b/builtin-remote.c
-index 90a4e35..883e6d4 100644
+index 883e6d4..a4cc0fa 100644
 --- a/builtin-remote.c
 +++ b/builtin-remote.c
-@@ -216,9 +216,8 @@ static int handle_one_branch(const char *refname,
- 	const unsigned char *sha1, int flags, void *cb_data)
- {
- 	struct ref_states *states = cb_data;
--	struct refspec refspec;
-+	struct refspec refspec = { 0, };
- 
--	memset(&refspec, 0, sizeof(refspec));
- 	refspec.dst = (char *)refname;
- 	if (!remote_find_tracking(states->remote, &refspec)) {
- 		struct string_list_item *item;
-@@ -304,11 +303,10 @@ static int add_branch_for_removal(const char *refname,
- 	const unsigned char *sha1, int flags, void *cb_data)
- {
- 	struct branches_for_remote *branches = cb_data;
--	struct refspec refspec;
-+	struct refspec refspec = { 0, };
- 	struct string_list_item *item;
- 	struct known_remote *kr;
- 
--	memset(&refspec, 0, sizeof(refspec));
- 	refspec.dst = (char *)refname;
- 	if (remote_find_tracking(branches->remote, &refspec))
- 		return 0;
-@@ -451,9 +449,8 @@ static int append_ref_to_tracked_list(const char *refname,
- 	const unsigned char *sha1, int flags, void *cb_data)
- {
- 	struct ref_states *states = cb_data;
--	struct refspec refspec;
-+	struct refspec refspec = { 0, };
- 
--	memset(&refspec, 0, sizeof(refspec));
- 	refspec.dst = (char *)refname;
- 	if (!remote_find_tracking(states->remote, &refspec))
- 		string_list_append(abbrev_branch(refspec.src), &states->tracked);
-@@ -469,14 +466,13 @@ static int show(int argc, const char **argv)
- 		OPT_BOOLEAN('n', NULL, &no_query, "do not query remotes"),
- 		OPT_END()
- 	};
--	struct ref_states states;
-+	struct ref_states states = { 0, };
- 
- 	argc = parse_options(argc, argv, options, builtin_remote_usage, 0);
- 
- 	if (argc < 1)
- 		return show_all();
- 
--	memset(&states, 0, sizeof(states));
- 	for (; argc; argc--, argv++) {
- 		int i;
- 
-@@ -545,14 +541,13 @@ static int prune(int argc, const char **argv)
- 		OPT__DRY_RUN(&dry_run),
- 		OPT_END()
- 	};
--	struct ref_states states;
-+	struct ref_states states = { 0, };
- 
- 	argc = parse_options(argc, argv, options, builtin_remote_usage, 0);
- 
- 	if (argc < 1)
- 		usage_with_options(builtin_remote_usage, options);
- 
--	memset(&states, 0, sizeof(states));
- 	for (; argc; argc--, argv++) {
- 		int i;
- 
-diff --git a/builtin-rerere.c b/builtin-rerere.c
-index dd4573f..45663f6 100644
---- a/builtin-rerere.c
-+++ b/builtin-rerere.c
-@@ -89,7 +89,7 @@ static int diff_two(const char *file1, const char *label1,
- 		const char *file2, const char *label2)
- {
- 	xpparam_t xpp;
--	xdemitconf_t xecfg;
-+	xdemitconf_t xecfg = { 0, };
- 	xdemitcb_t ecb;
- 	mmfile_t minus, plus;
- 
-@@ -99,7 +99,6 @@ static int diff_two(const char *file1, const char *label1,
- 	printf("--- a/%s\n+++ b/%s\n", label1, label2);
- 	fflush(stdout);
- 	xpp.flags = XDF_NEED_MINIMAL;
--	memset(&xecfg, 0, sizeof(xecfg));
- 	xecfg.ctxlen = 3;
- 	ecb.outf = outf;
- 	xdi_diff(&minus, &plus, &xpp, &xecfg, &ecb);
-diff --git a/builtin-reset.c b/builtin-reset.c
-index 16e6bb2..fef9727 100644
---- a/builtin-reset.c
-+++ b/builtin-reset.c
-@@ -136,9 +136,8 @@ static int read_from_tree(const char *prefix, const char **argv,
- {
- 	struct lock_file *lock = xcalloc(1, sizeof(struct lock_file));
- 	int index_fd, index_was_discarded = 0;
--	struct diff_options opt;
-+	struct diff_options opt = { 0, };
- 
--	memset(&opt, 0, sizeof(opt));
- 	diff_tree_setup_paths(get_pathspec(prefix, (const char **)argv), &opt);
- 	opt.output_format = DIFF_FORMAT_CALLBACK;
- 	opt.format_callback = update_index_from_diff;
-diff --git a/builtin-send-pack.c b/builtin-send-pack.c
-index 910db92..cb3f811 100644
---- a/builtin-send-pack.c
-+++ b/builtin-send-pack.c
-@@ -33,13 +33,12 @@ static int pack_objects(int fd, struct ref *refs, struct extra_have_objects *ext
- 		NULL,
- 		NULL,
- 	};
--	struct child_process po;
-+	struct child_process po = { 0, };
+@@ -54,7 +54,7 @@ static int add(int argc, const char **argv)
+ 	struct string_list track = { NULL, 0, 0 };
+ 	const char *master = NULL;
+ 	struct remote *remote;
+-	struct strbuf buf, buf2;
++	struct strbuf buf = STRBUF_INIT, buf2 = STRBUF_INIT;
+ 	const char *name, *url;
  	int i;
- 	char buf[42];
  
- 	if (args.use_thin_pack)
- 		argv[4] = "--thin";
--	memset(&po, 0, sizeof(po));
- 	po.argv = argv;
- 	po.in = -1;
- 	po.out = fd;
-@@ -389,9 +388,8 @@ static int do_send_pack(int in, int out, struct remote *remote, const char *dest
- 	int expect_status_report = 0;
- 	int flags = MATCH_REFS_NONE;
- 	int ret;
--	struct extra_have_objects extra_have;
-+	struct extra_have_objects extra_have = { 0, };
+@@ -81,9 +81,6 @@ static int add(int argc, const char **argv)
+ 			remote->fetch_refspec_nr))
+ 		die("remote %s already exists.", name);
  
--	memset(&extra_have, 0, sizeof(extra_have));
- 	if (args.send_all)
- 		flags |= MATCH_REFS_ALL;
- 	if (args.send_mirror)
+-	strbuf_init(&buf, 0);
+-	strbuf_init(&buf2, 0);
+-
+ 	strbuf_addf(&buf2, "refs/heads/test:refs/remotes/%s/test", name);
+ 	if (!valid_fetch_refspec(buf2.buf))
+ 		die("'%s' is not a valid remote name", name);
+@@ -350,7 +347,7 @@ static int rm(int argc, const char **argv)
+ 		OPT_END()
+ 	};
+ 	struct remote *remote;
+-	struct strbuf buf;
++	struct strbuf buf = STRBUF_INIT;
+ 	struct known_remotes known_remotes = { NULL, NULL };
+ 	struct string_list branches = { NULL, 0, 0, 1 };
+ 	struct branches_for_remote cb_data = { NULL, &branches, &known_remotes };
+@@ -366,7 +363,6 @@ static int rm(int argc, const char **argv)
+ 	known_remotes.to_delete = remote;
+ 	for_each_remote(add_known_remote, &known_remotes);
+ 
+-	strbuf_init(&buf, 0);
+ 	strbuf_addf(&buf, "remote.%s", remote->name);
+ 	if (git_config_rename_section(buf.buf, NULL) < 1)
+ 		return error("Could not remove config section '%s'", buf.buf);
+diff --git a/builtin-rev-list.c b/builtin-rev-list.c
+index facaff2..06cdeb7 100644
+--- a/builtin-rev-list.c
++++ b/builtin-rev-list.c
+@@ -107,8 +107,7 @@ static void show_commit(struct commit *commit)
+ 		putchar('\n');
+ 
+ 	if (revs.verbose_header && commit->buffer) {
+-		struct strbuf buf;
+-		strbuf_init(&buf, 0);
++		struct strbuf buf = STRBUF_INIT;
+ 		pretty_print_commit(revs.commit_format, commit,
+ 				    &buf, revs.abbrev, NULL, NULL,
+ 				    revs.date_mode, 0);
+diff --git a/builtin-rev-parse.c b/builtin-rev-parse.c
+index 9aa049e..81d5a6f 100644
+--- a/builtin-rev-parse.c
++++ b/builtin-rev-parse.c
+@@ -307,19 +307,17 @@ static int cmd_parseopt(int argc, const char **argv, const char *prefix)
+ 		OPT_END(),
+ 	};
+ 
+-	struct strbuf sb, parsed;
++	struct strbuf sb = STRBUF_INIT, parsed = STRBUF_INIT;
+ 	const char **usage = NULL;
+ 	struct option *opts = NULL;
+ 	int onb = 0, osz = 0, unb = 0, usz = 0;
+ 
+-	strbuf_init(&parsed, 0);
+ 	strbuf_addstr(&parsed, "set --");
+ 	argc = parse_options(argc, argv, parseopt_opts, parseopt_usage,
+ 	                     PARSE_OPT_KEEP_DASHDASH);
+ 	if (argc < 1 || strcmp(argv[0], "--"))
+ 		usage_with_options(parseopt_usage, parseopt_opts);
+ 
+-	strbuf_init(&sb, 0);
+ 	/* get the usage up to the first line with a -- on it */
+ 	for (;;) {
+ 		if (strbuf_getline(&sb, stdin, '\n') == EOF)
+diff --git a/builtin-show-branch.c b/builtin-show-branch.c
+index 233eed4..306b850 100644
+--- a/builtin-show-branch.c
++++ b/builtin-show-branch.c
+@@ -259,11 +259,10 @@ static void join_revs(struct commit_list **list_p,
+ 
+ static void show_one_commit(struct commit *commit, int no_name)
+ {
+-	struct strbuf pretty;
++	struct strbuf pretty = STRBUF_INIT;
+ 	const char *pretty_str = "(unavailable)";
+ 	struct commit_name *name = commit->util;
+ 
+-	strbuf_init(&pretty, 0);
+ 	if (commit->object.parsed) {
+ 		pretty_print_commit(CMIT_FMT_ONELINE, commit,
+ 				    &pretty, 0, NULL, NULL, 0, 0);
+diff --git a/builtin-stripspace.c b/builtin-stripspace.c
+index c0b2130..d6e3896 100644
+--- a/builtin-stripspace.c
++++ b/builtin-stripspace.c
+@@ -70,14 +70,13 @@ void stripspace(struct strbuf *sb, int skip_comments)
+ 
+ int cmd_stripspace(int argc, const char **argv, const char *prefix)
+ {
+-	struct strbuf buf;
++	struct strbuf buf = STRBUF_INIT;
+ 	int strip_comments = 0;
+ 
+ 	if (argc > 1 && (!strcmp(argv[1], "-s") ||
+ 				!strcmp(argv[1], "--strip-comments")))
+ 		strip_comments = 1;
+ 
+-	strbuf_init(&buf, 0);
+ 	if (strbuf_read(&buf, 0, 1024) < 0)
+ 		die("could not read the input");
+ 
 diff --git a/builtin-tag.c b/builtin-tag.c
-index f2853d0..084970b 100644
+index 084970b..75f6d65 100644
 --- a/builtin-tag.c
 +++ b/builtin-tag.c
-@@ -145,7 +145,7 @@ static int verify_tag(const char *name, const char *ref,
+@@ -337,7 +337,7 @@ static int parse_msg_arg(const struct option *opt, const char *arg, int unset)
  
- static int do_sign(struct strbuf *buffer)
+ int cmd_tag(int argc, const char **argv, const char *prefix)
  {
--	struct child_process gpg;
-+	struct child_process gpg = { 0, };
- 	const char *args[4];
- 	char *bracket;
- 	int len;
-@@ -164,7 +164,6 @@ static int do_sign(struct strbuf *buffer)
- 	 * because gpg exits without reading and then write gets SIGPIPE. */
- 	signal(SIGPIPE, SIG_IGN);
+-	struct strbuf buf;
++	struct strbuf buf = STRBUF_INIT;
+ 	unsigned char object[20], prev[20];
+ 	char ref[PATH_MAX];
+ 	const char *object_ref, *tag;
+@@ -387,7 +387,6 @@ int cmd_tag(int argc, const char **argv, const char *prefix)
+ 	if (verify)
+ 		return for_each_tag_name(argv, verify_tag);
  
--	memset(&gpg, 0, sizeof(gpg));
- 	gpg.argv = args;
- 	gpg.in = -1;
- 	gpg.out = -1;
-diff --git a/builtin-unpack-objects.c b/builtin-unpack-objects.c
-index 9f4bdd3..8ae199d 100644
---- a/builtin-unpack-objects.c
-+++ b/builtin-unpack-objects.c
-@@ -90,11 +90,9 @@ static void use(int bytes)
+-	strbuf_init(&buf, 0);
+ 	if (msg.given || msgfile) {
+ 		if (msg.given && msgfile)
+ 			die("only one -F or -m option is allowed.");
+diff --git a/builtin-update-index.c b/builtin-update-index.c
+index 417f972..1270836 100644
+--- a/builtin-update-index.c
++++ b/builtin-update-index.c
+@@ -297,11 +297,9 @@ static void update_one(const char *path, const char *prefix, int prefix_length)
  
- static void *get_data(unsigned long size)
+ static void read_index_info(int line_termination)
  {
--	z_stream stream;
-+	z_stream stream = { 0, };
- 	void *buf = xmalloc(size);
+-	struct strbuf buf;
+-	struct strbuf uq;
++	struct strbuf buf = STRBUF_INIT;
++	struct strbuf uq = STRBUF_INIT;
  
--	memset(&stream, 0, sizeof(stream));
--
- 	stream.next_out = buf;
- 	stream.avail_out = size;
- 	stream.next_in = fill(1);
-diff --git a/builtin-verify-tag.c b/builtin-verify-tag.c
-index 729a159..62aca43 100644
---- a/builtin-verify-tag.c
-+++ b/builtin-verify-tag.c
-@@ -18,7 +18,7 @@ static const char builtin_verify_tag_usage[] =
+-	strbuf_init(&buf, 0);
+-	strbuf_init(&uq, 0);
+ 	while (strbuf_getline(&buf, stdin, line_termination) != EOF) {
+ 		char *ptr, *tab;
+ 		char *path_name;
+@@ -717,10 +715,8 @@ int cmd_update_index(int argc, const char **argv, const char *prefix)
+ 			free((char*)p);
+ 	}
+ 	if (read_from_stdin) {
+-		struct strbuf buf, nbuf;
++		struct strbuf buf = STRBUF_INIT, nbuf = STRBUF_INIT;
  
- static int run_gpg_verify(const char *buf, unsigned long size, int verbose)
- {
--	struct child_process gpg;
-+	struct child_process gpg = { 0, };
- 	const char *args_gpg[] = {"gpg", "--verify", "FILE", "-", NULL};
- 	char path[PATH_MAX], *eol;
- 	size_t len;
-@@ -42,7 +42,6 @@ static int run_gpg_verify(const char *buf, unsigned long size, int verbose)
- 	if (verbose)
- 		write_in_full(1, buf, len);
- 
--	memset(&gpg, 0, sizeof(gpg));
- 	gpg.argv = args_gpg;
- 	gpg.in = -1;
- 	args_gpg[2] = path;
-diff --git a/bundle.c b/bundle.c
-index 00b2aab..1e3d446 100644
---- a/bundle.c
-+++ b/bundle.c
-@@ -99,7 +99,7 @@ int verify_bundle(struct bundle_header *header, int verbose)
- 	struct ref_list *p = &header->prerequisites;
- 	struct rev_info revs;
- 	const char *argv[] = {NULL, "--all"};
--	struct object_array refs;
-+	struct object_array refs = { 0, };
- 	struct commit *commit;
- 	int i, ret = 0, req_nr;
- 	const char *message = "Repository lacks these prerequisite commits:";
-@@ -122,7 +122,6 @@ int verify_bundle(struct bundle_header *header, int verbose)
- 	req_nr = revs.pending.nr;
- 	setup_revisions(2, argv, &revs, NULL);
- 
--	memset(&refs, 0, sizeof(struct object_array));
- 	for (i = 0; i < revs.pending.nr; i++) {
- 		struct object_array_entry *e = revs.pending.objects + i;
- 		add_object_array(e->item, e->name, &refs);
-@@ -179,7 +178,7 @@ int create_bundle(struct bundle_header *header, const char *path,
- 	char buffer[1024];
- 	struct rev_info revs;
- 	int read_from_stdin = 0;
--	struct child_process rls;
-+	struct child_process rls = { 0, };
- 	FILE *rls_fout;
- 
- 	bundle_to_stdout = !strcmp(path, "-");
-@@ -201,7 +200,6 @@ int create_bundle(struct bundle_header *header, const char *path,
- 	argv_boundary[1] = "--boundary";
- 	argv_boundary[2] = "--pretty=oneline";
- 	argv_boundary[argc + 2] = NULL;
--	memset(&rls, 0, sizeof(rls));
- 	rls.argv = argv_boundary;
- 	rls.out = -1;
- 	rls.git_cmd = 1;
-@@ -354,11 +352,10 @@ int unbundle(struct bundle_header *header, int bundle_fd)
- {
- 	const char *argv_index_pack[] = {"index-pack",
- 		"--fix-thin", "--stdin", NULL};
--	struct child_process ip;
-+	struct child_process ip = { 0, };
- 
- 	if (verify_bundle(header, 0))
- 		return -1;
--	memset(&ip, 0, sizeof(ip));
- 	ip.argv = argv_index_pack;
- 	ip.in = bundle_fd;
- 	ip.no_stdout = 1;
+-		strbuf_init(&buf, 0);
+-		strbuf_init(&nbuf, 0);
+ 		setup_work_tree();
+ 		while (strbuf_getline(&buf, stdin, line_termination) != EOF) {
+ 			const char *p;
 diff --git a/combine-diff.c b/combine-diff.c
-index de83c69..42f28bc 100644
+index 42f28bc..c48ece4 100644
 --- a/combine-diff.c
 +++ b/combine-diff.c
-@@ -202,10 +202,10 @@ static void combine_diff(const unsigned char *parent, mmfile_t *result_file,
- 	unsigned int p_lno, lno;
- 	unsigned long nmask = (1UL << n);
- 	xpparam_t xpp;
--	xdemitconf_t xecfg;
-+	xdemitconf_t xecfg = { 0, };
- 	mmfile_t parent_file;
- 	xdemitcb_t ecb;
--	struct combine_diff_state state;
-+	struct combine_diff_state state = { 0, };
- 	unsigned long sz;
+@@ -740,9 +740,8 @@ static void show_patch_diff(struct combine_diff_path *elem, int num_parent,
  
- 	if (!cnt)
-@@ -214,8 +214,6 @@ static void combine_diff(const unsigned char *parent, mmfile_t *result_file,
- 	parent_file.ptr = grab_blob(parent, &sz);
- 	parent_file.size = sz;
- 	xpp.flags = XDF_NEED_MINIMAL;
--	memset(&xecfg, 0, sizeof(xecfg));
--	memset(&state, 0, sizeof(state));
- 	state.nmask = nmask;
- 	state.sline = sline;
- 	state.lno = 1;
-diff --git a/connect.c b/connect.c
-index 67d2cd8..59bd865 100644
---- a/connect.c
-+++ b/connect.c
-@@ -198,7 +198,7 @@ static int git_tcp_connect_sock(char *host, int flags)
- 	int sockfd = -1, saved_errno = 0;
- 	char *colon, *end;
- 	const char *port = STR(DEFAULT_GIT_PORT);
--	struct addrinfo hints, *ai0, *ai;
-+	struct addrinfo hints = { 0, }, *ai0, *ai;
- 	int gai;
- 	int cnt = 0;
+ 			/* If not a fake symlink, apply filters, e.g. autocrlf */
+ 			if (is_file) {
+-				struct strbuf buf;
++				struct strbuf buf = STRBUF_INIT;
  
-@@ -221,7 +221,6 @@ static int git_tcp_connect_sock(char *host, int flags)
- 			port = "<none>";
- 	}
+-				strbuf_init(&buf, 0);
+ 				if (convert_to_git(elem->path, result, len, &buf, safe_crlf)) {
+ 					free(result);
+ 					result = strbuf_detach(&buf, &len);
+diff --git a/config.c b/config.c
+index 18d305c..b8d289d 100644
+--- a/config.c
++++ b/config.c
+@@ -753,9 +753,8 @@ static int store_write_section(int fd, const char* key)
+ {
+ 	const char *dot;
+ 	int i, success;
+-	struct strbuf sb;
++	struct strbuf sb = STRBUF_INIT;
  
--	memset(&hints, 0, sizeof(hints));
- 	hints.ai_socktype = SOCK_STREAM;
- 	hints.ai_protocol = IPPROTO_TCP;
+-	strbuf_init(&sb, 0);
+ 	dot = memchr(key, '.', store.baselen);
+ 	if (dot) {
+ 		strbuf_addf(&sb, "[%.*s \"", (int)(dot - key), key);
+@@ -780,7 +779,7 @@ static int store_write_pair(int fd, const char* key, const char* value)
+ 	int i, success;
+ 	int length = strlen(key + store.baselen + 1);
+ 	const char *quote = "";
+-	struct strbuf sb;
++	struct strbuf sb = STRBUF_INIT;
  
-@@ -437,7 +436,7 @@ static void git_proxy_connect(int fd[2], char *host)
- 	const char *port = STR(DEFAULT_GIT_PORT);
- 	char *colon, *end;
- 	const char *argv[4];
--	struct child_process proxy;
-+	struct child_process proxy = { 0, };
+ 	/*
+ 	 * Check to see if the value needs to be surrounded with a dq pair.
+@@ -797,7 +796,6 @@ static int store_write_pair(int fd, const char* key, const char* value)
+ 	if (i && value[i - 1] == ' ')
+ 		quote = "\"";
  
- 	if (host[0] == '[') {
- 		end = strchr(host + 1, ']');
-@@ -460,7 +459,6 @@ static void git_proxy_connect(int fd[2], char *host)
- 	argv[1] = host;
- 	argv[2] = port;
- 	argv[3] = NULL;
--	memset(&proxy, 0, sizeof(proxy));
- 	proxy.argv = argv;
- 	proxy.in = -1;
- 	proxy.out = -1;
+-	strbuf_init(&sb, 0);
+ 	strbuf_addf(&sb, "\t%.*s = %s",
+ 		    length, key + store.baselen + 1, quote);
+ 
 diff --git a/convert.c b/convert.c
-index 78efed8..a2655bd 100644
+index a2655bd..00b3a89 100644
 --- a/convert.c
 +++ b/convert.c
-@@ -246,12 +246,11 @@ static int filter_buffer(int fd, void *data)
- 	/*
- 	 * Spawn cmd and feed the buffer contents through its stdin.
- 	 */
--	struct child_process child_process;
-+	struct child_process child_process = { 0, };
- 	struct filter_params *params = (struct filter_params *)data;
- 	int write_err, status;
- 	const char *argv[] = { "sh", "-c", params->cmd, NULL };
- 
--	memset(&child_process, 0, sizeof(child_process));
- 	child_process.argv = argv;
- 	child_process.in = -1;
- 	child_process.out = fd;
-@@ -282,13 +281,12 @@ static int apply_filter(const char *path, const char *src, size_t len,
+@@ -280,7 +280,7 @@ static int apply_filter(const char *path, const char *src, size_t len,
+ 	 * (child --> cmd) --> us
  	 */
  	int ret = 1;
- 	struct strbuf nbuf;
--	struct async async;
-+	struct async async = { 0, };
+-	struct strbuf nbuf;
++	struct strbuf nbuf = STRBUF_INIT;
+ 	struct async async = { 0, };
  	struct filter_params params;
  
- 	if (!cmd)
- 		return 0;
+@@ -297,7 +297,6 @@ static int apply_filter(const char *path, const char *src, size_t len,
+ 	if (start_async(&async))
+ 		return 0;	/* error was already reported */
  
--	memset(&async, 0, sizeof(async));
- 	async.proc = filter_buffer;
- 	async.data = &params;
- 	params.src = src;
-diff --git a/daemon.c b/daemon.c
-index 3e5582d..4e62821 100644
---- a/daemon.c
-+++ b/daemon.c
-@@ -462,12 +462,11 @@ static void fill_in_extra_table_entries(struct interp *itable)
- 	 */
- #ifndef NO_IPV6
- 	{
--		struct addrinfo hints;
-+		struct addrinfo hints = { 0, };
- 		struct addrinfo *ai, *ai0;
- 		int gai;
- 		static char addrbuf[HOST_NAME_MAX + 1];
- 
--		memset(&hints, 0, sizeof(hints));
- 		hints.ai_flags = AI_CANONNAME;
- 
- 		gai = getaddrinfo(interp_table[INTERP_SLOT_HOST].value, 0, &hints, &ai0);
-@@ -489,14 +488,13 @@ static void fill_in_extra_table_entries(struct interp *itable)
- #else
- 	{
- 		struct hostent *hent;
--		struct sockaddr_in sa;
-+		struct sockaddr_in sa = { 0, };
- 		char **ap;
- 		static char addrbuf[HOST_NAME_MAX + 1];
- 
- 		hent = gethostbyname(interp_table[INTERP_SLOT_HOST].value);
- 
- 		ap = hent->h_addr_list;
--		memset(&sa, 0, sizeof sa);
- 		sa.sin_family = hent->h_addrtype;
- 		sa.sin_port = htons(0);
- 		memcpy(&sa.sin_addr, *ap, hent->h_length);
-@@ -722,12 +720,11 @@ static int socksetup(char *listen_addr, int listen_port, int **socklist_p)
- 	int socknum = 0, *socklist = NULL;
- 	int maxfd = -1;
- 	char pbuf[NI_MAXSERV];
--	struct addrinfo hints, *ai0, *ai;
-+	struct addrinfo hints = { 0, }, *ai0, *ai;
- 	int gai;
- 	long flags;
- 
- 	sprintf(pbuf, "%d", listen_port);
--	memset(&hints, 0, sizeof(hints));
- 	hints.ai_family = AF_UNSPEC;
- 	hints.ai_socktype = SOCK_STREAM;
- 	hints.ai_protocol = IPPROTO_TCP;
-@@ -793,11 +790,10 @@ static int socksetup(char *listen_addr, int listen_port, int **socklist_p)
- 
- static int socksetup(char *listen_addr, int listen_port, int **socklist_p)
- {
--	struct sockaddr_in sin;
-+	struct sockaddr_in sin = { 0, };
- 	int sockfd;
- 	long flags;
- 
--	memset(&sin, 0, sizeof sin);
- 	sin.sin_family = AF_INET;
- 	sin.sin_port = htons(listen_port);
- 
-diff --git a/date.c b/date.c
-index 35a5257..a13d6e2 100644
---- a/date.c
-+++ b/date.c
-@@ -539,11 +539,10 @@ static int date_string(unsigned long date, int offset, char *buf, int len)
-    (i.e. English) day/month names, and it doesn't work correctly with %z. */
- int parse_date(const char *date, char *result, int maxlen)
- {
--	struct tm tm;
-+	struct tm tm = { 0, };
- 	int offset, tm_gmt;
- 	time_t then;
- 
--	memset(&tm, 0, sizeof(tm));
- 	tm.tm_year = -1;
- 	tm.tm_mon = -1;
- 	tm.tm_mday = -1;
-diff --git a/diff-lib.c b/diff-lib.c
-index ae96c64..000f100 100644
---- a/diff-lib.c
-+++ b/diff-lib.c
-@@ -444,7 +444,7 @@ int run_diff_index(struct rev_info *revs, int cached)
- 	struct object *ent;
- 	struct tree *tree;
- 	const char *tree_name;
--	struct unpack_trees_options opts;
-+	struct unpack_trees_options opts = { 0, };
- 	struct tree_desc t;
- 	struct oneway_unpack_data unpack_cb;
- 
-@@ -458,7 +458,6 @@ int run_diff_index(struct rev_info *revs, int cached)
- 
- 	unpack_cb.revs = revs;
- 	unpack_cb.symcache[0] = '\0';
--	memset(&opts, 0, sizeof(opts));
- 	opts.head_idx = 1;
- 	opts.index_only = cached;
- 	opts.merge = 1;
-@@ -484,7 +483,7 @@ int do_diff_cache(const unsigned char *tree_sha1, struct diff_options *opt)
- 	int i;
- 	struct cache_entry **dst;
- 	struct cache_entry *last = NULL;
--	struct unpack_trees_options opts;
-+	struct unpack_trees_options opts = { 0, };
- 	struct tree_desc t;
- 	struct oneway_unpack_data unpack_cb;
- 
-@@ -517,7 +516,6 @@ int do_diff_cache(const unsigned char *tree_sha1, struct diff_options *opt)
- 
- 	unpack_cb.revs = &revs;
- 	unpack_cb.symcache[0] = '\0';
--	memset(&opts, 0, sizeof(opts));
- 	opts.head_idx = 1;
- 	opts.index_only = 1;
- 	opts.merge = 1;
+-	strbuf_init(&nbuf, 0);
+ 	if (strbuf_read(&nbuf, async.out, len) < 0) {
+ 		error("read from external filter %s failed", cmd);
+ 		ret = 0;
 diff --git a/diff.c b/diff.c
-index 02e948c..5b8e64d 100644
+index 5b8e64d..321218c 100644
 --- a/diff.c
 +++ b/diff.c
-@@ -466,12 +466,11 @@ static void fn_out_diff_words_aux(void *priv, char *line, unsigned long len)
- static void diff_words_show(struct diff_words_data *diff_words)
+@@ -217,9 +217,8 @@ static char *quote_two(const char *one, const char *two)
  {
- 	xpparam_t xpp;
--	xdemitconf_t xecfg;
-+	xdemitconf_t xecfg = { 0, };
- 	xdemitcb_t ecb;
- 	mmfile_t minus, plus;
- 	int i;
+ 	int need_one = quote_c_style(one, NULL, NULL, 1);
+ 	int need_two = quote_c_style(two, NULL, NULL, 1);
+-	struct strbuf res;
++	struct strbuf res = STRBUF_INIT;
  
--	memset(&xecfg, 0, sizeof(xecfg));
- 	minus.size = diff_words->minus.text.size;
- 	minus.ptr = xmalloc(minus.size);
- 	memcpy(minus.ptr, diff_words->minus.text.ptr, minus.size);
-@@ -1270,9 +1269,8 @@ static unsigned char *deflate_it(char *data,
+-	strbuf_init(&res, 0);
+ 	if (need_one + need_two) {
+ 		strbuf_addch(&res, '"');
+ 		quote_c_style(one, &res, NULL, 1);
+@@ -682,7 +681,7 @@ static char *pprint_rename(const char *a, const char *b)
  {
- 	int bound;
- 	unsigned char *deflated;
--	z_stream stream;
-+	z_stream stream = { 0, };
+ 	const char *old = a;
+ 	const char *new = b;
+-	struct strbuf name;
++	struct strbuf name = STRBUF_INIT;
+ 	int pfx_length, sfx_length;
+ 	int len_a = strlen(a);
+ 	int len_b = strlen(b);
+@@ -690,7 +689,6 @@ static char *pprint_rename(const char *a, const char *b)
+ 	int qlen_a = quote_c_style(a, NULL, NULL, 0);
+ 	int qlen_b = quote_c_style(b, NULL, NULL, 0);
  
--	memset(&stream, 0, sizeof(stream));
- 	deflateInit(&stream, zlib_compression_level);
- 	bound = deflateBound(&stream, size);
- 	deflated = xmalloc(bound);
-@@ -1569,17 +1567,15 @@ static void builtin_diff(const char *name_a,
- 		/* Crazy xdl interfaces.. */
- 		const char *diffopts = getenv("GIT_DIFF_OPTS");
- 		xpparam_t xpp;
--		xdemitconf_t xecfg;
-+		xdemitconf_t xecfg = { 0, };
- 		xdemitcb_t ecb;
--		struct emit_callback ecbdata;
-+		struct emit_callback ecbdata = { 0, };
- 		const struct funcname_pattern_entry *pe;
- 
- 		pe = diff_funcname_pattern(one);
- 		if (!pe)
- 			pe = diff_funcname_pattern(two);
- 
--		memset(&xecfg, 0, sizeof(xecfg));
--		memset(&ecbdata, 0, sizeof(ecbdata));
- 		ecbdata.label_path = lbl;
- 		ecbdata.color_diff = DIFF_OPT_TST(o, COLOR_DIFF);
- 		ecbdata.found_changesp = &o->found_changes;
-@@ -1648,10 +1644,9 @@ static void builtin_diffstat(const char *name_a, const char *name_b,
- 	} else {
- 		/* Crazy xdl interfaces.. */
- 		xpparam_t xpp;
--		xdemitconf_t xecfg;
-+		xdemitconf_t xecfg = { 0, };
- 		xdemitcb_t ecb;
- 
--		memset(&xecfg, 0, sizeof(xecfg));
- 		xpp.flags = XDF_NEED_MINIMAL | o->xdl_opts;
- 		xdi_diff_outf(&mf1, &mf2, diffstat_consume, diffstat,
- 			      &xpp, &xecfg, &ecb);
-@@ -1669,12 +1664,11 @@ static void builtin_checkdiff(const char *name_a, const char *name_b,
- 			      struct diff_options *o)
- {
- 	mmfile_t mf1, mf2;
--	struct checkdiff_t data;
-+	struct checkdiff_t data = { 0, };
- 
- 	if (!two)
+-	strbuf_init(&name, 0);
+ 	if (qlen_a || qlen_b) {
+ 		quote_c_style(a, &name, NULL, 0);
+ 		strbuf_addstr(&name, " => ");
+@@ -833,8 +831,7 @@ static void fill_print_name(struct diffstat_file *file)
  		return;
  
--	memset(&data, 0, sizeof(data));
- 	data.filename = name_b ? name_b : name_a;
- 	data.lineno = 0;
- 	data.o = o;
-@@ -1694,10 +1688,9 @@ static void builtin_checkdiff(const char *name_a, const char *name_b,
- 	else {
- 		/* Crazy xdl interfaces.. */
- 		xpparam_t xpp;
--		xdemitconf_t xecfg;
-+		xdemitconf_t xecfg = { 0, };
- 		xdemitcb_t ecb;
+ 	if (!file->is_renamed) {
+-		struct strbuf buf;
+-		strbuf_init(&buf, 0);
++		struct strbuf buf = STRBUF_INIT;
+ 		if (quote_c_style(file->name, &buf, NULL, 0)) {
+ 			pname = strbuf_detach(&buf, NULL);
+ 		} else {
+@@ -1803,10 +1800,9 @@ static int reuse_worktree_file(const char *name, const unsigned char *sha1, int
  
--		memset(&xecfg, 0, sizeof(xecfg));
- 		xecfg.ctxlen = 1; /* at least one context line */
- 		xpp.flags = XDF_NEED_MINIMAL;
- 		xdi_diff_outf(&mf1, &mf2, checkdiff_consume, &data,
-@@ -3129,22 +3122,20 @@ static int diff_get_patch_id(struct diff_options *options, unsigned char *sha1)
- 	struct diff_queue_struct *q = &diff_queued_diff;
- 	int i;
- 	git_SHA_CTX ctx;
--	struct patch_id_t data;
-+	struct patch_id_t data = { 0, };
- 	char buffer[PATH_MAX * 4 + 20];
- 
- 	git_SHA1_Init(&ctx);
--	memset(&data, 0, sizeof(struct patch_id_t));
- 	data.ctx = &ctx;
- 
- 	for (i = 0; i < q->nr; i++) {
- 		xpparam_t xpp;
--		xdemitconf_t xecfg;
-+		xdemitconf_t xecfg = { 0, };
- 		xdemitcb_t ecb;
- 		mmfile_t mf1, mf2;
- 		struct diff_filepair *p = q->queue[i];
- 		int len1, len2;
- 
--		memset(&xecfg, 0, sizeof(xecfg));
- 		if (p->status == 0)
- 			return error("internal diff status error");
- 		if (p->status == DIFF_STATUS_UNKNOWN)
-@@ -3274,9 +3265,8 @@ void diff_flush(struct diff_options *options)
- 	}
- 
- 	if (output_format & (DIFF_FORMAT_DIFFSTAT|DIFF_FORMAT_SHORTSTAT|DIFF_FORMAT_NUMSTAT)) {
--		struct diffstat_t diffstat;
-+		struct diffstat_t diffstat = { 0, };
- 
--		memset(&diffstat, 0, sizeof(struct diffstat_t));
- 		for (i = 0; i < q->nr; i++) {
- 			struct diff_filepair *p = q->queue[i];
- 			if (check_pair_status(p))
-diff --git a/fast-import.c b/fast-import.c
-index 3c035a5..0dbf329 100644
---- a/fast-import.c
-+++ b/fast-import.c
-@@ -1034,7 +1034,7 @@ static int store_object(
- 	unsigned char sha1[20];
- 	unsigned long hdrlen, deltalen;
- 	git_SHA_CTX c;
--	z_stream s;
-+	z_stream s = { 0, };
- 
- 	hdrlen = sprintf((char*)hdr,"%s %lu", typename(type),
- 		(unsigned long)dat->len) + 1;
-@@ -1070,7 +1070,6 @@ static int store_object(
- 	} else
- 		delta = NULL;
- 
--	memset(&s, 0, sizeof(s));
- 	deflateInit(&s, pack_compression_level);
- 	if (delta) {
- 		s.next_in = delta;
-@@ -1962,7 +1961,7 @@ static void file_change_cr(struct branch *b, int rename)
- 	static struct strbuf s_uq = STRBUF_INIT;
- 	static struct strbuf d_uq = STRBUF_INIT;
- 	const char *endp;
--	struct tree_entry leaf;
-+	struct tree_entry leaf = { 0, };
- 
- 	s = command_buf.buf + 2;
- 	strbuf_reset(&s_uq);
-@@ -1989,7 +1988,6 @@ static void file_change_cr(struct branch *b, int rename)
- 		d = d_uq.buf;
- 	}
- 
--	memset(&leaf, 0, sizeof(leaf));
- 	if (rename)
- 		tree_content_remove(&b->branch_tree, s, &leaf);
- 	else
-diff --git a/help.c b/help.c
-index fd87bb5..cb7d3e6 100644
---- a/help.c
-+++ b/help.c
-@@ -299,10 +299,8 @@ static void add_cmd_list(struct cmdnames *cmds, struct cmdnames *old)
- const char *help_unknown_cmd(const char *cmd)
+ static int populate_from_stdin(struct diff_filespec *s)
  {
- 	int i, n, best_similarity = 0;
--	struct cmdnames main_cmds, other_cmds;
-+	struct cmdnames main_cmds = { 0, }, other_cmds = { 0, };
+-	struct strbuf buf;
++	struct strbuf buf = STRBUF_INIT;
+ 	size_t size = 0;
  
--	memset(&main_cmds, 0, sizeof(main_cmds));
--	memset(&other_cmds, 0, sizeof(main_cmds));
- 	memset(&aliases, 0, sizeof(aliases));
+-	strbuf_init(&buf, 0);
+ 	if (strbuf_read(&buf, 0, 0) < 0)
+ 		return error("error while reading from stdin %s",
+ 				     strerror(errno));
+@@ -1858,7 +1854,7 @@ int diff_populate_filespec(struct diff_filespec *s, int size_only)
  
- 	git_config(git_unknown_cmd_config, NULL);
-diff --git a/http-push.c b/http-push.c
-index 42f4d78..1bddabd 100644
---- a/http-push.c
-+++ b/http-push.c
-@@ -486,13 +486,12 @@ static void start_put(struct transfer_request *request)
- 	unsigned long len;
- 	int hdrlen;
- 	ssize_t size;
--	z_stream stream;
-+	z_stream stream = { 0, };
+ 	if (!s->sha1_valid ||
+ 	    reuse_worktree_file(s->path, s->sha1, 0)) {
+-		struct strbuf buf;
++		struct strbuf buf = STRBUF_INIT;
+ 		struct stat st;
+ 		int fd;
  
- 	unpacked = read_sha1_file(request->obj->sha1, &type, &len);
- 	hdrlen = sprintf(hdr, "%s %lu", typename(type), len) + 1;
+@@ -1901,7 +1897,6 @@ int diff_populate_filespec(struct diff_filespec *s, int size_only)
+ 		/*
+ 		 * Convert from working tree format to canonical git format
+ 		 */
+-		strbuf_init(&buf, 0);
+ 		if (convert_to_git(s->path, s->data, s->size, &buf, safe_crlf)) {
+ 			size_t size = 0;
+ 			munmap(s->data, s->size);
+diff --git a/editor.c b/editor.c
+index eebc3e9..4d469d0 100644
+--- a/editor.c
++++ b/editor.c
+@@ -26,9 +26,8 @@ int launch_editor(const char *path, struct strbuf *buffer, const char *const *en
+ 		int i = 0;
+ 		int failed;
+ 		const char *args[6];
+-		struct strbuf arg0;
++		struct strbuf arg0 = STRBUF_INIT;
  
- 	/* Set it up */
--	memset(&stream, 0, sizeof(stream));
- 	deflateInit(&stream, zlib_compression_level);
- 	size = deflateBound(&stream, len + hdrlen);
- 	strbuf_init(&request->buffer.buf, size);
+-		strbuf_init(&arg0, 0);
+ 		if (strcspn(editor, "$ \t'") != len) {
+ 			/* there are specials */
+ 			strbuf_addf(&arg0, "%s \"$@\"", editor);
+diff --git a/exec_cmd.c b/exec_cmd.c
+index ce6741e..cdd35f9 100644
+--- a/exec_cmd.c
++++ b/exec_cmd.c
+@@ -59,9 +59,7 @@ static void add_path(struct strbuf *out, const char *path)
+ void setup_path(void)
+ {
+ 	const char *old_path = getenv("PATH");
+-	struct strbuf new_path;
+-
+-	strbuf_init(&new_path, 0);
++	struct strbuf new_path = STRBUF_INIT;
+ 
+ 	add_path(&new_path, argv_exec_path);
+ 	add_path(&new_path, getenv(EXEC_PATH_ENVIRONMENT));
+diff --git a/fsck.c b/fsck.c
+index 797e317..0cf5f01 100644
+--- a/fsck.c
++++ b/fsck.c
+@@ -307,9 +307,8 @@ int fsck_error_function(struct object *obj, int type, const char *fmt, ...)
+ {
+ 	va_list ap;
+ 	int len;
+-	struct strbuf sb;
++	struct strbuf sb = STRBUF_INIT;
+ 
+-	strbuf_init(&sb, 0);
+ 	strbuf_addf(&sb, "object %s:", obj->sha1?sha1_to_hex(obj->sha1):"(null)");
+ 
+ 	va_start(ap, fmt);
+diff --git a/git.c b/git.c
+index f4b0cf6..89feb0b 100644
+--- a/git.c
++++ b/git.c
+@@ -389,10 +389,9 @@ static void handle_internal_command(int argc, const char **argv)
+ 
+ static void execv_dashed_external(const char **argv)
+ {
+-	struct strbuf cmd;
++	struct strbuf cmd = STRBUF_INIT;
+ 	const char *tmp;
+ 
+-	strbuf_init(&cmd, 0);
+ 	strbuf_addf(&cmd, "git-%s", argv[0]);
+ 
+ 	/*
+diff --git a/graph.c b/graph.c
+index 5f82170..162a516 100644
+--- a/graph.c
++++ b/graph.c
+@@ -1010,14 +1010,12 @@ int graph_is_commit_finished(struct git_graph const *graph)
+ 
+ void graph_show_commit(struct git_graph *graph)
+ {
+-	struct strbuf msgbuf;
++	struct strbuf msgbuf = STRBUF_INIT;
+ 	int shown_commit_line = 0;
+ 
+ 	if (!graph)
+ 		return;
+ 
+-	strbuf_init(&msgbuf, 0);
+-
+ 	while (!shown_commit_line) {
+ 		shown_commit_line = graph_next_line(graph, &msgbuf);
+ 		fwrite(msgbuf.buf, sizeof(char), msgbuf.len, stdout);
+@@ -1031,12 +1029,11 @@ void graph_show_commit(struct git_graph *graph)
+ 
+ void graph_show_oneline(struct git_graph *graph)
+ {
+-	struct strbuf msgbuf;
++	struct strbuf msgbuf = STRBUF_INIT;
+ 
+ 	if (!graph)
+ 		return;
+ 
+-	strbuf_init(&msgbuf, 0);
+ 	graph_next_line(graph, &msgbuf);
+ 	fwrite(msgbuf.buf, sizeof(char), msgbuf.len, stdout);
+ 	strbuf_release(&msgbuf);
+@@ -1044,12 +1041,11 @@ void graph_show_oneline(struct git_graph *graph)
+ 
+ void graph_show_padding(struct git_graph *graph)
+ {
+-	struct strbuf msgbuf;
++	struct strbuf msgbuf = STRBUF_INIT;
+ 
+ 	if (!graph)
+ 		return;
+ 
+-	strbuf_init(&msgbuf, 0);
+ 	graph_padding_line(graph, &msgbuf);
+ 	fwrite(msgbuf.buf, sizeof(char), msgbuf.len, stdout);
+ 	strbuf_release(&msgbuf);
+@@ -1057,7 +1053,7 @@ void graph_show_padding(struct git_graph *graph)
+ 
+ int graph_show_remainder(struct git_graph *graph)
+ {
+-	struct strbuf msgbuf;
++	struct strbuf msgbuf = STRBUF_INIT;
+ 	int shown = 0;
+ 
+ 	if (!graph)
+@@ -1066,7 +1062,6 @@ int graph_show_remainder(struct git_graph *graph)
+ 	if (graph_is_commit_finished(graph))
+ 		return 0;
+ 
+-	strbuf_init(&msgbuf, 0);
+ 	for (;;) {
+ 		graph_next_line(graph, &msgbuf);
+ 		fwrite(msgbuf.buf, sizeof(char), msgbuf.len, stdout);
+diff --git a/hash-object.c b/hash-object.c
+index a4d127c..20937ff 100644
+--- a/hash-object.c
++++ b/hash-object.c
+@@ -34,10 +34,8 @@ static void hash_object(const char *path, const char *type, int write_object,
+ 
+ static void hash_stdin_paths(const char *type, int write_objects)
+ {
+-	struct strbuf buf, nbuf;
++	struct strbuf buf = STRBUF_INIT, nbuf = STRBUF_INIT;
+ 
+-	strbuf_init(&buf, 0);
+-	strbuf_init(&nbuf, 0);
+ 	while (strbuf_getline(&buf, stdin, '\n') != EOF) {
+ 		if (buf.buf[0] == '"') {
+ 			strbuf_reset(&nbuf);
 diff --git a/imap-send.c b/imap-send.c
-index af7e08c..700c332 100644
+index 700c332..fc0aeb5 100644
 --- a/imap-send.c
 +++ b/imap-send.c
-@@ -981,7 +981,7 @@ static struct store *imap_open_store(struct imap_server_conf *srvc)
- 	struct imap *imap;
- 	char *arg, *rsp;
- 	struct hostent *he;
--	struct sockaddr_in addr;
-+	struct sockaddr_in addr = { 0, };
- 	int s, a[2], preauth;
- 	pid_t pid;
+@@ -1263,10 +1263,9 @@ static int imap_store_msg(struct store *gctx, struct msg_data *data, int *uid)
  
-@@ -1019,7 +1019,6 @@ static struct store *imap_open_store(struct imap_server_conf *srvc)
- 
- 		imap_info("ok\n");
- 	} else {
--		memset(&addr, 0, sizeof(addr));
- 		addr.sin_port = htons(srvc->port);
- 		addr.sin_family = AF_INET;
- 
-@@ -1154,15 +1153,13 @@ static int imap_store_msg(struct store *gctx, struct msg_data *data, int *uid)
+ static int read_message(FILE *f, struct msg_data *msg)
  {
- 	struct imap_store *ctx = (struct imap_store *)gctx;
- 	struct imap *imap = ctx->imap;
--	struct imap_cmd_cb cb;
-+	struct imap_cmd_cb cb = { 0, };
- 	char *fmap, *buf;
- 	const char *prefix, *box;
- 	int ret, i, j, d, len, extra, nocr;
- 	int start, sbreak = 0, ebreak = 0;
- 	char flagstr[128], tuid[TUIDL * 2 + 1];
+-	struct strbuf buf;
++	struct strbuf buf = STRBUF_INIT;
  
--	memset(&cb, 0, sizeof(cb));
--
- 	fmap = data->data;
- 	len = data->len;
- 	nocr = !data->crlf;
-diff --git a/index-pack.c b/index-pack.c
-index 73860bf..90b2811 100644
---- a/index-pack.c
-+++ b/index-pack.c
-@@ -263,10 +263,9 @@ static void unlink_base_data(struct base_data *c)
+ 	memset(msg, 0, sizeof(*msg));
+-	strbuf_init(&buf, 0);
  
- static void *unpack_entry_data(unsigned long offset, unsigned long size)
+ 	do {
+ 		if (strbuf_fread(&buf, CHUNKSIZE, f) <= 0)
+diff --git a/log-tree.c b/log-tree.c
+index 2c1f3e6..cec3c06 100644
+--- a/log-tree.c
++++ b/log-tree.c
+@@ -252,7 +252,7 @@ void log_write_email_headers(struct rev_info *opt, const char *name,
+ 
+ void show_log(struct rev_info *opt)
  {
--	z_stream stream;
-+	z_stream stream = { 0, };
- 	void *buf = xmalloc(size);
- 
--	memset(&stream, 0, sizeof(stream));
- 	stream.next_out = buf;
- 	stream.avail_out = size;
- 	stream.next_in = fill(1);
-@@ -358,7 +357,7 @@ static void *get_data_from_pack(struct object_entry *obj)
- 	unsigned long len = obj[1].idx.offset - from;
- 	unsigned long rdy = 0;
- 	unsigned char *src, *data;
--	z_stream stream;
-+	z_stream stream = { 0, };
- 	int st;
- 
- 	src = xmalloc(len);
-@@ -373,7 +372,6 @@ static void *get_data_from_pack(struct object_entry *obj)
- 		rdy += n;
- 	} while (rdy < len);
- 	data = xmalloc(obj->size);
--	memset(&stream, 0, sizeof(stream));
- 	stream.next_out = data;
- 	stream.avail_out = obj->size;
- 	stream.next_in = src;
-@@ -659,11 +657,10 @@ static void parse_pack_objects(unsigned char *sha1)
- 
- static int write_compressed(struct sha1file *f, void *in, unsigned int size)
- {
--	z_stream stream;
-+	z_stream stream = { 0, };
- 	unsigned long maxsize;
- 	void *out;
- 
--	memset(&stream, 0, sizeof(stream));
- 	deflateInit(&stream, zlib_compression_level);
- 	maxsize = deflateBound(&stream, size);
- 	out = xmalloc(maxsize);
-diff --git a/ll-merge.c b/ll-merge.c
-index 4a71614..a81c89b 100644
---- a/ll-merge.c
-+++ b/ll-merge.c
-@@ -62,7 +62,7 @@ static int ll_xdl_merge(const struct ll_merge_driver *drv_unused,
- 			mmfile_t *src2, const char *name2,
- 			int virtual_ancestor)
- {
--	xpparam_t xpp;
-+	xpparam_t xpp = { 0, };
- 	int style = 0;
- 
- 	if (buffer_is_binary(orig->ptr, orig->size) ||
-@@ -77,7 +77,6 @@ static int ll_xdl_merge(const struct ll_merge_driver *drv_unused,
- 				       virtual_ancestor);
- 	}
- 
--	memset(&xpp, 0, sizeof(xpp));
- 	if (git_xmerge_style >= 0)
- 		style = git_xmerge_style;
- 	return xdl_merge(orig,
-@@ -175,7 +174,7 @@ static int ll_ext_merge(const struct ll_merge_driver *fn,
- 		{ "%A" },
- 		{ "%B" },
- 	};
--	struct child_process child;
-+	struct child_process child = { 0, };
- 	const char *args[20];
- 	int status, fd, i;
- 	struct stat st;
-@@ -195,7 +194,6 @@ static int ll_ext_merge(const struct ll_merge_driver *fn,
- 
- 	interpolate(cmdbuf, sizeof(cmdbuf), fn->cmdline, table, 3);
- 
--	memset(&child, 0, sizeof(child));
- 	child.argv = args;
- 	args[0] = "sh";
- 	args[1] = "-c";
-diff --git a/merge-file.c b/merge-file.c
-index 2a939c9..6e98470 100644
---- a/merge-file.c
-+++ b/merge-file.c
-@@ -27,10 +27,9 @@ static void free_mmfile(mmfile_t *f)
- static void *three_way_filemerge(mmfile_t *base, mmfile_t *our, mmfile_t *their, unsigned long *size)
- {
- 	mmbuffer_t res;
--	xpparam_t xpp;
-+	xpparam_t xpp = { 0, };
- 	int merge_status;
- 
--	memset(&xpp, 0, sizeof(xpp));
- 	merge_status = xdl_merge(base, our, ".our", their, ".their",
- 		&xpp, XDL_MERGE_ZEALOUS, &res);
- 
-@@ -58,11 +57,10 @@ static int generate_common_file(mmfile_t *res, mmfile_t *f1, mmfile_t *f2)
- 	unsigned long size = f1->size < f2->size ? f1->size : f2->size;
- 	void *ptr = xmalloc(size);
- 	xpparam_t xpp;
--	xdemitconf_t xecfg;
-+	xdemitconf_t xecfg = { 0, };
- 	xdemitcb_t ecb;
- 
- 	xpp.flags = XDF_NEED_MINIMAL;
--	memset(&xecfg, 0, sizeof(xecfg));
- 	xecfg.ctxlen = 3;
- 	xecfg.flags = XDL_EMIT_COMMON;
- 	ecb.outf = common_outf;
-diff --git a/merge-index.c b/merge-index.c
-index 7827e87..881ab13 100644
---- a/merge-index.c
-+++ b/merge-index.c
-@@ -8,8 +8,7 @@ static int err;
- 
- static void run_program(void)
- {
--	struct child_process child;
--	memset(&child, 0, sizeof(child));
-+	struct child_process child = { 0, };
- 	child.argv = arguments;
- 	if (run_command(&child)) {
- 		if (one_shot) {
+-	struct strbuf msgbuf;
++	struct strbuf msgbuf = STRBUF_INIT;
+ 	struct log_info *log = opt->loginfo;
+ 	struct commit *commit = log->commit, *parent = log->parent;
+ 	int abbrev = opt->diffopt.abbrev;
+@@ -381,7 +381,6 @@ void show_log(struct rev_info *opt)
+ 	/*
+ 	 * And then the pretty-printed message itself
+ 	 */
+-	strbuf_init(&msgbuf, 0);
+ 	if (need_8bit_cte >= 0)
+ 		need_8bit_cte = has_non_ascii(opt->add_signoff);
+ 	pretty_print_commit(opt->commit_format, commit, &msgbuf,
 diff --git a/merge-recursive.c b/merge-recursive.c
-index 6bc3eac..4358ecf 100644
+index 4358ecf..96f7334 100644
 --- a/merge-recursive.c
 +++ b/merge-recursive.c
-@@ -170,9 +170,8 @@ static int git_merge_trees(int index_only,
+@@ -497,8 +497,7 @@ static void update_file_flags(struct merge_options *o,
+ 		if (type != OBJ_BLOB)
+ 			die("blob expected for %s '%s'", sha1_to_hex(sha), path);
+ 		if (S_ISREG(mode)) {
+-			struct strbuf strbuf;
+-			strbuf_init(&strbuf, 0);
++			struct strbuf strbuf = STRBUF_INIT;
+ 			if (convert_to_working_tree(path, buf, size, &strbuf)) {
+ 				free(buf);
+ 				size = strbuf.len;
+diff --git a/mktag.c b/mktag.c
+index 0b34341..ba3d495 100644
+--- a/mktag.c
++++ b/mktag.c
+@@ -153,7 +153,7 @@ static int verify_tag(char *buffer, unsigned long size)
+ 
+ int main(int argc, char **argv)
  {
- 	int rc;
- 	struct tree_desc t[3];
--	struct unpack_trees_options opts;
-+	struct unpack_trees_options opts = { 0, };
+-	struct strbuf buf;
++	struct strbuf buf = STRBUF_INIT;
+ 	unsigned char result_sha1[20];
  
--	memset(&opts, 0, sizeof(opts));
- 	if (index_only)
- 		opts.index_only = 1;
- 	else
-diff --git a/merge-tree.c b/merge-tree.c
-index 2d1413e..71ab1be 100644
---- a/merge-tree.c
-+++ b/merge-tree.c
-@@ -102,11 +102,10 @@ static void show_diff(struct merge_list *entry)
- 	unsigned long size;
- 	mmfile_t src, dst;
- 	xpparam_t xpp;
--	xdemitconf_t xecfg;
-+	xdemitconf_t xecfg = { 0, };
- 	xdemitcb_t ecb;
+ 	if (argc != 1)
+@@ -161,7 +161,6 @@ int main(int argc, char **argv)
  
- 	xpp.flags = XDF_NEED_MINIMAL;
--	memset(&xecfg, 0, sizeof(xecfg));
- 	xecfg.ctxlen = 3;
- 	ecb.outf = show_outf;
- 	ecb.priv = NULL;
-diff --git a/pack-refs.c b/pack-refs.c
-index 848d311..cab2eaf 100644
---- a/pack-refs.c
-+++ b/pack-refs.c
-@@ -84,9 +84,8 @@ static struct lock_file packed;
- int pack_refs(unsigned int flags)
+ 	setup_git_directory();
+ 
+-	strbuf_init(&buf, 0);
+ 	if (strbuf_read(&buf, 0, 4096) < 0) {
+ 		die("could not read from stdin");
+ 	}
+diff --git a/mktree.c b/mktree.c
+index e0da110..514fd9b 100644
+--- a/mktree.c
++++ b/mktree.c
+@@ -65,8 +65,8 @@ static const char mktree_usage[] = "git-mktree [-z]";
+ 
+ int main(int ac, char **av)
  {
- 	int fd;
--	struct pack_refs_cb_data cbdata;
-+	struct pack_refs_cb_data cbdata = { 0, };
+-	struct strbuf sb;
+-	struct strbuf p_uq;
++	struct strbuf sb = STRBUF_INIT;
++	struct strbuf p_uq = STRBUF_INIT;
+ 	unsigned char sha1[20];
+ 	int line_termination = '\n';
  
--	memset(&cbdata, 0, sizeof(cbdata));
- 	cbdata.flags = flags;
- 
- 	fd = hold_lock_file_for_update(&packed, git_path("packed-refs"), 1);
-diff --git a/pretty.c b/pretty.c
-index 8beafa0..fd6924a 100644
---- a/pretty.c
-+++ b/pretty.c
-@@ -626,9 +626,8 @@ void format_commit_message(const struct commit *commit,
- 			   const void *format, struct strbuf *sb,
- 			   enum date_mode dmode)
- {
--	struct format_commit_context context;
-+	struct format_commit_context context = { 0, };
- 
--	memset(&context, 0, sizeof(context));
- 	context.commit = commit;
- 	context.dmode = dmode;
- 	strbuf_expand(sb, format, format_commit_item, &context);
-diff --git a/progress.c b/progress.c
-index 55a8687..7507dfe 100644
---- a/progress.c
-+++ b/progress.c
-@@ -44,12 +44,11 @@ static void progress_interval(int signum)
- 
- static void set_progress_signal(void)
- {
--	struct sigaction sa;
-+	struct sigaction sa = { { 0, }, };
- 	struct itimerval v;
- 
- 	progress_update = 0;
- 
--	memset(&sa, 0, sizeof(sa));
- 	sa.sa_handler = progress_interval;
- 	sigemptyset(&sa.sa_mask);
- 	sa.sa_flags = SA_RESTART;
-diff --git a/sha1_file.c b/sha1_file.c
-index 7515987..00049b5 100644
---- a/sha1_file.c
-+++ b/sha1_file.c
-@@ -1297,10 +1297,9 @@ unsigned long get_size_from_delta(struct packed_git *p,
- {
- 	const unsigned char *data;
- 	unsigned char delta_head[20], *in;
--	z_stream stream;
-+	z_stream stream = { 0, };
- 	int st;
- 
--	memset(&stream, 0, sizeof(stream));
- 	stream.next_out = delta_head;
- 	stream.avail_out = sizeof(delta_head);
- 
-@@ -1511,12 +1510,11 @@ static void *unpack_compressed_entry(struct packed_git *p,
- 				    unsigned long size)
- {
- 	int st;
--	z_stream stream;
-+	z_stream stream = { 0, };
- 	unsigned char *buffer, *in;
- 
- 	buffer = xmalloc(size + 1);
- 	buffer[size] = 0;
--	memset(&stream, 0, sizeof(stream));
- 	stream.next_out = buffer;
- 	stream.avail_out = size;
- 
-@@ -2252,7 +2250,7 @@ static int write_loose_object(const unsigned char *sha1, char *hdr, int hdrlen,
- {
- 	int fd, size, ret;
- 	unsigned char *compressed;
--	z_stream stream;
-+	z_stream stream = { 0, };
- 	char *filename;
- 	static char tmpfile[PATH_MAX];
- 
-@@ -2266,7 +2264,6 @@ static int write_loose_object(const unsigned char *sha1, char *hdr, int hdrlen,
+@@ -82,8 +82,6 @@ int main(int ac, char **av)
+ 		av++;
  	}
  
- 	/* Set it up */
--	memset(&stream, 0, sizeof(stream));
- 	deflateInit(&stream, zlib_compression_level);
- 	size = 8 + deflateBound(&stream, len+hdrlen);
- 	compressed = xmalloc(size);
-diff --git a/transport.c b/transport.c
-index 5110c56..ccbb42b 100644
---- a/transport.c
-+++ b/transport.c
-@@ -41,14 +41,12 @@ static int read_loose_refs(struct strbuf *path, int name_offset,
- 	struct {
- 		char **entries;
- 		int nr, alloc;
--	} list;
-+	} list = { 0, };
- 	int i, pathlen;
+-	strbuf_init(&sb, 0);
+-	strbuf_init(&p_uq, 0);
+ 	while (strbuf_getline(&sb, stdin, line_termination) != EOF) {
+ 		char *ptr, *ntr;
+ 		unsigned mode;
+diff --git a/pretty.c b/pretty.c
+index fd6924a..9e125ef 100644
+--- a/pretty.c
++++ b/pretty.c
+@@ -234,7 +234,7 @@ static char *get_header(const struct commit *commit, const char *key)
  
- 	if (!dir)
- 		return -1;
- 
--	memset (&list, 0, sizeof(list));
--
- 	while ((de = readdir(dir))) {
- 		if (de->d_name[0] == '.' && (de->d_name[1] == '\0' ||
- 				(de->d_name[1] == '.' &&
-@@ -146,7 +144,7 @@ static struct ref *get_refs_via_rsync(struct transport *transport)
+ static char *replace_encoding_header(char *buf, const char *encoding)
  {
- 	struct strbuf buf = STRBUF_INIT, temp_dir = STRBUF_INIT;
- 	struct ref dummy, *tail = &dummy;
--	struct child_process rsync;
-+	struct child_process rsync = { 0, };
- 	const char *args[5];
- 	int temp_dir_len;
+-	struct strbuf tmp;
++	struct strbuf tmp = STRBUF_INIT;
+ 	size_t start, len;
+ 	char *cp = buf;
  
-@@ -160,7 +158,6 @@ static struct ref *get_refs_via_rsync(struct transport *transport)
- 	strbuf_addstr(&buf, transport->url);
- 	strbuf_addstr(&buf, "/refs");
+@@ -250,7 +250,6 @@ static char *replace_encoding_header(char *buf, const char *encoding)
+ 		return buf; /* should not happen but be defensive */
+ 	len = cp + 1 - (buf + start);
  
--	memset(&rsync, 0, sizeof(rsync));
- 	rsync.argv = args;
- 	rsync.stdout_to_stderr = 1;
- 	args[0] = "rsync";
-@@ -206,14 +203,13 @@ static int fetch_objs_via_rsync(struct transport *transport,
- 				int nr_objs, const struct ref **to_fetch)
+-	strbuf_init(&tmp, 0);
+ 	strbuf_attach(&tmp, buf, strlen(buf), strlen(buf) + 1);
+ 	if (is_encoding_utf8(encoding)) {
+ 		/* we have re-coded to UTF-8; drop the header */
+diff --git a/read-cache.c b/read-cache.c
+index 901064b..7dfdda6 100644
+--- a/read-cache.c
++++ b/read-cache.c
+@@ -1446,9 +1446,8 @@ int write_index(const struct index_state *istate, int newfd)
+ 
+ 	/* Write extension data here */
+ 	if (istate->cache_tree) {
+-		struct strbuf sb;
++		struct strbuf sb = STRBUF_INIT;
+ 
+-		strbuf_init(&sb, 0);
+ 		cache_tree_write(&sb, istate->cache_tree);
+ 		err = write_index_ext_header(&c, newfd, CACHE_EXT_TREE, sb.len) < 0
+ 			|| ce_write(&c, newfd, sb.buf, sb.len) < 0;
+diff --git a/remote.c b/remote.c
+index a2d7ab1..d5efadd 100644
+--- a/remote.c
++++ b/remote.c
+@@ -245,7 +245,7 @@ static void read_branches_file(struct remote *remote)
  {
- 	struct strbuf buf = STRBUF_INIT;
--	struct child_process rsync;
-+	struct child_process rsync = { 0, };
- 	const char *args[8];
- 	int result;
- 
- 	strbuf_addstr(&buf, transport->url);
- 	strbuf_addstr(&buf, "/objects/");
- 
--	memset(&rsync, 0, sizeof(rsync));
- 	rsync.argv = args;
- 	rsync.stdout_to_stderr = 1;
- 	args[0] = "rsync";
-@@ -281,7 +277,7 @@ static int rsync_transport_push(struct transport *transport,
- {
- 	struct strbuf buf = STRBUF_INIT, temp_dir = STRBUF_INIT;
- 	int result = 0, i;
--	struct child_process rsync;
-+	struct child_process rsync = { 0, };
- 	const char *args[10];
- 
- 	if (flags & TRANSPORT_PUSH_MIRROR)
-@@ -292,7 +288,6 @@ static int rsync_transport_push(struct transport *transport,
- 	strbuf_addstr(&buf, transport->url);
- 	strbuf_addch(&buf, '/');
- 
--	memset(&rsync, 0, sizeof(rsync));
- 	rsync.argv = args;
- 	rsync.stdout_to_stderr = 1;
- 	i = 0;
-@@ -632,11 +627,10 @@ static int fetch_refs_via_pack(struct transport *transport,
- 	char **origh = xmalloc(nr_heads * sizeof(*origh));
- 	const struct ref *refs;
- 	char *dest = xstrdup(transport->url);
--	struct fetch_pack_args args;
-+	struct fetch_pack_args args = { 0, };
- 	int i;
- 	struct ref *refs_tmp = NULL;
- 
--	memset(&args, 0, sizeof(args));
- 	args.uploadpack = data->uploadpack;
- 	args.keep_pack = data->keep;
- 	args.lock_pack = 1;
-diff --git a/unpack-trees.c b/unpack-trees.c
-index e59d144..a9d6fe5 100644
---- a/unpack-trees.c
-+++ b/unpack-trees.c
-@@ -495,7 +495,7 @@ static int verify_clean_subdirectory(struct cache_entry *ce, const char *action,
+ 	const char *slash = strchr(remote->name, '/');
+ 	char *frag;
+-	struct strbuf branch;
++	struct strbuf branch = STRBUF_INIT;
+ 	int n = slash ? slash - remote->name : 1000;
+ 	FILE *f = fopen(git_path("branches/%.*s", n, remote->name), "r");
+ 	char *s, *p;
+@@ -283,7 +283,6 @@ static void read_branches_file(struct remote *remote)
+ 	 * #branch specified.  The "master" (or specified) branch is
+ 	 * fetched and stored in the local branch of the same name.
  	 */
- 	int namelen;
- 	int pos, i;
--	struct dir_struct d;
-+	struct dir_struct d = { 0, };
- 	char *pathbuf;
- 	int cnt = 0;
- 	unsigned char sha1[20];
-@@ -545,7 +545,6 @@ static int verify_clean_subdirectory(struct cache_entry *ce, const char *action,
- 	memcpy(pathbuf, ce->name, namelen);
- 	strcpy(pathbuf+namelen, "/");
+-	strbuf_init(&branch, 0);
+ 	frag = strchr(p, '#');
+ 	if (frag) {
+ 		*(frag++) = '\0';
+diff --git a/rerere.c b/rerere.c
+index 121f911..5bb5316 100644
+--- a/rerere.c
++++ b/rerere.c
+@@ -79,7 +79,7 @@ static int handle_file(const char *path,
+ 	enum {
+ 		RR_CONTEXT = 0, RR_SIDE_1, RR_SIDE_2, RR_ORIGINAL,
+ 	} hunk = RR_CONTEXT;
+-	struct strbuf one, two;
++	struct strbuf one = STRBUF_INIT, two = STRBUF_INIT;
+ 	FILE *f = fopen(path, "r");
+ 	FILE *out = NULL;
  
--	memset(&d, 0, sizeof(d));
- 	if (o->dir)
- 		d.exclude_per_dir = o->dir->exclude_per_dir;
- 	i = read_directory(&d, ce->name, pathbuf, namelen+1, NULL);
-diff --git a/upload-pack.c b/upload-pack.c
-index e5adbc0..64cbb0a 100644
---- a/upload-pack.c
-+++ b/upload-pack.c
-@@ -143,7 +143,7 @@ static int do_rev_list(int fd, void *create_full_pack)
- static void create_pack_file(void)
+@@ -97,8 +97,6 @@ static int handle_file(const char *path,
+ 	if (sha1)
+ 		git_SHA1_Init(&ctx);
+ 
+-	strbuf_init(&one, 0);
+-	strbuf_init(&two,  0);
+ 	while (fgets(buf, sizeof(buf), f)) {
+ 		if (!prefixcmp(buf, "<<<<<<< ")) {
+ 			if (hunk != RR_CONTEXT)
+diff --git a/sha1_file.c b/sha1_file.c
+index 00049b5..4b9ce6d 100644
+--- a/sha1_file.c
++++ b/sha1_file.c
+@@ -2385,8 +2385,7 @@ static int index_mem(unsigned char *sha1, void *buf, size_t size,
+ 	 * Convert blobs to git internal format
+ 	 */
+ 	if ((type == OBJ_BLOB) && path) {
+-		struct strbuf nbuf;
+-		strbuf_init(&nbuf, 0);
++		struct strbuf nbuf = STRBUF_INIT;
+ 		if (convert_to_git(path, buf, size, &nbuf,
+ 		                   write_object ? safe_crlf : 0)) {
+ 			buf = strbuf_detach(&nbuf, &size);
+@@ -2410,8 +2409,7 @@ int index_fd(unsigned char *sha1, int fd, struct stat *st, int write_object,
+ 	size_t size = xsize_t(st->st_size);
+ 
+ 	if (!S_ISREG(st->st_mode)) {
+-		struct strbuf sbuf;
+-		strbuf_init(&sbuf, 0);
++		struct strbuf sbuf = STRBUF_INIT;
+ 		if (strbuf_read(&sbuf, fd, 4096) >= 0)
+ 			ret = index_mem(sha1, sbuf.buf, sbuf.len, write_object,
+ 					type, path);
+diff --git a/walker.c b/walker.c
+index 0e68ee6..6b4cf70 100644
+--- a/walker.c
++++ b/walker.c
+@@ -215,9 +215,8 @@ static int mark_complete(const char *path, const unsigned char *sha1, int flag,
+ int walker_targets_stdin(char ***target, const char ***write_ref)
  {
- 	struct async rev_list;
--	struct child_process pack_objects;
-+	struct child_process pack_objects = { 0, };
- 	int create_full_pack = (nr_our_refs == want_obj.nr && !have_obj.nr);
- 	char data[8193], progress[128];
- 	char abort_msg[] = "aborting due to possible repository "
-@@ -169,7 +169,6 @@ static void create_pack_file(void)
- 		argv[arg++] = "--include-tag";
- 	argv[arg++] = NULL;
- 
--	memset(&pack_objects, 0, sizeof(pack_objects));
- 	pack_objects.in = rev_list.out;	/* start_command closes it */
- 	pack_objects.out = -1;
- 	pack_objects.err = -1;
+ 	int targets = 0, targets_alloc = 0;
+-	struct strbuf buf;
++	struct strbuf buf = STRBUF_INIT;
+ 	*target = NULL; *write_ref = NULL;
+-	strbuf_init(&buf, 0);
+ 	while (1) {
+ 		char *rf_one = NULL;
+ 		char *tg_one;
+diff --git a/ws.c b/ws.c
+index 7a7ff13..b1efcd9 100644
+--- a/ws.c
++++ b/ws.c
+@@ -99,8 +99,7 @@ unsigned whitespace_rule(const char *pathname)
+ /* The returned string should be freed by the caller. */
+ char *whitespace_error_string(unsigned ws)
+ {
+-	struct strbuf err;
+-	strbuf_init(&err, 0);
++	struct strbuf err = STRBUF_INIT;
+ 	if (ws & WS_TRAILING_SPACE)
+ 		strbuf_addstr(&err, "trailing whitespace");
+ 	if (ws & WS_SPACE_BEFORE_TAB) {
 diff --git a/wt-status.c b/wt-status.c
-index 7cf890f..ad8aac5 100644
+index ad8aac5..d617967 100644
 --- a/wt-status.c
 +++ b/wt-status.c
-@@ -235,7 +235,7 @@ static void wt_status_print_changed(struct wt_status *s)
- 
- static void wt_status_print_submodule_summary(struct wt_status *s)
+@@ -103,10 +103,8 @@ static void wt_status_print_filepair(struct wt_status *s,
  {
--	struct child_process sm_summary;
-+	struct child_process sm_summary = { 0, };
- 	char summary_limit[64];
- 	char index[PATH_MAX];
- 	const char *env[] = { index, NULL };
-@@ -253,7 +253,6 @@ static void wt_status_print_submodule_summary(struct wt_status *s)
- 	sprintf(summary_limit, "%d", wt_status_submodule_summary);
- 	snprintf(index, sizeof(index), "GIT_INDEX_FILE=%s", s->index_file);
+ 	const char *c = color(t);
+ 	const char *one, *two;
+-	struct strbuf onebuf, twobuf;
++	struct strbuf onebuf = STRBUF_INIT, twobuf = STRBUF_INIT;
  
--	memset(&sm_summary, 0, sizeof(sm_summary));
- 	sm_summary.argv = argv;
- 	sm_summary.env = env;
- 	sm_summary.git_cmd = 1;
-@@ -265,13 +264,12 @@ static void wt_status_print_submodule_summary(struct wt_status *s)
+-	strbuf_init(&onebuf, 0);
+-	strbuf_init(&twobuf, 0);
+ 	one = quote_path(p->one->path, -1, &onebuf, s->prefix);
+ 	two = quote_path(p->two->path, -1, &twobuf, s->prefix);
  
- static void wt_status_print_untracked(struct wt_status *s)
+@@ -190,9 +188,8 @@ static void wt_status_print_changed_cb(struct diff_queue_struct *q,
+ static void wt_status_print_initial(struct wt_status *s)
  {
--	struct dir_struct dir;
-+	struct dir_struct dir = { 0, };
+ 	int i;
+-	struct strbuf buf;
++	struct strbuf buf = STRBUF_INIT;
+ 
+-	strbuf_init(&buf, 0);
+ 	if (active_nr) {
+ 		s->commitable = 1;
+ 		wt_status_print_cached_header(s);
+@@ -267,9 +264,7 @@ static void wt_status_print_untracked(struct wt_status *s)
+ 	struct dir_struct dir = { 0, };
  	int i;
  	int shown_header = 0;
- 	struct strbuf buf;
- 
- 	strbuf_init(&buf, 0);
--	memset(&dir, 0, sizeof(dir));
+-	struct strbuf buf;
+-
+-	strbuf_init(&buf, 0);
++	struct strbuf buf = STRBUF_INIT;
  
  	if (!s->untracked) {
  		dir.show_other_directories = 1;
 diff --git a/xdiff-interface.c b/xdiff-interface.c
-index 8bab82e..662e604 100644
+index 662e604..99b143a 100644
 --- a/xdiff-interface.c
 +++ b/xdiff-interface.c
-@@ -140,9 +140,8 @@ int xdi_diff_outf(mmfile_t *mf1, mmfile_t *mf2,
+@@ -140,13 +140,12 @@ int xdi_diff_outf(mmfile_t *mf1, mmfile_t *mf2,
  		  xdemitconf_t const *xecfg, xdemitcb_t *xecb)
  {
  	int ret;
--	struct xdiff_emit_state state;
-+	struct xdiff_emit_state state = { 0, };
+-	struct xdiff_emit_state state = { 0, };
++	struct xdiff_emit_state state = { 0, 0, STRBUF_INIT };
  
--	memset(&state, 0, sizeof(state));
  	state.consume = fn;
  	state.consume_callback_data = consume_callback_data;
  	xecb->outf = xdiff_outf;
+ 	xecb->priv = &state;
+-	strbuf_init(&state.remainder, 0);
+ 	ret = xdi_diff(mf1, mf2, xpp, xecfg, xecb);
+ 	strbuf_release(&state.remainder);
+ 	return ret;
 -- 
 1.6.0.2.468.gd5b83
