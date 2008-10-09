@@ -1,78 +1,126 @@
-From: Paul Gortmaker <paul.gortmaker@windriver.com>
-Subject: Re: [PATCH] guilt: add git commit level versioning
-Date: Thu, 09 Oct 2008 12:13:14 -0400
-Message-ID: <48EE2D9A.20205@windriver.com>
-References: <1223431722-12259-1-git-send-email-paul.gortmaker@windriver.com> <20081009155445.GF27647@josefsipek.net>
+From: "Balasubramaniam, Arunan" <Arunan.Balasubramaniam@misys.com>
+Subject: RE: Implementing commit signing
+Date: Thu, 9 Oct 2008 18:53:03 +0100
+Message-ID: <E74D836C8B2CEF4A89F47E8ACECEEF9B748DCD@maildub1.misys.global.ad>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: "Josef 'Jeff' Sipek" <jeffpc@josefsipek.net>
-X-From: git-owner@vger.kernel.org Thu Oct 09 18:15:42 2008
+Content-Type: text/plain;
+	charset="us-ascii"
+Content-Transfer-Encoding: 8BIT
+Cc: "Git Mailing List" <git@vger.kernel.org>
+To: <spearce@spearce.org>
+X-From: git-owner@vger.kernel.org Thu Oct 09 19:57:27 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Kny9p-0004Yr-TS
-	for gcvg-git-2@gmane.org; Thu, 09 Oct 2008 18:14:34 +0200
+	id 1KnzkQ-00011n-Ah
+	for gcvg-git-2@gmane.org; Thu, 09 Oct 2008 19:56:26 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752985AbYJIQNX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 9 Oct 2008 12:13:23 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753080AbYJIQNX
-	(ORCPT <rfc822;git-outgoing>); Thu, 9 Oct 2008 12:13:23 -0400
-Received: from mail.windriver.com ([147.11.1.11]:36306 "EHLO mail.wrs.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752939AbYJIQNX (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 9 Oct 2008 12:13:23 -0400
-Received: from ALA-MAIL03.corp.ad.wrs.com (ala-mail03 [147.11.57.144])
-	by mail.wrs.com (8.13.6/8.13.6) with ESMTP id m99GDF9I000144;
-	Thu, 9 Oct 2008 09:13:15 -0700 (PDT)
-Received: from ala-mail06.corp.ad.wrs.com ([147.11.57.147]) by ALA-MAIL03.corp.ad.wrs.com with Microsoft SMTPSVC(6.0.3790.1830);
-	 Thu, 9 Oct 2008 09:13:15 -0700
-Received: from [128.224.146.65] ([128.224.146.65]) by ala-mail06.corp.ad.wrs.com with Microsoft SMTPSVC(6.0.3790.1830);
-	 Thu, 9 Oct 2008 09:13:15 -0700
-User-Agent: Thunderbird 2.0.0.17 (X11/20080925)
-In-Reply-To: <20081009155445.GF27647@josefsipek.net>
-X-OriginalArrivalTime: 09 Oct 2008 16:13:15.0530 (UTC) FILETIME=[EF66FEA0:01C92A29]
+	id S1757167AbYJIRzJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 9 Oct 2008 13:55:09 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754474AbYJIRzJ
+	(ORCPT <rfc822;git-outgoing>); Thu, 9 Oct 2008 13:55:09 -0400
+Received: from cluster-a.mailcontrol.com ([80.69.8.190]:53967 "EHLO
+	cluster-a.mailcontrol.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754714AbYJIRzI convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 9 Oct 2008 13:55:08 -0400
+Received: from rly29a.srv.mailcontrol.com (localhost.localdomain [127.0.0.1])
+	by rly29a.srv.mailcontrol.com (MailControl) with ESMTP id m99HsQN3011009
+	for <git@vger.kernel.org>; Thu, 9 Oct 2008 18:55:03 +0100
+Received: from submission.mailcontrol.com (submission.mailcontrol.com [86.111.216.190])
+	by rly29a.srv.mailcontrol.com (MailControl) id m99HrSfe006189
+	for git@vger.kernel.org; Thu, 9 Oct 2008 18:53:28 +0100
+Received: from MailDub1.misys.global.ad ([193.120.150.89])
+	by rly29a-eth0.srv.mailcontrol.com (envelope-sender Arunan.Balasubramaniam@misys.com) (MIMEDefang) with ESMTP id m99HrBAQ005905; Thu, 09 Oct 2008 18:53:28 +0100 (BST)
+X-MimeOLE: Produced By Microsoft Exchange V6.5
+Content-class: urn:content-classes:message
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+Thread-Topic: Implementing commit signing
+Thread-Index: AckqJdx0R4RR7wG1T+KYolz6CxFpJAABKEmQ
+X-Scanned-By: MailControl A-08-50-15 (www.mailcontrol.com) on 10.65.1.139
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/97868>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/97869>
 
-Josef 'Jeff' Sipek wrote:
-> On Tue, Oct 07, 2008 at 10:08:42PM -0400, Paul Gortmaker wrote:
->   
->> Shamelessly steal the dynamic versioning goodies from git
->> itself.  Now when you do "guilt --version" you can expect to
->> see things like:
->>
->> 	Guilt version 0.31.2.14.gece1.dirty
->>
->> assuming you've 14 commits since 0.31.2 and also some changes
->> that you've not committed yet.
->>     
->
-> Good idea. I've been pondering how to do this a while back, but never got
-> around to actually do it.
->
-> One comment: Why not keep the default version in guilt? You're running sed
-> on it anyway.  This makes releasing identical to what it was before the
-> patch:
-> 	<edit guilt to reflect new version, commit>
-> 	git tag -u abcdef v0.xy
-> 	git archive --tar v0.xy | gzip -9 > guilt-0.xy.tar.gz
->
-> Additionally, things won't "break" for folks running right out of the git
-> repo - I just add the git repo dir to my $PATH.
->   
+Shawn,
 
-Sounds reasonable to me.  I'm about to disappear for a 4 day weekend
-(Cdn Thanksgiving) so I won't be able to do that until next Tuesday at
-the earliest though.
+thank you for such a detailed reply. I only have a few points:
 
-P.
+Shawn O. Pearce wrote:
+> "Balasubramaniam, Arunan" <Arunan.Balasubramaniam@misys.com> wrote:
+> > I am looking at using Git within our organisation, and verifying the
+> > source of
+> > commits has been raised as a concern. GPG signing individual commits
+has
+> > been
+> > discussed at least once on this list [1].
+> 
+> Another approach is to use a central Git server with SSH
+> key authentication and install into every repository the
+> contrib/hooks/update-paranoid hook as $GIT_DIR/hooks/update.
+> This is actually what I did at my prior day-job.
 
-> Josef 'Jeff' Sipek.
->
->   
+We had looked at this sort of approach but are not hugely in favour of
+it.
+Engineers here operate in teams, with the work integrated and sent into
+the
+central repository by one person at regular intervals. We are leaning
+toward
+using our repositories in the same sort of manner. This is actually one
+of
+our reasons to move to DVCS. This is not to say we would not use a
+central
+server if it turned out to be our best option.
+
+> But as I think about it more, if you signed the diff, excluding the
+> line offsets in the hunk headers (so file paths, context and -/+
+> lines), the "author" line and the message, leaving out the other
+> fields of the commit message, it may be possible to still include
+> the signature in an email formatted patch and carry it through a
+> "git format-patch | git am" pipeline and still have it verify.
+
+Would this be dangerous? If you were to leave out the parent fields in
+the commit message, surely you could then reapply an old commit (that
+say introduced a bug)?
+
+> Its difficult to guage rejection without seeing the code behind it
+> and considering the consequences of including that code.  A lot
+> of these hypothetical discussions start out with a question like
+> this, raise some good points, and then folks are waiting to see it
+> implemented, but no code comes about.
+
+I hope I disclaimed enough that I'm not promising to do it :) As much as
+it
+does interest me, we may end up using the centralised server model you
+talked about or cleaning up the prototype I've been playing with that
+amends
+commits to add signature blocks or something else that suits. I am going
+to
+present some options to a higher power to decide what happens.
+
+> >   2) If it were accepted into Git, would an equivalent patch be
+accepted
+> > into
+> >      jgit? Would patches for UI to use it be accepted into egit?
+> 
+> Yes, absolutely, so long as the implementation in Java was reasonably
+> sane.  E.g. we'd prefer you used a pure Java implementation of
+> GnuPG, rather than say forking out to a Python script that execs
+> some Haskell program to use a SOAP RPC to a remote signing service
+> written in Tcl... ;-)
+
+I don't think that there is a Java GPG implementation about, some
+searching
+didn't find any live looking projects . Would a JNI wrapper to say GPGME
+(http://www.gnupg.org/related_software/gpgme/index.en.html) be
+acceptable?
+
+Thanks again,
+Arunan
+
+
+"Misys" is the trade name for Misys plc (registered in England and Wales). Registration Number: 01360027. Registered office: One Kingdom Street, London W2 6BL, United Kingdom. For a list of Misys group operating companies please go to http://www.misys.com/html/about_us/group_operating_companies/. This email and any attachments have been scanned for known viruses using multiple scanners. This email message is intended for the named recipient only. It may be privileged and/or confidential. If you are not the named recipient of this email please notify us immediately and do not copy it or use it for any purpose, nor disclose its contents to any other person. This email does not constitute the commencement of legal relations between you and Misys plc. Please refer to the executed contract betw
+ een you and the relevant member of the Misys group for the identity of the contracting party with which you are dealing. 
