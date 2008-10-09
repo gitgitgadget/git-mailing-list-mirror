@@ -1,72 +1,115 @@
-From: Alex Riesen <raa.lkml@gmail.com>
-Subject: Re: [PATCH] Implement git clone -v
-Date: Wed, 8 Oct 2008 08:25:29 +0200
-Message-ID: <20081008062529.GA4028@blimp.localhost>
-References: <81b0412b0810041442i3aa29628lf66ef9b188fe8ce7@mail.gmail.com> <1223331590-22138-1-git-send-email-vmiklos@frugalware.org> <81b0412b0810062321h33abe076kd87b60bffdaf218b@mail.gmail.com> <20081007193956.GB536@genesis.frugalware.org> <20081008060257.GA15240@spearce.org>
-Reply-To: Alex Riesen <raa.lkml@gmail.com>
+From: Paul Mackerras <paulus@samba.org>
+Subject: Re: [PATCH 5/7] gitk: Make cherry-pick call git-citool on conflicts.
+Date: Thu, 9 Oct 2008 18:42:33 +1100
+Message-ID: <18669.46569.45285.170033@cargo.ozlabs.ibm.com>
+References: <1223449540-20457-1-git-send-email-angavrilov@gmail.com>
+	<1223449540-20457-2-git-send-email-angavrilov@gmail.com>
+	<1223449540-20457-3-git-send-email-angavrilov@gmail.com>
+	<1223449540-20457-4-git-send-email-angavrilov@gmail.com>
+	<1223449540-20457-5-git-send-email-angavrilov@gmail.com>
+	<1223449540-20457-6-git-send-email-angavrilov@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Miklos Vajna <vmiklos@frugalware.org>,
-	Constantine Plotnikov <constantine.plotnikov@gmail.com>,
-	git@vger.kernel.org
-To: "Shawn O. Pearce" <spearce@spearce.org>
-X-From: git-owner@vger.kernel.org Thu Oct 09 08:35:13 2008
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Alexander Gavrilov <angavrilov@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Oct 09 09:44:05 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Knp79-00022Y-9r
-	for gcvg-git-2@gmane.org; Thu, 09 Oct 2008 08:35:11 +0200
+	id 1KnqBe-0008H2-CZ
+	for gcvg-git-2@gmane.org; Thu, 09 Oct 2008 09:43:54 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754811AbYJIGeA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 9 Oct 2008 02:34:00 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754744AbYJIGeA
-	(ORCPT <rfc822;git-outgoing>); Thu, 9 Oct 2008 02:34:00 -0400
-Received: from mo-p05-ob.rzone.de ([81.169.146.180]:26261 "EHLO
-	mo-p05-ob.rzone.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751494AbYJIGd7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 9 Oct 2008 02:33:59 -0400
-X-RZG-CLASS-ID: mo05
-X-RZG-AUTH: :Pm0FVUW6aauhRGJJc5OfA4AU8DM8ZlijdmJYxKn/UQvEQQx9CU8wrP4=
-Received: from tigra.home (Fa831.f.strato-dslnet.de [195.4.168.49])
-	by post.webmailer.de (mrclete mo15) (RZmta 17.10)
-	with ESMTP id U03eeak994pRLN ; Thu, 9 Oct 2008 08:33:53 +0200 (MEST)
-	(envelope-from: <raa.lkml@gmail.com>)
-Received: from blimp (unknown [192.168.0.8])
-	by tigra.home (Postfix) with ESMTP id 8D319277AE;
-	Thu,  9 Oct 2008 08:33:52 +0200 (CEST)
-Received: by blimp (Postfix, from userid 1000)
-	id 2430636D1E; Wed,  8 Oct 2008 08:25:29 +0200 (CEST)
-Content-Disposition: inline
-In-Reply-To: <20081008060257.GA15240@spearce.org>
-User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
+	id S1755891AbYJIHml (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 9 Oct 2008 03:42:41 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754557AbYJIHml
+	(ORCPT <rfc822;git-outgoing>); Thu, 9 Oct 2008 03:42:41 -0400
+Received: from ozlabs.org ([203.10.76.45]:50085 "EHLO ozlabs.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750795AbYJIHmk (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 9 Oct 2008 03:42:40 -0400
+Received: by ozlabs.org (Postfix, from userid 1003)
+	id 51079DDF37; Thu,  9 Oct 2008 18:42:39 +1100 (EST)
+In-Reply-To: <1223449540-20457-6-git-send-email-angavrilov@gmail.com>
+X-Mailer: VM 8.0.9 under Emacs 22.2.1 (i486-pc-linux-gnu)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/97831>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/97832>
 
-Shawn O. Pearce, Wed, Oct 08, 2008 08:02:57 +0200:
-> Miklos Vajna <vmiklos@frugalware.org> wrote:
-> > On Tue, Oct 07, 2008 at 08:21:28AM +0200, Alex Riesen <raa.lkml@gmail.com> wrote:
-> > > Yes. Does it work? :)
-> > 
-> > Yes, it does. I'm not sure how to test it from the testsuite, maybe
-> > redirect the output to a file and grep in it? It's ugly, that's why I
-> > did not do so, but if you think a testcase is a musthave for this
-> > feature then that's the way to go, I guess.
-> 
-> Actually its not a bad way to test the feature.  Normally we disable
-> progress if stdout is not a tty.  If you redirect to a file then
-> -v should be needed to get anything at all on stderr.
-> 
-> You may be able to just test the size of the file:
-> 
-> 	git fetch -v ... >out 2>err &&
+Alexander Gavrilov writes:
 
-git clone
+> Now that git-gui has facilities to help users resolve
+> conflicts, it makes sense to launch it from other gui
+> tools when they happen.
 
-> 	test -s err
+Nice idea...
 
-Right, but I don't think you need tests for progress bar. As a typical
-eye candy, it tends to change often enough to be too annoying to test.
+> +proc exec_citool {args {baseid {}}} {
+
+I'm a little nervous about you having a parameter called "args", since
+that specific name has a special meaning in Tcl; it's how Tcl handles
+variable-length argument lists.
+
+> +    global commitinfo env
+> +
+> +    if {[info exists env(GIT_AUTHOR_NAME)]} {
+> +	set old_name $env(GIT_AUTHOR_NAME)
+> +    }
+> +    if {[info exists env(GIT_AUTHOR_EMAIL)]} {
+> +	set old_email $env(GIT_AUTHOR_EMAIL)
+> +    }
+> +    if {[info exists env(GIT_AUTHOR_DATE)]} {
+> +	set old_date $env(GIT_AUTHOR_DATE)
+> +    }
+> +
+> +    if {$baseid ne {}} {
+> +	if {![info exists commitinfo($baseid)]} {
+> +	    getcommit $baseid
+> +	}
+> +	set author [lindex $commitinfo($baseid) 1]
+> +	set date [lindex $commitinfo($baseid) 2]
+> +	if {[regexp {^\s*(\S.*\S|\S)\s*<(.*)>\s*$} \
+> +	            $author author name email]
+> +	    && $date ne {}} {
+> +	    set env(GIT_AUTHOR_NAME) $name
+> +	    set env(GIT_AUTHOR_EMAIL) $email
+> +	    set env(GIT_AUTHOR_DATE) $date
+> +	}
+> +    }
+> +
+> +    eval exec git citool $args &
+
+If we can assume the existence of a shell (which we do elsewhere), we
+can perhaps do this more simply by putting the environment variable
+settings in the command before the command name.  It's a pity that git
+citool won't take the author name/email/date as command-line arguments
+or from a file, since it ends up being pretty verbose doing it the way
+you have.
+
+> @@ -7861,7 +7908,17 @@ proc cherrypick {} {
+>      # no error occurs, and exec takes that as an indication of error...
+>      if {[catch {exec sh -c "git cherry-pick -r $rowmenuid 2>&1"} err]} {
+>  	notbusy cherrypick
+> -	error_popup $err
+> +	if {[regexp -line \
+> +	    {Entry '(.*)' would be overwritten by merge} $err msg fname]} {
+> +	    error_popup [mc "Cherry-pick failed: file '%s' had local modifications.
+> +Your working directory is in an inconsistent state." $fname]
+
+That message seems a bit too scary.  It's not inconsistent, it's just
+got local modifications.  If I remember correctly, in this situation
+git cherry-pick will back out all the changes it did and leave the
+working directory as it was before.
+
+> +	} elseif {[regexp -line {^CONFLICT \(.*\):} $err msg]} {
+> +	    # Force citool to read MERGE_MSG
+> +	    file delete [file join [gitdir] "GITGUI_MSG"]
+> +	    exec_citool [list] $rowmenuid
+
+[list] as an idiom for the empty list is a little unusual (here and
+elsewhere in your patches); {} would be more usual.
+
+Paul.
