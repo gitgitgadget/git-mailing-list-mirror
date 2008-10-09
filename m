@@ -1,92 +1,73 @@
-From: Kevin Green <Kevin.T.Green@morganstanley.com>
-Subject: keeping remote branches in sync
-Date: Thu, 9 Oct 2008 10:14:18 -0400
-Message-ID: <20081009141418.GF18241@morganstanley.com>
+From: "Peter Harris" <git@peter.is-a-geek.org>
+Subject: Re: keeping remote branches in sync
+Date: Thu, 9 Oct 2008 10:43:21 -0400
+Message-ID: <eaa105840810090743pba41a98ocdf79b7c06d76e9e@mail.gmail.com>
+References: <20081009141418.GF18241@morganstanley.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Oct 09 16:24:23 2008
+X-From: git-owner@vger.kernel.org Thu Oct 09 16:45:10 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KnwQH-0006Zj-JJ
-	for gcvg-git-2@gmane.org; Thu, 09 Oct 2008 16:23:26 +0200
+	id 1Knwkk-0006w8-06
+	for gcvg-git-2@gmane.org; Thu, 09 Oct 2008 16:44:34 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759205AbYJIOVr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 9 Oct 2008 10:21:47 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753505AbYJIOVr
-	(ORCPT <rfc822;git-outgoing>); Thu, 9 Oct 2008 10:21:47 -0400
-Received: from pimtaint02.ms.com ([199.89.103.69]:49734 "EHLO
-	pimtaint02.ms.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753334AbYJIOVr (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 9 Oct 2008 10:21:47 -0400
-X-Greylist: delayed 446 seconds by postgrey-1.27 at vger.kernel.org; Thu, 09 Oct 2008 10:21:46 EDT
-Received: from pimtaint02 (localhost.ms.com [127.0.0.1])
-	by pimtaint02.ms.com (output Postfix) with ESMTP id CB7CA9045CD
-	for <git@vger.kernel.org>; Thu,  9 Oct 2008 10:14:18 -0400 (EDT)
-Received: from ny0032as02 (unknown [170.74.93.69])
-	by pimtaint02.ms.com (internal Postfix) with ESMTP id B198292C030
-	for <git@vger.kernel.org>; Thu,  9 Oct 2008 10:14:18 -0400 (EDT)
-Received: from np315c1n5 (localhost [127.0.0.1])
-	by ny0032as02 (msa-out Postfix) with ESMTP id A3FB0D3C15E;
-	Thu,  9 Oct 2008 10:14:18 -0400 (EDT)
-Received: from menevado.ms.com (unknown [144.203.222.190])
-	(Authenticated sender: yes)
-	by ny0032as02 (msa-in Postfix) with ESMTP id 85B69FBC02B;
-	Thu,  9 Oct 2008 10:14:18 -0400 (EDT)
-Received: by menevado.ms.com (Postfix, from userid 49008)
-	id 5CB495300F5; Thu,  9 Oct 2008 10:14:18 -0400 (EDT)
-Mail-Followup-To: git@vger.kernel.org
+	id S1753334AbYJIOnX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 9 Oct 2008 10:43:23 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753303AbYJIOnX
+	(ORCPT <rfc822;git-outgoing>); Thu, 9 Oct 2008 10:43:23 -0400
+Received: from rv-out-0506.google.com ([209.85.198.224]:41353 "EHLO
+	rv-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751889AbYJIOnW (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 9 Oct 2008 10:43:22 -0400
+Received: by rv-out-0506.google.com with SMTP id k40so61498rvb.1
+        for <git@vger.kernel.org>; Thu, 09 Oct 2008 07:43:21 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:sender
+         :to:subject:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:references
+         :x-google-sender-auth;
+        bh=IACKIu29gdxc7En5EzH966UH6e9Eao/CiCeIXyhm1mQ=;
+        b=sG4m/xwqaKq6gyKssi1s1e1rOmMkMh0J42sn2KXd7V310JWNV7G9aREKqHkS50fR6Y
+         GpNG5m0eylX5rP2O07rand5ez181Ptex4e8uua/AdE1YMGt7fxioU4bs6JzH/DG/8G/0
+         JjE0OVEeCGu9R4Kr/TtejXv1ZZqlozU6e0QZ8=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:sender:to:subject:in-reply-to:mime-version
+         :content-type:content-transfer-encoding:content-disposition
+         :references:x-google-sender-auth;
+        b=EmsP7aQ4ymd1qaYsLMFlr8tyYeL2VXzj+hJtlU64bSuWE02igjbMj4Z6XJzerYwq27
+         YpKr3YSMuC8zaTaSydN7f/KPhnDzyL+Iu6MjXvlQhP0GJsaq7+XX3a6MYaF6++4wN8uW
+         TiC37hlcYtm4bE/RRMJvKmqrjT1cgqjWET+Hs=
+Received: by 10.141.5.17 with SMTP id h17mr184206rvi.8.1223563401875;
+        Thu, 09 Oct 2008 07:43:21 -0700 (PDT)
+Received: by 10.140.194.3 with HTTP; Thu, 9 Oct 2008 07:43:21 -0700 (PDT)
+In-Reply-To: <20081009141418.GF18241@morganstanley.com>
 Content-Disposition: inline
-User-Agent: Mutt/1.5.6i
-X-Anti-Virus: Kaspersky Anti-Virus for MailServers 5.5.35/RELEASE, bases: 09102008 #1162421, status: clean
+X-Google-Sender-Auth: 8377c97d5df30816
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/97853>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/97854>
 
+On Thu, Oct 9, 2008 at 10:14 AM, Kevin Green wrote:
+> After topic branches are merged to master, we do some cleanup by deleting them
+> from the shared repo.
+>
+> One of the issues we have is that _my_ local repos remote branches aren't kept
+> in sync with the shared repo.
+...
 
-Hi,
+> I'd like some comment on whether our workflow could use some improvement.
+> Specifically, if there's a straightforward way to handle the issue above, that
+> would be great.  I've been looking through the manual on git-fetch and
+> git-pull and not seeing any options to do this.
 
-We've been using git for our development for a few months now.  We've got two
-developers and each push up to a shared bare repository.  Our workflow is pretty
-simple and goes something like this:
+Is "git remote prune" what you're looking for?
 
-We do development in local topic branches.  Occasionally, when we want the
-other to take a look we might push them up to our shared repo.
-
-Once we're happy with local testing and code review, we rename the topic
-branch to prefix it with "$user/for_next/".  This lets us know that the developer
-feels the code is ready for more further integration testing.  We use a branch
-called 'next' which merges all the for_next branches together.  One of us
-merges all the for_next branches locally and pushes it up to the shared repo.
-We then have some jobs that release that branch as an alpha nightly build for
-further testing by more users.
-
-After topic branches are merged to master, we do some cleanup by deleting them
-from the shared repo.
-
-One of the issues we have is that _my_ local repos remote branches aren't kept
-in sync with the shared repo.  So, if the other developer deletes all his
-topic branches and I do a git-pull, the topic branches still show as remotes
-in my branch and vice versa for him.  This is exactly what we expect, but it's
-not desirable for us.
-
-I'd like some comment on whether our workflow could use some improvement.
-Specifically, if there's a straightforward way to handle the issue above, that
-would be great.  I've been looking through the manual on git-fetch and
-git-pull and not seeing any options to do this. 
-
-I was thinking of writing a little utility that does a 'git-cherry master $topic'
-and doing a 'git-branch -d -r $topic' on any topic branch that is already in master, 
-but I'd rather use something already there, if possible.
-
-What are others doing to handle this situation?
-
-
-Thanks!
-
-
---Kevin
+Peter Harris
