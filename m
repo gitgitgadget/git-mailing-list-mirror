@@ -1,61 +1,70 @@
 From: Miklos Vajna <vmiklos@frugalware.org>
-Subject: [PATCH] Cleanup in sha1_file.c::cache_or_unpack_entry()
-Date: Thu,  9 Oct 2008 02:11:24 +0200
-Message-ID: <1223511084-3472-1-git-send-email-vmiklos@frugalware.org>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Oct 09 02:13:54 2008
+Subject: Re: [PATCH maint] builtin-merge.c: fix memory under-allocation
+Date: Thu, 9 Oct 2008 02:17:27 +0200
+Message-ID: <20081009001727.GP536@genesis.frugalware.org>
+References: <ZuhLzndR5Uvj7-_NyasP-FHF3AqTyLx-0sjNHMd0BC3LXC8LdLqBeQ@cipher.nrlssc.navy.mil>
+Mime-Version: 1.0
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="z3ovhOgMYmj8MRdq"
+Cc: "Shawn O. Pearce" <spearce@spearce.org>,
+	Git Mailing List <git@vger.kernel.org>
+To: Brandon Casey <casey@nrlssc.navy.mil>
+X-From: git-owner@vger.kernel.org Thu Oct 09 02:18:45 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Knj8k-0006uf-86
-	for gcvg-git-2@gmane.org; Thu, 09 Oct 2008 02:12:26 +0200
+	id 1KnjEo-0000VM-M0
+	for gcvg-git-2@gmane.org; Thu, 09 Oct 2008 02:18:43 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755766AbYJIALN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 8 Oct 2008 20:11:13 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755707AbYJIALN
-	(ORCPT <rfc822;git-outgoing>); Wed, 8 Oct 2008 20:11:13 -0400
-Received: from yugo.dsd.sztaki.hu ([195.111.2.114]:51567 "EHLO
-	yugo.frugalware.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754152AbYJIALN (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 8 Oct 2008 20:11:13 -0400
-Received: from vmobile.example.net (catv-89-132-129-234.catv.broadband.hu [89.132.129.234])
-	by yugo.frugalware.org (Postfix) with ESMTPA id 528A5149C60
-	for <git@vger.kernel.org>; Thu,  9 Oct 2008 02:11:11 +0200 (CEST)
-Received: by vmobile.example.net (Postfix, from userid 1003)
-	id 34B3319D922; Thu,  9 Oct 2008 02:11:24 +0200 (CEST)
-X-Mailer: git-send-email 1.6.0.2
+	id S1755655AbYJIARb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 8 Oct 2008 20:17:31 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755534AbYJIARb
+	(ORCPT <rfc822;git-outgoing>); Wed, 8 Oct 2008 20:17:31 -0400
+Received: from virgo.iok.hu ([193.202.89.103]:53875 "EHLO virgo.iok.hu"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754724AbYJIARa (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 8 Oct 2008 20:17:30 -0400
+Received: from kag.elte.hu (kag.elte.hu [157.181.177.1])
+	by virgo.iok.hu (Postfix) with ESMTP id F395058124;
+	Thu,  9 Oct 2008 02:17:28 +0200 (CEST)
+Received: from genesis.frugalware.org (frugalware.elte.hu [157.181.177.34])
+	by kag.elte.hu (Postfix) with ESMTP id B2D8E4465E;
+	Thu,  9 Oct 2008 02:17:28 +0200 (CEST)
+Received: by genesis.frugalware.org (Postfix, from userid 1000)
+	id EF99411901A1; Thu,  9 Oct 2008 02:17:27 +0200 (CEST)
+Content-Disposition: inline
+In-Reply-To: <ZuhLzndR5Uvj7-_NyasP-FHF3AqTyLx-0sjNHMd0BC3LXC8LdLqBeQ@cipher.nrlssc.navy.mil>
+User-Agent: Mutt/1.5.17 (2007-11-01)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/97813>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/97814>
 
-This patch just removes an unnecessary goto which makes the code easier
-to read and shorter.
 
-Signed-off-by: Miklos Vajna <vmiklos@frugalware.org>
----
- sha1_file.c |    6 ++----
- 1 files changed, 2 insertions(+), 4 deletions(-)
+--z3ovhOgMYmj8MRdq
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
 
-diff --git a/sha1_file.c b/sha1_file.c
-index 7515987..ea6bd99 100644
---- a/sha1_file.c
-+++ b/sha1_file.c
-@@ -1571,11 +1571,9 @@ static void *cache_or_unpack_entry(struct packed_git *p, off_t base_offset,
- 	struct delta_base_cache_entry *ent = delta_base_cache + hash;
- 
- 	ret = ent->data;
--	if (ret && ent->p == p && ent->base_offset == base_offset)
--		goto found_cache_entry;
--	return unpack_entry(p, base_offset, type, base_size);
-+	if (!ret || ent->p != p || ent->base_offset != base_offset)
-+		return unpack_entry(p, base_offset, type, base_size);
- 
--found_cache_entry:
- 	if (!keep_cache) {
- 		ent->data = NULL;
- 		ent->lru.next->prev = ent->lru.prev;
--- 
-1.6.0.2
+On Wed, Oct 08, 2008 at 07:07:54PM -0500, Brandon Casey <casey@nrlssc.navy.mil> wrote:
+> While we're at it, change the allocation to reference the variable it is
+> allocating memory for to try to prevent a similar mistake if the type is
+> changed in the future.
+
+If this is really a problem, then I think it would be good to mention
+this in Documentation/CodingGuidelines.
+
+--z3ovhOgMYmj8MRdq
+Content-Type: application/pgp-signature
+Content-Disposition: inline
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.9 (GNU/Linux)
+
+iEYEARECAAYFAkjtTZcACgkQe81tAgORUJZPUwCdH48tngVFtZMWMObmZVesBw6t
+lKEAn2eLlY6QnObVPvyso0GEkJf7DE3e
+=/9HT
+-----END PGP SIGNATURE-----
+
+--z3ovhOgMYmj8MRdq--
