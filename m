@@ -1,43 +1,89 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] builtin-apply: fix typo leading to stack corruption
-Date: Thu, 09 Oct 2008 05:51:37 -0700
-Message-ID: <7v4p3mors6.fsf@gitster.siamese.dyndns.org>
-References: <48ed30f5.0707d00a.2994.6f1e@mx.google.com>
+From: "Nguyen Thai Ngoc Duy" <pclouds@gmail.com>
+Subject: [RFD] Sparse checkout, unmerged entries and "reset --hard"
+Date: Thu, 9 Oct 2008 20:45:18 +0700
+Message-ID: <fcaeb9bf0810090645x29626b45j16d0e0e17fe93810@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Imre Deak <imre.deak@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Oct 09 14:53:31 2008
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+To: "Git Mailing List" <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Thu Oct 09 15:48:14 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Knv0k-0003Gh-Ds
-	for gcvg-git-2@gmane.org; Thu, 09 Oct 2008 14:52:58 +0200
+	id 1Knvqo-0008SD-L9
+	for gcvg-git-2@gmane.org; Thu, 09 Oct 2008 15:46:47 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754383AbYJIMvs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 9 Oct 2008 08:51:48 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754681AbYJIMvr
-	(ORCPT <rfc822;git-outgoing>); Thu, 9 Oct 2008 08:51:47 -0400
-Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:56901 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754334AbYJIMvr (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 9 Oct 2008 08:51:47 -0400
-Received: from localhost.localdomain (localhost [127.0.0.1])
-	by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id 17A0988A5F;
-	Thu,  9 Oct 2008 08:51:47 -0400 (EDT)
-Received: from pobox.com (ip68-225-240-211.oc.oc.cox.net [68.225.240.211])
- (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
- certificate requested) by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with
- ESMTPSA id 43F7288A5D; Thu,  9 Oct 2008 08:51:41 -0400 (EDT)
-In-Reply-To: <48ed30f5.0707d00a.2994.6f1e@mx.google.com> (Imre Deak's message
- of "Thu, 9 Oct 2008 00:24:16 +0300")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: 08638DB8-9601-11DD-AD44-FA2D76724C3F-77302942!a-sasl-quonix.pobox.com
+	id S1758939AbYJINp2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 9 Oct 2008 09:45:28 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758935AbYJINp1
+	(ORCPT <rfc822;git-outgoing>); Thu, 9 Oct 2008 09:45:27 -0400
+Received: from ik-out-1112.google.com ([66.249.90.181]:5190 "EHLO
+	ik-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1758928AbYJINp1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 9 Oct 2008 09:45:27 -0400
+Received: by ik-out-1112.google.com with SMTP id c30so25463ika.5
+        for <git@vger.kernel.org>; Thu, 09 Oct 2008 06:45:19 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to
+         :subject:mime-version:content-type:content-transfer-encoding
+         :content-disposition;
+        bh=UKZ35dKIRKka82uAi9aS5nb3fdzUteJQ9wNXQT3sUgE=;
+        b=GY5QXbD/1kNH1wqSqvG3ahYrRA2ooLdeadJOQkIdv4RqlwKmsLfanpQu6wOIKp3vPb
+         b4CuiMW2c6rd2N2KO5kZjRjy5LEIEFU4SUzQl0J9wVxC15yqPg8zdDcOIls87dTbaBKf
+         48dLFjs2ZrjvfymkvvicJiGE1SUVXvyMJgNCc=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:to:subject:mime-version:content-type
+         :content-transfer-encoding:content-disposition;
+        b=sY4cW8m5yjfD0EyV7JYVcK/8YAajAPlKezaw2fKDZWrRb7VZIHjvDFvT3vXDLj8woP
+         df5RFOws5XSqDRVp0htNS0CKlJV241+mxHSC+GMl4EGgg/h6W+bpmxs4xPVkwW0YqW/4
+         CjLgpqEq2nlsQoWOyahagBRUj0T1TsSVQ4WpY=
+Received: by 10.86.61.13 with SMTP id j13mr207135fga.69.1223559918746;
+        Thu, 09 Oct 2008 06:45:18 -0700 (PDT)
+Received: by 10.86.95.9 with HTTP; Thu, 9 Oct 2008 06:45:18 -0700 (PDT)
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/97848>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/97849>
 
-Looks good and would look better with a sign-off.
+Hi,
+
+There is a problem with those things and I don't know how to handle
+it. In brief, in "git reset --hard" (or "git read-tree --reset"),
+unmerged entries will be removed from in-memory index, so merge
+process does not see them and re-add them like new entries. But with
+sparse checkout, "new entries" and "merged entries" are handled
+differently. This may lead to stale/orphaned entries.
+
+The detail:
+
+ 1. unmerged entries are filtered out from cmd_read_tree() if --reset
+is provided.
+ 2. inside unpack_trees(), [1-3]way_merge() pass src[0] (which is NULL
+in unmerged cases) to merged_entry()
+ 3. merged_entry() sees it as "no old entry so this must be new
+entry", it makes sure there is no real file in working directory, but
+then the check is ignored in --reset mode.
+ 4. entries get added as new ones.
+
+With sparse checkout, in the last two steps, it would check if new
+entry matches default sparse pattern (which determines if the entry
+should be added to working directory). In case it decides the entry
+should not be added to working directory, it would remove CE_UPDATE
+flag from the entry. This is fine for _true_ new entries. But in
+unmerged case, it would leave a stale/orphaned entry in working
+directory while it is marked no-checkout in index.
+
+I would expect sparse checkout work correctly even in unmerged case.
+That is the entry is removed from working directory (if outside sparse
+pattern), staged entries are removed in index, stage 0 entry is added
+with no-checkout flag.
+
+Comments? Maybe doing a two-phase merge (unmerged entries first, the
+rest later)?
+-- 
+Duy
