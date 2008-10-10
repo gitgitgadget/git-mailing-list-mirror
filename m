@@ -1,100 +1,73 @@
-From: Pierre Habouzit <madcoder@debian.org>
-Subject: Re: [RFC PATCH] describe: Make --tags and --all match lightweight tags  more often
-Date: Fri, 10 Oct 2008 19:12:17 +0200
-Message-ID: <20081010171217.GB29028@artemis.corp>
-References: <20080930083940.GA11453@artemis.corp> <20081010165952.GI8203@spearce.org>
+From: "Giuseppe Bilotta" <giuseppe.bilotta@gmail.com>
+Subject: Re: [PATCHv2] gitweb: refactor input parameters parse/validation
+Date: Fri, 10 Oct 2008 19:33:40 +0200
+Message-ID: <cb7bb73a0810101033y3741df2dy88a64e72cbc3b8b0@mail.gmail.com>
+References: <200810071257.38423.jnareb@gmail.com>
+	 <1223457985-27094-1-git-send-email-giuseppe.bilotta@gmail.com>
+	 <20081010150108.GC29829@spearce.org>
 Mime-Version: 1.0
-Content-Type: multipart/signed; boundary="0eh6TmSyL6TZE2Uz";
-	protocol="application/pgp-signature"; micalg=SHA1
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-	Erez Zilber <erezzi.list@gmail.com>
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, "Jakub Narebski" <jnareb@gmail.com>
 To: "Shawn O. Pearce" <spearce@spearce.org>
-X-From: git-owner@vger.kernel.org Fri Oct 10 19:15:20 2008
+X-From: git-owner@vger.kernel.org Fri Oct 10 19:36:09 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KoLYT-0001JE-Ep
-	for gcvg-git-2@gmane.org; Fri, 10 Oct 2008 19:13:33 +0200
+	id 1KoLt8-0003Pm-HC
+	for gcvg-git-2@gmane.org; Fri, 10 Oct 2008 19:34:55 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758273AbYJJRMV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 10 Oct 2008 13:12:21 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758056AbYJJRMV
-	(ORCPT <rfc822;git-outgoing>); Fri, 10 Oct 2008 13:12:21 -0400
-Received: from pan.madism.org ([88.191.52.104]:39800 "EHLO hermes.madism.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1757864AbYJJRMU (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 10 Oct 2008 13:12:20 -0400
-Received: from madism.org (def92-12-88-177-251-208.fbx.proxad.net [88.177.251.208])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(Client CN "artemis.madism.org", Issuer "madism.org" (verified OK))
-	by hermes.madism.org (Postfix) with ESMTPS id 8520C3CB8B;
-	Fri, 10 Oct 2008 19:12:18 +0200 (CEST)
-Received: by madism.org (Postfix, from userid 1000)
-	id 6F6542A24F; Fri, 10 Oct 2008 19:12:17 +0200 (CEST)
+	id S1758056AbYJJRdm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 10 Oct 2008 13:33:42 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757993AbYJJRdm
+	(ORCPT <rfc822;git-outgoing>); Fri, 10 Oct 2008 13:33:42 -0400
+Received: from el-out-1112.google.com ([209.85.162.178]:54413 "EHLO
+	el-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757864AbYJJRdl (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 10 Oct 2008 13:33:41 -0400
+Received: by el-out-1112.google.com with SMTP id z25so295076ele.1
+        for <git@vger.kernel.org>; Fri, 10 Oct 2008 10:33:40 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to
+         :subject:cc:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:references;
+        bh=UGt+FlDT1FBhEIdYbP+Bv4e95HnAehfbDw4Kyxowzgc=;
+        b=VaY5bz5wwF0j3cHVU5mF4JIRza2ichbKX1PP9rb0fnXgeL8N64F20VqHjlZf/MfQJa
+         HlDMO1K6Aytgiu+xnI3jVw+GpwaBkhECEySzfry+C8jY8FyS2qJ6bjbFGIRd3VbqNcB+
+         KIwEsnAO8bfPRGdoKvHwprc4nVU4BfNwC3FOk=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
+         :content-type:content-transfer-encoding:content-disposition
+         :references;
+        b=CmxKvXkS1MvsUhGMY4QbYQ1b97te+q7RED6NdTBP5D9PcFzh5S5GyGsiRijHzWCa5w
+         CPtbTrflJ2YU/x4XINkMm8PQVs/722oaJYXph9th02lSVUWD3rB3jeF1qcVjzbmffb+j
+         ZGFS1r9sAhAVgjXTF4V78pgV51w9ndw2t536w=
+Received: by 10.150.230.15 with SMTP id c15mr2617704ybh.28.1223660020770;
+        Fri, 10 Oct 2008 10:33:40 -0700 (PDT)
+Received: by 10.150.145.2 with HTTP; Fri, 10 Oct 2008 10:33:40 -0700 (PDT)
+In-Reply-To: <20081010150108.GC29829@spearce.org>
 Content-Disposition: inline
-In-Reply-To: <20081010165952.GI8203@spearce.org>
-X-Face: $(^e[V4D-[`f2EmMGz@fgWK!e.B~2g.{08lKPU(nc1J~z\4B>*JEVq:E]7G-\6$Ycr4<;Z!|VY6Grt]+RsS$IMV)f>2)M="tY:ZPcU;&%it2D81X^kNya0=L]"vZmLP+UmKhgq+u*\.dJ8G!N&=EvlD
-User-Agent: Madmutt/devel (Linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/97950>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/97951>
+
+On Fri, Oct 10, 2008 at 5:01 PM, Shawn O. Pearce <spearce@spearce.org> wrote:
+> Giuseppe Bilotta <giuseppe.bilotta@gmail.com> wrote:
+>> +sub validate_action {
+>> +     my $input = shift || return undef;
+>> +     return undef unless exists $actions{$action};
+>> +     return $action;
+>> +}
+>
+> Shouldn't $action here be $input?
+
+Urgh. Yes, yes it should. Good catch. Should I resend?
 
 
---0eh6TmSyL6TZE2Uz
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
-
-On Fri, Oct 10, 2008 at 04:59:52PM +0000, Shawn O. Pearce wrote:
-> If the caller supplies --tags they want the lightweight, unannotated
-> tags to be searched for a match.  If a lightweight tag is closer
-> in the history, it should be matched, even if an annotated tag is
-> reachable further back in the commit chain.
->=20
-> The same applies with --all when matching any other type of ref.
->=20
-> Signed-off-by: Shawn O. Pearce <spearce@spearce.org>
-> ---
->=20
->  This come out of the discussions earlier last week, where folks
->  were confused about the meaning of --tags and wanted to see it
->  behave as they expected, which was to match the nearest tag,
->  no matter its "type".
->=20
->  The code is unchanged from what I sent out before, but now it has
->  updated test vectors and a commit message.
->=20
->  Thoughts?
-
-I would like to see an enhanced information in the documentation so that
-people remember that lightweight tags are not meant to be constant over
-time and that's a bad idea to use them.
-
-What the discussion showed, is that the people don't know about
-annotated tags, and git-describe should have a stub of documentation
-that points to git-tag(1) so that people learn about it.
-
-Apart from that, it feels fine.
-
---=20
-=C2=B7O=C2=B7  Pierre Habouzit
-=C2=B7=C2=B7O                                                madcoder@debia=
-n.org
-OOO                                                http://www.madism.org
-
---0eh6TmSyL6TZE2Uz
-Content-Type: application/pgp-signature
-Content-Disposition: inline
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.9 (GNU/Linux)
-
-iEYEABECAAYFAkjvjPEACgkQvGr7W6Hudhzs+gCfQGIE1L2mVvLrxA9b8gi9TcQO
-ErkAoJl6II237Uq8BCuUltPWv8UFhh5D
-=FLR1
------END PGP SIGNATURE-----
-
---0eh6TmSyL6TZE2Uz--
+-- 
+Giuseppe "Oblomov" Bilotta
