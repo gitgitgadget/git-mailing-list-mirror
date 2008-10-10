@@ -1,65 +1,75 @@
-From: Paul Mackerras <paulus@samba.org>
-Subject: Re: [PATCH (GITK) v2 3/4] gitk: Support filenames in the locale encoding.
-Date: Fri, 10 Oct 2008 22:21:16 +1100
-Message-ID: <18671.15020.13951.943822@cargo.ozlabs.ibm.com>
-References: <1222772422-28020-1-git-send-email-angavrilov@gmail.com>
-	<1222772422-28020-2-git-send-email-angavrilov@gmail.com>
-	<1222772422-28020-3-git-send-email-angavrilov@gmail.com>
-	<1222772422-28020-4-git-send-email-angavrilov@gmail.com>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: Different behaviour of rebase -i
+Date: Fri, 10 Oct 2008 13:40:47 +0200 (CEST)
+Message-ID: <alpine.DEB.1.00.0810101319150.22125@pacific.mpi-cbg.de.mpi-cbg.de>
+References: <6beb92080810091204n6df4338fs3b182194a8d6454e@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, Johannes Sixt <johannes.sixt@telecom.at>
-To: Alexander Gavrilov <angavrilov@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Oct 10 13:24:34 2008
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org
+To: Leonardo Sobral Cunha <sobral@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Oct 10 13:35:31 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KoG6g-0002Mu-Dk
-	for gcvg-git-2@gmane.org; Fri, 10 Oct 2008 13:24:30 +0200
+	id 1KoGHK-00069p-6l
+	for gcvg-git-2@gmane.org; Fri, 10 Oct 2008 13:35:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753019AbYJJLXQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 10 Oct 2008 07:23:16 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753097AbYJJLXP
-	(ORCPT <rfc822;git-outgoing>); Fri, 10 Oct 2008 07:23:15 -0400
-Received: from ozlabs.org ([203.10.76.45]:53822 "EHLO ozlabs.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752903AbYJJLXO (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 10 Oct 2008 07:23:14 -0400
-Received: by ozlabs.org (Postfix, from userid 1003)
-	id 0C226DDF25; Fri, 10 Oct 2008 22:23:13 +1100 (EST)
-In-Reply-To: <1222772422-28020-4-git-send-email-angavrilov@gmail.com>
-X-Mailer: VM 8.0.9 under Emacs 22.2.1 (i486-pc-linux-gnu)
+	id S1753623AbYJJLeQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 10 Oct 2008 07:34:16 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753325AbYJJLeQ
+	(ORCPT <rfc822;git-outgoing>); Fri, 10 Oct 2008 07:34:16 -0400
+Received: from mail.gmx.net ([213.165.64.20]:56567 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1753327AbYJJLeP (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 10 Oct 2008 07:34:15 -0400
+Received: (qmail invoked by alias); 10 Oct 2008 11:34:13 -0000
+Received: from pacific.mpi-cbg.de (EHLO [141.5.10.38]) [141.5.10.38]
+  by mail.gmx.net (mp016) with SMTP; 10 Oct 2008 13:34:13 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1/clo4a2LTcil41l9CikPn86kl/uODlpP1HtoJHH2
+	W3AMFvz/rhMPjo
+X-X-Sender: schindelin@pacific.mpi-cbg.de.mpi-cbg.de
+In-Reply-To: <6beb92080810091204n6df4338fs3b182194a8d6454e@mail.gmail.com>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.64
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/97926>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/97927>
 
-Alexander Gavrilov writes:
+Hi,
 
-> The previous patch changed the encoding used for
-> reading diffs to binary, which broke non-ASCII filename
-> support. This one fixes the breakage, together with some
-> existing bugs related to filename encoding.
+On Thu, 9 Oct 2008, Leonardo Sobral Cunha wrote:
 
-Sounds like this patch should be combined with the previous one.
+> While doing a git rebase with my upstream branch ahead of my local 
+> branch, first git rewinds my local branch to point to the upstream and 
+> then prints "Nothing to do". As expected, my local branch ends pointing 
+> to the upstream head.
+> 
+> But when I use the same command with the same branches using git rebase 
+> -i, nothing happens and my local branch does not point to upstream (the 
+> behaviour is different).
+> 
+> Is this different behaviour of rebase -i expected or is this a bug? This 
+> is still happening in git version 1.6.0.2.443.g52e83
 
-> @@ -6250,11 +6250,12 @@ proc gettreeline {gtf id} {
->  	    set line [string range $line 0 [expr {$i-1}]]
->  	    if {$diffids ne $nullid2 && [lindex $line 1] ne "blob"} continue
->  	    set sha1 [lindex $line 2]
-> -	    if {[string index $fname 0] eq "\""} {
-> -		set fname [lindex $fname 0]
-> -	    }
->  	    lappend treeidlist($id) $sha1
->  	}
-> +	if {[string index $fname 0] eq "\""} {
-> +	    set fname [lindex $fname 0]
-> +	}
+This is by design.  You need to have a way to stop rebasing in the editor.  
+For example when you realize that you passed the wrong upstream or 
+something.
 
-Concerning this part of the change, do we know whether git ls-files
-will quote filenames containing special characters or not?
+The most intuitive way (I thought) is to behave the same as "git commit": 
+if you do not want to continue, just delete everything.
 
-Paul.
+Now, I can see that it is unconvenient.
+
+A workaround would be to add a line "bla" and when rebase complains about 
+the unknown command, continue with "git rebase --skip".
+
+Maybe we should add a new command "noop" which is automatically inserted 
+when there is no other command?
+
+Ciao,
+Dscho
