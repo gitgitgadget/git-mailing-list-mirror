@@ -1,89 +1,111 @@
 From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: Re: [PATCH] git-gui: Correctly set up locators in case of preset
-	URL variable
-Date: Fri, 10 Oct 2008 09:42:55 -0700
-Message-ID: <20081010164255.GD29829@spearce.org>
-References: <20080930195839.GK21310@spearce.org> <1223028826-10306-1-git-send-email-pasky@suse.cz>
+Subject: [RFC PATCH] describe: Make --tags and --all match lightweight tags
+	more often
+Date: Fri, 10 Oct 2008 09:59:52 -0700
+Message-ID: <20081010165952.GI8203@spearce.org>
+References: <20080930083940.GA11453@artemis.corp>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org, Petr Baudis <petr.baudis@novartis.com>
-To: Petr Baudis <pasky@suse.cz>
-X-From: git-owner@vger.kernel.org Fri Oct 10 18:44:43 2008
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Pierre Habouzit <madcoder@debian.org>,
+	Erez Zilber <erezzi.list@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Oct 10 19:01:20 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KoL60-0005DE-MN
-	for gcvg-git-2@gmane.org; Fri, 10 Oct 2008 18:44:09 +0200
+	id 1KoLMP-00047n-Oh
+	for gcvg-git-2@gmane.org; Fri, 10 Oct 2008 19:01:06 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756323AbYJJQm5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 10 Oct 2008 12:42:57 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756771AbYJJQm5
-	(ORCPT <rfc822;git-outgoing>); Fri, 10 Oct 2008 12:42:57 -0400
-Received: from george.spearce.org ([209.20.77.23]:50333 "EHLO
+	id S1757907AbYJJQ7x (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 10 Oct 2008 12:59:53 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756053AbYJJQ7x
+	(ORCPT <rfc822;git-outgoing>); Fri, 10 Oct 2008 12:59:53 -0400
+Received: from george.spearce.org ([209.20.77.23]:58500 "EHLO
 	george.spearce.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755001AbYJJQm4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 10 Oct 2008 12:42:56 -0400
+	with ESMTP id S1756673AbYJJQ7w (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 10 Oct 2008 12:59:52 -0400
 Received: by george.spearce.org (Postfix, from userid 1001)
-	id 0A21938360; Fri, 10 Oct 2008 16:42:56 +0000 (UTC)
+	id 320573835F; Fri, 10 Oct 2008 16:59:52 +0000 (UTC)
 Content-Disposition: inline
-In-Reply-To: <1223028826-10306-1-git-send-email-pasky@suse.cz>
+In-Reply-To: <20080930083940.GA11453@artemis.corp>
 User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/97948>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/97949>
 
-Petr Baudis <pasky@suse.cz> wrote:
-> This patch fixes locators setup in case the URL variable is already set,
-> e.g. in the clone dialog during 'git gui clone'.
+If the caller supplies --tags they want the lightweight, unannotated
+tags to be searched for a match.  If a lightweight tag is closer
+in the history, it should be matched, even if an annotated tag is
+reachable further back in the commit chain.
 
-Huh.  Better, but Remote->Push... still crashes with your series:
+The same applies with --all when matching any other type of ref.
 
-can't read "push_url": no such variable
-can't read "push_url": no such variable
-    while executing
-"set $urlvar"
-    (procedure "location_input" line 26)
-    invoked from within
-"location_input $w.dest.url_t push_url push"
-    (procedure "do_push_anywhere" line 53)
-    invoked from within
-"do_push_anywhere"
-    invoked from within
-".#mbar.#mbar#remote invoke active"
-    ("uplevel" body line 1)
-    invoked from within
-"uplevel #0 [list $w invoke active]"
-    (procedure "tk::MenuInvoke" line 50)
-    invoked from within
-"tk::MenuInvoke .#mbar.#mbar#remote 1"
-    (command bound to event)
+Signed-off-by: Shawn O. Pearce <spearce@spearce.org>
+---
 
+ This come out of the discussions earlier last week, where folks
+ were confused about the meaning of --tags and wanted to see it
+ behave as they expected, which was to match the nearest tag,
+ no matter its "type".
+
+ The code is unchanged from what I sent out before, but now it has
+ updated test vectors and a commit message.
+
+ Thoughts?
+
+ builtin-describe.c  |    6 ++----
+ t/t6120-describe.sh |    8 ++++----
+ 2 files changed, 6 insertions(+), 8 deletions(-)
+
+diff --git a/builtin-describe.c b/builtin-describe.c
+index ec404c8..fd54fec 100644
+--- a/builtin-describe.c
++++ b/builtin-describe.c
+@@ -15,8 +15,8 @@ static const char * const describe_usage[] = {
+ };
  
-> diff --git a/git-gui/lib/transport.tcl b/git-gui/lib/transport.tcl
-> index 277e6b8..02c4eca 100644
-> --- a/git-gui/lib/transport.tcl
-> +++ b/git-gui/lib/transport.tcl
-> @@ -68,8 +68,13 @@ proc location_input {widget urlvar op} {
->  
->  	global _locator_template _locator_input _locator_var
->  	trace remove variable _locator_input write locator_update
-> -	set _locator_template $default_locator
-> -	set _locator_input {}
-> +	if {[set $urlvar] == {}} {
-> +		set _locator_template $default_locator
-> +		set _locator_input {}
-> +	} else {
-> +		set _locator_template "URL"
-> +		set _locator_input [set $urlvar]
-> +	}
->  	set _locator_var $urlvar
->  	trace add variable _locator_input write locator_update
->  
-> -- 
-> tg: (3c6c738..) t/git-gui/locator-preset (depends on: git-gui/locators t/git-gui/clonecmd)
+ static int debug;	/* Display lots of verbose info */
+-static int all;	/* Default to annotated tags only */
+-static int tags;	/* But allow any tags if --tags is specified */
++static int all;	/* Any valid ref can be used */
++static int tags;	/* Either lightweight or annotated tags */
+ static int longformat;
+ static int abbrev = DEFAULT_ABBREV;
+ static int max_candidates = 10;
+@@ -112,8 +112,6 @@ static int compare_pt(const void *a_, const void *b_)
+ {
+ 	struct possible_tag *a = (struct possible_tag *)a_;
+ 	struct possible_tag *b = (struct possible_tag *)b_;
+-	if (a->name->prio != b->name->prio)
+-		return b->name->prio - a->name->prio;
+ 	if (a->depth != b->depth)
+ 		return a->depth - b->depth;
+ 	if (a->found_order != b->found_order)
+diff --git a/t/t6120-describe.sh b/t/t6120-describe.sh
+index 16cc635..e6c9e59 100755
+--- a/t/t6120-describe.sh
++++ b/t/t6120-describe.sh
+@@ -91,10 +91,10 @@ check_describe D-* HEAD^^
+ check_describe A-* HEAD^^2
+ check_describe B HEAD^^2^
+ 
+-check_describe A-* --tags HEAD
+-check_describe A-* --tags HEAD^
+-check_describe D-* --tags HEAD^^
+-check_describe A-* --tags HEAD^^2
++check_describe c-* --tags HEAD
++check_describe c-* --tags HEAD^
++check_describe e-* --tags HEAD^^
++check_describe c-* --tags HEAD^^2
+ check_describe B --tags HEAD^^2^
+ 
+ check_describe B-0-* --long HEAD^^2^
+-- 
+1.6.0.2.687.g8544f
 
 -- 
 Shawn.
