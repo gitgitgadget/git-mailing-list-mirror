@@ -1,88 +1,104 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: [PATCH] test-lib: fix color reset in say_color()
-Date: Fri, 10 Oct 2008 02:30:06 -0700 (PDT)
-Message-ID: <m33aj4lrvs.fsf@localhost.localdomain>
-References: <1223590030-7464-1-git-send-email-vmiklos@frugalware.org>
+From: marcreddist@aim.com
+Subject: Re: Really remove a file ?
+Date: Fri, 10 Oct 2008 05:38:25 -0400
+Message-ID: <8CAF8D313562BEE-1588-259E@webmail-da15.sysops.aol.com>
+References: <8CAF851B91FEF07-660-20E9@webmail-da15.sysops.aol.com> <81b0412b0810091156v15dea27an95050a06cfb4f8df@mail.gmail.com> <d4bc1a2a0810091643u3903a1f4h44d3579b98fe6922@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Miklos Vajna <vmiklos@frugalware.org>
-X-From: git-owner@vger.kernel.org Fri Oct 10 11:31:39 2008
+Content-Type: text/plain; charset="us-ascii"; format=flowed
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Oct 10 11:48:20 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KoELL-00046C-Hk
-	for gcvg-git-2@gmane.org; Fri, 10 Oct 2008 11:31:32 +0200
+	id 1KoEb9-0000yB-Ti
+	for gcvg-git-2@gmane.org; Fri, 10 Oct 2008 11:47:52 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756437AbYJJJaN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 10 Oct 2008 05:30:13 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756412AbYJJJaM
-	(ORCPT <rfc822;git-outgoing>); Fri, 10 Oct 2008 05:30:12 -0400
-Received: from fg-out-1718.google.com ([72.14.220.157]:38797 "EHLO
-	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756171AbYJJJaK (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 10 Oct 2008 05:30:10 -0400
-Received: by fg-out-1718.google.com with SMTP id 19so286014fgg.17
-        for <git@vger.kernel.org>; Fri, 10 Oct 2008 02:30:08 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:received:received
-         :x-authentication-warning:to:cc:subject:references:from:in-reply-to
-         :message-id:lines:user-agent:mime-version:content-type:date;
-        bh=g33QRctl34eUYSUGYiYXgeCC28itMVZiaayRBAnbFMU=;
-        b=dPCppxyT7hXXLuvuVdAfqITeTLomWoIgxxNlHIQIQWuzxLBAfSSsFdfgnARU3EPHUA
-         zzQjXJn12GX+wxEEK4oRdkXWibbtbHK6RkYVOlRVqDvmA2/5nytGywxErdCmgejBOdUz
-         TvhWOY2NLOXwi+wg0ujBUQcZ9/XqTfY0eNWic=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=x-authentication-warning:to:cc:subject:references:from:in-reply-to
-         :message-id:lines:user-agent:mime-version:content-type:date;
-        b=HXhRDByXZ1GpRR8A9PWSk+kedzUUYyE5AWTheSHpbpSwrcnDl8O3pMJwNSos7WvKtV
-         A9pCquqGj6LzxflXaS2fp+YgGV7IlRTa/el7fxiKNGWT5J5T4C9WUQ/b6PNSpcgYsyrt
-         LNPZQw5p7730WcbURojPuquR3iIvEEyUiDu7M=
-Received: by 10.181.60.13 with SMTP id n13mr1237214bkk.39.1223631007964;
-        Fri, 10 Oct 2008 02:30:07 -0700 (PDT)
-Received: from localhost.localdomain (abvi22.neoplus.adsl.tpnet.pl [83.8.206.22])
-        by mx.google.com with ESMTPS id 23sm2127905eya.7.2008.10.10.02.30.05
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Fri, 10 Oct 2008 02:30:06 -0700 (PDT)
-Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id m9A9U2XB003864;
-	Fri, 10 Oct 2008 11:30:02 +0200
-Received: (from jnareb@localhost)
-	by localhost.localdomain (8.13.4/8.13.4/Submit) id m9A9U0ss003858;
-	Fri, 10 Oct 2008 11:30:00 +0200
-X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
-In-Reply-To: <1223590030-7464-1-git-send-email-vmiklos@frugalware.org>
-User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
+	id S1757417AbYJJJqj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 10 Oct 2008 05:46:39 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757376AbYJJJqj
+	(ORCPT <rfc822;git-outgoing>); Fri, 10 Oct 2008 05:46:39 -0400
+Received: from imo-m13.mx.aol.com ([64.12.143.101]:13394 "EHLO
+	imo-m13.mail.aol.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1757316AbYJJJqh (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 10 Oct 2008 05:46:37 -0400
+X-Greylist: delayed 485 seconds by postgrey-1.27 at vger.kernel.org; Fri, 10 Oct 2008 05:46:37 EDT
+Received: from marcreddist@aim.com
+	by imo-m13.mx.aol.com  (mail_out_v39.1.) id x.d0b.36ef32bd (37056)
+	 for <git@vger.kernel.org>; Fri, 10 Oct 2008 05:38:26 -0400 (EDT)
+Received: from smtprly-ma01.mx.aol.com (smtprly-ma01.mx.aol.com [64.12.207.140]) by cia-db04.mx.aol.com (v121_r3.13) with ESMTP id MAILCIADB042-90c048ef229227e; Fri, 10 Oct 2008 05:38:26 -0400
+Received: from webmail-da15 (webmail-da15.webmail.aol.com [205.188.212.210]) by smtprly-ma01.mx.aol.com (v121_r3.13) with ESMTP id MAILSMTPRLYMA012-5c4448ef2290b1; Fri, 10 Oct 2008 05:38:24 -0400
+X-AOL-IP: 62.23.145.195
+In-Reply-To: <d4bc1a2a0810091643u3903a1f4h44d3579b98fe6922@mail.gmail.com>
+X-MB-Message-Source: WebUI
+X-MB-Message-Type: User
+X-Mailer: AIM WebMail 39155-STANDARD
+Received: from 62.23.145.195 by webmail-da15.sysops.aol.com (205.188.212.210) with HTTP (WebMailUI); Fri, 10 Oct 2008 05:38:24 -0400
+X-Spam-Flag: NO
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/97919>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/97920>
 
-Miklos Vajna <vmiklos@frugalware.org> writes:
+Hi,
 
-> When executing a single test with colors enabled, the cursor was not set
-> back to the previous one, and you had to hit an extra enter to get it
-> back.
-> 
-> Work around this problem by calling 'tput sgr0' before printing the
-> final newline.
-> 
-> Signed-off-by: Miklos Vajna <vmiklos@frugalware.org>
-> ---
-> 
-> Actually I'm not 100% sure about how many users are affected. I have a
-> black background in konsole with white letters, and after the test I get
-> a green cursor, and once I hit enter, I get the white one back.
 
-I also had this very minor irritation that cursor retained color
-of last line till enter (or IIRC any key which moved cursor). I use
-ordinary xterm from X.Org 6.8.2(213).
+
+Thank you both, that's exactly what i needed.
+
+
+
+In case someone finds this post in the future, this :
+
+> $ git filter-branch --index-filter 'git update-index --remove
+
+' --force -- --all
+
+worked perfectly. Although, it told me that git can't work on a dirty 
+directory so I did this :
+
+$ git add .
+
+$ git commit
+
+And after the filter-branch
+
+$ git reset --hard HEAD^
+
+
+
+> You'll probably also want to run "git gc" on your repo to
+
+> actually get rid of the huge object that was added (or does
+
+> filter-branch do this automatically?).
+
+I'm not sure it's required by git-filter-branch alone. In this case :
+
+git-gc saves almost 5% after the file deletion
+
+it saves 4.5% before the file deletion
+
+If I run git gc before and after the git filter-branch, it saves 4.5% 
+and then 0.2%.
+
+
+
+But maybe my tests applies to my particular environment and cannot be 
+generalized.
+
+
+
+
+
+Thank you again for the help.
+
+Take care,
+
+Marc, happy git user.
+
+
 
 -- 
-Jakub Narebski
-Poland
-ShadeHawk on #git
