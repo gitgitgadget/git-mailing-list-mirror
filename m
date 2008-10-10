@@ -1,70 +1,83 @@
-From: Peter Krefting <peter@softwolves.pp.se>
-Subject: Re: Feature Request: Branch Annotations
-Date: Fri, 10 Oct 2008 09:24:08 +0100 (CET)
-Organization: /universe/earth/europe/norway/oslo
-Message-ID: <Pine.LNX.4.64.0810100922180.10709@ds9.cixit.se>
-References: <d2115f4f0810080341m27c4ca9bv9b1e9b66704ef3fa@mail.gmail.com> 
- <d2115f4f0810080348t62e18b14x1dfe798974332b05@mail.gmail.com> 
- <d2115f4f0810080349o30b6bc2labc2745b8d981e0d@mail.gmail.com> 
- <48ECB5CB.4010703@gmx.net> <7vwsgiptph.fsf@gitster.siamese.dyndns.org>
- <32541b130810081621k32493e20occba9cd97671775d@mail.gmail.com>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: [PATCHv2] gitweb: refactor input parameters parse/validation
+Date: Fri, 10 Oct 2008 10:37:30 +0200
+Message-ID: <200810101037.31037.jnareb@gmail.com>
+References: <200810071257.38423.jnareb@gmail.com> <1223457985-27094-1-git-send-email-giuseppe.bilotta@gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Junio C Hamano <gitster@pobox.com>,
-	David Soria Parra <sn_@gmx.net>,
-	Rotem Yaari <vmalloc@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: Avery Pennarun <apenwarr@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Oct 10 10:25:54 2008
+Content-Type: text/plain;
+  charset="iso-8859-2"
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, "Shawn O. Pearce" <spearce@spearce.org>,
+	Petr Baudis <pasky@suse.cz>
+To: Giuseppe Bilotta <giuseppe.bilotta@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Oct 10 10:39:10 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KoDJp-0002Z3-Ay
-	for gcvg-git-2@gmane.org; Fri, 10 Oct 2008 10:25:53 +0200
+	id 1KoDWU-0007QH-GP
+	for gcvg-git-2@gmane.org; Fri, 10 Oct 2008 10:38:59 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751257AbYJJIYl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 10 Oct 2008 04:24:41 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750964AbYJJIYl
-	(ORCPT <rfc822;git-outgoing>); Fri, 10 Oct 2008 04:24:41 -0400
-Received: from ds9.cixit.se ([193.15.169.228]:57804 "EHLO ds9.cixit.se"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750831AbYJJIYk (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 10 Oct 2008 04:24:40 -0400
-Received: from ds9.cixit.se (peter@localhost [127.0.0.1])
-	by ds9.cixit.se (8.12.3/8.12.3/Debian-7.2) with ESMTP id m9A8O9Y1025173
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Fri, 10 Oct 2008 10:24:09 +0200
-Received: from localhost (peter@localhost)
-	by ds9.cixit.se (8.12.3/8.12.3/Debian-7.2) with ESMTP id m9A8O8EP025167;
-	Fri, 10 Oct 2008 10:24:08 +0200
-X-Authentication-Warning: ds9.cixit.se: peter owned process doing -bs
-In-Reply-To: <32541b130810081621k32493e20occba9cd97671775d@mail.gmail.com>
-Accept: text/plain
-X-Warning: Junk / bulk email will be reported
-X-Rating: This message is not to be eaten by humans
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-3.0 (ds9.cixit.se [127.0.0.1]); Fri, 10 Oct 2008 10:24:09 +0200 (CEST)
+	id S1751266AbYJJIhm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 10 Oct 2008 04:37:42 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751274AbYJJIhm
+	(ORCPT <rfc822;git-outgoing>); Fri, 10 Oct 2008 04:37:42 -0400
+Received: from ey-out-2122.google.com ([74.125.78.24]:65184 "EHLO
+	ey-out-2122.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750956AbYJJIhk (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 10 Oct 2008 04:37:40 -0400
+Received: by ey-out-2122.google.com with SMTP id 6so172124eyi.37
+        for <git@vger.kernel.org>; Fri, 10 Oct 2008 01:37:37 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:from:to:subject:date
+         :user-agent:cc:references:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:message-id;
+        bh=EuPRPn9joFBxeMRTNtGirFrtEpY9j6M//lORgxzWSVM=;
+        b=POELkzMzKDW2S/56uQ76HQz5St3vbQCmum2fzgxi3DcgQUhSMD3TzC6FKdqvSkWZdN
+         PRW8VI0wQxQCDj9GocLPy52MMosZsmxYnQTHJ0VPM8++CttRIHtXYnbGLlZSV3OZIbuf
+         4J2aGnKACY1CigqnYCbnNaahJc2Bzlccw2FAc=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=from:to:subject:date:user-agent:cc:references:in-reply-to
+         :mime-version:content-type:content-transfer-encoding
+         :content-disposition:message-id;
+        b=CKh9HL9UtJfVmWksEHVsUtuSQMUzOFXg/MiOo8YGqBxQBbSFnz6O0se9x6j78riRTv
+         gjpP9bbOAwhxcEr+Yw1yg0qXgk7Q8ZEBvu8HCef8lrd505iYdPN94xyB6E7Yx9CEWvpi
+         oanxgYliCnHh0cXpuRS5DkCmFlj2qZUlYscX4=
+Received: by 10.210.90.10 with SMTP id n10mr1588000ebb.49.1223627857861;
+        Fri, 10 Oct 2008 01:37:37 -0700 (PDT)
+Received: from ?192.168.1.11? (abvi22.neoplus.adsl.tpnet.pl [83.8.206.22])
+        by mx.google.com with ESMTPS id 2sm6418171nfv.5.2008.10.10.01.37.34
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Fri, 10 Oct 2008 01:37:35 -0700 (PDT)
+User-Agent: KMail/1.9.3
+In-Reply-To: <1223457985-27094-1-git-send-email-giuseppe.bilotta@gmail.com>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/97914>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/97915>
 
-Avery Pennarun:
+On Wed, 8 Oct 2008, Giuseppe Bilotta wrote:
 
-> I guess bash completions would help with this (if you're using bash),
-> but even then it's kind of unreasonable to name branches something
-> like "bug-111234-widget-performance-improvements-for-customer-x",
-> which is the sort of information that would be awfully helpful two
-> months later when you're looking at old unmerged branches.
+> Since input parameters can be obtained both from CGI parameters and
+> PATH_INFO, we would like most of the code to be agnostic about the way
+> parameters were retrieved. We thus collect all the parameters into the
+> new %input_params hash, delaying validation after the collection is
+> completed.
+> 
+> Although the kludge removal is minimal at the moment, it makes life much
+> easier for future expansions such as more extensive PATH_INFO use or
+> other form of input such as command-line support.
+> 
+> Signed-off-by: Giuseppe Bilotta <giuseppe.bilotta@gmail.com>
 
-That's exactly what I do for one of the projects I am working on (well,
-minus the "bug-" prefix, that's implied). Bash completion works quite
-well for that, and the merge commits do give meaningful information.
+Very nice.
 
-But I would still like to be able to annotate it. Especially for
-long-living bug-fix branches, it could be useful to be able to add
-describe a branch with what state it is in, for instance.
+Acked-by: Jakub Narebski <jnareb@gmail.com>
 
 -- 
-\\// Peter - http://www.softwolves.pp.se/
+Jakub Narebski
+Poland
