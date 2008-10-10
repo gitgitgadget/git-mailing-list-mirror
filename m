@@ -1,64 +1,59 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: gitster is getting back to normal, slowly
-Date: Fri, 10 Oct 2008 08:34:03 -0700
-Message-ID: <7vej2omplg.fsf@gitster.siamese.dyndns.org>
+Subject: Re: git confused by rename
+Date: Fri, 10 Oct 2008 08:44:08 -0700
+Message-ID: <7vabdcmp4n.fsf@gitster.siamese.dyndns.org>
+References: <fb6605670810100741k7cff25c7y4df66834cf7482a0@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: spearce@spearce.org
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Oct 10 17:35:48 2008
+Cc: git@vger.kernel.org
+To: "Michael P. Soulier" <msoulier@digitaltorque.ca>
+X-From: git-owner@vger.kernel.org Fri Oct 10 17:45:35 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KoK1a-00075C-JA
-	for gcvg-git-2@gmane.org; Fri, 10 Oct 2008 17:35:31 +0200
+	id 1KoKBI-0003Nk-Aq
+	for gcvg-git-2@gmane.org; Fri, 10 Oct 2008 17:45:32 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759445AbYJJPeO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 10 Oct 2008 11:34:14 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759395AbYJJPeO
-	(ORCPT <rfc822;git-outgoing>); Fri, 10 Oct 2008 11:34:14 -0400
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:52848 "EHLO
+	id S1759198AbYJJPoS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 10 Oct 2008 11:44:18 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759395AbYJJPoS
+	(ORCPT <rfc822;git-outgoing>); Fri, 10 Oct 2008 11:44:18 -0400
+Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:49495 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1759358AbYJJPeN (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 10 Oct 2008 11:34:13 -0400
+	with ESMTP id S1759064AbYJJPoR (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 10 Oct 2008 11:44:17 -0400
 Received: from localhost.localdomain (localhost [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id ED34F6D8F8;
-	Fri, 10 Oct 2008 11:34:08 -0400 (EDT)
+	by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id 223C489D4F;
+	Fri, 10 Oct 2008 11:44:16 -0400 (EDT)
 Received: from pobox.com (ip68-225-240-211.oc.oc.cox.net [68.225.240.211])
  (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
- certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
- ESMTPSA id 776E26D8F5; Fri, 10 Oct 2008 11:34:05 -0400 (EDT)
+ certificate requested) by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with
+ ESMTPSA id 5109F89D42; Fri, 10 Oct 2008 11:44:10 -0400 (EDT)
+In-Reply-To: <fb6605670810100741k7cff25c7y4df66834cf7482a0@mail.gmail.com>
+ (Michael P. Soulier's message of "Fri, 10 Oct 2008 10:41:54 -0400")
 User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: E1679764-96E0-11DD-8D0F-9364E785EAEE-77302942!a-sasl-fastnet.pobox.com
+X-Pobox-Relay-ID: 4B4D5712-96E2-11DD-9ADF-FA2D76724C3F-77302942!a-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/97941>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/97942>
 
-Here is a brief status update from me.
+"Michael P. Soulier" <msoulier@digitaltorque.ca> writes:
 
-I am back from a Japan trip to attend the one-year-after-funeral service
-for my stepfather and a vacation.  I did not plan to touch keyboard while
-in there but I ended up giving a 3-hour git talk to about two dozen git
-users (but none of the people I know from this list) and would-be users [*1*].
+> #       renamed:    templates/scrc/index.html -> templates/scrc/cres_taps.html
+> #       modified:   templates/scrc/index.html
+>
+> Looking at the last two lines here, there is obviously an issue.
 
-I am going through my mailing list backlog, and it will probably be a few
-more days before I can fully catch up.  In the meantime, I've pulled from
-Shawn, who again did a wonderful job of being an interim maintainer [*2*],
-and pushed the result out, but I am afraind that my trees will lag behind
-his for a few more days.  If things go well, I expect to ask Shawn to stop
-applying patches at the end of Sunday and take it over from there.
+I am puzzled.
 
-[Footnote]
-
-*1* If you happen to read/speak Japanese, you might be interested in these
-links:
-
-    http://d.hatena.ne.jp/takagimasahiro/20081008/1223413046
-    http://d.hatena.ne.jp/kunit/20081004
-
-*2* Thanks, Shawn.  Part of me is very much tempted to ask him being an
-interim maintainer for a few more weeks so that I can see how it feels
-like to be a contributor again, but I'd refrain from doing so ;-)
+Looking at wt-status.c "renamed: A -> B" will be shown only when A and B
+are similar enough *and* there is no A remaining in the final result, and
+in such a case, "modified: A" should not be shown.  Because git does not
+care how you created B (IOW, it does not matter if B was typed from
+scratch with copying and pasting, or created by copying and editing), the
+"renamed: A -> B" entry itself is not surprising nor look like a bug at
+all, but its presense at the same time as "modified: A" does feel very
+fishy.
