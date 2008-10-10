@@ -1,55 +1,62 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: Fwd: git status options feature suggestion
-Date: Fri, 10 Oct 2008 13:13:42 +0200 (CEST)
-Message-ID: <alpine.DEB.1.00.0810101312360.22125@pacific.mpi-cbg.de.mpi-cbg.de>
-References: <81bfc67a0810082234p55e2fb9jb2a10f837eea7de0@mail.gmail.com>  <20081009061136.GA24288@coredump.intra.peff.net>  <81bfc67a0810082327p421ca4e9v84f4b33023bc6fe6@mail.gmail.com> <81bfc67a0810082327q71b9d6apf2787eb8519031bb@mail.gmail.com>
- <alpine.DEB.1.00.0810091101230.22125@pacific.mpi-cbg.de.mpi-cbg.de> <48EE1F58.2060707@drmicha.warpmail.net>
+From: Paul Mackerras <paulus@samba.org>
+Subject: Re: [PATCH (GITK) v2 3/4] gitk: Support filenames in the locale encoding.
+Date: Fri, 10 Oct 2008 22:23:08 +1100
+Message-ID: <18671.15132.660369.249649@cargo.ozlabs.ibm.com>
+References: <1222772422-28020-1-git-send-email-angavrilov@gmail.com>
+	<1222772422-28020-2-git-send-email-angavrilov@gmail.com>
+	<1222772422-28020-3-git-send-email-angavrilov@gmail.com>
+	<1222772422-28020-4-git-send-email-angavrilov@gmail.com>
+	<18671.15020.13951.943822@cargo.ozlabs.ibm.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Caleb Cushing <xenoterracide@gmail.com>, git@vger.kernel.org,
-	Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>
-To: Michael J Gruber <git@drmicha.warpmail.net>
-X-From: git-owner@vger.kernel.org Fri Oct 10 13:08:51 2008
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, Johannes Sixt <johannes.sixt@telecom.at>
+To: Alexander Gavrilov <angavrilov@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Oct 10 13:24:33 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KoFr7-0003iW-JP
-	for gcvg-git-2@gmane.org; Fri, 10 Oct 2008 13:08:26 +0200
+	id 1KoG6f-0002Mu-K1
+	for gcvg-git-2@gmane.org; Fri, 10 Oct 2008 13:24:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753133AbYJJLHN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 10 Oct 2008 07:07:13 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753147AbYJJLHN
-	(ORCPT <rfc822;git-outgoing>); Fri, 10 Oct 2008 07:07:13 -0400
-Received: from mail.gmx.net ([213.165.64.20]:55436 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1753097AbYJJLHL (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 10 Oct 2008 07:07:11 -0400
-Received: (qmail invoked by alias); 10 Oct 2008 11:07:08 -0000
-Received: from pacific.mpi-cbg.de (EHLO [141.5.10.38]) [141.5.10.38]
-  by mail.gmx.net (mp023) with SMTP; 10 Oct 2008 13:07:08 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1+5/AVe69u57P70SnJr0E0jyO0CsAQRM1R2gMSShf
-	Gu/EEgq87T6Ycw
-X-X-Sender: schindelin@pacific.mpi-cbg.de.mpi-cbg.de
-In-Reply-To: <48EE1F58.2060707@drmicha.warpmail.net>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.76
+	id S1753150AbYJJLXP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 10 Oct 2008 07:23:15 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753019AbYJJLXO
+	(ORCPT <rfc822;git-outgoing>); Fri, 10 Oct 2008 07:23:14 -0400
+Received: from ozlabs.org ([203.10.76.45]:53821 "EHLO ozlabs.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752857AbYJJLXO (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 10 Oct 2008 07:23:14 -0400
+Received: by ozlabs.org (Postfix, from userid 1003)
+	id 0605CDDF1E; Fri, 10 Oct 2008 22:23:13 +1100 (EST)
+In-Reply-To: <18671.15020.13951.943822@cargo.ozlabs.ibm.com>
+X-Mailer: VM 8.0.9 under Emacs 22.2.1 (i486-pc-linux-gnu)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/97924>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/97925>
 
-Hi,
+I wrote:
 
-On Thu, 9 Oct 2008, Michael J Gruber wrote:
+> > @@ -6250,11 +6250,12 @@ proc gettreeline {gtf id} {
+> >  	    set line [string range $line 0 [expr {$i-1}]]
+> >  	    if {$diffids ne $nullid2 && [lindex $line 1] ne "blob"} continue
+> >  	    set sha1 [lindex $line 2]
+> > -	    if {[string index $fname 0] eq "\""} {
+> > -		set fname [lindex $fname 0]
+> > -	    }
+> >  	    lappend treeidlist($id) $sha1
+> >  	}
+> > +	if {[string index $fname 0] eq "\""} {
+> > +	    set fname [lindex $fname 0]
+> > +	}
+> 
+> Concerning this part of the change, do we know whether git ls-files
+> will quote filenames containing special characters or not?
 
-> 1. make ls-files and diff --name-status use compatible letters
+A little experiment has convinced me that it does.  So this part looks
+OK.
 
-ls-files and diff (at least partially) are plumbing.  Breaking backwards 
-compatibility in these is out of the question.
-
-Ciao,
-Dscho
+Paul.
