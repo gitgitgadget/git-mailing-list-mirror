@@ -1,155 +1,80 @@
-From: Nicolas Pitre <nico@cam.org>
-Subject: [PATCH] fix pread()'s short read in index-pack
-Date: Thu, 09 Oct 2008 22:08:51 -0400 (EDT)
-Message-ID: <alpine.LFD.2.00.0810092140500.26244@xanadu.home>
-References: <20081009195518.GA1497@blimp.localhost>
+From: "Caleb Cushing" <xenoterracide@gmail.com>
+Subject: Re: Fwd: git status options feature suggestion
+Date: Thu, 9 Oct 2008 22:20:25 -0400
+Message-ID: <81bfc67a0810091920gfec5f19j6828a3e5ec7b7065@mail.gmail.com>
+References: <81bfc67a0810082234p55e2fb9jb2a10f837eea7de0@mail.gmail.com>
+	 <20081009061136.GA24288@coredump.intra.peff.net>
+	 <81bfc67a0810082327p421ca4e9v84f4b33023bc6fe6@mail.gmail.com>
+	 <81bfc67a0810082327q71b9d6apf2787eb8519031bb@mail.gmail.com>
+	 <alpine.DEB.1.00.0810091101230.22125@pacific.mpi-cbg.de.mpi-cbg.de>
+	 <48EE1F58.2060707@drmicha.warpmail.net>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: Alex Riesen <raa.lkml@gmail.com>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>,
-	"Shawn O. Pearce" <spearce@spearce.org>
-X-From: git-owner@vger.kernel.org Fri Oct 10 04:10:11 2008
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: "Johannes Schindelin" <Johannes.Schindelin@gmx.de>,
+	git@vger.kernel.org, "Jeff King" <peff@peff.net>,
+	"Junio C Hamano" <gitster@pobox.com>
+To: "Michael J Gruber" <git@drmicha.warpmail.net>
+X-From: git-owner@vger.kernel.org Fri Oct 10 04:21:40 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Ko7SD-0006di-VQ
-	for gcvg-git-2@gmane.org; Fri, 10 Oct 2008 04:10:10 +0200
+	id 1Ko7dK-0000gr-8e
+	for gcvg-git-2@gmane.org; Fri, 10 Oct 2008 04:21:38 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753142AbYJJCI6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 9 Oct 2008 22:08:58 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752429AbYJJCI6
-	(ORCPT <rfc822;git-outgoing>); Thu, 9 Oct 2008 22:08:58 -0400
-Received: from relais.videotron.ca ([24.201.245.36]:50716 "EHLO
-	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752146AbYJJCI6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 9 Oct 2008 22:08:58 -0400
-Received: from xanadu.home ([66.131.194.97]) by VL-MO-MR005.ip.videotron.ca
- (Sun Java(tm) System Messaging Server 6.3-4.01 (built Aug  3 2007; 32bit))
- with ESMTP id <0K8I00C4639SQKB0@VL-MO-MR005.ip.videotron.ca> for
- git@vger.kernel.org; Thu, 09 Oct 2008 22:08:16 -0400 (EDT)
-X-X-Sender: nico@xanadu.home
-In-reply-to: <20081009195518.GA1497@blimp.localhost>
-User-Agent: Alpine 2.00 (LFD 1167 2008-08-23)
+	id S1751150AbYJJCU1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 9 Oct 2008 22:20:27 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752146AbYJJCU0
+	(ORCPT <rfc822;git-outgoing>); Thu, 9 Oct 2008 22:20:26 -0400
+Received: from rv-out-0506.google.com ([209.85.198.230]:34165 "EHLO
+	rv-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750999AbYJJCU0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 9 Oct 2008 22:20:26 -0400
+Received: by rv-out-0506.google.com with SMTP id k40so330357rvb.1
+        for <git@vger.kernel.org>; Thu, 09 Oct 2008 19:20:25 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to
+         :subject:cc:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:references;
+        bh=aOS3oKUe30+nS1Mvk9N6YNBH9M3PLXjQtS9GZexJmRU=;
+        b=MfXB9UZ3NIfgGTieWNNvUtczyWjzW80C8ZqsSvNKlqKuS57HXIMyn/AoJbEjQgV9Q6
+         deC4PVe1/73776UIQFG8EyfPe5iZnq3J7+VW73hhjqF6rYpdXu/P8i5f258M3any/suB
+         +VQzj5rCNLtTzVXJ/gTU2zpI4h4jyrKzfuVEM=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
+         :content-type:content-transfer-encoding:content-disposition
+         :references;
+        b=TG/erDn45E3uSqdk3vDZUGAQvXSN44FOotXgKocu6Fy1Wj6sMsgg4CWD983SKBBBjE
+         btIzDk524vvaeNHReWlLl8IXTjUgQvVNH2ds8dkWL7d/3sT+h0CXcEAM3kYibDOR2fQF
+         4Ky46568569XOxcsZTNAKZWKFHSF7SYb7ehZ0=
+Received: by 10.140.133.9 with SMTP id g9mr668440rvd.235.1223605225445;
+        Thu, 09 Oct 2008 19:20:25 -0700 (PDT)
+Received: by 10.141.145.7 with HTTP; Thu, 9 Oct 2008 19:20:25 -0700 (PDT)
+In-Reply-To: <48EE1F58.2060707@drmicha.warpmail.net>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/97907>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/97908>
+
+> Could you list exactly which options you want implemented?
+--new --untracked --modified
+
+I believe there are other states as well that I'm not thinking of off
+the top of my head. Those should probably be included as well. another
+option could be to have an option --filter=modified for example.
 
 
-Since v1.6.0.2~13^2~ the completion of a thin pack uses sha1write() for 
-its ability to compute a SHA1 on the written data.  This also provides 
-data buffering which, along with commit 92392b4a45, will confuse pread() 
-whenever an appended object is 1) freed due to memory pressure because 
-of the depth-first delta processing, and 2) needed again because it has 
-many delta children, and 3) its data is still buffered by sha1write().
+> Requests for stuff like that keep appearing recently
+> ...
+>  Michael
 
-Let's fix the issue by simply forcing cached data out when such an 
-object is written so it can be pread()'d at leisure.
+all way over my head
 
-Signed-off-by: Nicolas Pitre <nico@cam.org>
 
----
-
-On Thu, 9 Oct 2008, Alex Riesen wrote:
-
-> Somehow I got my gnulib mirror to a strange state where I can't fetch
-> anything from it:
-> 
->     $ cd gnulib
->     $ git fetch -f ../gnulib.git 'refs/heads/*:refs/remotes/origin/*'
->     remote: Counting objects: 2202, done.
->     remote: Compressing objects: 100% (633/633), done.
->     remote: Total 1769 (delta 1448), reused 1455 (delta 1134)
->     Receiving objects: 100% (1769/1769), 404.11 KiB, done.
->     fatal: premature end of pack file, 1745 bytes missing
->     fatal: index-pack failed
-> 
-> This is with current Shawn's master (Junio's master erroneously gives
-> an error). Bisect points at ac0463ed44e859c84e354cd0ae47d9b5b124e112
-
-Thanks for providing a good test data set.  As you can see above, this 
-is something that is tricky to reproduce otherwise.  This patch is meant 
-for the maint branch but should be included in master as well.
-
-diff --git a/csum-file.c b/csum-file.c
-index bb70c75..3b3e090 100644
---- a/csum-file.c
-+++ b/csum-file.c
-@@ -11,7 +11,7 @@
- #include "progress.h"
- #include "csum-file.h"
- 
--static void sha1flush(struct sha1file *f, void *buf, unsigned int count)
-+static void flush(struct sha1file *f, void *buf, unsigned int count)
- {
- 	for (;;) {
- 		int ret = xwrite(f->fd, buf, count);
-@@ -30,22 +30,28 @@ static void sha1flush(struct sha1file *f, void *buf, unsigned int count)
- 	}
- }
- 
--int sha1close(struct sha1file *f, unsigned char *result, unsigned int flags)
-+void sha1flush(struct sha1file *f)
- {
--	int fd;
- 	unsigned offset = f->offset;
- 
- 	if (offset) {
- 		SHA1_Update(&f->ctx, f->buffer, offset);
--		sha1flush(f, f->buffer, offset);
-+		flush(f, f->buffer, offset);
- 		f->offset = 0;
- 	}
-+}
-+
-+int sha1close(struct sha1file *f, unsigned char *result, unsigned int flags)
-+{
-+	int fd;
-+
-+	sha1flush(f);
- 	SHA1_Final(f->buffer, &f->ctx);
- 	if (result)
- 		hashcpy(result, f->buffer);
- 	if (flags & (CSUM_CLOSE | CSUM_FSYNC)) {
- 		/* write checksum and close fd */
--		sha1flush(f, f->buffer, 20);
-+		flush(f, f->buffer, 20);
- 		if (flags & CSUM_FSYNC)
- 			fsync_or_die(f->fd, f->name);
- 		if (close(f->fd))
-@@ -83,7 +89,7 @@ int sha1write(struct sha1file *f, void *buf, unsigned int count)
- 		left -= nr;
- 		if (!left) {
- 			SHA1_Update(&f->ctx, data, offset);
--			sha1flush(f, data, offset);
-+			flush(f, data, offset);
- 			offset = 0;
- 		}
- 		f->offset = offset;
-diff --git a/csum-file.h b/csum-file.h
-index 72c9487..01f13b5 100644
---- a/csum-file.h
-+++ b/csum-file.h
-@@ -24,6 +24,7 @@ extern struct sha1file *sha1fd(int fd, const char *name);
- extern struct sha1file *sha1fd_throughput(int fd, const char *name, struct progress *tp);
- extern int sha1close(struct sha1file *, unsigned char *, unsigned int);
- extern int sha1write(struct sha1file *, void *, unsigned int);
-+extern void sha1flush(struct sha1file *f);
- extern void crc32_begin(struct sha1file *);
- extern uint32_t crc32_end(struct sha1file *);
- 
-diff --git a/index-pack.c b/index-pack.c
-index 530d820..ca72329 100644
---- a/index-pack.c
-+++ b/index-pack.c
-@@ -704,6 +704,7 @@ static struct object_entry *append_obj_to_pack(struct sha1file *f,
- 	obj[1].idx.offset = obj[0].idx.offset + n;
- 	obj[1].idx.offset += write_compressed(f, buf, size);
- 	obj[0].idx.crc32 = crc32_end(f);
-+	sha1flush(f);
- 	hashcpy(obj->idx.sha1, sha1);
- 	return obj;
- }
+-- 
+Caleb Cushing
