@@ -1,68 +1,79 @@
-From: =?iso-8859-1?Q?Bj=F6rn?= Steinbrink <B.Steinbrink@gmx.de>
-Subject: Re: Really remove a file ?
-Date: Fri, 10 Oct 2008 16:32:49 +0200
-Message-ID: <20081010143249.GE3671@atjola.homenet>
-References: <8CAF851B91FEF07-660-20E9@webmail-da15.sysops.aol.com> <81b0412b0810091156v15dea27an95050a06cfb4f8df@mail.gmail.com> <d4bc1a2a0810091643u3903a1f4h44d3579b98fe6922@mail.gmail.com> <8CAF8D313562BEE-1588-259E@webmail-da15.sysops.aol.com>
+From: "Michael P. Soulier" <msoulier@digitaltorque.ca>
+Subject: git confused by rename
+Date: Fri, 10 Oct 2008 10:41:54 -0400
+Message-ID: <fb6605670810100741k7cff25c7y4df66834cf7482a0@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: marcreddist@aim.com
-X-From: git-owner@vger.kernel.org Fri Oct 10 16:34:15 2008
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Oct 10 16:44:42 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KoJ45-00063S-H1
-	for gcvg-git-2@gmane.org; Fri, 10 Oct 2008 16:34:02 +0200
+	id 1KoJCw-0001aW-Ua
+	for gcvg-git-2@gmane.org; Fri, 10 Oct 2008 16:43:40 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757208AbYJJOcx convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 10 Oct 2008 10:32:53 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757283AbYJJOcx
-	(ORCPT <rfc822;git-outgoing>); Fri, 10 Oct 2008 10:32:53 -0400
-Received: from mail.gmx.net ([213.165.64.20]:45458 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1756934AbYJJOcw (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 10 Oct 2008 10:32:52 -0400
-Received: (qmail invoked by alias); 10 Oct 2008 14:32:49 -0000
-Received: from i577B8FB1.versanet.de (EHLO atjola.local) [87.123.143.177]
-  by mail.gmx.net (mp064) with SMTP; 10 Oct 2008 16:32:49 +0200
-X-Authenticated: #5039886
-X-Provags-ID: V01U2FsdGVkX18jcjgqZN0jGlXnelniEx9ECdj+BaNGpFYpCSVvZv
-	HJBbcLAKkOhT7+
+	id S1757873AbYJJOl4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 10 Oct 2008 10:41:56 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757700AbYJJOl4
+	(ORCPT <rfc822;git-outgoing>); Fri, 10 Oct 2008 10:41:56 -0400
+Received: from wa-out-1112.google.com ([209.85.146.182]:59461 "EHLO
+	wa-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757444AbYJJOlz (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 10 Oct 2008 10:41:55 -0400
+Received: by wa-out-1112.google.com with SMTP id v27so273183wah.21
+        for <git@vger.kernel.org>; Fri, 10 Oct 2008 07:41:54 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:sender
+         :to:subject:mime-version:content-type:content-transfer-encoding
+         :content-disposition:x-google-sender-auth;
+        bh=YSaQT5mFdrevGxW+x5AEhxCpch0siWrSXhRGWNGRAT4=;
+        b=l+lbEZLgIg8pelStPii72Q61vhHql8IU76A4v3JGfjIvljTEJkizYGQ/13L+pMBz/9
+         DU6wqDD2WyWrnCPbVll3zabGPw7RhoO4V5h8BUt1CmE3YRgqkhC+0co/GXIScYSgsTFg
+         k6gLfJK3w9u8Xxo0SAgP+KZbCtO7FPU5opANU=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:sender:to:subject:mime-version:content-type
+         :content-transfer-encoding:content-disposition:x-google-sender-auth;
+        b=gtKegSnqyTdhW41P4MOmgDq7RW0ywNMDs7yn5JOD5vYz2VYDyV7KG8Gdh7rY/qF2+t
+         zzdsavc8oAzd6dSUaqljiIuHwudjWtLNEZ4vTPACHs6IHEmwOyVqXVTlvfc5+lSpB/NX
+         McAnU0ZGvy6QKcCjyArbEbhSzq86cWXpLNkNU=
+Received: by 10.114.127.1 with SMTP id z1mr1826553wac.10.1223649714571;
+        Fri, 10 Oct 2008 07:41:54 -0700 (PDT)
+Received: by 10.114.74.20 with HTTP; Fri, 10 Oct 2008 07:41:54 -0700 (PDT)
 Content-Disposition: inline
-In-Reply-To: <8CAF8D313562BEE-1588-259E@webmail-da15.sysops.aol.com>
-User-Agent: Mutt/1.5.18 (2008-05-17)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.65
+X-Google-Sender-Auth: ec471d0e14955220
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/97936>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/97937>
 
-On 2008.10.10 05:38:25 -0400, marcreddist@aim.com wrote:
->> You'll probably also want to run "git gc" on your repo to actually
->> get rid of the huge object that was added (or does filter-branch do
->> this automatically?).
->
-> I'm not sure it's required by git-filter-branch alone. In this case :
->
-> git-gc saves almost 5% after the file deletion
->
-> it saves 4.5% before the file deletion
->
-> If I run git gc before and after the git filter-branch, it saves 4.5%=
- =20
-> and then 0.2%.
+# On branch ajax-callrecording
+# Changes to be committed:
+#   (use "git reset HEAD <file>..." to unstage)
+#
+#       modified:   js/urls.py
+#       modified:   js/views.py
+#       modified:   scrc/urls.py
+#       modified:   scrc/views.py
+#       new file:   templates/js/scrc.js
+#       modified:   templates/js/teleworker.js
+#       renamed:    templates/scrc/index.html -> templates/scrc/cres_taps.html
+#       modified:   templates/scrc/index.html
 
-Did you clear the refs/original namespace and your reflogs? Otherwise,
-the huge object is most likely still referenced and thus won't get
-pruned. Also, I usually prefer "git repack -adf" over "git gc" in such
-situations, but that's probably just because I don't know the right
-way to force "git gc" to immediately prune stuff just once.
+Looking at the last two lines here, there is obviously an issue.
 
-But don't do the pruning until you're absolutely sure that you don't
-require the old stuff anymore.
+I created a new cres_taps.html file, and modified the index.html file, and for
+some reason Git thinks that I renamed index.html.
 
-Bj=F6rn
+Looks like a bug, unless I'm missing something.
+
+Mike
+-- 
+Michael P. Soulier <msoulier@digitaltorque.ca>
+"Any intelligent fool can make things bigger and more complex... It takes a
+touch of genius - and a lot of courage to move in the opposite direction."
+--Albert Einstein
