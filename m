@@ -1,118 +1,61 @@
-From: Alexander Gavrilov <angavrilov@gmail.com>
-Subject: Re: [PATCH (GITK) v2 4/4] gitk: Implement batch lookup and caching of encoding attrs.
-Date: Sat, 11 Oct 2008 13:28:50 +0400
-Organization: HOME
-Message-ID: <200810111328.50951.angavrilov@gmail.com>
-References: <1222772422-28020-1-git-send-email-angavrilov@gmail.com> <bb6f213e0810100522v653507d6r75cc4c64b57aa459@mail.gmail.com> <18671.62417.328489.317909@cargo.ozlabs.ibm.com>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: Adding Reviewed-by/Tested-by tags to other peoples commits
+Date: Sat, 11 Oct 2008 12:42:08 +0200 (CEST)
+Message-ID: <alpine.DEB.1.00.0810111239590.22125@pacific.mpi-cbg.de.mpi-cbg.de>
+References: <b2cdc9f30810102337q13432bepa957acaace9ddc5d@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, "Johannes Sixt" <johannes.sixt@telecom.at>
-To: Paul Mackerras <paulus@samba.org>
-X-From: git-owner@vger.kernel.org Sat Oct 11 11:31:52 2008
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org
+To: Alex Bennee <kernel-hacker@bennee.com>
+X-From: git-owner@vger.kernel.org Sat Oct 11 12:42:24 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KoapB-0002FY-3i
-	for gcvg-git-2@gmane.org; Sat, 11 Oct 2008 11:31:49 +0200
+	id 1Kobv8-0005ir-Ly
+	for gcvg-git-2@gmane.org; Sat, 11 Oct 2008 12:42:03 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751393AbYJKJae (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 11 Oct 2008 05:30:34 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751357AbYJKJae
-	(ORCPT <rfc822;git-outgoing>); Sat, 11 Oct 2008 05:30:34 -0400
-Received: from fk-out-0910.google.com ([209.85.128.190]:10468 "EHLO
-	fk-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751332AbYJKJac (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 11 Oct 2008 05:30:32 -0400
-Received: by fk-out-0910.google.com with SMTP id 18so775887fkq.5
-        for <git@vger.kernel.org>; Sat, 11 Oct 2008 02:30:31 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:organization:to:subject
-         :date:user-agent:cc:references:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:message-id;
-        bh=MSYDOiCEggNYI/+y5XRXZfgX7QJ3picc/W7nMAYu0CM=;
-        b=fUsEiVP306xvMfBt5ZykdhJOYDUZGkAPm98pTN2V3cx7mtKlv3+L/DUsuL81N0eSPd
-         9yzrjhhWDIqATjrB5eA7MGyDJQbF01iHkCQSrgC017oxZeIWIXmIXn6M+SMROYSYcQo+
-         1+VWIfvMWzavNy3t3L0O8EvF81pDbwRcT+9tA=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=from:organization:to:subject:date:user-agent:cc:references
-         :in-reply-to:mime-version:content-type:content-transfer-encoding
-         :content-disposition:message-id;
-        b=gMM9xmw6Bmnm0akF5aEeGuGjaGm6iJE8vFGoFozOP5tPGJX7xzc329v789nM+45UPG
-         DPZjQrzSWEIvVq/KFYhOjEEtPOzAb1ascIQP+n9jrZv1uUsOMZ5gZ+LADrbHRyxm2aay
-         U0ZAzA1EWK1xCe3seOVkfQee/OJVxGbiivxk8=
-Received: by 10.181.25.18 with SMTP id c18mr2755136bkj.52.1223717430921;
-        Sat, 11 Oct 2008 02:30:30 -0700 (PDT)
-Received: from keydesk.localnet ([92.255.85.78])
-        by mx.google.com with ESMTPS id 31sm3498096fkt.3.2008.10.11.02.30.29
-        (version=SSLv3 cipher=RC4-MD5);
-        Sat, 11 Oct 2008 02:30:29 -0700 (PDT)
-User-Agent: KMail/1.10.1 (Linux/2.6.26.5-45.fc9.i686; KDE/4.1.1; i686; ; )
-In-Reply-To: <18671.62417.328489.317909@cargo.ozlabs.ibm.com>
-Content-Disposition: inline
+	id S1751692AbYJKKfb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 11 Oct 2008 06:35:31 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751620AbYJKKfb
+	(ORCPT <rfc822;git-outgoing>); Sat, 11 Oct 2008 06:35:31 -0400
+Received: from mail.gmx.net ([213.165.64.20]:34322 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1751154AbYJKKfa (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 11 Oct 2008 06:35:30 -0400
+Received: (qmail invoked by alias); 11 Oct 2008 10:35:36 -0000
+Received: from pacific.mpi-cbg.de (EHLO pacific.mpi-cbg.de) [141.5.10.38]
+  by mail.gmx.net (mp029) with SMTP; 11 Oct 2008 12:35:36 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1+7T5kKt9G7D1lk/xNYFsH0Yk4nPn4nxjdJl66xvO
+	3w1gKlP0jWmt2w
+X-X-Sender: schindelin@pacific.mpi-cbg.de.mpi-cbg.de
+In-Reply-To: <b2cdc9f30810102337q13432bepa957acaace9ddc5d@mail.gmail.com>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.6
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/97967>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/97968>
 
-On Saturday 11 October 2008 04:31:13 Paul Mackerras wrote:
-> > > Also, I wonder why we now have two levels of caching of the encoding
-> > > attribute.  Your patch 1/4 introduced path_encoding_cache, which was
-> > > fine, but now we have path_attr_cache as well, which seems to me to
-> > > serve exactly the same function since the encoding is the only
-> > > attribute we ever ask about.  Surely we don't need both caches?
-> > 
-> > If the (git-gui) patch that reimplements the tcl_encoding procedure is
-> > applied, we may drop the path_encoding_cache. Current implementation
-> > is too slow for batch lookup, especially if the encoding is actually
-> > not supported, and without the cache the lookup would be done on every
-> > loading of a diff.
-> 
-> I was thinking more in terms of dropping the path_attr_cache actually.
+Hi,
 
-Since gitattr is a general-purpose function that can read any attribute,
-I decided that it should use its own cache.
+On Sat, 11 Oct 2008, Alex Bennee wrote:
 
-Basically, all this double-caching issue is fallout from my failure to
-anticipate the need of batch attribute lookup from the beginning...
+> I've just tested/reviewed a patch of someone elses and I want to forward 
+> it on the appropriate mailing list. I gather for Linux you just add the 
+> appropriate tags to the commit. Does git offer a shortcut for doing this 
+> or do you have to do a reset HEAD^ and re-commit with a copy&pasted and 
+> modified commit message?
 
-> Actually, if [tcl_encoding] is slow, then why is $gui_encoding the
-> untranslated version, so that we do [tcl_encoding $gui_encoding] on
-> each call to get_path_encoding?  Why don't we do the tcl_encoding call
-> once and have $gui_encoding be the result of that?  In fact
-> $gui_encoding should be the result of this code (from
-> get_path_encoding):
-> 
-> 	set tcl_enc [tcl_encoding $gui_encoding]
-> 	if {$tcl_enc eq {}} {
-> 		set tcl_enc [encoding system]
-> 	}
+http://thread.gmane.org/gmane.comp.version-control.git/75250/focus=76304
 
-Well, that code was copied from git-gui, where it looks like this:
+In the end, nothing happened, but I could see that you might want to push 
+for this patch.  However, you'll have to replace the strbuf_initf() by 
+the ugly strbuf_init() && strbuf_addf() sequence, because strbuf_initf() 
+never made it into git.git.
 
-set tcl_enc [tcl_encoding [get_config gui.encoding]]
-
-I.e. there is no "$gui_encoding" variable, although get_config does use a cache.
-
-> And if [tcl_encoding] is slow, then it should have a cache.  There's
-> only likely to be at most 2 or 3 values it gets called for, and it's
-> a constant function.
-
-In git-gui the slowdown appeared during the construction of the menu
-listing all available encodings, so a simple cache would not have helped. 
-I  reimplemented it using a lookup table to resolve aliases (constructed
-on the first run). But it can be thought of as a precalculated cache.
-
-> At this point, what I think I might do is apply your set of patches
-> (but with 2/4 and 3/4 folded into a single patch) and then go through
-> and do another commit that addresses the concerns I've raised.  OK?
-
-Maybe I should resend the patches, scrapping path_encoding_cache,
-and adding the optimized version of tcl_encoding?
-
-Alexander
+Ciao,
+Dscho
