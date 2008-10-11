@@ -1,213 +1,82 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: [PATCH] Introduce core.keepHardLinks
-Date: Sat, 11 Oct 2008 13:45:13 +0200 (CEST)
-Message-ID: <alpine.DEB.1.00.0810111344241.22125@pacific.mpi-cbg.de.mpi-cbg.de>
+From: Robin Rosenberg <robin.rosenberg.lists@dewire.com>
+Subject: Re: [Gitk PATCH 1/6] gitk: Add procedure to create accelerated menus
+Date: Sat, 11 Oct 2008 13:39:23 +0200
+Message-ID: <200810111339.23343.robin.rosenberg.lists@dewire.com>
+References: <1223532590-8706-1-git-send-email-robin.rosenberg@dewire.com> <1223532590-8706-2-git-send-email-robin.rosenberg@dewire.com> <18672.1017.68669.913415@cargo.ozlabs.ibm.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-To: git@vger.kernel.org, gitster@pobox.com, spearce@spearce.org
-X-From: git-owner@vger.kernel.org Sat Oct 11 13:41:32 2008
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: Paul Mackerras <paulus@samba.org>
+X-From: git-owner@vger.kernel.org Sat Oct 11 13:42:01 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Kocqh-0004ZW-Bg
-	for gcvg-git-2@gmane.org; Sat, 11 Oct 2008 13:41:31 +0200
+	id 1KocrB-0004jI-07
+	for gcvg-git-2@gmane.org; Sat, 11 Oct 2008 13:42:01 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751886AbYJKLik (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 11 Oct 2008 07:38:40 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751933AbYJKLik
-	(ORCPT <rfc822;git-outgoing>); Sat, 11 Oct 2008 07:38:40 -0400
-Received: from mail.gmx.net ([213.165.64.20]:39455 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751271AbYJKLij (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 11 Oct 2008 07:38:39 -0400
-Received: (qmail invoked by alias); 11 Oct 2008 11:38:33 -0000
-Received: from pacific.mpi-cbg.de (EHLO [141.5.10.38]) [141.5.10.38]
-  by mail.gmx.net (mp040) with SMTP; 11 Oct 2008 13:38:33 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1/Ybk13LPzYzlOOI8r5lMIcIevKZjNaTbzFsIlN2b
-	HCwvCOL4fIC0Jf
-X-X-Sender: schindelin@pacific.mpi-cbg.de.mpi-cbg.de
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.41
+	id S1752100AbYJKLkt convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 11 Oct 2008 07:40:49 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752053AbYJKLkt
+	(ORCPT <rfc822;git-outgoing>); Sat, 11 Oct 2008 07:40:49 -0400
+Received: from [83.140.172.130] ([83.140.172.130]:11385 "EHLO dewire.com"
+	rhost-flags-FAIL-FAIL-OK-OK) by vger.kernel.org with ESMTP
+	id S1751990AbYJKLks convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 11 Oct 2008 07:40:48 -0400
+Received: from localhost (localhost [127.0.0.1])
+	by dewire.com (Postfix) with ESMTP id 6712B8006B1;
+	Sat, 11 Oct 2008 13:40:47 +0200 (CEST)
+X-Virus-Scanned: by amavisd-new at dewire.com
+Received: from dewire.com ([127.0.0.1])
+	by localhost (torino.dewire.com [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id KfJViplxqwBh; Sat, 11 Oct 2008 13:40:36 +0200 (CEST)
+Received: from [10.9.0.2] (unknown [10.9.0.2])
+	by dewire.com (Postfix) with ESMTP id D781A80008B;
+	Sat, 11 Oct 2008 13:40:36 +0200 (CEST)
+User-Agent: KMail/1.9.10
+In-Reply-To: <18672.1017.68669.913415@cargo.ozlabs.ibm.com>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/97974>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/97975>
 
+l=F6rdagen den 11 oktober 2008 03.40.09 skrev Paul Mackerras:
+> Robin Rosenberg writes:
+>=20
+> > +proc mcw {menubar args} {
+> > +    set ai [lsearch $args "-label"]
+> > +    if { $ai > 0 } {
+> > +	set label [lindex $args [expr {$ai + 1}]]
+> > +	foreach {l u} [::tk::UnderlineAmpersand $label] {
+>=20
+> Where did you find out about ::tk::UnderlineAmpersand?  Is it part of
+> the exported interface of Tk that we can rely on in future?
 
-When a tracked file was hard linked, we used to break the hard link
-whenever Git writes to that file.  Make that optional.
+I found it here. http://wiki.tcl.tk/1632. It hints that it may not be u=
+noffical. Seems to
+original from: http://groups.google.com/group/comp.lang.perl.tk/browse_=
+thread/thread/5b6f4c6a4a9f17b4/c9f8ab47800d27ee?lnk=3Dst&q=3D#c9f8ab478=
+00d27ee
 
-To keep the implementation simple, mode changes will still break the
-hard links.
+so if someone thinks there is a problem we could replace it with Underl=
+ineAmpersand
+with tcl code to do the same (or rip it as is if the license allows it)=
+=2E
 
-Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
----
+>=20
+> > +# Wrapper for mc to remove ampersands used for accelerators.
+> > +proc mca {label} {
+> > +    set tl8 [mc $label]
+> > +    foreach {l u} [::tk::UnderlineAmpersand $tl8] break
+> > +    return $l
+>=20
+> 	return [string map {"&" ""} [mc $label]]
+>=20
+> instead, perhaps?
+In theory we should translate && to & also, which UnderLineAmpersand do=
+es.
 
-	With the current revision of the patch, I can set
-	keep_hard_links = 1 and the test suite still passes.
-
-	I briefly tried to fix the "mode changes" issue, but replacing
-	the "st.st_mode != ce->ce_mode" with "S_ISREG(ce->ce_mode)"
-	(and consequently also adding
-	 "|| (keep_hard_links && chmod(path, mode)" to create_file()),
-	made at least t3400 fail, and then I ran out of my Git time budget.
-
- Documentation/config.txt |    4 +++
- cache.h                  |    1 +
- config.c                 |    5 ++++
- entry.c                  |    7 ++++-
- environment.c            |    1 +
- t/t0056-hardlinked.sh    |   58 ++++++++++++++++++++++++++++++++++++++++++++++
- 6 files changed, 74 insertions(+), 2 deletions(-)
- create mode 100644 t/t0056-hardlinked.sh
-
-diff --git a/Documentation/config.txt b/Documentation/config.txt
-index 173386e..7bfe431 100644
---- a/Documentation/config.txt
-+++ b/Documentation/config.txt
-@@ -207,6 +207,10 @@ core.symlinks::
- 	file. Useful on filesystems like FAT that do not support
- 	symbolic links. True by default.
- 
-+core.keepHardLinks::
-+	If true, do not break hard links by deleting and recreating the
-+	files.  Off by default.
-+
- core.gitProxy::
- 	A "proxy command" to execute (as 'command host port') instead
- 	of establishing direct connection to the remote server when
-diff --git a/cache.h b/cache.h
-index c89f2c6..c4bdece 100644
---- a/cache.h
-+++ b/cache.h
-@@ -479,6 +479,7 @@ enum rebase_setup_type {
- 
- extern enum branch_track git_branch_track;
- extern enum rebase_setup_type autorebase;
-+extern int keep_hard_links;
- 
- #define GIT_REPO_VERSION 0
- extern int repository_format_version;
-diff --git a/config.c b/config.c
-index 18d305c..35ffdef 100644
---- a/config.c
-+++ b/config.c
-@@ -490,6 +490,11 @@ static int git_default_core_config(const char *var, const char *value)
- 		return 0;
- 	}
- 
-+	if (!strcmp(var, "core.keephardlinks")) {
-+		keep_hard_links = git_config_bool(var, value);
-+		return 0;
-+	}
-+
- 	/* Add other config variables here and to Documentation/config.txt. */
- 	return 0;
- }
-diff --git a/entry.c b/entry.c
-index aa2ee46..dfddf83 100644
---- a/entry.c
-+++ b/entry.c
-@@ -82,7 +82,8 @@ static void remove_subtree(const char *path)
- static int create_file(const char *path, unsigned int mode)
- {
- 	mode = (mode & 0100) ? 0777 : 0666;
--	return open(path, O_WRONLY | O_CREAT | O_EXCL, mode);
-+	return open(path, O_WRONLY | O_CREAT |
-+			(keep_hard_links ? O_TRUNC : O_EXCL), mode);
- }
- 
- static void *read_blob_entry(struct cache_entry *ce, const char *path, unsigned long *size)
-@@ -225,7 +226,9 @@ int checkout_entry(struct cache_entry *ce, const struct checkout *state, char *t
- 			if (!state->force)
- 				return error("%s is a directory", path);
- 			remove_subtree(path);
--		} else if (unlink(path))
-+		} else if ((!keep_hard_links || !S_ISREG(st.st_mode) ||
-+					st.st_mode != ce->ce_mode) &&
-+				unlink(path))
- 			return error("unable to unlink old '%s' (%s)", path, strerror(errno));
- 	} else if (state->not_new)
- 		return 0;
-diff --git a/environment.c b/environment.c
-index 0693cd9..ef721e0 100644
---- a/environment.c
-+++ b/environment.c
-@@ -42,6 +42,7 @@ enum safe_crlf safe_crlf = SAFE_CRLF_WARN;
- unsigned whitespace_rule_cfg = WS_DEFAULT_RULE;
- enum branch_track git_branch_track = BRANCH_TRACK_REMOTE;
- enum rebase_setup_type autorebase = AUTOREBASE_NEVER;
-+int keep_hard_links = 0;
- 
- /* This is set by setup_git_dir_gently() and/or git_default_config() */
- char *git_work_tree_cfg;
-diff --git a/t/t0056-hardlinked.sh b/t/t0056-hardlinked.sh
-new file mode 100644
-index 0000000..934c2bc
---- /dev/null
-+++ b/t/t0056-hardlinked.sh
-@@ -0,0 +1,58 @@
-+#!/bin/sh
-+
-+test_description='read-tree and checkout respect hardlinked files'
-+
-+. ./test-lib.sh
-+
-+cat > file << EOF
-+1. Nf3 Nf6 2. c4 g6 3. Nc3 Bg7 4. d4 O-O 5. Bf4 d5 6. Qb3 dxc4 7. Qxc4 c6
-+8. e4 Nbd7 9. Rd1 Nb6 10. Qc5 Bg4 11. Bg5 Na4 12. Qa3 Nxc3 13. bxc3 Nxe4
-+14. Bxe7 Qb6 15. Bc4 Nxc3 16. Bc5 Rfe8+ 17. Kf1 Be6 18. Bxb6 Bxc4+ 19. Kg1 Ne2+
-+20. Kf1 Nxd4+ 21. Kg1 Ne2+ 22. Kf1 Nc3+ 23. Kg1 axb6 24. Qb4 Ra4 25. Qxb6 Nxd1
-+26. h3 Rxa2 27. Kh2 Nxf2 28. Re1 Rxe1 29. Qd8+ Bf8 30. Nxe1 Bd5 31. Nf3 Ne4
-+32. Qb8 b5 33. h4 h5 34. Ne5 Kg7 35. Kg1 Bc5+ 36. Kf1 Ng3+ 37. Ke1 Bb4+
-+38. Kd1 Bb3+ 39. Kc1 Ne2+ 40. Kb1 Nc3+
-+EOF
-+
-+ln file link || {
-+	say "Could not hard link; skipping test"
-+	test_done
-+	exit
-+}
-+
-+test_expect_success setup '
-+
-+	git config core.keepHardLinks true &&
-+	test_cmp file link &&
-+	cp file old &&
-+	git add file &&
-+	test_tick &&
-+	git commit -m initial &&
-+	echo "41. Kc1 Rc2#" >> file &&
-+	git add file &&
-+	test_tick &&
-+	git commit -m 2nd &&
-+	test_cmp file link &&
-+	! test_cmp file old
-+
-+'
-+
-+test_expect_success 'checking a file out does not break the hard link' '
-+
-+	git checkout HEAD^ -- file &&
-+	test_cmp file link &&
-+	test_cmp file old
-+
-+'
-+
-+test_expect_success 'read-tree -u -m does not break the hard link' '
-+
-+	git reset --hard &&
-+	test_cmp file link &&
-+	git read-tree -u -m HEAD^ &&
-+	test_cmp file link &&
-+	test_cmp file old
-+
-+'
-+
-+test_done
--- 
-1.6.0.2.749.g0cc32
+-- robin
