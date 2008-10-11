@@ -1,48 +1,59 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH] test-lib: fix color reset in say_color()
-Date: Fri, 10 Oct 2008 22:00:48 -0400
-Message-ID: <20081011020048.GA29328@coredump.intra.peff.net>
-References: <1223590030-7464-1-git-send-email-vmiklos@frugalware.org>
+From: Paul Mackerras <paulus@samba.org>
+Subject: Re: [Gitk PATCH 1/6] gitk: Add procedure to create accelerated menus
+Date: Sat, 11 Oct 2008 12:40:09 +1100
+Message-ID: <18672.1017.68669.913415@cargo.ozlabs.ibm.com>
+References: <1223532590-8706-1-git-send-email-robin.rosenberg@dewire.com>
+	<1223532590-8706-2-git-send-email-robin.rosenberg@dewire.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org
-To: Miklos Vajna <vmiklos@frugalware.org>
-X-From: git-owner@vger.kernel.org Sat Oct 11 04:02:06 2008
+To: Robin Rosenberg <robin.rosenberg@dewire.com>
+X-From: git-owner@vger.kernel.org Sat Oct 11 04:47:39 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KoTnu-0001BU-A9
-	for gcvg-git-2@gmane.org; Sat, 11 Oct 2008 04:02:02 +0200
+	id 1KoUVq-0002d4-Vx
+	for gcvg-git-2@gmane.org; Sat, 11 Oct 2008 04:47:27 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754676AbYJKCAv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 10 Oct 2008 22:00:51 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754669AbYJKCAv
-	(ORCPT <rfc822;git-outgoing>); Fri, 10 Oct 2008 22:00:51 -0400
-Received: from peff.net ([208.65.91.99]:3096 "EHLO peff.net"
+	id S1753919AbYJKCqL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 10 Oct 2008 22:46:11 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753896AbYJKCqK
+	(ORCPT <rfc822;git-outgoing>); Fri, 10 Oct 2008 22:46:10 -0400
+Received: from ozlabs.org ([203.10.76.45]:41069 "EHLO ozlabs.org"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754644AbYJKCAv (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 10 Oct 2008 22:00:51 -0400
-Received: (qmail 4769 invoked by uid 111); 11 Oct 2008 02:00:50 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.32) with SMTP; Fri, 10 Oct 2008 22:00:50 -0400
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Fri, 10 Oct 2008 22:00:48 -0400
-Content-Disposition: inline
-In-Reply-To: <1223590030-7464-1-git-send-email-vmiklos@frugalware.org>
+	id S1753807AbYJKCqK (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 10 Oct 2008 22:46:10 -0400
+Received: by ozlabs.org (Postfix, from userid 1003)
+	id 7EB2ADE187; Sat, 11 Oct 2008 13:46:08 +1100 (EST)
+In-Reply-To: <1223532590-8706-2-git-send-email-robin.rosenberg@dewire.com>
+X-Mailer: VM 8.0.9 under Emacs 22.2.1 (i486-pc-linux-gnu)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/97962>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/97963>
 
-On Fri, Oct 10, 2008 at 12:07:10AM +0200, Miklos Vajna wrote:
+Robin Rosenberg writes:
 
-> Actually I'm not 100% sure about how many users are affected. I have a
-> black background in konsole with white letters, and after the test I get
-> a green cursor, and once I hit enter, I get the white one back.
+> +proc mcw {menubar args} {
+> +    set ai [lsearch $args "-label"]
+> +    if { $ai > 0 } {
+> +	set label [lindex $args [expr {$ai + 1}]]
+> +	foreach {l u} [::tk::UnderlineAmpersand $label] {
 
-I think my comment is way late, as this has already been applied, but I
-think this is definitely the right thing to do. We are very careful to
-use the same pattern (color reset before newline) in the C code.
+Where did you find out about ::tk::UnderlineAmpersand?  Is it part of
+the exported interface of Tk that we can rely on in future?
 
--Peff
+> +# Wrapper for mc to remove ampersands used for accelerators.
+> +proc mca {label} {
+> +    set tl8 [mc $label]
+> +    foreach {l u} [::tk::UnderlineAmpersand $tl8] break
+> +    return $l
+
+	return [string map {"&" ""} [mc $label]]
+
+instead, perhaps?
+
+Paul.
