@@ -1,77 +1,64 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Adding Reviewed-by/Tested-by tags to other peoples commits
-Date: Sat, 11 Oct 2008 04:48:18 -0700
-Message-ID: <7vfxn3jqt9.fsf@gitster.siamese.dyndns.org>
-References: <b2cdc9f30810102337q13432bepa957acaace9ddc5d@mail.gmail.com>
- <alpine.DEB.1.00.0810111239590.22125@pacific.mpi-cbg.de.mpi-cbg.de>
+From: Paul Mackerras <paulus@samba.org>
+Subject: Re: [PATCH (GITK) v2 4/4] gitk: Implement batch lookup and caching of encoding attrs.
+Date: Sat, 11 Oct 2008 23:03:34 +1100
+Message-ID: <18672.38422.200764.101389@cargo.ozlabs.ibm.com>
+References: <1222772422-28020-1-git-send-email-angavrilov@gmail.com>
+	<bb6f213e0810100522v653507d6r75cc4c64b57aa459@mail.gmail.com>
+	<18671.62417.328489.317909@cargo.ozlabs.ibm.com>
+	<200810111328.50951.angavrilov@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Alex Bennee <kernel-hacker@bennee.com>, git@vger.kernel.org
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Sat Oct 11 13:50:47 2008
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, "Johannes Sixt" <johannes.sixt@telecom.at>
+To: Alexander Gavrilov <angavrilov@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Oct 11 14:04:53 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Koczd-0007EW-Ce
-	for gcvg-git-2@gmane.org; Sat, 11 Oct 2008 13:50:45 +0200
+	id 1KodDI-0002dX-49
+	for gcvg-git-2@gmane.org; Sat, 11 Oct 2008 14:04:52 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751933AbYJKLsb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 11 Oct 2008 07:48:31 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751505AbYJKLsb
-	(ORCPT <rfc822;git-outgoing>); Sat, 11 Oct 2008 07:48:31 -0400
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:57379 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751433AbYJKLsb (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 11 Oct 2008 07:48:31 -0400
-Received: from localhost.localdomain (localhost [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 75A426CF75;
-	Sat, 11 Oct 2008 07:48:29 -0400 (EDT)
-Received: from pobox.com (ip68-225-240-211.oc.oc.cox.net [68.225.240.211])
- (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
- certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
- ESMTPSA id E96216CF74; Sat, 11 Oct 2008 07:48:20 -0400 (EDT)
-In-Reply-To: <alpine.DEB.1.00.0810111239590.22125@pacific.mpi-cbg.de.mpi-cbg.de> (Johannes
- Schindelin's message of "Sat, 11 Oct 2008 12:42:08 +0200 (CEST)")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: 85A8BC0A-978A-11DD-8820-1E1F86D30F62-77302942!a-sasl-fastnet.pobox.com
+	id S1751990AbYJKMDk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 11 Oct 2008 08:03:40 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751964AbYJKMDk
+	(ORCPT <rfc822;git-outgoing>); Sat, 11 Oct 2008 08:03:40 -0400
+Received: from ozlabs.org ([203.10.76.45]:39135 "EHLO ozlabs.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751433AbYJKMDj (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 11 Oct 2008 08:03:39 -0400
+Received: by ozlabs.org (Postfix, from userid 1003)
+	id 34BEADDDFA; Sat, 11 Oct 2008 23:03:38 +1100 (EST)
+In-Reply-To: <200810111328.50951.angavrilov@gmail.com>
+X-Mailer: VM 8.0.9 under Emacs 22.2.1 (i486-pc-linux-gnu)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/97976>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/97977>
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+Alexander Gavrilov writes:
 
-> On Sat, 11 Oct 2008, Alex Bennee wrote:
->
->> I've just tested/reviewed a patch of someone elses and I want to forward 
->> it on the appropriate mailing list. I gather for Linux you just add the 
->> appropriate tags to the commit. Does git offer a shortcut for doing this 
->> or do you have to do a reset HEAD^ and re-commit with a copy&pasted and 
->> modified commit message?
->
-> http://thread.gmane.org/gmane.comp.version-control.git/75250/focus=76304
->
-> In the end, nothing happened, but I could see that you might want to push 
-> for this patch.
+> > And if [tcl_encoding] is slow, then it should have a cache.  There's
+> > only likely to be at most 2 or 3 values it gets called for, and it's
+> > a constant function.
+> 
+> In git-gui the slowdown appeared during the construction of the menu
+> listing all available encodings, so a simple cache would not have helped. 
+> I  reimplemented it using a lookup table to resolve aliases (constructed
+> on the first run). But it can be thought of as a precalculated cache.
 
-The fact a particular change has been reviewed is an attribute of a
-commit, and by recording the fact once (perhaps when you commit for the
-first time, or if your workflow is "commit blindly, then review, and then
-amend" then when you amend that commit), the commit object will remember
-that fact.
+Hmmm, one that uses more time and memory than it needs to for gitk's
+use...  I guess it's not a lot, but it still seems unnecessary, unless
+you can see a need for a menu of encodings in gitk.
 
-The patch you quoted adds Reviewed-by: at format-patch time, but I suspect
-that is a wrong approach.  You have to remember and recall which ones you
-reviewed (and which ones you didn't) when you run format-patch.  People
-who commit and immediately format-patch to send, or people who do not
-review until immediately before format-patch to send, would not realize
-the downside of the approach, but when your work style is to perform
-commit/review and e-mail communication in separate phases, it matters.
+> > At this point, what I think I might do is apply your set of patches
+> > (but with 2/4 and 3/4 folded into a single patch) and then go through
+> > and do another commit that addresses the concerns I've raised.  OK?
+> 
+> Maybe I should resend the patches, scrapping path_encoding_cache,
+> and adding the optimized version of tcl_encoding?
 
-This is a bit tangent, but perhaps rebase needs a hook so that users can
-strip certain tags automatically from the commit log messages (e.g.
-things like Reviewd-by: and Tested-by: become less trustworthy when you
-rebase; S-o-b: becomes somewhat less trustworthy when you "edit" in
-rebase-i; etc).
+OK.
+
+Paul.
