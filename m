@@ -1,82 +1,63 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+From: Junio C Hamano <gitster@pobox.com>
 Subject: Re: Adding Reviewed-by/Tested-by tags to other peoples commits
-Date: Sat, 11 Oct 2008 12:58:57 +0200 (CEST)
-Message-ID: <alpine.DEB.1.00.0810111254240.22125@pacific.mpi-cbg.de.mpi-cbg.de>
-References: <b2cdc9f30810102337q13432bepa957acaace9ddc5d@mail.gmail.com> <20081011074604.GA23883@sigill.intra.peff.net>
+Date: Sat, 11 Oct 2008 04:28:46 -0700
+Message-ID: <7v4p3jl6a9.fsf@gitster.siamese.dyndns.org>
+References: <b2cdc9f30810102337q13432bepa957acaace9ddc5d@mail.gmail.com>
+ <20081011074604.GA23883@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
+Content-Type: text/plain; charset=us-ascii
 Cc: Alex Bennee <kernel-hacker@bennee.com>, git@vger.kernel.org
 To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Sat Oct 11 12:55:03 2008
+X-From: git-owner@vger.kernel.org Sat Oct 11 13:30:22 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Koc7i-0000ig-7j
-	for gcvg-git-2@gmane.org; Sat, 11 Oct 2008 12:55:02 +0200
+	id 1Kocfo-0001XH-9N
+	for gcvg-git-2@gmane.org; Sat, 11 Oct 2008 13:30:16 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751815AbYJKKwY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 11 Oct 2008 06:52:24 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751773AbYJKKwY
-	(ORCPT <rfc822;git-outgoing>); Sat, 11 Oct 2008 06:52:24 -0400
-Received: from mail.gmx.net ([213.165.64.20]:58839 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751769AbYJKKwX (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 11 Oct 2008 06:52:23 -0400
-Received: (qmail invoked by alias); 11 Oct 2008 10:52:23 -0000
-Received: from pacific.mpi-cbg.de (EHLO [141.5.10.38]) [141.5.10.38]
-  by mail.gmx.net (mp026) with SMTP; 11 Oct 2008 12:52:23 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX19Vwo87sh1VfvddMxsKJwGXEiaSdwyJiBSuBHF1lo
-	1UzpkMmizB0YrL
-X-X-Sender: schindelin@pacific.mpi-cbg.de.mpi-cbg.de
-In-Reply-To: <20081011074604.GA23883@sigill.intra.peff.net>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.54
+	id S1751862AbYJKL3B (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 11 Oct 2008 07:29:01 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751626AbYJKL3B
+	(ORCPT <rfc822;git-outgoing>); Sat, 11 Oct 2008 07:29:01 -0400
+Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:42906 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751505AbYJKL3A (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 11 Oct 2008 07:29:00 -0400
+Received: from localhost.localdomain (localhost [127.0.0.1])
+	by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id 7ED98893DF;
+	Sat, 11 Oct 2008 07:28:58 -0400 (EDT)
+Received: from pobox.com (ip68-225-240-211.oc.oc.cox.net [68.225.240.211])
+ (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
+ certificate requested) by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with
+ ESMTPSA id 62722893DE; Sat, 11 Oct 2008 07:28:49 -0400 (EDT)
+In-Reply-To: <20081011074604.GA23883@sigill.intra.peff.net> (Jeff King's
+ message of "Sat, 11 Oct 2008 03:46:04 -0400")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: CBB6558E-9787-11DD-A100-4F5276724C3F-77302942!a-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/97969>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/97970>
 
-Hi,
-
-On Sat, 11 Oct 2008, Jeff King wrote:
+Jeff King <peff@peff.net> writes:
 
 > On Sat, Oct 11, 2008 at 07:37:04AM +0100, Alex Bennee wrote:
-> 
-> > I've just tested/reviewed a patch of someone elses and I want to 
-> > forward it on the appropriate mailing list. I gather for Linux you 
-> > just add the appropriate tags to the commit. Does git offer a shortcut 
-> > for doing this or do you have to do a reset HEAD^ and re-commit with a 
-> > copy&pasted and modified commit message?
-> 
-> Try "git commit --amend" to edit the commit message. There's no 
-> automatic way of adding acked-by or tested-by tags with git; most people 
-> who do those things often would probably configure their editor to make 
+>
+>> I've just tested/reviewed a patch of someone elses and I want to
+>> forward it on the appropriate mailing list. I gather for Linux you
+>> just add the appropriate tags to the commit. Does git offer a shortcut
+>> for doing this or do you have to do a reset HEAD^ and re-commit with a
+>> copy&pasted and modified commit message?
+>
+> Try "git commit --amend" to edit the commit message. There's no
+> automatic way of adding acked-by or tested-by tags with git; most people
+> who do those things often would probably configure their editor to make
 > it easier.
 
-Of course, you could also automate it with a script:
-
--- snip --
-GIT_EDITOR='sh -c "perl -pi.bak -e s/pick/edit/ \"$1\""' \
-git rebase -i HEAD~2
-while test -d .git/rebase-merge
-do
- GIT_EDITOR='sh -c "echo \"Reviewed-by: Mini Me <mi@ni.me>\" >> \"$1\""' \
- git commit --amend &&
- git rebase --continue ||
- break
-done
--- snap --
-
-(Of course you would make HEAD~2 a parameter...)
-
-BTW what happened with the "amend" patches to rebase -i?  AFAIR Peff or 
-MadCoder (or was it j6t?) had patches to teach rebase -i the "amend" 
-command, which would not fall back to the command line just to fix a typo 
-in a commit message... I would like to have that.
-
-Hth,
-Dscho
+These Distimmed-by: fields are cumulative in nature, so once recorded in a
+commit log message you cannot add new ones without amending, which means
+you cannot exchange such commits by pushing or pulling but by forwarding
+patches via e-mails.  I thought people added these in their MUAs.  IOW, I
+share your "would probably" with s/editor/MUA/.
