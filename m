@@ -1,82 +1,77 @@
-From: Robin Rosenberg <robin.rosenberg.lists@dewire.com>
-Subject: Re: [Gitk PATCH 1/6] gitk: Add procedure to create accelerated menus
-Date: Sat, 11 Oct 2008 13:39:23 +0200
-Message-ID: <200810111339.23343.robin.rosenberg.lists@dewire.com>
-References: <1223532590-8706-1-git-send-email-robin.rosenberg@dewire.com> <1223532590-8706-2-git-send-email-robin.rosenberg@dewire.com> <18672.1017.68669.913415@cargo.ozlabs.ibm.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: Adding Reviewed-by/Tested-by tags to other peoples commits
+Date: Sat, 11 Oct 2008 04:48:18 -0700
+Message-ID: <7vfxn3jqt9.fsf@gitster.siamese.dyndns.org>
+References: <b2cdc9f30810102337q13432bepa957acaace9ddc5d@mail.gmail.com>
+ <alpine.DEB.1.00.0810111239590.22125@pacific.mpi-cbg.de.mpi-cbg.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Paul Mackerras <paulus@samba.org>
-X-From: git-owner@vger.kernel.org Sat Oct 11 13:42:01 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: Alex Bennee <kernel-hacker@bennee.com>, git@vger.kernel.org
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Sat Oct 11 13:50:47 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KocrB-0004jI-07
-	for gcvg-git-2@gmane.org; Sat, 11 Oct 2008 13:42:01 +0200
+	id 1Koczd-0007EW-Ce
+	for gcvg-git-2@gmane.org; Sat, 11 Oct 2008 13:50:45 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752100AbYJKLkt convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 11 Oct 2008 07:40:49 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752053AbYJKLkt
-	(ORCPT <rfc822;git-outgoing>); Sat, 11 Oct 2008 07:40:49 -0400
-Received: from [83.140.172.130] ([83.140.172.130]:11385 "EHLO dewire.com"
-	rhost-flags-FAIL-FAIL-OK-OK) by vger.kernel.org with ESMTP
-	id S1751990AbYJKLks convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 11 Oct 2008 07:40:48 -0400
-Received: from localhost (localhost [127.0.0.1])
-	by dewire.com (Postfix) with ESMTP id 6712B8006B1;
-	Sat, 11 Oct 2008 13:40:47 +0200 (CEST)
-X-Virus-Scanned: by amavisd-new at dewire.com
-Received: from dewire.com ([127.0.0.1])
-	by localhost (torino.dewire.com [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id KfJViplxqwBh; Sat, 11 Oct 2008 13:40:36 +0200 (CEST)
-Received: from [10.9.0.2] (unknown [10.9.0.2])
-	by dewire.com (Postfix) with ESMTP id D781A80008B;
-	Sat, 11 Oct 2008 13:40:36 +0200 (CEST)
-User-Agent: KMail/1.9.10
-In-Reply-To: <18672.1017.68669.913415@cargo.ozlabs.ibm.com>
-Content-Disposition: inline
+	id S1751933AbYJKLsb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 11 Oct 2008 07:48:31 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751505AbYJKLsb
+	(ORCPT <rfc822;git-outgoing>); Sat, 11 Oct 2008 07:48:31 -0400
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:57379 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751433AbYJKLsb (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 11 Oct 2008 07:48:31 -0400
+Received: from localhost.localdomain (localhost [127.0.0.1])
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 75A426CF75;
+	Sat, 11 Oct 2008 07:48:29 -0400 (EDT)
+Received: from pobox.com (ip68-225-240-211.oc.oc.cox.net [68.225.240.211])
+ (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
+ certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
+ ESMTPSA id E96216CF74; Sat, 11 Oct 2008 07:48:20 -0400 (EDT)
+In-Reply-To: <alpine.DEB.1.00.0810111239590.22125@pacific.mpi-cbg.de.mpi-cbg.de> (Johannes
+ Schindelin's message of "Sat, 11 Oct 2008 12:42:08 +0200 (CEST)")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: 85A8BC0A-978A-11DD-8820-1E1F86D30F62-77302942!a-sasl-fastnet.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/97975>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/97976>
 
-l=F6rdagen den 11 oktober 2008 03.40.09 skrev Paul Mackerras:
-> Robin Rosenberg writes:
->=20
-> > +proc mcw {menubar args} {
-> > +    set ai [lsearch $args "-label"]
-> > +    if { $ai > 0 } {
-> > +	set label [lindex $args [expr {$ai + 1}]]
-> > +	foreach {l u} [::tk::UnderlineAmpersand $label] {
->=20
-> Where did you find out about ::tk::UnderlineAmpersand?  Is it part of
-> the exported interface of Tk that we can rely on in future?
+Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
-I found it here. http://wiki.tcl.tk/1632. It hints that it may not be u=
-noffical. Seems to
-original from: http://groups.google.com/group/comp.lang.perl.tk/browse_=
-thread/thread/5b6f4c6a4a9f17b4/c9f8ab47800d27ee?lnk=3Dst&q=3D#c9f8ab478=
-00d27ee
+> On Sat, 11 Oct 2008, Alex Bennee wrote:
+>
+>> I've just tested/reviewed a patch of someone elses and I want to forward 
+>> it on the appropriate mailing list. I gather for Linux you just add the 
+>> appropriate tags to the commit. Does git offer a shortcut for doing this 
+>> or do you have to do a reset HEAD^ and re-commit with a copy&pasted and 
+>> modified commit message?
+>
+> http://thread.gmane.org/gmane.comp.version-control.git/75250/focus=76304
+>
+> In the end, nothing happened, but I could see that you might want to push 
+> for this patch.
 
-so if someone thinks there is a problem we could replace it with Underl=
-ineAmpersand
-with tcl code to do the same (or rip it as is if the license allows it)=
-=2E
+The fact a particular change has been reviewed is an attribute of a
+commit, and by recording the fact once (perhaps when you commit for the
+first time, or if your workflow is "commit blindly, then review, and then
+amend" then when you amend that commit), the commit object will remember
+that fact.
 
->=20
-> > +# Wrapper for mc to remove ampersands used for accelerators.
-> > +proc mca {label} {
-> > +    set tl8 [mc $label]
-> > +    foreach {l u} [::tk::UnderlineAmpersand $tl8] break
-> > +    return $l
->=20
-> 	return [string map {"&" ""} [mc $label]]
->=20
-> instead, perhaps?
-In theory we should translate && to & also, which UnderLineAmpersand do=
-es.
+The patch you quoted adds Reviewed-by: at format-patch time, but I suspect
+that is a wrong approach.  You have to remember and recall which ones you
+reviewed (and which ones you didn't) when you run format-patch.  People
+who commit and immediately format-patch to send, or people who do not
+review until immediately before format-patch to send, would not realize
+the downside of the approach, but when your work style is to perform
+commit/review and e-mail communication in separate phases, it matters.
 
--- robin
+This is a bit tangent, but perhaps rebase needs a hook so that users can
+strip certain tags automatically from the commit log messages (e.g.
+things like Reviewd-by: and Tested-by: become less trustworthy when you
+rebase; S-o-b: becomes somewhat less trustworthy when you "edit" in
+rebase-i; etc).
