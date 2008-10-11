@@ -1,64 +1,68 @@
-From: Paul Mackerras <paulus@samba.org>
-Subject: Re: [PATCH (GITK) v2 4/4] gitk: Implement batch lookup and caching of encoding attrs.
-Date: Sat, 11 Oct 2008 23:03:34 +1100
-Message-ID: <18672.38422.200764.101389@cargo.ozlabs.ibm.com>
-References: <1222772422-28020-1-git-send-email-angavrilov@gmail.com>
-	<bb6f213e0810100522v653507d6r75cc4c64b57aa459@mail.gmail.com>
-	<18671.62417.328489.317909@cargo.ozlabs.ibm.com>
-	<200810111328.50951.angavrilov@gmail.com>
+From: "Mikael Magnusson" <mikachu@gmail.com>
+Subject: Re: [PATCH] "git diff <tree>{3,}": do not reverse order of arguments
+Date: Sat, 11 Oct 2008 14:53:12 +0200
+Message-ID: <237967ef0810110553r662df370ud1ec34de402bfe1c@mail.gmail.com>
+References: <1223690175.2828.26.camel@mattlaptop2.local>
+	 <7vwsgfjrp6.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, "Johannes Sixt" <johannes.sixt@telecom.at>
-To: Alexander Gavrilov <angavrilov@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Oct 11 14:04:53 2008
+Cc: "Matt McCutchen" <matt@mattmccutchen.net>, git@vger.kernel.org
+To: "Junio C Hamano" <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sat Oct 11 14:54:49 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KodDI-0002dX-49
-	for gcvg-git-2@gmane.org; Sat, 11 Oct 2008 14:04:52 +0200
+	id 1Kodza-00029N-ML
+	for gcvg-git-2@gmane.org; Sat, 11 Oct 2008 14:54:47 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751990AbYJKMDk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 11 Oct 2008 08:03:40 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751964AbYJKMDk
-	(ORCPT <rfc822;git-outgoing>); Sat, 11 Oct 2008 08:03:40 -0400
-Received: from ozlabs.org ([203.10.76.45]:39135 "EHLO ozlabs.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751433AbYJKMDj (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 11 Oct 2008 08:03:39 -0400
-Received: by ozlabs.org (Postfix, from userid 1003)
-	id 34BEADDDFA; Sat, 11 Oct 2008 23:03:38 +1100 (EST)
-In-Reply-To: <200810111328.50951.angavrilov@gmail.com>
-X-Mailer: VM 8.0.9 under Emacs 22.2.1 (i486-pc-linux-gnu)
+	id S1752657AbYJKMxO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 11 Oct 2008 08:53:14 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752609AbYJKMxO
+	(ORCPT <rfc822;git-outgoing>); Sat, 11 Oct 2008 08:53:14 -0400
+Received: from ey-out-2122.google.com ([74.125.78.27]:3548 "EHLO
+	ey-out-2122.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752590AbYJKMxO (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 11 Oct 2008 08:53:14 -0400
+Received: by ey-out-2122.google.com with SMTP id 6so367691eyi.37
+        for <git@vger.kernel.org>; Sat, 11 Oct 2008 05:53:12 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to
+         :subject:cc:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:references;
+        bh=oERuV4AwBeti6qHhoHGWw9qw9TNn71a7snhzRMSlKWQ=;
+        b=pT6F4Zb7Xu0Iu1bdtZXjcieDeTCixHCQx7y6QvC7Qbv5N34hndEBHFG1kYkJGAPa4d
+         kBq1F22okuIWlBoXhmjJq4uSKt9axv/0FV0ge7apdpawM9YewnBtmr3n9CUtR8IH1qj9
+         KKgNb27CbRjIQBcHtlt4u0GOibUAeiryvVjfw=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
+         :content-type:content-transfer-encoding:content-disposition
+         :references;
+        b=nghydJJPuvKnA3z9P7O4J+D71a6PHX5SLsE+4hkQQ0akEOKRUIJKpGTQVQcSROUWmb
+         iG2ebSm65zEhM8OOlBO4UvTelIX/H4xWrPv2yUGsLaSdqZvzizr7SdwS9RvYYxh9j+Kh
+         FD44ifeQhk34aP8wUkzpjhTm1hpYZrEIX7b6o=
+Received: by 10.210.139.15 with SMTP id m15mr2003753ebd.190.1223729592192;
+        Sat, 11 Oct 2008 05:53:12 -0700 (PDT)
+Received: by 10.210.19.20 with HTTP; Sat, 11 Oct 2008 05:53:12 -0700 (PDT)
+In-Reply-To: <7vwsgfjrp6.fsf@gitster.siamese.dyndns.org>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/97977>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/97978>
 
-Alexander Gavrilov writes:
+2008/10/11 Junio C Hamano <gitster@pobox.com>:
+> Perhaps the thinko was caused by discrepancy between the way internal
+> revision parser handles A..B and the way git-rev-parse parses it.  While
+> the internal revision parser parses it into "A ^B", rev-parse gives them
+> in reverse order, i.e. "B ^A" (which is not going to change).  In any
+> case, thanks for spotting this.
 
-> > And if [tcl_encoding] is slow, then it should have a cache.  There's
-> > only likely to be at most 2 or 3 values it gets called for, and it's
-> > a constant function.
-> 
-> In git-gui the slowdown appeared during the construction of the menu
-> listing all available encodings, so a simple cache would not have helped. 
-> I  reimplemented it using a lookup table to resolve aliases (constructed
-> on the first run). But it can be thought of as a precalculated cache.
+Ehm, do you mean the internal parses it into "A ^B" and rev-parse gives "^B A"?
 
-Hmmm, one that uses more time and memory than it needs to for gitk's
-use...  I guess it's not a lot, but it still seems unnecessary, unless
-you can see a need for a menu of encodings in gitk.
-
-> > At this point, what I think I might do is apply your set of patches
-> > (but with 2/4 and 3/4 folded into a single patch) and then go through
-> > and do another commit that addresses the concerns I've raised.  OK?
-> 
-> Maybe I should resend the patches, scrapping path_encoding_cache,
-> and adding the optimized version of tcl_encoding?
-
-OK.
-
-Paul.
+-- 
+Mikael Magnusson
