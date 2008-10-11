@@ -1,106 +1,96 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: Adding Reviewed-by/Tested-by tags to other peoples commits
-Date: Sat, 11 Oct 2008 15:06:48 +0200 (CEST)
-Message-ID: <alpine.DEB.1.00.0810111457300.22125@pacific.mpi-cbg.de.mpi-cbg.de>
-References: <b2cdc9f30810102337q13432bepa957acaace9ddc5d@mail.gmail.com> <alpine.DEB.1.00.0810111239590.22125@pacific.mpi-cbg.de.mpi-cbg.de> <7vfxn3jqt9.fsf@gitster.siamese.dyndns.org>
+From: Deskin Miller <deskinm@umich.edu>
+Subject: [PATCH] Fix testcase failure when extended attributes are in use
+Date: Sat, 11 Oct 2008 11:41:07 -0400
+Message-ID: <20081011154107.GA14994@riemann.deskinm.fdns.net>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Alex Bennee <kernel-hacker@bennee.com>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Oct 11 15:01:34 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, heikki.orsila@iki.fi
+To: spearce@spearce.org
+X-From: git-owner@vger.kernel.org Sat Oct 11 17:45:08 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Koe69-00046g-4D
-	for gcvg-git-2@gmane.org; Sat, 11 Oct 2008 15:01:33 +0200
+	id 1KogeS-00030D-1L
+	for gcvg-git-2@gmane.org; Sat, 11 Oct 2008 17:45:08 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752609AbYJKNAQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 11 Oct 2008 09:00:16 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752590AbYJKNAQ
-	(ORCPT <rfc822;git-outgoing>); Sat, 11 Oct 2008 09:00:16 -0400
-Received: from mail.gmx.net ([213.165.64.20]:39958 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1752531AbYJKNAP (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 11 Oct 2008 09:00:15 -0400
-Received: (qmail invoked by alias); 11 Oct 2008 13:00:21 -0000
-Received: from pacific.mpi-cbg.de (EHLO [141.5.10.38]) [141.5.10.38]
-  by mail.gmx.net (mp024) with SMTP; 11 Oct 2008 15:00:21 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX192DcNVSNp2OWkqr5tjKa0LnbWP8T137o18y//6Nk
-	q4rcZD4gMxt7Ro
-X-X-Sender: schindelin@pacific.mpi-cbg.de.mpi-cbg.de
-In-Reply-To: <7vfxn3jqt9.fsf@gitster.siamese.dyndns.org>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.53
+	id S1754531AbYJKPny (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 11 Oct 2008 11:43:54 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754225AbYJKPny
+	(ORCPT <rfc822;git-outgoing>); Sat, 11 Oct 2008 11:43:54 -0400
+Received: from wr-out-0506.google.com ([64.233.184.234]:11966 "EHLO
+	wr-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752808AbYJKPnx (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 11 Oct 2008 11:43:53 -0400
+Received: by wr-out-0506.google.com with SMTP id 69so622922wri.5
+        for <git@vger.kernel.org>; Sat, 11 Oct 2008 08:43:52 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:date:from:to:cc:subject
+         :message-id:mime-version:content-type:content-disposition:user-agent
+         :sender;
+        bh=GcaNtianLmeY6xFoPAAUFyB+RwgtPBmnGCBFocLs694=;
+        b=l5P76j/O/oeHRq0PsA3p/UY6p/0xDG1mx/UPSzpOvb/pzb74+BdR1sMwyhD439z9oY
+         1fi5iTRZIqbkBH+l8au5caP0PJsyZDf6qxKgQfz3ayi1ZbcijJlmm2ianWyYTFYdNy3m
+         zlYg+fyb97mDxUWl7G2ft2QXmD56mLS7+G9T0=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=date:from:to:cc:subject:message-id:mime-version:content-type
+         :content-disposition:user-agent:sender;
+        b=RrNA1Ul4M0KnIasn5mqDZaYvsM9NTxrLrIIQ+6ETnH0989qUoKZVhytRxxSil3UeEJ
+         76cGTCnd/b+XF6wB9KEUdT1xF9fHcnNmo5jTQ7hDBh52T09YC2lCXeieTvMIp0RTi11n
+         M4DJK192FxokKO2PDlTGBvR5z/S1x9xxxVgJQ=
+Received: by 10.65.97.18 with SMTP id z18mr3841146qbl.96.1223739831653;
+        Sat, 11 Oct 2008 08:43:51 -0700 (PDT)
+Received: from riemann.deskinm.fdns.net ([68.40.49.130])
+        by mx.google.com with ESMTPS id k8sm5454823qba.5.2008.10.11.08.43.50
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Sat, 11 Oct 2008 08:43:50 -0700 (PDT)
+Content-Disposition: inline
+User-Agent: Mutt/1.5.17 (2007-11-01)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/97979>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/97980>
 
-Hi,
+06cbe855 (Make core.sharedRepository more generic, 2008-04-16) made
+several testcases in t1301-shared-repo.sh which fail if on a system
+which creates files with extended attributes (e.g. SELinux), since ls
+appends a '+' sign to the permission set in such cases.  This fixes the
+testcase to strip any such sign prior to verifying the permission set.
 
-On Sat, 11 Oct 2008, Junio C Hamano wrote:
+Signed-off-by: Deskin Miller <deskinm@umich.edu>
+---
+Shawn, I read an email that said you'd maintain until Sunday the 12th, so I'm
+sending this to you; if you want to punt to Junio, feel free.
 
-> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
-> 
-> > On Sat, 11 Oct 2008, Alex Bennee wrote:
-> >
-> >> I've just tested/reviewed a patch of someone elses and I want to 
-> >> forward it on the appropriate mailing list. I gather for Linux you 
-> >> just add the appropriate tags to the commit. Does git offer a 
-> >> shortcut for doing this or do you have to do a reset HEAD^ and 
-> >> re-commit with a copy&pasted and modified commit message?
-> >
-> > http://thread.gmane.org/gmane.comp.version-control.git/75250/focus=76304
-> >
-> > In the end, nothing happened, but I could see that you might want to 
-> > push for this patch.
-> 
-> The fact a particular change has been reviewed is an attribute of a 
-> commit, and by recording the fact once (perhaps when you commit for the 
-> first time, or if your workflow is "commit blindly, then review, and 
-> then amend" then when you amend that commit), the commit object will 
-> remember that fact.
+Deskin Miller
 
-If that was the goal, you would _have_ to add commit notes.  Because 
-otherwise you would have to pretend to have changed the commit, which you 
-did not at all.
+ t/t1301-shared-repo.sh |    4 ++--
+ 1 files changed, 2 insertions(+), 2 deletions(-)
 
-> The patch you quoted adds Reviewed-by: at format-patch time, but I 
-> suspect that is a wrong approach.
-
-Color me puzzled.  You said in another mail that you think this is the 
-task for the MUA.  When I send patches (even forwarded ones), I use 
-format-patch just before pasting into the MUA (I do not trust send-email).  
-And that's where Git can kick in: format-patch.  Not the MUA.
-
-So technically, I understood that the format-patch approach is exactly the 
-same as you were proposing, only that you do not ask the MUA to do Git's 
-job.
-
-Unless, of course, you are talking about the reviewing style where the 
-patch does not leave the MUA until it is to be forwarded.
-
-> You have to remember and recall which ones you reviewed (and which ones 
-> you didn't) when you run format-patch.
-
-Don't you have to do that anyway?  I do not see how giving format-patch a 
-new option --reviewed-by would change the equation in any way.
-
-> This is a bit tangent, but perhaps rebase needs a hook so that users can 
-> strip certain tags automatically from the commit log messages (e.g. 
-> things like Reviewd-by: and Tested-by: become less trustworthy when you 
-> rebase; S-o-b: becomes somewhat less trustworthy when you "edit" in 
-> rebase-i; etc).
-
-Maybe.  I am not really convinced of the S-o-b.  You kept stressing that 
-the SOB is not about validity, but a statement that the patch is 
-intellectually proper or some such (IOW it means something like "Darl, 
-forget it").  And the point of origin does not change, even if you rebase 
-the commit.
-
-Ciao,
-Dscho
+diff --git a/t/t1301-shared-repo.sh b/t/t1301-shared-repo.sh
+index dc85e8b..b244f3e 100755
+--- a/t/t1301-shared-repo.sh
++++ b/t/t1301-shared-repo.sh
+@@ -83,7 +83,7 @@ do
+ 		rm -f .git/info/refs &&
+ 		git update-server-info &&
+ 		actual="$(ls -l .git/info/refs)" &&
+-		actual=${actual%% *} &&
++		actual=$(echo "$actual" | sed -e "s/[+]\? .*$//") &&
+ 		test "x$actual" = "x-$y" || {
+ 			ls -lt .git/info
+ 			false
+@@ -96,7 +96,7 @@ do
+ 		rm -f .git/info/refs &&
+ 		git update-server-info &&
+ 		actual="$(ls -l .git/info/refs)" &&
+-		actual=${actual%% *} &&
++		actual=$(echo "$actual" | sed -e "s/[+]\? .*$//") &&
+ 		test "x$actual" = "x-$x" || {
+ 			ls -lt .git/info
+ 			false
+-- 
+1.6.0.2.307.gc427
