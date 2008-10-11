@@ -1,84 +1,68 @@
-From: Paul Mackerras <paulus@samba.org>
-Subject: Re: [PATCH (GITK) v2 4/4] gitk: Implement batch lookup and caching of encoding attrs.
-Date: Sat, 11 Oct 2008 11:31:13 +1100
-Message-ID: <18671.62417.328489.317909@cargo.ozlabs.ibm.com>
-References: <1222772422-28020-1-git-send-email-angavrilov@gmail.com>
-	<1222772422-28020-2-git-send-email-angavrilov@gmail.com>
-	<1222772422-28020-3-git-send-email-angavrilov@gmail.com>
-	<1222772422-28020-4-git-send-email-angavrilov@gmail.com>
-	<1222772422-28020-5-git-send-email-angavrilov@gmail.com>
-	<18671.16658.667581.499095@cargo.ozlabs.ibm.com>
-	<bb6f213e0810100522v653507d6r75cc4c64b57aa459@mail.gmail.com>
+From: Brandon Casey <casey@nrlssc.navy.mil>
+Subject: Re: [PATCH] t9001: use older Getopt::Long boolean prefix '--no'	rather
+ than '--no-'
+Date: Fri, 10 Oct 2008 19:44:36 -0500
+Message-ID: <h06qyD79DtpYDO2W32USeygrtpn8V6dBogiNd6y5wtPVgMNDGwbl4A@cipher.nrlssc.navy.mil>
+References: <zAKaSrh5XLrzXloxZrj-A1EletXL_wuSGpTQgLXMT3MZYK_o3tUBfA@cipher.nrlssc.navy.mil> <20081011002431.GK8203@spearce.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, "Johannes Sixt" <johannes.sixt@telecom.at>
-To: "Alexander Gavrilov" <angavrilov@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Oct 11 02:32:42 2008
+Cc: Git Mailing List <git@vger.kernel.org>
+To: "Shawn O. Pearce" <spearce@spearce.org>
+X-From: git-owner@vger.kernel.org Sat Oct 11 02:46:03 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KoSPR-0000Z3-Jc
-	for gcvg-git-2@gmane.org; Sat, 11 Oct 2008 02:32:42 +0200
+	id 1KoScM-0002z6-OO
+	for gcvg-git-2@gmane.org; Sat, 11 Oct 2008 02:46:03 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754042AbYJKAb3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 10 Oct 2008 20:31:29 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754005AbYJKAb3
-	(ORCPT <rfc822;git-outgoing>); Fri, 10 Oct 2008 20:31:29 -0400
-Received: from ozlabs.org ([203.10.76.45]:38961 "EHLO ozlabs.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753942AbYJKAb2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 10 Oct 2008 20:31:28 -0400
-Received: by ozlabs.org (Postfix, from userid 1003)
-	id 60ADCDE1D1; Sat, 11 Oct 2008 11:31:27 +1100 (EST)
-In-Reply-To: <bb6f213e0810100522v653507d6r75cc4c64b57aa459@mail.gmail.com>
-X-Mailer: VM 8.0.9 under Emacs 22.2.1 (i486-pc-linux-gnu)
+	id S1754089AbYJKAom (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 10 Oct 2008 20:44:42 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754085AbYJKAom
+	(ORCPT <rfc822;git-outgoing>); Fri, 10 Oct 2008 20:44:42 -0400
+Received: from mail1.nrlssc.navy.mil ([128.160.35.1]:41693 "EHLO
+	mail.nrlssc.navy.mil" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753942AbYJKAol (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 10 Oct 2008 20:44:41 -0400
+Received: by mail.nrlssc.navy.mil id m9B0ibQP024309; Fri, 10 Oct 2008 19:44:39 -0500
+In-Reply-To: <20081011002431.GK8203@spearce.org>
+X-OriginalArrivalTime: 11 Oct 2008 00:44:37.0279 (UTC) FILETIME=[89901AF0:01C92B3A]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/97959>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/97960>
 
-Alexander Gavrilov writes:
-
-> OS-enforced command-line size limit on Windows is 32K. Cramming in
-> 1000 paths would leave only 32 characters for each path.
-
-Eeek.  OK.
-
-> > Also, I wonder why we now have two levels of caching of the encoding
-> > attribute.  Your patch 1/4 introduced path_encoding_cache, which was
-> > fine, but now we have path_attr_cache as well, which seems to me to
-> > serve exactly the same function since the encoding is the only
-> > attribute we ever ask about.  Surely we don't need both caches?
+Shawn O. Pearce wrote:
+> Brandon Casey <casey@nrlssc.navy.mil> wrote:
+>> Since dbf5e1e9, the '--no-validate' option is a Getopt::Long boolean
+>> option. The '--no-' prefix (as in --no-validate) for boolean options
+>> is not supported in Getopt::Long version 2.32 which was released with
+>> Perl 5.8.0. This version only supports '--no' as in '--novalidate'.
+>> More recent versions of Getopt::Long, such as version 2.34, support
+>> either prefix. So use the older form in the tests.
 > 
-> If the (git-gui) patch that reimplements the tcl_encoding procedure is
-> applied, we may drop the path_encoding_cache. Current implementation
-> is too slow for batch lookup, especially if the encoding is actually
-> not supported, and without the cache the lookup would be done on every
-> loading of a diff.
+> Ouch.
+> 
+> Should we update our docs?
+> 
+> Actually, if 2.32 doesn't support the --no-validate syntax than
+> this is a regression in Git.  Even if it is what many would call a
+> bug in Getopt::Long in Perl, I think Git 1.6.1 should still honor
+> --no-validate like it did in Git 1.6.0.
 
-I was thinking more in terms of dropping the path_attr_cache actually.
+If it makes any difference, none of the other boolean options would
+work in the documented '--no-' form either, such as --no-thread,
+--no-signed-off-by-cc, etc.  '--no-validate' is probably the only one
+that used to work.
 
-Actually, if [tcl_encoding] is slow, then why is $gui_encoding the
-untranslated version, so that we do [tcl_encoding $gui_encoding] on
-each call to get_path_encoding?  Why don't we do the tcl_encoding call
-once and have $gui_encoding be the result of that?  In fact
-$gui_encoding should be the result of this code (from
-get_path_encoding):
 
-	set tcl_enc [tcl_encoding $gui_encoding]
-	if {$tcl_enc eq {}} {
-		set tcl_enc [encoding system]
-	}
+Update the docs?
 
-And if [tcl_encoding] is slow, then it should have a cache.  There's
-only likely to be at most 2 or 3 values it gets called for, and it's
-a constant function.
+---[no-]validate::
++--[no-|no]validate::
 
-At this point, what I think I might do is apply your set of patches
-(but with 2/4 and 3/4 folded into a single patch) and then go through
-and do another commit that addresses the concerns I've raised.  OK?
+hmm. not sure.
 
-Paul.
+-brandon
