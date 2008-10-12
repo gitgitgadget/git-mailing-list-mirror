@@ -1,132 +1,84 @@
-From: Dmitry Potapov <dpotapov@gmail.com>
-Subject: Re: [PATCH v2] correct verify_path for Windows
-Date: Sun, 12 Oct 2008 17:50:48 +0400
-Message-ID: <20081012135048.GC21650@dpotapov.dyndns.org>
-References: <c475e2e60810020702q573570dcp31a5dc18bf98ef30@mail.gmail.com> <20081004233945.GM21650@dpotapov.dyndns.org> <B985AE98-F6E2-4C23-8D34-5A22A9F89FA7@gmail.com> <20081007032623.GX21650@dpotapov.dyndns.org> <48EAFF23.1020607@viscovery.net> <20081011163310.GZ21650@dpotapov.dyndns.org> <81b0412b0810111558vb69be00if4842fa91d777c3b@mail.gmail.com>
+From: Andreas Ericsson <ae@op5.se>
+Subject: Re: git status options feature suggestion
+Date: Sun, 12 Oct 2008 15:52:32 +0200
+Message-ID: <48F20120.1070602@op5.se>
+References: <81bfc67a0810082234p55e2fb9jb2a10f837eea7de0@mail.gmail.com>	<20081009061136.GA24288@coredump.intra.peff.net>	<81bfc67a0810082327p421ca4e9v84f4b33023bc6fe6@mail.gmail.com>	<81bfc67a0810082327q71b9d6apf2787eb8519031bb@mail.gmail.com>	<alpine.DEB.1.00.0810091101230.22125@pacific.mpi-cbg.de.mpi-cbg.de>	<48EE1F58.2060707@drmicha.warpmail.net>	<20081012044900.GA27845@coredump.intra.peff.net>	<7vwsgegvsh.fsf@gitster.siamese.dyndns.org>	<971DCAD3-3274-4507-AE3D-5BDCEDB8513C@wincent.com> <87od1qrqhi.fsf@iki.fi>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Johannes Sixt <j.sixt@viscovery.net>,
-	Joshua Juran <jjuran@gmail.com>,
-	Giovanni Funchal <gafunchal@gmail.com>, git@vger.kernel.org,
-	"Shawn O. Pearce" <spearce@spearce.org>
-To: Alex Riesen <raa.lkml@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Oct 12 15:53:11 2008
+Content-Type: text/plain; charset=ISO-8859-15; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: Wincent Colaiuta <win@wincent.com>,
+	Junio C Hamano <gitster@pobox.com>,
+	Jeff King <peff@peff.net>,
+	Michael J Gruber <git@drmicha.warpmail.net>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Caleb Cushing <xenoterracide@gmail.com>, git@vger.kernel.org
+To: Teemu Likonen <tlikonen@iki.fi>
+X-From: git-owner@vger.kernel.org Sun Oct 12 15:54:46 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Kp1Md-0004rC-Ri
-	for gcvg-git-2@gmane.org; Sun, 12 Oct 2008 15:52:08 +0200
+	id 1Kp1OX-0005ew-Fj
+	for gcvg-git-2@gmane.org; Sun, 12 Oct 2008 15:54:06 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752268AbYJLNuz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 12 Oct 2008 09:50:55 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752482AbYJLNuz
-	(ORCPT <rfc822;git-outgoing>); Sun, 12 Oct 2008 09:50:55 -0400
-Received: from fg-out-1718.google.com ([72.14.220.154]:21425 "EHLO
-	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752245AbYJLNuy (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 12 Oct 2008 09:50:54 -0400
-Received: by fg-out-1718.google.com with SMTP id 19so912338fgg.17
-        for <git@vger.kernel.org>; Sun, 12 Oct 2008 06:50:52 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:cc:subject
-         :message-id:references:mime-version:content-type:content-disposition
-         :in-reply-to:user-agent;
-        bh=3UUlRBes+QZb1zDNs3LP8SreWGQW+97Mo5sDpkP5rLc=;
-        b=Ya8vqpdLye4xssTMDRVBvL54ayAyvN1pFGzYmDn8nw0KBRXI7tZEBE+3mfxdDbV1xP
-         npnvT/Qk4MRusf33bN83mvqm5JpKxwZTFYGglhD+XL8orxKuTxweN6tn0wBtQJB0UsGC
-         Q45SJoSCqJVucmjcw5nzexRwzLjkaMoh13mQc=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        b=G+BFYFAphL5RDiWTw2ywMTxDxZohg6la/EVn8jHshDHQZvLUxAwBSXslKuBrs5gTt2
-         G4FAeFJ+hJWwr6T8OFjDHmNyFGUoHC2JYcehchJiPFlNXLTqHdz+L/V2/EQVLb22ItNY
-         VSn3JpCKhCyoBTarzap/bkp2w0WjA1nd6xTFU=
-Received: by 10.86.95.20 with SMTP id s20mr3925297fgb.65.1223819452606;
-        Sun, 12 Oct 2008 06:50:52 -0700 (PDT)
-Received: from localhost (ppp85-141-237-231.pppoe.mtu-net.ru [85.141.237.231])
-        by mx.google.com with ESMTPS id l12sm6304959fgb.6.2008.10.12.06.50.50
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Sun, 12 Oct 2008 06:50:51 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <81b0412b0810111558vb69be00if4842fa91d777c3b@mail.gmail.com>
-User-Agent: Mutt/1.5.13 (2006-08-11)
+	id S1753048AbYJLNwl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 12 Oct 2008 09:52:41 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753875AbYJLNwl
+	(ORCPT <rfc822;git-outgoing>); Sun, 12 Oct 2008 09:52:41 -0400
+Received: from mail.op5.se ([193.201.96.20]:45174 "EHLO mail.op5.se"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753048AbYJLNwk (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 12 Oct 2008 09:52:40 -0400
+Received: from localhost (localhost.localdomain [127.0.0.1])
+	by mail.op5.se (Postfix) with ESMTP id 75E0B1B80070;
+	Sun, 12 Oct 2008 15:45:15 +0200 (CEST)
+X-Virus-Scanned: amavisd-new at 
+X-Spam-Flag: NO
+X-Spam-Score: -2.694
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.694 tagged_above=-10 required=6.6
+	tests=[AWL=-0.195, BAYES_00=-2.599, RDNS_NONE=0.1]
+Received: from mail.op5.se ([127.0.0.1])
+	by localhost (mail.op5.se [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id o2Muqq9WyTdb; Sun, 12 Oct 2008 15:45:13 +0200 (CEST)
+Received: from clix.int.op5.se (unknown [172.27.78.14])
+	by mail.op5.se (Postfix) with ESMTP id E79E51B80050;
+	Sun, 12 Oct 2008 15:45:11 +0200 (CEST)
+User-Agent: Thunderbird 2.0.0.16 (X11/20080723)
+In-Reply-To: <87od1qrqhi.fsf@iki.fi>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/98020>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/98021>
 
-On Sun, Oct 12, 2008 at 12:58:52AM +0200, Alex Riesen wrote:
-> 2008/10/11 Dmitry Potapov <dpotapov@gmail.com>:
-> >> > +   /* On Windows, file names are case-insensitive */
-> >> > +   case 'G':
-> >> > +           if ((rest[1]|0x20) != 'i')
-> >> > +                   break;
-> >> > +           if ((rest[2]|0x20) != 't')
-> >> > +                   break;
-> >>
-> >> We have tolower().
-> >
-> > I am aware of that, but I am not sure what we gain by using it. It seems
-> > it makes only code bigger and slow.
+Teemu Likonen wrote:
+> Wincent Colaiuta <win@wincent.com> writes:
 > 
-> It does? Care to look into git-compat-util.h?
-
-As a matter of fact, I did, and I see the following:
-
-  #define sane_istest(x,mask) ((sane_ctype[(unsigned char)(x)] & (mask)) != 0)
-  #define tolower(x) sane_case((unsigned char)(x), 0x20)
-
-  static inline int sane_case(int x, int high)
-  {
-  	if (sane_istest(x, GIT_ALPHA))
-  		x = (x & ~0x20) | high;
-  	return x;
-  }
-
-So, it looks like an extra look up and an extra comparison here.
-
+>> I think if you're introducing a different command then you should make
+>> sure it doesn't happen to be an abbreviation of an existing one. It
+>> would be better to give it some other name (info, foo, whatever). If
+>> svn people then want to make an "st" alias pointing to it they're free
+>> to do so.
 > 
-> > ... As to readability, I don't see much
-> > improvement... Isn't obvious what this code does, especially with the
-> > above comment?
+> In Subversion and Bazaar "info" command gives mostly information about
+> the repository itself. They don't talk about individual files at all.
+> "status" is the command (also in Mercurial) for getting information
+> about the current state of files in the tree.
 > 
-> You want to seriously argue that "a | 0x20" is as readable as "tolower(a)"?
-> For the years to come? With a person who does not even know what ASCII is?
-> Ok, I'm exaggerating. But the point is: it is not us who will be
-> reading the code.
+> I think it would be really sad if "git status" can't be extended to
+> match people's needs. I don't like the idea of a new name for such
+> status command. It's a kind of "why git people always invent new names
+> for familiar commands?" thing.
 
-Obviously, for a person who don't know what ASCII is, tolower() will be
-much easier to understand, but the question is what I can reasonable to
-expect for a person reading this code later. A similar argument can be
-made about adding extra parenthesis, i.e. instead of writing
-  if (a == b || c == d)
-you should always write
-  if ((a == b) || (c == d))
-because some people do not remember the priority of each operator.
-(And I have seen such programmers who claim to have many experience of
-writing in C, yet, they do not remember operator priority.)
+Well, the solution is fairly simple then. Just make it configurable and
+set it in your ~/.gitconfig. It's not my itch to scratch though. I
+loathe the sparse output from cvs/svn/whatnot and would be just as happy
+if I never had to look at it again. I can understand its usefulness for
+scripting, but 'git status' is porcelain so for that purpose it really
+belongs somewhere else.
 
-For me, using tolower() does not make it more readable, but maybe I am
-too old-fashion assuming that people are supposed to know at least basic
-things about ASCII.
-
-> BTW, is it such a critical path?
-
-I am not sure whether it is critical or not. It is called for each
-name in path. So, if you have a long path, it may be called quite a
-few times per a single path. Also, some operation such 'git add' can
-call verify_path() more than once (IIRC, it was called thrice per each
-added file). But I have no numbers to tell whether it is noticeable or
-not.
-
-> Can't the code be unified and do without #ifdef?
-
-It will impose a extra restriction on what file names people can use,
-and I don't like extra restrictions for those who use sane file systems.
-
-
-Dmitry
+-- 
+Andreas Ericsson                   andreas.ericsson@op5.se
+OP5 AB                             www.op5.se
+Tel: +46 8-230225                  Fax: +46 8-230231
