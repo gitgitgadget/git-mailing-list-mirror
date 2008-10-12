@@ -1,94 +1,78 @@
-From: Alex Riesen <raa.lkml@gmail.com>
-Subject: Re: [PATCH v2] correct verify_path for Windows
-Date: Sun, 12 Oct 2008 20:18:36 +0200
-Message-ID: <20081012181836.GA10626@steel.home>
-References: <c475e2e60810020702q573570dcp31a5dc18bf98ef30@mail.gmail.com> <20081004233945.GM21650@dpotapov.dyndns.org> <B985AE98-F6E2-4C23-8D34-5A22A9F89FA7@gmail.com> <20081007032623.GX21650@dpotapov.dyndns.org> <48EAFF23.1020607@viscovery.net> <20081011163310.GZ21650@dpotapov.dyndns.org> <81b0412b0810111558vb69be00if4842fa91d777c3b@mail.gmail.com> <20081012135048.GC21650@dpotapov.dyndns.org>
-Reply-To: Alex Riesen <raa.lkml@gmail.com>
+From: Uwe =?iso-8859-1?Q?Kleine-K=F6nig?= <ukleinek@strlen.de>
+Subject: Re: [RFC PATCH] describe: Make --tags and --all match lightweight
+	tags more often
+Date: Sun, 12 Oct 2008 20:29:13 +0200
+Message-ID: <20081012182913.GA8858@strlen.de>
+References: <20080930083940.GA11453@artemis.corp> <20081010165952.GI8203@spearce.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Johannes Sixt <j.sixt@viscovery.net>,
-	Joshua Juran <jjuran@gmail.com>,
-	Giovanni Funchal <gafunchal@gmail.com>, git@vger.kernel.org,
-	"Shawn O. Pearce" <spearce@spearce.org>
-To: Dmitry Potapov <dpotapov@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Oct 12 20:20:22 2008
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+	Pierre Habouzit <madcoder@debian.org>,
+	Erez Zilber <erezzi.list@gmail.com>
+To: "Shawn O. Pearce" <spearce@spearce.org>
+X-From: git-owner@vger.kernel.org Sun Oct 12 20:30:36 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Kp5YD-0005KG-Fw
-	for gcvg-git-2@gmane.org; Sun, 12 Oct 2008 20:20:22 +0200
+	id 1Kp5i5-0008A2-Ti
+	for gcvg-git-2@gmane.org; Sun, 12 Oct 2008 20:30:34 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754655AbYJLSSu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 12 Oct 2008 14:18:50 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754520AbYJLSSu
-	(ORCPT <rfc822;git-outgoing>); Sun, 12 Oct 2008 14:18:50 -0400
-Received: from mo-p05-ob.rzone.de ([81.169.146.181]:23042 "EHLO
-	mo-p05-ob.rzone.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754625AbYJLSSt (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 12 Oct 2008 14:18:49 -0400
-X-RZG-CLASS-ID: mo05
-X-RZG-AUTH: :Pm0FVUW6aauhRGJJc5OfA4AU8DM8ZlijdmJYxKn/UQvEQQx9CE8wrTU=
-Received: from tigra.home (Fa930.f.strato-dslnet.de [195.4.169.48])
-	by post.webmailer.de (klopstock mo3) (RZmta 17.10)
-	with ESMTP id g06f32k9CGMLVZ ; Sun, 12 Oct 2008 20:18:36 +0200 (MEST)
-	(envelope-from: <raa.lkml@gmail.com>)
-Received: from steel.home (steel.home [192.168.1.2])
-	by tigra.home (Postfix) with ESMTP id 73054277D5;
-	Sun, 12 Oct 2008 20:18:36 +0200 (CEST)
-Received: by steel.home (Postfix, from userid 1000)
-	id 2D67856D27; Sun, 12 Oct 2008 20:18:36 +0200 (CEST)
+	id S1753633AbYJLS3W convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 12 Oct 2008 14:29:22 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753443AbYJLS3W
+	(ORCPT <rfc822;git-outgoing>); Sun, 12 Oct 2008 14:29:22 -0400
+Received: from Chamillionaire.breakpoint.cc ([85.10.199.196]:38340 "EHLO
+	Chamillionaire.breakpoint.cc" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751218AbYJLS3V (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 12 Oct 2008 14:29:21 -0400
+Received: id: ukleinek by Chamillionaire.breakpoint.cc authenticated by ukleinek with local
+	(easymta 1.00 BETA 1)
+	id 1Kp5gn-0002Jd-BG; Sun, 12 Oct 2008 20:29:13 +0200
 Content-Disposition: inline
-In-Reply-To: <20081012135048.GC21650@dpotapov.dyndns.org>
-User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
+In-Reply-To: <20081010165952.GI8203@spearce.org>
+User-Agent: Mutt/1.5.16 (2007-06-09)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/98043>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/98044>
 
-Dmitry Potapov, Sun, Oct 12, 2008 15:50:48 +0200:
-> On Sun, Oct 12, 2008 at 12:58:52AM +0200, Alex Riesen wrote:
-> > 2008/10/11 Dmitry Potapov <dpotapov@gmail.com>:
-> > >> > +   /* On Windows, file names are case-insensitive */
-> > >> > +   case 'G':
-> > >> > +           if ((rest[1]|0x20) != 'i')
-> > >> > +                   break;
-> > >> > +           if ((rest[2]|0x20) != 't')
-> > >> > +                   break;
-> > >>
-> > >> We have tolower().
-> > >
-> > > I am aware of that, but I am not sure what we gain by using it. It seems
-> > > it makes only code bigger and slow.
-> > 
-> > It does? Care to look into git-compat-util.h?
-> 
-> As a matter of fact, I did, and I see the following:
-> 
->   #define sane_istest(x,mask) ((sane_ctype[(unsigned char)(x)] & (mask)) != 0)
->   #define tolower(x) sane_case((unsigned char)(x), 0x20)
-> 
->   static inline int sane_case(int x, int high)
->   {
->   	if (sane_istest(x, GIT_ALPHA))
->   		x = (x & ~0x20) | high;
->   	return x;
->   }
-> 
-> So, it looks like an extra look up and an extra comparison here.
+On Fri, Oct 10, 2008 at 09:59:52AM -0700, Shawn O. Pearce wrote:
+> If the caller supplies --tags they want the lightweight, unannotated
+> tags to be searched for a match.  If a lightweight tag is closer
+> in the history, it should be matched, even if an annotated tag is
+> reachable further back in the commit chain.
+>=20
+> The same applies with --all when matching any other type of ref.
+>=20
+> Signed-off-by: Shawn O. Pearce <spearce@spearce.org>
+> ---
+>=20
+>  This come out of the discussions earlier last week, where folks
+>  were confused about the meaning of --tags and wanted to see it
+>  behave as they expected, which was to match the nearest tag,
+>  no matter its "type".
+>=20
+>  The code is unchanged from what I sent out before, but now it has
+>  updated test vectors and a commit message.
+>=20
+>  Thoughts?
+As I already told earlier, this is exactly how I would expect it.
 
-Does not look like much more code. But:
+>  static int debug;	/* Display lots of verbose info */
+> -static int all;	/* Default to annotated tags only */
+> -static int tags;	/* But allow any tags if --tags is specified */
+> +static int all;	/* Any valid ref can be used */
+> +static int tags;	/* Either lightweight or annotated tags */
+Maybe the last comment should better read:
 
-> > BTW, is it such a critical path?
-> 
-> I am not sure whether it is critical or not. It is called for each
-> name in path. So, if you have a long path, it may be called quite a
-> few times per a single path. Also, some operation such 'git add' can
-> call verify_path() more than once (IIRC, it was called thrice per each
-> added file). But I have no numbers to tell whether it is noticeable or
-> not.
+	/* allow lightweight tags */
 
-I looked at the callers (briefly). Performance could be a problem: add
-and checkout can work with real big file lists and long pathnames.
-So ok, than. It is critical.
+?  Apart from this one nitpick:
+
+Acked-By: Uwe Kleine-K=F6nig <ukleinek@strlen.de>
+
+Thanks
+Uwe
