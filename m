@@ -1,65 +1,62 @@
-From: "Catalin Marinas" <catalin.marinas@gmail.com>
-Subject: Re: [StGit PATCH 0/4] More tutorial updates
-Date: Sun, 12 Oct 2008 23:10:04 +0100
-Message-ID: <b0943d9e0810121510p3aa1d9fbo232a24c6c8ee223a@mail.gmail.com>
-References: <20081012150825.17648.3315.stgit@yoghurt>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+From: Robin Rosenberg <robin.rosenberg@dewire.com>
+Subject: [JGIT PATCH 0/4] Decodings
+Date: Mon, 13 Oct 2008 00:50:56 +0200
+Message-ID: <1223851860-13068-1-git-send-email-robin.rosenberg@dewire.com>
 Cc: git@vger.kernel.org
-To: "=?ISO-8859-1?Q?Karl_Hasselstr=F6m?=" <kha@treskal.com>
-X-From: git-owner@vger.kernel.org Mon Oct 13 00:11:32 2008
+To: spearce@spearce.org
+X-From: git-owner@vger.kernel.org Mon Oct 13 00:54:07 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Kp99r-0000Ey-SZ
-	for gcvg-git-2@gmane.org; Mon, 13 Oct 2008 00:11:28 +0200
+	id 1Kp9ot-0001ia-Lw
+	for gcvg-git-2@gmane.org; Mon, 13 Oct 2008 00:53:52 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753410AbYJLWKJ convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 12 Oct 2008 18:10:09 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752369AbYJLWKJ
-	(ORCPT <rfc822;git-outgoing>); Sun, 12 Oct 2008 18:10:09 -0400
-Received: from rv-out-0506.google.com ([209.85.198.235]:21294 "EHLO
-	rv-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752109AbYJLWKI convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 12 Oct 2008 18:10:08 -0400
-Received: by rv-out-0506.google.com with SMTP id k40so1542766rvb.1
-        for <git@vger.kernel.org>; Sun, 12 Oct 2008 15:10:04 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to
-         :subject:cc:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:references;
-        bh=NBgM06cZVQjgE+o9nJCcTIccRI9jKI2bUg9U6Kck0kU=;
-        b=Zr7JOt6qq2Jk6xzy3HrqHmKtWNXaTYDeJTiJGvOuLvOPbf/GlDyy+hslJXH8+V/Hlg
-         tSvHa/DsBGRj/+fcXYqvvZZNj2nwJpVC3RfZIbQrXgnit96yD27CBHrHTUCRmGAbs3vX
-         lUOjgf7DN42O7O/apfyHuZPj7nIi5uFUTomLU=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
-         :content-type:content-transfer-encoding:content-disposition
-         :references;
-        b=MqVUM/cRdynpA8zlMiaMpsWXNyTFP3mEoGrgZYZJgW4NLd4Dqn9WmD1wAXBu12L1cF
-         MajEA+gVavPhO5H4l90+afNzxjRaIVxI7i9Mcr8OiLidQMythnS6pcXSPT+Pqf1zU71L
-         qLejzwDsqEKmzGCLBhJOHD33kjY7DqqowGx0E=
-Received: by 10.140.162.21 with SMTP id k21mr3164571rve.110.1223849404454;
-        Sun, 12 Oct 2008 15:10:04 -0700 (PDT)
-Received: by 10.141.201.12 with HTTP; Sun, 12 Oct 2008 15:10:04 -0700 (PDT)
-In-Reply-To: <20081012150825.17648.3315.stgit@yoghurt>
-Content-Disposition: inline
+	id S1753900AbYJLWwk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 12 Oct 2008 18:52:40 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753914AbYJLWwj
+	(ORCPT <rfc822;git-outgoing>); Sun, 12 Oct 2008 18:52:39 -0400
+Received: from [83.140.172.130] ([83.140.172.130]:19052 "EHLO dewire.com"
+	rhost-flags-FAIL-FAIL-OK-OK) by vger.kernel.org with ESMTP
+	id S1752155AbYJLWwh (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 12 Oct 2008 18:52:37 -0400
+Received: from localhost (localhost [127.0.0.1])
+	by dewire.com (Postfix) with ESMTP id C5F6C147EACA;
+	Mon, 13 Oct 2008 00:52:35 +0200 (CEST)
+X-Virus-Scanned: by amavisd-new at dewire.com
+Received: from dewire.com ([127.0.0.1])
+	by localhost (torino.dewire.com [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id zf95EGVdol1J; Mon, 13 Oct 2008 00:52:17 +0200 (CEST)
+Received: from localhost.localdomain (unknown [10.9.0.2])
+	by dewire.com (Postfix) with ESMTP id CF4288003E7;
+	Mon, 13 Oct 2008 00:52:15 +0200 (CEST)
+X-Mailer: git-send-email 1.6.0.2.308.gef4a
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/98060>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/98061>
 
-2008/10/12 Karl Hasselstr=F6m <kha@treskal.com>:
-> More updates to the tutorial. I'd really appreciate if people would
-> sanity check these; a bad tutorial tends to reflect negatively on a
-> project.
+These patches might be slightly controversial. Since there is no perfect
+solution, we may want to try something that works to some extent and gives
+what a user might expect, i.e. presenting to a viewer the same glyphs 
+that the user who entered them saw, to the extent it is possible.
 
-I merge kha/safe into master and I'll post patches against it. Thanks.
+We already handle commit messages like this for the old style objects (sort of).
+This patch set also affects other data like refs. Currenly no sane solution
+exists in git so nothing really works well outside the non-ascii range for
+refs anyway so we can discuss what should happen with refs that contain
+non-ascii characters. The best thing is to avoid them, but some of us live
+in countries with funny dots in what we do and other have even stranger ways
+of expressing what they do, and hence things like branch names etc.
 
---=20
-Catalin
+Legacy SCM to GIT conversion programs seem to do every variation of transcoding/
+not transcoding commit messages and file names to UTF-8 so there is an issue here.
+The nice thing about transcoding filenames to UTF-8 is that they work on all
+platforms. A non-UTF-8 filename in a UTF-8 environement doesn't. In particular 
+such filenames are more or less inaccessible to a Java programs. For the reverse
+case it looks really bad. C Git currently does not transform file names. Missing from
+this patch set is test cases. As it is quite undefined in git what happens that
+is sort of ok so far, but I'd like to define it too in the same way.
+
+-- robin
