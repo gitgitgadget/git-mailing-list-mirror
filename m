@@ -1,82 +1,86 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: Re: Fwd: git status options feature suggestion
-Date: Sun, 12 Oct 2008 11:05:04 -0700
-Message-ID: <20081012180504.GD4856@spearce.org>
-References: <81bfc67a0810082234p55e2fb9jb2a10f837eea7de0@mail.gmail.com> <20081009061136.GA24288@coredump.intra.peff.net> <81bfc67a0810082327p421ca4e9v84f4b33023bc6fe6@mail.gmail.com> <81bfc67a0810082327q71b9d6apf2787eb8519031bb@mail.gmail.com> <alpine.DEB.1.00.0810091101230.22125@pacific.mpi-cbg.de.mpi-cbg.de> <48EE1F58.2060707@drmicha.warpmail.net> <20081012044900.GA27845@coredump.intra.peff.net> <7vwsgegvsh.fsf@gitster.siamese.dyndns.org> <20081012064512.GA32597@coredump.intra.peff.net>
+From: Andreas Ericsson <ae@op5.se>
+Subject: Re: [RFC PATCH] describe: Make --tags and --all match lightweight
+ tags more often
+Date: Sun, 12 Oct 2008 20:13:23 +0200
+Message-ID: <48F23E43.4010409@op5.se>
+References: <20081010165952.GI8203@spearce.org> <48F12CF8.505@op5.se> <20081012180040.GC4856@spearce.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Michael J Gruber <git@drmicha.warpmail.net>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Caleb Cushing <xenoterracide@gmail.com>, git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Sun Oct 12 20:06:24 2008
+Content-Type: text/plain; charset=ISO-8859-15; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+	Pierre Habouzit <madcoder@debian.org>,
+	Erez Zilber <erezzi.list@gmail.com>
+To: "Shawn O. Pearce" <spearce@spearce.org>
+X-From: git-owner@vger.kernel.org Sun Oct 12 20:14:56 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Kp5Kg-0000tf-1Q
-	for gcvg-git-2@gmane.org; Sun, 12 Oct 2008 20:06:22 +0200
+	id 1Kp5Sv-0003hf-Af
+	for gcvg-git-2@gmane.org; Sun, 12 Oct 2008 20:14:53 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754564AbYJLSFG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 12 Oct 2008 14:05:06 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754625AbYJLSFG
-	(ORCPT <rfc822;git-outgoing>); Sun, 12 Oct 2008 14:05:06 -0400
-Received: from george.spearce.org ([209.20.77.23]:45325 "EHLO
-	george.spearce.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754356AbYJLSFF (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 12 Oct 2008 14:05:05 -0400
-Received: by george.spearce.org (Postfix, from userid 1001)
-	id 8A9213835F; Sun, 12 Oct 2008 18:05:04 +0000 (UTC)
-Content-Disposition: inline
-In-Reply-To: <20081012064512.GA32597@coredump.intra.peff.net>
-User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
+	id S1754647AbYJLSNa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 12 Oct 2008 14:13:30 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754577AbYJLSN3
+	(ORCPT <rfc822;git-outgoing>); Sun, 12 Oct 2008 14:13:29 -0400
+Received: from mail.op5.se ([193.201.96.20]:36189 "EHLO mail.op5.se"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754520AbYJLSN3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 12 Oct 2008 14:13:29 -0400
+Received: from localhost (localhost.localdomain [127.0.0.1])
+	by mail.op5.se (Postfix) with ESMTP id D775F1B80050;
+	Sun, 12 Oct 2008 20:06:05 +0200 (CEST)
+X-Virus-Scanned: amavisd-new at 
+X-Spam-Flag: NO
+X-Spam-Score: -2.69
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.69 tagged_above=-10 required=6.6
+	tests=[AWL=-0.191, BAYES_00=-2.599, RDNS_NONE=0.1]
+Received: from mail.op5.se ([127.0.0.1])
+	by localhost (mail.op5.se [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id n52aobSSEuXX; Sun, 12 Oct 2008 20:06:04 +0200 (CEST)
+Received: from clix.int.op5.se (unknown [172.27.78.14])
+	by mail.op5.se (Postfix) with ESMTP id B763B1B8004E;
+	Sun, 12 Oct 2008 20:06:02 +0200 (CEST)
+User-Agent: Thunderbird 2.0.0.16 (X11/20080723)
+In-Reply-To: <20081012180040.GC4856@spearce.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/98041>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/98042>
 
-Jeff King <peff@peff.net> wrote:
-> On Sat, Oct 11, 2008 at 11:41:18PM -0700, Junio C Hamano wrote:
+Shawn O. Pearce wrote:
+> Andreas Ericsson <ae@op5.se> wrote:
+>> Shawn O. Pearce wrote:
+>>> If the caller supplies --tags they want the lightweight, unannotated
+>>> tags to be searched for a match.  If a lightweight tag is closer
+>>> in the history, it should be matched, even if an annotated tag is
+>>> reachable further back in the commit chain.
+>>>
+>>> The same applies with --all when matching any other type of ref.
+>>>
+>> In 99% of the cases, "--all" will then give back the currently
+>> checked out branch unless a revision is specified, right?
 > 
-> > And just make it mimic whatever folks accustomed to "svn st" would expect,
-> > modulo we would need two status letters to signal difference between
-> > (HEAD, index), and (index, worktree).  Perhaps three if you want to show
-> > difference between (HEAD, worktree) while at it.
+> Yup.
 > 
-> I remember a long time ago you started on a parallel diff walker that
-> could diff the working tree, the index, and a tree at once. Do you
-> remember the issues with it?
+> `git describe --all` or `git describe --all HEAD`
 > 
-> I think that would be the right tool here to show each file only once,
-> but with multiple status flags. Something like:
+> would kick back the current branch you have checked out, assuming
+> you have a real branch under refs/heads and not some detached HEAD.
 > 
->   A M foo
+> IMHO, that's what the user asked for.
+> 
 
-I have a tool that I'll be open-sourcing later this year, but it does
-something like that:
+True. I think this will raise questions of its usability though,
+in particular if it considers remote branches too.
 
-  project foo/                        branch master
-   Am   foo
-   M-   bar
-   R-   orig => dest ( 95%)
-
-Line coloring is red on lines with unstaged stuff in the working
-directory (3rd column, lower case letters) and green on lines that
-are fully staged (3rd column is a '-').
-
-The tool is in Python, but I'm just scraping the output of
-`diff-index -M --cached HEAD` and diff-files to get that
-display.  The status letters are exactly those given out by
-diff-index/diff-files, but the diff-files output is lowercased.
-
-Scott Chacon has seen the tool output and likes it; there's a tech
-talk that will be posted on YouTube soon where he and I are sort
-of talking about it.
-
-Sorry I can't say too much more about it yet.  But I'm trying to
-say that both Scott and I like a denser display like this.
+Otoh, I've never seen the use for "git describe --all" earlier
+either, so I guess I think differently from those who want this
+feature.
 
 -- 
-Shawn.
+Andreas Ericsson                   andreas.ericsson@op5.se
+OP5 AB                             www.op5.se
+Tel: +46 8-230225                  Fax: +46 8-230231
