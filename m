@@ -1,86 +1,71 @@
-From: Ingo Molnar <mingo@elte.hu>
+From: Teemu Likonen <tlikonen@iki.fi>
 Subject: Re: tip tree clone fail
-Date: Sun, 12 Oct 2008 17:24:27 +0200
-Message-ID: <20081012152427.GA4607@elte.hu>
-References: <48EEA714.4010205@cn.fujitsu.com> <20081010072951.GB16016@elte.hu> <20081010083720.GA32069@elte.hu> <alpine.LFD.2.00.0810101040200.3271@apollo> <48EF14FC.1000801@cn.fujitsu.com> <alpine.LFD.2.00.0810101046260.3271@apollo> <48EF1902.4070309@cn.fujitsu.com> <48EF7BC1.4000401@zytor.com> <20081012124105.GA26988@elte.hu> <48F20663.2040407@zytor.com>
+Date: Sun, 12 Oct 2008 18:36:48 +0300
+Message-ID: <877i8dx1tb.fsf@iki.fi>
+References: <48EEA714.4010205@cn.fujitsu.com> <20081010072951.GB16016@elte.hu>
+	<20081010083720.GA32069@elte.hu>
+	<alpine.LFD.2.00.0810101040200.3271@apollo>
+	<48EF14FC.1000801@cn.fujitsu.com>
+	<alpine.LFD.2.00.0810101046260.3271@apollo>
+	<48EF1902.4070309@cn.fujitsu.com> <48EF7BC1.4000401@zytor.com>
+	<20081012124105.GA26988@elte.hu> <48F20663.2040407@zytor.com>
+	<20081012152427.GA4607@elte.hu>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Wang Chen <wangchen@cn.fujitsu.com>,
+Cc: "H. Peter Anvin" <hpa@zytor.com>,
+	Wang Chen <wangchen@cn.fujitsu.com>,
 	Thomas Gleixner <tglx@linutronix.de>,
 	FNST-Lai Jiangshan <laijs@cn.fujitsu.com>,
 	FJ-KOSAKI Motohiro <kosaki.motohiro@jp.fujitsu.com>,
 	git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-To: "H. Peter Anvin" <hpa@zytor.com>
-X-From: git-owner@vger.kernel.org Sun Oct 12 17:26:09 2008
+To: Ingo Molnar <mingo@elte.hu>
+X-From: git-owner@vger.kernel.org Sun Oct 12 17:39:19 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Kp2pa-0008Qe-80
-	for gcvg-git-2@gmane.org; Sun, 12 Oct 2008 17:26:06 +0200
+	id 1Kp324-00045Q-UW
+	for gcvg-git-2@gmane.org; Sun, 12 Oct 2008 17:39:01 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753653AbYJLPYx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 12 Oct 2008 11:24:53 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753766AbYJLPYx
-	(ORCPT <rfc822;git-outgoing>); Sun, 12 Oct 2008 11:24:53 -0400
-Received: from mx3.mail.elte.hu ([157.181.1.138]:53230 "EHLO mx3.mail.elte.hu"
+	id S1753947AbYJLPhq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 12 Oct 2008 11:37:46 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753852AbYJLPhq
+	(ORCPT <rfc822;git-outgoing>); Sun, 12 Oct 2008 11:37:46 -0400
+Received: from mta-out.inet.fi ([195.156.147.13]:48586 "EHLO kirsi1.inet.fi"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753653AbYJLPYx (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 12 Oct 2008 11:24:53 -0400
-Received: from elvis.elte.hu ([157.181.1.14])
-	by mx3.mail.elte.hu with esmtp (Exim)
-	id 1Kp2o6-0000pl-Ex
-	from <mingo@elte.hu>; Sun, 12 Oct 2008 17:24:34 +0200
-Received: by elvis.elte.hu (Postfix, from userid 1004)
-	id 1E4203E21A3; Sun, 12 Oct 2008 17:24:27 +0200 (CEST)
-Content-Disposition: inline
-In-Reply-To: <48F20663.2040407@zytor.com>
-User-Agent: Mutt/1.5.18 (2008-05-17)
-Received-SPF: neutral (mx3: 157.181.1.14 is neither permitted nor denied by domain of elte.hu) client-ip=157.181.1.14; envelope-from=mingo@elte.hu; helo=elvis.elte.hu;
-X-ELTE-VirusStatus: clean
-X-ELTE-SpamScore: -1.5
-X-ELTE-SpamLevel: 
-X-ELTE-SpamCheck: no
-X-ELTE-SpamVersion: ELTE 2.0 
-X-ELTE-SpamCheck-Details: score=-1.5 required=5.9 tests=BAYES_00,DNS_FROM_SECURITYSAGE autolearn=no SpamAssassin version=3.2.3
-	-1.5 BAYES_00               BODY: Bayesian spam probability is 0 to 1%
-	[score: 0.0000]
-	0.0 DNS_FROM_SECURITYSAGE  RBL: Envelope sender in
-	blackholes.securitysage.com
+	id S1753827AbYJLPhq (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 12 Oct 2008 11:37:46 -0400
+Received: from mithlond.arda.local (80.220.180.181) by kirsi1.inet.fi (8.5.014)
+        id 48DA2F8900F19A76; Sun, 12 Oct 2008 18:36:55 +0300
+Received: from dtw by mithlond.arda.local with local (Exim 4.63)
+	(envelope-from <tlikonen@iki.fi>)
+	id 1Kp2zw-0000th-CF; Sun, 12 Oct 2008 18:36:48 +0300
+In-Reply-To: <20081012152427.GA4607@elte.hu> (Ingo Molnar's message of "Sun\, 12 Oct 2008 17\:24\:27 +0200")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/98032>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/98033>
 
+Ingo Molnar <mingo@elte.hu> writes:
 
-* H. Peter Anvin <hpa@zytor.com> wrote:
-
-> Ingo Molnar wrote:
->> * H. Peter Anvin <hpa@zytor.com> wrote:
+> * H. Peter Anvin <hpa@zytor.com> wrote:
+>> post-update, rather than post-receive.
 >>
->>> Wang Chen wrote:
->>>>> So http transport is wreckaged. (git version 1.6.0.1 here, Wang is using
->>>>> 1.5.3.x)
->>>> My git version is 1.5.5.1, although it doesn't matter ;)
->>>>
->>> http transport requires that "git update-server-info" is done after  
->>> each push.  Otherwise, it ends up in a trainwreck.
->>
->> can i simply put "git update-server-info" into .git/hooks/post-receive  
->> to solve this problem?
->>
+>> The standard post-update.sample contains it, it just needs a rename.
 >
-> post-update, rather than post-receive.
+> hm, -tip's .git/hooks/post-update already contained this, for the last 2 
+> months:
 >
-> The standard post-update.sample contains it, it just needs a rename.
+>   exec git update-server-info
+>
+> so ... _despite_ us having this in the git repo, the HTTP protocol
+> still does not work. Why?
 
-hm, -tip's .git/hooks/post-update already contained this, for the last 2 
-months:
+I don't know why but I have experienced the same: post-update hook just
+doesn't work. I described it here:
 
-  exec git update-server-info
+    http://thread.gmane.org/gmane.comp.version-control.git/82351
 
-so ... _despite_ us having this in the git repo, the HTTP protocol still 
-does not work. Why?
-
-	Ingo
+Fortunately post-receive hooks works, so you could to try it instead.
