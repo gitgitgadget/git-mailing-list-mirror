@@ -1,81 +1,130 @@
-From: Wincent Colaiuta <win@wincent.com>
-Subject: Re: git status options feature suggestion
-Date: Sun, 12 Oct 2008 12:47:11 +0200
-Message-ID: <971DCAD3-3274-4507-AE3D-5BDCEDB8513C@wincent.com>
-References: <81bfc67a0810082234p55e2fb9jb2a10f837eea7de0@mail.gmail.com> <20081009061136.GA24288@coredump.intra.peff.net> <81bfc67a0810082327p421ca4e9v84f4b33023bc6fe6@mail.gmail.com> <81bfc67a0810082327q71b9d6apf2787eb8519031bb@mail.gmail.com> <alpine.DEB.1.00.0810091101230.22125@pacific.mpi-cbg.de.mpi-cbg.de> <48EE1F58.2060707@drmicha.warpmail.net> <20081012044900.GA27845@coredump.intra.peff.net> <7vwsgegvsh.fsf@gitster.siamese.dyndns.org>
-Mime-Version: 1.0 (Apple Message framework v926)
-Content-Type: text/plain; charset=ISO-8859-1;
-	format=flowed	delsp=yes
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Jeff King <peff@peff.net>,
-	Michael J Gruber <git@drmicha.warpmail.net>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Caleb Cushing <xenoterracide@gmail.com>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sun Oct 12 12:50:40 2008
+From: Thomas Rast <trast@student.ethz.ch>
+Subject: [PATCH] Documentation: remove stale howto/rebase-and-edit.txt
+Date: Sun, 12 Oct 2008 13:21:48 +0200
+Message-ID: <1223810508-23615-1-git-send-email-trast@student.ethz.ch>
+Cc: git@vger.kernel.org
+To: "Shawn O. Pearce" <spearce@spearce.org>
+X-From: git-owner@vger.kernel.org Sun Oct 12 13:23:50 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KoyX1-0002s7-IQ
-	for gcvg-git-2@gmane.org; Sun, 12 Oct 2008 12:50:40 +0200
+	id 1Koz2w-0002yW-KG
+	for gcvg-git-2@gmane.org; Sun, 12 Oct 2008 13:23:39 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751688AbYJLKrY convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 12 Oct 2008 06:47:24 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751608AbYJLKrY
-	(ORCPT <rfc822;git-outgoing>); Sun, 12 Oct 2008 06:47:24 -0400
-Received: from wincent1.inetu.net ([209.235.192.161]:34092 "EHLO
-	wincent1.inetu.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751437AbYJLKrX convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 12 Oct 2008 06:47:23 -0400
-Received: from cuzco.lan (5.pool85-53-7.dynamic.orange.es [85.53.7.5])
-	(authenticated bits=0)
-	by wincent1.inetu.net (8.13.8/8.13.8) with ESMTP id m9CAlCxi006821
-	(version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NO);
-	Sun, 12 Oct 2008 06:47:14 -0400
-In-Reply-To: <7vwsgegvsh.fsf@gitster.siamese.dyndns.org>
-X-Mailer: Apple Mail (2.926)
+	id S1751844AbYJLLWA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 12 Oct 2008 07:22:00 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751855AbYJLLWA
+	(ORCPT <rfc822;git-outgoing>); Sun, 12 Oct 2008 07:22:00 -0400
+Received: from xsmtp0.ethz.ch ([82.130.70.14]:50673 "EHLO XSMTP0.ethz.ch"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751573AbYJLLV7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 12 Oct 2008 07:21:59 -0400
+Received: from xfe1.d.ethz.ch ([82.130.124.41]) by XSMTP0.ethz.ch with Microsoft SMTPSVC(6.0.3790.3959);
+	 Sun, 12 Oct 2008 13:21:51 +0200
+Received: from localhost.localdomain ([84.75.157.245]) by xfe1.d.ethz.ch over TLS secured channel with Microsoft SMTPSVC(6.0.3790.3959);
+	 Sun, 12 Oct 2008 13:21:51 +0200
+X-Mailer: git-send-email 1.6.0.2.804.g2004
+X-OriginalArrivalTime: 12 Oct 2008 11:21:51.0140 (UTC) FILETIME=[B9220E40:01C92C5C]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/98011>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/98012>
 
-El 12/10/2008, a las 8:41, Junio C Hamano escribi=F3:
+The "rebase and edit" howto predates the much easier solution 'git
+rebase -i' by two years.
 
-> Jeff King <peff@peff.net> writes:
->
->> So I think it is probably reasonable to think about a new command =20
->> (which
->> would not be called status) that shows this information.
->
-> I was going to suggest the same.  "git st" for people who come from =20
-> "svn st"
-> so that "git status" can be kept as traditional "preview of 'git =20
-> commit'".
->
-> And just make it mimic whatever folks accustomed to "svn st" would =20
-> expect,
-> modulo we would need two status letters to signal difference between
-> (HEAD, index), and (index, worktree).  Perhaps three if you want to =20
-> show
-> difference between (HEAD, worktree) while at it.
+Signed-off-by: Thomas Rast <trast@student.ethz.ch>
 
-One of the first aliases I set up when I started using git was "st" =20
-for status, and I'd imagine that's a pretty common thing for people =20
-coming from other SCMs like svn and cvs. But I very quickly became =20
-used to git's notion of what "status" means and I wouldn't want "git =20
-st" to start giving me a different behaviour.
+---
+ Documentation/howto/rebase-and-edit.txt |   79 -------------------------------
+ 1 files changed, 0 insertions(+), 79 deletions(-)
 
-I think if you're introducing a different command then you should make =
-=20
-sure it doesn't happen to be an abbreviation of an existing one. It =20
-would be better to give it some other name (info, foo, whatever). If =20
-svn people then want to make an "st" alias pointing to it they're free =
-=20
-to do so.
-
-Just my 2c.
-
-Cheers,
-Wincent
+diff --git a/Documentation/howto/rebase-and-edit.txt b/Documentation/howto/rebase-and-edit.txt
+deleted file mode 100644
+index 554909f..0000000
+--- a/Documentation/howto/rebase-and-edit.txt
++++ /dev/null
+@@ -1,79 +0,0 @@
+-Date:	Sat, 13 Aug 2005 22:16:02 -0700 (PDT)
+-From:	Linus Torvalds <torvalds@osdl.org>
+-To:	Steve French <smfrench@austin.rr.com>
+-cc:	git@vger.kernel.org
+-Subject: Re: sending changesets from the middle of a git tree
+-Abstract: In this article, Linus demonstrates how a broken commit
+- in a sequence of commits can be removed by rewinding the head and
+- reapplying selected changes.
+-
+-On Sat, 13 Aug 2005, Linus Torvalds wrote:
+-
+-> That's correct. Same things apply: you can move a patch over, and create a
+-> new one with a modified comment, but basically the _old_ commit will be
+-> immutable.
+-
+-Let me clarify.
+-
+-You can entirely _drop_ old branches, so commits may be immutable, but
+-nothing forces you to keep them. Of course, when you drop a commit, you'll
+-always end up dropping all the commits that depended on it, and if you
+-actually got somebody else to pull that commit you can't drop it from
+-_their_ repository, but undoing things is not impossible.
+-
+-For example, let's say that you've made a mess of things: you've committed
+-three commits "old->a->b->c", and you notice that "a" was broken, but you
+-want to save "b" and "c". What you can do is
+-
+-	# Create a branch "broken" that is the current code
+-	# for reference
+-	git branch broken
+-
+-	# Reset the main branch to three parents back: this
+-	# effectively undoes the three top commits
+-	git reset HEAD^^^
+-	git checkout -f
+-
+-	# Check the result visually to make sure you know what's
+-	# going on
+-	gitk --all
+-
+-	# Re-apply the two top ones from "broken"
+-	#
+-	# First "parent of broken" (aka b):
+-	git-diff-tree -p broken^ | git-apply --index
+-	git commit --reedit=broken^
+-
+-	# Then "top of broken" (aka c):
+-	git-diff-tree -p broken | git-apply --index
+-	git commit --reedit=broken
+-
+-and you've now re-applied (and possibly edited the comments) the two
+-commits b/c, and commit "a" is basically gone (it still exists in the
+-"broken" branch, of course).
+-
+-Finally, check out the end result again:
+-
+-	# Look at the new commit history
+-	gitk --all
+-
+-to see that everything looks sensible.
+-
+-And then, you can just remove the broken branch if you decide you really
+-don't want it:
+-
+-	# remove 'broken' branch
+-	git branch -d broken
+-
+-	# Prune old objects if you're really really sure
+-	git prune
+-
+-And yeah, I'm sure there are other ways of doing this. And as usual, the
+-above is totally untested, and I just wrote it down in this email, so if
+-I've done something wrong, you'll have to figure it out on your own ;)
+-
+-			Linus
+--
+-To unsubscribe from this list: send the line "unsubscribe git" in
+-the body of a message to majordomo@vger.kernel.org
+-More majordomo info at  http://vger.kernel.org/majordomo-info.html
+-- 
+tg: (e782e12..) t/doc-remove-old-howto (depends on: spearce/master)
