@@ -1,166 +1,240 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: What's in git/spearce.git (Oct 2008, #02; Sun, 12)
-Date: Sun, 12 Oct 2008 14:25:12 -0700
-Message-ID: <20081012212512.GF4856@spearce.org>
+From: "Tuncer Ayaz" <tuncer.ayaz@gmail.com>
+Subject: Re: [PATCH] Teach/Fix git-pull/git-merge --quiet and --verbose
+Date: Sun, 12 Oct 2008 23:31:44 +0200
+Message-ID: <4ac8254d0810121431v1a67afc8ua92842b3d8c39328@mail.gmail.com>
+References: <4ac8254d0810120954x2364054ahf2d49d6fbb7b0bb1@mail.gmail.com>
+	 <20081012200833.GC5255@spearce.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Oct 12 23:33:17 2008
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: "Shawn O. Pearce" <spearce@spearce.org>
+X-From: git-owner@vger.kernel.org Sun Oct 12 23:33:16 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Kp8Yg-0007QF-6h
-	for gcvg-git-2@gmane.org; Sun, 12 Oct 2008 23:33:02 +0200
+	id 1Kp8Yi-0007QF-1W
+	for gcvg-git-2@gmane.org; Sun, 12 Oct 2008 23:33:04 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753042AbYJLVZO convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 12 Oct 2008 17:25:14 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752413AbYJLVZO
-	(ORCPT <rfc822;git-outgoing>); Sun, 12 Oct 2008 17:25:14 -0400
-Received: from george.spearce.org ([209.20.77.23]:44612 "EHLO
-	george.spearce.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751906AbYJLVZN (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 12 Oct 2008 17:25:13 -0400
-Received: by george.spearce.org (Postfix, from userid 1001)
-	id 86B883835F; Sun, 12 Oct 2008 21:25:12 +0000 (UTC)
+	id S1753753AbYJLVbr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 12 Oct 2008 17:31:47 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753728AbYJLVbr
+	(ORCPT <rfc822;git-outgoing>); Sun, 12 Oct 2008 17:31:47 -0400
+Received: from wr-out-0506.google.com ([64.233.184.226]:23591 "EHLO
+	wr-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752631AbYJLVbq (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 12 Oct 2008 17:31:46 -0400
+Received: by wr-out-0506.google.com with SMTP id 69so905547wri.5
+        for <git@vger.kernel.org>; Sun, 12 Oct 2008 14:31:45 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to
+         :subject:cc:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:references;
+        bh=LTDJ7Kzv47wYctfu5/slSXuLe7YGjDFYxlpnZecbrK8=;
+        b=FK1wlqhw1R0gGQEDDJWqFAxZbwsQxjpTl28OjnZ903RksRi3AfF4rQIdpszGI89wux
+         R/BTs7DBtQf1UgrCiGgkQoMu7ThB39f+KmHn4fOi9olh9DYA0ie56C5iqVkTGjm8fJWh
+         7FUXynsKR7o9YA6xj7R5sj1FCprxvPJVS7rjE=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
+         :content-type:content-transfer-encoding:content-disposition
+         :references;
+        b=ayvy0vKctQOcGVgQKEE3imlg4oFPuIbWlqmpKoI6ILv2b+MSHaAImeiVfiXGjMCruL
+         K9rigA+FemB6bH4eskCih3pR73Q/J8JjECaGzAgVL/UW2DWymDe1UZ6F8JOTAmMI8Bbb
+         mrr2J0kHpK9jFM2AQ847TGyxjFD9ecCJfWeAk=
+Received: by 10.65.54.9 with SMTP id g9mr8886307qbk.55.1223847105024;
+        Sun, 12 Oct 2008 14:31:45 -0700 (PDT)
+Received: by 10.64.142.13 with HTTP; Sun, 12 Oct 2008 14:31:44 -0700 (PDT)
+In-Reply-To: <20081012200833.GC5255@spearce.org>
 Content-Disposition: inline
-X-maint-at: 72d404debaa804fca82fd9cf710fbde48c7305c6
-X-master-at: 5c283eb13c94be6ca974aa722159dc9838d10d97
-X-maint-was: e261cf94848d31868c21fb11cade51c30dfcdbe7
-X-master-was: 276328ffb87cefdc515bee5f09916aea6e0244ed
-User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/98055>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/98056>
 
-What's in git/spearce.git (Oct 2008, #02; Sun, 12)
+On Sun, Oct 12, 2008 at 10:08 PM, Shawn O. Pearce <spearce@spearce.org> wrote:
+> Tuncer Ayaz <tuncer.ayaz@gmail.com> wrote:
 
-  maint 72d404d (test-lib: fix broken printf)
- master 5c283eb (Merge branch 'maint')
------------------------------------------------------------------------=
--
+<snip>
 
-* The 'maint' branch has these fixes since the last announcement.
+I've incorporated all defects as noticed by Shawn and
+thanks to him found out that the changes in
+squash_message() are definitely not needed and are
+more of a left-over of my tryout/devel session.
+Moreover I've avoided further whitespace changes.
 
-Brandon Casey (2):
-  builtin-merge.c: allocate correct amount of memory
-  git-stash.sh: fix flawed fix of invalid ref handling (commit da65e7c1=
-)
+---
 
-Deskin Miller (1):
-  git init: --bare/--shared overrides system/global config
+>From 31fd16eccf2df334aef8fb59d4e48cf97cca93eb Mon Sep 17 00:00:00 2001
+From: Tuncer Ayaz <tuncer.ayaz@gmail.com>
+Date: Sun, 12 Oct 2008 23:27:14 +0200
+Subject: [PATCH] Teach/Fix git-pull/git-merge --quiet and --verbose
 
-Imre Deak (1):
-  builtin-apply: fix typo leading to stack corruption
+Signed-off-by: Tuncer Ayaz <tuncer.ayaz@gmail.com>
+---
+ Documentation/merge-options.txt |    8 ++++++++
+ builtin-fetch.c                 |    5 +++--
+ builtin-merge.c                 |   22 +++++++++++++++-------
+ git-pull.sh                     |   10 ++++++++--
+ 4 files changed, 34 insertions(+), 11 deletions(-)
 
-Jeff King (2):
-  Makefile: do not set NEEDS_LIBICONV for Solaris 8
-  git apply --directory broken for new files
+diff --git a/Documentation/merge-options.txt b/Documentation/merge-options.txt
+index 007909a..427cdef 100644
+--- a/Documentation/merge-options.txt
++++ b/Documentation/merge-options.txt
+@@ -1,3 +1,11 @@
++-q::
++--quiet::
++	Operate quietly.
++
++-v::
++--verbose::
++	Be verbose.
++
+ --stat::
+ 	Show a diffstat at the end of the merge. The diffstat is also
+ 	controlled by the configuration option merge.stat.
+diff --git a/builtin-fetch.c b/builtin-fetch.c
+index ee93d3a..287ce33 100644
+--- a/builtin-fetch.c
++++ b/builtin-fetch.c
+@@ -372,12 +372,13 @@ static int store_updated_refs(const char *url,
+const char *remote_name,
+ 				SUMMARY_WIDTH, *kind ? kind : "branch",
+ 				 REFCOL_WIDTH, *what ? what : "HEAD");
+ 		if (*note) {
+-			if (!shown_url) {
++			if ((verbose || !quiet) && !shown_url) {
+ 				fprintf(stderr, "From %.*s\n",
+ 						url_len, url);
+ 				shown_url = 1;
+ 			}
+-			fprintf(stderr, " %s\n", note);
++			if (verbose || !quiet)
++				fprintf(stderr, " %s\n", note);
+ 		}
+ 	}
+ 	fclose(fp);
+diff --git a/builtin-merge.c b/builtin-merge.c
+index 38266ba..dc12a2a 100644
+--- a/builtin-merge.c
++++ b/builtin-merge.c
+@@ -44,6 +44,7 @@ static const char * const builtin_merge_usage[] = {
+ static int show_diffstat = 1, option_log, squash;
+ static int option_commit = 1, allow_fast_forward = 1;
+ static int allow_trivial = 1, have_message;
++static int quiet, verbose;
+ static struct strbuf merge_msg;
+ static struct commit_list *remoteheads;
+ static unsigned char head[20], stash[20];
+@@ -152,6 +153,8 @@ static int option_parse_n(const struct option *opt,
+ }
 
-Johannes Schindelin (2):
-  git rm: refresh index before up-to-date check
-  rebase -i: do not fail when there is no commit to cherry-pick
+ static struct option builtin_merge_options[] = {
++	OPT__QUIET(&quiet),
++	OPT__VERBOSE(&verbose),
+ 	{ OPTION_CALLBACK, 'n', NULL, NULL, NULL,
+ 		"do not show a diffstat at the end of the merge",
+ 		PARSE_OPT_NOARG, option_parse_n },
+@@ -250,7 +253,8 @@ static void restore_state(void)
+ /* This is called when no merge was necessary. */
+ static void finish_up_to_date(const char *msg)
+ {
+-	printf("%s%s\n", squash ? " (nothing to squash)" : "", msg);
++	if (verbose || !quiet)
++		printf("%s%s\n", squash ? " (nothing to squash)" : "", msg);
+ 	drop_save();
+ }
 
-Johannes Sixt (1):
-  git-push.txt: Describe --repo option in more detail
+@@ -333,14 +337,15 @@ static void finish(const unsigned char
+*new_head, const char *msg)
+ 	if (!msg)
+ 		strbuf_addstr(&reflog_message, getenv("GIT_REFLOG_ACTION"));
+ 	else {
+-		printf("%s\n", msg);
++		if (verbose || !quiet)
++			printf("%s\n", msg);
+ 		strbuf_addf(&reflog_message, "%s: %s",
+ 			getenv("GIT_REFLOG_ACTION"), msg);
+ 	}
+ 	if (squash) {
+ 		squash_message();
+ 	} else {
+-		if (!merge_msg.len)
++		if ((verbose || !quiet) && !merge_msg.len)
+ 			printf("No merge message -- not updating HEAD\n");
+ 		else {
+ 			const char *argv_gc_auto[] = { "gc", "--auto", NULL };
+@@ -877,6 +882,8 @@ int cmd_merge(int argc, const char **argv, const
+char *prefix)
 
-Mikael Magnusson (1):
-  Fix a few typos in relnotes
+ 	argc = parse_options(argc, argv, builtin_merge_options,
+ 			builtin_merge_usage, 0);
++	if (!verbose && quiet)
++		show_diffstat = 0;
 
-Miklos Vajna (1):
-  test-lib: fix color reset in say_color()
+ 	if (squash) {
+ 		if (!allow_fast_forward)
+@@ -1020,10 +1027,11 @@ int cmd_merge(int argc, const char **argv,
+const char *prefix)
 
-Nicolas Pitre (1):
-  fix pread()'s short read in index-pack
+ 		strcpy(hex, find_unique_abbrev(head, DEFAULT_ABBREV));
 
-SZEDER G=C3=A1bor (2):
-  rebase -i: proper prepare-commit-msg hook argument when squashing
-  rebase -i: remove leftover debugging
+-		printf("Updating %s..%s\n",
+-			hex,
+-			find_unique_abbrev(remoteheads->item->object.sha1,
+-			DEFAULT_ABBREV));
++		if (verbose || !quiet)
++			printf("Updating %s..%s\n",
++				hex,
++				find_unique_abbrev(remoteheads->item->object.sha1,
++				DEFAULT_ABBREV));
+ 		strbuf_init(&msg, 0);
+ 		strbuf_addstr(&msg, "Fast forward");
+ 		if (have_message)
+diff --git a/git-pull.sh b/git-pull.sh
+index 75c3610..8e25d44 100755
+--- a/git-pull.sh
++++ b/git-pull.sh
+@@ -16,6 +16,7 @@ cd_to_toplevel
+ test -z "$(git ls-files -u)" ||
+ 	die "You are in the middle of a conflicted merge."
 
-Samuel Tardieu (1):
-  Do not use errno when pread() returns 0
++quiet= verbose=
+ strategy_args= no_stat= no_commit= squash= no_ff= log_arg=
+ curr_branch=$(git symbolic-ref -q HEAD)
+ curr_branch_short=$(echo "$curr_branch" | sed "s|refs/heads/||")
+@@ -23,6 +24,10 @@ rebase=$(git config --bool branch.$curr_branch_short.rebase)
+ while :
+ do
+ 	case "$1" in
++	-q|--quiet)
++		quiet=-q ;;
++	-v|--verbose)
++		verbose=-v ;;
+ 	-n|--no-stat|--no-summary)
+ 		no_stat=-n ;;
+ 	--stat|--summary)
+@@ -121,7 +126,7 @@ test true = "$rebase" && {
+ 		"refs/remotes/$origin/$reflist" 2>/dev/null)"
+ }
+ orig_head=$(git rev-parse --verify HEAD 2>/dev/null)
+-git fetch --update-head-ok "$@" || exit 1
++git fetch $verbose $quiet --update-head-ok "$@" || exit 1
 
-Shawn O. Pearce (1):
-  test-lib: fix broken printf
-
-
-* The 'master' branch has these since the last announcement
-  in addition to the above.
-
-Brandon Casey (4):
-  xdiff-interface.c: strip newline (and cr) from line before pattern
-    matching
-  Replace xmalloc/memset(0) pairs with xcalloc
-  t9001: use older Getopt::Long boolean prefix '--no' rather than '--no=
--'
-  Replace calls to strbuf_init(&foo, 0) with STRBUF_INIT initializer
-
-Dmitry Potapov (4):
-  add have_git_dir() function
-  mingw: move common functionality to win32.h
-  cygwin: Use native Win32 API for stat
-  print an error message for invalid path
-
-=46lorian Ragwitz (1):
-  Add git-svn branch to allow branch creation in SVN repositories
-
-Jonathan del Strother (1):
-  Teach git diff about Objective-C syntax
-
-Junio C Hamano (1):
-  git-add --intent-to-add (-N)
-
-Linus Torvalds (1):
-  date/time: do not get confused by fractional seconds
-
-Matt McCutchen (1):
-  "git diff <tree>{3,}": do not reverse order of arguments
-
-Michael J Gruber (1):
-  make prune report removed objects on -v
-
-Michael Witten (9):
-  Docs: send-email's usage text and man page mention same options
-  Docs: send-email usage text much sexier
-  Docs: send-email: Man page option ordering
-  send-email: change --no-validate to boolean --[no-]validate
-  Docs: send-email: --chain_reply_to -> --[no-]chain-reply-to
-  Docs: send-email: Remove unnecessary config variable description
-  Docs: send-email: Create logical groupings for --help text
-  Docs: send-email: Create logical groupings for man text
-  send-email: signedoffcc -> signedoffbycc, but handle both
-
-Mike Ralphson (1):
-  gitweb: Sort the list of forks on the summary page by age
-
-Miklos Vajna (2):
-  builtin-merge: refresh the index before calling a strategy
-  Cleanup in sha1_file.c::cache_or_unpack_entry()
-
-Petr Baudis (5):
-  gitweb: Clean-up sorting of project list
-  gitweb: Add support for extending the action bar with custom links
-  gitweb: Support for tag clouds
-  gitweb: Make the by_tag filter delve in forks as well
-  gitweb: Support for simple project search form
-
-Pierre Habouzit (3):
-  parse-opt: migrate fmt-merge-msg.
-  parse-opt: migrate git-merge-base.
-  parse-opt: migrate builtin-merge-file.
-
-Raphael Zimmerer (1):
-  git grep: Add "-z/--null" option as in GNU's grep.
-
-Teemu Likonen (1):
-  bash completion: Add --[no-]validate to "git send-email"
-
-Thomas Rast (1):
-  Documentation: remove stale howto/rebase-and-edit.txt
-
---=20
-Shawn.
+ curr_head=$(git rev-parse --verify HEAD 2>/dev/null)
+ if test "$curr_head" != "$orig_head"
+@@ -181,5 +186,6 @@ merge_name=$(git fmt-merge-msg $log_arg
+<"$GIT_DIR/FETCH_HEAD") || exit
+ test true = "$rebase" &&
+ 	exec git-rebase $strategy_args --onto $merge_head \
+ 	${oldremoteref:-$merge_head}
+-exec git-merge $no_stat $no_commit $squash $no_ff $log_arg $strategy_args \
++exec git-merge $quiet $verbose $no_stat $no_commit \
++	$squash $no_ff $log_arg $strategy_args \
+ 	"$merge_name" HEAD $merge_head
+-- 
+1.6.0.2.GIT
