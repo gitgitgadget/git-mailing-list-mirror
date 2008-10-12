@@ -1,110 +1,197 @@
-From: Daniel Barkalow <barkalow@iabervon.org>
-Subject: Re: [PATCH] fetch: refuse to fetch into the current branch in a
- non-bare repository
-Date: Sun, 12 Oct 2008 16:37:28 -0400 (EDT)
-Message-ID: <alpine.LNX.1.00.0810121501590.19665@iabervon.org>
-References: <alpine.DEB.1.00.0810111336350.22125@pacific.mpi-cbg.de.mpi-cbg.de>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: [PATCH/RFC v2] gitweb: Separate %global_features
+Date: Sun, 12 Oct 2008 23:00:25 +0200
+Message-ID: <20081012205925.29606.36935.stgit@localhost.localdomain>
+References: <20081012130157.26825.67398.stgit@localhost.localdomain>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org, gitster@pobox.com, spearce@spearce.org
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Sun Oct 12 22:38:45 2008
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Cc: Jakub Narebski <jnareb@gmail.com>, Petr Baudis <pasky@suse.cz>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Oct 12 23:02:23 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Kp7i8-0007Hc-Pb
-	for gcvg-git-2@gmane.org; Sun, 12 Oct 2008 22:38:45 +0200
+	id 1Kp850-0006nM-IP
+	for gcvg-git-2@gmane.org; Sun, 12 Oct 2008 23:02:23 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753558AbYJLUha (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 12 Oct 2008 16:37:30 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753216AbYJLUha
-	(ORCPT <rfc822;git-outgoing>); Sun, 12 Oct 2008 16:37:30 -0400
-Received: from iabervon.org ([66.92.72.58]:57159 "EHLO iabervon.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751096AbYJLUh3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 12 Oct 2008 16:37:29 -0400
-Received: (qmail 8362 invoked by uid 1000); 12 Oct 2008 20:37:28 -0000
-Received: from localhost (sendmail-bs@127.0.0.1)
-  by localhost with SMTP; 12 Oct 2008 20:37:28 -0000
-In-Reply-To: <alpine.DEB.1.00.0810111336350.22125@pacific.mpi-cbg.de.mpi-cbg.de>
-User-Agent: Alpine 1.00 (LNX 882 2007-12-20)
+	id S1752702AbYJLVBF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 12 Oct 2008 17:01:05 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752496AbYJLVBE
+	(ORCPT <rfc822;git-outgoing>); Sun, 12 Oct 2008 17:01:04 -0400
+Received: from ey-out-2122.google.com ([74.125.78.26]:14893 "EHLO
+	ey-out-2122.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752369AbYJLVBC (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 12 Oct 2008 17:01:02 -0400
+Received: by ey-out-2122.google.com with SMTP id 6so492588eyi.37
+        for <git@vger.kernel.org>; Sun, 12 Oct 2008 14:01:00 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:received:from:subject:to:cc
+         :date:message-id:in-reply-to:references:user-agent:mime-version
+         :content-type:content-transfer-encoding;
+        bh=Xs0oxTbpKUOhSYIcvyrqNO7eY2p9gylZbRfia1bOVME=;
+        b=Gw/XEXBCGsdyYRD3T6tv6fBOLhA/7bFO+fvqZLlPbP+8KqM8dnO4xPmb1WuWeRXMhi
+         8mmYCfUmUGi+ptFf6RX4Uo5M3lkkeTkxuBPz6c0wq68TT6kAJAReWHGHACAgqk7Q7Tjb
+         tg2l0go5PKPZyN9m4Lsoycv9JTNmirZ7kHPSs=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=from:subject:to:cc:date:message-id:in-reply-to:references
+         :user-agent:mime-version:content-type:content-transfer-encoding;
+        b=cqXECUNznjBHktk8rVlxzoMe+NtPBrv4AbBE/B71qTy1wcMsGDA56YPkZKZZ0Yn4Wj
+         tRRfUnk2yN2altVKflfHdE0WENLOjflLEDZzdIvT7bFRCKJaHoY2vPXV15o/QisswzIZ
+         SKBzY5ZsNonC/4ygIZyIU0JjC2+Ah0tggqggU=
+Received: by 10.210.81.3 with SMTP id e3mr4337488ebb.107.1223845260273;
+        Sun, 12 Oct 2008 14:01:00 -0700 (PDT)
+Received: from localhost.localdomain (abxa211.neoplus.adsl.tpnet.pl [83.8.250.211])
+        by mx.google.com with ESMTPS id 5sm8572207eyh.2.2008.10.12.14.00.57
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Sun, 12 Oct 2008 14:00:59 -0700 (PDT)
+Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
+	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id m9CL0P3u029644;
+	Sun, 12 Oct 2008 23:00:31 +0200
+In-Reply-To: <20081012130157.26825.67398.stgit@localhost.localdomain>
+User-Agent: StGIT/0.14.3
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/98053>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/98054>
 
-On Sat, 11 Oct 2008, Johannes Schindelin wrote:
+Put features for which project specific override is not supported into
+separate %global_feature hash, updating gitweb_check_feature()
+subroutine to use it.  For backward compatibility with existing gitweb
+configuration setups $feature{<feature>}{'default'} has preference
+over $global_feature{<feature>}.
 
-> Some confusing tutorials suggest that it would be a good idea to call
-> something like this:
-> 
-> 	git pull origin master:master
-> 
-> While it might make sense to store what you want to merge, it typically
-> is plain wrong.  Especially so when the current branch is "master".
-> 
-> Be at least a little bit helpful by refusing to fetch something into
-> the current branch.
+While at it remove stale comment for 'pathinfo' feature; requiring to
+use workaround specified was fixed in b65910f (gitweb: remove
+PATH_INFO from $my_url and $my_uri).
 
-I think this is the right thing to do.
+FIX IT: some spurious "HASH.." is printed to STDERR.
 
-> Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
-> ---
->  builtin-fetch.c   |   20 ++++++++++++++++++++
->  t/t5505-remote.sh |    2 +-
->  t/t5510-fetch.sh  |    6 ++++++
->  3 files changed, 28 insertions(+), 2 deletions(-)
-> 
-> diff --git a/builtin-fetch.c b/builtin-fetch.c
-> index ee93d3a..d701550 100644
-> --- a/builtin-fetch.c
-> +++ b/builtin-fetch.c
-> @@ -534,6 +534,25 @@ static void find_non_local_tags(struct transport *transport,
->  	string_list_clear(&new_refs, 0);
->  }
->  
-> +static void check_ref_map(struct ref *ref_map)
-> +{
-> +	int flag;
-> +	unsigned char sha1[20];
-> +	const char *HEAD;
-> +
-> +	if (is_bare_repository())
-> +		return;
-> +
-> +	HEAD = resolve_ref("HEAD", sha1, 1, &flag);
-> +
-> +	if (!HEAD || !(flag & REF_ISSYMREF))
-> +		return;
+Signed-off-by: Jakub Narebski <jnareb@gmail.com>
+---
+This should be backward compatibile...
 
-remote.h has a function for getting "the current branch", which would save 
-5 lines here:
+ gitweb/gitweb.perl |   66 ++++++++++++++++++++++++++--------------------------
+ 1 files changed, 33 insertions(+), 33 deletions(-)
 
-	struct branch *current_branch = branch_get(NULL);
-	if (!current_branch || is_bare_repository())
-		return;
-
-> +
-> +	for (; ref_map; ref_map = ref_map->next)
-> +		if (ref_map->peer_ref && !strcmp(HEAD, ref_map->peer_ref->name))
-
-		!strcmp(current_branch->ref_name, ref_map->peer_ref->name)
-
-(untested, and might be off by a "refs/" or something)
-
-> +			die("Refusing to fetch into current branch");
-> +}
-> +
->  static int do_fetch(struct transport *transport,
->  		    struct refspec *refs, int ref_count)
->  {
-> @@ -558,6 +577,7 @@ static int do_fetch(struct transport *transport,
->  	}
->  
->  	ref_map = get_ref_map(transport, refs, ref_count, tags, &autotags);
-> +	check_ref_map(ref_map);
->  
->  	for (rm = ref_map; rm; rm = rm->next) {
->  		if (rm->peer_ref)
+diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
+index cc6edbe..88bedec 100755
+--- a/gitweb/gitweb.perl
++++ b/gitweb/gitweb.perl
+@@ -215,13 +215,6 @@ our %feature = (
+ 		'override' => 0,
+ 		'default' => ['tgz']},
+ 
+-	# Enable text search, which will list the commits which match author,
+-	# committer or commit text to a given string.  Enabled by default.
+-	# Project specific override is not supported.
+-	'search' => {
+-		'override' => 0,
+-		'default' => [1]},
+-
+ 	# Enable grep search, which will list the files in currently selected
+ 	# tree containing the given string. Enabled by default. This can be
+ 	# potentially CPU-intensive, of course.
+@@ -248,6 +241,20 @@ our %feature = (
+ 		'sub' => \&feature_pickaxe,
+ 		'override' => 0,
+ 		'default' => [1]},
++);
++
++our %global_feature = (
++	# feature => [ default options...] (array reference)
++	#
++	# For those features project specific override is not supported.
++	# Note that for backwards compatibility of existing gitweb
++	# configurations $feature{<feature>}{'default'} has preference.
++
++	# use gitweb_check_feature(<feature>) to check if <feature> is enabled
++
++	# Enable text search, which will list the commits which match author,
++	# committer or commit text to a given string.  Enabled by default.
++	'search' => [1],
+ 
+ 	# Make gitweb use an alternative format of the URLs which can be
+ 	# more readable and natural-looking: project name is embedded
+@@ -257,16 +264,8 @@ our %feature = (
+ 	# generates links.
+ 
+ 	# To enable system wide have in $GITWEB_CONFIG
+-	# $feature{'pathinfo'}{'default'} = [1];
+-	# Project specific override is not supported.
+-
+-	# Note that you will need to change the default location of CSS,
+-	# favicon, logo and possibly other files to an absolute URL. Also,
+-	# if gitweb.cgi serves as your indexfile, you will need to force
+-	# $my_uri to contain the script name in your $GITWEB_CONFIG.
+-	'pathinfo' => {
+-		'override' => 0,
+-		'default' => [0]},
++	# $global_feature{'pathinfo'} = [1];
++	'pathinfo' => [0],
+ 
+ 	# Make gitweb consider projects in project root subdirectories
+ 	# to be forks of existing projects. Given project $projname.git,
+@@ -277,11 +276,8 @@ our %feature = (
+ 	# to be listed after the main project.
+ 
+ 	# To enable system wide have in $GITWEB_CONFIG
+-	# $feature{'forks'}{'default'} = [1];
+-	# Project specific override is not supported.
+-	'forks' => {
+-		'override' => 0,
+-		'default' => [0]},
++	# $global_feature{'forks'} = [1];
++	'forks' => [0],
+ 
+ 	# Insert custom links to the action bar of all project pages.
+ 	# This enables you mainly to link to third-party scripts integrating
+@@ -296,12 +292,9 @@ our %feature = (
+ 	# hash base (hb gitweb parameter); %% expands to %.
+ 
+ 	# To enable system wide have in $GITWEB_CONFIG e.g.
+-	# $feature{'actions'}{'default'} = [('graphiclog',
++	# $global_feature{'actions'} = [('graphiclog',
+ 	# 	'/git-browser/by-commit.html?r=%n', 'summary')];
+-	# Project specific override is not supported.
+-	'actions' => {
+-		'override' => 0,
+-		'default' => []},
++	'actions' => [],
+ 
+ 	# Allow gitweb scan project content tags described in ctags/
+ 	# of project repository, and display the popular Web 2.0-ish
+@@ -315,16 +308,23 @@ our %feature = (
+ 	# a pretty tag cloud instead of just a list of tags.
+ 
+ 	# To enable system wide have in $GITWEB_CONFIG
+-	# $feature{'ctags'}{'default'} = ['path_to_tag_script'];
++	# $global_feature{'ctags'} = ['path_to_tag_script'];
+ 	# Project specific override is not supported.
+-	'ctags' => {
+-		'override' => 0,
+-		'default' => [0]},
++	'ctags' => [0],
+ );
+ 
+ sub gitweb_check_feature {
+-	my ($name) = @_;
+-	return unless exists $feature{$name};
++	my $name = shift;
++
++	# %feature has precedence over %global_feature for backward
++	# compatibility with pre-existing gitweb configuration setups
++	unless (exists $feature{$name}) {
++		if (exists $global_feature{$name}) {
++			return @{$global_feature{$name}};
++		}
++		return;
++	}
++
+ 	my ($sub, $override, @defaults) = (
+ 		$feature{$name}{'sub'},
+ 		$feature{$name}{'override'},
