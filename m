@@ -1,70 +1,63 @@
 From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: Re: tip tree clone fail
-Date: Sun, 12 Oct 2008 10:59:27 -0700
-Message-ID: <20081012175927.GB4856@spearce.org>
-References: <48EF14FC.1000801@cn.fujitsu.com> <alpine.LFD.2.00.0810101046260.3271@apollo> <48EF1902.4070309@cn.fujitsu.com> <48EF7BC1.4000401@zytor.com> <20081012124105.GA26988@elte.hu> <48F20663.2040407@zytor.com> <20081012152427.GA4607@elte.hu> <20081012153952.GV10544@machine.or.cz> <20081012165954.GA2317@elte.hu> <m3tzbhk94k.fsf@localhost.localdomain>
+Subject: Re: [RFC PATCH] describe: Make --tags and --all match lightweight
+	tags more often
+Date: Sun, 12 Oct 2008 11:00:40 -0700
+Message-ID: <20081012180040.GC4856@spearce.org>
+References: <20081010165952.GI8203@spearce.org> <48F12CF8.505@op5.se>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Cc: Ingo Molnar <mingo@elte.hu>, Petr Baudis <pasky@suse.cz>,
-	"H. Peter Anvin" <hpa@zytor.com>,
-	Wang Chen <wangchen@cn.fujitsu.com>,
-	Thomas Gleixner <tglx@linutronix.de>,
-	FNST-Lai Jiangshan <laijs@cn.fujitsu.com>,
-	FJ-KOSAKI Motohiro <kosaki.motohiro@jp.fujitsu.com>,
-	git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Oct 12 20:01:46 2008
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+	Pierre Habouzit <madcoder@debian.org>,
+	Erez Zilber <erezzi.list@gmail.com>
+To: Andreas Ericsson <ae@op5.se>
+X-From: git-owner@vger.kernel.org Sun Oct 12 20:02:33 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Kp5GA-0007sG-Mm
-	for gcvg-git-2@gmane.org; Sun, 12 Oct 2008 20:01:43 +0200
+	id 1Kp5Gy-00087Q-UH
+	for gcvg-git-2@gmane.org; Sun, 12 Oct 2008 20:02:33 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754486AbYJLR72 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 12 Oct 2008 13:59:28 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754520AbYJLR72
-	(ORCPT <rfc822;git-outgoing>); Sun, 12 Oct 2008 13:59:28 -0400
-Received: from george.spearce.org ([209.20.77.23]:60356 "EHLO
+	id S1760237AbYJLSAm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 12 Oct 2008 14:00:42 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754610AbYJLSAm
+	(ORCPT <rfc822;git-outgoing>); Sun, 12 Oct 2008 14:00:42 -0400
+Received: from george.spearce.org ([209.20.77.23]:60364 "EHLO
 	george.spearce.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754356AbYJLR72 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 12 Oct 2008 13:59:28 -0400
+	with ESMTP id S1754564AbYJLSAl (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 12 Oct 2008 14:00:41 -0400
 Received: by george.spearce.org (Postfix, from userid 1001)
-	id 50B8C3835F; Sun, 12 Oct 2008 17:59:27 +0000 (UTC)
+	id 03CE43835F; Sun, 12 Oct 2008 18:00:40 +0000 (UTC)
 Content-Disposition: inline
-In-Reply-To: <m3tzbhk94k.fsf@localhost.localdomain>
+In-Reply-To: <48F12CF8.505@op5.se>
 User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/98039>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/98040>
 
-Jakub Narebski <jnareb@gmail.com> wrote:
-> Ingo Molnar <mingo@elte.hu> writes:
-> 
-> > Soapbox: in fact it would be outright stupid to limit the kernel 
-> > source's availability artificially by not making HTTP a tier-one access 
-> > method.
-> 
-> Hopefully there should soon be here "smart" HTTP server [...]
-> 
-> It is WIP, but I'm not sure how far it is from completion.
+Andreas Ericsson <ae@op5.se> wrote:
+> Shawn O. Pearce wrote:
+>> If the caller supplies --tags they want the lightweight, unannotated
+>> tags to be searched for a match.  If a lightweight tag is closer
+>> in the history, it should be matched, even if an annotated tag is
+>> reachable further back in the commit chain.
+>>
+>> The same applies with --all when matching any other type of ref.
+>>
+>
+> In 99% of the cases, "--all" will then give back the currently
+> checked out branch unless a revision is specified, right?
 
-Its still not even prototyped.  I'm supposed to be spending my 20%
-time at Google on the Git-in-HTTP documentation and implementation,
-so I can feed patches to the list for review.
+Yup.
 
-Sadly, my current 80% project has been demanding >120% of my time
-these past 5 weeks, so I have not been able to touch the Git-in-HTTP
-concept in that time period.
+`git describe --all` or `git describe --all HEAD`
 
-Most of my 80% project has to be wrapped up by this time next
-week.  Afterwards I'm going to try and dedicate at least a week
-to Git-in-HTTP and get caught up.  I sort of have to; its part of
-my goals for my performance evaluation.  Even if the list winds
-up rejecting my implementation, I still have to put it out there
-for discussion.
+would kick back the current branch you have checked out, assuming
+you have a real branch under refs/heads and not some detached HEAD.
+
+IMHO, that's what the user asked for.
 
 -- 
 Shawn.
