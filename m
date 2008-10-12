@@ -1,188 +1,282 @@
-From: Dmitry Potapov <dpotapov@gmail.com>
-Subject: Re: [PATCH 2/2 v2] check-attr: Add --stdin-paths option
-Date: Sun, 12 Oct 2008 20:35:05 +0400
-Message-ID: <20081012163504.GF21650@dpotapov.dyndns.org>
-References: <bb6f213e0809220312m6cb8022csa3843cfaccc5b69b@mail.gmail.com> <1223173855-6173-1-git-send-email-dpotapov@gmail.com> <1223173855-6173-2-git-send-email-dpotapov@gmail.com> <48E9B997.1010006@viscovery.net> <20081007001652.GR21650@dpotapov.dyndns.org> <20081008152443.GA4795@spearce.org> <20081012141952.GD21650@dpotapov.dyndns.org> <gct3lk$s16$1@ger.gmane.org>
+From: "Tuncer Ayaz" <tuncer.ayaz@gmail.com>
+Subject: [PATCH] Teach/Fix git-pull/git-merge --quiet and --verbose
+Date: Sun, 12 Oct 2008 18:54:38 +0200
+Message-ID: <4ac8254d0810120954x2364054ahf2d49d6fbb7b0bb1@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, "Shawn O. Pearce" <spearce@spearce.org>
-To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Oct 12 18:36:35 2008
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Oct 12 18:55:58 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Kp3vm-0006q8-8T
-	for gcvg-git-2@gmane.org; Sun, 12 Oct 2008 18:36:35 +0200
+	id 1Kp4EV-0004aw-7o
+	for gcvg-git-2@gmane.org; Sun, 12 Oct 2008 18:55:56 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753035AbYJLQfU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 12 Oct 2008 12:35:20 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752482AbYJLQfU
-	(ORCPT <rfc822;git-outgoing>); Sun, 12 Oct 2008 12:35:20 -0400
-Received: from fg-out-1718.google.com ([72.14.220.153]:4056 "EHLO
-	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752299AbYJLQfT (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 12 Oct 2008 12:35:19 -0400
-Received: by fg-out-1718.google.com with SMTP id 19so948136fgg.17
-        for <git@vger.kernel.org>; Sun, 12 Oct 2008 09:35:17 -0700 (PDT)
+	id S1754315AbYJLQym (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 12 Oct 2008 12:54:42 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754290AbYJLQym
+	(ORCPT <rfc822;git-outgoing>); Sun, 12 Oct 2008 12:54:42 -0400
+Received: from wr-out-0506.google.com ([64.233.184.232]:13504 "EHLO
+	wr-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754249AbYJLQyl (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 12 Oct 2008 12:54:41 -0400
+Received: by wr-out-0506.google.com with SMTP id 69so852226wri.5
+        for <git@vger.kernel.org>; Sun, 12 Oct 2008 09:54:40 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:cc:subject
-         :message-id:references:mime-version:content-type:content-disposition
-         :in-reply-to:user-agent;
-        bh=RJ2+g5hEX4yZ7W+Xo0WlJsxn3fWnXXss2Az8ZnJdwVw=;
-        b=WEMW+aL+RRt5uTk9YU24Q7kxGfvIiAL5iYNfPHy27/S2a67WIVrVaAgFzK+8l3Vbae
-         I6EzLG1j598H3R1Vr0J9p7njcEteh+u8fmFHImhESDlKeLY9BJQ5A0l79fgGCilnlOFs
-         wfNYICx5WHiH9JWoIbphCuCbJ6d6MHEN+n/lo=
+        h=domainkey-signature:received:received:message-id:date:from:to
+         :subject:mime-version:content-type:content-transfer-encoding
+         :content-disposition;
+        bh=zzu43pVXHrtvPnNk94RaQhwHjo6Ibt1MB9BpQrxbOmI=;
+        b=A684zGEsnQgPPgtZ8vqCq9vPssvTaq1Tiwnk5mGEF1jP9PXoJ+Je0zfEqOUykXjPq2
+         jw9I2p0fcNiD63CrBQTAV4QojYW+D0QZWpo2LxtUwB+J9DE0wEnhBTezvW5l0o7B8YvO
+         cNAyUdOVLNOiHu5DjkzZuL0REYkle0oW8EdQg=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        b=RJKFoFyaYBr+bqcjuhtkHoQXsi5Ak0S3wkywcBJFNBEjWlF626Bo3sXaT1uBQX+68J
-         3B1Ldhd1kbLM07d7hFr4/ElwxOU7RabmQzV8iajGSTIA7PB/xXam46XtG4C9OaQfilH8
-         plJimHL25rllGpY6tjJdSl7dXGH7v2qtAhaNc=
-Received: by 10.86.57.9 with SMTP id f9mr4069027fga.66.1223829317303;
-        Sun, 12 Oct 2008 09:35:17 -0700 (PDT)
-Received: from localhost (ppp91-77-162-44.pppoe.mtu-net.ru [91.77.162.44])
-        by mx.google.com with ESMTPS id 3sm5722884fge.3.2008.10.12.09.35.14
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Sun, 12 Oct 2008 09:35:16 -0700 (PDT)
+        h=message-id:date:from:to:subject:mime-version:content-type
+         :content-transfer-encoding:content-disposition;
+        b=YC5gkiFLNOf1sa3Wvdjc/0M821XNQdSftMDZQiKxaczXGWjb1OA+Qc6tnNDTW9L9Nf
+         gL+eVAu0P7yZJ3Zg5oYU0YGJWQh27ABqzfm20HSIKqo7dgIPfuHwKdOfeDVqLrSgyIt5
+         32o8E+3EzapzTIwjZgndK5b1f97qRIizejcqw=
+Received: by 10.65.123.10 with SMTP id a10mr8420649qbn.12.1223830478984;
+        Sun, 12 Oct 2008 09:54:38 -0700 (PDT)
+Received: by 10.64.142.13 with HTTP; Sun, 12 Oct 2008 09:54:38 -0700 (PDT)
 Content-Disposition: inline
-In-Reply-To: <gct3lk$s16$1@ger.gmane.org>
-User-Agent: Mutt/1.5.13 (2006-08-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/98035>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/98036>
 
-On Sun, Oct 12, 2008 at 05:04:21PM +0200, Jakub Narebski wrote:
-> Dmitry Potapov wrote:
-> 
-> >> And since its being
-> >> used mostly by automated tools (gitk/git-gui) I wonder if a -z should
-> >> also be supported for input termination with NUL instead of LF.
-> > 
-> > I have added it, but after I did, I start to wonder whether it is the
-> > right thing to do to unquote NUL terminated input line?
-> 
-> I think that -z should be not quoted (like git-diff-tree or git-ls-tree
-> _output_); if it is, then IMHO it is a bug.
+After fixing clone -q I noticed that pull -q is does not do what
+it's supposed to do and implemented --quiet/--verbose by
+adding it to builtin-merge and fixing two places in builtin-fetch.
 
-I am sorry. I was obviously wrong about 'git checkout-index', as it does
-not try to unquote if '-z' is specified. So, my previous patch was wrong.
-The corrected patch is below.
+I have not touched/adjusted contrib/completion/git-completion.bash
+but can take a look if wanted. I think it needs one or two adjustions
+anyway caused by recent --OPTIONS changes in master.
 
-It still uses the same output format whether '-z' is specified or not.
-Maybe I should change that too to use '\0' as the separator if '-z' is
-specified?
+I've tested the following invocations with the below changes applied:
+$ git pull
+$ git pull -q
+$ git pull -v
 
-Dmitry
-PS Please, add me to 'To:' or 'Cc:' when you reply to my email.
-
-
--- >8 --
-From: Dmitry Potapov <dpotapov@gmail.com>
-Date: Sun, 12 Oct 2008 18:08:43 +0400
-Subject: [PATCH] check-attr: Add --stdin option
-
+Signed-off-by: Tuncer Ayaz <tuncer.ayaz@gmail.com>
 ---
-This patch is meant to be squash on top of dp/checkattr in pu.
+ Documentation/merge-options.txt |    8 ++++++
+ builtin-fetch.c                 |    5 ++-
+ builtin-merge.c                 |   52 +++++++++++++++++++++++---------------
+ git-pull.sh                     |   10 +++++--
+ 4 files changed, 49 insertions(+), 26 deletions(-)
 
- Documentation/git-check-attr.txt |    8 ++++++--
- builtin-check-attr.c             |   15 ++++++++++-----
- t/t0003-attributes.sh            |    2 +-
- 3 files changed, 17 insertions(+), 8 deletions(-)
+diff --git a/Documentation/merge-options.txt b/Documentation/merge-options.txt
+index 007909a..427cdef 100644
+--- a/Documentation/merge-options.txt
++++ b/Documentation/merge-options.txt
+@@ -1,3 +1,11 @@
++-q::
++--quiet::
++	Operate quietly.
++
++-v::
++--verbose::
++	Be verbose.
++
+ --stat::
+ 	Show a diffstat at the end of the merge. The diffstat is also
+ 	controlled by the configuration option merge.stat.
+diff --git a/builtin-fetch.c b/builtin-fetch.c
+index ee93d3a..b5c2885 100644
+--- a/builtin-fetch.c
++++ b/builtin-fetch.c
+@@ -372,12 +372,13 @@ static int store_updated_refs(const char *url,
+const char *remote_name,
+ 				SUMMARY_WIDTH, *kind ? kind : "branch",
+ 				 REFCOL_WIDTH, *what ? what : "HEAD");
+ 		if (*note) {
+-			if (!shown_url) {
++			if ((verbose || !quiet) && !shown_url) {
+ 				fprintf(stderr, "From %.*s\n",
+ 						url_len, url);
+ 				shown_url = 1;
+ 			}
+-			fprintf(stderr, " %s\n", note);
++			if(verbose || !quiet)
++				fprintf(stderr, " %s\n", note);
+ 		}
+ 	}
+ 	fclose(fp);
+diff --git a/builtin-merge.c b/builtin-merge.c
+index 38266ba..1f601d4 100644
+--- a/builtin-merge.c
++++ b/builtin-merge.c
+@@ -44,6 +44,7 @@ static const char * const builtin_merge_usage[] = {
+ static int show_diffstat = 1, option_log, squash;
+ static int option_commit = 1, allow_fast_forward = 1;
+ static int allow_trivial = 1, have_message;
++static int quiet, verbose;
+ static struct strbuf merge_msg;
+ static struct commit_list *remoteheads;
+ static unsigned char head[20], stash[20];
+@@ -101,7 +102,7 @@ static struct strategy *get_strategy(const char *name)
+ 			struct cmdname *ent = main_cmds.names[i];
+ 			for (j = 0; j < ARRAY_SIZE(all_strategy); j++)
+ 				if (!strncmp(ent->name, all_strategy[j].name, ent->len)
+-						&& !all_strategy[j].name[ent->len])
++					&& !all_strategy[j].name[ent->len])
+ 					found = 1;
+ 			if (!found)
+ 				add_cmdname(&not_strategies, ent->name, ent->len);
+@@ -152,6 +153,8 @@ static int option_parse_n(const struct option *opt,
+ }
 
-diff --git a/Documentation/git-check-attr.txt b/Documentation/git-check-attr.txt
-index 0839a57..14e4374 100644
---- a/Documentation/git-check-attr.txt
-+++ b/Documentation/git-check-attr.txt
-@@ -9,7 +9,7 @@ git-check-attr - Display gitattributes information.
- SYNOPSIS
- --------
- 'git check-attr' attr... [--] pathname...
--'git check-attr' --stdin-paths attr... < <list-of-paths
-+'git check-attr' --stdin [-z] attr... < <list-of-paths
- 
- DESCRIPTION
- -----------
-@@ -18,9 +18,13 @@ For every pathname, this command will list if each attr is 'unspecified',
- 
- OPTIONS
- -------
----stdin-paths::
-+--stdin::
- 	Read file names from stdin instead of from the command-line.
- 
-+-z::
-+	Only meaningful with `--stdin`; paths are separated with
-+	NUL character instead of LF.
-+
- \--::
- 	Interpret all preceding arguments as attributes, and all following
- 	arguments as path names. If not supplied, only the first argument will
-diff --git a/builtin-check-attr.c b/builtin-check-attr.c
-index fa1e4d5..4921341 100644
---- a/builtin-check-attr.c
-+++ b/builtin-check-attr.c
-@@ -7,12 +7,16 @@
- static int stdin_paths;
- static const char * const check_attr_usage[] = {
- "git check-attr attr... [--] pathname...",
--"git check-attr --stdin-paths attr... < <list-of-paths>",
-+"git check-attr --stdin attr... < <list-of-paths>",
- NULL
- };
- 
-+static int null_term_line;
-+
- static const struct option check_attr_options[] = {
--	OPT_BOOLEAN(0 , "stdin-paths", &stdin_paths, "read file names from stdin"),
-+	OPT_BOOLEAN(0 , "stdin", &stdin_paths, "read file names from stdin"),
-+	OPT_BOOLEAN('z', NULL, &null_term_line,
-+		"input paths are terminated by a null character"),
- 	OPT_END()
- };
- 
-@@ -41,11 +45,12 @@ static void check_attr_stdin_paths(int cnt, struct git_attr_check *check,
- 	const char** name)
+ static struct option builtin_merge_options[] = {
++	OPT__QUIET(&quiet),
++	OPT__VERBOSE(&verbose),
+ 	{ OPTION_CALLBACK, 'n', NULL, NULL, NULL,
+ 		"do not show a diffstat at the end of the merge",
+ 		PARSE_OPT_NOARG, option_parse_n },
+@@ -250,7 +253,8 @@ static void restore_state(void)
+ /* This is called when no merge was necessary. */
+ static void finish_up_to_date(const char *msg)
  {
- 	struct strbuf buf, nbuf;
-+	int line_termination = null_term_line ? 0 : '\n';
- 
- 	strbuf_init(&buf, 0);
- 	strbuf_init(&nbuf, 0);
--	while (strbuf_getline(&buf, stdin, '\n') != EOF) {
--		if (buf.buf[0] == '"') {
-+	while (strbuf_getline(&buf, stdin, line_termination) != EOF) {
-+		if (line_termination && buf.buf[0] == '"') {
- 			strbuf_reset(&nbuf);
- 			if (unquote_c_style(&nbuf, buf.buf, NULL))
- 				die("line is badly quoted");
-@@ -90,7 +95,7 @@ int cmd_check_attr(int argc, const char **argv, const char *prefix)
- 	if (cnt <= 0)
- 		errstr = "No attribute specified";
- 	else if (stdin_paths && doubledash < argc)
--		errstr = "Can't specify files with --stdin-paths";
-+		errstr = "Can't specify files with --stdin";
- 	if (errstr) {
- 		error (errstr);
- 		usage_with_options(check_attr_usage, check_attr_options);
-diff --git a/t/t0003-attributes.sh b/t/t0003-attributes.sh
-index f6901b4..1c77192 100755
---- a/t/t0003-attributes.sh
-+++ b/t/t0003-attributes.sh
-@@ -60,7 +60,7 @@ a/b/h: test: a/b/h
- a/b/d/g: test: a/b/d/*
- EOF
- 
--	sed -e "s/:.*//" < expect | git check-attr --stdin-paths test > actual &&
-+	sed -e "s/:.*//" < expect | git check-attr --stdin test > actual &&
- 	test_cmp expect actual
- '
- 
--- 
-1.6.0.2.521.g739d3
+-	printf("%s%s\n", squash ? " (nothing to squash)" : "", msg);
++	if(verbose || !quiet)
++		printf("%s%s\n", squash ? " (nothing to squash)" : "", msg);
+ 	drop_save();
+ }
 
--- >8 --
+@@ -262,7 +266,8 @@ static void squash_message(void)
+ 	struct commit_list *j;
+ 	int fd;
+
+-	printf("Squash commit -- not updating HEAD\n");
++	if(verbose || !quiet)
++		printf("Squash commit -- not updating HEAD\n");
+ 	fd = open(git_path("SQUASH_MSG"), O_WRONLY | O_CREAT, 0666);
+ 	if (fd < 0)
+ 		die("Could not write to %s", git_path("SQUASH_MSG"));
+@@ -282,18 +287,20 @@ static void squash_message(void)
+ 	if (prepare_revision_walk(&rev))
+ 		die("revision walk setup failed");
+
+-	strbuf_init(&out, 0);
+-	strbuf_addstr(&out, "Squashed commit of the following:\n");
+-	while ((commit = get_revision(&rev)) != NULL) {
+-		strbuf_addch(&out, '\n');
+-		strbuf_addf(&out, "commit %s\n",
+-			sha1_to_hex(commit->object.sha1));
+-		pretty_print_commit(rev.commit_format, commit, &out, rev.abbrev,
+-			NULL, NULL, rev.date_mode, 0);
++	if(verbose || !quiet) {
++		strbuf_init(&out, 0);
++		strbuf_addstr(&out, "Squashed commit of the following:\n");
++		while ((commit = get_revision(&rev)) != NULL) {
++			strbuf_addch(&out, '\n');
++			strbuf_addf(&out, "commit %s\n",
++						sha1_to_hex(commit->object.sha1));
++			pretty_print_commit(rev.commit_format, commit, &out, rev.abbrev,
++								NULL, NULL, rev.date_mode, 0);
++		}
++		write(fd, out.buf, out.len);
++		close(fd);
++		strbuf_release(&out);
+ 	}
+-	write(fd, out.buf, out.len);
+-	close(fd);
+-	strbuf_release(&out);
+ }
+
+ static int run_hook(const char *name)
+@@ -333,14 +340,15 @@ static void finish(const unsigned char
+*new_head, const char *msg)
+ 	if (!msg)
+ 		strbuf_addstr(&reflog_message, getenv("GIT_REFLOG_ACTION"));
+ 	else {
+-		printf("%s\n", msg);
++		if(verbose || !quiet)
++			printf("%s\n", msg);
+ 		strbuf_addf(&reflog_message, "%s: %s",
+ 			getenv("GIT_REFLOG_ACTION"), msg);
+ 	}
+ 	if (squash) {
+ 		squash_message();
+ 	} else {
+-		if (!merge_msg.len)
++		if ((verbose || !quiet) && !merge_msg.len)
+ 			printf("No merge message -- not updating HEAD\n");
+ 		else {
+ 			const char *argv_gc_auto[] = { "gc", "--auto", NULL };
+@@ -877,6 +885,8 @@ int cmd_merge(int argc, const char **argv, const
+char *prefix)
+
+ 	argc = parse_options(argc, argv, builtin_merge_options,
+ 			builtin_merge_usage, 0);
++	if(!verbose && quiet)
++		show_diffstat = 0;
+
+ 	if (squash) {
+ 		if (!allow_fast_forward)
+@@ -1019,11 +1029,11 @@ int cmd_merge(int argc, const char **argv,
+const char *prefix)
+ 		char hex[41];
+
+ 		strcpy(hex, find_unique_abbrev(head, DEFAULT_ABBREV));
+-
+-		printf("Updating %s..%s\n",
+-			hex,
+-			find_unique_abbrev(remoteheads->item->object.sha1,
+-			DEFAULT_ABBREV));
++		if(verbose || !quiet)
++			printf("Updating %s..%s\n",
++				   hex,
++				   find_unique_abbrev(remoteheads->item->object.sha1,
++									  DEFAULT_ABBREV));
+ 		strbuf_init(&msg, 0);
+ 		strbuf_addstr(&msg, "Fast forward");
+ 		if (have_message)
+diff --git a/git-pull.sh b/git-pull.sh
+index 75c3610..d84ceb5 100755
+--- a/git-pull.sh
++++ b/git-pull.sh
+@@ -16,13 +16,17 @@ cd_to_toplevel
+ test -z "$(git ls-files -u)" ||
+ 	die "You are in the middle of a conflicted merge."
+
+-strategy_args= no_stat= no_commit= squash= no_ff= log_arg=
++quiet= verbose= strategy_args= no_stat= no_commit= squash= no_ff= log_arg=
+ curr_branch=$(git symbolic-ref -q HEAD)
+ curr_branch_short=$(echo "$curr_branch" | sed "s|refs/heads/||")
+ rebase=$(git config --bool branch.$curr_branch_short.rebase)
+ while :
+ do
+ 	case "$1" in
++	-q|--quiet)
++		quiet=-q ;;
++	-v|--verbose)
++		verbose=-v ;;
+ 	-n|--no-stat|--no-summary)
+ 		no_stat=-n ;;
+ 	--stat|--summary)
+@@ -121,7 +125,7 @@ test true = "$rebase" && {
+ 		"refs/remotes/$origin/$reflist" 2>/dev/null)"
+ }
+ orig_head=$(git rev-parse --verify HEAD 2>/dev/null)
+-git fetch --update-head-ok "$@" || exit 1
++git fetch $verbose $quiet --update-head-ok "$@" || exit 1
+
+ curr_head=$(git rev-parse --verify HEAD 2>/dev/null)
+ if test "$curr_head" != "$orig_head"
+@@ -181,5 +185,5 @@ merge_name=$(git fmt-merge-msg $log_arg
+<"$GIT_DIR/FETCH_HEAD") || exit
+ test true = "$rebase" &&
+ 	exec git-rebase $strategy_args --onto $merge_head \
+ 	${oldremoteref:-$merge_head}
+-exec git-merge $no_stat $no_commit $squash $no_ff $log_arg $strategy_args \
++exec git-merge $quiet $verbose $no_stat $no_commit $squash $no_ff
+$log_arg $strategy_args \
+ 	"$merge_name" HEAD $merge_head
+-- 
+1.6.0.2.GIT
