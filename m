@@ -1,117 +1,82 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: Fwd: git status options feature suggestion
-Date: Sun, 12 Oct 2008 00:49:00 -0400
-Message-ID: <20081012044900.GA27845@coredump.intra.peff.net>
-References: <81bfc67a0810082234p55e2fb9jb2a10f837eea7de0@mail.gmail.com> <20081009061136.GA24288@coredump.intra.peff.net> <81bfc67a0810082327p421ca4e9v84f4b33023bc6fe6@mail.gmail.com> <81bfc67a0810082327q71b9d6apf2787eb8519031bb@mail.gmail.com> <alpine.DEB.1.00.0810091101230.22125@pacific.mpi-cbg.de.mpi-cbg.de> <48EE1F58.2060707@drmicha.warpmail.net>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 3/4] diff: introduce diff.<driver>.binary
+Date: Sat, 11 Oct 2008 22:24:44 -0700
+Message-ID: <7vabdaidwj.fsf@gitster.siamese.dyndns.org>
+References: <20081005214114.GA21875@coredump.intra.peff.net>
+ <20081005214336.GC21925@coredump.intra.peff.net>
+ <48EB7D74.40302@viscovery.net>
+ <20081007153543.GA26531@coredump.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Caleb Cushing <xenoterracide@gmail.com>, git@vger.kernel.org,
-	Junio C Hamano <gitster@pobox.com>
-To: Michael J Gruber <git@drmicha.warpmail.net>
-X-From: git-owner@vger.kernel.org Sun Oct 12 06:54:28 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: Johannes Sixt <j.sixt@viscovery.net>,
+	Matthieu Moy <Matthieu.Moy@imag.fr>, git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Sun Oct 12 07:27:07 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KosyI-0001M2-Ou
-	for gcvg-git-2@gmane.org; Sun, 12 Oct 2008 06:54:27 +0200
+	id 1KotTq-0007kB-SI
+	for gcvg-git-2@gmane.org; Sun, 12 Oct 2008 07:27:03 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751084AbYJLEtG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 12 Oct 2008 00:49:06 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750884AbYJLEtF
-	(ORCPT <rfc822;git-outgoing>); Sun, 12 Oct 2008 00:49:05 -0400
-Received: from peff.net ([208.65.91.99]:2205 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750849AbYJLEtE (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 12 Oct 2008 00:49:04 -0400
-Received: (qmail 12684 invoked by uid 111); 12 Oct 2008 04:49:01 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.32) with SMTP; Sun, 12 Oct 2008 00:49:01 -0400
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Sun, 12 Oct 2008 00:49:00 -0400
-Content-Disposition: inline
-In-Reply-To: <48EE1F58.2060707@drmicha.warpmail.net>
+	id S1750806AbYJLFY4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 12 Oct 2008 01:24:56 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750768AbYJLFYz
+	(ORCPT <rfc822;git-outgoing>); Sun, 12 Oct 2008 01:24:55 -0400
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:49405 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750752AbYJLFYz (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 12 Oct 2008 01:24:55 -0400
+Received: from localhost.localdomain (localhost [127.0.0.1])
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id E06656D27E;
+	Sun, 12 Oct 2008 01:24:53 -0400 (EDT)
+Received: from pobox.com (ip68-225-240-211.oc.oc.cox.net [68.225.240.211])
+ (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
+ certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
+ ESMTPSA id CF7C86D27D; Sun, 12 Oct 2008 01:24:46 -0400 (EDT)
+In-Reply-To: <20081007153543.GA26531@coredump.intra.peff.net> (Jeff King's
+ message of "Tue, 7 Oct 2008 11:35:43 -0400")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: 19BA41AA-981E-11DD-87A1-1E1F86D30F62-77302942!a-sasl-fastnet.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/98000>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/98001>
 
-On Thu, Oct 09, 2008 at 05:12:24PM +0200, Michael J Gruber wrote:
+Jeff King <peff@peff.net> writes:
 
-> - people are used to "svn status [-v]" like output which can include
-> untracked as well as tracked unmodified files; there are other valid
-> reasons why you would want that info
-> 
-> - porc can't do it: git status can't show ignored files, doesn't use
-> status letters, can't show files with specific status; git diff
-> --name-status can't show ignored nor untracked files
-> [In fact, the description of "git diff" says "files which you could
-> add", which should include untracked files, but doesn't.]
-> 
-> - plumb uses conflicting letters: git ls-files output conflicts with git
-> diff --name-status output
-> 
-> So I guess it's time for a usability effort in this area. A few
-> questions before going about that:
+> Let's say I have a subdirectory of files, some of which are binary. But
+> for those that _aren't_ binary, I want to use a particular funcname
+> pattern. So I do this:
+>
+>   echo '* diff=foo' >subdir/.gitattributes
+>   git config diff.foo.funcname some-regex
+> ...
+> In practice, this doesn't happen much, because funcname tends to follow
+> the file extension, as does binary-ness.
 
-A week or two ago I came across yet another git-status annoyance: it
-needs write access to the repository to run (I was helping somebody with
-a task on a shared box, and I wanted to run status in their repository
-using my account).
+I find this a highly contrived example.  Is this ever be useful in
+practice?
 
-I considered submitting a patch to fix this, but I think it is really
-more fundamental. I use status to get an overview of what's going on in
-a repo, but it is intimately related to a potential commit.
+>> The reason why I'd like to understand the issue is because I like the
+>> diff.foo.textconv that you introduce in patch 4/4, but I dislike that I
+>> have to set diff.foo.binary to false in order to use the textconv. So, why
+>> is this .binary needed?
+>
+> I think this .binary is something we can and should get rid of; as it
+> stands now, you always end up having to set it along with .textconv. I
+> have considered two ways:
 
-And this bleeds into other areas, too. Why should the "what's going on
-in this repo" command prefix all lines with "#"? We would have more
-freedom to change the format if it weren't required to be a comment
-line in a commit message.
+The logic behind the original behaviour was that the file ought to be
+"diff-able" if you are setting up funcname pattern because the funcname
+pattern only makes sense if you are doing the textual diff.  In other
+words, "should we do textual diff?" and "what funcname pattern should we
+use?" are _not_ orthogonal, as wanting to configure the latter does imply
+that you do want to see the change in the textual diff format.
 
-So I think it is probably reasonable to think about a new command (which
-would not be called status) that shows this information. What do people
-want to see? And in what format? Some things I would want or have seen
-requested are:
-
- - staged and unstaged changes in --name-status format
-
- - files without changes (with a -v flag).
-
- - untracked files
-
- - current branch / detached HEAD (with relationship to tracked branch,
-   if any)
-
-And maybe after hashing it out, it turns out it's not that different
-from "git status" and we should just stick with that. But I would be
-curious to hear proposals.
-
-> - I think change of existing behaviour is unavoidable (make ls-files and
-> diff --name-status consistent). Is that something to do now or rather
-> before 1.7? Is porc (diff) supposed to be changed or plumb (ls-files)?
-
-I don't think you would want to just change the default; you would
-probably add a new option to ls-files to use the --name-status letters,
-and then use that in your new porcelain.
-
-> - How strong should the tie between git status and git commit be?
-> Current git status is basically git commit -n, with the usual meaning of
-> "-n" (such as for prune etc."), not with the current meaning of git
-> commit -n, sigh...
-
-I think the theoretical tool I mentioned would benefit from breaking
-this connection. But I don't know whether it is prudent to take the
-"status" name in doing so. Even if we decided to do so, it would
-probably happen something like:
-
-  1. Introduce git-wtf, a new status-like tool. Deprecate git-status in
-     its current form.
-
-  2. Wait a really long time.
-
-  3. Rename git-wtf to git-status.
-
-So either way, the first step is an alternative replacement command.
-
--Peff
+For the same rationale, if you have .textconv, I think it is natural for
+us to say that you do want to see the change in the textual diff format.
+So I'd agree that you can get rid of this .binary business by saying that
+having .textconv marks it diffable (IOW, I think your first alternative
+makes more sense).
