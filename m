@@ -1,79 +1,81 @@
-From: "Leo Razoumov" <slonik.az@gmail.com>
-Subject: Re: Fwd: git status options feature suggestion
-Date: Sun, 12 Oct 2008 06:09:47 -0400
-Message-ID: <ee2a733e0810120309o1fbfa4dxe6f2292a28bd6db3@mail.gmail.com>
-Reply-To: SLONIK.AZ@gmail.com
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Oct 12 12:13:33 2008
+From: Wincent Colaiuta <win@wincent.com>
+Subject: Re: git status options feature suggestion
+Date: Sun, 12 Oct 2008 12:47:11 +0200
+Message-ID: <971DCAD3-3274-4507-AE3D-5BDCEDB8513C@wincent.com>
+References: <81bfc67a0810082234p55e2fb9jb2a10f837eea7de0@mail.gmail.com> <20081009061136.GA24288@coredump.intra.peff.net> <81bfc67a0810082327p421ca4e9v84f4b33023bc6fe6@mail.gmail.com> <81bfc67a0810082327q71b9d6apf2787eb8519031bb@mail.gmail.com> <alpine.DEB.1.00.0810091101230.22125@pacific.mpi-cbg.de.mpi-cbg.de> <48EE1F58.2060707@drmicha.warpmail.net> <20081012044900.GA27845@coredump.intra.peff.net> <7vwsgegvsh.fsf@gitster.siamese.dyndns.org>
+Mime-Version: 1.0 (Apple Message framework v926)
+Content-Type: text/plain; charset=ISO-8859-1;
+	format=flowed	delsp=yes
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Jeff King <peff@peff.net>,
+	Michael J Gruber <git@drmicha.warpmail.net>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Caleb Cushing <xenoterracide@gmail.com>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sun Oct 12 12:50:40 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Koxx4-0002Ea-Ux
-	for gcvg-git-2@gmane.org; Sun, 12 Oct 2008 12:13:31 +0200
+	id 1KoyX1-0002s7-IQ
+	for gcvg-git-2@gmane.org; Sun, 12 Oct 2008 12:50:40 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751510AbYJLKJw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 12 Oct 2008 06:09:52 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751549AbYJLKJv
-	(ORCPT <rfc822;git-outgoing>); Sun, 12 Oct 2008 06:09:51 -0400
-Received: from fk-out-0910.google.com ([209.85.128.188]:33873 "EHLO
-	fk-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751421AbYJLKJv (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 12 Oct 2008 06:09:51 -0400
-Received: by fk-out-0910.google.com with SMTP id 18so1157646fkq.5
-        for <git@vger.kernel.org>; Sun, 12 Oct 2008 03:09:48 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:reply-to
-         :to:subject:mime-version:content-type:content-transfer-encoding
-         :content-disposition;
-        bh=ICWViKUIrUAEqChwuBS/HLOIrzSY5x+ewebC+zUfdPs=;
-        b=UMTExKj/u2pee2aHgSXBofCL7mefdZ65Z3g9I5744jykOh6cXgYvI1evVd3zFdiTJd
-         wif3+kDCxNyD2bgP8/IBb3KGGZ93L1/aDnKiVBQfF95Jzt4r0T5SijQ6pCeacuMiOhO0
-         cq1CqTbFfl2gsyXjzdCksxunx6J1C0UwPycAo=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:reply-to:to:subject:mime-version:content-type
-         :content-transfer-encoding:content-disposition;
-        b=bDU0lDvuxK/Wcmg5A31SqjE40g6fQrFKjsaXNDbOWBxxSLYNe/Ld20kp55TzGSCsCI
-         UrIlwrzlFuYUZYURL/ZfJI0uSpQzJVnYMRt+S5oMgY9ur/Bg4gzVTOS7YCgfh+Q8vCwN
-         U8ycADLkNobtL16Fp56A5saUNKdDUpdw+AQvo=
-Received: by 10.187.188.19 with SMTP id q19mr880327fap.48.1223806187887;
-        Sun, 12 Oct 2008 03:09:47 -0700 (PDT)
-Received: by 10.187.193.16 with HTTP; Sun, 12 Oct 2008 03:09:47 -0700 (PDT)
-Content-Disposition: inline
+	id S1751688AbYJLKrY convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 12 Oct 2008 06:47:24 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751608AbYJLKrY
+	(ORCPT <rfc822;git-outgoing>); Sun, 12 Oct 2008 06:47:24 -0400
+Received: from wincent1.inetu.net ([209.235.192.161]:34092 "EHLO
+	wincent1.inetu.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751437AbYJLKrX convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 12 Oct 2008 06:47:23 -0400
+Received: from cuzco.lan (5.pool85-53-7.dynamic.orange.es [85.53.7.5])
+	(authenticated bits=0)
+	by wincent1.inetu.net (8.13.8/8.13.8) with ESMTP id m9CAlCxi006821
+	(version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NO);
+	Sun, 12 Oct 2008 06:47:14 -0400
+In-Reply-To: <7vwsgegvsh.fsf@gitster.siamese.dyndns.org>
+X-Mailer: Apple Mail (2.926)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/98010>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/98011>
 
-On 10/12/08, Junio C Hamano <gitster@pobox.com> wrote:
-> [..snip..]
-> I was going to suggest the same.  "git st" for people who come from "svn st"
->  so that "git status" can be kept as traditional "preview of 'git commit'".
+El 12/10/2008, a las 8:41, Junio C Hamano escribi=F3:
+
+> Jeff King <peff@peff.net> writes:
 >
->  And just make it mimic whatever folks accustomed to "svn st" would expect,
->  modulo we would need two status letters to signal difference between
->  (HEAD, index), and (index, worktree).  Perhaps three if you want to show
->  difference between (HEAD, worktree) while at it.
+>> So I think it is probably reasonable to think about a new command =20
+>> (which
+>> would not be called status) that shows this information.
 >
->  And no, I have not seen any argument good enough to change ls-files nor
->  diff-$lowlevel output and break people's existing scripts.
+> I was going to suggest the same.  "git st" for people who come from =20
+> "svn st"
+> so that "git status" can be kept as traditional "preview of 'git =20
+> commit'".
 >
+> And just make it mimic whatever folks accustomed to "svn st" would =20
+> expect,
+> modulo we would need two status letters to signal difference between
+> (HEAD, index), and (index, worktree).  Perhaps three if you want to =20
+> show
+> difference between (HEAD, worktree) while at it.
 
-Please, at least introduce a new option (--status-letters)  that makes
+One of the first aliases I set up when I started using git was "st" =20
+for status, and I'd imagine that's a pretty common thing for people =20
+coming from other SCMs like svn and cvs. But I very quickly became =20
+used to git's notion of what "status" means and I wouldn't want "git =20
+st" to start giving me a different behaviour.
 
-git log --name-status
-git diff --name-status
-git ls-files -v
+I think if you're introducing a different command then you should make =
+=20
+sure it doesn't happen to be an abbreviation of an existing one. It =20
+would be better to give it some other name (info, foo, whatever). If =20
+svn people then want to make an "st" alias pointing to it they're free =
+=20
+to do so.
 
-to use consistent letters to indicate the status. For details, see
-recent discussion
-http://www.spinics.net/lists/git/msg81141.html
+Just my 2c.
 
-Thanks,
---Leo--
+Cheers,
+Wincent
