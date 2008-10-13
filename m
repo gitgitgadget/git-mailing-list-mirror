@@ -1,92 +1,79 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH 3/4] diff: introduce diff.<driver>.binary
-Date: Mon, 13 Oct 2008 00:15:25 -0400
-Message-ID: <20081013041525.GA32629@coredump.intra.peff.net>
-References: <20081005214114.GA21875@coredump.intra.peff.net> <20081005214336.GC21925@coredump.intra.peff.net> <48EB7D74.40302@viscovery.net> <20081007153543.GA26531@coredump.intra.peff.net> <7vabdaidwj.fsf@gitster.siamese.dyndns.org> <20081013012311.GE3768@coredump.intra.peff.net> <7vk5cddtzh.fsf@gitster.siamese.dyndns.org>
+From: Mark Levedahl <mlevedahl@gmail.com>
+Subject: Re: [PATCH] compat/cygwin.c - Use cygwin's stat if core.filemode
+ == true
+Date: Mon, 13 Oct 2008 00:31:53 -0400
+Message-ID: <48F2CF39.5040000@gmail.com>
+References: <20081012133934.GB21650@dpotapov.dyndns.org> <1223837086-2864-1-git-send-email-mlevedahl@gmail.com> <7vskr1fvys.fsf@gitster.siamese.dyndns.org> <48F25CB6.10702@gmail.com> <7vd4i5fkny.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Johannes Sixt <j.sixt@viscovery.net>,
-	Matthieu Moy <Matthieu.Moy@imag.fr>, git@vger.kernel.org
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: spearce@spearce.org, dpotapov@gmail.com, git@vger.kernel.org
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Oct 13 06:16:42 2008
+X-From: git-owner@vger.kernel.org Mon Oct 13 06:33:00 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KpErI-0001r1-MB
-	for gcvg-git-2@gmane.org; Mon, 13 Oct 2008 06:16:41 +0200
+	id 1KpF75-0004dT-LS
+	for gcvg-git-2@gmane.org; Mon, 13 Oct 2008 06:33:00 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751166AbYJMEP3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 13 Oct 2008 00:15:29 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751280AbYJMEP3
-	(ORCPT <rfc822;git-outgoing>); Mon, 13 Oct 2008 00:15:29 -0400
-Received: from peff.net ([208.65.91.99]:4226 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750858AbYJMEP2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 13 Oct 2008 00:15:28 -0400
-Received: (qmail 11443 invoked by uid 111); 13 Oct 2008 04:15:26 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.32) with SMTP; Mon, 13 Oct 2008 00:15:26 -0400
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Mon, 13 Oct 2008 00:15:25 -0400
-Content-Disposition: inline
-In-Reply-To: <7vk5cddtzh.fsf@gitster.siamese.dyndns.org>
+	id S1751336AbYJMEbd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 13 Oct 2008 00:31:33 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751151AbYJMEbd
+	(ORCPT <rfc822;git-outgoing>); Mon, 13 Oct 2008 00:31:33 -0400
+Received: from mail-gx0-f16.google.com ([209.85.217.16]:44059 "EHLO
+	mail-gx0-f16.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750733AbYJMEbc (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 13 Oct 2008 00:31:32 -0400
+Received: by gxk9 with SMTP id 9so3137143gxk.13
+        for <git@vger.kernel.org>; Sun, 12 Oct 2008 21:31:31 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from
+         :user-agent:mime-version:to:cc:subject:references:in-reply-to
+         :content-type:content-transfer-encoding;
+        bh=G95rG72eio9ZR85ijTvoh9OaiqUaIJiEMRqD+qEnBcY=;
+        b=bZm4DSPty2irX0MKRTPWZbyP7SRaocjj0ZR7rVM9TCE9a916WfYF71BNxTCrzOwv/c
+         jxcD/fwbUzL0voYrOy219HRi22BLbdDvIHjx55vp6yChdMVoTVOsy9c51EqBAP16Roeq
+         h6W2WhAjDGcXXzz7g3DfYUiUeVn1Ws8qJLMow=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:user-agent:mime-version:to:cc:subject
+         :references:in-reply-to:content-type:content-transfer-encoding;
+        b=qPJTpHp7Gl6kzuh1vEc7fnzq3kog3/qIqTwpjk4a5v+Oe4PkPMB87j/p9XhWd7SSbX
+         72qjTKu9kKGslY9PBghe7A+naf2lkVe64f+lEYwZJ5GIjI2P5OaZIjMrSsTiXOaeKbmc
+         b1iOJN7DWVCiOeiUbPJixzPSeIjyJpCrKzzk4=
+Received: by 10.151.155.5 with SMTP id h5mr7352882ybo.49.1223872291644;
+        Sun, 12 Oct 2008 21:31:31 -0700 (PDT)
+Received: from ?192.168.1.117? (pool-72-83-157-161.washdc.fios.verizon.net [72.83.157.161])
+        by mx.google.com with ESMTPS id v76sm7904853rnb.5.2008.10.12.21.31.29
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Sun, 12 Oct 2008 21:31:30 -0700 (PDT)
+User-Agent: Thunderbird 2.0.0.17 (Windows/20080914)
+In-Reply-To: <7vd4i5fkny.fsf@gitster.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/98080>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/98081>
 
-On Sun, Oct 12, 2008 at 09:00:50PM -0700, Junio C Hamano wrote:
+Junio C Hamano wrote:
+> I was wondering if git_cygwin_config() was originally written not to call
+> git_default_config() because some command implementations do not to want
+> to call git_default_core_config() (and/or read trust_executable_bit
+> variable from the configuration) for some reason (which would be just
+> hiding bugs in other parts of the system, I suspect).
+>
+> If that is the case, we would have to fix such broken parts of the system,
+> but until that happens your original patch to use a separate variable and
+> keeping trust_executable_bit untouched would be much safer than this
+> latest patch.  Hence the question.
+>   
+I was worried about altering the startup code, which is why I tried to 
+introduce as little change as possible. However, having rewritten the 
+patch using git_default_config() everything seems fine (the testsuite 
+passes, or at least as well as it usually does under Cygwin, and I 
+assume that is sufficient as this is Cygiwn specific). So, that patch 
+follows.
 
-> exchange workflow?  There needs either one or both of the following:
-> 
->  - A command line option to Porcelains to override textconv so that an
->    applicable binary diff can be obtained upon request (or format-patch
->    always disables textconv); and/or
-
-format-patch should always disable textconv. I admit that I didn't test
-it, but assumed it was covered under the same code path as external
-diff (i.e., just not reading in the config). But it doesn't seem to be.
-
-So that is definitely broken in my patch series. But even once that is
-fixed, I agree there should be a porcelain switch for turning this off.
-I sometimes do "git diff >patch" and read the result into my MUA.
-Obviously I would not want textconv'ing there.
-
->  - You teach git-apply to use a reverse transformation of textconv, so
->    that it does, upon reception of a textconv diff:
-> 
->    (1) pass existing preimage through textconv;
->    (2) apply the patch;
->    (3) convert the result back to binary.
-
-The problem with this approach is that it requires that the textconv be
-a reversible mapping. And the two motivating examples (dumping exif tags
-and converting word processor documents to text) are not; they are lossy
-conversions.
-
-It's possible that one could, given the binary preimage and the two
-lossy textconv'd versions, produce a custom binary merge that would just
-munge the tags, or just munge the text, or whatever. But that is an
-order of magnitude more work than writing a textconv, which is usually
-as simple as "/path/to/existing/conversion-script".
-
-And the whole point of this exercise was to make it simple to set this
-conversion up.
-
-> I'd say that format-patch should always disable textconv so that we won't
-> have to worry about it for now.
-
-Agreed, if you remove "for now". I had never intended for these to be
-anything but a human-readable display (and while I am generally OK with
-generalizing functionality when we can, I think there is real value in
-the simplicity here).
-
-If somebody really wants to send patches with converted text for
-reference, I would suggest producing a patch with the textconv'd output
-as a comment, and including the full binary patch to actually be
-applied (and yes, obviously they a malicious attacker could make them
-not match, but given the binary patch, we can trivially regenerate the
-textconv'd version and confirm it).
-
--Peff
+Mark
