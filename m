@@ -1,53 +1,78 @@
 From: Jeff King <peff@peff.net>
-Subject: Re: Fwd: git status options feature suggestion
-Date: Sun, 12 Oct 2008 21:06:08 -0400
-Message-ID: <20081013010608.GC3768@coredump.intra.peff.net>
-References: <81bfc67a0810082234p55e2fb9jb2a10f837eea7de0@mail.gmail.com> <20081009061136.GA24288@coredump.intra.peff.net> <81bfc67a0810082327p421ca4e9v84f4b33023bc6fe6@mail.gmail.com> <81bfc67a0810082327q71b9d6apf2787eb8519031bb@mail.gmail.com> <alpine.DEB.1.00.0810091101230.22125@pacific.mpi-cbg.de.mpi-cbg.de> <48EE1F58.2060707@drmicha.warpmail.net> <20081012044900.GA27845@coredump.intra.peff.net> <7vwsgegvsh.fsf@gitster.siamese.dyndns.org> <20081012064512.GA32597@coredump.intra.peff.net> <20081012180504.GD4856@spearce.org>
+Subject: Re: [PATCH 3/4] diff: introduce diff.<driver>.binary
+Date: Sun, 12 Oct 2008 21:23:11 -0400
+Message-ID: <20081013012311.GE3768@coredump.intra.peff.net>
+References: <20081005214114.GA21875@coredump.intra.peff.net> <20081005214336.GC21925@coredump.intra.peff.net> <48EB7D74.40302@viscovery.net> <20081007153543.GA26531@coredump.intra.peff.net> <7vabdaidwj.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Michael J Gruber <git@drmicha.warpmail.net>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Caleb Cushing <xenoterracide@gmail.com>, git@vger.kernel.org
-To: "Shawn O. Pearce" <spearce@spearce.org>
-X-From: git-owner@vger.kernel.org Mon Oct 13 03:07:26 2008
+Cc: Johannes Sixt <j.sixt@viscovery.net>,
+	Matthieu Moy <Matthieu.Moy@imag.fr>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Oct 13 03:24:33 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KpBu7-0002Kx-6m
-	for gcvg-git-2@gmane.org; Mon, 13 Oct 2008 03:07:23 +0200
+	id 1KpCAg-0005l0-Ip
+	for gcvg-git-2@gmane.org; Mon, 13 Oct 2008 03:24:31 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753777AbYJMBGM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 12 Oct 2008 21:06:12 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753315AbYJMBGM
-	(ORCPT <rfc822;git-outgoing>); Sun, 12 Oct 2008 21:06:12 -0400
-Received: from peff.net ([208.65.91.99]:4560 "EHLO peff.net"
+	id S1753939AbYJMBXO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 12 Oct 2008 21:23:14 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753916AbYJMBXO
+	(ORCPT <rfc822;git-outgoing>); Sun, 12 Oct 2008 21:23:14 -0400
+Received: from peff.net ([208.65.91.99]:3816 "EHLO peff.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752041AbYJMBGL (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 12 Oct 2008 21:06:11 -0400
-Received: (qmail 4555 invoked by uid 111); 13 Oct 2008 01:06:10 -0000
+	id S1753884AbYJMBXO (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 12 Oct 2008 21:23:14 -0400
+Received: (qmail 5160 invoked by uid 111); 13 Oct 2008 01:23:12 -0000
 Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.32) with SMTP; Sun, 12 Oct 2008 21:06:10 -0400
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Sun, 12 Oct 2008 21:06:08 -0400
+    by peff.net (qpsmtpd/0.32) with SMTP; Sun, 12 Oct 2008 21:23:12 -0400
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Sun, 12 Oct 2008 21:23:11 -0400
 Content-Disposition: inline
-In-Reply-To: <20081012180504.GD4856@spearce.org>
+In-Reply-To: <7vabdaidwj.fsf@gitster.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/98069>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/98070>
 
-On Sun, Oct 12, 2008 at 11:05:04AM -0700, Shawn O. Pearce wrote:
+On Sat, Oct 11, 2008 at 10:24:44PM -0700, Junio C Hamano wrote:
 
-> I have a tool that I'll be open-sourcing later this year, but it does
-> [...]
-> Sorry I can't say too much more about it yet.  But I'm trying to
-> say that both Scott and I like a denser display like this.
+> >   echo '* diff=foo' >subdir/.gitattributes
+> >   git config diff.foo.funcname some-regex
+> > ...
+> > In practice, this doesn't happen much, because funcname tends to follow
+> > the file extension, as does binary-ness.
+> 
+> I find this a highly contrived example.  Is this ever be useful in
+> practice?
 
-I like what I saw, and I think a "denser" format is what I was trying to
-suggest in my earlier message (I just didn't think of nearly as clear a
-word). So count me in for your list of people who would like to see this
-thing (and would even work on doing a pure-C version).
+Well, I was doing something like it. But after reading JSixt's messages,
+I think I agree that I was probably abusing the attributes system.
+
+> The logic behind the original behaviour was that the file ought to be
+> "diff-able" if you are setting up funcname pattern because the funcname
+> pattern only makes sense if you are doing the textual diff.  In other
+> words, "should we do textual diff?" and "what funcname pattern should we
+> use?" are _not_ orthogonal, as wanting to configure the latter does imply
+> that you do want to see the change in the textual diff format.
+
+Yeah, I don't think I can really disagree with that. I had some vague
+notion that it opens the path for adding orthogonal options later. But
+really, I'm not sure that any exist, since they are, by definition
+related to the diff. Unless we want to have diff driver options for how
+to do a binary diff.
+
+> For the same rationale, if you have .textconv, I think it is natural for
+> us to say that you do want to see the change in the textual diff format.
+> So I'd agree that you can get rid of this .binary business by saying that
+> having .textconv marks it diffable (IOW, I think your first alternative
+> makes more sense).
+
+OK. My re-rolled series will keep the assumption that a diff=* attribute
+makes a file non-binary. However, I will still include the 'binary'
+struct member in the diff driver, as it greatly simplifies the code. It
+is trivial then to support "diff.*.binary" (which would default to
+'false') if we feel like it.
 
 -Peff
