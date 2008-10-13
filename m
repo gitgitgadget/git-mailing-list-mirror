@@ -1,193 +1,86 @@
-From: "Tuncer Ayaz" <tuncer.ayaz@gmail.com>
-Subject: Re: [PATCH] Teach/Fix git-pull/git-merge --quiet and --verbose
-Date: Tue, 14 Oct 2008 00:29:48 +0200
-Message-ID: <4ac8254d0810131529l37d67b61q3589f15700d38261@mail.gmail.com>
-References: <1223934148-13942-1-git-send-email-tuncer.ayaz@gmail.com>
-	 <7vzll887ps.fsf@gitster.siamese.dyndns.org>
+From: Nanako Shiraishi <nanako3@lavabit.com>
+Subject: [PATCH] rebase: Document --no-verify option to bypass pre-rebase hook
+Date: Tue, 14 Oct 2008 08:17:16 +0900
+Message-ID: <20081014081716.6117@nanako3.lavabit.com>
+References: <20081012212543.GG4856@spearce.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: "Junio C Hamano" <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Oct 14 00:31:11 2008
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Cc: git@vger.kernel.org, "Shawn O. Pearce" <spearce@spearce.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Oct 14 01:19:13 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KpVwQ-0006QD-Un
-	for gcvg-git-2@gmane.org; Tue, 14 Oct 2008 00:31:07 +0200
+	id 1KpWgw-0002Oe-11
+	for gcvg-git-2@gmane.org; Tue, 14 Oct 2008 01:19:10 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758422AbYJMW3v (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 13 Oct 2008 18:29:51 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757681AbYJMW3v
-	(ORCPT <rfc822;git-outgoing>); Mon, 13 Oct 2008 18:29:51 -0400
-Received: from yx-out-2324.google.com ([74.125.44.29]:59612 "EHLO
-	yx-out-2324.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1758422AbYJMW3u (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 13 Oct 2008 18:29:50 -0400
-Received: by yx-out-2324.google.com with SMTP id 8so455270yxm.1
-        for <git@vger.kernel.org>; Mon, 13 Oct 2008 15:29:49 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to
-         :subject:cc:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:references;
-        bh=g7kK7sDAj9B5W3av4eUi9DGRQzGAd4f5fSyeWWHE9I0=;
-        b=qqBj/asSMtL23vHCm1Zo3J7fLCW1fAAmj0l1gpymc3uvN2JYAW3M5ZGQIWOHNQ1Ugq
-         R0mseuRMkDRS4i8QrziNrqajhLcR7NRmh74IDLuvvUZ8uFA6fLPRrUCz/2JWaFQ23xFK
-         76qErttZnGIe6UqU9x6xExmqLu9E8mEAl24qc=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
-         :content-type:content-transfer-encoding:content-disposition
-         :references;
-        b=IW07t1Zv/7NuDHDYkWOJ0QDqfF1aE/2c5FnpXff+iraVohmTo0z3jVlQf9BSMQ6ylX
-         btaJD2yV59b5ztwnjAT8m28iwcoRT0rgeTbHxSZSIZ69WbGBYCAbkE64fSPWyUgMf1iu
-         lNpWK+lq+obRSP3td9scdjKHpmU+XDyx6rulY=
-Received: by 10.65.116.9 with SMTP id t9mr11619883qbm.95.1223936988332;
-        Mon, 13 Oct 2008 15:29:48 -0700 (PDT)
-Received: by 10.64.142.13 with HTTP; Mon, 13 Oct 2008 15:29:48 -0700 (PDT)
-In-Reply-To: <7vzll887ps.fsf@gitster.siamese.dyndns.org>
-Content-Disposition: inline
+	id S1757416AbYJMXR4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 13 Oct 2008 19:17:56 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757038AbYJMXR4
+	(ORCPT <rfc822;git-outgoing>); Mon, 13 Oct 2008 19:17:56 -0400
+Received: from karen.lavabit.com ([72.249.41.33]:52950 "EHLO karen.lavabit.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753986AbYJMXRy (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 13 Oct 2008 19:17:54 -0400
+Received: from b.earth.lavabit.com (b.earth.lavabit.com [192.168.111.11])
+	by karen.lavabit.com (Postfix) with ESMTP id 7596EC7AFF;
+	Mon, 13 Oct 2008 18:17:53 -0500 (CDT)
+Received: from 7688.lavabit.com (212.62.97.21)
+	by lavabit.com with ESMTP id FXV8Y2F5QVYG; Mon, 13 Oct 2008 18:17:53 -0500
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws; s=lavabit; d=lavabit.com;
+  b=Gt5YqS4GedDioVKGu3xf/IGDOXGyZDXxPfMSiEGQvuBUbDt6cfPJdSnGLlbbmjgh0K5QD1rUmPgxkGmfUMudgDoRch4pbyg5oTBj2wJP2I5SJuHKI0DWduGtI7oLKhjagQOZZ4ePRA8Aj0opNaSO1apfHfhVKxOnsnzii/VUxCI=;
+  h=From:To:Cc:Date:Subject:In-reply-to:References:MIME-Version:Content-Type:Content-Transfer-Encoding:Message-Id;
+In-reply-to: <20081012212543.GG4856@spearce.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/98161>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/98162>
 
-On Tue, Oct 14, 2008 at 12:13 AM, Junio C Hamano <gitster@pobox.com> wrote:
-> tuncer.ayaz@gmail.com writes:
+Signed-off-by: Nanako Shiraishi <nanako3@lavabit.com>
+---
+
+"Shawn O. Pearce" <spearce@spearce.org> writes:
+
+> * ns/rebase-noverify (Mon Oct 6 14:14:29 2008 +0900) 1 commit
+>  + rebase --no-verify
 >
->> From: Tuncer Ayaz <tuncer.ayaz@gmail.com>
->>
->> Updated patch to current Junio master.
->
-> That's not a commit log message, is it?
+> This adds --no-verify to git rebase, to avoid the pre-rebase hook.
+> Lacks documentation but otherwise looks sound.
 
-Sorry, I was referring to my previous post and
-this was my first post via send-email.
+Here it is.
 
-Is it ok for me to include the log message here?
+ Documentation/git-rebase.txt |    5 ++++-
+ 1 files changed, 4 insertions(+), 1 deletions(-)
 
--->
-After fixing clone -q I noticed that pull -q does not do what
-it's supposed to do and implemented --quiet/--verbose by
-adding it to builtin-merge and fixing two places in builtin-fetch.
+diff --git a/Documentation/git-rebase.txt b/Documentation/git-rebase.txt
+index 32f0f12..4e84380 100644
+--- a/Documentation/git-rebase.txt
++++ b/Documentation/git-rebase.txt
+@@ -9,7 +9,7 @@ SYNOPSIS
+ --------
+ [verse]
+ 'git rebase' [-i | --interactive] [-v | --verbose] [-m | --merge]
+-	[-s <strategy> | --strategy=<strategy>]
++	[-s <strategy> | --strategy=<strategy>] [--no-verify]
+ 	[-C<n>] [ --whitespace=<option>] [-p | --preserve-merges]
+ 	[--onto <newbase>] <upstream> [<branch>]
+ 'git rebase' --continue | --skip | --abort
+@@ -232,6 +232,9 @@ OPTIONS
+ --verbose::
+ 	Display a diffstat of what changed upstream since the last rebase.
+ 
++--no-verify::
++	This option bypasses the pre-rebase hook.  See also linkgit:githooks[5].
++
+ -C<n>::
+ 	Ensure at least <n> lines of surrounding context match before
+ 	and after each change.  When fewer lines of surrounding
+-- 
+1.6.0.2
 
-I have not touched/adjusted contrib/completion/git-completion.bash
-but can take a look if wanted. I think it already needs one or two
-adjustments caused by recent --OPTIONS changes in master.
-
-I've tested the following invocations with the below changes applied:
-$ git pull
-$ git pull -q
-$ git pull -v
-<--
-
-is that good enough or did I miss something?
-
->> Signed-off-by: Tuncer Ayaz <tuncer.ayaz@gmail.com>
->> ---
->>  Documentation/merge-options.txt |    8 ++++++++
->>  builtin-fetch.c                 |    5 +++--
->>  builtin-merge.c                 |   22 +++++++++++++++-------
->>  git-pull.sh                     |   10 ++++++++--
->>  4 files changed, 34 insertions(+), 11 deletions(-)
->>
->> diff --git a/Documentation/merge-options.txt b/Documentation/merge-options.txt
->> index 007909a..427cdef 100644
->> --- a/Documentation/merge-options.txt
->> +++ b/Documentation/merge-options.txt
->> @@ -1,3 +1,11 @@
->> +-q::
->> +--quiet::
->> +     Operate quietly.
->> +
->> +-v::
->> +--verbose::
->> +     Be verbose.
->> +
->>  --stat::
->>       Show a diffstat at the end of the merge. The diffstat is also
->>       controlled by the configuration option merge.stat.
->> diff --git a/builtin-fetch.c b/builtin-fetch.c
->> index ee93d3a..287ce33 100644
->> --- a/builtin-fetch.c
->> +++ b/builtin-fetch.c
->> @@ -372,12 +372,13 @@ static int store_updated_refs(const char *url, const char *remote_name,
->>                               SUMMARY_WIDTH, *kind ? kind : "branch",
->>                                REFCOL_WIDTH, *what ? what : "HEAD");
->>               if (*note) {
->> -                     if (!shown_url) {
->> +                     if ((verbose || !quiet) && !shown_url) {
->
-> A pair of external verbosity flag -q and -v may be acceptable, but is it
-> sane to have a pair of variables in code always used like this?  In other
-> words, this makes me wonder if a single "verbosity level" variable that
-> can be set to quiet, normal and verbose would make it more readable.  For
-> example, this one would say:
->
->        if (verbosity >= VERBOSITY_NORMAL && !shown_url) {
->                ...
->        }
-
-what I would actually prefer to implement are separate
-printf functions for verbose, info and error messages
-and display them according to:
-info: sent to ouput if verbose is set or quiet is not set
-error: always sent to ouput
-verbose: only sent to output if verbose is set
-
-you could get that with your "verbosity level" solution.
-to keep it simple I would avoid adding any more
-levels or topics to logging and if someone really wants
-to either declare trace_printf to be debug_printf
-or rename it :).
-
-if that make sense I would like to teach this to
-git as a general option as far as possible and get
-rid of all the if clauses in front of printf calls.
-
-> Also what does your command line parsing code do when the user gives -q
-> and -v at the same time?  Does the last one on the command line win?
-> Shouldn't you instead get an error message (which of course would mean you
-> would need to fix the caller in git-pull.sh)?
-
-I thought about that also and at least in this patch
-tried to handle it by ignoring quiet if verbose is set.
-this may not be the logic everyone wants to have
-and exclusively allowing either -q or -v makes
-more sense.
-
->> +                     if (verbose || !quiet)
->> +                             fprintf(stderr, " %s\n", note);
->
-> Ditto.
->
->> +     if (verbose || !quiet)
->> +             printf("%s%s\n", squash ? " (nothing to squash)" : "", msg);
->
-> Ditto.
->
->> +             if (verbose || !quiet)
->> +                     printf("%s\n", msg);
->> +             if ((verbose || !quiet) && !merge_msg.len)
->
-> Ditto.
->
->> +     if (!verbose && quiet)
->> +             show_diffstat = 0;
->
-> Hmph, ah, that's (!(verbose || !quiet)).  See the readability issue?
-
-your version is more readable. the human mind seems to
-have a problem with double or triple negations :).
-
->> +             if (verbose || !quiet)
->> +                     printf("Updating %s..%s\n",
->> +                             hex,
->> +                             find_unique_abbrev(remoteheads->item->object.sha1,
->> +                             DEFAULT_ABBREV));
->
-> Ditto.
->
+-- 
+Nanako Shiraishi
+http://ivory.ap.teacup.com/nanako3/
