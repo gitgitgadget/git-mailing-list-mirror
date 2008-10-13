@@ -1,78 +1,143 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: What's cooking in git/spearce.git (Oct 2008, #02; Sun, 12)
-Date: Sun, 12 Oct 2008 19:05:33 -0700
-Message-ID: <7v3aj1fdw2.fsf@gitster.siamese.dyndns.org>
-References: <20081012212543.GG4856@spearce.org>
+From: "Shawn O. Pearce" <spearce@spearce.org>
+Subject: Re: [JGIT PATCH 4/4] Intelligent parsing of ambiguously encoded
+	meta data.
+Date: Sun, 12 Oct 2008 19:27:08 -0700
+Message-ID: <20081013022708.GJ4856@spearce.org>
+References: <1223851860-13068-1-git-send-email-robin.rosenberg@dewire.com> <1223851860-13068-2-git-send-email-robin.rosenberg@dewire.com> <1223851860-13068-3-git-send-email-robin.rosenberg@dewire.com> <1223851860-13068-4-git-send-email-robin.rosenberg@dewire.com> <1223851860-13068-5-git-send-email-robin.rosenberg@dewire.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Cc: git@vger.kernel.org
-To: "Shawn O. Pearce" <spearce@spearce.org>
-X-From: git-owner@vger.kernel.org Mon Oct 13 04:11:53 2008
+To: Robin Rosenberg <robin.rosenberg@dewire.com>
+X-From: git-owner@vger.kernel.org Mon Oct 13 04:28:24 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KpCuW-0006L4-Fr
-	for gcvg-git-2@gmane.org; Mon, 13 Oct 2008 04:11:53 +0200
+	id 1KpDAU-0000vF-PI
+	for gcvg-git-2@gmane.org; Mon, 13 Oct 2008 04:28:23 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754257AbYJMCFl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 12 Oct 2008 22:05:41 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754260AbYJMCFk
-	(ORCPT <rfc822;git-outgoing>); Sun, 12 Oct 2008 22:05:40 -0400
-Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:58385 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754242AbYJMCFk (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 12 Oct 2008 22:05:40 -0400
-Received: from localhost.localdomain (localhost [127.0.0.1])
-	by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id 2D4BE8A6ED;
-	Sun, 12 Oct 2008 22:05:39 -0400 (EDT)
-Received: from pobox.com (ip68-225-240-211.oc.oc.cox.net [68.225.240.211])
- (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
- certificate requested) by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with
- ESMTPSA id 6BBAF8A6EA; Sun, 12 Oct 2008 22:05:34 -0400 (EDT)
-In-Reply-To: <20081012212543.GG4856@spearce.org> (Shawn O. Pearce's message
- of "Sun, 12 Oct 2008 14:25:43 -0700")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: 6E90DC86-98CB-11DD-859F-4F5276724C3F-77302942!a-sasl-quonix.pobox.com
+	id S1754367AbYJMC1L (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 12 Oct 2008 22:27:11 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754254AbYJMC1K
+	(ORCPT <rfc822;git-outgoing>); Sun, 12 Oct 2008 22:27:10 -0400
+Received: from george.spearce.org ([209.20.77.23]:36892 "EHLO
+	george.spearce.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753723AbYJMC1J (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 12 Oct 2008 22:27:09 -0400
+Received: by george.spearce.org (Postfix, from userid 1001)
+	id 709C13835F; Mon, 13 Oct 2008 02:27:08 +0000 (UTC)
+Content-Disposition: inline
+In-Reply-To: <1223851860-13068-5-git-send-email-robin.rosenberg@dewire.com>
+User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/98073>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/98074>
 
-"Shawn O. Pearce" <spearce@spearce.org> writes:
+Robin Rosenberg <robin.rosenberg@dewire.com> wrote:
+> We cannot trust meta data to be encoded in any particular way, so we try
+> different encodings. First we try UTF-8, which is the only sane encoding
+> for non-local data, even when used in regions where eight bit legacy
+> encodings are common. The chance of mistakenly parsing non-UTF-8 data
+> as valid UTF-8 is varies from extremely low (western encodings) to low
+> for most other encodings. If the data does not look like UTF-8, we try the
+> suggested encoding. If that fails we try the user locale and finally, if
+> that fails we try ISO-8859-1, which cannot fail.
 
-> * pb/rename-rowin32 (Fri Oct 3 12:20:43 2008 +0200) 1 commit
->  - Do not rename read-only files during a push
->
-> Supposedly fixes pack file renames on Windows, but it makes the
-> test suite fail on Linux.  I haven't debugged why yet.
+Hmm.  I'm concerned about the infinite loop you have here.
+If ISO-8859-1 fails we'd be stuck here until the end of time.
+Plus its a bit ugly to read.
 
-I am kind of surprised that it actually passes the test on Windows, which
-implies that these cats shown in the patch to fix this breakage below do
-not honor ro-ness of the file, which in turn makes me doubt if making the
-resulting packfiles read-only has any effect on that platform whatsoever..
+I wonder if this is any better.  It passes your tests and is 2
+lines shorter.
 
- t/t5300-pack-object.sh |    2 ++
- 1 files changed, 2 insertions(+), 0 deletions(-)
-
-diff --git i/t/t5300-pack-object.sh w/t/t5300-pack-object.sh
-index b335c6b..544f59e 100755
---- i/t/t5300-pack-object.sh
-+++ w/t/t5300-pack-object.sh
-@@ -248,6 +248,7 @@ test_expect_success \
-      git index-pack test-3.pack &&
-      cmp test-3.idx test-1-${packname_1}.idx &&
+diff --git a/org.spearce.jgit/src/org/spearce/jgit/util/RawParseUtils.java b/org.spearce.jgit/src/org/spearce/jgit/util/RawParseUtils.java
+index a31734b..6c0e339 100644
+--- a/org.spearce.jgit/src/org/spearce/jgit/util/RawParseUtils.java
++++ b/org.spearce.jgit/src/org/spearce/jgit/util/RawParseUtils.java
+@@ -42,7 +42,10 @@
+ import static org.spearce.jgit.lib.ObjectChecker.encoding;
  
-+     rm -f test-3.pack &&
-      cat test-2-${packname_2}.pack >test-3.pack &&
-      git index-pack -o tmp.idx test-2-${packname_2}.pack &&
-      cmp tmp.idx test-2-${packname_2}.idx &&
-@@ -255,6 +256,7 @@ test_expect_success \
-      git index-pack test-3.pack &&
-      cmp test-3.idx test-2-${packname_2}.idx &&
+ import java.nio.ByteBuffer;
++import java.nio.charset.CharacterCodingException;
+ import java.nio.charset.Charset;
++import java.nio.charset.CharsetDecoder;
++import java.nio.charset.CodingErrorAction;
+ import java.util.Arrays;
  
-+     rm -f test-3.pack &&
-      cat test-3-${packname_3}.pack >test-3.pack &&
-      git index-pack -o tmp.idx test-3-${packname_3}.pack &&
-      cmp tmp.idx test-3-${packname_3}.idx &&
+ import org.spearce.jgit.lib.Constants;
+@@ -376,7 +379,10 @@ public static PersonIdent parsePersonIdent(final byte[] raw, final int nameB) {
+ 	}
+ 
+ 	/**
+-	 * Decode a region of the buffer under the specified character set.
++	 * Decode a region of the buffer under the specified character set if possible.
++	 *
++	 * If the byte stream cannot be decoded that way, the platform default is tried
++	 * and if that too fails, the fail-safe ISO-8859-1 encoding is tried.
+ 	 * 
+ 	 * @param cs
+ 	 *            character set to use when decoding the buffer.
+@@ -393,7 +399,56 @@ public static PersonIdent parsePersonIdent(final byte[] raw, final int nameB) {
+ 	public static String decode(final Charset cs, final byte[] buffer,
+ 			final int start, final int end) {
+ 		final ByteBuffer b = ByteBuffer.wrap(buffer, start, end - start);
+-		return cs.decode(b).toString();
++		b.mark();
++
++		// Try our built-in favorite. The assumption here is that
++		// decoding will fail if the data is not actually encoded
++		// using that encoder.
++		//
++		try {
++			return decode(b, Constants.CHARSET);
++		} catch (CharacterCodingException e) {
++			b.reset();
++		}
++
++		if (!cs.equals(Constants.CHARSET)) {
++			// Try the suggested encoding, it might be right since it was
++			// provided by the caller.
++			//
++			try {
++				return decode(b, cs);
++			} catch (CharacterCodingException e) {
++				b.reset();
++			}
++		}
++
++		// Try the default character set. A small group of people
++		// might actually use the same (or very similar) locale.
++		//
++		final Charset defcs = Charset.defaultCharset();
++		if (!defcs.equals(cs) && !defcs.equals(Constants.CHARSET)) {
++			try {
++				return decode(b, defcs);
++			} catch (CharacterCodingException e) {
++				b.reset();
++			}
++		}
++
++		// Fall back to an ISO-8859-1 style encoding. At least all of
++		// the bytes will be present in the output.
++		//
++		final StringBuilder r = new StringBuilder(end - start);
++		for (int i = start; i < end; i++)
++			r.append((char) (buffer[i] & 0xff));
++		return r.toString();
++	}
++
++	private static String decode(final ByteBuffer b, final Charset charset)
++			throws CharacterCodingException {
++		final CharsetDecoder d = charset.newDecoder();
++		d.onMalformedInput(CodingErrorAction.REPORT);
++		d.onUnmappableCharacter(CodingErrorAction.REPORT);
++		return d.decode(b).toString();
+ 	}
+ 
+ 	/**
+
+
+-- 
+Shawn.
