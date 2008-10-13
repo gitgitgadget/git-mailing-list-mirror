@@ -1,67 +1,181 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] Introduce core.keepHardLinks
-Date: Mon, 13 Oct 2008 10:33:43 -0700
-Message-ID: <7vhc7g9z7s.fsf@gitster.siamese.dyndns.org>
-References: <alpine.DEB.1.00.0810111344241.22125@pacific.mpi-cbg.de.mpi-cbg.de>
- <20081012183855.GA5255@spearce.org>
- <alpine.DEB.1.00.0810131057150.22125@pacific.mpi-cbg.de.mpi-cbg.de>
- <7vskr0bnlk.fsf@gitster.siamese.dyndns.org>
- <alpine.DEB.1.00.0810131611470.22125@pacific.mpi-cbg.de.mpi-cbg.de>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+From: "Shawn O. Pearce" <spearce@spearce.org>
+Subject: [JGIT PATCH 1/2] Check object connectivity during fetch if fsck is enabled
+Date: Mon, 13 Oct 2008 10:36:40 -0700
+Message-ID: <1223919401-15873-1-git-send-email-spearce@spearce.org>
 Cc: git@vger.kernel.org
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Mon Oct 13 19:37:06 2008
+To: Robin Rosenberg <robin.rosenberg@dewire.com>
+X-From: git-owner@vger.kernel.org Mon Oct 13 19:38:14 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KpRLg-0006iF-4F
-	for gcvg-git-2@gmane.org; Mon, 13 Oct 2008 19:36:52 +0200
+	id 1KpRMj-00079b-NH
+	for gcvg-git-2@gmane.org; Mon, 13 Oct 2008 19:37:58 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756480AbYJMRfl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 13 Oct 2008 13:35:41 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756475AbYJMRfk
-	(ORCPT <rfc822;git-outgoing>); Mon, 13 Oct 2008 13:35:40 -0400
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:40825 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756310AbYJMRfk (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 13 Oct 2008 13:35:40 -0400
+	id S1754739AbYJMRgp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 13 Oct 2008 13:36:45 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754635AbYJMRgo
+	(ORCPT <rfc822;git-outgoing>); Mon, 13 Oct 2008 13:36:44 -0400
+Received: from george.spearce.org ([209.20.77.23]:35098 "EHLO
+	george.spearce.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753644AbYJMRgn (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 13 Oct 2008 13:36:43 -0400
+Received: by george.spearce.org (Postfix, from userid 1000)
+	id E6A9638368; Mon, 13 Oct 2008 17:36:42 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.2.4 (2008-01-01) on george.spearce.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-4.4 required=4.0 tests=ALL_TRUSTED,BAYES_00
+	autolearn=ham version=3.2.4
 Received: from localhost.localdomain (localhost [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id A95126E480;
-	Mon, 13 Oct 2008 13:35:38 -0400 (EDT)
-Received: from pobox.com (ip68-225-240-211.oc.oc.cox.net [68.225.240.211])
- (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
- certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
- ESMTPSA id E52E66E44A; Mon, 13 Oct 2008 13:33:45 -0400 (EDT)
-In-Reply-To: <alpine.DEB.1.00.0810131611470.22125@pacific.mpi-cbg.de.mpi-cbg.de> (Johannes
- Schindelin's message of "Mon, 13 Oct 2008 18:09:21 +0200 (CEST)")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: 59A9B9FA-994D-11DD-8B45-1E1F86D30F62-77302942!a-sasl-fastnet.pobox.com
+	by george.spearce.org (Postfix) with ESMTP id 2995E3826E;
+	Mon, 13 Oct 2008 17:36:42 +0000 (UTC)
+X-Mailer: git-send-email 1.6.0.2.706.g340fc
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/98128>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/98129>
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+If we are fetching over a pack oriented connection and we are doing
+object-level fsck validation we need to also verify the graph is
+fully connected after the fetch is complete.  This additional check
+is necessary to ensure the peer didn't omit objects that we don't
+have, but which are listed as needing to be present.
 
-> - all the editors that this guy tested keep the hard links, so it was 
->   kinda hard to understand why Git insists on behaving differently,
->
-> - if the user asked for hard links, it is not Git's place to question that 
->   decision,
+On the walk style fetch connection we can bypass this check, as the
+connectivity was implicitly verified by the walker as it downloaded
+objects and built its queue of things to fetch.  Native pack and
+bundle transports however do not have this check built into them,
+and require that we execute the work ourselves.
 
-These are non-arguments, when you are asked to give rationale for adding
-capability to "ask for hard links" to begin with.
+Signed-off-by: Shawn O. Pearce <spearce@spearce.org>
+---
 
-IOW, the question was why git should support tracked contents being
-hardlinked to something else.
+ This is a follow-on to my fsck during fetch series, which is already
+ in master.  Making calls to ObjectChecker isn't enough as it does
+ not check the DAG's connectivity.
 
-[jc: Sorry for dropping Shawn from CC: list.  pobox.com seems to complain
-on his address for some reason.  Here are msmtp log for an identical
-message with and without him on the recipient list.
+ .../jgit/transport/BasePackFetchConnection.java    |    4 +++
+ .../spearce/jgit/transport/FetchConnection.java    |   22 ++++++++++++++++++++
+ .../org/spearce/jgit/transport/FetchProcess.java   |   13 ++++++++++-
+ .../spearce/jgit/transport/TransportBundle.java    |    4 +++
+ .../jgit/transport/WalkFetchConnection.java        |    4 +++
+ 5 files changed, 45 insertions(+), 2 deletions(-)
 
-Oct 13 10:23:57 host=sasl.smtp.pobox.com tls=on auth=on user=junio@pobox.com from=junio@pobox.com recipients=Johannes.Schindelin@gmx.de,barkalow@iabervon.org,git@vger.kernel.org,spearce@spearce.org,gitster@pobox.com smtpstatus=451 smtpmsg='451 4.3.5 Server configuration problem' errormsg='recipient address spearce@spearce.org not accepted by the server' exitcode=EX_DATAERR
-Oct 13 10:31:26 host=sasl.smtp.pobox.com tls=on auth=on user=junio@pobox.com from=junio@pobox.com recipients=Johannes.Schindelin@gmx.de,barkalow@iabervon.org,git@vger.kernel.org,gitster@pobox.com mailsize=2283 exitcode=EX_OK
-]
+diff --git a/org.spearce.jgit/src/org/spearce/jgit/transport/BasePackFetchConnection.java b/org.spearce.jgit/src/org/spearce/jgit/transport/BasePackFetchConnection.java
+index a542eb7..542a8a9 100644
+--- a/org.spearce.jgit/src/org/spearce/jgit/transport/BasePackFetchConnection.java
++++ b/org.spearce.jgit/src/org/spearce/jgit/transport/BasePackFetchConnection.java
+@@ -146,6 +146,10 @@ public boolean didFetchIncludeTags() {
+ 		return false;
+ 	}
+ 
++	public boolean didFetchTestConnectivity() {
++		return false;
++	}
++
+ 	protected void doFetch(final ProgressMonitor monitor,
+ 			final Collection<Ref> want) throws TransportException {
+ 		try {
+diff --git a/org.spearce.jgit/src/org/spearce/jgit/transport/FetchConnection.java b/org.spearce.jgit/src/org/spearce/jgit/transport/FetchConnection.java
+index 9d25b0d..d93972d 100644
+--- a/org.spearce.jgit/src/org/spearce/jgit/transport/FetchConnection.java
++++ b/org.spearce.jgit/src/org/spearce/jgit/transport/FetchConnection.java
+@@ -111,4 +111,26 @@ public void fetch(final ProgressMonitor monitor, final Collection<Ref> want)
+ 	 *         false if tags were not implicitly obtained.
+ 	 */
+ 	public boolean didFetchIncludeTags();
++
++	/**
++	 * Did the last {@link #fetch(ProgressMonitor, Collection)} validate graph?
++	 * <p>
++	 * Some transports walk the object graph on the client side, with the client
++	 * looking for what objects it is missing and requesting them individually
++	 * from the remote peer. By virtue of completing the fetch call the client
++	 * implicitly tested the object connectivity, as every object in the graph
++	 * was either already local or was requested successfully from the peer. In
++	 * such transports this method returns true.
++	 * <p>
++	 * Some transports assume the remote peer knows the Git object graph and is
++	 * able to supply a fully connected graph to the client (although it may
++	 * only be transferring the parts the client does not yet have). Its faster
++	 * to assume such remote peers are well behaved and send the correct
++	 * response to the client. In such tranports this method returns false.
++	 * 
++	 * @return true if the last fetch had to perform a connectivity check on the
++	 *         client side in order to succeed; false if the last fetch assumed
++	 *         the remote peer supplied a complete graph.
++	 */
++	public boolean didFetchTestConnectivity();
+ }
+\ No newline at end of file
+diff --git a/org.spearce.jgit/src/org/spearce/jgit/transport/FetchProcess.java b/org.spearce.jgit/src/org/spearce/jgit/transport/FetchProcess.java
+index 654572d..bb2d051 100644
+--- a/org.spearce.jgit/src/org/spearce/jgit/transport/FetchProcess.java
++++ b/org.spearce.jgit/src/org/spearce/jgit/transport/FetchProcess.java
+@@ -118,7 +118,7 @@ else if (tagopt == TagOpt.FETCH_TAGS)
+ 
+ 			final boolean includedTags;
+ 			if (!askFor.isEmpty() && !askForIsComplete()) {
+-				conn.fetch(monitor, askFor.values());
++				fetchObjects(monitor);
+ 				includedTags = conn.didFetchIncludeTags();
+ 
+ 				// Connection was used for object transfer. If we
+@@ -143,7 +143,7 @@ else if (tagopt == TagOpt.FETCH_TAGS)
+ 				if (!askFor.isEmpty() && (!includedTags || !askForIsComplete())) {
+ 					reopenConnection();
+ 					if (!askFor.isEmpty())
+-						conn.fetch(monitor, askFor.values());
++						fetchObjects(monitor);
+ 				}
+ 			}
+ 		} finally {
+@@ -171,6 +171,15 @@ else if (tagopt == TagOpt.FETCH_TAGS)
+ 		}
+ 	}
+ 
++	private void fetchObjects(final ProgressMonitor monitor)
++			throws TransportException {
++		conn.fetch(monitor, askFor.values());
++		if (transport.isCheckFetchedObjects()
++				&& !conn.didFetchTestConnectivity() && !askForIsComplete())
++			throw new TransportException(transport.getURI(),
++					"peer did not supply a complete object graph");
++	}
++
+ 	private void closeConnection() {
+ 		if (conn != null) {
+ 			conn.close();
+diff --git a/org.spearce.jgit/src/org/spearce/jgit/transport/TransportBundle.java b/org.spearce.jgit/src/org/spearce/jgit/transport/TransportBundle.java
+index 5b321a0..7d38b02 100644
+--- a/org.spearce.jgit/src/org/spearce/jgit/transport/TransportBundle.java
++++ b/org.spearce.jgit/src/org/spearce/jgit/transport/TransportBundle.java
+@@ -165,6 +165,10 @@ private String readLine(final byte[] hdrbuf) throws IOException {
+ 			return RawParseUtils.decode(Constants.CHARSET, hdrbuf, 0, lf);
+ 		}
+ 
++		public boolean didFetchTestConnectivity() {
++			return false;
++		}
++
+ 		@Override
+ 		protected void doFetch(final ProgressMonitor monitor,
+ 				final Collection<Ref> want) throws TransportException {
+diff --git a/org.spearce.jgit/src/org/spearce/jgit/transport/WalkFetchConnection.java b/org.spearce.jgit/src/org/spearce/jgit/transport/WalkFetchConnection.java
+index 5638454..d089f7b 100644
+--- a/org.spearce.jgit/src/org/spearce/jgit/transport/WalkFetchConnection.java
++++ b/org.spearce.jgit/src/org/spearce/jgit/transport/WalkFetchConnection.java
+@@ -189,6 +189,10 @@ WalkFetchConnection(final WalkTransport wt, final WalkRemoteObjectDatabase w) {
+ 		workQueue = new LinkedList<ObjectId>();
+ 	}
+ 
++	public boolean didFetchTestConnectivity() {
++		return true;
++	}
++
+ 	@Override
+ 	protected void doFetch(final ProgressMonitor monitor,
+ 			final Collection<Ref> want) throws TransportException {
+-- 
+1.6.0.2.706.g340fc
