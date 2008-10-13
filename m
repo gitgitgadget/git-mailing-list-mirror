@@ -1,56 +1,68 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] Introduce core.keepHardLinks
-Date: Mon, 13 Oct 2008 07:01:43 -0700
-Message-ID: <7vskr0bnlk.fsf@gitster.siamese.dyndns.org>
-References: <alpine.DEB.1.00.0810111344241.22125@pacific.mpi-cbg.de.mpi-cbg.de>
- <20081012183855.GA5255@spearce.org>
- <alpine.DEB.1.00.0810131057150.22125@pacific.mpi-cbg.de.mpi-cbg.de>
+From: "Shawn O. Pearce" <spearce@spearce.org>
+Subject: Re: [PATCH v2] Fix fetch/pull when run without --update-head-ok
+Date: Mon, 13 Oct 2008 07:09:38 -0700
+Message-ID: <20081013140938.GM4856@spearce.org>
+References: <alpine.DEB.1.00.0810111336350.22125@pacific.mpi-cbg.de.mpi-cbg.de> <alpine.LNX.1.00.0810121501590.19665@iabervon.org> <alpine.DEB.1.00.0810131129110.22125@pacific.mpi-cbg.de.mpi-cbg.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: "Shawn O. Pearce" <spearce@spearce.org>, git@vger.kernel.org
+Content-Type: text/plain; charset=utf-8
+Cc: Daniel Barkalow <barkalow@iabervon.org>, git@vger.kernel.org,
+	gitster@pobox.com
 To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Mon Oct 13 16:03:10 2008
+X-From: git-owner@vger.kernel.org Mon Oct 13 16:11:06 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KpO0o-0004m0-CP
-	for gcvg-git-2@gmane.org; Mon, 13 Oct 2008 16:03:06 +0200
+	id 1KpO8J-0007Nr-Ef
+	for gcvg-git-2@gmane.org; Mon, 13 Oct 2008 16:10:51 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752869AbYJMOBy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 13 Oct 2008 10:01:54 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752780AbYJMOBy
-	(ORCPT <rfc822;git-outgoing>); Mon, 13 Oct 2008 10:01:54 -0400
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:33420 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751306AbYJMOBy (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 13 Oct 2008 10:01:54 -0400
-Received: from localhost.localdomain (localhost [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 1E1E86E9BE;
-	Mon, 13 Oct 2008 10:01:52 -0400 (EDT)
-Received: from pobox.com (ip68-225-240-211.oc.oc.cox.net [68.225.240.211])
- (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
- certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
- ESMTPSA id AD9C36E9BD; Mon, 13 Oct 2008 10:01:46 -0400 (EDT)
-In-Reply-To: <alpine.DEB.1.00.0810131057150.22125@pacific.mpi-cbg.de.mpi-cbg.de> (Johannes
- Schindelin's message of "Mon, 13 Oct 2008 10:58:01 +0200 (CEST)")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: 7C6E7520-992F-11DD-B4DF-1E1F86D30F62-77302942!a-sasl-fastnet.pobox.com
+	id S1753108AbYJMOJj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 13 Oct 2008 10:09:39 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753625AbYJMOJj
+	(ORCPT <rfc822;git-outgoing>); Mon, 13 Oct 2008 10:09:39 -0400
+Received: from george.spearce.org ([209.20.77.23]:55428 "EHLO
+	george.spearce.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753095AbYJMOJj (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 13 Oct 2008 10:09:39 -0400
+Received: by george.spearce.org (Postfix, from userid 1001)
+	id 428073835F; Mon, 13 Oct 2008 14:09:38 +0000 (UTC)
+Content-Disposition: inline
+In-Reply-To: <alpine.DEB.1.00.0810131129110.22125@pacific.mpi-cbg.de.mpi-cbg.de>
+User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/98112>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/98113>
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
+> 
+> Some confusing tutorials suggested that it would be a good idea to fetch
+> into the current branch with something like this:
+> 
+> 	git fetch origin master:master
+> 
+> (or even worse: the same command line with "pull" instead of "fetch").
+> While it might make sense to store what you want to pull, it typically
+> is plain wrong when the current branch is "master".
+> 
+> As noticed by Junio, this behavior should be triggered by _not_ passing
+> the --update-head-ok option, but somewhere along the lines we lost that
+> behavior.
+> 
+> NOTE: this patch does not completely resurrect the original behavior
+> without --update-head-ok: the check for the current branch is now _only_
+> performed in non-bare repositories.
+> 
+> Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 
->> I cannot fathom why a user wants this much rope to hang themselves 
->> with...
->
-> The question is not so much why anyone want to do this, but _if_.
+Acked-by: Shawn O. Pearce <spearce@spearce.org>
 
-Sorry, I think the question should be _why_.
+> 	Strangely, some more tests refused to pass this time, because they
+> 	did not use --update-head-ok; this was fixed, too.
 
-You can gain a sympathetic "Ah, that is sensible, and 'this much rope to
-hang themselves with' comment was unwarranted" only by answering that
-question.
+Not strange, --update-head-ok was busted and the tests took advantage
+of it.  :-\
+ 
+-- 
+Shawn.
