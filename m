@@ -1,139 +1,100 @@
-From: Heikki Hokkanen <hoxu@users.sf.net>
-Subject: [PATCH] git show-ref: add --remotes option.
-Date: Mon, 13 Oct 2008 22:23:47 +0300
-Message-ID: <48F3A043.5070406@users.sf.net>
+From: Brandon <siamesedream01@gmail.com>
+Subject: Re: concerns about git
+Date: Mon, 13 Oct 2008 15:51:25 -0400
+Message-ID: <82c87da00810131251i52d10170h5c1991e2da0bd208@mail.gmail.com>
+References: <19959918.post@talk.nabble.com> <20081013181941.GT4856@spearce.org>
+	 <e1dab3980810131140p45c62e5cs690ac190eeacc38e@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-Cc: gitster@pobox.com
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Oct 13 21:25:10 2008
+Cc: "Shawn O. Pearce" <spearce@spearce.org>,
+	deepwinter <deepwinter@winterroot.net>, git@vger.kernel.org
+To: "David Tweed" <david.tweed@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Oct 13 21:52:46 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KpT2T-0001K5-H9
-	for gcvg-git-2@gmane.org; Mon, 13 Oct 2008 21:25:10 +0200
+	id 1KpTT5-0003Sq-KG
+	for gcvg-git-2@gmane.org; Mon, 13 Oct 2008 21:52:40 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757374AbYJMTXz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 13 Oct 2008 15:23:55 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757212AbYJMTXz
-	(ORCPT <rfc822;git-outgoing>); Mon, 13 Oct 2008 15:23:55 -0400
-Received: from gv-out-0910.google.com ([216.239.58.186]:35763 "EHLO
-	gv-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756829AbYJMTXy (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 13 Oct 2008 15:23:54 -0400
-Received: by gv-out-0910.google.com with SMTP id e6so394683gvc.37
-        for <git@vger.kernel.org>; Mon, 13 Oct 2008 12:23:51 -0700 (PDT)
+	id S1753434AbYJMTv1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 13 Oct 2008 15:51:27 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751401AbYJMTv1
+	(ORCPT <rfc822;git-outgoing>); Mon, 13 Oct 2008 15:51:27 -0400
+Received: from rv-out-0506.google.com ([209.85.198.238]:65198 "EHLO
+	rv-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750743AbYJMTv0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 13 Oct 2008 15:51:26 -0400
+Received: by rv-out-0506.google.com with SMTP id k40so1999652rvb.1
+        for <git@vger.kernel.org>; Mon, 13 Oct 2008 12:51:25 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from
-         :user-agent:mime-version:to:cc:subject:content-type
-         :content-transfer-encoding:sender;
-        bh=ZUbYTqWbGEqI1wkDh0/7VJjJOZPgpMGoxPtDs6p8S3k=;
-        b=FUqALZETRa2BZsizaWlXhbVK3ffs0ALYv0Ug4HyLohcAr90W59yenED/MIlk52YtoM
-         3/yTCtqPW+4xKbo/s3GtxH7cdXGV6jI83khqswtO1CqIXE2K6fVw4B/2EjugIXG17RWe
-         snHDyJRvRJbuyqL672KdKt1PAKDw43TIucs0k=
+        h=domainkey-signature:received:received:message-id:date:from:to
+         :subject:cc:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:references;
+        bh=HthGBFoOPfVNhv54D8hNwZDOohVRh5kDQNsDqRU7oeQ=;
+        b=BNunv+j6X/V4nF8kwJrhLEHJ8Wd2gxTsFtO9YgTW2HtUwucMTEDsQXsuU4PKqiKMgw
+         xRemToama3AkcOt4N0t1cx4L8rtUNYhwLnhEvpkaEx5UJTvDIDY3qZfVVTCiGrsoOhjQ
+         jV/i6jmYm4FRsYpIJ833243TWgjeZ9sPqaynA=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=message-id:date:from:user-agent:mime-version:to:cc:subject
-         :content-type:content-transfer-encoding:sender;
-        b=auMrc+//KOtZxnxq4+GyN6MS4IOd7eTXm+S+a3lDoUxnSo8ywNB+mwV4mF59P2unBQ
-         oXEG2gkytpUIwEjkW+xoFkVbWINdQF2zXhfqMmPslC4M1uIBRphUAZ9OqA7zEpyEw/9Q
-         RrP4mEJQ9ouxLTUKQF4fHfzorRFIWZ0Vr9dr4=
-Received: by 10.86.80.17 with SMTP id d17mr5652237fgb.47.1223925831362;
-        Mon, 13 Oct 2008 12:23:51 -0700 (PDT)
-Received: from ?91.155.182.187? (a91-155-182-187.elisa-laajakaista.fi [91.155.182.187])
-        by mx.google.com with ESMTPS id d4sm8663355fga.5.2008.10.13.12.23.48
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Mon, 13 Oct 2008 12:23:50 -0700 (PDT)
-User-Agent: Mozilla-Thunderbird 2.0.0.16 (X11/20080724)
+        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
+         :content-type:content-transfer-encoding:content-disposition
+         :references;
+        b=u3jIKulxrMR8UIC3U3IeyBAxnIQ3Y0dRSSL+4Frw5q7sDsOY3JIdAddwEftQB9hPk4
+         gMz/J0XKTMfRo51M3vUiYypAuWTDUDBfbqvVvCFrXgF9S/mAqODqAvZvKFwBsJju9Y/X
+         PdZiSUULQf4osf6vIWrbQRGhFcLbTd71dsVBk=
+Received: by 10.141.177.10 with SMTP id e10mr4144843rvp.112.1223927485903;
+        Mon, 13 Oct 2008 12:51:25 -0700 (PDT)
+Received: by 10.141.4.20 with HTTP; Mon, 13 Oct 2008 12:51:25 -0700 (PDT)
+In-Reply-To: <e1dab3980810131140p45c62e5cs690ac190eeacc38e@mail.gmail.com>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/98140>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/98141>
 
-This works as --tags and --heads, limiting the outputted ref types.
-Any combination of the three can be used.
+You can use "git config core.worktree <location>" to create a ".git"
+folder that manages a working copy in another location.
 
-Signed-off-by: Heikki Hokkanen <hoxu@users.sf.net>
----
- Documentation/git-show-ref.txt |   10 ++++++----
- builtin-show-ref.c             |   12 +++++++++---
- 2 files changed, 15 insertions(+), 7 deletions(-)
+I know some of the GUI tools don't support this though so I would only
+use it if truly necessary  . (For example a using git to manage a
+mapped network drive, it would be faster to keep the ".git" folder on
+the local harddrive)
 
-diff --git a/Documentation/git-show-ref.txt b/Documentation/git-show-ref.txt
-index 2f173ff..5aea2de 100644
---- a/Documentation/git-show-ref.txt
-+++ b/Documentation/git-show-ref.txt
-@@ -9,7 +9,8 @@ SYNOPSIS
- --------
- [verse]
- 'git show-ref' [-q|--quiet] [--verify] [-h|--head] [-d|--dereference]
--	     [-s|--hash] [--abbrev] [--tags] [--heads] [--] <pattern>...
-+	     [-s|--hash] [--abbrev] [--tags] [--heads] [--remotes]
-+	     [--] <pattern>...
- 'git show-ref' --exclude-existing[=pattern]
- 
- DESCRIPTION
-@@ -36,10 +37,11 @@ OPTIONS
- 
- --tags::
- --heads::
-+--remotes::
- 
--	Limit to only "refs/heads" and "refs/tags", respectively.  These
--	options are not mutually exclusive; when given both, references stored
--	in "refs/heads" and "refs/tags" are displayed.
-+	Limit to only "refs/heads", "refs/tags" and "refs/remotes" respectively.
-+	These options are not mutually exclusive; when given all, references
-+	stored in "refs/heads", "refs/tags" and "refs/remotes" are displayed.
- 
- -d::
- --dereference::
-diff --git a/builtin-show-ref.c b/builtin-show-ref.c
-index 572b114..d2362c2 100644
---- a/builtin-show-ref.c
-+++ b/builtin-show-ref.c
-@@ -5,10 +5,11 @@
- #include "tag.h"
- #include "string-list.h"
- 
--static const char show_ref_usage[] = "git show-ref [-q|--quiet] [--verify] [-h|--head] [-d|--dereference] [-s|--hash[=<length>]] [--abbrev[=<length>]] [--tags] [--heads] [--] [pattern*] < ref-list";
-+static const char show_ref_usage[] = "git show-ref [-q|--quiet] [--verify] [-h|--head] [-d|--dereference] [-s|--hash[=<length>]] [--abbrev[=<length>]] [--tags] [--heads] [--remotes] [--] [pattern*] < ref-list";
- 
- static int deref_tags = 0, show_head = 0, tags_only = 0, heads_only = 0,
--	found_match = 0, verify = 0, quiet = 0, hash_only = 0, abbrev = 0;
-+	remotes_only = 0, found_match = 0, verify = 0, quiet = 0, hash_only = 0,
-+	abbrev = 0;
- static const char **pattern;
- 
- static void show_one(const char *refname, const unsigned char *sha1)
-@@ -26,11 +27,12 @@ static int show_ref(const char *refname, const unsigned char *sha1, int flag, vo
- 	const char *hex;
- 	unsigned char peeled[20];
- 
--	if (tags_only || heads_only) {
-+	if (tags_only || heads_only || remotes_only) {
- 		int match;
- 
- 		match = heads_only && !prefixcmp(refname, "refs/heads/");
- 		match |= tags_only && !prefixcmp(refname, "refs/tags/");
-+		match |= remotes_only && !prefixcmp(refname, "refs/remotes/");
- 		if (!match)
- 			return 0;
- 	}
-@@ -217,6 +219,10 @@ int cmd_show_ref(int argc, const char **argv, const char *prefix)
- 			heads_only = 1;
- 			continue;
- 		}
-+		if (!strcmp(arg, "--remotes")) {
-+			remotes_only = 1;
-+			continue;
-+		}
- 		if (!strcmp(arg, "--exclude-existing"))
- 			return exclude_existing(NULL);
- 		if (!prefixcmp(arg, "--exclude-existing="))
--- 
-1.6.0.2.526.g5c283.dirty
+More documentation here: http://www.kernel.org/pub/software/scm/git/docs/
+
+On Mon, Oct 13, 2008 at 2:40 PM, David Tweed <david.tweed@gmail.com> wrote:
+> On Mon, Oct 13, 2008 at 7:19 PM, Shawn O. Pearce <spearce@spearce.org> wrote:
+>>  # then every once in a while, or from a cron job
+>>  $ git push --all backup
+>>
+>> Of course since Git is distributed you can you use this same approach
+>> to make backups to other systems.  You can even edit the .git/config
+>> to give the [remote "backup"] section more than one url line, so
+>> that "git push --all backup" will send updated copies to multiple
+>> locations at once.
+>
+> Another advantage of 'git push'ing to another repository (possibly via
+> cron) as backup is that (for technical reasons) git push has to
+> 'parse' the new changes to your repository in order to push, so it is
+> likely to spot corruption (eg, dying disk) at that time and when you
+> can decide what to do about it. (I have enough backups all over the
+> place that I don't worry about not having a 'copy' of any stuff I care
+> about, but that there'll be some fatal corruption I don't notice
+> immediately that then gets propagated everywhere rendering them
+> useless.)
+>
+> --
+> cheers, dave tweed__________________________
+> david.tweed@gmail.com
+> Rm 124, School of Systems Engineering, University of Reading.
+> "while having code so boring anyone can maintain it, use Python." --
+> attempted insult seen on slashdot
+> --
+> To unsubscribe from this list: send the line "unsubscribe git" in
+> the body of a message to majordomo@vger.kernel.org
+> More majordomo info at  http://vger.kernel.org/majordomo-info.html
+>
