@@ -1,97 +1,85 @@
 From: Giuseppe Bilotta <giuseppe.bilotta@gmail.com>
-Subject: [PATCHv5 3/5] gitweb: use_pathinfo filenames start with /
-Date: Mon, 13 Oct 2008 12:19:23 +0200
-Message-ID: <1223893165-26022-4-git-send-email-giuseppe.bilotta@gmail.com>
-References: <1223893165-26022-1-git-send-email-giuseppe.bilotta@gmail.com>
- <1223893165-26022-2-git-send-email-giuseppe.bilotta@gmail.com>
- <1223893165-26022-3-git-send-email-giuseppe.bilotta@gmail.com>
+Subject: [PATCHv5 0/5] *** SUBJECT HERE ***
+Date: Mon, 13 Oct 2008 12:19:20 +0200
+Message-ID: <1223893165-26022-1-git-send-email-giuseppe.bilotta@gmail.com>
 Cc: Jakub Narebski <jnareb@gmail.com>, Petr Baudis <pasky@suse.cz>,
 	"Shawn O. Pearce" <spearce@spearce.org>,
 	Junio C Hamano <gitster@pobox.com>,
 	Giuseppe Bilotta <giuseppe.bilotta@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Oct 13 12:20:44 2008
+X-From: git-owner@vger.kernel.org Mon Oct 13 12:20:45 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KpKXa-0003aN-N7
-	for gcvg-git-2@gmane.org; Mon, 13 Oct 2008 12:20:43 +0200
+	id 1KpKXZ-0003aN-4Z
+	for gcvg-git-2@gmane.org; Mon, 13 Oct 2008 12:20:41 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1763405AbYJMKTd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 13 Oct 2008 06:19:33 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1763190AbYJMKTa
-	(ORCPT <rfc822;git-outgoing>); Mon, 13 Oct 2008 06:19:30 -0400
-Received: from ik-out-1112.google.com ([66.249.90.183]:31420 "EHLO
-	ik-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1763189AbYJMKT2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 13 Oct 2008 06:19:28 -0400
-Received: by ik-out-1112.google.com with SMTP id c30so1116584ika.5
-        for <git@vger.kernel.org>; Mon, 13 Oct 2008 03:19:26 -0700 (PDT)
+	id S1763149AbYJMKT0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 13 Oct 2008 06:19:26 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1762610AbYJMKTZ
+	(ORCPT <rfc822;git-outgoing>); Mon, 13 Oct 2008 06:19:25 -0400
+Received: from ug-out-1314.google.com ([66.249.92.173]:34191 "EHLO
+	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1761500AbYJMKTR (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 13 Oct 2008 06:19:17 -0400
+Received: by ug-out-1314.google.com with SMTP id k3so472841ugf.37
+        for <git@vger.kernel.org>; Mon, 13 Oct 2008 03:19:15 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:received:received:from:to:cc:subject:date
-         :message-id:x-mailer:in-reply-to:references;
-        bh=xPH8l+FnKIfgEaArqixQ0oCaJd/vw31v7lxAqevV19A=;
-        b=ESc+edNiOYih4PtcGvfPPUpF3t2lIST7RxXRAjCAWX67A43+WkhSQAnarA8LedqoU4
-         bYr7Cd5PhdulrKNxbFf+QIVLkVLsE38RcJtTEPCaIY6qYroUMvtNU9DI6/osklJkv9gV
-         z2ROUmY2AKsMNOnTE0Mix1y3c18HEgkpWs97M=
+         :message-id:x-mailer;
+        bh=w8P/HAvfkkaYIZl+Xg2FaqfiO6jcHuivOSx8wU57JoE=;
+        b=TUvl4HHFNQ9uj5GihtvDmJnRaYLy0ISIbuVHGoEJGk6/vIJzpJJfayOSQqsB/RRxAp
+         OkD1Ugv6MRwkDJlaSgQ4GxlRgemzBR6/y4BkQXwSERxlZ8eCFZ1HgSI5vLPqGSu3gUmE
+         KNoEa9UhBbNf5H7dyX+fM2McS9jG0wYu3+kYk=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        b=JPqUtEk9eUsiDjKJlrnRfW/+oKvlSTqQUJiKh/pxKmMg8G3uA4LXHna8YmgPlF7nL0
-         QgcqiUwDmTpVU7EIAg+qowAJP8N8wwqofTJz+JnMVyo9dDk5fQXsx78wDuSMGu81BALc
-         nU+Df0NwB9VHlnAo9bsxK/G3bKFKVp9nkBFz0=
-Received: by 10.210.62.12 with SMTP id k12mr5266684eba.112.1223893165867;
-        Mon, 13 Oct 2008 03:19:25 -0700 (PDT)
+        h=from:to:cc:subject:date:message-id:x-mailer;
+        b=nDeHrLyhlOpucOIK/JzhG39xe9XBPT3lQb7gpbs8zD+SaSJVDs8QB+4CE8yIP8OCBd
+         IeXC8FQOx6h2YPTu6DvflIgTSOoDYvg/BF4zqWx3CS0XGkj0ih2NMw/hrQNPCoO74p4Z
+         qivo3DJ0WnffVgrWZTVwsMo91rwPcyspjmV3Q=
+Received: by 10.210.130.14 with SMTP id c14mr5262705ebd.187.1223893155269;
+        Mon, 13 Oct 2008 03:19:15 -0700 (PDT)
 Received: from localhost ([78.15.14.149])
-        by mx.google.com with ESMTPS id 5sm9547623eyh.2.2008.10.13.03.19.23
+        by mx.google.com with ESMTPS id 5sm9710603eyf.8.2008.10.13.03.19.13
         (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Mon, 13 Oct 2008 03:19:25 -0700 (PDT)
+        Mon, 13 Oct 2008 03:19:14 -0700 (PDT)
 X-Mailer: git-send-email 1.5.6.5
-In-Reply-To: <1223893165-26022-3-git-send-email-giuseppe.bilotta@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/98102>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/98103>
 
-When using path info, make filenames start with a / (right after the :
-that separates them from the hash base). This minimal change allows
-relative navigation to work properly when viewing HTML files in raw
-('blob_plain') mode.
+Fifth attempt for my gitweb PATH_INFO patchset, whose purpose is to
+reduce the use of CGI parameters by embedding as many parameters as
+possible in the URL path itself, provided the pathinfo feature is
+enabled.
 
-Signed-off-by: Giuseppe Bilotta <giuseppe.bilotta@gmail.com>
----
- gitweb/gitweb.perl |    6 +++---
- 1 files changed, 3 insertions(+), 3 deletions(-)
+The new typical gitweb URL is therefore in the form
 
-diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
-index 5337d40..49730f3 100755
---- a/gitweb/gitweb.perl
-+++ b/gitweb/gitweb.perl
-@@ -727,7 +727,7 @@ sub href (%) {
- 		# try to put as many parameters as possible in PATH_INFO:
- 		#   - project name
- 		#   - action
--		#   - hash or hash_base:filename
-+		#   - hash or hash_base:/filename
- 
- 		# When the script is the root DirectoryIndex for the domain,
- 		# $href here would be something like http://gitweb.example.com/
-@@ -746,11 +746,11 @@ sub href (%) {
- 			delete $params{'action'};
- 		}
- 
--		# Finally, we put either hash_base:file_name or hash
-+		# Finally, we put either hash_base:/file_name or hash
- 		if (defined $params{'hash_base'}) {
- 			$href .= "/".esc_url($params{'hash_base'});
- 			if (defined $params{'file_name'}) {
--				$href .= ":".esc_url($params{'file_name'});
-+				$href .= ":/".esc_url($params{'file_name'});
- 				delete $params{'file_name'};
- 			}
- 			delete $params{'hash'};
--- 
-1.5.6.5
+$project/$action/$parent:$file..$hash:$file
+
+(with useless parts stripped). Backwards compatibility for old-style
+$project/$hash[:$file] URLs is kept, as long as $hash is not a refname whose
+name happens to match a git action.
+
+The main implementation is provided by paired patches (#1#2, #4#5)
+that implement parsing and generation of the new style URLs.
+
+Patch #3 is a minor improvement to the URL syntax that allows web
+sites to be properly browsable in raw mode.
+
+The patchset depends on my previous input parameter handling patch currently
+waiting in 'next'.
+
+Giuseppe Bilotta (5):
+  gitweb: parse project/action/hash_base:filename PATH_INFO
+  gitweb: generate project/action/hash URLs
+  gitweb: use_pathinfo filenames start with /
+  gitweb: parse parent..current syntax from PATH_INFO
+  gitweb: generate parent..current URLs
+
+ gitweb/gitweb.perl |  124 +++++++++++++++++++++++++++++++++++++++++++++++----
+ 1 files changed, 114 insertions(+), 10 deletions(-)
