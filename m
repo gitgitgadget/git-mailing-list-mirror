@@ -1,96 +1,99 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH v2] Fix fetch/pull when run without --update-head-ok
-Date: Mon, 13 Oct 2008 20:12:43 +0200 (CEST)
-Message-ID: <alpine.DEB.1.00.0810132001230.22125@pacific.mpi-cbg.de.mpi-cbg.de>
-References: <alpine.DEB.1.00.0810111336350.22125@pacific.mpi-cbg.de.mpi-cbg.de> <alpine.LNX.1.00.0810121501590.19665@iabervon.org> <alpine.DEB.1.00.0810131129110.22125@pacific.mpi-cbg.de.mpi-cbg.de> <7vod1obmlh.fsf@gitster.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] Introduce core.keepHardLinks
+Date: Mon, 13 Oct 2008 11:06:44 -0700
+Message-ID: <7v63nw9xor.fsf@gitster.siamese.dyndns.org>
+References: <alpine.DEB.1.00.0810111344241.22125@pacific.mpi-cbg.de.mpi-cbg.de>
+ <20081012183855.GA5255@spearce.org>
+ <alpine.DEB.1.00.0810131057150.22125@pacific.mpi-cbg.de.mpi-cbg.de>
+ <7vskr0bnlk.fsf@gitster.siamese.dyndns.org>
+ <alpine.DEB.1.00.0810131611470.22125@pacific.mpi-cbg.de.mpi-cbg.de>
+ <7vhc7g9z7s.fsf@gitster.siamese.dyndns.org>
+ <alpine.DEB.1.00.0810131950140.22125@pacific.mpi-cbg.de.mpi-cbg.de>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Daniel Barkalow <barkalow@iabervon.org>, git@vger.kernel.org,
-	spearce@spearce.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Oct 13 20:12:33 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Mon Oct 13 20:13:46 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KpRpH-0002Vp-G1
-	for gcvg-git-2@gmane.org; Mon, 13 Oct 2008 20:07:28 +0200
+	id 1KpRqQ-000354-1x
+	for gcvg-git-2@gmane.org; Mon, 13 Oct 2008 20:08:38 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756433AbYJMSGJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 13 Oct 2008 14:06:09 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756272AbYJMSGI
-	(ORCPT <rfc822;git-outgoing>); Mon, 13 Oct 2008 14:06:08 -0400
-Received: from mail.gmx.net ([213.165.64.20]:59710 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1756245AbYJMSGH (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 13 Oct 2008 14:06:07 -0400
-Received: (qmail invoked by alias); 13 Oct 2008 18:06:04 -0000
-Received: from pacific.mpi-cbg.de (EHLO [141.5.10.38]) [141.5.10.38]
-  by mail.gmx.net (mp063) with SMTP; 13 Oct 2008 20:06:04 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX19kMztkW2Zkc33eUoIEnkqrIynJzWAj1XA/ndXWJt
-	LCZ0XKTW4A5b9C
-X-X-Sender: schindelin@pacific.mpi-cbg.de.mpi-cbg.de
-In-Reply-To: <7vod1obmlh.fsf@gitster.siamese.dyndns.org>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.6
+	id S1756640AbYJMSHZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 13 Oct 2008 14:07:25 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755751AbYJMSHX
+	(ORCPT <rfc822;git-outgoing>); Mon, 13 Oct 2008 14:07:23 -0400
+Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:53245 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754986AbYJMSHV (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 13 Oct 2008 14:07:21 -0400
+Received: from localhost.localdomain (localhost [127.0.0.1])
+	by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id AE8838867D;
+	Mon, 13 Oct 2008 14:07:20 -0400 (EDT)
+Received: from pobox.com (ip68-225-240-211.oc.oc.cox.net [68.225.240.211])
+ (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
+ certificate requested) by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with
+ ESMTPSA id CFFA988675; Mon, 13 Oct 2008 14:06:46 -0400 (EDT)
+In-Reply-To: <alpine.DEB.1.00.0810131950140.22125@pacific.mpi-cbg.de.mpi-cbg.de> (Johannes
+ Schindelin's message of "Mon, 13 Oct 2008 19:54:02 +0200 (CEST)")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: C759F3E4-9951-11DD-A434-4F5276724C3F-77302942!a-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/98135>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/98136>
 
-Hi,
+Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
-thanks for doing the due diligence that I should have done (but I ran out 
-of time).
+> On Mon, 13 Oct 2008, Junio C Hamano wrote:
+>
+>> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+>> 
+>> > - all the editors that this guy tested keep the hard links, so it was 
+>> >   kinda hard to understand why Git insists on behaving differently,
+>> >
+>> > - if the user asked for hard links, it is not Git's place to question 
+>> >   that decision,
+>> 
+>> These are non-arguments,
+>
+> Actually, they are arguments.
+>
+> The thing is: these editors do what they do for a reason.  Which is 
+> exactly the second reason.
+>
+> When a user makes hard links, it is not just for fun and bullocks.  It is 
+> not for copy-on-write either, that's not what hard links are supposed to 
+> do.  It is for cases when you need the _same_ information in two places.
+>
+> I am not that big a user of hard links myself, but when I do, I know 
+> exactly what I am doing.  And with my patch and that config variable set 
+> to true, Git will not interfer with that.
 
-On Mon, 13 Oct 2008, Junio C Hamano wrote:
+Ok, such a possible benefit should be described and defended better then.
+I only thought of the scenario Shawn has brought up, which is a downside
+of using this option without any conceivable upside, when I read your
+patch and your rationale you repeated in a few messages that followed.
 
-> The parts of the tests you fixed came from these:
-> 
->     6738c81 (send-pack: segfault fix on forced push, 2007-11-08)
+You could have said something like "The users may want to have a checkout,
+and keep the same contents always appear elsewhere i.e. 'installing by
+hardlinking'.  In such a setup, editing the source with an editor
+configured not to break hardlinks would still work fine, but git-checkout
+will unconditionally break such links, which is undesirable.  Such a setup
+would want a configuration variable like this."
 
-This really wants to make sure that no objects are shared or hard-linked 
-between the repository in "trash directory/" and the one in its 
-subdirectory "another/".  It predates "test_must_fail", too, it seems.
+"It is not for fun and bullocks" is not a description any clearer than
+what you kept repeating, but if you stated it like the above, then I would
+not have had trouble understanding what you wanted to say.
 
-It never touches the working directory "another/", so using 
---update-head-ok is okay.
+The documentation update needs to warn about the Shawn's scenario.  I also
+do not know what this should do when you have two tracked paths with
+identical contents hardlinked to each other.  Because we do not track
+hardlinks, I _think_ breaking links would be the right thing to do for
+such paths regardless of this configuration variable.
 
->     4ebc914 (builtin-remote: prune remotes correctly ..., 2008-02-29)
-
-This tests "git remote add"'s --mirror option.
-
-It never touches the working directory either.
-
->     4942025 (t5510: test "git fetch" following tags minimally, 2008-09-21)
-
-This test is actually not fixed, but contains two test cases for the issue 
-the commit fixes.
-
->     03db452 (Support gitlinks in fast-import., 2008-07-19)
-
-This creates an empty repository for tests to fast-import, and fetches 
-into the current (not yet existing) branch.
-
-I actually understand now why the tests started failing: the change from 
-resolve_ref() to get_branch() as requested by Daniel are at fault: 
-get_branch() does not check if the branch has an initial commit.
-
-I am actually regretting making this change.  Daniel, do you agree that it 
-might be better to change back to resolve_ref(), so that the initial 
-complaint (IIRC Han-Wen git pull'ed into a freshly initialized repository 
-with that utterly bogus "git pull origin master:master" line) is not 
-re-raised?
-
-> With these verified, I think I should move the "Strangely" comment to 
-> the commit log message proper (after stripping "Strangely" part -- it is 
-> not strange anymore after we understand why).
-
-The only test that would need fixing after reverting back to resolve_ref() 
-would be the "remote add --mirror" thing, which I think should be fine.
-
-Ciao,
-Dscho
+It also raises another question.  Don't you want this to be an attribute
+for paths, not all-or-nothing configuration per repository?
