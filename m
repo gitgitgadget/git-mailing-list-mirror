@@ -1,61 +1,146 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH v2] Fix fetch/pull when run without --update-head-ok
-Date: Mon, 13 Oct 2008 19:57:41 +0200 (CEST)
-Message-ID: <alpine.DEB.1.00.0810131956360.22125@pacific.mpi-cbg.de.mpi-cbg.de>
-References: <alpine.DEB.1.00.0810111336350.22125@pacific.mpi-cbg.de.mpi-cbg.de> <alpine.LNX.1.00.0810121501590.19665@iabervon.org> <alpine.DEB.1.00.0810131129110.22125@pacific.mpi-cbg.de.mpi-cbg.de> <20081013140938.GM4856@spearce.org>
+From: Jonas Fonseca <fonseca@diku.dk>
+Subject: [PATCH] Improve and fix git-check-attr(1)
+Date: Mon, 13 Oct 2008 19:57:05 +0200
+Message-ID: <20081013175705.GA9538@diku.dk>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Daniel Barkalow <barkalow@iabervon.org>, git@vger.kernel.org,
-	gitster@pobox.com
-To: "Shawn O. Pearce" <spearce@spearce.org>
-X-From: git-owner@vger.kernel.org Mon Oct 13 19:52:50 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Oct 13 20:00:06 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KpRae-0004Rw-6f
-	for gcvg-git-2@gmane.org; Mon, 13 Oct 2008 19:52:20 +0200
+	id 1KpRgW-00074H-63
+	for gcvg-git-2@gmane.org; Mon, 13 Oct 2008 19:58:24 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752471AbYJMRvI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 13 Oct 2008 13:51:08 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752329AbYJMRvI
-	(ORCPT <rfc822;git-outgoing>); Mon, 13 Oct 2008 13:51:08 -0400
-Received: from mail.gmx.net ([213.165.64.20]:34174 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1752231AbYJMRvG (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 13 Oct 2008 13:51:06 -0400
-Received: (qmail invoked by alias); 13 Oct 2008 17:51:02 -0000
-Received: from pacific.mpi-cbg.de (EHLO [141.5.10.38]) [141.5.10.38]
-  by mail.gmx.net (mp039) with SMTP; 13 Oct 2008 19:51:02 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX19dgKdYnYBduI1bIO3S/A/Uroo6Gwr58ffWf6FQv4
-	18kBEdq6xhyeLh
-X-X-Sender: schindelin@pacific.mpi-cbg.de.mpi-cbg.de
-In-Reply-To: <20081013140938.GM4856@spearce.org>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.7
+	id S1754700AbYJMR5L (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 13 Oct 2008 13:57:11 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754662AbYJMR5L
+	(ORCPT <rfc822;git-outgoing>); Mon, 13 Oct 2008 13:57:11 -0400
+Received: from mgw1.diku.dk ([130.225.96.91]:43344 "EHLO mgw1.diku.dk"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754524AbYJMR5J (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 13 Oct 2008 13:57:09 -0400
+Received: from localhost (localhost [127.0.0.1])
+	by mgw1.diku.dk (Postfix) with ESMTP id F00D152C32A;
+	Mon, 13 Oct 2008 19:57:06 +0200 (CEST)
+X-Virus-Scanned: amavisd-new at diku.dk
+Received: from mgw1.diku.dk ([127.0.0.1])
+	by localhost (mgw1.diku.dk [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id ViXa9DNfYbd7; Mon, 13 Oct 2008 19:57:05 +0200 (CEST)
+Received: from nhugin.diku.dk (nhugin.diku.dk [130.225.96.140])
+	by mgw1.diku.dk (Postfix) with ESMTP id A2EB752C320;
+	Mon, 13 Oct 2008 19:57:05 +0200 (CEST)
+Received: from tyr.diku.dk (tyr.diku.dk [130.225.96.226])
+	by nhugin.diku.dk (Postfix) with ESMTP
+	id AE1416DFB75; Mon, 13 Oct 2008 19:56:03 +0200 (CEST)
+Received: by tyr.diku.dk (Postfix, from userid 3873)
+	id 88F641A4001; Mon, 13 Oct 2008 19:57:05 +0200 (CEST)
+Content-Disposition: inline
+User-Agent: Mutt/1.5.16 (2007-06-09)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/98133>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/98134>
 
-Hi,
+Always use 'verse' for multi-line synopsis sections. Add output and
+example sections to document what output can be expected.
 
-On Mon, 13 Oct 2008, Shawn O. Pearce wrote:
+Signed-off-by: Jonas Fonseca <fonseca@diku.dk>
 
-> Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
-> > 
-> > 	Strangely, some more tests refused to pass this time, because they 
-> > 	did not use --update-head-ok; this was fixed, too.
-> 
-> Not strange, --update-head-ok was busted and the tests took advantage of 
-> it.  :-\
+---
+ Documentation/git-check-attr.txt |   63 +++++++++++++++++++++++++++++++++++++-
+ 1 files changed, 62 insertions(+), 1 deletions(-)
 
-Heh.  My "this time" was meant as "since the first revision of the patch".  
-I really tested the first revision, promise!  And those tests did not fail 
-back then.  Or I am even stupider than I am prepared to admit.
+ At least the first chunk should be applied. The last is a quick attempt
+ at documenting the expected output formally and with examples.
 
-Ciao,
-Dscho
+diff --git a/Documentation/git-check-attr.txt b/Documentation/git-check-attr.txt
+index 14e4374..09c5234 100644
+--- a/Documentation/git-check-attr.txt
++++ b/Documentation/git-check-attr.txt
+@@ -8,8 +8,9 @@ git-check-attr - Display gitattributes information.
+ 
+ SYNOPSIS
+ --------
++[verse]
+ 'git check-attr' attr... [--] pathname...
+-'git check-attr' --stdin [-z] attr... < <list-of-paths
++'git check-attr' --stdin [-z] attr... < <list-of-paths>
+ 
+ DESCRIPTION
+ -----------
+@@ -30,6 +31,66 @@ OPTIONS
+ 	arguments as path names. If not supplied, only the first argument will
+ 	be treated as an attribute.
+ 
++OUTPUT
++------
++
++The output is of the form:
++<path> COLON SP <attribute> COLON SP <info> LF
++
++Where <path> is the path of a file being queried, <attribute> is an attribute
++being queried and <info> can be either:
++
++'unspecified';; when the attribute is not defined for the path.
++'unset';; when the attribute is defined to false.
++'set';; when the attribute is defined to true.
++<value>;; when a value has been assigned to the attribute.
++
++EXAMPLES
++--------
++
++In the following examples, the following '.gitattributes' file is used:
++---------------
++*.java diff=java -crlf myAttr
++README caveat=unspecified
++---------------
++
++* Output for an unspecified attribute:
++---------------
++$ git check-attr filter src/org/example/lib/MyClass.java
++src/org/example/lib/MyClass.java: filter: unspecified
++---------------
++
++* Output for an unset attribute:
++---------------
++$ git check-attr crlf src/org/example/lib/MyClass.java
++src/org/example/lib/MyClass.java: crlf: unset
++---------------
++
++* Output for an attribute that has been set:
++---------------
++$ git check-attr myAttr src/org/example/lib/MyClass.java
++src/org/example/lib/MyClass.java: myAttr: set
++---------------
++
++* Output for an attribute set to a value:
++---------------
++$ git check-attr diff src/org/example/lib/MyClass.java
++src/org/example/lib/MyClass.java: diff: java
++---------------
++
++* Listing multiple attributes for a file:
++---------------
++$ git check-attr crlf diff myAttr -- src/org/example/lib/MyClass.java
++src/org/example/lib/MyClass.java: crlf: unset
++src/org/example/lib/MyClass.java: diff: java
++src/org/example/lib/MyClass.java: myAttr: set
++---------------
++
++* Not all values are equally unambiguous:
++---------------
++$ git check-attr caveat README
++src/org/example/lib/MyClass.java: caveat: unspecified
++---------------
+ 
+ SEE ALSO
+ --------
+-- 
+tg: (340fcf4..) jf/man-git-check-attr (depends on: next)
+
+-- 
+Jonas Fonseca
