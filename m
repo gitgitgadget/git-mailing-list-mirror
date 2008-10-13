@@ -1,100 +1,73 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2] Fix fetch/pull when run without --update-head-ok
-Date: Mon, 13 Oct 2008 07:23:22 -0700
-Message-ID: <7vod1obmlh.fsf@gitster.siamese.dyndns.org>
-References: <alpine.DEB.1.00.0810111336350.22125@pacific.mpi-cbg.de.mpi-cbg.de>
- <alpine.LNX.1.00.0810121501590.19665@iabervon.org>
- <alpine.DEB.1.00.0810131129110.22125@pacific.mpi-cbg.de.mpi-cbg.de>
+Subject: Re: What's cooking in git/spearce.git (Oct 2008, #02; Sun, 12)
+Date: Mon, 13 Oct 2008 07:25:49 -0700
+Message-ID: <7vhc7gbmhe.fsf@gitster.siamese.dyndns.org>
+References: <20081012212543.GG4856@spearce.org>
+ <20081013013752.8fc16695.stephen@exigencecorp.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Daniel Barkalow <barkalow@iabervon.org>, git@vger.kernel.org,
-	gitster@pobox.com, spearce@spearce.org
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Mon Oct 13 16:25:33 2008
+Cc: "Shawn O. Pearce" <spearce@spearce.org>, git@vger.kernel.org
+To: Stephen Haberman <stephen@exigencecorp.com>
+X-From: git-owner@vger.kernel.org Mon Oct 13 16:27:49 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KpOMK-0003pz-Lm
-	for gcvg-git-2@gmane.org; Mon, 13 Oct 2008 16:25:21 +0200
+	id 1KpOOf-0004kU-37
+	for gcvg-git-2@gmane.org; Mon, 13 Oct 2008 16:27:45 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755046AbYJMOXo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 13 Oct 2008 10:23:44 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756733AbYJMOXo
-	(ORCPT <rfc822;git-outgoing>); Mon, 13 Oct 2008 10:23:44 -0400
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:40076 "EHLO
+	id S1757202AbYJMO0E (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 13 Oct 2008 10:26:04 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757219AbYJMO0C
+	(ORCPT <rfc822;git-outgoing>); Mon, 13 Oct 2008 10:26:02 -0400
+Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:45945 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756727AbYJMOXm (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 13 Oct 2008 10:23:42 -0400
+	with ESMTP id S1757202AbYJMO0A (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 13 Oct 2008 10:26:00 -0400
 Received: from localhost.localdomain (localhost [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id EDFA86ECC9;
-	Mon, 13 Oct 2008 10:23:39 -0400 (EDT)
+	by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id 9E7F28995A;
+	Mon, 13 Oct 2008 10:25:59 -0400 (EDT)
 Received: from pobox.com (ip68-225-240-211.oc.oc.cox.net [68.225.240.211])
  (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
- certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
- ESMTPSA id 23ED46ECC8; Mon, 13 Oct 2008 10:23:29 -0400 (EDT)
-In-Reply-To: <alpine.DEB.1.00.0810131129110.22125@pacific.mpi-cbg.de.mpi-cbg.de> (Johannes
- Schindelin's message of "Mon, 13 Oct 2008 11:36:52 +0200 (CEST)")
+ certificate requested) by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with
+ ESMTPSA id 05A9A89955; Mon, 13 Oct 2008 10:25:53 -0400 (EDT)
 User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: 87F8BEA2-9932-11DD-9871-1E1F86D30F62-77302942!a-sasl-fastnet.pobox.com
+X-Pobox-Relay-ID: DB39AF04-9932-11DD-BAFE-4F5276724C3F-77302942!a-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/98114>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/98115>
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+Stephen Haberman <stephen@exigencecorp.com> writes:
 
-> Some confusing tutorials suggested that it would be a good idea to fetch
-> into the current branch with something like this:
->
-> 	git fetch origin master:master
->
-> (or even worse: the same command line with "pull" instead of "fetch").
-> While it might make sense to store what you want to pull, it typically
-> is plain wrong when the current branch is "master".
->
-> As noticed by Junio, this behavior should be triggered by _not_ passing
-> the --update-head-ok option, but somewhere along the lines we lost that
-> behavior.
+> (I also have a test comment typo and test_expect_failure change to make
+> to rebase-i-p from Junio's feedback and would like to know the
+> preferred way to submit those--e.g. a patch on top of your pu, a patch
+> on top of the existing series, or a new series all together. Given it
+> is not next, I'm guessing a new series all together.)
 
-Do you mean, by "this behavior should be triggered", "we should allow
-updating the current branch head only when --update-head-ok is given", in
-other words, "we should error out if the user tries to update the current
-head with git-fetch without passing --update-head-ok"?
+You guessed it right.
 
-> NOTE: this patch does not completely resurrect the original behavior
-> without --update-head-ok: the check for the current branch is now _only_
-> performed in non-bare repositories.
+As sh/maint-rebase3 is about a pure fix, while the other -i-p is a more
+involved enhancement, I am guessing Shawn decided not to queue the latter
+for 1.6.0.X, and I agree with that.  The final shape of the history should
+look like:
 
-I think that is a sensible improvement.
+ * maint will eventually get sh/maint-rebase3 to be in 1.6.0.X, which in
+   turn will eventually be merged to master;
 
-> 	Strangely, some more tests refused to pass this time, because they
-> 	did not use --update-head-ok; this was fixed, too.
+ * master will eventually get sh/rebase-i-p.
 
-We need to look at these changes a bit carefully, as changes to existing
-tests can be either (1) fixing those that depended on broken behaviour of
-the command, or (2) trying to hide regressions introduced by the patch
-under the rug.
+When two series have dependencies like this, it is generally the easiest
+and cleanest to prepare them to match such a final shape of the history.
+Hence, we would want two series built like this:
 
->  t/t5405-send-pack-rewind.sh |    2 +-
->  t/t5505-remote.sh           |    2 +-
->  t/t5510-fetch.sh            |   12 ++++++++++++
->  t/t9300-fast-import.sh      |    2 +-
+ * sh/maint-rebase3 applicable to the tip of 'maint' (this is already done;
+   what is in sh/maint-rebase3 is exactly that);
 
-I suspect all of these offending tests came after b888d61 (Make fetch a
-builtin, 2007-09-10) which lacked the necessary check in do_fetch() to
-cause the regression you are fixing (iow, I am suspecting that the
-brokenness of the tests were hidden by the breakage you are fixing).  The
-parts of the tests you fixed came from these:
+ * apply the above locally to 'maint', merge the result locally to
+   'master', and prepare sh/rebase-i-p series applicable on top of that
+   merge.
 
-    6738c81 (send-pack: segfault fix on forced push, 2007-11-08)
-    4ebc914 (builtin-remote: prune remotes correctly ..., 2008-02-29)
-    4942025 (t5510: test "git fetch" following tags minimally, 2008-09-21)
-    03db452 (Support gitlinks in fast-import., 2008-07-19)
-    
-all of which are indeed descendants of b888d61.
-
-With these verified, I think I should move the "Strangely" comment to the
-commit log message proper (after stripping "Strangely" part -- it is not
-strange anymore after we understand why).
+Thanks.
