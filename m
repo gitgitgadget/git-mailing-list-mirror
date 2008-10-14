@@ -1,98 +1,76 @@
-From: Jan Hudec <bulb@ucw.cz>
-Subject: Re: Git and tagging hook
-Date: Tue, 14 Oct 2008 19:22:27 +0200
-Message-ID: <20081014172227.GB6931@efreet.light.src>
-References: <1223268332.4072.7.camel@localhost> <48E9BB72.2080008@op5.se> <1223399613.20250.1.camel@localhost> <gcg67d$4o2$1@ger.gmane.org> <1223484445.4055.8.camel@localhost> <48ECF072.3000506@op5.se>
+From: "Alex Riesen" <raa.lkml@gmail.com>
+Subject: Re: retrieving a diff from git
+Date: Tue, 14 Oct 2008 19:29:03 +0200
+Message-ID: <81b0412b0810141029l7f37426axfc0646fa114fd3b5@mail.gmail.com>
+References: <20081014145112.GR22427@vanheusden.com>
+	 <81b0412b0810141001w46227afam70123237025a2d4d@mail.gmail.com>
+	 <20081014172048.GW22427@vanheusden.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Kristis Makris <kristis.makris@asu.edu>,
-	Jakub Narebski <jnareb@gmail.com>, git@vger.kernel.org
-To: Andreas Ericsson <ae@op5.se>
-X-From: git-owner@vger.kernel.org Tue Oct 14 19:23:56 2008
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: "Folkert van Heusden" <folkert@vanheusden.com>
+X-From: git-owner@vger.kernel.org Tue Oct 14 19:30:32 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Kpnch-0005gh-8Y
-	for gcvg-git-2@gmane.org; Tue, 14 Oct 2008 19:23:55 +0200
+	id 1Kpniu-0008O0-EP
+	for gcvg-git-2@gmane.org; Tue, 14 Oct 2008 19:30:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752579AbYJNRWo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 14 Oct 2008 13:22:44 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752528AbYJNRWn
-	(ORCPT <rfc822;git-outgoing>); Tue, 14 Oct 2008 13:22:43 -0400
-Received: from ns1.bluetone.cz ([212.158.128.13]:41797 "EHLO ns1.bluetone.cz"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752047AbYJNRWm (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 14 Oct 2008 13:22:42 -0400
-Received: from localhost (spamhole.bluetone.cz [192.168.13.2])
-	by ns1.bluetone.cz (Postfix) with ESMTP id 50179576D7;
-	Tue, 14 Oct 2008 19:22:41 +0200 (CEST)
-Received: from ns1.bluetone.cz ([192.168.13.1])
-	by localhost (spamhole.bluetone.cz [192.168.13.2]) (amavisd-new, port 10026)
-	with ESMTP id dojaQMwRXJwP; Tue, 14 Oct 2008 19:22:35 +0200 (CEST)
-Received: from efreet.light.src (145-119-207-85.strcechy.adsl-llu.static.bluetone.cz [85.207.119.145])
-	by ns1.bluetone.cz (Postfix) with ESMTP id 627F2576CE;
-	Tue, 14 Oct 2008 19:22:34 +0200 (CEST)
-Received: from bulb by efreet.light.src with local (Exim 4.69)
-	(envelope-from <bulb@ucw.cz>)
-	id 1KpnbH-00025z-9a; Tue, 14 Oct 2008 19:22:27 +0200
+	id S1752609AbYJNR3I (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 14 Oct 2008 13:29:08 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752569AbYJNR3H
+	(ORCPT <rfc822;git-outgoing>); Tue, 14 Oct 2008 13:29:07 -0400
+Received: from mail-gx0-f16.google.com ([209.85.217.16]:53456 "EHLO
+	mail-gx0-f16.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752281AbYJNR3G (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 14 Oct 2008 13:29:06 -0400
+Received: by gxk9 with SMTP id 9so5529861gxk.13
+        for <git@vger.kernel.org>; Tue, 14 Oct 2008 10:29:03 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to
+         :subject:cc:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:references;
+        bh=uq+3QYBiEPi8Cm8tvynnFC9Nipab9YhIyXjrP1hA20g=;
+        b=b/SMoQAcdZl4d9CLeiSGYtPe+NBxl3mNTKLb01xDAxlxoIFS2rJAha72WxL3f7Lr74
+         AWRyWraxdUT4Kof1wptW2zSBhTVglC/FJlO80/6rAeQuwKetGwrYjW9wK1Ar1SDLrEh6
+         MlrYrFXdVEc8C/4wRhlzELEL3HXnAJ12RLgIg=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
+         :content-type:content-transfer-encoding:content-disposition
+         :references;
+        b=QVyTcnuiKTqaAU9VHkBEAVUc5Q9uwh80ncEWVb8ArzuyhzbsegxtUaMXZ7OS8USNGp
+         iTLM0LAZoEIzVxH7JWXRCpP9gKzzUmtiSbxVHSuOYo15+pkzRxoR5/YGDS6D5SRrI8V5
+         RByQclnFaewcn+7B9IJe9jgjvZGAIe2b5pqQ0=
+Received: by 10.100.198.13 with SMTP id v13mr7729526anf.123.1224005343253;
+        Tue, 14 Oct 2008 10:29:03 -0700 (PDT)
+Received: by 10.100.91.8 with HTTP; Tue, 14 Oct 2008 10:29:03 -0700 (PDT)
+In-Reply-To: <20081014172048.GW22427@vanheusden.com>
 Content-Disposition: inline
-In-Reply-To: <48ECF072.3000506@op5.se>
-User-Agent: Mutt/1.5.18 (2008-05-17)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/98203>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/98204>
 
-On Wed, Oct 08, 2008 at 19:40:02 +0200, Andreas Ericsson wrote:
-> Kristis Makris wrote:
->> On Tue, 2008-10-07 at 19:28 +0200, Jakub Narebski wrote:
->>> Kristis Makris wrote:
->>>> I want the integration when I apply the tag to a local repository, NOT
->>>> only when I push/pull.
-
-Care to explain why that would ever be useful? It's local, which means that:
- - the user can take it back without a trace it ever happened (git tag -d or
-   even git update-ref -d) and
- - noone except the user will see it anyway, so it's not like they should
-   care either.
-
-Besides, you don't need git tag to create a tag in git, so the hook wouldn't
-really be guaranteed anyway (I mean, just like the commit hook is not -- you
-can still commit by calling write-tree, commit-tree and update-ref and avoid
-the hook).
-
->>> If you are talking about taging locally, you can simply make an alias
->>> or do something after tagging. Search archives for description when
->>> it is worth to add a hook, and when it is not.
->>
->> I am looking for a guarantee that is better than casually saying
->> "simply". I will be providing the integration work to users that may not
->> be as comfortable with making aliases. 
->>
->> I still don't see why a hook on local tagging is not available. Is it
->> possible to add support in Git for such a hook ? Both pre-tag and
->> post-tag.
+2008/10/14 Folkert van Heusden <folkert@vanheusden.com>:
+>> > How would I retrieve the 'kmemcheck' patches from git for the 2.6.27
+>> > kernel? I browsed to the url
+>> > http://git.kernel.org/?p=linux%2Fkernel%2Fgit%2Fx86%2Flinux-2.6-tip.git...
+>> > but could not find how to retrieve that diff.
+>> Well, you can of course just click on "commitdiff" (and "raw" afterwords)
+>> for every commit,
 >
-> Because noone's ever needed one before. If aliases can't do what you
-> want, write a patch to support it and hope Junio accepts it. It's really
-> quite straight-forward. Make sure you read Documentation/SubmittingPatches
-> before you send it.
+> Hmmm the outcome does not apply cleanly to 2.6.27.
+
+That's because the patches are not based on 2.6.27.
+
+>> but ... Have you considered using Git for that?
 >
-> Note though that use of tags on the developer's side will still be up
-> to the developer and not something you can force through other means
-> than policy or convention.
+> and check out the whole tree using Git? I did consider but then I would
+> not have all bells and whistles to generate a Debian kernel package.
 
-Being possible was never a reason to add features to git and the less it was
-a reason to add hooks. And there does not seem to be a use-case that would
-clearly benefit from having such hooks, or at least none was shown on the
-list so far.
-
-For integration with issue tracker, the local tag is neither final, nor
-useful to anybody except the user who did it until it hits the central
-repository. And working on the central repository directly does not seem like
-a good idea either.
-
--- 
-						 Jan 'Bulb' Hudec <bulb@ucw.cz>
+I afraid, that in this particular case you have no other choice, but ask Ingo.
