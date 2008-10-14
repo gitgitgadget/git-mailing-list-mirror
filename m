@@ -1,104 +1,64 @@
-From: Daniel Barkalow <barkalow@iabervon.org>
-Subject: Re: [PATCH v2] Fix fetch/pull when run without --update-head-ok
-Date: Tue, 14 Oct 2008 12:52:49 -0400 (EDT)
-Message-ID: <alpine.LNX.1.00.0810141240510.19665@iabervon.org>
-References: <alpine.DEB.1.00.0810111336350.22125@pacific.mpi-cbg.de.mpi-cbg.de> <alpine.LNX.1.00.0810121501590.19665@iabervon.org> <alpine.DEB.1.00.0810131129110.22125@pacific.mpi-cbg.de.mpi-cbg.de> <7vod1obmlh.fsf@gitster.siamese.dyndns.org>
- <alpine.DEB.1.00.0810132001230.22125@pacific.mpi-cbg.de.mpi-cbg.de> <alpine.LNX.1.00.0810131546180.19665@iabervon.org> <alpine.DEB.1.00.0810141145491.22125@pacific.mpi-cbg.de.mpi-cbg.de> <alpine.LNX.1.00.0810141148010.19665@iabervon.org>
- <alpine.DEB.1.00.0810141815490.22125@pacific.mpi-cbg.de.mpi-cbg.de>
+From: "Alex Riesen" <raa.lkml@gmail.com>
+Subject: Re: retrieving a diff from git
+Date: Tue, 14 Oct 2008 19:01:03 +0200
+Message-ID: <81b0412b0810141001w46227afam70123237025a2d4d@mail.gmail.com>
+References: <20081014145112.GR22427@vanheusden.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	spearce@spearce.org
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Tue Oct 14 18:54:21 2008
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: "Folkert van Heusden" <folkert@vanheusden.com>
+X-From: git-owner@vger.kernel.org Tue Oct 14 19:02:25 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Kpn9m-0000Xs-Uh
-	for gcvg-git-2@gmane.org; Tue, 14 Oct 2008 18:54:03 +0200
+	id 1KpnHp-0004An-Sa
+	for gcvg-git-2@gmane.org; Tue, 14 Oct 2008 19:02:22 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751592AbYJNQwv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 14 Oct 2008 12:52:51 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751670AbYJNQwv
-	(ORCPT <rfc822;git-outgoing>); Tue, 14 Oct 2008 12:52:51 -0400
-Received: from iabervon.org ([66.92.72.58]:52130 "EHLO iabervon.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751545AbYJNQwv (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 14 Oct 2008 12:52:51 -0400
-Received: (qmail 16505 invoked by uid 1000); 14 Oct 2008 16:52:49 -0000
-Received: from localhost (sendmail-bs@127.0.0.1)
-  by localhost with SMTP; 14 Oct 2008 16:52:49 -0000
-In-Reply-To: <alpine.DEB.1.00.0810141815490.22125@pacific.mpi-cbg.de.mpi-cbg.de>
-User-Agent: Alpine 1.00 (LNX 882 2007-12-20)
+	id S1751839AbYJNRBJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 14 Oct 2008 13:01:09 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751834AbYJNRBI
+	(ORCPT <rfc822;git-outgoing>); Tue, 14 Oct 2008 13:01:08 -0400
+Received: from wr-out-0506.google.com ([64.233.184.239]:19229 "EHLO
+	wr-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751805AbYJNRBH (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 14 Oct 2008 13:01:07 -0400
+Received: by wr-out-0506.google.com with SMTP id 69so1427529wri.5
+        for <git@vger.kernel.org>; Tue, 14 Oct 2008 10:01:03 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to
+         :subject:cc:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:references;
+        bh=8p+VpCbyZr78kMD8jgt/DBEAg5Zwa/hJWHpc85Bi3j0=;
+        b=fubIbeH0K0PzY4AzoX5yCN14ilhVQpPScWzyTHrz9CEgLTDVMS/pvfUZGXPMfebJZi
+         MvjK8erO1I1QC83FvclUk9ICdBlbFhVIvVirKh6C3/zCoOnNBvYi4KPRYlSqeT5qbW85
+         iZ5ZPWoxVMokKl+c9MiMH+pC5U6upnL+YmaWE=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
+         :content-type:content-transfer-encoding:content-disposition
+         :references;
+        b=PKZVc2L/FsOJQlIhEkFbb+p2O2c/U4LWO4oArYushxtRO4GfQZQg5RNPYtZ0KU4eew
+         TKfPQhOlYL9N/BEC7QZr+A4fuLm4bNcZJik9kqWlsd/x44xD+KZt0XxknZkWjGSL1lWn
+         y9W4Yxxkm7yzOtF4tyT7fRv0IW8NPFMu8VpSE=
+Received: by 10.100.178.7 with SMTP id a7mr496010anf.2.1224003663650;
+        Tue, 14 Oct 2008 10:01:03 -0700 (PDT)
+Received: by 10.100.91.8 with HTTP; Tue, 14 Oct 2008 10:01:03 -0700 (PDT)
+In-Reply-To: <20081014145112.GR22427@vanheusden.com>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/98199>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/98200>
 
-On Tue, 14 Oct 2008, Johannes Schindelin wrote:
+2008/10/14 Folkert van Heusden <folkert@vanheusden.com>:
+> How would I retrieve the 'kmemcheck' patches from git for the 2.6.27
+> kernel? I browsed to the url
+> http://git.kernel.org/?p=linux%2Fkernel%2Fgit%2Fx86%2Flinux-2.6-tip.git...
+> but could not find how to retrieve that diff.
 
-> Hi,
-> 
-> On Tue, 14 Oct 2008, Daniel Barkalow wrote:
-> 
-> > On Tue, 14 Oct 2008, Johannes Schindelin wrote:
-> > 
-> > > On Mon, 13 Oct 2008, Daniel Barkalow wrote:
-> > > 
-> > > > On Mon, 13 Oct 2008, Johannes Schindelin wrote:
-> > > > 
-> > > > > I actually understand now why the tests started failing: the 
-> > > > > change from resolve_ref() to get_branch() as requested by Daniel 
-> > > > > are at fault: get_branch() does not check if the branch has an 
-> > > > > initial commit.
-> > > > > 
-> > > > > I am actually regretting making this change.  Daniel, do you agree 
-> > > > > that it might be better to change back to resolve_ref(), so that 
-> > > > > the initial complaint (IIRC Han-Wen git pull'ed into a freshly 
-> > > > > initialized repository with that utterly bogus "git pull origin 
-> > > > > master:master" line) is not re-raised?
-> > > > 
-> > > > Is it, in fact, okay to fetch into the current branch if it's "yet 
-> > > > to be born"? I feel like it shouldn't be, since you'll get exactly 
-> > > > the same problem that you would if the branch already existed: the 
-> > > > index reflects the previous state (in this case, it's empty), so git 
-> > > > will show that you've staged removing all of the files, right? So 
-> > > > this would make the check for --update-head-ok more strict than 
-> > > > before, but I think the behavior change is correct.
-> > > 
-> > > I think 
-> > > http://thread.gmane.org/gmane.comp.version-control.git/31351/focus=31544 
-> > > is the best link to see what Han-Wen said.  Granted, it was a 
-> > > misunderstanding on his part, but there have been quite a few people 
-> > > with the same misunderstanding.
-> > > 
-> > > So what they did was
-> > > 
-> > > 	$ mkdir just-one-branch
-> > > 	$ cd just-one-branch
-> > > 	$ git init
-> > > 	$ git remote add origin <url>
-> > > 	$ git pull origin master:master
-> > > 
-> > > And this _will_ work correctly.  Except when using get_branch(NULL) 
-> > > instead of the validating resolve_ref().
-> > 
-> > "git pull origin master:master" invokes "git fetch" with --update-head-ok, 
-> 
-> Does it?  You're correct.  I do not like it.
-
-The reason that it runs with --update-head-ok (and the reason that 
---update-head-ok exists in the first place) is that, when you're doing a 
-pull, if you fetch into the current branch, pull will identify that you've 
-actually fast-forwarded the current branch and will update the working 
-tree and index accordingly (which it's allowed to do because it's expected 
-to perform a merge in the working tree and index).
-
-That is, it uses --update-head-ok because "git pull origin master:master" 
-will work correctly, regardless of whether the local master is 
-yet-to-be-born or not.
-
-	-Daniel
-*This .sig left intentionally blank*
+Well, you can of course just click on "commitdiff" (and "raw" afterwords)
+for every commit, but ... Have you considered using Git for that?
