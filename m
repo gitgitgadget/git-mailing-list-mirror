@@ -1,103 +1,76 @@
-From: "Alex Riesen" <raa.lkml@gmail.com>
-Subject: [PATCH] Fix mkpath abuse in dwim_ref/sha1_name.c
-Date: Tue, 14 Oct 2008 18:23:49 +0200
-Message-ID: <81b0412b0810140923x5cf58bb9x5acd1517a19e9847@mail.gmail.com>
+From: "Mike Ralphson" <mike.ralphson@gmail.com>
+Subject: Re: How many users of parsecvs are there?
+Date: Tue, 14 Oct 2008 17:51:12 +0100
+Message-ID: <e2b179460810140951v3bcfc951xc211b70e71ec198e@mail.gmail.com>
+References: <b2cdc9f30810140310l647eb2fbld3f6a1c608d029a@mail.gmail.com>
+	 <alpine.DEB.1.00.0810141820110.22125@pacific.mpi-cbg.de.mpi-cbg.de>
 Mime-Version: 1.0
-Content-Type: multipart/mixed; 
-	boundary="----=_Part_11288_9581461.1224001429805"
-Cc: "Junio C Hamano" <gitster@pobox.com>,
-	"Shawn O. Pearce" <spearce@spearce.org>
-To: "Git Mailing List" <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Tue Oct 14 18:29:27 2008
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, keithp@neko.keithp.com,
+	"Johannes Schindelin" <Johannes.Schindelin@gmx.de>
+To: "Alex Bennee" <kernel-hacker@bennee.com>
+X-From: git-owner@vger.kernel.org Tue Oct 14 18:52:51 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Kpmhj-0004Kf-Nf
-	for gcvg-git-2@gmane.org; Tue, 14 Oct 2008 18:25:04 +0200
+	id 1Kpn8E-0008Gp-8f
+	for gcvg-git-2@gmane.org; Tue, 14 Oct 2008 18:52:26 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751052AbYJNQXw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 14 Oct 2008 12:23:52 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750890AbYJNQXw
-	(ORCPT <rfc822;git-outgoing>); Tue, 14 Oct 2008 12:23:52 -0400
-Received: from mail-gx0-f16.google.com ([209.85.217.16]:58223 "EHLO
-	mail-gx0-f16.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750807AbYJNQXv (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 14 Oct 2008 12:23:51 -0400
-Received: by gxk9 with SMTP id 9so5409207gxk.13
-        for <git@vger.kernel.org>; Tue, 14 Oct 2008 09:23:50 -0700 (PDT)
+	id S1751296AbYJNQvO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 14 Oct 2008 12:51:14 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751318AbYJNQvO
+	(ORCPT <rfc822;git-outgoing>); Tue, 14 Oct 2008 12:51:14 -0400
+Received: from qw-out-2122.google.com ([74.125.92.25]:40744 "EHLO
+	qw-out-2122.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750892AbYJNQvN (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 14 Oct 2008 12:51:13 -0400
+Received: by qw-out-2122.google.com with SMTP id 3so650055qwe.37
+        for <git@vger.kernel.org>; Tue, 14 Oct 2008 09:51:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:received:received:message-id:date:from:to
-         :subject:cc:mime-version:content-type;
-        bh=jfXQBTlz839nYApGFNagCm1w1ctqSh/1zkB7I8Efn0g=;
-        b=km1rndrbYay8//IQUusmC+ZhTdoXKdEHwpt5KFuPTiiZdDaFyLIsDQ4/OMCNdudMUk
-         hWqNnhzxH7iLRyK5PhN3HakAZ8taGsP/VjJ8YF2tS4mRhYCy9TU6Dt7oN6j/sWf8FoUS
-         Ni8XrT+nL2sa0chxaXVcshKwqcW3pN7MZLaz4=
+         :subject:cc:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:references;
+        bh=3u1CFjg2FHxAhb4C1fRzh1Vl14gTyb1C3Fa0NIfpwkY=;
+        b=DaIWjGsAq1YGE/CTa4V+cXEQ1NXjivrKFp0zDSQ3QwEtTFh6sNxV51Rf9ghSVAVgSe
+         rLmmgS695MSjLLScOxyUt86o0N2AAVKwBI60V3ikeQWdZR6gMhHAZMGRJSVsHCntYEOE
+         sBpTQ8+tivaSyM/Vyo+rA1X1cYRMNZ6zWsOY4=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:cc:mime-version:content-type;
-        b=njVJ6G42F1TKVo+lAeLUq3Mn/PZH5yCbR5LmXHlne/jEiDqJkvLOOk0+Z4fR700Ga3
-         dEwRNtx0wyM3gPuoU5p3/YdfAJYaQsWcjm+haAEUucDANliMnSCzsQmtXJcFs89p9sZG
-         IHv9vByEET1PFFe6+aVicuQhmWqWdSBizR3NU=
-Received: by 10.100.194.5 with SMTP id r5mr851774anf.11.1224001429840;
-        Tue, 14 Oct 2008 09:23:49 -0700 (PDT)
-Received: by 10.100.91.8 with HTTP; Tue, 14 Oct 2008 09:23:49 -0700 (PDT)
+        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
+         :content-type:content-transfer-encoding:content-disposition
+         :references;
+        b=KipQ7dam+IVCQ2kOtqmH+WX7+QpEO/CAO0U/NvE2JhGRYP1X7f2Y2M/8QrJp/OrY/U
+         YcTCaFfgPWoq0WSG/U3b9rk36si8snAz5rDnag7d9Y04374j5ZqErAdTvfdCnueMXOeJ
+         Gek2sAMC1rR0s0DDn0A7jbrV8CzSiHqAf3HTk=
+Received: by 10.214.150.7 with SMTP id x7mr6841422qad.38.1224003072611;
+        Tue, 14 Oct 2008 09:51:12 -0700 (PDT)
+Received: by 10.214.215.10 with HTTP; Tue, 14 Oct 2008 09:51:12 -0700 (PDT)
+In-Reply-To: <alpine.DEB.1.00.0810141820110.22125@pacific.mpi-cbg.de.mpi-cbg.de>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/98197>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/98198>
 
-------=_Part_11288_9581461.1224001429805
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Content-Disposition: inline
+On Tue, 14 Oct 2008, Alex Bennee wrote:
+>
+> I'm wondering how many people are there still using parsecvs to to track
+> a live CVS tree?
 
-Otherwise the function sometimes fail to resolve obviously correct refnames,
-because the string data pointed to by "ref" argument were reused.
+I used it to import some problematic historical CVS projects into git.
+It coped with the (probably) broken history better than cvsps did at
+the time, though I had to hack it to ignore some non-standard
+directives in the ,v files (deltatype, permissions etc).
 
-Signed-off-by: Alex Riesen <raa.lkml@gmail.com>
----
- sha1_name.c |    6 ++++--
- 1 files changed, 4 insertions(+), 2 deletions(-)
+At the time that was a one-off exercise, but the project which
+replaced that project has now itself been cancelled and it is just
+possible the original will be revived (!)
 
-Frankly, I'm having hard time trying to justify _any_ use of mkpath.
-It is a bug waiting to happen every time is any code between the
-call site and assignment but strdup.
+Hopefully though, the egit project would now be sufficient for us to
+go forward based on the converted history in git and leave CVS behind.
 
-------=_Part_11288_9581461.1224001429805
-Content-Type: text/x-patch; name=0001-Fix-mkpath-abuse-in-sha1_name.c.patch
-Content-Transfer-Encoding: base64
-X-Attachment-Id: f_fmaqvb1g0
-Content-Disposition: attachment;
- filename=0001-Fix-mkpath-abuse-in-sha1_name.c.patch
-
-RnJvbSAwNTJlMTM3ZDRhZDg2ODdkNzhiYjI1NzAzOTBlZDRmNmIxOWY3Y2JhIE1vbiBTZXAgMTcg
-MDA6MDA6MDAgMjAwMQpGcm9tOiBBbGV4IFJpZXNlbiA8cmFhLmxrbWxAZ21haWwuY29tPgpEYXRl
-OiBUdWUsIDE0IE9jdCAyMDA4IDE4OjE0OjIwICswMjAwClN1YmplY3Q6IFtQQVRDSF0gRml4IG1r
-cGF0aCBhYnVzZSBpbiBzaGExX25hbWUuYwoKT3RoZXJ3aXNlIHRoZSBmdW5jdGlvbiBzb21ldGlt
-ZXMgZmFpbCB0byByZXNvbHZlIG9idmlvdXNseSBjb3JyZWN0IHJlZm5hbWVzLApiZWNhdXNlIHRo
-ZSBzdHJpbmcgZGF0YSBwb2ludGVkIHRvIGJ5ICJyZWYiIGFyZ3VtZW50IHdlcmUgcmV1c2VkLgoK
-U2lnbmVkLW9mZi1ieTogQWxleCBSaWVzZW4gPHJhYS5sa21sQGdtYWlsLmNvbT4KLS0tCiBzaGEx
-X25hbWUuYyB8ICAgIDYgKysrKy0tCiAxIGZpbGVzIGNoYW5nZWQsIDQgaW5zZXJ0aW9ucygrKSwg
-MiBkZWxldGlvbnMoLSkKCmRpZmYgLS1naXQgYS9zaGExX25hbWUuYyBiL3NoYTFfbmFtZS5jCmlu
-ZGV4IDQxYjY4MDkuLmI1YjUzYmYgMTAwNjQ0Ci0tLSBhL3NoYTFfbmFtZS5jCisrKyBiL3NoYTFf
-bmFtZS5jCkBAIC0yNDIsNiArMjQyLDcgQEAgaW50IGR3aW1fcmVmKGNvbnN0IGNoYXIgKnN0ciwg
-aW50IGxlbiwgdW5zaWduZWQgY2hhciAqc2hhMSwgY2hhciAqKnJlZikKIHsKIAljb25zdCBjaGFy
-ICoqcCwgKnI7CiAJaW50IHJlZnNfZm91bmQgPSAwOworCWNoYXIgZnVsbHJlZltQQVRIX01BWF07
-CiAKIAkqcmVmID0gTlVMTDsKIAlmb3IgKHAgPSByZWZfcmV2X3BhcnNlX3J1bGVzOyAqcDsgcCsr
-KSB7CkBAIC0yNDksNyArMjUwLDggQEAgaW50IGR3aW1fcmVmKGNvbnN0IGNoYXIgKnN0ciwgaW50
-IGxlbiwgdW5zaWduZWQgY2hhciAqc2hhMSwgY2hhciAqKnJlZikKIAkJdW5zaWduZWQgY2hhciAq
-dGhpc19yZXN1bHQ7CiAKIAkJdGhpc19yZXN1bHQgPSByZWZzX2ZvdW5kID8gc2hhMV9mcm9tX3Jl
-ZiA6IHNoYTE7Ci0JCXIgPSByZXNvbHZlX3JlZihta3BhdGgoKnAsIGxlbiwgc3RyKSwgdGhpc19y
-ZXN1bHQsIDEsIE5VTEwpOworCQlzbnByaW50ZihmdWxscmVmLCBzaXplb2YoZnVsbHJlZiksICpw
-LCBsZW4sIHN0cik7CisJCXIgPSByZXNvbHZlX3JlZihmdWxscmVmLCB0aGlzX3Jlc3VsdCwgMSwg
-TlVMTCk7CiAJCWlmIChyKSB7CiAJCQlpZiAoIXJlZnNfZm91bmQrKykKIAkJCQkqcmVmID0geHN0
-cmR1cChyKTsKQEAgLTI3Miw3ICsyNzQsNyBAQCBpbnQgZHdpbV9sb2coY29uc3QgY2hhciAqc3Ry
-LCBpbnQgbGVuLCB1bnNpZ25lZCBjaGFyICpzaGExLCBjaGFyICoqbG9nKQogCQljaGFyIHBhdGhb
-UEFUSF9NQVhdOwogCQljb25zdCBjaGFyICpyZWYsICppdDsKIAotCQlzdHJjcHkocGF0aCwgbWtw
-YXRoKCpwLCBsZW4sIHN0cikpOworCQlzbnByaW50ZihwYXRoLCBzaXplb2YocGF0aCksICpwLCBs
-ZW4sIHN0cik7CiAJCXJlZiA9IHJlc29sdmVfcmVmKHBhdGgsIGhhc2gsIDEsIE5VTEwpOwogCQlp
-ZiAoIXJlZikKIAkJCWNvbnRpbnVlOwotLSAKMS42LjAuMi40OTQuZ2IyNWRhCgo=
-------=_Part_11288_9581461.1224001429805--
+Mike
