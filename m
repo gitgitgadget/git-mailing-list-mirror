@@ -1,111 +1,78 @@
-From: Daniel Barkalow <barkalow@iabervon.org>
-Subject: Re: [PATCH v2] Fix fetch/pull when run without --update-head-ok
-Date: Tue, 14 Oct 2008 13:02:35 -0400 (EDT)
-Message-ID: <alpine.LNX.1.00.0810141258050.19665@iabervon.org>
-References: <alpine.DEB.1.00.0810111336350.22125@pacific.mpi-cbg.de.mpi-cbg.de> <alpine.LNX.1.00.0810121501590.19665@iabervon.org> <alpine.DEB.1.00.0810131129110.22125@pacific.mpi-cbg.de.mpi-cbg.de> <7vod1obmlh.fsf@gitster.siamese.dyndns.org>
- <alpine.DEB.1.00.0810132001230.22125@pacific.mpi-cbg.de.mpi-cbg.de> <alpine.LNX.1.00.0810131546180.19665@iabervon.org> <alpine.DEB.1.00.0810141145491.22125@pacific.mpi-cbg.de.mpi-cbg.de> <alpine.LNX.1.00.0810141148010.19665@iabervon.org>
- <alpine.DEB.1.00.0810141815490.22125@pacific.mpi-cbg.de.mpi-cbg.de> <alpine.LNX.1.00.0810141240510.19665@iabervon.org>
+From: Folkert van Heusden <folkert@vanheusden.com>
+Subject: Re: retrieving a diff from git
+Date: Tue, 14 Oct 2008 19:20:49 +0200
+Organization: www.unixexpert.nl
+Message-ID: <20081014172048.GW22427@vanheusden.com>
+References: <20081014145112.GR22427@vanheusden.com> <81b0412b0810141001w46227afam70123237025a2d4d@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	spearce@spearce.org
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Tue Oct 14 19:04:21 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Alex Riesen <raa.lkml@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Oct 14 19:22:34 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KpnJX-0004pr-3g
-	for gcvg-git-2@gmane.org; Tue, 14 Oct 2008 19:04:07 +0200
+	id 1Kpnb9-0004wg-7F
+	for gcvg-git-2@gmane.org; Tue, 14 Oct 2008 19:22:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753423AbYJNRCi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 14 Oct 2008 13:02:38 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751859AbYJNRCi
-	(ORCPT <rfc822;git-outgoing>); Tue, 14 Oct 2008 13:02:38 -0400
-Received: from iabervon.org ([66.92.72.58]:46020 "EHLO iabervon.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751498AbYJNRCh (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 14 Oct 2008 13:02:37 -0400
-Received: (qmail 17223 invoked by uid 1000); 14 Oct 2008 17:02:35 -0000
-Received: from localhost (sendmail-bs@127.0.0.1)
-  by localhost with SMTP; 14 Oct 2008 17:02:35 -0000
-In-Reply-To: <alpine.LNX.1.00.0810141240510.19665@iabervon.org>
-User-Agent: Alpine 1.00 (LNX 882 2007-12-20)
+	id S1752572AbYJNRUx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 14 Oct 2008 13:20:53 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752569AbYJNRUx
+	(ORCPT <rfc822;git-outgoing>); Tue, 14 Oct 2008 13:20:53 -0400
+Received: from smtp-vbr8.xs4all.nl ([194.109.24.28]:3250 "EHLO
+	smtp-vbr8.xs4all.nl" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752565AbYJNRUw (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 14 Oct 2008 13:20:52 -0400
+Received: from keetweej.vanheusden.com (keetweej.vanheusden.com [80.126.110.251])
+	by smtp-vbr8.xs4all.nl (8.13.8/8.13.8) with ESMTP id m9EHKnJX025761;
+	Tue, 14 Oct 2008 19:20:49 +0200 (CEST)
+	(envelope-from folkert@vanheusden.com)
+Received: from belle.intranet.vanheusden.com (belle.intranet.vanheusden.com [192.168.64.100])
+	by keetweej.vanheusden.com (Postfix) with ESMTP id 4396E82CD;
+	Tue, 14 Oct 2008 19:20:49 +0200 (CEST)
+Received: by belle.intranet.vanheusden.com (Postfix, from userid 1000)
+	id 3C13E40226; Tue, 14 Oct 2008 19:20:49 +0200 (CEST)
+Content-Disposition: inline
+In-Reply-To: <81b0412b0810141001w46227afam70123237025a2d4d@mail.gmail.com>
+X-Chameleon-Return-To: folkert@vanheusden.com
+X-Xfmail-Return-To: folkert@vanheusden.com
+X-Phonenumber: +31-6-41278122
+X-URL: http://www.vanheusden.com/
+X-PGP-KeyID: 1F28D8AE
+X-GPG-fingerprint: AC89 09CE 41F2 00B4 FCF2  B174 3019 0E8C 1F28 D8AE
+X-Key: http://pgp.surfnet.nl:11371/pks/lookup?op=get&search=0x1F28D8AE
+Read-Receipt-To: <folkert@vanheusden.com>
+Reply-By: Sat Oct 11 11:14:03 CEST 2008
+X-Message-Flag: MultiTail - tail on steroids
+User-Agent: Mutt/1.5.18 (2008-05-17)
+X-Virus-Scanned: by XS4ALL Virus Scanner
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/98201>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/98202>
 
-On Tue, 14 Oct 2008, Daniel Barkalow wrote:
+> > How would I retrieve the 'kmemcheck' patches from git for the 2.6.27
+> > kernel? I browsed to the url
+> > http://git.kernel.org/?p=linux%2Fkernel%2Fgit%2Fx86%2Flinux-2.6-tip.git...
+> > but could not find how to retrieve that diff.
+> Well, you can of course just click on "commitdiff" (and "raw" afterwords)
+> for every commit,
 
-> On Tue, 14 Oct 2008, Johannes Schindelin wrote:
-> 
-> > Hi,
-> > 
-> > On Tue, 14 Oct 2008, Daniel Barkalow wrote:
-> > 
-> > > On Tue, 14 Oct 2008, Johannes Schindelin wrote:
-> > > 
-> > > > On Mon, 13 Oct 2008, Daniel Barkalow wrote:
-> > > > 
-> > > > > On Mon, 13 Oct 2008, Johannes Schindelin wrote:
-> > > > > 
-> > > > > > I actually understand now why the tests started failing: the 
-> > > > > > change from resolve_ref() to get_branch() as requested by Daniel 
-> > > > > > are at fault: get_branch() does not check if the branch has an 
-> > > > > > initial commit.
-> > > > > > 
-> > > > > > I am actually regretting making this change.  Daniel, do you agree 
-> > > > > > that it might be better to change back to resolve_ref(), so that 
-> > > > > > the initial complaint (IIRC Han-Wen git pull'ed into a freshly 
-> > > > > > initialized repository with that utterly bogus "git pull origin 
-> > > > > > master:master" line) is not re-raised?
-> > > > > 
-> > > > > Is it, in fact, okay to fetch into the current branch if it's "yet 
-> > > > > to be born"? I feel like it shouldn't be, since you'll get exactly 
-> > > > > the same problem that you would if the branch already existed: the 
-> > > > > index reflects the previous state (in this case, it's empty), so git 
-> > > > > will show that you've staged removing all of the files, right? So 
-> > > > > this would make the check for --update-head-ok more strict than 
-> > > > > before, but I think the behavior change is correct.
-> > > > 
-> > > > I think 
-> > > > http://thread.gmane.org/gmane.comp.version-control.git/31351/focus=31544 
-> > > > is the best link to see what Han-Wen said.  Granted, it was a 
-> > > > misunderstanding on his part, but there have been quite a few people 
-> > > > with the same misunderstanding.
-> > > > 
-> > > > So what they did was
-> > > > 
-> > > > 	$ mkdir just-one-branch
-> > > > 	$ cd just-one-branch
-> > > > 	$ git init
-> > > > 	$ git remote add origin <url>
-> > > > 	$ git pull origin master:master
-> > > > 
-> > > > And this _will_ work correctly.  Except when using get_branch(NULL) 
-> > > > instead of the validating resolve_ref().
-> > > 
-> > > "git pull origin master:master" invokes "git fetch" with --update-head-ok, 
-> > 
-> > Does it?  You're correct.  I do not like it.
-> 
-> The reason that it runs with --update-head-ok (and the reason that 
-> --update-head-ok exists in the first place) is that, when you're doing a 
-> pull, if you fetch into the current branch, pull will identify that you've 
-> actually fast-forwarded the current branch and will update the working 
-> tree and index accordingly (which it's allowed to do because it's expected 
-> to perform a merge in the working tree and index).
-> 
-> That is, it uses --update-head-ok because "git pull origin master:master" 
-> will work correctly, regardless of whether the local master is 
-> yet-to-be-born or not.
+Hmmm the outcome does not apply cleanly to 2.6.27.
 
-In particular, the --update-head-ok is from b10ac50f, which is what added 
-the check to prohibit fetching into the current branch otherwise, back in 
-August 2005. There's never been anything preventing updating the current 
-branch using "pull".
+> but ... Have you considered using Git for that?
 
-	-Daniel
-*This .sig left intentionally blank*
+and check out the whole tree using Git? I did consider but then I would
+not have all bells and whistles to generate a Debian kernel package.
+
+
+Folkert van Heusden
+
+-- 
+MultiTail is a versatile tool for watching logfiles and output of
+commands. Filtering, coloring, merging, diff-view, etc.
+http://www.vanheusden.com/multitail/
+----------------------------------------------------------------------
+Phone: +31-6-41278122, PGP-key: 1F28D8AE, www.vanheusden.com
