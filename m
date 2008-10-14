@@ -1,85 +1,66 @@
-From: Kristian Amlie <kristian.amlie@trolltech.com>
-Subject: Re: Rerunning merge on a single file
-Date: Tue, 14 Oct 2008 14:48:01 +0200
-Message-ID: <48F49501.3010005@trolltech.com>
-References: <48F48CDB.1010309@trolltech.com>
+From: Chris Dumoulin <dumoulin@oanda.com>
+Subject: EGIT compare editor
+Date: Tue, 14 Oct 2008 10:18:27 -0400
+Message-ID: <48F4AA33.40605@oanda.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1;
-	format=flowed
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: =?ISO-8859-1?Q?Santi_B=E9jar?= <santi@agolina.net>
-X-From: git-owner@vger.kernel.org Tue Oct 14 14:49:46 2008
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Oct 14 16:42:17 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KpjL1-0005Iw-Pn
-	for gcvg-git-2@gmane.org; Tue, 14 Oct 2008 14:49:24 +0200
+	id 1Kpl4w-0004PP-8P
+	for gcvg-git-2@gmane.org; Tue, 14 Oct 2008 16:40:54 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755508AbYJNMsK convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 14 Oct 2008 08:48:10 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755430AbYJNMsJ
-	(ORCPT <rfc822;git-outgoing>); Tue, 14 Oct 2008 08:48:09 -0400
-Received: from hoat.troll.no ([62.70.27.150]:53767 "EHLO hoat.troll.no"
+	id S1751135AbYJNOji (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 14 Oct 2008 10:39:38 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751121AbYJNOji
+	(ORCPT <rfc822;git-outgoing>); Tue, 14 Oct 2008 10:39:38 -0400
+Received: from mail.oanda.com ([216.220.44.220]:35234 "EHLO mail.oanda.com"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755178AbYJNMsI (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 14 Oct 2008 08:48:08 -0400
-Received: from hoat.troll.no (tedur.troll.no [62.70.27.154])
-	by hoat.troll.no (Postfix) with SMTP id D206F20545;
-	Tue, 14 Oct 2008 14:48:03 +0200 (CEST)
-Received: from sx01.troll.no (sx01.troll.no [62.70.27.21])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	id S1751113AbYJNOjh (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 14 Oct 2008 10:39:37 -0400
+X-Greylist: delayed 1268 seconds by postgrey-1.27 at vger.kernel.org; Tue, 14 Oct 2008 10:39:37 EDT
+Received: from localhost (localhost [127.0.0.1])
+	by mail.oanda.com (Postfix) with ESMTP id A65C4EC020
+	for <git@vger.kernel.org>; Tue, 14 Oct 2008 10:18:28 -0400 (EDT)
+Received: from mail.oanda.com ([127.0.0.1])
+	by localhost (mail.q9.oanda.com [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id 13792-08 for <git@vger.kernel.org>;
+	Tue, 14 Oct 2008 10:18:28 -0400 (EDT)
+Received: from gateway.oanda.com (unknown [216.235.10.210])
+	(using TLSv1 with cipher ADH-AES256-SHA (256/256 bits))
 	(No client certificate requested)
-	by hoat.troll.no (Postfix) with ESMTP id C8B6A2045D;
-	Tue, 14 Oct 2008 14:48:03 +0200 (CEST)
-Received: from sx01.troll.no (localhost.localdomain [127.0.0.1])
-	by sx01.troll.no (8.13.8/8.13.8) with ESMTP id m9ECm0XW030401;
-	Tue, 14 Oct 2008 14:48:01 +0200
-Received: from [172.24.106.14] ( [172.24.106.14])
-    by sx01.troll.no (Scalix SMTP Relay 11.4.1.11929)
-    via ESMTP; Tue, 14 Oct 2008 14:48:00 +0200 (CEST)
-In-Reply-To: <adf1fd3d0810140521g7f43ee3bs5d4e60772bcc1d8c@mail.gmail.com>
-References: <adf1fd3d0810140521g7f43ee3bs5d4e60772bcc1d8c@mail.gmail.com>
-x-scalix-Hops: 1
-User-Agent: Thunderbird 2.0.0.14 (X11/20080519)
-X-Enigmail-Version: 0.95.6
-Content-Disposition: inline
+	by mail.oanda.com (Postfix) with ESMTPS id 8EBAEEC016
+	for <git@vger.kernel.org>; Tue, 14 Oct 2008 10:18:28 -0400 (EDT)
+Received: from [10.0.10.50] (unknown [10.0.10.50])
+	by eddie.dev.oanda.com (Postfix) with ESMTP id 276716408A
+	for <git@vger.kernel.org>; Tue, 14 Oct 2008 10:18:28 -0400 (EDT)
+User-Agent: Thunderbird 2.0.0.17 (X11/20080925)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/98186>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/98187>
 
-Santi B=E9jar wrote:
-> On Tue, Oct 14, 2008 at 2:13 PM, Kristian Amlie
-> <kristian.amlie@trolltech.com> wrote:
->> Hey, I have question about advanced merging.
->>
->> Suppose I have a huge merge with conflicts all over the place. There=
- is no
->> way to avoid them, so I start working from the top. At some point, h=
-owever,
->> I make a mistake and lose the merge information for one file (for ex=
-ample by
->> checking out the file from HEAD).
->>
->> In that case I would like to get the conflict markers back, and do t=
-hat file
->> over again, but I don't want to throw away the rest of the index sta=
-te.
->> Currently the only way I can see to do this is by checking out sever=
-al file
->> versions under different names and then using git merge-file on them=
-=2E
->>
->> Is there a better way to achieve this?
->=20
-> If the different versions are still in the index you could use:
->=20
-> $ git checkout --merge $file
+I seem to have successfully installed EGIT in Eclipse 3.4.1, but I can't 
+figure out how to bring up the compare editor to view diffs.
 
-In my case the files were added to the index already, so I guess it=20
-doesn't work then?
+The EGIT plugin seems to be loaded and working for my project; I see 
+"[Git @ master]" beside the project name, and ">" beside changed files. 
+Also, the quickdiff seems to be working; I see a different colour in the 
+left margin beside changes within the file. The "Team" context menu 
+seems to be populated properly: "Commit", "Update Index (Refresh)", 
+"Show in Resource History", "Assume unchanged", "Track (Add)", "Untrack 
+(Remove)", "Apply Patch...", and below the separator "Show Local History".
 
-Kristian
+I expect that after right-clicking on a changed file, I would have some 
+option under "Compare With" or "Team" that would allow me to diff the 
+current file against the HEAD or some other revision using the compare 
+editor, but I can't seem to find any way to do this. How do I bring up 
+the compare editor to view diffs?
+
+Thanks,
+Chris
