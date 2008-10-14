@@ -1,76 +1,80 @@
-From: "Alex Bennee" <kernel-hacker@bennee.com>
-Subject: How many users of parsecvs are there?
-Date: Tue, 14 Oct 2008 11:10:00 +0100
-Message-ID: <b2cdc9f30810140310l647eb2fbld3f6a1c608d029a@mail.gmail.com>
+From: Samuel Tardieu <sam@rfc1149.net>
+Subject: Re: [BUG?] git remote rm repo nukes local refs for mirror repo
+Date: Tue, 14 Oct 2008 12:55:13 +0200
+Organization: RFC 1149 (see http://www.rfc1149.net/)
+Message-ID: <2008-10-14-12-55-13+trackit+sam@rfc1149.net>
+References: <48F460DB.9030209@drmicha.warpmail.net>
+	<alpine.DEB.1.00.0810141131130.22125@pacific.mpi-cbg.de.mpi-cbg.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: keithp@neko.keithp.com
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Oct 14 12:11:38 2008
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 8bit
+Cc: Michael J Gruber <git@drmicha.warpmail.net>,
+	Git Mailing List <git@vger.kernel.org>
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Tue Oct 14 12:58:32 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Kpgs0-00087d-Sw
-	for gcvg-git-2@gmane.org; Tue, 14 Oct 2008 12:11:17 +0200
+	id 1KphbC-00074p-Hp
+	for gcvg-git-2@gmane.org; Tue, 14 Oct 2008 12:57:59 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754879AbYJNKKE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 14 Oct 2008 06:10:04 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754801AbYJNKKE
-	(ORCPT <rfc822;git-outgoing>); Tue, 14 Oct 2008 06:10:04 -0400
-Received: from yw-out-2324.google.com ([74.125.46.30]:24740 "EHLO
-	yw-out-2324.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754788AbYJNKKC (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 14 Oct 2008 06:10:02 -0400
-Received: by yw-out-2324.google.com with SMTP id 9so490004ywe.1
-        for <git@vger.kernel.org>; Tue, 14 Oct 2008 03:10:01 -0700 (PDT)
-Received: by 10.90.102.15 with SMTP id z15mr3085609agb.95.1223979000153;
-        Tue, 14 Oct 2008 03:10:00 -0700 (PDT)
-Received: by 10.90.105.11 with HTTP; Tue, 14 Oct 2008 03:10:00 -0700 (PDT)
-Content-Disposition: inline
-X-Google-Sender-Auth: cb566a319688d94f
+	id S1752501AbYJNKzY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 14 Oct 2008 06:55:24 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752860AbYJNKzX
+	(ORCPT <rfc822;git-outgoing>); Tue, 14 Oct 2008 06:55:23 -0400
+Received: from zaphod.rfc1149.net ([88.191.14.223]:34064 "EHLO
+	mail.rfc1149.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751715AbYJNKzX (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 14 Oct 2008 06:55:23 -0400
+Received: from localhost (localhost [127.0.0.1])
+	by mail.rfc1149.net (Postfix) with ESMTP id 21AD0E04D9;
+	Tue, 14 Oct 2008 12:55:20 +0200 (CEST)
+X-Virus-Scanned: amavisd-new at rfc1149.net
+Received: from mail.rfc1149.net ([127.0.0.1])
+	by localhost (zaphod.rfc1149.net [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id 8E6WwP7K2JqS; Tue, 14 Oct 2008 12:55:14 +0200 (CEST)
+Received: from mail2.rfc1149.net (unknown [IPv6:2a01:e35:1382:f950::3])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(Client CN "mail2.rfc1149.net", Issuer "rfc1149.net" (verified OK))
+	by mail.rfc1149.net (Postfix) with ESMTPS id A66C8E04BE;
+	Tue, 14 Oct 2008 12:55:14 +0200 (CEST)
+Received: from localhost (localhost [127.0.0.1])
+	by mail2.rfc1149.net (Postfix) with ESMTP id C13A4C40BC;
+	Tue, 14 Oct 2008 12:55:13 +0200 (CEST)
+Received: from mail2.rfc1149.net ([127.0.0.1])
+	by localhost (localhost [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id uPOhkuR0llgp; Tue, 14 Oct 2008 12:55:13 +0200 (CEST)
+Received: by mail2.rfc1149.net (Postfix, from userid 1000)
+	id 89CA3C40BD; Tue, 14 Oct 2008 12:55:13 +0200 (CEST)
+In-Reply-To: <alpine.DEB.1.00.0810141131130.22125@pacific.mpi-cbg.de.mpi-cbg.de> (Johannes Schindelin's message of "Tue\, 14 Oct 2008 11\:32\:13 +0200 \(CEST\)")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-WWW: http://www.rfc1149.net/sam
+X-Jabber: <sam@rfc1149.net> (see http://www.jabber.org/)
+X-OpenPGP-Fingerprint: 79C0 AE3C CEA8 F17B 0EF1  45A5 F133 2241 1B80 ADE6 (see http://www.gnupg.org/)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/98178>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/98179>
 
-I'm wondering how many people are there still using parsecvs to to
-track a live CVS tree?
+Michael> I just noticed the hard way that "git remote rm repo" nukes
+Michael> all local (mirrored) refs if repo had been setup with "git
+Michael> remote add --mirror repo url".  Some may argue that this
+Michael> behaviour fits the description "deletes all remote tracking
+Michael> branches" but I would claim it does not: mirrored branches
+Michael> are not remote tracking branches in the proper sense.
 
-I've been using it for a while at work to track a rather monster CVS
-repository. The main reasons are:
+Johannes> Count me into the former group.  If you set up a "--mirror"
+Johannes> repository, it defeats the purpose to mix that with _true_
+Johannes> local branches.
 
-1. It's the fastest import I've come across so far. Given the size of
-the CVS repo other solutions took far too long to do the conversion
-2. It's simple to configure (if you can call "find" configuring),
-assuming you have access to the CVS repo proper
-3. It reliably regenerates the repository so you can run the entire
-conversion from scratch the next day and hapily pull into working
-repos (I assume if I got tother working they should exhibit this
-property).
+IMO it should exit with an error and force to use "--force" to perform
+the operation. The scenario I envision is a mirror becoming the
+primary repository because the original source has disappeared. You
+would want to remove the now-useless reference to the source, and
+silently nuking all branches is wrong.
 
-However I have come across a few problems. One of which involves files
-not getting put into branches which I've managed hack a band-aid
-solution for that involves ignoring date discrepancies. However having
-mailed keith he made it clear he doesn't use it any more having
-converted his stuff so it's currently not being actively maintained.
-
-So the question really is are there people out there still using it?
-If not I'll hang up my code exploring boots and have another go at
-whatever is considered the best in class iterative CVS to GIT gateway.
-If it's still a useful tool for other people as well I'm happy to
-delve deeper into the code and seeing if any of the crinkles can be
-ironed out.
-
-It's interesting to note from the Git Users Survey 2008 that CVS is
-still the second most used legacy version control system. One could
-draw the conclusion that having a well supported bullet proof
-incremental CVS import mechanism as part of git should still be a
-fairly important goal. There are a lot (too many?)  out of tree
-solutions out there which makes approaching the task somewhat daunting
-when first coming to git.
-
+  Sam
 -- 
-Alex, homepage: http://www.bennee.com/~alex/
+Samuel Tardieu -- sam@rfc1149.net -- http://www.rfc1149.net/
