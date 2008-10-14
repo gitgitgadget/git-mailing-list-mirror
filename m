@@ -1,69 +1,58 @@
 From: Michael J Gruber <git@drmicha.warpmail.net>
-Subject: Re: View remote logs?
-Date: Tue, 14 Oct 2008 10:21:52 +0200
-Message-ID: <48F456A0.701@drmicha.warpmail.net>
-References: <20081014071907.GP16999@penguin.codegnome.org>
+Subject: [BUG?] git remote rm repo nukes local refs for mirror repo
+Date: Tue, 14 Oct 2008 11:05:31 +0200
+Message-ID: <48F460DB.9030209@drmicha.warpmail.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain; charset=ISO-8859-15
 Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Oct 14 10:23:26 2008
+To: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Tue Oct 14 11:08:21 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KpfBa-0004VI-QD
-	for gcvg-git-2@gmane.org; Tue, 14 Oct 2008 10:23:23 +0200
+	id 1Kpfro-0002MR-RM
+	for gcvg-git-2@gmane.org; Tue, 14 Oct 2008 11:07:01 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753712AbYJNIWG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 14 Oct 2008 04:22:06 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754527AbYJNIWG
-	(ORCPT <rfc822;git-outgoing>); Tue, 14 Oct 2008 04:22:06 -0400
-Received: from out4.smtp.messagingengine.com ([66.111.4.28]:42915 "EHLO
+	id S1754446AbYJNJFo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 14 Oct 2008 05:05:44 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754419AbYJNJFo
+	(ORCPT <rfc822;git-outgoing>); Tue, 14 Oct 2008 05:05:44 -0400
+Received: from out4.smtp.messagingengine.com ([66.111.4.28]:40703 "EHLO
 	out4.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1753712AbYJNIWF (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 14 Oct 2008 04:22:05 -0400
-Received: from compute2.internal (compute2.internal [10.202.2.42])
-	by out1.messagingengine.com (Postfix) with ESMTP id DBEEB179926
-	for <git@vger.kernel.org>; Tue, 14 Oct 2008 04:22:02 -0400 (EDT)
-Received: from heartbeat1.messagingengine.com ([10.202.2.160])
-  by compute2.internal (MEProxy); Tue, 14 Oct 2008 04:22:02 -0400
-X-Sasl-enc: vV6NwtuOmQJ+gwaCReOVvkVIVI57DFMsrsurNH3p7FE/ 1223972522
+	by vger.kernel.org with ESMTP id S1754446AbYJNJFn (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 14 Oct 2008 05:05:43 -0400
+Received: from compute1.internal (compute1.internal [10.202.2.41])
+	by out1.messagingengine.com (Postfix) with ESMTP id B84EE17A8BD
+	for <git@vger.kernel.org>; Tue, 14 Oct 2008 05:05:42 -0400 (EDT)
+Received: from heartbeat2.messagingengine.com ([10.202.2.161])
+  by compute1.internal (MEProxy); Tue, 14 Oct 2008 05:05:42 -0400
+X-Sasl-enc: BUVBSc86ALL5ChKZId3o+vK04adye3HTakoWj9V/9IAT 1223975142
 Received: from [139.174.44.12] (whitehead.math.tu-clausthal.de [139.174.44.12])
-	by mail.messagingengine.com (Postfix) with ESMTPSA id 36EAD2BFDF
-	for <git@vger.kernel.org>; Tue, 14 Oct 2008 04:22:02 -0400 (EDT)
+	by mail.messagingengine.com (Postfix) with ESMTPSA id 4DA762A0B3
+	for <git@vger.kernel.org>; Tue, 14 Oct 2008 05:05:42 -0400 (EDT)
 User-Agent: Thunderbird 2.0.0.17 (X11/20080914)
-In-Reply-To: <20081014071907.GP16999@penguin.codegnome.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/98174>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/98175>
 
-Todd A. Jacobs venit, vidit, dixit 14.10.2008 09:19:
-> I've Googled around, and tried some experiments with likely-looking
-> tools like git log, git diff, and git ls-remote, but they only seem to
-> operate on the local repository. In particular, there doesn't seem to be
-> an obvious way to view the commit logs on a remote repository without
-> pulling it first.
-> 
-> On an intuitive level, it seems like "git log origin" would allow me to
-> see what someone has committed to a remote repository so I can decide
-> whether it's something I want to pull. Even something like "git diff
-> HEAD origin" would let me know if there were changes I might want to
-> pull before doing so.
-> 
-> Am I missing something obvious? Is it possible to use the CLI to view
-> remote logs, or is the only choice to pull everything?
+I just noticed the hard way that "git remote rm repo" nukes all local
+(mirrored) refs if repo had been setup with "git remote add --mirror
+repo url".
+Some may argue that this behaviour fits the description "deletes all
+remote tracking branches" but I would claim it does not: mirrored
+branches are not remote tracking branches in the proper sense.
 
-You can always fetch (rather than pull) and then decide whether to pull
-(i.e. merge or rebase FETCH_HEAD) or not.
-
-The problem with "remote log" is that log can show diffstats, full diffs
-etc, so that it would need all new objects anyways.
-
-If you want to avoid fetching new objects the only way is to run git log
-etc. on the remote side. You can do this with ssh, but the other
-transports (git:, http:) don't support this.
+So:
+- Is this behaviour intended?
+- If yes, how else would I remove a remote mirror configuration without
+destroying a local repo? git config, I know, but that can't be the way.
 
 Michael
+
+Technical:
+remote_find_tracking() in remote.c returns "branch" as the remote
+tracking branch of "branch" (itself) in a mirror setup. Is this the
+right thing to do?
