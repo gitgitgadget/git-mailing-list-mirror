@@ -1,80 +1,102 @@
-From: Samuel Tardieu <sam@rfc1149.net>
-Subject: Re: [BUG?] git remote rm repo nukes local refs for mirror repo
-Date: Tue, 14 Oct 2008 12:55:13 +0200
-Organization: RFC 1149 (see http://www.rfc1149.net/)
-Message-ID: <2008-10-14-12-55-13+trackit+sam@rfc1149.net>
-References: <48F460DB.9030209@drmicha.warpmail.net>
-	<alpine.DEB.1.00.0810141131130.22125@pacific.mpi-cbg.de.mpi-cbg.de>
+From: "Ciprian Dorin Craciun" <ciprian.craciun@gmail.com>
+Subject: Re: concerns about git
+Date: Tue, 14 Oct 2008 14:25:11 +0300
+Message-ID: <8e04b5820810140425j14c1c7efm2346a967ad6a070e@mail.gmail.com>
+References: <19959918.post@talk.nabble.com> <20081013181941.GT4856@spearce.org>
+	 <e1dab3980810131140p45c62e5cs690ac190eeacc38e@mail.gmail.com>
+	 <82c87da00810131251i52d10170h5c1991e2da0bd208@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 8bit
-Cc: Michael J Gruber <git@drmicha.warpmail.net>,
-	Git Mailing List <git@vger.kernel.org>
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Tue Oct 14 12:58:32 2008
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: "David Tweed" <david.tweed@gmail.com>,
+	"Shawn O. Pearce" <spearce@spearce.org>,
+	deepwinter <deepwinter@winterroot.net>, git@vger.kernel.org
+To: Brandon <siamesedream01@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Oct 14 13:27:03 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KphbC-00074p-Hp
-	for gcvg-git-2@gmane.org; Tue, 14 Oct 2008 12:57:59 +0200
+	id 1Kpi3C-0000Gt-On
+	for gcvg-git-2@gmane.org; Tue, 14 Oct 2008 13:26:55 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752501AbYJNKzY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 14 Oct 2008 06:55:24 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752860AbYJNKzX
-	(ORCPT <rfc822;git-outgoing>); Tue, 14 Oct 2008 06:55:23 -0400
-Received: from zaphod.rfc1149.net ([88.191.14.223]:34064 "EHLO
-	mail.rfc1149.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751715AbYJNKzX (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 14 Oct 2008 06:55:23 -0400
-Received: from localhost (localhost [127.0.0.1])
-	by mail.rfc1149.net (Postfix) with ESMTP id 21AD0E04D9;
-	Tue, 14 Oct 2008 12:55:20 +0200 (CEST)
-X-Virus-Scanned: amavisd-new at rfc1149.net
-Received: from mail.rfc1149.net ([127.0.0.1])
-	by localhost (zaphod.rfc1149.net [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id 8E6WwP7K2JqS; Tue, 14 Oct 2008 12:55:14 +0200 (CEST)
-Received: from mail2.rfc1149.net (unknown [IPv6:2a01:e35:1382:f950::3])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(Client CN "mail2.rfc1149.net", Issuer "rfc1149.net" (verified OK))
-	by mail.rfc1149.net (Postfix) with ESMTPS id A66C8E04BE;
-	Tue, 14 Oct 2008 12:55:14 +0200 (CEST)
-Received: from localhost (localhost [127.0.0.1])
-	by mail2.rfc1149.net (Postfix) with ESMTP id C13A4C40BC;
-	Tue, 14 Oct 2008 12:55:13 +0200 (CEST)
-Received: from mail2.rfc1149.net ([127.0.0.1])
-	by localhost (localhost [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id uPOhkuR0llgp; Tue, 14 Oct 2008 12:55:13 +0200 (CEST)
-Received: by mail2.rfc1149.net (Postfix, from userid 1000)
-	id 89CA3C40BD; Tue, 14 Oct 2008 12:55:13 +0200 (CEST)
-In-Reply-To: <alpine.DEB.1.00.0810141131130.22125@pacific.mpi-cbg.de.mpi-cbg.de> (Johannes Schindelin's message of "Tue\, 14 Oct 2008 11\:32\:13 +0200 \(CEST\)")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-WWW: http://www.rfc1149.net/sam
-X-Jabber: <sam@rfc1149.net> (see http://www.jabber.org/)
-X-OpenPGP-Fingerprint: 79C0 AE3C CEA8 F17B 0EF1  45A5 F133 2241 1B80 ADE6 (see http://www.gnupg.org/)
+	id S1754967AbYJNLZU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 14 Oct 2008 07:25:20 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754828AbYJNLZU
+	(ORCPT <rfc822;git-outgoing>); Tue, 14 Oct 2008 07:25:20 -0400
+Received: from ug-out-1314.google.com ([66.249.92.172]:63869 "EHLO
+	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754683AbYJNLZT (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 14 Oct 2008 07:25:19 -0400
+Received: by ug-out-1314.google.com with SMTP id k3so875161ugf.37
+        for <git@vger.kernel.org>; Tue, 14 Oct 2008 04:25:11 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to
+         :subject:cc:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:references;
+        bh=V5eU+NjnKDL2tHAF2B9o9PDYMTIBVmWJVYH9bJteO6s=;
+        b=HXwjL8f+YsU5dJtZdhcBa4xct50w0oyBC/A0Y0XFJAlMhI1aNTttARa2h5XBlmXPih
+         ujuJLDxK/KS+GVjZJGOhJZJDhRN/jYbHo3Y19LHdi6OUjyL7Z9NRagv1GG5tQ/ZoKOcT
+         0xtY2JRRnw3VXvLPQNq912HuYrNBWTLNHTGnE=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
+         :content-type:content-transfer-encoding:content-disposition
+         :references;
+        b=tqa4pQ/x/vTLlBbOJVSGEja/cypTvlVkROjPI4/WdWpvhX48QGC6qtCmuwUGL01AwF
+         f9sub9+RhE6Wi+GJ8GseCRfKypxaJCzGaAkClrZFBY09K0tR6xzN1AsMf1jBGWCugQ9i
+         swjm10WsZpDiuWfGALMWhIAl4Jh7YR5qdiOL8=
+Received: by 10.210.66.1 with SMTP id o1mr7120392eba.193.1223983511260;
+        Tue, 14 Oct 2008 04:25:11 -0700 (PDT)
+Received: by 10.210.129.8 with HTTP; Tue, 14 Oct 2008 04:25:11 -0700 (PDT)
+In-Reply-To: <82c87da00810131251i52d10170h5c1991e2da0bd208@mail.gmail.com>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/98179>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/98180>
 
-Michael> I just noticed the hard way that "git remote rm repo" nukes
-Michael> all local (mirrored) refs if repo had been setup with "git
-Michael> remote add --mirror repo url".  Some may argue that this
-Michael> behaviour fits the description "deletes all remote tracking
-Michael> branches" but I would claim it does not: mirrored branches
-Michael> are not remote tracking branches in the proper sense.
+On Mon, Oct 13, 2008 at 10:51 PM, Brandon <siamesedream01@gmail.com> wrote:
+> You can use "git config core.worktree <location>" to create a ".git"
+> folder that manages a working copy in another location.
+>
+> I know some of the GUI tools don't support this though so I would only
+> use it if truly necessary  . (For example a using git to manage a
+> mapped network drive, it would be faster to keep the ".git" folder on
+> the local harddrive)
+>
+> More documentation here: http://www.kernel.org/pub/software/scm/git/docs/
+>
+> On Mon, Oct 13, 2008 at 2:40 PM, David Tweed <david.tweed@gmail.com> wrote:
+>> On Mon, Oct 13, 2008 at 7:19 PM, Shawn O. Pearce <spearce@spearce.org> wrote:
+>>>  # then every once in a while, or from a cron job
+>>>  $ git push --all backup
+>>>
+>>> Of course since Git is distributed you can you use this same approach
+>>> to make backups to other systems.  You can even edit the .git/config
+>>> to give the [remote "backup"] section more than one url line, so
+>>> that "git push --all backup" will send updated copies to multiple
+>>> locations at once.
+>>
+>> Another advantage of 'git push'ing to another repository (possibly via
+>> cron) as backup is that (for technical reasons) git push has to
+>> 'parse' the new changes to your repository in order to push, so it is
+>> likely to spot corruption (eg, dying disk) at that time and when you
+>> can decide what to do about it. (I have enough backups all over the
+>> place that I don't worry about not having a 'copy' of any stuff I care
+>> about, but that there'll be some fatal corruption I don't notice
+>> immediately that then gets propagated everywhere rendering them
+>> useless.)
+>>
+>> --
+>> cheers, dave tweed__________________________
+>> david.tweed@gmail.com
 
-Johannes> Count me into the former group.  If you set up a "--mirror"
-Johannes> repository, it defeats the purpose to mix that with _true_
-Johannes> local branches.
+    I have the same problem as David, but I manage it by using a
+symlink. That is my .git folder is a symlink to the real repository
+(possibly on another partition). (So far I had no problems with this
+setup.)
 
-IMO it should exit with an error and force to use "--force" to perform
-the operation. The scenario I envision is a mirror becoming the
-primary repository because the original source has disappeared. You
-would want to remove the now-useless reference to the source, and
-silently nuking all branches is wrong.
-
-  Sam
--- 
-Samuel Tardieu -- sam@rfc1149.net -- http://www.rfc1149.net/
+    Ciprian Dorin Craciun.
