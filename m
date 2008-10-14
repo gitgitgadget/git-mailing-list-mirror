@@ -1,93 +1,96 @@
-From: Matt McCutchen <matt@mattmccutchen.net>
-Subject: Re: [PATCH try 2] t1301-shared-repo.sh: don't let a default ACL
-	interfere with the test
-Date: Tue, 14 Oct 2008 19:00:27 -0400
-Message-ID: <1224025227.2699.13.camel@mattlaptop2.local>
-References: <1224022020.2699.4.camel@mattlaptop2.local>
-	 <1224022216.2699.5.camel@mattlaptop2.local>
-	 <7vzll66c5u.fsf@gitster.siamese.dyndns.org>
+From: "Marcel M. Cary" <marcel@earth.care2.com>
+Subject: from symlinked directory: unable to chdir or not a git archive
+Date: Tue, 14 Oct 2008 15:58:13 -0700
+Message-ID: <48F52405.6010406@earth.care2.com>
 Mime-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset="ISO-8859-1"
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Oct 15 01:02:42 2008
+To: <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Wed Oct 15 01:04:40 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KpsuQ-0003vG-N4
-	for gcvg-git-2@gmane.org; Wed, 15 Oct 2008 01:02:35 +0200
+	id 1KpswR-0004Q6-CL
+	for gcvg-git-2@gmane.org; Wed, 15 Oct 2008 01:04:39 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755035AbYJNXBT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 14 Oct 2008 19:01:19 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755018AbYJNXBT
-	(ORCPT <rfc822;git-outgoing>); Tue, 14 Oct 2008 19:01:19 -0400
-Received: from sd-green-bigip-83.dreamhost.com ([208.97.132.83]:43398 "EHLO
-	jankymail-a4.g.dreamhost.com" rhost-flags-OK-OK-OK-FAIL)
-	by vger.kernel.org with ESMTP id S1754947AbYJNXBS (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 14 Oct 2008 19:01:18 -0400
-X-Greylist: delayed 3206 seconds by postgrey-1.27 at vger.kernel.org; Tue, 14 Oct 2008 19:01:18 EDT
-Received: from [129.2.207.232] (ml2.student.umd.edu [129.2.207.232])
-	by jankymail-a4.g.dreamhost.com (Postfix) with ESMTP id 2FB1618112B;
-	Tue, 14 Oct 2008 16:01:17 -0700 (PDT)
-In-Reply-To: <7vzll66c5u.fsf@gitster.siamese.dyndns.org>
-X-Mailer: Evolution 2.22.3.1 (2.22.3.1-1.fc9) 
+	id S1752309AbYJNXD2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 14 Oct 2008 19:03:28 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752157AbYJNXD2
+	(ORCPT <rfc822;git-outgoing>); Tue, 14 Oct 2008 19:03:28 -0400
+Received: from exchange01.care2.com ([38.99.18.107]:47594 "EHLO
+	exchange01.earth.care2.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1752092AbYJNXD1 (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 14 Oct 2008 19:03:27 -0400
+X-Greylist: delayed 311 seconds by postgrey-1.27 at vger.kernel.org; Tue, 14 Oct 2008 19:03:27 EDT
+Received: from [127.0.0.1] (63.146.170.73) by exchange01.earth.care2.com
+ (38.99.18.107) with Microsoft SMTP Server id 8.0.813.0; Tue, 14 Oct 2008
+ 16:02:19 -0700
+User-Agent: Thunderbird 2.0.0.6 (X11/20070801)
+X-PureMessage: [Scanned]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/98222>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/98223>
 
-On Tue, 2008-10-14 at 15:32 -0700, Junio C Hamano wrote:
-> Matt McCutchen <matt@mattmccutchen.net> writes:
-> > This test creates files with several different umasks and expects the files to
-> > be permissioned according to the umasks, so a default ACL on the test dir causes
-> 
-> Is "to permission" a verb?
+I'm getting an error:
 
-I thought it could be, but I'll reword that sentence.
+  fatal: 'origin': unable to chdir or not a git archive
 
-> > the test to fail.  To avoid that, remove the default ACL if possible with
-> > setfacl(1).  (Will work on many systems.)
-> 
-> It is not clear in the comment in parentheses what provision you have made
-> not to harm people on systems without setfacl.
-> 
-> I think "if possible" which you already have is a good enough description
-> (i.e. "if setfacl fails we do not barf and if you do not have the command
-> you probably are not running with a funky default ACL to see this issue
-> anyway"), so I'd rather drop the comment in parentheses.
+when trying to pull even though pushing works just fine.  So I don't
+think the problem is that the remote repository doesn't exist.  (I see
+the entry in GitFaq for this error message, but I don't think that
+answer quite explains this situation.)
 
-Sure.
+I think it's important that, when pulling, I'm in a directory that is a
+symlink into the Git working copy.  Having git operate correctly in that
+environment is important to me because Git doesn't support checking out
+a subdirectory of my project.
 
-> > Signed-off-by: Matt McCutchen <matt@mattmccutchen.net>
-> > ---
-> > This time with a signoff.
-> >
-> >  t/t1301-shared-repo.sh |    3 +++
-> >  1 files changed, 3 insertions(+), 0 deletions(-)
-> >
-> > diff --git a/t/t1301-shared-repo.sh b/t/t1301-shared-repo.sh
-> > index dc85e8b..2275caa 100755
-> > --- a/t/t1301-shared-repo.sh
-> > +++ b/t/t1301-shared-repo.sh
-> > @@ -7,6 +7,9 @@ test_description='Test shared repository initialization'
-> >  
-> >  . ./test-lib.sh
-> >  
-> > +# Remove a default ACL from the test dir if possible.
-> > +setfacl -k . 2>/dev/null
-> > +
-> 
-> Makes me wonder why this is _not_ inside test-lib.sh where it creates the
-> test (trash) directory.  That way, you would cover future tests that wants
-> to see a saner/simpler POSIX permission behaviour, wouldn't you?
+A shell transcript follows that illustrates a simplified problem
+scenario using Git 1.6.0.1.  I see the same error message with 1.6.0.2
+and 1.6.0.2.530.g67faa (master branch today).
 
-Yes.  However, I don't anticipate there being any tests specifically
-about file permissions other than t1301-shared-repo.sh, and if the user
-has set a default ACL on the git source tree, we might want to let trash
-directories obey that setting except in the one case where it breaks the
-test.  What do you think?
+Is there an easy way around this?  Right now I have to cd to the target
+of the symlink to do the pull, which is annoying.
 
-Matt
+Thanks,
+Marcel
+
+~/git$ mkdir tmp-repo
+~/git$ cd tmp-repo/
+~/git/tmp-repo$ git init
+Initialized empty Git repository in /home/marcel/git/tmp-repo/.git/
+~/git/tmp-repo$ mkdir foo
+~/git/tmp-repo$ touch foo/bar
+~/git/tmp-repo$ git add foo/bar
+~/git/tmp-repo$ git commit -m 'Add empty file'
+Created initial commit 651b80a: Add empty file
+ 0 files changed, 0 insertions(+), 0 deletions(-)
+ create mode 100644 foo/bar
+~/git/tmp-repo$ cd ..
+~/git$ git clone tmp-repo clone-repo
+Initialized empty Git repository in /home/marcel/git/clone-repo/.git/
+~/git$ ln -s clone-repo/foo/ foo-link
+~/git$ cd foo-link/
+~/git/foo-link$ echo hello >> bar
+~/git/foo-link$ git commit -a -m 'Say hi'
+Created commit 0a92c49: Say hi
+ 1 files changed, 1 insertions(+), 0 deletions(-)
+~/git/foo-link$ git push origin master
+Counting objects: 7, done.
+Writing objects: 100% (4/4), 281 bytes, done.
+Total 4 (delta 0), reused 0 (delta 0)
+Unpacking objects: 100% (4/4), done.
+To /home/marcel/git/tmp-repo/.git
+   651b80a..0a92c49  master -> master
+~/git/foo-link$ git pull
+fatal: 'origin': unable to chdir or not a git archive
+fatal: The remote end hung up unexpectedly
+~/git/foo-link$ cd ~/git/clone-repo/foo
+~/git/clone-repo/foo$ git pull
+Already up-to-date.
+~/git/clone-repo/foo$
+
+on Linux 2.6.18-4-486, ext3
