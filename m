@@ -1,45 +1,57 @@
-From: "=?ISO-8859-1?Q?Santi_B=E9jar?=" <santi@agolina.net>
+From: Kristian Amlie <kristian.amlie@trolltech.com>
 Subject: Re: Rerunning merge on a single file
-Date: Tue, 14 Oct 2008 14:28:54 +0200
-Message-ID: <adf1fd3d0810140528p8bf8958t528b226d01a55a45@mail.gmail.com>
+Date: Tue, 14 Oct 2008 14:48:01 +0200
+Message-ID: <48F49501.3010005@trolltech.com>
 References: <48F48CDB.1010309@trolltech.com>
-	 <adf1fd3d0810140521g7f43ee3bs5d4e60772bcc1d8c@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain; charset=ISO-8859-1;
+	format=flowed
 Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: git@vger.kernel.org
-To: "Kristian Amlie" <kristian.amlie@trolltech.com>
-X-From: git-owner@vger.kernel.org Tue Oct 14 14:30:37 2008
+To: =?ISO-8859-1?Q?Santi_B=E9jar?= <santi@agolina.net>
+X-From: git-owner@vger.kernel.org Tue Oct 14 14:49:46 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Kpj2j-0006lD-W6
-	for gcvg-git-2@gmane.org; Tue, 14 Oct 2008 14:30:30 +0200
+	id 1KpjL1-0005Iw-Pn
+	for gcvg-git-2@gmane.org; Tue, 14 Oct 2008 14:49:24 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756397AbYJNM25 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 14 Oct 2008 08:28:57 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756304AbYJNM25
-	(ORCPT <rfc822;git-outgoing>); Tue, 14 Oct 2008 08:28:57 -0400
-Received: from mail-gx0-f16.google.com ([209.85.217.16]:40506 "EHLO
-	mail-gx0-f16.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756397AbYJNM24 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 14 Oct 2008 08:28:56 -0400
-Received: by gxk9 with SMTP id 9so5003384gxk.13
-        for <git@vger.kernel.org>; Tue, 14 Oct 2008 05:28:55 -0700 (PDT)
-Received: by 10.100.95.19 with SMTP id s19mr7247877anb.43.1223987334945;
-        Tue, 14 Oct 2008 05:28:54 -0700 (PDT)
-Received: by 10.100.112.16 with HTTP; Tue, 14 Oct 2008 05:28:54 -0700 (PDT)
+	id S1755508AbYJNMsK convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 14 Oct 2008 08:48:10 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755430AbYJNMsJ
+	(ORCPT <rfc822;git-outgoing>); Tue, 14 Oct 2008 08:48:09 -0400
+Received: from hoat.troll.no ([62.70.27.150]:53767 "EHLO hoat.troll.no"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755178AbYJNMsI (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 14 Oct 2008 08:48:08 -0400
+Received: from hoat.troll.no (tedur.troll.no [62.70.27.154])
+	by hoat.troll.no (Postfix) with SMTP id D206F20545;
+	Tue, 14 Oct 2008 14:48:03 +0200 (CEST)
+Received: from sx01.troll.no (sx01.troll.no [62.70.27.21])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by hoat.troll.no (Postfix) with ESMTP id C8B6A2045D;
+	Tue, 14 Oct 2008 14:48:03 +0200 (CEST)
+Received: from sx01.troll.no (localhost.localdomain [127.0.0.1])
+	by sx01.troll.no (8.13.8/8.13.8) with ESMTP id m9ECm0XW030401;
+	Tue, 14 Oct 2008 14:48:01 +0200
+Received: from [172.24.106.14] ( [172.24.106.14])
+    by sx01.troll.no (Scalix SMTP Relay 11.4.1.11929)
+    via ESMTP; Tue, 14 Oct 2008 14:48:00 +0200 (CEST)
 In-Reply-To: <adf1fd3d0810140521g7f43ee3bs5d4e60772bcc1d8c@mail.gmail.com>
+References: <adf1fd3d0810140521g7f43ee3bs5d4e60772bcc1d8c@mail.gmail.com>
+x-scalix-Hops: 1
+User-Agent: Thunderbird 2.0.0.14 (X11/20080519)
+X-Enigmail-Version: 0.95.6
 Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/98185>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/98186>
 
-On Tue, Oct 14, 2008 at 2:21 PM, Santi B=E9jar <santi@agolina.net> wrot=
-e:
+Santi B=E9jar wrote:
 > On Tue, Oct 14, 2008 at 2:13 PM, Kristian Amlie
 > <kristian.amlie@trolltech.com> wrote:
 >> Hey, I have question about advanced merging.
@@ -62,12 +74,12 @@ al file
 =2E
 >>
 >> Is there a better way to achieve this?
->
+>=20
 > If the different versions are still in the index you could use:
->
+>=20
 > $ git checkout --merge $file
 
-Note that this is very new, as it was introduced in
-v1.6.0.1-26-geac5a40, so you'll need at least 1.6.0.2.
+In my case the files were added to the index already, so I guess it=20
+doesn't work then?
 
-Santi
+Kristian
