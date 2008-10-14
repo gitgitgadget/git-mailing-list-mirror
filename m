@@ -1,80 +1,65 @@
-From: Lars Hoss <lars@woeye.net>
-Subject: Git 1.6.0.2, Submodules and MacOSX Leopard
-Date: Tue, 14 Oct 2008 08:53:57 +0200
-Message-ID: <678FF056-2A69-49EF-B0AF-8F6C4A17B831@woeye.net>
-Mime-Version: 1.0 (Apple Message framework v929.2)
-Content-Type: text/plain; charset=US-ASCII; format=flowed; delsp=yes
-Content-Transfer-Encoding: 7bit
+From: "Todd A. Jacobs" <nospam@codegnome.org>
+Subject: View remote logs?
+Date: Tue, 14 Oct 2008 00:19:07 -0700
+Message-ID: <20081014071907.GP16999@penguin.codegnome.org>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Oct 14 09:16:04 2008
+X-From: git-owner@vger.kernel.org Tue Oct 14 09:52:51 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Kpe84-0008Hg-QY
-	for gcvg-git-2@gmane.org; Tue, 14 Oct 2008 09:15:41 +0200
+	id 1Kpei3-0003Zg-5V
+	for gcvg-git-2@gmane.org; Tue, 14 Oct 2008 09:52:51 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751699AbYJNHO2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 14 Oct 2008 03:14:28 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751903AbYJNHO2
-	(ORCPT <rfc822;git-outgoing>); Tue, 14 Oct 2008 03:14:28 -0400
-Received: from mail.codewut.de ([78.47.135.140]:45553 "EHLO mail.codewut.de"
+	id S1754248AbYJNHvi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 14 Oct 2008 03:51:38 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753756AbYJNHvi
+	(ORCPT <rfc822;git-outgoing>); Tue, 14 Oct 2008 03:51:38 -0400
+Received: from que21.charter.net ([209.225.8.22]:52016 "EHLO que21.charter.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751579AbYJNHO1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 14 Oct 2008 03:14:27 -0400
-X-Greylist: delayed 1225 seconds by postgrey-1.27 at vger.kernel.org; Tue, 14 Oct 2008 03:14:26 EDT
-Received: by mail.codewut.de (Postfix, from userid 65534)
-	id A092D7BEF1; Tue, 14 Oct 2008 08:56:59 +0200 (CEST)
-X-Spam-Checker-Version: SpamAssassin 3.1.7-deb (2006-10-05) on mail.codewut.de
-X-Spam-Level: 
-X-Spam-Status: No, score=-4.1 required=5.0 tests=ALL_TRUSTED,AWL,BAYES_00 
-	autolearn=ham version=3.1.7-deb
-Received: from [10.0.1.200] (ppp-88-217-56-235.dynamic.mnet-online.de [88.217.56.235])
-	(Authenticated sender: lars)
-	by mail.codewut.de (Postfix) with ESMTP id 03B737BE59
-	for <git@vger.kernel.org>; Tue, 14 Oct 2008 08:56:57 +0200 (CEST)
-X-Mailer: Apple Mail (2.929.2)
+	id S1752578AbYJNHvh (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 14 Oct 2008 03:51:37 -0400
+X-Greylist: delayed 1396 seconds by postgrey-1.27 at vger.kernel.org; Tue, 14 Oct 2008 03:51:37 EDT
+Received: from aarprv06.charter.net ([10.20.200.76]) by mta31.charter.net
+          (InterMail vM.7.08.03.00 201-2186-126-20070710) with ESMTP
+          id <20081014071910.KHGA4798.mta31.charter.net@aarprv06.charter.net>
+          for <git@vger.kernel.org>; Tue, 14 Oct 2008 03:19:10 -0400
+Received: from penguin.codegnome.org ([71.83.124.90])
+          by aarprv06.charter.net with ESMTP
+          id <20081014071909.NPV128.aarprv06.charter.net@penguin.codegnome.org>
+          for <git@vger.kernel.org>; Tue, 14 Oct 2008 03:19:09 -0400
+Received: by penguin.codegnome.org (Postfix, from userid 1000)
+	id 3F85237CAB; Tue, 14 Oct 2008 00:19:09 -0700 (PDT)
+Received: by penguin.codegnome.org (tmda-sendmail, from uid 1000);
+	Tue, 14 Oct 2008 00:19:09 -0700
+Content-Disposition: inline
+User-Agent: Mutt/1.5.13 (2006-08-11)
+X-Delivery-Agent: TMDA/1.1.12 (Macallan)
+Mail-Followup-To: git@vger.kernel.org
+X-Chzlrs: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/98171>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/98172>
 
-Greetings everyone!
+I've Googled around, and tried some experiments with likely-looking
+tools like git log, git diff, and git ls-remote, but they only seem to
+operate on the local repository. In particular, there doesn't seem to be
+an obvious way to view the commit logs on a remote repository without
+pulling it first.
 
-Last night I played around with submodules on MacOSX Leopard using Git  
-1.6.0.2.
-And it seems there is a bug.
+On an intuitive level, it seems like "git log origin" would allow me to
+see what someone has committed to a remote repository so I can decide
+whether it's something I want to pull. Even something like "git diff
+HEAD origin" would let me know if there were changes I might want to
+pull before doing so.
 
-If I add a submodule like this:
+Am I missing something obvious? Is it possible to use the CLI to view
+remote logs, or is the only choice to pull everything?
 
-git submodule add /Users/lars/tmp/git_test/foo_lib/ lib
-
-It says:
-
-Initialized empty Git repository in /Users/lars/tmp/git_test/ 
-sample_app/lib/.git/
-
-And I can see the lib folder. So far so good. But when I do a git  
-status it says:
-
-# On branch master
-# Changes to be committed:
-#   (use "git reset HEAD <file>..." to unstage)
-#
-#	new file:   .gitmodules
-#	new file:   lib
-#
-# Untracked files:
-#   (use "git add <file>..." to include in what will be committed)
-#
-#	lib/
-
-So why is lib listed under untracked files?
-I did a quick test on my Linux server and there it worked as expected.  
-Which means that lib wasn't listed under
-untracked files. Then again I use an older version of git on my Linux  
-box (1.5.x).
-
-Yours,
-Lars
+-- 
+"Oh, look: rocks!"
+	-- Doctor Who, "Destiny of the Daleks"
