@@ -1,95 +1,76 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH v2] Fix fetch/pull when run without --update-head-ok
-Date: Tue, 14 Oct 2008 11:49:06 +0200 (CEST)
-Message-ID: <alpine.DEB.1.00.0810141145491.22125@pacific.mpi-cbg.de.mpi-cbg.de>
-References: <alpine.DEB.1.00.0810111336350.22125@pacific.mpi-cbg.de.mpi-cbg.de> <alpine.LNX.1.00.0810121501590.19665@iabervon.org> <alpine.DEB.1.00.0810131129110.22125@pacific.mpi-cbg.de.mpi-cbg.de> <7vod1obmlh.fsf@gitster.siamese.dyndns.org>
- <alpine.DEB.1.00.0810132001230.22125@pacific.mpi-cbg.de.mpi-cbg.de> <alpine.LNX.1.00.0810131546180.19665@iabervon.org>
+From: "Alex Bennee" <kernel-hacker@bennee.com>
+Subject: How many users of parsecvs are there?
+Date: Tue, 14 Oct 2008 11:10:00 +0100
+Message-ID: <b2cdc9f30810140310l647eb2fbld3f6a1c608d029a@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	spearce@spearce.org
-To: Daniel Barkalow <barkalow@iabervon.org>
-X-From: git-owner@vger.kernel.org Tue Oct 14 11:44:07 2008
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: keithp@neko.keithp.com
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Oct 14 12:11:38 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KpgRI-0007KC-L5
-	for gcvg-git-2@gmane.org; Tue, 14 Oct 2008 11:43:41 +0200
+	id 1Kpgs0-00087d-Sw
+	for gcvg-git-2@gmane.org; Tue, 14 Oct 2008 12:11:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753076AbYJNJm2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 14 Oct 2008 05:42:28 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752721AbYJNJm2
-	(ORCPT <rfc822;git-outgoing>); Tue, 14 Oct 2008 05:42:28 -0400
-Received: from mail.gmx.net ([213.165.64.20]:45607 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1752638AbYJNJm1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 14 Oct 2008 05:42:27 -0400
-Received: (qmail invoked by alias); 14 Oct 2008 09:42:25 -0000
-Received: from pacific.mpi-cbg.de (EHLO [141.5.10.38]) [141.5.10.38]
-  by mail.gmx.net (mp064) with SMTP; 14 Oct 2008 11:42:25 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX19K0cQvFHxKvbHGjkN/d/dW3t86ZEbW0NoZSjRJX/
-	9+0yW0eCgMCQSs
-X-X-Sender: schindelin@pacific.mpi-cbg.de.mpi-cbg.de
-In-Reply-To: <alpine.LNX.1.00.0810131546180.19665@iabervon.org>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.55
+	id S1754879AbYJNKKE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 14 Oct 2008 06:10:04 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754801AbYJNKKE
+	(ORCPT <rfc822;git-outgoing>); Tue, 14 Oct 2008 06:10:04 -0400
+Received: from yw-out-2324.google.com ([74.125.46.30]:24740 "EHLO
+	yw-out-2324.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754788AbYJNKKC (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 14 Oct 2008 06:10:02 -0400
+Received: by yw-out-2324.google.com with SMTP id 9so490004ywe.1
+        for <git@vger.kernel.org>; Tue, 14 Oct 2008 03:10:01 -0700 (PDT)
+Received: by 10.90.102.15 with SMTP id z15mr3085609agb.95.1223979000153;
+        Tue, 14 Oct 2008 03:10:00 -0700 (PDT)
+Received: by 10.90.105.11 with HTTP; Tue, 14 Oct 2008 03:10:00 -0700 (PDT)
+Content-Disposition: inline
+X-Google-Sender-Auth: cb566a319688d94f
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/98177>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/98178>
 
-Hi,
+I'm wondering how many people are there still using parsecvs to to
+track a live CVS tree?
 
-On Mon, 13 Oct 2008, Daniel Barkalow wrote:
+I've been using it for a while at work to track a rather monster CVS
+repository. The main reasons are:
 
-> On Mon, 13 Oct 2008, Johannes Schindelin wrote:
-> 
-> > I actually understand now why the tests started failing: the change from 
-> > resolve_ref() to get_branch() as requested by Daniel are at fault: 
-> > get_branch() does not check if the branch has an initial commit.
-> > 
-> > I am actually regretting making this change.  Daniel, do you agree 
-> > that it might be better to change back to resolve_ref(), so that the 
-> > initial complaint (IIRC Han-Wen git pull'ed into a freshly initialized 
-> > repository with that utterly bogus "git pull origin master:master" 
-> > line) is not re-raised?
-> 
-> Is it, in fact, okay to fetch into the current branch if it's "yet to be 
-> born"? I feel like it shouldn't be, since you'll get exactly the same 
-> problem that you would if the branch already existed: the index reflects 
-> the previous state (in this case, it's empty), so git will show that 
-> you've staged removing all of the files, right? So this would make the 
-> check for --update-head-ok more strict than before, but I think the 
-> behavior change is correct.
+1. It's the fastest import I've come across so far. Given the size of
+the CVS repo other solutions took far too long to do the conversion
+2. It's simple to configure (if you can call "find" configuring),
+assuming you have access to the CVS repo proper
+3. It reliably regenerates the repository so you can run the entire
+conversion from scratch the next day and hapily pull into working
+repos (I assume if I got tother working they should exhibit this
+property).
 
-I think 
-http://thread.gmane.org/gmane.comp.version-control.git/31351/focus=31544 
-is the best link to see what Han-Wen said.  Granted, it was a 
-misunderstanding on his part, but there have been quite a few people with 
-the same misunderstanding.
+However I have come across a few problems. One of which involves files
+not getting put into branches which I've managed hack a band-aid
+solution for that involves ignoring date discrepancies. However having
+mailed keith he made it clear he doesn't use it any more having
+converted his stuff so it's currently not being actively maintained.
 
-So what they did was
+So the question really is are there people out there still using it?
+If not I'll hang up my code exploring boots and have another go at
+whatever is considered the best in class iterative CVS to GIT gateway.
+If it's still a useful tool for other people as well I'm happy to
+delve deeper into the code and seeing if any of the crinkles can be
+ironed out.
 
-	$ mkdir just-one-branch
-	$ cd just-one-branch
-	$ git init
-	$ git remote add origin <url>
-	$ git pull origin master:master
+It's interesting to note from the Git Users Survey 2008 that CVS is
+still the second most used legacy version control system. One could
+draw the conclusion that having a well supported bullet proof
+incremental CVS import mechanism as part of git should still be a
+fairly important goal. There are a lot (too many?)  out of tree
+solutions out there which makes approaching the task somewhat daunting
+when first coming to git.
 
-And this _will_ work correctly.  Except when using get_branch(NULL) 
-instead of the validating resolve_ref().
-
-When we talk about not breaking existing behavior, we have to talk about 
-this behavior, too.
-
-So, my vote is to revert back to resolve_ref(), even if it needs more 
-lines.
-
-Thoughts of others?
-
-Ciao,
-Dscho
+-- 
+Alex, homepage: http://www.bennee.com/~alex/
