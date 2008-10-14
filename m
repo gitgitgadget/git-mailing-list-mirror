@@ -1,100 +1,80 @@
-From: Deskin Miller <deskinm@umich.edu>
-Subject: [PATCH v2] Fix testcase failure when extended attributes are in use
-Date: Mon, 13 Oct 2008 22:10:16 -0400
-Message-ID: <20081014021016.GB14994@riemann.deskinm.fdns.net>
-References: <20081011154107.GA14994@riemann.deskinm.fdns.net>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: gitster@pobox.com, heikki.orsila@iki.fi
+From: Lars Hoss <lars@woeye.net>
+Subject: Git 1.6.0.2, Submodules and MacOSX Leopard
+Date: Tue, 14 Oct 2008 08:53:57 +0200
+Message-ID: <678FF056-2A69-49EF-B0AF-8F6C4A17B831@woeye.net>
+Mime-Version: 1.0 (Apple Message framework v929.2)
+Content-Type: text/plain; charset=US-ASCII; format=flowed; delsp=yes
+Content-Transfer-Encoding: 7bit
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Oct 14 04:14:31 2008
+X-From: git-owner@vger.kernel.org Tue Oct 14 09:16:04 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KpZQd-0007cE-8i
-	for gcvg-git-2@gmane.org; Tue, 14 Oct 2008 04:14:31 +0200
+	id 1Kpe84-0008Hg-QY
+	for gcvg-git-2@gmane.org; Tue, 14 Oct 2008 09:15:41 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755200AbYJNCNR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 13 Oct 2008 22:13:17 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755142AbYJNCNR
-	(ORCPT <rfc822;git-outgoing>); Mon, 13 Oct 2008 22:13:17 -0400
-Received: from yw-out-2324.google.com ([74.125.46.28]:2676 "EHLO
-	yw-out-2324.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754851AbYJNCNQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 13 Oct 2008 22:13:16 -0400
-Received: by yw-out-2324.google.com with SMTP id 9so470017ywe.1
-        for <git@vger.kernel.org>; Mon, 13 Oct 2008 19:13:14 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:cc:subject
-         :message-id:references:mime-version:content-type:content-disposition
-         :in-reply-to:user-agent:sender;
-        bh=hbs0skb742AYwtUBhytHEU6Vb0RQYATSmboEECL+yyk=;
-        b=X3JGpXQqmjF+hkahfPyXTG3j7ttjnYfYNjjk6oMgm71xIn7x56H0OQAzu3bmb2WD3k
-         7NS0O2fGpD3pMPT0mfhWbOuUIwoYbI7XT7ixUeVzI2n53XX0S31eAiLiMxURWvPn8RSy
-         rg8ScacX8Sx9CUdFvl5DzayZcR+fAaf8A9viY=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent:sender;
-        b=CafxNHx6MOC0NUJC4f1/ZjzFcj1uUMrZKx2lgDiLC+uoUpP20YWHbBhLmEL3SGU/0+
-         zmX7igU+SCYoy2zISE4MsHgqRagyLYTeYqBHniJlKTEIOfHrDtRkFwGL8LW36DDCRkCB
-         2ql4EGxRScdJiaQ+hsZYMW4inFXmBJ+wasFcQ=
-Received: by 10.151.45.6 with SMTP id x6mr9270235ybj.110.1223950394311;
-        Mon, 13 Oct 2008 19:13:14 -0700 (PDT)
-Received: from riemann.deskinm.fdns.net ([68.40.49.130])
-        by mx.google.com with ESMTPS id d25sm12429337elf.17.2008.10.13.19.13.11
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Mon, 13 Oct 2008 19:13:12 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <20081011154107.GA14994@riemann.deskinm.fdns.net>
-User-Agent: Mutt/1.5.17 (2007-11-01)
+	id S1751699AbYJNHO2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 14 Oct 2008 03:14:28 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751903AbYJNHO2
+	(ORCPT <rfc822;git-outgoing>); Tue, 14 Oct 2008 03:14:28 -0400
+Received: from mail.codewut.de ([78.47.135.140]:45553 "EHLO mail.codewut.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751579AbYJNHO1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 14 Oct 2008 03:14:27 -0400
+X-Greylist: delayed 1225 seconds by postgrey-1.27 at vger.kernel.org; Tue, 14 Oct 2008 03:14:26 EDT
+Received: by mail.codewut.de (Postfix, from userid 65534)
+	id A092D7BEF1; Tue, 14 Oct 2008 08:56:59 +0200 (CEST)
+X-Spam-Checker-Version: SpamAssassin 3.1.7-deb (2006-10-05) on mail.codewut.de
+X-Spam-Level: 
+X-Spam-Status: No, score=-4.1 required=5.0 tests=ALL_TRUSTED,AWL,BAYES_00 
+	autolearn=ham version=3.1.7-deb
+Received: from [10.0.1.200] (ppp-88-217-56-235.dynamic.mnet-online.de [88.217.56.235])
+	(Authenticated sender: lars)
+	by mail.codewut.de (Postfix) with ESMTP id 03B737BE59
+	for <git@vger.kernel.org>; Tue, 14 Oct 2008 08:56:57 +0200 (CEST)
+X-Mailer: Apple Mail (2.929.2)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/98170>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/98171>
 
-06cbe855 (Make core.sharedRepository more generic, 2008-04-16) made
-several testcases in t1301-shared-repo.sh which fail if on a system
-which creates files with extended attributes (e.g. SELinux), since ls
-appends a '+' sign to the permission set in such cases.  This fixes the
-testcase to strip any such sign prior to verifying the permission set.
+Greetings everyone!
 
-Signed-off-by: Deskin Miller <deskinm@umich.edu>
----
-...and then I discovered Documentation/CodingGuidelines: no ? in regular
-expressions.  I really need to learn these shell variable-manipulation
-builtins.
+Last night I played around with submodules on MacOSX Leopard using Git  
+1.6.0.2.
+And it seems there is a bug.
 
-Apologies if for some reason the previous version got used, I haven't seen it
-anywhere, however.
+If I add a submodule like this:
 
-Deskin Miller
+git submodule add /Users/lars/tmp/git_test/foo_lib/ lib
 
- t/t1301-shared-repo.sh |    2 ++
- 1 files changed, 2 insertions(+), 0 deletions(-)
+It says:
 
-diff --git a/t/t1301-shared-repo.sh b/t/t1301-shared-repo.sh
-index dc85e8b..4d2db62 100755
---- a/t/t1301-shared-repo.sh
-+++ b/t/t1301-shared-repo.sh
-@@ -84,6 +84,7 @@ do
- 		git update-server-info &&
- 		actual="$(ls -l .git/info/refs)" &&
- 		actual=${actual%% *} &&
-+		actual=${actual%+} &&
- 		test "x$actual" = "x-$y" || {
- 			ls -lt .git/info
- 			false
-@@ -97,6 +98,7 @@ do
- 		git update-server-info &&
- 		actual="$(ls -l .git/info/refs)" &&
- 		actual=${actual%% *} &&
-+		actual=${actual%+} &&
- 		test "x$actual" = "x-$x" || {
- 			ls -lt .git/info
- 			false
--- 
-1.6.0.2.514.g23abd3
+Initialized empty Git repository in /Users/lars/tmp/git_test/ 
+sample_app/lib/.git/
+
+And I can see the lib folder. So far so good. But when I do a git  
+status it says:
+
+# On branch master
+# Changes to be committed:
+#   (use "git reset HEAD <file>..." to unstage)
+#
+#	new file:   .gitmodules
+#	new file:   lib
+#
+# Untracked files:
+#   (use "git add <file>..." to include in what will be committed)
+#
+#	lib/
+
+So why is lib listed under untracked files?
+I did a quick test on my Linux server and there it worked as expected.  
+Which means that lib wasn't listed under
+untracked files. Then again I use an older version of git on my Linux  
+box (1.5.x).
+
+Yours,
+Lars
