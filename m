@@ -1,125 +1,93 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH] pull: allow "git pull origin $something:$current_branch"
- into an unborn branch
-Date: Tue, 14 Oct 2008 15:53:44 -0700
-Message-ID: <7vmyh66b5z.fsf@gitster.siamese.dyndns.org>
-References: <alpine.DEB.1.00.0810111336350.22125@pacific.mpi-cbg.de.mpi-cbg.de>
- <alpine.LNX.1.00.0810121501590.19665@iabervon.org>
- <alpine.DEB.1.00.0810131129110.22125@pacific.mpi-cbg.de.mpi-cbg.de>
- <7vod1obmlh.fsf@gitster.siamese.dyndns.org>
- <alpine.DEB.1.00.0810132001230.22125@pacific.mpi-cbg.de.mpi-cbg.de>
- <alpine.LNX.1.00.0810131546180.19665@iabervon.org>
- <alpine.DEB.1.00.0810141145491.22125@pacific.mpi-cbg.de.mpi-cbg.de>
- <alpine.LNX.1.00.0810141148010.19665@iabervon.org>
- <alpine.DEB.1.00.0810141815490.22125@pacific.mpi-cbg.de.mpi-cbg.de>
- <alpine.LNX.1.00.0810141240510.19665@iabervon.org>
- <alpine.LNX.1.00.0810141258050.19665@iabervon.org>
- <7vk5ca7rw3.fsf@gitster.siamese.dyndns.org>
+From: Matt McCutchen <matt@mattmccutchen.net>
+Subject: Re: [PATCH try 2] t1301-shared-repo.sh: don't let a default ACL
+	interfere with the test
+Date: Tue, 14 Oct 2008 19:00:27 -0400
+Message-ID: <1224025227.2699.13.camel@mattlaptop2.local>
+References: <1224022020.2699.4.camel@mattlaptop2.local>
+	 <1224022216.2699.5.camel@mattlaptop2.local>
+	 <7vzll66c5u.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, spearce@spearce.org
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Daniel Barkalow <barkalow@iabervon.org>
-X-From: git-owner@vger.kernel.org Wed Oct 15 00:55:17 2008
+Content-Type: text/plain
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Oct 15 01:02:42 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KpsnH-0001vF-1j
-	for gcvg-git-2@gmane.org; Wed, 15 Oct 2008 00:55:11 +0200
+	id 1KpsuQ-0003vG-N4
+	for gcvg-git-2@gmane.org; Wed, 15 Oct 2008 01:02:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752671AbYJNWx4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 14 Oct 2008 18:53:56 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752658AbYJNWx4
-	(ORCPT <rfc822;git-outgoing>); Tue, 14 Oct 2008 18:53:56 -0400
-Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:57105 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752643AbYJNWxz (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 14 Oct 2008 18:53:55 -0400
-Received: from localhost.localdomain (localhost [127.0.0.1])
-	by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id A54BF8AFA7;
-	Tue, 14 Oct 2008 18:53:54 -0400 (EDT)
-Received: from pobox.com (ip68-225-240-211.oc.oc.cox.net [68.225.240.211])
- (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
- certificate requested) by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with
- ESMTPSA id 48F708AF98; Tue, 14 Oct 2008 18:53:49 -0400 (EDT)
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: FA2BB2A2-9A42-11DD-9342-4F5276724C3F-77302942!a-sasl-quonix.pobox.com
+	id S1755035AbYJNXBT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 14 Oct 2008 19:01:19 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755018AbYJNXBT
+	(ORCPT <rfc822;git-outgoing>); Tue, 14 Oct 2008 19:01:19 -0400
+Received: from sd-green-bigip-83.dreamhost.com ([208.97.132.83]:43398 "EHLO
+	jankymail-a4.g.dreamhost.com" rhost-flags-OK-OK-OK-FAIL)
+	by vger.kernel.org with ESMTP id S1754947AbYJNXBS (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 14 Oct 2008 19:01:18 -0400
+X-Greylist: delayed 3206 seconds by postgrey-1.27 at vger.kernel.org; Tue, 14 Oct 2008 19:01:18 EDT
+Received: from [129.2.207.232] (ml2.student.umd.edu [129.2.207.232])
+	by jankymail-a4.g.dreamhost.com (Postfix) with ESMTP id 2FB1618112B;
+	Tue, 14 Oct 2008 16:01:17 -0700 (PDT)
+In-Reply-To: <7vzll66c5u.fsf@gitster.siamese.dyndns.org>
+X-Mailer: Evolution 2.22.3.1 (2.22.3.1-1.fc9) 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/98221>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/98222>
 
-Some misguided documents floating on the Net suggests this sequence:
+On Tue, 2008-10-14 at 15:32 -0700, Junio C Hamano wrote:
+> Matt McCutchen <matt@mattmccutchen.net> writes:
+> > This test creates files with several different umasks and expects the files to
+> > be permissioned according to the umasks, so a default ACL on the test dir causes
+> 
+> Is "to permission" a verb?
 
-    mkdir newdir && cd newdir
-    git init
-    git remote add origin $url
-    git pull origin master:master
+I thought it could be, but I'll reword that sentence.
 
-"git pull" has known about an misguided "pull" like this where the
-underlying fetch updates the current branch for a long time, and it also
-has known about another form of insanity "git pull origin master" into an
-unborn branch, but these two workarounds were not aware of the existence
-of each other and did not work well together.
+> > the test to fail.  To avoid that, remove the default ACL if possible with
+> > setfacl(1).  (Will work on many systems.)
+> 
+> It is not clear in the comment in parentheses what provision you have made
+> not to harm people on systems without setfacl.
+> 
+> I think "if possible" which you already have is a good enough description
+> (i.e. "if setfacl fails we do not barf and if you do not have the command
+> you probably are not running with a funky default ACL to see this issue
+> anyway"), so I'd rather drop the comment in parentheses.
 
-This fixes it.
+Sure.
 
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
----
+> > Signed-off-by: Matt McCutchen <matt@mattmccutchen.net>
+> > ---
+> > This time with a signoff.
+> >
+> >  t/t1301-shared-repo.sh |    3 +++
+> >  1 files changed, 3 insertions(+), 0 deletions(-)
+> >
+> > diff --git a/t/t1301-shared-repo.sh b/t/t1301-shared-repo.sh
+> > index dc85e8b..2275caa 100755
+> > --- a/t/t1301-shared-repo.sh
+> > +++ b/t/t1301-shared-repo.sh
+> > @@ -7,6 +7,9 @@ test_description='Test shared repository initialization'
+> >  
+> >  . ./test-lib.sh
+> >  
+> > +# Remove a default ACL from the test dir if possible.
+> > +setfacl -k . 2>/dev/null
+> > +
+> 
+> Makes me wonder why this is _not_ inside test-lib.sh where it creates the
+> test (trash) directory.  That way, you would cover future tests that wants
+> to see a saner/simpler POSIX permission behaviour, wouldn't you?
 
- * This comes on top of js/maint-fetch-update-head.  Passes all the tests,
-   and also its own.
+Yes.  However, I don't anticipate there being any tests specifically
+about file permissions other than t1301-shared-repo.sh, and if the user
+has set a default ACL on the git source tree, we might want to let trash
+directories obey that setting except in the one case where it breaks the
+test.  What do you think?
 
- git-pull.sh     |    4 ++--
- t/t5520-pull.sh |   12 ++++++++++++
- 2 files changed, 14 insertions(+), 2 deletions(-)
-
-diff --git a/git-pull.sh b/git-pull.sh
-index 75c3610..664fe34 100755
---- a/git-pull.sh
-+++ b/git-pull.sh
-@@ -124,7 +124,7 @@ orig_head=$(git rev-parse --verify HEAD 2>/dev/null)
- git fetch --update-head-ok "$@" || exit 1
- 
- curr_head=$(git rev-parse --verify HEAD 2>/dev/null)
--if test "$curr_head" != "$orig_head"
-+if test -n "$orig_head" && test "$curr_head" != "$orig_head"
- then
- 	# The fetch involved updating the current branch.
- 
-@@ -172,7 +172,7 @@ esac
- 
- if test -z "$orig_head"
- then
--	git update-ref -m "initial pull" HEAD $merge_head "" &&
-+	git update-ref -m "initial pull" HEAD $merge_head "$curr_head" &&
- 	git read-tree --reset -u HEAD || exit 1
- 	exit
- fi
-diff --git a/t/t5520-pull.sh b/t/t5520-pull.sh
-index 997b2db..725771f 100755
---- a/t/t5520-pull.sh
-+++ b/t/t5520-pull.sh
-@@ -29,6 +29,18 @@ test_expect_success 'checking the results' '
- 	diff file cloned/file
- '
- 
-+test_expect_success 'pulling into void using master:master' '
-+	mkdir cloned-uho &&
-+	(
-+		cd cloned-uho &&
-+		git init &&
-+		git pull .. master:master
-+	) &&
-+	test -f file &&
-+	test -f cloned-uho/file &&
-+	test_cmp file cloned-uho/file
-+'
-+
- test_expect_success 'test . as a remote' '
- 
- 	git branch copy master &&
--- 
-1.6.0.2.711.gf1ba4
+Matt
