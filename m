@@ -1,68 +1,73 @@
-From: "H. Peter Anvin" <hpa@zytor.com>
-Subject: Re: tip tree clone fail
-Date: Tue, 14 Oct 2008 22:25:43 -0700
-Message-ID: <48F57ED7.1090305@zytor.com>
-References: <20081010083720.GA32069@elte.hu> <alpine.LFD.2.00.0810101040200.3271@apollo> <48EF14FC.1000801@cn.fujitsu.com> <alpine.LFD.2.00.0810101046260.3271@apollo> <48EF1902.4070309@cn.fujitsu.com> <48EF7BC1.4000401@zytor.com> <20081012124105.GA26988@elte.hu> <48F20663.2040407@zytor.com> <20081012152427.GA4607@elte.hu> <20081012153952.GV10544@machine.or.cz> <20081012165954.GA2317@elte.hu> <48F3178A.50106@cn.fujitsu.com> <48F37073.1030808@zytor.com> <48F566C4.2050905@cn.fujitsu.com>
+From: benhill <benhill@gmail.com>
+Subject: Updating Submodules
+Date: Tue, 14 Oct 2008 22:51:02 -0700 (PDT)
+Message-ID: <19987153.post@talk.nabble.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset=us-ascii
 Content-Transfer-Encoding: 7bit
-Cc: Ingo Molnar <mingo@elte.hu>, Petr Baudis <pasky@suse.cz>,
-	Thomas Gleixner <tglx@linutronix.de>,
-	FNST-Lai Jiangshan <laijs@cn.fujitsu.com>,
-	FJ-KOSAKI Motohiro <kosaki.motohiro@jp.fujitsu.com>,
-	git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-To: Wang Chen <wangchen@cn.fujitsu.com>
-X-From: git-owner@vger.kernel.org Wed Oct 15 07:27:59 2008
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Oct 15 07:56:40 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KpyvO-00080f-R4
-	for gcvg-git-2@gmane.org; Wed, 15 Oct 2008 07:27:59 +0200
+	id 1KpzN7-0005Re-Cu
+	for gcvg-git-2@gmane.org; Wed, 15 Oct 2008 07:56:37 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751065AbYJOF0r (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 15 Oct 2008 01:26:47 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751055AbYJOF0q
-	(ORCPT <rfc822;git-outgoing>); Wed, 15 Oct 2008 01:26:46 -0400
-Received: from terminus.zytor.com ([198.137.202.10]:54937 "EHLO
-	terminus.zytor.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751020AbYJOF0q (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 15 Oct 2008 01:26:46 -0400
-Received: from mail.hos.anvin.org (c-98-210-181-100.hsd1.ca.comcast.net [98.210.181.100])
-	(authenticated bits=0)
-	by terminus.zytor.com (8.14.2/8.14.1) with ESMTP id m9F5PpVt032719
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Tue, 14 Oct 2008 22:25:52 -0700
-Received: from tazenda.hos.anvin.org (tazenda.hos.anvin.org [172.27.0.16])
-	by mail.hos.anvin.org (8.14.2/8.13.8) with ESMTP id m9F5Pnfb025455;
-	Tue, 14 Oct 2008 22:25:49 -0700
-Received: from tazenda.hos.anvin.org (localhost.localdomain [127.0.0.1])
-	by tazenda.hos.anvin.org (8.14.2/8.13.6) with ESMTP id m9F5PhBa020470;
-	Tue, 14 Oct 2008 22:25:43 -0700
-User-Agent: Thunderbird 2.0.0.14 (X11/20080501)
-In-Reply-To: <48F566C4.2050905@cn.fujitsu.com>
-X-Virus-Scanned: ClamAV 0.93.3/8426/Tue Oct 14 17:11:44 2008 on terminus.zytor.com
-X-Virus-Status: Clean
+	id S1751246AbYJOFvI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 15 Oct 2008 01:51:08 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751243AbYJOFvG
+	(ORCPT <rfc822;git-outgoing>); Wed, 15 Oct 2008 01:51:06 -0400
+Received: from kuber.nabble.com ([216.139.236.158]:35366 "EHLO
+	kuber.nabble.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751111AbYJOFvG (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 15 Oct 2008 01:51:06 -0400
+Received: from isper.nabble.com ([192.168.236.156])
+	by kuber.nabble.com with esmtp (Exim 4.63)
+	(envelope-from <lists@nabble.com>)
+	id 1KpzHi-0008DV-Fb
+	for git@vger.kernel.org; Tue, 14 Oct 2008 22:51:02 -0700
+X-Nabble-From: benhill@gmail.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/98232>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/98233>
 
-Wang Chen wrote:
-> 
-> Yes. My clone is successful. Thanks, Peter.
-> But, after cloning, git-pull failed because of conflict.
-> I think maybe because Ingo rebased his tree?
-> ---
-> Auto-merged init/main.c
-> CONFLICT (content): Merge conflict in init/main.c
-> Auto-merged scripts/bootgraph.pl
-> CONFLICT (add/add): Merge conflict in scripts/bootgraph.pl
-> Removed sound/soc/at91/eti_b1_wm8731.c
-> Automatic merge failed; fix conflicts and then commit the result.
-> ---
 
-Yes, the master branch on tip is not rebase-free.
+Heyah Folks.
 
-	-hpa
+So I have been playing with this for a few hours, and I must be missing
+something.
+
+I have created a submodule in my super project with the standard commands:
+
+git submodule add <repo> <path>
+
+No problem.  Repo Loads.  I push it to origin (github) and the little arrow
+designating it as a sub is there.
+
+Then one of my colleagues checks out the super and runs:
+
+git submodule init
+git submodule add
+
+...no problems thus far...the repo loads as planned.
+
+The she makes some changes to the submodule, checks them in, pushes them to
+origin (also github).
+
+Now, if she tried to check in changes to the super...it is no longer just
+the submodule ref that she is checking in...but the whole tree....like it
+adds all the files in the submodule to the super...if she were to push to
+github, the little arrow would be gone..and the whole tree is there.  
+
+What am I doing wrong here?  How do you make updates to supers to point to
+the head revision of the sub?
+
+Thanks for any help.
+
+Ben
+-- 
+View this message in context: http://www.nabble.com/Updating-Submodules-tp19987153p19987153.html
+Sent from the git mailing list archive at Nabble.com.
