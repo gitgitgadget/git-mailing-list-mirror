@@ -1,77 +1,72 @@
-From: Matt McCutchen <matt@mattmccutchen.net>
-Subject: Re: [PATCH try 2] t1301-shared-repo.sh: don't let a default ACL
-	interfere with the test
-Date: Wed, 15 Oct 2008 10:34:02 -0400
-Message-ID: <1224081242.2935.13.camel@mattlaptop2.local>
-References: <1224022020.2699.4.camel@mattlaptop2.local>
-	 <1224022216.2699.5.camel@mattlaptop2.local>
-	 <7vzll66c5u.fsf@gitster.siamese.dyndns.org>
-	 <48F589EC.6050307@viscovery.net>
-Mime-Version: 1.0
-Content-Type: text/plain
+From: Pieter de Bie <pdebie@ai.rug.nl>
+Subject: Re: [BUG] git status doesn't handle submodules properly on OSX
+Date: Wed, 15 Oct 2008 16:38:23 +0200
+Message-ID: <5D0481A4-D173-4CF8-B855-5E58978210F8@ai.rug.nl>
+References: <c60a85c1297be6446ad92a3e7723ddc8.squirrel@webmail.highteq.net>
+Mime-Version: 1.0 (Apple Message framework v929.2)
+Content-Type: text/plain; charset=US-ASCII; format=flowed
 Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Johannes Sixt <j.sixt@viscovery.net>
-X-From: git-owner@vger.kernel.org Wed Oct 15 16:36:28 2008
+To: Lars Hoss <lars@woeye.net>, Jeff King <peff@peff.net>,
+	Git Mailinglist <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Wed Oct 15 16:39:53 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Kq7Tu-0004Tq-Gj
-	for gcvg-git-2@gmane.org; Wed, 15 Oct 2008 16:36:11 +0200
+	id 1Kq7XU-0005rs-Ca
+	for gcvg-git-2@gmane.org; Wed, 15 Oct 2008 16:39:52 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753295AbYJOOey (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 15 Oct 2008 10:34:54 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753259AbYJOOey
-	(ORCPT <rfc822;git-outgoing>); Wed, 15 Oct 2008 10:34:54 -0400
-Received: from sd-green-bigip-83.dreamhost.com ([208.97.132.83]:43080 "EHLO
-	jankymail-a5.g.dreamhost.com" rhost-flags-OK-OK-OK-FAIL)
-	by vger.kernel.org with ESMTP id S1753121AbYJOOex (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 15 Oct 2008 10:34:53 -0400
-Received: from [129.2.207.232] (ml2.student.umd.edu [129.2.207.232])
-	by jankymail-a5.g.dreamhost.com (Postfix) with ESMTP id D213513F42;
-	Wed, 15 Oct 2008 07:34:51 -0700 (PDT)
-In-Reply-To: <48F589EC.6050307@viscovery.net>
-X-Mailer: Evolution 2.22.3.1 (2.22.3.1-1.fc9) 
+	id S1755978AbYJOOig (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 15 Oct 2008 10:38:36 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755967AbYJOOif
+	(ORCPT <rfc822;git-outgoing>); Wed, 15 Oct 2008 10:38:35 -0400
+Received: from frim.nl ([87.230.85.232]:40136 "EHLO
+	lvps87-230-85-232.dedicated.hosteurope.de" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1755960AbYJOOie (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 15 Oct 2008 10:38:34 -0400
+Received: from s5591931c.adsl.wanadoo.nl ([85.145.147.28] helo=[192.168.1.11])
+	by lvps87-230-85-232.dedicated.hosteurope.de with esmtpsa (TLS-1.0:RSA_AES_128_CBC_SHA1:16)
+	(Exim 4.63)
+	(envelope-from <pdebie@ai.rug.nl>)
+	id 1Kq7WA-0001u3-AN; Wed, 15 Oct 2008 16:38:30 +0200
+In-Reply-To: <c60a85c1297be6446ad92a3e7723ddc8.squirrel@webmail.highteq.net>
+X-Priority: 3 (Normal)
+X-Mailer: Apple Mail (2.929.2)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/98274>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/98275>
 
-On Wed, 2008-10-15 at 08:13 +0200, Johannes Sixt wrote:
-> Junio C Hamano schrieb:
-> > Makes me wonder why this is _not_ inside test-lib.sh where it creates the
-> > test (trash) directory.  That way, you would cover future tests that wants
-> > to see a saner/simpler POSIX permission behaviour, wouldn't you?
-> 
-> But that would also paper over unanticipated bad interactions with strange
-> ACLs that people might set, wouldn't it? By not placing this into
-> test-lib.sh there is a higher chance that such an interaction is revealed,
-> and we can react on it (educate users or fix the code).
 
-A default ACL on the working tree does not interfere with git's
-operation.  If the repository is shared, git will explicitly set the
-permissions of every file as configured; otherwise, new files will
-simply take their permissions from the default ACL instead of the
-creating process's umask.  This is exactly the behavior that a user who
-sets a default ACL would expect.  There is no need to modify
-adjust_shared_perm or to warn users not to use default ACLs.
+On 15 okt 2008, at 14:07, Lars Hoss wrote:
 
-The only problem here is that a default ACL prevents
-t1301-shared-repo.sh from testing the interaction between the umask and
-the sharedRepository setting, since the test case expects new files to
-be created according to the umask it set but the default ACL is
-overriding the umask.  Removing the trash directory's default ACL is a
-perfectly legitimate way for t1301-shared-repo.sh to test what it wants
-to test.  Another option would be to modify the trash directory's
-default ACL instead of modifying the umask.
+> two days ago I posted about an issue:
+> http://thread.gmane.org/gmane.comp.version-control.git/98171
+>
+> After more testing I can confirm it is indeed a bug.
+>
+> 1.6.0.2 on OSX Leopard doesn't work. After adding a submodule
+> the folder of the submodule will always get listed under
+> "Untracked files" when calling git status.
+>
+> 1.5.6, however, works fine. I have not tested trunk yet.
+>
+> So as a workaround I have to go back to 1.5.6 for now.
 
-Other tests will not care whether test-lib.sh clears a default ACL for
-them because they are not specifically testing file permissions.
-Therefore, I thought it best to leave the default ACL alone so that the
-trash directories get the permissions the user has specified in the
-default ACL in case he/she cares about sharing the trash directories
-with others.
+Works for me on Leopard
 
-Matt
+Vienna:a pieter$ git submodule add ~/projects/GitX/ gitx
+Initialized empty Git repository in /Users/pieter/a/gitx/.git/
+Vienna:a pieter$ git st
+# On branch master
+# Changes to be committed:
+#   (use "git reset HEAD <file>..." to unstage)
+#
+#	new file:   .gitmodules
+#	new file:   gitx
+#
+Vienna:a pieter$ git --version
+git version 1.6.0.2.415.gf9137
+
+- Pieter
