@@ -1,73 +1,68 @@
-From: benhill <benhill@gmail.com>
-Subject: Updating Submodules
-Date: Tue, 14 Oct 2008 22:51:02 -0700 (PDT)
-Message-ID: <19987153.post@talk.nabble.com>
+From: Johannes Sixt <j.sixt@viscovery.net>
+Subject: Re: [PATCH try 2] t1301-shared-repo.sh: don't let a default ACL 
+  interfere with the test
+Date: Wed, 15 Oct 2008 08:13:00 +0200
+Message-ID: <48F589EC.6050307@viscovery.net>
+References: <1224022020.2699.4.camel@mattlaptop2.local> <1224022216.2699.5.camel@mattlaptop2.local> <7vzll66c5u.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Oct 15 07:56:40 2008
+Cc: Matt McCutchen <matt@mattmccutchen.net>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Oct 15 08:14:24 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KpzN7-0005Re-Cu
-	for gcvg-git-2@gmane.org; Wed, 15 Oct 2008 07:56:37 +0200
+	id 1KpzeJ-00011p-Ag
+	for gcvg-git-2@gmane.org; Wed, 15 Oct 2008 08:14:23 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751246AbYJOFvI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 15 Oct 2008 01:51:08 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751243AbYJOFvG
-	(ORCPT <rfc822;git-outgoing>); Wed, 15 Oct 2008 01:51:06 -0400
-Received: from kuber.nabble.com ([216.139.236.158]:35366 "EHLO
-	kuber.nabble.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751111AbYJOFvG (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 15 Oct 2008 01:51:06 -0400
-Received: from isper.nabble.com ([192.168.236.156])
-	by kuber.nabble.com with esmtp (Exim 4.63)
-	(envelope-from <lists@nabble.com>)
-	id 1KpzHi-0008DV-Fb
-	for git@vger.kernel.org; Tue, 14 Oct 2008 22:51:02 -0700
-X-Nabble-From: benhill@gmail.com
+	id S1751105AbYJOGNI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 15 Oct 2008 02:13:08 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751074AbYJOGNH
+	(ORCPT <rfc822;git-outgoing>); Wed, 15 Oct 2008 02:13:07 -0400
+Received: from lilzmailso02.liwest.at ([212.33.55.13]:19030 "EHLO
+	lilzmailso02.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751098AbYJOGNG (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 15 Oct 2008 02:13:06 -0400
+Received: from cm56-163-160.liwest.at ([86.56.163.160] helo=linz.eudaptics.com)
+	by lilzmailso02.liwest.at with esmtpa (Exim 4.66)
+	(envelope-from <j.sixt@viscovery.net>)
+	id 1Kpzcy-0004vZ-MZ; Wed, 15 Oct 2008 08:13:01 +0200
+Received: from [127.0.0.1] (unknown [192.168.1.42])
+	by linz.eudaptics.com (Postfix) with ESMTP
+	id 5499069F; Wed, 15 Oct 2008 08:13:00 +0200 (CEST)
+User-Agent: Thunderbird 2.0.0.6 (Windows/20070728)
+In-Reply-To: <7vzll66c5u.fsf@gitster.siamese.dyndns.org>
+X-Spam-Score: 1.7 (+)
+X-Spam-Report: ALL_TRUSTED=-1.8, BAYES_99=3.5
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/98233>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/98234>
 
+Junio C Hamano schrieb:
+> Matt McCutchen <matt@mattmccutchen.net> writes:
+>> diff --git a/t/t1301-shared-repo.sh b/t/t1301-shared-repo.sh
+>> index dc85e8b..2275caa 100755
+>> --- a/t/t1301-shared-repo.sh
+>> +++ b/t/t1301-shared-repo.sh
+>> @@ -7,6 +7,9 @@ test_description='Test shared repository initialization'
+>>  
+>>  . ./test-lib.sh
+>>  
+>> +# Remove a default ACL from the test dir if possible.
+>> +setfacl -k . 2>/dev/null
+>> +
+> 
+> Makes me wonder why this is _not_ inside test-lib.sh where it creates the
+> test (trash) directory.  That way, you would cover future tests that wants
+> to see a saner/simpler POSIX permission behaviour, wouldn't you?
 
-Heyah Folks.
+But that would also paper over unanticipated bad interactions with strange
+ACLs that people might set, wouldn't it? By not placing this into
+test-lib.sh there is a higher chance that such an interaction is revealed,
+and we can react on it (educate users or fix the code).
 
-So I have been playing with this for a few hours, and I must be missing
-something.
-
-I have created a submodule in my super project with the standard commands:
-
-git submodule add <repo> <path>
-
-No problem.  Repo Loads.  I push it to origin (github) and the little arrow
-designating it as a sub is there.
-
-Then one of my colleagues checks out the super and runs:
-
-git submodule init
-git submodule add
-
-...no problems thus far...the repo loads as planned.
-
-The she makes some changes to the submodule, checks them in, pushes them to
-origin (also github).
-
-Now, if she tried to check in changes to the super...it is no longer just
-the submodule ref that she is checking in...but the whole tree....like it
-adds all the files in the submodule to the super...if she were to push to
-github, the little arrow would be gone..and the whole tree is there.  
-
-What am I doing wrong here?  How do you make updates to supers to point to
-the head revision of the sub?
-
-Thanks for any help.
-
-Ben
--- 
-View this message in context: http://www.nabble.com/Updating-Submodules-tp19987153p19987153.html
-Sent from the git mailing list archive at Nabble.com.
+-- Hannes
