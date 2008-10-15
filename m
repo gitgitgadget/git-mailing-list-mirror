@@ -1,70 +1,76 @@
 From: Stephen Haberman <stephen@exigencecorp.com>
-Subject: [PATCH] rebase-i-p: squashing and limiting todo
-Date: Wed, 15 Oct 2008 02:44:33 -0500
-Message-ID: <cover.1224055978.git.stephen@exigencecorp.com>
+Subject: [PATCH] rebase-i-p: use HEAD for updating the ref instead of mapping OLDHEAD
+Date: Wed, 15 Oct 2008 02:44:35 -0500
+Message-ID: <ef8c08551dca1ddfea0017fd4026ac9ae60fbfec.1224055978.git.stephen@exigencecorp.com>
+References: <cover.1224055978.git.stephen@exigencecorp.com>
+ <79b3f186dc599ebb5e251d5c0ca93c233263974c.1224055978.git.stephen@exigencecorp.com>
 Cc: git@vger.kernel.org, Stephen Haberman <stephen@exigencecorp.com>
 To: gitster@pobox.com
-X-From: git-owner@vger.kernel.org Wed Oct 15 09:46:05 2008
+X-From: git-owner@vger.kernel.org Wed Oct 15 09:46:06 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Kq14z-00012V-3G
-	for gcvg-git-2@gmane.org; Wed, 15 Oct 2008 09:46:01 +0200
+	id 1Kq152-00012V-B5
+	for gcvg-git-2@gmane.org; Wed, 15 Oct 2008 09:46:04 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751716AbYJOHop (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 15 Oct 2008 03:44:45 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751673AbYJOHop
-	(ORCPT <rfc822;git-outgoing>); Wed, 15 Oct 2008 03:44:45 -0400
-Received: from smtp162.sat.emailsrvr.com ([66.216.121.162]:49863 "EHLO
+	id S1751995AbYJOHox (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 15 Oct 2008 03:44:53 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751973AbYJOHou
+	(ORCPT <rfc822;git-outgoing>); Wed, 15 Oct 2008 03:44:50 -0400
+Received: from smtp162.sat.emailsrvr.com ([66.216.121.162]:49871 "EHLO
 	smtp162.sat.emailsrvr.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751617AbYJOHoo (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 15 Oct 2008 03:44:44 -0400
+	with ESMTP id S1751860AbYJOHop (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 15 Oct 2008 03:44:45 -0400
 Received: from relay6.relay.sat.mlsrvr.com (localhost [127.0.0.1])
-	by relay6.relay.sat.mlsrvr.com (SMTP Server) with ESMTP id 1ABCC1E06A9;
+	by relay6.relay.sat.mlsrvr.com (SMTP Server) with ESMTP id 464331E06AE;
+	Wed, 15 Oct 2008 03:44:45 -0400 (EDT)
+Received: by relay6.relay.sat.mlsrvr.com (Authenticated sender: stephen-AT-exigencecorp.com) with ESMTP id BCE221E0660;
 	Wed, 15 Oct 2008 03:44:44 -0400 (EDT)
-Received: by relay6.relay.sat.mlsrvr.com (Authenticated sender: stephen-AT-exigencecorp.com) with ESMTP id B80411E0660;
-	Wed, 15 Oct 2008 03:44:43 -0400 (EDT)
 X-Mailer: git-send-email 1.6.0.2
+In-Reply-To: <79b3f186dc599ebb5e251d5c0ca93c233263974c.1224055978.git.stephen@exigencecorp.com>
+In-Reply-To: <cover.1224055978.git.stephen@exigencecorp.com>
+References: <cover.1224055978.git.stephen@exigencecorp.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/98247>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/98248>
 
-This is v3, rebased on top of sp/maint with sp/master and sh/maint-rebase3.
+If OLDHEAD was reordered in the todo, and its mapped NEWHEAD was used to set the
+ref, commits reordered after OLDHEAD in the todo would should up as un-committed
+changes.
 
-So, it should apply cleanly to that. Junio's feedback aside, the only change
-from v2 is that maint-rebase3's dropped commit check needs to be done before
-Johannes's recent addition of:
+Signed-off-by: Stephen Haberman <stephen@exigencecorp.com>
+---
+ git-rebase--interactive.sh |   15 +--------------
+ 1 files changed, 1 insertions(+), 14 deletions(-)
 
-    test -s "$TODO" || echo noop >> "$TODO"
-
-Because now the todo may temporarily have picks in it while probing for parents
-that could later be removed by the dropped/cherry-picked commit check.
-
-Previously todo never had temporary entries, so it didn't matter when the
-dropped commit check was done.
-
-(Apologies for not seeing Junio's what's cooking first and using his
-maint/master instead of Shawn's. Let me know if I need to redo this and I will
-get even more practice at rebasing.)
-
-(Gah, resending with the list cc'd this time. Dammit, sorry about that.)
-
-Thanks,
-Stephen
-
-Stephen Haberman (7):
-  rebase-i-p: test to exclude commits from todo based on its parents
-  rebase-i-p: use HEAD for updating the ref instead of mapping OLDHEAD
-  rebase-i-p: delay saving current-commit to REWRITTEN if squashing
-  rebase-i-p: fix 'no squashing merges' tripping up non-merges
-  rebase-i-p: only list commits that require rewriting in todo
-  rebase-i-p: do not include non-first-parent commits touching UPSTREAM
-  rebase-i-p: if todo was reordered use HEAD as the rewritten parent
-
- git-rebase--interactive.sh               |  131 ++++++++++++++++++-----------
- t/t3411-rebase-preserve-around-merges.sh |  136 ++++++++++++++++++++++++++++++
- 2 files changed, 218 insertions(+), 49 deletions(-)
- create mode 100644 t/t3411-rebase-preserve-around-merges.sh
+diff --git a/git-rebase--interactive.sh b/git-rebase--interactive.sh
+index 30e4523..c968117 100755
+--- a/git-rebase--interactive.sh
++++ b/git-rebase--interactive.sh
+@@ -376,20 +376,7 @@ do_next () {
+ 	HEADNAME=$(cat "$DOTEST"/head-name) &&
+ 	OLDHEAD=$(cat "$DOTEST"/head) &&
+ 	SHORTONTO=$(git rev-parse --short $(cat "$DOTEST"/onto)) &&
+-	if test -d "$REWRITTEN"
+-	then
+-		test -f "$DOTEST"/current-commit &&
+-			current_commit=$(cat "$DOTEST"/current-commit) &&
+-			git rev-parse HEAD > "$REWRITTEN"/$current_commit
+-		if test -f "$REWRITTEN"/$OLDHEAD
+-		then
+-			NEWHEAD=$(cat "$REWRITTEN"/$OLDHEAD)
+-		else
+-			NEWHEAD=$OLDHEAD
+-		fi
+-	else
+-		NEWHEAD=$(git rev-parse HEAD)
+-	fi &&
++	NEWHEAD=$(git rev-parse HEAD) &&
+ 	case $HEADNAME in
+ 	refs/*)
+ 		message="$GIT_REFLOG_ACTION: $HEADNAME onto $SHORTONTO)" &&
+-- 
+1.6.0.2
