@@ -1,84 +1,60 @@
-From: "David Tweed" <david.tweed@gmail.com>
-Subject: Re: git and filesystem problems (ext3 and vfat)
-Date: Thu, 16 Oct 2008 17:33:42 +0100
-Message-ID: <e1dab3980810160933q30577344uf9b26c9ef0789576@mail.gmail.com>
-References: <d0383f90810160903p6f8ffe77o86fdad5387f82481@mail.gmail.com>
-	 <48F76936.3010801@drmicha.warpmail.net>
-	 <d0383f90810160923m60ec95d8v8550a611f91176b6@mail.gmail.com>
+From: Andrew Morton <akpm@linux-foundation.org>
+Subject: Untracked working tree files
+Date: Wed, 15 Oct 2008 11:56:54 -0700
+Message-ID: <20081015115654.fb34438f.akpm@linux-foundation.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain; charset=US-ASCII
 Content-Transfer-Encoding: 7bit
-Cc: "Michael J Gruber" <git@drmicha.warpmail.net>, git@vger.kernel.org
-To: "Ian Brown" <ianbrn@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Oct 16 18:35:05 2008
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Oct 15 20:58:10 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KqVoP-00006N-Ai
-	for gcvg-git-2@gmane.org; Thu, 16 Oct 2008 18:34:57 +0200
+	id 1KqBZS-0004XO-1T
+	for gcvg-git-2@gmane.org; Wed, 15 Oct 2008 20:58:10 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751719AbYJPQdo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 16 Oct 2008 12:33:44 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752136AbYJPQdo
-	(ORCPT <rfc822;git-outgoing>); Thu, 16 Oct 2008 12:33:44 -0400
-Received: from qw-out-2122.google.com ([74.125.92.27]:50711 "EHLO
-	qw-out-2122.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750926AbYJPQdo (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 16 Oct 2008 12:33:44 -0400
-Received: by qw-out-2122.google.com with SMTP id 3so29496qwe.37
-        for <git@vger.kernel.org>; Thu, 16 Oct 2008 09:33:42 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to
-         :subject:cc:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:references;
-        bh=FXzuLRfUo0YIVZc+8wjZSOgR7tO7pERhMoJ3ab2hkaY=;
-        b=BqFbUmmoGWRxmLkN9V+4nGlVV7PICsTQ3a5TyQCaPK4JyltpWjozYcj7cTfrARmIvF
-         pXnhSGfretB0DzwsadXIobV58a18ChO9rej70DjwTjH4vytiHEpBP+7PmK1eXdP88Ijr
-         y7OX6Bf2Js1Em0dWqb94fixUouw2iHQS43Tvc=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
-         :content-type:content-transfer-encoding:content-disposition
-         :references;
-        b=KtM1iqkwAuFjcQjVQeZq/pQbxGqZP8vmKj9tZs1FQoLdDUq5HcClEfSG53AzGdW1ae
-         HdG1IODHiwUHbTB23OojFAkJRUcT+jYM+DdXW7hhAabMjRzTWPpnwuv3bopcDOcJLqRK
-         vv8kOsX8qTJtmJW4ef65pqqaQK5LbiLDpXceI=
-Received: by 10.215.40.2 with SMTP id s2mr3205853qaj.37.1224174822850;
-        Thu, 16 Oct 2008 09:33:42 -0700 (PDT)
-Received: by 10.214.81.8 with HTTP; Thu, 16 Oct 2008 09:33:42 -0700 (PDT)
-In-Reply-To: <d0383f90810160923m60ec95d8v8550a611f91176b6@mail.gmail.com>
-Content-Disposition: inline
+	id S1753348AbYJOS45 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 15 Oct 2008 14:56:57 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753093AbYJOS45
+	(ORCPT <rfc822;git-outgoing>); Wed, 15 Oct 2008 14:56:57 -0400
+Received: from smtp1.linux-foundation.org ([140.211.169.13]:54999 "EHLO
+	smtp1.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1752181AbYJOS45 (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 15 Oct 2008 14:56:57 -0400
+Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [140.211.169.55])
+	by smtp1.linux-foundation.org (8.14.2/8.13.5/Debian-3ubuntu1.1) with ESMTP id m9FIutaf003279
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO)
+	for <git@vger.kernel.org>; Wed, 15 Oct 2008 11:56:56 -0700
+Received: from akpm.corp.google.com (localhost [127.0.0.1])
+	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with SMTP id m9FIutmg022746
+	for <git@vger.kernel.org>; Wed, 15 Oct 2008 11:56:55 -0700
+X-Mailer: Sylpheed version 2.2.4 (GTK+ 2.8.20; i486-pc-linux-gnu)
+X-Spam-Status: No, hits=-2.869 required=5 tests=AWL,BAYES_00
+X-Spam-Checker-Version: SpamAssassin 3.2.4-osdl_revision__1.47__
+X-MIMEDefang-Filter: lf$Revision: 1.188 $
+X-Scanned-By: MIMEDefang 2.63 on 140.211.169.13
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/98399>
 
-On Thu, Oct 16, 2008 at 5:23 PM, Ian Brown <ianbrn@gmail.com> wrote:
-> Hello,
-> Thanks for you quick answer.
->
-> ls shows the files.
+I often get this (running git 1.5.6.rc0 presently):
 
-I'm assuming this is on both the vfat and ext3 disks? All the
-filenames' cases are correct?
+y:/usr/src/git26> git-checkout linux-next
+error: Untracked working tree file 'arch/x86/kernel/apic.c' would be overwritten by merge.
 
-> git status shows:
-> fatal: Not a git repository
-> Regards,
-> IB
+which screws things up.  I fix it by removing the offending file, which
+gets irritating because git bails out after the first such instance, so
+I need to rerun git-checkout once per file (there are sometimes tens of them).
 
-The error message unfortunately really means "git couldn't find
-_everything_ needed to be a repository" without saying what precisely
-it had problems finding. Educated guess: Have a look in the .git
-directory on each disk. Is there a file called 'HEAD' or has its case
-been changed?
+Should this be happening?  I don't know what causes it, really.  All
+I've been doing in that directory is running `git-checkout' against
+various maintainers' trees.  95% of the time this works OK but
+eventually git seems to get all confused and the above happens.
 
--- 
-cheers, dave tweed__________________________
-david.tweed@gmail.com
-Rm 124, School of Systems Engineering, University of Reading.
-"while having code so boring anyone can maintain it, use Python." --
-attempted insult seen on slashdot
+Is there some way in which I can work around this with a single command
+rather than having to run git-checkout once per offending file?  I
+suppose a good old `rm -rf *' would do it...
+
+Thanks.
