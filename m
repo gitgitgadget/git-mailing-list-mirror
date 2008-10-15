@@ -1,67 +1,75 @@
-From: "Avery Pennarun" <apenwarr@gmail.com>
-Subject: Re: Super module pointing to submodule branch instead of a specific commit?
-Date: Wed, 15 Oct 2008 17:57:17 -0400
-Message-ID: <32541b130810151457q66a97ffob18d7154acbbacb3@mail.gmail.com>
-References: <2729632a0810151416l3a16f6d6x4e32e457d26496bc@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: Untracked working tree files
+Date: Wed, 15 Oct 2008 15:06:36 -0700
+Message-ID: <7v3aixqzrn.fsf@gitster.siamese.dyndns.org>
+References: <20081015115654.fb34438f.akpm@linux-foundation.org>
+ <alpine.DEB.1.10.0810151208100.7808@asgard.lang.hm>
+ <alpine.DEB.1.10.0810151211580.7808@asgard.lang.hm>
+ <alpine.LFD.2.00.0810151219120.3288@nehalem.linux-foundation.org>
+ <20081015124949.b657a8db.akpm@linux-foundation.org>
+ <alpine.LFD.2.00.0810151256410.3288@nehalem.linux-foundation.org>
+ <alpine.LFD.2.00.0810151311210.3288@nehalem.linux-foundation.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: skillzero@gmail.com
-X-From: git-owner@vger.kernel.org Wed Oct 15 23:58:51 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: Andrew Morton <akpm@linux-foundation.org>, david@lang.hm,
+	Git Mailing List <git@vger.kernel.org>
+To: Linus Torvalds <torvalds@linux-foundation.org>
+X-From: git-owner@vger.kernel.org Thu Oct 16 00:08:08 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KqEO9-0000sY-21
-	for gcvg-git-2@gmane.org; Wed, 15 Oct 2008 23:58:41 +0200
+	id 1KqEXA-00043Z-VC
+	for gcvg-git-2@gmane.org; Thu, 16 Oct 2008 00:08:01 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754284AbYJOV5V (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 15 Oct 2008 17:57:21 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754194AbYJOV5U
-	(ORCPT <rfc822;git-outgoing>); Wed, 15 Oct 2008 17:57:20 -0400
-Received: from mail-gx0-f16.google.com ([209.85.217.16]:45298 "EHLO
-	mail-gx0-f16.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754244AbYJOV5T (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 15 Oct 2008 17:57:19 -0400
-Received: by gxk9 with SMTP id 9so7542280gxk.13
-        for <git@vger.kernel.org>; Wed, 15 Oct 2008 14:57:17 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to
-         :subject:cc:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:references;
-        bh=LC+kQTCo92lfw4MXadugl2WsvipjuBGaAMFKBRwAnf8=;
-        b=nkh1BX5t7dEQYKp35rPhakTmy6w6JaWEAgyaiFjZc7721TDcxVW73iTUm7PFvW5Sch
-         842xCZ4RsDK67Oiu+vcE2TMy0B/HygA8szbBSQYA/YupvnLERVqQF3m4O+aGImifuRav
-         zTznnDChKZCzVkApcjfDI8y1KJG7eYAYms48A=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
-         :content-type:content-transfer-encoding:content-disposition
-         :references;
-        b=jVTaPcvP9VkDujoa6mDw2HjWzyW4vPJJj3gXvrqd3K9VkSZRLwOKOPgMZkoZVCMTAQ
-         rwNdm145ZXdI9dnHiHFDCmFxq86bK4OE5ZGxBMjWaQpHSBaMiDxnNJ7lfVEid6s4RSUR
-         y32QMQmc3wvTShGAgibx4ndFVJywhzqg73Kps=
-Received: by 10.150.228.12 with SMTP id a12mr2619109ybh.25.1224107837619;
-        Wed, 15 Oct 2008 14:57:17 -0700 (PDT)
-Received: by 10.150.96.5 with HTTP; Wed, 15 Oct 2008 14:57:17 -0700 (PDT)
-In-Reply-To: <2729632a0810151416l3a16f6d6x4e32e457d26496bc@mail.gmail.com>
-Content-Disposition: inline
+	id S1753651AbYJOWGq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 15 Oct 2008 18:06:46 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753342AbYJOWGq
+	(ORCPT <rfc822;git-outgoing>); Wed, 15 Oct 2008 18:06:46 -0400
+Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:46144 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752805AbYJOWGq (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 15 Oct 2008 18:06:46 -0400
+Received: from localhost.localdomain (localhost [127.0.0.1])
+	by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id 0E2B48B163;
+	Wed, 15 Oct 2008 18:06:45 -0400 (EDT)
+Received: from pobox.com (ip68-225-240-211.oc.oc.cox.net [68.225.240.211])
+ (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
+ certificate requested) by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with
+ ESMTPSA id 54FCD8B162; Wed, 15 Oct 2008 18:06:39 -0400 (EDT)
+In-Reply-To: <alpine.LFD.2.00.0810151311210.3288@nehalem.linux-foundation.org> (Linus
+ Torvalds's message of "Wed, 15 Oct 2008 13:23:50 -0700 (PDT)")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: 8DFFAEDA-9B05-11DD-9B59-4F5276724C3F-77302942!a-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/98333>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/98334>
 
-On Wed, Oct 15, 2008 at 5:16 PM,  <skillzero@gmail.com> wrote:
-> Is there a way to have a super module point to a branch of a submodule
-> instead of a specific commit ID?
+Linus Torvalds <torvalds@linux-foundation.org> writes:
 
-In some sense, this is too simple to be supported by git-submodule.
-You might want to try the "ext" tool instead:
-http://nopugs.com/2008/09/06/ext-tutorial
+> On Wed, 15 Oct 2008, Linus Torvalds wrote:
+>> 
+> It's quite possible that we should remove unmerged entries. Except that's 
+> not how our internal 'read_cache_unmerged()' function works. It really 
+> just ignores them, and throws them on the floor. We _could_ try to just 
+> turn them into a (since) stage-0 entry.
+>
+> Junio?
 
-Have fun,
+I'd agree that dropping unmerged entries to stage-0 when we can would make
+sense.  An conflicted existing path would get an stage-0 entry in the
+index, which is compared with the switched-to HEAD (which could be the
+same as the current one when "git reset --hard" is run without a rev), we
+notice that they are different and the index entry and the work tree path
+is overwritten by the version from the switched-to HEAD.  For a new path
+that a failed merge tried to bring in, we notice that the switched-to HEAD
+does not have that path and happily remove it from the index and from the
+work tree.  All will go a lot smoother than the current code.
 
-Avery
+I am not sure what should happen when we can't drop the unmerged entry
+down to stage-0 due to D/F conflicts, though.  IIRC, read-tree proper
+would not touch the work tree in such a case, but merge-recursive creates
+our and their versions with funny suffixes, which will not be known to the
+index and will be left in the working tree.
