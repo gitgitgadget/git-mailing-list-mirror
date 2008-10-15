@@ -1,82 +1,74 @@
-From: "Jonathan del Strother" <maillist@steelskies.com>
-Subject: Re: git-scm.com (was Re: Git graph on GitHub)
-Date: Wed, 15 Oct 2008 20:02:25 +0100
-Message-ID: <57518fd10810151202v2f64b830h333f31856aaf07c7@mail.gmail.com>
-References: <bab6a2ab0810150315l273d4ef3k95cda8f43a4745ca@mail.gmail.com>
-	 <bab6a2ab0810150318pb616a6dj867efa36623ac12e@mail.gmail.com>
-	 <20C9ABEC-52E5-405E-A755-C58A6359D7A9@wincent.com>
-	 <bab6a2ab0810151136n4f997890qd418277ea8c4aea4@mail.gmail.com>
+From: david@lang.hm
+Subject: Re: Untracked working tree files
+Date: Wed, 15 Oct 2008 12:09:25 -0700 (PDT)
+Message-ID: <alpine.DEB.1.10.0810151208100.7808@asgard.lang.hm>
+References: <20081015115654.fb34438f.akpm@linux-foundation.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: "Wincent Colaiuta" <win@wincent.com>, git@vger.kernel.org
-To: "PJ Hyett" <pjhyett@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Oct 15 21:03:51 2008
+Content-Type: TEXT/PLAIN; charset=US-ASCII; format=flowed
+Cc: git@vger.kernel.org
+To: Andrew Morton <akpm@linux-foundation.org>
+X-From: git-owner@vger.kernel.org Wed Oct 15 21:10:14 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KqBeo-0006jy-Ou
-	for gcvg-git-2@gmane.org; Wed, 15 Oct 2008 21:03:43 +0200
+	id 1KqBks-0000vM-Bm
+	for gcvg-git-2@gmane.org; Wed, 15 Oct 2008 21:09:58 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754001AbYJOTC1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 15 Oct 2008 15:02:27 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753975AbYJOTC1
-	(ORCPT <rfc822;git-outgoing>); Wed, 15 Oct 2008 15:02:27 -0400
-Received: from yx-out-2324.google.com ([74.125.44.30]:27470 "EHLO
-	yx-out-2324.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753952AbYJOTC0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 15 Oct 2008 15:02:26 -0400
-Received: by yx-out-2324.google.com with SMTP id 8so653587yxm.1
-        for <git@vger.kernel.org>; Wed, 15 Oct 2008 12:02:25 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:sender
-         :to:subject:cc:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:references
-         :x-google-sender-auth;
-        bh=cwUFP5hTTBjqhVGbJwmryuwXB1yVX3VpylFkNRiUQto=;
-        b=fUQJwf5CsuuiMPoLbfVOjgCuPLwRUo5SAz51bmcGPaynpapb8gyMXIQy+pw5ljATv0
-         obqPuc6gxikiIZEzRKDUN5ZXT/zBRHxRmmePVbluKO0e0M/PkRli311wtfzZjJFIkncv
-         RTW18RZljot+Jes8uFl+Q6hO6Eqe0Qqkw3mQc=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:sender:to:subject:cc:in-reply-to:mime-version
-         :content-type:content-transfer-encoding:content-disposition
-         :references:x-google-sender-auth;
-        b=ElUNF9itTtuPIRo1n+nU707STgQVO69oFuItJkRllD+mgG+vs0nVrOA0NyJyMYVXR0
-         WDpXzK9zzmfAcxNAjJLcpoN6OfTx1b2T88HRWsoWAbsKdVZyOd+scSTJOOke2xBYGqaa
-         LZqrh3wJ/2rc7aHmW2y61jfecrt4pudhbFaEw=
-Received: by 10.142.163.13 with SMTP id l13mr601584wfe.265.1224097345060;
-        Wed, 15 Oct 2008 12:02:25 -0700 (PDT)
-Received: by 10.142.70.18 with HTTP; Wed, 15 Oct 2008 12:02:25 -0700 (PDT)
-In-Reply-To: <bab6a2ab0810151136n4f997890qd418277ea8c4aea4@mail.gmail.com>
-Content-Disposition: inline
-X-Google-Sender-Auth: 0efe149c4b7bfc95
+	id S1755182AbYJOTIq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 15 Oct 2008 15:08:46 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755149AbYJOTIp
+	(ORCPT <rfc822;git-outgoing>); Wed, 15 Oct 2008 15:08:45 -0400
+Received: from mail.lang.hm ([64.81.33.126]:45769 "EHLO bifrost.lang.hm"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754129AbYJOTIp (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 15 Oct 2008 15:08:45 -0400
+Received: from asgard.lang.hm (asgard.lang.hm [10.0.0.100])
+	by bifrost.lang.hm (8.13.4/8.13.4/Debian-3) with ESMTP id m9FJ8elv001308;
+	Wed, 15 Oct 2008 12:08:40 -0700
+X-X-Sender: dlang@asgard.lang.hm
+In-Reply-To: <20081015115654.fb34438f.akpm@linux-foundation.org>
+User-Agent: Alpine 1.10 (DEB 962 2008-03-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/98296>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/98297>
 
-On Wed, Oct 15, 2008 at 7:36 PM, PJ Hyett <pjhyett@gmail.com> wrote:
->> Coming up in news at 6...
->>
->> GitHub announces new maintainer for Git
->>
->> GitHub is proud to announce the replacement of the old Git maintainer with
->> the "Git Core Team", comprising PJ Hyett, Scott Chacon, Tom Preston and some
->> select personalities from the Ruby on Rails world. You'll be able to track
->> all the latest updates to "Git Edge" over at GitHub. The former maintainer,
->> Junio C Hamano, is being retired from service because the Git community (see
->> git-scm.com) decided he wasn't as good-looking as David Heinemeier Hanson.
->> For more information, see the official Git book (book.git-scm.com).
+On Wed, 15 Oct 2008, Andrew Morton wrote:
+
+> Date: Wed, 15 Oct 2008 11:56:54 -0700
+> From: Andrew Morton <akpm@linux-foundation.org>
+> To: git@vger.kernel.org
+> Subject: Untracked working tree files
+> 
+> I often get this (running git 1.5.6.rc0 presently):
 >
-> In case there was any confusion, this is why we almost never bother
-> posting to the list, because no matter what the topic, it always turns
-> into why the git community hates GitHub.
+> y:/usr/src/git26> git-checkout linux-next
+> error: Untracked working tree file 'arch/x86/kernel/apic.c' would be overwritten by merge.
+>
+> which screws things up.  I fix it by removing the offending file, which
+> gets irritating because git bails out after the first such instance, so
+> I need to rerun git-checkout once per file (there are sometimes tens of them).
 
-Really?  I thought it was usually just about how Wincent hates GitHub.
+what I do when I run into this is "git reset --hard HEAD" which makes all 
+files in the working directory match HEAD, and then I can do the other 
+checkout.
 
+David Lang
 
-FWIW, I think github is pretty good, and git-scm.com is great.
+> Should this be happening?  I don't know what causes it, really.  All
+> I've been doing in that directory is running `git-checkout' against
+> various maintainers' trees.  95% of the time this works OK but
+> eventually git seems to get all confused and the above happens.
+>
+> Is there some way in which I can work around this with a single command
+> rather than having to run git-checkout once per offending file?  I
+> suppose a good old `rm -rf *' would do it...
+>
+> Thanks.
+> --
+> To unsubscribe from this list: send the line "unsubscribe git" in
+> the body of a message to majordomo@vger.kernel.org
+> More majordomo info at  http://vger.kernel.org/majordomo-info.html
+>
