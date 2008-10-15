@@ -1,53 +1,67 @@
-From: Nanako Shiraishi <nanako3@lavabit.com>
-Subject: Re: BUG: git rev-list segfaults
-Date: Thu, 16 Oct 2008 06:22:23 +0900
-Message-ID: <20081016062223.6117@nanako3.lavabit.com>
-References: <Pine.LNX.4.64.0810152034040.7572@rosenkohl.springl.homeip.net>
+From: "Avery Pennarun" <apenwarr@gmail.com>
+Subject: Re: Super module pointing to submodule branch instead of a specific commit?
+Date: Wed, 15 Oct 2008 17:57:17 -0400
+Message-ID: <32541b130810151457q66a97ffob18d7154acbbacb3@mail.gmail.com>
+References: <2729632a0810151416l3a16f6d6x4e32e457d26496bc@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org
-To: Stephan Springl <springl-git@bfw-online.de>
-X-From: git-owner@vger.kernel.org Wed Oct 15 23:24:19 2008
+To: skillzero@gmail.com
+X-From: git-owner@vger.kernel.org Wed Oct 15 23:58:51 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KqDqs-0004Tb-OQ
-	for gcvg-git-2@gmane.org; Wed, 15 Oct 2008 23:24:19 +0200
+	id 1KqEO9-0000sY-21
+	for gcvg-git-2@gmane.org; Wed, 15 Oct 2008 23:58:41 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754255AbYJOVXA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 15 Oct 2008 17:23:00 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753976AbYJOVW7
-	(ORCPT <rfc822;git-outgoing>); Wed, 15 Oct 2008 17:22:59 -0400
-Received: from karen.lavabit.com ([72.249.41.33]:47066 "EHLO karen.lavabit.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753746AbYJOVW6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 15 Oct 2008 17:22:58 -0400
-Received: from a.earth.lavabit.com (a.earth.lavabit.com [192.168.111.10])
-	by karen.lavabit.com (Postfix) with ESMTP id BF958C7AF7;
-	Wed, 15 Oct 2008 16:22:57 -0500 (CDT)
-Received: from 4665.lavabit.com (212.62.97.20)
-	by lavabit.com with ESMTP id VJBWYCD675YZ; Wed, 15 Oct 2008 16:22:57 -0500
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws; s=lavabit; d=lavabit.com;
-  b=MXYf+RBnU20mQEGH4HICStxRlnw+jh4Foqt7cOhSLSxP5vZhHrui4E5wcNW90442t3U6ehN7PsMtv5K83KgngESmtmnHJs1Bhg4ZFrSxFCFDz1KAaQQ0swa2RdN9DVfY2c1HgyO+RZNruZm100muLaDR0KWwTJYlMOS3eedXI1s=;
-  h=From:To:Cc:Date:Subject:In-reply-to:References:MIME-Version:Content-Type:Content-Transfer-Encoding:Message-Id;
-In-reply-to: <Pine.LNX.4.64.0810152034040.7572@rosenkohl.springl.homeip.net>
+	id S1754284AbYJOV5V (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 15 Oct 2008 17:57:21 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754194AbYJOV5U
+	(ORCPT <rfc822;git-outgoing>); Wed, 15 Oct 2008 17:57:20 -0400
+Received: from mail-gx0-f16.google.com ([209.85.217.16]:45298 "EHLO
+	mail-gx0-f16.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754244AbYJOV5T (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 15 Oct 2008 17:57:19 -0400
+Received: by gxk9 with SMTP id 9so7542280gxk.13
+        for <git@vger.kernel.org>; Wed, 15 Oct 2008 14:57:17 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to
+         :subject:cc:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:references;
+        bh=LC+kQTCo92lfw4MXadugl2WsvipjuBGaAMFKBRwAnf8=;
+        b=nkh1BX5t7dEQYKp35rPhakTmy6w6JaWEAgyaiFjZc7721TDcxVW73iTUm7PFvW5Sch
+         842xCZ4RsDK67Oiu+vcE2TMy0B/HygA8szbBSQYA/YupvnLERVqQF3m4O+aGImifuRav
+         zTznnDChKZCzVkApcjfDI8y1KJG7eYAYms48A=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
+         :content-type:content-transfer-encoding:content-disposition
+         :references;
+        b=jVTaPcvP9VkDujoa6mDw2HjWzyW4vPJJj3gXvrqd3K9VkSZRLwOKOPgMZkoZVCMTAQ
+         rwNdm145ZXdI9dnHiHFDCmFxq86bK4OE5ZGxBMjWaQpHSBaMiDxnNJ7lfVEid6s4RSUR
+         y32QMQmc3wvTShGAgibx4ndFVJywhzqg73Kps=
+Received: by 10.150.228.12 with SMTP id a12mr2619109ybh.25.1224107837619;
+        Wed, 15 Oct 2008 14:57:17 -0700 (PDT)
+Received: by 10.150.96.5 with HTTP; Wed, 15 Oct 2008 14:57:17 -0700 (PDT)
+In-Reply-To: <2729632a0810151416l3a16f6d6x4e32e457d26496bc@mail.gmail.com>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/98332>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/98333>
 
-Stephan Springl <springl-git@bfw-online.de> writes:
+On Wed, Oct 15, 2008 at 5:16 PM,  <skillzero@gmail.com> wrote:
+> Is there a way to have a super module point to a branch of a submodule
+> instead of a specific commit ID?
 
-> git rev-list segfaults when crossing a merge commit when given
-> --bisect-vars and --first-parent.
+In some sense, this is too simple to be supported by git-submodule.
+You might want to try the "ext" tool instead:
+http://nopugs.com/2008/09/06/ext-tutorial
 
-This is an old news, isn't it?
+Have fun,
 
-    http://thread.gmane.org/gmane.comp.version-control.git/93416/focus=93420
-
--- 
-Nanako Shiraishi
-http://ivory.ap.teacup.com/nanako3/
+Avery
