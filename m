@@ -1,73 +1,111 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH try 2] t1301-shared-repo.sh: don't let a default ACL 
- interfere with the test
-Date: Tue, 14 Oct 2008 23:30:05 -0700
-Message-ID: <7vmyh64bgy.fsf@gitster.siamese.dyndns.org>
-References: <1224022020.2699.4.camel@mattlaptop2.local>
- <1224022216.2699.5.camel@mattlaptop2.local>
- <7vzll66c5u.fsf@gitster.siamese.dyndns.org> <48F589EC.6050307@viscovery.net>
+From: Christian Couder <chriscool@tuxfamily.org>
+Subject: Re: The behaviour of git bisect skip
+Date: Wed, 15 Oct 2008 08:54:49 +0200
+Message-ID: <200810150854.49830.chriscool@tuxfamily.org>
+References: <48F3DCEB.1060803@zytor.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Matt McCutchen <matt@mattmccutchen.net>, git@vger.kernel.org
-To: Johannes Sixt <j.sixt@viscovery.net>
-X-From: git-owner@vger.kernel.org Wed Oct 15 08:31:32 2008
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Git Mailing List <git@vger.kernel.org>
+To: "H. Peter Anvin" <hpa@zytor.com>
+X-From: git-owner@vger.kernel.org Wed Oct 15 08:53:10 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Kpzur-0005ho-6C
-	for gcvg-git-2@gmane.org; Wed, 15 Oct 2008 08:31:29 +0200
+	id 1Kq0Fq-0002s2-4k
+	for gcvg-git-2@gmane.org; Wed, 15 Oct 2008 08:53:10 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751074AbYJOGaP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 15 Oct 2008 02:30:15 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751091AbYJOGaP
-	(ORCPT <rfc822;git-outgoing>); Wed, 15 Oct 2008 02:30:15 -0400
-Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:41163 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750861AbYJOGaN (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 15 Oct 2008 02:30:13 -0400
-Received: from localhost.localdomain (localhost [127.0.0.1])
-	by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id 5AF018B62E;
-	Wed, 15 Oct 2008 02:30:12 -0400 (EDT)
-Received: from pobox.com (ip68-225-240-211.oc.oc.cox.net [68.225.240.211])
- (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
- certificate requested) by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with
- ESMTPSA id 1A6578B62B; Wed, 15 Oct 2008 02:30:07 -0400 (EDT)
-In-Reply-To: <48F589EC.6050307@viscovery.net> (Johannes Sixt's message of
- "Wed, 15 Oct 2008 08:13:00 +0200")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: B88C5C30-9A82-11DD-81B4-4F5276724C3F-77302942!a-sasl-quonix.pobox.com
+	id S1751534AbYJOGv4 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 15 Oct 2008 02:51:56 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751507AbYJOGv4
+	(ORCPT <rfc822;git-outgoing>); Wed, 15 Oct 2008 02:51:56 -0400
+Received: from smtp6-g19.free.fr ([212.27.42.36]:49319 "EHLO smtp6-g19.free.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751479AbYJOGvz convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 15 Oct 2008 02:51:55 -0400
+Received: from smtp6-g19.free.fr (localhost.localdomain [127.0.0.1])
+	by smtp6-g19.free.fr (Postfix) with ESMTP id 1B999196F2;
+	Wed, 15 Oct 2008 08:51:53 +0200 (CEST)
+Received: from bureau.boubyland (gre92-7-82-243-130-161.fbx.proxad.net [82.243.130.161])
+	by smtp6-g19.free.fr (Postfix) with ESMTP id 306B71975E;
+	Wed, 15 Oct 2008 08:51:52 +0200 (CEST)
+User-Agent: KMail/1.9.9
+In-Reply-To: <48F3DCEB.1060803@zytor.com>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/98238>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/98239>
 
-Johannes Sixt <j.sixt@viscovery.net> writes:
+Le mardi 14 octobre 2008, H. Peter Anvin a =C3=A9crit :
+> I recently had the unhappy experience of trying to bisect a tree with=
+ a
+> large region of the history obscured by auxilliary bugs.  "git bisect
+> skip" will stay in the central region, thus being largely useless.
 
-> Junio C Hamano schrieb:
-> ...
->>> +# Remove a default ACL from the test dir if possible.
->>> +setfacl -k . 2>/dev/null
->>> +
->> 
->> Makes me wonder why this is _not_ inside test-lib.sh where it creates the
->> test (trash) directory.  That way, you would cover future tests that wants
->> to see a saner/simpler POSIX permission behaviour, wouldn't you?
+Yeah, it tries to find the first non skipped commit among the best poss=
+ible=20
+bisection points. And if you have a linear history the best bisection=20
+points are in the middle of the good and bad commits.
+
+> I was thinking about how to possibly do it better.  This is something=
+ I
+> came up with, and thought it might be interesing.
 >
-> But that would also paper over unanticipated bad interactions with strange
-> ACLs that people might set, wouldn't it? By not placing this into
-> test-lib.sh there is a higher chance that such an interaction is revealed,
-> and we can react on it (educate users or fix the code).
+> a. we obviously cannot move the start and end (good and bad) markers,
+> since they have not been shown one way or the other.
+>
+> b. however, the practice of testing the centermost point is merely th=
+e
+> *optimal*, corresponding to 1 bit of information per iteration.  An
+> off-center test is also possible (as long as the value depends on bot=
+h
+> endpoints, and isn't fixed from one of the endpoints; in that case we
+> have a linear search), corresponding to a smaller amount of informati=
+on
+> - for example, sampling at the one-quarter point corresponds to
+> 3/4*log2(3/4) + 1/4*log2(1/4) =3D~ 0.811 bits of information.
+>
+> I would suggest something based on the following algorithm:
+>
+> Given an interval with a certain number of skip points, subdivide the
+> interval into subintervals each separated by a skip point.  Pick the
+> centermost point of the *largest* of these intervals.  If there is mo=
+re
+> than one largest interval, choose the one centermost point that ends =
+up
+> being centermost in the overall interval.
+>
+> This algorithm obviously needs some adjustment (as does plain binary
+> search) in order to deal with a branched history, but I thought it mi=
+ght
+> be an interesting starting point.  It has the desirable property that=
+ it
+> can make forward progress even in the presence of skip points, and th=
+at
+> it avoids needlessly searching close to skip points.
 
-What do you exactly mean by "educate users or fix the code"?  For example,
-by not putting this setfacl in test-lib.sh, t1301 revealed that with a
-default ACL higher up, "git init --shared" would not work as expected.
+It looks like a great alternative algorithm but as the current bisect s=
+kip=20
+is implemented in shell, I think that it might be too difficult or=20
+inefficient to implement something like that in shell.
 
-Then what?
+I think it might be better to try a more simple alternative algorithm f=
+irst=20
+like removing all skipped commits from the sorted list of possible=20
+bisection point (the list is sorted because best commits from a bisecti=
+on=20
+point are first) and trying the commit at one third (or another fixed=20
+ration) of the best commit.
 
- - Do you mean, by "educate users", that we teach users not to play fun
-   games with ACL in a git controled working tree?
+Regards,
+Christian.
+=20
 
- - Do you mean, by "fix the code", that we teach adjust_shared_perm() to
-   deal with ACL?
+> 	-hpa
+> --
+> To unsubscribe from this list: send the line "unsubscribe git" in
+> the body of a message to majordomo@vger.kernel.org
+> More majordomo info at  http://vger.kernel.org/majordomo-info.html
