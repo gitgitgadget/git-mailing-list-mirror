@@ -1,86 +1,150 @@
-From: "Lars Hoss" <lars@woeye.net>
-Subject: Re: [BUG] git status doesn't handle submodules properly on OSX
-Date: Wed, 15 Oct 2008 16:51:13 +0200 (CEST)
-Message-ID: <6ca24750ca8d7bd9e995d023e78e0d71.squirrel@webmail.highteq.net>
-References: <c60a85c1297be6446ad92a3e7723ddc8.squirrel@webmail.highteq.net>
-    <5D0481A4-D173-4CF8-B855-5E58978210F8@ai.rug.nl>
+From: "Nguyen Thai Ngoc Duy" <pclouds@gmail.com>
+Subject: Re: Separating generated files? (Re: Mercurial -> git)
+Date: Wed, 15 Oct 2008 21:54:26 +0700
+Message-ID: <fcaeb9bf0810150754s613f2c44pd8341711d9d73f73@mail.gmail.com>
+References: <E6D34628-783D-4597-8B00-C10F27F63BE2@iro.umontreal.ca>
+	<48F5D86B.6040501@pflanze.mine.nu>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: "Lars Hoss" <lars@woeye.net>, "Jeff King" <peff@peff.net>,
-	"Git Mailinglist" <git@vger.kernel.org>
-To: "Pieter de Bie" <pdebie@ai.rug.nl>
-X-From: git-owner@vger.kernel.org Wed Oct 15 16:50:45 2008
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git-2@gmane.org
-Received: from vger.kernel.org ([209.132.176.167])
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: 7bit
+Cc: Gambit List <Gambit-list@iro.umontreal.ca>
+To: "Christian Jaeger" <christian@pflanze.mine.nu>, 
+	"Git Mailing List" <git@vger.kernel.org>
+X-From: gambit-list-bounces@iro.umontreal.ca Wed Oct 15 16:56:14 2008
+Return-path: <gambit-list-bounces@iro.umontreal.ca>
+Envelope-to: glsg-gambit-list@m.gmane.org
+Received: from mercure.iro.umontreal.ca ([132.204.24.67])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Kq7hW-0001qg-Rv
-	for gcvg-git-2@gmane.org; Wed, 15 Oct 2008 16:50:15 +0200
-Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756217AbYJOOsP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 15 Oct 2008 10:48:15 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756205AbYJOOsN
-	(ORCPT <rfc822;git-outgoing>); Wed, 15 Oct 2008 10:48:13 -0400
-Received: from mail.codewut.de ([78.47.135.140]:34519 "EHLO mail.codewut.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756196AbYJOOsM (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 15 Oct 2008 10:48:12 -0400
-Received: by mail.codewut.de (Postfix, from userid 65534)
-	id 9B2AE7BEF1; Wed, 15 Oct 2008 16:51:15 +0200 (CEST)
-X-Spam-Checker-Version: SpamAssassin 3.1.7-deb (2006-10-05) on mail.codewut.de
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.6 required=5.0 tests=AWL,BAYES_00 autolearn=ham 
-	version=3.1.7-deb
-Received: from webmail.highteq.net (web.highteq.net [78.47.135.138])
-	by mail.codewut.de (Postfix) with ESMTP id 654967BE67;
-	Wed, 15 Oct 2008 16:51:13 +0200 (CEST)
-Received: from 194.127.8.17
-        (SquirrelMail authenticated user lars)
-        by webmail.highteq.net with HTTP;
-        Wed, 15 Oct 2008 16:51:13 +0200 (CEST)
-In-Reply-To: <5D0481A4-D173-4CF8-B855-5E58978210F8@ai.rug.nl>
-User-Agent: SquirrelMail/1.4.15
-X-Priority: 3 (Normal)
-Importance: Normal
-Sender: git-owner@vger.kernel.org
-Precedence: bulk
-List-ID: <git.vger.kernel.org>
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/98276>
+	id 1Kq7n6-0004DX-A2
+	for glsg-gambit-list@m.gmane.org; Wed, 15 Oct 2008 16:56:00 +0200
+Received: from mercure.iro.umontreal.ca (localhost.iro.umontreal.ca [127.0.0.1])
+	by mercure.iro.umontreal.ca (Postfix) with ESMTP id 99C202CFD81;
+	Wed, 15 Oct 2008 10:54:50 -0400 (EDT)
+X-Original-To: gambit-list@iro.umontreal.ca
+Delivered-To: gambit-list@iro.umontreal.ca
+Received: from perlin.iro.umontreal.ca (perlin.iro.umontreal.ca
+	[132.204.24.51])
+	by mercure.iro.umontreal.ca (Postfix) with ESMTP id 40A422CFD81
+	for <gambit-list@iro.umontreal.ca>;
+	Wed, 15 Oct 2008 10:54:48 -0400 (EDT)
+Received: from rv-out-0708.google.com (rv-out-0708.google.com [209.85.198.246])
+	by perlin.iro.umontreal.ca (Postfix) with ESMTP id AFC83148233
+	for <Gambit-list@iro.umontreal.ca>;
+	Wed, 15 Oct 2008 10:54:27 -0400 (EDT)
+Received: by rv-out-0708.google.com with SMTP id k29so2668009rvb.8
+	for <Gambit-list@iro.umontreal.ca>;
+	Wed, 15 Oct 2008 07:54:26 -0700 (PDT)
+Received: by 10.141.74.18 with SMTP id b18mr679104rvl.159.1224082466530;
+	Wed, 15 Oct 2008 07:54:26 -0700 (PDT)
+Received: by 10.141.154.18 with HTTP; Wed, 15 Oct 2008 07:54:26 -0700 (PDT)
+In-Reply-To: <48F5D86B.6040501@pflanze.mine.nu>
+Content-Disposition: inline
+X-DIRO-MailScanner-Information: Please contact the ISP for more information
+X-DIRO-MailScanner: Found to be clean
+X-DIRO-MailScanner-SpamCheck: n'est pas un polluriel,
+	SpamAssassin (score=-2.533, requis 5, autolearn=not spam,
+	BAYES_00 -2.60, RCVD_BY_IP 0.07, SPF_HELO_PASS -0.00)
+X-DIRO-MailScanner-From: pclouds@gmail.com
+X-Spam-Status: No
+X-BeenThere: gambit-list@iro.umontreal.ca
+X-Mailman-Version: 2.1.8
+Precedence: list
+List-Id: Discussion of topics related to the use of the Gambit Scheme system
+	<gambit-list.iro.umontreal.ca>
+List-Unsubscribe: <https://webmail.iro.umontreal.ca/mailman/listinfo/gambit-list>,
+	<mailto:gambit-list-request@iro.umontreal.ca?subject=unsubscribe>
+List-Archive: <http://webmail.iro.umontreal.ca/pipermail/gambit-list>
+List-Post: <mailto:gambit-list@iro.umontreal.ca>
+List-Help: <mailto:gambit-list-request@iro.umontreal.ca?subject=help>
+List-Subscribe: <https://webmail.iro.umontreal.ca/mailman/listinfo/gambit-list>,
+	<mailto:gambit-list-request@iro.umontreal.ca?subject=subscribe>
+Sender: gambit-list-bounces@iro.umontreal.ca
+Errors-To: gambit-list-bounces@iro.umontreal.ca
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/98277>
 
-> Works for me on Leopard
+Hi Christian,
+
+The idea of using two separate repositories for source and generated
+source is interesting. I would like to bring this to git mailing list,
+they may provide insightul comments for your idea or even other
+approaches.
+
+Background for Git people: gambit-c was previously stored in
+mercurial. The main source is in gambit-c (a Scheme implementation or
+a Lisp dialect). *.scm files generate *.c, which will be compiled by
+gcc as usual. Both *.scm and generated *.c are now stored in
+mercurial. Gambit-C maintainers have recently decided to move to Git.
+
+On 10/15/08, Christian Jaeger <christian@pflanze.mine.nu> wrote:
+> I wonder whether it would be a good idea, and good occasion to realize
+>  it, to move source files and generated files into separate repositories
+>  and 'link' those together using the git submodule feature.
 >
-> Vienna:a pieter$ git submodule add ~/projects/GitX/ gitx
-> Initialized empty Git repository in /Users/pieter/a/gitx/.git/
-> Vienna:a pieter$ git st
-> # On branch master
-> # Changes to be committed:
-> #   (use "git reset HEAD <file>..." to unstage)
-> #
-> #	new file:   .gitmodules
-> #	new file:   gitx
-> #
-> Vienna:a pieter$ git --version
-> git version 1.6.0.2.415.gf9137
-
-My git version "1.6.0.2" says:
-
-# On branch master
-# Changes to be committed:
-#   (use "git reset HEAD <file>..." to unstage)
-#
-#	new file:   .gitmodules
-#	new file:   lib
-#
-# Untracked files:
-#   (use "git add <file>..." to include in what will be committed)
-#
-#	lib/
-git --version
-git version 1.6.0.2
-
-Git was build from macports.
-
-Yours,
-Lars
+>  Expected advantages:
+>
+>  - no clutter when looking through the history (can possibly be mitigated
+>  by constraining git log, git diff etc. to the non-generated paths only,
+>  although I don't think this is possible (cleanly) with the current
+>  directory structure); the same holds true for using "git format-patch"
+>  (one wouldn't usually want to include the generated files in diffs sent
+>  to the mailing list)
+>
+>  - when merging branches, there will usually be no need to deal with
+>  merge conflicts in the generated files (one would just regenerate them
+>  instead)
+>
+>  - [especially for files being generated not by Gambit itself (for
+>  example "configure"),] the files can be regenerated by differing
+>  [external] software versions without having to deal with those
+>  superfluous changes in the source repository.
+>
+>  By still committing the generated files--to a different
+>  submodule--Gambit can still be updated through Git alone, and the
+>  possible advantage of tracking the generated files to see the effects of
+>  changes in compiler sources can still be had.
+>
+>  Expected disadvantages:
+>
+>  - all generated files need to reside in a separate directory structure;
+>  e.g. the file $BASEDIR/lib/_io.c would have to be at a place like
+>  $BASEDIR/build/lib/_io.c instead, where build/ is the submodule taking
+>  all generated files; since the "configure" file is expected to reside at
+>  the toplevel, I guess this would require that "make update" copies it
+>  from $BASEDIR/build/configure to $BASEDIR/configure (assuming that one
+>  cannot use a symlink because of portability reasons).
+>
+>  - to commit the generated files, a separate step is necessary ("cd
+>  $otherrepo; git commit -a", or maybe easier create a "make
+>  commit_generated" make target?)
+>
+>  - to make this work with the "source" repository residing at the
+>  toplevel, the Git superproject repository (of which the "source" and
+>  "build" repositories are submodules) would need to reside in a
+>  non-standard directory, like $BASEDIR/.gitsuperproject/ instead of the
+>  usual .git/, and using the GIT_DIR environment variable to access it,
+>  although this can probably be handled by make targets (i.e. "make
+>  update" would set GIT_DIR=$BASEDIR/.gitsuperproject when calling "git
+>  submodule update").
+>
+>  - there may be some cases to flesh out; like, should "make update"
+>  really call "git submodule update" (which simply sets the submodules to
+>  the reference given by the superproject, throwing away changes done by
+>  the user in the submodules (they can be recovered from the git reflog,
+>  but may still be a surprise)) or should it run "git pull" in each
+>  submodule instead?
+>
+>  I thought I'd bring this up now because if package maintainers need to
+>  adapt some things anyway, that may be a good time to do it now. (There's
+>  even the possibility to split the converted Mercurial repository into
+>  the source + build parts in retrospect now, which won't be possible
+>  anymore later on (without changing the sha1 sums of the whole Git
+>  history with the associated breakage of existing clones), although that
+>  may not be important.)
+>
+>  I'm willing to help in the effort, although I don't know the build tools
+>  (autoconf and make) and their use in the setup well, so I would probably
+>  be quite a bit lost when doing it alone.
+>
+>  Christian.
+-- 
+Duy
