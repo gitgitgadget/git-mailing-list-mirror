@@ -1,71 +1,96 @@
-From: Michael J Gruber <git@drmicha.warpmail.net>
-Subject: Re: [gambit-list] Separating generated files? (Re: Mercurial -> git)
-Date: Wed, 15 Oct 2008 18:42:31 +0200
-Message-ID: <48F61D77.3080100@drmicha.warpmail.net>
-References: <E6D34628-783D-4597-8B00-C10F27F63BE2@iro.umontreal.ca>	<48F5D86B.6040501@pflanze.mine.nu>	<fcaeb9bf0810150754s613f2c44pd8341711d9d73f73@mail.gmail.com> <vpqiqrt3mgs.fsf@bauges.imag.fr>
+From: Christian Jaeger <christian@pflanze.mine.nu>
+Subject: Re: Separating generated files?
+Date: Wed, 15 Oct 2008 18:45:56 +0200
+Message-ID: <48F61E44.3080900@pflanze.mine.nu>
+References: <E6D34628-783D-4597-8B00-C10F27F63BE2@iro.umontreal.ca>	<48F5D86B.6040501@pflanze.mine.nu>	<fcaeb9bf0810150754s613f2c44pd8341711d9d73f73@mail.gmail.com>
+	<vpqiqrt3mgs.fsf@bauges.imag.fr>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain; charset="us-ascii"
 Content-Transfer-Encoding: 7bit
-Cc: Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
-	Christian Jaeger <christian@pflanze.mine.nu>,
-	Git Mailing List <git@vger.kernel.org>,
-	Marc Feeley <feeley@iro.umontreal.ca>,
-	Gambit List <Gambit-list@iro.umontreal.ca>
+Cc: Gambit List <Gambit-list@iro.umontreal.ca>,
+	Git Mailing List <git@vger.kernel.org>
 To: Matthieu Moy <Matthieu.Moy@imag.fr>
-X-From: git-owner@vger.kernel.org Wed Oct 15 18:44:03 2008
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git-2@gmane.org
-Received: from vger.kernel.org ([209.132.176.167])
+X-From: gambit-list-bounces@iro.umontreal.ca Wed Oct 15 18:47:52 2008
+Return-path: <gambit-list-bounces@iro.umontreal.ca>
+Envelope-to: glsg-gambit-list@m.gmane.org
+Received: from mercure.iro.umontreal.ca ([132.204.24.67])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Kq9TR-0006cp-9N
-	for gcvg-git-2@gmane.org; Wed, 15 Oct 2008 18:43:49 +0200
-Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752142AbYJOQmh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 15 Oct 2008 12:42:37 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752056AbYJOQmh
-	(ORCPT <rfc822;git-outgoing>); Wed, 15 Oct 2008 12:42:37 -0400
-Received: from out2.smtp.messagingengine.com ([66.111.4.26]:34024 "EHLO
-	out2.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751970AbYJOQmg (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 15 Oct 2008 12:42:36 -0400
-Received: from compute1.internal (compute1.internal [10.202.2.41])
-	by out1.messagingengine.com (Postfix) with ESMTP id 964A717D5DF;
-	Wed, 15 Oct 2008 12:42:35 -0400 (EDT)
-Received: from heartbeat1.messagingengine.com ([10.202.2.160])
-  by compute1.internal (MEProxy); Wed, 15 Oct 2008 12:42:35 -0400
-X-Sasl-enc: bYrvE7mb8EfJ0qr5YkJYsXrArJVwV7uKBcu1rLOQWMHp 1224088955
-Received: from [139.174.44.12] (whitehead.math.tu-clausthal.de [139.174.44.12])
-	by mail.messagingengine.com (Postfix) with ESMTPSA id 6711E12D87;
-	Wed, 15 Oct 2008 12:42:34 -0400 (EDT)
-User-Agent: Thunderbird 2.0.0.17 (X11/20080914)
+	id 1Kq9X8-0008J1-ST
+	for glsg-gambit-list@m.gmane.org; Wed, 15 Oct 2008 18:47:39 +0200
+Received: from mercure.iro.umontreal.ca (localhost.iro.umontreal.ca [127.0.0.1])
+	by mercure.iro.umontreal.ca (Postfix) with ESMTP id 098CC2CFD81;
+	Wed, 15 Oct 2008 12:46:29 -0400 (EDT)
+X-Original-To: gambit-list@iro.umontreal.ca
+Delivered-To: gambit-list@iro.umontreal.ca
+Received: from perlin.iro.umontreal.ca (perlin.iro.umontreal.ca
+	[132.204.24.51])
+	by mercure.iro.umontreal.ca (Postfix) with ESMTP id 5D7162CFD7B
+	for <gambit-list@iro.umontreal.ca>;
+	Wed, 15 Oct 2008 12:46:27 -0400 (EDT)
+Received: from ethlife.ethz.ch (ethlife-a.ethz.ch [129.132.49.178])
+	by perlin.iro.umontreal.ca (Postfix) with SMTP id 562A1148229
+	for <Gambit-list@iro.umontreal.ca>;
+	Wed, 15 Oct 2008 12:45:58 -0400 (EDT)
+Received: (qmail 26216 invoked from network); 15 Oct 2008 16:45:57 -0000
+Received: from unknown (HELO elvis-jaeger.mine.nu) (127.0.0.1)
+	by localhost with SMTP; 15 Oct 2008 16:45:57 -0000
+Received: (qmail 6757 invoked from network); 15 Oct 2008 16:45:57 -0000
+Received: from unknown (HELO ?127.0.0.1?) (10.0.5.1)
+	by elvis-jaeger.mine.nu with SMTP; 15 Oct 2008 16:45:57 -0000
+User-Agent: Mozilla-Thunderbird 2.0.0.16 (X11/20080724)
 In-Reply-To: <vpqiqrt3mgs.fsf@bauges.imag.fr>
-Sender: git-owner@vger.kernel.org
-Precedence: bulk
-List-ID: <git.vger.kernel.org>
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/98285>
+X-DIRO-MailScanner-Information: Please contact the ISP for more information
+X-DIRO-MailScanner: Found to be clean
+X-DIRO-MailScanner-SpamCheck: n'est pas un polluriel,
+	SpamAssassin (score=-2.599, requis 5, BAYES_00 -2.60)
+X-DIRO-MailScanner-From: christian@pflanze.mine.nu
+X-Spam-Status: No
+X-BeenThere: gambit-list@iro.umontreal.ca
+X-Mailman-Version: 2.1.8
+Precedence: list
+List-Id: Discussion of topics related to the use of the Gambit Scheme system
+	<gambit-list.iro.umontreal.ca>
+List-Unsubscribe: <https://webmail.iro.umontreal.ca/mailman/listinfo/gambit-list>,
+	<mailto:gambit-list-request@iro.umontreal.ca?subject=unsubscribe>
+List-Archive: <http://webmail.iro.umontreal.ca/pipermail/gambit-list>
+List-Post: <mailto:gambit-list@iro.umontreal.ca>
+List-Help: <mailto:gambit-list-request@iro.umontreal.ca?subject=help>
+List-Subscribe: <https://webmail.iro.umontreal.ca/mailman/listinfo/gambit-list>,
+	<mailto:gambit-list-request@iro.umontreal.ca?subject=subscribe>
+Sender: gambit-list-bounces@iro.umontreal.ca
+Errors-To: gambit-list-bounces@iro.umontreal.ca
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/98286>
 
-Matthieu Moy venit, vidit, dixit 15.10.2008 17:30:
-> "Nguyen Thai Ngoc Duy" <pclouds@gmail.com> writes:
-> 
->> Hi Christian,
->>
->> The idea of using two separate repositories for source and generated
->> source is interesting. I would like to bring this to git mailing list,
->> they may provide insightul comments for your idea or even other
->> approaches.
-> 
+Matthieu Moy wrote:
 > I think the first question is: do you (and why) need to use a version
 > control system for generated files?
 
-I guess we can take "yes" for granted for the first part ;)
-As for the why: In cases like this one it's interesting to compare
-(read: diff) the output generated by different versions of the input.
+The project in question is a self-hosting compiler which compiles to C 
+as an intermediary language. Providing the generated C files to users 
+makes installation easy (it avoids the bootstrapping issue). So it's 
+more 'severe' of an issue than just one of for example generating 
+documentation files using a 3rd-party tool.
 
-I wonder whether a clever use of "excludes" and GIT_DIR would allow
-tracking the different filesets in the same dir, but using different
-repos. I'm just afraid it's a fragile setup, in the sense that it relies
-on config stuff which is not tracked (and thus not reproduced
-automatically on clone).
+What may make matters worse, is that there are interdependencies between 
+a number of hand-written C files and the generated files, so it's not 
+always possible to use an older compiler version to reproduce the 
+generated C files for a newer compiler; so if you want to merge newer 
+compiler sources, you may also need the generated files, at least if you 
+want that without fuss. So, there is always a need to somehow transmit 
+the generated files too. I guess that this is easier than code the 
+system in a way to always allow backwards compatibility (I haven't 
+worked on the compiler itself yet, so this is a guess and may need 
+confirmation).
 
-Michael
+Apart from that, I've found it useful (in another project, writing a 
+document translator) to keep generated files in a VCS (Git) as well (I 
+checked them into the *same* repository as the translator source, even 
+if it felt ugly (for the previously mentioned reasons)), as then when I 
+changed the translator, I could easily see where it had effect on the 
+generated output. It can even serve as a debugging help kind of like a 
+test suite does. This may be the case here, too (again, I'm guessing here).
+
+How are other compiler projects which are bootstrapping via C dealing 
+with this?
+
+Christian.
