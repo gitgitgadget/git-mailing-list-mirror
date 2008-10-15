@@ -1,63 +1,75 @@
-From: "Lars Hoss" <lars@woeye.net>
-Subject: [BUG] git status doesn't handle submodules properly on OSX
-Date: Wed, 15 Oct 2008 14:07:17 +0200 (CEST)
-Message-ID: <c60a85c1297be6446ad92a3e7723ddc8.squirrel@webmail.highteq.net>
+From: Petr Baudis <pasky@suse.cz>
+Subject: Re: Git graph on GitHub
+Date: Wed, 15 Oct 2008 14:20:22 +0200
+Message-ID: <20081015122022.GW10544@machine.or.cz>
+References: <530345950810150047v75bfbf9clebbb8a406b172c4c@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Oct 15 14:06:04 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Tom Werner <pubsub@rubyisawesome.com>
+X-From: git-owner@vger.kernel.org Wed Oct 15 14:21:55 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Kq58O-0008Cg-4y
-	for gcvg-git-2@gmane.org; Wed, 15 Oct 2008 14:05:48 +0200
+	id 1Kq5Ns-0005ZE-52
+	for gcvg-git-2@gmane.org; Wed, 15 Oct 2008 14:21:48 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752568AbYJOMET (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 15 Oct 2008 08:04:19 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752737AbYJOMET
-	(ORCPT <rfc822;git-outgoing>); Wed, 15 Oct 2008 08:04:19 -0400
-Received: from mail.codewut.de ([78.47.135.140]:53504 "EHLO mail.codewut.de"
+	id S1753939AbYJOMUa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 15 Oct 2008 08:20:30 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753916AbYJOMU3
+	(ORCPT <rfc822;git-outgoing>); Wed, 15 Oct 2008 08:20:29 -0400
+Received: from w241.dkm.cz ([62.24.88.241]:52650 "EHLO machine.or.cz"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751706AbYJOMES (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 15 Oct 2008 08:04:18 -0400
-Received: by mail.codewut.de (Postfix, from userid 65534)
-	id 9641F7BEF1; Wed, 15 Oct 2008 14:07:20 +0200 (CEST)
-X-Spam-Checker-Version: SpamAssassin 3.1.7-deb (2006-10-05) on mail.codewut.de
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.6 required=5.0 tests=AWL,BAYES_00 autolearn=ham 
-	version=3.1.7-deb
-Received: from webmail.highteq.net (web.highteq.net [78.47.135.138])
-	by mail.codewut.de (Postfix) with ESMTP id 878817BE67
-	for <git@vger.kernel.org>; Wed, 15 Oct 2008 14:07:17 +0200 (CEST)
-Received: from 194.127.8.18
-        (SquirrelMail authenticated user lars)
-        by webmail.highteq.net with HTTP;
-        Wed, 15 Oct 2008 14:07:17 +0200 (CEST)
-User-Agent: SquirrelMail/1.4.15
-X-Priority: 3 (Normal)
-Importance: Normal
+	id S1753805AbYJOMU2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 15 Oct 2008 08:20:28 -0400
+Received: by machine.or.cz (Postfix, from userid 2001)
+	id 82EB01E4C02B; Wed, 15 Oct 2008 14:20:22 +0200 (CEST)
+Content-Disposition: inline
+In-Reply-To: <530345950810150047v75bfbf9clebbb8a406b172c4c@mail.gmail.com>
+User-Agent: Mutt/1.5.16 (2007-06-09)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/98266>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/98267>
 
-Greetings all,
+  Hi,
 
-two days ago I posted about an issue:
-http://thread.gmane.org/gmane.comp.version-control.git/98171
+On Wed, Oct 15, 2008 at 12:47:52AM -0700, Tom Werner wrote:
+> We've just pushed out an update to the Network Graph on GitHub this
+> evening that finally allows us to draw very large repositories
+> (including Git). We're mirroring the Git repo on the site and I
+> thought it might be interesting for people to see this visualization.
+> Enjoy!
+> 
+> http://github.com/git/git/network
+> 
+> Let me know if you have any ideas for improvements on the graph. I'm
+> always looking for ways to enhance it.
 
-After more testing I can confirm it is indeed a bug.
+  it's generally nice, but I think it could be much more useful yet. :-)
 
-1.6.0.2 on OSX Leopard doesn't work. After adding a submodule
-the folder of the submodule will always get listed under
-"Untracked files" when calling git status.
+  Generally, I find its information density very low. I see only tiny
+dots connected by lines at the top of the screen (rest grey) and if I
+want to know _what_ commits are actually there, I need to carefully
+hover over the scattered tiny dots. So my question is, exactly what kind
+of information do you seek to present primarily? Based on what I see,
+the answer seems to be just "how hairy the project history is", and I'm
+wondering if maybe some other class of information would be more
+interesting. IOW, what about using that blank grey area to show the
+commit subjects? ;-)
 
-1.5.6, however, works fine. I have not tested trunk yet.
+  Right now, your repository contains only the 'master' branch. I guess
+you want to setup a --mirror repository instead of pulling?
 
-So as a workaround I have to go back to 1.5.6 for now.
+  Also, it would be pretty nifty if you could tag lines of past topic
+branches based on the merge commit message. E.g. mark the blue line
+short in the past as pb/gitweb-tagcloud based on the 3e3d4ee merge. On
+the other hand, I'm not sure how well would it work visually if the
+topic branches are very short and merged right away.
 
-Yours,
-Lars
+-- 
+				Petr "Pasky" Baudis
+People who take cold baths never have rheumatism, but they have
+cold baths.
