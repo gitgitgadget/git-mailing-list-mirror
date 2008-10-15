@@ -1,55 +1,57 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [BUG] git status doesn't handle submodules properly on OSX
-Date: Wed, 15 Oct 2008 08:49:43 -0400
-Message-ID: <20081015124943.GA10816@sigill.intra.peff.net>
-References: <c60a85c1297be6446ad92a3e7723ddc8.squirrel@webmail.highteq.net>
+From: "=?ISO-8859-1?Q?Santi_B=E9jar?=" <santi@agolina.net>
+Subject: Re: [PATCH v2] describe: Make --tags and --all match lightweight tags more often
+Date: Wed, 15 Oct 2008 14:54:14 +0200
+Message-ID: <adf1fd3d0810150554k65f66932la30e42e93131a7a8@mail.gmail.com>
+References: <20080930083940.GA11453@artemis.corp>
+	 <20081010165952.GI8203@spearce.org>
+	 <20081010171217.GB29028@artemis.corp>
+	 <20081013143946.GP4856@spearce.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org
-To: Lars Hoss <lars@woeye.net>
-X-From: git-owner@vger.kernel.org Wed Oct 15 14:51:28 2008
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: "Junio C Hamano" <gitster@pobox.com>, git@vger.kernel.org,
+	"Pierre Habouzit" <madcoder@debian.org>,
+	"Erez Zilber" <erezzi.list@gmail.com>,
+	"=?ISO-8859-1?Q?Uwe_Kleine-K=F6nig?=" <ukleinek@strlen.de>
+To: "Shawn O. Pearce" <spearce@spearce.org>
+X-From: git-owner@vger.kernel.org Wed Oct 15 14:55:38 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Kq5qV-0007Tt-CS
-	for gcvg-git-2@gmane.org; Wed, 15 Oct 2008 14:51:23 +0200
+	id 1Kq5uT-0000QN-N0
+	for gcvg-git-2@gmane.org; Wed, 15 Oct 2008 14:55:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753638AbYJOMuD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 15 Oct 2008 08:50:03 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753421AbYJOMuC
-	(ORCPT <rfc822;git-outgoing>); Wed, 15 Oct 2008 08:50:02 -0400
-Received: from peff.net ([208.65.91.99]:3254 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752818AbYJOMuA (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 15 Oct 2008 08:50:00 -0400
-Received: (qmail 24919 invoked by uid 111); 15 Oct 2008 12:49:45 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.32) with ESMTP; Wed, 15 Oct 2008 08:49:45 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 15 Oct 2008 08:49:43 -0400
+	id S1752770AbYJOMyR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 15 Oct 2008 08:54:17 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752737AbYJOMyR
+	(ORCPT <rfc822;git-outgoing>); Wed, 15 Oct 2008 08:54:17 -0400
+Received: from ug-out-1314.google.com ([66.249.92.169]:34255 "EHLO
+	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752724AbYJOMyQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 15 Oct 2008 08:54:16 -0400
+Received: by ug-out-1314.google.com with SMTP id k3so1285287ugf.37
+        for <git@vger.kernel.org>; Wed, 15 Oct 2008 05:54:15 -0700 (PDT)
+Received: by 10.103.2.14 with SMTP id e14mr519298mui.104.1224075254885;
+        Wed, 15 Oct 2008 05:54:14 -0700 (PDT)
+Received: by 10.102.247.10 with HTTP; Wed, 15 Oct 2008 05:54:14 -0700 (PDT)
+In-Reply-To: <20081013143946.GP4856@spearce.org>
 Content-Disposition: inline
-In-Reply-To: <c60a85c1297be6446ad92a3e7723ddc8.squirrel@webmail.highteq.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/98270>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/98271>
 
-On Wed, Oct 15, 2008 at 02:07:17PM +0200, Lars Hoss wrote:
+> diff --git a/Documentation/git-describe.txt b/Documentation/git-describe.txt
+> index c4dbc2a..40e061f 100644
+> --- a/Documentation/git-describe.txt
+> +++ b/Documentation/git-describe.txt
 
-> two days ago I posted about an issue:
-> http://thread.gmane.org/gmane.comp.version-control.git/98171
-> 
-> After more testing I can confirm it is indeed a bug.
-> 
-> 1.6.0.2 on OSX Leopard doesn't work. After adding a submodule
-> the folder of the submodule will always get listed under
-> "Untracked files" when calling git status.
-> 
-> 1.5.6, however, works fine. I have not tested trunk yet.
+[...]
 
-I wasn't able to reproduce your bug on my Linux box. Can you bisect to
-find the faulty commit?
+> +annotated tags.  For more information about creating annoated tags
 
--Peff
+s/annoated/annotated/
+
+Santi
