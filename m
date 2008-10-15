@@ -1,77 +1,125 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH try 2] t1301-shared-repo.sh: don't let a default ACL 
- interfere with the test
-Date: Wed, 15 Oct 2008 00:57:33 -0700
-Message-ID: <7v7i8a47f6.fsf@gitster.siamese.dyndns.org>
-References: <1224022020.2699.4.camel@mattlaptop2.local>
- <1224022216.2699.5.camel@mattlaptop2.local>
- <7vzll66c5u.fsf@gitster.siamese.dyndns.org> <48F589EC.6050307@viscovery.net>
- <7vmyh64bgy.fsf@gitster.siamese.dyndns.org> <48F59928.5040502@viscovery.net>
+From: Stephen Haberman <stephen@exigencecorp.com>
+Subject: Re: [PATCH 1/3] Prepare for non-interactive merge-preserving rebase
+Date: Wed, 15 Oct 2008 03:07:06 -0500
+Organization: Exigence
+Message-ID: <20081015030706.f876bfff.stephen@exigencecorp.com>
+References: <48D95836.6040200@op5.se>
+	<20080923162211.d4b15373.stephen@exigencecorp.com>
+	<48D95FE1.30200@op5.se>
+	<20080924001027.GA19264@neumann>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Matt McCutchen <matt@mattmccutchen.net>, git@vger.kernel.org
-To: Johannes Sixt <j.sixt@viscovery.net>
-X-From: git-owner@vger.kernel.org Wed Oct 15 09:58:57 2008
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
+Cc: Git Mailing List <git@vger.kernel.org>
+To: SZEDER =?ISO-8859-1?Q?G=E1bor?= <szeder@fzi.de>
+X-From: git-owner@vger.kernel.org Wed Oct 15 10:08:24 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Kq1HS-000526-4x
-	for gcvg-git-2@gmane.org; Wed, 15 Oct 2008 09:58:54 +0200
+	id 1Kq1Qd-0007YO-7h
+	for gcvg-git-2@gmane.org; Wed, 15 Oct 2008 10:08:23 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752268AbYJOH5m (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 15 Oct 2008 03:57:42 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752211AbYJOH5m
-	(ORCPT <rfc822;git-outgoing>); Wed, 15 Oct 2008 03:57:42 -0400
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:44346 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752069AbYJOH5l (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 15 Oct 2008 03:57:41 -0400
-Received: from localhost.localdomain (localhost [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 66A786C072;
-	Wed, 15 Oct 2008 03:57:39 -0400 (EDT)
-Received: from pobox.com (ip68-225-240-211.oc.oc.cox.net [68.225.240.211])
- (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
- certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
- ESMTPSA id 6EEFE6C06E; Wed, 15 Oct 2008 03:57:35 -0400 (EDT)
-In-Reply-To: <48F59928.5040502@viscovery.net> (Johannes Sixt's message of
- "Wed, 15 Oct 2008 09:18:00 +0200")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: F0080E78-9A8E-11DD-937C-1E1F86D30F62-77302942!a-sasl-fastnet.pobox.com
+	id S1751046AbYJOIHL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 15 Oct 2008 04:07:11 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751388AbYJOIHL
+	(ORCPT <rfc822;git-outgoing>); Wed, 15 Oct 2008 04:07:11 -0400
+Received: from smtp132.sat.emailsrvr.com ([66.216.121.132]:39268 "EHLO
+	smtp132.sat.emailsrvr.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751033AbYJOIHJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 15 Oct 2008 04:07:09 -0400
+Received: from relay3.relay.sat.mlsrvr.com (localhost [127.0.0.1])
+	by relay3.relay.sat.mlsrvr.com (SMTP Server) with ESMTP id 30D9925A956;
+	Wed, 15 Oct 2008 04:07:09 -0400 (EDT)
+Received: by relay3.relay.sat.mlsrvr.com (Authenticated sender: stephen-AT-exigencecorp.com) with ESMTP id DC85125A799;
+	Wed, 15 Oct 2008 04:07:08 -0400 (EDT)
+In-Reply-To: <20080924001027.GA19264@neumann>
+X-Mailer: Sylpheed 2.5.0 (GTK+ 2.10.14; i686-pc-mingw32)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/98256>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/98257>
 
-Johannes Sixt <j.sixt@viscovery.net> writes:
 
->>> But that would also paper over unanticipated bad interactions with strange
->>> ACLs that people might set, wouldn't it? By not placing this into
->>> test-lib.sh there is a higher chance that such an interaction is revealed,
->>> and we can react on it (educate users or fix the code).
->> 
->> What do you exactly mean by "educate users or fix the code"?  For example,
->> by not putting this setfacl in test-lib.sh, t1301 revealed that with a
->> default ACL higher up, "git init --shared" would not work as expected.
->> 
->> Then what?
->> 
->>  - Do you mean, by "educate users", that we teach users not to play fun
->>    games with ACL in a git controled working tree?
->
-> Correct. In the case of a shared repository we can educate users not to
-> play with ACLs.
->
->>  - Do you mean, by "fix the code", that we teach adjust_shared_perm() to
->>    deal with ACL?
->
-> Correct in principle, but we need not go this route in the case of shared
-> repositories because we better educate users.
+> The following DAG is created by the commands below:
+> 
+>   -A---B      master
+>     \
+>      C---M    topic
+>       \ /
+>        D
+> 
+>   git init
+>   echo 1 >foo
+>   git add foo
+>   git commit -m 'first on master'       # A
+>   echo 2 >>foo
+>   git commit -m 'second on master' foo  # B
+>   git checkout -b topic HEAD^
+>   echo 1 >bar
+>   git add bar
+>   git commit -m 'first on topic'        # C
+>   git checkout -b subtopic
+>   echo 1 >baz
+>   git add baz
+>   git commit -m 'first on subtopic'     # D
+>   git checkout topic
+>   git merge --no-ff subtopic            # M
+> 
+> If I now execute 'git rebase -p master topic', I get the following:
+> 
+>   -A---B            master
+>     \   \
+>      \   C'---M'    topic
+>       \      /
+>        C----D
 
-If that is the case what difference does your suggestion of not putting it
-in test-lib.sh make?  We discourage users from playing ACL games, and we
-protect ourselves from such by making sure the trash directory used for
-running tests are not contaminated with ACL.  Wouldn't it make more sense
-to do so for all the tests, so that future test writers do not have to
-worry about it?
+Following up on this old thread, I can't get M' to have the old parent
+D. I always see D change to D' and then topic is fast fowarded to D'
+instead of an M' showing up. (I've tried 1.6.0.2, my rebase-i-p changes,
+and sp/maint.)
+
+> But I would rather like to have the following:
+> 
+>   -A---B            master
+>         \
+>          C'---M'    topic
+>           \  /
+>            D'
+> 
+> Would such a behaviour possible at all?
+
+Yes, I think it just takes the following patch:
+
+--- a/git-rebase--interactive.sh
++++ b/git-rebase--interactive.sh
+@@ -251,7 +251,7 @@ pick_one_preserving_merges () {
+                                GIT_AUTHOR_EMAIL="$GIT_AUTHOR_EMAIL" \
+                                GIT_AUTHOR_DATE="$GIT_AUTHOR_DATE" \
+                                output git merge $STRATEGY -m "$msg" \
+-                                       $new_parents
++                                       --no-ff $new_parents
+
+Applying this to either sp/maint or my rebase-i-p changes gets your
+desired output.
+
+With the only caveat being that the subtopic branch stays pointing at
+the old D--since you are rebasing topic, it does not change where
+subtopic points when rewriting D -> D'.
+
+Musing, I could see moving subtopic being possible, definitely with git
+sequencer, but also with a --other-branches-follow-rewrites flag of some
+sort that, after rewriting hash1->hash2, just finds any local branches
+pointing at hash1 and updates their refs to be hash2. Not that I'm
+really suggesting it, but I don't think it would be that hard.
+
+Anyway, subtopic still pointing at D aside, I think your desired output
+makes sense, given you've explicitly told rebase to preserve merges. If
+you wanted a non-ff M in the first place, I think passing along a
+--no-ff to keep M' around is reasonable. And would otherwise be harmless.
+
+I can write a test/patch for this unless you beat me to it or other
+think it is unreasonable.
+
+- Stephen
