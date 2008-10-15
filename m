@@ -1,59 +1,85 @@
-From: Matt Draisey <matt@draisey.ca>
-Subject: Detached checkout will clobber branch head when using symlink HEAD
-Date: Wed, 15 Oct 2008 14:24:47 -0400
-Message-ID: <1224095087.5366.19.camel@localhost>
+From: "PJ Hyett" <pjhyett@gmail.com>
+Subject: Re: git-scm.com (was Re: Git graph on GitHub)
+Date: Wed, 15 Oct 2008 11:36:10 -0700
+Message-ID: <bab6a2ab0810151136n4f997890qd418277ea8c4aea4@mail.gmail.com>
+References: <bab6a2ab0810150315l273d4ef3k95cda8f43a4745ca@mail.gmail.com>
+	 <bab6a2ab0810150318pb616a6dj867efa36623ac12e@mail.gmail.com>
+	 <20C9ABEC-52E5-405E-A755-C58A6359D7A9@wincent.com>
 Mime-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Oct 15 20:26:37 2008
+Cc: git@vger.kernel.org
+To: "Wincent Colaiuta" <win@wincent.com>
+X-From: git-owner@vger.kernel.org Wed Oct 15 20:37:38 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KqB4e-0000W6-To
-	for gcvg-git-2@gmane.org; Wed, 15 Oct 2008 20:26:21 +0200
+	id 1KqBFO-0005CK-IE
+	for gcvg-git-2@gmane.org; Wed, 15 Oct 2008 20:37:27 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751823AbYJOSZI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 15 Oct 2008 14:25:08 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751736AbYJOSZI
-	(ORCPT <rfc822;git-outgoing>); Wed, 15 Oct 2008 14:25:08 -0400
-Received: from ug-out-1314.google.com ([66.249.92.168]:40259 "EHLO
-	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751246AbYJOSZH (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 15 Oct 2008 14:25:07 -0400
-Received: by ug-out-1314.google.com with SMTP id k3so1395344ugf.37
-        for <git@vger.kernel.org>; Wed, 15 Oct 2008 11:25:02 -0700 (PDT)
-Received: by 10.67.19.13 with SMTP id w13mr5784454ugi.35.1224095101765;
-        Wed, 15 Oct 2008 11:25:01 -0700 (PDT)
-Received: from ?192.168.0.100? (bas2-windsor12-1128661893.dsl.bell.ca [67.70.3.133])
-        by mx.google.com with ESMTPS id u6sm151430uge.13.2008.10.15.11.24.58
-        (version=SSLv3 cipher=RC4-MD5);
-        Wed, 15 Oct 2008 11:25:00 -0700 (PDT)
-X-Mailer: Evolution 2.6.3 
+	id S1754365AbYJOSgN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 15 Oct 2008 14:36:13 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754264AbYJOSgN
+	(ORCPT <rfc822;git-outgoing>); Wed, 15 Oct 2008 14:36:13 -0400
+Received: from wa-out-1112.google.com ([209.85.146.182]:28278 "EHLO
+	wa-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754068AbYJOSgL (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 15 Oct 2008 14:36:11 -0400
+Received: by wa-out-1112.google.com with SMTP id v27so1594166wah.21
+        for <git@vger.kernel.org>; Wed, 15 Oct 2008 11:36:10 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to
+         :subject:cc:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:references;
+        bh=ZZxB/OPEa4cmoUAW6Hp9qQlRZV9LxZU38P+JvH4wAy0=;
+        b=t+YP5n86OGmNmUf7oHjefscsjJ6V1suAlHRlZmoSnFrt3jSIWnrKBsXLYDrzgsFRTN
+         +nJl/GFsDimoLYE+duCa6gXayyDCP0e4Nx/AeVflLuyonzcyv/mOySZNvzV3TgVq+BV5
+         p81jTzZEKit7RhSzSn8FPr6BZmgGwrDZdZkjg=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
+         :content-type:content-transfer-encoding:content-disposition
+         :references;
+        b=HYJKl7MJnyP2CaGxAeHWHcSbqWKZLAHeS4+R/7y6iQBI/yJhm0chQ5vVqCasSlwqkx
+         0LaG9CMHvEB9cBzgjR+CxDrOZxtOFudjq2vU+/T5F0d0P0BnFCGgZ5VwaBluAAO9D3B5
+         fOi6y8smKsGMypsUFlUJyrzLnfEKImh/1WDkQ=
+Received: by 10.114.181.1 with SMTP id d1mr1331377waf.3.1224095770294;
+        Wed, 15 Oct 2008 11:36:10 -0700 (PDT)
+Received: by 10.114.74.2 with HTTP; Wed, 15 Oct 2008 11:36:10 -0700 (PDT)
+In-Reply-To: <20C9ABEC-52E5-405E-A755-C58A6359D7A9@wincent.com>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/98293>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/98294>
 
-The faulty code appears to be this
+> Coming up in news at 6...
+>
+> GitHub announces new maintainer for Git
+>
+> GitHub is proud to announce the replacement of the old Git maintainer with
+> the "Git Core Team", comprising PJ Hyett, Scott Chacon, Tom Preston and some
+> select personalities from the Ruby on Rails world. You'll be able to track
+> all the latest updates to "Git Edge" over at GitHub. The former maintainer,
+> Junio C Hamano, is being retired from service because the Git community (see
+> git-scm.com) decided he wasn't as good-looking as David Heinemeier Hanson.
+> For more information, see the official Git book (book.git-scm.com).
 
-git 1.6.0.2.526.g5c283
-builtin-checkout.c
+In case there was any confusion, this is why we almost never bother
+posting to the list, because no matter what the topic, it always turns
+into why the git community hates GitHub.
 
->    481	static void update_refs_for_switch(struct checkout_opts *opts,
+I really don't understand the disdain for a company that's made git
+accessible to a much wider audience in less than a year. I kinda
+thought we'd all be on the same team.
 
->    500		if (new->path) {
-> 
->    511		} else if (strcmp(new->name, "HEAD")) {
->    512			update_ref(msg.buf, "HEAD", new->commit->object.sha1, NULL,
->    513				   REF_NODEREF, DIE_ON_ERR);
->    514			if (!opts->quiet) {
->    515				if (old->path)
->    516					fprintf(stderr, "Note: moving to \"%s\" which isn't a local branch\nIf you want to create a new branch from this checkout, you may do so\n(now or later) by using -b with the checkout command again. Example:\n  git checkout -b <new_branch_name>\n", new->name);
->    517				describe_detached_head("HEAD is now at", new->commit);
->    518			}
->    519		}
+For the record, Scott wasn't a GitHub employee when he wrote
+git-scm.com, nor was he paid to produce it. Turns out people don't
+always have ulterior motives, he just wanted to make a better git
+homepage.
 
-If HEAD is a symlink rather than a "ref:" style link this is really bad.
+
+-PJ
