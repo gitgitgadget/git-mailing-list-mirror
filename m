@@ -1,84 +1,80 @@
-From: Wang Chen <wangchen@cn.fujitsu.com>
-Subject: Re: tip tree clone fail
-Date: Wed, 15 Oct 2008 11:43:00 +0800
-Message-ID: <48F566C4.2050905@cn.fujitsu.com>
-References: <20081010083720.GA32069@elte.hu> <alpine.LFD.2.00.0810101040200.3271@apollo> <48EF14FC.1000801@cn.fujitsu.com> <alpine.LFD.2.00.0810101046260.3271@apollo> <48EF1902.4070309@cn.fujitsu.com> <48EF7BC1.4000401@zytor.com> <20081012124105.GA26988@elte.hu> <48F20663.2040407@zytor.com> <20081012152427.GA4607@elte.hu> <20081012153952.GV10544@machine.or.cz> <20081012165954.GA2317@elte.hu> <48F3178A.50106@cn.fujitsu.com> <48F37073.1030808@zytor.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: [PATCH] Fix reading of cloud tags
+Date: Tue, 14 Oct 2008 21:27:12 -0700
+Message-ID: <7v1vyi5vq7.fsf_-_@gitster.siamese.dyndns.org>
+References: <7vljws83nd.fsf@gitster.siamese.dyndns.org>
+ <20081013234851.GY4856@spearce.org> <20081014000812.GZ4856@spearce.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: Ingo Molnar <mingo@elte.hu>, Petr Baudis <pasky@suse.cz>,
-	Thomas Gleixner <tglx@linutronix.de>,
-	FNST-Lai Jiangshan <laijs@cn.fujitsu.com>,
-	FJ-KOSAKI Motohiro <kosaki.motohiro@jp.fujitsu.com>,
-	git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-To: "H. Peter Anvin" <hpa@zytor.com>
-X-From: git-owner@vger.kernel.org Wed Oct 15 05:48:22 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, "Shawn O. Pearce" <spearce@spearce.org>
+To: Petr Baudis <pasky@suse.cz>
+X-From: git-owner@vger.kernel.org Wed Oct 15 06:28:43 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KpxMz-0006JW-UM
-	for gcvg-git-2@gmane.org; Wed, 15 Oct 2008 05:48:22 +0200
+	id 1Kpxzw-0004p1-Tk
+	for gcvg-git-2@gmane.org; Wed, 15 Oct 2008 06:28:37 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751798AbYJODqK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 14 Oct 2008 23:46:10 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750958AbYJODqJ
-	(ORCPT <rfc822;git-outgoing>); Tue, 14 Oct 2008 23:46:09 -0400
-Received: from cn.fujitsu.com ([222.73.24.84]:57446 "EHLO song.cn.fujitsu.com"
-	rhost-flags-OK-FAIL-OK-OK) by vger.kernel.org with ESMTP
-	id S1751496AbYJODqI (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 14 Oct 2008 23:46:08 -0400
-Received: from tang.cn.fujitsu.com (tang.cn.fujitsu.com [10.167.250.3])
-	by song.cn.fujitsu.com (Postfix) with ESMTP id C1CF8170138;
-	Wed, 15 Oct 2008 11:46:02 +0800 (CST)
-Received: from fnst.cn.fujitsu.com (localhost.localdomain [127.0.0.1])
-	by tang.cn.fujitsu.com (8.13.1/8.13.1) with ESMTP id m9F3jxW5011756;
-	Wed, 15 Oct 2008 11:45:59 +0800
-Received: from [10.167.141.111] (unknown [10.167.141.111])
-	by fnst.cn.fujitsu.com (Postfix) with ESMTPA id 651B6D429E;
-	Wed, 15 Oct 2008 11:51:01 +0800 (CST)
-User-Agent: Thunderbird 2.0.0.17 (Windows/20080914)
-In-Reply-To: <48F37073.1030808@zytor.com>
+	id S1750954AbYJOE1X (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 15 Oct 2008 00:27:23 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750955AbYJOE1X
+	(ORCPT <rfc822;git-outgoing>); Wed, 15 Oct 2008 00:27:23 -0400
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:64038 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750938AbYJOE1X (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 15 Oct 2008 00:27:23 -0400
+Received: from localhost.localdomain (localhost [127.0.0.1])
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 87FDE6F189;
+	Wed, 15 Oct 2008 00:27:19 -0400 (EDT)
+Received: from pobox.com (ip68-225-240-211.oc.oc.cox.net [68.225.240.211])
+ (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
+ certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
+ ESMTPSA id 3F9DB6F186; Wed, 15 Oct 2008 00:27:15 -0400 (EDT)
+In-Reply-To: <20081014000812.GZ4856@spearce.org> (Shawn O. Pearce's message
+ of "Mon, 13 Oct 2008 17:08:12 -0700")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: 8E01C3B2-9A71-11DD-999F-1E1F86D30F62-77302942!a-sasl-fastnet.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/98230>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/98231>
 
-H. Peter Anvin said the following on 2008-10-13 23:59:
-> Wang Chen wrote:
->>
->> Ingo, thank you for your work.
->> I can clone more, but error still occurs:
->>
->> Getting alternates list for
->> http://www.kernel.org/pub/scm/linux/kernel/git/x86/linux-2.6-tip.git
->> Also look at
->> http://www.kernel.org/pub/scm/linux/kernel/git/torvalds/linux-2.6.git/
->> Also look at
->> http://www.kernel.org/pub/scm/linux/kernel/git/sfr/linux-next.git/
->> Getting pack list for
->> http://www.kernel.org/pub/scm/linux/kernel/git/x86/linux-2.6-tip.git
->> error: transfer closed with 8280 bytes remaining to read
->> Getting pack list for
->> http://www.kernel.org/pub/scm/linux/kernel/git/torvalds/linux-2.6.git/
->> Getting pack list for
->> http://www.kernel.org/pub/scm/linux/kernel/git/sfr/linux-next.git/
->> error: Unable to find 95630fe2917f805a26f8d8beaafb80cd2f729eb5 under
->> http://www.kernel.org/pub/scm/linux/kernel/git/x86/linux-2.6-tip.git
->> Cannot obtain needed object 95630fe2917f805a26f8d8beaafb80cd2f729eb5
-> 
-> I cleaned it up and it should work now.
-> 
+The projectroot path could have SP in it, in which case iterating over
+<$git_dir/ctags/*> does not correctly enumerate the cloud tags files at
+all.
 
-Yes. My clone is successful. Thanks, Peter.
-But, after cloning, git-pull failed because of conflict.
-I think maybe because Ingo rebased his tree?
+This can be observed by creating an empty t/trash directory and running
+t9500 test.  The $projectroot ends with "trash directory.t9500-gitweb-/"
+and <$glob> would give "trash", which can be opened and reading from it
+immediately yields undef, which in turn gives an undef value warning to
+the standard error stream upon attempt to chomp it.
+
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
 ---
-Auto-merged init/main.c
-CONFLICT (content): Merge conflict in init/main.c
-Auto-merged scripts/bootgraph.pl
-CONFLICT (add/add): Merge conflict in scripts/bootgraph.pl
-Removed sound/soc/at91/eti_b1_wm8731.c
-Automatic merge failed; fix conflicts and then commit the result.
----
+ gitweb/gitweb.perl |    4 +++-
+ 1 files changed, 3 insertions(+), 1 deletions(-)
+
+diff --git c/gitweb/gitweb.perl w/gitweb/gitweb.perl
+index 1116800..577c041 100755
+--- c/gitweb/gitweb.perl
++++ w/gitweb/gitweb.perl
+@@ -1805,7 +1805,8 @@ sub git_get_project_ctags {
+ 	my $ctags = {};
+ 
+ 	$git_dir = "$projectroot/$path";
+-	foreach (<$git_dir/ctags/*>) {
++	opendir D, "$git_dir/ctags";
++	foreach (grep { -f $_ } map { "$git_dir/ctags/$_" } readdir(D)) {
+ 		open CT, $_ or next;
+ 		my $val = <CT>;
+ 		chomp $val;
+@@ -1813,6 +1814,7 @@ sub git_get_project_ctags {
+ 		my $ctag = $_; $ctag =~ s#.*/##;
+ 		$ctags->{$ctag} = $val;
+ 	}
++	closedir D;
+ 	$ctags;
+ }
+ 
