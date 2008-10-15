@@ -1,65 +1,88 @@
-From: Wincent Colaiuta <win@wincent.com>
-Subject: Re: git-scm.com (was Re: Git graph on GitHub)
-Date: Wed, 15 Oct 2008 12:34:21 +0200
-Message-ID: <20C9ABEC-52E5-405E-A755-C58A6359D7A9@wincent.com>
-References: <bab6a2ab0810150315l273d4ef3k95cda8f43a4745ca@mail.gmail.com> <bab6a2ab0810150318pb616a6dj867efa36623ac12e@mail.gmail.com>
-Mime-Version: 1.0 (Apple Message framework v929.2)
-Content-Type: text/plain; charset=ISO-8859-1;
-	format=flowed	delsp=yes
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+From: "Nguyen Thai Ngoc Duy" <pclouds@gmail.com>
+Subject: Re: What's cooking in git.git (Oct 2008, #03; Tue, 14)
+Date: Wed, 15 Oct 2008 18:54:44 +0700
+Message-ID: <fcaeb9bf0810150454g572f6147w6a61d770ba28e808@mail.gmail.com>
+References: <7v8wsq7rt5.fsf@gitster.siamese.dyndns.org>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org
-To: PJ Hyett <pjhyett@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Oct 15 12:35:56 2008
+To: "Junio C Hamano" <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Oct 15 13:56:01 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Kq3jI-00037H-Bn
-	for gcvg-git-2@gmane.org; Wed, 15 Oct 2008 12:35:48 +0200
+	id 1Kq4yv-0005LL-7h
+	for gcvg-git-2@gmane.org; Wed, 15 Oct 2008 13:56:01 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751932AbYJOKed convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 15 Oct 2008 06:34:33 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751851AbYJOKed
-	(ORCPT <rfc822;git-outgoing>); Wed, 15 Oct 2008 06:34:33 -0400
-Received: from wincent1.inetu.net ([209.235.192.161]:59541 "EHLO
-	wincent1.inetu.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751296AbYJOKed convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 15 Oct 2008 06:34:33 -0400
-Received: from cuzco.lan (5.pool85-53-7.dynamic.orange.es [85.53.7.5])
-	(authenticated bits=0)
-	by wincent1.inetu.net (8.13.8/8.13.8) with ESMTP id m9FAYS71012268
-	(version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NO);
-	Wed, 15 Oct 2008 06:34:30 -0400
-In-Reply-To: <bab6a2ab0810150318pb616a6dj867efa36623ac12e@mail.gmail.com>
-X-Mailer: Apple Mail (2.929.2)
+	id S1752506AbYJOLys (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 15 Oct 2008 07:54:48 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752455AbYJOLys
+	(ORCPT <rfc822;git-outgoing>); Wed, 15 Oct 2008 07:54:48 -0400
+Received: from ik-out-1112.google.com ([66.249.90.176]:33957 "EHLO
+	ik-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751314AbYJOLyr (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 15 Oct 2008 07:54:47 -0400
+Received: by ik-out-1112.google.com with SMTP id c30so1972160ika.5
+        for <git@vger.kernel.org>; Wed, 15 Oct 2008 04:54:44 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to
+         :subject:cc:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:references;
+        bh=k97evNmXBYdj/a0N5Y2tY1YiYjiVhgr3XqN2vFksQbQ=;
+        b=VM6r0I+Oo103WPySI2DJ0/i/QZOUNvP2sxJMTLwW+95v6JGjarWpDmnGwMQW7h5A9k
+         FRiUgJeh3vMUDsd9g4bNTIMG78WgdGNilBvqqD22PTvLAw2RtuRx8jbyeU3t7pTyTcnG
+         aDIeeMdnnHGop3+3iccIvxL2MXcVGJtdk4H+k=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
+         :content-type:content-transfer-encoding:content-disposition
+         :references;
+        b=xQzw6rihB69onIs20LOqaYICbrWDt1uVoL/ve9szaNIaZqUaptZ1weo0e0KkAzpOnf
+         pugmcrOaH6iXEJfxCbBrUUumo/+alzHckFJrmTSMh67gAXP2t+T0qa7EgBLjc2eC1LwK
+         VT6Ji/w2goQkBEDZuwRsmSkPvx1IjktC6FxWo=
+Received: by 10.86.51.10 with SMTP id y10mr1223017fgy.51.1224071684813;
+        Wed, 15 Oct 2008 04:54:44 -0700 (PDT)
+Received: by 10.86.95.9 with HTTP; Wed, 15 Oct 2008 04:54:44 -0700 (PDT)
+In-Reply-To: <7v8wsq7rt5.fsf@gitster.siamese.dyndns.org>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/98264>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/98265>
 
-El 15/10/2008, a las 12:18, PJ Hyett escribi=F3:
-
->> One nitpick regarding your git.git mirror: I doubt that people here
->> ("the community") consider git-scm.com to be "the git homepage". I =20
->> don't
->> want to go into the reasons and start a pointless thread, but since
->> git-scm.com is a fork of git.or.cz pointing to the latter (the root)
->> should make everyone happy.
+On 10/15/08, Junio C Hamano <gitster@pobox.com> wrote:
+>  [Stuck Topics]
 >
-> Hi Michael,
-> I'll go ahead and start a pointless thread along with the reasons
-> provided via answers to the 2008 Git Survey[1]:
+>  * nd/narrow (Wed Oct 1 11:04:09 2008 +0700) 9 commits
+>   - grep: skip files outside sparse checkout area
+>   - checkout_entry(): CE_NO_CHECKOUT on checked out entries.
+>   - Prevent diff machinery from examining worktree outside sparse
+>    checkout
+>   - ls-files: Add tests for --sparse and friends
+>   - update-index: add --checkout/--no-checkout to update
+>    CE_NO_CHECKOUT bit
+>   - update-index: refactor mark_valid() in preparation for new options
+>   - ls-files: add options to support sparse checkout
+>   - Introduce CE_NO_CHECKOUT bit
+>   - Extend index to save more flags
+>
+>  Recently updated with a repost.  Shawn says he's been too swamped at
+>  day-job to actively review the series.  There has been some discussion on
+>  list about it so its not stalled, but it needs more eyeballs.
 
-Coming up in news at 6...
+Just a bit of update. I'm still working on the second half. Code
+change is even more than this, so I will wait until the first half
+gets reviewed and accepted before sending the rest.
 
-GitHub announces new maintainer for Git
-
-GitHub is proud to announce the replacement of the old Git maintainer =20
-with the "Git Core Team", comprising PJ Hyett, Scott Chacon, Tom =20
-Preston and some select personalities from the Ruby on Rails world. =20
-You'll be able to track all the latest updates to "Git Edge" over at =20
-GitHub. The former maintainer, Junio C Hamano, is being retired from =20
-service because the Git community (see git-scm.com) decided he wasn't =20
-as good-looking as David Heinemeier Hanson. For more information, see =20
-the official Git book (book.git-scm.com).
+BTW, in the first half, unpack_trees()-related commands may refuse to
+work if there is orphaned/stale entries in working directory
+(verify_*() functions still look at working directory no matter
+whether entries are no-checkout). Those entries are troublesome anyway
+so encouraging people to clean them out is, IMHO, a good idea, rather
+than fixing unpack_trees() to ignore them.
+-- 
+Duy
