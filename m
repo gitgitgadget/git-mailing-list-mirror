@@ -1,365 +1,84 @@
-From: "Stefan Karpinski" <stefan.karpinski@gmail.com>
-Subject: Re: builtin conversion between tabs and spaces
-Date: Tue, 14 Oct 2008 18:47:00 -0700
-Message-ID: <d4bc1a2a0810141847n1c3b9fb8u25d8f6fbb3fd10a@mail.gmail.com>
-References: <d4bc1a2a0810141839r547a770j3a8e56312afa6a53@mail.gmail.com>
-	 <d4bc1a2a0810141842q1e50c85au7d813f2e5e37a84c@mail.gmail.com>
-	 <d4bc1a2a0810141844x76223e76xf04e07ece834fc61@mail.gmail.com>
+From: Wang Chen <wangchen@cn.fujitsu.com>
+Subject: Re: tip tree clone fail
+Date: Wed, 15 Oct 2008 11:43:00 +0800
+Message-ID: <48F566C4.2050905@cn.fujitsu.com>
+References: <20081010083720.GA32069@elte.hu> <alpine.LFD.2.00.0810101040200.3271@apollo> <48EF14FC.1000801@cn.fujitsu.com> <alpine.LFD.2.00.0810101046260.3271@apollo> <48EF1902.4070309@cn.fujitsu.com> <48EF7BC1.4000401@zytor.com> <20081012124105.GA26988@elte.hu> <48F20663.2040407@zytor.com> <20081012152427.GA4607@elte.hu> <20081012153952.GV10544@machine.or.cz> <20081012165954.GA2317@elte.hu> <48F3178A.50106@cn.fujitsu.com> <48F37073.1030808@zytor.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=WINDOWS-1252
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: "Git Mailing List" <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Wed Oct 15 03:48:22 2008
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: Ingo Molnar <mingo@elte.hu>, Petr Baudis <pasky@suse.cz>,
+	Thomas Gleixner <tglx@linutronix.de>,
+	FNST-Lai Jiangshan <laijs@cn.fujitsu.com>,
+	FJ-KOSAKI Motohiro <kosaki.motohiro@jp.fujitsu.com>,
+	git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+To: "H. Peter Anvin" <hpa@zytor.com>
+X-From: git-owner@vger.kernel.org Wed Oct 15 05:48:22 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KpvUq-0007ke-Pt
-	for gcvg-git-2@gmane.org; Wed, 15 Oct 2008 03:48:21 +0200
+	id 1KpxMz-0006JW-UM
+	for gcvg-git-2@gmane.org; Wed, 15 Oct 2008 05:48:22 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752029AbYJOBrH convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 14 Oct 2008 21:47:07 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752046AbYJOBrG
-	(ORCPT <rfc822;git-outgoing>); Tue, 14 Oct 2008 21:47:06 -0400
-Received: from an-out-0708.google.com ([209.85.132.243]:3769 "EHLO
-	an-out-0708.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751981AbYJOBrD convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 14 Oct 2008 21:47:03 -0400
-Received: by an-out-0708.google.com with SMTP id d40so186307and.103
-        for <git@vger.kernel.org>; Tue, 14 Oct 2008 18:47:00 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to
-         :subject:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:references;
-        bh=51lKuAzj4qQzei9pvqCHXpXPsTeIeXm4pjlUDCFbiuM=;
-        b=mn7SMB4Ggq2uxPBV2izAodsK11hgjahNjKVUhAezRvcz7zZ5jHrINRIkH6Y0JVqUGD
-         EaMYm57hRbXbpJAsBUDhPw8nhhjPUAerzMQ11ceQwrlBh4Rloce4GnP3YaRjPjzEx+qu
-         +VCPoOaliYvDD2cxujvRk1bGHYdAiA+4wXC+k=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:in-reply-to:mime-version
-         :content-type:content-transfer-encoding:content-disposition
-         :references;
-        b=OXquXRkfgixSx4FDrEsZyVezy/50PHTIMeifMJD65OAd5gB4OX5T2KUaqkxIJUqZ/K
-         H1MIxPM7xDZXxEY9fdKt1OadJDTp1eXm0t0scyqmbhOf4ObYJywmdzdixUUV277EEIVl
-         oxE5MKxD0aXYeJb1onD5WTu8PM1fVkTwdIbl0=
-Received: by 10.100.152.19 with SMTP id z19mr365168and.45.1224035220268;
-        Tue, 14 Oct 2008 18:47:00 -0700 (PDT)
-Received: by 10.100.197.16 with HTTP; Tue, 14 Oct 2008 18:47:00 -0700 (PDT)
-In-Reply-To: <d4bc1a2a0810141844x76223e76xf04e07ece834fc61@mail.gmail.com>
-Content-Disposition: inline
+	id S1751798AbYJODqK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 14 Oct 2008 23:46:10 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750958AbYJODqJ
+	(ORCPT <rfc822;git-outgoing>); Tue, 14 Oct 2008 23:46:09 -0400
+Received: from cn.fujitsu.com ([222.73.24.84]:57446 "EHLO song.cn.fujitsu.com"
+	rhost-flags-OK-FAIL-OK-OK) by vger.kernel.org with ESMTP
+	id S1751496AbYJODqI (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 14 Oct 2008 23:46:08 -0400
+Received: from tang.cn.fujitsu.com (tang.cn.fujitsu.com [10.167.250.3])
+	by song.cn.fujitsu.com (Postfix) with ESMTP id C1CF8170138;
+	Wed, 15 Oct 2008 11:46:02 +0800 (CST)
+Received: from fnst.cn.fujitsu.com (localhost.localdomain [127.0.0.1])
+	by tang.cn.fujitsu.com (8.13.1/8.13.1) with ESMTP id m9F3jxW5011756;
+	Wed, 15 Oct 2008 11:45:59 +0800
+Received: from [10.167.141.111] (unknown [10.167.141.111])
+	by fnst.cn.fujitsu.com (Postfix) with ESMTPA id 651B6D429E;
+	Wed, 15 Oct 2008 11:51:01 +0800 (CST)
+User-Agent: Thunderbird 2.0.0.17 (Windows/20080914)
+In-Reply-To: <48F37073.1030808@zytor.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/98229>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/98230>
 
-Appologies for gmail mangling. I will use git send-email for real patch=
-es.
+H. Peter Anvin said the following on 2008-10-13 23:59:
+> Wang Chen wrote:
+>>
+>> Ingo, thank you for your work.
+>> I can clone more, but error still occurs:
+>>
+>> Getting alternates list for
+>> http://www.kernel.org/pub/scm/linux/kernel/git/x86/linux-2.6-tip.git
+>> Also look at
+>> http://www.kernel.org/pub/scm/linux/kernel/git/torvalds/linux-2.6.git/
+>> Also look at
+>> http://www.kernel.org/pub/scm/linux/kernel/git/sfr/linux-next.git/
+>> Getting pack list for
+>> http://www.kernel.org/pub/scm/linux/kernel/git/x86/linux-2.6-tip.git
+>> error: transfer closed with 8280 bytes remaining to read
+>> Getting pack list for
+>> http://www.kernel.org/pub/scm/linux/kernel/git/torvalds/linux-2.6.git/
+>> Getting pack list for
+>> http://www.kernel.org/pub/scm/linux/kernel/git/sfr/linux-next.git/
+>> error: Unable to find 95630fe2917f805a26f8d8beaafb80cd2f729eb5 under
+>> http://www.kernel.org/pub/scm/linux/kernel/git/x86/linux-2.6-tip.git
+>> Cannot obtain needed object 95630fe2917f805a26f8d8beaafb80cd2f729eb5
+> 
+> I cleaned it up and it should work now.
+> 
 
-On Tue, Oct 14, 2008 at 6:44 PM, Stefan Karpinski
-<stefan.karpinski@gmail.com> wrote:
-> I find myself really wanting to enforce standards in the use of space=
-s
-> versus tabs. I deal with some unruly programmers who refuse to set
-> their editors to use soft tabs, but I *hate* tabs in the repo. And of
-> course others feel equally strongly about keeping only tabs in the
-> repo (e.g. the git repo).
->
-> This led me to wonder if it wouldn't make sense to have this
-> conversion ability built into git. The following patch implements thi=
-s
-> functionality. It still needs work=97it's not meant to be final, just=
- to
-> give an idea=97but I just wanted to see if people on the git list
-> thought this sort of thing would be worthwhile at all.
->
-> If people think it's worth having in git, then how should it be
-> configured? I feel like a project should be able to define the
-> expected tab size for binary file types. Moreover, the project should
-> be able to define the default cannonicalization with resepect to
-> whitespace for different files types. Then, if they so desire, each
-> git user should be able to override the output format on a
-> per-repository basis.
->
-> Does this make any sense? Comments?
->
-> ---
-> diff --git a/convert.c b/convert.c
-> index 1816e97..280f45b 100644
-> --- a/convert.c
-> +++ b/convert.c
-> @@ -18,7 +18,7 @@
->
->  struct text_stat {
->       /* NUL, CR, LF and CRLF counts */
-> -       unsigned nul, cr, lf, crlf;
-> +       unsigned nul, cr, lf, crlf, tab;
->
->       /* These are just approximations! */
->       unsigned printable, nonprintable;
-> @@ -48,7 +48,10 @@
->  static void gather_stats(const char *buf, unsigned long size, struct
-> text_stat *
->               else if (c < 32) {
->                       switch (c) {
->                               /* BS, HT, ESC and FF */
-> -                       case '\b': case '\t': case '\033': case '\014=
-':
-> +                       case '\t':
-> +                               stats->tab++;
-> +                               /* fall through */
-> +                       case '\b': case '\033': case '\014':
->                               stats->printable++;
->                               break;
->                       case 0:
-> @@ -235,6 +238,105 @@
->  static int crlf_to_worktree(const char *path, const char *src, size_=
-t len,
->       return 1;
->  }
->
-> +static int tabs_to_spaces(const char *path, const char *src, size_t =
-len,
-> +
->                  struct strbuf *buf, int untabify)
-> +{
-> +       char *to_free =3D NULL;
-> +       struct text_stat stats;
-> +  static const unsigned tab_size =3D 4;
-> +       char *spaces;
-> +
-> +       if (!untabify)
-> +               return 0;
-> +
-> +  /* instead of calling twice, should cache these stats across calls=
- */
-> +       gather_stats(src, len, &stats);
-> +
-> +       if (!stats.tab)
-> +    return 0;
-> +
-> +       /* are we "faking" in place editing ? */
-> +       if (src =3D=3D buf->buf)
-> +               to_free =3D strbuf_detach(buf, NULL);
-> +
-> +  /* this growth may be excessive: not all tabs get tab_size spaces =
-*/
-> +       strbuf_grow(buf, len + tab_size * stats.tab);
-> +  spaces =3D (char *) xmalloc(tab_size);
-> +  memset(spaces, ' ', tab_size);
-> +       for (;;) {
-> +               const char *line =3D src;
-> +               const char *nl =3D memchr(src, '\n', len);
-> +               char *tab;
-> +    if (!nl)
-> +      nl =3D src + len;
-> +    while (src < nl && (tab =3D memchr(src, '\t', nl - src))) {
-> +      strbuf_add(buf, src, tab - src);
-> +      strbuf_add(buf, spaces, tab_size - ((tab - line) % tab_size));
-> +      src =3D tab + 1;
-> +    }
-> +    if (src < nl)
-> +      strbuf_add(buf, src, nl - src);
-> +               if (nl < src + len)
-> +                       strbuf_addch(buf, '\n');
-> +               else
-> +                       break;
-> +               src =3D nl + 1;
-> +               len -=3D src - line;
-> +       }
-> +
-> +       free(to_free);
-> +       free(spaces);
-> +       return 1;
-> +}
-> +
-> +static int spaces_to_tabs(const char *path, const char *src, size_t =
-len,
-> +
->                  struct strbuf *buf, int tabify)
-> +{
-> +  static const unsigned tab_size =3D 4;
-> +
-> +       if (!tabify)
-> +               return 0;
-> +
-> +       /* only grow if not in place */
-> +       if (strbuf_avail(buf) + buf->len < len)
-> +               strbuf_grow(buf, len - buf->len);
-> +
-> +       for (;;) {
-> +               int tabs =3D 0, spaces =3D 0;
-> +               const char *line =3D src;
-> +               const char *nl =3D memchr(src, '\n', len);
-> +    if (!nl)
-> +      nl =3D src + len;
-> +               for (;; src++) {
-> +                       if (*src =3D=3D ' ') {
-> +                               spaces++;
-> +                               if (spaces =3D=3D tab_size) {
-> +                                       tabs++;
-> +                                       spaces =3D 0;
-> +                               }
-> +                       } else if (*src =3D=3D '\t') {
-> +                               tabs++;
-> +                               spaces =3D 0;
-> +                       } else break;
-> +               }
-> +               if (line < src) {
-> +                       memset(buf->buf + buf->len, '\t', tabs);
-> +                       memset(buf->buf + buf->len + tabs, ' ', space=
-s);
-> +                       strbuf_setlen(buf, buf->len + tabs + spaces);
-> +               }
-> +    if (src < nl)
-> +      strbuf_add(buf, src, nl - src);
-> +               if (nl < src + len)
-> +                       strbuf_addch(buf, '\n');
-> +               else
-> +                       break;
-> +               src =3D nl + 1;
-> +               len -=3D src - line;
-> +       }
-> +
-> +       return 1;
-> +}
-> +
->  struct filter_params {
->       const char *src;
->       unsigned long size;
-> @@ -370,22 +472,29 @@
->  static int read_convert_config(const char *var, const char *value, v=
-oid *cb)
->       return 0;
->  }
->
-> -static void setup_convert_check(struct git_attr_check *check)
-> +struct convert_checks {
-> +  struct git_attr_check crlf, tabs, ident, filter;
-> +};
-> +
-> +static void setup_convert_check(struct convert_checks *checks)
->  {
->       static struct git_attr *attr_crlf;
-> +       static struct git_attr *attr_tabs;
->       static struct git_attr *attr_ident;
->       static struct git_attr *attr_filter;
->
->       if (!attr_crlf) {
->               attr_crlf =3D git_attr("crlf", 4);
-> +               attr_tabs =3D git_attr("tabs", 4);
->               attr_ident =3D git_attr("ident", 5);
->               attr_filter =3D git_attr("filter", 6);
->               user_convert_tail =3D &user_convert;
->               git_config(read_convert_config, NULL);
->       }
-> -       check[0].attr =3D attr_crlf;
-> -       check[1].attr =3D attr_ident;
-> -       check[2].attr =3D attr_filter;
-> +       checks->crlf.attr =3D attr_crlf;
-> +       checks->tabs.attr =3D attr_tabs;
-> +       checks->ident.attr =3D attr_ident;
-> +       checks->filter.attr =3D attr_filter;
->  }
->
->  static int count_ident(const char *cp, unsigned long size)
-> @@ -566,20 +675,22 @@
->  static int git_path_check_ident(const char *path, struct git_attr_ch=
-eck *check)
->       return !!ATTR_TRUE(value);
->  }
->
-> +#define CHECK_ARRAY_SIZE (sizeof(struct convert_checks)/sizeof(struc=
-t
-> git_attr_check))
-> +
->  int convert_to_git(const char *path, const char *src, size_t len,
->                   struct strbuf *dst, enum safe_crlf checksafe)
->  {
-> -       struct git_attr_check check[3];
-> +       struct convert_checks checks;
->       int crlf =3D CRLF_GUESS;
->       int ident =3D 0, ret =3D 0;
->       const char *filter =3D NULL;
->
-> -       setup_convert_check(check);
-> -       if (!git_checkattr(path, ARRAY_SIZE(check), check)) {
-> +       setup_convert_check(&checks);
-> +       if (!git_checkattr(path, CHECK_ARRAY_SIZE, (struct git_attr_c=
-heck *)
-> &checks)) {
->               struct convert_driver *drv;
-> -               crlf =3D git_path_check_crlf(path, check + 0);
-> -               ident =3D git_path_check_ident(path, check + 1);
-> -               drv =3D git_path_check_convert(path, check + 2);
-> +               crlf =3D git_path_check_crlf(path, &(checks.crlf));
-> +               ident =3D git_path_check_ident(path, &(checks.ident))=
-;
-> +               drv =3D git_path_check_convert(path, &(checks.filter)=
-);
->               if (drv && drv->clean)
->                       filter =3D drv->clean;
->       }
-> @@ -589,6 +700,11 @@
->  int convert_to_git(const char *path, const char *src, size_t len,
->               src =3D dst->buf;
->               len =3D dst->len;
->       }
-> +       ret |=3D tabs_to_spaces(path, src, len, dst, 1); // get real =
-variable
-> +       if (ret) {
-> +               src =3D dst->buf;
-> +               len =3D dst->len;
-> +       }
->       ret |=3D crlf_to_git(path, src, len, dst, crlf, checksafe);
->       if (ret) {
->               src =3D dst->buf;
-> @@ -599,17 +715,17 @@
->  int convert_to_git(const char *path, const char *src, size_t len,
->
->  int convert_to_working_tree(const char *path, const char *src, size_=
-t
-> len, struct strbuf *dst)
->  {
-> -       struct git_attr_check check[3];
-> +       struct convert_checks checks;
->       int crlf =3D CRLF_GUESS;
->       int ident =3D 0, ret =3D 0;
->       const char *filter =3D NULL;
->
-> -       setup_convert_check(check);
-> -       if (!git_checkattr(path, ARRAY_SIZE(check), check)) {
-> +       setup_convert_check(&checks);
-> +       if (!git_checkattr(path, CHECK_ARRAY_SIZE, (struct git_attr_c=
-heck *)
-> &checks)) {
->               struct convert_driver *drv;
-> -               crlf =3D git_path_check_crlf(path, check + 0);
-> -               ident =3D git_path_check_ident(path, check + 1);
-> -               drv =3D git_path_check_convert(path, check + 2);
-> +               crlf =3D git_path_check_crlf(path, &(checks.crlf));
-> +               ident =3D git_path_check_ident(path, &(checks.ident))=
-;
-> +               drv =3D git_path_check_convert(path, &(checks.filter)=
-);
->               if (drv && drv->smudge)
->                       filter =3D drv->smudge;
->       }
-> @@ -624,5 +740,10 @@
->  int convert_to_working_tree(const char *path, const char *src, size_=
-t
-> len, struc
->               src =3D dst->buf;
->               len =3D dst->len;
->       }
-> +       ret |=3D tabs_to_spaces(path, src, len, dst, 1); // get real =
-variable
-> +       if (ret) {
-> +               src =3D dst->buf;
-> +               len =3D dst->len;
-> +       }
->       return ret | apply_filter(path, src, len, dst, filter);
->  }
->
+Yes. My clone is successful. Thanks, Peter.
+But, after cloning, git-pull failed because of conflict.
+I think maybe because Ingo rebased his tree?
+---
+Auto-merged init/main.c
+CONFLICT (content): Merge conflict in init/main.c
+Auto-merged scripts/bootgraph.pl
+CONFLICT (add/add): Merge conflict in scripts/bootgraph.pl
+Removed sound/soc/at91/eti_b1_wm8731.c
+Automatic merge failed; fix conflicts and then commit the result.
+---
