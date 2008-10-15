@@ -1,102 +1,99 @@
-From: David Aguilar <davvid@gmail.com>
-Subject: [PATCH] git-mergetool: properly handle "git mergetool -- filename"
-Date: Wed, 15 Oct 2008 00:39:53 -0700
-Message-ID: <36715524a8e3a4688024cc1e23dd1518c4df71a0.1224056291.git.davvid@gmail.com>
-Cc: git@vger.kernel.org, tytso@mit.edu,
-	David Aguilar <davvid@gmail.com>
+From: Stephen Haberman <stephen@exigencecorp.com>
+Subject: [PATCH] rebase-i-p: if todo was reordered use HEAD as the rewritten parent
+Date: Wed, 15 Oct 2008 02:44:40 -0500
+Message-ID: <130c9caae646675893ed17cd213c53a9734fe837.1224055978.git.stephen@exigencecorp.com>
+References: <cover.1224055978.git.stephen@exigencecorp.com>
+ <79b3f186dc599ebb5e251d5c0ca93c233263974c.1224055978.git.stephen@exigencecorp.com>
+ <ef8c08551dca1ddfea0017fd4026ac9ae60fbfec.1224055978.git.stephen@exigencecorp.com>
+ <759654ef1f1781cd2b102e21c6f972b065560398.1224055978.git.stephen@exigencecorp.com>
+ <ab80b829ebfa597dc4aaac6e49f9907e505adf59.1224055978.git.stephen@exigencecorp.com>
+ <0977b23f6c709d4aea76de7a88e9fe17272b31ea.1224055978.git.stephen@exigencecorp.com>
+ <3fd41e60ed27b248f15c60d5a45e543a7e32af99.1224055978.git.stephen@exigencecorp.com>
+Cc: git@vger.kernel.org, Stephen Haberman <stephen@exigencecorp.com>
 To: gitster@pobox.com
-X-From: git-owner@vger.kernel.org Wed Oct 15 09:46:51 2008
+X-From: git-owner@vger.kernel.org Wed Oct 15 09:46:49 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Kq15j-0001GN-EB
+	id 1Kq15i-0001GN-L0
 	for gcvg-git-2@gmane.org; Wed, 15 Oct 2008 09:46:47 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751973AbYJOHpA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 15 Oct 2008 03:45:00 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751673AbYJOHo7
-	(ORCPT <rfc822;git-outgoing>); Wed, 15 Oct 2008 03:44:59 -0400
-Received: from mail-gx0-f16.google.com ([209.85.217.16]:54639 "EHLO
-	mail-gx0-f16.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751973AbYJOHoz (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 15 Oct 2008 03:44:55 -0400
-Received: by gxk9 with SMTP id 9so6446572gxk.13
-        for <git@vger.kernel.org>; Wed, 15 Oct 2008 00:44:54 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:cc:subject:date
-         :message-id:x-mailer;
-        bh=BV0gp3SbyI0M3KGEtTenqqQFKVol+YCxh6TPdhuEKBc=;
-        b=OJAhAkxp6a6ATQTQRObgafuJeBzkS0as8exST4Wj+DjF6wwpSQETcyVkaOpTseTRhY
-         eM/gxHzXogX6jBIOY2bZzkyx4pcrSNtNs+SJ9HKG07/VpsQhXkvqqmFrFc9JOuuY63N3
-         9RzR/8D0iUdFfugcr6vxZ7GBNxTWC56KJjxYA=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer;
-        b=noID4Lkd2IlnlzoK9IrW8pwTeUOkKKBB43uTEQebT8xDwEUoR2ARTs+BDsfX/qu+G/
-         q5ofDtcEwlUsRCTD7Jc6OBXVVcKL9QweTNObp+s8TZvOZYaUKjGinIMxH97KOLxNGACd
-         ZqVAQGDQWIT+blDokI5nGLkv/fcZlzuLV6uD4=
-Received: by 10.142.155.4 with SMTP id c4mr326826wfe.9.1224056694135;
-        Wed, 15 Oct 2008 00:44:54 -0700 (PDT)
-Received: from localhost (208-106-56-2.static.dsltransport.net [208.106.56.2])
-        by mx.google.com with ESMTPS id 28sm23153990wfd.4.2008.10.15.00.44.51
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Wed, 15 Oct 2008 00:44:52 -0700 (PDT)
-X-Mailer: git-send-email 1.6.0.2.532.g84ed4c
+	id S1752063AbYJOHo4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 15 Oct 2008 03:44:56 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751673AbYJOHoz
+	(ORCPT <rfc822;git-outgoing>); Wed, 15 Oct 2008 03:44:55 -0400
+Received: from smtp162.sat.emailsrvr.com ([66.216.121.162]:49889 "EHLO
+	smtp162.sat.emailsrvr.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751944AbYJOHot (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 15 Oct 2008 03:44:49 -0400
+Received: from relay6.relay.sat.mlsrvr.com (localhost [127.0.0.1])
+	by relay6.relay.sat.mlsrvr.com (SMTP Server) with ESMTP id D51DC1E06B2;
+	Wed, 15 Oct 2008 03:44:48 -0400 (EDT)
+Received: by relay6.relay.sat.mlsrvr.com (Authenticated sender: stephen-AT-exigencecorp.com) with ESMTP id 575431E0660;
+	Wed, 15 Oct 2008 03:44:48 -0400 (EDT)
+X-Mailer: git-send-email 1.6.0.2
+In-Reply-To: <3fd41e60ed27b248f15c60d5a45e543a7e32af99.1224055978.git.stephen@exigencecorp.com>
+In-Reply-To: <cover.1224055978.git.stephen@exigencecorp.com>
+References: <cover.1224055978.git.stephen@exigencecorp.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/98252>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/98253>
 
-git-mergetool has an entry for "--" in its command-line parsing code
-to designate the end of option processing.  It was not calling shift,
-though, which caused git-mergetool to incorrectly use "--" as the
-merge filename.
+This seems like the best guess we can make until git sequencer marks are
+available. That being said, within the context of re-ordering a commit before
+its parent in todo, I think applying it on top of the current commit seems like
+a reasonable assumption of what the user intended.
 
-This patch fixes this bug and updates the usage and documentation
-to include [--] in the options spec.
-
-Signed-off-by: David Aguilar <davvid@gmail.com>
+Signed-off-by: Stephen Haberman <stephen@exigencecorp.com>
 ---
- Documentation/git-mergetool.txt |    2 +-
- git-mergetool.sh                |    3 ++-
- 2 files changed, 3 insertions(+), 2 deletions(-)
+ git-rebase--interactive.sh               |    9 +++++++++
+ t/t3411-rebase-preserve-around-merges.sh |    4 ++--
+ 2 files changed, 11 insertions(+), 2 deletions(-)
 
-diff --git a/Documentation/git-mergetool.txt b/Documentation/git-mergetool.txt
-index e0b2703..475db72 100644
---- a/Documentation/git-mergetool.txt
-+++ b/Documentation/git-mergetool.txt
-@@ -7,7 +7,7 @@ git-mergetool - Run merge conflict resolution tools to resolve merge conflicts
- 
- SYNOPSIS
- --------
--'git mergetool' [--tool=<tool>] [<file>]...
-+'git mergetool' [--tool=<tool>] [--] [<file>]...
- 
- DESCRIPTION
- -----------
-diff --git a/git-mergetool.sh b/git-mergetool.sh
-index 94187c3..1b0dfec 100755
---- a/git-mergetool.sh
-+++ b/git-mergetool.sh
-@@ -8,7 +8,7 @@
- # at the discretion of Junio C Hamano.
+diff --git a/git-rebase--interactive.sh b/git-rebase--interactive.sh
+index 3821692..1fc4f44 100755
+--- a/git-rebase--interactive.sh
++++ b/git-rebase--interactive.sh
+@@ -194,6 +194,15 @@ pick_one_preserving_merges () {
+ 		if test -f "$REWRITTEN"/$p
+ 		then
+ 			new_p=$(cat "$REWRITTEN"/$p)
++
++			# If the todo reordered commits, and our parent is marked for
++			# rewriting, but hasn't been gotten to yet, assume the user meant to
++			# drop it on top of the current HEAD
++			if test -z "$new_p"
++			then
++				new_p=$(git rev-parse HEAD)
++			fi
++
+ 			test $p != $new_p && fast_forward=f
+ 			case "$new_parents" in
+ 			*$new_p*)
+diff --git a/t/t3411-rebase-preserve-around-merges.sh b/t/t3411-rebase-preserve-around-merges.sh
+index b3973c9..dfad5dd 100644
+--- a/t/t3411-rebase-preserve-around-merges.sh
++++ b/t/t3411-rebase-preserve-around-merges.sh
+@@ -80,7 +80,7 @@ test_expect_success 'setup' '
+ #       \        /
+ #        -- C1 --
  #
+-test_expect_failure 'squash F1 into D1' '
++test_expect_success 'squash F1 into D1' '
+ 	FAKE_LINES="1 squash 3 2" git rebase -i -p B1 &&
+ 	test "$(git rev-parse HEAD^2)" = "$(git rev-parse branch)" &&
+ 	test "$(git rev-parse HEAD~2)" = "$(git rev-parse B1)" &&
+@@ -99,7 +99,7 @@ test_expect_failure 'squash F1 into D1' '
+ #
+ # And rebase G1..M1 onto E2
  
--USAGE='[--tool=tool] [file to merge] ...'
-+USAGE='[--tool=tool] [--] [file to merge] ...'
- SUBDIRECTORY_OK=Yes
- OPTIONS_SPEC=
- . git-sh-setup
-@@ -296,6 +296,7 @@ do
- 	    esac
- 	    ;;
- 	--)
-+	    shift
- 	    break
- 	    ;;
- 	-*)
+-test_expect_failure 'rebase two levels of merge' '
++test_expect_success 'rebase two levels of merge' '
+ 	git checkout -b branch2 A1 &&
+ 	touch g &&
+ 	git add g &&
 -- 
-1.6.0.2.532.g84ed4c
+1.6.0.2
