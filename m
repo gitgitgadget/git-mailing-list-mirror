@@ -1,99 +1,67 @@
-From: "Stefan Karpinski" <stefan.karpinski@gmail.com>
-Subject: Re: builtin conversion between tabs and spaces
-Date: Wed, 15 Oct 2008 16:02:28 -0700
-Message-ID: <d4bc1a2a0810151602j56550c3di2f59f92039fa8243@mail.gmail.com>
-References: <d4bc1a2a0810141839r547a770j3a8e56312afa6a53@mail.gmail.com>
-	 <d4bc1a2a0810141842q1e50c85au7d813f2e5e37a84c@mail.gmail.com>
-	 <d4bc1a2a0810141844x76223e76xf04e07ece834fc61@mail.gmail.com>
-	 <20081015062539.GB3775@blimp.localdomain>
-	 <d4bc1a2a0810151352s6c963e32jc4f492a7c84841dc@mail.gmail.com>
-	 <57518fd10810151402p4ea3283anf4b3d175c4e82425@mail.gmail.com>
-	 <d4bc1a2a0810151418r3bf21ddaj498017e8e178f579@mail.gmail.com>
+From: Linus Torvalds <torvalds@linux-foundation.org>
+Subject: Re: [PATCH] reset --hard/read-tree --reset -u: remove unmerged new
+ paths
+Date: Wed, 15 Oct 2008 16:16:17 -0700 (PDT)
+Message-ID: <alpine.LFD.2.00.0810151615550.3288@nehalem.linux-foundation.org>
+References: <20081015115654.fb34438f.akpm@linux-foundation.org> <alpine.DEB.1.10.0810151208100.7808@asgard.lang.hm> <alpine.DEB.1.10.0810151211580.7808@asgard.lang.hm> <alpine.LFD.2.00.0810151219120.3288@nehalem.linux-foundation.org>
+ <20081015124949.b657a8db.akpm@linux-foundation.org> <alpine.LFD.2.00.0810151256410.3288@nehalem.linux-foundation.org> <alpine.LFD.2.00.0810151311210.3288@nehalem.linux-foundation.org> <7v3aixqzrn.fsf@gitster.siamese.dyndns.org>
+ <7vy70ppiq1.fsf_-_@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: "Alex Riesen" <raa.lkml@gmail.com>,
-	"Git Mailing List" <git@vger.kernel.org>,
-	"Johannes Sixt" <j.sixt@viscovery.net>
-To: "Jonathan del Strother" <maillist@steelskies.com>
-X-From: git-owner@vger.kernel.org Thu Oct 16 01:03:42 2008
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Andrew Morton <akpm@linux-foundation.org>, david@lang.hm,
+	Git Mailing List <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Oct 16 01:20:52 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KqFP3-0002A8-KT
-	for gcvg-git-2@gmane.org; Thu, 16 Oct 2008 01:03:42 +0200
+	id 1KqFff-0007Jl-BC
+	for gcvg-git-2@gmane.org; Thu, 16 Oct 2008 01:20:51 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753440AbYJOXCa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 15 Oct 2008 19:02:30 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753432AbYJOXCa
-	(ORCPT <rfc822;git-outgoing>); Wed, 15 Oct 2008 19:02:30 -0400
-Received: from yx-out-2324.google.com ([74.125.44.28]:19058 "EHLO
-	yx-out-2324.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753427AbYJOXC3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 15 Oct 2008 19:02:29 -0400
-Received: by yx-out-2324.google.com with SMTP id 8so674311yxm.1
-        for <git@vger.kernel.org>; Wed, 15 Oct 2008 16:02:28 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to
-         :subject:cc:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:references;
-        bh=G00H5ZTMVfqg4Yxs9eIWbe0ZbQZealxUx9creFCChjI=;
-        b=oxyCB3o6sltzwSlMLuf5Rr+aeDovJuNzlSgFFL8k+C7EnLXygoo4Filzta24zwb9Vt
-         Ed8CYAMlIaXcva/zzzKlicsnUFqFuQODVZMKx0l/y6DhAqn1K4XtJmwvtxetdpg/p42Y
-         n4s6AVGkz9/FQ/Yc/KSPMvC1hw4EJQH9kwgEw=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
-         :content-type:content-transfer-encoding:content-disposition
-         :references;
-        b=SlPKCitCH0SbaasNrKJidwWGen2TDZF+3nbqARH54njvRxQAWl3gn/xtHqrH1mHaw8
-         DHkky9xATgSIfEBTxJvVsuxsNHhcQlVbiyetzqLzz08tTFMwCBCsg2vazZcaHcU9Y4Zo
-         BXV0hXP4CyOmsv6bnkivHv+2VwEmGmj2aKt68=
-Received: by 10.100.46.10 with SMTP id t10mr1945547ant.136.1224111748080;
-        Wed, 15 Oct 2008 16:02:28 -0700 (PDT)
-Received: by 10.100.197.16 with HTTP; Wed, 15 Oct 2008 16:02:28 -0700 (PDT)
-In-Reply-To: <d4bc1a2a0810151418r3bf21ddaj498017e8e178f579@mail.gmail.com>
-Content-Disposition: inline
+	id S1752136AbYJOXQz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 15 Oct 2008 19:16:55 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752119AbYJOXQz
+	(ORCPT <rfc822;git-outgoing>); Wed, 15 Oct 2008 19:16:55 -0400
+Received: from smtp1.linux-foundation.org ([140.211.169.13]:34814 "EHLO
+	smtp1.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751287AbYJOXQy (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 15 Oct 2008 19:16:54 -0400
+Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [140.211.169.55])
+	by smtp1.linux-foundation.org (8.14.2/8.13.5/Debian-3ubuntu1.1) with ESMTP id m9FNGIuZ019304
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Wed, 15 Oct 2008 16:16:19 -0700
+Received: from localhost (localhost [127.0.0.1])
+	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id m9FNGHRH019462;
+	Wed, 15 Oct 2008 16:16:17 -0700
+In-Reply-To: <7vy70ppiq1.fsf_-_@gitster.siamese.dyndns.org>
+User-Agent: Alpine 2.00 (LFD 1167 2008-08-23)
+X-Spam-Status: No, hits=-5.433 required=5 tests=AWL,BAYES_00,OSDL_HEADER_SUBJECT_BRACKETED,PATCH_SUBJECT_OSDL
+X-Spam-Checker-Version: SpamAssassin 3.2.4-osdl_revision__1.47__
+X-MIMEDefang-Filter: lf$Revision: 1.188 $
+X-Scanned-By: MIMEDefang 2.63 on 140.211.169.13
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/98337>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/98338>
 
-Any further comments? I'm more than willing to implement this, but I
-won't bother if there's no chance of getting it accepted as a patch.
-Does no one else feel like at least having the option to enforce
-whitespace consistency in git is a good thing? If not, I guess I'll
-just muddle along without this feature instead of implementing it.
 
-On Wed, Oct 15, 2008 at 2:18 PM, Stefan Karpinski
-<stefan.karpinski@gmail.com> wrote:
-> That's not what I would call a "crazy" mix of tabs and spaces, but
-> rather a *sane* mix of tabs and spaces. That can consistently be
-> reproduced, and is in fact what the spaces_to_tabs function included
-> above produces. The sane consistent formats as I see it are:
+
+On Wed, 15 Oct 2008, Junio C Hamano wrote:
 >
->  1) use spaces for everything
->  2) use tabs for indentation, spaces for everything else
->  3) use tabs for indentation and alignment
->
-> If you know the tab size, you can reproduce any of these from the
-> others, except that #3 is a little tricky since there's places where
-> the tab/space issue can be ambiguous. I actually think that keeping
-> the repo version with tab-based indentation is a very sane thing to
-> do. However, I'd still like to be able to edit the files using soft
-> tabs, largely because any program that doesn't know what my tab size
-> should be applies its own interpretation and makes the code look
-> terrible (think terminal output for diff, cat, less, etc.)
->
-> On the other hand, a *crazy* mix of tabs and spaces is where some
-> indentation is done with spaces while other indentation is done with
-> tabs. Even crazier is a single line where the indentation is a mixture
-> of tabs and spaces. I think that just about everyone can agree that
-> this is not only crazy, but evil and is the kind of thing one really
-> wants to avoid in a code base. Unfortunately, when developers disagree
-> on their standard settings, it's very, very hard to avoid precisely
-> this kind of mess. My idea is to enable git to prevent this sort of
-> insanity if configured to do so.
+> When aborting a failed merge that has brought in a new path using "git
+> reset --hard" or "git read-tree --reset -u", we used to first forget about
+> the new path (via read_cache_unmerged) and then matched the working tree
+> to what is recorded in the index, thus ending up leaving the new path in
+> the work tree.
+
+Looks good to me. And from my tests, I think "git checkout -f" didn't have 
+this problem at all, because it ends up using not got read-tree, but doing 
+its own "reset_tree()" that uses unpack_trees().
+
+I do wonder if "git reset" should perhaps be written in those terms, 
+instead of just being a wrapper around git read-tree. But the patch looks 
+fine.
+
+		Linus
