@@ -1,64 +1,74 @@
-From: Johannes Sixt <j.sixt@viscovery.net>
-Subject: Re: What's cooking in git.git (Oct 2008, #03; Tue, 14)
-Date: Wed, 15 Oct 2008 10:36:23 +0200
-Message-ID: <48F5AB87.4080409@viscovery.net>
-References: <7v8wsq7rt5.fsf@gitster.siamese.dyndns.org>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH] Introduce core.keepHardLinks
+Date: Wed, 15 Oct 2008 11:07:32 +0200 (CEST)
+Message-ID: <alpine.DEB.1.00.0810151104400.22125@pacific.mpi-cbg.de.mpi-cbg.de>
+References: <alpine.DEB.1.00.0810111344241.22125@pacific.mpi-cbg.de.mpi-cbg.de> <20081012183855.GA5255@spearce.org> <alpine.DEB.1.00.0810131057150.22125@pacific.mpi-cbg.de.mpi-cbg.de> <7vskr0bnlk.fsf@gitster.siamese.dyndns.org>
+ <alpine.DEB.1.00.0810131611470.22125@pacific.mpi-cbg.de.mpi-cbg.de> <7vhc7g9z7s.fsf@gitster.siamese.dyndns.org> <alpine.DEB.1.00.0810131950140.22125@pacific.mpi-cbg.de.mpi-cbg.de> <7v63nw9xor.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, Petr Baudis <pasky@suse.cz>
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Oct 15 10:37:44 2008
+X-From: git-owner@vger.kernel.org Wed Oct 15 11:02:17 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Kq1sz-0007m4-Vn
-	for gcvg-git-2@gmane.org; Wed, 15 Oct 2008 10:37:42 +0200
+	id 1Kq2Ga-0006d3-MM
+	for gcvg-git-2@gmane.org; Wed, 15 Oct 2008 11:02:05 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752046AbYJOIg1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 15 Oct 2008 04:36:27 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752017AbYJOIg1
-	(ORCPT <rfc822;git-outgoing>); Wed, 15 Oct 2008 04:36:27 -0400
-Received: from lilzmailso01.liwest.at ([212.33.55.23]:56151 "EHLO
-	lilzmailso01.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751608AbYJOIg0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 15 Oct 2008 04:36:26 -0400
-Received: from cm56-163-160.liwest.at ([86.56.163.160] helo=linz.eudaptics.com)
-	by lilzmailso01.liwest.at with esmtpa (Exim 4.66)
-	(envelope-from <j.sixt@viscovery.net>)
-	id 1Kq1rj-0001Xd-JH; Wed, 15 Oct 2008 10:36:23 +0200
-Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.96])
-	by linz.eudaptics.com (Postfix) with ESMTP
-	id 5A97D69F; Wed, 15 Oct 2008 10:36:23 +0200 (CEST)
-User-Agent: Thunderbird 2.0.0.6 (Windows/20070728)
-In-Reply-To: <7v8wsq7rt5.fsf@gitster.siamese.dyndns.org>
-X-Spam-Score: 1.7 (+)
-X-Spam-Report: ALL_TRUSTED=-1.8, BAYES_99=3.5
+	id S1751859AbYJOJAw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 15 Oct 2008 05:00:52 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751736AbYJOJAv
+	(ORCPT <rfc822;git-outgoing>); Wed, 15 Oct 2008 05:00:51 -0400
+Received: from mail.gmx.net ([213.165.64.20]:39328 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1751468AbYJOJAv (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 15 Oct 2008 05:00:51 -0400
+Received: (qmail invoked by alias); 15 Oct 2008 09:00:48 -0000
+Received: from pacific.mpi-cbg.de (EHLO [141.5.10.38]) [141.5.10.38]
+  by mail.gmx.net (mp057) with SMTP; 15 Oct 2008 11:00:48 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX18lC+9BH3olNxhRCEfmiiXhYVADrfSSe6UGAt9N6E
+	+4Y79KhCAmUwac
+X-X-Sender: schindelin@pacific.mpi-cbg.de.mpi-cbg.de
+In-Reply-To: <7v63nw9xor.fsf@gitster.siamese.dyndns.org>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.68
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/98260>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/98261>
 
-Junio C Hamano schrieb:
-> * pb/rename-rowin32 (Sun Oct 12 21:01:23 2008 -0700) 2 commits
->  - (squash): index-pack: do not unconditionally make packfile read-
->    only
->  - Do not rename read-only files during a push
-> 
-> Supposedly fixes pack file renames on Windows.  The (squash) patch is my
-> attempt to fix its breakage.
+Hi,
 
-I'm afraid I can't reproduce the problem that the commit message
-describes. (But then I don't know whether I understand it correctly
-because it talks about "push to local repository", and I'm not sure how to
-read this).
+On Mon, 13 Oct 2008, Junio C Hamano wrote:
 
-Googling around indicates that this is a Samba bug:
-http://lists.samba.org/archive/samba/2005-July/108941.html
-OTOH, svn has considered a workaround for a similar problem just last week:
-http://www.nabble.com/-PATCH--Fix-for-renaming-errors-on-Samba-working-copies.-td19854585.html
-I cannot tell what the situation with current Samba versions is. Pasky?
+> You could have said something like "The users may want to have a 
+> checkout, and keep the same contents always appear elsewhere i.e. 
+> 'installing by hardlinking'.  In such a setup, editing the source with 
+> an editor configured not to break hardlinks would still work fine, but 
+> git-checkout will unconditionally break such links, which is 
+> undesirable.  Such a setup would want a configuration variable like 
+> this."
 
--- Hannes
+Sounds very nice.  Sorry for being grumpy, and not being able to come up 
+with such a beautiful description.
+
+> The documentation update needs to warn about the Shawn's scenario.  I also
+> do not know what this should do when you have two tracked paths with
+> identical contents hardlinked to each other.
+
+When the user does that, it's the user's wish.  I'd not let Git play cute 
+games with that.
+
+> It also raises another question.  Don't you want this to be an attribute 
+> for paths, not all-or-nothing configuration per repository?
+
+I'd rather not have it as an attribute, because it is not so much about 
+file types that should show this behavior.  It is more like an option that 
+I fully expect to be set in $HOME/.gitconfig.
+
+Ciao,
+Dscho
