@@ -1,108 +1,77 @@
-From: Brian Foster <brian.foster@innova-card.com>
-Subject: [Q] "status" of files in (a part of) the working tree
-Date: Wed, 15 Oct 2008 09:53:42 +0200
-Message-ID: <200810150953.42279.brian.foster@innova-card.com>
-Reply-To: Brian Foster <brian.foster@innova-card.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH try 2] t1301-shared-repo.sh: don't let a default ACL 
+ interfere with the test
+Date: Wed, 15 Oct 2008 00:57:33 -0700
+Message-ID: <7v7i8a47f6.fsf@gitster.siamese.dyndns.org>
+References: <1224022020.2699.4.camel@mattlaptop2.local>
+ <1224022216.2699.5.camel@mattlaptop2.local>
+ <7vzll66c5u.fsf@gitster.siamese.dyndns.org> <48F589EC.6050307@viscovery.net>
+ <7vmyh64bgy.fsf@gitster.siamese.dyndns.org> <48F59928.5040502@viscovery.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Wed Oct 15 09:54:55 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: Matt McCutchen <matt@mattmccutchen.net>, git@vger.kernel.org
+To: Johannes Sixt <j.sixt@viscovery.net>
+X-From: git-owner@vger.kernel.org Wed Oct 15 09:58:57 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Kq1DZ-0003oB-Or
-	for gcvg-git-2@gmane.org; Wed, 15 Oct 2008 09:54:54 +0200
+	id 1Kq1HS-000526-4x
+	for gcvg-git-2@gmane.org; Wed, 15 Oct 2008 09:58:54 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751672AbYJOHxl convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 15 Oct 2008 03:53:41 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752059AbYJOHxl
-	(ORCPT <rfc822;git-outgoing>); Wed, 15 Oct 2008 03:53:41 -0400
-Received: from fg-out-1718.google.com ([72.14.220.159]:53790 "EHLO
-	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751533AbYJOHxk convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 15 Oct 2008 03:53:40 -0400
-Received: by fg-out-1718.google.com with SMTP id 19so1939046fgg.17
-        for <git@vger.kernel.org>; Wed, 15 Oct 2008 00:53:39 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:reply-to:to:subject:date
-         :user-agent:mime-version:content-type:content-transfer-encoding
-         :content-disposition:message-id:sender;
-        bh=UGnVFcA/yzE75ffNZSbK5cRjUYgwO/2yJRsAvhVJep0=;
-        b=DFhP10ciMXutFaU+68a/atmM6V8cjdhtdactgSeYwKoJ9NyO+BrtlVBptYSDLLQEow
-         Q4Fq3o9+QnOqqd48ZMqOisrHUimezPCQ2fHXKEGnlIMiEWoLijx/Y08gybCIfJVadFky
-         CkwyOIYo2SXgASLZskwvtjZEE04EsqA0+hJC8=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=from:reply-to:to:subject:date:user-agent:mime-version:content-type
-         :content-transfer-encoding:content-disposition:message-id:sender;
-        b=SsYwvm1+ZiCIpT2BxR2t0z+B2JjW/vGfp7nQEJgkvP0Md4/FvlvLsGe9yrP+ETJeuC
-         0vSVKE2UNsNXGoyogAOC1rWIhYmrILxQCjr35vtXN9/dokowe+nCpMPmyZyKFTlNhEoz
-         mlg0WNT8EEB4uNSz0cou7osoisolVOjXmxnd8=
-Received: by 10.86.83.2 with SMTP id g2mr950137fgb.54.1224057219049;
-        Wed, 15 Oct 2008 00:53:39 -0700 (PDT)
-Received: from innova-card.com (1-61.252-81.static-ip.oleane.fr [81.252.61.1])
-        by mx.google.com with ESMTPS id e20sm10409789fga.1.2008.10.15.00.53.34
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Wed, 15 Oct 2008 00:53:36 -0700 (PDT)
-User-Agent: KMail/1.9.6 (enterprise 0.20070907.709405)
-Content-Disposition: inline
+	id S1752268AbYJOH5m (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 15 Oct 2008 03:57:42 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752211AbYJOH5m
+	(ORCPT <rfc822;git-outgoing>); Wed, 15 Oct 2008 03:57:42 -0400
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:44346 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752069AbYJOH5l (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 15 Oct 2008 03:57:41 -0400
+Received: from localhost.localdomain (localhost [127.0.0.1])
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 66A786C072;
+	Wed, 15 Oct 2008 03:57:39 -0400 (EDT)
+Received: from pobox.com (ip68-225-240-211.oc.oc.cox.net [68.225.240.211])
+ (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
+ certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
+ ESMTPSA id 6EEFE6C06E; Wed, 15 Oct 2008 03:57:35 -0400 (EDT)
+In-Reply-To: <48F59928.5040502@viscovery.net> (Johannes Sixt's message of
+ "Wed, 15 Oct 2008 09:18:00 +0200")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: F0080E78-9A8E-11DD-937C-1E1F86D30F62-77302942!a-sasl-fastnet.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/98255>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/98256>
 
+Johannes Sixt <j.sixt@viscovery.net> writes:
 
-Hello,
+>>> But that would also paper over unanticipated bad interactions with strange
+>>> ACLs that people might set, wouldn't it? By not placing this into
+>>> test-lib.sh there is a higher chance that such an interaction is revealed,
+>>> and we can react on it (educate users or fix the code).
+>> 
+>> What do you exactly mean by "educate users or fix the code"?  For example,
+>> by not putting this setfacl in test-lib.sh, t1301 revealed that with a
+>> default ACL higher up, "git init --shared" would not work as expected.
+>> 
+>> Then what?
+>> 
+>>  - Do you mean, by "educate users", that we teach users not to play fun
+>>    games with ACL in a git controled working tree?
+>
+> Correct. In the case of a shared repository we can educate users not to
+> play with ACLs.
+>
+>>  - Do you mean, by "fix the code", that we teach adjust_shared_perm() to
+>>    deal with ACL?
+>
+> Correct in principle, but we need not go this route in the case of shared
+> repositories because we better educate users.
 
- For every file in a directory of my working tree,
- I want to obtain a quick "status" summary (ideally,
- recursively, i.e. descending into each sub-directory):
- E.g., not-tracked, latest modification is not in
- the index, latest modification is in the index,
- not-modified, and so on.  As a hypothetical example
- (`# comments' added to explain what the line means):
-
-    $ git some-cmd
-    ? foo      # not-tracked
-    - bar      # tracked, not-modified
-    M xyzzy    # tracked, last modification not-in-index
-    I plover   # tracked, last modification in-the-index
-     ...
-    $=20
-
- The `git ls-files' command sort-of seems to almost do
- what I want, but not exactly.  For instance (this is
- written by hand but based on actual results):
-
-    $ git version
-    git version 1.6.0.2
-    $ git ls-files --exclude-standard --others --modified --cached -t
-    ? foo
-    H bar
-    H xyzzy
-    C xyzzy
-    ...
-    $=20
-
- However, note that some files are listed twice (which
- is confusing for my purposes), and I'm uncertain I've
- specified all the magic to see all non-excluded files
- regardless of their "status".  Obviously, once I know
- the appropriate set of magic I should be able to write
- a filter to process the output and remove the unwanted
- duplicates, but I'm wondering if someone has a better
- suggestion?  Generalissimo Goggle didn't find any clews.
-
-cheers!
-	-blf-
-
---=20
-=E2=80=9CHow many surrealists does it take to   | Brian Foster
- change a lightbulb? Three. One calms   | somewhere in south of France
- the warthog, and two fill the bathtub  |   Stop E$$o (ExxonMobil)!
- with brightly-coloured machine tools.=E2=80=9D |      http://www.stope=
-sso.com
+If that is the case what difference does your suggestion of not putting it
+in test-lib.sh make?  We discourage users from playing ACL games, and we
+protect ourselves from such by making sure the trash directory used for
+running tests are not contaminated with ACL.  Wouldn't it make more sense
+to do so for all the tests, so that future test writers do not have to
+worry about it?
