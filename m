@@ -1,73 +1,95 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] reset --hard/read-tree --reset -u: remove unmerged new
- paths
-Date: Wed, 15 Oct 2008 23:27:46 -0700
-Message-ID: <7vprm1jbq5.fsf@gitster.siamese.dyndns.org>
-References: <20081015115654.fb34438f.akpm@linux-foundation.org>
- <alpine.DEB.1.10.0810151208100.7808@asgard.lang.hm>
- <alpine.DEB.1.10.0810151211580.7808@asgard.lang.hm>
- <alpine.LFD.2.00.0810151219120.3288@nehalem.linux-foundation.org>
- <20081015124949.b657a8db.akpm@linux-foundation.org>
- <alpine.LFD.2.00.0810151256410.3288@nehalem.linux-foundation.org>
- <alpine.LFD.2.00.0810151311210.3288@nehalem.linux-foundation.org>
- <7v3aixqzrn.fsf@gitster.siamese.dyndns.org>
- <7vy70ppiq1.fsf_-_@gitster.siamese.dyndns.org>
- <alpine.LFD.2.00.0810151615550.3288@nehalem.linux-foundation.org>
+From: Pete Harlan <pgit@pcharlan.com>
+Subject: Re: git-svnimport.perl bug when copy source path has a revision
+Date: Wed, 15 Oct 2008 23:43:43 -0700
+Message-ID: <48F6E29F.1050807@pcharlan.com>
+References: <quack.20081015T1211.lth8wsp65dk@roar.cs.berkeley.edu>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Andrew Morton <akpm@linux-foundation.org>, david@lang.hm,
-	Git Mailing List <git@vger.kernel.org>
-To: Linus Torvalds <torvalds@linux-foundation.org>
-X-From: git-owner@vger.kernel.org Thu Oct 16 08:29:23 2008
+Content-Transfer-Encoding: 7bit
+Cc: Git mailing list <git@vger.kernel.org>
+To: Karl Chen <quarl@cs.berkeley.edu>
+X-From: git-owner@vger.kernel.org Thu Oct 16 08:44:58 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KqMMM-0001nL-MI
-	for gcvg-git-2@gmane.org; Thu, 16 Oct 2008 08:29:23 +0200
+	id 1KqMbR-0005ga-RI
+	for gcvg-git-2@gmane.org; Thu, 16 Oct 2008 08:44:58 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752115AbYJPG2J (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 16 Oct 2008 02:28:09 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752074AbYJPG2H
-	(ORCPT <rfc822;git-outgoing>); Thu, 16 Oct 2008 02:28:07 -0400
-Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:40469 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751466AbYJPG2H (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 16 Oct 2008 02:28:07 -0400
-Received: from localhost.localdomain (localhost [127.0.0.1])
-	by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id 319E38912A;
-	Thu, 16 Oct 2008 02:28:05 -0400 (EDT)
-Received: from pobox.com (ip68-225-240-211.oc.oc.cox.net [68.225.240.211])
- (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
- certificate requested) by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with
- ESMTPSA id A4D5589127; Thu, 16 Oct 2008 02:27:58 -0400 (EDT)
-In-Reply-To: <alpine.LFD.2.00.0810151615550.3288@nehalem.linux-foundation.org> (Linus
- Torvalds's message of "Wed, 15 Oct 2008 16:16:17 -0700 (PDT)")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: 97208BD8-9B4B-11DD-9DED-4F5276724C3F-77302942!a-sasl-quonix.pobox.com
+	id S1752537AbYJPGnp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 16 Oct 2008 02:43:45 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752616AbYJPGnp
+	(ORCPT <rfc822;git-outgoing>); Thu, 16 Oct 2008 02:43:45 -0400
+Received: from lax-green-bigip-5.dreamhost.com ([208.113.200.5]:49193 "EHLO
+	swarthymail-a1.g.dreamhost.com" rhost-flags-OK-OK-OK-FAIL)
+	by vger.kernel.org with ESMTP id S1752221AbYJPGno (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 16 Oct 2008 02:43:44 -0400
+Received: from [192.168.0.2] (031.132-78-65.ftth.swbr.surewest.net [65.78.132.31])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by swarthymail-a1.g.dreamhost.com (Postfix) with ESMTP id 396328F18E;
+	Wed, 15 Oct 2008 23:43:44 -0700 (PDT)
+User-Agent: Mozilla-Thunderbird 2.0.0.16 (X11/20080724)
+In-Reply-To: <quack.20081015T1211.lth8wsp65dk@roar.cs.berkeley.edu>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/98348>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/98349>
 
-Linus Torvalds <torvalds@linux-foundation.org> writes:
+Karl Chen wrote:
+> This looks like a bug in git-svnimport.perl.  If a tag (or
+> branch?) is created retroactively, git-svnimport doesn't respect
+> the copy source revision.
+> 
+> To reproduce:
+> 
+> svnadmin create somerepo;  export R=file://$PWD/somerepo
+> 
+> svn co $R wc && cd wc
+> 
+> mkdir trunk tags && svn add trunk tags && svn commit -m ""  # rev 1
+> 
+> cd trunk
+> echo a > a
+> echo b > b
+> echo c > c
+> 
+> svn add a && svn commit -m "commit a"   # rev 2
+> svn add b && svn commit -m "commit b"   # rev 3
+> # Copy from revision 2 instead of HEAD:
+> svn cp -m "tag rev 2" $R/trunk@2 $R/tags/mytag  # rev 4
+> svn add c && svn commit -m "commit c"   # rev 5
+> 
+> svn ls $R/tags/mytag 
+> # Lists only 'a'
+> 
+> mkdir /tmp/gitrepo && cd /tmp/gitrepo
+> perl /usr/share/doc/git-core/contrib/examples/git-svnimport.perl $R
+> 
+> git log mytag
+> # 'mytag' includes "commit b"; it was created as if it were tagged
+> # at r3; the "@2" was ignored.
 
-> On Wed, 15 Oct 2008, Junio C Hamano wrote:
->>
->> When aborting a failed merge that has brought in a new path using "git
->> reset --hard" or "git read-tree --reset -u", we used to first forget about
->> the new path (via read_cache_unmerged) and then matched the working tree
->> to what is recorded in the index, thus ending up leaving the new path in
->> the work tree.
->
-> Looks good to me. And from my tests, I think "git checkout -f" didn't have 
-> this problem at all, because it ends up using not got read-tree, but doing 
-> its own "reset_tree()" that uses unpack_trees().
->
-> I do wonder if "git reset" should perhaps be written in those terms, 
-> instead of just being a wrapper around git read-tree. But the patch looks 
-> fine.
+If you replace this:
 
-Let's do this for 'maint' and I'll let others think about possible
-improvements, then ;-).
+> perl /usr/share/doc/git-core/contrib/examples/git-svnimport.perl $R
+
+with:
+
+git svn init -T trunk -t tags $R
+git svn fetch
+git log tags/mytag
+
+you get a log that doesn't include "commit b".  (And it does include the
+tag commit, as svn does.)  tags/mytag is a branch, visibile via "git
+branch -r", instead of a tag.  I'm not fluent enough in git svn to know
+if this is a bug or a feature.
+
+According to git logs (8cb070a4, fee9832a), git-svnimport.perl hasn't
+been maintained in a while, presumably because git svn provides a
+superset of its functionality.
+
+HTH,
+
+--Pete
