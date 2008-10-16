@@ -1,70 +1,250 @@
-From: "Richard Hartmann" <richih.mailinglist@gmail.com>
-Subject: Re: Feedback outside of the user survey
-Date: Thu, 16 Oct 2008 15:18:32 +0200
-Message-ID: <2d460de70810160618u1803375aj913145a5060e5308@mail.gmail.com>
-References: <2d460de70810160319r4bed8643g884508cdeba772@mail.gmail.com>
-	 <20081016115628.GA24836@garry-x300.arpnetworks.com>
+From: Miklos Vajna <vmiklos@frugalware.org>
+Subject: [PATCH v2] parse-opt: migrate builtin-checkout-index.
+Date: Thu, 16 Oct 2008 15:28:10 +0200
+Message-ID: <20081016132810.GG536@genesis.frugalware.org>
+References: <1224111343-17433-1-git-send-email-vmiklos@frugalware.org> <20081016082340.GB15266@artemis.corp>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: "Garry Dolley" <gdolley@arpnetworks.com>
-X-From: git-owner@vger.kernel.org Thu Oct 16 15:19:50 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Pierre Habouzit <madcoder@debian.org>
+X-From: git-owner@vger.kernel.org Thu Oct 16 15:30:06 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KqSlW-0004kR-QC
-	for gcvg-git-2@gmane.org; Thu, 16 Oct 2008 15:19:48 +0200
+	id 1KqSus-0000QK-3q
+	for gcvg-git-2@gmane.org; Thu, 16 Oct 2008 15:29:26 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751209AbYJPNSf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 16 Oct 2008 09:18:35 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751168AbYJPNSe
-	(ORCPT <rfc822;git-outgoing>); Thu, 16 Oct 2008 09:18:34 -0400
-Received: from yx-out-2324.google.com ([74.125.44.28]:4981 "EHLO
-	yx-out-2324.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751163AbYJPNSe (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 16 Oct 2008 09:18:34 -0400
-Received: by yx-out-2324.google.com with SMTP id 8so715165yxm.1
-        for <git@vger.kernel.org>; Thu, 16 Oct 2008 06:18:32 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to
-         :subject:cc:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:references;
-        bh=ZYjzif8W6GiHoteQOPR4Sm0ASrX+rXtT/OUWPJyfZiI=;
-        b=N/gMT6jrSKAUdXU7qy1pKbq1H5WEV2UvDnLIalmWlAanUSpvzUp8JlvlqBUma5afGo
-         +UIem4I+wlEtcoHueo6kS/E6oC5lXC4vi+tNmTJ8lmN1y1fMbp+j5kkzZnUJ4r1pcD2n
-         g91MUFEBGiz9ZS5qEdXsIgZQHQUT1p2I2ja10=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
-         :content-type:content-transfer-encoding:content-disposition
-         :references;
-        b=xMn8UFu2icKi0VNCmMZSMG6m4IxzNBvBwarwJAVvyN2Zd8ZhMHPd1pHdqrC19BVNpn
-         KrROaejTMMep4jokrDBkqjUssTp1LQBiwGiSdv4/4NXByunD5Fy6x6BpfT2/kjCuPUNg
-         5HvpUVawf5tG+2XdlOfJl/ZFOkGv0O4GvTuW8=
-Received: by 10.101.70.15 with SMTP id x15mr3160914ank.112.1224163112247;
-        Thu, 16 Oct 2008 06:18:32 -0700 (PDT)
-Received: by 10.100.43.19 with HTTP; Thu, 16 Oct 2008 06:18:32 -0700 (PDT)
-In-Reply-To: <20081016115628.GA24836@garry-x300.arpnetworks.com>
+	id S1751634AbYJPN2O (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 16 Oct 2008 09:28:14 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751288AbYJPN2O
+	(ORCPT <rfc822;git-outgoing>); Thu, 16 Oct 2008 09:28:14 -0400
+Received: from virgo.iok.hu ([193.202.89.103]:37454 "EHLO virgo.iok.hu"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751252AbYJPN2N (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 16 Oct 2008 09:28:13 -0400
+Received: from kag.elte.hu (kag.elte.hu [157.181.177.1])
+	by virgo.iok.hu (Postfix) with ESMTP id 584DE580DA;
+	Thu, 16 Oct 2008 15:28:11 +0200 (CEST)
+Received: from genesis.frugalware.org (frugalware.elte.hu [157.181.177.34])
+	by kag.elte.hu (Postfix) with ESMTP id 0121A4465E;
+	Thu, 16 Oct 2008 15:28:10 +0200 (CEST)
+Received: by genesis.frugalware.org (Postfix, from userid 1000)
+	id AC31611901A1; Thu, 16 Oct 2008 15:28:10 +0200 (CEST)
 Content-Disposition: inline
+In-Reply-To: <20081016082340.GB15266@artemis.corp>
+User-Agent: Mutt/1.5.17 (2007-11-01)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/98377>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/98378>
 
-On Thu, Oct 16, 2008 at 13:56, Garry Dolley <gdolley@arpnetworks.com> wrote:
+Signed-off-by: Miklos Vajna <vmiklos@frugalware.org>
+---
 
-> I know from an external point of view, it seems pulling a subdir
-> wouldn't be a big deal; but if you look at git internals, you start
-> to realize why it's an option that isn't on the table.
+On Thu, Oct 16, 2008 at 10:23:40AM +0200, Pierre Habouzit <madcoder@debian.org> wrote:
+> Since git checkout-index -h will show you all the options, I usually
+> prefer to use "[options] [--] <file>...", it's 10x as readable, and the
+> user will have the [options] detail just below.
 
-That's my understanding as well. And you can simply branch
-out a subdir when you want to work on it.
-I am not saying this should be changed, just that it should
-be mention in The Big Overview.
+OK, changed.
 
+ builtin-checkout-index.c |  151 +++++++++++++++++++++++++---------------------
+ 1 files changed, 82 insertions(+), 69 deletions(-)
 
-Richard
+diff --git a/builtin-checkout-index.c b/builtin-checkout-index.c
+index 4ba2702..bc91f94 100644
+--- a/builtin-checkout-index.c
++++ b/builtin-checkout-index.c
+@@ -40,6 +40,7 @@
+ #include "cache.h"
+ #include "quote.h"
+ #include "cache-tree.h"
++#include "parse-options.h"
+ 
+ #define CHECKOUT_ALL 4
+ static int line_termination = '\n';
+@@ -153,11 +154,55 @@ static void checkout_all(const char *prefix, int prefix_length)
+ 		exit(128);
+ }
+ 
+-static const char checkout_cache_usage[] =
+-"git checkout-index [-u] [-q] [-a] [-f] [-n] [--stage=[123]|all] [--prefix=<string>] [--temp] [--] <file>...";
++static const char * const builtin_checkout_index_usage[] = {
++	"git checkout-index [options] [--] <file>...",
++	NULL
++};
+ 
+ static struct lock_file lock_file;
+ 
++static int option_parse_u(const struct option *opt,
++			      const char *arg, int unset)
++{
++	int *newfd = opt->value;
++
++	state.refresh_cache = 1;
++	if (*newfd < 0)
++		*newfd = hold_locked_index(&lock_file, 1);
++	return 0;
++}
++
++static int option_parse_z(const struct option *opt,
++			  const char *arg, int unset)
++{
++	line_termination = unset;
++	return 0;
++}
++
++static int option_parse_prefix(const struct option *opt,
++			       const char *arg, int unset)
++{
++	state.base_dir = arg;
++	state.base_dir_len = strlen(arg);
++	return 0;
++}
++
++static int option_parse_stage(const struct option *opt,
++			      const char *arg, int unset)
++{
++	if (!strcmp(arg, "all")) {
++		to_tempfile = 1;
++		checkout_stage = CHECKOUT_ALL;
++	} else {
++		int ch = arg[0];
++		if ('1' <= ch && ch <= '3')
++			checkout_stage = arg[0] - '0';
++		else
++			die("stage should be between 1 and 3 or all");
++	}
++	return 0;
++}
++
+ int cmd_checkout_index(int argc, const char **argv, const char *prefix)
+ {
+ 	int i;
+@@ -165,6 +210,33 @@ int cmd_checkout_index(int argc, const char **argv, const char *prefix)
+ 	int all = 0;
+ 	int read_from_stdin = 0;
+ 	int prefix_length;
++	int force = 0, quiet = 0, not_new = 0;
++	struct option builtin_checkout_index_options[] = {
++		OPT_BOOLEAN('a', "all", &all,
++			"checks out all files in the index"),
++		OPT_BOOLEAN('f', "force", &force,
++			"forces overwrite of existing files"),
++		OPT__QUIET(&quiet),
++		OPT_BOOLEAN('n', "no-create", &not_new,
++			"don't checkout new files"),
++		{ OPTION_CALLBACK, 'u', "index", &newfd, NULL,
++			"update stat information in the index file",
++			PARSE_OPT_NOARG, option_parse_u },
++		{ OPTION_CALLBACK, 'z', NULL, NULL, NULL,
++			"paths are separated with NUL character",
++			PARSE_OPT_NOARG, option_parse_z },
++		OPT_BOOLEAN(0, "stdin", &read_from_stdin,
++			"read list of paths from the standard input"),
++		OPT_BOOLEAN(0, "temp", &to_tempfile,
++			"write the content to temporary files"),
++		OPT_CALLBACK(0, "prefix", NULL, "string",
++			"when creating files, prepend <string>",
++			option_parse_prefix),
++		OPT_CALLBACK(0, "stage", NULL, NULL,
++			"copy out the files from named stage",
++			option_parse_stage),
++		OPT_END()
++	};
+ 
+ 	git_config(git_default_config, NULL);
+ 	state.base_dir = "";
+@@ -174,72 +246,13 @@ int cmd_checkout_index(int argc, const char **argv, const char *prefix)
+ 		die("invalid cache");
+ 	}
+ 
+-	for (i = 1; i < argc; i++) {
+-		const char *arg = argv[i];
+-
+-		if (!strcmp(arg, "--")) {
+-			i++;
+-			break;
+-		}
+-		if (!strcmp(arg, "-a") || !strcmp(arg, "--all")) {
+-			all = 1;
+-			continue;
+-		}
+-		if (!strcmp(arg, "-f") || !strcmp(arg, "--force")) {
+-			state.force = 1;
+-			continue;
+-		}
+-		if (!strcmp(arg, "-q") || !strcmp(arg, "--quiet")) {
+-			state.quiet = 1;
+-			continue;
+-		}
+-		if (!strcmp(arg, "-n") || !strcmp(arg, "--no-create")) {
+-			state.not_new = 1;
+-			continue;
+-		}
+-		if (!strcmp(arg, "-u") || !strcmp(arg, "--index")) {
+-			state.refresh_cache = 1;
+-			if (newfd < 0)
+-				newfd = hold_locked_index(&lock_file, 1);
+-			continue;
+-		}
+-		if (!strcmp(arg, "-z")) {
+-			line_termination = 0;
+-			continue;
+-		}
+-		if (!strcmp(arg, "--stdin")) {
+-			if (i != argc - 1)
+-				die("--stdin must be at the end");
+-			read_from_stdin = 1;
+-			i++; /* do not consider arg as a file name */
+-			break;
+-		}
+-		if (!strcmp(arg, "--temp")) {
+-			to_tempfile = 1;
+-			continue;
+-		}
+-		if (!prefixcmp(arg, "--prefix=")) {
+-			state.base_dir = arg+9;
+-			state.base_dir_len = strlen(state.base_dir);
+-			continue;
+-		}
+-		if (!prefixcmp(arg, "--stage=")) {
+-			if (!strcmp(arg + 8, "all")) {
+-				to_tempfile = 1;
+-				checkout_stage = CHECKOUT_ALL;
+-			} else {
+-				int ch = arg[8];
+-				if ('1' <= ch && ch <= '3')
+-					checkout_stage = arg[8] - '0';
+-				else
+-					die("stage should be between 1 and 3 or all");
+-			}
+-			continue;
+-		}
+-		if (arg[0] == '-')
+-			usage(checkout_cache_usage);
+-		break;
+-	}
++	argc = parse_options(argc, argv, builtin_checkout_index_options,
++			builtin_checkout_index_usage, 0);
++	state.force = force;
++	state.quiet = quiet;
++	state.not_new = not_new;
++	if (argc && read_from_stdin)
++		die("--stdin must be at the end");
+ 
+ 	if (state.base_dir_len || to_tempfile) {
+ 		/* when --prefix is specified we do not
+@@ -253,7 +266,7 @@ int cmd_checkout_index(int argc, const char **argv, const char *prefix)
+ 	}
+ 
+ 	/* Check out named files first */
+-	for ( ; i < argc; i++) {
++	for (i = 0; i < argc; i++) {
+ 		const char *arg = argv[i];
+ 		const char *p;
+ 
+-- 
+1.6.0.2
