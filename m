@@ -1,250 +1,122 @@
-From: Miklos Vajna <vmiklos@frugalware.org>
-Subject: [PATCH v2] parse-opt: migrate builtin-checkout-index.
-Date: Thu, 16 Oct 2008 15:28:10 +0200
-Message-ID: <20081016132810.GG536@genesis.frugalware.org>
-References: <1224111343-17433-1-git-send-email-vmiklos@frugalware.org> <20081016082340.GB15266@artemis.corp>
+From: "=?ISO-8859-1?Q?Santi_B=E9jar?=" <santi@agolina.net>
+Subject: Re: [gambit-list] Separating generated files?
+Date: Thu, 16 Oct 2008 15:29:27 +0200
+Message-ID: <adf1fd3d0810160629o31540fd7ke08288961a046ee2@mail.gmail.com>
+References: <E6D34628-783D-4597-8B00-C10F27F63BE2@iro.umontreal.ca>
+	 <48F5D86B.6040501@pflanze.mine.nu>
+	 <fcaeb9bf0810150754s613f2c44pd8341711d9d73f73@mail.gmail.com>
+	 <vpqiqrt3mgs.fsf@bauges.imag.fr>
+	 <48F61D77.3080100@drmicha.warpmail.net>
+	 <48F62834.9080102@pflanze.mine.nu> <48F72CED.6030508@pflanze.mine.nu>
+	 <adf1fd3d0810160512if056c3dt5eeec6a097e1a7a7@mail.gmail.com>
+	 <48F73463.2050902@pflanze.mine.nu>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Pierre Habouzit <madcoder@debian.org>
-X-From: git-owner@vger.kernel.org Thu Oct 16 15:30:06 2008
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: "Michael J Gruber" <git@drmicha.warpmail.net>,
+	"Matthieu Moy" <Matthieu.Moy@imag.fr>,
+	"Nguyen Thai Ngoc Duy" <pclouds@gmail.com>,
+	"Git Mailing List" <git@vger.kernel.org>,
+	"Marc Feeley" <feeley@iro.umontreal.ca>,
+	"Gambit List" <Gambit-list@iro.umontreal.ca>
+To: "Christian Jaeger" <christian@pflanze.mine.nu>
+X-From: git-owner@vger.kernel.org Thu Oct 16 15:31:28 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KqSus-0000QK-3q
-	for gcvg-git-2@gmane.org; Thu, 16 Oct 2008 15:29:26 +0200
+	id 1KqSw7-0000xP-80
+	for gcvg-git-2@gmane.org; Thu, 16 Oct 2008 15:30:43 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751634AbYJPN2O (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 16 Oct 2008 09:28:14 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751288AbYJPN2O
-	(ORCPT <rfc822;git-outgoing>); Thu, 16 Oct 2008 09:28:14 -0400
-Received: from virgo.iok.hu ([193.202.89.103]:37454 "EHLO virgo.iok.hu"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751252AbYJPN2N (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 16 Oct 2008 09:28:13 -0400
-Received: from kag.elte.hu (kag.elte.hu [157.181.177.1])
-	by virgo.iok.hu (Postfix) with ESMTP id 584DE580DA;
-	Thu, 16 Oct 2008 15:28:11 +0200 (CEST)
-Received: from genesis.frugalware.org (frugalware.elte.hu [157.181.177.34])
-	by kag.elte.hu (Postfix) with ESMTP id 0121A4465E;
-	Thu, 16 Oct 2008 15:28:10 +0200 (CEST)
-Received: by genesis.frugalware.org (Postfix, from userid 1000)
-	id AC31611901A1; Thu, 16 Oct 2008 15:28:10 +0200 (CEST)
+	id S1753267AbYJPN3a convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 16 Oct 2008 09:29:30 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752187AbYJPN3a
+	(ORCPT <rfc822;git-outgoing>); Thu, 16 Oct 2008 09:29:30 -0400
+Received: from gv-out-0910.google.com ([216.239.58.188]:33347 "EHLO
+	gv-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751816AbYJPN33 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 16 Oct 2008 09:29:29 -0400
+Received: by gv-out-0910.google.com with SMTP id e6so746802gvc.37
+        for <git@vger.kernel.org>; Thu, 16 Oct 2008 06:29:27 -0700 (PDT)
+Received: by 10.103.16.14 with SMTP id t14mr1417361mui.25.1224163767189;
+        Thu, 16 Oct 2008 06:29:27 -0700 (PDT)
+Received: by 10.102.247.10 with HTTP; Thu, 16 Oct 2008 06:29:27 -0700 (PDT)
+In-Reply-To: <48F73463.2050902@pflanze.mine.nu>
 Content-Disposition: inline
-In-Reply-To: <20081016082340.GB15266@artemis.corp>
-User-Agent: Mutt/1.5.17 (2007-11-01)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/98378>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/98379>
 
-Signed-off-by: Miklos Vajna <vmiklos@frugalware.org>
----
+On Thu, Oct 16, 2008 at 2:32 PM, Christian Jaeger
+<christian@pflanze.mine.nu> wrote:
+> Santi B=E9jar wrote:
+>>
+>> It looks like the html and man branches of git.git.
+>>
+>> http://git.kernel.org/?p=3Dgit/git.git;a=3Dshortlog;h=3Dhtml
+>> http://git.kernel.org/?p=3Dgit/git.git;a=3Dshortlog;h=3Dman
+>>
+>> They are automatically generated when Junio pushes the branches to
+>> kernel.org. Afterwards you can do a "make quick-install-html" and
+>> install the preformated html pages from these branches. They are
+>> generated with the dodoc.sh script from the todo branch in git.git
+>> (look inside for instructions):
+>>
+>> http://git.kernel.org/?p=3Dgit/git.git;a=3Dblob_plain;f=3Ddodoc.sh;h=
+b=3Dtodo
+>
+> This script only generates the html / man branches, it doesn't help f=
+ind the
+> right version for a given git version, right?
 
-On Thu, Oct 16, 2008 at 10:23:40AM +0200, Pierre Habouzit <madcoder@debian.org> wrote:
-> Since git checkout-index -h will show you all the options, I usually
-> prefer to use "[options] [--] <file>...", it's 10x as readable, and the
-> user will have the [options] detail just below.
+Right, one script to generate and one to get the right version.
 
-OK, changed.
+>
+> The differences are:
+>
+> - the html / man branches have a strictly linear history
 
- builtin-checkout-index.c |  151 +++++++++++++++++++++++++---------------------
- 1 files changed, 82 insertions(+), 69 deletions(-)
+Yes, because in this case it is not needed to replicate the whole
+history, but it could be improved.
 
-diff --git a/builtin-checkout-index.c b/builtin-checkout-index.c
-index 4ba2702..bc91f94 100644
---- a/builtin-checkout-index.c
-+++ b/builtin-checkout-index.c
-@@ -40,6 +40,7 @@
- #include "cache.h"
- #include "quote.h"
- #include "cache-tree.h"
-+#include "parse-options.h"
- 
- #define CHECKOUT_ALL 4
- static int line_termination = '\n';
-@@ -153,11 +154,55 @@ static void checkout_all(const char *prefix, int prefix_length)
- 		exit(128);
- }
- 
--static const char checkout_cache_usage[] =
--"git checkout-index [-u] [-q] [-a] [-f] [-n] [--stage=[123]|all] [--prefix=<string>] [--temp] [--] <file>...";
-+static const char * const builtin_checkout_index_usage[] = {
-+	"git checkout-index [options] [--] <file>...",
-+	NULL
-+};
- 
- static struct lock_file lock_file;
- 
-+static int option_parse_u(const struct option *opt,
-+			      const char *arg, int unset)
-+{
-+	int *newfd = opt->value;
-+
-+	state.refresh_cache = 1;
-+	if (*newfd < 0)
-+		*newfd = hold_locked_index(&lock_file, 1);
-+	return 0;
-+}
-+
-+static int option_parse_z(const struct option *opt,
-+			  const char *arg, int unset)
-+{
-+	line_termination = unset;
-+	return 0;
-+}
-+
-+static int option_parse_prefix(const struct option *opt,
-+			       const char *arg, int unset)
-+{
-+	state.base_dir = arg;
-+	state.base_dir_len = strlen(arg);
-+	return 0;
-+}
-+
-+static int option_parse_stage(const struct option *opt,
-+			      const char *arg, int unset)
-+{
-+	if (!strcmp(arg, "all")) {
-+		to_tempfile = 1;
-+		checkout_stage = CHECKOUT_ALL;
-+	} else {
-+		int ch = arg[0];
-+		if ('1' <= ch && ch <= '3')
-+			checkout_stage = arg[0] - '0';
-+		else
-+			die("stage should be between 1 and 3 or all");
-+	}
-+	return 0;
-+}
-+
- int cmd_checkout_index(int argc, const char **argv, const char *prefix)
- {
- 	int i;
-@@ -165,6 +210,33 @@ int cmd_checkout_index(int argc, const char **argv, const char *prefix)
- 	int all = 0;
- 	int read_from_stdin = 0;
- 	int prefix_length;
-+	int force = 0, quiet = 0, not_new = 0;
-+	struct option builtin_checkout_index_options[] = {
-+		OPT_BOOLEAN('a', "all", &all,
-+			"checks out all files in the index"),
-+		OPT_BOOLEAN('f', "force", &force,
-+			"forces overwrite of existing files"),
-+		OPT__QUIET(&quiet),
-+		OPT_BOOLEAN('n', "no-create", &not_new,
-+			"don't checkout new files"),
-+		{ OPTION_CALLBACK, 'u', "index", &newfd, NULL,
-+			"update stat information in the index file",
-+			PARSE_OPT_NOARG, option_parse_u },
-+		{ OPTION_CALLBACK, 'z', NULL, NULL, NULL,
-+			"paths are separated with NUL character",
-+			PARSE_OPT_NOARG, option_parse_z },
-+		OPT_BOOLEAN(0, "stdin", &read_from_stdin,
-+			"read list of paths from the standard input"),
-+		OPT_BOOLEAN(0, "temp", &to_tempfile,
-+			"write the content to temporary files"),
-+		OPT_CALLBACK(0, "prefix", NULL, "string",
-+			"when creating files, prepend <string>",
-+			option_parse_prefix),
-+		OPT_CALLBACK(0, "stage", NULL, NULL,
-+			"copy out the files from named stage",
-+			option_parse_stage),
-+		OPT_END()
-+	};
- 
- 	git_config(git_default_config, NULL);
- 	state.base_dir = "";
-@@ -174,72 +246,13 @@ int cmd_checkout_index(int argc, const char **argv, const char *prefix)
- 		die("invalid cache");
- 	}
- 
--	for (i = 1; i < argc; i++) {
--		const char *arg = argv[i];
--
--		if (!strcmp(arg, "--")) {
--			i++;
--			break;
--		}
--		if (!strcmp(arg, "-a") || !strcmp(arg, "--all")) {
--			all = 1;
--			continue;
--		}
--		if (!strcmp(arg, "-f") || !strcmp(arg, "--force")) {
--			state.force = 1;
--			continue;
--		}
--		if (!strcmp(arg, "-q") || !strcmp(arg, "--quiet")) {
--			state.quiet = 1;
--			continue;
--		}
--		if (!strcmp(arg, "-n") || !strcmp(arg, "--no-create")) {
--			state.not_new = 1;
--			continue;
--		}
--		if (!strcmp(arg, "-u") || !strcmp(arg, "--index")) {
--			state.refresh_cache = 1;
--			if (newfd < 0)
--				newfd = hold_locked_index(&lock_file, 1);
--			continue;
--		}
--		if (!strcmp(arg, "-z")) {
--			line_termination = 0;
--			continue;
--		}
--		if (!strcmp(arg, "--stdin")) {
--			if (i != argc - 1)
--				die("--stdin must be at the end");
--			read_from_stdin = 1;
--			i++; /* do not consider arg as a file name */
--			break;
--		}
--		if (!strcmp(arg, "--temp")) {
--			to_tempfile = 1;
--			continue;
--		}
--		if (!prefixcmp(arg, "--prefix=")) {
--			state.base_dir = arg+9;
--			state.base_dir_len = strlen(state.base_dir);
--			continue;
--		}
--		if (!prefixcmp(arg, "--stage=")) {
--			if (!strcmp(arg + 8, "all")) {
--				to_tempfile = 1;
--				checkout_stage = CHECKOUT_ALL;
--			} else {
--				int ch = arg[8];
--				if ('1' <= ch && ch <= '3')
--					checkout_stage = arg[8] - '0';
--				else
--					die("stage should be between 1 and 3 or all");
--			}
--			continue;
--		}
--		if (arg[0] == '-')
--			usage(checkout_cache_usage);
--		break;
--	}
-+	argc = parse_options(argc, argv, builtin_checkout_index_options,
-+			builtin_checkout_index_usage, 0);
-+	state.force = force;
-+	state.quiet = quiet;
-+	state.not_new = not_new;
-+	if (argc && read_from_stdin)
-+		die("--stdin must be at the end");
- 
- 	if (state.base_dir_len || to_tempfile) {
- 		/* when --prefix is specified we do not
-@@ -253,7 +266,7 @@ int cmd_checkout_index(int argc, const char **argv, const char *prefix)
- 	}
- 
- 	/* Check out named files first */
--	for ( ; i < argc; i++) {
-+	for (i = 0; i < argc; i++) {
- 		const char *arg = argv[i];
- 		const char *p;
- 
--- 
-1.6.0.2
+> and are centrally maintained. This solves the distribution issue for =
+end users. But while
+> developping the compiler, the developers may need to go back in the h=
+istory
+> of their own development (e.g. when the current compiler doesn't work
+> anymore), and the suspected usefulness of being able to see and track
+> differences in the generated code also isn't available for a strictly
+> central approach.
+
+So, you can divide the problem in two: (a) generated files in the
+remote repositories (these can be generated automatically on the
+server or in a dedicated server) (b) local generated files for local
+commits. If both follow the same format to specify the original commit
+you can use the same script to get it.
+
+>
+> - the script above is only for creating and committing the derived fi=
+les, in
+> a hook similar to the one I suggested in build/.git/hooks/commit-msg;=
+ this
+> is the "cd build; git commit -m 'generated files for source repositor=
+y
+> commit
+>> `git rev-parse HEAD`'" part; the more interesting part comes from
+>> automatically finding the right commit in the generated branches for=
+ a given
+>> source commit. This is what I intend to solve with the
+>> "intergit-find-matching-commit-in" script. Said in a simpler way: th=
+e git
+>> html / man branches do not offer automatically resolvable linking.
+
+They offer this (Autogenerated HTML docs for v1.6.0.2-530-g67faa) but
+there is no script around it.
+
+My point was that there are other project keeping generated files (and
+sometimes I would like it too), so you can see what they are doing. At
+the end, maybe, you system could be usefull for them also.
+
+Santi
