@@ -1,67 +1,89 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH] Preserve file permissions on git-reflog expire
-Date: Thu, 16 Oct 2008 14:34:45 +0200 (CEST)
-Message-ID: <alpine.DEB.1.00.0810161434220.22125@pacific.mpi-cbg.de.mpi-cbg.de>
-References: <48F629C2.70203@datacom.ind.br> <7v3aix4ud4.fsf@gitster.siamese.dyndns.org>
+From: Christian Jaeger <christian@pflanze.mine.nu>
+Subject: Re: [gambit-list] Separating generated files?
+Date: Thu, 16 Oct 2008 14:32:35 +0200
+Message-ID: <48F73463.2050902@pflanze.mine.nu>
+References: <E6D34628-783D-4597-8B00-C10F27F63BE2@iro.umontreal.ca>	 <48F5D86B.6040501@pflanze.mine.nu>	 <fcaeb9bf0810150754s613f2c44pd8341711d9d73f73@mail.gmail.com>	 <vpqiqrt3mgs.fsf@bauges.imag.fr>	 <48F61D77.3080100@drmicha.warpmail.net>	 <48F62834.9080102@pflanze.mine.nu> <48F72CED.6030508@pflanze.mine.nu> <adf1fd3d0810160512if056c3dt5eeec6a097e1a7a7@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Samuel Lucas Vaz de Mello <samuellucas@datacom.ind.br>,
-	git@vger.kernel.org, "Shawn O. Pearce" <spearce@spearce.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Oct 16 14:29:41 2008
+Content-Type: text/plain; charset=ISO-8859-1;
+	format=flowed
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Michael J Gruber <git@drmicha.warpmail.net>,
+	Matthieu Moy <Matthieu.Moy@imag.fr>,
+	Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>,
+	Marc Feeley <feeley@iro.umontreal.ca>,
+	Gambit List <Gambit-list@iro.umontreal.ca>
+To: =?ISO-8859-1?Q?Santi_B=E9jar?= <santi@agolina.net>
+X-From: git-owner@vger.kernel.org Thu Oct 16 14:33:52 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KqRyv-0002ds-1c
-	for gcvg-git-2@gmane.org; Thu, 16 Oct 2008 14:29:33 +0200
+	id 1KqS35-0004ch-3i
+	for gcvg-git-2@gmane.org; Thu, 16 Oct 2008 14:33:51 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753651AbYJPM2O (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 16 Oct 2008 08:28:14 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753565AbYJPM2O
-	(ORCPT <rfc822;git-outgoing>); Thu, 16 Oct 2008 08:28:14 -0400
-Received: from mail.gmx.net ([213.165.64.20]:59990 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1753451AbYJPM2N (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 16 Oct 2008 08:28:13 -0400
-Received: (qmail invoked by alias); 16 Oct 2008 12:28:06 -0000
-Received: from pacific.mpi-cbg.de (EHLO [141.5.10.38]) [141.5.10.38]
-  by mail.gmx.net (mp047) with SMTP; 16 Oct 2008 14:28:06 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX198NJpWrZt82DQdANk25gntSyFsE6/zRzpKYR1J10
-	0/WmB+rPSlRsNG
-X-X-Sender: schindelin@pacific.mpi-cbg.de.mpi-cbg.de
-In-Reply-To: <7v3aix4ud4.fsf@gitster.siamese.dyndns.org>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.62
+	id S1754167AbYJPMcj convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 16 Oct 2008 08:32:39 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754005AbYJPMci
+	(ORCPT <rfc822;git-outgoing>); Thu, 16 Oct 2008 08:32:38 -0400
+Received: from ethlife-a.ethz.ch ([129.132.49.178]:39615 "HELO ethlife.ethz.ch"
+	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with SMTP
+	id S1753825AbYJPMci (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 16 Oct 2008 08:32:38 -0400
+Received: (qmail 5385 invoked from network); 16 Oct 2008 12:32:36 -0000
+Received: from unknown (HELO elvis-jaeger.mine.nu) (127.0.0.1)
+  by localhost with SMTP; 16 Oct 2008 12:32:36 -0000
+Received: (qmail 31204 invoked from network); 16 Oct 2008 12:32:35 -0000
+Received: from unknown (HELO ?127.0.0.1?) (10.0.5.1)
+  by elvis-jaeger.mine.nu with SMTP; 16 Oct 2008 12:32:35 -0000
+User-Agent: Mozilla-Thunderbird 2.0.0.16 (X11/20080724)
+In-Reply-To: <adf1fd3d0810160512if056c3dt5eeec6a097e1a7a7@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/98375>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/98376>
 
-Hi,
+Santi B=E9jar wrote:
+> It looks like the html and man branches of git.git.
+>
+> http://git.kernel.org/?p=3Dgit/git.git;a=3Dshortlog;h=3Dhtml
+> http://git.kernel.org/?p=3Dgit/git.git;a=3Dshortlog;h=3Dman
+>
+> They are automatically generated when Junio pushes the branches to
+> kernel.org. Afterwards you can do a "make quick-install-html" and
+> install the preformated html pages from these branches. They are
+> generated with the dodoc.sh script from the todo branch in git.git
+> (look inside for instructions):
+>
+> http://git.kernel.org/?p=3Dgit/git.git;a=3Dblob_plain;f=3Ddodoc.sh;hb=
+=3Dtodo
 
-On Wed, 15 Oct 2008, Junio C Hamano wrote:
+This script only generates the html / man branches, it doesn't help fin=
+d=20
+the right version for a given git version, right?
 
-> Samuel Lucas Vaz de Mello <samuellucas@datacom.ind.br> writes:
-> 
-> > samuel@erdinger:~/myrepo$ git push 
-> > Counting objects: 5, done.
-> > Compressing objects: 100% (3/3), done.
-> > Unpacking objects: 100% (3/3), done.
-> > Writing objects: 100% (3/3), 295 bytes, done.
-> > Total 3 (delta 2), reused 0 (delta 0)
-> > error: Unable to append to logs/refs/heads/master: Permission denied 
-> > To /remote/myrepo/
-> > ! [remote rejected] master -> master (failed to write)
-> > error: failed to push some refs to '/remote/myrepo/' 
-> 
-> Thanks for a reproduction recipe.  I think an abbreviated version of this
-> would deserve to be in the commit log message proper.
+The differences are:
 
-Or as a test script.
+- the html / man branches have a strictly linear history and are=20
+centrally maintained. This solves the distribution issue for end users.=
+=20
+But while developping the compiler, the developers may need to go back=20
+in the history of their own development (e.g. when the current compiler=
+=20
+doesn't work anymore), and the suspected usefulness of being able to se=
+e=20
+and track differences in the generated code also isn't available for a=20
+strictly central approach.
 
-Ciao,
-Dscho
+- the script above is only for creating and committing the derived=20
+files, in a hook similar to the one I suggested in=20
+build/.git/hooks/commit-msg; this is the "cd build; git commit -m=20
+'generated files for source repository commit
+ > `git rev-parse HEAD`'" part; the more interesting part comes from=20
+automatically finding the right commit in the generated branches for a=20
+given source commit. This is what I intend to solve with the=20
+"intergit-find-matching-commit-in" script. Said in a simpler way: the=20
+git html / man branches do not offer automatically resolvable linking.
+
+Christian.
