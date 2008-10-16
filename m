@@ -1,78 +1,68 @@
-From: "Stefan Karpinski" <stefan.karpinski@gmail.com>
-Subject: Re: builtin conversion between tabs and spaces
-Date: Wed, 15 Oct 2008 19:00:46 -0700
-Message-ID: <d4bc1a2a0810151900v3db6ca1t8d295684c5b4cd98@mail.gmail.com>
-References: <d4bc1a2a0810141839r547a770j3a8e56312afa6a53@mail.gmail.com>
-	 <d4bc1a2a0810141842q1e50c85au7d813f2e5e37a84c@mail.gmail.com>
-	 <d4bc1a2a0810141844x76223e76xf04e07ece834fc61@mail.gmail.com>
-	 <20081015062539.GB3775@blimp.localdomain>
-	 <d4bc1a2a0810151352s6c963e32jc4f492a7c84841dc@mail.gmail.com>
-	 <57518fd10810151402p4ea3283anf4b3d175c4e82425@mail.gmail.com>
-	 <d4bc1a2a0810151418r3bf21ddaj498017e8e178f579@mail.gmail.com>
-	 <d4bc1a2a0810151602j56550c3di2f59f92039fa8243@mail.gmail.com>
-	 <48F67E09.90202@gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH try 2] t1301-shared-repo.sh: don't let a default ACL 
+ interfere with the test
+Date: Wed, 15 Oct 2008 22:23:20 -0700
+Message-ID: <7vzll5jepj.fsf@gitster.siamese.dyndns.org>
+References: <1224022020.2699.4.camel@mattlaptop2.local>
+ <1224022216.2699.5.camel@mattlaptop2.local>
+ <7vzll66c5u.fsf@gitster.siamese.dyndns.org> <48F589EC.6050307@viscovery.net>
+ <7vmyh64bgy.fsf@gitster.siamese.dyndns.org> <48F59928.5040502@viscovery.net>
+ <7v7i8a47f6.fsf@gitster.siamese.dyndns.org> <48F5A590.3050905@viscovery.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: "Jonathan del Strother" <maillist@steelskies.com>,
-	"Alex Riesen" <raa.lkml@gmail.com>,
-	"Git Mailing List" <git@vger.kernel.org>,
-	"Johannes Sixt" <j.sixt@viscovery.net>
-To: gitzilla@gmail.com
-X-From: git-owner@vger.kernel.org Thu Oct 16 04:02:03 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: Matt McCutchen <matt@mattmccutchen.net>, git@vger.kernel.org
+To: Johannes Sixt <j.sixt@viscovery.net>
+X-From: git-owner@vger.kernel.org Thu Oct 16 07:24:47 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KqIBe-0007Lg-PJ
-	for gcvg-git-2@gmane.org; Thu, 16 Oct 2008 04:02:03 +0200
+	id 1KqLLq-0003Xi-UL
+	for gcvg-git-2@gmane.org; Thu, 16 Oct 2008 07:24:47 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753527AbYJPCAv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 15 Oct 2008 22:00:51 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753500AbYJPCAv
-	(ORCPT <rfc822;git-outgoing>); Wed, 15 Oct 2008 22:00:51 -0400
-Received: from an-out-0708.google.com ([209.85.132.246]:23608 "EHLO
-	an-out-0708.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753408AbYJPCAu (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 15 Oct 2008 22:00:50 -0400
-Received: by an-out-0708.google.com with SMTP id d40so219304and.103
-        for <git@vger.kernel.org>; Wed, 15 Oct 2008 19:00:47 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to
-         :subject:cc:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:references;
-        bh=mzcIXyiBHXUzr65rwb8ZiqKYQONKF4pMFUCzL5zGvog=;
-        b=C0QqzVPIsZF/W6ZkJs8wqKyze/7Mh3SujbmpkJG+NxSN1LnsqN+cjQo10z1rntS9pB
-         4W7d7pLewu0967CKEriFFUOC+k9xwTwf3YdhnV27lLzMNIPLBs4RDL/JBAwOYdQRgN/9
-         5xJuSeoY1zU8s25LgqlkWiCdwG42vJuu3gKvA=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
-         :content-type:content-transfer-encoding:content-disposition
-         :references;
-        b=nTaOjGa8YxTw3aZzFhPN54/2yDBbjePOH5IbdKa8xITunPCVIJOBfQB/T3EbliXaU8
-         hEYkeSebJ7R0s7alol3Ytf65z0tMAtSH3UatrIY1aK66YuQgMY6uE67rf1cMQUYMoTDv
-         mDwAEAIGdG2jiluQB60iguZahc/jNbgUv3E3E=
-Received: by 10.100.229.12 with SMTP id b12mr2210218anh.157.1224122446965;
-        Wed, 15 Oct 2008 19:00:46 -0700 (PDT)
-Received: by 10.100.197.16 with HTTP; Wed, 15 Oct 2008 19:00:46 -0700 (PDT)
-In-Reply-To: <48F67E09.90202@gmail.com>
-Content-Disposition: inline
+	id S1754396AbYJPFXc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 16 Oct 2008 01:23:32 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754340AbYJPFXc
+	(ORCPT <rfc822;git-outgoing>); Thu, 16 Oct 2008 01:23:32 -0400
+Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:34210 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754157AbYJPFXa (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 16 Oct 2008 01:23:30 -0400
+Received: from localhost.localdomain (localhost [127.0.0.1])
+	by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id DD1BF8BBB4;
+	Thu, 16 Oct 2008 01:23:27 -0400 (EDT)
+Received: from pobox.com (ip68-225-240-211.oc.oc.cox.net [68.225.240.211])
+ (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
+ certificate requested) by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with
+ ESMTPSA id 106698BBAE; Thu, 16 Oct 2008 01:23:22 -0400 (EDT)
+In-Reply-To: <48F5A590.3050905@viscovery.net> (Johannes Sixt's message of
+ "Wed, 15 Oct 2008 10:10:56 +0200")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: 901ADF72-9B42-11DD-9EBC-4F5276724C3F-77302942!a-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/98343>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/98344>
 
->> Any further comments? I'm more than willing to implement this, but I
->> won't bother if there's no chance of getting it accepted as a patch.
->> Does no one else feel like at least having the option to enforce
->> whitespace consistency in git is a good thing? If not, I guess I'll
->> just muddle along without this feature instead of implementing it.
+Johannes Sixt <j.sixt@viscovery.net> writes:
+
+> Junio C Hamano schrieb:
 >
-> I'm against including this in except as a sample smudge/clean script. Git is
-> a content tracker; not the enforcement mechanism for individual project
-> policies.
+>> If that is the case what difference does your suggestion of not putting it
+>> in test-lib.sh make?  We discourage users from playing ACL games, and we
+>> protect ourselves from such by making sure the trash directory used for
+>> running tests are not contaminated with ACL.  Wouldn't it make more sense
+>> to do so for all the tests, so that future test writers do not have to
+>> worry about it?
+>
+> We have to decide case by case. In the case of shared directories it makes
+> sense to suggest "do not play ACL games". In other cases, however, this
+> suggestion could not work out that well, and a workaround in the code is
+> the better solutions. But we do not know what those other cases are, and
+> the test suite may be a tool to uncover them.
 
-Alright. Fair enough.
+Although I am not particularly interested in hypothetical case that does
+not have concrete examples, I do not care deeply enough either.  So let's
+take this patch (with updated/corrected log message) that minimally covers
+the parts that can be broken by ACL games.
