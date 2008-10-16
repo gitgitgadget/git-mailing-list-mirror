@@ -1,77 +1,55 @@
-From: Miklos Vajna <vmiklos@frugalware.org>
-Subject: Re: Rebasing Multiple branches at once...
-Date: Thu, 16 Oct 2008 23:00:02 +0200
-Message-ID: <20081016210002.GJ536@genesis.frugalware.org>
-References: <48F730D0.9040008@calicojack.co.uk> <20081016135908.GI536@genesis.frugalware.org> <48F7542B.1050909@calicojack.co.uk>
+From: Paul Mackerras <paulus@samba.org>
+Subject: Re: [PATCH 1/7] gitk: Enhance UI popup and accelerator handling.
+Date: Fri, 17 Oct 2008 08:55:38 +1100
+Message-ID: <18679.47194.852924.385301@cargo.ozlabs.ibm.com>
+References: <1223449540-20457-1-git-send-email-angavrilov@gmail.com>
+	<1223449540-20457-2-git-send-email-angavrilov@gmail.com>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="pssgfZQbIK00CPi6"
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org
-To: Rick Moynihan <rick@calicojack.co.uk>
-X-From: git-owner@vger.kernel.org Thu Oct 16 23:01:23 2008
+To: Alexander Gavrilov <angavrilov@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Oct 16 23:57:16 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KqZyF-00042c-92
-	for gcvg-git-2@gmane.org; Thu, 16 Oct 2008 23:01:23 +0200
+	id 1KqaqD-0006h4-MP
+	for gcvg-git-2@gmane.org; Thu, 16 Oct 2008 23:57:10 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755248AbYJPVAH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 16 Oct 2008 17:00:07 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755231AbYJPVAG
-	(ORCPT <rfc822;git-outgoing>); Thu, 16 Oct 2008 17:00:06 -0400
-Received: from virgo.iok.hu ([193.202.89.103]:51802 "EHLO virgo.iok.hu"
+	id S1755490AbYJPVz5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 16 Oct 2008 17:55:57 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755461AbYJPVz5
+	(ORCPT <rfc822;git-outgoing>); Thu, 16 Oct 2008 17:55:57 -0400
+Received: from ozlabs.org ([203.10.76.45]:39684 "EHLO ozlabs.org"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755071AbYJPVAF (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 16 Oct 2008 17:00:05 -0400
-Received: from kag.elte.hu (kag.elte.hu [157.181.177.1])
-	by virgo.iok.hu (Postfix) with ESMTP id 74AD1580C8;
-	Thu, 16 Oct 2008 23:00:03 +0200 (CEST)
-Received: from genesis.frugalware.org (frugalware.elte.hu [157.181.177.34])
-	by kag.elte.hu (Postfix) with ESMTP id 5F9D74465E;
-	Thu, 16 Oct 2008 23:00:03 +0200 (CEST)
-Received: by genesis.frugalware.org (Postfix, from userid 1000)
-	id F013D11901A1; Thu, 16 Oct 2008 23:00:02 +0200 (CEST)
-Content-Disposition: inline
-In-Reply-To: <48F7542B.1050909@calicojack.co.uk>
-User-Agent: Mutt/1.5.17 (2007-11-01)
+	id S1754852AbYJPVz4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 16 Oct 2008 17:55:56 -0400
+Received: by ozlabs.org (Postfix, from userid 1003)
+	id 4BA73DDF0A; Fri, 17 Oct 2008 08:55:45 +1100 (EST)
+In-Reply-To: <1223449540-20457-2-git-send-email-angavrilov@gmail.com>
+X-Mailer: VM 8.0.9 under Emacs 22.2.1 (i486-pc-linux-gnu)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/98426>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/98427>
 
+Alexander Gavrilov writes:
 
---pssgfZQbIK00CPi6
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+> - Popups are supposed to be marked transient, otherwise
+>   the WM creates them in strange places. Besides, at
+>   least under kwin, transients are automatically kept
+>   above their parent.
 
-On Thu, Oct 16, 2008 at 03:48:11PM +0100, Rick Moynihan <rick@calicojack.co=
-=2Euk> wrote:
-> Yes, but my understanding is that it's only harmful if you publish the=20
-> branch (or dependent branches) which are being rebased.
->=20
-> So rebasing is very bad in these circumstances, but I fail to see why it'=
-s=20
-> bad if these branches are kept private.
+I agree with most of the places where you add wm transient commands,
+but in the case of the list of references (showrefs), I think of that
+as a long-lived window that one would normally place beside the main
+window.  (In fact, it should be a pane in the main window, but I
+couldn't think of a place for it.  Maybe I should split the
+bottom-right pane in two.)
 
-Ah, I thought you publish your branches.
+So I don't think the wm transient in showrefs is what we want.
+Comments?
 
-One reason may be that if you use merge, no history is lost, if you use
-rebase, history is in the reflogs, so it'll be lost after some time. But
-if you know what you are doing, then this is not a problem.
-
---pssgfZQbIK00CPi6
-Content-Type: application/pgp-signature
-Content-Disposition: inline
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.9 (GNU/Linux)
-
-iEYEARECAAYFAkj3q1IACgkQe81tAgORUJaWvwCeJMiPMQAv78e6hkcX4ryaCHCH
-/jkAnRZ4WUaeyROVWhsZUK/AyLLjmvYp
-=9vro
------END PGP SIGNATURE-----
-
---pssgfZQbIK00CPi6--
+Paul.
