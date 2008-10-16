@@ -1,157 +1,185 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: Detached checkout will clobber branch head when using symlink
-	HEAD
-Date: Thu, 16 Oct 2008 16:39:16 -0400
-Message-ID: <20081016203916.GB9487@coredump.intra.peff.net>
-References: <1224095087.5366.19.camel@localhost> <20081016191751.GB14707@coredump.intra.peff.net> <1224187863.2796.15.camel@localhost>
+From: Toby Allsopp <Toby.Allsopp@navman.co.nz>
+Subject: Re: Rebasing Multiple branches at once...
+Date: Fri, 17 Oct 2008 09:27:48 +1300
+Message-ID: <87vdvscmkb.fsf@nav-akl-pcn-343.mitacad.com>
+References: <48F730D0.9040008@calicojack.co.uk>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Matt Draisey <matt@draisey.ca>
-X-From: git-owner@vger.kernel.org Thu Oct 16 22:40:32 2008
+Content-Type: multipart/mixed; boundary="=-=-="
+Cc: Rick Moynihan <rick@calicojack.co.uk>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Oct 16 22:44:31 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KqZe3-00054y-Tf
-	for gcvg-git-2@gmane.org; Thu, 16 Oct 2008 22:40:32 +0200
+	id 1KqZhr-0006XX-Kv
+	for gcvg-git-2@gmane.org; Thu, 16 Oct 2008 22:44:28 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754041AbYJPUjT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 16 Oct 2008 16:39:19 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754281AbYJPUjT
-	(ORCPT <rfc822;git-outgoing>); Thu, 16 Oct 2008 16:39:19 -0400
-Received: from peff.net ([208.65.91.99]:1169 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752259AbYJPUjT (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 16 Oct 2008 16:39:19 -0400
-Received: (qmail 9872 invoked by uid 111); 16 Oct 2008 20:39:17 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.32) with SMTP; Thu, 16 Oct 2008 16:39:17 -0400
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Thu, 16 Oct 2008 16:39:16 -0400
-Content-Disposition: inline
-In-Reply-To: <1224187863.2796.15.camel@localhost>
+	id S1754142AbYJPUnM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 16 Oct 2008 16:43:12 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754266AbYJPUnL
+	(ORCPT <rfc822;git-outgoing>); Thu, 16 Oct 2008 16:43:11 -0400
+Received: from ip-58-28-171-25.wxnz.net ([58.28.171.25]:27825 "EHLO
+	AKLEXFE01.mitacad.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1752385AbYJPUnK (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 16 Oct 2008 16:43:10 -0400
+X-Greylist: delayed 915 seconds by postgrey-1.27 at vger.kernel.org; Thu, 16 Oct 2008 16:43:10 EDT
+Received: from AKLEXVS01.mitacad.com ([10.112.5.35]) by AKLEXFE01.mitacad.com with Microsoft SMTPSVC(6.0.3790.3959);
+	 Fri, 17 Oct 2008 09:27:56 +1300
+Received: from nav-akl-pcn-343.mitacad.com.navman.co.nz ([10.112.8.44]) by AKLEXVS01.mitacad.com with Microsoft SMTPSVC(6.0.3790.3959);
+	 Fri, 17 Oct 2008 09:27:56 +1300
+In-Reply-To: <48F730D0.9040008@calicojack.co.uk> (Rick Moynihan's message of
+	"Thu, 16 Oct 2008 13:17:20 +0100")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.0.60 (gnu/linux)
+X-OriginalArrivalTime: 16 Oct 2008 20:27:56.0787 (UTC) FILETIME=[ACA20430:01C92FCD]
+X-TM-AS-Product-Ver: SMEX-8.0.0.1181-5.500.1027-16222.001
+X-TM-AS-Result: No--21.895500-8.000000-31
+X-TM-AS-User-Approved-Sender: No
+X-TM-AS-User-Blocked-Sender: No
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/98422>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/98423>
 
-On Thu, Oct 16, 2008 at 04:11:03PM -0400, Matt Draisey wrote:
 
-> I am using the following system defaults:
-> 
-> core.prefersymlinkrefs=true
-> gc.packrefs=false
-> 
-> so almost all my git repositories are still using a symlink HEAD.
-> I have some old scripts That I use occasionally and still depend on it.
-> Using detached checkout is the only problem I've had.
+--=-=-=
 
-In your position I would consider updating my scripts. But I guess you
-could also try to work up a patch that makes detached HEAD work
-(replacing the symlink with a file, then bringing back the symlink when
-you're on a branch). In the meantime, here is a cleaned-up version of my
-patch, with a proper commit message and a test.
+On Fri, Oct 17 2008, Rick Moynihan wrote:
 
--- >8 --
-do not clobber symlinked ref with detached HEAD
+> Hi,
+>
+> I have a master branch, a dev branch and a number of feature branches
+> from dev.  And I was wondering if there was an easy way to rebase dev
+> and all of it's sub-branches onto master.
+>
+> I know I can run this as a series of commands, and use --onto to do
+> this, but was wondering if there was an easier way.  As running:
+>
+> git rebase master
+>
+> when on the dev branch only rebases dev and not it's dependent
+> branches.
 
-The default configuration for git uses a symref for HEAD.
-When we detach the HEAD, we can simply write the detached
-commit sha1 into the HEAD file.
+I have a Perl script I use to rebase a number of topic branches as the
+remote tracking branches they're based on move.  It handles the case of
+topic based on other topics.  It is designed specifically for my
+workflow, which is tracking a central Subversion repository using
+git-svn, but I don't think it relies on using git-svn.  Anyway, you
+might find it useful for inspiration.
 
-It is still possible to use symlinks for HEAD (either by
-setting it up manually, or by using core.prefersymlinkrefs).
-In that case, moving to a detached HEAD is impossible, since
-we have nowhere to store the sha1.
+The script outputs a sequence of commands and leaves the running of them
+up to you because you may need to resolve conflicts at any point.
 
-However, the current code doesn't realize this and actually
-writes into the HEAD file anyway, meaning that it overwrites
-the value of the currently checked out branch.
+Regards,
+Toby.
 
-Instead, let's detect in the locking mechanism that we have
-a symlink but the caller requested that we lock the original
-ref name instead of its linked destination. This has two
-advantages:
 
-  - we don't have to add an extra stat call, since we
-    discover the symlink during normal ref resolution
+--=-=-=
+Content-Type: text/x-perl
+Content-Disposition: inline; filename=git-rebase-branches
 
-  - any code to update a ref should lock it, meaning that we
-    should catch any other similar instances
+#!/usr/bin/perl
 
-Signed-off-by: Jeff King <peff@peff.net>
----
- refs.c                      |    9 ++++++++-
- refs.h                      |    1 +
- t/t7202-checkout-symlink.sh |   19 +++++++++++++++++++
- 3 files changed, 28 insertions(+), 1 deletions(-)
- create mode 100755 t/t7202-checkout-symlink.sh
+# Rebases master and everything based on master to the new trunk.  Use
+# after a git-svn-fetch.
 
-diff --git a/refs.c b/refs.c
-index b680750..b4b3865 100644
---- a/refs.c
-+++ b/refs.c
-@@ -446,8 +446,11 @@ const char *resolve_ref(const char *ref, unsigned char *sha1, int reading, int *
- 				buffer[len] = 0;
- 				strcpy(ref_buffer, buffer);
- 				ref = ref_buffer;
--				if (flag)
-+				if (flag) {
-+					if (!(*flag & REF_ISSYMREF))
-+						*flag |= REF_OUTER_IS_SYMLINK;
- 					*flag |= REF_ISSYMREF;
-+				}
- 				continue;
- 			}
- 		}
-@@ -817,6 +820,10 @@ static struct ref_lock *lock_ref_sha1_basic(const char *ref, const unsigned char
- 		}
- 		ref = resolve_ref(orig_ref, lock->old_sha1, mustexist, &type);
- 	}
-+	if (type & REF_OUTER_IS_SYMLINK && flags & REF_NODEREF) {
-+		error("unable to directly lock symbolic link '%s'", orig_ref);
-+		goto error_return;
-+	}
- 	if (type_p)
- 	    *type_p = type;
- 	if (!ref) {
-diff --git a/refs.h b/refs.h
-index 06ad260..9b0dcd9 100644
---- a/refs.h
-+++ b/refs.h
-@@ -12,6 +12,7 @@ struct ref_lock {
- 
- #define REF_ISSYMREF 01
- #define REF_ISPACKED 02
-+#define REF_OUTER_IS_SYMLINK 04
- 
- /*
-  * Calls the specified function for each ref file until it returns nonzero,
-diff --git a/t/t7202-checkout-symlink.sh b/t/t7202-checkout-symlink.sh
-new file mode 100755
-index 0000000..cf09f5f
---- /dev/null
-+++ b/t/t7202-checkout-symlink.sh
-@@ -0,0 +1,19 @@
-+#!/bin/sh
-+
-+test_description='checkout with symlinked HEAD'
-+. ./test-lib.sh
-+
-+test_expect_success 'setup' '
-+	echo one > file && git add file && git commit -m one &&
-+	echo two > file && git add file && git commit -m two &&
-+	ln -sf refs/heads/master .git/HEAD
-+'
-+
-+test_expect_success 'checkout detached HEAD does not clobber ref' '
-+	test_must_fail git checkout HEAD^ &&
-+	echo two >expect &&
-+	git log -1 --pretty=tformat:%s >actual
-+	test_cmp actual expect
-+'
-+
-+test_done
--- 
-1.6.0.2.711.gf1ba4.dirty
+use strict;
+use warnings;
+
+use Getopt::Long;
+use List::Util qw(first);
+
+use Git;
+
+my $dry_run;
+
+GetOptions("dry-run|n" => \$dry_run)
+  or die "usage error";
+
+sub ref2branch {
+    my $ref = shift;
+    $ref =~ s,^refs/heads/,,
+      or die "Not a branch: '$ref'";
+    return $ref;
+}
+
+my $repo = Git->repository();
+
+my %remotes_by_name;
+my %remotes_by_hash;
+my %remote_revs;
+
+for ($repo->command('for-each-ref', 'refs/remotes')) {
+    my ($hash, undef, $ref) = split;
+    $remotes_by_name{$ref} = $hash;
+    $remotes_by_hash{$hash} = $ref;
+    $remote_revs{$ref} = [$repo->command('rev-list', $ref)];
+}
+
+my %heads_by_name;
+my %heads_by_hash;
+
+for ($repo->command('for-each-ref', 'refs/heads')) {
+    my ($hash, undef, $ref) = split;
+    $heads_by_name{$ref} = $hash;
+    $heads_by_hash{$hash} = $ref;
+}
+
+my %roots;
+my %heads_by_parent;
+
+for my $head (sort keys %heads_by_name) {
+    #print STDERR "Considering $head\n";
+    my $parent;
+    my $last_rev;
+    for my $rev ($repo->command('rev-list', $head, '--not', keys %remotes_by_name)) {
+        my $maybe_parent = $heads_by_hash{$rev};
+        if ($maybe_parent && $maybe_parent ne $head) {
+            #print STDERR "  found parent $maybe_parent\n";
+            $parent = $maybe_parent;
+            last;
+        }
+        $last_rev = $rev;
+    }
+    if ($parent) {
+        push @{$heads_by_parent{$parent}}, $head;
+    } elsif ($last_rev) {
+        my $remote_base = $repo->command_oneline('rev-parse', "$last_rev^");
+        my @remotes;
+        #print STDERR "  last rev $last_rev $remote_base\n";
+        for my $remote_name (sort keys %remotes_by_name) {
+            my $remote = first { $_ eq $remote_base } @{$remote_revs{$remote_name}};
+            if (defined($remote) && $remote eq $remote_base) {
+                #print STDERR "  found remote $remote_name\n";
+                push @remotes, $remote_name;
+            }
+        }
+        if (@remotes == 1) {
+            $roots{$head} = $remotes[0];
+        } else {
+            print STDERR "WARNING: Not exactly one candidate remote for $head: ",
+                join(' ', @remotes), "\n";
+        }
+    }
+}
+
+for my $root (sort keys %roots) {
+    my $remote = $roots{$root};
+    my $short_root = ref2branch($root);
+    $remote =~ s,^refs/,,;
+    print "git rebase $remote $short_root\n";
+    rebase_tree($root);
+}
+
+sub rebase_tree {
+    my ($parent) = @_;
+    for my $head (@{$heads_by_parent{$parent}}) {
+        my $short_parent = ref2branch($parent);
+        my $short_head = ref2branch($head);
+        print "git rebase --onto $short_parent $heads_by_name{$parent} $short_head\n";
+        rebase_tree($head);
+    }
+}
+
+--=-=-=--
