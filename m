@@ -1,65 +1,71 @@
-From: Marc Branchaud <marcnarc@xiplink.com>
-Subject: Re: Working with remotes; cloning remote references
-Date: Thu, 16 Oct 2008 18:09:48 -0400
-Message-ID: <48F7BBAC.2090907@xiplink.com>
-References: <48F7852F.109@xiplink.com>	 <eaa105840810161220k26eebd48q8de606597f2be055@mail.gmail.com>	 <48F7A42E.70200@xiplink.com> <eaa105840810161345r69c9f05j66bb850085f561e7@mail.gmail.com>
+From: "Richard Hartmann" <richih.mailinglist@gmail.com>
+Subject: commiting while the current version is in conflict
+Date: Fri, 17 Oct 2008 00:10:55 +0200
+Message-ID: <2d460de70810161510ha220593g4615a55b2c3e3b25@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Peter Harris <git@peter.is-a-geek.org>
-X-From: git-owner@vger.kernel.org Fri Oct 17 00:11:03 2008
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Oct 17 00:12:14 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Kqb3e-0002jD-Ts
-	for gcvg-git-2@gmane.org; Fri, 17 Oct 2008 00:11:03 +0200
+	id 1Kqb4k-00034p-Hh
+	for gcvg-git-2@gmane.org; Fri, 17 Oct 2008 00:12:11 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755529AbYJPWJu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 16 Oct 2008 18:09:50 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755401AbYJPWJu
-	(ORCPT <rfc822;git-outgoing>); Thu, 16 Oct 2008 18:09:50 -0400
-Received: from smtp242.iad.emailsrvr.com ([207.97.245.242]:50845 "EHLO
-	smtp242.iad.emailsrvr.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755204AbYJPWJu (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 16 Oct 2008 18:09:50 -0400
-Received: from relay14.relay.iad.mlsrvr.com (localhost [127.0.0.1])
-	by relay14.relay.iad.mlsrvr.com (SMTP Server) with ESMTP id 6849C2055BF;
-	Thu, 16 Oct 2008 18:09:48 -0400 (EDT)
-Received: by relay14.relay.iad.mlsrvr.com (Authenticated sender: mbranchaud-AT-xiplink.com) with ESMTP id 495A0205573;
-	Thu, 16 Oct 2008 18:09:48 -0400 (EDT)
-User-Agent: Thunderbird 2.0.0.17 (X11/20080925)
-In-Reply-To: <eaa105840810161345r69c9f05j66bb850085f561e7@mail.gmail.com>
+	id S1757645AbYJPWK5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 16 Oct 2008 18:10:57 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757600AbYJPWK5
+	(ORCPT <rfc822;git-outgoing>); Thu, 16 Oct 2008 18:10:57 -0400
+Received: from mail-gx0-f16.google.com ([209.85.217.16]:50871 "EHLO
+	mail-gx0-f16.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757505AbYJPWK4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 16 Oct 2008 18:10:56 -0400
+Received: by gxk9 with SMTP id 9so366494gxk.13
+        for <git@vger.kernel.org>; Thu, 16 Oct 2008 15:10:55 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to
+         :subject:mime-version:content-type:content-transfer-encoding
+         :content-disposition;
+        bh=GglZj+P9CSr+DMJPj5v956y9aZRw7KBTZximcvb1bgs=;
+        b=MzP2x17u78vdbP2LERp0FW8P2dT5ntZu9iqlHpT6b5o0ypyvFxQDaIaPpzHfDL89/m
+         qyRdVCRILJHHvXhg3vKDoW8Aud4/t3fjZYnfxHYTEwmcNFeJ5SkbPVyjIpyyGch6QNpO
+         A5aCUxYol/WzUJM1PYYOM3147KqrO+nuw0hGE=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:to:subject:mime-version:content-type
+         :content-transfer-encoding:content-disposition;
+        b=BQvfxjv1///b/wdK0c1gRsYFhoMB9lk2fS19OyGx1/CLg0n3NFGl5UBWT8BCrDS2OC
+         c+lVFP/c9/0nYJSbcd2cFiqqGJW2Cj9Qs1DJx+sjWvl20WYBnfWKnw35WpsIvnY22i4S
+         GK0v28YCrh09Rs4E/pS7NY7465gidSEa5JecQ=
+Received: by 10.100.6.19 with SMTP id 19mr4397441anf.90.1224195055054;
+        Thu, 16 Oct 2008 15:10:55 -0700 (PDT)
+Received: by 10.100.43.19 with HTTP; Thu, 16 Oct 2008 15:10:55 -0700 (PDT)
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/98429>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/98430>
 
-Peter Harris wrote:
-> 
-> Ah. I believe I misunderstood what you wanted. Perhaps you want "git
-> remote add", then? Unfortunately, you have to know what your remotes
-> are outside of git for this. Perhaps a script in the root of your
-> repository you can run to set this up after the initial clone?
+Hi all,
 
-I think we're converging onto the same track.
+I fooled around with git a liitle bit and noticed something
+rather strange. I merged two branches, creating a conflict
+on purpose. When I then did a
 
-Yes, I do want to use "git remote add".  My point is basically that, 
-having done various git-remote-adds in the main repository, I'd like to 
-avoid having to redo them in a clone of that repository.
+ git commit -a
 
-A script would work, sure, but to me this seems like something git 
-should handle for me.  If I have to re-establish my connections to the 
-remotes whenever I want to pull in updates, then I don't see much point 
-in keeping the remotes defined in any git repo.
+all changes were submitted. Of course, I now have a
+file with the conflict markers inlined in my repository. Not
+a good thing, imo. Is there a way to make git block all
+conflicting versions?
 
-> I seem to recall some discussion of allowing a .gitconfig to be in
-> repositories (similar to .gitignore), but the idea was shot down for
-> security reasons.
+Also, I would be interested in the design decissions
+behind the current behaviour. Any pointers?
 
-I think I can understand why that would be undesirable, but I don't know 
-if something like that would be necessary for what I'm talking about.
 
-		Marc
+Thanks,
+Richard
