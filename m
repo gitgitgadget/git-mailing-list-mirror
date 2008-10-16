@@ -1,79 +1,52 @@
-From: "Ian Brown" <ianbrn@gmail.com>
-Subject: git and filesystem problems (ext3 and vfat)
-Date: Thu, 16 Oct 2008 18:03:30 +0200
-Message-ID: <d0383f90810160903p6f8ffe77o86fdad5387f82481@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+From: Pieter de Bie <pieter@frim.nl>
+Subject: Re: What's in git.git (Oct 2008, #03; Tue, 14)
+Date: Thu, 16 Oct 2008 17:37:10 +0200
+Message-ID: <465E8DD6-CBDC-4E02-9C7F-57CBE81E3549@frim.nl>
+References: <7vej2i7rt9.fsf@gitster.siamese.dyndns.org> <bsftmRx17krWBpVlulipoJEO1fWsD0hZfF3HOZcajX6GV66RKW8W6A@cipher.nrlssc.navy.mil> <20081016100805.GA20762@sigill.intra.peff.net> <0my5lujnbpdG6sxrffMExwukINu2tasxBSH0E0xYQoe6y5yyFL0LNA@cipher.nrlssc.navy.mil>
+Mime-Version: 1.0 (Apple Message framework v929.2)
+Content-Type: text/plain; charset=US-ASCII; format=flowed; delsp=yes
 Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Oct 16 18:05:00 2008
+Cc: Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
+	git@vger.kernel.org, Arjen Laarhoven <arjen@yaph.org>,
+	"Shawn O. Pearce" <spearce@spearce.org>,
+	Mike Ralphson <mike@abacus.co.uk>
+To: Brandon Casey <casey@nrlssc.navy.mil>
+X-From: git-owner@vger.kernel.org Thu Oct 16 18:18:59 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KqVLC-0005fs-5L
-	for gcvg-git-2@gmane.org; Thu, 16 Oct 2008 18:04:46 +0200
+	id 1KqVYv-0002fw-K7
+	for gcvg-git-2@gmane.org; Thu, 16 Oct 2008 18:18:58 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752918AbYJPQDd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 16 Oct 2008 12:03:33 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753545AbYJPQDd
-	(ORCPT <rfc822;git-outgoing>); Thu, 16 Oct 2008 12:03:33 -0400
-Received: from nf-out-0910.google.com ([64.233.182.184]:33978 "EHLO
-	nf-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752306AbYJPQDc (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 16 Oct 2008 12:03:32 -0400
-Received: by nf-out-0910.google.com with SMTP id d3so33060nfc.21
-        for <git@vger.kernel.org>; Thu, 16 Oct 2008 09:03:30 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to
-         :subject:mime-version:content-type:content-transfer-encoding
-         :content-disposition;
-        bh=yE5bxKzw/su/NRIrx4Z2lvyQXj1VwADYQIbRdAme73E=;
-        b=Yg8S8UCJ1ZrFcplXwo9hYWfLS09zNahrg5NqiHWczAd2fBeCBcTB0HRMo6E/V6fLGv
-         sa+LmXcNAs+5L7idlP/vDzsy7uCeRtc1iFb/rdA58YO3KaJkgEWZ3wMqsp1ltbuMbs+y
-         ZJSh09Xc2En8GKeiNimx+8YcmsE3eL8ixNHts=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:mime-version:content-type
-         :content-transfer-encoding:content-disposition;
-        b=eOpr4qLKT5cqG2n9dUhOhCN3T+NEFdSPGtDhm9U2xN32nV1Bnp6AJcAYpbALv9mLz2
-         6x2t46d6yFQkg7qI3Xabvs04oEqOMirvQqK/y6HOuzklCBKCRXpcu/5EhAuUJbjJulhC
-         TjXcqOnGPS6trlLAi6YOQ9L8Vzn7zCly5v6M8=
-Received: by 10.86.95.8 with SMTP id s8mr2846876fgb.38.1224173010422;
-        Thu, 16 Oct 2008 09:03:30 -0700 (PDT)
-Received: by 10.86.27.16 with HTTP; Thu, 16 Oct 2008 09:03:30 -0700 (PDT)
-Content-Disposition: inline
+	id S1753211AbYJPQRn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 16 Oct 2008 12:17:43 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753983AbYJPQRn
+	(ORCPT <rfc822;git-outgoing>); Thu, 16 Oct 2008 12:17:43 -0400
+Received: from frim.nl ([87.230.85.232]:59179 "EHLO
+	lvps87-230-85-232.dedicated.hosteurope.de" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751585AbYJPQRm (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 16 Oct 2008 12:17:42 -0400
+X-Greylist: delayed 2417 seconds by postgrey-1.27 at vger.kernel.org; Thu, 16 Oct 2008 12:17:42 EDT
+Received: from s5591931c.adsl.wanadoo.nl ([85.145.147.28] helo=[192.168.1.11])
+	by lvps87-230-85-232.dedicated.hosteurope.de with esmtpsa (TLS-1.0:RSA_AES_128_CBC_SHA1:16)
+	(Exim 4.63)
+	(envelope-from <pieter@frim.nl>)
+	id 1KqUua-0002wt-T3; Thu, 16 Oct 2008 17:37:16 +0200
+In-Reply-To: <0my5lujnbpdG6sxrffMExwukINu2tasxBSH0E0xYQoe6y5yyFL0LNA@cipher.nrlssc.navy.mil>
+X-Mailer: Apple Mail (2.929.2)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/98394>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/98395>
 
-Hello, ]
 
- I have a diskOnKey which has a vfat filesystem.
-I ran there:
-git clone git://git.kernel.org/pub/scm/linux/kernel/git/linville/wireless-2.6.git
-the I copied all the wireless-2.6 folder to an ext3 partition.
-There I ran git diff.
+On 16 okt 2008, at 17:21, Brandon Casey wrote:
 
-I get many messages like these (probably on all files of the repository):
+> Darwin, anyone?
 
-diff --git a/COPYING b/COPYING
-deleted file mode 100644
-index ca442d3..0000000
---- a/COPYING
-+++ /dev/null
-@@ -1,356 +0,0 @@
--
+'maint' passes for me on Darwin (OS X Leopard) after removing the  
+regex stuff in Makefile
 
-and then all the lines of the file with "-" in the beginning, as if
-they are empty.
-
-Why is it so ?
-Is there any way to overcome it ?
-Must I run "git clone" on an ext3 DiskOnKey only ?
-
-Regards,
-Ian
+- Pieter
