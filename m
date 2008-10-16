@@ -1,53 +1,79 @@
-From: Matt Draisey <matt@draisey.ca>
-Subject: Re: Detached checkout will clobber branch head when using symlink
-	HEAD
-Date: Thu, 16 Oct 2008 16:28:59 -0400
-Message-ID: <1224188939.2796.22.camel@localhost>
-References: <1224095087.5366.19.camel@localhost>
-	 <20081016191751.GB14707@coredump.intra.peff.net>
-	 <1224187863.2796.15.camel@localhost>
-	 <alpine.LFD.2.00.0810161619330.26244@xanadu.home>
+From: Marc Branchaud <marcnarc@xiplink.com>
+Subject: Re: Working with remotes; cloning remote references
+Date: Thu, 16 Oct 2008 16:29:34 -0400
+Message-ID: <48F7A42E.70200@xiplink.com>
+References: <48F7852F.109@xiplink.com> <eaa105840810161220k26eebd48q8de606597f2be055@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
 Content-Transfer-Encoding: 7bit
-Cc: Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
-	git@vger.kernel.org
-To: Nicolas Pitre <nico@cam.org>
-X-From: git-owner@vger.kernel.org Thu Oct 16 22:30:32 2008
+Cc: git@peter.is-a-geek.org
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Oct 16 22:30:51 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KqZUG-00018d-Sq
-	for gcvg-git-2@gmane.org; Thu, 16 Oct 2008 22:30:25 +0200
+	id 1KqZUg-0001Jc-Mc
+	for gcvg-git-2@gmane.org; Thu, 16 Oct 2008 22:30:51 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754637AbYJPU3N (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 16 Oct 2008 16:29:13 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754625AbYJPU3N
-	(ORCPT <rfc822;git-outgoing>); Thu, 16 Oct 2008 16:29:13 -0400
-Received: from ug-out-1314.google.com ([66.249.92.175]:21223 "EHLO
-	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754608AbYJPU3M (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 16 Oct 2008 16:29:12 -0400
-Received: by ug-out-1314.google.com with SMTP id k3so1841144ugf.37
-        for <git@vger.kernel.org>; Thu, 16 Oct 2008 13:29:10 -0700 (PDT)
-Received: by 10.67.21.11 with SMTP id y11mr6907280ugi.70.1224188950721;
-        Thu, 16 Oct 2008 13:29:10 -0700 (PDT)
-Received: from ?192.168.0.100? (bas2-windsor12-1177605554.dsl.bell.ca [70.48.213.178])
-        by mx.google.com with ESMTPS id g30sm3435607ugd.57.2008.10.16.13.29.08
-        (version=SSLv3 cipher=RC4-MD5);
-        Thu, 16 Oct 2008 13:29:09 -0700 (PDT)
-In-Reply-To: <alpine.LFD.2.00.0810161619330.26244@xanadu.home>
-X-Mailer: Evolution 2.6.3 
+	id S1755224AbYJPU3g (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 16 Oct 2008 16:29:36 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755134AbYJPU3g
+	(ORCPT <rfc822;git-outgoing>); Thu, 16 Oct 2008 16:29:36 -0400
+Received: from smtp232.iad.emailsrvr.com ([207.97.245.232]:34857 "EHLO
+	smtp232.iad.emailsrvr.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754980AbYJPU3f (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 16 Oct 2008 16:29:35 -0400
+Received: from relay13.relay.iad.mlsrvr.com (localhost [127.0.0.1])
+	by relay13.relay.iad.mlsrvr.com (SMTP Server) with ESMTP id 3FEE59B19E4;
+	Thu, 16 Oct 2008 16:29:34 -0400 (EDT)
+Received: by relay13.relay.iad.mlsrvr.com (Authenticated sender: mbranchaud-AT-xiplink.com) with ESMTP id 1D4DD9B1485;
+	Thu, 16 Oct 2008 16:29:34 -0400 (EDT)
+User-Agent: Thunderbird 2.0.0.17 (X11/20080925)
+In-Reply-To: <eaa105840810161220k26eebd48q8de606597f2be055@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/98418>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/98419>
 
-On Thu, 2008-10-16 at 16:20 -0400, Nicolas Pitre wrote:
-> A symlink HEAD and detached checkouts are simply incompatible.
+Peter Harris wrote:
+> 
+> "git clone" doesn't have this option, but you can turn it on
+> immediately after with something similar to:
+> git config --add remote.origin.fetch +refs/remotes/*:refs/remotes/*
+> (which I use for fanning-out my git-svn repos)
 
-Not necessarily.  The symlinking code will unlink the original inode
-each time it creates a new symlink anyway.  It is simply a matter of
-creating a new file in its place.
+Thanks for the pointer (and the quick reply).
+
+That doesn't seem to be what I'm looking for, though -- perhaps I'm 
+missing something?  The above puts the remotes in the .git/refs/remotes 
+directory, but the .git/config file doesn't have them.
+
+More specifically, if I clone the main repository and run the above and 
+then fetch, then AFAICT I'm still not linked to the external mirrors in 
+the clone.  In particular, I can't refer to an external project in the 
+subtree pull:
+
+	$ git pull -s subtree external2 master
+	fatal: 'external2': unable to chdir or not a git archive
+
+(Where 'external2' is the name of the remote in the main repo.)  Also, 
+the only remote in the config file is still just the origin.
+
+(As an aside, the above "git config --add" incantation causes problems 
+if run inside a clone of a clone:
+	$ git clone main clone-of-main
+	$ git clone clone-of-main clone-of-clone-of-main
+	$ cd clone-of-clone-of-main
+	$ git config --add remote.origin.fetch \
+		+refs/remotes/*:refs/remotes/*
+	$ git pull
+	fatal: refs/remotes/origin/master tracks both 
+refs/remotes/origin/master and refs/heads/master
+)
+
+You did say "something similar" in your reply -- am I not seeing 
+something obvious?
+
+		Marc
