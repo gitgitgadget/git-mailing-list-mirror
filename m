@@ -1,74 +1,77 @@
-From: A Large Angry SCM <gitzilla@gmail.com>
-Subject: Re: builtin conversion between tabs and spaces
-Date: Wed, 15 Oct 2008 19:34:33 -0400
-Message-ID: <48F67E09.90202@gmail.com>
-References: <d4bc1a2a0810141839r547a770j3a8e56312afa6a53@mail.gmail.com>	 <d4bc1a2a0810141842q1e50c85au7d813f2e5e37a84c@mail.gmail.com>	 <d4bc1a2a0810141844x76223e76xf04e07ece834fc61@mail.gmail.com>	 <20081015062539.GB3775@blimp.localdomain>	 <d4bc1a2a0810151352s6c963e32jc4f492a7c84841dc@mail.gmail.com>	 <57518fd10810151402p4ea3283anf4b3d175c4e82425@mail.gmail.com>	 <d4bc1a2a0810151418r3bf21ddaj498017e8e178f579@mail.gmail.com> <d4bc1a2a0810151602j56550c3di2f59f92039fa8243@mail.gmail.com>
-Reply-To: gitzilla@gmail.com
+From: drafnel@gmail.com
+Subject: [PATCH maint 1/2] t4018-diff-funcname: rework negated last expression test
+Date: Wed, 15 Oct 2008 19:58:49 -0500
+Message-ID: <13723998.1224118688113.JavaMail.teamon@b307.teamon.com>
+References: <7vljwpr6lr.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Type: text/plain
 Content-Transfer-Encoding: 7bit
-Cc: Jonathan del Strother <maillist@steelskies.com>,
-	Alex Riesen <raa.lkml@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>,
-	Johannes Sixt <j.sixt@viscovery.net>
-To: Stefan Karpinski <stefan.karpinski@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Oct 16 01:35:56 2008
+Cc: git@vger.kernel.org, Brandon Casey <drafnel@gmail.com>
+To: gitster@pobox.com
+X-From: git-owner@vger.kernel.org Thu Oct 16 03:17:21 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KqFuC-0002gO-Mv
-	for gcvg-git-2@gmane.org; Thu, 16 Oct 2008 01:35:53 +0200
+	id 1KqHUP-0007KG-11
+	for gcvg-git-2@gmane.org; Thu, 16 Oct 2008 03:17:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753457AbYJOXei (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 15 Oct 2008 19:34:38 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753157AbYJOXei
-	(ORCPT <rfc822;git-outgoing>); Wed, 15 Oct 2008 19:34:38 -0400
-Received: from mail-gx0-f16.google.com ([209.85.217.16]:60310 "EHLO
-	mail-gx0-f16.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752437AbYJOXeh (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 15 Oct 2008 19:34:37 -0400
-Received: by gxk9 with SMTP id 9so7624285gxk.13
-        for <git@vger.kernel.org>; Wed, 15 Oct 2008 16:34:36 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id
-         :disposition-notification-to:date:from:reply-to:user-agent
-         :mime-version:to:cc:subject:references:in-reply-to:content-type
-         :content-transfer-encoding;
-        bh=NvDyKeSzVShkamilRXIC7T+xiwSjfj2BhOzVq5T3A+Y=;
-        b=f5iFFgbS2gbkHdH2ykhBJ51iU2EpPi/Ba6uefVS2H46ka+1MG23mPW/KRkzh0icZWF
-         xWyEI04Soq+sDVykDTwMbuTl29FEfTo0iLaTw7+PRjJmzNTfJ26TXgv+M5AiCw4ymyeW
-         LsdmF7GbcirX23hw2ADOFs61JOmIDR7f9jII0=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:disposition-notification-to:date:from:reply-to
-         :user-agent:mime-version:to:cc:subject:references:in-reply-to
-         :content-type:content-transfer-encoding;
-        b=RqpQU5dITZFaFQc84FZMm2l/bRCAdhDmrWofX80rfEJsLZorTqzmzijsnWuCG6/LVE
-         DnCRFWJu3xMZ2aT3nmn2bN3owuqc/KdVrfXfteYSbENVlGwd750zkQiCiEHxey1wtdnG
-         EySSmC3Kcty/vrwdXW2HPSjpB0/kj2WloLgDY=
-Received: by 10.90.99.3 with SMTP id w3mr1953389agb.89.1224113676371;
-        Wed, 15 Oct 2008 16:34:36 -0700 (PDT)
-Received: from ?10.0.0.6? (c-66-177-19-100.hsd1.fl.comcast.net [66.177.19.100])
-        by mx.google.com with ESMTPS id c44sm577936hsc.12.2008.10.15.16.34.34
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Wed, 15 Oct 2008 16:34:35 -0700 (PDT)
-User-Agent: Thunderbird 1.5.0.10 (X11/20060911)
-In-Reply-To: <d4bc1a2a0810151602j56550c3di2f59f92039fa8243@mail.gmail.com>
+	id S1750989AbYJPBQE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 15 Oct 2008 21:16:04 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752158AbYJPBQC
+	(ORCPT <rfc822;git-outgoing>); Wed, 15 Oct 2008 21:16:02 -0400
+Received: from www.teamon.com ([216.34.91.250]:60111 "EHLO b307.teamon.com"
+	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+	id S1751004AbYJPBQA (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 15 Oct 2008 21:16:00 -0400
+X-Greylist: delayed 1065 seconds by postgrey-1.27 at vger.kernel.org; Wed, 15 Oct 2008 21:16:00 EDT
+Received: from b307.teamon.com (localhost [127.0.0.1])
+	by b307.teamon.com (8.11.7 DSN_MOD/8.11.7) with ESMTP id m9G0w8525095;
+	Thu, 16 Oct 2008 00:58:08 GMT
+X-Mailer: git-send-email 1.6.0.2.101.gb844
+In-Reply-To: <7vljwpr6lr.fsf@gitster.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/98340>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/98341>
 
-Stefan Karpinski wrote:
-> Any further comments? I'm more than willing to implement this, but I
-> won't bother if there's no chance of getting it accepted as a patch.
-> Does no one else feel like at least having the option to enforce
-> whitespace consistency in git is a good thing? If not, I guess I'll
-> just muddle along without this feature instead of implementing it.
+This test used the non-zero exit status of 'git diff' to indicate that a
+negated funcname pattern, when placed last, was correctly rejected.
 
-I'm against including this in except as a sample smudge/clean script. 
-Git is a content tracker; not the enforcement mechanism for individual 
-project policies.
+The problem with this is that 'git diff' always returns non-zero if it
+finds differences in the files it is comparing, and the files must
+contain differences in order to trigger the funcname pattern codepath.
+
+Instead of checking for non-zero exit status, make sure the expected
+error message is printed.
+
+Signed-off-by: Brandon Casey <drafnel@gmail.com>
+---
+
+
+This is not really a series, but I expect you'll apply both, so this
+seems easier for both of us.
+
+-brandon
+
+
+ t/t4018-diff-funcname.sh |    3 ++-
+ 1 files changed, 2 insertions(+), 1 deletions(-)
+
+diff --git a/t/t4018-diff-funcname.sh b/t/t4018-diff-funcname.sh
+index 99fff97..72076ec 100755
+--- a/t/t4018-diff-funcname.sh
++++ b/t/t4018-diff-funcname.sh
+@@ -65,7 +65,8 @@ test_expect_success 'custom pattern' '
+ 
+ test_expect_success 'last regexp must not be negated' '
+ 	git config diff.java.funcname "!static" &&
+-	test_must_fail git diff --no-index Beer.java Beer-correct.java
++	git diff --no-index Beer.java Beer-correct.java 2>&1 |
++	grep "fatal: Last expression must not be negated:"
+ '
+ 
+ test_expect_success 'alternation in pattern' '
+-- 
+1.6.0.2.101.gb844
