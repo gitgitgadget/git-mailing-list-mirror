@@ -1,91 +1,79 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] Teach/Fix git-pull/git-merge --quiet and --verbose
-Date: Wed, 15 Oct 2008 23:15:07 -0700
-Message-ID: <7vtzbdjcb8.fsf@gitster.siamese.dyndns.org>
-References: <1223934148-13942-1-git-send-email-tuncer.ayaz@gmail.com>
- <7vzll887ps.fsf@gitster.siamese.dyndns.org>
- <4ac8254d0810131529l37d67b61q3589f15700d38261@mail.gmail.com>
- <4ac8254d0810151047p7e12e8efk6fea666d2ac85f0f@mail.gmail.com>
- <7vy70p3cga.fsf@gitster.siamese.dyndns.org>
- <4ac8254d0810151220l48b81325yf3aca48cda49ef3a@mail.gmail.com>
- <7vprm1pfmd.fsf@gitster.siamese.dyndns.org>
- <4ac8254d0810152254i615bca9dye0aedd8689c946e7@mail.gmail.com>
+From: "Alex Riesen" <raa.lkml@gmail.com>
+Subject: Re: [PATCH] Fix mkpath abuse in dwim_ref/sha1_name.c
+Date: Thu, 16 Oct 2008 08:21:12 +0200
+Message-ID: <81b0412b0810152321u508f1e2eqa7790baf476baf34@mail.gmail.com>
+References: <81b0412b0810140923x5cf58bb9x5acd1517a19e9847@mail.gmail.com>
+	 <7viqru6a1r.fsf@gitster.siamese.dyndns.org>
+	 <20081015062039.GA3775@blimp.localdomain>
+	 <7vabd5r1ss.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: "Tuncer Ayaz" <tuncer.ayaz@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Oct 16 08:16:48 2008
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: "Git Mailing List" <git@vger.kernel.org>,
+	"Shawn O. Pearce" <spearce@spearce.org>
+To: "Junio C Hamano" <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Oct 16 08:23:41 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KqMA2-0006YQ-3l
-	for gcvg-git-2@gmane.org; Thu, 16 Oct 2008 08:16:38 +0200
+	id 1KqMGc-00007m-4c
+	for gcvg-git-2@gmane.org; Thu, 16 Oct 2008 08:23:26 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756626AbYJPGPZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 16 Oct 2008 02:15:25 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756624AbYJPGPY
-	(ORCPT <rfc822;git-outgoing>); Thu, 16 Oct 2008 02:15:24 -0400
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:50806 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756546AbYJPGPU (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 16 Oct 2008 02:15:20 -0400
-Received: from localhost.localdomain (localhost [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 97CC66F849;
-	Thu, 16 Oct 2008 02:15:16 -0400 (EDT)
-Received: from pobox.com (ip68-225-240-211.oc.oc.cox.net [68.225.240.211])
- (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
- certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
- ESMTPSA id 3E0676F848; Thu, 16 Oct 2008 02:15:12 -0400 (EDT)
-In-Reply-To: <4ac8254d0810152254i615bca9dye0aedd8689c946e7@mail.gmail.com>
- (Tuncer Ayaz's message of "Thu, 16 Oct 2008 07:54:40 +0200")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: CD0BBFA8-9B49-11DD-8A51-1E1F86D30F62-77302942!a-sasl-fastnet.pobox.com
+	id S1754017AbYJPGVP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 16 Oct 2008 02:21:15 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753966AbYJPGVP
+	(ORCPT <rfc822;git-outgoing>); Thu, 16 Oct 2008 02:21:15 -0400
+Received: from yx-out-2324.google.com ([74.125.44.29]:48127 "EHLO
+	yx-out-2324.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753684AbYJPGVN (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 16 Oct 2008 02:21:13 -0400
+Received: by yx-out-2324.google.com with SMTP id 8so694590yxm.1
+        for <git@vger.kernel.org>; Wed, 15 Oct 2008 23:21:12 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to
+         :subject:cc:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:references;
+        bh=FYKLo6OGYdeK4rSTcaxiFOBQXrbijIYbclCFLWO8WYE=;
+        b=KSK+DeuZvOq+EzmRikHJWTVwguc63N5J5yK7ImO5PvLQmbRO6fgc+bB+s8MpOF6QHf
+         Gv2AY6pBELpeTn7/DOPPjlj0MW10FfkJj1iLP1SouNTSQCDJWDnQE2oYwhM2e9wVwDyz
+         nabBhrvbeVpRvy3gVmfM4TmQuE6hHWIW0DBig=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
+         :content-type:content-transfer-encoding:content-disposition
+         :references;
+        b=l+L1ei9acYteFcYVANcceixTJMxFnW+wezBchGSgYEj9srHueJHn8rdUfdab7O/6J3
+         mwrYMCnwq/vP229iMVzUj+DKxBGt1fupzQwZht8vs30radi4C+59xZLD8klwr0BuVAzA
+         J4bsFRYvD5REaoEeWSVBBvJ8LAiCJcmabxaro=
+Received: by 10.101.67.11 with SMTP id u11mr2657716ank.88.1224138072738;
+        Wed, 15 Oct 2008 23:21:12 -0700 (PDT)
+Received: by 10.100.91.8 with HTTP; Wed, 15 Oct 2008 23:21:12 -0700 (PDT)
+In-Reply-To: <7vabd5r1ss.fsf@gitster.siamese.dyndns.org>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/98346>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/98347>
 
-"Tuncer Ayaz" <tuncer.ayaz@gmail.com> writes:
-
-> On Thu, Oct 16, 2008 at 2:07 AM, Junio C Hamano <gitster@pobox.com> wrote:
->> "Tuncer Ayaz" <tuncer.ayaz@gmail.com> writes:
+2008/10/15 Junio C Hamano <gitster@pobox.com>:
+> Alex Riesen <raa.lkml@gmail.com> writes:
+>
+>> Junio C Hamano, Wed, Oct 15, 2008 01:17:52 +0200:
+>>> "Alex Riesen" <raa.lkml@gmail.com> writes:
+>>> >
+>>> > Otherwise the function sometimes fail to resolve obviously correct refnames,
+>>> > because the string data pointed to by "ref" argument were reused.
+>>> >
+>>> But your patch instead rewrites the computation of str2 by bypassing the
+>>> call to "another_function_that_uses_get_pathname()" and duplicating its
+>>> logic, which I do not think is a viable approach in the longer term.
 >>
->>> On Wed, Oct 15, 2008 at 9:06 PM, Junio C Hamano <gitster@pobox.com> wrote:
->>>> "Tuncer Ayaz" <tuncer.ayaz@gmail.com> writes:
->>>>
-> Would you prefer to leave -v out?
+>> There is not enough logic to bypass there. It's just a dumb sprintf!
+>
+> But didn't you lose call to cleanup_path()?
+>
 
-Not at all.
-
-Perhaps there is a deeper misunderstanding.
-
-It makes perfect sense _at the end user interface level_ to have -v and -q
-as two separate options, perhaps with "later one wins" semantics.  Another
-possible semantics is "-q and -v are mutually incompatible", but I think
-"later one wins" makes it much more usable from the end user's point of view.
-
-The only thing I was objecting to was your repeated (verbose || !quiet)
-expression in the _implementation_, which would have been much easier to
-read and maintain, if it were expressed as a single variable "verbosity"
-that can have one of three values.
-
-IOW,
-
-	static enum { QUIET, NORMAL, VERBOSE } verbosity = NORMAL;
-        ...
-
-        	if (!strcmp("--quiet", arg))
-                	verbosity = QUIET;
-		else if (!strcmp("--verbose", arg))
-                	verbosity = VERBOSE;
-		else ...
-
-	...
-                if (verbosity > QUIET)
-                	print informational message;
-		if (verbosity > NORMAL)
-                	print verbose message;
-
-See?
+In this case?
