@@ -1,81 +1,67 @@
-From: "Lars Hoss" <lars@woeye.net>
-Subject: Re: [BUG] git status doesn't handle submodules properly on OSX
-Date: Thu, 16 Oct 2008 14:30:00 +0200 (CEST)
-Message-ID: <8199b7ae4c441c4311045141ddaaa36f.squirrel@webmail.highteq.net>
-References: <c60a85c1297be6446ad92a3e7723ddc8.squirrel@webmail.highteq.net>
-    <5D0481A4-D173-4CF8-B855-5E58978210F8@ai.rug.nl>
-    <6ca24750ca8d7bd9e995d023e78e0d71.squirrel@webmail.highteq.net>
-    <524C98C8-C3A5-4501-932A-2F0ACDE2886A@simplicidade.org>
-    <3520b7a9009f072cfc3aeb82ae205e6b.squirrel@webmail.highteq.net>
-    <48F7280C.3080205@viscovery.net>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH] Preserve file permissions on git-reflog expire
+Date: Thu, 16 Oct 2008 14:34:45 +0200 (CEST)
+Message-ID: <alpine.DEB.1.00.0810161434220.22125@pacific.mpi-cbg.de.mpi-cbg.de>
+References: <48F629C2.70203@datacom.ind.br> <7v3aix4ud4.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: "Lars Hoss" <lars@woeye.net>, "Pedro Melo" <melo@simplicidade.org>,
-	"Pieter de Bie" <pdebie@ai.rug.nl>, "Jeff King" <peff@peff.net>,
-	"Git Mailinglist" <git@vger.kernel.org>
-To: "Johannes Sixt" <j.sixt@viscovery.net>
-X-From: git-owner@vger.kernel.org Thu Oct 16 14:28:12 2008
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Samuel Lucas Vaz de Mello <samuellucas@datacom.ind.br>,
+	git@vger.kernel.org, "Shawn O. Pearce" <spearce@spearce.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Oct 16 14:29:41 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KqRxZ-00023T-GO
-	for gcvg-git-2@gmane.org; Thu, 16 Oct 2008 14:28:10 +0200
+	id 1KqRyv-0002ds-1c
+	for gcvg-git-2@gmane.org; Thu, 16 Oct 2008 14:29:33 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753159AbYJPM05 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 16 Oct 2008 08:26:57 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753406AbYJPM05
-	(ORCPT <rfc822;git-outgoing>); Thu, 16 Oct 2008 08:26:57 -0400
-Received: from mail.codewut.de ([78.47.135.140]:51267 "EHLO mail.codewut.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752959AbYJPM04 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 16 Oct 2008 08:26:56 -0400
-Received: by mail.codewut.de (Postfix, from userid 65534)
-	id 655BD7BEF1; Thu, 16 Oct 2008 14:30:03 +0200 (CEST)
-X-Spam-Checker-Version: SpamAssassin 3.1.7-deb (2006-10-05) on mail.codewut.de
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.6 required=5.0 tests=AWL,BAYES_00 autolearn=ham 
-	version=3.1.7-deb
-Received: from webmail.highteq.net (web.highteq.net [78.47.135.138])
-	by mail.codewut.de (Postfix) with ESMTP id CDDF87BE4C;
-	Thu, 16 Oct 2008 14:30:00 +0200 (CEST)
-Received: from 194.127.8.18
-        (SquirrelMail authenticated user lars)
-        by webmail.highteq.net with HTTP;
-        Thu, 16 Oct 2008 14:30:00 +0200 (CEST)
-In-Reply-To: <48F7280C.3080205@viscovery.net>
-User-Agent: SquirrelMail/1.4.15
-X-Priority: 3 (Normal)
-Importance: Normal
+	id S1753651AbYJPM2O (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 16 Oct 2008 08:28:14 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753565AbYJPM2O
+	(ORCPT <rfc822;git-outgoing>); Thu, 16 Oct 2008 08:28:14 -0400
+Received: from mail.gmx.net ([213.165.64.20]:59990 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1753451AbYJPM2N (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 16 Oct 2008 08:28:13 -0400
+Received: (qmail invoked by alias); 16 Oct 2008 12:28:06 -0000
+Received: from pacific.mpi-cbg.de (EHLO [141.5.10.38]) [141.5.10.38]
+  by mail.gmx.net (mp047) with SMTP; 16 Oct 2008 14:28:06 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX198NJpWrZt82DQdANk25gntSyFsE6/zRzpKYR1J10
+	0/WmB+rPSlRsNG
+X-X-Sender: schindelin@pacific.mpi-cbg.de.mpi-cbg.de
+In-Reply-To: <7v3aix4ud4.fsf@gitster.siamese.dyndns.org>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.62
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/98374>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/98375>
 
-Thanks again for your feedback, guys!
+Hi,
 
-Ok, I've done it and tracked it down. Unfortunately my MacBook
-has no access to the company network or internet (must get an iPhone ;-),
-so I cannot copy&paste my finding.
+On Wed, 15 Oct 2008, Junio C Hamano wrote:
 
-For now I can you give this:
-1.5.6.rc1.24.gd629 fails
-1.5.6.rc1.23.g6c2ce works
+> Samuel Lucas Vaz de Mello <samuellucas@datacom.ind.br> writes:
+> 
+> > samuel@erdinger:~/myrepo$ git push 
+> > Counting objects: 5, done.
+> > Compressing objects: 100% (3/3), done.
+> > Unpacking objects: 100% (3/3), done.
+> > Writing objects: 100% (3/3), 295 bytes, done.
+> > Total 3 (delta 2), reused 0 (delta 0)
+> > error: Unable to append to logs/refs/heads/master: Permission denied 
+> > To /remote/myrepo/
+> > ! [remote rejected] master -> master (failed to write)
+> > error: failed to push some refs to '/remote/myrepo/' 
+> 
+> Thanks for a reproduction recipe.  I think an abbreviated version of this
+> would deserve to be in the commit log message proper.
 
-The commit was on Jun 5, 14:47:50 by Marius Storm-Olsen and the relevant
-file is wt-status.c.
+Or as a test script.
 
-Ok, I think I found the issue. I enabled showUntrackedFiles in my gitconfig:
-
-status.showUntrackedFiles = all
-
-On the one hand it makes sense to list submodule folder as untracked
-files. Then again it feels wrong because it is a registered submodule. Hm
-:-)
-
-Anyway, bisect is really impressive!
-
-Yours,
-Lars
+Ciao,
+Dscho
