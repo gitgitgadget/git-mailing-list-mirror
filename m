@@ -1,76 +1,79 @@
-From: Brandon Casey <casey@nrlssc.navy.mil>
-Subject: Re: Usability of git stash
-Date: Thu, 16 Oct 2008 10:22:44 -0500
-Message-ID: <vCcONcOJu3QKQyRgPdT5Dws3F2P25RNAFOgM5GX6FWWKJe40papCRw@cipher.nrlssc.navy.mil>
-References: <87wsg9acfv.fsf@cup.kalibalik.dk> <nKimSsYZj6xfGNCQS3i5cRwnWQfbHrtUrwdGB2zGWVfMOcfZMwJDKg@cipher.nrlssc.navy.mil> <86vdvsg4up.fsf@lola.quinscape.zz>
+From: Thomas Rast <trast@student.ethz.ch>
+Subject: Re: What's cooking in git.git (Oct 2008, #03; Tue, 14)
+Date: Thu, 16 Oct 2008 17:53:03 +0200
+Message-ID: <200810161753.06318.trast@student.ethz.ch>
+References: <7v8wsq7rt5.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: multipart/signed;
+  boundary="nextPart2236822.n9xoYPx8xB";
+  protocol="application/pgp-signature";
+  micalg=pgp-sha1
 Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org
-To: David Kastrup <dak@gnu.org>
-X-From: git-owner@vger.kernel.org Thu Oct 16 17:24:15 2008
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Oct 16 17:54:30 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KqUhn-0005SI-49
-	for gcvg-git-2@gmane.org; Thu, 16 Oct 2008 17:24:03 +0200
+	id 1KqVB9-0001U4-OW
+	for gcvg-git-2@gmane.org; Thu, 16 Oct 2008 17:54:24 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754583AbYJPPWy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 16 Oct 2008 11:22:54 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754120AbYJPPWy
-	(ORCPT <rfc822;git-outgoing>); Thu, 16 Oct 2008 11:22:54 -0400
-Received: from mail1.nrlssc.navy.mil ([128.160.35.1]:42334 "EHLO
-	mail.nrlssc.navy.mil" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754210AbYJPPWx (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 16 Oct 2008 11:22:53 -0400
-Received: by mail.nrlssc.navy.mil id m9GFMidr015143; Thu, 16 Oct 2008 10:22:44 -0500
-In-Reply-To: <86vdvsg4up.fsf@lola.quinscape.zz>
-X-OriginalArrivalTime: 16 Oct 2008 15:22:44.0544 (UTC) FILETIME=[09AF7C00:01C92FA3]
+	id S1753693AbYJPPxJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 16 Oct 2008 11:53:09 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751685AbYJPPxI
+	(ORCPT <rfc822;git-outgoing>); Thu, 16 Oct 2008 11:53:08 -0400
+Received: from xsmtp1.ethz.ch ([82.130.70.13]:6188 "EHLO xsmtp1.ethz.ch"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751485AbYJPPxH (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 16 Oct 2008 11:53:07 -0400
+Received: from xfe1.d.ethz.ch ([82.130.124.41]) by xsmtp1.ethz.ch with Microsoft SMTPSVC(6.0.3790.3959);
+	 Thu, 16 Oct 2008 17:52:55 +0200
+Received: from [192.168.0.8] ([77.56.223.244]) by xfe1.d.ethz.ch over TLS secured channel with Microsoft SMTPSVC(6.0.3790.3959);
+	 Thu, 16 Oct 2008 17:52:55 +0200
+User-Agent: KMail/1.9.9
+In-Reply-To: <7v8wsq7rt5.fsf@gitster.siamese.dyndns.org>
+X-OriginalArrivalTime: 16 Oct 2008 15:52:55.0213 (UTC) FILETIME=[40EDA5D0:01C92FA7]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/98392>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/98393>
 
-David Kastrup wrote:
-> Brandon Casey <casey@nrlssc.navy.mil> writes:
-> 
->> Anders Melchiorsen wrote:
->>
->>> When trying to recover from that scenario, I do "git stash apply" as
->>> recommended by the "git stash" output. Now I still lost my index
->>> state, all changes are unstaged.
->> See the documentation, apply has a '--index' option.
-> 
-> Still, the shoot-yourself-in-the-foot potential is quite larger than
-> appropriate for what is mostly workflow porcelaine.  It is even larger
-> than appropriate for plumbing IMHO.
+--nextPart2236822.n9xoYPx8xB
+Content-Type: text/plain;
+  charset="utf-8"
+Content-Transfer-Encoding: quoted-printable
+Content-Disposition: inline
 
-I think it is excessive to call the action taken by 'git stash', when it
-is unwanted, "shoot[ing]-yourself-in-the-foot". More like stub-your-toe.
+You wrote:
+> * tr/workflow-doc (Sat Sep 13 18:11:01 2008 +0200) 2 commits
+>  + Documentation: Refer to git-rebase(1) to warn against rewriting
+>  + Documentation: new upstream rebase recovery section in git-rebase
+>=20
+> Shawn says that an update came in recently, but they are not here yet.
+> I'd need to dig it up, but I haven't had time.
 
-In exchange for allowing new users to stub their toe on new commands, the
-work flow of more experienced users is made a little easier.
+The one you commented on was the last iteration.  I hope to find the
+time to reroll the next (perhaps final) iteration this weekend.
 
-> I mean, even misspellings like
-> git stash lisp
->
-> cause action that is not easily reversible, and the given help output is
-> misleading with regard to index state.
+=2D Thomas
 
-$ git stash lisp
-Usage: git stash list [<options>]
-   or: git stash (show | drop | pop ) [<stash>]
-   or: git stash apply [--index] [<stash>]
-   or: git stash branch <branchname> [<stash>]
-   or: git stash [save [--keep-index] [<message>]]
-   or: git stash clear
+=2D-=20
+Thomas Rast
+trast@{inf,student}.ethz.ch
 
 
-Maybe you are referring to the long since changed behavior where
-'git stash' == 'git stash save' and so "lisp" in your example
-would have been taken as a stash description. This behavior existed
-for less than 6 months, and has been changed now for over 10 months.
+--nextPart2236822.n9xoYPx8xB
+Content-Type: application/pgp-signature; name=signature.asc 
+Content-Description: This is a digitally signed message part.
 
--brandon
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.0.9 (GNU/Linux)
+
+iEYEABECAAYFAkj3Y2IACgkQqUud07tmzP3e5QCfRRAGKF6/KIRyTr6BGMxdfBRO
+HRQAn3YuUgeiyHjGfm5VkVsgTqx20idi
+=ucck
+-----END PGP SIGNATURE-----
+
+--nextPart2236822.n9xoYPx8xB--
