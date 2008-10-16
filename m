@@ -1,57 +1,77 @@
-From: Nicolas Pitre <nico@cam.org>
-Subject: Re: Detached checkout will clobber branch head when using symlink HEAD
-Date: Thu, 16 Oct 2008 16:47:48 -0400 (EDT)
-Message-ID: <alpine.LFD.2.00.0810161646550.26244@xanadu.home>
-References: <1224095087.5366.19.camel@localhost>
- <20081016191751.GB14707@coredump.intra.peff.net>
- <1224187863.2796.15.camel@localhost>
- <alpine.LFD.2.00.0810161619330.26244@xanadu.home>
- <1224188939.2796.22.camel@localhost>
+From: Miklos Vajna <vmiklos@frugalware.org>
+Subject: Re: Rebasing Multiple branches at once...
+Date: Thu, 16 Oct 2008 23:00:02 +0200
+Message-ID: <20081016210002.GJ536@genesis.frugalware.org>
+References: <48F730D0.9040008@calicojack.co.uk> <20081016135908.GI536@genesis.frugalware.org> <48F7542B.1050909@calicojack.co.uk>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
-	git@vger.kernel.org
-To: Matt Draisey <matt@draisey.ca>
-X-From: git-owner@vger.kernel.org Thu Oct 16 22:49:09 2008
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="pssgfZQbIK00CPi6"
+Cc: git@vger.kernel.org
+To: Rick Moynihan <rick@calicojack.co.uk>
+X-From: git-owner@vger.kernel.org Thu Oct 16 23:01:23 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KqZmN-0008B9-E1
-	for gcvg-git-2@gmane.org; Thu, 16 Oct 2008 22:49:07 +0200
+	id 1KqZyF-00042c-92
+	for gcvg-git-2@gmane.org; Thu, 16 Oct 2008 23:01:23 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754980AbYJPUrz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 16 Oct 2008 16:47:55 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754919AbYJPUrz
-	(ORCPT <rfc822;git-outgoing>); Thu, 16 Oct 2008 16:47:55 -0400
-Received: from relais.videotron.ca ([24.201.245.36]:37778 "EHLO
-	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754911AbYJPUrz (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 16 Oct 2008 16:47:55 -0400
-Received: from xanadu.home ([66.131.194.97]) by VL-MO-MR002.ip.videotron.ca
- (Sun Java(tm) System Messaging Server 6.3-4.01 (built Aug  3 2007; 32bit))
- with ESMTP id <0K8U000VSN3OOQ40@VL-MO-MR002.ip.videotron.ca> for
- git@vger.kernel.org; Thu, 16 Oct 2008 16:47:49 -0400 (EDT)
-X-X-Sender: nico@xanadu.home
-In-reply-to: <1224188939.2796.22.camel@localhost>
-User-Agent: Alpine 2.00 (LFD 1167 2008-08-23)
+	id S1755248AbYJPVAH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 16 Oct 2008 17:00:07 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755231AbYJPVAG
+	(ORCPT <rfc822;git-outgoing>); Thu, 16 Oct 2008 17:00:06 -0400
+Received: from virgo.iok.hu ([193.202.89.103]:51802 "EHLO virgo.iok.hu"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755071AbYJPVAF (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 16 Oct 2008 17:00:05 -0400
+Received: from kag.elte.hu (kag.elte.hu [157.181.177.1])
+	by virgo.iok.hu (Postfix) with ESMTP id 74AD1580C8;
+	Thu, 16 Oct 2008 23:00:03 +0200 (CEST)
+Received: from genesis.frugalware.org (frugalware.elte.hu [157.181.177.34])
+	by kag.elte.hu (Postfix) with ESMTP id 5F9D74465E;
+	Thu, 16 Oct 2008 23:00:03 +0200 (CEST)
+Received: by genesis.frugalware.org (Postfix, from userid 1000)
+	id F013D11901A1; Thu, 16 Oct 2008 23:00:02 +0200 (CEST)
+Content-Disposition: inline
+In-Reply-To: <48F7542B.1050909@calicojack.co.uk>
+User-Agent: Mutt/1.5.17 (2007-11-01)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/98425>
-
-On Thu, 16 Oct 2008, Matt Draisey wrote:
-
-> On Thu, 2008-10-16 at 16:20 -0400, Nicolas Pitre wrote:
-> > A symlink HEAD and detached checkouts are simply incompatible.
-> 
-> Not necessarily.  The symlinking code will unlink the original inode
-> each time it creates a new symlink anyway.  It is simply a matter of
-> creating a new file in its place.
-
-True.  I didn't think it all through initially.
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/98426>
 
 
-Nicolas
+--pssgfZQbIK00CPi6
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
+
+On Thu, Oct 16, 2008 at 03:48:11PM +0100, Rick Moynihan <rick@calicojack.co=
+=2Euk> wrote:
+> Yes, but my understanding is that it's only harmful if you publish the=20
+> branch (or dependent branches) which are being rebased.
+>=20
+> So rebasing is very bad in these circumstances, but I fail to see why it'=
+s=20
+> bad if these branches are kept private.
+
+Ah, I thought you publish your branches.
+
+One reason may be that if you use merge, no history is lost, if you use
+rebase, history is in the reflogs, so it'll be lost after some time. But
+if you know what you are doing, then this is not a problem.
+
+--pssgfZQbIK00CPi6
+Content-Type: application/pgp-signature
+Content-Disposition: inline
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.9 (GNU/Linux)
+
+iEYEARECAAYFAkj3q1IACgkQe81tAgORUJaWvwCeJMiPMQAv78e6hkcX4ryaCHCH
+/jkAnRZ4WUaeyROVWhsZUK/AyLLjmvYp
+=9vro
+-----END PGP SIGNATURE-----
+
+--pssgfZQbIK00CPi6--
