@@ -1,95 +1,102 @@
-From: Pete Harlan <pgit@pcharlan.com>
-Subject: Re: git-svnimport.perl bug when copy source path has a revision
-Date: Wed, 15 Oct 2008 23:43:43 -0700
-Message-ID: <48F6E29F.1050807@pcharlan.com>
-References: <quack.20081015T1211.lth8wsp65dk@roar.cs.berkeley.edu>
+From: Ingo Molnar <mingo@elte.hu>
+Subject: Re: [PATCH] reset --hard/read-tree --reset -u: remove unmerged new
+	paths
+Date: Thu, 16 Oct 2008 09:20:10 +0200
+Message-ID: <20081016072010.GA19188@elte.hu>
+References: <20081015115654.fb34438f.akpm@linux-foundation.org> <alpine.DEB.1.10.0810151208100.7808@asgard.lang.hm> <alpine.DEB.1.10.0810151211580.7808@asgard.lang.hm> <alpine.LFD.2.00.0810151219120.3288@nehalem.linux-foundation.org> <20081015124949.b657a8db.akpm@linux-foundation.org> <alpine.LFD.2.00.0810151256410.3288@nehalem.linux-foundation.org> <alpine.LFD.2.00.0810151311210.3288@nehalem.linux-foundation.org> <7v3aixqzrn.fsf@gitster.siamese.dyndns.org> <7vy70ppiq1.fsf_-_@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
-Cc: Git mailing list <git@vger.kernel.org>
-To: Karl Chen <quarl@cs.berkeley.edu>
-X-From: git-owner@vger.kernel.org Thu Oct 16 08:44:58 2008
+Cc: Linus Torvalds <torvalds@linux-foundation.org>,
+	Andrew Morton <akpm@linux-foundation.org>, david@lang.hm,
+	Git Mailing List <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Oct 16 09:21:46 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KqMbR-0005ga-RI
-	for gcvg-git-2@gmane.org; Thu, 16 Oct 2008 08:44:58 +0200
+	id 1KqNAw-0007k8-FP
+	for gcvg-git-2@gmane.org; Thu, 16 Oct 2008 09:21:39 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752537AbYJPGnp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 16 Oct 2008 02:43:45 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752616AbYJPGnp
-	(ORCPT <rfc822;git-outgoing>); Thu, 16 Oct 2008 02:43:45 -0400
-Received: from lax-green-bigip-5.dreamhost.com ([208.113.200.5]:49193 "EHLO
-	swarthymail-a1.g.dreamhost.com" rhost-flags-OK-OK-OK-FAIL)
-	by vger.kernel.org with ESMTP id S1752221AbYJPGno (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 16 Oct 2008 02:43:44 -0400
-Received: from [192.168.0.2] (031.132-78-65.ftth.swbr.surewest.net [65.78.132.31])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by swarthymail-a1.g.dreamhost.com (Postfix) with ESMTP id 396328F18E;
-	Wed, 15 Oct 2008 23:43:44 -0700 (PDT)
-User-Agent: Mozilla-Thunderbird 2.0.0.16 (X11/20080724)
-In-Reply-To: <quack.20081015T1211.lth8wsp65dk@roar.cs.berkeley.edu>
+	id S1751415AbYJPHUY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 16 Oct 2008 03:20:24 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752744AbYJPHUY
+	(ORCPT <rfc822;git-outgoing>); Thu, 16 Oct 2008 03:20:24 -0400
+Received: from mx3.mail.elte.hu ([157.181.1.138]:36602 "EHLO mx3.mail.elte.hu"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750992AbYJPHUX (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 16 Oct 2008 03:20:23 -0400
+Received: from elvis.elte.hu ([157.181.1.14])
+	by mx3.mail.elte.hu with esmtp (Exim)
+	id 1KqN9a-0007UM-7f
+	from <mingo@elte.hu>; Thu, 16 Oct 2008 09:20:14 +0200
+Received: by elvis.elte.hu (Postfix, from userid 1004)
+	id 67C483E21A3; Thu, 16 Oct 2008 09:20:12 +0200 (CEST)
+Content-Disposition: inline
+In-Reply-To: <7vy70ppiq1.fsf_-_@gitster.siamese.dyndns.org>
+User-Agent: Mutt/1.5.18 (2008-05-17)
+Received-SPF: neutral (mx3: 157.181.1.14 is neither permitted nor denied by domain of elte.hu) client-ip=157.181.1.14; envelope-from=mingo@elte.hu; helo=elvis.elte.hu;
+X-ELTE-VirusStatus: clean
+X-ELTE-SpamScore: -1.5
+X-ELTE-SpamLevel: 
+X-ELTE-SpamCheck: no
+X-ELTE-SpamVersion: ELTE 2.0 
+X-ELTE-SpamCheck-Details: score=-1.5 required=5.9 tests=BAYES_00,DNS_FROM_SECURITYSAGE autolearn=no SpamAssassin version=3.2.3
+	-1.5 BAYES_00               BODY: Bayesian spam probability is 0 to 1%
+	[score: 0.0000]
+	0.0 DNS_FROM_SECURITYSAGE  RBL: Envelope sender in
+	blackholes.securitysage.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/98349>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/98350>
 
-Karl Chen wrote:
-> This looks like a bug in git-svnimport.perl.  If a tag (or
-> branch?) is created retroactively, git-svnimport doesn't respect
-> the copy source revision.
-> 
-> To reproduce:
-> 
-> svnadmin create somerepo;  export R=file://$PWD/somerepo
-> 
-> svn co $R wc && cd wc
-> 
-> mkdir trunk tags && svn add trunk tags && svn commit -m ""  # rev 1
-> 
-> cd trunk
-> echo a > a
-> echo b > b
-> echo c > c
-> 
-> svn add a && svn commit -m "commit a"   # rev 2
-> svn add b && svn commit -m "commit b"   # rev 3
-> # Copy from revision 2 instead of HEAD:
-> svn cp -m "tag rev 2" $R/trunk@2 $R/tags/mytag  # rev 4
-> svn add c && svn commit -m "commit c"   # rev 5
-> 
-> svn ls $R/tags/mytag 
-> # Lists only 'a'
-> 
-> mkdir /tmp/gitrepo && cd /tmp/gitrepo
-> perl /usr/share/doc/git-core/contrib/examples/git-svnimport.perl $R
-> 
-> git log mytag
-> # 'mytag' includes "commit b"; it was created as if it were tagged
-> # at r3; the "@2" was ignored.
 
-If you replace this:
+* Junio C Hamano <gitster@pobox.com> wrote:
 
-> perl /usr/share/doc/git-core/contrib/examples/git-svnimport.perl $R
+> When aborting a failed merge that has brought in a new path using "git 
+> reset --hard" or "git read-tree --reset -u", we used to first forget 
+> about the new path (via read_cache_unmerged) and then matched the 
+> working tree to what is recorded in the index, thus ending up leaving 
+> the new path in the work tree.
 
-with:
+i've met this problem in various variants in the past few months, and i 
+always assumed that it's "as designed" - as Git's policy is to never 
+lose information unless forced to do so. (which i find very nice in 
+general, and which saved modification from getting lost a couple of 
+times in the past)
 
-git svn init -T trunk -t tags $R
-git svn fetch
-git log tags/mytag
+the situations where i end up with a messed up working tree [using 
+git-c427559 right now]:
 
-you get a log that doesn't include "commit b".  (And it does include the
-tag commit, as svn does.)  tags/mytag is a branch, visibile via "git
-branch -r", instead of a tag.  I'm not fluent enough in git svn to know
-if this is a bug or a feature.
+ - doing a conflicted Octopus merge will leave the tree in some weird 
+   half-merged state, with lots of untracked working tree files that not 
+   even a hard reset will recover from. The routine thing i do to clean 
+   up is:
 
-According to git logs (8cb070a4, fee9832a), git-svnimport.perl hasn't
-been maintained in a while, presumably because git svn provides a
-superset of its functionality.
+      git reset --hard HEAD
+      git checkout HEAD .
+      git ls-files --others | xargs rm              # DANGEROUS
 
-HTH,
+   doing git checkout -f alone is not enough, as there might be various 
+   dangling files left around.
 
---Pete
+ - git auto-gc thinking that it needs to do another pass in the middle 
+   of a random git operation, but i dont have 10 minutes to wait so i 
+   decide to Ctrl-C it.
+
+ - doing the wrong "git checkout" and then Ctlr-C-ing it can leave the
+   working tree in limbo as well, needing fixups. If i'm stuck between
+   two branches that rename/remove files it might need the full fixup
+   sequence above.
+
+ - if a testbox has a corrupted system clock, its git repo and the 
+   kernel build can get confused. This is to be expected i think - but
+   the full sequence above will recover the corrupted tree. Not much Git
+   can do about this i guess.
+
+Does your fix mean that all i have to do in the future is a hard reset 
+back to HEAD, and that dangling files are not supposed to stay around?
+
+	Ingo
