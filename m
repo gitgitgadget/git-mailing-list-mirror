@@ -1,130 +1,135 @@
 From: Giuseppe Bilotta <giuseppe.bilotta@gmail.com>
-Subject: [PATCHv6 1/5] gitweb: parse project/action/hash_base:filename PATH_INFO
-Date: Thu, 16 Oct 2008 22:27:07 +0200
-Message-ID: <1224188831-17767-2-git-send-email-giuseppe.bilotta@gmail.com>
+Subject: [PATCHv6 4/5] gitweb: parse parent..current syntax from PATH_INFO
+Date: Thu, 16 Oct 2008 22:27:10 +0200
+Message-ID: <1224188831-17767-5-git-send-email-giuseppe.bilotta@gmail.com>
 References: <1224188831-17767-1-git-send-email-giuseppe.bilotta@gmail.com>
+ <1224188831-17767-2-git-send-email-giuseppe.bilotta@gmail.com>
+ <1224188831-17767-3-git-send-email-giuseppe.bilotta@gmail.com>
+ <1224188831-17767-4-git-send-email-giuseppe.bilotta@gmail.com>
 Cc: Jakub Narebski <jnareb@gmail.com>, Petr Baudis <pasky@suse.cz>,
 	Junio C Hamano <gitster@pobox.com>,
 	Giuseppe Bilotta <giuseppe.bilotta@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Oct 16 22:28:13 2008
+X-From: git-owner@vger.kernel.org Thu Oct 16 22:28:27 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KqZS4-0000BA-5Y
-	for gcvg-git-2@gmane.org; Thu, 16 Oct 2008 22:28:08 +0200
+	id 1KqZSN-0000ID-0F
+	for gcvg-git-2@gmane.org; Thu, 16 Oct 2008 22:28:27 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753902AbYJPU07 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 16 Oct 2008 16:26:59 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753937AbYJPU07
-	(ORCPT <rfc822;git-outgoing>); Thu, 16 Oct 2008 16:26:59 -0400
-Received: from nf-out-0910.google.com ([64.233.182.188]:17896 "EHLO
-	nf-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753616AbYJPU06 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 16 Oct 2008 16:26:58 -0400
-Received: by nf-out-0910.google.com with SMTP id d3so137749nfc.21
-        for <git@vger.kernel.org>; Thu, 16 Oct 2008 13:26:57 -0700 (PDT)
+	id S1754570AbYJPU1O (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 16 Oct 2008 16:27:14 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754375AbYJPU1N
+	(ORCPT <rfc822;git-outgoing>); Thu, 16 Oct 2008 16:27:13 -0400
+Received: from ey-out-2122.google.com ([74.125.78.27]:37082 "EHLO
+	ey-out-2122.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754282AbYJPU1L (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 16 Oct 2008 16:27:11 -0400
+Received: by ey-out-2122.google.com with SMTP id 6so78348eyi.37
+        for <git@vger.kernel.org>; Thu, 16 Oct 2008 13:27:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:received:received:from:to:cc:subject:date
          :message-id:x-mailer:in-reply-to:references;
-        bh=0rhAk4XZzGcpGjmCsvl3tp1XM97YEAcsx+glKwaR8Pk=;
-        b=DuozaFhs/Sntq2xWjbJ5JjxST1I2pkivr3bpkXeBL+sAkG5/c6I1kifkluakAbwD1+
-         kTCYDdz41xzOP/8K2TFd2T21TuSaPBvxonxmrPgTfEZ2t8WcciQiCxX+1dvzkMvRN4Ve
-         +ouJEkOAfLKBr7gaqoWg1EesaDs30f4xOgjKw=
+        bh=6+mwhejpzTL2p/OI4mtVSkaNvjhVPhontbYjwvopQvA=;
+        b=jm3j3jqJ/19b7dTnldbiztp0mnmMY+TF1Bg+5tHB/2ZHaAhtg/IXhJOkJAzjKc7cY+
+         mu3/GU9hhwsVPFFDXJqROX07j29jO6HgrJ+xdjkuzMz/GFMgTGCul/wcpK0tJWWTGunE
+         kNXrw3xuKHkU7ibqfvcH9i75Vww8dvrFbSTUM=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        b=m7wG+XsgCTOB2xzy4ICYgsoi5UnfMGS+hHQUcUxvp1s6Fo8u5WqHbTZPk1p74eTqt6
-         SZQSm27cs82Ng9flnwPheqdr2qA2VlQ7ZxfYyvAEDXzpH8sAWq8rTiMOvtSskYpOVoHz
-         b19QhF4DTvx6ZTjWA0x38jtgFJESN1hQNO4Uw=
-Received: by 10.210.126.5 with SMTP id y5mr3423731ebc.94.1224188817880;
-        Thu, 16 Oct 2008 13:26:57 -0700 (PDT)
+        b=Pbi79zZ/vtnpMVa6MyKJ2g/uldvbiHs3Z/R+tSJci9583JbEXjxVjlPJPbonNb4n4G
+         F9UUx15Rah56yZ2fXwJ36VFJwmK2pyc4ZVnE0wQtXZ6v/Y+eC726Pb76PkSsAadT5E7b
+         FmPgU5N2nDTXk2ID9jjfcAlWN14ylFLo4NHhQ=
+Received: by 10.210.67.4 with SMTP id p4mr3392971eba.174.1224188829376;
+        Thu, 16 Oct 2008 13:27:09 -0700 (PDT)
 Received: from localhost ([94.37.30.171])
-        by mx.google.com with ESMTPS id 20sm2547539eyk.4.2008.10.16.13.26.55
+        by mx.google.com with ESMTPS id 3sm2504820eyj.3.2008.10.16.13.27.07
         (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Thu, 16 Oct 2008 13:26:56 -0700 (PDT)
+        Thu, 16 Oct 2008 13:27:08 -0700 (PDT)
 X-Mailer: git-send-email 1.5.6.5
-In-Reply-To: <1224188831-17767-1-git-send-email-giuseppe.bilotta@gmail.com>
+In-Reply-To: <1224188831-17767-4-git-send-email-giuseppe.bilotta@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/98413>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/98414>
 
-This patch enables gitweb to parse URLs with more information embedded
-in PATH_INFO, reducing the need for CGI parameters. The typical gitweb
-path is now $project/$action/$hash_base:$file_name or
-$project/$action/$hash
+This patch makes it possible to use an URL such as
+$project/somebranch..otherbranch:/filename to get a diff between
+different version of a file. Paths like
+$project/$action/somebranch:/somefile..otherbranch:/otherfile are parsed
+as well.
 
-This is mostly backwards compatible with the old-style gitweb paths,
-$project/$branch[:$filename], except when it was used to access a branch
-whose name matches a gitweb action.
+All '*diff' actions and in general actions that use $hash_parent[_base]
+and $file_parent can now get all of their parameters from PATH_INFO
 
 Signed-off-by: Giuseppe Bilotta <giuseppe.bilotta@gmail.com>
 ---
- gitweb/gitweb.perl |   37 +++++++++++++++++++++++++++++++------
- 1 files changed, 31 insertions(+), 6 deletions(-)
+ gitweb/gitweb.perl |   36 ++++++++++++++++++++++++++++++++++--
+ 1 files changed, 34 insertions(+), 2 deletions(-)
 
 diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
-index c5254af..6d0dc26 100755
+index 49730f3..1a7b0b9 100755
 --- a/gitweb/gitweb.perl
 +++ b/gitweb/gitweb.perl
-@@ -534,23 +534,48 @@ sub evaluate_path_info {
- 	return if $input_params{'action'};
- 	$path_info =~ s,^\Q$project\E/*,,;
+@@ -548,7 +548,12 @@ sub evaluate_path_info {
+ 		'history',
+ 	);
  
-+	# next, check if we have an action
-+	my $action = $path_info;
-+	$action =~ s,/.*$,,;
-+	if (exists $actions{$action}) {
-+		$path_info =~ s,^$action/*,,;
-+		$input_params{'action'} = $action;
-+	}
+-	my ($refname, $pathname) = split(/:/, $path_info, 2);
++	# horrible regexp to catch
++	# [$hash_parent_base[:$file_parent]..]$hash_parent[:$file_name]
++	my ($parentrefname, $parentpathname, $refname, $pathname) =
++		($path_info =~ /^(?:(.+?)(?::(.+))?\.\.)?(.+?)(?::(.+))?$/);
 +
-+	# list of actions that want hash_base instead of hash
-+	my @wants_base = (
-+		'tree',
-+		'history',
-+	);
-+
- 	my ($refname, $pathname) = split(/:/, $path_info, 2);
++	# first, analyze the 'current' part
  	if (defined $pathname) {
--		# we got "project.git/branch:filename" or "project.git/branch:dir/"
-+		# we got "branch:filename" or "branch:dir/"
+ 		# we got "branch:filename" or "branch:dir/"
  		# we could use git_get_type(branch:pathname), but it needs $git_dir
- 		$pathname =~ s,^/+,,;
- 		if (!$pathname || substr($pathname, -1) eq "/") {
--			$input_params{'action'} = "tree";
-+			$input_params{'action'} ||= "tree";
+@@ -557,7 +562,13 @@ sub evaluate_path_info {
+ 			$input_params{'action'} ||= "tree";
  			$pathname =~ s,/$,,;
  		} else {
--			$input_params{'action'} = "blob_plain";
-+			$input_params{'action'} ||= "blob_plain";
+-			$input_params{'action'} ||= "blob_plain";
++			# the default action depends on whether we had parent info
++			# or not
++			if ($parentrefname) {
++				$input_params{'action'} ||= "blobdiff_plain";
++			} else {
++				$input_params{'action'} ||= "blob_plain";
++			}
  		}
  		$input_params{'hash_base'} ||= $refname;
  		$input_params{'file_name'} ||= $pathname;
- 	} elsif (defined $refname) {
--		# we got "project.git/branch"
--		$input_params{'action'} = "shortlog";
--		$input_params{'hash'} ||= $refname;
-+		# we got "branch". in this case we have to choose if we have to
-+		# set hash or hash_base.
-+		#
-+		# Most of the actions without a pathname only want hash to be
-+		# set, except for the ones specified in @wants_base that want
-+		# hash_base instead. It should also be noted that hand-crafted
-+		# links having 'history' as an action and no pathname or hash
-+		# set will fail, but that happens regardless of PATH_INFO.
-+		$input_params{'action'} ||= "shortlog";
-+		if (grep {$input_params{'action'} eq $_} @wants_base) {
-+			$input_params{'hash_base'} ||= $refname;
-+		} else {
-+			$input_params{'hash'} ||= $refname;
-+		}
+@@ -577,6 +588,27 @@ sub evaluate_path_info {
+ 			$input_params{'hash'} ||= $refname;
+ 		}
  	}
++
++	# next, handle the 'parent' part, if present
++	if (defined $parentrefname) {
++		# a missing pathspec defaults to the 'current' filename, allowing e.g.
++		# someproject/blobdiff/oldrev..newrev:/filename
++		if ($parentpathname) {
++			$parentpathname =~ s,^/+,,;
++			$parentpathname =~ s,/$,,;
++			$input_params{'file_parent'} ||= $parentpathname;
++		} else {
++			$input_params{'file_parent'} ||= $input_params{'file_name'};
++		}
++		# we assume that hash_parent_base is wanted if a path was specified,
++		# or if the action wants hash_base instead of hash
++		if (defined $input_params{'file_parent'} ||
++			grep {$input_params{'action'} eq $_} @wants_base) {
++			$input_params{'hash_parent_base'} ||= $parentrefname;
++		} else {
++			$input_params{'hash_parent'} ||= $parentrefname;
++		}
++	}
  }
  evaluate_path_info();
+ 
 -- 
 1.5.6.5
