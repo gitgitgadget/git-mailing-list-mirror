@@ -1,60 +1,46 @@
-From: Andrew Morton <akpm@linux-foundation.org>
-Subject: Untracked working tree files
-Date: Wed, 15 Oct 2008 11:56:54 -0700
-Message-ID: <20081015115654.fb34438f.akpm@linux-foundation.org>
+From: Karl Chen <quarl@cs.berkeley.edu>
+Subject: Re: git-svnimport.perl bug when copy source path has a revision
+Date: Thu, 16 Oct 2008 11:36:33 -0700
+Message-ID: <quack.20081016T1136.lthk5c8crpq@roar.cs.berkeley.edu>
+References: <quack.20081015T1211.lth8wsp65dk@roar.cs.berkeley.edu>
+	<48F6E29F.1050807@pcharlan.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Oct 15 20:58:10 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: Git mailing list <git@vger.kernel.org>
+To: Pete Harlan <pgit@pcharlan.com>
+X-From: git-owner@vger.kernel.org Thu Oct 16 20:37:47 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KqBZS-0004XO-1T
-	for gcvg-git-2@gmane.org; Wed, 15 Oct 2008 20:58:10 +0200
+	id 1KqXjG-0006tk-OU
+	for gcvg-git-2@gmane.org; Thu, 16 Oct 2008 20:37:47 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753348AbYJOS45 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 15 Oct 2008 14:56:57 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753093AbYJOS45
-	(ORCPT <rfc822;git-outgoing>); Wed, 15 Oct 2008 14:56:57 -0400
-Received: from smtp1.linux-foundation.org ([140.211.169.13]:54999 "EHLO
-	smtp1.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1752181AbYJOS45 (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 15 Oct 2008 14:56:57 -0400
-Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [140.211.169.55])
-	by smtp1.linux-foundation.org (8.14.2/8.13.5/Debian-3ubuntu1.1) with ESMTP id m9FIutaf003279
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO)
-	for <git@vger.kernel.org>; Wed, 15 Oct 2008 11:56:56 -0700
-Received: from akpm.corp.google.com (localhost [127.0.0.1])
-	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with SMTP id m9FIutmg022746
-	for <git@vger.kernel.org>; Wed, 15 Oct 2008 11:56:55 -0700
-X-Mailer: Sylpheed version 2.2.4 (GTK+ 2.8.20; i486-pc-linux-gnu)
-X-Spam-Status: No, hits=-2.869 required=5 tests=AWL,BAYES_00
-X-Spam-Checker-Version: SpamAssassin 3.2.4-osdl_revision__1.47__
-X-MIMEDefang-Filter: lf$Revision: 1.188 $
-X-Scanned-By: MIMEDefang 2.63 on 140.211.169.13
+	id S1751709AbYJPSge (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 16 Oct 2008 14:36:34 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751719AbYJPSge
+	(ORCPT <rfc822;git-outgoing>); Thu, 16 Oct 2008 14:36:34 -0400
+Received: from roar.CS.Berkeley.EDU ([128.32.36.242]:59523 "EHLO
+	roar.quarl.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751685AbYJPSgd (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 16 Oct 2008 14:36:33 -0400
+Received: by roar.quarl.org (Postfix, from userid 18378)
+	id 30164343ED; Thu, 16 Oct 2008 11:36:33 -0700 (PDT)
+X-Quack-Archive: 1
+In-Reply-To: <48F6E29F.1050807@pcharlan.com> (Pete Harlan's message of "Wed\, 15 Oct 2008 23\:43\:43 -0700")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/98401>
 
-I often get this (running git 1.5.6.rc0 presently):
+>>>>> On 2008-10-15 23:43 PDT, Pete Harlan writes:
 
-y:/usr/src/git26> git-checkout linux-next
-error: Untracked working tree file 'arch/x86/kernel/apic.c' would be overwritten by merge.
+    Pete> git svn init -T trunk -t tags $R git svn fetch git log
+    Pete> tags/mytag
 
-which screws things up.  I fix it by removing the offending file, which
-gets irritating because git bails out after the first such instance, so
-I need to rerun git-checkout once per file (there are sometimes tens of them).
-
-Should this be happening?  I don't know what causes it, really.  All
-I've been doing in that directory is running `git-checkout' against
-various maintainers' trees.  95% of the time this works OK but
-eventually git seems to get all confused and the above happens.
-
-Is there some way in which I can work around this with a single command
-rather than having to run git-checkout once per offending file?  I
-suppose a good old `rm -rf *' would do it...
-
-Thanks.
+Thanks for the pointer.  I do know about git-svn and used it
+to convert most of my repositories, but one particular repository
+isn't converting with git-svn - it runs for hours before I cancel
+it, whereas git-svnimport completes in minutes.
