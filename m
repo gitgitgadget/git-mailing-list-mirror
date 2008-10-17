@@ -1,88 +1,88 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: Git hooks are not called over HTTP
-Date: Fri, 17 Oct 2008 02:22:06 -0700 (PDT)
-Message-ID: <m38wsnk24l.fsf@localhost.localdomain>
-References: <7beb12420810162323o6dce0a71r897fbed9b9d3e417@mail.gmail.com>
+From: "Richard Hartmann" <richih.mailinglist@gmail.com>
+Subject: Re: commiting while the current version is in conflict
+Date: Fri, 17 Oct 2008 11:32:29 +0200
+Message-ID: <2d460de70810170232o24fcd1d4pd1c7a7503e17b02@mail.gmail.com>
+References: <7vy70of6t2.fsf@arte.twinsun.com>
+	 <2d460de70810170021q5daa902er1e6e2fb6633400ec@mail.gmail.com>
+	 <7vwsg7mxb6.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: "KwangYul Seo" <kwangyul.seo@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Oct 17 11:23:39 2008
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: "Shawn O. Pearce" <spearce@spearce.org>,
+	"Miklos Vajna" <vmiklos@frugalware.org>, git@vger.kernel.org
+To: "Junio C Hamano" <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Oct 17 11:33:49 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KqlYW-0005Db-Dn
-	for gcvg-git-2@gmane.org; Fri, 17 Oct 2008 11:23:36 +0200
+	id 1KqliL-0008Kl-PT
+	for gcvg-git-2@gmane.org; Fri, 17 Oct 2008 11:33:46 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752572AbYJQJWN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 17 Oct 2008 05:22:13 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752269AbYJQJWM
-	(ORCPT <rfc822;git-outgoing>); Fri, 17 Oct 2008 05:22:12 -0400
-Received: from ey-out-2122.google.com ([74.125.78.27]:49678 "EHLO
-	ey-out-2122.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752201AbYJQJWK (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 17 Oct 2008 05:22:10 -0400
-Received: by ey-out-2122.google.com with SMTP id 6so160890eyi.37
-        for <git@vger.kernel.org>; Fri, 17 Oct 2008 02:22:08 -0700 (PDT)
+	id S1753053AbYJQJcb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 17 Oct 2008 05:32:31 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752892AbYJQJcb
+	(ORCPT <rfc822;git-outgoing>); Fri, 17 Oct 2008 05:32:31 -0400
+Received: from mail-gx0-f16.google.com ([209.85.217.16]:53301 "EHLO
+	mail-gx0-f16.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752823AbYJQJca (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 17 Oct 2008 05:32:30 -0400
+Received: by gxk9 with SMTP id 9so793037gxk.13
+        for <git@vger.kernel.org>; Fri, 17 Oct 2008 02:32:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:received:received
-         :x-authentication-warning:to:cc:subject:references:from:in-reply-to
-         :message-id:lines:user-agent:mime-version:content-type:date;
-        bh=tiayKvxyTXGrtmy6p8nV3Q5pX8gSCve4uyVLEQnFJv4=;
-        b=G/DnuwiesKGlAXnS5aRBUUCnA1OSVKcAWebbvnD2y/RNLUlzrheOmhgNJwALCPtfT/
-         9XyobofKFauZSP4EE9dEbb2DMBqdzFhcznxP9CswDujn6tfaBxNbmrpnQiu69QDh52BW
-         73GkWQ5IRUBmCVv7LxqzZ4gYeTrLgSzjyU80M=
+        h=domainkey-signature:received:received:message-id:date:from:to
+         :subject:cc:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:references;
+        bh=BHrTIRpxTIzvw6xZ6lIlVOVpgU5IQutQm/bZnki1TOI=;
+        b=quzBK0IqeH534c12gH10Pvgrfj3n9gbQZhAz7p0ceWGqVdH+I13TPKzuqUEFi4q4hf
+         SZivDH+6p2kC3NGMx80XSEC7/txQyW7YORtW04sDCF0SOAmEGyvHhe+gSXw0rJhBJ8xn
+         KmrYhR0WMntrWtyQbW1Z9iILA85QFfD6huNfs=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=x-authentication-warning:to:cc:subject:references:from:in-reply-to
-         :message-id:lines:user-agent:mime-version:content-type:date;
-        b=m01SzoiIN8wkefGwENshJX/yOv64n0U4JRt11YKhnXKIseQngM0zm1gg00VoYt3Qvr
-         Jprh5yK0kYhn7lr6Chr7sIbYzYj3/diogS0+arZo0K6jdkxXRRjSpF6cWh+hnuMIVopM
-         qdV3GrnZv70moO1L0tQu14VsjY9Uv4pMIl4iM=
-Received: by 10.210.51.18 with SMTP id y18mr4135705eby.103.1224235327991;
-        Fri, 17 Oct 2008 02:22:07 -0700 (PDT)
-Received: from localhost.localdomain (abvf153.neoplus.adsl.tpnet.pl [83.8.203.153])
-        by mx.google.com with ESMTPS id 7sm3536799eyg.0.2008.10.17.02.22.05
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Fri, 17 Oct 2008 02:22:06 -0700 (PDT)
-Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id m9H9M3vF029966;
-	Fri, 17 Oct 2008 11:22:03 +0200
-Received: (from jnareb@localhost)
-	by localhost.localdomain (8.13.4/8.13.4/Submit) id m9H9M2Ra029963;
-	Fri, 17 Oct 2008 11:22:02 +0200
-X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
-In-Reply-To: <7beb12420810162323o6dce0a71r897fbed9b9d3e417@mail.gmail.com>
-User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
+        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
+         :content-type:content-transfer-encoding:content-disposition
+         :references;
+        b=U1QAbe7MlwX5hAh9HTSexVINWpkckSKl6O5xDAfKVw7ajY5P0PPJ1xXTN/+9gl5P/K
+         9FrzlCZOl7BmDRHjm4Hud9Bopx5fAMyiK8XMZHEjI3NYCFzxLCjzxO0xGQWbcsNcVccs
+         aC5qTk+Ndn8G218N8MzBKdqOtEHDlHtuJj2jc=
+Received: by 10.100.126.7 with SMTP id y7mr3659800anc.77.1224235949151;
+        Fri, 17 Oct 2008 02:32:29 -0700 (PDT)
+Received: by 10.100.43.19 with HTTP; Fri, 17 Oct 2008 02:32:29 -0700 (PDT)
+In-Reply-To: <7vwsg7mxb6.fsf@gitster.siamese.dyndns.org>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/98463>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/98464>
 
-"KwangYul Seo" <kwangyul.seo@gmail.com> writes:
+On Fri, Oct 17, 2008 at 10:37, Junio C Hamano <gitster@pobox.com> wrote:
 
-> I have setup a git repository with post-receive and post-update
-> enabled. I configured hooks.envelopesender and hooks.mailinglist. I
-> confirmed that it works fine with push from local repositories.
-> However, hooks are never called when push is done over HTTP. I added
-> 'echo abc' to post-receive to see if it is called or not. With local
-> push, abc was printed, but with HTTP push it was not printed. What is
-> the problem here?
+> Eh, Sorry about that --- I did not mean "ignorant" in that sense.  Perhaps
+> replacing the word with "unfortunate" would sound nicer?
 
-The "problem" here (which is very much the way HTTP protocol was
-designed) is that it isn't _git_ that updates repository on remote
-side on push (which knows about hooks), but _web server_ via WebDAV.
-And web server knows nothing about hooks.
+A lot yes. No harm done, apologies for picking the bad interpretation
+of ignorant.
 
-Perhaps that would get improved when "smart" HTTP protocol gets
-implemented (currently in the phase of design, I think just after
-designing protocol).
 
--- 
-Jakub Narebski
-Poland
-ShadeHawk on #git
+> Don't you realize that is what the hook is doing already?  After making
+> such an error, the definitive information is lost, because the user told
+> the tool that the resolution is done and the file is ready to be
+> committed) by mistake.  Even then the hook is trying its best to help the
+> user.
+
+You misunderstood me, there. I was thinking about the pre-add hook
+while writing the above. Doing anything at commit time is obviously
+wrong.
+
+
+> As to pre-add hook, I am not enthused, but if somebody sends in a clean
+> patch, I wouldn't be opposed to it at least in principle.
+
+An implicit need for it does apparently exist. Else, the default hook for
+pre-commit would not need to check for conflicts.
+
+
+Richard
