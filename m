@@ -1,149 +1,65 @@
-From: Josef Wolf <jw@raven.inka.de>
-Subject: Howto setup-git-server-over-http.txt with SSL and basic authentication?
-Date: Fri, 17 Oct 2008 18:06:04 +0200
-Message-ID: <20081017160603.GD9707@raven.wolf.lan>
+From: Christian Jaeger <christian@pflanze.mine.nu>
+Subject: Re: Excluding files from git-diff
+Date: Fri, 17 Oct 2008 18:30:31 +0200
+Message-ID: <48F8BDA7.50901@pflanze.mine.nu>
+References: <20081017145313.GA23471@eriks> <48F8ACC2.1010903@drmicha.warpmail.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Oct 17 18:25:04 2008
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: Erik Hahn <erik_hahn@gmx.de>, git@vger.kernel.org
+To: Michael J Gruber <git@drmicha.warpmail.net>
+X-From: git-owner@vger.kernel.org Fri Oct 17 18:32:00 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Kqs7v-0000qX-0J
-	for gcvg-git-2@gmane.org; Fri, 17 Oct 2008 18:24:35 +0200
+	id 1KqsEu-0004Dp-TI
+	for gcvg-git-2@gmane.org; Fri, 17 Oct 2008 18:31:49 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754265AbYJQQXV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 17 Oct 2008 12:23:21 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753994AbYJQQXV
-	(ORCPT <rfc822;git-outgoing>); Fri, 17 Oct 2008 12:23:21 -0400
-Received: from quechua.inka.de ([193.197.184.2]:55611 "EHLO mail.inka.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753267AbYJQQXV (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 17 Oct 2008 12:23:21 -0400
-X-Greylist: delayed 866 seconds by postgrey-1.27 at vger.kernel.org; Fri, 17 Oct 2008 12:23:20 EDT
-Received: from raven.inka.de (uucp@[127.0.0.1])
-	by mail.inka.de with uucp (rmailwrap 0.5) 
-	id 1Kqrsg-0003bH-Rh; Fri, 17 Oct 2008 18:08:50 +0200
-Received: by raven.inka.de (Postfix, from userid 1000)
-	id 8691B3AB9D; Fri, 17 Oct 2008 18:06:04 +0200 (CEST)
-Content-Disposition: inline
-User-Agent: Mutt/1.5.9i
+	id S1754920AbYJQQaf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 17 Oct 2008 12:30:35 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754377AbYJQQaf
+	(ORCPT <rfc822;git-outgoing>); Fri, 17 Oct 2008 12:30:35 -0400
+Received: from ethlife-a.ethz.ch ([129.132.49.178]:44997 "HELO ethlife.ethz.ch"
+	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with SMTP
+	id S1754461AbYJQQae (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 17 Oct 2008 12:30:34 -0400
+Received: (qmail 15758 invoked from network); 17 Oct 2008 16:30:31 -0000
+Received: from unknown (HELO elvis-jaeger.mine.nu) (127.0.0.1)
+  by localhost with SMTP; 17 Oct 2008 16:30:31 -0000
+Received: (qmail 21243 invoked from network); 17 Oct 2008 16:30:31 -0000
+Received: from unknown (HELO ?127.0.0.1?) (10.0.5.1)
+  by elvis-jaeger.mine.nu with SMTP; 17 Oct 2008 16:30:31 -0000
+User-Agent: Mozilla-Thunderbird 2.0.0.16 (X11/20080724)
+In-Reply-To: <48F8ACC2.1010903@drmicha.warpmail.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/98486>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/98487>
 
-Hello folks,
+Michael J Gruber wrote:
+> your .gitignore probably doesn't change that often,
+> so that it shouldn't show up in the diff after that anyways. Or put it
+> in .git/info/excludes.
 
-I am new to git and I am trying to set up a git repository as described in
+For me, adding entries to that file does not make "git diff" or "gitk" 
+or even "git ls-files" ignore files matching the entries. Only "git 
+ls-files --others --exclude-from=.git/info/exclude" will exclude them. 
+And "git diff " and gitk don't seem to know the --exclude-from option.
 
-  http://www.kernel.org/pub/software/scm/git/docs/howto/setup-git-server-over-http.txt
+Is there a way to really invert the patterns given to "git diff" or 
+alike? I.e. instead of saying "git diff -- * .somedotfile 
+.someothernongitignoredotfile" one could just say something like "git 
+diff --invert-matches -- .gitignore"? And even better, could one 
+configure some such so that it has effect on all tools by default?
 
-but with SSL and basic authentication.
+(That would help working around the clutter problem from the "Separating 
+generated files?" thread; i.e. in some cases this could be good enough 
+to not require splitting a project into multiple repositories. (Although 
+I'm all the same currently working on a 
+"intergit-find-matching-commit-in" script, since there may be more good 
+reasons than only the clutter to split projects.))
 
-This is what I have done:
-
-1. Create bare git repository on the server:
-
-     root: mkdir -p /data/git/test
-     root: ( cd /data/git/test ; git --bare init )
-     root: chown -R wwwrun:www /data/git
-
-2. Add a new DAV location to the (existing and already working) apache
-   config, pointing to the newly created git repository.  I list only
-   the relevant parts here:
-
-     LoadModule dav_svn_module /usr/lib/apache2/mod_dav_svn.so
-     LoadModule dav_fs_module /usr/lib/apache2/mod_dav_fs.so
-     DAVLockDB "/data/dav/lock/DAV.lock"
-
-     Alias /git/test /data/git/test
-     <Location /git/test>
-       DAV on
-       Order           Allow,Deny
-       Allow           from all
-       AllowOverride   None
-       AuthName        "test"
-       AuthType        Basic
-       AuthUserFile    /m/b/httpd/passwd
-       AuthGroupFile   /m/b/httpd/group
-       Require         group test test-ro
-       SSLRequireSSL
-       <LimitExcept GET PROPFIND OPTIONS REPORT>
-         Require group test
-       </LimitExcept>
-     </Location>
-
-3. Now it's time to test DAV access, so I go to the client:
-
-     konqueror webdavs://repo.host.org/git/test
-
-   After asking for credentials, Konqueror shows me content, and I can
-   read/copy/delete files to/from the DAV directory.  So the server
-   seems to work fine.
-   Now I go test curl:
-
-     $ curl --cacert /etc/cacerts/myca.pem \
-            https://user@repo.host.org/git/test/HEAD
-
-   fails with "authentication required", but
-
-     $ curl --cacert /etc/cacerts/myca.pem --user user \
-            https://user@repo.host.org/git/test/HEAD
-
-   works fine.  So I put this information into ~/.curlrc:
-
-     $ cat ~/.curlrc
-     --cacert /etc/cacerts/myca.pem
-     --user   user
-     $ curl https://repo.host.org/git/test/HEAD
-     Enter host password for user 'user':
-     ref: refs/heads/master
-     $
-
-   this looks good now.
-
-4. OK, now I go to the next step on the client:
-
-     $ git-config remote.upload.url https://repo.host.org/git/test/
-     error: could not lock config file .git/config
-     $
-
-   hmm, maybe I should have an empty repos here?  So:
-
-     $ git init
-     Initialized empty Git repository in /tmp/test/.git/
-     $ git-config remote.upload.url https://repo.host.org/git/test/
-     $ git push upload master
-     error: Cannot access URL https://repo.host.org/git/test/, return code 60
-     error: failed to push some refs to 'https://repo.host.org/git/test/'
-
-   OK, from the above mentioned howto, this looks like cacert is missing.
-   Looks like (unlike the howto states) ~/.curlrc is ignored by git.
-   So I go searching for appropriate configuration options in git:
-
-     $ git-config http.sslCAPath /etc/cacerts
-
-   don't help (why?), but 
-
-     $ git-config http.sslCAInfo /etc/cacerts/myca.pem
-     $ git push upload master
-     error: Cannot access URL https://repo.host.org/git/test/, return code 22
-     error: failed to push some refs to 'https://repo.host.org/git/test/'
-
-   Finally, that's a new error code.  This is probably because the server
-   requires authentication.  But I can't find any hints how to specify
-   credentials in git-config or git-push.
-
-So now come my questions:
-
-0. The howto says curl is used for transport. Why is my ~/.curlrc ignored?
-1. Since .curlrc is ignored: How do I specify credentials for git?
-2. Why don't sslCAPath work?
-3. Is there a way to override credentials and sslCAPath on a per-remote
-   basis (as can be done with http.proxy, for example)
-
-Any hints?
+Christian.
