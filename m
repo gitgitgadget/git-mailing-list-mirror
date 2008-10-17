@@ -1,60 +1,72 @@
-From: arjen@yaph.org (Arjen Laarhoven)
-Subject: Re: What's in git.git (Oct 2008, #03; Tue, 14)
-Date: Fri, 17 Oct 2008 09:02:45 +0200
-Message-ID: <20081017070245.GA29345@regex.yaph.org>
-References: <7vej2i7rt9.fsf@gitster.siamese.dyndns.org> <bsftmRx17krWBpVlulipoJEO1fWsD0hZfF3HOZcajX6GV66RKW8W6A@cipher.nrlssc.navy.mil> <20081016100805.GA20762@sigill.intra.peff.net> <0my5lujnbpdG6sxrffMExwukINu2tasxBSH0E0xYQoe6y5yyFL0LNA@cipher.nrlssc.navy.mil> <465E8DD6-CBDC-4E02-9C7F-57CBE81E3549@frim.nl>
+From: "Richard Hartmann" <richih.mailinglist@gmail.com>
+Subject: Re: commiting while the current version is in conflict
+Date: Fri, 17 Oct 2008 09:25:06 +0200
+Message-ID: <2d460de70810170025y74fbd846nefc7dad24f669e75@mail.gmail.com>
+References: <2d460de70810161510ha220593g4615a55b2c3e3b25@mail.gmail.com>
+	 <m3ljwojeeu.fsf@localhost.localdomain>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Brandon Casey <casey@nrlssc.navy.mil>, Jeff King <peff@peff.net>,
-	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	"Shawn O. Pearce" <spearce@spearce.org>,
-	Mike Ralphson <mike@abacus.co.uk>
-To: Pieter de Bie <pieter@frim.nl>
-X-From: git-owner@vger.kernel.org Fri Oct 17 09:24:22 2008
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: "Jakub Narebski" <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Oct 17 09:26:28 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Kqjh7-0006UT-UT
-	for gcvg-git-2@gmane.org; Fri, 17 Oct 2008 09:24:22 +0200
+	id 1Kqjj6-0006zt-NH
+	for gcvg-git-2@gmane.org; Fri, 17 Oct 2008 09:26:25 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751502AbYJQHXK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 17 Oct 2008 03:23:10 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751494AbYJQHXJ
-	(ORCPT <rfc822;git-outgoing>); Fri, 17 Oct 2008 03:23:09 -0400
-Received: from regex.yaph.org ([193.202.115.201]:42480 "EHLO regex.yaph.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751321AbYJQHXI (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 17 Oct 2008 03:23:08 -0400
-X-Greylist: delayed 1251 seconds by postgrey-1.27 at vger.kernel.org; Fri, 17 Oct 2008 03:23:08 EDT
-Received: by regex.yaph.org (Postfix, from userid 1000)
-	id E4ED95B7D5; Fri, 17 Oct 2008 09:02:45 +0200 (CEST)
+	id S1751560AbYJQHZJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 17 Oct 2008 03:25:09 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751494AbYJQHZJ
+	(ORCPT <rfc822;git-outgoing>); Fri, 17 Oct 2008 03:25:09 -0400
+Received: from mail-gx0-f16.google.com ([209.85.217.16]:58146 "EHLO
+	mail-gx0-f16.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751487AbYJQHZH (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 17 Oct 2008 03:25:07 -0400
+Received: by gxk9 with SMTP id 9so727264gxk.13
+        for <git@vger.kernel.org>; Fri, 17 Oct 2008 00:25:06 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to
+         :subject:cc:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:references;
+        bh=8vRDGaQiFEHnYUFQxyGdJUOWCv1eKnDLKuokAS1CCfA=;
+        b=PFT5lkAtX89IrnV0GR2nFx+cftV+DocnxjC4UTIOVYNpcexwK+sc03SshLkAL0fkhQ
+         kPg4eiPvkwkaoSQeDzRvco+ImKr8VjM8eGR+5uKedA1judW9DGQeNtGqutYz7dhrGpdO
+         o3SwK7g77NL/1dO0l7ZFOORjTZrMEelPdfrng=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
+         :content-type:content-transfer-encoding:content-disposition
+         :references;
+        b=DXctK9/fi6/eo3gE2bs3J379NzN797ZmbrVW1Gw7cxAPi6iiWJ6kdAIA/5aKCjTi58
+         98ZLAj7iHI/GUH2ELzIrMVe9P5c1FYdI4fJVw09qMka5rv9Ho97IaAh2NyDyGXW/UMMw
+         e/eG1o5ETjHVKxA9INP/QIXQ1gCJlMA/opoYU=
+Received: by 10.100.248.9 with SMTP id v9mr4668610anh.115.1224228306337;
+        Fri, 17 Oct 2008 00:25:06 -0700 (PDT)
+Received: by 10.100.43.19 with HTTP; Fri, 17 Oct 2008 00:25:06 -0700 (PDT)
+In-Reply-To: <m3ljwojeeu.fsf@localhost.localdomain>
 Content-Disposition: inline
-In-Reply-To: <465E8DD6-CBDC-4E02-9C7F-57CBE81E3549@frim.nl>
-User-Agent: Mutt/1.5.11
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/98453>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/98454>
 
-On Thu, Oct 16, 2008 at 05:37:10PM +0200, Pieter de Bie wrote:
-> 
-> On 16 okt 2008, at 17:21, Brandon Casey wrote:
-> 
-> >Darwin, anyone?
-> 
-> 'maint' passes for me on Darwin (OS X Leopard) after removing the  
-> regex stuff in Makefile
+On Fri, Oct 17, 2008 at 01:42, Jakub Narebski <jnareb@gmail.com> wrote:
 
-Yup, confirmed.
+> [a lot of detailed information]
 
-Arjen
+Thanks! 'Unfortunately', I figured all this out by myself, in the
+meantime, but I really appreciate that you took the time to
+explain all this .
 
--- 
-Arjen Laarhoven
 
-The presence of those seeking the truth is infinitely to be preferred to 
-those who think they've found it.
-                                -- Terry Pratchett, "Monstrous Regiment"
+Thanks!
+Richard
+
+PS: Well, I lie, I did not figure out the mv $1.sample $1 bit
+as my git version still uses the old format.
