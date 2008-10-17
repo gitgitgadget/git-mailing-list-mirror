@@ -1,173 +1,95 @@
-From: Scott Moser <smoser@brickies.net>
-Subject: Re: [PATCH] fix guilt-pop and push to fail if no relevant patches
-Date: Fri, 17 Oct 2008 07:37:33 -0400 (EDT)
-Message-ID: <alpine.DEB.1.00.0810170736240.27798@brickies>
-References: <1222714293-9680-1-git-send-email-smoser@brickies.net>
+From: "Gennady Kushnir" <genkush@rujel.net>
+Subject: Re: Removing some files from history
+Date: Fri, 17 Oct 2008 15:51:15 +0400
+Message-ID: <96ed5eac0810170451y69fd864jb44ef62bca468498@mail.gmail.com>
+References: <96ed5eac0810170338s292fe858s1c092428a44a7ad2@mail.gmail.com>
+	 <48F86E6A.7080102@fastmail.fm>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org
-To: Josef 'Jeff' Sipek <jeffpc@josefsipek.net>
-X-From: git-owner@vger.kernel.org Fri Oct 17 13:39:00 2008
+To: "Michael J Gruber" <michaeljgruber+gmane@fastmail.fm>
+X-From: git-owner@vger.kernel.org Fri Oct 17 13:52:43 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KqnfM-0007MJ-Rm
-	for gcvg-git-2@gmane.org; Fri, 17 Oct 2008 13:38:49 +0200
+	id 1Kqnsc-0003UB-Ax
+	for gcvg-git-2@gmane.org; Fri, 17 Oct 2008 13:52:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753126AbYJQLhh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 17 Oct 2008 07:37:37 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752838AbYJQLhh
-	(ORCPT <rfc822;git-outgoing>); Fri, 17 Oct 2008 07:37:37 -0400
-Received: from sd-green-bigip-66.dreamhost.com ([208.97.132.66]:49260 "EHLO
-	spunkymail-a9.g.dreamhost.com" rhost-flags-OK-OK-OK-FAIL)
-	by vger.kernel.org with ESMTP id S1752712AbYJQLhg (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 17 Oct 2008 07:37:36 -0400
-Received: from brickies.mosers.us (d14-69-66-169.try.wideopenwest.com [69.14.169.66])
-	by spunkymail-a9.g.dreamhost.com (Postfix) with ESMTP id 2E5F61FCEE;
-	Fri, 17 Oct 2008 04:37:34 -0700 (PDT)
-X-X-Sender: smoser@brickies
-In-Reply-To: <1222714293-9680-1-git-send-email-smoser@brickies.net>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+	id S1753028AbYJQLvR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 17 Oct 2008 07:51:17 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753253AbYJQLvR
+	(ORCPT <rfc822;git-outgoing>); Fri, 17 Oct 2008 07:51:17 -0400
+Received: from rv-out-0506.google.com ([209.85.198.229]:46586 "EHLO
+	rv-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752986AbYJQLvQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 17 Oct 2008 07:51:16 -0400
+Received: by rv-out-0506.google.com with SMTP id k40so519236rvb.1
+        for <git@vger.kernel.org>; Fri, 17 Oct 2008 04:51:15 -0700 (PDT)
+Received: by 10.141.180.11 with SMTP id h11mr2450140rvp.158.1224244275558;
+        Fri, 17 Oct 2008 04:51:15 -0700 (PDT)
+Received: by 10.140.161.4 with HTTP; Fri, 17 Oct 2008 04:51:15 -0700 (PDT)
+In-Reply-To: <48F86E6A.7080102@fastmail.fm>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/98473>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/98474>
 
-Jeff,
-   Did you not like the patch below for some reason ?
-   It seemed fairly straightforward to me that guilt-pop and guilt-push
-should exit failure if they did not do anything due to having nothing to
-do.
+thank you for precise instructions.
 
+however I did not completely understand the part about references and reflog
+what are these? git tags?
 
-On Mon, 29 Sep 2008, Scott Moser wrote:
+and another question:
+did I understand it right, that I can even make some changes to that
+file in history - not just simply delete one?
 
-> currently guilt-pop and guilt-push will exit with '0' if there are no more
-> relevant patches in the series (ie, if you've pushed or popped all of them)
+Gennady
+
+2008/10/17 Michael J Gruber <michaeljgruber+gmane@fastmail.fm>:
+> Gennady Kushnir venit, vidit, dixit 17.10.2008 12:38:
+>> Hello all
+>> I'm not yet subscribed, but I wish I shall get reply anyway
+>>
+>> I'm going to make my repository public, but I have found that one of
+>> my files contains some private data that I would not like to share.
+>> Is it possible to remove that file from all commits in my local
+>> repository history before publishing it?
+>> Or it would be easier to start publishing with just my current state
+>> (whith all private data cleaned up)?
+>>
+>> Thanks in advance.
+>> Gennady
+> Use
 >
-> This means that you cannot do something like:
->   while guilt-push; do
->     guilt refresh || break
->   done
+> git filter-branch --index-filter 'git rm --cached secret' -- --all
 >
-> for reference, quilt does exit with non-zero in those cases:
->   $ quilt push -a && quilt push
->   File series fully applied, ends at patch my.patch
->   $ echo $?
->   1
+> or
 >
->   $ quilt pop -a; quilt pop
->   No patch removed
->   $ echo $?
->   2
+> git filter-branch --tree-filter 'rm -f secret' -- --all
 >
-> Signed-off-by: Scott Moser <smoser@brickies.net>
-> ---
->  guilt-pop            |    3 +--
->  guilt-push           |   43 ++++++++++++++++++++++++-------------------
->  regression/t-021.out |    3 +++
->  3 files changed, 28 insertions(+), 21 deletions(-)
+> where 'secret' is the name of the file to be removed.
 >
-> diff --git a/guilt-pop b/guilt-pop
-> index db8473e..8a83fdb 100755
-> --- a/guilt-pop
-> +++ b/guilt-pop
-> @@ -45,8 +45,7 @@ patch="$1"
->  [ ! -z "$all" ] && patch="-a"
+> After that, make sure you clean up your repo before publishing:
+> Clean out the original references (command on 1 line):
 >
->  if [ ! -s "$applied" ]; then
-> -	disp "No patches applied."
-> -	exit 0
-> +	die "No patches applied."
->  elif [ "$patch" = "-a" ]; then
->  	# we are supposed to pop all patches
+> git for-each-ref  --format='%(refname)' refs/original |while read ref;
+> do git update-ref -d $ref;done
 >
-> diff --git a/guilt-push b/guilt-push
-> index 018f9ac..48f886b 100755
-> --- a/guilt-push
-> +++ b/guilt-push
-> @@ -97,22 +97,27 @@ fi
->  sidx=`wc -l < $applied`
->  sidx=`expr $sidx + 1`
+> Clean out the reflog:
 >
-> -get_series | sed -n -e "${sidx},${eidx}p" | while read p
-> -do
-> -	disp "Applying patch..$p"
-> -	if [ ! -f "$GUILT_DIR/$branch/$p" ]; then
-> -		die "Patch $p does not exist. Aborting."
-> -	fi
-> -
-> -	push_patch "$p" $abort_flag
-> -
-> -	# bail if necessary
-> -	if [ $? -eq 0 ]; then
-> -		disp "Patch applied."
-> -	elif [ -z "$abort_flag" ]; then
-> -		die "Patch applied with rejects. Fix it up, and refresh."
-> -	else
-> -		die "To force apply this patch, use 'guilt push -f'"
-> -	fi
-> -done
-> -
-> +get_series | sed -n -e "${sidx},${eidx}p" |
-> +	{
-> +	did_patch=0
-> +	while read p
-> +	do
-> +		disp "Applying patch..$p"
-> +		if [ ! -f "$GUILT_DIR/$branch/$p" ]; then
-> +			die "Patch $p does not exist. Aborting."
-> +		fi
-> +
-> +		push_patch "$p" $abort_flag
-> +
-> +		# bail if necessary
-> +		if [ $? -eq 0 ]; then
-> +			disp "Patch applied."
-> +		elif [ -z "$abort_flag" ]; then
-> +			die "Patch applied with rejects. Fix it up, and refresh."
-> +		else
-> +			die "To force apply this patch, use 'guilt push -f'"
-> +		fi
-> +		did_patch=1
-> +	done
-> +	[ $did_patch -ge 1 ] || die "no patches to apply"
-> +	}
-> diff --git a/regression/t-021.out b/regression/t-021.out
-> index cd8ae96..44771cb 100644
-> --- a/regression/t-021.out
-> +++ b/regression/t-021.out
-> @@ -822,6 +822,7 @@ index 0000000..8baef1b
->  @@ -0,0 +1 @@
->  +abc
->  % guilt-push --all
-> +no patches to apply
->  % guilt-pop -n -1
->  Invalid number of patches to pop.
->  % list_files
-> @@ -908,6 +909,7 @@ index 0000000..8baef1b
->  @@ -0,0 +1 @@
->  +abc
->  % guilt-push --all
-> +no patches to apply
->  % guilt-pop -n 0
->  No patches requested to be removed.
->  % list_files
-> @@ -994,6 +996,7 @@ index 0000000..8baef1b
->  @@ -0,0 +1 @@
->  +abc
->  % guilt-push --all
-> +no patches to apply
->  % guilt-pop -n 1
->  Now at remove.
->  % list_files
-> --
-> 1.5.6.3
+> git reflog --expire=0 expire
 >
+> Remove the old objects and packs:
 >
-> !DSPAM:48e123ca138521410093335!
+> git prune
+> git repack -adf
 >
+> [Makes me feel this should be easier.]
+>
+> Michael
 >
