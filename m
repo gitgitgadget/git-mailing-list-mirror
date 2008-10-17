@@ -1,116 +1,72 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: "checkout --track -b" broken? (with suggested fix)
-Date: Thu, 16 Oct 2008 23:37:44 -0700
-Message-ID: <7vej2fohfr.fsf@gitster.siamese.dyndns.org>
+From: Andreas Ericsson <ae@op5.se>
+Subject: Re: Git and tagging hook
+Date: Fri, 17 Oct 2008 09:04:52 +0200
+Message-ID: <48F83914.8080508@op5.se>
+References: <1223268332.4072.7.camel@localhost> <48E9BB72.2080008@op5.se> <1223399613.20250.1.camel@localhost> <gcg67d$4o2$1@ger.gmane.org> <1223484445.4055.8.camel@localhost> <48ECF072.3000506@op5.se> <20081014172227.GB6931@efreet.light.src> <1224007401.4073.40.camel@localhost> <20081016201502.GA6362@efreet.light.src>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Jay Soffian <jaysoffian@gmail.com>,
-	Daniel Barkalow <barkalow@iabervon.org>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Oct 17 08:39:37 2008
+Content-Type: text/plain; charset=ISO-8859-15; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: Kristis Makris <kristis.makris@asu.edu>,
+	Jakub Narebski <jnareb@gmail.com>, git@vger.kernel.org
+To: Jan Hudec <bulb@ucw.cz>
+X-From: git-owner@vger.kernel.org Fri Oct 17 09:06:23 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Kqize-0002xN-Fg
-	for gcvg-git-2@gmane.org; Fri, 17 Oct 2008 08:39:26 +0200
+	id 1KqjPX-0001QK-Md
+	for gcvg-git-2@gmane.org; Fri, 17 Oct 2008 09:06:12 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750910AbYJQGiO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 17 Oct 2008 02:38:14 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750912AbYJQGiO
-	(ORCPT <rfc822;git-outgoing>); Fri, 17 Oct 2008 02:38:14 -0400
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:64811 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750889AbYJQGiO (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 17 Oct 2008 02:38:14 -0400
-Received: from localhost.localdomain (localhost [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 4134C70CA3;
-	Fri, 17 Oct 2008 02:38:07 -0400 (EDT)
-Received: from pobox.com (ip68-225-240-211.oc.oc.cox.net [68.225.240.211])
- (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
- certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
- ESMTPSA id 93D1270CA2; Fri, 17 Oct 2008 02:37:59 -0400 (EDT)
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: 286EA83E-9C16-11DD-9E5A-1E1F86D30F62-77302942!a-sasl-fastnet.pobox.com
+	id S1751152AbYJQHE7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 17 Oct 2008 03:04:59 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751172AbYJQHE6
+	(ORCPT <rfc822;git-outgoing>); Fri, 17 Oct 2008 03:04:58 -0400
+Received: from mail.op5.se ([193.201.96.20]:32837 "EHLO mail.op5.se"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750991AbYJQHE6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 17 Oct 2008 03:04:58 -0400
+Received: from localhost (localhost.localdomain [127.0.0.1])
+	by mail.op5.se (Postfix) with ESMTP id 058C91B8005E;
+	Fri, 17 Oct 2008 08:58:04 +0200 (CEST)
+X-Virus-Scanned: amavisd-new at 
+X-Spam-Flag: NO
+X-Spam-Score: -3.796
+X-Spam-Level: 
+X-Spam-Status: No, score=-3.796 tagged_above=-10 required=6.6
+	tests=[ALL_TRUSTED=-1.8, AWL=0.603, BAYES_00=-2.599]
+Received: from mail.op5.se ([127.0.0.1])
+	by localhost (mail.op5.se [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id Fev86wzolheh; Fri, 17 Oct 2008 08:57:56 +0200 (CEST)
+Received: from clix.int.op5.se (unknown [192.168.1.20])
+	by mail.op5.se (Postfix) with ESMTP id B78101B80053;
+	Fri, 17 Oct 2008 08:57:55 +0200 (CEST)
+User-Agent: Thunderbird 2.0.0.16 (X11/20080723)
+In-Reply-To: <20081016201502.GA6362@efreet.light.src>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/98449>
 
-Sorry for bringing up a potentially old issue, but I do not think the test
-added by 9ed36cf (branch: optionally setup branch.*.merge from upstream
-local branches, 2008-02-19) is correct.  It does this:
+Jan Hudec wrote:
+> As for people replacing their local commits, this is common especially in
+> Linux (and Git) development model.
 
-    test_expect_success \
-        'checkout w/--track from non-branch HEAD fails' '
-        git checkout -b delete-me master &&
-        rm .git/refs/heads/delete-me &&
-        test refs/heads/delete-me = "$(git symbolic-ref HEAD)" &&
-        test_must_fail git checkout --track -b track'
+It's common everywhere where projects use peer review.
 
-It creates branch 'delete-me' at the tip of 'master' to check it out, and
-then it manually deletes the branch.  It expects "checkout --track -b track"
-to fail because the current branch is broken and there is no way to set up
-a tracking information for the new branch.
+Results 1 - 50 of about 14,600 for '"PATCH v2" vger.kernel.org'
+Results 1 - 50 of about 360,000 for "PATCH v2"
 
-But I think this is bogus.  The checkout fails not because of lack of
-trackability (due to broken current _branch_), but because there is no
-current _commit_ to branch from.
+So yes, it is a very common practice and anything interacting with a remote
+database based on each commit action will almost certainly be doing something
+wrong quite a lot of the time, especially since not all the patch-series end
+up being incorporated into a release anyway.
 
-	Jay CC'ed because 9ed36cf is his; Daniel CC'ed as branch.c was
-	originally his.
+The only sane integration point is the public watering-hole repository used
+for the project, and especially the release branch (or the "for-linus" branches
+around the world for sub-projects).
 
-Here is an attempt to fix the test, which then revealed that the feature
-the commit introduced is broken in the tip of 'maint'.  Back when 9ed36cf
-was written, test_must_fail was unavailable, and test_expect_failure meant
-something different, so transplanting this on top of that old commit won't
-reveal the breakage, but I strongly suspect that the feature was broken
-from the very beginning.
-
-The patch to branch.c is a quick fix for this issue.  The resulting code
-passes all the tests, but I am not very proud of hardcoding the "HEAD" in
-the code.  There must be a better way to do this.
-
- branch.c      |    4 +++-
- t/t7201-co.sh |   11 +++++------
- 2 files changed, 8 insertions(+), 7 deletions(-)
-
-diff --git c/branch.c w/branch.c
-index b1e59f2..6a75057 100644
---- c/branch.c
-+++ w/branch.c
-@@ -129,7 +129,9 @@ void create_branch(const char *head,
- 			die("Cannot setup tracking information; starting point is not a branch.");
- 		break;
- 	case 1:
--		/* Unique completion -- good */
-+		/* Unique completion -- good, only if it is a real ref */
-+		if (track == BRANCH_TRACK_EXPLICIT && !strcmp(real_ref, "HEAD"))
-+			die("Cannot setup tracking information; starting point is not a branch.");
- 		break;
- 	default:
- 		die("Ambiguous object name: '%s'.", start_name);
-diff --git c/t/t7201-co.sh w/t/t7201-co.sh
-index fbec70d..da1fbf8 100755
---- c/t/t7201-co.sh
-+++ w/t/t7201-co.sh
-@@ -330,12 +330,11 @@ test_expect_success \
-     test "$(git config branch.track2.merge)"
-     git config branch.autosetupmerge false'
- 
--test_expect_success \
--    'checkout w/--track from non-branch HEAD fails' '
--    git checkout -b delete-me master &&
--    rm .git/refs/heads/delete-me &&
--    test refs/heads/delete-me = "$(git symbolic-ref HEAD)" &&
--    test_must_fail git checkout --track -b track'
-+test_expect_success 'checkout w/--track from non-branch HEAD fails' '
-+    git checkout master^0 &&
-+    test_must_fail git symbolic-ref HEAD &&
-+    test_must_fail git checkout --track -b track
-+'
- 
- test_expect_success 'checkout an unmerged path should fail' '
- 	rm -f .git/index &&
+-- 
+Andreas Ericsson                   andreas.ericsson@op5.se
+OP5 AB                             www.op5.se
+Tel: +46 8-230225                  Fax: +46 8-230231
