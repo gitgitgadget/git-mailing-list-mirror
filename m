@@ -1,87 +1,77 @@
-From: Anders Melchiorsen <anders@kalibalik.dk>
-Subject: Re: --diff-filter=T does not list x changes
-Date: Fri, 17 Oct 2008 21:33:54 +0200
-Message-ID: <87wsg7m2xp.fsf@kalibalik.dk>
-References: <871vyhbsys.fsf@cup.kalibalik.dk>
-	<20081016102201.GB20762@sigill.intra.peff.net>
-	<7vhc7cq8uq.fsf@gitster.siamese.dyndns.org>
-	<87ej2fvgv9.fsf@kalibalik.dk>
-	<7v1vyfoca2.fsf@gitster.siamese.dyndns.org>
+From: Marc Branchaud <marcnarc@xiplink.com>
+Subject: Re: Working with remotes; cloning remote references
+Date: Fri, 17 Oct 2008 15:50:58 -0400
+Message-ID: <48F8ECA2.3040208@xiplink.com>
+References: <48F7852F.109@xiplink.com>	 <eaa105840810161220k26eebd48q8de606597f2be055@mail.gmail.com>	 <48F7A42E.70200@xiplink.com> <eaa105840810161345r69c9f05j66bb850085f561e7@mail.gmail.com> <48F7BBAC.2090907@xiplink.com> <48F83FD0.90606@drmicha.warpmail.net> <48F8A4E8.8070008@xiplink.com> <48F8AA5E.6090908@drmicha.warpmail.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Jeff King <peff@peff.net>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Oct 17 21:35:14 2008
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: Peter Harris <git@peter.is-a-geek.org>, git@vger.kernel.org
+To: Michael J Gruber <git@drmicha.warpmail.net>
+X-From: git-owner@vger.kernel.org Fri Oct 17 21:52:24 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Kqv6P-00028w-GL
-	for gcvg-git-2@gmane.org; Fri, 17 Oct 2008 21:35:14 +0200
+	id 1KqvMq-0007xW-Nz
+	for gcvg-git-2@gmane.org; Fri, 17 Oct 2008 21:52:13 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755816AbYJQTd6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 17 Oct 2008 15:33:58 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755804AbYJQTd6
-	(ORCPT <rfc822;git-outgoing>); Fri, 17 Oct 2008 15:33:58 -0400
-Received: from mail.hotelhot.dk ([77.75.163.100]:60251 "EHLO mail.hotelhot.dk"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755525AbYJQTd5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 17 Oct 2008 15:33:57 -0400
-Received: from mail.hotelhot.dk (localhost [127.0.0.1])
-	by mail.hotelhot.dk (Postfix) with ESMTP id 1F60814062;
-	Fri, 17 Oct 2008 21:33:58 +0200 (CEST)
-Received: from dylle (router.kalibalik.dk [192.168.0.1])
-	by mail.hotelhot.dk (Postfix) with ESMTP id CF3031405A;
-	Fri, 17 Oct 2008 21:33:57 +0200 (CEST)
-In-Reply-To: <7v1vyfoca2.fsf@gitster.siamese.dyndns.org> (Junio C. Hamano's message of "Fri\, 17 Oct 2008 01\:29\:09 -0700")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.1 (gnu/linux)
-X-Virus-Scanned: ClamAV using ClamSMTP
+	id S1757561AbYJQTu6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 17 Oct 2008 15:50:58 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756978AbYJQTu5
+	(ORCPT <rfc822;git-outgoing>); Fri, 17 Oct 2008 15:50:57 -0400
+Received: from smtp162.iad.emailsrvr.com ([207.97.245.162]:53725 "EHLO
+	smtp162.iad.emailsrvr.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756835AbYJQTu4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 17 Oct 2008 15:50:56 -0400
+Received: from relay6.relay.iad.emailsrvr.com (localhost [127.0.0.1])
+	by relay6.relay.iad.emailsrvr.com (SMTP Server) with ESMTP id E4DB77A6C17;
+	Fri, 17 Oct 2008 15:50:54 -0400 (EDT)
+Received: by relay6.relay.iad.emailsrvr.com (Authenticated sender: mbranchaud-AT-xiplink.com) with ESMTP id BC3A37A73D9;
+	Fri, 17 Oct 2008 15:50:54 -0400 (EDT)
+User-Agent: Thunderbird 2.0.0.17 (X11/20080925)
+In-Reply-To: <48F8AA5E.6090908@drmicha.warpmail.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/98490>
-
-Junio C Hamano <gitster@pobox.com> writes:
-
-> Anders Melchiorsen <mail@cup.kalibalik.dk> writes:
->
->> I hope you agree that this reading is not obvious from the
->> documentation,...
->
-> Yup, didn't I already say that the documentation is buggy?
-
-Possibly, though not in this thread.
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/98491>
 
 
->> How about adding a diff-filter=X for the executable bit?
->
-> I do not think it is a good idea for two reasons. Backward
-> compatibility and sane design.
->
-> For one thing, "diff --name-status" never shows X, so you would
-> introduce an unnecessary inconsistency. If you change
-> "--name-status" to avoid that, you would be breaking people's
-> existing scripts that expect to see "M" for such a change.
+Michael J Gruber wrote:
+> 
+> "pull -s strategy repo master" does a fetch followed by "merge -s
+> strategy repomaster", where repomaster is the ref for master on repo.
+> So, if you got that branch (repomaster=ThingOne/master) by cloning from
+> main you can do the merge (subtree or other) on your clone, even without
+> the remote repo config for ThingOne on clone.
 
-(I noticed that X is already used in diff-filter, but will keep it for
-this discussion)
-
-I was thinking that X could be a subset of M. So only if you
-specifically ask for diff-filter=X (and not M) would you get this new
-functionality. That should keep it compatible. It would then pick
-files that have had their x flipped, regardless of their change in
-content. With diff-filter=M, it would work as it does today.
-
-If name-status output must be consistent, it could even output M for
-these changes. That would still be unambiguous (but probably confusing).
-
-...
-
-As you say that this is an unnecessary inconsistency, I wonder whether
-you have a different way to pick out the commits that toggle the x
-bit? That is a problem that I am facing, with no solution shown so far ...
+I'm afraid I'm having trouble translating what you're saying into actual 
+git commands (or are you proposing some new git functionality?).  How 
+would I get the ThingOne/master branch into the clone?
 
 
-Anders.
+After some more thought I realized that the clone can just pull directly 
+from the ThingOne repository:
+
+clone/$ git pull -s subtree git://thing/ThingOne.git master
+
+(I'm still getting used to git's ability to match commit IDs from 
+anywhere -- it's magic! :) )
+
+This goes a long way to where we want to be, in that we don't have to do 
+our merging work in the original main repository.
+
+It would be nice, though, if the clone were able to use the main 
+repository's definition of the ThingOne remote.  I can think of some 
+plausible scenarios where a person could get confused about which 
+repo/branch they're supposed to pull.  It's easy to recover from that 
+kind of mistake, but there'd be less chance of a mistake if one could 
+tell git to "pull from X as defined in the origin repository".
+
+And actually, git's remote functionality feels a bit crippled if clones 
+can't make some use of the origin's remotes.  Is there a reason for 
+keeping remote definitions out of a clone?
+
+		Marc
