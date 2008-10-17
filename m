@@ -1,121 +1,149 @@
-From: Daniel Barkalow <barkalow@iabervon.org>
-Subject: Re: "checkout --track -b" broken? (with suggested fix)
-Date: Fri, 17 Oct 2008 11:47:11 -0400 (EDT)
-Message-ID: <alpine.LNX.1.00.0810171113340.19665@iabervon.org>
-References: <7vej2fohfr.fsf@gitster.siamese.dyndns.org>
+From: Josef Wolf <jw@raven.inka.de>
+Subject: Howto setup-git-server-over-http.txt with SSL and basic authentication?
+Date: Fri, 17 Oct 2008 18:06:04 +0200
+Message-ID: <20081017160603.GD9707@raven.wolf.lan>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org, Jay Soffian <jaysoffian@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Oct 17 17:49:07 2008
+Content-Type: text/plain; charset=us-ascii
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Oct 17 18:25:04 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KqrZL-0002cA-NH
-	for gcvg-git-2@gmane.org; Fri, 17 Oct 2008 17:48:52 +0200
+	id 1Kqs7v-0000qX-0J
+	for gcvg-git-2@gmane.org; Fri, 17 Oct 2008 18:24:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754179AbYJQPrO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 17 Oct 2008 11:47:14 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754068AbYJQPrO
-	(ORCPT <rfc822;git-outgoing>); Fri, 17 Oct 2008 11:47:14 -0400
-Received: from iabervon.org ([66.92.72.58]:56545 "EHLO iabervon.org"
+	id S1754265AbYJQQXV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 17 Oct 2008 12:23:21 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753994AbYJQQXV
+	(ORCPT <rfc822;git-outgoing>); Fri, 17 Oct 2008 12:23:21 -0400
+Received: from quechua.inka.de ([193.197.184.2]:55611 "EHLO mail.inka.de"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753088AbYJQPrN (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 17 Oct 2008 11:47:13 -0400
-Received: (qmail 890 invoked by uid 1000); 17 Oct 2008 15:47:11 -0000
-Received: from localhost (sendmail-bs@127.0.0.1)
-  by localhost with SMTP; 17 Oct 2008 15:47:11 -0000
-In-Reply-To: <7vej2fohfr.fsf@gitster.siamese.dyndns.org>
-User-Agent: Alpine 1.00 (LNX 882 2007-12-20)
+	id S1753267AbYJQQXV (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 17 Oct 2008 12:23:21 -0400
+X-Greylist: delayed 866 seconds by postgrey-1.27 at vger.kernel.org; Fri, 17 Oct 2008 12:23:20 EDT
+Received: from raven.inka.de (uucp@[127.0.0.1])
+	by mail.inka.de with uucp (rmailwrap 0.5) 
+	id 1Kqrsg-0003bH-Rh; Fri, 17 Oct 2008 18:08:50 +0200
+Received: by raven.inka.de (Postfix, from userid 1000)
+	id 8691B3AB9D; Fri, 17 Oct 2008 18:06:04 +0200 (CEST)
+Content-Disposition: inline
+User-Agent: Mutt/1.5.9i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/98485>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/98486>
 
-On Thu, 16 Oct 2008, Junio C Hamano wrote:
+Hello folks,
 
-> Sorry for bringing up a potentially old issue, but I do not think the test
-> added by 9ed36cf (branch: optionally setup branch.*.merge from upstream
-> local branches, 2008-02-19) is correct.  It does this:
-> 
->     test_expect_success \
->         'checkout w/--track from non-branch HEAD fails' '
->         git checkout -b delete-me master &&
->         rm .git/refs/heads/delete-me &&
->         test refs/heads/delete-me = "$(git symbolic-ref HEAD)" &&
->         test_must_fail git checkout --track -b track'
-> 
-> It creates branch 'delete-me' at the tip of 'master' to check it out, and
-> then it manually deletes the branch.  It expects "checkout --track -b track"
-> to fail because the current branch is broken and there is no way to set up
-> a tracking information for the new branch.
-> 
-> But I think this is bogus.  The checkout fails not because of lack of
-> trackability (due to broken current _branch_), but because there is no
-> current _commit_ to branch from.
->
-> 	Jay CC'ed because 9ed36cf is his; Daniel CC'ed as branch.c was
-> 	originally his.
->
-> Here is an attempt to fix the test, which then revealed that the feature
-> the commit introduced is broken in the tip of 'maint'.  Back when 9ed36cf
-> was written, test_must_fail was unavailable, and test_expect_failure meant
-> something different, so transplanting this on top of that old commit won't
-> reveal the breakage, but I strongly suspect that the feature was broken
-> from the very beginning.
-> 
-> The patch to branch.c is a quick fix for this issue.  The resulting code
-> passes all the tests, but I am not very proud of hardcoding the "HEAD" in
-> the code.  There must be a better way to do this.
+I am new to git and I am trying to set up a git repository as described in
 
-I agree with the change to the test. I think it would be better to 
-hard-code "refs/heads/" instead of "HEAD", and I feel like we must have a 
-"is this ref name a branch?" function, if only because someone could stick 
-"refs/tags/foo" in HEAD, and we should still say it's not something you 
-could track, despite it being something different from "HEAD".
+  http://www.kernel.org/pub/software/scm/git/docs/howto/setup-git-server-over-http.txt
 
->  branch.c      |    4 +++-
->  t/t7201-co.sh |   11 +++++------
->  2 files changed, 8 insertions(+), 7 deletions(-)
-> 
-> diff --git c/branch.c w/branch.c
-> index b1e59f2..6a75057 100644
-> --- c/branch.c
-> +++ w/branch.c
-> @@ -129,7 +129,9 @@ void create_branch(const char *head,
->  			die("Cannot setup tracking information; starting point is not a branch.");
->  		break;
->  	case 1:
-> -		/* Unique completion -- good */
-> +		/* Unique completion -- good, only if it is a real ref */
-> +		if (track == BRANCH_TRACK_EXPLICIT && !strcmp(real_ref, "HEAD"))
-> +			die("Cannot setup tracking information; starting point is not a branch.");
->  		break;
->  	default:
->  		die("Ambiguous object name: '%s'.", start_name);
-> diff --git c/t/t7201-co.sh w/t/t7201-co.sh
-> index fbec70d..da1fbf8 100755
-> --- c/t/t7201-co.sh
-> +++ w/t/t7201-co.sh
-> @@ -330,12 +330,11 @@ test_expect_success \
->      test "$(git config branch.track2.merge)"
->      git config branch.autosetupmerge false'
->  
-> -test_expect_success \
-> -    'checkout w/--track from non-branch HEAD fails' '
-> -    git checkout -b delete-me master &&
-> -    rm .git/refs/heads/delete-me &&
-> -    test refs/heads/delete-me = "$(git symbolic-ref HEAD)" &&
-> -    test_must_fail git checkout --track -b track'
-> +test_expect_success 'checkout w/--track from non-branch HEAD fails' '
-> +    git checkout master^0 &&
-> +    test_must_fail git symbolic-ref HEAD &&
-> +    test_must_fail git checkout --track -b track
-> +'
->  
->  test_expect_success 'checkout an unmerged path should fail' '
->  	rm -f .git/index &&
-> 
+but with SSL and basic authentication.
+
+This is what I have done:
+
+1. Create bare git repository on the server:
+
+     root: mkdir -p /data/git/test
+     root: ( cd /data/git/test ; git --bare init )
+     root: chown -R wwwrun:www /data/git
+
+2. Add a new DAV location to the (existing and already working) apache
+   config, pointing to the newly created git repository.  I list only
+   the relevant parts here:
+
+     LoadModule dav_svn_module /usr/lib/apache2/mod_dav_svn.so
+     LoadModule dav_fs_module /usr/lib/apache2/mod_dav_fs.so
+     DAVLockDB "/data/dav/lock/DAV.lock"
+
+     Alias /git/test /data/git/test
+     <Location /git/test>
+       DAV on
+       Order           Allow,Deny
+       Allow           from all
+       AllowOverride   None
+       AuthName        "test"
+       AuthType        Basic
+       AuthUserFile    /m/b/httpd/passwd
+       AuthGroupFile   /m/b/httpd/group
+       Require         group test test-ro
+       SSLRequireSSL
+       <LimitExcept GET PROPFIND OPTIONS REPORT>
+         Require group test
+       </LimitExcept>
+     </Location>
+
+3. Now it's time to test DAV access, so I go to the client:
+
+     konqueror webdavs://repo.host.org/git/test
+
+   After asking for credentials, Konqueror shows me content, and I can
+   read/copy/delete files to/from the DAV directory.  So the server
+   seems to work fine.
+   Now I go test curl:
+
+     $ curl --cacert /etc/cacerts/myca.pem \
+            https://user@repo.host.org/git/test/HEAD
+
+   fails with "authentication required", but
+
+     $ curl --cacert /etc/cacerts/myca.pem --user user \
+            https://user@repo.host.org/git/test/HEAD
+
+   works fine.  So I put this information into ~/.curlrc:
+
+     $ cat ~/.curlrc
+     --cacert /etc/cacerts/myca.pem
+     --user   user
+     $ curl https://repo.host.org/git/test/HEAD
+     Enter host password for user 'user':
+     ref: refs/heads/master
+     $
+
+   this looks good now.
+
+4. OK, now I go to the next step on the client:
+
+     $ git-config remote.upload.url https://repo.host.org/git/test/
+     error: could not lock config file .git/config
+     $
+
+   hmm, maybe I should have an empty repos here?  So:
+
+     $ git init
+     Initialized empty Git repository in /tmp/test/.git/
+     $ git-config remote.upload.url https://repo.host.org/git/test/
+     $ git push upload master
+     error: Cannot access URL https://repo.host.org/git/test/, return code 60
+     error: failed to push some refs to 'https://repo.host.org/git/test/'
+
+   OK, from the above mentioned howto, this looks like cacert is missing.
+   Looks like (unlike the howto states) ~/.curlrc is ignored by git.
+   So I go searching for appropriate configuration options in git:
+
+     $ git-config http.sslCAPath /etc/cacerts
+
+   don't help (why?), but 
+
+     $ git-config http.sslCAInfo /etc/cacerts/myca.pem
+     $ git push upload master
+     error: Cannot access URL https://repo.host.org/git/test/, return code 22
+     error: failed to push some refs to 'https://repo.host.org/git/test/'
+
+   Finally, that's a new error code.  This is probably because the server
+   requires authentication.  But I can't find any hints how to specify
+   credentials in git-config or git-push.
+
+So now come my questions:
+
+0. The howto says curl is used for transport. Why is my ~/.curlrc ignored?
+1. Since .curlrc is ignored: How do I specify credentials for git?
+2. Why don't sslCAPath work?
+3. Is there a way to override credentials and sslCAPath on a per-remote
+   basis (as can be done with http.proxy, for example)
+
+Any hints?
