@@ -1,98 +1,60 @@
-From: "Richard Hartmann" <richih.mailinglist@gmail.com>
-Subject: Re: commiting while the current version is in conflict
-Date: Fri, 17 Oct 2008 09:21:52 +0200
-Message-ID: <2d460de70810170021q5daa902er1e6e2fb6633400ec@mail.gmail.com>
-References: <7vy70of6t2.fsf@arte.twinsun.com>
+From: arjen@yaph.org (Arjen Laarhoven)
+Subject: Re: What's in git.git (Oct 2008, #03; Tue, 14)
+Date: Fri, 17 Oct 2008 09:02:45 +0200
+Message-ID: <20081017070245.GA29345@regex.yaph.org>
+References: <7vej2i7rt9.fsf@gitster.siamese.dyndns.org> <bsftmRx17krWBpVlulipoJEO1fWsD0hZfF3HOZcajX6GV66RKW8W6A@cipher.nrlssc.navy.mil> <20081016100805.GA20762@sigill.intra.peff.net> <0my5lujnbpdG6sxrffMExwukINu2tasxBSH0E0xYQoe6y5yyFL0LNA@cipher.nrlssc.navy.mil> <465E8DD6-CBDC-4E02-9C7F-57CBE81E3549@frim.nl>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: "Shawn O. Pearce" <spearce@spearce.org>,
-	"Miklos Vajna" <vmiklos@frugalware.org>, git@vger.kernel.org
-To: "Junio Hamano" <junio@twinsun.com>
-X-From: git-owner@vger.kernel.org Fri Oct 17 09:23:13 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: Brandon Casey <casey@nrlssc.navy.mil>, Jeff King <peff@peff.net>,
+	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+	"Shawn O. Pearce" <spearce@spearce.org>,
+	Mike Ralphson <mike@abacus.co.uk>
+To: Pieter de Bie <pieter@frim.nl>
+X-From: git-owner@vger.kernel.org Fri Oct 17 09:24:22 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Kqjg0-0006Db-BX
-	for gcvg-git-2@gmane.org; Fri, 17 Oct 2008 09:23:12 +0200
+	id 1Kqjh7-0006UT-UT
+	for gcvg-git-2@gmane.org; Fri, 17 Oct 2008 09:24:22 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751483AbYJQHV4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 17 Oct 2008 03:21:56 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751440AbYJQHV4
-	(ORCPT <rfc822;git-outgoing>); Fri, 17 Oct 2008 03:21:56 -0400
-Received: from an-out-0708.google.com ([209.85.132.251]:23728 "EHLO
-	an-out-0708.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751167AbYJQHVz (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 17 Oct 2008 03:21:55 -0400
-Received: by an-out-0708.google.com with SMTP id d40so26639and.103
-        for <git@vger.kernel.org>; Fri, 17 Oct 2008 00:21:52 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to
-         :subject:cc:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:references;
-        bh=BVNHJazCfc1M6YLiM3e6jv63PEVaP2EdJLetFP47Njs=;
-        b=obW88+xBacW3ayb0gnj0LCP/y/fKLXtRV2spZEWqtfmy6CPZgpKQVpprMpijsN4jVt
-         QBf0CZSXI5lyfRrjLVQrB6s7AdsbV/li854o96ywIEabt/PT1ywUx9YBlbTw9JOb9KIQ
-         /Jz/guvuefz+ye0dVvwIev6pmKYTONmgzB9EU=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
-         :content-type:content-transfer-encoding:content-disposition
-         :references;
-        b=Uly3jaiAktGsmvxtUye0ATiZ4i729w6XydE4Dezycnjffqu+UU8ws6rxfrIRfLTBZ/
-         70Hs01JnvPJN9qH3sEKxH9mu+rY4zOU6Oin8HdyGQwTkFqzo3PA/MSLba8Ff2SLc6sq+
-         OeBz08ZG5BjmlCKF8PNuX9KmfanlWAHex2m9M=
-Received: by 10.100.138.17 with SMTP id l17mr4922687and.65.1224228112635;
-        Fri, 17 Oct 2008 00:21:52 -0700 (PDT)
-Received: by 10.100.43.19 with HTTP; Fri, 17 Oct 2008 00:21:52 -0700 (PDT)
-In-Reply-To: <7vy70of6t2.fsf@arte.twinsun.com>
+	id S1751502AbYJQHXK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 17 Oct 2008 03:23:10 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751494AbYJQHXJ
+	(ORCPT <rfc822;git-outgoing>); Fri, 17 Oct 2008 03:23:09 -0400
+Received: from regex.yaph.org ([193.202.115.201]:42480 "EHLO regex.yaph.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751321AbYJQHXI (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 17 Oct 2008 03:23:08 -0400
+X-Greylist: delayed 1251 seconds by postgrey-1.27 at vger.kernel.org; Fri, 17 Oct 2008 03:23:08 EDT
+Received: by regex.yaph.org (Postfix, from userid 1000)
+	id E4ED95B7D5; Fri, 17 Oct 2008 09:02:45 +0200 (CEST)
 Content-Disposition: inline
+In-Reply-To: <465E8DD6-CBDC-4E02-9C7F-57CBE81E3549@frim.nl>
+User-Agent: Mutt/1.5.11
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/98452>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/98453>
 
-On Fri, Oct 17, 2008 at 01:39, Junio Hamano <junio@twinsun.com> wrote:
+On Thu, Oct 16, 2008 at 05:37:10PM +0200, Pieter de Bie wrote:
+> 
+> On 16 okt 2008, at 17:21, Brandon Casey wrote:
+> 
+> >Darwin, anyone?
+> 
+> 'maint' passes for me on Darwin (OS X Leopard) after removing the  
+> regex stuff in Makefile
 
->  (0) You are wrong to assume that git does not keep conflict
->     information; we can tell if the index is "unmerged" to see
->     if you still have unresolved conflicts;
+Yup, confirmed.
 
-That information is already lost at the point when the
-pre-commit hook is executed. Thus, I more or less had to
-arrive at the wrong conclusion :)
+Arjen
 
+-- 
+Arjen Laarhoven
 
->  (1) When the index is unmerged, git-commit will stop even
->     before getting to pre-commit hook, so there is no point
->     for pre-commit hook to check if the index is unmerged;
-
-I realize this, now.
-
-
->  (2) pre-commit hook is a last ditch effort to help ignorant
->     users who have already done "git add" without thinking and
->     lost the "unmerged" state.  It has to look at and guess at
->     the contents for that.
-
-Ignoring the ad hominem attack, I would argue that the two
-distinct mental concepts of 'I want to commit this in the next
-commit' and 'I have resolved this conflict' should have two
-distinct commands.
-To err is human, which is why rm -i exists. Else, you could
-just use alias rm='rm -rf'.
-
-Also, within certain boundaries, a tool should adapt to the
-user, not vice versa.
-
-In my opinion, a pre-add hook which is able to warn the user
-that something they are about to add is still in conflict would
-be best. The one piece of feedback I had up to now was
-very positive.
-
-
-Richard
+The presence of those seeking the truth is infinitely to be preferred to 
+those who think they've found it.
+                                -- Terry Pratchett, "Monstrous Regiment"
