@@ -1,96 +1,75 @@
-From: "Alexander Gladysh" <agladysh@gmail.com>
-Subject: Re: Weird filename encoding issue
-Date: Fri, 17 Oct 2008 12:08:04 +0400
-Message-ID: <c6c947f60810170108q3038b66bj2ad89bdcb7105903@mail.gmail.com>
-References: <c6c947f60810170059s3859d906r9935b5e80d8a41c6@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: --diff-filter=T does not list x changes
+Date: Fri, 17 Oct 2008 01:29:09 -0700
+Message-ID: <7v1vyfoca2.fsf@gitster.siamese.dyndns.org>
+References: <871vyhbsys.fsf@cup.kalibalik.dk>
+ <20081016102201.GB20762@sigill.intra.peff.net>
+ <7vhc7cq8uq.fsf@gitster.siamese.dyndns.org> <87ej2fvgv9.fsf@kalibalik.dk>
 Mime-Version: 1.0
-Content-Type: multipart/mixed; 
-	boundary="----=_Part_30645_29969461.1224230885025"
-To: msysgit@googlegroups.com, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Oct 17 10:09:35 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: Jeff King <peff@peff.net>, git@vger.kernel.org
+To: Anders Melchiorsen <mail@cup.kalibalik.dk>
+X-From: git-owner@vger.kernel.org Fri Oct 17 10:31:40 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KqkOj-0003lL-21
-	for gcvg-git-2@gmane.org; Fri, 17 Oct 2008 10:09:25 +0200
+	id 1KqkjP-0003GN-0Y
+	for gcvg-git-2@gmane.org; Fri, 17 Oct 2008 10:30:47 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751605AbYJQIIJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 17 Oct 2008 04:08:09 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751562AbYJQIIJ
-	(ORCPT <rfc822;git-outgoing>); Fri, 17 Oct 2008 04:08:09 -0400
-Received: from rv-out-0506.google.com ([209.85.198.236]:27702 "EHLO
-	rv-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751501AbYJQIIF (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 17 Oct 2008 04:08:05 -0400
-Received: by rv-out-0506.google.com with SMTP id k40so425557rvb.1
-        for <git@vger.kernel.org>; Fri, 17 Oct 2008 01:08:05 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to
-         :subject:in-reply-to:mime-version:content-type:references;
-        bh=gtGC/4wKcSnqOSFqKJO5Z0GNrYIs1zNXFAZmPOrY+Ss=;
-        b=Ds9BoAy+oqHxY1L4ZAgbY2rQ3jYCJ6/wydQq+2nOMZv7SdKJZZ+QtU4bTVh+/hJfxl
-         84yoogqVkBNwUHHB9lSlTpn7IE0COO9bqxKoTf/IGEMRXA7DSjeWhxSprONdX8puAuPw
-         0BQl0dx3smneJg2OexqfWoR95nNFfGzRMPK2o=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:in-reply-to:mime-version
-         :content-type:references;
-        b=Djsix3sF3goMRhB5Y+YuAPfwAVwLNM04oyjvUrao1b4ijrffOgsN57dIctmmOO5752
-         1MLAj+FD65TfKDFOrKCAoctRW85r1UH7UdSYThKNkybICAOuX043g0VKMJKXh608olGx
-         5oyM/+PapJ9wVvdntJ2evrB4yOG+TN89XaW48=
-Received: by 10.140.201.15 with SMTP id y15mr2319752rvf.145.1224230885020;
-        Fri, 17 Oct 2008 01:08:05 -0700 (PDT)
-Received: by 10.140.188.5 with HTTP; Fri, 17 Oct 2008 01:08:04 -0700 (PDT)
-In-Reply-To: <c6c947f60810170059s3859d906r9935b5e80d8a41c6@mail.gmail.com>
+	id S1752080AbYJQI3c (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 17 Oct 2008 04:29:32 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752072AbYJQI3b
+	(ORCPT <rfc822;git-outgoing>); Fri, 17 Oct 2008 04:29:31 -0400
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:56522 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751607AbYJQI3a (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 17 Oct 2008 04:29:30 -0400
+Received: from localhost.localdomain (localhost [127.0.0.1])
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id A36A670401;
+	Fri, 17 Oct 2008 04:29:28 -0400 (EDT)
+Received: from pobox.com (ip68-225-240-211.oc.oc.cox.net [68.225.240.211])
+ (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
+ certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
+ ESMTPSA id 6E78770400; Fri, 17 Oct 2008 04:29:21 -0400 (EDT)
+In-Reply-To: <87ej2fvgv9.fsf@kalibalik.dk> (Anders Melchiorsen's message of
+ "Fri, 17 Oct 2008 09:08:10 +0200")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: B6DBD42A-9C25-11DD-8F72-1E1F86D30F62-77302942!a-sasl-fastnet.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/98457>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/98458>
 
-------=_Part_30645_29969461.1224230885025
-Content-Type: text/plain; charset=KOI8-R
-Content-Transfer-Encoding: base64
-Content-Disposition: inline
+Anders Melchiorsen <mail@cup.kalibalik.dk> writes:
 
-T24gRnJpLCBPY3QgMTcsIDIwMDggYXQgMTE6NTkgQU0sIEFsZXhhbmRlciBHbGFkeXNoIDxhZ2xh
-ZHlzaEBnbWFpbC5jb20+IHdyb3RlOgo+IEhpLCBhbGwhCj4KPiBPUyBYIDEwLjUuNSAoRW5nbGlz
-aCBsb2NhbGUpLCBHaXQgMS41LjUuMQo+IFdpbmRvd3MgWFAgU1AyIChSdXNzaWFuKSwgbXN5c0dp
-dCAxLjUuNi4xLjEwNzEuZzc2ZmIKCk15IGFwb2xvZ2llcywgR21haWwgZWF0ZW4gcGFydCBvZiBt
-eSBtZXNzYWdlLgoKU29ycnkgZm9yIHN1Y2ggb2xkIEdpdCB2ZXJzaW9ucywgSSBjYW4gbm90IHVw
-Z3JhZGUgcmlnaHQgbm93LiBQZXJoYXBzCml0IHdhcyBmaXhlZCBpbiAxLjYueD8KClN0ZXBzIHRv
-IHJlcHJvZHVjZToKCjEuIENyZWF0ZSBnaXQgcmVwbyBvbiBXaW5kb3dzIG1hY2hpbmUsIGFkZCB0
-aGVyZSBmaWxlLCBuYW1lZAoi68/QydEudHh0IiAoUnVzc2lhbiBmb3IgQ29weS50eHQpIGluIENQ
-MTI1MSAoTk9UIFVURi04KS4gSnVzdCBpbgpjYXNlLCBob3BlZnVsbHkgY29ycmVjdGx5IG5hbWVk
-IGZpbGUgaXMgYXR0YWNoZWQuCgpGaWxlIG11c3QgYmUgYWRkZWQgYW5kIGNvbW1pdHRlZCBmcm9t
-IGdpdCBndWksIG5vdCBmcm9tIGNvbW1hbmQgbGluZS4KCiQgbWtkaXIgdGVzdCAmJiBjZCB0ZXN0
-CiQgZ2l0IGluaXQKPHB1dCBmaWxlIHRoZXJlPgokIGdpdCBndWkKCjIuIFNoYXJlIHRoZSByZXBv
-IHNvbWV3aGVyZSwgc28gaXQgd291bGQgYmUgYWNjZXNzaWJsZSBmcm9tIE9TIFggKHJlcG8Kc2hv
-dWxkIHN0aWxsIGJlIG9uIFdpbmRvd3MgbWFjaGluZSkuCgozLiBDbG9uZSByZXBvIHRvIE9TIFgg
-bWFjaGluZSBhbmQgc2VlIHRoZSB3ZWlyZCBiZWhhdmlvdXIuIEdpdCBzdGF0dXMKY2FuJ3QgZGVj
-aWRlIGhvdyBmaWxlIHNob3VsZCBiZSBuYW1lZCwgIiVDQSVFRSVFRiVFOCVGRi50eHQiIG9yCiJc
-MzEyXDM1NlwzNTdcMzUwXDM3Ny50eHQiLgoKJCBnaXQgY2xvbmUgL1ZvbHVtZXMvRXhjaGFuZ2Uv
-dGVzdC8KSW5pdGlhbGl6ZWQgZW1wdHkgR2l0IHJlcG9zaXRvcnkgaW4gL1VzZXJzL2FnbGFkeXNo
-L3Rlc3QvLmdpdC8KJCBjZCB0ZXN0CiQgZ2l0IHN0YXR1cwojIE9uIGJyYW5jaCBtYXN0ZXIKIyBV
-bnRyYWNrZWQgZmlsZXM6CiMgICAodXNlICJnaXQgYWRkIDxmaWxlPi4uLiIgdG8gaW5jbHVkZSBp
-biB3aGF0IHdpbGwgYmUgY29tbWl0dGVkKQojCiMJJUNBJUVFJUVGJUU4JUZGLnR4dApub3RoaW5n
-IGFkZGVkIHRvIGNvbW1pdCBidXQgdW50cmFja2VkIGZpbGVzIHByZXNlbnQgKHVzZSAiZ2l0IGFk
-ZCIgdG8gdHJhY2spCiQgbHMKJUNBJUVFJUVGJUU4JUZGLnR4dAokIGdpdCBjbGVhbiAtZmQKUmVt
-b3ZpbmcgJUNBJUVFJUVGJUU4JUZGLnR4dAokIGdpdCBzdGF0dXMKIyBPbiBicmFuY2ggbWFzdGVy
-CiMgQ2hhbmdlZCBidXQgbm90IHVwZGF0ZWQ6CiMgICAodXNlICJnaXQgYWRkL3JtIDxmaWxlPi4u
-LiIgdG8gdXBkYXRlIHdoYXQgd2lsbCBiZSBjb21taXR0ZWQpCiMKIwlkZWxldGVkOiAgICAiXDMx
-MlwzNTZcMzU3XDM1MFwzNzcudHh0IgojCm5vIGNoYW5nZXMgYWRkZWQgdG8gY29tbWl0ICh1c2Ug
-ImdpdCBhZGQiIGFuZC9vciAiZ2l0IGNvbW1pdCAtYSIpCgpBbGV4YW5kZXIuCg==
-------=_Part_30645_29969461.1224230885025
-Content-Type: application/zip; name=Copy.zip
-Content-Transfer-Encoding: base64
-X-Attachment-Id: f_fmeisni70
-Content-Disposition: attachment; filename=Copy.zip
+> Junio C Hamano <gitster@pobox.com> writes:
+>
+>> That documentation is quite loosely written. Typechange diff is what
+>> T has always meant, and it never was about the executable bit. The
+>> word "mode" in that sentence only means the upper bits
+>> S_IFREG/S_IFLNK (iow, masked by S_IFMT).
+>
+> I hope you agree that this reading is not obvious from the
+> documentation,...
 
-UEsDBAoAAAAAAGdZUTkAAAAAAAAAAAAAAAAJAAAAiq6vqO8udHh0UEsBAhQACgAAAAAAZ1lROQAA
-AAAAAAAAAAAAAAkAAAAAAAAAAAAgAAAAAAAAAIqur6jvLnR4dFBLBQYAAAAAAQABADcAAAAnAAAA
-AAA=
-------=_Part_30645_29969461.1224230885025--
+Yup, didn't I already say that the documentation is buggy?
+
+> How about adding a diff-filter=X for the executable bit?
+
+I do not think it is a good idea for two reasons.  Backward compatibility
+and sane design.
+
+For one thing, "diff --name-status" never shows X, so you would introduce
+an unnecessary inconsistency.  If you change "--name-status" to avoid
+that, you would be breaking people's existing scripts that expect to see
+"M" for such a change.
+
+Even if you were forgiven by these people whose scripts are broken by your
+change, you need to decide between "M" and "X" when both contents and
+executable bit are changed.  The least surprising logic would probably be
+to show "X" when _only_ executable bit is changed and show "M" when
+contents changed (even when executable bit also did), but that feels quite
+arbitrary.  And the other way around isn't any better.
