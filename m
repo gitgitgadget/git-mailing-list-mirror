@@ -1,63 +1,57 @@
-From: Anders Melchiorsen <mail@cup.kalibalik.dk>
-Subject: Re: Excluding files from git-diff
-Date: Sat, 18 Oct 2008 01:38:55 +0200
-Message-ID: <48F9220F.5060009@cup.kalibalik.dk>
-References: <20081017145313.GA23471@eriks>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: "checkout --track -b" broken? (with suggested fix)
+Date: Fri, 17 Oct 2008 16:57:53 -0700
+Message-ID: <7vskqug4fy.fsf@gitster.siamese.dyndns.org>
+References: <7vej2fohfr.fsf@gitster.siamese.dyndns.org>
+ <alpine.LNX.1.00.0810171113340.19665@iabervon.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Erik Hahn <erik_hahn@gmx.de>
-X-From: git-owner@vger.kernel.org Sat Oct 18 01:40:15 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Jay Soffian <jaysoffian@gmail.com>
+To: Daniel Barkalow <barkalow@iabervon.org>
+X-From: git-owner@vger.kernel.org Sat Oct 18 01:59:21 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KqyvT-0007fk-7i
-	for gcvg-git-2@gmane.org; Sat, 18 Oct 2008 01:40:11 +0200
+	id 1KqzE0-0003C1-O9
+	for gcvg-git-2@gmane.org; Sat, 18 Oct 2008 01:59:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754952AbYJQXi6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 17 Oct 2008 19:38:58 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754373AbYJQXi6
-	(ORCPT <rfc822;git-outgoing>); Fri, 17 Oct 2008 19:38:58 -0400
-Received: from mail.hotelhot.dk ([77.75.163.100]:50717 "EHLO mail.hotelhot.dk"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753470AbYJQXi6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 17 Oct 2008 19:38:58 -0400
-Received: from mail.hotelhot.dk (localhost [127.0.0.1])
-	by mail.hotelhot.dk (Postfix) with ESMTP id 41EEE14062;
-	Sat, 18 Oct 2008 01:38:59 +0200 (CEST)
-Received: from [192.168.0.201] (unknown [192.168.0.201])
-	by mail.hotelhot.dk (Postfix) with ESMTP id 05D541405A;
-	Sat, 18 Oct 2008 01:38:58 +0200 (CEST)
-User-Agent: Thunderbird 2.0.0.17 (X11/20080925)
-In-Reply-To: <20081017145313.GA23471@eriks>
-X-Virus-Scanned: ClamAV using ClamSMTP
+	id S1754289AbYJQX6G (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 17 Oct 2008 19:58:06 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754142AbYJQX6F
+	(ORCPT <rfc822;git-outgoing>); Fri, 17 Oct 2008 19:58:05 -0400
+Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:64090 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754120AbYJQX6E (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 17 Oct 2008 19:58:04 -0400
+Received: from localhost.localdomain (localhost [127.0.0.1])
+	by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id A38838B684;
+	Fri, 17 Oct 2008 19:58:01 -0400 (EDT)
+Received: from pobox.com (ip68-225-240-211.oc.oc.cox.net [68.225.240.211])
+ (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
+ certificate requested) by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with
+ ESMTPSA id 5B42F8B679; Fri, 17 Oct 2008 19:57:55 -0400 (EDT)
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: 6E64B824-9CA7-11DD-A451-4F5276724C3F-77302942!a-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/98500>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/98501>
 
-Erik Hahn wrote:
-> I'm currently working on a script whose developer does not use
-> git. Hence, when I mail him the patch, I don't want to include the
-> .gitignore file. Is it possible to exclude a file from git-diff (except
-> not adding it to git, of course?)
->   
+Daniel Barkalow <barkalow@iabervon.org> writes:
 
+> On Thu, 16 Oct 2008, Junio C Hamano wrote:
+>
+>> The patch to branch.c is a quick fix for this issue.  The resulting code
+>> passes all the tests, but I am not very proud of hardcoding the "HEAD" in
+>> the code.  There must be a better way to do this.
+>
+> I agree with the change to the test. I think it would be better to 
+> hard-code "refs/heads/" instead of "HEAD", and I feel like we must have a 
+> "is this ref name a branch?" function, if only because someone could stick 
+> "refs/tags/foo" in HEAD, and we should still say it's not something you 
+> could track, despite it being something different from "HEAD".
 
-I don't think that this is what you are asking about, but it's a neat 
-trick anyway :-).
-
-To permanently exclude files from git diff, set up a custom diff driver 
-in ~/.gitconfig:
-
-[diff "nodiff"]
-    command = /bin/true
-
-and then mention the files that should use this driver in 
-.git/info/attributes:
-
-.gitignore diff=nodiff
+But you can track things under refs/remotes/, so...
