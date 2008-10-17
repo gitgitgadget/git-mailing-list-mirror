@@ -1,77 +1,70 @@
-From: Michael J Gruber <git@drmicha.warpmail.net>
-Subject: Re: Working with remotes; cloning remote references
-Date: Fri, 17 Oct 2008 09:33:36 +0200
-Message-ID: <48F83FD0.90606@drmicha.warpmail.net>
-References: <48F7852F.109@xiplink.com>	 <eaa105840810161220k26eebd48q8de606597f2be055@mail.gmail.com>	 <48F7A42E.70200@xiplink.com> <eaa105840810161345r69c9f05j66bb850085f561e7@mail.gmail.com> <48F7BBAC.2090907@xiplink.com>
+From: "Alexander Gladysh" <agladysh@gmail.com>
+Subject: Weird filename encoding issue
+Date: Fri, 17 Oct 2008 11:59:20 +0400
+Message-ID: <c6c947f60810170059s3859d906r9935b5e80d8a41c6@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: Peter Harris <git@peter.is-a-geek.org>, git@vger.kernel.org
-To: Marc Branchaud <marcnarc@xiplink.com>
-X-From: git-owner@vger.kernel.org Fri Oct 17 09:37:00 2008
+Content-Type: multipart/mixed; 
+	boundary="----=_Part_30632_7206474.1224230360465"
+To: msysgit@googlegroups.com, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Oct 17 10:00:37 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KqjtL-0001eB-3E
-	for gcvg-git-2@gmane.org; Fri, 17 Oct 2008 09:36:59 +0200
+	id 1KqkGB-0000rG-AM
+	for gcvg-git-2@gmane.org; Fri, 17 Oct 2008 10:00:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751494AbYJQHdl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 17 Oct 2008 03:33:41 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751440AbYJQHdk
-	(ORCPT <rfc822;git-outgoing>); Fri, 17 Oct 2008 03:33:40 -0400
-Received: from out3.smtp.messagingengine.com ([66.111.4.27]:38001 "EHLO
-	out3.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751207AbYJQHdk (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 17 Oct 2008 03:33:40 -0400
-Received: from compute2.internal (compute2.internal [10.202.2.42])
-	by out1.messagingengine.com (Postfix) with ESMTP id 41C7018106F;
-	Fri, 17 Oct 2008 03:33:39 -0400 (EDT)
-Received: from heartbeat1.messagingengine.com ([10.202.2.160])
-  by compute2.internal (MEProxy); Fri, 17 Oct 2008 03:33:39 -0400
-X-Sasl-enc: mmIQEUogc43gbPQU4zl/RI9cfk+FrJFbU9C9zOe/6qk8 1224228818
-Received: from [139.174.44.12] (whitehead.math.tu-clausthal.de [139.174.44.12])
-	by mail.messagingengine.com (Postfix) with ESMTPSA id 7AB6D2C753;
-	Fri, 17 Oct 2008 03:33:38 -0400 (EDT)
-User-Agent: Thunderbird 2.0.0.17 (X11/20080914)
-In-Reply-To: <48F7BBAC.2090907@xiplink.com>
+	id S1753333AbYJQH7X (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 17 Oct 2008 03:59:23 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753345AbYJQH7X
+	(ORCPT <rfc822;git-outgoing>); Fri, 17 Oct 2008 03:59:23 -0400
+Received: from rv-out-0506.google.com ([209.85.198.226]:23740 "EHLO
+	rv-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753374AbYJQH7V (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 17 Oct 2008 03:59:21 -0400
+Received: by rv-out-0506.google.com with SMTP id k40so422158rvb.1
+        for <git@vger.kernel.org>; Fri, 17 Oct 2008 00:59:20 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to
+         :subject:mime-version:content-type;
+        bh=jul3NFVlQLM7igYglfVSmlG6hhMq7hcMktCneB8HPo4=;
+        b=U/ItuZownqBNE1/dXCr3kGg80NOzzUUG7yNoSI7iwKohWTBvKSctULgVl17ztreC6l
+         v2jHgYf/YlO+Yp7wPrsXb024UHQE8Bx+Jpkmr//H5331fJWMNga+PT7vBrFltkBCtt6Y
+         XEuhxUwEhzDS1GAaP9i7mMSBZK703SwADUpk8=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:to:subject:mime-version:content-type;
+        b=ogC0rD9XDgLPZ2ARYknH/uUNThL46QMbfL/Rw4MwFGis05L+08WQ9jI9cB+uRJ9GJt
+         TZjCg7pRJmhMnCf3SXM/288mQnQZtMyzvGlqBaYqxP4DtSrl2HkmN18d87qS7+LYL0Vv
+         Nk85tvh5Gw37UGWBb0JvASF8TAQQMmm0/2J3k=
+Received: by 10.141.114.15 with SMTP id r15mr2316099rvm.164.1224230360472;
+        Fri, 17 Oct 2008 00:59:20 -0700 (PDT)
+Received: by 10.140.188.5 with HTTP; Fri, 17 Oct 2008 00:59:20 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/98455>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/98456>
 
-Marc Branchaud venit, vidit, dixit 17.10.2008 00:09:
-> Peter Harris wrote:
->> Ah. I believe I misunderstood what you wanted. Perhaps you want "git
->> remote add", then? Unfortunately, you have to know what your remotes
->> are outside of git for this. Perhaps a script in the root of your
->> repository you can run to set this up after the initial clone?
-> 
-> I think we're converging onto the same track.
-> 
-> Yes, I do want to use "git remote add".  My point is basically that, 
-> having done various git-remote-adds in the main repository, I'd like to 
-> avoid having to redo them in a clone of that repository.
-> 
-> A script would work, sure, but to me this seems like something git 
-> should handle for me.  If I have to re-establish my connections to the 
-> remotes whenever I want to pull in updates, then I don't see much point 
-> in keeping the remotes defined in any git repo.
-> 
->> I seem to recall some discussion of allowing a .gitconfig to be in
->> repositories (similar to .gitignore), but the idea was shot down for
->> security reasons.
-> 
-> I think I can understand why that would be undesirable, but I don't know 
-> if something like that would be necessary for what I'm talking about.
+------=_Part_30632_7206474.1224230360465
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Content-Disposition: inline
 
-I don't think there is a direct gittish way for transferring the remote
-config from one repo to a clone (other than copying what git submodule
-does with .gitmodules etc.).
+Hi, all!
 
-Would it be sufficient for you if a clone could trigger the main repo to
-update its remotes (i.e. git remote update)?
+OS X 10.5.5 (English locale), Git 1.5.5.1
+Windows XP SP2 (Russian), msysGit 1.5.6.1.1071.g76fb
 
-Michael
+------=_Part_30632_7206474.1224230360465
+Content-Type: application/zip; name=Copy.zip
+Content-Transfer-Encoding: base64
+X-Attachment-Id: f_fmeisni70
+Content-Disposition: attachment; filename=Copy.zip
+
+UEsDBAoAAAAAAGdZUTkAAAAAAAAAAAAAAAAJAAAAiq6vqO8udHh0UEsBAhQACgAAAAAAZ1lROQAA
+AAAAAAAAAAAAAAkAAAAAAAAAAAAgAAAAAAAAAIqur6jvLnR4dFBLBQYAAAAAAQABADcAAAAnAAAA
+AAA=
+------=_Part_30632_7206474.1224230360465--
