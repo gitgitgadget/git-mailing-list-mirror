@@ -1,167 +1,100 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH 3/3] Fix checkout not to clobber the branch when using
- symlinked HEAD upon detaching
-Date: Fri, 17 Oct 2008 16:11:45 -0700
-Message-ID: <7v3aiuhl5a.fsf_-_@gitster.siamese.dyndns.org>
-References: <1224095087.5366.19.camel@localhost>
- <20081016191751.GB14707@coredump.intra.peff.net>
- <1224187863.2796.15.camel@localhost>
- <20081016203916.GB9487@coredump.intra.peff.net>
- <7vfxmuhlad.fsf@gitster.siamese.dyndns.org>
+From: William Pursell <bill.pursell@gmail.com>
+Subject: [PATCH] feature request: git-mergetool --force
+Date: Sat, 18 Oct 2008 00:23:05 +0100
+Message-ID: <48F91E59.50202@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Matt Draisey <matt@draisey.ca>, git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Sat Oct 18 01:13:21 2008
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Oct 18 01:24:25 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KqyVR-000144-1V
-	for gcvg-git-2@gmane.org; Sat, 18 Oct 2008 01:13:17 +0200
+	id 1KqygC-0003p0-56
+	for gcvg-git-2@gmane.org; Sat, 18 Oct 2008 01:24:24 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757907AbYJQXMG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 17 Oct 2008 19:12:06 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757894AbYJQXMG
-	(ORCPT <rfc822;git-outgoing>); Fri, 17 Oct 2008 19:12:06 -0400
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:59454 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757872AbYJQXME (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 17 Oct 2008 19:12:04 -0400
-Received: from localhost.localdomain (localhost [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 3432670DBE;
-	Fri, 17 Oct 2008 19:12:03 -0400 (EDT)
-Received: from pobox.com (ip68-225-240-211.oc.oc.cox.net [68.225.240.211])
- (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
- certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
- ESMTPSA id 8DDB270DBC; Fri, 17 Oct 2008 19:11:57 -0400 (EDT)
-In-Reply-To: <7vfxmuhlad.fsf@gitster.siamese.dyndns.org> (Junio C. Hamano's
- message of "Fri, 17 Oct 2008 16:08:42 -0700")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: 0239B646-9CA1-11DD-9153-1E1F86D30F62-77302942!a-sasl-fastnet.pobox.com
+	id S1752183AbYJQXXM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 17 Oct 2008 19:23:12 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751386AbYJQXXL
+	(ORCPT <rfc822;git-outgoing>); Fri, 17 Oct 2008 19:23:11 -0400
+Received: from nf-out-0910.google.com ([64.233.182.186]:40702 "EHLO
+	nf-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750819AbYJQXXK (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 17 Oct 2008 19:23:10 -0400
+Received: by nf-out-0910.google.com with SMTP id d3so450564nfc.21
+        for <git@vger.kernel.org>; Fri, 17 Oct 2008 16:23:09 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from
+         :user-agent:mime-version:to:subject:content-type
+         :content-transfer-encoding;
+        bh=D7z4dm/TGSl7NilRRZRCiNiSZYmNjNuf3FQzOkRGXQg=;
+        b=WpbLhuyim8bUaMtM6cbKcxsvcSgc1Whz2RZK8xLq3pi1/5CoE1Lp8vKzTXm/nKzGAd
+         /naehbg0kJhqq+RiXbhXKyz7TsDbPyFEEVGp4OlWuWkoZ9N1Zvui2SaCw6DwgfHFC2Fn
+         ZsJ2XUWkl3UrEUVSIzzjnVNZFQ9AgHoCUwWPQ=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:user-agent:mime-version:to:subject
+         :content-type:content-transfer-encoding;
+        b=ScFgLJGrycY7L5MZS2IGzx5Ehz2Lqy5T8Um3YMI4wmoj4H6mHW/vBuV+7wVI9fOB9F
+         Rs2BNL6/NYPBvIA8scvO5BUkqV3qhz5aA//ZdURlJu1xd8np9h8nFdIod1l3CasaUyL+
+         NVf5oqpY9u97lz1JfXH1c8mA4zsKS7uO0Egxo=
+Received: by 10.210.92.8 with SMTP id p8mr565121ebb.101.1224285789332;
+        Fri, 17 Oct 2008 16:23:09 -0700 (PDT)
+Received: from clam.local (5ad934a0.bb.sky.com [90.217.52.160])
+        by mx.google.com with ESMTPS id t2sm3703219gve.5.2008.10.17.16.23.07
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Fri, 17 Oct 2008 16:23:08 -0700 (PDT)
+User-Agent: Thunderbird 2.0.0.17 (Macintosh/20080914)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/98498>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/98499>
 
-When you are using core.prefersymlinkrefs (i.e. your ".git/HEAD" is a
-symlink to "refs/heads/$current_branch"), attempt to detach HEAD resulted
-in clobbering the tip of the current branch.
+I occasionally use commands like 'cp $REMOTE $MERGED' with
+mergetool, and would prefer to not be prompted to start
+the tool on each file.  A --force option would be handy.
 
-The offending callchain is:
-
-  update_ref(..., "HEAD", REF_NODEREF, ...);
-  -> lock_any_ref_for_update("HEAD", ..., REF_NODEREF);
-   -> lock_ref_sha1_basic("HEAD", ..., REF_NODEREF, ...);
-      . calls resolve_ref() to read HEAD to arrive at
-        refs/heads/master
-      . however, it notices REF_NODEREF and adjusts the ref to be updated
-        back to "HEAD";
-    -> hold_lock_file_for_update(..., "HEAD", 1);
-     -> lock_file(..., "HEAD");
-        . resolves symlink "HEAD" to "refs/heads/master", and
-          locks it!  This creates "refs/heads/master.lock", that is
-          then renamed to "refs/heads/master" when unlocked.
-
-The behaviour of lock_file() to resolve symlink at this point in the code
-comes from d58e8d3 (When locking in a symlinked repository, try to lock
-the original, 2007-07-25), and as explained in the log message of that
-commit, we cannot unconditionally remove it.
-
-This patch fixes this.  It teaches lock_file() not to dereference the
-symbolic link when LOCK_NODEREF is given, and uses this new flag in
-lock_ref_sha1_basic() when it is operating directly on HEAD (iow when
-REF_NODEREF was given to it).
-
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
----
-
- I haven't tested it beyond running the full testsuite, which it does pass,
- but I can't give any more guarantee than that.  Testing is for wimps ;-)
-
- cache.h       |    1 +
- lockfile.c    |    3 ++-
- refs.c        |   10 ++++++----
- t/t7201-co.sh |    2 +-
- 4 files changed, 10 insertions(+), 6 deletions(-)
-
-diff --git a/cache.h b/cache.h
-index 941a9dc..8ab2fd8 100644
---- a/cache.h
-+++ b/cache.h
-@@ -412,6 +412,7 @@ struct lock_file {
- 	char filename[PATH_MAX];
- };
- #define LOCK_DIE_ON_ERROR 1
-+#define LOCK_NODEREF 2
- extern int hold_lock_file_for_update(struct lock_file *, const char *path, int);
- extern int hold_lock_file_for_append(struct lock_file *, const char *path, int);
- extern int commit_lock_file(struct lock_file *);
-diff --git a/lockfile.c b/lockfile.c
-index bc1b585..6d75608 100644
---- a/lockfile.c
-+++ b/lockfile.c
-@@ -130,7 +130,8 @@ static int lock_file(struct lock_file *lk, const char *path, int flags)
- 	 * subtract 5 from size to make sure there's room for adding
- 	 * ".lock" for the lock file name
- 	 */
--	resolve_symlink(lk->filename, sizeof(lk->filename)-5);
-+	if (!(flags & LOCK_NODEREF))
-+		resolve_symlink(lk->filename, sizeof(lk->filename)-5);
- 	strcat(lk->filename, ".lock");
- 	lk->fd = open(lk->filename, O_RDWR | O_CREAT | O_EXCL, 0666);
- 	if (0 <= lk->fd) {
-diff --git a/refs.c b/refs.c
-index 5467e98..9e422dc 100644
---- a/refs.c
-+++ b/refs.c
-@@ -790,7 +790,7 @@ static struct ref_lock *lock_ref_sha1_basic(const char *ref, const unsigned char
- 	struct ref_lock *lock;
- 	struct stat st;
- 	int last_errno = 0;
--	int type;
-+	int type, lflags;
- 	int mustexist = (old_sha1 && !is_null_sha1(old_sha1));
- 
- 	lock = xcalloc(1, sizeof(struct ref_lock));
-@@ -830,8 +830,11 @@ static struct ref_lock *lock_ref_sha1_basic(const char *ref, const unsigned char
- 
- 	lock->lk = xcalloc(1, sizeof(struct lock_file));
- 
--	if (flags & REF_NODEREF)
-+	lflags = LOCK_DIE_ON_ERROR;
-+	if (flags & REF_NODEREF) {
- 		ref = orig_ref;
-+		lflags |= LOCK_NODEREF;
-+	}
- 	lock->ref_name = xstrdup(ref);
- 	lock->orig_ref_name = xstrdup(orig_ref);
- 	ref_file = git_path("%s", ref);
-@@ -845,9 +848,8 @@ static struct ref_lock *lock_ref_sha1_basic(const char *ref, const unsigned char
- 		error("unable to create directory for %s", ref_file);
- 		goto error_return;
- 	}
--	lock->lock_fd = hold_lock_file_for_update(lock->lk, ref_file,
--						  LOCK_DIE_ON_ERROR);
- 
-+	lock->lock_fd = hold_lock_file_for_update(lock->lk, ref_file, lflags);
- 	return old_sha1 ? verify_lock(lock, old_sha1, mustexist) : lock;
- 
-  error_return:
-diff --git a/t/t7201-co.sh b/t/t7201-co.sh
-index 01304d7..d9a80aa 100755
---- a/t/t7201-co.sh
-+++ b/t/t7201-co.sh
-@@ -339,7 +339,7 @@ test_expect_success 'checkout w/--track from non-branch HEAD fails' '
-     test "z$(git rev-parse master^0)" = "z$(git rev-parse HEAD)"
- '
- 
--test_expect_failure 'detch a symbolic link HEAD' '
-+test_expect_success 'detch a symbolic link HEAD' '
-     git checkout master &&
-     git config --bool core.prefersymlinkrefs yes &&
-     git checkout side &&
 -- 
-1.6.0.2.734.gae0be
+William Pursell
+
+
+diff --git a/git-mergetool.sh b/git-mergetool.sh
+index 94187c3..5c9ce09 100755
+--- a/git-mergetool.sh
++++ b/git-mergetool.sh
+@@ -8,7 +8,7 @@
+  # at the discretion of Junio C Hamano.
+  #
+
+-USAGE='[--tool=tool] [file to merge] ...'
++USAGE='[--tool=tool] [--force] [file to merge] ...'
+  SUBDIRECTORY_OK=Yes
+  OPTIONS_SPEC=
+  . git-sh-setup
+@@ -176,8 +176,10 @@ merge_file () {
+      echo "Normal merge conflict for '$MERGED':"
+      describe_file "$local_mode" "local" "$LOCAL"
+      describe_file "$remote_mode" "remote" "$REMOTE"
+-    printf "Hit return to start merge resolution tool (%s): " "$merge_tool"
+-    read ans
++    if test x"$force_option" != xyes; then
++	printf "Hit return to start merge resolution tool (%s): " "$merge_tool"
++	read ans
++    fi
+
+      case "$merge_tool" in
+  	kdiff3)
+@@ -283,6 +285,9 @@ merge_file () {
+  while test $# != 0
+  do
+      case "$1" in
++	-f|--fo|--for|--forc|--force)
++	    force_option=yes
++	    ;;
+  	-t|--tool*)
+  	    case "$#,$1" in
+  		*,*=*)
