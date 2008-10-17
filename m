@@ -1,91 +1,74 @@
-From: "Ondrej Certik" <ondrej@certik.cz>
-Subject: Re: [ANNOUNCE] cgit 0.8
-Date: Fri, 17 Oct 2008 23:31:00 +0200
-Message-ID: <85b5c3130810171431p26a6b4c7s152cc04694b50bc9@mail.gmail.com>
-References: <8c5c35580810051310u60859afcvf38845244308cd23@mail.gmail.com>
-	 <alpine.DEB.2.00.0810051346290.27691@alchemy.localdomain>
-	 <8c5c35580810051522l3c8fcfe4md8b78b569f287246@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: Detached checkout will clobber branch head when using symlink
+ HEAD
+Date: Fri, 17 Oct 2008 16:08:42 -0700
+Message-ID: <7vfxmuhlad.fsf@gitster.siamese.dyndns.org>
+References: <1224095087.5366.19.camel@localhost>
+ <20081016191751.GB14707@coredump.intra.peff.net>
+ <1224187863.2796.15.camel@localhost>
+ <20081016203916.GB9487@coredump.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: "Asheesh Laroia" <git@asheesh.org>,
-	"Git Mailing List" <git@vger.kernel.org>
-To: "Lars Hjemli" <hjemli@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Oct 17 23:32:38 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: Matt Draisey <matt@draisey.ca>, git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Sat Oct 18 01:10:12 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Kqwvp-0008Ah-3w
-	for gcvg-git-2@gmane.org; Fri, 17 Oct 2008 23:32:25 +0200
+	id 1KqySR-0000ME-2p
+	for gcvg-git-2@gmane.org; Sat, 18 Oct 2008 01:10:11 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754446AbYJQVbG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 17 Oct 2008 17:31:06 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753988AbYJQVbF
-	(ORCPT <rfc822;git-outgoing>); Fri, 17 Oct 2008 17:31:05 -0400
-Received: from nf-out-0910.google.com ([64.233.182.190]:21455 "EHLO
-	nf-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754399AbYJQVbE (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 17 Oct 2008 17:31:04 -0400
-Received: by nf-out-0910.google.com with SMTP id d3so435049nfc.21
-        for <git@vger.kernel.org>; Fri, 17 Oct 2008 14:31:01 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:sender
-         :to:subject:cc:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:references
-         :x-google-sender-auth;
-        bh=Fb0YtlsCAZWMPq2LKd1fyf1EaSsbugIAj4EiT0942CY=;
-        b=xG6lRSXzQsjL3PeKQFLOm9GZb/3XvNQPW39hC1pZxNb0IWw+7poiaG08DylgVznSFE
-         GFaFtJYYJ0uFgkNhwKV36e6WCZb7dCfupqvPm109MjNIFi2p/a3bKxiy26XX1lKljeqH
-         jcqx21j43vy8YAFvHoaehjiMPjI+5du7TnKzo=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:sender:to:subject:cc:in-reply-to:mime-version
-         :content-type:content-transfer-encoding:content-disposition
-         :references:x-google-sender-auth;
-        b=voJyYQLS/HQY02bjiw7gbhTmaQU49w02xIid/WzvWmUt/dl7DxgUhiHaTQjouQpKdx
-         ID1nMwTa7aVa5yxng6jD/bRG6Pabt+oWXFKQUZx5djy8tx8Ze5JrhiUxq7yoNROyBgHe
-         qQWoBSxHvtphDiGTRgvoqgHc1E71fPOtjrzGw=
-Received: by 10.86.27.19 with SMTP id a19mr4405048fga.56.1224279060971;
-        Fri, 17 Oct 2008 14:31:00 -0700 (PDT)
-Received: by 10.86.33.8 with HTTP; Fri, 17 Oct 2008 14:31:00 -0700 (PDT)
-In-Reply-To: <8c5c35580810051522l3c8fcfe4md8b78b569f287246@mail.gmail.com>
-Content-Disposition: inline
-X-Google-Sender-Auth: 4394c1f4f6621660
+	id S1757340AbYJQXI5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 17 Oct 2008 19:08:57 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757342AbYJQXI5
+	(ORCPT <rfc822;git-outgoing>); Fri, 17 Oct 2008 19:08:57 -0400
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:54972 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757332AbYJQXI4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 17 Oct 2008 19:08:56 -0400
+Received: from localhost.localdomain (localhost [127.0.0.1])
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 7A61670D4F;
+	Fri, 17 Oct 2008 19:08:55 -0400 (EDT)
+Received: from pobox.com (ip68-225-240-211.oc.oc.cox.net [68.225.240.211])
+ (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
+ certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
+ ESMTPSA id DB18870D4E; Fri, 17 Oct 2008 19:08:50 -0400 (EDT)
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: 9257442E-9CA0-11DD-9153-1E1F86D30F62-77302942!a-sasl-fastnet.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/98494>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/98495>
 
-On Mon, Oct 6, 2008 at 12:22 AM, Lars Hjemli <hjemli@gmail.com> wrote:
-> On Sun, Oct 5, 2008 at 22:49, Asheesh Laroia <git@asheesh.org> wrote:
->> On Sun, 5 Oct 2008, Lars Hjemli wrote:
->>
->>> cgit-0.8, another webinterface for git, is now available.
->>>
->> I'm curious - is there any interest in the cgit world in providing gitweb
->> URL compatibility?
->
-> Well, it's a request that's popped up a few times, but no patches so
-> far. It would probably be a nice feature if it could be done cleanly.
+I do not think that is a correct approach.
 
-While we are at the urls, I prefer the urls that mercurial has, e.g.:
+The offending callchain is:
 
-http://hg.sympy.org/sympy/rev/62b1589fefa7
+  update_ref(..., "HEAD", REF_NODEREF, ...);
+  -> lock_any_ref_for_update("HEAD", ..., REF_NODEREF);
+   -> lock_ref_sha1_basic("HEAD", ..., REF_NODEREF, ...);
+      . calls resolve_ref() to read HEAD to arrive at
+        refs/heads/master
+      . however, it notices REF_NODEREF and adjusts the ref to be updated
+        back to "HEAD";
+    -> hold_lock_file_for_update(..., "HEAD", 1);
+     -> lock_file(..., "HEAD");
+        . resolves symlink "HEAD" to "refs/heads/master", and
+          locks it!  This creates "refs/heads/master.lock", that is
+          then renamed to "refs/heads/master" when unlocked.
 
-is there any reason why cgit uses
+In other words, the breakage is in lock_file() and not in resolve_ref().
+The latter gives the same output to the caller whether the HEAD is
+symbolic link or textual symref -- at least it should.
 
-http://hjemli.net/git/cgit/commit/?id=140012d
+The behaviour of lock_file() to resolve symlink at this point in the code
+comes from d58e8d3 (When locking in a symlinked repository, try to lock
+the original, 2007-07-25), and as explained in the log message of that
+commit, we cannot unconditionally remove it.
 
-instead of:
-
-http://hjemli.net/git/cgit/commit/140012d
-
-?
-
-If its just a matter of preparing a patch, I'll do that.
-
-Ondrej
+Three patches to fix this issue, that come on top of the fix to t7201
+(--track from detached HEAD should fail) I sent out last night, will
+follow.
