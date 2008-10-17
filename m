@@ -1,77 +1,239 @@
-From: Marc Branchaud <marcnarc@xiplink.com>
-Subject: Re: Working with remotes; cloning remote references
-Date: Fri, 17 Oct 2008 15:50:58 -0400
-Message-ID: <48F8ECA2.3040208@xiplink.com>
-References: <48F7852F.109@xiplink.com>	 <eaa105840810161220k26eebd48q8de606597f2be055@mail.gmail.com>	 <48F7A42E.70200@xiplink.com> <eaa105840810161345r69c9f05j66bb850085f561e7@mail.gmail.com> <48F7BBAC.2090907@xiplink.com> <48F83FD0.90606@drmicha.warpmail.net> <48F8A4E8.8070008@xiplink.com> <48F8AA5E.6090908@drmicha.warpmail.net>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: Peter Harris <git@peter.is-a-geek.org>, git@vger.kernel.org
-To: Michael J Gruber <git@drmicha.warpmail.net>
-X-From: git-owner@vger.kernel.org Fri Oct 17 21:52:24 2008
+From: Nicolas Pitre <nico@cam.org>
+Subject: [PATCH 1/2] index-pack: rationalize delta resolution code
+Date: Fri, 17 Oct 2008 15:57:57 -0400
+Message-ID: <1224273478-18384-1-git-send-email-nico@cam.org>
+Content-Transfer-Encoding: 7BIT
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Oct 17 21:59:55 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KqvMq-0007xW-Nz
-	for gcvg-git-2@gmane.org; Fri, 17 Oct 2008 21:52:13 +0200
+	id 1KqvUG-0002Wq-A1
+	for gcvg-git-2@gmane.org; Fri, 17 Oct 2008 21:59:53 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757561AbYJQTu6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 17 Oct 2008 15:50:58 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756978AbYJQTu5
-	(ORCPT <rfc822;git-outgoing>); Fri, 17 Oct 2008 15:50:57 -0400
-Received: from smtp162.iad.emailsrvr.com ([207.97.245.162]:53725 "EHLO
-	smtp162.iad.emailsrvr.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756835AbYJQTu4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 17 Oct 2008 15:50:56 -0400
-Received: from relay6.relay.iad.emailsrvr.com (localhost [127.0.0.1])
-	by relay6.relay.iad.emailsrvr.com (SMTP Server) with ESMTP id E4DB77A6C17;
-	Fri, 17 Oct 2008 15:50:54 -0400 (EDT)
-Received: by relay6.relay.iad.emailsrvr.com (Authenticated sender: mbranchaud-AT-xiplink.com) with ESMTP id BC3A37A73D9;
-	Fri, 17 Oct 2008 15:50:54 -0400 (EDT)
-User-Agent: Thunderbird 2.0.0.17 (X11/20080925)
-In-Reply-To: <48F8AA5E.6090908@drmicha.warpmail.net>
+	id S1755591AbYJQT6i (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 17 Oct 2008 15:58:38 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753804AbYJQT6i
+	(ORCPT <rfc822;git-outgoing>); Fri, 17 Oct 2008 15:58:38 -0400
+Received: from relais.videotron.ca ([24.201.245.36]:53877 "EHLO
+	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753391AbYJQT6h (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 17 Oct 2008 15:58:37 -0400
+Received: from localhost.localdomain ([66.131.194.97])
+ by VL-MO-MR004.ip.videotron.ca
+ (Sun Java(tm) System Messaging Server 6.3-4.01 (built Aug  3 2007; 32bit))
+ with ESMTP id <0K8W0078JFGMEWZ1@VL-MO-MR004.ip.videotron.ca> for
+ git@vger.kernel.org; Fri, 17 Oct 2008 15:57:59 -0400 (EDT)
+X-Mailer: git-send-email 1.6.0.2.711.gf1ba4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/98491>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/98492>
 
+Instead of having strange loops for walking unresolved deltas with the
+same base duplicated in many places, let's rework the code so this is
+done in a single place instead.  This simplifies callers quite a bit too.
 
-Michael J Gruber wrote:
-> 
-> "pull -s strategy repo master" does a fetch followed by "merge -s
-> strategy repomaster", where repomaster is the ref for master on repo.
-> So, if you got that branch (repomaster=ThingOne/master) by cloning from
-> main you can do the merge (subtree or other) on your clone, even without
-> the remote repo config for ThingOne on clone.
+Signed-off-by: Nicolas Pitre <nico@cam.org>
+---
+ index-pack.c |  123 +++++++++++++++++++++++++++------------------------------
+ 1 files changed, 58 insertions(+), 65 deletions(-)
 
-I'm afraid I'm having trouble translating what you're saying into actual 
-git commands (or are you proposing some new git functionality?).  How 
-would I get the ThingOne/master branch into the clone?
-
-
-After some more thought I realized that the clone can just pull directly 
-from the ThingOne repository:
-
-clone/$ git pull -s subtree git://thing/ThingOne.git master
-
-(I'm still getting used to git's ability to match commit IDs from 
-anywhere -- it's magic! :) )
-
-This goes a long way to where we want to be, in that we don't have to do 
-our merging work in the original main repository.
-
-It would be nice, though, if the clone were able to use the main 
-repository's definition of the ThingOne remote.  I can think of some 
-plausible scenarios where a person could get confused about which 
-repo/branch they're supposed to pull.  It's easy to recover from that 
-kind of mistake, but there'd be less chance of a mistake if one could 
-tell git to "pull from X as defined in the origin repository".
-
-And actually, git's remote functionality feels a bit crippled if clones 
-can't make some use of the origin's remotes.  Is there a reason for 
-keeping remote definitions out of a clone?
-
-		Marc
+diff --git a/index-pack.c b/index-pack.c
+index d3a4d31..82843e7 100644
+--- a/index-pack.c
++++ b/index-pack.c
+@@ -244,7 +244,8 @@ static void link_base_data(struct base_data *base, struct base_data *c)
+ 
+ 	c->base = base;
+ 	c->child = NULL;
+-	base_cache_used += c->size;
++	if (c->data)
++		base_cache_used += c->size;
+ 	prune_base_data(c);
+ }
+ 
+@@ -494,8 +495,10 @@ static void *get_base_data(struct base_data *c)
+ 			free(raw);
+ 			if (!c->data)
+ 				bad_object(obj->idx.offset, "failed to apply delta");
+-		} else
++		} else {
+ 			c->data = get_data_from_pack(obj);
++			c->size = obj->size;
++		}
+ 
+ 		base_cache_used += c->size;
+ 		prune_base_data(c);
+@@ -504,49 +507,73 @@ static void *get_base_data(struct base_data *c)
+ }
+ 
+ static void resolve_delta(struct object_entry *delta_obj,
+-			  struct base_data *base_obj, enum object_type type)
++			  struct base_data *base, struct base_data *result)
+ {
+ 	void *delta_data;
+ 	unsigned long delta_size;
+-	union delta_base delta_base;
+-	int j, first, last;
+-	struct base_data result;
+ 
+-	delta_obj->real_type = type;
++	delta_obj->real_type = base->obj->type;
+ 	delta_data = get_data_from_pack(delta_obj);
+ 	delta_size = delta_obj->size;
+-	result.data = patch_delta(get_base_data(base_obj), base_obj->size,
+-			     delta_data, delta_size,
+-			     &result.size);
++	result->obj = delta_obj;
++	result->data = patch_delta(get_base_data(base), base->obj->size,
++				   delta_data, delta_size, &result->size);
+ 	free(delta_data);
+-	if (!result.data)
++	if (!result->data)
+ 		bad_object(delta_obj->idx.offset, "failed to apply delta");
+-	sha1_object(result.data, result.size, type, delta_obj->idx.sha1);
++	sha1_object(result->data, result->size, delta_obj->real_type,
++		    delta_obj->idx.sha1);
+ 	nr_resolved_deltas++;
++}
++
++static void find_unresolved_deltas(struct base_data *base,
++				   struct base_data *prev_base)
++{
++	int i, ref, ref_first, ref_last, ofs, ofs_first, ofs_last;
++
++	/*
++	 * This is a recursive function. Those brackets should help reducing
++	 * stack usage by limiting the scope of the delta_base union.
++	 */
++	{
++		union delta_base base_spec;
++
++		hashcpy(base_spec.sha1, base->obj->idx.sha1);
++		ref = !find_delta_children(&base_spec, &ref_first, &ref_last);
++
++		memset(&base_spec, 0, sizeof(base_spec));
++		base_spec.offset = base->obj->idx.offset;
++		ofs = !find_delta_children(&base_spec, &ofs_first, &ofs_last);
++	}
++
++	if (!ref && !ofs)
++		return;
+ 
+-	result.obj = delta_obj;
+-	link_base_data(base_obj, &result);
++	link_base_data(prev_base, base);
+ 
+-	hashcpy(delta_base.sha1, delta_obj->idx.sha1);
+-	if (!find_delta_children(&delta_base, &first, &last)) {
+-		for (j = first; j <= last; j++) {
+-			struct object_entry *child = objects + deltas[j].obj_no;
+-			if (child->real_type == OBJ_REF_DELTA)
+-				resolve_delta(child, &result, type);
++	if (ref) {
++		for (i = ref_first; i <= ref_last; i++) {
++			struct object_entry *child = objects + deltas[i].obj_no;
++			if (child->real_type == OBJ_REF_DELTA) {
++				struct base_data result;
++				resolve_delta(child, base, &result);
++				find_unresolved_deltas(&result, base);
++			}
+ 		}
+ 	}
+ 
+-	memset(&delta_base, 0, sizeof(delta_base));
+-	delta_base.offset = delta_obj->idx.offset;
+-	if (!find_delta_children(&delta_base, &first, &last)) {
+-		for (j = first; j <= last; j++) {
+-			struct object_entry *child = objects + deltas[j].obj_no;
+-			if (child->real_type == OBJ_OFS_DELTA)
+-				resolve_delta(child, &result, type);
++	if (ofs) {
++		for (i = ofs_first; i <= ofs_last; i++) {
++			struct object_entry *child = objects + deltas[i].obj_no;
++			if (child->real_type == OBJ_OFS_DELTA) {
++				struct base_data result;
++				resolve_delta(child, base, &result);
++				find_unresolved_deltas(&result, base);
++			}
+ 		}
+ 	}
+ 
+-	unlink_base_data(&result);
++	unlink_base_data(base);
+ }
+ 
+ static int compare_delta_entry(const void *a, const void *b)
+@@ -622,37 +649,13 @@ static void parse_pack_objects(unsigned char *sha1)
+ 		progress = start_progress("Resolving deltas", nr_deltas);
+ 	for (i = 0; i < nr_objects; i++) {
+ 		struct object_entry *obj = &objects[i];
+-		union delta_base base;
+-		int j, ref, ref_first, ref_last, ofs, ofs_first, ofs_last;
+ 		struct base_data base_obj;
+ 
+ 		if (obj->type == OBJ_REF_DELTA || obj->type == OBJ_OFS_DELTA)
+ 			continue;
+-		hashcpy(base.sha1, obj->idx.sha1);
+-		ref = !find_delta_children(&base, &ref_first, &ref_last);
+-		memset(&base, 0, sizeof(base));
+-		base.offset = obj->idx.offset;
+-		ofs = !find_delta_children(&base, &ofs_first, &ofs_last);
+-		if (!ref && !ofs)
+-			continue;
+-		base_obj.data = get_data_from_pack(obj);
+-		base_obj.size = obj->size;
+ 		base_obj.obj = obj;
+-		link_base_data(NULL, &base_obj);
+-
+-		if (ref)
+-			for (j = ref_first; j <= ref_last; j++) {
+-				struct object_entry *child = objects + deltas[j].obj_no;
+-				if (child->real_type == OBJ_REF_DELTA)
+-					resolve_delta(child, &base_obj, obj->type);
+-			}
+-		if (ofs)
+-			for (j = ofs_first; j <= ofs_last; j++) {
+-				struct object_entry *child = objects + deltas[j].obj_no;
+-				if (child->real_type == OBJ_OFS_DELTA)
+-					resolve_delta(child, &base_obj, obj->type);
+-			}
+-		unlink_base_data(&base_obj);
++		base_obj.data = NULL;
++		find_unresolved_deltas(&base_obj, NULL);
+ 		display_progress(progress, nr_resolved_deltas);
+ 	}
+ }
+@@ -745,7 +748,6 @@ static void fix_unresolved_deltas(struct sha1file *f, int nr_unresolved)
+ 	for (i = 0; i < n; i++) {
+ 		struct delta_entry *d = sorted_by_pos[i];
+ 		enum object_type type;
+-		int j, first, last;
+ 		struct base_data base_obj;
+ 
+ 		if (objects[d->obj_no].real_type != OBJ_REF_DELTA)
+@@ -759,16 +761,7 @@ static void fix_unresolved_deltas(struct sha1file *f, int nr_unresolved)
+ 			die("local object %s is corrupt", sha1_to_hex(d->base.sha1));
+ 		base_obj.obj = append_obj_to_pack(f, d->base.sha1,
+ 					base_obj.data, base_obj.size, type);
+-		link_base_data(NULL, &base_obj);
+-
+-		find_delta_children(&d->base, &first, &last);
+-		for (j = first; j <= last; j++) {
+-			struct object_entry *child = objects + deltas[j].obj_no;
+-			if (child->real_type == OBJ_REF_DELTA)
+-				resolve_delta(child, &base_obj, type);
+-		}
+-
+-		unlink_base_data(&base_obj);
++		find_unresolved_deltas(&base_obj, NULL);
+ 		display_progress(progress, nr_resolved_deltas);
+ 	}
+ 	free(sorted_by_pos);
+-- 
+1.6.0.2.711.gf1ba4
