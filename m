@@ -1,65 +1,76 @@
-From: Nanako Shiraishi <nanako3@lavabit.com>
-Subject: Re: [PATCH] Documentation: diff-filter=T only tests for symlink changes
-Date: Sat, 18 Oct 2008 22:40:45 +0900
-Message-ID: <20081018224045.6117@nanako3.lavabit.com>
-References: <87vdvq5lu4.fsf_-_@cup.kalibalik.dk>
+From: Garry Dolley <gdolley@arpnetworks.com>
+Subject: Re: Feedback outside of the user survey
+Date: Sat, 18 Oct 2008 06:49:07 -0700
+Message-ID: <20081018134906.GA13894@garry-thinkpad.arpnetworks.com>
+References: <2d460de70810160319r4bed8643g884508cdeba772@mail.gmail.com> <20081016115628.GA24836@garry-x300.arpnetworks.com> <2d460de70810160618u1803375aj913145a5060e5308@mail.gmail.com> <48F7A4F8.2080600@jaeger.mine.nu>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Anders Melchiorsen <mail@cup.kalibalik.dk>
-X-From: git-owner@vger.kernel.org Sat Oct 18 15:46:28 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: Richard Hartmann <richih.mailinglist@gmail.com>,
+	git@vger.kernel.org
+To: Christian Jaeger <christian@jaeger.mine.nu>
+X-From: git-owner@vger.kernel.org Sat Oct 18 15:50:55 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KrC8R-0001YD-4U
-	for gcvg-git-2@gmane.org; Sat, 18 Oct 2008 15:46:27 +0200
+	id 1KrCCe-0002lk-F6
+	for gcvg-git-2@gmane.org; Sat, 18 Oct 2008 15:50:48 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751453AbYJRNpL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 18 Oct 2008 09:45:11 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751431AbYJRNpL
-	(ORCPT <rfc822;git-outgoing>); Sat, 18 Oct 2008 09:45:11 -0400
-Received: from karen.lavabit.com ([72.249.41.33]:48585 "EHLO karen.lavabit.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751359AbYJRNpK (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 18 Oct 2008 09:45:10 -0400
-Received: from b.earth.lavabit.com (b.earth.lavabit.com [192.168.111.11])
-	by karen.lavabit.com (Postfix) with ESMTP id 7BB7CC7B09;
-	Sat, 18 Oct 2008 08:45:09 -0500 (CDT)
-Received: from 6585.lavabit.com (212.62.97.21)
-	by lavabit.com with ESMTP id 6IM8I7BPFBA3; Sat, 18 Oct 2008 08:45:09 -0500
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws; s=lavabit; d=lavabit.com;
-  b=wZnHoaAu6le8BVcNTSV8BS3E5wdDuzHMbS43jBD/2SJCPgVYMDhCfted8LQjjjRqPAqbbnfaSYkwIHIebv6zEzjEU4v0j2CqPjZ5aMsY50sODnhQYp3bnCa2EawqlR2mTsar553Sg4ock+BSVd9fsyrk2dldGrsNsf5TJ9wpREI=;
-  h=From:To:Cc:Date:Subject:In-reply-to:MIME-Version:Content-Type:Content-Transfer-Encoding:Message-Id;
-In-reply-to: <87vdvq5lu4.fsf_-_@cup.kalibalik.dk>
+	id S1751501AbYJRNtN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 18 Oct 2008 09:49:13 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750819AbYJRNtM
+	(ORCPT <rfc822;git-outgoing>); Sat, 18 Oct 2008 09:49:12 -0400
+Received: from mail.arpnetworks.com ([205.134.237.79]:35612 "HELO
+	penguin.filetron.com" rhost-flags-OK-FAIL-OK-FAIL) by vger.kernel.org
+	with SMTP id S1752167AbYJRNtL (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 18 Oct 2008 09:49:11 -0400
+Received: (qmail 30842 invoked from network); 18 Oct 2008 13:47:10 -0000
+Received: from unknown (HELO garry-thinkpad.arpnetworks.com) (gdolley@arpnetworks.com@205.134.237.48)
+  by mail.arpnetworks.com with SMTP; 18 Oct 2008 13:47:10 -0000
+Content-Disposition: inline
+In-Reply-To: <48F7A4F8.2080600@jaeger.mine.nu>
+X-PGP-Key: http://scie.nti.st/pubkey.asc
+X-PGP-Fingerprint: A4C2 A268 0A00 1C26 94BC  9690 4255 E69B F65A 9900
+User-Agent: Mutt/1.5.16 (2007-06-09)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/98549>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/98550>
 
-Quoting Anders Melchiorsen <mail@cup.kalibalik.dk>:
+On Thu, Oct 16, 2008 at 10:32:56PM +0200, Christian Jaeger wrote:
+> Hm, I don't see a fundamental technical problem which would prevent one 
+> from implementing the ability to checkout only a subdirectory into the 
+> working directory (i.e. to add options to Git to make it reflect the 
+> working directory as being a subdirectory of what is in Git's database). At 
+> this level I don't see anything inherently different from SVN--except maybe 
+> for directory renames: if someone else is renaming the directory you've 
+> checked out, what should happend with your checkout? Git's filebased rename 
+> tracking would just lead to everything vanishing from your checkout. I 
+> don't know what happens in SVN, maybe it keeps track of the directory 
+> rename and still sends you the changes of the directory you've checked out 
+> even if it has now a different name on the server?
+>
+> Anyway, an unavoidable difference is that you have to always clone the 
+> whole Git *database*. With SVN the database stays on the server, with Git 
+> it is being cloned. Just as I expect SVN to need the whole database to be 
+> [...]
 
-> diff --git a/Documentation/diff-options.txt b/Documentation/diff-options.txt
-> index 7788d4f..7604a13 100644
-> --- a/Documentation/diff-options.txt
-> +++ b/Documentation/diff-options.txt
-> @@ -137,7 +137,7 @@ endif::git-format-patch[]
->  --diff-filter=[ACDMRTUXB*]::
->  	Select only files that are Added (`A`), Copied (`C`),
->  	Deleted (`D`), Modified (`M`), Renamed (`R`), have their
-> -	type (mode) changed (`T`), are Unmerged (`U`), are
-> +	type (symlink/regular file) changed (`T`), are Unmerged (`U`), are
->  	Unknown (`X`), or have had their pairing Broken (`B`).
->  	Any combination of the filter characters may be used.
->  	When `*` (All-or-none) is added to the combination, all
-> -- 
-> 1.6.0.2.514.g23abd3
+Right, but I think cloning the entire git database just to get a
+subdir is a fundamental technical problem.  It's no different than
+git-clone + checkout + rm -rf <what I don't want in working tree>
 
-Are symlinks and regular files the only kind of object you can see in diff? What happens when a file or directory changes to a submodule?
+In that sense, git already has support for cloning subdirectories,
+which is why I don't think this method applies to what the original
+post author meant when they referred to "support for cloning sub
+directories".
+
+:)
 
 -- 
-Nanako Shiraishi
-http://ivory.ap.teacup.com/nanako3/
+Garry Dolley
+ARP Networks, Inc.
+http://scie.nti.st
+Los Angeles County REACT, Unit 336
+WQGK336
