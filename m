@@ -1,120 +1,82 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: Excluding files from git-diff
-Date: Sat, 18 Oct 2008 12:58:34 -0400
-Message-ID: <20081018165834.GA28364@coredump.intra.peff.net>
-References: <20081017145313.GA23471@eriks> <48F8ACC2.1010903@drmicha.warpmail.net> <48F8BDA7.50901@pflanze.mine.nu> <20081018155912.GA20387@coredump.intra.peff.net> <48FA0A17.9050506@pflanze.mine.nu> <20081018161424.GC20185@coredump.intra.peff.net>
+From: Johannes Sixt <johannes.sixt@telecom.at>
+Subject: Re: Weird filename encoding issue
+Date: Sat, 18 Oct 2008 19:51:53 +0200
+Message-ID: <200810181951.53962.johannes.sixt@telecom.at>
+References: <c6c947f60810170059s3859d906r9935b5e80d8a41c6@mail.gmail.com> <48F852FC.2070506@viscovery.net> <c6c947f60810172322o12beeb80xfd39b551b0db7c99@mail.gmail.com>
+Reply-To: johannes.sixt@telecom.at
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Michael J Gruber <git@drmicha.warpmail.net>,
-	Erik Hahn <erik_hahn@gmx.de>, git@vger.kernel.org
-To: Christian Jaeger <christian@pflanze.mine.nu>
-X-From: git-owner@vger.kernel.org Sat Oct 18 18:59:54 2008
+Content-Type: text/plain; charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
+Cc: msysGit <msysgit@googlegroups.com>, git@vger.kernel.org
+To: agladysh@gmail.com
+X-From: grbounce-SUPTvwUAAABqUyiVh9Fi-Slj5a_0adWQ=gcvm-msysgit=m.gmane.org@googlegroups.com Sat Oct 18 19:53:31 2008
 connect(): Connection refused
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git-2@gmane.org
-Received: from vger.kernel.org ([209.132.176.167])
+Return-path: <grbounce-SUPTvwUAAABqUyiVh9Fi-Slj5a_0adWQ=gcvm-msysgit=m.gmane.org@googlegroups.com>
+Envelope-to: gcvm-msysgit@m.gmane.org
+Received: from wf-out-1516.google.com ([209.85.200.166])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KrF9a-0000mN-Gi
-	for gcvg-git-2@gmane.org; Sat, 18 Oct 2008 18:59:51 +0200
-Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750999AbYJRQ6i (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 18 Oct 2008 12:58:38 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750912AbYJRQ6i
-	(ORCPT <rfc822;git-outgoing>); Sat, 18 Oct 2008 12:58:38 -0400
-Received: from peff.net ([208.65.91.99]:4382 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750812AbYJRQ6h (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 18 Oct 2008 12:58:37 -0400
-Received: (qmail 2554 invoked by uid 111); 18 Oct 2008 16:58:35 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.32) with SMTP; Sat, 18 Oct 2008 12:58:35 -0400
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Sat, 18 Oct 2008 12:58:34 -0400
+	id 1KrFzD-0006xH-Ho
+	for gcvm-msysgit@m.gmane.org; Sat, 18 Oct 2008 19:53:11 +0200
+Received: by wf-out-1516.google.com with SMTP id u12so284069wfc.33
+        for <gcvm-msysgit@m.gmane.org>; Sat, 18 Oct 2008 10:52:03 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=googlegroups.com; s=beta;
+        h=domainkey-signature:received:received:x-sender:x-apparently-to
+         :received:received:received-spf:authentication-results:received
+         :received:from:to:subject:date:user-agent:cc:references:in-reply-to
+         :mime-version:content-type:content-transfer-encoding
+         :content-disposition:message-id:reply-to:sender:precedence
+         :x-google-loop:mailing-list:list-id:list-post:list-help
+         :list-unsubscribe:x-beenthere-env:x-beenthere;
+        bh=Lj4ykTxBkD08pY2poYadSCUKkVa++fRCqjaWuw0hJoo=;
+        b=G3Rhfq3x0rkkef95SZsBQvQdQWN6zo3iI9Be0IV/L0WZSYsaETaGZ4ab+7gRESbSLw
+         2TVgp+6ctdGx7rZ56/3aSyVj27kwz/xhsOySWjlb24ldE1gUtiCgEcU8rHksjh0tKGm4
+         bLIUS0t///QNu+oxxMf4hB68Luae+S1eEsF8A=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=googlegroups.com; s=beta;
+        h=x-sender:x-apparently-to:received-spf:authentication-results:from
+         :to:subject:date:user-agent:cc:references:in-reply-to:mime-version
+         :content-type:content-transfer-encoding:content-disposition
+         :message-id:reply-to:sender:precedence:x-google-loop:mailing-list
+         :list-id:list-post:list-help:list-unsubscribe:x-beenthere-env
+         :x-beenthere;
+        b=qzo9A3Aeri2oy1PZ8m4ZEn0kxIqN4VP0r0kfpfkQrPhgnna2/6HCLxnjzYc5/LGC60
+         YSeoKwnlihqhenjcB6+ObYqzkzTnb6Kgh0Om/eO2V5jxK8xPvQ9HV+3SvJpfhiACORwl
+         C/8+WrHS/4IU6d9n1hwsPFqqzPSC2SRDh4q5I=
+Received: by 10.141.14.14 with SMTP id r14mr168316rvi.0.1224352317368;
+        Sat, 18 Oct 2008 10:51:57 -0700 (PDT)
+Received: by 10.106.212.23 with SMTP id k23gr3102prg.0;
+	Sat, 18 Oct 2008 10:51:57 -0700 (PDT)
+X-Sender: johannes.sixt@telecom.at
+X-Apparently-To: msysgit@googlegroups.com
+Received: by 10.100.31.3 with SMTP id e3mr3406449ane.18.1224352316921; Sat, 18 Oct 2008 10:51:56 -0700 (PDT)
+Received: from smtp5.srv.eunet.at (smtp5.srv.eunet.at [193.154.160.227]) by mx.google.com with ESMTP id 7si4940788yxg.0.2008.10.18.10.51.56; Sat, 18 Oct 2008 10:51:56 -0700 (PDT)
+Received-SPF: neutral (google.com: 193.154.160.227 is neither permitted nor denied by best guess record for domain of johannes.sixt@telecom.at) client-ip=193.154.160.227;
+Authentication-Results: mx.google.com; spf=neutral (google.com: 193.154.160.227 is neither permitted nor denied by best guess record for domain of johannes.sixt@telecom.at) smtp.mail=johannes.sixt@telecom.at
+Received: from dx.sixt.local (unknown [93.83.142.38]) by smtp5.srv.eunet.at (Postfix) with ESMTP id CEF9E13A35D; Sat, 18 Oct 2008 19:51:54 +0200 (CEST)
+Received: from localhost (localhost [IPv6:::1]) by dx.sixt.local (Postfix) with ESMTP id 5F7932805A; Sat, 18 Oct 2008 19:51:54 +0200 (CEST)
+User-Agent: KMail/1.9.9
+In-Reply-To: <c6c947f60810172322o12beeb80xfd39b551b0db7c99@mail.gmail.com>
 Content-Disposition: inline
-In-Reply-To: <20081018161424.GC20185@coredump.intra.peff.net>
-Sender: git-owner@vger.kernel.org
+Sender: msysgit@googlegroups.com
 Precedence: bulk
-List-ID: <git.vger.kernel.org>
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/98560>
+X-Google-Loop: groups
+Mailing-List: list msysgit@googlegroups.com;
+	contact msysgit+owner@googlegroups.com
+List-Id: <msysgit.googlegroups.com>
+List-Post: <mailto:msysgit@googlegroups.com>
+List-Help: <mailto:msysgit+help@googlegroups.com>
+List-Unsubscribe: <http://googlegroups.com/group/msysgit/subscribe>,
+	<mailto:msysgit+unsubscribe@googlegroups.com>
+X-BeenThere-Env: msysgit@googlegroups.com
+X-BeenThere: msysgit@googlegroups.com
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/98561>
 
-On Sat, Oct 18, 2008 at 12:14:24PM -0400, Jeff King wrote:
 
-> The most flexible thing would be the ability to say "I want these paths
-> (or all paths), and exclude these paths" (sort of like we already do for
-> commits). But defining a good command-line syntax for that would
-> probably be painful, and I really think the only sane use case is "I
-> want all paths except for these". In which case your "--invert-match"
-> seems like a good route.
+On Samstag, 18. Oktober 2008, Alexander Gladysh wrote:
+> 1. Git hooks do not work under msysgit.
 
-I looked at this a little, so here's as far as I got, in case it helps
-you in writing a patch.
+This is new to me. Why are you saying that? (IOW, please be more precise with 
+your description. We can't help you if all you tell us is "Does not work" .)
 
-There are actually two ways the limiter is used:
-
- 1. diff will show only a subset of the paths, as contained in a
-    diff_options.paths variable
-
- 2. the revision walker will prune based based on changes in particular
-    paths (e.g., "git log --invert-path -- .gitignore" should show only
-    commits that touch something besides .gitignore)
-
-The code to handle '1' might look something like the patch below, but
-this doesn't deal at all with revision pruning.
-
----
-diff --git a/diff.c b/diff.c
-index 1c6be89..a72f593 100644
---- a/diff.c
-+++ b/diff.c
-@@ -2646,6 +2646,8 @@ int diff_opt_parse(struct diff_options *options, const char **av, int ac)
- 		DIFF_OPT_CLR(options, ALLOW_EXTERNAL);
- 	else if (!strcmp(arg, "--ignore-submodules"))
- 		DIFF_OPT_SET(options, IGNORE_SUBMODULES);
-+	else if (!strcmp(arg, "--invert-path"))
-+		DIFF_OPT_SET(options, INVERT_PATH);
- 
- 	/* misc options */
- 	else if (!strcmp(arg, "-z"))
-diff --git a/diff.h b/diff.h
-index a49d865..43f3bff 100644
---- a/diff.h
-+++ b/diff.h
-@@ -65,6 +65,7 @@ typedef void (*diff_format_fn_t)(struct diff_queue_struct *q,
- #define DIFF_OPT_IGNORE_SUBMODULES   (1 << 18)
- #define DIFF_OPT_DIRSTAT_CUMULATIVE  (1 << 19)
- #define DIFF_OPT_DIRSTAT_BY_FILE     (1 << 20)
-+#define DIFF_OPT_INVERT_PATH         (1 << 21)
- #define DIFF_OPT_TST(opts, flag)    ((opts)->flags & DIFF_OPT_##flag)
- #define DIFF_OPT_SET(opts, flag)    ((opts)->flags |= DIFF_OPT_##flag)
- #define DIFF_OPT_CLR(opts, flag)    ((opts)->flags &= ~DIFF_OPT_##flag)
-diff --git a/tree-diff.c b/tree-diff.c
-index 9f67af6..ef78d91 100644
---- a/tree-diff.c
-+++ b/tree-diff.c
-@@ -91,7 +91,7 @@ static int compare_tree_entry(struct tree_desc *t1, struct tree_desc *t2, const
-  *  - zero for no
-  *  - negative for "no, and no subsequent entries will be either"
-  */
--static int tree_entry_interesting(struct tree_desc *desc, const char *base, int baselen, struct diff_options *opt)
-+static int tree_entry_interesting_internal(struct tree_desc *desc, const char *base, int baselen, struct diff_options *opt)
- {
- 	const char *path;
- 	const unsigned char *sha1;
-@@ -190,6 +190,17 @@ static int tree_entry_interesting(struct tree_desc *desc, const char *base, int
- 	return never_interesting; /* No matches */
- }
- 
-+static int tree_entry_interesting(struct tree_desc *desc, const char *base, int baselen, struct diff_options *opt)
-+{
-+	int r = tree_entry_interesting_internal(desc, base, baselen, opt);
-+	if (!DIFF_OPT_TST(opt, INVERT_PATH))
-+		return r;
-+	return r  < 0 ?     2 :
-+	       r == 0 ?     1 :
-+	       r == 1 ?     0 :
-+	       /* r > 1 */ -1;
-+}
-+
- /* A whole sub-tree went away or appeared */
- static void show_tree(struct diff_options *opt, const char *prefix, struct tree_desc *desc, const char *base, int baselen)
- {
+-- Hannes
