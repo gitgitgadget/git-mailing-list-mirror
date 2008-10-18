@@ -1,120 +1,70 @@
-From: "Leo Razoumov" <slonik.az@gmail.com>
+From: "Felipe Contreras" <felipe.contreras@gmail.com>
 Subject: Re: [Q] submitting patches from gmail
-Date: Sat, 18 Oct 2008 10:12:06 -0400
-Message-ID: <ee2a733e0810180712k42a4dbb6m3d4e9de717a79b53@mail.gmail.com>
+Date: Sat, 18 Oct 2008 17:20:57 +0300
+Message-ID: <94a0d4530810180720t417769edi9c64b8d239e77260@mail.gmail.com>
 References: <ee2a733e0810180508m466f3ea1i9c63b47177f6e12d@mail.gmail.com>
 	 <gdcm3d$f3k$1@ger.gmane.org>
-Reply-To: SLONIK.AZ@gmail.com
+	 <ee2a733e0810180712k42a4dbb6m3d4e9de717a79b53@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: "Giuseppe Bilotta" <giuseppe.bilotta@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Oct 18 16:13:51 2008
+Cc: "Giuseppe Bilotta" <giuseppe.bilotta@gmail.com>,
+	git@vger.kernel.org
+To: SLONIK.AZ@gmail.com
+X-From: git-owner@vger.kernel.org Sat Oct 18 16:22:25 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KrCYr-0001wu-Gu
-	for gcvg-git-2@gmane.org; Sat, 18 Oct 2008 16:13:46 +0200
+	id 1KrCh6-0004Ly-B4
+	for gcvg-git-2@gmane.org; Sat, 18 Oct 2008 16:22:16 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751321AbYJROMM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 18 Oct 2008 10:12:12 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750910AbYJROMM
-	(ORCPT <rfc822;git-outgoing>); Sat, 18 Oct 2008 10:12:12 -0400
-Received: from fg-out-1718.google.com ([72.14.220.155]:34564 "EHLO
-	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750787AbYJROML (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 18 Oct 2008 10:12:11 -0400
-Received: by fg-out-1718.google.com with SMTP id 19so762955fgg.17
-        for <git@vger.kernel.org>; Sat, 18 Oct 2008 07:12:07 -0700 (PDT)
+	id S1751443AbYJROVA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 18 Oct 2008 10:21:00 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751399AbYJROVA
+	(ORCPT <rfc822;git-outgoing>); Sat, 18 Oct 2008 10:21:00 -0400
+Received: from ey-out-2122.google.com ([74.125.78.27]:6708 "EHLO
+	ey-out-2122.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751423AbYJROU7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 18 Oct 2008 10:20:59 -0400
+Received: by ey-out-2122.google.com with SMTP id 6so358670eyi.37
+        for <git@vger.kernel.org>; Sat, 18 Oct 2008 07:20:57 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:reply-to
-         :to:subject:cc:in-reply-to:mime-version:content-type
+        h=domainkey-signature:received:received:message-id:date:from:to
+         :subject:cc:in-reply-to:mime-version:content-type
          :content-transfer-encoding:content-disposition:references;
-        bh=OvJutyCDd2JWpwWL5ZMQN25RLtP2EQMtjvEaftzG8SE=;
-        b=Ifk/dEBQetkI8r7yGWXpPSTcc/QKEjf8jo4vpmslNY1PTw8obhteZf+bVT9wnNgxam
-         yV7zCGj3wUJhYAArcdOh3jNmIN3AWZT65ZrnRr6/qtVzGZBVfdkorpkzZu5hxnL408eL
-         NbvfktDkfAcpYSXgXS6NULYm6NOQsEqeyo3E4=
+        bh=L164SiZhOelccddRp1en7zwUl5BtkqIENq2Q+HCfzx4=;
+        b=SAe+NaaoS+kqKF/RvISpRcG1X/LmIGW4YX9aP6NbL3MX3khZL8jIh7rqCLFHGbV84q
+         fiZMp0+LEIQiM/+4+/0f/MKht23hs3pQuSNw6bb93pyjnz57+EFiM+NVsmPVlV8WStqH
+         W9VHtuUEWcooETV++IBMTZR+j/AeR32KVe60U=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=message-id:date:from:reply-to:to:subject:cc:in-reply-to
-         :mime-version:content-type:content-transfer-encoding
-         :content-disposition:references;
-        b=mIG2iY/V6wgWbpIk63kgHyWaBNCAVjK58e+a+VXPyCLI8Ge607zrwFaoaYr+g5AG/G
-         +CgYfJugToVVsdca/mv9hBZVHtDe9ZXoBsiQ4rgVu/kT33U8wQ1lnw7DpenB+38Tizws
-         kwXHWXG67HklbZ3olOVv/ws32BWJpqS3tef+A=
-Received: by 10.187.243.17 with SMTP id v17mr799140far.77.1224339126522;
-        Sat, 18 Oct 2008 07:12:06 -0700 (PDT)
-Received: by 10.187.193.16 with HTTP; Sat, 18 Oct 2008 07:12:06 -0700 (PDT)
-In-Reply-To: <gdcm3d$f3k$1@ger.gmane.org>
+        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
+         :content-type:content-transfer-encoding:content-disposition
+         :references;
+        b=TlXtjOjfeqglcAx8SZZaeyoBJcCm3HizIF5qepAVgFwV/h0OrUe5k9yah95s5EfUsG
+         8ObRNJLy0n3rcA7k9vGnlwu6gE5Wxto7IDXsfQBf1wEwM4UDDF2sMX/dR7cxQwEym2Ns
+         OXqqC1UR+gpinkqv6RMnt+v6V5LFuAknyVz5U=
+Received: by 10.210.105.19 with SMTP id d19mr5998380ebc.5.1224339657937;
+        Sat, 18 Oct 2008 07:20:57 -0700 (PDT)
+Received: by 10.210.24.18 with HTTP; Sat, 18 Oct 2008 07:20:57 -0700 (PDT)
+In-Reply-To: <ee2a733e0810180712k42a4dbb6m3d4e9de717a79b53@mail.gmail.com>
 Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/98552>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/98553>
 
-Giuseppe,
-Thanks for the help!
+On Sat, Oct 18, 2008 at 5:12 PM, Leo Razoumov <slonik.az@gmail.com> wrote:
+> Giuseppe,
+> Thanks for the help!
+>
+> BTW, what is  /etc/ssl/certs/ca-certificates.crt and how to generate it?
 
-BTW, what is  /etc/ssl/certs/ca-certificates.crt and how to generate it?
+Your distro should provide that along with openssl.
 
---Leo--
-
-On 10/18/08, Giuseppe Bilotta <giuseppe.bilotta@gmail.com> wrote:
-> On Saturday 18 October 2008 14:08, Leo Razoumov wrote:
->
->  > Hi Everyone,
->  > I wonder what is the preferred way to submit patches from a gmail account.
->  > Google mail auto wraps long lines and there is no way to change this setting.
->  > Safe way would be to use attachments. Are they allowed on git mailing list?
->
->
-> I've been sending patches from gmail for a while without problems. It took me
->  a while to find a working configruation, but I finally managed to do it using
->  msmtp. I have
->
->  [sendemail]
->         smtpserver = /usr/bin/msmtp
->
->  in my ~/.gitconfig
->
->  and the following ~/.msmtprc
->
->  ======
->  # Example for a user configuration file
->
->  # Set default values for all following accounts.
->  defaults
->  tls on
->  tls_trust_file /etc/ssl/certs/ca-certificates.crt
->  logfile ~/.msmtp.log
->
->  # My email service
->  account gmail
->  host smtp.gmail.com
->  from yourgmailusername@gmail.com
->  auth on
->  user yourgmailusername
->  password yourgmailpassword
->
->  # Set a default account
->  account default : gmail
->  =========
->
->  And to send patches I just use something like
->
->  git send-email --to "git@vger.kernel.org" --cc "whoever" 00*
->
->  --
->  Giuseppe "Oblomov" Bilotta
->
->
->  --
->  To unsubscribe from this list: send the line "unsubscribe git" in
->  the body of a message to majordomo@vger.kernel.org
->  More majordomo info at  http://vger.kernel.org/majordomo-info.html
->
+-- 
+Felipe Contreras
