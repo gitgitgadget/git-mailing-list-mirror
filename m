@@ -1,43 +1,48 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] force_object_loose: Fix memory leak
-Date: Sat, 18 Oct 2008 11:08:07 -0700
-Message-ID: <7v1vyddbeg.fsf@gitster.siamese.dyndns.org>
-References: <20081018003731.GA17290@atjola.homenet>
- <alpine.LFD.2.00.0810172105030.26244@xanadu.home>
+Subject: Re: [PATCH] Documentation: diff-filter=T only tests for symlink
+ changes
+Date: Sat, 18 Oct 2008 11:08:20 -0700
+Message-ID: <7vprlxbwtn.fsf@gitster.siamese.dyndns.org>
+References: <871vyhbsys.fsf@cup.kalibalik.dk>
+ <20081016102201.GB20762@sigill.intra.peff.net>
+ <7vhc7cq8uq.fsf@gitster.siamese.dyndns.org> <87ej2fvgv9.fsf@kalibalik.dk>
+ <7v1vyfoca2.fsf@gitster.siamese.dyndns.org> <87wsg7m2xp.fsf@kalibalik.dk>
+ <7vzll2epuh.fsf@gitster.siamese.dyndns.org>
+ <87vdvq5lu4.fsf_-_@cup.kalibalik.dk>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Nicolas Pitre <nico@cam.org>, git@vger.kernel.org
-To: =?utf-8?Q?Bj=C3=B6rn?= Steinbrink <B.Steinbrink@gmx.de>
-X-From: git-owner@vger.kernel.org Sat Oct 18 20:09:35 2008
+Cc: git@vger.kernel.org
+To: Anders Melchiorsen <mail@cup.kalibalik.dk>
+X-From: git-owner@vger.kernel.org Sat Oct 18 20:09:56 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KrGEy-0002gj-Ff
-	for gcvg-git-2@gmane.org; Sat, 18 Oct 2008 20:09:28 +0200
+	id 1KrGFM-0002nK-Dw
+	for gcvg-git-2@gmane.org; Sat, 18 Oct 2008 20:09:52 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750964AbYJRSIQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 18 Oct 2008 14:08:16 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750966AbYJRSIQ
-	(ORCPT <rfc822;git-outgoing>); Sat, 18 Oct 2008 14:08:16 -0400
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:54800 "EHLO
+	id S1751098AbYJRSI0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 18 Oct 2008 14:08:26 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751096AbYJRSI0
+	(ORCPT <rfc822;git-outgoing>); Sat, 18 Oct 2008 14:08:26 -0400
+Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:39821 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750935AbYJRSIP (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 18 Oct 2008 14:08:15 -0400
+	with ESMTP id S1751095AbYJRSIZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 18 Oct 2008 14:08:25 -0400
 Received: from localhost.localdomain (localhost [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id B504671CBF;
-	Sat, 18 Oct 2008 14:08:13 -0400 (EDT)
+	by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id 3C8E48C015;
+	Sat, 18 Oct 2008 14:08:25 -0400 (EDT)
 Received: from pobox.com (ip68-225-240-211.oc.oc.cox.net [68.225.240.211])
  (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
- certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
- ESMTPSA id 8617B71CBD; Sat, 18 Oct 2008 14:08:09 -0400 (EDT)
+ certificate requested) by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with
+ ESMTPSA id 4B3488C013; Sat, 18 Oct 2008 14:08:21 -0400 (EDT)
 User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: BB07180A-9D3F-11DD-993F-1E1F86D30F62-77302942!a-sasl-fastnet.pobox.com
+X-Pobox-Relay-ID: C1E32CCC-9D3F-11DD-B22C-4F5276724C3F-77302942!a-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/98562>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/98563>
 
 Thanks.
