@@ -1,65 +1,83 @@
-From: "Tuncer Ayaz" <tuncer.ayaz@gmail.com>
-Subject: Re: [Q] submitting patches from gmail
-Date: Sat, 18 Oct 2008 14:16:43 +0200
-Message-ID: <4ac8254d0810180516h56633ed3q8377ddbbbf316bab@mail.gmail.com>
-References: <ee2a733e0810180508m466f3ea1i9c63b47177f6e12d@mail.gmail.com>
+From: =?UTF-8?B?UmVuw6kgU2NoYXJmZQ==?= <rene.scharfe@lsrfire.ath.cx>
+Subject: Re: [PATCH 1/3] add alloc_ref_with_prefix()
+Date: Sat, 18 Oct 2008 14:35:47 +0200
+Message-ID: <48F9D823.4000908@lsrfire.ath.cx>
+References: <48F9A054.4010703@lsrfire.ath.cx>	 <36ca99e90810180227u367783f6vc3b7af0176f6df06@mail.gmail.com>	 <48F9AECA.3020606@lsrfire.ath.cx> <36ca99e90810180507q2dedf4ck7262239ae91d892f@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: SLONIK.AZ@gmail.com
-X-From: git-owner@vger.kernel.org Sat Oct 18 14:19:02 2008
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Git Mailing List <git@vger.kernel.org>,
+	Junio C Hamano <gitster@pobox.com>
+To: Bert Wesarg <bert.wesarg@googlemail.com>
+X-From: git-owner@vger.kernel.org Sat Oct 18 14:38:05 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KrAlo-0002qt-Up
-	for gcvg-git-2@gmane.org; Sat, 18 Oct 2008 14:19:01 +0200
+	id 1KrB4C-0007pg-Qs
+	for gcvg-git-2@gmane.org; Sat, 18 Oct 2008 14:38:01 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751533AbYJRMQq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 18 Oct 2008 08:16:46 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751517AbYJRMQq
-	(ORCPT <rfc822;git-outgoing>); Sat, 18 Oct 2008 08:16:46 -0400
-Received: from hs-out-0708.google.com ([64.233.178.243]:20559 "EHLO
-	hs-out-0708.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751496AbYJRMQp (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 18 Oct 2008 08:16:45 -0400
-Received: by hs-out-0708.google.com with SMTP id 4so374747hsl.5
-        for <git@vger.kernel.org>; Sat, 18 Oct 2008 05:16:44 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to
-         :subject:cc:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:references;
-        bh=Mti1BpI2Ph5Uc5XiRkC23IAhBX7qdjsiw/5YDiJ64PI=;
-        b=sUCJ0yThysxqQjLXrZZ4WBI9KpCpnbCMau2YwiwKGfPz9doGRnyefYrdTXVodmowYv
-         ykn1a9L3qkCVniMMlW4gOB15sQ0ackkV85jxgU26RVKhJx/4ZJwgJHvyaVjcGbE+NO5c
-         uJqckYPhpeYOOZeuEHCBdujnRDpcWRourUo80=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
-         :content-type:content-transfer-encoding:content-disposition
-         :references;
-        b=cicf1R8z4zBGfY7oxvb0ZoSBdmmEHUrM44c6+XFaUEf+i1WfzuEj76Rfc2xOXp1rTX
-         suXXFRcUd4YOhKrU6pl0QXxY2fSMjQ+/Te80mNZ25QOkxX3/c9lSDnDZ06ulyXBp5C9e
-         WIfPEbDdrK5Z+hJ+B3ZCSsvYGXwYby+hM8p3I=
-Received: by 10.65.197.16 with SMTP id z16mr2345156qbp.97.1224332203977;
-        Sat, 18 Oct 2008 05:16:43 -0700 (PDT)
-Received: by 10.65.114.10 with HTTP; Sat, 18 Oct 2008 05:16:43 -0700 (PDT)
-In-Reply-To: <ee2a733e0810180508m466f3ea1i9c63b47177f6e12d@mail.gmail.com>
-Content-Disposition: inline
+	id S1750935AbYJRMfw convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 18 Oct 2008 08:35:52 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750884AbYJRMfw
+	(ORCPT <rfc822;git-outgoing>); Sat, 18 Oct 2008 08:35:52 -0400
+Received: from india601.server4you.de ([85.25.151.105]:34373 "EHLO
+	india601.server4you.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750819AbYJRMfv (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 18 Oct 2008 08:35:51 -0400
+Received: from [10.0.1.101] (p57B7E475.dip.t-dialin.net [87.183.228.117])
+	by india601.server4you.de (Postfix) with ESMTPSA id 8D1CD2F8058;
+	Sat, 18 Oct 2008 14:35:49 +0200 (CEST)
+User-Agent: Thunderbird 2.0.0.17 (Windows/20080914)
+In-Reply-To: <36ca99e90810180507q2dedf4ck7262239ae91d892f@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/98542>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/98543>
 
-On Sat, Oct 18, 2008 at 2:08 PM, Leo Razoumov <slonik.az@gmail.com> wrote:
-> Hi Everyone,
-> I wonder what is the preferred way to submit patches from a gmail account.
-> Google mail auto wraps long lines and there is no way to change this setting.
-> Safe way would be to use attachments. Are they allowed on git mailing list?
+Bert Wesarg schrieb:
+> On Sat, Oct 18, 2008 at 11:39, Ren=C3=A9 Scharfe <rene.scharfe@lsrfir=
+e.ath.cx> wrote:
+>>>> +static struct ref *alloc_ref_with_prefix(const char *prefix, size=
+_t prefixlen,
+>>>> +               const char *name)
+>>>> +{
+>>>> +       size_t len =3D strlen(name);
+>>>> +       struct ref *ref =3D xcalloc(1, sizeof(struct ref) + prefix=
+len + len + 1);
+>>>> +       memcpy(ref->name, prefix, prefixlen);
+>>>> +       memcpy(ref->name + prefixlen, name, len);
+>>> Where does you \0-terminate the string?
+>> xcalloc() calls calloc(), which zeroes the memory.
+> So, you write the memory range twice, just for the last \0?
 
-I do use git send-mail with msmtp as the SMTP client and smtp.gmail.com as
-the host. If you are able to go that route it would solve your problem.
+Well, one could exclude the name part from zeroing, that's true.  It's =
+usually
+safer to zero a whole block of memory right at allocation time, lest on=
+e
+forgets, though.  I simply kept it they way it was done before.
+
+That said, here's a patch (4/3):
+
+diff --git a/remote.c b/remote.c
+index e530a21..184115d 100644
+--- a/remote.c
++++ b/remote.c
+@@ -753,9 +753,10 @@ static struct ref *alloc_ref_with_prefix(const cha=
+r *prefix, size_t prefixlen,
+ 		const char *name)
+ {
+ 	size_t len =3D strlen(name);
+-	struct ref *ref =3D xcalloc(1, sizeof(struct ref) + prefixlen + len +=
+ 1);
++	struct ref *ref =3D xmalloc(sizeof(struct ref) + prefixlen + len + 1)=
+;
++	memset(ref, sizeof(struct ref));
+ 	memcpy(ref->name, prefix, prefixlen);
+-	memcpy(ref->name + prefixlen, name, len);
++	memcpy(ref->name + prefixlen, name, len + 1);
+ 	return ref;
+ }
+=20
