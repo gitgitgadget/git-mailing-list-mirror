@@ -1,95 +1,120 @@
-From: Christian Jaeger <christian@jaeger.mine.nu>
-Subject: Re: Feedback outside of the user survey
-Date: Sat, 18 Oct 2008 16:01:15 +0200
-Message-ID: <48F9EC2B.2010200@jaeger.mine.nu>
-References: <2d460de70810160319r4bed8643g884508cdeba772@mail.gmail.com> <20081016115628.GA24836@garry-x300.arpnetworks.com> <2d460de70810160618u1803375aj913145a5060e5308@mail.gmail.com> <48F7A4F8.2080600@jaeger.mine.nu> <20081018134906.GA13894@garry-thinkpad.arpnetworks.com>
+From: "Leo Razoumov" <slonik.az@gmail.com>
+Subject: Re: [Q] submitting patches from gmail
+Date: Sat, 18 Oct 2008 10:12:06 -0400
+Message-ID: <ee2a733e0810180712k42a4dbb6m3d4e9de717a79b53@mail.gmail.com>
+References: <ee2a733e0810180508m466f3ea1i9c63b47177f6e12d@mail.gmail.com>
+	 <gdcm3d$f3k$1@ger.gmane.org>
+Reply-To: SLONIK.AZ@gmail.com
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii; format=flowed
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-Cc: Richard Hartmann <richih.mailinglist@gmail.com>,
-	git@vger.kernel.org
-To: Garry Dolley <gdolley@arpnetworks.com>
-X-From: git-owner@vger.kernel.org Sat Oct 18 16:02:56 2008
+Cc: git@vger.kernel.org
+To: "Giuseppe Bilotta" <giuseppe.bilotta@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Oct 18 16:13:51 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KrCOL-0006uz-MW
-	for gcvg-git-2@gmane.org; Sat, 18 Oct 2008 16:02:54 +0200
+	id 1KrCYr-0001wu-Gu
+	for gcvg-git-2@gmane.org; Sat, 18 Oct 2008 16:13:46 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750994AbYJROBX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 18 Oct 2008 10:01:23 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750910AbYJROBW
-	(ORCPT <rfc822;git-outgoing>); Sat, 18 Oct 2008 10:01:22 -0400
-Received: from ethlife-a.ethz.ch ([129.132.49.178]:41175 "HELO ethlife.ethz.ch"
-	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with SMTP
-	id S1750819AbYJROBW (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 18 Oct 2008 10:01:22 -0400
-Received: (qmail 558 invoked from network); 18 Oct 2008 14:01:19 -0000
-Received: from unknown (HELO elvis-jaeger.mine.nu) (127.0.0.1)
-  by localhost with SMTP; 18 Oct 2008 14:01:19 -0000
-Received: (qmail 27824 invoked from network); 18 Oct 2008 14:01:16 -0000
-Received: from unknown (HELO ?127.0.0.1?) (10.0.5.1)
-  by elvis-jaeger.mine.nu with SMTP; 18 Oct 2008 14:01:16 -0000
-User-Agent: Mozilla-Thunderbird 2.0.0.16 (X11/20080724)
-In-Reply-To: <20081018134906.GA13894@garry-thinkpad.arpnetworks.com>
+	id S1751321AbYJROMM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 18 Oct 2008 10:12:12 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750910AbYJROMM
+	(ORCPT <rfc822;git-outgoing>); Sat, 18 Oct 2008 10:12:12 -0400
+Received: from fg-out-1718.google.com ([72.14.220.155]:34564 "EHLO
+	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750787AbYJROML (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 18 Oct 2008 10:12:11 -0400
+Received: by fg-out-1718.google.com with SMTP id 19so762955fgg.17
+        for <git@vger.kernel.org>; Sat, 18 Oct 2008 07:12:07 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:reply-to
+         :to:subject:cc:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:references;
+        bh=OvJutyCDd2JWpwWL5ZMQN25RLtP2EQMtjvEaftzG8SE=;
+        b=Ifk/dEBQetkI8r7yGWXpPSTcc/QKEjf8jo4vpmslNY1PTw8obhteZf+bVT9wnNgxam
+         yV7zCGj3wUJhYAArcdOh3jNmIN3AWZT65ZrnRr6/qtVzGZBVfdkorpkzZu5hxnL408eL
+         NbvfktDkfAcpYSXgXS6NULYm6NOQsEqeyo3E4=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:reply-to:to:subject:cc:in-reply-to
+         :mime-version:content-type:content-transfer-encoding
+         :content-disposition:references;
+        b=mIG2iY/V6wgWbpIk63kgHyWaBNCAVjK58e+a+VXPyCLI8Ge607zrwFaoaYr+g5AG/G
+         +CgYfJugToVVsdca/mv9hBZVHtDe9ZXoBsiQ4rgVu/kT33U8wQ1lnw7DpenB+38Tizws
+         kwXHWXG67HklbZ3olOVv/ws32BWJpqS3tef+A=
+Received: by 10.187.243.17 with SMTP id v17mr799140far.77.1224339126522;
+        Sat, 18 Oct 2008 07:12:06 -0700 (PDT)
+Received: by 10.187.193.16 with HTTP; Sat, 18 Oct 2008 07:12:06 -0700 (PDT)
+In-Reply-To: <gdcm3d$f3k$1@ger.gmane.org>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/98551>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/98552>
 
-Garry Dolley wrote:
-> On Thu, Oct 16, 2008 at 10:32:56PM +0200, Christian Jaeger wrote:
->   
->> Hm, I don't see a fundamental technical problem which would prevent one 
->> from implementing the ability to checkout only a subdirectory into the 
->> working directory (i.e. to add options to Git to make it reflect the 
->> working directory as being a subdirectory of what is in Git's database). At 
->> this level I don't see anything inherently different from SVN--except maybe 
->> for directory renames: if someone else is renaming the directory you've 
->> checked out, what should happend with your checkout? Git's filebased rename 
->> tracking would just lead to everything vanishing from your checkout. I 
->> don't know what happens in SVN, maybe it keeps track of the directory 
->> rename and still sends you the changes of the directory you've checked out 
->> even if it has now a different name on the server?
->>
->> Anyway, an unavoidable difference is that you have to always clone the 
->> whole Git *database*. With SVN the database stays on the server, with Git 
->> it is being cloned. Just as I expect SVN to need the whole database to be 
->> [...]
->>     
+Giuseppe,
+Thanks for the help!
+
+BTW, what is  /etc/ssl/certs/ca-certificates.crt and how to generate it?
+
+--Leo--
+
+On 10/18/08, Giuseppe Bilotta <giuseppe.bilotta@gmail.com> wrote:
+> On Saturday 18 October 2008 14:08, Leo Razoumov wrote:
 >
-> Right, but I think cloning the entire git database just to get a
-> subdir is a fundamental technical problem.  It's no different than
-> git-clone + checkout + rm -rf <what I don't want in working tree>
->   
-
-We're in "violent agreement" here.
-
-> In that sense, git already has support for cloning subdirectories,
-> which is why I don't think this method applies to what the original
-> post author meant when they referred to "support for cloning sub
-> directories".
->   
-
-I just think it's worth pointing out the difference between the working 
-dir and the database. It should be as easy to implement checking out 
-subdirectories in Git as it was in SVN (except, again, that, iff 
-directory renames should be tracked, some code would have to be written 
-to find out about directory renames, which SVN solves in a simpler way 
-by just requiring that the user specifies renames explicitely). It's 
-worth pointing out that working directory checkouts and database cloning 
-are separate operatoins and it's only the database cloning which is, per 
-definition (as it is a distributed VCS) different from SVN.
-
-> :)
->   
-
-If you really wanted, I suppose you could additionally look into 
-implementing a kind of shallow cloning that only copies objects over the 
-wire which are necessary for representing the subdirectory you're 
-interested in.
-
-Christian.
+>  > Hi Everyone,
+>  > I wonder what is the preferred way to submit patches from a gmail account.
+>  > Google mail auto wraps long lines and there is no way to change this setting.
+>  > Safe way would be to use attachments. Are they allowed on git mailing list?
+>
+>
+> I've been sending patches from gmail for a while without problems. It took me
+>  a while to find a working configruation, but I finally managed to do it using
+>  msmtp. I have
+>
+>  [sendemail]
+>         smtpserver = /usr/bin/msmtp
+>
+>  in my ~/.gitconfig
+>
+>  and the following ~/.msmtprc
+>
+>  ======
+>  # Example for a user configuration file
+>
+>  # Set default values for all following accounts.
+>  defaults
+>  tls on
+>  tls_trust_file /etc/ssl/certs/ca-certificates.crt
+>  logfile ~/.msmtp.log
+>
+>  # My email service
+>  account gmail
+>  host smtp.gmail.com
+>  from yourgmailusername@gmail.com
+>  auth on
+>  user yourgmailusername
+>  password yourgmailpassword
+>
+>  # Set a default account
+>  account default : gmail
+>  =========
+>
+>  And to send patches I just use something like
+>
+>  git send-email --to "git@vger.kernel.org" --cc "whoever" 00*
+>
+>  --
+>  Giuseppe "Oblomov" Bilotta
+>
+>
+>  --
+>  To unsubscribe from this list: send the line "unsubscribe git" in
+>  the body of a message to majordomo@vger.kernel.org
+>  More majordomo info at  http://vger.kernel.org/majordomo-info.html
+>
