@@ -1,53 +1,91 @@
-From: =?UTF-8?B?UmVuw6kgU2NoYXJmZQ==?= <rene.scharfe@lsrfire.ath.cx>
-Subject: Re: [PATCH 1/3] add alloc_ref_with_prefix()
-Date: Sat, 18 Oct 2008 11:39:22 +0200
-Message-ID: <48F9AECA.3020606@lsrfire.ath.cx>
-References: <48F9A054.4010703@lsrfire.ath.cx> <36ca99e90810180227u367783f6vc3b7af0176f6df06@mail.gmail.com>
+From: SZEDER =?iso-8859-1?Q?G=E1bor?= <szeder@ira.uka.de>
+Subject: Re: Archiving tags/branches?
+Date: Sat, 18 Oct 2008 12:23:45 +0200
+Message-ID: <20081018102345.GA3749@neumann>
+References: <48F93F52.4070506@pcharlan.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=iso-8859-1
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Git Mailing List <git@vger.kernel.org>,
-	Junio C Hamano <gitster@pobox.com>
-To: Bert Wesarg <bert.wesarg@googlemail.com>
-X-From: git-owner@vger.kernel.org Sat Oct 18 11:40:44 2008
+Cc: git@vger.kernel.org
+To: Pete Harlan <pgit@pcharlan.com>
+X-From: git-owner@vger.kernel.org Sat Oct 18 12:25:29 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Kr8IZ-0005Q2-Lk
-	for gcvg-git-2@gmane.org; Sat, 18 Oct 2008 11:40:40 +0200
+	id 1Kr8zv-0007BT-Ev
+	for gcvg-git-2@gmane.org; Sat, 18 Oct 2008 12:25:27 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750972AbYJRJj1 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 18 Oct 2008 05:39:27 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750964AbYJRJj1
-	(ORCPT <rfc822;git-outgoing>); Sat, 18 Oct 2008 05:39:27 -0400
-Received: from india601.server4you.de ([85.25.151.105]:39224 "EHLO
-	india601.server4you.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750930AbYJRJj1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 18 Oct 2008 05:39:27 -0400
-Received: from [10.0.1.101] (p57B7E475.dip.t-dialin.net [87.183.228.117])
-	by india601.server4you.de (Postfix) with ESMTPSA id 35E222F8058;
-	Sat, 18 Oct 2008 11:39:25 +0200 (CEST)
-User-Agent: Thunderbird 2.0.0.17 (Windows/20080914)
-In-Reply-To: <36ca99e90810180227u367783f6vc3b7af0176f6df06@mail.gmail.com>
+	id S1751207AbYJRKXw convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 18 Oct 2008 06:23:52 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751018AbYJRKXw
+	(ORCPT <rfc822;git-outgoing>); Sat, 18 Oct 2008 06:23:52 -0400
+Received: from moutng.kundenserver.de ([212.227.126.187]:65425 "EHLO
+	moutng.kundenserver.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751209AbYJRKXv (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 18 Oct 2008 06:23:51 -0400
+Received: from [127.0.1.1] (p5B132E70.dip0.t-ipconnect.de [91.19.46.112])
+	by mrelayeu.kundenserver.de (node=mrelayeu3) with ESMTP (Nemesis)
+	id 0MKxQS-1Kr8yI08E0-0002gW; Sat, 18 Oct 2008 12:23:46 +0200
+Content-Disposition: inline
+In-Reply-To: <48F93F52.4070506@pcharlan.com>
+User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
+X-Provags-ID: V01U2FsdGVkX1/89iiXoE8nErmK0oVvMTkPrs+i5Htxsx8d/UR
+ DLf9GGRUYEYYAwOzQ3SR0+muY/jl5fAsxVG735gEqV8F+aJDFE
+ MXZJGGkp/jWF1FUuy8E2Q==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/98535>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/98536>
 
->> +static struct ref *alloc_ref_with_prefix(const char *prefix, size_t=
- prefixlen,
->> +               const char *name)
->> +{
->> +       size_t len =3D strlen(name);
->> +       struct ref *ref =3D xcalloc(1, sizeof(struct ref) + prefixle=
-n + len + 1);
->> +       memcpy(ref->name, prefix, prefixlen);
->> +       memcpy(ref->name + prefixlen, name, len);
-> Where does you \0-terminate the string?
+Hi Pete,
 
-xcalloc() calls calloc(), which zeroes the memory.
+On Fri, Oct 17, 2008 at 06:43:46PM -0700, Pete Harlan wrote:
+>  If I wanted to archive those, it looks like this would work:
+>=20
+> mkdir .git/refs/archived-tags
+> cp -a .git/refs/tags/* .git/refs/archived-tags
+> git tag -d <tag-to-hide> # repeat as necessary
+>=20
+> I can then maintain a short list of tags that currently interest me, =
+but
+> am guaranteed not to lose old branches (say) referenced by those tags=
+=2E
+>=20
+> Is there a reason this won't work?
 
-Ren=C3=A9
+Yes:
+
+$ git --version
+git version 1.6.0.2.574.g7d0e0
+$ git init
+Initialized empty Git repository in /home/szeder/tmp/git/archive/.git/
+$ echo 1 >foo
+$ git add foo
+$ git commit -m bar
+Created initial commit 0c92489: bar
+ 1 files changed, 1 insertions(+), 0 deletions(-)
+ create mode 100644 foo
+$ git tag t
+$ git update-ref refs/archived-tags/t t
+$ git tag -d t
+Deleted tag 't'
+$ cat .git/refs/archived-tags/t
+0c92489da6ec6dfd9875eb590d820fcceb01829b
+$ git gc
+Counting objects: 3, done.
+Writing objects: 100% (3/3), done.
+Total 3 (delta 0), reused 0 (delta 0)
+$ cat .git/refs/archived-tags/t
+cat: .git/refs/archived-tags/t: No such file or directory
+
+So, if you put any tags or branches under refs/whatever-non-standard/,
+then it gets deleted when you gc (or when gc is run automatically).
+
+I don't know whether this behaviour is intentional or not, but I have
+experienced this the hard way recently.
+
+Regards,
+G=E1bor
