@@ -1,73 +1,94 @@
-From: "Catalin Marinas" <catalin.marinas@gmail.com>
-Subject: Re: StGIT 0.14.3: extra space is added before e-mail on export after "stg edit"
-Date: Sat, 18 Oct 2008 09:48:19 +0100
-Message-ID: <b0943d9e0810180148k4ba5bb2bgf3c5cdb2358b9419@mail.gmail.com>
-References: <200810152025.19995.arvidjaar@mail.ru>
+From: Anders Melchiorsen <mail@cup.kalibalik.dk>
+Subject: [PATCH] Documentation: diff-filter=T only tests for symlink changes
+Date: Sat, 18 Oct 2008 10:49:55 +0200
+Message-ID: <87vdvq5lu4.fsf_-_@cup.kalibalik.dk>
+References: <871vyhbsys.fsf@cup.kalibalik.dk>
+	<20081016102201.GB20762@sigill.intra.peff.net>
+	<7vhc7cq8uq.fsf@gitster.siamese.dyndns.org>
+	<87ej2fvgv9.fsf@kalibalik.dk>
+	<7v1vyfoca2.fsf@gitster.siamese.dyndns.org>
+	<87wsg7m2xp.fsf@kalibalik.dk>
+	<7vzll2epuh.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-To: "Andrey Borzenkov" <arvidjaar@mail.ru>
-X-From: git-owner@vger.kernel.org Sat Oct 18 10:49:36 2008
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sat Oct 18 10:51:16 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Kr7V7-0002dC-HR
-	for gcvg-git-2@gmane.org; Sat, 18 Oct 2008 10:49:34 +0200
+	id 1Kr7Wj-0002wg-Dh
+	for gcvg-git-2@gmane.org; Sat, 18 Oct 2008 10:51:13 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750964AbYJRIsV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 18 Oct 2008 04:48:21 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750986AbYJRIsU
-	(ORCPT <rfc822;git-outgoing>); Sat, 18 Oct 2008 04:48:20 -0400
-Received: from rv-out-0506.google.com ([209.85.198.238]:22616 "EHLO
-	rv-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750922AbYJRIsT (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 18 Oct 2008 04:48:19 -0400
-Received: by rv-out-0506.google.com with SMTP id k40so952004rvb.1
-        for <git@vger.kernel.org>; Sat, 18 Oct 2008 01:48:19 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to
-         :subject:cc:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:references;
-        bh=DOgiEFoB5aHyN46HrekdXfdrhLpcGBTP9lYPpTFm9Wo=;
-        b=QxOpGrlQZC8IXlr+VItxahiS7QoI+TJJ4/V+PTsIZQ+3BAebfHQ7BTrAVxUXaoCloY
-         r/MkYIoSDOzCy/K4RY/A+Usr2WIRm/X9tSveSZ9QAmYuBJ1zgzQ1f8Pa3E7K8k7HmqJC
-         Hs4CuW80zfWy+EELMfra4jgQ+dn3q049Y7vN8=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
-         :content-type:content-transfer-encoding:content-disposition
-         :references;
-        b=h67lmMM93WvqeeTCeveWE+/UiSbR8RIsO/XMr8WB1AdMJRmJyF8d5tyKlauvYg4qV6
-         OzuY5NSLUOevbKkM//ENR+dsdVE/s/VRWemU1ek5EKWzApyvgXAzwBa1X8z6YsObh4Qc
-         o/+DvLz92o1sekJEY/cyiot1t/MJp+JZw8alI=
-Received: by 10.141.164.13 with SMTP id r13mr3157252rvo.150.1224319699093;
-        Sat, 18 Oct 2008 01:48:19 -0700 (PDT)
-Received: by 10.140.199.1 with HTTP; Sat, 18 Oct 2008 01:48:19 -0700 (PDT)
-In-Reply-To: <200810152025.19995.arvidjaar@mail.ru>
-Content-Disposition: inline
+	id S1751080AbYJRIt7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 18 Oct 2008 04:49:59 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751091AbYJRIt6
+	(ORCPT <rfc822;git-outgoing>); Sat, 18 Oct 2008 04:49:58 -0400
+Received: from mail.hotelhot.dk ([77.75.163.100]:50844 "EHLO mail.hotelhot.dk"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751033AbYJRIt5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 18 Oct 2008 04:49:57 -0400
+Received: from mail.hotelhot.dk (localhost [127.0.0.1])
+	by mail.hotelhot.dk (Postfix) with ESMTP id 518AD14062;
+	Sat, 18 Oct 2008 10:49:56 +0200 (CEST)
+Received: from dylle (router.kalibalik.dk [192.168.0.1])
+	by mail.hotelhot.dk (Postfix) with ESMTP id 2C0C01405A;
+	Sat, 18 Oct 2008 10:49:56 +0200 (CEST)
+In-Reply-To: <7vzll2epuh.fsf@gitster.siamese.dyndns.org> (Junio C. Hamano's message of "Fri\, 17 Oct 2008 16\:58\:30 -0700")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.1 (gnu/linux)
+X-Virus-Scanned: ClamAV using ClamSMTP
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/98530>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/98531>
 
-2008/10/15 Andrey Borzenkov <arvidjaar@mail.ru>:
-> Funny problem. I have following export template:
->
-> Subject: [PATCH] %(shortdescr)s
-> From: %(authname)s %(authemail)s
->
-> %(longdescr)s
-> Signed-off-by: %(authname)s %(authemail)s
+With the previous text, one could get the understanding that
+diff-filter=T also tested for changes in the executable bit.
 
-The default templates contain "%(authname)s <%(authemail)s>", i.e.
-with the angle brackets arount authemail and I've never seen this
-problem. Does it work if you change them (or use the default
-templates)?
+Signed-off-by: Anders Melchiorsen <mail@cup.kalibalik.dk>
+---
 
+Junio C Hamano <gitster@pobox.com> writes:
+
+> There are other "commit pickers" such as -S<strting> and
+> --diff-filter that do not absolutely have to exist (iow, they could
+> also be scripted), but what they pick earned easy shortcuts because
+> the need is very common. Once you can demonstrate that the need to
+> pick executable-bit changes is also very common, _and_ if you can
+> come up with a clean solution, we might add a commit picker that
+> looks for changes in executable-ness in the future. I dunno.
+
+You are right that this should be a rare need.
+
+I didn't mean to push for this feature. I just offered to implement
+it, as I needed it myself and din't see other ways. A script will work
+fine for me, I should have thought of that.
+
+The documentation patch that I promised is here.
+
+
+Thanks,
+Anders.
+
+
+ Documentation/diff-options.txt |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
+
+diff --git a/Documentation/diff-options.txt b/Documentation/diff-options.txt
+index 7788d4f..7604a13 100644
+--- a/Documentation/diff-options.txt
++++ b/Documentation/diff-options.txt
+@@ -137,7 +137,7 @@ endif::git-format-patch[]
+ --diff-filter=[ACDMRTUXB*]::
+ 	Select only files that are Added (`A`), Copied (`C`),
+ 	Deleted (`D`), Modified (`M`), Renamed (`R`), have their
+-	type (mode) changed (`T`), are Unmerged (`U`), are
++	type (symlink/regular file) changed (`T`), are Unmerged (`U`), are
+ 	Unknown (`X`), or have had their pairing Broken (`B`).
+ 	Any combination of the filter characters may be used.
+ 	When `*` (All-or-none) is added to the combination, all
 -- 
-Catalin
+1.6.0.2.514.g23abd3
