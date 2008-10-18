@@ -1,75 +1,84 @@
-From: Paolo Bonzini <bonzini@gnu.org>
-Subject: Re: What is the pre-merge hook status?
-Date: Sat, 18 Oct 2008 23:57:15 +0200
-Message-ID: <48FA5BBB.8060406@gnu.org>
-References: <c6c947f60810172342n6843b173tb0019d0af706800d@mail.gmail.com>
+From: "Alex Bennee" <kernel-hacker@bennee.com>
+Subject: Re: git-svn crashing perl
+Date: Sat, 18 Oct 2008 23:00:41 +0100
+Message-ID: <b2cdc9f30810181500u357ce6e2tb8bef4fd559e89d3@mail.gmail.com>
+References: <b2cdc9f30810180642n22b800ddg244555bf788a83bc@mail.gmail.com>
+	 <394ab6ec0810180905t5faca9cbnc7b73267a72deddc@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org
-To: Alexander Gladysh <agladysh@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Oct 18 23:58:35 2008
+To: "Heinrich Nirschl" <heinrich.nirschl@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Oct 19 00:01:56 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KrJog-0002Ji-2G
-	for gcvg-git-2@gmane.org; Sat, 18 Oct 2008 23:58:34 +0200
+	id 1KrJrv-00039u-Ow
+	for gcvg-git-2@gmane.org; Sun, 19 Oct 2008 00:01:56 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750954AbYJRV5U (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 18 Oct 2008 17:57:20 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750938AbYJRV5U
-	(ORCPT <rfc822;git-outgoing>); Sat, 18 Oct 2008 17:57:20 -0400
-Received: from mail-gx0-f29.google.com ([209.85.217.29]:40606 "EHLO
-	mail-gx0-f29.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750928AbYJRV5T (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 18 Oct 2008 17:57:19 -0400
-Received: by gxk10 with SMTP id 10so491954gxk.13
-        for <git@vger.kernel.org>; Sat, 18 Oct 2008 14:57:18 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from
-         :user-agent:mime-version:to:cc:subject:references:in-reply-to
-         :x-enigmail-version:content-type:content-transfer-encoding:sender;
-        bh=v+f6chP4OPZiWCkZdqSqxeWNjt3UCvz59R/ijhp89Kg=;
-        b=xBSeQbsrHCIbsBx3SvbacWTyhfAPozTlGDZDLxBxi/EZuiRhagRN0Na8Vt4kJHYq3q
-         oNlv6cWysOoErCv3R0gyIvGoHVFtVbgnvtz8NaO9dfujfUVutEmz3YFBdo2jXvQZ/wZf
-         A4w9UzvAcXnUQHan7VGKpuYpAoyEfKjqpXz+Q=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:user-agent:mime-version:to:cc:subject
-         :references:in-reply-to:x-enigmail-version:content-type
-         :content-transfer-encoding:sender;
-        b=LSeN+6OPR84XpJU0U0hoSQwXA0FCbv0M3N+RwNTssrMJpkh7R7wN/QnqZ4gVVAys0o
-         qKE0BIn+WZAQWpzAyf7I4bgRs47RRynmnghjdyiYM73l6KPP2b1TUbqMdfiC0IqIGXRg
-         jYtdtPPAwMUXHXiu2Fn08Udi8yQgWY6i+M4YI=
-Received: by 10.214.9.8 with SMTP id 8mr7762855qai.51.1224367038227;
-        Sat, 18 Oct 2008 14:57:18 -0700 (PDT)
-Received: from 187.0.71.10.in-addr.arpa (70.43.3.242.nw.nuvox.net [70.43.3.242])
-        by mx.google.com with ESMTPS id 33sm5950645yxr.3.2008.10.18.14.57.15
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Sat, 18 Oct 2008 14:57:16 -0700 (PDT)
-User-Agent: Thunderbird 2.0.0.17 (Macintosh/20080914)
-In-Reply-To: <c6c947f60810172342n6843b173tb0019d0af706800d@mail.gmail.com>
-X-Enigmail-Version: 0.95.7
+	id S1751040AbYJRWAo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 18 Oct 2008 18:00:44 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751014AbYJRWAo
+	(ORCPT <rfc822;git-outgoing>); Sat, 18 Oct 2008 18:00:44 -0400
+Received: from mail-gx0-f16.google.com ([209.85.217.16]:42377 "EHLO
+	mail-gx0-f16.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751006AbYJRWAn (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 18 Oct 2008 18:00:43 -0400
+Received: by gxk9 with SMTP id 9so2442893gxk.13
+        for <git@vger.kernel.org>; Sat, 18 Oct 2008 15:00:42 -0700 (PDT)
+Received: by 10.90.69.15 with SMTP id r15mr6021738aga.64.1224367241396;
+        Sat, 18 Oct 2008 15:00:41 -0700 (PDT)
+Received: by 10.90.105.11 with HTTP; Sat, 18 Oct 2008 15:00:41 -0700 (PDT)
+In-Reply-To: <394ab6ec0810180905t5faca9cbnc7b73267a72deddc@mail.gmail.com>
+Content-Disposition: inline
+X-Google-Sender-Auth: 05efb360cd0c7002
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/98575>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/98576>
 
-Alexander Gladysh wrote:
-> Hi, Paolo!
-> 
-> What is the status of your pre-merge hook patch?
-> 
-> http://article.gmane.org/gmane.comp.version-control.git/93888
-> 
-> I think it can help me greatly with my repository management process.
+On Sat, Oct 18, 2008 at 5:05 PM, Heinrich Nirschl
+<heinrich.nirschl@gmail.com> wrote:
+> On Sat, Oct 18, 2008 at 3:42 PM, Alex Bennee <kernel-hacker@bennee.com> wrote:
+>> Hi,
+>>
+>> Doing a git-sv fetch --fetch-all is generating a SEGV in perl while I
+>> try and update my repo. Although I can look at the backtrace in perl
+>> it doesn't really tell me much. Any tips on how I can get more info?
+>>
+>
+> This seems to be a problem of the subversion perl bindings. See for example:
+> http://subversion.tigris.org/issues/show_bug.cgi?id=3007
+>
 
-I decided that it was a bad design for me at least, because the control
-had better be implemented on the server (using an update hook).  But I
-can submit it if you need it for something.
+Looks similar. libapr certainly seems to be breaking something:
 
-Paolo
+
+Core was generated by `/usr/bin/perl
+/home/alex/src/git.git/install/libexec/git-core/git-svn fetch --f'.
+Program terminated with signal 11, Segmentation fault.
+#0  0x00007fd0d813c370 in ?? ()
+(gdb) bt
+#0  0x00007fd0d813c370 in ?? ()
+#1  0x00007fd0d9a52a5d in ?? () from /usr/lib/libapr-1.so.0
+#2  0x00007fd0d9a53d9a in ?? () from /usr/lib/libapr-1.so.0
+#3  0x00007fd0d9a54003 in ?? () from /usr/lib/libapr-1.so.0
+#4  0x00007fd0d9a53d88 in ?? () from /usr/lib/libapr-1.so.0
+#5  0x00007fd0d9a54003 in ?? () from /usr/lib/libapr-1.so.0
+#6  0x00007fd0d9a540f3 in apr_pool_terminate () from /usr/lib/libapr-1.so.0
+#7  0x00007fd0db1c6e83 in _wrap_apr_terminate () from
+/usr/lib64/perl5/vendor_perl/5.8.8/x86_64-linux/auto/SVN/_Core/_Core.so
+#8  0x000000000047dbab in Perl_pp_entersub ()
+#9  0x00000000004677fa in Perl_runops_debug ()
+#10 0x0000000000425ae8 in Perl_call_sv ()
+#11 0x0000000000425faa in Perl_call_list ()
+#12 0x000000000042a0e8 in perl_destruct ()
+#13 0x0000000000422238 in main ()
+
+
+
+-- 
+Alex, homepage: http://www.bennee.com/~alex/
