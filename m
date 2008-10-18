@@ -1,76 +1,64 @@
-From: Abhijit Bhopatkar <bain@devslashzero.com>
-Subject: [PATCH] Documentation: Better explain git-commit --author implications
-Date: Sat, 18 Oct 2008 09:05:16 +0530
-Message-ID: <48F95974.3010503@devslashzero.com>
+From: Christian Jaeger <christian@pflanze.mine.nu>
+Subject: Re: Excluding files from git-diff
+Date: Sat, 18 Oct 2008 05:50:33 +0200
+Message-ID: <48F95D09.9070704@pflanze.mine.nu>
+References: <20081017145313.GA23471@eriks> <48F8ACC2.1010903@drmicha.warpmail.net> <48F8BDA7.50901@pflanze.mine.nu> <loom.20081017T173145-53@post.gmane.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain; charset=us-ascii; format=flowed
 Content-Transfer-Encoding: 7bit
-Cc: gitster@pobox.com
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Oct 18 05:41:42 2008
+Cc: git@vger.kernel.org
+To: Eric Raible <raible@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Oct 18 05:52:04 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Kr2hA-0008KV-KK
-	for gcvg-git-2@gmane.org; Sat, 18 Oct 2008 05:41:41 +0200
+	id 1Kr2rD-0001ch-QR
+	for gcvg-git-2@gmane.org; Sat, 18 Oct 2008 05:52:04 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751906AbYJRDf1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 17 Oct 2008 23:35:27 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751786AbYJRDf1
-	(ORCPT <rfc822;git-outgoing>); Fri, 17 Oct 2008 23:35:27 -0400
-Received: from ti-out-0910.google.com ([209.85.142.187]:41213 "EHLO
-	ti-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751189AbYJRDf0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 17 Oct 2008 23:35:26 -0400
-Received: by ti-out-0910.google.com with SMTP id b6so400718tic.23
-        for <git@vger.kernel.org>; Fri, 17 Oct 2008 20:35:23 -0700 (PDT)
-Received: by 10.110.37.3 with SMTP id k3mr3517170tik.13.1224300923735;
-        Fri, 17 Oct 2008 20:35:23 -0700 (PDT)
-Received: from ?192.168.1.204? ([59.95.12.5])
-        by mx.google.com with ESMTPS id d4sm6240505tib.1.2008.10.17.20.35.20
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Fri, 17 Oct 2008 20:35:22 -0700 (PDT)
-User-Agent: Thunderbird 2.0.0.17 (X11/20080914)
-X-Enigmail-Version: 0.95.6
+	id S1751440AbYJRDui (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 17 Oct 2008 23:50:38 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751189AbYJRDuh
+	(ORCPT <rfc822;git-outgoing>); Fri, 17 Oct 2008 23:50:37 -0400
+Received: from ethlife-a.ethz.ch ([129.132.49.178]:57826 "HELO ethlife.ethz.ch"
+	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with SMTP
+	id S1751183AbYJRDuh (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 17 Oct 2008 23:50:37 -0400
+Received: (qmail 25949 invoked from network); 18 Oct 2008 03:50:35 -0000
+Received: from unknown (HELO elvis-jaeger.mine.nu) (127.0.0.1)
+  by localhost with SMTP; 18 Oct 2008 03:50:35 -0000
+Received: (qmail 18180 invoked from network); 18 Oct 2008 03:50:33 -0000
+Received: from unknown (HELO ?127.0.0.1?) (10.0.5.1)
+  by elvis-jaeger.mine.nu with SMTP; 18 Oct 2008 03:50:33 -0000
+User-Agent: Mozilla-Thunderbird 2.0.0.16 (X11/20080724)
+In-Reply-To: <loom.20081017T173145-53@post.gmane.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/98519>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/98520>
 
-'--author' changes the author name and email, but the
-documentation was not clear that it will not affect the
-'--signoff' option which will still use the user's name and
-email from the git settings.
+Eric Raible wrote:
+> Christian Jaeger <christian <at> pflanze.mine.nu> writes:
+>
+>   
+>> Michael J Gruber wrote:
+>>     
+>>> Or put it
+>>> in .git/info/excludes.
+>>>       
+>> Only "git ls-files --others --exclude-from=.git/info/exclude" will exclude
+>>     
+>
+> Could it be a simple as "excludes" vs "exclude"?
+>   
 
-Signed-off-by: Abhijit Bhopatkar <bain@devslashzero.com>
----
- Documentation/git-commit.txt |    4 +++-
- 1 files changed, 3 insertions(+), 1 deletions(-)
+Nope.
 
-diff --git a/Documentation/git-commit.txt b/Documentation/git-commit.txt
-index eb05b0f..17b69fa 100644
---- a/Documentation/git-commit.txt
-+++ b/Documentation/git-commit.txt
-@@ -78,7 +78,8 @@ OPTIONS
- 	Override the author name used in the commit.  You can use the
- 	standard `A U Thor <author@example.com>` format.  Otherwise,
- 	an existing commit that matches the given string and its author
--	name is used.
-+	name is used. This has no effect on singoff line which will
-+	still use commiter name and email .
+ln -s exclude .git/info/excludes
+git ls-files # still shows files matching the excludes
+git ls-files --exclude-from=.git/info/exclude # does not show
+git ls-files --exclude-from=.git/info/excludes # does not show
 
- -m <msg>::
- --message=<msg>::
-@@ -95,6 +96,7 @@ OPTIONS
- -s::
- --signoff::
- 	Add Signed-off-by line at the end of the commit message.
-+	'--author' option has no effect on this line.
-
- -n::
- --no-verify::
--- 
-1.5.6.3
+Christian.
