@@ -1,54 +1,65 @@
-From: Paul Mackerras <paulus@samba.org>
-Subject: Re: [Gitk Patch 0/6]
-Date: Sat, 18 Oct 2008 23:11:22 +1100
-Message-ID: <18681.53866.855255.688290@cargo.ozlabs.ibm.com>
-References: <1223532590-8706-1-git-send-email-robin.rosenberg@dewire.com>
+From: "Tuncer Ayaz" <tuncer.ayaz@gmail.com>
+Subject: Re: [Q] submitting patches from gmail
+Date: Sat, 18 Oct 2008 14:16:43 +0200
+Message-ID: <4ac8254d0810180516h56633ed3q8377ddbbbf316bab@mail.gmail.com>
+References: <ee2a733e0810180508m466f3ea1i9c63b47177f6e12d@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org
-To: Robin Rosenberg <robin.rosenberg@dewire.com>
-X-From: git-owner@vger.kernel.org Sat Oct 18 14:19:01 2008
+To: SLONIK.AZ@gmail.com
+X-From: git-owner@vger.kernel.org Sat Oct 18 14:19:02 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KrAlo-0002qt-60
-	for gcvg-git-2@gmane.org; Sat, 18 Oct 2008 14:19:00 +0200
+	id 1KrAlo-0002qt-Up
+	for gcvg-git-2@gmane.org; Sat, 18 Oct 2008 14:19:01 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751503AbYJRMQ2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 18 Oct 2008 08:16:28 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751496AbYJRMQ2
-	(ORCPT <rfc822;git-outgoing>); Sat, 18 Oct 2008 08:16:28 -0400
-Received: from ozlabs.org ([203.10.76.45]:57823 "EHLO ozlabs.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751466AbYJRMQ1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 18 Oct 2008 08:16:27 -0400
-Received: by ozlabs.org (Postfix, from userid 1003)
-	id 23309DDDF0; Sat, 18 Oct 2008 23:16:26 +1100 (EST)
-In-Reply-To: <1223532590-8706-1-git-send-email-robin.rosenberg@dewire.com>
-X-Mailer: VM 8.0.9 under Emacs 22.2.1 (i486-pc-linux-gnu)
+	id S1751533AbYJRMQq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 18 Oct 2008 08:16:46 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751517AbYJRMQq
+	(ORCPT <rfc822;git-outgoing>); Sat, 18 Oct 2008 08:16:46 -0400
+Received: from hs-out-0708.google.com ([64.233.178.243]:20559 "EHLO
+	hs-out-0708.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751496AbYJRMQp (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 18 Oct 2008 08:16:45 -0400
+Received: by hs-out-0708.google.com with SMTP id 4so374747hsl.5
+        for <git@vger.kernel.org>; Sat, 18 Oct 2008 05:16:44 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to
+         :subject:cc:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:references;
+        bh=Mti1BpI2Ph5Uc5XiRkC23IAhBX7qdjsiw/5YDiJ64PI=;
+        b=sUCJ0yThysxqQjLXrZZ4WBI9KpCpnbCMau2YwiwKGfPz9doGRnyefYrdTXVodmowYv
+         ykn1a9L3qkCVniMMlW4gOB15sQ0ackkV85jxgU26RVKhJx/4ZJwgJHvyaVjcGbE+NO5c
+         uJqckYPhpeYOOZeuEHCBdujnRDpcWRourUo80=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
+         :content-type:content-transfer-encoding:content-disposition
+         :references;
+        b=cicf1R8z4zBGfY7oxvb0ZoSBdmmEHUrM44c6+XFaUEf+i1WfzuEj76Rfc2xOXp1rTX
+         suXXFRcUd4YOhKrU6pl0QXxY2fSMjQ+/Te80mNZ25QOkxX3/c9lSDnDZ06ulyXBp5C9e
+         WIfPEbDdrK5Z+hJ+B3ZCSsvYGXwYby+hM8p3I=
+Received: by 10.65.197.16 with SMTP id z16mr2345156qbp.97.1224332203977;
+        Sat, 18 Oct 2008 05:16:43 -0700 (PDT)
+Received: by 10.65.114.10 with HTTP; Sat, 18 Oct 2008 05:16:43 -0700 (PDT)
+In-Reply-To: <ee2a733e0810180508m466f3ea1i9c63b47177f6e12d@mail.gmail.com>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/98541>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/98542>
 
-Robin Rosenberg writes:
+On Sat, Oct 18, 2008 at 2:08 PM, Leo Razoumov <slonik.az@gmail.com> wrote:
+> Hi Everyone,
+> I wonder what is the preferred way to submit patches from a gmail account.
+> Google mail auto wraps long lines and there is no way to change this setting.
+> Safe way would be to use attachments. Are they allowed on git mailing list?
 
-> I finally got tired of pressing Alt and some letter to activate menus in Gitk. 
-> For example in "any" program you can press Alt-F to have the File menu drop 
-> down and then select the underscored character to select the wanted menu.
-> 
-> This series makes it possible. Friends of TCL may think my solution is too
-> hack-ish. It doesn't fix all of the similary problem (mostly button) but 
-> that is the subject of later patches as it looks like it requires other
-> means.
-
-Have a look at what I just pushed out.  It adds infrastructure to let
-us use "&" in menu items to specify an alt+letter accelerator, but in
-a different way to your patches.  If you'd like to redo your patch to
-add "&" to the menu items, that would be good.
-
-Paul.
+I do use git send-mail with msmtp as the SMTP client and smtp.gmail.com as
+the host. If you are able to go that route it would solve your problem.
