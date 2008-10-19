@@ -1,79 +1,212 @@
-From: Nanako Shiraishi <nanako3@lavabit.com>
-Subject: Re: [PATCH] Documentation: diff-filter=T only tests for symlink changes
-Date: Sun, 19 Oct 2008 10:04:54 +0900
-Message-ID: <20081019100454.6117@nanako3.lavabit.com>
-References: <87vdvq5lu4.fsf_-_@cup.kalibalik.dk>
+From: Matt McCutchen <matt@mattmccutchen.net>
+Subject: [PATCH] config.txt: alphabetize configuration variable groups
+Date: Sat, 18 Oct 2008 21:42:31 -0400
+Message-ID: <1224380551.19061.22.camel@mattlaptop2.local>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Cc: Anders Melchiorsen <mail@cup.kalibalik.dk>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sun Oct 19 03:06:44 2008
+Content-Type: text/plain
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Oct 19 03:50:19 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KrMkk-0007ab-Cm
-	for gcvg-git-2@gmane.org; Sun, 19 Oct 2008 03:06:42 +0200
+	id 1KrNQr-00058j-2U
+	for gcvg-git-2@gmane.org; Sun, 19 Oct 2008 03:50:13 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751993AbYJSBFZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 18 Oct 2008 21:05:25 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752055AbYJSBFZ
-	(ORCPT <rfc822;git-outgoing>); Sat, 18 Oct 2008 21:05:25 -0400
-Received: from karen.lavabit.com ([72.249.41.33]:56553 "EHLO karen.lavabit.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751981AbYJSBFY (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 18 Oct 2008 21:05:24 -0400
-Received: from b.earth.lavabit.com (b.earth.lavabit.com [192.168.111.11])
-	by karen.lavabit.com (Postfix) with ESMTP id 34077C7B61;
-	Sat, 18 Oct 2008 20:05:24 -0500 (CDT)
-Received: from 9977.lavabit.com (212.62.97.21)
-	by lavabit.com with ESMTP id 4AVMUV5Y015R; Sat, 18 Oct 2008 20:05:24 -0500
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws; s=lavabit; d=lavabit.com;
-  b=WEo+esUikubQE33XdO4zBqgDMeMk2JkPP0TkTrlrC5B3asJcQJi+2wXcyDRsipwtPyOgFuxoz1Ts4cUpR1WZS0L03TYzz7qzMbQA0BpaikJGQ4qb3ABbBWTZE4PmQa6KYyce0nBFBHlndGdar/9gq4EWD2fbrBi0B5BcoZ8QAaY=;
-  h=From:To:Cc:Date:Subject:In-reply-to:MIME-Version:Content-Type:Content-Transfer-Encoding:Message-Id;
-In-reply-to: <87vdvq5lu4.fsf_-_@cup.kalibalik.dk>
+	id S1752059AbYJSBmf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 18 Oct 2008 21:42:35 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752055AbYJSBmf
+	(ORCPT <rfc822;git-outgoing>); Sat, 18 Oct 2008 21:42:35 -0400
+Received: from sd-green-bigip-207.dreamhost.com ([208.97.132.207]:54782 "EHLO
+	jankymail-a1.g.dreamhost.com" rhost-flags-OK-OK-OK-FAIL)
+	by vger.kernel.org with ESMTP id S1752024AbYJSBme (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 18 Oct 2008 21:42:34 -0400
+Received: from [129.2.207.232] (ml2.student.umd.edu [129.2.207.232])
+	by jankymail-a1.g.dreamhost.com (Postfix) with ESMTP id 3C287985E0;
+	Sat, 18 Oct 2008 18:42:33 -0700 (PDT)
+X-Mailer: Evolution 2.22.3.1 (2.22.3.1-1.fc9) 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/98587>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/98588>
 
-Quoting Junio C Hamano <gitster@pobox.com>:
->
-> Nanako Shiraishi <nanako3@lavabit.com> writes:
->
->> Quoting Anders Melchiorsen <mail@cup.kalibalik.dk>:
->>
->>> diff --git a/Documentation/diff-options.txt b/Documentation/diff-options.txt
->>> index 7788d4f..7604a13 100644
->>> --- a/Documentation/diff-options.txt
->>> +++ b/Documentation/diff-options.txt
->>> @@ -137,7 +137,7 @@ endif::git-format-patch[]
->>>  --diff-filter=[ACDMRTUXB*]::
->>>  	Select only files that are Added (`A`), Copied (`C`),
->>>  	Deleted (`D`), Modified (`M`), Renamed (`R`), have their
->>> -	type (mode) changed (`T`), are Unmerged (`U`), are
->>> +	type (symlink/regular file) changed (`T`), are Unmerged (`U`), are
->>>  	Unknown (`X`), or have had their pairing Broken (`B`).
->>>  	Any combination of the filter characters may be used.
->>>  	When `*` (All-or-none) is added to the combination, all
->>> -- 
->>> 1.6.0.2.514.g23abd3
->>
->> Are symlinks and regular files the only kind of object you can see in
->> diff? What happens when a file or directory changes to a submodule?
->
-> Oops.  I've already applied Anders's patch, but you are right.  A change
-> from a blob to submodule also shows up as a typechange event.
->
-> Perhaps we should just remove the parenthesised comment from there
-> instead.  I'll rewind and rebuild, as I haven't pushed the results out
-> yet (lucky me).
+Signed-off-by: Matt McCutchen <matt@mattmccutchen.net>
+---
+ Documentation/config.txt |   96 +++++++++++++++++++++++-----------------------
+ 1 files changed, 48 insertions(+), 48 deletions(-)
 
-I see that you pushed out this change already, and you changed your mind and described them all.  I think the result reads better.
-
+diff --git a/Documentation/config.txt b/Documentation/config.txt
+index da18a54..704d1bb 100644
+--- a/Documentation/config.txt
++++ b/Documentation/config.txt
+@@ -570,9 +570,6 @@ color.status.<slot>::
+ 	to red). The values of these variables may be specified as in
+ 	color.branch.<slot>.
+ 
+-commit.template::
+-	Specify a file to use as the template for new commit messages.
+-
+ color.ui::
+ 	When set to `always`, always use colors in all git commands which
+ 	are capable of colored output. When false (or `never`), never. When
+@@ -580,6 +577,9 @@ color.ui::
+ 	terminal. When more specific variables of color.* are set, they always
+ 	take precedence over this setting. Defaults to false.
+ 
++commit.template::
++	Specify a file to use as the template for new commit messages.
++
+ diff.autorefreshindex::
+ 	When using 'git-diff' to compare with work tree
+ 	files, do not consider stat-only change as changed.
+@@ -711,18 +711,6 @@ gc.rerereunresolved::
+ 	kept for this many days when 'git-rerere gc' is run.
+ 	The default is 15 days.  See linkgit:git-rerere[1].
+ 
+-rerere.autoupdate::
+-	When set to true, `git-rerere` updates the index with the
+-	resulting contents after it cleanly resolves conflicts using
+-	previously recorded resolution.  Defaults to false.
+-
+-rerere.enabled::
+-	Activate recording of resolved conflicts, so that identical
+-	conflict hunks can be resolved automatically, should they
+-	be encountered again.  linkgit:git-rerere[1] command is by
+-	default enabled if you create `rr-cache` directory under
+-	`$GIT_DIR`, but can be disabled by setting this option to false.
+-
+ gitcvs.enabled::
+ 	Whether the CVS server interface is enabled for this repository.
+ 	See linkgit:git-cvsserver[1].
+@@ -890,6 +878,10 @@ i18n.logOutputEncoding::
+ 	Character encoding the commit messages are converted to when
+ 	running 'git-log' and friends.
+ 
++imap::
++	The configuration variables in the 'imap' section are described
++	in linkgit:git-imap-send[1].
++
+ instaweb.browser::
+ 	Specify the program that will be used to browse your working
+ 	repository in gitweb. See linkgit:git-instaweb[1].
+@@ -925,8 +917,6 @@ man.viewer::
+ 	Specify the programs that may be used to display help in the
+ 	'man' format. See linkgit:git-help[1].
+ 
+-include::merge-config.txt[]
+-
+ man.<tool>.cmd::
+ 	Specify the command to invoke the specified man viewer. The
+ 	specified command is evaluated in shell with the man page
+@@ -936,6 +926,8 @@ man.<tool>.path::
+ 	Override the path for the given tool that may be used to
+ 	display help in the 'man' format. See linkgit:git-help[1].
+ 
++include::merge-config.txt[]
++
+ merge.conflictstyle::
+ 	Specify the style in which conflicted hunks are written out to
+ 	working tree files upon merge.  The default is "merge", which
+@@ -1052,6 +1044,28 @@ pull.octopus::
+ pull.twohead::
+ 	The default merge strategy to use when pulling a single branch.
+ 
++receive.fsckObjects::
++	If it is set to true, git-receive-pack will check all received
++	objects. It will abort in the case of a malformed object or a
++	broken link. The result of an abort are only dangling objects.
++	Defaults to false.
++
++receive.unpackLimit::
++	If the number of objects received in a push is below this
++	limit then the objects will be unpacked into loose object
++	files. However if the number of received objects equals or
++	exceeds this limit then the received pack will be stored as
++	a pack, after adding any missing delta bases.  Storing the
++	pack from a push can make the push operation complete faster,
++	especially on slow filesystems.  If not set, the value of
++	`transfer.unpackLimit` is used instead.
++
++receive.denyNonFastForwards::
++	If set to true, git-receive-pack will deny a ref update which is
++	not a fast forward. Use this to prevent such an update via a push,
++	even if that push is forced. This configuration variable is
++	set when initializing a shared repository.
++
+ remote.<name>.url::
+ 	The URL of a remote repository.  See linkgit:git-fetch[1] or
+ 	linkgit:git-push[1].
+@@ -1101,6 +1115,18 @@ repack.usedeltabaseoffset::
+ 	"false" and repack. Access from old git versions over the
+ 	native protocol are unaffected by this option.
+ 
++rerere.autoupdate::
++	When set to true, `git-rerere` updates the index with the
++	resulting contents after it cleanly resolves conflicts using
++	previously recorded resolution.  Defaults to false.
++
++rerere.enabled::
++	Activate recording of resolved conflicts, so that identical
++	conflict hunks can be resolved automatically, should they
++	be encountered again.  linkgit:git-rerere[1] command is by
++	default enabled if you create `rr-cache` directory under
++	`$GIT_DIR`, but can be disabled by setting this option to false.
++
+ showbranch.default::
+ 	The default set of branches for linkgit:git-show-branch[1].
+ 	See linkgit:git-show-branch[1].
+@@ -1137,6 +1163,11 @@ tar.umask::
+ 	archiving user's umask will be used instead.  See umask(2) and
+ 	linkgit:git-archive[1].
+ 
++transfer.unpackLimit::
++	When `fetch.unpackLimit` or `receive.unpackLimit` are
++	not set, the value of this variable is used instead.
++	The default value is 100.
++
+ url.<base>.insteadOf::
+ 	Any URL that starts with this value will be rewritten to
+ 	start, instead, with <base>. In cases where some site serves a
+@@ -1165,37 +1196,6 @@ user.signingkey::
+ 	unchanged to gpg's --local-user parameter, so you may specify a key
+ 	using any method that gpg supports.
+ 
+-imap::
+-	The configuration variables in the 'imap' section are described
+-	in linkgit:git-imap-send[1].
+-
+-receive.fsckObjects::
+-	If it is set to true, git-receive-pack will check all received
+-	objects. It will abort in the case of a malformed object or a
+-	broken link. The result of an abort are only dangling objects.
+-	Defaults to false.
+-
+-receive.unpackLimit::
+-	If the number of objects received in a push is below this
+-	limit then the objects will be unpacked into loose object
+-	files. However if the number of received objects equals or
+-	exceeds this limit then the received pack will be stored as
+-	a pack, after adding any missing delta bases.  Storing the
+-	pack from a push can make the push operation complete faster,
+-	especially on slow filesystems.  If not set, the value of
+-	`transfer.unpackLimit` is used instead.
+-
+-receive.denyNonFastForwards::
+-	If set to true, git-receive-pack will deny a ref update which is
+-	not a fast forward. Use this to prevent such an update via a push,
+-	even if that push is forced. This configuration variable is
+-	set when initializing a shared repository.
+-
+-transfer.unpackLimit::
+-	When `fetch.unpackLimit` or `receive.unpackLimit` are
+-	not set, the value of this variable is used instead.
+-	The default value is 100.
+-
+ web.browser::
+ 	Specify a web browser that may be used by some commands.
+ 	Currently only linkgit:git-instaweb[1] and linkgit:git-help[1]
 -- 
-Nanako Shiraishi
-http://ivory.ap.teacup.com/nanako3/
+1.6.0.2.545.g6cb4a
