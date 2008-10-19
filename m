@@ -1,323 +1,229 @@
-From: Tuncer Ayaz <tuncer.ayaz@gmail.com>
-Subject: [PATCH] Teach/Fix -q/-v to pull/fetch
-Date: Sun, 19 Oct 2008 20:17:57 +0200
-Message-ID: <1224440277-2469-1-git-send-email-tuncer.ayaz@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Oct 20 13:05:55 2008
+From: =?ISO-8859-15?Q?Ren=E9_Scharfe?= <rene.scharfe@lsrfire.ath.cx>
+Subject: [PATCH, RFC] diff: add option to show context between close chunks
+Date: Sun, 19 Oct 2008 19:59:23 +0200
+Message-ID: <48FB757B.9030105@lsrfire.ath.cx>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-15
+Content-Transfer-Encoding: 7bit
+Cc: Davide Libenzi <davidel@xmailserver.org>
+To: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Mon Oct 20 13:13:21 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KrcsD-0005DD-2n
-	for gcvg-git-2@gmane.org; Sun, 19 Oct 2008 20:19:29 +0200
+	id 1KrcaD-0004do-Er
+	for gcvg-git-2@gmane.org; Sun, 19 Oct 2008 20:00:53 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751669AbYJSSSA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 19 Oct 2008 14:18:00 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751671AbYJSSSA
-	(ORCPT <rfc822;git-outgoing>); Sun, 19 Oct 2008 14:18:00 -0400
-Received: from fk-out-0910.google.com ([209.85.128.190]:14462 "EHLO
-	fk-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751590AbYJSSR6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 19 Oct 2008 14:17:58 -0400
-Received: by fk-out-0910.google.com with SMTP id 18so1569996fkq.5
-        for <git@vger.kernel.org>; Sun, 19 Oct 2008 11:17:56 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:subject:date
-         :message-id:x-mailer;
-        bh=B+JZg5B32IUW6XYa+BlWj8vWxmXAEIV89u68f3whXRc=;
-        b=NawRFRF5Pl2ugU0YBMFBJNbxhcM+1mAyjiOMV18PwPiijklJHpymEaK2B5FzA8Y4Ne
-         rYO6YhpIFA9u6TnfKSLDMp1lijlRTmLL+sGf/oceEK7eIlLYCsi1NffuI24qDu+yjY0o
-         H3B1sqqQ7J7oH5hRqUyAJmGa44aeS/RTeofGs=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=from:to:subject:date:message-id:x-mailer;
-        b=hiQOw/VB42gXk9D2J/HXXXgtl9PIfzEU5e3cmzPY5AmrQmc6nDE93Uktc2+ciUhI30
-         qhcnNdB4k0fs2wdlxkVUN3001ooPx+3XvcTmCKRD2vWZllnL5GlcIhstEi4nNixTH28P
-         US+4E5dkrAnk6DFG7+WxYIGvRQM4BzEpzlpZs=
-Received: by 10.181.49.15 with SMTP id b15mr623547bkk.213.1224440276612;
-        Sun, 19 Oct 2008 11:17:56 -0700 (PDT)
-Received: from localhost (achn-4db49d68.pool.einsundeins.de [77.180.157.104])
-        by mx.google.com with ESMTPS id 12sm13196599fks.9.2008.10.19.11.17.54
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Sun, 19 Oct 2008 11:17:55 -0700 (PDT)
-X-Mailer: git-send-email 1.6.0.2.GIT
+	id S1751592AbYJSR7d (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 19 Oct 2008 13:59:33 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751590AbYJSR7d
+	(ORCPT <rfc822;git-outgoing>); Sun, 19 Oct 2008 13:59:33 -0400
+Received: from india601.server4you.de ([85.25.151.105]:57706 "EHLO
+	india601.server4you.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751572AbYJSR7c (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 19 Oct 2008 13:59:32 -0400
+Received: from [10.0.1.101] (p57B7FE55.dip.t-dialin.net [87.183.254.85])
+	by india601.server4you.de (Postfix) with ESMTPSA id A25A32F8057;
+	Sun, 19 Oct 2008 19:59:30 +0200 (CEST)
+User-Agent: Thunderbird 2.0.0.17 (Windows/20080914)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/98653>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/98654>
 
-After fixing clone -q I noticed that pull -q does not do what
-it's supposed to do and implemented --quiet/--verbose by
-adding it to builtin-merge and fixing two places in builtin-fetch.
+This patch adds a new diff option, --inter-chunk-context.  It can be
+used to show the context in gaps between chunks, thereby creating a
+big chunk out of two close chunks, in order to have an unbroken
+context, making reviews easier.
 
-I have not touched/adjusted contrib/completion/git-completion.bash
-but can take a look if wanted. I think it already needs one or two
-adjustments caused by recent --OPTIONS changes in master.
+With --inter-chunk-context=1, patches have the same number of lines
+as without the option, as only the chunk header is replaced by the
+context line it was shadowing.
 
-I've tested the following invocations with the below changes applied:
-$ git pull
-$ git pull -q
-$ git pull -v
+You can use commit b0b44bc7b26c8c4b4221a377ce6ba174b843cb8d in the
+git repo to try out this option; there's a chunk in transport.c
+which is just one line away from the next.  (I found this option
+helpful in reviewing my own patch before sending. :)
 
-This is the next attempt trying to incorporate Junio's
-suggestions and I'm not sure about the following:
-1) having the same option callback function in both modules
-2) my adaption of the following two lines from
-builtin-fetch.c to the new verbosity option:
-    if (verbosity == VERBOSE)
-        transport->verbose = 1;
-    if (verbosity == QUIET)
-        transport->verbose = -1;
-3) my usage of OPTION_CALLBACK. therefore please
-correct me if I did it wrong or my cb fun has an
-obvious defect. it may very well have one :)
+I think it makes sense to make 1, or even 3, the default for this
+option for all commands that create patches intended for human
+consumption.  The patch keeps the default at 0, though.
 
-Signed-off-by: Tuncer Ayaz <tuncer.ayaz@gmail.com>
+There are downsides, of course: values higher than 1 potentially make
+the resulting patch longer.  More context means a higher probability
+of (perhaps unnecessary) merge conflicts.
+
+Comments?
 ---
- Documentation/merge-options.txt |    8 ++++++++
- builtin-fetch.c                 |   35 +++++++++++++++++++++++++----------
- builtin-merge.c                 |   36 +++++++++++++++++++++++++++++-------
- git-pull.sh                     |   10 ++++++++--
- 4 files changed, 70 insertions(+), 19 deletions(-)
+ Documentation/diff-options.txt      |    4 ++
+ diff.c                              |    4 ++
+ diff.h                              |    1 +
+ t/t4030-diff-inter-chunk-context.sh |   75 +++++++++++++++++++++++++++++++++++
+ xdiff/xdiff.h                       |    1 +
+ xdiff/xemit.c                       |    3 +-
+ 6 files changed, 87 insertions(+), 1 deletions(-)
+ create mode 100755 t/t4030-diff-inter-chunk-context.sh
 
-diff --git a/Documentation/merge-options.txt b/Documentation/merge-options.txt
-index 007909a..427cdef 100644
---- a/Documentation/merge-options.txt
-+++ b/Documentation/merge-options.txt
-@@ -1,3 +1,11 @@
-+-q::
-+--quiet::
-+	Operate quietly.
+diff --git a/Documentation/diff-options.txt b/Documentation/diff-options.txt
+index c62b45c..e0c6d8c 100644
+--- a/Documentation/diff-options.txt
++++ b/Documentation/diff-options.txt
+@@ -215,6 +215,10 @@ endif::git-format-patch[]
+ -w::
+ 	Shorthand for "--ignore-all-space".
+ 
++--inter-chunk-context=<lines>::
++	Show the context between diff chunks, up to the specified number
++	of lines, thereby fusing chunks that are close to each other.
 +
-+-v::
-+--verbose::
-+	Be verbose.
+ --exit-code::
+ 	Make the program exit with codes similar to diff(1).
+ 	That is, it exits with 1 if there were differences and
+diff --git a/diff.c b/diff.c
+index 1c6be89..4a3b486 100644
+--- a/diff.c
++++ b/diff.c
+@@ -1594,6 +1594,7 @@ static void builtin_diff(const char *name_a,
+ 		ecbdata.file = o->file;
+ 		xpp.flags = XDF_NEED_MINIMAL | o->xdl_opts;
+ 		xecfg.ctxlen = o->context;
++		xecfg.interchunkctxlen = o->interchunkcontext;
+ 		xecfg.flags = XDL_EMIT_FUNCNAMES;
+ 		if (pe)
+ 			xdiff_set_find_func(&xecfg, pe->pattern, pe->cflags);
+@@ -2677,6 +2678,9 @@ int diff_opt_parse(struct diff_options *options, const char **av, int ac)
+ 		options->b_prefix = arg + 13;
+ 	else if (!strcmp(arg, "--no-prefix"))
+ 		options->a_prefix = options->b_prefix = "";
++	else if (opt_arg(arg, '\0', "inter-chunk-context",
++			 &options->interchunkcontext))
++		;
+ 	else if (!prefixcmp(arg, "--output=")) {
+ 		options->file = fopen(arg + strlen("--output="), "w");
+ 		options->close_file = 1;
+diff --git a/diff.h b/diff.h
+index a49d865..6003024 100644
+--- a/diff.h
++++ b/diff.h
+@@ -77,6 +77,7 @@ struct diff_options {
+ 	const char *a_prefix, *b_prefix;
+ 	unsigned flags;
+ 	int context;
++	int interchunkcontext;
+ 	int break_opt;
+ 	int detect_rename;
+ 	int skip_stat_unmatch;
+diff --git a/t/t4030-diff-inter-chunk-context.sh b/t/t4030-diff-inter-chunk-context.sh
+new file mode 100755
+index 0000000..448f1b9
+--- /dev/null
++++ b/t/t4030-diff-inter-chunk-context.sh
+@@ -0,0 +1,75 @@
++#!/bin/sh
 +
- --stat::
- 	Show a diffstat at the end of the merge. The diffstat is also
- 	controlled by the configuration option merge.stat.
-diff --git a/builtin-fetch.c b/builtin-fetch.c
-index ee93d3a..717e833 100644
---- a/builtin-fetch.c
-+++ b/builtin-fetch.c
-@@ -22,16 +22,31 @@ enum {
- 	TAGS_SET = 2
- };
- 
--static int append, force, keep, update_head_ok, verbose, quiet;
-+static int append, force, keep, update_head_ok;
- static int tags = TAGS_DEFAULT;
- static const char *depth;
- static const char *upload_pack;
- static struct strbuf default_rla = STRBUF_INIT;
- static struct transport *transport;
-+static enum { QUIET, NORMAL, VERBOSE } verbosity = NORMAL;
++test_description='diff chunk merging'
 +
-+static int option_parse_verbosity(const struct option *opt,
-+			  const char *arg, int unset)
-+{
-+	if (!strcmp("quiet", opt->long_name))
-+		verbosity = QUIET;
-+	else if (!strcmp("verbose", opt->long_name))
-+		verbosity = VERBOSE;
-+	return 0;
-+}
- 
- static struct option builtin_fetch_options[] = {
--	OPT__QUIET(&quiet),
--	OPT__VERBOSE(&verbose),
-+	{ OPTION_CALLBACK, 'q', "quiet", NULL, NULL,
-+		"operate quietly",
-+		PARSE_OPT_NOARG, option_parse_verbosity },
-+	{ OPTION_CALLBACK, 'v', "verbose", NULL, NULL,
-+		"be verbose",
-+		PARSE_OPT_NOARG, option_parse_verbosity },
- 	OPT_BOOLEAN('a', "append", &append,
- 		    "append to .git/FETCH_HEAD instead of overwriting"),
- 	OPT_STRING(0, "upload-pack", &upload_pack, "PATH",
-@@ -192,7 +207,6 @@ static int s_update_ref(const char *action,
- 
- static int update_local_ref(struct ref *ref,
- 			    const char *remote,
--			    int verbose,
- 			    char *display)
- {
- 	struct commit *current = NULL, *updated;
-@@ -210,7 +224,7 @@ static int update_local_ref(struct ref *ref,
- 		die("object %s not found", sha1_to_hex(ref->new_sha1));
- 
- 	if (!hashcmp(ref->old_sha1, ref->new_sha1)) {
--		if (verbose)
-+		if (verbosity == VERBOSE)
- 			sprintf(display, "= %-*s %-*s -> %s", SUMMARY_WIDTH,
- 				"[up to date]", REFCOL_WIDTH, remote,
- 				pretty_ref);
-@@ -366,18 +380,19 @@ static int store_updated_refs(const char *url, const char *remote_name,
- 			note);
- 
- 		if (ref)
--			rc |= update_local_ref(ref, what, verbose, note);
-+			rc |= update_local_ref(ref, what, note);
- 		else
- 			sprintf(note, "* %-*s %-*s -> FETCH_HEAD",
- 				SUMMARY_WIDTH, *kind ? kind : "branch",
- 				 REFCOL_WIDTH, *what ? what : "HEAD");
- 		if (*note) {
--			if (!shown_url) {
-+			if (verbosity > QUIET && !shown_url) {
- 				fprintf(stderr, "From %.*s\n",
- 						url_len, url);
- 				shown_url = 1;
- 			}
--			fprintf(stderr, " %s\n", note);
-+			if (verbosity > QUIET)
-+				fprintf(stderr, " %s\n", note);
- 		}
- 	}
- 	fclose(fp);
-@@ -622,9 +637,9 @@ int cmd_fetch(int argc, const char **argv, const char *prefix)
- 		remote = remote_get(argv[0]);
- 
- 	transport = transport_get(remote, remote->url[0]);
--	if (verbose >= 2)
-+	if (verbosity == VERBOSE)
- 		transport->verbose = 1;
--	if (quiet)
-+	if (verbosity == QUIET)
- 		transport->verbose = -1;
- 	if (upload_pack)
- 		set_option(TRANS_OPT_UPLOADPACK, upload_pack);
-diff --git a/builtin-merge.c b/builtin-merge.c
-index 5e2b7f1..6966831 100644
---- a/builtin-merge.c
-+++ b/builtin-merge.c
-@@ -50,6 +50,7 @@ static unsigned char head[20], stash[20];
- static struct strategy **use_strategies;
- static size_t use_strategies_nr, use_strategies_alloc;
- static const char *branch;
-+static enum { QUIET, NORMAL, VERBOSE } verbosity = NORMAL;
- 
- static struct strategy all_strategy[] = {
- 	{ "recursive",  DEFAULT_TWOHEAD | NO_TRIVIAL },
-@@ -151,7 +152,23 @@ static int option_parse_n(const struct option *opt,
- 	return 0;
- }
- 
-+static int option_parse_verbosity(const struct option *opt,
-+			  const char *arg, int unset)
-+{
-+	if (!strcmp("quiet", opt->long_name))
-+		verbosity = QUIET;
-+	else if (!strcmp("verbose", opt->long_name))
-+		verbosity = VERBOSE;
-+	return 0;
++. ./test-lib.sh
++
++f() {
++	i=1
++	echo $1
++	while test $i -le $2
++	do
++		echo $i
++		i=$(expr $i + 1)
++	done
++	echo $3
 +}
 +
- static struct option builtin_merge_options[] = {
-+	{ OPTION_CALLBACK, 'q', "quiet", NULL, NULL,
-+		"operate quietly",
-+		PARSE_OPT_NOARG, option_parse_verbosity },
-+	{ OPTION_CALLBACK, 'v', "verbose", NULL, NULL,
-+		"be verbose",
-+		PARSE_OPT_NOARG, option_parse_verbosity },
- 	{ OPTION_CALLBACK, 'n', NULL, NULL, NULL,
- 		"do not show a diffstat at the end of the merge",
- 		PARSE_OPT_NOARG, option_parse_n },
-@@ -249,7 +266,8 @@ static void restore_state(void)
- /* This is called when no merge was necessary. */
- static void finish_up_to_date(const char *msg)
- {
--	printf("%s%s\n", squash ? " (nothing to squash)" : "", msg);
-+	if (verbosity > QUIET)
-+		printf("%s%s\n", squash ? " (nothing to squash)" : "", msg);
- 	drop_save();
- }
++test_expect_success 'setup' '
++	f a 1 b >f1 &&
++	f a 2 b >f2 &&
++	f a 3 b >f3 &&
++	git add f1 f2 f3 &&
++	git commit -q -m. f1 f2 f3 &&
++	f x 1 y >f1 &&
++	f x 2 y >f2 &&
++	f x 3 y >f3
++'
++
++t() {
++	case "$2" in
++	'')	cmd="diff -U$1" ;;
++	*)	cmd="diff -U$1 --inter-chunk-context=$2" ;;
++	esac
++	label="$cmd, $3 common $4"
++
++	test_expect_success "$label: count chunks ($5)" "
++		test $(git $cmd f$3 | grep '^@@ ' | wc -l) = $5
++	"
++
++	expected="expected.$1.$3.$5"
++	test -f $expected &&
++	test_expect_success "$label: check output" "
++		git $cmd f$3 >actual &&
++		test_cmp $expected actual
++	"
++}
++
++cat <<EOF >expected.0.1.1 || exit 1
++diff --git a/f1 b/f1
++index f1e80ce..ae397d0 100644
++--- a/f1
+++++ b/f1
++@@ -1,3 +1,3 @@
++-a
+++x
++ 1
++-b
+++y
++EOF
++
++# ctx	intrctx	common	lines	chunks
++t 0	''	1	line	2
++t 0	0	1	line	2
++t 0	1	1	line	1
++t 0	2	1	line	1
++t 0	''	2	lines	2
++t 0	0	2	lines	2
++t 0	1	2	lines	2
++t 0	2	2	lines	1
++t 1	''	3	lines	2
++t 1	0	3	lines	2
++t 1	1	3	lines	1
++t 1	2	3	lines	1
++
++test_done
+diff --git a/xdiff/xdiff.h b/xdiff/xdiff.h
+index deebe02..d8f14e6 100644
+--- a/xdiff/xdiff.h
++++ b/xdiff/xdiff.h
+@@ -84,6 +84,7 @@ typedef long (*find_func_t)(const char *line, long line_len, char *buffer, long
  
-@@ -330,14 +348,15 @@ static void finish(const unsigned char *new_head, const char *msg)
- 	if (!msg)
- 		strbuf_addstr(&reflog_message, getenv("GIT_REFLOG_ACTION"));
- 	else {
--		printf("%s\n", msg);
-+		if (verbosity > QUIET)
-+			printf("%s\n", msg);
- 		strbuf_addf(&reflog_message, "%s: %s",
- 			getenv("GIT_REFLOG_ACTION"), msg);
- 	}
- 	if (squash) {
- 		squash_message();
- 	} else {
--		if (!merge_msg.len)
-+		if (verbosity > QUIET && !merge_msg.len)
- 			printf("No merge message -- not updating HEAD\n");
- 		else {
- 			const char *argv_gc_auto[] = { "gc", "--auto", NULL };
-@@ -871,6 +890,8 @@ int cmd_merge(int argc, const char **argv, const char *prefix)
+ typedef struct s_xdemitconf {
+ 	long ctxlen;
++	long interchunkctxlen;
+ 	unsigned long flags;
+ 	find_func_t find_func;
+ 	void *find_func_priv;
+diff --git a/xdiff/xemit.c b/xdiff/xemit.c
+index d3d9c84..3bf2581 100644
+--- a/xdiff/xemit.c
++++ b/xdiff/xemit.c
+@@ -60,9 +60,10 @@ static int xdl_emit_record(xdfile_t *xdf, long ri, char const *pre, xdemitcb_t *
+  */
+ static xdchange_t *xdl_get_hunk(xdchange_t *xscr, xdemitconf_t const *xecfg) {
+ 	xdchange_t *xch, *xchp;
++	long max_common = 2 * xecfg->ctxlen + xecfg->interchunkctxlen;
  
- 	argc = parse_options(argc, argv, builtin_merge_options,
- 			builtin_merge_usage, 0);
-+	if (verbosity > QUIET)
-+		show_diffstat = 0;
+ 	for (xchp = xscr, xch = xscr->next; xch; xchp = xch, xch = xch->next)
+-		if (xch->i1 - (xchp->i1 + xchp->chg1) > 2 * xecfg->ctxlen)
++		if (xch->i1 - (xchp->i1 + xchp->chg1) > max_common)
+ 			break;
  
- 	if (squash) {
- 		if (!allow_fast_forward)
-@@ -1012,10 +1033,11 @@ int cmd_merge(int argc, const char **argv, const char *prefix)
- 
- 		strcpy(hex, find_unique_abbrev(head, DEFAULT_ABBREV));
- 
--		printf("Updating %s..%s\n",
--			hex,
--			find_unique_abbrev(remoteheads->item->object.sha1,
--			DEFAULT_ABBREV));
-+		if (verbosity > QUIET)
-+			printf("Updating %s..%s\n",
-+				hex,
-+				find_unique_abbrev(remoteheads->item->object.sha1,
-+				DEFAULT_ABBREV));
- 		strbuf_addstr(&msg, "Fast forward");
- 		if (have_message)
- 			strbuf_addstr(&msg,
-diff --git a/git-pull.sh b/git-pull.sh
-index 75c3610..8e25d44 100755
---- a/git-pull.sh
-+++ b/git-pull.sh
-@@ -16,6 +16,7 @@ cd_to_toplevel
- test -z "$(git ls-files -u)" ||
- 	die "You are in the middle of a conflicted merge."
- 
-+quiet= verbose=
- strategy_args= no_stat= no_commit= squash= no_ff= log_arg=
- curr_branch=$(git symbolic-ref -q HEAD)
- curr_branch_short=$(echo "$curr_branch" | sed "s|refs/heads/||")
-@@ -23,6 +24,10 @@ rebase=$(git config --bool branch.$curr_branch_short.rebase)
- while :
- do
- 	case "$1" in
-+	-q|--quiet)
-+		quiet=-q ;;
-+	-v|--verbose)
-+		verbose=-v ;;
- 	-n|--no-stat|--no-summary)
- 		no_stat=-n ;;
- 	--stat|--summary)
-@@ -121,7 +126,7 @@ test true = "$rebase" && {
- 		"refs/remotes/$origin/$reflist" 2>/dev/null)"
- }
- orig_head=$(git rev-parse --verify HEAD 2>/dev/null)
--git fetch --update-head-ok "$@" || exit 1
-+git fetch $verbose $quiet --update-head-ok "$@" || exit 1
- 
- curr_head=$(git rev-parse --verify HEAD 2>/dev/null)
- if test "$curr_head" != "$orig_head"
-@@ -181,5 +186,6 @@ merge_name=$(git fmt-merge-msg $log_arg <"$GIT_DIR/FETCH_HEAD") || exit
- test true = "$rebase" &&
- 	exec git-rebase $strategy_args --onto $merge_head \
- 	${oldremoteref:-$merge_head}
--exec git-merge $no_stat $no_commit $squash $no_ff $log_arg $strategy_args \
-+exec git-merge $quiet $verbose $no_stat $no_commit \
-+	$squash $no_ff $log_arg $strategy_args \
- 	"$merge_name" HEAD $merge_head
+ 	return xchp;
 -- 
-1.6.0.2.GIT
+1.6.0.2.287.g3791f
