@@ -1,98 +1,131 @@
-From: Deskin Miller <deskinm@umich.edu>
-Subject: Re: [PATCH v2] Fix testcase failure when extended attributes are
-	in use
-Date: Sun, 19 Oct 2008 08:24:19 -0400
-Message-ID: <20081019122419.GA2015@riemann.deskinm.fdns.net>
-References: <20081011154107.GA14994@riemann.deskinm.fdns.net> <20081014021016.GB14994@riemann.deskinm.fdns.net> <7vbpxig4fb.fsf@gitster.siamese.dyndns.org>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, heikki.orsila@iki.fi
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Oct 20 07:33:46 2008
+From: Giuseppe Bilotta <giuseppe.bilotta@gmail.com>
+Subject: [PATCH 6/6] gitweb: retrieve snapshot format from PATH_INFO
+Date: Sun, 19 Oct 2008 14:11:55 +0200
+Message-ID: <1224418315-26164-1-git-send-email-giuseppe.bilotta@gmail.com>
+References: <1224188831-17767-6-git-send-email-giuseppe.bilotta@gmail.com>
+Cc: Jakub Narebski <jnareb@gmail.com>, Petr Baudis <pasky@suse.cz>,
+	Junio C Hamano <gitster@pobox.com>,
+	Giuseppe Bilotta <giuseppe.bilotta@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Oct 20 07:40:07 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KrXPn-0002Fz-7T
-	for gcvg-git-2@gmane.org; Sun, 19 Oct 2008 14:29:47 +0200
+	id 1KrX9L-0001lO-T6
+	for gcvg-git-2@gmane.org; Sun, 19 Oct 2008 14:12:48 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751084AbYJSM1o (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 19 Oct 2008 08:27:44 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751207AbYJSM1o
-	(ORCPT <rfc822;git-outgoing>); Sun, 19 Oct 2008 08:27:44 -0400
-Received: from yx-out-2324.google.com ([74.125.44.29]:57659 "EHLO
-	yx-out-2324.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750878AbYJSM1n (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 19 Oct 2008 08:27:43 -0400
-Received: by yx-out-2324.google.com with SMTP id 8so225855yxm.1
-        for <git@vger.kernel.org>; Sun, 19 Oct 2008 05:27:42 -0700 (PDT)
+	id S1751084AbYJSMLf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 19 Oct 2008 08:11:35 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751207AbYJSMLf
+	(ORCPT <rfc822;git-outgoing>); Sun, 19 Oct 2008 08:11:35 -0400
+Received: from ug-out-1314.google.com ([66.249.92.175]:38838 "EHLO
+	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750898AbYJSMLe (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 19 Oct 2008 08:11:34 -0400
+Received: by ug-out-1314.google.com with SMTP id k3so462432ugf.37
+        for <git@vger.kernel.org>; Sun, 19 Oct 2008 05:11:31 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:cc:subject
-         :message-id:references:mime-version:content-type:content-disposition
-         :in-reply-to:user-agent:sender;
-        bh=ksA5RsQod6GTYbDJ6dMSh1eMxy3Jno85liqU9IQ7jxs=;
-        b=SvQxShwxJAuH5LNF97TCdGNgT1V72OlUEehJlit9J1Y9/oh4Z7Z2mCgMqqLf0sy50U
-         tHo/q0MXwBw4UZTEJ5gMYlfIn7uo3fnNfBGdBxSggt2q1XzGWiCeFw98ibO7Bipz+T+A
-         TMINzmxoA/L0Kc3PFcZwjqgR08yEBWtBzYL5Q=
+        h=domainkey-signature:received:received:from:to:cc:subject:date
+         :message-id:x-mailer:in-reply-to:references;
+        bh=5gafuSS0OFaK4AOYxfDBbME9F+jyd62pU1LGXepUACE=;
+        b=a8V7jd6rgseEG1tkzdRn0fgRE96YXR0mSs4Kj0Qvoe3KEdXAHfIQv8XsBhgNiTJZUM
+         lkOLPkJlRT2fi15Y6kc06mIlobRhggzMtu4RzltieFq4JHU5MFO2SUb3lI6K2+6Yza9Q
+         3Opkdh6WBNEzRCoddmDdV6zGUrQXCx2fhhg5E=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent:sender;
-        b=MqDyozwuz2L6DeaMFOj/nFRG+2ijDtbFeiH0WC2bfNv7nsnnI1WXDRQIEgpKnLNOGR
-         AoRzOVausfTCBPRgqPn3Rb0QLw2AMsbqBoS6o2y8Qr1HoBBORlfLbJmUc+BAw+lRHxOk
-         y7EGWJOtKDbfup49S3iXWAaxBsgvsnT742Ay4=
-Received: by 10.150.122.13 with SMTP id u13mr9647095ybc.185.1224419262300;
-        Sun, 19 Oct 2008 05:27:42 -0700 (PDT)
-Received: from riemann.deskinm.fdns.net ([68.40.49.130])
-        by mx.google.com with ESMTPS id n29sm9415144elf.5.2008.10.19.05.27.40
+        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
+        b=QztE5ULPwsuFuEADKEUjuW2+Z/Ig0EvvoElKhZOsKZUaZx3phzq4qgUO2KtJL7X3CV
+         Li1YDyi4McjlPh20CfZX6ZbnnWRu9FnOeEruWrZU7qdCY0v8cix6qWBgEceX03Fq5Ooo
+         gP3uT05XREehFOSxnbA1QSZSXrNFndGtwF6mQ=
+Received: by 10.67.116.18 with SMTP id t18mr1390545ugm.58.1224418291026;
+        Sun, 19 Oct 2008 05:11:31 -0700 (PDT)
+Received: from localhost ([94.37.30.171])
+        by mx.google.com with ESMTPS id k2sm2519899ugf.18.2008.10.19.05.11.29
         (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Sun, 19 Oct 2008 05:27:41 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <7vbpxig4fb.fsf@gitster.siamese.dyndns.org>
-User-Agent: Mutt/1.5.17 (2007-11-01)
+        Sun, 19 Oct 2008 05:11:30 -0700 (PDT)
+X-Mailer: git-send-email 1.5.6.5
+In-Reply-To: <1224188831-17767-6-git-send-email-giuseppe.bilotta@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/98614>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/98615>
 
-On Fri, Oct 17, 2008 at 04:58:16PM -0700, Junio C Hamano wrote:
-> With 8ed0a74 (t1301-shared-repo.sh: don't let a default ACL interfere with
-> the test, 2008-10-16) applied is this still needed, or can I drop it from
-> my review box?
+We parse requests for $project/snapshot/$head.$sfx as equivalent to
+$project/snapshot/$head?sf=$sfx, where $sfx is any of the known
+(although not necessarily supported) snapshot formats (or its default
+suffix).
 
-Apologies for a tardy response, was out of town and away from keyboard for a
-day.
+The filename for the resulting package preserves the requested
+extensions (so asking for a .tgz gives a .tgz, and asking for a .tar.gz
+gives a .tar.gz), although for obvious reasons it doesn't preserve the
+basename (git/snapshot/next.tgz returns a file names git-next.tgz).
+
+Signed-off-by: Giuseppe Bilotta <giuseppe.bilotta@gmail.com>
+---
+
+Ok, I lied, there's a 6th patch ready. Its purpose is to allow embedding of
+the snapshot format parameter in the URL, in the form of an extension
+appended to the refname.
+
+I have not prepared the corresponding URL generation code yet, because of
+potential ambiguity that might arise: even though at URL generation time
+the project does not have a head named $head.$sfx, it is possible (although
+extremely unlikely) that such head is created later on, and the PATH_INFO
+generation code cannot therefore guarantee the permalink nature of the
+embedded snapshot format URL.
+
+ gitweb/gitweb.perl |   35 +++++++++++++++++++++++++++++++++++
+ 1 files changed, 35 insertions(+), 0 deletions(-)
+
+diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
+index 99c8c20..7ffd10b 100755
+--- a/gitweb/gitweb.perl
++++ b/gitweb/gitweb.perl
+@@ -609,6 +609,41 @@ sub evaluate_path_info {
+ 			$input_params{'hash_parent'} ||= $parentrefname;
+ 		}
+ 	}
++
++	# for the snapshot action, we allow URLs in the form
++	# $project/snapshot/$hash.ext
++	# where .ext determines the snapshot and gets removed from the
++	# passed $refname to provide the $hash.
++	#
++	# To be able to tell that $refname includes the format extension, we
++	# require some conditions to be satisfied:
++	# - the hash input parameter MUST have been set from the $refname part
++	#   of the URL (i.e. they must be equal)
++	# - the snapshot format MUST NOT have been defined already
++	# - the $refname itself MUST NOT be a valid refname
++	if ($input_params{'action'} eq 'snapshot' && defined $refname &&
++		$refname eq $input_params{'hash'} &&
++		!defined $input_params{'snapshot_format'} &&
++		!parse_commit($refname)) {
++		# We loop over the known snapshot formats, checking for
++		# extensions. Allowed extensions are both the defined suffix
++		# (which includes the initial dot already) and the snapshot
++		# format key itself, with a prepended dot
++		while (my ($fmt, %opt) = each %known_snapshot_formats) {
++			my $hash = $refname;
++			my $sfx;
++			$hash =~ s/(\Q$opt{'suffix'}\E|\Q.$fmt\E)$//;
++			next unless $sfx = $1;
++			# a valid suffix was found, so set the snapshot format
++			# and reset the hash parameter
++			$input_params{'snapshot_format'} = $fmt;
++			$input_params{'hash'} = $hash;
++			# we also set the format suffix to the one requested
++			# in the URL: this way a request for e.g. .tgz returns
++			# a .tgz instead of a .tar.gz
++			$known_snapshot_formats{$fmt}{'suffix'} = $sfx;
++		}
++	}
+ }
+ evaluate_path_info();
  
-This patch is still needed, as my and Matt's patch are solving two different
-issues with t1301.  As he pointed out in the thread regarding his patch, the
-issue was that the testcase was intended to specifically test Git's interaction
-with permissions set via the umask, but a default ACL on the 'trash directory'
-could interfere with this, since they'd override the umask settings.  Remove
-the ACL, no problem.
-
-My patch, on the other hand, is to deal with 'ls' output in case a file has
-certain filesystem extended attributes.  These could be e.g. POSIX ACLs, or a
-SELinux security context, or perhaps others.  If such an extended attribute is
-present, 'ls -l' will print permissions with a '+' appended, e.g.
--rw-r--r--+
-Instead of
--rw-r--r--
-However, t1301 reads permissions output by ls for several tests, and compares
-them to string representations such as that above.  Without removing the '+',
-if present, the strings will not match.  Furthermore, since this occurs for
-other filesystem extended attributes, and not just ACLs, it is not possible to
-simply strip all extended attributes from the file in question (with SELinux,
-the kernel won't let you remove a file's security context anyway).
-
-For what it's worth, I've experienced this failure on my Ubuntu 8.04 laptop
-with SELinux permissive mode, so it's possible ls behaves slightly differently
-on other systems; I've not been able to determine this one way or another.
-However, I see no harm in accounting for this situation in the general case,
-since the typical output of ls on other systems will not be affected nor
-modified with this patch.
-
-Hope that helps,
-Deskin Miller
+-- 
+1.5.6.5
