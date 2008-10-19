@@ -1,63 +1,63 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH] feature request: git-mergetool --force
-Date: Sun, 19 Oct 2008 07:47:23 -0400
-Message-ID: <20081019114722.GA30412@coredump.intra.peff.net>
-References: <48F91E59.50202@gmail.com> <20081018154824.GA20185@coredump.intra.peff.net> <48FA2E9F.3090305@gmail.com> <20081018205443.GA29534@coredump.intra.peff.net> <48FA6E55.9030101@hashpling.org>
+From: Fredrik Skolmli <fredrik@frsk.net>
+Subject: [PATCH] Documentation: Spelling fix
+Date: Sun, 19 Oct 2008 18:09:43 +0200
+Message-ID: <20081019160943.GA20862@frsk.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: William Pursell <bill.pursell@gmail.com>, git@vger.kernel.org
-To: Charles Bailey <charles@hashpling.org>
-X-From: git-owner@vger.kernel.org Mon Oct 20 07:50:31 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: gitster@pobox.com
+X-From: git-owner@vger.kernel.org Mon Oct 20 08:30:48 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KrWlz-00010q-RC
-	for gcvg-git-2@gmane.org; Sun, 19 Oct 2008 13:48:40 +0200
+	id 1Kras4-0001Bb-62
+	for gcvg-git-2@gmane.org; Sun, 19 Oct 2008 18:11:12 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751189AbYJSLr1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 19 Oct 2008 07:47:27 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751207AbYJSLr1
-	(ORCPT <rfc822;git-outgoing>); Sun, 19 Oct 2008 07:47:27 -0400
-Received: from peff.net ([208.65.91.99]:4982 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750984AbYJSLr0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 19 Oct 2008 07:47:26 -0400
-Received: (qmail 7071 invoked by uid 111); 19 Oct 2008 11:47:24 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.32) with SMTP; Sun, 19 Oct 2008 07:47:24 -0400
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Sun, 19 Oct 2008 07:47:23 -0400
+	id S1751441AbYJSQJv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 19 Oct 2008 12:09:51 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751384AbYJSQJv
+	(ORCPT <rfc822;git-outgoing>); Sun, 19 Oct 2008 12:09:51 -0400
+Received: from cassarossa.samfundet.no ([129.241.93.19]:50292 "EHLO
+	cassarossa.samfundet.no" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751377AbYJSQJv (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 19 Oct 2008 12:09:51 -0400
+Received: from asterix.samfundet.no
+	([2001:700:300:1800::f] helo=asterix.frsk.net ident=Debian-exim)
+	by cassarossa.samfundet.no with esmtps (TLS-1.0:RSA_AES_256_CBC_SHA1:32)
+	(Exim 4.63)
+	(envelope-from <fredrik@frsk.net>)
+	id 1Kraqe-0007C7-0a; Sun, 19 Oct 2008 18:09:44 +0200
+Received: from fredrik by asterix.frsk.net with local (Exim 4.63)
+	(envelope-from <fredrik@frsk.net>)
+	id 1Kraqd-0003Aa-IO; Sun, 19 Oct 2008 18:09:43 +0200
 Content-Disposition: inline
-In-Reply-To: <48FA6E55.9030101@hashpling.org>
+User-Agent: Mutt/1.5.13 (2006-08-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/98617>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/98618>
 
-On Sun, Oct 19, 2008 at 12:16:37AM +0100, Charles Bailey wrote:
 
-> I've recently been using git mergetool quite a bit and I'm currently
-> cooking a couple of patches. The first, by coincidence, was a "-n"
-> option which disabled the hit-return-to-actually-do-anything prompt. I,
-> also, used the variable "NOPROMPT" to describe this behaviour.
-> 
-> The other change that I am working was more of an issue for me. When I
-> have a fair number of files to merge I sometimes want to skip a merge.
-> Perhaps it's a tricky one and I want do the easy wins first.
-> [...]
-> Thoughts?
+Signed-off-by: Fredrik Skolmli <fredrik@frsk.net>
+---
+ Documentation/git-checkout.txt |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
 
-I think those are both reasonable behaviors. I also thought instantly of
-the issue you mentioned, that people who really did want to abort would
-get stuck in a loop of spawning the merge resolver. For that reason, I
-think it makes sense to have both of them as options (either config,
-command-line, or both). And if you do "git mergetool --no-prompt
---keep-going", then you are accepting the fact that you won't have a
-chance to ask it to stop.
-
-And I would suggest "-k, --keep-going" for the second option, as it
-reminds me of the similar "make" option.
-
--Peff
+diff --git a/Documentation/git-checkout.txt b/Documentation/git-checkout.txt
+index 2b344e1..ea05a7a 100644
+--- a/Documentation/git-checkout.txt
++++ b/Documentation/git-checkout.txt
+@@ -88,7 +88,7 @@ This would tell us to use "hack" as the local branch when branching
+ off of "origin/hack" (or "remotes/origin/hack", or even
+ "refs/remotes/origin/hack").  If the given name has no slash, or the above
+ guessing results in an empty name, the guessing is aborted.  You can
+-exlicitly give a name with '-b' in such a case.
++explicitly give a name with '-b' in such a case.
+ 
+ --no-track::
+ 	Ignore the branch.autosetupmerge configuration variable.
+-- 
+1.5.6.5
