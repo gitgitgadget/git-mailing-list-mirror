@@ -1,125 +1,170 @@
-From: Maciej Pasternacki <maciej@pasternacki.net>
-Subject: [PATCH v2] Add command line option --chdir/-C to allow setting git process work directory.
-Date: Sun, 19 Oct 2008 09:18:19 -0700
-Message-ID: <20081019161819.GA12495@charybdis.dreamhost.com>
+From: "Shawn O. Pearce" <spearce@spearce.org>
+Subject: Re: [JGIT PATCH] Encode/decode index and tree entries using UTF-8
+Date: Sun, 19 Oct 2008 10:14:56 -0700
+Message-ID: <20081019171456.GC14786@spearce.org>
+References: <200810191529.43439.robin.rosenberg.lists@dewire.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Jeff King <peff@peff.net>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Oct 20 09:10:03 2008
+Cc: git@vger.kernel.org
+To: Robin Rosenberg <robin.rosenberg.lists@dewire.com>
+X-From: git-owner@vger.kernel.org Mon Oct 20 09:33:13 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Krb2m-0001Uv-4s
-	for gcvg-git-2@gmane.org; Sun, 19 Oct 2008 18:22:16 +0200
+	id 1Krbtw-0003GI-Lh
+	for gcvg-git-2@gmane.org; Sun, 19 Oct 2008 19:17:13 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751475AbYJSQSV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 19 Oct 2008 12:18:21 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751471AbYJSQSV
-	(ORCPT <rfc822;git-outgoing>); Sun, 19 Oct 2008 12:18:21 -0400
-Received: from smarty.dreamhost.com ([208.113.175.8]:40365 "EHLO
-	smarty.dreamhost.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751464AbYJSQSU (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 19 Oct 2008 12:18:20 -0400
-X-Greylist: delayed 58552 seconds by postgrey-1.27 at vger.kernel.org; Sun, 19 Oct 2008 12:18:20 EDT
-Received: from charybdis.dreamhost.com (unknown [66.33.197.39])
-	by smarty.dreamhost.com (Postfix) with ESMTP id 78594EE249;
-	Sun, 19 Oct 2008 09:18:19 -0700 (PDT)
-Received: by charybdis.dreamhost.com (Postfix, from userid 2307417)
-	id 7611331FC9; Sun, 19 Oct 2008 09:18:19 -0700 (PDT)
+	id S1751510AbYJSRO6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 19 Oct 2008 13:14:58 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751508AbYJSRO6
+	(ORCPT <rfc822;git-outgoing>); Sun, 19 Oct 2008 13:14:58 -0400
+Received: from george.spearce.org ([209.20.77.23]:54221 "EHLO
+	george.spearce.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751478AbYJSRO5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 19 Oct 2008 13:14:57 -0400
+Received: by george.spearce.org (Postfix, from userid 1001)
+	id 6CD883835F; Sun, 19 Oct 2008 17:14:56 +0000 (UTC)
 Content-Disposition: inline
-User-Agent: Mutt/1.5.13 (2006-08-11)
+In-Reply-To: <200810191529.43439.robin.rosenberg.lists@dewire.com>
+User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/98622>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/98623>
 
-When "git pull" is ran outside of work tree, it is unable to update work tree
-with pulled changes; specifying --git-dir and --work-tree does not help here
-because "cd_to_toplevel" call in git-pull occurs after "require_work_tree";
-changing order may break the commend if there is no working tree.  Some more
-commands behave in a similar way.
+Robin Rosenberg <robin.rosenberg.lists@dewire.com> wrote:
+> Decoding uses the same strategy as for commit messages and other string
+> entities. Encoding is always done in UTF-8. This is incompatible with
+> Git for non-unicode unices, but it leads to the expected behavior on
+> Windows and cross-locale sharing of repositories.
 
-In my project, I need to call "git pull" from outside of work tree, but I need
-it to update the work tree.  It seems to require doing chdir() before running
-git, but this is problematic thing to do in the calling program because of
-portability issues.  Proper solution seems to be providing -C / --chdir command
-line option, similar to this of Make, that would make main git program perform
-chdir() to specified directory before running the specific command.  This would
-make using git from outside programs much more straightforward.
-
-This patch provides -C and --chdir command line options that behave as
-described above.
-
-Signed-off-by: Maciej Pasternacki <maciej@pasternacki.net>
----
- Documentation/git.txt |    6 +++++-
- git.c                 |   19 ++++++++++++++++++-
- 2 files changed, 23 insertions(+), 2 deletions(-)
-
-diff --git a/Documentation/git.txt b/Documentation/git.txt
-index df420ae..6676d68 100644
---- a/Documentation/git.txt
-+++ b/Documentation/git.txt
-@@ -12,7 +12,7 @@ SYNOPSIS
- 'git' [--version] [--exec-path[=GIT_EXEC_PATH]]
-     [-p|--paginate|--no-pager]
-     [--bare] [--git-dir=GIT_DIR] [--work-tree=GIT_WORK_TREE]
--    [--help] COMMAND [ARGS]
-+    [-C DIRECTORY|--chdir=DIRECTORY] [--help] COMMAND [ARGS]
+FWIW I think this is a good idea.
  
- DESCRIPTION
- -----------
-@@ -185,6 +185,10 @@ help ...`.
- 	environment is not set, it is set to the current working
- 	directory.
+> Inpired by the recent thread on the gitml, I decideed to clean up jgit a little. I
+> know the GitIndex is soon to be obsoleted, but it it still the class that does
+> the dirty work when committing in Egit and the changes are fairly simple
+> anyway.
+
+Yup, I agree.
+
+I mostly agree with the patch, but we have a utility function you
+are missing using:
  
-+-C <directory>::
-+--chdir=<directory>::
-+	Change working directory before doing anything.
+> @@ -300,11 +302,11 @@ static boolean File_hasExecute() {
+>  		return FS.INSTANCE.supportsExecute();
+>  	}
+>  
+> -	static byte[] makeKey(File wd, File f) {
+> +	static byte[] makeKey(File wd, File f) throws IOException {
+>  		if (!f.getPath().startsWith(wd.getPath()))
+>  			throw new Error("Path is not in working dir");
+>  		String relName = Repository.stripWorkDir(wd, f);
+> -		return relName.getBytes();
+> +		return relName.getBytes(Constants.CHARACTER_ENCODING);
+>  	}
+
+Instead of "relName.getBytes(Constants.CHARACTER_ENCODING)" use
+"Constants.encode(relName)".  Its shorter and faster.
+  
+> @@ -591,7 +593,7 @@ public String toString() {
+>  		 * @return path name for this entry
+>  		 */
+>  		public String getName() {
+> -			return new String(name);
+> +			return RawParseUtils.decode(Constants.CHARSET, name, 0, name.length);
+
+Heh.  That's actually a common idiom.  We probably should add:
+
+	String decode(final byte[] arr) {
+		return decode(Constants.CHARSET, arr, 0, arr.length);
+	}
+
+to RawParseUtils to make these decode whole array calls easier
+to make.
+
+I think you should squash this into your patch, and fix up the
+getBytes and decode calls as I noted above before we apply this.
+
+diff --git a/org.spearce.jgit/src/org/spearce/jgit/dircache/DirCacheEntry.java b/org.spearce.jgit/src/org/spearce/jgit/dircache/DirCacheEntry.java
+index cc683d7..913f3ae 100644
+--- a/org.spearce.jgit/src/org/spearce/jgit/dircache/DirCacheEntry.java
++++ b/org.spearce.jgit/src/org/spearce/jgit/dircache/DirCacheEntry.java
+@@ -42,7 +42,6 @@
+ import java.io.IOException;
+ import java.io.InputStream;
+ import java.io.OutputStream;
+-import java.nio.ByteBuffer;
+ import java.util.Arrays;
+ 
+ import org.spearce.jgit.lib.AnyObjectId;
+@@ -50,6 +49,7 @@
+ import org.spearce.jgit.lib.FileMode;
+ import org.spearce.jgit.lib.ObjectId;
+ import org.spearce.jgit.util.NB;
++import org.spearce.jgit.util.RawParseUtils;
+ 
+ /**
+  * A single file (or stage of a file) in a {@link DirCache}.
+@@ -405,7 +405,7 @@ public void setObjectIdFromRaw(final byte[] bs, final int p) {
+ 	 *         returned string.
+ 	 */
+ 	public String getPathString() {
+-		return Constants.CHARSET.decode(ByteBuffer.wrap(path)).toString();
++		return RawParseUtils.decode(path);
+ 	}
+ 
+ 	/**
+diff --git a/org.spearce.jgit/src/org/spearce/jgit/dircache/DirCacheTree.java b/org.spearce.jgit/src/org/spearce/jgit/dircache/DirCacheTree.java
+index 26b6348..589894a 100644
+--- a/org.spearce.jgit/src/org/spearce/jgit/dircache/DirCacheTree.java
++++ b/org.spearce.jgit/src/org/spearce/jgit/dircache/DirCacheTree.java
+@@ -39,7 +39,6 @@
+ 
+ import java.io.IOException;
+ import java.io.OutputStream;
+-import java.nio.ByteBuffer;
+ import java.util.Arrays;
+ import java.util.Comparator;
+ 
+@@ -251,8 +250,7 @@ ObjectId getObjectId() {
+ 	 * @return name of the tree. This does not contain any '/' characters.
+ 	 */
+ 	public String getNameString() {
+-		final ByteBuffer bb = ByteBuffer.wrap(encodedName);
+-		return Constants.CHARSET.decode(bb).toString();
++		return RawParseUtils.decode(encodedName);
+ 	}
+ 
+ 	/**
+diff --git a/org.spearce.jgit/src/org/spearce/jgit/util/RawParseUtils.java b/org.spearce.jgit/src/org/spearce/jgit/util/RawParseUtils.java
+index 6c0e339..2519f19 100644
+--- a/org.spearce.jgit/src/org/spearce/jgit/util/RawParseUtils.java
++++ b/org.spearce.jgit/src/org/spearce/jgit/util/RawParseUtils.java
+@@ -379,6 +379,21 @@ public static PersonIdent parsePersonIdent(final byte[] raw, final int nameB) {
+ 	}
+ 
+ 	/**
++	 * Decode a region of the buffer from the default character set (UTF-8).
++	 * 
++	 * If the byte stream cannot be decoded that way, the platform default is
++	 * tried and if that too fails, the fail-safe ISO-8859-1 encoding is tried.
++	 * 
++	 * @param buffer
++	 *            buffer to pull raw bytes from.
++	 * @return a string representation of the entire buffer, after decoding the
++	 *         region through the specified character set.
++	 */
++	public static String decode(final byte[] buffer) {
++		return decode(Constants.CHARSET, buffer, 0, buffer.length);
++	}
 +
- 
- FURTHER DOCUMENTATION
- ---------------------
-diff --git a/git.c b/git.c
-index 89feb0b..c63d754 100644
---- a/git.c
-+++ b/git.c
-@@ -4,7 +4,7 @@
- #include "quote.h"
- 
- const char git_usage_string[] =
--	"git [--version] [--exec-path[=GIT_EXEC_PATH]] [-p|--paginate|--no-pager] [--bare] [--git-dir=GIT_DIR] [--work-tree=GIT_WORK_TREE] [--help] COMMAND [ARGS]";
-+	"git [--version] [--exec-path[=GIT_EXEC_PATH]] [-p|--paginate|--no-pager] [--bare] [--git-dir=GIT_DIR] [--work-tree=GIT_WORK_TREE] [-C DIR|--chdir=DIR] [--help] COMMAND [ARGS]";
- 
- const char git_more_info_string[] =
- 	"See 'git help COMMAND' for more information on a specific command.";
-@@ -115,6 +115,23 @@ static int handle_options(const char*** argv, int* argc, int* envchanged)
- 			setenv(GIT_DIR_ENVIRONMENT, getcwd(git_dir, sizeof(git_dir)), 0);
- 			if (envchanged)
- 				*envchanged = 1;
-+		} else if (!strcmp(cmd, "-C") || !strcmp(cmd, "--chdir")) {
-+			if (*argc < 2) {
-+				fprintf(stderr, "No directory given for --chdir or -C.\n" );
-+				usage(git_usage_string);
-+			}
-+			if (chdir((*argv)[1])) {
-+				fprintf(stderr, "Cannot change directory to %s: %s\n", (*argv)[1], strerror(errno));
-+				usage(git_usage_string);
-+			}
-+			(*argv)++;
-+			(*argc)--;
-+			handled++;
-+		} else if (!prefixcmp(cmd,"--chdir=")) {
-+			if (chdir(cmd+8)) {
-+				fprintf(stderr, "Cannot change directory to %s: %s\n", cmd+8, strerror(errno));				     
-+				usage(git_usage_string);
-+			}
- 		} else {
- 			fprintf(stderr, "Unknown option: %s\n", cmd);
- 			usage(git_usage_string);
++	/**
+ 	 * Decode a region of the buffer under the specified character set if possible.
+ 	 *
+ 	 * If the byte stream cannot be decoded that way, the platform default is tried
+
 -- 
-1.6.0.1
+Shawn.
