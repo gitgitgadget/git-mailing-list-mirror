@@ -1,80 +1,104 @@
-From: Junio C Hamano <gitster@pobox.com>
+From: Pierre Habouzit <madcoder@debian.org>
 Subject: Re: [PATCH] parse-opt: migrate builtin-checkout-index.
-Date: Sun, 19 Oct 2008 13:59:05 -0700
-Message-ID: <7v4p387146.fsf@gitster.siamese.dyndns.org>
-References: <1224441040-5071-1-git-send-email-vmiklos@frugalware.org>
- <7vabd073bg.fsf@gitster.siamese.dyndns.org>
- <20081019201934.GO16610@artemis.corp>
+Date: Sun, 19 Oct 2008 22:19:34 +0200
+Message-ID: <20081019201934.GO16610@artemis.corp>
+References: <1224441040-5071-1-git-send-email-vmiklos@frugalware.org> <7vabd073bg.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: multipart/signed; boundary="tv2SIFopg1r47n4a";
+	protocol="application/pgp-signature"; micalg=SHA1
 Cc: Miklos Vajna <vmiklos@frugalware.org>, git@vger.kernel.org
-To: Pierre Habouzit <madcoder@debian.org>
-X-From: git-owner@vger.kernel.org Mon Oct 20 11:45:36 2008
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Oct 20 12:02:29 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KrfO7-0001nq-Pf
-	for gcvg-git-2@gmane.org; Sun, 19 Oct 2008 23:00:36 +0200
+	id 1KrepQ-0000gV-ED
+	for gcvg-git-2@gmane.org; Sun, 19 Oct 2008 22:24:44 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751796AbYJSU7T (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 19 Oct 2008 16:59:19 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751789AbYJSU7T
-	(ORCPT <rfc822;git-outgoing>); Sun, 19 Oct 2008 16:59:19 -0400
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:38815 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751779AbYJSU7S (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 19 Oct 2008 16:59:18 -0400
-Received: from localhost.localdomain (localhost [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 52D6671F2B;
-	Sun, 19 Oct 2008 16:59:17 -0400 (EDT)
-Received: from pobox.com (ip68-225-240-211.oc.oc.cox.net [68.225.240.211])
- (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
- certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
- ESMTPSA id 0304571F2A; Sun, 19 Oct 2008 16:59:12 -0400 (EDT)
-In-Reply-To: <20081019201934.GO16610@artemis.corp> (Pierre Habouzit's message
- of "Sun, 19 Oct 2008 22:19:34 +0200")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: CB05A87A-9E20-11DD-90F6-9CEDC82D7133-77302942!a-sasl-fastnet.pobox.com
+	id S1751770AbYJSUTi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 19 Oct 2008 16:19:38 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751726AbYJSUTi
+	(ORCPT <rfc822;git-outgoing>); Sun, 19 Oct 2008 16:19:38 -0400
+Received: from pan.madism.org ([88.191.52.104]:55553 "EHLO hermes.madism.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751616AbYJSUTh (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 19 Oct 2008 16:19:37 -0400
+Received: from madism.org (olympe.madism.org [82.243.245.108])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(Client CN "artemis.madism.org", Issuer "madism.org" (verified OK))
+	by hermes.madism.org (Postfix) with ESMTPS id D2E053ED36;
+	Sun, 19 Oct 2008 22:19:35 +0200 (CEST)
+Received: by madism.org (Postfix, from userid 1000)
+	id 66B24778397; Sun, 19 Oct 2008 22:19:34 +0200 (CEST)
+Content-Disposition: inline
+In-Reply-To: <7vabd073bg.fsf@gitster.siamese.dyndns.org>
+X-Face: $(^e[V4D-[`f2EmMGz@fgWK!e.B~2g.{08lKPU(nc1J~z\4B>*JEVq:E]7G-\6$Ycr4<;Z!|VY6Grt]+RsS$IMV)f>2)M="tY:ZPcU;&%it2D81X^kNya0=L]"vZmLP+UmKhgq+u*\.dJ8G!N&=EvlD
+User-Agent: Madmutt/devel (Linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/98637>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/98638>
 
-Pierre Habouzit <madcoder@debian.org> writes:
 
-> On Sun, Oct 19, 2008 at 08:11:31PM +0000, Junio C Hamano wrote:
->> Miklos Vajna <vmiklos@frugalware.org> writes:
->
->> >> Right, I fixed this in option_parse_z(). --no-z should set
->> >> line_termination to \n instead of 1.
->> >
->> > Originally in option_parse_z() I had
->> >
->> >         line_termination = unset;
->> >
->> > which is in fact right, because (as Pierre pointed out) unset for short
->> > options are always false, but I changed it to
->> >
->> >         line_termination = 0;
->> >
->> > to make it more readable.
->> 
->> I think Pierre's comment is short-sighted.  Think of what would happen
->> when somebody adds "--nul" as a longer equivalent to "-z", since it is
->> extremely easy to do things like that with the use of parse-opt API?
->
-> Err I was only pointing out that --no-z would no nothing, I actually
-> didn't really read the argument :)  I didn't say having --null was a bad
-> idea,...
+--tv2SIFopg1r47n4a
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-It is a good practice to anticipate potential future breakages, assess the
-cost to avoid them, avoid the ones that can be avoided with minimum cost
-(and document the others you know will be broken).  That's the key to
-produce maintainable piece of code.  The change necessary to Miklos's
-original code to do this is quite simple (i.e. flip between '\0' and
-'\n'), and I didn't see any room for argument like "short option won't let
-you say --no-z".  That's where my comment about "short-sighted"-ness comes
-from.
+On Sun, Oct 19, 2008 at 08:11:31PM +0000, Junio C Hamano wrote:
+> Miklos Vajna <vmiklos@frugalware.org> writes:
+>=20
+> > Signed-off-by: Miklos Vajna <vmiklos@frugalware.org>
+> > ---
+> >
+> > On Sat, Oct 18, 2008 at 03:17:23AM +0200, Miklos Vajna <vmiklos@frugalw=
+are.org> wrote:
+> >> > This adds a new feature to say --no-z from the command line, doesn't
+> >> > it?
+> >> > And I suspect the feature is broken ;-).
+> >>
+> >> Right, I fixed this in option_parse_z(). --no-z should set
+> >> line_termination to \n instead of 1.
+> >
+> > Originally in option_parse_z() I had
+> >
+> >         line_termination =3D unset;
+> >
+> > which is in fact right, because (as Pierre pointed out) unset for short
+> > options are always false, but I changed it to
+> >
+> >         line_termination =3D 0;
+> >
+> > to make it more readable.
+>=20
+> I think Pierre's comment is short-sighted.  Think of what would happen
+> when somebody adds "--nul" as a longer equivalent to "-z", since it is
+> extremely easy to do things like that with the use of parse-opt API?
+
+Err I was only pointing out that --no-z would no nothing, I actually
+didn't really read the argument :)  I didn't say having --null was a bad
+idea, and I think we have -z/--null at a couple of places already, and
+it's probably a good thing to actually _add_ --null.
+
+--=20
+=C2=B7O=C2=B7  Pierre Habouzit
+=C2=B7=C2=B7O                                                madcoder@debia=
+n.org
+OOO                                                http://www.madism.org
+
+--tv2SIFopg1r47n4a
+Content-Type: application/pgp-signature
+Content-Disposition: inline
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.9 (GNU/Linux)
+
+iEYEABECAAYFAkj7llYACgkQvGr7W6HudhxDHgCgk6UqwwKo+Gip0R9wXm8hUm53
+5O4AoJjbMsL65uLVsKSu1L5ku5wWlD+n
+=DVtU
+-----END PGP SIGNATURE-----
+
+--tv2SIFopg1r47n4a--
