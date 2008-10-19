@@ -1,103 +1,86 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH/RFR&A] gitweb: Better processing format string in custom
- links in navbar
-Date: Sun, 19 Oct 2008 00:07:12 -0700
-Message-ID: <7vzll16p27.fsf@gitster.siamese.dyndns.org>
+Subject: [PATCH/RFR&A] Fix reading of cloud tags
+Date: Sun, 19 Oct 2008 00:06:57 -0700
+Message-ID: <7vbpxh83n2.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
 To: Petr Baudis <pasky@suse.cz>
-X-From: git-owner@vger.kernel.org Sun Oct 19 09:08:32 2008
+X-From: git-owner@vger.kernel.org Sun Oct 19 09:08:33 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KrSOu-00011H-53
-	for gcvg-git-2@gmane.org; Sun, 19 Oct 2008 09:08:32 +0200
+	id 1KrSOs-00011H-Jn
+	for gcvg-git-2@gmane.org; Sun, 19 Oct 2008 09:08:31 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751193AbYJSHHX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 19 Oct 2008 03:07:23 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751192AbYJSHHW
-	(ORCPT <rfc822;git-outgoing>); Sun, 19 Oct 2008 03:07:22 -0400
-Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:45497 "EHLO
+	id S1751157AbYJSHHH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 19 Oct 2008 03:07:07 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751156AbYJSHHH
+	(ORCPT <rfc822;git-outgoing>); Sun, 19 Oct 2008 03:07:07 -0400
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:37019 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751156AbYJSHHU (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 19 Oct 2008 03:07:20 -0400
+	with ESMTP id S1751150AbYJSHHG (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 19 Oct 2008 03:07:06 -0400
 Received: from localhost.localdomain (localhost [127.0.0.1])
-	by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id 6292B8CC75;
-	Sun, 19 Oct 2008 03:07:19 -0400 (EDT)
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id B12047105F;
+	Sun, 19 Oct 2008 03:07:03 -0400 (EDT)
 Received: from pobox.com (ip68-225-240-211.oc.oc.cox.net [68.225.240.211])
  (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
- certificate requested) by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with
- ESMTPSA id 7D9208CC74; Sun, 19 Oct 2008 03:07:14 -0400 (EDT)
+ certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
+ ESMTPSA id 284EE7105C; Sun, 19 Oct 2008 03:06:59 -0400 (EDT)
 User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: 919C617E-9DAC-11DD-9C9B-4F5276724C3F-77302942!a-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: 884441FA-9DAC-11DD-8FE8-1E1F86D30F62-77302942!a-sasl-fastnet.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/98597>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/98598>
 
-I was not around when this was posted and discussed; Shawn's note says
-this is waiting for "some sort of response from Pasky", hence this request
-for review and ack.  It still is parked in 'pu'.
+This is in 'next' but it would be nice to get acked before advancing it to
+master.
 
 -- >8 --
 
-Make processing format string in custom links in action bar ('actions'
-feature) more robust.  Now there would be no problems if one of
-expanded values (for example project name, of project filename)
-contains '%'; additionally format string supports '%' escaping by
-doubling, i.e. '%%' expands to '%'.
+The projectroot path could have SP in it, in which case iterating over
+<$git_dir/ctags/*> does not correctly enumerate the cloud tags files at
+all.
 
-Signed-off-by: Jakub Narebski <jnareb@gmail.com>
-Signed-off-by: Shawn O. Pearce <spearce@spearce.org>
+This can be observed by creating an empty t/trash directory and running
+t9500 test.  The $projectroot ends with "trash directory.t9500-gitweb-/"
+and <$glob> would give "trash", which can be opened and reading from it
+immediately yields undef, which in turn gives an undef value warning to
+the standard error stream upon attempt to chomp it.
+
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
 ---
- gitweb/gitweb.perl |   19 ++++++++++++-------
- 1 files changed, 12 insertions(+), 7 deletions(-)
+ gitweb/gitweb.perl |    6 +++++-
+ 1 files changed, 5 insertions(+), 1 deletions(-)
 
 diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
-index 1116800..cc6edbe 100755
+index 1116800..41b6866 100755
 --- a/gitweb/gitweb.perl
 +++ b/gitweb/gitweb.perl
-@@ -290,10 +290,10 @@ our %feature = (
+@@ -1805,7 +1805,10 @@ sub git_get_project_ctags {
+ 	my $ctags = {};
  
- 	# The 'default' value consists of a list of triplets in the form
- 	# (label, link, position) where position is the label after which
--	# to inster the link and link is a format string where %n expands
-+	# to insert the link and link is a format string where %n expands
- 	# to the project name, %f to the project path within the filesystem,
- 	# %h to the current hash (h gitweb parameter) and %b to the current
--	# hash base (hb gitweb parameter).
-+	# hash base (hb gitweb parameter); %% expands to %.
- 
- 	# To enable system wide have in $GITWEB_CONFIG e.g.
- 	# $feature{'actions'}{'default'} = [('graphiclog',
-@@ -2866,14 +2866,19 @@ sub git_print_page_nav {
- 	$arg{'tree'}{'hash_base'} = $treebase if defined $treebase;
- 
- 	my @actions = gitweb_check_feature('actions');
-+	my %repl = (
-+		'%' => '%',
-+		'n' => $project,         # project name
-+		'f' => $git_dir,         # project path within filesystem
-+		'h' => $treehead || '',  # current hash ('h' parameter)
-+		'b' => $treebase || '',  # hash base ('hb' parameter)
-+	);
- 	while (@actions) {
--		my ($label, $link, $pos) = (shift(@actions), shift(@actions), shift(@actions));
-+		my ($label, $link, $pos) = splice(@actions,0,3);
-+		# insert
- 		@navs = map { $_ eq $pos ? ($_, $label) : $_ } @navs;
- 		# munch munch
--		$link =~ s#%n#$project#g;
--		$link =~ s#%f#$git_dir#g;
--		$treehead ? $link =~ s#%h#$treehead#g : $link =~ s#%h##g;
--		$treebase ? $link =~ s#%b#$treebase#g : $link =~ s#%b##g;
-+		$link =~ s/%([%nfhb])/$repl{$1}/g;
- 		$arg{$label}{'_href'} = $link;
+ 	$git_dir = "$projectroot/$path";
+-	foreach (<$git_dir/ctags/*>) {
++	unless (opendir D, "$git_dir/ctags") {
++		return $ctags;
++	}
++	foreach (grep { -f $_ } map { "$git_dir/ctags/$_" } readdir(D)) {
+ 		open CT, $_ or next;
+ 		my $val = <CT>;
+ 		chomp $val;
+@@ -1813,6 +1816,7 @@ sub git_get_project_ctags {
+ 		my $ctag = $_; $ctag =~ s#.*/##;
+ 		$ctags->{$ctag} = $val;
  	}
++	closedir D;
+ 	$ctags;
+ }
  
 -- 
 1.6.0.2.767.g8f0e
