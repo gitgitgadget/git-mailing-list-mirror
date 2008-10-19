@@ -1,67 +1,85 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Detached checkout will clobber branch head when using symlink
- HEAD
-Date: Sun, 19 Oct 2008 12:36:08 -0700
-Message-ID: <7vskqs74yf.fsf@gitster.siamese.dyndns.org>
-References: <1224095087.5366.19.camel@localhost>
- <20081016191751.GB14707@coredump.intra.peff.net>
- <1224187863.2796.15.camel@localhost>
- <20081016203916.GB9487@coredump.intra.peff.net>
- <7vfxmuhlad.fsf@gitster.siamese.dyndns.org>
- <20081019130050.GA1822@coredump.intra.peff.net>
+From: Pierre Habouzit <madcoder@debian.org>
+Subject: Re: [PATCH] parse-opt: migrate builtin-checkout-index.
+Date: Sun, 19 Oct 2008 21:34:27 +0200
+Message-ID: <20081019193427.GK16610@artemis.corp>
+References: <7v63nqg4f4.fsf@gitster.siamese.dyndns.org> <1224292643-28704-1-git-send-email-vmiklos@frugalware.org> <20081019192906.GA26073@rdrz.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Matt Draisey <matt@draisey.ca>, git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Mon Oct 20 12:35:32 2008
+Content-Type: multipart/signed; boundary="huBJOJF9BsF479P6";
+	protocol="application/pgp-signature"; micalg=SHA1
+Cc: Miklos Vajna <vmiklos@frugalware.org>,
+	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Raphael Zimmerer <killekulla@rdrz.de>
+X-From: git-owner@vger.kernel.org Mon Oct 20 12:36:41 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Kre5l-0007VC-9u
-	for gcvg-git-2@gmane.org; Sun, 19 Oct 2008 21:37:33 +0200
+	id 1Kre42-0007SU-Ps
+	for gcvg-git-2@gmane.org; Sun, 19 Oct 2008 21:35:47 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751787AbYJSTgS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 19 Oct 2008 15:36:18 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751786AbYJSTgR
-	(ORCPT <rfc822;git-outgoing>); Sun, 19 Oct 2008 15:36:17 -0400
-Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:61019 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751785AbYJSTgR (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 19 Oct 2008 15:36:17 -0400
-Received: from localhost.localdomain (localhost [127.0.0.1])
-	by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id 5538B8D0A7;
-	Sun, 19 Oct 2008 15:36:15 -0400 (EDT)
-Received: from pobox.com (ip68-225-240-211.oc.oc.cox.net [68.225.240.211])
- (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
- certificate requested) by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with
- ESMTPSA id 5F6BD8D0A6; Sun, 19 Oct 2008 15:36:09 -0400 (EDT)
-In-Reply-To: <20081019130050.GA1822@coredump.intra.peff.net> (Jeff King's
- message of "Sun, 19 Oct 2008 09:00:50 -0400")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: 31867478-9E15-11DD-9C8B-4F5276724C3F-77302942!a-sasl-quonix.pobox.com
+	id S1751749AbYJSTeb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 19 Oct 2008 15:34:31 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751775AbYJSTeb
+	(ORCPT <rfc822;git-outgoing>); Sun, 19 Oct 2008 15:34:31 -0400
+Received: from pan.madism.org ([88.191.52.104]:41909 "EHLO hermes.madism.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751533AbYJSTea (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 19 Oct 2008 15:34:30 -0400
+Received: from madism.org (olympe.madism.org [82.243.245.108])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(Client CN "artemis.madism.org", Issuer "madism.org" (verified OK))
+	by hermes.madism.org (Postfix) with ESMTPS id 044D53ECF1;
+	Sun, 19 Oct 2008 21:34:28 +0200 (CEST)
+Received: by madism.org (Postfix, from userid 1000)
+	id 8D7EE778397; Sun, 19 Oct 2008 21:34:27 +0200 (CEST)
+Content-Disposition: inline
+In-Reply-To: <20081019192906.GA26073@rdrz.de>
+X-Face: $(^e[V4D-[`f2EmMGz@fgWK!e.B~2g.{08lKPU(nc1J~z\4B>*JEVq:E]7G-\6$Ycr4<;Z!|VY6Grt]+RsS$IMV)f>2)M="tY:ZPcU;&%it2D81X^kNya0=L]"vZmLP+UmKhgq+u*\.dJ8G!N&=EvlD
+User-Agent: Madmutt/devel (Linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/98645>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/98646>
 
-Jeff King <peff@peff.net> writes:
 
-> But if I am reading your patch right, you are actually enabling detached
-> HEAD in this instance, which is much better. Unfortunately, I had quite
-> a few conflicts in applying your patches on top of master (with or
-> without the patch from "checkout --track -b broken"), and when I thought
-> I had fixed up the result, the test actually still failed.
->
-> So I will take your word that it actually works, and that I screwed up
-> resolving the conflicts.
+--huBJOJF9BsF479P6
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-It's the three-patch series that leads to 684968c (Fix checkout not to
-clobber the branch when using symlinked HEAD upon detaching, 2008-10-17).
+On Sun, Oct 19, 2008 at 07:29:08PM +0000, Raphael Zimmerer wrote:
+> On Sat, Oct 18, 2008 at 03:17:23AM +0200, Miklos Vajna wrote:
+> > Right, I fixed this in option_parse_z(). --no-z should set
+> > line_termination to \n instead of 1.
+>=20
+> How about "--no-null"?
+>=20
+> The long option name for "-z" is "--null", as used in git-config and
+> git-grep. So I suggest to use that as the long option name for "-z",
+> as the enhanced option parser automatically will recongnize
+> "--no-null", when used. That helps avoid further confusion with git
+> option names.
 
-> PS If you are rebasing or resolving anyway, as I suspect you will have
-> to, there is a typo in the test: s/detch/detach/
+git checkout-index has no --null option. If you make --null be the long
+form for -z then --no-null will be "autogenerated".
+--=20
+=C2=B7O=C2=B7  Pierre Habouzit
+=C2=B7=C2=B7O                                                madcoder@debia=
+n.org
+OOO                                                http://www.madism.org
 
-Thanks; the series was only in 'pu', so I will.
+--huBJOJF9BsF479P6
+Content-Type: application/pgp-signature
+Content-Disposition: inline
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.9 (GNU/Linux)
+
+iEYEABECAAYFAkj7i8MACgkQvGr7W6HudhzVmQCgnPyXM/xPvWeg1S2xrIgKtnMe
+ZQsAn2F59twBeXUoIJirD/DwUPi39sGY
+=chRN
+-----END PGP SIGNATURE-----
+
+--huBJOJF9BsF479P6--
