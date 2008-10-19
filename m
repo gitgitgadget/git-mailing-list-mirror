@@ -1,121 +1,200 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] Teach/Fix pull/fetch -q/-v options
-Date: Sun, 19 Oct 2008 14:26:03 -0700
-Message-ID: <7vy70k5las.fsf@gitster.siamese.dyndns.org>
-References: <1224445691-1366-1-git-send-email-tuncer.ayaz@gmail.com>
+From: Robin Rosenberg <robin.rosenberg@dewire.com>
+Subject: [GITK PATCH] Add menu accelerators
+Date: Sun, 19 Oct 2008 23:19:46 +0200
+Message-ID: <200810192319.46974.robin.rosenberg@dewire.com>
+References: <1223532590-8706-1-git-send-email-robin.rosenberg@dewire.com> <18681.53866.855255.688290@cargo.ozlabs.ibm.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: git@vger.kernel.org
-To: Tuncer Ayaz <tuncer.ayaz@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Oct 20 11:27:29 2008
+To: Paul Mackerras <paulus@samba.org>
+X-From: git-owner@vger.kernel.org Mon Oct 20 11:37:16 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Krfo8-0002nv-0b
-	for gcvg-git-2@gmane.org; Sun, 19 Oct 2008 23:27:28 +0200
+	id 1Krfi1-0002Uc-IK
+	for gcvg-git-2@gmane.org; Sun, 19 Oct 2008 23:21:10 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751900AbYJSV0M (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 19 Oct 2008 17:26:12 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751868AbYJSV0M
-	(ORCPT <rfc822;git-outgoing>); Sun, 19 Oct 2008 17:26:12 -0400
-Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:57842 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751858AbYJSV0L (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 19 Oct 2008 17:26:11 -0400
-Received: from localhost.localdomain (localhost [127.0.0.1])
-	by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id B1F768D607;
-	Sun, 19 Oct 2008 17:26:09 -0400 (EDT)
-Received: from pobox.com (ip68-225-240-211.oc.oc.cox.net [68.225.240.211])
- (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
- certificate requested) by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with
- ESMTPSA id 0A1E48D606; Sun, 19 Oct 2008 17:26:05 -0400 (EDT)
-In-Reply-To: <1224445691-1366-1-git-send-email-tuncer.ayaz@gmail.com> (Tuncer
- Ayaz's message of "Sun, 19 Oct 2008 21:48:11 +0200")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: 8C13D0A2-9E24-11DD-BD3F-4F5276724C3F-77302942!a-sasl-quonix.pobox.com
+	id S1751841AbYJSVTz convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 19 Oct 2008 17:19:55 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751805AbYJSVTz
+	(ORCPT <rfc822;git-outgoing>); Sun, 19 Oct 2008 17:19:55 -0400
+Received: from av9-1-sn2.hy.skanova.net ([81.228.8.179]:59825 "EHLO
+	av9-1-sn2.hy.skanova.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751789AbYJSVTy convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 19 Oct 2008 17:19:54 -0400
+Received: by av9-1-sn2.hy.skanova.net (Postfix, from userid 502)
+	id 0AAAB37FB8; Sun, 19 Oct 2008 23:19:52 +0200 (CEST)
+Received: from smtp4-2-sn2.hy.skanova.net (smtp4-2-sn2.hy.skanova.net [81.228.8.93])
+	by av9-1-sn2.hy.skanova.net (Postfix) with ESMTP
+	id E704437FB8; Sun, 19 Oct 2008 23:19:51 +0200 (CEST)
+Received: from sleipner.dewire.com (h250n1fls32o811.telia.com [213.67.100.250])
+	by smtp4-2-sn2.hy.skanova.net (Postfix) with ESMTP id 993AA37E43;
+	Sun, 19 Oct 2008 23:19:51 +0200 (CEST)
+Received: from dewire.com (unknown [10.9.0.1])
+	by sleipner.dewire.com (Postfix) with ESMTP id D35D3B07;
+	Sun, 19 Oct 2008 23:19:48 +0200 (CEST)
+Received: from localhost (localhost [127.0.0.1])
+	by dewire.com (Postfix) with ESMTP id 15C35147EAC3;
+	Sun, 19 Oct 2008 23:19:51 +0200 (CEST)
+X-Virus-Scanned: by amavisd-new at dewire.com
+Received: from dewire.com ([127.0.0.1])
+	by localhost (torino.dewire.com [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id 8rlo5fRf3icW; Sun, 19 Oct 2008 23:19:50 +0200 (CEST)
+Received: from [10.9.0.4] (unknown [10.9.0.4])
+	by dewire.com (Postfix) with ESMTP id 485F2800250;
+	Sun, 19 Oct 2008 23:19:50 +0200 (CEST)
+User-Agent: KMail/1.9.10
+In-Reply-To: <18681.53866.855255.688290@cargo.ozlabs.ibm.com>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/98634>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/98635>
 
-Tuncer Ayaz <tuncer.ayaz@gmail.com> writes:
+Signed-off-by: Robin Rosenberg <robin.rosenberg@dewire.com>
+---
 
-> 2) my adaption of the following two lines from
-> builtin-fetch.c to the new verbosity option:
->     if (verbosity == VERBOSE)
->         transport->verbose = 1;
->     if (verbosity == QUIET)
->         transport->verbose = -1;
+l=F6rdagen den 18 oktober 2008 14.11.22 skrev Paul Mackerras:
+> Have a look at what I just pushed out.  It adds infrastructure to let
+> us use "&" in menu items to specify an alt+letter accelerator, but in
+> a different way to your patches.  If you'd like to redo your patch to
+> add "&" to the menu items, that would be good.
 
-Hmm, what's wrong with it?  Looks Ok to me...
+Looks fine. Seems to work too. Then we want to do the same thing
+with buttons. Btw, is it only for me that the "popup menu key" does
+not work for in gitk?
 
->  static struct option builtin_fetch_options[] = {
-> -	OPT__QUIET(&quiet),
-> -	OPT__VERBOSE(&verbose),
-> +	{ OPTION_CALLBACK, 'q', "quiet", NULL, NULL,
-> +		"operate quietly",
-> +		PARSE_OPT_NOARG, option_parse_quiet },
-> +	{ OPTION_CALLBACK, 'v', "verbose", NULL, NULL,
-> +		"be verbose",
-> +		PARSE_OPT_NOARG, option_parse_verbose },
+This patch does not include re-generated po's, nor the updated swedish =
+translation.
 
-Isn't there a OPTION_FOO that assigns a constant to the given variable?
+-- robin
 
-> @@ -192,7 +211,6 @@ static int s_update_ref(const char *action,
->  
->  static int update_local_ref(struct ref *ref,
->  			    const char *remote,
-> -			    int verbose,
->  			    char *display)
->  {
->  	struct commit *current = NULL, *updated;
-> ...
-> @@ -366,18 +384,19 @@ static int store_updated_refs(const char *url, const char *remote_name,
->  			note);
->  
->  		if (ref)
-> -			rc |= update_local_ref(ref, what, verbose, note);
-> +			rc |= update_local_ref(ref, what, note);
+ gitk |   72 +++++++++++++++++++++++++++++++++-------------------------=
+--------
+ 1 files changed, 36 insertions(+), 36 deletions(-)
 
-Hmph, in the existing code, do_fetch()->fetch_refs()->store_updated_refs()
-callchain relies on the "verbose" to be global anyway, so losing the
-ability to call update_local_ref() with verbosity as parameter is not a
-huge deal.
-
-I however think it would be more beneficial in the longer term to keep
-"verbosity" as parameter so the caller can tweak what the callee does, and
-making large part of what cmd_fetch() does callable from outside.  That
-would involve making the builtin_fetch_options[] on-stack, and passing
-verbosity (and possibly other variables currently used as file-scope
-global) as parameters, which is outside of the scope of your patch, but it
-is something to keep in mind.
-
-> diff --git a/git-pull.sh b/git-pull.sh
-> index 75c3610..dc613db 100755
-> --- a/git-pull.sh
-> +++ b/git-pull.sh
-> @@ -16,6 +16,7 @@ cd_to_toplevel
->  test -z "$(git ls-files -u)" ||
->  	die "You are in the middle of a conflicted merge."
->  
-> +verbosity=
->  strategy_args= no_stat= no_commit= squash= no_ff= log_arg=
->  curr_branch=$(git symbolic-ref -q HEAD)
->  curr_branch_short=$(echo "$curr_branch" | sed "s|refs/heads/||")
-
-It would fit at the end of the next line just fine, wouldn't it?
-
-> @@ -23,6 +24,10 @@ rebase=$(git config --bool branch.$curr_branch_short.rebase)
->  while :
->  do
->  	case "$1" in
-> +	-q|--quiet)
-> +		verbosity="$verbosity -q" ;;
-> +	-v|--verbose)
-> +		verbosity="$verbosity -v" ;;
-
-You know verbosity flags (-q and -v) are "the last one wins", so I do not
-see much point in this concatenation.
+diff --git a/gitk b/gitk
+index 3678de1..e65c0ce 100755
+--- a/gitk
++++ b/gitk
+@@ -1817,26 +1817,26 @@ proc makewindow {} {
+     # The "mc" arguments here are purely so that xgettext
+     # sees the following string as needing to be translated
+     makemenu .bar {
+-	{mc "File" cascade {
+-	    {mc "Update" command updatecommits -accelerator F5}
+-	    {mc "Reload" command reloadcommits}
+-	    {mc "Reread references" command rereadrefs}
+-	    {mc "List references" command showrefs}
+-	    {mc "Quit" command doquit}
++	{mc "&File" cascade {
++	    {mc "&Update" command updatecommits -accelerator F5}
++	    {mc "&Reload" command reloadcommits}
++	    {mc "R&eread references" command rereadrefs}
++	    {mc "&List references" command showrefs}
++	    {mc "&Quit" command doquit}
+ 	}}
+-	{mc "Edit" cascade {
+-	    {mc "Preferences" command doprefs}
++	{mc "&Edit" cascade {
++	    {mc "&Preferences" command doprefs}
+ 	}}
+-	{mc "View" cascade {
+-	    {mc "New view..." command {newview 0}}
+-	    {mc "Edit view..." command editview -state disabled}
+-	    {mc "Delete view" command delview -state disabled}
++	{mc "&View" cascade {
++	    {mc "&New view..." command {newview 0}}
++	    {mc "&Edit view..." command editview -state disabled}
++	    {mc "&Delete view" command delview -state disabled}
+ 	    {xx "" separator}
+-	    {mc "All files" radiobutton {selectedview 0} -command {showview 0=
+}}
++	    {mc "&All files" radiobutton {selectedview 0} -command {showview =
+0}}
+ 	}}
+-	{mc "Help" cascade {
+-	    {mc "About gitk" command about}
+-	    {mc "Key bindings" command keys}
++	{mc "&Help" cascade {
++	    {mc "&About gitk" command about}
++	    {mc "&Key bindings" command keys}
+ 	}}
+     }
+     . configure -menu .bar
+@@ -2220,39 +2220,39 @@ proc makewindow {} {
+=20
+     set rowctxmenu .rowctxmenu
+     makemenu $rowctxmenu {
+-	{mc "Diff this -> selected" command {diffvssel 0}}
+-	{mc "Diff selected -> this" command {diffvssel 1}}
+-	{mc "Make patch" command mkpatch}
+-	{mc "Create tag" command mktag}
+-	{mc "Write commit to file" command writecommit}
+-	{mc "Create new branch" command mkbranch}
+-	{mc "Cherry-pick this commit" command cherrypick}
+-	{mc "Reset HEAD branch to here" command resethead}
++	{mc "Diff &this -> selected" command {diffvssel 0}}
++	{mc "Diff &selected -> this" command {diffvssel 1}}
++	{mc "Make &patch" command mkpatch}
++	{mc "Create ta&g" command mktag}
++	{mc "&Write commit to file" command writecommit}
++	{mc "Create new &branch" command mkbranch}
++	{mc "&Cherry-pick this commit" command cherrypick}
++	{mc "&Reset HEAD branch to here" command resethead}
+     }
+     $rowctxmenu configure -tearoff 0
+=20
+     set fakerowmenu .fakerowmenu
+     makemenu $fakerowmenu {
+-	{mc "Diff this -> selected" command {diffvssel 0}}
+-	{mc "Diff selected -> this" command {diffvssel 1}}
+-	{mc "Make patch" command mkpatch}
++	{mc "Diff &this -> selected" command {diffvssel 0}}
++	{mc "Diff &selected -> this" command {diffvssel 1}}
++	{mc "Make &patch" command mkpatch}
+     }
+     $fakerowmenu configure -tearoff 0
+=20
+     set headctxmenu .headctxmenu
+     makemenu $headctxmenu {
+-	{mc "Check out this branch" command cobranch}
+-	{mc "Remove this branch" command rmbranch}
++	{mc "&Check out this branch" command cobranch}
++	{mc "&Remove this branch" command rmbranch}
+     }
+     $headctxmenu configure -tearoff 0
+=20
+     global flist_menu
+     set flist_menu .flistctxmenu
+     makemenu $flist_menu {
+-	{mc "Highlight this too" command {flist_hl 0}}
+-	{mc "Highlight this only" command {flist_hl 1}}
+-	{mc "External diff" command {external_diff}}
+-	{mc "Blame parent commit" command {external_blame 1}}
++	{mc "Highlight this &too" command {flist_hl 0}}
++	{mc "Highlight this &only" command {flist_hl 1}}
++	{mc "E&xternal diff" command {external_diff}}
++	{mc "&Blame parent commit" command {external_blame 1}}
+     }
+     $flist_menu configure -tearoff 0
+ }
+@@ -7361,9 +7361,9 @@ proc rowmenu {x y id} {
+     } else {
+ 	set menu $fakerowmenu
+     }
+-    $menu entryconfigure [mca "Diff this -> selected"] -state $state
+-    $menu entryconfigure [mca "Diff selected -> this"] -state $state
+-    $menu entryconfigure [mca "Make patch"] -state $state
++    $menu entryconfigure [mca "Diff &this -> selected"] -state $state
++    $menu entryconfigure [mca "Diff &selected -> this"] -state $state
++    $menu entryconfigure [mca "Make &patch"] -state $state
+     tk_popup $menu $x $y
+ }
+=20
+--=20
+1.6.0.2.308.gef4a
