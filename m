@@ -1,92 +1,136 @@
-From: Maciej Pasternacki <maciej@pasternacki.net>
-Subject: Re: [PATCH] -C/--chdir command line option
-Date: Sun, 19 Oct 2008 17:24:37 +0200
-Message-ID: <81E9D278-4851-4B1E-BE7D-D8563CEDA6F9@pasternacki.net>
-References: <20081019000227.GA9423@charybdis.dreamhost.com> <20081019131745.GA8643@coredump.intra.peff.net> <86685067-021C-4DC5-A462-AA6834208BDE@pasternacki.net> <20081019141634.GA8997@coredump.intra.peff.net>
-Mime-Version: 1.0 (Apple Message framework v929.2)
-Content-Type: text/plain; charset=US-ASCII; format=flowed; delsp=yes
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Mon Oct 20 00:01:54 2008
+From: Giuseppe Bilotta <giuseppe.bilotta@gmail.com>
+Subject: [PATHv2 8/8] gitweb: make the supported snapshot formats array global
+Date: Sun, 19 Oct 2008 16:24:30 +0200
+Message-ID: <1224426270-27755-3-git-send-email-giuseppe.bilotta@gmail.com>
+References: <1224188831-17767-6-git-send-email-giuseppe.bilotta@gmail.com>
+ <1224426270-27755-1-git-send-email-giuseppe.bilotta@gmail.com>
+ <1224426270-27755-2-git-send-email-giuseppe.bilotta@gmail.com>
+Cc: Jakub Narebski <jnareb@gmail.com>, Petr Baudis <pasky@suse.cz>,
+	Junio C Hamano <gitster@pobox.com>,
+	Giuseppe Bilotta <giuseppe.bilotta@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Oct 20 04:55:39 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KraAG-00084V-NG
-	for gcvg-git-2@gmane.org; Sun, 19 Oct 2008 17:25:57 +0200
+	id 1KrZDp-00062W-6p
+	for gcvg-git-2@gmane.org; Sun, 19 Oct 2008 16:25:33 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751370AbYJSPYp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 19 Oct 2008 11:24:45 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751359AbYJSPYp
-	(ORCPT <rfc822;git-outgoing>); Sun, 19 Oct 2008 11:24:45 -0400
-Received: from sd-green-bigip-83.dreamhost.com ([208.97.132.83]:35680 "EHLO
-	jankymail-a2.g.dreamhost.com" rhost-flags-OK-OK-OK-FAIL)
-	by vger.kernel.org with ESMTP id S1751318AbYJSPYo (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 19 Oct 2008 11:24:44 -0400
-X-Greylist: delayed 5847 seconds by postgrey-1.27 at vger.kernel.org; Sun, 19 Oct 2008 11:24:44 EDT
-Received: from [192.168.11.248] (vide-sat.pl [213.192.64.46])
-	(using TLSv1 with cipher AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by jankymail-a2.g.dreamhost.com (Postfix) with ESMTP id 072E8B6A6A;
-	Sun, 19 Oct 2008 08:24:41 -0700 (PDT)
-In-Reply-To: <20081019141634.GA8997@coredump.intra.peff.net>
-X-Mailer: Apple Mail (2.929.2)
+	id S1751368AbYJSOYR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 19 Oct 2008 10:24:17 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751280AbYJSOYR
+	(ORCPT <rfc822;git-outgoing>); Sun, 19 Oct 2008 10:24:17 -0400
+Received: from fk-out-0910.google.com ([209.85.128.189]:46624 "EHLO
+	fk-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751358AbYJSOYQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 19 Oct 2008 10:24:16 -0400
+Received: by fk-out-0910.google.com with SMTP id 18so1478177fkq.5
+        for <git@vger.kernel.org>; Sun, 19 Oct 2008 07:24:15 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:from:to:cc:subject:date
+         :message-id:x-mailer:in-reply-to:references;
+        bh=8HGVwj98SkCguH76bTIgnYskFb7iON3wdpdBFyFmi2o=;
+        b=NX5bFHMSYn/8LDgwUHWy6aH/u+lRYMIlEZnK4ZYLmSfmBxpJ96iFqLzaWs2+P7dzyS
+         UCH1HP5WZLoLx9LsdoUyXaIhjv1qo4IQT7bEbXdROhselI4nLQg/8WCR1kfnro4cmLlX
+         5GbVbAqiiGQaGyizV29ch0Yni9kgH16OM1j4g=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
+        b=rUJs37DtTBbWcD/byRylRwAPaMSGLqIi5vlXtSXl1mj1OYVtP3whyGHOvZr2JM9Y8a
+         CohSRVQIJOKOISasFGXDxFo8bLiKdH6bjUzQJhaHG0ki5IbmvcLtWvQTx4t1ZYUE11sh
+         Ll0b84+7V3X9iX3pyFAy7qrdjiHWbb3hi4MRg=
+Received: by 10.181.135.5 with SMTP id m5mr2311965bkn.87.1224426255092;
+        Sun, 19 Oct 2008 07:24:15 -0700 (PDT)
+Received: from localhost ([94.37.30.171])
+        by mx.google.com with ESMTPS id d13sm12050577fka.19.2008.10.19.07.24.12
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Sun, 19 Oct 2008 07:24:13 -0700 (PDT)
+X-Mailer: git-send-email 1.5.6.5
+In-Reply-To: <1224426270-27755-2-git-send-email-giuseppe.bilotta@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/98604>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/98605>
 
-On 2008-10-19, at 16:16, Jeff King wrote:
+The @snapshot_fmts array, containing the list of the supported snapshot
+formats, was recreated locally in three different routines (with the
+different name @supported_fmts in one of them).
 
-> Though I am not clear from your original description if that is even
-> what you want. It sounds like you might be doing:
->
->  git -C /chdir/path --git-dir=/back/to/where/I/was
->
-> in which case I think work-tree _is_ a better fit.
+Its local generation is particularly expensive because two of the
+callers, href() and format_snapshot_links(), are often called many times
+in a single page.
 
-No.  I have a regular "git clone"'d work tree inside some "shelf"  
-directory containing many repos (not only from git), and I'd like to  
-pull changes into this work tree.  As simple as "cvs up".  But -- I  
-don't want to chdir() there myself, and I had no problem with cvs, svn  
-and darcs (didn't do other VC systems yet).  So, -C would do exactly  
-what I need.
+Simplify code and speed up page generation by making the array global.
 
->>> Also, the envchanged flag should probably be set, as for the git-dir
->>> and work-tree options.
->>
->> OK.  I thought it means literally environment change, as in setenv().
->
-> It is really used to tell the options parser for aliases that some
-> options which change the operating environment should not be used in  
-> an
-> alias. I.e., something like:
->
->  git config alias.foo "--git-dir=/path/to/whatever log"
->
-> isn't allowed, because we have already done some work on setting up  
-> the
-> git-dir at this point. IMHO, this is a limitation of the current
-> approach to setting up the environment, but fixing it would be
-> nontrivial.
->
-> I'm not 100% sure that doing a chdir should be disallowed in this
-> instance, but I suspect it would cause problems. I think it is  
-> better in
-> this instance to be conservative and disallow it in aliases.
+Signed-off-by: Giuseppe Bilotta <giuseppe.bilotta@gmail.com>
+---
+ gitweb/gitweb.perl |   21 ++++++++-------------
+ 1 files changed, 8 insertions(+), 13 deletions(-)
 
-In this case, I think envchanged should not be set -- I would expect - 
-C dir to work *exactly* like "cd dir && git ...", including  
-configuration, environment variables and so on.  OTOH, option like "-- 
-no-env" may be useful in my case -- I want git to behave consistently  
-on users' machines, regardless of their configuration.  This, however,  
-is only a minor issue.
-
-Regards,
-Maciej.
-
+diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
+index 5fd5a1f..d1475b7 100755
+--- a/gitweb/gitweb.perl
++++ b/gitweb/gitweb.perl
+@@ -748,6 +748,10 @@ if (defined $searchtext) {
+ our $git_dir;
+ $git_dir = "$projectroot/$project" if $project;
+ 
++# list of supported snapshot formats
++our @snapshot_fmts = gitweb_check_feature('snapshot');
++@snapshot_fmts = filter_snapshot_fmts(@snapshot_fmts);
++
+ # dispatch
+ if (!defined $action) {
+ 	if (defined $hash) {
+@@ -858,11 +862,7 @@ sub href (%) {
+ 			# snapshot_format should always be defined when href()
+ 			# is called, but just in case some code forgets, we
+ 			# fall back to the default
+-			if (!$fmt) {
+-				my @snapshot_fmts = gitweb_check_feature('snapshot');
+-				@snapshot_fmts = filter_snapshot_fmts(@snapshot_fmts);
+-				$fmt = $snapshot_fmts[0];
+-			}
++			$fmt ||= $snapshot_fmts[0];
+ 			$href .= $known_snapshot_formats{$fmt}{'suffix'};
+ 			delete $params{'snapshot_format'};
+ 		}
+@@ -1695,8 +1695,6 @@ sub format_diff_line {
+ # linked.  Pass the hash of the tree/commit to snapshot.
+ sub format_snapshot_links {
+ 	my ($hash) = @_;
+-	my @snapshot_fmts = gitweb_check_feature('snapshot');
+-	@snapshot_fmts = filter_snapshot_fmts(@snapshot_fmts);
+ 	my $num_fmts = @snapshot_fmts;
+ 	if ($num_fmts > 1) {
+ 		# A parenthesized list of links bearing format names.
+@@ -4898,20 +4896,17 @@ sub git_tree {
+ }
+ 
+ sub git_snapshot {
+-	my @supported_fmts = gitweb_check_feature('snapshot');
+-	@supported_fmts = filter_snapshot_fmts(@supported_fmts);
+-
+ 	my $format = $input_params{'snapshot_format'};
+-	if (!@supported_fmts) {
++	if (!@snapshot_fmts) {
+ 		die_error(403, "Snapshots not allowed");
+ 	}
+ 	# default to first supported snapshot format
+-	$format ||= $supported_fmts[0];
++	$format ||= $snapshot_fmts[0];
+ 	if ($format !~ m/^[a-z0-9]+$/) {
+ 		die_error(400, "Invalid snapshot format parameter");
+ 	} elsif (!exists($known_snapshot_formats{$format})) {
+ 		die_error(400, "Unknown snapshot format");
+-	} elsif (!grep($_ eq $format, @supported_fmts)) {
++	} elsif (!grep($_ eq $format, @snapshot_fmts)) {
+ 		die_error(403, "Unsupported snapshot format");
+ 	}
+ 
 -- 
--><- Maciej Pasternacki -><- http://www.pasternacki.net/ -><-
+1.5.6.5
