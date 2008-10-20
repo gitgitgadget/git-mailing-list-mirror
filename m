@@ -1,112 +1,106 @@
-From: Michael J Gruber <michaeljgruber+gmane@fastmail.fm>
-Subject: Re: Working with remotes; cloning remote references
-Date: Mon, 20 Oct 2008 15:22:44 +0200
-Message-ID: <48FC8624.9090807@fastmail.fm>
-References: <48F7852F.109@xiplink.com>	 <eaa105840810161220k26eebd48q8de606597f2be055@mail.gmail.com>	 <48F7A42E.70200@xiplink.com> <eaa105840810161345r69c9f05j66bb850085f561e7@mail.gmail.com> <48F7BBAC.2090907@xiplink.com> <48F83FD0.90606@drmicha.warpmail.net> <48F8A4E8.8070008@xiplink.com> <48F8AA5E.6090908@drmicha.warpmail.net> <48F8ECA2.3040208@xiplink.com>
+From: Baz <brian.ewins@gmail.com>
+Subject: Re: need help stripping a repo to one file
+Date: Mon, 20 Oct 2008 12:53:04 +0100
+Message-ID: <2faad3050810200453o231d9702i6856657b925dd332@mail.gmail.com>
+References: <81bfc67a0810190327i7842d346g4c20f5816e8a9eda@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-Cc: Michael J Gruber <git@drmicha.warpmail.net>,
-	Peter Harris <git@peter.is-a-geek.org>, git@vger.kernel.org
-To: Marc Branchaud <marcnarc@xiplink.com>
-X-From: git-owner@vger.kernel.org Mon Oct 20 19:59:38 2008
+Cc: git@vger.kernel.org
+To: "Caleb Cushing" <xenoterracide@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Oct 20 20:10:28 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Krujq-0004hd-2O
-	for gcvg-git-2@gmane.org; Mon, 20 Oct 2008 15:24:02 +0200
+	id 1KrtL4-00062X-Cf
+	for gcvg-git-2@gmane.org; Mon, 20 Oct 2008 13:54:22 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751715AbYJTNWt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 20 Oct 2008 09:22:49 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751719AbYJTNWt
-	(ORCPT <rfc822;git-outgoing>); Mon, 20 Oct 2008 09:22:49 -0400
-Received: from out3.smtp.messagingengine.com ([66.111.4.27]:49610 "EHLO
-	out3.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751673AbYJTNWt (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 20 Oct 2008 09:22:49 -0400
-Received: from compute2.internal (compute2.internal [10.202.2.42])
-	by out1.messagingengine.com (Postfix) with ESMTP id 1701E18163C;
-	Mon, 20 Oct 2008 09:22:48 -0400 (EDT)
-Received: from heartbeat1.messagingengine.com ([10.202.2.160])
-  by compute2.internal (MEProxy); Mon, 20 Oct 2008 09:22:48 -0400
-X-Sasl-enc: wVY9SUiHOkGXWN128EvcWlVVlINHAoZNs56x3TwLR3Fk 1224508967
-Received: from [139.174.44.12] (whitehead.math.tu-clausthal.de [139.174.44.12])
-	by mail.messagingengine.com (Postfix) with ESMTPSA id 19E4C1B7E6;
-	Mon, 20 Oct 2008 09:22:46 -0400 (EDT)
-User-Agent: Thunderbird 2.0.0.17 (X11/20080914)
-In-Reply-To: <48F8ECA2.3040208@xiplink.com>
+	id S1751832AbYJTLxI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 20 Oct 2008 07:53:08 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751830AbYJTLxI
+	(ORCPT <rfc822;git-outgoing>); Mon, 20 Oct 2008 07:53:08 -0400
+Received: from nf-out-0910.google.com ([64.233.182.187]:51673 "EHLO
+	nf-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751806AbYJTLxG (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 20 Oct 2008 07:53:06 -0400
+Received: by nf-out-0910.google.com with SMTP id d3so889657nfc.21
+        for <git@vger.kernel.org>; Mon, 20 Oct 2008 04:53:04 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to
+         :subject:cc:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:references;
+        bh=MFISBb64uZoo/rqaqz5yDKzYZ2ZqW0zf2wZQpt74Ymw=;
+        b=ji1xubpyFo3xubSvyW458kO56tGrktf6eppiIuGyR6STXiyYq3ZqDSopahxthJYabN
+         Y40DcBZ7tGNxXTOY52ADNBMERhNukEvfkz9kM/aW3GnCpkIYplprImzKpTpqO3ZoGAux
+         zYlF9ZT5ZppIWM6DIik1w8V/5TDwayBFNyc3Q=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
+         :content-type:content-transfer-encoding:content-disposition
+         :references;
+        b=VyQ+CZKl3AfQMIeNLf71zNOU4g8+PLscWKnYjlFMYbXgfTmF5ZFJQnTGUIX3grC744
+         9yTs6X78N3Jgck6EBwH5fwlXNHCrFmMy7gV+F68mWEArcSQB4G22xOHbo2RJOxHoutFd
+         N5fcvoBAGZ8UrQ4WnZGTCrdZh0sg56iOLZpIY=
+Received: by 10.103.249.19 with SMTP id b19mr458026mus.53.1224503584696;
+        Mon, 20 Oct 2008 04:53:04 -0700 (PDT)
+Received: by 10.103.141.13 with HTTP; Mon, 20 Oct 2008 04:53:04 -0700 (PDT)
+In-Reply-To: <81bfc67a0810190327i7842d346g4c20f5816e8a9eda@mail.gmail.com>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/98684>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/98685>
 
-Marc Branchaud venit, vidit, dixit 17.10.2008 21:50:
-> Michael J Gruber wrote:
->> "pull -s strategy repo master" does a fetch followed by "merge -s
->> strategy repomaster", where repomaster is the ref for master on repo.
->> So, if you got that branch (repomaster=ThingOne/master) by cloning from
->> main you can do the merge (subtree or other) on your clone, even without
->> the remote repo config for ThingOne on clone.
-> 
-> I'm afraid I'm having trouble translating what you're saying into actual 
-> git commands (or are you proposing some new git functionality?).  How 
-> would I get the ThingOne/master branch into the clone?
+2008/10/19 Caleb Cushing <xenoterracide@gmail.com>:
+> here's what I've done so far (note: this is a public repo if anyone
+> wants to take a look)
+>
+> git clone git@github.com:xenoterracide/dot_usr.git sql_iabbr
+> cd sql_iabbr/
+> git checkout db3c5ffb180f10dde8e539a81a6644760e098dcd
+> git branch -D master
+> git checkout -b master
+> git filter-branch --subdirectory-filter  vim/ftplugin/ -- --all
+>
+>
+> that leaves me with this
+> html  sgml  sh  tex  vim  xhtml  xml  sql_iabbr.vim  xml.vim
+>
+> all I want left is sql_iabbr.vim and it's history
 
-Sorry for being cryptic. What I meant was: The clones don't need the
-full remote config of main in order to get main's remote branches for
-the ThingOne remote. Say, main stores the remote tracking branches for
-ThingOne in "refs/remotes/ThingOne", using an appropriate remote config.
-Then a clone could use the refspec
-"refs/remotes/ThingOne/*:refs/remotes/ThingOne/*" (when fetching from
-main) in order to fetch those branches, without having a remote config
-for ThingOne on the clone. Concretely:
+So you just want the history for a single file?
 
-git config remote.main.fetch
-'+refs/remotes/ThingOne/*:refs/remotes/ThingOne/*'
+ git log -p --reverse --pretty=email -- sql_iabbr.vim
 
-on a clone which has a remote config "main" for the main repo.
+That outputs a patch history for sql_iabbr.vim in mbox format, you can
+import that into an empty repo with git-am.
 
-> After some more thought I realized that the clone can just pull directly 
-> from the ThingOne repository:
-> 
-> clone/$ git pull -s subtree git://thing/ThingOne.git master
+(I had a look at the project, the history is simple with no merges
+etc, so nothing like --first-parent is needed)
 
-I thought that's what you were trying to avoid...
+Cheers,
+Baz
 
-> (I'm still getting used to git's ability to match commit IDs from 
-> anywhere -- it's magic! :) )
-
-... but this explains everything ;)
-
-> This goes a long way to where we want to be, in that we don't have to do 
-> our merging work in the original main repository.
-> 
-> It would be nice, though, if the clone were able to use the main 
-> repository's definition of the ThingOne remote.  I can think of some 
-> plausible scenarios where a person could get confused about which 
-> repo/branch they're supposed to pull.  It's easy to recover from that 
-> kind of mistake, but there'd be less chance of a mistake if one could 
-> tell git to "pull from X as defined in the origin repository".
-
-I think the approach I outlined above could solve this: main prepares
-everything to be pulled under refs/remotes/ThingOne, and clones (i.e.
-clone users) are told to fetch with a refspec like above. This way they
-get a copy of main's remote tracking branches for ThingOne. (Maybe you
-use one branch only, then the refspec is even simpler.)
-
-> And actually, git's remote functionality feels a bit crippled if clones 
-> can't make some use of the origin's remotes.  Is there a reason for 
-> keeping remote definitions out of a clone?
-
-Say A and B are working on a project C. Then, typically, A is interested
-in B's work on C, i.e. some of B's local branches, but not on B's remote
- tracking branches: A tracks a "central" C already, just like B does,
-and remote tracking branches don't carry any "value adding" by the
-cloner, they're just a local unmodified copy of the remote.
-
-But you can always add a refspec like above.
-
-Michael
+>
+> I've used stuff like
+> git filter-branch --tree-filter 'rm -rf xml.vim' HEAD
+>
+> to remove the files... but I notice that leaves the logs.
+>
+> I'm thinking I could do that and then remove those commits but I
+> haven't figured out how to remove the commits, and even then I'm not
+> sure the repo would be in the state I want.
+>
+> can anyone help me get to where I want to be? also is there an easier
+> way to do what I've done so far?
+> --
+> Caleb Cushing
+> --
+> To unsubscribe from this list: send the line "unsubscribe git" in
+> the body of a message to majordomo@vger.kernel.org
+> More majordomo info at  http://vger.kernel.org/majordomo-info.html
+>
