@@ -1,101 +1,114 @@
-From: Pete Harlan <pgit@pcharlan.com>
-Subject: Re: Archiving tags/branches?
-Date: Sun, 19 Oct 2008 23:14:30 -0700
-Message-ID: <48FC21C6.90600@pcharlan.com>
-References: <48F93F52.4070506@pcharlan.com> <ee77f5c20810171950j9ab85bfi6eddca167f86fda2@mail.gmail.com>
+From: Andreas Ericsson <ae@op5.se>
+Subject: Re: Feedback outside of the user survey
+Date: Mon, 20 Oct 2008 11:57:13 +0200
+Message-ID: <48FC55F9.3060509@op5.se>
+References: <2d460de70810160319r4bed8643g884508cdeba772@mail.gmail.com> <20081016115628.GA24836@garry-x300.arpnetworks.com> <2d460de70810160618u1803375aj913145a5060e5308@mail.gmail.com> <48F7A4F8.2080600@jaeger.mine.nu> <20081018134906.GA13894@garry-thinkpad.arpnetworks.com> <48F9EC2B.2010200@jaeger.mine.nu>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain; charset=ISO-8859-15; format=flowed
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: David Symonds <dsymonds@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Oct 20 15:29:50 2008
+Cc: Garry Dolley <gdolley@arpnetworks.com>,
+	Richard Hartmann <richih.mailinglist@gmail.com>,
+	git@vger.kernel.org
+To: Christian Jaeger <christian@jaeger.mine.nu>
+X-From: git-owner@vger.kernel.org Mon Oct 20 16:40:35 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Kro3P-0004kd-0y
-	for gcvg-git-2@gmane.org; Mon, 20 Oct 2008 08:15:47 +0200
+	id 1KrrWy-0005Fm-BQ
+	for gcvg-git-2@gmane.org; Mon, 20 Oct 2008 11:58:32 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751055AbYJTGOc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 20 Oct 2008 02:14:32 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751034AbYJTGOc
-	(ORCPT <rfc822;git-outgoing>); Mon, 20 Oct 2008 02:14:32 -0400
-Received: from lax-green-bigip-5.dreamhost.com ([208.113.200.5]:60993 "EHLO
-	swarthymail-a3.g.dreamhost.com" rhost-flags-OK-OK-OK-FAIL)
-	by vger.kernel.org with ESMTP id S1750769AbYJTGOb (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 20 Oct 2008 02:14:31 -0400
-Received: from [192.168.0.2] (031.132-78-65.ftth.swbr.surewest.net [65.78.132.31])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by swarthymail-a3.g.dreamhost.com (Postfix) with ESMTP id 992F77F01A;
-	Sun, 19 Oct 2008 23:14:30 -0700 (PDT)
-User-Agent: Mozilla-Thunderbird 2.0.0.16 (X11/20080724)
-In-Reply-To: <ee77f5c20810171950j9ab85bfi6eddca167f86fda2@mail.gmail.com>
+	id S1750985AbYJTJ5T (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 20 Oct 2008 05:57:19 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751028AbYJTJ5T
+	(ORCPT <rfc822;git-outgoing>); Mon, 20 Oct 2008 05:57:19 -0400
+Received: from mail.op5.se ([193.201.96.20]:43951 "EHLO mail.op5.se"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750953AbYJTJ5T (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 20 Oct 2008 05:57:19 -0400
+Received: from localhost (localhost.localdomain [127.0.0.1])
+	by mail.op5.se (Postfix) with ESMTP id 6D0A824B10E0;
+	Mon, 20 Oct 2008 11:50:44 +0200 (CEST)
+X-Virus-Scanned: amavisd-new at 
+X-Spam-Flag: NO
+X-Spam-Score: -3.842
+X-Spam-Level: 
+X-Spam-Status: No, score=-3.842 tagged_above=-10 required=6.6
+	tests=[ALL_TRUSTED=-1.8, AWL=0.557, BAYES_00=-2.599]
+Received: from mail.op5.se ([127.0.0.1])
+	by localhost (mail.op5.se [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id UlmN1aww35tB; Mon, 20 Oct 2008 11:50:41 +0200 (CEST)
+Received: from clix.int.op5.se (unknown [192.168.1.20])
+	by mail.op5.se (Postfix) with ESMTP id 84AF01B8036C;
+	Mon, 20 Oct 2008 11:50:40 +0200 (CEST)
+User-Agent: Thunderbird 2.0.0.16 (X11/20080723)
+In-Reply-To: <48F9EC2B.2010200@jaeger.mine.nu>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/98668>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/98669>
 
-David Symonds wrote:
-> On Sat, Oct 18, 2008 at 12:43 PM, Pete Harlan <pgit@pcharlan.com>
-> wrote:
->> Hi,
->> 
->> I'm looking for a way to manage an ever-growing list of tags.  I've
->> read some git docs, but am new to git and wonder if the below
->> method doesn't work or if there's a standard practice I haven't run
->> into.
->> 
->> Most of the tags in my repo are uninteresting to look at, but can't
->> be deleted.  (Code releases for the most part, or stalled topic
->> branches.) If I wanted to archive those, it looks like this would
->> work:
+Christian Jaeger wrote:
+> Garry Dolley wrote:
+>> On Thu, Oct 16, 2008 at 10:32:56PM +0200, Christian Jaeger wrote:
+>>  
+>>> Hm, I don't see a fundamental technical problem which would prevent 
+>>> one from implementing the ability to checkout only a subdirectory 
+>>> into the working directory (i.e. to add options to Git to make it 
+>>> reflect the working directory as being a subdirectory of what is in 
+>>> Git's database). At this level I don't see anything inherently 
+>>> different from SVN--except maybe for directory renames: if someone 
+>>> else is renaming the directory you've checked out, what should 
+>>> happend with your checkout? Git's filebased rename tracking would 
+>>> just lead to everything vanishing from your checkout. I don't know 
+>>> what happens in SVN, maybe it keeps track of the directory rename and 
+>>> still sends you the changes of the directory you've checked out even 
+>>> if it has now a different name on the server?
+>>>
+>>> Anyway, an unavoidable difference is that you have to always clone 
+>>> the whole Git *database*. With SVN the database stays on the server, 
+>>> with Git it is being cloned. Just as I expect SVN to need the whole 
+>>> database to be [...]
+>>>     
+>>
+>> Right, but I think cloning the entire git database just to get a
+>> subdir is a fundamental technical problem.  It's no different than
+>> git-clone + checkout + rm -rf <what I don't want in working tree>
+>>   
 > 
-> Is it really true that they can't be deleted? The only reason to
-> avoid it might be for preventing Git's GC from cleaning them up, but
-> if all your branches/tags are reachable via "interesting"
-> branches/tags then you could just slap the tag name and SHA1 in a
-> text file somewhere.
+> We're in "violent agreement" here.
 > 
+>> In that sense, git already has support for cloning subdirectories,
+>> which is why I don't think this method applies to what the original
+>> post author meant when they referred to "support for cloning sub
+>> directories".
+>>   
 > 
-> Dave.
+> I just think it's worth pointing out the difference between the working 
+> dir and the database. It should be as easy to implement checking out 
+> subdirectories in Git as it was in SVN (except, again, that, iff 
+> directory renames should be tracked, some code would have to be written 
+> to find out about directory renames, which SVN solves in a simpler way 
+> by just requiring that the user specifies renames explicitely). It's 
+> worth pointing out that working directory checkouts and database cloning 
+> are separate operatoins and it's only the database cloning which is, per 
+> definition (as it is a distributed VCS) different from SVN.
+> 
+>> :)
+>>   
+> 
+> If you really wanted, I suppose you could additionally look into 
+> implementing a kind of shallow cloning that only copies objects over the 
+> wire which are necessary for representing the subdirectory you're 
+> interested in.
+> 
 
-Thank you for your response.  The tags aren't reachable; they're
-dead-end branches.
+So what do you do when one such commit also affects something outside
+the subdirectory?
 
-Our development history looks like this:
-
-o---o---o---o---o---o---o---o---o---o---o---o---o---o master
- \                   \                   \
-  o---o---o r1.0      o---o---o r1.1      o---o---o r1.2
-
-with releases branched off the development line and stabilized during
-QA.  Fixes into the release branches are cherry-picked out of master,
-with no merges.
-
-With a new release every few weeks, the tags pile up.
-
-(There are workflows, such as git.git's, where the release tags form one
-long line of development, and when we start using git we may use a
-different workflow, but the above was our svn workflow, for the
-obvious reason that svn doesn't understand merges.  We're going to
-import hundreds of such branches in the conversion to git; most such
-names are noise, but we don't want to lose the history.)
-
-I would think a built-in feature for archiving refs would be useful to
-other projects, even when the tags/branches are reachable and therefore
-one could manually stash them in a file.  Getting the design right is
-tricky because there are a lot of different ways to approach it, but the
-idea seems generally useful to me.
-
-One direction would be to support directory commands for tags, using
-refs/tags and refs/branches as the root directories of trees.  (This was
-the solution in svn, which naturally supports a hierarchy of branches.)
- Another would be to have a regexp for hiding tags/branches with a
-certain pattern (e.g., leading '.').  What I'll probably do in the short
-term is write an alias that lists the most recent 10 tags and use that
-most of the time.
-
---Pete
+-- 
+Andreas Ericsson                   andreas.ericsson@op5.se
+OP5 AB                             www.op5.se
+Tel: +46 8-230225                  Fax: +46 8-230231
