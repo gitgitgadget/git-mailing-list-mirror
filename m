@@ -1,71 +1,73 @@
-From: Nicolas Pitre <nico@cam.org>
-Subject: Re: [BUG?] Fail to pull from kernel.org: pack has bad object
-Date: Mon, 20 Oct 2008 09:59:48 -0400 (EDT)
-Message-ID: <alpine.LFD.2.00.0810200955250.26244@xanadu.home>
-References: <200810201010.29173.johan@herland.net>
- <200810201026.57306.trast@student.ethz.ch>
- <20081020121533.GA2177@coredump.intra.peff.net>
+From: "Nguyen Thai Ngoc Duy" <pclouds@gmail.com>
+Subject: Re: [PATCH] -C/--chdir command line option
+Date: Mon, 20 Oct 2008 20:59:46 +0700
+Message-ID: <fcaeb9bf0810200659p91acb1cj58be43d3ef1c3e15@mail.gmail.com>
+References: <20081019000227.GA9423@charybdis.dreamhost.com>
+	 <20081019131745.GA8643@coredump.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: Thomas Rast <trast@student.ethz.ch>,
-	Johan Herland <johan@herland.net>, git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Mon Oct 20 21:23:09 2008
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: "Maciej Pasternacki" <maciej@pasternacki.net>, git@vger.kernel.org
+To: "Jeff King" <peff@peff.net>
+X-From: git-owner@vger.kernel.org Mon Oct 20 21:45:57 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KrvKA-00065Z-BY
-	for gcvg-git-2@gmane.org; Mon, 20 Oct 2008 16:01:34 +0200
+	id 1KrvJd-0005xM-V6
+	for gcvg-git-2@gmane.org; Mon, 20 Oct 2008 16:01:02 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751855AbYJTOAV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 20 Oct 2008 10:00:21 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751937AbYJTOAV
-	(ORCPT <rfc822;git-outgoing>); Mon, 20 Oct 2008 10:00:21 -0400
-Received: from relais.videotron.ca ([24.201.245.36]:23196 "EHLO
-	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751519AbYJTOAV (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 20 Oct 2008 10:00:21 -0400
-Received: from xanadu.home ([66.131.194.97]) by VL-MO-MR005.ip.videotron.ca
- (Sun Java(tm) System Messaging Server 6.3-4.01 (built Aug  3 2007; 32bit))
- with ESMTP id <0K9100DFOIUO2NO0@VL-MO-MR005.ip.videotron.ca> for
- git@vger.kernel.org; Mon, 20 Oct 2008 09:59:12 -0400 (EDT)
-X-X-Sender: nico@xanadu.home
-In-reply-to: <20081020121533.GA2177@coredump.intra.peff.net>
-User-Agent: Alpine 2.00 (LFD 1167 2008-08-23)
+	id S1751957AbYJTN7t (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 20 Oct 2008 09:59:49 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751955AbYJTN7t
+	(ORCPT <rfc822;git-outgoing>); Mon, 20 Oct 2008 09:59:49 -0400
+Received: from ey-out-2122.google.com ([74.125.78.27]:1075 "EHLO
+	ey-out-2122.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751864AbYJTN7s (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 20 Oct 2008 09:59:48 -0400
+Received: by ey-out-2122.google.com with SMTP id 6so571461eyi.37
+        for <git@vger.kernel.org>; Mon, 20 Oct 2008 06:59:46 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to
+         :subject:cc:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:references;
+        bh=Rk0vd9iziDFo5Gm5ivJAYzG0GSDkhZP2qroQfygIZuQ=;
+        b=LUv5beS+nJrxz1czc2Cx7DMx15g2nzrc13TwGQls7EX1XC6iK7pfirN2nfWZsHWoCs
+         ZfWQ+BSs1Faui3E9YpnzWC/7szP1F+kNNO2m50zFuEKDMVw59kVxANsR05qeV8Po5pDh
+         9F6ZxBSzEOqWsCkNTISJhWTajR8npKZkaTgFk=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
+         :content-type:content-transfer-encoding:content-disposition
+         :references;
+        b=nRupTqaQwEXTWbrE/oRjMJHj1rRnUELk8JL3Kd7sbJVPbivq8QQUTdI+MLGUXMYQp6
+         INTR833Dea7AhSFCj5jTYaN0rIinaCF7P3m7sonTLd+hzUbZe21mbjFlCqN59gSUsWNR
+         8UySMh1e66ilx1HWP1/W5qHndIHBbBJAZ2gDM=
+Received: by 10.86.74.4 with SMTP id w4mr6837910fga.25.1224511186417;
+        Mon, 20 Oct 2008 06:59:46 -0700 (PDT)
+Received: by 10.86.95.9 with HTTP; Mon, 20 Oct 2008 06:59:46 -0700 (PDT)
+In-Reply-To: <20081019131745.GA8643@coredump.intra.peff.net>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/98694>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/98695>
 
-On Mon, 20 Oct 2008, Jeff King wrote:
+On 10/19/08, Jeff King <peff@peff.net> wrote:
+>  I'm not sure if the actual problem is related to the oft-discussed,
+>  unresolved work-tree startup woes, or is something much simpler to fix.
+>  I'll try to look closer later today.
 
-> I am getting it, too, but I remembered to save my repo. :) The 'next'
-> branch is broken, but master works fine. The bisect points to
-> 
->   commit 9441b61dc5c3f1f984114ec8bd470dc20c55dfe0
->   Author: Nicolas Pitre <nico@cam.org>
->   Date:   Fri Oct 17 15:57:57 2008 -0400
-> 
->       index-pack: rationalize delta resolution code
-
-Dammit... I'm growing a habit of breaking things lately.
-
-> but I don't have time to look further right now (there is a small child
-> who apparently thinks coloring with crayons is more interesting than
-> bisecting bugs).
-> 
-> I can make my broken repo available if need be (though given the number
-> of us seeing the problem, I doubt it is hard to reproduce).
-
-It certainly is... to me at least.
-
-When index-pack dies like that, a temporary (and incomplete) pack file 
-is left in .git/objects/pack/ with tmp in the file name.  I'd need only 
-that to reproduce the issue.
-
-
-Nicolas
+I think all commands should be able to jump to worktree even if you
+are outside work-tree. git-pull and similar commands are easy because
+they don't take pathnames. The way pathnames are handled in git does
+not make it easy for outside current working directory, because if old
+cwd is outside worktree, the parameter "prefix" sent to those commands
+become "../../blah/", not a real prefix anymore. If a command expects
+an index pathname, then that prefix should be rejected. If they expect
+a filesystem pathname, it can be used with care.
+-- 
+Duy
