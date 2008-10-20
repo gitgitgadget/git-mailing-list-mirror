@@ -1,74 +1,62 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] -C/--chdir command line option
-Date: Sun, 19 Oct 2008 21:55:57 -0700
-Message-ID: <7vr66b50gy.fsf@gitster.siamese.dyndns.org>
-References: <20081019000227.GA9423@charybdis.dreamhost.com>
- <20081019131745.GA8643@coredump.intra.peff.net>
- <86685067-021C-4DC5-A462-AA6834208BDE@pasternacki.net>
- <20081019141634.GA8997@coredump.intra.peff.net>
+From: Miles Bader <miles@gnu.org>
+Subject: Re: Usability of git stash
+Date: Mon, 20 Oct 2008 14:23:44 +0900
+Message-ID: <buowsg3delb.fsf@dhapc248.dev.necel.com>
+References: <87wsg9acfv.fsf@cup.kalibalik.dk>
+	<nKimSsYZj6xfGNCQS3i5cRwnWQfbHrtUrwdGB2zGWVfMOcfZMwJDKg@cipher.nrlssc.navy.mil>
+	<86vdvsg4up.fsf@lola.quinscape.zz>
+	<vCcONcOJu3QKQyRgPdT5Dws3F2P25RNAFOgM5GX6FWWKJe40papCRw@cipher.nrlssc.navy.mil>
+	<87prly5k5r.fsf@cup.kalibalik.dk>
+Reply-To: Miles Bader <miles@gnu.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Maciej Pasternacki <maciej@pasternacki.net>, git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Mon Oct 20 14:35:02 2008
+Cc: Brandon Casey <casey@nrlssc.navy.mil>, David Kastrup <dak@gnu.org>,
+	git@vger.kernel.org
+To: Anders Melchiorsen <mail@cup.kalibalik.dk>
+X-From: git-owner@vger.kernel.org Mon Oct 20 14:42:54 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KrmvK-000125-6E
-	for gcvg-git-2@gmane.org; Mon, 20 Oct 2008 07:03:22 +0200
+	id 1KrnGd-00079P-8a
+	for gcvg-git-2@gmane.org; Mon, 20 Oct 2008 07:25:23 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751752AbYJTE4M (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 20 Oct 2008 00:56:12 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751812AbYJTE4L
-	(ORCPT <rfc822;git-outgoing>); Mon, 20 Oct 2008 00:56:11 -0400
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:53545 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751735AbYJTE4L (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 20 Oct 2008 00:56:11 -0400
-Received: from localhost.localdomain (localhost [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id AB47571308;
-	Mon, 20 Oct 2008 00:56:09 -0400 (EDT)
-Received: from pobox.com (ip68-225-240-211.oc.oc.cox.net [68.225.240.211])
- (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
- certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
- ESMTPSA id 2E77171306; Mon, 20 Oct 2008 00:56:04 -0400 (EDT)
-In-Reply-To: <20081019141634.GA8997@coredump.intra.peff.net> (Jeff King's
- message of "Sun, 19 Oct 2008 10:16:34 -0400")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: 69515370-9E63-11DD-BF48-9CEDC82D7133-77302942!a-sasl-fastnet.pobox.com
+	id S1752092AbYJTFYL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 20 Oct 2008 01:24:11 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752086AbYJTFYL
+	(ORCPT <rfc822;git-outgoing>); Mon, 20 Oct 2008 01:24:11 -0400
+Received: from TYO201.gate.nec.co.jp ([202.32.8.193]:51232 "EHLO
+	tyo201.gate.nec.co.jp" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752036AbYJTFYK (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 20 Oct 2008 01:24:10 -0400
+Received: from relay21.aps.necel.com ([10.29.19.50])
+	by tyo201.gate.nec.co.jp (8.13.8/8.13.4) with ESMTP id m9K5Nq5f007154;
+	Mon, 20 Oct 2008 14:23:52 +0900 (JST)
+Received: from relay21.aps.necel.com ([10.29.19.24] [10.29.19.24]) by relay21.aps.necel.com with ESMTP; Mon, 20 Oct 2008 14:23:52 +0900
+Received: from dhapc248.dev.necel.com ([10.114.112.215] [10.114.112.215]) by relay21.aps.necel.com with ESMTP; Mon, 20 Oct 2008 14:23:52 +0900
+Received: by dhapc248.dev.necel.com (Postfix, from userid 31295)
+	id 506714C4; Mon, 20 Oct 2008 14:23:49 +0900 (JST)
+System-Type: i686-pc-linux-gnu
+Blat: Foop
+In-Reply-To: <87prly5k5r.fsf@cup.kalibalik.dk> (Anders Melchiorsen's message
+	of "Sat, 18 Oct 2008 11:26:08 +0200")
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/98660>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/98661>
 
-Jeff King <peff@peff.net> writes:
+Anders Melchiorsen <mail@cup.kalibalik.dk> writes:
+> I wonder whether experienced users even use stash a lot. Personally,
+> after getting my head around the DAG, and thus getting more
+> comfortable with git reset, I tend to make "WIP" commits instead.
 
-> On Sun, Oct 19, 2008 at 03:47:04PM +0200, Maciej Pasternacki wrote:
->
->> As for -C being superfluous: --git-dir and --work-tree seem to support  
->> weird usage patterns (like work tree separate from git-dir), but it seems 
->
-> Hmm. Yeah, thinking about it more, -C is not really superfluous with
-> respect to those options. You don't want to say "here is the work-tree,
-> and here is the git-dir". You want to say "find the work-tree and
-> git-dir for me using the usual rules, as if I were in this directory."
+I certainly do, and my impression is that some of the biggest boosters
+of stash have always been the git heavy hitters (it's certainly not one
+of these "implemented due to nagging by newbies" features)...
 
-I think that interpretation of -C, if the option existed, makes sense, but
-I do not understand why the tool that drives git refuses to chdir to the
-repository for itself in the first place.
+-Miles
 
-The only excuse I remember seeing in the thread was that "make has '-C'
-option, so let's have it, because it is similar", which does not justfiy
-addition of that option to git at all to me.
-
-With "make", the -C option can be justified as a necessary tool to write a
-recursive Makefile that can be sanely and easily processed without
-actually executing any commands (iow, imaging implementing "make" that
-allows you to write "cd there && $(MAKE)" in the toplevel Makefile and
-tells the users what would happen in "there" when run as "make -n").
-
-And even in "make" context, not all implementations have it.  I think it
-is only GNU and fairly recent BSDs.
+-- 
+Liberty, n. One of imagination's most precious possessions.
