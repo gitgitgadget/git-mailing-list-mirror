@@ -1,78 +1,95 @@
-From: Christian Jaeger <christian@jaeger.mine.nu>
-Subject: Re: Feedback outside of the user survey
-Date: Mon, 20 Oct 2008 16:43:51 +0200
-Message-ID: <48FC9927.5030903@jaeger.mine.nu>
-References: <2d460de70810160319r4bed8643g884508cdeba772@mail.gmail.com> <20081016115628.GA24836@garry-x300.arpnetworks.com> <2d460de70810160618u1803375aj913145a5060e5308@mail.gmail.com> <48F7A4F8.2080600@jaeger.mine.nu> <20081018134906.GA13894@garry-thinkpad.arpnetworks.com> <48F9EC2B.2010200@jaeger.mine.nu> <48FC55F9.3060509@op5.se>
+From: "Simon Strandgaard" <neoneye@gmail.com>
+Subject: bug: git-stash save and symbolic links
+Date: Mon, 20 Oct 2008 10:34:53 +0200
+Message-ID: <df1390cc0810200134x68a8eb1fyc7f24650c8c9c5d3@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15; format=flowed
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-Cc: Garry Dolley <gdolley@arpnetworks.com>,
-	Richard Hartmann <richih.mailinglist@gmail.com>,
-	git@vger.kernel.org
-To: Andreas Ericsson <ae@op5.se>
-X-From: git-owner@vger.kernel.org Mon Oct 20 18:56:46 2008
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Oct 20 19:00:15 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Krw0N-0000vo-Es
-	for gcvg-git-2@gmane.org; Mon, 20 Oct 2008 16:45:11 +0200
+	id 1KrqFI-0002Dk-Cl
+	for gcvg-git-2@gmane.org; Mon, 20 Oct 2008 10:36:12 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751085AbYJTOn7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 20 Oct 2008 10:43:59 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751056AbYJTOn7
-	(ORCPT <rfc822;git-outgoing>); Mon, 20 Oct 2008 10:43:59 -0400
-Received: from ethlife-a.ethz.ch ([129.132.49.178]:40738 "HELO ethlife.ethz.ch"
-	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with SMTP
-	id S1750976AbYJTOn6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 20 Oct 2008 10:43:58 -0400
-Received: (qmail 25805 invoked from network); 20 Oct 2008 14:43:55 -0000
-Received: from unknown (HELO elvis-jaeger.mine.nu) (127.0.0.1)
-  by localhost with SMTP; 20 Oct 2008 14:43:55 -0000
-Received: (qmail 6771 invoked from network); 20 Oct 2008 14:43:51 -0000
-Received: from unknown (HELO ?127.0.0.1?) (10.0.5.1)
-  by elvis-jaeger.mine.nu with SMTP; 20 Oct 2008 14:43:51 -0000
-User-Agent: Mozilla-Thunderbird 2.0.0.16 (X11/20080724)
-In-Reply-To: <48FC55F9.3060509@op5.se>
+	id S1751510AbYJTIez (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 20 Oct 2008 04:34:55 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750911AbYJTIez
+	(ORCPT <rfc822;git-outgoing>); Mon, 20 Oct 2008 04:34:55 -0400
+Received: from wf-out-1314.google.com ([209.85.200.169]:12164 "EHLO
+	wf-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750724AbYJTIey (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 20 Oct 2008 04:34:54 -0400
+Received: by wf-out-1314.google.com with SMTP id 27so1844319wfd.4
+        for <git@vger.kernel.org>; Mon, 20 Oct 2008 01:34:54 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to
+         :subject:mime-version:content-type:content-transfer-encoding
+         :content-disposition;
+        bh=KYiQ2knU0ovkFqstnka69gZ19U3eTjhSOu4G7calLUg=;
+        b=ZH9Rcj5hsup2gUQfyxBY7XSJeh1fGvgileXXJvksDYYbW3WBJRdZeoVK49ic/S/xOz
+         7HCaOxsCYwgjZNob5q7L0hIb72N4sTKYiYzawkazh0vihy9tmSdaiRfO9BtiWbmb29GJ
+         ZsNBzBT2piN3fdhFit+GuW5EqYFm9cY8OV7GA=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:to:subject:mime-version:content-type
+         :content-transfer-encoding:content-disposition;
+        b=iZ+mVF8CPE8Okt1MMrdvmbfmgzAoscZHl1nSZHphcWzf4zzSiSvpq6XTpN/shrruF6
+         XRqWfo4TCn//3C0VYKHYRd2WuYIQAXRY7KZVMObzjRzGZN5wZtMgX2RsGzLiZFLPOVw7
+         M5bbXi6j2Y5syjaH9OdtZOTDXZNrOVX8+PAzw=
+Received: by 10.142.251.15 with SMTP id y15mr2932694wfh.39.1224491693994;
+        Mon, 20 Oct 2008 01:34:53 -0700 (PDT)
+Received: by 10.143.168.21 with HTTP; Mon, 20 Oct 2008 01:34:53 -0700 (PDT)
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/98680>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/98681>
 
-Andreas Ericsson wrote:
-> Christian Jaeger wrote:
->> If you really wanted, I suppose you could additionally look into 
->> implementing a kind of shallow cloning that only copies objects over 
->> the wire which are necessary for representing the subdirectory you're 
->> interested in.
->>
->
-> So what do you do when one such commit also affects something outside
-> the subdirectory?
+git-stash cannot find the repository when the path is a symbolic link.
+solution for me was to cd to the absolute path and then do git-stash.
 
-You haven't said what you mean with "affect".
+FAILURE: git-stash with symbolic link.
 
-Since the point is that you do not want to see any effect to be made nor 
-described if it is about something outside the subdirectory, the program 
-would just not look at those?
+prompt> pwd
+/Users/neoneye/st
+prompt> ls -la ~/st
+lrwxr-xr-x  1 neoneye  neoneye  38 10 Okt 07:40 /Users/neoneye/st ->
+/Users/neoneye/git/code/source_toolbox
+prompt> git-stash
+fatal: Not a git repository
+fatal: Not a git repository
+fatal: Not a git repository
+You do not have the initial commit yet
+prompt>
 
-Did you mean, new commits to be made from changed subdirectory contents? 
-The stuff outside the subdirectory would just be kept the same and thus 
-again doesn't need to be present locally.
 
-Did you mean merging branches where one or more of the branches have 
-changes outside the working directory? As long as the changes from the 
-branches don't touch any of the same files (outside the 
-subworkingdirectory), there's no need to fetch the files' contents, the 
-program is only interested in the changes in the directory listings 
-(thus directory objects). Now if there *are* changes to the same files 
-(and outside the subworkingdirectory), the program would certainly need 
-to fetch those contents, too, to be able to create the new contents. 
-Would it require a place in the working directory? Yes if there are 
-conflicts which need to be resolved manually, since it needs a place to 
-put the conflicts to ask the user to resolve.  So I guess it boils down 
-to SVN having a different notion of what a merge entails?
+SUCCESS: git-stash without symbolic link.
 
-Christian.
+prompt> pwd
+/Users/neoneye/git/code
+prompt> ls -la
+drwxr-xr-x  16 neoneye  neoneye   544 20 Okt 10:18 .git
+drwxr-xr-x  29 neoneye  neoneye   986 16 Okt 13:04 source_toolbox
+prompt> git stash save "did I mess up"
+Saved working directory and index state "On master: did I mess up"
+HEAD is now at 90ac45d we can now seek through a WAV file.. finally.
+prompt>
+
+
+I think the problem is located in the save_stash() function, but
+im not good at sh scripting to make a patch.
+
+
+
+Thank you very much for git!
+
+
+-- 
+Simon Strandgaard
+http://toolboxapp.com/
