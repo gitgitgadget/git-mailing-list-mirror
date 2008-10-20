@@ -1,69 +1,114 @@
-From: Jeff King <peff@peff.net>
+From: "Simon Strandgaard" <neoneye@gmail.com>
 Subject: Re: bug: git-stash save and symbolic links
-Date: Mon, 20 Oct 2008 13:55:17 -0400
-Message-ID: <20081020175517.GA18539@coredump.intra.peff.net>
-References: <df1390cc0810200134x68a8eb1fyc7f24650c8c9c5d3@mail.gmail.com> <20081020151715.GA13553@coredump.intra.peff.net> <df1390cc0810200832i4fa974fx1d70ed489aa1be02@mail.gmail.com> <df1390cc0810200839q5eddad1cp4bc14762724d8848@mail.gmail.com>
+Date: Mon, 20 Oct 2008 17:32:32 +0200
+Message-ID: <df1390cc0810200832i4fa974fx1d70ed489aa1be02@mail.gmail.com>
+References: <df1390cc0810200134x68a8eb1fyc7f24650c8c9c5d3@mail.gmail.com>
+	 <20081020151715.GA13553@coredump.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org
-To: Simon Strandgaard <neoneye@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Oct 20 23:58:22 2008
+To: "Jeff King" <peff@peff.net>
+X-From: git-owner@vger.kernel.org Tue Oct 21 00:01:51 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KryzY-0004Ug-Ku
-	for gcvg-git-2@gmane.org; Mon, 20 Oct 2008 19:56:33 +0200
+	id 1KrwmP-0006FR-IN
+	for gcvg-git-2@gmane.org; Mon, 20 Oct 2008 17:34:50 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752837AbYJTRzU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 20 Oct 2008 13:55:20 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752855AbYJTRzU
-	(ORCPT <rfc822;git-outgoing>); Mon, 20 Oct 2008 13:55:20 -0400
-Received: from peff.net ([208.65.91.99]:4476 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752837AbYJTRzT (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 20 Oct 2008 13:55:19 -0400
-Received: (qmail 14515 invoked by uid 111); 20 Oct 2008 17:55:18 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.32) with SMTP; Mon, 20 Oct 2008 13:55:18 -0400
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Mon, 20 Oct 2008 13:55:17 -0400
+	id S1751085AbYJTPcf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 20 Oct 2008 11:32:35 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751134AbYJTPce
+	(ORCPT <rfc822;git-outgoing>); Mon, 20 Oct 2008 11:32:34 -0400
+Received: from el-out-1112.google.com ([209.85.162.181]:48223 "EHLO
+	el-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750992AbYJTPcd (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 20 Oct 2008 11:32:33 -0400
+Received: by el-out-1112.google.com with SMTP id z25so398694ele.1
+        for <git@vger.kernel.org>; Mon, 20 Oct 2008 08:32:32 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to
+         :subject:cc:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:references;
+        bh=YrJ5W8GVxg+htXBjvOO/9bw9UJFjK6pDnLFjoSREjJU=;
+        b=Pj2FRSJsbLMkBMylyX/MkNqJHdaZraHVmNBCYZ5wGpV7AuWnNJsfLGfrjIJz003AP9
+         3f87JxcL3cE4JtIYXDarjOryDH5p64LbTaI5gSLice2jo71/6ujz/2WoodV6sZoLSJLx
+         ENtudnZHbDlG4EcQ1rszqFP2mOOKtoDYklLFQ=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
+         :content-type:content-transfer-encoding:content-disposition
+         :references;
+        b=T7bvL3JtytEsefQiNKtgMmeZ6AepvzXpkuegv139u9tXOAYSO1cuX5/opxFPS0x93p
+         ub2vpouMwLmr7MpHtt6+sXF5a9H+Zncx8FXUyOH6HOan69xPOVAf304kHyfXGR6VjWG4
+         m2U1ZPwWSYcwWgBbXlpUt2As4eY3EMcLz4hzU=
+Received: by 10.142.81.7 with SMTP id e7mr3124132wfb.320.1224516752068;
+        Mon, 20 Oct 2008 08:32:32 -0700 (PDT)
+Received: by 10.143.168.21 with HTTP; Mon, 20 Oct 2008 08:32:32 -0700 (PDT)
+In-Reply-To: <20081020151715.GA13553@coredump.intra.peff.net>
 Content-Disposition: inline
-In-Reply-To: <df1390cc0810200839q5eddad1cp4bc14762724d8848@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/98719>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/98720>
 
-On Mon, Oct 20, 2008 at 05:39:31PM +0200, Simon Strandgaard wrote:
+On Mon, Oct 20, 2008 at 5:17 PM, Jeff King <peff@peff.net> wrote:
+> On Mon, Oct 20, 2008 at 10:34:53AM +0200, Simon Strandgaard wrote:
+[snip]
+> What version of git are you running (though I tried a few different
+> ones, and all passed my test)?
 
->      mkdir test &&
->      echo content >test/file2 &&
->      git add test/file2 &&
->      git commit -m two &&
->    cd .. &&
->      ln -s repo/test linked &&
 
-Ah, OK. You have a symlink into a subdirectory of the repository. Git
-correctly finds the repository's .git directory, but then when we
-attempt to 'cd' to the top-level of the working tree, we end up outside
-of the repository. The culprit is actually "git rev-parse --show-cdup".
-This demonstrates it more simply:
+I have made some changes, so it can be reproduced
 
-  mkdir repo &&
-  (cd repo && git init) &&
-  mkdir repo/dir &&
-  ln -s repo/dir linked &&
-  cd linked && git rev-parse --show-cdup
+prompt> sh run.sh
+Initialized empty Git repository in /Users/neoneye/Desktop/test/repo/.git/
+Created initial commit a2a7d6f: one
+ 1 files changed, 1 insertions(+), 0 deletions(-)
+ create mode 100644 file
+before stash
+fatal: Not a git repository
+fatal: Not a git repository
+fatal: Not a git repository
+You do not have the initial commit yet
 
-which prints "../". But that's not right; we actually need to go to
-"../repo".
+prompt> cat run.sh
+rm -rf repo &&
+rm -f linked &&
+mkdir repo &&
+   cd repo &&
+     git init &&
+     echo content >file &&
+     git add file &&
+     git commit -m one &&
+     mkdir test &&
+   cd .. &&
+     ln -s repo/test linked &&
+   cd linked &&
+     echo cruft >>file &&
+     echo before stash &&
+     git stash &&
+     echo after stash
 
-I think the right solution in this situation is that we should _not_ be
-setting is_inside_work_tree in setup_git_directory_gently, so that we
-chdir to its absolute path. But I don't think we ever actually detect
-the symlink during this setup, so I'm not sure how best to realize we
-are _in_ this situation.
+prompt> pwd
+/Users/neoneye/Desktop/test
+prompt>
 
--Peff
+
+This is my computer
+
+prompt> git --version
+git version 1.5.6.2
+prompt> uname -a
+Darwin Macintosh.local 9.5.0 Darwin Kernel Version 9.5.0: Wed Sep  3
+11:29:43 PDT 2008; root:xnu-1228.7.58~1/RELEASE_I386 i386
+prompt>
+
+
+-- 
+Simon Strandgaard
+http://toolboxapp.com/
