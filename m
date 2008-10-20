@@ -1,106 +1,106 @@
-From: Baz <brian.ewins@gmail.com>
-Subject: Re: need help stripping a repo to one file
-Date: Mon, 20 Oct 2008 12:53:04 +0100
-Message-ID: <2faad3050810200453o231d9702i6856657b925dd332@mail.gmail.com>
-References: <81bfc67a0810190327i7842d346g4c20f5816e8a9eda@mail.gmail.com>
+From: "Giuseppe Bilotta" <giuseppe.bilotta@gmail.com>
+Subject: Re: [PATCHv6 5/5] gitweb: generate parent..current URLs
+Date: Mon, 20 Oct 2008 16:57:44 +0200
+Message-ID: <cb7bb73a0810200757h540a699qd9d3ea236fc7b5ad@mail.gmail.com>
+References: <1224188831-17767-1-git-send-email-giuseppe.bilotta@gmail.com>
+	 <1224188831-17767-5-git-send-email-giuseppe.bilotta@gmail.com>
+	 <1224188831-17767-6-git-send-email-giuseppe.bilotta@gmail.com>
+	 <200810201249.14426.jnareb@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: "Caleb Cushing" <xenoterracide@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Oct 20 20:10:28 2008
+Cc: git@vger.kernel.org, "Petr Baudis" <pasky@suse.cz>,
+	"Junio C Hamano" <gitster@pobox.com>
+To: "Jakub Narebski" <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Oct 20 20:14:58 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KrtL4-00062X-Cf
-	for gcvg-git-2@gmane.org; Mon, 20 Oct 2008 13:54:22 +0200
+	id 1KrwDj-0004iu-IE
+	for gcvg-git-2@gmane.org; Mon, 20 Oct 2008 16:59:00 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751832AbYJTLxI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 20 Oct 2008 07:53:08 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751830AbYJTLxI
-	(ORCPT <rfc822;git-outgoing>); Mon, 20 Oct 2008 07:53:08 -0400
-Received: from nf-out-0910.google.com ([64.233.182.187]:51673 "EHLO
-	nf-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751806AbYJTLxG (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 20 Oct 2008 07:53:06 -0400
-Received: by nf-out-0910.google.com with SMTP id d3so889657nfc.21
-        for <git@vger.kernel.org>; Mon, 20 Oct 2008 04:53:04 -0700 (PDT)
+	id S1751243AbYJTO5r (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 20 Oct 2008 10:57:47 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751215AbYJTO5q
+	(ORCPT <rfc822;git-outgoing>); Mon, 20 Oct 2008 10:57:46 -0400
+Received: from el-out-1112.google.com ([209.85.162.180]:38042 "EHLO
+	el-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751190AbYJTO5q (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 20 Oct 2008 10:57:46 -0400
+Received: by el-out-1112.google.com with SMTP id z25so392265ele.1
+        for <git@vger.kernel.org>; Mon, 20 Oct 2008 07:57:44 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:received:received:message-id:date:from:to
          :subject:cc:in-reply-to:mime-version:content-type
          :content-transfer-encoding:content-disposition:references;
-        bh=MFISBb64uZoo/rqaqz5yDKzYZ2ZqW0zf2wZQpt74Ymw=;
-        b=ji1xubpyFo3xubSvyW458kO56tGrktf6eppiIuGyR6STXiyYq3ZqDSopahxthJYabN
-         Y40DcBZ7tGNxXTOY52ADNBMERhNukEvfkz9kM/aW3GnCpkIYplprImzKpTpqO3ZoGAux
-         zYlF9ZT5ZppIWM6DIik1w8V/5TDwayBFNyc3Q=
+        bh=tqnYf6/aORttgJHzgvGk8NxwHg/JhBtqPTNDRucoO/I=;
+        b=cNOxBcgtO5Tnceze204fFidDBdMvQL/PBbUuUFGcQqBu8Ge1fwqiqS8QFN54wgw3Mp
+         0zTIyG/Avh6HlFgMsq6phxR033oDU1QqPrF2cpaSulZa7evWsk7CEuL8SFd1vxaiWItp
+         xH5xLOKVP+1zWrP0OEtGQx++YV8cu7qUibCYc=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
          :content-type:content-transfer-encoding:content-disposition
          :references;
-        b=VyQ+CZKl3AfQMIeNLf71zNOU4g8+PLscWKnYjlFMYbXgfTmF5ZFJQnTGUIX3grC744
-         9yTs6X78N3Jgck6EBwH5fwlXNHCrFmMy7gV+F68mWEArcSQB4G22xOHbo2RJOxHoutFd
-         N5fcvoBAGZ8UrQ4WnZGTCrdZh0sg56iOLZpIY=
-Received: by 10.103.249.19 with SMTP id b19mr458026mus.53.1224503584696;
-        Mon, 20 Oct 2008 04:53:04 -0700 (PDT)
-Received: by 10.103.141.13 with HTTP; Mon, 20 Oct 2008 04:53:04 -0700 (PDT)
-In-Reply-To: <81bfc67a0810190327i7842d346g4c20f5816e8a9eda@mail.gmail.com>
+        b=q9BLL4uuTb7qTyijIyPzrFol43AS6ETB8El/AghONe4neWQwE+d1QxMxrlJRyoSgi2
+         5LvkoCXSTQmZ9A6NZ1TS9g1KQUQkvy3IiuTwbgBEnZMaq17sVrLPzGLzZUD484C5WmaG
+         THaJS6FgC/c9kQl2WAPyld+MB/7Y5vc3WiTJ4=
+Received: by 10.151.155.5 with SMTP id h5mr12417507ybo.49.1224514664778;
+        Mon, 20 Oct 2008 07:57:44 -0700 (PDT)
+Received: by 10.150.145.2 with HTTP; Mon, 20 Oct 2008 07:57:44 -0700 (PDT)
+In-Reply-To: <200810201249.14426.jnareb@gmail.com>
 Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/98685>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/98686>
 
-2008/10/19 Caleb Cushing <xenoterracide@gmail.com>:
-> here's what I've done so far (note: this is a public repo if anyone
-> wants to take a look)
+On Mon, Oct 20, 2008 at 12:49 PM, Jakub Narebski <jnareb@gmail.com> wrote:
+>> -             #   - hash or hash_base:/filename
+>> +             #   - hash_parent or hash_parent_base:/file_parent
+>> +             #   - hash or hash_base:/file_name
 >
-> git clone git@github.com:xenoterracide/dot_usr.git sql_iabbr
-> cd sql_iabbr/
-> git checkout db3c5ffb180f10dde8e539a81a6644760e098dcd
-> git branch -D master
-> git checkout -b master
-> git filter-branch --subdirectory-filter  vim/ftplugin/ -- --all
->
->
-> that leaves me with this
-> html  sgml  sh  tex  vim  xhtml  xml  sql_iabbr.vim  xml.vim
->
-> all I want left is sql_iabbr.vim and it's history
+> Minor nit: this contain independent change 'filename' -> 'file_name',
+> but I think it is not worth separating...
 
-So you just want the history for a single file?
+Oopsie. Oh well, I was getting so used to all those _  that it felt
+strange without
 
- git log -p --reverse --pretty=email -- sql_iabbr.vim
+>>               # When the script is the root DirectoryIndex for the domain,
+>>               # $href here would be something like http://gitweb.example.com/
+>> @@ -778,17 +779,36 @@ sub href (%) {
+>>                       delete $params{'action'};
+>>               }
+>>
+>> -             # Finally, we put either hash_base:/file_name or hash
+>> +             # Next, we put hash_parent_base:/file_parent..hash_base:/file_name,
+>> +             # stripping nonexistent or useless pieces
+>> +             $href .= "/" if ($params{'hash_base'} || $params{'hash_parent_base'}
+>> +                     || $params{'hash_parent'} || $params{'hash'});
+>
+> Nice trick (and required change).
+>
+>>               if (defined $params{'hash_base'}) {
+>> -                     $href .= "/".esc_url($params{'hash_base'});
+>> -                     if (defined $params{'file_name'}) {
+>> +                     if (defined $params{'hash_parent_base'}) {
+>> +                             $href .= esc_url($params{'hash_parent_base'});
+>> +                             # skip the file_parent if it's the same as the file_name
+>> +                             delete $params{'file_parent'} if $params{'file_parent'} eq $params{'file_name'};
+>> +                             if (defined $params{'file_parent'} && $params{'file_parent'} !~ /\.\./) {
+>> +                                     $href .= ":/".esc_url($params{'file_parent'});
+>> +                                     delete $params{'file_parent'};
+>> +                             }
+>
+> Side note: I wonder if we should use esc_url or esc_param here...
 
-That outputs a patch history for sql_iabbr.vim in mbox format, you can
-import that into an empty repo with git-am.
+esc_url, I would say, allowing us to build RFC-compliant URLs. Isn't
+esc_param for CGI?
 
-(I had a look at the project, the history is simple with no merges
-etc, so nothing like --first-parent is needed)
 
-Cheers,
-Baz
-
->
-> I've used stuff like
-> git filter-branch --tree-filter 'rm -rf xml.vim' HEAD
->
-> to remove the files... but I notice that leaves the logs.
->
-> I'm thinking I could do that and then remove those commits but I
-> haven't figured out how to remove the commits, and even then I'm not
-> sure the repo would be in the state I want.
->
-> can anyone help me get to where I want to be? also is there an easier
-> way to do what I've done so far?
-> --
-> Caleb Cushing
-> --
-> To unsubscribe from this list: send the line "unsubscribe git" in
-> the body of a message to majordomo@vger.kernel.org
-> More majordomo info at  http://vger.kernel.org/majordomo-info.html
->
+-- 
+Giuseppe "Oblomov" Bilotta
