@@ -1,97 +1,87 @@
-From: Andreas Ericsson <ae@op5.se>
-Subject: Re: Usability of git stash
-Date: Mon, 20 Oct 2008 11:49:35 +0200
-Message-ID: <48FC542F.9010200@op5.se>
-References: <87wsg9acfv.fsf@cup.kalibalik.dk>	<nKimSsYZj6xfGNCQS3i5cRwnWQfbHrtUrwdGB2zGWVfMOcfZMwJDKg@cipher.nrlssc.navy.mil>	<86vdvsg4up.fsf@lola.quinscape.zz>	<vCcONcOJu3QKQyRgPdT5Dws3F2P25RNAFOgM5GX6FWWKJe40papCRw@cipher.nrlssc.navy.mil> <87prly5k5r.fsf@cup.kalibalik.dk>
+From: "Alex Riesen" <raa.lkml@gmail.com>
+Subject: Re: [PATCH] -C/--chdir command line option
+Date: Mon, 20 Oct 2008 08:26:12 +0200
+Message-ID: <81b0412b0810192326n7ace9d4fjd8013cbe1872df22@mail.gmail.com>
+References: <20081019000227.GA9423@charybdis.dreamhost.com>
+	 <20081019131745.GA8643@coredump.intra.peff.net>
+	 <86685067-021C-4DC5-A462-AA6834208BDE@pasternacki.net>
+	 <20081019141634.GA8997@coredump.intra.peff.net>
+	 <7vr66b50gy.fsf@gitster.siamese.dyndns.org>
+	 <7vhc774ydr.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15; format=flowed
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-Cc: Brandon Casey <casey@nrlssc.navy.mil>, David Kastrup <dak@gnu.org>,
-	git@vger.kernel.org
-To: Anders Melchiorsen <mail@cup.kalibalik.dk>
-X-From: git-owner@vger.kernel.org Mon Oct 20 15:03:38 2008
+Cc: "Jeff King" <peff@peff.net>,
+	"Maciej Pasternacki" <maciej@pasternacki.net>, git@vger.kernel.org
+To: "Junio C Hamano" <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Oct 20 15:14:41 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KrrPf-0002xG-4L
-	for gcvg-git-2@gmane.org; Mon, 20 Oct 2008 11:50:59 +0200
+	id 1KroEh-0008W6-7b
+	for gcvg-git-2@gmane.org; Mon, 20 Oct 2008 08:27:27 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750998AbYJTJtq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 20 Oct 2008 05:49:46 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750765AbYJTJtp
-	(ORCPT <rfc822;git-outgoing>); Mon, 20 Oct 2008 05:49:45 -0400
-Received: from mail.op5.se ([193.201.96.20]:50460 "EHLO mail.op5.se"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750763AbYJTJtp (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 20 Oct 2008 05:49:45 -0400
-Received: from localhost (localhost.localdomain [127.0.0.1])
-	by mail.op5.se (Postfix) with ESMTP id C050F24B0001;
-	Mon, 20 Oct 2008 11:43:07 +0200 (CEST)
-X-Virus-Scanned: amavisd-new at 
-X-Spam-Flag: NO
-X-Spam-Score: -3.834
-X-Spam-Level: 
-X-Spam-Status: No, score=-3.834 tagged_above=-10 required=6.6
-	tests=[ALL_TRUSTED=-1.8, AWL=0.565, BAYES_00=-2.599]
-Received: from mail.op5.se ([127.0.0.1])
-	by localhost (mail.op5.se [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id ZkcFueateTbc; Mon, 20 Oct 2008 11:43:04 +0200 (CEST)
-Received: from clix.int.op5.se (unknown [192.168.1.20])
-	by mail.op5.se (Postfix) with ESMTP id B3F061B8036C;
-	Mon, 20 Oct 2008 11:43:02 +0200 (CEST)
-User-Agent: Thunderbird 2.0.0.16 (X11/20080723)
-In-Reply-To: <87prly5k5r.fsf@cup.kalibalik.dk>
+	id S1751209AbYJTG0O (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 20 Oct 2008 02:26:14 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751208AbYJTG0O
+	(ORCPT <rfc822;git-outgoing>); Mon, 20 Oct 2008 02:26:14 -0400
+Received: from an-out-0708.google.com ([209.85.132.243]:39270 "EHLO
+	an-out-0708.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751194AbYJTG0N (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 20 Oct 2008 02:26:13 -0400
+Received: by an-out-0708.google.com with SMTP id d40so79901and.103
+        for <git@vger.kernel.org>; Sun, 19 Oct 2008 23:26:12 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to
+         :subject:cc:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:references;
+        bh=5+23tloHwRDVxUwAFeGGYotppMwO7IL2coc5bX92zfU=;
+        b=Dxn+Jvt26IVa2z6tZsCBHrbD+Ux+6tTYFQj3MNY6S8M3kXeuvDhHew0SltBTYoAXmn
+         zzeX3PFFiM15lUC4t0o5QTxEW+yXWzPY9kkzhKSMiygrfNqZftJHDgXDOZtcctRiQKyT
+         pda00KYrxv4VPAE0Hxdhwol7wddZwEYaD3qi4=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
+         :content-type:content-transfer-encoding:content-disposition
+         :references;
+        b=AA8vWmwMMmcnNFnw6ZSMvOJvIDjw/Y/W+NSo3I2ryJVBf8c0o+SBEVLW8H1JBIUemy
+         E/gIPmMYXhMSaZP7WdyAdXfDpzVG859Buutq66XqX1/z/V75x0EjG6ZxcB5lsg3iqmam
+         Es7mAMQH7WzjHhv0SqWItXId8gYF5/wBd5cc0=
+Received: by 10.100.227.6 with SMTP id z6mr7953339ang.34.1224483972647;
+        Sun, 19 Oct 2008 23:26:12 -0700 (PDT)
+Received: by 10.100.91.8 with HTTP; Sun, 19 Oct 2008 23:26:12 -0700 (PDT)
+In-Reply-To: <7vhc774ydr.fsf@gitster.siamese.dyndns.org>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/98665>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/98666>
 
-Anders Melchiorsen wrote:
-> Brandon Casey <casey@nrlssc.navy.mil> writes:
-> 
->> In exchange for allowing new users to stub their toe on new commands, the
->> work flow of more experienced users is made a little easier.
-> 
-> I wonder whether experienced users even use stash a lot. Personally,
-> after getting my head around the DAG, and thus getting more
-> comfortable with git reset, I tend to make "WIP" commits instead.
-> 
+2008/10/20 Junio C Hamano <gitster@pobox.com>:
+> Junio C Hamano <gitster@pobox.com> writes:
+> I wouldn't however suggest allowing the syntax to set environment
+> variables, like:
+>
+>        $ git GIT_AUTHOR_NAME="A U Thor" commit
+>
+> as this is something your shell lets you do easily, i.e:
+>
+>        $ GIT_AUTHOR_NAME="A U Thor" git commit
+>
 
-I use stash quite a lot. It's useful for me because my co-workers
-sometimes pull from me so I cannot use 'wip' commits (without annoying
-my co-workers anyway).
+No, someplace else it doesn't (yes, windows again).
+It is mostly hard to do there, because the system shell is so
+primitive, and installation of something sane (sh or env) is
+an additional (and hard to explain to windows zealots) hassle.
 
-> After having used "git stash clear" at a bad time once, I am wary of
-> stashing work that I actually want to keep. I prefer workflows where
-> my mistakes can be (easily) corrected.
-> 
+And even in something like Perl it is hard: you cannot
+change the environment just for the child process, you
+have to change your own, run the process and change
+it back.
 
-I never use "stash clear", but always do "stash pop", so my stash-stack
-is hardly ever deeper than one. It would be a lot worse for us to get a
-"wip" commit accidentally propagated and built on further. It's happened
-and it's no fun what so ever as it requires team coordination and rewrite
-of published history to get it back to a good state.
-
-> 
-> The primary thing that stash does for me is preserve the index state.
-> Unfortunately, --index is not default for stash apply, so I often
-> forget it.
-> 
-
-I commit regularly enough that it doesn't take me long at all to re-do
-the index changes.
-
-> Sometimes, I also want stash to store away changes to untracked files
-> (to get a clean working directory), but that is not possible.
-> 
-
-git add .
-git stash --index
-
--- 
-Andreas Ericsson                   andreas.ericsson@op5.se
-OP5 AB                             www.op5.se
-Tel: +46 8-230225                  Fax: +46 8-230231
+So, yes, I like your suggestion, but I'd like to _include_
+setting all the Git's environment.
