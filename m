@@ -1,103 +1,95 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] rebase-i-p: only list commits that require rewriting in
- todo
-Date: Mon, 20 Oct 2008 16:36:38 -0700
-Message-ID: <7vej2a3kl5.fsf@gitster.siamese.dyndns.org>
-References: <cover.1224055978.git.stephen@exigencecorp.com>
- <0977b23f6c709d4aea76de7a88e9fe17272b31ea.1224055978.git.stephen@exigencecorp.com> <20081020115003.GA11309@coredump.intra.peff.net>
+From: Jeff King <peff@peff.net>
+Subject: Re: git add --patch newfile doesn't add newfile to cache ?
+Date: Mon, 20 Oct 2008 19:50:50 -0400
+Message-ID: <20081020235049.GA23120@coredump.intra.peff.net>
+References: <20081020143636.GB3988@gmx.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Stephen Haberman <stephen@exigencecorp.com>, gitster@pobox.com,
-	git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Tue Oct 21 01:54:54 2008
+Content-Type: text/plain; charset=utf-8
+Cc: git@vger.kernel.org
+To: Marc Weber <marco-oweber@gmx.de>
+X-From: git-owner@vger.kernel.org Tue Oct 21 01:55:55 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Ks4K0-0003Og-Q4
-	for gcvg-git-2@gmane.org; Tue, 21 Oct 2008 01:38:01 +0200
+	id 1Ks4Xg-0004Is-AK
+	for gcvg-git-2@gmane.org; Tue, 21 Oct 2008 01:52:08 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752083AbYJTXgs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 20 Oct 2008 19:36:48 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752070AbYJTXgs
-	(ORCPT <rfc822;git-outgoing>); Mon, 20 Oct 2008 19:36:48 -0400
-Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:46783 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751789AbYJTXgr (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 20 Oct 2008 19:36:47 -0400
-Received: from localhost.localdomain (localhost [127.0.0.1])
-	by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id 3E7FE8D520;
-	Mon, 20 Oct 2008 19:36:46 -0400 (EDT)
-Received: from pobox.com (ip68-225-240-211.oc.oc.cox.net [68.225.240.211])
- (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
- certificate requested) by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with
- ESMTPSA id 24B778D51F; Mon, 20 Oct 2008 19:36:39 -0400 (EDT)
-In-Reply-To: <20081020115003.GA11309@coredump.intra.peff.net> (Jeff King's
- message of "Mon, 20 Oct 2008 07:50:04 -0400")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: F56DC554-9EFF-11DD-AA40-4F5276724C3F-77302942!a-sasl-quonix.pobox.com
+	id S1752256AbYJTXuz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 20 Oct 2008 19:50:55 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752109AbYJTXuz
+	(ORCPT <rfc822;git-outgoing>); Mon, 20 Oct 2008 19:50:55 -0400
+Received: from peff.net ([208.65.91.99]:3417 "EHLO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751502AbYJTXuz (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 20 Oct 2008 19:50:55 -0400
+Received: (qmail 16889 invoked by uid 111); 20 Oct 2008 23:50:51 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+    by peff.net (qpsmtpd/0.32) with SMTP; Mon, 20 Oct 2008 19:50:51 -0400
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Mon, 20 Oct 2008 19:50:50 -0400
+Content-Disposition: inline
+In-Reply-To: <20081020143636.GB3988@gmx.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/98744>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/98745>
 
-Jeff King <peff@peff.net> writes:
+On Mon, Oct 20, 2008 at 04:36:36PM +0200, Marc Weber wrote:
 
-> On Wed, Oct 15, 2008 at 02:44:38AM -0500, Stephen Haberman wrote:
->
->> +					cat "$TODO" | grep -v "${rev:0:7}" > "${TODO}2" ; mv "${TODO}2" "$TODO"
->
-> Substring expansion (like ${rev:0:7}) is not portable. At least it
-> doesn't work on FreeBSD /bin/sh, and "it's not even in POSIX", I
-> believe.
+> Is this desired behaviour?
+> [...]
+>         git init
+>         echo test > test
+>         git add --patch test
+>         echo "running status, nothing has been added"
+>         git status
 
-True.
+I think your example makes sense, but nobody ever really tried it
+before. I use "git add -p" all the time, but almost always when I am
+adding a new file, I add the whole contents.
 
-I do not remember the individual patches in the series, but I have to say
-that the script at the tip of the topic is, eh, less than ideal.
+I think there are two ways to go about fixing it:
 
-Here is a small untested patch to fix a few issues I spotted while reading
-it for two minutes.
+  - in git-add--interactive.perl, the function patch_update_cmd
+    explicitly looks at the list of modified files. It would have to
+    also check for untracked files, which is easy. But we also need to
+    keep track of which files are modified and which are untracked
+    through the whole patching procedure, which is a bit more invasive.
 
- * Why filter output from "rev-list --left-right A...B" and look for the
-   ones that begin with ">"?  Wouldn't "rev-list A..B" give that?
+  - the recently-added "git add -N" adds an empty file into the index,
+    at which point we could add content in the normal way. So:
 
- * The abbreviated SHA-1 are made with "rev-list --abbrev=7" into $TODO in
-   an earlier invocation, and it can be more than 7 letters to avoid
-   ambiguity.  Not just that "${r:0:7} is not even in POSIX", but use of
-   it here is actively wrong.
+      git add -N test
+      git add -p test
 
- * There is no point in catting a single file and piping it into grep.
+    should just work (but obviously requires two steps from the user).
+    You could do something more automatic like the patch below, but I
+    think the semantics aren't quite right. If you stage nothing for a
+    newly added file, then you still end up with an empty version of the
+    staged file in the index. I would expect the semantics to be:
 
+      1. if you stage any content, then the file is added to the index
+         with that content
 
- git-rebase--interactive.sh |    7 ++++---
- 1 files changed, 4 insertions(+), 3 deletions(-)
+      2. if you stage no content, then the file remains untracked
 
-diff --git i/git-rebase--interactive.sh w/git-rebase--interactive.sh
-index 848fbe7..a563dea 100755
---- i/git-rebase--interactive.sh
-+++ w/git-rebase--interactive.sh
-@@ -635,8 +635,8 @@ first and then run 'git rebase --continue' again."
- 				sed -n "s/^>//p" > "$DOTEST"/not-cherry-picks
- 			# Now all commits and note which ones are missing in
- 			# not-cherry-picks and hence being dropped
--			git rev-list $UPSTREAM...$HEAD --left-right | \
--				sed -n "s/^>//p" | while read rev
-+			git rev-list $UPSTREAM..$HEAD |
-+			while read rev
- 			do
- 				if test -f "$REWRITTEN"/$rev -a "$(grep "$rev" "$DOTEST"/not-cherry-picks)" = ""
- 				then
-@@ -645,7 +645,8 @@ first and then run 'git rebase --continue' again."
- 					# just the history of its first-parent for others that will
- 					# be rebasing on top of it
- 					git rev-list --parents -1 $rev | cut -d' ' -f2 > "$DROPPED"/$rev
--					cat "$TODO" | grep -v "${rev:0:7}" > "${TODO}2" ; mv "${TODO}2" "$TODO"
-+					short=$(git rev-list -1 --abbrev-commit --abbrev=7 $rev)
-+					grep -v "^[a-z][a-z]* $short" <"$TODO" > "${TODO}2" ; mv "${TODO}2" "$TODO"
- 					rm "$REWRITTEN"/$rev
- 				fi
- 			done
+---
+diff --git a/git-add--interactive.perl b/git-add--interactive.perl
+index da768ee..72f8a67 100755
+--- a/git-add--interactive.perl
++++ b/git-add--interactive.perl
+@@ -811,6 +811,12 @@ EOF
+ }
+ 
+ sub patch_update_cmd {
++	my @new = list_untracked();
++	if (@new) {
++		system(qw(git add -N), @new)
++			and die "git add reported failure";
++	}
++
+ 	my @mods = grep { !($_->{BINARY}) } list_modified('file-only');
+ 	my @them;
+ 
