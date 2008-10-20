@@ -1,50 +1,71 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] fix multiple issues in index-pack
-Date: Mon, 20 Oct 2008 14:31:54 -0700
-Message-ID: <7vskqr2bsl.fsf@gitster.siamese.dyndns.org>
-References: <alpine.LFD.2.00.0810201609300.26244@xanadu.home>
+From: Nicolas Pitre <nico@cam.org>
+Subject: Re: [PATCH] fix for "index-pack: rationalize delta resolution code"
+Date: Mon, 20 Oct 2008 15:27:24 -0400 (EDT)
+Message-ID: <alpine.LFD.2.00.0810201525540.26244@xanadu.home>
+References: <alpine.LFD.2.00.0810201357340.26244@xanadu.home>
+ <20081020191400.GA18743@fiberbit.xs4all.nl>
+ <20081020192051.GA21770@fiberbit.xs4all.nl>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Nicolas Pitre <nico@cam.org>
-X-From: git-owner@vger.kernel.org Tue Oct 21 00:43:54 2008
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+	Jeff King <peff@peff.net>
+To: Marco Roeland <marco.roeland@xs4all.nl>
+X-From: git-owner@vger.kernel.org Tue Oct 21 00:44:32 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Ks2NK-0008VS-RO
-	for gcvg-git-2@gmane.org; Mon, 20 Oct 2008 23:33:19 +0200
+	id 1Ks0Qm-0005LU-DC
+	for gcvg-git-2@gmane.org; Mon, 20 Oct 2008 21:28:44 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753084AbYJTVcH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 20 Oct 2008 17:32:07 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753186AbYJTVcH
-	(ORCPT <rfc822;git-outgoing>); Mon, 20 Oct 2008 17:32:07 -0400
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:60234 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752973AbYJTVcG (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 20 Oct 2008 17:32:06 -0400
-Received: from localhost.localdomain (localhost [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id BBFB771C76;
-	Mon, 20 Oct 2008 17:32:04 -0400 (EDT)
-Received: from pobox.com (ip68-225-240-211.oc.oc.cox.net [68.225.240.211])
- (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
- certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
- ESMTPSA id A180371C72; Mon, 20 Oct 2008 17:32:01 -0400 (EDT)
-In-Reply-To: <alpine.LFD.2.00.0810201609300.26244@xanadu.home> (Nicolas
- Pitre's message of "Mon, 20 Oct 2008 16:46:19 -0400 (EDT)")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: 8A1D5C26-9EEE-11DD-9CE2-9CEDC82D7133-77302942!a-sasl-fastnet.pobox.com
+	id S1752986AbYJTT1c (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 20 Oct 2008 15:27:32 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752859AbYJTT1c
+	(ORCPT <rfc822;git-outgoing>); Mon, 20 Oct 2008 15:27:32 -0400
+Received: from relais.videotron.ca ([24.201.245.36]:18754 "EHLO
+	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751415AbYJTT1b (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 20 Oct 2008 15:27:31 -0400
+Received: from xanadu.home ([66.131.194.97]) by VL-MO-MR001.ip.videotron.ca
+ (Sun Java(tm) System Messaging Server 6.3-4.01 (built Aug  3 2007; 32bit))
+ with ESMTP id <0K91006IGY1OONF0@VL-MO-MR001.ip.videotron.ca> for
+ git@vger.kernel.org; Mon, 20 Oct 2008 15:27:25 -0400 (EDT)
+X-X-Sender: nico@xanadu.home
+In-reply-to: <20081020192051.GA21770@fiberbit.xs4all.nl>
+User-Agent: Alpine 2.00 (LFD 1167 2008-08-23)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/98734>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/98735>
 
-Nicolas Pitre <nico@cam.org> writes:
+On Mon, 20 Oct 2008, Marco Roeland wrote:
 
-> Damn... this one was subtle.  And I'm still wondering how the hell the 
-> test suite is able to pass with this.  I'll try to figure out why and 
-> come up with better tests.
+> Op maandag 20 oktober 2008 om 21:14 uur schreef Marco Roeland het volgende:
+> 
+> > This is on Debian 'sid' with an AMD64 architecture.
+> > 
+> > I've put the whole ".git" directory (warning: almost 35MB) for
+> > investigation at:
+> > 
+> > http://www.xs4all.nl/~fiberbit/http://www.xs4all.nl/~fiberbit/git-next-8f0e41f3-bad-index.tgz
+> 
+> Gah, I can't even copy-and-paste:
+> 
+> http://www.xs4all.nl/~fiberbit/git-next-8f0e41f3-bad-index.tgz
 
-Thanks; much appreciated.
+Don't worry -- I figured it out and was able to reproduce the problem 
+already.  Thanks a lot!
+
+> This is on a quadcore. I recently experimented with "git config
+> pack.threads 0" but as it didn't seem to speedup anything I removed
+> it again. Just mention it on the infinitesimal chance it might be
+> important.
+
+It is not.  And the speedup should be noticeable when you repack, not 
+when you fetch.
+
+
+Nicolas
