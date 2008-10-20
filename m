@@ -1,67 +1,77 @@
-From: Nicolas Pitre <nico@cam.org>
-Subject: [PATCH] fix for "index-pack: rationalize delta resolution code"
-Date: Mon, 20 Oct 2008 14:12:04 -0400 (EDT)
-Message-ID: <alpine.LFD.2.00.0810201357340.26244@xanadu.home>
+From: Thomas Rast <trast@student.ethz.ch>
+Subject: Re: [BUG?] Fail to pull from kernel.org: pack has bad object
+Date: Mon, 20 Oct 2008 22:48:55 +0200
+Message-ID: <200810202248.57932.trast@student.ethz.ch>
+References: <200810201010.29173.johan@herland.net> <alpine.LFD.2.00.0810201112360.26244@xanadu.home> <200810202247.33372.trast@student.ethz.ch>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: git@vger.kernel.org, Jeff King <peff@peff.net>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Oct 21 00:08:33 2008
+Content-Type: multipart/signed;
+  boundary="nextPart1254459.b1pJylQn5s";
+  protocol="application/pgp-signature";
+  micalg=pgp-sha1
+Content-Transfer-Encoding: 7bit
+Cc: Johan Herland <johan@herland.net>, Jeff King <peff@peff.net>,
+	git@vger.kernel.org
+To: Nicolas Pitre <nico@cam.org>
+X-From: git-owner@vger.kernel.org Tue Oct 21 00:08:39 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KrzGB-0000vi-Q5
-	for gcvg-git-2@gmane.org; Mon, 20 Oct 2008 20:13:44 +0200
+	id 1Ks1hZ-0005fY-9C
+	for gcvg-git-2@gmane.org; Mon, 20 Oct 2008 22:50:09 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752428AbYJTSMb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 20 Oct 2008 14:12:31 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752406AbYJTSMb
-	(ORCPT <rfc822;git-outgoing>); Mon, 20 Oct 2008 14:12:31 -0400
-Received: from relais.videotron.ca ([24.201.245.36]:9074 "EHLO
-	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752287AbYJTSMb (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 20 Oct 2008 14:12:31 -0400
-Received: from xanadu.home ([66.131.194.97]) by VL-MH-MR001.ip.videotron.ca
- (Sun Java(tm) System Messaging Server 6.3-4.01 (built Aug  3 2007; 32bit))
- with ESMTP id <0K9100AH3UK4S4O5@VL-MH-MR001.ip.videotron.ca> for
- git@vger.kernel.org; Mon, 20 Oct 2008 14:12:05 -0400 (EDT)
-X-X-Sender: nico@xanadu.home
-User-Agent: Alpine 2.00 (LFD 1167 2008-08-23)
+	id S1754178AbYJTUs4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 20 Oct 2008 16:48:56 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754096AbYJTUs4
+	(ORCPT <rfc822;git-outgoing>); Mon, 20 Oct 2008 16:48:56 -0400
+Received: from xsmtp1.ethz.ch ([82.130.70.13]:34064 "EHLO xsmtp1.ethz.ch"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752710AbYJTUsz (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 20 Oct 2008 16:48:55 -0400
+Received: from xfe2.d.ethz.ch ([82.130.124.42]) by xsmtp1.ethz.ch with Microsoft SMTPSVC(6.0.3790.3959);
+	 Mon, 20 Oct 2008 22:48:54 +0200
+Received: from pcjremy.inf.ethz.ch ([129.132.153.233]) by xfe2.d.ethz.ch over TLS secured channel with Microsoft SMTPSVC(6.0.3790.3959);
+	 Mon, 20 Oct 2008 22:48:54 +0200
+User-Agent: KMail/1.9.9
+In-Reply-To: <200810202247.33372.trast@student.ethz.ch>
+X-OriginalArrivalTime: 20 Oct 2008 20:48:54.0294 (UTC) FILETIME=[43D15B60:01C932F5]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/98721>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/98722>
 
-My bad.  A small detail went through the crack: the real_type of
-a delta object is the real_type of its base object.
+--nextPart1254459.b1pJylQn5s
+Content-Type: text/plain;
+  charset="utf-8"
+Content-Transfer-Encoding: quoted-printable
+Content-Disposition: inline
 
-Without this, the created index will be wrong as the actual object SHA1
-won't match the object.
+Thomas Rast wrote:
+> No, that was in my own git.git.  Here's the entire repo, if that
+> context helps.  51M with all temporaries and everything, sorry; I'm
+> too tired to clean it up.  I doubt I have anything to hide in there
+> however.
 
-Signed-off-by: Nicolas Pitre <nico@cam.org>
----
+Obviously I should read all mail before replying.  Sorry for the
+noise.
 
-If you got a corrupted .idx file because of this ('git verify-pack' 
-should tell) then just toss it and recreate with a fixed 'git 
-index-pack'.
+=2D-=20
+Thomas Rast
+trast@{inf,student}.ethz.ch
 
-Could anyone having problems fetching from kernel.org with git from the 
-next branch confirm that this also fixes that? Thanks.
 
-diff --git a/index-pack.c b/index-pack.c
-index 0a917d7..8287ebf 100644
---- a/index-pack.c
-+++ b/index-pack.c
-@@ -517,7 +517,7 @@ static void resolve_delta(struct object_entry *delta_obj,
- 	void *delta_data;
- 	unsigned long delta_size;
- 
--	delta_obj->real_type = base->obj->type;
-+	delta_obj->real_type = base->obj->real_type;
- 	delta_data = get_data_from_pack(delta_obj);
- 	delta_size = delta_obj->size;
- 	result->obj = delta_obj;
+--nextPart1254459.b1pJylQn5s
+Content-Type: application/pgp-signature; name=signature.asc 
+Content-Description: This is a digitally signed message part.
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.0.9 (GNU/Linux)
+
+iEYEABECAAYFAkj87rkACgkQqUud07tmzP0eQgCfTxW9mo0RWSYaHtPI6WepgRTE
+DYkAoKJvo4kp/yIeeuHyCwNY5hSI/0mB
+=y4/W
+-----END PGP SIGNATURE-----
+
+--nextPart1254459.b1pJylQn5s--
