@@ -1,78 +1,110 @@
-From: Johan Herland <johan@herland.net>
-Subject: [BUG?] Fail to pull from kernel.org: pack has bad object
-Date: Mon, 20 Oct 2008 10:10:29 +0200
-Message-ID: <200810201010.29173.johan@herland.net>
+From: Andreas Ericsson <ae@op5.se>
+Subject: Re: Feedback outside of the user survey
+Date: Mon, 20 Oct 2008 18:11:12 +0200
+Message-ID: <48FCADA0.4020008@op5.se>
+References: <2d460de70810160319r4bed8643g884508cdeba772@mail.gmail.com> <20081016115628.GA24836@garry-x300.arpnetworks.com> <2d460de70810160618u1803375aj913145a5060e5308@mail.gmail.com> <48F7A4F8.2080600@jaeger.mine.nu> <20081018134906.GA13894@garry-thinkpad.arpnetworks.com> <48F9EC2B.2010200@jaeger.mine.nu> <48FC55F9.3060509@op5.se> <48FC9927.5030903@jaeger.mine.nu> <48FC9D87.3010303@op5.se> <48FCA1BC.3060300@jaeger.mine.nu>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 7BIT
-Cc: Junio C Hamano <gitster@pobox.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Oct 20 20:23:58 2008
+Content-Type: text/plain; charset=ISO-8859-15; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: Garry Dolley <gdolley@arpnetworks.com>,
+	Richard Hartmann <richih.mailinglist@gmail.com>,
+	git@vger.kernel.org
+To: Christian Jaeger <christian@jaeger.mine.nu>
+X-From: git-owner@vger.kernel.org Mon Oct 20 20:36:24 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Krpsa-0003vz-Om
-	for gcvg-git-2@gmane.org; Mon, 20 Oct 2008 10:12:45 +0200
+	id 1KrxMv-0008L1-UE
+	for gcvg-git-2@gmane.org; Mon, 20 Oct 2008 18:12:34 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751578AbYJTILc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 20 Oct 2008 04:11:32 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751548AbYJTILc
-	(ORCPT <rfc822;git-outgoing>); Mon, 20 Oct 2008 04:11:32 -0400
-Received: from smtp.getmail.no ([84.208.20.33]:56705 "EHLO smtp.getmail.no"
+	id S1751969AbYJTQLW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 20 Oct 2008 12:11:22 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751946AbYJTQLW
+	(ORCPT <rfc822;git-outgoing>); Mon, 20 Oct 2008 12:11:22 -0400
+Received: from mail.op5.se ([193.201.96.20]:36811 "EHLO mail.op5.se"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751510AbYJTILb (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 20 Oct 2008 04:11:31 -0400
-Received: from pmxchannel-daemon.no-osl-m323-srv-009-z2.isp.get.no by
- no-osl-m323-srv-009-z2.isp.get.no
- (Sun Java System Messaging Server 6.2-7.05 (built Sep  5 2006))
- id <0K91003092R60D00@no-osl-m323-srv-009-z2.isp.get.no> for
- git@vger.kernel.org; Mon, 20 Oct 2008 10:11:31 +0200 (CEST)
-Received: from smtp.getmail.no ([10.5.16.1])
- by no-osl-m323-srv-009-z2.isp.get.no
- (Sun Java System Messaging Server 6.2-7.05 (built Sep  5 2006))
- with ESMTP id <0K91000CD2PI7WD0@no-osl-m323-srv-009-z2.isp.get.no> for
- git@vger.kernel.org; Mon, 20 Oct 2008 10:10:30 +0200 (CEST)
-Received: from alpha.herland ([84.215.102.95])
- by no-osl-m323-srv-004-z1.isp.get.no
- (Sun Java System Messaging Server 6.2-7.05 (built Sep  5 2006))
- with ESMTP id <0K9100ILL2PHR4B0@no-osl-m323-srv-004-z1.isp.get.no> for
- git@vger.kernel.org; Mon, 20 Oct 2008 10:10:29 +0200 (CEST)
-Content-disposition: inline
-User-Agent: KMail/1.9.9
+	id S1751860AbYJTQLV (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 20 Oct 2008 12:11:21 -0400
+Received: from localhost (localhost.localdomain [127.0.0.1])
+	by mail.op5.se (Postfix) with ESMTP id 3C1DC1B80051;
+	Mon, 20 Oct 2008 18:04:49 +0200 (CEST)
+X-Virus-Scanned: amavisd-new at 
+X-Spam-Flag: NO
+X-Spam-Score: -3.875
+X-Spam-Level: 
+X-Spam-Status: No, score=-3.875 tagged_above=-10 required=6.6
+	tests=[ALL_TRUSTED=-1.8, AWL=0.524, BAYES_00=-2.599]
+Received: from mail.op5.se ([127.0.0.1])
+	by localhost (mail.op5.se [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id 4M+LQI3lVRfX; Mon, 20 Oct 2008 18:04:42 +0200 (CEST)
+Received: from clix.int.op5.se (unknown [192.168.1.20])
+	by mail.op5.se (Postfix) with ESMTP id 229641B8004E;
+	Mon, 20 Oct 2008 18:04:41 +0200 (CEST)
+User-Agent: Thunderbird 2.0.0.16 (X11/20080723)
+In-Reply-To: <48FCA1BC.3060300@jaeger.mine.nu>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/98687>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/98688>
 
-Hi,
+Christian Jaeger wrote:
+> Andreas Ericsson wrote:
+>> Christian Jaeger wrote:
+>>> Andreas Ericsson wrote:
+>>>> Christian Jaeger wrote:
+>>>>> If you really wanted, I suppose you could additionally look into 
+>>>>> implementing a kind of shallow cloning that only copies objects 
+>>>>> over the wire which are necessary for representing the subdirectory 
+>>>>> you're interested in.
+>>>>>
+>>>>
+>>>> So what do you do when one such commit also affects something outside
+>>>> the subdirectory?
+>>>
+>>> You haven't said what you mean with "affect".
+>>>
+>>
+>> I mean "how would you handle a commit (and its tree-object) that updates
+>> all Makefiles in, for example, the Linux kernel project?". Those files
+>> are spread far and wide, and you'd want that change to *your* tree, but
+>> getting it into your tree either means you need to rewrite the tree (and
+>> thereby the commit) itself to get rid of uninteresting blob's from the
+>> tree, and you'd also have to prune the tree to not reveal the directory
+>> layout of the rest of the repository.
+> 
+> You have said "either" but not "or".
 
-Currently I get the following error when trying to pull from git.git at 
-kernel.org:
+"or end up transferring all objects on the wire anyway".
 
-$ git pull
-remote: Counting objects: 279, done.
-remote: Compressing objects: 100% (78/78), done.
-remote: Total 177 (delta 136), reused 135 (delta 99)
-Receiving objects: 100% (177/177), 66.59 KiB | 59 KiB/s, done.
-fatal: pack has bad object at offset 53487: failed to apply delta
-fatal: index-pack failed
+> 
+>> I take it parentage could be resolved by a ridiculously large 
+>> grafts-file.
+> 
+> Hm, not sure whether you mean to rescue the situation with rewritten 
+> commits here -- but hell no, I certainly don't mean to have different 
+> commit objects for different clones/checkouts.
+> 
 
+Then you'll be transferring all objects over the wire anyway, so there
+goes that idea.
 
-For reference, here's the relevant part of .git/config:
+>> What you'd end up with wouldn't be a git repository at all anymore. It
+>> would be a "stump", as it'd be missing large parts of the tree entirely.
+> 
+> That was my point, yes.
+> 
 
-[remote "origin"]
-        url = git://git.kernel.org/pub/scm/git/git.git
-        fetch = +refs/heads/*:refs/remotes/origin/*
+That's partially implemented, I think (google for Nguy (or something, I'm
+not very god with asian names), but your original suggestion said to save
+on transferring objects from one machine to another, which will play poorly
+with git's object database and which you're now arguing against.
 
-
-I using a recent "next" version: 1.6.0.2.767.g8f0e
-
-
-...Johan
+Please make up your mind.
 
 -- 
-Johan Herland, <johan@herland.net>
-www.herland.net
+Andreas Ericsson                   andreas.ericsson@op5.se
+OP5 AB                             www.op5.se
+Tel: +46 8-230225                  Fax: +46 8-230231
