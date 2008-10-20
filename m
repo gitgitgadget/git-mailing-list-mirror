@@ -1,94 +1,100 @@
-From: Christian Jaeger <christian@jaeger.mine.nu>
-Subject: Re: Feedback outside of the user survey
-Date: Mon, 20 Oct 2008 17:20:28 +0200
-Message-ID: <48FCA1BC.3060300@jaeger.mine.nu>
-References: <2d460de70810160319r4bed8643g884508cdeba772@mail.gmail.com> <20081016115628.GA24836@garry-x300.arpnetworks.com> <2d460de70810160618u1803375aj913145a5060e5308@mail.gmail.com> <48F7A4F8.2080600@jaeger.mine.nu> <20081018134906.GA13894@garry-thinkpad.arpnetworks.com> <48F9EC2B.2010200@jaeger.mine.nu> <48FC55F9.3060509@op5.se> <48FC9927.5030903@jaeger.mine.nu> <48FC9D87.3010303@op5.se>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: Garry Dolley <gdolley@arpnetworks.com>,
-	Richard Hartmann <richih.mailinglist@gmail.com>,
-	git@vger.kernel.org
-To: Andreas Ericsson <ae@op5.se>
-X-From: git-owner@vger.kernel.org Mon Oct 20 20:41:33 2008
+From: Alexander Gavrilov <angavrilov@gmail.com>
+Subject: [PATCH (GIT-GUI,MINGW) 3/3] Windows: Make OpenSSH properly detect tty detachment.
+Date: Mon, 20 Oct 2008 20:02:20 +0400
+Message-ID: <1224518540-23782-4-git-send-email-angavrilov@gmail.com>
+References: <1224518540-23782-1-git-send-email-angavrilov@gmail.com>
+ <1224518540-23782-2-git-send-email-angavrilov@gmail.com>
+ <1224518540-23782-3-git-send-email-angavrilov@gmail.com>
+Cc: msysgit@googlegroups.com, Johannes Sixt <johannes.sixt@telecom.at>,
+	"Shawn O. Pearce" <spearce@spearce.org>,
+	Junio C Hamano <gitster@pobox.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Oct 20 20:53:54 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KrwZk-0002GF-8O
-	for gcvg-git-2@gmane.org; Mon, 20 Oct 2008 17:21:44 +0200
+	id 1KrxGU-0006X3-3i
+	for gcvg-git-2@gmane.org; Mon, 20 Oct 2008 18:05:54 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751054AbYJTPUc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 20 Oct 2008 11:20:32 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751134AbYJTPUc
-	(ORCPT <rfc822;git-outgoing>); Mon, 20 Oct 2008 11:20:32 -0400
-Received: from ethlife-a.ethz.ch ([129.132.49.178]:41702 "HELO ethlife.ethz.ch"
-	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with SMTP
-	id S1750976AbYJTPUb (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 20 Oct 2008 11:20:31 -0400
-Received: (qmail 28264 invoked from network); 20 Oct 2008 15:20:29 -0000
-Received: from unknown (HELO elvis-jaeger.mine.nu) (127.0.0.1)
-  by localhost with SMTP; 20 Oct 2008 15:20:29 -0000
-Received: (qmail 11803 invoked from network); 20 Oct 2008 15:20:29 -0000
-Received: from unknown (HELO ?127.0.0.1?) (10.0.5.1)
-  by elvis-jaeger.mine.nu with SMTP; 20 Oct 2008 15:20:29 -0000
-User-Agent: Mozilla-Thunderbird 2.0.0.16 (X11/20080724)
-In-Reply-To: <48FC9D87.3010303@op5.se>
+	id S1751867AbYJTQEW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 20 Oct 2008 12:04:22 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750776AbYJTQEW
+	(ORCPT <rfc822;git-outgoing>); Mon, 20 Oct 2008 12:04:22 -0400
+Received: from fg-out-1718.google.com ([72.14.220.153]:46649 "EHLO
+	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751617AbYJTQET (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 20 Oct 2008 12:04:19 -0400
+Received: by fg-out-1718.google.com with SMTP id 19so1444220fgg.17
+        for <git@vger.kernel.org>; Mon, 20 Oct 2008 09:04:17 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:from:to:cc:subject:date
+         :message-id:x-mailer:in-reply-to:references;
+        bh=RfmPDw3gzpO8p9O4F5Glz1eQrWjsi5pl1KpsVpeTa5k=;
+        b=dCVxl4eQBX9n/1Mbeuiiai8ZHcztkovTSTf0/qEEDsjCoWULXOBAQpEDLOz08LuYJf
+         ELsB1GlU0SSlbjWONFh1aQY/ht1Q5Xrzdgh8ezb7i5DKLEXXm+Ea55dX6Cq4J9Gmyg31
+         2bPpEvZnnKiz3ULdzFcW2IA1LjYZdzBdtka00=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
+        b=I/XZK3dl8amVXX8+AiFDGbs4/nzXMbsyPMxNgUjJoRHwkx025LwnK5G21XWiRUY0gL
+         e7O9HG+TB+xmXprSL0LHMBeZoi9/BsbntOjZQXwroUJ33N/DGCe3uVTIhHnbqN7Con4r
+         /0URyvycsbx0ZDL+INxXH/dTaPHt+W+Dim+X0=
+Received: by 10.181.219.15 with SMTP id w15mr1675078bkq.90.1224518656507;
+        Mon, 20 Oct 2008 09:04:16 -0700 (PDT)
+Received: from localhost.localdomain ([92.255.85.78])
+        by mx.google.com with ESMTPS id p17sm7985073fka.14.2008.10.20.09.04.14
+        (version=SSLv3 cipher=RC4-MD5);
+        Mon, 20 Oct 2008 09:04:15 -0700 (PDT)
+X-Mailer: git-send-email 1.6.0.20.g6148bc
+In-Reply-To: <1224518540-23782-3-git-send-email-angavrilov@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/98689>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/98690>
 
-Andreas Ericsson wrote:
-> Christian Jaeger wrote:
->> Andreas Ericsson wrote:
->>> Christian Jaeger wrote:
->>>> If you really wanted, I suppose you could additionally look into 
->>>> implementing a kind of shallow cloning that only copies objects 
->>>> over the wire which are necessary for representing the subdirectory 
->>>> you're interested in.
->>>>
->>>
->>> So what do you do when one such commit also affects something outside
->>> the subdirectory?
->>
->> You haven't said what you mean with "affect".
->>
->
-> I mean "how would you handle a commit (and its tree-object) that updates
-> all Makefiles in, for example, the Linux kernel project?". Those files
-> are spread far and wide, and you'd want that change to *your* tree, but
-> getting it into your tree either means you need to rewrite the tree (and
-> thereby the commit) itself to get rid of uninteresting blob's from the
-> tree, and you'd also have to prune the tree to not reveal the directory
-> layout of the rest of the repository.
+Apparently, CREATE_NO_WINDOW makes the OS tell the process
+that it has a console, but without actually creating the
+window. As a result, when git is started from GUI, ssh
+tries to ask its questions on the invisible console.
 
-You have said "either" but not "or".
+This patch uses DETACHED_PROCESS instead, which clearly
+means that the process should be left without a console.
+The downside is that if the process manually calls
+AllocConsole, the window will appear. A similar thing
+might occur if it calls another console executable.
 
-> I take it parentage could be resolved by a ridiculously large 
-> grafts-file.
+Signed-off-by: Alexander Gavrilov <angavrilov@gmail.com>
+Acked-by: Johannes Sixt <johannes.sixt@telecom.at>
+---
+ compat/mingw.c |    8 ++++++--
+ 1 files changed, 6 insertions(+), 2 deletions(-)
 
-Hm, not sure whether you mean to rescue the situation with rewritten 
-commits here -- but hell no, I certainly don't mean to have different 
-commit objects for different clones/checkouts.
-
-> What you'd end up with wouldn't be a git repository at all anymore. It
-> would be a "stump", as it'd be missing large parts of the tree entirely.
-
-That was my point, yes.
-
-> I'm unsure just how much you'd have to compute to be able to use such a
-> stump to incorporate your changes with other users again, but I doubt it
-> would be trivial to implement. Good thing it's not my itch, really.
-
-I've been suggesting it to Garry :)
-
-Maybe whoever writes up something on the wiki regarding subdirectory 
-checkouts in SVN versus Git could still care about what the "fundamental 
-technical" limits are versus what the current implementation (or 
-practicalness) imposes. It will be both a more enlightening and 
-potentially more future-proof explanation then.
-
-Christian.
+diff --git a/compat/mingw.c b/compat/mingw.c
+index 1e29b88..b6fcf69 100644
+--- a/compat/mingw.c
++++ b/compat/mingw.c
+@@ -586,12 +586,16 @@ static pid_t mingw_spawnve(const char *cmd, const char **argv, char **env,
+ 		 * would normally create a console window. But
+ 		 * since we'll be redirecting std streams, we do
+ 		 * not need the console.
++		 * It is necessary to use DETACHED_PROCESS
++		 * instead of CREATE_NO_WINDOW to make ssh
++		 * recognize that it has no console.
+ 		 */
+-		flags = CREATE_NO_WINDOW;
++		flags = DETACHED_PROCESS;
+ 	} else {
+ 		/* There is already a console. If we specified
+-		 * CREATE_NO_WINDOW here, too, Windows would
++		 * DETACHED_PROCESS here, too, Windows would
+ 		 * disassociate the child from the console.
++		 * The same is true for CREATE_NO_WINDOW.
+ 		 * Go figure!
+ 		 */
+ 		flags = 0;
+-- 
+1.6.0.2.1256.ga12f0
