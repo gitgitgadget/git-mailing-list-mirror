@@ -1,134 +1,81 @@
-From: "Simon Strandgaard" <neoneye@gmail.com>
-Subject: Re: bug: git-stash save and symbolic links
-Date: Mon, 20 Oct 2008 17:39:31 +0200
-Message-ID: <df1390cc0810200839q5eddad1cp4bc14762724d8848@mail.gmail.com>
-References: <df1390cc0810200134x68a8eb1fyc7f24650c8c9c5d3@mail.gmail.com>
-	 <20081020151715.GA13553@coredump.intra.peff.net>
-	 <df1390cc0810200832i4fa974fx1d70ed489aa1be02@mail.gmail.com>
+From: Johannes Sixt <j.sixt@viscovery.net>
+Subject: Re: [PATCH, RFC] diff: add option to show context between close chunks
+Date: Mon, 20 Oct 2008 16:32:37 +0200
+Message-ID: <48FC9685.8030704@viscovery.net>
+References: <48FB757B.9030105@lsrfire.ath.cx>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: "Jeff King" <peff@peff.net>
-X-From: git-owner@vger.kernel.org Mon Oct 20 22:42:26 2008
+Content-Type: text/plain; charset=ISO-8859-15
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Git Mailing List <git@vger.kernel.org>,
+	Davide Libenzi <davidel@xmailserver.org>
+To: =?ISO-8859-15?Q?Ren=E9_Scharfe?= <rene.scharfe@lsrfire.ath.cx>
+X-From: git-owner@vger.kernel.org Mon Oct 20 22:49:26 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KrwsI-0007zm-W8
-	for gcvg-git-2@gmane.org; Mon, 20 Oct 2008 17:40:55 +0200
+	id 1KrvrA-0006wZ-Fm
+	for gcvg-git-2@gmane.org; Mon, 20 Oct 2008 16:35:41 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751424AbYJTPje (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 20 Oct 2008 11:39:34 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751345AbYJTPje
-	(ORCPT <rfc822;git-outgoing>); Mon, 20 Oct 2008 11:39:34 -0400
-Received: from mail-gx0-f16.google.com ([209.85.217.16]:48105 "EHLO
-	mail-gx0-f16.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751243AbYJTPjd (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 20 Oct 2008 11:39:33 -0400
-Received: by gxk9 with SMTP id 9so3848738gxk.13
-        for <git@vger.kernel.org>; Mon, 20 Oct 2008 08:39:31 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to
-         :subject:cc:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:references;
-        bh=ngH428YayFTpWKl3NjPaFL2+0V91yrs0gHw68P8/0s0=;
-        b=S7DP+r6JTsg5c5JHnoJQEkTWCuDUOzgN1UT7LCVOJESC8Whber02ObqEiBCwU6sjHN
-         Bd59u4dmVX+e/MwkU53Z3AzlOJDCZfSfBsuF/0ejL/Z1vnH7HKSNwL1EYZNBuFIdA8wN
-         GNlEfKIA+HpJfFgXT0Y9CfJLstBE1l4A9iJ98=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
-         :content-type:content-transfer-encoding:content-disposition
-         :references;
-        b=RV2edfpZ9wJxUlMjhhT59SGcuhaJuZSeyu8wY0BXarApqYJhWzjhRl0JUKNVdhVrzv
-         OfK3A8ns45u82DHXWNB/MObfirmyBkADa9xL8NaOHIm4tCN4tXf48NzX9FKNLhcPcnSo
-         0JXTg7Piq4mLPNJT9HBx6irMDFFPB81rmZge0=
-Received: by 10.143.19.16 with SMTP id w16mr3130374wfi.223.1224517171267;
-        Mon, 20 Oct 2008 08:39:31 -0700 (PDT)
-Received: by 10.143.168.21 with HTTP; Mon, 20 Oct 2008 08:39:31 -0700 (PDT)
-In-Reply-To: <df1390cc0810200832i4fa974fx1d70ed489aa1be02@mail.gmail.com>
-Content-Disposition: inline
+	id S1751056AbYJTOcm convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 20 Oct 2008 10:32:42 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751126AbYJTOcm
+	(ORCPT <rfc822;git-outgoing>); Mon, 20 Oct 2008 10:32:42 -0400
+Received: from lilzmailso02.liwest.at ([212.33.55.13]:23662 "EHLO
+	lilzmailso02.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751011AbYJTOcl convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 20 Oct 2008 10:32:41 -0400
+Received: from cm56-163-160.liwest.at ([86.56.163.160] helo=linz.eudaptics.com)
+	by lilzmailso02.liwest.at with esmtpa (Exim 4.66)
+	(envelope-from <j.sixt@viscovery.net>)
+	id 1KrvoD-00029M-Hq; Mon, 20 Oct 2008 16:32:37 +0200
+Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.96])
+	by linz.eudaptics.com (Postfix) with ESMTP
+	id 4DF616B7; Mon, 20 Oct 2008 16:32:37 +0200 (CEST)
+User-Agent: Thunderbird 2.0.0.6 (Windows/20070728)
+In-Reply-To: <48FB757B.9030105@lsrfire.ath.cx>
+X-Spam-Score: 1.7 (+)
+X-Spam-Report: ALL_TRUSTED=-1.8, BAYES_99=3.5
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/98703>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/98704>
 
-On Mon, Oct 20, 2008 at 5:32 PM, Simon Strandgaard <neoneye@gmail.com> wrote:
-> On Mon, Oct 20, 2008 at 5:17 PM, Jeff King <peff@peff.net> wrote:
->> On Mon, Oct 20, 2008 at 10:34:53AM +0200, Simon Strandgaard wrote:
-> [snip]
->> What version of git are you running (though I tried a few different
->> ones, and all passed my test)?
->
->
-> I have made some changes, so it can be reproduced
-[snip]
+Ren=E9 Scharfe schrieb:
+> This patch adds a new diff option, --inter-chunk-context.  It can be
+> used to show the context in gaps between chunks, thereby creating a
+> big chunk out of two close chunks, in order to have an unbroken
+> context, making reviews easier.
+>=20
+> With --inter-chunk-context=3D1, patches have the same number of lines
+> as without the option, as only the chunk header is replaced by the
+> context line it was shadowing.
+>=20
+> You can use commit b0b44bc7b26c8c4b4221a377ce6ba174b843cb8d in the
+> git repo to try out this option; there's a chunk in transport.c
+> which is just one line away from the next.  (I found this option
+> helpful in reviewing my own patch before sending. :)
+>=20
+> I think it makes sense to make 1, or even 3, the default for this
+> option for all commands that create patches intended for human
+> consumption.  The patch keeps the default at 0, though.
+>=20
+> There are downsides, of course: values higher than 1 potentially make
+> the resulting patch longer.  More context means a higher probability
+> of (perhaps unnecessary) merge conflicts.
+>=20
+> Comments?
 
-Sorry, forget the other run.sh I forgot to add the dir to the repository.
-Here the linked dir is included in the repository.
+Why can't you just use -U6 instead instead of --inter-chunk-context=3D3=
+? If
+this is intended for human consumption anyway, then you can just as wel=
+l
+increase the overall number of context lines: You get extra context lin=
+es
+in the places where hunks are not fused, but this cannot be a disadvant=
+age
+for the targeted audience.
 
-prompt> sh run.sh
-Initialized empty Git repository in /Users/neoneye/Desktop/test/repo/.git/
-Created initial commit b904776: one
- 1 files changed, 1 insertions(+), 0 deletions(-)
- create mode 100644 file
-Created commit 19746b5: two
- 1 files changed, 1 insertions(+), 0 deletions(-)
- create mode 100644 test/file2
-before stash
-fatal: Not a git repository
-fatal: Not a git repository
-fatal: Not a git repository
-You do not have the initial commit yet
-
-prompt> cat run.sh
-rm -rf repo &&
-rm -f linked &&
-mkdir repo &&
-   cd repo &&
-     git init &&
-     echo content >file &&
-     git add file &&
-     git commit -m one &&
-     mkdir test &&
-     echo content >test/file2 &&
-     git add test/file2 &&
-     git commit -m two &&
-   cd .. &&
-     ln -s repo/test linked &&
-   cd linked &&
-     echo cruft >>file &&
-     echo before stash &&
-     git stash &&
-     echo after stash
-
-prompt> pwd
-/Users/neoneye/Desktop/test
-prompt>
-
-
-[snip]
-> This is my computer
->
-> prompt> git --version
-> git version 1.5.6.2
-> prompt> uname -a
-> Darwin Macintosh.local 9.5.0 Darwin Kernel Version 9.5.0: Wed Sep  3
-> 11:29:43 PDT 2008; root:xnu-1228.7.58~1/RELEASE_I386 i386
-> prompt>
->
->
-> --
-> Simon Strandgaard
-> http://toolboxapp.com/
->
-
-
-
--- 
-Simon Strandgaard
-http://toolboxapp.com/
+-- Hannes
