@@ -1,82 +1,79 @@
-From: Maciej Pasternacki <maciej@pasternacki.net>
-Subject: Re: [PATCH] -C/--chdir command line option
-Date: Mon, 20 Oct 2008 09:28:03 +0200
-Message-ID: <2C311251-D0C3-4962-9EDE-02383C6B9A1C@pasternacki.net>
-References: <DDFCD680-C477-4BE5-AB71-3F26048E26D1@pasternacki.net>
-Mime-Version: 1.0 (Apple Message framework v929.2)
-Content-Type: text/plain; charset=US-ASCII; format=flowed; delsp=yes
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Oct 20 16:41:43 2008
+From: Andreas Ericsson <ae@op5.se>
+Subject: Re: [PATCH 1/3] add alloc_ref_with_prefix()
+Date: Mon, 20 Oct 2008 12:34:22 +0200
+Message-ID: <48FC5EAE.9000108@op5.se>
+References: <48F9A054.4010703@lsrfire.ath.cx>	 <36ca99e90810180227u367783f6vc3b7af0176f6df06@mail.gmail.com>	 <48F9AECA.3020606@lsrfire.ath.cx> <36ca99e90810180507q2dedf4ck7262239ae91d892f@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-15;
+	format=flowed
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: =?ISO-8859-15?Q?Ren=E9_Scharfe?= <rene.scharfe@lsrfire.ath.cx>,
+	Git Mailing List <git@vger.kernel.org>,
+	Junio C Hamano <gitster@pobox.com>
+To: Bert Wesarg <bert.wesarg@googlemail.com>
+X-From: git-owner@vger.kernel.org Mon Oct 20 17:06:45 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KrpCf-0000fh-GM
-	for gcvg-git-2@gmane.org; Mon, 20 Oct 2008 09:29:26 +0200
+	id 1Krs6s-0007dI-JE
+	for gcvg-git-2@gmane.org; Mon, 20 Oct 2008 12:35:39 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750991AbYJTH2M (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 20 Oct 2008 03:28:12 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750958AbYJTH2M
-	(ORCPT <rfc822;git-outgoing>); Mon, 20 Oct 2008 03:28:12 -0400
-Received: from sd-green-bigip-74.dreamhost.com ([208.97.132.74]:53593 "EHLO
-	jankymail-a1.g.dreamhost.com" rhost-flags-OK-OK-OK-FAIL)
-	by vger.kernel.org with ESMTP id S1750878AbYJTH2L (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 20 Oct 2008 03:28:11 -0400
-Received: from [192.168.11.248] (vide-sat.pl [213.192.64.46])
-	(using TLSv1 with cipher AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by jankymail-a1.g.dreamhost.com (Postfix) with ESMTP id 660F0986A8
-	for <git@vger.kernel.org>; Mon, 20 Oct 2008 00:28:09 -0700 (PDT)
-X-Mailer: Apple Mail (2.929.2)
+	id S1751028AbYJTKe0 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 20 Oct 2008 06:34:26 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751056AbYJTKeZ
+	(ORCPT <rfc822;git-outgoing>); Mon, 20 Oct 2008 06:34:25 -0400
+Received: from mail.op5.se ([193.201.96.20]:35489 "EHLO mail.op5.se"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750911AbYJTKeZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 20 Oct 2008 06:34:25 -0400
+Received: from localhost (localhost.localdomain [127.0.0.1])
+	by mail.op5.se (Postfix) with ESMTP id B19AA1B8037A;
+	Mon, 20 Oct 2008 12:27:51 +0200 (CEST)
+X-Virus-Scanned: amavisd-new at 
+X-Spam-Flag: NO
+X-Spam-Score: -3.849
+X-Spam-Level: 
+X-Spam-Status: No, score=-3.849 tagged_above=-10 required=6.6
+	tests=[ALL_TRUSTED=-1.8, AWL=0.550, BAYES_00=-2.599]
+Received: from mail.op5.se ([127.0.0.1])
+	by localhost (mail.op5.se [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id DnXyNT4fqY3b; Mon, 20 Oct 2008 12:27:50 +0200 (CEST)
+Received: from clix.int.op5.se (unknown [192.168.1.20])
+	by mail.op5.se (Postfix) with ESMTP id E1ED21B800B2;
+	Mon, 20 Oct 2008 12:27:49 +0200 (CEST)
+User-Agent: Thunderbird 2.0.0.16 (X11/20080723)
+In-Reply-To: <36ca99e90810180507q2dedf4ck7262239ae91d892f@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/98670>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/98671>
 
-On 2008-10-20, at 06:55, Junio C Hamano wrote:
+Bert Wesarg wrote:
+> On Sat, Oct 18, 2008 at 11:39, Ren=E9 Scharfe <rene.scharfe@lsrfire.a=
+th.cx> wrote:
+>>>> +static struct ref *alloc_ref_with_prefix(const char *prefix, size=
+_t prefixlen,
+>>>> +               const char *name)
+>>>> +{
+>>>> +       size_t len =3D strlen(name);
+>>>> +       struct ref *ref =3D xcalloc(1, sizeof(struct ref) + prefix=
+len + len + 1);
+>>>> +       memcpy(ref->name, prefix, prefixlen);
+>>>> +       memcpy(ref->name + prefixlen, name, len);
+>>> Where does you \0-terminate the string?
+>> xcalloc() calls calloc(), which zeroes the memory.
+> So, you write the memory range twice, just for the last \0?
+>=20
 
->>> As for -C being superfluous: --git-dir and --work-tree seem to  
->>> support
->>> weird usage patterns (like work tree separate from git-dir), but  
->>> it seems
->>
->> Hmm. Yeah, thinking about it more, -C is not really superfluous with
->> respect to those options. You don't want to say "here is the work- 
->> tree,
->> and here is the git-dir". You want to say "find the work-tree and
->> git-dir for me using the usual rules, as if I were in this  
->> directory."
->
-> I think that interpretation of -C, if the option existed, makes  
-> sense, but
-> I do not understand why the tool that drives git refuses to chdir to  
-> the
-> repository for itself in the first place.
+calloc() doesn't do the zeroing pass if it gets memory from the kernel,
+which guarantees that the memory is already zeroed out. In reality,
+calloc() usually saves on both readability and performance over
+explicitly nul-terminating strings.
 
-The tool (a) manages many repositories, and I don't want to chdir()  
-back and forth, (b) should be able to manage those repositories not  
-disturbing anything other.  It comes as a Common Lisp library, which  
-will usually be called by end user, but can also be called  
-programmatically, and I wouldn't want any library to change my cwd; it  
-could chdir() back, of course, but this would still be a race  
-condition if other threads were running at the same time.
-
-And there is the Lisp-specific thing, that the language comes from  
-before Unix domination, and things as simple as changing the process'  
-cwd are actually nontrivial to do portably (there is equivalent of cwd  
-inside Lisp world, which is used by Lisp-level file access routines,  
-but chdir() is not in ANSI standard, is done differently by every  
-implementation, and would require some kind of compatibility layer).
-
-For me, -C would make life much easier, and I gave other arguments for  
-it before.  It would suffice if --work-tree worked with "git pull", if  
--C doesn't pass, but it seems to me that -C has some merits.
-
-Regards,
-Maciej.
-
--- 
--><- Maciej Pasternacki -><- http://www.pasternacki.net/ -><-
+--=20
+Andreas Ericsson                   andreas.ericsson@op5.se
+OP5 AB                             www.op5.se
+Tel: +46 8-230225                  Fax: +46 8-230231
