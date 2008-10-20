@@ -1,72 +1,83 @@
-From: Christian Jaeger <christian@jaeger.mine.nu>
-Subject: Re: Feedback outside of the user survey
-Date: Mon, 20 Oct 2008 19:30:03 +0200
-Message-ID: <48FCC01B.8030709@jaeger.mine.nu>
-References: <2d460de70810160319r4bed8643g884508cdeba772@mail.gmail.com> <20081016115628.GA24836@garry-x300.arpnetworks.com> <2d460de70810160618u1803375aj913145a5060e5308@mail.gmail.com> <48F7A4F8.2080600@jaeger.mine.nu> <20081018134906.GA13894@garry-thinkpad.arpnetworks.com> <48F9EC2B.2010200@jaeger.mine.nu> <48FC55F9.3060509@op5.se> <48FC9927.5030903@jaeger.mine.nu> <48FC9D87.3010303@op5.se> <48FCA1BC.3060300@jaeger.mine.nu> <48FCADA0.4020008@op5.se> <48FCB87B.1080207@jaeger.mine.nu>
+From: Thomas Rast <trast@student.ethz.ch>
+Subject: Re: [BUG?] Fail to pull from kernel.org: pack has bad object
+Date: Mon, 20 Oct 2008 22:47:30 +0200
+Message-ID: <200810202247.33372.trast@student.ethz.ch>
+References: <200810201010.29173.johan@herland.net> <200810201610.54427.trast@student.ethz.ch> <alpine.LFD.2.00.0810201112360.26244@xanadu.home>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15; format=flowed
+Content-Type: multipart/signed;
+  boundary="nextPart23552419.r8sjpvbEBu";
+  protocol="application/pgp-signature";
+  micalg=pgp-sha1
 Content-Transfer-Encoding: 7bit
-Cc: Garry Dolley <gdolley@arpnetworks.com>,
-	Richard Hartmann <richih.mailinglist@gmail.com>,
+Cc: Johan Herland <johan@herland.net>, Jeff King <peff@peff.net>,
 	git@vger.kernel.org
-To: Andreas Ericsson <ae@op5.se>
-X-From: git-owner@vger.kernel.org Mon Oct 20 23:42:31 2008
+To: Nicolas Pitre <nico@cam.org>
+X-From: git-owner@vger.kernel.org Mon Oct 20 23:42:38 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KrybG-0005wx-Te
-	for gcvg-git-2@gmane.org; Mon, 20 Oct 2008 19:31:27 +0200
+	id 1Ks1gF-0004Yl-96
+	for gcvg-git-2@gmane.org; Mon, 20 Oct 2008 22:48:47 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753171AbYJTRaL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 20 Oct 2008 13:30:11 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752557AbYJTRaL
-	(ORCPT <rfc822;git-outgoing>); Mon, 20 Oct 2008 13:30:11 -0400
-Received: from ethlife-a.ethz.ch ([129.132.49.178]:44489 "HELO ethlife.ethz.ch"
-	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with SMTP
-	id S1752153AbYJTRaJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 20 Oct 2008 13:30:09 -0400
-Received: (qmail 4205 invoked from network); 20 Oct 2008 17:30:06 -0000
-Received: from unknown (HELO elvis-jaeger.mine.nu) (127.0.0.1)
-  by localhost with SMTP; 20 Oct 2008 17:30:06 -0000
-Received: (qmail 28569 invoked from network); 20 Oct 2008 17:30:03 -0000
-Received: from unknown (HELO ?127.0.0.1?) (10.0.5.1)
-  by elvis-jaeger.mine.nu with SMTP; 20 Oct 2008 17:30:03 -0000
-User-Agent: Mozilla-Thunderbird 2.0.0.16 (X11/20080724)
-In-Reply-To: <48FCB87B.1080207@jaeger.mine.nu>
+	id S1754747AbYJTUrd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 20 Oct 2008 16:47:33 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754725AbYJTUrd
+	(ORCPT <rfc822;git-outgoing>); Mon, 20 Oct 2008 16:47:33 -0400
+Received: from xsmtp1.ethz.ch ([82.130.70.13]:33855 "EHLO xsmtp1.ethz.ch"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754572AbYJTUrc (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 20 Oct 2008 16:47:32 -0400
+Received: from xfe2.d.ethz.ch ([82.130.124.42]) by xsmtp1.ethz.ch with Microsoft SMTPSVC(6.0.3790.3959);
+	 Mon, 20 Oct 2008 22:47:30 +0200
+Received: from pcjremy.inf.ethz.ch ([129.132.153.233]) by xfe2.d.ethz.ch over TLS secured channel with Microsoft SMTPSVC(6.0.3790.3959);
+	 Mon, 20 Oct 2008 22:47:29 +0200
+User-Agent: KMail/1.9.9
+In-Reply-To: <alpine.LFD.2.00.0810201112360.26244@xanadu.home>
+X-OriginalArrivalTime: 20 Oct 2008 20:47:29.0840 (UTC) FILETIME=[117AB300:01C932F5]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/98712>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/98713>
 
-Christian Jaeger wrote:
-> Andreas Ericsson wrote:
->> Christian Jaeger wrote:
->>> Hm, not sure whether you mean to rescue the situation with rewritten 
->>> commits here -- but hell no, I certainly don't mean to have 
->>> different commit objects for different clones/checkouts.
->>>
->>
->> Then you'll be transferring all objects over the wire anyway
->
-> Why? Again, care to differentiate between technical feasibility and 
-> current implementation.
+--nextPart23552419.r8sjpvbEBu
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: quoted-printable
+Content-Disposition: inline
 
-I think it was this detail:
+Nicolas Pitre wrote:
+> On Mon, 20 Oct 2008, Thomas Rast wrote:
+> >   http://n.ethz.ch/~trast/download/tmp_pack_NMj69p
+>=20
+> Yes, except I can't resolve any of the deltas in there...  Is it from=20
+> the Linux kernel repository?
 
-> ... lazy cloning
+No, that was in my own git.git.  Here's the entire repo, if that
+context helps.  51M with all temporaries and everything, sorry; I'm
+too tired to clean it up.  I doubt I have anything to hide in there
+however.
 
-which I have been leaving under the carpet in my previous mails; i.e. 
-when doing merges, Git may need additional objects which haven't been 
-fetched by just fetching the branches's subdirectory parts, so merges 
-can't generally be done offline anymore. This is certainly a departure 
-from the current idea; and if you don't want to depart from that, then 
-yes, you'd need basically the whole database in advance or merges 
-wouldn't be possible. So I think I understand why you said "Then you'll 
-be transferring all objects over the wire anyway", you did assume that 
-there would be no such thing as on-demand / lazy fetching of missing 
-objects.
+  http://n.ethz.ch/~trast/download/git-with-broken-pack.tar.bz2
 
-Christian.
+=2D-=20
+Thomas Rast
+trast@{inf,student}.ethz.ch
+
+
+
+--nextPart23552419.r8sjpvbEBu
+Content-Type: application/pgp-signature; name=signature.asc 
+Content-Description: This is a digitally signed message part.
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.0.9 (GNU/Linux)
+
+iEYEABECAAYFAkj87mUACgkQqUud07tmzP0lOACffixj4VdcCqdzf+NtIM+W9RL6
+JwMAn1t0yGmnZQTlRiMUFAeakEnodJzW
+=pPr+
+-----END PGP SIGNATURE-----
+
+--nextPart23552419.r8sjpvbEBu--
