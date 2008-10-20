@@ -1,94 +1,109 @@
-From: Marco Roeland <marco.roeland@xs4all.nl>
-Subject: Re: [PATCH] fix for "index-pack: rationalize delta resolution code"
-Date: Mon, 20 Oct 2008 21:14:00 +0200
-Message-ID: <20081020191400.GA18743@fiberbit.xs4all.nl>
-References: <alpine.LFD.2.00.0810201357340.26244@xanadu.home>
+From: =?ISO-8859-15?Q?Ren=E9_Scharfe?= <rene.scharfe@lsrfire.ath.cx>
+Subject: Re: [PATCH, RFC] diff: add option to show context between close chunks
+Date: Mon, 20 Oct 2008 20:06:25 +0200
+Message-ID: <48FCC8A1.5090109@lsrfire.ath.cx>
+References: <48FB757B.9030105@lsrfire.ath.cx> <48FC9685.8030704@viscovery.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	Jeff King <peff@peff.net>
-To: Nicolas Pitre <nico@cam.org>
-X-From: git-owner@vger.kernel.org Tue Oct 21 00:40:15 2008
+Content-Type: text/plain; charset=ISO-8859-15
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Git Mailing List <git@vger.kernel.org>,
+	Davide Libenzi <davidel@xmailserver.org>
+To: Johannes Sixt <j.sixt@viscovery.net>
+X-From: git-owner@vger.kernel.org Tue Oct 21 00:42:41 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Ks0Es-0001iO-Q7
-	for gcvg-git-2@gmane.org; Mon, 20 Oct 2008 21:16:27 +0200
+	id 1KrzAU-0007eL-S5
+	for gcvg-git-2@gmane.org; Mon, 20 Oct 2008 20:07:51 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752303AbYJTTPO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 20 Oct 2008 15:15:14 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751981AbYJTTPN
-	(ORCPT <rfc822;git-outgoing>); Mon, 20 Oct 2008 15:15:13 -0400
-Received: from smtp-vbr8.xs4all.nl ([194.109.24.28]:4804 "EHLO
-	smtp-vbr8.xs4all.nl" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752215AbYJTTPM (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 20 Oct 2008 15:15:12 -0400
-Received: from fiberbit.xs4all.nl (fiberbit.xs4all.nl [80.101.187.211])
-	by smtp-vbr8.xs4all.nl (8.13.8/8.13.8) with ESMTP id m9KJE162060483;
-	Mon, 20 Oct 2008 21:14:01 +0200 (CEST)
-	(envelope-from marco.roeland@xs4all.nl)
-Received: from marco by fiberbit.xs4all.nl with local (Exim 4.69)
-	(envelope-from <marco.roeland@xs4all.nl>)
-	id 1Ks0CW-0005dZ-On; Mon, 20 Oct 2008 21:14:00 +0200
-Content-Disposition: inline
-In-Reply-To: <alpine.LFD.2.00.0810201357340.26244@xanadu.home>
-User-Agent: Mutt/1.5.18 (2008-05-17)
-X-Virus-Scanned: by XS4ALL Virus Scanner
+	id S1754301AbYJTSGj convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 20 Oct 2008 14:06:39 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754271AbYJTSGi
+	(ORCPT <rfc822;git-outgoing>); Mon, 20 Oct 2008 14:06:38 -0400
+Received: from india601.server4you.de ([85.25.151.105]:50527 "EHLO
+	india601.server4you.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754185AbYJTSGe (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 20 Oct 2008 14:06:34 -0400
+Received: from [10.0.1.101] (p57B7C6D1.dip.t-dialin.net [87.183.198.209])
+	by india601.server4you.de (Postfix) with ESMTPSA id 2EC142F8057;
+	Mon, 20 Oct 2008 20:06:32 +0200 (CEST)
+User-Agent: Thunderbird 2.0.0.17 (Windows/20080914)
+In-Reply-To: <48FC9685.8030704@viscovery.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/98732>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/98733>
 
-On Monday October 2008 at 14:12 Nicolas Pitre wrote:
+Johannes Sixt schrieb:
+> Why can't you just use -U6 instead instead of --inter-chunk-context=3D=
+3? If
+> this is intended for human consumption anyway, then you can just as w=
+ell
+> increase the overall number of context lines: You get extra context l=
+ines
+> in the places where hunks are not fused, but this cannot be a disadva=
+ntage
+> for the targeted audience.
 
-> My bad.  A small detail went through the crack: the real_type of
-> a delta object is the real_type of its base object.
-> 
-> Without this, the created index will be wrong as the actual object SHA1
-> won't match the object.
-> 
-> Signed-off-by: Nicolas Pitre <nico@cam.org>
-> ---
-> 
-> If you got a corrupted .idx file because of this ('git verify-pack' 
-> should tell) then just toss it and recreate with a fixed 'git 
-> index-pack'.
-> 
-> Could anyone having problems fetching from kernel.org with git from the 
-> next branch confirm that this also fixes that? Thanks.
+The extra lines _are_ a disadvantage for me, since each chunk gets them
+while only close ones need them -- that's wasted space.  The intent is
+to save time by not having to apply and rediff a patch on a mailing lis=
+t
+in order to see the hidden text; part of the savings would be lost if
+the reader had to skip over extra lines.
 
-I still seem to have the same problem after patching:
+Besides, this option is probably most useful if set by default on
+machines not controlled by me.  E.g. I wouldn't want to change an optio=
+n
+on a gitweb page, I'd want to get fused chunks by default.  I wouldn't
+want to write "best viewed with -U6" in a patch description, I'd want i=
+t
+to just work (e.g. for gitk users).
 
-$ git pull
-remote: Counting objects: 279, done.
-remote: Compressing objects: 100% (78/78), done.
-remote: Total 177 (delta 136), reused 135 (delta 99)
-Receiving objects: 100% (177/177), 66.59 KiB, done.
-fatal: pack has bad object at offset 53487: failed to apply delta
-fatal: index-pack failed
+I have to admit my main motivation was that one line gap, where a chunk
+header hid an interesting line of context.  Showing it didn't change th=
+e
+length of the patch, so I found this to be a sad wastage.
 
-'git verify-pack' does _not_ report an error for either pack or index.
-This is with git from branch next at 8f0e41f379d486dd27766d84d994eb1da5b8319d
-trying to pull from git://git.kernel.org/pub/scm/git/git.git
+Optimizing patches for readability makes sense since they are such an
+important part of our communication here.  I think --i-c-c=3D1 results =
+in
+an obvious win without much of a downside.  I was surprised to find tha=
+t
+almost 4% of the chunks in git 1.6.0 would be eliminated by that option=
+:
 
-This is on Debian 'sid' with an AMD64 architecture.
+   $ git log -p v1.6.0 | grep -c '^@@ '
+   60544
+   $ git log -p v1.6.0 --inter-chunk-context=3D1 | grep -c '^@@ '
+   58471
 
-I've put the whole ".git" directory (warning: almost 35MB) for
-investigation at:
+But perhaps a higher value would be even better?
 
-http://www.xs4all.nl/~fiberbit/http://www.xs4all.nl/~fiberbit/git-next-8f0e41f3-bad-index.tgz
+   $ git log v1.6.0 | wc -l
+   225441
+   $ git log -p v1.6.0 | wc -l
+   1736188
+   $ git log -p --inter-chunk-context=3D10 v1.6.0 | wc -l
+   1779048
+   $ git log -p -U8 v1.6.0 | wc -l
+   2214448
 
-I hope I've patched correctly. After applying (cleanly) and rebuilding
-simply executing "./git" from the workdirectory still uses the old
-version. Only after using "make install" I get the patched version,
-which as shown above still gives an error, from the die() at line 528 in
-index-pack.c: bad_object(delta_obj->idx.offset, "failed to apply
-delta");
+Well, I don't know if those patches are easier to read (haven't looked
+at them), but I imagine that some related changes are presented with th=
+e
+full context between them (e.g. changes to loop header and footer,
+function signature and body).  The numbers only show that it's
+affordable (3% more lines with -i-c-c=3D10, 30% more lines with the
+comparable -U8).
 
-Not much more time tonight here, but perhaps it's easier to reproduce
-now with the copy of an affected .git directory.
--- 
-Marco Roeland
+(Why 10?  With the default of -U3, a chunk is 6 lines of context plus a=
+t
+least one line of actual change.  Two chunks are at least 14 lines long=
+,
+thus only 10 more fit into 24 lines, i.e. a terminal window..)
+
+Ren=E9
