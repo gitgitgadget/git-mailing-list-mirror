@@ -1,77 +1,88 @@
-From: Thomas Rast <trast@student.ethz.ch>
-Subject: Re: [BUG?] Fail to pull from kernel.org: pack has bad object
-Date: Mon, 20 Oct 2008 16:10:51 +0200
-Message-ID: <200810201610.54427.trast@student.ethz.ch>
-References: <200810201010.29173.johan@herland.net> <20081020121533.GA2177@coredump.intra.peff.net> <alpine.LFD.2.00.0810200955250.26244@xanadu.home>
+From: Michael J Gruber <git@drmicha.warpmail.net>
+Subject: Re: [PATCH] -C/--chdir command line option
+Date: Mon, 20 Oct 2008 14:57:45 +0200
+Message-ID: <48FC8049.2080107@drmicha.warpmail.net>
+References: <20081019000227.GA9423@charybdis.dreamhost.com> <20081019131745.GA8643@coredump.intra.peff.net> <86685067-021C-4DC5-A462-AA6834208BDE@pasternacki.net> <20081019141634.GA8997@coredump.intra.peff.net> <7vr66b50gy.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: multipart/signed;
-  boundary="nextPart4489048.9dC85Ff0fh";
-  protocol="application/pgp-signature";
-  micalg=pgp-sha1
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-Cc: Johan Herland <johan@herland.net>, Jeff King <peff@peff.net>,
+Cc: Jeff King <peff@peff.net>,
+	Maciej Pasternacki <maciej@pasternacki.net>,
 	git@vger.kernel.org
-To: Nicolas Pitre <nico@cam.org>
-X-From: git-owner@vger.kernel.org Mon Oct 20 22:13:42 2008
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Oct 20 22:20:10 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KrvUK-0000Cr-PL
-	for gcvg-git-2@gmane.org; Mon, 20 Oct 2008 16:12:05 +0200
+	id 1KruLh-0006un-Dh
+	for gcvg-git-2@gmane.org; Mon, 20 Oct 2008 14:59:05 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751864AbYJTOKw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 20 Oct 2008 10:10:52 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752031AbYJTOKw
-	(ORCPT <rfc822;git-outgoing>); Mon, 20 Oct 2008 10:10:52 -0400
-Received: from xsmtp1.ethz.ch ([82.130.70.13]:13199 "EHLO xsmtp1.ethz.ch"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751535AbYJTOKw (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 20 Oct 2008 10:10:52 -0400
-Received: from xfe2.d.ethz.ch ([82.130.124.42]) by xsmtp1.ethz.ch with Microsoft SMTPSVC(6.0.3790.3959);
-	 Mon, 20 Oct 2008 16:10:51 +0200
-Received: from pcjremy.inf.ethz.ch ([129.132.153.233]) by xfe2.d.ethz.ch over TLS secured channel with Microsoft SMTPSVC(6.0.3790.3959);
-	 Mon, 20 Oct 2008 16:10:50 +0200
-User-Agent: KMail/1.9.9
-In-Reply-To: <alpine.LFD.2.00.0810200955250.26244@xanadu.home>
-X-OriginalArrivalTime: 20 Oct 2008 14:10:50.0653 (UTC) FILETIME=[A80EF4D0:01C932BD]
+	id S1752120AbYJTM5w (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 20 Oct 2008 08:57:52 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751719AbYJTM5w
+	(ORCPT <rfc822;git-outgoing>); Mon, 20 Oct 2008 08:57:52 -0400
+Received: from out3.smtp.messagingengine.com ([66.111.4.27]:46832 "EHLO
+	out3.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751246AbYJTM5v (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 20 Oct 2008 08:57:51 -0400
+Received: from compute2.internal (compute2.internal [10.202.2.42])
+	by out1.messagingengine.com (Postfix) with ESMTP id 633DD1810CC;
+	Mon, 20 Oct 2008 08:57:48 -0400 (EDT)
+Received: from heartbeat2.messagingengine.com ([10.202.2.161])
+  by compute2.internal (MEProxy); Mon, 20 Oct 2008 08:57:48 -0400
+X-Sasl-enc: SNVr+gcGRwJCbMG93PkTjKnEWh2WUvf0fxDsnfLDfhLc 1224507467
+Received: from [139.174.44.12] (whitehead.math.tu-clausthal.de [139.174.44.12])
+	by mail.messagingengine.com (Postfix) with ESMTPSA id 7C1351F4E4;
+	Mon, 20 Oct 2008 08:57:47 -0400 (EDT)
+User-Agent: Thunderbird 2.0.0.17 (X11/20080914)
+In-Reply-To: <7vr66b50gy.fsf@gitster.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/98697>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/98698>
 
---nextPart4489048.9dC85Ff0fh
-Content-Type: text/plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: quoted-printable
-Content-Disposition: inline
+Junio C Hamano venit, vidit, dixit 20.10.2008 06:55:
+> Jeff King <peff@peff.net> writes:
+> 
+>> On Sun, Oct 19, 2008 at 03:47:04PM +0200, Maciej Pasternacki wrote:
+>>
+>>> As for -C being superfluous: --git-dir and --work-tree seem to support  
+>>> weird usage patterns (like work tree separate from git-dir), but it seems 
+>> Hmm. Yeah, thinking about it more, -C is not really superfluous with
+>> respect to those options. You don't want to say "here is the work-tree,
+>> and here is the git-dir". You want to say "find the work-tree and
+>> git-dir for me using the usual rules, as if I were in this directory."
+> 
+> I think that interpretation of -C, if the option existed, makes sense, but
+> I do not understand why the tool that drives git refuses to chdir to the
+> repository for itself in the first place.
+> 
+> The only excuse I remember seeing in the thread was that "make has '-C'
+> option, so let's have it, because it is similar", which does not justfiy
+> addition of that option to git at all to me.
 
-Nicholas Pitre wrote:
-> When index-pack dies like that, a temporary (and incomplete) pack file=20
-> is left in .git/objects/pack/ with tmp in the file name.  I'd need only=20
-> that to reproduce the issue.
+I want to have '-j2' ;)
 
-Like this?
+Seriously:
 
-  http://n.ethz.ch/~trast/download/tmp_pack_NMj69p
- =20
-=2D-=20
-Thomas Rast
-trast@{inf,student}.ethz.ch
+git -C elsewhere command opts
 
+is shorther and more direct than
 
---nextPart4489048.9dC85Ff0fh
-Content-Type: application/pgp-signature; name=signature.asc 
-Content-Description: This is a digitally signed message part.
+(cd elsewhere && git command opts)
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.0.9 (GNU/Linux)
+which is the true equivalent, or
 
-iEYEABECAAYFAkj8kW4ACgkQqUud07tmzP2fdwCgk63+wGy6+ddAxWe8LGJL0j/7
-A7MAn1LewegA6RzkZ5pNpEG0YWcZABVl
-=XB+U
------END PGP SIGNATURE-----
+pushd elsewhere; git command opts; popd
 
---nextPart4489048.9dC85Ff0fh--
+And much shorter than using --git-dir and --work-tree, which are
+semi-broken right now.
+
+I just think it's very useful to be able to peek into a repo somewhere
+else quickly; or for transferral of objects between unrelated objects
+(run rev-parse elsewhere etc.).
+
+Michael
