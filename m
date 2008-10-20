@@ -1,79 +1,121 @@
 From: Andreas Ericsson <ae@op5.se>
-Subject: Re: [PATCH 1/3] add alloc_ref_with_prefix()
-Date: Mon, 20 Oct 2008 12:34:22 +0200
-Message-ID: <48FC5EAE.9000108@op5.se>
-References: <48F9A054.4010703@lsrfire.ath.cx>	 <36ca99e90810180227u367783f6vc3b7af0176f6df06@mail.gmail.com>	 <48F9AECA.3020606@lsrfire.ath.cx> <36ca99e90810180507q2dedf4ck7262239ae91d892f@mail.gmail.com>
+Subject: Re: [PATCH] git-fetch should not strip off ".git" extension
+Date: Mon, 20 Oct 2008 12:36:11 +0200
+Message-ID: <48FC5F1B.1050608@op5.se>
+References: <ee2a733e0810180459m5fd20365s3c27bea5c1f3f704@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15;
-	format=flowed
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: =?ISO-8859-15?Q?Ren=E9_Scharfe?= <rene.scharfe@lsrfire.ath.cx>,
-	Git Mailing List <git@vger.kernel.org>,
-	Junio C Hamano <gitster@pobox.com>
-To: Bert Wesarg <bert.wesarg@googlemail.com>
-X-From: git-owner@vger.kernel.org Mon Oct 20 17:06:45 2008
+Content-Type: text/plain; charset=ISO-8859-15; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: SLONIK.AZ@gmail.com
+X-From: git-owner@vger.kernel.org Mon Oct 20 17:09:19 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Krs6s-0007dI-JE
-	for gcvg-git-2@gmane.org; Mon, 20 Oct 2008 12:35:39 +0200
+	id 1Krs8d-0008NI-Iy
+	for gcvg-git-2@gmane.org; Mon, 20 Oct 2008 12:37:28 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751028AbYJTKe0 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 20 Oct 2008 06:34:26 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751056AbYJTKeZ
-	(ORCPT <rfc822;git-outgoing>); Mon, 20 Oct 2008 06:34:25 -0400
-Received: from mail.op5.se ([193.201.96.20]:35489 "EHLO mail.op5.se"
+	id S1751562AbYJTKgQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 20 Oct 2008 06:36:16 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751556AbYJTKgP
+	(ORCPT <rfc822;git-outgoing>); Mon, 20 Oct 2008 06:36:15 -0400
+Received: from mail.op5.se ([193.201.96.20]:35733 "EHLO mail.op5.se"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750911AbYJTKeZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 20 Oct 2008 06:34:25 -0400
+	id S1751518AbYJTKgP (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 20 Oct 2008 06:36:15 -0400
 Received: from localhost (localhost.localdomain [127.0.0.1])
-	by mail.op5.se (Postfix) with ESMTP id B19AA1B8037A;
-	Mon, 20 Oct 2008 12:27:51 +0200 (CEST)
+	by mail.op5.se (Postfix) with ESMTP id A82A324B0001;
+	Mon, 20 Oct 2008 12:29:41 +0200 (CEST)
 X-Virus-Scanned: amavisd-new at 
 X-Spam-Flag: NO
-X-Spam-Score: -3.849
+X-Spam-Score: -3.855
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.849 tagged_above=-10 required=6.6
-	tests=[ALL_TRUSTED=-1.8, AWL=0.550, BAYES_00=-2.599]
+X-Spam-Status: No, score=-3.855 tagged_above=-10 required=6.6
+	tests=[ALL_TRUSTED=-1.8, AWL=0.544, BAYES_00=-2.599]
 Received: from mail.op5.se ([127.0.0.1])
 	by localhost (mail.op5.se [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id DnXyNT4fqY3b; Mon, 20 Oct 2008 12:27:50 +0200 (CEST)
+	with ESMTP id uqQLUTpTjDf2; Mon, 20 Oct 2008 12:29:39 +0200 (CEST)
 Received: from clix.int.op5.se (unknown [192.168.1.20])
-	by mail.op5.se (Postfix) with ESMTP id E1ED21B800B2;
-	Mon, 20 Oct 2008 12:27:49 +0200 (CEST)
+	by mail.op5.se (Postfix) with ESMTP id 42BB11B800B2;
+	Mon, 20 Oct 2008 12:29:39 +0200 (CEST)
 User-Agent: Thunderbird 2.0.0.16 (X11/20080723)
-In-Reply-To: <36ca99e90810180507q2dedf4ck7262239ae91d892f@mail.gmail.com>
+In-Reply-To: <ee2a733e0810180459m5fd20365s3c27bea5c1f3f704@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/98671>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/98672>
 
-Bert Wesarg wrote:
-> On Sat, Oct 18, 2008 at 11:39, Ren=E9 Scharfe <rene.scharfe@lsrfire.a=
-th.cx> wrote:
->>>> +static struct ref *alloc_ref_with_prefix(const char *prefix, size=
-_t prefixlen,
->>>> +               const char *name)
->>>> +{
->>>> +       size_t len =3D strlen(name);
->>>> +       struct ref *ref =3D xcalloc(1, sizeof(struct ref) + prefix=
-len + len + 1);
->>>> +       memcpy(ref->name, prefix, prefixlen);
->>>> +       memcpy(ref->name + prefixlen, name, len);
->>> Where does you \0-terminate the string?
->> xcalloc() calls calloc(), which zeroes the memory.
-> So, you write the memory range twice, just for the last \0?
->=20
+Leo Razoumov wrote:
+> When source git repository has extension ".git" like in "MyRepo.git"
+> "git fetch" will drop ".git" extension and refer to it as "MyRepo".
+> 
+> Example:
+> 
+> sh$ git fetch -v ../MyRepo.git master
+> From ../MyRepo
+>  * branch            master     -> FETCH_HEAD
+> 
+> sh$ cat .git/FETCH_HEAD
+> 6eb10bd105f2ef7f64c595100c0a850c5b3cfeb9           branch 'master' of ../MyRepo
+> 
+> Please, note that "git fetch" writes "../MyRepo" instead of "../MyRepo.git"
+> 
+> My workflow makes it convenient to have two distinct repositories
+> (1) "MyRepo"      => where I work daily (WIP)
+> (2) "MyRepo.git" => --bare repository accessible to others. "MyRepo"
+> pushes ready changes to "MyRepo.git"
+> Dropping ".git" extension causes confusion between these two quite
+> similarly named repositories.
+> 
+> This problem can be easily solved by the patch below that removes the
+> code that strips off ".git" extension.
+> 
+> --Leo--
+> 
+> ----8<-------------------
+> 
+>  builtin-fetch--tool.c |    2 --
+>  builtin-fetch.c       |    2 --
+>  2 files changed, 0 insertions(+), 4 deletions(-)
+> 
+> diff --git a/builtin-fetch--tool.c b/builtin-fetch--tool.c
+> index 7460ab7..5d0b95f 100644
+> --- a/builtin-fetch--tool.c
+> +++ b/builtin-fetch--tool.c
+> @@ -160,8 +160,6 @@ static int append_fetch_head(FILE *fp,
+>  	for (i = remote_len - 1; remote[i] == '/' && 0 <= i; i--)
+>  		;
+>  	remote_len = i + 1;
+> -	if (4 < i && !strncmp(".git", remote + i - 3, 4))
+> -		remote_len = i - 3;
+> 
+>  	note_len = 0;
+>  	if (*what) {
+> diff --git a/builtin-fetch.c b/builtin-fetch.c
+> index ee93d3a..28123a5 100644
+> --- a/builtin-fetch.c
+> +++ b/builtin-fetch.c
+> @@ -348,8 +348,6 @@ static int store_updated_refs(const char *url,
+> const char *remote_name,
+>  		for (i = url_len - 1; url[i] == '/' && 0 <= i; i--)
+>  			;
+>  		url_len = i + 1;
+> -		if (4 < i && !strncmp(".git", url + i - 3, 4))
+> -			url_len = i - 3;
+> 
 
-calloc() doesn't do the zeroing pass if it gets memory from the kernel,
-which guarantees that the memory is already zeroed out. In reality,
-calloc() usually saves on both readability and performance over
-explicitly nul-terminating strings.
+Will this still play nicely with
 
---=20
+   git clone foo.git
+
+?
+
+Otherwise, please also fix the fallout from this patch.
+
+-- 
 Andreas Ericsson                   andreas.ericsson@op5.se
 OP5 AB                             www.op5.se
 Tel: +46 8-230225                  Fax: +46 8-230231
