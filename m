@@ -1,74 +1,89 @@
-From: Jeff King <peff@peff.net>
+From: Thomas Rast <trast@student.ethz.ch>
 Subject: Re: [BUG?] Fail to pull from kernel.org: pack has bad object
-Date: Mon, 20 Oct 2008 08:15:33 -0400
-Message-ID: <20081020121533.GA2177@coredump.intra.peff.net>
-References: <200810201010.29173.johan@herland.net> <200810201026.57306.trast@student.ethz.ch>
+Date: Mon, 20 Oct 2008 10:26:55 +0200
+Message-ID: <200810201026.57306.trast@student.ethz.ch>
+References: <200810201010.29173.johan@herland.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Nicolas Pitre <nico@cam.org>, Johan Herland <johan@herland.net>,
-	git@vger.kernel.org
-To: Thomas Rast <trast@student.ethz.ch>
-X-From: git-owner@vger.kernel.org Mon Oct 20 19:09:05 2008
+Content-Type: multipart/signed;
+  boundary="nextPart4589766.Ox37uJUgWJ";
+  protocol="application/pgp-signature";
+  micalg=pgp-sha1
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Johan Herland <johan@herland.net>
+X-From: git-owner@vger.kernel.org Mon Oct 20 19:47:24 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KrthE-0004DF-Cc
-	for gcvg-git-2@gmane.org; Mon, 20 Oct 2008 14:17:16 +0200
+	id 1Krq7V-0008W3-D6
+	for gcvg-git-2@gmane.org; Mon, 20 Oct 2008 10:28:09 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752364AbYJTMPh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 20 Oct 2008 08:15:37 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751246AbYJTMPh
-	(ORCPT <rfc822;git-outgoing>); Mon, 20 Oct 2008 08:15:37 -0400
-Received: from peff.net ([208.65.91.99]:4726 "EHLO peff.net"
+	id S1751719AbYJTI04 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 20 Oct 2008 04:26:56 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751660AbYJTI04
+	(ORCPT <rfc822;git-outgoing>); Mon, 20 Oct 2008 04:26:56 -0400
+Received: from xsmtp0.ethz.ch ([82.130.70.14]:21924 "EHLO XSMTP0.ethz.ch"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751136AbYJTMPg (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 20 Oct 2008 08:15:36 -0400
-Received: (qmail 12545 invoked by uid 111); 20 Oct 2008 12:15:34 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.32) with SMTP; Mon, 20 Oct 2008 08:15:34 -0400
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Mon, 20 Oct 2008 08:15:33 -0400
-Content-Disposition: inline
-In-Reply-To: <200810201026.57306.trast@student.ethz.ch>
+	id S1751591AbYJTI0z (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 20 Oct 2008 04:26:55 -0400
+Received: from xfe2.d.ethz.ch ([82.130.124.42]) by XSMTP0.ethz.ch with Microsoft SMTPSVC(6.0.3790.3959);
+	 Mon, 20 Oct 2008 10:26:53 +0200
+Received: from pcjremy.inf.ethz.ch ([129.132.153.233]) by xfe2.d.ethz.ch over TLS secured channel with Microsoft SMTPSVC(6.0.3790.3959);
+	 Mon, 20 Oct 2008 10:26:53 +0200
+User-Agent: KMail/1.9.9
+In-Reply-To: <200810201010.29173.johan@herland.net>
+X-OriginalArrivalTime: 20 Oct 2008 08:26:53.0432 (UTC) FILETIME=[9B50EF80:01C9328D]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/98682>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/98683>
 
-On Mon, Oct 20, 2008 at 10:26:55AM +0200, Thomas Rast wrote:
+--nextPart4589766.Ox37uJUgWJ
+Content-Type: text/plain;
+  charset="utf-8"
+Content-Transfer-Encoding: quoted-printable
+Content-Disposition: inline
 
-> > Currently I get the following error when trying to pull from git.git at 
-> > kernel.org:
-> > 
-> > $ git pull
-> > remote: Counting objects: 279, done.
-> > remote: Compressing objects: 100% (78/78), done.
-> > remote: Total 177 (delta 136), reused 135 (delta 99)
-> > Receiving objects: 100% (177/177), 66.59 KiB | 59 KiB/s, done.
-> > fatal: pack has bad object at offset 53487: failed to apply delta
-> > fatal: index-pack failed
-> 
-> I just had the same, panicked, then compiled 'maint' and the fetch
-> worked.  Unfortunately I wasn't awake enough to make a copy of the
-> repo.  Maybe you can make one, then use it to bisect the problem
-> between maint and next...
+Jonathan Herland wrote:
+>
+> Currently I get the following error when trying to pull from git.git at=20
+> kernel.org:
+>=20
+> $ git pull
+> remote: Counting objects: 279, done.
+> remote: Compressing objects: 100% (78/78), done.
+> remote: Total 177 (delta 136), reused 135 (delta 99)
+> Receiving objects: 100% (177/177), 66.59 KiB | 59 KiB/s, done.
+> fatal: pack has bad object at offset 53487: failed to apply delta
+> fatal: index-pack failed
 
-I am getting it, too, but I remembered to save my repo. :) The 'next'
-branch is broken, but master works fine. The bisect points to
+I just had the same, panicked, then compiled 'maint' and the fetch
+worked.  Unfortunately I wasn't awake enough to make a copy of the
+repo.  Maybe you can make one, then use it to bisect the problem
+between maint and next...
 
-  commit 9441b61dc5c3f1f984114ec8bd470dc20c55dfe0
-  Author: Nicolas Pitre <nico@cam.org>
-  Date:   Fri Oct 17 15:57:57 2008 -0400
+=2D Thomas
 
-      index-pack: rationalize delta resolution code
+=2D-=20
+Thomas Rast
+trast@{inf,student}.ethz.ch
 
-but I don't have time to look further right now (there is a small child
-who apparently thinks coloring with crayons is more interesting than
-bisecting bugs).
 
-I can make my broken repo available if need be (though given the number
-of us seeing the problem, I doubt it is hard to reproduce).
 
--Peff
+
+--nextPart4589766.Ox37uJUgWJ
+Content-Type: application/pgp-signature; name=signature.asc 
+Content-Description: This is a digitally signed message part.
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.0.9 (GNU/Linux)
+
+iEYEABECAAYFAkj8QNEACgkQqUud07tmzP3wDgCfchDgnc85/vVIGRZLcvAYFW7j
+bQ0An0a9a3PNiW/ZCgaC0j0csQSixvHp
+=K5wW
+-----END PGP SIGNATURE-----
+
+--nextPart4589766.Ox37uJUgWJ--
