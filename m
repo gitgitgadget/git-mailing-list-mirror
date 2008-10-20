@@ -1,87 +1,66 @@
-From: "Alex Riesen" <raa.lkml@gmail.com>
-Subject: Re: [PATCH] -C/--chdir command line option
-Date: Mon, 20 Oct 2008 08:26:12 +0200
-Message-ID: <81b0412b0810192326n7ace9d4fjd8013cbe1872df22@mail.gmail.com>
-References: <20081019000227.GA9423@charybdis.dreamhost.com>
-	 <20081019131745.GA8643@coredump.intra.peff.net>
-	 <86685067-021C-4DC5-A462-AA6834208BDE@pasternacki.net>
-	 <20081019141634.GA8997@coredump.intra.peff.net>
-	 <7vr66b50gy.fsf@gitster.siamese.dyndns.org>
-	 <7vhc774ydr.fsf@gitster.siamese.dyndns.org>
+From: Pete Harlan <pgit@pcharlan.com>
+Subject: Re: Archiving tags/branches?
+Date: Sun, 19 Oct 2008 23:36:10 -0700
+Message-ID: <48FC26DA.10508@pcharlan.com>
+References: <48F93F52.4070506@pcharlan.com> <200810181315.49265.johan@herland.net> <20081018130204.GB3749@neumann> <200810181532.59883.johan@herland.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-Cc: "Jeff King" <peff@peff.net>,
-	"Maciej Pasternacki" <maciej@pasternacki.net>, git@vger.kernel.org
-To: "Junio C Hamano" <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Oct 20 15:14:41 2008
+Cc: git@vger.kernel.org,
+	=?ISO-8859-1?Q?SZEDER_G=E1bor?= <szeder@ira.uka.de>
+To: Johan Herland <johan@herland.net>
+X-From: git-owner@vger.kernel.org Mon Oct 20 15:27:01 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KroEh-0008W6-7b
-	for gcvg-git-2@gmane.org; Mon, 20 Oct 2008 08:27:27 +0200
+	id 1KroON-000353-J5
+	for gcvg-git-2@gmane.org; Mon, 20 Oct 2008 08:37:28 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751209AbYJTG0O (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 20 Oct 2008 02:26:14 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751208AbYJTG0O
-	(ORCPT <rfc822;git-outgoing>); Mon, 20 Oct 2008 02:26:14 -0400
-Received: from an-out-0708.google.com ([209.85.132.243]:39270 "EHLO
-	an-out-0708.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751194AbYJTG0N (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 20 Oct 2008 02:26:13 -0400
-Received: by an-out-0708.google.com with SMTP id d40so79901and.103
-        for <git@vger.kernel.org>; Sun, 19 Oct 2008 23:26:12 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to
-         :subject:cc:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:references;
-        bh=5+23tloHwRDVxUwAFeGGYotppMwO7IL2coc5bX92zfU=;
-        b=Dxn+Jvt26IVa2z6tZsCBHrbD+Ux+6tTYFQj3MNY6S8M3kXeuvDhHew0SltBTYoAXmn
-         zzeX3PFFiM15lUC4t0o5QTxEW+yXWzPY9kkzhKSMiygrfNqZftJHDgXDOZtcctRiQKyT
-         pda00KYrxv4VPAE0Hxdhwol7wddZwEYaD3qi4=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
-         :content-type:content-transfer-encoding:content-disposition
-         :references;
-        b=AA8vWmwMMmcnNFnw6ZSMvOJvIDjw/Y/W+NSo3I2ryJVBf8c0o+SBEVLW8H1JBIUemy
-         E/gIPmMYXhMSaZP7WdyAdXfDpzVG859Buutq66XqX1/z/V75x0EjG6ZxcB5lsg3iqmam
-         Es7mAMQH7WzjHhv0SqWItXId8gYF5/wBd5cc0=
-Received: by 10.100.227.6 with SMTP id z6mr7953339ang.34.1224483972647;
-        Sun, 19 Oct 2008 23:26:12 -0700 (PDT)
-Received: by 10.100.91.8 with HTTP; Sun, 19 Oct 2008 23:26:12 -0700 (PDT)
-In-Reply-To: <7vhc774ydr.fsf@gitster.siamese.dyndns.org>
-Content-Disposition: inline
+	id S1751124AbYJTGgM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 20 Oct 2008 02:36:12 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751298AbYJTGgM
+	(ORCPT <rfc822;git-outgoing>); Mon, 20 Oct 2008 02:36:12 -0400
+Received: from lax-green-bigip-5.dreamhost.com ([208.113.200.5]:47919 "EHLO
+	swarthymail-a6.g.dreamhost.com" rhost-flags-OK-OK-OK-FAIL)
+	by vger.kernel.org with ESMTP id S1750878AbYJTGgM (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 20 Oct 2008 02:36:12 -0400
+Received: from [192.168.0.2] (031.132-78-65.ftth.swbr.surewest.net [65.78.132.31])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by swarthymail-a6.g.dreamhost.com (Postfix) with ESMTP id 5677A106271;
+	Sun, 19 Oct 2008 23:36:11 -0700 (PDT)
+User-Agent: Mozilla-Thunderbird 2.0.0.16 (X11/20080724)
+In-Reply-To: <200810181532.59883.johan@herland.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/98666>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/98667>
 
-2008/10/20 Junio C Hamano <gitster@pobox.com>:
-> Junio C Hamano <gitster@pobox.com> writes:
-> I wouldn't however suggest allowing the syntax to set environment
-> variables, like:
->
->        $ git GIT_AUTHOR_NAME="A U Thor" commit
->
-> as this is something your shell lets you do easily, i.e:
->
->        $ GIT_AUTHOR_NAME="A U Thor" git commit
->
+Johan Herland wrote:
+> BTW, the best way IMHO to archive old refs is to clone your repo (with all 
+> tags/branches) to a backup disk, and then regularly push (git push --all && 
+> git push --tags) your new tags/branches to this backup. You are now free to 
+> delete these tags/branches from your work repo (they will not be deleted 
+> from the backup unless you use "git push --mirror"). And if you ever need 
+> to retrieve an old tag/branch, it's just a matter of pulling it from the 
+> backup repo. Nice, clean, flexible, and requires no changes to git.
+> 
+> 
+> Have fun! :)
+> 
+> ...Johan
 
-No, someplace else it doesn't (yes, windows again).
-It is mostly hard to do there, because the system shell is so
-primitive, and installation of something sane (sh or env) is
-an additional (and hard to explain to windows zealots) hassle.
+Hi,
 
-And even in something like Perl it is hard: you cannot
-change the environment just for the child process, you
-have to change your own, run the process and change
-it back.
+Thank you; that indeed seems to work and solves the problem of managing
+refs/archived-tags manually.
 
-So, yes, I like your suggestion, but I'd like to _include_
-setting all the Git's environment.
+Using a secondary repo solely to overcome a flat tag/branch namespace
+feels hackish.  Perhaps git will benefit someday from work in this area,
+but until I come up with a patch your suggestion should work fine.  Just
+knowing I didn't overlook an existing feature helps a lot.
+
+--Pete
