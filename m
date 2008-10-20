@@ -1,109 +1,159 @@
-From: Brandon Casey <casey@nrlssc.navy.mil>
-Subject: Re: Usability of git stash
-Date: Mon, 20 Oct 2008 11:33:14 -0500
-Message-ID: <iLaWuW8h9LOhSqXlSRIQTWkC7QR2AL4JEb3gIbblWjY2dzOepLLfdg@cipher.nrlssc.navy.mil>
-References: <87wsg9acfv.fsf@cup.kalibalik.dk> <nKimSsYZj6xfGNCQS3i5cRwnWQfbHrtUrwdGB2zGWVfMOcfZMwJDKg@cipher.nrlssc.navy.mil> <86vdvsg4up.fsf@lola.quinscape.zz> <vCcONcOJu3QKQyRgPdT5Dws3F2P25RNAFOgM5GX6FWWKJe40papCRw@cipher.nrlssc.navy.mil> <87prly5k5r.fsf@cup.kalibalik.dk>
+From: "Tuncer Ayaz" <tuncer.ayaz@gmail.com>
+Subject: Re: [PATCH] Teach/Fix pull/fetch -q/-v options
+Date: Mon, 20 Oct 2008 18:35:33 +0200
+Message-ID: <4ac8254d0810200935sf7ad873tea53c0fb53bbe1c0@mail.gmail.com>
+References: <1224445691-1366-1-git-send-email-tuncer.ayaz@gmail.com>
+	 <7vy70k5las.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-Cc: David Kastrup <dak@gnu.org>, git@vger.kernel.org
-To: Anders Melchiorsen <mail@cup.kalibalik.dk>
-X-From: git-owner@vger.kernel.org Mon Oct 20 23:13:51 2008
+Cc: git@vger.kernel.org
+To: "Junio C Hamano" <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Oct 20 23:15:08 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KrxiP-0006JO-3x
-	for gcvg-git-2@gmane.org; Mon, 20 Oct 2008 18:34:45 +0200
+	id 1KrxkO-00070A-Rh
+	for gcvg-git-2@gmane.org; Mon, 20 Oct 2008 18:36:49 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753522AbYJTQde (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 20 Oct 2008 12:33:34 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753511AbYJTQde
-	(ORCPT <rfc822;git-outgoing>); Mon, 20 Oct 2008 12:33:34 -0400
-Received: from mail1.nrlssc.navy.mil ([128.160.35.1]:38551 "EHLO
-	mail.nrlssc.navy.mil" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753041AbYJTQdd (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 20 Oct 2008 12:33:33 -0400
-Received: by mail.nrlssc.navy.mil id m9KGXF2u013155; Mon, 20 Oct 2008 11:33:15 -0500
-In-Reply-To: <87prly5k5r.fsf@cup.kalibalik.dk>
-X-OriginalArrivalTime: 20 Oct 2008 16:33:15.0337 (UTC) FILETIME=[8D164390:01C932D1]
+	id S1751424AbYJTQfg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 20 Oct 2008 12:35:36 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751902AbYJTQfg
+	(ORCPT <rfc822;git-outgoing>); Mon, 20 Oct 2008 12:35:36 -0400
+Received: from yw-out-2324.google.com ([74.125.46.28]:42925 "EHLO
+	yw-out-2324.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750998AbYJTQff (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 20 Oct 2008 12:35:35 -0400
+Received: by yw-out-2324.google.com with SMTP id 9so309391ywe.1
+        for <git@vger.kernel.org>; Mon, 20 Oct 2008 09:35:33 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to
+         :subject:cc:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:references;
+        bh=GeERUzZI3H15dzapyN4i8hDmghTf9yRNV/aSbVaOwdE=;
+        b=RY+vLNFgUZko0ZrAE69jxDDfoEGAir6pTnggjSmdZoUxFQpdlEVHE7UgpfKWwCfqv6
+         jE20u/GYUPH0Cpg4Nt/uayeUleE1fSy2sP7IDFeKrM9yPbvbiTHo4qi7sSVHj16x+mDp
+         LRshcKjKWRKMtDsQfkewjG4Y7rLkHz7+4kD+s=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
+         :content-type:content-transfer-encoding:content-disposition
+         :references;
+        b=W9OMB2tT/2kmJVUASLOET62dn1rv1BNMao9Pu9YFmO0HudU72hIrPXBwfKqwg02FTb
+         yHgeYTdLloAv2b7TpBjPwl1h8kz5GYeO9AK0cBSKfLOjw9hWZYwMyfWS5MWANUbOgGi6
+         pVmfP1pQLDv93XqYKyiVTw8xKzZXFYGbFc2V0=
+Received: by 10.64.183.1 with SMTP id g1mr5093531qbf.72.1224520533187;
+        Mon, 20 Oct 2008 09:35:33 -0700 (PDT)
+Received: by 10.65.114.10 with HTTP; Mon, 20 Oct 2008 09:35:33 -0700 (PDT)
+In-Reply-To: <7vy70k5las.fsf@gitster.siamese.dyndns.org>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/98708>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/98709>
 
-Anders Melchiorsen wrote:
-> Brandon Casey <casey@nrlssc.navy.mil> writes:
-> 
->> In exchange for allowing new users to stub their toe on new commands, the
->> work flow of more experienced users is made a little easier.
-> 
-> I wonder whether experienced users even use stash a lot. Personally,
-> after getting my head around the DAG, and thus getting more
-> comfortable with git reset, I tend to make "WIP" commits instead.
+On Sun, Oct 19, 2008 at 11:26 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> Tuncer Ayaz <tuncer.ayaz@gmail.com> writes:
+>
+>> 2) my adaption of the following two lines from
+>> builtin-fetch.c to the new verbosity option:
+>>     if (verbosity == VERBOSE)
+>>         transport->verbose = 1;
+>>     if (verbosity == QUIET)
+>>         transport->verbose = -1;
+>
+> Hmm, what's wrong with it?  Looks Ok to me...
 
-There is another use for stash, as has previously been described by someone
-else on this list. That is for incrementally splitting up changes made to
-the working directory into a series of commits, _and_ testing each commit.
+Just wanted to be sure it's correct, that's all.
 
-This is what the 'git stash save --keep-index' functionality was invented for,
-but I do not consider this single option to completely satisfy the
-requirements. The idea is to be able to 'git add -i' commits to the index and
-then stash away all of the remaining commits so that the commits in the index
-can be tested alone. After testing, you may decide that you want to move
-commits from the index into the stash set or vice versa as appropriate before
-committing.
+Actually I think the old code:
+if (verbose >= 2)
+    transport->verbose = 1;
+is wrong and probably a leftover from old days
+as Shawn confirmed.
 
-Easily performing the operations in the previous sentence is what is missing.
-Additional hunks can be added easily, but they can not be un-staged easily.
-Maybe the interactive mode of git-add needs a '-p' sub-command which will
-allow selecting from the set of staged hunks, and un-staging individually in
-the same way that the 'p' sub-command allows staging hunks.
+>>  static struct option builtin_fetch_options[] = {
+>> -     OPT__QUIET(&quiet),
+>> -     OPT__VERBOSE(&verbose),
+>> +     { OPTION_CALLBACK, 'q', "quiet", NULL, NULL,
+>> +             "operate quietly",
+>> +             PARSE_OPT_NOARG, option_parse_quiet },
+>> +     { OPTION_CALLBACK, 'v', "verbose", NULL, NULL,
+>> +             "be verbose",
+>> +             PARSE_OPT_NOARG, option_parse_verbose },
+>
+> Isn't there a OPTION_FOO that assigns a constant to the given variable?
 
-There is an example of this workflow in the stash man page, but I think it
-needs to be changed. It is suggested:
+Yes, there is - OPT_SET_INT and I've used that in my next patch.
 
-   # ... hack hack hack ...
-   $ git add --patch foo            # add just first part to the index
-   $ git stash save --keep-index    # save all other changes to the stash
-   $ edit/build/test first part
-   $ git commit -m 'First part'     # commit fully tested change
-   $ git stash pop                  # prepare to work on all other changes
-   # ... repeat above five steps until ...
+>> @@ -192,7 +211,6 @@ static int s_update_ref(const char *action,
+>>
+>>  static int update_local_ref(struct ref *ref,
+>>                           const char *remote,
+>> -                         int verbose,
+>>                           char *display)
+>>  {
+>>       struct commit *current = NULL, *updated;
+>> ...
+>> @@ -366,18 +384,19 @@ static int store_updated_refs(const char *url, const char
+>> *remote_name,
+>>                       note);
+>>
+>>               if (ref)
+>> -                     rc |= update_local_ref(ref, what, verbose, note);
+>> +                     rc |= update_local_ref(ref, what, note);
+>
+> Hmph, in the existing code, do_fetch()->fetch_refs()->store_updated_refs()
+> callchain relies on the "verbose" to be global anyway, so losing the
+> ability to call update_local_ref() with verbosity as parameter is not a
+> huge deal.
 
-The commit and pop currently need to be changed to something like:
+OK, I've kept the removal of the verbose param in the next patch.
 
-   # git reset --hard
-   # git stash pop --index
-   # git commit -m 'First part'
+> I however think it would be more beneficial in the longer term to keep
+> "verbosity" as parameter so the caller can tweak what the callee does, and
+> making large part of what cmd_fetch() does callable from outside.  That
+> would involve making the builtin_fetch_options[] on-stack, and passing
+> verbosity (and possibly other variables currently used as file-scope
+> global) as parameters, which is outside of the scope of your patch, but it
+> is something to keep in mind.
+>
+>> diff --git a/git-pull.sh b/git-pull.sh
+>> index 75c3610..dc613db 100755
+>> --- a/git-pull.sh
+>> +++ b/git-pull.sh
+>> @@ -16,6 +16,7 @@ cd_to_toplevel
+>>  test -z "$(git ls-files -u)" ||
+>>       die "You are in the middle of a conflicted merge."
+>>
+>> +verbosity=
+>>  strategy_args= no_stat= no_commit= squash= no_ff= log_arg=
+>>  curr_branch=$(git symbolic-ref -q HEAD)
+>>  curr_branch_short=$(echo "$curr_branch" | sed "s|refs/heads/||")
+>
+> It would fit at the end of the next line just fine, wouldn't it?
+>
+>> @@ -23,6 +24,10 @@ rebase=$(git config --bool branch.$curr_branch_short.rebase)
+>>  while :
+>>  do
+>>       case "$1" in
+>> +     -q|--quiet)
+>> +             verbosity="$verbosity -q" ;;
+>> +     -v|--verbose)
+>> +             verbosity="$verbosity -v" ;;
+>
+> You know verbosity flags (-q and -v) are "the last one wins", so I do not
+> see much point in this concatenation.
 
-Otherwise you are prone to merge conflicts in the working directory which
-are not straight-forward to reconcile. When there are merge conflicts,
-the changes from the stash are staged for committing, and the files with
-conflicts are 'Changed but not updated'. The user must reconcile the
-conflicts and then 'git reset'.
-
-I'm sure the user's reaction (as mine was) will be WTF!?. I initially
-concluded that this work-flow was just broken. It is still usable, but far
-from perfect.
-
-> After having used "git stash clear" at a bad time once, I am wary of
-> stashing work that I actually want to keep. I prefer workflows where
-> my mistakes can be (easily) corrected.
-
-There is now a 'git stash drop' which can be used to drop individual stashes,
-and a 'git stash pop' to apply and then drop an individual stash.
-
-> The primary thing that stash does for me is preserve the index state.
-> Unfortunately, --index is not default for stash apply, so I often
-> forget it.
-
-The apply can always be redone.
-
-   git reset --hard && git stash apply --index
-
-But, I wouldn't be against making --index the default.
-
--brandon
+Without concatenation I would need to analyze the content
+of the variable each time the option is passed to the shell
+script. Do you know of a simpler/better way still keeping the
+functionality that
+$ git pull -q -v --quiet --verbose --quiet gives verbosity=QUIET
+and
+$ git pull -q -v --quiet --verbose --quiet -v yields verbosity=VERBOSE
+?
