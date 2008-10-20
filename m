@@ -1,81 +1,84 @@
-From: Johannes Sixt <j.sixt@viscovery.net>
-Subject: Re: [PATCH, RFC] diff: add option to show context between close chunks
-Date: Mon, 20 Oct 2008 16:32:37 +0200
-Message-ID: <48FC9685.8030704@viscovery.net>
-References: <48FB757B.9030105@lsrfire.ath.cx>
+From: Marco Roeland <marco.roeland@xs4all.nl>
+Subject: Re: [PATCH] fix for "index-pack: rationalize delta resolution code"
+Date: Mon, 20 Oct 2008 22:12:51 +0200
+Message-ID: <20081020201251.GC22123@fiberbit.xs4all.nl>
+References: <alpine.LFD.2.00.0810201357340.26244@xanadu.home> <20081020191400.GA18743@fiberbit.xs4all.nl> <20081020192051.GA21770@fiberbit.xs4all.nl> <alpine.LFD.2.00.0810201525540.26244@xanadu.home> <20081020193652.GA22123@fiberbit.xs4all.nl> <alpine.LFD.2.00.0810201601480.26244@xanadu.home>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Git Mailing List <git@vger.kernel.org>,
-	Davide Libenzi <davidel@xmailserver.org>
-To: =?ISO-8859-15?Q?Ren=E9_Scharfe?= <rene.scharfe@lsrfire.ath.cx>
-X-From: git-owner@vger.kernel.org Mon Oct 20 22:49:26 2008
+Content-Type: text/plain; charset=utf-8
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+	Jeff King <peff@peff.net>
+To: Nicolas Pitre <nico@cam.org>
+X-From: git-owner@vger.kernel.org Mon Oct 20 22:51:46 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KrvrA-0006wZ-Fm
-	for gcvg-git-2@gmane.org; Mon, 20 Oct 2008 16:35:41 +0200
+	id 1Ks19b-0001rf-Fs
+	for gcvg-git-2@gmane.org; Mon, 20 Oct 2008 22:15:03 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751056AbYJTOcm convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 20 Oct 2008 10:32:42 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751126AbYJTOcm
-	(ORCPT <rfc822;git-outgoing>); Mon, 20 Oct 2008 10:32:42 -0400
-Received: from lilzmailso02.liwest.at ([212.33.55.13]:23662 "EHLO
-	lilzmailso02.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751011AbYJTOcl convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 20 Oct 2008 10:32:41 -0400
-Received: from cm56-163-160.liwest.at ([86.56.163.160] helo=linz.eudaptics.com)
-	by lilzmailso02.liwest.at with esmtpa (Exim 4.66)
-	(envelope-from <j.sixt@viscovery.net>)
-	id 1KrvoD-00029M-Hq; Mon, 20 Oct 2008 16:32:37 +0200
-Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.96])
-	by linz.eudaptics.com (Postfix) with ESMTP
-	id 4DF616B7; Mon, 20 Oct 2008 16:32:37 +0200 (CEST)
-User-Agent: Thunderbird 2.0.0.6 (Windows/20070728)
-In-Reply-To: <48FB757B.9030105@lsrfire.ath.cx>
-X-Spam-Score: 1.7 (+)
-X-Spam-Report: ALL_TRUSTED=-1.8, BAYES_99=3.5
+	id S1754184AbYJTUN3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 20 Oct 2008 16:13:29 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753142AbYJTUN3
+	(ORCPT <rfc822;git-outgoing>); Mon, 20 Oct 2008 16:13:29 -0400
+Received: from smtp-vbr1.xs4all.nl ([194.109.24.21]:4663 "EHLO
+	smtp-vbr1.xs4all.nl" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754691AbYJTUN2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 20 Oct 2008 16:13:28 -0400
+Received: from fiberbit.xs4all.nl (fiberbit.xs4all.nl [80.101.187.211])
+	by smtp-vbr1.xs4all.nl (8.13.8/8.13.8) with ESMTP id m9KKCpra072686;
+	Mon, 20 Oct 2008 22:12:51 +0200 (CEST)
+	(envelope-from marco.roeland@xs4all.nl)
+Received: from marco by fiberbit.xs4all.nl with local (Exim 4.69)
+	(envelope-from <marco.roeland@xs4all.nl>)
+	id 1Ks17T-0005ur-3M; Mon, 20 Oct 2008 22:12:51 +0200
+Content-Disposition: inline
+In-Reply-To: <alpine.LFD.2.00.0810201601480.26244@xanadu.home>
+User-Agent: Mutt/1.5.18 (2008-05-17)
+X-Virus-Scanned: by XS4ALL Virus Scanner
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/98704>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/98705>
 
-Ren=E9 Scharfe schrieb:
-> This patch adds a new diff option, --inter-chunk-context.  It can be
-> used to show the context in gaps between chunks, thereby creating a
-> big chunk out of two close chunks, in order to have an unbroken
-> context, making reviews easier.
->=20
-> With --inter-chunk-context=3D1, patches have the same number of lines
-> as without the option, as only the chunk header is replaced by the
-> context line it was shadowing.
->=20
-> You can use commit b0b44bc7b26c8c4b4221a377ce6ba174b843cb8d in the
-> git repo to try out this option; there's a chunk in transport.c
-> which is just one line away from the next.  (I found this option
-> helpful in reviewing my own patch before sending. :)
->=20
-> I think it makes sense to make 1, or even 3, the default for this
-> option for all commands that create patches intended for human
-> consumption.  The patch keeps the default at 0, though.
->=20
-> There are downsides, of course: values higher than 1 potentially make
-> the resulting patch longer.  More context means a higher probability
-> of (perhaps unnecessary) merge conflicts.
->=20
-> Comments?
+On Monday Oktober 20th 2008 at 16:04 Nicolas Pitre wrote:
 
-Why can't you just use -U6 instead instead of --inter-chunk-context=3D3=
-? If
-this is intended for human consumption anyway, then you can just as wel=
-l
-increase the overall number of context lines: You get extra context lin=
-es
-in the places where hunks are not fused, but this cannot be a disadvant=
-age
-for the targeted audience.
+> If you want to make the difference really visible, try with
+> 'git repack -a -f --window=100'.
 
--- Hannes
+Impressive, yes. Thanks very much.
+
+marco@sirius:~/src/git (next) $ time git repack -a -f --window=100
+Counting objects: 85713, done.
+Compressing objects: 100% (84207/84207), done.
+Writing objects: 100% (85713/85713), done.
+Total 85713 (delta 62371), reused 0 (delta 0)
+
+real    1m2.775s
+user    1m1.848s
+sys     0m0.176s
+marco@sirius:~/src/git (next) $ git config pack.threads 0
+marco@sirius:~/src/git (next) $ time git repack -a -f --window=100
+Counting objects: 85713, done.
+Compressing objects: 100% (84207/84207), done.
+Writing objects: 100% (85713/85713), done.
+Total 85713 (delta 62363), reused 0 (delta 0)
+
+real    0m21.348s
+user    1m2.948s
+sys     0m0.432s
+marco@sirius:~/src/git (next) $ git config --unset pack.threads
+marco@sirius:~/src/git (next) $ time git repack -a -f --window=100
+Counting objects: 85713, done.
+Compressing objects: 100% (84207/84207), done.
+Writing objects: 100% (85713/85713), done.
+Total 85713 (delta 62371), reused 0 (delta 0)
+
+real    1m1.904s
+user    1m1.476s
+sys     0m0.184s
+
+This on Intel(R) Core(TM)2 Quad  CPU   Q9450  @ 2.66GHz.
+-- 
+Marco Roeland
