@@ -1,58 +1,66 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATHv2 6/8] gitweb: retrieve snapshot format from PATH_INFO
-Date: Tue, 21 Oct 2008 12:09:14 -0700
-Message-ID: <7vtzb5ydd1.fsf@gitster.siamese.dyndns.org>
-References: <1224188831-17767-6-git-send-email-giuseppe.bilotta@gmail.com>
- <1224426270-27755-1-git-send-email-giuseppe.bilotta@gmail.com>
- <200810211844.35714.jnareb@gmail.com>
- <cb7bb73a0810211136n452ac8bdp7814ff09749b3142@mail.gmail.com>
+From: Robin Rosenberg <robin.rosenberg.lists@dewire.com>
+Subject: Re: [EGIT PATCH] git property page for project properties.
+Date: Tue, 21 Oct 2008 21:13:30 +0200
+Message-ID: <200810212113.30414.robin.rosenberg.lists@dewire.com>
+References: <1224529604-42397-1-git-send-email-tomi.pakarinen@iki.fi> <200810211950.50540.robin.rosenberg.lists@dewire.com> <f299b4f30810211109q7f2919f2r1d5cd8faf0048154@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: "Jakub Narebski" <jnareb@gmail.com>, git@vger.kernel.org,
-	"Petr Baudis" <pasky@suse.cz>, "Junio C Hamano" <gitster@pobox.com>
-To: "Giuseppe Bilotta" <giuseppe.bilotta@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Oct 21 21:10:52 2008
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
+Cc: spearce@spearce.org, git@vger.kernel.org
+To: tomi.pakarinen@iki.fi
+X-From: git-owner@vger.kernel.org Tue Oct 21 21:15:20 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KsMcw-00021S-8p
-	for gcvg-git-2@gmane.org; Tue, 21 Oct 2008 21:10:46 +0200
+	id 1KsMh5-0003xN-AG
+	for gcvg-git-2@gmane.org; Tue, 21 Oct 2008 21:15:03 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751126AbYJUTJd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 21 Oct 2008 15:09:33 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751045AbYJUTJd
-	(ORCPT <rfc822;git-outgoing>); Tue, 21 Oct 2008 15:09:33 -0400
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:65444 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750874AbYJUTJd (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 21 Oct 2008 15:09:33 -0400
-Received: from localhost.localdomain (localhost [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 0CFD9725F5;
-	Tue, 21 Oct 2008 15:09:32 -0400 (EDT)
-Received: from pobox.com (ip68-225-240-211.oc.oc.cox.net [68.225.240.211])
- (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
- certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
- ESMTPSA id D105D725EC; Tue, 21 Oct 2008 15:09:22 -0400 (EDT)
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: CAB62D02-9FA3-11DD-B94A-9CEDC82D7133-77302942!a-sasl-fastnet.pobox.com
+	id S1755491AbYJUTNk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 21 Oct 2008 15:13:40 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752921AbYJUTNk
+	(ORCPT <rfc822;git-outgoing>); Tue, 21 Oct 2008 15:13:40 -0400
+Received: from av8-2-sn3.vrr.skanova.net ([81.228.9.184]:54206 "EHLO
+	av8-2-sn3.vrr.skanova.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755472AbYJUTNj (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 21 Oct 2008 15:13:39 -0400
+Received: by av8-2-sn3.vrr.skanova.net (Postfix, from userid 502)
+	id CFE6F380D3; Tue, 21 Oct 2008 21:13:36 +0200 (CEST)
+Received: from smtp3-1-sn3.vrr.skanova.net (smtp3-1-sn3.vrr.skanova.net [81.228.9.101])
+	by av8-2-sn3.vrr.skanova.net (Postfix) with ESMTP
+	id B6D6238056; Tue, 21 Oct 2008 21:13:36 +0200 (CEST)
+Received: from sleipner.dewire.com (h250n1fls32o811.telia.com [213.67.100.250])
+	by smtp3-1-sn3.vrr.skanova.net (Postfix) with ESMTP id A0D0037E46;
+	Tue, 21 Oct 2008 21:13:36 +0200 (CEST)
+Received: from dewire.com (unknown [10.9.0.1])
+	by sleipner.dewire.com (Postfix) with ESMTP id AD65B1943;
+	Tue, 21 Oct 2008 21:13:31 +0200 (CEST)
+Received: from localhost (localhost [127.0.0.1])
+	by dewire.com (Postfix) with ESMTP id 38363802E07;
+	Tue, 21 Oct 2008 21:13:36 +0200 (CEST)
+X-Virus-Scanned: by amavisd-new at dewire.com
+Received: from dewire.com ([127.0.0.1])
+	by localhost (torino.dewire.com [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id F7MRB88TTVTm; Tue, 21 Oct 2008 21:13:35 +0200 (CEST)
+Received: from [10.9.0.4] (unknown [10.9.0.4])
+	by dewire.com (Postfix) with ESMTP id A5A9080284E;
+	Tue, 21 Oct 2008 21:13:35 +0200 (CEST)
+User-Agent: KMail/1.9.10
+In-Reply-To: <f299b4f30810211109q7f2919f2r1d5cd8faf0048154@mail.gmail.com>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/98805>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/98806>
 
-"Giuseppe Bilotta" <giuseppe.bilotta@gmail.com> writes:
+tisdagen den 21 oktober 2008 20.09.13 skrev Tomi Pakarinen:
+>  That is ok. I just didn't notice that method before. But, what if
+> someone wants localize this plugin, he'll propably have to explode
+> this back to switch statement.
 
->> But I'd rather have this patch series to be in separate thread...
->
-> Yes, a posteriori I think it's better too. I'll resend the 5 path_info
-> patches with the minor stylistic corrections you suggested, and send
-> these 3 separately.
+No, we'd localize getDescription().
 
-I've only been watching from the sidelines, but the discussion seemed
-sensible.  With the resend with Acks I think they are already 'next'
-material.
-
-Thanks, both of you.  
+-- robin
