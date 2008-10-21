@@ -1,66 +1,89 @@
-From: Charles Bailey <charles@hashpling.org>
-Subject: Re: [PATCH 2/3] Add -n/--no-prompt option to mergetool
-Date: Tue, 21 Oct 2008 13:26:55 +0100
-Message-ID: <20081021122655.GA29294@hashpling.org>
-References: <1224583999-26279-1-git-send-email-charles@hashpling.org> <1224583999-26279-2-git-send-email-charles@hashpling.org> <48FDC1CA.2080800@op5.se>
+From: "Alexander Gavrilov" <angavrilov@gmail.com>
+Subject: Re: [PATCH 7/7] gitk: Explicitly position popup windows.
+Date: Tue, 21 Oct 2008 16:52:27 +0400
+Message-ID: <bb6f213e0810210552k1e18ad83l9e06981454818cd2@mail.gmail.com>
+References: <1223449540-20457-1-git-send-email-angavrilov@gmail.com>
+	 <1223449540-20457-2-git-send-email-angavrilov@gmail.com>
+	 <1223449540-20457-3-git-send-email-angavrilov@gmail.com>
+	 <1223449540-20457-4-git-send-email-angavrilov@gmail.com>
+	 <1223449540-20457-5-git-send-email-angavrilov@gmail.com>
+	 <1223449540-20457-6-git-send-email-angavrilov@gmail.com>
+	 <1223449540-20457-7-git-send-email-angavrilov@gmail.com>
+	 <1223449540-20457-8-git-send-email-angavrilov@gmail.com>
+	 <18685.49152.25344.398737@cargo.ozlabs.ibm.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Jeff King <peff@peff.net>,
-	William Pursell <bill.pursell@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>,
-	"Theodore Ts'o" <tytso@mit.edu>
-To: Andreas Ericsson <ae@op5.se>
-X-From: git-owner@vger.kernel.org Tue Oct 21 14:28:47 2008
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: "Paul Mackerras" <paulus@samba.org>
+X-From: git-owner@vger.kernel.org Tue Oct 21 14:53:45 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KsGLm-0004ym-4c
-	for gcvg-git-2@gmane.org; Tue, 21 Oct 2008 14:28:38 +0200
+	id 1KsGk4-0006QX-Vn
+	for gcvg-git-2@gmane.org; Tue, 21 Oct 2008 14:53:45 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753768AbYJUM1J (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 21 Oct 2008 08:27:09 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752303AbYJUM1I
-	(ORCPT <rfc822;git-outgoing>); Tue, 21 Oct 2008 08:27:08 -0400
-Received: from pih-relay05.plus.net ([212.159.14.18]:40224 "EHLO
-	pih-relay05.plus.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752750AbYJUM1H (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 21 Oct 2008 08:27:07 -0400
-Received: from [212.159.69.125] (helo=hashpling.plus.com)
-	 by pih-relay05.plus.net with esmtp (Exim) id 1KsGK8-0001js-N8; Tue, 21 Oct 2008 13:26:56 +0100
-Received: from cayley.hashpling.org (cayley.hashpling.org [192.168.76.254])
-	by hashpling.plus.com (8.14.2/8.14.2) with ESMTP id m9LCQtev029763
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Tue, 21 Oct 2008 13:26:55 +0100
-Received: (from charles@localhost)
-	by cayley.hashpling.org (8.14.2/8.14.2/Submit) id m9LCQtTK029762;
-	Tue, 21 Oct 2008 13:26:55 +0100
+	id S1753057AbYJUMwa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 21 Oct 2008 08:52:30 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752878AbYJUMwa
+	(ORCPT <rfc822;git-outgoing>); Tue, 21 Oct 2008 08:52:30 -0400
+Received: from ug-out-1314.google.com ([66.249.92.171]:38739 "EHLO
+	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752803AbYJUMw3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 21 Oct 2008 08:52:29 -0400
+Received: by ug-out-1314.google.com with SMTP id k3so1010101ugf.37
+        for <git@vger.kernel.org>; Tue, 21 Oct 2008 05:52:27 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to
+         :subject:cc:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:references;
+        bh=BHFIxR9yDLFJp/nwkg/piqjVpdun06Nnjue4unD75Lk=;
+        b=OjNB5Er2FcYO+LMEAYnYmod50vYCeUGfCpG5DJyWVKzrDANX3wW8PlPd+/SJJerHFT
+         yNkXXLlL9OEoctPNY8f1Nu9UOCeWyShESWv9TH9SFxalpUtPDdf4/bH/FERWsZHvqQpm
+         pBgqoqcKDEPEDnk+1qBYoVxlhkkyJbcBPBUvo=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
+         :content-type:content-transfer-encoding:content-disposition
+         :references;
+        b=WQNI1mr6gd9VBUwXLDBRgRZ1/uvF158heMkLPsLBN/FZyWsi1EG3DsANiGfc07KobD
+         hf64GO9UGiJRIQpWvwQIFSjMrQPhENnFG9DEq8GFbI7XQDcDzSd+utFmSmDVyWFz3AFt
+         ie3BzvzWxoOBrfw6SzplVkohPb4xLrBgJh95k=
+Received: by 10.103.189.15 with SMTP id r15mr4435748mup.135.1224593547055;
+        Tue, 21 Oct 2008 05:52:27 -0700 (PDT)
+Received: by 10.103.251.10 with HTTP; Tue, 21 Oct 2008 05:52:27 -0700 (PDT)
+In-Reply-To: <18685.49152.25344.398737@cargo.ozlabs.ibm.com>
 Content-Disposition: inline
-In-Reply-To: <48FDC1CA.2080800@op5.se>
-User-Agent: Mutt/1.5.18 (2008-05-17)
-X-Plusnet-Relay: 980a42bf6b32592a7376d485c144c175
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/98784>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/98785>
 
-On Tue, Oct 21, 2008 at 01:49:30PM +0200, Andreas Ericsson wrote:
+On Tue, Oct 21, 2008 at 3:41 PM, Paul Mackerras <paulus@samba.org> wrote:
+> Alexander Gavrilov writes:
 >
-> There is discussion already about "-n should be for dry-run!" and git's
-> inconsistencies in such matters. Wouldn't -y ("assume yes on prompt")
-> be better?
+>> For some reason, on Windows all transient windows are placed
+>> in the upper left corner of the screen. Thus, it is necessary
+>> to explicitly position the windows using the tk::PlaceWindow
+>> function.
 >
+> Hmmm, this is not part of the official Tk API as far as I can see, and
+> having to call tk::PlaceWindow on every window we create is a bit
+> gross.  What exactly does it do, and what effect will this change have
+> on Linux?  Are you sure there isn't some other way to fix the problem?
 
-I must have missed this discussion. I've just had a very quick look at
-a handful of basic modifying git commands (merge, pull, commit,
-checkout, reset, revert) and only found 'add' that used -n as
---dry-run.
+It is just a convenient helper function that can explicitly compute
+and set the window position in a number of ways. It is used in Tk's
+dialog implementations. If you don't like using an unofficial
+function, I can pull out the relevant ~8 lines of code as a separate
+function in gitk.
 
-That said, I've no real objections to -y if that makes for a better
-consensus.
 
--- 
-Charles Bailey
-http://ccgi.hashpling.plus.com/blog/
+http://objectmix.com/tcl/390381-tile-dialog-boxes-not-transient-parent-under-windows.html
+http://wiki.tcl.tk/1254
+
+Alexander
