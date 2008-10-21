@@ -1,100 +1,78 @@
-From: "Tomi Pakarinen" <tomi.pakarinen@gmail.com>
-Subject: Re: [EGIT PATCH] git property page for project properties.
-Date: Tue, 21 Oct 2008 21:09:13 +0300
-Message-ID: <f299b4f30810211109q7f2919f2r1d5cd8faf0048154@mail.gmail.com>
-References: <1224529604-42397-1-git-send-email-tomi.pakarinen@iki.fi>
-	 <200810211950.50540.robin.rosenberg.lists@dewire.com>
-Reply-To: tomi.pakarinen@iki.fi
+From: Daniel Barkalow <barkalow@iabervon.org>
+Subject: Re: [PATCH, RFC] diff: add option to show context between close  
+ chunks
+Date: Tue, 21 Oct 2008 14:16:10 -0400 (EDT)
+Message-ID: <alpine.LNX.1.00.0810211403120.19665@iabervon.org>
+References: <48FB757B.9030105@lsrfire.ath.cx> <7vabcy3k9l.fsf@gitster.siamese.dyndns.org> <48FD781C.2000103@viscovery.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: spearce@spearce.org, git@vger.kernel.org
-To: "Robin Rosenberg" <robin.rosenberg.lists@dewire.com>
-X-From: git-owner@vger.kernel.org Tue Oct 21 20:11:08 2008
+Content-Type: MULTIPART/MIXED; BOUNDARY="1547844168-1791605661-1224612970=:19665"
+Cc: Junio C Hamano <gitster@pobox.com>,
+	=?ISO-8859-15?Q?Ren=E9_Scharfe?= <rene.scharfe@lsrfire.ath.cx>,
+	Git Mailing List <git@vger.kernel.org>,
+	Davide Libenzi <davidel@xmailserver.org>
+To: Johannes Sixt <j.sixt@viscovery.net>
+X-From: git-owner@vger.kernel.org Tue Oct 21 20:17:57 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KsLgs-0001yk-Cv
-	for gcvg-git-2@gmane.org; Tue, 21 Oct 2008 20:10:46 +0200
+	id 1KsLnJ-00051y-TK
+	for gcvg-git-2@gmane.org; Tue, 21 Oct 2008 20:17:26 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751814AbYJUSJQ convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 21 Oct 2008 14:09:16 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752084AbYJUSJP
-	(ORCPT <rfc822;git-outgoing>); Tue, 21 Oct 2008 14:09:15 -0400
-Received: from wa-out-1112.google.com ([209.85.146.180]:57542 "EHLO
-	wa-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752676AbYJUSJO convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 21 Oct 2008 14:09:14 -0400
-Received: by wa-out-1112.google.com with SMTP id v27so1263049wah.21
-        for <git@vger.kernel.org>; Tue, 21 Oct 2008 11:09:14 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:reply-to
-         :to:subject:cc:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:references;
-        bh=kteBD0DMjSDmdlMiLnVlUQJvW9a74OlKhW5N8QFfUQw=;
-        b=Q8XTy9NKF8I7B+m0OYy0iUWC0SBbx3nqJjF5yYicm4BnY9pwZjVXpzbXhU8JrkV6Pr
-         39+B03DOUhrW47e3WHKLMPVRvvUjvP3GAhpDgdbaibHsVF13lY+SRWYH7yVBuA96xfEi
-         seHSOdinK9xfmyP1qrmRtBBGDBzeReE+2IowU=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:reply-to:to:subject:cc:in-reply-to
-         :mime-version:content-type:content-transfer-encoding
-         :content-disposition:references;
-        b=ukBD+YXpomEbQuafmmFAsdjg1PDru62ddyz4MbNy1BK9XnjLgvldoqX4hZmKPHtwIw
-         TyTBmPIilqYWixLSge1CKhvpw6Is5GiP9/szmYpJ27irkWsv1x6T2UVS64gm482DonHf
-         eOeda0kE+bVnlqA+etj+Veize/OIVh5BA2dw4=
-Received: by 10.114.37.1 with SMTP id k1mr6687821wak.42.1224612554076;
-        Tue, 21 Oct 2008 11:09:14 -0700 (PDT)
-Received: by 10.115.91.4 with HTTP; Tue, 21 Oct 2008 11:09:13 -0700 (PDT)
-In-Reply-To: <200810211950.50540.robin.rosenberg.lists@dewire.com>
-Content-Disposition: inline
+	id S1751929AbYJUSQN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 21 Oct 2008 14:16:13 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751897AbYJUSQM
+	(ORCPT <rfc822;git-outgoing>); Tue, 21 Oct 2008 14:16:12 -0400
+Received: from iabervon.org ([66.92.72.58]:49061 "EHLO iabervon.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751882AbYJUSQM (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 21 Oct 2008 14:16:12 -0400
+Received: (qmail 32578 invoked by uid 1000); 21 Oct 2008 18:16:10 -0000
+Received: from localhost (sendmail-bs@127.0.0.1)
+  by localhost with SMTP; 21 Oct 2008 18:16:10 -0000
+In-Reply-To: <48FD781C.2000103@viscovery.net>
+User-Agent: Alpine 1.00 (LNX 882 2007-12-20)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/98801>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/98802>
 
-On Tue, Oct 21, 2008 at 8:50 PM, Robin Rosenberg
-<robin.rosenberg.lists@dewire.com> wrote:
-> m=E5ndagen den 20 oktober 2008 21.06.44 skrev Tomi Pakarinen:
->>  Show git property page in project's properties, if project
->> has git repository provider.
-> [...]
->> +             switch (repository.getRepositoryState()) {
->> +             case BISECTING:
->> +                     state.setText("Bisecting");
->> +                     break;
->> +             case MERGING:
->> +                     state.setText("Merging");
->> +                     break;
->> +             case REBASING:
->> +                     state.setText("Rebasing");
->> +                     break;
->> +             case REBASING_INTERACTIVE:
->> +                     state.setText("Rebasing interactive");
->> +                     break;
->> +             case REBASING_MERGE:
->> +                     state.setText("Rebasing merge");
->> +                     break;
->> +             case SAFE:
->> +                     state.setText("Safe");
->> +                     break;
->> +             }
-> Why not this:
->
->                state.setText(repository.getRepositoryState().getDescr=
-iption());
->
-> Description is ment for presentation purposes. The enum for code.
->
-> -- robin
->
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
- That is ok. I just didn't notice that method before. But, what if
-someone wants localize this plugin, he'll propably have to explode
-this back to switch statement.
+--1547844168-1791605661-1224612970=:19665
+Content-Type: TEXT/PLAIN; charset=UTF-8
+Content-Transfer-Encoding: 8BIT
 
-   Tomi.
+On Tue, 21 Oct 2008, Johannes Sixt wrote:
+
+> Junio C Hamano schrieb:
+> > René Scharfe <rene.scharfe@lsrfire.ath.cx> writes:
+> > 
+> >> I think it makes sense to make 1, or even 3, the default for this
+> >> option for all commands that create patches intended for human
+> >> consumption.  The patch keeps the default at 0, though.
+> > 
+> > I think defaulting to 1 would make sense, or alternatively, just
+> > hardcoding that behaviour without any new option.  That would give you
+> > more information with the same number of patch lines, iow, upside without
+> > any downside.
+> 
+> Are you sure about the "without any downside" part? The extra context line
+> inhibits that the patch applies cleanly to a version of the file that has
+> that very line modified (including a different number of lines).
+
+We could start allowing "fuzz" by default in the case of a patch with more 
+context than we'd expect to see. That is, git-apply would ignore context 
+lines more than 3 lines away from any changed lines, sharing the 
+assumption of our patch-generation side that lines that far away don't 
+matter in general. (Now, if people were in the habit of including as 
+context additional lines in fragile locations, this wouldn't be a good 
+assumption, but I doubt anybody would be able to identify such lines to 
+include them).
+
+	-Daniel
+*This .sig left intentionally blank*
+--1547844168-1791605661-1224612970=:19665--
