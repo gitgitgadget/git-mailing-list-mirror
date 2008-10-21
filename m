@@ -1,83 +1,60 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH, RFC] diff: add option to show context between close
-	chunks
-Date: Tue, 21 Oct 2008 07:20:40 -0400
-Message-ID: <20081021112040.GB17363@coredump.intra.peff.net>
-References: <48FB757B.9030105@lsrfire.ath.cx> <7vabcy3k9l.fsf@gitster.siamese.dyndns.org> <48FD781C.2000103@viscovery.net> <7vskqqzajy.fsf@gitster.siamese.dyndns.org>
+From: Paul Mackerras <paulus@samba.org>
+Subject: git command to read
+Date: Tue, 21 Oct 2008 22:21:09 +1100
+Message-ID: <18685.47909.354146.487700@cargo.ozlabs.ibm.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Johannes Sixt <j.sixt@viscovery.net>,
-	=?utf-8?B?UmVuw6k=?= Scharfe <rene.scharfe@lsrfire.ath.cx>,
-	Git Mailing List <git@vger.kernel.org>,
-	Davide Libenzi <davidel@xmailserver.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Oct 21 13:22:26 2008
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: "Junio C Hamano" <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Oct 21 13:22:49 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KsFJE-000449-6h
-	for gcvg-git-2@gmane.org; Tue, 21 Oct 2008 13:21:56 +0200
+	id 1KsFJl-0004Jm-4j
+	for gcvg-git-2@gmane.org; Tue, 21 Oct 2008 13:22:29 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752647AbYJULUn convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 21 Oct 2008 07:20:43 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752797AbYJULUn
-	(ORCPT <rfc822;git-outgoing>); Tue, 21 Oct 2008 07:20:43 -0400
-Received: from peff.net ([208.65.91.99]:1893 "EHLO peff.net"
+	id S1752797AbYJULVR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 21 Oct 2008 07:21:17 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752755AbYJULVR
+	(ORCPT <rfc822;git-outgoing>); Tue, 21 Oct 2008 07:21:17 -0400
+Received: from ozlabs.org ([203.10.76.45]:47062 "EHLO ozlabs.org"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751597AbYJULUm (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 21 Oct 2008 07:20:42 -0400
-Received: (qmail 19670 invoked by uid 111); 21 Oct 2008 11:20:41 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.32) with SMTP; Tue, 21 Oct 2008 07:20:41 -0400
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Tue, 21 Oct 2008 07:20:40 -0400
-Content-Disposition: inline
-In-Reply-To: <7vskqqzajy.fsf@gitster.siamese.dyndns.org>
+	id S1751482AbYJULVQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 21 Oct 2008 07:21:16 -0400
+Received: by ozlabs.org (Postfix, from userid 1003)
+	id 7E85DDDDE1; Tue, 21 Oct 2008 22:21:15 +1100 (EST)
+X-Mailer: VM 8.0.9 under Emacs 22.2.1 (i486-pc-linux-gnu)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/98774>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/98775>
 
-On Tue, Oct 21, 2008 at 12:12:17AM -0700, Junio C Hamano wrote:
+Junio,
 
-> Yeah.  Ren=C3=A9 wanted this for _human consumption_, not mechanical =
-patch
-> application, so "hardcoding" literally there in the very low level of=
- the
-> diff callchain is not quite right (it would affect format-patch which=
- is
-> primarily for mechanical application).
->=20
-> I guess you could make the hardcoded value 1 for everybody else and 0=
- for
-> format-patch.
+Is there a command in git at the moment that will read commit IDs on
+standard input and print the contents of each commit on standard
+output (without waiting for EOF on stdin)?
 
-I see your reasoning, but at the same time, a large portion of patches =
-I
-read are from format-patch (and Ren=C3=A9 even said that he was trying =
-to
-save the user from the "apply then diff just to look at the patch"
-annoyance). And I have personally, as a patch submitter, created some
-format-patch output sent to the git list with -U5 to combine hunks and
-make it more readable for reviewers.
+I tried git rev-list --stdin --no-walk --header, but it seems to
+collect all the IDs from stdin and eliminate duplicates before
+outputting anything, which is not what I want.  What I want is a
+process that I can run from gitk where I can write IDs to its stdin
+whenever gitk needs to know the contents of some commits, and know
+that those contents will be turning up on the pipe from its stdout in
+a timely fashion, without having to start a new process each time.  Is
+there a way to do that currently?
 
-Not to mention that I sometimes apply or post the output of "git diff".
+The reason I want this is to reduce gitk's memory usage.  At present
+it reads all the commits into memory, which takes about 160MB on the
+current kernel tree just to store the contents of all the commits
+(since Tcl stores strings internally as 2 bytes/character).  Instead I
+plan to make gitk keep a cache of commits and read in commits as
+needed from an external process.  When doing a search, we may need to
+read in nearly all the commits, and we'll need to do it quickly.
 
-To me that it implies that either:
-
- - the increased chance of conflict is not a problem in practice, and w=
-e
-   should have the option on by default everywhere
-
- - it is a problem, in which case we should ask the user to turn on the
-   feature manually instead of second-guessing how they will use the
-   resulting patch (which they might not even know, since they are
-   making assumptions about how other people might use the patch, and
-   they must decide for their situation between shipping something that
-   is more readable but slightly more conflict prone, or as easy to
-   apply as possible)
-
--Peff
+Thanks,
+Paul.
