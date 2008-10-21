@@ -1,70 +1,54 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH] rehabilitate 'git index-pack' inside the object store
-Date: Tue, 21 Oct 2008 19:02:48 +0200 (CEST)
-Message-ID: <alpine.DEB.1.00.0810211856090.22125@pacific.mpi-cbg.de.mpi-cbg.de>
-References: <alpine.LFD.2.00.0810202110380.26244@xanadu.home> <fcaeb9bf0810210757w1c14e0a3x1eb61a589a089f10@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] git-fetch should not strip off ".git" extension
+Date: Tue, 21 Oct 2008 09:56:28 -0700
+Message-ID: <7vej29zy2r.fsf@gitster.siamese.dyndns.org>
+References: <ee2a733e0810180459m5fd20365s3c27bea5c1f3f704@mail.gmail.com>
+ <48FC5F1B.1050608@op5.se> <7vzlkz2jv7.fsf@gitster.siamese.dyndns.org>
+ <ee2a733e0810210323j249c3460x881af6d6aefc647c@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Nicolas Pitre <nico@cam.org>, Junio C Hamano <gitster@pobox.com>,
-	git@vger.kernel.org
-To: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Oct 21 18:58:17 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: "Junio C Hamano" <gitster@pobox.com>,
+	"Andreas Ericsson" <ae@op5.se>, git@vger.kernel.org
+To: SLONIK.AZ@gmail.com
+X-From: git-owner@vger.kernel.org Tue Oct 21 18:58:42 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KsKXw-0004Md-LT
-	for gcvg-git-2@gmane.org; Tue, 21 Oct 2008 18:57:29 +0200
+	id 1KsKYP-0004bo-Bd
+	for gcvg-git-2@gmane.org; Tue, 21 Oct 2008 18:57:57 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751963AbYJUQzy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 21 Oct 2008 12:55:54 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751930AbYJUQzy
-	(ORCPT <rfc822;git-outgoing>); Tue, 21 Oct 2008 12:55:54 -0400
-Received: from mail.gmx.net ([213.165.64.20]:34125 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751963AbYJUQzx (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 21 Oct 2008 12:55:53 -0400
-Received: (qmail invoked by alias); 21 Oct 2008 16:55:47 -0000
-Received: from pacific.mpi-cbg.de (EHLO pacific.mpi-cbg.de) [141.5.10.38]
-  by mail.gmx.net (mp065) with SMTP; 21 Oct 2008 18:55:47 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX19vWntczuBv/vvzLGw0raKN4GN2oaoRdNnzePqYqZ
-	M7KxRammYw947x
-X-X-Sender: schindelin@pacific.mpi-cbg.de.mpi-cbg.de
-In-Reply-To: <fcaeb9bf0810210757w1c14e0a3x1eb61a589a089f10@mail.gmail.com>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.66
+	id S1752343AbYJUQ4p (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 21 Oct 2008 12:56:45 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752138AbYJUQ4p
+	(ORCPT <rfc822;git-outgoing>); Tue, 21 Oct 2008 12:56:45 -0400
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:42859 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751478AbYJUQ4o (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 21 Oct 2008 12:56:44 -0400
+Received: from localhost.localdomain (localhost [127.0.0.1])
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 00E567064D;
+	Tue, 21 Oct 2008 12:56:42 -0400 (EDT)
+Received: from pobox.com (ip68-225-240-211.oc.oc.cox.net [68.225.240.211])
+ (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
+ certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
+ ESMTPSA id B95EE70646; Tue, 21 Oct 2008 12:56:35 -0400 (EDT)
+In-Reply-To: <ee2a733e0810210323j249c3460x881af6d6aefc647c@mail.gmail.com>
+ (Leo Razoumov's message of "Tue, 21 Oct 2008 06:23:57 -0400")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: 3C312922-9F91-11DD-8C44-9CEDC82D7133-77302942!a-sasl-fastnet.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/98796>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/98797>
 
-Hi,
+"Leo Razoumov" <slonik.az@gmail.com> writes:
 
-On Tue, 21 Oct 2008, Nguyen Thai Ngoc Duy wrote:
+> Even though the old behavior is "long established", it introduces
+> unnecessary ambiguity. If I have two repos
+> ...
 
-> Maybe we should let setup_*_gently() do read-only stuff only and let its 
-> consumers to handle cwd.
-
-I think that makes sense.  This would allow setup*gently() to be much 
-cleaner, and only setup_git_directory() itself would do the 
-chdir(worktree).
-
-However, let's think this really through this time, so that that darned 
-worktree stuff is fixed for good.
-
-So I propose this change in semantics:
-
-- setup_git_directory_gently(): rename to discover_git_directory(), 
-  and avoid any chdir() at all.
-- setup_git_directory(): keep the semantics that it chdir()s to the
-  worktree, or to the git directory for bare repositories.
-
-Using _gently() even for RUN_SETUP builtins should solve the long standing 
-pager problem, too.
-
-Ciao,
-Dscho
+Of course.  Now you know why people don't name such a pair of repositories
+like that ;-).
