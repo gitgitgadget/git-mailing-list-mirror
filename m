@@ -1,157 +1,71 @@
-From: Johannes Sixt <j.sixt@viscovery.net>
-Subject: [PATCH] git-remote: list branches in vertical lists
-Date: Tue, 21 Oct 2008 16:43:14 +0200
-Message-ID: <48FDEA82.5050903@viscovery.net>
+From: "Nguyen Thai Ngoc Duy" <pclouds@gmail.com>
+Subject: Re: [PATCH] rehabilitate 'git index-pack' inside the object store
+Date: Tue, 21 Oct 2008 21:57:04 +0700
+Message-ID: <fcaeb9bf0810210757w1c14e0a3x1eb61a589a089f10@mail.gmail.com>
+References: <alpine.LFD.2.00.0810202110380.26244@xanadu.home>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Oct 21 16:52:13 2008
+Cc: "Junio C Hamano" <gitster@pobox.com>, git@vger.kernel.org
+To: "Nicolas Pitre" <nico@cam.org>
+X-From: git-owner@vger.kernel.org Tue Oct 21 17:00:58 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KsITM-0008CU-Gc
-	for gcvg-git-2@gmane.org; Tue, 21 Oct 2008 16:44:37 +0200
+	id 1KsIgh-0005OL-Qr
+	for gcvg-git-2@gmane.org; Tue, 21 Oct 2008 16:58:24 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751943AbYJUOnV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 21 Oct 2008 10:43:21 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751807AbYJUOnV
-	(ORCPT <rfc822;git-outgoing>); Tue, 21 Oct 2008 10:43:21 -0400
-Received: from lilzmailso01.liwest.at ([212.33.55.23]:17572 "EHLO
-	lilzmailso01.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751901AbYJUOnU (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 21 Oct 2008 10:43:20 -0400
-Received: from cm56-163-160.liwest.at ([86.56.163.160] helo=linz.eudaptics.com)
-	by lilzmailso01.liwest.at with esmtpa (Exim 4.66)
-	(envelope-from <j.sixt@viscovery.net>)
-	id 1KsIS2-00005v-LN; Tue, 21 Oct 2008 16:43:17 +0200
-Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.96])
-	by linz.eudaptics.com (Postfix) with ESMTP
-	id 615F669F; Tue, 21 Oct 2008 16:43:14 +0200 (CEST)
-User-Agent: Thunderbird 2.0.0.6 (Windows/20070728)
-X-Enigmail-Version: 0.95.5
-X-Spam-Score: 1.7 (+)
-X-Spam-Report: ALL_TRUSTED=-1.8, BAYES_99=3.5
+	id S1751719AbYJUO5I (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 21 Oct 2008 10:57:08 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751597AbYJUO5H
+	(ORCPT <rfc822;git-outgoing>); Tue, 21 Oct 2008 10:57:07 -0400
+Received: from ey-out-2122.google.com ([74.125.78.24]:13626 "EHLO
+	ey-out-2122.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751482AbYJUO5G (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 21 Oct 2008 10:57:06 -0400
+Received: by ey-out-2122.google.com with SMTP id 6so784229eyi.37
+        for <git@vger.kernel.org>; Tue, 21 Oct 2008 07:57:05 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to
+         :subject:cc:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:references;
+        bh=7bvgImIAlOmzSh5uBIqbYAhSRtut3dbLkYnxGZX0zrQ=;
+        b=LaZGNLhQguejFpgWsuh28EgtY0oV4ju5IJwgQRoU3QUT/widFLIEGbg0ZYtgSUg2tf
+         /OQH1sXr9fZOXjW5gDwlJsnPEadJtFUpvnpT7qvRq8CCTA97Yl7odsJFPBhc2p6kO2VI
+         DhJ63pAgMWXR22gP01SXCZ09LlUgkZbiQlQys=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
+         :content-type:content-transfer-encoding:content-disposition
+         :references;
+        b=d+SlAGpfKDb9hc9wo6Y8vMvL4wbsSwJ/oIQYa7fKFny0oRH+YsZj2RURbztcCiGPgW
+         ESfK2k6x8exzdl9z3bxScCfw/vSczTmiXvp00Nj3kOkLUTEkYnc6fyWJDeoBjKgfkW7z
+         7HBf7X9WE4IvoceOW3nSyrrBuGo6TEik7mY4s=
+Received: by 10.86.92.7 with SMTP id p7mr8095771fgb.8.1224601025052;
+        Tue, 21 Oct 2008 07:57:05 -0700 (PDT)
+Received: by 10.86.95.9 with HTTP; Tue, 21 Oct 2008 07:57:04 -0700 (PDT)
+In-Reply-To: <alpine.LFD.2.00.0810202110380.26244@xanadu.home>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/98787>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/98788>
 
-From: Johannes Sixt <johannes.sixt@telecom.at>
+On 10/21/08, Nicolas Pitre <nico@cam.org> wrote:
+> Before commit d0b92a3f6e it was possible to run 'git index-pack'
+>  directly in the .git/objects/pack/ directory.  Restore that ability.
 
-Previously, branches were listed on a single line in each section. But
-if there are many branches, then horizontal, line-wrapped lists are very
-inconvenient to scan for a human. This makes the lists vertical, i.e one
-branch per line is printed.
-
-This does mean that users' scripts must be updated because the output
-format changed, but the result is friendlier to the eye *and* easier to
-parse.
-
-Signed-off-by: Johannes Sixt <johannes.sixt@telecom.at>
----
- Documentation/user-manual.txt |    4 +++-
- builtin-remote.c              |   11 +++++------
- t/t5505-remote.sh             |   14 +++++++++-----
- 3 files changed, 17 insertions(+), 12 deletions(-)
-
-diff --git a/Documentation/user-manual.txt b/Documentation/user-manual.txt
-index 08d1310..645d752 100644
---- a/Documentation/user-manual.txt
-+++ b/Documentation/user-manual.txt
-@@ -4356,7 +4356,9 @@ $ git remote show example	# get details
- * remote example
-   URL: git://example.com/project.git
-   Tracked remote branches
--    master next ...
-+    master
-+    next
-+    ...
- $ git fetch example		# update branches from example
- $ git branch -r			# list all remote branches
- -----------------------------------------------
-diff --git a/builtin-remote.c b/builtin-remote.c
-index 90a4e35..1b1697b 100644
---- a/builtin-remote.c
-+++ b/builtin-remote.c
-@@ -416,10 +416,9 @@ static void show_list(const char *title, struct string_list *list,
- 		return;
-
- 	printf(title, list->nr > 1 ? "es" : "", extra_arg);
--	printf("\n    ");
--	for (i = 0; i < list->nr; i++)
--		printf("%s%s", i ? " " : "", list->items[i].string);
- 	printf("\n");
-+	for (i = 0; i < list->nr; i++)
-+		printf("    %s\n", list->items[i].string);
- }
-
- static int get_remote_ref_states(const char *name,
-@@ -515,17 +514,17 @@ static int show(int argc, const char **argv)
- 		show_list("  Tracked remote branch%s", &states.tracked, "");
-
- 		if (states.remote->push_refspec_nr) {
--			printf("  Local branch%s pushed with 'git push'\n   ",
-+			printf("  Local branch%s pushed with 'git push'\n",
- 				states.remote->push_refspec_nr > 1 ?
- 					"es" : "");
- 			for (i = 0; i < states.remote->push_refspec_nr; i++) {
- 				struct refspec *spec = states.remote->push + i;
--				printf(" %s%s%s%s", spec->force ? "+" : "",
-+				printf("    %s%s%s%s\n",
-+				       spec->force ? "+" : "",
- 				       abbrev_branch(spec->src),
- 				       spec->dst ? ":" : "",
- 				       spec->dst ? abbrev_branch(spec->dst) : "");
- 			}
--			printf("\n");
- 		}
-
- 		/* NEEDSWORK: free remote */
-diff --git a/t/t5505-remote.sh b/t/t5505-remote.sh
-index e5137dc..e6cf2c7 100755
---- a/t/t5505-remote.sh
-+++ b/t/t5505-remote.sh
-@@ -28,7 +28,7 @@ tokens_match () {
- }
-
- check_remote_track () {
--	actual=$(git remote show "$1" | sed -n -e '$p') &&
-+	actual=$(git remote show "$1" | sed -e '1,/Tracked/d') &&
- 	shift &&
- 	tokens_match "$*" "$actual"
- }
-@@ -118,9 +118,11 @@ cat > test/expect << EOF
-   New remote branch (next fetch will store in remotes/origin)
-     master
-   Tracked remote branches
--    side master
-+    side
-+    master
-   Local branches pushed with 'git push'
--    master:upstream +refs/tags/lastbackup
-+    master:upstream
-+    +refs/tags/lastbackup
- EOF
-
- test_expect_success 'show' '
-@@ -147,9 +149,11 @@ cat > test/expect << EOF
-   Remote branch merged with 'git pull' while on branch master
-     master
-   Tracked remote branches
--    master side
-+    master
-+    side
-   Local branches pushed with 'git push'
--    master:upstream +refs/tags/lastbackup
-+    master:upstream
-+    +refs/tags/lastbackup
- EOF
-
- test_expect_success 'show -n' '
+I am sorry I did not catch this in the first place. While the fix
+should be fine for "git index-pack". I wonder what can happen for
+other setup_*_gently()'s consumers. Other commands may be affected too
+(e.g. running "git apply" or "git bundle" from inside .git). Maybe we
+should let setup_*_gently() do read-only stuff only and let its
+consumers to handle cwd. I recall Jeff has plan about worktree setup
+rework, though could not find the thread. Will think more of it
+tomorrow.
 -- 
-1.6.0.2.1573.gdf533
+Duy
