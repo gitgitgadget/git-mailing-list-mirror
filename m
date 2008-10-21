@@ -1,62 +1,57 @@
 From: Pete Harlan <pgit@pcharlan.com>
 Subject: Re: Archiving tags/branches?
-Date: Mon, 20 Oct 2008 19:53:43 -0700
-Message-ID: <48FD4437.1080504@pcharlan.com>
-References: <48F93F52.4070506@pcharlan.com> <200810181532.59883.johan@herland.net> <48FC26DA.10508@pcharlan.com> <200810200953.45339.johan@herland.net>
+Date: Mon, 20 Oct 2008 21:08:31 -0700
+Message-ID: <48FD55BF.1020207@pcharlan.com>
+References: <48F93F52.4070506@pcharlan.com>	<200810181315.49265.johan@herland.net> <20081018130204.GB3749@neumann>	<200810181532.59883.johan@herland.net> <48FC26DA.10508@pcharlan.com> <m3prlvibb7.fsf@localhost.localdomain>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
+Content-Type: text/plain; charset=us-ascii
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org,
-	=?ISO-8859-1?Q?SZEDER_G=E1bor?= <szeder@ira.uka.de>
-To: Johan Herland <johan@herland.net>
-X-From: git-owner@vger.kernel.org Tue Oct 21 04:54:58 2008
+Cc: Johan Herland <johan@herland.net>, git@vger.kernel.org,
+	SZEDER Gabor <szeder@ira.uka.de>
+To: Jakub Narebski <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Oct 21 06:09:51 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Ks7Ob-0005m4-VH
-	for gcvg-git-2@gmane.org; Tue, 21 Oct 2008 04:54:58 +0200
+	id 1Ks8Z1-0002he-RD
+	for gcvg-git-2@gmane.org; Tue, 21 Oct 2008 06:09:48 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752260AbYJUCxq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 20 Oct 2008 22:53:46 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752354AbYJUCxq
-	(ORCPT <rfc822;git-outgoing>); Mon, 20 Oct 2008 22:53:46 -0400
-Received: from lax-green-bigip-5.dreamhost.com ([208.113.200.5]:38562 "EHLO
-	swarthymail-a7.g.dreamhost.com" rhost-flags-OK-OK-OK-FAIL)
-	by vger.kernel.org with ESMTP id S1752256AbYJUCxp (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 20 Oct 2008 22:53:45 -0400
+	id S1750797AbYJUEIe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 21 Oct 2008 00:08:34 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750778AbYJUEIe
+	(ORCPT <rfc822;git-outgoing>); Tue, 21 Oct 2008 00:08:34 -0400
+Received: from lax-green-bigip-5.dreamhost.com ([208.113.200.5]:53000 "EHLO
+	swarthymail-a5.g.dreamhost.com" rhost-flags-OK-OK-OK-FAIL)
+	by vger.kernel.org with ESMTP id S1750747AbYJUEId (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 21 Oct 2008 00:08:33 -0400
 Received: from [192.168.0.2] (031.132-78-65.ftth.swbr.surewest.net [65.78.132.31])
 	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
 	(No client certificate requested)
-	by swarthymail-a7.g.dreamhost.com (Postfix) with ESMTP id 8A014DE573;
-	Mon, 20 Oct 2008 19:53:44 -0700 (PDT)
+	by swarthymail-a5.g.dreamhost.com (Postfix) with ESMTP id 65B68109EB6;
+	Mon, 20 Oct 2008 21:08:32 -0700 (PDT)
 User-Agent: Mozilla-Thunderbird 2.0.0.16 (X11/20080724)
-In-Reply-To: <200810200953.45339.johan@herland.net>
+In-Reply-To: <m3prlvibb7.fsf@localhost.localdomain>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/98755>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/98756>
 
-Johan Herland wrote:
-> On Monday 20 October 2008, Pete Harlan wrote:
+Jakub Narebski wrote:
+> Pete Harlan <pgit@pcharlan.com> writes:
+> 
 >> Johan Herland wrote:
->>> BTW, the best way IMHO to archive old refs is to clone your repo (with
->>> all tags/branches) to a backup disk, and then regularly push (git push
->>> --all && git push --tags) your new tags/branches to this backup. You
->>> are now free to delete these tags/branches from your work repo (they
->>> will not be deleted from the backup unless you use "git push
->>> --mirror"). And if you ever need to retrieve an old tag/branch, it's
->>> just a matter of pulling it from the backup repo. Nice, clean,
->>> flexible, and requires no changes to git.
->>>
->>>
->>> Have fun! :)
->>>
->>> ...Johan
->> Hi,
->>
+> 
+>>> BTW, the best way IMHO to archive old refs is to clone your repo
+>>> (with all tags/branches) to a backup disk, and then regularly push
+>>> (git push --all && git push --tags) your new tags/branches to this
+>>> backup. You are now free to delete these tags/branches from your
+>>> work repo (they will not be deleted from the backup unless you use
+>>> "git push --mirror"). And if you ever need to retrieve an old
+>>> tag/branch, it's just a matter of pulling it from the backup
+>>> repo. Nice, clean, flexible, and requires no changes to git.
 >> Thank you; that indeed seems to work and solves the problem of managing
 >> refs/archived-tags manually.
 >>
@@ -65,33 +60,66 @@ Johan Herland wrote:
 >> but until I come up with a patch your suggestion should work fine.  Just
 >> knowing I didn't overlook an existing feature helps a lot.
 > 
-> From reading your other emails, I get the feeling that I'm in a similar 
-> situation at $dayjob (i.e. converting ~9 years of development history from 
-> CVS to Git). We have literally tens of thousands of tags (mostly build and 
-> release tags) in some of our repos, and keeping all these tags in our daily 
-> work repos is simply unwieldy and impractical. We therefore plan to have 
-> official reps which only contain the most important tags, and 
-> have "archive" repos in a different location that contain all the other 
-> tags.
+> I don't quite understand what you mean by _flat_ namespace for tags
+> and branches.
+> 
+> First, it is not unusual to have hierarchical branch names, at least
+> for short-term topic branches. For example in git.git history (and in
+> "What's cooking..." announcements on git mailing list) you can find
+> branch names such as rs/alloc-ref, nd/narrow, tr/workflow-doc.
+> Additionally remote-tracking branch names have inherently hierarchical
+> names: refs/remotes/<remote>/<remote branch>.  While tag names usually
+> are of the type x.y.z, it is not mandated by some technological
+> limitation.
 
-Another solution that may work for me is to bind the old lines of
-development together using the merge strategy "ours" to link them in a
-chain.  When I first read about "ours" I thought it only has evil
-applications, but it seems to be created for just this sort of tying
-together development that is actually, but was not historically, linked.
- Making those tags reachable from current heads would allow stashing
-them in a versioned file somewhere without cluttering up the real
-tags/branches or requiring a separate repo.
+What I mean by "flat" is that "/" is just another character as far as
+what git exposes to the user.  Regardless of any semantics the user
+chooses to assign to it, and regardless of what advantage git makes use
+of "/" internally, unless I can do something like:
 
-> You seem to want to keep all your tags in the work repo, but in a 
-> separate/hidden namespace, so that they don't clutter the default tag 
-> listings. IMHO, once you get into thousands of tags, cloning and other 
-> operations where all refs are synchronized become annoyingly slow (although 
-> things are certainly somewhat better in v1.6). At that point, my only 
-> advice is to keep the lesser-used tags in separate repos, and pull each ref 
-> into your work repos on-demand, especially when most of these tags will 
-> probably never be referenced.
+% git tag --ls
+sometag
+someothertag
+releases/
+% git tag --ls releases/
+releases/2008/
+releases/2007/
+% git tag --ls releases/2008
+releases/2008/r3.14
+%
 
-The efficiency issue is one I hadn't considered; thanks.
+"/" is just like any another character in a tag or branch.
+
+(The above notional --ls modifier is probably very easy to write, and if
+I do so it may address all of my woes.  Subversion's branching/tagging
+can be organized pretty much exactly like this, and importing into git
+such a repository is what initially led me to ask about organizing tags
+and branches.)
+
+What I'm usually likely to want from a "list tags" command is to see the
+most recent few tags, not (say) all 226 tags in git.git.  I'll probably
+write a little alias that does that, but even then when looking at the
+whole list it would be nice to have the option to navigate it
+hierarchically.  (Or in some other manner, and/or possibly with a
+configurable directory separator.)
+
+> Second, you can always put your archived refs in another namespace,
+> beside 'heads', 'tags', and 'remotes'. I for example use
+> refs/tags/Attic for lightweigth tags to some interesting abandoned
+> experiments, but it could have been refs/deleted/tags, or
+> refs/Attic/tags.
+
+My original question was asking whether this sort of thing would work
+(e.g., they would never be automatically pruned), and I'm happy to see
+that the answer is yes.  The main downside to it is that you can't
+clone/pull/push changes to it using git.
+
+Many thanks to you and everyone for their help.  Git is so flexible that
+it can be difficult when starting out to know whether you're missing a
+way of attacking a problem.
 
 --Pete
+
+> Last, please remember that there exists something like packed refs
+> format (see git-pack-refs(1)... oops, it dies not describe
+> .git/packed-refs format, unfortunately).
