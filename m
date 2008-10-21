@@ -1,86 +1,72 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] git-svn: don't escape tilde ('~') for http(s) URLs
-Date: Tue, 21 Oct 2008 14:53:28 -0700
-Message-ID: <7vtzb5wr6v.fsf@gitster.siamese.dyndns.org>
-References: <20081018213919.GC3107@atjola.homenet>
- <20081018224728.GD3107@atjola.homenet>
- <20081021211131.GA21606@yp-box.dyndns.org>
+From: "Alex Riesen" <raa.lkml@gmail.com>
+Subject: Re: [PATCH] git-fetch should not strip off ".git" extension
+Date: Wed, 22 Oct 2008 00:06:55 +0200
+Message-ID: <81b0412b0810211506y400ba750k2613ba19f01fb57@mail.gmail.com>
+References: <ee2a733e0810180459m5fd20365s3c27bea5c1f3f704@mail.gmail.com>
+	 <48FC5F1B.1050608@op5.se> <7vzlkz2jv7.fsf@gitster.siamese.dyndns.org>
+	 <ee2a733e0810210323j249c3460x881af6d6aefc647c@mail.gmail.com>
+	 <7vej29zy2r.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: =?utf-8?Q?Bj=C3=B6rn?= Steinbrink <B.Steinbrink@gmx.de>,
-	git@vger.kernel.org, jsogo@debian.org
-To: Eric Wong <normalperson@yhbt.net>
-X-From: git-owner@vger.kernel.org Tue Oct 21 23:55:42 2008
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: SLONIK.AZ@gmail.com, "Andreas Ericsson" <ae@op5.se>,
+	git@vger.kernel.org
+To: "Junio C Hamano" <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Oct 22 00:08:37 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KsPC4-0001wu-4l
-	for gcvg-git-2@gmane.org; Tue, 21 Oct 2008 23:55:12 +0200
+	id 1KsPOe-0007Uf-Dd
+	for gcvg-git-2@gmane.org; Wed, 22 Oct 2008 00:08:12 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756326AbYJUVxk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 21 Oct 2008 17:53:40 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756228AbYJUVxk
-	(ORCPT <rfc822;git-outgoing>); Tue, 21 Oct 2008 17:53:40 -0400
-Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:33427 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756327AbYJUVxj (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 21 Oct 2008 17:53:39 -0400
-Received: from localhost.localdomain (localhost [127.0.0.1])
-	by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id CA9778D33D;
-	Tue, 21 Oct 2008 17:53:36 -0400 (EDT)
-Received: from pobox.com (ip68-225-240-211.oc.oc.cox.net [68.225.240.211])
- (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
- certificate requested) by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with
- ESMTPSA id D42998D33C; Tue, 21 Oct 2008 17:53:30 -0400 (EDT)
-In-Reply-To: <20081021211131.GA21606@yp-box.dyndns.org> (Eric Wong's message
- of "Tue, 21 Oct 2008 14:12:15 -0700")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: B6A7E7BC-9FBA-11DD-97A0-4F5276724C3F-77302942!a-sasl-quonix.pobox.com
+	id S1752557AbYJUWG7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 21 Oct 2008 18:06:59 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752224AbYJUWG7
+	(ORCPT <rfc822;git-outgoing>); Tue, 21 Oct 2008 18:06:59 -0400
+Received: from an-out-0708.google.com ([209.85.132.246]:42475 "EHLO
+	an-out-0708.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752191AbYJUWG6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 21 Oct 2008 18:06:58 -0400
+Received: by an-out-0708.google.com with SMTP id d40so151602and.103
+        for <git@vger.kernel.org>; Tue, 21 Oct 2008 15:06:55 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to
+         :subject:cc:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:references;
+        bh=W7U/bWpH635TItDzhgqKLJZKjYON74ViJ75xuCszoSE=;
+        b=BCyO8/et1VcVcBjt24ranQ5djo1qZdQqBaNkfw2arIkYkr42i8Lixc102wN1YWEaK5
+         x2GHTBlJ0Q2pqQSOh5nw535PiOB+/WgvmnrVYsuQkRYxI2swEMjezZNT5jwfv92Nb89p
+         Jo4pXn2jfqWqS7SYD4j9Re0GPoymFgk2ohqiA=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
+         :content-type:content-transfer-encoding:content-disposition
+         :references;
+        b=sz8bFwy2Ob4aB2ELU99spFjy0LV6lvfcpoRqmwRjRBZMrGfiqTUsCf3PCECmHZGKbh
+         21UuGEgxz0TPRpDvZ7w7/8J9ETpb60wPpQ3A2stXdazmBfeeGrnN/E+377EvpsXW1gqQ
+         L6AGTdvRzchqXf6mb+gV1mtEGWLcwHAUES5kA=
+Received: by 10.100.43.10 with SMTP id q10mr9303691anq.1.1224626815591;
+        Tue, 21 Oct 2008 15:06:55 -0700 (PDT)
+Received: by 10.100.91.8 with HTTP; Tue, 21 Oct 2008 15:06:55 -0700 (PDT)
+In-Reply-To: <7vej29zy2r.fsf@gitster.siamese.dyndns.org>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/98820>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/98821>
 
-Eric Wong <normalperson@yhbt.net> writes:
+2008/10/21 Junio C Hamano <gitster@pobox.com>:
+> "Leo Razoumov" <slonik.az@gmail.com> writes:
+>
+>> Even though the old behavior is "long established", it introduces
+>> unnecessary ambiguity. If I have two repos
+>> ...
+>
+> Of course.  Now you know why people don't name such a pair of repositories
+> like that ;-).
 
->> strace revealed that git-svn url-encodes ~ while svn does not do that.
->>
->> For svn we have:
->> write(5, "<S:update-report send-all=\"true\" xmlns:S=\"svn:\">
->> <S:src-path>https://sucs.org/~welshbyte/svn/backuptool/trunk</S:src-path>...
->>
->> While git-svn shows:
->> write(7, "<S:update-report send-all=\"true\" xmlns:S=\"svn:\">
->> <S:src-path>https://sucs.org/%7Ewelshbyte/svn/backuptool/trunk</S:src-path>...
-
-This looks like an XML based request sequence to me (and svn is talking
-WebDAV here, right?); it makes me wonder what exact quoting rules are used
-there.  I would expect $path in <S:src-path>$path</S:src-path> to quote
-a letters in it e.g. '<' as "&lt;" --- which is quite different from what
-the s/// substitutions in the patch seem to be doing.
-
-> diff --git a/git-svn.perl b/git-svn.perl
-> index ef6d773..a97049a 100755
-> --- a/git-svn.perl
-> +++ b/git-svn.perl
-> @@ -852,7 +852,7 @@ sub escape_uri_only {
-> -		s/([^\w.%+-]|%(?![a-fA-F0-9]{2}))/sprintf("%%%02X",ord($1))/eg;
-> +		s/([^~\w.%+-]|%(?![a-fA-F0-9]{2}))/sprintf("%%%02X",ord($1))/eg;
-
-Admittedly I do not know git-svn (nor Perl svn bindings it uses), and I
-suspect that some of the XML-level escaping is done in the libsvn side,
-but it would be nice if somebody can at least verify that the code after
-the patch works with repositories with funny characters in pathnames
-(perhaps list all the printables including "<&>?*!@.+-%^").  Even nicer
-would be a log message that says "the resulting code covers all cases
-because it follows _that_ spec to escape _all_ problematic letters",
-pointing at some in svn (or libsvn-perl) resource.
-
-The patch may make a path with '~' work, but it (neither in the patch text
-nor in the commit log message) does not have much to give readers enough
-confidence that the code after the patch is the _final_ one, as opposed to
-being just a band-aid for a single symptom that happened to have been
-discovered this time.
+FWIW, I support Leo on that. The "established" behavior is stupid.
