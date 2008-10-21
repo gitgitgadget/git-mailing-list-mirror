@@ -1,55 +1,57 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: git command to read
-Date: Tue, 21 Oct 2008 07:25:22 -0400
-Message-ID: <20081021112521.GC17363@coredump.intra.peff.net>
-References: <18685.47909.354146.487700@cargo.ozlabs.ibm.com>
+From: Paul Mackerras <paulus@samba.org>
+Subject: Re: [PATCH 7/7] gitk: Explicitly position popup windows.
+Date: Tue, 21 Oct 2008 22:41:52 +1100
+Message-ID: <18685.49152.25344.398737@cargo.ozlabs.ibm.com>
+References: <1223449540-20457-1-git-send-email-angavrilov@gmail.com>
+	<1223449540-20457-2-git-send-email-angavrilov@gmail.com>
+	<1223449540-20457-3-git-send-email-angavrilov@gmail.com>
+	<1223449540-20457-4-git-send-email-angavrilov@gmail.com>
+	<1223449540-20457-5-git-send-email-angavrilov@gmail.com>
+	<1223449540-20457-6-git-send-email-angavrilov@gmail.com>
+	<1223449540-20457-7-git-send-email-angavrilov@gmail.com>
+	<1223449540-20457-8-git-send-email-angavrilov@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Paul Mackerras <paulus@samba.org>
-X-From: git-owner@vger.kernel.org Tue Oct 21 13:27:08 2008
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Alexander Gavrilov <angavrilov@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Oct 21 13:43:20 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KsFO7-0006ES-7z
-	for gcvg-git-2@gmane.org; Tue, 21 Oct 2008 13:26:59 +0200
+	id 1KsFdr-0003wK-Lq
+	for gcvg-git-2@gmane.org; Tue, 21 Oct 2008 13:43:16 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753778AbYJULZ0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 21 Oct 2008 07:25:26 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753659AbYJULZZ
-	(ORCPT <rfc822;git-outgoing>); Tue, 21 Oct 2008 07:25:25 -0400
-Received: from peff.net ([208.65.91.99]:3265 "EHLO peff.net"
+	id S1753793AbYJULmD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 21 Oct 2008 07:42:03 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753796AbYJULmD
+	(ORCPT <rfc822;git-outgoing>); Tue, 21 Oct 2008 07:42:03 -0400
+Received: from ozlabs.org ([203.10.76.45]:33929 "EHLO ozlabs.org"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753451AbYJULZY (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 21 Oct 2008 07:25:24 -0400
-Received: (qmail 19723 invoked by uid 111); 21 Oct 2008 11:25:23 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.32) with SMTP; Tue, 21 Oct 2008 07:25:23 -0400
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Tue, 21 Oct 2008 07:25:22 -0400
-Content-Disposition: inline
-In-Reply-To: <18685.47909.354146.487700@cargo.ozlabs.ibm.com>
+	id S1752180AbYJULmB (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 21 Oct 2008 07:42:01 -0400
+Received: by ozlabs.org (Postfix, from userid 1003)
+	id 52D3EDDDE7; Tue, 21 Oct 2008 22:41:58 +1100 (EST)
+In-Reply-To: <1223449540-20457-8-git-send-email-angavrilov@gmail.com>
+X-Mailer: VM 8.0.9 under Emacs 22.2.1 (i486-pc-linux-gnu)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/98776>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/98777>
 
-On Tue, Oct 21, 2008 at 10:21:09PM +1100, Paul Mackerras wrote:
+Alexander Gavrilov writes:
 
-> Is there a command in git at the moment that will read commit IDs on
-> standard input and print the contents of each commit on standard
-> output (without waiting for EOF on stdin)?
+> For some reason, on Windows all transient windows are placed
+> in the upper left corner of the screen. Thus, it is necessary
+> to explicitly position the windows using the tk::PlaceWindow
+> function.
 
-How about:
+Hmmm, this is not part of the official Tk API as far as I can see, and
+having to call tk::PlaceWindow on every window we create is a bit
+gross.  What exactly does it do, and what effect will this change have
+on Linux?  Are you sure there isn't some other way to fix the problem?
 
-  git cat-file --batch
-
-?
-
-Unfortunately it just dumps the raw commit information instead of
-allowing the usual formatting, but perhaps that is sufficient (you asked
-for "contents").
-
--Peff
+Paul.
