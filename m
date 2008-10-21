@@ -1,277 +1,55 @@
-From: "Giuseppe Bilotta" <giuseppe.bilotta@gmail.com>
-Subject: Re: [PATHv2 6/8] gitweb: retrieve snapshot format from PATH_INFO
-Date: Tue, 21 Oct 2008 20:36:41 +0200
-Message-ID: <cb7bb73a0810211136n452ac8bdp7814ff09749b3142@mail.gmail.com>
-References: <1224188831-17767-6-git-send-email-giuseppe.bilotta@gmail.com>
-	 <1224426270-27755-1-git-send-email-giuseppe.bilotta@gmail.com>
-	 <200810211844.35714.jnareb@gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: gitk: Turn short SHA1 names into links too
+Date: Tue, 21 Oct 2008 12:09:00 -0700
+Message-ID: <7vzlkxyddf.fsf@gitster.siamese.dyndns.org>
+References: <alpine.LFD.1.10.0809251657080.3265@nehalem.linux-foundation.org>
+ <18685.4652.287143.717452@cargo.ozlabs.ibm.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, "Petr Baudis" <pasky@suse.cz>,
-	"Junio C Hamano" <gitster@pobox.com>
-To: "Jakub Narebski" <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Oct 21 20:38:29 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: Linus Torvalds <torvalds@linux-foundation.org>,
+	Git Mailing List <git@vger.kernel.org>
+To: Paul Mackerras <paulus@samba.org>
+X-From: git-owner@vger.kernel.org Tue Oct 21 21:10:41 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KsM7f-0005gL-Rl
-	for gcvg-git-2@gmane.org; Tue, 21 Oct 2008 20:38:28 +0200
+	id 1KsMcg-0001vU-3O
+	for gcvg-git-2@gmane.org; Tue, 21 Oct 2008 21:10:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752921AbYJUSgo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 21 Oct 2008 14:36:44 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752507AbYJUSgo
-	(ORCPT <rfc822;git-outgoing>); Tue, 21 Oct 2008 14:36:44 -0400
-Received: from mail-gx0-f16.google.com ([209.85.217.16]:62918 "EHLO
-	mail-gx0-f16.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752565AbYJUSgn (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 21 Oct 2008 14:36:43 -0400
-Received: by gxk9 with SMTP id 9so6057343gxk.13
-        for <git@vger.kernel.org>; Tue, 21 Oct 2008 11:36:41 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to
-         :subject:cc:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:references;
-        bh=o6YQn1VO0DLStPAU2VQivBaJnJkcw0THMrEOLZkq7qs=;
-        b=kaRtVXnI59no/fu2J28jLuP+iV8GvSBg/el1Pn99fbH2Ssh4ZhuRfg3yjl4WRPImvY
-         /sEja6KbhzzB9rdESylXDDMBX/v3Tbl9LdCHBYSdLfs0mLrfa3oyFKRjKRgz1wKGndjX
-         pYRWnMiBjBtSxQYv0LJxmnuaWGIKeM3HR6cGU=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
-         :content-type:content-transfer-encoding:content-disposition
-         :references;
-        b=EVeHuH6R5Pl1L5FI+5YEp7i+TxAg50DvNK3q/7Pn85QNMbiOx2jm9QXnWuGcCBNlDC
-         RyrtdbzZ9iKOx8i7ol98L1KTzLsz6zaoa1gyP94bLN1U9mCxlQNGOjjsmA1zWZUgFF6e
-         ZtQNy27UzqSyuqKZqF99xLglSIeVzIWFtXIsE=
-Received: by 10.150.11.6 with SMTP id 6mr65240ybk.9.1224614201349;
-        Tue, 21 Oct 2008 11:36:41 -0700 (PDT)
-Received: by 10.150.145.2 with HTTP; Tue, 21 Oct 2008 11:36:41 -0700 (PDT)
-In-Reply-To: <200810211844.35714.jnareb@gmail.com>
-Content-Disposition: inline
+	id S1751548AbYJUTJR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 21 Oct 2008 15:09:17 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751338AbYJUTJR
+	(ORCPT <rfc822;git-outgoing>); Tue, 21 Oct 2008 15:09:17 -0400
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:65192 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750746AbYJUTJQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 21 Oct 2008 15:09:16 -0400
+Received: from localhost.localdomain (localhost [127.0.0.1])
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 5E3BE725E1;
+	Tue, 21 Oct 2008 15:09:14 -0400 (EDT)
+Received: from pobox.com (ip68-225-240-211.oc.oc.cox.net [68.225.240.211])
+ (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
+ certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
+ ESMTPSA id 4C59B725E0; Tue, 21 Oct 2008 15:09:08 -0400 (EDT)
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: C02E00DA-9FA3-11DD-B94A-9CEDC82D7133-77302942!a-sasl-fastnet.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/98803>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/98804>
 
-On Tue, Oct 21, 2008 at 6:44 PM, Jakub Narebski <jnareb@gmail.com> wrote:
-> I like the idea behind this patch, to enable to use path_info for as
-> much gitweb parameters as possible.  After this patch series the only
-> parameters which wouldn't be possible to represent in path_info would
-> be:
->  * @extra_options ('opt') multi-valued parameter, used to pass
->   thinks like '--no-merges', which cannot be fit in the "simplified"
->   list-like (as opposed to hash-like query string) path_info URL.
->  * $searchtype ('st') and $searchtext ('s') etc. parameters, which
->   are generated by HTML form, and are naturally generated in query
->   string format.
->  * $page ('pg') parameter, which could theoretically be added as last
->   part of path_info URL, for example $project/next/2/... if not for
->   pesky $project/history/next:/Documentation/2/ where you cannot be
->   sure that having /<number>/ at the end is rare.
->  * $order ('o') parameter, which would be hard to fit in path_info,
->   with its limitation of parameters being specified by position.
->   Or even next to impossible.
->  * 'by_tag'...
+Paul Mackerras <paulus@samba.org> writes:
+
+> Linus Torvalds writes:
 >
-> But I'd rather have this patch series to be in separate thread...
-
-Yes, a posteriori I think it's better too. I'll resend the 5 path_info
-patches with the minor stylistic corrections you suggested, and send
-these 3 separately.
-
-
-> On Sun, 19 Oct 2008, Giuseppe Bilotta wrote:
+>> And the thing I wanted to work was to have the abbreviated SHA1's that 
+>> have started to get more common in the kernel commit logs work as links in 
+>> gitk too, just the way a full 40-character SHA1 link works.
 >
->> We parse requests for $project/snapshot/$head.$sfx as equivalent to
->> $project/snapshot/$head?sf=$sfx, where $sfx is any of the known
->> (although not necessarily supported) snapshot formats (or its default
->> suffix).
->>
->> The filename for the resulting package preserves the requested
->> extensions (so asking for a .tgz gives a .tgz, and asking for a .tar.gz
->> gives a .tar.gz), although for obvious reasons it doesn't preserve the
->> basename (git/snapshot/next.tgz returns a file names git-next.tgz).
->
-> That is a bit of difference from sf=<format> in CGI query string, where
-> <format> is always a name of a format (for example 'tgz' or 'tbz2'),
-> and actual suffix is defined in %known_snapshot_formats (for example
-> '.tar.gz' and '.tar.bz2' respectively).  Now you can specify snapshot
-> format either either by its name, for example 'tgz' (which is simple
-> lookup in hash) which result in proposed filename with '.tgz' suffix,
-> or you can specify suffix, for example 'tar.gz' (which requires
-> searching through all hash) which result in proposed filename with
-> '.tar.gz' suffix.
->
-> This is a bit of inconsistency; to be consistent with how we handle
-> 'sf' CGI parameter we would translate 'tgz' $sfx into 'tar.gz' in
-> snapshot filename.  This would also cover currently purely theoretical
-> case when different snapshot formats (for example 'tgz' and 'tgz9')
-> would use the same snapshot suffix (extension), but differ for example
-> in parameters passed to compressor (for example '-9' or '--best' in
-> the 'tgz9' case).
->
-> On the other hand one would expect that when URL which looks like
-> URL to snapshot ends with '.$sfx', then filename for snapshot would
-> also end with '.$sfx'.
->
-> This certainly requires some further thoughts.
+> I just pushed out a commit to gitk that makes this work, and fixes the
+> other bugs you mentioned.
 
-What I decided was to set gitweb to always produce links with the
-suffix (.e.g .tar.gz), but I saw no particular reason not to accept
-the shorter version which is (1) commonly used as a suffix as well and
-(2) happens to be the actual format key used by gitweb.
-
-A different, possibly cleaner approach, but a more extensive change,
-would be to have each format describe a list of suffixes, defaulting
-to the first one on creation by identifying all of them. This is more
-invasive because all of the uses of {'suffix'} have to be replaced
-with {'suffix'}[0], or something like that (maybe we could add a
-separate key 'other_suffixes' instead?)
-
-
->> This introduces a potential case for ambiguity if a project has a head
->> that ends with a snapshot-like suffix (.zip, .tgz, .tar.gz, etc) and the
->> sf CGI parameter is not present; however, gitweb only produces URLs with
->> the sf parameter, so this is only a potential issue for hand-coded URLs
->> for extremely unusual project.
->
-> I think you wanted to say here "_currently_ produces URLs with the 'sf'
-> parameter" as the next patch in series changes this.
-
-Ah yes, good point.
-
->> Signed-off-by: Giuseppe Bilotta <giuseppe.bilotta@gmail.com>
->> ---
->>
->> I had second thoughts on this. Now we always look for the snapshot extension if
->> the sf CGI parameter is missing, even if the project has a head that matches
->> the full pseudo-refname $head.$sfx.
->>
->> The reason for this is that (1) there is no ambiguity for gitweb-generated
->> URLs (2) the only URLs that could fail are hand-made URLs for extremely
->> unusual projects and (3) it allows us to set gitweb up to generate
->> (unambiguous) URLs without the sf CGI parameter.
->
-> This is also simpler and cheaper solution.
-
-That, too 8-)
-
->> This also means that I can add 3 patches to the series, instead of just one:
->> * patch #6 that parses the new format
->> * patch #7 that generates the new URLs
->> * patch #8 for some code refactoring
->
-> Now, I haven't yet read the last patch in series, so I don't know if
-> it is independent refactoring, making sense even before patches named
-> #6 and #7 here, or is it connected with searching for snapshot format
-> by suffix it uses.  If the former, it should be done upfront, as it
-> shouldn't need discussion, and being easier to be accepted into git.git.
-> If the latter, then it should probably be folded (squashed) into #6,
-> first patch in the series.
-
-In fact, patch #8 can be written independently of the other too, and
-would provide a significant speed benefit for generation of pages with
-lots of 'snapshot' links: what it does is just to make the 'supported
-formats' array global, preparing it only once instead of re-preparing
-it every time a snapshot link is created.
-
->>  gitweb/gitweb.perl |   34 ++++++++++++++++++++++++++++++++++
->>  1 files changed, 34 insertions(+), 0 deletions(-)
->>
->> diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
->> index 99c8c20..e9e9e60 100755
->> --- a/gitweb/gitweb.perl
->> +++ b/gitweb/gitweb.perl
->> @@ -609,6 +609,40 @@ sub evaluate_path_info {
->>                       $input_params{'hash_parent'} ||= $parentrefname;
->>               }
->>       }
->> +
->> +     # for the snapshot action, we allow URLs in the form
->> +     # $project/snapshot/$hash.ext
->> +     # where .ext determines the snapshot and gets removed from the
->> +     # passed $refname to provide the $hash.
->> +     #
->> +     # To be able to tell that $refname includes the format extension, we
->> +     # require the following two conditions to be satisfied:
->> +     # - the hash input parameter MUST have been set from the $refname part
->> +     #   of the URL (i.e. they must be equal)
->
-> This means no "$project/.tgz?h=next", isn't it?
-
-Right.
-
->> +     # - the snapshot format MUST NOT have been defined already
->
-> I would add "which means that 'sf' parameter is not set in URL", or
-> something like that as the last line of above comment.
-
-Good idea. I'll make it an 'e.g.' to keep the comment valid for future
-additional parameter evaluation such as command-line input.
-
-> I like that the code is so well commented, by the way.
-
-Thanks.
-
->> +     if ($input_params{'action'} eq 'snapshot' && defined $refname &&
->> +             $refname eq $input_params{'hash'} &&
->
-> Minor nit.
->
-> I would use here (the question of style / better readability):
->
-> +       if ($input_params{'action'} eq 'snapshot' &&
-> +                defined $refname && $refname eq $input_params{'hash'} &&
->
-> to have both conditions about $refname in the same line.
-
-Yes, it'd look much better.
-
->> +             !defined $input_params{'snapshot_format'}) {
->> +             # We loop over the known snapshot formats, checking for
->> +             # extensions. Allowed extensions are both the defined suffix
->> +             # (which includes the initial dot already) and the snapshot
->> +             # format key itself, with a prepended dot
->> +             while (my ($fmt, %opt) = each %known_snapshot_formats) {
->> +                     my $hash = $refname;
->> +                     my $sfx;
->> +                     $hash =~ s/(\Q$opt{'suffix'}\E|\Q.$fmt\E)$//;
->> +                     next unless $sfx = $1;
->> +                     # a valid suffix was found, so set the snapshot format
->> +                     # and reset the hash parameter
->> +                     $input_params{'snapshot_format'} = $fmt;
->> +                     $input_params{'hash'} = $hash;
->> +                     # we also set the format suffix to the one requested
->> +                     # in the URL: this way a request for e.g. .tgz returns
->> +                     # a .tgz instead of a .tar.gz
->> +                     $known_snapshot_formats{$fmt}{'suffix'} = $sfx;
->> +                     last;
->> +             }
->
-> I'm not sure if it worth (see comment at the beginning of this mail)
-> adding this code, or just allow $sfx to be snapshot _name_ (key in
-> %known_snapshot_formats hash).
->
-> Otherwise it would be as simple as checking if $known_snapshot_formats{$sfx}
-> exists (assuming that snapshot format names does not contain '.').
->
-> If we decide to go more complicated route, then refactoring it in such
-> a way that suffixes are also keys to %known_snapshot_formats would be
-> preferred... err, sorry, not so simple.  But refactoring this check
-> into separate subroutine (as I think last patch in series does) would
-> be good idea.
-
-See comments above.
-
-> Also, I'd rather you checked if the $refname part contains '.' for it
-> to even consider that it can be suffix.
-
-Ah, good idea.
-
--- 
-Giuseppe "Oblomov" Bilotta
+FWIW, pulled and pushed out.  Thanks.
