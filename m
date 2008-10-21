@@ -1,89 +1,187 @@
-From: "Alexander Gavrilov" <angavrilov@gmail.com>
-Subject: Re: [PATCH 7/7] gitk: Explicitly position popup windows.
-Date: Tue, 21 Oct 2008 16:52:27 +0400
-Message-ID: <bb6f213e0810210552k1e18ad83l9e06981454818cd2@mail.gmail.com>
-References: <1223449540-20457-1-git-send-email-angavrilov@gmail.com>
-	 <1223449540-20457-2-git-send-email-angavrilov@gmail.com>
-	 <1223449540-20457-3-git-send-email-angavrilov@gmail.com>
-	 <1223449540-20457-4-git-send-email-angavrilov@gmail.com>
-	 <1223449540-20457-5-git-send-email-angavrilov@gmail.com>
-	 <1223449540-20457-6-git-send-email-angavrilov@gmail.com>
-	 <1223449540-20457-7-git-send-email-angavrilov@gmail.com>
-	 <1223449540-20457-8-git-send-email-angavrilov@gmail.com>
-	 <18685.49152.25344.398737@cargo.ozlabs.ibm.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH 2/2] rm: loosen safety valve for empty files
+Date: Tue, 21 Oct 2008 09:54:19 -0400
+Message-ID: <20081021135419.GA17999@coredump.intra.peff.net>
+References: <20081021003712.GB32569@coredump.intra.peff.net> <7v4p361x1f.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=utf-8
 Cc: git@vger.kernel.org
-To: "Paul Mackerras" <paulus@samba.org>
-X-From: git-owner@vger.kernel.org Tue Oct 21 14:53:45 2008
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Oct 21 15:57:29 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KsGk4-0006QX-Vn
-	for gcvg-git-2@gmane.org; Tue, 21 Oct 2008 14:53:45 +0200
+	id 1KsHhx-0004k4-A1
+	for gcvg-git-2@gmane.org; Tue, 21 Oct 2008 15:55:38 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753057AbYJUMwa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 21 Oct 2008 08:52:30 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752878AbYJUMwa
-	(ORCPT <rfc822;git-outgoing>); Tue, 21 Oct 2008 08:52:30 -0400
-Received: from ug-out-1314.google.com ([66.249.92.171]:38739 "EHLO
-	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752803AbYJUMw3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 21 Oct 2008 08:52:29 -0400
-Received: by ug-out-1314.google.com with SMTP id k3so1010101ugf.37
-        for <git@vger.kernel.org>; Tue, 21 Oct 2008 05:52:27 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to
-         :subject:cc:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:references;
-        bh=BHFIxR9yDLFJp/nwkg/piqjVpdun06Nnjue4unD75Lk=;
-        b=OjNB5Er2FcYO+LMEAYnYmod50vYCeUGfCpG5DJyWVKzrDANX3wW8PlPd+/SJJerHFT
-         yNkXXLlL9OEoctPNY8f1Nu9UOCeWyShESWv9TH9SFxalpUtPDdf4/bH/FERWsZHvqQpm
-         pBgqoqcKDEPEDnk+1qBYoVxlhkkyJbcBPBUvo=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
-         :content-type:content-transfer-encoding:content-disposition
-         :references;
-        b=WQNI1mr6gd9VBUwXLDBRgRZ1/uvF158heMkLPsLBN/FZyWsi1EG3DsANiGfc07KobD
-         hf64GO9UGiJRIQpWvwQIFSjMrQPhENnFG9DEq8GFbI7XQDcDzSd+utFmSmDVyWFz3AFt
-         ie3BzvzWxoOBrfw6SzplVkohPb4xLrBgJh95k=
-Received: by 10.103.189.15 with SMTP id r15mr4435748mup.135.1224593547055;
-        Tue, 21 Oct 2008 05:52:27 -0700 (PDT)
-Received: by 10.103.251.10 with HTTP; Tue, 21 Oct 2008 05:52:27 -0700 (PDT)
-In-Reply-To: <18685.49152.25344.398737@cargo.ozlabs.ibm.com>
+	id S1751481AbYJUNyX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 21 Oct 2008 09:54:23 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751380AbYJUNyX
+	(ORCPT <rfc822;git-outgoing>); Tue, 21 Oct 2008 09:54:23 -0400
+Received: from peff.net ([208.65.91.99]:1878 "EHLO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751339AbYJUNyW (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 21 Oct 2008 09:54:22 -0400
+Received: (qmail 21142 invoked by uid 111); 21 Oct 2008 13:54:20 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+    by peff.net (qpsmtpd/0.32) with SMTP; Tue, 21 Oct 2008 09:54:20 -0400
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Tue, 21 Oct 2008 09:54:19 -0400
 Content-Disposition: inline
+In-Reply-To: <7v4p361x1f.fsf@gitster.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/98785>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/98786>
 
-On Tue, Oct 21, 2008 at 3:41 PM, Paul Mackerras <paulus@samba.org> wrote:
-> Alexander Gavrilov writes:
->
->> For some reason, on Windows all transient windows are placed
->> in the upper left corner of the screen. Thus, it is necessary
->> to explicitly position the windows using the tk::PlaceWindow
->> function.
->
-> Hmmm, this is not part of the official Tk API as far as I can see, and
-> having to call tk::PlaceWindow on every window we create is a bit
-> gross.  What exactly does it do, and what effect will this change have
-> on Linux?  Are you sure there isn't some other way to fix the problem?
+On Mon, Oct 20, 2008 at 07:50:36PM -0700, Junio C Hamano wrote:
 
-It is just a convenient helper function that can explicitly compute
-and set the window position in a number of ways. It is used in Tk's
-dialog implementations. If you don't like using an unofficial
-function, I can pull out the relevant ~8 lines of code as a separate
-function in gitk.
+> in addition to what you are trying to fix here with "git rm".  With such a
+> change, your "git rm empty" code can also distinguish between an empty
+> blob the user wanted to add _as the final contents_, and a path that has
+> been marked with "add -N", and behave differently (the former would not
+> require -f while the latter would).
 
+Your reasoning makes sense.
 
-http://objectmix.com/tcl/390381-tile-dialog-boxes-not-transient-parent-under-windows.html
-http://wiki.tcl.tk/1254
+> As an interim measure, I suspect your patch is an improvement from the
+> current state of affairs, but the above test will then break when an
+> improvement to "git add -N" implementation outlined above materializes.
 
-Alexander
+Yeah, I actually considered writing it as "git add -N", but I thought it
+better that the person who changes the behavior breaks the test, reads
+the commit message, and decides then what the best behavior is.
+
+But if you are comfortable saying now "this is what the behavior
+_should_ be", then I think the test modifications you proposed make
+sense (and after reading your discussion above, I think the behavior you
+propose is reasonable).
+
+> So how about changing the test to explicitly check that a path that was
+> added by "git add -N" can be removed, and either (1) not check about an
+> empty blob that was explicitly added by the user, or (2) check that an
+> empty blob that was explicitly added by the user cannot be "git rm"'ed
+> without -f, with expect_failure?
+
+Patch below. I tried to expand the commit message to explain the
+situation to the future developer who extends intent-to-add, but please
+mark up if anything seems unclear.
+
+-- >8 --
+rm: loosen safety valve for empty files
+
+If a file is different between the working tree copy, the
+index, and the HEAD, then we do not allow it to be deleted
+without --force.
+
+However, this is overly tight in the face of "git add
+--intent-to-add":
+
+  $ git add --intent-to-add file
+  $ : oops, I don't actually want to stage that yet
+  $ git rm --cached file
+  error: 'empty' has staged content different from both the
+  file and the HEAD (use -f to force removal)
+  $ git rm -f --cached file
+
+Unfortunately, there is currently no way to distinguish
+between an empty file that has been added and an "intent to
+add" file. The ideal behavior would be to disallow the
+former while allowing the latter.
+
+This patch loosens the safety valve to allow the deletion
+only if we are deleting the cached entry and the cached
+content is empty.  This covers the intent-to-add situation,
+and assumes there is little harm in not protecting users who
+have legitimately added an empty file.  In many cases,
+the file will still be empty, in which case the safety valve
+does not trigger anyway (since the content remains untouched
+in the working tree). Otherwise, we do remove the fact that
+no content was staged, but given that the content is by
+definition empty, it is not terribly difficult for a user to
+recreate it.
+
+However, we still document the desired behavior in the form
+of two tests. One checks the correct removal of an
+intent-to-add file. The other checks that we still disallow
+removal of empty files, but is marked as expect_failure to
+indicate this compromise. If the intent-to-add feature is
+ever extended to differentiate between normal empty files
+and intent-to-add files, then the safety valve can be
+re-tightened.
+
+Signed-off-by: Jeff King <peff@peff.net>
+---
+ builtin-rm.c  |    3 ++-
+ cache.h       |    1 +
+ read-cache.c  |    2 +-
+ t/t3600-rm.sh |   13 +++++++++++++
+ 4 files changed, 17 insertions(+), 2 deletions(-)
+
+diff --git a/builtin-rm.c b/builtin-rm.c
+index e06640c..b7126e3 100644
+--- a/builtin-rm.c
++++ b/builtin-rm.c
+@@ -79,7 +79,8 @@ static int check_local_mod(unsigned char *head, int index_only)
+ 		     || hashcmp(ce->sha1, sha1))
+ 			staged_changes = 1;
+ 
+-		if (local_changes && staged_changes)
++		if (local_changes && staged_changes &&
++		    !(index_only && is_empty_blob_sha1(ce->sha1)))
+ 			errs = error("'%s' has staged content different "
+ 				     "from both the file and the HEAD\n"
+ 				     "(use -f to force removal)", name);
+diff --git a/cache.h b/cache.h
+index cdbeb48..b0edbf9 100644
+--- a/cache.h
++++ b/cache.h
+@@ -519,6 +519,7 @@ static inline void hashclr(unsigned char *hash)
+ {
+ 	memset(hash, 0, 20);
+ }
++extern int is_empty_blob_sha1(const unsigned char *sha1);
+ 
+ int git_mkstemp(char *path, size_t n, const char *template);
+ 
+diff --git a/read-cache.c b/read-cache.c
+index fdb41b8..2c45086 100644
+--- a/read-cache.c
++++ b/read-cache.c
+@@ -160,7 +160,7 @@ static int ce_modified_check_fs(struct cache_entry *ce, struct stat *st)
+ 	return 0;
+ }
+ 
+-static int is_empty_blob_sha1(const unsigned char *sha1)
++int is_empty_blob_sha1(const unsigned char *sha1)
+ {
+ 	static const unsigned char empty_blob_sha1[20] = {
+ 		0xe6,0x9d,0xe2,0x9b,0xb2,0xd1,0xd6,0x43,0x4b,0x8b,
+diff --git a/t/t3600-rm.sh b/t/t3600-rm.sh
+index 66aca99..5b4d6f7 100755
+--- a/t/t3600-rm.sh
++++ b/t/t3600-rm.sh
+@@ -187,6 +187,19 @@ test_expect_success 'but with -f it should work.' '
+ 	test_must_fail git ls-files --error-unmatch baz
+ '
+ 
++test_expect_failure 'refuse to remove cached empty file with modifications' '
++	touch empty &&
++	git add empty &&
++	echo content >empty &&
++	test_must_fail git rm --cached empty
++'
++
++test_expect_success 'remove intent-to-add file without --force' '
++	echo content >intent-to-add &&
++	git add -N intent-to-add
++	git rm --cached intent-to-add
++'
++
+ test_expect_success 'Recursive test setup' '
+ 	mkdir -p frotz &&
+ 	echo qfwfq >frotz/nitfol &&
+-- 
+1.6.0.2.808.gf6cf2
