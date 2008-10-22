@@ -1,94 +1,68 @@
-From: Fergus McMenemie <fergus@twig.me.uk>
-Subject: Re: git 1.6.0.2 make test fails at t1301 under mac os x 10.4.
-Date: Wed, 22 Oct 2008 07:11:04 +0100
-Message-ID: <p06240806c52472a2e0ab@[192.168.47.12]>
+From: Mike Hommey <mh@glandium.org>
+Subject: Re: [PATCH] git-svn: don't escape tilde ('~') for http(s) URLs
+Date: Wed, 22 Oct 2008 08:13:25 +0200
+Organization: glandium.org
+Message-ID: <20081022061325.GC8225@glandium.org>
+References: <20081018213919.GC3107@atjola.homenet> <20081018224728.GD3107@atjola.homenet> <20081021211131.GA21606@yp-box.dyndns.org> <7vtzb5wr6v.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Oct 22 08:12:26 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: Eric Wong <normalperson@yhbt.net>,
+	=?iso-8859-15?Q?Bj=F6rn?= Steinbrink <B.Steinbrink@gmx.de>,
+	git@vger.kernel.org, jsogo@debian.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Oct 22 08:15:05 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KsWxD-0003m2-BW
-	for gcvg-git-2@gmane.org; Wed, 22 Oct 2008 08:12:23 +0200
+	id 1KsWzo-0004Pl-Ec
+	for gcvg-git-2@gmane.org; Wed, 22 Oct 2008 08:15:04 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751477AbYJVGLJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 22 Oct 2008 02:11:09 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751471AbYJVGLI
-	(ORCPT <rfc822;git-outgoing>); Wed, 22 Oct 2008 02:11:08 -0400
-Received: from c.painless.aaisp.net.uk ([81.187.30.53]:47080 "EHLO
-	c.painless.aaisp.net.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751446AbYJVGLH (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 22 Oct 2008 02:11:07 -0400
-Received: from 110.88.155.90.in-addr.arpa ([90.155.88.110] helo=twig.me.uk)
-	by c.painless.aaisp.net.uk with smtp (Exim 4.69)
-	(envelope-from <fergus@twig.me.uk>)
-	id 1KsWvv-0000NX-BD
-	for git@vger.kernel.org; Wed, 22 Oct 2008 07:11:03 +0100
-Received: from [192.168.47.12] (pb.twig.me.uk [192.168.47.12])
-	by twig.me.uk (Postfix) with ESMTP id B15B630910E
-	for <git@vger.kernel.org>; Wed, 22 Oct 2008 07:11:02 +0100 (BST)
-X-Virus-Scanned: Clear (Version: ClamAV 0.94/8467/Wed Oct 22 03:32:13 2008, by smtp.aaisp.net.uk)
+	id S1751537AbYJVGNw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 22 Oct 2008 02:13:52 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751529AbYJVGNw
+	(ORCPT <rfc822;git-outgoing>); Wed, 22 Oct 2008 02:13:52 -0400
+Received: from vuizook.err.no ([194.24.252.247]:37896 "EHLO vuizook.err.no"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751501AbYJVGNv (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 22 Oct 2008 02:13:51 -0400
+Received: from cha92-13-88-165-248-19.fbx.proxad.net ([88.165.248.19] helo=jigen)
+	by vuizook.err.no with esmtps (TLS-1.0:RSA_AES_256_CBC_SHA1:32)
+	(Exim 4.69)
+	(envelope-from <mh@glandium.org>)
+	id 1KsWyR-0006eQ-Tg; Wed, 22 Oct 2008 08:13:43 +0200
+Received: from mh by jigen with local (Exim 4.69)
+	(envelope-from <mh@jigen>)
+	id 1KsWyD-0002hd-Qj; Wed, 22 Oct 2008 08:13:25 +0200
+Content-Disposition: inline
+In-Reply-To: <7vtzb5wr6v.fsf@gitster.siamese.dyndns.org>
+X-GPG-Fingerprint: A479 A824 265C B2A5 FC54  8D1E DE4B DA2C 54FD 2A58
+User-Agent: Mutt/1.5.18 (2008-05-17)
+X-Spam-Status: (score 0.1): No, score=0.1 required=5.0 tests=RDNS_DYNAMIC autolearn=disabled version=3.2.4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/98830>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/98831>
 
-Johannes,
+On Tue, Oct 21, 2008 at 02:53:28PM -0700, Junio C Hamano wrote:
+> Eric Wong <normalperson@yhbt.net> writes:
+> 
+> >> strace revealed that git-svn url-encodes ~ while svn does not do that.
+> >>
+> >> For svn we have:
+> >> write(5, "<S:update-report send-all=\"true\" xmlns:S=\"svn:\">
+> >> <S:src-path>https://sucs.org/~welshbyte/svn/backuptool/trunk</S:src-path>...
+> >>
+> >> While git-svn shows:
+> >> write(7, "<S:update-report send-all=\"true\" xmlns:S=\"svn:\">
+> >> <S:src-path>https://sucs.org/%7Ewelshbyte/svn/backuptool/trunk</S:src-path>...
+> 
+> This looks like an XML based request sequence to me (and svn is talking
+> WebDAV here, right?);
 
-Thanks for the prompt response. On the systems that work:-
+XML based would be &126;, not %7E.
+Anyways, aren't there ready-to-use url quoting functions in perl ?
 
->fergus:pwd
->/usr/local/packages/git-1.6.0.2
->fergus:mkdir y
->fergus:dir y
->total 0
->drwxr-xr-x    2 fergus  fergus     68 21 Oct 22:52 ./
->drwxr-xr-x  692 fergus  fergus  23528 21 Oct 22:52 ../
->fergus:id
->uid=501(fergus) gid=501(fergus) groups=501(fergus),98(_lpadmin),101(com.apple.sharepoint.group.1),66(_uucp),80(admin)
-
-on the system that fails I see
-
->fergus:mkdir y
->fergus:dir y
->total 0
->drwxr-xr-x     2 fergus  wheel     68 Oct 21 22:52 ./
->drwxr-xr-x   693 fergus  wheel  23562 Oct 21 22:52 ../
->fergus:id
->uid=501(fergus) gid=501(fergus) groups=501(fergus), 81(appserveradm), 79(appserverusr), 80(admin)
-
-Looking into this further, creating a file/dir on a BSD based system such
-as OSX, the group ownership of the file/dir is taken from the enclosing
-dirs group. Unlike say Solaris or Linux where it is based on your primary
-group. I had not noticed this difference before!
-
-All test passed, after changing the group ownership.
-
->On Tue, 21 Oct 2008, Fergus McMenemie wrote:
->
->> >++ mkdir sub
->> >++ cd sub
->> >++ umask 002
->> >++ git init --shared=1
->> >fatal: Could not make /usr/local/packages/git-1.6.0.2/t/trash
->> >directory/sub/.git/refs writable by group
->
->I guess this is the problem.
->
->Could you inspect what owner/group that directory has?
->
->Ciao,
->Dscho
-
--- 
-
-===============================================================
-Fergus McMenemie               Email:fergus@twig.me.uk
-Techmore Ltd                   Phone:(UK) 07721 376021
-
-Unix/Mac/Intranets             Analyst Programmer
-===============================================================
+Mike
