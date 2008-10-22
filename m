@@ -1,78 +1,76 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: git add --patch newfile doesn't add newfile to cache ?
-Date: Wed, 22 Oct 2008 09:29:46 -0400
-Message-ID: <20081022132946.GB17393@coredump.intra.peff.net>
-References: <20081020143636.GB3988@gmx.de> <20081020235049.GA23120@coredump.intra.peff.net> <20081022131232.GL3988@gmx.de>
+From: "Nguyen Thai Ngoc Duy" <pclouds@gmail.com>
+Subject: Re: [PATCH] rehabilitate 'git index-pack' inside the object store
+Date: Wed, 22 Oct 2008 21:04:34 +0700
+Message-ID: <fcaeb9bf0810220704o7a0ed177u48dcada9391ec626@mail.gmail.com>
+References: <alpine.LFD.2.00.0810202110380.26244@xanadu.home>
+	 <fcaeb9bf0810210757w1c14e0a3x1eb61a589a089f10@mail.gmail.com>
+	 <alpine.DEB.1.00.0810211856090.22125@pacific.mpi-cbg.de.mpi-cbg.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org
-To: Marc Weber <marco-oweber@gmx.de>
-X-From: git-owner@vger.kernel.org Wed Oct 22 15:31:22 2008
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: "Nicolas Pitre" <nico@cam.org>,
+	"Junio C Hamano" <gitster@pobox.com>, git@vger.kernel.org
+To: "Johannes Schindelin" <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Wed Oct 22 16:06:08 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Ksdny-00036K-5d
-	for gcvg-git-2@gmane.org; Wed, 22 Oct 2008 15:31:18 +0200
+	id 1KseLL-0006VH-Qf
+	for gcvg-git-2@gmane.org; Wed, 22 Oct 2008 16:05:48 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754829AbYJVN3u (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 22 Oct 2008 09:29:50 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753765AbYJVN3t
-	(ORCPT <rfc822;git-outgoing>); Wed, 22 Oct 2008 09:29:49 -0400
-Received: from peff.net ([208.65.91.99]:1045 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753509AbYJVN3s (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 22 Oct 2008 09:29:48 -0400
-Received: (qmail 956 invoked by uid 111); 22 Oct 2008 13:29:47 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.32) with SMTP; Wed, 22 Oct 2008 09:29:47 -0400
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Wed, 22 Oct 2008 09:29:46 -0400
+	id S1752144AbYJVOEj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 22 Oct 2008 10:04:39 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752102AbYJVOEj
+	(ORCPT <rfc822;git-outgoing>); Wed, 22 Oct 2008 10:04:39 -0400
+Received: from nf-out-0910.google.com ([64.233.182.186]:24465 "EHLO
+	nf-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752043AbYJVOEi (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 22 Oct 2008 10:04:38 -0400
+Received: by nf-out-0910.google.com with SMTP id d3so1430854nfc.21
+        for <git@vger.kernel.org>; Wed, 22 Oct 2008 07:04:34 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to
+         :subject:cc:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:references;
+        bh=1OW1HbhPxy51x54JnYWCtdv1cK6RKSv2ragH/c848Yc=;
+        b=tSFreyOV1N/6WFTLwK0+Xyt+N5BmoNCMLaP9cFF1T+58SuZV1+Y4eTtzv41937bEIn
+         2gpEhSzS9T/vN4MXI2Q2JacBjPE1TDPhrFHffW2iM1HGVeprEJPGWV5yiKNRNrqv1TCr
+         fETifYcj/m6tB1xPh3qV7eE6yguv+4cgTec1s=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
+         :content-type:content-transfer-encoding:content-disposition
+         :references;
+        b=xIrKMimoVvTueDwqRDnzhn1PDAVL1b8znJvoqQRJKAOMhY2i9XrGUFX/X8P6Hgk7IA
+         x5rXX420ICfM38zJmfPAzSQZmxx3c6knQKnj3HEo2v5f7X4mD3mPq+8+lGFUDbPvUAuO
+         khA4x4rnxEct0C+++pxqjFvjThuvrD7z1Smjc=
+Received: by 10.86.4.14 with SMTP id 14mr1053509fgd.20.1224684274299;
+        Wed, 22 Oct 2008 07:04:34 -0700 (PDT)
+Received: by 10.86.95.9 with HTTP; Wed, 22 Oct 2008 07:04:34 -0700 (PDT)
+In-Reply-To: <alpine.DEB.1.00.0810211856090.22125@pacific.mpi-cbg.de.mpi-cbg.de>
 Content-Disposition: inline
-In-Reply-To: <20081022131232.GL3988@gmx.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/98867>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/98868>
 
-On Wed, Oct 22, 2008 at 03:12:32PM +0200, Marc Weber wrote:
+On 10/22/08, Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
+>  So I propose this change in semantics:
+>
+>  - setup_git_directory_gently(): rename to discover_git_directory(),
+>   and avoid any chdir() at all.
+>  - setup_git_directory(): keep the semantics that it chdir()s to the
+>   worktree, or to the git directory for bare repositories.
+>
+>  Using _gently() even for RUN_SETUP builtins should solve the long standing
+>  pager problem, too.
 
-> >  sub patch_update_cmd {
-> > +	my @new = list_untracked();
-> > +	if (@new) {
-> > +		system(qw(git add -N), @new)
-> > +			and die "git add reported failure";
-> > +	}
-> > +
->  
-> 
-> I've tried the patch. However I'm not fully satisified.
-> I often use --patch to have another second look at each change to be
-> committed. Your patch adds new files to the cache silently without
-> giving the user the change to omit or edit the patch. But exatly that's
-> the reason I'm using --patch. So maybe I can work on this in some days..
-> Maybe I've also injected those lines into the wrong git version 
-> (1.6.0.2.GIT)
-
-Yes, you need to use the current 'master' branch for the "-N" feature.
-The point of "-N" is to say "this is a file I want to track, but don't
-add any contents yet." So it does your part 1:
-
->       1) when using git add --patch untracked-file the user should be
->          given the default patch view (only containing + lines)
->          so that he can use edit to only commit parts of the file in the
->          usual way. (I guess this is similar to having used git add -N
->          before, I haven't tried yet)
-
-But not your part 2:
-
->       2) if he wants to skip the entire patch / file nothing should be
->          added to the index.
-
-If you add _no_ contents, you still end up with the "this is a file I
-want to track" part, but with no contents. And I agree it should stage
-nothing, which is why this is an unsatisfactory solution (and why I
-didn't clean up the patch and send it to Junio for inclusion).
-
--Peff
+One more thing: "git foo -h" with RUN_SETUP won't run if repository is
+not found. Maybe just drop RUN_SETUP and let subcommands call
+setup_git_directory()
+-- 
+Duy
