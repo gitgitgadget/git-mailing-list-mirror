@@ -1,97 +1,79 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: [irq/urgent]: created 3786fc7: "irq: make variable static"
-Date: Wed, 22 Oct 2008 03:50:52 -0700 (PDT)
-Message-ID: <m3ljwgj3xy.fsf@localhost.localdomain>
-References: <20081022061730.GA5749@elte.hu>
+From: "Alex Riesen" <raa.lkml@gmail.com>
+Subject: Re: git history and file moves
+Date: Wed, 22 Oct 2008 13:19:26 +0200
+Message-ID: <81b0412b0810220419q43f6985fs1c608e3d3cbcf8f3@mail.gmail.com>
+References: <1224640967.14280.0.camel@minggr.sh.intel.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Ingo Molnar <mingo@elte.hu>
-X-From: git-owner@vger.kernel.org Wed Oct 22 12:52:19 2008
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, "Moore, Robert" <robert.moore@intel.com>
+To: "Lin Ming" <ming.m.lin@intel.com>
+X-From: git-owner@vger.kernel.org Wed Oct 22 13:20:41 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KsbJx-0005YD-UJ
-	for gcvg-git-2@gmane.org; Wed, 22 Oct 2008 12:52:10 +0200
+	id 1KsblY-0006Y6-P9
+	for gcvg-git-2@gmane.org; Wed, 22 Oct 2008 13:20:41 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754137AbYJVKu4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 22 Oct 2008 06:50:56 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753927AbYJVKu4
-	(ORCPT <rfc822;git-outgoing>); Wed, 22 Oct 2008 06:50:56 -0400
-Received: from ug-out-1314.google.com ([66.249.92.171]:38919 "EHLO
-	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752678AbYJVKuz (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 22 Oct 2008 06:50:55 -0400
-Received: by ug-out-1314.google.com with SMTP id k3so1316720ugf.37
-        for <git@vger.kernel.org>; Wed, 22 Oct 2008 03:50:53 -0700 (PDT)
+	id S1751477AbYJVLT2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 22 Oct 2008 07:19:28 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751461AbYJVLT2
+	(ORCPT <rfc822;git-outgoing>); Wed, 22 Oct 2008 07:19:28 -0400
+Received: from an-out-0708.google.com ([209.85.132.240]:49984 "EHLO
+	an-out-0708.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750785AbYJVLT1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 22 Oct 2008 07:19:27 -0400
+Received: by an-out-0708.google.com with SMTP id d40so165939and.103
+        for <git@vger.kernel.org>; Wed, 22 Oct 2008 04:19:26 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:received:received
-         :x-authentication-warning:to:cc:subject:references:from:in-reply-to
-         :message-id:lines:user-agent:mime-version:content-type:date;
-        bh=BzTRvYHzPbh4DkAOhXHMreYOOvOfl5uSU1mq8TP98U0=;
-        b=irg/QMW1kMb/O+NHRKPDU/jldU52y2+Bqc1YwW6NcpQBM2h6kM5gitIIZjoMLE1oZW
-         tlu4yR0sm0frMjovR/Xztm2NZOhg8jP7GU26dB6e7a4ijQTZs5Vh/k8rKnACTAWQ81C7
-         uAi+M0bJQzUrxbwMB03w22WiQCv2qEH+czLmQ=
+        h=domainkey-signature:received:received:message-id:date:from:to
+         :subject:cc:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:references;
+        bh=+YE9dQ/yRXMGSggPXT4sMKrNDPQPrRZdPMiydMU96d0=;
+        b=A0+XamX7E+Xv9+xpva9db19X3J9WXYhtMqv0M5dvWuW6fUEl1sI+4jPnCbPctQco5k
+         RKyplW3rpJIplAPfhSFJui+vkIfTf+Pv1zRvm6eaIHHSan2+5Oyew9ndcMXRXuCKSmxy
+         ydzQ1/w6as++JAAbApfA87ZyMlu1fLmjdLGC8=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=x-authentication-warning:to:cc:subject:references:from:in-reply-to
-         :message-id:lines:user-agent:mime-version:content-type:date;
-        b=BVtpb0jrDwBwj/zr154qRSj4Re+YyjQTHXFLKPqriSDCk6Ulcs5cf7PzdiLBCYRkxX
-         StUqhSp4u9jgd4f3mLn8HQ1PTf1X8s5gze9clXnaMRiRj7P2NIcUMOjxoSdY1q8zduAk
-         csrI8DCmlSrpyAyR0LaDl0kEGOJNuDRgg4lAQ=
-Received: by 10.66.236.13 with SMTP id j13mr3468597ugh.7.1224672653848;
-        Wed, 22 Oct 2008 03:50:53 -0700 (PDT)
-Received: from localhost.localdomain (abxd135.neoplus.adsl.tpnet.pl [83.8.253.135])
-        by mx.google.com with ESMTPS id k1sm4176880ugf.15.2008.10.22.03.50.51
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Wed, 22 Oct 2008 03:50:52 -0700 (PDT)
-Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id m9MAs3xx008750;
-	Wed, 22 Oct 2008 12:54:03 +0200
-Received: (from jnareb@localhost)
-	by localhost.localdomain (8.13.4/8.13.4/Submit) id m9MAs16S008747;
-	Wed, 22 Oct 2008 12:54:01 +0200
-X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
-In-Reply-To: <20081022061730.GA5749@elte.hu>
-User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
+        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
+         :content-type:content-transfer-encoding:content-disposition
+         :references;
+        b=VZWLUxKjCyA86oDwA4VmuwAKS9/N6ptjqnPp0OG8tCCIYHlc5gAc9g3f8n7BvS9VRh
+         LVxXwj4ArBL4NEB17fTEKA/20KxhGjuBuicBlA0WDWWpGDhTEqbRxurlGljVcQnBZiwM
+         JTyMJYjhwn4PxPxJL5nwOgDqsvkwhEgl6GLlU=
+Received: by 10.100.205.15 with SMTP id c15mr11424594ang.37.1224674366448;
+        Wed, 22 Oct 2008 04:19:26 -0700 (PDT)
+Received: by 10.100.91.8 with HTTP; Wed, 22 Oct 2008 04:19:26 -0700 (PDT)
+In-Reply-To: <1224640967.14280.0.camel@minggr.sh.intel.com>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/98856>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/98857>
 
-Ingo Molnar <mingo@elte.hu> writes:
+2008/10/22 Lin Ming <ming.m.lin@intel.com>:
+> I'm looking for a way to move files to a new directory and have the
+> full history follow the file automatically. Is this possible?
+>
+> I know about --follow, but I want the history to just follow the file
+> transparently. ...
 
-> Git recently started printing the branch name when creating commits:
-> 
->   [irq/urgent]: created 3786fc7: "irq: make variable static"
-> 
-> very nice idea IMO! Having it all on one line allows me to double-check 
-> that i indeed queued up a patch in the intended topic branch. Had it 
-> read:
-> 
->   [irq/urgent]: created 3786fc7: "printk: make variable static"
-> 
-> i'd have noticed the mistake immediately.
-> 
-> this welcome enhancement made me remember of three usage problems i had 
-> with Git recently:
-[...]
+Of all Git tools, what does not do this "transparently" or "automatically"?
+How more transparent do you imagine this?
+What do you think should follow what?
 
-About printing either forward (git-describe, e.g. v1.6.0.2-590-g67f6062)
-or backward (git-name-rev, e.g. tags/v1.6.0-rc2~8): you can use
-git-name-rev in filter mode (git log ... | git name-rev --stdin), or
-"git log --decorate", or '%d' in --pretty format specifier (this is very
-new thing).
+I ask, because it is hard to understand what exactly is it you're missing:
+merge support (which we have), git log listing the files as copied/renamed
+(which is what --follow is for, and the suggestion for you is to make an
+alias or something), git blame (ever looked at git gui blame?) or gitk
+(which follows renames in default configuration)
 
-You might be also interested in --abbrev-commit (when used with
---pretty=oneline format), and --graph option to git-log (or
-git-show-branch).  The "(--merged | --no-merged | --contains) [<commit>]"
-options to git-branch might be also of interest...
--- 
-Jakub Narebski
-Poland
-ShadeHawk on #git
+> Also, we have a git web interface and we want the full
+> history for the moved files to be available.
+
+It is available. Whether it is shown is another question. git-web can
+be improved (or just configured?)
