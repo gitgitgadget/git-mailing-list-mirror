@@ -1,78 +1,74 @@
-From: Michael J Gruber <git@drmicha.warpmail.net>
-Subject: Re: git history and file moves
-Date: Wed, 22 Oct 2008 14:38:51 +0200
-Message-ID: <48FF1EDB.8010503@drmicha.warpmail.net>
-References: <1224640967.14280.0.camel@minggr.sh.intel.com> <81b0412b0810220419q43f6985fs1c608e3d3cbcf8f3@mail.gmail.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH v2] builtin-blame: Reencode commit messages according
+	to git-log rules.
+Date: Wed, 22 Oct 2008 08:39:27 -0400
+Message-ID: <20081022123926.GA7774@coredump.intra.peff.net>
+References: <1224622557-6669-1-git-send-email-angavrilov@gmail.com> <20081022082016.GA18473@sigill.intra.peff.net> <bb6f213e0810220135hd520f78odb83414c248a15e4@mail.gmail.com> <20081022085036.GA1454@sigill.intra.peff.net> <bb6f213e0810220232p2e7fe3daoa32f46fbe5bef2ac@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: Alex Riesen <raa.lkml@gmail.com>, git@vger.kernel.org,
-	"Moore, Robert" <robert.moore@intel.com>
-To: Lin Ming <ming.m.lin@intel.com>
-X-From: git-owner@vger.kernel.org Wed Oct 22 14:40:15 2008
+Content-Type: text/plain; charset=utf-8
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+To: Alexander Gavrilov <angavrilov@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Oct 22 14:40:52 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Ksd0V-0000SF-VN
-	for gcvg-git-2@gmane.org; Wed, 22 Oct 2008 14:40:12 +0200
+	id 1Ksd12-0000eR-KG
+	for gcvg-git-2@gmane.org; Wed, 22 Oct 2008 14:40:45 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753236AbYJVMi4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 22 Oct 2008 08:38:56 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754179AbYJVMi4
-	(ORCPT <rfc822;git-outgoing>); Wed, 22 Oct 2008 08:38:56 -0400
-Received: from out3.smtp.messagingengine.com ([66.111.4.27]:55120 "EHLO
-	out3.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1752451AbYJVMiz (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 22 Oct 2008 08:38:55 -0400
-Received: from compute1.internal (compute1.internal [10.202.2.41])
-	by out1.messagingengine.com (Postfix) with ESMTP id 9DB9A182301;
-	Wed, 22 Oct 2008 08:38:54 -0400 (EDT)
-Received: from heartbeat2.messagingengine.com ([10.202.2.161])
-  by compute1.internal (MEProxy); Wed, 22 Oct 2008 08:38:54 -0400
-X-Sasl-enc: R7nUloGJ/DJyrhrL2U6HFfQtGJak96e86aDnPp6rtUXl 1224679134
-Received: from [139.174.44.12] (whitehead.math.tu-clausthal.de [139.174.44.12])
-	by mail.messagingengine.com (Postfix) with ESMTPSA id AF4032EE50;
-	Wed, 22 Oct 2008 08:38:53 -0400 (EDT)
-User-Agent: Thunderbird 2.0.0.17 (X11/20080914)
-In-Reply-To: <81b0412b0810220419q43f6985fs1c608e3d3cbcf8f3@mail.gmail.com>
+	id S1753126AbYJVMja (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 22 Oct 2008 08:39:30 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753143AbYJVMja
+	(ORCPT <rfc822;git-outgoing>); Wed, 22 Oct 2008 08:39:30 -0400
+Received: from peff.net ([208.65.91.99]:3881 "EHLO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752957AbYJVMj3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 22 Oct 2008 08:39:29 -0400
+Received: (qmail 511 invoked by uid 111); 22 Oct 2008 12:39:28 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+    by peff.net (qpsmtpd/0.32) with SMTP; Wed, 22 Oct 2008 08:39:28 -0400
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Wed, 22 Oct 2008 08:39:27 -0400
+Content-Disposition: inline
+In-Reply-To: <bb6f213e0810220232p2e7fe3daoa32f46fbe5bef2ac@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/98860>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/98861>
 
-Alex Riesen venit, vidit, dixit 10/22/08 13:19:
-> 2008/10/22 Lin Ming <ming.m.lin@intel.com>:
->> I'm looking for a way to move files to a new directory and have the
->> full history follow the file automatically. Is this possible?
->>
->> I know about --follow, but I want the history to just follow the file
->> transparently. ...
-> 
-> Of all Git tools, what does not do this "transparently" or "automatically"?
-> How more transparent do you imagine this?
-> What do you think should follow what?
-> 
-> I ask, because it is hard to understand what exactly is it you're missing:
-> merge support (which we have), git log listing the files as copied/renamed
-> (which is what --follow is for, and the suggestion for you is to make an
-> alias or something), git blame (ever looked at git gui blame?) or gitk
-> (which follows renames in default configuration)
-> 
->> Also, we have a git web interface and we want the full
->> history for the moved files to be available.
-> 
-> It is available. Whether it is shown is another question. git-web can
-> be improved (or just configured?)
+On Wed, Oct 22, 2008 at 01:32:56PM +0400, Alexander Gavrilov wrote:
 
-By default, gitweb uses "-M" for diff. You can specify all options (-C,
--CC, -B) using  "@diff_opts" in the config file for gitweb.cgi - if that
-is what you are using. Is it?
+> From the output it seems that what fails is "-f cp1251 -t sjis" and
+> "-f utf-8 -t sjis" (remember that blame --incremental produces its
 
-Anyways, using default configs for git log and gitweb.cgi both of them
-show the full history (renames, history before and after) for me here,
-using current git (1.6.0.3.514.g2f91b). What is your setup?
+Oh, indeed. Converting to and from utf-8 seems to work, but not between
+cp1251 and sjis:
 
-Michael
+  $ iconv -f SJIS -t UTF-8 sjis.txt | sed s/SJIS/UTF8/ >test &&
+  >   cmp test utf8.txt && echo ok
+  ok
+
+  $ iconv -f UTF-8 -t SJIS utf8.txt | sed s/UTF8/SJIS/ >test &&
+  >   cmp test sjis.txt && echo ok
+  ok
+
+  $ iconv -f SJIS -t CP1251 sjis.txt
+  Not supported SJIS to CP1251
+
+  $ iconv -f CP1251 -t SJIS cp1251.txt
+  Not supported CP1251 to SJIS
+
+So I think it is simply a limitation of the platform with respect to the
+particular encodings used. There is a similar problem in t3900, I think,
+with EUCJP and ISO-2022-JP. I assume one _can_ install these encodings
+for Solaris, but the admins of my box haven't done so (and this is a
+production box that I can't ask for such things on).
+
+> blame for some reason actually tries to convert to an entirely
+> different encoding. If tests 4 and 5 pass, you can try adding
+> --encoding=shift-jis to test 2 to check it.
+
+Tests 2, 3, and 4 fail. Test 5 does pass.
+
+-Peff
