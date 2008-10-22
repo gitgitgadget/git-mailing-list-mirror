@@ -1,184 +1,84 @@
-From: Johannes Sixt <j.sixt@viscovery.net>
-Subject: Re: [PATCH] git-remote: list branches in vertical lists
-Date: Wed, 22 Oct 2008 09:39:47 +0200
-Message-ID: <48FED8C3.20003@viscovery.net>
-References: <48FDEA82.5050903@viscovery.net> <alpine.DEB.1.00.0810211847410.22125@pacific.mpi-cbg.de.mpi-cbg.de>
+From: Andreas Ericsson <ae@op5.se>
+Subject: Re: [PATCH] git-fetch should not strip off ".git" extension
+Date: Wed, 22 Oct 2008 09:55:15 +0200
+Message-ID: <48FEDC63.8090104@op5.se>
+References: <ee2a733e0810180459m5fd20365s3c27bea5c1f3f704@mail.gmail.com>	 <48FC5F1B.1050608@op5.se> <7vzlkz2jv7.fsf@gitster.siamese.dyndns.org>	 <ee2a733e0810210323j249c3460x881af6d6aefc647c@mail.gmail.com>	 <7vej29zy2r.fsf@gitster.siamese.dyndns.org>	 <81b0412b0810211506y400ba750k2613ba19f01fb57@mail.gmail.com>	 <7vd4htwp6v.fsf@gitster.siamese.dyndns.org> <81b0412b0810211543p6cb8c4ej49fb7fe70c3e2917@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain; charset=ISO-8859-15; format=flowed
 Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Wed Oct 22 09:41:10 2008
+Cc: Junio C Hamano <gitster@pobox.com>, SLONIK.AZ@gmail.com,
+	git@vger.kernel.org
+To: Alex Riesen <raa.lkml@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Oct 22 09:56:58 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KsYL4-0004Zq-0d
-	for gcvg-git-2@gmane.org; Wed, 22 Oct 2008 09:41:06 +0200
+	id 1KsYaC-0001pd-4Q
+	for gcvg-git-2@gmane.org; Wed, 22 Oct 2008 09:56:44 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752000AbYJVHjw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 22 Oct 2008 03:39:52 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751771AbYJVHjw
-	(ORCPT <rfc822;git-outgoing>); Wed, 22 Oct 2008 03:39:52 -0400
-Received: from lilzmailso02.liwest.at ([212.33.55.13]:13066 "EHLO
-	lilzmailso02.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751477AbYJVHjv (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 22 Oct 2008 03:39:51 -0400
-Received: from cm56-163-160.liwest.at ([86.56.163.160] helo=linz.eudaptics.com)
-	by lilzmailso02.liwest.at with esmtpa (Exim 4.66)
-	(envelope-from <j.sixt@viscovery.net>)
-	id 1KsYJn-0007Yb-E6; Wed, 22 Oct 2008 09:39:47 +0200
-Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.96])
-	by linz.eudaptics.com (Postfix) with ESMTP
-	id 3535D6EF; Wed, 22 Oct 2008 09:39:47 +0200 (CEST)
-User-Agent: Thunderbird 2.0.0.6 (Windows/20070728)
-In-Reply-To: <alpine.DEB.1.00.0810211847410.22125@pacific.mpi-cbg.de.mpi-cbg.de>
-X-Enigmail-Version: 0.95.5
-X-Spam-Score: 1.7 (+)
-X-Spam-Report: ALL_TRUSTED=-1.8, BAYES_99=3.5
+	id S1751464AbYJVHz0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 22 Oct 2008 03:55:26 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751148AbYJVHz0
+	(ORCPT <rfc822;git-outgoing>); Wed, 22 Oct 2008 03:55:26 -0400
+Received: from mail.op5.se ([193.201.96.20]:41652 "EHLO mail.op5.se"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751314AbYJVHzZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 22 Oct 2008 03:55:25 -0400
+Received: from localhost (localhost.localdomain [127.0.0.1])
+	by mail.op5.se (Postfix) with ESMTP id 6E9DB1B80048;
+	Wed, 22 Oct 2008 09:49:02 +0200 (CEST)
+X-Virus-Scanned: amavisd-new at 
+X-Spam-Flag: NO
+X-Spam-Score: -3.904
+X-Spam-Level: 
+X-Spam-Status: No, score=-3.904 tagged_above=-10 required=6.6
+	tests=[ALL_TRUSTED=-1.8, AWL=0.495, BAYES_00=-2.599]
+Received: from mail.op5.se ([127.0.0.1])
+	by localhost (mail.op5.se [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id oQiRj29YojKX; Wed, 22 Oct 2008 09:48:58 +0200 (CEST)
+Received: from clix.int.op5.se (unknown [192.168.1.20])
+	by mail.op5.se (Postfix) with ESMTP id 6E4EB1B8006F;
+	Wed, 22 Oct 2008 09:48:56 +0200 (CEST)
+User-Agent: Thunderbird 2.0.0.16 (X11/20080723)
+In-Reply-To: <81b0412b0810211543p6cb8c4ej49fb7fe70c3e2917@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/98836>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/98837>
 
-From: Johannes Sixt <j6t@kdbg.org>
-
-Previously, branches were listed on a single line in each section. But
-if there are many branches, then horizontal, line-wrapped lists are very
-inconvenient to scan for a human. This makes the lists vertical, i.e one
-branch per line is printed.
-
-Since "git remote" is porcelain, we can easily make this
-backwards-incompatible change.
-
-Signed-off-by: Johannes Sixt <j6t@kdbg.org>
----
-Johannes Schindelin schrieb:
-> On Tue, 21 Oct 2008, Johannes Sixt wrote:
->> This does mean that users' scripts must be updated because the output 
->> format changed, but the result is friendlier to the eye *and* easier to 
->> parse.
+Alex Riesen wrote:
+> 2008/10/22 Junio C Hamano <gitster@pobox.com>:
+>> "Alex Riesen" <raa.lkml@gmail.com> writes:
+>>> FWIW, I support Leo on that. The "established" behavior is stupid.
+>> I am not inclined to respond to such an emotional argument.  On the other
+>> hand, it is fair to say that the existing behaviour is established,
+>> because it is backed by a long history, which you can objectively verify.
 > 
-> My initial reaction to that was: add an option, and keep the old behavior 
-> then.
+> I found it illogical (well, stupid) and inconvinient
 > 
-> But on second thought: No script has any business scanning the output of 
-> git-remote.  That command is a pure convenience wrapper, and scripts 
-> trying to list remote branches should use git show-ref instead.
+>> *1* It would be a different matter if the patch at the same time removed
+>> the fetch/clone DWIMmery.  At least such a patch would be internally self
+>> consistent.
 > 
-> So I'd say: replace the last comment with
-> 
-> 	Since "git remote" is porcelain, we can easily make this 
-> 	backwards-incompatible change.
+> Good idea.
 
-Here we go.
+No. Bad idea. That would not only break people's fetch configurations if
+they've done clone on repos without passing .git, but also mean users
+would have to remember if a particular server names their bare repos
+"project.git".
 
-Note the new email address, too. I'm afraid the old one, @telecom.at, goes
-out of service by the end of the year.
+If you remove *all* DWIMmery from fetch/clone, you'd also break people's
+expectations when they're fetching from each other, as they'd have to pass
+"git://devpeer/project/.git" instead of just "git://devpeer/project", which
+is what *looks* sane.
 
--- Hannes
+A good idea would be to always report the name the user used. 'git clone'
+already does that, recording the non-DWIMmed URL in the remotes config.
 
- Documentation/user-manual.txt |    4 +++-
- builtin-remote.c              |   11 +++++------
- t/t5505-remote.sh             |   14 +++++++++-----
- 3 files changed, 17 insertions(+), 12 deletions(-)
-
-diff --git a/Documentation/user-manual.txt b/Documentation/user-manual.txt
-index 08d1310..645d752 100644
---- a/Documentation/user-manual.txt
-+++ b/Documentation/user-manual.txt
-@@ -4356,7 +4356,9 @@ $ git remote show example	# get details
- * remote example
-   URL: git://example.com/project.git
-   Tracked remote branches
--    master next ...
-+    master
-+    next
-+    ...
- $ git fetch example		# update branches from example
- $ git branch -r			# list all remote branches
- -----------------------------------------------
-diff --git a/builtin-remote.c b/builtin-remote.c
-index 90a4e35..1b1697b 100644
---- a/builtin-remote.c
-+++ b/builtin-remote.c
-@@ -416,10 +416,9 @@ static void show_list(const char *title, struct string_list *list,
- 		return;
-
- 	printf(title, list->nr > 1 ? "es" : "", extra_arg);
--	printf("\n    ");
--	for (i = 0; i < list->nr; i++)
--		printf("%s%s", i ? " " : "", list->items[i].string);
- 	printf("\n");
-+	for (i = 0; i < list->nr; i++)
-+		printf("    %s\n", list->items[i].string);
- }
-
- static int get_remote_ref_states(const char *name,
-@@ -515,17 +514,17 @@ static int show(int argc, const char **argv)
- 		show_list("  Tracked remote branch%s", &states.tracked, "");
-
- 		if (states.remote->push_refspec_nr) {
--			printf("  Local branch%s pushed with 'git push'\n   ",
-+			printf("  Local branch%s pushed with 'git push'\n",
- 				states.remote->push_refspec_nr > 1 ?
- 					"es" : "");
- 			for (i = 0; i < states.remote->push_refspec_nr; i++) {
- 				struct refspec *spec = states.remote->push + i;
--				printf(" %s%s%s%s", spec->force ? "+" : "",
-+				printf("    %s%s%s%s\n",
-+				       spec->force ? "+" : "",
- 				       abbrev_branch(spec->src),
- 				       spec->dst ? ":" : "",
- 				       spec->dst ? abbrev_branch(spec->dst) : "");
- 			}
--			printf("\n");
- 		}
-
- 		/* NEEDSWORK: free remote */
-diff --git a/t/t5505-remote.sh b/t/t5505-remote.sh
-index e5137dc..e6cf2c7 100755
---- a/t/t5505-remote.sh
-+++ b/t/t5505-remote.sh
-@@ -28,7 +28,7 @@ tokens_match () {
- }
-
- check_remote_track () {
--	actual=$(git remote show "$1" | sed -n -e '$p') &&
-+	actual=$(git remote show "$1" | sed -e '1,/Tracked/d') &&
- 	shift &&
- 	tokens_match "$*" "$actual"
- }
-@@ -118,9 +118,11 @@ cat > test/expect << EOF
-   New remote branch (next fetch will store in remotes/origin)
-     master
-   Tracked remote branches
--    side master
-+    side
-+    master
-   Local branches pushed with 'git push'
--    master:upstream +refs/tags/lastbackup
-+    master:upstream
-+    +refs/tags/lastbackup
- EOF
-
- test_expect_success 'show' '
-@@ -147,9 +149,11 @@ cat > test/expect << EOF
-   Remote branch merged with 'git pull' while on branch master
-     master
-   Tracked remote branches
--    master side
-+    master
-+    side
-   Local branches pushed with 'git push'
--    master:upstream +refs/tags/lastbackup
-+    master:upstream
-+    +refs/tags/lastbackup
- EOF
-
- test_expect_success 'show -n' '
 -- 
-1.6.0.2.1573.gdf533
+Andreas Ericsson                   andreas.ericsson@op5.se
+OP5 AB                             www.op5.se
+Tel: +46 8-230225                  Fax: +46 8-230231
