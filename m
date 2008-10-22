@@ -1,44 +1,50 @@
-From: Jeff King <peff@peff.net>
+From: Charles Bailey <charles@hashpling.org>
 Subject: Re: [RFC PATCH] archive: fix setup to work in bare repositories
-Date: Wed, 22 Oct 2008 16:46:50 -0400
-Message-ID: <20081022204650.GD4585@coredump.intra.peff.net>
+Date: Wed, 22 Oct 2008 22:09:13 +0100
+Message-ID: <20081022210913.GB22541@hashpling.org>
 References: <gdmp0p$92r$1@ger.gmane.org> <20081022130829.GC2015@riemann.deskinm.fdns.net> <gdnsca$92r$2@ger.gmane.org> <20081022203722.GD2015@riemann.deskinm.fdns.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Cc: kenneth johansson <ken@kenjo.org>, git@vger.kernel.org,
 	gitster@pobox.com
 To: Deskin Miller <deskinm@umich.edu>
-X-From: git-owner@vger.kernel.org Wed Oct 22 22:48:11 2008
+X-From: git-owner@vger.kernel.org Wed Oct 22 23:10:53 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Kskcg-0006hj-SH
-	for gcvg-git-2@gmane.org; Wed, 22 Oct 2008 22:48:07 +0200
+	id 1Kskyh-0007II-Je
+	for gcvg-git-2@gmane.org; Wed, 22 Oct 2008 23:10:52 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752144AbYJVUqy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 22 Oct 2008 16:46:54 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752128AbYJVUqy
-	(ORCPT <rfc822;git-outgoing>); Wed, 22 Oct 2008 16:46:54 -0400
-Received: from peff.net ([208.65.91.99]:1945 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752099AbYJVUqx (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 22 Oct 2008 16:46:53 -0400
-Received: (qmail 4423 invoked by uid 111); 22 Oct 2008 20:46:52 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.32) with SMTP; Wed, 22 Oct 2008 16:46:52 -0400
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Wed, 22 Oct 2008 16:46:50 -0400
+	id S1754569AbYJVVJV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 22 Oct 2008 17:09:21 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754365AbYJVVJU
+	(ORCPT <rfc822;git-outgoing>); Wed, 22 Oct 2008 17:09:20 -0400
+Received: from ptb-relay03.plus.net ([212.159.14.147]:55748 "EHLO
+	ptb-relay03.plus.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753799AbYJVVJT (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 22 Oct 2008 17:09:19 -0400
+Received: from [212.159.69.125] (helo=hashpling.plus.com)
+	 by ptb-relay03.plus.net with esmtp (Exim) id 1Kskx8-0008IL-Ct; Wed, 22 Oct 2008 22:09:14 +0100
+Received: from cayley.hashpling.org (cayley.hashpling.org [192.168.76.254])
+	by hashpling.plus.com (8.14.2/8.14.2) with ESMTP id m9ML9DKN023124
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Wed, 22 Oct 2008 22:09:14 +0100
+Received: (from charles@localhost)
+	by cayley.hashpling.org (8.14.2/8.14.2/Submit) id m9ML9DBr023123;
+	Wed, 22 Oct 2008 22:09:13 +0100
 Content-Disposition: inline
 In-Reply-To: <20081022203722.GD2015@riemann.deskinm.fdns.net>
+User-Agent: Mutt/1.5.18 (2008-05-17)
+X-Plusnet-Relay: 51049ad6b86f55ff1aa9f58900f09a30
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/98910>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/98911>
 
 On Wed, Oct 22, 2008 at 04:37:22PM -0400, Deskin Miller wrote:
-
 > cmd_archive was calling git_config -> setup_git_env prior to
 > write_archive calling setup_git_directory.  In a bare repository, the
 > former will set git_dir to be '.git' since the latter has not
@@ -48,18 +54,18 @@ On Wed, Oct 22, 2008 at 04:37:22PM -0400, Deskin Miller wrote:
 > should work from anywhere, not just in git repositories, so that
 > argument needs to be checked for before setup_git_directory is called.
 
-Should you perhaps be able to call setup_git_directory_gently(), and
-then once you decide that you really do need the setup, call
-setup_git_directory()?
+Just for some background, I think that this issue might be an
+unintended consequence of this commit:
 
-You would have to add a "did we already do run" flag to
-setup_git_directory_gently(), but I think it is already an error to call
-it twice, so you wouldn't be hurting anything by that.
+b99b5b40cffb5269e4aa38b6b60391b55039e27d
 
-Note also that by moving the setup, you are moving the chdir() that
-happens; you may need to prefix paths to any arguments to accomodate
-this (I don't think it should matter, since git-archive shouldn't look
-at any paths until after it would have done the setup_git_directory()
-before, but I didn't check carefully).
+The only reason that the git_config call has been added is to ensure
+the correct setting of core.autocrlf before convert_to_working_tree is
+called on any blobs.
 
--Peff
+I haven't looked in detail, but would moving this call later make for
+an cleaner change?
+
+-- 
+Charles Bailey
+http://ccgi.hashpling.plus.com/blog/
