@@ -1,92 +1,79 @@
-From: Jonas Fonseca <fonseca@diku.dk>
-Subject: [JGIT RFC PATCH 3/3] Rate limit warnings spewed by
-	RepositoryTestCase.recursiveDelete
-Date: Wed, 22 Oct 2008 10:34:20 +0200
-Message-ID: <20081022083420.GC17940@diku.dk>
+From: "Alexander Gavrilov" <angavrilov@gmail.com>
+Subject: Re: [PATCH v2] builtin-blame: Reencode commit messages according to git-log rules.
+Date: Wed, 22 Oct 2008 12:35:17 +0400
+Message-ID: <bb6f213e0810220135hd520f78odb83414c248a15e4@mail.gmail.com>
+References: <1224622557-6669-1-git-send-email-angavrilov@gmail.com>
+	 <20081022082016.GA18473@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Robin Rosenberg <robin.rosenberg@dewire.com>,
-	"Shawn O. Pearce" <spearce@spearce.org>
-X-From: git-owner@vger.kernel.org Wed Oct 22 10:36:00 2008
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, "Junio C Hamano" <gitster@pobox.com>
+To: "Jeff King" <peff@peff.net>
+X-From: git-owner@vger.kernel.org Wed Oct 22 10:37:07 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KsZC9-0006OL-BB
-	for gcvg-git-2@gmane.org; Wed, 22 Oct 2008 10:35:57 +0200
+	id 1KsZDE-0006gJ-22
+	for gcvg-git-2@gmane.org; Wed, 22 Oct 2008 10:37:04 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752481AbYJVIeZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 22 Oct 2008 04:34:25 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752496AbYJVIeZ
-	(ORCPT <rfc822;git-outgoing>); Wed, 22 Oct 2008 04:34:25 -0400
-Received: from mgw1.diku.dk ([130.225.96.91]:44571 "EHLO mgw1.diku.dk"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752282AbYJVIeZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 22 Oct 2008 04:34:25 -0400
-Received: from localhost (localhost [127.0.0.1])
-	by mgw1.diku.dk (Postfix) with ESMTP id CC67952C3DC;
-	Wed, 22 Oct 2008 10:34:23 +0200 (CEST)
-X-Virus-Scanned: amavisd-new at diku.dk
-Received: from mgw1.diku.dk ([127.0.0.1])
-	by localhost (mgw1.diku.dk [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id gZmGzp56p8Tm; Wed, 22 Oct 2008 10:34:22 +0200 (CEST)
-Received: from nhugin.diku.dk (nhugin.diku.dk [130.225.96.140])
-	by mgw1.diku.dk (Postfix) with ESMTP id 0DBB552C3DA;
-	Wed, 22 Oct 2008 10:34:22 +0200 (CEST)
-Received: from ask.diku.dk (ask.diku.dk [130.225.96.225])
-	by nhugin.diku.dk (Postfix) with ESMTP
-	id 29BF26DFB62; Wed, 22 Oct 2008 10:33:05 +0200 (CEST)
-Received: by ask.diku.dk (Postfix, from userid 3873)
-	id 2A4674F9FA3; Wed, 22 Oct 2008 10:34:20 +0200 (CEST)
+	id S1752736AbYJVIfV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 22 Oct 2008 04:35:21 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752676AbYJVIfV
+	(ORCPT <rfc822;git-outgoing>); Wed, 22 Oct 2008 04:35:21 -0400
+Received: from nf-out-0910.google.com ([64.233.182.189]:42839 "EHLO
+	nf-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752559AbYJVIfT (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 22 Oct 2008 04:35:19 -0400
+Received: by nf-out-0910.google.com with SMTP id d3so1363496nfc.21
+        for <git@vger.kernel.org>; Wed, 22 Oct 2008 01:35:17 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to
+         :subject:cc:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:references;
+        bh=bEh72kaZfSwJnJHvxt9CretG1hdSUUXQxkylI5GtrW0=;
+        b=ChR4ONaSmRngeV7GWBaujRmpSl1OfPhFNWfCwwwiVBqZkh0xZkV/fM4xQgDoCk91TG
+         DvnFEnsEV0NZav6H6w4TFoHum2mGTcDb4jNdE3hnxaL5sMb3mvf45Bc4LAVEap8RxPpS
+         pTk9smYygKCdEQkzVpEY5SxOPdzAc4CIpn6lU=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
+         :content-type:content-transfer-encoding:content-disposition
+         :references;
+        b=jcnA08j5A8KmCBNmbDWYZ8yWWd0aYC/8EHKVFC+tLY9BY7u7TdWJ8jOSQE01FMn1dc
+         d7PmHlCQXL6cu7R6xpBhQwB5T3hloH/j51s3Ig5qjYNCAUGSHvRRj3M8/2cAdaYKJFj0
+         Sojca+2GU6go6lZCX6ZeCrJ5Mi73opojzVZ8U=
+Received: by 10.103.211.3 with SMTP id n3mr5007886muq.43.1224664517528;
+        Wed, 22 Oct 2008 01:35:17 -0700 (PDT)
+Received: by 10.103.251.10 with HTTP; Wed, 22 Oct 2008 01:35:17 -0700 (PDT)
+In-Reply-To: <20081022082016.GA18473@sigill.intra.peff.net>
 Content-Disposition: inline
-User-Agent: Mutt/1.5.16 (2007-06-09)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/98846>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/98847>
 
-On Windows XP / NTFS / NetBeans 6.1 / Java 5 a lot of warnings are
-printed. In most cases the path is in fact deleted and it seems to just
-be a timing bug or something Windows or NTFS specific. Also, many of the
-warnings are for the same paths and therefore a bit redundant.
-Furthermore, when a lot of warnings are printed it gives the feeling of
-slowing down the tests. By rate limiting the warnings the problem is
-still made visible for developers to notice.
+On Wed, Oct 22, 2008 at 12:20 PM, Jeff King <peff@peff.net> wrote:
+> On Wed, Oct 22, 2008 at 12:55:57AM +0400, Alexander Gavrilov wrote:
+>
+>> +test_expect_success \
+>> +     'blame respects i18n.commitencoding' '
+>> +     git blame --incremental file | \
+>> +             grep "^\(author\|summary\) " > actual &&
+>> +     test_cmp actual expected
+>
+> Even though it is POSIX, using backslashed grouping in 'grep' isn't
+> portable. It fails at least on Solaris 8, and you have to do:
+>
+>  egrep "^(author|summary) "
+>
+> instead. Of course, I can't get your test to pass even with that change,
+> but I think that is just a broken iconv on Solaris.
 
-Signed-off-by: Jonas Fonseca <fonseca@diku.dk>
----
- .../org/spearce/jgit/lib/RepositoryTestCase.java   |    4 +++-
- 1 files changed, 3 insertions(+), 1 deletions(-)
+Hm, which of the conversions fail? You can try manually converting the
+txt files with the iconv command to figure it out.
 
- This is mostly an annoyance fix, but might be acceptable.
-
-diff --git a/org.spearce.jgit.test/tst/org/spearce/jgit/lib/RepositoryTestCase.java b/org.spearce.jgit.test/tst/org/spearce/jgit/lib/RepositoryTestCase.java
-index 9d7d133..44e24d7 100644
---- a/org.spearce.jgit.test/tst/org/spearce/jgit/lib/RepositoryTestCase.java
-+++ b/org.spearce.jgit.test/tst/org/spearce/jgit/lib/RepositoryTestCase.java
-@@ -51,6 +51,8 @@
- 
- public abstract class RepositoryTestCase extends TestCase {
- 
-+	private static long deleteFailures;
-+
- 	protected final File trashParent = new File("trash");
- 
- 	protected File trash;
-@@ -79,7 +81,7 @@ protected static void recursiveDelete(final File dir) {
- 			}
- 		}
- 		dir.delete();
--		if (dir.exists()) {
-+		if (dir.exists() && deleteFailures++ < 42) {
- 			System.out.println("Warning: Failed to delete " + dir);
- 		}
- 	}
--- 
-1.6.0.2.1166.g8d97a.dirty
-
--- 
-Jonas Fonseca
+Alexander
