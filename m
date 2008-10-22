@@ -1,81 +1,78 @@
-From: Marc Weber <marco-oweber@gmx.de>
-Subject: Re: Does a `git pull' write to the origin repository in any way?
-Date: Wed, 22 Oct 2008 15:25:17 +0200
-Message-ID: <20081022132517.GM3988@gmx.de>
-References: <a65d095e0810220200q42936427o917cdac067d04135@mail.gmail.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: git add --patch newfile doesn't add newfile to cache ?
+Date: Wed, 22 Oct 2008 09:29:46 -0400
+Message-ID: <20081022132946.GB17393@coredump.intra.peff.net>
+References: <20081020143636.GB3988@gmx.de> <20081020235049.GA23120@coredump.intra.peff.net> <20081022131232.GL3988@gmx.de>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Oct 22 15:26:56 2008
+Cc: git@vger.kernel.org
+To: Marc Weber <marco-oweber@gmx.de>
+X-From: git-owner@vger.kernel.org Wed Oct 22 15:31:22 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KsdjQ-0001PG-Df
-	for gcvg-git-2@gmane.org; Wed, 22 Oct 2008 15:26:36 +0200
+	id 1Ksdny-00036K-5d
+	for gcvg-git-2@gmane.org; Wed, 22 Oct 2008 15:31:18 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752859AbYJVNZW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 22 Oct 2008 09:25:22 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751775AbYJVNZW
-	(ORCPT <rfc822;git-outgoing>); Wed, 22 Oct 2008 09:25:22 -0400
-Received: from mail.gmx.net ([213.165.64.20]:60341 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1752161AbYJVNZV (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 22 Oct 2008 09:25:21 -0400
-Received: (qmail invoked by alias); 22 Oct 2008 13:25:18 -0000
-Received: from pD9E09255.dip.t-dialin.net (EHLO nixos) [217.224.146.85]
-  by mail.gmx.net (mp041) with SMTP; 22 Oct 2008 15:25:18 +0200
-X-Authenticated: #9006135
-X-Provags-ID: V01U2FsdGVkX1/acwclNTPaB6aFftBVMGQDwCQa96Q424TQ9/c8Ly
-	JM/eCbNOvCUzSs
-Received: by nixos (sSMTP sendmail emulation); Wed, 22 Oct 2008 15:25:17 +0200
-Mail-Followup-To: Marc Weber <marco-oweber@gmx.de>, git@vger.kernel.org
+	id S1754829AbYJVN3u (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 22 Oct 2008 09:29:50 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753765AbYJVN3t
+	(ORCPT <rfc822;git-outgoing>); Wed, 22 Oct 2008 09:29:49 -0400
+Received: from peff.net ([208.65.91.99]:1045 "EHLO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753509AbYJVN3s (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 22 Oct 2008 09:29:48 -0400
+Received: (qmail 956 invoked by uid 111); 22 Oct 2008 13:29:47 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+    by peff.net (qpsmtpd/0.32) with SMTP; Wed, 22 Oct 2008 09:29:47 -0400
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Wed, 22 Oct 2008 09:29:46 -0400
 Content-Disposition: inline
-In-Reply-To: <a65d095e0810220200q42936427o917cdac067d04135@mail.gmail.com>
-User-Agent: Mutt/1.5.15 (2007-04-06)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.64
+In-Reply-To: <20081022131232.GL3988@gmx.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/98866>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/98867>
 
-On Wed, Oct 22, 2008 at 08:00:11PM +1100, Brett Ryan wrote:
-> Greetings, the reason I ask this question is because my pattern of
-> development is to create local source git repositories on my home
-> directory, then pull them to the central location. I found myself
-> getting the error `unable to create temporary sha1 filename
-> .git/objects/11: File exists' which after investigation found that
-> there were paths in `.git/objects/' owned by root which is who I use
-> to do the pull from my home directory using sudo. 
-Aeh.. about which repo are you talking here? I guess it's not the one
-owned by root because otherwise this would be normal..
+On Wed, Oct 22, 2008 at 03:12:32PM +0200, Marc Weber wrote:
 
-Hi Brett, I'm not sure where the problem comes form. But I feel your dev
-cycle is kind of wired.
-If you can login as root using ssh you can also do it the "normal" (?)
-way:
+> >  sub patch_update_cmd {
+> > +	my @new = list_untracked();
+> > +	if (@new) {
+> > +		system(qw(git add -N), @new)
+> > +			and die "git add reported failure";
+> > +	}
+> > +
+>  
+> 
+> I've tried the patch. However I'm not fully satisified.
+> I often use --patch to have another second look at each change to be
+> committed. Your patch adds new files to the cache silently without
+> giving the user the change to omit or edit the patch. But exatly that's
+> the reason I'm using --patch. So maybe I can work on this in some days..
+> Maybe I've also injected those lines into the wrong git version 
+> (1.6.0.2.GIT)
 
-# user dir
-git remote add root_repo ssh://root@localhost/path-to-root-repo
-git pull root_repo # then resolve conflicts if any
-git push root_repo # update the root repo
+Yes, you need to use the current 'master' branch for the "-N" feature.
+The point of "-N" is to say "this is a file I want to track, but don't
+add any contents yet." So it does your part 1:
 
-This way you always have conflicts in your local repo and never on the
-root one which is preferable (IMHO)..
+>       1) when using git add --patch untracked-file the user should be
+>          given the default patch view (only containing + lines)
+>          so that he can use edit to only commit parts of the file in the
+>          usual way. (I guess this is similar to having used git add -N
+>          before, I haven't tried yet)
 
-git-fetch doesn't list a way to access another repo by "su(do)" which
-might be the best way here ? This could be convinient because you
-would'nt have to setup an extra group to access the same repo as root
-and user (?)
+But not your part 2:
 
-You're right that git pull *should not* modify any files from the repo
-its pulling from.. But I don't know enough about git internals to say
-more about this. All I know is that git clone might have created some
-hardlinks.. But I'm not sure how this interfers with file permissions.
+>       2) if he wants to skip the entire patch / file nothing should be
+>          added to the index.
 
-I hope someone else can give a more accurate reply.
+If you add _no_ contents, you still end up with the "this is a file I
+want to track" part, but with no contents. And I agree it should stage
+nothing, which is why this is an unsatisfactory solution (and why I
+didn't clean up the patch and send it to Junio for inclusion).
 
-Marc Weber
+-Peff
