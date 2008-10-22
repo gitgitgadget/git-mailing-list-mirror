@@ -1,71 +1,70 @@
-From: "Weiwei Shu" <shuww1980@gmail.com>
-Subject: how to configure Git to treat certain type of ascii files as binary files
-Date: Wed, 22 Oct 2008 16:58:28 -0500
-Message-ID: <65d12cb10810221458j14ef0009u679cdb0f73299d7f@mail.gmail.com>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [RFC PATCH 1/5] add valgrind support in test scripts
+Date: Thu, 23 Oct 2008 00:13:47 +0200 (CEST)
+Message-ID: <alpine.DEB.1.00.0810230008430.22125@pacific.mpi-cbg.de.mpi-cbg.de>
+References: <20081022202810.GA4439@coredump.intra.peff.net> <20081022202915.GA4547@coredump.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Oct 22 23:59:44 2008
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Thu Oct 23 00:08:08 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Ksljy-0008Op-LD
-	for gcvg-git-2@gmane.org; Wed, 22 Oct 2008 23:59:43 +0200
+	id 1Ksls3-0002iH-68
+	for gcvg-git-2@gmane.org; Thu, 23 Oct 2008 00:08:03 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753633AbYJVV6a (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 22 Oct 2008 17:58:30 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753075AbYJVV6a
-	(ORCPT <rfc822;git-outgoing>); Wed, 22 Oct 2008 17:58:30 -0400
-Received: from wa-out-1112.google.com ([209.85.146.183]:25980 "EHLO
-	wa-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752432AbYJVV63 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 22 Oct 2008 17:58:29 -0400
-Received: by wa-out-1112.google.com with SMTP id v27so8201wah.21
-        for <git@vger.kernel.org>; Wed, 22 Oct 2008 14:58:28 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to
-         :subject:mime-version:content-type:content-transfer-encoding
-         :content-disposition;
-        bh=vA2CTNf659SY////C+KgadP2bcIa8wyvf6lhDprDtlM=;
-        b=MIgObR2sUgCbx14Lvx5GCMnIsQBOkcAeivQ5Ba+YeQetRafTa5Am0ZEBk0lkRzV+ez
-         jBb0bBGABoEq2CM3gR2DAsDv0wGG2Y/n/43mt4Fp+uviFh3LSkYntCv5wzceLD+6yNJf
-         abcQTEi0e9I1Ti5D+8nPS5YvWFIH4ViTdgQNg=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:mime-version:content-type
-         :content-transfer-encoding:content-disposition;
-        b=LIUMrLZaIQPlUqaaRB26HlCMtkDEulCjYzdUTF+qHnpknXmPexu0Yq8wZaBl8M5qLr
-         SFOx9djVthD/h7TJlLzKOvVlGIB4n+0YrpqskFsWkXtDRrJbMML7dP6D7lrw0w5gOfAO
-         70CV11tq6VFBWAWkhst0hGv94WgYDexaapNR0=
-Received: by 10.114.195.19 with SMTP id s19mr8099273waf.54.1224712708158;
-        Wed, 22 Oct 2008 14:58:28 -0700 (PDT)
-Received: by 10.114.160.3 with HTTP; Wed, 22 Oct 2008 14:58:28 -0700 (PDT)
-Content-Disposition: inline
+	id S1755951AbYJVWGv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 22 Oct 2008 18:06:51 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755820AbYJVWGv
+	(ORCPT <rfc822;git-outgoing>); Wed, 22 Oct 2008 18:06:51 -0400
+Received: from mail.gmx.net ([213.165.64.20]:42136 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1759101AbYJVWGu (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 22 Oct 2008 18:06:50 -0400
+Received: (qmail invoked by alias); 22 Oct 2008 22:06:48 -0000
+Received: from pacific.mpi-cbg.de (EHLO [141.5.10.38]) [141.5.10.38]
+  by mail.gmx.net (mp066) with SMTP; 23 Oct 2008 00:06:48 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX19FJOEpNzZFEEdUiiCK9FBBVrtWQpzs9b6Ny105GJ
+	Air9QZL+qJ5PVf
+X-X-Sender: schindelin@pacific.mpi-cbg.de.mpi-cbg.de
+In-Reply-To: <20081022202915.GA4547@coredump.intra.peff.net>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.5
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/98918>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/98919>
 
-Hello everyone,
+Hi,
 
-My first post in this mailing list. Could some one direct me to some
-document/manual pages to setup Git to treat ascii files as binary
-files? I'm using Git to do circuit schematics (SPICE files)
-versioning. I will not do any merging or editing stuff with external
-editors. The only way to change it is to use schematic capture GUIs
-(Cadence, ADS, etc). So I'd like to treat them as binary files to
-reduce the possibilities of messing them up.
+On Wed, 22 Oct 2008, Jeff King wrote:
 
-I know it seems a little bit stupid to use Git to do such an easy job.
-But hey, it's the most eye-catching SCM software, isn't it?
+> diff --git a/Makefile b/Makefile
+> index d6f3695..68f0172 100644
+> --- a/Makefile
+> +++ b/Makefile
+> @@ -1343,7 +1345,12 @@ all:: $(TEST_PROGRAMS)
+>  
+>  export NO_SVN_TESTS
+>  
+> -test: all
+> +valgrind-setup: $(patsubst %.sh,%,$(VALGRIND_SH))
+> +	rm -rf t/valgrind/bin
+> +	mkdir t/valgrind/bin
+> +	for i in git $(PROGRAMS); do cp test-valgrind t/valgrind/bin/$$i; done
 
+I wonder if it would not be better to scrap the t/valgrind/ directory and 
+regenerate it everytime you run a test manually; I'd use "ln" instead of 
+"cp", and also parse command-list.txt to catch really all of them (even if 
+a dashed form is used for a builtin by mistake).
 
+Otherwise: good work, I like it!
 
--- 
-Weiwei
---Hope Springs Eternal.
+Ciao,
+Dscho
