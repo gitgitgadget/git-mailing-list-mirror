@@ -1,67 +1,71 @@
-From: Fredrik Skolmli <fredrik@frsk.net>
-Subject: Re: [PATCH] rebase-i-p: delay saving current-commit to REWRITTEN if squashing
-Date: Wed, 22 Oct 2008 17:50:14 +0200
-Message-ID: <20081022155014.GD20967@frsk.net>
-References: <cover.1224055978.git.stephen@exigencecorp.com> <759654ef1f1781cd2b102e21c6f972b065560398.1224055978.git.stephen@exigencecorp.com> <20081022125149.GA17092@coredump.intra.peff.net> <alpine.DEB.1.00.0810221721370.22125@pacific.mpi-cbg.de.mpi-cbg.de>
+From: =?iso-8859-1?Q?Bj=F6rn?= Steinbrink <B.Steinbrink@gmx.de>
+Subject: Terminology question: "tracking" branches
+Date: Wed, 22 Oct 2008 18:13:02 +0200
+Message-ID: <20081022161302.GC16946@atjola.homenet>
+References: <48F7BBAC.2090907@xiplink.com> <48F83FD0.90606@drmicha.warpmail.net> <48F8A4E8.8070008@xiplink.com> <48F8AA5E.6090908@drmicha.warpmail.net> <48F8ECA2.3040208@xiplink.com> <48FC8624.9090807@fastmail.fm> <48FCB6B8.6090708@xiplink.com> <48FDA5A0.8030506@drmicha.warpmail.net> <48FDF28A.9060606@xiplink.com> <48FF3FEE.8020209@drmicha.warpmail.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Jeff King <peff@peff.net>,
-	Stephen Haberman <stephen@exigencecorp.com>, gitster@pobox.com,
-	git@vger.kernel.org
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Wed Oct 22 17:53:05 2008
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Marc Branchaud <marcnarc@xiplink.com>,
+	Peter Harris <git@peter.is-a-geek.org>, git@vger.kernel.org
+To: Michael J Gruber <git@drmicha.warpmail.net>
+X-From: git-owner@vger.kernel.org Wed Oct 22 18:16:07 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Ksfzp-0000Bs-4q
-	for gcvg-git-2@gmane.org; Wed, 22 Oct 2008 17:51:41 +0200
+	id 1KsgLt-0002GC-Hu
+	for gcvg-git-2@gmane.org; Wed, 22 Oct 2008 18:14:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752763AbYJVPu2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 22 Oct 2008 11:50:28 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752586AbYJVPu2
-	(ORCPT <rfc822;git-outgoing>); Wed, 22 Oct 2008 11:50:28 -0400
-Received: from cassarossa.samfundet.no ([129.241.93.19]:42913 "EHLO
-	cassarossa.samfundet.no" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752553AbYJVPu1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 22 Oct 2008 11:50:27 -0400
-Received: from asterix.samfundet.no
-	([2001:700:300:1800::f] helo=asterix.frsk.net ident=Debian-exim)
-	by cassarossa.samfundet.no with esmtps (TLS-1.0:RSA_AES_256_CBC_SHA1:32)
-	(Exim 4.63)
-	(envelope-from <fredrik@frsk.net>)
-	id 1KsfyQ-0006gY-OP; Wed, 22 Oct 2008 17:50:15 +0200
-Received: from fredrik by asterix.frsk.net with local (Exim 4.63)
-	(envelope-from <fredrik@frsk.net>)
-	id 1KsfyQ-0007Bj-FM; Wed, 22 Oct 2008 17:50:14 +0200
+	id S1753066AbYJVQNQ convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 22 Oct 2008 12:13:16 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752950AbYJVQNQ
+	(ORCPT <rfc822;git-outgoing>); Wed, 22 Oct 2008 12:13:16 -0400
+Received: from mail.gmx.net ([213.165.64.20]:44552 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1751290AbYJVQNP (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 22 Oct 2008 12:13:15 -0400
+Received: (qmail invoked by alias); 22 Oct 2008 16:13:13 -0000
+Received: from i577AD8B4.versanet.de (EHLO atjola.local) [87.122.216.180]
+  by mail.gmx.net (mp012) with SMTP; 22 Oct 2008 18:13:13 +0200
+X-Authenticated: #5039886
+X-Provags-ID: V01U2FsdGVkX19LvBwcjNpL3Jsf3Q3f6VCISsLRB2RRVjMOf+BZo9
+	ta3z5g9Vax0YdT
 Content-Disposition: inline
-In-Reply-To: <alpine.DEB.1.00.0810221721370.22125@pacific.mpi-cbg.de.mpi-cbg.de>
-User-Agent: Mutt/1.5.13 (2006-08-11)
+In-Reply-To: <48FF3FEE.8020209@drmicha.warpmail.net>
+User-Agent: Mutt/1.5.18 (2008-05-17)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.67
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/98881>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/98882>
 
-On Wed, Oct 22, 2008 at 05:21:53PM +0200, Johannes Schindelin wrote:
-> Hi,
-> 
-> On Wed, 22 Oct 2008, Jeff King wrote:
-> 
-> > On Wed, Oct 15, 2008 at 02:44:36AM -0500, Stephen Haberman wrote:
-> > 
-> > > +		if [ "$fast_forward" == "t" ]
-> > 
-> > This one even fails on my Linux box. :) "==" is a bash-ism.
-> 
-> Did we not also prefer "test" to "["?
+On 2008.10.22 16:59:58 +0200, Michael J Gruber wrote:
+> - a remote branch (a branch in your local repo which is a copy of a
+> branch in a remote repo; stored under refs/remotes, never to be modif=
+ied
+> locally)
+> - a (remote) tracking branch (a local branch which is set up to pull
+> from a remote branch by default)
 
-We did.
+(Remote) tracking branches are actually what you called remote branches=
+,
+at least according to the git glossary. But I wonder, what is the right
+term for a branch that has the --track setup for pull?
 
-Documentation/CodingGuidelines, line 51:
-    - We prefer "test" over "[ ... ]".
+On #git I usually fall back to some variation of "a branch that is
+configured for 'git pull'" or something similarly verbose (and maybe
+that's even partially wrong/inaccurate/incomplete?). And I always try t=
+o
+stick to saying "remote tracking branch" and not just "tracking branch"
+(as the glossary does) to avoid confusion as best as I can. But that
+feels quite suboptimal.
 
--- 
-Kind regards,
-Fredrik Skolmli
+So, is there some term that describes a local branch that has been
+configured for "git pull"?
+
+Thanks,
+Bj=F6rn
