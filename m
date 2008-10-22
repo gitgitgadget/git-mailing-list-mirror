@@ -1,76 +1,59 @@
-From: Michael J Gruber <git@drmicha.warpmail.net>
-Subject: Re: Start git svn clone at specific revision for cloning subprojects
- in large svn repositories?
-Date: Wed, 22 Oct 2008 17:08:43 +0200
-Message-ID: <48FF41FB.4080403@drmicha.warpmail.net>
-References: <pan.2008.10.22.15.00.21.403423@yahoo.com>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH] rebase-i-p: delay saving current-commit to REWRITTEN if
+ squashing
+Date: Wed, 22 Oct 2008 17:21:53 +0200 (CEST)
+Message-ID: <alpine.DEB.1.00.0810221721370.22125@pacific.mpi-cbg.de.mpi-cbg.de>
+References: <cover.1224055978.git.stephen@exigencecorp.com> <759654ef1f1781cd2b102e21c6f972b065560398.1224055978.git.stephen@exigencecorp.com> <20081022125149.GA17092@coredump.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Jeff Kowalczyk <jtk@yahoo.com>
-X-From: git-owner@vger.kernel.org Wed Oct 22 17:10:38 2008
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Stephen Haberman <stephen@exigencecorp.com>, gitster@pobox.com,
+	git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Wed Oct 22 17:16:24 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KsfLi-0007Xx-Na
-	for gcvg-git-2@gmane.org; Wed, 22 Oct 2008 17:10:15 +0200
+	id 1KsfRV-0001eO-4k
+	for gcvg-git-2@gmane.org; Wed, 22 Oct 2008 17:16:13 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756655AbYJVPIs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 22 Oct 2008 11:08:48 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754078AbYJVPIr
-	(ORCPT <rfc822;git-outgoing>); Wed, 22 Oct 2008 11:08:47 -0400
-Received: from out3.smtp.messagingengine.com ([66.111.4.27]:53202 "EHLO
-	out3.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1756648AbYJVPIr (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 22 Oct 2008 11:08:47 -0400
-Received: from compute1.internal (compute1.internal [10.202.2.41])
-	by out1.messagingengine.com (Postfix) with ESMTP id 6692D1823B4;
-	Wed, 22 Oct 2008 11:08:46 -0400 (EDT)
-Received: from heartbeat2.messagingengine.com ([10.202.2.161])
-  by compute1.internal (MEProxy); Wed, 22 Oct 2008 11:08:46 -0400
-X-Sasl-enc: pa/5lI6B90oa+AfVItEkJvdJVswxZO4OzyRCPoClcZZu 1224688126
-Received: from [139.174.44.12] (whitehead.math.tu-clausthal.de [139.174.44.12])
-	by mail.messagingengine.com (Postfix) with ESMTPSA id D73EB2028F;
-	Wed, 22 Oct 2008 11:08:45 -0400 (EDT)
-User-Agent: Thunderbird 2.0.0.17 (X11/20080914)
-In-Reply-To: <pan.2008.10.22.15.00.21.403423@yahoo.com>
+	id S1752139AbYJVPO7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 22 Oct 2008 11:14:59 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751561AbYJVPO7
+	(ORCPT <rfc822;git-outgoing>); Wed, 22 Oct 2008 11:14:59 -0400
+Received: from mail.gmx.net ([213.165.64.20]:59212 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1750815AbYJVPO7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 22 Oct 2008 11:14:59 -0400
+Received: (qmail invoked by alias); 22 Oct 2008 15:14:56 -0000
+Received: from pacific.mpi-cbg.de (EHLO [141.5.10.38]) [141.5.10.38]
+  by mail.gmx.net (mp026) with SMTP; 22 Oct 2008 17:14:56 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1+1AsA9Dxa1puUPqokzYW7gpcRcHdodZbVg/Fa6gb
+	0yWmWxYlKlAnZY
+X-X-Sender: schindelin@pacific.mpi-cbg.de.mpi-cbg.de
+In-Reply-To: <20081022125149.GA17092@coredump.intra.peff.net>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.67
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/98877>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/98878>
 
-Jeff Kowalczyk venit, vidit, dixit 10/22/08 17:00:
-> I would like to git svn clone subprojects from a large community
-> subversion repository (plone collective).
+Hi,
+
+On Wed, 22 Oct 2008, Jeff King wrote:
+
+> On Wed, Oct 15, 2008 at 02:44:36AM -0500, Stephen Haberman wrote:
 > 
-> The repository is currently at 74K commits, but subprojects of interest
-> are typically much more recent, and their initial import revision is known.
+> > +		if [ "$fast_forward" == "t" ]
 > 
-> I would like to avoid a) unnecessary traffic to the svn server and b)
-> the very long delay in git svn cloning these subprojects.
-> 
-> Is there a way to specfiy a starting revision to git svn clone?
+> This one even fails on my Linux box. :) "==" is a bash-ism.
 
-Your friendly man page provider says:
+Did we not also prefer "test" to "["?
 
-       -r <ARG>, --revision <ARG>
-           Used with the fetch command.
-
-           This allows revision ranges for partial/cauterized history to
-be supported. $NUMBER, $NUMBER1:$NUMBER2 (numeric
-           ranges), $NUMBER:HEAD, and BASE:$NUMBER are all supported.
-
-           This can allow you to make partial mirrors when running
-fetch; but is generally not recommended because history
-           will be skipped and lost.
-
-Usage of "Scroll Down" is strongly advised when viewing git help svn ;)
-
-Michael
-
-P.S.: It works nicely, don't mind the warning in the man page if you
-know the start rev for sure.
+Ciao,
+Dscho
