@@ -1,117 +1,184 @@
-From: "=?ISO-8859-1?Q?Santi_B=E9jar?=" <santi@agolina.net>
-Subject: Re: [irq/urgent]: created 3786fc7: "irq: make variable static"
-Date: Wed, 22 Oct 2008 09:39:49 +0200
-Message-ID: <adf1fd3d0810220039g51d61e92l5ba254b57723d3b6@mail.gmail.com>
-References: <20081022061730.GA5749@elte.hu>
+From: Johannes Sixt <j.sixt@viscovery.net>
+Subject: Re: [PATCH] git-remote: list branches in vertical lists
+Date: Wed, 22 Oct 2008 09:39:47 +0200
+Message-ID: <48FED8C3.20003@viscovery.net>
+References: <48FDEA82.5050903@viscovery.net> <alpine.DEB.1.00.0810211847410.22125@pacific.mpi-cbg.de.mpi-cbg.de>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: "Ingo Molnar" <mingo@elte.hu>
-X-From: git-owner@vger.kernel.org Wed Oct 22 09:41:08 2008
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Git Mailing List <git@vger.kernel.org>
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Wed Oct 22 09:41:10 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KsYL4-0004Zq-PW
-	for gcvg-git-2@gmane.org; Wed, 22 Oct 2008 09:41:07 +0200
+	id 1KsYL4-0004Zq-0d
+	for gcvg-git-2@gmane.org; Wed, 22 Oct 2008 09:41:06 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751969AbYJVHjy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 22 Oct 2008 03:39:54 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751771AbYJVHjy
-	(ORCPT <rfc822;git-outgoing>); Wed, 22 Oct 2008 03:39:54 -0400
-Received: from ug-out-1314.google.com ([66.249.92.168]:14562 "EHLO
-	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751660AbYJVHjv (ORCPT <rfc822;git@vger.kernel.org>);
+	id S1752000AbYJVHjw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 22 Oct 2008 03:39:52 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751771AbYJVHjw
+	(ORCPT <rfc822;git-outgoing>); Wed, 22 Oct 2008 03:39:52 -0400
+Received: from lilzmailso02.liwest.at ([212.33.55.13]:13066 "EHLO
+	lilzmailso02.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751477AbYJVHjv (ORCPT <rfc822;git@vger.kernel.org>);
 	Wed, 22 Oct 2008 03:39:51 -0400
-Received: by ug-out-1314.google.com with SMTP id k3so1273747ugf.37
-        for <git@vger.kernel.org>; Wed, 22 Oct 2008 00:39:49 -0700 (PDT)
-Received: by 10.103.212.2 with SMTP id o2mr4986186muq.1.1224661189613;
-        Wed, 22 Oct 2008 00:39:49 -0700 (PDT)
-Received: by 10.103.131.8 with HTTP; Wed, 22 Oct 2008 00:39:49 -0700 (PDT)
-In-Reply-To: <20081022061730.GA5749@elte.hu>
-Content-Disposition: inline
+Received: from cm56-163-160.liwest.at ([86.56.163.160] helo=linz.eudaptics.com)
+	by lilzmailso02.liwest.at with esmtpa (Exim 4.66)
+	(envelope-from <j.sixt@viscovery.net>)
+	id 1KsYJn-0007Yb-E6; Wed, 22 Oct 2008 09:39:47 +0200
+Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.96])
+	by linz.eudaptics.com (Postfix) with ESMTP
+	id 3535D6EF; Wed, 22 Oct 2008 09:39:47 +0200 (CEST)
+User-Agent: Thunderbird 2.0.0.6 (Windows/20070728)
+In-Reply-To: <alpine.DEB.1.00.0810211847410.22125@pacific.mpi-cbg.de.mpi-cbg.de>
+X-Enigmail-Version: 0.95.5
+X-Spam-Score: 1.7 (+)
+X-Spam-Report: ALL_TRUSTED=-1.8, BAYES_99=3.5
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/98835>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/98836>
 
-On Wed, Oct 22, 2008 at 8:17 AM, Ingo Molnar <mingo@elte.hu> wrote:
-[...]
+From: Johannes Sixt <j6t@kdbg.org>
 
-> this welcome enhancement made me remember of three usage problems i had
-> with Git recently:
->
-> 1)
->
-> Btw., it would be nice if there was an easier way to get a similar git
-> log display in the ASCII space. For example i frequently ask the
-> question "which topic branch did commit XYZ originate from?". All i have
-> now is a pretty crude script that displays this for a given file:
->
-> earth4:~/tip> tip-log --no-merges linus.. kernel/sched.c | grep ^#
-> # core/kill-the-BKL: ffda12a: sched: optimize group load balancer
-> # core/locking: ffda12a: sched: optimize group load balancer
-> ...
->
-> (see the script attached below)
->
-> but it's very slow with 233 branches, obviously, so i only use it as a
-> last resort mechanism.
->
-> What i'd _love_ to see is just an ASCII representation of where a commit
-> "came from" into the current branch. The first-hop branch it was
-> committed to.
->
-> it doesnt even have to be correct in the sha1 sense - i.e. it's enough
-> for me if the merge commit log is parsed. (and hence it wont be correct
-> if a branch ceases to exist or is renamed - but that is OK, i keep the
-> branch space static)
->
-> any ideas how to achieve that? I'd love to have output like this, if i
-> do this from tip/master (the master integration branch):
->
->  # mockup
->
->  earth4:~/tip> gll --no-merges kernel/sched.c
->  ffda12a: [sched/core]      sched: optimize group load balancer
->  8cd162c: [sched/clock]     sched: only update rq->clock while holding
->  0a16b60: [tracing/sched]   tracing, sched: LTTng instrumentation
->  a5d8c34: [sched/debug]     sched debug: add name to sched_domain sysctl entries
->  34b3ede: [sched/core]      sched: remove redundant code in cpu_cgroup_create()
->
-> ... and i dont want to embedd the branch name in every single commit.
->
-> The semantics seem well-specified to me: walk down the merge tree a
-> particular commit came from, and use the branch name that is mentioned
-> in a merge commit's comment section 'closest' to this commit.
->
-> That information is not 'trustable' in the sha1 sense because merge
-> commits can be modified manually and because the momentary name of a
-> branch might not be correct anymore - but with a sane topical setup this
-> would be a very powerful visualization tool.
->
-> It would be a nice tool that makes it easy to check the proper structure
-> of topical branches, after the fact. Weird, incorrectly queued up
-> commits would stick out _immediately_:
->
->  34b3ede: [x86/xen]      sched: remove redundant code in cpu_cgroup_create()
->
+Previously, branches were listed on a single line in each section. But
+if there are many branches, then horizontal, line-wrapped lists are very
+inconvenient to scan for a human. This makes the lists vertical, i.e one
+branch per line is printed.
 
-If you still have the tip of the branches you want to know, you can
-get a similar output with:
+Since "git remote" is porcelain, we can easily make this
+backwards-incompatible change.
 
-$ git log --pretty=oneline builtin-checkout.c | git name-rev --stdin
-828e32b82e3e2bb10d6d730d3abe505063b481f6 (remotes/origin/HEAD~17) Fix
-mismerge at cdb22c4 in builtin-checkout.c
-f285a2d7ed6548666989406de8f0e7233eb84368 (remotes/spearce/master~2)
-Replace calls to strbuf_init(&foo, 0) with STRBUF_INIT initializer
-048f2762007d022defceb6850a44bc1bd5ccebf7 (remotes/spearce/master~24)
-do not segfault if make_cache_entry failed
+Signed-off-by: Johannes Sixt <j6t@kdbg.org>
+---
+Johannes Schindelin schrieb:
+> On Tue, 21 Oct 2008, Johannes Sixt wrote:
+>> This does mean that users' scripts must be updated because the output 
+>> format changed, but the result is friendlier to the eye *and* easier to 
+>> parse.
+> 
+> My initial reaction to that was: add an option, and keep the old behavior 
+> then.
+> 
+> But on second thought: No script has any business scanning the output of 
+> git-remote.  That command is a pure convenience wrapper, and scripts 
+> trying to list remote branches should use git show-ref instead.
+> 
+> So I'd say: replace the last comment with
+> 
+> 	Since "git remote" is porcelain, we can easily make this 
+> 	backwards-incompatible change.
 
-(sorry if it is refilled)
+Here we go.
 
-HTH,
-Santi
+Note the new email address, too. I'm afraid the old one, @telecom.at, goes
+out of service by the end of the year.
+
+-- Hannes
+
+ Documentation/user-manual.txt |    4 +++-
+ builtin-remote.c              |   11 +++++------
+ t/t5505-remote.sh             |   14 +++++++++-----
+ 3 files changed, 17 insertions(+), 12 deletions(-)
+
+diff --git a/Documentation/user-manual.txt b/Documentation/user-manual.txt
+index 08d1310..645d752 100644
+--- a/Documentation/user-manual.txt
++++ b/Documentation/user-manual.txt
+@@ -4356,7 +4356,9 @@ $ git remote show example	# get details
+ * remote example
+   URL: git://example.com/project.git
+   Tracked remote branches
+-    master next ...
++    master
++    next
++    ...
+ $ git fetch example		# update branches from example
+ $ git branch -r			# list all remote branches
+ -----------------------------------------------
+diff --git a/builtin-remote.c b/builtin-remote.c
+index 90a4e35..1b1697b 100644
+--- a/builtin-remote.c
++++ b/builtin-remote.c
+@@ -416,10 +416,9 @@ static void show_list(const char *title, struct string_list *list,
+ 		return;
+
+ 	printf(title, list->nr > 1 ? "es" : "", extra_arg);
+-	printf("\n    ");
+-	for (i = 0; i < list->nr; i++)
+-		printf("%s%s", i ? " " : "", list->items[i].string);
+ 	printf("\n");
++	for (i = 0; i < list->nr; i++)
++		printf("    %s\n", list->items[i].string);
+ }
+
+ static int get_remote_ref_states(const char *name,
+@@ -515,17 +514,17 @@ static int show(int argc, const char **argv)
+ 		show_list("  Tracked remote branch%s", &states.tracked, "");
+
+ 		if (states.remote->push_refspec_nr) {
+-			printf("  Local branch%s pushed with 'git push'\n   ",
++			printf("  Local branch%s pushed with 'git push'\n",
+ 				states.remote->push_refspec_nr > 1 ?
+ 					"es" : "");
+ 			for (i = 0; i < states.remote->push_refspec_nr; i++) {
+ 				struct refspec *spec = states.remote->push + i;
+-				printf(" %s%s%s%s", spec->force ? "+" : "",
++				printf("    %s%s%s%s\n",
++				       spec->force ? "+" : "",
+ 				       abbrev_branch(spec->src),
+ 				       spec->dst ? ":" : "",
+ 				       spec->dst ? abbrev_branch(spec->dst) : "");
+ 			}
+-			printf("\n");
+ 		}
+
+ 		/* NEEDSWORK: free remote */
+diff --git a/t/t5505-remote.sh b/t/t5505-remote.sh
+index e5137dc..e6cf2c7 100755
+--- a/t/t5505-remote.sh
++++ b/t/t5505-remote.sh
+@@ -28,7 +28,7 @@ tokens_match () {
+ }
+
+ check_remote_track () {
+-	actual=$(git remote show "$1" | sed -n -e '$p') &&
++	actual=$(git remote show "$1" | sed -e '1,/Tracked/d') &&
+ 	shift &&
+ 	tokens_match "$*" "$actual"
+ }
+@@ -118,9 +118,11 @@ cat > test/expect << EOF
+   New remote branch (next fetch will store in remotes/origin)
+     master
+   Tracked remote branches
+-    side master
++    side
++    master
+   Local branches pushed with 'git push'
+-    master:upstream +refs/tags/lastbackup
++    master:upstream
++    +refs/tags/lastbackup
+ EOF
+
+ test_expect_success 'show' '
+@@ -147,9 +149,11 @@ cat > test/expect << EOF
+   Remote branch merged with 'git pull' while on branch master
+     master
+   Tracked remote branches
+-    master side
++    master
++    side
+   Local branches pushed with 'git push'
+-    master:upstream +refs/tags/lastbackup
++    master:upstream
++    +refs/tags/lastbackup
+ EOF
+
+ test_expect_success 'show -n' '
+-- 
+1.6.0.2.1573.gdf533
