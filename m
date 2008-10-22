@@ -1,129 +1,83 @@
-From: Marc Weber <marco-oweber@gmx.de>
-Subject: Re: git add --patch newfile doesn't add newfile to cache ?
-Date: Wed, 22 Oct 2008 15:12:32 +0200
-Message-ID: <20081022131232.GL3988@gmx.de>
-References: <20081020143636.GB3988@gmx.de> <20081020235049.GA23120@coredump.intra.peff.net>
+From: Deskin Miller <deskinm@umich.edu>
+Subject: Re: git archive
+Date: Wed, 22 Oct 2008 09:08:29 -0400
+Message-ID: <20081022130829.GC2015@riemann.deskinm.fdns.net>
+References: <gdmp0p$92r$1@ger.gmane.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Oct 22 15:14:15 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: kenneth johansson <ken@kenjo.org>
+X-From: git-owner@vger.kernel.org Wed Oct 22 15:15:14 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KsdX9-0004RF-UJ
-	for gcvg-git-2@gmane.org; Wed, 22 Oct 2008 15:13:56 +0200
+	id 1KsdX9-0004RF-58
+	for gcvg-git-2@gmane.org; Wed, 22 Oct 2008 15:13:55 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753035AbYJVNMk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 22 Oct 2008 09:12:40 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752925AbYJVNMk
-	(ORCPT <rfc822;git-outgoing>); Wed, 22 Oct 2008 09:12:40 -0400
-Received: from mail.gmx.net ([213.165.64.20]:48997 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1752499AbYJVNMj (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 22 Oct 2008 09:12:39 -0400
-Received: (qmail invoked by alias); 22 Oct 2008 13:12:34 -0000
-Received: from pD9E09255.dip.t-dialin.net (EHLO nixos) [217.224.146.85]
-  by mail.gmx.net (mp001) with SMTP; 22 Oct 2008 15:12:34 +0200
-X-Authenticated: #9006135
-X-Provags-ID: V01U2FsdGVkX1+bXOJnCQebkBJ7gwhl7TpYiSwKkyGsaolS1iyb2z
-	3UoM9pnB5OX57p
-Received: by nixos (sSMTP sendmail emulation); Wed, 22 Oct 2008 15:12:33 +0200
-Mail-Followup-To: Marc Weber <marco-oweber@gmx.de>, git@vger.kernel.org
+	id S1752710AbYJVNL5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 22 Oct 2008 09:11:57 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752499AbYJVNL5
+	(ORCPT <rfc822;git-outgoing>); Wed, 22 Oct 2008 09:11:57 -0400
+Received: from mail-gx0-f16.google.com ([209.85.217.16]:57386 "EHLO
+	mail-gx0-f16.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751330AbYJVNL5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 22 Oct 2008 09:11:57 -0400
+Received: by gxk9 with SMTP id 9so7252728gxk.13
+        for <git@vger.kernel.org>; Wed, 22 Oct 2008 06:11:55 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:date:from:to:cc:subject
+         :message-id:references:mime-version:content-type:content-disposition
+         :in-reply-to:user-agent:sender;
+        bh=sFDJqhS5YBXUuYla0Xm7675sfL6NxtrJQWluoUhdi5I=;
+        b=MiR3/9Ekj0qjP9x6ubIh6bdpM+9AkKQt8LifyMNhPaheRyVpVM6XAuuIJAMqbqBkzf
+         UE/8kprY4j4gAeeW+aF0/y63fxloMrO+9Fei/lIjdyXTS2MyGBBWgdYdbEZdDi20sPrE
+         ZKQrhR2Eag/sw0ayS87zm6JkPNxBdvdVw+RVE=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent:sender;
+        b=PkyPiC3GAkSlhrKD0s/ItIKorhouRyoOOMYRSSTT62KDB0UI4fKroNJ0GDaZ11L4GL
+         rm63fK+STA+usVuYrN5B9JYf6gxhHfALdGk7OlKPy7RsoDhwYku03nno9AjyXCoHU+g7
+         HxWsj7raTGmadpzrI07shOMoMdF64jbUSBHVM=
+Received: by 10.65.155.7 with SMTP id h7mr8240188qbo.96.1224681114286;
+        Wed, 22 Oct 2008 06:11:54 -0700 (PDT)
+Received: from riemann.deskinm.fdns.net ([68.40.49.130])
+        by mx.google.com with ESMTPS id 28sm9638885qbw.11.2008.10.22.06.11.52
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Wed, 22 Oct 2008 06:11:53 -0700 (PDT)
 Content-Disposition: inline
-In-Reply-To: <20081020235049.GA23120@coredump.intra.peff.net>
-User-Agent: Mutt/1.5.15 (2007-04-06)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.57
+In-Reply-To: <gdmp0p$92r$1@ger.gmane.org>
+User-Agent: Mutt/1.5.17 (2007-11-01)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/98863>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/98864>
 
-On Mon, Oct 20, 2008 at 07:50:50PM -0400, Jeff King wrote:
-> On Mon, Oct 20, 2008 at 04:36:36PM +0200, Marc Weber wrote:
+On Wed, Oct 22, 2008 at 08:42:01AM +0000, kenneth johansson wrote:
+> I was going to make a tar of the latest stable linux kernel. 
+> Done it before but now I got a strange problem. 
 > 
-> > Is this desired behaviour?
-> > [...]
-> >         git init
-> >         echo test > test
-> >         git add --patch test
-> >         echo "running status, nothing has been added"
-> >         git status
-> 
-> I think your example makes sense, but nobody ever really tried it
-> before. [..]
-I came across this use case because I'm lazy. eg
-        git add --patch file-to-be-committed-partly  newfile
+> >git archive --format=tar v2.6.27.2
+> fatal: Not a valid object name
 
-is shorter than
-        git add --patch file-to-be-committed-partly
-        git add newfile
+I had the same thing happen to me, while trying to make an archive of Git.
+Were you perchance working in a bare repository, as I was?  I spent some time
+looking at it and I think git archive sets up the environment in the wrong
+order, though of course I never finished a patch so I'm going from memory:
 
+After looking at the code again, I think the issue is that git_config is called
+in builtin-archive.c:cmd_archive before setup_git_directory is called in
+archive.c:write_archive.  The former ends up setting GIT_DIR to be '.git' even
+if you're in a bare repository.  My coding skills weren't up to fixing it
+easily; moving setup_git_directory before git_config in builtin-archive caused
+last test of t5000 to fail: GIT_DIR=some/nonexistent/path git archive --list
+should still display the archive formats.
 
+Another vote for from me for the discussion carried on here:
+http://article.gmane.org/gmane.comp.version-control.git/98800
 
-> I use "git add -p" all the time, but almost always when I am
-> adding a new file, I add the whole contents.
-> 
-> I think there are two ways to go about fixing it:
-> 
->   - in git-add--interactive.perl, the function patch_update_cmd
->     explicitly looks at the list of modified files. It would have to
->     also check for untracked files, which is easy. But we also need to
->     keep track of which files are modified and which are untracked
->     through the whole patching procedure, which is a bit more invasive.
-> 
->   - the recently-added "git add -N" adds an empty file into the index,
->     at which point we could add content in the normal way. So:
-> 
->       git add -N test
->       git add -p test
-> 
->     should just work (but obviously requires two steps from the user).
->     You could do something more automatic like the patch below, but I
->     think the semantics aren't quite right. If you stage nothing for a
->     newly added file, then you still end up with an empty version of the
->     staged file in the index. I would expect the semantics to be:
-> 
->       1. if you stage any content, then the file is added to the index
->          with that content
-> 
->       2. if you stage no content, then the file remains untracked
-
-> ---
-> diff --git a/git-add--interactive.perl b/git-add--interactive.perl
-> [...]
->  sub patch_update_cmd {
-> +	my @new = list_untracked();
-> +	if (@new) {
-> +		system(qw(git add -N), @new)
-> +			and die "git add reported failure";
-> +	}
-> +
- 
-
-I've tried the patch. However I'm not fully satisified.
-I often use --patch to have another second look at each change to be
-committed. Your patch adds new files to the cache silently without
-giving the user the change to omit or edit the patch. But exatly that's
-the reason I'm using --patch. So maybe I can work on this in some days..
-Maybe I've also injected those lines into the wrong git version 
-(1.6.0.2.GIT)
-
-May I try rewriting your semantics proposal to this ?
-
-      1) when using git add --patch untracked-file the user should be
-         given the default patch view (only containing + lines)
-         so that he can use edit to only commit parts of the file in the
-         usual way. (I guess this is similar to having used git add -N
-         before, I haven't tried yet)
-
-      2) if he wants to skip the entire patch / file nothing should be
-         added to the index.
-
-Thanks for your reply.
-
-Sincerly
-Marc Weber
+Deskin Miller
