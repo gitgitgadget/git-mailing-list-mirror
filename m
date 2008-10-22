@@ -1,71 +1,58 @@
-From: =?iso-8859-1?Q?Bj=F6rn?= Steinbrink <B.Steinbrink@gmx.de>
-Subject: Terminology question: "tracking" branches
-Date: Wed, 22 Oct 2008 18:13:02 +0200
-Message-ID: <20081022161302.GC16946@atjola.homenet>
-References: <48F7BBAC.2090907@xiplink.com> <48F83FD0.90606@drmicha.warpmail.net> <48F8A4E8.8070008@xiplink.com> <48F8AA5E.6090908@drmicha.warpmail.net> <48F8ECA2.3040208@xiplink.com> <48FC8624.9090807@fastmail.fm> <48FCB6B8.6090708@xiplink.com> <48FDA5A0.8030506@drmicha.warpmail.net> <48FDF28A.9060606@xiplink.com> <48FF3FEE.8020209@drmicha.warpmail.net>
+From: Brandon Casey <casey@nrlssc.navy.mil>
+Subject: Re: [PATCH] Implement git remote mv
+Date: Wed, 22 Oct 2008 11:52:54 -0500
+Message-ID: <JQScKsOjmj-C7kmMPApAxZ3UDmaTZ1j0HkObQuCveJ9n4G-4o6Zxbw@cipher.nrlssc.navy.mil>
+References: <1224634994-1664-1-git-send-email-vmiklos@frugalware.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Marc Branchaud <marcnarc@xiplink.com>,
-	Peter Harris <git@peter.is-a-geek.org>, git@vger.kernel.org
-To: Michael J Gruber <git@drmicha.warpmail.net>
-X-From: git-owner@vger.kernel.org Wed Oct 22 18:16:07 2008
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Miklos Vajna <vmiklos@frugalware.org>
+X-From: git-owner@vger.kernel.org Wed Oct 22 18:57:08 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KsgLt-0002GC-Hu
-	for gcvg-git-2@gmane.org; Wed, 22 Oct 2008 18:14:30 +0200
+	id 1Ksh18-0003qi-1t
+	for gcvg-git-2@gmane.org; Wed, 22 Oct 2008 18:57:06 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753066AbYJVQNQ convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 22 Oct 2008 12:13:16 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752950AbYJVQNQ
-	(ORCPT <rfc822;git-outgoing>); Wed, 22 Oct 2008 12:13:16 -0400
-Received: from mail.gmx.net ([213.165.64.20]:44552 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751290AbYJVQNP (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 22 Oct 2008 12:13:15 -0400
-Received: (qmail invoked by alias); 22 Oct 2008 16:13:13 -0000
-Received: from i577AD8B4.versanet.de (EHLO atjola.local) [87.122.216.180]
-  by mail.gmx.net (mp012) with SMTP; 22 Oct 2008 18:13:13 +0200
-X-Authenticated: #5039886
-X-Provags-ID: V01U2FsdGVkX19LvBwcjNpL3Jsf3Q3f6VCISsLRB2RRVjMOf+BZo9
-	ta3z5g9Vax0YdT
-Content-Disposition: inline
-In-Reply-To: <48FF3FEE.8020209@drmicha.warpmail.net>
-User-Agent: Mutt/1.5.18 (2008-05-17)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.67
+	id S1751915AbYJVQzw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 22 Oct 2008 12:55:52 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751873AbYJVQzw
+	(ORCPT <rfc822;git-outgoing>); Wed, 22 Oct 2008 12:55:52 -0400
+Received: from mail1.nrlssc.navy.mil ([128.160.35.1]:48203 "EHLO
+	mail.nrlssc.navy.mil" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751777AbYJVQzv (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 22 Oct 2008 12:55:51 -0400
+Received: by mail.nrlssc.navy.mil id m9MGqtZf009435; Wed, 22 Oct 2008 11:52:55 -0500
+In-Reply-To: <1224634994-1664-1-git-send-email-vmiklos@frugalware.org>
+X-OriginalArrivalTime: 22 Oct 2008 16:52:55.0448 (UTC) FILETIME=[A1506980:01C93466]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/98882>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/98883>
 
-On 2008.10.22 16:59:58 +0200, Michael J Gruber wrote:
-> - a remote branch (a branch in your local repo which is a copy of a
-> branch in a remote repo; stored under refs/remotes, never to be modif=
-ied
-> locally)
-> - a (remote) tracking branch (a local branch which is set up to pull
-> from a remote branch by default)
+Miklos Vajna wrote:
 
-(Remote) tracking branches are actually what you called remote branches=
-,
-at least according to the git glossary. But I wonder, what is the right
-term for a branch that has the --track setup for pull?
+> +static int mv(int argc, const char **argv)
+> +{
+> +	struct option options[] = {
+> +		OPT_END()
+> +	};
+> +	struct remote *oldremote, *newremote;
+> +	struct strbuf buf = STRBUF_INIT, buf2 = STRBUF_INIT;
+> +	struct string_list remote_branches = { NULL, 0, 0, 0 };
+> +	struct rename_info rename = { argv[1], argv[2], &remote_branches };
 
-On #git I usually fall back to some variation of "a branch that is
-configured for 'git pull'" or something similarly verbose (and maybe
-that's even partially wrong/inaccurate/incomplete?). And I always try t=
-o
-stick to saying "remote tracking branch" and not just "tracking branch"
-(as the glossary does) to avoid confusion as best as I can. But that
-feels quite suboptimal.
+I think some non-c99 compilers would have issues with this run-time
+initialization from function arguments. Plus, what if argv doesn't have
+3 elements? I see you have a check for that below...
 
-So, is there some term that describes a local branch that has been
-configured for "git pull"?
+> +	int i;
+> +
+> +	if (argc != 3)
+> +		usage_with_options(builtin_remote_usage, options);
 
-Thanks,
-Bj=F6rn
+-brandon
