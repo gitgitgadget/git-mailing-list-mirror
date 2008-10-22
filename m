@@ -1,130 +1,97 @@
-From: Ingo Molnar <mingo@elte.hu>
+From: Jakub Narebski <jnareb@gmail.com>
 Subject: Re: [irq/urgent]: created 3786fc7: "irq: make variable static"
-Date: Wed, 22 Oct 2008 11:58:18 +0200
-Message-ID: <20081022095818.GA27711@elte.hu>
-References: <20081022061730.GA5749@elte.hu> <48FEE5B3.9060202@op5.se> <20081022090010.GC4369@elte.hu> <48FEF868.2010802@op5.se>
+Date: Wed, 22 Oct 2008 03:50:52 -0700 (PDT)
+Message-ID: <m3ljwgj3xy.fsf@localhost.localdomain>
+References: <20081022061730.GA5749@elte.hu>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-To: Andreas Ericsson <ae@op5.se>
-X-From: git-owner@vger.kernel.org Wed Oct 22 11:59:48 2008
+To: Ingo Molnar <mingo@elte.hu>
+X-From: git-owner@vger.kernel.org Wed Oct 22 12:52:19 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KsaVG-0003bo-2J
-	for gcvg-git-2@gmane.org; Wed, 22 Oct 2008 11:59:46 +0200
+	id 1KsbJx-0005YD-UJ
+	for gcvg-git-2@gmane.org; Wed, 22 Oct 2008 12:52:10 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751906AbYJVJ6d convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 22 Oct 2008 05:58:33 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751923AbYJVJ6d
-	(ORCPT <rfc822;git-outgoing>); Wed, 22 Oct 2008 05:58:33 -0400
-Received: from mx2.mail.elte.hu ([157.181.151.9]:33266 "EHLO mx2.mail.elte.hu"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750873AbYJVJ6c (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 22 Oct 2008 05:58:32 -0400
-Received: from elvis.elte.hu ([157.181.1.14])
-	by mx2.mail.elte.hu with esmtp (Exim)
-	id 1KsaTt-0000Zq-2q
-	from <mingo@elte.hu>; Wed, 22 Oct 2008 11:58:30 +0200
-Received: by elvis.elte.hu (Postfix, from userid 1004)
-	id 3C5303E21A3; Wed, 22 Oct 2008 11:58:15 +0200 (CEST)
-Content-Disposition: inline
-In-Reply-To: <48FEF868.2010802@op5.se>
-User-Agent: Mutt/1.5.18 (2008-05-17)
-Received-SPF: neutral (mx2: 157.181.1.14 is neither permitted nor denied by domain of elte.hu) client-ip=157.181.1.14; envelope-from=mingo@elte.hu; helo=elvis.elte.hu;
-X-ELTE-VirusStatus: clean
-X-ELTE-SpamScore: -1.5
-X-ELTE-SpamLevel: 
-X-ELTE-SpamCheck: no
-X-ELTE-SpamVersion: ELTE 2.0 
-X-ELTE-SpamCheck-Details: score=-1.5 required=5.9 tests=BAYES_00,DNS_FROM_SECURITYSAGE autolearn=no SpamAssassin version=3.2.3
-	-1.5 BAYES_00               BODY: Bayesian spam probability is 0 to 1%
-	[score: 0.0000]
-	0.0 DNS_FROM_SECURITYSAGE  RBL: Envelope sender in
-	blackholes.securitysage.com
+	id S1754137AbYJVKu4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 22 Oct 2008 06:50:56 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753927AbYJVKu4
+	(ORCPT <rfc822;git-outgoing>); Wed, 22 Oct 2008 06:50:56 -0400
+Received: from ug-out-1314.google.com ([66.249.92.171]:38919 "EHLO
+	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752678AbYJVKuz (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 22 Oct 2008 06:50:55 -0400
+Received: by ug-out-1314.google.com with SMTP id k3so1316720ugf.37
+        for <git@vger.kernel.org>; Wed, 22 Oct 2008 03:50:53 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:received:received
+         :x-authentication-warning:to:cc:subject:references:from:in-reply-to
+         :message-id:lines:user-agent:mime-version:content-type:date;
+        bh=BzTRvYHzPbh4DkAOhXHMreYOOvOfl5uSU1mq8TP98U0=;
+        b=irg/QMW1kMb/O+NHRKPDU/jldU52y2+Bqc1YwW6NcpQBM2h6kM5gitIIZjoMLE1oZW
+         tlu4yR0sm0frMjovR/Xztm2NZOhg8jP7GU26dB6e7a4ijQTZs5Vh/k8rKnACTAWQ81C7
+         uAi+M0bJQzUrxbwMB03w22WiQCv2qEH+czLmQ=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=x-authentication-warning:to:cc:subject:references:from:in-reply-to
+         :message-id:lines:user-agent:mime-version:content-type:date;
+        b=BVtpb0jrDwBwj/zr154qRSj4Re+YyjQTHXFLKPqriSDCk6Ulcs5cf7PzdiLBCYRkxX
+         StUqhSp4u9jgd4f3mLn8HQ1PTf1X8s5gze9clXnaMRiRj7P2NIcUMOjxoSdY1q8zduAk
+         csrI8DCmlSrpyAyR0LaDl0kEGOJNuDRgg4lAQ=
+Received: by 10.66.236.13 with SMTP id j13mr3468597ugh.7.1224672653848;
+        Wed, 22 Oct 2008 03:50:53 -0700 (PDT)
+Received: from localhost.localdomain (abxd135.neoplus.adsl.tpnet.pl [83.8.253.135])
+        by mx.google.com with ESMTPS id k1sm4176880ugf.15.2008.10.22.03.50.51
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Wed, 22 Oct 2008 03:50:52 -0700 (PDT)
+Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
+	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id m9MAs3xx008750;
+	Wed, 22 Oct 2008 12:54:03 +0200
+Received: (from jnareb@localhost)
+	by localhost.localdomain (8.13.4/8.13.4/Submit) id m9MAs16S008747;
+	Wed, 22 Oct 2008 12:54:01 +0200
+X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
+In-Reply-To: <20081022061730.GA5749@elte.hu>
+User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/98855>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/98856>
 
+Ingo Molnar <mingo@elte.hu> writes:
 
-* Andreas Ericsson <ae@op5.se> wrote:
+> Git recently started printing the branch name when creating commits:
+> 
+>   [irq/urgent]: created 3786fc7: "irq: make variable static"
+> 
+> very nice idea IMO! Having it all on one line allows me to double-check 
+> that i indeed queued up a patch in the intended topic branch. Had it 
+> read:
+> 
+>   [irq/urgent]: created 3786fc7: "printk: make variable static"
+> 
+> i'd have noticed the mistake immediately.
+> 
+> this welcome enhancement made me remember of three usage problems i had 
+> with Git recently:
+[...]
 
-> Ingo Molnar wrote:
->> * Andreas Ericsson <ae@op5.se> wrote:
->>
->>> I imagine you'd want to use it to find out which branches you can (=
-or=20
->>> can't) merge, and in that case you need to know about all the topic=
-s =20
->>> which have the commit. Assuming you don't go crazy cherry-picking a=
-nd=20
->>> criss-cross merging, it should only list a few. The output is not a=
-s =20
->>> fancy as below, but it should be faster than the appended script (b=
-y =20
->>> several orders of magnitude).
->>
->> i solved that particular problem quite well, based on suggestions in=
- a =20
->> thread earlier on the git-list. I'm using git branch --no-merged:
->>
->>  earth4:~/tip> time todo-merge-all
->>  merging the following updated branches:
->>  merging linus ... ... merge done.
->>
->>  real    0m2.865s
->>  user    0m2.580s
->>  sys     0m0.228s
->>
->> that work step used to be over a minute! There are 233 topic branche=
-s=20
->> at the moment and 18 integration branches. Kudos for making this go=20
->> really fast in 1.6.0.
->>
->> the thing i'm after is to see the originator branch of changes. "git=
- =20
->> name-rev" was suggested by Santi B=E9jar in this thread and that is =
-=20
->> exactly what i need - i'll try to integrate it into some git-log-ish=
- =20
->> output tool.
->>
->> One thing i noticed is that 'git name-rev' can be quite slow for=20
->> certain commits:
->>
->>  earth4:~/tip> time git name-rev 948f984
->>  948f984 tags/tip-safe-poison-pointers-2008-05-26_08_52_Mon~1
->>
->>  real    0m2.181s
->>  user    0m2.068s
->>  sys     0m0.092s
->>
->> Which seems natural since it might have to dive back into history an=
-d =20
->> cross-reference it to all names. (there's 400 branches and 450 tags =
-in =20
->> this tree, so i'm certainly pushing things!)
->>
->> But if i use that in my git-log-line summary tool it might become =20
->> quadratic overhead (or worse) very quickly, with minutes of runtime.
->>
->
-> What's the timing for "git branch --contains 948f984" ?
->
-> "git name-rev" parses a lot more just to be able to print a pretty
-> short-name (the reversed "git describe") for you to use.
+About printing either forward (git-describe, e.g. v1.6.0.2-590-g67f6062)
+or backward (git-name-rev, e.g. tags/v1.6.0-rc2~8): you can use
+git-name-rev in filter mode (git log ... | git name-rev --stdin), or
+"git log --decorate", or '%d' in --pretty format specifier (this is very
+new thing).
 
-it takes much longer:
-
- earth4:~/tip> time git branch --contains 948f984
- [... 44 branches ...]
- real    0m9.596s
- user    0m9.151s
- sys     0m0.218s
-
-	Ingo
+You might be also interested in --abbrev-commit (when used with
+--pretty=oneline format), and --graph option to git-log (or
+git-show-branch).  The "(--merged | --no-merged | --contains) [<commit>]"
+options to git-branch might be also of interest...
+-- 
+Jakub Narebski
+Poland
+ShadeHawk on #git
