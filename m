@@ -1,58 +1,71 @@
-From: "Edward Ned Harvey" <git@nedharvey.com>
-Subject: RE: git performance
-Date: Wed, 22 Oct 2008 17:55:14 -0400
-Message-ID: <000901c93490$e0c40ed0$a24c2c70$@com>
-References: <000801c93483$2fdad340$8f9079c0$@com> <20081022203624.GA4585@coredump.intra.peff.net>
+From: "Weiwei Shu" <shuww1980@gmail.com>
+Subject: how to configure Git to treat certain type of ascii files as binary files
+Date: Wed, 22 Oct 2008 16:58:28 -0500
+Message-ID: <65d12cb10810221458j14ef0009u679cdb0f73299d7f@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain;
-	charset="utf-8"
-Content-Transfer-Encoding: 8BIT
-To: <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Wed Oct 22 23:56:45 2008
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Oct 22 23:59:44 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Kslh6-0007MR-2m
-	for gcvg-git-2@gmane.org; Wed, 22 Oct 2008 23:56:44 +0200
+	id 1Ksljy-0008Op-LD
+	for gcvg-git-2@gmane.org; Wed, 22 Oct 2008 23:59:43 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757552AbYJVVza (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 22 Oct 2008 17:55:30 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757565AbYJVVz3
-	(ORCPT <rfc822;git-outgoing>); Wed, 22 Oct 2008 17:55:29 -0400
-Received: from mail.itekmail.com ([208.86.156.243]:45526 "EHLO
-	mail.itekmail.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757457AbYJVVz2 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 22 Oct 2008 17:55:28 -0400
-X-Spam-Status: No, hits=0.0 required=2.5
-	tests=AWL: 0.227,BAYES_00: -1.665,TOTAL_SCORE: -1.438
-X-Spam-Level: 
-Received: from carmel ([98.110.160.127])
-	(authenticated user rahvee@nedharvey.com)
-	by mail.itekmail.com
-	(using TLSv1/SSLv3 with cipher RC4-MD5 (128 bits))
-	for git@vger.kernel.org;
-	Wed, 22 Oct 2008 16:55:25 -0500
-In-Reply-To: <20081022203624.GA4585@coredump.intra.peff.net>
-X-Mailer: Microsoft Office Outlook 12.0
-Thread-Index: Ack0kNwEd0CByfuaTJCObkQ3jAbMNw==
-Content-Language: en-us
+	id S1753633AbYJVV6a (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 22 Oct 2008 17:58:30 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753075AbYJVV6a
+	(ORCPT <rfc822;git-outgoing>); Wed, 22 Oct 2008 17:58:30 -0400
+Received: from wa-out-1112.google.com ([209.85.146.183]:25980 "EHLO
+	wa-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752432AbYJVV63 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 22 Oct 2008 17:58:29 -0400
+Received: by wa-out-1112.google.com with SMTP id v27so8201wah.21
+        for <git@vger.kernel.org>; Wed, 22 Oct 2008 14:58:28 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to
+         :subject:mime-version:content-type:content-transfer-encoding
+         :content-disposition;
+        bh=vA2CTNf659SY////C+KgadP2bcIa8wyvf6lhDprDtlM=;
+        b=MIgObR2sUgCbx14Lvx5GCMnIsQBOkcAeivQ5Ba+YeQetRafTa5Am0ZEBk0lkRzV+ez
+         jBb0bBGABoEq2CM3gR2DAsDv0wGG2Y/n/43mt4Fp+uviFh3LSkYntCv5wzceLD+6yNJf
+         abcQTEi0e9I1Ti5D+8nPS5YvWFIH4ViTdgQNg=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:to:subject:mime-version:content-type
+         :content-transfer-encoding:content-disposition;
+        b=LIUMrLZaIQPlUqaaRB26HlCMtkDEulCjYzdUTF+qHnpknXmPexu0Yq8wZaBl8M5qLr
+         SFOx9djVthD/h7TJlLzKOvVlGIB4n+0YrpqskFsWkXtDRrJbMML7dP6D7lrw0w5gOfAO
+         70CV11tq6VFBWAWkhst0hGv94WgYDexaapNR0=
+Received: by 10.114.195.19 with SMTP id s19mr8099273waf.54.1224712708158;
+        Wed, 22 Oct 2008 14:58:28 -0700 (PDT)
+Received: by 10.114.160.3 with HTTP; Wed, 22 Oct 2008 14:58:28 -0700 (PDT)
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/98917>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/98918>
 
-> Yes, it does stat all the files. How many files are you talking about,
-> and what platform?  From a warm cache on Linux, the 23,000 files kernel
-> repo takes about a tenth of a second to stat all files for me (and this
-> on a several year-old machine). And of course many operations don't
-> require stat'ing at all (like looking at logs, or diffs that don't
-> involve the working tree).
+Hello everyone,
 
-No worries.  No solution can meet everyone's needs.
+My first post in this mailing list. Could some one direct me to some
+document/manual pages to setup Git to treat ascii files as binary
+files? I'm using Git to do circuit schematics (SPICE files)
+versioning. I will not do any merging or editing stuff with external
+editors. The only way to change it is to use schematic capture GUIs
+(Cadence, ADS, etc). So I'd like to treat them as binary files to
+reduce the possibilities of messing them up.
 
-I'm talking about 40-50,000 files, on multi-user production linux, which means the cache is never warm, except when I'm benchmarking.  Specifically RHEL 4 with the files on NFS mount.  Cold cache "svn st" takes ~10 mins.  Warm cache 20-30 sec.  Surprisingly to me, performance was approx the same for files on local disk versus NFS.  Probably the best solution for us is perforce, we just don't like the pricetag.
+I know it seems a little bit stupid to use Git to do such an easy job.
+But hey, it's the most eye-catching SCM software, isn't it?
 
-Out of curiosity, what are they talking about, when they say "git is fast?"  Just the fact that it's all local disk, or is there more to it than that?  I could see - git would probably outperform perforce for versioning of large files (let's say iso files) to benefit from sustained local disk IO, while perforce would probably outperform anything I can think of, operating on thousands of tiny files, because it will never walk the tree.
+
+
+-- 
+Weiwei
+--Hope Springs Eternal.
