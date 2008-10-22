@@ -1,59 +1,71 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH] rebase-i-p: delay saving current-commit to REWRITTEN if
- squashing
-Date: Wed, 22 Oct 2008 17:21:53 +0200 (CEST)
-Message-ID: <alpine.DEB.1.00.0810221721370.22125@pacific.mpi-cbg.de.mpi-cbg.de>
-References: <cover.1224055978.git.stephen@exigencecorp.com> <759654ef1f1781cd2b102e21c6f972b065560398.1224055978.git.stephen@exigencecorp.com> <20081022125149.GA17092@coredump.intra.peff.net>
+From: Nicolas Ferre <nicolas.ferre@atmel.com>
+Subject: Re: error: packfile while git fsck
+Date: Wed, 22 Oct 2008 17:22:09 +0200
+Organization: atmel
+Message-ID: <48FF4521.5070303@atmel.com>
+References: <48FF337F.3050505@atmel.com> <alpine.LFD.2.00.0810221049340.26244@xanadu.home>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Stephen Haberman <stephen@exigencecorp.com>, gitster@pobox.com,
-	git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Wed Oct 22 17:16:24 2008
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Nicolas Pitre <nico@cam.org>
+X-From: git-owner@vger.kernel.org Wed Oct 22 17:23:54 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KsfRV-0001eO-4k
-	for gcvg-git-2@gmane.org; Wed, 22 Oct 2008 17:16:13 +0200
+	id 1KsfYY-0004Sz-R1
+	for gcvg-git-2@gmane.org; Wed, 22 Oct 2008 17:23:31 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752139AbYJVPO7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 22 Oct 2008 11:14:59 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751561AbYJVPO7
-	(ORCPT <rfc822;git-outgoing>); Wed, 22 Oct 2008 11:14:59 -0400
-Received: from mail.gmx.net ([213.165.64.20]:59212 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1750815AbYJVPO7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 22 Oct 2008 11:14:59 -0400
-Received: (qmail invoked by alias); 22 Oct 2008 15:14:56 -0000
-Received: from pacific.mpi-cbg.de (EHLO [141.5.10.38]) [141.5.10.38]
-  by mail.gmx.net (mp026) with SMTP; 22 Oct 2008 17:14:56 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1+1AsA9Dxa1puUPqokzYW7gpcRcHdodZbVg/Fa6gb
-	0yWmWxYlKlAnZY
-X-X-Sender: schindelin@pacific.mpi-cbg.de.mpi-cbg.de
-In-Reply-To: <20081022125149.GA17092@coredump.intra.peff.net>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.67
+	id S1752767AbYJVPWR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 22 Oct 2008 11:22:17 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752743AbYJVPWR
+	(ORCPT <rfc822;git-outgoing>); Wed, 22 Oct 2008 11:22:17 -0400
+Received: from mail.atmel.fr ([81.80.104.162]:56764 "EHLO atmel-es2.atmel.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750866AbYJVPWQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 22 Oct 2008 11:22:16 -0400
+Received: from fwat.rfo.atmel.com (gateway [192.168.1.1])
+	by atmel-es2.atmel.fr (8.11.6+Sun/8.11.6) with SMTP id m9MFL1I02444;
+	Wed, 22 Oct 2008 17:21:01 +0200 (MEST)
+Received: from meyreuil ([10.159.254.132]) by fwat; Wed, 22 Oct 2008 17:19:35 +0200 (MEST)
+Received: from [127.0.0.1] (pc245_112.atmel.fr [10.159.245.112])
+	by meyreuil.atmel.fr (8.11.7p1+Sun/8.11.7) with ESMTP id m9MFM7b17437;
+	Wed, 22 Oct 2008 17:22:08 +0200 (MEST)
+User-Agent: Thunderbird 2.0.0.17 (Windows/20080914)
+In-Reply-To: <alpine.LFD.2.00.0810221049340.26244@xanadu.home>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/98878>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/98879>
 
-Hi,
-
-On Wed, 22 Oct 2008, Jeff King wrote:
-
-> On Wed, Oct 15, 2008 at 02:44:36AM -0500, Stephen Haberman wrote:
+Nicolas Pitre :
+> On Wed, 22 Oct 2008, Nicolas Ferre wrote:
 > 
-> > +		if [ "$fast_forward" == "t" ]
+>> Hi all,
+>> (please cc me on response)
+>>
+>> I am facing error during git status & git fsck on my tree.
+>> This tree is cloned from various linux kernel trees.
+>>
+>> Here are a sample of the error I see :
+>>
+>> $ git fsck
+>> error: packfile
+>> .git/objects/pack/pack-2ab31ad1f8cb69d091a56fe936634e4796606d49.pack does not
+>> match index
+>> error: packfile
+>> .git/objects/pack/pack-2ab31ad1f8cb69d091a56fe936634e4796606d49.pack cannot be
+>> accessed
+> [...]
 > 
-> This one even fails on my Linux box. :) "==" is a bash-ism.
+> What git version?
 
-Did we not also prefer "test" to "["?
+$ git --version
+git version 1.5.3.7
 
-Ciao,
-Dscho
+Kind regards,
+-- 
+Nicolas Ferre
