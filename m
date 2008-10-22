@@ -1,66 +1,55 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH v2] builtin-blame: Reencode commit messages according
-	to git-log rules.
-Date: Wed, 22 Oct 2008 15:14:16 -0400
-Message-ID: <20081022191415.GA31568@coredump.intra.peff.net>
-References: <1224622557-6669-1-git-send-email-angavrilov@gmail.com> <20081022082016.GA18473@sigill.intra.peff.net> <7vd4hsv46z.fsf@gitster.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [ANNOUCNE] repo - The Multiple Git Repository Tool
+Date: Wed, 22 Oct 2008 12:14:17 -0700
+Message-ID: <7vzlkwtpbq.fsf@gitster.siamese.dyndns.org>
+References: <20081022154245.GT14786@spearce.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Alexander Gavrilov <angavrilov@gmail.com>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Oct 22 21:15:38 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: "Shawn O. Pearce" <spearce@spearce.org>
+X-From: git-owner@vger.kernel.org Wed Oct 22 21:15:43 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KsjB8-000081-Bu
-	for gcvg-git-2@gmane.org; Wed, 22 Oct 2008 21:15:34 +0200
+	id 1KsjB9-000081-4Q
+	for gcvg-git-2@gmane.org; Wed, 22 Oct 2008 21:15:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752850AbYJVTOT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 22 Oct 2008 15:14:19 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753403AbYJVTOT
-	(ORCPT <rfc822;git-outgoing>); Wed, 22 Oct 2008 15:14:19 -0400
-Received: from peff.net ([208.65.91.99]:1519 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752277AbYJVTOS (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 22 Oct 2008 15:14:18 -0400
-Received: (qmail 3129 invoked by uid 111); 22 Oct 2008 19:14:17 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.32) with SMTP; Wed, 22 Oct 2008 15:14:17 -0400
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Wed, 22 Oct 2008 15:14:16 -0400
-Content-Disposition: inline
-In-Reply-To: <7vd4hsv46z.fsf@gitster.siamese.dyndns.org>
+	id S1755196AbYJVTO0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 22 Oct 2008 15:14:26 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755145AbYJVTO0
+	(ORCPT <rfc822;git-outgoing>); Wed, 22 Oct 2008 15:14:26 -0400
+Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:63544 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754712AbYJVTOZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 22 Oct 2008 15:14:25 -0400
+Received: from localhost.localdomain (localhost [127.0.0.1])
+	by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id 4ABB38E327;
+	Wed, 22 Oct 2008 15:14:24 -0400 (EDT)
+Received: from pobox.com (ip68-225-240-211.oc.oc.cox.net [68.225.240.211])
+ (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
+ certificate requested) by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with
+ ESMTPSA id E2FBA8E322; Wed, 22 Oct 2008 15:14:19 -0400 (EDT)
+In-Reply-To: <20081022154245.GT14786@spearce.org> (Shawn O. Pearce's message
+ of "Wed, 22 Oct 2008 08:42:45 -0700")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: A3517A4E-A06D-11DD-BF0C-4F5276724C3F-77302942!a-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/98891>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/98892>
 
-On Wed, Oct 22, 2008 at 12:07:48PM -0700, Junio C Hamano wrote:
+"Shawn O. Pearce" <spearce@spearce.org> writes:
 
-> Yuck.  Solaris 8 /usr/bin/grep does not even grok "-e", so we cannot do a
-> more obvious:
-> 
-> 	grep -e "^author " -e "^summary "
+> Google developed two tools, repo and Gerrit, and open sourced them
+> under the Apache License:
+>
+>   http://android.git.kernel.org/?p=tools/repo.git
+>   http://android.git.kernel.org/?p=tools/gerrit.git
+>
+>   git://android.git.kernel.org/tools/repo.git
+>   git://android.git.kernel.org/tools/gerrit.git
 
-Yep. I already introduced one use of egrep for a similar case in
-8753941 (tests: grep portability fixes).
-
-> Do people build with NO_EXTERNAL_GREP on older Solaris?
-
-Yep. See:
-
-  http://repo.or.cz/w/git/gitbuild.git?a=blob;f=jk/solaris/config.mak;hb=platform
-
-for the gory details (boy, I wish we had nice PATH_INFO-based gitweb
-URLs...).
-
-> git-submodule.sh uses grep "-e" to look for two patterns and I suspect
-> older Solaris would have the same issue.
-
-Yes, that code will break on Solaris. Most of my portability fixes have
-been in direct response to tests, so I guess we are not testing
-git-submodule very well.
-
--Peff
+Heh, very nice, with a very shallow history ;-)
