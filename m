@@ -1,93 +1,72 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] git-svn: don't escape tilde ('~') for http(s) URLs
-Date: Wed, 22 Oct 2008 11:53:10 -0700
-Message-ID: <7viqrkv4vd.fsf@gitster.siamese.dyndns.org>
-References: <20081018213919.GC3107@atjola.homenet>
- <20081018224728.GD3107@atjola.homenet>
- <20081021211131.GA21606@yp-box.dyndns.org>
- <7vtzb5wr6v.fsf@gitster.siamese.dyndns.org> <20081022081653.GC14966@untitled>
+Subject: Re: [PATCH v2] builtin-blame: Reencode commit messages according to
+ git-log rules.
+Date: Wed, 22 Oct 2008 12:07:48 -0700
+Message-ID: <7vd4hsv46z.fsf@gitster.siamese.dyndns.org>
+References: <1224622557-6669-1-git-send-email-angavrilov@gmail.com>
+ <20081022082016.GA18473@sigill.intra.peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: =?utf-8?Q?Bj=C3=B6rn?= Steinbrink <B.Steinbrink@gmx.de>,
-	git@vger.kernel.org, jsogo@debian.org
-To: Eric Wong <normalperson@yhbt.net>
-X-From: git-owner@vger.kernel.org Wed Oct 22 20:55:24 2008
+Cc: Alexander Gavrilov <angavrilov@gmail.com>, git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Wed Oct 22 21:09:30 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KsirW-0000wG-Jp
-	for gcvg-git-2@gmane.org; Wed, 22 Oct 2008 20:55:19 +0200
+	id 1Ksj58-00065s-63
+	for gcvg-git-2@gmane.org; Wed, 22 Oct 2008 21:09:22 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758805AbYJVSxc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 22 Oct 2008 14:53:32 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758338AbYJVSxb
-	(ORCPT <rfc822;git-outgoing>); Wed, 22 Oct 2008 14:53:31 -0400
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:40053 "EHLO
+	id S1753931AbYJVTIJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 22 Oct 2008 15:08:09 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752918AbYJVTIH
+	(ORCPT <rfc822;git-outgoing>); Wed, 22 Oct 2008 15:08:07 -0400
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:47544 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1758786AbYJVSxa (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 22 Oct 2008 14:53:30 -0400
+	with ESMTP id S1752016AbYJVTIF (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 22 Oct 2008 15:08:05 -0400
 Received: from localhost.localdomain (localhost [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 6BA6B72E34;
-	Wed, 22 Oct 2008 14:53:27 -0400 (EDT)
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 9A0D572032;
+	Wed, 22 Oct 2008 15:08:03 -0400 (EDT)
 Received: from pobox.com (ip68-225-240-211.oc.oc.cox.net [68.225.240.211])
  (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
  certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
- ESMTPSA id B00FE72E33; Wed, 22 Oct 2008 14:53:18 -0400 (EDT)
-In-Reply-To: <20081022081653.GC14966@untitled> (Eric Wong's message of "Wed,
- 22 Oct 2008 01:16:53 -0700")
+ ESMTPSA id 21E357202F; Wed, 22 Oct 2008 15:07:56 -0400 (EDT)
+In-Reply-To: <20081022082016.GA18473@sigill.intra.peff.net> (Jeff King's
+ message of "Wed, 22 Oct 2008 04:20:17 -0400")
 User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: B62BC960-A06A-11DD-B2EA-9CEDC82D7133-77302942!a-sasl-fastnet.pobox.com
+X-Pobox-Relay-ID: C06B5BD2-A06C-11DD-9765-9CEDC82D7133-77302942!a-sasl-fastnet.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/98888>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/98889>
 
-Eric Wong <normalperson@yhbt.net> writes:
+Jeff King <peff@peff.net> writes:
 
-> Junio C Hamano <gitster@pobox.com> wrote:
+> On Wed, Oct 22, 2008 at 12:55:57AM +0400, Alexander Gavrilov wrote:
 >
-> Help with looking at what SVN does and writing testcases would
-> definitely be appreciated on this matter.  Or perhaps this can be done
-> at GitTogether :)
-
-I'm not sure it would be a good use of time at GitTogether to do something
-whose spec is pretty much self-evident (essentially for this one it boils
-down to "define what are the 'funny' bytes, and list the protocols
-supported by svn, and come up with paths with funny bytes in it and 
-see what libsvn-perl gives to the underlying svn library, and what the svn
-library does over the wire").  Ongoiong "fix start-up sequence around
-worktree area" might be a better fit; I dunno.
-
->> The patch may make a path with '~' work, but it (neither in the patch text
->> nor in the commit log message) does not have much to give readers enough
->> confidence that the code after the patch is the _final_ one, as opposed to
->> being just a band-aid for a single symptom that happened to have been
->> discovered this time.
+>> +test_expect_success \
+>> +	'blame respects i18n.commitencoding' '
+>> +	git blame --incremental file | \
+>> +		grep "^\(author\|summary\) " > actual &&
+>> +	test_cmp actual expected
 >
-> This is definitely a band-aid fix until I or somebody else takes the
-> time to figure out:
+> Even though it is POSIX, using backslashed grouping in 'grep' isn't
+> portable. It fails at least on Solaris 8, and you have to do:
 >
->  1. exactly which characters need to be escaped
->  2. for which protocols those characters need to be escaped
->  3. which part(s) of the URI they need to be escaped for
->     (repository root vs SVN path)
->  4. which versions of SVN needs more (or less) escaping rules
+>   egrep "^(author|summary) "
 >
-> (I vote for somebody else, especially for #4 :)
+> instead. Of course, I can't get your test to pass even with that change,
+> but I think that is just a broken iconv on Solaris.
 
-Item 3. above disturbs me.  Do you mean that in:
+Yuck.  Solaris 8 /usr/bin/grep does not even grok "-e", so we cannot do a
+more obvious:
 
-    https://sucs.org/~welshbyte/svn/backuptool/trunk/foo~bar.txt
+	grep -e "^author " -e "^summary "
 
-the two tildes might have to be sent to libsvn-perl differently?
+Do people build with NO_EXTERNAL_GREP on older Solaris?
 
-Even if that is the case, I am inclined suggest taking the patch in the
-meantime as an interim workaround, with the understanding that we know the
-patch improves the situation for the tilde before welshbyte and even
-though we do not know if the patch regresses for the latter one between
-foo and bar, it would be much rarer to have tilde in such places.
-
-Care to come up with an updated log message?
+git-submodule.sh uses grep "-e" to look for two patterns and I suspect
+older Solaris would have the same issue.
