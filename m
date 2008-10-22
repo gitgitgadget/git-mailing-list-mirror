@@ -1,7 +1,7 @@
 From: "Leo Razoumov" <slonik.az@gmail.com>
 Subject: Re: [PATCH] git-fetch should not strip off ".git" extension
-Date: Wed, 22 Oct 2008 07:35:50 -0400
-Message-ID: <ee2a733e0810220435v5f1bfa62y508f78f2d9bef8ba@mail.gmail.com>
+Date: Wed, 22 Oct 2008 07:50:24 -0400
+Message-ID: <ee2a733e0810220450i20dc81c5j488b513b5c0b781e@mail.gmail.com>
 References: <ee2a733e0810180459m5fd20365s3c27bea5c1f3f704@mail.gmail.com>
 	 <48FC5F1B.1050608@op5.se> <7vzlkz2jv7.fsf@gitster.siamese.dyndns.org>
 	 <ee2a733e0810210323j249c3460x881af6d6aefc647c@mail.gmail.com>
@@ -15,52 +15,56 @@ Content-Transfer-Encoding: 7bit
 Cc: "Alex Riesen" <raa.lkml@gmail.com>, "Andreas Ericsson" <ae@op5.se>,
 	git@vger.kernel.org
 To: "Junio C Hamano" <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Oct 22 13:37:08 2008
+X-From: git-owner@vger.kernel.org Wed Oct 22 13:51:47 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Ksc1T-0003ft-EE
-	for gcvg-git-2@gmane.org; Wed, 22 Oct 2008 13:37:07 +0200
+	id 1KscFe-0000O7-0Y
+	for gcvg-git-2@gmane.org; Wed, 22 Oct 2008 13:51:46 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752088AbYJVLfx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 22 Oct 2008 07:35:53 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752043AbYJVLfx
-	(ORCPT <rfc822;git-outgoing>); Wed, 22 Oct 2008 07:35:53 -0400
-Received: from fg-out-1718.google.com ([72.14.220.155]:18833 "EHLO
-	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751906AbYJVLfw (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 22 Oct 2008 07:35:52 -0400
-Received: by fg-out-1718.google.com with SMTP id 19so331104fgg.17
-        for <git@vger.kernel.org>; Wed, 22 Oct 2008 04:35:50 -0700 (PDT)
+	id S1753149AbYJVLu1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 22 Oct 2008 07:50:27 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753143AbYJVLu1
+	(ORCPT <rfc822;git-outgoing>); Wed, 22 Oct 2008 07:50:27 -0400
+Received: from fk-out-0910.google.com ([209.85.128.190]:2218 "EHLO
+	fk-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752069AbYJVLu0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 22 Oct 2008 07:50:26 -0400
+Received: by fk-out-0910.google.com with SMTP id 18so3025249fkq.5
+        for <git@vger.kernel.org>; Wed, 22 Oct 2008 04:50:24 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:received:received:message-id:date:from:reply-to
          :to:subject:cc:in-reply-to:mime-version:content-type
          :content-transfer-encoding:content-disposition:references;
-        bh=vRSSU/2QSra7hKkLWE+V7KeIcGmzllE1vUZjELARbDU=;
-        b=Bad5gjAYdbVzRFHVt6XbwpdYA15m//P51iDuMBOWThrerH+/wE1X0zT8CqSitmEbrB
-         y5l2V7zV8AeNeA1ig3Y1KH2ycApHr6d3N8MhyDeJX3BF9kcAblW4GdUnUtd+qu3Vp/WY
-         qgvdCvZxy7xGjmgEZkO/SdFKKa9qoG//0l43Y=
+        bh=1r7ixhsmB/JNrkJCCPBXSmtKqBocoVnYkyMvKGGIBP0=;
+        b=jzxZzKg2yuT7TyAwuOBYianAYS7m8+K9ko3M+waPemyhbnA+z0P9xRLMWWqRLAr6rI
+         3PHZrd5nnd2txo4vyuhenvnsMTUFlceELtnbvfxT5YLAiqrFBnwSmf96SfUZG/hAbMxI
+         vzEiY0ifNignCa4mtAJby6bOrvfwbBF8Yvvt4=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=message-id:date:from:reply-to:to:subject:cc:in-reply-to
          :mime-version:content-type:content-transfer-encoding
          :content-disposition:references;
-        b=DFtWXjcxjP2T8EHivlWxO5JYdZnxASSn3EUt/0w8vfe8yb+ILsHahYbD+bCca6iVmD
-         BcF82fjqTXchBoLE7ySG1ZoFv9yUT0Q+T+mXbgA+Cc0rgp9Q8pkRM4XJ2dxGrB2NqOVS
-         36pVb2+yB11XzJyts0X6bAyNrNtAvXZu7FJZY=
-Received: by 10.187.231.1 with SMTP id i1mr1453357far.18.1224675350647;
-        Wed, 22 Oct 2008 04:35:50 -0700 (PDT)
-Received: by 10.187.193.16 with HTTP; Wed, 22 Oct 2008 04:35:50 -0700 (PDT)
+        b=cEfzeTbhbReTi1RTdCl/MOTj/XkHBAfL+LICFZjnIct9Mx2+cI8u4quvz5Yz4EF6xT
+         4tBdANl3eJiWZjBGx7wBHB2kAFJ74Cf34GCXcjI4plynUDdV+3ymUyfxidVPmwaeN9wg
+         arTMEqkJtdu8UFye8vfx7QZ608lOzWIni+cZ8=
+Received: by 10.187.224.14 with SMTP id b14mr1457483far.4.1224676224598;
+        Wed, 22 Oct 2008 04:50:24 -0700 (PDT)
+Received: by 10.187.193.16 with HTTP; Wed, 22 Oct 2008 04:50:24 -0700 (PDT)
 In-Reply-To: <7vd4htwp6v.fsf@gitster.siamese.dyndns.org>
 Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/98858>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/98859>
+
+My apologies!! I hit send button by mistake before message was
+complete. Please, see below a completed version.
+--Leo--
 
 On 10/21/08, Junio C Hamano <gitster@pobox.com> wrote:
 > "Alex Riesen" <raa.lkml@gmail.com> writes:
@@ -126,7 +130,15 @@ after I do "git clone Foo.git" I get "Foo" repo side-by-side with
 Regarding your footnote *1*. I agree with your suggestions and I can
 improve the patch in the following way:
 
-(1) Fetch/clone messages/comments will refer to the source/destination
-repos by their complete names without stripping off any parts
-(2) Searching for a source repo, clone/fetch will first try an exact
-match and if it fails it will remove/add ".git" suffix and
+(P1) Fetch/clone messages/records will refer to the source/destination
+repos by their complete names without stripping off any parts of the name.
+
+(P2) Searching for a source repo, clone/fetch will first try an exact
+match and if it fails it will remove/add ".git" suffix as needed and retry.
+
+Item (P2) will provide the convenience, while item (P1) still
+guarantees correctness.
+
+Please, let me know if such approach is more satisfactory.
+
+--Leo--
