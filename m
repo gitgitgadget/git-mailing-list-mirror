@@ -1,55 +1,50 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [ANNOUCNE] repo - The Multiple Git Repository Tool
-Date: Wed, 22 Oct 2008 12:14:17 -0700
-Message-ID: <7vzlkwtpbq.fsf@gitster.siamese.dyndns.org>
-References: <20081022154245.GT14786@spearce.org>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH] rebase-i-p: delay saving current-commit to REWRITTEN
+	if squashing
+Date: Wed, 22 Oct 2008 15:15:17 -0400
+Message-ID: <20081022191517.GB31568@coredump.intra.peff.net>
+References: <cover.1224055978.git.stephen@exigencecorp.com> <759654ef1f1781cd2b102e21c6f972b065560398.1224055978.git.stephen@exigencecorp.com> <20081022125149.GA17092@coredump.intra.peff.net> <7v4p34v42e.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: "Shawn O. Pearce" <spearce@spearce.org>
-X-From: git-owner@vger.kernel.org Wed Oct 22 21:15:43 2008
+Content-Type: text/plain; charset=utf-8
+Cc: Stephen Haberman <stephen@exigencecorp.com>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Oct 22 21:16:40 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KsjB9-000081-4Q
-	for gcvg-git-2@gmane.org; Wed, 22 Oct 2008 21:15:35 +0200
+	id 1KsjC5-0000Z8-Sw
+	for gcvg-git-2@gmane.org; Wed, 22 Oct 2008 21:16:34 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755196AbYJVTO0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 22 Oct 2008 15:14:26 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755145AbYJVTO0
-	(ORCPT <rfc822;git-outgoing>); Wed, 22 Oct 2008 15:14:26 -0400
-Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:63544 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754712AbYJVTOZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 22 Oct 2008 15:14:25 -0400
-Received: from localhost.localdomain (localhost [127.0.0.1])
-	by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id 4ABB38E327;
-	Wed, 22 Oct 2008 15:14:24 -0400 (EDT)
-Received: from pobox.com (ip68-225-240-211.oc.oc.cox.net [68.225.240.211])
- (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
- certificate requested) by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with
- ESMTPSA id E2FBA8E322; Wed, 22 Oct 2008 15:14:19 -0400 (EDT)
-In-Reply-To: <20081022154245.GT14786@spearce.org> (Shawn O. Pearce's message
- of "Wed, 22 Oct 2008 08:42:45 -0700")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: A3517A4E-A06D-11DD-BF0C-4F5276724C3F-77302942!a-sasl-quonix.pobox.com
+	id S1753721AbYJVTPU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 22 Oct 2008 15:15:20 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754147AbYJVTPU
+	(ORCPT <rfc822;git-outgoing>); Wed, 22 Oct 2008 15:15:20 -0400
+Received: from peff.net ([208.65.91.99]:1524 "EHLO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752895AbYJVTPT (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 22 Oct 2008 15:15:19 -0400
+Received: (qmail 3175 invoked by uid 111); 22 Oct 2008 19:15:18 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+    by peff.net (qpsmtpd/0.32) with SMTP; Wed, 22 Oct 2008 15:15:18 -0400
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Wed, 22 Oct 2008 15:15:17 -0400
+Content-Disposition: inline
+In-Reply-To: <7v4p34v42e.fsf@gitster.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/98892>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/98893>
 
-"Shawn O. Pearce" <spearce@spearce.org> writes:
+On Wed, Oct 22, 2008 at 12:10:33PM -0700, Junio C Hamano wrote:
 
-> Google developed two tools, repo and Gerrit, and open sourced them
-> under the Apache License:
->
->   http://android.git.kernel.org/?p=tools/repo.git
->   http://android.git.kernel.org/?p=tools/gerrit.git
->
->   git://android.git.kernel.org/tools/repo.git
->   git://android.git.kernel.org/tools/gerrit.git
+> >> +		if [ "$fast_forward" == "t" ]
+> > This one even fails on my Linux box. :) "==" is a bash-ism.
+> 
+> Thanks.
 
-Heh, very nice, with a very shallow history ;-)
+You're very welcome, and sorry for not saving you a little time by
+writing my complaint in patch form in the first place.
+
+-Peff
