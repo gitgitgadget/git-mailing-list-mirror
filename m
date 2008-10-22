@@ -1,57 +1,96 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH v2] builtin-blame: Reencode commit messages according
-	to git-log rules.
-Date: Wed, 22 Oct 2008 04:20:17 -0400
-Message-ID: <20081022082016.GA18473@sigill.intra.peff.net>
-References: <1224622557-6669-1-git-send-email-angavrilov@gmail.com>
+From: Stephen Rothwell <sfr@canb.auug.org.au>
+Subject: Re: linux-next: stackprotector tree build failure
+Date: Wed, 22 Oct 2008 19:27:25 +1100
+Message-ID: <20081022192725.5f5de711.sfr@canb.auug.org.au>
+References: <20081022131124.a572b11f.sfr@canb.auug.org.au>
+	<20081022043227.GA31413@elte.hu>
+	<20081022182149.f89fe88d.sfr@canb.auug.org.au>
+	<20081022072923.GC27637@elte.hu>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-To: Alexander Gavrilov <angavrilov@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Oct 22 10:21:37 2008
+Content-Type: multipart/signed; protocol="application/pgp-signature";
+ micalg="PGP-SHA1";
+ boundary="Signature=_Wed__22_Oct_2008_19_27_25_+1100_d0tfyYBqz66O1XNr"
+Cc: Thomas Gleixner <tglx@linutronix.de>,
+	"H. Peter Anvin" <hpa@zytor.com>, linux-next@vger.kernel.org,
+	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Ingo Molnar <mingo@elte.hu>
+X-From: linux-next-owner@vger.kernel.org Wed Oct 22 10:28:53 2008
 connect(): Connection refused
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git-2@gmane.org
+Return-path: <linux-next-owner@vger.kernel.org>
+Envelope-to: glkn-linux-next@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KsYyG-0001Qa-7Z
-	for gcvg-git-2@gmane.org; Wed, 22 Oct 2008 10:21:36 +0200
+	id 1KsZ5E-00041r-7d
+	for glkn-linux-next@gmane.org; Wed, 22 Oct 2008 10:28:48 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752120AbYJVIUW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 22 Oct 2008 04:20:22 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752108AbYJVIUW
-	(ORCPT <rfc822;git-outgoing>); Wed, 22 Oct 2008 04:20:22 -0400
-Received: from peff.net ([208.65.91.99]:1392 "EHLO peff.net"
+	id S1753931AbYJVI1h (ORCPT <rfc822;glkn-linux-next@m.gmane.org>);
+	Wed, 22 Oct 2008 04:27:37 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753444AbYJVI1h
+	(ORCPT <rfc822;linux-next-outgoing>);
+	Wed, 22 Oct 2008 04:27:37 -0400
+Received: from chilli.pcug.org.au ([203.10.76.44]:57541 "EHLO smtps.tip.net.au"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751238AbYJVIUV (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 22 Oct 2008 04:20:21 -0400
-Received: (qmail 31316 invoked by uid 111); 22 Oct 2008 08:20:19 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.32) with ESMTP; Wed, 22 Oct 2008 04:20:19 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 22 Oct 2008 04:20:17 -0400
-Content-Disposition: inline
-In-Reply-To: <1224622557-6669-1-git-send-email-angavrilov@gmail.com>
-Sender: git-owner@vger.kernel.org
+	id S1753132AbYJVI1f (ORCPT <rfc822;linux-next@vger.kernel.org>);
+	Wed, 22 Oct 2008 04:27:35 -0400
+Received: from ash.ozlabs.ibm.com (bh02i525f01.au.ibm.com [202.81.18.30])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(Client did not present a certificate)
+	by smtps.tip.net.au (Postfix) with ESMTP id 43566368006;
+	Wed, 22 Oct 2008 19:27:32 +1100 (EST)
+In-Reply-To: <20081022072923.GC27637@elte.hu>
+X-Mailer: Sylpheed 2.5.0 (GTK+ 2.12.11; i486-pc-linux-gnu)
+Sender: linux-next-owner@vger.kernel.org
 Precedence: bulk
-List-ID: <git.vger.kernel.org>
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/98840>
+List-ID: <linux-next.vger.kernel.org>
+X-Mailing-List: linux-next@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/98841>
 
-On Wed, Oct 22, 2008 at 12:55:57AM +0400, Alexander Gavrilov wrote:
+--Signature=_Wed__22_Oct_2008_19_27_25_+1100_d0tfyYBqz66O1XNr
+Content-Type: text/plain; charset=US-ASCII
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-> +test_expect_success \
-> +	'blame respects i18n.commitencoding' '
-> +	git blame --incremental file | \
-> +		grep "^\(author\|summary\) " > actual &&
-> +	test_cmp actual expected
+On Wed, 22 Oct 2008 09:29:23 +0200 Ingo Molnar <mingo@elte.hu> wrote:
+>
+> I've Cc:-ed Junio and the Git list as a general FYI - but it must be=20
+> frustrating to get such a bugreport, because i have no reproducer.
+>=20
+> git-rerere sometimes seems to be picking up the wrong resolution. VERY=20
+> rarely.
+>=20
+> It seems random and content dependent. Once it happened to=20
+> arch/x86/kernel/traps_32.c and now to kernel/fork.c. Along the ~170=20
+> successful resolutions i have in my tree right now. And i do many=20
+> conflict resolutions every day - and it happened only once every 6=20
+> months or so.
+>=20
+> (the arch/x86/kernel/traps_32.c one happened regularly, that's why i=20
+> thought it's content sha1 dependent, and not some corruption.)
+>=20
+> Next time it happens i'll be on the watchout and will save the complete=20
+> tree.
 
-Even though it is POSIX, using backslashed grouping in 'grep' isn't
-portable. It fails at least on Solaris 8, and you have to do:
+I think rerere matches preimages on the SHA1 of the conflict (or its
+reverse), so sufficiently similar pieces of code will match.  I would
+expect things like ext2/3/4 to be candidates.  Did the traps_32.c one
+match one for traps_64.c?
 
-  egrep "^(author|summary) "
+I may be mistaken, but I once followed the code in rerere to try to
+figure out how to fix a resolution.
+--=20
+Cheers,
+Stephen Rothwell                    sfr@canb.auug.org.au
+http://www.canb.auug.org.au/~sfr/
 
-instead. Of course, I can't get your test to pass even with that change,
-but I think that is just a broken iconv on Solaris.
+--Signature=_Wed__22_Oct_2008_19_27_25_+1100_d0tfyYBqz66O1XNr
+Content-Type: application/pgp-signature
 
--Peff
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.9 (GNU/Linux)
+
+iEYEARECAAYFAkj+4+0ACgkQjjKRsyhoI8yt7QCeM9KWBNKY6deAOeaOxhDp7vUH
+Y8UAn24XKT8hLfB9jmuSXHZSpC7y/ka8
+=7TrS
+-----END PGP SIGNATURE-----
+
+--Signature=_Wed__22_Oct_2008_19_27_25_+1100_d0tfyYBqz66O1XNr--
