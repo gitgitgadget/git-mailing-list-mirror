@@ -1,100 +1,94 @@
-From: Robin Rosenberg <robin.rosenberg@dewire.com>
-Subject: Re: [JGIT PATCH 8/8] Define a basic merge API, and a two-way tree merge strategy
-Date: Thu, 23 Oct 2008 23:14:29 +0200
-Message-ID: <200810232314.29867.robin.rosenberg@dewire.com>
-References: <1223932217-4771-1-git-send-email-spearce@spearce.org> <1223932217-4771-8-git-send-email-spearce@spearce.org> <1223932217-4771-9-git-send-email-spearce@spearce.org>
+From: Pierre Habouzit <madcoder@debian.org>
+Subject: Re: clean/smudge filters for pdf files
+Date: Thu, 23 Oct 2008 23:32:03 +0200
+Message-ID: <20081023213203.GB26104@artemis.corp>
+References: <ee2a733e0810231244u1510cdc8y7b27af9b8fdda1e0@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
+Content-Type: multipart/signed; boundary="p4qYPpj5QlsIQJ0K";
+	protocol="application/pgp-signature"; micalg=SHA1
 Cc: git@vger.kernel.org
-To: "Shawn O. Pearce" <spearce@spearce.org>
-X-From: git-owner@vger.kernel.org Thu Oct 23 23:16:08 2008
+To: Leo Razoumov <slonik.az@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Oct 23 23:33:57 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Kt7XC-0005np-5z
-	for gcvg-git-2@gmane.org; Thu, 23 Oct 2008 23:15:58 +0200
+	id 1Kt7oY-00032H-2a
+	for gcvg-git-2@gmane.org; Thu, 23 Oct 2008 23:33:54 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752610AbYJWVOo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 23 Oct 2008 17:14:44 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752430AbYJWVOn
-	(ORCPT <rfc822;git-outgoing>); Thu, 23 Oct 2008 17:14:43 -0400
-Received: from mail.dewire.com ([83.140.172.130]:18211 "EHLO dewire.com"
+	id S1753284AbYJWVcJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 23 Oct 2008 17:32:09 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755855AbYJWVcI
+	(ORCPT <rfc822;git-outgoing>); Thu, 23 Oct 2008 17:32:08 -0400
+Received: from pan.madism.org ([88.191.52.104]:38543 "EHLO hermes.madism.org"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752366AbYJWVOn convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 23 Oct 2008 17:14:43 -0400
-Received: from localhost (localhost [127.0.0.1])
-	by dewire.com (Postfix) with ESMTP id 74A4B147EAE9;
-	Thu, 23 Oct 2008 23:14:40 +0200 (CEST)
-X-Virus-Scanned: by amavisd-new at dewire.com
-Received: from dewire.com ([127.0.0.1])
-	by localhost (torino.dewire.com [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id x+ZaDJZDpiZw; Thu, 23 Oct 2008 23:14:39 +0200 (CEST)
-Received: from [10.9.0.3] (unknown [10.9.0.3])
-	by dewire.com (Postfix) with ESMTP id CD6E380267D;
-	Thu, 23 Oct 2008 23:14:39 +0200 (CEST)
-User-Agent: KMail/1.9.10
-In-Reply-To: <1223932217-4771-9-git-send-email-spearce@spearce.org>
+	id S1753931AbYJWVcG (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 23 Oct 2008 17:32:06 -0400
+Received: from madism.org (olympe.madism.org [82.243.245.108])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(Client CN "artemis.madism.org", Issuer "madism.org" (verified OK))
+	by hermes.madism.org (Postfix) with ESMTPS id 271523FD50;
+	Thu, 23 Oct 2008 23:32:05 +0200 (CEST)
+Received: by madism.org (Postfix, from userid 1000)
+	id D11D055AC17; Thu, 23 Oct 2008 23:32:03 +0200 (CEST)
 Content-Disposition: inline
+In-Reply-To: <ee2a733e0810231244u1510cdc8y7b27af9b8fdda1e0@mail.gmail.com>
+X-Face: $(^e[V4D-[`f2EmMGz@fgWK!e.B~2g.{08lKPU(nc1J~z\4B>*JEVq:E]7G-\6$Ycr4<;Z!|VY6Grt]+RsS$IMV)f>2)M="tY:ZPcU;&%it2D81X^kNya0=L]"vZmLP+UmKhgq+u*\.dJ8G!N&=EvlD
+User-Agent: Madmutt/devel (Linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/98987>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/98988>
 
-Hi, Shawn
 
-Shouldn't testTrivialTwoWay_disjointhistories()  work?
+--p4qYPpj5QlsIQJ0K
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-The two trees have nothing in common and so should be trivially mergeable.
+On Thu, Oct 23, 2008 at 07:44:39PM +0000, Leo Razoumov wrote:
+> I am trying to improve storage efficiency for PDF files in a git repo.
+> Following earlier discussions in this list I am trying to set up
+> proper clean/smudge filters. What follows is my current setup
+>=20
+> # in ~/.gitconfig
+> [filter "pdf"]
+> 	clean  =3D "pdftk - output - uncompress"
+> 	smudge =3D "pdftk - output - compress"
+>=20
+> # in .gitattributes
+> *.pdf filter=3Dpdf
+>=20
+> Unfortunately, it seems as though that pdftk uncompress followed by
+> pdftk compress do not leave the file invariant. I tried several
+> uncompress+compress iterations and the file still keep changing (the
+> size though stays the same).
+> Is there any other alternative way to store PDF files in git repo more
+> efficiently?
+> Any alternative to pdftk on Linux?
 
--- robin
+actually it uses some kind of zlib algorithm so that's pretty normal you
+don't have the same result with a packer. Maybe one could write a tool
+like pristine-tar for that purpose.
 
->From cef2695431e368da616a1e9c8de3e5e419854a4c Mon Sep 17 00:00:00 2001
-From: Robin Rosenberg <robin.rosenberg@dewire.com>
-Date: Thu, 23 Oct 2008 23:09:10 +0200
-Subject: [EGIT PATCH] Simple merge test
+--=20
+=C2=B7O=C2=B7  Pierre Habouzit
+=C2=B7=C2=B7O                                                madcoder@debia=
+n.org
+OOO                                                http://www.madism.org
 
----
- .../org/spearce/jgit/merge/SimpleMergeTest.java    |   28 ++++++++++++++++++++
- 1 files changed, 28 insertions(+), 0 deletions(-)
- create mode 100644 org.spearce.jgit.test/tst/org/spearce/jgit/merge/SimpleMergeTest.java
+--p4qYPpj5QlsIQJ0K
+Content-Type: application/pgp-signature
+Content-Disposition: inline
 
-diff --git a/org.spearce.jgit.test/tst/org/spearce/jgit/merge/SimpleMergeTest.java b/org.spearce.jgit.test/tst/org/spearce/jgit/merge/SimpleMergeTest.java
-new file mode 100644
-index 0000000..8ec1c7f
---- /dev/null
-+++ b/org.spearce.jgit.test/tst/org/spearce/jgit/merge/SimpleMergeTest.java
-@@ -0,0 +1,28 @@
-+package org.spearce.jgit.merge;
-+
-+import java.io.IOException;
-+
-+import org.spearce.jgit.lib.ObjectId;
-+import org.spearce.jgit.lib.RepositoryTestCase;
-+
-+public class SimpleMergeTest extends RepositoryTestCase {
-+
-+	public void testTrivialTwoWay_noway() throws IOException {
-+		Merger ourMerger = MergeStrategy.SIMPLE_TWO_WAY_IN_CORE.newMerger(db);
-+		boolean merge = ourMerger.merge(new ObjectId[] { db.resolve("a"), db.resolve("c") });
-+		assertFalse(merge);
-+	}
-+
-+	public void testTrivialTwoWay_disjointhistories() throws IOException {
-+		Merger ourMerger = MergeStrategy.SIMPLE_TWO_WAY_IN_CORE.newMerger(db);
-+		boolean merge = ourMerger.merge(new ObjectId[] { db.resolve("a"), db.resolve("c~4") });
-+		assertTrue(merge); 
-+	}
-+
-+	public void testTrivialTwoWay_ok() throws IOException {
-+		Merger ourMerger = MergeStrategy.SIMPLE_TWO_WAY_IN_CORE.newMerger(db);
-+		boolean merge = ourMerger.merge(new ObjectId[] { db.resolve("a^0^0^0"), db.resolve("a^0^0^1") });
-+		assertTrue(merge);
-+		assertEquals(db.mapTree("a^0^0").getId(), ourMerger.getResultTreeId());
-+	}
-+}
--- 
-1.6.0.2.308.gef4a
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.9 (GNU/Linux)
+
+iEYEABECAAYFAkkA7VMACgkQvGr7W6HudhwbXwCfdBnZur5qUXPqctdO0/VR0hjP
+eHcAoI+LiQdfyihCDr/HkYV6xumzVqAP
+=/yfO
+-----END PGP SIGNATURE-----
+
+--p4qYPpj5QlsIQJ0K--
