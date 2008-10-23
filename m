@@ -1,73 +1,68 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [RFC PATCH 1/5] add valgrind support in test scripts
-Date: Wed, 22 Oct 2008 17:14:52 -0700
-Message-ID: <7v7i80tber.fsf@gitster.siamese.dyndns.org>
-References: <20081022202810.GA4439@coredump.intra.peff.net>
- <20081022202915.GA4547@coredump.intra.peff.net>
- <alpine.DEB.1.00.0810230008430.22125@pacific.mpi-cbg.de.mpi-cbg.de>
+From: "David Symonds" <dsymonds@gmail.com>
+Subject: Re: [ANNOUCNE] repo - The Multiple Git Repository Tool
+Date: Wed, 22 Oct 2008 17:45:03 -0700
+Message-ID: <ee77f5c20810221745o95da5d7l79fb8be13c9c5e2@mail.gmail.com>
+References: <20081022154245.GT14786@spearce.org>
+	 <7vzlkwtpbq.fsf@gitster.siamese.dyndns.org>
+	 <20081022211320.GW14786@spearce.org>
+	 <7vvdvkte4i.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Jeff King <peff@peff.net>, git@vger.kernel.org
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Thu Oct 23 02:16:45 2008
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: "Shawn O. Pearce" <spearce@spearce.org>, git@vger.kernel.org
+To: "Junio C Hamano" <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Oct 23 02:46:28 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KsnsM-00032K-F5
-	for gcvg-git-2@gmane.org; Thu, 23 Oct 2008 02:16:30 +0200
+	id 1KsoLL-0003hM-4C
+	for gcvg-git-2@gmane.org; Thu, 23 Oct 2008 02:46:27 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752804AbYJWAPE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 22 Oct 2008 20:15:04 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752689AbYJWAPE
-	(ORCPT <rfc822;git-outgoing>); Wed, 22 Oct 2008 20:15:04 -0400
-Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:42688 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752451AbYJWAPC (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 22 Oct 2008 20:15:02 -0400
-Received: from localhost.localdomain (localhost [127.0.0.1])
-	by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id 04E0C8EE77;
-	Wed, 22 Oct 2008 20:15:01 -0400 (EDT)
-Received: from pobox.com (ip68-225-240-211.oc.oc.cox.net [68.225.240.211])
- (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
- certificate requested) by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with
- ESMTPSA id 669C38EE72; Wed, 22 Oct 2008 20:14:54 -0400 (EDT)
-In-Reply-To: <alpine.DEB.1.00.0810230008430.22125@pacific.mpi-cbg.de.mpi-cbg.de> (Johannes
- Schindelin's message of "Thu, 23 Oct 2008 00:13:47 +0200 (CEST)")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: A20960F0-A097-11DD-B2C6-4F5276724C3F-77302942!a-sasl-quonix.pobox.com
+	id S1753608AbYJWApG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 22 Oct 2008 20:45:06 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753457AbYJWApG
+	(ORCPT <rfc822;git-outgoing>); Wed, 22 Oct 2008 20:45:06 -0400
+Received: from rv-out-0506.google.com ([209.85.198.239]:22904 "EHLO
+	rv-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753168AbYJWApD (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 22 Oct 2008 20:45:03 -0400
+Received: by rv-out-0506.google.com with SMTP id k40so71515rvb.1
+        for <git@vger.kernel.org>; Wed, 22 Oct 2008 17:45:03 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to
+         :subject:cc:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:references;
+        bh=RDzYnsrcXxuiXXl1/upng5rwfFNcLa6HTlaYB9/zRmQ=;
+        b=NF+D7oeOEGOLo08W/EzomeWzlME0XCvRvpiei5uq2Jmmfx8QI1lEckfQw2Pc8e+57v
+         JVKVfEPDhLZUOx1tXggpB4Fo4IhrWN8QkMNX/uHuUjqyzNwKFdiJlmqTuYHpyURuY/uA
+         UPxGRe0f75ztQK+xBBXpsFQVxh2Dx3IP8rzLQ=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
+         :content-type:content-transfer-encoding:content-disposition
+         :references;
+        b=R/RfjxLMdT1827AHrMgkKjgxs5m4BTtLXYFkPwQUgBPLO7DRrq0sMqEpBrMCZ2UQwW
+         9KvXCaXKys03BIxt1xOoLqTs0QnDxm1UXgeydoQnoT+wMES/IqkW/9nuU74NXDzs40Su
+         R+jqZil2tQ/3Zhi90JSWCZhuLYLzB5nzseUAY=
+Received: by 10.142.242.11 with SMTP id p11mr4686087wfh.174.1224722703345;
+        Wed, 22 Oct 2008 17:45:03 -0700 (PDT)
+Received: by 10.142.170.14 with HTTP; Wed, 22 Oct 2008 17:45:03 -0700 (PDT)
+In-Reply-To: <7vvdvkte4i.fsf@gitster.siamese.dyndns.org>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/98931>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/98932>
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+On Wed, Oct 22, 2008 at 4:16 PM, Junio C Hamano <gitster@pobox.com> wrote:
 
-> Hi,
->
-> On Wed, 22 Oct 2008, Jeff King wrote:
->
->> diff --git a/Makefile b/Makefile
->> index d6f3695..68f0172 100644
->> --- a/Makefile
->> +++ b/Makefile
->> @@ -1343,7 +1345,12 @@ all:: $(TEST_PROGRAMS)
->>  
->>  export NO_SVN_TESTS
->>  
->> -test: all
->> +valgrind-setup: $(patsubst %.sh,%,$(VALGRIND_SH))
->> +	rm -rf t/valgrind/bin
->> +	mkdir t/valgrind/bin
->> +	for i in git $(PROGRAMS); do cp test-valgrind t/valgrind/bin/$$i; done
->
-> I wonder if it would not be better to scrap the t/valgrind/ directory and 
-> regenerate it everytime you run a test manually; I'd use "ln" instead of 
-> "cp", and also parse command-list.txt to catch really all of them (even if 
-> a dashed form is used for a builtin by mistake).
+> By the way, are you still in need of a folding bookshelf from Target?
 
-Going one step further, I wonder if this approach can also be used to
-catch such a mistake.  Install a dashed form that records the fact that it
-was called when it shouldn't, and by whom.
+Weirdest aside *ever* on the Git ML, at least from my memory.
+
+
+Dave.
