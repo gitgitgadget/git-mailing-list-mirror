@@ -1,237 +1,91 @@
-From: "Nguyen Thai Ngoc Duy" <pclouds@gmail.com>
-Subject: Re: git archive
-Date: Thu, 23 Oct 2008 22:33:31 +0700
-Message-ID: <fcaeb9bf0810230833i3953a5abt2d2ba6ca1b751754@mail.gmail.com>
-References: <gdmp0p$92r$1@ger.gmane.org>
-	 <20081022130829.GC2015@riemann.deskinm.fdns.net>
+From: Jeff King <peff@peff.net>
+Subject: Re: git performance
+Date: Thu, 23 Oct 2008 12:39:12 -0400
+Message-ID: <20081023163912.GA11489@coredump.intra.peff.net>
+References: <000801c93483$2fdad340$8f9079c0$@com> <20081022203624.GA4585@coredump.intra.peff.net> <000901c93490$e0c40ed0$a24c2c70$@com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: "kenneth johansson" <ken@kenjo.org>, git@vger.kernel.org
-To: "Deskin Miller" <deskinm@umich.edu>
-X-From: git-owner@vger.kernel.org Thu Oct 23 17:35:36 2008
+Content-Type: text/plain; charset=utf-8
+Cc: git@vger.kernel.org
+To: Edward Ned Harvey <git@nedharvey.com>
+X-From: git-owner@vger.kernel.org Thu Oct 23 18:40:42 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Kt2Db-0006uw-T2
-	for gcvg-git-2@gmane.org; Thu, 23 Oct 2008 17:35:24 +0200
+	id 1Kt3Ej-0003rd-Ul
+	for gcvg-git-2@gmane.org; Thu, 23 Oct 2008 18:40:38 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755275AbYJWPdr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 23 Oct 2008 11:33:47 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755279AbYJWPdr
-	(ORCPT <rfc822;git-outgoing>); Thu, 23 Oct 2008 11:33:47 -0400
-Received: from mail-gx0-f16.google.com ([209.85.217.16]:53516 "EHLO
-	mail-gx0-f16.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754700AbYJWPdp (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 23 Oct 2008 11:33:45 -0400
-Received: by mail-gx0-f16.google.com with SMTP id 9so4270gxk.13
-        for <git@vger.kernel.org>; Thu, 23 Oct 2008 08:33:44 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to
-         :subject:cc:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:references;
-        bh=o0j9Q/WhJdDhHai/LJmOUpdmvSqp80vyekzYXd2Khjc=;
-        b=Bjp703OnSKZTSac7MwoHRpoG8iJhB8K08d/WMZzO6vDP7EysxfpPuDcXIcIZe3PSks
-         cBWBFrbUUbWy2g+mtGhXE1qke1gAlGkWmZ2uy7gnLoTGiWX+DvjUJm+Ps0Azu/e+EuRe
-         ls0wXq9XrbAk1fBupty0HmlKRFGya4Nkwv6vI=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
-         :content-type:content-transfer-encoding:content-disposition
-         :references;
-        b=I3bJb8C+oFbe2UgMb/CEUeaIVkUS7I+AoHAMYpI/D737fEB+Oycycchtju1Xz0n0/T
-         CcQVan08kvT9gl4NaynEUgs5i3uAUsReaDdhePG4VnLCr27Y57whVcxxA2pQlrFWhd5i
-         ECDttTiwAx6C1aY0udBUCGT5Y0BkoZF+NOltw=
-Received: by 10.86.59.2 with SMTP id h2mr2382347fga.40.1224776011120;
-        Thu, 23 Oct 2008 08:33:31 -0700 (PDT)
-Received: by 10.86.95.9 with HTTP; Thu, 23 Oct 2008 08:33:31 -0700 (PDT)
-In-Reply-To: <20081022130829.GC2015@riemann.deskinm.fdns.net>
+	id S1755747AbYJWQjR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 23 Oct 2008 12:39:17 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755292AbYJWQjQ
+	(ORCPT <rfc822;git-outgoing>); Thu, 23 Oct 2008 12:39:16 -0400
+Received: from peff.net ([208.65.91.99]:4151 "EHLO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754812AbYJWQjP (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 23 Oct 2008 12:39:15 -0400
+Received: (qmail 10544 invoked by uid 111); 23 Oct 2008 16:39:14 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+    by peff.net (qpsmtpd/0.32) with SMTP; Thu, 23 Oct 2008 12:39:14 -0400
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Thu, 23 Oct 2008 12:39:12 -0400
 Content-Disposition: inline
+In-Reply-To: <000901c93490$e0c40ed0$a24c2c70$@com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/98974>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/98975>
 
-On 10/22/08, Deskin Miller <deskinm@umich.edu> wrote:
-> On Wed, Oct 22, 2008 at 08:42:01AM +0000, kenneth johansson wrote:
->  > I was going to make a tar of the latest stable linux kernel.
->  > Done it before but now I got a strange problem.
->  >
->  > >git archive --format=tar v2.6.27.2
->  > fatal: Not a valid object name
->
->
-> I had the same thing happen to me, while trying to make an archive of Git.
->  Were you perchance working in a bare repository, as I was?  I spent some time
->  looking at it and I think git archive sets up the environment in the wrong
->  order, though of course I never finished a patch so I'm going from memory:
->
->  After looking at the code again, I think the issue is that git_config is called
->  in builtin-archive.c:cmd_archive before setup_git_directory is called in
->  archive.c:write_archive.  The former ends up setting GIT_DIR to be '.git' even
->  if you're in a bare repository.  My coding skills weren't up to fixing it
->  easily; moving setup_git_directory before git_config in builtin-archive caused
->  last test of t5000 to fail: GIT_DIR=some/nonexistent/path git archive --list
->  should still display the archive formats.
+On Wed, Oct 22, 2008 at 05:55:14PM -0400, Edward Ned Harvey wrote:
 
-The problem affects some other commands as well. I tried the following
-patch, ran "make test" and discovered "git mailinfo", "git
-verify-pack", "git hash-object" and "git unpack-file". A bandage patch
-is at the end of this mail. Solution is as Jeff suggested: call
-setup_git_directory_gently() early.
+> I'm talking about 40-50,000 files, on multi-user production linux,
+> which means the cache is never warm, except when I'm benchmarking.
 
----<---
-diff --git a/environment.c b/environment.c
-index 0693cd9..00ed640 100644
---- a/environment.c
-+++ b/environment.c
-@@ -49,14 +49,18 @@ static char *work_tree;
+Well, if you have a cold cache it's going to take longer. :) You should
+probably benchmark if you want to know exactly how long.
 
- static const char *git_dir;
- static char *git_object_dir, *git_index_file, *git_refs_dir, *git_graft_file;
-+int git_dir_discovered;
+> Specifically RHEL 4 with the files on NFS mount.  Cold cache "svn st"
+> takes ~10 mins.  Warm cache 20-30 sec.  Surprisingly to me,
 
- static void setup_git_env(void)
- {
- 	git_dir = getenv(GIT_DIR_ENVIRONMENT);
- 	if (!git_dir)
- 		git_dir = read_gitfile_gently(DEFAULT_GIT_DIR_ENVIRONMENT);
--	if (!git_dir)
-+	if (!git_dir) {
-+		if (!git_dir_discovered)
-+			die("Internal error: .git must be relocated at cwd by setup_git_*");
- 		git_dir = DEFAULT_GIT_DIR_ENVIRONMENT;
-+	}
- 	git_object_dir = getenv(DB_ENVIRONMENT);
- 	if (!git_object_dir) {
- 		git_object_dir = xmalloc(strlen(git_dir) + 9);
-diff --git a/setup.c b/setup.c
-index 78a8041..d404c21 100644
---- a/setup.c
-+++ b/setup.c
-@@ -368,6 +368,7 @@ const char *read_gitfile_gently(const char *path)
-  * We cannot decide in this function whether we are in the work tree or
-  * not, since the config can only be read _after_ this function was called.
-  */
-+extern int git_dir_discovered;
- const char *setup_git_directory_gently(int *nongit_ok)
- {
- 	const char *work_tree_env = getenv(GIT_WORK_TREE_ENVIRONMENT);
-@@ -472,6 +473,8 @@ const char *setup_git_directory_gently(int *nongit_ok)
- 		}
- 		chdir("..");
- 	}
-+	/* It is safe to call setup_git_env() now */
-+	git_dir_discovered = 1;
+Wow, that is awful. For comparison, "git status" from a cold on the
+kernel repo takes me 17 seconds. From a warm cache, less than half a
+second.
 
- 	inside_git_dir = 0;
- 	if (!work_tree_env)
----<---
+Yes, the cold cache case would probably be better with inotify, but
+compared to svn, that's screaming fast. I haven't used perforce. If your
+bottleneck really is stat'ing the tree, then yes, something that avoided
+that might perform better (but weigh that particular optimization
+against other things which might be slower).
 
+> Out of curiosity, what are they talking about, when they say "git is
+> fast?"
 
-Bandage patch:
+Well, there are the numbers above. When comparing to SVN or (god forbid)
+CVS, there are order of magnitude speedups for most common operations.
 
----<---
-diff --git a/builtin-archive.c b/builtin-archive.c
-index 432ce2a..5ea0a12 100644
---- a/builtin-archive.c
-+++ b/builtin-archive.c
-@@ -110,7 +110,9 @@ static const char *extract_remote_arg(int *ac,
-const char **av)
- int cmd_archive(int argc, const char **argv, const char *prefix)
- {
- 	const char *remote = NULL;
-+	int nongit;
+>  Just the fact that it's all local disk, or is there more to it
+> than that?  I could see - git would probably outperform perforce for
 
-+	prefix = setup_git_directory_gently(&nongit);
- 	git_config(git_default_config, NULL);
+The things that generally make git fast are:
 
- 	remote = extract_remote_arg(&argc, argv);
-diff --git a/builtin-mailinfo.c b/builtin-mailinfo.c
-index e890f7a..5d401fb 100644
---- a/builtin-mailinfo.c
-+++ b/builtin-mailinfo.c
-@@ -916,10 +916,9 @@ static const char mailinfo_usage[] =
- int cmd_mailinfo(int argc, const char **argv, const char *prefix)
- {
- 	const char *def_charset;
-+	int nongit;
+  - using a compact on-disk structure (including zlib and aggressive
+    delta-finding) to keep your cache warm (and when it's not warm, to
+    get data off the disk as quickly as possible)
 
--	/* NEEDSWORK: might want to do the optional .git/ directory
--	 * discovery
--	 */
-+	prefix = setup_git_directory_gently(&nongit);
- 	git_config(git_default_config, NULL);
+  - the content-addressable nature of objects means we can just look at
+    the data we need to solve a problem. For example,
+    getting the history between point A and point B is "O(the number of
+    commits between A and B)", _not_ "O(the size of the repo)".
+    Viewing a log without generating diffs is "O(the number of
+    commits)", not "O(some combination of the number of commits and the
+    number of files in each commit)". Diffing two points in history is
+    "O(the size of the differences between the two points)" and is
+    totally independent of the number of commits between the two points.
 
- 	def_charset = (git_commit_encoding ? git_commit_encoding : "utf-8");
-diff --git a/builtin-verify-pack.c b/builtin-verify-pack.c
-index 25a29f1..35a4eb2 100644
---- a/builtin-verify-pack.c
-+++ b/builtin-verify-pack.c
-@@ -115,7 +115,9 @@ int cmd_verify_pack(int argc, const char **argv,
-const char *prefix)
- 	int verbose = 0;
- 	int no_more_options = 0;
- 	int nothing_done = 1;
-+	int nongit;
+  - most operations are streamable. "git log >/dev/null" on the kernel
+    repo (about 90,000 commits) takes 8.5 seconds on my box. But it
+    starts generating output immediately, so it _feels_ instant, and the
+    rest of the data is generated while I read the first commit in my
+    pager.
 
-+	prefix = setup_git_directory_gently(&nongit);
- 	git_config(git_default_config, NULL);
- 	while (1 < argc) {
- 		if (!no_more_options && argv[1][0] == '-') {
-diff --git a/hash-object.c b/hash-object.c
-index 20937ff..a52b6be 100644
---- a/hash-object.c
-+++ b/hash-object.c
-@@ -78,19 +78,20 @@ int main(int argc, const char **argv)
- 	const char *prefix = NULL;
- 	int prefix_length = -1;
- 	const char *errstr = NULL;
-+	int nongit;
-
- 	type = blob_type;
-
--	git_config(git_default_config, NULL);
--
- 	argc = parse_options(argc, argv, hash_object_options, hash_object_usage, 0);
-
--	if (write_object) {
--		prefix = setup_git_directory();
--		prefix_length = prefix ? strlen(prefix) : 0;
--		if (vpath && prefix)
--			vpath = prefix_filename(prefix, prefix_length, vpath);
--	}
-+	prefix = setup_git_directory_gently(&nongit);
-+	git_config(git_default_config, NULL);
-+	prefix_length = prefix ? strlen(prefix) : 0;
-+	if (vpath && prefix)
-+		vpath = prefix_filename(prefix, prefix_length, vpath);
-+
-+	if (write_object && nongit)
-+		die("Git repository required");
-
- 	if (stdin_paths) {
- 		if (hashstdin)
-diff --git a/unpack-file.c b/unpack-file.c
-index bcdc8bb..1a58d72 100644
---- a/unpack-file.c
-+++ b/unpack-file.c
-@@ -27,10 +27,10 @@ int main(int argc, char **argv)
-
- 	if (argc != 2)
- 		usage("git-unpack-file <sha1>");
-+	setup_git_directory();
- 	if (get_sha1(argv[1], sha1))
- 		die("Not a valid object name %s", argv[1]);
-
--	setup_git_directory();
- 	git_config(git_default_config, NULL);
-
- 	puts(create_temp_file(sha1));
----<---
--- 
-Duy
+-Peff
