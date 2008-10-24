@@ -1,103 +1,105 @@
-From: Joey Hess <joey@kitenet.net>
-Subject: [PATCH] git-daemon: set REMOTE_ADDR to client address
-Date: Fri, 24 Oct 2008 01:48:50 -0400
-Message-ID: <20081024054849.GA29048@kodama.kitenet.net>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] Only update the cygwin-related configuration during
+ state auto-setup
+Date: Thu, 23 Oct 2008 22:54:09 -0700
+Message-ID: <7viqri35dq.fsf@gitster.siamese.dyndns.org>
+References: <81b0412b0810230607sfea05ddm62bd03f837fc922e@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Oct 24 07:50:07 2008
+Cc: "Mark Levedahl" <mlevedahl@gmail.com>, spearce@spearce.org,
+	dpotapov@gmail.com, git@vger.kernel.org
+To: "Alex Riesen" <raa.lkml@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Oct 24 07:55:47 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KtFYk-0003Rx-ML
-	for gcvg-git-2@gmane.org; Fri, 24 Oct 2008 07:50:07 +0200
+	id 1KtFeB-0004sD-Ma
+	for gcvg-git-2@gmane.org; Fri, 24 Oct 2008 07:55:44 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751057AbYJXFsy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 24 Oct 2008 01:48:54 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751066AbYJXFsy
-	(ORCPT <rfc822;git-outgoing>); Fri, 24 Oct 2008 01:48:54 -0400
-Received: from wren.kitenet.net ([80.68.85.49]:48580 "EHLO kitenet.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751057AbYJXFsx (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 24 Oct 2008 01:48:53 -0400
-Received: from kodama.kitenet.net (fttu-67-223-5-142.btes.tv [67.223.5.142])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(Client CN "Joey Hess", Issuer "Joey Hess" (verified OK))
-	by kitenet.net (Postfix) with ESMTPS id 87F9E3142E1
-	for <git@vger.kernel.org>; Fri, 24 Oct 2008 01:48:51 -0400 (EDT)
-Received: by kodama.kitenet.net (Postfix, from userid 1000)
-	id 3F234114025; Fri, 24 Oct 2008 01:48:50 -0400 (EDT)
-Content-Disposition: inline
-User-Agent: Mutt/1.5.18 (2008-05-17)
-X-Virus-Scanned: ClamAV 0.94/8483/Thu Oct 23 23:01:54 2008 on wren.kitenet.net
-X-Virus-Status: Clean
+	id S1751854AbYJXFya (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 24 Oct 2008 01:54:30 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751597AbYJXFy3
+	(ORCPT <rfc822;git-outgoing>); Fri, 24 Oct 2008 01:54:29 -0400
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:53956 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750959AbYJXFy3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 24 Oct 2008 01:54:29 -0400
+Received: from localhost.localdomain (localhost [127.0.0.1])
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 64DFB73EA7;
+	Fri, 24 Oct 2008 01:54:27 -0400 (EDT)
+Received: from pobox.com (ip68-225-240-211.oc.oc.cox.net [68.225.240.211])
+ (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
+ certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
+ ESMTPSA id AF85873EA5; Fri, 24 Oct 2008 01:54:16 -0400 (EDT)
+In-Reply-To: <81b0412b0810230607sfea05ddm62bd03f837fc922e@mail.gmail.com>
+ (Alex Riesen's message of "Thu, 23 Oct 2008 15:07:22 +0200")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: 37C51258-A190-11DD-B23D-9CEDC82D7133-77302942!a-sasl-fastnet.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/99009>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/99010>
 
-This allows hooks like pre-receive to look at the client's IP
-address.
+"Alex Riesen" <raa.lkml@gmail.com> writes:
 
-Of course the IP address can't be used to get strong security;
-git-daemon isn't the right thing to use if you need that. However,
-basic IP address checking can be good enough in some situations.
+> Otherwise the other global settings which were already read and set up will
+> be overwritten ...
 
-REMOTE_ADDR is the same environment variable used to communicate the
-client's address to CGI scripts.
+This is the answer to the question I asked in:
 
-Signed-off-by: Joey Hess <joey@kitenet.net>
----
+ http://thread.gmane.org/gmane.comp.version-control.git/97986/focus=98066
 
-Real world example: ikiwiki can use pre-receive to check that the pushed
-changes are ones that anyone could make to the wiki's source via the web
-interface, and thus safe to accept. It's useful to be able to ban IP
-addresses from editing a wiki on the web, as a first line of defence to
-guard against spammers etc. With this patch the same IP guards can be
-applied to changes pushed in via git-daemon.
+Perhaps we should use a separate variable as the original patch did, in:
 
- Documentation/git-daemon.txt |    9 +++++++++
- daemon.c                     |    4 ++++
- 2 files changed, 13 insertions(+), 0 deletions(-)
+  http://article.gmane.org/gmane.comp.version-control.git/97987
 
-diff --git a/Documentation/git-daemon.txt b/Documentation/git-daemon.txt
-index b08a08c..f1a570a 100644
---- a/Documentation/git-daemon.txt
-+++ b/Documentation/git-daemon.txt
-@@ -270,6 +270,15 @@ selectively enable/disable services per repository::
- ----------------------------------------------------------------
+How about doing it like this instead?
+
+
+diff --git i/compat/cygwin.c w/compat/cygwin.c
+index f196753..ebac148 100644
+--- i/compat/cygwin.c
++++ w/compat/cygwin.c
+@@ -91,26 +91,32 @@ static int cygwin_stat(const char *path, struct stat *buf)
+  * functions should be used. The choice is determined by core.ignorecygwinfstricks.
+  * Reading this option is not always possible immediately as git_dir may be
+  * not be set yet. So until it is set, use cygwin lstat/stat functions.
+- * However, if the trust_executable_bit is set, we must use the Cygwin posix
++ * However, if core.filemode is set, we must use the Cygwin posix
+  * stat/lstat as the Windows stat fuctions do not determine posix filemode.
++ *
++ * Note that git_cygwin_config() does NOT call git_default_config() and this
++ * is deliberate.  Many commands read from config to establish initial
++ * values in variables and later tweak them from elsewhere (e.g. command line).
++ * init_stat() is called lazily on demand, typically much late in the program,
++ * and calling git_default_config() from here would break such variables.
+  */
+ static int native_stat = 1;
+-extern int trust_executable_bit;
++static int core_filemode;
  
+ static int git_cygwin_config(const char *var, const char *value, void *cb)
+ {
+-	if (!strcmp(var, "core.ignorecygwinfstricks")) {
++	if (!strcmp(var, "core.ignorecygwinfstricks"))
+ 		native_stat = git_config_bool(var, value);
+-		return 0;
+-	}
+-	return git_default_config(var, value, cb);
++	else if (!strcmp(var, "core.filemode"))
++		core_filemode = git_config_bool(var, value);
++	return 0;
+ }
  
-+ENVIRONMENT
-+-----------
-+'git-daemon' will set REMOTE_ADDR to the IP address of the client
-+that connected to it, if the IP address is available. REMOTE_ADDR will
-+be available in the environment of hooks called when
-+services are performed.
-+
-+
-+
- Author
- ------
- Written by Linus Torvalds <torvalds@osdl.org>, YOSHIFUJI Hideaki
-diff --git a/daemon.c b/daemon.c
-index 3e5582d..b9ba44c 100644
---- a/daemon.c
-+++ b/daemon.c
-@@ -537,6 +537,10 @@ static int execute(struct sockaddr *addr)
- #endif
- 		}
- 		loginfo("Connection from %s:%d", addrbuf, port);
-+		setenv("REMOTE_ADDR", addrbuf, 1);
-+	}
-+	else {
-+		unsetenv("REMOTE_ADDR");
- 	}
- 
- 	alarm(init_timeout ? init_timeout : timeout);
-
--- 
-1.5.6.5
+ static int init_stat(void)
+ {
+ 	if (have_git_dir()) {
+ 		git_config(git_cygwin_config, NULL);
+-		if (!trust_executable_bit && native_stat) {
++		if (!core_filemode && native_stat) {
+ 			cygwin_stat_fn = cygwin_stat;
+ 			cygwin_lstat_fn = cygwin_lstat;
+ 		} else {
