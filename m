@@ -1,71 +1,74 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Re* ext3: fix ext3_dx_readdir hash collision handling -
- Regression
-Date: Fri, 24 Oct 2008 15:35:03 -0700
-Message-ID: <7vk5bx1v1k.fsf@gitster.siamese.dyndns.org>
-References: <20081022093201.GA2227@gentoox2.trippelsdorf.de>
- <20081023032832.GE10369@mit.edu>
- <20081023063740.GA2438@gentoox2.trippelsdorf.de>
- <20081024000109.GD7842@mit.edu>
- <20081024042851.GA2360@gentoox2.trippelsdorf.de>
- <alpine.LFD.2.00.0810240853310.3287@nehalem.linux-foundation.org>
- <7vwsfx1wnb.fsf_-_@gitster.siamese.dyndns.org>
- <alpine.LFD.2.00.0810241524350.3287@nehalem.linux-foundation.org>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH 3/5] refactor userdiff textconv code
+Date: Fri, 24 Oct 2008 18:50:01 -0400
+Message-ID: <20081024225001.GA13978@coredump.intra.peff.net>
+References: <20081024024631.GA20365@coredump.intra.peff.net> <20081024025330.GC2831@coredump.intra.peff.net> <7v3ail3dfy.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Linus Torvalds <torvalds@linux-foundation.org>
-X-From: git-owner@vger.kernel.org Sat Oct 25 00:36:26 2008
+Content-Type: text/plain; charset=utf-8
+Cc: git@vger.kernel.org, Johannes Sixt <j.sixt@viscovery.net>,
+	Matthieu Moy <Matthieu.Moy@imag.fr>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sat Oct 25 00:51:24 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KtVGb-0007E5-Cb
-	for gcvg-git-2@gmane.org; Sat, 25 Oct 2008 00:36:25 +0200
+	id 1KtVV2-0002Yi-VC
+	for gcvg-git-2@gmane.org; Sat, 25 Oct 2008 00:51:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751341AbYJXWfL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 24 Oct 2008 18:35:11 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751295AbYJXWfL
-	(ORCPT <rfc822;git-outgoing>); Fri, 24 Oct 2008 18:35:11 -0400
-Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:37324 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750714AbYJXWfK (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 24 Oct 2008 18:35:10 -0400
-Received: from localhost.localdomain (localhost [127.0.0.1])
-	by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id 882068F359;
-	Fri, 24 Oct 2008 18:35:09 -0400 (EDT)
-Received: from pobox.com (ip68-225-240-211.oc.oc.cox.net [68.225.240.211])
- (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
- certificate requested) by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with
- ESMTPSA id 097998F357; Fri, 24 Oct 2008 18:35:05 -0400 (EDT)
-In-Reply-To: <alpine.LFD.2.00.0810241524350.3287@nehalem.linux-foundation.org> (Linus
- Torvalds's message of "Fri, 24 Oct 2008 15:26:46 -0700 (PDT)")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: 03AD9D1E-A21C-11DD-8DB8-4F5276724C3F-77302942!a-sasl-quonix.pobox.com
+	id S1751529AbYJXWuF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 24 Oct 2008 18:50:05 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751516AbYJXWuF
+	(ORCPT <rfc822;git-outgoing>); Fri, 24 Oct 2008 18:50:05 -0400
+Received: from peff.net ([208.65.91.99]:4075 "EHLO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751529AbYJXWuE (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 24 Oct 2008 18:50:04 -0400
+Received: (qmail 24983 invoked by uid 111); 24 Oct 2008 22:50:02 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+    by peff.net (qpsmtpd/0.32) with SMTP; Fri, 24 Oct 2008 18:50:02 -0400
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Fri, 24 Oct 2008 18:50:01 -0400
+Content-Disposition: inline
+In-Reply-To: <7v3ail3dfy.fsf@gitster.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/99077>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/99078>
 
-Linus Torvalds <torvalds@linux-foundation.org> writes:
+On Fri, Oct 24, 2008 at 02:12:17PM -0700, Junio C Hamano wrote:
 
-> On Fri, 24 Oct 2008, Junio C Hamano wrote:
->>
->> Subject: allow readdir(3) to return the same entry twice
->
-> The thing is, this really is a kernel bug. We have even bisected it (and 
-> it hasn't hit any released kernel). The original reporter showed it with a 
-> simple "rm -r".
->
-> So it really isn't a git bug, even though I initially thought it might be, 
-> before I looked closer.
->
-> That said, the git patch may be worth it just because two *concurrent* 
-> invocations of "git clean" could then cause one (or both) to fail this 
-> way.
+> Either that or drop data_is_textconv and have two sets of <ptr,size> pair
+> in filespec, one for real data and another purely for diff text
+> generation.
 
-Yeah, or on perhaps a buggy implementation of readdir(3) on somebody
-else's system.  In either case, I just thought it might be a low impact
-belt-and-suspenders fix that is worth considering.
+I thought about that. My reasoning against it was two-fold:
+
+ 1. We don't want to keep two copies in memory unnecessarily. Of
+    course, we could easily free the original, but just store the
+    information in a different pointer to make sure they never get
+    confused. So that is a non-issue.
+
+ 2. I had some vague notion that it is more convenient in the long run
+    to do this to the filespec, since we can then transparently pass the
+    munged filespec around and pretend like the converted text was the
+    original content.
+
+    However, I'm not sure exactly _where_ we would want to do this.
+    The obvious places are for patch, for diffstat, or for whitespace
+    checking. But all of those places use mmfile, so we can munge them
+    in the same way. I haven't looked at using this with blame, but I do
+    think "git blame --textconv foo.jpg" would be useful.
+
+    (Actually not true. I did just look for 30 seconds at using this
+     with blame, but blame doesn't seem to to use builtin_diff at all).
+
+> That is, you let fill_mmfile() to fill the real data in mf1 and mf2 as
+> before, ask one/two if they have textconv, and if so, convert mf1 and mf2
+> in place, and let xdl work on it, like...
+
+I think your example would work fine, if there is no other advantage to
+having a transparently-munged diff_filespec (as above).
+
+-Peff
