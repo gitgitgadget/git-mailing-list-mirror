@@ -1,57 +1,71 @@
-From: "Ping Yin" <pkufranky@gmail.com>
-Subject: git adds some text file as binary file by mistake
-Date: Fri, 24 Oct 2008 20:37:01 +0800
-Message-ID: <46dff0320810240537i4f0d86b9p56def9ef6a69c180@mail.gmail.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH 3/5] refactor userdiff textconv code
+Date: Fri, 24 Oct 2008 08:40:44 -0400
+Message-ID: <20081024124043.GA4806@coredump.intra.peff.net>
+References: <20081024024631.GA20365@coredump.intra.peff.net> <20081024025330.GC2831@coredump.intra.peff.net> <4901762A.3090003@viscovery.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-To: "Git Mailing List" <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Fri Oct 24 14:38:35 2008
+Content-Type: text/plain; charset=utf-8
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+	Matthieu Moy <Matthieu.Moy@imag.fr>
+To: Johannes Sixt <j.sixt@viscovery.net>
+X-From: git-owner@vger.kernel.org Fri Oct 24 14:42:08 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KtLvo-0000Ms-29
-	for gcvg-git-2@gmane.org; Fri, 24 Oct 2008 14:38:20 +0200
+	id 1KtLzL-0001fM-6H
+	for gcvg-git-2@gmane.org; Fri, 24 Oct 2008 14:41:59 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752316AbYJXMhE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 24 Oct 2008 08:37:04 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752320AbYJXMhE
-	(ORCPT <rfc822;git-outgoing>); Fri, 24 Oct 2008 08:37:04 -0400
-Received: from yx-out-2324.google.com ([74.125.44.28]:25471 "EHLO
-	yx-out-2324.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752316AbYJXMhD (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 24 Oct 2008 08:37:03 -0400
-Received: by yx-out-2324.google.com with SMTP id 8so280891yxm.1
-        for <git@vger.kernel.org>; Fri, 24 Oct 2008 05:37:01 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to
-         :subject:mime-version:content-type:content-transfer-encoding
-         :content-disposition;
-        bh=MFRm55xFd2JbXOM/vbEj/76A8EuKysphoRlg28odqDw=;
-        b=floiIH8lvKJsyw4wQvrhgdI0XyPffYC201BDkIKUvmKT62QB/VAsACpkDbWgcDrrMR
-         lZpW4ba4jrBtgOyIIn4NltWKytGJotYG5YYSO3smG0gmG05lfe2dFDGASH3jwhgMEpCD
-         ldlB2+Mv1wiRJWiq1mb42wnLZVRH8TWsZHK10=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:mime-version:content-type
-         :content-transfer-encoding:content-disposition;
-        b=qMGtihmzX+sxSs1lippQw1VtD8Oq6TSqdgjYG61gd/LxqHZDv5m3u1FU7Tb9/iJYz7
-         mxsay2C1h+saS4UoSVZOkv2C9cmIGa1xPr1i7DwrYIx4qOvi1Dk7Wx0lbRl6+bP5miE2
-         yqtMSIVah9+eLTx5oYD5CguFqozuzdoo2fumk=
-Received: by 10.150.52.2 with SMTP id z2mr5763239ybz.210.1224851821493;
-        Fri, 24 Oct 2008 05:37:01 -0700 (PDT)
-Received: by 10.150.140.10 with HTTP; Fri, 24 Oct 2008 05:37:01 -0700 (PDT)
+	id S1752208AbYJXMkr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 24 Oct 2008 08:40:47 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752090AbYJXMkr
+	(ORCPT <rfc822;git-outgoing>); Fri, 24 Oct 2008 08:40:47 -0400
+Received: from peff.net ([208.65.91.99]:1192 "EHLO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751252AbYJXMkq (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 24 Oct 2008 08:40:46 -0400
+Received: (qmail 17014 invoked by uid 111); 24 Oct 2008 12:40:45 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+    by peff.net (qpsmtpd/0.32) with SMTP; Fri, 24 Oct 2008 08:40:45 -0400
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Fri, 24 Oct 2008 08:40:44 -0400
 Content-Disposition: inline
+In-Reply-To: <4901762A.3090003@viscovery.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/99030>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/99031>
 
-So what should i do if i want it added as text file?
+On Fri, Oct 24, 2008 at 09:15:54AM +0200, Johannes Sixt wrote:
 
---
-Ping Yin
+> What do we do when symlinks are involved? Pilot error? Or should we
+> exclude them from textconv (and diff.*.command, for that matter)
+> at all times? See a test case below.
+
+Hrm, I hadn't really considered that. I would guess they should not be
+excluded from diff.*.command; the external driver gets the mode, so it
+is free to represent symlinks in whatever way it wants.
+
+But clearly they are going to always be text, so there is no point in
+textconv'ing them.
+
+> +cat >expect.typechange <<'EOF'
+> +Binary files a/file and /dev/null differ
+> +diff --git a/file b/file
+> +new file mode 120000
+> +index ad8b3d2..67be421
+> +--- /dev/null
+> ++++ b/file
+> +@@ -0,0 +1 @@
+> ++frotz
+> +\ No newline at end of file
+> +EOF
+> +
+
+I find this output a bit confusing, since it actually breaks it into a
+deletion and an addition. But I guess that is orthogonal to the textconv
+issue, and intended. I don't think I've ever actually needed to diff a
+symlink before.
+
+-Peff
