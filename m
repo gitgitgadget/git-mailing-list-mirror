@@ -1,107 +1,68 @@
-From: Johannes Sixt <j.sixt@viscovery.net>
-Subject: Re: [PATCH 3/5] refactor userdiff textconv code
-Date: Fri, 24 Oct 2008 09:15:54 +0200
-Message-ID: <4901762A.3090003@viscovery.net>
-References: <20081024024631.GA20365@coredump.intra.peff.net> <20081024025330.GC2831@coredump.intra.peff.net>
+From: "Alex Riesen" <raa.lkml@gmail.com>
+Subject: Re: [PATCH] Only update the cygwin-related configuration during state auto-setup
+Date: Fri, 24 Oct 2008 09:47:03 +0200
+Message-ID: <81b0412b0810240047h4a9b1d04m44a1a76df722d075@mail.gmail.com>
+References: <81b0412b0810230607sfea05ddm62bd03f837fc922e@mail.gmail.com>
+	 <7viqri35dq.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-	Matthieu Moy <Matthieu.Moy@imag.fr>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Fri Oct 24 09:17:40 2008
+Cc: "Mark Levedahl" <mlevedahl@gmail.com>, spearce@spearce.org,
+	dpotapov@gmail.com, git@vger.kernel.org
+To: "Junio C Hamano" <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Oct 24 09:48:30 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KtGvR-0000wK-OV
-	for gcvg-git-2@gmane.org; Fri, 24 Oct 2008 09:17:38 +0200
+	id 1KtHPG-0002AQ-2N
+	for gcvg-git-2@gmane.org; Fri, 24 Oct 2008 09:48:26 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752959AbYJXHQE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 24 Oct 2008 03:16:04 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756075AbYJXHQB
-	(ORCPT <rfc822;git-outgoing>); Fri, 24 Oct 2008 03:16:01 -0400
-Received: from lilzmailso01.liwest.at ([212.33.55.23]:64223 "EHLO
-	lilzmailso01.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756041AbYJXHQA (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 24 Oct 2008 03:16:00 -0400
-Received: from cm56-163-160.liwest.at ([86.56.163.160] helo=linz.eudaptics.com)
-	by lilzmailso01.liwest.at with esmtpa (Exim 4.69)
-	(envelope-from <j.sixt@viscovery.net>)
-	id 1KtIlm-0001N0-3b; Fri, 24 Oct 2008 11:15:48 +0200
-Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.96])
-	by linz.eudaptics.com (Postfix) with ESMTP
-	id E9CE44FB; Fri, 24 Oct 2008 09:15:54 +0200 (CEST)
-User-Agent: Thunderbird 2.0.0.6 (Windows/20070728)
-In-Reply-To: <20081024025330.GC2831@coredump.intra.peff.net>
-X-Enigmail-Version: 0.95.5
-X-Spam-Score: 1.7 (+)
-X-Spam-Report: ALL_TRUSTED=-1.8, BAYES_99=3.5
+	id S1751825AbYJXHrJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 24 Oct 2008 03:47:09 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751346AbYJXHrI
+	(ORCPT <rfc822;git-outgoing>); Fri, 24 Oct 2008 03:47:08 -0400
+Received: from yw-out-2324.google.com ([74.125.46.28]:59019 "EHLO
+	yw-out-2324.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751057AbYJXHrF (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 24 Oct 2008 03:47:05 -0400
+Received: by yw-out-2324.google.com with SMTP id 9so251359ywe.1
+        for <git@vger.kernel.org>; Fri, 24 Oct 2008 00:47:04 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to
+         :subject:cc:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:references;
+        bh=hPvN02/0HpSprS9TUOBubdWpSRwoW5xmMk70E/X2DJU=;
+        b=CE33Ws9xfusk7zsKDNrr7Srz9MDukovD+yYhbm88K30GKOFMrOBqO0BkkhPpEMxXfM
+         D/9RRPc2fI/NjC3stBiUUHbCIF0FjNXgsNmxY/nXnx9CcUK8Y/tfILeg2R2qLJFSkWEw
+         gEBK7s30zbB0u1+gGkNZG1tp31qgjCzAflprg=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
+         :content-type:content-transfer-encoding:content-disposition
+         :references;
+        b=VpamhyOcPzqcrxM8H2zOQVGw9U2lxedYAcuayvrkhqgmw4czqUAVq6evVwCrmomYFN
+         4UC9MPsZDnL7feDbmtmw+zdWH7JuyiCW+jIEAtuS8dZq5m4Ooy50myJLWmZGHQXNA/BG
+         5/YHg7PN0ExAohrlDa+ex4RRBskarpEL4tY1s=
+Received: by 10.100.137.12 with SMTP id k12mr2083270and.55.1224834424088;
+        Fri, 24 Oct 2008 00:47:04 -0700 (PDT)
+Received: by 10.100.91.8 with HTTP; Fri, 24 Oct 2008 00:47:03 -0700 (PDT)
+In-Reply-To: <7viqri35dq.fsf@gitster.siamese.dyndns.org>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/99016>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/99017>
 
-Jeff King schrieb:
-> This patch moves the text conversion to a
-> diff_filespec_textconv function; this function can be called
-> to insert the text-converted contents of the file into the
-> filespec. These contents will survive through any
-> diff_populate_filespec calls, meaning that it is safe to
-> pass the resulting filespec to other diff functions which
-> will look at the content.
+2008/10/24 Junio C Hamano <gitster@pobox.com>:
+> Perhaps we should use a separate variable as the original patch did, in:
+>
+>  http://article.gmane.org/gmane.comp.version-control.git/97987
+>
+> How about doing it like this instead?
 
-What do we do when symlinks are involved? Pilot error? Or should we
-exclude them from textconv (and diff.*.command, for that matter)
-at all times? See a test case below.
-
-> Also, I'm happy to hear comments on which functionality should get
-> text-converted. I think I like seeing the --stat report the binary
-> changes.
-
-At this time I also think that it is enough to apply textconv only
-to generate diffs.
-
-Test case follows:
-diff --git a/t/t4030-diff-textconv.sh b/t/t4030-diff-textconv.sh
-index e456746..dab4338 100755
---- a/t/t4030-diff-textconv.sh
-+++ b/t/t4030-diff-textconv.sh
-@@ -19,6 +19,18 @@ cat >expect.text <<'EOF'
- +1
- EOF
-
-+cat >expect.typechange <<'EOF'
-+Binary files a/file and /dev/null differ
-+diff --git a/file b/file
-+new file mode 120000
-+index ad8b3d2..67be421
-+--- /dev/null
-++++ b/file
-+@@ -0,0 +1 @@
-++frotz
-+\ No newline at end of file
-+EOF
-+
- cat >hexdump <<'EOF'
- #!/bin/sh
- perl -e '$/ = undef; $_ = <>; s/./ord($&)/ge; print $_' "$1"
-@@ -75,4 +87,16 @@ test_expect_success 'format-patch produces binary' '
- 	test_cmp expect.binary actual
- '
-
-+# make a symlink the hard way that works on symlink-challenged file systems
-+test_expect_failure 'textconv does not kick in if there is a type change' '
-+	echo -n frotz > file &&
-+	git add file &&
-+	git ls-files -s | sed -e s/100644/120000/ |
-+		git update-index --index-info &&
-+	git commit -m typechange &&
-+	git show >diff &&
-+	find_diff <diff >actual &&
-+	test_cmp expect.typechange actual
-+'
-+
- test_done
+I like this. Will start testing it over next european night, as soon as
+the current test run finishes. In about 6 hours, that is :-/
