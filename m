@@ -1,92 +1,70 @@
-From: "Giuseppe Bilotta" <giuseppe.bilotta@gmail.com>
+From: david@lang.hm
 Subject: Re: [RFC] Zit: the git-based single file content tracker
-Date: Fri, 24 Oct 2008 21:51:29 +0200
-Message-ID: <cb7bb73a0810241251w4c2486a0x4684a25b364ebbbb@mail.gmail.com>
-References: <gdok16$vh2$1@ger.gmane.org> <4901077A.7050904@gmx.ch>
-	 <cb7bb73a0810232355u6de0479cyc260c80227f44e59@mail.gmail.com>
-	 <m38wsei8ne.fsf@localhost.localdomain>
-	 <7vabct3l1e.fsf@gitster.siamese.dyndns.org>
-	 <alpine.DEB.1.10.0810241159290.27333@asgard.lang.hm>
-	 <cb7bb73a0810241242y7467f6fexcca4b7cd768e7992@mail.gmail.com>
-	 <alpine.DEB.1.10.0810241244170.27333@asgard.lang.hm>
+Date: Fri, 24 Oct 2008 12:53:21 -0700 (PDT)
+Message-ID: <alpine.DEB.1.10.0810241251490.27333@asgard.lang.hm>
+References: <gdok16$vh2$1@ger.gmane.org> <4901077A.7050904@gmx.ch> <cb7bb73a0810232355u6de0479cyc260c80227f44e59@mail.gmail.com> <m38wsei8ne.fsf@localhost.localdomain> <7vabct3l1e.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: "Junio C Hamano" <gitster@pobox.com>,
-	"Jakub Narebski" <jnareb@gmail.com>,
-	"Jean-Luc Herren" <jlh@gmx.ch>, git@vger.kernel.org
-To: david@lang.hm
-X-From: git-owner@vger.kernel.org Fri Oct 24 21:52:46 2008
+Content-Type: TEXT/PLAIN; charset=US-ASCII; format=flowed
+Cc: Jakub Narebski <jnareb@gmail.com>,
+	Giuseppe Bilotta <giuseppe.bilotta@gmail.com>,
+	Jean-Luc Herren <jlh@gmx.ch>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Oct 24 21:54:29 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KtSiD-0007wK-8w
-	for gcvg-git-2@gmane.org; Fri, 24 Oct 2008 21:52:45 +0200
+	id 1KtSjo-0008Uw-TP
+	for gcvg-git-2@gmane.org; Fri, 24 Oct 2008 21:54:25 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752756AbYJXTvb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 24 Oct 2008 15:51:31 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752568AbYJXTvb
-	(ORCPT <rfc822;git-outgoing>); Fri, 24 Oct 2008 15:51:31 -0400
-Received: from yx-out-2324.google.com ([74.125.44.30]:61210 "EHLO
-	yx-out-2324.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751793AbYJXTvb (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 24 Oct 2008 15:51:31 -0400
-Received: by yx-out-2324.google.com with SMTP id 8so369232yxm.1
-        for <git@vger.kernel.org>; Fri, 24 Oct 2008 12:51:29 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to
-         :subject:cc:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:references;
-        bh=RZoWwiYSYLqS6r5TlJ/GdB+IsJDO95IUvT2zKT8rHkg=;
-        b=ghtK3YrFzCmLUpRplEzraIaRQJuKEl1G4WpMzpcZLboXK/Nij6SvRKMGNNtxF07B2e
-         RmJweSlY/cwQ7ZsW0jMjGRLYt8E1JSN9W6FAVy71NwtRmxzHsBxLy/8OvQowcfTfkwMW
-         0ZazuXa/mc+FfDHrnVMnGiL7G9vDDAEcfn4oU=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
-         :content-type:content-transfer-encoding:content-disposition
-         :references;
-        b=fCdzrg6EQT1jQjHGdmiXqvmRtR4C2fqf4QJ9kwJnMTz8ZrANJch3eHtDAV5ZZHt9LW
-         G8mUjXFGLHqSZCxDIyPLedCW7rhOTRYSkZlEF5HlNajSThtxFEoUTjP5O9Mss3JsJBnj
-         KsjS5aP8sma31P2MoWX7QSlnG9vcflWklaCIo=
-Received: by 10.150.230.8 with SMTP id c8mr6447797ybh.47.1224877889767;
-        Fri, 24 Oct 2008 12:51:29 -0700 (PDT)
-Received: by 10.150.145.2 with HTTP; Fri, 24 Oct 2008 12:51:29 -0700 (PDT)
-In-Reply-To: <alpine.DEB.1.10.0810241244170.27333@asgard.lang.hm>
-Content-Disposition: inline
+	id S1752188AbYJXTxL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 24 Oct 2008 15:53:11 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751777AbYJXTxK
+	(ORCPT <rfc822;git-outgoing>); Fri, 24 Oct 2008 15:53:10 -0400
+Received: from mail.lang.hm ([64.81.33.126]:40466 "EHLO bifrost.lang.hm"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750936AbYJXTxJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 24 Oct 2008 15:53:09 -0400
+Received: from asgard.lang.hm (asgard.lang.hm [10.0.0.100])
+	by bifrost.lang.hm (8.13.4/8.13.4/Debian-3) with ESMTP id m9OJqdUS020664;
+	Fri, 24 Oct 2008 12:52:43 -0700
+X-X-Sender: dlang@asgard.lang.hm
+In-Reply-To: <7vabct3l1e.fsf@gitster.siamese.dyndns.org>
+User-Agent: Alpine 1.10 (DEB 962 2008-03-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/99056>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/99057>
 
-On Fri, Oct 24, 2008 at 9:46 PM,  <david@lang.hm> wrote:
-> On Fri, 24 Oct 2008, Giuseppe Bilotta wrote:
+On Fri, 24 Oct 2008, Junio C Hamano wrote:
+
+> Jakub Narebski <jnareb@gmail.com> writes:
+>
+>> "Giuseppe Bilotta" <giuseppe.bilotta@gmail.com> writes:
+>>> On Fri, Oct 24, 2008 at 1:23 AM, Jean-Luc Herren <jlh@gmx.ch> wrote:
 >>
->> It seems that tags, hooks, branches and description can be done with.
+>>>> If you decide against a shared repository, maybe you want to
+>>>> consider to not use ".zit.file/", but ".zit/file/" as the
+>>>> repository?  This would reduce the clutter to a single directory,
+>>>> just like with ".git".  And moving files around wouldn't be that
+>>>> much complicated.
+>>>
+>>> Right. I'll give that a shot.
+>>
+>> By the way RCS which I use for version control of single files use
+>> both approaches: it can store 'file,v' alongside 'file' (just like
+>> your '.zit.file/' or '.file.git/'), but it can also store files on
+>> per-directory basis in 'RCS/' subdirectory (proposed '.zit/file/' or
+>> '.zit/file.git/' solution)
 >
-> do you mean 'can be done away with'?
+> I am not opposed to the wish to track a single file (but I have to say I
+> am not personally in need for such a feature), but I have to wonder from
+> the technical point of view if one-repo-per-file is the right approach.
 
-Ahem. Yes. I've got a patch ready for zit that gets rid of them.
+I just had what's probably a silly thought.
 
-(A smarter way would be to create a template, but I'm not smart.)
+how close is a zit setup to a subproject setup?
 
->> info contains exclude which is rather essential,
->
-> is it? by default everything in this file is commented out. And with you
-> only adding files explicitly why would it ever need to excluded anything?
-
-Zit does
- 		echo "*" > $GIT_DIR/info/exclude
-and yes it sucks to use a whole block for a file that only contains
-one character. Suggestions welcome.
-
-The reason why we want the exclude is that when you do zit status
-somefile you don't want every other file in the directory to come up
-as 'not tracked'.
-
--- 
-Giuseppe "Oblomov" Bilotta
+David Lang
