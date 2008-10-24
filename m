@@ -1,108 +1,146 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: What's in git.git (Oct 2008, #03; Tue, 14)
-Date: Thu, 23 Oct 2008 19:44:27 -0700
-Message-ID: <7vod1a3e5w.fsf@gitster.siamese.dyndns.org>
-References: <7vej2i7rt9.fsf@gitster.siamese.dyndns.org>
- <bsftmRx17krWBpVlulipoJEO1fWsD0hZfF3HOZcajX6GV66RKW8W6A@cipher.nrlssc.navy.mil>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH 3/4] diff: introduce diff.<driver>.binary
+Date: Thu, 23 Oct 2008 22:46:32 -0400
+Message-ID: <20081024024631.GA20365@coredump.intra.peff.net>
+References: <20081005214114.GA21875@coredump.intra.peff.net> <20081005214336.GC21925@coredump.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Arjen Laarhoven <arjen@yaph.org>,
-	Jeff King <peff@peff.net>,
-	"Shawn O. Pearce" <spearce@spearce.org>,
-	"Mike Ralphson" <mike@abacus.co.uk>
-To: Brandon Casey <casey@nrlssc.navy.mil>
-X-From: git-owner@vger.kernel.org Fri Oct 24 04:46:45 2008
+Content-Type: text/plain; charset=utf-8
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Johannes Sixt <j.sixt@viscovery.net>,
+	Matthieu Moy <Matthieu.Moy@imag.fr>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Oct 24 04:47:53 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KtChI-00032D-I0
-	for gcvg-git-2@gmane.org; Fri, 24 Oct 2008 04:46:45 +0200
+	id 1KtCiK-0003Ec-B6
+	for gcvg-git-2@gmane.org; Fri, 24 Oct 2008 04:47:48 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751943AbYJXCoo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 23 Oct 2008 22:44:44 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751935AbYJXCon
-	(ORCPT <rfc822;git-outgoing>); Thu, 23 Oct 2008 22:44:43 -0400
-Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:61405 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751915AbYJXCon (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 23 Oct 2008 22:44:43 -0400
-Received: from localhost.localdomain (localhost [127.0.0.1])
-	by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id 7AF2D8EC1D;
-	Thu, 23 Oct 2008 22:44:41 -0400 (EDT)
-Received: from pobox.com (ip68-225-240-211.oc.oc.cox.net [68.225.240.211])
- (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
- certificate requested) by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with
- ESMTPSA id B20A18EC1B; Thu, 23 Oct 2008 22:44:29 -0400 (EDT)
-In-Reply-To: <bsftmRx17krWBpVlulipoJEO1fWsD0hZfF3HOZcajX6GV66RKW8W6A@cipher.nrlssc.navy.mil> (Brandon Casey's message of "Wed, 15 Oct 2008 10:35:30 -0500")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: B53D6FB6-A175-11DD-8B9B-4F5276724C3F-77302942!a-sasl-quonix.pobox.com
+	id S1752200AbYJXCqf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 23 Oct 2008 22:46:35 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751983AbYJXCqf
+	(ORCPT <rfc822;git-outgoing>); Thu, 23 Oct 2008 22:46:35 -0400
+Received: from peff.net ([208.65.91.99]:1604 "EHLO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751935AbYJXCqe (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 23 Oct 2008 22:46:34 -0400
+Received: (qmail 12765 invoked by uid 111); 24 Oct 2008 02:46:33 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+    by peff.net (qpsmtpd/0.32) with SMTP; Thu, 23 Oct 2008 22:46:33 -0400
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Thu, 23 Oct 2008 22:46:32 -0400
+Content-Disposition: inline
+In-Reply-To: <20081005214336.GC21925@coredump.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/98998>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/98999>
 
-Brandon Casey <casey@nrlssc.navy.mil> writes:
+On Sun, Oct 05, 2008 at 05:43:36PM -0400, Jeff King wrote:
 
->   2) Do we want to stick with compat/regex on
->
->       Darwin: Arjen
->      FreeBSD: Jeff
->          AIX: Mike
->
->      now that the builtin funcname patterns have been converted to Extended
->      Regular Expressions?
+> However, there is at least one conflicting situation: there
+> is no way to say "use the regular rules to determine whether
+> this file is binary, but if we do diff it textually, use
+> this funcname pattern." That is, currently setting diff=foo
+> indicates that the file is definitely text.
 
--- >8 --
-Subject: Stop using compat/regex.c on platforms with working regexp library
+Hrm. I don't know what crack I was smoking when I wrote this (and then
+argued about it for weeks afterward). It is actually the _opposite_
+situation.  That is, once you have said "diff=foo", there is no way to
+say "btw, foo files are _definitely_ text."
 
-We used to have non-POSIX comformant BRE in our code, and linked with GNU
-regexp library on a few platforms (Darwin, FreeBSD and AIX) to work it
-around.  This was backwards.
+See, this is the old code:
 
-We've fixed the broken regexps to use ERE that native regexp libraries on
-these platforms can handle just fine.  There is no need to link with GNU
-regexp library on these platforms anymore.
+> -static void diff_filespec_check_attr(struct diff_filespec *one)
+> +void diff_filespec_load_driver(struct diff_filespec *one)
+>  {
+> -	struct userdiff_driver *drv;
+> -	int check_from_data = 0;
+> -
+> -	if (one->checked_attr)
+> -		return;
+> -
+> -	drv = userdiff_find_by_path(one->path);
+> -	one->is_binary = 0;
+> -
+> -	/* binaryness */
+> -	if (drv == USERDIFF_ATTR_TRUE)
+> -		;
+> -	else if (drv == USERDIFF_ATTR_FALSE)
+> -		one->is_binary = 1;
+> -	else
+> -		check_from_data = 1;
+> -
+> -	if (check_from_data) {
+> -		if (!one->data && DIFF_FILE_VALID(one))
+> -			diff_populate_filespec(one, 0);
+> -
+> -		if (one->data)
+> -			one->is_binary = buffer_is_binary(one->data, one->size);
+> -	}
+> +	if (!one->driver)
+> +		one->driver = userdiff_find_by_path(one->path);
+> +	if (!one->driver)
+> +		one->driver = userdiff_find_by_name("default");
+>  }
 
-Tested-on-AIX-by: Mike Ralphson <mike@abacus.co.uk>
-Tested-on-FreeBSD-by: Jeff King <peff@peff.net>
-Tested-on-Darwin-by: Arjen Laarhoven <arjen@yaph.org>
-Tested-on-Darwin-by: Pieter de Bie <pieter@frim.nl>
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
----
- Makefile |    6 ------
- 1 files changed, 0 insertions(+), 6 deletions(-)
+You can clearly see that we use check_from_data as long as the value is
+not true or false. Meaning if it is unspecified _or_ if it has a string
+value (actually, this text is hacked up by my previous patch, but you
+can look at maint:diff.c and see that it is similar).
 
-diff --git c/Makefile w/Makefile
-index d6f3695..40309e1 100644
---- c/Makefile
-+++ w/Makefile
-@@ -640,8 +640,6 @@ ifeq ($(uname_S),Darwin)
- 	endif
- 	NO_STRLCPY = YesPlease
- 	NO_MEMMEM = YesPlease
--	COMPAT_CFLAGS += -Icompat/regex
--	COMPAT_OBJS += compat/regex/regex.o
- endif
- ifeq ($(uname_S),SunOS)
- 	NEEDS_SOCKET = YesPlease
-@@ -692,8 +690,6 @@ ifeq ($(uname_S),FreeBSD)
- 	BASIC_LDFLAGS += -L/usr/local/lib
- 	DIR_HAS_BSD_GROUP_SEMANTICS = YesPlease
- 	THREADED_DELTA_SEARCH = YesPlease
--	COMPAT_CFLAGS += -Icompat/regex
--	COMPAT_OBJS += compat/regex/regex.o
- endif
- ifeq ($(uname_S),OpenBSD)
- 	NO_STRCASESTR = YesPlease
-@@ -720,8 +716,6 @@ ifeq ($(uname_S),AIX)
- 	INTERNAL_QSORT = UnfortunatelyYes
- 	NEEDS_LIBICONV=YesPlease
- 	BASIC_CFLAGS += -D_LARGE_FILES
--	COMPAT_CFLAGS += -Icompat/regex
--	COMPAT_OBJS += compat/regex/regex.o
- endif
- ifeq ($(uname_S),GNU)
- 	# GNU/Hurd
+And this makes sense. Otherwise, plumbing like "git diff-tree" would
+get mightily confused by external diff commands. For example, consider
+if you had "foo diff=bar" in your attributes file, and defined
+"diff.bar.command". That external diff would be used for git-diff, but
+_not_ for diff-tree. But it would be stupid for diff-tree to look at the
+attribute and say "oh, we have a diff attr, it must be text."
+
+So the patch is right to keep the binary value to "-1" except for the
+few cases where it has been specified explicitly. I found this out when
+I tried to "fix" it to the old behavior tonight and discovered lots of
+breakage.
+
+And this also means that diff.*.binary really _does_ do something
+useful. If you have, for example, a ".foo" file that looks like binary,
+but really isn't, _and_ you want to set a custom hunk header for it,
+previously you were out of luck. You could do one or the other. Now you
+can do:
+
+  git config diff.foo.xfuncname whatever
+  git config diff.foo.binary false
+
+and get the desired effect.
+
+As for the fallout from this with regards to our discussion last week,
+there were two relevant points:
+
+ - Junio suggested that anytime we use funcname, we always want text
+   anyway. I think that is reasonable, but it has never been the case up
+   until now (in fact, you were stuck with the _opposite_ until now, so
+   my series at least makes it possible to say "always text", though
+   you have to do it manually). So I will leave it for now, and
+   if people feel strongly, my series provides a sane basis for a patch
+   that does this automatically.
+
+ - Johannes complained about having to set "diff.foo.binary = false"
+   when we have set "diff.foo.textconv".  I agree that having to set it
+   is cumbersome, but what's worse is that it is wrong. You are saying
+   "this file is not binary" which is only _sometimes_ true. That is, it
+   is only true if we are in a command which actually performs the text
+   conversion. Plumbing sees _just_ the binary half, which is outright
+   wrong (and which became painfully obvious once I wrote some tests).
+
+   The solution is that textconv'd data should always be treated as
+   text, and that takes some refactoring of my patches. I will post a
+   series dealing with this in a minute.
+
+Hopefully that explanation made sense. This turned out to be a lot
+trickier than I thought (in combination with my apparent crack habit),
+and I just spent several hours trying to figure out all of the niggling
+details. But I realize the rest of you haven't thought about it for at
+least a week. :)
+
+-Peff
