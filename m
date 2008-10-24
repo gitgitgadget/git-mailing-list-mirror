@@ -1,106 +1,65 @@
-From: =?ISO-8859-15?Q?Ren=E9_Scharfe?= <rene.scharfe@lsrfire.ath.cx>
-Subject: Re: [PATCH] Fixed git archive for bare repos
-Date: Sat, 25 Oct 2008 00:19:49 +0200
-Message-ID: <49024A05.3090100@lsrfire.ath.cx>
-References: <20081022210913.GB22541@hashpling.org> <1224712023-5280-1-git-send-email-charles@hashpling.org>
+From: Linus Torvalds <torvalds@linux-foundation.org>
+Subject: Re: Re* ext3: fix ext3_dx_readdir hash collision handling -
+ Regression
+Date: Fri, 24 Oct 2008 15:26:46 -0700 (PDT)
+Message-ID: <alpine.LFD.2.00.0810241524350.3287@nehalem.linux-foundation.org>
+References: <20081022093201.GA2227@gentoox2.trippelsdorf.de> <20081023032832.GE10369@mit.edu> <20081023063740.GA2438@gentoox2.trippelsdorf.de> <20081024000109.GD7842@mit.edu> <20081024042851.GA2360@gentoox2.trippelsdorf.de>
+ <alpine.LFD.2.00.0810240853310.3287@nehalem.linux-foundation.org> <7vwsfx1wnb.fsf_-_@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, Deskin Miller <deskinm@umich.edu>,
-	kenneth johansson <ken@kenjo.org>, gitster@pobox.com
-To: Charles Bailey <charles@hashpling.org>
-X-From: git-owner@vger.kernel.org Sat Oct 25 00:21:12 2008
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sat Oct 25 00:28:12 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KtV1r-0003L4-OD
-	for gcvg-git-2@gmane.org; Sat, 25 Oct 2008 00:21:12 +0200
+	id 1KtV8c-0005BJ-E9
+	for gcvg-git-2@gmane.org; Sat, 25 Oct 2008 00:28:10 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754632AbYJXWT6 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 24 Oct 2008 18:19:58 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754491AbYJXWT5
-	(ORCPT <rfc822;git-outgoing>); Fri, 24 Oct 2008 18:19:57 -0400
-Received: from india601.server4you.de ([85.25.151.105]:39627 "EHLO
-	india601.server4you.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753507AbYJXWT5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 24 Oct 2008 18:19:57 -0400
-Received: from [10.0.1.100] (p57B7FD98.dip.t-dialin.net [87.183.253.152])
-	by india601.server4you.de (Postfix) with ESMTPSA id A20CD2F8050;
-	Sat, 25 Oct 2008 00:19:54 +0200 (CEST)
-User-Agent: Thunderbird 2.0.0.17 (Windows/20080914)
-In-Reply-To: <1224712023-5280-1-git-send-email-charles@hashpling.org>
+	id S1753798AbYJXW05 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 24 Oct 2008 18:26:57 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755458AbYJXW05
+	(ORCPT <rfc822;git-outgoing>); Fri, 24 Oct 2008 18:26:57 -0400
+Received: from smtp1.linux-foundation.org ([140.211.169.13]:46941 "EHLO
+	smtp1.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1753669AbYJXW04 (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 24 Oct 2008 18:26:56 -0400
+Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [140.211.169.55])
+	by smtp1.linux-foundation.org (8.14.2/8.13.5/Debian-3ubuntu1.1) with ESMTP id m9OMQkY1017964
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Fri, 24 Oct 2008 15:26:47 -0700
+Received: from localhost (localhost [127.0.0.1])
+	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id m9OMQkuB002807;
+	Fri, 24 Oct 2008 15:26:46 -0700
+In-Reply-To: <7vwsfx1wnb.fsf_-_@gitster.siamese.dyndns.org>
+User-Agent: Alpine 2.00 (LFD 1167 2008-08-23)
+X-Spam-Status: No, hits=-3.443 required=5 tests=AWL,BAYES_00
+X-Spam-Checker-Version: SpamAssassin 3.2.4-osdl_revision__1.47__
+X-MIMEDefang-Filter: lf$Revision: 1.188 $
+X-Scanned-By: MIMEDefang 2.63 on 140.211.169.13
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/99074>
-
-Charles Bailey schrieb:
-> This moves the call to git config to a place where it doesn't break
-> the logic for using git archive in a bare repository but retains the
-> fix to make git archive respect core.autocrlf.
-
-If one combines your patch, Deskin's commit message and test and extend=
-s
-on the latter a bit then I think we have a winner. :)
-
-Here are a few more tests which create a ZIP file in addition to a tar
-archive and compare them to their non-bare counterparts.
-
-Care to resend?
-
-Thanks,
-Ren=E9
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/99075>
 
 
- t/t5000-tar-tree.sh |   21 +++++++++++++++++++++
- 1 files changed, 21 insertions(+), 0 deletions(-)
 
-diff --git a/t/t5000-tar-tree.sh b/t/t5000-tar-tree.sh
-index e395ff4..bf5fa25 100755
---- a/t/t5000-tar-tree.sh
-+++ b/t/t5000-tar-tree.sh
-@@ -58,6 +58,11 @@ test_expect_success \
-      git commit-tree $treeid </dev/null)'
-=20
- test_expect_success \
-+    'create bare clone' \
-+    'git clone --bare . bare.git &&
-+     cp .gitattributes bare.git/info/attributes'
-+
-+test_expect_success \
-     'remove ignored file' \
-     'rm a/ignored'
-=20
-@@ -74,6 +79,14 @@ test_expect_success \
-     'diff b.tar b2.tar'
-=20
- test_expect_success \
-+    'git archive in a bare repo' \
-+    '(cd bare.git && git archive HEAD) >b3.tar'
-+
-+test_expect_success \
-+    'git archive vs. the same in a bare repo' \
-+    'test_cmp b.tar b3.tar'
-+
-+test_expect_success \
-     'validate file modification time' \
-     'mkdir extract &&
-      "$TAR" xf b.tar -C extract a/a &&
-@@ -151,6 +164,14 @@ test_expect_success \
-     'git archive --format=3Dzip' \
-     'git archive --format=3Dzip HEAD >d.zip'
-=20
-+test_expect_success \
-+    'git archive --format=3Dzip in a bare repo' \
-+    '(cd bare.git && git archive --format=3Dzip HEAD) >d1.zip'
-+
-+test_expect_success \
-+    'git archive --format=3Dzip vs. the same in a bare repo' \
-+    'test_cmp d.zip d1.zip'
-+
- $UNZIP -v >/dev/null 2>&1
- if [ $? -eq 127 ]; then
- 	echo "Skipping ZIP tests, because unzip was not found"
+On Fri, 24 Oct 2008, Junio C Hamano wrote:
+>
+> Subject: allow readdir(3) to return the same entry twice
+
+The thing is, this really is a kernel bug. We have even bisected it (and 
+it hasn't hit any released kernel). The original reporter showed it with a 
+simple "rm -r".
+
+So it really isn't a git bug, even though I initially thought it might be, 
+before I looked closer.
+
+That said, the git patch may be worth it just because two *concurrent* 
+invocations of "git clean" could then cause one (or both) to fail this 
+way.
+
+		Linus
