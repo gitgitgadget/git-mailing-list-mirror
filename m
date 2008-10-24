@@ -1,126 +1,88 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re* ext3: fix ext3_dx_readdir hash collision handling - Regression
-Date: Fri, 24 Oct 2008 15:00:24 -0700
-Message-ID: <7vwsfx1wnb.fsf_-_@gitster.siamese.dyndns.org>
-References: <20081022093201.GA2227@gentoox2.trippelsdorf.de>
- <20081023032832.GE10369@mit.edu>
- <20081023063740.GA2438@gentoox2.trippelsdorf.de>
- <20081024000109.GD7842@mit.edu>
- <20081024042851.GA2360@gentoox2.trippelsdorf.de>
- <alpine.LFD.2.00.0810240853310.3287@nehalem.linux-foundation.org>
+From: "Moore, Robert" <robert.moore@intel.com>
+Subject: RE: git history and file moves
+Date: Fri, 24 Oct 2008 15:01:40 -0700
+Message-ID: <4911F71203A09E4D9981D27F9D8308580AA80062@orsmsx503.amr.corp.intel.com>
+References: <1224640967.14280.0.camel@minggr.sh.intel.com>
+	 <81b0412b0810220419q43f6985fs1c608e3d3cbcf8f3@mail.gmail.com>
+	 <48FF1EDB.8010503@drmicha.warpmail.net>
+	 <4911F71203A09E4D9981D27F9D8308580AA7FFFB@orsmsx503.amr.corp.intel.com>
+ <81b0412b0810241443t75e2022fg984df400585cb254@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Linus Torvalds <torvalds@linux-foundation.org>
-X-From: git-owner@vger.kernel.org Sat Oct 25 00:01:55 2008
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: 8BIT
+Cc: Michael J Gruber <git@drmicha.warpmail.net>,
+	"Lin, Ming M" <ming.m.lin@intel.com>,
+	"git@vger.kernel.org" <git@vger.kernel.org>
+To: Alex Riesen <raa.lkml@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Oct 25 00:03:07 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KtUjA-0006NO-2H
-	for gcvg-git-2@gmane.org; Sat, 25 Oct 2008 00:01:52 +0200
+	id 1KtUkE-0006gF-2U
+	for gcvg-git-2@gmane.org; Sat, 25 Oct 2008 00:02:58 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754534AbYJXWAj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 24 Oct 2008 18:00:39 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754491AbYJXWAj
-	(ORCPT <rfc822;git-outgoing>); Fri, 24 Oct 2008 18:00:39 -0400
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:49908 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751198AbYJXWAi (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 24 Oct 2008 18:00:38 -0400
-Received: from localhost.localdomain (localhost [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 4C9DD730FC;
-	Fri, 24 Oct 2008 18:00:37 -0400 (EDT)
-Received: from pobox.com (ip68-225-240-211.oc.oc.cox.net [68.225.240.211])
- (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
- certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
- ESMTPSA id 70C55730F6; Fri, 24 Oct 2008 18:00:30 -0400 (EDT)
-In-Reply-To: <alpine.LFD.2.00.0810240853310.3287@nehalem.linux-foundation.org> (Linus
- Torvalds's message of "Fri, 24 Oct 2008 09:08:26 -0700 (PDT)")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: 3085F26E-A217-11DD-8DB5-9CEDC82D7133-77302942!a-sasl-fastnet.pobox.com
+	id S1755262AbYJXWBp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 24 Oct 2008 18:01:45 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755168AbYJXWBp
+	(ORCPT <rfc822;git-outgoing>); Fri, 24 Oct 2008 18:01:45 -0400
+Received: from mga09.intel.com ([134.134.136.24]:1305 "EHLO mga09.intel.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754887AbYJXWBo convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 24 Oct 2008 18:01:44 -0400
+Received: from orsmga002.jf.intel.com ([10.7.209.21])
+  by orsmga102.jf.intel.com with ESMTP; 24 Oct 2008 14:56:39 -0700
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="4.33,480,1220252400"; 
+   d="scan'208";a="352097635"
+Received: from unknown (HELO azsmsx601.amr.corp.intel.com) ([10.2.121.193])
+  by orsmga002.jf.intel.com with ESMTP; 24 Oct 2008 15:01:08 -0700
+Received: from orsmsx601.amr.corp.intel.com (10.22.226.213) by
+ azsmsx601.amr.corp.intel.com (10.2.121.193) with Microsoft SMTP Server (TLS)
+ id 8.1.311.2; Fri, 24 Oct 2008 15:01:43 -0700
+Received: from orsmsx503.amr.corp.intel.com ([10.22.226.47]) by
+ orsmsx601.amr.corp.intel.com ([10.22.226.213]) with mapi; Fri, 24 Oct 2008
+ 15:01:42 -0700
+Thread-Topic: git history and file moves
+Thread-Index: Ack2IYYoQl4EnTVfTwy1baK8G1DinQAAf9XQ
+In-Reply-To: <81b0412b0810241443t75e2022fg984df400585cb254@mail.gmail.com>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+acceptlanguage: en-US
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/99070>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/99071>
 
-Linus Torvalds <torvalds@linux-foundation.org> writes:
+What we are seeing is an issue after we do a file move to a new directory. Once moved, the previous history of the file is not readily available. One needs to know to use --follow on the command line, and worse, gitweb does not show the full history at all.
 
-> The "git buglet" looks liek this:
->
->  - build a kernel
->
->  - do "git clean -dqfx". This fails with
->
-> 	warning: failed to remove 'include/config/'
->
->  - do "git clean -dqfx" again. And now it works - apparently because the 
->    first invocation deleted enough of the big directory.
->
-> Doing an 'strace' to see what is going on, I see:
->
-> 	..
-> 	getdents(3, /* 132 entries */, 4096)    = 3888
-> 	lstat("include/config/sgi", {st_mode=S_IFDIR|0755, st_size=4096, ...}) = 0
-> 	open("include/config/sgi", O_RDONLY|O_NONBLOCK|O_DIRECTORY|0x80000) = 4
-> 	fstat(4, {st_mode=S_IFDIR|0755, st_size=4096, ...}) = 0
-> 	getdents(4, /* 3 entries */, 4096)      = 80
-> 	lstat("include/config/sgi/partition.h", {st_mode=S_IFREG|0644, st_size=0, ...}) = 0
-> 	unlink("include/config/sgi/partition.h") = 0
-> 	getdents(4, /* 0 entries */, 4096)      = 0
-> 	close(4)                                = 0
-> 	rmdir("include/config/sgi")             = 0
-> 	lstat("include/config/sgi", 0x7fffdc4d2110) = -1 ENOENT (No such file or directory)
-> 	close(3)                                = 0
-> 	write(2, "warning: failed to remove \'include/config/\'\n", 44) = 44
-> 	..
->
-> and notice how it does that
->
-> 	lstat("include/config/sgi", ..
->
-> _twice_. That, in turn (knowing the git implementation), implies that it 
-> was returned twice from that first "getdents(3, ...)" call.
->
-> So what git clean does is to scan over the readdir() return values, see if 
-> it's a file it knows about, try to remove it if not, lstat() every entry, 
-> recurse into them if they are directories, and then remove it. If the 
-> lstat() fails, "git clean" will fail.
+We have almost a decade of history on the project, from several different source control systems. We often find it useful to go back and find out when something changed, so we want to keep it and have it easily available.
 
-Hmm, interesting.
-
--- >8 --
-Subject: allow readdir(3) to return the same entry twice
-
-When removing a large directory recursively, repeatedly running unlink(2)
-on what we read from readdir(3) can cause readdir(3) (or underlying
-getdents(2)) to return the same entry twice.  If we have already removed
-it, running lstat() on the entry would fail with ENOENT, but there is no
-harm if we ignore such an error.
-
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
----
-
- dir.c |    7 +++++--
- 1 files changed, 5 insertions(+), 2 deletions(-)
-
-diff --git i/dir.c w/dir.c
-index 0131983..293df4e 100644
---- i/dir.c
-+++ w/dir.c
-@@ -800,8 +800,11 @@ int remove_dir_recursively(struct strbuf *path, int only_empty)
- 
- 		strbuf_setlen(path, len);
- 		strbuf_addstr(path, e->d_name);
--		if (lstat(path->buf, &st))
--			; /* fall thru */
-+		if (lstat(path->buf, &st)) {
-+			if (errno == ENOENT)
-+				continue;
-+			/* otherwise fall thru */
-+		}
- 		else if (S_ISDIR(st.st_mode)) {
- 			if (!remove_dir_recursively(path, only_empty))
- 				continue; /* happy */
+>-----Original Message-----
+>From: Alex Riesen [mailto:raa.lkml@gmail.com]
+>Sent: Friday, October 24, 2008 2:43 PM
+>To: Moore, Robert
+>Cc: Michael J Gruber; Lin, Ming M; git@vger.kernel.org
+>Subject: Re: git history and file moves
+>
+>2008/10/24 Moore, Robert <robert.moore@intel.com>:
+>> Here's what we have:
+>>
+>> /var/www/cgi-bin/gitweb.acpica/gitweb.conf
+>>
+>> Containts this : GITWEB_CSS = "/icons/gitweb.css";
+>>
+>> What should we add to automatically get all file history?
+>>
+>
+>Nothing. It is the default. You can change the variable Michael
+>mentioned to use "-M -M -C -C" but it is very-very slow on any
+>kind of history worth its commits.
+>
+>And you almost never talk about _file_ history in Git. It is all
+>_project_ history, filtered for commits which touch the file you're
+>interested in at the moment of looking.
