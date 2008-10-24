@@ -1,159 +1,67 @@
-From: Jeff King <peff@peff.net>
-Subject: [PATCH 5/5] document the diff driver textconv feature
-Date: Thu, 23 Oct 2008 22:56:10 -0400
-Message-ID: <20081024025610.GE2831@coredump.intra.peff.net>
-References: <20081024024631.GA20365@coredump.intra.peff.net>
+From: Daniel Barkalow <barkalow@iabervon.org>
+Subject: Re: git performance
+Date: Thu, 23 Oct 2008 23:56:46 -0400 (EDT)
+Message-ID: <alpine.LNX.1.00.0810232237060.19665@iabervon.org>
+References: <alpine.LNX.1.00.0810231346520.19665@iabervon.org> <000801c93483$2fdad340$8f9079c0$@com> <20081022203624.GA4585@coredump.intra.peff.net> <000901c93490$e0c40ed0$a24c2c70$@com> <20081024072412.6117@nanako3.lavabit.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Johannes Sixt <j.sixt@viscovery.net>,
-	Matthieu Moy <Matthieu.Moy@imag.fr>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Oct 24 04:57:31 2008
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Edward Ned Harvey <git@nedharvey.com>, git@vger.kernel.org
+To: Nanako Shiraishi <nanako3@lavabit.com>
+X-From: git-owner@vger.kernel.org Fri Oct 24 05:59:08 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KtCrh-0005Bw-OE
-	for gcvg-git-2@gmane.org; Fri, 24 Oct 2008 04:57:30 +0200
+	id 1KtDpH-0007rS-1a
+	for gcvg-git-2@gmane.org; Fri, 24 Oct 2008 05:59:03 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752616AbYJXC4O (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 23 Oct 2008 22:56:14 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752645AbYJXC4O
-	(ORCPT <rfc822;git-outgoing>); Thu, 23 Oct 2008 22:56:14 -0400
-Received: from peff.net ([208.65.91.99]:3806 "EHLO peff.net"
+	id S1751685AbYJXD4t (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 23 Oct 2008 23:56:49 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751651AbYJXD4t
+	(ORCPT <rfc822;git-outgoing>); Thu, 23 Oct 2008 23:56:49 -0400
+Received: from iabervon.org ([66.92.72.58]:37956 "EHLO iabervon.org"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752238AbYJXC4N (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 23 Oct 2008 22:56:13 -0400
-Received: (qmail 12946 invoked by uid 111); 24 Oct 2008 02:56:11 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.32) with SMTP; Thu, 23 Oct 2008 22:56:11 -0400
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Thu, 23 Oct 2008 22:56:10 -0400
-Content-Disposition: inline
-In-Reply-To: <20081024024631.GA20365@coredump.intra.peff.net>
+	id S1751423AbYJXD4s (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 23 Oct 2008 23:56:48 -0400
+Received: (qmail 3010 invoked by uid 1000); 24 Oct 2008 03:56:46 -0000
+Received: from localhost (sendmail-bs@127.0.0.1)
+  by localhost with SMTP; 24 Oct 2008 03:56:46 -0000
+In-Reply-To: <20081024072412.6117@nanako3.lavabit.com>
+User-Agent: Alpine 1.00 (LNX 882 2007-12-20)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/99005>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/99006>
 
-This patch also changes the term "custom diff driver" to
-"external diff driver"; now that there are more facets of a
-"custom driver" than just external diffing, it makes sense
-to refer to the configuration of "diff.foo.*" as the "foo
-diff driver", with "diff.foo.command" as the "external
-driver for foo".
+On Fri, 24 Oct 2008, Nanako Shiraishi wrote:
 
-Signed-off-by: Jeff King <peff@peff.net>
----
- Documentation/gitattributes.txt |   66 +++++++++++++++++++++++++++++++--------
- 1 files changed, 53 insertions(+), 13 deletions(-)
+> Quoting Daniel Barkalow <barkalow@iabervon.org>:
+> 
+> > On Wed, 22 Oct 2008, Edward Ned Harvey wrote:
+> >
+> >> Out of curiosity, what are they talking about, when they say "git is 
+> >> fast?"  Just the fact that it's all local disk, or is there more to it 
+> >> than that?  I could see - git would probably outperform perforce for 
+> >> versioning of large files (let's say iso files) to benefit from 
+> >> sustained local disk IO, while perforce would probably outperform 
+> >> anything I can think of, operating on thousands of tiny files, because 
+> >> it will never walk the tree. 
+> >
+> > It shouldn't be too hard to make git work like perforce with respect to 
+> > walking the tree. git keeps an index of the stat() info it saw when it 
+> > last looked at files, and only looks at the contents of files whose stat() 
+> > info has changed. In order to have it work like perforce, it would just 
+> > need to have a flag in the stat() info index for "don't even bother", 
+> 
+> Are you describing the "assume unchanged bit"?
 
-diff --git a/Documentation/gitattributes.txt b/Documentation/gitattributes.txt
-index 2694559..314e2d3 100644
---- a/Documentation/gitattributes.txt
-+++ b/Documentation/gitattributes.txt
-@@ -213,10 +213,12 @@ with `crlf`, and then `ident` and fed to `filter`.
- Generating diff text
- ~~~~~~~~~~~~~~~~~~~~
- 
--The attribute `diff` affects if 'git-diff' generates textual
--patch for the path or just says `Binary files differ`.  It also
--can affect what line is shown on the hunk header `@@ -k,l +n,m @@`
--line.
-+The attribute `diff` affects how 'git' generates diffs for particular
-+files. It can tell git whether to generate a textual patch for the path
-+or to treat the path as a binary file.  It can also affect what line is
-+shown on the hunk header `@@ -k,l +n,m @@` line, tell git to use an
-+external command to generate the diff, or ask git to convert binary
-+files to a text format before generating the diff.
- 
- Set::
- 
-@@ -227,7 +229,8 @@ Set::
- Unset::
- 
- 	A path to which the `diff` attribute is unset will
--	generate `Binary files differ`.
-+	generate `Binary files differ` (or a binary patch, if
-+	binary patches are enabled).
- 
- Unspecified::
- 
-@@ -238,21 +241,21 @@ Unspecified::
- 
- String::
- 
--	Diff is shown using the specified custom diff driver.
--	The driver program is given its input using the same
--	calling convention as used for GIT_EXTERNAL_DIFF
--	program.  This name is also used for custom hunk header
--	selection.
-+	Diff is shown using the specified diff driver.  Each driver may
-+	specify one or more options, as described in the following
-+	section. The options for the diff driver "foo" are defined
-+	by the configuration variables in the "diff.foo" section of the
-+	git config file.
- 
- 
--Defining a custom diff driver
--^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-+Defining an external diff driver
-+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
- 
- The definition of a diff driver is done in `gitconfig`, not
- `gitattributes` file, so strictly speaking this manual page is a
- wrong place to talk about it.  However...
- 
--To define a custom diff driver `jcdiff`, add a section to your
-+To define an external diff driver `jcdiff`, add a section to your
- `$GIT_DIR/config` file (or `$HOME/.gitconfig` file) like this:
- 
- ----------------------------------------------------------------
-@@ -328,6 +331,43 @@ patterns are available:
- - `tex` suitable for source code for LaTeX documents.
- 
- 
-+Performing text diffs of binary files
-+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-+
-+Sometimes it is desirable to see the diff of a text-converted
-+version of some binary files. For example, a word processor
-+document can be converted to an ASCII text representation, and
-+the diff of the text shown. Even though this conversion loses
-+some information, the resulting diff is useful for human
-+viewing (but cannot be applied directly).
-+
-+The `textconv` config option is used to define a program for
-+performing such a conversion. The program should take a single
-+argument, the name of a file to convert, and produce the
-+resulting text on stdout.
-+
-+For example, to show the diff of the exif information of a
-+file instead of the binary information (assuming you have the
-+exif tool installed):
-+
-+------------------------
-+[diff "jpg"]
-+	textconv = exif
-+------------------------
-+
-+NOTE: The text conversion is generally a one-way conversion;
-+in this example, we lose the actual image contents and focus
-+just on the text data. This means that diffs generated by
-+textconv are _not_ suitable for applying. For this reason,
-+only `git diff` and the `git log` family of commands (i.e.,
-+log, whatchanged, show) will perform text conversion. `git
-+format-patch` will never generate this output. If you want to
-+send somebody a text-converted diff of a binary file (e.g.,
-+because it quickly conveys the changes you have made), you
-+should generate it separately and send it as a comment _in
-+addition to_ the usual binary diff that you might send.
-+
-+
- Performing a three-way merge
- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
- 
--- 
-1.6.0.3.518.gdb328.dirty
+Yes, but with the user write mode bit in the filesystem set to 
+no-assume-unchanged, which is how Perforce users cope with it. I hadn't 
+realized it had been implemented to get set on a per-file basis, rather 
+than just as a global setting that caused it to not stat() anything except 
+right when it was told to update.
+
+	-Daniel
+*This .sig left intentionally blank*
