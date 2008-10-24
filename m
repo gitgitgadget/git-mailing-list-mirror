@@ -1,61 +1,106 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: What's cooking in git.git (Oct 2008, #05; Wed, 22)
-Date: Fri, 24 Oct 2008 15:13:17 -0700
-Message-ID: <7vprlp1w1u.fsf@gitster.siamese.dyndns.org>
-References: <7v8wsf50ne.fsf@gitster.siamese.dyndns.org>
- <gdsjb1$eob$1@ger.gmane.org>
+From: =?ISO-8859-15?Q?Ren=E9_Scharfe?= <rene.scharfe@lsrfire.ath.cx>
+Subject: Re: [PATCH] Fixed git archive for bare repos
+Date: Sat, 25 Oct 2008 00:19:49 +0200
+Message-ID: <49024A05.3090100@lsrfire.ath.cx>
+References: <20081022210913.GB22541@hashpling.org> <1224712023-5280-1-git-send-email-charles@hashpling.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Oct 25 00:14:45 2008
+Content-Type: text/plain; charset=ISO-8859-15
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, Deskin Miller <deskinm@umich.edu>,
+	kenneth johansson <ken@kenjo.org>, gitster@pobox.com
+To: Charles Bailey <charles@hashpling.org>
+X-From: git-owner@vger.kernel.org Sat Oct 25 00:21:12 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KtUvb-0001lQ-QC
-	for gcvg-git-2@gmane.org; Sat, 25 Oct 2008 00:14:44 +0200
+	id 1KtV1r-0003L4-OD
+	for gcvg-git-2@gmane.org; Sat, 25 Oct 2008 00:21:12 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758056AbYJXWNa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 24 Oct 2008 18:13:30 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754491AbYJXWN3
-	(ORCPT <rfc822;git-outgoing>); Fri, 24 Oct 2008 18:13:29 -0400
-Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:35820 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1758050AbYJXWN3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 24 Oct 2008 18:13:29 -0400
-Received: from localhost.localdomain (localhost [127.0.0.1])
-	by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id E41B58F1F3;
-	Fri, 24 Oct 2008 18:13:26 -0400 (EDT)
-Received: from pobox.com (ip68-225-240-211.oc.oc.cox.net [68.225.240.211])
- (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
- certificate requested) by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with
- ESMTPSA id B82C58F1F2; Fri, 24 Oct 2008 18:13:20 -0400 (EDT)
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: FB40E850-A218-11DD-81F2-4F5276724C3F-77302942!a-sasl-quonix.pobox.com
+	id S1754632AbYJXWT6 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 24 Oct 2008 18:19:58 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754491AbYJXWT5
+	(ORCPT <rfc822;git-outgoing>); Fri, 24 Oct 2008 18:19:57 -0400
+Received: from india601.server4you.de ([85.25.151.105]:39627 "EHLO
+	india601.server4you.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753507AbYJXWT5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 24 Oct 2008 18:19:57 -0400
+Received: from [10.0.1.100] (p57B7FD98.dip.t-dialin.net [87.183.253.152])
+	by india601.server4you.de (Postfix) with ESMTPSA id A20CD2F8050;
+	Sat, 25 Oct 2008 00:19:54 +0200 (CEST)
+User-Agent: Thunderbird 2.0.0.17 (Windows/20080914)
+In-Reply-To: <1224712023-5280-1-git-send-email-charles@hashpling.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/99073>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/99074>
 
-Jakub Narebski <jnareb@gmail.com> writes:
+Charles Bailey schrieb:
+> This moves the call to git config to a place where it doesn't break
+> the logic for using git archive in a bare repository but retains the
+> fix to make git archive respect core.autocrlf.
 
-> Junio C Hamano wrote:
->
->> * gb/gitweb-pathinfo (Tue Oct 21 21:34:54 2008 +0200) 5 commits
->>  - gitweb: generate parent..current URLs
->>  - gitweb: parse parent..current syntax from PATH_INFO
->>  - gitweb: use_pathinfo filenames start with /
->>  - gitweb: generate project/action/hash URLs
->>  - gitweb: parse project/action/hash_base:filename PATH_INFO
->> 
->> Seventh iteration; hopefully the usual gitweb gangs will give quick
->> comments and ack to push this out to 'next' soon.
->
-> If I remember correctly v7 is mainly cosmetic changes, and I have
-> acked all or almost all of the equivalent patches from v6.
+If one combines your patch, Deskin's commit message and test and extend=
+s
+on the latter a bit then I think we have a winner. :)
 
-I take it to mean you reviewed v7 and we have your Ack on them;
-thanks.
+Here are a few more tests which create a ZIP file in addition to a tar
+archive and compare them to their non-bare counterparts.
+
+Care to resend?
+
+Thanks,
+Ren=E9
+
+
+ t/t5000-tar-tree.sh |   21 +++++++++++++++++++++
+ 1 files changed, 21 insertions(+), 0 deletions(-)
+
+diff --git a/t/t5000-tar-tree.sh b/t/t5000-tar-tree.sh
+index e395ff4..bf5fa25 100755
+--- a/t/t5000-tar-tree.sh
++++ b/t/t5000-tar-tree.sh
+@@ -58,6 +58,11 @@ test_expect_success \
+      git commit-tree $treeid </dev/null)'
+=20
+ test_expect_success \
++    'create bare clone' \
++    'git clone --bare . bare.git &&
++     cp .gitattributes bare.git/info/attributes'
++
++test_expect_success \
+     'remove ignored file' \
+     'rm a/ignored'
+=20
+@@ -74,6 +79,14 @@ test_expect_success \
+     'diff b.tar b2.tar'
+=20
+ test_expect_success \
++    'git archive in a bare repo' \
++    '(cd bare.git && git archive HEAD) >b3.tar'
++
++test_expect_success \
++    'git archive vs. the same in a bare repo' \
++    'test_cmp b.tar b3.tar'
++
++test_expect_success \
+     'validate file modification time' \
+     'mkdir extract &&
+      "$TAR" xf b.tar -C extract a/a &&
+@@ -151,6 +164,14 @@ test_expect_success \
+     'git archive --format=3Dzip' \
+     'git archive --format=3Dzip HEAD >d.zip'
+=20
++test_expect_success \
++    'git archive --format=3Dzip in a bare repo' \
++    '(cd bare.git && git archive --format=3Dzip HEAD) >d1.zip'
++
++test_expect_success \
++    'git archive --format=3Dzip vs. the same in a bare repo' \
++    'test_cmp d.zip d1.zip'
++
+ $UNZIP -v >/dev/null 2>&1
+ if [ $? -eq 127 ]; then
+ 	echo "Skipping ZIP tests, because unzip was not found"
