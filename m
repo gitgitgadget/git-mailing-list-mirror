@@ -1,101 +1,57 @@
-From: "Giuseppe Bilotta" <giuseppe.bilotta@gmail.com>
-Subject: Re: [RFC] Zit: the git-based single file content tracker
-Date: Fri, 24 Oct 2008 14:15:26 +0200
-Message-ID: <cb7bb73a0810240515x4d57ea03w1b245f83d740ddfd@mail.gmail.com>
-References: <gdok16$vh2$1@ger.gmane.org> <m38wsei8ne.fsf@localhost.localdomain>
-	 <cb7bb73a0810240352u28bab2b5p907065680985270a@mail.gmail.com>
-	 <200810241332.32487.jnareb@gmail.com>
+From: "Ping Yin" <pkufranky@gmail.com>
+Subject: git adds some text file as binary file by mistake
+Date: Fri, 24 Oct 2008 20:37:01 +0800
+Message-ID: <46dff0320810240537i4f0d86b9p56def9ef6a69c180@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-Cc: "Jean-Luc Herren" <jlh@gmx.ch>, git@vger.kernel.org
-To: "Jakub Narebski" <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Oct 24 14:16:43 2008
+To: "Git Mailing List" <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Fri Oct 24 14:38:35 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KtLar-0008Ta-TN
-	for gcvg-git-2@gmane.org; Fri, 24 Oct 2008 14:16:42 +0200
+	id 1KtLvo-0000Ms-29
+	for gcvg-git-2@gmane.org; Fri, 24 Oct 2008 14:38:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753112AbYJXMP3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 24 Oct 2008 08:15:29 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753243AbYJXMP3
-	(ORCPT <rfc822;git-outgoing>); Fri, 24 Oct 2008 08:15:29 -0400
-Received: from yw-out-2324.google.com ([74.125.46.29]:60949 "EHLO
-	yw-out-2324.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753035AbYJXMP2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 24 Oct 2008 08:15:28 -0400
-Received: by yw-out-2324.google.com with SMTP id 9so276136ywe.1
-        for <git@vger.kernel.org>; Fri, 24 Oct 2008 05:15:26 -0700 (PDT)
+	id S1752316AbYJXMhE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 24 Oct 2008 08:37:04 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752320AbYJXMhE
+	(ORCPT <rfc822;git-outgoing>); Fri, 24 Oct 2008 08:37:04 -0400
+Received: from yx-out-2324.google.com ([74.125.44.28]:25471 "EHLO
+	yx-out-2324.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752316AbYJXMhD (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 24 Oct 2008 08:37:03 -0400
+Received: by yx-out-2324.google.com with SMTP id 8so280891yxm.1
+        for <git@vger.kernel.org>; Fri, 24 Oct 2008 05:37:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:received:received:message-id:date:from:to
-         :subject:cc:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:references;
-        bh=0y5KlaaSNiQDtlSkjNn4oAuLZvuZK79NwYpXP6Q4VbI=;
-        b=xhsnmKC0hndl4cnqO3A7y3iUZcmwhbEVEVEoQ8upj0QowUicF1AoojAbpli1TAdEoM
-         M/W9t6jptwtgj45ZMHPI+Kfn4rY/8FLCyhh2Bfu7nGpQeIBZehXP6Dims2UmbonU9waC
-         Vf1KFo5bsHH/AP1fEQauGr8E8oB/ZmheLQQP4=
+         :subject:mime-version:content-type:content-transfer-encoding
+         :content-disposition;
+        bh=MFRm55xFd2JbXOM/vbEj/76A8EuKysphoRlg28odqDw=;
+        b=floiIH8lvKJsyw4wQvrhgdI0XyPffYC201BDkIKUvmKT62QB/VAsACpkDbWgcDrrMR
+         lZpW4ba4jrBtgOyIIn4NltWKytGJotYG5YYSO3smG0gmG05lfe2dFDGASH3jwhgMEpCD
+         ldlB2+Mv1wiRJWiq1mb42wnLZVRH8TWsZHK10=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
-         :content-type:content-transfer-encoding:content-disposition
-         :references;
-        b=Lz74MQpZ1/rlustVI+cxMpN5LjB8FPSatGRFjqsSb9ih9YJNR2xiYVJ+kAY0luSoBw
-         5mDoD3Wde2psBFVGY/DDb0ffU9oG8Rqc8Q75uYnZWoaSAD+t7FgxMgPjO4gkZ6dRiYEH
-         3C8K2va9FhZGAcE+oyZ8HPwt9xI17Ew/2hm3Q=
-Received: by 10.151.39.2 with SMTP id r2mr5776052ybj.108.1224850526777;
-        Fri, 24 Oct 2008 05:15:26 -0700 (PDT)
-Received: by 10.150.145.2 with HTTP; Fri, 24 Oct 2008 05:15:26 -0700 (PDT)
-In-Reply-To: <200810241332.32487.jnareb@gmail.com>
+        h=message-id:date:from:to:subject:mime-version:content-type
+         :content-transfer-encoding:content-disposition;
+        b=qMGtihmzX+sxSs1lippQw1VtD8Oq6TSqdgjYG61gd/LxqHZDv5m3u1FU7Tb9/iJYz7
+         mxsay2C1h+saS4UoSVZOkv2C9cmIGa1xPr1i7DwrYIx4qOvi1Dk7Wx0lbRl6+bP5miE2
+         yqtMSIVah9+eLTx5oYD5CguFqozuzdoo2fumk=
+Received: by 10.150.52.2 with SMTP id z2mr5763239ybz.210.1224851821493;
+        Fri, 24 Oct 2008 05:37:01 -0700 (PDT)
+Received: by 10.150.140.10 with HTTP; Fri, 24 Oct 2008 05:37:01 -0700 (PDT)
 Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/99029>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/99030>
 
-On Fri, Oct 24, 2008 at 1:32 PM, Jakub Narebski <jnareb@gmail.com> wrote:
-> On Fri, 24 Oct 2008, Giuseppe Bilotta wrote:
->> On Fri, Oct 24, 2008 at 12:31 PM, Jakub Narebski <jnareb@gmail.com> wrote:
->>> By the way RCS which I use for version control of single files use
->>> both approaches: it can store 'file,v' alongside 'file' (just like
->>> your '.zit.file/' or '.file.git/'), but it can also store files on
->>> per-directory basis in 'RCS/' subdirectory (proposed '.zit/file/' or
->>> '.zit/file.git/' solution)
->>
->> Indeed, there's not particular reason why both solutions shouldn't be
->> available. [...]
->
->> The only problem then is priority. When looking for a file's repo, do
->> we look at .file.git first, or .zit/file.git? How does RCS behave in
->> this case?
->
-> rcsintro(1) states:
->
->  If you don't want to clutter your working directory with RCS files, create
->  a  subdirectory called RCS in your working directory, and move all your RCS
->  files there.  RCS commands will look *first* into that directory to find
->  needed files.
+So what should i do if i want it added as text file?
 
-Cool. I pushed changes to this end to git.oblomov.eu/zit --now zit
-will look for .zit/file.git first, then for .file.git; if neither is
-found, and .zit/ exists, the repo is set to .zit/file.git, otherwise
-it's set to .file.git
-
-You can either manually mkdir .zit, or use zit init that does exactly
-the same thing.
-
->>> By the way, it would be nice to have VC interface for Emacs for Zit...
->>
->> I'm afraid someone else will have to take care of that, since Emacs is
->> not really something I use.
->
-> I'll try to hack it using contrib/emacs/vc-git.el as a base...
-
-Cool, thanks.
-
--- 
-Giuseppe "Oblomov" Bilotta
+--
+Ping Yin
