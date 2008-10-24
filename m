@@ -1,105 +1,106 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] Only update the cygwin-related configuration during
- state auto-setup
-Date: Thu, 23 Oct 2008 22:54:09 -0700
-Message-ID: <7viqri35dq.fsf@gitster.siamese.dyndns.org>
-References: <81b0412b0810230607sfea05ddm62bd03f837fc922e@mail.gmail.com>
+From: david@lang.hm
+Subject: Re: [RFC] Zit (v2): the git-based single file content tracker
+Date: Thu, 23 Oct 2008 23:21:02 -0700 (PDT)
+Message-ID: <alpine.DEB.1.10.0810232314490.20238@asgard.lang.hm>
+References: <gdok16$vh2$1@ger.gmane.org> <gdqbta$rhe$1@ger.gmane.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: "Mark Levedahl" <mlevedahl@gmail.com>, spearce@spearce.org,
-	dpotapov@gmail.com, git@vger.kernel.org
-To: "Alex Riesen" <raa.lkml@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Oct 24 07:55:47 2008
+Content-Type: TEXT/PLAIN; charset=US-ASCII; format=flowed
+Cc: git@vger.kernel.org
+To: Giuseppe Bilotta <giuseppe.bilotta@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Oct 24 08:21:57 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KtFeB-0004sD-Ma
-	for gcvg-git-2@gmane.org; Fri, 24 Oct 2008 07:55:44 +0200
+	id 1KtG3W-0002jP-Ij
+	for gcvg-git-2@gmane.org; Fri, 24 Oct 2008 08:21:55 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751854AbYJXFya (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 24 Oct 2008 01:54:30 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751597AbYJXFy3
-	(ORCPT <rfc822;git-outgoing>); Fri, 24 Oct 2008 01:54:29 -0400
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:53956 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750959AbYJXFy3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 24 Oct 2008 01:54:29 -0400
-Received: from localhost.localdomain (localhost [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 64DFB73EA7;
-	Fri, 24 Oct 2008 01:54:27 -0400 (EDT)
-Received: from pobox.com (ip68-225-240-211.oc.oc.cox.net [68.225.240.211])
- (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
- certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
- ESMTPSA id AF85873EA5; Fri, 24 Oct 2008 01:54:16 -0400 (EDT)
-In-Reply-To: <81b0412b0810230607sfea05ddm62bd03f837fc922e@mail.gmail.com>
- (Alex Riesen's message of "Thu, 23 Oct 2008 15:07:22 +0200")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: 37C51258-A190-11DD-B23D-9CEDC82D7133-77302942!a-sasl-fastnet.pobox.com
+	id S1751686AbYJXGUY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 24 Oct 2008 02:20:24 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751719AbYJXGUY
+	(ORCPT <rfc822;git-outgoing>); Fri, 24 Oct 2008 02:20:24 -0400
+Received: from mail.lang.hm ([64.81.33.126]:39159 "EHLO bifrost.lang.hm"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751066AbYJXGUW (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 24 Oct 2008 02:20:22 -0400
+Received: from asgard.lang.hm (asgard.lang.hm [10.0.0.100])
+	by bifrost.lang.hm (8.13.4/8.13.4/Debian-3) with ESMTP id m9O6KJDO017889;
+	Thu, 23 Oct 2008 23:20:19 -0700
+X-X-Sender: dlang@asgard.lang.hm
+In-Reply-To: <gdqbta$rhe$1@ger.gmane.org>
+User-Agent: Alpine 1.10 (DEB 962 2008-03-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/99010>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/99011>
 
-"Alex Riesen" <raa.lkml@gmail.com> writes:
+On Thu, 23 Oct 2008, Giuseppe Bilotta wrote:
 
-> Otherwise the other global settings which were already read and set up will
-> be overwritten ...
+> I decided to give the simpler GIT_DIR approach another go.
+>
+> The reworked Zit ( git://git.oblomov.eu/zit ) works by creating
+> .file.git/ to track file's history. .file.git/info/excludes is
+> initialized to the very strong '*' pattern to ensure that things such
+> as git status etc only consider the actually tracked file.
+>
+> The obvious advantage over the previous implementation is that we
+> don't rely on fragile and non-portable hardlinks. The disadvantage
+> is that something really bad can happen if a command fails to obey
+> GIT_DIR or GIT_WORK_TREE correctly.
 
-This is the answer to the question I asked in:
+this is a very interesting approach.
 
- http://thread.gmane.org/gmane.comp.version-control.git/97986/focus=98066
+the thought that hit me as I finidhed reading this thread is that we 
+are very close to having the full continum of file/repository combinations
 
-Perhaps we should use a separate variable as the original patch did, in:
+1. everything in the dir is part of one repository (the normal git case)
 
-  http://article.gmane.org/gmane.comp.version-control.git/97987
+2. some of all of the individual files in a dir is it's own repository 
+(the zit case)
 
-How about doing it like this instead?
+3. the in-between case where you can have multiple repositories that can 
+have multiple files in them.
+
+how hard would it be to extend zit to support case #3?
+
+offhand I can see it complicating the task of figuing out which repository 
+to use for a file, but what else?
+
+David Lang
 
 
-diff --git i/compat/cygwin.c w/compat/cygwin.c
-index f196753..ebac148 100644
---- i/compat/cygwin.c
-+++ w/compat/cygwin.c
-@@ -91,26 +91,32 @@ static int cygwin_stat(const char *path, struct stat *buf)
-  * functions should be used. The choice is determined by core.ignorecygwinfstricks.
-  * Reading this option is not always possible immediately as git_dir may be
-  * not be set yet. So until it is set, use cygwin lstat/stat functions.
-- * However, if the trust_executable_bit is set, we must use the Cygwin posix
-+ * However, if core.filemode is set, we must use the Cygwin posix
-  * stat/lstat as the Windows stat fuctions do not determine posix filemode.
-+ *
-+ * Note that git_cygwin_config() does NOT call git_default_config() and this
-+ * is deliberate.  Many commands read from config to establish initial
-+ * values in variables and later tweak them from elsewhere (e.g. command line).
-+ * init_stat() is called lazily on demand, typically much late in the program,
-+ * and calling git_default_config() from here would break such variables.
-  */
- static int native_stat = 1;
--extern int trust_executable_bit;
-+static int core_filemode;
- 
- static int git_cygwin_config(const char *var, const char *value, void *cb)
- {
--	if (!strcmp(var, "core.ignorecygwinfstricks")) {
-+	if (!strcmp(var, "core.ignorecygwinfstricks"))
- 		native_stat = git_config_bool(var, value);
--		return 0;
--	}
--	return git_default_config(var, value, cb);
-+	else if (!strcmp(var, "core.filemode"))
-+		core_filemode = git_config_bool(var, value);
-+	return 0;
- }
- 
- static int init_stat(void)
- {
- 	if (have_git_dir()) {
- 		git_config(git_cygwin_config, NULL);
--		if (!trust_executable_bit && native_stat) {
-+		if (!core_filemode && native_stat) {
- 			cygwin_stat_fn = cygwin_stat;
- 			cygwin_lstat_fn = cygwin_lstat;
- 		} else {
+> Command delegation is made a little smarter:
+>
+> zit somecommand file [args...]
+>
+> gets delegated to
+>
+> git somecommand [args...]
+>
+> with GIT_DIR=.file.git and GIT_WORK_TREE="`pwd`", which works
+> surprisingly well. To prevent stupid expressions such as zit add file
+> file or zit commit file file, add and commit put the filename back at
+> the end of the parameter list.
+>
+> Commands that seem to work correctly so far are init, add, log,
+> status, diff, remote, push, pull, and even rebase -i.
+>
+> Commands that definitely need some work are rm (should it just remove
+> the .file.git/ dir?) and mv (hairy: we would need to rename .file.git
+> to .newname.git too, but rollbacks are likely to break things).
+>
+> The only new command introduced by zit is zit list, which lists all
+> zit-tracked files in the current directory, currently in a very
+> braindead way (e.g. I'd like it to display the proper status, such as
+> C M or whatever; suggestions welcome).
+>
+> On the TODO list is also some smart way to guess which file we're
+> talking about when no file is specified. Basically, the idea is to
+> check if there's only one tracked file, or only one changed tracked
+> file, and allow a missing file option in that case.
+>
+> As usual, comments suggestions and critiques welcome.
+>
+>
