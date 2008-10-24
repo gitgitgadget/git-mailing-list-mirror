@@ -1,62 +1,58 @@
-From: Charles Bailey <charles@hashpling.org>
-Subject: Re: [PATCH 2/3] Add -n/--no-prompt option to mergetool
-Date: Fri, 24 Oct 2008 23:55:39 +0100
-Message-ID: <20081024225539.GA6119@hashpling.org>
-References: <1224583999-26279-1-git-send-email-charles@hashpling.org> <1224583999-26279-2-git-send-email-charles@hashpling.org> <48FDC1CA.2080800@op5.se> <20081021122655.GA29294@hashpling.org> <20081022211720.GA23146@hashpling.org> <7vr668tdvy.fsf@gitster.siamese.dyndns.org> <20081023064455.GA10675@hashpling.org> <49024CF1.5040406@gmail.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH 3/5] refactor userdiff textconv code
+Date: Fri, 24 Oct 2008 18:56:05 -0400
+Message-ID: <20081024225605.GA16774@coredump.intra.peff.net>
+References: <20081024024631.GA20365@coredump.intra.peff.net> <20081024025330.GC2831@coredump.intra.peff.net> <7v3ail3dfy.fsf@gitster.siamese.dyndns.org> <20081024225001.GA13978@coredump.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	Jeff King <peff@peff.net>, Andreas Ericsson <ae@op5.se>,
-	"Theodore Ts'o" <tytso@mit.edu>
-To: William Pursell <bill.pursell@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Oct 25 00:57:07 2008
+Content-Type: text/plain; charset=utf-8
+Cc: git@vger.kernel.org, Johannes Sixt <j.sixt@viscovery.net>,
+	Matthieu Moy <Matthieu.Moy@imag.fr>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sat Oct 25 00:57:29 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KtVaa-0003wQ-HQ
-	for gcvg-git-2@gmane.org; Sat, 25 Oct 2008 00:57:05 +0200
+	id 1KtVau-00042z-Ln
+	for gcvg-git-2@gmane.org; Sat, 25 Oct 2008 00:57:25 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751135AbYJXWzw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 24 Oct 2008 18:55:52 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751278AbYJXWzw
-	(ORCPT <rfc822;git-outgoing>); Fri, 24 Oct 2008 18:55:52 -0400
-Received: from ptb-relay02.plus.net ([212.159.14.146]:32924 "EHLO
-	ptb-relay02.plus.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750785AbYJXWzv (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 24 Oct 2008 18:55:51 -0400
-Received: from [212.159.69.125] (helo=hashpling.plus.com)
-	 by ptb-relay02.plus.net with esmtp (Exim) id 1KtVZF-0000Dj-1S; Fri, 24 Oct 2008 23:55:41 +0100
-Received: from cayley.hashpling.org (cayley.hashpling.org [192.168.76.254])
-	by hashpling.plus.com (8.14.2/8.14.2) with ESMTP id m9OMteRp006582
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Fri, 24 Oct 2008 23:55:40 +0100
-Received: (from charles@localhost)
-	by cayley.hashpling.org (8.14.2/8.14.2/Submit) id m9OMtd9m006581;
-	Fri, 24 Oct 2008 23:55:39 +0100
+	id S1752044AbYJXW4L (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 24 Oct 2008 18:56:11 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751740AbYJXW4K
+	(ORCPT <rfc822;git-outgoing>); Fri, 24 Oct 2008 18:56:10 -0400
+Received: from peff.net ([208.65.91.99]:2576 "EHLO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751673AbYJXW4J (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 24 Oct 2008 18:56:09 -0400
+Received: (qmail 25072 invoked by uid 111); 24 Oct 2008 22:56:06 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+    by peff.net (qpsmtpd/0.32) with SMTP; Fri, 24 Oct 2008 18:56:06 -0400
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Fri, 24 Oct 2008 18:56:05 -0400
 Content-Disposition: inline
-In-Reply-To: <49024CF1.5040406@gmail.com>
-User-Agent: Mutt/1.5.18 (2008-05-17)
-X-Plusnet-Relay: e1d38dd4359bfeeecd3e90f0f9d8e625
+In-Reply-To: <20081024225001.GA13978@coredump.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/99079>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/99080>
 
-On Fri, Oct 24, 2008 at 11:32:17PM +0100, William Pursell wrote:
->
-> If the short option is dropped, the config option should
-> probably associated with mergetool.<tool>.interactive rather
-> than mergetool.interactive.  (s/interactive/whatever)
+On Fri, Oct 24, 2008 at 06:50:01PM -0400, Jeff King wrote:
 
-I'm not sure I understand your reasoning. The no-prompt/interactive
-option affects the behaviour of the mergetool script independent of
-which particular merge tool is being used. Why should the presence or
-absence of a short option affect whether the config option is global
-or per tool?
+>     However, I'm not sure exactly _where_ we would want to do this.
+>     The obvious places are for patch, for diffstat, or for whitespace
+>     checking. But all of those places use mmfile, so we can munge them
+>     in the same way. I haven't looked at using this with blame, but I do
+>     think "git blame --textconv foo.jpg" would be useful.
+> 
+>     (Actually not true. I did just look for 30 seconds at using this
+>      with blame, but blame doesn't seem to to use builtin_diff at all).
 
--- 
-Charles Bailey
-http://ccgi.hashpling.plus.com/blog/
+Ah, I see. It looks like we would have to munge fill_blob_sha1 in
+builtin-blame.c. In which case totally splitting this out from
+diff_filespec is even better, since we don't have one there.
+
+So let me try to re-roll my series based on your suggestion, and then
+I'll see if I can add "blame --textconv" on top.
+
+-Peff
