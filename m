@@ -1,91 +1,93 @@
-From: Pete Harlan <pgit@pcharlan.com>
-Subject: Re: git performance
-Date: Fri, 24 Oct 2008 00:55:59 -0700
-Message-ID: <49017F8F.3000908@pcharlan.com>
-References: <000801c93483$2fdad340$8f9079c0$@com> <20081022203624.GA4585@coredump.intra.peff.net> <000901c93490$e0c40ed0$a24c2c70$@com>
+From: Michael J Gruber <git@drmicha.warpmail.net>
+Subject: Re: clean/smudge filters for pdf files
+Date: Fri, 24 Oct 2008 10:10:13 +0200
+Message-ID: <490182E5.4030804@drmicha.warpmail.net>
+References: <ee2a733e0810231244u1510cdc8y7b27af9b8fdda1e0@mail.gmail.com>	 <20081023213203.GB26104@artemis.corp> <ee2a733e0810231840u1aed8455w7e4c461e2565ad08@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Edward Ned Harvey <git@nedharvey.com>
-X-From: git-owner@vger.kernel.org Fri Oct 24 09:57:33 2008
+Cc: Pierre Habouzit <madcoder@debian.org>, git@vger.kernel.org
+To: SLONIK.AZ@gmail.com
+X-From: git-owner@vger.kernel.org Fri Oct 24 10:11:37 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KtHY3-00055v-5k
-	for gcvg-git-2@gmane.org; Fri, 24 Oct 2008 09:57:31 +0200
+	id 1KtHlf-0001Xx-Gv
+	for gcvg-git-2@gmane.org; Fri, 24 Oct 2008 10:11:36 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751939AbYJXH4E (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 24 Oct 2008 03:56:04 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751174AbYJXH4B
-	(ORCPT <rfc822;git-outgoing>); Fri, 24 Oct 2008 03:56:01 -0400
-Received: from lax-green-bigip-5.dreamhost.com ([208.113.200.5]:43589 "EHLO
-	swarthymail-a4.g.dreamhost.com" rhost-flags-OK-OK-OK-FAIL)
-	by vger.kernel.org with ESMTP id S1751939AbYJXH4A (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 24 Oct 2008 03:56:00 -0400
-Received: from [192.168.0.101] (031.132-78-65.ftth.swbr.surewest.net [65.78.132.31])
-	by swarthymail-a4.g.dreamhost.com (Postfix) with ESMTP id B3EC0129A98;
-	Fri, 24 Oct 2008 00:55:59 -0700 (PDT)
-User-Agent: Thunderbird 2.0.0.17 (X11/20080925)
-In-Reply-To: <000901c93490$e0c40ed0$a24c2c70$@com>
+	id S1751756AbYJXIKT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 24 Oct 2008 04:10:19 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751861AbYJXIKT
+	(ORCPT <rfc822;git-outgoing>); Fri, 24 Oct 2008 04:10:19 -0400
+Received: from out3.smtp.messagingengine.com ([66.111.4.27]:42827 "EHLO
+	out3.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751686AbYJXIKR (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 24 Oct 2008 04:10:17 -0400
+Received: from compute2.internal (compute2.internal [10.202.2.42])
+	by out1.messagingengine.com (Postfix) with ESMTP id 99BCC17F915;
+	Fri, 24 Oct 2008 04:10:15 -0400 (EDT)
+Received: from heartbeat2.messagingengine.com ([10.202.2.161])
+  by compute2.internal (MEProxy); Fri, 24 Oct 2008 04:10:15 -0400
+X-Sasl-enc: teo9sYj4h6W0u+mE1pl5eWOienwB9sZkUziE0M6Oup5L 1224835815
+Received: from [139.174.44.12] (whitehead.math.tu-clausthal.de [139.174.44.12])
+	by mail.messagingengine.com (Postfix) with ESMTPSA id D6FBA302C3;
+	Fri, 24 Oct 2008 04:10:14 -0400 (EDT)
+User-Agent: Thunderbird 2.0.0.17 (X11/20080914)
+In-Reply-To: <ee2a733e0810231840u1aed8455w7e4c461e2565ad08@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/99018>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/99019>
 
-Edward Ned Harvey wrote:
-> > Yes, it does stat all the files. How many files are you talking about,
-> > and what platform?  From a warm cache on Linux, the 23,000 files kernel
-> > repo takes about a tenth of a second to stat all files for me (and this
->
-> I'm talking about 40-50,000 files, on multi-user production linux,
-> which means the cache is never warm, except when I'm benchmarking.
-> Specifically RHEL 4 with the files on NFS mount.  Cold cache "svn
-> st" takes ~10 mins.  Warm cache 20-30 sec.  Surprisingly to me,
+Leo Razoumov venit, vidit, dixit 24.10.2008 03:40:
+> On 10/23/08, Pierre Habouzit <madcoder@debian.org> wrote:
+>> On Thu, Oct 23, 2008 at 07:44:39PM +0000, Leo Razoumov wrote:
+>>  > I am trying to improve storage efficiency for PDF files in a git repo.
+>>  > Following earlier discussions in this list I am trying to set up
+>>  > proper clean/smudge filters. What follows is my current setup
+>>  >
+>>  > # in ~/.gitconfig
+>>  > [filter "pdf"]
+>>  >       clean  = "pdftk - output - uncompress"
+>>  >       smudge = "pdftk - output - compress"
+>>  >
+>>  > # in .gitattributes
+>>  > *.pdf filter=pdf
+>>  >
+>>  > Unfortunately, it seems as though that pdftk uncompress followed by
+>>  > pdftk compress do not leave the file invariant. I tried several
+>>  > uncompress+compress iterations and the file still keep changing (the
+>>  > size though stays the same).
+>>  > Is there any other alternative way to store PDF files in git repo more
+>>  > efficiently?
+>>  > Any alternative to pdftk on Linux?
+>>
+>>
+>> actually it uses some kind of zlib algorithm so that's pretty normal you
+>>  don't have the same result with a packer. Maybe one could write a tool
+>>  like pristine-tar for that purpose.
+>>
+> 
+> With zlib you get the same deterministic result as long as you use the
+> same zlib packer and unpacker. With pdftk compress/uncompress seem not
+> to form a bijection pair. This issue was briefly discussed on this
+> list back in April 2008 but no resolution emerged.
 
-I did some tests with a repo with ~32k files, and git was slightly
-slower than svn with a cold cache (10.2s vs 8.4s), and around twice as
-fast with a warm cache (.5s vs 1s).
+For a different file format I use the pair "gzip -c, gunzip -c" without
+any problems, so zlib is not a problem. I do see the effect that
+checkouts on different machines may have different compressed files
+(same gzip version), but this is a non-issue.
 
-Git 1.6.0.2, svn 1.4.6. Cache made cold with
-"echo 1 >/proc/sys/vm/drop_caches".  Timings best of 5 runs.
+Your experience with pdftk confirms mine. It shuffles things around
+becauses it parses the files into objects and then writes them out again
+in possibly different order. This is no problem for pdf because it uses
+"pointers" (it's a bijection up to reordering), but it's a weird design,
+and complicates things for us.
 
-(I did various benchmarks with svn 1.5.3 also, but there's something
-awfully wrong with svn 1.5.x's merging, which takes pathologically
-long compared with 1.4 (minutes instead of seconds), and it wasn't
-noticeably faster than 1.4 at anything I tested.)
+I'm still looking for something viable, I'll let list know when I've
+found something...
 
-> performance was approx the same for files on local disk versus NFS.
-
-10 minutes seems like a crazy amount of time for 40-50k files.  If you
-didn't say you'd tested it on local disks, it would really sound like
-a bad NFS interaction more than an svn problem.
-
-> Out of curiosity, what are they talking about, when they say "git is
-> fast?"
-
-In my comparisons between svn and git, the operation "checkout
-revision N of the tree" (i.e., "svn update -r 40000" vs "git checkout
-302c7476") took five minutes on subversion and ten seconds using git.
-The tests were all local, so git wasn't benefiting from being a DVCS,
-it was just eerily fast on some things.  Svn was even that slow when
-the revisions were 1 commit different, if it was a large enough
-commit.
-
-I don't check out whole revisions like that very often, but switching
-between branches is a similar operation.  It doesn't usually take five
-minutes in svn but it's an interruption, and with git it isn't.
-
-For almost everything I tried git was faster, but status wasn't really
-one of them.  The compelling cases were the number of things that were
-faster _enough_ to no longer be an interruption, and being a DVCS, and
-rebase, and rebase -i, and gitk, and a smarter blame, and
-branching/merging support like it's something you'd do all day long,
-not just when you were forced to.
-
-HTH,
-
---Pete
+Michael
