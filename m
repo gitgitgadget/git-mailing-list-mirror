@@ -1,83 +1,89 @@
-From: Pascal Obry <pascal@obry.net>
-Subject: Problem with git filter-branch
-Date: Sat, 25 Oct 2008 11:33:12 +0200
-Organization: Home - http://www.obry.net
-Message-ID: <4902E7D8.6050401@obry.net>
-Reply-To: pascal@obry.net
+From: William Pursell <bill.pursell@gmail.com>
+Subject: Re: [PATCH 2/3] Add -n/--no-prompt option to mergetool
+Date: Sat, 25 Oct 2008 11:11:14 +0100
+Message-ID: <4902F0C2.2070709@gmail.com>
+References: <1224583999-26279-1-git-send-email-charles@hashpling.org> <1224583999-26279-2-git-send-email-charles@hashpling.org> <48FDC1CA.2080800@op5.se> <20081021122655.GA29294@hashpling.org> <20081022211720.GA23146@hashpling.org> <7vr668tdvy.fsf@gitster.siamese.dyndns.org> <20081023064455.GA10675@hashpling.org> <49024CF1.5040406@gmail.com> <20081024225539.GA6119@hashpling.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
 Content-Transfer-Encoding: 7bit
-To: git list <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Sat Oct 25 11:34:38 2008
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+	Jeff King <peff@peff.net>, Andreas Ericsson <ae@op5.se>,
+	Theodore Ts'o <tytso@mit.edu>
+To: Charles Bailey <charles@hashpling.org>
+X-From: git-owner@vger.kernel.org Sat Oct 25 12:12:41 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KtfXX-0000Xk-21
-	for gcvg-git-2@gmane.org; Sat, 25 Oct 2008 11:34:35 +0200
+	id 1Ktg8I-0000VU-VV
+	for gcvg-git-2@gmane.org; Sat, 25 Oct 2008 12:12:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752043AbYJYJdV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 25 Oct 2008 05:33:21 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752029AbYJYJdV
-	(ORCPT <rfc822;git-outgoing>); Sat, 25 Oct 2008 05:33:21 -0400
-Received: from fg-out-1718.google.com ([72.14.220.152]:2742 "EHLO
-	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751982AbYJYJdV (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 25 Oct 2008 05:33:21 -0400
-Received: by fg-out-1718.google.com with SMTP id 19so1247913fgg.17
-        for <git@vger.kernel.org>; Sat, 25 Oct 2008 02:33:19 -0700 (PDT)
-Received: by 10.86.68.2 with SMTP id q2mr1033605fga.34.1224927198582;
-        Sat, 25 Oct 2008 02:33:18 -0700 (PDT)
-Received: from ?192.168.0.100? (AVelizy-154-1-2-53.w82-124.abo.wanadoo.fr [82.124.64.53])
-        by mx.google.com with ESMTPS id l19sm2054527fgb.7.2008.10.25.02.33.16
+	id S1751904AbYJYKLV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 25 Oct 2008 06:11:21 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751878AbYJYKLV
+	(ORCPT <rfc822;git-outgoing>); Sat, 25 Oct 2008 06:11:21 -0400
+Received: from ey-out-2122.google.com ([74.125.78.27]:29658 "EHLO
+	ey-out-2122.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751489AbYJYKLU (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 25 Oct 2008 06:11:20 -0400
+Received: by ey-out-2122.google.com with SMTP id 6so480684eyi.37
+        for <git@vger.kernel.org>; Sat, 25 Oct 2008 03:11:18 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from
+         :user-agent:mime-version:to:cc:subject:references:in-reply-to
+         :content-type:content-transfer-encoding;
+        bh=yQ82odQK7m+8iehC+hgCb1rM5QBbxxoM3fvBBzjS+lY=;
+        b=Eh2+/sI3CMe2aaSoDbonuDISS6LZUHBhb8vV9WUPnPtbXndFbxVGxiV2j2582iOA9F
+         gM1BPZJ9n5etmMb8bcTOYgRseTBwjz4cuKBsgjxo5He5hC+d/e5wO4jhfmpT13ZpLgjO
+         8UkYNicU5jdFnKZVa+qnpgT/oMTkPUSRstVjo=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:user-agent:mime-version:to:cc:subject
+         :references:in-reply-to:content-type:content-transfer-encoding;
+        b=KWEuRSNFWqywhYqE6VPx5c88CPB2G5BEPxhjNdFCZhskgnNrxsvtRytWpcNOnu+JZK
+         Gon47XWAIK+Ajs45VsfFk8Lh5SYVSKmfCC+J7V7JHNm2zdz4C9bVB/amym9vfMMjZXfs
+         Hq1TFGm1pN9Z0jJpEslu8j2cYig6f4hSjhSCI=
+Received: by 10.210.59.3 with SMTP id h3mr3595562eba.150.1224929478783;
+        Sat, 25 Oct 2008 03:11:18 -0700 (PDT)
+Received: from clam.local (5ad934ac.bb.sky.com [90.217.52.172])
+        by mx.google.com with ESMTPS id g9sm2525598gvc.0.2008.10.25.03.11.15
         (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Sat, 25 Oct 2008 02:33:17 -0700 (PDT)
-User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.1; fr-FR; rv:1.8.1.17) Gecko/20080914 Thunderbird/2.0.0.17 Mnenhy/0.7.5.0
-X-Enigmail-Version: 0.95.7
+        Sat, 25 Oct 2008 03:11:17 -0700 (PDT)
+User-Agent: Thunderbird 2.0.0.17 (Macintosh/20080914)
+In-Reply-To: <20081024225539.GA6119@hashpling.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/99100>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/99101>
 
+Charles Bailey wrote:
+> On Fri, Oct 24, 2008 at 11:32:17PM +0100, William Pursell wrote:
+>> If the short option is dropped, the config option should
+>> probably associated with mergetool.<tool>.interactive rather
+>> than mergetool.interactive.  (s/interactive/whatever)
+> 
+> I'm not sure I understand your reasoning. The no-prompt/interactive
+> option affects the behaviour of the mergetool script independent of
+> which particular merge tool is being used. Why should the presence or
+> absence of a short option affect whether the config option is global
+> or per tool?
+> 
 
-I'm using Git svn but I do not think this matters.
+My thinking is that when using an interactive tool
+like vimdiff, the user is probably not going to
+care as much about being prompted, or may prefer
+to have the prompt in that situation.  However,
+if they've written a script to do the merge
+non-interactively, then the prompt is undesirable.
 
-I'm used to add manually some branches from the Subversion repository. I
-usually fetch the branch without following the parent then connect the
-branch to the proper branch point (I really need to do this as the
-Subversion repository structure is not following the standard layout).
-
-Anyway, I used to run the following command:
-
-$ git filter-branch --tag-name-filter cat --parent-filter "sed -e
-'s/^$/-p c96d4da294667de1800687d25340551683153002/'" svn-release_2_6
-
-without problem, I now get this:
-
-Namespace refs/original/ not empty
-rm: cannot remove directory
-`/home/obry/dev/repositories/git/proj/.git-rewrite': Directory not empty
-
-The .git-rewrite is empty and when the command return I can do:
-
-$ rmdir .git-rewrite
-
-without problem.
-
-Is this is known issue? Any idea?
-
-Thanks,
-Pascal.
+So a person might want to be prompted with
+git mergetool -t vimdiff, and prefer no prompt
+with git mergetool -t my-script.  Being able
+to configure the behavior on a per-tool
+basis would allow that.
 
 -- 
-
---|------------------------------------------------------
---| Pascal Obry                           Team-Ada Member
---| 45, rue Gabriel Peri - 78114 Magny Les Hameaux FRANCE
---|------------------------------------------------------
---|              http://www.obry.net
---| "The best way to travel is by means of imagination"
---|
---| gpg --keyserver wwwkeys.pgp.net --recv-key C1082595
+William Pursell
