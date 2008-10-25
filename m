@@ -1,89 +1,91 @@
-From: William Pursell <bill.pursell@gmail.com>
-Subject: Re: [PATCH 2/3] Add -n/--no-prompt option to mergetool
-Date: Sat, 25 Oct 2008 11:11:14 +0100
-Message-ID: <4902F0C2.2070709@gmail.com>
-References: <1224583999-26279-1-git-send-email-charles@hashpling.org> <1224583999-26279-2-git-send-email-charles@hashpling.org> <48FDC1CA.2080800@op5.se> <20081021122655.GA29294@hashpling.org> <20081022211720.GA23146@hashpling.org> <7vr668tdvy.fsf@gitster.siamese.dyndns.org> <20081023064455.GA10675@hashpling.org> <49024CF1.5040406@gmail.com> <20081024225539.GA6119@hashpling.org>
+From: "Giuseppe Bilotta" <giuseppe.bilotta@gmail.com>
+Subject: Re: [RFC] Zit: the git-based single file content tracker
+Date: Sat, 25 Oct 2008 12:30:40 +0200
+Message-ID: <cb7bb73a0810250330w39811a29g7b497ec70a3b9085@mail.gmail.com>
+References: <gdok16$vh2$1@ger.gmane.org> <200810242230.49238.jnareb@gmail.com>
+	 <cb7bb73a0810250048q7ad8595bt565de05ec2ec37cb@mail.gmail.com>
+	 <200810251110.25704.jnareb@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	Jeff King <peff@peff.net>, Andreas Ericsson <ae@op5.se>,
-	Theodore Ts'o <tytso@mit.edu>
-To: Charles Bailey <charles@hashpling.org>
-X-From: git-owner@vger.kernel.org Sat Oct 25 12:12:41 2008
+Cc: "David Lang" <david@lang.hm>, "Junio C Hamano" <gitster@pobox.com>,
+	"Jean-Luc Herren" <jlh@gmx.ch>, git@vger.kernel.org
+To: "Jakub Narebski" <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Oct 25 12:32:08 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Ktg8I-0000VU-VV
-	for gcvg-git-2@gmane.org; Sat, 25 Oct 2008 12:12:35 +0200
+	id 1KtgRC-0004wX-FN
+	for gcvg-git-2@gmane.org; Sat, 25 Oct 2008 12:32:06 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751904AbYJYKLV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 25 Oct 2008 06:11:21 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751878AbYJYKLV
-	(ORCPT <rfc822;git-outgoing>); Sat, 25 Oct 2008 06:11:21 -0400
-Received: from ey-out-2122.google.com ([74.125.78.27]:29658 "EHLO
-	ey-out-2122.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751489AbYJYKLU (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 25 Oct 2008 06:11:20 -0400
-Received: by ey-out-2122.google.com with SMTP id 6so480684eyi.37
-        for <git@vger.kernel.org>; Sat, 25 Oct 2008 03:11:18 -0700 (PDT)
+	id S1751374AbYJYKam (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 25 Oct 2008 06:30:42 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751356AbYJYKam
+	(ORCPT <rfc822;git-outgoing>); Sat, 25 Oct 2008 06:30:42 -0400
+Received: from mail-gx0-f16.google.com ([209.85.217.16]:54568 "EHLO
+	mail-gx0-f16.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751096AbYJYKal (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 25 Oct 2008 06:30:41 -0400
+Received: by gxk9 with SMTP id 9so661859gxk.13
+        for <git@vger.kernel.org>; Sat, 25 Oct 2008 03:30:40 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from
-         :user-agent:mime-version:to:cc:subject:references:in-reply-to
-         :content-type:content-transfer-encoding;
-        bh=yQ82odQK7m+8iehC+hgCb1rM5QBbxxoM3fvBBzjS+lY=;
-        b=Eh2+/sI3CMe2aaSoDbonuDISS6LZUHBhb8vV9WUPnPtbXndFbxVGxiV2j2582iOA9F
-         gM1BPZJ9n5etmMb8bcTOYgRseTBwjz4cuKBsgjxo5He5hC+d/e5wO4jhfmpT13ZpLgjO
-         8UkYNicU5jdFnKZVa+qnpgT/oMTkPUSRstVjo=
+        h=domainkey-signature:received:received:message-id:date:from:to
+         :subject:cc:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:references;
+        bh=xKypv9h7xzfRjhFBO1XiwbeNdbw15AJbcsS7c2P4nFE=;
+        b=cl0BfH/RAE6X6eq+bXb52f+Lg/VLfrq6yG9DYC4iNBNW1siQNdiObSHl3v/vVDSbla
+         Sbg65+5iIxpegcS4KzYhVuMYH4EPjnKJwD2Y5nkmkGdU2v0wtqLETYSMo+zMXOd0H6jW
+         QpArOBNrEB93dzCRHNvQ69zqBKppE+qOeWd6U=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=message-id:date:from:user-agent:mime-version:to:cc:subject
-         :references:in-reply-to:content-type:content-transfer-encoding;
-        b=KWEuRSNFWqywhYqE6VPx5c88CPB2G5BEPxhjNdFCZhskgnNrxsvtRytWpcNOnu+JZK
-         Gon47XWAIK+Ajs45VsfFk8Lh5SYVSKmfCC+J7V7JHNm2zdz4C9bVB/amym9vfMMjZXfs
-         Hq1TFGm1pN9Z0jJpEslu8j2cYig6f4hSjhSCI=
-Received: by 10.210.59.3 with SMTP id h3mr3595562eba.150.1224929478783;
-        Sat, 25 Oct 2008 03:11:18 -0700 (PDT)
-Received: from clam.local (5ad934ac.bb.sky.com [90.217.52.172])
-        by mx.google.com with ESMTPS id g9sm2525598gvc.0.2008.10.25.03.11.15
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Sat, 25 Oct 2008 03:11:17 -0700 (PDT)
-User-Agent: Thunderbird 2.0.0.17 (Macintosh/20080914)
-In-Reply-To: <20081024225539.GA6119@hashpling.org>
+        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
+         :content-type:content-transfer-encoding:content-disposition
+         :references;
+        b=qTkbTUdszLA5Y5YuR895W701/xjhKopJ2RgW4ppD2ZQ4sPFBI2i63r7OmVPvKiO64R
+         44ecl530AUT9pgKYgiV9o1ZtenKJMn9k+VRaDirBOpS8HT0AV9M2JtO8CGJWgVX0KqKf
+         tygOF9PSvENCPLP0FxfJpetI6sxCIEwn6t0dc=
+Received: by 10.150.155.4 with SMTP id c4mr3485991ybe.106.1224930640557;
+        Sat, 25 Oct 2008 03:30:40 -0700 (PDT)
+Received: by 10.150.145.2 with HTTP; Sat, 25 Oct 2008 03:30:40 -0700 (PDT)
+In-Reply-To: <200810251110.25704.jnareb@gmail.com>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/99101>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/99102>
 
-Charles Bailey wrote:
-> On Fri, Oct 24, 2008 at 11:32:17PM +0100, William Pursell wrote:
->> If the short option is dropped, the config option should
->> probably associated with mergetool.<tool>.interactive rather
->> than mergetool.interactive.  (s/interactive/whatever)
-> 
-> I'm not sure I understand your reasoning. The no-prompt/interactive
-> option affects the behaviour of the mergetool script independent of
-> which particular merge tool is being used. Why should the presence or
-> absence of a short option affect whether the config option is global
-> or per tool?
-> 
+On Sat, Oct 25, 2008 at 11:10 AM, Jakub Narebski <jnareb@gmail.com> wrote:
+> On Sat, 25 Oct 2008, Giuseppe Bilotta wrote:
+>
+>> The user .zitignore file is probably the best approach: we can create
+>> it ourselves (usually), and even if Git doesn't expand the pathname
+>> itself, we can just use an absolute path. I'll go that way.
+>
+> First, absolute path to ~/.zitignore is a bit fragile: what if layout
+> of home directories for users change, for example because of increasing
+> number of users some fan-out is required (/home/nick -> /home/2/nick)?
+> Second, ~/.zitignore looks like something that user can change; if
+> you install zit, it can install libexec/zitignore somewhere... or just
+> use ./zit/excludes (with 'do not edit' comment perhaps...).
 
-My thinking is that when using an interactive tool
-like vimdiff, the user is probably not going to
-care as much about being prompted, or may prefer
-to have the prompt in that situation.  However,
-if they've written a script to do the merge
-non-interactively, then the prompt is undesirable.
+(Actually, I just found another interesting thing about the config, in
+that it stores the path to the work tree. This is not a problem,
+though, because zit_setup() sets GIT_WORK_TREE.)
 
-So a person might want to be prompted with
-git mergetool -t vimdiff, and prefer no prompt
-with git mergetool -t my-script.  Being able
-to configure the behavior on a per-tool
-basis would allow that.
+As I said, I don't like depending on stuff that needs to be installed.
+For example, what about user (non-system) installs? the libexec (or
+whatever) solution would have the same problem as the ~/.zitignore
+solution, with the moving $HOME.
+
+I guess this leaves the .zit/ solution as the most robust one,
+although it's not the most space-effective, especially if you have
+many directories, each with a single tracked file. On the plus side,
+going for the .zit/ solution and dropping support for .somefile.git/
+means some significant code semplification.
 
 -- 
-William Pursell
+Giuseppe "Oblomov" Bilotta
