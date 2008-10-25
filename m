@@ -1,60 +1,107 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH 4/7] textconv: don't convert for every operation
-Date: Sat, 25 Oct 2008 15:35:54 -0400
-Message-ID: <20081025193554.GA27457@coredump.intra.peff.net>
-References: <20081025004815.GA23851@coredump.intra.peff.net> <20081025005256.GD23903@coredump.intra.peff.net> <7vhc71b5ai.fsf@gitster.siamese.dyndns.org> <20081025071912.GA24287@coredump.intra.peff.net> <7v3aika5l7.fsf@gitster.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 5/5] blame: use xdi_diff_hunks(), get rid of struct patch
+Date: Sat, 25 Oct 2008 12:36:28 -0700
+Message-ID: <7vhc708o1v.fsf@gitster.siamese.dyndns.org>
+References: <1219360921-28529-1-git-send-email-bdowning@lavos.net>
+ <1219360921-28529-2-git-send-email-bdowning@lavos.net>
+ <48AFC73F.2010100@lsrfire.ath.cx> <20080824081254.GI31114@lavos.net>
+ <48BF0FBF.3010104@lsrfire.ath.cx> <49031FB8.8060003@lsrfire.ath.cx>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Cc: Johannes Sixt <j.sixt@viscovery.net>,
-	Matthieu Moy <Matthieu.Moy@imag.fr>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Oct 25 21:38:11 2008
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Brian Downing <bdowning@lavos.net>, git@vger.kernel.org
+To: =?utf-8?Q?Ren=C3=A9?= Scharfe <rene.scharfe@lsrfire.ath.cx>
+X-From: git-owner@vger.kernel.org Sat Oct 25 21:38:10 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Ktoxc-0006rp-NH
-	for gcvg-git-2@gmane.org; Sat, 25 Oct 2008 21:38:09 +0200
+	id 1Ktoxe-0006rp-A4
+	for gcvg-git-2@gmane.org; Sat, 25 Oct 2008 21:38:10 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752113AbYJYTf6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 25 Oct 2008 15:35:58 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752089AbYJYTf6
-	(ORCPT <rfc822;git-outgoing>); Sat, 25 Oct 2008 15:35:58 -0400
-Received: from peff.net ([208.65.91.99]:1200 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752062AbYJYTf5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 25 Oct 2008 15:35:57 -0400
-Received: (qmail 2786 invoked by uid 111); 25 Oct 2008 19:35:56 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.32) with SMTP; Sat, 25 Oct 2008 15:35:55 -0400
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Sat, 25 Oct 2008 15:35:54 -0400
-Content-Disposition: inline
-In-Reply-To: <7v3aika5l7.fsf@gitster.siamese.dyndns.org>
+	id S1750850AbYJYTgj convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 25 Oct 2008 15:36:39 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750830AbYJYTgj
+	(ORCPT <rfc822;git-outgoing>); Sat, 25 Oct 2008 15:36:39 -0400
+Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:57175 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750729AbYJYTgi convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 25 Oct 2008 15:36:38 -0400
+Received: from localhost.localdomain (localhost [127.0.0.1])
+	by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id 3D2CC8FB30;
+	Sat, 25 Oct 2008 15:36:37 -0400 (EDT)
+Received: from pobox.com (ip68-225-240-211.oc.oc.cox.net [68.225.240.211])
+ (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
+ certificate requested) by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with
+ ESMTPSA id 750708FB2E; Sat, 25 Oct 2008 15:36:30 -0400 (EDT)
+In-Reply-To: <49031FB8.8060003@lsrfire.ath.cx> (=?utf-8?Q?Ren=C3=A9?=
+ Scharfe's message of "Sat, 25 Oct 2008 15:31:36 +0200")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: 3D0B1068-A2CC-11DD-A5B2-4F5276724C3F-77302942!a-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/99122>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/99123>
 
-On Sat, Oct 25, 2008 at 11:32:20AM -0700, Junio C Hamano wrote:
+Ren=C3=A9 Scharfe <rene.scharfe@lsrfire.ath.cx> writes:
 
-> The end result may not be that much different, but I find the latter
-> easier to follow for three reasons:
+> Based on a patch by Brian Downing, this replaces the struct patch bas=
+ed
+> code for blame passing with calls to xdi_diff_hunks().  This way we
+> avoid generating and then parsing patches; we only let the interestin=
+g
+> infos be passed to our callbacks instead.  This makes blame a bit fas=
+ter:
+>
+>    $ blame=3D"./git blame -M -C -C -p --incremental v1.6.0"
+>
+>    # master
+>    $ /usr/bin/time $blame Makefile >/dev/null
+>    1.38user 0.14system 0:01.52elapsed 100%CPU (0avgtext+0avgdata 0max=
+resident)k
+>    0inputs+0outputs (0major+12226minor)pagefaults 0swaps
+>    $ /usr/bin/time $blame cache.h >/dev/null
+>    1.66user 0.13system 0:01.80elapsed 99%CPU (0avgtext+0avgdata 0maxr=
+esident)k
+>    0inputs+0outputs (0major+12262minor)pagefaults 0swaps
+>
+>    # this patch series
+>    $ /usr/bin/time $blame Makefile >/dev/null
+>    1.27user 0.12system 0:01.40elapsed 99%CPU (0avgtext+0avgdata 0maxr=
+esident)k
+>    0inputs+0outputs (0major+11836minor)pagefaults 0swaps
+>    $ /usr/bin/time $blame cache.h >/dev/null
+>    1.52user 0.12system 0:01.70elapsed 97%CPU (0avgtext+0avgdata 0maxr=
+esident)k
+>    0inputs+0outputs (0major+12052minor)pagefaults 0swaps
+>
+> Signed-off-by: Rene Scharfe <rene.scharfe@lsrfire.ath.cx>
 
-Your reasoning here is sound. My initial thought was to make it a
-one-liner change to "turn on" text conversion in other spots. But
+The resulting series reads quite clean.  I like it.
 
-  a) it didn't turn out that way, since you still have to keep track of
-     the "did I textconv" when determining binary-ness, and whether to
-     free()
+> Brian, your numbers looked much more impressive.  Could you please cl=
+ock
+> this code with your repository and the file server.c?  I wonder if th=
+is
+> callback mechanism is just too complicated or if your case simply ben=
+efits
+> lots more than the two files from git mentioned above.
+>
+> The patch series ends here without adding xdiff caching, for two reas=
+ons.
+> It's quite easy to add it; patch 4 from your series applies unchanged=
+ and
+> patch 5 is just needs a few small changes to account for the absence =
+of
+> compare_buffer().  More importantly, speed actually went down with ca=
+ching
+> for the test case.  The common tail optimization (xdi_diff() vs. xdl_=
+diff())
+> seems to beat caching for cache.h and Makefile..
 
-  b) we don't actually want to do it anywhere else (except perhaps, as I
-     mentioned, in blame, but that is a totally different interface
-     anyway)
-
-I will re-roll my latest series according to your recommendation
-(unless you are set on reverting the first part; if so, please tell me
-asap so I can work under that assumption).
-
--Peff
+Perhaps revision.c in our history would be more interesting than cache.=
+h
+or Makefile, as there are more line migrations from different places to
+that file.
