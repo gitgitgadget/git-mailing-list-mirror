@@ -1,97 +1,82 @@
-From: david@lang.hm
-Subject: Re: Performance impact of a large number of commits
-Date: Fri, 24 Oct 2008 22:29:58 -0700 (PDT)
-Message-ID: <alpine.DEB.1.10.0810242219440.20238@asgard.lang.hm>
-References: <1224874946.7566.13.camel@localhost>  <alpine.DEB.1.10.0810241240100.27333@asgard.lang.hm>  <1224878202.7566.25.camel@localhost>  <alpine.DEB.1.10.0810241301430.27333@asgard.lang.hm> <1224911915.7566.35.camel@localhost>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 4/7] textconv: don't convert for every operation
+Date: Fri, 24 Oct 2008 22:41:09 -0700
+Message-ID: <7vhc71b5ai.fsf@gitster.siamese.dyndns.org>
+References: <20081025004815.GA23851@coredump.intra.peff.net>
+ <20081025005256.GD23903@coredump.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; format=flowed; charset=US-ASCII
-Cc: git@vger.kernel.org
-To: Samuel Abels <newsgroups@debain.org>
-X-From: git-owner@vger.kernel.org Sat Oct 25 07:30:46 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: Johannes Sixt <j.sixt@viscovery.net>,
+	Matthieu Moy <Matthieu.Moy@imag.fr>, git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Sat Oct 25 07:42:56 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KtbjW-00084w-IL
-	for gcvg-git-2@gmane.org; Sat, 25 Oct 2008 07:30:43 +0200
+	id 1KtbvL-0001hd-3w
+	for gcvg-git-2@gmane.org; Sat, 25 Oct 2008 07:42:55 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751089AbYJYF3U (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 25 Oct 2008 01:29:20 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751164AbYJYF3U
-	(ORCPT <rfc822;git-outgoing>); Sat, 25 Oct 2008 01:29:20 -0400
-Received: from mail.lang.hm ([64.81.33.126]:37510 "EHLO bifrost.lang.hm"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751026AbYJYF3U (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 25 Oct 2008 01:29:20 -0400
-Received: from asgard.lang.hm (asgard.lang.hm [10.0.0.100])
-	by bifrost.lang.hm (8.13.4/8.13.4/Debian-3) with ESMTP id m9P5TGLr022214;
-	Fri, 24 Oct 2008 22:29:16 -0700
-X-X-Sender: dlang@asgard.lang.hm
-In-Reply-To: <1224911915.7566.35.camel@localhost>
-User-Agent: Alpine 1.10 (DEB 962 2008-03-14)
+	id S1751263AbYJYFli (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 25 Oct 2008 01:41:38 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751222AbYJYFli
+	(ORCPT <rfc822;git-outgoing>); Sat, 25 Oct 2008 01:41:38 -0400
+Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:34756 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751164AbYJYFlh (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 25 Oct 2008 01:41:37 -0400
+Received: from localhost.localdomain (localhost [127.0.0.1])
+	by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id CBF508F561;
+	Sat, 25 Oct 2008 01:41:35 -0400 (EDT)
+Received: from pobox.com (ip68-225-240-211.oc.oc.cox.net [68.225.240.211])
+ (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
+ certificate requested) by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with
+ ESMTPSA id 8921F8F559; Sat, 25 Oct 2008 01:41:13 -0400 (EDT)
+In-Reply-To: <20081025005256.GD23903@coredump.intra.peff.net> (Jeff King's
+ message of "Fri, 24 Oct 2008 20:52:56 -0400")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: 962E05EE-A257-11DD-AD51-4F5276724C3F-77302942!a-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/99094>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/99095>
 
-On Sat, 25 Oct 2008, Samuel Abels wrote:
+Jeff King <peff@peff.net> writes:
 
-> On Fri, 2008-10-24 at 13:11 -0700, david@lang.hm wrote:
->>> git commit explicitly (i.e., walking the tree to stat files for finding
->>> changes is not necessary).
->>
->> I suspect that your limits would be filesystem/OS limits more than git
->> limits
->>
->> at 5-10 files/commit you are going to be creating .5-1m files/day, even
->> spread across 256 directories this is going to be a _lot_ of files.
->
-> The files are organized in a way that places no more than ~1.000 files
-> into each directory. Will Git create a directory containing a larger
-> number of object files? I can see that this would be a problem in our
-> use case.
+> -static int fill_mmfile(mmfile_t *mf, struct diff_filespec *one)
+> +static int fill_mmfile(mmfile_t *mf, struct diff_filespec *one,
+> +		int try_textconv)
+>  {
+>  	const char *textconv;
+>  
+> @@ -304,7 +305,7 @@ static int fill_mmfile(mmfile_t *mf, struct diff_filespec *one)
+>  	else if (diff_populate_filespec(one, 0))
+>  		return -1;
+>  
+> -	if ((textconv = get_textconv(one))) {
+> +	if (try_textconv && (textconv = get_textconv(one))) {
+>  		size_t size;
+>  		mf->ptr = run_textconv(textconv, one, &size);
+>  		if (!mf->ptr)
+> @@ -1396,7 +1397,7 @@ static void builtin_diff(const char *name_a,
+>  		}
+>  	}
 
-when git stores the copies of the files it does a sha1 hash of the file 
-contents and then stores the file in the directory
-.git/objects/<first two digits of the hash>/<hash>
-this means that if you have files that have the same content they all fold 
-togeather, but with lots of files changing rapidly the result is a lot of 
-files in these object directories.
+Isn't this function "fill_mmfile()" and its callers leaky as a sieve?
 
-it would be a pretty minor change to git to have it use more directories 
-(in fact, there's another thread going on today where people are looking 
-at making this configurable, in that case to reduce the number of 
-directories)
+The original fill_mmfile() was to only borrow one->data and users of
+mmfile_t never had to worry about freeing what's in mf->ptr (and freeing
+them would have been actively wrong).
 
-the other storage format that git has is the pack file. it takes a bunch 
-of the objects, does some comparisons between them (to find duplicate bits 
-of files), and then stores the result (base files plus deltas to re-create 
-other files). the resulting compression is _extremely_ efficiant, and it 
-collapses many file objects into one pack file (addressing the issues of 
-many files in one directory)
+I am also somewhat worried about the performance impact of running
+get_textconv() to the same filespec many times when no textconv is
+defined, which is the normal case we should optimize for.  It appears that
+diff_filespec_load_driver() is optimized for a wrong case (i.e. "we
+already know this needs a custom driver and we know which one").
 
->> packing this may help (depending on how much the files change), but with
->> this many files the work of doing the packing would be expensive.
->
-> We can probably do that even if it takes several hours.
-
-my concern is that spending time creating the pack files will mean that 
-you don't have time to insert the new files.
-
-that being said, there may be other ways of dealing with this data rather 
-than putting it into files and then adding it to the git repository.
-
-Git has a fast-import streaming format that is designed for programs to 
-use that are converting repositories from other SCM systems. if you can 
-tell more about what you are doing (how the data is being gathered, are 
-the files re-created for each commit, or are they being modified? if they 
-are being modified is it appending data, changing some data, or randomly 
-writing throughout the file? etc) there may be some other options 
-available.
-
-at this point I don't know if git can work for you or not, but I'm pretty 
-sure nothing else will have a chance with your size.
-
-David Lang
+I am inclined to suggest reverting the whole series (including the ones
+that are already in 'master') and start over from scratch, limiting the
+run_textconv() to only inside diff.c::builtin_diff() (in the else {} block
+where "Crazy xcl interfaces.." comment appears).
