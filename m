@@ -1,62 +1,60 @@
-From: "J.H." <warthog19@eaglescrag.net>
-Subject: Re: git export to svn
-Date: Sat, 25 Oct 2008 11:43:25 -0700
-Message-ID: <1224960205.2874.11.camel@localhost.localdomain>
-References: <FC51BBF1-B2CA-4A00-9312-2333FDA537C2@gmail.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH 4/7] textconv: don't convert for every operation
+Date: Sat, 25 Oct 2008 15:35:54 -0400
+Message-ID: <20081025193554.GA27457@coredump.intra.peff.net>
+References: <20081025004815.GA23851@coredump.intra.peff.net> <20081025005256.GD23903@coredump.intra.peff.net> <7vhc71b5ai.fsf@gitster.siamese.dyndns.org> <20081025071912.GA24287@coredump.intra.peff.net> <7v3aika5l7.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Warren Harris <warrensomebody@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Oct 25 21:24:13 2008
+Content-Type: text/plain; charset=utf-8
+Cc: Johannes Sixt <j.sixt@viscovery.net>,
+	Matthieu Moy <Matthieu.Moy@imag.fr>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sat Oct 25 21:38:11 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Ktok7-0002tL-Tw
-	for gcvg-git-2@gmane.org; Sat, 25 Oct 2008 21:24:12 +0200
+	id 1Ktoxc-0006rp-NH
+	for gcvg-git-2@gmane.org; Sat, 25 Oct 2008 21:38:09 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752056AbYJYTW6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 25 Oct 2008 15:22:58 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752033AbYJYTW6
-	(ORCPT <rfc822;git-outgoing>); Sat, 25 Oct 2008 15:22:58 -0400
-Received: from shards.monkeyblade.net ([198.137.202.13]:53815 "EHLO
-	shards.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751952AbYJYTW5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 25 Oct 2008 15:22:57 -0400
-X-Greylist: delayed 2371 seconds by postgrey-1.27 at vger.kernel.org; Sat, 25 Oct 2008 15:22:57 EDT
-Received: from [192.168.144.248] ([216.239.45.19])
-	(authenticated bits=0)
-	by shards.monkeyblade.net (8.14.1/8.14.1) with ESMTP id m9PIhNOE026616
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Sat, 25 Oct 2008 11:43:23 -0700
-In-Reply-To: <FC51BBF1-B2CA-4A00-9312-2333FDA537C2@gmail.com>
-X-Mailer: Evolution 2.12.3 (2.12.3-5.fc8) 
-X-Virus-Scanned: ClamAV 0.88.7/8491/Sat Oct 25 07:32:29 2008 on shards.monkeyblade.net
-X-Virus-Status: Clean
-X-Greylist: Sender succeeded SMTP AUTH authentication, not delayed by milter-greylist-2.1.12 (shards.monkeyblade.net [198.137.202.13]); Sat, 25 Oct 2008 11:43:23 -0700 (PDT)
+	id S1752113AbYJYTf6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 25 Oct 2008 15:35:58 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752089AbYJYTf6
+	(ORCPT <rfc822;git-outgoing>); Sat, 25 Oct 2008 15:35:58 -0400
+Received: from peff.net ([208.65.91.99]:1200 "EHLO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752062AbYJYTf5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 25 Oct 2008 15:35:57 -0400
+Received: (qmail 2786 invoked by uid 111); 25 Oct 2008 19:35:56 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+    by peff.net (qpsmtpd/0.32) with SMTP; Sat, 25 Oct 2008 15:35:55 -0400
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Sat, 25 Oct 2008 15:35:54 -0400
+Content-Disposition: inline
+In-Reply-To: <7v3aika5l7.fsf@gitster.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/99121>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/99122>
 
-The basic way you would want to do it, it attach your git tree to SVN
-and then git svn dcommit - which will replay the uncommitted changes
-back into SVN - git svn init will do the attachment - assuming that your
-git / svn repositories are at least based from the same place.
+On Sat, Oct 25, 2008 at 11:32:20AM -0700, Junio C Hamano wrote:
 
-- John 'Warthog9' Hawley
+> The end result may not be that much different, but I find the latter
+> easier to follow for three reasons:
 
-On Sat, 2008-10-25 at 11:40 -0700, Warren Harris wrote:
-> Is there a way to export a git repository along with its history to  
-> svn? (git svn init seems to want to go in the other direction.) I know  
-> this is in some sense "going backwards" but I need to commit my work  
-> to a client. Thanks,
-> 
-> Warren
-> --
-> To unsubscribe from this list: send the line "unsubscribe git" in
-> the body of a message to majordomo@vger.kernel.org
-> More majordomo info at  http://vger.kernel.org/majordomo-info.html
+Your reasoning here is sound. My initial thought was to make it a
+one-liner change to "turn on" text conversion in other spots. But
+
+  a) it didn't turn out that way, since you still have to keep track of
+     the "did I textconv" when determining binary-ness, and whether to
+     free()
+
+  b) we don't actually want to do it anywhere else (except perhaps, as I
+     mentioned, in blame, but that is a totally different interface
+     anyway)
+
+I will re-roll my latest series according to your recommendation
+(unless you are set on reverting the first part; if so, please tell me
+asap so I can work under that assumption).
+
+-Peff
