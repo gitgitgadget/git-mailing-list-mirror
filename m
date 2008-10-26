@@ -1,75 +1,60 @@
-From: "Giuseppe Bilotta" <giuseppe.bilotta@gmail.com>
-Subject: Re: [RFC] Zit (v2): the git-based single file content tracker
-Date: Sun, 26 Oct 2008 23:16:14 +0100
-Message-ID: <cb7bb73a0810261516i32554afera3250e1b6a0f02b9@mail.gmail.com>
-References: <gdok16$vh2$1@ger.gmane.org> <m3k5bvgz83.fsf@localhost.localdomain>
-	 <cb7bb73a0810261418y3b114e2ag81cbb75c4a80603c@mail.gmail.com>
-	 <200810262304.13582.jnareb@gmail.com>
+From: =?UTF-8?B?UmVuw6kgU2NoYXJmZQ==?= <rene.scharfe@lsrfire.ath.cx>
+Subject: Re: [PATCH 5/5] blame: use xdi_diff_hunks(), get rid of struct patch
+Date: Sun, 26 Oct 2008 23:20:08 +0100
+Message-ID: <4904ED18.3070500@lsrfire.ath.cx>
+References: <1219360921-28529-1-git-send-email-bdowning@lavos.net> <1219360921-28529-2-git-send-email-bdowning@lavos.net> <48AFC73F.2010100@lsrfire.ath.cx> <20080824081254.GI31114@lavos.net> <48BF0FBF.3010104@lsrfire.ath.cx> <49031FB8.8060003@lsrfire.ath.cx> <7vhc708o1v.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: "Jakub Narebski" <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Oct 26 23:17:31 2008
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Brian Downing <bdowning@lavos.net>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sun Oct 26 23:21:30 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KuDvN-00082d-UM
-	for gcvg-git-2@gmane.org; Sun, 26 Oct 2008 23:17:30 +0100
+	id 1KuDzC-0000S4-TW
+	for gcvg-git-2@gmane.org; Sun, 26 Oct 2008 23:21:27 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751937AbYJZWQQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 26 Oct 2008 18:16:16 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751756AbYJZWQQ
-	(ORCPT <rfc822;git-outgoing>); Sun, 26 Oct 2008 18:16:16 -0400
-Received: from mail-gx0-f16.google.com ([209.85.217.16]:51304 "EHLO
-	mail-gx0-f16.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751368AbYJZWQP (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 26 Oct 2008 18:16:15 -0400
-Received: by gxk9 with SMTP id 9so1710037gxk.13
-        for <git@vger.kernel.org>; Sun, 26 Oct 2008 15:16:14 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to
-         :subject:cc:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:references;
-        bh=fh0mKJsb8ZT96zOzMDa4DHjhyMqqP5jyKkSdvrPQOaA=;
-        b=QUh8ZDeCuptFZHJElhw3cpu39gy64I38JoM1t4XmXRjbv8/MODrtujOL+F+WJfodj0
-         3j2iMFQE7+zw1ElnhMG5WTBavsFlDwwKFUbTVC992FZED/XCO4Gxf7OIWnC4vz/PapZS
-         iTkqZoO5I6CSc5d9A7D9ixwKNhItaRJjo2TzM=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
-         :content-type:content-transfer-encoding:content-disposition
-         :references;
-        b=HHGwXP+Qk7ka56znqTO3n5+5g/aO9NLrJ6nQUtN0A5IGutWLnHdsC2IEODVPMBJxI4
-         V08s5Ss2pTgn0zpKSDYMXdz4NdshTo4ZHlPa8XiATtWPUXARArSwP5IyOPRkM5hA5Qnu
-         TX+ITDebJ7qvPAjKKYy91CCJ+dAEDvPV9bJEI=
-Received: by 10.150.220.19 with SMTP id s19mr4875453ybg.217.1225059374471;
-        Sun, 26 Oct 2008 15:16:14 -0700 (PDT)
-Received: by 10.150.145.2 with HTTP; Sun, 26 Oct 2008 15:16:14 -0700 (PDT)
-In-Reply-To: <200810262304.13582.jnareb@gmail.com>
-Content-Disposition: inline
+	id S1752566AbYJZWUO convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 26 Oct 2008 18:20:14 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752472AbYJZWUN
+	(ORCPT <rfc822;git-outgoing>); Sun, 26 Oct 2008 18:20:13 -0400
+Received: from india601.server4you.de ([85.25.151.105]:43033 "EHLO
+	india601.server4you.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751967AbYJZWUM (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 26 Oct 2008 18:20:12 -0400
+Received: from [10.0.1.101] (p57B7F906.dip.t-dialin.net [87.183.249.6])
+	by india601.server4you.de (Postfix) with ESMTPSA id 1C3012F804C;
+	Sun, 26 Oct 2008 23:20:11 +0100 (CET)
+User-Agent: Thunderbird 2.0.0.17 (Windows/20080914)
+In-Reply-To: <7vhc708o1v.fsf@gitster.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/99189>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/99190>
 
-On Sun, Oct 26, 2008 at 11:04 PM, Jakub Narebski <jnareb@gmail.com> wrote:
->  Gitweb config file variables
->  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
->  [...]
->   * @git_base_url_list
->     List of git base URLs used for URL to where fetch project from, shown
->     in project summary page.  Full URL is "$git_base_url/$project".
->     You can setup multiple base URLs (for example one for  git:// protocol
->     access, and one for http:// "dumb" protocol access).  Note that per
->     repository configuration in 'cloneurl' file, or as values of gitweb.url
->     project config.
+Junio C Hamano schrieb:
+> Perhaps revision.c in our history would be more interesting than cach=
+e.h
+> or Makefile, as there are more line migrations from different places =
+to
+> that file.
 
-Doh, thanks, I had totally overlooked it. Done 8-)
+Indeed:
 
--- 
-Giuseppe "Oblomov" Bilotta
+   # master
+   $ /usr/bin/time $blame revision.c >/dev/null
+   2.15user 0.27system 0:02.58elapsed 94%CPU (0avgtext+0avgdata 0maxres=
+ident)k
+   3544inputs+0outputs (29major+13835minor)pagefaults 0swaps
+
+   # this patch series
+   $ /usr/bin/time $blame revision.c >/dev/null
+   1.88user 0.14system 0:02.03elapsed 99%CPU (0avgtext+0avgdata 0maxres=
+ident)k
+   0inputs+0outputs (0major+14068minor)pagefaults 0swaps
+
+Ren=C3=A9
