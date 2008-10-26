@@ -1,101 +1,76 @@
-From: "Felipe Contreras" <felipe.contreras@gmail.com>
-Subject: Re: [VOTE] git versus mercurial (for DragonflyBSD)
-Date: Sun, 26 Oct 2008 21:54:53 +0200
-Message-ID: <94a0d4530810261254m3668f02ek461fd220805f9b92@mail.gmail.com>
-References: <ge0rla$mce$1@ger.gmane.org> <m3r663h276.fsf@localhost.localdomain>
-	 <94a0d4530810260857u7c0cb122g8147b9484108f539@mail.gmail.com>
-	 <200810262007.30148.jnareb@gmail.com>
+From: "Giuseppe Bilotta" <giuseppe.bilotta@gmail.com>
+Subject: Re: [RFC] Zit (v2): the git-based single file content tracker
+Date: Sun, 26 Oct 2008 22:18:57 +0100
+Message-ID: <cb7bb73a0810261418y3b114e2ag81cbb75c4a80603c@mail.gmail.com>
+References: <gdok16$vh2$1@ger.gmane.org> <gdqbta$rhe$1@ger.gmane.org>
+	 <m34p32i83f.fsf@localhost.localdomain>
+	 <cb7bb73a0810240401q57e40b9dj46c35f90681cfa3d@mail.gmail.com>
+	 <m3k5bvgz83.fsf@localhost.localdomain>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, mercurial@selenic.com
+Cc: git@vger.kernel.org
 To: "Jakub Narebski" <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Oct 26 20:56:17 2008
+X-From: git-owner@vger.kernel.org Sun Oct 26 22:20:15 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KuBia-0005bs-Aq
-	for gcvg-git-2@gmane.org; Sun, 26 Oct 2008 20:56:08 +0100
+	id 1KuD1x-0001i3-TU
+	for gcvg-git-2@gmane.org; Sun, 26 Oct 2008 22:20:14 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753726AbYJZTyy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 26 Oct 2008 15:54:54 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753363AbYJZTyy
-	(ORCPT <rfc822;git-outgoing>); Sun, 26 Oct 2008 15:54:54 -0400
-Received: from rv-out-0506.google.com ([209.85.198.226]:4372 "EHLO
-	rv-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751919AbYJZTyx (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 26 Oct 2008 15:54:53 -0400
-Received: by rv-out-0506.google.com with SMTP id k40so1785920rvb.1
-        for <git@vger.kernel.org>; Sun, 26 Oct 2008 12:54:53 -0700 (PDT)
+	id S1752193AbYJZVS7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 26 Oct 2008 17:18:59 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752113AbYJZVS7
+	(ORCPT <rfc822;git-outgoing>); Sun, 26 Oct 2008 17:18:59 -0400
+Received: from yx-out-2324.google.com ([74.125.44.29]:29292 "EHLO
+	yx-out-2324.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752112AbYJZVS6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 26 Oct 2008 17:18:58 -0400
+Received: by yx-out-2324.google.com with SMTP id 8so472996yxm.1
+        for <git@vger.kernel.org>; Sun, 26 Oct 2008 14:18:57 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:received:received:message-id:date:from:to
          :subject:cc:in-reply-to:mime-version:content-type
          :content-transfer-encoding:content-disposition:references;
-        bh=KsF7+NbfTQuWlhOMlC2O9d85UwOfzDf2NqYHvVGu/xY=;
-        b=rv0xYzBPcXjR5wJywZRIHeNYaFVWC/mHNa3xbAihRadj0xLve3kC5y4CwkIVeERdf2
-         jDolh/KrwPsE+Ydq4ERycCxQZYPDUouiyr5QGsvgz+ckZMlTZSqtVLWAf/T/xY4Wjhyg
-         uwXo+gwR1CRzGpmiRK4nRGo/76FwNf8nF3zvw=
+        bh=tXnXhP4XBoZYNKOPMUcV0Jp5MGCT8yHallHy7Ik0+pA=;
+        b=wFolpG6UI8pws8MNFMHtO4HP5BgcZ0T9zA9JoCAF29YBVoyOyaGsMQP3LErnOBZk5m
+         MQtghOumPdNcAg2tkzExAlBonz6fXfnGR88mofAVX0lDNgJoqnij48z07LqXB3Az6Fiv
+         Ht2l/jAzPAafUv+TVZqQf1Vabb2jaNXnp4qHY=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
          :content-type:content-transfer-encoding:content-disposition
          :references;
-        b=rnFWQShQCEzIZsdwTz+A3II/iVpw1Ny+ZoEPK/snFi+30OZuR7qi0a1g9m7Ct0Ebv6
-         Rb6sfiRsbhREy3e0NuHPN6m/n6NFhDUVyZiCMXDZypKHCyjyHVmJcOikb3c46ZKt7Coe
-         PD9Wt3v1Ml9wBhVCYQEJly+eLBTY/MNUsbXjw=
-Received: by 10.140.147.5 with SMTP id u5mr2736925rvd.274.1225050893086;
-        Sun, 26 Oct 2008 12:54:53 -0700 (PDT)
-Received: by 10.140.171.5 with HTTP; Sun, 26 Oct 2008 12:54:53 -0700 (PDT)
-In-Reply-To: <200810262007.30148.jnareb@gmail.com>
+        b=YTSjigd1uk9t09YmJ/7+X4IXny18RXwdZhI+lDx8hCJ1QFO4k352L/e0hbUsH11wdU
+         JOE0S7BFmaYRM4wmnpbnCKHkiz8ou/94tIbomNS0ERuhSnBZVu5cOHJSj5y8qw4uFCpT
+         gD//4HHZkN3GaEb5DRI11Ax0AGPKYSlDw3TDw=
+Received: by 10.151.50.11 with SMTP id c11mr10751597ybk.214.1225055937678;
+        Sun, 26 Oct 2008 14:18:57 -0700 (PDT)
+Received: by 10.150.145.2 with HTTP; Sun, 26 Oct 2008 14:18:57 -0700 (PDT)
+In-Reply-To: <m3k5bvgz83.fsf@localhost.localdomain>
 Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/99182>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/99183>
 
-On Sun, Oct 26, 2008 at 9:07 PM, Jakub Narebski <jnareb@gmail.com> wrote:
-> I'm not sure if Mercurial mailing list is not subscribe only. Git isn't.
+On Sun, Oct 26, 2008 at 4:20 PM, Jakub Narebski <jnareb@gmail.com> wrote:
+> "Giuseppe Bilotta" <giuseppe.bilotta@gmail.com> writes:
+>> Ah, good idea. Done, in Version Control Interface layers section
 >
-> On Sun, 26 Sep 2008, Felipe Contreras wrote:
->> On Sun, Oct 26, 2008 at 4:15 PM, Jakub Narebski <jnareb@gmail.com> wrote:
->> > [Cc: gmane.comp.version-control.git,
->> >     gmane.comp.version-control.mercurial.general]
+> Thanks.
 >
->> > 3. Repository design and performance.
->
->> >   Git and Mercurial have similar performance, although it is thought
->> >   that due to design Mercurial has faster patch applying and is
->> >   optimized for cold cache case, while Git has faster merging and is
->> >   optimized for warm cache case.
->> >
->> >   Mercurial may have (or had) problems with larger binary files, from
->> >   what I have heard.
->>
->> The fact that hg is changeset based means that certain operations are
->> slower, like checkout a specific commit. In hg my bet is you would
->> need to gather a bunch of changesets while in git the operation is
->> done in a single step.
->
-> Actually from what I have read Mercurial stores current version
-> (snapshot) from time to time, so time to resolve specific commit is
-> limited.  Also if you have packed your Git repository (good idea not
-> only to limit size, but also for performance (I/O performance)), then
-> resolving specific commit also might require some delta resolution
-> (by default delta chain length is limited to 50, see pack.depth).
+> I have added link to repositoy, as you didn't configure your gitweb to
+> display those URL links (see gitweb/README and gitweb/INSTALL).
 
-Ah, ok, good to know.
+Oops, right, thanks. BTW, isn't there a way to have the git:// URL be
+computed automatically? Judging by the docs, it seems that I have to
+set it manually for each project, like the description.
 
->> It also means that bare clones are not possible in hg, or at least
->> very complicated.
->
-> I think it is things like .hgtags which make bare clones (without
-> working directory) to be hard or even impossible in Mercurial.
-
-Oops, I meant shallow clones (git clone --depth=1).
 
 -- 
-Felipe Contreras
+Giuseppe "Oblomov" Bilotta
