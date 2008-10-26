@@ -1,161 +1,187 @@
 From: Jeff King <peff@peff.net>
-Subject: [PATCH v3 2/8] document the diff driver textconv feature
-Date: Sun, 26 Oct 2008 00:41:52 -0400
-Message-ID: <20081026044152.GB21047@coredump.intra.peff.net>
+Subject: [PATCH v3 3/8] add userdiff textconv tests
+Date: Sun, 26 Oct 2008 00:42:25 -0400
+Message-ID: <20081026044225.GC21047@coredump.intra.peff.net>
 References: <20081026043802.GA14530@coredump.intra.peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Cc: Johannes Sixt <j.sixt@viscovery.net>,
 	Matthieu Moy <Matthieu.Moy@imag.fr>, git@vger.kernel.org
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sun Oct 26 05:43:09 2008
+X-From: git-owner@vger.kernel.org Sun Oct 26 05:43:45 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KtxT2-0004iY-S2
-	for gcvg-git-2@gmane.org; Sun, 26 Oct 2008 05:43:09 +0100
+	id 1KtxTZ-0004ny-Lj
+	for gcvg-git-2@gmane.org; Sun, 26 Oct 2008 05:43:42 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751305AbYJZElz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 26 Oct 2008 00:41:55 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751284AbYJZElz
-	(ORCPT <rfc822;git-outgoing>); Sun, 26 Oct 2008 00:41:55 -0400
-Received: from peff.net ([208.65.91.99]:2003 "EHLO peff.net"
+	id S1751492AbYJZEm2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 26 Oct 2008 00:42:28 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751439AbYJZEm2
+	(ORCPT <rfc822;git-outgoing>); Sun, 26 Oct 2008 00:42:28 -0400
+Received: from peff.net ([208.65.91.99]:2011 "EHLO peff.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751236AbYJZEly (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 26 Oct 2008 00:41:54 -0400
-Received: (qmail 4905 invoked by uid 111); 26 Oct 2008 04:41:53 -0000
+	id S1751284AbYJZEm2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 26 Oct 2008 00:42:28 -0400
+Received: (qmail 4934 invoked by uid 111); 26 Oct 2008 04:42:27 -0000
 Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.32) with SMTP; Sun, 26 Oct 2008 00:41:53 -0400
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Sun, 26 Oct 2008 00:41:52 -0400
+    by peff.net (qpsmtpd/0.32) with SMTP; Sun, 26 Oct 2008 00:42:27 -0400
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Sun, 26 Oct 2008 00:42:25 -0400
 Content-Disposition: inline
 In-Reply-To: <20081026043802.GA14530@coredump.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/99142>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/99143>
 
-This patch also changes the term "custom diff driver" to
-"external diff driver"; now that there are more facets of a
-"custom driver" than just external diffing, it makes sense
-to refer to the configuration of "diff.foo.*" as the "foo
-diff driver", with "diff.foo.command" as the "external
-driver for foo".
+These tests provide a basic sanity check that textconv'd
+files work. The tests try to describe how this configuration
+_should_ work; thus some of the tests are marked to expect
+failure.
+
+In particular, we fail to actually textconv anything because
+the 'diff.foo.binary' config option is not set, which will
+be fixed in the next patch.
+
+This also means that some "expect_failure" tests actually
+seem to be fixed; in reality, this is just because textconv
+is broken and its failure mode happens to make these tests
+work.
 
 Signed-off-by: Jeff King <peff@peff.net>
 ---
-Same as before, but re-ordered to beginning since it is
-non-controversial.
+Same as before.
 
- Documentation/gitattributes.txt |   66 +++++++++++++++++++++++++++++++--------
- 1 files changed, 53 insertions(+), 13 deletions(-)
+ t/t4030-diff-textconv.sh |  118 ++++++++++++++++++++++++++++++++++++++++++++++
+ 1 files changed, 118 insertions(+), 0 deletions(-)
+ create mode 100755 t/t4030-diff-textconv.sh
 
-diff --git a/Documentation/gitattributes.txt b/Documentation/gitattributes.txt
-index 2694559..314e2d3 100644
---- a/Documentation/gitattributes.txt
-+++ b/Documentation/gitattributes.txt
-@@ -213,10 +213,12 @@ with `crlf`, and then `ident` and fed to `filter`.
- Generating diff text
- ~~~~~~~~~~~~~~~~~~~~
- 
--The attribute `diff` affects if 'git-diff' generates textual
--patch for the path or just says `Binary files differ`.  It also
--can affect what line is shown on the hunk header `@@ -k,l +n,m @@`
--line.
-+The attribute `diff` affects how 'git' generates diffs for particular
-+files. It can tell git whether to generate a textual patch for the path
-+or to treat the path as a binary file.  It can also affect what line is
-+shown on the hunk header `@@ -k,l +n,m @@` line, tell git to use an
-+external command to generate the diff, or ask git to convert binary
-+files to a text format before generating the diff.
- 
- Set::
- 
-@@ -227,7 +229,8 @@ Set::
- Unset::
- 
- 	A path to which the `diff` attribute is unset will
--	generate `Binary files differ`.
-+	generate `Binary files differ` (or a binary patch, if
-+	binary patches are enabled).
- 
- Unspecified::
- 
-@@ -238,21 +241,21 @@ Unspecified::
- 
- String::
- 
--	Diff is shown using the specified custom diff driver.
--	The driver program is given its input using the same
--	calling convention as used for GIT_EXTERNAL_DIFF
--	program.  This name is also used for custom hunk header
--	selection.
-+	Diff is shown using the specified diff driver.  Each driver may
-+	specify one or more options, as described in the following
-+	section. The options for the diff driver "foo" are defined
-+	by the configuration variables in the "diff.foo" section of the
-+	git config file.
- 
- 
--Defining a custom diff driver
--^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-+Defining an external diff driver
-+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
- 
- The definition of a diff driver is done in `gitconfig`, not
- `gitattributes` file, so strictly speaking this manual page is a
- wrong place to talk about it.  However...
- 
--To define a custom diff driver `jcdiff`, add a section to your
-+To define an external diff driver `jcdiff`, add a section to your
- `$GIT_DIR/config` file (or `$HOME/.gitconfig` file) like this:
- 
- ----------------------------------------------------------------
-@@ -328,6 +331,43 @@ patterns are available:
- - `tex` suitable for source code for LaTeX documents.
- 
- 
-+Performing text diffs of binary files
-+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+diff --git a/t/t4030-diff-textconv.sh b/t/t4030-diff-textconv.sh
+new file mode 100755
+index 0000000..1b09648
+--- /dev/null
++++ b/t/t4030-diff-textconv.sh
+@@ -0,0 +1,118 @@
++#!/bin/sh
 +
-+Sometimes it is desirable to see the diff of a text-converted
-+version of some binary files. For example, a word processor
-+document can be converted to an ASCII text representation, and
-+the diff of the text shown. Even though this conversion loses
-+some information, the resulting diff is useful for human
-+viewing (but cannot be applied directly).
++test_description='diff.*.textconv tests'
++. ./test-lib.sh
 +
-+The `textconv` config option is used to define a program for
-+performing such a conversion. The program should take a single
-+argument, the name of a file to convert, and produce the
-+resulting text on stdout.
++find_diff() {
++	sed '1,/^index /d' | sed '/^-- $/,$d'
++}
 +
-+For example, to show the diff of the exif information of a
-+file instead of the binary information (assuming you have the
-+exif tool installed):
++cat >expect.binary <<'EOF'
++Binary files a/file and b/file differ
++EOF
 +
-+------------------------
-+[diff "jpg"]
-+	textconv = exif
-+------------------------
++cat >expect.text <<'EOF'
++--- a/file
+++++ b/file
++@@ -1 +1,2 @@
++ 0
+++1
++EOF
 +
-+NOTE: The text conversion is generally a one-way conversion;
-+in this example, we lose the actual image contents and focus
-+just on the text data. This means that diffs generated by
-+textconv are _not_ suitable for applying. For this reason,
-+only `git diff` and the `git log` family of commands (i.e.,
-+log, whatchanged, show) will perform text conversion. `git
-+format-patch` will never generate this output. If you want to
-+send somebody a text-converted diff of a binary file (e.g.,
-+because it quickly conveys the changes you have made), you
-+should generate it separately and send it as a comment _in
-+addition to_ the usual binary diff that you might send.
++cat >hexdump <<'EOF'
++#!/bin/sh
++perl -e '$/ = undef; $_ = <>; s/./ord($&)/ge; print $_' "$1"
++EOF
++chmod +x hexdump
 +
++test_expect_success 'setup binary file with history' '
++	printf "\\0\\n" >file &&
++	git add file &&
++	git commit -m one &&
++	printf "\\1\\n" >>file &&
++	git add file &&
++	git commit -m two
++'
 +
- Performing a three-way merge
- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
- 
++test_expect_success 'file is considered binary by porcelain' '
++	git diff HEAD^ HEAD >diff &&
++	find_diff <diff >actual &&
++	test_cmp expect.binary actual
++'
++
++test_expect_success 'file is considered binary by plumbing' '
++	git diff-tree -p HEAD^ HEAD >diff &&
++	find_diff <diff >actual &&
++	test_cmp expect.binary actual
++'
++
++test_expect_success 'setup textconv filters' '
++	echo file diff=foo >.gitattributes &&
++	git config diff.foo.textconv "$PWD"/hexdump &&
++	git config diff.fail.textconv false
++'
++
++test_expect_failure 'diff produces text' '
++	git diff HEAD^ HEAD >diff &&
++	find_diff <diff >actual &&
++	test_cmp expect.text actual
++'
++
++test_expect_success 'diff-tree produces binary' '
++	git diff-tree -p HEAD^ HEAD >diff &&
++	find_diff <diff >actual &&
++	test_cmp expect.binary actual
++'
++
++test_expect_failure 'log produces text' '
++	git log -1 -p >log &&
++	find_diff <log >actual &&
++	test_cmp expect.text actual
++'
++
++test_expect_failure 'format-patch produces binary' '
++	git format-patch --no-binary --stdout HEAD^ >patch &&
++	find_diff <patch >actual &&
++	test_cmp expect.binary actual
++'
++
++cat >expect.stat <<'EOF'
++ file |  Bin 2 -> 4 bytes
++ 1 files changed, 0 insertions(+), 0 deletions(-)
++EOF
++test_expect_failure 'diffstat does not run textconv' '
++	echo file diff=fail >.gitattributes &&
++	git diff --stat HEAD^ HEAD >actual &&
++	test_cmp expect.stat actual
++'
++# restore working setup
++echo file diff=foo >.gitattributes
++
++cat >expect.typechange <<'EOF'
++--- a/file
+++++ /dev/null
++@@ -1,2 +0,0 @@
++-0
++-1
++diff --git a/file b/file
++new file mode 120000
++index ad8b3d2..67be421
++--- /dev/null
+++++ b/file
++@@ -0,0 +1 @@
+++frotz
++\ No newline at end of file
++EOF
++# make a symlink the hard way that works on symlink-challenged file systems
++test_expect_failure 'textconv does not act on symlinks' '
++	echo -n frotz > file &&
++	git add file &&
++	git ls-files -s | sed -e s/100644/120000/ |
++		git update-index --index-info &&
++	git commit -m typechange &&
++	git show >diff &&
++	find_diff <diff >actual &&
++	test_cmp expect.typechange actual
++'
++
++test_done
 -- 
 1.6.0.3.524.ge8b2e.dirty
