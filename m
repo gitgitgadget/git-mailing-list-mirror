@@ -1,308 +1,59 @@
-From: Miklos Vajna <vmiklos@frugalware.org>
-Subject: [PATCH 1/3] Fix git branch -m for symrefs.
-Date: Sun, 26 Oct 2008 03:33:56 +0100
-Message-ID: <39b6bd01cf753d48a803e1d5908e543b66899c77.1224987944.git.vmiklos@frugalware.org>
-References: <cover.1224987944.git.vmiklos@frugalware.org>
-Cc: Jeff King <peff@peff.net>, Brandon Casey <casey@nrlssc.navy.mil>,
-	git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sun Oct 26 03:34:51 2008
+From: walt <w41ter@gmail.com>
+Subject: [VOTE]  git versus mercurial
+Date: Sat, 25 Oct 2008 21:28:24 -0700
+Message-ID: <ge0rla$mce$1@ger.gmane.org>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Oct 26 05:36:55 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KtvSn-0001cv-1n
-	for gcvg-git-2@gmane.org; Sun, 26 Oct 2008 03:34:45 +0100
+	id 1KtxMz-0003Vh-D1
+	for gcvg-git-2@gmane.org; Sun, 26 Oct 2008 05:36:53 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751901AbYJZCdX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 25 Oct 2008 22:33:23 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751878AbYJZCdV
-	(ORCPT <rfc822;git-outgoing>); Sat, 25 Oct 2008 22:33:21 -0400
-Received: from yugo.dsd.sztaki.hu ([195.111.2.114]:53272 "EHLO
-	yugo.frugalware.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751674AbYJZCdQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 25 Oct 2008 22:33:16 -0400
-Received: from vmobile.example.net (catv-80-98-230-81.catv.broadband.hu [80.98.230.81])
-	by yugo.frugalware.org (Postfix) with ESMTPA id C74A0446CCD;
-	Sun, 26 Oct 2008 03:33:13 +0100 (CET)
-Received: by vmobile.example.net (Postfix, from userid 1003)
-	id 869D78B387; Sun, 26 Oct 2008 03:33:59 +0100 (CET)
-X-Mailer: git-send-email 1.6.0.2
-In-Reply-To: <cover.1224987944.git.vmiklos@frugalware.org>
-In-Reply-To: <cover.1224987944.git.vmiklos@frugalware.org>
-References: <cover.1224987944.git.vmiklos@frugalware.org>
+	id S1750744AbYJZEfJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 26 Oct 2008 00:35:09 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750726AbYJZEfJ
+	(ORCPT <rfc822;git-outgoing>); Sun, 26 Oct 2008 00:35:09 -0400
+Received: from main.gmane.org ([80.91.229.2]:34084 "EHLO ciao.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750717AbYJZEfH (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 26 Oct 2008 00:35:07 -0400
+Received: from root by ciao.gmane.org with local (Exim 4.43)
+	id 1KtxLC-0001xC-N0
+	for git@vger.kernel.org; Sun, 26 Oct 2008 04:35:02 +0000
+Received: from adsl-69-234-183-20.dsl.irvnca.pacbell.net ([69.234.183.20])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Sun, 26 Oct 2008 04:35:02 +0000
+Received: from w41ter by adsl-69-234-183-20.dsl.irvnca.pacbell.net with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Sun, 26 Oct 2008 04:35:02 +0000
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@ger.gmane.org
+X-Gmane-NNTP-Posting-Host: adsl-69-234-183-20.dsl.irvnca.pacbell.net
+User-Agent: Thunderbird/3.0a2pre (X11; 2008102512)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/99138>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/99139>
 
-This had two problems with symrefs. First, it copied the actual sha1
-instead of the "pointer", second it failed to remove the old ref after a
-successful rename.
+No, no, I'm not the one calling for a vote.  You old-timers here
+will know the name Matt Dillon, who is leading the dragonflybsd
+project (www.dragonflybsd.org).
 
-Given that till now delete_ref() always dereferenced symrefs, a new
-parameters has been introduced to delete_ref() to allow deleting refs
-without a dereference.
+Matt is the one who is calling for the vote in his thread "Vote
+for your source control system" in the dragonfly.kernel group,
+accessible via nntp://nntp.dragonflybsd.org.
 
-Signed-off-by: Miklos Vajna <vmiklos@frugalware.org>
----
- builtin-branch.c       |    2 +-
- builtin-receive-pack.c |    2 +-
- builtin-remote.c       |    4 +-
- builtin-reset.c        |    2 +-
- builtin-send-pack.c    |    2 +-
- builtin-tag.c          |    2 +-
- builtin-update-ref.c   |    2 +-
- cache.h                |    2 +-
- refs.c                 |   59 ++++++++++++++++++++++++++++++------------------
- t/t3200-branch.sh      |    9 +++++++
- 10 files changed, 55 insertions(+), 31 deletions(-)
+I've already cast my vote for git, which I confess is not very
+honest because I've never even tried mercurial.  I would truly
+be grateful to anyone here who knows both git and mercurial who
+could contribute verifiable facts to that debate.
 
-diff --git a/builtin-branch.c b/builtin-branch.c
-index 8d634ff..2b3613f 100644
---- a/builtin-branch.c
-+++ b/builtin-branch.c
-@@ -160,7 +160,7 @@ static int delete_branches(int argc, const char **argv, int force, int kinds)
- 			continue;
- 		}
- 
--		if (delete_ref(name, sha1)) {
-+		if (delete_ref(name, sha1, 0)) {
- 			error("Error deleting %sbranch '%s'", remote,
- 			       argv[i]);
- 			ret = 1;
-diff --git a/builtin-receive-pack.c b/builtin-receive-pack.c
-index 45e3cd9..ab5fa1c 100644
---- a/builtin-receive-pack.c
-+++ b/builtin-receive-pack.c
-@@ -224,7 +224,7 @@ static const char *update(struct command *cmd)
- 			warning ("Allowing deletion of corrupt ref.");
- 			old_sha1 = NULL;
- 		}
--		if (delete_ref(name, old_sha1)) {
-+		if (delete_ref(name, old_sha1, 0)) {
- 			error("failed to delete %s", name);
- 			return "failed to delete";
- 		}
-diff --git a/builtin-remote.c b/builtin-remote.c
-index df2be06..e396a3a 100644
---- a/builtin-remote.c
-+++ b/builtin-remote.c
-@@ -337,7 +337,7 @@ static int remove_branches(struct string_list *branches)
- 		const char *refname = item->string;
- 		unsigned char *sha1 = item->util;
- 
--		if (delete_ref(refname, sha1))
-+		if (delete_ref(refname, sha1, 0))
- 			result |= error("Could not remove branch %s", refname);
- 	}
- 	return result;
-@@ -565,7 +565,7 @@ static int prune(int argc, const char **argv)
- 			const char *refname = states.stale.items[i].util;
- 
- 			if (!dry_run)
--				result |= delete_ref(refname, NULL);
-+				result |= delete_ref(refname, NULL, 0);
- 
- 			printf(" * [%s] %s\n", dry_run ? "would prune" : "pruned",
- 			       abbrev_ref(refname, "refs/remotes/"));
-diff --git a/builtin-reset.c b/builtin-reset.c
-index 16e6bb2..9514b77 100644
---- a/builtin-reset.c
-+++ b/builtin-reset.c
-@@ -279,7 +279,7 @@ int cmd_reset(int argc, const char **argv, const char *prefix)
- 		update_ref(msg, "ORIG_HEAD", orig, old_orig, 0, MSG_ON_ERR);
- 	}
- 	else if (old_orig)
--		delete_ref("ORIG_HEAD", old_orig);
-+		delete_ref("ORIG_HEAD", old_orig, 0);
- 	prepend_reflog_action("updating HEAD", msg, sizeof(msg));
- 	update_ref_status = update_ref(msg, "HEAD", sha1, orig, 0, MSG_ON_ERR);
- 
-diff --git a/builtin-send-pack.c b/builtin-send-pack.c
-index 910db92..bbf6e0a 100644
---- a/builtin-send-pack.c
-+++ b/builtin-send-pack.c
-@@ -234,7 +234,7 @@ static void update_tracking_ref(struct remote *remote, struct ref *ref)
- 		if (args.verbose)
- 			fprintf(stderr, "updating local tracking ref '%s'\n", rs.dst);
- 		if (ref->deletion) {
--			delete_ref(rs.dst, NULL);
-+			delete_ref(rs.dst, NULL, 0);
- 		} else
- 			update_ref("update by push", rs.dst,
- 					ref->new_sha1, NULL, 0, 0);
-diff --git a/builtin-tag.c b/builtin-tag.c
-index b13fa34..1ff7b37 100644
---- a/builtin-tag.c
-+++ b/builtin-tag.c
-@@ -125,7 +125,7 @@ static int for_each_tag_name(const char **argv, each_tag_name_fn fn)
- static int delete_tag(const char *name, const char *ref,
- 				const unsigned char *sha1)
- {
--	if (delete_ref(ref, sha1))
-+	if (delete_ref(ref, sha1, 0))
- 		return 1;
- 	printf("Deleted tag '%s'\n", name);
- 	return 0;
-diff --git a/builtin-update-ref.c b/builtin-update-ref.c
-index 56a0b1b..d8f3142 100644
---- a/builtin-update-ref.c
-+++ b/builtin-update-ref.c
-@@ -48,7 +48,7 @@ int cmd_update_ref(int argc, const char **argv, const char *prefix)
- 		die("%s: not a valid old SHA1", oldval);
- 
- 	if (delete)
--		return delete_ref(refname, oldval ? oldsha1 : NULL);
-+		return delete_ref(refname, oldval ? oldsha1 : NULL, 0);
- 	else
- 		return update_ref(msg, refname, sha1, oldval ? oldsha1 : NULL,
- 				  no_deref ? REF_NODEREF : 0, DIE_ON_ERR);
-diff --git a/cache.h b/cache.h
-index b0edbf9..a3c77f0 100644
---- a/cache.h
-+++ b/cache.h
-@@ -434,7 +434,7 @@ extern int commit_locked_index(struct lock_file *);
- extern void set_alternate_index_output(const char *);
- extern int close_lock_file(struct lock_file *);
- extern void rollback_lock_file(struct lock_file *);
--extern int delete_ref(const char *, const unsigned char *sha1);
-+extern int delete_ref(const char *, const unsigned char *sha1, int delopt);
- 
- /* Environment bits from configuration mechanism */
- extern int trust_executable_bit;
-diff --git a/refs.c b/refs.c
-index 0a126fa..70c0967 100644
---- a/refs.c
-+++ b/refs.c
-@@ -921,25 +921,33 @@ static int repack_without_ref(const char *refname)
- 	return commit_lock_file(&packlock);
- }
- 
--int delete_ref(const char *refname, const unsigned char *sha1)
-+int delete_ref(const char *refname, const unsigned char *sha1, int delopt)
- {
- 	struct ref_lock *lock;
--	int err, i, ret = 0, flag = 0;
-+	int err, i = 0, ret = 0, flag = 0;
- 
- 	lock = lock_ref_sha1_basic(refname, sha1, 0, &flag);
- 	if (!lock)
- 		return 1;
- 	if (!(flag & REF_ISPACKED)) {
- 		/* loose */
--		i = strlen(lock->lk->filename) - 5; /* .lock */
--		lock->lk->filename[i] = 0;
--		err = unlink(lock->lk->filename);
-+		const char *path;
-+
-+		if (!(delopt & REF_NODEREF)) {
-+			i = strlen(lock->lk->filename) - 5; /* .lock */
-+			lock->lk->filename[i] = 0;
-+			path = lock->lk->filename;
-+		} else {
-+			path = git_path(refname);
-+		}
-+		err = unlink(path);
- 		if (err && errno != ENOENT) {
- 			ret = 1;
- 			error("unlink(%s) failed: %s",
--			      lock->lk->filename, strerror(errno));
-+			      path, strerror(errno));
- 		}
--		lock->lk->filename[i] = '.';
-+		if (!(delopt & REF_NODEREF))
-+			lock->lk->filename[i] = '.';
- 	}
- 	/* removing the loose one could have resurrected an earlier
- 	 * packed one.  Also, if it was not loose we need to repack
-@@ -964,11 +972,16 @@ int rename_ref(const char *oldref, const char *newref, const char *logmsg)
- 	struct ref_lock *lock;
- 	struct stat loginfo;
- 	int log = !lstat(git_path("logs/%s", oldref), &loginfo);
-+	const char *symref = NULL;
-+	int is_symref = 0;
- 
- 	if (S_ISLNK(loginfo.st_mode))
- 		return error("reflog for %s is a symlink", oldref);
- 
--	if (!resolve_ref(oldref, orig_sha1, 1, &flag))
-+	symref = resolve_ref(oldref, orig_sha1, 1, &flag);
-+	if (flag & REF_ISSYMREF)
-+		is_symref = 1;
-+	if (!symref)
- 		return error("refname %s not found", oldref);
- 
- 	if (!is_refname_available(newref, oldref, get_packed_refs(), 0))
-@@ -988,12 +1001,12 @@ int rename_ref(const char *oldref, const char *newref, const char *logmsg)
- 		return error("unable to move logfile logs/%s to tmp-renamed-log: %s",
- 			oldref, strerror(errno));
- 
--	if (delete_ref(oldref, orig_sha1)) {
-+	if (delete_ref(oldref, orig_sha1, REF_NODEREF)) {
- 		error("unable to delete old %s", oldref);
- 		goto rollback;
- 	}
- 
--	if (resolve_ref(newref, sha1, 1, &flag) && delete_ref(newref, sha1)) {
-+	if (resolve_ref(newref, sha1, 1, &flag) && delete_ref(newref, sha1, REF_NODEREF)) {
- 		if (errno==EISDIR) {
- 			if (remove_empty_directories(git_path("%s", newref))) {
- 				error("Directory not empty: %s", newref);
-@@ -1031,18 +1044,20 @@ int rename_ref(const char *oldref, const char *newref, const char *logmsg)
- 	}
- 	logmoved = log;
- 
--	lock = lock_ref_sha1_basic(newref, NULL, 0, NULL);
--	if (!lock) {
--		error("unable to lock %s for update", newref);
--		goto rollback;
--	}
--
--	lock->force_write = 1;
--	hashcpy(lock->old_sha1, orig_sha1);
--	if (write_ref_sha1(lock, orig_sha1, logmsg)) {
--		error("unable to write current sha1 into %s", newref);
--		goto rollback;
--	}
-+	if (!is_symref) {
-+		lock = lock_ref_sha1_basic(newref, NULL, 0, NULL);
-+		if (!lock) {
-+			error("unable to lock %s for update", newref);
-+			goto rollback;
-+		}
-+		lock->force_write = 1;
-+		hashcpy(lock->old_sha1, orig_sha1);
-+		if (write_ref_sha1(lock, orig_sha1, logmsg)) {
-+			error("unable to write current sha1 into %s", newref);
-+			goto rollback;
-+		}
-+	} else
-+		create_symref(newref, symref, logmsg);
- 
- 	return 0;
- 
-diff --git a/t/t3200-branch.sh b/t/t3200-branch.sh
-index 2147eac..fdeb1f5 100755
---- a/t/t3200-branch.sh
-+++ b/t/t3200-branch.sh
-@@ -112,6 +112,15 @@ test_expect_success 'config information was renamed, too' \
- 	"test $(git config branch.s.dummy) = Hello &&
- 	 test_must_fail git config branch.s/s/dummy"
- 
-+test_expect_success 'renaming a symref' \
-+'
-+	git symbolic-ref refs/heads/master2 refs/heads/master &&
-+	git branch -m master2 master3 &&
-+	git symbolic-ref refs/heads/master3 &&
-+	test -f .git/refs/heads/master &&
-+	! test -f .git/refs/heads/master2
-+'
-+
- test_expect_success \
-     'git branch -m u v should fail when the reflog for u is a symlink' '
-      git branch -l u &&
--- 
-1.6.0.2
+Thanks.
