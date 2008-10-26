@@ -1,107 +1,80 @@
-From: Brandon <siamesedream01@gmail.com>
-Subject: Re: From Perforce to Git
-Date: Sun, 26 Oct 2008 11:08:27 -0500
-Message-ID: <82c87da00810260908w2530dbb8j7ebcabe2516d5ed@mail.gmail.com>
-References: <82c87da00810251418y4a6ef1fbgccefb12061535226@mail.gmail.com>
-	 <ee77f5c20810251640q4b40d524n7271a0dfa11ebef8@mail.gmail.com>
-	 <ee77f5c20810251641l4892ff12n7b30667c6fcc903c@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: Weird problem with long $PATH and alternates (bisected)
+Date: Sun, 26 Oct 2008 09:15:18 -0700
+Message-ID: <7vljwb5o4p.fsf@gitster.siamese.dyndns.org>
+References: <237967ef0810260746w10e930c1sf36a2674f49afbe1@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: git <git@vger.kernel.org>
-To: "David Symonds" <dsymonds@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Oct 26 17:10:10 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: "Git Mailing List" <git@vger.kernel.org>
+To: "Mikael Magnusson" <mikachu@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Oct 26 17:16:42 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Ku8Bs-0006Pr-LK
-	for gcvg-git-2@gmane.org; Sun, 26 Oct 2008 17:10:09 +0100
+	id 1Ku8IE-0008J7-Ep
+	for gcvg-git-2@gmane.org; Sun, 26 Oct 2008 17:16:42 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755822AbYJZQI3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 26 Oct 2008 12:08:29 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755630AbYJZQI3
-	(ORCPT <rfc822;git-outgoing>); Sun, 26 Oct 2008 12:08:29 -0400
-Received: from rv-out-0506.google.com ([209.85.198.237]:49178 "EHLO
-	rv-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755691AbYJZQI2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 26 Oct 2008 12:08:28 -0400
-Received: by rv-out-0506.google.com with SMTP id k40so1721292rvb.1
-        for <git@vger.kernel.org>; Sun, 26 Oct 2008 09:08:27 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to
-         :subject:cc:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:references;
-        bh=GqQ5VpFG9C0FklyMEsIEjgQxBb3b4+NUksDVzAPNVbo=;
-        b=lZYwctrztcW3V32o6whvFspfwoq+EZre5snar4brRgOidNnabKsw7AO91dk27GD5z1
-         wO60wpv2SFfNhZm3fARuoBLFQgASjz/Gs45IT9pM6CY3Ky0g6OC8leG4Ij78844/jUIz
-         iBNvneVKjsNQqrYIhLKVP3/756JbFRL78fbU8=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
-         :content-type:content-transfer-encoding:content-disposition
-         :references;
-        b=B/q1yUw0JPxjoFii1UcMo8r3o8QE7P9sx2g0/Lc8K4PvzZfT2paU7s7IJmX8bIhVBP
-         XBnrI2jXJV8DVI/kquCnFA0fRw2ct7F6K9hgX/J7j32w0vO0d87CV4l0+V4FrqfnWpOy
-         JPtXcEGZtimz6doH2bbTF4txBj7W61PhsmQJg=
-Received: by 10.140.188.10 with SMTP id l10mr2657387rvf.6.1225037307313;
-        Sun, 26 Oct 2008 09:08:27 -0700 (PDT)
-Received: by 10.141.79.18 with HTTP; Sun, 26 Oct 2008 09:08:27 -0700 (PDT)
-In-Reply-To: <ee77f5c20810251641l4892ff12n7b30667c6fcc903c@mail.gmail.com>
-Content-Disposition: inline
+	id S1755058AbYJZQP3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 26 Oct 2008 12:15:29 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753887AbYJZQP3
+	(ORCPT <rfc822;git-outgoing>); Sun, 26 Oct 2008 12:15:29 -0400
+Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:33478 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753331AbYJZQP2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 26 Oct 2008 12:15:28 -0400
+Received: from localhost.localdomain (localhost [127.0.0.1])
+	by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id 1F0F08F805;
+	Sun, 26 Oct 2008 12:15:27 -0400 (EDT)
+Received: from pobox.com (ip68-225-240-211.oc.oc.cox.net [68.225.240.211])
+ (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
+ certificate requested) by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with
+ ESMTPSA id 3ACEB8F804; Sun, 26 Oct 2008 12:15:19 -0400 (EDT)
+In-Reply-To: <237967ef0810260746w10e930c1sf36a2674f49afbe1@mail.gmail.com>
+ (Mikael Magnusson's message of "Sun, 26 Oct 2008 15:46:39 +0100")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: 4D1DC434-A379-11DD-9837-4F5276724C3F-77302942!a-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/99170>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/99171>
 
-On Sat, Oct 25, 2008 at 6:41 PM, David Symonds <dsymonds@gmail.com> wrote:
-> On Sat, Oct 25, 2008 at 2:18 PM, Brandon <siamesedream01@gmail.com> wrote:
->
->>   I'm trying to make a comprehensive comparison of Perforce and Git
->> features. There are two things I currently can't find:
->>
->> 1) "Who's editing what"
->>    It's been documented that git can help developers communicate who
->> is editing what at any given time like perforce. (assuming there is a
->> central repositry) Has anyone seen an example of scripts to do this?
->
-> That's the primary feature of Perforce that kills its scalability once
-> you get past a few hundred developers; it bloats the metadata too
-> much. When you're using Git, there's really little point in using it,
-> since you don't declare what files you are going to be editing, and
-> you can find out other people's changes at merge time at your leisure
-> (not just when *you* want to commit).
+"Mikael Magnusson" <mikachu@gmail.com> writes:
 
-   I think there is an even more fundamental problem with this
-feature. Since perforce 'forces' developers the checkout files for
-edit, eventually you just ignore these warnings because you don't know
-if someone is really checking something out to make a change they are
-going to commit, or just need to make a file writable to experiment
-with some other feature they're working on etc... This feature would
-work much better if it were optional. I don't really care about the
-feature per se I would just like to be able to state that Git can
-offer everything that perforce can.
-   I would imagine this would require users pushing their changes to a
-branch in the central git repo. Then other users could use git log or
-cherry to see what files others are interested in (aka declared they
-are going to edit)? Not that this is necessarily a good way to work.
+> % mkdir 1; cd 1
+> % echo > a; git add a; git commit -m a
+> % cd ..
+> % git clone -s 1 2
+> % git push . master:master
+> fatal: Could not switch to
+> '/tmp/a/1/.git/objects/n:/usr/games/bin:/usr/local/ipod-chain'
+> fatal: The remote end hung up unexpectedly
 
+I think I see a bug in foreach_alt_odb() to add_refs_from_alternate()
+callchain, but I cannot explain why the contents of $PATH leaks to the
+error message.
 
->> 2) Symlinks to checkout partial repository
->>   I believe I read symlinks could be used to checkout part of a
->> repository. Is this true? any references? I imagine submodules is the
->> preferred way of doing this, and "narrow" or "partial" or "sparse"
->> checkouts are under development
->
-> I don't think so. You could use symlinks to *simulate* a bigger
-> repository that is actually made up of smaller repositories.
->
->
-> Dave.
->
+Can you try this patch?
 
-thanks, I'm pretty sure I'm just imagining reading this somewhere, I
-just needed some confirmation.
+ sha1_file.c |    4 +++-
+ 1 files changed, 3 insertions(+), 1 deletions(-)
+
+diff --git i/sha1_file.c w/sha1_file.c
+index ab2b520..98e7d7a 100644
+--- i/sha1_file.c
++++ w/sha1_file.c
+@@ -402,9 +402,11 @@ void foreach_alt_odb(alt_odb_fn fn, void *cb)
+ 	struct alternate_object_database *ent;
+ 
+ 	prepare_alt_odb();
+-	for (ent = alt_odb_list; ent; ent = ent->next)
++	for (ent = alt_odb_list; ent; ent = ent->next) {
++		*ent->name = '\0';
+ 		if (fn(ent, cb))
+ 			return;
++	}
+ }
+ 
+ void prepare_alt_odb(void)
