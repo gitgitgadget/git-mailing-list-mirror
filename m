@@ -1,63 +1,62 @@
-From: SZEDER =?iso-8859-1?Q?G=E1bor?= <szeder@ira.uka.de>
-Subject: Re: [PATCH] add -p: warn if only binary changes present
-Date: Sun, 26 Oct 2008 11:40:06 +0100
-Message-ID: <20081026104006.GA18969@neumann>
-References: <1224884916-20369-1-git-send-email-trast@student.ethz.ch>
-	<20081026051013.GD21178@coredump.intra.peff.net>
-	<200810261128.14735.trast@student.ethz.ch>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Jeff King <peff@peff.net>, git@vger.kernel.org,
-	Junio C Hamano <junio@pobox.com>
-To: Thomas Rast <trast@student.ethz.ch>
-X-From: git-owner@vger.kernel.org Sun Oct 26 11:41:39 2008
+From: "David M. Syzdek" <david.syzdek@acsalaska.net>
+Subject: [PATCH] Add Makefile check for FreeBSD 4.9-SECURITY
+Date: Sun, 26 Oct 2008 03:52:47 -0800
+Message-ID: <1225021967-11902-1-git-send-email-david.syzdek@acsalaska.net>
+Cc: "David M. Syzdek" <david.syzdek@acsalaska.net>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Oct 26 13:08:46 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Ku33v-00032a-N8
-	for gcvg-git-2@gmane.org; Sun, 26 Oct 2008 11:41:36 +0100
+	id 1Ku4QH-0007jp-UJ
+	for gcvg-git-2@gmane.org; Sun, 26 Oct 2008 13:08:46 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752605AbYJZKkW convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 26 Oct 2008 06:40:22 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752630AbYJZKkW
-	(ORCPT <rfc822;git-outgoing>); Sun, 26 Oct 2008 06:40:22 -0400
-Received: from moutng.kundenserver.de ([212.227.126.177]:61711 "EHLO
-	moutng.kundenserver.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752351AbYJZKkV (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 26 Oct 2008 06:40:21 -0400
-Received: from [127.0.1.1] (p5B133467.dip0.t-ipconnect.de [91.19.52.103])
-	by mrelayeu.kundenserver.de (node=mrelayeu8) with ESMTP (Nemesis)
-	id 0ML31I-1Ku32V2HV5-0000Rm; Sun, 26 Oct 2008 11:40:08 +0100
-Content-Disposition: inline
-In-Reply-To: <200810261128.14735.trast@student.ethz.ch>
-User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
-X-Provags-ID: V01U2FsdGVkX19v7F1yv8PbOXb+e3oH3tNJvQQf0NRTpuArpnn
- JAXflTc/GXQFT/nb5G1oHxvUZxZAzO1j4tCfvT73r4k0+mm+w/
- KcpgoNtNnx3Bc8uPT+FtQ==
+	id S1752751AbYJZMHa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 26 Oct 2008 08:07:30 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752566AbYJZMH2
+	(ORCPT <rfc822;git-outgoing>); Sun, 26 Oct 2008 08:07:28 -0400
+Received: from iris.acsalaska.net ([209.112.173.229]:23092 "EHLO
+	iris.acsalaska.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752444AbYJZMH1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 26 Oct 2008 08:07:27 -0400
+Received: from localhost.localdomain (209-193-51-248.static.acsalaska.net [209.193.51.248])
+	by iris.acsalaska.net (8.14.1/8.14.1) with ESMTP id m9QBqlBP055335;
+	Sun, 26 Oct 2008 03:52:47 -0800 (AKDT)
+	(envelope-from david.syzdek@acsalaska.net)
+X-Mailer: git-send-email 1.6.0.2.GIT
+X-ACS-Spam-Status: no
+X-ACS-Spam-Score: 1.3 (x)
+X-ACS-Spam-Tests: HELO_LH_LD,ACS_BOGUS_LOCALHOST
+X-ACS-Scanned-By: MD 2.63; SA 3.2.4; spamdefang 1.122
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/99156>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/99157>
 
-On Sun, Oct 26, 2008 at 12:28:09PM +0200, Thomas Rast wrote:
-> Jeff King wrote:
-> > > +			print STDERR "No changes except to binary files.\n";
-> >   No changed text files.
-> I tried to make a more precise statement.  "No changed text files"
-> also holds if no files at all were changed.  A user can only infer
-> that there _are_ binary changes if he knows that the message in the
-> latter case would have been "No changes".
->=20
-> That being said, it is somewhat awkward, I just couldn't come up with
-> a better message with this meaning.
-What about
+If the system is FreeBSD 4.9, then NO_UINTMAX_T and NO_STRTOUMAX is defined.
 
-   Only binary files changed.
+Signed-off-by: David M. Syzdek <david.syzdek@acsalaska.net>
+---
+ Makefile |    4 ++++
+ 1 files changed, 4 insertions(+), 0 deletions(-)
 
-or something of the sort?
-
-G=E1bor
+diff --git a/Makefile b/Makefile
+index bf6a6dc..c568314 100644
+--- a/Makefile
++++ b/Makefile
+@@ -679,6 +679,10 @@ ifeq ($(uname_S),FreeBSD)
+ 	DIR_HAS_BSD_GROUP_SEMANTICS = YesPlease
+ 	COMPAT_CFLAGS += -Icompat/regex
+ 	COMPAT_OBJS += compat/regex/regex.o
++	ifeq ($(uname_R),4.9-SECURITY)
++		NO_UINTMAX_T = YesPlease
++		NO_STRTOUMAX = YesPlease
++	endif
+ endif
+ ifeq ($(uname_S),OpenBSD)
+ 	NO_STRCASESTR = YesPlease
+-- 
+1.6.0.2.GIT
