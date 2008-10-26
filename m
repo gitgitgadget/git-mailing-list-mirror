@@ -1,209 +1,225 @@
 From: Jeff King <peff@peff.net>
-Subject: [PATCH v3 4/8] refactor userdiff textconv code
-Date: Sun, 26 Oct 2008 00:44:53 -0400
-Message-ID: <20081026044453.GD21047@coredump.intra.peff.net>
+Subject: [PATCH v3 5/8] userdiff: require explicitly allowing textconv
+Date: Sun, 26 Oct 2008 00:45:55 -0400
+Message-ID: <20081026044555.GE21047@coredump.intra.peff.net>
 References: <20081026043802.GA14530@coredump.intra.peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Cc: Johannes Sixt <j.sixt@viscovery.net>,
 	Matthieu Moy <Matthieu.Moy@imag.fr>, git@vger.kernel.org
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sun Oct 26 05:46:10 2008
+X-From: git-owner@vger.kernel.org Sun Oct 26 05:47:13 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KtxVx-0005Gm-BN
-	for gcvg-git-2@gmane.org; Sun, 26 Oct 2008 05:46:10 +0100
+	id 1KtxWz-0005Rw-2A
+	for gcvg-git-2@gmane.org; Sun, 26 Oct 2008 05:47:13 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751289AbYJZEo4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 26 Oct 2008 00:44:56 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751299AbYJZEo4
-	(ORCPT <rfc822;git-outgoing>); Sun, 26 Oct 2008 00:44:56 -0400
-Received: from peff.net ([208.65.91.99]:2013 "EHLO peff.net"
+	id S1751439AbYJZEp6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 26 Oct 2008 00:45:58 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751391AbYJZEp6
+	(ORCPT <rfc822;git-outgoing>); Sun, 26 Oct 2008 00:45:58 -0400
+Received: from peff.net ([208.65.91.99]:2247 "EHLO peff.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751289AbYJZEo4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 26 Oct 2008 00:44:56 -0400
-Received: (qmail 4961 invoked by uid 111); 26 Oct 2008 04:44:54 -0000
+	id S1751299AbYJZEp6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 26 Oct 2008 00:45:58 -0400
+Received: (qmail 4990 invoked by uid 111); 26 Oct 2008 04:45:56 -0000
 Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.32) with SMTP; Sun, 26 Oct 2008 00:44:54 -0400
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Sun, 26 Oct 2008 00:44:53 -0400
+    by peff.net (qpsmtpd/0.32) with SMTP; Sun, 26 Oct 2008 00:45:56 -0400
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Sun, 26 Oct 2008 00:45:55 -0400
 Content-Disposition: inline
 In-Reply-To: <20081026043802.GA14530@coredump.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/99144>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/99145>
 
-The original implementation of textconv put the conversion
-into fill_mmfile. This was a bad idea for a number of
-reasons:
+Diffs that have been produced with textconv almost certainly
+cannot be applied, so we want to be careful not to generate
+them in things like format-patch.
 
- - it made the semantics of fill_mmfile unclear. In some
-   cases, it was allocating data (if a text conversion
-   occurred), and in some cases not (if we could use the
-   data directly from the filespec). But the caller had
-   no idea which had happened, and so didn't know whether
-   the memory should be freed
+This introduces a new diff options, ALLOW_TEXTCONV, which
+controls this behavior. It is off by default, but is
+explicitly turned on for the "log" family of commands, as
+well as the "diff" porcelain (but not diff-* plumbing).
 
- - similarly, the caller had no idea if a text conversion
-   had occurred, and so didn't know whether the contents
-   should be treated as binary or not. This meant that we
-   incorrectly guessed that text-converted content was
-   binary and didn't actually show it (unless the user
-   overrode us with "diff.foo.binary = false", which then
-   created problems in plumbing where the text conversion
-   did _not_ occur)
-
- - not all callers of fill_mmfile want the text contents. In
-   particular, we don't really want diffstat, whitespace
-   checks, patch id generation, etc, to look at the
-   converted contents.
-
-This patch pulls the conversion code directly into
-builtin_diff, so that we only see the conversion when
-generating an actual patch. We also then know whether we are
-doing a conversion, so we can check the binary-ness and free
-the data from the mmfile appropriately (the previous version
-leaked quite badly when text conversion was used)
+Because both text conversion and external diffing are
+controlled by these diff options, we can get rid of the
+"plumbing versus porcelain" distinction when reading the
+config. This was an attempt to control the same thing, but
+suffered from being too coarse-grained.
 
 Signed-off-by: Jeff King <peff@peff.net>
 ---
-This patch is the interesting one. I think your suggestion turned out
-fairly clean (and this reverts fill_mmfile back to its state before the
-original textconv series).
+The new changes in 4/8 make this even cleaner than before.
 
- diff.c                   |   48 +++++++++++++++++++++++++++++++++------------
- t/t4030-diff-textconv.sh |    6 ++--
- 2 files changed, 38 insertions(+), 16 deletions(-)
+ builtin-diff.c           |    1 +
+ builtin-log.c            |    1 +
+ diff.c                   |   26 +++++++++++---------------
+ diff.h                   |    1 +
+ t/t4030-diff-textconv.sh |    2 +-
+ userdiff.c               |   10 +---------
+ userdiff.h               |    3 +--
+ 7 files changed, 17 insertions(+), 27 deletions(-)
 
+diff --git a/builtin-diff.c b/builtin-diff.c
+index 9c8c295..2de5834 100644
+--- a/builtin-diff.c
++++ b/builtin-diff.c
+@@ -300,6 +300,7 @@ int cmd_diff(int argc, const char **argv, const char *prefix)
+ 	}
+ 	DIFF_OPT_SET(&rev.diffopt, ALLOW_EXTERNAL);
+ 	DIFF_OPT_SET(&rev.diffopt, RECURSIVE);
++	DIFF_OPT_SET(&rev.diffopt, ALLOW_TEXTCONV);
+ 
+ 	/*
+ 	 * If the user asked for our exit code then don't start a
+diff --git a/builtin-log.c b/builtin-log.c
+index a0944f7..75d698f 100644
+--- a/builtin-log.c
++++ b/builtin-log.c
+@@ -59,6 +59,7 @@ static void cmd_log_init(int argc, const char **argv, const char *prefix,
+ 		} else
+ 			die("unrecognized argument: %s", arg);
+ 	}
++	DIFF_OPT_SET(&rev->diffopt, ALLOW_TEXTCONV);
+ }
+ 
+ /*
 diff --git a/diff.c b/diff.c
-index d1fd594..6f01595 100644
+index 6f01595..608223a 100644
 --- a/diff.c
 +++ b/diff.c
-@@ -294,18 +294,8 @@ static int fill_mmfile(mmfile_t *mf, struct diff_filespec *one)
- 	else if (diff_populate_filespec(one, 0))
- 		return -1;
+@@ -93,12 +93,6 @@ int git_diff_ui_config(const char *var, const char *value, void *cb)
+ 	if (!strcmp(var, "diff.external"))
+ 		return git_config_string(&external_diff_cmd_cfg, var, value);
  
--	diff_filespec_load_driver(one);
--	if (one->driver->textconv) {
--		size_t size;
--		mf->ptr = run_textconv(one->driver->textconv, one, &size);
--		if (!mf->ptr)
--			return -1;
--		mf->size = size;
+-	switch (userdiff_config_porcelain(var, value)) {
+-		case 0: break;
+-		case -1: return -1;
+-		default: return 0;
 -	}
--	else {
--		mf->ptr = one->data;
--		mf->size = one->size;
--	}
-+	mf->ptr = one->data;
-+	mf->size = one->size;
- 	return 0;
+-
+ 	return git_diff_basic_config(var, value, cb);
  }
  
-@@ -1323,6 +1313,14 @@ void diff_set_mnemonic_prefix(struct diff_options *options, const char *a, const
- 		options->b_prefix = b;
- }
+@@ -109,6 +103,12 @@ int git_diff_basic_config(const char *var, const char *value, void *cb)
+ 		return 0;
+ 	}
  
-+static const char *get_textconv(struct diff_filespec *one)
-+{
-+	if (!DIFF_FILE_VALID(one))
-+		return NULL;
-+	diff_filespec_load_driver(one);
-+	return one->driver->textconv;
-+}
++	switch (userdiff_config(var, value)) {
++		case 0: break;
++		case -1: return -1;
++		default: return 0;
++	}
 +
- static void builtin_diff(const char *name_a,
- 			 const char *name_b,
- 			 struct diff_filespec *one,
-@@ -1337,6 +1335,7 @@ static void builtin_diff(const char *name_a,
+ 	if (!prefixcmp(var, "diff.color.") || !prefixcmp(var, "color.diff.")) {
+ 		int slot = parse_diff_color_slot(var, 11);
+ 		if (!value)
+@@ -123,12 +123,6 @@ int git_diff_basic_config(const char *var, const char *value, void *cb)
+ 		return 0;
+ 	}
+ 
+-	switch (userdiff_config_basic(var, value)) {
+-		case 0: break;
+-		case -1: return -1;
+-		default: return 0;
+-	}
+-
+ 	return git_color_default_config(var, value, cb);
+ }
+ 
+@@ -1335,7 +1329,7 @@ static void builtin_diff(const char *name_a,
  	const char *set = diff_get_color_opt(o, DIFF_METAINFO);
  	const char *reset = diff_get_color_opt(o, DIFF_RESET);
  	const char *a_prefix, *b_prefix;
-+	const char *textconv_one, *textconv_two;
+-	const char *textconv_one, *textconv_two;
++	const char *textconv_one = NULL, *textconv_two = NULL;
  
  	diff_set_mnemonic_prefix(o, "a/", "b/");
  	if (DIFF_OPT_TST(o, REVERSE_DIFF)) {
-@@ -1390,8 +1389,12 @@ static void builtin_diff(const char *name_a,
+@@ -1389,8 +1383,10 @@ static void builtin_diff(const char *name_a,
  	if (fill_mmfile(&mf1, one) < 0 || fill_mmfile(&mf2, two) < 0)
  		die("unable to read files to diff");
  
-+	textconv_one = get_textconv(one);
-+	textconv_two = get_textconv(two);
-+
+-	textconv_one = get_textconv(one);
+-	textconv_two = get_textconv(two);
++	if (DIFF_OPT_TST(o, ALLOW_TEXTCONV)) {
++		textconv_one = get_textconv(one);
++		textconv_two = get_textconv(two);
++	}
+ 
  	if (!DIFF_OPT_TST(o, TEXT) &&
--	    (diff_filespec_is_binary(one) || diff_filespec_is_binary(two))) {
-+	    ( (diff_filespec_is_binary(one) && !textconv_one) ||
-+	      (diff_filespec_is_binary(two) && !textconv_two) )) {
- 		/* Quite common confusing case */
- 		if (mf1.size == mf2.size &&
- 		    !memcmp(mf1.ptr, mf2.ptr, mf1.size))
-@@ -1412,6 +1415,21 @@ static void builtin_diff(const char *name_a,
- 		struct emit_callback ecbdata;
- 		const struct userdiff_funcname *pe;
- 
-+		if (textconv_one) {
-+			size_t size;
-+			mf1.ptr = run_textconv(textconv_one, one, &size);
-+			if (!mf1.ptr)
-+				die("unable to read files to diff");
-+			mf1.size = size;
-+		}
-+		if (textconv_two) {
-+			size_t size;
-+			mf2.ptr = run_textconv(textconv_two, two, &size);
-+			if (!mf2.ptr)
-+				die("unable to read files to diff");
-+			mf2.size = size;
-+		}
-+
- 		pe = diff_funcname_pattern(one);
- 		if (!pe)
- 			pe = diff_funcname_pattern(two);
-@@ -1443,6 +1461,10 @@ static void builtin_diff(const char *name_a,
- 			      &xpp, &xecfg, &ecb);
- 		if (DIFF_OPT_TST(o, COLOR_DIFF_WORDS))
- 			free_diff_words_data(&ecbdata);
-+		if (textconv_one)
-+			free(mf1.ptr);
-+		if (textconv_two)
-+			free(mf2.ptr);
- 	}
- 
-  free_ab_and_return:
+ 	    ( (diff_filespec_is_binary(one) && !textconv_one) ||
+diff --git a/diff.h b/diff.h
+index a49d865..42582ed 100644
+--- a/diff.h
++++ b/diff.h
+@@ -65,6 +65,7 @@ typedef void (*diff_format_fn_t)(struct diff_queue_struct *q,
+ #define DIFF_OPT_IGNORE_SUBMODULES   (1 << 18)
+ #define DIFF_OPT_DIRSTAT_CUMULATIVE  (1 << 19)
+ #define DIFF_OPT_DIRSTAT_BY_FILE     (1 << 20)
++#define DIFF_OPT_ALLOW_TEXTCONV      (1 << 21)
+ #define DIFF_OPT_TST(opts, flag)    ((opts)->flags & DIFF_OPT_##flag)
+ #define DIFF_OPT_SET(opts, flag)    ((opts)->flags |= DIFF_OPT_##flag)
+ #define DIFF_OPT_CLR(opts, flag)    ((opts)->flags &= ~DIFF_OPT_##flag)
 diff --git a/t/t4030-diff-textconv.sh b/t/t4030-diff-textconv.sh
-index 1b09648..090a21d 100755
+index 090a21d..1df48ae 100755
 --- a/t/t4030-diff-textconv.sh
 +++ b/t/t4030-diff-textconv.sh
-@@ -52,7 +52,7 @@ test_expect_success 'setup textconv filters' '
- 	git config diff.fail.textconv false
+@@ -70,7 +70,7 @@ test_expect_success 'log produces text' '
+ 	test_cmp expect.text actual
  '
  
--test_expect_failure 'diff produces text' '
-+test_expect_success 'diff produces text' '
- 	git diff HEAD^ HEAD >diff &&
- 	find_diff <diff >actual &&
- 	test_cmp expect.text actual
-@@ -64,7 +64,7 @@ test_expect_success 'diff-tree produces binary' '
+-test_expect_failure 'format-patch produces binary' '
++test_expect_success 'format-patch produces binary' '
+ 	git format-patch --no-binary --stdout HEAD^ >patch &&
+ 	find_diff <patch >actual &&
  	test_cmp expect.binary actual
- '
+diff --git a/userdiff.c b/userdiff.c
+index d95257a..3681062 100644
+--- a/userdiff.c
++++ b/userdiff.c
+@@ -120,7 +120,7 @@ static int parse_tristate(int *b, const char *k, const char *v)
+ 	return 1;
+ }
  
--test_expect_failure 'log produces text' '
-+test_expect_success 'log produces text' '
- 	git log -1 -p >log &&
- 	find_diff <log >actual &&
- 	test_cmp expect.text actual
-@@ -80,7 +80,7 @@ cat >expect.stat <<'EOF'
-  file |  Bin 2 -> 4 bytes
-  1 files changed, 0 insertions(+), 0 deletions(-)
- EOF
--test_expect_failure 'diffstat does not run textconv' '
-+test_expect_success 'diffstat does not run textconv' '
- 	echo file diff=fail >.gitattributes &&
- 	git diff --stat HEAD^ HEAD >actual &&
- 	test_cmp expect.stat actual
+-int userdiff_config_basic(const char *k, const char *v)
++int userdiff_config(const char *k, const char *v)
+ {
+ 	struct userdiff_driver *drv;
+ 
+@@ -130,14 +130,6 @@ int userdiff_config_basic(const char *k, const char *v)
+ 		return parse_funcname(&drv->funcname, k, v, REG_EXTENDED);
+ 	if ((drv = parse_driver(k, v, "binary")))
+ 		return parse_tristate(&drv->binary, k, v);
+-
+-	return 0;
+-}
+-
+-int userdiff_config_porcelain(const char *k, const char *v)
+-{
+-	struct userdiff_driver *drv;
+-
+ 	if ((drv = parse_driver(k, v, "command")))
+ 		return parse_string(&drv->external, k, v);
+ 	if ((drv = parse_driver(k, v, "textconv")))
+diff --git a/userdiff.h b/userdiff.h
+index f29c18f..ba29457 100644
+--- a/userdiff.h
++++ b/userdiff.h
+@@ -14,8 +14,7 @@ struct userdiff_driver {
+ 	const char *textconv;
+ };
+ 
+-int userdiff_config_basic(const char *k, const char *v);
+-int userdiff_config_porcelain(const char *k, const char *v);
++int userdiff_config(const char *k, const char *v);
+ struct userdiff_driver *userdiff_find_by_name(const char *name);
+ struct userdiff_driver *userdiff_find_by_path(const char *path);
+ 
 -- 
 1.6.0.3.524.ge8b2e.dirty
