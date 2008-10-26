@@ -1,128 +1,151 @@
-From: "Felipe Contreras" <felipe.contreras@gmail.com>
-Subject: Re: [VOTE] git versus mercurial (for DragonflyBSD)
-Date: Sun, 26 Oct 2008 17:57:21 +0200
-Message-ID: <94a0d4530810260857u7c0cb122g8147b9484108f539@mail.gmail.com>
-References: <ge0rla$mce$1@ger.gmane.org> <m3r663h276.fsf@localhost.localdomain>
+From: =?ISO-8859-1?Q?Ren=E9_Scharfe?= <rene.scharfe@lsrfire.ath.cx>
+Subject: Re: [irq/urgent]: created 3786fc7: "irq: make variable static"
+Date: Sun, 26 Oct 2008 17:04:19 +0100
+Message-ID: <49049503.5080402@lsrfire.ath.cx>
+References: <20081022061730.GA5749@elte.hu> <adf1fd3d0810220039g51d61e92l5ba254b57723d3b6@mail.gmail.com> <20081022075639.GA1284@elte.hu>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, mercurial@selenic.com
-To: "Jakub Narebski" <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Oct 26 16:58:37 2008
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: =?ISO-8859-1?Q?Santi_B=E9jar?= <santi@agolina.net>,
+	git@vger.kernel.org
+To: Ingo Molnar <mingo@elte.hu>
+X-From: git-owner@vger.kernel.org Sun Oct 26 17:06:38 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Ku80h-0003gr-IA
-	for gcvg-git-2@gmane.org; Sun, 26 Oct 2008 16:58:36 +0100
+	id 1Ku88T-0005aZ-MC
+	for gcvg-git-2@gmane.org; Sun, 26 Oct 2008 17:06:38 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753913AbYJZP5W (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 26 Oct 2008 11:57:22 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754190AbYJZP5W
-	(ORCPT <rfc822;git-outgoing>); Sun, 26 Oct 2008 11:57:22 -0400
-Received: from rv-out-0506.google.com ([209.85.198.236]:52959 "EHLO
-	rv-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753913AbYJZP5V (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 26 Oct 2008 11:57:21 -0400
-Received: by rv-out-0506.google.com with SMTP id k40so1718026rvb.1
-        for <git@vger.kernel.org>; Sun, 26 Oct 2008 08:57:21 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to
-         :subject:cc:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:references;
-        bh=eyT24nlBSoZFUdFoJCpp6Pj0bcXS/oAXyO5OEq51U20=;
-        b=bU/lF6b/VCNyyz09WIfFnh/4m3RjHdrVANKOLtquPcxN6jhZKeVn5pOvOMrC5k5SEo
-         F7dk2gBvqXO8vrdh68MgYSuXUJWy4jgc4Qj465LDFS60u9XSqA6wT4a+B6/8KjHGxMod
-         FnoI2gUeHRZhGjeuIr7FdsESAl0VMYxE31CI4=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
-         :content-type:content-transfer-encoding:content-disposition
-         :references;
-        b=aESVKe3TJia7nlmM4oimH1P/nKBK2uSRmBsEbTvGuqk8kpLFJaCUyLRdTxu5FcJiXN
-         GNTqmrKvIy+H5nSskgiwyiv9p2j1x2z0Gzwpl9FaRlKUOa3s/YgI/WKvoHAM6LTdZK6J
-         k1o1Tc5aMnHq8huNc2SQMn0gtpnp235H0n9vw=
-Received: by 10.141.43.5 with SMTP id v5mr2626399rvj.216.1225036641108;
-        Sun, 26 Oct 2008 08:57:21 -0700 (PDT)
-Received: by 10.140.171.5 with HTTP; Sun, 26 Oct 2008 08:57:21 -0700 (PDT)
-In-Reply-To: <m3r663h276.fsf@localhost.localdomain>
-Content-Disposition: inline
+	id S1754976AbYJZQEZ convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 26 Oct 2008 12:04:25 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754695AbYJZQEZ
+	(ORCPT <rfc822;git-outgoing>); Sun, 26 Oct 2008 12:04:25 -0400
+Received: from india601.server4you.de ([85.25.151.105]:38791 "EHLO
+	india601.server4you.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754038AbYJZQEY (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 26 Oct 2008 12:04:24 -0400
+Received: from [10.0.1.101] (p57B7F906.dip.t-dialin.net [87.183.249.6])
+	by india601.server4you.de (Postfix) with ESMTPSA id 25F7C2F804C;
+	Sun, 26 Oct 2008 17:04:22 +0100 (CET)
+User-Agent: Thunderbird 2.0.0.17 (Windows/20080914)
+In-Reply-To: <20081022075639.GA1284@elte.hu>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/99168>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/99169>
 
-On Sun, Oct 26, 2008 at 4:15 PM, Jakub Narebski <jnareb@gmail.com> wrote:
-> [Cc: gmane.comp.version-control.git,
->     gmane.comp.version-control.mercurial.general]
->
-> walt <w41ter@gmail.com> writes:
->
->> No, no, I'm not the one calling for a vote.  You old-timers here
->> will know the name Matt Dillon, who is leading the dragonflybsd
->> project (www.dragonflybsd.org).
->>
->> Matt is the one who is calling for the vote in his thread "Vote
->> for your source control system" in the dragonfly.kernel group,
->> accessible via nntp://nntp.dragonflybsd.org.
->>
->> I've already cast my vote for git, which I confess is not very
->> honest because I've never even tried mercurial.  I would truly
->> be grateful to anyone here who knows both git and mercurial who
->> could contribute verifiable facts to that debate.
+Ingo Molnar schrieb:
+> The most useful angle would be if git log --format had a way to print=
+=20
+> the reverse name. Then i could do a git-log-line script like:
+>=20
+>   git log --pretty=3Dformat:"%h: %20N %s" $@
+>=20
+> where %N prints the reverse name.
+>=20
+> While at it: it would be nice if git log had a way to crop string=20
+> output. For example i'd love to use:
+>=20
+>   git log --pretty=3Dformat:"%h: %60s" $@
+>=20
+> which would print out at most 60 characters from the first commit lin=
+e.
+>=20
+> That way i can see it properly on an 80 width terminal and can paste =
+it=20
+> into email without linewraps, etc. But --pretty=3Dformat does not see=
+m to=20
+> know width restrictions.
 
-<snip/>
+You don't need support for format string cropping in git for the latter
+example, you can use cut instead:
 
-> 3. Repository design and performance.
->
->   Git is designed around idea of content adressed object database;
->   objects are adressed by their content (by SHA-1 of their type and
->   content).  Commits for example have information about author and
->   comitter, pointer to zero or more parent commits, and pointer to
->   tree object (representing top directory in project).  Branches
->   and tags are just pointers to DAG (Direct Acyclic Graph) of
->   commits; current branch is denoted by HEAD pointer to branch.
->   There is explicit staging area called 'index', used for conflict
->   resolution dureing merges, and which can be used to make commit in
->   stages, allow uncomitted changes in tree (in working directory).
->   Git design supports very well multiple branches in single
->   repository, and tracking changes in multiple remote repositories
->   each with multiple branches.
->
->   Mercurial, from what I have read of its documentation, and from the
->   few discussion on #revctrl IRC channel, and from what I understand
->   is based on changes stored per file, with information about files
->   and their versions stored in manifest (flat) file, and with changes
->   described in changelog-like file (changerev).  One of limitations
->   of "record" database (as opposed to Git's object database) is that
->   commits can have zero (root commit), one or two (merge commits)
->   parents only.  There is apparent in design that Mercurial was
->   developed with single branch per repository paradigm in mind.
->   Local branches from what I understand are marked in CVS-like
->   fashion using tags.  Tags are implemented as either local to
->   repository and untransferable, or as .hgtags versioned file with
->   special case treatment.  (But I'm obviously biased here).
->
->   Git and Mercurial have similar performance, although it is thought
->   that due to design Mercurla has faster patch applying and is
->   optimized for cold cache case, while Git has faster merging and is
->   optimized for warm cache case.
->
->   Mercurial may have (or had) problems with larger binary files, from
->   what I have heard.
+   git log --pretty=3Dformat:%h:\ %s $@ | cut -b-70
 
-The fact that hg is changeset based means that certain operations are
-slower, like checkout a specific commit. In hg my bet is you would
-need to gather a bunch of changesets while in git the operation is
-done in a single step.
+But I only realized that after I had written the following patch. :)
+Would this feature still be useful?
 
-It also means that bare clones are not possible in hg, or at least
-very complicated.
+Thanks,
+Ren=E9
 
-Note: I'm not sure if what I'm claiming is correct.
+---
+ Documentation/pretty-formats.txt |    5 +++++
+ pretty.c                         |   30 ++++++++++++++++++++++++++++--
+ 2 files changed, 33 insertions(+), 2 deletions(-)
 
--- 
-Felipe Contreras
+diff --git a/Documentation/pretty-formats.txt b/Documentation/pretty-fo=
+rmats.txt
+index f18d33e..cc76c45 100644
+--- a/Documentation/pretty-formats.txt
++++ b/Documentation/pretty-formats.txt
+@@ -128,6 +128,11 @@ The placeholders are:
+ - '%n': newline
+ - '%x00': print a byte from a hex code
+=20
+++
++You can also specify a maximum width for each field after the '%', e.g=
+=2E
++'%60s' will show the first sixty characters of the subject (or less if
++it's shorter).
++
+ * 'tformat:'
+ +
+ The 'tformat:' format works exactly like 'format:', except that it
+diff --git a/pretty.c b/pretty.c
+index 1e79943..74e8932 100644
+--- a/pretty.c
++++ b/pretty.c
+@@ -498,8 +498,8 @@ static void format_decoration(struct strbuf *sb, co=
+nst struct commit *commit)
+ 		strbuf_addch(sb, ')');
+ }
+=20
+-static size_t format_commit_item(struct strbuf *sb, const char *placeh=
+older,
+-                               void *context)
++static size_t do_format_commit_item(struct strbuf *sb, const char *pla=
+ceholder,
++		void *context)
+ {
+ 	struct format_commit_context *c =3D context;
+ 	const struct commit *commit =3D c->commit;
+@@ -621,6 +621,32 @@ static size_t format_commit_item(struct strbuf *sb=
+, const char *placeholder,
+ 	return 0;	/* unknown placeholder */
+ }
+=20
++static size_t format_commit_item(struct strbuf *sb, const char *placeh=
+older,
++		void *context)
++{
++	size_t digits =3D 0;
++	size_t maxlen =3D 0;
++	size_t consumed;
++
++	if (isdigit(placeholder[0])) {
++		do {
++			digits++;
++			maxlen *=3D 10;
++			maxlen +=3D placeholder[0] - '0';
++			placeholder++;
++		} while (isdigit(placeholder[0]));
++		maxlen +=3D sb->len;
++	}
++
++	consumed =3D do_format_commit_item(sb, placeholder, context);
++	if (!consumed)
++		return 0;
++
++	if (digits && sb->len > maxlen)
++		strbuf_setlen(sb, maxlen);
++	return digits + consumed;
++}
++
+ void format_commit_message(const struct commit *commit,
+ 			   const void *format, struct strbuf *sb,
+ 			   enum date_mode dmode)
+--=20
+1.6.0.3.514.g2f91b
