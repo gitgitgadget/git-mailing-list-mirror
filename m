@@ -1,241 +1,85 @@
-From: "Blucher, Guy" <Guy.Blucher@dsto.defence.gov.au>
-Subject: [RFC] gitweb: add 'historyfollow' view that follows renames
-Date: Mon, 27 Oct 2008 13:47:49 +1030
-Message-ID: <054F21930D24A0428E5B4588462C7AED0149B4B8@ednex512.dsto.defence.gov.au>
+From: Pete Harlan <pgit@pcharlan.com>
+Subject: Re: Problems during upgrade git from 1.5.3.2 to latest
+Date: Sun, 26 Oct 2008 20:58:32 -0700
+Message-ID: <49053C68.9020901@pcharlan.com>
+References: <20180862.post@talk.nabble.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 8BIT
-Cc: <git@vger.kernel.org>
-To: <ming.m.lin@intel.com>, <jnareb@gmail.com>,
-	<robert.moore@intel.com>
-X-From: git-owner@vger.kernel.org Mon Oct 27 04:46:56 2008
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: horry <qch1695@motorola.com>
+X-From: git-owner@vger.kernel.org Mon Oct 27 05:03:29 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KuJ4B-0005hs-DW
-	for gcvg-git-2@gmane.org; Mon, 27 Oct 2008 04:46:56 +0100
+	id 1KuJKC-0000Sw-EY
+	for gcvg-git-2@gmane.org; Mon, 27 Oct 2008 05:03:28 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751314AbYJ0Dpj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 26 Oct 2008 23:45:39 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750740AbYJ0Dpj
-	(ORCPT <rfc822;git-outgoing>); Sun, 26 Oct 2008 23:45:39 -0400
-Received: from digger1.defence.gov.au ([203.5.217.4]:47777 "EHLO
-	digger1.defence.gov.au" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750713AbYJ0Dpi convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 26 Oct 2008 23:45:38 -0400
-X-Greylist: delayed 1662 seconds by postgrey-1.27 at vger.kernel.org; Sun, 26 Oct 2008 23:45:35 EDT
-Received: from ednmsw510.dsto.defence.gov.au (ednmsw510.dsto.defence.gov.au [131.185.68.11])
-	by digger1.defence.gov.au (DSTO/DSTO) with ESMTP id m9R3FWnd006838
-	for <git@vger.kernel.org>; Mon, 27 Oct 2008 13:45:32 +1030 (CST)
-Received: from ednex510.dsto.defence.gov.au (ednex510.dsto.defence.gov.au) by 
-    ednmsw510.dsto.defence.gov.au (Clearswift SMTPRS 5.2.9) with ESMTP id 
-    <T8a4af83f5883b9440b1618@ednmsw510.dsto.defence.gov.au>; Mon, 27 Oct 
-    2008 13:47:49 +1030
-Received: from ednex512.dsto.defence.gov.au ([131.185.2.172]) by 
-    ednex510.dsto.defence.gov.au with Microsoft SMTPSVC(6.0.3790.3959); 
-    Mon, 27 Oct 2008 13:47:50 +1030
-X-MimeOLE: Produced By Microsoft Exchange V6.5
-Content-class: urn:content-classes:message
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-Thread-Topic: [RFC] gitweb: add 'historyfollow' view that follows renames 
-    [SEC=UNCLASSIFIED]
-Thread-Index: Ack34pbqvQjKSPtnQv+obtOLtdhvoA==
-X-OriginalArrivalTime: 27 Oct 2008 03:17:50.0221 (UTC) 
-    FILETIME=[9797BBD0:01C937E2]
-X-TM-AS-Product-Ver: SMEX-7.0.0.1584-5.5.1027-16240.007
-X-TM-AS-Result: No--22.467900-0.000000-31
+	id S1751365AbYJ0D6e (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 26 Oct 2008 23:58:34 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751356AbYJ0D6e
+	(ORCPT <rfc822;git-outgoing>); Sun, 26 Oct 2008 23:58:34 -0400
+Received: from lax-green-bigip-5.dreamhost.com ([208.113.200.5]:54752 "EHLO
+	swarthymail-a1.g.dreamhost.com" rhost-flags-OK-OK-OK-FAIL)
+	by vger.kernel.org with ESMTP id S1751338AbYJ0D6d (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 26 Oct 2008 23:58:33 -0400
+Received: from [192.168.0.2] (031.132-78-65.ftth.swbr.surewest.net [65.78.132.31])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by swarthymail-a1.g.dreamhost.com (Postfix) with ESMTP id BFA2C8F440;
+	Sun, 26 Oct 2008 20:58:32 -0700 (PDT)
+User-Agent: Mozilla-Thunderbird 2.0.0.16 (X11/20080724)
+In-Reply-To: <20180862.post@talk.nabble.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/99199>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/99200>
 
+horry wrote:
+> Hello ,
+>    My previous git version is 1.5.3.2 and i perform the suggested commands : 
+> git clone http://www.kernel.org/pub/scm/git/git.git  and it goes well , end
+> up with :
+> 
+> ....................................................................
+> got d00da833cbeec16da9415e0ac11269594279545a
+> Checking 1480 files out...
+>  100% (1480/1480) done
+> 
+> Then i perform make in the same directory i performed clone and it shows
+> errors .
+> 
+> bfnt47-gx1:/apps/mds_lrt/git/git> make
+> GIT_VERSION = 1.6.0.3.517.g759a
+>     * new build flags or prefix
+>     CC fast-import.o
+> In file included from /usr/include/openssl/ssl.h:179,
+>                  from git-compat-util.h:104,
+>                  from builtin.h:4,
+>                  from fast-import.c:142:
+> /usr/include/openssl/kssl.h:72:18: krb5.h: No such file or directory
 
-Hi Folks,
+This is saying that you are missing this header file.  On my machine
+(Debian Linux "testing") the package that provides that file is libkrb5-dev.
 
->> 
->> What should we add to automatically get all file history?
+Even if you're not using Debian, or Linux, this page may help you locate
+which packages on your system may contain a given missing file:
 
-> While the 'commitdiff' view would, in default gitweb configuration, 
-> contain information about file renames, currently 'history' view does 
-> not support '--follow' option to git-log.  It wouldn't be too hard to 
-> add it, but it just wasn't done (well, add to this the fact that 
-> --follow works only for simple cases).
+http://www.debian.org/distrib/packages#search_contents
 
-We also ran up against this issue because renaming of files in our
-project is a useful bit of information while browsing file history.
+Entering krb5.h in the "Search the contents of packages" box brings up a
+list of packages containing files ending in "krb5.h", one (likely
+example of which) is libkrb5-dev.
 
-I hacked gitweb to add a 'historyfollow' viewing option in addition to
-the 'history' option.  Yes, '--follow' is expensive so I didn't just
-make it the default 'history' behaviour. 
+--Pete
 
-The only problem with doing it was that parse_commits in gitweb.perl
-uses git rev-list which doesn't support the '--follow' option like
-git-log does. A bit of hacking to use 'git log --pretty=raw -z' to make
-the output look close to that from rev-list means only minor
-shoe-horning is required (perhaps it would be better to make rev-list
-understand --follow though?).
-
-I wasn't originally prepared to publish the work here because I don't
-really think it's the best solution. But considering it's come up... I
-include a patch inline against gitweb.perl from v1.6.0.3 that implements
-a 'historyfollow' view. 
-
-Feel free to do with it what you will. It would need some substantial
-tidying up by someone who knows much more about perl than me :) 
-
-We use it such that anywhere a 'history' link is provided a
-'historyfollow' link is also provided next to it - This patch doesn't
-implement that bit though.
-
-Hope it helps.
-
-Cheers,
-Guy.
-
----
-
---- a/gitweb/gitweb.perl
-+++ b/gitweb/gitweb.perl
-@@ -478,6 +478,7 @@ my %actions = (
-        "forks" => \&git_forks,
-        "heads" => \&git_heads,
-        "history" => \&git_history,
-+       "historyfollow" => \&git_history_follow,
-        "log" => \&git_log,
-        "rss" => \&git_rss,
-        "atom" => \&git_atom,
-@@ -2311,25 +2312,39 @@ sub parse_commit {
- }
- 
- sub parse_commits {
--       my ($commit_id, $maxcount, $skip, $filename, @args) = @_;
-+       my ($commit_id, $maxcount, $skip, $mode, $filename, @args) = @_;
-        my @cos;
- 
-        $maxcount ||= 1;
-        $skip ||= 0;
- 
-        local $/ = "\0";
-+        # The '--max-count' argument is not available when doing a
-+        # '--follow' to 'git log'
-+        my $count_arg = ("--max-count=" . $maxcount) ;
-+        if (defined $mode && $mode eq "--follow") {
-+            $count_arg = "--follow" ;
-+        }
- 
--       open my $fd, "-|", git_cmd(), "rev-list",
--               "--header",
-+
-+       open my $fd, "-|", git_cmd(), "log",
-+               "-z",
-+               "--pretty=raw",
-                @args,
--               ("--max-count=" . $maxcount),
-+                ($count_arg ? ($count_arg ) : ()),
-                ("--skip=" . $skip),
-                @extra_options,
-                $commit_id,
-                "--",
-                ($filename ? ($filename) : ())
--               or die_error(500, "Open git-rev-list failed");
-+               or die_error(500, "Open git-log failed");
-        while (my $line = <$fd>) {
-+               # Need to put a delimiter on the end of output
-+                # 'git-log -z' doesn't put one before EOF like rev-list
-does
-+                $line = ($line . '\0');
-+                # Need to strip the word commit from the start so it
-+                # looks like rev-list output
-+                $line =~ s/^commit // ;
-                my %co = parse_commit_text($line);
-                push @cos, \%co;
-        }
-@@ -5363,6 +5378,13 @@ sub git_commitdiff_plain {
- }
- 
- sub git_history {
-+        my $mode = shift || '';
-+        my $history_call = "history";
-+
-+       if ($mode eq "--follow") {
-+           $history_call .= "historyfollow" ;
-+       }
-+
-        if (!defined $hash_base) {
-                $hash_base = git_get_head_hash($project);
-        }
-@@ -5377,7 +5399,7 @@ sub git_history {
-        my $limit = sprintf("--max-count=%i", (100 * ($page+1)));
- 
-        my @commitlist = parse_commits($hash_base, 101, (100 * $page),
--                                      $file_name, "--full-history")
-+                                      $mode, $file_name,
-"--full-history")
-            or die_error(404, "No such file or directory on given
-branch");
- 
-        if (!defined $hash && defined $file_name) {
-@@ -5398,7 +5420,7 @@ sub git_history {
-        my $paging_nav = '';
-        if ($page > 0) {
-                $paging_nav .=
--                       $cgi->a({-href => href(action=>"history",
-hash=>$hash, hash_base=>$hash_base,
-+                       $cgi->a({-href => href(action=>"$history_call",
-hash=>$hash, hash_base=>$hash_base,
-                                               file_name=>$file_name)},
-                                "first");
-                $paging_nav .= " &sdot; " .
-@@ -5429,6 +5451,11 @@ sub git_history {
-        git_footer_html();
- }
- 
-+sub git_history_follow {
-+       git_history('--follow');
-+}
-+
-+
- sub git_search {
-        gitweb_check_feature('search') or die_error(403, "Search is
-disabled");
-        if (!defined $searchtext) {
-@@ -5469,7 +5496,7 @@ sub git_search {
-                        $greptype = "--committer=";
-                }
-                $greptype .= $searchtext;
--               my @commitlist = parse_commits($hash, 101, (100 *
-$page), undef,
-+               my @commitlist = parse_commits($hash, 101, (100 *
-$page), undef, undef,
-                                               $greptype,
-'--regexp-ignore-case',
-                                               $search_use_regexp ?
-'--extended-regexp' : '--fixed-strings');
- 
-@@ -5737,7 +5764,7 @@ sub git_feed {
- 
-        # log/feed of current (HEAD) branch, log of given branch,
-history of file/directory
-        my $head = $hash || 'HEAD';
--       my @commitlist = parse_commits($head, 150, 0, $file_name);
-+       my @commitlist = parse_commits($head, 150, 0, undef,
-$file_name);
- 
-        my %latest_commit;
-        my %latest_date;
----
-
-Guy.
-____________________________________________________
-Guy Blucher
-Defence Science and Technology Organisation
-AUSTRALIA
-
-IMPORTANT : This email remains the property of the Australian Defence
-Organisation and is subject to the jurisdiction of section 70 of the
-Crimes Act 1914.  If you have received this email in error, you are
-requested to contact the sender and delete the email.
+> XXXXXXX:/apps/mds_lrt/git/git> git version
+> git version 1.5.3.2
+> 
+> Can someone tell me how to resolve it ?
+> 
+> thanks,
+> Horry
