@@ -1,86 +1,61 @@
-From: Christian Jaeger <christian@pflanze.mine.nu>
-Subject: [ANNOUNCE] intergit repository-linking tool (early release)
-Date: Mon, 27 Oct 2008 03:22:37 +0100
-Message-ID: <490525ED.8080702@pflanze.mine.nu>
+From: horry <qch1695@motorola.com>
+Subject: Problems during upgrade git from 1.5.3.2 to latest
+Date: Sun, 26 Oct 2008 19:29:31 -0700 (PDT)
+Message-ID: <20180862.post@talk.nabble.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Type: text/plain; charset=us-ascii
 Content-Transfer-Encoding: 7bit
-Cc: gambit-list <gambit-list@iro.umontreal.ca>
-To: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Mon Oct 27 03:23:56 2008
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Oct 27 03:33:13 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KuHlr-0007iw-CK
-	for gcvg-git-2@gmane.org; Mon, 27 Oct 2008 03:23:55 +0100
+	id 1KuHuo-0000aq-Pj
+	for gcvg-git-2@gmane.org; Mon, 27 Oct 2008 03:33:11 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750881AbYJ0CWm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 26 Oct 2008 22:22:42 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750799AbYJ0CWm
-	(ORCPT <rfc822;git-outgoing>); Sun, 26 Oct 2008 22:22:42 -0400
-Received: from ethlife-a.ethz.ch ([129.132.49.178]:52615 "HELO ethlife.ethz.ch"
-	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with SMTP
-	id S1750790AbYJ0CWl (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 26 Oct 2008 22:22:41 -0400
-Received: (qmail 11025 invoked from network); 27 Oct 2008 02:22:39 -0000
-Received: from unknown (HELO elvis-jaeger.mine.nu) (127.0.0.1)
-  by localhost with SMTP; 27 Oct 2008 02:22:39 -0000
-Received: (qmail 2820 invoked from network); 27 Oct 2008 02:22:38 -0000
-Received: from unknown (HELO ?127.0.0.1?) (10.0.5.1)
-  by elvis-jaeger.mine.nu with SMTP; 27 Oct 2008 02:22:38 -0000
-User-Agent: Mozilla-Thunderbird 2.0.0.16 (X11/20080724)
+	id S1751098AbYJ0C3c (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 26 Oct 2008 22:29:32 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751197AbYJ0C3c
+	(ORCPT <rfc822;git-outgoing>); Sun, 26 Oct 2008 22:29:32 -0400
+Received: from kuber.nabble.com ([216.139.236.158]:59716 "EHLO
+	kuber.nabble.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751058AbYJ0C3b (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 26 Oct 2008 22:29:31 -0400
+Received: from isper.nabble.com ([192.168.236.156])
+	by kuber.nabble.com with esmtp (Exim 4.63)
+	(envelope-from <lists@nabble.com>)
+	id 1KuHrH-0001RW-4b
+	for git@vger.kernel.org; Sun, 26 Oct 2008 19:29:31 -0700
+X-Nabble-From: qch1695@motorola.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/99197>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/99198>
 
-Hello
 
-Ten days ago I started a thread about "Separating generated files?" [1], 
-and suggested in the end that instead of using git submodule 
-functionality, one might be better off using a tool which can, upon 
-committing files in the repository containing generated files, add a 
-link ("reference") pointing to the commit in the source repository which 
-represents the source files they have been generated from, and then when 
-someone is checking out some revision of the source files later, use 
-this information to find the (best-)matching commit in the repository 
-with the generated files. This may also be useful in other situations 
-where one likes to keep repositories separate but they have a version 
-dependency on each other.
+Hello ,
+   My previous git version is 1.5.3.2 and i perform the suggested commands : 
+git clone http://www.kernel.org/pub/scm/git/git.git  and it goes well , end
+up with :
 
-I've now written a first version of a pair of these two programs, which 
-accomplishes this. You can get them from:
+....................................................................
+got d00da833cbeec16da9415e0ac11269594279545a
+Checking 1480 files out...
+ 100% (1480/1480) done
 
-http://www.christianjaeger.ch/dyn/pubgit/gitweb?p=intergit.git;a=summary
-git clone http://christianjaeger.ch/pubgit/intergit.git
+Then i checked git version , it still shows previous version without any
+change .
 
-This will need some finish before really being production ready; it will 
-mainly need some experimentation on how it is to be used exactly, so 
-that possibly missing features in the search and indexing algorithms can 
-be added (like whether it should understand merges between two commits 
-containing references as a commit having both references even if the 
-merge commit doesn't specify a reference), and I'm also keen on some 
-feedback implementation-wise (building the index is currently slow, and 
-some of the problems that I'm listing in the docs (Implementation.txt 
-and TODO.txt) may have solutions I've not been aware of). I've tried to 
-add some useful documentation (see *.txt files), so I'm hoping this 
-helps anyone interested to understand how it works, or just give me some 
-feedback on how it may or may not be useful.
+XXXXXXX:/apps/mds_lrt/git/git> git version
+git version 1.5.3.2
 
-I've developed and tested it on Linux. Hints on whether it works under 
-other systems and how to make it work with msysgit would be very 
-appreciated.
+Is there additional command which i should perform after clone ?
 
-Christian
-
-[1] http://marc.info/?l=git&m=122415845625044&w=2
-
-PS. I've just noticed the thread about "repo - The Multiple Git 
-Repository Tool". I'll have to take a look first to see how it is 
-related to my program--it may take me a few days as I'll be busy.
-
---
-My OpenPGP fingerprint: F033 D030 F75D E445 05A1  1865 4ECB DF80 1FE6 92DA
+thanks,
+Horry
+-- 
+View this message in context: http://www.nabble.com/Problems-during-upgrade-git-from-1.5.3.2-to-latest-tp20180862p20180862.html
+Sent from the git mailing list archive at Nabble.com.
