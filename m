@@ -1,122 +1,120 @@
-From: Miklos Vajna <vmiklos@frugalware.org>
+From: Arne Babenhauserheide <arne_bab@web.de>
 Subject: Re: [VOTE] git versus mercurial (for DragonflyBSD)
-Date: Mon, 27 Oct 2008 22:07:16 +0100
-Message-ID: <20081027210716.GS2273@genesis.frugalware.org>
-References: <ge0rla$mce$1@ger.gmane.org> <200810271512.26352.arne_bab@web.de> <200810271901.48925.jnareb@gmail.com> <200810272149.13542.arne_bab@web.de>
+Date: Mon, 27 Oct 2008 22:30:44 +0100
+Message-ID: <200810272230.51683.arne_bab@web.de>
+References: <ge0rla$mce$1@ger.gmane.org> <200810272149.13542.arne_bab@web.de> <20081027210716.GS2273@genesis.frugalware.org>
+Reply-To: "Arne Babenhauserheide" <arne_bab@web.de>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="xtmLDbP6TiKhntQb"
+Content-Type: multipart/signed;
+  boundary="nextPart1632877.uyqaAl2XdW";
+  protocol="application/pgp-signature";
+  micalg=pgp-sha1
+Content-Transfer-Encoding: 7bit
 Cc: Jakub Narebski <jnareb@gmail.com>, git@vger.kernel.org,
 	mercurial@selenic.com, SLONIK.AZ@gmail.com
-To: Arne Babenhauserheide <arne_bab@web.de>
-X-From: git-owner@vger.kernel.org Mon Oct 27 22:08:49 2008
+To: Miklos Vajna <vmiklos@frugalware.org>
+X-From: git-owner@vger.kernel.org Mon Oct 27 22:32:41 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KuZKJ-0006sU-FN
-	for gcvg-git-2@gmane.org; Mon, 27 Oct 2008 22:08:39 +0100
+	id 1KuZhN-0007m7-KH
+	for gcvg-git-2@gmane.org; Mon, 27 Oct 2008 22:32:30 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754123AbYJ0VHX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 27 Oct 2008 17:07:23 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754104AbYJ0VHX
-	(ORCPT <rfc822;git-outgoing>); Mon, 27 Oct 2008 17:07:23 -0400
-Received: from virgo.iok.hu ([193.202.89.103]:55938 "EHLO virgo.iok.hu"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753978AbYJ0VHV (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 27 Oct 2008 17:07:21 -0400
-Received: from kag.elte.hu (kag.elte.hu [157.181.177.1])
-	by virgo.iok.hu (Postfix) with ESMTP id 4C9F8580AC;
-	Mon, 27 Oct 2008 22:07:19 +0100 (CET)
-Received: from genesis.frugalware.org (frugalware.elte.hu [157.181.177.34])
-	by kag.elte.hu (Postfix) with ESMTP id 2C01F4465E;
-	Mon, 27 Oct 2008 22:07:17 +0100 (CET)
-Received: by genesis.frugalware.org (Postfix, from userid 1000)
-	id 04F1011901A1; Mon, 27 Oct 2008 22:07:16 +0100 (CET)
-Content-Disposition: inline
-In-Reply-To: <200810272149.13542.arne_bab@web.de>
-User-Agent: Mutt/1.5.17 (2007-11-01)
+	id S1752396AbYJ0VbR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 27 Oct 2008 17:31:17 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752390AbYJ0VbR
+	(ORCPT <rfc822;git-outgoing>); Mon, 27 Oct 2008 17:31:17 -0400
+Received: from fmmailgate01.web.de ([217.72.192.221]:45449 "EHLO
+	fmmailgate01.web.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752284AbYJ0VbQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 27 Oct 2008 17:31:16 -0400
+Received: from smtp06.web.de (fmsmtp06.dlan.cinetic.de [172.20.5.172])
+	by fmmailgate01.web.de (Postfix) with ESMTP id A69EDF82E504;
+	Mon, 27 Oct 2008 22:30:59 +0100 (CET)
+Received: from [217.227.70.45] (helo=fluss.localnet)
+	by smtp06.web.de with asmtp (TLSv1:AES256-SHA:256)
+	(WEB.DE 4.109 #226)
+	id 1KuZfv-0005z3-00; Mon, 27 Oct 2008 22:30:59 +0100
+User-Agent: KMail/1.10.1 (Linux/2.6.25-gentoo-r7; KDE/4.1.1; x86_64; ; )
+In-Reply-To: <20081027210716.GS2273@genesis.frugalware.org>
+X-Sender: arne_bab@web.de
+X-Provags-ID: V01U2FsdGVkX18uxw/UuvWSA01oF+mrkVhp/KSdn9d8cGtNBfDP
+	Iy3mnOKRte8p7tn9OrZwV3hJ6QYQuHBILLSVi1R1JKARD5Amw1
+	r0ZWmQFVY=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/99266>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/99267>
 
-
---xtmLDbP6TiKhntQb
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+--nextPart1632877.uyqaAl2XdW
+Content-Type: text/plain;
+  charset="iso-8859-15"
 Content-Transfer-Encoding: quoted-printable
-
-On Mon, Oct 27, 2008 at 09:48:50PM +0100, Arne Babenhauserheide <arne_bab@w=
-eb.de> wrote:
-> 1) Writing Python is much easier and quicker than writing C, especially w=
-hen=20
-> you can just experiment with the Python interpreter (or better still: wit=
-h=20
-> ipython). No memory management hassle, no strange compiler bugs, no stray=
-=20
-> pointers. Just plain writing what you want to do. But if you need C speed=
-, you=20
-> can still include parts written in C - where you really need it. For all =
-other=20
-> cases you have more readable and far more compact code.=20
-
-You compare Python to C here, but did you realize that in git you can
-write your git command in any language you want? Of course it's
-recommended to do it in C/shell/perl if you want to get it included in
-git.git, but that's just a decision.
-
-> 2) You can easily access every core function, and you can replace every=
-=20
-> command.=20
-> You don't have to invent a "git foolog" command. Instead you can just ada=
-pt=20
-> the regular log to do a foolog which people can use via "hg log".=20
-
-IIRC the main reason git aliases can't overwrite git commands is because
-that would break scripts relying on the output of existing git commands.
-Given that I install such an extension, won't my script break?
-
-> The defaults should be the most common way to use the tool, so people can=
-=20
-> easily learn it.=20
->=20
-> Advanced stuff can be added with extensions.=20
-
-=46rom a user's point of view, I think external git commands and such hg
-plugins are equal. The user instally the "foo"
-extension/command/plugin/whatever and gets the "git/hg foo" command.
-
-> And because the most used plugins are distributed with Mercurial, I can a=
-lso=20
-> activate them when I don't control the Mercurial installation - and shoul=
-d=20
-> something be missing which I need, I can just download and activate a plu=
-gin=20
-> without having to compile anything, since they are simply Python modules.=
-=20
->=20
-> Just set=20
-> [extensions]
-> foo =3D /blah/foo.py
->=20
-> in ~/.hgrc and the foo plugin is active.=20
-
-Same for git, as long as it's written in a scripting language; you
-should include git-foo in PATH then you can use git foo.
-
---xtmLDbP6TiKhntQb
-Content-Type: application/pgp-signature
 Content-Disposition: inline
+
+Am Montag 27 Oktober 2008 22:07:16 schrieb Miklos Vajna:
+> You compare Python to C here, but did you realize that in git you can
+> write your git command in any language you want? Of course it's
+> recommended to do it in C/shell/perl if you want to get it included in
+> git.git, but that's just a decision.
+
+I was asked explicitely about the difference of writing a Mercurial extensi=
+on=20
+and of writing some addition for git in C, so I answered that.=20
+
+> IIRC the main reason git aliases can't overwrite git commands is because
+> that would break scripts relying on the output of existing git commands.
+> Given that I install such an extension, won't my script break?
+
+Since that "script" will likely be an extension which will use the core=20
+function instead of the UI command, it won't break.=20
+
+Stuff which does command line parsing can naturally break when I change the=
+=20
+output. But it can also directly use the advanced features.=20
+
+> From a user's point of view, I think external git commands and such hg
+> plugins are equal. The user instally the "foo"
+> extension/command/plugin/whatever and gets the "git/hg foo" command.
+[snip]
+> Same for git, as long as it's written in a scripting language; you
+> should include git-foo in PATH then you can use git foo.
+
+Means git can provide additional commands and only has the limitation that =
+I=20
+can't overwrite the basic commands, right?=20
+
+But we're slowly moving off topic, aside from "OK, git also has extensions =
+=2D=20
+they are called external commands".=20
+
+Best wishes,=20
+Arne
+
+
+=2D- My stuff: http://draketo.de - stories, songs, poems, programs and stuf=
+f :)
+=2D- Infinite Hands: http://infinite-hands.draketo.de - singing a part of t=
+he=20
+history of free software.
+=2D- Ein W=FCrfel System: http://1w6.org - einfach saubere (Rollenspiel-) R=
+egeln.
+
+=2D- PGP/GnuPG: http://draketo.de/inhalt/ich/pubkey.txt
+
+--nextPart1632877.uyqaAl2XdW
+Content-Type: application/pgp-signature; name=signature.asc 
+Content-Description: This is a digitally signed message part.
 
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.9 (GNU/Linux)
+Version: GnuPG v2.0.9 (GNU/Linux)
 
-iEYEARECAAYFAkkGLYQACgkQe81tAgORUJZ6/gCeNcO4yUB73g6fIlNSUumt5IiQ
-xckAnAmywp3bkzN2xK3X6b1DkHklpu/I
-=MrTX
+iEYEABECAAYFAkkGMwsACgkQMwdGm/6WxATedQCg1mSt1aUFdhtBIpovVfXAZUDN
+r/EAn14p6ZVdVU047Gi7KoJh/utxHY59
+=+DNq
 -----END PGP SIGNATURE-----
 
---xtmLDbP6TiKhntQb--
+--nextPart1632877.uyqaAl2XdW--
