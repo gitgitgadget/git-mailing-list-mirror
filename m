@@ -1,127 +1,81 @@
-From: "David Syzdek" <syzdek@gmail.com>
-Subject: Re: [PATCH] Add support for uintmax_t type on FreeBSD 4.9
-Date: Mon, 27 Oct 2008 05:23:15 -0800
-Message-ID: <9a0027270810270623h4c0c34d0vcd92f61edff6da5@mail.gmail.com>
-References: <1225021957-11880-1-git-send-email-david.syzdek@acsalaska.net>
-	 <7vy70aip06.fsf@gitster.siamese.dyndns.org>
-	 <9a0027270810262239r311074m51d382bdd95fd0dc@mail.gmail.com>
-	 <9a0027270810262246i56cf5515l5fa0875f91d90a7a@mail.gmail.com>
-	 <7v1vy2imt2.fsf@gitster.siamese.dyndns.org>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: [RFC PATCH] detection of directory renames
+Date: Mon, 27 Oct 2008 06:35:44 -0700 (PDT)
+Message-ID: <m3fxmignz3.fsf@localhost.localdomain>
+References: <7vfxojtr9t.fsf@gitster.siamese.dyndns.org>
+	<20080925213819.27029.47944.stgit@gandelf.nowhere.earth>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-To: "Junio C Hamano" <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Oct 27 14:24:33 2008
+To: Yann Dirson <ydirson@altern.org>
+X-From: git-owner@vger.kernel.org Mon Oct 27 14:37:13 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KuS59-00060s-8F
-	for gcvg-git-2@gmane.org; Mon, 27 Oct 2008 14:24:31 +0100
+	id 1KuSHG-0001ar-2V
+	for gcvg-git-2@gmane.org; Mon, 27 Oct 2008 14:37:02 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752527AbYJ0NXR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 27 Oct 2008 09:23:17 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752487AbYJ0NXR
-	(ORCPT <rfc822;git-outgoing>); Mon, 27 Oct 2008 09:23:17 -0400
-Received: from wf-out-1314.google.com ([209.85.200.173]:38678 "EHLO
-	wf-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752313AbYJ0NXQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 27 Oct 2008 09:23:16 -0400
-Received: by wf-out-1314.google.com with SMTP id 27so2050961wfd.4
-        for <git@vger.kernel.org>; Mon, 27 Oct 2008 06:23:15 -0700 (PDT)
+	id S1752411AbYJ0Nft (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 27 Oct 2008 09:35:49 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752439AbYJ0Nfs
+	(ORCPT <rfc822;git-outgoing>); Mon, 27 Oct 2008 09:35:48 -0400
+Received: from nf-out-0910.google.com ([64.233.182.186]:2357 "EHLO
+	nf-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752372AbYJ0Nfs (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 27 Oct 2008 09:35:48 -0400
+Received: by nf-out-0910.google.com with SMTP id d3so672685nfc.21
+        for <git@vger.kernel.org>; Mon, 27 Oct 2008 06:35:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to
-         :subject:cc:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:references;
-        bh=u0mLz00kolgF3sXZnUX69DY3ZL1dn55c9PAdYzCrDgw=;
-        b=YFsvM+ZPySfzPUuTHSMyJDTgyr82PzZtdNmIm2bwy9/Rovx/VDjm/9N0PL0nnpz02f
-         H78haQy2GhPEVOGQCKo5qm6FOoHRWdu3IWUm/KtLYa0tjVGP2LXaO4DdA8Ip+FCU5aSe
-         exG6papr34o8g/f6D2k2j1y1fR3lC/8S7JXL0=
+        h=domainkey-signature:received:received:received:received
+         :x-authentication-warning:to:cc:subject:references:from:in-reply-to
+         :message-id:lines:user-agent:mime-version:content-type:date;
+        bh=/X7lBGioKtiNl2Y26aoXxjQLqmmLLqJ3gpuqBKIRG1A=;
+        b=IxNL+uzB27D5LkTkVzS0MB+rwsjmy4FgfXq4o1LP4vHYvWhLwFv9Qpp0POhTfLgFOl
+         51Yf/g4YfQBIIAhoYhfZqfeN9zTtj6VA029QLLNkPFN4KWe04ABp+ydOS8h8PX67Eb8h
+         B11RX/iyYF5P5K1qD1z3GVpys9g36wGYMl/1Y=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
-         :content-type:content-transfer-encoding:content-disposition
-         :references;
-        b=om8C78+AYlxYrJGJK6HPr7SqJ100PAgUY7bLW0IXJBfHGp4w9dUgOyj2s4zmtrnBv8
-         AJA5eshhKbkFiwWUofyoM7GEBk96kVylnqDmDfaVYhcR8U5l+KZqmZWX6OuXg8kgi+wO
-         KRdzcBGDOIeGcJqfSKGfK+PQW2mmo4xeFN3PI=
-Received: by 10.141.69.1 with SMTP id w1mr3243102rvk.147.1225113795573;
-        Mon, 27 Oct 2008 06:23:15 -0700 (PDT)
-Received: by 10.141.77.7 with HTTP; Mon, 27 Oct 2008 06:23:15 -0700 (PDT)
-In-Reply-To: <7v1vy2imt2.fsf@gitster.siamese.dyndns.org>
-Content-Disposition: inline
+        h=x-authentication-warning:to:cc:subject:references:from:in-reply-to
+         :message-id:lines:user-agent:mime-version:content-type:date;
+        b=bvSaeMNtmgbpBAJMntnEFxf6bnmrJ7XmkRswRGwcN+PI62aqU0iLLmubdwC1dtDBDr
+         HnzJv30Cv1kbk+rqtlBMC6Q5/e8X0TmkZk9epoxjQuEHtAk46QGWrzXVft4S5LYooXIH
+         iKTqv0mx/s3EY2kdeDCIREFVPCTfbE45dxrj4=
+Received: by 10.210.59.14 with SMTP id h14mr6660380eba.169.1225114546728;
+        Mon, 27 Oct 2008 06:35:46 -0700 (PDT)
+Received: from localhost.localdomain (abvq236.neoplus.adsl.tpnet.pl [83.8.214.236])
+        by mx.google.com with ESMTPS id 5sm5874727eyh.2.2008.10.27.06.35.42
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Mon, 27 Oct 2008 06:35:44 -0700 (PDT)
+Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
+	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id m9RDZXMt015199;
+	Mon, 27 Oct 2008 14:35:39 +0100
+Received: (from jnareb@localhost)
+	by localhost.localdomain (8.13.4/8.13.4/Submit) id m9RDZTZG015196;
+	Mon, 27 Oct 2008 14:35:29 +0100
+X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
+In-Reply-To: <20080925213819.27029.47944.stgit@gandelf.nowhere.earth>
+User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/99230>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/99231>
 
-On Sun, Oct 26, 2008 at 10:17 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> "David Syzdek" <syzdek@gmail.com> writes:
->
->> On Sun, Oct 26, 2008 at 9:30 PM, Junio C Hamano <gitster@pobox.com> wrote:
->> ...
->>> I have a stupid question.
->>>
->>> Would it be a more appropriate improvement to do it like this:
->>>
->>>        ifdef USE_THIS_AS_UINTMAX_T
->>>            BASIC_CFLAGS += -Duintmax_t="$(USE_THIS_AS_UINTMAX_T)"
->>>        endif
->>>
->>> and then add a section for FreeBSD 4.9-SECURITY like this:
->>>
->>>        ifeq ($(uname_R),4.9-SECURITY)
->>>                USE_THIS_AS_UINTMAX_T = uint32_t
->>>        endif
->>>
->>> That way, an oddball 64-bit machine can use uint64_t here if it wants to,
->>> possibly including FreeBSD 4.9-SECURITY backported to 64-bit ;-).
->>>
->>
->> Your suggestion provides more flexibility for other environments. I
->> was making the assumption that 64-bit systems would define uintmax_t,
->> however in retrospect that would be unwise.
->> Would you like me to resubmit the patches with your modifications?
->
-> Actually there was a reason why I said this was a "stupid" question.  I
-> think your assumption on 64-bit platforms would hold in practice, and my
-> suggestion could be an unnecessary overengineering.  If nobody knows of a
-> system that would benefit from such a generalization, your original patch
-> would be better, partly because I think:
->
->  (1) USE_THIS_AS_UINTMAX_T is just for demonstration of concept and is a
->     terrible name we cannot possibly use in our Makefile.  We have to
->     spend brain cycles to come up with a better name; and
->
->  (2) It may be tricky to come up with autoconf macros to determine what to
->     set USE_THIS_AS_UINTMAX_T to.
->
-> As a slightly unrelated aside, I find it somewhat unfortunate that the
-> conditional says "4.9-SECURITY", which is a bit too explicit and specific.
-> to my taste.  I do not know how FreeBSD versioning scheme works, but
-> wouldn't your change work equally well for 4.9-RELEASE or 4.11-RELEASE?
->
-> I suspect that you would want to say "$(uname_R) that begins with '4.' or
-> smaller needs this workaround", as strtoul(3) manual page seems to appear
-> first in FreeBSD 5.0-RELEASE (but not found in FreeBSD 4.11-RELEASE).
->
+Yann Dirson <ydirson@altern.org> writes:
 
-The following should match against FreeBSD 4.x:
+> This is a first very preliminar patch, mostly so people can comment
+> early on the big picture.  It has a number of limitations, many but
+> not all already listed as FIXME's in the patch itself.  If anything in
+> this patch seems so wrong it is not worth polishing it, it's the
+> perfect time to say so :)
 
-	FREEBSD_MAJOR := $(shell sh -c 'echo $(uname_R) |cut -d. -f1')
-	ifeq ($(FREEBSD_MAJOR),4)
-		NO_UINTMAX_T = YesPlease
-		NO_STRTOUMAX = YesPlease
-	endif
-
-Is the use of FREEBSD_MAJOR okay, or would another name be more appropriate?
-
-
+What happened to this work? I din't see it mentioned in "what's
+cooking..." announcements...
 
 -- 
-An earthquake wiped out Etchisketchistan today.
-   -- Onion TV
+Jakub Narebski
+Poland
+ShadeHawk on #git
