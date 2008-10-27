@@ -1,79 +1,53 @@
-From: David Soria Parra <sn_@gmx.net>
-Subject: Re: [VOTE] git versus mercurial (for DragonflyBSD)
-Date: Mon, 27 Oct 2008 12:42:42 +0100
-Message-ID: <4905A932.2030506@gmx.net>
-References: <ge0rla$mce$1@ger.gmane.org> <200810261955.10536.jnareb@gmail.com>	<200810270147.52490.arne_bab@web.de>	<200810270252.23392.jnareb@gmail.com> <1225100597.31813.11.camel@abelardo.lan>
+From: Paul Mackerras <paulus@samba.org>
+Subject: New gitk feature - show where a line came from
+Date: Mon, 27 Oct 2008 22:47:55 +1100
+Message-ID: <18693.43627.381786.934151@cargo.ozlabs.ibm.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8;
-	format=flowed
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: mercurial@selenic.com, git@vger.kernel.org
-To: Emanuele Aina <emanuele.aina@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Oct 27 12:44:32 2008
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Oct 27 12:49:17 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KuQWH-0004qP-3o
-	for gcvg-git-2@gmane.org; Mon, 27 Oct 2008 12:44:25 +0100
+	id 1KuQaz-0006CM-6A
+	for gcvg-git-2@gmane.org; Mon, 27 Oct 2008 12:49:17 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752520AbYJ0Lmy convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 27 Oct 2008 07:42:54 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752516AbYJ0Lmy
-	(ORCPT <rfc822;git-outgoing>); Mon, 27 Oct 2008 07:42:54 -0400
-Received: from mail.gmx.net ([213.165.64.20]:39717 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1752500AbYJ0Lmx (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 27 Oct 2008 07:42:53 -0400
-Received: (qmail invoked by alias); 27 Oct 2008 11:42:51 -0000
-Received: from krlh-5d857d31.pool.einsundeins.de (EHLO [192.168.1.217]) [93.133.125.49]
-  by mail.gmx.net (mp020) with SMTP; 27 Oct 2008 12:42:51 +0100
-X-Authenticated: #4427663
-X-Provags-ID: V01U2FsdGVkX18bRrF5liIbknEeb6VWkw/FUCyBKSzbvixh8hdsvC
-	HlVcXtT4oLyFkk
-User-Agent: Thunderbird 2.0.0.17 (X11/20080925)
-In-Reply-To: <1225100597.31813.11.camel@abelardo.lan>
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.7
+	id S1752280AbYJ0LsE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 27 Oct 2008 07:48:04 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752050AbYJ0LsC
+	(ORCPT <rfc822;git-outgoing>); Mon, 27 Oct 2008 07:48:02 -0400
+Received: from ozlabs.org ([203.10.76.45]:47675 "EHLO ozlabs.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751865AbYJ0LsB (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 27 Oct 2008 07:48:01 -0400
+Received: by ozlabs.org (Postfix, from userid 1003)
+	id 37D16DDDE0; Mon, 27 Oct 2008 22:47:59 +1100 (EST)
+X-Mailer: VM 8.0.9 under Emacs 22.2.1 (i486-pc-linux-gnu)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/99227>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/99228>
 
-Emanuele Aina schrieb:
-> Jakub Narebski precis=C3=B2:
->=20
->>> What do you mean by "cleaner design"?=20
->> Clean _underlying_ design. Git has very nice underlying model of gra=
-ph
->> (DAG) of commits (revisions), and branches and tags as pointers to t=
-his
->> graph.
->=20
-> Just for reference, the abstract history model of Mercurial and GIT i=
-s
-> the same, a DAG of changesets identified by their cryptographic hash =
-as
-> designed for Monotone, which can be considered the parent of both.
->=20
-> GIT and Mercurial then differs in how this abstract model is written =
-to
-> disk, with different tradeoffs in terms of performances and how easil=
-y a
-> specific feature can be implemented, but there is no reason something
-> can be done in GIT but not in Mercurial or viceversa.
+I have just pushed out some commits for gitk which add a feature that
+I have wanted for a long time - a way to point at a line in gitk and
+say "where did that come from" and have gitk show you the answer.  You
+can now right-click on a line in the diff/file display pane (bottom
+left) and select "Show origin of this line".  Gitk will run a one-line
+git blame on that line, and once the answer comes back, it will select
+the commit that added that line, highlight the line with a light-blue
+background, and scroll so that the line is visible.  This works both
+when displaying diffs and when displaying files.
 
-Yes, it's the same: a DAG  with hashes. But there are limitations due t=
-o=20
-the implementation (and not the design). Just as a bad and completely=20
-useless example (don't start to argue, I know it's nothing someone woul=
-d=20
-like to have): you cannot force mercurial to merge two revisions and=20
-create a merge commit if one is the others ancestor,which is possible i=
-n=20
-git with git --no-ff. In addition they differ in some other ways:=20
-Mercurial doesn't have an index to stage commits, which is something=20
-that git has and allows very powerful features (such as git add -i, etc=
-).
+There are still some minor rough edges, but I'd be interested in
+hearing whether it's useful to people, or if people have problems
+using it.
+
+This builds on the work done by Alexander Gavrilov, who added the
+context menu for the diff/file display pane and a menu item to start
+an external git gui blame on a file.
+
+Paul.
