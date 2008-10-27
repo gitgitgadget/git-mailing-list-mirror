@@ -1,58 +1,61 @@
-From: Nanako Shiraishi <nanako3@lavabit.com>
-Subject: Re: [RFC PATCH v2] fetch-pack: log(n)-transmission find_common()
-Date: Mon, 27 Oct 2008 19:29:23 +0900
-Message-ID: <20081027192923.6117@nanako3.lavabit.com>
-References: <1224790716-20551-1-git-send-email-trast@student.ethz.ch>
+From: "Leslie P. Polzer" <sky@viridian-project.de>
+Subject: Re: [VOTE] git versus mercurial (for DragonflyBSD)
+Date: Mon, 27 Oct 2008 11:12:27 +0100 (CET)
+Message-ID: <62339.88.73.238.241.1225102347.squirrel@mail.stardawn.org>
+References: <ge0rla$mce$1@ger.gmane.org>
+    <200810270252.23392.jnareb@gmail.com>
+    <200810270850.09696.arne_bab@web.de>
+    <200810271041.54511.jnareb@gmail.com>
+Reply-To: leslie.polzer@gmx.net
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain;charset=utf-8
 Content-Transfer-Encoding: 8bit
-Cc: Thomas Rast <trast@student.ethz.ch>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Oct 27 11:31:08 2008
+Cc: "Arne Babenhauserheide" <arne_bab@web.de>, slonik.az@gmail.com,
+	mercurial@selenic.com, git@vger.kernel.org
+To: "Jakub Narebski" <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Oct 27 11:42:46 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KuPNL-0005yy-7D
-	for gcvg-git-2@gmane.org; Mon, 27 Oct 2008 11:31:07 +0100
+	id 1KuPYT-0002T2-LT
+	for gcvg-git-2@gmane.org; Mon, 27 Oct 2008 11:42:38 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751907AbYJ0K3y (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 27 Oct 2008 06:29:54 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751988AbYJ0K3y
-	(ORCPT <rfc822;git-outgoing>); Mon, 27 Oct 2008 06:29:54 -0400
-Received: from karen.lavabit.com ([72.249.41.33]:44699 "EHLO karen.lavabit.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751639AbYJ0K3x (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 27 Oct 2008 06:29:53 -0400
-Received: from b.earth.lavabit.com (b.earth.lavabit.com [192.168.111.11])
-	by karen.lavabit.com (Postfix) with ESMTP id BFCCDC843A;
-	Mon, 27 Oct 2008 05:29:52 -0500 (CDT)
-Received: from 9801.lavabit.com (212.62.97.21)
-	by lavabit.com with ESMTP id 5OPEPBNR9HBB; Mon, 27 Oct 2008 05:29:52 -0500
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws; s=lavabit; d=lavabit.com;
-  b=L8ofCTeAEdVBueEQpGO7g9r4Sf+7h+vbdbdwDBAmOsII9sKWhY7woh5lKYjH1pmt1er7PdlsnQvS74ziAyiZy8V1kKxyWqpcZnFah/AuYxObZCqCI9lSx4pmGty9hsoq+9Qt5w6Ge3eQqYdRHBgHrvqs4u8wyqEhxztCk3kwRCU=;
-  h=From:To:Cc:Date:Subject:In-reply-to:References:MIME-Version:Content-Type:Content-Transfer-Encoding:Message-Id;
-In-reply-to: <1224790716-20551-1-git-send-email-trast@student.ethz.ch>
+	id S1751756AbYJ0KlV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 27 Oct 2008 06:41:21 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751689AbYJ0KlV
+	(ORCPT <rfc822;git-outgoing>); Mon, 27 Oct 2008 06:41:21 -0400
+Received: from viridian-project.de ([89.149.208.197]:34621 "EHLO
+	viridian-project.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750881AbYJ0KlV (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 27 Oct 2008 06:41:21 -0400
+X-Greylist: delayed 1729 seconds by postgrey-1.27 at vger.kernel.org; Mon, 27 Oct 2008 06:41:20 EDT
+Received: from localhost ([127.0.0.1]:34584 helo=mail.stardawn.org)
+	by viridian-project.de with esmtp (Exim 4.63)
+	(envelope-from <sky@viridian-project.de>)
+	id 1KuP5H-0001oC-UR; Mon, 27 Oct 2008 11:12:28 +0100
+Received: from 88.73.238.241
+        (SquirrelMail authenticated user sky)
+        by mail.stardawn.org with HTTP;
+        Mon, 27 Oct 2008 11:12:27 +0100 (CET)
+In-Reply-To: <200810271041.54511.jnareb@gmail.com>
+User-Agent: SquirrelMail/1.4.9a
+X-Priority: 3 (Normal)
+Importance: Normal
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/99223>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/99224>
 
-Quoting Thomas Rast <trast@student.ethz.ch>:
 
-> Replaces the existing simple history search with a more sophisticated
-> algorithm:
-> 
-> 1) Walk history with exponentially increasing stride lengths; i.e.,
->    send the 1st commit, then the 2nd after that, then the 4th after
->    that, and so on.
-> 
-> 2) Bisect the resulting intervals.
+> I'm not sure if I should have mentioned transactions in databases here.
+> Oh, well... Note however that there are advanced way of doing
+> transactions in relational databases which lead to dangling things
+> to be purged when transaction is interrupted.
 
-Junio, may I ask what the status of this patch is? I see Nicolas responded and said "I gave this a quick try". Wasn't it a good enough review?
+For the record: transactions are applicable to all kinds of databases,
+not only relational ones.
 
--- 
-Nanako Shiraishi
-http://ivory.ap.teacup.com/nanako3/
+  Leslie
