@@ -1,75 +1,81 @@
-From: Hannu Koivisto <azure@iki.fi>
-Subject: Gitk/Cygwin bug: phony local changes
-Date: Mon, 27 Oct 2008 17:22:52 +0200
-Organization: NOYB
-Message-ID: <83bpx62hbn.fsf@kalahari.s2.org>
+From: "Pascal Obry" <pascal@obry.net>
+Subject: Re: rebase, file permissions and removed file
+Date: Mon, 27 Oct 2008 16:33:22 +0100
+Message-ID: <a2633edd0810270833q482260b4pf0ae11dcf2d4936f@mail.gmail.com>
+References: <a2633edd0810270702x416bb659ke183b0cc6266071@mail.gmail.com>
+	 <4905D276.9020308@viscovery.net>
+	 <a2633edd0810270809w7fec93b2rc314cc025f41d41f@mail.gmail.com>
+	 <4905DC90.6050503@viscovery.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Oct 27 16:24:28 2008
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: "Git Mailing List" <git@vger.kernel.org>
+To: "Johannes Sixt" <j.sixt@viscovery.net>
+X-From: git-owner@vger.kernel.org Mon Oct 27 16:34:43 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KuTx7-0005xU-GO
-	for gcvg-git-2@gmane.org; Mon, 27 Oct 2008 16:24:22 +0100
+	id 1KuU78-00015K-2K
+	for gcvg-git-2@gmane.org; Mon, 27 Oct 2008 16:34:42 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751283AbYJ0PXH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 27 Oct 2008 11:23:07 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751474AbYJ0PXG
-	(ORCPT <rfc822;git-outgoing>); Mon, 27 Oct 2008 11:23:06 -0400
-Received: from main.gmane.org ([80.91.229.2]:57485 "EHLO ciao.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751210AbYJ0PXF (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 27 Oct 2008 11:23:05 -0400
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1KuTvo-0002cF-1c
-	for git@vger.kernel.org; Mon, 27 Oct 2008 15:23:00 +0000
-Received: from s2.org ([195.197.64.39])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Mon, 27 Oct 2008 15:23:00 +0000
-Received: from azure by s2.org with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Mon, 27 Oct 2008 15:23:00 +0000
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@ger.gmane.org
-X-Gmane-NNTP-Posting-Host: s2.org
-User-Agent: Gnus/5.110011 (No Gnus v0.11) Emacs/22.2 (gnu/linux)
-Cancel-Lock: sha1:MomSZ9ttUQsYtPrNRbOVLERjVq4=
+	id S1752338AbYJ0Pd0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 27 Oct 2008 11:33:26 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752311AbYJ0PdZ
+	(ORCPT <rfc822;git-outgoing>); Mon, 27 Oct 2008 11:33:25 -0400
+Received: from wf-out-1314.google.com ([209.85.200.175]:63192 "EHLO
+	wf-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752219AbYJ0PdY (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 27 Oct 2008 11:33:24 -0400
+Received: by wf-out-1314.google.com with SMTP id 27so2099015wfd.4
+        for <git@vger.kernel.org>; Mon, 27 Oct 2008 08:33:23 -0700 (PDT)
+Received: by 10.140.191.14 with SMTP id o14mr3329298rvf.130.1225121602777;
+        Mon, 27 Oct 2008 08:33:22 -0700 (PDT)
+Received: by 10.141.51.13 with HTTP; Mon, 27 Oct 2008 08:33:22 -0700 (PDT)
+In-Reply-To: <4905DC90.6050503@viscovery.net>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/99238>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/99239>
 
-Greetings,
+On Mon, Oct 27, 2008 at 4:21 PM, Johannes Sixt <j.sixt@viscovery.net> wrote:
+> Pascal Obry schrieb:
+>> On Mon, Oct 27, 2008 at 3:38 PM, Johannes Sixt <j.sixt@viscovery.net> wrote:
+>>> Since you don't have any content to lose, you can always just
+>>>
+>>>  $ touch file1
+>>>  $ git add file1
+>>>  $ git rm file1
+>>
+>> Does not work:
+>
+> Yes, it did! ;)
 
-git clone git://git.kernel.org/pub/scm/git/git.git
-cd git
-gitk
+Well, on my side I add to use:
 
-with Cygwin build of git version 1.6.0.3.523.g304d0 in Windows XP
-SP2 with Cygwin dll version 1.5.24 results to gitk showing "Local
-uncommitted changes, not checked in to index" entry in the history
-tree and if I select that entry, it seems to indicate that all
-files have changed but without any actual content changes.
+   $ git rm --cached file1
 
-git status doesn't show any changes.
+For the last command.
 
-If I run git diff (which displays no changes) or git reset and then
-run gitk again, there is no longer that "Local uncommitted
-changes..." entry.
+> This is an entirely different matter. My interpretation is that the
+> permission change of file1 was the only change in this commit. Since this
+> is no longer needed, you should run 'git rebase --skip'.
 
-Since it was suggested on #irc, I tried "git config --global
-core.trustctime false" but that didn't help, which I suppose was
-expected since the documentation talks about differences between
-the index and the working copy and I haven't added anything to the
-index.
+No no :) Too easy! I have plenty of other permission changes in my commit
+that I do not want to loose!
 
-I can reproduce this problem with another (private) repository as
-well.
+Pascal.
 
 -- 
-Hannu
+
+--|------------------------------------------------------
+--| Pascal Obry                           Team-Ada Member
+--| 45, rue Gabriel Peri - 78114 Magny Les Hameaux FRANCE
+--|------------------------------------------------------
+--|              http://www.obry.net
+--| "The best way to travel is by means of imagination"
+--|
+--| gpg --keyserver wwwkeys.pgp.net --recv-key C1082595
