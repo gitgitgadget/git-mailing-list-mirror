@@ -1,117 +1,224 @@
-From: Arne Babenhauserheide <arne_bab@web.de>
-Subject: Re: [VOTE] git versus mercurial (for DragonflyBSD)
-Date: Mon, 27 Oct 2008 01:20:49 +0100
-Message-ID: <200810270120.55276.arne_bab@web.de>
-References: <ge0rla$mce$1@ger.gmane.org> <ee2a733e0810260805n35c3a637v4739dda938a22518@mail.gmail.com> <200810261955.10536.jnareb@gmail.com>
-Reply-To: "Arne Babenhauserheide" <arne_bab@web.de>
+From: "Roger Leigh" <rleigh@whinlatter.ukfsn.org>
+Subject: git-cvsimport produces different (broken) repos when using pserver
+	or local repo access
+Date: Mon, 27 Oct 2008 00:25:40 +0000
+Message-ID: <20081027002539.GB3399@codelibre.net>
 Mime-Version: 1.0
-Content-Type: multipart/signed;
-  boundary="nextPart1389043.JTTnbxC54r";
-  protocol="application/pgp-signature";
-  micalg=pgp-sha1
-Content-Transfer-Encoding: 7bit
-Cc: Jakub Narebski <jnareb@gmail.com>, SLONIK.AZ@gmail.com,
-	git@vger.kernel.org
-To: mercurial@selenic.com
-X-From: git-owner@vger.kernel.org Mon Oct 27 01:22:23 2008
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="HG+GLK89HZ1zG0kk"
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Oct 27 01:27:12 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KuFsD-0002mr-NE
-	for gcvg-git-2@gmane.org; Mon, 27 Oct 2008 01:22:22 +0100
+	id 1KuFwt-0003hd-5w
+	for gcvg-git-2@gmane.org; Mon, 27 Oct 2008 01:27:11 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750960AbYJ0AVE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 26 Oct 2008 20:21:04 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750893AbYJ0AVD
-	(ORCPT <rfc822;git-outgoing>); Sun, 26 Oct 2008 20:21:03 -0400
-Received: from fmmailgate01.web.de ([217.72.192.221]:52241 "EHLO
-	fmmailgate01.web.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750840AbYJ0AVB (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 26 Oct 2008 20:21:01 -0400
-Received: from smtp06.web.de (fmsmtp06.dlan.cinetic.de [172.20.5.172])
-	by fmmailgate01.web.de (Postfix) with ESMTP id C0960F8231FD;
-	Mon, 27 Oct 2008 01:20:59 +0100 (CET)
-Received: from [217.227.126.165] (helo=fluss.localnet)
-	by smtp06.web.de with asmtp (TLSv1:AES256-SHA:256)
-	(WEB.DE 4.109 #226)
-	id 1KuFqt-000506-00; Mon, 27 Oct 2008 01:20:59 +0100
-User-Agent: KMail/1.10.1 (Linux/2.6.25-gentoo-r7; KDE/4.1.1; x86_64; ; )
-In-Reply-To: <200810261955.10536.jnareb@gmail.com>
-X-Sender: arne_bab@web.de
-X-Provags-ID: V01U2FsdGVkX1+cggZdDrCgrHugqoq0uSUOYQdQ7uQ8E9tF19Wl
-	2VAEheApAFS41KXvWq/0fFNZyjBoUS9rj7HhnxXnTaidDzNEF3
-	NtPERRaN8=
+	id S1751403AbYJ0AZz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 26 Oct 2008 20:25:55 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751389AbYJ0AZz
+	(ORCPT <rfc822;git-outgoing>); Sun, 26 Oct 2008 20:25:55 -0400
+Received: from nagini.codelibre.net ([80.68.93.164]:3918 "EHLO
+	nagini.codelibre.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751193AbYJ0AZy (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 26 Oct 2008 20:25:54 -0400
+Received: by nagini.codelibre.net (Postfix, from userid 107)
+	id DF7417C1B1; Mon, 27 Oct 2008 00:25:50 +0000 (GMT)
+Received: from whinlatter.ukfsn.org (78-105-115-105.zone3.bethere.co.uk [78.105.115.105])
+	by nagini.codelibre.net (Postfix) with ESMTPSA id 6FAAF7C012
+	for <git@vger.kernel.org>; Mon, 27 Oct 2008 00:25:44 +0000 (GMT)
+Received: by whinlatter.ukfsn.org (sSMTP sendmail emulation); Mon, 27 Oct 2008 00:25:40 +0000
+Content-Disposition: inline
+X-GPG-Key: 0x25BFB848
+X-Debian: testing/unstable
+X-OS-Uptime: 11:31:31 up 7 min,  1 user,  load average: 1.43, 1.09, 0.51
+User-Agent: Mutt/1.5.18 (2008-05-17)
+X-Bogosity: Ham, tests=bogofilter, spamicity=0.000000, version=1.1.7
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/99193>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/99194>
 
---nextPart1389043.JTTnbxC54r
-Content-Type: text/plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: quoted-printable
+
+--HG+GLK89HZ1zG0kk
+Content-Type: multipart/mixed; boundary="vGgW1X5XWziG23Ko"
 Content-Disposition: inline
 
-Am Sonntag 26 Oktober 2008 19:55:09 schrieb Jakub Narebski:
-> > * Recently, Hg development seems to have somewhat slowed down. To
-> >   simply put it, there is not enough room in the world for several
-> >   similar SCM systems. With git's pace and momentum the other SCMs
-> >   including Hg are fighting an uphill battle.
->
-> The competing _distributed_ version control systems left seems to be
-> Bazaar-NG (Ubuntu), Mercurial (OpenSolaris, Mozilla), Git (Linux kernel,
-> Freedesktop.org, Ruby on Rails people).  There are many IDEs, many
-> editors, many web browsers; there is Linux and there are *BSD; I hope
-> that Mercurial would continue to be developed, and not vanish in
-> obscurity like Arch and clones...
 
-Before we get tangled in this train of thought:=20
+--vGgW1X5XWziG23Ko
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-I created a head-to-head code_swarm of Mercurial and Git and it clearly sho=
-ws=20
-that Mercurial development didn't slow down.=20
+Hi,
 
-The code_swarm isn't a fancy one with music and annotations, but I think=20
-you'll directly see for yourself what I mean:=20
+I've noticed that git-cvsimport can under some circumstances produce broken
+repositories.  This appears to only occur when using pserver access to the =
+CVS
+repo; running with a local repo is apparently fine, with all tested versions
+giving the same repo (master head has same hash for the last commit).
+In all cases cvsps version 2.1 was used.
 
-=2D http://www.rakjar.de/shared_codeswarm/hg-vs-git-short.avi
+Repo source:
+pserver :pserver:anonymous@gimp-print.cvs.sourceforge.net:/cvsroot/gimp-pri=
+nt
+local   rsync -av 'rsync://gimp-print.cvs.sourceforge.net/cvsroot/gimp-prin=
+t/*' cvs-backup
 
-red is git,=20
-blue is Mercurial.=20
+I've tested with a number of git versions, including git.git as of yesterda=
+y:
 
-It is a result of my shared_codeswarm project with which you can create=20
-code_swarms from more than one repository automatically - and update them=20
-incrementally, creating new code_swarms of only the new commits in the=20
-repositories:=20
+git version                repo     last commit  URI
+1.5.5.GIT                  local    a51c479826   git://git.debian.org/git/u=
+sers/rleigh/gutenprint-upstream.git
+1.5.5.GIT (2 failures)     pserver  bfa6f8248a   git://git.debian.org/git/u=
+sers/rleigh/gutenprint-upstream-broken.git
+1.5.5.GIT (no failure)     pserver  bfa6f8248a   git://git.debian.org/git/u=
+sers/rleigh/gutenprint-upstream-pserver.git
+1.5.6.5                    local    a51c479826   git://git.debian.org/git/u=
+sers/rleigh/gutenprint-upstream-git1.5.6.5-local.git
+1.5.6.5                    pserver  6f0950c097   git://git.debian.org/git/u=
+sers/rleigh/gutenprint-upstream-git1.5.6.5-pserver.git
+git.git 1.6.0.3.517.g759a  local    a51c479826   git://git.debian.org/git/u=
+sers/rleigh/gutenprint-upstream-git1.6-local.git
+git.git 1.6.0.3.517.g759a  pserver  6f0950c097   git://git.debian.org/git/u=
+sers/rleigh/gutenprint-upstream-git1.6-pserver.git
 
-=2D http://www.rakjar.de/shared_codeswarm/project_activity_battle_swarm.html
+With git 1.5.5 I'm tracking the CVS repo running git-cvsimport every 20 mins
+=66rom a cron job.  A few months ago it managed to botch, resulting in a br=
+oken
+repo (it didn't delete files deleted from CVS).  I think this occurs when
+git-cvsimport fails (I get a perl error, though I'm afraid I don't have the=
+ log
+anymore); running again results in successful completion, but the repo is
+screwed, I think due to that commit being incomplete or something.  This
+occured twice during the import in the second line in the above table, in t=
+his
+case resulting in missing files (src/cups/i18n.*).  Again, I'm afraid I don=
+'t
+have the logs, but I can repeat again if this is not an already known/fixed
+issue.  The repo is quite big, taking several hours to import, so it might
+possibly be a network connection problem and it's not handling that correct=
+ly
+on failure.  However, even when the import comples successfully (line 3), t=
+he
+hash is still the same as line 2 where it failed twice and needed restartin=
+g.
 
-Best wishes,=20
-Arne
+So, it looks like depending on if I use a local repo directly or remove via
+pserver, I get a different repo.  1.5.5 using pserver is different to later
+versions, presumably this is a buggy version because it's broken whether or=
+ not
+I get a failure.  Later versions always completed without failure; while the
+local and pserver using repos differ, they do both seem OK.  However, I wou=
+ld
+have expected identical results, given that they are all created from the
+same data.
 
-=2D- My stuff: http://draketo.de - stories, songs, poems, programs and stuf=
-f :)
-=2D- Infinite Hands: http://infinite-hands.draketo.de - singing a part of t=
-he=20
-history of free software.
-=2D- Ein W=FCrfel System: http://1w6.org - einfach saubere (Rollenspiel-) R=
-egeln.
+The script I used to do the import is attached.
 
-=2D- PGP/GnuPG: http://draketo.de/inhalt/ich/pubkey.txt
 
---nextPart1389043.JTTnbxC54r
-Content-Type: application/pgp-signature; name=signature.asc 
-Content-Description: This is a digitally signed message part.
+Regards,
+Roger
+
+--=20
+  .''`.  Roger Leigh
+ : :' :  Debian GNU/Linux             http://people.debian.org/~rleigh/
+ `. `'   Printing on GNU/Linux?       http://gutenprint.sourceforge.net/
+   `-    GPG Public Key: 0x25BFB848   Please GPG sign your mail.
+
+--vGgW1X5XWziG23Ko
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: attachment; filename=gutenprint-bootstrap
+
+#!/bin/bash
+
+CVSROOT=:pserver:anonymous@gimp-print.cvs.sourceforge.net:/cvsroot/gimp-print
+CVSMODULE=print
+HOME=/home/users/rleigh
+GIT_DIR=/var/lib/gforge/chroot/home/users/rleigh/public_git/gutenprint-upstream.git
+LOGDIR=${HOME}/log
+LOCKFILE=${HOME}/gutenprint-cvs.lock
+AUTHORS=${HOME}/gutenprint-auth
+
+#date -R
+
+lockfile -2 -r 2 ${LOCKFILE}
+
+# If we managed to lock the file
+if [ $? -eq 0 ]; then
+#	echo "Running git-cvsimport"
+	export GIT_DIR
+	export CVSROOT
+	git-cvsimport -A $AUTHORS -i -v print
+	rm -f ${LOCKFILE}
+else
+	echo "Couldn't get lock for cvssuck"
+fi
+
+#date -R
+
+
+--vGgW1X5XWziG23Ko
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: attachment; filename=gutenprint-auth
+
+andystewart=Andy Stewart <andystewart@attbi.com>
+anikin=Eugene Anikin <eugene@anikin.com>
+cpbs=Charles Briscoe-Smith <cpbs@debian.org>
+daberti=Daniele Berti <daberti@users.sourceforge.net>
+davehill=Dave Hill <dave@minnie.demon.co.uk>
+degger=Daniel Egger <degger@users.sourceforge.net>
+doctormo=Martin Owens <doctormo@users.sourceforge.net>
+dpace=David Pace <dpace@echo-on.net>
+easysw=Mike Sweet <msweet@apple.com>
+faust3=Sascha Sommer <saschasommer@freenet.de>
+gandy=Andy Thaller <thaller@ph.tum.de>
+gtaylor=Grant Taylor <gtaylor@users.sourceforge.net>
+iay=Ian Young <ian@iay.org.uk>
+jmv=Jean-Marc Verbavatz <verbavatz@ifrance.fr>
+julianbradfield=Julian Bradfield <julianbradfield@users.sourceforge.net>
+khk=Karl Heinz Kremer <khk@khk.net>
+m0m=Michael Mraka <michael.mraka@linux.cz>
+mbroughtn=mbroughtn <mbroughtn@users.sourceforge.net>
+menthos=Christian Rose <menthos@users.sourceforge.net>
+mitsch=Michael Natterer <mitschel@cs.tu-berlin.de>
+mtomlinson=Mark Tomlinson <mark.tomlinson@xtra.co.nz>
+nestordi=nestor di <nestordi@users.sourceforge.net>
+nicholas=nicholas <nicholas@users.sourceforge.net>
+peter_missel=Peter Missel <peter_missel@users.sourceforge.net>
+rblancha=Richard Blanchard <rblancha@users.sourceforge.net>
+rleigh=Roger Leigh <rleigh@debian.org>
+rlk=Robert Krawitz <rlk@alum.mit.edu>
+rwisi=Richard Wisenoecker <Richard.Wisenoecker@gmx.at>
+sharkey=Eric Sharkey <sharkey@debian.org>
+smiller=Steve Miller <smiller@rni.net>
+spa=Salvador Abreu <spa@users.sourceforge.net>
+stevek=Steve Kann <stevek@stevek.com>
+tillkamppeter=Till Kamppeter <till.kamppeter@gmail.com>
+ttonino=Thomas Tonino <ttonino@bio.vu.nl>
+tylerb=Tyler Blessing <tylerb@users.sourceforge.net>
+uid21630=uid21630 <uid21630@users.sourceforge.net>
+wiz=Joseph S. Wisniewski <wiz@users.sourceforge.net>
+wollvieh=Wolfgang Bauer <wollvieh@users.sourceforge.net>
+zoopa =Pete Parks <zoopa@users.sourceforge.net>
+
+--vGgW1X5XWziG23Ko--
+
+--HG+GLK89HZ1zG0kk
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: Digital signature
+Content-Disposition: inline
 
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.0.9 (GNU/Linux)
+Version: GnuPG v1.4.9 (GNU/Linux)
 
-iEYEABECAAYFAkkFCWcACgkQMwdGm/6WxAQu8QCeOMNS+MlM7W2C6XVCJB4KKbIV
-e24An0TyzLwWXwubv7OY1SI5fL3or0CH
-=XIQd
+iEYEARECAAYFAkkFCoMACgkQVcFcaSW/uEh6UQCg8xsNdnYMRpc7e7cz5zRqzkjg
+jisAnRuMC5JB7bb3wxDssLsTsN2QWh2K
+=cn+r
 -----END PGP SIGNATURE-----
 
---nextPart1389043.JTTnbxC54r--
+--HG+GLK89HZ1zG0kk--
