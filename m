@@ -1,81 +1,62 @@
-From: "Pascal Obry" <pascal@obry.net>
-Subject: Re: rebase, file permissions and removed file
-Date: Mon, 27 Oct 2008 16:33:22 +0100
-Message-ID: <a2633edd0810270833q482260b4pf0ae11dcf2d4936f@mail.gmail.com>
-References: <a2633edd0810270702x416bb659ke183b0cc6266071@mail.gmail.com>
-	 <4905D276.9020308@viscovery.net>
-	 <a2633edd0810270809w7fec93b2rc314cc025f41d41f@mail.gmail.com>
-	 <4905DC90.6050503@viscovery.net>
+From: Marc Branchaud <marcnarc@xiplink.com>
+Subject: Re: Terminology question: "tracking" branches
+Date: Mon, 27 Oct 2008 11:43:44 -0400
+Message-ID: <4905E1B0.8040601@xiplink.com>
+References: <48F7BBAC.2090907@xiplink.com> <48F83FD0.90606@drmicha.warpmail.net> <48F8A4E8.8070008@xiplink.com> <48F8AA5E.6090908@drmicha.warpmail.net> <48F8ECA2.3040208@xiplink.com> <48FC8624.9090807@fastmail.fm> <48FCB6B8.6090708@xiplink.com> <48FDA5A0.8030506@drmicha.warpmail.net> <48FDF28A.9060606@xiplink.com> <48FF3FEE.8020209@drmicha.warpmail.net> <20081022161302.GC16946@atjola.homenet> <490030AB.8090207@drmicha.warpmail.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
 Content-Transfer-Encoding: 7bit
-Cc: "Git Mailing List" <git@vger.kernel.org>
-To: "Johannes Sixt" <j.sixt@viscovery.net>
-X-From: git-owner@vger.kernel.org Mon Oct 27 16:34:43 2008
+Cc: =?ISO-8859-1?Q?Bj=F6rn_Steinbrink?= <B.Steinbrink@gmx.de>,
+	Peter Harris <git@peter.is-a-geek.org>, git@vger.kernel.org,
+	Junio C Hamano <gitster@pobox.com>
+To: Michael J Gruber <git@drmicha.warpmail.net>
+X-From: git-owner@vger.kernel.org Mon Oct 27 16:44:44 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KuU78-00015K-2K
-	for gcvg-git-2@gmane.org; Mon, 27 Oct 2008 16:34:42 +0100
+	id 1KuUGk-0004kn-RW
+	for gcvg-git-2@gmane.org; Mon, 27 Oct 2008 16:44:39 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752338AbYJ0Pd0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 27 Oct 2008 11:33:26 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752311AbYJ0PdZ
-	(ORCPT <rfc822;git-outgoing>); Mon, 27 Oct 2008 11:33:25 -0400
-Received: from wf-out-1314.google.com ([209.85.200.175]:63192 "EHLO
-	wf-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752219AbYJ0PdY (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 27 Oct 2008 11:33:24 -0400
-Received: by wf-out-1314.google.com with SMTP id 27so2099015wfd.4
-        for <git@vger.kernel.org>; Mon, 27 Oct 2008 08:33:23 -0700 (PDT)
-Received: by 10.140.191.14 with SMTP id o14mr3329298rvf.130.1225121602777;
-        Mon, 27 Oct 2008 08:33:22 -0700 (PDT)
-Received: by 10.141.51.13 with HTTP; Mon, 27 Oct 2008 08:33:22 -0700 (PDT)
-In-Reply-To: <4905DC90.6050503@viscovery.net>
-Content-Disposition: inline
+	id S1752124AbYJ0PnX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 27 Oct 2008 11:43:23 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752096AbYJ0PnX
+	(ORCPT <rfc822;git-outgoing>); Mon, 27 Oct 2008 11:43:23 -0400
+Received: from smtp192.iad.emailsrvr.com ([207.97.245.192]:37980 "EHLO
+	smtp192.iad.emailsrvr.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752047AbYJ0PnW (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 27 Oct 2008 11:43:22 -0400
+Received: from relay9.relay.iad.mlsrvr.com (localhost [127.0.0.1])
+	by relay9.relay.iad.mlsrvr.com (SMTP Server) with ESMTP id 4944E1CBA57;
+	Mon, 27 Oct 2008 11:43:21 -0400 (EDT)
+Received: by relay9.relay.iad.mlsrvr.com (Authenticated sender: mbranchaud-AT-xiplink.com) with ESMTP id 0EA5E1CBA55;
+	Mon, 27 Oct 2008 11:43:21 -0400 (EDT)
+User-Agent: Thunderbird 2.0.0.17 (X11/20080925)
+In-Reply-To: <490030AB.8090207@drmicha.warpmail.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/99239>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/99240>
 
-On Mon, Oct 27, 2008 at 4:21 PM, Johannes Sixt <j.sixt@viscovery.net> wrote:
-> Pascal Obry schrieb:
->> On Mon, Oct 27, 2008 at 3:38 PM, Johannes Sixt <j.sixt@viscovery.net> wrote:
->>> Since you don't have any content to lose, you can always just
->>>
->>>  $ touch file1
->>>  $ git add file1
->>>  $ git rm file1
->>
->> Does not work:
->
-> Yes, it did! ;)
+Michael J Gruber wrote:
+> 
+> remote tracking branch: Synonymous with tracking branch. [remote is a
+> noun, an object for track here]
 
-Well, on my side I add to use:
+Er, "remote" is an adjective there...  :)
 
-   $ git rm --cached file1
+> [adjective to be found] branch: A local branch which is set up to pull
+> or rebase automatically from a tracking branch. Used for local
+> modifications to remote branches. [I'm tempted to use local tracking
+> branch here, but that would just add to the confusion.]
 
-For the last command.
+I say there's no need for an adjective here, as this is just a plain old 
+branch that git-branch creates by default (right?).
 
-> This is an entirely different matter. My interpretation is that the
-> permission change of file1 was the only change in this commit. Since this
-> is no longer needed, you should run 'git rebase --skip'.
+What's needed is an adjective for when git-branch is given the 
+--no-track option (or when branch.automergesetup is false). 
+"Non-tracking branch" perhaps?
 
-No no :) Too easy! I have plenty of other permission changes in my commit
-that I do not want to loose!
-
-Pascal.
-
--- 
-
---|------------------------------------------------------
---| Pascal Obry                           Team-Ada Member
---| 45, rue Gabriel Peri - 78114 Magny Les Hameaux FRANCE
---|------------------------------------------------------
---|              http://www.obry.net
---| "The best way to travel is by means of imagination"
---|
---| gpg --keyserver wwwkeys.pgp.net --recv-key C1082595
+		Marc
