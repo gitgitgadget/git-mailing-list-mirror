@@ -1,98 +1,88 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: [VOTE] git versus mercurial (for DragonflyBSD)
-Date: Mon, 27 Oct 2008 21:37:05 +0100
-Message-ID: <200810272137.07309.jnareb@gmail.com>
-References: <ge0rla$mce$1@ger.gmane.org> <200810270252.23392.jnareb@gmail.com> <b6jwksWkldU6N726dbI3k3yYE6WL1aXJERb9Oh1lNd8g5zdTavgRew@cipher.nrlssc.navy.mil>
+From: Linus Torvalds <torvalds@linux-foundation.org>
+Subject: Re: [PATCH 0/2] Random patches from my tree
+Date: Mon, 27 Oct 2008 13:37:22 -0700 (PDT)
+Message-ID: <alpine.LFD.2.00.0810271328310.3386@nehalem.linux-foundation.org>
+References: <alpine.LFD.2.00.0810271256470.3386@nehalem.linux-foundation.org>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Cc: Arne Babenhauserheide <arne_bab@web.de>, mercurial@selenic.com,
-	SLONIK.AZ@gmail.com, git@vger.kernel.org
-To: Brandon Casey <casey@nrlssc.navy.mil>
-X-From: git-owner@vger.kernel.org Mon Oct 27 21:38:32 2008
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+To: Git Mailing List <git@vger.kernel.org>,
+	Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Oct 27 21:39:32 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KuYr9-0002Pc-GF
-	for gcvg-git-2@gmane.org; Mon, 27 Oct 2008 21:38:32 +0100
+	id 1KuYs6-0002m0-Ka
+	for gcvg-git-2@gmane.org; Mon, 27 Oct 2008 21:39:31 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752257AbYJ0UhQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 27 Oct 2008 16:37:16 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752211AbYJ0UhQ
-	(ORCPT <rfc822;git-outgoing>); Mon, 27 Oct 2008 16:37:16 -0400
-Received: from ey-out-2122.google.com ([74.125.78.24]:52344 "EHLO
-	ey-out-2122.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751955AbYJ0UhP (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 27 Oct 2008 16:37:15 -0400
-Received: by ey-out-2122.google.com with SMTP id 6so897736eyi.37
-        for <git@vger.kernel.org>; Mon, 27 Oct 2008 13:37:13 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:subject:date
-         :user-agent:cc:references:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:message-id;
-        bh=atIjAX0LTmFLyv8oXkcTS0NsrnOwBxO88AnLNazSCDc=;
-        b=nvBMO3wDjHEDlZVl+OpYBWH3T91YHbVfTtHPlG6bZm8PacNdlncWSihxtOcQc6cKHU
-         Bxiw6xrjMHoGpta0ExHpdYo0RBj+6niqpltceMgf+LndZXnZ2JWOtjV8FS4zVHHMY7c5
-         8zlejFmTQIwfobF1MQPhvyZb2twsYQrc8WssY=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=from:to:subject:date:user-agent:cc:references:in-reply-to
-         :mime-version:content-type:content-transfer-encoding
-         :content-disposition:message-id;
-        b=LhB/cnc3hIcehTVWb4Yj3w6lEdCpyzZiVBXhwhj2UkTNlxjuLQ/lbZcjnnJ9dBYQdy
-         +srqLkO0NfpxtbPYjRPshNlocQpBnA99MzF1QUNDZcsbwFPzzYu6zoQEjgXSR2ucbPqX
-         iVvgPJ7y7uJ7GV+zfVONn3N3bet9Q59qpftqw=
-Received: by 10.210.104.20 with SMTP id b20mr7227103ebc.94.1225139833020;
-        Mon, 27 Oct 2008 13:37:13 -0700 (PDT)
-Received: from ?192.168.1.11? (abwe94.neoplus.adsl.tpnet.pl [83.8.228.94])
-        by mx.google.com with ESMTPS id z34sm351773ikz.0.2008.10.27.13.37.09
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Mon, 27 Oct 2008 13:37:11 -0700 (PDT)
-User-Agent: KMail/1.9.3
-In-Reply-To: <b6jwksWkldU6N726dbI3k3yYE6WL1aXJERb9Oh1lNd8g5zdTavgRew@cipher.nrlssc.navy.mil>
-Content-Disposition: inline
+	id S1751584AbYJ0UiR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 27 Oct 2008 16:38:17 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751193AbYJ0UiR
+	(ORCPT <rfc822;git-outgoing>); Mon, 27 Oct 2008 16:38:17 -0400
+Received: from smtp1.linux-foundation.org ([140.211.169.13]:41195 "EHLO
+	smtp1.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1750782AbYJ0UiQ (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 27 Oct 2008 16:38:16 -0400
+Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [140.211.169.55])
+	by smtp1.linux-foundation.org (8.14.2/8.13.5/Debian-3ubuntu1.1) with ESMTP id m9RKbMb2016802
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Mon, 27 Oct 2008 13:37:23 -0700
+Received: from localhost (localhost [127.0.0.1])
+	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id m9RKbMXs018874;
+	Mon, 27 Oct 2008 13:37:22 -0700
+In-Reply-To: <alpine.LFD.2.00.0810271256470.3386@nehalem.linux-foundation.org>
+User-Agent: Alpine 2.00 (LFD 1167 2008-08-23)
+X-Spam-Status: No, hits=-3.941 required=5 tests=AWL,BAYES_00,OSDL_HEADER_SUBJECT_BRACKETED
+X-Spam-Checker-Version: SpamAssassin 3.2.4-osdl_revision__1.47__
+X-MIMEDefang-Filter: lf$Revision: 1.188 $
+X-Scanned-By: MIMEDefang 2.63 on 140.211.169.13
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/99263>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/99264>
 
-On Mon, 27 Oct 2008, Brandon Casey wrote:
-> Jakub Narebski wrote:
-> > On Mon, 27 Oct 2008, Arne Babenhauserheide wrote:
-> > >
-> > > Also, looking at git, git users still have to garbage collect regularly, which 
-> > > shows to me that the design wasn't really cleaner. 
-> > 
-> > Well, they have to a lot less than they used to, and there is 
-> > "git gc --auto" that can be put in crontab safely.
+
+On Mon, 27 Oct 2008, Linus Torvalds wrote:
 > 
-> I think you missed the most convincing argument _for_ explicit garbage collection.
+> So the second one allows things like
 > 
-> By allowing explicit repository packing, git allows you to delay a cpu intensive
-> operation til later, when time doesn't matter, like at the end of the day right
-> before I go home. It also allows more cpu intensive delta/compression algorithms
-> to be used.
-> 
-> By contrast, mercurial performs deltafication and compression on each commit.
-> So, acceptable commit speed must be weighed against the complexity of the
-> deltafication/compression algorithm and file format.
+> 	git log --pretty=oneline --source --all
 
-On the one hand one can use different compression for loose (immediate)
-and packed (in a free time) objects.
+A better example may have --abbrev-commit, at which point my current git 
+tree looks like this for me:
 
-On the other access from "smart" client (git://, ssh://, future "smart"
-HTTP server) results in creating a pack, so we cannot allow for too
-tight pack compression, or to be more exact too much CPU load taken.
+	52be8b3... refs/heads/master Add a 'source' decorator for commits
+	affba33... refs/heads/master Add file delete/create info when we overflow rename
+	6806f78... refs/remotes/origin/pu Merge branch 'ar/mksnpath' into pu
+	058412d... refs/remotes/origin/pu Fix potentially dangerous uses of mkpath and g
+	356af64... refs/remotes/origin/pu Merge branch 'ar/maint-mksnpath' into HEAD
+	9fa03c1... refs/remotes/origin/pu Fix potentially dangerous uses of mkpath and g
+	94cc355... refs/remotes/origin/pu Fix mkpath abuse in dwim_ref and dwim_log of s
+	108bebe... refs/remotes/origin/pu Add mksnpath which allows you to specify the o
+	6af1fc2... refs/remotes/origin/man Autogenerated manpages for v1.6.0.3-523-g304d
+	61b1229... refs/remotes/origin/html Autogenerated HTML docs for v1.6.0.3-523-g30
+	f3ce133... refs/remotes/origin/pu Merge branch 'jc/send-pack-tell-me-more' into 
+	2b37e3a... refs/remotes/origin/pu Merge branch 'jk/renamelimit' into pu
+	..
 
-The ability to vary 'quality' of pack compression is very useful to
-distinguish between very loosely packed fast-import pack, and tightly
-repacked in free time.
+ie you can see the the branch that the commits are on.
 
--- 
-Jakub Narebski
-Poland
+An example of the ambiguous nature would be 
+
+	304d058... refs/remotes/origin/HEAD Merge branch 'maint'
+
+ie because the HEAD and 'master' branches of refs/remotes/origin are the 
+same, it's ambiguous which one to take, and git will have picked one at 
+random. And obviously when you hit a point where two branches meet again, 
+it really will depend on which branch we happened to be parsing at the 
+time (which generally is "which branch had a commit date that was further 
+back in history").
+
+Another known deficiency: "gitk --source" doesn't work (neither does "gitk 
+--decorate" for that matter). gitk gets very upset indeed if you try, and 
+sucks up CPU cycles in some infinite loop.
+
+
+		Linus
