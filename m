@@ -1,84 +1,75 @@
-From: Linus Torvalds <torvalds@linux-foundation.org>
-Subject: Re: [PATCH 2/2] Add a 'source' decorator for commits
-Date: Tue, 28 Oct 2008 10:21:39 -0700 (PDT)
-Message-ID: <alpine.LFD.2.00.0810281016150.3386@nehalem.linux-foundation.org>
-References: <alpine.LFD.2.00.0810271256470.3386@nehalem.linux-foundation.org> <alpine.LFD.2.00.0810271305500.3386@nehalem.linux-foundation.org> <alpine.LFD.2.00.0810271306230.3386@nehalem.linux-foundation.org> <20081028054539.GA23195@sigill.intra.peff.net>
- <alpine.LFD.2.00.0810280755570.3386@nehalem.linux-foundation.org>
+From: Alex Riesen <raa.lkml@gmail.com>
+Subject: [PATCH] Plug a memleak in builtin-revert
+Date: Tue, 28 Oct 2008 18:27:33 +0100
+Message-ID: <20081028172733.GA7054@blimp.localdomain>
+Reply-To: Alex Riesen <raa.lkml@gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Git Mailing List <git@vger.kernel.org>,
-	Junio C Hamano <gitster@pobox.com>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Tue Oct 28 18:24:30 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: Junio C Hamano <gitster@pobox.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Oct 28 18:29:01 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KusIt-0001AU-7e
-	for gcvg-git-2@gmane.org; Tue, 28 Oct 2008 18:24:27 +0100
+	id 1KusNA-0002ta-3V
+	for gcvg-git-2@gmane.org; Tue, 28 Oct 2008 18:28:52 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752424AbYJ1RXN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 28 Oct 2008 13:23:13 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752307AbYJ1RXN
-	(ORCPT <rfc822;git-outgoing>); Tue, 28 Oct 2008 13:23:13 -0400
-Received: from smtp1.linux-foundation.org ([140.211.169.13]:36398 "EHLO
-	smtp1.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751092AbYJ1RXM (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 28 Oct 2008 13:23:12 -0400
-Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [140.211.169.55])
-	by smtp1.linux-foundation.org (8.14.2/8.13.5/Debian-3ubuntu1.1) with ESMTP id m9SHLeG3025391
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Tue, 28 Oct 2008 10:21:41 -0700
-Received: from localhost (localhost [127.0.0.1])
-	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id m9SHLdE6018354;
-	Tue, 28 Oct 2008 10:21:39 -0700
-In-Reply-To: <alpine.LFD.2.00.0810280755570.3386@nehalem.linux-foundation.org>
-User-Agent: Alpine 2.00 (LFD 1167 2008-08-23)
-X-Spam-Status: No, hits=-3.941 required=5 tests=AWL,BAYES_00,OSDL_HEADER_SUBJECT_BRACKETED
-X-Spam-Checker-Version: SpamAssassin 3.2.4-osdl_revision__1.47__
-X-MIMEDefang-Filter: lf$Revision: 1.188 $
-X-Scanned-By: MIMEDefang 2.63 on 140.211.169.13
+	id S1752476AbYJ1R1i (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 28 Oct 2008 13:27:38 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752460AbYJ1R1i
+	(ORCPT <rfc822;git-outgoing>); Tue, 28 Oct 2008 13:27:38 -0400
+Received: from mo-p05-ob.rzone.de ([81.169.146.180]:20670 "EHLO
+	mo-p05-ob.rzone.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751092AbYJ1R1h (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 28 Oct 2008 13:27:37 -0400
+X-RZG-CLASS-ID: mo05
+X-RZG-AUTH: :Pm0FVUW6aauhRGJJc5OfA4AU8DM8ZlijdmJYxKn/UQvEQQx8A082pEts
+Received: from tigra.home (Facd6.f.strato-dslnet.de [195.4.172.214])
+	by post.webmailer.de (mrclete mo54) (RZmta 17.14)
+	with ESMTP id N00e3ck9SGQIK2 ; Tue, 28 Oct 2008 18:27:34 +0100 (MET)
+	(envelope-from: <raa.lkml@gmail.com>)
+Received: from blimp.localdomain (unknown [192.168.0.8])
+	by tigra.home (Postfix) with ESMTP id 58EEE277C8;
+	Tue, 28 Oct 2008 18:27:34 +0100 (CET)
+Received: by blimp.localdomain (Postfix, from userid 1000)
+	id 1BF9336D27; Tue, 28 Oct 2008 18:27:34 +0100 (CET)
+Content-Disposition: inline
+User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/99306>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/99307>
 
+Probably happened when working around git_path's problem with returned
+buffer being reused.
 
+---
+ builtin-revert.c |    3 ++-
+ 1 files changed, 2 insertions(+), 1 deletions(-)
 
-On Tue, 28 Oct 2008, Linus Torvalds wrote:
-> 
-> I could imagine doing it as not a single string: you could make it be a 
-> pointer to a list of (alphabetically sorted) strings, and then you don't 
-> have to make an allocation for each commit, you'd only need to do 
-> something like
-> 
-> 	void add_source(struct commit *commit, struct strin_list *list)
-
-Actually, no. That would be wrong.
-
-Why? Becuase we might be printing out the commit before we see it for the 
-second time, so if we were to print out anything but the "first reached 
-data", we'd now have really nasty _unreliable_ data that would actually 
-change depending on whether we also do things like --topo-sort and/or do 
-commit limiting.
-
-So suddenly --source would have to do the full tree just to make sure that 
-it's reliably giving the same information, and that makes it much less 
-useful.
-
-In contrast, the thing I sent out is not only really simple and has 
-basically zero peformance impact, but it's actually "more reliable" in 
-that what it gives you is meaningful and clear. It might pick one 
-particular name over another in random ways that depend on internal 
-choices and the exact order that you gave your arguments in, but it 
-doesn't even _try_ to claim anything else.
-
-The source "name" is unambiguous only if there is a single source, and it 
-doesn't really even try to claim anything else - for other cases, it will 
-give answers that "make sense" but they won't necessarily be the _whole_ 
-truth. But it won't ever be really misleading either, and it will never 
-cause any slowdowns.
-
-		Linus
+diff --git a/builtin-revert.c b/builtin-revert.c
+index 4725540..7483a7a 100644
+--- a/builtin-revert.c
++++ b/builtin-revert.c
+@@ -251,7 +251,7 @@ static int revert_or_cherry_pick(int argc, const char **argv)
+ 	int i, index_fd, clean;
+ 	char *oneline, *reencoded_message = NULL;
+ 	const char *message, *encoding;
+-	const char *defmsg = xstrdup(git_path("MERGE_MSG"));
++	char *defmsg = xstrdup(git_path("MERGE_MSG"));
+ 	struct merge_options o;
+ 	struct tree *result, *next_tree, *base_tree, *head_tree;
+ 	static struct lock_file index_lock;
+@@ -432,6 +432,7 @@ static int revert_or_cherry_pick(int argc, const char **argv)
+ 		return execv_git_cmd(args);
+ 	}
+ 	free(reencoded_message);
++	free(defmsg);
+ 
+ 	return 0;
+ }
+-- 
+1.6.0.3.549.gb475d
