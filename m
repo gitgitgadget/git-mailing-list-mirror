@@ -1,76 +1,80 @@
-From: Andreas Ericsson <ae@op5.se>
-Subject: Re: [VOTE] git versus mercurial (for DragonflyBSD)
-Date: Tue, 28 Oct 2008 18:48:28 +0100
-Message-ID: <4907506C.8090609@op5.se>
-References: <ge0rla$mce$1@ger.gmane.org> <200810272149.13542.arne_bab@web.de> <20081027210716.GS2273@genesis.frugalware.org> <200810272230.51683.arne_bab@web.de>
+From: Hannu Koivisto <azure@iki.fi>
+Subject: Re: git bisect view's use of DISPLAY environment variable in Cygwin
+Date: Tue, 28 Oct 2008 19:51:34 +0200
+Organization: NOYB
+Message-ID: <83skqg1uc9.fsf@kalahari.s2.org>
+References: <83wsfs1y6v.fsf@kalahari.s2.org>
+	<c07716ae0810281015s47741fdqec4c3bed3313bb6a@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: Miklos Vajna <vmiklos@frugalware.org>,
-	Jakub Narebski <jnareb@gmail.com>, git@vger.kernel.org,
-	mercurial@selenic.com, SLONIK.AZ@gmail.com
-To: Arne Babenhauserheide <arne_bab@web.de>
-X-From: git-owner@vger.kernel.org Tue Oct 28 18:50:17 2008
+Content-Type: text/plain; charset=us-ascii
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Oct 28 18:53:08 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Kushl-0002ix-Em
-	for gcvg-git-2@gmane.org; Tue, 28 Oct 2008 18:50:09 +0100
+	id 1KuskY-0003p3-QK
+	for gcvg-git-2@gmane.org; Tue, 28 Oct 2008 18:53:03 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754331AbYJ1Rsh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 28 Oct 2008 13:48:37 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752504AbYJ1Rsg
-	(ORCPT <rfc822;git-outgoing>); Tue, 28 Oct 2008 13:48:36 -0400
-Received: from mail.op5.se ([193.201.96.20]:32955 "EHLO mail.op5.se"
+	id S1752704AbYJ1Rvs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 28 Oct 2008 13:51:48 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752683AbYJ1Rvs
+	(ORCPT <rfc822;git-outgoing>); Tue, 28 Oct 2008 13:51:48 -0400
+Received: from main.gmane.org ([80.91.229.2]:54404 "EHLO ciao.gmane.org"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754331AbYJ1Rsg (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 28 Oct 2008 13:48:36 -0400
-Received: from localhost (localhost.localdomain [127.0.0.1])
-	by mail.op5.se (Postfix) with ESMTP id 697C324B001C;
-	Tue, 28 Oct 2008 18:42:55 +0100 (CET)
-X-Virus-Scanned: amavisd-new at 
-X-Spam-Flag: NO
-X-Spam-Score: -2.499
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.499 tagged_above=-10 required=6.6
-	tests=[BAYES_00=-2.599, RDNS_NONE=0.1]
-Received: from mail.op5.se ([127.0.0.1])
-	by localhost (mail.op5.se [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id wk9sWD2DGwzY; Tue, 28 Oct 2008 18:42:52 +0100 (CET)
-Received: from clix.int.op5.se (unknown [172.27.78.10])
-	by mail.op5.se (Postfix) with ESMTP id D501324B001B;
-	Tue, 28 Oct 2008 18:42:51 +0100 (CET)
-User-Agent: Thunderbird 2.0.0.16 (X11/20080723)
-In-Reply-To: <200810272230.51683.arne_bab@web.de>
+	id S1752532AbYJ1Rvr (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 28 Oct 2008 13:51:47 -0400
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1KusjG-0005dS-48
+	for git@vger.kernel.org; Tue, 28 Oct 2008 17:51:42 +0000
+Received: from s2.org ([195.197.64.39])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Tue, 28 Oct 2008 17:51:42 +0000
+Received: from azure by s2.org with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Tue, 28 Oct 2008 17:51:42 +0000
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@ger.gmane.org
+X-Gmane-NNTP-Posting-Host: s2.org
+User-Agent: Gnus/5.110011 (No Gnus v0.11) Emacs/22.2 (gnu/linux)
+Cancel-Lock: sha1:MlG0UgLEhF6aOlhB1ajhfPd5lRY=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/99309>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/99310>
 
-Arne Babenhauserheide wrote:
-> Am Montag 27 Oktober 2008 22:07:16 schrieb Miklos Vajna:
->> IIRC the main reason git aliases can't overwrite git commands is because
->> that would break scripts relying on the output of existing git commands.
->> Given that I install such an extension, won't my script break?
-> 
-> Since that "script" will likely be an extension which will use the core 
-> function instead of the UI command, it won't break. 
-> 
-> Stuff which does command line parsing can naturally break when I change the 
-> output. But it can also directly use the advanced features. 
-> 
+"Christian Couder" <christian.couder@gmail.com> writes:
 
-But then you're back with a single language, taking valuable freedom
-away from the addon author. How many perl gurus have skipped writing
-stuff for hg because it's a "python-or-bust" thing?
+> Hi,
+>
+> On Tue, Oct 28, 2008 at 5:28 PM, Hannu Koivisto <azure@iki.fi> wrote:
+>> Greetings,
+>>
+>> git bisect view uses gitk if DISPLAY environment variable is set
+>> and git log otherwise.  Since gitk doesn't require X server in
+>> Cygwin, that seems like a bit questionable condition in that
+>> environment.
+>
+> Do you know any environment variable that we could use to detect we
+> can use gitk in Cygwin?
 
-And please don't give me that rubbish of "but Python is obviously better
-than C". Which one's true (if any) depends only on how you define "better".
+I looked around and I believe there is no such variable.  I suppose
+the only case where you cannot use gitk is when the user is logged
+on using ssh, telnet, psexec or similar (well, unless you use some
+non-standard Tcl/Tk build which is configured to use X instead of
+Windows graphics).  Then again, I don't think typical Windows
+programs do any checks for such situations.
+
+So, easy fix: always use gitk unless log is specified.  Harder fix:
+figure out a way to test if the login session is such that
+graphical applications can be run.
+
+> You can use "git bisect view log" to use "git log" even if DISPLAY is set.
+
+I'd rather not use undocumented functionality ;)
 
 -- 
-Andreas Ericsson                   andreas.ericsson@op5.se
-OP5 AB                             www.op5.se
-Tel: +46 8-230225                  Fax: +46 8-230231
+Hannu
