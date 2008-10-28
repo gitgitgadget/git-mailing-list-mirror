@@ -1,146 +1,99 @@
-From: Karl =?utf-8?q?Hasselstr=C3=B6m?= <kha@treskal.com>
-Subject: [StGit PATCH] Tutorial: Importing patches
-Date: Tue, 28 Oct 2008 21:42:23 +0100
-Message-ID: <20081028204223.9539.89315.stgit@yoghurt>
+From: "Christian Couder" <christian.couder@gmail.com>
+Subject: Re: git bisect view's use of DISPLAY environment variable in Cygwin
+Date: Tue, 28 Oct 2008 20:13:48 +0100
+Message-ID: <c07716ae0810281213k432d82d8i468f54ae03146b88@mail.gmail.com>
+References: <83wsfs1y6v.fsf@kalahari.s2.org>
+	 <c07716ae0810281015s47741fdqec4c3bed3313bb6a@mail.gmail.com>
+	 <83skqg1uc9.fsf@kalahari.s2.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org
-To: Catalin Marinas <catalin.marinas@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Oct 28 21:43:48 2008
+To: "Hannu Koivisto" <azure@iki.fi>
+X-From: git-owner@vger.kernel.org Tue Oct 28 21:56:52 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KuvPk-0002si-Uu
-	for gcvg-git-2@gmane.org; Tue, 28 Oct 2008 21:43:45 +0100
+	id 1KuvcQ-0007eH-Ih
+	for gcvg-git-2@gmane.org; Tue, 28 Oct 2008 21:56:51 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752791AbYJ1Umb convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 28 Oct 2008 16:42:31 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752687AbYJ1Umb
-	(ORCPT <rfc822;git-outgoing>); Tue, 28 Oct 2008 16:42:31 -0400
-Received: from diana.vm.bytemark.co.uk ([80.68.90.142]:1534 "EHLO
-	diana.vm.bytemark.co.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752558AbYJ1Umb (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 28 Oct 2008 16:42:31 -0400
-Received: from localhost ([127.0.0.1] helo=[127.0.1.1])
-	by diana.vm.bytemark.co.uk with esmtp (Exim 3.36 #1 (Debian))
-	id 1KuvOU-0005Bp-00; Tue, 28 Oct 2008 20:42:26 +0000
-User-Agent: StGIT/0.14.3.236.g0c611
+	id S1753199AbYJ1Uzh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 28 Oct 2008 16:55:37 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753191AbYJ1Uzh
+	(ORCPT <rfc822;git-outgoing>); Tue, 28 Oct 2008 16:55:37 -0400
+Received: from rn-out-0910.google.com ([64.233.170.188]:55978 "EHLO
+	rn-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753106AbYJ1Uzg (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 28 Oct 2008 16:55:36 -0400
+Received: by rn-out-0910.google.com with SMTP id k40so1354594rnd.17
+        for <git@vger.kernel.org>; Tue, 28 Oct 2008 13:55:35 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to
+         :subject:cc:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:references;
+        bh=aS//PR0+hEd3iW818Q/l/o0lwUx+kqBBH4kd5RQk95Y=;
+        b=wyIErkb+j5/WLtwcp3JwyhnVhRHi9r7JXEQE7UJCXDGuMKJ5MZt549UIIOIbYCUluK
+         7dog4fGu8tjzwPp3S1Q5M8IqQxNzWdtMi8fa+WknhhzIpz/UmbTS6I4kNLnYONyEzzW9
+         ERQST3cazE3zcakRpXIGaRe1YJe5dX3yCc6wE=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
+         :content-type:content-transfer-encoding:content-disposition
+         :references;
+        b=d1uSPmBknlHKIbseEdmr5U4gxAcaSOyyQ/A7UxYhcFiH1aEV4MEYf2CJw6EoL2thV4
+         ki3PxB984j0tqeQ1+tZcKHp1Rrzp4nrIbCZSaK8CP6lpOA6jXpV9KXYrCCgz5q6j9dzb
+         DOQAtu0cxfDd7re5V+DjEZDsJxvD9JzFHO6NI=
+Received: by 10.150.140.6 with SMTP id n6mr5637609ybd.102.1225221228427;
+        Tue, 28 Oct 2008 12:13:48 -0700 (PDT)
+Received: by 10.150.200.11 with HTTP; Tue, 28 Oct 2008 12:13:48 -0700 (PDT)
+In-Reply-To: <83skqg1uc9.fsf@kalahari.s2.org>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/99321>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/99322>
 
-Signed-off-by: Karl Hasselstr=C3=B6m <kha@treskal.com>
+On Tue, Oct 28, 2008 at 6:51 PM, Hannu Koivisto <azure@iki.fi> wrote:
+> "Christian Couder" <christian.couder@gmail.com> writes:
+>
+>> Hi,
+>>
+>> On Tue, Oct 28, 2008 at 5:28 PM, Hannu Koivisto <azure@iki.fi> wrote:
+>>> Greetings,
+>>>
+>>> git bisect view uses gitk if DISPLAY environment variable is set
+>>> and git log otherwise.  Since gitk doesn't require X server in
+>>> Cygwin, that seems like a bit questionable condition in that
+>>> environment.
+>>
+>> Do you know any environment variable that we could use to detect we
+>> can use gitk in Cygwin?
+>
+> I looked around and I believe there is no such variable.  I suppose
+> the only case where you cannot use gitk is when the user is logged
+> on using ssh, telnet, psexec or similar (well, unless you use some
+> non-standard Tcl/Tk build which is configured to use X instead of
+> Windows graphics).  Then again, I don't think typical Windows
+> programs do any checks for such situations.
 
----
+We need at least a way to detect we are under Cygwin, because we won't
+change the current behavior for all platforms.
+Is checking for the CYGWIN environment variable enough?
 
- Documentation/tutorial.txt |   89 ++++++++++++++++++++++++++++++++++++=
-++++++++
- 1 files changed, 88 insertions(+), 1 deletions(-)
+> So, easy fix: always use gitk unless log is specified.  Harder fix:
+> figure out a way to test if the login session is such that
+> graphical applications can be run.
+>
+>> You can use "git bisect view log" to use "git log" even if DISPLAY is set.
+>
+> I'd rather not use undocumented functionality ;)
 
+In this case you can use any "git log" option after "git bisect view"
+(for example: git bisect view -p).
 
-diff --git a/Documentation/tutorial.txt b/Documentation/tutorial.txt
-index 2808462..283b358 100644
---- a/Documentation/tutorial.txt
-+++ b/Documentation/tutorial.txt
-@@ -621,7 +621,94 @@ get rid of such empty patches if you don't want th=
-em hanging around:
- Importing patches
- -----------------
-=20
--TODO:: import, ...
-+While you are busy producing patches, there's hopefully someone -- the
-+'maintainer' -- at the other end who recieves them and 'applies' them
-+to her Git tree, which is then published for all (or parts of) the
-+world to see.
-+
-+It's perfectly fine for this person to not have the foggiest idea what
-+StGit is. In that case, she'll probably apply your patches with
-+something like +git am+, and everything will just work, exactly as if
-+you'd used Git to send those patches. But she might be an StGit user
-+too, in which case she might use stglink:import[].
-+
-+There are basically four kinds if stuff you can import with
-+stglink:import[]:
-+
-+  1. A patch in a file.
-+
-+  2. Several files containing one patch each, and a 'series' file
-+     listing those other files in the correct order.
-+
-+  3. An e-mail containing a single patch.
-+
-+  4. A mailbox file (in standard Unix +mbox+ format) containing
-+     multiple e-mails with one patch in each.
-+
-+
-+Importing a plain patch
-+~~~~~~~~~~~~~~~~~~~~~~~
-+
-+Importing a plain patch, such as produced by e.g. GNU +diff+, +git
-+diff+, +git show+, stglink:diff[], or stglink:show[], is very easy.
-+Just say
-+
-+  $ stg import my-patch
-+
-+and you'll have a new patch at the top of your stack.
-+
-+If you don't give a file name on the command line, stglink:import[]
-+will read the patch from its standard input -- in other words, you can
-+pipe a patch to it directly from the command that produces it.
-+
-+By default, the new patch's name will be taken from the file name, and
-+its commit message and author info will be taken from the beginning of
-+the patch, if they are there. However, there are command line switches
-+to override all of these things; see the man page for details.
-+
-+
-+Importing several patches at once
-+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-+
-+Some programs -- among them stglink:export[] -- will create a bunch of
-+files with one patch in each, and a 'series' file (often called
-++series+) listing the other files in the correct order. Give
-++$$--series$$+ and the name of the series file to stglink:import[],
-+and it will import all the patches for you, in the correct order.
-+
-+
-+Importing a patch from an e-mail
-+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-+
-+Importing a patch from an e-mail is simple too:
-+
-+  $ stg import --mail my-mail
-+
-+The e-mail should be in standard Git mail format (which is what e.g.
-+stglink:mail[] produces) -- that is, with the patch in-line in the
-+mail, not attached. The authorship info is taken from the mail
-+headers, and the commit message is read from the 'Subject:' line and
-+the mail body.
-+
-+If you don't give a file name, the mail will be read from the standard
-+input. This means that, if your mail reader supports it, you can pipe
-+a mail directly to +stg import $$--mail$$+ and the patch will be
-+applied.
-+
-+
-+Importing a mailbox full of patches
-+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-+
-+Finally, in case importing one patch at a time is too much work,
-+stglink:import[] also accepts an entire Unix +mbox+-format mailbox,
-+either on the command line or on its standard input; just use the
-++$$--mbox$$+ flag. Each mail should contain one patch, and is imported
-+just like with +$$--mail$$+.
-+
-+Mailboxes full of patches are produced by e.g. stglink:mail[] with the
-++$$--mbox$$+ flag, but most mail readers can produce them too, meaning
-+that you can copy all the patch mails you want to apply to a separate
-+mailbox, and then import them all in one go.
-=20
-=20
- Other stuff that needs to be placed somewhere
+Regards,
+Christian.
