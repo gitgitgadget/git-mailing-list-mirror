@@ -1,89 +1,99 @@
-From: "Dmitry V. Levin" <ldv@altlinux.org>
-Subject: Re: [PATCH 6/6] t9400, t9401: use "git cvsserver" without dash
-Date: Tue, 28 Oct 2008 14:16:10 +0300
-Message-ID: <20081028111610.GE1682@wo.int.altlinux.org>
-References: <7vljy13sq0.fsf@gitster.siamese.dyndns.org> <20080910062529.6117@nanako3.lavabit.com> <20080910200318.6117@nanako3.lavabit.com> <7v8wtzvd8h.fsf@gitster.siamese.dyndns.org>
+From: "Alex Riesen" <raa.lkml@gmail.com>
+Subject: Re: [PATCH] Only update the cygwin-related configuration during state auto-setup
+Date: Tue, 28 Oct 2008 13:21:59 +0100
+Message-ID: <81b0412b0810280521x5982315ahe1d81c2c7176f1c8@mail.gmail.com>
+References: <7viqri35dq.fsf@gitster.siamese.dyndns.org>
+	 <20081027192018.6117@nanako3.lavabit.com>
+	 <7vhc6xh010.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="Rgf3q3z9SdmXC6oT"
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Oct 28 12:26:42 2008
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: "Nanako Shiraishi" <nanako3@lavabit.com>,
+	"Mark Levedahl" <mlevedahl@gmail.com>, spearce@spearce.org,
+	dpotapov@gmail.com, git@vger.kernel.org
+To: "Junio C Hamano" <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Oct 28 13:23:24 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Kumia-0007XU-Jc
-	for gcvg-git-2@gmane.org; Tue, 28 Oct 2008 12:26:37 +0100
+	id 1KunbR-0001GR-RV
+	for gcvg-git-2@gmane.org; Tue, 28 Oct 2008 13:23:18 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752900AbYJ1LZE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 28 Oct 2008 07:25:04 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752813AbYJ1LZE
-	(ORCPT <rfc822;git-outgoing>); Tue, 28 Oct 2008 07:25:04 -0400
-Received: from vint.altlinux.org ([194.107.17.35]:33636 "EHLO
-	vint.altlinux.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752772AbYJ1LZD (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 28 Oct 2008 07:25:03 -0400
-Received: from wo.int.altlinux.org (wo.int.altlinux.org [192.168.1.4])
-	by vint.altlinux.org (Postfix) with ESMTP id E5FA23F80240;
-	Tue, 28 Oct 2008 14:16:10 +0300 (MSK)
-Received: by wo.int.altlinux.org (Postfix, from userid 508)
-	id D724D3F48C90; Tue, 28 Oct 2008 14:16:10 +0300 (MSK)
+	id S1753192AbYJ1MWE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 28 Oct 2008 08:22:04 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753157AbYJ1MWC
+	(ORCPT <rfc822;git-outgoing>); Tue, 28 Oct 2008 08:22:02 -0400
+Received: from mail-gx0-f18.google.com ([209.85.217.18]:48992 "EHLO
+	mail-gx0-f18.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752834AbYJ1MWB (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 28 Oct 2008 08:22:01 -0400
+Received: by mail-gx0-f18.google.com with SMTP id 11so1366288gxk.13
+        for <git@vger.kernel.org>; Tue, 28 Oct 2008 05:22:00 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to
+         :subject:cc:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:references;
+        bh=Q5KgAvV6a9I2hYdmKgEWZ6lMpZ8YokkjSg5R8S+ucBg=;
+        b=VyN6hWA3nvLM3SgA1zOoPihB7rbKvW/droROHTA0NDcOFPbsBToNOs2Dg1XlrCevMa
+         Z/LPZwC+b6CX+F1g6F73UB29iUgMrx5lQEmirRZIOubFmVpFTgn8XW1UBImdkm5lNWS9
+         MBj8MFnbHRdzS/OttFHNDVbz0ZMOik9zb5j7s=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
+         :content-type:content-transfer-encoding:content-disposition
+         :references;
+        b=GlZg23zaLD42ujdfru6jAfrkISzrJbRNMbfXggK/wMDj3O6oJobAr0jzIqb7Ipl57Z
+         UUKOoIO4adLmqgyEJ+hWVZNhmMFdhu6a7hWH8mgNRU/kbxoLEglCXX5FprkhZ3WBM+yq
+         H7yIHKii1Xz9v7k70IsMdPrR0voARCUQ/4Bhw=
+Received: by 10.100.41.9 with SMTP id o9mr7004851ano.39.1225196519777;
+        Tue, 28 Oct 2008 05:21:59 -0700 (PDT)
+Received: by 10.100.91.8 with HTTP; Tue, 28 Oct 2008 05:21:59 -0700 (PDT)
+In-Reply-To: <7vhc6xh010.fsf@gitster.siamese.dyndns.org>
 Content-Disposition: inline
-In-Reply-To: <7v8wtzvd8h.fsf@gitster.siamese.dyndns.org>
-X-fingerprint: FE4C 93AB E19A 2E4C CB5D  3E4E 7CAB E6AC 9E35 361E
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/99283>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/99284>
 
-
---Rgf3q3z9SdmXC6oT
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
-
-Hi,
-=20
-On Wed, Sep 10, 2008 at 03:37:50PM -0700, Junio C Hamano wrote:
+2008/10/28 Junio C Hamano <gitster@pobox.com>:
 > Nanako Shiraishi <nanako3@lavabit.com> writes:
->=20
-> > Subject: [PATCH] Install git-cvsserver in $(bindir)
-> >
-> > It is one of the server side programs and needs to be found on usual $P=
-ATH.
-> >
-> > Signed-off-by: Nanako Shiraishi <nanako3@lavabit.com>
-> > ...
-> > -	$(INSTALL) git$X git-upload-pack$X git-receive-pack$X git-upload-arch=
-ive$X git-shell$X '$(DESTDIR_SQ)$(bindir_SQ)'
-> > +	$(INSTALL) git$X git-upload-pack$X git-receive-pack$X git-upload-arch=
-ive$X git-shell$X git-cvsserver$X '$(DESTDIR_SQ)$(bindir_SQ)'
->=20
-> Thanks.
->=20
-> Will queue but without $X at the end, as I do not think we want it even on
-> Windows because cvsserver is a script.
+>> Quoting Junio C Hamano <gitster@pobox.com>:
+>>
+>>> This is the answer to the question I asked in:
+>>>
+>>>  http://thread.gmane.org/gmane.comp.version-control.git/97986/focus=98066
+>>>
+>>> Perhaps we should use a separate variable as the original patch did, in:
+>>>
+>>>   http://article.gmane.org/gmane.comp.version-control.git/97987
+>>>
+>>> How about doing it like this instead?
+>>
+>> Junio, may I ask what the status of this patch is? I see you did not write tests nor commit message --- are you waiting for others to write them?
+>
+> Heh, Alex's ack is good enough for me as far as the code itself is
+> concerned, but I do want these "fixes" accompanied by additional tests to
+> reproduce to avoid future regressions, and this being a Cygwin fix, I am
+> not really the right person to write tests nor run them.
 
-Please apply this compatibility fix (commit v1.6.0.1-308-gede4caf)
-to maint as well.
+I suggest NOT writing the test for the workaround for just one platform I
+personally call the most idiotic of the Microsoft's fallouts. As the
+fix is located
+in the code specific to that platform, it wont do any harm for anyone, whether
+it works or not (even if the code in tree does not work). The Junio's fix is
+definitely enough for me and, I'm very sure, for anyone still having to
+deal with cygwin.
 
+So for the Google's record: the patch to fix the --encoding option of git
+format-patch broken on cygwin is in the Junio's mail, to be found, i.e.:
+http://marc.info/?l=git&m=122482769817566&w=4
 
---=20
-ldv
-
---Rgf3q3z9SdmXC6oT
-Content-Type: application/pgp-signature
-Content-Disposition: inline
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.9 (GNU/Linux)
-
-iEYEARECAAYFAkkG9HoACgkQfKvmrJ41Nh7IIwCgqu3La7HeLpvXSccEvA1BkCaD
-qvsAoLJ7gHHdtaIjspk24AwEx0E6iAnf
-=k9k9
------END PGP SIGNATURE-----
-
---Rgf3q3z9SdmXC6oT--
+Nanako, as there is not many of such poor bastards left, it is not
+even a problem
+to keep the fix just in Git mailing list archives. There is just not
+enough of a looser
+base to press its development in whatever direction.
