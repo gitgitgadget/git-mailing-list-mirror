@@ -1,125 +1,150 @@
-From: Pierre Habouzit <madcoder@debian.org>
-Subject: Re: [PATCH 2/2] Add a 'source' decorator for commits
-Date: Tue, 28 Oct 2008 14:19:28 +0100
-Message-ID: <20081028131928.GB8272@artemis.googlewifi.com>
-References: <alpine.LFD.2.00.0810271256470.3386@nehalem.linux-foundation.org> <alpine.LFD.2.00.0810271305500.3386@nehalem.linux-foundation.org> <alpine.LFD.2.00.0810271306230.3386@nehalem.linux-foundation.org> <20081028054539.GA23195@sigill.intra.peff.net> <20081028131116.GA8272@artemis.googlewifi.com>
+From: "Nguyen Thai Ngoc Duy" <pclouds@gmail.com>
+Subject: Re: new plan for cleaning up the worktree mess, was Re: [PATCH] rehabilitate 'git index-pack' inside the object store
+Date: Tue, 28 Oct 2008 20:52:25 +0700
+Message-ID: <fcaeb9bf0810280652x7f883e35h157f94144263c5fa@mail.gmail.com>
+References: <alpine.LFD.2.00.0810202110380.26244@xanadu.home>
+	 <fcaeb9bf0810210757w1c14e0a3x1eb61a589a089f10@mail.gmail.com>
+	 <alpine.DEB.1.00.0810211856090.22125@pacific.mpi-cbg.de.mpi-cbg.de>
+	 <20081021174303.GA25827@coredump.intra.peff.net>
+	 <alpine.DEB.1.00.0810211955250.22125@pacific.mpi-cbg.de.mpi-cbg.de>
 Mime-Version: 1.0
-Content-Type: multipart/signed; boundary="8P1HSweYDcXXzwPJ";
-	protocol="application/pgp-signature"; micalg=SHA1
-Cc: Linus Torvalds <torvalds@linux-foundation.org>,
-	Git Mailing List <git@vger.kernel.org>,
-	Junio C Hamano <gitster@pobox.com>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Tue Oct 28 14:21:56 2008
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: "Jeff King" <peff@peff.net>, "Nicolas Pitre" <nico@cam.org>,
+	"Junio C Hamano" <gitster@pobox.com>, git@vger.kernel.org
+To: "Johannes Schindelin" <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Tue Oct 28 14:54:22 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KuoV7-0005OA-1U
-	for gcvg-git-2@gmane.org; Tue, 28 Oct 2008 14:20:49 +0100
+	id 1Kup0w-0001Kk-O8
+	for gcvg-git-2@gmane.org; Tue, 28 Oct 2008 14:53:43 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753140AbYJ1NTc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 28 Oct 2008 09:19:32 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753176AbYJ1NTc
-	(ORCPT <rfc822;git-outgoing>); Tue, 28 Oct 2008 09:19:32 -0400
-Received: from pan.madism.org ([88.191.52.104]:55860 "EHLO hermes.madism.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752901AbYJ1NTb (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 28 Oct 2008 09:19:31 -0400
-Received: from madism.org (user-64-9-235-148.googlewifi.com [64.9.235.148])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(Client CN "artemis.madism.org", Issuer "madism.org" (verified OK))
-	by hermes.madism.org (Postfix) with ESMTPS id 9A1583A85A;
-	Tue, 28 Oct 2008 14:19:30 +0100 (CET)
-Received: by madism.org (Postfix, from userid 1000)
-	id 353042A29F; Tue, 28 Oct 2008 14:19:28 +0100 (CET)
+	id S1752557AbYJ1Nw2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 28 Oct 2008 09:52:28 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752163AbYJ1Nw2
+	(ORCPT <rfc822;git-outgoing>); Tue, 28 Oct 2008 09:52:28 -0400
+Received: from ik-out-1112.google.com ([66.249.90.181]:20705 "EHLO
+	ik-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751343AbYJ1Nw1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 28 Oct 2008 09:52:27 -0400
+Received: by ik-out-1112.google.com with SMTP id c29so776544ika.5
+        for <git@vger.kernel.org>; Tue, 28 Oct 2008 06:52:25 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to
+         :subject:cc:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:references;
+        bh=uufwngnFhMJKkD5cUYmzKunM8HvmW79cEq3XWUFP1tM=;
+        b=nongfySa5IJrsxmV22beK4a4yhVFWuXUd+kaf2XDf5omlI8uEyFrfGE+yuzkZn+zMG
+         iPlQGtiw27EzeLOuBAKzkYW7doz/a95hqr2l8GwbPxokKDXG7ZWt3eTWITvM67iRdaLF
+         gGi91TI8L5WzzOq5gxMOdLKHTq+Bd7v0ssLMY=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
+         :content-type:content-transfer-encoding:content-disposition
+         :references;
+        b=StMAOAc4r7Lgu5zGpF47V+jOkhDLFhx2uaHHBcKfrniPgQ2slT/8HwVoBpr57Bsb+G
+         G7M4mpJW4mz3e/UcEd7vQBMIkDsNzdKL51ZbrdOYhT9bccMCdu7Q1haFv4qOeoVyZQop
+         OyHnkEi2wQWQD94ARo55HEca6jBA/pk8+8ulw=
+Received: by 10.86.72.15 with SMTP id u15mr4509797fga.45.1225201945367;
+        Tue, 28 Oct 2008 06:52:25 -0700 (PDT)
+Received: by 10.86.95.9 with HTTP; Tue, 28 Oct 2008 06:52:25 -0700 (PDT)
+In-Reply-To: <alpine.DEB.1.00.0810211955250.22125@pacific.mpi-cbg.de.mpi-cbg.de>
 Content-Disposition: inline
-In-Reply-To: <20081028131116.GA8272@artemis.googlewifi.com>
-X-Face: $(^e[V4D-[`f2EmMGz@fgWK!e.B~2g.{08lKPU(nc1J~z\4B>*JEVq:E]7G-\6$Ycr4<;Z!|VY6Grt]+RsS$IMV)f>2)M="tY:ZPcU;&%it2D81X^kNya0=L]"vZmLP+UmKhgq+u*\.dJ8G!N&=EvlD
-User-Agent: Madmutt/devel (Linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/99289>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/99290>
 
+On 10/22/08, Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
+> Hi,
+>
+>  On Tue, 21 Oct 2008, Jeff King wrote:
+>
+>  > On Tue, Oct 21, 2008 at 07:02:48PM +0200, Johannes Schindelin wrote:
+>  >
+>  > > So I propose this change in semantics:
+>  > >
+>  > > - setup_git_directory_gently(): rename to discover_git_directory(),
+>  > >   and avoid any chdir() at all.
+>  > > - setup_git_directory(): keep the semantics that it chdir()s to the
+>  > >   worktree, or to the git directory for bare repositories.
+>  > >
+>  > > Using _gently() even for RUN_SETUP builtins should solve the long
+>  > > standing pager problem, too.
+>  >
+>  > I'm not sure there aren't hidden problems lurking in that strategy
+>  > (every time I look at this area of code, something unexpected prevents
+>  > what I think should Just Work from Just Working), but I think that is a
+>  > promising direction to go for clearing up some of the long-standing
+>  > issues.
+>
+>  Same here.  I grew a pretty strong opinion about the whole worktree thing,
+>  but maybe that is only because it was done trying to change as little as
+>  possible.
 
---8P1HSweYDcXXzwPJ
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+I played a bit with code, extracted discover_git_directory() from
+setup_git_directory_gently() then made the latter a wrapper of the
+former with chdir(). Some more for thoughts from the experiment.
 
-On Tue, Oct 28, 2008 at 01:11:16PM +0000, Pierre Habouzit wrote:
-> On Tue, Oct 28, 2008 at 05:45:40AM +0000, Jeff King wrote:
-> > On Mon, Oct 27, 2008 at 01:07:10PM -0700, Linus Torvalds wrote:
-> > > Of course, if the commit is reachable through multiple sources (which=
- is
-> > > common), our particular choice of "first" reachable is entirely random
-> > > and depends on the particular path we happened to follow.
-> >=20
-> > Hmm. It would be nice to keep even a simple counter to get a "distance"
-> > from the ref and choose the one with the smallest distance (I think we
-> > can get away without the complex rules that git-describe uses, since we
-> > are not interested in describing the full commit, but rather finding a
-> > "likely" branch).
-> >=20
-> > However, that would require making multiple passes over the commit
-> > graph, which might impact the startup speed.
->=20
-> Actually I tried to do that (and you meant name-rev --contains rather
-> than describe actually ;p), and I stopped because it's too slow. I
-> believe the proper way to do that is to help git-log knowing which are
-> the short (topic) branches, and to crawl incrementally using a
-> date-based hack. This would basically work a bit like this. Let's
-> imaging you want to crawl "next" in git and know which topics from pu
-> are in it. You would say e.g.:
->=20
-> git-log --topics=3D*/* next (as pretty much every */* is a topic branch
-> for git.git).
->=20
->=20
-> Then one has to know which are the heads of every topic branches first,
-> then crawl next the usual way, except that when you arrive to a point
-> that is a topic branch head, you don't look that way. You remember the
-> date of that point, and continue to crawl "next" a bit further so that
-> you can start annotating the topic's commits you've stumbled upon. And
-> you do that, you look at jd/topic (as in John Doe topic branch) and mark
-> all the commits as being from jd/topic, until you either go back to some
-> commit from next, or your current commit date is younger than your
-> current "next" crawling front. In the former case, you're done with that
-> topic, in the latter you must continue to preprocess "next" a bit more.
+1. Because discover_git_directory() does not do chdir() until later in
+setup_git_directory_gently(), setting GIT_DIR to a relative path seems
+unsafe (or worse unset at all, in case .git is found in parent
+directories). But making GIT_DIR absolute path breaks tests because
+some of them expect "git rev-parse --git-dir" to return a relative
+path. The approach used in 044bbbc (Make git_dir a path relative to
+work_tree in setup_work_tree()) can be reused to performance loss, but
+that won't solve the issue.
 
-My description is clumsy, as we probably sometimes want to crawl topics
-that aren't merged either like in git-log --topics=3D*/* --all.  But we
-just have to mark the current "front" of the walk, and have it sorted
-between things that are part of topic heads and the thing that are not.
-We don't even need to decorate the things that are _not_ part of the
-topics at all I'd say, because that's where you definitely need distance
-based algorithms and multiple passes to yield correct results.
+2. 044bbbc also brings up another issue: code duplication between
+setup_git_directory_gently() and setup_work_tree(). The new
+setup*gently() can be roughly like this if setup_work_tree() can
+calculate prefix too:
 
-Whereas for the specific case of topic branches, which is what people
-want (see Ingo's mails on the subject a week or so ago), the algorithm I
-propose is, I guess, mostly O(n + m) in the number of walked commits (n)
-and references (m). IOW fast.
+const char *setup_git_directory_gently(int *nongit_ok)
+{
+        int nonworktree_ok;
+        /*
+         * Let's assume that we are in a git repository.
+         * If it turns out later that we are somewhere else, the value will be
+         * updated accordingly.
+         */
+        if (nongit_ok)
+                *nongit_ok = 0;
 
+        if (!discover_git_directory()) {
+                if (nongit_ok) {
+                        *nongit_ok = 1;
+                        return NULL;
+                }
+                die("Not a git repository");
+        }
 
---=20
-=C2=B7O=C2=B7  Pierre Habouzit
-=C2=B7=C2=B7O                                                madcoder@debia=
-n.org
-OOO                                                http://www.madism.org
+        return setup_work_tree_gently(&nonworktree_ok); // gentle version
+}
 
---8P1HSweYDcXXzwPJ
-Content-Type: application/pgp-signature
-Content-Disposition: inline
+So I propose to make setup_work_tree() return a prefix, relative to
+current cwd. The setup procedure then would become:
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.9 (GNU/Linux)
+if (discover_git_directory())
+    die("Git repository needed");
+prefix = setup_work_tree(); // die() inside if cannot setup worktree
 
-iEYEABECAAYFAkkHEWAACgkQvGr7W6HudhxU8ACfTfrUhrFajrOTA587nbr/MS+y
-xN4AoJK7r4xKDFiQ1g4BjN+/b9OMUJud
-=FLvM
------END PGP SIGNATURE-----
+3. Dealing with cwd outside worktree. If cwd is inside a worktree,
+prefix will be calculated correctly. If it is outside, the current
+behavior (with both GIT_DIR and GIT_WORK_TREE set) is leave prefix as
+NULL. I think that is not right. With a wrong prefix, git commands
+will not be able to access on-disk files. I would propose either:
+  - die() if cwd is outside worktree
+  - setup*gently() discovers the situation and gives up, then lets git
+commands handle themselves. Some commands, like git-archive, don't
+care about on-disk files at all, they could just simply ignore the
+prefix and keep going. Others may die() or handle it properly.
 
---8P1HSweYDcXXzwPJ--
+Again, this breaks things.
+-- 
+Duy
