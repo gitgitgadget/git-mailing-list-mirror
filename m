@@ -1,77 +1,48 @@
-From: Pieter de Bie <pdebie@ai.rug.nl>
-Subject: Re: Git/Mercurial interoperability (and what about bzr?) (was: Re: [VOTE] git versus mercurial)
-Date: Tue, 28 Oct 2008 16:33:54 +0100
-Message-ID: <E026EBDF-F402-49AB-A7A8-0A0EFB513907@ai.rug.nl>
-References: <ge0rla$mce$1@ger.gmane.org> <ge70nl$l6t$1@ger.gmane.org> <alpine.DEB.1.00.0810281445190.22125@pacific.mpi-cbg.de.mpi-cbg.de> <Pine.LNX.4.64.0810281536360.27029@ds9.cixit.se>
-Mime-Version: 1.0 (Apple Message framework v929.2)
-Content-Type: text/plain; charset=US-ASCII; format=flowed; delsp=yes
-Content-Transfer-Encoding: 7bit
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Peter Krefting <peter@softwolves.pp.se>
-X-From: git-owner@vger.kernel.org Tue Oct 28 16:35:28 2008
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 6/6] t9400, t9401: use "git cvsserver" without dash
+Date: Tue, 28 Oct 2008 08:57:52 -0700
+Message-ID: <7vy708g1a7.fsf@gitster.siamese.dyndns.org>
+References: <7vljy13sq0.fsf@gitster.siamese.dyndns.org>
+ <20080910062529.6117@nanako3.lavabit.com>
+ <20080910200318.6117@nanako3.lavabit.com>
+ <7v8wtzvd8h.fsf@gitster.siamese.dyndns.org>
+ <20081028111610.GE1682@wo.int.altlinux.org>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: "Dmitry V. Levin" <ldv@altlinux.org>
+X-From: git-owner@vger.kernel.org Tue Oct 28 17:00:13 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KuqbI-0006FK-9g
-	for gcvg-git-2@gmane.org; Tue, 28 Oct 2008 16:35:20 +0100
+	id 1Kuqye-0007E8-F5
+	for gcvg-git-2@gmane.org; Tue, 28 Oct 2008 16:59:28 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751495AbYJ1PeH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 28 Oct 2008 11:34:07 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751566AbYJ1PeF
-	(ORCPT <rfc822;git-outgoing>); Tue, 28 Oct 2008 11:34:05 -0400
-Received: from frim.nl ([87.230.85.232]:50186 "EHLO
-	lvps87-230-85-232.dedicated.hosteurope.de" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751201AbYJ1PeE (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 28 Oct 2008 11:34:04 -0400
-Received: from s5591931c.adsl.wanadoo.nl ([85.145.147.28] helo=[192.168.1.11])
-	by lvps87-230-85-232.dedicated.hosteurope.de with esmtpsa (TLS-1.0:RSA_AES_128_CBC_SHA1:16)
-	(Exim 4.63)
-	(envelope-from <pdebie@ai.rug.nl>)
-	id 1Kuqa1-0001Ws-3F; Tue, 28 Oct 2008 16:34:01 +0100
-In-Reply-To: <Pine.LNX.4.64.0810281536360.27029@ds9.cixit.se>
-X-Mailer: Apple Mail (2.929.2)
+	id S1752018AbYJ1P6K (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 28 Oct 2008 11:58:10 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751977AbYJ1P6J
+	(ORCPT <rfc822;git-outgoing>); Tue, 28 Oct 2008 11:58:09 -0400
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:57936 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751870AbYJ1P6I (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 28 Oct 2008 11:58:08 -0400
+Received: from localhost.localdomain (localhost [127.0.0.1])
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id C770C75DA2;
+	Tue, 28 Oct 2008 11:58:06 -0400 (EDT)
+Received: from pobox.com (ip68-225-240-211.oc.oc.cox.net [68.225.240.211])
+ (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
+ certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
+ ESMTPSA id 75B7F75D9D; Tue, 28 Oct 2008 11:58:01 -0400 (EDT)
+In-Reply-To: <20081028111610.GE1682@wo.int.altlinux.org> (Dmitry V. Levin's
+ message of "Tue, 28 Oct 2008 14:16:10 +0300")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: 35DE83B2-A509-11DD-8CA3-9CEDC82D7133-77302942!a-sasl-fastnet.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/99299>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/99300>
 
-
-On 28 okt 2008, at 15:41, Peter Krefting wrote:
-
-> It seems to me that use of DVCS is polarising between Git, Mercurial
-> and Bzr. It would be nice to have easy interoperability between the
-> systems, at least as far as can be covered by the lowest common
-> denominator of what they support. I would love to be able to use Git  
-> to
-> clone a Bzr repository that I need to be able to access, since bzr is
-> just different enough from Git to be annoying. Same goes for  
-> Mercurial.
-> And I am sure that users of the other tools feel the same.
->
-> Would it be possible to design a common transfer format that could be
-> implemented by all three (and that would be a little smarter than
-> fast-export/fast-import)?
-
-What would you want that the fast-export/imports are lacking? I think  
-they are excellent tools to build some integration on.
-
-You might want to look at my git-bzr script (http://github.com/pieter/git-bzr/tree/master 
-), which I created so I could use
-bazaar branches easily in git. It allows you to fetch a bzr branch,  
-merge it in with your local work, and then push it out again:
-
-	git bzr add bzr-branch ~/bazaar/something
-	git bzr fetch bzr-branch
-	git merge bzr/bzr-branch
-	git bzr push bzr-branch
-
-It's quite crude, but it's also only 100 lines or so and does what I  
-need. It should also be simple enough to adapt it to also incorporate  
-hg. When I needed the bzr integration, I looked into hg as well, but  
-there wasn't a hg fast-import yet. If I understand dscho correctly,  
-that exists now, so it should be easy enough to integrate that as well.
-
-- Pieter
+Thanks; will cherry-pick both.
