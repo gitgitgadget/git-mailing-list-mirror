@@ -1,138 +1,73 @@
-From: Jeff King <peff@peff.net>
-Subject: alternate log --follow idea
-Date: Tue, 28 Oct 2008 02:44:28 -0400
-Message-ID: <20081028064425.GA26450@sigill.intra.peff.net>
+From: =?iso-8859-1?Q?Bj=F6rn?= Steinbrink <B.Steinbrink@gmx.de>
+Subject: Re: Terminology question: "tracking" branches
+Date: Tue, 28 Oct 2008 09:01:02 +0100
+Message-ID: <20081028080102.GL3612@atjola.homenet>
+References: <48F8AA5E.6090908@drmicha.warpmail.net> <48F8ECA2.3040208@xiplink.com> <48FC8624.9090807@fastmail.fm> <48FCB6B8.6090708@xiplink.com> <48FDA5A0.8030506@drmicha.warpmail.net> <48FDF28A.9060606@xiplink.com> <48FF3FEE.8020209@drmicha.warpmail.net> <20081022161302.GC16946@atjola.homenet> <490030AB.8090207@drmicha.warpmail.net> <20081027162840.GK3612@atjola.homenet>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Oct 28 07:45:48 2008
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Marc Branchaud <marcnarc@xiplink.com>,
+	Peter Harris <git@peter.is-a-geek.org>, git@vger.kernel.org,
+	Junio C Hamano <gitster@pobox.com>
+To: Michael J Gruber <git@drmicha.warpmail.net>
+X-From: git-owner@vger.kernel.org Tue Oct 28 09:02:26 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KuiKo-0008PW-K4
-	for gcvg-git-2@gmane.org; Tue, 28 Oct 2008 07:45:47 +0100
+	id 1KujWz-00014U-5h
+	for gcvg-git-2@gmane.org; Tue, 28 Oct 2008 09:02:25 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752571AbYJ1Goc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 28 Oct 2008 02:44:32 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752562AbYJ1Goc
-	(ORCPT <rfc822;git-outgoing>); Tue, 28 Oct 2008 02:44:32 -0400
-Received: from peff.net ([208.65.91.99]:1673 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752527AbYJ1Goc (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 28 Oct 2008 02:44:32 -0400
-Received: (qmail 18169 invoked by uid 111); 28 Oct 2008 06:44:30 -0000
-Received: from c-98-207-159-21.hsd1.ca.comcast.net (HELO sigill.intra.peff.net) (98.207.159.21)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.32) with ESMTP; Tue, 28 Oct 2008 02:44:30 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 28 Oct 2008 02:44:28 -0400
+	id S1752308AbYJ1IBK convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 28 Oct 2008 04:01:10 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752120AbYJ1IBJ
+	(ORCPT <rfc822;git-outgoing>); Tue, 28 Oct 2008 04:01:09 -0400
+Received: from mail.gmx.net ([213.165.64.20]:36802 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1751955AbYJ1IBI (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 28 Oct 2008 04:01:08 -0400
+Received: (qmail invoked by alias); 28 Oct 2008 08:01:05 -0000
+Received: from i577BB324.versanet.de (EHLO atjola.local) [87.123.179.36]
+  by mail.gmx.net (mp005) with SMTP; 28 Oct 2008 09:01:05 +0100
+X-Authenticated: #5039886
+X-Provags-ID: V01U2FsdGVkX18BV30rVGoBz31lzikK/frU96/Ut0h4K2xgjyaPYR
+	i3ZfBlcD8I5gj/
 Content-Disposition: inline
+In-Reply-To: <20081027162840.GK3612@atjola.homenet>
+User-Agent: Mutt/1.5.18 (2008-05-17)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.64
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/99278>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/99279>
 
-At the GitTogether this morning, I mentioned an alternate idea for
-looking at the history of a file that moved. Currently we have:
+On 2008.10.27 17:28:40 +0100, Bj=F6rn Steinbrink wrote:
+> On 2008.10.23 10:07:07 +0200, Michael J Gruber wrote:
+> > That leaves open:
+> >=20
+> > - What does "remote branch" mean, if it means anything at all? It c=
+ould
+> > be used for a branch in a remote repository, i.e. the other side of
+> > fetch/push refspec (remote branch:tracking branch).
+>=20
+> I prefer to say "the branch on the remote" there, but that's just to
+> avoid confusion with "remote tracking branch".
 
- 1. git log <path>
+So I just happened to use "git remote show origin" and that uses "remot=
+e
+branch" as you described it:
 
-    Show the commits, in reverse chronological order, that touched any
-    content that at the time of touching resided at <path>.
+* remote origin
+  URL: git://git.kernel.org/pub/scm/git/git.git
+  Remote branch merged with 'git pull' while on branch master
+    master
+  Tracked remote branches
+    html
+    maint
+    ...
 
- 2. git log --follow <path>
-
-    Show the commits, in reverse chronological order, for the content
-    currently in <path>, where we find movement of content from one path
-    to another by checking single commits, and say either "all of this
-    content moved from one path to another" or not.
-
- 3. git blame <path>
-
-    Show the current content of <path>, but with each line of content
-    showing the commit that introduced it.
-
-In a repository with moving files, '1' is often insufficient or
-annoying, since you get to the "root" of the file and discover that it
-really came from somewhere else. In other words, you never really cared
-about that path at all, but rather about the _content_ in it.
-
-So you try '2', but that has its own drawbacks.  It only works on one
-file at a time, and it doesn't work on many cases, including "git log
---follow git-gui/git-gui.sh".
-
-So you move to '3', which sort of works. It shows you the commits that
-introduced the current content, but not in the log format. That is, if
-you don't care about "which commit introduced this particular line" but
-rather "what are the commits that created this content", it is not very
-useful. You see the same commits repeated (since they often change many
-lines), the commits are shown in file order rather than reverse
-chronological order, and you don't get the usual nicely formatted log.
-
-So the new idea is very simple: look at the current content, get the
-list of all commits which were involved in creating that content, and
-then display them as a flattened history in the usual git-log way.
-
-The script below implements a very naive version:
-
--- >8 --
-#!/bin/sh
-
-dashed() {
-	for i in "$@"; do
-		case "$i" in
-		-*) echo $i ;;
-		esac
-	done
-}
-
-nondashed() {
-	for i in "$@"; do
-		case "$i" in
-		-*) ;;
-		*) echo $i ;;
-		esac
-	done
-}
-
-# hope we don't have spaces in our arguments
-git ls-files `nondashed "$@"` |
-while read file; do
-	git blame --porcelain "$file" |
-	egrep '^[0-9a-f]{40}' |
-	cut -d' ' -f1
-done |
-sort -u |
-xargs git log --no-walk `dashed "$@"`
--- >8 --
-
-You can try:
-
-  sh blame-log.sh git-gui/git-gui.sh
-
-which should Just Work. Because it expands its arguments via ls-files,
-you can also track the content of a whole directory:
-
-  sh blame-log.sh -p contrib/examples
-
-which finds all of the commits that touched those files, even when they
-were not yet in contrib (in fact, it even traces some of the lines back
-to git-tag-script!).
-
-Of course it has its downsides (aside from this horrific
-implementation). For one thing, it's _way_ slower than a regular log,
-especially on a large chunk of content.  Some of that is in the
-implementation, but mostly it is that blame takes a lot of computation.
-We might be able to make things better with a specialized blame.
-
-And as somebody (I think Steven) mentioned earlier, it only traces
-content which survived to the end. So it won't mention commits which
-were later eradicated, which may be useful to see.
-
-And I'm sure there are probably other little problems, as I haven't
-thought too deeply about this. But maybe it is worth adding to the
-arsenal of exploration tools.
-
--Peff
+JFYI
+Bj=F6rn
