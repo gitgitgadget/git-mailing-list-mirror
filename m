@@ -1,61 +1,62 @@
-From: Johannes Sixt <j.sixt@viscovery.net>
-Subject: Re: [PATCH] git show <tree>: show mode and hash, and handle -r
-Date: Wed, 29 Oct 2008 08:20:04 +0100
-Message-ID: <49080EA4.9080404@viscovery.net>
-References: <alpine.DEB.1.00.0810290207330.22125@pacific.mpi-cbg.de.mpi-cbg.de>
+From: "Christian MICHON" <christian.michon@gmail.com>
+Subject: nice google video on "contributing with git"
+Date: Wed, 29 Oct 2008 08:24:47 +0100
+Message-ID: <46d6db660810290024x585113d8l7d17e9f1aa4ce3fc@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-Cc: gitster@pobox.com, git@vger.kernel.org, schacon@gmail.com
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Wed Oct 29 08:21:41 2008
+To: "Git Mailing List" <git@vger.kernel.org>,
+	"Johannes Schindelin" <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Wed Oct 29 08:26:04 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Kv5Mv-0005BU-7J
-	for gcvg-git-2@gmane.org; Wed, 29 Oct 2008 08:21:29 +0100
+	id 1Kv5RK-00066y-6X
+	for gcvg-git-2@gmane.org; Wed, 29 Oct 2008 08:26:02 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752597AbYJ2HUM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 29 Oct 2008 03:20:12 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752561AbYJ2HUL
-	(ORCPT <rfc822;git-outgoing>); Wed, 29 Oct 2008 03:20:11 -0400
-Received: from lilzmailso02.liwest.at ([212.33.55.13]:11191 "EHLO
-	lilzmailso02.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752539AbYJ2HUK (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 29 Oct 2008 03:20:10 -0400
-Received: from cm56-163-160.liwest.at ([86.56.163.160] helo=linz.eudaptics.com)
-	by lilzmailso02.liwest.at with esmtpa (Exim 4.69)
-	(envelope-from <j.sixt@viscovery.net>)
-	id 1Kv5LZ-00010h-8K; Wed, 29 Oct 2008 08:20:05 +0100
-Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.96])
-	by linz.eudaptics.com (Postfix) with ESMTP
-	id D83DD4FB; Wed, 29 Oct 2008 08:20:04 +0100 (CET)
-User-Agent: Thunderbird 2.0.0.6 (Windows/20070728)
-In-Reply-To: <alpine.DEB.1.00.0810290207330.22125@pacific.mpi-cbg.de.mpi-cbg.de>
-X-Spam-Score: -0.8 (/)
-X-Spam-Report: ALL_TRUSTED=-1.8, BAYES_60=1
+	id S1752368AbYJ2HYt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 29 Oct 2008 03:24:49 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752308AbYJ2HYt
+	(ORCPT <rfc822;git-outgoing>); Wed, 29 Oct 2008 03:24:49 -0400
+Received: from wf-out-1314.google.com ([209.85.200.169]:35767 "EHLO
+	wf-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752002AbYJ2HYs (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 29 Oct 2008 03:24:48 -0400
+Received: by wf-out-1314.google.com with SMTP id 25so3307541wfc.6
+        for <git@vger.kernel.org>; Wed, 29 Oct 2008 00:24:47 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to
+         :subject:mime-version:content-type:content-transfer-encoding
+         :content-disposition;
+        bh=EEhtsifUevOcjmxnW9m9YWOJ8Kd32rYaqDT9ImK/KxA=;
+        b=YpI0sIIpNDtsMerDBNdOsx6z0Cyx4z2W5aww/KcHsouJMakOdYqg4M/TF/rrUV7LE0
+         TNUmu5DFPKBNDgc73Np7sFOV/pnTeC7u1dgrrvEBFBKESluz1wRhd1YOH41LZmP2H7I3
+         NFp+to7GV96+K2LiZXTrSMjeOPKAr2Sq9tw3Q=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:to:subject:mime-version:content-type
+         :content-transfer-encoding:content-disposition;
+        b=UAxjQZF953lcsy9fbeIruzhBYgY+4KESX3aYTXXo2Y42aItPM1YZ1sc7Wvyk3qgTA5
+         unHCFsis27rD15KJA0Tzvb7x0EtYcRSK8eHU1X+aC6CiEXtY6oflGEPBcpTICl3vGxWu
+         Oy6Cu9x3TTl4jmx57CdM9w5ydEbhBFmcoUmbE=
+Received: by 10.142.14.18 with SMTP id 18mr3846684wfn.62.1225265087262;
+        Wed, 29 Oct 2008 00:24:47 -0700 (PDT)
+Received: by 10.142.57.17 with HTTP; Wed, 29 Oct 2008 00:24:47 -0700 (PDT)
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/99349>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/99350>
 
-Johannes Schindelin schrieb:
-> Now, git show <tree> shows some more information, and with the -r option,
-> it recurses into subdirectories.
-> 
-> Requested by Scott Chacon.
-> 
-> Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
-> ---
-> 
-> 	The only quirk is the command line parsing for -r: we cannot use 
-> 	DIFF_OPT_TST(&rev.diffopt, RECURSIVE), because that is switched 
-> 	on not only by cmd_log_init(), but implicitly by 
-> 	diff_setup_done(), because FORMAT_PATCH is selected by git-show.
+taken 2 days ago apparently :)
 
-This comment should for sure go into the commit message.
+http://www.youtube.com/watch?v=j45cs5_nY2k
 
--- Hannes
+-- 
+Christian
+--
+http://detaolb.sourceforge.net/, a linux distribution for Qemu with Git inside !
