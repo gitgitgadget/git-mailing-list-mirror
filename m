@@ -1,60 +1,61 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH] Use find instead of perl in t5000 to get file
-	modification time
-Date: Wed, 29 Oct 2008 17:54:45 -0400
-Message-ID: <20081029215444.GA19874@sigill.intra.peff.net>
-References: <81b0412b0810290338j1beaa25bx9fb373a69f5dfe7@mail.gmail.com>
+From: "Leo Razoumov" <slonik.az@gmail.com>
+Subject: request for pre-generated git.info pages
+Date: Wed, 29 Oct 2008 18:00:45 -0400
+Message-ID: <ee2a733e0810291500o67b3f94fibef63e0a173e8cc1@mail.gmail.com>
+Reply-To: SLONIK.AZ@gmail.com
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Git Mailing List <git@vger.kernel.org>,
-	Junio C Hamano <gitster@pobox.com>,
-	=?utf-8?B?UmVuw6k=?= Scharfe <rene.scharfe@lsrfire.ath.cx>
-To: Alex Riesen <raa.lkml@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Oct 29 22:56:19 2008
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org, "Junio C Hamano" <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Oct 29 23:02:03 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KvJ1W-0004ez-Du
-	for gcvg-git-2@gmane.org; Wed, 29 Oct 2008 22:56:18 +0100
+	id 1KvJ73-0006P0-EN
+	for gcvg-git-2@gmane.org; Wed, 29 Oct 2008 23:02:01 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754769AbYJ2Vyt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 29 Oct 2008 17:54:49 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754303AbYJ2Vys
-	(ORCPT <rfc822;git-outgoing>); Wed, 29 Oct 2008 17:54:48 -0400
-Received: from peff.net ([208.65.91.99]:3808 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754655AbYJ2Vys (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 29 Oct 2008 17:54:48 -0400
-Received: (qmail 31490 invoked by uid 111); 29 Oct 2008 21:54:47 -0000
-Received: from Unknown (HELO sigill.intra.peff.net) (216.239.45.19)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.32) with ESMTP; Wed, 29 Oct 2008 17:54:47 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 29 Oct 2008 17:54:45 -0400
+	id S1752269AbYJ2WAs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 29 Oct 2008 18:00:48 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752182AbYJ2WAs
+	(ORCPT <rfc822;git-outgoing>); Wed, 29 Oct 2008 18:00:48 -0400
+Received: from fg-out-1718.google.com ([72.14.220.156]:15354 "EHLO
+	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751870AbYJ2WAr (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 29 Oct 2008 18:00:47 -0400
+Received: by fg-out-1718.google.com with SMTP id 19so208570fgg.17
+        for <git@vger.kernel.org>; Wed, 29 Oct 2008 15:00:45 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:reply-to
+         :to:subject:mime-version:content-type:content-transfer-encoding
+         :content-disposition;
+        bh=eZQor9b43oPYaJQSOuWEu0v2vXYu1Sx1QCljTSxO3SE=;
+        b=lDIzFIW42BDO5WPpbcdTJ3n1Z+gPZ3lUiNRs1AwJJR6Y8mpd1lqCgOMl4IvDp5DZUp
+         i1woJYCPVu7g9VERCLs4qO6BfrLjnUGKGo86EbSYt9XkTuSHTobDwpl+Rku1kIaeg/Vc
+         KtbIxTbnfs9IYV4Nqhwnb5a4u7C2xxMMEsbiU=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:reply-to:to:subject:mime-version:content-type
+         :content-transfer-encoding:content-disposition;
+        b=h57rO5E4RgOmxF5H6ITB5ZvPU/EX+j1zcW/3jSA7SirIu0Wh4KqA+LpCAshGmLJUfS
+         TUDNBeKcVLXr3ED8sagBktYJgbsq+3oqoWdSLJAy9cPhy8EmV/1+N5PavuNSAwDhX7Nk
+         c9NmojYW05us8W7gHMfRGnhPpWPKM/mIOE2Ag=
+Received: by 10.181.240.7 with SMTP id s7mr2514647bkr.110.1225317645607;
+        Wed, 29 Oct 2008 15:00:45 -0700 (PDT)
+Received: by 10.181.7.8 with HTTP; Wed, 29 Oct 2008 15:00:45 -0700 (PDT)
 Content-Disposition: inline
-In-Reply-To: <81b0412b0810290338j1beaa25bx9fb373a69f5dfe7@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/99417>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/99418>
 
-On Wed, Oct 29, 2008 at 11:38:32AM +0100, Alex Riesen wrote:
+I am an emacs user but with my current setup I have difficulties
+generating git.info pages. Main Git repo already provides
+pre-generated man and html  documentation in "man" and "html"
+branches. I would kindly beg to extend this privilege to "info" pages
+to benefit all the emacs users out there.
 
-> There can be a problem with "-printf": Open Group SUS does not specify
-> -printf for find(1), so it is probably a problem somewhere. I just don't know.
-> [...]
-> +     find extract/a/a -printf "%T@\\n" >b.mtime &&
-
-$ uname -sr
-FreeBSD 6.1-RELEASE-p17-jc1
-$ find . -printf "%T@\\n"
-find: -printf: unknown option
-
-> There is always a fallback, which is to write a small program which calls
-> native stat(2). Or modify test-chmtime to just print mtime when asked.
-
-I think that makes the most sense.
-
--Peff
+--Leo--
