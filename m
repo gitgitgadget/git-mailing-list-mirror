@@ -1,82 +1,79 @@
-From: Boyd Lynn Gerber <gerberb@zenez.com>
-Subject: Re: [VOTE]  git versus mercurial
-Date: Wed, 29 Oct 2008 13:51:44 -0600
-Message-ID: <alpine.LNX.2.00.0810291350440.7553@suse104.zenez.com>
-References: <ge0rla$mce$1@ger.gmane.org> <ge70nl$l6t$1@ger.gmane.org> <alpine.DEB.1.00.0810281445190.22125@pacific.mpi-cbg.de.mpi-cbg.de> <20081029191140.GB29357@spearce.org> <alpine.LNX.2.00.0810291335400.7553@suse104.zenez.com>
- <alpine.DEB.1.00.0810292047530.22125@pacific.mpi-cbg.de.mpi-cbg.de>
+From: "Jonas Fonseca" <jonas.fonseca@gmail.com>
+Subject: Re: A typesetting problem with git man pages
+Date: Wed, 29 Oct 2008 21:14:35 +0100
+Message-ID: <2c6b72b30810291314n75154276ma226cccc1ea07504@mail.gmail.com>
+References: <87skqfus7v.fsf@iki.fi>
+	 <20081029193958.GA12856@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII; format=flowed
-Cc: "Shawn O. Pearce" <spearce@spearce.org>, walt <w41ter@gmail.com>,
-	git@vger.kernel.org
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Wed Oct 29 20:53:05 2008
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: "Teemu Likonen" <tlikonen@iki.fi>, git@vger.kernel.org
+To: "Jeff King" <peff@peff.net>
+X-From: git-owner@vger.kernel.org Wed Oct 29 21:15:52 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KvH6A-0001SA-GS
-	for gcvg-git-2@gmane.org; Wed, 29 Oct 2008 20:52:59 +0100
+	id 1KvHSK-0001rf-1f
+	for gcvg-git-2@gmane.org; Wed, 29 Oct 2008 21:15:52 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753801AbYJ2Tvp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 29 Oct 2008 15:51:45 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753774AbYJ2Tvp
-	(ORCPT <rfc822;git-outgoing>); Wed, 29 Oct 2008 15:51:45 -0400
-Received: from suse104.zenez.com ([198.60.105.164]:19198 "EHLO
-	suse104.zenez.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753681AbYJ2Tvp (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 29 Oct 2008 15:51:45 -0400
-Received: by suse104.zenez.com (Postfix, from userid 1000)
-	id 3B5EBA7C891; Wed, 29 Oct 2008 13:51:44 -0600 (MDT)
-Received: from localhost (localhost [127.0.0.1])
-	by suse104.zenez.com (Postfix) with ESMTP id 26AFDA7C888;
-	Wed, 29 Oct 2008 13:51:44 -0600 (MDT)
-In-Reply-To: <alpine.DEB.1.00.0810292047530.22125@pacific.mpi-cbg.de.mpi-cbg.de>
-User-Agent: Alpine 2.00 (LNX 1167 2008-08-23)
+	id S1753521AbYJ2UOj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 29 Oct 2008 16:14:39 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753466AbYJ2UOj
+	(ORCPT <rfc822;git-outgoing>); Wed, 29 Oct 2008 16:14:39 -0400
+Received: from mu-out-0910.google.com ([209.85.134.187]:60540 "EHLO
+	mu-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753358AbYJ2UOi (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 29 Oct 2008 16:14:38 -0400
+Received: by mu-out-0910.google.com with SMTP id g7so147983muf.1
+        for <git@vger.kernel.org>; Wed, 29 Oct 2008 13:14:36 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to
+         :subject:cc:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:references;
+        bh=EzOO71mxQDIDkskYuFxL7YgezjVhm8G5siMTunE7UMw=;
+        b=Ma3pP8t4pyIRBePphuNmkBSLAcBnKDNu8Qd8VV9CAyjpH9h7n2YzxscfqU5RSTR/zm
+         fm28p3XGiQNBjqVFAQMPqovj6DsIt0AFjlchSYgciTnWMmBkgrzqMiEcCDhZfdB5Eawl
+         wIb74gnKog1osF6vIekcq3hVWKn30B3Hfw0Zw=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
+         :content-type:content-transfer-encoding:content-disposition
+         :references;
+        b=k496CffBDJ5Pw9sAXWnbvZP5G4BaJrqW56qd4BAE8cZT6BXxZQ5BkuyW2+gD2B4FU6
+         HHzJMh6rqTydQSyWdOwqaZmfQM27QCv5j+QE29fC5FCJ9j2Ennq85wpll80Z/mujgMSR
+         1XcpbO/7nXOnxKvpg2YUa1Eeh/7rNWoPuU5x4=
+Received: by 10.181.48.4 with SMTP id a4mr2509005bkk.6.1225311276003;
+        Wed, 29 Oct 2008 13:14:36 -0700 (PDT)
+Received: by 10.181.228.16 with HTTP; Wed, 29 Oct 2008 13:14:35 -0700 (PDT)
+In-Reply-To: <20081029193958.GA12856@sigill.intra.peff.net>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/99399>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/99400>
 
-On Wed, 29 Oct 2008, Johannes Schindelin wrote:
-> On Wed, 29 Oct 2008, Boyd Lynn Gerber wrote:
->> On Wed, 29 Oct 2008, Shawn O. Pearce wrote:
->>> Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
->>>> On Tue, 28 Oct 2008, walt wrote:
->>>>> walt wrote:
->>>>>> No, no, I'm not the one calling for a vote.  You old-timers here
->>>>>> will know the name Matt Dillon, who is leading the dragonflybsd
->>>>>> project (www.dragonflybsd.org).
->>>>>>
->>>>>> Matt is the one who is calling for the vote in his thread "Vote
->>>>>> for your source control system" in the dragonfly.kernel group,
->>>>>> accessible via nntp://nntp.dragonflybsd.org...
->>>>>
->>>>> The official vote was 19 to 19, plus one for perforce and one for
->>>>> svn. Matt has proposed a primary git repository and a mirror in
->>>>> hg, and that's being debated now.
->>>
->>> FWIW at the Google Summer of Code Mentor Summit this past weekend we
->>> had a "Git vs. Hg" talk with both Git and Hg represented by
->>> contributors to each project.
->>>
->>> Slides are online here:
->>>
->>>  http://docs.google.com/Presentation?id=dcfz2dg9_0hqqz3dsr
->>
->> But how do I save the presentation?  I do not seem to be able to do it.
->> I would like to view it off-line.
+On Wed, Oct 29, 2008 at 20:39, Jeff King <peff@peff.net> wrote:
+> so the problem is the extra \&. But I don't know why that is being
+> generated. It _should_ be part of the character entity, I thought, but
+> xmlto seems to be rendering it as the newline character entity _plus_
+> the ampersand.
 >
-> Just an idea: print to PDF?  There is a link "print slides" on the lower
-> right.
+> So it seems like a bug to me in the XML parser, but it is more likely
+> that I'm somehow clueless about XML.
 
-That worked.  I had to make my window full screen to see the option.  It 
-did not show-up in my normal window.
+The way I understand it is that the DocBook XSL (stylesheet) doing the
+conversion from xml to the manpage ensures that possible problematic
+characters that could break the manpage are escaped. A dot in the
+start of a line is problematic since it could be interpreted as markup
+by the manpage viewer and in the mentioned case, the code was not
+generated by the stylesheet, thus it must be escaped. So IMO, the
+stylesheet is hardly to blame, the problem is that the asciidoc.conf
+file defines a macro for literallayout, in which it expects manpage
+code to be passed through unescaped.
 
-
-Thanks,
-
---
-Boyd Gerber <gerberb@zenez.com>
-ZENEZ	1042 East Fort Union #135, Midvale Utah  84047
+-- 
+Jonas Fonseca
