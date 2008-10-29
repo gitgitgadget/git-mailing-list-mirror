@@ -1,103 +1,58 @@
 From: Jeff King <peff@peff.net>
-Subject: [PATCH] increase git el1T3nEss
-Date: Wed, 29 Oct 2008 13:06:31 -0400
-Message-ID: <20081029170631.GA12078@sigill.intra.peff.net>
-References: <1225257832-29086-1-git-send-email-pasky@suse.cz>
+Subject: Re: [PATCH] git-diff: Add --staged as a synonym for --cached.
+Date: Wed, 29 Oct 2008 13:11:22 -0400
+Message-ID: <20081029171122.GA12167@sigill.intra.peff.net>
+References: <1225296936-1357-1-git-send-email-dsymonds@gmail.com> <20081029164253.GA3172@sigill.intra.peff.net> <ee77f5c20810290950k6d7acfcbt90b6280c290bd532@mail.gmail.com> <alpine.DEB.1.00.0810291804400.22125@pacific.mpi-cbg.de.mpi-cbg.de>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org,
-	Johannes Schindelin <johannes.schindelin@gmx.de>,
-	Scott Chacon <schacon@gmail.com>,
-	Tom Preston-Werner <tom@github.com>,
-	"J.H." <warthog19@eaglescrag.net>, Sam Vilain <sam@vilain.net>,
-	Christian Couder <chriscool@tuxfamily.org>,
-	Kai Blin <kai@samba.org>
-To: Petr Baudis <pasky@suse.cz>
-X-From: git-owner@vger.kernel.org Wed Oct 29 18:08:34 2008
+Cc: David Symonds <dsymonds@gmail.com>, git@vger.kernel.org,
+	gitster@pobox.com, Stephan Beyer <s-beyer@gmx.net>
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Wed Oct 29 18:12:40 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KvEWN-00085H-HL
-	for gcvg-git-2@gmane.org; Wed, 29 Oct 2008 18:07:52 +0100
+	id 1KvEb2-0001Xh-B5
+	for gcvg-git-2@gmane.org; Wed, 29 Oct 2008 18:12:40 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754015AbYJ2RGg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 29 Oct 2008 13:06:36 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753231AbYJ2RGg
-	(ORCPT <rfc822;git-outgoing>); Wed, 29 Oct 2008 13:06:36 -0400
-Received: from peff.net ([208.65.91.99]:1430 "EHLO peff.net"
+	id S1753627AbYJ2RL1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 29 Oct 2008 13:11:27 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753231AbYJ2RL0
+	(ORCPT <rfc822;git-outgoing>); Wed, 29 Oct 2008 13:11:26 -0400
+Received: from peff.net ([208.65.91.99]:4268 "EHLO peff.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753996AbYJ2RGf (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 29 Oct 2008 13:06:35 -0400
-Received: (qmail 29526 invoked by uid 111); 29 Oct 2008 17:06:34 -0000
+	id S1753200AbYJ2RL0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 29 Oct 2008 13:11:26 -0400
+Received: (qmail 29574 invoked by uid 111); 29 Oct 2008 17:11:24 -0000
 Received: from Unknown (HELO sigill.intra.peff.net) (216.239.45.19)
   (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.32) with ESMTP; Wed, 29 Oct 2008 13:06:34 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 29 Oct 2008 13:06:31 -0400
+  by peff.net (qpsmtpd/0.32) with ESMTP; Wed, 29 Oct 2008 13:11:24 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 29 Oct 2008 13:11:22 -0400
 Content-Disposition: inline
-In-Reply-To: <1225257832-29086-1-git-send-email-pasky@suse.cz>
+In-Reply-To: <alpine.DEB.1.00.0810291804400.22125@pacific.mpi-cbg.de.mpi-cbg.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/99383>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/99384>
 
-The uptake of git by script kiddies has been disappointingly
-minimal. Let's make it more palatable by allowing mixed-case
-and l33t-speak commands.
+On Wed, Oct 29, 2008 at 06:06:09PM +0100, Johannes Schindelin wrote:
 
-Signed-off-by: Jeff King <peff@peff.net>
----
-This commit was made by "git c0mM1t".
+> However, note that we have to hash out what to do about the convention 
+> that --cached traditionally means that only the staging area (formerly 
+> known as "the index") is affected, while --index means that the command 
+> touches the working directory, too.
 
- git.c |   27 ++++++++++++++++++++++++++-
- 1 files changed, 26 insertions(+), 1 deletions(-)
+If we assume that we have only the word "stage" and variations
+available, then there aren't too many options.
 
-diff --git a/git.c b/git.c
-index 89feb0b..fd0ca67 100644
---- a/git.c
-+++ b/git.c
-@@ -261,6 +261,31 @@ static int run_command(struct cmd_struct *p, int argc, const char **argv)
- 	return 0;
- }
- 
-+static char deelite(char in) {
-+	if (isalpha(in))
-+		return tolower(in);
-+	switch (in) {
-+	case '0': return 'o';
-+	case '1': return 'i';
-+	case '3': return 'e';
-+	case '5': return 's';
-+	case '7': return 'l';
-+	}
-+	return in;
-+}
-+
-+static int elitecmp(const char *a, const char *b) {
-+	while (1) {
-+		char ca = deelite(*a), cb = deelite(*b);
-+		if (ca != cb)
-+			return ca < cb ? -1 : 1;
-+		if (!ca)
-+			return 0;
-+		a++;
-+		b++;
-+	}
-+}
-+
- static void handle_internal_command(int argc, const char **argv)
- {
- 	const char *cmd = argv[0];
-@@ -381,7 +406,7 @@ static void handle_internal_command(int argc, const char **argv)
- 
- 	for (i = 0; i < ARRAY_SIZE(commands); i++) {
- 		struct cmd_struct *p = commands+i;
--		if (strcmp(p->cmd, cmd))
-+		if (elitecmp(p->cmd, cmd))
- 			continue;
- 		exit(run_command(p, argc, argv));
- 	}
--- 
-1.6.0.3.764.ge6f2.dirty
+  only the staging area:
+    --stage-only, --staged-only
+
+  both:
+    --staged (as opposed to --staged-only) --stage-and-worktree (too
+    long), --both (not descriptive enough), --stage-too (yuck)
+
+-Peff
