@@ -1,62 +1,80 @@
-From: Pascal Obry <pascal@obry.net>
-Subject: Re: [PATCH] Implement git-staged, an alias for 'git diff --cached'.
-Date: Wed, 29 Oct 2008 15:58:41 +0100
-Organization: Home - http://www.obry.net
-Message-ID: <49087A21.1080508@obry.net>
-References: <1225237145-95435-1-git-send-email-dsymonds@gmail.com>
-Reply-To: pascal@obry.net
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH] Implement git-staged, an alias for 'git diff
+ --cached'.
+Date: Wed, 29 Oct 2008 16:08:58 +0100 (CET)
+Message-ID: <alpine.DEB.1.00.0810291604200.22125@pacific.mpi-cbg.de.mpi-cbg.de>
+References: <20081029003931.GA7291@sigill.intra.peff.net> <1225241048-99267-1-git-send-email-dsymonds@gmail.com> <C0BD1E4B-130F-4A16-8865-8EEABE1431FD@wincent.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, gitster@pobox.com
-To: David Symonds <dsymonds@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Oct 29 16:00:35 2008
+Content-Type: MULTIPART/MIXED; BOUNDARY="8323328-1530966495-1225292940=:22125"
+Cc: David Symonds <dsymonds@gmail.com>, git@vger.kernel.org,
+	gitster@pobox.com, Jeff King <peff@peff.net>
+To: Wincent Colaiuta <win@wincent.com>
+X-From: git-owner@vger.kernel.org Wed Oct 29 16:03:46 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KvCWl-0001Yr-CX
-	for gcvg-git-2@gmane.org; Wed, 29 Oct 2008 16:00:07 +0100
+	id 1KvCZW-0002nh-J7
+	for gcvg-git-2@gmane.org; Wed, 29 Oct 2008 16:02:59 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753746AbYJ2O6x (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 29 Oct 2008 10:58:53 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753834AbYJ2O6x
-	(ORCPT <rfc822;git-outgoing>); Wed, 29 Oct 2008 10:58:53 -0400
-Received: from ik-out-1112.google.com ([66.249.90.179]:14358 "EHLO
-	ik-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753699AbYJ2O6w (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 29 Oct 2008 10:58:52 -0400
-Received: by ik-out-1112.google.com with SMTP id c29so32534ika.5
-        for <git@vger.kernel.org>; Wed, 29 Oct 2008 07:58:49 -0700 (PDT)
-Received: by 10.86.76.16 with SMTP id y16mr5810754fga.17.1225292329419;
-        Wed, 29 Oct 2008 07:58:49 -0700 (PDT)
-Received: from ?192.168.0.100? (AVelizy-154-1-40-132.w82-124.abo.wanadoo.fr [82.124.144.132])
-        by mx.google.com with ESMTPS id 4sm156106fge.8.2008.10.29.07.58.47
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Wed, 29 Oct 2008 07:58:48 -0700 (PDT)
-User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.1; fr-FR; rv:1.8.1.17) Gecko/20080914 Thunderbird/2.0.0.17 Mnenhy/0.7.5.0
-In-Reply-To: <1225237145-95435-1-git-send-email-dsymonds@gmail.com>
-X-Enigmail-Version: 0.95.7
+	id S1753873AbYJ2PBq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 29 Oct 2008 11:01:46 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753876AbYJ2PBq
+	(ORCPT <rfc822;git-outgoing>); Wed, 29 Oct 2008 11:01:46 -0400
+Received: from mail.gmx.net ([213.165.64.20]:60710 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1753682AbYJ2PBp (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 29 Oct 2008 11:01:45 -0400
+Received: (qmail invoked by alias); 29 Oct 2008 15:01:43 -0000
+Received: from pacific.mpi-cbg.de (EHLO pacific.mpi-cbg.de) [141.5.10.38]
+  by mail.gmx.net (mp008) with SMTP; 29 Oct 2008 16:01:43 +0100
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX18zJzF14uUz/2McIqyO4WdJtQTZysEPJf7BEeufwq
+	NLpbRWwc15MmKY
+X-X-Sender: schindelin@pacific.mpi-cbg.de.mpi-cbg.de
+In-Reply-To: <C0BD1E4B-130F-4A16-8865-8EEABE1431FD@wincent.com>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.65
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/99367>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/99368>
 
-What about :
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-   $ git config --global alias.staged "diff --cached"
+--8323328-1530966495-1225292940=:22125
+Content-Type: TEXT/PLAIN; charset=ISO-8859-1
+Content-Transfer-Encoding: 8BIT
 
-I'm using this since some time.
+Hi,
 
--- 
+On Wed, 29 Oct 2008, Wincent Colaiuta wrote:
 
---|------------------------------------------------------
---| Pascal Obry                           Team-Ada Member
---| 45, rue Gabriel Peri - 78114 Magny Les Hameaux FRANCE
---|------------------------------------------------------
---|              http://www.obry.net
---| "The best way to travel is by means of imagination"
---|
---| gpg --keyserver wwwkeys.pgp.net --recv-key C1082595
+> El 29/10/2008, a las 1:44, David Symonds escribió:
+> 
+> > +SCRIPT_SH += git-staged.sh
+> 
+> Isn't this exactly what aliases are for?
+>   git config --global alias.staged "diff --cached"
+> (Rather than adding yet another command...)
+
+The difference being, of course, that we do not ship default aliases (and 
+neither do we plan to...).
+
+So saying "this is what aliases are for" you ask for _newbies_ to add it 
+for themselves.  We are talking the same newbies who should be helped by 
+that command, and typically do not know that there are Git aliases yet.
+
+Even worse, just sum the times it takes everybody to make that alias, and 
+then compare with the time it would take to include something like David 
+posted in git.git.  It should be obvious that the time balance is 
+absolutely horrible.
+
+Ciao,
+Dscho
+
+--8323328-1530966495-1225292940=:22125--
