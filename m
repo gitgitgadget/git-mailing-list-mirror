@@ -1,59 +1,68 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH] Implement git-staged, an alias for 'git diff
- --cached'.
-Date: Wed, 29 Oct 2008 16:48:09 +0100 (CET)
-Message-ID: <alpine.DEB.1.00.0810291647280.22125@pacific.mpi-cbg.de.mpi-cbg.de>
-References: <20081029003931.GA7291@sigill.intra.peff.net> <1225241048-99267-1-git-send-email-dsymonds@gmail.com> <C0BD1E4B-130F-4A16-8865-8EEABE1431FD@wincent.com> <alpine.DEB.1.00.0810291604200.22125@pacific.mpi-cbg.de.mpi-cbg.de>
- <20081029152202.GA10029@leksak.fem-net>
+From: Bill Lear <rael@zopyra.com>
+Subject: Using the --track option when creating a branch
+Date: Wed, 29 Oct 2008 09:23:54 -0600
+Message-ID: <18696.32778.842933.486171@lisa.zopyra.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Wincent Colaiuta <win@wincent.com>,
-	David Symonds <dsymonds@gmail.com>, git@vger.kernel.org,
-	gitster@pobox.com, Jeff King <peff@peff.net>
-To: Stephan Beyer <s-beyer@gmx.net>
-X-From: git-owner@vger.kernel.org Wed Oct 29 16:44:16 2008
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Oct 29 16:58:04 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KvDBj-0003Kd-Rb
-	for gcvg-git-2@gmane.org; Wed, 29 Oct 2008 16:42:28 +0100
+	id 1KvDOK-0001A9-8f
+	for gcvg-git-2@gmane.org; Wed, 29 Oct 2008 16:55:28 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753012AbYJ2Pkz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 29 Oct 2008 11:40:55 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753174AbYJ2Pkz
-	(ORCPT <rfc822;git-outgoing>); Wed, 29 Oct 2008 11:40:55 -0400
-Received: from mail.gmx.net ([213.165.64.20]:52681 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1752986AbYJ2Pkz (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 29 Oct 2008 11:40:55 -0400
-Received: (qmail invoked by alias); 29 Oct 2008 15:40:53 -0000
-Received: from pacific.mpi-cbg.de (EHLO pacific.mpi-cbg.de) [141.5.10.38]
-  by mail.gmx.net (mp040) with SMTP; 29 Oct 2008 16:40:53 +0100
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX19uvXMbaCtugU4lze/eyoi+9VauZSL8NVfuBztxvS
-	/sBhoCVA1R9O9d
-X-X-Sender: schindelin@pacific.mpi-cbg.de.mpi-cbg.de
-In-Reply-To: <20081029152202.GA10029@leksak.fem-net>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.71
+	id S1752948AbYJ2PyL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 29 Oct 2008 11:54:11 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752374AbYJ2PyL
+	(ORCPT <rfc822;git-outgoing>); Wed, 29 Oct 2008 11:54:11 -0400
+Received: from mail.zopyra.com ([65.68.225.25]:61779 "EHLO zopyra.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752083AbYJ2PyK (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 29 Oct 2008 11:54:10 -0400
+X-Greylist: delayed 1810 seconds by postgrey-1.27 at vger.kernel.org; Wed, 29 Oct 2008 11:54:10 EDT
+Received: (from rael@localhost)
+	by zopyra.com (8.11.6/8.11.6) id m9TFNxw29170;
+	Wed, 29 Oct 2008 09:23:59 -0600
+X-Mailer: VM 8.0.11 under Emacs 21.1.1 (i686-pc-linux-gnu)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/99374>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/99375>
 
-Hi,
+We have had a few "crossed stream" problems when developers are
+working on a local branch and they do an unguarded git push/pull,
+when they really intended to do git push/pull origin branchname.
 
-On Wed, 29 Oct 2008, Stephan Beyer wrote:
+We use git in a way that makes it desirable for us to only push/pull
+to the same remote branch.  So, if I'm in branch X, I want 'git push'
+to push to origin/X, and 'git pull' to fetch into origin/X and then
+merge into X from origin/X.
 
-> For me, a "git staged" feels wrong without a "git stage" (alias for "git 
-> add") and "git unstage <file>" (alias for "git reset <file>"). And I 
-> think the list of examples can easily be continued.
+In other words, we want git push/pull to behave in branches other than
+master the same way it does when in master.
 
-http://article.gmane.org/gmane.comp.version-control.git/99340
+I have discovered the '--track' option when creating a local branch,
+and this appears to me to be the thing that gives us the desired
+behavior.
 
-Thanks,
-Dscho
+Before I tell the rest of the team that this is the correct way
+to do things, I need to be sure I am correct, so if anyone here
+can confirm or deny this, I'd appreciate it.
+
+Also, once a branch has been created, how can we add a '--track' option
+after the fact?
+
+Finally, is there a 'global' config setting that would set this behavior
+for all repos (new or existing)?
+
+We are using git 1.6.* versions here, mostly.
+
+Thanks.
+
+
+Bill
