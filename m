@@ -1,50 +1,65 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH] Implement git-staged, an alias for 'git diff --cached'.
-Date: Wed, 29 Oct 2008 11:19:57 -0400
-Message-ID: <20081029151956.GA28598@segfault.peff.net>
-References: <1225237145-95435-1-git-send-email-dsymonds@gmail.com> <1225238368-98594-1-git-send-email-dsymonds@gmail.com> <20081029003931.GA7291@sigill.intra.peff.net> <20081029010107.GB12065@leksak.fem-net> <20081029010534.GA8833@sigill.intra.peff.net> <HUCQtsE3HvgGu_KDktGNx0KyijzaFKOESHnzFagEbf4erQlMxjgVNQ@cipher.nrlssc.navy.mil>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH 1/1] diff: support making output friendlier for fine,
+ grand users
+Date: Wed, 29 Oct 2008 16:28:26 +0100 (CET)
+Message-ID: <alpine.DEB.1.00.0810291628050.22125@pacific.mpi-cbg.de.mpi-cbg.de>
+References: <1225257832-29086-1-git-send-email-pasky@suse.cz> <20081029150731.GA9942@linode.davidb.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Stephan Beyer <s-beyer@gmx.net>,
-	David Symonds <dsymonds@gmail.com>, git@vger.kernel.org,
-	gitster@pobox.com
-To: Brandon Casey <casey@nrlssc.navy.mil>
-X-From: git-owner@vger.kernel.org Wed Oct 29 16:21:15 2008
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Petr Baudis <pasky@suse.cz>, git@vger.kernel.org,
+	Scott Chacon <schacon@gmail.com>,
+	Tom Preston-Werner <tom@github.com>, Jeff King <peff@peff.net>,
+	"J.H." <warthog19@eaglescrag.net>, Sam Vilain <sam@vilain.net>,
+	Christian Couder <chriscool@tuxfamily.org>,
+	Kai Blin <kai@samba.org>
+To: David Brown <git@davidb.org>
+X-From: git-owner@vger.kernel.org Wed Oct 29 16:22:42 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KvCrD-0002Ro-7W
-	for gcvg-git-2@gmane.org; Wed, 29 Oct 2008 16:21:15 +0100
+	id 1KvCsN-0002w1-Ba
+	for gcvg-git-2@gmane.org; Wed, 29 Oct 2008 16:22:27 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752695AbYJ2PT7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 29 Oct 2008 11:19:59 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752668AbYJ2PT7
-	(ORCPT <rfc822;git-outgoing>); Wed, 29 Oct 2008 11:19:59 -0400
-Received: from peff.net ([208.65.91.99]:1488 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752621AbYJ2PT6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 29 Oct 2008 11:19:58 -0400
-Received: (qmail 28612 invoked by uid 1000); 29 Oct 2008 15:19:57 -0000
-Content-Disposition: inline
-In-Reply-To: <HUCQtsE3HvgGu_KDktGNx0KyijzaFKOESHnzFagEbf4erQlMxjgVNQ@cipher.nrlssc.navy.mil>
+	id S1752979AbYJ2PVO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 29 Oct 2008 11:21:14 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752977AbYJ2PVO
+	(ORCPT <rfc822;git-outgoing>); Wed, 29 Oct 2008 11:21:14 -0400
+Received: from mail.gmx.net ([213.165.64.20]:39574 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1752904AbYJ2PVN (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 29 Oct 2008 11:21:13 -0400
+Received: (qmail invoked by alias); 29 Oct 2008 15:21:10 -0000
+Received: from pacific.mpi-cbg.de (EHLO pacific.mpi-cbg.de) [141.5.10.38]
+  by mail.gmx.net (mp061) with SMTP; 29 Oct 2008 16:21:10 +0100
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX19jHD5l/SJjvNBWMUUX33hr/hwiuWR6UjDgHP0TNg
+	ZCVzcx+e4EkLDn
+X-X-Sender: schindelin@pacific.mpi-cbg.de.mpi-cbg.de
+In-Reply-To: <20081029150731.GA9942@linode.davidb.org>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.61
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/99370>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/99371>
 
-On Wed, Oct 29, 2008 at 09:33:08AM -0500, Brandon Casey wrote:
+Hi,
 
-> > You are missing some of the context,
+On Wed, 29 Oct 2008, David Brown wrote:
+
+> On Tue, Oct 28, 2008 at 10:23:52PM -0700, Petr Baudis wrote:
 > 
-> Yeah, it would have been nice if there was audio.
-> Anyone take minutes, possibly?
+> >+	}
+> >+	else if (!strcmp(arg, "--pirate")) {
+> >+		printf("Arrrr!  These be yer fine changes, me 'earty!!\n");
+> 
+> We need to wait until Sept 19 to apply this patch, however.
 
-There's no audio. Some of the slides will be available. I took notes on
-at least one of the discussions, which I will try to summarize and post.
-And I think some of the discussion will end up as patches, which will
-hopefully provide full justification in their commit messages. ;)
+We could back-date it, of course.
 
--Peff
+Ciao,
+Dscho
