@@ -1,79 +1,63 @@
-From: "Avery Pennarun" <apenwarr@gmail.com>
-Subject: [ANNOUNCE] Gitbuilder 0.2.0 is released
-Date: Wed, 29 Oct 2008 14:37:22 -0400
-Message-ID: <32541b130810291137i11a6e086ndedc43c9fb2e6ef0@mail.gmail.com>
+From: "Shawn O. Pearce" <spearce@spearce.org>
+Subject: Re: [VOTE]  git versus mercurial
+Date: Wed, 29 Oct 2008 12:11:40 -0700
+Message-ID: <20081029191140.GB29357@spearce.org>
+References: <ge0rla$mce$1@ger.gmane.org> <ge70nl$l6t$1@ger.gmane.org> <alpine.DEB.1.00.0810281445190.22125@pacific.mpi-cbg.de.mpi-cbg.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-To: "Git Mailing List" <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Wed Oct 29 19:49:00 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: walt <w41ter@gmail.com>, git@vger.kernel.org
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Wed Oct 29 20:12:56 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KvG5p-0000RD-V3
-	for gcvg-git-2@gmane.org; Wed, 29 Oct 2008 19:48:34 +0100
+	id 1KvGTP-00027U-IH
+	for gcvg-git-2@gmane.org; Wed, 29 Oct 2008 20:12:56 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752607AbYJ2SrU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 29 Oct 2008 14:47:20 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752542AbYJ2SrU
-	(ORCPT <rfc822;git-outgoing>); Wed, 29 Oct 2008 14:47:20 -0400
-Received: from mail-gx0-f12.google.com ([209.85.217.12]:39403 "EHLO
-	mail-gx0-f12.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752435AbYJ2SrT (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 29 Oct 2008 14:47:19 -0400
-X-Greylist: delayed 419 seconds by postgrey-1.27 at vger.kernel.org; Wed, 29 Oct 2008 14:47:19 EDT
-Received: by gxk5 with SMTP id 5so59378gxk.13
-        for <git@vger.kernel.org>; Wed, 29 Oct 2008 11:47:18 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to
-         :subject:mime-version:content-type:content-transfer-encoding
-         :content-disposition;
-        bh=utvrhAW4diSqSBKJxwJZguApfUYTyV+qvoY6trSzFio=;
-        b=NGU4pJm3W3ptOSxxuf+u4U7OmS+A0l8NCjoeUiw1p7wp+tiRj6Q/LyxzkhKaLV0rAW
-         klbKuh+SNSYFxDd/gQkwVBoxIwCe8vP3ULoFbMmNjfDEZOIVUFrzkD2mte9ibic8uH9a
-         HjSLRCogca5iQKSQiVZ0V/K0HydxSJqiq2HxU=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:mime-version:content-type
-         :content-transfer-encoding:content-disposition;
-        b=NwoYvCQvsjx0lZjhOazGEBLCpl4lcQ+MW2VAz80sVnNU1Uw8b27qcyMDrEBdmLqhLS
-         dNLjotDMauWmJnSwgyaybgtLWGDGzMOBbvB/RXL8FjisEDq2GqbAZsEHTv5pY4ZQVnT9
-         kmDLNJW3WF9M3654baiICzjySJiGGrAFj3yn8=
-Received: by 10.151.108.5 with SMTP id k5mr1833310ybm.209.1225305442595;
-        Wed, 29 Oct 2008 11:37:22 -0700 (PDT)
-Received: by 10.150.96.5 with HTTP; Wed, 29 Oct 2008 11:37:22 -0700 (PDT)
+	id S1753296AbYJ2TLm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 29 Oct 2008 15:11:42 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753253AbYJ2TLm
+	(ORCPT <rfc822;git-outgoing>); Wed, 29 Oct 2008 15:11:42 -0400
+Received: from george.spearce.org ([209.20.77.23]:55814 "EHLO
+	george.spearce.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753182AbYJ2TLl (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 29 Oct 2008 15:11:41 -0400
+Received: by george.spearce.org (Postfix, from userid 1001)
+	id 09E843835F; Wed, 29 Oct 2008 19:11:40 +0000 (UTC)
 Content-Disposition: inline
+In-Reply-To: <alpine.DEB.1.00.0810281445190.22125@pacific.mpi-cbg.de.mpi-cbg.de>
+User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/99389>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/99390>
 
-Hi all,
+Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
+> On Tue, 28 Oct 2008, walt wrote:
+> 
+> > walt wrote:
+> > > No, no, I'm not the one calling for a vote.  You old-timers here will 
+> > > know the name Matt Dillon, who is leading the dragonflybsd project 
+> > > (www.dragonflybsd.org).
+> > >
+> > > Matt is the one who is calling for the vote in his thread "Vote for 
+> > > your source control system" in the dragonfly.kernel group, accessible 
+> > > via nntp://nntp.dragonflybsd.org...
+> > 
+> > The official vote was 19 to 19, plus one for perforce and one for svn.  
+> > Matt has proposed a primary git repository and a mirror in hg, and 
+> > that's being debated now.
 
-I'd like to announce the new v0.2.0 release of gitbuilder, an
-auto-bisecting autobuilder tool for git-based projects.  The new
-version incorporates several suggestions from end users, including:
+FWIW at the Google Summer of Code Mentor Summit this past weekend
+we had a "Git vs. Hg" talk with both Git and Hg represented by
+contributors to each project.
 
- - a new bar at the top shows the most recent builds and their status
- - the RSS link is now more obvious
- - non-fatal warnings now turn your build yellow instead of green
- - we now count and report warnings, errors, and test failures separately
- - a new changelog script can email recent changes in your repo on a
-daily/weekly schedule
+Slides are online here:
 
-You can see some running gitbuilder examples (including one that
-tracks git.git) here:
-   http://versabanq.com/demo/build/
+  http://docs.google.com/Presentation?id=dcfz2dg9_0hqqz3dsr
 
-And you can download the source code (in perl+shell) here:
-   http://github.com/apenwarr/gitbuilder/
-
-Enjoy!
-
-Have fun,
-
-Avery
+-- 
+Shawn.
