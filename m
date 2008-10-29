@@ -1,55 +1,62 @@
-From: Brandon Casey <casey@nrlssc.navy.mil>
+From: Pascal Obry <pascal@obry.net>
 Subject: Re: [PATCH] Implement git-staged, an alias for 'git diff --cached'.
-Date: Wed, 29 Oct 2008 09:33:08 -0500
-Message-ID: <HUCQtsE3HvgGu_KDktGNx0KyijzaFKOESHnzFagEbf4erQlMxjgVNQ@cipher.nrlssc.navy.mil>
-References: <1225237145-95435-1-git-send-email-dsymonds@gmail.com> <1225238368-98594-1-git-send-email-dsymonds@gmail.com> <20081029003931.GA7291@sigill.intra.peff.net> <20081029010107.GB12065@leksak.fem-net> <20081029010534.GA8833@sigill.intra.peff.net>
+Date: Wed, 29 Oct 2008 15:58:41 +0100
+Organization: Home - http://www.obry.net
+Message-ID: <49087A21.1080508@obry.net>
+References: <1225237145-95435-1-git-send-email-dsymonds@gmail.com>
+Reply-To: pascal@obry.net
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-Cc: Stephan Beyer <s-beyer@gmx.net>,
-	David Symonds <dsymonds@gmail.com>, git@vger.kernel.org,
-	gitster@pobox.com
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Wed Oct 29 15:35:45 2008
+Cc: git@vger.kernel.org, gitster@pobox.com
+To: David Symonds <dsymonds@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Oct 29 16:00:35 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KvC8S-00081S-HL
-	for gcvg-git-2@gmane.org; Wed, 29 Oct 2008 15:35:01 +0100
+	id 1KvCWl-0001Yr-CX
+	for gcvg-git-2@gmane.org; Wed, 29 Oct 2008 16:00:07 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753783AbYJ2Odm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 29 Oct 2008 10:33:42 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753733AbYJ2Odm
-	(ORCPT <rfc822;git-outgoing>); Wed, 29 Oct 2008 10:33:42 -0400
-Received: from mail1.nrlssc.navy.mil ([128.160.35.1]:50867 "EHLO
-	mail.nrlssc.navy.mil" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753722AbYJ2Odm (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 29 Oct 2008 10:33:42 -0400
-Received: by mail.nrlssc.navy.mil id m9TEX8CY017658; Wed, 29 Oct 2008 09:33:08 -0500
-In-Reply-To: <20081029010534.GA8833@sigill.intra.peff.net>
-X-OriginalArrivalTime: 29 Oct 2008 14:33:08.0641 (UTC) FILETIME=[43477910:01C939D3]
+	id S1753746AbYJ2O6x (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 29 Oct 2008 10:58:53 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753834AbYJ2O6x
+	(ORCPT <rfc822;git-outgoing>); Wed, 29 Oct 2008 10:58:53 -0400
+Received: from ik-out-1112.google.com ([66.249.90.179]:14358 "EHLO
+	ik-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753699AbYJ2O6w (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 29 Oct 2008 10:58:52 -0400
+Received: by ik-out-1112.google.com with SMTP id c29so32534ika.5
+        for <git@vger.kernel.org>; Wed, 29 Oct 2008 07:58:49 -0700 (PDT)
+Received: by 10.86.76.16 with SMTP id y16mr5810754fga.17.1225292329419;
+        Wed, 29 Oct 2008 07:58:49 -0700 (PDT)
+Received: from ?192.168.0.100? (AVelizy-154-1-40-132.w82-124.abo.wanadoo.fr [82.124.144.132])
+        by mx.google.com with ESMTPS id 4sm156106fge.8.2008.10.29.07.58.47
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Wed, 29 Oct 2008 07:58:48 -0700 (PDT)
+User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.1; fr-FR; rv:1.8.1.17) Gecko/20080914 Thunderbird/2.0.0.17 Mnenhy/0.7.5.0
+In-Reply-To: <1225237145-95435-1-git-send-email-dsymonds@gmail.com>
+X-Enigmail-Version: 0.95.7
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/99366>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/99367>
 
-Jeff King wrote:
-> On Wed, Oct 29, 2008 at 02:01:07AM +0100, Stephan Beyer wrote:
-> 
->> I'm still not understanding, what it's for.
->> Usability? Because doing
->> 	git config --global alias.staged 'diff --cached'
->> is lame?
-> 
-> You are missing some of the context,
+What about :
 
-Yeah, it would have been nice if there was audio.
-Anyone take minutes, possibly?
+   $ git config --global alias.staged "diff --cached"
 
-btw the term "staged" makes perfect sense to me, whereas "cached"
-was not intuitively obvious to me.
+I'm using this since some time.
 
--brandon
+-- 
+
+--|------------------------------------------------------
+--| Pascal Obry                           Team-Ada Member
+--| 45, rue Gabriel Peri - 78114 Magny Les Hameaux FRANCE
+--|------------------------------------------------------
+--|              http://www.obry.net
+--| "The best way to travel is by means of imagination"
+--|
+--| gpg --keyserver wwwkeys.pgp.net --recv-key C1082595
