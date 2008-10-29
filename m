@@ -1,61 +1,64 @@
-From: "Leo Razoumov" <slonik.az@gmail.com>
-Subject: request for pre-generated git.info pages
-Date: Wed, 29 Oct 2008 18:00:45 -0400
-Message-ID: <ee2a733e0810291500o67b3f94fibef63e0a173e8cc1@mail.gmail.com>
-Reply-To: SLONIK.AZ@gmail.com
+From: Teemu Likonen <tlikonen@iki.fi>
+Subject: Re: A typesetting problem with git man pages
+Date: Thu, 30 Oct 2008 00:22:43 +0200
+Message-ID: <87od13ujm4.fsf@iki.fi>
+References: <87skqfus7v.fsf@iki.fi>
+	<2c6b72b30810291235j554cc21dw4e3da4fdbfe633ee@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org, "Junio C Hamano" <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Oct 29 23:02:03 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: "Jonas Fonseca" <fonseca@diku.dk>
+X-From: git-owner@vger.kernel.org Wed Oct 29 23:24:01 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KvJ73-0006P0-EN
-	for gcvg-git-2@gmane.org; Wed, 29 Oct 2008 23:02:01 +0100
+	id 1KvJSK-0006Hv-C5
+	for gcvg-git-2@gmane.org; Wed, 29 Oct 2008 23:24:00 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752269AbYJ2WAs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 29 Oct 2008 18:00:48 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752182AbYJ2WAs
-	(ORCPT <rfc822;git-outgoing>); Wed, 29 Oct 2008 18:00:48 -0400
-Received: from fg-out-1718.google.com ([72.14.220.156]:15354 "EHLO
-	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751870AbYJ2WAr (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 29 Oct 2008 18:00:47 -0400
-Received: by fg-out-1718.google.com with SMTP id 19so208570fgg.17
-        for <git@vger.kernel.org>; Wed, 29 Oct 2008 15:00:45 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:reply-to
-         :to:subject:mime-version:content-type:content-transfer-encoding
-         :content-disposition;
-        bh=eZQor9b43oPYaJQSOuWEu0v2vXYu1Sx1QCljTSxO3SE=;
-        b=lDIzFIW42BDO5WPpbcdTJ3n1Z+gPZ3lUiNRs1AwJJR6Y8mpd1lqCgOMl4IvDp5DZUp
-         i1woJYCPVu7g9VERCLs4qO6BfrLjnUGKGo86EbSYt9XkTuSHTobDwpl+Rku1kIaeg/Vc
-         KtbIxTbnfs9IYV4Nqhwnb5a4u7C2xxMMEsbiU=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:reply-to:to:subject:mime-version:content-type
-         :content-transfer-encoding:content-disposition;
-        b=h57rO5E4RgOmxF5H6ITB5ZvPU/EX+j1zcW/3jSA7SirIu0Wh4KqA+LpCAshGmLJUfS
-         TUDNBeKcVLXr3ED8sagBktYJgbsq+3oqoWdSLJAy9cPhy8EmV/1+N5PavuNSAwDhX7Nk
-         c9NmojYW05us8W7gHMfRGnhPpWPKM/mIOE2Ag=
-Received: by 10.181.240.7 with SMTP id s7mr2514647bkr.110.1225317645607;
-        Wed, 29 Oct 2008 15:00:45 -0700 (PDT)
-Received: by 10.181.7.8 with HTTP; Wed, 29 Oct 2008 15:00:45 -0700 (PDT)
-Content-Disposition: inline
+	id S1752731AbYJ2WWr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 29 Oct 2008 18:22:47 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752311AbYJ2WWr
+	(ORCPT <rfc822;git-outgoing>); Wed, 29 Oct 2008 18:22:47 -0400
+Received: from mta-out.inet.fi ([195.156.147.13]:43782 "EHLO jenni1.inet.fi"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752081AbYJ2WWq (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 29 Oct 2008 18:22:46 -0400
+Received: from mithlond.arda.local (80.220.180.181) by jenni1.inet.fi (8.5.014)
+        id 48FC59C70086E1EF; Thu, 30 Oct 2008 00:22:45 +0200
+In-Reply-To: <2c6b72b30810291235j554cc21dw4e3da4fdbfe633ee@mail.gmail.com> (Jonas Fonseca's message of "Wed\, 29 Oct 2008 20\:35\:03 +0100")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/99418>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/99419>
 
-I am an emacs user but with my current setup I have difficulties
-generating git.info pages. Main Git repo already provides
-pre-generated man and html  documentation in "man" and "html"
-branches. I would kindly beg to extend this privilege to "info" pages
-to benefit all the emacs users out there.
+Jonas Fonseca (2008-10-29 20:35 +0100) wrote:
 
---Leo--
+> On Wed, Oct 29, 2008 at 20:16, Teemu Likonen <tlikonen@iki.fi> wrote:
+>> Does anybody know why "man" prints those ".ft" commands? The
+>> corresponding code in git-log.1 file is this:
+
+> I had a similar problem after upgrading on Ubuntu and came up with a
+> patch to optionally disable some of asciidoc.conf (commit
+> 7f55cf451c9e7). Try putting DOCBOOK_XSL_172=Yes in your config.mak.
+
+Ah, thank you. That fixed it.
+
+In case someone is interested there is still a minor flaw that an
+example command and the following paragraph is printed with no empty
+line between them. Like in the beginning of "git help tutorial", for
+example:
+
+    First, note that you can get documentation for a command such as git
+    log --graph with:
+
+        $ man git-log             
+    It is a good idea to introduce yourself to git [...]
+
+It would be nicer if there was empty line after "$ man git-log". I can't
+remember if this is new issue or not. This applies only to man pages; in
+html pages there are nice boxes around example commands and equal
+spacing before and after them.
