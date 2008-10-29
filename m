@@ -1,118 +1,92 @@
-From: =?iso-8859-1?Q?Bj=F6rn?= Steinbrink <B.Steinbrink@gmx.de>
+From: Liu Yubao <yubao.liu@gmail.com>
 Subject: Re: Do most people feel tracking branches useful?
-Date: Wed, 29 Oct 2008 11:03:13 +0100
-Message-ID: <20081029100313.GP3612@atjola.homenet>
-References: <49082514.9050405@gmail.com>
+Date: Wed, 29 Oct 2008 18:22:15 +0800
+Message-ID: <49083957.2060702@gmail.com>
+References: <49082514.9050405@gmail.com> <49083166.7090804@op5.se>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+Content-Type: text/plain; charset=ISO-8859-15
+Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org
-To: Liu Yubao <yubao.liu@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Oct 29 11:04:33 2008
+To: Andreas Ericsson <ae@op5.se>
+X-From: git-owner@vger.kernel.org Wed Oct 29 11:23:41 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Kv7uh-0005H4-Au
-	for gcvg-git-2@gmane.org; Wed, 29 Oct 2008 11:04:31 +0100
+	id 1Kv8D9-0002vz-3G
+	for gcvg-git-2@gmane.org; Wed, 29 Oct 2008 11:23:35 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753257AbYJ2KDS convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 29 Oct 2008 06:03:18 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753306AbYJ2KDR
-	(ORCPT <rfc822;git-outgoing>); Wed, 29 Oct 2008 06:03:17 -0400
-Received: from mail.gmx.net ([213.165.64.20]:36815 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1753094AbYJ2KDQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 29 Oct 2008 06:03:16 -0400
-Received: (qmail invoked by alias); 29 Oct 2008 10:03:14 -0000
-Received: from i577BB586.versanet.de (EHLO atjola.local) [87.123.181.134]
-  by mail.gmx.net (mp062) with SMTP; 29 Oct 2008 11:03:14 +0100
-X-Authenticated: #5039886
-X-Provags-ID: V01U2FsdGVkX18BN3wWqYMBI0lRtBNwDuyMZmf4rQSSSeW/P0+K+I
-	zNqaUMhBNAPF2o
-Content-Disposition: inline
-In-Reply-To: <49082514.9050405@gmail.com>
-User-Agent: Mutt/1.5.18 (2008-05-17)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.59
+	id S1753399AbYJ2KWW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 29 Oct 2008 06:22:22 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753394AbYJ2KWV
+	(ORCPT <rfc822;git-outgoing>); Wed, 29 Oct 2008 06:22:21 -0400
+Received: from ti-out-0910.google.com ([209.85.142.185]:49299 "EHLO
+	ti-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753389AbYJ2KWV (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 29 Oct 2008 06:22:21 -0400
+Received: by ti-out-0910.google.com with SMTP id b6so1650773tic.23
+        for <git@vger.kernel.org>; Wed, 29 Oct 2008 03:22:19 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from
+         :user-agent:mime-version:to:cc:subject:references:in-reply-to
+         :content-type:content-transfer-encoding;
+        bh=DdtodMAcD+YDlp24ZRQckWRjPrPgYkTCciyIf0lLeLg=;
+        b=bCT4QNK0i+QBLVVIRcpV0T7p4phsTjztAH7gREXOwdljo4uvK4rSpiah1uDH0MqP32
+         6PAGLhaWiuhyJHPrJnv5IlAsElGEmSIWmjmrfdv8Q4G7XCHnYhgQmTgijkjQlYFH+n1O
+         Zhk9zZcEUoVoqi0znRDQl9oRLN3EWAKsoGwVo=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:user-agent:mime-version:to:cc:subject
+         :references:in-reply-to:content-type:content-transfer-encoding;
+        b=RPWw4ZZEOPipeN8kLne6Pv9K7NvKf8Z6m1TtYOQ1BjgwLrUtghuUSXyQSLT6KzGKZx
+         8KizoAfC10L7r9TULc5xCKqcLI0OPr4aEhPzuUzSVf3qmKdMZgdneeDTfoiWaSISZDYd
+         8aamt7D8zgreBDvOfCP2f8v179vsHE1kE158E=
+Received: by 10.110.47.17 with SMTP id u17mr5618548tiu.49.1225275738922;
+        Wed, 29 Oct 2008 03:22:18 -0700 (PDT)
+Received: from ?10.64.1.142? ([211.157.41.194])
+        by mx.google.com with ESMTPS id a4sm5537210tib.4.2008.10.29.03.22.16
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Wed, 29 Oct 2008 03:22:18 -0700 (PDT)
+User-Agent: Thunderbird 2.0.0.17 (Windows/20080914)
+In-Reply-To: <49083166.7090804@op5.se>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/99356>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/99357>
 
-On 2008.10.29 16:55:48 +0800, Liu Yubao wrote:
-> Hi,
->=20
-> I often feel tracking branches are useless to me, because there are r=
-emote
-> branches and I work on my private branch in most time.
->=20
->    repos
->      |
->      |-- my               (private branch, do my dirty work)
->      |-- master           (tracking branch)
->      |-- origin/master    (remote branch)
+Andreas Ericsson wrote:
+> Liu Yubao wrote:
+> 
+> Use "git fetch" instead of "git pull" and you won't need the 'my' branch.
+> If you use "git pull --rebase" you won't need to bother at all.
+> 
+Thank you very much, I didn't know the "--rebase" option, now I learn
+the 'branch.<name>.rebase' configuration too by "git help pull".
 
-Actually, origin/master is the "[remote] tracking branch". master is
-just a branch that has config settings for "git pull" defaults. ;-)
+[...snip...]
 
-"Remote branches" are the actual branches on a remote repository.
+> 
+> I can't understand why you're working so hard for a linear history, but
+> perhaps
+> that's just an effect of only having leaf developers. I also can't
+> understand
+You got it exactly, we are leaf developers and make enhancement mostly,
+we don't want the upstream branch full of merging commit for many
+not so major changes. I remember keeping linear history is recommended
+in git's documentation.
 
-> To avoid conflict when execute `git pull` and make the history linear=
-, I work
-> on branch "my" instead of "master". Here is my work flow:
->=20
-> 1) use `git fetch` or `git remote update` to synchronize branch
-> "origin/master" with branch "master" in remote repository;
-> 2) create a new private branch to polish my commits and rebase it aga=
-inst
-> "origin/master";
-> 3) at last push this new branch to the remote repository or ask the u=
-pstream
-> developer to fetch it(no `git pull` because we want history as linear
-> as possible).
+> why you'd want to sync with upstream at all if you're just working on a
+> single
+> feature/bugfix at the time, since you'd probably be better off by just
+> completing
+> that single feature in your own time and doing "git pull --rebase && git
+> push"
+> when you're done.
+I only sync when I have finished my enhancement, I don't like merging
+when pull.
 
-git pull --rebase
-
-> I don't want to bother with the tracking branch "master", it's identi=
-cal
-> with "origin/master".  Because `git checkout -b xxx <remote_branch>`
-> will create a tracking branch "xxx" by default, so my question is:
-> do most people feel tracking branches useful?
-
-Tracking branches (origin/* etc.) are very useful :-) And branches that
-have "git pull" defaults (what you called "tracking branch") are also
-useful.
-
-In your case, you probably want:
-git checkout -b my-stuff origin/master
-git config branch.my-stuff.rebase true
-
-and then you can do:
-git pull
-
-Instead of:
-git fetch origin
-git rebase origin/master
-
-You can also setup branch.autosetuprebase, to automatically get the
-rebase setup, so you can skip the call to "git config" above.
-
-And you can just delete the "master" branch if you don't use it. There'=
-s
-nothing that forces you to keep any branches around that you don't use.
-But that doesn't affect the usefulness of tracking branches or branches
-that have "git pull" defaults :-)
-
-> BTW: I feel the terminalogy "remote branch" is confused, because I mu=
-st
-> synchronize it with `git fetch`. I feel it's better to call it "track=
-ing
-> branch" // seems will lead to bigger confusion to experienced git use=
-rs:-(
-
-See above, that's already the case ;-)
-
-Bj=F6rn
+Yes, I'd better use "git pull --rebase", "pull" is a wonderful command:
+pull = fetch + merge, pull --rebase = fetch + rebase, wow!
