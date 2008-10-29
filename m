@@ -1,78 +1,82 @@
-From: "Felipe Contreras" <felipe.contreras@gmail.com>
-Subject: Re: [PATCH] Implement git-staged, an alias for 'git diff --cached'.
-Date: Wed, 29 Oct 2008 21:49:09 +0200
-Message-ID: <94a0d4530810291249x3a1c499xb5dde96de1ac39b3@mail.gmail.com>
-References: <1225237145-95435-1-git-send-email-dsymonds@gmail.com>
+From: Boyd Lynn Gerber <gerberb@zenez.com>
+Subject: Re: [VOTE]  git versus mercurial
+Date: Wed, 29 Oct 2008 13:51:44 -0600
+Message-ID: <alpine.LNX.2.00.0810291350440.7553@suse104.zenez.com>
+References: <ge0rla$mce$1@ger.gmane.org> <ge70nl$l6t$1@ger.gmane.org> <alpine.DEB.1.00.0810281445190.22125@pacific.mpi-cbg.de.mpi-cbg.de> <20081029191140.GB29357@spearce.org> <alpine.LNX.2.00.0810291335400.7553@suse104.zenez.com>
+ <alpine.DEB.1.00.0810292047530.22125@pacific.mpi-cbg.de.mpi-cbg.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, gitster@pobox.com
-To: "David Symonds" <dsymonds@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Oct 29 20:50:27 2008
+Content-Type: TEXT/PLAIN; charset=US-ASCII; format=flowed
+Cc: "Shawn O. Pearce" <spearce@spearce.org>, walt <w41ter@gmail.com>,
+	git@vger.kernel.org
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Wed Oct 29 20:53:05 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KvH3i-0000Q1-DF
-	for gcvg-git-2@gmane.org; Wed, 29 Oct 2008 20:50:26 +0100
+	id 1KvH6A-0001SA-GS
+	for gcvg-git-2@gmane.org; Wed, 29 Oct 2008 20:52:59 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753323AbYJ2TtM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 29 Oct 2008 15:49:12 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753172AbYJ2TtL
-	(ORCPT <rfc822;git-outgoing>); Wed, 29 Oct 2008 15:49:11 -0400
-Received: from rv-out-0506.google.com ([209.85.198.239]:14528 "EHLO
-	rv-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753171AbYJ2TtK (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 29 Oct 2008 15:49:10 -0400
-Received: by rv-out-0506.google.com with SMTP id k40so163501rvb.1
-        for <git@vger.kernel.org>; Wed, 29 Oct 2008 12:49:09 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to
-         :subject:cc:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:references;
-        bh=NiQaSZWdwyU0z0boLoKSNOgV5MPdk+wi4B5inUF9lqk=;
-        b=XRU9QF9d53l7ohHOvapkZMuTTmcrrn+Lsd70KyRvF0V/FRCY0gHdcoS4cjzo7S1btB
-         zD7lj3cpd8hXzZRecL/kpMo2mBYlysYHrO3SQ/CXbJPA6Vy7X3LdKigNyzz6CHWpu1M4
-         lUP8KyW/JJVN3vVDxbFcO++qpnLK0ZZI1OT50=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
-         :content-type:content-transfer-encoding:content-disposition
-         :references;
-        b=xezNomqODJjmUtmjm90Igp2nMs+VP8zmCI37v7sc6irzPoy6uRC7a1NvD6chJNWXg5
-         e68COT6TJSR9o5zGGniWWQCd3H3JyNWHhWQBSR/iLD7jCrt/8visNJM7IjsMsUAzLrP4
-         15oZpi53+aOWHR6F3U7fQF2bABmbcvD/TV1JI=
-Received: by 10.141.116.17 with SMTP id t17mr5116086rvm.251.1225309749384;
-        Wed, 29 Oct 2008 12:49:09 -0700 (PDT)
-Received: by 10.140.166.19 with HTTP; Wed, 29 Oct 2008 12:49:09 -0700 (PDT)
-In-Reply-To: <1225237145-95435-1-git-send-email-dsymonds@gmail.com>
-Content-Disposition: inline
+	id S1753801AbYJ2Tvp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 29 Oct 2008 15:51:45 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753774AbYJ2Tvp
+	(ORCPT <rfc822;git-outgoing>); Wed, 29 Oct 2008 15:51:45 -0400
+Received: from suse104.zenez.com ([198.60.105.164]:19198 "EHLO
+	suse104.zenez.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753681AbYJ2Tvp (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 29 Oct 2008 15:51:45 -0400
+Received: by suse104.zenez.com (Postfix, from userid 1000)
+	id 3B5EBA7C891; Wed, 29 Oct 2008 13:51:44 -0600 (MDT)
+Received: from localhost (localhost [127.0.0.1])
+	by suse104.zenez.com (Postfix) with ESMTP id 26AFDA7C888;
+	Wed, 29 Oct 2008 13:51:44 -0600 (MDT)
+In-Reply-To: <alpine.DEB.1.00.0810292047530.22125@pacific.mpi-cbg.de.mpi-cbg.de>
+User-Agent: Alpine 2.00 (LNX 1167 2008-08-23)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/99398>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/99399>
 
-On Wed, Oct 29, 2008 at 1:39 AM, David Symonds <dsymonds@gmail.com> wrote:
-> Signed-off-by: David Symonds <dsymonds@gmail.com>
-> ---
->  This isn't a particularly serious patch, but is very relevant to our
->  current discussion at GitTogether '08.
+On Wed, 29 Oct 2008, Johannes Schindelin wrote:
+> On Wed, 29 Oct 2008, Boyd Lynn Gerber wrote:
+>> On Wed, 29 Oct 2008, Shawn O. Pearce wrote:
+>>> Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
+>>>> On Tue, 28 Oct 2008, walt wrote:
+>>>>> walt wrote:
+>>>>>> No, no, I'm not the one calling for a vote.  You old-timers here
+>>>>>> will know the name Matt Dillon, who is leading the dragonflybsd
+>>>>>> project (www.dragonflybsd.org).
+>>>>>>
+>>>>>> Matt is the one who is calling for the vote in his thread "Vote
+>>>>>> for your source control system" in the dragonfly.kernel group,
+>>>>>> accessible via nntp://nntp.dragonflybsd.org...
+>>>>>
+>>>>> The official vote was 19 to 19, plus one for perforce and one for
+>>>>> svn. Matt has proposed a primary git repository and a mirror in
+>>>>> hg, and that's being debated now.
+>>>
+>>> FWIW at the Google Summer of Code Mentor Summit this past weekend we
+>>> had a "Git vs. Hg" talk with both Git and Hg represented by
+>>> contributors to each project.
+>>>
+>>> Slides are online here:
+>>>
+>>>  http://docs.google.com/Presentation?id=dcfz2dg9_0hqqz3dsr
+>>
+>> But how do I save the presentation?  I do not seem to be able to do it.
+>> I would like to view it off-line.
+>
+> Just an idea: print to PDF?  There is a link "print slides" on the lower
+> right.
 
-I've thought about some commands like:
-git stage $file (git add $file)
-git unstage $file (git reset $file)
+That worked.  I had to make my window full screen to see the option.  It 
+did not show-up in my normal window.
 
-Perhaps
-git stage add
-git stage rm
 
-And then your proposal would fit with:
-git stage diff
+Thanks,
 
-Or something like that.
-
--- 
-Felipe Contreras
+--
+Boyd Gerber <gerberb@zenez.com>
+ZENEZ	1042 East Fort Union #135, Midvale Utah  84047
