@@ -1,78 +1,78 @@
-From: Wincent Colaiuta <win@wincent.com>
+From: "Felipe Contreras" <felipe.contreras@gmail.com>
 Subject: Re: [PATCH] Implement git-staged, an alias for 'git diff --cached'.
-Date: Wed, 29 Oct 2008 20:44:58 +0100
-Message-ID: <C03E504F-50E8-4887-80CE-2C6B2F824B9E@wincent.com>
-References: <20081029003931.GA7291@sigill.intra.peff.net> <1225241048-99267-1-git-send-email-dsymonds@gmail.com> <C0BD1E4B-130F-4A16-8865-8EEABE1431FD@wincent.com> <alpine.DEB.1.00.0810291604200.22125@pacific.mpi-cbg.de.mpi-cbg.de> <08FC4756-8890-449D-BB55-90E4761C9B93@wincent.com> <alpine.DEB.1.00.0810291801580.22125@pacific.mpi-cbg.de.mpi-cbg.de> <E4E10B61-FA92-417C-9046-F9DE3B48C2A6@wincent.com> <alpine.DEB.1.00.0810292022480.22125@pacific.mpi-cbg.de.mpi-cbg.de>
-Mime-Version: 1.0 (Apple Message framework v929.2)
-Content-Type: text/plain; charset=ISO-8859-1;
-	format=flowed	delsp=yes
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: David Symonds <dsymonds@gmail.com>, git@vger.kernel.org,
-	gitster@pobox.com, Jeff King <peff@peff.net>
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Wed Oct 29 20:46:52 2008
+Date: Wed, 29 Oct 2008 21:49:09 +0200
+Message-ID: <94a0d4530810291249x3a1c499xb5dde96de1ac39b3@mail.gmail.com>
+References: <1225237145-95435-1-git-send-email-dsymonds@gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, gitster@pobox.com
+To: "David Symonds" <dsymonds@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Oct 29 20:50:27 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KvH0F-0007S8-QU
-	for gcvg-git-2@gmane.org; Wed, 29 Oct 2008 20:46:52 +0100
+	id 1KvH3i-0000Q1-DF
+	for gcvg-git-2@gmane.org; Wed, 29 Oct 2008 20:50:26 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754174AbYJ2Tpi convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 29 Oct 2008 15:45:38 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753323AbYJ2Tpi
-	(ORCPT <rfc822;git-outgoing>); Wed, 29 Oct 2008 15:45:38 -0400
-Received: from wincent1.inetu.net ([209.235.192.161]:60551 "EHLO
-	wincent1.inetu.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754162AbYJ2Tph convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 29 Oct 2008 15:45:37 -0400
-Received: from cuzco.lan (225.pool85-53-3.dynamic.orange.es [85.53.3.225])
-	(authenticated bits=0)
-	by wincent1.inetu.net (8.13.8/8.13.8) with ESMTP id m9TJiwO8027220
-	(version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NO);
-	Wed, 29 Oct 2008 15:45:01 -0400
-In-Reply-To: <alpine.DEB.1.00.0810292022480.22125@pacific.mpi-cbg.de.mpi-cbg.de>
-X-Mailer: Apple Mail (2.929.2)
+	id S1753323AbYJ2TtM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 29 Oct 2008 15:49:12 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753172AbYJ2TtL
+	(ORCPT <rfc822;git-outgoing>); Wed, 29 Oct 2008 15:49:11 -0400
+Received: from rv-out-0506.google.com ([209.85.198.239]:14528 "EHLO
+	rv-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753171AbYJ2TtK (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 29 Oct 2008 15:49:10 -0400
+Received: by rv-out-0506.google.com with SMTP id k40so163501rvb.1
+        for <git@vger.kernel.org>; Wed, 29 Oct 2008 12:49:09 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to
+         :subject:cc:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:references;
+        bh=NiQaSZWdwyU0z0boLoKSNOgV5MPdk+wi4B5inUF9lqk=;
+        b=XRU9QF9d53l7ohHOvapkZMuTTmcrrn+Lsd70KyRvF0V/FRCY0gHdcoS4cjzo7S1btB
+         zD7lj3cpd8hXzZRecL/kpMo2mBYlysYHrO3SQ/CXbJPA6Vy7X3LdKigNyzz6CHWpu1M4
+         lUP8KyW/JJVN3vVDxbFcO++qpnLK0ZZI1OT50=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
+         :content-type:content-transfer-encoding:content-disposition
+         :references;
+        b=xezNomqODJjmUtmjm90Igp2nMs+VP8zmCI37v7sc6irzPoy6uRC7a1NvD6chJNWXg5
+         e68COT6TJSR9o5zGGniWWQCd3H3JyNWHhWQBSR/iLD7jCrt/8visNJM7IjsMsUAzLrP4
+         15oZpi53+aOWHR6F3U7fQF2bABmbcvD/TV1JI=
+Received: by 10.141.116.17 with SMTP id t17mr5116086rvm.251.1225309749384;
+        Wed, 29 Oct 2008 12:49:09 -0700 (PDT)
+Received: by 10.140.166.19 with HTTP; Wed, 29 Oct 2008 12:49:09 -0700 (PDT)
+In-Reply-To: <1225237145-95435-1-git-send-email-dsymonds@gmail.com>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/99397>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/99398>
 
-El 29/10/2008, a las 20:23, Johannes Schindelin escribi=F3:
+On Wed, Oct 29, 2008 at 1:39 AM, David Symonds <dsymonds@gmail.com> wrote:
+> Signed-off-by: David Symonds <dsymonds@gmail.com>
+> ---
+>  This isn't a particularly serious patch, but is very relevant to our
+>  current discussion at GitTogether '08.
 
-> Hi,
->
-> On Wed, 29 Oct 2008, Wincent Colaiuta wrote:
->
->> El 29/10/2008, a las 18:03, Johannes Schindelin escribi=F3:
->>
->>> On Wed, 29 Oct 2008, Wincent Colaiuta wrote:
->>>
->>>> Git already has too many commands. Adding more is not going to =20
->>>> clear
->>>> up newbie confusion, and will only waste time because people will
->>>> complain about it and ask why there is this kind of duplication.
->>>
->>> I completely disagree.  If the existing set of commands causes
->>> confusion, we need to deprecate those parts and add new commands.
->>> Even if we have a ton of commands already.
->>
->> The confusion isn't at the command level; it's at the switch/option
->> level. The solution isn't to add a new command.
->
-> Seems that at leat one guy who does Git training disagrees with you, =
-=20
-> _in
-> addition_ to me.
+I've thought about some commands like:
+git stage $file (git add $file)
+git unstage $file (git reset $file)
 
-That's what I call a "zero value" addition to the thread, seeing as =20
-anyone reading the thread _already_ knows the opinions of the =20
-participants who've posted.
+Perhaps
+git stage add
+git stage rm
 
-Adding a separate command to an already overwhelming command set in =20
-order to address confusion about options to "git diff" is a case of =20
-"duct-tape UI design".
+And then your proposal would fit with:
+git stage diff
 
-Wincent
+Or something like that.
+
+-- 
+Felipe Contreras
