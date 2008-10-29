@@ -1,82 +1,76 @@
-From: Miklos Vajna <vmiklos@frugalware.org>
-Subject: Re: [PATCH] increase git el1T3nEss
-Date: Wed, 29 Oct 2008 18:11:33 +0100
-Message-ID: <20081029171133.GJ24201@genesis.frugalware.org>
-References: <1225257832-29086-1-git-send-email-pasky@suse.cz> <20081029170631.GA12078@sigill.intra.peff.net>
+From: Pascal Obry <pascal@obry.net>
+Subject: Re: [PATCH] Implement git-staged, an alias for 'git diff --cached'.
+Date: Wed, 29 Oct 2008 18:13:03 +0100
+Organization: Home - http://www.obry.net
+Message-ID: <4908999F.4040208@obry.net>
+References: <20081029003931.GA7291@sigill.intra.peff.net> <1225241048-99267-1-git-send-email-dsymonds@gmail.com> <C0BD1E4B-130F-4A16-8865-8EEABE1431FD@wincent.com> <alpine.DEB.1.00.0810291604200.22125@pacific.mpi-cbg.de.mpi-cbg.de> <08FC4756-8890-449D-BB55-90E4761C9B93@wincent.com> <alpine.DEB.1.00.0810291801580.22125@pacific.mpi-cbg.de.mpi-cbg.de>
+Reply-To: pascal@obry.net
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="f0Ums9VvOMUG7syy"
-Cc: Petr Baudis <pasky@suse.cz>, git@vger.kernel.org,
-	Johannes Schindelin <johannes.schindelin@gmx.de>,
-	Scott Chacon <schacon@gmail.com>,
-	Tom Preston-Werner <tom@github.com>,
-	"J.H." <warthog19@eaglescrag.net>, Sam Vilain <sam@vilain.net>,
-	Christian Couder <chriscool@tuxfamily.org>,
-	Kai Blin <kai@samba.org>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Wed Oct 29 18:12:57 2008
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Wincent Colaiuta <win@wincent.com>,
+	David Symonds <dsymonds@gmail.com>, git@vger.kernel.org,
+	gitster@pobox.com, Jeff King <peff@peff.net>
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Wed Oct 29 18:14:52 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KvEbJ-0001eY-10
-	for gcvg-git-2@gmane.org; Wed, 29 Oct 2008 18:12:57 +0100
+	id 1KvEcm-0002Hv-8i
+	for gcvg-git-2@gmane.org; Wed, 29 Oct 2008 18:14:28 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753689AbYJ2RLi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 29 Oct 2008 13:11:38 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753802AbYJ2RLi
-	(ORCPT <rfc822;git-outgoing>); Wed, 29 Oct 2008 13:11:38 -0400
-Received: from virgo.iok.hu ([193.202.89.103]:50019 "EHLO virgo.iok.hu"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753654AbYJ2RLh (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 29 Oct 2008 13:11:37 -0400
-Received: from kag.elte.hu (kag.elte.hu [157.181.177.1])
-	by virgo.iok.hu (Postfix) with ESMTP id 28EA75812B;
-	Wed, 29 Oct 2008 18:11:36 +0100 (CET)
-Received: from genesis.frugalware.org (frugalware.elte.hu [157.181.177.34])
-	by kag.elte.hu (Postfix) with ESMTP id 887F54465E;
-	Wed, 29 Oct 2008 18:11:33 +0100 (CET)
-Received: by genesis.frugalware.org (Postfix, from userid 1000)
-	id 3CFD9119019E; Wed, 29 Oct 2008 18:11:33 +0100 (CET)
-Content-Disposition: inline
-In-Reply-To: <20081029170631.GA12078@sigill.intra.peff.net>
-User-Agent: Mutt/1.5.17 (2007-11-01)
+	id S1753943AbYJ2RNP convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 29 Oct 2008 13:13:15 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753934AbYJ2RNO
+	(ORCPT <rfc822;git-outgoing>); Wed, 29 Oct 2008 13:13:14 -0400
+Received: from nf-out-0910.google.com ([64.233.182.185]:5615 "EHLO
+	nf-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753759AbYJ2RNO (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 29 Oct 2008 13:13:14 -0400
+Received: by nf-out-0910.google.com with SMTP id d3so56399nfc.21
+        for <git@vger.kernel.org>; Wed, 29 Oct 2008 10:13:12 -0700 (PDT)
+Received: by 10.86.63.19 with SMTP id l19mr5926949fga.57.1225300392343;
+        Wed, 29 Oct 2008 10:13:12 -0700 (PDT)
+Received: from ?192.168.0.100? (AVelizy-154-1-40-132.w82-124.abo.wanadoo.fr [82.124.144.132])
+        by mx.google.com with ESMTPS id 4sm417096fgg.4.2008.10.29.10.13.09
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Wed, 29 Oct 2008 10:13:11 -0700 (PDT)
+User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.1; fr-FR; rv:1.8.1.17) Gecko/20080914 Thunderbird/2.0.0.17 Mnenhy/0.7.5.0
+In-Reply-To: <alpine.DEB.1.00.0810291801580.22125@pacific.mpi-cbg.de.mpi-cbg.de>
+X-Enigmail-Version: 0.95.7
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/99385>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/99386>
 
-
---f0Ums9VvOMUG7syy
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
-
-On Wed, Oct 29, 2008 at 01:06:31PM -0400, Jeff King <peff@peff.net> wrote:
-> The uptake of git by script kiddies has been disappointingly
-> minimal. Let's make it more palatable by allowing mixed-case
-> and l33t-speak commands.
+Johannes Schindelin a =E9crit :
+> I completely disagree.  If the existing set of commands causes confus=
+ion,=20
+> we need to deprecate those parts and add new commands.  Even if we ha=
+ve a=20
+> ton of commands already.
 >=20
-> Signed-off-by: Jeff King <peff@peff.net>
-> ---
-> This commit was made by "git c0mM1t".
+> It does not need to hurt, either.  Just think of init-db.  Ever heard=
+ of=20
+> it?  We still have it, yet it is not relevant.
 
-Testcase?
+In this specific case adding a new command as an alias for a
+command+option seems wrong! I much prefer adding the alias --staged for
+--cached - as proposed now - if it can make things easier for new comer=
+s.
 
-(I hope it was not serious, just like my question. ;-)
+Pascal.
 
---f0Ums9VvOMUG7syy
-Content-Type: application/pgp-signature
-Content-Disposition: inline
+--=20
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.9 (GNU/Linux)
-
-iEYEARECAAYFAkkImUUACgkQe81tAgORUJaj6gCfd9x/tLBZOWQWlWWD8uidSiu8
-ci8An26Gqsw8BKuywhR5RXuZFU1jy9/4
-=CjiJ
------END PGP SIGNATURE-----
-
---f0Ums9VvOMUG7syy--
+--|------------------------------------------------------
+--| Pascal Obry                           Team-Ada Member
+--| 45, rue Gabriel Peri - 78114 Magny Les Hameaux FRANCE
+--|------------------------------------------------------
+--|              http://www.obry.net
+--| "The best way to travel is by means of imagination"
+--|
+--| gpg --keyserver wwwkeys.pgp.net --recv-key C1082595
