@@ -1,67 +1,61 @@
-From: Petr Baudis <pasky@suse.cz>
-Subject: [PATCH 1/1] diff: support making output friendlier for fine, grand users
-Date: Tue, 28 Oct 2008 22:23:52 -0700
-Message-ID: <1225257832-29086-1-git-send-email-pasky@suse.cz>
-Cc: Johannes Schindelin <johannes.schindelin@gmx.de>,
-	Scott Chacon <schacon@gmail.com>,
-	Tom Preston-Werner <tom@github.com>, Jeff King <peff@peff.net>,
-	"J.H." <warthog19@eaglescrag.net>, Sam Vilain <sam@vilain.net>,
-	Christian Couder <chriscool@tuxfamily.org>,
-	Kai Blin <kai@samba.org>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Oct 29 07:19:22 2008
+From: Johannes Sixt <j.sixt@viscovery.net>
+Subject: Re: [PATCH] git show <tree>: show mode and hash, and handle -r
+Date: Wed, 29 Oct 2008 08:20:04 +0100
+Message-ID: <49080EA4.9080404@viscovery.net>
+References: <alpine.DEB.1.00.0810290207330.22125@pacific.mpi-cbg.de.mpi-cbg.de>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: gitster@pobox.com, git@vger.kernel.org, schacon@gmail.com
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Wed Oct 29 08:21:41 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Kv4Oj-00007A-SI
-	for gcvg-git-2@gmane.org; Wed, 29 Oct 2008 07:19:18 +0100
+	id 1Kv5Mv-0005BU-7J
+	for gcvg-git-2@gmane.org; Wed, 29 Oct 2008 08:21:29 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751929AbYJ2GOW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 29 Oct 2008 02:14:22 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751588AbYJ2GOW
-	(ORCPT <rfc822;git-outgoing>); Wed, 29 Oct 2008 02:14:22 -0400
-Received: from w241.dkm.cz ([62.24.88.241]:46594 "EHLO pixie.suse.cz"
-	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-	id S1751357AbYJ2GOV (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 29 Oct 2008 02:14:21 -0400
-Received: by pixie.suse.cz (Postfix, from userid 2001)
-	id 1F1002ACFF0; Tue, 28 Oct 2008 22:23:52 -0700 (PDT)
-X-Mailer: git-send-email 1.5.4.5
+	id S1752597AbYJ2HUM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 29 Oct 2008 03:20:12 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752561AbYJ2HUL
+	(ORCPT <rfc822;git-outgoing>); Wed, 29 Oct 2008 03:20:11 -0400
+Received: from lilzmailso02.liwest.at ([212.33.55.13]:11191 "EHLO
+	lilzmailso02.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752539AbYJ2HUK (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 29 Oct 2008 03:20:10 -0400
+Received: from cm56-163-160.liwest.at ([86.56.163.160] helo=linz.eudaptics.com)
+	by lilzmailso02.liwest.at with esmtpa (Exim 4.69)
+	(envelope-from <j.sixt@viscovery.net>)
+	id 1Kv5LZ-00010h-8K; Wed, 29 Oct 2008 08:20:05 +0100
+Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.96])
+	by linz.eudaptics.com (Postfix) with ESMTP
+	id D83DD4FB; Wed, 29 Oct 2008 08:20:04 +0100 (CET)
+User-Agent: Thunderbird 2.0.0.6 (Windows/20070728)
+In-Reply-To: <alpine.DEB.1.00.0810290207330.22125@pacific.mpi-cbg.de.mpi-cbg.de>
+X-Spam-Score: -0.8 (/)
+X-Spam-Report: ALL_TRUSTED=-1.8, BAYES_60=1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/99348>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/99349>
 
-Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
-Signed-off-by: Scott Chacon <schacon@gmail.com>
-Signed-off-by: Tom Preston-Werner <tom@github.com>
-Signed-off-by: Jeff King <peff@peff.net>
-Signed-off-by: J.H. <warthog19@eaglescrag.net>
-Signed-off-by: Sam Vilain <sam@vilain.net>
-Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
-Signed-off-by: Kai Blin <kai@samba.org>
-Acked-by: Petr Baudis <pasky@suse.cz>
-Enabled-by: Cascade "Smooth" Amber <clarity@tiedhouse.com>
----
- diff.c |    3 +++
- 1 files changed, 3 insertions(+), 0 deletions(-)
+Johannes Schindelin schrieb:
+> Now, git show <tree> shows some more information, and with the -r option,
+> it recurses into subdirectories.
+> 
+> Requested by Scott Chacon.
+> 
+> Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+> ---
+> 
+> 	The only quirk is the command line parsing for -r: we cannot use 
+> 	DIFF_OPT_TST(&rev.diffopt, RECURSIVE), because that is switched 
+> 	on not only by cmd_log_init(), but implicitly by 
+> 	diff_setup_done(), because FORMAT_PATCH is selected by git-show.
 
-diff --git a/diff.c b/diff.c
-index e368fef..0e2c14a 100644
---- a/diff.c
-+++ b/diff.c
-@@ -2489,6 +2489,9 @@ int diff_opt_parse(struct diff_options *options, const char **av, int ac)
- 	else if (!prefixcmp(arg, "--output=")) {
- 		options->file = fopen(arg + strlen("--output="), "w");
- 		options->close_file = 1;
-+	}
-+	else if (!strcmp(arg, "--pirate")) {
-+		printf("Arrrr!  These be yer fine changes, me 'earty!!\n");
- 	} else
- 		return 0;
- 	return 1;
--- 
-1.5.4.5
+This comment should for sure go into the commit message.
+
+-- Hannes
