@@ -1,80 +1,64 @@
-From: David Symonds <dsymonds@gmail.com>
-Subject: [PATCH] Implement git-staged, an alias for 'git diff --cached'.
-Date: Tue, 28 Oct 2008 17:44:08 -0700
-Message-ID: <1225241048-99267-1-git-send-email-dsymonds@gmail.com>
-References: <20081029003931.GA7291@sigill.intra.peff.net>
-Cc: David Symonds <dsymonds@gmail.com>
-To: git@vger.kernel.org, gitster@pobox.com, Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Wed Oct 29 01:46:35 2008
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH] Implement git-staged, an alias for 'git diff
+ --cached'.
+Date: Wed, 29 Oct 2008 02:02:29 +0100 (CET)
+Message-ID: <alpine.DEB.1.00.0810290201400.22125@pacific.mpi-cbg.de.mpi-cbg.de>
+References: <20081029003931.GA7291@sigill.intra.peff.net> <1225241048-99267-1-git-send-email-dsymonds@gmail.com>
+Mime-Version: 1.0
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org, gitster@pobox.com, Jeff King <peff@peff.net>
+To: David Symonds <dsymonds@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Oct 29 01:56:41 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KuzCi-000291-FM
-	for gcvg-git-2@gmane.org; Wed, 29 Oct 2008 01:46:32 +0100
+	id 1KuzMS-0004KT-BZ
+	for gcvg-git-2@gmane.org; Wed, 29 Oct 2008 01:56:36 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753339AbYJ2ApT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 28 Oct 2008 20:45:19 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752940AbYJ2ApT
-	(ORCPT <rfc822;git-outgoing>); Tue, 28 Oct 2008 20:45:19 -0400
-Received: from smtp-out.google.com ([216.239.33.17]:48766 "EHLO
-	smtp-out.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752785AbYJ2ApT (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 28 Oct 2008 20:45:19 -0400
-Received: from wpaz5.hot.corp.google.com (wpaz5.hot.corp.google.com [172.24.198.69])
-	by smtp-out.google.com with ESMTP id m9T0iIOG028279;
-	Wed, 29 Oct 2008 00:44:20 GMT
-Received: from localhost.localdomain (dhcp-172-19-79-244.mtv.corp.google.com [172.19.79.244])
-	by wpaz5.hot.corp.google.com with ESMTP id m9T0i93s027403;
-	Tue, 28 Oct 2008 17:44:09 -0700
-X-Mailer: git-send-email 1.6.0
-In-Reply-To: <20081029003931.GA7291@sigill.intra.peff.net>
+	id S1752839AbYJ2AzW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 28 Oct 2008 20:55:22 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752785AbYJ2AzW
+	(ORCPT <rfc822;git-outgoing>); Tue, 28 Oct 2008 20:55:22 -0400
+Received: from mail.gmx.net ([213.165.64.20]:57409 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1752704AbYJ2AzV (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 28 Oct 2008 20:55:21 -0400
+Received: (qmail invoked by alias); 29 Oct 2008 00:55:19 -0000
+Received: from pacific.mpi-cbg.de (EHLO [141.5.10.38]) [141.5.10.38]
+  by mail.gmx.net (mp050) with SMTP; 29 Oct 2008 01:55:19 +0100
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX18ZiO9EAiQZkEvI7VnlBtH/+v2WclodcYVRVAzNHR
+	KS6+kSrknbdR2V
+X-X-Sender: schindelin@pacific.mpi-cbg.de.mpi-cbg.de
+In-Reply-To: <1225241048-99267-1-git-send-email-dsymonds@gmail.com>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.67
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/99339>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/99340>
 
-Signed-off-by: David Symonds <dsymonds@gmail.com>
----
- .gitignore    |    1 +
- Makefile      |    1 +
- git-staged.sh |    2 ++
- 3 files changed, 4 insertions(+), 0 deletions(-)
- create mode 100755 git-staged.sh
+Hi,
 
-diff --git a/.gitignore b/.gitignore
-index bbaf9de..9353d19 100644
---- a/.gitignore
-+++ b/.gitignore
-@@ -118,6 +118,7 @@ git-show
- git-show-branch
- git-show-index
- git-show-ref
-+git-staged
- git-stash
- git-status
- git-stripspace
-diff --git a/Makefile b/Makefile
-index d6f3695..1b23e53 100644
---- a/Makefile
-+++ b/Makefile
-@@ -262,6 +262,7 @@ SCRIPT_SH += git-rebase.sh
- SCRIPT_SH += git-repack.sh
- SCRIPT_SH += git-request-pull.sh
- SCRIPT_SH += git-sh-setup.sh
-+SCRIPT_SH += git-staged.sh
- SCRIPT_SH += git-stash.sh
- SCRIPT_SH += git-submodule.sh
- SCRIPT_SH += git-web--browse.sh
-diff --git a/git-staged.sh b/git-staged.sh
-new file mode 100755
-index 0000000..66a5e33
---- /dev/null
-+++ b/git-staged.sh
-@@ -0,0 +1,2 @@
-+#!/bin/sh
-+exec git diff --cached "$@"
--- 
-1.6.0
+On Tue, 28 Oct 2008, David Symonds wrote:
+
+> diff --git a/.gitignore b/.gitignore
+> index bbaf9de..9353d19 100644
+> --- a/.gitignore
+> +++ b/.gitignore
+> @@ -118,6 +118,7 @@ git-show
+>  git-show-branch
+>  git-show-index
+>  git-show-ref
+> +git-staged
+
+Would it not be better to teach "git show --staged" to do that, and to add 
+a command pair "git stage <file>" and "git unstage <file>" to do the 
+obvious?
+
+Ciao,
+Dscho
