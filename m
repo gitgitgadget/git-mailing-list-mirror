@@ -1,80 +1,120 @@
-From: Wincent Colaiuta <win@wincent.com>
-Subject: Re: [PATCH] Implement git-staged, an alias for 'git diff --cached'.
-Date: Wed, 29 Oct 2008 17:16:44 +0100
-Message-ID: <08FC4756-8890-449D-BB55-90E4761C9B93@wincent.com>
-References: <20081029003931.GA7291@sigill.intra.peff.net> <1225241048-99267-1-git-send-email-dsymonds@gmail.com> <C0BD1E4B-130F-4A16-8865-8EEABE1431FD@wincent.com> <alpine.DEB.1.00.0810291604200.22125@pacific.mpi-cbg.de.mpi-cbg.de>
-Mime-Version: 1.0 (Apple Message framework v929.2)
-Content-Type: text/plain; charset=ISO-8859-1;
-	format=flowed	delsp=yes
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: David Symonds <dsymonds@gmail.com>, git@vger.kernel.org,
-	gitster@pobox.com, Jeff King <peff@peff.net>
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Wed Oct 29 17:19:09 2008
+From: "=?ISO-8859-1?Q?Santi_B=E9jar?=" <santi@agolina.net>
+Subject: Re: Using the --track option when creating a branch
+Date: Wed, 29 Oct 2008 17:25:37 +0100
+Message-ID: <adf1fd3d0810290925s493cdc6oc7534904c864db28@mail.gmail.com>
+References: <18696.32778.842933.486171@lisa.zopyra.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: "Bill Lear" <rael@zopyra.com>
+X-From: git-owner@vger.kernel.org Wed Oct 29 17:27:32 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KvDl0-0003KS-Oa
-	for gcvg-git-2@gmane.org; Wed, 29 Oct 2008 17:18:55 +0100
+	id 1KvDsq-0006bT-Sc
+	for gcvg-git-2@gmane.org; Wed, 29 Oct 2008 17:27:01 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754650AbYJ2QRk convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 29 Oct 2008 12:17:40 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754632AbYJ2QRk
-	(ORCPT <rfc822;git-outgoing>); Wed, 29 Oct 2008 12:17:40 -0400
-Received: from wincent1.inetu.net ([209.235.192.161]:58212 "EHLO
-	wincent1.inetu.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753963AbYJ2QRj convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 29 Oct 2008 12:17:39 -0400
-Received: from cuzco.lan (225.pool85-53-3.dynamic.orange.es [85.53.3.225])
-	(authenticated bits=0)
-	by wincent1.inetu.net (8.13.8/8.13.8) with ESMTP id m9TGGjsB022272
-	(version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NO);
-	Wed, 29 Oct 2008 12:16:47 -0400
-In-Reply-To: <alpine.DEB.1.00.0810291604200.22125@pacific.mpi-cbg.de.mpi-cbg.de>
-X-Mailer: Apple Mail (2.929.2)
+	id S1753695AbYJ2QZp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 29 Oct 2008 12:25:45 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753802AbYJ2QZp
+	(ORCPT <rfc822;git-outgoing>); Wed, 29 Oct 2008 12:25:45 -0400
+Received: from mail-gx0-f18.google.com ([209.85.217.18]:49396 "EHLO
+	mail-gx0-f18.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753637AbYJ2QZo (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 29 Oct 2008 12:25:44 -0400
+Received: by gxk11 with SMTP id 11so2989497gxk.13
+        for <git@vger.kernel.org>; Wed, 29 Oct 2008 09:25:42 -0700 (PDT)
+Received: by 10.103.224.17 with SMTP id b17mr4303631mur.16.1225297537764;
+        Wed, 29 Oct 2008 09:25:37 -0700 (PDT)
+Received: by 10.103.131.8 with HTTP; Wed, 29 Oct 2008 09:25:37 -0700 (PDT)
+In-Reply-To: <18696.32778.842933.486171@lisa.zopyra.com>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/99377>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/99378>
 
-El 29/10/2008, a las 16:08, Johannes Schindelin escribi=F3:
+On Wed, Oct 29, 2008 at 4:23 PM, Bill Lear <rael@zopyra.com> wrote:
+> We have had a few "crossed stream" problems when developers are
+> working on a local branch and they do an unguarded git push/pull,
+> when they really intended to do git push/pull origin branchname.
+>
+> We use git in a way that makes it desirable for us to only push/pull
+> to the same remote branch.  So, if I'm in branch X, I want 'git push'
+> to push to origin/X, and 'git pull' to fetch into origin/X and then
+> merge into X from origin/X.
+>
+> In other words, we want git push/pull to behave in branches other than
+> master the same way it does when in master.
+>
+> I have discovered the '--track' option when creating a local branch,
+> and this appears to me to be the thing that gives us the desired
+> behavior.
 
-> Hi,
->
-> On Wed, 29 Oct 2008, Wincent Colaiuta wrote:
->
->> El 29/10/2008, a las 1:44, David Symonds escribi=F3:
->>
->>> +SCRIPT_SH +=3D git-staged.sh
->>
->> Isn't this exactly what aliases are for?
->>  git config --global alias.staged "diff --cached"
->> (Rather than adding yet another command...)
->
-> The difference being, of course, that we do not ship default aliases =
-=20
-> (and
-> neither do we plan to...).
->
-> So saying "this is what aliases are for" you ask for _newbies_ to =20
-> add it
-> for themselves.  We are talking the same newbies who should be =20
-> helped by
-> that command, and typically do not know that there are Git aliases =20
-> yet.
->
-> Even worse, just sum the times it takes everybody to make that =20
-> alias, and
-> then compare with the time it would take to include something like =20
-> David
-> posted in git.git.  It should be obvious that the time balance is
-> absolutely horrible.
+branch.autosetupmerge controls if --track is used by default (it is
+true by default since a long time)
+(See "git help config" for details)
 
-Git already has too many commands. Adding more is not going to clear =20
-up newbie confusion, and will only waste time because people will =20
-complain about it and ask why there is this kind of duplication.
+>
+> Before I tell the rest of the team that this is the correct way
+> to do things, I need to be sure I am correct, so if anyone here
+> can confirm or deny this, I'd appreciate it.
 
-W
+It should just work (at least in the lastest releases) when creating a
+branch from a remote branch.
+
+$ git checkout -b X origin/X
+or
+$ git branch X origin/X
+Branch X set up to track remote branch refs/remotes/origin/X
+
+>
+> Also, once a branch has been created, how can we add a '--track' option
+> after the fact?
+
+It it just two configs (apart from the remote repository). A help
+message should appear when using "git pull" without arguments and it
+cannot figure out the branch to merge:
+
+$ # currently in branch next
+$ git pull
+You asked me to pull without telling me which branch you
+want to merge with, and 'branch.next.merge' in
+your configuration file does not tell me either.  Please
+name which branch you want to merge on the command line and
+try again (e.g. 'git pull <repository> <refspec>').
+See git-pull(1) for details on the refspec.
+
+If you often merge with the same branch, you may want to
+configure the following variables in your configuration
+file:
+
+    branch.next.remote = <nickname>
+    branch.next.merge = <remote-ref>
+    remote.<nickname>.url = <url>
+    remote.<nickname>.fetch = <refspec>
+
+See git-config(1) for details.
+
+[end]
+
+so to add it after the fact you should execute:
+
+$ git config branch.next.remote origin
+$ git config branch.next.merge refs/heads/next
+
+>
+> Finally, is there a 'global' config setting that would set this behavior
+> for all repos (new or existing)?
+
+See above.
+
+>
+> We are using git 1.6.* versions here, mostly.
+>
+
+Santi
