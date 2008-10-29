@@ -1,107 +1,54 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: [PATCH] git show <tree>: show mode and hash, and handle -r
-Date: Wed, 29 Oct 2008 02:09:55 +0100 (CET)
-Message-ID: <alpine.DEB.1.00.0810290207330.22125@pacific.mpi-cbg.de.mpi-cbg.de>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH] Implement git-staged, an alias for 'git diff --cached'.
+Date: Tue, 28 Oct 2008 21:05:34 -0400
+Message-ID: <20081029010534.GA8833@sigill.intra.peff.net>
+References: <1225237145-95435-1-git-send-email-dsymonds@gmail.com> <1225238368-98594-1-git-send-email-dsymonds@gmail.com> <20081029003931.GA7291@sigill.intra.peff.net> <20081029010107.GB12065@leksak.fem-net>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-To: gitster@pobox.com, git@vger.kernel.org, schacon@gmail.com
-X-From: git-owner@vger.kernel.org Wed Oct 29 02:04:01 2008
+Content-Type: text/plain; charset=utf-8
+Cc: David Symonds <dsymonds@gmail.com>, git@vger.kernel.org,
+	gitster@pobox.com
+To: Stephan Beyer <s-beyer@gmx.net>
+X-From: git-owner@vger.kernel.org Wed Oct 29 02:06:58 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KuzTd-000626-6C
-	for gcvg-git-2@gmane.org; Wed, 29 Oct 2008 02:04:01 +0100
+	id 1KuzWM-0006gf-UZ
+	for gcvg-git-2@gmane.org; Wed, 29 Oct 2008 02:06:51 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753004AbYJ2BCs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 28 Oct 2008 21:02:48 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753283AbYJ2BCs
-	(ORCPT <rfc822;git-outgoing>); Tue, 28 Oct 2008 21:02:48 -0400
-Received: from mail.gmx.net ([213.165.64.20]:52380 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1752889AbYJ2BCr (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 28 Oct 2008 21:02:47 -0400
-Received: (qmail invoked by alias); 29 Oct 2008 01:02:46 -0000
-Received: from pacific.mpi-cbg.de (EHLO [141.5.10.38]) [141.5.10.38]
-  by mail.gmx.net (mp048) with SMTP; 29 Oct 2008 02:02:46 +0100
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1+lOxdZDaSl60fFbxqsCfzXgyTekCr4+bgrZWnHq0
-	WDcNFVqpZTK95l
-X-X-Sender: schindelin@pacific.mpi-cbg.de.mpi-cbg.de
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.48
+	id S1752998AbYJ2BFi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 28 Oct 2008 21:05:38 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751119AbYJ2BFi
+	(ORCPT <rfc822;git-outgoing>); Tue, 28 Oct 2008 21:05:38 -0400
+Received: from peff.net ([208.65.91.99]:3263 "EHLO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752998AbYJ2BFh (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 28 Oct 2008 21:05:37 -0400
+Received: (qmail 25031 invoked by uid 111); 29 Oct 2008 01:05:36 -0000
+Received: from Unknown (HELO sigill.intra.peff.net) (216.239.45.19)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.32) with ESMTP; Tue, 28 Oct 2008 21:05:36 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 28 Oct 2008 21:05:34 -0400
+Content-Disposition: inline
+In-Reply-To: <20081029010107.GB12065@leksak.fem-net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/99344>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/99345>
 
+On Wed, Oct 29, 2008 at 02:01:07AM +0100, Stephan Beyer wrote:
 
-Now, git show <tree> shows some more information, and with the -r option,
-it recurses into subdirectories.
+> I'm still not understanding, what it's for.
+> Usability? Because doing
+> 	git config --global alias.staged 'diff --cached'
+> is lame?
 
-Requested by Scott Chacon.
+You are missing some of the context, which is that we just had a big
+in-person debate about how the staged nomenclature is confusing. We call
+things "cached", "staged", and "index", depending on the command.
 
-Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
----
+So this is an attempt to rectify that.
 
-	The only quirk is the command line parsing for -r: we cannot use 
-	DIFF_OPT_TST(&rev.diffopt, RECURSIVE), because that is switched 
-	on not only by cmd_log_init(), but implicitly by 
-	diff_setup_done(), because FORMAT_PATCH is selected by git-show.
-
- builtin-log.c |   16 +++++++++++++---
- 1 files changed, 13 insertions(+), 3 deletions(-)
-
-diff --git a/builtin-log.c b/builtin-log.c
-index 3796dda..b00d353 100644
---- a/builtin-log.c
-+++ b/builtin-log.c
-@@ -297,8 +297,12 @@ static int show_tree_object(const unsigned char *sha1,
- 		const char *base, int baselen,
- 		const char *pathname, unsigned mode, int stage, void *context)
- {
--	printf("%s%s\n", pathname, S_ISDIR(mode) ? "/" : "");
--	return 0;
-+	int *recursive = context;
-+	printf("%06o %s %.*s%s%s\n", mode,
-+			find_unique_abbrev(sha1, DEFAULT_ABBREV),
-+			baselen, base,
-+			pathname, S_ISDIR(mode) ? "/" : "");
-+	return *recursive ? READ_TREE_RECURSIVE : 0;
- }
- 
- int cmd_show(int argc, const char **argv, const char *prefix)
-@@ -306,6 +310,7 @@ int cmd_show(int argc, const char **argv, const char *prefix)
- 	struct rev_info rev;
- 	struct object_array_entry *objects;
- 	int i, count, ret = 0;
-+	int tree_recursive = 0;
- 
- 	git_config(git_log_config, NULL);
- 
-@@ -319,6 +324,11 @@ int cmd_show(int argc, const char **argv, const char *prefix)
- 	rev.always_show_header = 1;
- 	rev.ignore_merges = 0;
- 	rev.no_walk = 1;
-+	for (i = 1; i < argc && strcmp(argv[i], "--"); i++)
-+		if (!strcmp(argv[i], "-r")) {
-+			tree_recursive = 1;
-+			break;
-+		}
- 	cmd_log_init(argc, argv, prefix, &rev);
- 
- 	count = rev.pending.nr;
-@@ -348,7 +358,7 @@ int cmd_show(int argc, const char **argv, const char *prefix)
- 					name,
- 					diff_get_color_opt(&rev.diffopt, DIFF_RESET));
- 			read_tree_recursive((struct tree *)o, "", 0, 0, NULL,
--					show_tree_object, NULL);
-+					show_tree_object, &tree_recursive);
- 			break;
- 		case OBJ_COMMIT:
- 			rev.pending.nr = rev.pending.alloc = 0;
--- 
-1.6.0.2.763.g72663
+-Peff
