@@ -1,64 +1,79 @@
-From: Teemu Likonen <tlikonen@iki.fi>
-Subject: Re: [PATCH] Implement git-staged, an alias for 'git diff --cached'.
-Date: Wed, 29 Oct 2008 20:30:39 +0200
-Message-ID: <878ws7w8xc.fsf@iki.fi>
-References: <20081029003931.GA7291@sigill.intra.peff.net>
-	<1225241048-99267-1-git-send-email-dsymonds@gmail.com>
-	<C0BD1E4B-130F-4A16-8865-8EEABE1431FD@wincent.com>
-	<alpine.DEB.1.00.0810291604200.22125@pacific.mpi-cbg.de.mpi-cbg.de>
-	<08FC4756-8890-449D-BB55-90E4761C9B93@wincent.com>
-	<alpine.DEB.1.00.0810291801580.22125@pacific.mpi-cbg.de.mpi-cbg.de>
-	<E4E10B61-FA92-417C-9046-F9DE3B48C2A6@wincent.com>
+From: "Avery Pennarun" <apenwarr@gmail.com>
+Subject: [ANNOUNCE] Gitbuilder 0.2.0 is released
+Date: Wed, 29 Oct 2008 14:37:22 -0400
+Message-ID: <32541b130810291137i11a6e086ndedc43c9fb2e6ef0@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	David Symonds <dsymonds@gmail.com>, git@vger.kernel.org,
-	gitster@pobox.com, Jeff King <peff@peff.net>
-To: Wincent Colaiuta <win@wincent.com>
-X-From: git-owner@vger.kernel.org Wed Oct 29 19:32:30 2008
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+To: "Git Mailing List" <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Wed Oct 29 19:49:00 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KvFqE-00020o-Q3
-	for gcvg-git-2@gmane.org; Wed, 29 Oct 2008 19:32:27 +0100
+	id 1KvG5p-0000RD-V3
+	for gcvg-git-2@gmane.org; Wed, 29 Oct 2008 19:48:34 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753066AbYJ2SbM convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 29 Oct 2008 14:31:12 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753042AbYJ2SbL
-	(ORCPT <rfc822;git-outgoing>); Wed, 29 Oct 2008 14:31:11 -0400
-Received: from mta-out.inet.fi ([195.156.147.13]:49576 "EHLO kirsi2.inet.fi"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752607AbYJ2SbK (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 29 Oct 2008 14:31:10 -0400
-Received: from mithlond.arda.local (80.220.180.181) by kirsi2.inet.fi (8.5.014)
-        id 48FC5B8900851255; Wed, 29 Oct 2008 20:30:42 +0200
-In-Reply-To: <E4E10B61-FA92-417C-9046-F9DE3B48C2A6@wincent.com> (Wincent Colaiuta's message of "Wed\, 29 Oct 2008 18\:42\:57 +0100")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+	id S1752607AbYJ2SrU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 29 Oct 2008 14:47:20 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752542AbYJ2SrU
+	(ORCPT <rfc822;git-outgoing>); Wed, 29 Oct 2008 14:47:20 -0400
+Received: from mail-gx0-f12.google.com ([209.85.217.12]:39403 "EHLO
+	mail-gx0-f12.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752435AbYJ2SrT (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 29 Oct 2008 14:47:19 -0400
+X-Greylist: delayed 419 seconds by postgrey-1.27 at vger.kernel.org; Wed, 29 Oct 2008 14:47:19 EDT
+Received: by gxk5 with SMTP id 5so59378gxk.13
+        for <git@vger.kernel.org>; Wed, 29 Oct 2008 11:47:18 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to
+         :subject:mime-version:content-type:content-transfer-encoding
+         :content-disposition;
+        bh=utvrhAW4diSqSBKJxwJZguApfUYTyV+qvoY6trSzFio=;
+        b=NGU4pJm3W3ptOSxxuf+u4U7OmS+A0l8NCjoeUiw1p7wp+tiRj6Q/LyxzkhKaLV0rAW
+         klbKuh+SNSYFxDd/gQkwVBoxIwCe8vP3ULoFbMmNjfDEZOIVUFrzkD2mte9ibic8uH9a
+         HjSLRCogca5iQKSQiVZ0V/K0HydxSJqiq2HxU=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:to:subject:mime-version:content-type
+         :content-transfer-encoding:content-disposition;
+        b=NwoYvCQvsjx0lZjhOazGEBLCpl4lcQ+MW2VAz80sVnNU1Uw8b27qcyMDrEBdmLqhLS
+         dNLjotDMauWmJnSwgyaybgtLWGDGzMOBbvB/RXL8FjisEDq2GqbAZsEHTv5pY4ZQVnT9
+         kmDLNJW3WF9M3654baiICzjySJiGGrAFj3yn8=
+Received: by 10.151.108.5 with SMTP id k5mr1833310ybm.209.1225305442595;
+        Wed, 29 Oct 2008 11:37:22 -0700 (PDT)
+Received: by 10.150.96.5 with HTTP; Wed, 29 Oct 2008 11:37:22 -0700 (PDT)
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/99388>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/99389>
 
-Wincent Colaiuta (2008-10-29 18:42 +0100) wrote:
+Hi all,
 
-> El 29/10/2008, a las 18:03, Johannes Schindelin escribi=F3:
->> I completely disagree. If the existing set of commands causes
->> confusion, we need to deprecate those parts and add new commands.
->> Even if we have a ton of commands already.
->
-> The confusion isn't at the command level; it's at the switch/option
-> level. The solution isn't to add a new command.
+I'd like to announce the new v0.2.0 release of gitbuilder, an
+auto-bisecting autobuilder tool for git-based projects.  The new
+version incorporates several suggestions from end users, including:
 
-I don't remember being confused in particular area but I think it's a
-_very_ good thing that the following three are behind the same "diff"
-command:
+ - a new bar at the top shows the most recent builds and their status
+ - the RSS link is now more obvious
+ - non-fatal warnings now turn your build yellow instead of green
+ - we now count and report warnings, errors, and test failures separately
+ - a new changelog script can email recent changes in your repo on a
+daily/weekly schedule
 
-    git diff
-    git diff --cached       (or --staged)
-    git diff HEAD
+You can see some running gitbuilder examples (including one that
+tracks git.git) here:
+   http://versabanq.com/demo/build/
 
-It's also good idea to pretty much always teach those three together.
+And you can download the source code (in perl+shell) here:
+   http://github.com/apenwarr/gitbuilder/
+
+Enjoy!
+
+Have fun,
+
+Avery
