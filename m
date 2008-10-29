@@ -1,13 +1,15 @@
 From: Nicolas Pitre <nico@cam.org>
-Subject: [PATCH 6/9] make find_pack_revindex() aware of the nasty world
-Date: Wed, 29 Oct 2008 19:02:49 -0400
-Message-ID: <1225321372-6570-7-git-send-email-nico@cam.org>
+Subject: [PATCH 7/9] pack-objects: allow "fixing" a corrupted pack without a
+ full repack
+Date: Wed, 29 Oct 2008 19:02:50 -0400
+Message-ID: <1225321372-6570-8-git-send-email-nico@cam.org>
 References: <1225321372-6570-1-git-send-email-nico@cam.org>
  <1225321372-6570-2-git-send-email-nico@cam.org>
  <1225321372-6570-3-git-send-email-nico@cam.org>
  <1225321372-6570-4-git-send-email-nico@cam.org>
  <1225321372-6570-5-git-send-email-nico@cam.org>
  <1225321372-6570-6-git-send-email-nico@cam.org>
+ <1225321372-6570-7-git-send-email-nico@cam.org>
 Content-Transfer-Encoding: 7BIT
 Cc: git@vger.kernel.org
 To: Junio C Hamano <gitster@pobox.com>
@@ -17,104 +19,121 @@ Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KvK6w-0004tU-SY
-	for gcvg-git-2@gmane.org; Thu, 30 Oct 2008 00:05:59 +0100
+	id 1KvK6x-0004tU-L7
+	for gcvg-git-2@gmane.org; Thu, 30 Oct 2008 00:06:00 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756991AbYJ2XDo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 29 Oct 2008 19:03:44 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756876AbYJ2XDn
-	(ORCPT <rfc822;git-outgoing>); Wed, 29 Oct 2008 19:03:43 -0400
+	id S1757359AbYJ2XDv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 29 Oct 2008 19:03:51 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758211AbYJ2XDt
+	(ORCPT <rfc822;git-outgoing>); Wed, 29 Oct 2008 19:03:49 -0400
 Received: from relais.videotron.ca ([24.201.245.36]:39112 "EHLO
 	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756961AbYJ2XDk (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 29 Oct 2008 19:03:40 -0400
+	with ESMTP id S1757705AbYJ2XDr (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 29 Oct 2008 19:03:47 -0400
 Received: from localhost.localdomain ([66.131.194.97])
  by VL-MO-MR002.ip.videotron.ca
  (Sun Java(tm) System Messaging Server 6.3-4.01 (built Aug  3 2007; 32bit))
  with ESMTP id <0K9I00DV4W0SZRE0@VL-MO-MR002.ip.videotron.ca> for
- git@vger.kernel.org; Wed, 29 Oct 2008 19:02:54 -0400 (EDT)
+ git@vger.kernel.org; Wed, 29 Oct 2008 19:02:55 -0400 (EDT)
 X-Mailer: git-send-email 1.6.0.3.757.g01be.dirty
-In-reply-to: <1225321372-6570-6-git-send-email-nico@cam.org>
+In-reply-to: <1225321372-6570-7-git-send-email-nico@cam.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/99428>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/99429>
 
-It currently calls die() whenever given offset is not found thinking
-that such thing should never happen.  But this offset may come from a
-corrupted pack whych _could_ happen and not be found.  Callers should
-deal with this possibility gracefully instead.
+When the pack data to be reused is found to be bad, let's fall back to
+full object access through the generic path which has its own strategies
+to find alternate object sources in that case.  This allows for "fixing"
+a corrupted pack simply by copying either another pack containing the
+object(s) found to be bad, or the loose object itself, into the object
+store and launch a repack without the need for -f.
 
 Signed-off-by: Nicolas Pitre <nico@cam.org>
 ---
- builtin-pack-objects.c |    2 ++
- pack-revindex.c        |    3 ++-
- sha1_file.c            |   18 ++++++++++++------
- 3 files changed, 16 insertions(+), 7 deletions(-)
+ builtin-pack-objects.c |   28 +++++++++++++++++++---------
+ 1 files changed, 19 insertions(+), 9 deletions(-)
 
 diff --git a/builtin-pack-objects.c b/builtin-pack-objects.c
-index b595d04..963b432 100644
+index 963b432..826c762 100644
 --- a/builtin-pack-objects.c
 +++ b/builtin-pack-objects.c
-@@ -1053,6 +1053,8 @@ static void check_object(struct object_entry *entry)
- 			if (reuse_delta && !entry->preferred_base) {
- 				struct revindex_entry *revidx;
- 				revidx = find_pack_revindex(p, ofs);
-+				if (!revidx)
-+					goto give_up;
- 				base_ref = nth_packed_object_sha1(p, revidx->nr);
- 			}
- 			entry->in_pack_header_size = used + used_0;
-diff --git a/pack-revindex.c b/pack-revindex.c
-index 6096b62..1de53c8 100644
---- a/pack-revindex.c
-+++ b/pack-revindex.c
-@@ -140,7 +140,8 @@ struct revindex_entry *find_pack_revindex(struct packed_git *p, off_t ofs)
- 		else
- 			lo = mi + 1;
- 	} while (lo < hi);
--	die("internal error: pack revindex corrupt");
-+	error("bad offset for revindex");
-+	return NULL;
- }
+@@ -277,6 +277,7 @@ static unsigned long write_object(struct sha1file *f,
+ 				 */
  
- void discard_revindex(void)
-diff --git a/sha1_file.c b/sha1_file.c
-index 384a430..9ce1df0 100644
---- a/sha1_file.c
-+++ b/sha1_file.c
-@@ -1388,9 +1388,12 @@ static int packed_delta_info(struct packed_git *p,
- 		return OBJ_BAD;
- 	type = packed_object_info(p, base_offset, NULL);
- 	if (type <= OBJ_NONE) {
--		struct revindex_entry *revidx = find_pack_revindex(p, base_offset);
--		const unsigned char *base_sha1 =
--					nth_packed_object_sha1(p, revidx->nr);
-+		struct revindex_entry *revidx;
-+		const unsigned char *base_sha1;
-+		revidx = find_pack_revindex(p, base_offset);
-+		if (!revidx)
-+			return OBJ_BAD;
-+		base_sha1 = nth_packed_object_sha1(p, revidx->nr);
- 		mark_bad_packed_object(p, base_sha1);
- 		type = sha1_object_info(base_sha1, NULL);
- 		if (type <= OBJ_NONE)
-@@ -1682,9 +1685,12 @@ static void *unpack_delta_entry(struct packed_git *p,
- 		 * This is costly but should happen only in the presence
- 		 * of a corrupted pack, and is better than failing outright.
- 		 */
--		struct revindex_entry *revidx = find_pack_revindex(p, base_offset);
--		const unsigned char *base_sha1 =
--					nth_packed_object_sha1(p, revidx->nr);
-+		struct revindex_entry *revidx;
-+		const unsigned char *base_sha1;
-+		revidx = find_pack_revindex(p, base_offset);
-+		if (!revidx)
-+			return NULL;
-+		base_sha1 = nth_packed_object_sha1(p, revidx->nr);
- 		error("failed to read delta base object %s"
- 		      " at offset %"PRIuMAX" from %s",
- 		      sha1_to_hex(base_sha1), (uintmax_t)base_offset,
+ 	if (!to_reuse) {
++		no_reuse:
+ 		if (!usable_delta) {
+ 			buf = read_sha1_file(entry->idx.sha1, &type, &size);
+ 			if (!buf)
+@@ -358,20 +359,30 @@ static unsigned long write_object(struct sha1file *f,
+ 		struct revindex_entry *revidx;
+ 		off_t offset;
+ 
+-		if (entry->delta) {
++		if (entry->delta)
+ 			type = (allow_ofs_delta && entry->delta->idx.offset) ?
+ 				OBJ_OFS_DELTA : OBJ_REF_DELTA;
+-			reused_delta++;
+-		}
+ 		hdrlen = encode_header(type, entry->size, header);
++
+ 		offset = entry->in_pack_offset;
+ 		revidx = find_pack_revindex(p, offset);
+ 		datalen = revidx[1].offset - offset;
+ 		if (!pack_to_stdout && p->index_version > 1 &&
+-		    check_pack_crc(p, &w_curs, offset, datalen, revidx->nr))
+-			die("bad packed object CRC for %s", sha1_to_hex(entry->idx.sha1));
++		    check_pack_crc(p, &w_curs, offset, datalen, revidx->nr)) {
++			error("bad packed object CRC for %s", sha1_to_hex(entry->idx.sha1));
++			unuse_pack(&w_curs);
++			goto no_reuse;
++		}
++
+ 		offset += entry->in_pack_header_size;
+ 		datalen -= entry->in_pack_header_size;
++		if (!pack_to_stdout && p->index_version == 1 &&
++		    check_pack_inflate(p, &w_curs, offset, datalen, entry->size)) {
++			error("corrupt packed object for %s", sha1_to_hex(entry->idx.sha1));
++			unuse_pack(&w_curs);
++			goto no_reuse;
++		}
++
+ 		if (type == OBJ_OFS_DELTA) {
+ 			off_t ofs = entry->idx.offset - entry->delta->idx.offset;
+ 			unsigned pos = sizeof(dheader) - 1;
+@@ -383,21 +394,19 @@ static unsigned long write_object(struct sha1file *f,
+ 			sha1write(f, header, hdrlen);
+ 			sha1write(f, dheader + pos, sizeof(dheader) - pos);
+ 			hdrlen += sizeof(dheader) - pos;
++			reused_delta++;
+ 		} else if (type == OBJ_REF_DELTA) {
+ 			if (limit && hdrlen + 20 + datalen + 20 >= limit)
+ 				return 0;
+ 			sha1write(f, header, hdrlen);
+ 			sha1write(f, entry->delta->idx.sha1, 20);
+ 			hdrlen += 20;
++			reused_delta++;
+ 		} else {
+ 			if (limit && hdrlen + datalen + 20 >= limit)
+ 				return 0;
+ 			sha1write(f, header, hdrlen);
+ 		}
+-
+-		if (!pack_to_stdout && p->index_version == 1 &&
+-		    check_pack_inflate(p, &w_curs, offset, datalen, entry->size))
+-			die("corrupt packed object for %s", sha1_to_hex(entry->idx.sha1));
+ 		copy_pack_data(f, p, &w_curs, offset, datalen);
+ 		unuse_pack(&w_curs);
+ 		reused++;
+@@ -1074,6 +1083,7 @@ static void check_object(struct object_entry *entry)
+ 			 */
+ 			entry->type = entry->in_pack_type;
+ 			entry->delta = base_entry;
++			entry->delta_size = entry->size;
+ 			entry->delta_sibling = base_entry->delta_child;
+ 			base_entry->delta_child = entry;
+ 			unuse_pack(&w_curs);
 -- 
 1.6.0.3.757.g01be.dirty
