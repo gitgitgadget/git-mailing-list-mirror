@@ -1,62 +1,56 @@
-From: "Christian MICHON" <christian.michon@gmail.com>
-Subject: nice google video on "contributing with git"
-Date: Wed, 29 Oct 2008 08:24:47 +0100
-Message-ID: <46d6db660810290024x585113d8l7d17e9f1aa4ce3fc@mail.gmail.com>
+From: Miles Bader <miles@gnu.org>
+Subject: Re: [VOTE]  git versus mercurial
+Date: Wed, 29 Oct 2008 17:15:22 +0900
+Message-ID: <buoy7074y1x.fsf@dhapc248.dev.necel.com>
+References: <ge0rla$mce$1@ger.gmane.org> <ge70nl$l6t$1@ger.gmane.org>
+Reply-To: Miles Bader <miles@gnu.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-To: "Git Mailing List" <git@vger.kernel.org>,
-	"Johannes Schindelin" <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Wed Oct 29 08:26:04 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: walt <w41ter@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Oct 29 09:16:56 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Kv5RK-00066y-6X
-	for gcvg-git-2@gmane.org; Wed, 29 Oct 2008 08:26:02 +0100
+	id 1Kv6ET-0001sy-Pj
+	for gcvg-git-2@gmane.org; Wed, 29 Oct 2008 09:16:50 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752368AbYJ2HYt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 29 Oct 2008 03:24:49 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752308AbYJ2HYt
-	(ORCPT <rfc822;git-outgoing>); Wed, 29 Oct 2008 03:24:49 -0400
-Received: from wf-out-1314.google.com ([209.85.200.169]:35767 "EHLO
-	wf-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752002AbYJ2HYs (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 29 Oct 2008 03:24:48 -0400
-Received: by wf-out-1314.google.com with SMTP id 25so3307541wfc.6
-        for <git@vger.kernel.org>; Wed, 29 Oct 2008 00:24:47 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to
-         :subject:mime-version:content-type:content-transfer-encoding
-         :content-disposition;
-        bh=EEhtsifUevOcjmxnW9m9YWOJ8Kd32rYaqDT9ImK/KxA=;
-        b=YpI0sIIpNDtsMerDBNdOsx6z0Cyx4z2W5aww/KcHsouJMakOdYqg4M/TF/rrUV7LE0
-         TNUmu5DFPKBNDgc73Np7sFOV/pnTeC7u1dgrrvEBFBKESluz1wRhd1YOH41LZmP2H7I3
-         NFp+to7GV96+K2LiZXTrSMjeOPKAr2Sq9tw3Q=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:mime-version:content-type
-         :content-transfer-encoding:content-disposition;
-        b=UAxjQZF953lcsy9fbeIruzhBYgY+4KESX3aYTXXo2Y42aItPM1YZ1sc7Wvyk3qgTA5
-         unHCFsis27rD15KJA0Tzvb7x0EtYcRSK8eHU1X+aC6CiEXtY6oflGEPBcpTICl3vGxWu
-         Oy6Cu9x3TTl4jmx57CdM9w5ydEbhBFmcoUmbE=
-Received: by 10.142.14.18 with SMTP id 18mr3846684wfn.62.1225265087262;
-        Wed, 29 Oct 2008 00:24:47 -0700 (PDT)
-Received: by 10.142.57.17 with HTTP; Wed, 29 Oct 2008 00:24:47 -0700 (PDT)
-Content-Disposition: inline
+	id S1752442AbYJ2IPf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 29 Oct 2008 04:15:35 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752559AbYJ2IPe
+	(ORCPT <rfc822;git-outgoing>); Wed, 29 Oct 2008 04:15:34 -0400
+Received: from TYO201.gate.nec.co.jp ([202.32.8.193]:60599 "EHLO
+	tyo201.gate.nec.co.jp" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752294AbYJ2IPc (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 29 Oct 2008 04:15:32 -0400
+Received: from relay31.aps.necel.com ([10.29.19.54])
+	by tyo201.gate.nec.co.jp (8.13.8/8.13.4) with ESMTP id m9T8FOPu025059;
+	Wed, 29 Oct 2008 17:15:24 +0900 (JST)
+Received: from relay31.aps.necel.com ([10.29.19.16] [10.29.19.16]) by relay31.aps.necel.com with ESMTP; Wed, 29 Oct 2008 17:15:24 +0900
+Received: from dhapc248.dev.necel.com ([10.114.112.215] [10.114.112.215]) by relay31.aps.necel.com with ESMTP; Wed, 29 Oct 2008 17:15:24 +0900
+Received: by dhapc248.dev.necel.com (Postfix, from userid 31295)
+	id AEA1D3D7; Wed, 29 Oct 2008 17:15:23 +0900 (JST)
+System-Type: i686-pc-linux-gnu
+Blat: Foop
+In-Reply-To: <ge70nl$l6t$1@ger.gmane.org> (walt's message of "Tue, 28 Oct 2008
+	05:31:47 -0700")
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/99350>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/99351>
 
-taken 2 days ago apparently :)
+walt <w41ter@gmail.com> writes:
+> The official vote was 19 to 19, plus one for perforce and one
+> for svn.  Matt has proposed a primary git repository and a mirror
+> in hg, and that's being debated now.
 
-http://www.youtube.com/watch?v=j45cs5_nY2k
+Boy, whoever has the popcorn concession must be making a fortune!
+
+-Miles
 
 -- 
-Christian
---
-http://detaolb.sourceforge.net/, a linux distribution for Qemu with Git inside !
+Infancy, n. The period of our lives when, according to Wordsworth, 'Heaven
+lies about us.' The world begins lying about us pretty soon afterward.
