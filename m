@@ -1,96 +1,67 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: Using the --track option when creating a branch
-Date: Fri, 31 Oct 2008 00:24:12 +0100
-Organization: At home
-Message-ID: <gedfmt$q9c$1@ger.gmane.org>
-References: <18696.32778.842933.486171@lisa.zopyra.com> <1225343538.10803.9.camel@maia.lan> <18697.41702.241183.408377@lisa.zopyra.com> <18697.42140.459170.891195@lisa.zopyra.com> <4909A7C4.30507@op5.se> <2008-10-30-14-52-52+trackit+sam@rfc1149.net> <4909BF58.9010500@op5.se> <2008-10-30-15-23-16+trackit+sam@rfc1149.net>
+From: Theodore Tso <tytso@mit.edu>
+Subject: Re: [PATCH] Documentation: add a planning document for the next
+	CLI revamp
+Date: Thu, 30 Oct 2008 19:27:17 -0400
+Message-ID: <20081030232717.GB10779@mit.edu>
+References: <1225338485-11046-1-git-send-email-sam@vilain.net> <20081030143918.GB14744@mit.edu> <1225389068.19891.28.camel@maia.lan>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7Bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Oct 31 00:25:51 2008
+Cc: git@vger.kernel.org, Sam Vilain <samv@vilain.net>
+To: Sam Vilain <sam@vilain.net>
+X-From: git-owner@vger.kernel.org Fri Oct 31 00:28:56 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Kvgtf-0005h0-9C
-	for gcvg-git-2@gmane.org; Fri, 31 Oct 2008 00:25:47 +0100
+	id 1Kvgwf-0006U9-Al
+	for gcvg-git-2@gmane.org; Fri, 31 Oct 2008 00:28:53 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753601AbYJ3XYd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 30 Oct 2008 19:24:33 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753483AbYJ3XYd
-	(ORCPT <rfc822;git-outgoing>); Thu, 30 Oct 2008 19:24:33 -0400
-Received: from main.gmane.org ([80.91.229.2]:41710 "EHLO ciao.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752132AbYJ3XYc (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 30 Oct 2008 19:24:32 -0400
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1KvgsJ-0004Eq-Aq
-	for git@vger.kernel.org; Thu, 30 Oct 2008 23:24:23 +0000
-Received: from abvo7.neoplus.adsl.tpnet.pl ([83.8.212.7])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Thu, 30 Oct 2008 23:24:23 +0000
-Received: from jnareb by abvo7.neoplus.adsl.tpnet.pl with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Thu, 30 Oct 2008 23:24:23 +0000
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@ger.gmane.org
-X-Gmane-NNTP-Posting-Host: abvo7.neoplus.adsl.tpnet.pl
-Mail-Copies-To: Jakub Narebski <jnareb@gmail.com>
-User-Agent: KNode/0.10.2
+	id S1754496AbYJ3X1U (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 30 Oct 2008 19:27:20 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753530AbYJ3X1U
+	(ORCPT <rfc822;git-outgoing>); Thu, 30 Oct 2008 19:27:20 -0400
+Received: from www.church-of-our-saviour.org ([69.25.196.31]:37554 "EHLO
+	thunker.thunk.org" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1754280AbYJ3X1T (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 30 Oct 2008 19:27:19 -0400
+Received: from root (helo=closure.thunk.org)
+	by thunker.thunk.org with local-esmtp   (Exim 4.50 #1 (Debian))
+	id 1Kvgv7-0003s9-WC; Thu, 30 Oct 2008 19:27:18 -0400
+Received: from tytso by closure.thunk.org with local (Exim 4.69)
+	(envelope-from <tytso@mit.edu>)
+	id 1Kvgv7-0005Ox-D4; Thu, 30 Oct 2008 19:27:17 -0400
+Content-Disposition: inline
+In-Reply-To: <1225389068.19891.28.camel@maia.lan>
+User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
+X-SA-Exim-Connect-IP: <locally generated>
+X-SA-Exim-Mail-From: tytso@mit.edu
+X-SA-Exim-Scanned: No (on thunker.thunk.org); SAEximRunCond expanded to false
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/99532>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/99533>
 
-[Cc: Samuel Tardieu <sam@rfc1149.net>, Andreas Ericsson <ae@op5.se>,
-     git@vger.kernel.org]
-
-Samuel Tardieu wrote:
-> * Andreas Ericsson <ae@op5.se> [2008-10-30 15:06:16 +0100]
+On Thu, Oct 30, 2008 at 10:51:08AM -0700, Sam Vilain wrote:
 > 
->> --all pushes all refs, even the non-matching ones, which is very
->> rarely desirable and only accidentally sometimes the same as "push all
->> matching refs".
->>
->>> I know that I've never had the intent to push all the refs without
->>> thinking about it first. Most of the time, I intend to push only
->>> the current branch I am in.
->>
->> Then say so. There's a very simple command syntax for it:
->> "git push <remote> <current-branch>"
-> 
-> I update the branches I'm working in maybe 20 times a day, sometimes
-> more. When I make a change and all the tests pass, I prefer to call
-> 
->   git push
-> 
-> rather than
-> 
->   git push origin 2.0-beta1
-> 
-> (and "2.0-beta1" is a short name here, some branches have much longer
-> names)
+> Well, I don't have strong feelings on the exact command name used; I
+> suggested "undo", probably also ambiguous.  But still, a significant
+> number of users are surprised when they type 'git revert' and they get a
+> backed out patch.
 
-You can use
+Yeah, that's why I suggested "git revert-file".  It's less ambiguous
+than "undo", and it's easier for people used to "hg revert" and "svn
+revert" to find "git revert-file".  And, it won't be run accidentally
+by old-timers who are used to the old (to be deprecated) "git revert".
+But I'm not that picky about the name; I just missed the "git undo"
+proposal in your patch.
 
-  $ git push origin HEAD
+> Making it plain "revert" would violate expectations of existing users;
+> it seems a better idea to just deprecate it, and point the users to the
+> new method - cherry-pick --revert - or the command they might have meant
+> - whatever that becomes.
 
-and I think (but I am not sure) that there is DWIM-mery allowing
-to simply say
+Yup, I agree; that's why I suggested "git revert-file".
 
-  $ git push HEAD
-
-and it would use configured branch.$(git symbolic-ref HEAD).remote
-
-
-And if it is not as I said, the patches would better made it so, instead of
-changing default behavior from push matching refspecs to push current
-branch only.
--- 
-Jakub Narebski
-Warsaw, Poland
-ShadeHawk on #git
+							- Ted
