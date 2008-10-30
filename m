@@ -1,227 +1,78 @@
-From: Eric Wong <normalperson@yhbt.net>
-Subject: Re: Encoding problems using git-svn
-Date: Thu, 30 Oct 2008 00:41:49 -0700
-Message-ID: <20081030074114.GA26926@yp-box.dyndns.org>
-References: <8b168cfb0810282014r789ac01dnec51824de1078f0@mail.gmail.com>
+From: "Mike Ralphson" <mike.ralphson@gmail.com>
+Subject: Re: request for pre-generated git.info pages
+Date: Thu, 30 Oct 2008 09:06:35 +0000
+Message-ID: <e2b179460810300206g79e06c63m2060092fa654b18b@mail.gmail.com>
+References: <ee2a733e0810291500o67b3f94fibef63e0a173e8cc1@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git <git@vger.kernel.org>
-To: James North <tocapicha@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Oct 30 08:43:07 2008
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: "Junio C Hamano" <gitster@pobox.com>, "Jeff King" <peff@peff.net>
+To: SLONIK.AZ@gmail.com, "Git Mailing List" <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Thu Oct 30 10:07:53 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KvSBO-00068n-Vn
-	for gcvg-git-2@gmane.org; Thu, 30 Oct 2008 08:43:07 +0100
+	id 1KvTVP-00048z-Lb
+	for gcvg-git-2@gmane.org; Thu, 30 Oct 2008 10:07:52 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754150AbYJ3Hlw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 30 Oct 2008 03:41:52 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754104AbYJ3Hlv
-	(ORCPT <rfc822;git-outgoing>); Thu, 30 Oct 2008 03:41:51 -0400
-Received: from hand.yhbt.net ([66.150.188.102]:54849 "EHLO hand.yhbt.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753970AbYJ3Hlu (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 30 Oct 2008 03:41:50 -0400
-Received: from localhost.localdomain (localhost [127.0.0.1])
-	by hand.yhbt.net (Postfix) with ESMTP id 71FDD2DC01A;
-	Thu, 30 Oct 2008 07:41:49 +0000 (UTC)
+	id S1753231AbYJ3JGi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 30 Oct 2008 05:06:38 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752532AbYJ3JGi
+	(ORCPT <rfc822;git-outgoing>); Thu, 30 Oct 2008 05:06:38 -0400
+Received: from rv-out-0506.google.com ([209.85.198.226]:14664 "EHLO
+	rv-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753230AbYJ3JGg (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 30 Oct 2008 05:06:36 -0400
+Received: by rv-out-0506.google.com with SMTP id k40so476091rvb.1
+        for <git@vger.kernel.org>; Thu, 30 Oct 2008 02:06:35 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to
+         :subject:cc:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:references;
+        bh=Gmotn4+E2u6Xsw0Iiix3QKwltpaHenax7hU7WPc4qdQ=;
+        b=S80YRYFVzN1O4e2MO/71ZVGvO2H/Uj29SO1ByTi8BJvZm/TASoOh4g4CssXmFoVUUt
+         BG9DEVP90WUwdgD+nzoCes11m9QyC6a9C4hLBWSK17jNcOw4a1B603Sr8swIHiWGTZ4Y
+         BnusBZFgr/nmwzWk8wgU1qXVlwnaSM+BHOyS8=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
+         :content-type:content-transfer-encoding:content-disposition
+         :references;
+        b=jREfkpiKB7L6bit6hR57mzPKdNzWs9Fle+FWDS01QxJsTILKYywQ50vDVCW0KBbJPu
+         RhoTBrDqKAPGMpkSNSMkVONVlvd4P1GE4uutHwZmwVAWAiQ+FA0eKorU+pLNzBdwlWa/
+         buIKGiNXwdinY5sT9kH1wCksW8mGY36mHU7u4=
+Received: by 10.141.36.10 with SMTP id o10mr5497489rvj.176.1225357595587;
+        Thu, 30 Oct 2008 02:06:35 -0700 (PDT)
+Received: by 10.141.52.18 with HTTP; Thu, 30 Oct 2008 02:06:35 -0700 (PDT)
+In-Reply-To: <ee2a733e0810291500o67b3f94fibef63e0a173e8cc1@mail.gmail.com>
 Content-Disposition: inline
-In-Reply-To: <8b168cfb0810282014r789ac01dnec51824de1078f0@mail.gmail.com>
-User-Agent: Mutt/1.5.18 (2008-05-17)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/99448>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/99449>
 
-Hi James,
+2008/10/29 Leo Razoumov <slonik.az@gmail.com>:
+> I am an emacs user but with my current setup I have difficulties
+> generating git.info pages. Main Git repo already provides
+> pre-generated man and html  documentation in "man" and "html"
+> branches. I would kindly beg to extend this privilege to "info" pages
+> to benefit all the emacs users out there.
 
-I saw your other patch too late, I had already started working on my
-patch earlier today but got distracted by other things (being at
-GitTogether :) and lacked a stable Internet connection afterwards.
+Unfortunately I don't have a working asciidoc etc toolchain either
+(though I will take a look at getting it working on my central git box
+which is Linux based). As I'm not an emacs or Info user I probably
+wouldn't know if they were building correctly anyway.
 
-Anyways, here's my version, it handles the case where the user specifies
-the --edit option to interactively edit the commit message before
-committing; and also reencodes the messages when fetching from SVN.
+However, if anyone can do the above, I'll be happy to help them get
+set up to push an 'info' branch to gitbuild.git
+(http://repo.or.cz/w/git/gitbuild.git).
 
-Can you let me know if it works for you?
+How often would you want the info pages rebuilt? Just the versions
+which Junio tags? Or would you only want them built from one branch
+(e.g. maint)?
 
-Note: I'll be in transit tomorrow and may not have time to follow
-up on this until Saturday.
-
->From 84f003e0c39414ebf27a98de167643e95bed6abb Mon Sep 17 00:00:00 2001
-From: Eric Wong <normalperson@yhbt.net>
-Date: Wed, 29 Oct 2008 23:49:26 -0700
-Subject: [PATCH] git-svn: respect i18n.commitencoding config
-
-SVN itself always stores log messages in the repository as
-UTF-8.  git always stores/retrieves everything as raw binary
-data with no transformations whatsoever.
-
-To interact with SVN, we need to encode log messages as UTF-8
-before sending them to SVN, as SVN cannot do it for us.  When
-retrieving log messages from SVN, we also need to (attempt to)
-reencode the UTF-8 log message back to the user-specified commit
-encoding.
-
-Note, handling i18n.logoutputencoding for "git svn log" also
-needs to be done in a future change.
-
-Also, this change only deals with the encoding of commit
-messages and nothing else (path names, blob content, ...).
-
-In-Reply-To: <8b168cfb0810282014r789ac01dnec51824de1078f0@mail.gmail.com>
-James North <tocapicha@gmail.com> wrote:
-> Hi,
->
-> I'm using git-svn on a system with ISO-8859-1 encoding. The problem is
-> when I try to use "git svn dcommit" to send changes to a remote svn
-> (also ISO-8859-1).
->
-> Seems like git-svn is sending commit messages with utf-8 (just a
-> guessing...) and they look bad on the remote svn log. E.g. "Ca?\241a
-> de cami?\243n"
->
-> I have tried using i18n.commitencoding=ISO-8859-1 as suggested by the
-> warning when doing "git svn dcommit" but messages still are sent with
-> wrong encoding.
-
-Signed-off-by: Eric Wong <normalperson@yhbt.net>
----
- git-svn.perl                           |   24 ++++++++-
- t/t9129-git-svn-i18n-commitencoding.sh |   80 ++++++++++++++++++++++++++++++++
- 2 files changed, 101 insertions(+), 3 deletions(-)
- create mode 100755 t/t9129-git-svn-i18n-commitencoding.sh
-
-diff --git a/git-svn.perl b/git-svn.perl
-index f90ddac..f24559c 100755
---- a/git-svn.perl
-+++ b/git-svn.perl
-@@ -1136,9 +1136,19 @@ sub get_commit_entry {
- 		system($editor, $commit_editmsg);
- 	}
- 	rename $commit_editmsg, $commit_msg or croak $!;
--	open $log_fh, '<', $commit_msg or croak $!;
--	{ local $/; chomp($log_entry{log} = <$log_fh>); }
--	close $log_fh or croak $!;
-+	{
-+		# SVN requires messages to be UTF-8 when entering the repo
-+		local $/;
-+		open $log_fh, '<', $commit_msg or croak $!;
-+		binmode $log_fh;
-+		chomp($log_entry{log} = <$log_fh>);
-+
-+		if (my $enc = Git::config('i18n.commitencoding')) {
-+			require Encode;
-+			Encode::from_to($log_entry{log}, $enc, 'UTF-8');
-+		}
-+		close $log_fh or croak $!;
-+	}
- 	unlink $commit_msg;
- 	\%log_entry;
- }
-@@ -2273,6 +2283,14 @@ sub do_git_commit {
- 	}
- 	defined(my $pid = open3(my $msg_fh, my $out_fh, '>&STDERR', @exec))
- 	                                                           or croak $!;
-+	binmode $msg_fh;
-+
-+	# we always get UTF-8 from SVN, but we may want our commits in
-+	# a different encoding.
-+	if (my $enc = Git::config('i18n.commitencoding')) {
-+		require Encode;
-+		Encode::from_to($log_entry->{log}, 'UTF-8', $enc);
-+	}
- 	print $msg_fh $log_entry->{log} or croak $!;
- 	restore_commit_header_env($old_env);
- 	unless ($self->no_metadata) {
-diff --git a/t/t9129-git-svn-i18n-commitencoding.sh b/t/t9129-git-svn-i18n-commitencoding.sh
-new file mode 100755
-index 0000000..2848e46
---- /dev/null
-+++ b/t/t9129-git-svn-i18n-commitencoding.sh
-@@ -0,0 +1,80 @@
-+#!/bin/sh
-+#
-+# Copyright (c) 2008 Eric Wong
-+
-+test_description='git svn honors i18n.commitEncoding in config'
-+
-+. ./lib-git-svn.sh
-+
-+compare_git_head_with () {
-+	nr=`wc -l < "$1"`
-+	a=7
-+	b=$(($a + $nr - 1))
-+	git cat-file commit HEAD | sed -ne "$a,${b}p" >current &&
-+	test_cmp current "$1"
-+}
-+
-+compare_svn_head_with () {
-+	LC_ALL=en_US.UTF-8 svn log --limit 1 `git svn info --url` | \
-+		sed -e 1,3d -e "/^-\+\$/d" >current &&
-+	test_cmp current "$1"
-+}
-+
-+for H in ISO-8859-1 EUCJP ISO-2022-JP
-+do
-+	test_expect_success "$H setup" '
-+		mkdir $H &&
-+		svn import -m "$H test" $H "$svnrepo"/$H &&
-+		git svn clone "$svnrepo"/$H $H
-+	'
-+done
-+
-+for H in ISO-8859-1 EUCJP ISO-2022-JP
-+do
-+	test_expect_success "$H commit on git side" '
-+	(
-+		cd $H &&
-+		git config i18n.commitencoding $H &&
-+		git checkout -b t refs/remotes/git-svn &&
-+		echo $H >F &&
-+		git add F &&
-+		git commit -a -F "$TEST_DIRECTORY"/t3900/$H.txt &&
-+		E=$(git cat-file commit HEAD | sed -ne "s/^encoding //p") &&
-+		test "z$E" = "z$H"
-+		compare_git_head_with "$TEST_DIRECTORY"/t3900/$H.txt
-+	)
-+	'
-+done
-+
-+for H in ISO-8859-1 EUCJP ISO-2022-JP
-+do
-+	test_expect_success "$H dcommit to svn" '
-+	(
-+		cd $H &&
-+		git svn dcommit &&
-+		git cat-file commit HEAD | grep git-svn-id: &&
-+		E=$(git cat-file commit HEAD | sed -ne "s/^encoding //p") &&
-+		test "z$E" = "z$H" &&
-+		compare_git_head_with "$TEST_DIRECTORY"/t3900/$H.txt
-+	)
-+	'
-+done
-+
-+test_expect_success 'ISO-8859-1 should match UTF-8 in svn' '
-+(
-+	cd ISO-8859-1 &&
-+	compare_svn_head_with "$TEST_DIRECTORY"/t3900/1-UTF-8.txt
-+)
-+'
-+
-+for H in EUCJP ISO-2022-JP
-+do
-+	test_expect_success '$H should match UTF-8 in svn' '
-+	(
-+		cd $H &&
-+		compare_svn_head_with "$TEST_DIRECTORY"/t3900/2-UTF-8.txt
-+	)
-+	'
-+done
-+
-+test_done
--- 
-Eric Wong
+Mike
