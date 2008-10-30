@@ -1,266 +1,433 @@
 From: Yann Dirson <ydirson@altern.org>
-Subject: [PATCH 2/2] Add testcases for the --factorize-renames diffcore flag.
-Date: Thu, 30 Oct 2008 23:16:51 +0100
-Message-ID: <20081030221651.3325.79397.stgit@gandelf.nowhere.earth>
+Subject: [PATCH 1/2] Introduce rename factorization in diffcore.
+Date: Thu, 30 Oct 2008 23:16:46 +0100
+Message-ID: <20081030221645.3325.78288.stgit@gandelf.nowhere.earth>
 References: <20081030220532.3325.54457.stgit@gandelf.nowhere.earth>
 Mime-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Oct 30 23:18:38 2008
+X-From: git-owner@vger.kernel.org Thu Oct 30 23:19:03 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KvfqY-0002ff-KD
-	for gcvg-git-2@gmane.org; Thu, 30 Oct 2008 23:18:31 +0100
+	id 1KvfqX-0002ff-BO
+	for gcvg-git-2@gmane.org; Thu, 30 Oct 2008 23:18:30 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758706AbYJ3WRL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 30 Oct 2008 18:17:11 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758675AbYJ3WRK
-	(ORCPT <rfc822;git-outgoing>); Thu, 30 Oct 2008 18:17:10 -0400
-Received: from smtp6-g19.free.fr ([212.27.42.36]:46356 "EHLO smtp6-g19.free.fr"
+	id S1756264AbYJ3WRD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 30 Oct 2008 18:17:03 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756156AbYJ3WRC
+	(ORCPT <rfc822;git-outgoing>); Thu, 30 Oct 2008 18:17:02 -0400
+Received: from smtp2-g19.free.fr ([212.27.42.28]:60038 "EHLO smtp2-g19.free.fr"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1757529AbYJ3WRG (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 30 Oct 2008 18:17:06 -0400
-Received: from smtp6-g19.free.fr (localhost.localdomain [127.0.0.1])
-	by smtp6-g19.free.fr (Postfix) with ESMTP id ABC291976B
-	for <git@vger.kernel.org>; Thu, 30 Oct 2008 23:17:04 +0100 (CET)
+	id S1755410AbYJ3WQ7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 30 Oct 2008 18:16:59 -0400
+Received: from smtp2-g19.free.fr (localhost.localdomain [127.0.0.1])
+	by smtp2-g19.free.fr (Postfix) with ESMTP id 1F95A12B6E9
+	for <git@vger.kernel.org>; Thu, 30 Oct 2008 23:16:57 +0100 (CET)
 Received: from gandelf.nowhere.earth (nan92-1-81-57-214-146.fbx.proxad.net [81.57.214.146])
-	by smtp6-g19.free.fr (Postfix) with ESMTP id 6A87819749
-	for <git@vger.kernel.org>; Thu, 30 Oct 2008 23:17:03 +0100 (CET)
+	by smtp2-g19.free.fr (Postfix) with ESMTP id CEA1012B6C5
+	for <git@vger.kernel.org>; Thu, 30 Oct 2008 23:16:56 +0100 (CET)
 Received: from gandelf.nowhere.earth (localhost [127.0.0.1])
-	by gandelf.nowhere.earth (Postfix) with ESMTP id 75FED1F0C2
-	for <git@vger.kernel.org>; Thu, 30 Oct 2008 23:16:51 +0100 (CET)
+	by gandelf.nowhere.earth (Postfix) with ESMTP id 33E201F0C2
+	for <git@vger.kernel.org>; Thu, 30 Oct 2008 23:16:46 +0100 (CET)
 In-Reply-To: <20081030220532.3325.54457.stgit@gandelf.nowhere.earth>
 User-Agent: StGIT/0.14.3
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/99527>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/99528>
 
-This notably includes a couple of tests for cases known not to be
-working correctly yet.
+Rename factorization tries to group together files moving from and to
+identical directories - the most common case being directory renames.
+This feature is activated by the new --factorize-renames diffcore
+flag.
+
+This is only the first step, adding the basic functionnality and
+adding support to raw diff output (and it breaks unified-diff output
+which does not know how to handle that stuff yet).
+
+Even the output format may not be kept as is.  For now both the result
+of "mv a b" and "mv a/* b/" are displayed as "Rnnn a/ b/", which is
+probably not what we want.  "Rnnn a/* b/" could be a good choice for
+the latter if we want them to be distinguished, and even if we want
+them to look the same.
+
+Other future developements to be made on top of this include:
+* extension of unified-diff format to express this
+* application of such new diffs
+* teach git-svn (and others ?) to make use of that flag
+* merge correctly in case of addition into a moved dir
+* detect "directory splits" so merge can flag a conflict on file adds
+* use inexact dir renames to bump score of below-threshold renames
+  from/to same locations
+* add yours here
 ---
 
- t/t4030-diff-rename-factorize.sh |  209 ++++++++++++++++++++++++++++++++++++++
- 1 files changed, 209 insertions(+), 0 deletions(-)
- create mode 100755 t/t4030-diff-rename-factorize.sh
+ diff-lib.c        |    6 +
+ diff.c            |    5 +
+ diff.h            |    3 +
+ diffcore-rename.c |  227 +++++++++++++++++++++++++++++++++++++++++++++++++++--
+ diffcore.h        |    1 
+ tree-diff.c       |    4 +
+ 6 files changed, 235 insertions(+), 11 deletions(-)
 
-diff --git a/t/t4030-diff-rename-factorize.sh b/t/t4030-diff-rename-factorize.sh
-new file mode 100755
-index 0000000..fcf8fb6
---- /dev/null
-+++ b/t/t4030-diff-rename-factorize.sh
-@@ -0,0 +1,209 @@
-+#!/bin/sh
-+#
-+# Copyright (c) 2008 Yann Dirson
-+# Copyright (c) 2005 Junio C Hamano
-+#
+diff --git a/diff-lib.c b/diff-lib.c
+index ae96c64..dcc4c2c 100644
+--- a/diff-lib.c
++++ b/diff-lib.c
+@@ -179,7 +179,8 @@ int run_diff_files(struct rev_info *revs, unsigned int option)
+ 		changed = ce_match_stat(ce, &st, ce_option);
+ 		if (!changed) {
+ 			ce_mark_uptodate(ce);
+-			if (!DIFF_OPT_TST(&revs->diffopt, FIND_COPIES_HARDER))
++			if (!DIFF_OPT_TST(&revs->diffopt, FIND_COPIES_HARDER) &&
++			    !DIFF_OPT_TST(&revs->diffopt, FACTORIZE_RENAMES))
+ 				continue;
+ 		}
+ 		oldmode = ce->ce_mode;
+@@ -310,7 +311,8 @@ static int show_modified(struct oneway_unpack_data *cbdata,
+ 
+ 	oldmode = old->ce_mode;
+ 	if (mode == oldmode && !hashcmp(sha1, old->sha1) &&
+-	    !DIFF_OPT_TST(&revs->diffopt, FIND_COPIES_HARDER))
++	    !DIFF_OPT_TST(&revs->diffopt, FIND_COPIES_HARDER) &&
++	    !DIFF_OPT_TST(&revs->diffopt, FACTORIZE_RENAMES))
+ 		return 0;
+ 
+ 	diff_change(&revs->diffopt, oldmode, mode,
+diff --git a/diff.c b/diff.c
+index e368fef..f91fcf6 100644
+--- a/diff.c
++++ b/diff.c
+@@ -2437,6 +2437,11 @@ int diff_opt_parse(struct diff_options *options, const char **av, int ac)
+ 		DIFF_OPT_SET(options, REVERSE_DIFF);
+ 	else if (!strcmp(arg, "--find-copies-harder"))
+ 		DIFF_OPT_SET(options, FIND_COPIES_HARDER);
++	else if (!strcmp(arg, "--factorize-renames")) {
++		DIFF_OPT_SET(options, FACTORIZE_RENAMES);
++		if (!options->detect_rename)
++			options->detect_rename = DIFF_DETECT_RENAME;
++	}
+ 	else if (!strcmp(arg, "--follow"))
+ 		DIFF_OPT_SET(options, FOLLOW_RENAMES);
+ 	else if (!strcmp(arg, "--color"))
+diff --git a/diff.h b/diff.h
+index a49d865..db1658b 100644
+--- a/diff.h
++++ b/diff.h
+@@ -65,6 +65,7 @@ typedef void (*diff_format_fn_t)(struct diff_queue_struct *q,
+ #define DIFF_OPT_IGNORE_SUBMODULES   (1 << 18)
+ #define DIFF_OPT_DIRSTAT_CUMULATIVE  (1 << 19)
+ #define DIFF_OPT_DIRSTAT_BY_FILE     (1 << 20)
++#define DIFF_OPT_FACTORIZE_RENAMES   (1 << 21)
+ #define DIFF_OPT_TST(opts, flag)    ((opts)->flags & DIFF_OPT_##flag)
+ #define DIFF_OPT_SET(opts, flag)    ((opts)->flags |= DIFF_OPT_##flag)
+ #define DIFF_OPT_CLR(opts, flag)    ((opts)->flags &= ~DIFF_OPT_##flag)
+@@ -220,6 +221,8 @@ extern void diffcore_std(struct diff_options *);
+ "  -C            detect copies.\n" \
+ "  --find-copies-harder\n" \
+ "                try unchanged files as candidate for copy detection.\n" \
++"  --factorize-renames\n" \
++"                factorize renames of all files of a directory.\n" \
+ "  -l<n>         limit rename attempts up to <n> paths.\n" \
+ "  -O<file>      reorder diffs according to the <file>.\n" \
+ "  -S<string>    find filepair whose only one side contains the string.\n" \
+diff --git a/diffcore-rename.c b/diffcore-rename.c
+index 1b2ebb4..fc789bc 100644
+--- a/diffcore-rename.c
++++ b/diffcore-rename.c
+@@ -52,6 +52,32 @@ static struct diff_rename_dst *locate_rename_dst(struct diff_filespec *two,
+ 	return &(rename_dst[first]);
+ }
+ 
++static struct diff_rename_dst *locate_rename_dst_dir(struct diff_filespec *dir)
++{
++	/* code mostly duplicated from locate_rename_dst - not sure we
++	 * could merge them efficiently,though
++	 */
++	int first, last;
++	int dirlength = strlen(dir->path);
 +
-+test_description='Test rename factorization in diff engine.
++	first = 0;
++	last = rename_dst_nr;
++	while (last > first) {
++		int next = (last + first) >> 1;
++		struct diff_rename_dst *dst = &(rename_dst[next]);
++		int cmp = strncmp(dir->path, dst->two->path, dirlength);
++		if (!cmp)
++			return dst;
++		if (cmp < 0) {
++			last = next;
++			continue;
++		}
++		first = next+1;
++	}
++	/* not found */
++	return NULL;
++}
 +
-+'
-+. ./test-lib.sh
-+. "$TEST_DIRECTORY"/diff-lib.sh
+ /* Table of rename/copy src files */
+ static struct diff_rename_src {
+ 	struct diff_filespec *one;
+@@ -409,6 +435,165 @@ static void record_if_better(struct diff_score m[], struct diff_score *o)
+ 		m[worst] = *o;
+ }
+ 
++struct diff_dir_rename {
++	struct diff_filespec *one;
++	struct diff_filespec *two;
++	int discarded;
++	struct diff_dir_rename* next;
++};
 +
-+test_expect_success \
-+    'commit the index.'  \
-+    'git update-ref HEAD $(echo "original empty commit" | git commit-tree $(git write-tree))'
++/*
++ * Marks as such file_rename if it is made uninteresting by dir_rename.
++ * Returns -1 if the file_rename is outside of the range in which given
++ * renames concerned by dir_rename are to be found (ie. end of loop),
++ * 0 otherwise.
++ */
++static int maybe_mark_uninteresting(struct diff_rename_dst* file_rename,
++				    struct diff_dir_rename* dir_rename,
++				    int one_len, int two_len)
++{
++	if (!file_rename->pair) /* file add */
++		return 0;
++	if (strncmp(file_rename->two->path,
++		    dir_rename->two->path, two_len))
++		return -1;
++	if (strncmp(file_rename->pair->one->path,
++		    dir_rename->one->path, one_len) ||
++	    !basename_same(file_rename->pair->one, file_rename->two) ||
++	    file_rename->pair->score != MAX_SCORE)
++		return 0;
 +
-+mkdir a
-+echo >a/path0 'Line 1
-+Line 2
-+Line 3
-+Line 4
-+Line 5
-+Line 6
-+Line 7
-+Line 8
-+Line 9
-+Line 10
-+line 11
-+Line 12
-+Line 13
-+Line 14
-+Line 15
-+'
-+sed <a/path0 >a/path1 s/Line/Record/
-+sed <a/path0 >a/path2 s/Line/Stuff/
-+sed <a/path0 >a/path3 s/Line/Blurb/
++	file_rename->pair->uninteresting_rename = 1;
++	fprintf (stderr, "[DBG] %s* -> %s* makes %s -> %s uninteresting\n",
++		dir_rename->one->path, dir_rename->two->path,
++		file_rename->pair->one->path, file_rename->two->path);
++	return 0;
++}
 +
-+test_expect_success \
-+    'update-index --add file inside a directory.' \
-+    'git update-index --add a/path*'
++// FIXME: prevent possible overflow
++/*
++ * Copy dirname of src into dst, with final "/".
++ * Only handles relative paths since there is no relative path in a git repo.
++ * Writes "./" when there is no "/" in src.
++ * May overwrite more chars than really needed, if src ends with a "/".
++ */
++static const char* copy_dirname(char* dst, const char* src)
++{
++	char* lastslash = strrchr(src, '/');
++	if (!lastslash)
++		return strcpy(dst, "./");
++	strncpy(dst, src, lastslash - src + 1);
++	dst[lastslash - src + 1] = '\0';
 +
-+test_expect_success \
-+    'write that tree.' \
-+    'tree=$(git write-tree) && test -n "$tree"'
++	// if src ends with a "/" strip the last component
++	if (lastslash[1] == '\0') {
++		lastslash = strrchr(dst, '/');
++		if (!lastslash)
++			return strcpy(dst, ".");
++		lastslash[1] = '\0';
++	}
 +
-+test_expect_success \
-+    'commit the index.'  \
-+    'git update-ref HEAD $(echo "original set of files" | git commit-tree $tree)'
++	return dst;
++}
 +
-+mv a b
-+test_expect_success \
-+    'renamed the directory.' \
-+    'git update-index --add --remove a/path0 a/path1 a/path2 a/path3 b/path*'
++/*
++ * FIXME: we could optimize the 100%-rename case by preventing
++ * recursion to unfold what we know we would refold here.
++ * FIXME: do we want to replace linked list with sorted array ?
++ * FIXME: this prototype only handles renaming of dirs without
++ * a subdir.
++ * FIXME: leaks like hell.
++ * FIXME: ideas to evaluate a similarity score, anyone ?
++ *  10% * tree similarity + 90% * moved files similarity ?
++ */
++static struct diff_dir_rename* factorization_candidates = NULL;
++static void diffcore_factorize_renames(void)
++{
++	char one_parent_path[PATH_MAX], two_parent_path[PATH_MAX];
++	int i;
 +
-+test_expect_success \
-+    'git diff-index --factorize-renames after directory move.' \
-+    'git diff-index --factorize-renames $tree >current'
-+grep -v "^\[DBG\] " <current >current.filtered
-+cat >expected <<\EOF
-+:040000 040000 0000000000000000000000000000000000000000 0000000000000000000000000000000000000000 R100	a/	b/
-+EOF
++	for (i = 0; i < rename_dst_nr; i++) {
++		// FIXME: what are those ?
++		if (!rename_dst[i].pair)
++			continue;
++		// dummy renames used by copy detection
++		if (!strcmp(rename_dst[i].pair->one->path, rename_dst[i].pair->two->path))
++			continue;
 +
-+test_expect_success \
-+    'validate the output for directory move.' \
-+    'compare_diff_patch current.filtered expected'
++		copy_dirname(one_parent_path, rename_dst[i].pair->one->path);
 +
-+# now test non-100% renames
++		struct diff_filespec* one_parent = alloc_filespec(one_parent_path);
++		fill_filespec(one_parent, null_sha1 /*FIXME*/, S_IFDIR);
 +
-+echo 'Line 16' >> b/path0
-+mv b/path2 b/2path
-+rm b/path3
-+echo anything > b/path100
-+test_expect_success \
-+    'edited dir contents.' \
-+    'git update-index --add --remove b/* b/path2 b/path3'
++		if (!locate_rename_dst_dir(one_parent)) {
++			// one_parent_path is empty in result tree
 +
-+test_expect_success \
-+    'git diff-index --factorize-renames after directory move and content changes.' \
-+    'git diff-index --factorize-renames $tree >current'
-+grep -v "^\[DBG\] " <current >current.filtered
-+cat >expected <<\EOF
-+:040000 040000 0000000000000000000000000000000000000000 0000000000000000000000000000000000000000 R100	a/	b/
-+:100644 000000 c6971ab9f08a6cd9c89a0f87d94ae347aad6144a 0000000000000000000000000000000000000000 D	a/path3
-+:100644 100644 dbde7141d737c8aa0003672c1bc21ded48c6c3b9 dbde7141d737c8aa0003672c1bc21ded48c6c3b9 R100	a/path2	b/2path
-+:100644 100644 fdbec444a77953b1bcc899d9fabfa202e5e68f08 4db595d12886f90e36765fc1732c17bccb836663 R093	a/path0	b/path0
-+:000000 100644 0000000000000000000000000000000000000000 1ba4650885513e62386fd3e23aeb45beeb67d3bb A	b/path100
-+EOF
++			// already considered ?
++			struct diff_dir_rename* seen;
++			for (seen=factorization_candidates; seen; seen = seen->next)
++				if (!strcmp(seen->one->path, one_parent_path)) break;
++			if (!seen) {
++				// record potential dir rename
++				copy_dirname(two_parent_path, rename_dst[i].pair->two->path);
 +
-+test_expect_success \
-+    'validate the output for directory move and content changes.' \
-+    'compare_diff_patch current.filtered expected'
++				seen = xmalloc(sizeof(*seen));
++				seen->one = one_parent;
++				seen->two = alloc_filespec(two_parent_path);
++				fill_filespec(seen->two, null_sha1 /*FIXME*/, S_IFDIR);
++				seen->discarded = 0;
++				seen->next = factorization_candidates;
++				factorization_candidates = seen;
++				fprintf (stderr, "[DBG] %s -> %s suggests possible rename from %s to %s\n",
++				       rename_dst[i].pair->one->path,
++				       rename_dst[i].pair->two->path,
++				       one_parent_path, two_parent_path);
++				fflush(stdout);
++				continue;
++			}
++			if (seen->discarded)
++				continue;
++			// check that seen entry matches this rename
++			copy_dirname(two_parent_path, rename_dst[i].pair->two->path);
++			if (strcmp(two_parent_path, seen->two->path)) {
++				fprintf (stderr, "[DBG] discarding dir split of %s from renames (into %s and %s)\n",
++				       one_parent_path, two_parent_path, seen->two->path);
++				seen->discarded = 1;
++			}
 +
-+git reset --hard
++			/* all checks ok, we keep that entry */
++		}
++	}
 +
-+# now test bulk moves that are not directory moves (get consensus before going further ?)
++	// turn candidates into real renames
++	struct diff_dir_rename* candidate;
++	for (candidate=factorization_candidates; candidate; candidate = candidate->next) {
++		int two_idx, i, one_len, two_len;
++		if (candidate->discarded)
++			continue;
 +
-+mkdir c
-+for i in 0 1 2; do cp a/path$i c/apath$i; done
-+test_expect_success \
-+    'add files into a new directory.' \
-+    'git update-index --add c/apath*'
++		if (!locate_rename_dst_dir(candidate->two)) {
++			fprintf (stderr, "PANIC: %s candidate of rename not in target tree (from %s)\n",
++				candidate->two->path, candidate->one->path);
++		}
++		// bisect to an entry within candidate dst dir
++		two_idx = locate_rename_dst_dir(candidate->two) - rename_dst;
 +
-+test_expect_success \
-+    'commit all this.'  \
-+    'git commit -m "first set of changes"'
++		// now remove extraneous 100% files inside.
++		one_len = strlen(candidate->one->path);
++		two_len = strlen(candidate->two->path);
++		for (i = two_idx; i < rename_dst_nr; i++)
++			if (maybe_mark_uninteresting (rename_dst+i, candidate,
++						      one_len, two_len) < 0)
++				break;
++		for (i = two_idx-1; i >= 0; i--)
++			if (maybe_mark_uninteresting (rename_dst+i, candidate,
++						      one_len, two_len) < 0)
++				break;
++	}
 +
-+mv c/* a/
-+test_expect_success \
-+    'move all of the new dir contents into a preexisting dir.' \
-+    'git update-index --add --remove a/* c/apath0 c/apath1 c/apath2'
++	return;
++}
 +
-+test_expect_success \
-+    'git diff-index --factorize-renames without full-dir rename.' \
-+    'git diff-index --factorize-renames HEAD >current'
-+grep -v "^\[DBG\] " <current >current.filtered
-+cat >expected <<\EOF
-+:040000 040000 0000000000000000000000000000000000000000 0000000000000000000000000000000000000000 R100	c/*	a/
-+EOF
+ void diffcore_rename(struct diff_options *options)
+ {
+ 	int detect_rename = options->detect_rename;
+@@ -446,13 +631,22 @@ void diffcore_rename(struct diff_options *options)
+ 				p->one->rename_used++;
+ 			register_rename_src(p->one, p->score);
+ 		}
+-		else if (detect_rename == DIFF_DETECT_COPY) {
+-			/*
+-			 * Increment the "rename_used" score by
+-			 * one, to indicate ourselves as a user.
+-			 */
+-			p->one->rename_used++;
+-			register_rename_src(p->one, p->score);
++		else {
++			if (detect_rename == DIFF_DETECT_COPY) {
++				/*
++				 * Increment the "rename_used" score by
++				 * one, to indicate ourselves as a user.
++				 */
++				p->one->rename_used++;
++				register_rename_src(p->one, p->score);
++			}
++			if (DIFF_OPT_TST(options, FACTORIZE_RENAMES)) {
++				/* similarly, rename factorization needs to
++				 * see all files from second tree
++				 */
++				//p->two->rename_used++; // FIXME: would we need that ?
++				locate_rename_dst(p->two, 1);
++			}
+ 		}
+ 	}
+ 	if (rename_dst_nr == 0 || rename_src_nr == 0)
+@@ -561,8 +755,24 @@ void diffcore_rename(struct diff_options *options)
+ 	/* At this point, we have found some renames and copies and they
+ 	 * are recorded in rename_dst.  The original list is still in *q.
+ 	 */
 +
-+test_expect_failure \
-+    'validate the output for bulk rename without full-dir rename.' \
-+    'compare_diff_patch current.filtered expected'
++	/* Now possibly factorize those renames and copies. */
++	if (DIFF_OPT_TST(options, FACTORIZE_RENAMES))
++		diffcore_factorize_renames();
 +
-+git reset --hard
+ 	outq.queue = NULL;
+ 	outq.nr = outq.alloc = 0;
 +
-+# now test moves to toplevel (seriously broken)
++	// first, turn factorization_candidates into real renames
++	struct diff_dir_rename* candidate;
++	for (candidate=factorization_candidates; candidate; candidate = candidate->next) {
++		struct diff_filepair* pair;
++		if (candidate->discarded) continue;
++		pair = diff_queue(&outq, candidate->one, candidate->two);
++		pair->score = MAX_SCORE;
++		pair->renamed_pair = 1;
++	}
 +
-+mv c/* .
-+test_expect_success \
-+    'move all of the new dir contents into toplevel.' \
-+    'git update-index --add --remove apath* c/apath0 c/apath1 c/apath2'
-+
-+test_expect_success \
-+    'git diff-index --factorize-renames files bulk-moved to toplevel.' \
-+    'git diff-index --factorize-renames HEAD >current'
-+grep -v "^\[DBG\] " <current >current.filtered
-+cat >expected <<\EOF
-+:040000 040000 0000000000000000000000000000000000000000 0000000000000000000000000000000000000000 R100	c/*	./
-+EOF
-+
-+test_expect_failure \
-+    'validate the output for files bulk-moved to toplevel.' \
-+    'compare_diff_patch current.filtered expected'
-+
-+git reset --hard
-+
-+# now test renaming with subdirs (lacks hiding of renamed subdirs)
-+
-+mv c a/
-+test_expect_success \
-+    'move the new dir as subdir of another.' \
-+    'git update-index --add --remove a/c/* c/apath0 c/apath1 c/apath2'
-+
-+test_expect_success \
-+    'commit all this.'  \
-+    'git commit -m "move as subdir"'
-+
-+mv a b
-+echo foo >> b/c/apath0
-+test_expect_success \
-+    'rename the directory with some changes.' \
-+    'git update-index --add --remove a/path0 a/path1 a/path2 a/path3 a/c/apath0 a/c/apath1 a/c/apath2 b/path* b/c/apath*'
-+
-+test_expect_success \
-+    'git diff-index --factorize-renames on a move including a subdir.' \
-+    'git diff-index --factorize-renames HEAD >current'
-+grep -v "^\[DBG\] " <current >current.filtered
-+cat >expected <<\EOF
-+:040000 040000 0000000000000000000000000000000000000000 0000000000000000000000000000000000000000 R100	a/	b/
-+:100644 100644 fdbec444a77953b1bcc899d9fabfa202e5e68f08 00084e5ea68b5ae339b7c4b429e4a70fe25d069b R096	a/c/apath0	b/c/apath0
-+EOF
-+
-+test_expect_failure \
-+    'validate the output for a move including a subdir.' \
-+    'compare_diff_patch current.filtered expected'
-+
-+# now test moving all files from toplevel into subdir (does not hides file moves) (needs consensus on syntax)
-+#FIXME: maybe handle this as special case of move of a dir into one of its own subdirs ?
-+
-+git reset --hard HEAD~2
-+
-+mv a/* .
-+test_expect_success \
-+    'rename the directory with some changes.' \
-+    'git update-index --add --remove a/path0 a/path1 a/path2 a/path3 path*'
-+
-+test_expect_success \
-+    'commit all this.'  \
-+    'git commit -m "move all files to toplevel"'
-+
-+mkdir z
-+mv path* z/
-+test_expect_success \
-+    'rename the directory with some changes.' \
-+    'git update-index --add --remove path0 path1 path2 path3 z/path*'
-+
-+test_expect_success \
-+    'git diff-index --factorize-renames everything from toplevel.' \
-+    'git diff-index --factorize-renames HEAD >current'
-+grep -v "^\[DBG\] " <current >current.filtered
-+cat >expected <<\EOF
-+:040000 040000 0000000000000000000000000000000000000000 0000000000000000000000000000000000000000 R100	./*	z/
-+EOF
-+
-+test_expect_failure \
-+    'validate the output for a move of everything from toplevel.' \
-+    'compare_diff_patch current.filtered expected'
-+
-+test_done
+ 	for (i = 0; i < q->nr; i++) {
+ 		struct diff_filepair *p = q->queue[i];
+ 		struct diff_filepair *pair_to_free = NULL;
+@@ -577,7 +787,8 @@ void diffcore_rename(struct diff_options *options)
+ 			struct diff_rename_dst *dst =
+ 				locate_rename_dst(p->two, 0);
+ 			if (dst && dst->pair) {
+-				diff_q(&outq, dst->pair);
++				if (!dst->pair->uninteresting_rename)
++					diff_q(&outq, dst->pair);
+ 				pair_to_free = p;
+ 			}
+ 			else
+diff --git a/diffcore.h b/diffcore.h
+index 713cca7..6d2e65b 100644
+--- a/diffcore.h
++++ b/diffcore.h
+@@ -66,6 +66,7 @@ struct diff_filepair {
+ 	unsigned broken_pair : 1;
+ 	unsigned renamed_pair : 1;
+ 	unsigned is_unmerged : 1;
++	unsigned uninteresting_rename : 1;
+ };
+ #define DIFF_PAIR_UNMERGED(p) ((p)->is_unmerged)
+ 
+diff --git a/tree-diff.c b/tree-diff.c
+index 9f67af6..872f757 100644
+--- a/tree-diff.c
++++ b/tree-diff.c
+@@ -49,7 +49,9 @@ static int compare_tree_entry(struct tree_desc *t1, struct tree_desc *t2, const
+ 		show_entry(opt, "+", t2, base, baselen);
+ 		return 1;
+ 	}
+-	if (!DIFF_OPT_TST(opt, FIND_COPIES_HARDER) && !hashcmp(sha1, sha2) && mode1 == mode2)
++	if (!DIFF_OPT_TST(opt, FIND_COPIES_HARDER) &&
++	    !DIFF_OPT_TST(opt, FACTORIZE_RENAMES) &&
++	    !hashcmp(sha1, sha2) && mode1 == mode2)
+ 		return 0;
+ 
+ 	/*
