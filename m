@@ -1,101 +1,70 @@
-From: "=?ISO-8859-1?Q?Santi_B=E9jar?=" <santi@agolina.net>
-Subject: Re: Using the --track option when creating a branch
-Date: Thu, 30 Oct 2008 13:41:26 +0100
-Message-ID: <adf1fd3d0810300541l7fb8b64nf9587fec4e481c58@mail.gmail.com>
-References: <18696.32778.842933.486171@lisa.zopyra.com>
-	 <1225343538.10803.9.camel@maia.lan>
-	 <18697.41702.241183.408377@lisa.zopyra.com>
+From: Teemu Likonen <tlikonen@iki.fi>
+Subject: Re: [PATCH] asciidoc: add minor workaround to add an empty line after code blocks
+Date: Thu, 30 Oct 2008 14:56:15 +0200
+Message-ID: <8763nautqo.fsf@iki.fi>
+References: <87skqfus7v.fsf@iki.fi>
+	<2c6b72b30810291235j554cc21dw4e3da4fdbfe633ee@mail.gmail.com>
+	<87od13ujm4.fsf@iki.fi> <20081030104503.GA17131@diku.dk>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: "Sam Vilain" <sam@vilain.net>, git@vger.kernel.org
-To: "Bill Lear" <rael@zopyra.com>
-X-From: git-owner@vger.kernel.org Thu Oct 30 13:43:04 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Jonas Fonseca <fonseca@diku.dk>
+X-From: git-owner@vger.kernel.org Thu Oct 30 13:57:43 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KvWrL-0003aS-7U
-	for gcvg-git-2@gmane.org; Thu, 30 Oct 2008 13:42:43 +0100
+	id 1KvX5j-0000qd-5N
+	for gcvg-git-2@gmane.org; Thu, 30 Oct 2008 13:57:35 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753842AbYJ3Ml3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 30 Oct 2008 08:41:29 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753024AbYJ3Ml3
-	(ORCPT <rfc822;git-outgoing>); Thu, 30 Oct 2008 08:41:29 -0400
-Received: from ik-out-1112.google.com ([66.249.90.178]:38700 "EHLO
-	ik-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752494AbYJ3Ml2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 30 Oct 2008 08:41:28 -0400
-Received: by ik-out-1112.google.com with SMTP id c29so430598ika.5
-        for <git@vger.kernel.org>; Thu, 30 Oct 2008 05:41:26 -0700 (PDT)
-Received: by 10.103.121.19 with SMTP id y19mr4849767mum.30.1225370486086;
-        Thu, 30 Oct 2008 05:41:26 -0700 (PDT)
-Received: by 10.103.131.8 with HTTP; Thu, 30 Oct 2008 05:41:26 -0700 (PDT)
-In-Reply-To: <18697.41702.241183.408377@lisa.zopyra.com>
-Content-Disposition: inline
+	id S1753944AbYJ3M4V (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 30 Oct 2008 08:56:21 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753950AbYJ3M4V
+	(ORCPT <rfc822;git-outgoing>); Thu, 30 Oct 2008 08:56:21 -0400
+Received: from mta-out.inet.fi ([195.156.147.13]:55545 "EHLO jenni1.inet.fi"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753944AbYJ3M4U (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 30 Oct 2008 08:56:20 -0400
+Received: from mithlond.arda.local (80.220.180.181) by jenni1.inet.fi (8.5.014)
+        id 48FC59C7008F7880; Thu, 30 Oct 2008 14:56:19 +0200
+In-Reply-To: <20081030104503.GA17131@diku.dk> (Jonas Fonseca's message of "Thu\, 30 Oct 2008 11\:45\:03 +0100")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/99465>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/99466>
 
-On Thu, Oct 30, 2008 at 1:04 PM, Bill Lear <rael@zopyra.com> wrote:
-> On Wednesday, October 29, 2008 at 22:12:18 (-0700) Sam Vilain writes:
->>On Wed, 2008-10-29 at 09:23 -0600, Bill Lear wrote:
->>> We use git in a way that makes it desirable for us to only push/pull
->>> to the same remote branch.  So, if I'm in branch X, I want 'git push'
->>> to push to origin/X, and 'git pull' to fetch into origin/X and then
->>> merge into X from origin/X.
->>>
->>> In other words, we want git push/pull to behave in branches other than
->>> master the same way it does when in master.
->>>
->>> I have discovered the '--track' option when creating a local branch,
->>> and this appears to me to be the thing that gives us the desired
->>> behavior.
->>
->>As things currently stand this is not achievable behaviour.  The
->>behaviour of 'git push' is to push all matching refs.  If you are lucky
->>this is what you intended, but it also pushes any changes to *other*
->>branches that you have made.
->>
->>I have tabled a change proposal to make it work as you suggest in a
->>separate thread.
->
-> Ok, now I'm confused.  The ONLY thing I want to prevent is the
-> "crossing of streams" issue.  If I am on branch X and issue 'git
-> push', I want X, and ONLY X, to be pushed to the remote repository's X
-> branch --- I don't care if other branches are pushed to their
-> respective remote branches, as long as they don't get merged to X.
+Jonas Fonseca (2008-10-30 11:45 +0100) wrote:
 
-No branches will get merged in a push.
+> Insert an empty <simpara> in manpages after code blocks to force and
+> empty line.
 
->
-> So, are you saying that Santi was incorrect, and that in fact
-> the push will result in a merge of the branches?
+>  This is an old issue reported by Theodore Ts'o and fixed partially in
+>  commit 63c97ce228f2d2697a8ed954a9592dfb5f286338 for the URL section
+>  of the fetch/pull/push manpages. I have fixed this in tig using an
+>  approach similar to the attached. Simple and clean, but only tested
+>  with docbook-xsl version 1.72 so I have made it conditional.
 
-Sorry, I was (partly) incorrect because I was only talking about pull.
-For push you can add a "push = HEAD" config to the remote and then the
-"git push" will only push the current branch (with the corresponding
-matching remote branch).
+Thanks. Your patch seems to work and code blocks look much nicer now. I
+tested command-line "man" as well as Emacs' "M-x man" and "M-x woman".
+I'm using docbook-xsl Debian package version 1.73.2.dfsg.1-4.
 
-$ git config remote.origin.push HEAD
+Another kind of formatting issue exists with some other example
+commands, like in "git rebase" manpage, for example. Not that I care
+that much, but here's an example. The asciidoc source (git-rebase.txt)
+contains:
 
-Strictly speaking when you push (with the default config or with the
-above trick) you push matching branches (it doesn't matter what is the
-branch.<remote>.merge). Currently there is no way to say "push to the
-corresponding tracking branch"
+    then the command
 
-Still I think this will work as you want (as long as your local and
-remote branch have the same name):
+        git rebase --onto topicA~5 topicA~3 topicA
 
-$ git clone $url
-$ cd path
-$ git config remote.origin.push HEAD
-$ git checkout -b branch origin/branch
-$ work, commit,...
-$ git push
+    would result in the removal of commits F and G:
 
-HTH,
-Santi
+In final manpage output it looks like this:
+
+    then the command                               
+
+        git rebase --onto topicA~5 topicA~3 topicA 
+    would result in the removal of commits F and G:
