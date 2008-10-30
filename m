@@ -1,100 +1,112 @@
-From: Andreas Ericsson <ae@op5.se>
-Subject: Re: [PATCH] Documentation: add a planning document for the next	CLI
- revamp
-Date: Thu, 30 Oct 2008 16:02:29 +0100
-Message-ID: <4909CC85.1080803@op5.se>
-References: <1225338485-11046-1-git-send-email-sam@vilain.net> <20081030143918.GB14744@mit.edu>
+From: Samuel Tardieu <sam@rfc1149.net>
+Subject: Re: Using the --track option when creating a branch
+Date: Thu, 30 Oct 2008 16:04:08 +0100
+Organization: RFC 1149 (see http://www.rfc1149.net/)
+Message-ID: <2008-10-30-16-04-08+trackit+sam@rfc1149.net>
+References: <18696.32778.842933.486171@lisa.zopyra.com> <1225343538.10803.9.camel@maia.lan> <18697.41702.241183.408377@lisa.zopyra.com> <18697.42140.459170.891195@lisa.zopyra.com> <4909A7C4.30507@op5.se> <2008-10-30-14-52-52+trackit+sam@rfc1149.net> <4909BF58.9010500@op5.se> <2008-10-30-15-23-16+trackit+sam@rfc1149.net> <4909CABD.1040708@op5.se>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: Sam Vilain <sam@vilain.net>, git@vger.kernel.org,
-	Sam Vilain <samv@vilain.net>
-To: Theodore Tso <tytso@mit.edu>
-X-From: git-owner@vger.kernel.org Thu Oct 30 16:04:07 2008
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 8bit
+Cc: Bill Lear <rael@zopyra.com>, git@vger.kernel.org
+To: Andreas Ericsson <ae@op5.se>
+X-From: git-owner@vger.kernel.org Thu Oct 30 16:06:18 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KvZ3x-0000cI-Op
-	for gcvg-git-2@gmane.org; Thu, 30 Oct 2008 16:03:54 +0100
+	id 1KvZ5t-00013h-FL
+	for gcvg-git-2@gmane.org; Thu, 30 Oct 2008 16:05:53 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754882AbYJ3PCj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 30 Oct 2008 11:02:39 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754804AbYJ3PCj
-	(ORCPT <rfc822;git-outgoing>); Thu, 30 Oct 2008 11:02:39 -0400
-Received: from mail.op5.se ([193.201.96.20]:58574 "EHLO mail.op5.se"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754078AbYJ3PCi (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 30 Oct 2008 11:02:38 -0400
-Received: from localhost (localhost.localdomain [127.0.0.1])
-	by mail.op5.se (Postfix) with ESMTP id 8E14E1B80048;
-	Thu, 30 Oct 2008 15:57:10 +0100 (CET)
-X-Virus-Scanned: amavisd-new at 
-X-Spam-Flag: NO
-X-Spam-Score: -4.399
-X-Spam-Level: 
-X-Spam-Status: No, score=-4.399 tagged_above=-10 required=6.6
-	tests=[ALL_TRUSTED=-1.8, BAYES_00=-2.599]
-Received: from mail.op5.se ([127.0.0.1])
-	by localhost (mail.op5.se [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id 5R5uHok4PsZV; Thu, 30 Oct 2008 15:57:04 +0100 (CET)
-Received: from clix.int.op5.se (unknown [192.168.1.20])
-	by mail.op5.se (Postfix) with ESMTP id 513401B80087;
-	Thu, 30 Oct 2008 15:57:04 +0100 (CET)
-User-Agent: Thunderbird 2.0.0.16 (X11/20080723)
-In-Reply-To: <20081030143918.GB14744@mit.edu>
+	id S1755397AbYJ3PEN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 30 Oct 2008 11:04:13 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755378AbYJ3PEN
+	(ORCPT <rfc822;git-outgoing>); Thu, 30 Oct 2008 11:04:13 -0400
+Received: from zoidberg.rfc1149.net ([91.121.19.179]:47773 "EHLO
+	zoidberg.rfc1149.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755222AbYJ3PEM (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 30 Oct 2008 11:04:12 -0400
+Received: from localhost (localhost [127.0.0.1])
+	by zoidberg.rfc1149.net (Postfix) with ESMTP id 13E4B1114BD;
+	Thu, 30 Oct 2008 16:04:11 +0100 (CET)
+X-Virus-Scanned: amavisd-new at rfc1149.net
+Received: from zoidberg.rfc1149.net ([127.0.0.1])
+	by localhost (zaphod.rfc1149.net [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id kboz5dIvPQ3O; Thu, 30 Oct 2008 16:04:09 +0100 (CET)
+Received: from mail2.rfc1149.net (willow.rfc1149.net [IPv6:2001:6f8:37a:2::2])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(Client CN "mail2.rfc1149.net", Issuer "rfc1149.net" (verified OK))
+	by zoidberg.rfc1149.net (Postfix) with ESMTPS id B4717111467;
+	Thu, 30 Oct 2008 16:04:09 +0100 (CET)
+Received: from localhost (localhost [127.0.0.1])
+	by mail2.rfc1149.net (Postfix) with ESMTP id 1F74CC40BC;
+	Thu, 30 Oct 2008 16:04:09 +0100 (CET)
+Received: from mail2.rfc1149.net ([127.0.0.1])
+	by localhost (localhost [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id IKEKqz2n-LvI; Thu, 30 Oct 2008 16:04:09 +0100 (CET)
+Received: by mail2.rfc1149.net (Postfix, from userid 1000)
+	id 032BAC40BD; Thu, 30 Oct 2008 16:04:09 +0100 (CET)
+Content-Disposition: inline
+In-Reply-To: <4909CABD.1040708@op5.se>
+User-Agent: Mutt/1.5.18 (2008-05-17)
+X-WWW: http://www.rfc1149.net/sam
+X-Jabber: <sam@rfc1149.net> (see http://www.jabber.org/)
+X-OpenPGP-Fingerprint: 79C0 AE3C CEA8 F17B 0EF1  45A5 F133 2241 1B80 ADE6 (see http://www.gnupg.org/)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/99482>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/99483>
 
-Theodore Tso wrote:
-> On Wed, Oct 29, 2008 at 08:48:05PM -0700, Sam Vilain wrote:
->> From: Sam Vilain <samv@vilain.net>
->>
->> For cross-command CLI changes to be effective, they need to be
->> cohesively planned.  Add a planning document for this next set of
->> changes.
-> 
-> Here are my favorites:
-> 
-> * Add the command "git revert-file <files>" which is syntactic sugar for:
-> 
->         git checkout HEAD -- <files>
-> 
->   Rationale: Many other SCM's have a way of undoing local edits to a
->   file very simply, i.e."hg revert <file>" or "svn revert <file>", and
->   for many developers's workflow, it's useful to be able to undo local
->   edits to a single file, but not to everything else in the working
->   directory.  And "git checkout HEAD -- <file>" is rather cumbersome
->   to type, and many beginning users don't find it intuitive to look in
->   the "git-checkout" man page for instructions on how to revert a
->   local file.
-> 
+* Andreas Ericsson <ae@op5.se> [2008-10-30 15:54:53 +0100]
 
-I like it, although I guess one would have to add a "--staged" flag to
-git revert-file to be able to checkout files from index as well, or people
-will wonder why that can't be done.
+> Correct me if I'm wrong, but wouldn't my suggestion of not trying to
+> push (even matching) branches that haven't been updated since we last
+> fetched from the remote do exactly the same thing for your particular
+> use-case, but without syntax change and all the annoying minor parts
+> that it entails?
 
-> * Change the argument handling for "git format-patch" so it is
->   consistent with everything else which takes a set of commits.  Yes,
->   it means that where people have gotten used to typing "git
->   format-patch origin", they'll have to type instead: "git
->   format-patch origin..", but's much more consistent.  We've done the
->   best we can by documenting the existing behavior, but if'we re going
->   to make major, potentially incompatible, CLI changes, this is
->   something to at least consider.  Maybe with a config file for people
->   who really don't want to retrain their fingers to type the two extra
->   periods?
-> 
+Not exactly. I often do some work on a branch which does not mandate
+a topic branch and have to switch branches to fix a bug for example.
+This would continue to push unterminated changes as well.
 
-"git format-patch" does exactly the same thing as other commit-range handling
-commands do, which is assume that the missing commit end-point is HEAD, so it
-actually is consistent, although it doesn't quite look as if it is.
+Typical use case, which happens (to me) quite frequently:
 
--- 
-Andreas Ericsson                   andreas.ericsson@op5.se
-OP5 AB                             www.op5.se
-Tel: +46 8-230225                  Fax: +46 8-230231
+  % git checkout master
+  [start new feature, estimated implementation time 15 minutes]
+  % git commit -m "Reorganize foobar in previous of xyzzy."
+    (note that I'm not sure that I will keep it, I'll know that later
+    when my next commit is ready, maybe in 10 minutes, no need for
+    a topic branch)
+  [mail from a customer, "I noticed some strange behaviour here" --
+   let's fix it]
+  % git checkout 2.0-beta1-release-candidate
+  [fix strange behaviour and add new test]
+  [test locally]
+  % git commit -m "Fix strange behaviour baz."
+  % git push
+    (so that it goes to the buildfarm for QA testing)
+
+Argh, "master" has been pushed as well. Ok, I could have done
+
+  % git branch
+    (because I know I am on the right branch but do not necessarily
+     remember its full name all the time)
+  % git push origin 2.0-beta1-release-candidate
+
+or I could have started a topic branch, but I often push 2 or 3
+commits at a time instead, the first one being a refactoring of
+existing code to ease the subsequent one.
+
+>From what I have seen, people I am working with often have the
+same workflow (do not systematically start a topic branch when
+in active development mode)
+
+> Define "many". Perhaps as often as 2-3 times per day. Not very often,
+> but frequent enough that I definitely want some short sweet way of
+> doing it. OTOH, I also find the "rejected" messages annoying, and I
+> definitely feel one could do something about them. However, it's my
+> birthday today and I plan on being far too drunk/hungover the entire
+> weekend for me to take any actions in that direction.
+
+Happy birthday :)
