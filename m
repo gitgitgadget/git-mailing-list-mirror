@@ -1,98 +1,137 @@
-From: Deskin Miller <deskinm@umich.edu>
-Subject: Re: [PATCH] Documented --no-checkout option in git-svn
-Date: Thu, 30 Oct 2008 14:07:36 -0400
-Message-ID: <20081030180736.GA20322@euler>
-References: <1225382900-22482-1-git-send-email-_vi@list.ru>
+From: "Jan =?UTF-8?B?S3LDvGdlcg==?=" <jk@jk.gs>
+Subject: [PATCH] Introduce receive.denyDeletes
+Date: Thu, 30 Oct 2008 19:11:34 +0100
+Message-ID: <20081030191134.62455c24@perceptron>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, gitster@pobox.com,
-	Vitaly _Vi Shukela <public_vi@tut.by>
-To: _vi@list.ru
-X-From: git-owner@vger.kernel.org Thu Oct 30 19:09:08 2008
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: gitster@pobox.com
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Oct 30 19:19:21 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Kvbx5-0002ra-Aw
-	for gcvg-git-2@gmane.org; Thu, 30 Oct 2008 19:08:59 +0100
+	id 1Kvc6L-000723-HV
+	for gcvg-git-2@gmane.org; Thu, 30 Oct 2008 19:18:34 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754164AbYJ3SHp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 30 Oct 2008 14:07:45 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754135AbYJ3SHp
-	(ORCPT <rfc822;git-outgoing>); Thu, 30 Oct 2008 14:07:45 -0400
-Received: from hs-out-0708.google.com ([64.233.178.244]:53789 "EHLO
-	hs-out-0708.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753994AbYJ3SHo (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 30 Oct 2008 14:07:44 -0400
-Received: by hs-out-0708.google.com with SMTP id 4so358342hsl.5
-        for <git@vger.kernel.org>; Thu, 30 Oct 2008 11:07:43 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:cc:subject
-         :message-id:references:mime-version:content-type:content-disposition
-         :in-reply-to:user-agent:sender;
-        bh=Kgt5NIeWyWsjGzivzW1DGA3hgqyG6sRfEao4dYvck2w=;
-        b=fsyjltbtcD+3DrB1ahYMxlnC+Ki4kH/PV2ZCf35SZbPsSoRhm0KU5+DLDSE9noidn0
-         hYRduAUcgk8XaBAmnnYsFpOdXvPx5gop+jf5tnkvnwWFBB+f/M6WG0SeVCtS71bxaDwe
-         GQB+i52tZLz3N4HI7oaghLRJ2tDAfiy90Vc3w=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent:sender;
-        b=dtSDwMaut1zQv9z2iIo/miJVqBaZGcisD3S9u8sPDf7Rjthw3SQ+ksJc/XwrY3/weA
-         WA2vg8VeWKwtdc7Jkvg7CwvFg134fo0bI8B2/v+XHfofNFhR9cbXNdyvcuZi0r6ycOtH
-         NlPJf/lTct6wt9Zw4lBuwJFoI2XqMU75ejwg8=
-Received: by 10.64.195.20 with SMTP id s20mr2925905qbf.20.1225390063038;
-        Thu, 30 Oct 2008 11:07:43 -0700 (PDT)
-Received: from euler ([141.213.134.25])
-        by mx.google.com with ESMTPS id 25sm3869520qbw.1.2008.10.30.11.07.40
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Thu, 30 Oct 2008 11:07:41 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <1225382900-22482-1-git-send-email-_vi@list.ru>
-User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
+	id S1757912AbYJ3SRQ convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 30 Oct 2008 14:17:16 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757828AbYJ3SRP
+	(ORCPT <rfc822;git-outgoing>); Thu, 30 Oct 2008 14:17:15 -0400
+Received: from zoidberg.org ([213.133.99.5]:33287 "EHLO cthulhu.zoidberg.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1756988AbYJ3SRO convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 30 Oct 2008 14:17:14 -0400
+X-Greylist: delayed 329 seconds by postgrey-1.27 at vger.kernel.org; Thu, 30 Oct 2008 14:17:14 EDT
+Received: from perceptron (xdsl-87-78-167-87.netcologne.de [::ffff:87.78.167.87])
+  (IDENT: unknown, AUTH: LOGIN jast, TLS: TLSv1/SSLv3,256bits,AES256-SHA)
+  by cthulhu.zoidberg.org with esmtp; Thu, 30 Oct 2008 19:11:45 +0100
+  id 001627BD.4909F8E1.00000539
+X-Mailer: Claws Mail 3.3.1 (GTK+ 2.12.9; i486-pc-linux-gnu)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/99515>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/99516>
 
-On Thu, Oct 30, 2008 at 06:08:20PM +0200, _vi@list.ru wrote:
-> From: Vitaly "_Vi" Shukela <public_vi@tut.by>
-> 
-> Signed-off-by: Vitaly "_Vi" Shukela <public_vi@tut.by>
-> ---
->  Documentation/git-svn.txt |    6 ++++++
->  1 files changed, 6 insertions(+), 0 deletions(-)
-> 
-> diff --git a/Documentation/git-svn.txt b/Documentation/git-svn.txt
-> index 84c8f3c..90784a5 100644
-> --- a/Documentation/git-svn.txt
-> +++ b/Documentation/git-svn.txt
-> @@ -91,6 +91,9 @@ COMMANDS
->  	tracking.  The name of the [svn-remote "..."] section in the
->  	.git/config file may be specified as an optional command-line
->  	argument.
-> +	
-> +--no-checkout
-> +	Do not checkout latest revision after fetching.
+Occasionally, it may be useful to prevent branches from getting deleted=
+ from
+a centralized repository, particularly when no administrative access to=
+ the
+server is available to undo it via reflog. It also makes
+receive.denyNonFastForwards more useful if it is used for access contro=
+l, since
+it prevents force-updating refs by deleting and re-creating a ref.
 
-This isn't quite how the other options are listed in the source; for one, this
-ends up formatted in the final manpage like
+Signed-off-by: Jan Kr=C3=BCger <jk@jk.gs>
+---
+=46airly low invasiveness. Includes documentation and test case. I have=
+ run all
+parts of the test suite that use receive-pack, send-pack and friends.
 
---no-checkout Do not checkout latest revision after fetching.
+ Documentation/config.txt |    4 ++++
+ builtin-receive-pack.c   |   12 ++++++++++++
+ t/t5400-send-pack.sh     |   11 +++++++++++
+ 3 files changed, 27 insertions(+), 0 deletions(-)
 
-Instead of
-
---no-checkout
-	Do not checkout latest revision after fetching.
-
-Also, the wording seems slightly imprecise; in fact, if the repository already
-has a checkout, git svn fetch would not attempt to check anything out in its
-place, nor will it check anything out if there is a local master branch
-already.  With clone this is not typically a problem, but in fact it is
-possible to clone into a preexisting git repository, so the same concerns
-exist.
-
-Deskin Miller
+diff --git a/Documentation/config.txt b/Documentation/config.txt
+index 29369d0..965ed74 100644
+--- a/Documentation/config.txt
++++ b/Documentation/config.txt
+@@ -1188,6 +1188,10 @@ receive.unpackLimit::
+ 	especially on slow filesystems.  If not set, the value of
+ 	`transfer.unpackLimit` is used instead.
+=20
++receive.denyDeletes::
++	If set to true, git-receive-pack will deny a ref update that deletes
++	the ref. Use this to prevent such a ref deletion via a push.
++
+ receive.denyNonFastForwards::
+ 	If set to true, git-receive-pack will deny a ref update which is
+ 	not a fast forward. Use this to prevent such an update via a push,
+diff --git a/builtin-receive-pack.c b/builtin-receive-pack.c
+index 9f60f31..2c0225c 100644
+--- a/builtin-receive-pack.c
++++ b/builtin-receive-pack.c
+@@ -11,6 +11,7 @@
+=20
+ static const char receive_pack_usage[] =3D "git-receive-pack <git-dir>=
+";
+=20
++static int deny_deletes =3D 0;
+ static int deny_non_fast_forwards =3D 0;
+ static int receive_fsck_objects;
+ static int receive_unpack_limit =3D -1;
+@@ -23,6 +24,11 @@ static int capabilities_sent;
+=20
+ static int receive_pack_config(const char *var, const char *value, voi=
+d *cb)
+ {
++	if (strcmp(var, "receive.denydeletes") =3D=3D 0) {
++		deny_deletes =3D git_config_bool(var, value);
++		return 0;
++	}
++
+ 	if (strcmp(var, "receive.denynonfastforwards") =3D=3D 0) {
+ 		deny_non_fast_forwards =3D git_config_bool(var, value);
+ 		return 0;
+@@ -185,6 +191,12 @@ static const char *update(struct command *cmd)
+ 		      "but I can't find it!", sha1_to_hex(new_sha1));
+ 		return "bad pack";
+ 	}
++	if (deny_deletes && is_null_sha1(new_sha1) &&
++	    !is_null_sha1(old_sha1) &&
++	    !prefixcmp(name, "refs/heads/")) {
++		error("denying ref deletion for %s", name);
++		return "deletion prohibited";
++	}
+ 	if (deny_non_fast_forwards && !is_null_sha1(new_sha1) &&
+ 	    !is_null_sha1(old_sha1) &&
+ 	    !prefixcmp(name, "refs/heads/")) {
+diff --git a/t/t5400-send-pack.sh b/t/t5400-send-pack.sh
+index 544771d..6db9e18 100755
+--- a/t/t5400-send-pack.sh
++++ b/t/t5400-send-pack.sh
+@@ -104,6 +104,17 @@ HOME=3D`pwd`/no-such-directory
+ export HOME ;# this way we force the victim/.git/config to be used.
+=20
+ test_expect_success \
++	'pushing a delete should be denied with denyDeletes' '
++	cd victim &&
++	git config receive.denyDeletes true &&
++	git branch extra master &&
++	cd .. &&
++	test -f victim/.git/refs/heads/extra &&
++	git send-pack ./victim/.git/ :extra master && return 1
++	rm -f victim/.git/refs/heads/extra
++'
++
++test_expect_success \
+         'pushing with --force should be denied with denyNonFastforward=
+s' '
+ 	cd victim &&
+ 	git config receive.denyNonFastforwards true &&
+--=20
+1.6.0.3.523.g304d0.dirty
