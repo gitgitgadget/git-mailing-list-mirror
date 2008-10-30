@@ -1,60 +1,56 @@
-From: Teemu Likonen <tlikonen@iki.fi>
-Subject: Re: A typesetting problem with git man pages
-Date: Fri, 31 Oct 2008 10:37:14 +0200
-Message-ID: <871vxxtb2d.fsf@iki.fi>
-References: <87skqfus7v.fsf@iki.fi>
-	<2c6b72b30810291235j554cc21dw4e3da4fdbfe633ee@mail.gmail.com>
-	<8763n9tduo.fsf@iki.fi>
+From: Kalle Olavi Niemitalo <kon@iki.fi>
+Subject: Re: request for pre-generated git.info pages
+Date: Fri, 31 Oct 2008 01:06:20 +0200
+Message-ID: <8763n98yz7.fsf@Astalo.kon.iki.fi>
+References: <ee2a733e0810291500o67b3f94fibef63e0a173e8cc1@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: "Jonas Fonseca" <fonseca@diku.dk>
-X-From: git-owner@vger.kernel.org Fri Oct 31 09:38:52 2008
+Content-Type: text/plain; charset=us-ascii
+Keywords: docbook2x,db2x_texixml --to-stdout,XSLT
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Oct 31 09:38:53 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KvpWs-0003qU-UC
-	for gcvg-git-2@gmane.org; Fri, 31 Oct 2008 09:38:51 +0100
+	id 1KvpWt-0003qU-Mx
+	for gcvg-git-2@gmane.org; Fri, 31 Oct 2008 09:38:52 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752758AbYJaIhU convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 31 Oct 2008 04:37:20 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752392AbYJaIhS
-	(ORCPT <rfc822;git-outgoing>); Fri, 31 Oct 2008 04:37:18 -0400
-Received: from mta-out.inet.fi ([195.156.147.13]:59837 "EHLO kirsi1.inet.fi"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751269AbYJaIhR (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 31 Oct 2008 04:37:17 -0400
-Received: from mithlond.arda.local (80.220.180.181) by kirsi1.inet.fi (8.5.014)
-        id 48FC5AC9009A1189; Fri, 31 Oct 2008 10:37:15 +0200
-In-Reply-To: <8763n9tduo.fsf@iki.fi> (Teemu Likonen's message of "Fri\, 31 Oct 2008 09\:37\:03 +0200")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+	id S1752478AbYJaIhY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 31 Oct 2008 04:37:24 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752809AbYJaIhY
+	(ORCPT <rfc822;git-outgoing>); Fri, 31 Oct 2008 04:37:24 -0400
+Received: from smtp1.dnainternet.fi ([87.94.96.108]:56220 "EHLO
+	smtp1.dnainternet.fi" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752392AbYJaIhX (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 31 Oct 2008 04:37:23 -0400
+X-Greylist: delayed 640 seconds by postgrey-1.27 at vger.kernel.org; Fri, 31 Oct 2008 04:37:23 EDT
+Received: from Astalo.kon.iki.fi (85-23-32-64-Rajakyla-TR1.suomi.net [85.23.32.64])
+	(using TLSv1 with cipher AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by smtp1.dnainternet.fi (Postfix) with ESMTP id 1B890C906
+	for <git@vger.kernel.org>; Fri, 31 Oct 2008 10:26:40 +0200 (EET)
+Received: from Kalle by Astalo.kon.iki.fi with local (Exim 4.52)
+	id 1Kvgaq-0008R1-IT; Fri, 31 Oct 2008 01:06:20 +0200
+In-Reply-To: <ee2a733e0810291500o67b3f94fibef63e0a173e8cc1@mail.gmail.com>
+	(Leo Razoumov's message of "Wed, 29 Oct 2008 18:00:45 -0400")
+User-Agent: Gnus/5.110007 (No Gnus v0.7) Emacs/23.0.51 (gnu/linux)
+X-Accept-Language: fi;q=1.0, en;q=0.9, sv;q=0.5, de;q=0.1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/99564>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/99565>
 
-Teemu Likonen (2008-10-31 09:37 +0200) wrote:
+"Leo Razoumov" <slonik.az@gmail.com> writes:
 
-> Alas, there are still problems - or at least I have. Let's look at th=
-e
-> "git checkout" manual page and its output in the "EXAMPLES" section:
->
->
->         $ git checkout master             =E2fB(1)=E2fR    =20
->         $ git checkout master~2 Makefile  =E2fB(2)=E2fR    =20
->         $ rm -f hello.c                                =20
->         $ git checkout hello.c            =E2fB(3)=E2fR    =20
->     =E2                                                  =20
->     =E2fB1. =E2fRswitch branch =E2                           =20
->     =E2fB2. =E2fRtake out a file out of other commit =E2     =20
->     =E2fB3. =E2fRrestore hello.c from HEAD of current branch
+> I am an emacs user but with my current setup I have difficulties
+> generating git.info pages.
 
-This has been reported to Debian so perhaps the issue is
-Debian-specific. I don't know. The bug was found in Debian git-core
-package version 1:1.5.6-1.
+This bug in docbook2x 0.8.8 can result in empty *.texi files:
+http://sourceforge.net/tracker/index.php?func=detail&aid=1912754&group_id=7856&atid=107856
+`db2x_teximl' does not honor `--to-stdout'
 
-    http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=3D490863
+With docbook2x 0.8.3, I successfully built git.info and gitman.info.
+However, the Info browser does not recognize cross-references
+between them.  I am playing with some patches to fix those.
