@@ -1,113 +1,103 @@
-From: Bill Lear <rael@zopyra.com>
-Subject: Re: Using the --track option when creating a branch
-Date: Thu, 30 Oct 2008 09:42:15 -0600
-Message-ID: <18697.54743.601331.133842@lisa.zopyra.com>
-References: <18696.32778.842933.486171@lisa.zopyra.com>
-	<1225343538.10803.9.camel@maia.lan>
-	<18697.41702.241183.408377@lisa.zopyra.com>
-	<18697.42140.459170.891195@lisa.zopyra.com>
-	<4909A7C4.30507@op5.se>
-	<2008-10-30-14-52-52+trackit+sam@rfc1149.net>
-	<4909BF58.9010500@op5.se>
-	<2008-10-30-15-23-16+trackit+sam@rfc1149.net>
-	<4909CABD.1040708@op5.se>
-	<2008-10-30-16-04-08+trackit+sam@rfc1149.net>
-	<4909D1FE.2080403@op5.se>
+From: Julian Phillips <julian@quantumfyre.co.uk>
+Subject: Re: [PATCH] Documentation: add a planning document for the next CLI
+ revamp
+Date: Thu, 30 Oct 2008 15:25:42 +0000 (GMT)
+Message-ID: <alpine.LNX.2.00.0810301518300.13964@reaper.quantumfyre.co.uk>
+References: <1225338485-11046-1-git-send-email-sam@vilain.net> <20081030132453.GB24098@artemis.corp>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
-Cc: Samuel Tardieu <sam@rfc1149.net>, git@vger.kernel.org
-To: Andreas Ericsson <ae@op5.se>
-X-From: git-owner@vger.kernel.org Thu Oct 30 16:43:51 2008
+Content-Type: TEXT/PLAIN; charset=US-ASCII; format=flowed
+Cc: Sam Vilain <sam@vilain.net>, git@vger.kernel.org,
+	Sam Vilain <samv@vilain.net>
+To: Pierre Habouzit <madcoder@debian.org>
+X-From: git-owner@vger.kernel.org Thu Oct 30 16:56:24 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KvZgN-0007ZY-PM
-	for gcvg-git-2@gmane.org; Thu, 30 Oct 2008 16:43:36 +0100
+	id 1KvZsc-0004gJ-Ul
+	for gcvg-git-2@gmane.org; Thu, 30 Oct 2008 16:56:15 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754114AbYJ3PmZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 30 Oct 2008 11:42:25 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754139AbYJ3PmY
-	(ORCPT <rfc822;git-outgoing>); Thu, 30 Oct 2008 11:42:24 -0400
-Received: from mail.zopyra.com ([65.68.225.25]:61228 "EHLO zopyra.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753989AbYJ3PmX (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 30 Oct 2008 11:42:23 -0400
-Received: (from rael@localhost)
-	by zopyra.com (8.11.6/8.11.6) id m9UFgJE27104;
-	Thu, 30 Oct 2008 09:42:19 -0600
-In-Reply-To: <4909D1FE.2080403@op5.se>
-X-Mailer: VM 8.0.11 under Emacs 21.1.1 (i686-pc-linux-gnu)
+	id S1754463AbYJ3Pyp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 30 Oct 2008 11:54:45 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753687AbYJ3Pyp
+	(ORCPT <rfc822;git-outgoing>); Thu, 30 Oct 2008 11:54:45 -0400
+Received: from electron.quantumfyre.co.uk ([87.106.55.16]:55418 "EHLO
+	electron.quantumfyre.co.uk" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1752460AbYJ3Pyp (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 30 Oct 2008 11:54:45 -0400
+X-Greylist: delayed 1694 seconds by postgrey-1.27 at vger.kernel.org; Thu, 30 Oct 2008 11:54:44 EDT
+Received: from neutron.quantumfyre.co.uk (neutron.quantumfyre.co.uk [212.159.54.235])
+	by electron.quantumfyre.co.uk (Postfix) with ESMTP id 6593129E1DD9
+	for <git@vger.kernel.org>; Thu, 30 Oct 2008 15:26:28 +0000 (GMT)
+Received: (qmail 4692 invoked by uid 103); 30 Oct 2008 15:25:42 +0000
+Received: from 212.159.54.234 by neutron.quantumfyre.co.uk (envelope-from <julian@quantumfyre.co.uk>, uid 201) with qmail-scanner-1.25st 
+ (clamdscan: 0.94/8541. spamassassin: 3.2.1. perlscan: 1.25st.  
+ Clear:RC:1(212.159.54.234):. 
+ Processed in 0.02889 secs); 30 Oct 2008 15:25:42 -0000
+Received: from darkphoton.datavampyre.co.uk (212.159.54.234)
+  by neutron.quantumfyre.co.uk with SMTP; 30 Oct 2008 15:25:42 +0000
+X-X-Sender: jp3@reaper.quantumfyre.co.uk
+In-Reply-To: <20081030132453.GB24098@artemis.corp>
+User-Agent: Alpine 2.00 (LNX 1167 2008-08-23)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/99490>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/99491>
 
-On Thursday, October 30, 2008 at 16:25:50 (+0100) Andreas Ericsson writes:
->Samuel Tardieu wrote:
->> * Andreas Ericsson <ae@op5.se> [2008-10-30 15:54:53 +0100]
->> 
->>> Correct me if I'm wrong, but wouldn't my suggestion of not trying to
->>> push (even matching) branches that haven't been updated since we last
->>> fetched from the remote do exactly the same thing for your particular
->>> use-case, but without syntax change and all the annoying minor parts
->>> that it entails?
->> 
->> Not exactly. I often do some work on a branch which does not mandate
->> a topic branch and have to switch branches to fix a bug for example.
->> This would continue to push unterminated changes as well.
->> 
->> Typical use case, which happens (to me) quite frequently:
->> 
+On Thu, 30 Oct 2008, Pierre Habouzit wrote:
+
+> On Thu, Oct 30, 2008 at 03:48:05AM +0000, Sam Vilain wrote:
+>> +Working with patches
+>> +--------------------
+>> +
+>> +  * 'git send-email' should prompt for all SMTP-related information
+>> +    about sending e-mail when it is running with no configuration.
+>> +    Because these days /usr/lib/sendmail is rarely configured
+>> +    correctly.
 >
->...
+> And when the user answer them, it should set them (a bit like zsh does
+> when it's run from the first time e.g.)
 >
->>
->> Argh, "master" has been pushed as well. Ok, I could have done
->> 
+>> +
+>> +  * other git send-email functionality which has bitten people -
+>> +    particularly building the recipient list - should prompt for
+>> +    confirmation until configured to be automatic.
+>> +
 >
->Ah, I see. I sympathize, although I really do think you'd be
->better off by learning to explicitly push things.
+>  * git-send-email should be either more interactive, or less: either
+>    just use the damn configuration, or propose a mode where it spawns
+>    an editor for each patch so that you can add further comments.
+>
+>  * git-send-email should be able to format-patches by himself (IOW
+>    accept most of format-patch arguments and deal with the patch list
+>    by himself, which is usable if the previous point is implemented).
 
-Exactly my concerns when I raised this issue originally.  It's hard to
-teach people to do this:
+This gets my vote ...
 
-% git push origin master
+These are two of the reasons that I ended up ignoring git-send-email and 
+writing my own replacement.  I found the whole format-patch/send-email 
+dance too cumbersome and confusing - particularly for sending a single 
+patch.  To send a single patch I ended up with the command:
 
-or:
+git mail-commmits --edit HEAD~1
 
-% git pull origin master
+It would be nice if I could replace this with:
 
-so that when they intend and MUST do this (lest chaos ensue):
+git send-email --edit HEAD~1
 
-% git push origin ReleaseBranch
+;)
 
-or this:
+>
+>> +  * 'git am -3' the default; with global option to make it not the
+>> +    default for those that prefer the speed of -2
+>> +
+>> +
 
-% git pull origin ReleaseBranch
+-- 
+Julian
 
-they don't mistakenly do this:
-
-% git push
-
-or:
-
-% git pull
-
-the reason being that every manual our users read says "use git push",
-use "git pull", the examples being written for 'master' branch usage,
-and people just assume that 'git push'/'git pull' are smart enough to
-know which branch you are on and do the same logical thing as a bare
-'git push'/'git pull' does when on master.
-
-Several times this has happened to us: people make this mistake and
-push or pull stuff into a branch they do not want.  The pull is not so
-bad, but the push messes up our central repo.  This has happened both
-here at my current company, and my previous one, and the persons
-making the mistakes are neither sloppy nor inexperienced.
-
-
-Bill
+  ---
+Blessed be those who initiate lively discussions with the hopelessly mute,
+for they shall be know as Dentists.
