@@ -1,64 +1,76 @@
-From: Jonas Fonseca <fonseca@diku.dk>
-Subject: Re: [JGIT RFC PATCH 3/3] Rate limit warnings spewed by
-	RepositoryTestCase.recursiveDelete
-Date: Thu, 30 Oct 2008 11:46:20 +0100
-Message-ID: <20081030104620.GB17131@diku.dk>
-References: <20081022083420.GC17940@diku.dk> <200810240110.21755.robin.rosenberg@dewire.com>
+From: "Stefan Karpinski" <stefan.karpinski@gmail.com>
+Subject: Re: [PATCH] Documentation: add a planning document for the next CLI revamp
+Date: Thu, 30 Oct 2008 03:55:28 -0700
+Message-ID: <d4bc1a2a0810300355q42b35a35p2ba0e778691a0ab6@mail.gmail.com>
+References: <1225338485-11046-1-git-send-email-sam@vilain.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: "Shawn O. Pearce" <spearce@spearce.org>, git@vger.kernel.org
-To: Robin Rosenberg <robin.rosenberg@dewire.com>
-X-From: git-owner@vger.kernel.org Thu Oct 30 11:47:38 2008
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: "Sam Vilain" <sam@vilain.net>
+X-From: git-owner@vger.kernel.org Thu Oct 30 11:57:14 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KvV3x-00033K-82
-	for gcvg-git-2@gmane.org; Thu, 30 Oct 2008 11:47:37 +0100
+	id 1KvVDD-0006B1-NU
+	for gcvg-git-2@gmane.org; Thu, 30 Oct 2008 11:57:12 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753747AbYJ3KqX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 30 Oct 2008 06:46:23 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753762AbYJ3KqX
-	(ORCPT <rfc822;git-outgoing>); Thu, 30 Oct 2008 06:46:23 -0400
-Received: from mgw1.diku.dk ([130.225.96.91]:56110 "EHLO mgw1.diku.dk"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753594AbYJ3KqW (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 30 Oct 2008 06:46:22 -0400
-Received: from localhost (localhost [127.0.0.1])
-	by mgw1.diku.dk (Postfix) with ESMTP id 55E6352C31F;
-	Thu, 30 Oct 2008 11:46:21 +0100 (CET)
-X-Virus-Scanned: amavisd-new at diku.dk
-Received: from mgw1.diku.dk ([127.0.0.1])
-	by localhost (mgw1.diku.dk [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id vdLiI8gf8iBG; Thu, 30 Oct 2008 11:46:20 +0100 (CET)
-Received: from nhugin.diku.dk (nhugin.diku.dk [130.225.96.140])
-	by mgw1.diku.dk (Postfix) with ESMTP id 3D61252C346;
-	Thu, 30 Oct 2008 11:46:20 +0100 (CET)
-Received: from tyr.diku.dk (tyr.diku.dk [130.225.96.226])
-	by nhugin.diku.dk (Postfix) with ESMTP
-	id D0FC46DF845; Thu, 30 Oct 2008 11:44:52 +0100 (CET)
-Received: by tyr.diku.dk (Postfix, from userid 3873)
-	id 27D501A4001; Thu, 30 Oct 2008 11:46:20 +0100 (CET)
+	id S1755071AbYJ3Kze (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 30 Oct 2008 06:55:34 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755047AbYJ3Kzd
+	(ORCPT <rfc822;git-outgoing>); Thu, 30 Oct 2008 06:55:33 -0400
+Received: from an-out-0708.google.com ([209.85.132.250]:20349 "EHLO
+	an-out-0708.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754965AbYJ3Kza (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 30 Oct 2008 06:55:30 -0400
+Received: by an-out-0708.google.com with SMTP id d40so53675and.103
+        for <git@vger.kernel.org>; Thu, 30 Oct 2008 03:55:29 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to
+         :subject:cc:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:references;
+        bh=QmLz/NGKPalc/WZHCTVCBaeyQfY42qOM7Xbo6mIiyGU=;
+        b=eMfRpKDGSwNE26BSz8m2q7F7xZh8SlF0izfShTOAWevpIhOSrK5WPKg0KJ+RCu2ehN
+         ONG3oovawCaiezc6sPDN/JOszq2YgKCI7DBFDy76z851VGxFZQR5zp4hteRTj6ldwfHv
+         xzogQiAQbgrc91HAMJAfS81NV0pgp9PXTHvE4=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
+         :content-type:content-transfer-encoding:content-disposition
+         :references;
+        b=h11Qeh3zN7sEzObMNABssv4d6hYlAVC0XLNyopowgJqX2suadU9wIFruwCy8XwXbu8
+         5cYlbKM8+liSyyUQsaEWSWool6iArQC1bbKGzbwB3zxQCTNYXm4vxYFvZhqGIKJ4wvyO
+         iY0Jx8CFffhta2MypAMb8CaTMfH+xPS2RfE1Y=
+Received: by 10.100.13.2 with SMTP id 2mr461553anm.74.1225364129018;
+        Thu, 30 Oct 2008 03:55:29 -0700 (PDT)
+Received: by 10.100.231.7 with HTTP; Thu, 30 Oct 2008 03:55:28 -0700 (PDT)
+In-Reply-To: <1225338485-11046-1-git-send-email-sam@vilain.net>
 Content-Disposition: inline
-In-Reply-To: <200810240110.21755.robin.rosenberg@dewire.com>
-User-Agent: Mutt/1.5.16 (2007-06-09)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/99456>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/99457>
 
-Robin Rosenberg <robin.rosenberg@dewire.com> wrote Fri, Oct 24, 2008:
-> onsdagen den 22 oktober 2008 10.34.20 skrev Jonas Fonseca:
-> > On Windows XP / NTFS / NetBeans 6.1 / Java 5 a lot of warnings are
-> > printed. In most cases the path is in fact deleted and it seems to
-> > just be a timing bug or something Windows or NTFS specific.
->
-> The problem is actually flaws in the unit tests and in the supporting
-> RepositoryTestCase.  I think I'll fix that instead.
+These proposed changes look great.
 
-Thanks. Any progress on this? Can I help in any way?
+On Wed, Oct 29, 2008 at 8:48 PM, Sam Vilain <sam@vilain.net> wrote:
 
--- 
-Jonas Fonseca
+> +  * 'git unstage' would do what 'git reset --' does now
+
+Would it make sense to deprecate using "git reset --" for this then?
+It's always seemed confusing to me to have such disparate
+functionality in the reset command.
+
+> +  * 'git export' command that does what
+> +    'git archive --format=tar --prefix=dir | tar x' does now
+
+It would be nice if the "git export" command could "checkout" a
+non-repo copy of a remote repo at a specific version. This would be as
+simple as calling archive on the remote size and then unarchiving it
+locally. But would of course take care of all the plumbing.
+
+(Sorry for the resend, Sam.)
