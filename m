@@ -1,72 +1,95 @@
-From: "Jan =?UTF-8?B?S3LDvGdlcg==?=" <jk@jk.gs>
-Subject: [PATCH] Documentation: clarify information about 'ident' attribute
-Date: Thu, 30 Oct 2008 19:14:33 +0100
-Message-ID: <20081030191433.710aff11@perceptron>
+From: Nicolas Pitre <nico@cam.org>
+Subject: Re: [PATCH] Documentation: add a planning document for the next CLI
+ revamp
+Date: Thu, 30 Oct 2008 14:28:35 -0400 (EDT)
+Message-ID: <alpine.LFD.2.00.0810301423520.13034@xanadu.home>
+References: <1225338485-11046-1-git-send-email-sam@vilain.net>
+ <alpine.LFD.2.00.0810301024300.13034@xanadu.home>
+ <20081030145253.GK14786@spearce.org> <20081030145928.GA21707@glandium.org>
+ <20081030150135.GG24098@artemis.corp>
+ <alpine.LFD.2.00.0810301105350.13034@xanadu.home>
+ <1225387882.19891.9.camel@maia.lan>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: gitster@pobox.com
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Oct 30 19:21:40 2008
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+Cc: Pierre Habouzit <madcoder@debian.org>,
+	Mike Hommey <mh@glandium.org>,
+	"Shawn O. Pearce" <spearce@spearce.org>, git@vger.kernel.org
+To: Sam Vilain <sam@vilain.net>
+X-From: git-owner@vger.kernel.org Thu Oct 30 19:30:06 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Kvc9L-00009w-8x
-	for gcvg-git-2@gmane.org; Thu, 30 Oct 2008 19:21:39 +0100
+	id 1KvcHS-0003Y1-RS
+	for gcvg-git-2@gmane.org; Thu, 30 Oct 2008 19:30:03 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755239AbYJ3SUU convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 30 Oct 2008 14:20:20 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753764AbYJ3SUT
-	(ORCPT <rfc822;git-outgoing>); Thu, 30 Oct 2008 14:20:19 -0400
-Received: from zoidberg.org ([213.133.99.5]:55578 "EHLO cthulhu.zoidberg.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753299AbYJ3SUS convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 30 Oct 2008 14:20:18 -0400
-Received: from perceptron (xdsl-87-78-167-87.netcologne.de [::ffff:87.78.167.87])
-  (IDENT: unknown, AUTH: LOGIN jast, TLS: TLSv1/SSLv3,256bits,AES256-SHA)
-  by cthulhu.zoidberg.org with esmtp; Thu, 30 Oct 2008 19:14:35 +0100
-  id 001627C8.4909F98B.000007B4
-X-Mailer: Claws Mail 3.3.1 (GTK+ 2.12.9; i486-pc-linux-gnu)
+	id S1755438AbYJ3S2s (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 30 Oct 2008 14:28:48 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754658AbYJ3S2r
+	(ORCPT <rfc822;git-outgoing>); Thu, 30 Oct 2008 14:28:47 -0400
+Received: from relais.videotron.ca ([24.201.245.36]:49266 "EHLO
+	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753338AbYJ3S2r (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 30 Oct 2008 14:28:47 -0400
+Received: from xanadu.home ([66.131.194.97]) by VL-MO-MR005.ip.videotron.ca
+ (Sun Java(tm) System Messaging Server 6.3-4.01 (built Aug  3 2007; 32bit))
+ with ESMTP id <0K9K001NTDYLS501@VL-MO-MR005.ip.videotron.ca> for
+ git@vger.kernel.org; Thu, 30 Oct 2008 14:27:57 -0400 (EDT)
+X-X-Sender: nico@xanadu.home
+In-reply-to: <1225387882.19891.9.camel@maia.lan>
+User-Agent: Alpine 2.00 (LFD 1167 2008-08-23)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/99517>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/99518>
 
-The documentation spoke of the attribute being set "to" a path; this ca=
-n
-mistakenly be interpreted as "the attribute needs to have its value set=
- to
-some kind of path". This clarifies things (and also calls the object ID=
- a
-hash rather than a name because that might be confusing too).
+On Thu, 30 Oct 2008, Sam Vilain wrote:
 
-Signed-off-by: Jan Kr=C3=BCger <jk@jk.gs>
----
-Confused me and a few other people on IRC the other day.
+> On Thu, 2008-10-30 at 12:53 -0400, Nicolas Pitre wrote:
+> > > Seconded.
+> > > 
+> > > Having git-checkout $foo being a shorthand for git checkout -b $foo
+> > > origin/$foo when origin/$foo exists and $foo doesn't is definitely handy.
+> > 
+> > No.  This is only the first step towards insanity.
+> > 
+> > In many cases origin/$foo == origin/master so this can't work in that 
+> > case which is, after all, the common case.
+> 
+> I don't understand that argument at all, can you explain further?
 
- Documentation/gitattributes.txt |    6 +++---
- 1 files changed, 3 insertions(+), 3 deletions(-)
+By default, git creates a branch called "master.  Hence, by default, if 
+you clone that repository, this branch will be called origin/master.  So 
+by default $foo is already ambiguous.
 
-diff --git a/Documentation/gitattributes.txt b/Documentation/gitattribu=
-tes.txt
-index 2694559..b39db6b 100644
---- a/Documentation/gitattributes.txt
-+++ b/Documentation/gitattributes.txt
-@@ -163,9 +163,9 @@ few exceptions.  Even though...
- `ident`
- ^^^^^^^
-=20
--When the attribute `ident` is set to a path, git replaces
--`$Id$` in the blob object with `$Id:`, followed by
--40-character hexadecimal blob object name, followed by a dollar
-+When the attribute `ident` is set for a path, git replaces
-+`$Id$` in the blob object with `$Id:`, followed by the
-+40-character hexadecimal blob object hash, followed by a dollar
- sign `$` upon checkout.  Any byte sequence that begins with
- `$Id:` and ends with `$` in the worktree file is replaced
- with `$Id$` upon check-in.
---=20
-1.6.0.3.523.g304d0.dirty
+> >   Therefore I think this is 
+> > wrong to add magic operations which are not useful for the common case 
+> > and actively _hide_ how git actually works.  Not only will you have to 
+> > explain how git works anyway for that common origin/master case, but 
+> > you'll also have to explain why sometimes the magic works and sometimes 
+> > not.  Please keep such convenience shortcuts for your own scripts and/or 
+> > aliases.
+> 
+> It's not about magic, it's about sensible defaults.  Currently this use
+> case is an error, and the resultant command is very long to type, and
+> involves typing the branch name twice.  I end up writing things like:
+> 
+>   git checkout -b {,origin/}wr34251-do-something
+> 
+> For the user who doesn't know to use the ksh-style {} blocks this is
+> voodoo.  The longer form is cumbersome.
+
+This is no excuse for promoting semantics only useful in such special 
+cases.
+
+> For the case where the thing you type is a resolvable reference, it
+> would just check it out, as now.
+
+As long as it checks it out with a detached head if it is a remote 
+branch then I have no issue.
+
+
+Nicolas
