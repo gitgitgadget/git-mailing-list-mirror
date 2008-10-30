@@ -1,61 +1,96 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH 1/2] Add --verbose|-v to test-chmtime
-Date: Thu, 30 Oct 2008 18:58:51 -0400
-Message-ID: <20081030225850.GA3688@sigill.intra.peff.net>
-References: <81b0412b0810300426u2ccbe51at1bf5f989b6333ed1@mail.gmail.com>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: Using the --track option when creating a branch
+Date: Fri, 31 Oct 2008 00:24:12 +0100
+Organization: At home
+Message-ID: <gedfmt$q9c$1@ger.gmane.org>
+References: <18696.32778.842933.486171@lisa.zopyra.com> <1225343538.10803.9.camel@maia.lan> <18697.41702.241183.408377@lisa.zopyra.com> <18697.42140.459170.891195@lisa.zopyra.com> <4909A7C4.30507@op5.se> <2008-10-30-14-52-52+trackit+sam@rfc1149.net> <4909BF58.9010500@op5.se> <2008-10-30-15-23-16+trackit+sam@rfc1149.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Git Mailing List <git@vger.kernel.org>,
-	Junio C Hamano <gitster@pobox.com>,
-	=?utf-8?B?UmVuw6k=?= Scharfe <rene.scharfe@lsrfire.ath.cx>
-To: Alex Riesen <raa.lkml@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Oct 31 00:00:46 2008
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7Bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Oct 31 00:25:51 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KvgVS-0007R2-5g
-	for gcvg-git-2@gmane.org; Fri, 31 Oct 2008 00:00:46 +0100
+	id 1Kvgtf-0005h0-9C
+	for gcvg-git-2@gmane.org; Fri, 31 Oct 2008 00:25:47 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754078AbYJ3W64 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 30 Oct 2008 18:58:56 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754000AbYJ3W6z
-	(ORCPT <rfc822;git-outgoing>); Thu, 30 Oct 2008 18:58:55 -0400
-Received: from peff.net ([208.65.91.99]:1783 "EHLO peff.net"
+	id S1753601AbYJ3XYd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 30 Oct 2008 19:24:33 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753483AbYJ3XYd
+	(ORCPT <rfc822;git-outgoing>); Thu, 30 Oct 2008 19:24:33 -0400
+Received: from main.gmane.org ([80.91.229.2]:41710 "EHLO ciao.gmane.org"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753388AbYJ3W6y (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 30 Oct 2008 18:58:54 -0400
-Received: (qmail 12190 invoked by uid 111); 30 Oct 2008 22:58:53 -0000
-Received: from Unknown (HELO sigill.intra.peff.net) (12.233.202.2)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.32) with ESMTP; Thu, 30 Oct 2008 18:58:53 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 30 Oct 2008 18:58:51 -0400
-Content-Disposition: inline
-In-Reply-To: <81b0412b0810300426u2ccbe51at1bf5f989b6333ed1@mail.gmail.com>
+	id S1752132AbYJ3XYc (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 30 Oct 2008 19:24:32 -0400
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1KvgsJ-0004Eq-Aq
+	for git@vger.kernel.org; Thu, 30 Oct 2008 23:24:23 +0000
+Received: from abvo7.neoplus.adsl.tpnet.pl ([83.8.212.7])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Thu, 30 Oct 2008 23:24:23 +0000
+Received: from jnareb by abvo7.neoplus.adsl.tpnet.pl with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Thu, 30 Oct 2008 23:24:23 +0000
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@ger.gmane.org
+X-Gmane-NNTP-Posting-Host: abvo7.neoplus.adsl.tpnet.pl
+Mail-Copies-To: Jakub Narebski <jnareb@gmail.com>
+User-Agent: KNode/0.10.2
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/99531>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/99532>
 
-On Thu, Oct 30, 2008 at 12:26:24PM +0100, Alex Riesen wrote:
+[Cc: Samuel Tardieu <sam@rfc1149.net>, Andreas Ericsson <ae@op5.se>,
+     git@vger.kernel.org]
 
-> This allows us replace perl when getting the mtime of a file because
-> of time zone conversions, though at the moment only one platform which
-> does this has been identified: Cygwin when used with ActiveState Perl
-> (as usual).
-> [...]
->     test-chmtime -v +0 filename1 | cut -f 1
+Samuel Tardieu wrote:
+> * Andreas Ericsson <ae@op5.se> [2008-10-30 15:06:16 +0100]
+> 
+>> --all pushes all refs, even the non-matching ones, which is very
+>> rarely desirable and only accidentally sometimes the same as "push all
+>> matching refs".
+>>
+>>> I know that I've never had the intent to push all the refs without
+>>> thinking about it first. Most of the time, I intend to push only
+>>> the current branch I am in.
+>>
+>> Then say so. There's a very simple command syntax for it:
+>> "git push <remote> <current-branch>"
+> 
+> I update the branches I'm working in maybe 20 times a day, sometimes
+> more. When I make a change and all the tests pass, I prefer to call
+> 
+>   git push
+> 
+> rather than
+> 
+>   git push origin 2.0-beta1
+> 
+> (and "2.0-beta1" is a short name here, some branches have much longer
+> names)
 
-Personally, I would have:
+You can use
 
-  - split the argument refactoring and the addition of the "-v" argument
-    into two patches to make reviewers lives easier
+  $ git push origin HEAD
 
-  - just used a special timespec that means "don't change anything, but
-    show show"
+and I think (but I am not sure) that there is DWIM-mery allowing
+to simply say
 
-but I think those are mostly nitpicks, so I am OK with the series as-is.
+  $ git push HEAD
 
--Peff
+and it would use configured branch.$(git symbolic-ref HEAD).remote
+
+
+And if it is not as I said, the patches would better made it so, instead of
+changing default behavior from push matching refspecs to push current
+branch only.
+-- 
+Jakub Narebski
+Warsaw, Poland
+ShadeHawk on #git
