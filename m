@@ -1,70 +1,150 @@
-From: Teemu Likonen <tlikonen@iki.fi>
-Subject: Re: [PATCH] asciidoc: add minor workaround to add an empty line after code blocks
-Date: Thu, 30 Oct 2008 14:56:15 +0200
-Message-ID: <8763nautqo.fsf@iki.fi>
-References: <87skqfus7v.fsf@iki.fi>
-	<2c6b72b30810291235j554cc21dw4e3da4fdbfe633ee@mail.gmail.com>
-	<87od13ujm4.fsf@iki.fi> <20081030104503.GA17131@diku.dk>
+From: Pierre Habouzit <madcoder@debian.org>
+Subject: Re: [PATCH] Documentation: add a planning document for the next CLI revamp
+Date: Thu, 30 Oct 2008 14:24:53 +0100
+Message-ID: <20081030132453.GB24098@artemis.corp>
+References: <1225338485-11046-1-git-send-email-sam@vilain.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Jonas Fonseca <fonseca@diku.dk>
-X-From: git-owner@vger.kernel.org Thu Oct 30 13:57:43 2008
+Content-Type: multipart/signed; boundary="BwCQnh7xodEAoBMC";
+	protocol="application/pgp-signature"; micalg=SHA1
+Cc: git@vger.kernel.org, Sam Vilain <samv@vilain.net>
+To: Sam Vilain <sam@vilain.net>
+X-From: git-owner@vger.kernel.org Thu Oct 30 14:26:28 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KvX5j-0000qd-5N
-	for gcvg-git-2@gmane.org; Thu, 30 Oct 2008 13:57:35 +0100
+	id 1KvXXU-0003iz-WE
+	for gcvg-git-2@gmane.org; Thu, 30 Oct 2008 14:26:17 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753944AbYJ3M4V (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 30 Oct 2008 08:56:21 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753950AbYJ3M4V
-	(ORCPT <rfc822;git-outgoing>); Thu, 30 Oct 2008 08:56:21 -0400
-Received: from mta-out.inet.fi ([195.156.147.13]:55545 "EHLO jenni1.inet.fi"
+	id S1754962AbYJ3NY6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 30 Oct 2008 09:24:58 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754938AbYJ3NY5
+	(ORCPT <rfc822;git-outgoing>); Thu, 30 Oct 2008 09:24:57 -0400
+Received: from pan.madism.org ([88.191.52.104]:39169 "EHLO hermes.madism.org"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753944AbYJ3M4U (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 30 Oct 2008 08:56:20 -0400
-Received: from mithlond.arda.local (80.220.180.181) by jenni1.inet.fi (8.5.014)
-        id 48FC59C7008F7880; Thu, 30 Oct 2008 14:56:19 +0200
-In-Reply-To: <20081030104503.GA17131@diku.dk> (Jonas Fonseca's message of "Thu\, 30 Oct 2008 11\:45\:03 +0100")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+	id S1754865AbYJ3NY4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 30 Oct 2008 09:24:56 -0400
+Received: from madism.org (def92-12-88-177-251-208.fbx.proxad.net [88.177.251.208])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(Client CN "artemis.madism.org", Issuer "madism.org" (verified OK))
+	by hermes.madism.org (Postfix) with ESMTPS id 79864221;
+	Thu, 30 Oct 2008 14:24:54 +0100 (CET)
+Received: by madism.org (Postfix, from userid 1000)
+	id 0B4D25EE23C; Thu, 30 Oct 2008 14:24:53 +0100 (CET)
+Content-Disposition: inline
+In-Reply-To: <1225338485-11046-1-git-send-email-sam@vilain.net>
+X-Face: $(^e[V4D-[`f2EmMGz@fgWK!e.B~2g.{08lKPU(nc1J~z\4B>*JEVq:E]7G-\6$Ycr4<;Z!|VY6Grt]+RsS$IMV)f>2)M="tY:ZPcU;&%it2D81X^kNya0=L]"vZmLP+UmKhgq+u*\.dJ8G!N&=EvlD
+User-Agent: Madmutt/devel (Linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/99466>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/99467>
 
-Jonas Fonseca (2008-10-30 11:45 +0100) wrote:
 
-> Insert an empty <simpara> in manpages after code blocks to force and
-> empty line.
+--BwCQnh7xodEAoBMC
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
->  This is an old issue reported by Theodore Ts'o and fixed partially in
->  commit 63c97ce228f2d2697a8ed954a9592dfb5f286338 for the URL section
->  of the fetch/pull/push manpages. I have fixed this in tig using an
->  approach similar to the attached. Simple and clean, but only tested
->  with docbook-xsl version 1.72 so I have made it conditional.
+On Thu, Oct 30, 2008 at 03:48:05AM +0000, Sam Vilain wrote:
+> +Add/rm/reset/checkout/revert
+> +----------------------------
+> +
+> +Many find these confusing.
+> +
+> +  * 'git stage' would do what 'git add' does now.
 
-Thanks. Your patch seems to work and code blocks look much nicer now. I
-tested command-line "man" as well as Emacs' "M-x man" and "M-x woman".
-I'm using docbook-xsl Debian package version 1.73.2.dfsg.1-4.
+  -> git stage -i/-p shall do what git add -i/-p does.
 
-Another kind of formatting issue exists with some other example
-commands, like in "git rebase" manpage, for example. Not that I care
-that much, but here's an example. The asciidoc source (git-rebase.txt)
-contains:
+> +
+> +  * 'git unstage' would do what 'git reset --' does now
 
-    then the command
+  -> likely we need a git unstage -i/-p to interactively unstage some
+     bits.
 
-        git rebase --onto topicA~5 topicA~3 topicA
+* 'git track' would do what git add -N does now.
 
-    would result in the removal of commits F and G:
+* 'git untrack' would do what 'git rm --cached' does now.
 
-In final manpage output it looks like this:
+> +  * 'git undo' would do what 'git checkout HEAD --' does now
 
-    then the command                               
+I'm not really a fan of this one. Undo is too unspecific (I know at
+least 2 people using that for git reset --hard HEAD~1 and 1 other for an
+alias to git reset --hard HEAD@{1}).
 
-        git rebase --onto topicA~5 topicA~3 topicA 
-    would result in the removal of commits F and G:
+I have no constructive proposal to replace it though, but I believe git
+undo would cause lots of harm. Would it be for another command, it
+wouldn't be a problem, but git undo *LOSES* information by design (the
+local changes on a file), and it would override aliases that people
+could have done on it. Choosing it has consequences.
+
+
+> +Working with patches
+> +--------------------
+> +
+> +  * 'git send-email' should prompt for all SMTP-related information
+> +    about sending e-mail when it is running with no configuration.
+> +    Because these days /usr/lib/sendmail is rarely configured
+> +    correctly.
+
+And when the user answer them, it should set them (a bit like zsh does
+when it's run from the first time e.g.)
+
+> +
+> +  * other git send-email functionality which has bitten people -
+> +    particularly building the recipient list - should prompt for
+> +    confirmation until configured to be automatic.
+> +
+
+  * git-send-email should be either more interactive, or less: either
+    just use the damn configuration, or propose a mode where it spawns
+    an editor for each patch so that you can add further comments.
+
+  * git-send-email should be able to format-patches by himself (IOW
+    accept most of format-patch arguments and deal with the patch list
+    by himself, which is usable if the previous point is implemented).
+
+> +  * 'git am -3' the default; with global option to make it not the
+> +    default for those that prefer the speed of -2
+> +
+> +
+> +Submodules
+> +----------
+> +
+> +  * submodules should be able to refer to symbolic ref names, svn
+> +    style - in the .gitmodules file.  The actual commit used is still
+> +    recorded in the index.
+> +
+> +  * when switching branches, if the checked out revision of a submodule
+> +    changes, then it should be switched as well
+> +
+> +  * 'git submodule update' should be able to be triggered when
+> +    switching branches (but not be the default behaviour)
+
+Actually on this one, I'd say that a submodule is either non initialized
+(in which case we don't care) or it is. If it is, switching branches
+should probably trigger a submodule update if the switch isn't possible
+(because the dereferenced sha1 doesn't exists). Or alternatively it
+should make the whole branch switch fail.
+
+--=20
+=C2=B7O=C2=B7  Pierre Habouzit
+=C2=B7=C2=B7O                                                madcoder@debia=
+n.org
+OOO                                                http://www.madism.org
+
+--BwCQnh7xodEAoBMC
+Content-Type: application/pgp-signature
+Content-Disposition: inline
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.9 (GNU/Linux)
+
+iEYEABECAAYFAkkJtaQACgkQvGr7W6HudhwOuQCgjnsMRpaZyFkY+Lejoo0cuR9n
+LskAn0OuB08kPHaMkYGhPWKkGWFKKGnq
+=qVF9
+-----END PGP SIGNATURE-----
+
+--BwCQnh7xodEAoBMC--
