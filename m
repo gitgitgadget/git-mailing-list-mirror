@@ -1,93 +1,100 @@
-From: Pierre Habouzit <madcoder@debian.org>
-Subject: Re: [PATCH] Documentation: add a planning document for the next CLI revamp
-Date: Thu, 30 Oct 2008 16:01:35 +0100
-Message-ID: <20081030150135.GG24098@artemis.corp>
-References: <1225338485-11046-1-git-send-email-sam@vilain.net> <alpine.LFD.2.00.0810301024300.13034@xanadu.home> <20081030145253.GK14786@spearce.org> <20081030145928.GA21707@glandium.org>
+From: Andreas Ericsson <ae@op5.se>
+Subject: Re: [PATCH] Documentation: add a planning document for the next	CLI
+ revamp
+Date: Thu, 30 Oct 2008 16:02:29 +0100
+Message-ID: <4909CC85.1080803@op5.se>
+References: <1225338485-11046-1-git-send-email-sam@vilain.net> <20081030143918.GB14744@mit.edu>
 Mime-Version: 1.0
-Content-Type: multipart/signed; boundary="reI/iBAAp9kzkmX4";
-	protocol="application/pgp-signature"; micalg=SHA1
-Cc: "Shawn O. Pearce" <spearce@spearce.org>,
-	Nicolas Pitre <nico@cam.org>, Sam Vilain <sam@vilain.net>,
-	git@vger.kernel.org
-To: Mike Hommey <mh@glandium.org>
-X-From: git-owner@vger.kernel.org Thu Oct 30 16:03:28 2008
+Content-Type: text/plain; charset=ISO-8859-15; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: Sam Vilain <sam@vilain.net>, git@vger.kernel.org,
+	Sam Vilain <samv@vilain.net>
+To: Theodore Tso <tytso@mit.edu>
+X-From: git-owner@vger.kernel.org Thu Oct 30 16:04:07 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KvZ3Q-0000NV-1y
-	for gcvg-git-2@gmane.org; Thu, 30 Oct 2008 16:03:20 +0100
+	id 1KvZ3x-0000cI-Op
+	for gcvg-git-2@gmane.org; Thu, 30 Oct 2008 16:03:54 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755553AbYJ3PBm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 30 Oct 2008 11:01:42 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756576AbYJ3PBl
-	(ORCPT <rfc822;git-outgoing>); Thu, 30 Oct 2008 11:01:41 -0400
-Received: from pan.madism.org ([88.191.52.104]:58573 "EHLO hermes.madism.org"
+	id S1754882AbYJ3PCj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 30 Oct 2008 11:02:39 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754804AbYJ3PCj
+	(ORCPT <rfc822;git-outgoing>); Thu, 30 Oct 2008 11:02:39 -0400
+Received: from mail.op5.se ([193.201.96.20]:58574 "EHLO mail.op5.se"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756568AbYJ3PBk (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 30 Oct 2008 11:01:40 -0400
-Received: from madism.org (def92-12-88-177-251-208.fbx.proxad.net [88.177.251.208])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(Client CN "artemis.madism.org", Issuer "madism.org" (verified OK))
-	by hermes.madism.org (Postfix) with ESMTPS id BF0B23B3DD;
-	Thu, 30 Oct 2008 16:01:36 +0100 (CET)
-Received: by madism.org (Postfix, from userid 1000)
-	id 0F8645EE23B; Thu, 30 Oct 2008 16:01:35 +0100 (CET)
-Content-Disposition: inline
-In-Reply-To: <20081030145928.GA21707@glandium.org>
-X-Face: $(^e[V4D-[`f2EmMGz@fgWK!e.B~2g.{08lKPU(nc1J~z\4B>*JEVq:E]7G-\6$Ycr4<;Z!|VY6Grt]+RsS$IMV)f>2)M="tY:ZPcU;&%it2D81X^kNya0=L]"vZmLP+UmKhgq+u*\.dJ8G!N&=EvlD
-User-Agent: Madmutt/devel (Linux)
+	id S1754078AbYJ3PCi (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 30 Oct 2008 11:02:38 -0400
+Received: from localhost (localhost.localdomain [127.0.0.1])
+	by mail.op5.se (Postfix) with ESMTP id 8E14E1B80048;
+	Thu, 30 Oct 2008 15:57:10 +0100 (CET)
+X-Virus-Scanned: amavisd-new at 
+X-Spam-Flag: NO
+X-Spam-Score: -4.399
+X-Spam-Level: 
+X-Spam-Status: No, score=-4.399 tagged_above=-10 required=6.6
+	tests=[ALL_TRUSTED=-1.8, BAYES_00=-2.599]
+Received: from mail.op5.se ([127.0.0.1])
+	by localhost (mail.op5.se [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id 5R5uHok4PsZV; Thu, 30 Oct 2008 15:57:04 +0100 (CET)
+Received: from clix.int.op5.se (unknown [192.168.1.20])
+	by mail.op5.se (Postfix) with ESMTP id 513401B80087;
+	Thu, 30 Oct 2008 15:57:04 +0100 (CET)
+User-Agent: Thunderbird 2.0.0.16 (X11/20080723)
+In-Reply-To: <20081030143918.GB14744@mit.edu>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/99481>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/99482>
 
+Theodore Tso wrote:
+> On Wed, Oct 29, 2008 at 08:48:05PM -0700, Sam Vilain wrote:
+>> From: Sam Vilain <samv@vilain.net>
+>>
+>> For cross-command CLI changes to be effective, they need to be
+>> cohesively planned.  Add a planning document for this next set of
+>> changes.
+> 
+> Here are my favorites:
+> 
+> * Add the command "git revert-file <files>" which is syntactic sugar for:
+> 
+>         git checkout HEAD -- <files>
+> 
+>   Rationale: Many other SCM's have a way of undoing local edits to a
+>   file very simply, i.e."hg revert <file>" or "svn revert <file>", and
+>   for many developers's workflow, it's useful to be able to undo local
+>   edits to a single file, but not to everything else in the working
+>   directory.  And "git checkout HEAD -- <file>" is rather cumbersome
+>   to type, and many beginning users don't find it intuitive to look in
+>   the "git-checkout" man page for instructions on how to revert a
+>   local file.
+> 
 
---reI/iBAAp9kzkmX4
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+I like it, although I guess one would have to add a "--staged" flag to
+git revert-file to be able to checkout files from index as well, or people
+will wonder why that can't be done.
 
-On Thu, Oct 30, 2008 at 02:59:28PM +0000, Mike Hommey wrote:
-> On Thu, Oct 30, 2008 at 07:52:53AM -0700, Shawn O. Pearce <spearce@spearc=
-e.org> wrote:
-> > +1 to Nico's NAK.
-> >=20
-> > Although I was at the GitTogether I don't remember this change to
-> > checkout being discussed.  I must have been asleep reading email
-> > or something.  I am _NOT_ in favor of this change; I think the
-> > current behavior of "git checkout origin/master" is correct and as
-> > sane as we can make it.
->=20
-> Except he was talking about 'git checkout branch', not 'git checkout
-> origin/branch'. And I would be fine with 'git checkout branch' doing
-> what 'git checkout -b branch $remote/branch' does if $remote is unique
-> (i.e. there is no other 'branch' branch in any other remote) and the
-> 'branch' branch doesn't already exist.
+> * Change the argument handling for "git format-patch" so it is
+>   consistent with everything else which takes a set of commits.  Yes,
+>   it means that where people have gotten used to typing "git
+>   format-patch origin", they'll have to type instead: "git
+>   format-patch origin..", but's much more consistent.  We've done the
+>   best we can by documenting the existing behavior, but if'we re going
+>   to make major, potentially incompatible, CLI changes, this is
+>   something to at least consider.  Maybe with a config file for people
+>   who really don't want to retrain their fingers to type the two extra
+>   periods?
+> 
 
-Seconded.
+"git format-patch" does exactly the same thing as other commit-range handling
+commands do, which is assume that the missing commit end-point is HEAD, so it
+actually is consistent, although it doesn't quite look as if it is.
 
-Having git-checkout $foo being a shorthand for git checkout -b $foo
-origin/$foo when origin/$foo exists and $foo doesn't is definitely handy.
-
---=20
-=C2=B7O=C2=B7  Pierre Habouzit
-=C2=B7=C2=B7O                                                madcoder@debia=
-n.org
-OOO                                                http://www.madism.org
-
---reI/iBAAp9kzkmX4
-Content-Type: application/pgp-signature
-Content-Disposition: inline
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.9 (GNU/Linux)
-
-iEYEABECAAYFAkkJzE8ACgkQvGr7W6Hudhzn8QCcDL0xFLdz9cD0EzMGOFyGcyRt
-IyAAnjQkKqq7t7TQvwetO9F8OhiE4XKB
-=zU2W
------END PGP SIGNATURE-----
-
---reI/iBAAp9kzkmX4--
+-- 
+Andreas Ericsson                   andreas.ericsson@op5.se
+OP5 AB                             www.op5.se
+Tel: +46 8-230225                  Fax: +46 8-230231
