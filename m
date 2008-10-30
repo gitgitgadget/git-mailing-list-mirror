@@ -1,110 +1,85 @@
-From: Pierre Habouzit <madcoder@debian.org>
-Subject: Re: [PATCH] git-filter-branch: Add an example on how to remove empty commits
-Date: Thu, 30 Oct 2008 14:26:23 +0100
-Message-ID: <20081030132623.GC24098@artemis.corp>
-References: <1225326833-15210-1-git-send-email-pasky@suse.cz>
+From: Samuel Tardieu <sam@rfc1149.net>
+Subject: Re: Using the --track option when creating a branch
+Date: Thu, 30 Oct 2008 14:52:52 +0100
+Organization: RFC 1149 (see http://www.rfc1149.net/)
+Message-ID: <2008-10-30-14-52-52+trackit+sam@rfc1149.net>
+References: <18696.32778.842933.486171@lisa.zopyra.com>
+	<1225343538.10803.9.camel@maia.lan>
+	<18697.41702.241183.408377@lisa.zopyra.com>
+	<18697.42140.459170.891195@lisa.zopyra.com> <4909A7C4.30507@op5.se>
 Mime-Version: 1.0
-Content-Type: multipart/signed; boundary="ZwgA9U+XZDXt4+m+";
-	protocol="application/pgp-signature"; micalg=SHA1
-Cc: git@vger.kernel.org, Sverre Rabbelier <srabbelier@gmail.com>
-To: Petr Baudis <pasky@suse.cz>
-X-From: git-owner@vger.kernel.org Thu Oct 30 14:27:48 2008
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 8bit
+Cc: Bill Lear <rael@zopyra.com>, git@vger.kernel.org
+To: Andreas Ericsson <ae@op5.se>
+X-From: git-owner@vger.kernel.org Thu Oct 30 14:54:42 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KvXYr-0004EH-CM
-	for gcvg-git-2@gmane.org; Thu, 30 Oct 2008 14:27:41 +0100
+	id 1KvXyd-00069A-8e
+	for gcvg-git-2@gmane.org; Thu, 30 Oct 2008 14:54:19 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753694AbYJ3N01 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 30 Oct 2008 09:26:27 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753892AbYJ3N00
-	(ORCPT <rfc822;git-outgoing>); Thu, 30 Oct 2008 09:26:26 -0400
-Received: from pan.madism.org ([88.191.52.104]:39177 "EHLO hermes.madism.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753652AbYJ3N00 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 30 Oct 2008 09:26:26 -0400
-Received: from madism.org (def92-12-88-177-251-208.fbx.proxad.net [88.177.251.208])
+	id S1754555AbYJ3NxF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 30 Oct 2008 09:53:05 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754531AbYJ3NxE
+	(ORCPT <rfc822;git-outgoing>); Thu, 30 Oct 2008 09:53:04 -0400
+Received: from zoidberg.rfc1149.net ([91.121.19.179]:38901 "EHLO
+	zoidberg.rfc1149.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753528AbYJ3NxD (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 30 Oct 2008 09:53:03 -0400
+Received: from localhost (localhost [127.0.0.1])
+	by zoidberg.rfc1149.net (Postfix) with ESMTP id CB86011144D;
+	Thu, 30 Oct 2008 14:52:57 +0100 (CET)
+X-Virus-Scanned: amavisd-new at rfc1149.net
+Received: from zoidberg.rfc1149.net ([127.0.0.1])
+	by localhost (zaphod.rfc1149.net [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id SyFY8gyk8Uq4; Thu, 30 Oct 2008 14:52:53 +0100 (CET)
+Received: from mail2.rfc1149.net (willow.rfc1149.net [IPv6:2001:6f8:37a:2::2])
 	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(Client CN "artemis.madism.org", Issuer "madism.org" (verified OK))
-	by hermes.madism.org (Postfix) with ESMTPS id 1A3E6221;
-	Thu, 30 Oct 2008 14:26:25 +0100 (CET)
-Received: by madism.org (Postfix, from userid 1000)
-	id BDCF75EE23C; Thu, 30 Oct 2008 14:26:23 +0100 (CET)
-Content-Disposition: inline
-In-Reply-To: <1225326833-15210-1-git-send-email-pasky@suse.cz>
-X-Face: $(^e[V4D-[`f2EmMGz@fgWK!e.B~2g.{08lKPU(nc1J~z\4B>*JEVq:E]7G-\6$Ycr4<;Z!|VY6Grt]+RsS$IMV)f>2)M="tY:ZPcU;&%it2D81X^kNya0=L]"vZmLP+UmKhgq+u*\.dJ8G!N&=EvlD
-User-Agent: Madmutt/devel (Linux)
+	(Client CN "mail2.rfc1149.net", Issuer "rfc1149.net" (verified OK))
+	by zoidberg.rfc1149.net (Postfix) with ESMTPS id A38BC110584;
+	Thu, 30 Oct 2008 14:52:53 +0100 (CET)
+Received: from localhost (localhost [127.0.0.1])
+	by mail2.rfc1149.net (Postfix) with ESMTP id 00A5FC40BC;
+	Thu, 30 Oct 2008 14:52:53 +0100 (CET)
+Received: from mail2.rfc1149.net ([127.0.0.1])
+	by localhost (localhost [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id 3afg6GtwhOK4; Thu, 30 Oct 2008 14:52:52 +0100 (CET)
+Received: by mail2.rfc1149.net (Postfix, from userid 1000)
+	id BF866C40BD; Thu, 30 Oct 2008 14:52:52 +0100 (CET)
+In-Reply-To: <4909A7C4.30507@op5.se> (Andreas Ericsson's message of "Thu\, 30 Oct 2008 13\:25\:40 +0100")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-WWW: http://www.rfc1149.net/sam
+X-Jabber: <sam@rfc1149.net> (see http://www.jabber.org/)
+X-OpenPGP-Fingerprint: 79C0 AE3C CEA8 F17B 0EF1  45A5 F133 2241 1B80 ADE6 (see http://www.gnupg.org/)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/99468>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/99469>
 
+>>>>> "Andreas" == Andreas Ericsson <ae@op5.se> writes:
 
---ZwgA9U+XZDXt4+m+
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Andreas> This particular bikeshed was painted a long time ago, with
+Andreas> the consensus going in favour of "git push" pushing all
+Andreas> *matching* refspecs.
 
-On Thu, Oct 30, 2008 at 12:33:53AM +0000, Petr Baudis wrote:
-> From: Sverre Rabbelier <srabbelier@gmail.com>
->=20
-> Signed-off-by: Sverre Rabbelier <srabbelier@gmail.com>
-> Signed-off-by: Petr Baudis <pasky@suse.cz>
-> ---
->  Documentation/git-filter-branch.txt |   15 +++++++++++++++
->  1 files changed, 15 insertions(+), 0 deletions(-)
->=20
-> diff --git a/Documentation/git-filter-branch.txt b/Documentation/git-filt=
-er-branch.txt
-> index fed6de6..2565244 100644
-> --- a/Documentation/git-filter-branch.txt
-> +++ b/Documentation/git-filter-branch.txt
-> @@ -246,6 +246,21 @@ git filter-branch --commit-filter '
->  	fi' HEAD
->  ------------------------------------------------------------------------=
-------
-> =20
-> +To remove commits that are empty (do not introduce any change):
-> +
-> +------------------------------------------------------------------------=
-------
-> +git rev-list HEAD | while read c; do [ -n "$(git diff-tree --root $c)" ]=
- || echo $c; done > revs
-> +
-> +git filter-branch --commit-filter '
-> +  if grep -q "$GIT_COMMIT" '"$(pwd)/"revs';
-> +  then
-> +    skip_commit "$@";
-> +  else
-> +    git commit-tree "$@";
-> +  fi' HEAD
-> +
-> +------------------------------------------------------------------------=
-------
+I still don't understand why this is useful, especially when git push
+already has a "--all" option.
 
-Why not add an option to filter-branch that removes a commit if it's
-empty ? It's quite useful, it helps the user concentrating on just
-keeping what matches *his* criteriums, and not caring about the minor
-details of cleansing the result.
---=20
-=C2=B7O=C2=B7  Pierre Habouzit
-=C2=B7=C2=B7O                                                madcoder@debia=
-n.org
-OOO                                                http://www.madism.org
+I know that I've never had the intent to push all the refs without
+thinking about it first. Most of the time, I intend to push only
+the current branch I am in.
 
---ZwgA9U+XZDXt4+m+
-Content-Type: application/pgp-signature
-Content-Disposition: inline
+The current behaviour made me remove the branches I was not actively
+on locally, because I would get errors from "git push" all the time
+saying that I was not up-to-date in those branches.
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.9 (GNU/Linux)
+Note that the "git pull" issue is completely different, as it merges
+or fast forwards the current branch only.
 
-iEYEABECAAYFAkkJtf8ACgkQvGr7W6HudhznSACgjXWJwUPAeaLbohxiGy3BVopH
-XUQAn2jQwfQgbqFqbA6om2ap7VQpfVl4
-=JlSh
------END PGP SIGNATURE-----
-
---ZwgA9U+XZDXt4+m+--
+  Sam
+-- 
+Samuel Tardieu -- sam@rfc1149.net -- http://www.rfc1149.net/
