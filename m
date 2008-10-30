@@ -1,68 +1,85 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: [PATCH] Documentation: add a planning document for the next CLI revamp
-Date: Fri, 31 Oct 2008 00:55:17 +0100
-Organization: At home
-Message-ID: <gedhh6$urq$1@ger.gmane.org>
-References: <1225338485-11046-1-git-send-email-sam@vilain.net> <alpine.LFD.2.00.0810301024300.13034@xanadu.home> <20081030145253.GK14786@spearce.org> <20081030145928.GA21707@glandium.org> <20081030150135.GG24098@artemis.corp> <alpine.LFD.2.00.0810301105350.13034@xanadu.home> <1225387882.19891.9.camel@maia.lan>
+From: Ian Hilt <ian.hilt@gmx.com>
+Subject: Re: [PATCH] t4030: Don't use echo -n
+Date: Thu, 30 Oct 2008 19:52:15 -0400
+Message-ID: <20081030235215.GB18221@sys-0.hiltweb.site>
+References: <1225404776-51748-1-git-send-email-benji@silverinsanity.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-2
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Oct 31 00:56:45 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Brian Gernhardt <benji@silverinsanity.com>
+X-From: git-owner@vger.kernel.org Fri Oct 31 01:00:16 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KvhNc-0005bG-1h
-	for gcvg-git-2@gmane.org; Fri, 31 Oct 2008 00:56:44 +0100
+	id 1KvhQz-0006Vi-9i
+	for gcvg-git-2@gmane.org; Fri, 31 Oct 2008 01:00:13 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751154AbYJ3Xza convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 30 Oct 2008 19:55:30 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752028AbYJ3Xz3
-	(ORCPT <rfc822;git-outgoing>); Thu, 30 Oct 2008 19:55:29 -0400
-Received: from main.gmane.org ([80.91.229.2]:58227 "EHLO ciao.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750999AbYJ3Xz3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 30 Oct 2008 19:55:29 -0400
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1KvhML-0005Mf-9Q
-	for git@vger.kernel.org; Thu, 30 Oct 2008 23:55:25 +0000
-Received: from abvo7.neoplus.adsl.tpnet.pl ([83.8.212.7])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Thu, 30 Oct 2008 23:55:25 +0000
-Received: from jnareb by abvo7.neoplus.adsl.tpnet.pl with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Thu, 30 Oct 2008 23:55:25 +0000
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@ger.gmane.org
-X-Gmane-NNTP-Posting-Host: abvo7.neoplus.adsl.tpnet.pl
-Mail-Copies-To: Jakub Narebski <jnareb@gmail.com>
-User-Agent: KNode/0.10.2
+	id S1752969AbYJ3X7A (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 30 Oct 2008 19:59:00 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753022AbYJ3X7A
+	(ORCPT <rfc822;git-outgoing>); Thu, 30 Oct 2008 19:59:00 -0400
+Received: from mail.gmx.com ([74.208.5.67]:45582 "HELO mail.gmx.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1752946AbYJ3X67 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 30 Oct 2008 19:58:59 -0400
+X-Greylist: delayed 399 seconds by postgrey-1.27 at vger.kernel.org; Thu, 30 Oct 2008 19:58:59 EDT
+Received: (qmail invoked by alias); 30 Oct 2008 23:52:18 -0000
+Received: from cpe-75-185-223-130.woh.res.rr.com (EHLO sys-0.hiltweb.site) [75.185.223.130]
+  by mail.gmx.com (mp-us005) with SMTP; 30 Oct 2008 19:52:18 -0400
+X-Authenticated: #47758715
+X-Provags-ID: V01U2FsdGVkX1+WyzVzuUWWVxjtYmO5psTG11aQaiD1CeRJDuVwjQ
+	zm2yEZdfP9Fxwd
+Content-Disposition: inline
+In-Reply-To: <1225404776-51748-1-git-send-email-benji@silverinsanity.com>
+User-Agent: Mutt/1.5.18 (2008-05-17)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.57
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/99535>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/99536>
 
-Sam Vilain wrote:
+On Thu, Oct 30, 2008 at 06:12:56PM -0400, Brian Gernhardt wrote:
+> Signed-off-by: Brian Gernhardt <benji@silverinsanity.com>
 
-> It's not about magic, it's about sensible defaults. =A0Currently this=
- use
-> case is an error, and the resultant command is very long to type, and
-> involves typing the branch name twice. =A0I end up writing things lik=
-e:
->=20
-> =A0 git checkout -b {,origin/}wr34251-do-something
+No commit message???
 
-Can't you use currently
+> ---
+>  t/t4030-diff-textconv.sh |    5 ++---
+>  1 files changed, 2 insertions(+), 3 deletions(-)
+> 
+> diff --git a/t/t4030-diff-textconv.sh b/t/t4030-diff-textconv.sh
+> index 3945731..7ec244f 100755
+> --- a/t/t4030-diff-textconv.sh
+> +++ b/t/t4030-diff-textconv.sh
+> @@ -96,16 +96,15 @@ cat >expect.typechange <<'EOF'
+>  -1
+>  diff --git a/file b/file
+>  new file mode 120000
+> -index ad8b3d2..67be421
+> +index ad8b3d2..8e4020b
+>  --- /dev/null
+>  +++ b/file
+>  @@ -0,0 +1 @@
+>  +frotz
+> -\ No newline at end of file
+>  EOF
+>  # make a symlink the hard way that works on symlink-challenged file systems
+>  test_expect_success 'textconv does not act on symlinks' '
+> -	echo -n frotz > file &&
+> +	echo frotz > file &&
+>  	git add file &&
+>  	git ls-files -s | sed -e s/100644/120000/ |
+>  		git update-index --index-info &&
+> -- 
+> 1.6.0.3.523.g304d0
 
-    git checkout --track origin/wr34251-do-something
+This doesn't apply for me.  My tip is up-to-date, but it doesn't even have
+this file it t/.
 
+A little bewildered,
 
-P.S. Somehow I don't see first message in this thread on GMane...
---=20
-Jakub Narebski
-Warsaw, Poland
-ShadeHawk on #git
+	Ian
