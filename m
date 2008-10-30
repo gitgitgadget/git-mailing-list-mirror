@@ -1,112 +1,68 @@
-From: Andreas Ericsson <ae@op5.se>
-Subject: Re: Using the --track option when creating a branch
-Date: Thu, 30 Oct 2008 16:25:50 +0100
-Message-ID: <4909D1FE.2080403@op5.se>
-References: <18696.32778.842933.486171@lisa.zopyra.com> <1225343538.10803.9.camel@maia.lan> <18697.41702.241183.408377@lisa.zopyra.com> <18697.42140.459170.891195@lisa.zopyra.com> <4909A7C4.30507@op5.se> <2008-10-30-14-52-52+trackit+sam@rfc1149.net> <4909BF58.9010500@op5.se> <2008-10-30-15-23-16+trackit+sam@rfc1149.net> <4909CABD.1040708@op5.se> <2008-10-30-16-04-08+trackit+sam@rfc1149.net>
+From: Matthieu Moy <Matthieu.Moy@imag.fr>
+Subject: Re: [PATCH] Documentation: add a planning document for the next CLI revamp
+Date: Thu, 30 Oct 2008 16:20:28 +0100
+Message-ID: <vpqmygmw1mr.fsf@bauges.imag.fr>
+References: <1225338485-11046-1-git-send-email-sam@vilain.net>
+	<20081030143918.GB14744@mit.edu>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: Bill Lear <rael@zopyra.com>, git@vger.kernel.org
-To: Samuel Tardieu <sam@rfc1149.net>
-X-From: git-owner@vger.kernel.org Thu Oct 30 16:36:17 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: Sam Vilain <sam@vilain.net>, git@vger.kernel.org
+To: Theodore Tso <tytso@mit.edu>
+X-From: git-owner@vger.kernel.org Thu Oct 30 16:39:49 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KvZZI-0004a3-96
-	for gcvg-git-2@gmane.org; Thu, 30 Oct 2008 16:36:16 +0100
+	id 1KvZcY-0005yg-Ob
+	for gcvg-git-2@gmane.org; Thu, 30 Oct 2008 16:39:39 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753583AbYJ3PfA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 30 Oct 2008 11:35:00 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753528AbYJ3PfA
-	(ORCPT <rfc822;git-outgoing>); Thu, 30 Oct 2008 11:35:00 -0400
-Received: from mail.op5.se ([193.201.96.20]:54708 "EHLO mail.op5.se"
+	id S1753742AbYJ3PiZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 30 Oct 2008 11:38:25 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752972AbYJ3PiZ
+	(ORCPT <rfc822;git-outgoing>); Thu, 30 Oct 2008 11:38:25 -0400
+Received: from harmonie.imag.fr ([147.171.130.40]:51882 "EHLO harmonie.imag.fr"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753384AbYJ3Pe7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 30 Oct 2008 11:34:59 -0400
-Received: from localhost (localhost.localdomain [127.0.0.1])
-	by mail.op5.se (Postfix) with ESMTP id CF6001B800A6;
-	Thu, 30 Oct 2008 16:20:39 +0100 (CET)
-X-Virus-Scanned: amavisd-new at 
-X-Spam-Flag: NO
-X-Spam-Score: -4.399
-X-Spam-Level: 
-X-Spam-Status: No, score=-4.399 tagged_above=-10 required=6.6
-	tests=[ALL_TRUSTED=-1.8, BAYES_00=-2.599]
-Received: from mail.op5.se ([127.0.0.1])
-	by localhost (mail.op5.se [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id bXRdY9mkAYS9; Thu, 30 Oct 2008 16:20:26 +0100 (CET)
-Received: from clix.int.op5.se (unknown [192.168.1.20])
-	by mail.op5.se (Postfix) with ESMTP id BDE5D1B80087;
-	Thu, 30 Oct 2008 16:20:25 +0100 (CET)
-User-Agent: Thunderbird 2.0.0.16 (X11/20080723)
-In-Reply-To: <2008-10-30-16-04-08+trackit+sam@rfc1149.net>
+	id S1752759AbYJ3PiY (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 30 Oct 2008 11:38:24 -0400
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by harmonie.imag.fr (8.13.8/8.13.8) with ESMTP id m9UFZTtv016688;
+	Thu, 30 Oct 2008 16:35:31 +0100 (CET)
+Received: from bauges.imag.fr ([129.88.43.5])
+	by mail-veri.imag.fr with esmtps (TLS-1.0:RSA_AES_256_CBC_SHA:32)
+	(Exim 4.50)
+	id 1KvZK0-00023l-Hh; Thu, 30 Oct 2008 16:20:28 +0100
+Received: from moy by bauges.imag.fr with local (Exim 4.63)
+	(envelope-from <moy@imag.fr>)
+	id 1KvZK0-0002kJ-FQ; Thu, 30 Oct 2008 16:20:28 +0100
+In-Reply-To: <20081030143918.GB14744@mit.edu> (Theodore Tso's message of "Thu\, 30 Oct 2008 10\:39\:18 -0400")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/23.0.60 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-3.0 (harmonie.imag.fr [147.171.130.40]); Thu, 30 Oct 2008 16:35:31 +0100 (CET)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM for more information
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: moy@imag.fr
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/99488>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/99489>
 
-Samuel Tardieu wrote:
-> * Andreas Ericsson <ae@op5.se> [2008-10-30 15:54:53 +0100]
-> 
->> Correct me if I'm wrong, but wouldn't my suggestion of not trying to
->> push (even matching) branches that haven't been updated since we last
->> fetched from the remote do exactly the same thing for your particular
->> use-case, but without syntax change and all the annoying minor parts
->> that it entails?
-> 
-> Not exactly. I often do some work on a branch which does not mandate
-> a topic branch and have to switch branches to fix a bug for example.
-> This would continue to push unterminated changes as well.
-> 
-> Typical use case, which happens (to me) quite frequently:
-> 
+Theodore Tso <tytso@mit.edu> writes:
 
-...
-
+> * Add the command "git revert-file <files>" which is syntactic sugar for:
 >
-> Argh, "master" has been pushed as well. Ok, I could have done
-> 
+>         git checkout HEAD -- <files>
 
-Ah, I see. I sympathize, although I really do think you'd be
-better off by learning to explicitly push things.
+I don't think "revert-file" is a good name for this: although other
+SCM often call this "revert", what Git calls "revert" is about
+reverting an existing commit (it's "backout" in hg for example). The
+terminology to revert the working tree to the last commited version is
+already here in Git, it's "reset".
 
->   % git branch
->     (because I know I am on the right branch but do not necessarily
->      remember its full name all the time)
-
-offtopic: Use shell-completion and set your PS1 to include the __git_ps1
-output.
-
->   % git push origin 2.0-beta1-release-candidate
-> 
-> or I could have started a topic branch, but I often push 2 or 3
-> commits at a time instead, the first one being a refactoring of
-> existing code to ease the subsequent one.
-> 
-
-I fail to see why this would prevent you from starting a topic-branch.
-In fact, I would have thought it was a reason *for* starting a topic.
-
->>From what I have seen, people I am working with often have the
-> same workflow (do not systematically start a topic branch when
-> in active development mode)
-> 
->> Define "many". Perhaps as often as 2-3 times per day. Not very often,
->> but frequent enough that I definitely want some short sweet way of
->> doing it. OTOH, I also find the "rejected" messages annoying, and I
->> definitely feel one could do something about them. However, it's my
->> birthday today and I plan on being far too drunk/hungover the entire
->> weekend for me to take any actions in that direction.
-> 
-> Happy birthday :)
-> 
-
-Thank you :-)
+I've already argued in favor of allowing "git reset --hard <files>",
+which is consistant with existing terminology and doesn't add an extra
+command, but without success.
 
 -- 
-Andreas Ericsson                   andreas.ericsson@op5.se
-OP5 AB                             www.op5.se
-Tel: +46 8-230225                  Fax: +46 8-230231
+Matthieu
