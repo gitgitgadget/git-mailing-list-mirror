@@ -1,128 +1,255 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] git show <tree>: show mode and hash, and handle -r
-Date: Thu, 30 Oct 2008 14:15:19 -0700
-Message-ID: <7vtzatdbtk.fsf@gitster.siamese.dyndns.org>
-References: <alpine.DEB.1.00.0810290207330.22125@pacific.mpi-cbg.de.mpi-cbg.de>
+From: "Moore, Robert" <robert.moore@intel.com>
+Subject: RE: [RFC] gitweb: add 'historyfollow' view that follows renames
+Date: Thu, 30 Oct 2008 15:00:44 -0700
+Message-ID: <4911F71203A09E4D9981D27F9D8308580AEC1324@orsmsx503.amr.corp.intel.com>
+References: <054F21930D24A0428E5B4588462C7AED0149B4B8@ednex512.dsto.defence.gov.au>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, schacon@gmail.com
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Thu Oct 30 22:17:24 2008
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: 8BIT
+Cc: "git@vger.kernel.org" <git@vger.kernel.org>
+To: "Blucher, Guy" <Guy.Blucher@dsto.defence.gov.au>,
+	"Lin, Ming M" <ming.m.lin@intel.com>,
+	"jnareb@gmail.com" <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Oct 30 23:02:07 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KvetM-0007Ft-FH
-	for gcvg-git-2@gmane.org; Thu, 30 Oct 2008 22:17:20 +0100
+	id 1Kvfae-0005SN-N5
+	for gcvg-git-2@gmane.org; Thu, 30 Oct 2008 23:02:05 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756005AbYJ3VPn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 30 Oct 2008 17:15:43 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755262AbYJ3VPn
-	(ORCPT <rfc822;git-outgoing>); Thu, 30 Oct 2008 17:15:43 -0400
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:65052 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753510AbYJ3VPm (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 30 Oct 2008 17:15:42 -0400
-Received: from localhost.localdomain (localhost [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id D01F576B56;
-	Thu, 30 Oct 2008 17:15:40 -0400 (EDT)
-Received: from pobox.com (ip68-225-240-211.oc.oc.cox.net [68.225.240.211])
- (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
- certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
- ESMTPSA id 898D876B35; Thu, 30 Oct 2008 17:15:26 -0400 (EDT)
-In-Reply-To: <alpine.DEB.1.00.0810290207330.22125@pacific.mpi-cbg.de.mpi-cbg.de> (Johannes
- Schindelin's message of "Wed, 29 Oct 2008 02:09:55 +0100 (CET)")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: E7C90A42-A6C7-11DD-8090-9CEDC82D7133-77302942!a-sasl-fastnet.pobox.com
+	id S1753291AbYJ3WAu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 30 Oct 2008 18:00:50 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753166AbYJ3WAu
+	(ORCPT <rfc822;git-outgoing>); Thu, 30 Oct 2008 18:00:50 -0400
+Received: from mga14.intel.com ([143.182.124.37]:19013 "EHLO mga14.intel.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753277AbYJ3WAt convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 30 Oct 2008 18:00:49 -0400
+Received: from azsmga001.ch.intel.com ([10.2.17.19])
+  by azsmga102.ch.intel.com with ESMTP; 30 Oct 2008 15:00:48 -0700
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="4.33,518,1220252400"; 
+   d="scan'208";a="67937628"
+Received: from unknown (HELO azsmsx001.amr.corp.intel.com) ([10.2.167.98])
+  by azsmga001.ch.intel.com with ESMTP; 30 Oct 2008 15:00:48 -0700
+Received: from orsmsx602.amr.corp.intel.com (10.22.226.211) by
+ azsmsx001.amr.corp.intel.com (10.2.167.98) with Microsoft SMTP Server (TLS)
+ id 8.1.311.2; Thu, 30 Oct 2008 15:00:47 -0700
+Received: from orsmsx503.amr.corp.intel.com ([10.22.226.47]) by
+ orsmsx602.amr.corp.intel.com ([10.22.226.211]) with mapi; Thu, 30 Oct 2008
+ 15:00:45 -0700
+Thread-Topic: [RFC] gitweb: add 'historyfollow' view that follows renames 
+Thread-Index: Ack34pbqvQjKSPtnQv+obtOLtdhvoAC+E9pQ
+In-Reply-To: <054F21930D24A0428E5B4588462C7AED0149B4B8@ednex512.dsto.defence.gov.au>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+acceptlanguage: en-US
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/99524>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/99525>
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+Thanks. This sounds like what we need.
 
-> Now, git show <tree> shows some more information, and with the -r option,
-> it recurses into subdirectories.
+We will take a look at it.
+Bob
+
+
+>-----Original Message-----
+>From: Blucher, Guy [mailto:Guy.Blucher@dsto.defence.gov.au]
+>Sent: Sunday, October 26, 2008 8:18 PM
+>To: Lin, Ming M; jnareb@gmail.com; Moore, Robert
+>Cc: git@vger.kernel.org
+>Subject: [RFC] gitweb: add 'historyfollow' view that follows renames
 >
-> Requested by Scott Chacon.
 >
-> Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
-> ---
+>Hi Folks,
 >
-> 	The only quirk is the command line parsing for -r: we cannot use 
-> 	DIFF_OPT_TST(&rev.diffopt, RECURSIVE), because that is switched 
-> 	on not only by cmd_log_init(), but implicitly by 
-> 	diff_setup_done(), because FORMAT_PATCH is selected by git-show.
-
-That's a rather large quirk with an ugly workaround if you ask me.
-
-I also notice that there is:
-
-    int cmd_log_reflog(int argc, const char **argv, const char *prefix)
-    {
-            struct rev_info rev;
-            ...
-            /*
-             * This means that we override whatever commit format the user gave
-             * on the cmd line.  Sad, but cmd_log_init() currently doesn't
-             * allow us to set a different default.
-             */
-
-I wonder if it would help breaking down cmd_log_init() a bit like this.
-
- builtin-log.c |   27 +++++++++++++++++++++------
- 1 files changed, 21 insertions(+), 6 deletions(-)
-
-diff --git c/builtin-log.c w/builtin-log.c
-index 2efe593..0fcc28a 100644
---- c/builtin-log.c
-+++ w/builtin-log.c
-@@ -50,18 +50,23 @@ static int add_ref_decoration(const char *refname, const unsigned char *sha1, in
- 	return 0;
- }
- 
--static void cmd_log_init(int argc, const char **argv, const char *prefix,
--		      struct rev_info *rev)
-+static void cmd_log_init_0(int argc, const char **argv, const char *prefix,
-+			   struct rev_info *rev,
-+			   int default_abbrev,
-+			   int default_commit_format,
-+			   int default_verbose_header,
-+			   int default_recursive)
- {
- 	int i;
- 	int decorate = 0;
- 
--	rev->abbrev = DEFAULT_ABBREV;
--	rev->commit_format = CMIT_FMT_DEFAULT;
-+	rev->abbrev = default_abbrev;
-+	rev->commit_format = default_commit_format;
- 	if (fmt_pretty)
- 		get_commit_format(fmt_pretty, rev);
--	rev->verbose_header = 1;
--	DIFF_OPT_SET(&rev->diffopt, RECURSIVE);
-+	rev->verbose_header = default_verbose_header;
-+	if (default_recursive)
-+		DIFF_OPT_SET(&rev->diffopt, RECURSIVE);
- 	rev->show_root_diff = default_show_root;
- 	rev->subject_prefix = fmt_patch_subject_prefix;
- 
-@@ -88,6 +93,16 @@ static void cmd_log_init(int argc, const char **argv, const char *prefix,
- 	}
- }
- 
-+static void cmd_log_init(int argc, const char **argv, const char *prefix,
-+			 struct rev_info *rev)
-+{
-+	cmd_log_init_0(argc, argv, prefix, rev,
-+		       DEFAULT_ABBREV,
-+		       CMIT_FMT_DEFAULT,
-+		       1,
-+		       1);
-+}
-+
- /*
-  * This gives a rough estimate for how many commits we
-  * will print out in the list.
+>>>
+>>> What should we add to automatically get all file history?
+>
+>> While the 'commitdiff' view would, in default gitweb configuration,
+>> contain information about file renames, currently 'history' view does
+>> not support '--follow' option to git-log.  It wouldn't be too hard to
+>> add it, but it just wasn't done (well, add to this the fact that
+>> --follow works only for simple cases).
+>
+>We also ran up against this issue because renaming of files in our
+>project is a useful bit of information while browsing file history.
+>
+>I hacked gitweb to add a 'historyfollow' viewing option in addition to
+>the 'history' option.  Yes, '--follow' is expensive so I didn't just
+>make it the default 'history' behaviour.
+>
+>The only problem with doing it was that parse_commits in gitweb.perl
+>uses git rev-list which doesn't support the '--follow' option like
+>git-log does. A bit of hacking to use 'git log --pretty=raw -z' to make
+>the output look close to that from rev-list means only minor
+>shoe-horning is required (perhaps it would be better to make rev-list
+>understand --follow though?).
+>
+>I wasn't originally prepared to publish the work here because I don't
+>really think it's the best solution. But considering it's come up... I
+>include a patch inline against gitweb.perl from v1.6.0.3 that implements
+>a 'historyfollow' view.
+>
+>Feel free to do with it what you will. It would need some substantial
+>tidying up by someone who knows much more about perl than me :)
+>
+>We use it such that anywhere a 'history' link is provided a
+>'historyfollow' link is also provided next to it - This patch doesn't
+>implement that bit though.
+>
+>Hope it helps.
+>
+>Cheers,
+>Guy.
+>
+>---
+>
+>--- a/gitweb/gitweb.perl
+>+++ b/gitweb/gitweb.perl
+>@@ -478,6 +478,7 @@ my %actions = (
+>        "forks" => \&git_forks,
+>        "heads" => \&git_heads,
+>        "history" => \&git_history,
+>+       "historyfollow" => \&git_history_follow,
+>        "log" => \&git_log,
+>        "rss" => \&git_rss,
+>        "atom" => \&git_atom,
+>@@ -2311,25 +2312,39 @@ sub parse_commit {
+> }
+>
+> sub parse_commits {
+>-       my ($commit_id, $maxcount, $skip, $filename, @args) = @_;
+>+       my ($commit_id, $maxcount, $skip, $mode, $filename, @args) = @_;
+>        my @cos;
+>
+>        $maxcount ||= 1;
+>        $skip ||= 0;
+>
+>        local $/ = "\0";
+>+        # The '--max-count' argument is not available when doing a
+>+        # '--follow' to 'git log'
+>+        my $count_arg = ("--max-count=" . $maxcount) ;
+>+        if (defined $mode && $mode eq "--follow") {
+>+            $count_arg = "--follow" ;
+>+        }
+>
+>-       open my $fd, "-|", git_cmd(), "rev-list",
+>-               "--header",
+>+
+>+       open my $fd, "-|", git_cmd(), "log",
+>+               "-z",
+>+               "--pretty=raw",
+>                @args,
+>-               ("--max-count=" . $maxcount),
+>+                ($count_arg ? ($count_arg ) : ()),
+>                ("--skip=" . $skip),
+>                @extra_options,
+>                $commit_id,
+>                "--",
+>                ($filename ? ($filename) : ())
+>-               or die_error(500, "Open git-rev-list failed");
+>+               or die_error(500, "Open git-log failed");
+>        while (my $line = <$fd>) {
+>+               # Need to put a delimiter on the end of output
+>+                # 'git-log -z' doesn't put one before EOF like rev-list
+>does
+>+                $line = ($line . '\0');
+>+                # Need to strip the word commit from the start so it
+>+                # looks like rev-list output
+>+                $line =~ s/^commit // ;
+>                my %co = parse_commit_text($line);
+>                push @cos, \%co;
+>        }
+>@@ -5363,6 +5378,13 @@ sub git_commitdiff_plain {
+> }
+>
+> sub git_history {
+>+        my $mode = shift || '';
+>+        my $history_call = "history";
+>+
+>+       if ($mode eq "--follow") {
+>+           $history_call .= "historyfollow" ;
+>+       }
+>+
+>        if (!defined $hash_base) {
+>                $hash_base = git_get_head_hash($project);
+>        }
+>@@ -5377,7 +5399,7 @@ sub git_history {
+>        my $limit = sprintf("--max-count=%i", (100 * ($page+1)));
+>
+>        my @commitlist = parse_commits($hash_base, 101, (100 * $page),
+>-                                      $file_name, "--full-history")
+>+                                      $mode, $file_name,
+>"--full-history")
+>            or die_error(404, "No such file or directory on given
+>branch");
+>
+>        if (!defined $hash && defined $file_name) {
+>@@ -5398,7 +5420,7 @@ sub git_history {
+>        my $paging_nav = '';
+>        if ($page > 0) {
+>                $paging_nav .=
+>-                       $cgi->a({-href => href(action=>"history",
+>hash=>$hash, hash_base=>$hash_base,
+>+                       $cgi->a({-href => href(action=>"$history_call",
+>hash=>$hash, hash_base=>$hash_base,
+>                                               file_name=>$file_name)},
+>                                "first");
+>                $paging_nav .= " &sdot; " .
+>@@ -5429,6 +5451,11 @@ sub git_history {
+>        git_footer_html();
+> }
+>
+>+sub git_history_follow {
+>+       git_history('--follow');
+>+}
+>+
+>+
+> sub git_search {
+>        gitweb_check_feature('search') or die_error(403, "Search is
+>disabled");
+>        if (!defined $searchtext) {
+>@@ -5469,7 +5496,7 @@ sub git_search {
+>                        $greptype = "--committer=";
+>                }
+>                $greptype .= $searchtext;
+>-               my @commitlist = parse_commits($hash, 101, (100 *
+>$page), undef,
+>+               my @commitlist = parse_commits($hash, 101, (100 *
+>$page), undef, undef,
+>                                               $greptype,
+>'--regexp-ignore-case',
+>                                               $search_use_regexp ?
+>'--extended-regexp' : '--fixed-strings');
+>
+>@@ -5737,7 +5764,7 @@ sub git_feed {
+>
+>        # log/feed of current (HEAD) branch, log of given branch,
+>history of file/directory
+>        my $head = $hash || 'HEAD';
+>-       my @commitlist = parse_commits($head, 150, 0, $file_name);
+>+       my @commitlist = parse_commits($head, 150, 0, undef,
+>$file_name);
+>
+>        my %latest_commit;
+>        my %latest_date;
+>---
+>
+>Guy.
+>____________________________________________________
+>Guy Blucher
+>Defence Science and Technology Organisation
+>AUSTRALIA
+>
+>IMPORTANT : This email remains the property of the Australian Defence
+>Organisation and is subject to the jurisdiction of section 70 of the
+>Crimes Act 1914.  If you have received this email in error, you are
+>requested to contact the sender and delete the email.
