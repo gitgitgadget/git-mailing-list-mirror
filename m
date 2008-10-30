@@ -1,51 +1,53 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH] git-filter-branch: Add an example on how to remove empty
- commits
-Date: Thu, 30 Oct 2008 01:56:16 +0100 (CET)
-Message-ID: <alpine.DEB.1.00.0810300151480.22125@pacific.mpi-cbg.de.mpi-cbg.de>
+From: Sam Vilain <sam@vilain.net>
+Subject: Re: [PATCH] git-filter-branch: Add an example on how to remove
+	empty commits
+Date: Wed, 29 Oct 2008 17:39:19 -0700
+Message-ID: <1225327159.21951.15.camel@maia.lan>
 References: <1225326833-15210-1-git-send-email-pasky@suse.cz>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
+Content-Type: text/plain
+Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org, Sverre Rabbelier <srabbelier@gmail.com>
 To: Petr Baudis <pasky@suse.cz>
-X-From: git-owner@vger.kernel.org Thu Oct 30 01:50:19 2008
+X-From: git-owner@vger.kernel.org Thu Oct 30 01:51:50 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KvLjr-0007cN-5q
-	for gcvg-git-2@gmane.org; Thu, 30 Oct 2008 01:50:15 +0100
+	id 1KvLlL-00081N-QH
+	for gcvg-git-2@gmane.org; Thu, 30 Oct 2008 01:51:48 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751292AbYJ3AtE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 29 Oct 2008 20:49:04 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751302AbYJ3AtD
-	(ORCPT <rfc822;git-outgoing>); Wed, 29 Oct 2008 20:49:03 -0400
-Received: from mail.gmx.net ([213.165.64.20]:39786 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751196AbYJ3AtB (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 29 Oct 2008 20:49:01 -0400
-Received: (qmail invoked by alias); 30 Oct 2008 00:48:58 -0000
-Received: from pacific.mpi-cbg.de (EHLO pacific.mpi-cbg.de) [141.5.10.38]
-  by mail.gmx.net (mp020) with SMTP; 30 Oct 2008 01:48:58 +0100
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX18/0QkJIeo/GUTng1c+WVpJ8iC/ofOhR04FcGo01U
-	ZA23C5ux6XHWSU
-X-X-Sender: schindelin@pacific.mpi-cbg.de.mpi-cbg.de
+	id S1753714AbYJ3Auf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 29 Oct 2008 20:50:35 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752897AbYJ3Aue
+	(ORCPT <rfc822;git-outgoing>); Wed, 29 Oct 2008 20:50:34 -0400
+Received: from watts.utsl.gen.nz ([202.78.240.73]:48972 "EHLO mail.utsl.gen.nz"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751302AbYJ3Aue (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 29 Oct 2008 20:50:34 -0400
+X-Greylist: delayed 659 seconds by postgrey-1.27 at vger.kernel.org; Wed, 29 Oct 2008 20:50:34 EDT
+Received: by mail.utsl.gen.nz (Postfix, from userid 1004)
+	id 0E5D021D238; Thu, 30 Oct 2008 13:39:33 +1300 (NZDT)
+X-Spam-Checker-Version: SpamAssassin 3.2.5 (2008-06-10) on
+	mail.musashi.utsl.gen.nz
+X-Spam-Level: 
+X-Spam-Status: No, score=-4.1 required=5.0 tests=ALL_TRUSTED,AWL,BAYES_00
+	autolearn=ham version=3.2.5
+Received: from [127.0.0.1] (longdrop.musashi.utsl.gen.nz [192.168.253.12])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by mail.utsl.gen.nz (Postfix) with ESMTPSA id 2190721D157;
+	Thu, 30 Oct 2008 13:39:26 +1300 (NZDT)
 In-Reply-To: <1225326833-15210-1-git-send-email-pasky@suse.cz>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.57
+X-Mailer: Evolution 2.22.3.1 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/99442>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/99443>
 
-Hi,
-
-On Wed, 29 Oct 2008, Petr Baudis wrote:
-
+On Wed, 2008-10-29 at 17:33 -0700, Petr Baudis wrote:
 > +To remove commits that are empty (do not introduce any change):
 > +
 > +------------------------------------------------------------------------------
@@ -54,28 +56,11 @@ On Wed, 29 Oct 2008, Petr Baudis wrote:
 > +git filter-branch --commit-filter '
 > +  if grep -q "$GIT_COMMIT" '"$(pwd)/"revs';
 > +  then
-> +    skip_commit "$@";
-> +  else
-> +    git commit-tree "$@";
-> +  fi' HEAD
 
-You would not need to use the temporary "revs" file by using something 
-(totally untested, of course):
+Why not put the git diff-tree in the commit filter?
 
-git filter-branch --commit-filter '
-  if git diff-tree --exit-status -q "$GIT_COMMIT";
-  then
-    git commit-tree "$@";
-  else
-    skip_commit "$@";
-  fi' HEAD
+Is this tested?  It doesn't look like it does what the comment says...
+surely you have to compare with the previous commit, not the null
+commit?
 
-Of course, you could also mention that you could use
-
-	git log --cherry-pick -p --pretty=format: ..<branch>@{1}
-
-to verify that all skipped commits had empty diffs.  That one is also 
-totally untested.
-
-Ciao,
-Dscho
+Sam.
