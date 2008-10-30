@@ -1,69 +1,85 @@
-From: Sam Vilain <sam@vilain.net>
-Subject: Re: Using the --track option when creating a branch
-Date: Wed, 29 Oct 2008 22:12:18 -0700
-Message-ID: <1225343538.10803.9.camel@maia.lan>
-References: <18696.32778.842933.486171@lisa.zopyra.com>
+From: "Ping Yin" <pkufranky@gmail.com>
+Subject: Re: git adds some text file as binary file by mistake
+Date: Thu, 30 Oct 2008 14:32:47 +0800
+Message-ID: <46dff0320810292332y34ea0daemde05b58572946497@mail.gmail.com>
+References: <46dff0320810240537i4f0d86b9p56def9ef6a69c180@mail.gmail.com>
+	 <4901C58D.4010309@drmicha.warpmail.net>
+	 <46dff0320810240630s5cbfa62esd10a9da45ce37bf8@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Bill Lear <rael@zopyra.com>
-X-From: git-owner@vger.kernel.org Thu Oct 30 06:13:50 2008
+Cc: "Git Mailing List" <git@vger.kernel.org>
+To: "Michael J Gruber" <git@drmicha.warpmail.net>
+X-From: git-owner@vger.kernel.org Thu Oct 30 07:34:29 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KvPqv-0000s3-Eg
-	for gcvg-git-2@gmane.org; Thu, 30 Oct 2008 06:13:49 +0100
+	id 1KvR6w-0007ph-2D
+	for gcvg-git-2@gmane.org; Thu, 30 Oct 2008 07:34:26 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751940AbYJ3FMd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 30 Oct 2008 01:12:33 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751732AbYJ3FMd
-	(ORCPT <rfc822;git-outgoing>); Thu, 30 Oct 2008 01:12:33 -0400
-Received: from watts.utsl.gen.nz ([202.78.240.73]:48793 "EHLO mail.utsl.gen.nz"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751216AbYJ3FMc (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 30 Oct 2008 01:12:32 -0400
-Received: by mail.utsl.gen.nz (Postfix, from userid 1004)
-	id B475C21D157; Thu, 30 Oct 2008 18:12:27 +1300 (NZDT)
-X-Spam-Checker-Version: SpamAssassin 3.2.5 (2008-06-10) on
-	mail.musashi.utsl.gen.nz
-X-Spam-Level: 
-X-Spam-Status: No, score=-4.4 required=5.0 tests=ALL_TRUSTED,BAYES_00
-	autolearn=ham version=3.2.5
-Received: from [127.0.0.1] (longdrop.musashi.utsl.gen.nz [192.168.253.12])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by mail.utsl.gen.nz (Postfix) with ESMTPSA id 648D821C592;
-	Thu, 30 Oct 2008 18:12:21 +1300 (NZDT)
-In-Reply-To: <18696.32778.842933.486171@lisa.zopyra.com>
-X-Mailer: Evolution 2.22.3.1 
+	id S1752702AbYJ3GdK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 30 Oct 2008 02:33:10 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752656AbYJ3GdJ
+	(ORCPT <rfc822;git-outgoing>); Thu, 30 Oct 2008 02:33:09 -0400
+Received: from rn-out-0910.google.com ([64.233.170.191]:17218 "EHLO
+	rn-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752702AbYJ3GdI (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 30 Oct 2008 02:33:08 -0400
+Received: by rn-out-0910.google.com with SMTP id k40so280768rnd.17
+        for <git@vger.kernel.org>; Wed, 29 Oct 2008 23:32:47 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to
+         :subject:cc:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:references;
+        bh=mnARqVFISFfkTnlK3t1RP/I/sUo0LY47+2hYFOyVYkM=;
+        b=v8iL2eQr0VUlAIbwudbzFjX2naG8qCOlW0wEazEmWhK0x6cVPtKwKbg2rncK1g/1uJ
+         +6lxHHKyvv2mZGybxcZ1ww9NM8Rte1mc4UFrwNTzh6rtR9dSEORx3KyYb5gfHYf3y/km
+         HPWr2lxRmVXUuPMBfcbWiBww6BKdwF9g19jh0=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
+         :content-type:content-transfer-encoding:content-disposition
+         :references;
+        b=Qt0lxAFw+hQnPdFC4uHIBK8sHDRTGHmEcP1j3CQHtywE1YarDqJOHG0B1Hhrixm9Jr
+         I3aehxTXQj4feiPG2QWUfmHXUNq6QOejAc027C/ClQAB5Ml/3W0zhs9MouLdLK8ERecB
+         7vqvENwbGg1Yrf3iafrE1/cTeCrj1Fh/HTpHw=
+Received: by 10.151.41.14 with SMTP id t14mr13510212ybj.179.1225348367915;
+        Wed, 29 Oct 2008 23:32:47 -0700 (PDT)
+Received: by 10.150.140.10 with HTTP; Wed, 29 Oct 2008 23:32:47 -0700 (PDT)
+In-Reply-To: <46dff0320810240630s5cbfa62esd10a9da45ce37bf8@mail.gmail.com>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/99445>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/99446>
 
-On Wed, 2008-10-29 at 09:23 -0600, Bill Lear wrote:
-> We use git in a way that makes it desirable for us to only push/pull
-> to the same remote branch.  So, if I'm in branch X, I want 'git push'
-> to push to origin/X, and 'git pull' to fetch into origin/X and then
-> merge into X from origin/X.
-> 
-> In other words, we want git push/pull to behave in branches other than
-> master the same way it does when in master.
-> 
-> I have discovered the '--track' option when creating a local branch,
-> and this appears to me to be the thing that gives us the desired
-> behavior.
+On Fri, Oct 24, 2008 at 9:30 PM, Ping Yin <pkufranky@gmail.com> wrote:
+> On Fri, Oct 24, 2008 at 8:54 PM, Michael J Gruber
+> <git@drmicha.warpmail.net> wrote:
+>> Ping Yin venit, vidit, dixit 24.10.2008 14:37:
+>>> So what should i do if i want it added as text file?
+>>
+>> You should give us more detail on the file ;)
+>> What's the extension, what's the typical content? It may be a simple
+>> matter of specifying attributes.
+>> Do ordinary diff and grep recognize your files as text?
+>>
+>> Michael
+>>
+>
+> It's just an xml file. I guess maybe there are some hidden characters
+> at the beginning. I will figure it out later because i have no access
+> to that file right now.
+>
+> Ping Yin
+>
 
-As things currently stand this is not achievable behaviour.  The
-behaviour of 'git push' is to push all matching refs.  If you are lucky
-this is what you intended, but it also pushes any changes to *other*
-branches that you have made.
+I have figured it out. It's just because the BOM characters feff00 in
+the beginning of the utf-8 xml file.
 
-I have tabled a change proposal to make it work as you suggest in a
-separate thread.
-
-Sam
+-- 
+Ping Yin
