@@ -1,92 +1,56 @@
-From: Sam Vilain <sam@vilain.net>
-Subject: Re: [PATCH] Documentation: add a planning document for the next 
-	CLI revamp
-Date: Thu, 30 Oct 2008 10:44:26 -0700
-Message-ID: <1225388666.19891.22.camel@maia.lan>
-References: <1225338485-11046-1-git-send-email-sam@vilain.net>
-	 <20081030143918.GB14744@mit.edu> <20081030144321.GF24098@artemis.corp>
-	 <20081030163056.GA8899@mit.edu>  <20081030164357.GJ24098@artemis.corp>
-Mime-Version: 1.0
-Content-Type: text/plain
-Content-Transfer-Encoding: 7bit
-Cc: Theodore Tso <tytso@mit.edu>, git@vger.kernel.org,
-	Sam Vilain <samv@vilain.net>
-To: Pierre Habouzit <madcoder@debian.org>
-X-From: git-owner@vger.kernel.org Thu Oct 30 18:46:40 2008
+From: "Shawn O. Pearce" <spearce@spearce.org>
+Subject: [JGIT PATCH 0/3] Improved object validation
+Date: Thu, 30 Oct 2008 10:46:22 -0700
+Message-ID: <1225388785-26818-1-git-send-email-spearce@spearce.org>
+Cc: git@vger.kernel.org
+To: Robin Rosenberg <robin.rosenberg@dewire.com>
+X-From: git-owner@vger.kernel.org Thu Oct 30 18:47:48 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KvbbI-0001qT-Eq
-	for gcvg-git-2@gmane.org; Thu, 30 Oct 2008 18:46:28 +0100
+	id 1KvbcU-0002IZ-QP
+	for gcvg-git-2@gmane.org; Thu, 30 Oct 2008 18:47:43 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756989AbYJ3Ro5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 30 Oct 2008 13:44:57 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757171AbYJ3Ro5
-	(ORCPT <rfc822;git-outgoing>); Thu, 30 Oct 2008 13:44:57 -0400
-Received: from watts.utsl.gen.nz ([202.78.240.73]:58283 "EHLO mail.utsl.gen.nz"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755710AbYJ3Ro4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 30 Oct 2008 13:44:56 -0400
-Received: by mail.utsl.gen.nz (Postfix, from userid 1004)
-	id D0B7221C83C; Fri, 31 Oct 2008 06:44:54 +1300 (NZDT)
-X-Spam-Checker-Version: SpamAssassin 3.2.5 (2008-06-10) on
-	mail.musashi.utsl.gen.nz
+	id S1754847AbYJ3Rq3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 30 Oct 2008 13:46:29 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753194AbYJ3Rq3
+	(ORCPT <rfc822;git-outgoing>); Thu, 30 Oct 2008 13:46:29 -0400
+Received: from george.spearce.org ([209.20.77.23]:50780 "EHLO
+	george.spearce.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753188AbYJ3Rq2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 30 Oct 2008 13:46:28 -0400
+Received: by george.spearce.org (Postfix, from userid 1000)
+	id 73ED638377; Thu, 30 Oct 2008 17:46:27 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.2.4 (2008-01-01) on george.spearce.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-4.4 required=5.0 tests=ALL_TRUSTED,BAYES_00
-	autolearn=ham version=3.2.5
-Received: from [127.0.0.1] (longdrop.musashi.utsl.gen.nz [192.168.253.12])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by mail.utsl.gen.nz (Postfix) with ESMTPSA id 306FD21C318;
-	Fri, 31 Oct 2008 06:44:29 +1300 (NZDT)
-In-Reply-To: <20081030164357.GJ24098@artemis.corp>
-X-Mailer: Evolution 2.22.3.1 
+X-Spam-Status: No, score=-2.5 required=4.0 tests=ALL_TRUSTED,BAYES_20
+	autolearn=ham version=3.2.4
+Received: from localhost.localdomain (localhost [127.0.0.1])
+	by george.spearce.org (Postfix) with ESMTP id 4B59C38260;
+	Thu, 30 Oct 2008 17:46:26 +0000 (UTC)
+X-Mailer: git-send-email 1.6.0.3.756.gb776d
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/99506>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/99507>
 
-On Thu, 2008-10-30 at 17:43 +0100, Pierre Habouzit wrote:
-> In fact I believe that what we lack is a shorthand for:
-> 
-> $sha1^..$sha1 because that would solve both of your issues, and it's
-> something that has bothered me in the past too for other commands.
+This is mostly a resend as I haven't heard anything on the series.
+One new patch at the end, to handle '.' and '..' cases.
 
-There is already a shorthand for that;
+Shawn O. Pearce (3):
+  Check object connectivity during fetch if fsck is enabled
+  Add --[no-]thin and --[no-]fsck optiosn to fetch command line tool
+  Don't permit '.' or '..' in tree entries
 
-  $sha1^!
-
-Indeed passing that to git-format-patch has the intended effect; it
-causes it to save a patch for just the commit in question.
-
-I agree that it would make more sense for the current behaviour to be
-changed;
-
-  git format-patch origin/master..
-
-Isn't that much more to type than:
-
-  git format-patch origin/master
-
-And it makes the case where you just want to format a single patch work
-better.
-
-However, I worry about the backwards incompatibility.  The other changes
-I listed didn't really violate existing expectations.
-
-That being said, the case where a single commit reference is passed,
-with no range, should be relatively easy to detect.  In this situation
-it could return an error, and encourage the user to use "--since" or
-"--only"; or to configure one of those to be the default.
-
-I'm wondering whether it's worth building some kind of mechanism to
-notice that settings like this have not been set, and to print a warning
-like "warning: you are using a git that introduced minor command
-changes; use 'git config --new' to pick your defaults" - that way,
-changes to command operation could be introduced that would not annoy
-older users so much.
-
-Sam.
+ .../src/org/spearce/jgit/pgm/Fetch.java            |   20 +++++++++++++
+ .../org/spearce/jgit/lib/ObjectCheckerTest.java    |   31 ++++++++++++++++++++
+ .../src/org/spearce/jgit/lib/ObjectChecker.java    |    7 ++++
+ .../jgit/transport/BasePackFetchConnection.java    |    4 ++
+ .../spearce/jgit/transport/FetchConnection.java    |   22 ++++++++++++++
+ .../org/spearce/jgit/transport/FetchProcess.java   |   13 +++++++-
+ .../spearce/jgit/transport/TransportBundle.java    |    4 ++
+ .../jgit/transport/WalkFetchConnection.java        |    4 ++
+ 8 files changed, 103 insertions(+), 2 deletions(-)
