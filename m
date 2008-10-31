@@ -1,94 +1,93 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
+From: Andreas Ericsson <ae@op5.se>
 Subject: Re: libgit2 - a true git library
-Date: Fri, 31 Oct 2008 14:58:57 -0700
-Message-ID: <20081031215857.GZ14786@spearce.org>
-References: <20081031170704.GU14786@spearce.org> <20081031174745.GA4058@artemis.corp> <20081031184154.GV14786@spearce.org> <7vfxmc8r8g.fsf@gitster.siamese.dyndns.org>
+Date: Fri, 31 Oct 2008 22:59:47 +0100
+Message-ID: <490B7FD3.8060003@op5.se>
+References: <20081031170704.GU14786@spearce.org> <20081031174745.GA4058@artemis.corp>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Pierre Habouzit <madcoder@debian.org>, git@vger.kernel.org,
+Content-Type: text/plain; charset=ISO-8859-15; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: "Shawn O. Pearce" <spearce@spearce.org>, git@vger.kernel.org,
 	Scott Chacon <schacon@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Oct 31 23:00:13 2008
+To: Pierre Habouzit <madcoder@debian.org>
+X-From: git-owner@vger.kernel.org Fri Oct 31 23:01:17 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Kw22N-0006mh-Kj
-	for gcvg-git-2@gmane.org; Fri, 31 Oct 2008 23:00:12 +0100
+	id 1Kw23R-000790-4k
+	for gcvg-git-2@gmane.org; Fri, 31 Oct 2008 23:01:17 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752439AbYJaV67 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 31 Oct 2008 17:58:59 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752393AbYJaV67
-	(ORCPT <rfc822;git-outgoing>); Fri, 31 Oct 2008 17:58:59 -0400
-Received: from george.spearce.org ([209.20.77.23]:56205 "EHLO
-	george.spearce.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752361AbYJaV66 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 31 Oct 2008 17:58:58 -0400
-Received: by george.spearce.org (Postfix, from userid 1001)
-	id 798893835F; Fri, 31 Oct 2008 21:58:57 +0000 (UTC)
-Content-Disposition: inline
-In-Reply-To: <7vfxmc8r8g.fsf@gitster.siamese.dyndns.org>
-User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
+	id S1752418AbYJaWAA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 31 Oct 2008 18:00:00 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752461AbYJaWAA
+	(ORCPT <rfc822;git-outgoing>); Fri, 31 Oct 2008 18:00:00 -0400
+Received: from mail.op5.se ([193.201.96.20]:48781 "EHLO mail.op5.se"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752393AbYJaV77 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 31 Oct 2008 17:59:59 -0400
+Received: from localhost (localhost.localdomain [127.0.0.1])
+	by mail.op5.se (Postfix) with ESMTP id A18711B8004D;
+	Fri, 31 Oct 2008 22:54:39 +0100 (CET)
+X-Virus-Scanned: amavisd-new at 
+X-Spam-Flag: NO
+X-Spam-Score: -2.499
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.499 tagged_above=-10 required=6.6
+	tests=[BAYES_00=-2.599, RDNS_NONE=0.1]
+Received: from mail.op5.se ([127.0.0.1])
+	by localhost (mail.op5.se [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id O4Gt0QoPfW1n; Fri, 31 Oct 2008 22:54:37 +0100 (CET)
+Received: from clix.int.op5.se (unknown [172.27.78.26])
+	by mail.op5.se (Postfix) with ESMTP id E0B0B1B80048;
+	Fri, 31 Oct 2008 22:54:33 +0100 (CET)
+User-Agent: Thunderbird 2.0.0.16 (X11/20080723)
+In-Reply-To: <20081031174745.GA4058@artemis.corp>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/99654>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/99655>
 
-Junio C Hamano <gitster@pobox.com> wrote:
-> "Shawn O. Pearce" <spearce@spearce.org> writes:
+Pierre Habouzit wrote:
+> On Fri, Oct 31, 2008 at 05:07:04PM +0000, Shawn O. Pearce wrote:
+>> During the GitTogether we were kicking around the idea of a ground-up
+>> implementation of a Git library.  This may be easier than trying
+>> to grind down git.git into a library, as we aren't tied to any
+>> of the current global state baggage or the current die() based
+>> error handling.
+>>
+>> I've started an _extremely_ rough draft.  The code compiles into a
+>> libgit.a but it doesn't even implement what it describes in the API,
+>> let alone a working Git implementation.  Really what I'm trying to
+>> incite here is some discussion on what the API looks like.
 > 
-> >>   * proper public "stuff" naming (I e.g. realy like types names -- not
-> >>     struct or enum tags, that I don't really care -- ending with _t as
-> >>     it helps navigating source.
-> >
-> > Fixed, types now end in _t.
+> I know this isn't actually helping a lot to define the real APIs, but we
+> should really not repeat current git mistakes and have a really uniform
+> APIs, meaning that first we must decide:
+>   * proper namespacing (e.g. OBJ_* looks like failure to me, it's a way
+>     too common prefix);
 > 
-> Ugh.
+
+As it's the git-lib, all public functions should almost certainly be
+prefixed with "git" or "git_". I favor "git_".
+
+>   * proper public "stuff" naming (I e.g. realy like types names -- not
+>     struct or enum tags, that I don't really care -- ending with _t as
+>     it helps navigating source.
 > 
-> You could talk me into it if you promise never typedef structures (or
-> pointer to structures) with such symbols, I guess.
- 
-I should write that one down in CONVENTIONS.
 
-IMHO:
-
-  typedef uint32_t uid_t;       /* sane */
-  typedef enum {...} status_t;  /* sane */
-  typedef struct foo_t foo_t;   /* sane */
-
-  typedef struct {...} foo_t;   /* borderline insane */
-
-  typedef char* str_t;          /* totally nuts */
-  typedef char**** str_pppp_t;  /* totally nuts */
-
-Hiding the fact that scalar types like a uid_t are 32 bits on
-this system is reasonable.  Heck, uid_t is already in POSIX,
-we shouldn't fight that sort of idea.  It at least improves
-documentation somewhat.
-
-Hiding the fact that some scalar type is an enum, so you don't have
-to type "enum blah" everywhere is also reasonable.  Its slightly
-better than #define some magic constants and passing an int
-everywhere.  Its a reasonable balance between reducing keystrokes
-and keeping the code semi-self-documenting.
-
-Hiding the fact that an opaque struct (or union) you cannot ever
-see the members of is a struct or union is good API design.  You can
-later change the major class from struct to union or back, or totally
-redefine it, but the caller never needs to know what is going on.
-
-Hiding a pointer is wrong.  Callers should know they are getting a
-pointer, or are being asked to supply a pointer-to-a-pointer.  So the
-"FILE*" stdio functions are sane, because we don't know what is under
-a FILE type but we do know when we are dealing with a pointer to one.
+*_t types are reserved by POSIX for future implementations, so that's
+a no-go (although I doubt POSIX will ever make types named git_*_t).
 
 
-My original proposal didn't stick _t onto the end of everything,
-because I didn't think it was really necessary.  I'm fine with it
-either way.  It may be better to include the _t suffix, it seems
-to be somewhat common in libraries.
+Apart from that, please consider reading Ulrich Drepper's musings on
+library design at http://people.redhat.com/drepper/goodpractice.pdf
+
+It's pretty short but brings up nearly all the crucial points one really
+don't want to forget.
 
 -- 
-Shawn.
+Andreas Ericsson                   andreas.ericsson@op5.se
+OP5 AB                             www.op5.se
+Tel: +46 8-230225                  Fax: +46 8-230231
