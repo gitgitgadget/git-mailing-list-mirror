@@ -1,67 +1,65 @@
-From: "David Symonds" <dsymonds@gmail.com>
-Subject: Re: commit type
-Date: Fri, 31 Oct 2008 11:04:22 -0700
-Message-ID: <ee77f5c20810311104m6044bf70r1d9d405fa04454e0@mail.gmail.com>
-References: <loom.20081031T174821-603@post.gmane.org>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH] Avoid using non-portable `echo -n` in tests.
+Date: Fri, 31 Oct 2008 14:24:56 -0400
+Message-ID: <20081031182456.GC3230@sigill.intra.peff.net>
+References: <8A4A84EC-51F7-4038-957C-CCA5C00E5977@silverinsanity.com> <1225429753-70109-1-git-send-email-benji@silverinsanity.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: 7rans <transfire@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Oct 31 19:06:27 2008
+Content-Type: text/plain; charset=utf-8
+Cc: Git List <git@vger.kernel.org>,
+	Shawn O Pearce <spearce@spearce.org>
+To: Brian Gernhardt <benji@silverinsanity.com>
+X-From: git-owner@vger.kernel.org Fri Oct 31 19:26:32 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KvyNU-0005Xn-27
-	for gcvg-git-2@gmane.org; Fri, 31 Oct 2008 19:05:48 +0100
+	id 1KvyhT-0007AE-Vh
+	for gcvg-git-2@gmane.org; Fri, 31 Oct 2008 19:26:24 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751573AbYJaSEb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 31 Oct 2008 14:04:31 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751771AbYJaSEb
-	(ORCPT <rfc822;git-outgoing>); Fri, 31 Oct 2008 14:04:31 -0400
-Received: from ey-out-2122.google.com ([74.125.78.25]:38060 "EHLO
-	ey-out-2122.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751571AbYJaSEa (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 31 Oct 2008 14:04:30 -0400
-Received: by ey-out-2122.google.com with SMTP id 6so507403eyi.37
-        for <git@vger.kernel.org>; Fri, 31 Oct 2008 11:04:22 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to
-         :subject:cc:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:references;
-        bh=qyRpXSzig7fuALtrcLK+vUP6mcPZplgu5+b4UjZaKT4=;
-        b=efQkttpEBE/JM8ryWnFwkcHwRSea9WQ2mFg1W2cxX5ZJznS0Fay26Wd8lEN5TS6nGl
-         E/pwE1IhHSPL8wQ6tStTmUvFbtr7FVjo5VK10FCQyfxiwDiPA+gsJcN9zsCIHIVte/zT
-         pkXme0hievVfUjVxgDqdXE4HiZVcMsVb1/Zy0=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
-         :content-type:content-transfer-encoding:content-disposition
-         :references;
-        b=nB3J8dCIkH5oZoac8zECqTmLKmLF5eGBFb04IeZr+VRST3yeswGaSwzQaFPecDZdvl
-         Y96gJyJ11zkzYB1QnSSKbSVIi/5m4WAR9FCymCRDw2/P5bcLGJ3Aspx+f0VIc6jHhBm0
-         gmlMWo6yX+pxphaqvV2rE7YHecgV3TwTTr+YQ=
-Received: by 10.210.126.18 with SMTP id y18mr13686204ebc.131.1225476262732;
-        Fri, 31 Oct 2008 11:04:22 -0700 (PDT)
-Received: by 10.210.51.7 with HTTP; Fri, 31 Oct 2008 11:04:22 -0700 (PDT)
-In-Reply-To: <loom.20081031T174821-603@post.gmane.org>
+	id S1752055AbYJaSZK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 31 Oct 2008 14:25:10 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752026AbYJaSZJ
+	(ORCPT <rfc822;git-outgoing>); Fri, 31 Oct 2008 14:25:09 -0400
+Received: from peff.net ([208.65.91.99]:4108 "EHLO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752051AbYJaSZI (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 31 Oct 2008 14:25:08 -0400
+Received: (qmail 8413 invoked by uid 111); 31 Oct 2008 18:25:06 -0000
+Received: from 65-122-15-169.dia.static.qwest.net (HELO sigill.intra.peff.net) (65.122.15.169)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.32) with ESMTP; Fri, 31 Oct 2008 14:25:06 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 31 Oct 2008 14:24:56 -0400
 Content-Disposition: inline
+In-Reply-To: <1225429753-70109-1-git-send-email-benji@silverinsanity.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/99615>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/99616>
 
-On Fri, Oct 31, 2008 at 10:58 AM, 7rans <transfire@gmail.com> wrote:
+On Fri, Oct 31, 2008 at 01:09:13AM -0400, Brian Gernhardt wrote:
 
-> Currently I achieve this by adding "[type]" to the end of my commit messages.
-> But of course that's less than optimal.
+> Not all /bin/sh have a builtin echo that recognizes -n.  Using printf
+> is far more portable.
+> 
+> Discovered on OS X 10.5.5 in t4030-diff-textconv.sh and changed in all
+> the test scripts.
 
-Why is that less than optimal? It seems a lot less intrusive than what
-you suggest.
+Hmph. I think this is a good patch, and there is precedent in the past
+(20fa04ea, 2aad957, 9754563). But I am surprised this was not caught by
+our recent autobuilding project.
 
+However, it seems to work on FreeBSD (which makes it doubly weird that
+it is broken on OS X). On Solaris, the /bin/sh is so horribly broken
+that I have to use bash anyway. Commit 9754563 claims breakage on AIX,
+but it looks like Mike is doing the AIX builds with bash.
 
-Dave.
+So I guess we just need an OS X autobuild. ;)
+
+>  t/t4030-diff-textconv.sh           |    2 +-
+
+And of course this one was me, but I blame JSixt, whose test I just
+mindlessly copied. ;)
+
+-Peff
