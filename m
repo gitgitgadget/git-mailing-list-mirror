@@ -1,119 +1,222 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 3/7] Documentation: rework SHA1 description in git push
-Date: Thu, 30 Oct 2008 22:36:11 -0700
-Message-ID: <7v1vxxba2c.fsf@gitster.siamese.dyndns.org>
-References: <1225311945-17100-1-git-send-email-mail@cup.kalibalik.dk>
- <1225311945-17100-2-git-send-email-mail@cup.kalibalik.dk>
- <1225311945-17100-3-git-send-email-mail@cup.kalibalik.dk>
- <1225311945-17100-4-git-send-email-mail@cup.kalibalik.dk>
+From: Sam Vilain <sam@vilain.net>
+Subject: Re: [PATCH] Documentation: add a planning document for the next
+	CLI revamp
+Date: Thu, 30 Oct 2008 23:40:38 -0700
+Message-ID: <1225435238.20883.18.camel@maia.lan>
+References: <20081030002239.D453B21D14E@mail.utsl.gen.nz>
+	 <20081031003154.GA5745@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Anders Melchiorsen <mail@cup.kalibalik.dk>
-X-From: git-owner@vger.kernel.org Fri Oct 31 06:38:10 2008
+Content-Type: text/plain
+Content-Transfer-Encoding: 7bit
+Cc: Sam Vilain <samv@vilain.net>, git@vger.kernel.org,
+	Johannes Schindelin <johannes.schindelin@gmx.de>,
+	Scott Chacon <schacon@gmail.com>,
+	Tom Preston-Werner <tom@github.com>,
+	"J.H." <warthog19@eaglescrag.net>,
+	Christian Couder <chriscool@tuxfamily.org>,
+	Kai Blin <kai@samba.org>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Fri Oct 31 07:42:48 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Kvmi1-0003eS-Bx
-	for gcvg-git-2@gmane.org; Fri, 31 Oct 2008 06:38:09 +0100
+	id 1KvniR-0008GY-7T
+	for gcvg-git-2@gmane.org; Fri, 31 Oct 2008 07:42:39 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752543AbYJaFgk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 31 Oct 2008 01:36:40 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752540AbYJaFgj
-	(ORCPT <rfc822;git-outgoing>); Fri, 31 Oct 2008 01:36:39 -0400
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:47897 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752099AbYJaFgj (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 31 Oct 2008 01:36:39 -0400
-Received: from localhost.localdomain (localhost [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id BA3B576EC3;
-	Fri, 31 Oct 2008 01:36:38 -0400 (EDT)
-Received: from pobox.com (ip68-225-240-211.oc.oc.cox.net [68.225.240.211])
- (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
- certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
- ESMTPSA id 8D5F176EC0; Fri, 31 Oct 2008 01:36:18 -0400 (EDT)
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: E3B22592-A70D-11DD-8BE2-9CEDC82D7133-77302942!a-sasl-fastnet.pobox.com
+	id S1754032AbYJaGk7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 31 Oct 2008 02:40:59 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752396AbYJaGk7
+	(ORCPT <rfc822;git-outgoing>); Fri, 31 Oct 2008 02:40:59 -0400
+Received: from watts.utsl.gen.nz ([202.78.240.73]:47010 "EHLO mail.utsl.gen.nz"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751701AbYJaGk5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 31 Oct 2008 02:40:57 -0400
+Received: by mail.utsl.gen.nz (Postfix, from userid 1004)
+	id 28D7821C50D; Fri, 31 Oct 2008 19:40:53 +1300 (NZDT)
+X-Spam-Checker-Version: SpamAssassin 3.2.5 (2008-06-10) on
+	mail.musashi.utsl.gen.nz
+X-Spam-Level: 
+X-Spam-Status: No, score=-4.4 required=5.0 tests=ALL_TRUSTED,BAYES_00
+	autolearn=ham version=3.2.5
+Received: from [127.0.0.1] (longdrop.musashi.utsl.gen.nz [192.168.253.12])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by mail.utsl.gen.nz (Postfix) with ESMTPSA id A0B1121C21D;
+	Fri, 31 Oct 2008 19:40:42 +1300 (NZDT)
+In-Reply-To: <20081031003154.GA5745@sigill.intra.peff.net>
+X-Mailer: Evolution 2.22.3.1 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/99553>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/99554>
 
-Anders Melchiorsen <mail@cup.kalibalik.dk> writes:
+On Thu, 2008-10-30 at 20:31 -0400, Jeff King wrote:
+> >  Some suggestions, which have been briefly scanned over by some of the
+> >  (remaining) GitTogether attendees.  Please keep it constructive!  :)
+> Thanks for putting this together.
 
-> Get rid of a double pair of parentheses. The arbitrary SHA1 is a
-> special case, so it can be postponed a bit.
+No problem!  Thanks for responding.  I've been amazed that it seems to
+have been largely taken well :)  But there are still very important
+changes required.
 
-Hmmm...
+> > +  * 'git status' would encourage the user to use
+> > +    'git diff --staged' to see staged changes as a patch
+> 
+> I notice the commit template message getting longer and longer. Maybe it
+> is time for status.verbosetemplate (which could default to true, I just
+> want to be able to turn it off).
 
-Strictly speaking, arbitrary SHA-1 is the general case, and branch name is
-a special case of it, but in practice, branch name is the most frequently
-used form, and that is why it has the short-hand convention that allows it
-to to be pushed to the same name.  I agree with the outcome of this patch
-(except for one point I'll mention shortly) because I think it is a good
-idea to talk about most frequently used form first, not because "branch"
-is the general case.  IOW, the proposed commit log message is wrong.
+Right.  We'll have to work through that when we look at how 'git status'
+output is displayed.  There may be some people who parse the existing
+output, but they should get to read the release notes about the proper
+ways to do that.  I think the whole output could do with a shake-up.
 
-> Also mention HEAD, which is possibly the most useful SHA1 in this
-> situation.
+> > +  * 'git undo' would do what 'git checkout HEAD --' does now
+> This is an awful name, IMHO. It doesn't point out _what_ you're undoing,
 
-HEAD is indeed useful, but it falls into the special case of "branch
-name", not "arbitrary SHA-1 expression".  This distinction is important
-because you can push "HEAD" without colon and it will act as if you said
-master:master (or whatever branch you are currently on).  This is already
-described in the existing doc:
+As others have said, yes.
 
-    The local ref that matches <src> is used
-    to fast forward the remote ref that matches <dst> (or, if no <dst> was
-    specified, the same ref that <src> referred to locally).
+> So I think with your stage/unstage, we have:
+> 
+>   W->S: stage
+>   H->S: unstage
+>   S->W: ?
+>   S->H: commit (no paths)
+>   W->H: commit (paths or -a)
+>   H->W: ?
+> 
+> So I think we can note something: movement commands are related based on
+> their _destination_. So since both of the missing ones impact the
+> working tree, they should have a related name.
 
-but I agree that it is unnecessarily hard to understand, because the
-document tries to describe the general case first and then relies on the
-user to understand that "ref <src> referred to locally" means "branch
-name".  We should make this part more explicit.
+An interesting observation.
 
-With that in mind, I have two paragraphs to replace the parts your patch
-touches as a counterproposal.
+I still think it's OK to use 'git revert-files' for this; it just seems
+so long.  Switches could specify where to and from.
 
-> diff --git a/Documentation/git-push.txt b/Documentation/git-push.txt
-> index 02c7dae..fb9fb97 100644
-> --- a/Documentation/git-push.txt
-> +++ b/Documentation/git-push.txt
-> @@ -38,9 +38,7 @@ OPTIONS
->  	by the source ref, followed by a colon `:`, followed by
->  	the destination ref.
->  +
-> -The <src> side represents the source branch (or arbitrary
-> -"SHA1 expression", such as `master~4` (four parents before the
-> -tip of `master` branch); see linkgit:git-rev-parse[1]) that you
-> +The <src> side represents the source branch that you
->  want to push.  The <dst> side represents the destination location.
+> Side note: there are actually _other_ places you might want to move
+> content. Like a stash. So now you can think of it as:
+> 
+>                  stash
+>                   ^  ^
+>                  /    \
+>                 /      \
+>                v        v
+>   HEAD <--> stage <--> working tree
+> 
+> So maybe we just need a "git content" command. And then you can "git
+> content --from=HEAD --to=tree <paths>" or "git content --from=tree
+> --to=stash", with all equally supporting "--interactive".  And of course
+> I am kidding, because typing that would be awful. But I think
+> conceptually, it makes sense. To me, anyway.
 
-The <src> is often the name of the branch you would want to push, but it
-can be any arbitrary "SHA-1 expression", such as `master~4` (four parents
-before the tip of `master` branch -- see linkgit:git-rev-parse[1]), or
-`HEAD` (the tip of the current branch).  The <dst> tells which ref on the
-remote side is updated with this push.
+Again interesting, you could look at the stash as a whole bunch of
+staged commits yet to happen.  Of course, adding a file when the version
+in HEAD doesn't match the version in the base of the stash is a bit
+insane, so should probably be an error.
 
-The object referenced by <src> is used to fast forward the ref <dst> on
-the remote side.  You can omit <dst> to update the same ref on the remote
-side as <src> (<src> is often the name of a branch you push, and often you
-push to the same branch on the remote side; `git push HEAD` is a handy way
-to push only the current branch to the remote side under the same name).
-If the optional leading plus `{plus}` is used, the remote ref is updated
-even if it does not result in a fast forward update.
+I'll have a ponder over this and whether there is a simple word for this
+all.
 
-> @@ -193,6 +195,10 @@ git push origin master::
->  	with it.  If `master` did not exist remotely, it would be
->  	created.
->  
-> +git push origin HEAD:master::
-> +	Push the current head to the remote ref matching `master` in
-> +	the `origin` repository.
-> +
+> > +  * 'git branch --switch' : alternative to checkout
+> 
+> Blech. I think switching branches is the one thing that checkout does
+> unconfusedly. And this is much more typing. Not to mention that So I
+> would rather see "git switch" if checkout is somehow unpalatable.
+>
+> But I don't know that it is. This seems like an attempt to say "branch
+> operations should all be part of 'git branch'". But checkout isn't
+> necessarily a branch operation. Consider detaching HEAD to a tag. Should
+> it be "git tag --switch"?
 
-Additional example is good, but you would want to tell readers that this
-would be useful when your current branch is _not_ 'master'.
+You're right with all that.  I don't think that it is necessarily wrong
+to have two ways to get at functionality, depending on whether you start
+with the noun or the verb first; so long as it doesn't introduce
+confusion.  And if anything, I think --switch is wrong; --checkout is
+probably more consistent.
+
+I think I might have to mark this one as [maybe], and make it --checkout
+- as you say, it would need to go on all the other commands that are
+nouns and able to be checked out to be consistent.  Let's see how that
+looks in round 2.
+
+> > +  * 'git push --matching' does what 'git push' does today (without
+> > +    explicit configuration)
+> 
+> I think this is reasonable even without other changes, just to override
+> any configuration.
+
+Excellent, I have another vote towards this push sanity!  :)
+
+> > +  * 'git push' with no ref args and no 'push =' configuration does
+> > +    what:
+> > +    'git push origin $(git symbolic-ref HEAD | sed "s!refs/heads/!!")'
+> > +    does today.  ie, it only pushes the current branch.
+> > +    If a branch was defined in branch.<name>.push, push to that ref
+> > +    instead of the matching one.  If there is no matching ref, and
+> > +    there is a branch.<name>.merge, push back there.
+> 
+> There was a thread between me and Junio some months ago that touched on
+> this. I don't remember all of the arguments, but it was resolved to keep
+> the current behavior. Any proposal along these lines should at least
+> revisit and respond to those arguments.
+
+Right.  So, before round 2, I'll read and attempt to summarise that
+thread - assuming I can find it!  :)
+
+> > +  * 'git push' to checked out branch of non-bare repository not
+> > +    allowed without special configuration.  Configuration available
+> I have this patch done and sitting in my repo, but I need to add the
+> "without special configuration" bit and add tests and docs.
+
+Looking forward to that!  Thanks.
+
+> > +  * 'git branch' should default to '--color=auto -v'
+> This should at least be configurable (even if it defaults to "on"). "-v"
+> is more expensive, and not always wanted.
+> 
+> I, for one, just use "git branch" to get the current branch. I don't
+> know of a more obvious way to ask for it (and please don't mention an
+> ever-changing bash prompt).
+
+What's wrong with 'git symbolic-ref HEAD' ?  *ducks*
+
+Of course 'git branch -q' would then be the quick version, or 'git
+br' (after git config --global alias.br 'branch -q')
+
+Another command people often want is 'git info' to tell them stuff like
+they might get from 'git status' or 'git remote' but without all the
+file details...
+
+> > +  * 'git tag -l' should show more information
+> 
+> I remember somebody talking about this, but not the details. Which
+> information?
+
+Oh, good point.  Basically the same stuff that 'git branch -v' shows; in
+any case, its behaviour should be relatively consistent compared to 'git
+branch'.
+
+> > +  * 'git init --server' (or similar) should do everything required for
+> > +    exporting::
+> > +----
+> > +chmod -R a+rX
+> > +touch git-daemon-export-ok
+> > +git gc
+> > +git update-server-info
+> > +chmod u+x .git/hooks/post-update
+> > +git config core.sharedrepository=1
+> > +----
+> 
+> But not all of those things are necessarily related, and some of them
+> have security implications. I would hate to get a bug report like "I
+> used --server because I wanted to share my content via dumb http, but my
+> repo was p0wned because of too-loose group permissions."
+
+ok.  That should come down to the detail of how '--server' is specified,
+I think.  I'll expand on that during round 2.
+
+Sam.
