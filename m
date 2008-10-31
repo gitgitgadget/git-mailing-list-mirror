@@ -1,71 +1,124 @@
-From: Nicolas Pitre <nico@cam.org>
-Subject: Re: Are binary xdeltas only used if you use git-gc?
-Date: Fri, 31 Oct 2008 15:53:50 -0400 (EDT)
-Message-ID: <alpine.LFD.2.00.0810311549570.13034@xanadu.home>
-References: <f1d2d9ca0810310243r669840bbj2c5ee7183e0caaed@mail.gmail.com>
- <m37i7pggnk.fsf@localhost.localdomain>
- <f1d2d9ca0810310428o166dc075wbb43c00c1a555350@mail.gmail.com>
- <200810311726.57122.jnareb@gmail.com> <vpqej1wra1c.fsf@bauges.imag.fr>
+From: "Shawn O. Pearce" <spearce@spearce.org>
+Subject: Re: libgit2 - a true git library
+Date: Fri, 31 Oct 2008 12:57:11 -0700
+Message-ID: <20081031195711.GW14786@spearce.org>
+References: <20081031170704.GU14786@spearce.org> <20081031174745.GA4058@artemis.corp> <20081031184154.GV14786@spearce.org> <20081031185435.GC8464@artemis.corp>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: Jakub Narebski <jnareb@gmail.com>,
-	Thanassis Tsiodras <ttsiodras@gmail.com>, git@vger.kernel.org
-To: Matthieu Moy <Matthieu.Moy@imag.fr>
-X-From: git-owner@vger.kernel.org Fri Oct 31 20:55:11 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Scott Chacon <schacon@gmail.com>
+To: Pierre Habouzit <madcoder@debian.org>
+X-From: git-owner@vger.kernel.org Fri Oct 31 20:58:28 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Kw05O-0005wO-DC
-	for gcvg-git-2@gmane.org; Fri, 31 Oct 2008 20:55:10 +0100
+	id 1Kw08Y-0006y6-BY
+	for gcvg-git-2@gmane.org; Fri, 31 Oct 2008 20:58:26 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751921AbYJaTx5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 31 Oct 2008 15:53:57 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751827AbYJaTx5
-	(ORCPT <rfc822;git-outgoing>); Fri, 31 Oct 2008 15:53:57 -0400
-Received: from relais.videotron.ca ([24.201.245.36]:55652 "EHLO
-	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751284AbYJaTx4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 31 Oct 2008 15:53:56 -0400
-Received: from xanadu.home ([66.131.194.97]) by VL-MO-MR005.ip.videotron.ca
- (Sun Java(tm) System Messaging Server 6.3-4.01 (built Aug  3 2007; 32bit))
- with ESMTP id <0K9M005QVCKOESD0@VL-MO-MR005.ip.videotron.ca> for
- git@vger.kernel.org; Fri, 31 Oct 2008 15:53:12 -0400 (EDT)
-X-X-Sender: nico@xanadu.home
-In-reply-to: <vpqej1wra1c.fsf@bauges.imag.fr>
-User-Agent: Alpine 2.00 (LFD 1167 2008-08-23)
+	id S1752015AbYJaT5N (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 31 Oct 2008 15:57:13 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751992AbYJaT5N
+	(ORCPT <rfc822;git-outgoing>); Fri, 31 Oct 2008 15:57:13 -0400
+Received: from george.spearce.org ([209.20.77.23]:33735 "EHLO
+	george.spearce.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751827AbYJaT5M (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 31 Oct 2008 15:57:12 -0400
+Received: by george.spearce.org (Postfix, from userid 1001)
+	id 4293B3835F; Fri, 31 Oct 2008 19:57:11 +0000 (UTC)
+Content-Disposition: inline
+In-Reply-To: <20081031185435.GC8464@artemis.corp>
+User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/99629>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/99630>
 
-On Fri, 31 Oct 2008, Matthieu Moy wrote:
+Yet more updates to the API:
 
-> Jakub Narebski <jnareb@gmail.com> writes:
+http://www.spearce.org/projects/scm/libgit2/apidocs/html/modules.html
+
+In particular I've started to define what revision machinary might
+look like, based somewhat on JGit's (public) RevWalk API.  The guts
+of how to make it work of course aren't yet defined.
+
+My goal here is to have the git_revp_t be non-thread safe, but
+also to contain the entire object pool, so git_revp_free() will
+dispose of any and all git_commit_t's which were created from it.
+
+This "fixes" the "we leak everything" behavior and allows
+applications to have multiple pools on different threads if
+it needs to.  Thus the core git_revp_t isn't thread-safe and
+doesn't get weighed down by locking if the application wants
+multiple threads.
+
+
+Pierre Habouzit <madcoder@debian.org> wrote:
 > 
-> > Thanassis Tsiodras wrote:
-> >  
-> >> So I have to git-gc on my side (after the commits), git-gc on the remote,
-> >> and then git-push?
-> >
-> > Perhaps I haven't made myself clear.
-> >
-> > On the local side: git-commit creates loose (compressed, but not
-> > deltified) objects. git-gc packs and deltifies.
-> >
-> > On the remote side (for smart protocols, i.e. git and ssh): git
-> > creates _thin_ pack, deltified; 
+> Well, I propose the following: we set-up on GNU-ld + gcc enabled systems
+> all what is needed to use symbol visibility, which isn't that intrusive,
+> and also rather easy given your GIT_EXPORT macro definition.
+
+Yes, agreed.  Only I don't know how to do it myself.  I know its
+possible, so if someone wants to contribute a patch for this ... :-)
+ 
+> No, my worry was rather wrt git core itself, I really think we _must_
+> make it link against libgit2 if we want libgit2 to stay current, but git
+> core will _very likely_ need the private stuff, and it _will_ be a
+> problem. I mean we cannot seriously so-name a library and show its guts
+> at the same time, and I'm unsure how to fix that problem. _that_ was my
+> actual question.
+
+Hmmph.  I agree git-core needs to link to libgit2.
+
+I disagree it needs private bits.  If we do the library right
+git-core can use the public API.  And where it cannot its either
+not something that is "right" for libgit2 (e.g. its parseopts and
+we aren't committed yet to including option parsing) or its highly
+experimental and we shouldn't put it into the library (and thus
+also git-core) until its more frozen.
+
+That said, I don't think its criminal to have git-core include and
+link to a static libgit2, especially if git-core's usage of the
+library is ahead of what the library itself is able to expose at
+the present time.
+ 
+> I'd say we should do both at the same time. Asking people if they would
+> agree to relicense code can be done in parallel. We could extract a list
+> of source files that we may need (my extraction included stuff that is
+> very unlikely to be useful like test-*.c that aren't useful, and some
+> that are already BSD I think), and see who it yields. It should be
+> possible to do a matrix source-file x people and see on a per-file basis
+> what they think.
 > 
-> I don't understand this point: the OP talks about pushing, so isn't
-> the pack created on the _local_ machine (and then sent to the remote)?
+> If someone gives me the list of files we should consider (I'm not sure
+> about a good list right now) I could do the matrix at some fixed sha1
+> from git.git using git blame -C -M -M -w, and ask people see where it
+> leads us ?
 
-Yes, the pack is created on the fly when pushing, regardless if the repo 
-is already packed or not locally.  The only difference a locally packed 
-repo provides is a shorter "Compressing objects" phase when pushing 
-that's all. The packedness of the remote has no effect at all.
+Off the top of my head some really important ones:
 
+	diff-delta.c
+	object.c
+	patch-delta.c
+	refs.c
+	revision.c
+	sha1_file.c
+	sha1_name.c
 
-Nicolas
+They form a pretty large part of the guts of what most people want
+from a git library.
+
+Slightly less important, but still fairly core:
+
+	builtin-fetch-pack.c
+	builtin-send-pack.c
+	connect.c
+	remote.c
+	transport.c
+
+Is most of the client side of the git:// transport, something people want.
+
+-- 
+Shawn.
