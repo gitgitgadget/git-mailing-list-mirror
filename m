@@ -1,93 +1,95 @@
-From: "Scott Chacon" <schacon@gmail.com>
-Subject: Re: why not TortoiseGit
-Date: Fri, 31 Oct 2008 08:57:31 -0700
-Message-ID: <d411cc4a0810310857y5b4f8c46ue33e1f6a9e2c13d1@mail.gmail.com>
-References: <7FD1F85C96D70C4A89DA1DF7667EAE96125890@zch01exm23.fsl.freescale.net>
-	 <20081031121913.GE18221@sys-0.hiltweb.site> <490AFBA5.5090700@op5.se>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: Are binary xdeltas only used if you use git-gc?
+Date: Fri, 31 Oct 2008 17:26:56 +0100
+Message-ID: <200810311726.57122.jnareb@gmail.com>
+References: <f1d2d9ca0810310243r669840bbj2c5ee7183e0caaed@mail.gmail.com> <m37i7pggnk.fsf@localhost.localdomain> <f1d2d9ca0810310428o166dc075wbb43c00c1a555350@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain;
+  charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Cc: "Ian Hilt" <ian.hilt@gmx.com>,
-	"Li Frank-B20596" <Frank.Li@freescale.com>, git@vger.kernel.org
-To: "Andreas Ericsson" <ae@op5.se>
-X-From: git-owner@vger.kernel.org Fri Oct 31 17:00:21 2008
+Cc: git@vger.kernel.org
+To: "Thanassis Tsiodras" <ttsiodras@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Oct 31 17:28:40 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KvwOc-000334-EJ
-	for gcvg-git-2@gmane.org; Fri, 31 Oct 2008 16:58:46 +0100
+	id 1KvwrN-0007FJ-Ji
+	for gcvg-git-2@gmane.org; Fri, 31 Oct 2008 17:28:30 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751761AbYJaP5g (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 31 Oct 2008 11:57:36 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751612AbYJaP5f
-	(ORCPT <rfc822;git-outgoing>); Fri, 31 Oct 2008 11:57:35 -0400
-Received: from wa-out-1112.google.com ([209.85.146.178]:32481 "EHLO
-	wa-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751602AbYJaP5c (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 31 Oct 2008 11:57:32 -0400
-Received: by wa-out-1112.google.com with SMTP id v27so661814wah.21
-        for <git@vger.kernel.org>; Fri, 31 Oct 2008 08:57:32 -0700 (PDT)
+	id S1751470AbYJaQ1H (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 31 Oct 2008 12:27:07 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751382AbYJaQ1H
+	(ORCPT <rfc822;git-outgoing>); Fri, 31 Oct 2008 12:27:07 -0400
+Received: from ug-out-1314.google.com ([66.249.92.175]:27424 "EHLO
+	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751493AbYJaQ1E (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 31 Oct 2008 12:27:04 -0400
+Received: by ug-out-1314.google.com with SMTP id 39so1287641ugf.37
+        for <git@vger.kernel.org>; Fri, 31 Oct 2008 09:27:02 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to
-         :subject:cc:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:references;
-        bh=Qs5DIgJxvdaRH450W9mz0k9t2kjn1D6JcAFVrs7ejx0=;
-        b=pI9ahjrDqpsaLCNq4ricxzRH7TnR5wMmUf/gNjOiiuFDuGJwFY/q+ZD072X9shZ/VD
-         EksKKUxw9lW4TF2k16RDse+ssD6MOcxSE3PccCD8qCqkc9wTK4KJhmcJLz5mIBgiuXjJ
-         /0tBr/nRd0+ZlySfuuiynKmZVE4V3pnohw9aI=
+        h=domainkey-signature:received:received:from:to:subject:date
+         :user-agent:cc:references:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:message-id;
+        bh=FJH0Dn5ON9rPBw5mHhRIOLr+OKaMZf7p3pH6/uZWAn8=;
+        b=p8abih3G0ozhQkJy02oeXZ1d3TOEZhgReFmKX7oI0GkVfzHt3DT1373q2q+7Rs9rwf
+         L64wLw91exEhe4CCSl/DrnzWJJMbOT82OCKPvkbxRIKYI2Q0eDe68FoXTf3e5Wh8EExK
+         YAVfkeMbs3jUz/pssLxaHef5YsGx50e3ZkcxE=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
-         :content-type:content-transfer-encoding:content-disposition
-         :references;
-        b=pv/h2RrDMKqgSmyozsZQ19P/qFkJcXoEPL8094Pk1BgDCsS/te2uQyXtoFO7tiEfiE
-         gsVX1bA2ka3sG3z4gBYrevigRUhIizbVpQGhMD8ZlCqmpV1viRt6l98f090u5F9uFOPx
-         7jg8ViAqATQg0OaWj/CHDgqBj3Ibr+6uk1WiI=
-Received: by 10.115.48.12 with SMTP id a12mr10142732wak.38.1225468651982;
-        Fri, 31 Oct 2008 08:57:31 -0700 (PDT)
-Received: by 10.114.135.18 with HTTP; Fri, 31 Oct 2008 08:57:31 -0700 (PDT)
-In-Reply-To: <490AFBA5.5090700@op5.se>
+        h=from:to:subject:date:user-agent:cc:references:in-reply-to
+         :mime-version:content-type:content-transfer-encoding
+         :content-disposition:message-id;
+        b=FlSs7KiQ7ehcSwreDQb0bmEtmKMy2zomvuThtGDAjQND41jpYSX1p2dhVqWrYhR4gb
+         uvAoa+WTKRlg/iHlRP1Aw7N+Ux5dtA7gqQaUXBQlLX9N5Hct2IqqjyrElmZpwsUpldZw
+         FcvaTE1nnNq2ceOHId0wFOxQbBeFhLL3BEhRs=
+Received: by 10.66.236.13 with SMTP id j13mr2840016ugh.7.1225470422560;
+        Fri, 31 Oct 2008 09:27:02 -0700 (PDT)
+Received: from ?192.168.1.11? (abwk207.neoplus.adsl.tpnet.pl [83.8.234.207])
+        by mx.google.com with ESMTPS id 20sm5024853uga.49.2008.10.31.09.26.59
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Fri, 31 Oct 2008 09:27:01 -0700 (PDT)
+User-Agent: KMail/1.9.3
+In-Reply-To: <f1d2d9ca0810310428o166dc075wbb43c00c1a555350@mail.gmail.com>
 Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/99597>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/99598>
 
-I'm trying to get this restarted - dscho and I talked about this at
-the GitTogether, and I met some people (from the OpenAFS project that
-also happened to be there, oddly) who were interested in working on
-this with me.  I think the lack of a linkable library has greatly
-hindered the development of projects like this, so that will likely be
-part of the development process as well.
+Thanassis Tsiodras wrote:
+> On Fri, Oct 31, 2008 at 1:15 PM, Jakub Narebski <jnareb@gmail.com> wrote:
+ 
+> > Git does deltification _only_ in packfiles. But when you push via SSH
+> > git would generate a pack file with commits the other side doesn't
+> > have, and those packs are thin packs, so they also have deltas... but
+> > the remote side then adds bases to those thin packs making them
+> > standalone: you would have to git-gc on remote.
+> 
+> So I have to git-gc on my side (after the commits), git-gc on the remote,
+> and then git-push?
 
-Scott
+Perhaps I haven't made myself clear.
 
-On Fri, Oct 31, 2008 at 5:35 AM, Andreas Ericsson <ae@op5.se> wrote:
-> Ian Hilt wrote:
->>
->> On Fri, Oct 31, 2008 at 09:44:45AM +0800, Li Frank-B20596 wrote:
->>>
->>> There are TortoiseCVS, TortoiseSVN, TortoiseBzr, TortoiseHg
->>> Why not ToroiseGit
->>
->> This is what Johannes Schindelin had to say,
->>
->>        <http://code.google.com/p/msysgit/wiki/GitCheetah>
->
-> Noone's written TortoiseGit yet. I have no idea why, and I have
-> no reason to write it myself. If GitCheetah isn't working well,
-> I'm sure patches are welcome.
->
-> --
-> Andreas Ericsson                   andreas.ericsson@op5.se
-> OP5 AB                             www.op5.se
-> Tel: +46 8-230225                  Fax: +46 8-230231
-> --
-> To unsubscribe from this list: send the line "unsubscribe git" in
-> the body of a message to majordomo@vger.kernel.org
-> More majordomo info at  http://vger.kernel.org/majordomo-info.html
->
+On the local side: git-commit creates loose (compressed, but not
+deltified) objects. git-gc packs and deltifies.
+
+On the remote side (for smart protocols, i.e. git and ssh): git
+creates _thin_ pack, deltified; on the remote side git either makes
+pack thick/self contained by adding base objects (object + deltas),
+or explodes pack into loose object (object). You need git-gc on
+remote server to fully deltify on remote side. But transfer is fully
+deltified.
+
+On the remote side (for dumb protocols, i.e. rsync and http): git
+finds required packs and transfers them whole. So the situation is
+like on local side, but git might transfer more than really needed
+because it transfers packs in full.
+
+HTH.
+-- 
+Jakub Narebski
+Poland
