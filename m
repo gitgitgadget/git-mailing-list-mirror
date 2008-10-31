@@ -1,82 +1,68 @@
-From: Deskin Miller <deskinm@umich.edu>
-Subject: [PATCH] git-svn: change dashed git-commit-tree to git commit-tree
-Date: Fri, 31 Oct 2008 00:10:25 -0400
-Message-ID: <20081031041025.GB20322@euler>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: normalperson@yhbt.net, gitster@pobox.com
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Oct 31 05:11:48 2008
+From: Brian Gernhardt <benji@silverinsanity.com>
+Subject: Re: [PATCH] t4030: Don't use echo -n
+Date: Fri, 31 Oct 2008 01:02:45 -0400
+Message-ID: <8A4A84EC-51F7-4038-957C-CCA5C00E5977@silverinsanity.com>
+References: <1225404776-51748-1-git-send-email-benji@silverinsanity.com> <20081030235215.GB18221@sys-0.hiltweb.site>
+Mime-Version: 1.0 (Apple Message framework v929.2)
+Content-Type: text/plain; charset=US-ASCII; format=flowed; delsp=yes
+Content-Transfer-Encoding: 7bit
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Ian Hilt <Ian.Hilt@gmx.com>
+X-From: git-owner@vger.kernel.org Fri Oct 31 06:04:12 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KvlMQ-0005RV-Kf
-	for gcvg-git-2@gmane.org; Fri, 31 Oct 2008 05:11:47 +0100
+	id 1KvmB9-00062z-VD
+	for gcvg-git-2@gmane.org; Fri, 31 Oct 2008 06:04:12 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751776AbYJaEKd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 31 Oct 2008 00:10:33 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751926AbYJaEKd
-	(ORCPT <rfc822;git-outgoing>); Fri, 31 Oct 2008 00:10:33 -0400
-Received: from rn-out-0910.google.com ([64.233.170.191]:14055 "EHLO
-	rn-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751566AbYJaEKc (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 31 Oct 2008 00:10:32 -0400
-Received: by rn-out-0910.google.com with SMTP id k40so843538rnd.17
-        for <git@vger.kernel.org>; Thu, 30 Oct 2008 21:10:31 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:cc:subject
-         :message-id:mime-version:content-type:content-disposition:user-agent
-         :sender;
-        bh=rVHYfVxm1lvUpBGRIAZDqtu9pb2cJkoVc6m3rzZRv9I=;
-        b=KGPmaQJc+QMczbgu29Mt4cgJspwDyECJDNXv/+eymBFAd/SkVTdu15DuIqYOJG+YZg
-         FsHtcK+jyUh03X4yFK/9m0lhAb4CF6BDyqWqkgr7ClPWidG0fF+6MC+wpEubHqQkATxY
-         ssK2sKFC9UmfEg6a8n/+RcMr8PGx86ieWk2VY=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:mime-version:content-type
-         :content-disposition:user-agent:sender;
-        b=vncRUl1mni3MXr2+6Wq4J+/eWgvE5530dgVCEFDvit9LCT7x7j+1sB95MZRgy/VAbd
-         vY2McbEljUfAHDuZag8Fw9Faizur9wvwjjdlDFNscrgt/u5njPBmh9sBHCp1rvbr8xDQ
-         6UqwonlQx2rpEfJwWcEnUn/tw6rVPWSejY+z0=
-Received: by 10.64.251.9 with SMTP id y9mr12440990qbh.27.1225426230858;
-        Thu, 30 Oct 2008 21:10:30 -0700 (PDT)
-Received: from euler ([68.40.49.130])
-        by mx.google.com with ESMTPS id 12sm5284428qbw.2.2008.10.30.21.10.29
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Thu, 30 Oct 2008 21:10:29 -0700 (PDT)
-Content-Disposition: inline
-User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
+	id S1752388AbYJaFC5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 31 Oct 2008 01:02:57 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751553AbYJaFC5
+	(ORCPT <rfc822;git-outgoing>); Fri, 31 Oct 2008 01:02:57 -0400
+Received: from vs072.rosehosting.com ([216.114.78.72]:37728 "EHLO
+	silverinsanity.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751302AbYJaFC4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 31 Oct 2008 01:02:56 -0400
+Received: by silverinsanity.com (Postfix, from userid 5001)
+	id 375271FFC18A; Fri, 31 Oct 2008 05:02:43 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.1.7-deb (2006-10-05) on 
+	silverinsanity.com
+X-Spam-Level: 
+X-Spam-Status: No, score=-1.0 required=5.0 tests=AWL,BAYES_00,RCVD_IN_PBL,
+	RCVD_IN_SORBS_DUL autolearn=no version=3.1.7-deb
+Received: from [192.168.1.109] (cpe-69-205-127-75.rochester.res.rr.com [69.205.127.75])
+	(using TLSv1 with cipher AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by silverinsanity.com (Postfix) with ESMTP id E6B1A1FFC186;
+	Fri, 31 Oct 2008 05:02:38 +0000 (UTC)
+In-Reply-To: <20081030235215.GB18221@sys-0.hiltweb.site>
+X-Mailer: Apple Mail (2.929.2)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/99549>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/99550>
 
-Signed-off-by: Deskin Miller <deskinm@umich.edu>
----
-Once again I'm using a copy of git-svn.perl directly, and this fails to exec.
-I looked at it more closely and it fails because git binary calls setup_path,
-which puts the libexec path into $PATH; of course, this doesn't happen when
-git-svn is called directly.
 
- git-svn.perl |    2 +-
- 1 files changed, 1 insertions(+), 1 deletions(-)
+On Oct 30, 2008, at 7:52 PM, Ian Hilt wrote:
 
-diff --git a/git-svn.perl b/git-svn.perl
-index 2e68c68..56238da 100755
---- a/git-svn.perl
-+++ b/git-svn.perl
-@@ -2202,7 +2202,7 @@ sub do_git_commit {
- 	}
- 	die "Tree is not a valid sha1: $tree\n" if $tree !~ /^$::sha1$/o;
- 
--	my @exec = ('git-commit-tree', $tree);
-+	my @exec = ('git', 'commit-tree', $tree);
- 	foreach ($self->get_commit_parents($log_entry)) {
- 		push @exec, '-p', $_;
- 	}
--- 
-1.6.0.3.515.g304f
+> On Thu, Oct 30, 2008 at 06:12:56PM -0400, Brian Gernhardt wrote:
+>> Signed-off-by: Brian Gernhardt <benji@silverinsanity.com>
+>
+> No commit message???
+>>
+
+"Don't use echo -n" seemed simple enough to me, as it's the only thing  
+it does.  And the reason is that echo -n isn't portable, as has been  
+determined previously in git.  I'll update this and use the better  
+replacement "printf" anyway.
+
+> This doesn't apply for me.  My tip is up-to-date, but it doesn't  
+> even have
+> this file it t/.
+
+This is based on next and is for a file that isn't in master.
+
+~~ Brian
