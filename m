@@ -1,112 +1,95 @@
-From: Ian Hilt <ihilt@mcgregor-surmount.com>
-Subject: Re: [PATCH 3/3] git send-email: add --annotate option
-Date: Fri, 31 Oct 2008 17:34:03 -0400
-Message-ID: <20081031213403.GC21345@maintenance05.msc.mcgregor-surmount.com>
-References: <1225450632-7230-1-git-send-email-madcoder@debian.org> <1225450632-7230-2-git-send-email-madcoder@debian.org> <1225450632-7230-3-git-send-email-madcoder@debian.org> <1225450632-7230-4-git-send-email-madcoder@debian.org>
+From: Pierre Habouzit <madcoder@debian.org>
+Subject: Re: [PATCH 2/3] git send-email: do not ask questions when  --compose is used.
+Date: Fri, 31 Oct 2008 22:38:03 +0100
+Message-ID: <20081031213803.GB21799@artemis.corp>
+References: <1225450632-7230-1-git-send-email-madcoder@debian.org> <1225456609-694-1-git-send-email-madcoder@debian.org> <1225456609-694-2-git-send-email-madcoder@debian.org> <1225456609-694-3-git-send-email-madcoder@debian.org> <20081031213338.GB21345@maintenance05.msc.mcgregor-surmount.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: multipart/signed; boundary="98e8jtXdkpgskNou";
+	protocol="application/pgp-signature"; micalg=SHA1
 Cc: git@vger.kernel.org
-To: Pierre Habouzit <madcoder@debian.org>
-X-From: git-owner@vger.kernel.org Fri Oct 31 22:35:23 2008
+To: Ian Hilt <ihilt@mcgregor-surmount.com>
+X-From: git-owner@vger.kernel.org Fri Oct 31 22:39:22 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Kw1eM-0007Kf-7H
-	for gcvg-git-2@gmane.org; Fri, 31 Oct 2008 22:35:22 +0100
+	id 1Kw1iC-0008Oj-VQ
+	for gcvg-git-2@gmane.org; Fri, 31 Oct 2008 22:39:21 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752526AbYJaVeI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 31 Oct 2008 17:34:08 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752216AbYJaVeH
-	(ORCPT <rfc822;git-outgoing>); Fri, 31 Oct 2008 17:34:07 -0400
-Received: from mail.mcgregor-surmount.com ([70.61.40.162]:59200 "EHLO
-	mcgregor-surmount.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1751643AbYJaVeG (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 31 Oct 2008 17:34:06 -0400
-Received: from maintenance05.msc.mcgregor-surmount.com ([70.61.40.162]) by mcgregor-surmount.com with Microsoft SMTPSVC(6.0.3790.3959);
-	 Fri, 31 Oct 2008 17:34:03 -0400
+	id S1752384AbYJaViH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 31 Oct 2008 17:38:07 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751574AbYJaViG
+	(ORCPT <rfc822;git-outgoing>); Fri, 31 Oct 2008 17:38:06 -0400
+Received: from pan.madism.org ([88.191.52.104]:35957 "EHLO hermes.madism.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752535AbYJaViF (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 31 Oct 2008 17:38:05 -0400
+Received: from madism.org (olympe.madism.org [82.243.245.108])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(Client CN "artemis.madism.org", Issuer "madism.org" (verified OK))
+	by hermes.madism.org (Postfix) with ESMTPS id 751183B6C4;
+	Fri, 31 Oct 2008 22:38:04 +0100 (CET)
+Received: by madism.org (Postfix, from userid 1000)
+	id 2C4E15EE243; Fri, 31 Oct 2008 22:38:03 +0100 (CET)
 Content-Disposition: inline
-In-Reply-To: <1225450632-7230-4-git-send-email-madcoder@debian.org>
-User-Agent: Mutt/1.5.18 (2008-05-17)
-X-OriginalArrivalTime: 31 Oct 2008 21:34:03.0396 (UTC) FILETIME=[651CC440:01C93BA0]
-X-TM-AS-Product-Ver: SMEX-8.1.0.1092-5.500.1027-16252.002
-X-TM-AS-Result: No--19.275400-0.000000-31
-X-TM-AS-User-Approved-Sender: Yes
-X-TM-AS-User-Blocked-Sender: No
+In-Reply-To: <20081031213338.GB21345@maintenance05.msc.mcgregor-surmount.com>
+X-Face: $(^e[V4D-[`f2EmMGz@fgWK!e.B~2g.{08lKPU(nc1J~z\4B>*JEVq:E]7G-\6$Ycr4<;Z!|VY6Grt]+RsS$IMV)f>2)M="tY:ZPcU;&%it2D81X^kNya0=L]"vZmLP+UmKhgq+u*\.dJ8G!N&=EvlD
+User-Agent: Madmutt/devel (Linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/99648>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/99649>
 
-On Fri, Oct 31, 2008 at 11:57:12AM +0100, Pierre Habouzit wrote:
-> This allows to review every patch (and fix various aspects of them, or
-> comment them) in an editor just before being sent. Combined to the fact
-> that git send-email can now process revision lists, this makes git
-> send-email and efficient way to review and send patches interactively.
-> 
-> Signed-off-by: Pierre Habouzit <madcoder@debian.org>
-> ---
->  Documentation/git-send-email.txt |   11 +++++++++++
->  git-send-email.perl              |   26 ++++++++++++++++++++++++--
->  2 files changed, 35 insertions(+), 2 deletions(-)
-> 
-> diff --git a/Documentation/git-send-email.txt b/Documentation/git-send-email.txt
-> index cafff1a..9ee81d5 100644
-> --- a/Documentation/git-send-email.txt
-> +++ b/Documentation/git-send-email.txt
-> @@ -37,6 +37,11 @@ The --bcc option must be repeated for each user you want on the bcc list.
->  +
->  The --cc option must be repeated for each user you want on the cc list.
->  
-> +--annotate::
-> +	Review each patch you're about to send in an editor. The setting
-> +	'sendemail.multiedit' defines if this will spawn one editor per patch
-> +	or one for all of them at once.
-> +
->  --compose::
->  	Use $GIT_EDITOR, core.editor, $VISUAL, or $EDITOR to edit an
->  	introductory message for the patch series.
-> @@ -204,6 +209,12 @@ sendemail.aliasfiletype::
->  	Format of the file(s) specified in sendemail.aliasesfile. Must be
->  	one of 'mutt', 'mailrc', 'pine', or 'gnus'.
->  
-> +sendemail.multiedit::
-> +	If true (default), a single editor instance will be spawned to edit
-> +	files you have to edit (patches when '--annotate' is used, and the
-> +	summary when '--compose' is used). If false, files will be edited one
-> +	after the other, spawning a new editor each time.
-> +
->  
->  Author
->  ------
-> diff --git a/git-send-email.perl b/git-send-email.perl
-> index 0d50ee2..65c254d 100755
-> --- a/git-send-email.perl
-> +++ b/git-send-email.perl
-> @@ -48,6 +48,7 @@ git send-email [options] <file | directory | rev-list >
->      --bcc                   <str>  * Email Bcc:
->      --subject               <str>  * Email "Subject:"
->      --in-reply-to           <str>  * Email "In-Reply-To:"
-> +    --annotate                     * Review each patch that will be sent in an editor.
->      --compose                      * Open an editor for introduction.
->  
->    Sending:
-> @@ -130,7 +131,8 @@ my $compose_filename = ".msg.$$";
->  
->  # Variables we fill in automatically, or via prompting:
->  my (@to,@cc,@initial_cc,@bcclist,@xh,
-> -	$initial_reply_to,$initial_subject,@files,$author,$sender,$smtp_authpass,$compose,$time);
-> +	$initial_reply_to,$initial_subject,@files,
-> +	$author,$sender,$smtp_authpass,$annotate,$compose,$time);
->  
->  my $envelope_sender;
->  
-> @@ -151,6 +153,17 @@ if ($@) {
->  # Behavior modification variables
->  my ($quiet, $dry_run) = (0, 0);
->  
-> +# Handle interactive edition of files.
 
-s/edition/editing/;
+--98e8jtXdkpgskNou
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
+
+On Fri, Oct 31, 2008 at 09:33:38PM +0000, Ian Hilt wrote:
+> On Fri, Oct 31, 2008 at 01:36:48PM +0100, Pierre Habouzit wrote:
+> > +GIT: Please enter your email below this line.
+>=20
+> At first glance I thought this meant to enter my email address here.
+> So, instead of "email" would "message" be better?  Although on second
+> glance I realized this is where the body of the message went.  Not sure
+> if this is worth changing.
+
+Well, this line sounds kind of awkward actually, so I was even thinking
+about removing it.
+
+Decent editors should probably have a plugin to put the cursor here and
+be done with it.
+
+
+In fact what looks odd is the GIT: stuff. a line looking like:
+
+    --- write your message below this line ---
+
+Looks 10x better, though need some code to strip it out if the user kept
+it, and I'm lazy, GIT: stuff is automatically removed...
+
+
+But if that's the only thing that you don't like in the series, I'm
+glad, this is quite a minor issue ;)
+--=20
+=C2=B7O=C2=B7  Pierre Habouzit
+=C2=B7=C2=B7O                                                madcoder@debia=
+n.org
+OOO                                                http://www.madism.org
+
+--98e8jtXdkpgskNou
+Content-Type: application/pgp-signature
+Content-Disposition: inline
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.9 (GNU/Linux)
+
+iEYEABECAAYFAkkLersACgkQvGr7W6HudhzzTgCgoUpUdKT/v5GHr7W8cM+TC63w
+zm4An2C45eW4l01JNLSsOygTT3WKWQya
+=QB/E
+-----END PGP SIGNATURE-----
+
+--98e8jtXdkpgskNou--
