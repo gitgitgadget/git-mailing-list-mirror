@@ -1,92 +1,67 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: [PATCH] Documentation/gitattributes: Add subsection header for each attribute
-Date: Fri, 31 Oct 2008 23:24:55 +0100
-Message-ID: <1225491895-31987-1-git-send-email-jnareb@gmail.com>
-Cc: Jakub Narebski <jnareb@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Oct 31 23:28:25 2008
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH] filter-branch: add git_commit_non_empty_tree and
+ --prune-empty.
+Date: Fri, 31 Oct 2008 23:36:58 +0100 (CET)
+Message-ID: <alpine.DEB.1.00.0810312334480.22125@pacific.mpi-cbg.de.mpi-cbg.de>
+References: <20081030132623.GC24098@artemis.corp> <1225445204-28000-1-git-send-email-madcoder@debian.org>
+Mime-Version: 1.0
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org, pasky@suse.cz, srabbelier@gmail.com
+To: Pierre Habouzit <madcoder@debian.org>
+X-From: git-owner@vger.kernel.org Fri Oct 31 23:31:00 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Kw2S8-0007HO-KF
-	for gcvg-git-2@gmane.org; Fri, 31 Oct 2008 23:26:49 +0100
+	id 1Kw2W4-0000M4-Tl
+	for gcvg-git-2@gmane.org; Fri, 31 Oct 2008 23:30:53 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753419AbYJaWZf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 31 Oct 2008 18:25:35 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752535AbYJaWZe
-	(ORCPT <rfc822;git-outgoing>); Fri, 31 Oct 2008 18:25:34 -0400
-Received: from ik-out-1112.google.com ([66.249.90.178]:23229 "EHLO
-	ik-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753402AbYJaWZd (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 31 Oct 2008 18:25:33 -0400
-Received: by ik-out-1112.google.com with SMTP id c29so441705ika.5
-        for <git@vger.kernel.org>; Fri, 31 Oct 2008 15:25:31 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:received:received:from:to:cc
-         :subject:date:message-id:x-mailer;
-        bh=KiixLVN9X9KXjw0jW7/4ucmE97ZsgBKvwqQc90OevNM=;
-        b=WjuW5n46hf3j7nfhyYJRZmFeuCqmJDwFi2ylR1BDgS+esyiRdnL72fJklhlSDrQGZl
-         kOj6JtLUxbGSbVAG++4tLH5CYPE0LcWyY5y+FbEBH7id8u34VZQ6i8jJsJcOIVCnGYmE
-         +mh2ErNBOfoXxWbjdtd6Dk6KVYbqUQfILsiFs=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer;
-        b=dF4RB3WXKb5AoDKwr1146vszZA29wK4/Qy/WbLI47OzrTqdoED7GdIj+kdoVSLjvnJ
-         +1lKV3uPFpvF1qzWrVNXBnP6NN1Nb5EKes6dZOB7XaFwuperhtKG9G+zjOoTCI3/PpUM
-         gg3eGHxK4GxjCTPjiEQ6F4Jv5jz+mbxGmOfnw=
-Received: by 10.210.11.13 with SMTP id 13mr2980551ebk.176.1225491931870;
-        Fri, 31 Oct 2008 15:25:31 -0700 (PDT)
-Received: from localhost.localdomain (abwk207.neoplus.adsl.tpnet.pl [83.8.234.207])
-        by mx.google.com with ESMTPS id 20sm4844446eyk.4.2008.10.31.15.25.29
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Fri, 31 Oct 2008 15:25:30 -0700 (PDT)
-Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id m9VMP6hU032015;
-	Fri, 31 Oct 2008 23:25:11 +0100
-Received: (from jnareb@localhost)
-	by localhost.localdomain (8.13.4/8.13.4/Submit) id m9VMOtK1032012;
-	Fri, 31 Oct 2008 23:24:55 +0100
-X-Mailer: git-send-email 1.6.0.3
+	id S1752312AbYJaW3k (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 31 Oct 2008 18:29:40 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752233AbYJaW3k
+	(ORCPT <rfc822;git-outgoing>); Fri, 31 Oct 2008 18:29:40 -0400
+Received: from mail.gmx.net ([213.165.64.20]:56188 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1751096AbYJaW3j (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 31 Oct 2008 18:29:39 -0400
+Received: (qmail invoked by alias); 31 Oct 2008 22:29:37 -0000
+Received: from pacific.mpi-cbg.de (EHLO pacific.mpi-cbg.de) [141.5.10.38]
+  by mail.gmx.net (mp063) with SMTP; 31 Oct 2008 23:29:37 +0100
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX184yys6pPU4F+e25B4iRHz2HxUYUS9jv8fA58mxc5
+	5Ar6bd62rwlIT8
+X-X-Sender: schindelin@pacific.mpi-cbg.de.mpi-cbg.de
+In-Reply-To: <1225445204-28000-1-git-send-email-madcoder@debian.org>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.6899999999999999
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/99661>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/99662>
 
-This makes attributes easier to find; before this patch some
-attributes had individual subsections, and some didn't.
+Hi,
 
-Signed-off-by: Jakub Narebski <jnareb@gmail.com>
----
- Documentation/gitattributes.txt |    6 ++++++
- 1 files changed, 6 insertions(+), 0 deletions(-)
+On Fri, 31 Oct 2008, Pierre Habouzit wrote:
 
-diff --git a/Documentation/gitattributes.txt b/Documentation/gitattributes.txt
-index 24e880c..eb64841 100644
---- a/Documentation/gitattributes.txt
-+++ b/Documentation/gitattributes.txt
-@@ -213,6 +213,9 @@ with `crlf`, and then `ident` and fed to `filter`.
- Generating diff text
- ~~~~~~~~~~~~~~~~~~~~
- 
-+`diff`
-+^^^^^^
-+
- The attribute `diff` affects if 'git-diff' generates textual
- patch for the path or just says `Binary files differ`.  It also
- can affect what line is shown on the hunk header `@@ -k,l +n,m @@`
-@@ -331,6 +334,9 @@ patterns are available:
- Performing a three-way merge
- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
- 
-+`merge`
-+^^^^^^^
-+
- The attribute `merge` affects how three versions of a file is
- merged when a file-level merge is necessary during `git merge`,
- and other programs such as `git revert` and `git cherry-pick`.
--- 
-1.6.0.3
+> git_commit_non_empty_tree is added to the functions that can be run from 
+> commit filters. Its effect is to commit only commits actually touching 
+> the tree and that are not merge points either.
+> 
+> The option --prune-empty is added. It defaults the commit-filter to
+> 'git_commit_non_empty_tree "$@"', and can be used with any other
+> combination of filters, except --commit-hook that must used
+> 'git_commit_non_empty_tree "$@"' where one puts 'git commit-tree "$@"'
+> usually to achieve the same result.
+
+I think that the example Sverre posted is better.  It might be a bit more 
+to write out, but at least people can adapt it to their needs (as opposed 
+to only skip "empty" commits).
+
+However, I would _love_ to see your tests being merged with Sverre's patch 
+(of course, the tests should use the described procedure, then).
+
+Ciao,
+Dscho
