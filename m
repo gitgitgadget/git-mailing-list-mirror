@@ -1,80 +1,91 @@
-From: Steve Folly <steve@spfweb.co.uk>
-Subject: Re: [PATCH] Avoid using non-portable =?utf-8?b?YGVjaG8=?= =?utf-8?b?LW5g?= in tests.
-Date: Fri, 31 Oct 2008 09:36:03 +0000 (UTC)
-Message-ID: <loom.20081031T093317-846@post.gmane.org>
-References: <8A4A84EC-51F7-4038-957C-CCA5C00E5977@silverinsanity.com> <1225429753-70109-1-git-send-email-benji@silverinsanity.com> <7vtzat89br.fsf@gitster.siamese.dyndns.org>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: Are binary xdeltas only used if you use git-gc?
+Date: Fri, 31 Oct 2008 04:15:32 -0700 (PDT)
+Message-ID: <m37i7pggnk.fsf@localhost.localdomain>
+References: <f1d2d9ca0810310243r669840bbj2c5ee7183e0caaed@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Oct 31 12:11:23 2008
+Cc: git@vger.kernel.org
+To: "Thanassis Tsiodras" <ttsiodras@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Oct 31 12:16:52 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KvruT-0005mK-K6
-	for gcvg-git-2@gmane.org; Fri, 31 Oct 2008 12:11:22 +0100
+	id 1Kvrzj-0007VQ-Tu
+	for gcvg-git-2@gmane.org; Fri, 31 Oct 2008 12:16:48 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750756AbYJaLKH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 31 Oct 2008 07:10:07 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750753AbYJaLKH
-	(ORCPT <rfc822;git-outgoing>); Fri, 31 Oct 2008 07:10:07 -0400
-Received: from main.gmane.org ([80.91.229.2]:40494 "EHLO ciao.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750747AbYJaLKF (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 31 Oct 2008 07:10:05 -0400
-Received: from root by ciao.gmane.org with local (Exim 4.43)
-	id 1KvrtC-0002Gx-Kq
-	for git@vger.kernel.org; Fri, 31 Oct 2008 11:10:02 +0000
-Received: from 80-195-8-231.cable.ubr16.haye.blueyonder.co.uk ([80.195.8.231])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Fri, 31 Oct 2008 11:10:02 +0000
-Received: from steve by 80-195-8-231.cable.ubr16.haye.blueyonder.co.uk with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Fri, 31 Oct 2008 11:10:02 +0000
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@ger.gmane.org
-X-Gmane-NNTP-Posting-Host: main.gmane.org
-User-Agent: Loom/3.14 (http://gmane.org/)
-X-Loom-IP: 80.195.8.231 (Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10_5_5; en-gb) AppleWebKit/525.18 (KHTML, like Gecko) Version/3.1.2 Safari/525.20.1)
+	id S1751374AbYJaLPh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 31 Oct 2008 07:15:37 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751536AbYJaLPh
+	(ORCPT <rfc822;git-outgoing>); Fri, 31 Oct 2008 07:15:37 -0400
+Received: from ug-out-1314.google.com ([66.249.92.168]:41730 "EHLO
+	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751041AbYJaLPf (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 31 Oct 2008 07:15:35 -0400
+Received: by ug-out-1314.google.com with SMTP id 39so1195540ugf.37
+        for <git@vger.kernel.org>; Fri, 31 Oct 2008 04:15:33 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:received:received
+         :x-authentication-warning:to:cc:subject:references:from:in-reply-to
+         :message-id:lines:user-agent:mime-version:content-type:date;
+        bh=GOTwBAXqkpVgAtUskgx6gorXiXQOshMfxGKIVMy7c5M=;
+        b=XFXTS1z+myN17mzb43CUZK0W5dnNjeJRyJCV/t/W0spWjdeUOMeEXiYDn9zjfjomzD
+         9EXQpdcKFaR0fgWl8MZQGOPk/eC5qUTH4j6hqsWmBTJiJFdPGmmpjQtd9T8sZ9Kam53z
+         5c2novssCNCxvrnT+IcDXw88ascN7HJcauBpw=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=x-authentication-warning:to:cc:subject:references:from:in-reply-to
+         :message-id:lines:user-agent:mime-version:content-type:date;
+        b=Ln97Xz1fI+m5GeiLwHjNeVNiPR13uMxXAyfA9puD2Dygp6MshR+DdbVGVtUrpZyn37
+         JdEfvCNS8ZhYY4fN8kJ1A5FNMsoSaLYygkhc555O1iW0N5BOeAXee2l1p14yyTlo+9Am
+         dV2yk22BNYAymErUPIYYjjRhhb1RM1QBtxwjM=
+Received: by 10.67.119.8 with SMTP id w8mr2555635ugm.20.1225451733844;
+        Fri, 31 Oct 2008 04:15:33 -0700 (PDT)
+Received: from localhost.localdomain (abvo7.neoplus.adsl.tpnet.pl [83.8.212.7])
+        by mx.google.com with ESMTPS id s8sm4664155uge.18.2008.10.31.04.15.30
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Fri, 31 Oct 2008 04:15:32 -0700 (PDT)
+Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
+	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id m9VBF6eT024010;
+	Fri, 31 Oct 2008 12:15:17 +0100
+Received: (from jnareb@localhost)
+	by localhost.localdomain (8.13.4/8.13.4/Submit) id m9VBEtSo024006;
+	Fri, 31 Oct 2008 12:14:55 +0100
+X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
+In-Reply-To: <f1d2d9ca0810310243r669840bbj2c5ee7183e0caaed@mail.gmail.com>
+User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/99575>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/99576>
 
-Junio C Hamano <gitster <at> pobox.com> writes:
+"Thanassis Tsiodras" <ttsiodras@gmail.com> writes:
 
-> 
-> Brian Gernhardt <benji <at> silverinsanity.com> writes:
-> 
-> > Not all /bin/sh have a builtin echo that recognizes -n.  Using printf
-> > is far more portable.
-> >
-> > Discovered on OS X 10.5.5 in t4030-diff-textconv.sh and changed in all
-> > the test scripts.
-> 
-> I had an impression that OS X was BSDish.  Wasn't "echo -n" a BSDism?
-> 
+> I've been usig Git for the last couple of months and am quite happy with it.
+> In one of my Git repositories, I am storing uncompressed .tar files
+> (since being uncompressed allows git to detect and store
+> only their "real"differences).
 
-FYI, "man echo" on OS X 10.5.5 has this to say...
+I think you can use clean / smudge filter in gitattributes for that.
 
-     The following option is available:
+[...]
 
-     -n    Do not print the trailing newline character.  This may also be
-           achieved by appending `\c' to the end of the string, as is done by
-           iBCS2 compatible systems.  Note that this option as well as the
-           effect of `\c' are implementation-defined in IEEE Std 1003.1-2001
-           (``POSIX.1'') as amended by Cor. 1-2002.  Applications aiming for
-           maximum portability are strongly encouraged to use printf(1) to
-           suppress the newline character.
+> Then again, I must confess I only did the git-gc after I pushed.
+> Does the git-push actually take advantage of the similarities only if
+> I do a git-gc first?
 
-     Some shells may provide a builtin echo command which is similar or iden-
-     tical to this utility.  Most notably, the builtin echo in sh(1) does not
-     accept the -n option.  Consult the builtin(1) manual page.
+Git does deltification _only_ in packfiles. But when you push via SSH
+git would generate a pack file with commits the other side doesn't
+have, and those packs are thin packs, so they also have deltas... but
+the remote side then adds bases to those thin packs making them
+standalone: you would have to git-gc on remote.
 
-
-Regards,
-Steve.
+HTH
+-- 
+Jakub Narebski
+Poland
+ShadeHawk on #git
