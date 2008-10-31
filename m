@@ -1,70 +1,88 @@
-From: Matthieu Moy <Matthieu.Moy@imag.fr>
-Subject: Re: Are binary xdeltas only used if you use git-gc?
-Date: Fri, 31 Oct 2008 13:42:05 +0100
-Message-ID: <vpqy705rl5u.fsf@bauges.imag.fr>
-References: <f1d2d9ca0810310243r669840bbj2c5ee7183e0caaed@mail.gmail.com>
+From: "Peter Harris" <git@peter.is-a-geek.org>
+Subject: Re: [PATCH] Use find instead of perl in t5000 to get file modification time
+Date: Fri, 31 Oct 2008 08:59:38 -0400
+Message-ID: <eaa105840810310559l29addd80i7a22c21e37231bb1@mail.gmail.com>
+References: <81b0412b0810290338j1beaa25bx9fb373a69f5dfe7@mail.gmail.com>
+	 <1225344554.10803.17.camel@maia.lan>
+	 <20081031070003.GA4458@blimp.localdomain>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: "Thanassis Tsiodras" <ttsiodras@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Oct 31 13:46:20 2008
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: "Sam Vilain" <sam@vilain.net>,
+	"Git Mailing List" <git@vger.kernel.org>,
+	"Junio C Hamano" <gitster@pobox.com>, "Jeff King" <peff@peff.net>,
+	"=?ISO-8859-1?Q?Ren=E9_Scharfe?=" <rene.scharfe@lsrfire.ath.cx>
+To: "Alex Riesen" <raa.lkml@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Oct 31 14:00:54 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KvtO7-0003gn-Ls
-	for gcvg-git-2@gmane.org; Fri, 31 Oct 2008 13:46:04 +0100
+	id 1KvtcU-0001Hb-Fx
+	for gcvg-git-2@gmane.org; Fri, 31 Oct 2008 14:00:54 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751000AbYJaMoe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 31 Oct 2008 08:44:34 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750870AbYJaMoe
-	(ORCPT <rfc822;git-outgoing>); Fri, 31 Oct 2008 08:44:34 -0400
-Received: from imag.imag.fr ([129.88.30.1]:53445 "EHLO imag.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750846AbYJaMoe (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 31 Oct 2008 08:44:34 -0400
-Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by imag.imag.fr (8.13.8/8.13.8) with ESMTP id m9VCg73S012158
-	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
-	Fri, 31 Oct 2008 13:42:07 +0100 (CET)
-Received: from bauges.imag.fr ([129.88.43.5])
-	by mail-veri.imag.fr with esmtps (TLS-1.0:RSA_AES_256_CBC_SHA:32)
-	(Exim 4.50)
-	id 1KvtKI-0007Q1-1A; Fri, 31 Oct 2008 13:42:06 +0100
-Received: from moy by bauges.imag.fr with local (Exim 4.63)
-	(envelope-from <moy@imag.fr>)
-	id 1KvtKH-0002rq-VE; Fri, 31 Oct 2008 13:42:05 +0100
-In-Reply-To: <f1d2d9ca0810310243r669840bbj2c5ee7183e0caaed@mail.gmail.com> (Thanassis Tsiodras's message of "Fri\, 31 Oct 2008 11\:43\:43 +0200")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/23.0.60 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-3.0 (imag.imag.fr [129.88.30.1]); Fri, 31 Oct 2008 13:42:07 +0100 (CET)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM for more information
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: moy@imag.fr
+	id S1751151AbYJaM7k (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 31 Oct 2008 08:59:40 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751092AbYJaM7k
+	(ORCPT <rfc822;git-outgoing>); Fri, 31 Oct 2008 08:59:40 -0400
+Received: from rv-out-0506.google.com ([209.85.198.239]:42158 "EHLO
+	rv-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751147AbYJaM7j (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 31 Oct 2008 08:59:39 -0400
+Received: by rv-out-0506.google.com with SMTP id k40so1219595rvb.1
+        for <git@vger.kernel.org>; Fri, 31 Oct 2008 05:59:39 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:sender
+         :to:subject:cc:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:references
+         :x-google-sender-auth;
+        bh=JJwfO8BMpXVk8Chc3lWfxCGhgDaG/nyPT+3Mxae4MEU=;
+        b=DIYkr+qRaaVVdIcZ0u1tI0l8PfEPGDhWSebJNDrxZD2LqDNW0Rnhz/cucLRt1aGWsg
+         fqChqAoyfy3uMu7sz4T0MJbirzXb1W+ZVve9Jmjr2L4zv4s6IXLbT3Fn67SL2ELvuJk1
+         SjP+1AHfVD2fvlddLhSzLflGX65iKKmW58664=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:sender:to:subject:cc:in-reply-to:mime-version
+         :content-type:content-transfer-encoding:content-disposition
+         :references:x-google-sender-auth;
+        b=Lboxu6HftdA/e2WJO7sT8plhRT8GafKK0Ti+YLLAXbDn/scx8QfNA1sIgp4xXerIXh
+         ofiIsHL93Ucmo2HQDX1KHP3iLssZbXy4VUQEJt9vUxZ2Z4rf1j6ocWPpIpvoN8gwiuzZ
+         HJrYURPPqWO61D3DjyiKrUX192wbFHkv4i7as=
+Received: by 10.141.170.10 with SMTP id x10mr6613153rvo.221.1225457978877;
+        Fri, 31 Oct 2008 05:59:38 -0700 (PDT)
+Received: by 10.141.97.15 with HTTP; Fri, 31 Oct 2008 05:59:38 -0700 (PDT)
+In-Reply-To: <20081031070003.GA4458@blimp.localdomain>
+Content-Disposition: inline
+X-Google-Sender-Auth: 7772209f96199996
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/99585>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/99586>
 
-"Thanassis Tsiodras" <ttsiodras@gmail.com> writes:
+On Fri, Oct 31, 2008 at 3:00 AM, Alex Riesen wrote:
+> Sam Vilain, Thu, Oct 30, 2008 06:29:14 +0100:
+>> On Wed, 2008-10-29 at 11:38 +0100, Alex Riesen wrote:
+>> > I could not find what exactly does the ActiveState's Perl use for its stat
+>> > implementation (and honestly, have no motivation to look harder).
+>> > It seems to honor TZ, but the produced time does not seem to be either
+>> > local or GMT.
+>>
+>> See, the difference is that the perl is portable and your patch isn't.
+>
+> ActiveState Perl on Windows is portable? To another windows, maybe.
 
-> If that is the case, I will create an alias to always git-gc after commits...
+Quite aside from missing the point (which is that Vanilla Perl runs
+everywhere, including Windows[1]), this is also factually incorrect. A
+quick check of the ActiveState website would reveal ActivePerl
+downloads for AIX, Linux (x86 and x86-64), Solaris (x86, SPARC, and
+SPARC64), MacOSX (x86 and PPC), and source code, in addition to
+Windows.
 
-If you have a decent version of git, it already does "git gc --auto"
-regularly. With --auto, git gc will do nothing if you don't have too
-many unpacked objects, and will try to do the right thing otherwise
-(incremental packs, see man git gc). The idea is that "git gc" is a
-costly operation, and git prefers to waste a bit of disk space to make
-most "commit" really fast, and to take time to optimize the repository
-only when it grew too much.
+Looks pretty portable to me.
 
-If you're worried about repository size and you have a permanently
-running machine, a good idea is to run git gc in a cron job, so that
-you work fast in daytime, and your computer optimizes hard at night
-time ;-) (I have gic gc + git fsck in a cron job, so I'll also know if
-a repository gets corrupted).
+Peter Harris
 
--- 
-Matthieu
+[1] http://vanillaperl.com/
