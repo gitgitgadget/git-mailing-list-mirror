@@ -1,91 +1,78 @@
-From: Jakub Narebski <jnareb@gmail.com>
+From: "Thanassis Tsiodras" <ttsiodras@gmail.com>
 Subject: Re: Are binary xdeltas only used if you use git-gc?
-Date: Fri, 31 Oct 2008 04:15:32 -0700 (PDT)
-Message-ID: <m37i7pggnk.fsf@localhost.localdomain>
+Date: Fri, 31 Oct 2008 13:16:05 +0200
+Message-ID: <f1d2d9ca0810310416n1e9f3700if49951a05cae9a37@mail.gmail.com>
 References: <f1d2d9ca0810310243r669840bbj2c5ee7183e0caaed@mail.gmail.com>
+	 <20081031110245.GA22633@artemis.corp>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org
-To: "Thanassis Tsiodras" <ttsiodras@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Oct 31 12:16:52 2008
+To: "Pierre Habouzit" <madcoder@debian.org>
+X-From: git-owner@vger.kernel.org Fri Oct 31 12:17:25 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Kvrzj-0007VQ-Tu
-	for gcvg-git-2@gmane.org; Fri, 31 Oct 2008 12:16:48 +0100
+	id 1Kvs0H-0007h4-SK
+	for gcvg-git-2@gmane.org; Fri, 31 Oct 2008 12:17:22 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751374AbYJaLPh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 31 Oct 2008 07:15:37 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751536AbYJaLPh
-	(ORCPT <rfc822;git-outgoing>); Fri, 31 Oct 2008 07:15:37 -0400
-Received: from ug-out-1314.google.com ([66.249.92.168]:41730 "EHLO
-	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751041AbYJaLPf (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 31 Oct 2008 07:15:35 -0400
-Received: by ug-out-1314.google.com with SMTP id 39so1195540ugf.37
-        for <git@vger.kernel.org>; Fri, 31 Oct 2008 04:15:33 -0700 (PDT)
+	id S1750944AbYJaLQL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 31 Oct 2008 07:16:11 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750960AbYJaLQK
+	(ORCPT <rfc822;git-outgoing>); Fri, 31 Oct 2008 07:16:10 -0400
+Received: from fg-out-1718.google.com ([72.14.220.159]:5142 "EHLO
+	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750867AbYJaLQI (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 31 Oct 2008 07:16:08 -0400
+Received: by fg-out-1718.google.com with SMTP id 19so919486fgg.17
+        for <git@vger.kernel.org>; Fri, 31 Oct 2008 04:16:05 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:received:received
-         :x-authentication-warning:to:cc:subject:references:from:in-reply-to
-         :message-id:lines:user-agent:mime-version:content-type:date;
-        bh=GOTwBAXqkpVgAtUskgx6gorXiXQOshMfxGKIVMy7c5M=;
-        b=XFXTS1z+myN17mzb43CUZK0W5dnNjeJRyJCV/t/W0spWjdeUOMeEXiYDn9zjfjomzD
-         9EXQpdcKFaR0fgWl8MZQGOPk/eC5qUTH4j6hqsWmBTJiJFdPGmmpjQtd9T8sZ9Kam53z
-         5c2novssCNCxvrnT+IcDXw88ascN7HJcauBpw=
+        h=domainkey-signature:received:received:message-id:date:from:to
+         :subject:cc:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:references;
+        bh=C+MQZpTEkhDG0ssTkS1xrL71wPMqxEvGLMSN79XotDg=;
+        b=pabqjRLtAeVh48lAUL1zmVonum0rQh58G7gHkGNPc3pW2EUKAFUcQr3mkfS0tibAHX
+         o+9cpPCs3ui3T0rnYx97yu/qUG3oJ/cxT4hVs0d9i/vdTO4E+8oHlSDmiyIg0Jipjb6W
+         2MnLvr4oXLJQEeu0YI7SEq4BFJKURCZJUza2g=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=x-authentication-warning:to:cc:subject:references:from:in-reply-to
-         :message-id:lines:user-agent:mime-version:content-type:date;
-        b=Ln97Xz1fI+m5GeiLwHjNeVNiPR13uMxXAyfA9puD2Dygp6MshR+DdbVGVtUrpZyn37
-         JdEfvCNS8ZhYY4fN8kJ1A5FNMsoSaLYygkhc555O1iW0N5BOeAXee2l1p14yyTlo+9Am
-         dV2yk22BNYAymErUPIYYjjRhhb1RM1QBtxwjM=
-Received: by 10.67.119.8 with SMTP id w8mr2555635ugm.20.1225451733844;
-        Fri, 31 Oct 2008 04:15:33 -0700 (PDT)
-Received: from localhost.localdomain (abvo7.neoplus.adsl.tpnet.pl [83.8.212.7])
-        by mx.google.com with ESMTPS id s8sm4664155uge.18.2008.10.31.04.15.30
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Fri, 31 Oct 2008 04:15:32 -0700 (PDT)
-Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id m9VBF6eT024010;
-	Fri, 31 Oct 2008 12:15:17 +0100
-Received: (from jnareb@localhost)
-	by localhost.localdomain (8.13.4/8.13.4/Submit) id m9VBEtSo024006;
-	Fri, 31 Oct 2008 12:14:55 +0100
-X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
-In-Reply-To: <f1d2d9ca0810310243r669840bbj2c5ee7183e0caaed@mail.gmail.com>
-User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
+        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
+         :content-type:content-transfer-encoding:content-disposition
+         :references;
+        b=w1GXU1CsofJg0MguxCO06u7kg+SSF1eNW8DjSANQ2nZOEGWoJj9BnhSdCyB75m/rrc
+         12YnMGAcNC+k5qoxK/bKZW653ABeWSuPfnEjtzWXo9oPRIBTeqbo8ff9+jZ9YwnBzAKs
+         U65FyzUta6/6SN7b7FC8HTtqTZ+Z9W2ykOMDg=
+Received: by 10.181.231.19 with SMTP id i19mr3022127bkr.205.1225451765709;
+        Fri, 31 Oct 2008 04:16:05 -0700 (PDT)
+Received: by 10.181.5.13 with HTTP; Fri, 31 Oct 2008 04:16:05 -0700 (PDT)
+In-Reply-To: <20081031110245.GA22633@artemis.corp>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/99576>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/99577>
 
-"Thanassis Tsiodras" <ttsiodras@gmail.com> writes:
+Actually, after using git-gc, git-repack isn't really needed...
+git-gc identifies that the two files are very similar and re-deltifies
+(see the du -s -k outputs in the original mail, after git-gc we have
+in fact lower usage than the first commit).
 
-> I've been usig Git for the last couple of months and am quite happy with it.
-> In one of my Git repositories, I am storing uncompressed .tar files
-> (since being uncompressed allows git to detect and store
-> only their "real"differences).
+My question is basically...
+(a) why doesn't git detect this during commit and needs a git-gc
+(b) whether after git-gc I would have seen the massive difference
+during a subsequent git-push or not
 
-I think you can use clean / smudge filter in gitattributes for that.
+Thanassis.
 
-[...]
 
-> Then again, I must confess I only did the git-gc after I pushed.
-> Does the git-push actually take advantage of the similarities only if
-> I do a git-gc first?
+> Have you tried to git repack with aggressive options, like:
+>
+>    git repack --window=500 --depth=500 \
+>      --window-memory=<fair amount of your physical RAM>
 
-Git does deltification _only_ in packfiles. But when you push via SSH
-git would generate a pack file with commits the other side doesn't
-have, and those packs are thin packs, so they also have deltas... but
-the remote side then adds bases to those thin packs making them
-standalone: you would have to git-gc on remote.
-
-HTH
 -- 
-Jakub Narebski
-Poland
-ShadeHawk on #git
+What I gave, I have; what I spent, I had; what I kept, I lost. -Old Epitaph
