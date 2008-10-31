@@ -1,71 +1,69 @@
-From: Sam Vilain <sam@vilain.net>
-Subject: Re: [PATCH] Documentation: add a planning document for the next
-	CLI revamp
-Date: Thu, 30 Oct 2008 23:51:39 -0700
-Message-ID: <1225435899.20883.25.camel@maia.lan>
-References: <1225338485-11046-1-git-send-email-sam@vilain.net>
-	 <alpine.LFD.2.00.0810301024300.13034@xanadu.home>
-	 <20081030145253.GK14786@spearce.org> <20081030145928.GA21707@glandium.org>
-	 <20081030150135.GG24098@artemis.corp>
-	 <alpine.LFD.2.00.0810301105350.13034@xanadu.home>
-	 <1225387882.19891.9.camel@maia.lan>   <gedhh6$urq$1@ger.gmane.org>
+From: Alex Riesen <raa.lkml@gmail.com>
+Subject: Re: [PATCH] Use find instead of perl in t5000 to get file
+	modification time
+Date: Fri, 31 Oct 2008 08:00:03 +0100
+Message-ID: <20081031070003.GA4458@blimp.localdomain>
+References: <81b0412b0810290338j1beaa25bx9fb373a69f5dfe7@mail.gmail.com> <1225344554.10803.17.camel@maia.lan>
+Reply-To: Alex Riesen <raa.lkml@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Oct 31 07:53:04 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: Git Mailing List <git@vger.kernel.org>,
+	Junio C Hamano <gitster@pobox.com>,
+	Jeff King <peff@peff.net>,
+	=?iso-8859-15?Q?Ren=E9?= Scharfe <rene.scharfe@lsrfire.ath.cx>
+To: Sam Vilain <sam@vilain.net>
+X-From: git-owner@vger.kernel.org Fri Oct 31 08:01:34 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KvnsV-0002Ew-UD
-	for gcvg-git-2@gmane.org; Fri, 31 Oct 2008 07:53:04 +0100
+	id 1Kvo0j-0003wc-1Z
+	for gcvg-git-2@gmane.org; Fri, 31 Oct 2008 08:01:33 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752271AbYJaGvu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 31 Oct 2008 02:51:50 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752576AbYJaGvu
-	(ORCPT <rfc822;git-outgoing>); Fri, 31 Oct 2008 02:51:50 -0400
-Received: from watts.utsl.gen.nz ([202.78.240.73]:52909 "EHLO mail.utsl.gen.nz"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752204AbYJaGvt (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 31 Oct 2008 02:51:49 -0400
-Received: by mail.utsl.gen.nz (Postfix, from userid 1004)
-	id F111E21C50D; Fri, 31 Oct 2008 19:51:47 +1300 (NZDT)
-X-Spam-Checker-Version: SpamAssassin 3.2.5 (2008-06-10) on
-	mail.musashi.utsl.gen.nz
-X-Spam-Level: 
-X-Spam-Status: No, score=-4.4 required=5.0 tests=ALL_TRUSTED,BAYES_00
-	autolearn=ham version=3.2.5
-Received: from [127.0.0.1] (longdrop.musashi.utsl.gen.nz [192.168.253.12])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by mail.utsl.gen.nz (Postfix) with ESMTPSA id 39A2E21C488;
-	Fri, 31 Oct 2008 19:51:41 +1300 (NZDT)
-In-Reply-To: <gedhh6$urq$1@ger.gmane.org>
-X-Mailer: Evolution 2.22.3.1 
+	id S1752204AbYJaHAQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 31 Oct 2008 03:00:16 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751701AbYJaHAP
+	(ORCPT <rfc822;git-outgoing>); Fri, 31 Oct 2008 03:00:15 -0400
+Received: from mo-p05-ob.rzone.de ([81.169.146.181]:46293 "EHLO
+	mo-p05-ob.rzone.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750950AbYJaHAN (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 31 Oct 2008 03:00:13 -0400
+X-RZG-CLASS-ID: mo05
+X-RZG-AUTH: :Pm0FVUW6aauhRGJJc5OfA4AU8DM8ZlijdmJYxKn/UQvEQQx8BU83rXw=
+Received: from tigra.home (Fae26.f.strato-dslnet.de [195.4.174.38])
+	by post.webmailer.de (mrclete mo51) (RZmta 17.14)
+	with ESMTP id a00e28k9V66nqP ; Fri, 31 Oct 2008 08:00:04 +0100 (MET)
+	(envelope-from: <raa.lkml@gmail.com>)
+Received: from blimp.localdomain (unknown [192.168.0.8])
+	by tigra.home (Postfix) with ESMTP id 5AC77277C8;
+	Fri, 31 Oct 2008 08:00:04 +0100 (CET)
+Received: by blimp.localdomain (Postfix, from userid 1000)
+	id 2570736D27; Fri, 31 Oct 2008 08:00:04 +0100 (CET)
+Content-Disposition: inline
+In-Reply-To: <1225344554.10803.17.camel@maia.lan>
+User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/99555>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/99556>
 
-On Fri, 2008-10-31 at 00:55 +0100, Jakub Narebski wrote:
-> > involves typing the branch name twice.  I end up writing things like:
-> > 
-> >   git checkout -b {,origin/}wr34251-do-something
+Sam Vilain, Thu, Oct 30, 2008 06:29:14 +0100:
+> On Wed, 2008-10-29 at 11:38 +0100, Alex Riesen wrote:
+> > I could not find what exactly does the ActiveState's Perl use for its stat
+> > implementation (and honestly, have no motivation to look harder).
+> > It seems to honor TZ, but the produced time does not seem to be either
+> > local or GMT.
 > 
-> Can't you use currently
-> 
->     git checkout --track origin/wr34251-do-something
+> See, the difference is that the perl is portable and your patch isn't.
 
-Ah, that's a new feature.  Still, I think it's poorly Huffman coded; far
-too verbose.
+ActiveState Perl on Windows is portable? To another windows, maybe.
 
-But let's resume this discussion after I dig up the old thread about
-pushing and pulling too... I think it makes sense to look at this as a
-whole.
+> Can you at least reveal how far out the value printed by the perl
+> fragment was from the expected value, and what your TZ offset is in
+> seconds.  It might be pointing to a deeper problem that could affect
+> more than just this test case.
 
-Cheers,
-Sam.
+I tried TZ set to CET (my zone), GMT, and UTC. The difference was from
+1200 sec to 3600.
