@@ -1,100 +1,51 @@
-From: Nicolas Pitre <nico@cam.org>
+From: Brandon Casey <casey@nrlssc.navy.mil>
 Subject: Re: getting list of objects for packing
-Date: Fri, 31 Oct 2008 16:40:40 -0400 (EDT)
-Message-ID: <alpine.LFD.2.00.0810311625450.13034@xanadu.home>
-References: <TtAUShKh7lOR5rkf1iyWwpMOWoYpT8Mnw-t3Wemdy3tTCd0XiQHdag@cipher.nrlssc.navy.mil>
+Date: Fri, 31 Oct 2008 15:48:52 -0500
+Message-ID: <JhY9the71dfsAJuojZF2S4BG-SEkshM7XxIWGPBeY9M@cipher.nrlssc.navy.mil>
+References: <TtAUShKh7lOR5rkf1iyWwpMOWoYpT8Mnw-t3Wemdy3tTCd0XiQHdag@cipher.nrlssc.navy.mil> <alpine.LFD.2.00.0810311625450.13034@xanadu.home>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
 Cc: Git Mailing List <git@vger.kernel.org>
-To: Brandon Casey <casey@nrlssc.navy.mil>
-X-From: git-owner@vger.kernel.org Fri Oct 31 21:42:02 2008
+To: Nicolas Pitre <nico@cam.org>
+X-From: git-owner@vger.kernel.org Fri Oct 31 21:50:11 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Kw0oj-0004IC-7s
-	for gcvg-git-2@gmane.org; Fri, 31 Oct 2008 21:42:01 +0100
+	id 1Kw0wb-0006kO-2V
+	for gcvg-git-2@gmane.org; Fri, 31 Oct 2008 21:50:09 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751669AbYJaUkr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 31 Oct 2008 16:40:47 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751403AbYJaUkr
-	(ORCPT <rfc822;git-outgoing>); Fri, 31 Oct 2008 16:40:47 -0400
-Received: from relais.videotron.ca ([24.201.245.36]:60083 "EHLO
-	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751244AbYJaUkq (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 31 Oct 2008 16:40:46 -0400
-Received: from xanadu.home ([66.131.194.97]) by VL-MO-MR001.ip.videotron.ca
- (Sun Java(tm) System Messaging Server 6.3-4.01 (built Aug  3 2007; 32bit))
- with ESMTP id <0K9M001MOERSUIG0@VL-MO-MR001.ip.videotron.ca> for
- git@vger.kernel.org; Fri, 31 Oct 2008 16:40:40 -0400 (EDT)
-X-X-Sender: nico@xanadu.home
-In-reply-to: <TtAUShKh7lOR5rkf1iyWwpMOWoYpT8Mnw-t3Wemdy3tTCd0XiQHdag@cipher.nrlssc.navy.mil>
-User-Agent: Alpine 2.00 (LFD 1167 2008-08-23)
+	id S1752219AbYJaUs4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 31 Oct 2008 16:48:56 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752069AbYJaUs4
+	(ORCPT <rfc822;git-outgoing>); Fri, 31 Oct 2008 16:48:56 -0400
+Received: from mail1.nrlssc.navy.mil ([128.160.35.1]:50435 "EHLO
+	mail.nrlssc.navy.mil" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752035AbYJaUs4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 31 Oct 2008 16:48:56 -0400
+Received: by mail.nrlssc.navy.mil id m9VKmrLp017155; Fri, 31 Oct 2008 15:48:53 -0500
+In-Reply-To: <alpine.LFD.2.00.0810311625450.13034@xanadu.home>
+X-OriginalArrivalTime: 31 Oct 2008 20:48:53.0282 (UTC) FILETIME=[15C23020:01C93B9A]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/99640>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/99641>
 
-On Fri, 31 Oct 2008, Brandon Casey wrote:
+Nicolas Pitre wrote:
+> On Fri, 31 Oct 2008, Brandon Casey wrote:
 
+>>   -The sed statement is stripping off anything after the sha1. Any way to
+>>    get rev-list to print out just the sha1 so that sed is not necessary?
 > 
-> I'm trying to write a script that will repack large binary or compressed
-> objects into their own non-compressed, non-delta'ed pack file.
-> 
-> To make the decision about whether an object should go into this special
-> pack file or not, I want the output from 'git cat-file --batch-check'.
-> I get it with something similar to:
-> 
->    git rev-list --objects --all |
->       sed -e 's/^\([0-9a-f]\{40\}\).*/\1/' |
->       git cat-file --batch-check
-> 
-> First question: Is the rev-list call correct?
+> If you strip the data after the SHA1 when pipping into pack-objects then 
+> you'll have horrible delta compression results.  The path names after 
+> each SHA1 is used to sort objects when trying to find best matches for 
+> delta compression. So you should preserve those and feed it back 
+> especially with those packs that you still want delta compression for.
 
-yes.
+Ah, I'll have to rethink my script then. Thanks!
 
->   -If I am understanding things right, then the list of objects produced
->    by rev-list will be in the right order for piping to pack-objects. 
->   -The sed statement is stripping off anything after the sha1. Any way to
->    get rev-list to print out just the sha1 so that sed is not necessary?
-
-If you strip the data after the SHA1 when pipping into pack-objects then 
-you'll have horrible delta compression results.  The path names after 
-each SHA1 is used to sort objects when trying to find best matches for 
-delta compression. So you should preserve those and feed it back 
-especially with those packs that you still want delta compression for.
-
-> ISSUE TWO:
-> 
-> I have placed these two packs into my own personal repo, and I have unpacked all
-> of the other objects so that they are loose.
-> 
-> I thought I could use a similar sequence of commands to pack those loose objects
-> into a normal and special pack. I added the --unpacked option to my rev-list
-> command, but it still lists many more objects than exist loosely in the repository.
-> 
->    git rev-list --objects --unpacked --all
-> 
-> The man page says:
-> 
->    --objects
->           Print  the  object  IDs  of any object referenced by the listed
->           commits. --objects foo ^bar thus means "send me all object  IDs
->           which  I  need to download if I have the commit object bar, but
->           not foo".
-> 
->    --unpacked
->           Only useful with --objects; print the object IDs that  are  not
->           in packs.
-> 
-> Is this the correct behavior for rev-list --unpacked?
-
-Well, don't think so.  Although I have zero unpacked objects in my git 
-repository, the listing still gives me a hundred objects or so, and they 
-all appear to be tag objects.  There is probably a bug here.
-
-
-Nicolas
+-brandon
