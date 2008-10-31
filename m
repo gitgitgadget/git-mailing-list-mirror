@@ -1,83 +1,115 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: [PATCH] Documentation: add a planning document for the next CLI revamp
-Date: Fri, 31 Oct 2008 08:36:01 +0100
-Message-ID: <200810310836.02908.jnareb@gmail.com>
-References: <1225338485-11046-1-git-send-email-sam@vilain.net> <gedhh6$urq$1@ger.gmane.org> <1225435899.20883.25.camel@maia.lan>
+From: Teemu Likonen <tlikonen@iki.fi>
+Subject: Re: A typesetting problem with git man pages
+Date: Fri, 31 Oct 2008 09:37:03 +0200
+Message-ID: <8763n9tduo.fsf@iki.fi>
+References: <87skqfus7v.fsf@iki.fi>
+	<2c6b72b30810291235j554cc21dw4e3da4fdbfe633ee@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-2
+Content-Type: text/plain; charset=iso-8859-1
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, Nicolas Pitre <nico@cam.org>
-To: Sam Vilain <sam@vilain.net>
-X-From: git-owner@vger.kernel.org Fri Oct 31 08:37:34 2008
+Cc: git@vger.kernel.org
+To: "Jonas Fonseca" <fonseca@diku.dk>
+X-From: git-owner@vger.kernel.org Fri Oct 31 08:38:27 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KvoZZ-0003Lh-9N
-	for gcvg-git-2@gmane.org; Fri, 31 Oct 2008 08:37:33 +0100
+	id 1KvoaN-0003X0-6i
+	for gcvg-git-2@gmane.org; Fri, 31 Oct 2008 08:38:23 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752099AbYJaHgS convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 31 Oct 2008 03:36:18 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752250AbYJaHgS
-	(ORCPT <rfc822;git-outgoing>); Fri, 31 Oct 2008 03:36:18 -0400
-Received: from ik-out-1112.google.com ([66.249.90.182]:49367 "EHLO
-	ik-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751614AbYJaHgQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 31 Oct 2008 03:36:16 -0400
-Received: by ik-out-1112.google.com with SMTP id c29so113786ika.5
-        for <git@vger.kernel.org>; Fri, 31 Oct 2008 00:36:15 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:subject:date
-         :user-agent:cc:references:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:message-id;
-        bh=GrgnhfTYlQZ7v0AneX94hKS2LCfS7WdzeHucP3biXKU=;
-        b=X9DrJl3cnJlG4HwrSMq+zGlHxZoMWg78qFeJtNMBZM3aLSC9fUmRzLYBhrxIHN0ba0
-         d06FJpvs4vtMJ1DjzHSebnApyZfJ+UQuPbJ0rTwwz1vuhHDDl7a0talBJFr/8SMsjyuL
-         z4VcFGb+6hSCY0+x3LniUk9hbMAagTzwVQ5Eo=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=from:to:subject:date:user-agent:cc:references:in-reply-to
-         :mime-version:content-type:content-transfer-encoding
-         :content-disposition:message-id;
-        b=UZWXKDxsJFC6PrD9+QJuKKgC0DyuYPpq5NAgN5IVBf517VENd8GOOdNAyLfSj3qneD
-         fSVP4XR9G5wkywo9v2C7RY1rNoOa5Tt/Yo13QFpNJ/d3priFKQbNDeFpwwFP6SllWjik
-         /7ynAm1MDjkvl1vh9SMTZuSnLCamvRhdd6VFM=
-Received: by 10.210.89.4 with SMTP id m4mr8434911ebb.107.1225438575161;
-        Fri, 31 Oct 2008 00:36:15 -0700 (PDT)
-Received: from ?192.168.1.11? (abvo7.neoplus.adsl.tpnet.pl [83.8.212.7])
-        by mx.google.com with ESMTPS id d2sm1932575nfc.20.2008.10.31.00.36.12
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Fri, 31 Oct 2008 00:36:13 -0700 (PDT)
-User-Agent: KMail/1.9.3
-In-Reply-To: <1225435899.20883.25.camel@maia.lan>
-Content-Disposition: inline
+	id S1752002AbYJaHhI convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 31 Oct 2008 03:37:08 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751096AbYJaHhI
+	(ORCPT <rfc822;git-outgoing>); Fri, 31 Oct 2008 03:37:08 -0400
+Received: from mta-out.inet.fi ([195.156.147.13]:34845 "EHLO kirsi2.inet.fi"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750800AbYJaHhH (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 31 Oct 2008 03:37:07 -0400
+Received: from mithlond.arda.local (80.220.180.181) by kirsi2.inet.fi (8.5.014)
+        id 48FC5B8900991208; Fri, 31 Oct 2008 09:37:04 +0200
+In-Reply-To: <2c6b72b30810291235j554cc21dw4e3da4fdbfe633ee@mail.gmail.com> (Jonas Fonseca's message of "Wed\, 29 Oct 2008 20\:35\:03 +0100")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/99557>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/99558>
 
-Dnia pi=B1tek 31. pa=BCdziernika 2008 07:51, Sam Vilain napisa=B3:
-> On Fri, 2008-10-31 at 00:55 +0100, Jakub Narebski wrote:
+Jonas Fonseca (2008-10-29 20:35 +0100) wrote:
 
-> > > involves typing the branch name twice.  I end up writing things l=
-ike:
-> > >=20
-> > >   git checkout -b {,origin/}wr34251-do-something
-> >=20
-> > Can't you use currently
-> >=20
-> >     git checkout --track origin/wr34251-do-something
->=20
-> Ah, that's a new feature.  Still, I think it's poorly Huffman coded; =
-far
-> too verbose.
+> On Wed, Oct 29, 2008 at 20:16, Teemu Likonen <tlikonen@iki.fi> wrote:
+>> Does anybody know why "man" prints those ".ft" commands? The
+>> corresponding code in git-log.1 file is this:
+>>
+>>    \&.ft C
+>>    [i18n]
+>>            commitencoding =3D ISO\-8859\-1
+>>    \&.ft
+>>
+>> Recently I upgraded my system from Debian 4.0 (Etch) to 5.0 (Lenny) =
+and
+>> it is possible that some tools which are related to compiling the ma=
+n
+>> pages are now newer versions.
+>
+> I had a similar problem after upgrading on Ubuntu and came up with a
+> patch to optionally disable some of asciidoc.conf (commit
+> 7f55cf451c9e7). Try putting DOCBOOK_XSL_172=3DYes in your config.mak.
 
-Well, either you have a little bit more verbose, or you have to have
-some DWIM-mery, which (as usual with DWIM) can go wrong.
+Alas, there are still problems - or at least I have. Let's look at the
+"git checkout" manual page and its output in the "EXAMPLES" section:
 
---=20
-Jakub Narebski
-Poland
+
+        $ git checkout master             =E2fB(1)=E2fR    =20
+        $ git checkout master~2 Makefile  =E2fB(2)=E2fR    =20
+        $ rm -f hello.c                                =20
+        $ git checkout hello.c            =E2fB(3)=E2fR    =20
+    =E2                                                  =20
+    =E2fB1. =E2fRswitch branch =E2                           =20
+    =E2fB2. =E2fRtake out a file out of other commit =E2     =20
+    =E2fB3. =E2fRrestore hello.c from HEAD of current branch
+
+    If you have an unfortunate branch that is named hello.c, this step
+    would be confused as an instruction to switch to that branch. You
+    should instead write:
+
+        $ git checkout -- hello.c
+    =E2
+    .RE
+
+    2.  After working in a wrong branch, switching to the correct branc=
+h
+       would be done using:
+
+           $ git checkout mytopic
+
+
+The corresponding code in the git-checkout.txt file:
+
+
+    ------------                                  =20
+    $ git checkout master             <1>         =20
+    $ git checkout master~2 Makefile  <2>         =20
+    $ rm -f hello.c                               =20
+    $ git checkout hello.c            <3>         =20
+    ------------                                  =20
+    +                                             =20
+    <1> switch branch                             =20
+    <2> take out a file out of other commit       =20
+    <3> restore hello.c from HEAD of current branch
+    +
+    If you have an unfortunate branch that is named `hello.c`, this
+    step would be confused as an instruction to switch to that branch.
+    You should instead write:
+    +
+    ------------
+    $ git checkout -- hello.c
+    ------------
+
+    . After working in a wrong branch, switching to the correct
+    branch would be done using:
+    +
+    ------------
+    $ git checkout mytopic
+    ------------
