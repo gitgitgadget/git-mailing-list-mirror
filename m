@@ -1,132 +1,59 @@
-From: Ian Hilt <ihilt@mcgregor-surmount.com>
-Subject: Re: [PATCH 2/3] git send-email: do not ask questions when
-	--compose is used.
-Date: Fri, 31 Oct 2008 18:01:49 -0400
-Message-ID: <20081031220149.GD21345@maintenance05.msc.mcgregor-surmount.com>
-References: <1225450632-7230-1-git-send-email-madcoder@debian.org> <1225456609-694-1-git-send-email-madcoder@debian.org> <1225456609-694-2-git-send-email-madcoder@debian.org> <1225456609-694-3-git-send-email-madcoder@debian.org> <20081031213338.GB21345@maintenance05.msc.mcgregor-surmount.com> <20081031213803.GB21799@artemis.corp>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH] Use find instead of perl in t5000 to get file modification
+ time
+Date: Fri, 31 Oct 2008 23:14:59 +0100 (CET)
+Message-ID: <alpine.DEB.1.00.0810312314190.22125@pacific.mpi-cbg.de.mpi-cbg.de>
+References: <81b0412b0810290338j1beaa25bx9fb373a69f5dfe7@mail.gmail.com> <1225344554.10803.17.camel@maia.lan> <20081031070003.GA4458@blimp.localdomain>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Pierre Habouzit <madcoder@debian.org>
-X-From: git-owner@vger.kernel.org Fri Oct 31 23:03:19 2008
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Sam Vilain <sam@vilain.net>,
+	Git Mailing List <git@vger.kernel.org>,
+	Junio C Hamano <gitster@pobox.com>,
+	Jeff King <peff@peff.net>,
+	=?ISO-8859-15?Q?Ren=E9_Scharfe?= <rene.scharfe@lsrfire.ath.cx>
+To: Alex Riesen <raa.lkml@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Oct 31 23:09:00 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Kw25A-0007kk-30
-	for gcvg-git-2@gmane.org; Fri, 31 Oct 2008 23:03:04 +0100
+	id 1Kw2Ap-0001Mt-L4
+	for gcvg-git-2@gmane.org; Fri, 31 Oct 2008 23:08:56 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753450AbYJaWBw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 31 Oct 2008 18:01:52 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753431AbYJaWBw
-	(ORCPT <rfc822;git-outgoing>); Fri, 31 Oct 2008 18:01:52 -0400
-Received: from mail.mcgregor-surmount.com ([70.61.40.162]:59418 "EHLO
-	mcgregor-surmount.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1752776AbYJaWBv (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 31 Oct 2008 18:01:51 -0400
-Received: from maintenance05.msc.mcgregor-surmount.com ([70.61.40.162]) by mcgregor-surmount.com with Microsoft SMTPSVC(6.0.3790.3959);
-	 Fri, 31 Oct 2008 18:01:49 -0400
-Content-Disposition: inline
-In-Reply-To: <20081031213803.GB21799@artemis.corp>
-User-Agent: Mutt/1.5.18 (2008-05-17)
-X-OriginalArrivalTime: 31 Oct 2008 22:01:49.0978 (UTC) FILETIME=[4678FFA0:01C93BA4]
-X-TM-AS-Product-Ver: SMEX-8.1.0.1092-5.500.1027-16252.002
-X-TM-AS-Result: No--9.135200-0.000000-31
-X-TM-AS-User-Approved-Sender: Yes
-X-TM-AS-User-Blocked-Sender: No
+	id S1752361AbYJaWHm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 31 Oct 2008 18:07:42 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752393AbYJaWHm
+	(ORCPT <rfc822;git-outgoing>); Fri, 31 Oct 2008 18:07:42 -0400
+Received: from mail.gmx.net ([213.165.64.20]:40517 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1752312AbYJaWHm (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 31 Oct 2008 18:07:42 -0400
+Received: (qmail invoked by alias); 31 Oct 2008 22:07:39 -0000
+Received: from pacific.mpi-cbg.de (EHLO pacific.mpi-cbg.de) [141.5.10.38]
+  by mail.gmx.net (mp004) with SMTP; 31 Oct 2008 23:07:39 +0100
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1/fL6cKxmnfjxK22LSR0vp+O6yF9dTlIudkl5TWSw
+	oYjLl8XfqYOkB3
+X-X-Sender: schindelin@pacific.mpi-cbg.de.mpi-cbg.de
+In-Reply-To: <20081031070003.GA4458@blimp.localdomain>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.76
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/99657>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/99658>
 
-On Fri, Oct 31, 2008 at 10:38:03PM +0100, Pierre Habouzit wrote:
-> On Fri, Oct 31, 2008 at 09:33:38PM +0000, Ian Hilt wrote:
-> > On Fri, Oct 31, 2008 at 01:36:48PM +0100, Pierre Habouzit wrote:
-> > > +GIT: Please enter your email below this line.
-> > 
-> > At first glance I thought this meant to enter my email address here.
-> > So, instead of "email" would "message" be better?  Although on second
-> > glance I realized this is where the body of the message went.  Not sure
-> > if this is worth changing.
-> 
-> Well, this line sounds kind of awkward actually, so I was even thinking
-> about removing it.
-> 
-> Decent editors should probably have a plugin to put the cursor here and
-> be done with it.
-> 
-> 
-> In fact what looks odd is the GIT: stuff. a line looking like:
-> 
->     --- write your message below this line ---
-> 
-> Looks 10x better, though need some code to strip it out if the user kept
-> it, and I'm lazy, GIT: stuff is automatically removed...
+Hi,
 
-Or, to follow the convention of git-status and git-commit, you could do
-this with "# ".
+On Fri, 31 Oct 2008, Alex Riesen wrote:
 
-So something like,
+> ActiveState Perl on Windows is portable? To another windows, maybe.
 
---->8---
-From: Ian Hilt <ihilt@mcgregor-surmount.com>
-Date: Fri, 31 Oct 2008 17:55:46 -0400
-Subject: [PATCH] Use a hash instead of GIT: for line removal
+/me wonders why you could not use the Perl that ships with Git for 
+Windows, at least for the purposes of Git.
 
-Signed-off-by: Ian Hilt <ihilt@mcgregor-surmount.com>
----
- git-send-email.perl |   12 ++++++------
- 1 files changed, 6 insertions(+), 6 deletions(-)
-
-diff --git a/git-send-email.perl b/git-send-email.perl
-index 5cebb40..c6e21a8 100755
---- a/git-send-email.perl
-+++ b/git-send-email.perl
-@@ -427,7 +427,7 @@ sub get_patch_subject($) {
- 	while (my $line = <$fh>) {
- 		next unless ($line =~ /^Subject: (.*)$/);
- 		close $fh;
--		return "GIT: $1\n";
-+		return "# $1\n";
- 	}
- 	close $fh;
- 	die "No subject line in $fn ?";
-@@ -446,14 +446,14 @@ if ($compose) {
- 
- 	print C <<EOT;
- From $tpl_sender # This line is ignored.
--GIT: Lines beginning in "GIT: " will be removed.
--GIT: Consider including an overall diffstat or table of contents
--GIT: for the patch you are writing.
-+# Lines beginning in "# " will be removed.
-+# Consider including an overall diffstat or table of contents
-+# for the patch you are writing.
- From: $tpl_sender
- Subject: $tpl_subject
- In-Reply-To: $tpl_reply_to
- 
--GIT: Please enter your email below this line.
-+# --- write your message below this line ---
- 
- EOT
- 	for my $f (@files) {
-@@ -479,7 +479,7 @@ EOT
- 	my $in_body = 0;
- 	my $summary_empty = 1;
- 	while(<C>) {
--		next if m/^GIT: /;
-+		next if m/^# /;
- 		if ($in_body) {
- 		} elsif (/^\n$/) {
- 			$in_body = 1;
---->8---
-
-> But if that's the only thing that you don't like in the series, I'm
-> glad, this is quite a minor issue ;)
-
-I've thought something like this would be a good thing.  An editor makes
-things easier to fix than the command-line.
-
-	Ian
+Ciao,
+Dscho
