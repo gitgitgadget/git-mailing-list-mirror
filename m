@@ -1,110 +1,77 @@
-From: Pierre Habouzit <madcoder@debian.org>
-Subject: Re: libgit2 - a true git library
-Date: Fri, 31 Oct 2008 22:31:14 +0100
-Message-ID: <20081031213114.GA21799@artemis.corp>
-References: <20081031170704.GU14786@spearce.org> <20081031174745.GA4058@artemis.corp> <alpine.LFD.2.00.0810311558540.13034@xanadu.home>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH] git show <tree>: show mode and hash, and handle -r
+Date: Fri, 31 Oct 2008 22:40:29 +0100 (CET)
+Message-ID: <alpine.DEB.1.00.0810312236490.22125@pacific.mpi-cbg.de.mpi-cbg.de>
+References: <alpine.DEB.1.00.0810290207330.22125@pacific.mpi-cbg.de.mpi-cbg.de> <7vtzatdbtk.fsf@gitster.siamese.dyndns.org> <alpine.DEB.1.00.0810311753080.22125@pacific.mpi-cbg.de.mpi-cbg.de> <7vk5bo8y3m.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: multipart/signed; boundary="HcAYCG3uE/tztfnV";
-	protocol="application/pgp-signature"; micalg=SHA1
-Cc: "Shawn O. Pearce" <spearce@spearce.org>, git@vger.kernel.org,
-	Scott Chacon <schacon@gmail.com>
-To: Nicolas Pitre <nico@cam.org>
-X-From: git-owner@vger.kernel.org Fri Oct 31 22:32:32 2008
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org, schacon@gmail.com
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Oct 31 22:34:30 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Kw1bb-0006Ve-0b
-	for gcvg-git-2@gmane.org; Fri, 31 Oct 2008 22:32:31 +0100
+	id 1Kw1dQ-00074A-IX
+	for gcvg-git-2@gmane.org; Fri, 31 Oct 2008 22:34:25 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752412AbYJaVbS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 31 Oct 2008 17:31:18 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752442AbYJaVbS
-	(ORCPT <rfc822;git-outgoing>); Fri, 31 Oct 2008 17:31:18 -0400
-Received: from pan.madism.org ([88.191.52.104]:42283 "EHLO hermes.madism.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752384AbYJaVbS (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 31 Oct 2008 17:31:18 -0400
-Received: from madism.org (olympe.madism.org [82.243.245.108])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(Client CN "artemis.madism.org", Issuer "madism.org" (verified OK))
-	by hermes.madism.org (Postfix) with ESMTPS id F0DF73B708;
-	Fri, 31 Oct 2008 22:31:15 +0100 (CET)
-Received: by madism.org (Postfix, from userid 1000)
-	id 92C8F5EE243; Fri, 31 Oct 2008 22:31:14 +0100 (CET)
-Content-Disposition: inline
-In-Reply-To: <alpine.LFD.2.00.0810311558540.13034@xanadu.home>
-X-Face: $(^e[V4D-[`f2EmMGz@fgWK!e.B~2g.{08lKPU(nc1J~z\4B>*JEVq:E]7G-\6$Ycr4<;Z!|VY6Grt]+RsS$IMV)f>2)M="tY:ZPcU;&%it2D81X^kNya0=L]"vZmLP+UmKhgq+u*\.dJ8G!N&=EvlD
-User-Agent: Madmutt/devel (Linux)
+	id S1751636AbYJaVdM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 31 Oct 2008 17:33:12 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752222AbYJaVdM
+	(ORCPT <rfc822;git-outgoing>); Fri, 31 Oct 2008 17:33:12 -0400
+Received: from mail.gmx.net ([213.165.64.20]:41301 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1751574AbYJaVdK (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 31 Oct 2008 17:33:10 -0400
+Received: (qmail invoked by alias); 31 Oct 2008 21:33:08 -0000
+Received: from pacific.mpi-cbg.de (EHLO pacific.mpi-cbg.de) [141.5.10.38]
+  by mail.gmx.net (mp054) with SMTP; 31 Oct 2008 22:33:08 +0100
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1+tbmFWg82tFkTfPrWc1mgbwEFohOt1yr/Ym9i6rA
+	GliQ3RhN3GR7Ab
+X-X-Sender: schindelin@pacific.mpi-cbg.de.mpi-cbg.de
+In-Reply-To: <7vk5bo8y3m.fsf@gitster.siamese.dyndns.org>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.6
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/99645>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/99646>
 
+Hi,
 
---HcAYCG3uE/tztfnV
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+On Fri, 31 Oct 2008, Junio C Hamano wrote:
 
-On Fri, Oct 31, 2008 at 08:24:14PM +0000, Nicolas Pitre wrote:
-> On Fri, 31 Oct 2008, Pierre Habouzit wrote:
->=20
-> > Last but not least, I believe parts of git-core are currently easy to
-> > just take. For example, any code *I* wrote, I hereby give permission to
-> > relicense it in any of the following licenses: BSD-like, MIT-like,
-> > WTFPL.
->=20
-> First........... is there really a need to re-license it?
-> If so then the choice of license is IMHO rather important.
+> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+> 
+> > On Thu, 30 Oct 2008, Junio C Hamano wrote:
+> >
+> >> I wonder if it would help breaking down cmd_log_init() a bit like this.
+> >
+> > Sorry, I am quite busy (this is the first time I am able to check my 
+> > mail since the GitTogether), so I cannot look at that in detail.
+> >
+> > However, I strongly expect your suggestion not to help: for showing 
+> > commits, we _want_ recursive to be the default.  And switching that on 
+> > devoids us from being able to DIFF_OPT_TST(.., RECURSIVE) to detect if 
+> > the user said '-r' _explicitely_.
+> 
+> You can turn on recursive unconditionally for the normal "show 
+> committish" case, and check for explicit "-r" for "show treeish" that 
+> was bolted-on much later, can't you?
 
-Hmm yeah, GPL has the viral link issue, and there is a real use of
-embedding the libgit in many projects. There is a use for it: front-ends
-to git from editors, for closed-source projects of various sorts, ...
-All of those right now must do a reimplementation of what they need. As
-soon as they need some kind of performance, exec()ing git-* commands
-doesn't fly.
+No, I can't, because cmd_show() uses setup_revisions() (actually, this 
+is called by cmd_log_init()) not only to parse the command line arguments, 
+but also the objects to show.
 
-Git is currently mostly "GPLv2 or later". A BSDish license was
-mentioned, because it's the most permissive one and that nobody cared
-that much, though a LGPL/GPL-with-GCC-exception would probably fly.
+The only way I could imagine this working is to turn _off_ FORMAT_PATCH, 
+do the parsing, then check if RECURSIVE was set, then turn _on_ 
+FORMAT_PATCH and call diff_setup_done().
 
-Many of the people needing a library for libgit are probably reading the
-list, I'll let them comment. The kind of license you propose would
-totally suite my needs, and I think, most of the one discussed at
-GitTogether'08 (except for the eclipse people disliking GPL'ed stuff,
-but anyways there was the issue of C code being non pure java anyways,
-so maybe Shawn can comment on that bit, I don't recall the exact
-specifics I must reckon).
+But that feels just as awful.
 
-
-OT: FWIW I prefer BSDish licenses (even the MIT actually) for libraries
-because I believe that computing is overall better if everyone can use
-the right tool for the task, and I don't want to prevent people from
-using good stuff (I hope I write good stuff ;P) because of the license.
-And I don't care about people don't giving back to me, those are not the
-kind of people who would have given back if it was GPL'ed anyways.
-
-But I understand this is a completely personal view, and I'm not even
-trying to persuade you :)
---=20
-=C2=B7O=C2=B7  Pierre Habouzit
-=C2=B7=C2=B7O                                                madcoder@debia=
-n.org
-OOO                                                http://www.madism.org
-
---HcAYCG3uE/tztfnV
-Content-Type: application/pgp-signature
-Content-Disposition: inline
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.9 (GNU/Linux)
-
-iEYEABECAAYFAkkLeSIACgkQvGr7W6Hudhw3MQCcC3uZcmImKz8bQ66DBKyyE1Fg
-qNkAnR5J+t2eKiXNL+gPpdAFw88xzUnQ
-=RFTU
------END PGP SIGNATURE-----
-
---HcAYCG3uE/tztfnV--
+Ciao,
+Dscho
