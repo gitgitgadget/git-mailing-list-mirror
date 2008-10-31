@@ -1,115 +1,57 @@
-From: Teemu Likonen <tlikonen@iki.fi>
-Subject: Re: A typesetting problem with git man pages
-Date: Fri, 31 Oct 2008 09:37:03 +0200
-Message-ID: <8763n9tduo.fsf@iki.fi>
-References: <87skqfus7v.fsf@iki.fi>
-	<2c6b72b30810291235j554cc21dw4e3da4fdbfe633ee@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] Introduce receive.denyDeletes
+Date: Fri, 31 Oct 2008 01:04:22 -0700
+Message-ID: <7v63n99omx.fsf@gitster.siamese.dyndns.org>
+References: <20081030191134.62455c24@perceptron>
+ <20081030183210.GO14786@spearce.org> <20081030194503.2f9ece1a@perceptron>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: "Jonas Fonseca" <fonseca@diku.dk>
-X-From: git-owner@vger.kernel.org Fri Oct 31 08:38:27 2008
+Cc: "Shawn O. Pearce" <spearce@spearce.org>, git@vger.kernel.org
+To: =?utf-8?Q?Jan_Kr=C3=BCger?= <jk@jk.gs>
+X-From: git-owner@vger.kernel.org Fri Oct 31 09:06:16 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KvoaN-0003X0-6i
-	for gcvg-git-2@gmane.org; Fri, 31 Oct 2008 08:38:23 +0100
+	id 1Kvp17-0003OY-LX
+	for gcvg-git-2@gmane.org; Fri, 31 Oct 2008 09:06:02 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752002AbYJaHhI convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 31 Oct 2008 03:37:08 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751096AbYJaHhI
-	(ORCPT <rfc822;git-outgoing>); Fri, 31 Oct 2008 03:37:08 -0400
-Received: from mta-out.inet.fi ([195.156.147.13]:34845 "EHLO kirsi2.inet.fi"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750800AbYJaHhH (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 31 Oct 2008 03:37:07 -0400
-Received: from mithlond.arda.local (80.220.180.181) by kirsi2.inet.fi (8.5.014)
-        id 48FC5B8900991208; Fri, 31 Oct 2008 09:37:04 +0200
-In-Reply-To: <2c6b72b30810291235j554cc21dw4e3da4fdbfe633ee@mail.gmail.com> (Jonas Fonseca's message of "Wed\, 29 Oct 2008 20\:35\:03 +0100")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+	id S1752792AbYJaIEo convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 31 Oct 2008 04:04:44 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752649AbYJaIEm
+	(ORCPT <rfc822;git-outgoing>); Fri, 31 Oct 2008 04:04:42 -0400
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:51312 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752678AbYJaIEk convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 31 Oct 2008 04:04:40 -0400
+Received: from localhost.localdomain (localhost [127.0.0.1])
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 046B2770DC;
+	Fri, 31 Oct 2008 04:04:37 -0400 (EDT)
+Received: from pobox.com (ip68-225-240-211.oc.oc.cox.net [68.225.240.211])
+ (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
+ certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
+ ESMTPSA id 1CB63770D9; Fri, 31 Oct 2008 04:04:29 -0400 (EDT)
+In-Reply-To: <20081030194503.2f9ece1a@perceptron> (Jan =?utf-8?Q?Kr=C3=BCg?=
+ =?utf-8?Q?er's?= message of "Thu, 30 Oct 2008 19:45:03 +0100")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: 8F8BD2B4-A722-11DD-B84A-9CEDC82D7133-77302942!a-sasl-fastnet.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/99558>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/99559>
 
-Jonas Fonseca (2008-10-29 20:35 +0100) wrote:
+"Jan Kr=C3=BCger" <jk@jk.gs> writes:
 
-> On Wed, Oct 29, 2008 at 20:16, Teemu Likonen <tlikonen@iki.fi> wrote:
->> Does anybody know why "man" prints those ".ft" commands? The
->> corresponding code in git-log.1 file is this:
->>
->>    \&.ft C
->>    [i18n]
->>            commitencoding =3D ISO\-8859\-1
->>    \&.ft
->>
->> Recently I upgraded my system from Debian 4.0 (Etch) to 5.0 (Lenny) =
-and
->> it is possible that some tools which are related to compiling the ma=
-n
->> pages are now newer versions.
->
-> I had a similar problem after upgrading on Ubuntu and came up with a
-> patch to optionally disable some of asciidoc.conf (commit
-> 7f55cf451c9e7). Try putting DOCBOOK_XSL_172=3DYes in your config.mak.
+> Can I then delete the branch afterwards without lots of juggling (in
+> case the test fails due to a random other reason that the branch
+> accidentally getting deleted by receive-pack)? I'd expect I'd have to
+> save the exit code to a temporary variable and that's just as ugly.
 
-Alas, there are still problems - or at least I have. Let's look at the
-"git checkout" manual page and its output in the "EXAMPLES" section:
-
-
-        $ git checkout master             =E2fB(1)=E2fR    =20
-        $ git checkout master~2 Makefile  =E2fB(2)=E2fR    =20
-        $ rm -f hello.c                                =20
-        $ git checkout hello.c            =E2fB(3)=E2fR    =20
-    =E2                                                  =20
-    =E2fB1. =E2fRswitch branch =E2                           =20
-    =E2fB2. =E2fRtake out a file out of other commit =E2     =20
-    =E2fB3. =E2fRrestore hello.c from HEAD of current branch
-
-    If you have an unfortunate branch that is named hello.c, this step
-    would be confused as an instruction to switch to that branch. You
-    should instead write:
-
-        $ git checkout -- hello.c
-    =E2
-    .RE
-
-    2.  After working in a wrong branch, switching to the correct branc=
-h
-       would be done using:
-
-           $ git checkout mytopic
-
-
-The corresponding code in the git-checkout.txt file:
-
-
-    ------------                                  =20
-    $ git checkout master             <1>         =20
-    $ git checkout master~2 Makefile  <2>         =20
-    $ rm -f hello.c                               =20
-    $ git checkout hello.c            <3>         =20
-    ------------                                  =20
-    +                                             =20
-    <1> switch branch                             =20
-    <2> take out a file out of other commit       =20
-    <3> restore hello.c from HEAD of current branch
-    +
-    If you have an unfortunate branch that is named `hello.c`, this
-    step would be confused as an instruction to switch to that branch.
-    You should instead write:
-    +
-    ------------
-    $ git checkout -- hello.c
-    ------------
-
-    . After working in a wrong branch, switching to the correct
-    branch would be done using:
-    +
-    ------------
-    $ git checkout mytopic
-    ------------
+Although I agree that your attempt to allow the test continue even when
+this test fails is a very good practice, I personally do not find the
+alternative you mention ugly at all.  I actually find that "return 1"
+uglier because it feels like it knows too much about how
+test_expect_success is implemented.
