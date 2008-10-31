@@ -1,95 +1,90 @@
 From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: Are binary xdeltas only used if you use git-gc?
-Date: Fri, 31 Oct 2008 17:26:56 +0100
-Message-ID: <200810311726.57122.jnareb@gmail.com>
-References: <f1d2d9ca0810310243r669840bbj2c5ee7183e0caaed@mail.gmail.com> <m37i7pggnk.fsf@localhost.localdomain> <f1d2d9ca0810310428o166dc075wbb43c00c1a555350@mail.gmail.com>
+Subject: Re: [PATCH] prepare deprecation of git-revert
+Date: Fri, 31 Oct 2008 09:36:33 -0700 (PDT)
+Message-ID: <m33aichgc1.fsf@localhost.localdomain>
+References: <1225468527-29694-1-git-send-email-madcoder@debian.org>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="utf-8"
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-To: "Thanassis Tsiodras" <ttsiodras@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Oct 31 17:28:40 2008
+To: Pierre Habouzit <madcoder@debian.org>
+X-From: git-owner@vger.kernel.org Fri Oct 31 17:38:06 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KvwrN-0007FJ-Ji
-	for gcvg-git-2@gmane.org; Fri, 31 Oct 2008 17:28:30 +0100
+	id 1Kvx0R-00034S-OZ
+	for gcvg-git-2@gmane.org; Fri, 31 Oct 2008 17:37:52 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751470AbYJaQ1H (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 31 Oct 2008 12:27:07 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751382AbYJaQ1H
-	(ORCPT <rfc822;git-outgoing>); Fri, 31 Oct 2008 12:27:07 -0400
-Received: from ug-out-1314.google.com ([66.249.92.175]:27424 "EHLO
-	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751493AbYJaQ1E (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 31 Oct 2008 12:27:04 -0400
-Received: by ug-out-1314.google.com with SMTP id 39so1287641ugf.37
-        for <git@vger.kernel.org>; Fri, 31 Oct 2008 09:27:02 -0700 (PDT)
+	id S1751525AbYJaQgh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 31 Oct 2008 12:36:37 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751245AbYJaQgh
+	(ORCPT <rfc822;git-outgoing>); Fri, 31 Oct 2008 12:36:37 -0400
+Received: from ey-out-2122.google.com ([74.125.78.26]:65384 "EHLO
+	ey-out-2122.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751279AbYJaQgg (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 31 Oct 2008 12:36:36 -0400
+Received: by ey-out-2122.google.com with SMTP id 6so483234eyi.37
+        for <git@vger.kernel.org>; Fri, 31 Oct 2008 09:36:34 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:subject:date
-         :user-agent:cc:references:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:message-id;
-        bh=FJH0Dn5ON9rPBw5mHhRIOLr+OKaMZf7p3pH6/uZWAn8=;
-        b=p8abih3G0ozhQkJy02oeXZ1d3TOEZhgReFmKX7oI0GkVfzHt3DT1373q2q+7Rs9rwf
-         L64wLw91exEhe4CCSl/DrnzWJJMbOT82OCKPvkbxRIKYI2Q0eDe68FoXTf3e5Wh8EExK
-         YAVfkeMbs3jUz/pssLxaHef5YsGx50e3ZkcxE=
+        h=domainkey-signature:received:received:received:received
+         :x-authentication-warning:to:cc:subject:references:from:in-reply-to
+         :message-id:lines:user-agent:mime-version:content-type:date;
+        bh=JjhmRmdLndlWXrbHKs4DF3mNI4Err669yHGvh5D9pzc=;
+        b=Txeajs/LN8Df8hJfuWij4w5COmoTc46GSXfW4AOYjNqtwejppUTMTjlFdQjNaE5mun
+         yPZTK30MdXG+Q4wqDnOiXHceFd8dBwLdsnPfRfsJnBOB4Ic4fmmJhtXTf63QPfSirPEQ
+         pdyks9E07EtiNar98D1LUKAIUEhXiJ8CzrPjs=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=from:to:subject:date:user-agent:cc:references:in-reply-to
-         :mime-version:content-type:content-transfer-encoding
-         :content-disposition:message-id;
-        b=FlSs7KiQ7ehcSwreDQb0bmEtmKMy2zomvuThtGDAjQND41jpYSX1p2dhVqWrYhR4gb
-         uvAoa+WTKRlg/iHlRP1Aw7N+Ux5dtA7gqQaUXBQlLX9N5Hct2IqqjyrElmZpwsUpldZw
-         FcvaTE1nnNq2ceOHId0wFOxQbBeFhLL3BEhRs=
-Received: by 10.66.236.13 with SMTP id j13mr2840016ugh.7.1225470422560;
-        Fri, 31 Oct 2008 09:27:02 -0700 (PDT)
-Received: from ?192.168.1.11? (abwk207.neoplus.adsl.tpnet.pl [83.8.234.207])
-        by mx.google.com with ESMTPS id 20sm5024853uga.49.2008.10.31.09.26.59
+        h=x-authentication-warning:to:cc:subject:references:from:in-reply-to
+         :message-id:lines:user-agent:mime-version:content-type:date;
+        b=pUfjSdeRD8UM8omvD+8L8yVPdTMe31sBjEHTM05ALXabtxk4TV7JOOnLJ7VpTrOqW/
+         2rQQx3drHfSiXcdUPlt2zvoTE0DLh/7Uxnke3Rbf7SOsdNn/vJnRmvZb0j/3HdP7ZY0E
+         NFi7h4YHh4s3I8OZaVFLT9bqPa5TKiLRG0oGM=
+Received: by 10.210.144.3 with SMTP id r3mr9333118ebd.115.1225470994773;
+        Fri, 31 Oct 2008 09:36:34 -0700 (PDT)
+Received: from localhost.localdomain (abwk207.neoplus.adsl.tpnet.pl [83.8.234.207])
+        by mx.google.com with ESMTPS id y34sm1390455iky.9.2008.10.31.09.36.32
         (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Fri, 31 Oct 2008 09:27:01 -0700 (PDT)
-User-Agent: KMail/1.9.3
-In-Reply-To: <f1d2d9ca0810310428o166dc075wbb43c00c1a555350@mail.gmail.com>
-Content-Disposition: inline
+        Fri, 31 Oct 2008 09:36:33 -0700 (PDT)
+Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
+	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id m9VGaW9J027457;
+	Fri, 31 Oct 2008 17:36:32 +0100
+Received: (from jnareb@localhost)
+	by localhost.localdomain (8.13.4/8.13.4/Submit) id m9VGaUH8027454;
+	Fri, 31 Oct 2008 17:36:30 +0100
+X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
+In-Reply-To: <1225468527-29694-1-git-send-email-madcoder@debian.org>
+User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/99598>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/99599>
 
-Thanassis Tsiodras wrote:
-> On Fri, Oct 31, 2008 at 1:15 PM, Jakub Narebski <jnareb@gmail.com> wrote:
- 
-> > Git does deltification _only_ in packfiles. But when you push via SSH
-> > git would generate a pack file with commits the other side doesn't
-> > have, and those packs are thin packs, so they also have deltas... but
-> > the remote side then adds bases to those thin packs making them
-> > standalone: you would have to git-gc on remote.
+Pierre Habouzit <madcoder@debian.org> writes:
+
+> * Rename builtin-revert.c into builtin-cherry-pick.c
 > 
-> So I have to git-gc on my side (after the commits), git-gc on the remote,
-> and then git-push?
+> * Add option -R/--revert to git-cherry-pick.
+>   Document it by taking the current content of git-revert manpage for the
+>   option.
+> 
+> * get rid of the no_replay initialization, just ignore it when we're in
+>   the revert case, it makes really no sense to error out.
+> 
+> * put the warning of deprecation in cmd_revert, #if 0-ed out for now.
 
-Perhaps I haven't made myself clear.
+> +#if 0
+> +	warning("git revert is deprecated, please use git cherry-pick --revert/-R instead");
+> +#endif
 
-On the local side: git-commit creates loose (compressed, but not
-deltified) objects. git-gc packs and deltifies.
+By the way, Mercurial names this command IIRC 'hg backout'. 
 
-On the remote side (for smart protocols, i.e. git and ssh): git
-creates _thin_ pack, deltified; on the remote side git either makes
-pack thick/self contained by adding base objects (object + deltas),
-or explodes pack into loose object (object). You need git-gc on
-remote server to fully deltify on remote side. But transfer is fully
-deltified.
-
-On the remote side (for dumb protocols, i.e. rsync and http): git
-finds required packs and transfers them whole. So the situation is
-like on local side, but git might transfer more than really needed
-because it transfers packs in full.
-
-HTH.
+But I think that adding '-R' option to git-cherry-pick is a good idea
+even if we don't go deprecating git-revert.
 -- 
 Jakub Narebski
 Poland
+ShadeHawk on #git
