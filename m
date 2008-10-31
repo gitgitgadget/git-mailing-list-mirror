@@ -1,54 +1,64 @@
-From: Samuel Lucas Vaz de Mello <samuellucas@datacom.ind.br>
-Subject: Re: commit type
-Date: Fri, 31 Oct 2008 16:56:05 -0200
-Organization: DATACOM
-Message-ID: <490B54C5.3070108@datacom.ind.br>
-References: <loom.20081031T174821-603@post.gmane.org> <ee77f5c20810311104m6044bf70r1d9d405fa04454e0@mail.gmail.com>
+From: Theodore Tso <tytso@mit.edu>
+Subject: Re: [PATCH] prepare deprecation of git-revert
+Date: Fri, 31 Oct 2008 15:01:57 -0400
+Message-ID: <20081031190157.GG17651@mit.edu>
+References: <1225468527-29694-1-git-send-email-madcoder@debian.org> <m33aichgc1.fsf@localhost.localdomain>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: 7rans <transfire@gmail.com>, git@vger.kernel.org
-To: David Symonds <dsymonds@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Oct 31 19:57:31 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: Pierre Habouzit <madcoder@debian.org>, git@vger.kernel.org
+To: Jakub Narebski <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Oct 31 20:03:25 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KvzBa-0001zI-LF
-	for gcvg-git-2@gmane.org; Fri, 31 Oct 2008 19:57:31 +0100
+	id 1KvzHC-00041v-7E
+	for gcvg-git-2@gmane.org; Fri, 31 Oct 2008 20:03:18 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752280AbYJaS4K (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 31 Oct 2008 14:56:10 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752225AbYJaS4I
-	(ORCPT <rfc822;git-outgoing>); Fri, 31 Oct 2008 14:56:08 -0400
-Received: from mail.datacom-telematica.com.br ([200.213.13.18]:44623 "EHLO
-	mail.datacom-telematica.com.br" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751096AbYJaS4H (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 31 Oct 2008 14:56:07 -0400
-Received: by mail.datacom-telematica.com.br (Postfix, from userid 65)
-	id 079EF32ADA; Fri, 31 Oct 2008 16:56:04 -0200 (BRST)
-Received: from [10.1.3.11] (unknown [10.1.3.11])
-	by mail.datacom-telematica.com.br (Postfix) with ESMTP id 7A53F32AD8;
-	Fri, 31 Oct 2008 16:56:04 -0200 (BRST)
-User-Agent: Thunderbird 2.0.0.17 (X11/20080925)
-In-Reply-To: <ee77f5c20810311104m6044bf70r1d9d405fa04454e0@mail.gmail.com>
+	id S1751281AbYJaTCB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 31 Oct 2008 15:02:01 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751450AbYJaTCB
+	(ORCPT <rfc822;git-outgoing>); Fri, 31 Oct 2008 15:02:01 -0400
+Received: from www.church-of-our-saviour.ORG ([69.25.196.31]:43162 "EHLO
+	thunker.thunk.org" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1751271AbYJaTCA (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 31 Oct 2008 15:02:00 -0400
+Received: from root (helo=closure.thunk.org)
+	by thunker.thunk.org with local-esmtp   (Exim 4.50 #1 (Debian))
+	id 1KvzFu-0007Mq-17; Fri, 31 Oct 2008 15:01:58 -0400
+Received: from tytso by closure.thunk.org with local (Exim 4.69)
+	(envelope-from <tytso@mit.edu>)
+	id 1KvzFt-0002Gr-EL; Fri, 31 Oct 2008 15:01:57 -0400
+Content-Disposition: inline
+In-Reply-To: <m33aichgc1.fsf@localhost.localdomain>
+User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
+X-SA-Exim-Connect-IP: <locally generated>
+X-SA-Exim-Mail-From: tytso@mit.edu
+X-SA-Exim-Scanned: No (on thunker.thunk.org); SAEximRunCond expanded to false
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/99621>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/99622>
 
-David Symonds wrote:
-> On Fri, Oct 31, 2008 at 10:58 AM, 7rans <transfire@gmail.com> wrote:
+On Fri, Oct 31, 2008 at 09:36:33AM -0700, Jakub Narebski wrote:
+> > +#if 0
+> > +	warning("git revert is deprecated, please use git cherry-pick --revert/-R instead");
+> > +#endif
 > 
->> Currently I achieve this by adding "[type]" to the end of my commit messages.
->> But of course that's less than optimal.
-> 
-> Why is that less than optimal? It seems a lot less intrusive than what
-> you suggest.
-> 
+> By the way, Mercurial names this command IIRC 'hg backout'. 
 
-Also, you can use a hook to check that the commit message contains a valid "type".
+By the way, BitKeeper names this command "bk undo" (which is another
+reason why I would advocate against "git undo" as a syntatic sugar for
+"git checkout HEAD -- $*") --- not that I think there are too many BK
+refugees that might want to switch to git, but it shows that "undo"
+has its own ambiguities; gk uses "undo" the same way we currently use
+"git revert".
 
- - Samuel
+For people who argue that "git cherry-pick --revert" or "git
+cherry-pick -R" is too long, I'd argue that for most people its not a
+common command, and for those for which it is common, they can always
+make in alias for "git pick".
+
+						- Ted
