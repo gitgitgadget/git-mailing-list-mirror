@@ -1,95 +1,64 @@
-From: Pierre Habouzit <madcoder@debian.org>
-Subject: Re: [PATCH 2/3] git send-email: do not ask questions when  --compose is used.
-Date: Fri, 31 Oct 2008 22:38:03 +0100
-Message-ID: <20081031213803.GB21799@artemis.corp>
-References: <1225450632-7230-1-git-send-email-madcoder@debian.org> <1225456609-694-1-git-send-email-madcoder@debian.org> <1225456609-694-2-git-send-email-madcoder@debian.org> <1225456609-694-3-git-send-email-madcoder@debian.org> <20081031213338.GB21345@maintenance05.msc.mcgregor-surmount.com>
+From: Brandon Casey <casey@nrlssc.navy.mil>
+Subject: Re: getting list of objects for packing
+Date: Fri, 31 Oct 2008 16:40:03 -0500
+Message-ID: <fAUegZ3bxPo8HquZjUM9syW-giYefuAzBtb1XXHQ-TwbmvJvMZvmDA@cipher.nrlssc.navy.mil>
+References: <TtAUShKh7lOR5rkf1iyWwpMOWoYpT8Mnw-t3Wemdy3tTCd0XiQHdag@cipher.nrlssc.navy.mil> <alpine.LFD.2.00.0810311625450.13034@xanadu.home> <JhY9the71dfsAJuojZF2S4BG-SEkshM7XxIWGPBeY9M@cipher.nrlssc.navy.mil> <7v7i7o8nc5.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: multipart/signed; boundary="98e8jtXdkpgskNou";
-	protocol="application/pgp-signature"; micalg=SHA1
-Cc: git@vger.kernel.org
-To: Ian Hilt <ihilt@mcgregor-surmount.com>
-X-From: git-owner@vger.kernel.org Fri Oct 31 22:39:22 2008
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: Nicolas Pitre <nico@cam.org>,
+	Git Mailing List <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Oct 31 22:41:59 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Kw1iC-0008Oj-VQ
-	for gcvg-git-2@gmane.org; Fri, 31 Oct 2008 22:39:21 +0100
+	id 1Kw1kk-0000mN-Uj
+	for gcvg-git-2@gmane.org; Fri, 31 Oct 2008 22:41:59 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752384AbYJaViH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 31 Oct 2008 17:38:07 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751574AbYJaViG
-	(ORCPT <rfc822;git-outgoing>); Fri, 31 Oct 2008 17:38:06 -0400
-Received: from pan.madism.org ([88.191.52.104]:35957 "EHLO hermes.madism.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752535AbYJaViF (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 31 Oct 2008 17:38:05 -0400
-Received: from madism.org (olympe.madism.org [82.243.245.108])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(Client CN "artemis.madism.org", Issuer "madism.org" (verified OK))
-	by hermes.madism.org (Postfix) with ESMTPS id 751183B6C4;
-	Fri, 31 Oct 2008 22:38:04 +0100 (CET)
-Received: by madism.org (Postfix, from userid 1000)
-	id 2C4E15EE243; Fri, 31 Oct 2008 22:38:03 +0100 (CET)
-Content-Disposition: inline
-In-Reply-To: <20081031213338.GB21345@maintenance05.msc.mcgregor-surmount.com>
-X-Face: $(^e[V4D-[`f2EmMGz@fgWK!e.B~2g.{08lKPU(nc1J~z\4B>*JEVq:E]7G-\6$Ycr4<;Z!|VY6Grt]+RsS$IMV)f>2)M="tY:ZPcU;&%it2D81X^kNya0=L]"vZmLP+UmKhgq+u*\.dJ8G!N&=EvlD
-User-Agent: Madmutt/devel (Linux)
+	id S1752577AbYJaVka (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 31 Oct 2008 17:40:30 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753504AbYJaVk3
+	(ORCPT <rfc822;git-outgoing>); Fri, 31 Oct 2008 17:40:29 -0400
+Received: from mail1.nrlssc.navy.mil ([128.160.35.1]:36447 "EHLO
+	mail.nrlssc.navy.mil" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752947AbYJaVk2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 31 Oct 2008 17:40:28 -0400
+Received: by mail.nrlssc.navy.mil id m9VLe3CD020573; Fri, 31 Oct 2008 16:40:03 -0500
+In-Reply-To: <7v7i7o8nc5.fsf@gitster.siamese.dyndns.org>
+X-OriginalArrivalTime: 31 Oct 2008 21:40:03.0666 (UTC) FILETIME=[3BD99B20:01C93BA1]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/99649>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/99650>
 
+Junio C Hamano wrote:
+> Brandon Casey <casey@nrlssc.navy.mil> writes:
+> 
+>> Nicolas Pitre wrote:
+>>> On Fri, 31 Oct 2008, Brandon Casey wrote:
+>>>>   -The sed statement is stripping off anything after the sha1. Any way to
+>>>>    get rev-list to print out just the sha1 so that sed is not necessary?
+>>> If you strip the data after the SHA1 when pipping into pack-objects then 
+>>> you'll have horrible delta compression results.  The path names after 
+>>> each SHA1 is used to sort objects when trying to find best matches for 
+>>> delta compression. So you should preserve those and feed it back 
+>>> especially with those packs that you still want delta compression for.
+>> Ah, I'll have to rethink my script then. Thanks!
+> 
+> Yeah, but wasn't the purpose of your whole exercise to list objects that
+> do not delta nor compress well with each other, in which case the delta
+> compression order (aka name hash) would not matter, no?
 
---98e8jtXdkpgskNou
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+The script I wrote actually starts up two pack-objects instances and I was
+writing the objects I wanted to pack _normally_ to one, and the ones that I
+did not want compressed/deltafied to the other (which was started with
+--no-reuse-object --window=0 --depth=0 --compression=0).
 
-On Fri, Oct 31, 2008 at 09:33:38PM +0000, Ian Hilt wrote:
-> On Fri, Oct 31, 2008 at 01:36:48PM +0100, Pierre Habouzit wrote:
-> > +GIT: Please enter your email below this line.
->=20
-> At first glance I thought this meant to enter my email address here.
-> So, instead of "email" would "message" be better?  Although on second
-> glance I realized this is where the body of the message went.  Not sure
-> if this is worth changing.
+I didn't mentioned that fact in my first email, but I'm very glad Nico
+made his point.
 
-Well, this line sounds kind of awkward actually, so I was even thinking
-about removing it.
-
-Decent editors should probably have a plugin to put the cursor here and
-be done with it.
-
-
-In fact what looks odd is the GIT: stuff. a line looking like:
-
-    --- write your message below this line ---
-
-Looks 10x better, though need some code to strip it out if the user kept
-it, and I'm lazy, GIT: stuff is automatically removed...
-
-
-But if that's the only thing that you don't like in the series, I'm
-glad, this is quite a minor issue ;)
---=20
-=C2=B7O=C2=B7  Pierre Habouzit
-=C2=B7=C2=B7O                                                madcoder@debia=
-n.org
-OOO                                                http://www.madism.org
-
---98e8jtXdkpgskNou
-Content-Type: application/pgp-signature
-Content-Disposition: inline
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.9 (GNU/Linux)
-
-iEYEABECAAYFAkkLersACgkQvGr7W6HudhzzTgCgoUpUdKT/v5GHr7W8cM+TC63w
-zm4An2C45eW4l01JNLSsOygTT3WKWQya
-=QB/E
------END PGP SIGNATURE-----
-
---98e8jtXdkpgskNou--
+-brandon
