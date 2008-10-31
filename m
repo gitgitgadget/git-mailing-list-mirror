@@ -1,65 +1,83 @@
-From: Ian Hilt <ihilt@mcgregor-surmount.com>
-Subject: Re: [PATCH] Avoid using non-portable `echo -n` in tests.
-Date: Fri, 31 Oct 2008 16:11:27 -0400
-Message-ID: <20081031201127.GA21345@maintenance05.msc.mcgregor-surmount.com>
-References: <200810312050.31167.fg@one2team.net>
+From: david@lang.hm
+Subject: Re: libgit2 - a true git library
+Date: Fri, 31 Oct 2008 13:29:40 -0700 (PDT)
+Message-ID: <alpine.DEB.1.10.0810311325490.5851@asgard.lang.hm>
+References: <20081031170704.GU14786@spearce.org> <20081031174745.GA4058@artemis.corp> <alpine.LFD.2.00.0810311558540.13034@xanadu.home>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Git List <git@vger.kernel.org>
-To: Francis Galiegue <fg@one2team.net>
-X-From: git-owner@vger.kernel.org Fri Oct 31 21:28:01 2008
+Content-Type: TEXT/PLAIN; charset=US-ASCII; format=flowed
+Cc: Pierre Habouzit <madcoder@debian.org>,
+	"Shawn O. Pearce" <spearce@spearce.org>, git@vger.kernel.org,
+	Scott Chacon <schacon@gmail.com>
+To: Nicolas Pitre <nico@cam.org>
+X-From: git-owner@vger.kernel.org Fri Oct 31 21:31:12 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Kw0bB-0008HH-E9
-	for gcvg-git-2@gmane.org; Fri, 31 Oct 2008 21:28:01 +0100
+	id 1Kw0e0-0000nB-OJ
+	for gcvg-git-2@gmane.org; Fri, 31 Oct 2008 21:30:57 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752263AbYJaU0s convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 31 Oct 2008 16:26:48 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752231AbYJaU0s
-	(ORCPT <rfc822;git-outgoing>); Fri, 31 Oct 2008 16:26:48 -0400
-Received: from mail.mcgregor-surmount.com ([70.61.40.162]:56731 "EHLO
-	mcgregor-surmount.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1752035AbYJaU0r (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 31 Oct 2008 16:26:47 -0400
-X-Greylist: delayed 913 seconds by postgrey-1.27 at vger.kernel.org; Fri, 31 Oct 2008 16:26:47 EDT
-Received: from maintenance05.msc.mcgregor-surmount.com ([70.61.40.162]) by mcgregor-surmount.com with Microsoft SMTPSVC(6.0.3790.3959);
-	 Fri, 31 Oct 2008 16:11:31 -0400
-Content-Disposition: inline
-In-Reply-To: <200810312050.31167.fg@one2team.net>
-User-Agent: Mutt/1.5.18 (2008-05-17)
-X-OriginalArrivalTime: 31 Oct 2008 20:11:31.0163 (UTC) FILETIME=[DD59FAB0:01C93B94]
-X-TM-AS-Product-Ver: SMEX-8.1.0.1092-5.500.1027-16252.001
-X-TM-AS-Result: No--12.785300-0.000000-31
-X-TM-AS-User-Approved-Sender: Yes
-X-TM-AS-User-Blocked-Sender: No
+	id S1752340AbYJaU3N (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 31 Oct 2008 16:29:13 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752298AbYJaU3L
+	(ORCPT <rfc822;git-outgoing>); Fri, 31 Oct 2008 16:29:11 -0400
+Received: from mail.lang.hm ([64.81.33.126]:46467 "EHLO bifrost.lang.hm"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752277AbYJaU3K (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 31 Oct 2008 16:29:10 -0400
+Received: from asgard.lang.hm (asgard.lang.hm [10.0.0.100])
+	by bifrost.lang.hm (8.13.4/8.13.4/Debian-3) with ESMTP id m9VKT0F9028707;
+	Fri, 31 Oct 2008 12:29:00 -0800
+X-X-Sender: dlang@asgard.lang.hm
+In-Reply-To: <alpine.LFD.2.00.0810311558540.13034@xanadu.home>
+User-Agent: Alpine 1.10 (DEB 962 2008-03-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/99637>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/99638>
 
-On Fri, Oct 31, 2008 at 08:50:31PM +0100, Francis Galiegue wrote:
-> Le Friday 31 October 2008 19:39:33 Jeff King, vous avez =E9crit=A0:
-> [...]
-> >
-> > Agreed, and actually I found such a bashism (test =3D=3D) last week=
- (though
-> > of course it also broke on FreeBSD).
-> >
->=20
-> As for bash-isms, a hunt for $(...) also looks necessary...
->=20
-> $ grep -rl '\$([^)]\+)' $(find -type f)|wc -l
-> 272
->=20
-> Unless I'm mistaken (and I probably am), the $(...) construct is=20
-> bash-specific, isn't it?
+On Fri, 31 Oct 2008, Nicolas Pitre wrote:
 
-Nope.  Read section 2.6.3 Command Substitution here,
+> On Fri, 31 Oct 2008, Pierre Habouzit wrote:
+>
+>> Last but not least, I believe parts of git-core are currently easy to
+>> just take. For example, any code *I* wrote, I hereby give permission to
+>> relicense it in any of the following licenses: BSD-like, MIT-like,
+>> WTFPL.
+>
+> First........... is there really a need to re-license it?
+> If so then the choice of license is IMHO rather important.
 
-<http://www.opengroup.org/onlinepubs/009695399/utilities/xcu_chap02.htm=
-l>
+at the very least you should go from GPLv2 to LGPLv2 for the library.
+
+while it can be argued that this really shouldn't be nessasary, the water 
+is muddy enough that it would be a very good thing to do this.
+
+I don't see any need to switch to a BSD/MIT/etc license for a library, the 
+LGPL lets it get linked with those licenses anyway.
+
+> My favorite license for a library is the GPL with the gcc exception,
+> i.e. what libraries coming with gcc are using.  They're GPL but with an
+> exception allowing them to be linked with anything.  And because
+> everything on a Linux system, including proprietary applications, is
+> likely linked against those gcc libs, then there is nothing that would
+> prevent libgit to be linked against anything as well.  But the library
+> code itself has GPL protection.
+>
+> For reference, here's the exception text:
+>
+>   In addition to the permissions in the GNU General Public License, the
+>   Free Software Foundation gives you unlimited permission to link the
+>   compiled version of this file into combinations with other programs,
+>   and to distribute those combinations without any restriction coming
+>   from the use of this file.  (The General Public License restrictions
+>   do apply in other respects; for example, they cover modification of
+>   the file, and distribution when not linked into a combine
+>   executable.)
+
+<shrug>, I don't see why this is needed with the LGPL, but I'm not a 
+lawyer.
+
+David Lang
