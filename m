@@ -1,133 +1,74 @@
-From: Pierre Habouzit <madcoder@debian.org>
-Subject: Re: libgit2 - a true git library
-Date: Sat, 01 Nov 2008 00:33:18 +0100
-Message-ID: <20081031233317.GA29036@artemis.corp>
-References: <20081031170704.GU14786@spearce.org> <20081031174745.GA4058@artemis.corp> <alpine.LFD.2.00.0810311558540.13034@xanadu.home> <7viqr873x7.fsf@gitster.siamese.dyndns.org>
+From: Alex Riesen <raa.lkml@gmail.com>
+Subject: Re: [PATCH] Use find instead of perl in t5000 to get file
+	modification time
+Date: Sat, 1 Nov 2008 00:37:36 +0100
+Message-ID: <20081031233736.GB21997@steel.home>
+References: <81b0412b0810290338j1beaa25bx9fb373a69f5dfe7@mail.gmail.com> <1225344554.10803.17.camel@maia.lan> <20081031070003.GA4458@blimp.localdomain> <alpine.DEB.1.00.0810312314190.22125@pacific.mpi-cbg.de.mpi-cbg.de>
+Reply-To: Alex Riesen <raa.lkml@gmail.com>
 Mime-Version: 1.0
-Content-Type: multipart/signed; boundary="EVF5PPMfhYS0aIcm";
-	protocol="application/pgp-signature"; micalg=SHA1
-Cc: Nicolas Pitre <nico@cam.org>,
-	"Shawn O. Pearce" <spearce@spearce.org>, git@vger.kernel.org,
-	Scott Chacon <schacon@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Nov 01 00:34:43 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: Sam Vilain <sam@vilain.net>,
+	Git Mailing List <git@vger.kernel.org>,
+	Junio C Hamano <gitster@pobox.com>,
+	Jeff King <peff@peff.net>,
+	=?iso-8859-15?Q?Ren=E9?= Scharfe <rene.scharfe@lsrfire.ath.cx>
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Sat Nov 01 00:39:00 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Kw3Vq-0001fn-JN
-	for gcvg-git-2@gmane.org; Sat, 01 Nov 2008 00:34:43 +0100
+	id 1Kw3a0-0002ht-0Q
+	for gcvg-git-2@gmane.org; Sat, 01 Nov 2008 00:39:00 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751368AbYJaXd3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 31 Oct 2008 19:33:29 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751365AbYJaXd3
-	(ORCPT <rfc822;git-outgoing>); Fri, 31 Oct 2008 19:33:29 -0400
-Received: from pan.madism.org ([88.191.52.104]:33150 "EHLO hermes.madism.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751360AbYJaXd2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 31 Oct 2008 19:33:28 -0400
-Received: from madism.org (olympe.madism.org [82.243.245.108])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(Client CN "artemis.madism.org", Issuer "madism.org" (verified OK))
-	by hermes.madism.org (Postfix) with ESMTPS id B188E3B764;
-	Sat,  1 Nov 2008 00:33:24 +0100 (CET)
-Received: by madism.org (Postfix, from userid 1000)
-	id 7B6D55EE243; Sat,  1 Nov 2008 00:33:18 +0100 (CET)
+	id S1751669AbYJaXhr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 31 Oct 2008 19:37:47 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751451AbYJaXhr
+	(ORCPT <rfc822;git-outgoing>); Fri, 31 Oct 2008 19:37:47 -0400
+Received: from mo-p05-ob.rzone.de ([81.169.146.180]:58272 "EHLO
+	mo-p05-ob.rzone.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751360AbYJaXhq (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 31 Oct 2008 19:37:46 -0400
+X-RZG-CLASS-ID: mo05
+X-RZG-AUTH: :Pm0FVUW6aauhRGJJc5OfA4AU8DM8ZlijdmJYxKn/UQvEQQx8BE81pIKr
+Received: from tigra.home (Faf6f.f.strato-dslnet.de [195.4.175.111])
+	by post.webmailer.de (fruni mo23) (RZmta 17.14)
+	with ESMTP id I00222k9VMdsGR ; Sat, 1 Nov 2008 00:37:40 +0100 (MET)
+	(envelope-from: <raa.lkml@gmail.com>)
+Received: from steel.home (steel.home [192.168.1.2])
+	by tigra.home (Postfix) with ESMTP id F3F0B277C8;
+	Sat,  1 Nov 2008 01:37:39 +0100 (CET)
+Received: by steel.home (Postfix, from userid 1000)
+	id 1799156D27; Sat,  1 Nov 2008 00:37:37 +0100 (CET)
 Content-Disposition: inline
-In-Reply-To: <7viqr873x7.fsf@gitster.siamese.dyndns.org>
-X-Face: $(^e[V4D-[`f2EmMGz@fgWK!e.B~2g.{08lKPU(nc1J~z\4B>*JEVq:E]7G-\6$Ycr4<;Z!|VY6Grt]+RsS$IMV)f>2)M="tY:ZPcU;&%it2D81X^kNya0=L]"vZmLP+UmKhgq+u*\.dJ8G!N&=EvlD
-User-Agent: Madmutt/devel (Linux)
+In-Reply-To: <alpine.DEB.1.00.0810312314190.22125@pacific.mpi-cbg.de.mpi-cbg.de>
+User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/99679>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/99680>
 
+Johannes Schindelin, Fri, Oct 31, 2008 23:14:59 +0100:
+> Hi,
+> 
+> On Fri, 31 Oct 2008, Alex Riesen wrote:
+> 
+> > ActiveState Perl on Windows is portable? To another windows, maybe.
+> 
+> /me wonders why you could not use the Perl that ships with Git for 
+> Windows, at least for the purposes of Git.
 
---EVF5PPMfhYS0aIcm
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Corporate policy and very-very incompetent IT service. Besides being
+illegal to install actually usable software, there are some of
+internal programs which are quite sensitive to perl (any other perl)
+appearing anywhere on disk, not to mention PATH (the build system, for
+one). Same for cygwin revisions.
 
-On Fri, Oct 31, 2008 at 11:14:44PM +0000, Junio C Hamano wrote:
-> Nicolas Pitre <nico@cam.org> writes:
->=20
-> > My favorite license for a library is the GPL with the gcc exception,
-> > i.e. what libraries coming with gcc are using.  They're GPL but with an=
-=20
-> > exception allowing them to be linked with anything.
->=20
-> Although I'd be Ok with either GPL + gcc exception on whatever core-ish
-> (i.e. what will be necessary for libgit2; "blame" would not count) pieces
-> I have in C-git codebase, "can be linked with anything" allows a gaping
-> hole to the library, which I'm a bit hesitant to swallow without thinking.
-
-Well I wasn't thinking about anything else than what is needed for the
-libgit2. I love BSDish for libraries, though like GPL for the actual
-_tools_ I write with it.
-
-> E.g.  our read_object() may look like this:
->=20
->          void *read_object(const object_name_t sha1,
->                            enum object_type *type,
->                            size_t *size)
->          {
->                  ...
->          }
->=20
->=20
-> but an extension a closed-source person may sell you back may do:
->=20
->         +typedef void *read_object_fn(const object_name_t,
->         +                             enum object_type *,
->         +                             size_t *);
->         +read_object_fn read_object_custom =3D NULL;
->          void *read_object(const object_name_t sha1,
->                            enum object_type *type,
->                            size_t *size)
->          {
->         +       if (read_object_custom !=3D NULL)
->         +               return read_object_custom(sha1, type, size);
->                 ...
->          }
->=20
-> I.e. use the supplied custom function to do proprietary magic, such as
-> reading the object lazily from elsewhere over the network.  And we will
-> never get that magic bit back.
-
-Well, for one "we're" not supposed to accept any patch that does that,
-and I don't expect that the people who end up maintaining libgit2 will
-become rogue. Though if such bits of APIs do exist one day, then well, I
-see no license except the GPL that can prevent you from that.
-
-
-My idea of trying to be able to reuse git.git code is not a necessity,
-a new implementation from scratch is likely to be possible. Though we
-all know that if the core git contributors don't contribute and
-eventually use libgit2 this will not fly. That's why we must think about
-it.
-
-I assume given your answer that if libgit2 is BSD you may not be as
-motivated to contribute code to it as you are to git.git, and this IMHO
-would be a big no-go, like shawn said in another mail.
-
---=20
-=C2=B7O=C2=B7  Pierre Habouzit
-=C2=B7=C2=B7O                                                madcoder@debia=
-n.org
-OOO                                                http://www.madism.org
-
---EVF5PPMfhYS0aIcm
-Content-Type: application/pgp-signature
-Content-Disposition: inline
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.9 (GNU/Linux)
-
-iEYEABECAAYFAkkLlb0ACgkQvGr7W6HudhwNPwCcCsfjzl9d4JSo1yAtnRn8NHJA
-LDQAnjsu7zbbfvpiDn0WXhYA5Qs/r5h1
-=KYU8
------END PGP SIGNATURE-----
-
---EVF5PPMfhYS0aIcm--
+I tried using other perl and more modern cygwin, and it can be made to
+work, but it is cumbersome and boring. And one more thing to reinstall
+after IT wipes your computer because you've got a new disk or they
+decided you need winxp instead of w2k, or something else... So I'm
+just trying reduce effort I put into what I'm not supposed to do at
+work anyway.
