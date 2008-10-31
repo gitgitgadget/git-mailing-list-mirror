@@ -1,64 +1,61 @@
 From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: Re: [PATCH] Introduce receive.denyDeletes
-Date: Fri, 31 Oct 2008 07:30:22 -0700
-Message-ID: <20081031143022.GQ14786@spearce.org>
-References: <20081030191134.62455c24@perceptron> <20081030183210.GO14786@spearce.org> <20081030194503.2f9ece1a@perceptron> <7v63n99omx.fsf@gitster.siamese.dyndns.org>
+Subject: Re: [PATCH] Avoid using non-portable `echo -n` in tests.
+Date: Fri, 31 Oct 2008 07:32:00 -0700
+Message-ID: <20081031143200.GR14786@spearce.org>
+References: <8A4A84EC-51F7-4038-957C-CCA5C00E5977@silverinsanity.com> <1225429753-70109-1-git-send-email-benji@silverinsanity.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Jan Krrrger <jk@jk.gs>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Oct 31 15:31:50 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: Git List <git@vger.kernel.org>
+To: Brian Gernhardt <benji@silverinsanity.com>
+X-From: git-owner@vger.kernel.org Fri Oct 31 15:33:18 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Kvv2H-0008Qx-NW
-	for gcvg-git-2@gmane.org; Fri, 31 Oct 2008 15:31:38 +0100
+	id 1Kvv3s-0000aa-3k
+	for gcvg-git-2@gmane.org; Fri, 31 Oct 2008 15:33:16 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751379AbYJaOaY convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 31 Oct 2008 10:30:24 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751365AbYJaOaY
-	(ORCPT <rfc822;git-outgoing>); Fri, 31 Oct 2008 10:30:24 -0400
-Received: from george.spearce.org ([209.20.77.23]:36462 "EHLO
+	id S1751493AbYJaOcB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 31 Oct 2008 10:32:01 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751478AbYJaOcB
+	(ORCPT <rfc822;git-outgoing>); Fri, 31 Oct 2008 10:32:01 -0400
+Received: from george.spearce.org ([209.20.77.23]:43023 "EHLO
 	george.spearce.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751350AbYJaOaX (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 31 Oct 2008 10:30:23 -0400
+	with ESMTP id S1751449AbYJaOcA (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 31 Oct 2008 10:32:00 -0400
 Received: by george.spearce.org (Postfix, from userid 1001)
-	id D3AC93835F; Fri, 31 Oct 2008 14:30:22 +0000 (UTC)
+	id 430473835F; Fri, 31 Oct 2008 14:32:00 +0000 (UTC)
 Content-Disposition: inline
-In-Reply-To: <7v63n99omx.fsf@gitster.siamese.dyndns.org>
+In-Reply-To: <1225429753-70109-1-git-send-email-benji@silverinsanity.com>
 User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/99589>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/99590>
 
-Junio C Hamano <gitster@pobox.com> wrote:
-> "Jan Kr=FCger" <jk@jk.gs> writes:
->=20
-> > Can I then delete the branch afterwards without lots of juggling (i=
-n
-> > case the test fails due to a random other reason that the branch
-> > accidentally getting deleted by receive-pack)? I'd expect I'd have =
-to
-> > save the exit code to a temporary variable and that's just as ugly.
+Brian Gernhardt <benji@silverinsanity.com> wrote:
+> Not all /bin/sh have a builtin echo that recognizes -n.  Using printf
+> is far more portable.
+ 
+> diff --git a/t/t9400-git-cvsserver-server.sh b/t/t9400-git-cvsserver-server.sh
+> index c1850d2..f6a2dbd 100755
+> --- a/t/t9400-git-cvsserver-server.sh
+> +++ b/t/t9400-git-cvsserver-server.sh
+> @@ -424,7 +424,7 @@ cd "$WORKDIR"
+>  test_expect_success 'cvs update (-p)' '
+>      touch really-empty &&
+>      echo Line 1 > no-lf &&
+> -    echo -n Line 2 >> no-lf &&
+> +    printf Line 2 >> no-lf &&
 
-If you want to delete the branch after the test is done, do it
-outside of the test_expect_success's 3rd argument.  Then it will
-run the branch deletion whether or not the test was successful.
-=20
-> Although I agree that your attempt to allow the test continue even wh=
-en
-> this test fails is a very good practice, I personally do not find the
-> alternative you mention ugly at all.  I actually find that "return 1"
-> uglier because it feels like it knows too much about how
-> test_expect_success is implemented.
+That needs to be:
 
-Yea, I also found the "return 1" to be horribly difficult to read, and
-knowing far too much about the test suite.
+	printf 'Line 2'
 
---=20
+to have the same result.  Fortunately I don't think it matters
+in this test, but it does read odd.
+
+-- 
 Shawn.
