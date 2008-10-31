@@ -1,63 +1,82 @@
-From: Miles Bader <miles@gnu.org>
-Subject: Re: why not TortoiseGit
-Date: Fri, 31 Oct 2008 12:53:49 +0900
-Message-ID: <buofxmdh12q.fsf@dhapc248.dev.necel.com>
-References: <7FD1F85C96D70C4A89DA1DF7667EAE96125890@zch01exm23.fsl.freescale.net>
-	<m3bpx1h6e6.fsf@localhost.localdomain>
-	<7FD1F85C96D70C4A89DA1DF7667EAE9612589D@zch01exm23.fsl.freescale.net>
-	<dfdaadcd0810302007q658d74c4wfb278999ea10885d@mail.gmail.com>
-Reply-To: Miles Bader <miles@gnu.org>
+From: Deskin Miller <deskinm@umich.edu>
+Subject: [PATCH] git-svn: change dashed git-commit-tree to git commit-tree
+Date: Fri, 31 Oct 2008 00:10:25 -0400
+Message-ID: <20081031041025.GB20322@euler>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: "Li Frank-B20596" <Frank.Li@freescale.com>,
-	"Jakub Narebski" <jnareb@gmail.com>, git@vger.kernel.org
-To: "George Shammas" <georgyo@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Oct 31 04:55:28 2008
+Cc: normalperson@yhbt.net, gitster@pobox.com
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Oct 31 05:11:48 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Kvl6c-0002GA-RU
-	for gcvg-git-2@gmane.org; Fri, 31 Oct 2008 04:55:27 +0100
+	id 1KvlMQ-0005RV-Kf
+	for gcvg-git-2@gmane.org; Fri, 31 Oct 2008 05:11:47 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751103AbYJaDyL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 30 Oct 2008 23:54:11 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751048AbYJaDyK
-	(ORCPT <rfc822;git-outgoing>); Thu, 30 Oct 2008 23:54:10 -0400
-Received: from TYO201.gate.nec.co.jp ([202.32.8.193]:41789 "EHLO
-	tyo201.gate.nec.co.jp" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750937AbYJaDyJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 30 Oct 2008 23:54:09 -0400
-Received: from relay11.aps.necel.com ([10.29.19.46])
-	by tyo201.gate.nec.co.jp (8.13.8/8.13.4) with ESMTP id m9V3rUFu011668;
-	Fri, 31 Oct 2008 12:53:50 +0900 (JST)
-Received: from relay11.aps.necel.com ([10.29.19.20] [10.29.19.20]) by relay11.aps.necel.com with ESMTP; Fri, 31 Oct 2008 12:53:50 +0900
-Received: from dhapc248.dev.necel.com ([10.114.112.215] [10.114.112.215]) by relay11.aps.necel.com with ESMTP; Fri, 31 Oct 2008 12:53:50 +0900
-Received: by dhapc248.dev.necel.com (Postfix, from userid 31295)
-	id 11DF3444; Fri, 31 Oct 2008 12:53:49 +0900 (JST)
-System-Type: i686-pc-linux-gnu
-Blat: Foop
-In-Reply-To: <dfdaadcd0810302007q658d74c4wfb278999ea10885d@mail.gmail.com>
-	(George Shammas's message of "Thu, 30 Oct 2008 20:07:18 -0700")
+	id S1751776AbYJaEKd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 31 Oct 2008 00:10:33 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751926AbYJaEKd
+	(ORCPT <rfc822;git-outgoing>); Fri, 31 Oct 2008 00:10:33 -0400
+Received: from rn-out-0910.google.com ([64.233.170.191]:14055 "EHLO
+	rn-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751566AbYJaEKc (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 31 Oct 2008 00:10:32 -0400
+Received: by rn-out-0910.google.com with SMTP id k40so843538rnd.17
+        for <git@vger.kernel.org>; Thu, 30 Oct 2008 21:10:31 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:date:from:to:cc:subject
+         :message-id:mime-version:content-type:content-disposition:user-agent
+         :sender;
+        bh=rVHYfVxm1lvUpBGRIAZDqtu9pb2cJkoVc6m3rzZRv9I=;
+        b=KGPmaQJc+QMczbgu29Mt4cgJspwDyECJDNXv/+eymBFAd/SkVTdu15DuIqYOJG+YZg
+         FsHtcK+jyUh03X4yFK/9m0lhAb4CF6BDyqWqkgr7ClPWidG0fF+6MC+wpEubHqQkATxY
+         ssK2sKFC9UmfEg6a8n/+RcMr8PGx86ieWk2VY=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=date:from:to:cc:subject:message-id:mime-version:content-type
+         :content-disposition:user-agent:sender;
+        b=vncRUl1mni3MXr2+6Wq4J+/eWgvE5530dgVCEFDvit9LCT7x7j+1sB95MZRgy/VAbd
+         vY2McbEljUfAHDuZag8Fw9Faizur9wvwjjdlDFNscrgt/u5njPBmh9sBHCp1rvbr8xDQ
+         6UqwonlQx2rpEfJwWcEnUn/tw6rVPWSejY+z0=
+Received: by 10.64.251.9 with SMTP id y9mr12440990qbh.27.1225426230858;
+        Thu, 30 Oct 2008 21:10:30 -0700 (PDT)
+Received: from euler ([68.40.49.130])
+        by mx.google.com with ESMTPS id 12sm5284428qbw.2.2008.10.30.21.10.29
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Thu, 30 Oct 2008 21:10:29 -0700 (PDT)
+Content-Disposition: inline
+User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/99548>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/99549>
 
-"George Shammas" <georgyo@gmail.com> writes:
-> The very very blunt answer is, TortoiseGit doesn't exist because no
-> one has created it. And this may partly be do to the fact that git is
-> more powerful then the programs who have it, so its a bigger project
-> to make it stupid proof.
+Signed-off-by: Deskin Miller <deskinm@umich.edu>
+---
+Once again I'm using a copy of git-svn.perl directly, and this fails to exec.
+I looked at it more closely and it fails because git binary calls setup_path,
+which puts the libexec path into $PATH; of course, this doesn't happen when
+git-svn is called directly.
 
-... and from what I've seen of tortoise* users, "stupid proof" is very,
-very, very, necessary...
+ git-svn.perl |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
 
--Miles
-
+diff --git a/git-svn.perl b/git-svn.perl
+index 2e68c68..56238da 100755
+--- a/git-svn.perl
++++ b/git-svn.perl
+@@ -2202,7 +2202,7 @@ sub do_git_commit {
+ 	}
+ 	die "Tree is not a valid sha1: $tree\n" if $tree !~ /^$::sha1$/o;
+ 
+-	my @exec = ('git-commit-tree', $tree);
++	my @exec = ('git', 'commit-tree', $tree);
+ 	foreach ($self->get_commit_parents($log_entry)) {
+ 		push @exec, '-p', $_;
+ 	}
 -- 
-Immortality, n.  A toy which people cry for, And on their knees apply for,
-      Dispute, contend and lie for, And if allowed Would be right proud
-      Eternally to die for.
+1.6.0.3.515.g304f
