@@ -1,80 +1,72 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH] Documentation: add a planning document for the next CLI
- revamp
-Date: Sat, 1 Nov 2008 01:37:24 +0100 (CET)
-Message-ID: <alpine.DEB.1.00.0811010137020.22125@pacific.mpi-cbg.de.mpi-cbg.de>
-References: <1225338485-11046-1-git-send-email-sam@vilain.net> <alpine.LFD.2.00.0810301024300.13034@xanadu.home> <20081030145253.GK14786@spearce.org> <20081030145928.GA21707@glandium.org> <20081030150135.GG24098@artemis.corp>
+From: david@lang.hm
+Subject: Re: libgit2 - a true git library
+Date: Fri, 31 Oct 2008 17:41:22 -0700 (PDT)
+Message-ID: <alpine.DEB.1.10.0810311738100.5851@asgard.lang.hm>
+References: <20081031170704.GU14786@spearce.org> <20081031174745.GA4058@artemis.corp> <alpine.LFD.2.00.0810311558540.13034@xanadu.home> <7viqr873x7.fsf@gitster.siamese.dyndns.org> <20081031234115.GD14786@spearce.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Mike Hommey <mh@glandium.org>,
-	"Shawn O. Pearce" <spearce@spearce.org>,
-	Nicolas Pitre <nico@cam.org>, Sam Vilain <sam@vilain.net>,
-	git@vger.kernel.org
-To: Pierre Habouzit <madcoder@debian.org>
-X-From: git-owner@vger.kernel.org Sat Nov 01 01:33:07 2008
+Content-Type: TEXT/PLAIN; charset=US-ASCII; format=flowed
+Cc: Junio C Hamano <gitster@pobox.com>, Nicolas Pitre <nico@cam.org>,
+	Pierre Habouzit <madcoder@debian.org>, git@vger.kernel.org,
+	Scott Chacon <schacon@gmail.com>
+To: "Shawn O. Pearce" <spearce@spearce.org>
+X-From: git-owner@vger.kernel.org Sat Nov 01 01:42:37 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Kw4QL-00010K-Ty
-	for gcvg-git-2@gmane.org; Sat, 01 Nov 2008 01:33:06 +0100
+	id 1Kw4ZX-0003MW-1z
+	for gcvg-git-2@gmane.org; Sat, 01 Nov 2008 01:42:35 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751151AbYKAAaI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 31 Oct 2008 20:30:08 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751025AbYKAAaI
-	(ORCPT <rfc822;git-outgoing>); Fri, 31 Oct 2008 20:30:08 -0400
-Received: from mail.gmx.net ([213.165.64.20]:39753 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1750756AbYKAAaG (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 31 Oct 2008 20:30:06 -0400
-Received: (qmail invoked by alias); 01 Nov 2008 00:30:04 -0000
-Received: from pacific.mpi-cbg.de (EHLO pacific.mpi-cbg.de) [141.5.10.38]
-  by mail.gmx.net (mp043) with SMTP; 01 Nov 2008 01:30:04 +0100
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1/XPK1OWz/XdPZtzi9MRZVKC8E799dB8knaSDrP6I
-	xZkLvX/Abm1myq
-X-X-Sender: schindelin@pacific.mpi-cbg.de.mpi-cbg.de
-In-Reply-To: <20081030150135.GG24098@artemis.corp>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.6
+	id S1751025AbYKAAk6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 31 Oct 2008 20:40:58 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750795AbYKAAk6
+	(ORCPT <rfc822;git-outgoing>); Fri, 31 Oct 2008 20:40:58 -0400
+Received: from mail.lang.hm ([64.81.33.126]:41106 "EHLO bifrost.lang.hm"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750784AbYKAAk5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 31 Oct 2008 20:40:57 -0400
+Received: from asgard.lang.hm (asgard.lang.hm [10.0.0.100])
+	by bifrost.lang.hm (8.13.4/8.13.4/Debian-3) with ESMTP id mA10egCM029595;
+	Fri, 31 Oct 2008 16:40:42 -0800
+X-X-Sender: dlang@asgard.lang.hm
+In-Reply-To: <20081031234115.GD14786@spearce.org>
+User-Agent: Alpine 1.10 (DEB 962 2008-03-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/99692>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/99693>
 
-Hi,
+On Fri, 31 Oct 2008, Shawn O. Pearce wrote:
 
-On Thu, 30 Oct 2008, Pierre Habouzit wrote:
+> Junio C Hamano <gitster@pobox.com> wrote:
+>>
+>>
+>> I.e. use the supplied custom function to do proprietary magic, such as
+>> reading the object lazily from elsewhere over the network.  And we will
+>> never get that magic bit back.
+>
+> As a maintainer I'd never accept such a patch.  I'd ask for the
+> code under read_object_custom, or toss the patch on the floor.
+> But that doesn't stop them from distributing the patched sources
+> like above, keeping the fun bits in the closed source portion of
+> the executable they distribute.
+>
+> Maybe I just think too highly of the other guy, but I'd hope that
+> anyone patching libgit2 like above would try to avoid it, because
+> they'd face merge issues in the future.
 
-> On Thu, Oct 30, 2008 at 02:59:28PM +0000, Mike Hommey wrote:
-> > On Thu, Oct 30, 2008 at 07:52:53AM -0700, Shawn O. Pearce <spearce@spearce.org> wrote:
-> > > +1 to Nico's NAK.
-> > > 
-> > > Although I was at the GitTogether I don't remember this change to
-> > > checkout being discussed.  I must have been asleep reading email
-> > > or something.  I am _NOT_ in favor of this change; I think the
-> > > current behavior of "git checkout origin/master" is correct and as
-> > > sane as we can make it.
-> > 
-> > Except he was talking about 'git checkout branch', not 'git checkout
-> > origin/branch'. And I would be fine with 'git checkout branch' doing
-> > what 'git checkout -b branch $remote/branch' does if $remote is unique
-> > (i.e. there is no other 'branch' branch in any other remote) and the
-> > 'branch' branch doesn't already exist.
-> 
-> Seconded.
-> 
-> Having git-checkout $foo being a shorthand for git checkout -b $foo
-> origin/$foo when origin/$foo exists and $foo doesn't is definitely handy.
+the issue that I see is that libgit2 will be (on most systems) a shared 
+library.
 
-Have you guys actually checked out what
+what's to stop someone from taking the libgit2 code, adding the magic 
+proprietary piece, and selling a new libgit2 library binary 'just replace 
+your existing shared library with this new one and all your git related 
+programs gain this feature'
 
-	git checkout -t origin/foo
+they would only face merge issues if they need to keep up to date with 
+you, and git makes it pretty easy to maintain a fork if you only have to 
+do one-way merging (rere)
 
-does?
-
-Ciao,
-Dscho
+David Lang
