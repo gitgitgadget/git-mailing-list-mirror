@@ -1,69 +1,153 @@
-From: Gonsolo <gonsolo@gmail.com>
-Subject: Git remote status
-Date: Sat, 01 Nov 2008 20:52:48 +0100
-Message-ID: <490CB390.9000206@gmail.com>
+From: Francis Galiegue <fg@one2team.net>
+Subject: Re: [PATCH 2/3] git send-email: do not ask questions when  --compose is used.
+Date: Sat, 1 Nov 2008 20:56:37 +0100
+Organization: One2team
+Message-ID: <200811012056.37220.fg@one2team.net>
+References: <20081031220149.GD21345@maintenance05.msc.mcgregor-surmount.com> <200811011834.32702.fg@one2team.com> <20081101174352.GG26229@artemis.corp>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: Multipart/Mixed;
+  boundary="Boundary-00=_1RLDJiLsCF6XOhC"
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Nov 01 20:54:09 2008
+X-From: git-owner@vger.kernel.org Sat Nov 01 20:58:43 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KwMXw-0005U9-EO
-	for gcvg-git-2@gmane.org; Sat, 01 Nov 2008 20:54:08 +0100
+	id 1KwMcK-0006cY-Ul
+	for gcvg-git-2@gmane.org; Sat, 01 Nov 2008 20:58:41 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752218AbYKATwy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 1 Nov 2008 15:52:54 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752182AbYKATwy
-	(ORCPT <rfc822;git-outgoing>); Sat, 1 Nov 2008 15:52:54 -0400
-Received: from fg-out-1718.google.com ([72.14.220.154]:16363 "EHLO
-	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752047AbYKATwy (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 1 Nov 2008 15:52:54 -0400
-Received: by fg-out-1718.google.com with SMTP id 19so1484909fgg.17
-        for <git@vger.kernel.org>; Sat, 01 Nov 2008 12:52:51 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from
-         :user-agent:mime-version:to:subject:content-type
-         :content-transfer-encoding;
-        bh=lGMzBSjCqYn5FNGDSlWSuJVUZeHwQ5mD9gtELunA2Fo=;
-        b=L3XOX14fY7KI1TFum/RBr+Bd2/GqQLpd/ROw+0ibIrU3+oqSXwAByk2BN8Z8nhTScV
-         jD7Tz2FGSuTCwynDy1g5ekx7IaLewiEsht7B8MRkVtLLyRjOcHqAfOtwugI1Zz9YqBcM
-         JWAiGA8FmO3mz0ctc5DdNYmmBFdlUnLQ8aSkc=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:user-agent:mime-version:to:subject
-         :content-type:content-transfer-encoding;
-        b=JDyqZJXdL8WJSDw2Oui8eJllon6TIjwhH3xMHyC7xuzG7Pp2eAA737yI47qGW1PG+r
-         zrmF3Bb+Gw+YeWgGnd9lzIGypC+rlc+GbRblyD1Yyp7Y4QzP/wAdotpuOkdEMbMg5+F6
-         DbKr4QfCvaMF608hVIDrmo5F2HXzd8AesIpEM=
-Received: by 10.86.58.3 with SMTP id g3mr9524642fga.77.1225569171481;
-        Sat, 01 Nov 2008 12:52:51 -0700 (PDT)
-Received: from ?192.168.2.100? (p54BD7E81.dip.t-dialin.net [84.189.126.129])
-        by mx.google.com with ESMTPS id 4sm6547915fge.8.2008.11.01.12.52.50
-        (version=SSLv3 cipher=RC4-MD5);
-        Sat, 01 Nov 2008 12:52:50 -0700 (PDT)
-User-Agent: Thunderbird 2.0.0.17 (X11/20080925)
+	id S1752307AbYKAT51 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 1 Nov 2008 15:57:27 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752238AbYKAT51
+	(ORCPT <rfc822;git-outgoing>); Sat, 1 Nov 2008 15:57:27 -0400
+Received: from ns35774.ovh.net ([213.251.185.197]:58602 "EHLO ns35774.ovh.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752047AbYKAT50 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 1 Nov 2008 15:57:26 -0400
+Received: from erwin.kitchen.eel (AOrleans-157-1-98-121.w90-20.abo.wanadoo.fr [90.20.173.121])
+	(Authenticated sender: fg@one2team.net)
+	by ns35774.ovh.net (Postfix) with ESMTP id D548892C011
+	for <git@vger.kernel.org>; Sat,  1 Nov 2008 20:57:14 +0100 (CET)
+User-Agent: KMail/1.9.9
+In-Reply-To: <20081101174352.GG26229@artemis.corp>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/99765>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/99766>
 
-Hi!
+--Boundary-00=_1RLDJiLsCF6XOhC
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: quoted-printable
+Content-Disposition: inline
 
-If I switch branches with "git checkout master" git tells me something 
-like "Your branch is ahead of the tracked remote branch 'origin/master' 
-by 39 commits".
-Is there a "git remote status" or git-status switch to get the same 
-information without switching branches?
-Sometimes it's valuable whether one should push changes (for example 
-before installing a new Ubuntu version ;) ).
+Le Saturday 01 November 2008 18:43:52 Pierre Habouzit, vous avez =E9crit=A0:
+[...]
 
-Thank you,
+> Your regex fails to parse:
+>
+> "Someone with a comma, and an escape double quote \" in its name"
 
-g
+Easy fix: replace "[^"]+" with "[^"]+(?:\\"[^"]*)*".
+
+>   <regex.cant.be.used.for.serious.parsing@i.told.you.so>
+
+Oh yes. Regexes _are_ the way to do serious parsing. All MIME packages you=
+=20
+will find floating around use regexes to parse mail headers correctly.
+
+Granted, adhering to the RFC822 to the letter is rather hard. But I have a=
+=20
+sample program here that can not only parse the escaped double quote, but=20
+also take account for the multiple line stuff and multiple headers of the=20
+same type where email addresse are valid (To:, Cc:, Bcc:). See attachment.=
+=20
+=46eel free to use the code.
+
+=2D---
+
+fg@erwin ~ $ cat t.txt
+To: John Doe <some.address@some.tld>, Random Joe <random.joe@abc.def>,=20
+Superman <batman@nyc.us>, "Someone with a comma, inside its tag name"=20
+<a@b.com>
+To: bbr@one2team.com,
+ u1@whatever.org,
+  u2@wherever.ru,
+   u3@blah.com
+fg@erwin ~ $ perl t.pl <t.txt
+=46ound mail: John Doe <some.address@some.tld>
+=46ound mail: Random Joe <random.joe@abc.def>
+=46ound mail: Superman <batman@nyc.us>
+=46ound mail: "Someone with a comma, inside its tag name" <a@b.com>
+=46ound mail: bbr@one2team.com
+=46ound mail: u1@whatever.org
+=46ound mail: u2@wherever.ru
+=46ound mail: u3@blah.com
+=2D---
+
+
+=2D-=20
+fge
+
+--Boundary-00=_1RLDJiLsCF6XOhC
+Content-Type: application/x-perl;
+  name="t.pl"
+Content-Transfer-Encoding: 7bit
+Content-Disposition: attachment;
+	filename="t.pl"
+
+#!/usr/bin/perl -W
+
+use strict;
+
+my $headers = {};
+
+my ($current_header, $last_recorded_header) = ("", "");
+
+while (my $line = <STDIN>) {
+	last if ($line =~ m/^\s*$/); # END of headers
+
+	if ($line =~ m/^(^\w+): (.*)/) {
+		$current_header = lc($1);
+		next unless (
+			("$current_header" eq "to") or
+			("$current_header" eq "cc") or
+			("$current_header" eq "bcc")
+		);
+		chomp (my $value = $2);
+		$value =~ s/\s*,\s*$//;
+		if ("$current_header" ne "$last_recorded_header") {
+			$last_recorded_header = $current_header;
+		} else {
+			$headers->{"$last_recorded_header"} .= ", ";
+		}
+		$headers->{"$last_recorded_header"} .= "$value, ";
+		next;
+	}
+
+	if ($line =~ m/\s+(.*)$/) {
+		chomp (my $value = $1);
+		$headers->{"$last_recorded_header"} .= "$value";
+		next;
+	}
+
+	# Should never come here
+	die "Invalid headers!\n";
+}
+
+my $email_regex_1 = qr/[^@,]+@[^@,]+/;
+
+my $email_regex_2 = qr/(?:"[^"]+(?:\"[^"]*)*")?\s*<[^@]+@[^@]+>/;
+
+my $emails_string = $headers->{"to"};
+
+my @emails = ($emails_string =~ m/\s*($email_regex_1|$email_regex_2)\s*,?/g);
+
+print "Found mail: $_\n" foreach (@emails);
+
+exit(0);
+
+
+--Boundary-00=_1RLDJiLsCF6XOhC--
