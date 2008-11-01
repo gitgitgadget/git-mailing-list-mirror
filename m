@@ -1,74 +1,80 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: Re: libgit2 - a true git library
-Date: Fri, 31 Oct 2008 17:19:26 -0700
-Message-ID: <20081101001926.GF14786@spearce.org>
-References: <20081031170704.GU14786@spearce.org> <20081031174745.GA4058@artemis.corp> <alpine.LFD.2.00.0810311558540.13034@xanadu.home> <20081031213114.GA21799@artemis.corp> <CBF2AF68-BA41-4394-A837-F62864CF8BFB@ai.rug.nl> <20081031232829.GC14786@spearce.org> <7v63n872bs.fsf@gitster.siamese.dyndns.org> <20081101000213.GB29036@artemis.corp>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH] Documentation: add a planning document for the next CLI
+ revamp
+Date: Sat, 1 Nov 2008 01:37:24 +0100 (CET)
+Message-ID: <alpine.DEB.1.00.0811010137020.22125@pacific.mpi-cbg.de.mpi-cbg.de>
+References: <1225338485-11046-1-git-send-email-sam@vilain.net> <alpine.LFD.2.00.0810301024300.13034@xanadu.home> <20081030145253.GK14786@spearce.org> <20081030145928.GA21707@glandium.org> <20081030150135.GG24098@artemis.corp>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Pieter de Bie <pdebie@ai.rug.nl>,
-	Nicolas Pitre <nico@cam.org>, git@vger.kernel.org,
-	Scott Chacon <schacon@gmail.com>
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Mike Hommey <mh@glandium.org>,
+	"Shawn O. Pearce" <spearce@spearce.org>,
+	Nicolas Pitre <nico@cam.org>, Sam Vilain <sam@vilain.net>,
+	git@vger.kernel.org
 To: Pierre Habouzit <madcoder@debian.org>
-X-From: git-owner@vger.kernel.org Sat Nov 01 01:21:07 2008
+X-From: git-owner@vger.kernel.org Sat Nov 01 01:33:07 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Kw4EK-0005gF-Sk
-	for gcvg-git-2@gmane.org; Sat, 01 Nov 2008 01:20:41 +0100
+	id 1Kw4QL-00010K-Ty
+	for gcvg-git-2@gmane.org; Sat, 01 Nov 2008 01:33:06 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751624AbYKAAT2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 31 Oct 2008 20:19:28 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751180AbYKAAT2
-	(ORCPT <rfc822;git-outgoing>); Fri, 31 Oct 2008 20:19:28 -0400
-Received: from george.spearce.org ([209.20.77.23]:35403 "EHLO
-	george.spearce.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751624AbYKAAT1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 31 Oct 2008 20:19:27 -0400
-Received: by george.spearce.org (Postfix, from userid 1001)
-	id A779A3835F; Sat,  1 Nov 2008 00:19:26 +0000 (UTC)
-Content-Disposition: inline
-In-Reply-To: <20081101000213.GB29036@artemis.corp>
-User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
+	id S1751151AbYKAAaI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 31 Oct 2008 20:30:08 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751025AbYKAAaI
+	(ORCPT <rfc822;git-outgoing>); Fri, 31 Oct 2008 20:30:08 -0400
+Received: from mail.gmx.net ([213.165.64.20]:39753 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1750756AbYKAAaG (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 31 Oct 2008 20:30:06 -0400
+Received: (qmail invoked by alias); 01 Nov 2008 00:30:04 -0000
+Received: from pacific.mpi-cbg.de (EHLO pacific.mpi-cbg.de) [141.5.10.38]
+  by mail.gmx.net (mp043) with SMTP; 01 Nov 2008 01:30:04 +0100
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1/XPK1OWz/XdPZtzi9MRZVKC8E799dB8knaSDrP6I
+	xZkLvX/Abm1myq
+X-X-Sender: schindelin@pacific.mpi-cbg.de.mpi-cbg.de
+In-Reply-To: <20081030150135.GG24098@artemis.corp>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.6
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/99691>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/99692>
 
-Pierre Habouzit <madcoder@debian.org> wrote:
-> On Fri, Oct 31, 2008 at 11:49:11PM +0000, Junio C Hamano wrote:
+Hi,
+
+On Thu, 30 Oct 2008, Pierre Habouzit wrote:
+
+> On Thu, Oct 30, 2008 at 02:59:28PM +0000, Mike Hommey wrote:
+> > On Thu, Oct 30, 2008 at 07:52:53AM -0700, Shawn O. Pearce <spearce@spearce.org> wrote:
+> > > +1 to Nico's NAK.
+> > > 
+> > > Although I was at the GitTogether I don't remember this change to
+> > > checkout being discussed.  I must have been asleep reading email
+> > > or something.  I am _NOT_ in favor of this change; I think the
+> > > current behavior of "git checkout origin/master" is correct and as
+> > > sane as we can make it.
 > > 
-> > I understand that the apidocs/ is a very early work-in-progress, but
-> > still, it bothers me that it is unclear to me what lifetime rules are in
-> > effect on the in-core objects.  For example, in C-git, commit objects are
-> > not just parsed but are modified in place as history is traversed
-> > (e.g. their flags smudged and their parents simplified).  You have "flags"
-> > field in commit, which implies to me that the design shares this same
-> > "modified by processing in-place" assumption.
+> > Except he was talking about 'git checkout branch', not 'git checkout
+> > origin/branch'. And I would be fine with 'git checkout branch' doing
+> > what 'git checkout -b branch $remote/branch' does if $remote is unique
+> > (i.e. there is no other 'branch' branch in any other remote) and the
+> > 'branch' branch doesn't already exist.
 > 
-> I don't think it's impossible to have something efficient without this
-> kind of hacks. You just need to dissociate the objects from their
-> annotations, though use some kind of allocator that allow numbering of
-> the objects, and use that number as a lookup in an array of annotations.
-> It will require pool allocators for the annotations, but that should
-> work fine and efficientely.
-
-Interesting approach.  I don't know why I didn't think of that one.
-
-You'll still need to be able to toss parts of the git graph though.
-If you just pin everything in memory under a single global object
-table you'll run server processes out of memory as they chug through
-large numbers of repositories.
-
-> > By the way, I hate git_result_t.  That should be "int", the most natural
-> > integral type on the platform.
+> Seconded.
 > 
-> I concur.
+> Having git-checkout $foo being a shorthand for git checkout -b $foo
+> origin/$foo when origin/$foo exists and $foo doesn't is definitely handy.
 
-int it is then.
+Have you guys actually checked out what
 
--- 
-Shawn.
+	git checkout -t origin/foo
+
+does?
+
+Ciao,
+Dscho
