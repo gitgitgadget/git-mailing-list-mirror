@@ -1,104 +1,119 @@
-From: "Thanassis Tsiodras" <ttsiodras@gmail.com>
-Subject: Re: Are binary xdeltas only used if you use git-gc?
-Date: Sat, 1 Nov 2008 13:54:53 +0200
-Message-ID: <f1d2d9ca0811010454u203a7c88x1e09735b3fc1358f@mail.gmail.com>
-References: <f1d2d9ca0810310243r669840bbj2c5ee7183e0caaed@mail.gmail.com>
-	 <m37i7pggnk.fsf@localhost.localdomain>
-	 <f1d2d9ca0810310428o166dc075wbb43c00c1a555350@mail.gmail.com>
-	 <200810311726.57122.jnareb@gmail.com> <vpqej1wra1c.fsf@bauges.imag.fr>
-	 <alpine.LFD.2.00.0810311549570.13034@xanadu.home>
+From: "Giuseppe Bilotta" <giuseppe.bilotta@gmail.com>
+Subject: Re: [PATHv2 7/8] gitweb: embed snapshot format parameter in PATH_INFO
+Date: Sat, 1 Nov 2008 13:57:52 +0100
+Message-ID: <cb7bb73a0811010557u31ce5f69o9b4b0d53a102498a@mail.gmail.com>
+References: <1224188831-17767-6-git-send-email-giuseppe.bilotta@gmail.com>
+	 <1224426270-27755-1-git-send-email-giuseppe.bilotta@gmail.com>
+	 <1224426270-27755-2-git-send-email-giuseppe.bilotta@gmail.com>
+	 <200811010118.14191.jnareb@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-Cc: "Matthieu Moy" <Matthieu.Moy@imag.fr>,
-	"Jakub Narebski" <jnareb@gmail.com>, git@vger.kernel.org
-To: "Nicolas Pitre" <nico@cam.org>
-X-From: git-owner@vger.kernel.org Sat Nov 01 12:56:21 2008
+Cc: git@vger.kernel.org, "Petr Baudis" <pasky@suse.cz>,
+	"Junio C Hamano" <gitster@pobox.com>
+To: "Jakub Narebski" <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Nov 01 13:59:18 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KwF5Z-0001lX-Cb
-	for gcvg-git-2@gmane.org; Sat, 01 Nov 2008 12:56:21 +0100
+	id 1KwG4S-00026v-Ks
+	for gcvg-git-2@gmane.org; Sat, 01 Nov 2008 13:59:17 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751479AbYKALy5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 1 Nov 2008 07:54:57 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751474AbYKALy5
-	(ORCPT <rfc822;git-outgoing>); Sat, 1 Nov 2008 07:54:57 -0400
-Received: from fg-out-1718.google.com ([72.14.220.158]:52123 "EHLO
-	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751414AbYKALy4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 1 Nov 2008 07:54:56 -0400
-Received: by fg-out-1718.google.com with SMTP id 19so1336910fgg.17
-        for <git@vger.kernel.org>; Sat, 01 Nov 2008 04:54:54 -0700 (PDT)
+	id S1751450AbYKAM5z (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 1 Nov 2008 08:57:55 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751435AbYKAM5z
+	(ORCPT <rfc822;git-outgoing>); Sat, 1 Nov 2008 08:57:55 -0400
+Received: from yw-out-2324.google.com ([74.125.46.30]:38015 "EHLO
+	yw-out-2324.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751407AbYKAM5y (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 1 Nov 2008 08:57:54 -0400
+Received: by yw-out-2324.google.com with SMTP id 9so722752ywe.1
+        for <git@vger.kernel.org>; Sat, 01 Nov 2008 05:57:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:received:received:message-id:date:from:to
          :subject:cc:in-reply-to:mime-version:content-type
          :content-transfer-encoding:content-disposition:references;
-        bh=LO5//S9jliyA/ixakRoOoZ7KYwZnbFvRg7pWRjDoCYs=;
-        b=D2UyPUqWy9wSqvsf+gaNZ0pU5nQitX28hkT9B7FWSoY53neDnNWOOrR6vz3uAqqvxf
-         oSQ56Ld0iea4JacpNNUbttQsah4uKA/iFGidE8XcR0HFBn7AF9IoEk3mAysIyo+RGOZ1
-         zondQlPWnCzydqNR/RY6pXHVlM0pqXJI0n46Q=
+        bh=RPYayRoeGgp2XbhIgohVzlBndS9+rcA7kwG6LqFgc74=;
+        b=kkcq0OKDw0WCjB5Ww89Nm8QR9nWctqezy01i0NDpxmUBsOR73aHAixMLene5IoI/mz
+         LREW3mbo0IowaY5CXhy3tXP1Qy/d2h+jkWAS39mqT89UI1rGCbbkbKaRyhAvF/A4xNgY
+         yH3knKId9WWpyW+O2atApAZd8BB9pa//ZxhRo=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
          :content-type:content-transfer-encoding:content-disposition
          :references;
-        b=FdD98HuoNsQZQ35HxkHNx9m4Uo0ItwVBaUuY0Pwpwtamtxv8OggDy46dR6CfgWGm9X
-         ygK+qoZma4fUABroYIYvGGMEN98W57Zhs3MbOoN0GFUhOk82NQcKcBmmnoOc62iRUAUn
-         ko8eZhZNjcZIv5BhAnJIz0MYUZ61VICHA+54o=
-Received: by 10.181.17.13 with SMTP id u13mr887978bki.152.1225540493742;
-        Sat, 01 Nov 2008 04:54:53 -0700 (PDT)
-Received: by 10.181.5.13 with HTTP; Sat, 1 Nov 2008 04:54:53 -0700 (PDT)
-In-Reply-To: <alpine.LFD.2.00.0810311549570.13034@xanadu.home>
+        b=CQJGMITabUdFYpQqS+GvBdKAMwJb4Dfe0jobATTS3ylywltSuQf19LcaYqTd5El+yG
+         CbAxJroswjVZ56JmnQeBHIuXZ6j33SWObyxF6OT0LZERhFGYbb2ZhYYyfptigwgEup3U
+         AXFDzDI8PNqPSuZbYXYagQoUIeimoXse94bVw=
+Received: by 10.151.114.6 with SMTP id r6mr4189418ybm.150.1225544272729;
+        Sat, 01 Nov 2008 05:57:52 -0700 (PDT)
+Received: by 10.150.155.12 with HTTP; Sat, 1 Nov 2008 05:57:52 -0700 (PDT)
+In-Reply-To: <200811010118.14191.jnareb@gmail.com>
 Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/99738>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/99739>
 
-Thanks to everybody for your help.
+On Sat, Nov 1, 2008 at 1:18 AM, Jakub Narebski <jnareb@gmail.com> wrote:
+> On Sun, 19 Oct 2008, Giuseppe Bilotta wrote:
+>
+> I'm sorry for the delay.
 
-I will setup an alias to always use "git push --thin".
-For the reverse direction, I don't see a --thin for "git pull",
+No problem.
 
-My understanding is that "git pull" is optimal,
-and does what --thin does for push anyway, right?
+>> When PATH_INFO is active, get rid of the sf CGI parameter by embedding
+>> the snapshot format information in the PATH_INFO URL, in the form of an
+>> appropriate extension.
+>
+> The question is: should we use format suffix (e.g. 'tar.gz'),
+> or format name (e.g. 'tgz')?  The latter is later easier to parse,
+> see comments to first patch in better snapshot support for path_info.
 
-On 10/31/08, Nicolas Pitre <nico@cam.org> wrote:
-> On Fri, 31 Oct 2008, Matthieu Moy wrote:
+I think it's essentially a matter of deciding which extension to use
+by default on output, and accepting either extension on input.
+
+
+>> +             # since we destructively absorb parameters, we keep this
+>> +             # boolean that remembers if we're handling a snapshot
+>> +             my $is_snapshot = $params{'action'} eq 'snapshot';
+>> +
 >
->> Jakub Narebski <jnareb@gmail.com> writes:
->>
->> > Thanassis Tsiodras wrote:
->> >
->> >> So I have to git-gc on my side (after the commits), git-gc on the
->> >> remote,
->> >> and then git-push?
->> >
->> > Perhaps I haven't made myself clear.
->> >
->> > On the local side: git-commit creates loose (compressed, but not
->> > deltified) objects. git-gc packs and deltifies.
->> >
->> > On the remote side (for smart protocols, i.e. git and ssh): git
->> > creates _thin_ pack, deltified;
->>
->> I don't understand this point: the OP talks about pushing, so isn't
->> the pack created on the _local_ machine (and then sent to the remote)?
+> Side note: we destructively absorb parameters, because parameters
+> which are not absorbed are then used to generate query string part
+> of URL.
 >
-> Yes, the pack is created on the fly when pushing, regardless if the repo
-> is already packed or not locally.  The only difference a locally packed
-> repo provides is a shorter "Compressing objects" phase when pushing
-> that's all. The packedness of the remote has no effect at all.
+> Deleting parameter but remembering the fact that it was used is one
+> (but not only) solution.
+
+Well, in the specific case of the 'action' parameter we could just
+keep it around and only discard it at the end.
+
+>> +                     if (!$fmt) {
+>> +                             my @snapshot_fmts = gitweb_check_feature('snapshot');
+>> +                             @snapshot_fmts = filter_snapshot_fmts(@snapshot_fmts);
+>> +                             $fmt = $snapshot_fmts[0];
+>> +                     }
 >
+> I anderstand that the above code is improved with new patch?
+
+Yup, I followed your suggestion of putting the refactoring earlier.
+
+>> +                     $href .= $known_snapshot_formats{$fmt}{'suffix'};
 >
-> Nicolas
->
+> Again: should we use snapshot prefix, or snapshot name, which means here
+> do we use $known_snapshot_formats{$fmt}{'suffix'}; or just $fmt; ?
+
+I really don't know, either is fine for me.
+
+Maybe using $fmt has the benefit that it copes better with some buggy
+versions of some browser (like Opera) that tend to strip the .gz from
+.tar.gz files ...
 
 
 -- 
-What I gave, I have; what I spent, I had; what I kept, I lost. -Old Epitaph
+Giuseppe "Oblomov" Bilotta
