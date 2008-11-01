@@ -1,57 +1,77 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: Re: libgit2 - a true git library
-Date: Sat, 1 Nov 2008 15:57:14 -0700
-Message-ID: <20081101225714.GD15463@spearce.org>
-References: <alpine.LFD.2.00.0810311558540.13034@xanadu.home> <7viqr873x7.fsf@gitster.siamese.dyndns.org> <20081031234115.GD14786@spearce.org> <alpine.DEB.1.10.0810311738100.5851@asgard.lang.hm> <20081101010011.GG14786@spearce.org> <alpine.DEB.1.10.0810311802360.5851@asgard.lang.hm> <20081101010824.GE29036@artemis.corp> <alpine.LFD.2.00.0810312121000.13034@xanadu.home> <20081101014336.GI14786@spearce.org> <alpine.LFD.2.00.0810312150200.13034@xanadu.home>
+From: Matthieu Moy <Matthieu.Moy@imag.fr>
+Subject: Re: [PATCH] prepare deprecation of git-revert
+Date: Sun, 02 Nov 2008 00:01:29 +0100
+Message-ID: <vpqr65voxti.fsf@bauges.imag.fr>
+References: <1225468527-29694-1-git-send-email-madcoder@debian.org>
+	<20081031165003.GA5355@steel.home>
+	<alpine.DEB.1.00.0811010012320.22125@pacific.mpi-cbg.de.mpi-cbg.de>
+	<7vej1w73nr.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Pierre Habouzit <madcoder@debian.org>, david@lang.hm,
-	git@vger.kernel.org
-To: Nicolas Pitre <nico@cam.org>
-X-From: git-owner@vger.kernel.org Sat Nov 01 23:58:53 2008
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Alex Riesen <raa.lkml@gmail.com>,
+	Pierre Habouzit <madcoder@debian.org>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sun Nov 02 00:06:04 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KwPQM-00022k-Tf
-	for gcvg-git-2@gmane.org; Sat, 01 Nov 2008 23:58:31 +0100
+	id 1KwPWm-00047h-OG
+	for gcvg-git-2@gmane.org; Sun, 02 Nov 2008 00:05:48 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751656AbYKAW5Q (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 1 Nov 2008 18:57:16 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751619AbYKAW5Q
-	(ORCPT <rfc822;git-outgoing>); Sat, 1 Nov 2008 18:57:16 -0400
-Received: from george.spearce.org ([209.20.77.23]:56258 "EHLO
-	george.spearce.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751530AbYKAW5P (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 1 Nov 2008 18:57:15 -0400
-Received: by george.spearce.org (Postfix, from userid 1001)
-	id C855B3835F; Sat,  1 Nov 2008 22:57:14 +0000 (UTC)
-Content-Disposition: inline
-In-Reply-To: <alpine.LFD.2.00.0810312150200.13034@xanadu.home>
-User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
+	id S1751888AbYKAXDy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 1 Nov 2008 19:03:54 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751881AbYKAXDy
+	(ORCPT <rfc822;git-outgoing>); Sat, 1 Nov 2008 19:03:54 -0400
+Received: from harmonie.imag.fr ([147.171.130.40]:36353 "EHLO harmonie.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751776AbYKAXDy (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 1 Nov 2008 19:03:54 -0400
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by harmonie.imag.fr (8.13.8/8.13.8) with ESMTP id mA1N1aaE000469;
+	Sun, 2 Nov 2008 00:01:37 +0100 (CET)
+Received: from bauges.imag.fr ([129.88.43.5])
+	by mail-veri.imag.fr with esmtps (TLS-1.0:RSA_AES_256_CBC_SHA:32)
+	(Exim 4.50)
+	id 1KwPTF-0004mH-Ss; Sun, 02 Nov 2008 00:01:29 +0100
+Received: from moy by bauges.imag.fr with local (Exim 4.63)
+	(envelope-from <moy@imag.fr>)
+	id 1KwPTF-0004hY-P2; Sun, 02 Nov 2008 00:01:29 +0100
+In-Reply-To: <7vej1w73nr.fsf@gitster.siamese.dyndns.org> (Junio C. Hamano's message of "Fri\, 31 Oct 2008 16\:20\:24 -0700")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/23.0.60 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-3.0 (harmonie.imag.fr [147.171.130.40]); Sun, 02 Nov 2008 00:01:37 +0100 (CET)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM for more information
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: moy@imag.fr
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/99786>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/99787>
 
-Nicolas Pitre <nico@cam.org> wrote:
-> On Fri, 31 Oct 2008, Shawn O. Pearce wrote:
-> 
-> > My take on the consensus for the license part of the discussion is
-> > that libgit2 should be under the "GPL gcc library" license.
-> > 
-> > BTW, I can't actually find a copy of that license; the only thing
-> > I can locate in the GCC SVN tree is a copy of the LGPL.
-> 
-> The exception is usually found at the top of files constituting 
-> libgcc.a.  One example is gcc/config/arm/ieee754-df.S.  ;-)
+Junio C Hamano <gitster@pobox.com> writes:
 
-Headers updated.  Its now GPL+gcc library exception.
+> The current state of affairs is that there is no remedy if teachers find
+> "git checkout -- path" or "git revert HEAD~24" is confusing to new people.
+> By introducing "git unstage path" or "git cherry-pick -r HEAD~24",
+> teachers can choose to teach what they feel less confusing, and they do
+> not have to teach "git checkout -- path" or "git revert HEAD~24".  We
+> should stop there.
 
-Not that the 5 lines of useful code there really needs copyright,
-but hey, whatever.
+I think you should go half a step further: officially deprecate
+"revert", but keep it supported forever. The reason is just to help
+documentation to be homogeneous (I foresee questions of users having
+read here about "cherry-pick -R" and there about "revert" and asking
+"should I use one or the other"). At least, the man page for "revert"
+should state explicitly "this is a convenience alias for ...".
+
+But I agree that removing support for "revert" is probably useless and
+somehow harmfull.
+
+(my 2 cents ...)
 
 -- 
-Shawn.
+Matthieu
