@@ -1,102 +1,79 @@
-From: Theodore Tso <tytso@mit.edu>
-Subject: Re: Git/Mercurial interoperability (and what about bzr?)
-Date: Sat, 1 Nov 2008 09:39:31 -0400
-Message-ID: <20081101133931.GC8134@mit.edu>
-References: <ge0rla$mce$1@ger.gmane.org> <ge70nl$l6t$1@ger.gmane.org> <alpine.DEB.1.00.0810281445190.22125@pacific.mpi-cbg.de.mpi-cbg.de> <Pine.LNX.4.64.0810281536360.27029@ds9.cixit.se> <E026EBDF-F402-49AB-A7A8-0A0EFB513907@ai.rug.nl> <20081028191234.GS24201@genesis.frugalware.org> <20081028213144.GC10862@mit.edu> <87ljw3zx8i.fsf@mid.deneb.enyo.de> <m3prlffzk2.fsf@localhost.localdomain> <87abcjpvy2.fsf@mid.deneb.enyo.de>
+From: Nicolas Pitre <nico@cam.org>
+Subject: Re: libgit2 - a true git library
+Date: Sat, 01 Nov 2008 09:50:45 -0400 (EDT)
+Message-ID: <alpine.LFD.2.00.0811010944000.13034@xanadu.home>
+References: <20081031213114.GA21799@artemis.corp>
+ <CBF2AF68-BA41-4394-A837-F62864CF8BFB@ai.rug.nl>
+ <20081031232829.GC14786@spearce.org>
+ <7v63n872bs.fsf@gitster.siamese.dyndns.org>
+ <20081101001300.GE14786@spearce.org>
+ <alpine.LFD.2.00.0810312106310.13034@xanadu.home>
+ <20081101011910.GH14786@spearce.org>
+ <alpine.LFD.2.00.0810312135190.13034@xanadu.home>
+ <20081101015217.GJ14786@spearce.org>
+ <alpine.DEB.1.00.0811010320370.22125@pacific.mpi-cbg.de.mpi-cbg.de>
+ <20081101110120.GA3819@artemis.corp>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Jakub Narebski <jnareb@gmail.com>, git@vger.kernel.org
-To: Florian Weimer <fw@deneb.enyo.de>
-X-From: git-owner@vger.kernel.org Sat Nov 01 14:41:48 2008
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	"Shawn O. Pearce" <spearce@spearce.org>,
+	Junio C Hamano <gitster@pobox.com>,
+	Pieter de Bie <pdebie@ai.rug.nl>, git@vger.kernel.org,
+	Scott Chacon <schacon@gmail.com>
+To: Pierre Habouzit <madcoder@debian.org>
+X-From: git-owner@vger.kernel.org Sat Nov 01 14:52:16 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KwGjZ-0005Hi-D1
-	for gcvg-git-2@gmane.org; Sat, 01 Nov 2008 14:41:45 +0100
+	id 1KwGte-0008SZ-KH
+	for gcvg-git-2@gmane.org; Sat, 01 Nov 2008 14:52:11 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751450AbYKANji (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 1 Nov 2008 09:39:38 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751449AbYKANji
-	(ORCPT <rfc822;git-outgoing>); Sat, 1 Nov 2008 09:39:38 -0400
-Received: from www.church-of-our-saviour.org ([69.25.196.31]:39028 "EHLO
-	thunker.thunk.org" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1751410AbYKANjh (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 1 Nov 2008 09:39:37 -0400
-Received: from root (helo=closure.thunk.org)
-	by thunker.thunk.org with local-esmtp   (Exim 4.50 #1 (Debian))
-	id 1KwGhQ-0001QE-PV; Sat, 01 Nov 2008 09:39:32 -0400
-Received: from tytso by closure.thunk.org with local (Exim 4.69)
-	(envelope-from <tytso@mit.edu>)
-	id 1KwGhP-0001v6-U3; Sat, 01 Nov 2008 09:39:31 -0400
-Content-Disposition: inline
-In-Reply-To: <87abcjpvy2.fsf@mid.deneb.enyo.de>
-User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
-X-SA-Exim-Connect-IP: <locally generated>
-X-SA-Exim-Mail-From: tytso@mit.edu
-X-SA-Exim-Scanned: No (on thunker.thunk.org); SAEximRunCond expanded to false
+	id S1751473AbYKANuy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 1 Nov 2008 09:50:54 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751435AbYKANuy
+	(ORCPT <rfc822;git-outgoing>); Sat, 1 Nov 2008 09:50:54 -0400
+Received: from relais.videotron.ca ([24.201.245.36]:32079 "EHLO
+	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751410AbYKANux (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 1 Nov 2008 09:50:53 -0400
+Received: from xanadu.home ([66.131.194.97]) by VL-MO-MR005.ip.videotron.ca
+ (Sun Java(tm) System Messaging Server 6.3-4.01 (built Aug  3 2007; 32bit))
+ with ESMTP id <0K9N006YMQFJDRA0@VL-MO-MR005.ip.videotron.ca> for
+ git@vger.kernel.org; Sat, 01 Nov 2008 09:50:08 -0400 (EDT)
+X-X-Sender: nico@xanadu.home
+In-reply-to: <20081101110120.GA3819@artemis.corp>
+User-Agent: Alpine 2.00 (LFD 1167 2008-08-23)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/99742>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/99743>
 
-On Sat, Nov 01, 2008 at 11:44:21AM +0100, Florian Weimer wrote:
-> > Now Mercurial has chosen to use in-tree '.hgtags' file to have global
-> > tags transferable.  Never mind the fact that it had to treat this file
-> > in special way to have it non-versioned
+On Sat, 1 Nov 2008, Pierre Habouzit wrote:
+
+> Well, you can't return _sanely_ an error through a pointer. The &1
+> method is broken as soon as you return a char* (there is an alignment
+> requirement for malloc, not for any pointer out there), hence shall not
+> be used, as it would not be the sole way to test for error.
 > 
-> Oops, thought this file was versioned.  Things like
-> 
->   <http://tycoon.hpl.hp.com/changeset/932:931d181e9f58/.hgtags>
+> Another option, that is _theorically_ not portable, but is ttbomk on all
+> the platforms we intend to support (IOW POSIX-ish and windows), is to
+> use "small" values of the pointers for errors. [NULL .. (void *)(PAGE_SIZE - 1)[
+> cannot exist, which gives us probably always 512 different errors, and
 
-.hgtags is stored as a versioned file in Mercurial.  That's one of the
-problems, and it leads to no shortage of headaches.
+4095 actually.  You don't need to align error codes.
 
-Some of the problems are discussed here:
+> the test is ((uintptr_t)ptr < (PAGE_SIZE)) which is cheap. It's butt
+> ugly, but encoding errors into pointers is butt ugly in the first place.
 
-   http://www.selenic.com/mercurial/wiki/index.cgi/Tag
+Or use "negative" pointers.  Again, please have a look at 
+include/linux/err.h.  The pointer range from 0xffffffff (or 
+0xffffffffffffffff on 64-bit machines) down to the range you want is for 
+errors, and the top of the address range is almost certain to never be 
+valid in user space either.
 
-Specifically, to quote the Mercurial Wiki:
 
-    The fact that tags identify changesets and are also parts of
-    changesets has some potentially confusing implications:
-
-    * The changeset that a tag refers to is always older than the
-      changeset that commits the tag itself.
-
-    * Updating a working dir to a particular tag will take that
-      directory back to a point before the tag itself existed.
-
-    * Cloning a repo to a particular tag will give you a new repo that
-      does not have that tag.
-
-In addition, Mercurial has to play interesting special case games in a
-repository which has multiple heads (in git terms, "branches").  When
-looking up a tag, it has to take the union of all of the .hgtags files
-at the tips of each of the branches.  So if you have a large number of
-heads in your Mercurial repository, tags access doesn't scale well at
-all.  Mercurial is very much optimized for having a single or at best
-a few heads/branches in a repository.
-
-As I mentioned earlier this makes it much more difficult to do a
-bidrectional hg/git gateway, since the two DAG's are not toplogically
-equivalent, and in fact, *when* you add a tag to a particular
-commit/revision can make a distinct difference to the shape of the
-DAG.  If you tag right after creating the revision in question, then
-there is a tag commit right after the revision.  If you commit a few
-dozen changes into the repository, and *then* tag a point many commits
-earlier, then the tag commit will be tacked onto the head of whatever
-branch you happened to be on.
-
-In fact, in the worst case, if you accidentally tag a revision on the
-"maint" branch while you happened to be on the "devel" branch, the tag
-for the commit in the "maint" branch will be attached to the "devel"
-branch, and while it will work just fine for *you*, someone who only
-fetches the "maint" branch might never see the tag that you placed on
-the maint branch --- unless they happen to also pull the devel branch.
-
-What fun, eh?
-
-					- Ted
+Nicolas
