@@ -1,105 +1,96 @@
-From: "Tuncer Ayaz" <tuncer.ayaz@gmail.com>
-Subject: Re: [PATCH] Teach/Fix pull/fetch -q/-v options
-Date: Sat, 1 Nov 2008 18:23:44 +0100
-Message-ID: <4ac8254d0811011023r10a4ce45ka962344ceef564f0@mail.gmail.com>
-References: <1224606624-5082-1-git-send-email-tuncer.ayaz@gmail.com>
-	 <20081027190816.6117@nanako3.lavabit.com>
-	 <7vprllh0ao.fsf@gitster.siamese.dyndns.org>
+From: Pierre Habouzit <madcoder@debian.org>
+Subject: Re: libgit2 - a true git library
+Date: Sat, 01 Nov 2008 18:30:42 +0100
+Message-ID: <20081101173042.GE26229@artemis.corp>
+References: <20081031170704.GU14786@spearce.org> <20081031174745.GA4058@artemis.corp> <20081031184154.GV14786@spearce.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: "Nanako Shiraishi" <nanako3@lavabit.com>, git@vger.kernel.org
-To: "Junio C Hamano" <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Nov 01 18:30:34 2008
+Content-Type: multipart/signed; boundary="3XA6nns4nE4KvaS/";
+	protocol="application/pgp-signature"; micalg=SHA1
+Cc: git@vger.kernel.org, Scott Chacon <schacon@gmail.com>
+To: "Shawn O. Pearce" <spearce@spearce.org>
+X-From: git-owner@vger.kernel.org Sat Nov 01 18:32:01 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KwKIy-0003i1-Ex
-	for gcvg-git-2@gmane.org; Sat, 01 Nov 2008 18:30:32 +0100
+	id 1KwKKM-00044E-T3
+	for gcvg-git-2@gmane.org; Sat, 01 Nov 2008 18:31:59 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751708AbYKAR3S (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 1 Nov 2008 13:29:18 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751677AbYKAR3S
-	(ORCPT <rfc822;git-outgoing>); Sat, 1 Nov 2008 13:29:18 -0400
-Received: from hs-out-0708.google.com ([64.233.178.244]:4885 "EHLO
-	hs-out-0708.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751373AbYKAR3R (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 1 Nov 2008 13:29:17 -0400
-Received: by hs-out-0708.google.com with SMTP id 4so945484hsl.5
-        for <git@vger.kernel.org>; Sat, 01 Nov 2008 10:29:16 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to
-         :subject:cc:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:references;
-        bh=Ur+NLB2eQNmI2n0B40UFV3a/rPUdf8bt662Eo3I7Dek=;
-        b=tcmpHNyA1ofIZStqnnqUV9xf5ZDcSi53ySfM+ftfKGxYX1p+uuwAdL9VYapWIEDGVu
-         8J/YGHActUYHLb8+7g9hFIzANOfPAaL3Pmv2Q0M5kFUc/ev4fz1JrEUEmwWFPk1Wd2IB
-         UU8IX5WJONzGUZ2KUcPaZLY5CC50kv2C2o06k=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
-         :content-type:content-transfer-encoding:content-disposition
-         :references;
-        b=QA0P/68dxR+rggbTr948u57o8+2hLxQNZwngAmlX/tpHXVvPSHExHG1yFssyGv7HXV
-         u+BcfSGOtEH6n0g7bvWtOLrdHXfyE/VhlRCZFc+Fg7o8LO95fwVyTaVssNmmG/P49WNF
-         yDpyeUA0OBxbEM8HcDvoMKVlGza1LWT1fcGms=
-Received: by 10.64.21.10 with SMTP id 10mr6736302qbu.8.1225560224324;
-        Sat, 01 Nov 2008 10:23:44 -0700 (PDT)
-Received: by 10.65.114.10 with HTTP; Sat, 1 Nov 2008 10:23:44 -0700 (PDT)
-In-Reply-To: <7vprllh0ao.fsf@gitster.siamese.dyndns.org>
+	id S1751809AbYKARaq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 1 Nov 2008 13:30:46 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751701AbYKARap
+	(ORCPT <rfc822;git-outgoing>); Sat, 1 Nov 2008 13:30:45 -0400
+Received: from pan.madism.org ([88.191.52.104]:55951 "EHLO hermes.madism.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751771AbYKARap (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 1 Nov 2008 13:30:45 -0400
+Received: from madism.org (olympe.madism.org [82.243.245.108])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(Client CN "artemis.madism.org", Issuer "madism.org" (verified OK))
+	by hermes.madism.org (Postfix) with ESMTPS id E1E423B7FC;
+	Sat,  1 Nov 2008 18:30:43 +0100 (CET)
+Received: by madism.org (Postfix, from userid 1000)
+	id 98CD75EE245; Sat,  1 Nov 2008 18:30:42 +0100 (CET)
 Content-Disposition: inline
+In-Reply-To: <20081031184154.GV14786@spearce.org>
+X-Face: $(^e[V4D-[`f2EmMGz@fgWK!e.B~2g.{08lKPU(nc1J~z\4B>*JEVq:E]7G-\6$Ycr4<;Z!|VY6Grt]+RsS$IMV)f>2)M="tY:ZPcU;&%it2D81X^kNya0=L]"vZmLP+UmKhgq+u*\.dJ8G!N&=EvlD
+User-Agent: Madmutt/devel (Linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/99749>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/99750>
 
-On Tue, Oct 28, 2008 at 4:21 AM, Junio C Hamano <gitster@pobox.com> wrote:
-> Nanako Shiraishi <nanako3@lavabit.com> writes:
->
->> Quoting Tuncer Ayaz <tuncer.ayaz@gmail.com>:
->>
->>> After fixing clone -q I noticed that pull -q does not do what
->>> it's supposed to do and implemented --quiet/--verbose by
->>> adding it to builtin-merge and fixing two places in builtin-fetch.
->>
->> Junio, may I ask what the status of this patch is? Maybe the patch was
->> lost in the noise? The commit log message is written very differently from
->> existing commits in the history of git, and I am thinking that maybe that is
->> why you did not like the whole patch? Or is it lack of any test script?
->
-> Well, perhaps you've been with us long enough to get too picky like
-> myself, but this was genuinely lost in the noise and my scrambling to get
-> back to normal.  We do not typically say "I did this, I did that", but the
-> first paragraph in Tuncer's message is perfectly fine.  I would probably
-> liked the second paragraph better if it were after --- lines (it is more
-> about the possible enhancements in other areas, and does not belong to the
-> commit log message for this change), but it is not a grave enough offence
-> to get the patch rejected.
 
-Should I resend the patch with a short and simple commit message
-like the following?
---8<--
-Implement git-pull --quiet and --verbose by adding the
-options to git-pull and fixing verbosity handling in git-fetch.
--->8--
+--3XA6nns4nE4KvaS/
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-> The patch itself looks Ok; the lack of test script additions does indeed
-> bother me somewhat, but it is not too big a deal.
+On Fri, Oct 31, 2008 at 06:41:54PM +0000, Shawn O. Pearce wrote:
+> How about this?
+>=20
+> http://www.spearce.org/projects/scm/libgit2/apidocs/CONVENTIONS
 
-I took a look at t/ and am not quite sure whether I should test -v/-q
-by analyzing stdout output's length & content.
+FWIW I've read what you say about types, while this is good design to
+make things abstract, accessors are slower _and_ disallow many
+optimizations as it's a function call and that it may clobber all your
+pointers values.
 
-I think testing -q and -v makes more sense on a global and not
-git-pull or git-fetch level. For that to be possible I envision building
-common verbosity-based logging functions/macros.
+For types that _will_ be in the tight loops, we must make the types
+explicit or it'll bite us hard performance-wise. I'm thinking what is
+"struct object" or "struct commit" in git.git. It's likely that we will
+loose a *lot* of those types are opaque.
 
-I don't like the idea of scanning stdout for length or content as
-long as we're not sure that all errors and warnings are sent
-to stderr and stdout is for info and verbose only.
+struct object in git has not changed since 2006.06. struct commit hasn't
+since 2005.04 if you ignore { unsigned int indegree; void *util; } that
+if I'm correct are annotations, and is a problem we (I think) have to
+address differently anyways (I gave my proposal on this, I'm eager to
+hear about what other think on the subject). So if in git.git that _is_
+a moving target we have had a 2 year old implementation for those types,
+it's that they're pretty well like this.
 
-> P.S. We are having fun at GitTogether'08 in the first half of this week,
-> so please expect slower response than usual.
+It's IMNSHO on the matter that core structures of git _will_ have to be
+made explicit. I'm thinking objects and their "subtypes" (commits,
+trees, blobs). Maybe a couple of things on the same vein.
+
+--=20
+=C2=B7O=C2=B7  Pierre Habouzit
+=C2=B7=C2=B7O                                                madcoder@debia=
+n.org
+OOO                                                http://www.madism.org
+
+--3XA6nns4nE4KvaS/
+Content-Type: application/pgp-signature
+Content-Disposition: inline
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.9 (GNU/Linux)
+
+iEYEABECAAYFAkkMkkIACgkQvGr7W6HudhzkcwCfcVvg9HiDWZHaZhVvPz5UrDvs
+fKkAoItFW9QmwTzIyOeKnNcwWnIhm2QV
+=hcct
+-----END PGP SIGNATURE-----
+
+--3XA6nns4nE4KvaS/--
