@@ -1,83 +1,130 @@
-From: Pierre Habouzit <madcoder@debian.org>
+From: Andreas Ericsson <ae@op5.se>
 Subject: Re: libgit2 - a true git library
-Date: Sat, 01 Nov 2008 19:48:50 +0100
-Message-ID: <20081101184850.GH26229@artemis.corp>
-References: <20081031170704.GU14786@spearce.org> <20081031174745.GA4058@artemis.corp> <20081031184154.GV14786@spearce.org> <20081101173042.GE26229@artemis.corp> <490CA37C.1070107@op5.se>
+Date: Sat, 01 Nov 2008 20:18:05 +0100
+Message-ID: <490CAB6D.90209@op5.se>
+References: <20081031170704.GU14786@spearce.org>
 Mime-Version: 1.0
-Content-Type: multipart/signed; boundary="82evfD9Ogz2JrdWZ";
-	protocol="application/pgp-signature"; micalg=SHA1
-Cc: "Shawn O. Pearce" <spearce@spearce.org>, git@vger.kernel.org,
-	Scott Chacon <schacon@gmail.com>
-To: Andreas Ericsson <ae@op5.se>
-X-From: git-owner@vger.kernel.org Sat Nov 01 19:50:35 2008
+Content-Type: text/plain; charset=ISO-8859-15; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, Scott Chacon <schacon@gmail.com>
+To: "Shawn O. Pearce" <spearce@spearce.org>
+X-From: git-owner@vger.kernel.org Sat Nov 01 20:19:40 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KwLYQ-0003qu-7f
-	for gcvg-git-2@gmane.org; Sat, 01 Nov 2008 19:50:34 +0100
+	id 1KwM0Q-0004Ao-FT
+	for gcvg-git-2@gmane.org; Sat, 01 Nov 2008 20:19:30 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753842AbYKASsz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 1 Nov 2008 14:48:55 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753834AbYKASsz
-	(ORCPT <rfc822;git-outgoing>); Sat, 1 Nov 2008 14:48:55 -0400
-Received: from pan.madism.org ([88.191.52.104]:44083 "EHLO hermes.madism.org"
+	id S1752392AbYKATSQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 1 Nov 2008 15:18:16 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752314AbYKATSQ
+	(ORCPT <rfc822;git-outgoing>); Sat, 1 Nov 2008 15:18:16 -0400
+Received: from mail.op5.se ([193.201.96.20]:42271 "EHLO mail.op5.se"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753828AbYKASsy (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 1 Nov 2008 14:48:54 -0400
-Received: from madism.org (olympe.madism.org [82.243.245.108])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(Client CN "artemis.madism.org", Issuer "madism.org" (verified OK))
-	by hermes.madism.org (Postfix) with ESMTPS id C8B153B82C;
-	Sat,  1 Nov 2008 19:48:51 +0100 (CET)
-Received: by madism.org (Postfix, from userid 1000)
-	id 660CC5EE245; Sat,  1 Nov 2008 19:48:50 +0100 (CET)
-Content-Disposition: inline
-In-Reply-To: <490CA37C.1070107@op5.se>
-X-Face: $(^e[V4D-[`f2EmMGz@fgWK!e.B~2g.{08lKPU(nc1J~z\4B>*JEVq:E]7G-\6$Ycr4<;Z!|VY6Grt]+RsS$IMV)f>2)M="tY:ZPcU;&%it2D81X^kNya0=L]"vZmLP+UmKhgq+u*\.dJ8G!N&=EvlD
-User-Agent: Madmutt/devel (Linux)
+	id S1752047AbYKATSP (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 1 Nov 2008 15:18:15 -0400
+Received: from localhost (localhost.localdomain [127.0.0.1])
+	by mail.op5.se (Postfix) with ESMTP id 056821B800A4;
+	Sat,  1 Nov 2008 20:13:02 +0100 (CET)
+X-Virus-Scanned: amavisd-new at 
+X-Spam-Flag: NO
+X-Spam-Score: -2.499
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.499 tagged_above=-10 required=6.6
+	tests=[AWL=0.000, BAYES_00=-2.599, RDNS_NONE=0.1]
+Received: from mail.op5.se ([127.0.0.1])
+	by localhost (mail.op5.se [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id q29GQUqY2lvT; Sat,  1 Nov 2008 20:12:59 +0100 (CET)
+Received: from clix.int.op5.se (unknown [172.27.78.6])
+	by mail.op5.se (Postfix) with ESMTP id DA20A1B8010D;
+	Sat,  1 Nov 2008 20:12:57 +0100 (CET)
+User-Agent: Thunderbird 2.0.0.16 (X11/20080723)
+In-Reply-To: <20081031170704.GU14786@spearce.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/99760>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/99761>
+
+Shawn O. Pearce wrote:
+> During the GitTogether we were kicking around the idea of a ground-up
+> implementation of a Git library.  This may be easier than trying
+> to grind down git.git into a library, as we aren't tied to any
+> of the current global state baggage or the current die() based
+> error handling.
+> 
+> I've started an _extremely_ rough draft.  The code compiles into a
+> libgit.a but it doesn't even implement what it describes in the API,
+> let alone a working Git implementation.  Really what I'm trying to
+> incite here is some discussion on what the API looks like.
+> 
+> API Docs:
+> http://www.spearce.org/projects/scm/libgit2/apidocs/html/modules.html
+> 
+> Source Code Clone URL:
+> http://www.spearce.org/projects/scm/libgit2/libgit2.git
+> 
+
+Having looked briefly at the code, I've got a couple of comments:
+* GIT_EXTERN() does nothing. Ever. It's noise and should be removed.
+  Instead it would be better to have GIT_PRIVATE(), which could
+  set visibility to "internal" or "hidden", meaning the symbol it's
+  attached to can be used for lookups when creating a shared library
+  but won't be usable from programs linking to that shared library
+  (visibility-attributes have zero effect on static libraries). At
+  least on all archs anyone really cares about.
+* Prefixing the files themselves with git_ is useless and only leads
+  to developer frustration. I imagine we'd be installing any header
+  files in a git/ directory anyway, so we're gaining absolutely
+  nothing with the git_ prefix on source-files.
+
+Apart from that, it seems you've been designing a lot rather than
+trying to use the API to actually do something. It would, imo, be
+a lot better to start development with adding functionality shared
+between all programs and then expand further on that, such as
+incorporating all functions needed for manipulating tags into the
+library and then modify existing code to use the library to get
+tag-ish things done. That would also mean that the library would
+quickly get used by core git, as once a certain part of it is
+complete patches can be fitted to the library rather than to the
+current non-libish dying() functions.
 
 
---82evfD9Ogz2JrdWZ
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+I also think it's quite alright to not strive *too* hard to make
+all functions thread-safe, as very few of them will actually need
+that. It's unlikely that a user program will spawn one thread to
+write a lot of tags while another is trying to parse them, for
+example.
 
-On Sat, Nov 01, 2008 at 06:44:12PM +0000, Andreas Ericsson wrote:
-> Pierre Habouzit wrote:
+By adding an init routine that determines the workdir and the
+gitdir, one could start using the library straight away.
 
-> >For types that _will_ be in the tight loops, we must make the types
-> >explicit or it'll bite us hard performance-wise. I'm thinking what is
-> >"struct object" or "struct commit" in git.git. It's likely that we will
-> >loose a *lot* of those types are opaque.
->=20
-> The last sentence doesn't parse. I assume you mean "if those types=20
-> are..",
+int git_init(const char *db, const char *worktree)
+{
+    if (git_set_db_dir(db))
+        return -1;
+    git_set_worktree((worktree))
+        return -1;
 
-This was a typo, indeed s/of/if/
+    return 0;
+}
 
---=20
-=C2=B7O=C2=B7  Pierre Habouzit
-=C2=B7=C2=B7O                                                madcoder@debia=
-n.org
-OOO                                                http://www.madism.org
+and already you have a some few small helpers that are nifty to
+to have around:
+int git_is_gitdir(const char *path);  /* returns 1 on success */
+int git_has_gitdir(const char *path); /* returns 1 on success */
+const char *git_mkpath(const char *fmt, ...)
 
---82evfD9Ogz2JrdWZ
-Content-Type: application/pgp-signature
-Content-Disposition: inline
+This way one will notice rather quickly what's needed (making it
+easy to keep a more-or-less public TODO available, with small stuff
+on it for the most part), and one can then go look for it in the
+existing git code and, if possible, convert stuff or, best case
+scenario, steal it straight off so that more apps can benefit from
+tried and tested code.
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.9 (GNU/Linux)
-
-iEYEABECAAYFAkkMpJIACgkQvGr7W6HudhwFuwCfUtsQuZle+PFnSJ52PVz6QIaN
-DnwAnRo9zN5xuijdjGUYJabbJMc4xIE0
-=YuFF
------END PGP SIGNATURE-----
-
---82evfD9Ogz2JrdWZ--
+-- 
+Andreas Ericsson                   andreas.ericsson@op5.se
+OP5 AB                             www.op5.se
+Tel: +46 8-230225                  Fax: +46 8-230231
