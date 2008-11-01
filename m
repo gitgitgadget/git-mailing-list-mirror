@@ -1,102 +1,85 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: libgit2 - a true git library
-Date: Fri, 31 Oct 2008 16:56:51 -0700 (PDT)
-Message-ID: <m3tzasfhgb.fsf@localhost.localdomain>
-References: <20081031170704.GU14786@spearce.org>
-	<20081031174745.GA4058@artemis.corp>
-	<alpine.LFD.2.00.0810311558540.13034@xanadu.home>
-	<7viqr873x7.fsf@gitster.siamese.dyndns.org>
-	<20081031234115.GD14786@spearce.org>
+From: Brandon Casey <casey@nrlssc.navy.mil>
+Subject: Re: getting list of objects for packing
+Date: Fri, 31 Oct 2008 19:00:06 -0500
+Message-ID: <1S3xpaVP1Cy1Rei_ODwlXsBdu64BGiPve-lj_4fN6cA@cipher.nrlssc.navy.mil>
+References: <TtAUShKh7lOR5rkf1iyWwpMOWoYpT8Mnw-t3Wemdy3tTCd0XiQHdag@cipher.nrlssc.navy.mil> <alpine.LFD.2.00.0810311625450.13034@xanadu.home> <JhY9the71dfsAJuojZF2S4BG-SEkshM7XxIWGPBeY9M@cipher.nrlssc.navy.mil> <7v7i7o8nc5.fsf@gitster.siamese.dyndns.org> <fAUegZ3bxPo8HquZjUM9syW-giYefuAzBtb1XXHQ-TwbmvJvMZvmDA@cipher.nrlssc.navy.mil>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <gitster@pobox.com>, Nicolas Pitre <nico@cam.org>,
-	Pierre Habouzit <madcoder@debian.org>, git@vger.kernel.org,
-	Scott Chacon <schacon@gmail.com>
-To: "Shawn O. Pearce" <spearce@spearce.org>
-X-From: git-owner@vger.kernel.org Sat Nov 01 00:58:25 2008
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: Nicolas Pitre <nico@cam.org>,
+	Git Mailing List <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sat Nov 01 01:01:35 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Kw3sk-0007w6-5i
-	for gcvg-git-2@gmane.org; Sat, 01 Nov 2008 00:58:22 +0100
+	id 1Kw3vl-0000XX-JR
+	for gcvg-git-2@gmane.org; Sat, 01 Nov 2008 01:01:30 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752238AbYJaX4z (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 31 Oct 2008 19:56:55 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752461AbYJaX4z
-	(ORCPT <rfc822;git-outgoing>); Fri, 31 Oct 2008 19:56:55 -0400
-Received: from nf-out-0910.google.com ([64.233.182.187]:55609 "EHLO
-	nf-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752231AbYJaX4y (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 31 Oct 2008 19:56:54 -0400
-Received: by nf-out-0910.google.com with SMTP id d3so672736nfc.21
-        for <git@vger.kernel.org>; Fri, 31 Oct 2008 16:56:52 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:received:received
-         :x-authentication-warning:to:cc:subject:references:from:in-reply-to
-         :message-id:lines:user-agent:mime-version:content-type:date;
-        bh=m0+C8CBAQcmlVhRdqdU1w2UU9Kg5ZuBKCjNdhxSHIrU=;
-        b=sCXsXksVzRO+6rRuRq33jWFVyzX0CJGv8MpkcVLOAW9/EgdL19pqMNcaCMbrG6zLp1
-         Y0LVDrDCCJkFruJjMY4qAOkB+otJqGnBUSKfblFh2p2UPNWi2RE4e5jQcydHo5ibWneV
-         NExBIUskN3rF2EiTuUZFNRaCh8W3Y7Lmngbms=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=x-authentication-warning:to:cc:subject:references:from:in-reply-to
-         :message-id:lines:user-agent:mime-version:content-type:date;
-        b=TqHVKMWVF1uLrzoxVPYcbeVf37ZpD4H2zB+BWM4DX6H0m+i/QFmAL5ryANSgW1t0rV
-         ScboKVedg1CqsyS5MvJc1geV+XkTNC3OiLQQmaMNlkYr0+62uXeYF6v6fWV5O973A9aI
-         uyIL5PP4Rsl6I/08He5IuuJyEgQDG1pJE3cOA=
-Received: by 10.210.59.14 with SMTP id h14mr5148669eba.50.1225497412118;
-        Fri, 31 Oct 2008 16:56:52 -0700 (PDT)
-Received: from localhost.localdomain (abwk207.neoplus.adsl.tpnet.pl [83.8.234.207])
-        by mx.google.com with ESMTPS id 10sm4863200eyd.6.2008.10.31.16.56.49
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Fri, 31 Oct 2008 16:56:51 -0700 (PDT)
-Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id m9VNtpHl000458;
-	Sat, 1 Nov 2008 00:56:01 +0100
-Received: (from jnareb@localhost)
-	by localhost.localdomain (8.13.4/8.13.4/Submit) id m9VNtGnC000453;
-	Sat, 1 Nov 2008 00:55:16 +0100
-X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
-In-Reply-To: <20081031234115.GD14786@spearce.org>
-User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
+	id S1751769AbYKAAAP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 31 Oct 2008 20:00:15 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751410AbYKAAAP
+	(ORCPT <rfc822;git-outgoing>); Fri, 31 Oct 2008 20:00:15 -0400
+Received: from mail1.nrlssc.navy.mil ([128.160.35.1]:43961 "EHLO
+	mail.nrlssc.navy.mil" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750795AbYKAAAO (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 31 Oct 2008 20:00:14 -0400
+Received: by mail.nrlssc.navy.mil id mA1007kx029699; Fri, 31 Oct 2008 19:00:07 -0500
+In-Reply-To: <fAUegZ3bxPo8HquZjUM9syW-giYefuAzBtb1XXHQ-TwbmvJvMZvmDA@cipher.nrlssc.navy.mil>
+X-OriginalArrivalTime: 01 Nov 2008 00:00:07.0223 (UTC) FILETIME=[CCC2A470:01C93BB4]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/99684>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/99685>
 
-"Shawn O. Pearce" <spearce@spearce.org> writes:
-> Junio C Hamano <gitster@pobox.com> wrote:
-
-> > Although no license asks this, my wish is that if somebody built on top of
-> > what I wrote to make the world a better place, I'd like the same access to
-> > that additional code so that I too can enjoy the improved world.  Because
-> > almost all of my code in git.git are under GPLv2, in reality I do not have
-> > any access to your software as long as you do not distribute your
-> > additional code that made the world a better place, which is a bit sad.
+Brandon Casey wrote:
+> Junio C Hamano wrote:
+>> Brandon Casey <casey@nrlssc.navy.mil> writes:
+>>
+>>> Nicolas Pitre wrote:
+>>>> On Fri, 31 Oct 2008, Brandon Casey wrote:
+>>>>>   -The sed statement is stripping off anything after the sha1. Any way to
+>>>>>    get rev-list to print out just the sha1 so that sed is not necessary?
+>>>> If you strip the data after the SHA1 when pipping into pack-objects then 
+>>>> you'll have horrible delta compression results.  The path names after 
+>>>> each SHA1 is used to sort objects when trying to find best matches for 
+>>>> delta compression. So you should preserve those and feed it back 
+>>>> especially with those packs that you still want delta compression for.
+>>> Ah, I'll have to rethink my script then. Thanks!
+>> Yeah, but wasn't the purpose of your whole exercise to list objects that
+>> do not delta nor compress well with each other, in which case the delta
+>> compression order (aka name hash) would not matter, no?
 > 
-> IMHO, its a flaw of the GPL.  GitHub anyone?  Heck, even Google uses
-> a lot of GPL'd software internally (yes, we have Linux desktops and
-> servers) but not all of the software we distribute internally goes
-> external, so not all of our patches are published.  *sigh*
-> 
-> I've actually stayed awake at night sometimes wondering what the
-> world would be like if the GPL virual clause forced the source code
-> for a website to be opened, or forced you to publish your code
-> even if you never distribute binaries beyond "you" (where "you"
-> is some mega corp in many countries with many employees).
+> The script I wrote actually starts up two pack-objects instances and I was
+> writing the objects I wanted to pack _normally_ to one, and the ones that I
+> did not want compressed/deltafied to the other (which was started with
+> --no-reuse-object --window=0 --depth=0 --compression=0).
 
-There is such license, and it is called AGPLv3, Affero GPL[1].
+So, my script created two pack files: one packed normally, and one packed without
+compression or delta. I removed my original packs, and put these two new ones in
+my pack directory and ran 'git fsck --full' and it completed successfully. There
+are no loose objects in the repo.
 
-And of course Google prohibits (or did prohibit) using it for projects
-hosted at Google Code... wonder why... ;-)
+I added a .keep file for each pack.
 
-[1] http://en.wikipedia.org/wiki/AGPL
--- 
-Jakub Narebski
-Poland
-ShadeHawk on #git
+Since my script removed the extra info from rev-parse's output, I removed the
+.keep file from the appropriate pack and ran 'git gc --aggressive'.
+
+The 1.7GB pack that had the .keep file removed has been replaced with a +3GB
+pack file. The other pack file which still has the .keep file is 2.3GB.
+
+In another repo with 3 packs marked .keep, and one 388KB pack with ~300
+objects in it, and 3 loose dangling objects, the 388KB pack was replaced with
+a 3.5GB pack.
+
+It appears that the entire repository is being packed into the new pack file
+even though there are existing pack files with .keep files.
+
+If I compare the output from 'git verify-pack -v' I can see that many of the
+objects in the packs marked with a .keep file are indeed in the new pack file.
+But not all of them.
+
+-brandon
