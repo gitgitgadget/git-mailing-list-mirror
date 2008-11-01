@@ -1,63 +1,92 @@
-From: Florian Weimer <fw@deneb.enyo.de>
-Subject: Re: Git/Mercurial interoperability (and what about bzr?)
-Date: Sat, 01 Nov 2008 09:06:21 +0100
-Message-ID: <87ljw3zx8i.fsf@mid.deneb.enyo.de>
-References: <ge0rla$mce$1@ger.gmane.org> <ge70nl$l6t$1@ger.gmane.org>
-	<alpine.DEB.1.00.0810281445190.22125@pacific.mpi-cbg.de.mpi-cbg.de>
-	<Pine.LNX.4.64.0810281536360.27029@ds9.cixit.se>
-	<E026EBDF-F402-49AB-A7A8-0A0EFB513907@ai.rug.nl>
-	<20081028191234.GS24201@genesis.frugalware.org>
-	<20081028213144.GC10862@mit.edu>
+From: "=?ISO-8859-1?Q?Santi_B=E9jar?=" <santi@agolina.net>
+Subject: Re: [PATCH] add instructions on how to send patches to the mailing list with Gmail
+Date: Sat, 1 Nov 2008 11:00:05 +0100
+Message-ID: <adf1fd3d0811010300ye0aca83t12d271388d35b8d4@mail.gmail.com>
+References: <b97024a40811010028l36606128v61172807f4cf503a@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Nov 01 09:30:38 2008
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, "Junio C Hamano" <gitster@pobox.com>
+To: "Tom Preston-Werner" <tom@github.com>
+X-From: git-owner@vger.kernel.org Sat Nov 01 11:01:38 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KwBsR-0007X8-Et
-	for gcvg-git-2@gmane.org; Sat, 01 Nov 2008 09:30:35 +0100
+	id 1KwDIX-0004Nq-DL
+	for gcvg-git-2@gmane.org; Sat, 01 Nov 2008 11:01:37 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751093AbYKAIZf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 1 Nov 2008 04:25:35 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750904AbYKAIZf
-	(ORCPT <rfc822;git-outgoing>); Sat, 1 Nov 2008 04:25:35 -0400
-Received: from mail.enyo.de ([212.9.189.167]:44843 "EHLO mail.enyo.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750826AbYKAIZe (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 1 Nov 2008 04:25:34 -0400
-X-Greylist: delayed 1151 seconds by postgrey-1.27 at vger.kernel.org; Sat, 01 Nov 2008 04:25:34 EDT
-Received: from deneb.vpn.enyo.de ([212.9.189.177] helo=deneb.enyo.de)
-	by mail.enyo.de with esmtp id 1KwBUz-0001fW-CT
-	for git@vger.kernel.org; Sat, 01 Nov 2008 09:06:21 +0100
-Received: from fw by deneb.enyo.de with local (Exim 4.69)
-	(envelope-from <fw@deneb.enyo.de>)
-	id 1KwBUz-0002Fl-1e
-	for git@vger.kernel.org; Sat, 01 Nov 2008 09:06:21 +0100
-In-Reply-To: <20081028213144.GC10862@mit.edu> (Theodore Tso's message of "Tue,
-	28 Oct 2008 17:31:44 -0400")
+	id S1751251AbYKAKAK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 1 Nov 2008 06:00:10 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751225AbYKAKAK
+	(ORCPT <rfc822;git-outgoing>); Sat, 1 Nov 2008 06:00:10 -0400
+Received: from mu-out-0910.google.com ([209.85.134.189]:36036 "EHLO
+	mu-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751248AbYKAKAJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 1 Nov 2008 06:00:09 -0400
+Received: by mu-out-0910.google.com with SMTP id g7so1560224muf.1
+        for <git@vger.kernel.org>; Sat, 01 Nov 2008 03:00:07 -0700 (PDT)
+Received: by 10.103.214.8 with SMTP id r8mr6012775muq.125.1225533606062;
+        Sat, 01 Nov 2008 03:00:06 -0700 (PDT)
+Received: by 10.103.179.20 with HTTP; Sat, 1 Nov 2008 03:00:05 -0700 (PDT)
+In-Reply-To: <b97024a40811010028l36606128v61172807f4cf503a@mail.gmail.com>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/99722>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/99723>
 
-* Theodore Tso:
+On Sat, Nov 1, 2008 at 8:28 AM, Tom Preston-Werner <tom@github.com> wrote:
+> Gmail is one of the most popular email providers in the world. Now that Gmail
+> supports IMAP, sending properly formatted patches via `git imap-send` is
+> trivial. This section in SubmittingPatches explains how to do so.
+>
+> Signed-off-by: Tom Preston-Werner <tom@github.com>
+> ---
+>  Documentation/SubmittingPatches |   27 +++++++++++++++++++++++++++
+>  1 files changed, 27 insertions(+), 0 deletions(-)
+>
+> diff --git a/Documentation/SubmittingPatches b/Documentation/SubmittingPatches
+> index a1e9100..f0295c6 100644
+> --- a/Documentation/SubmittingPatches
+> +++ b/Documentation/SubmittingPatches
+> @@ -456,3 +456,30 @@ This should help you to submit patches inline using KMail.
+>
+>  5) Back in the compose window: add whatever other text you wish to the
+>  message, complete the addressing and subject fields, and press send.
+> +
+> +
+> +Gmail
+> +-----
+> +
+> +Submitting properly formatted patches via Gmail is simple now that
+> +IMAP support is available. First, edit your ~/.gitconfig to specify your
+> +account settings:
+> +
+> +[imap]
+> +       folder = "[Gmail]/Drafts"
+> +       host = imaps://imap.gmail.com
+> +       user = user@gmail.com
+> +       pass = p4ssw0rd
+> +       port = 993
+> +       sslverify = false
 
-> In the past I've looked at the possibility of creating a
-> bi-directional, incremental gateway between hg and git repositories.
-> The main thing which makes this difficult is that hg stores tags
-> in-band inside the change-controlled .hgtags file.  This means that if
-> you cut a release, tag it, and then create a commit to further modify
-> the repository, the new commit is descended from the tag commit,
-> whereas in git, the tag is a "bookmark" --- perhaps signed via GPG,
-> but not part of the revision history.
+Warning: It is not secure.
 
-Couldn't you just keep the .hgtags file and have everyone interested
-in the tags use special scripts?
+> +
+> +Next, ensure that your Gmail settings are correct. In "Settings" the
+> +"Use Unicode (UTF-8) encoding for outgoing messages" should be checked.
+> +
+> +Once your commits are ready to send to the mailing list, run the following
+> +command to send the patch emails to your Gmail Drafts folder.
+> +
+> +       $ git format-patch -M --stdout origin/master | git imap-send
+> +
+> +Go to your Gmail account, open the Drafts folder, find the patch email, fill
+> +in the To: and CC: fields and send away!
 
-(Admittedly, I'm horribly totally by Git's behavior in this area.  I
-haven't figured out yet under what circumstances tags are pushed and
-pulled, so I'm not totally opposed to the Mercurial model. 8-/)
+Are you sure the mail does not get whitespace damaged?
+
+Santi
