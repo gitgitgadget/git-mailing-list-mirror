@@ -1,72 +1,64 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
+From: Nicolas Pitre <nico@cam.org>
 Subject: Re: libgit2 - a true git library
-Date: Fri, 31 Oct 2008 18:52:17 -0700
-Message-ID: <20081101015217.GJ14786@spearce.org>
-References: <20081031174745.GA4058@artemis.corp> <alpine.LFD.2.00.0810311558540.13034@xanadu.home> <20081031213114.GA21799@artemis.corp> <CBF2AF68-BA41-4394-A837-F62864CF8BFB@ai.rug.nl> <20081031232829.GC14786@spearce.org> <7v63n872bs.fsf@gitster.siamese.dyndns.org> <20081101001300.GE14786@spearce.org> <alpine.LFD.2.00.0810312106310.13034@xanadu.home> <20081101011910.GH14786@spearce.org> <alpine.LFD.2.00.0810312135190.13034@xanadu.home>
+Date: Fri, 31 Oct 2008 21:53:53 -0400 (EDT)
+Message-ID: <alpine.LFD.2.00.0810312150200.13034@xanadu.home>
+References: <20081031170704.GU14786@spearce.org>
+ <20081031174745.GA4058@artemis.corp>
+ <alpine.LFD.2.00.0810311558540.13034@xanadu.home>
+ <7viqr873x7.fsf@gitster.siamese.dyndns.org>
+ <20081031234115.GD14786@spearce.org>
+ <alpine.DEB.1.10.0810311738100.5851@asgard.lang.hm>
+ <20081101010011.GG14786@spearce.org>
+ <alpine.DEB.1.10.0810311802360.5851@asgard.lang.hm>
+ <20081101010824.GE29036@artemis.corp>
+ <alpine.LFD.2.00.0810312121000.13034@xanadu.home>
+ <20081101014336.GI14786@spearce.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Pieter de Bie <pdebie@ai.rug.nl>,
-	Pierre Habouzit <madcoder@debian.org>, git@vger.kernel.org,
-	Scott Chacon <schacon@gmail.com>
-To: Nicolas Pitre <nico@cam.org>
-X-From: git-owner@vger.kernel.org Sat Nov 01 02:53:34 2008
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+Cc: Pierre Habouzit <madcoder@debian.org>, david@lang.hm,
+	git@vger.kernel.org
+To: "Shawn O. Pearce" <spearce@spearce.org>
+X-From: git-owner@vger.kernel.org Sat Nov 01 02:55:15 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Kw5gB-0001h3-L7
-	for gcvg-git-2@gmane.org; Sat, 01 Nov 2008 02:53:32 +0100
+	id 1Kw5hq-00022A-Bb
+	for gcvg-git-2@gmane.org; Sat, 01 Nov 2008 02:55:14 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751673AbYKABwS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 31 Oct 2008 21:52:18 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751479AbYKABwS
-	(ORCPT <rfc822;git-outgoing>); Fri, 31 Oct 2008 21:52:18 -0400
-Received: from george.spearce.org ([209.20.77.23]:36985 "EHLO
-	george.spearce.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751398AbYKABwS (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 31 Oct 2008 21:52:18 -0400
-Received: by george.spearce.org (Postfix, from userid 1001)
-	id 93ADB38360; Sat,  1 Nov 2008 01:52:17 +0000 (UTC)
-Content-Disposition: inline
-In-Reply-To: <alpine.LFD.2.00.0810312135190.13034@xanadu.home>
-User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
+	id S1751769AbYKAByA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 31 Oct 2008 21:54:00 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751561AbYKAByA
+	(ORCPT <rfc822;git-outgoing>); Fri, 31 Oct 2008 21:54:00 -0400
+Received: from relais.videotron.ca ([24.201.245.36]:42360 "EHLO
+	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751368AbYKABx7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 31 Oct 2008 21:53:59 -0400
+Received: from xanadu.home ([66.131.194.97]) by VL-MO-MR005.ip.videotron.ca
+ (Sun Java(tm) System Messaging Server 6.3-4.01 (built Aug  3 2007; 32bit))
+ with ESMTP id <0K9M00GKFT8Q2Q90@VL-MO-MR005.ip.videotron.ca> for
+ git@vger.kernel.org; Fri, 31 Oct 2008 21:53:15 -0400 (EDT)
+X-X-Sender: nico@xanadu.home
+In-reply-to: <20081101014336.GI14786@spearce.org>
+User-Agent: Alpine 2.00 (LFD 1167 2008-08-23)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/99707>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/99708>
 
-Nicolas Pitre <nico@cam.org> wrote:
-> On Fri, 31 Oct 2008, Shawn O. Pearce wrote:
+On Fri, 31 Oct 2008, Shawn O. Pearce wrote:
+
+> My take on the consensus for the license part of the discussion is
+> that libgit2 should be under the "GPL gcc library" license.
 > 
-> > > Both the negative code and errno style are lightweight in the common "no 
-> > > error" case.  The errno style is probably more handy for those functions 
-> > > returning a pointer which should be NULL in the error case.
-> > 
-> > I'm sticking with return a negative code for now, to the extent
-> > that some functions which return a pointer but also have many
-> > common failure modes (e.g. git_odb_open) use an output parameter
-> > as their first arg, so the error code can be returned as the result
-> > of the function.
-> 
-> Actually, the pointer-returning functions can encode error cases into a 
-> "negative" pointer. See include/linux/err.h for example.
-> 
-> 	void *ptr = git_alloc_foo(...);
-> 	if (IS_ERR(ptr))
-> 		die("git_alloc_foo failed: %s", git_strerr(PTR_ERR(ptr)));
+> BTW, I can't actually find a copy of that license; the only thing
+> I can locate in the GCC SVN tree is a copy of the LGPL.
 
-Oh, good point.  We could also stagger the errors so they are
-always odd, and never return an odd-alignment pointer from a
-successful function.  Thus IS_ERR can be written as:
+The exception is usually found at the top of files constituting 
+libgcc.a.  One example is gcc/config/arm/ieee754-df.S.  ;-)
 
-  #define IS_ERR(ptr) (((intptr_t)(ptr)) & 1)
 
-which is quite cheap, and given the (probably required anyway)
-aligned allocation policy means we still have 2^31 possible
-error codes available.
-
--- 
-Shawn.
+Nicolas
