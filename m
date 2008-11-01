@@ -1,102 +1,74 @@
-From: Bruno Santos <nayart3@gmail.com>
+From: "Shawn O. Pearce" <spearce@spearce.org>
 Subject: Re: libgit2 - a true git library
-Date: Fri, 31 Oct 2008 23:18:58 +0000
-Message-ID: <490B9262.5070905@gmail.com>
-References: <20081031170704.GU14786@spearce.org>
+Date: Fri, 31 Oct 2008 17:19:26 -0700
+Message-ID: <20081101001926.GF14786@spearce.org>
+References: <20081031170704.GU14786@spearce.org> <20081031174745.GA4058@artemis.corp> <alpine.LFD.2.00.0810311558540.13034@xanadu.home> <20081031213114.GA21799@artemis.corp> <CBF2AF68-BA41-4394-A837-F62864CF8BFB@ai.rug.nl> <20081031232829.GC14786@spearce.org> <7v63n872bs.fsf@gitster.siamese.dyndns.org> <20081101000213.GB29036@artemis.corp>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: "Shawn O. Pearce" <spearce@spearce.org>
-X-From: git-owner@vger.kernel.org Sat Nov 01 01:20:35 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Pieter de Bie <pdebie@ai.rug.nl>,
+	Nicolas Pitre <nico@cam.org>, git@vger.kernel.org,
+	Scott Chacon <schacon@gmail.com>
+To: Pierre Habouzit <madcoder@debian.org>
+X-From: git-owner@vger.kernel.org Sat Nov 01 01:21:07 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Kw4E4-0005aL-VA
-	for gcvg-git-2@gmane.org; Sat, 01 Nov 2008 01:20:25 +0100
+	id 1Kw4EK-0005gF-Sk
+	for gcvg-git-2@gmane.org; Sat, 01 Nov 2008 01:20:41 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751164AbYKAATM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 31 Oct 2008 20:19:12 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751180AbYKAATM
-	(ORCPT <rfc822;git-outgoing>); Fri, 31 Oct 2008 20:19:12 -0400
-Received: from mail.av.it.pt ([193.136.92.53]:50335 "EHLO av.it.pt"
-	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-	id S1751025AbYKAATL (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 31 Oct 2008 20:19:11 -0400
-X-Greylist: delayed 3602 seconds by postgrey-1.27 at vger.kernel.org; Fri, 31 Oct 2008 20:19:11 EDT
-Received: from [84.91.33.231] (account bsantos HELO [192.168.1.100])
-  by av.it.pt (CommuniGate Pro SMTP 5.1.7)
-  with ESMTPA id 30317883; Fri, 31 Oct 2008 23:17:32 +0000
-User-Agent: Thunderbird 2.0.0.17 (Windows/20080914)
-In-Reply-To: <20081031170704.GU14786@spearce.org>
+	id S1751624AbYKAAT2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 31 Oct 2008 20:19:28 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751180AbYKAAT2
+	(ORCPT <rfc822;git-outgoing>); Fri, 31 Oct 2008 20:19:28 -0400
+Received: from george.spearce.org ([209.20.77.23]:35403 "EHLO
+	george.spearce.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751624AbYKAAT1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 31 Oct 2008 20:19:27 -0400
+Received: by george.spearce.org (Postfix, from userid 1001)
+	id A779A3835F; Sat,  1 Nov 2008 00:19:26 +0000 (UTC)
+Content-Disposition: inline
+In-Reply-To: <20081101000213.GB29036@artemis.corp>
+User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/99690>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/99691>
 
-Shawn O. Pearce wrote:
-> During the GitTogether we were kicking around the idea of a ground-up
-> implementation of a Git library.  This may be easier than trying
-> to grind down git.git into a library, as we aren't tied to any
-> of the current global state baggage or the current die() based
-> error handling.
+Pierre Habouzit <madcoder@debian.org> wrote:
+> On Fri, Oct 31, 2008 at 11:49:11PM +0000, Junio C Hamano wrote:
+> > 
+> > I understand that the apidocs/ is a very early work-in-progress, but
+> > still, it bothers me that it is unclear to me what lifetime rules are in
+> > effect on the in-core objects.  For example, in C-git, commit objects are
+> > not just parsed but are modified in place as history is traversed
+> > (e.g. their flags smudged and their parents simplified).  You have "flags"
+> > field in commit, which implies to me that the design shares this same
+> > "modified by processing in-place" assumption.
 > 
-> I've started an _extremely_ rough draft.  The code compiles into a
-> libgit.a but it doesn't even implement what it describes in the API,
-> let alone a working Git implementation.  Really what I'm trying to
-> incite here is some discussion on what the API looks like.
+> I don't think it's impossible to have something efficient without this
+> kind of hacks. You just need to dissociate the objects from their
+> annotations, though use some kind of allocator that allow numbering of
+> the objects, and use that number as a lookup in an array of annotations.
+> It will require pool allocators for the annotations, but that should
+> work fine and efficientely.
+
+Interesting approach.  I don't know why I didn't think of that one.
+
+You'll still need to be able to toss parts of the git graph though.
+If you just pin everything in memory under a single global object
+table you'll run server processes out of memory as they chug through
+large numbers of repositories.
+
+> > By the way, I hate git_result_t.  That should be "int", the most natural
+> > integral type on the platform.
 > 
-> API Docs:
-> http://www.spearce.org/projects/scm/libgit2/apidocs/html/modules.html
-> 
-> Source Code Clone URL:
-> http://www.spearce.org/projects/scm/libgit2/libgit2.git
-> 
+> I concur.
 
-We should take the opportunity a make it more portable. Instead of using
-the posix api directly we should warp it in "git_" APIs. And be carefull
-with certain APIs like fork or fork+exec and instead provided a more
-generic solution: for fork one that would use the best solution in the
-given platform, either by forking or threading; and for fork+exec a
-generic create_process/run_command.
+int it is then.
 
-
-Here's an example, for the 'read' API, on how we can simply do this
-without worries for the posix crowd:
-
-ssize_t git_read(git_fildes_t fildes, void* buf, size_t bufsize);
-
-Were git_fildes_t would be an int for posix and an HANDLE for win32.
-For the posix case git_read can be simply inlined and we get zero overhead:
-
-static inline ssize_t git_read(git_fildes_t fildes, void *buf,
-			size_t bufsize)
-{
-	return read(fildes, buf, bufsize);
-}
-
-And for the win32 case it would be much more easier to implement the
-equivalent, something like:
-
-ssize_t git_read(git_fildes_t fildes, void *buf, size_t bufsize)
-{
-	DWORD rd;
-
-	if (!ReadFile(fildes, buf, bufsize, &rd, NULL)) {
-		//translate win32 error to errno
-		return -1;
-	}
-	return rd;
-}
-
-
-Of course, there is also the issue of using the c runtime on win32, but
-that problem can be easily solved outside git, provided that we don't
-use a 'fileno' like API.
-
-
-
-Bruno Santos
+-- 
+Shawn.
