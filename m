@@ -1,102 +1,87 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: Re: libgit2 - a true git library
-Date: Sat, 1 Nov 2008 13:29:22 -0700
-Message-ID: <20081101202922.GB15463@spearce.org>
-References: <20081031170704.GU14786@spearce.org> <20081031174745.GA4058@artemis.corp> <20081031184154.GV14786@spearce.org> <20081101173042.GE26229@artemis.corp> <490CA37C.1070107@op5.se>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH] Use find instead of perl in t5000 to get file modification
+ time
+Date: Sat, 1 Nov 2008 21:37:14 +0100 (CET)
+Message-ID: <alpine.DEB.1.00.0811012134290.22125@pacific.mpi-cbg.de.mpi-cbg.de>
+References: <81b0412b0810290338j1beaa25bx9fb373a69f5dfe7@mail.gmail.com> <1225344554.10803.17.camel@maia.lan> <20081031070003.GA4458@blimp.localdomain> <alpine.DEB.1.00.0810312314190.22125@pacific.mpi-cbg.de.mpi-cbg.de> <20081031233736.GB21997@steel.home>
+ <alpine.DEB.1.00.0811010121570.22125@pacific.mpi-cbg.de.mpi-cbg.de> <20081101142434.GA7157@steel.home>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Pierre Habouzit <madcoder@debian.org>, git@vger.kernel.org,
-	Scott Chacon <schacon@gmail.com>
-To: Andreas Ericsson <ae@op5.se>
-X-From: git-owner@vger.kernel.org Sat Nov 01 21:30:37 2008
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Sam Vilain <sam@vilain.net>,
+	Git Mailing List <git@vger.kernel.org>,
+	Junio C Hamano <gitster@pobox.com>,
+	Jeff King <peff@peff.net>,
+	=?ISO-8859-15?Q?Ren=E9_Scharfe?= <rene.scharfe@lsrfire.ath.cx>
+To: Alex Riesen <raa.lkml@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Nov 01 21:31:08 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KwN7E-0007Rt-EK
-	for gcvg-git-2@gmane.org; Sat, 01 Nov 2008 21:30:36 +0100
+	id 1KwN7k-0007ad-09
+	for gcvg-git-2@gmane.org; Sat, 01 Nov 2008 21:31:08 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752569AbYKAU3X (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 1 Nov 2008 16:29:23 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752541AbYKAU3X
-	(ORCPT <rfc822;git-outgoing>); Sat, 1 Nov 2008 16:29:23 -0400
-Received: from george.spearce.org ([209.20.77.23]:41209 "EHLO
-	george.spearce.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752535AbYKAU3W (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 1 Nov 2008 16:29:22 -0400
-Received: by george.spearce.org (Postfix, from userid 1001)
-	id 1944E3835F; Sat,  1 Nov 2008 20:29:22 +0000 (UTC)
-Content-Disposition: inline
-In-Reply-To: <490CA37C.1070107@op5.se>
-User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
+	id S1752591AbYKAU3z (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 1 Nov 2008 16:29:55 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752541AbYKAU3z
+	(ORCPT <rfc822;git-outgoing>); Sat, 1 Nov 2008 16:29:55 -0400
+Received: from mail.gmx.net ([213.165.64.20]:46866 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1752586AbYKAU3y (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 1 Nov 2008 16:29:54 -0400
+Received: (qmail invoked by alias); 01 Nov 2008 20:29:52 -0000
+Received: from pacific.mpi-cbg.de (EHLO pacific.mpi-cbg.de) [141.5.10.38]
+  by mail.gmx.net (mp062) with SMTP; 01 Nov 2008 21:29:52 +0100
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1+ETn9UH0GEklPUU3IGDOT7Cxo6Te0D5kYIhjzmiz
+	miVuKO3STpOqb0
+X-X-Sender: schindelin@pacific.mpi-cbg.de.mpi-cbg.de
+In-Reply-To: <20081101142434.GA7157@steel.home>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.6
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/99773>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/99774>
 
-Andreas Ericsson <ae@op5.se> wrote:
-> Pierre Habouzit wrote:
->> On Fri, Oct 31, 2008 at 06:41:54PM +0000, Shawn O. Pearce wrote:
->>> How about this?
->>>
->>> http://www.spearce.org/projects/scm/libgit2/apidocs/CONVENTIONS
->>
->> FWIW I've read what you say about types, while this is good design to
->> make things abstract, accessors are slower _and_ disallow many
->> optimizations as it's a function call and that it may clobber all your
->> pointers values.
+Hi,
 
-True, accessors slow things down.  But I'm not sure that the
-accessors at the application level are going to be a huge problem.
+On Sat, 1 Nov 2008, Alex Riesen wrote:
 
-Where the CPU time really matters is inside the tight loops of the
-library, where we can expose the struct to ourselves, because if
-the layout changes we'd be relinking the library anyway with the
-updated object code.
+> Johannes Schindelin, Sat, Nov 01, 2008 01:23:32 +0100:
+> > 
+> > Well, if you install Git for Windows (as opposed to cygwin), it is 
+> > minimum hassle, and Perl is delivered right with it.
+> 
+> I'd like to try it again, but weren't ther some fatal problems with 
+> cygwin1.dll being in PATH? I always work either in Cygwin's bash or just 
+> have to have it in PATH, because of the build environment even being 
+> strictly Windows based (case-insensitive and alike) just have to use 
+> sane tooling in its scripts.
 
-I would rather stick with accessors right now.  We could in the
-future expose the structs and convert the accessors to macros or
-inline functions in a future version of the ABI if performance is
-really shown to be a problem here from the *application*.
+I was talking about Git for Windows, i.e. the result of msysGit (as 
+opposed to Git in Cygwin).
 
-Remember we are mostly talking about applications that are happy to
-fork+exec git right now.  A little accessor function call is *still*
-faster than that fork call was.
+So no, there have not been any conflicts with cygwin1.dll in the PATH, as 
+far as I can recall.  There have been problems with shell utilities being 
+found in the Cygwin PATH before being found in the MSys PATH, but I 
+thought we just prepended the MSys PATH to avoid that.  Haven't checked, 
+though.
 
->> struct object in git has not changed since 2006.06. struct commit hasn't
->> since 2005.04 if you ignore { unsigned int indegree; void *util; } that
->> if I'm correct are annotations, and is a problem we (I think) have to
->> address differently anyways (I gave my proposal on this, I'm eager to
->> hear about what other think on the subject). So if in git.git that _is_
->> a moving target we have had a 2 year old implementation for those types,
->> it's that they're pretty well like this.
->>
->> It's IMNSHO on the matter that core structures of git _will_ have to be
->> made explicit. I'm thinking objects and their "subtypes" (commits,
->> trees, blobs). Maybe a couple of things on the same vein.
->
-> I agree. "git_commit", "git_tree", "git_blob" and "git_tag" can almost
-> certainly be set in stone straight away.
+> > P.S.: some guys at the GSoC mentor summit convinced me in at least 
+> > trying to fix _their_ problems on msysGit, so chances are good I'll 
+> > fix issues you would encounter in the same run.
+> 
+> Do you still plan to distribute MinGW with it? It's very nice to be able 
+> to track Junio's repo, have own branches and rebuild Git from time to 
+> time. For me, at least.
 
-Eh, I disagree here.  In git.git today "struct commit" exposes its
-buffer with the canonical commit encoding.  Having that visible
-wrecks what Nico and I were thinking about doing with pack v4 and
-encoding commits in a non-canonical format when stored in packs.
-Ditto with trees.
+You mean to distribute a minimal MSys environment where you have bash?  
+Yes, we have to do that, as there are still too many important parts of 
+Git written in Shell.
 
-Because git.git code goes against that canonical buffer we cannot
-easily insert pack v4 and test the improvements we want to make.
-The refactoring required is one of the reasons we haven't done pack
-v4 yet.  _IF_ we really are going through this effort of building
-a different API and shifting to its use in git.git I want to make
-sure we at least initially leave the door open to make changes
-without rewriting everything *again*.
-
-Accessor functions can usually be inlined or macro'd away.  But
-they cannot be magically inserted by the compiler if they aren't
-there in the first place.  This isn't Python...  :-)
-
--- 
-Shawn.
+Ciao,
+Dscho
