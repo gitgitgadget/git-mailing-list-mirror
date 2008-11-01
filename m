@@ -1,83 +1,126 @@
-From: "Tom Preston-Werner" <tom@github.com>
-Subject: Re: [PATCH] add instructions on how to send patches to the mailing list with Gmail
-Date: Sat, 1 Nov 2008 13:40:27 -0700
-Message-ID: <b97024a40811011340s92a1c24jb81b75dfb25e43c5@mail.gmail.com>
-References: <b97024a40811010028l36606128v61172807f4cf503a@mail.gmail.com>
-	 <adf1fd3d0811010300ye0aca83t12d271388d35b8d4@mail.gmail.com>
+From: "Shawn O. Pearce" <spearce@spearce.org>
+Subject: Re: libgit2 - a true git library
+Date: Sat, 1 Nov 2008 13:42:59 -0700
+Message-ID: <20081101204259.GC15463@spearce.org>
+References: <20081031170704.GU14786@spearce.org> <490CAB6D.90209@op5.se>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: base64
-Cc: git@vger.kernel.org, "Junio C Hamano" <gitster@pobox.com>
-To: "=?UTF-8?Q?Santi_B=C3=A9jar?=" <santi@agolina.net>
-X-From: git-owner@vger.kernel.org Sat Nov 01 21:42:11 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Scott Chacon <schacon@gmail.com>
+To: Andreas Ericsson <ae@op5.se>
+X-From: git-owner@vger.kernel.org Sat Nov 01 21:44:17 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KwNIQ-0001jL-R8
-	for gcvg-git-2@gmane.org; Sat, 01 Nov 2008 21:42:11 +0100
+	id 1KwNKQ-0002DB-UJ
+	for gcvg-git-2@gmane.org; Sat, 01 Nov 2008 21:44:15 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752580AbYKAUkc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 1 Nov 2008 16:40:32 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752577AbYKAUkb
-	(ORCPT <rfc822;git-outgoing>); Sat, 1 Nov 2008 16:40:31 -0400
-Received: from ey-out-2122.google.com ([74.125.78.24]:33275 "EHLO
-	ey-out-2122.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752557AbYKAUkb (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 1 Nov 2008 16:40:31 -0400
-Received: by ey-out-2122.google.com with SMTP id 6so652277eyi.37
-        for <git@vger.kernel.org>; Sat, 01 Nov 2008 13:40:28 -0700 (PDT)
-Received: by 10.210.105.20 with SMTP id d20mr1356700ebc.142.1225572027818;
-        Sat, 01 Nov 2008 13:40:27 -0700 (PDT)
-Received: by 10.210.117.11 with HTTP; Sat, 1 Nov 2008 13:40:27 -0700 (PDT)
-In-Reply-To: <adf1fd3d0811010300ye0aca83t12d271388d35b8d4@mail.gmail.com>
+	id S1752633AbYKAUnA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 1 Nov 2008 16:43:00 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752610AbYKAUnA
+	(ORCPT <rfc822;git-outgoing>); Sat, 1 Nov 2008 16:43:00 -0400
+Received: from george.spearce.org ([209.20.77.23]:43577 "EHLO
+	george.spearce.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752604AbYKAUnA (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 1 Nov 2008 16:43:00 -0400
+Received: by george.spearce.org (Postfix, from userid 1001)
+	id 8155C3835F; Sat,  1 Nov 2008 20:42:59 +0000 (UTC)
 Content-Disposition: inline
+In-Reply-To: <490CAB6D.90209@op5.se>
+User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/99775>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/99776>
 
-T24gU2F0LCBOb3YgMSwgMjAwOCBhdCAzOjAwIEFNLCBTYW50aSBCw6lqYXIgPHNhbnRpQGFnb2xp
-bmEubmV0PiB3cm90ZToKPiBPbiBTYXQsIE5vdiAxLCAyMDA4IGF0IDg6MjggQU0sIFRvbSBQcmVz
-dG9uLVdlcm5lciA8dG9tQGdpdGh1Yi5jb20+IHdyb3RlOgo+PiBHbWFpbCBpcyBvbmUgb2YgdGhl
-IG1vc3QgcG9wdWxhciBlbWFpbCBwcm92aWRlcnMgaW4gdGhlIHdvcmxkLiBOb3cgdGhhdCBHbWFp
-bAo+PiBzdXBwb3J0cyBJTUFQLCBzZW5kaW5nIHByb3Blcmx5IGZvcm1hdHRlZCBwYXRjaGVzIHZp
-YSBgZ2l0IGltYXAtc2VuZGAgaXMKPj4gdHJpdmlhbC4gVGhpcyBzZWN0aW9uIGluIFN1Ym1pdHRp
-bmdQYXRjaGVzIGV4cGxhaW5zIGhvdyB0byBkbyBzby4KPj4KPj4gU2lnbmVkLW9mZi1ieTogVG9t
-IFByZXN0b24tV2VybmVyIDx0b21AZ2l0aHViLmNvbT4KPj4gLS0tCj4+ICBEb2N1bWVudGF0aW9u
-L1N1Ym1pdHRpbmdQYXRjaGVzIHwgICAyNyArKysrKysrKysrKysrKysrKysrKysrKysrKysKPj4g
-IDEgZmlsZXMgY2hhbmdlZCwgMjcgaW5zZXJ0aW9ucygrKSwgMCBkZWxldGlvbnMoLSkKPj4KPj4g
-ZGlmZiAtLWdpdCBhL0RvY3VtZW50YXRpb24vU3VibWl0dGluZ1BhdGNoZXMgYi9Eb2N1bWVudGF0
-aW9uL1N1Ym1pdHRpbmdQYXRjaGVzCj4+IGluZGV4IGExZTkxMDAuLmYwMjk1YzYgMTAwNjQ0Cj4+
-IC0tLSBhL0RvY3VtZW50YXRpb24vU3VibWl0dGluZ1BhdGNoZXMKPj4gKysrIGIvRG9jdW1lbnRh
-dGlvbi9TdWJtaXR0aW5nUGF0Y2hlcwo+PiBAQCAtNDU2LDMgKzQ1NiwzMCBAQCBUaGlzIHNob3Vs
-ZCBoZWxwIHlvdSB0byBzdWJtaXQgcGF0Y2hlcyBpbmxpbmUgdXNpbmcgS01haWwuCj4+Cj4+ICA1
-KSBCYWNrIGluIHRoZSBjb21wb3NlIHdpbmRvdzogYWRkIHdoYXRldmVyIG90aGVyIHRleHQgeW91
-IHdpc2ggdG8gdGhlCj4+ICBtZXNzYWdlLCBjb21wbGV0ZSB0aGUgYWRkcmVzc2luZyBhbmQgc3Vi
-amVjdCBmaWVsZHMsIGFuZCBwcmVzcyBzZW5kLgo+PiArCj4+ICsKPj4gK0dtYWlsCj4+ICstLS0t
-LQo+PiArCj4+ICtTdWJtaXR0aW5nIHByb3Blcmx5IGZvcm1hdHRlZCBwYXRjaGVzIHZpYSBHbWFp
-bCBpcyBzaW1wbGUgbm93IHRoYXQKPj4gK0lNQVAgc3VwcG9ydCBpcyBhdmFpbGFibGUuIEZpcnN0
-LCBlZGl0IHlvdXIgfi8uZ2l0Y29uZmlnIHRvIHNwZWNpZnkgeW91cgo+PiArYWNjb3VudCBzZXR0
-aW5nczoKPj4gKwo+PiArW2ltYXBdCj4+ICsgICAgICAgZm9sZGVyID0gIltHbWFpbF0vRHJhZnRz
-Igo+PiArICAgICAgIGhvc3QgPSBpbWFwczovL2ltYXAuZ21haWwuY29tCj4+ICsgICAgICAgdXNl
-ciA9IHVzZXJAZ21haWwuY29tCj4+ICsgICAgICAgcGFzcyA9IHA0c3N3MHJkCj4+ICsgICAgICAg
-cG9ydCA9IDk5Mwo+PiArICAgICAgIHNzbHZlcmlmeSA9IGZhbHNlCj4KPiBXYXJuaW5nOiBJdCBp
-cyBub3Qgc2VjdXJlLgoKSXQgaXMgdHJ1ZSB0aGF0IHRoZSBjZXJ0aWZpY2F0ZSBpcyBub3QgdmVy
-aWZpZWQsIGJ1dCBzaW5jZSB0aGUgcGF0Y2hlcwphcmUgZGVzdGluZWQgZm9yIGEgcHVibGljIG1h
-aWxpbmcgbGlzdCwgdGhpcyBkb2VzIG5vdCByZXByZXNlbnQgYQpsYXJnZSBwcm9ibGVtLgoKPj4g
-Kwo+PiArTmV4dCwgZW5zdXJlIHRoYXQgeW91ciBHbWFpbCBzZXR0aW5ncyBhcmUgY29ycmVjdC4g
-SW4gIlNldHRpbmdzIiB0aGUKPj4gKyJVc2UgVW5pY29kZSAoVVRGLTgpIGVuY29kaW5nIGZvciBv
-dXRnb2luZyBtZXNzYWdlcyIgc2hvdWxkIGJlIGNoZWNrZWQuCj4+ICsKPj4gK09uY2UgeW91ciBj
-b21taXRzIGFyZSByZWFkeSB0byBzZW5kIHRvIHRoZSBtYWlsaW5nIGxpc3QsIHJ1biB0aGUgZm9s
-bG93aW5nCj4+ICtjb21tYW5kIHRvIHNlbmQgdGhlIHBhdGNoIGVtYWlscyB0byB5b3VyIEdtYWls
-IERyYWZ0cyBmb2xkZXIuCj4+ICsKPj4gKyAgICAgICAkIGdpdCBmb3JtYXQtcGF0Y2ggLU0gLS1z
-dGRvdXQgb3JpZ2luL21hc3RlciB8IGdpdCBpbWFwLXNlbmQKPj4gKwo+PiArR28gdG8geW91ciBH
-bWFpbCBhY2NvdW50LCBvcGVuIHRoZSBEcmFmdHMgZm9sZGVyLCBmaW5kIHRoZSBwYXRjaCBlbWFp
-bCwgZmlsbAo+PiAraW4gdGhlIFRvOiBhbmQgQ0M6IGZpZWxkcyBhbmQgc2VuZCBhd2F5IQo+Cj4g
-QXJlIHlvdSBzdXJlIHRoZSBtYWlsIGRvZXMgbm90IGdldCB3aGl0ZXNwYWNlIGRhbWFnZWQ/CgpZ
-ZXMsIEkgaGF2ZSBzZW50IHBhdGNoZXMgdXNpbmcgZXhhY3RseSB0aGlzIG1ldGhvZC4gSGVyZSBp
-cyBhbiBleGFtcGxlCm9mIG9uZSBJIHNlbnQgdG9kYXk6Cmh0dHA6Ly9hcnRpY2xlLmdtYW5lLm9y
-Zy9nbWFuZS5jb21wLnZlcnNpb24tY29udHJvbC5naXQvOTk3NTkuIFRhYnMKYXJlIHByZXNlcnZl
-ZCBhbmQgbGluZXMgYXJlIG5vdCB3cmFwcGVkIGltcHJvcGVybHkuCgpUb20K
+Andreas Ericsson <ae@op5.se> wrote:
+> Shawn O. Pearce wrote:
+>> During the GitTogether we were kicking around the idea of a ground-up
+>> implementation of a Git library.
+>
+> Having looked briefly at the code, I've got a couple of comments:
+> * GIT_EXTERN() does nothing. Ever. It's noise and should be removed.
+
+I feel the same way.
+
+But I was also under the impression that the brilliant engineers
+who work for Microsoft decided that on their platform special
+annotations have to be inserted on functions that a DLL wants to
+export to applications.
+
+Hence any cross-platform library that I have seen annotates their
+exported functions this way, with the macro being empty on POSIX
+and expanding to some magic keyword on Microsoft's OS.  I think it
+goes between the return type and the function name too...
+
+>  Instead it would be better to have GIT_PRIVATE(),
+
+I can see why you said this; needing GIT_PRIVATE() is a lot more
+rare than needing GIT_EXTERN().  Only a handful of cross-module,
+but private, functions are likely to exist, so it makes sense to
+mark the smaller subset.  But see above.  *sigh*
+
+> * Prefixing the files themselves with git_ is useless and only leads
+>  to developer frustration. I imagine we'd be installing any header
+>  files in a git/ directory anyway, so we're gaining absolutely
+>  nothing with the git_ prefix on source-files.
+
+Yes, I realized that this morning.  I plan on changing that mess
+around so we have "include/git/oid.h" and library and application
+code can use "#include <git/oid.h>".  Library modules should just
+be "src/oid.c" then.
+
+> Apart from that, it seems you've been designing a lot rather than
+> trying to use the API to actually do something.
+
+I wanted to get a solid idea of what our API conventions should be,
+before we started writing a lot of code around them.  Part of the
+problem with the git.git code is we don't have conventions that are
+really suited for use in a shared library (assuming we even have
+conventions in there) so we can't use that code as a library today.
+
+> It would, imo, be
+> a lot better to start development with adding functionality shared
+> between all programs and then expand further on that, such as
+> incorporating all functions needed for manipulating tags into the
+> library and then modify existing code to use the library to get
+> tag-ish things done.
+
+Tags are mostly pointless.  Its a tiny part of the code that isn't
+that interesting to most people.  And it requires object database
+access anyway if you want to talk about parsing or reading a tag.
+There's almost no point in a git library that can't read the on
+disk object database, or write to it.
+
+> I also think it's quite alright to not strive *too* hard to make
+> all functions thread-safe, as very few of them will actually need
+> that. It's unlikely that a user program will spawn one thread to
+> write a lot of tags while another is trying to parse them, for
+> example.
+
+Oh really?
+
+Maybe true for tags, just because they are such an unimportant part
+of the git suite compared to everything else.
+
+But right now I'm running a production system using a threaded server
+process that is operating on Git repositories.  Fortunately threads
+suck less on Java than they do on POSIX, and we have a 100% pure
+Java library available for Git.
+
+It would be nice if a library created in the late part of 2008
+recognized that threads exist, aren't going to disappear tomorrow,
+and that consumers of libraries actually may need to run the library
+within a threaded process.
+
+Or are you one of those developers who think threads only exist
+in the giant monolithic kernel land, and all user space should
+be isolated process?  I often wonder who such people can justify
+the kernel address space being multi-threaded but userland being
+stuck to single threaded applications.  Oh, right, the kernel has
+to go fast...
+
+-- 
+Shawn.
