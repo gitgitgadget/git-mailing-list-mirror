@@ -1,126 +1,76 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: Re: libgit2 - a true git library
-Date: Sat, 1 Nov 2008 13:42:59 -0700
-Message-ID: <20081101204259.GC15463@spearce.org>
-References: <20081031170704.GU14786@spearce.org> <490CAB6D.90209@op5.se>
+From: "=?BIG5?B?vEKpdrzd?=" <n0zm0p2u31q2t@gmail.com>
+Subject: =?BIG5?B?UEhQwcqqq6iuuOquxq53uvSvuLFNrtc=?=
+Date: Sun, 2 Nov 2008 05:44:31 +0800
+Message-ID: <3f56bdce0811011444j49c1b45avbe2fa75c823d4d5a@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Scott Chacon <schacon@gmail.com>
-To: Andreas Ericsson <ae@op5.se>
-X-From: git-owner@vger.kernel.org Sat Nov 01 21:44:17 2008
+Content-Type: text/plain; charset=BIG5
+Content-Transfer-Encoding: base64
+To: gipservece@aptg.com.tw
+X-From: git-owner@vger.kernel.org Sat Nov 01 22:54:33 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KwNKQ-0002DB-UJ
-	for gcvg-git-2@gmane.org; Sat, 01 Nov 2008 21:44:15 +0100
+	id 1KwOQR-0002Y9-AR
+	for gcvg-git-2@gmane.org; Sat, 01 Nov 2008 22:54:31 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752633AbYKAUnA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 1 Nov 2008 16:43:00 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752610AbYKAUnA
-	(ORCPT <rfc822;git-outgoing>); Sat, 1 Nov 2008 16:43:00 -0400
-Received: from george.spearce.org ([209.20.77.23]:43577 "EHLO
-	george.spearce.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752604AbYKAUnA (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 1 Nov 2008 16:43:00 -0400
-Received: by george.spearce.org (Postfix, from userid 1001)
-	id 8155C3835F; Sat,  1 Nov 2008 20:42:59 +0000 (UTC)
+	id S1750900AbYKAVol (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 1 Nov 2008 17:44:41 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750987AbYKAVok
+	(ORCPT <rfc822;git-outgoing>); Sat, 1 Nov 2008 17:44:40 -0400
+Received: from qb-out-0506.google.com ([72.14.204.238]:26343 "EHLO
+	qb-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750867AbYKAVok (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 1 Nov 2008 17:44:40 -0400
+Received: by qb-out-0506.google.com with SMTP id f11so751585qba.17
+        for <git@vger.kernel.org>; Sat, 01 Nov 2008 14:44:38 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to
+         :subject:mime-version:content-type:content-transfer-encoding
+         :content-disposition;
+        bh=PThGnRlpMPNnci19O0cJZgDpyGXTyJdNb10VHREbiZU=;
+        b=j8sd8NSXXz4H0HsoMekoEnew06Yw0B3Soq6AQvxoYRy1jpMIVNC3E7Me3md/UKT3NO
+         Nhw5UtmoLftAHi11P9q5JUTyMJTYxv1zjjOb5BMsLhYDVy8Wr5W+R/1JSjeLyPkZjkn8
+         /Z6hDPUVLJa2K+Y80DeSEdZiEUX70dPbDW1Kg=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:to:subject:mime-version:content-type
+         :content-transfer-encoding:content-disposition;
+        b=tS9LvRRbW6fBci7CbIaRgr1ish8djCetTTr0kOigVG97gJxlHqej6Puu+k2u2VHSon
+         6cSVg5p7SUe+i3oEm4XxWAlUKSMNT48RhCTURJirBT2mxnt65loMtMAnZ1zzV5xeIe1r
+         Gk+lHxEDP9qE0fcF0ABHRvo/rrz/w+vF8JrXk=
+Received: by 10.210.18.8 with SMTP id 8mr15516026ebr.125.1225575871586;
+        Sat, 01 Nov 2008 14:44:31 -0700 (PDT)
+Received: by 10.210.28.17 with HTTP; Sat, 1 Nov 2008 14:44:31 -0700 (PDT)
 Content-Disposition: inline
-In-Reply-To: <490CAB6D.90209@op5.se>
-User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/99776>
+X-Spam-Report: 5.7 points;
+ *  1.6 FROM_HAS_MIXED_NUMS3 From: contains numbers mixed in with letters
+ *  0.1 RCVD_BY_IP Received by mail server with no name
+ *  0.0 BAYES_50 BODY: Bayesian spam probability is 40 to 60%
+ *      [score: 0.5000]
+ *  3.0 RAZOR2_CF_RANGE_51_100 BODY: Razor2 gives confidence level above 50%
+ *      [cf: 100]
+ *  1.0 RAZOR2_CHECK Listed in Razor2 (http://razor.sf.net/)
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/99777>
 
-Andreas Ericsson <ae@op5.se> wrote:
-> Shawn O. Pearce wrote:
->> During the GitTogether we were kicking around the idea of a ground-up
->> implementation of a Git library.
->
-> Having looked briefly at the code, I've got a couple of comments:
-> * GIT_EXTERN() does nothing. Ever. It's noise and should be removed.
-
-I feel the same way.
-
-But I was also under the impression that the brilliant engineers
-who work for Microsoft decided that on their platform special
-annotations have to be inserted on functions that a DLL wants to
-export to applications.
-
-Hence any cross-platform library that I have seen annotates their
-exported functions this way, with the macro being empty on POSIX
-and expanding to some magic keyword on Microsoft's OS.  I think it
-goes between the return type and the function name too...
-
->  Instead it would be better to have GIT_PRIVATE(),
-
-I can see why you said this; needing GIT_PRIVATE() is a lot more
-rare than needing GIT_EXTERN().  Only a handful of cross-module,
-but private, functions are likely to exist, so it makes sense to
-mark the smaller subset.  But see above.  *sigh*
-
-> * Prefixing the files themselves with git_ is useless and only leads
->  to developer frustration. I imagine we'd be installing any header
->  files in a git/ directory anyway, so we're gaining absolutely
->  nothing with the git_ prefix on source-files.
-
-Yes, I realized that this morning.  I plan on changing that mess
-around so we have "include/git/oid.h" and library and application
-code can use "#include <git/oid.h>".  Library modules should just
-be "src/oid.c" then.
-
-> Apart from that, it seems you've been designing a lot rather than
-> trying to use the API to actually do something.
-
-I wanted to get a solid idea of what our API conventions should be,
-before we started writing a lot of code around them.  Part of the
-problem with the git.git code is we don't have conventions that are
-really suited for use in a shared library (assuming we even have
-conventions in there) so we can't use that code as a library today.
-
-> It would, imo, be
-> a lot better to start development with adding functionality shared
-> between all programs and then expand further on that, such as
-> incorporating all functions needed for manipulating tags into the
-> library and then modify existing code to use the library to get
-> tag-ish things done.
-
-Tags are mostly pointless.  Its a tiny part of the code that isn't
-that interesting to most people.  And it requires object database
-access anyway if you want to talk about parsing or reading a tag.
-There's almost no point in a git library that can't read the on
-disk object database, or write to it.
-
-> I also think it's quite alright to not strive *too* hard to make
-> all functions thread-safe, as very few of them will actually need
-> that. It's unlikely that a user program will spawn one thread to
-> write a lot of tags while another is trying to parse them, for
-> example.
-
-Oh really?
-
-Maybe true for tags, just because they are such an unimportant part
-of the git suite compared to everything else.
-
-But right now I'm running a production system using a threaded server
-process that is operating on Git repositories.  Fortunately threads
-suck less on Java than they do on POSIX, and we have a 100% pure
-Java library available for Git.
-
-It would be nice if a library created in the late part of 2008
-recognized that threads exist, aren't going to disappear tomorrow,
-and that consumers of libraries actually may need to run the library
-within a threaded process.
-
-Or are you one of those developers who think threads only exist
-in the giant monolithic kernel land, and all user space should
-be isolated process?  I often wonder who such people can justify
-the kernel address space being multi-threaded but userland being
-stuck to single threaded applications.  Oh, right, the kernel has
-to go fast...
-
--- 
-Shawn.
+pHPgvqzsp9669K22s12tcAoKp9qtzKq6qXamrqFHq8ik4aq6qEOjuKXzpHCoxrGhoUGzo6xPpHPg
+vqq6pGqoxrGhCgqn2q3MpmKxwKVYpfi3fqfOtki69K+4pV2ndKtlpXi69K22rPykdSur4aV4ut6y
+erV7pqEKCq2trsmtrbZxsU2u17v5IKV1rW4kMjksOTAwCgoopmKwZaO4pn4xMDBNQqSjra2sebZx
+uvSvuKrFtqEpCgqn2q3MsLWquqSjpXWsT7r0r7ihQabTrE+xeqX4t36quqRKpGYKCqO4rdOmbqq6
+pfi3frr0r7i46q7Gp1muyafzt3OqurN0q9esT6vcrautbqq6Cgql+Ld+ou2kxqq6sKqrfr3ouc62
+pKFBpbSzebF6qrq69Lj0qvmtsQoKv+++3KRz4L6mqLROsXqqurnat1EKCqHjoeOh46HjoeOh46Hj
+oeOh46HjoeOh46HjoeOh46HjoeOh46HjoeOh46HjoeOh46HjoeMKUFM6IL11pFfByqqruvSvuKfa
+rczB2aVptKOo0ajqpWS+96juoUEKoUChQLtQvXWkV6ZDpkyxYrPmpf6s2bZXsNMrtmynvcO6tk8u
+Li4uLi61par3rHmqQbDIvveo7gqh46HjoeOh46HjoeOh46HjoeOh46HjoeOh46HjoeOh46HjoeOh
+46HjoeOh46HjoeOh46HjCgrFd6rvqNO5cayiuN+2wLFNrfuhXVNhbaFeoUcwOTgwMTE5ODEyIC8g
+MDkzODc2NDM5NQoKpFe69LdqtE2heaFAuvSttrNdrXCkc+C+oUCheqdZpWmn5Kjsp9qtzAoKoeOh
+46HjoeOh46HjoeOh46HjoeOh46HjoeOh46HjoeOh46HjoeOh46HjoeOh46HjoeOh4wqlu6S9pXGl
+dKV+tKOo0cP2weSmclNFT7HGp8eqQbDICqtPw9KxTrF6qrq69K+4pmJZeCAvIEd4IC4uLrHGpmKy
+xKRArbYKoUChQKFAoUChQKFAoUChQKFAoUChQKFAoUChQKFAoUChQKFAIMV3qu+o07lxuN+w3SEh
+IQqh46HjoeOh46HjoeOh46HjoeOh46HjoeOh46HjoeOh46HjoeOh46HjoeOh46HjoeOh46HjCg==
