@@ -1,68 +1,78 @@
-From: Fredrik Skolmli <fredrik@frsk.net>
-Subject: Re: [PATCH] add instructions on how to send patches to the mailing list with Gmail
-Date: Sun, 2 Nov 2008 16:01:00 +0100
-Message-ID: <20081102150100.GF13242@frsk.net>
-References: <b97024a40811010028l36606128v61172807f4cf503a@mail.gmail.com> <adf1fd3d0811010300ye0aca83t12d271388d35b8d4@mail.gmail.com> <b97024a40811011340s92a1c24jb81b75dfb25e43c5@mail.gmail.com> <20081102091006.GA4066@artemis>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH] Use find instead of perl in t5000 to get file modification
+ time
+Date: Sun, 2 Nov 2008 17:05:47 +0100 (CET)
+Message-ID: <alpine.DEB.1.00.0811021704280.22125@pacific.mpi-cbg.de.mpi-cbg.de>
+References: <81b0412b0810290338j1beaa25bx9fb373a69f5dfe7@mail.gmail.com> <1225344554.10803.17.camel@maia.lan> <20081031070003.GA4458@blimp.localdomain> <alpine.DEB.1.00.0810312314190.22125@pacific.mpi-cbg.de.mpi-cbg.de> <20081031233736.GB21997@steel.home>
+ <alpine.DEB.1.00.0811010121570.22125@pacific.mpi-cbg.de.mpi-cbg.de> <20081101142434.GA7157@steel.home> <alpine.DEB.1.00.0811012134290.22125@pacific.mpi-cbg.de.mpi-cbg.de> <20081102143751.GA18140@blimp.localdomain>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Tom Preston-Werner <tom@github.com>,
-	Santi =?iso-8859-1?Q?B=E9jar?= <santi@agolina.net>,
-	git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-To: Pierre Habouzit <madcoder@debian.org>
-X-From: git-owner@vger.kernel.org Sun Nov 02 16:02:48 2008
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Sam Vilain <sam@vilain.net>,
+	Git Mailing List <git@vger.kernel.org>,
+	Junio C Hamano <gitster@pobox.com>,
+	Jeff King <peff@peff.net>,
+	=?ISO-8859-15?Q?Ren=E9_Scharfe?= <rene.scharfe@lsrfire.ath.cx>
+To: Alex Riesen <raa.lkml@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Nov 02 16:59:47 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KweTQ-0000jj-38
-	for gcvg-git-2@gmane.org; Sun, 02 Nov 2008 16:02:40 +0100
+	id 1KwfMc-00086i-2y
+	for gcvg-git-2@gmane.org; Sun, 02 Nov 2008 16:59:42 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753496AbYKBPBT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 2 Nov 2008 10:01:19 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753489AbYKBPBT
-	(ORCPT <rfc822;git-outgoing>); Sun, 2 Nov 2008 10:01:19 -0500
-Received: from cassarossa.samfundet.no ([129.241.93.19]:47770 "EHLO
-	cassarossa.samfundet.no" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752765AbYKBPBS (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 2 Nov 2008 10:01:18 -0500
-Received: from asterix.samfundet.no
-	([2001:700:300:1800::f] helo=asterix.frsk.net ident=Debian-exim)
-	by cassarossa.samfundet.no with esmtps (TLS-1.0:RSA_AES_256_CBC_SHA1:32)
-	(Exim 4.63)
-	(envelope-from <fredrik@frsk.net>)
-	id 1KweRo-0007no-TR; Sun, 02 Nov 2008 16:01:03 +0100
-Received: from fredrik by asterix.frsk.net with local (Exim 4.63)
-	(envelope-from <fredrik@frsk.net>)
-	id 1KweRo-0003eE-GY; Sun, 02 Nov 2008 16:01:00 +0100
-Content-Disposition: inline
-In-Reply-To: <20081102091006.GA4066@artemis>
-User-Agent: Mutt/1.5.13 (2006-08-11)
+	id S1753612AbYKBP61 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 2 Nov 2008 10:58:27 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753615AbYKBP61
+	(ORCPT <rfc822;git-outgoing>); Sun, 2 Nov 2008 10:58:27 -0500
+Received: from mail.gmx.net ([213.165.64.20]:45406 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1753610AbYKBP60 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 2 Nov 2008 10:58:26 -0500
+Received: (qmail invoked by alias); 02 Nov 2008 15:58:23 -0000
+Received: from pacific.mpi-cbg.de (EHLO pacific.mpi-cbg.de) [141.5.10.38]
+  by mail.gmx.net (mp041) with SMTP; 02 Nov 2008 16:58:23 +0100
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX19IiogqyqdIlhHPzu/THrEDRrNOPMbts0WHzgaNKD
+	85ai+JOnyQ3Z+N
+X-X-Sender: schindelin@pacific.mpi-cbg.de.mpi-cbg.de
+In-Reply-To: <20081102143751.GA18140@blimp.localdomain>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.64
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/99847>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/99848>
 
-On Sun, Nov 02, 2008 at 10:10:06AM +0100, Pierre Habouzit wrote:
+Hi,
 
-> > > Warning: It is not secure.
+On Sun, 2 Nov 2008, Alex Riesen wrote:
+
+> Johannes Schindelin, Sat, Nov 01, 2008 21:37:14 +0100:
+> > On Sat, 1 Nov 2008, Alex Riesen wrote:
+> > > Johannes Schindelin, Sat, Nov 01, 2008 01:23:32 +0100:
+> > > > 
+> > > > P.S.: some guys at the GSoC mentor summit convinced me in at least 
+> > > > trying to fix _their_ problems on msysGit, so chances are good 
+> > > > I'll fix issues you would encounter in the same run.
+> > > 
+> > > Do you still plan to distribute MinGW with it? It's very nice to be 
+> > > able to track Junio's repo, have own branches and rebuild Git from 
+> > > time to time. For me, at least.
 > > 
-> > It is true that the certificate is not verified, but since the patches
-> > are destined for a public mailing list, this does not represent a
-> > large problem.
+> > You mean to distribute a minimal MSys environment where you have bash?  
+> > Yes, we have to do that, as there are still too many important parts 
+> > of Git written in Shell.
 > 
-> What he means is that the password is cleartext ;)
-> (I think)
+> No, the mingw compiler and libraries. I vaguely remember some talking 
+> about including the build environment into Git distribution.
 
-The way I read and understand it, the issues arises if a MITM-attack takes
-place.  If the client doesn't verify the certificate, an attacker can easily
-get the username and password. 
+We do that already for a long time.  Basically, we have two distributions: 
+Git for Windows (for the end user) and msysGit (for the developer wanting 
+to work _on_ Git).  Actually, msysGit was there first.
 
-So unless someone creates a separate gmail-account for submitting patches,
-one should really trust the connection (ie not a public wlan), or verify the
-certificate before transmitting the password.
-
--- 
-Kind regards,
-Fredrik Skolmli
+Hth,
+Dscho
