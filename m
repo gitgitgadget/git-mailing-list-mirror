@@ -1,86 +1,67 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: git reset --hard w/o touching every file
-Date: Sun, 2 Nov 2008 01:52:12 -0400
-Message-ID: <20081102055212.GG5261@coredump.intra.peff.net>
-References: <gegn38$lku$1@ger.gmane.org> <20081101110529.GC3819@artemis.corp> <geicn8$ss8$1@ger.gmane.org> <20081102033313.GB4936@coredump.intra.peff.net> <gejanr$os$1@ger.gmane.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] Documentation: add a planning document for the next CLI
+ revamp
+Date: Sat, 01 Nov 2008 23:08:06 -0700
+Message-ID: <7v1vxu4q49.fsf@gitster.siamese.dyndns.org>
+References: <1225338485-11046-1-git-send-email-sam@vilain.net>
+ <20081030143918.GB14744@mit.edu> <20081030144321.GF24098@artemis.corp>
+ <20081030163056.GA8899@mit.edu>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org
-To: "Edward Z. Yang" <edwardzyang@thewritingpot.com>
-X-From: git-owner@vger.kernel.org Sun Nov 02 06:53:31 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: Pierre Habouzit <madcoder@debian.org>, Sam Vilain <sam@vilain.net>,
+	git@vger.kernel.org, Sam Vilain <samv@vilain.net>
+To: Theodore Tso <tytso@mit.edu>
+X-From: git-owner@vger.kernel.org Sun Nov 02 07:09:41 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KwVty-0003PO-2F
-	for gcvg-git-2@gmane.org; Sun, 02 Nov 2008 06:53:30 +0100
+	id 1KwW9b-0005VB-17
+	for gcvg-git-2@gmane.org; Sun, 02 Nov 2008 07:09:39 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752017AbYKBFwQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 2 Nov 2008 01:52:16 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751982AbYKBFwQ
-	(ORCPT <rfc822;git-outgoing>); Sun, 2 Nov 2008 01:52:16 -0400
-Received: from peff.net ([208.65.91.99]:4537 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751871AbYKBFwP (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 2 Nov 2008 01:52:15 -0400
-Received: (qmail 22865 invoked by uid 111); 2 Nov 2008 05:52:13 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.32) with SMTP; Sun, 02 Nov 2008 01:52:13 -0400
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Sun, 02 Nov 2008 01:52:12 -0400
-Content-Disposition: inline
-In-Reply-To: <gejanr$os$1@ger.gmane.org>
+	id S1752079AbYKBGIZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 2 Nov 2008 01:08:25 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752058AbYKBGIZ
+	(ORCPT <rfc822;git-outgoing>); Sun, 2 Nov 2008 01:08:25 -0500
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:34519 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752015AbYKBGIY (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 2 Nov 2008 01:08:24 -0500
+Received: from localhost.localdomain (localhost [127.0.0.1])
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 8497677B23;
+	Sun,  2 Nov 2008 01:08:23 -0500 (EST)
+Received: from pobox.com (ip68-225-240-211.oc.oc.cox.net [68.225.240.211])
+ (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
+ certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
+ ESMTPSA id 27D0777B22; Sun,  2 Nov 2008 01:08:13 -0500 (EST)
+In-Reply-To: <20081030163056.GA8899@mit.edu> (Theodore Tso's message of "Thu,
+ 30 Oct 2008 12:30:56 -0400")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: A7DC2318-A8A4-11DD-9A70-9CEDC82D7133-77302942!a-sasl-fastnet.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/99815>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/99816>
 
-On Sun, Nov 02, 2008 at 12:36:09AM -0400, Edward Z. Yang wrote:
+Theodore Tso <tytso@mit.edu> writes:
 
-> I'm using a script to automatically update a website with the contents
-> of a Git repository at a specified interval. While I could use git pull,
-> I've been told that it's safer to do a git fetch, and then a git reset
-> --hard remotes/master, because the former could trigger a merge and on a
-> live website that is NOT desirable.
+> On Thu, Oct 30, 2008 at 03:43:21PM +0100, Pierre Habouzit wrote:
+>> 
+>> git format-patch origin/next.. works already. I'm used to the asymetric
+>> git format-patch origin/next syntax, and I would be sorry if it
+>> disappeared though, and I see no really good reason to get rid of it.
+>
+> The reason why it annoys me is because I often what to cherry-pick a
+> single patch to send to someone, and so while "git show 332d2e78"
+> shows me the patch, but if I want to use git-send-email for that
+> particular patch, "git format-patch 332d2e78" doesn't DTRT.  I have to
+> type "git format-patch 332d2e78^..332d2e78" instead.
+> ...
+> (And I get annoyed when I want to run git format-patch on a single
+> patch not at the tip of the tree; but if it's just me, I can write a
+> "git format-single-patch" wrapper script to get around it.)
 
-Well, there will never be a merge if you aren't making local changes
-(and your upstream is not doing silly things like rewinding the history of
-what it gives you). But if you aren't making local changes, then doing a
-reset is "safe" in the sense that you will have nothing to throw away.
-
-> Unfortunately, since Git touches all files on a reset --hard, it's
-> causing problems with the smart cache system, which checks whether or
-> not the cache file is older than the source file, and regenerating if
-> it is.
-
-Ah, OK. I see what you want.
-
-Git usually tries very hard not to touch files that don't need to be
-touched. So that sounds like a bug. However, I can't reproduce it with
-this test case:
-
-    mkdir repo && cd repo && git init &&
-    touch a b && git add a b && git commit -m added &&
-    echo changes >a && git commit -a -m 'changed a' &&
-    touch -d 1979-10-12 a b && echo before reset && ls -l a b &&
-    git update-index --refresh &&
-    git reset --hard HEAD^ && echo after reset && ls -l a b
-
-I end up with:
-
-    before reset
-    -rw-r--r-- 1 peff peff 8 1979-10-12 00:00 a
-    -rw-r--r-- 1 peff peff 0 1979-10-12 00:00 b
-    HEAD is now at d7fd84e added
-    after reset
-    -rw-r--r-- 1 peff peff 0 2008-11-02 01:46 a
-    -rw-r--r-- 1 peff peff 0 1979-10-12 00:00 b
-
-which makes sense. The only tricky thing is the "update-index --refresh"
-call, which basically tells git "update your cache with the new mtime
-value", which is necessary because of the contrived use of "touch". But
-if you are manipulating these files only through "git reset", it should
-Just Work.
-
--Peff
+Huh?  I am so used to "git format-patch -1 HEAD" (or "332d2e78") that I am
+very surprised.
