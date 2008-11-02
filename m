@@ -1,141 +1,72 @@
-From: Christian Couder <chriscool@tuxfamily.org>
-Subject: [RFC/PATCH 2/2] bisect: add test case for "git bisect replace"
-Date: Sun, 2 Nov 2008 02:20:16 +0100
-Message-ID: <20081102022016.99b7771e.chriscool@tuxfamily.org>
+From: "Shawn O. Pearce" <spearce@spearce.org>
+Subject: Re: libgit2 - a true git library
+Date: Sat, 1 Nov 2008 18:36:36 -0700
+Message-ID: <20081102013636.GF15463@spearce.org>
+References: <alpine.DEB.1.10.0810311738100.5851@asgard.lang.hm> <20081101010011.GG14786@spearce.org> <alpine.DEB.1.10.0810311802360.5851@asgard.lang.hm> <20081101010824.GE29036@artemis.corp> <alpine.LFD.2.00.0810312121000.13034@xanadu.home> <20081101014336.GI14786@spearce.org> <alpine.LFD.2.00.0810312150200.13034@xanadu.home> <20081101225714.GD15463@spearce.org> <d411cc4a0811011726h1fb1ad0ct5c37af753940f4a4@mail.gmail.com> <d411cc4a0811011807g229f8becs9f411d6e19fb6c12@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sun Nov 02 02:19:00 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: Nicolas Pitre <nico@cam.org>,
+	Pierre Habouzit <madcoder@debian.org>, david@lang.hm,
+	git@vger.kernel.org
+To: Scott Chacon <schacon@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Nov 02 02:45:52 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KwRcJ-0006Un-3y
-	for gcvg-git-2@gmane.org; Sun, 02 Nov 2008 02:18:59 +0100
+	id 1KwS2J-00046r-1J
+	for gcvg-git-2@gmane.org; Sun, 02 Nov 2008 02:45:51 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752329AbYKBBRp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 1 Nov 2008 21:17:45 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752312AbYKBBRp
-	(ORCPT <rfc822;git-outgoing>); Sat, 1 Nov 2008 21:17:45 -0400
-Received: from smtp6-g19.free.fr ([212.27.42.36]:42495 "EHLO smtp6-g19.free.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752174AbYKBBRo (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 1 Nov 2008 21:17:44 -0400
-Received: from smtp6-g19.free.fr (localhost.localdomain [127.0.0.1])
-	by smtp6-g19.free.fr (Postfix) with ESMTP id 3556619701;
-	Sun,  2 Nov 2008 02:17:43 +0100 (CET)
-Received: from localhost.boubyland (gre92-7-82-243-130-161.fbx.proxad.net [82.243.130.161])
-	by smtp6-g19.free.fr (Postfix) with SMTP id C77CD19700;
-	Sun,  2 Nov 2008 02:17:42 +0100 (CET)
-X-Mailer: Sylpheed 2.5.0 (GTK+ 2.12.11; i486-pc-linux-gnu)
+	id S1752312AbYKBBgh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 1 Nov 2008 21:36:37 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752317AbYKBBgh
+	(ORCPT <rfc822;git-outgoing>); Sat, 1 Nov 2008 21:36:37 -0400
+Received: from george.spearce.org ([209.20.77.23]:48765 "EHLO
+	george.spearce.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752225AbYKBBgh (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 1 Nov 2008 21:36:37 -0400
+Received: by george.spearce.org (Postfix, from userid 1001)
+	id 726713835F; Sun,  2 Nov 2008 01:36:36 +0000 (UTC)
+Content-Disposition: inline
+In-Reply-To: <d411cc4a0811011807g229f8becs9f411d6e19fb6c12@mail.gmail.com>
+User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/99796>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/99797>
 
----
- t/t6035-bisect-replace.sh |   89 +++++++++++++++++++++++++++++++++++++++++++++
- 1 files changed, 89 insertions(+), 0 deletions(-)
- create mode 100755 t/t6035-bisect-replace.sh
+Scott Chacon <schacon@gmail.com> wrote:
+> > On Sat, Nov 1, 2008 at 3:57 PM, Shawn O. Pearce <spearce@spearce.org> wrote:
+> >>
+> >> Headers updated.  Its now GPL+gcc library exception.
+> 
+> I personally would rather see it BSD or something more permissive so
+> that no human has to waste even a second of their valuable time
+> figuring out if they can work with it or not, but I understand that
+> many people here are much more protective of their code.  I simply
+> think that LGPL is a much more widely used and understood compromise
+> that affords nearly the same protectionism.
 
-diff --git a/t/t6035-bisect-replace.sh b/t/t6035-bisect-replace.sh
-new file mode 100755
-index 0000000..ed2061e
---- /dev/null
-+++ b/t/t6035-bisect-replace.sh
-@@ -0,0 +1,89 @@
-+#!/bin/sh
-+#
-+# Copyright (c) 2008 Christian Couder
-+#
-+test_description='Test git bisect replace functionality'
-+
-+exec </dev/null
-+
-+. ./test-lib.sh
-+
-+add_and_commit_file()
-+{
-+    _file="$1"
-+    _msg="$2"
-+
-+    git add $_file || return $?
-+    test_tick || return $?
-+    git commit --quiet -m "$_file: $_msg"
-+}
-+
-+HASH1=
-+HASH2=
-+HASH3=
-+HASH4=
-+HASH5=
-+HASH6=
-+
-+test_expect_success 'set up buggy branch' '
-+     echo "line 1" >> hello &&
-+     echo "line 2" >> hello &&
-+     echo "line 3" >> hello &&
-+     echo "line 4" >> hello &&
-+     add_and_commit_file hello "4 lines" &&
-+     HASH1=$(git rev-parse --verify HEAD) &&
-+     echo "line BUG" >> hello &&
-+     echo "line 6" >> hello &&
-+     echo "line 7" >> hello &&
-+     echo "line 8" >> hello &&
-+     add_and_commit_file hello "4 more lines with a BUG" &&
-+     HASH2=$(git rev-parse --verify HEAD) &&
-+     echo "line 9" >> hello &&
-+     echo "line 10" >> hello &&
-+     add_and_commit_file hello "2 more lines" &&
-+     HASH3=$(git rev-parse --verify HEAD) &&
-+     echo "line 11" >> hello &&
-+     add_and_commit_file hello "1 more line" &&
-+     HASH4=$(git rev-parse --verify HEAD) &&
-+     sed -e "s/BUG/5/" hello > hello.new &&
-+     mv hello.new hello &&
-+     add_and_commit_file hello "BUG fixed" &&
-+     HASH5=$(git rev-parse --verify HEAD) &&
-+     echo "line 12" >> hello &&
-+     echo "line 13" >> hello &&
-+     add_and_commit_file hello "2 more lines" &&
-+     HASH6=$(git rev-parse --verify HEAD)
-+'
-+
-+HASHFIX2=
-+HASHFIX3=
-+HASHFIX4=
-+
-+test_expect_success 'set up fixed branch' '
-+     git checkout $HASH1 &&
-+     echo "line 5" >> hello &&
-+     echo "line 6" >> hello &&
-+     echo "line 7" >> hello &&
-+     echo "line 8" >> hello &&
-+     add_and_commit_file hello "4 more lines with no BUG" &&
-+     HASHFIX2=$(git rev-parse --verify HEAD) &&
-+     git cherry-pick $HASH3 &&
-+     HASHFIX3=$(git rev-parse --verify HEAD) &&
-+     git cherry-pick $HASH4 &&
-+     HASHFIX4=$(git rev-parse --verify HEAD)
-+'
-+
-+test_expect_success '"git bisect replace" buggy branch with fixed one' '
-+     git bisect replace $HASH5 HEAD &&
-+     git rev-list --bisect-all $HASH6 > rev_list.txt &&
-+     grep $HASHFIX2 rev_list.txt &&
-+     grep $HASHFIX3 rev_list.txt &&
-+     grep $HASHFIX4 rev_list.txt &&
-+     test_must_fail grep $HASH2 rev_list.txt &&
-+     test_must_fail grep $HASH3 rev_list.txt &&
-+     test_must_fail grep $HASH4 rev_list.txt
-+'
-+
-+#
-+#
-+test_done
+Apparently BSD won't fly, as you have already seen on the list.
+
+If we did put the library under a BSD license we'd lose some core
+contributors.  Or they at least wouldn't improve the library code,
+even if git.git linked to it in the future.  I don't want to lose
+these folks.
+
+IANAL, but from what I can tell the main difference between LGPL
+and GPL+"gcc library exception" is that the LGPL requires that
+the end-user must be able to relink the derived executable with
+their own replacement library.  The GPL+"gcc library exception"
+makes no such requirement.
+
+If you read the exception clause it practically makes the library
+even easier to use commerically than the BSD license does, however
+modifications to the library sources must still be distributed.
+
+Isn't that actually somewhat close to the Mozilla Public License?
+
 -- 
-1.6.0.3.531.gd12eb.dirty
+Shawn.
