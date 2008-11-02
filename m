@@ -1,108 +1,94 @@
-From: =?iso-8859-1?Q?Bj=F6rn?= Steinbrink <B.Steinbrink@gmx.de>
-Subject: Re: [PATCH] git-diff: Add --staged as a synonym for --cached.
-Date: Sun, 2 Nov 2008 13:35:19 +0100
-Message-ID: <20081102123519.GA21251@atjola.homenet>
-References: <1225296936-1357-1-git-send-email-dsymonds@gmail.com> <20081029164253.GA3172@sigill.intra.peff.net> <ee77f5c20810290950k6d7acfcbt90b6280c290bd532@mail.gmail.com> <alpine.DEB.1.00.0810291804400.22125@pacific.mpi-cbg.de.mpi-cbg.de> <20081029171122.GA12167@sigill.intra.peff.net>
+From: Yann Dirson <ydirson@altern.org>
+Subject: [PATCH v2] Add reference for status letters in documentation.
+Date: Sun, 02 Nov 2008 14:37:28 +0100
+Message-ID: <20081102133611.6115.51449.stgit@gandelf.nowhere.earth>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	David Symonds <dsymonds@gmail.com>, git@vger.kernel.org,
-	gitster@pobox.com, Stephan Beyer <s-beyer@gmx.net>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Sun Nov 02 13:37:52 2008
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Nov 02 14:39:20 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KwcC7-0002pz-PG
-	for gcvg-git-2@gmane.org; Sun, 02 Nov 2008 13:36:40 +0100
+	id 1KwdAj-0003CP-NI
+	for gcvg-git-2@gmane.org; Sun, 02 Nov 2008 14:39:18 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753672AbYKBMfZ convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 2 Nov 2008 07:35:25 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753636AbYKBMfZ
-	(ORCPT <rfc822;git-outgoing>); Sun, 2 Nov 2008 07:35:25 -0500
-Received: from mail.gmx.net ([213.165.64.20]:55834 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1753540AbYKBMfY (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 2 Nov 2008 07:35:24 -0500
-Received: (qmail invoked by alias); 02 Nov 2008 12:35:21 -0000
-Received: from i577B8DDD.versanet.de (EHLO atjola.local) [87.123.141.221]
-  by mail.gmx.net (mp008) with SMTP; 02 Nov 2008 13:35:21 +0100
-X-Authenticated: #5039886
-X-Provags-ID: V01U2FsdGVkX1/2CgIBvNr2NhvVG2nI+X/lYbHSU8YYIQVkHb8xfF
-	OEyNgNFFlSVnA/
-Content-Disposition: inline
-In-Reply-To: <20081029171122.GA12167@sigill.intra.peff.net>
-User-Agent: Mutt/1.5.18 (2008-05-17)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.6
+	id S1754090AbYKBNhq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 2 Nov 2008 08:37:46 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753786AbYKBNhq
+	(ORCPT <rfc822;git-outgoing>); Sun, 2 Nov 2008 08:37:46 -0500
+Received: from smtp8-g19.free.fr ([212.27.42.65]:50501 "EHLO smtp8-g19.free.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753443AbYKBNho (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 2 Nov 2008 08:37:44 -0500
+Received: from smtp8-g19.free.fr (localhost [127.0.0.1])
+	by smtp8-g19.free.fr (Postfix) with ESMTP id 3EE6D32A6EC
+	for <git@vger.kernel.org>; Sun,  2 Nov 2008 14:37:43 +0100 (CET)
+Received: from gandelf.nowhere.earth (nan92-1-81-57-214-146.fbx.proxad.net [81.57.214.146])
+	by smtp8-g19.free.fr (Postfix) with ESMTP id 21FC132A7D7
+	for <git@vger.kernel.org>; Sun,  2 Nov 2008 14:37:43 +0100 (CET)
+Received: from gandelf.nowhere.earth (localhost [127.0.0.1])
+	by gandelf.nowhere.earth (Postfix) with ESMTP id 0885CA003
+	for <git@vger.kernel.org>; Sun,  2 Nov 2008 14:37:29 +0100 (CET)
+User-Agent: StGIT/0.14.3
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/99840>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/99841>
 
-On 2008.10.29 13:11:22 -0400, Jeff King wrote:
-> On Wed, Oct 29, 2008 at 06:06:09PM +0100, Johannes Schindelin wrote:
->=20
-> > However, note that we have to hash out what to do about the convent=
-ion=20
-> > that --cached traditionally means that only the staging area (forme=
-rly=20
-> > known as "the index") is affected, while --index means that the com=
-mand=20
-> > touches the working directory, too.
->=20
-> If we assume that we have only the word "stage" and variations
-> available, then there aren't too many options.
->=20
->   only the staging area:
->     --stage-only, --staged-only
->=20
->   both:
->     --staged (as opposed to --staged-only) --stage-and-worktree (too
->     long), --both (not descriptive enough), --stage-too (yuck)
+Also fix error in diff_filepair::status documentation, and point to
+the in-code reference as well as the doc.
 
-Hm, I don't think that would work out nicely with stash. --keep-index
-would become --keep-staged-only, which is IMHO pretty confusing, as the
-default is to keep nothing. And even if you add another option to keep
-all changes, so that the current state is just put onto the stash, but
-the working tree and index are unchanged, you would have --keep-staged
-and --keep-staged-only. Not really any better.
+Signed-off-by: Yann Dirson <ydirson@altern.org>
+---
 
-Admittedly, --keep-index is quite different from --index, but if you're
-going to change the CLI to hide the word "index", that option needs to
-be changed as well and the usage of the new terms should be unified.
+Since diffcore.h is for devs anyway, it is IMHO a good idea to let it
+also point to the in-code doc.
 
-Looking at --cached/--index we have basically three things:
+ Documentation/diff-format.txt |   16 ++++++++++++++++
+ diffcore.h                    |    2 +-
+ 2 files changed, 17 insertions(+), 1 deletions(-)
 
-  --cached to refer to the state of the index (diff, grep, [stash], ...=
-)
-  --cached to _work on_ the index only (rm, apply, ...)
-  --index to _work on_ both the index and the working tree (apply, ...)
-
-Maybe that could be translated to:
-
-  --staged: refer to the state of the index
-  --stage: in addition to changing the working tree, also stage the cha=
-nges
-  --stage-only: only stage the changes, don't change the working tree
-
-That would give us, for example:
-git diff --staged
-git grep --staged
-
-git apply --stage
-git apply --stage-only
-git rm --stage-only
-
-git stash --keep-staged
-
-A quick look through Documentation/ revealed only one problematic case,
-which is ls-files that already has a --stage option. And that looks lik=
-e
-a dealbreaker :-(
-
-Bj=F6rn
+diff --git a/Documentation/diff-format.txt b/Documentation/diff-format.txt
+index 400cbb3..aafd3a3 100644
+--- a/Documentation/diff-format.txt
++++ b/Documentation/diff-format.txt
+@@ -46,6 +46,22 @@ That is, from the left to the right:
+ . path for "dst"; only exists for C or R.
+ . an LF or a NUL when '-z' option is used, to terminate the record.
+ 
++Possible status letters are:
++
++- A: addition of a file
++- C: copy of a file into a new one
++- D: deletion of a file
++- M: modification of the contents or mode of a file
++- R: renaming of a file
++- T: change in the type of the file
++- U: file is unmerged (you must complete the merge before it can
++be committed)
++- X: "unknown" change type (most probably a bug, please report it)
++
++Status letters C and M are always followed by a score (denoting the
++percentage of similarity between the source and target of the move or
++copy), and are the only ones to be so.
++
+ <sha1> is shown as all 0's if a file is new on the filesystem
+ and it is out of sync with the index.
+ 
+diff --git a/diffcore.h b/diffcore.h
+index 713cca7..5b63458 100644
+--- a/diffcore.h
++++ b/diffcore.h
+@@ -62,7 +62,7 @@ struct diff_filepair {
+ 	struct diff_filespec *one;
+ 	struct diff_filespec *two;
+ 	unsigned short int score;
+-	char status; /* M C R N D U (see Documentation/diff-format.txt) */
++	char status; /* M C R A D U etc. (see Documentation/diff-format.txt or DIFF_STATUS_* in diff.h) */
+ 	unsigned broken_pair : 1;
+ 	unsigned renamed_pair : 1;
+ 	unsigned is_unmerged : 1;
