@@ -1,101 +1,80 @@
-From: "Tomi Pakarinen" <tomi.pakarinen@gmail.com>
-Subject: Re: git-cvsimport BUG: some commits are completely out of phase (but cvsps sees them all right)
-Date: Mon, 3 Nov 2008 00:21:44 +0200
-Message-ID: <f299b4f30811021421w2ef43792l7514ab3a0506077a@mail.gmail.com>
-References: <200811022203.41092.fg@one2team.net>
-Reply-To: tomi.pakarinen@iki.fi
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] Documentation: add a planning document for the next CLI
+ revamp
+Date: Sun, 02 Nov 2008 14:27:57 -0800
+Message-ID: <7v3ai9226q.fsf@gitster.siamese.dyndns.org>
+References: <20081030002239.D453B21D14E@mail.utsl.gen.nz>
+ <20081031003154.GA5745@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: "Francis Galiegue" <fg@one2team.net>
-X-From: git-owner@vger.kernel.org Sun Nov 02 23:23:00 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: Sam Vilain <samv@vilain.net>, git@vger.kernel.org,
+	Johannes Schindelin <johannes.schindelin@gmx.de>,
+	Scott Chacon <schacon@gmail.com>,
+	Tom Preston-Werner <tom@github.com>,
+	"J.H." <warthog19@eaglescrag.net>,
+	Christian Couder <chriscool@tuxfamily.org>,
+	Kai Blin <kai@samba.org>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Sun Nov 02 23:29:58 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KwlLX-0001Xm-9q
-	for gcvg-git-2@gmane.org; Sun, 02 Nov 2008 23:22:59 +0100
+	id 1KwlSE-0003hE-Dh
+	for gcvg-git-2@gmane.org; Sun, 02 Nov 2008 23:29:54 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752923AbYKBWVq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 2 Nov 2008 17:21:46 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752847AbYKBWVq
-	(ORCPT <rfc822;git-outgoing>); Sun, 2 Nov 2008 17:21:46 -0500
-Received: from wa-out-1112.google.com ([209.85.146.179]:52157 "EHLO
-	wa-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752839AbYKBWVp (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 2 Nov 2008 17:21:45 -0500
-Received: by wa-out-1112.google.com with SMTP id v27so1251962wah.21
-        for <git@vger.kernel.org>; Sun, 02 Nov 2008 14:21:44 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:reply-to
-         :to:subject:cc:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:references;
-        bh=67uPWl/cX9kaS70c6723WK5YEOCFwkcEKOFsBR6y77I=;
-        b=l+K3yT1DUTZlJ7upBdP0GZYkMCenTWlCJA1HoMX2BlknAa5aYYzzyk650WKXsWxl4O
-         V/2Y1fjXyoKBwElqm5Uf0Mrst6aW5QeCfChDSNJBEXcTNWGHcv1HTdZUagUy1RHYTpHy
-         iuBESuChuPjuYdj/LF6K/fsdVD1qP3CIQQrH8=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:reply-to:to:subject:cc:in-reply-to
-         :mime-version:content-type:content-transfer-encoding
-         :content-disposition:references;
-        b=eb4rChdwtt3THvG4c1YznxwOj93jpafN8cLc17PmkM8kQOjmhRBrrdmScrT2uuL+FC
-         m8IbJJOPurMO8Jn7B6LbtYZ45eh00oBxTvmMmWIwjRXJVLqjh1HBnALVAGI/15xYAyWG
-         wnj61GzCoNFm+j296VgN2+eUJsAYg9CrqGhHM=
-Received: by 10.114.73.1 with SMTP id v1mr12217334waa.110.1225664504346;
-        Sun, 02 Nov 2008 14:21:44 -0800 (PST)
-Received: by 10.115.91.4 with HTTP; Sun, 2 Nov 2008 14:21:44 -0800 (PST)
-In-Reply-To: <200811022203.41092.fg@one2team.net>
-Content-Disposition: inline
+	id S1753183AbYKBW2k (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 2 Nov 2008 17:28:40 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753098AbYKBW2k
+	(ORCPT <rfc822;git-outgoing>); Sun, 2 Nov 2008 17:28:40 -0500
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:49764 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752937AbYKBW2j (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 2 Nov 2008 17:28:39 -0500
+Received: from localhost.localdomain (localhost [127.0.0.1])
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 31D30778FE;
+	Sun,  2 Nov 2008 17:28:38 -0500 (EST)
+Received: from pobox.com (ip68-225-240-211.oc.oc.cox.net [68.225.240.211])
+ (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
+ certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
+ ESMTPSA id 92862778F4; Sun,  2 Nov 2008 17:28:04 -0500 (EST)
+In-Reply-To: <20081031003154.GA5745@sigill.intra.peff.net> (Jeff King's
+ message of "Thu, 30 Oct 2008 20:31:54 -0400")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: 98211530-A92D-11DD-81A1-9CEDC82D7133-77302942!a-sasl-fastnet.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/99881>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/99882>
 
-CVS's branch does not appear on cvsps's output, until you do a commit
-to it. git-cvsimport
-relies on cvsps and can not do much about this...
+Jeff King <peff@peff.net> writes:
 
-Last problem may arise, if you try to do incremental imports from cvs to git.
-For incremental imports you must start import from same location in
-cvs each time.
-If you have made first import from beginning of history, sequent
-imports must start
-from there too. Otherwise cvsps will renumber patch sets.
+>> +  * 'git push --matching' does what 'git push' does today (without
+>> +    explicit configuration)
+>
+> I think this is reasonable even without other changes, just to override
+> any configuration.
 
-  Tomi.
+I don't.  Can't you say "git push $there HEAD" these days?  I vaguely
+recall that there is a way to configure push that way for people too lazy
+to type "origin HEAD" after "git push".
 
+>> +  * 'git export' command that does what
+>> +    'git archive --format=tar --prefix=dir | tar x' does now
+>
+> I agree, if you mean "does what ... does now" means "looks to the user
+> like ... is happening". This is much more sanely done using
+> git-checkout-index (though somebody suggested "remote export", which
+> would need to use tar itself).
 
-
-On Sun, Nov 2, 2008 at 11:03 PM, Francis Galiegue <fg@one2team.net> wrote:
-> Maybe it's due to the other bug that I reported with git-cvsimport a few days
-> ago: namely, it does NOT see branches created by CVS with no commits in them
-> (ie, create the branch and that's it, don't touch anything).
->
-> The problem is very serious, since it seems to trigger another bug which
-> prevents git-cvsimport from working at all. cvsps DOES see the commit
-> correctly (branc exists for this file at 1.47.6):
->
-> ---
-> Members:
->
-> src/java/com/one2team/database/bean/impl/relation/reporting/Register.java:1.47->1.47.6.1
-> ---
->
-> But on the imported git repository, the diff is rather 1.60 -> 1.47.6.1! As a
-> result, the repository is plain unusable.
->
-> As to the first problem, git finds 6 branches, cvs log finds 8 for the same
-> module. git finds 22 tags, cvs log finds 29!
->
-> --
-> fge
-> --
-> To unsubscribe from this list: send the line "unsubscribe git" in
-> the body of a message to majordomo@vger.kernel.org
-> More majordomo info at  http://vger.kernel.org/majordomo-info.html
->
+I think I was neutral in the discussion that led to the removal of
+"git-export", but the rationale IIRC was exactly because "git-export" can
+be done by simply piping "git-tar" to tar.  On the other hand, if all you
+had was "export" and you wanted to create a release tar/zip ball, you have
+to first create a (potentially huge) hierarchy in the filesystem only to
+archive it.  This change needs to defend that the benefit of being able to
+create a new non-git checkout elsewhere on the filesystem far outweighs
+the downside of addition of another command (i.e. "eek, why does git have
+that many commands" from new people).
