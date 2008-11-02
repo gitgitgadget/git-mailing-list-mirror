@@ -1,58 +1,61 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH] prepare deprecation of git-revert
-Date: Sun, 2 Nov 2008 00:41:59 -0400
-Message-ID: <20081102044159.GF5261@coredump.intra.peff.net>
-References: <1225468527-29694-1-git-send-email-madcoder@debian.org>
+From: David Brown <git@davidb.org>
+Subject: Re: libgit2 - a true git library
+Date: Sat, 1 Nov 2008 22:09:18 -0700
+Message-ID: <20081102050917.GA26634@linode.davidb.org>
+References: <alpine.DEB.1.10.0810311738100.5851@asgard.lang.hm> <20081101010011.GG14786@spearce.org> <alpine.DEB.1.10.0810311802360.5851@asgard.lang.hm> <20081101010824.GE29036@artemis.corp> <alpine.LFD.2.00.0810312121000.13034@xanadu.home> <20081101014336.GI14786@spearce.org> <alpine.LFD.2.00.0810312150200.13034@xanadu.home> <20081101225714.GD15463@spearce.org> <d411cc4a0811011726h1fb1ad0ct5c37af753940f4a4@mail.gmail.com> <d411cc4a0811011807g229f8becs9f411d6e19fb6c12@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org
-To: Pierre Habouzit <madcoder@debian.org>
-X-From: git-owner@vger.kernel.org Sun Nov 02 05:43:21 2008
+Content-Type: text/plain; charset=us-ascii; format=flowed
+Cc: "Shawn O. Pearce" <spearce@spearce.org>,
+	Nicolas Pitre <nico@cam.org>,
+	Pierre Habouzit <madcoder@debian.org>, david@lang.hm,
+	git@vger.kernel.org
+To: Scott Chacon <schacon@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Nov 02 06:10:41 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KwUo4-0001yL-N3
-	for gcvg-git-2@gmane.org; Sun, 02 Nov 2008 05:43:21 +0100
+	id 1KwVEU-0005ZD-Tm
+	for gcvg-git-2@gmane.org; Sun, 02 Nov 2008 06:10:39 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751444AbYKBEmF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 2 Nov 2008 00:42:05 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751390AbYKBEmE
-	(ORCPT <rfc822;git-outgoing>); Sun, 2 Nov 2008 00:42:04 -0400
-Received: from peff.net ([208.65.91.99]:3229 "EHLO peff.net"
+	id S1751543AbYKBFJY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 2 Nov 2008 01:09:24 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751532AbYKBFJY
+	(ORCPT <rfc822;git-outgoing>); Sun, 2 Nov 2008 01:09:24 -0400
+Received: from linode.davidb.org ([72.14.176.16]:51976 "EHLO mail.davidb.org"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751160AbYKBEmC (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 2 Nov 2008 00:42:02 -0400
-Received: (qmail 22607 invoked by uid 111); 2 Nov 2008 04:42:00 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.32) with SMTP; Sun, 02 Nov 2008 00:42:00 -0400
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Sun, 02 Nov 2008 00:41:59 -0400
+	id S1751390AbYKBFJX (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 2 Nov 2008 01:09:23 -0400
+Received: from davidb by mail.davidb.org with local (Exim 4.69 #1 (Debian))
+	id 1KwVDC-0006yW-12; Sat, 01 Nov 2008 22:09:18 -0700
 Content-Disposition: inline
-In-Reply-To: <1225468527-29694-1-git-send-email-madcoder@debian.org>
+In-Reply-To: <d411cc4a0811011807g229f8becs9f411d6e19fb6c12@mail.gmail.com>
+User-Agent: Mutt/1.5.16 (2007-06-09)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/99813>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/99814>
 
-On Fri, Oct 31, 2008 at 04:55:27PM +0100, Pierre Habouzit wrote:
+On Sat, Nov 01, 2008 at 06:07:04PM -0700, Scott Chacon wrote:
 
->  I've not kept the auto-edit feature of git-revert for the git-cherry-pick -R
->  case as I don't believe it makes a lot of sense. But if people are unhappy
->  with that, I can easily "fix" it.
+>Think about trying to incorporate this into something proprietary,
+>Shawn - how much of a pain is it going to be to get that license
+>reviewed in Google?  However, LGPL I'm sure there is already a
+>reviewed policy.  Now, since that may be a pain, time that Shawn could
+>have been spending being paid to work on the library is lost because
+>they can't use it, or it takes weeks/months to review it.  That's my
+>concern.
 
-I disagree. I write a new commit message for every revert I do.
+The gcc exception license should have been reviewed by anyone who has
+ever build anything proprietary out of gcc.
 
-When you cherry-pick, you are pulling a good commit from somewhere else.
-So its commit message should suffice to explain why you are making the
-change (and infrequently, you might want to give more context or say
-"and here is where this comes from").
+GPL+link exception is a very common license.  It's most common use is
+for runtime libraries for various programming languages.
 
-But when you revert, you are saying "this other commit was bad, so let's
-reverse it." So you can look at the other commit to see what it did, but
-you still don't know _why_ it was bad. A revert should always give
-information about what you know _now_ that you didn't know when you
-made the commit originally.
+Lawyers I know are significantly less fearful of the GPL+exception
+than the LGPL.  The exception basically says that if you use it in a
+certain way, then none of the GPL applies.
 
--Peff
+David
