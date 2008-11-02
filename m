@@ -1,95 +1,112 @@
-From: bd_ <bdonlan@gmail.com>
-Subject: Re: commit type
-Date: Sun, 2 Nov 2008 18:02:09 -0500
-Message-ID: <3e8340490811021502p70ab40a1ocdc9fca012769a29@mail.gmail.com>
-References: <loom.20081031T174821-603@post.gmane.org>
-	 <ee77f5c20810311104m6044bf70r1d9d405fa04454e0@mail.gmail.com>
-	 <loom.20081031T191102-81@post.gmane.org>
-	 <alpine.DEB.1.00.0811010025570.22125@pacific.mpi-cbg.de.mpi-cbg.de>
-	 <loom.20081101T034635-562@post.gmane.org>
+From: "David Syzdek" <syzdek@gmail.com>
+Subject: Re: What's cooking in git.git (Nov 2008, #01; Sun, 02)
+Date: Sun, 2 Nov 2008 14:13:35 -0900
+Message-ID: <9a0027270811021513h2739c825o8f989a614a11f69@mail.gmail.com>
+References: <7vbpwx3j7q.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: 7rans <transfire@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Nov 03 00:03:41 2008
+Cc: git@vger.kernel.org,
+	"David M. Syzdek" <david.syzdek@acsalaska.net>, pasky@suse.cz
+To: "Junio C Hamano" <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Nov 03 00:14:53 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Kwlyg-0004Nc-E5
-	for gcvg-git-2@gmane.org; Mon, 03 Nov 2008 00:03:26 +0100
+	id 1Kwm9j-0007Hr-Qf
+	for gcvg-git-2@gmane.org; Mon, 03 Nov 2008 00:14:52 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753260AbYKBXCM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 2 Nov 2008 18:02:12 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753258AbYKBXCM
-	(ORCPT <rfc822;git-outgoing>); Sun, 2 Nov 2008 18:02:12 -0500
-Received: from qw-out-2122.google.com ([74.125.92.26]:36957 "EHLO
-	qw-out-2122.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753136AbYKBXCL (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 2 Nov 2008 18:02:11 -0500
-Received: by qw-out-2122.google.com with SMTP id 3so1000113qwe.37
-        for <git@vger.kernel.org>; Sun, 02 Nov 2008 15:02:10 -0800 (PST)
+	id S1753615AbYKBXNh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 2 Nov 2008 18:13:37 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753596AbYKBXNh
+	(ORCPT <rfc822;git-outgoing>); Sun, 2 Nov 2008 18:13:37 -0500
+Received: from rv-out-0506.google.com ([209.85.198.236]:51609 "EHLO
+	rv-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753447AbYKBXNg (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 2 Nov 2008 18:13:36 -0500
+Received: by rv-out-0506.google.com with SMTP id k40so2270253rvb.1
+        for <git@vger.kernel.org>; Sun, 02 Nov 2008 15:13:35 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:received:received:message-id:date:from:to
          :subject:cc:in-reply-to:mime-version:content-type
          :content-transfer-encoding:content-disposition:references;
-        bh=uaS67whHlcEAuzSBpPHTuNEc2h8HeGDzqagSi3mJ5m0=;
-        b=erLXwDS0k+VQxIhFuYpYtWYQuFpPyOR5pTQN7HlsHvTQbmHb2l5fNRzHRgR7PWbLhd
-         9YyTV+aXHaEO6ppR9HdF6Irls46W3VcnDQv0tzNrOdzoz2xft9o4xim8jpaqsJCkhjM7
-         x/BfOsApXzJM44IaBQRG4BR/bvEYD8E6yl56Y=
+        bh=emIWN2ujqFs0DjmWh3+lvqNcTpSLpbSdOISTSWlPSss=;
+        b=bvv4dmbRMHbAeh8a8GSDOPrW9xiW5tOWfcru8mfTeaCwXSukuA5KUprW1YQerBgfrN
+         89ZPQqLbj1TzGUUmOS6Fz74AqkR777b/Ujb5MWfKZHMy0oMCq0IXKHAJw1QVvRSPOO9n
+         bzvMvCIS0/CKo4ZK0jWfWvaM/fX3iEGNGaWPI=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
          :content-type:content-transfer-encoding:content-disposition
          :references;
-        b=ZBL6yrLk469TZuK3UrfRSPw5QAnEcw891bZbRJ+AhoDLf8mHb3/54A0i9KGGUO/Fov
-         wim2LQo9E3kntY7iXUCroMULzpiJLS6C5bzM7eozOZNhB+LE3vP26Yg9YJY/2EcJA2E+
-         C39Yrm5dsnm0YK7RFKToMW6Tl3JOzY0mpene4=
-Received: by 10.214.182.12 with SMTP id e12mr2827645qaf.240.1225666930016;
-        Sun, 02 Nov 2008 15:02:10 -0800 (PST)
-Received: by 10.214.215.5 with HTTP; Sun, 2 Nov 2008 15:02:09 -0800 (PST)
-In-Reply-To: <loom.20081101T034635-562@post.gmane.org>
+        b=DkIDKkgyoaez93ZyG+gZLDfG55JnCtcj+/nN2jBeWuFjCbh395S+o35zrX9wAB6JKd
+         UmORbCTd8L7P/TRY1/4b5SYocAGZYP6fqs1AADf4EJSrKRSac5wAo2rC9BNV/Qfo0Jp9
+         uZgLdlgu6f/HJFwhSjZbzLnTwdg05fVhyxMzI=
+Received: by 10.141.50.11 with SMTP id c11mr8479382rvk.222.1225667615724;
+        Sun, 02 Nov 2008 15:13:35 -0800 (PST)
+Received: by 10.141.77.7 with HTTP; Sun, 2 Nov 2008 15:13:35 -0800 (PST)
+In-Reply-To: <7vbpwx3j7q.fsf@gitster.siamese.dyndns.org>
 Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/99884>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/99885>
 
-On Fri, Oct 31, 2008 at 11:15 PM, 7rans <transfire@gmail.com> wrote:
-> Johannes Schindelin <Johannes.Schindelin <at> gmx.de> writes:
+On Sun, Nov 2, 2008 at 12:34 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> Here are the topics that have been cooking.  Commits prefixed
+> with '-' are only in 'pu' while commits prefixed with '+' are
+> in 'next'.
 >
->> So you want to force this onto all Git users?
+> The topics list the commits in reverse chronological order.  The topics
+> meant to be merged to the maintenance series have "maint-" in their names.
 >
-> Not at all. It would be a purely optional. You would never even need to know the
-> feature existed if you didn't want to use it. So I'm not sure how that is
-> forcing it upon anyone.
+> There are backlog patches I'm planning to deal with later today; they do
+> not appear in this list.
 >
-> Moreover, I suggested it b/c I would find such a feature very useful, and, by
-> extension, thought others might as well. Perhaps others have done something
-> similar, in which case it would be interesting the hear their take, or on the
-> other hand they've never considered it before, but now can consider the
-> potential utility of just such a feature.
+> ----------------------------------------------------------------
+> [New Topics]
 >
->> If yes: that murmur you hear in the background, it might well be the
->> collective "thanks, but no thanks" of people who do not want that type of
->> distinction between different commits
+> * mv/maint-branch-m-symref (Sat Nov 1 00:25:44 2008 +0100) 5 commits
+>  + update-ref --no-deref -d: handle the case when the pointed ref is
+>   packed
+>  + git branch -m: forbid renaming of a symref
+>  + Fix git update-ref --no-deref -d.
+>  + rename_ref(): handle the case when the reflog of a ref does not
+>   exist
+>  + Fix git branch -m for symrefs.
 >
-> There is no need to make one. It's purely annotative.
+> * rs/blame (Sat Oct 25 15:31:36 2008 +0200) 5 commits
+>  - blame: use xdi_diff_hunks(), get rid of struct patch
+>  - add xdi_diff_hunks() for callers that only need hunk lengths
+>  - Allow alternate "low-level" emit function from xdl_diff
+>  - Always initialize xpparam_t to 0
+>  - blame: inline get_patch()
+>
+> * ds/uintmax-config (Sun Oct 26 03:52:47 2008 -0800) 2 commits
+>  - Add Makefile check for FreeBSD 4.9-SECURITY
+>  - Build: add NO_UINTMAX_T to support ancient systems
+>
+> I amended the topmost one to widen the applicability of this new feature
+> to all FreeBSD 4.*, not limited to 4.9-SECURITY; testing before this hits
+> 'next' is appreciated.
+>
+> * ds/autoconf (Sun Nov 2 01:04:46 2008 -0700) 2 commits
+>  - DONTMERGE: fixup with a convenience macro
+>  - autoconf: Add link tests to each AC_CHECK_FUNC() test
+>
+> The topmost one is my attempt to simplify the new way of checking; the
+> resulting configure.ac produces the identical configure script with or
+> without it, so I think it is Ok, but testing before this hits 'next' is
+> appreciated.  If all goes well, I think the two should be squashed into
+> one patch.
 
-The problem with this approach is that it begins to dictate a set of
-annotations which are considered 'more important' by the git core than
-others. By allowing in your 'commit type', it sets a precedent that
-git will add random, possibly not backwards compatible metadata
-changes just to support the local policies of some subset of git
-users. It's far better to provide a generic feature that will cover
-all users; and using the commit description, with hooks to enforce
-proper format according to local policy, is just that.
+I tested the above changes on FreeBSD.  The changes worked on FreeBSD
+4.9 worked.
 
-If using the commit description, with hooks to enforce whatever
-formatting you prefer, is not sufficient for your needs, then it would
-be useful to discuss exactly how this would be deficient, and then
-possibly think about adding a /generic/ feature that meets your needs.
+However pthread is linked on FreeBSD 4.x by using `-pthread' instead
+of `-lpthread'.  The current pu branch forces the use of Pthreads and
+links using an invalid flag. I am working on a patch now.
