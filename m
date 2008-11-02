@@ -1,91 +1,89 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] git-diff: Add --staged as a synonym for --cached.
-Date: Sun, 02 Nov 2008 10:30:16 -0800
-Message-ID: <7vljw2yo93.fsf@gitster.siamese.dyndns.org>
-References: <1225296936-1357-1-git-send-email-dsymonds@gmail.com>
- <20081029164253.GA3172@sigill.intra.peff.net>
- <ee77f5c20810290950k6d7acfcbt90b6280c290bd532@mail.gmail.com>
- <alpine.DEB.1.00.0810291804400.22125@pacific.mpi-cbg.de.mpi-cbg.de>
- <20081029171122.GA12167@sigill.intra.peff.net>
- <20081102123519.GA21251@atjola.homenet>
+From: "Mikael Magnusson" <mikachu@gmail.com>
+Subject: [PATCH] Document that git-log takes --all-match.
+Date: Sun, 2 Nov 2008 19:32:46 +0100
+Message-ID: <237967ef0811021032j15f7d9cbudfdf9350bc521cd6@mail.gmail.com>
+References: <237967ef0811021028w3aa22411t99b2203a9148bbf6@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Jeff King <peff@peff.net>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	David Symonds <dsymonds@gmail.com>, git@vger.kernel.org,
-	gitster@pobox.com, Stephan Beyer <s-beyer@gmx.net>
-To: =?utf-8?Q?Bj=C3=B6rn?= Steinbrink <B.Steinbrink@gmx.de>
-X-From: git-owner@vger.kernel.org Sun Nov 02 19:32:01 2008
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+To: "Git Mailing List" <git@vger.kernel.org>,
+	"Junio C Hamano" <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sun Nov 02 19:34:06 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Kwhk0-0003c5-NP
-	for gcvg-git-2@gmane.org; Sun, 02 Nov 2008 19:32:01 +0100
+	id 1Kwhly-00048w-NJ
+	for gcvg-git-2@gmane.org; Sun, 02 Nov 2008 19:34:03 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753940AbYKBSaq convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 2 Nov 2008 13:30:46 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753925AbYKBSaq
-	(ORCPT <rfc822;git-outgoing>); Sun, 2 Nov 2008 13:30:46 -0500
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:53541 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753915AbYKBSaq convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 2 Nov 2008 13:30:46 -0500
-Received: from localhost.localdomain (localhost [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 8EEEF779B8;
-	Sun,  2 Nov 2008 13:30:44 -0500 (EST)
-Received: from pobox.com (ip68-225-240-211.oc.oc.cox.net [68.225.240.211])
- (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
- certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
- ESMTPSA id B9CBE7799D; Sun,  2 Nov 2008 13:30:24 -0500 (EST)
-In-Reply-To: <20081102123519.GA21251@atjola.homenet> (=?utf-8?Q?Bj=C3=B6rn?=
- Steinbrink's message of "Sun, 2 Nov 2008 13:35:19 +0100")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: 5C63CD7E-A90C-11DD-8EEE-9CEDC82D7133-77302942!a-sasl-fastnet.pobox.com
+	id S1754005AbYKBSct (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 2 Nov 2008 13:32:49 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753994AbYKBSct
+	(ORCPT <rfc822;git-outgoing>); Sun, 2 Nov 2008 13:32:49 -0500
+Received: from ey-out-2122.google.com ([74.125.78.25]:29219 "EHLO
+	ey-out-2122.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753980AbYKBScs (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 2 Nov 2008 13:32:48 -0500
+Received: by ey-out-2122.google.com with SMTP id 6so727168eyi.37
+        for <git@vger.kernel.org>; Sun, 02 Nov 2008 10:32:46 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to
+         :subject:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:references;
+        bh=pxSLlRsHIrc525nr+Yi8zFBxW2cYkLUU7XFeit/Koqs=;
+        b=wYcv3e/9+DD29ft3hzcSqjtQR3vZmwhBTuwH3txtMcKGM9HTYtppa6dSmw0WzeXgYY
+         KaTYdxwS04Wb7UTdZFdVXhhvccSfU+Z7HVc2tBIIADjLTsNOXhlsbAxp7QxCqCnC901I
+         Qc/jif+oZ3TijVk6DsRK7FCVi4B5qUcvaA6V8=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:to:subject:in-reply-to:mime-version
+         :content-type:content-transfer-encoding:content-disposition
+         :references;
+        b=H3sQwJ3VIvfjA+QU/6cSkV98wDyUyYNLr11kZWi4RaATpgJJyjXeUu5UdcZvjUCwWb
+         XSeDGo3rHZTHBJXMHnNNtY5ieFE7MeAFVoYQIuHVoSRUUwjOhsqveozlDYnKWNL5XGQq
+         lyX8KAKLJes2lKYCKHhDkYvk74tHbyu7xZrno=
+Received: by 10.210.143.11 with SMTP id q11mr727380ebd.146.1225650766253;
+        Sun, 02 Nov 2008 10:32:46 -0800 (PST)
+Received: by 10.210.73.14 with HTTP; Sun, 2 Nov 2008 10:32:46 -0800 (PST)
+In-Reply-To: <237967ef0811021028w3aa22411t99b2203a9148bbf6@mail.gmail.com>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/99859>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/99860>
 
-Bj=C3=B6rn Steinbrink <B.Steinbrink@gmx.de> writes:
+Signed-off-by: Mikael Magnusson <mikachu@gmail.com>
 
-> Looking at --cached/--index we have basically three things:
->
->   --cached to refer to the state of the index (diff, grep, [stash], .=
-=2E.)
->   --cached to _work on_ the index only (rm, apply, ...)
->   --index to _work on_ both the index and the working tree (apply, ..=
-=2E)
+---
 
-I think the earlier two are the same thing.  The only difference betwee=
-n
-them is that in the first one, the definition of your "work on" happens=
- to
-be a read-only operation.  Am I mistaken?
+It's already listed in the bash completion. Feel free to reword.
+Looking at this I can't help but feel that the text for
+--grep/--author/--committer is misleading, since they say they will
+limit to commits blabla, but they don't if another is given. Ie they
+only do what they say if you give the --all-match option.
 
-> A quick look through Documentation/ revealed only one problematic cas=
-e,
-> which is ls-files that already has a --stage option. And that looks l=
-ike
-> a dealbreaker :-(
+ Documentation/rev-list-options.txt |    4 ++++
+ 1 files changed, 4 insertions(+), 0 deletions(-)
 
-'ls-files' is primarily about the index contents and all else is a fluf=
-f
-;-)
+index 0ce916a..966276b 100644
+--- a/Documentation/rev-list-options.txt
++++ b/Documentation/rev-list-options.txt
+@@ -174,6 +174,10 @@ endif::git-rev-list[]
+       Limit the commits output to ones with log message that
+       matches the specified pattern (regular expression).
 
-You could say --show-stage-too if you wanted to, but the command is a
-plumbing to begin with, so perhaps if we can identify the cases where
-people need to use the command and enhance some Porcelain (likely
-candidate is 'status' or perhaps 'status --short') to give the informat=
-ion
-people use ls-files for, we hopefully wouldn't have to change ls-files
-itself at all.
++--all-match::
++       Limit the commits output to ones that match all given --grep,
++       --author and --committer instead of ones that match at least one.
++
+ -i::
+ --regexp-ignore-case::
 
-The only case I use ls-files these days when I am _using_ git (as oppos=
-ed
-to developing/debugging git) is "git ls-files -u" to get the list of st=
-ill
-unmerged paths during a conflicted merge.
+--
+1.6.0.2.GIT
+
+--
+Mikael Magnusson
