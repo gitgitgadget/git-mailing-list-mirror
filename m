@@ -1,111 +1,90 @@
-From: "Li Frank" <Frank.Li@freescale.com>
-Subject: RE: why not TortoiseGit
-Date: Sun, 2 Nov 2008 22:14:10 +0800
-Message-ID: <7FD1F85C96D70C4A89DA1DF7667EAE961E728C@zch01exm23.fsl.freescale.net>
-References: <7FD1F85C96D70C4A89DA1DF7667EAE96125890@zch01exm23.fsl.freescale.net> <20081031121913.GE18221@sys-0.hiltweb.site> <490AFBA5.5090700@op5.se> <d411cc4a0810310857y5b4f8c46ue33e1f6a9e2c13d1@mail.gmail.com>
+From: Alex Riesen <raa.lkml@gmail.com>
+Subject: Re: [PATCH] Use find instead of perl in t5000 to get file
+	modification time
+Date: Sun, 2 Nov 2008 15:37:52 +0100
+Message-ID: <20081102143751.GA18140@blimp.localdomain>
+References: <81b0412b0810290338j1beaa25bx9fb373a69f5dfe7@mail.gmail.com> <1225344554.10803.17.camel@maia.lan> <20081031070003.GA4458@blimp.localdomain> <alpine.DEB.1.00.0810312314190.22125@pacific.mpi-cbg.de.mpi-cbg.de> <20081031233736.GB21997@steel.home> <alpine.DEB.1.00.0811010121570.22125@pacific.mpi-cbg.de.mpi-cbg.de> <20081101142434.GA7157@steel.home> <alpine.DEB.1.00.0811012134290.22125@pacific.mpi-cbg.de.mpi-cbg.de>
+Reply-To: Alex Riesen <raa.lkml@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain;
-	charset="us-ascii"
-Content-Transfer-Encoding: 8BIT
-Cc: "Ian Hilt" <ian.hilt@gmx.com>, <git@vger.kernel.org>
-To: "Scott Chacon" <schacon@gmail.com>, "Andreas Ericsson" <ae@op5.se>
-X-From: git-owner@vger.kernel.org Sun Nov 02 15:15:40 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: Sam Vilain <sam@vilain.net>,
+	Git Mailing List <git@vger.kernel.org>,
+	Junio C Hamano <gitster@pobox.com>,
+	Jeff King <peff@peff.net>,
+	=?iso-8859-15?Q?Ren=E9?= Scharfe <rene.scharfe@lsrfire.ath.cx>
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Sun Nov 02 15:42:10 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Kwdjw-0003pt-9y
-	for gcvg-git-2@gmane.org; Sun, 02 Nov 2008 15:15:40 +0100
+	id 1Kwe9Y-0002KY-FH
+	for gcvg-git-2@gmane.org; Sun, 02 Nov 2008 15:42:08 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753459AbYKBOO1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 2 Nov 2008 09:14:27 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753447AbYKBOO0
-	(ORCPT <rfc822;git-outgoing>); Sun, 2 Nov 2008 09:14:26 -0500
-Received: from az33egw02.freescale.net ([192.88.158.103]:57474 "EHLO
-	az33egw02.freescale.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753385AbYKBOO0 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 2 Nov 2008 09:14:26 -0500
-Received: from az33smr01.freescale.net (az33smr01.freescale.net [10.64.34.199])
-	by az33egw02.freescale.net (8.12.11/az33egw02) with ESMTP id mA2EEGe8011982
-	for <git@vger.kernel.org>; Sun, 2 Nov 2008 07:14:17 -0700 (MST)
-Received: from zch01exm23.fsl.freescale.net (zch01exm23.ap.freescale.net [10.192.129.207])
-	by az33smr01.freescale.net (8.13.1/8.13.0) with ESMTP id mA2EEFl7022523
-	for <git@vger.kernel.org>; Sun, 2 Nov 2008 08:14:16 -0600 (CST)
-Content-class: urn:content-classes:message
-X-MimeOLE: Produced By Microsoft Exchange V6.5
-In-Reply-To: <d411cc4a0810310857y5b4f8c46ue33e1f6a9e2c13d1@mail.gmail.com>
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-Thread-Topic: why not TortoiseGit
-Thread-Index: Ack7cX8kg2YMosKmTp693FI7V4yvywBgc1Ig
+	id S1753441AbYKBOiL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 2 Nov 2008 09:38:11 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753425AbYKBOiK
+	(ORCPT <rfc822;git-outgoing>); Sun, 2 Nov 2008 09:38:10 -0500
+Received: from mo-p05-ob.rzone.de ([81.169.146.182]:39524 "EHLO
+	mo-p05-ob.rzone.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753385AbYKBOiI (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 2 Nov 2008 09:38:08 -0500
+X-RZG-CLASS-ID: mo05
+X-RZG-AUTH: :Pm0FVUW6aauhRGJJc5OfA4AU8DM8ZlijdmJYxKn/UQvEQQx8AU81pIV0
+Received: from tigra.home (Faa73.f.strato-dslnet.de [195.4.170.115])
+	by post.webmailer.de (fruni mo27) (RZmta 17.14)
+	with ESMTP id k00248kA2CiOlV ; Sun, 2 Nov 2008 15:37:54 +0100 (MET)
+	(envelope-from: <raa.lkml@gmail.com>)
+Received: from blimp.localdomain (unknown [192.168.1.28])
+	by tigra.home (Postfix) with ESMTP id BE240277C8;
+	Sun,  2 Nov 2008 15:37:53 +0100 (CET)
+Received: by blimp.localdomain (Postfix, from userid 1000)
+	id 380C536D27; Sun,  2 Nov 2008 15:37:52 +0100 (CET)
+Content-Disposition: inline
+In-Reply-To: <alpine.DEB.1.00.0811012134290.22125@pacific.mpi-cbg.de.mpi-cbg.de>
+User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/99845>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/99846>
 
-I read some code of TortoiseSVN and TortoiseHg Code. 
-At beginning, TortoiseGit can git command to get information like Qgit.
-After linkable library ready, replace "git command". 
+Johannes Schindelin, Sat, Nov 01, 2008 21:37:14 +0100:
+> On Sat, 1 Nov 2008, Alex Riesen wrote:
+> > Johannes Schindelin, Sat, Nov 01, 2008 01:23:32 +0100:
+> > > 
+> > > Well, if you install Git for Windows (as opposed to cygwin), it is 
+> > > minimum hassle, and Perl is delivered right with it.
+> > 
+> > I'd like to try it again, but weren't ther some fatal problems with 
+> > cygwin1.dll being in PATH? I always work either in Cygwin's bash or just 
+> > have to have it in PATH, because of the build environment even being 
+> > strictly Windows based (case-insensitive and alike) just have to use 
+> > sane tooling in its scripts.
+> 
+> I was talking about Git for Windows, i.e. the result of msysGit (as 
+> opposed to Git in Cygwin).
+> 
+> So no, there have not been any conflicts with cygwin1.dll in the PATH, as 
+> far as I can recall.  There have been problems with shell utilities being 
+> found in the Cygwin PATH before being found in the MSys PATH, but I 
+> thought we just prepended the MSys PATH to avoid that.  Haven't checked, 
+> though.
 
-I think TortoiseGit can start base on below way.
- 
-1.  Base on TortoiseHg, It is python Script.  Replace below hg operator
-with Git. 
-2.  Base on TortoiseSVN, It is developed with C++. Need VS2008.
-ToritoiseSVN provide some built in diff and merge tools. 
-3.  Base on Qgit, which provide some basic UI, such comment dialogbox,
-history view and file annotate. 
+Ok, I'll give it a try.
 
+> > > P.S.: some guys at the GSoC mentor summit convinced me in at least 
+> > > trying to fix _their_ problems on msysGit, so chances are good I'll 
+> > > fix issues you would encounter in the same run.
+> > 
+> > Do you still plan to distribute MinGW with it? It's very nice to be able 
+> > to track Junio's repo, have own branches and rebuild Git from time to 
+> > time. For me, at least.
+> 
+> You mean to distribute a minimal MSys environment where you have bash?  
+> Yes, we have to do that, as there are still too many important parts of 
+> Git written in Shell.
 
-Best regards
-Frank Li
-
------Original Message-----
-From: git-owner@vger.kernel.org [mailto:git-owner@vger.kernel.org] On
-Behalf Of Scott Chacon
-Sent: Friday, October 31, 2008 11:58 PM
-To: Andreas Ericsson
-Cc: Ian Hilt; Li Frank-B20596; git@vger.kernel.org
-Subject: Re: why not TortoiseGit
-
-I'm trying to get this restarted - dscho and I talked about this at the
-GitTogether, and I met some people (from the OpenAFS project that also
-happened to be there, oddly) who were interested in working on this with
-me.  I think the lack of a linkable library has greatly hindered the
-development of projects like this, so that will likely be part of the
-development process as well.
-
-Scott
-
-On Fri, Oct 31, 2008 at 5:35 AM, Andreas Ericsson <ae@op5.se> wrote:
-> Ian Hilt wrote:
->>
->> On Fri, Oct 31, 2008 at 09:44:45AM +0800, Li Frank-B20596 wrote:
->>>
->>> There are TortoiseCVS, TortoiseSVN, TortoiseBzr, TortoiseHg Why not 
->>> ToroiseGit
->>
->> This is what Johannes Schindelin had to say,
->>
->>        <http://code.google.com/p/msysgit/wiki/GitCheetah>
->
-> Noone's written TortoiseGit yet. I have no idea why, and I have no 
-> reason to write it myself. If GitCheetah isn't working well, I'm sure 
-> patches are welcome.
->
-> --
-> Andreas Ericsson                   andreas.ericsson@op5.se
-> OP5 AB                             www.op5.se
-> Tel: +46 8-230225                  Fax: +46 8-230231
-> --
-> To unsubscribe from this list: send the line "unsubscribe git" in the 
-> body of a message to majordomo@vger.kernel.org More majordomo info at
-
-> http://vger.kernel.org/majordomo-info.html
->
---
-To unsubscribe from this list: send the line "unsubscribe git" in the
-body of a message to majordomo@vger.kernel.org More majordomo info at
-http://vger.kernel.org/majordomo-info.html
+No, the mingw compiler and libraries. I vaguely remember some talking
+about including the build environment into Git distribution.
