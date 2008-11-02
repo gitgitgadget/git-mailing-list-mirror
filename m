@@ -1,163 +1,94 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: What's in git.git (Nov 2008, #01; Sun, 02)
-Date: Sun, 02 Nov 2008 13:35:08 -0800
-Message-ID: <7vabch3j77.fsf@gitster.siamese.dyndns.org>
+Subject: Re: [PATCH] Documentation: add a planning document for the next CLI
+ revamp
+Date: Sun, 02 Nov 2008 13:53:44 -0800
+Message-ID: <7vy70123rr.fsf@gitster.siamese.dyndns.org>
+References: <1225338485-11046-1-git-send-email-sam@vilain.net>
+ <20081030132453.GB24098@artemis.corp>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Nov 02 22:36:40 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: Sam Vilain <sam@vilain.net>, git@vger.kernel.org
+To: Pierre Habouzit <madcoder@debian.org>
+X-From: git-owner@vger.kernel.org Sun Nov 02 22:55:18 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Kwkch-0005AT-N8
-	for gcvg-git-2@gmane.org; Sun, 02 Nov 2008 22:36:40 +0100
+	id 1Kwkui-0001Kd-2j
+	for gcvg-git-2@gmane.org; Sun, 02 Nov 2008 22:55:16 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754250AbYKBVfZ convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 2 Nov 2008 16:35:25 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754249AbYKBVfX
-	(ORCPT <rfc822;git-outgoing>); Sun, 2 Nov 2008 16:35:23 -0500
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:44119 "EHLO
+	id S1754256AbYKBVyB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 2 Nov 2008 16:54:01 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754275AbYKBVyA
+	(ORCPT <rfc822;git-outgoing>); Sun, 2 Nov 2008 16:54:00 -0500
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:33930 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754230AbYKBVfV convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 2 Nov 2008 16:35:21 -0500
+	with ESMTP id S1754231AbYKBVyA (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 2 Nov 2008 16:54:00 -0500
 Received: from localhost.localdomain (localhost [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 0EA4977113;
-	Sun,  2 Nov 2008 16:35:21 -0500 (EST)
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id C6ED7773B8;
+	Sun,  2 Nov 2008 16:53:58 -0500 (EST)
 Received: from pobox.com (ip68-225-240-211.oc.oc.cox.net [68.225.240.211])
  (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
  certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
- ESMTPSA id 4B1C87710F; Sun,  2 Nov 2008 16:35:15 -0500 (EST)
-X-maint-at: 1a9016aae5aa8c468bb2d8d5dd16303d5c005869
-X-master-at: 6a509a6f7f38906996ac791449d5bcc2f32eef23
+ ESMTPSA id BAE0E773B6; Sun,  2 Nov 2008 16:53:50 -0500 (EST)
+In-Reply-To: <20081030132453.GB24098@artemis.corp> (Pierre Habouzit's message
+ of "Thu, 30 Oct 2008 14:24:53 +0100")
 User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: 267BB07C-A926-11DD-80A4-9CEDC82D7133-77302942!a-sasl-fastnet.pobox.com
+X-Pobox-Relay-ID: C0B7450A-A928-11DD-8017-9CEDC82D7133-77302942!a-sasl-fastnet.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/99877>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/99878>
 
-There are several topic branches destined for 'maint' that have been
-cooking and have graduated to 'master', and I'll make the noise about
-1.6.0.4 louder once they are merged, but not yet.
+Pierre Habouzit <madcoder@debian.org> writes:
 
-On the 'master' front, there are quite a few git-gui updates.
+> * 'git track' would do what git add -N does now.
+> * 'git untrack' would do what 'git rm --cached' does now.
 
-* The 'maint' branch has these fixes since the last announcement.
+Ok with me up to here.
 
-Alex Riesen (3):
-  Plug a memleak in builtin-revert
-  Add --verbose|-v to test-chmtime
-  Use test-chmtime -v instead of perl in t5000 to get mtime of a file
+>> +  * 'git undo' would do what 'git checkout HEAD --' does now
+> ...
+> I have no constructive proposal to replace it though, but I believe git
+> undo would cause lots of harm.
 
-Charles Bailey (1):
-  git-archive: work in bare repos
+I'm in agreement.
 
-Deskin Miller (2):
-  git-svn: change dashed git-config to git config
-  git-svn: change dashed git-commit-tree to git commit-tree
+>   * git-send-email should be either more interactive, or less: either
+>     just use the damn configuration, or propose a mode where it spawns
+>     an editor for each patch so that you can add further comments.
 
-Gustaf Hendeby (1):
-  git-gui: Help identify aspell version on Windows too
+In principle I'd agree, but I use send-email non-interactively myself (I
+type Meta/SE where Meta is an independent checkout of my 'todo' branch),
+so I am not sure if the "just use the configuration" is an added
+requirement.  I also have this in .git/config in the repo:
 
-Jakub Narebski (1):
-  Documentation/gitattributes: Add subsection header for each attribute
+        [sendemail]
+                smtpserver = /usr/bin/msmtp
+                to = git@vger.kernel.org
+                suppressfrom
+                signedoffcc = false
 
-Jan Kr=C3=BCger (1):
-  Documentation: clarify information about 'ident' attribute
+>   * git-send-email should be able to format-patches by himself (IOW
+>     accept most of format-patch arguments and deal with the patch list
+>     by himself, which is usable if the previous point is implemented).
 
-Jeff King (4):
-  correct cache_entry allocation
-  pack-objects: avoid reading uninitalized data
-  fix overlapping memcpy in normalize_absolute_path
-  send-pack: do not send out single-level refs such as refs/stash
+I earlier was against this, mostly out of the "each tool to do the job it
+was designed to do well" principle, but with your workflow description and
+Peff's comment, I am open to add this kind of "run format-patch internally"
+wrapper behaviour to send-email which is already a Porcelain anyway.
 
-Jonas Fonseca (1):
-  asciidoc: add minor workaround to add an empty line after code blocks
+>> +  * 'git am -3' the default; with global option to make it not the
+>> +    default for those that prefer the speed of -2
 
-Junio C Hamano (1):
-  Start 1.6.0.4 cycle
+I am moderately negative on this, but not because of performance concern.
 
-Linus Torvalds (1):
-  Add file delete/create info when we overflow rename_limit
-
-Markus Heidelberg (1):
-  bash completion: add doubledash to "git show"
-
-Nanako Shiraishi (1):
-  Install git-cvsserver in $(bindir)
-
-Pierre Habouzit (1):
-  git send-email: avoid leaking directory file descriptors.
-
-Thomas Rast (1):
-  add -p: warn if only binary changes present
-
-Tom Preston-Werner (1):
-  add instructions on how to send patches to the mailing list with Gmai=
-l
-
-Tommi Virtanen (1):
-  Install git-shell in bindir, too
-
-
-* The 'master' branch has these since the last announcement
-  in addition to the above.
-
-Alexander Gavrilov (6):
-  git-gui: Make Ctrl-T safe to use for conflicting files.
-  git-gui: Fix the blame window shape.
-  git-gui: Add a search command to the blame viewer.
-  git-gui: Fix the blame viewer destroy handler.
-  git-gui: Add a dialog that shows the OpenSSH public key.
-  git-gui: Add a simple implementation of SSH_ASKPASS.
-
-Christian Stimming (1):
-  git-gui: Update German translation.
-
-Jan Kr=C3=BCger (1):
-  Introduce receive.denyDeletes
-
-Joey Hess (1):
-  git-daemon: set REMOTE_ADDR to client address
-
-Johannes Sixt (6):
-  git-gui: Do not automatically stage file after merge tool finishes
-  git-gui: Remove space from the end of aspell's reply before processin=
-g
-  git-gui: Fix switch statement in lib/merge.tcl
-  git-gui: Show a round number of bytes of large untracked text files
-  git-gui: Mark-up strings in show_{other,unmerged}_diff() for localiza=
-tion
-  git-gui: Do not munge conflict marker lines in a normal diff
-
-Junio C Hamano (4):
-  receive-pack: fix "borrowing from alternate object store" implementat=
-ion
-  compat/cygwin.c: make runtime detection of lstat/stat lessor impact
-  Stop using compat/regex.c on platforms with working regexp library
-  Update draft release notes to 1.6.1
-
-Petr Baudis (12):
-  git-gui: Clarify the Remote -> Delete... action
-  git-gui: Squash populate_{push,fetch}_menu to populate_remotes_menu
-  git-gui: Add support for adding remotes
-  git-gui: Add support for removing remotes
-  git-gui: mkdir -p when initializing new remote repository
-  git-gui: Use git web--browser for web browsing
-  git-gui: Add Explore Working Copy to the Repository menu
-  git-gui: gui.autoexplore makes explorer to pop up automatically after
-    picking
-  git-gui: Avoid using the term URL when specifying repositories
-  git-gui: Make input boxes in init/clone/open dialogs consistent
-  git-gui: Fix removing non-pushable remotes
-  git-gui: Fix fetching from remotes when adding them
-
-Shawn O. Pearce (1):
-  git-gui: Show/hide "Sign Off" based on nocommitmsg option
-
-Tom Preston-Werner (1):
-  connect.c: add a way for git-daemon to pass an error back to client
+The --3way fall back is done only when it is necessary, and there is no
+"prefer the speed" involved.  It is between "stop when the patch does not
+apply because there may be something iffy going on" and "assume it is Ok
+in such an iffy case to pretend that you apply the patch to the original
+copy and cherry-pick the result to your updated tree".  IOW, it is a
+safety concern.
