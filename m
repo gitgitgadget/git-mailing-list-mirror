@@ -1,59 +1,66 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: libgit2 - a true git library
-Date: Sun, 2 Nov 2008 03:30:12 +0100 (CET)
-Message-ID: <alpine.DEB.1.00.0811020328070.22125@pacific.mpi-cbg.de.mpi-cbg.de>
-References: <20081031170704.GU14786@spearce.org> <490CAB6D.90209@op5.se> <20081101204259.GC15463@spearce.org>
+From: Jeff King <peff@peff.net>
+Subject: Re: Git remote status
+Date: Sat, 1 Nov 2008 23:30:56 -0400
+Message-ID: <20081102033056.GA4936@coredump.intra.peff.net>
+References: <490CB390.9000206@gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Andreas Ericsson <ae@op5.se>, git@vger.kernel.org,
-	Scott Chacon <schacon@gmail.com>
-To: "Shawn O. Pearce" <spearce@spearce.org>
-X-From: git-owner@vger.kernel.org Sun Nov 02 03:25:32 2008
+Content-Type: text/plain; charset=utf-8
+Cc: git@vger.kernel.org
+To: Gonsolo <gonsolo@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Nov 02 04:34:23 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KwSeg-0004iH-7n
-	for gcvg-git-2@gmane.org; Sun, 02 Nov 2008 03:25:30 +0100
+	id 1KwTjH-0008Cj-K4
+	for gcvg-git-2@gmane.org; Sun, 02 Nov 2008 04:34:20 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752557AbYKBCWv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 1 Nov 2008 22:22:51 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752545AbYKBCWv
-	(ORCPT <rfc822;git-outgoing>); Sat, 1 Nov 2008 22:22:51 -0400
-Received: from mail.gmx.net ([213.165.64.20]:35844 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1752448AbYKBCWv (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 1 Nov 2008 22:22:51 -0400
-Received: (qmail invoked by alias); 02 Nov 2008 02:22:49 -0000
-Received: from pacific.mpi-cbg.de (EHLO pacific.mpi-cbg.de) [141.5.10.38]
-  by mail.gmx.net (mp029) with SMTP; 02 Nov 2008 03:22:49 +0100
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1/TL1Mr7JnTs7DH40KBxQo9a4y6CM8fbuAlOGEqO7
-	L0CzGatDl1vhV4
-X-X-Sender: schindelin@pacific.mpi-cbg.de.mpi-cbg.de
-In-Reply-To: <20081101204259.GC15463@spearce.org>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.72
+	id S1752644AbYKBDbA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 1 Nov 2008 23:31:00 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752641AbYKBDbA
+	(ORCPT <rfc822;git-outgoing>); Sat, 1 Nov 2008 23:31:00 -0400
+Received: from peff.net ([208.65.91.99]:3694 "EHLO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752626AbYKBDa7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 1 Nov 2008 23:30:59 -0400
+Received: (qmail 22139 invoked by uid 111); 2 Nov 2008 03:30:57 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+    by peff.net (qpsmtpd/0.32) with SMTP; Sat, 01 Nov 2008 23:30:57 -0400
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Sat, 01 Nov 2008 23:30:56 -0400
+Content-Disposition: inline
+In-Reply-To: <490CB390.9000206@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/99800>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/99801>
 
-Hi,
+On Sat, Nov 01, 2008 at 08:52:48PM +0100, Gonsolo wrote:
 
-On Sat, 1 Nov 2008, Shawn O. Pearce wrote:
+> If I switch branches with "git checkout master" git tells me something  
+> like "Your branch is ahead of the tracked remote branch 'origin/master'  
+> by 39 commits".
+> Is there a "git remote status" or git-status switch to get the same  
+> information without switching branches?
 
-> But I was also under the impression that the brilliant engineers who 
-> work for Microsoft decided that on their platform special annotations 
-> have to be inserted on functions that a DLL wants to export to 
-> applications.
+"git status" will do this automatically in recent versions of git (as of
+1.6.0, I believe).
 
-Exactly.  This is the "good" old __declspec(dllexport) for you.  It is a 
-pain in the butt, but that is what you have to go for if libgit2 is 
-supposed to be any more portable than ligit.a.
+You can also use "git branch -v" to see a summary of how all branches
+relate to their tracked counterparts.
 
-Ciao,
-Dscho
+> Sometimes it's valuable whether one should push changes (for example  
+> before installing a new Ubuntu version ;) ).
+
+For that, I might want to actually _see_ the changes. So I would use:
+
+  git shortlog origin/master..
+
+(or "log" with a variety of formatting options to get as much
+information as you like). And if the relationship is more complex (i.e.,
+I want to see if I need to push _or_ pull):
+
+  gitk origin/master...
+
+-Peff
