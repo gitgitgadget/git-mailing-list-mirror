@@ -1,98 +1,75 @@
-From: Hannu Koivisto <azure@iki.fi>
-Subject: .gitattributes glob matching broken
-Date: Sun, 02 Nov 2008 18:33:51 +0200
-Organization: NOYB
-Message-ID: <83od0yaxzk.fsf@kalahari.s2.org>
+From: "Brendan Macmillan" <melbourne.research@gmail.com>
+Subject: Re: commit takes 8 secs; but instant when offline - can I fix this?
+Date: Mon, 3 Nov 2008 03:34:48 +1100
+Message-ID: <7d856ea50811020834n3a252ae2r21d36b24c10eebbf@mail.gmail.com>
+References: <1225634894605-1445352.post@n2.nabble.com>
+	 <200811021514.00057.trast@student.ethz.ch>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Nov 02 17:35:32 2008
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: "Thomas Rast" <trast@student.ethz.ch>
+X-From: git-owner@vger.kernel.org Sun Nov 02 17:36:04 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Kwfv6-0001yr-Ps
-	for gcvg-git-2@gmane.org; Sun, 02 Nov 2008 17:35:21 +0100
+	id 1Kwfvn-0002Ff-Pa
+	for gcvg-git-2@gmane.org; Sun, 02 Nov 2008 17:36:04 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753773AbYKBQeH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 2 Nov 2008 11:34:07 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753722AbYKBQeG
-	(ORCPT <rfc822;git-outgoing>); Sun, 2 Nov 2008 11:34:06 -0500
-Received: from main.gmane.org ([80.91.229.2]:44971 "EHLO ciao.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753674AbYKBQeE (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 2 Nov 2008 11:34:04 -0500
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1Kwftm-0001gG-7H
-	for git@vger.kernel.org; Sun, 02 Nov 2008 16:33:58 +0000
-Received: from s2.org ([195.197.64.39])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Sun, 02 Nov 2008 16:33:58 +0000
-Received: from azure by s2.org with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Sun, 02 Nov 2008 16:33:58 +0000
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@ger.gmane.org
-X-Gmane-NNTP-Posting-Host: s2.org
-User-Agent: Gnus/5.110011 (No Gnus v0.11) Emacs/22.2 (gnu/linux)
-Cancel-Lock: sha1:TBLotvyD9XSi1zjbcacb7JsRDig=
+	id S1753779AbYKBQeu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 2 Nov 2008 11:34:50 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753785AbYKBQeu
+	(ORCPT <rfc822;git-outgoing>); Sun, 2 Nov 2008 11:34:50 -0500
+Received: from ti-out-0910.google.com ([209.85.142.188]:54571 "EHLO
+	ti-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753722AbYKBQeu (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 2 Nov 2008 11:34:50 -0500
+Received: by ti-out-0910.google.com with SMTP id b6so1151776tic.23
+        for <git@vger.kernel.org>; Sun, 02 Nov 2008 08:34:48 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to
+         :subject:cc:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:references;
+        bh=JvG1m+dM3fVzNk2axdS1RfDD0GtapQyjux7THc0Rr+0=;
+        b=WIOfcn9yxz41UJmrtCURu3HR2etyFLrHpejVpEWEEl40NeRd2dLJFUF2RI7OoqdqW4
+         1avnqqXH1M0TAZYJWdvoI5N3dulLCLCZFM/zUxpC2Q8WPMojZJpttiiGrR4NcjsBlDxZ
+         enOijPONQjyfQamwcm8MXfusczOy2icR+WQIc=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
+         :content-type:content-transfer-encoding:content-disposition
+         :references;
+        b=ZuCRByK2DaTsJXMN5LiIM3ijGsn0q7e8fgr+XU85U3HvxSHq3D+ziUiqOglRSEgsrN
+         c4dnrMuz5+jKZkvI5C4VKizlQGd9r58rS6DVZcL32nDcdsK0ix4a6uYNmygiOVSdL2Ug
+         nKYe5arB5nrcRHz6TwQyBfKmB1Oz7UDU+TBtU=
+Received: by 10.110.37.17 with SMTP id k17mr6820419tik.26.1225643688257;
+        Sun, 02 Nov 2008 08:34:48 -0800 (PST)
+Received: by 10.110.17.16 with HTTP; Sun, 2 Nov 2008 08:34:48 -0800 (PST)
+In-Reply-To: <200811021514.00057.trast@student.ethz.ch>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/99853>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/99854>
 
-Greetings,
+Many thanks for the explanation, and it's now instant.
 
-It seems that, for example, glob pattern *.s matches files with .sh
-extension at least with checkout and reset --hard but git status
-thinks otherwise:
+To ~/.gitconfig, I added:
 
-mkdir test
-cd test
-git init
-echo -e "*.sh -crlf\n*.s crlf" > .gitattributes
-echo -e "foobar\nfoobar\nfoobar" > kala.s
-echo -e "foobar\nfoobar\nfoobar" > kala.sh
-git add .gitattributes kala.s kala.sh
-git commit -m "Foo."
-cd ..
-git clone -n test test2
-cd test2
-git config core.autocrlf true
-git checkout
-git status
+[user]
+  email = myemail@address.com
 
-# On branch master
-# Changed but not updated:
-#   (use "git add <file>..." to update what will be committed)
-#   (use "git checkout -- <file>..." to discard changes in working
-# directory)
-#
-#       modified:   kala.sh
-#
-no changes added to commit (use "git add" and/or "git commit -a")
 
-file kala.s kala.sh
-
-kala.s:  ASCII text, with CRLF line terminators
-kala.sh: ASCII text, with CRLF line terminators
-
-Tested in Linux with git 1.6.0.3.535.g933bb (master as of this
-writing) but also witnessed in Windows and with slightly older
-git versions.
-
-This makes git use in a Windows environment pretty much impossible
-if you don't want to / can't rely on git guessing "text"
-vs. "binary" files correctly so I hope a solution is found soon.
-
-It would also be good to document what kind of glob patterns git
-actually supports.  I made the assumption that at least on Linux it
-supports whatever glob(7) says but even if that assumption is
-correct (which it may not be, of course) for example Windows users
-may not realize to look for such a manual page.
-
--- 
-Hannu
+On 03/11/2008, Thomas Rast <trast@student.ethz.ch> wrote:
+> 13ren wrote:
+>  > With the network plugged in, git-commit takes 8 seconds.
+>  >
+>  > When I unplug the network, commit is instant...
+>
+> Configure your user.email (and user.name), see man git-config.  If the
+>  email is not set, Git tries to figure out your hostname, which
+>  depending on DNS misconfigurations can apparently cause such delays.
