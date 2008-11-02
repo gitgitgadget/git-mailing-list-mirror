@@ -1,80 +1,76 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] Documentation: add a planning document for the next CLI
- revamp
-Date: Sun, 02 Nov 2008 14:27:57 -0800
-Message-ID: <7v3ai9226q.fsf@gitster.siamese.dyndns.org>
-References: <20081030002239.D453B21D14E@mail.utsl.gen.nz>
- <20081031003154.GA5745@sigill.intra.peff.net>
+From: Francis Galiegue <fg@one2team.net>
+Subject: Re: git-cvsimport BUG: some commits are completely out of phase (but cvsps sees them all right)
+Date: Sun, 2 Nov 2008 23:31:13 +0100
+Organization: One2team
+Message-ID: <200811022331.14048.fg@one2team.net>
+References: <200811022203.41092.fg@one2team.net> <f299b4f30811021421w2ef43792l7514ab3a0506077a@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Sam Vilain <samv@vilain.net>, git@vger.kernel.org,
-	Johannes Schindelin <johannes.schindelin@gmx.de>,
-	Scott Chacon <schacon@gmail.com>,
-	Tom Preston-Werner <tom@github.com>,
-	"J.H." <warthog19@eaglescrag.net>,
-	Christian Couder <chriscool@tuxfamily.org>,
-	Kai Blin <kai@samba.org>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Sun Nov 02 23:29:58 2008
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: tomi.pakarinen@iki.fi
+X-From: git-owner@vger.kernel.org Sun Nov 02 23:33:34 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KwlSE-0003hE-Dh
-	for gcvg-git-2@gmane.org; Sun, 02 Nov 2008 23:29:54 +0100
+	id 1KwlVl-0004b6-K1
+	for gcvg-git-2@gmane.org; Sun, 02 Nov 2008 23:33:34 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753183AbYKBW2k (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 2 Nov 2008 17:28:40 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753098AbYKBW2k
-	(ORCPT <rfc822;git-outgoing>); Sun, 2 Nov 2008 17:28:40 -0500
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:49764 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752937AbYKBW2j (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 2 Nov 2008 17:28:39 -0500
-Received: from localhost.localdomain (localhost [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 31D30778FE;
-	Sun,  2 Nov 2008 17:28:38 -0500 (EST)
-Received: from pobox.com (ip68-225-240-211.oc.oc.cox.net [68.225.240.211])
- (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
- certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
- ESMTPSA id 92862778F4; Sun,  2 Nov 2008 17:28:04 -0500 (EST)
-In-Reply-To: <20081031003154.GA5745@sigill.intra.peff.net> (Jeff King's
- message of "Thu, 30 Oct 2008 20:31:54 -0400")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: 98211530-A92D-11DD-81A1-9CEDC82D7133-77302942!a-sasl-fastnet.pobox.com
+	id S1753053AbYKBWcU convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 2 Nov 2008 17:32:20 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753098AbYKBWcU
+	(ORCPT <rfc822;git-outgoing>); Sun, 2 Nov 2008 17:32:20 -0500
+Received: from ns35774.ovh.net ([213.251.185.197]:42653 "EHLO ns35774.ovh.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752937AbYKBWcU convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 2 Nov 2008 17:32:20 -0500
+Received: from erwin.kitchen.eel (unknown [90.63.13.131])
+	(Authenticated sender: fg@one2team.net)
+	by ns35774.ovh.net (Postfix) with ESMTP id AC9E392C011;
+	Sun,  2 Nov 2008 23:32:06 +0100 (CET)
+User-Agent: KMail/1.9.9
+In-Reply-To: <f299b4f30811021421w2ef43792l7514ab3a0506077a@mail.gmail.com>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/99882>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/99883>
 
-Jeff King <peff@peff.net> writes:
-
->> +  * 'git push --matching' does what 'git push' does today (without
->> +    explicit configuration)
+Le Sunday 02 November 2008 23:21:44 Tomi Pakarinen, vous avez =E9crit=A0=
+:
+> CVS's branch does not appear on cvsps's output, until you do a commit
+> to it. git-cvsimport
+> relies on cvsps and can not do much about this...
 >
-> I think this is reasonable even without other changes, just to override
-> any configuration.
 
-I don't.  Can't you say "git push $there HEAD" these days?  I vaguely
-recall that there is a way to configure push that way for people too lazy
-to type "origin HEAD" after "git push".
+Well, there's another file that cvsps generate (in $HOME/.cvsps) that h=
+elps=20
+here and that is named ":<method>:<method_args>:#path#to#cvsroot#module=
+name."=20
+This file contains the needed information. As far as I can see though,=20
+git-cvsimport does not use it.
 
->> +  * 'git export' command that does what
->> +    'git archive --format=tar --prefix=dir | tar x' does now
+
+> Last problem may arise, if you try to do incremental imports from cvs=
+ to
+> git. For incremental imports you must start import from same location=
+ in
+> cvs each time.
+> If you have made first import from beginning of history, sequent
+> imports must start
+> from there too. Otherwise cvsps will renumber patch sets.
 >
-> I agree, if you mean "does what ... does now" means "looks to the user
-> like ... is happening". This is much more sanely done using
-> git-checkout-index (though somebody suggested "remote export", which
-> would need to use tar itself).
 
-I think I was neutral in the discussion that led to the removal of
-"git-export", but the rationale IIRC was exactly because "git-export" can
-be done by simply piping "git-tar" to tar.  On the other hand, if all you
-had was "export" and you wanted to create a release tar/zip ball, you have
-to first create a (potentially huge) hierarchy in the filesystem only to
-archive it.  This change needs to defend that the benefit of being able to
-create a new non-git checkout elsewhere on the filesystem far outweighs
-the downside of addition of another command (i.e. "eek, why does git have
-that many commands" from new people).
+The plan would be to convert all modules in one go, with no one committ=
+ing in=20
+the meantime, so that's not a problem.
+
+I'll try and dig a little deeper into git-cvsimport and see if I can ma=
+ke it=20
+use this information...
+
+--=20
+fge
