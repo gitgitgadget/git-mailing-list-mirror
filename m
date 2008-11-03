@@ -1,74 +1,69 @@
-From: Christoph Duelli <duelli@melosgmbh.de>
-Subject: Re: how to ignore all .xvpics directories
-Date: Mon, 03 Nov 2008 13:15:36 +0100
-Message-ID: <490EEB68.3040009@melosgmbh.de>
-References: <490ECE54.5090505@melosgmbh.de> <m3d4hdf2qp.fsf@localhost.localdomain>
+From: Matthieu Moy <Matthieu.Moy@imag.fr>
+Subject: Re: [PATCH 3/3] git send-email: add --annotate option
+Date: Mon, 03 Nov 2008 13:18:35 +0100
+Message-ID: <vpqk5blknok.fsf@bauges.imag.fr>
+References: <1225450632-7230-1-git-send-email-madcoder@debian.org>
+	<1225450632-7230-2-git-send-email-madcoder@debian.org>
+	<1225450632-7230-3-git-send-email-madcoder@debian.org>
+	<1225450632-7230-4-git-send-email-madcoder@debian.org>
+	<7vskqa3atg.fsf@gitster.siamese.dyndns.org>
+	<20081102095152.GG4066@artemis>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Nov 03 13:20:23 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Pierre Habouzit <madcoder@debian.org>
+X-From: git-owner@vger.kernel.org Mon Nov 03 13:23:05 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KwyPu-0005VP-Ag
-	for gcvg-git-2@gmane.org; Mon, 03 Nov 2008 13:20:22 +0100
+	id 1KwySO-00069i-M9
+	for gcvg-git-2@gmane.org; Mon, 03 Nov 2008 13:22:57 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755218AbYKCMTK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 3 Nov 2008 07:19:10 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755202AbYKCMTJ
-	(ORCPT <rfc822;git-outgoing>); Mon, 3 Nov 2008 07:19:09 -0500
-Received: from mo-p00-ob.rzone.de ([81.169.146.161]:23278 "EHLO
-	mo-p00-ob.rzone.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753163AbYKCMTF (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 3 Nov 2008 07:19:05 -0500
-X-Greylist: delayed 7444 seconds by postgrey-1.27 at vger.kernel.org; Mon, 03 Nov 2008 07:19:04 EST
-X-RZG-CLASS-ID: mo00
-X-RZG-AUTH: :P2kWY0mrft+7PRqjQVQfkgnIveo2zsFMc4bua7BlzFdiPwP9DUuD8pO0q5s=
-Received: from mail.melosgmbh.de (p5B07AD3C.dip0.t-ipconnect.de [91.7.173.60])
-	by post.webmailer.de (mrclete mo32) (RZmta 17.14)
-	with ESMTP id V00dbdkA3CHg1H ; Mon, 3 Nov 2008 13:19:03 +0100 (MET)
-	(envelope-from: <duelli@melosgmbh.de>)
-X-Spam-Status: No, hits=0.0 required=4.0
-	tests=AWL: 0.034,BAYES_00: -1.665,TOTAL_SCORE: -1.631
-X-Spam-Level: 
-Received: from [172.27.1.229] ([172.27.1.229])
-	(authenticated user duelli@melosgmbh.de)
-	by mail.melosgmbh.de (Kerio MailServer 6.4.1 patch 1);
-	Mon, 3 Nov 2008 13:18:58 +0100
-User-Agent: Thunderbird 2.0.0.17 (X11/20080914)
-In-Reply-To: <m3d4hdf2qp.fsf@localhost.localdomain>
+	id S1754910AbYKCMVn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 3 Nov 2008 07:21:43 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754852AbYKCMVn
+	(ORCPT <rfc822;git-outgoing>); Mon, 3 Nov 2008 07:21:43 -0500
+Received: from harmonie.imag.fr ([147.171.130.40]:46115 "EHLO harmonie.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754178AbYKCMVm (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 3 Nov 2008 07:21:42 -0500
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by harmonie.imag.fr (8.13.8/8.13.8) with ESMTP id mA3CJQHj000070;
+	Mon, 3 Nov 2008 13:19:26 +0100 (CET)
+Received: from bauges.imag.fr ([129.88.43.5])
+	by mail-veri.imag.fr with esmtps (TLS-1.0:RSA_AES_256_CBC_SHA:32)
+	(Exim 4.50)
+	id 1KwyOC-0002vo-0g; Mon, 03 Nov 2008 13:18:36 +0100
+Received: from moy by bauges.imag.fr with local (Exim 4.63)
+	(envelope-from <moy@imag.fr>)
+	id 1KwyOB-0004cV-US; Mon, 03 Nov 2008 13:18:35 +0100
+In-Reply-To: <20081102095152.GG4066@artemis> (Pierre Habouzit's message of "Sun\, 02 Nov 2008 10\:51\:52 +0100")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/23.0.60 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-3.0 (harmonie.imag.fr [147.171.130.40]); Mon, 03 Nov 2008 13:19:26 +0100 (CET)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM for more information
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: moy@imag.fr
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/99935>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/99936>
 
-Jakub Narebski schrieb:
->> [ Note: some time ago this issue has already popped up:
->> http://thread.gmane.org/gmane.comp.version-control.git/50504
->>
->> However, adding a line with just .xvpics in the toplevel .gitignore
->> does not help. Neither does /**/.xvpics
-> 
-> Could you reproduce the steps you tried? Because I have checked, and
-> putting .xvpics or .xvpics/ in top level .gitignore (or in
-> .git/info/excludes, or ~/.gitignore) works as expected: filename
-> without '/' in it is match agains _basename_.
-> 
-> Note that .gitignore is about contents which is not tracked (not known
-> to git). If you added .xvpics to commit by accident, .gitignore will
-> do nothing then.
-Thank you Jakub,
+Pierre Habouzit <madcoder@debian.org> writes:
 
-I checked that and indeed... someone left uncomitted changes (i.e. 
-deleted those (acc. commited) files without committing) and got me confused.
-It *does* work for untracked files.
+> I don't know for others, but with those series, git-send-email is
+> _REALLY_ what I would have wanted it to be from day 1.
 
-Sorry for the noise.
+Same for me. I didn't really understand why git was asking me to run
+two separate commands to send a patch. Having git-send-email do
+everything and ask me only the required is really the way I expected
+it to be.
+
+(probably not a coincidence that at least bzr and darcs have a "send"
+command that does just this)
 
 -- 
-Christoph Duelli
+Matthieu
