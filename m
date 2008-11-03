@@ -1,61 +1,76 @@
-From: Christoph Duelli <duelli@melosgmbh.de>
-Subject: how to ignore all .xvpics directories
-Date: Mon, 03 Nov 2008 11:11:32 +0100
-Message-ID: <490ECE54.5090505@melosgmbh.de>
+From: Andreas Ericsson <ae@op5.se>
+Subject: Re: git/lib and git/git-gui/lib merge mis-hap?
+Date: Mon, 03 Nov 2008 11:27:10 +0100
+Message-ID: <490ED1FE.2000209@op5.se>
+References: <490CAE40.4060300@op5.se> <20081101202201.GA15463@spearce.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-15; format=flowed
 Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Nov 03 11:28:10 2008
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Git Mailing List <git@vger.kernel.org>
+To: "Shawn O. Pearce" <spearce@spearce.org>
+X-From: git-owner@vger.kernel.org Mon Nov 03 11:29:10 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KwwfI-00006d-V9
-	for gcvg-git-2@gmane.org; Mon, 03 Nov 2008 11:28:09 +0100
+	id 1KwwgG-0000K9-Hv
+	for gcvg-git-2@gmane.org; Mon, 03 Nov 2008 11:29:08 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754941AbYKCK0w (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 3 Nov 2008 05:26:52 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754943AbYKCK0w
-	(ORCPT <rfc822;git-outgoing>); Mon, 3 Nov 2008 05:26:52 -0500
-Received: from mo-p00-ob.rzone.de ([81.169.146.162]:41051 "EHLO
-	mo-p00-ob.rzone.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754941AbYKCK0v (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 3 Nov 2008 05:26:51 -0500
-X-RZG-CLASS-ID: mo00
-X-RZG-AUTH: :P2kWY0mrft+7PRqjQVQfkgnIveo2zsFMc4bua7BlzFdiPwP9DUuD8pO0q5s=
-Received: from mail.melosgmbh.de (p5B07AD3C.dip0.t-ipconnect.de [91.7.173.60])
-	by post.webmailer.de (mrclete mo45) (RZmta 17.14)
-	with ESMTP id 600e14kA39uYLp for <git@vger.kernel.org>;
-	Mon, 3 Nov 2008 11:14:58 +0100 (MET)
-	(envelope-from: <duelli@melosgmbh.de>)
-X-Spam-Status: No, hits=0.0 required=4.0
-	tests=AWL: 0.034,BAYES_00: -1.665,TOTAL_SCORE: -1.631
+	id S1754973AbYKCK1z (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 3 Nov 2008 05:27:55 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754981AbYKCK1y
+	(ORCPT <rfc822;git-outgoing>); Mon, 3 Nov 2008 05:27:54 -0500
+Received: from mail.op5.se ([193.201.96.20]:56640 "EHLO mail.op5.se"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754964AbYKCK1y (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 3 Nov 2008 05:27:54 -0500
+Received: from localhost (localhost.localdomain [127.0.0.1])
+	by mail.op5.se (Postfix) with ESMTP id 2487B1B80C13;
+	Mon,  3 Nov 2008 11:22:51 +0100 (CET)
+X-Virus-Scanned: amavisd-new at 
+X-Spam-Flag: NO
+X-Spam-Score: -4.399
 X-Spam-Level: 
-Received: from [172.27.1.229] ([172.27.1.229])
-	(authenticated user duelli@melosgmbh.de)
-	by mail.melosgmbh.de (Kerio MailServer 6.4.1 patch 1)
-	for git@vger.kernel.org;
-	Mon, 3 Nov 2008 11:14:54 +0100
-User-Agent: Thunderbird 2.0.0.17 (X11/20080914)
+X-Spam-Status: No, score=-4.399 tagged_above=-10 required=6.6
+	tests=[ALL_TRUSTED=-1.8, BAYES_00=-2.599]
+Received: from mail.op5.se ([127.0.0.1])
+	by localhost (mail.op5.se [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id ethNzk6D1Ovc; Mon,  3 Nov 2008 11:22:09 +0100 (CET)
+Received: from clix.int.op5.se (unknown [192.168.1.20])
+	by mail.op5.se (Postfix) with ESMTP id 247021B80C9D;
+	Mon,  3 Nov 2008 11:22:08 +0100 (CET)
+User-Agent: Thunderbird 2.0.0.16 (X11/20080723)
+In-Reply-To: <20081101202201.GA15463@spearce.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/99928>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/99929>
 
-Is it possible to ignore (once and for all) that directories like .pics 
-or .xvpics (that might occur all over the place where xv was called) 
-should be ignored?
+Shawn O. Pearce wrote:
+> Andreas Ericsson <ae@op5.se> wrote:
+>> Settling down to get some libgit2 hacking done (adding build-rules
+>> to git.git), I noticed that there's a file in git.git called
+>> lib/remote_add.tcl, which looks as if it belongs in git-gui/lib.
+>>
+>> I don't know how this happened, but since I assume it's subtree
+>> merged (thus requiring more work to correct than a simple patch),
+>> it would be nifty if it could get corrected so as to make space
+>> for the up-and-coming git library :-)
+> 
+> That was a bad merge of git-gui on my part.  I thought it was fixed.
+> It only happened in next, and was there only for a day before
+> someone pointed it out to me, and I fixed it in the tree.
+> 
+> FWIW, "git mv lib/remote_add.tcl git-gui/lib" is all you need to
+> fix it.  There's nothing special about the subtree merge.
+> 
 
-[ Note: some time ago this issue has already popped up:
-http://thread.gmane.org/gmane.comp.version-control.git/50504
+I just pulled latest next, and it's fixed now. Thanks.
 
-However, adding a line with just .xvpics in the toplevel .gitignore does 
-not help. Neither does /**/.xvpics
-]
-
-Best regards
 -- 
-Christoph Duelli
+Andreas Ericsson                   andreas.ericsson@op5.se
+OP5 AB                             www.op5.se
+Tel: +46 8-230225                  Fax: +46 8-230231
