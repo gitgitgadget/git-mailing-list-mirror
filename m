@@ -1,62 +1,72 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: why not TortoiseGit
-Date: Mon, 3 Nov 2008 14:26:38 +0100 (CET)
-Message-ID: <alpine.DEB.1.00.0811031425080.22125@pacific.mpi-cbg.de.mpi-cbg.de>
-References: <7FD1F85C96D70C4A89DA1DF7667EAE96125890@zch01exm23.fsl.freescale.net>  <20081031121913.GE18221@sys-0.hiltweb.site> <490AFBA5.5090700@op5.se>  <d411cc4a0810310857y5b4f8c46ue33e1f6a9e2c13d1@mail.gmail.com>  <7FD1F85C96D70C4A89DA1DF7667EAE961E728C@zch01exm23.fsl.freescale.net>
- <320075ff0811030200q606b76a8i16496cf7b8b1b7d2@mail.gmail.com>
+From: Matthieu Moy <Matthieu.Moy@imag.fr>
+Subject: Re: how to ignore all .xvpics directories
+Date: Mon, 03 Nov 2008 14:03:54 +0100
+Message-ID: <vpqabchkll1.fsf@bauges.imag.fr>
+References: <490ECE54.5090505@melosgmbh.de>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Li Frank <Frank.Li@freescale.com>,
-	Scott Chacon <schacon@gmail.com>, Andreas Ericsson <ae@op5.se>,
-	Ian Hilt <ian.hilt@gmx.com>, git@vger.kernel.org
-To: Nigel Magnay <nigel.magnay@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Nov 03 14:20:42 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Christoph Duelli <duelli@melosgmbh.de>
+X-From: git-owner@vger.kernel.org Mon Nov 03 14:23:54 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KwzMB-0006mm-8i
-	for gcvg-git-2@gmane.org; Mon, 03 Nov 2008 14:20:35 +0100
+	id 1KwzPK-0007mW-PK
+	for gcvg-git-2@gmane.org; Mon, 03 Nov 2008 14:23:51 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754772AbYKCNTR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 3 Nov 2008 08:19:17 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754760AbYKCNTR
-	(ORCPT <rfc822;git-outgoing>); Mon, 3 Nov 2008 08:19:17 -0500
-Received: from mail.gmx.net ([213.165.64.20]:60645 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1754746AbYKCNTQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 3 Nov 2008 08:19:16 -0500
-Received: (qmail invoked by alias); 03 Nov 2008 13:19:14 -0000
-Received: from pacific.mpi-cbg.de (EHLO pacific.mpi-cbg.de) [141.5.10.38]
-  by mail.gmx.net (mp024) with SMTP; 03 Nov 2008 14:19:14 +0100
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1956BUR2Vt5iJ5JV+TnK2DVtjszTC0D3LhR7Dibll
-	1NuwJxdiE44rIa
-X-X-Sender: schindelin@pacific.mpi-cbg.de.mpi-cbg.de
-In-Reply-To: <320075ff0811030200q606b76a8i16496cf7b8b1b7d2@mail.gmail.com>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.73
+	id S1754629AbYKCNWh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 3 Nov 2008 08:22:37 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753117AbYKCNWh
+	(ORCPT <rfc822;git-outgoing>); Mon, 3 Nov 2008 08:22:37 -0500
+Received: from harmonie.imag.fr ([147.171.130.40]:62055 "EHLO harmonie.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753968AbYKCNWg (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 3 Nov 2008 08:22:36 -0500
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by harmonie.imag.fr (8.13.8/8.13.8) with ESMTP id mA3DIvuY013799;
+	Mon, 3 Nov 2008 14:19:04 +0100 (CET)
+Received: from bauges.imag.fr ([129.88.43.5])
+	by mail-veri.imag.fr with esmtps (TLS-1.0:RSA_AES_256_CBC_SHA:32)
+	(Exim 4.50)
+	id 1Kwz62-0003pp-6L; Mon, 03 Nov 2008 14:03:54 +0100
+Received: from moy by bauges.imag.fr with local (Exim 4.63)
+	(envelope-from <moy@imag.fr>)
+	id 1Kwz62-0004hg-3o; Mon, 03 Nov 2008 14:03:54 +0100
+In-Reply-To: <490ECE54.5090505@melosgmbh.de> (Christoph Duelli's message of "Mon\, 03 Nov 2008 11\:11\:32 +0100")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/23.0.60 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-3.0 (harmonie.imag.fr [147.171.130.40]); Mon, 03 Nov 2008 14:19:04 +0100 (CET)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM for more information
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: moy@imag.fr
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/99939>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/99940>
 
-Hi,
+Christoph Duelli <duelli@melosgmbh.de> writes:
 
-On Mon, 3 Nov 2008, Nigel Magnay wrote:
+> Is it possible to ignore (once and for all) that directories like
+> .pics or .xvpics (that might occur all over the place where xv was
+> called) should be ignored?
 
-> But it doesn't look like a hard project to me, just requires stripping 
-> out a lot of junk and re-patching callouts to a git executable (which 
-> could be the standard git tools) and a minimal git library that knows if 
-> files are dirty.
+in ~/.gitconfig:
 
-I only wish that people would put their code where there mouth is.
+[core]
+        excludesfile = /home/yourlogin/.gitignore
 
-At least with GitCheetah, we have working code, _and_ an opportunity to go 
-cross-platform.
+then, in ~/.gitignore:
 
-Ciao,
-Dscho
+.xvpics
+
+and all your .xvpics will be ignored for all your projects.
+
+(it's nice to keep such ignore list user-wide and not project-wide if
+you don't want to bother your collaborators with your choice of
+software).
+
+-- 
+Matthieu
