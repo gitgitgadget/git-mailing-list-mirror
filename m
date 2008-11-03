@@ -1,76 +1,147 @@
-From: "=?BIG5?B?q8Cozq91?=" <j7qd6h9m18k9m@gmail.com>
-Subject: =?BIG5?B?UEhQwcqqq6iuuOquxq53uvSvuLFNrtc=?=
-Date: Mon, 3 Nov 2008 07:57:06 +0800
-Message-ID: <98ecf030811021557j32a2f0c9h5cd68c20b2a12241@mail.gmail.com>
+From: Deskin Miller <deskinm@umich.edu>
+Subject: [RFC PATCH] git-svn: proper detection of bare repositories
+Date: Sun, 2 Nov 2008 19:09:03 -0500
+Message-ID: <20081103000903.GA1135@euler>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=BIG5
-Content-Transfer-Encoding: base64
-To: gipsylisa@yahoo.com
-X-From: git-owner@vger.kernel.org Mon Nov 03 00:58:29 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: normalperson@yhbt.net
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Nov 03 01:10:31 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Kwmpx-0001Ex-Dg
-	for gcvg-git-2@gmane.org; Mon, 03 Nov 2008 00:58:29 +0100
+	id 1Kwn1Y-0003wh-Sa
+	for gcvg-git-2@gmane.org; Mon, 03 Nov 2008 01:10:29 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753906AbYKBX5P (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 2 Nov 2008 18:57:15 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753883AbYKBX5P
-	(ORCPT <rfc822;git-outgoing>); Sun, 2 Nov 2008 18:57:15 -0500
-Received: from qb-out-0506.google.com ([72.14.204.239]:7338 "EHLO
-	qb-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753796AbYKBX5O (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 2 Nov 2008 18:57:14 -0500
-Received: by qb-out-0506.google.com with SMTP id f11so922019qba.17
-        for <git@vger.kernel.org>; Sun, 02 Nov 2008 15:57:13 -0800 (PST)
+	id S1753896AbYKCAJO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 2 Nov 2008 19:09:14 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753893AbYKCAJO
+	(ORCPT <rfc822;git-outgoing>); Sun, 2 Nov 2008 19:09:14 -0500
+Received: from el-out-1112.google.com ([209.85.162.176]:8773 "EHLO
+	el-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753883AbYKCAJN (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 2 Nov 2008 19:09:13 -0500
+Received: by el-out-1112.google.com with SMTP id z25so1083202ele.1
+        for <git@vger.kernel.org>; Sun, 02 Nov 2008 16:09:11 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to
-         :subject:mime-version:content-type:content-transfer-encoding
-         :content-disposition;
-        bh=PThGnRlpMPNnci19O0cJZgDpyGXTyJdNb10VHREbiZU=;
-        b=Ddkh/j2kmlP4+AtpylVfKn2n69BOLLY0+A1z3dh5HcKrL/EvG9Tm8BHTqXLsm4owJx
-         a9uQmGR11alc8R4RdSCcowW3TBiV62uUTjl6UOVvlE2WtZngcnD6Ij45BZS8YuR5cn4W
-         5XElPsmFp439azW90eTYKB0F1FiCMuS2prb7c=
+        h=domainkey-signature:received:received:date:from:to:cc:subject
+         :message-id:mime-version:content-type:content-disposition:user-agent
+         :sender;
+        bh=dO0dTsar67SmpFk2CPUQP2G06QNCZyz8IhiL6NG1GTY=;
+        b=dcKLvSYCmMS3v8wEeg1rbkmw4GIHAuJeT9v/WMJR8VsgSyM5NjIQmsUJhTA04XHFQB
+         +WDsCMW9JzaslzUX737p7il/8SB8KSjy5fqDDXbDvZCIApbtXZsXcvcVdUWNWx7vp22t
+         QlHdbeUpAjL3j76f8wYo59TLqrYNc78lG0C0M=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:mime-version:content-type
-         :content-transfer-encoding:content-disposition;
-        b=G9IK1ffeeYvVgTgjt4S2njvqiz/da1UgWA8B+eMFz6RUgeeH3JjPUO7kp3vX19oT2W
-         iowRib4MikBNCaBeBS0lf/ytGMG1xhhiF00SBqlMVOcciWj2VqLD1xqzYuFMdTEEfFmn
-         W1qfQyQ/OP4qqCLY1KNAEIMmB1qQU5/1u+X2M=
-Received: by 10.180.224.4 with SMTP id w4mr4010376bkg.174.1225670226701;
-        Sun, 02 Nov 2008 15:57:06 -0800 (PST)
-Received: by 10.180.235.4 with HTTP; Sun, 2 Nov 2008 15:57:06 -0800 (PST)
+        h=date:from:to:cc:subject:message-id:mime-version:content-type
+         :content-disposition:user-agent:sender;
+        b=nn3xkqZzTDcdtlvfgwdYqpMRju0RpUcjiELjwB/QEkPVirSlOGHry8mvNCEam4cfkQ
+         iV3UF+WbUzRCHwsa+l5F5zYzhQf9/C44bvPtDk00HIy8cDdt5Vfl/Yv5IL0CTEsbdOyl
+         F2I8byQrYQreY2Dyap02AbayXb/XWIiS7buuc=
+Received: by 10.64.208.8 with SMTP id f8mr17225588qbg.24.1225670951020;
+        Sun, 02 Nov 2008 16:09:11 -0800 (PST)
+Received: from euler ([68.40.49.130])
+        by mx.google.com with ESMTPS id s12sm15860159qbs.9.2008.11.02.16.09.09
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Sun, 02 Nov 2008 16:09:09 -0800 (PST)
 Content-Disposition: inline
+User-Agent: Mutt/1.5.18 (2008-05-17)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-X-Spam-Report: 5.7 points;
- *  1.6 FROM_HAS_MIXED_NUMS3 From: contains numbers mixed in with letters
- *  0.1 RCVD_BY_IP Received by mail server with no name
- *  0.0 BAYES_50 BODY: Bayesian spam probability is 40 to 60%
- *      [score: 0.5000]
- *  3.0 RAZOR2_CF_RANGE_51_100 BODY: Razor2 gives confidence level above 50%
- *      [cf: 100]
- *  1.0 RAZOR2_CHECK Listed in Razor2 (http://razor.sf.net/)
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/99891>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/99892>
 
-pHPgvqzsp9669K22s12tcAoKp9qtzKq6qXamrqFHq8ik4aq6qEOjuKXzpHCoxrGhoUGzo6xPpHPg
-vqq6pGqoxrGhCgqn2q3MpmKxwKVYpfi3fqfOtki69K+4pV2ndKtlpXi69K22rPykdSur4aV4ut6y
-erV7pqEKCq2trsmtrbZxsU2u17v5IKV1rW4kMjksOTAwCgoopmKwZaO4pn4xMDBNQqSjra2sebZx
-uvSvuKrFtqEpCgqn2q3MsLWquqSjpXWsT7r0r7ihQabTrE+xeqX4t36quqRKpGYKCqO4rdOmbqq6
-pfi3frr0r7i46q7Gp1muyafzt3OqurN0q9esT6vcrautbqq6Cgql+Ld+ou2kxqq6sKqrfr3ouc62
-pKFBpbSzebF6qrq69Lj0qvmtsQoKv+++3KRz4L6mqLROsXqqurnat1EKCqHjoeOh46HjoeOh46Hj
-oeOh46HjoeOh46HjoeOh46HjoeOh46HjoeOh46HjoeOh46HjoeMKUFM6IL11pFfByqqruvSvuKfa
-rczB2aVptKOo0ajqpWS+96juoUEKoUChQLtQvXWkV6ZDpkyxYrPmpf6s2bZXsNMrtmynvcO6tk8u
-Li4uLi61par3rHmqQbDIvveo7gqh46HjoeOh46HjoeOh46HjoeOh46HjoeOh46HjoeOh46HjoeOh
-46HjoeOh46HjoeOh46HjCgrFd6rvqNO5cayiuN+2wLFNrfuhXVNhbaFeoUcwOTgwMTE5ODEyIC8g
-MDkzODc2NDM5NQoKpFe69LdqtE2heaFAuvSttrNdrXCkc+C+oUCheqdZpWmn5Kjsp9qtzAoKoeOh
-46HjoeOh46HjoeOh46HjoeOh46HjoeOh46HjoeOh46HjoeOh46HjoeOh46HjoeOh4wqlu6S9pXGl
-dKV+tKOo0cP2weSmclNFT7HGp8eqQbDICqtPw9KxTrF6qrq69K+4pmJZeCAvIEd4IC4uLrHGpmKy
-xKRArbYKoUChQKFAoUChQKFAoUChQKFAoUChQKFAoUChQKFAoUChQKFAIMV3qu+o07lxuN+w3SEh
-IQqh46HjoeOh46HjoeOh46HjoeOh46HjoeOh46HjoeOh46HjoeOh46HjoeOh46HjoeOh46HjCg==
+I keep coming across commands like this, which don't work properly in bare
+repositories, and thinking that they need to be patched (see e.g. ddff8563, or
+Duy's comments on the thread starting at
+http://thread.gmane.org/gmane.comp.version-control.git/98849), but now I'm not
+so sure.  For one, despite this patch working, it turns out that 'git --bare
+svn <cmd>' also works (and presumably has) for some time.
+
+Is git --bare the correct way to deal with this situation?  That is to say, do
+we intend commands to 'just work' regardless of whether the repo is bare or
+not, or should the user be thinking about the difference and including --bare
+in the command invocation when necessary?  I'm a vote for the 'just work' camp,
+but it seems a lot of things aren't necessarily that way.  On the other hand,
+the majority of commands do just work.
+
+I guess I'm asking for a sanity check before I write any more such patches;
+certainly I find them useful, as the issues come up during my normal use of
+Git, but I don't want to be pursuing things of no use to anyone else, or
+(worse) things that are fundamentally wrong for some reason I don't understand
+yet.
+
+-- 8< --
+
+When in a bare repository (or .git, for that matter), git-svn would fail
+to initialise properly, since git rev-parse --show-cdup would not output
+anything.  However, git rev-parse --show-cdup actually returns an error
+code if it's really not in a git directory.
+
+Fix the issue by checking for an explicit error from git rev-parse, and
+setting $git_dir appropriately if instead it just does not output.
+
+Signed-off-by: Deskin Miller <deskinm@umich.edu>
+---
+ git-svn.perl             |   14 ++++++++++----
+ t/t9100-git-svn-basic.sh |    9 +++++++++
+ 2 files changed, 19 insertions(+), 4 deletions(-)
+
+diff --git a/git-svn.perl b/git-svn.perl
+index 56238da..d25e9be 100755
+--- a/git-svn.perl
++++ b/git-svn.perl
+@@ -42,6 +42,7 @@ use File::Path qw/mkpath/;
+ use Getopt::Long qw/:config gnu_getopt no_ignore_case auto_abbrev/;
+ use IPC::Open3;
+ use Git;
++use Error qw/:try/;
+ 
+ BEGIN {
+ 	# import functions from Git into our packages, en masse
+@@ -214,11 +215,16 @@ unless ($cmd && $cmd =~ /(?:clone|init|multi-init)$/) {
+ 			    "but it is not a directory\n";
+ 		}
+ 		my $git_dir = delete $ENV{GIT_DIR};
+-		chomp(my $cdup = command_oneline(qw/rev-parse --show-cdup/));
+-		unless (length $cdup) {
+-			die "Already at toplevel, but $git_dir ",
+-			    "not found '$cdup'\n";
+-		}
++		my $cdup = undef;
++		try {
++			$cdup = command_oneline(qw/rev-parse --show-cdup/);
++			$git_dir = '.' unless ($cdup);
++			chomp $cdup if ($cdup);
++			$cdup = "." unless ($cdup && length $cdup);
++		}
++		catch Git::Error::Command with {
++			die "Already at toplevel, but $git_dir not found\n";
++		};
+ 		chdir $cdup or die "Unable to chdir up to '$cdup'\n";
+ 		unless (-d $git_dir) {
+ 			die "$git_dir still not found after going to ",
+diff --git a/t/t9100-git-svn-basic.sh b/t/t9100-git-svn-basic.sh
+index 843a501..fdbc23a 100755
+--- a/t/t9100-git-svn-basic.sh
++++ b/t/t9100-git-svn-basic.sh
+@@ -265,4 +265,13 @@ test_expect_success 'able to set-tree to a subdirectory' "
+ 	test -z \"\`git diff refs/heads/my-bar refs/remotes/bar\`\"
+ 	"
+ 
++test_expect_success 'git-svn works in a bare repository' '
++	mkdir bare-repo &&
++	( cd bare-repo &&
++	git init --bare &&
++	GIT_DIR=. git svn init "$svnrepo" &&
++	git svn fetch ) &&
++	rm -rf bare-repo
++	'
++
+ test_done
+-- 
+1.6.0.3.524.g47d14
