@@ -1,72 +1,103 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] Add autoconf tests for pthreads
-Date: Mon, 03 Nov 2008 14:07:14 -0800
-Message-ID: <7vd4hcv4z1.fsf@gitster.siamese.dyndns.org>
-References: <1225736068-97988-1-git-send-email-david.syzdek@acsalaska.net>
+From: Brandon Casey <casey@nrlssc.navy.mil>
+Subject: [PATCH v3] t7700: demonstrate mishandling of objects in packs with
+ a .keep file
+Date: Mon, 03 Nov 2008 16:14:34 -0600
+Message-ID: <5QaPpbqIy9l0n5_CfDoFgHU9t7eMkiXtyHTh8C6VkbUVh62Cajc2qw@cipher.nrlssc.navy.mil>
+References: <muOuA1nLBoljLnZoguxeFeKt-8Q-I9Y3ljvxnLWLt9KyA8HwVtMa4Q@cipher.nrlssc.navy.mil>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, jnareb@gmail.com
-To: david.syzdek@acsalaska.net
-X-From: git-owner@vger.kernel.org Mon Nov 03 23:08:46 2008
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: Git Mailing List <git@vger.kernel.org>,
+	"Shawn O. Pearce" <spearce@spearce.org>,
+	Nicolas Pitre <nico@cam.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Nov 03 23:16:04 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Kx7bI-0007MG-F6
-	for gcvg-git-2@gmane.org; Mon, 03 Nov 2008 23:08:44 +0100
+	id 1Kx7iH-00018w-AB
+	for gcvg-git-2@gmane.org; Mon, 03 Nov 2008 23:15:57 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753407AbYKCWHb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 3 Nov 2008 17:07:31 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753377AbYKCWHb
-	(ORCPT <rfc822;git-outgoing>); Mon, 3 Nov 2008 17:07:31 -0500
-Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:46906 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753407AbYKCWHa (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 3 Nov 2008 17:07:30 -0500
-Received: from localhost.localdomain (localhost [127.0.0.1])
-	by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id F086C92627;
-	Mon,  3 Nov 2008 17:07:28 -0500 (EST)
-Received: from pobox.com (ip68-225-240-211.oc.oc.cox.net [68.225.240.211])
- (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
- certificate requested) by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with
- ESMTPSA id 69F4792624; Mon,  3 Nov 2008 17:07:16 -0500 (EST)
-In-Reply-To: <1225736068-97988-1-git-send-email-david.syzdek@acsalaska.net>
- (david syzdek's message of "Mon, 3 Nov 2008 09:14:28 -0900")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: CE07A92C-A9F3-11DD-86AA-4F5276724C3F-77302942!a-sasl-quonix.pobox.com
+	id S1751143AbYKCWOn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 3 Nov 2008 17:14:43 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751096AbYKCWOn
+	(ORCPT <rfc822;git-outgoing>); Mon, 3 Nov 2008 17:14:43 -0500
+Received: from mail1.nrlssc.navy.mil ([128.160.35.1]:39414 "EHLO
+	mail.nrlssc.navy.mil" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750835AbYKCWOm (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 3 Nov 2008 17:14:42 -0500
+Received: by mail.nrlssc.navy.mil id mA3MEZjr019958; Mon, 3 Nov 2008 16:14:35 -0600
+In-Reply-To: <muOuA1nLBoljLnZoguxeFeKt-8Q-I9Y3ljvxnLWLt9KyA8HwVtMa4Q@cipher.nrlssc.navy.mil>
+X-OriginalArrivalTime: 03 Nov 2008 22:14:35.0434 (UTC) FILETIME=[8DF590A0:01C93E01]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/100003>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/100004>
 
-david.syzdek@acsalaska.net writes:
+From: Brandon Casey <drafnel@gmail.com>
 
-> +# Define PTHREAD_LIBS to the linker flag used for Pthread support and define
-> +# THREADED_DELTA_SEARCH if Pthreads are available.
+Objects residing in pack files that have an associated .keep file are not
+supposed to be repacked into new pack files, but they are.
 
-This may affect platforms that do have pthread library but choose not to
-use threaded delta search for whatever reason by suddenly turning it on.
+Signed-off-by: Brandon Casey <casey@nrlssc.navy.mil>
+---
 
-Which arguably may be a good thing to do, but it is a change unrelated to
-porting to FreeBSD.
 
-> +AC_LANG_CONFTEST([AC_LANG_PROGRAM(
-> +  [[#include <pthread.h>]],
-> +  [[pthread_mutex_t test_mutex;]]
-> +)])
-> +${CC} -pthread conftest.c -o conftest.o > /dev/null 2>&1
-> +if test $? -eq 0;then
-> + PTHREAD_LIBS="-pthread"
-> + THREADED_DELTA_SEARCH=YesPlease
-> +else
-> + ${CC} -lpthread conftest.c -o conftest.o > /dev/null 2>&1
+Whoops, white space contaminated in two spots, this one fixes it.
 
-Maybe I am old fashioned, but having "-library" very near the beginning of
-the command line and naming the final link product (i.e. not with -c) *.o
-makes me go "Huh?"  If it were written like this,
+-brandon
 
-	$CC -o conftest$ac_exeext conftest.c -lpthread
 
-it might have been easier to swallow.  I dunno.
+ t/t7700-repack.sh |   38 ++++++++++++++++++++++++++++++++++++++
+ 1 files changed, 38 insertions(+), 0 deletions(-)
+ create mode 100755 t/t7700-repack.sh
+
+diff --git a/t/t7700-repack.sh b/t/t7700-repack.sh
+new file mode 100755
+index 0000000..7aaff0b
+--- /dev/null
++++ b/t/t7700-repack.sh
+@@ -0,0 +1,38 @@
++#!/bin/sh
++
++test_description='git repack works correctly'
++
++. ./test-lib.sh
++
++test_expect_failure 'objects in packs marked .keep are not repacked' '
++	echo content1 > file1 &&
++	echo content2 > file2 &&
++	git add . &&
++	git commit -m initial_commit &&
++	# Create two packs
++	# The first pack will contain all of the objects except one
++	git rev-list --objects --all | grep -v file2 |
++		git pack-objects pack > /dev/null &&
++	# The second pack will contain the excluded object
++	packsha1=$(git rev-list --objects --all | grep file2 |
++		git pack-objects pack) &&
++	touch -r pack-$packsha1.pack pack-$packsha1.keep &&
++	objsha1=$(git verify-pack -v pack-$packsha1.idx | head -n 1 |
++		sed -e "s/^\([0-9a-f]\{40\}\).*/\1/") &&
++	mv pack-* .git/objects/pack/ &&
++	git repack -A -d -l &&
++	git prune-packed &&
++	for p in .git/objects/pack/*.idx; do
++		idx=$(basename $p)
++		test "pack-$packsha1.idx" = "$idx" && continue
++		if git verify-pack -v $p | egrep "^$objsha1"; then
++			found_duplicate_object=1
++			echo "DUPLICATE OBJECT FOUND"
++			break
++		fi
++	done &&
++	test -z "$found_duplicate_object"
++'
++
++test_done
++
+-- 
+1.6.0.3.552.g12334
