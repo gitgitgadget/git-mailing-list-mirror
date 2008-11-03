@@ -1,96 +1,92 @@
-From: Pierre Habouzit <madcoder@debian.org>
-Subject: Re: [PATCH] Documentation: add a planning document for the next CLI  revamp
-Date: Mon, 03 Nov 2008 14:47:22 +0100
-Message-ID: <20081103134722.GF13930@artemis.corp>
-References: <1225338485-11046-1-git-send-email-sam@vilain.net> <20081030132453.GB24098@artemis.corp> <7vy70123rr.fsf@gitster.siamese.dyndns.org>
+From: "Dilip M" <dilipm79@gmail.com>
+Subject: Re: Fetch via http and proxy which requires authentication
+Date: Mon, 3 Nov 2008 19:32:14 +0530
+Message-ID: <c94f8e120811030602p57007278p5a2c48ce7663282d@mail.gmail.com>
+References: <4d8e3fd30808272300g58d92dd8pd877d72805bc29c0@mail.gmail.com>
+	 <4d8e3fd30808280313i70f572cfh9c14fbc2adbf5cea@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: multipart/signed; boundary="ExXT7PjY8AI4Hyfa";
-	protocol="application/pgp-signature"; micalg=SHA1
-Cc: Sam Vilain <sam@vilain.net>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Nov 03 14:48:45 2008
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+To: "Paolo Ciarrocchi" <paolo.ciarrocchi@gmail.com>,
+	"Git Mailing List" <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Mon Nov 03 15:03:39 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KwznO-0006r3-0E
-	for gcvg-git-2@gmane.org; Mon, 03 Nov 2008 14:48:42 +0100
+	id 1Kx01l-0002xj-1n
+	for gcvg-git-2@gmane.org; Mon, 03 Nov 2008 15:03:33 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755229AbYKCNr1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 3 Nov 2008 08:47:27 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755227AbYKCNr1
-	(ORCPT <rfc822;git-outgoing>); Mon, 3 Nov 2008 08:47:27 -0500
-Received: from pan.madism.org ([88.191.52.104]:33590 "EHLO hermes.madism.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755097AbYKCNr0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 3 Nov 2008 08:47:26 -0500
-Received: from madism.org (def92-12-88-177-251-208.fbx.proxad.net [88.177.251.208])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(Client CN "artemis.madism.org", Issuer "madism.org" (verified OK))
-	by hermes.madism.org (Postfix) with ESMTPS id E52053BBE8;
-	Mon,  3 Nov 2008 14:47:23 +0100 (CET)
-Received: by madism.org (Postfix, from userid 1000)
-	id 8ABA055AC1C; Mon,  3 Nov 2008 14:47:22 +0100 (CET)
+	id S1755169AbYKCOCT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 3 Nov 2008 09:02:19 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754262AbYKCOCT
+	(ORCPT <rfc822;git-outgoing>); Mon, 3 Nov 2008 09:02:19 -0500
+Received: from ug-out-1314.google.com ([66.249.92.173]:41129 "EHLO
+	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754208AbYKCOCS (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 3 Nov 2008 09:02:18 -0500
+Received: by ug-out-1314.google.com with SMTP id 39so1716220ugf.37
+        for <git@vger.kernel.org>; Mon, 03 Nov 2008 06:02:16 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to
+         :subject:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:references;
+        bh=q/1JEVadREZUiZVHHAfJpFX0aM3daja1yT2N93BqTPY=;
+        b=iNLdkzdkf8tR+16eOd9Ens/fhYjnF3oLRpgFan9ZTIjmwjZnWIixmbA/SIqscuNUB4
+         buRsbsElmunVHC4ySrKJehpTspkn9eQqNlLoJJcI0uNTNDgCviBWN/ZHAYxfPrsegQef
+         B7TYOF1CybByB6Q0MlZyKFou6zQDucGu7ZpUc=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:to:subject:in-reply-to:mime-version
+         :content-type:content-transfer-encoding:content-disposition
+         :references;
+        b=HhPgXv6JhVirCtzoj3vM5+7JWU2Y7uw3aJWssiXyHURmPo6qScrYSv1jkUZtxlG28K
+         nzE0qwTtq29Vh5Odae4F4p8GGIKkHpjPeIZTR/1QQqBRj3sBfrODw9byCwOAcIm2fEx9
+         eCxJ+cnJjZvVLmiAoZtDbsOE79bhCwCBsB7YU=
+Received: by 10.67.30.4 with SMTP id h4mr2043979ugj.11.1225720934716;
+        Mon, 03 Nov 2008 06:02:14 -0800 (PST)
+Received: by 10.66.220.11 with HTTP; Mon, 3 Nov 2008 06:02:14 -0800 (PST)
+In-Reply-To: <4d8e3fd30808280313i70f572cfh9c14fbc2adbf5cea@mail.gmail.com>
 Content-Disposition: inline
-In-Reply-To: <7vy70123rr.fsf@gitster.siamese.dyndns.org>
-X-Face: $(^e[V4D-[`f2EmMGz@fgWK!e.B~2g.{08lKPU(nc1J~z\4B>*JEVq:E]7G-\6$Ycr4<;Z!|VY6Grt]+RsS$IMV)f>2)M="tY:ZPcU;&%it2D81X^kNya0=L]"vZmLP+UmKhgq+u*\.dJ8G!N&=EvlD
-User-Agent: Madmutt/devel (Linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/99944>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/99945>
+
+On Thu, Aug 28, 2008 at 3:43 PM, Paolo Ciarrocchi
+<paolo.ciarrocchi@gmail.com> wrote:
+>> Hi all,
+>> i'm looking for a way to use git behind a corporate proxy which
+>> requires authentication.
+>> i just need to be able to fetch/pull via http.
+>> i'm using git on a win xp box.
+>> Any hint?
+>
+> Yes, google for  http_proxy ;-)
+>
+> export http_proxy=http://host:port
+> git clone http://username:password@giturl
+
+I tried setting, export http_proxy=http://<user>:<password>@host:port
+
+But git clone failed!
+
+$git clone http://kernel.org/pub/scm/linux/kernel/git/torvalds/linux-2.6.git git
+clone http://kernel.org/pub/scm/linux/kernel/git/torvalds/linux-2.6.git
+Initialized empty Git repository in /home/dilipm/bin/linux-2.6/.git/
+fatal:
+http://kernel.org/pub/scm/linux/kernel/git/torvalds/linux-2.6.git/info/refs
+download error - The requested file was not found
+
+What may the problem?  How can debug....
 
 
---ExXT7PjY8AI4Hyfa
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+PS: wget works ...
 
-On Sun, Nov 02, 2008 at 09:53:44PM +0000, Junio C Hamano wrote:
-> Pierre Habouzit <madcoder@debian.org> writes:
-> >   * git-send-email should be either more interactive, or less: either
-> >     just use the damn configuration, or propose a mode where it spawns
-> >     an editor for each patch so that you can add further comments.
->=20
-> In principle I'd agree, but I use send-email non-interactively myself (I
-> type Meta/SE where Meta is an independent checkout of my 'todo' branch),
-> so I am not sure if the "just use the configuration" is an added
-> requirement.  I also have this in .git/config in the repo:
->=20
->         [sendemail]
->                 smtpserver =3D /usr/bin/msmtp
->                 to =3D git@vger.kernel.org
->                 suppressfrom
->                 signedoffcc =3D false
 
-Well with my patches it goes _more_ interactive on request only, so that
-wouldn't break your setup (you have to explicitely pass --annotated
-and/or --compose). Okay arguably not the feature that auto enables
---compose on series of more than 1 patch, but you can redirect
-send-email to | cat or pass --no-compose for that. Or we can drop that
-bit of the patch if people find it too cumbersome, I can put that in an
-alias I don't really care.
 
-I really _care_ about not breaking send-email for its previous uses.
-
---=20
-=C2=B7O=C2=B7  Pierre Habouzit
-=C2=B7=C2=B7O                                                madcoder@debia=
-n.org
-OOO                                                http://www.madism.org
-
---ExXT7PjY8AI4Hyfa
-Content-Type: application/pgp-signature
-Content-Disposition: inline
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.9 (GNU/Linux)
-
-iEYEABECAAYFAkkPAOkACgkQvGr7W6Hudhwo0ACfdSveE3V3pneWLA5EX+WE1dF9
-/k0AnA5ClMKwOAMouz7lVq5xrDDq+MPU
-=JC2v
------END PGP SIGNATURE-----
-
---ExXT7PjY8AI4Hyfa--
+-- 
+Dilip
