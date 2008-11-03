@@ -1,134 +1,253 @@
-From: Hannu Koivisto <azure@iki.fi>
-Subject: CRLF support bugs (was: Re: .gitattributes glob matching broken)
-Date: Mon, 03 Nov 2008 17:05:24 +0200
-Organization: NOYB
-Message-ID: <83y700alzf.fsf_-_@kalahari.s2.org>
-References: <83od0yaxzk.fsf@kalahari.s2.org>
-	<20081103090932.GA18424@coredump.intra.peff.net>
+From: Pierre Habouzit <madcoder@debian.org>
+Subject: Re: [PATCH] filter-branch: add git_commit_non_empty_tree and  --prune-empty.
+Date: Mon, 03 Nov 2008 16:18:26 +0100
+Message-ID: <20081103151826.GJ13930@artemis.corp>
+References: <20081030132623.GC24098@artemis.corp> <1225445204-28000-1-git-send-email-madcoder@debian.org> <7viqr5wgl7.fsf@gitster.siamese.dyndns.org> <20081103092729.GE13930@artemis.corp>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Jeff King <peff@peff.net>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Nov 03 16:07:15 2008
+Content-Type: multipart/signed; boundary="xQR6quUbZ63TTuTU";
+	protocol="application/pgp-signature"; micalg=SHA1
+Cc: git@vger.kernel.org, pasky@suse.cz, srabbelier@gmail.com
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Nov 03 16:20:18 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Kx118-0007Of-Eq
-	for gcvg-git-2@gmane.org; Mon, 03 Nov 2008 16:06:58 +0100
+	id 1Kx1Du-0003TY-IR
+	for gcvg-git-2@gmane.org; Mon, 03 Nov 2008 16:20:11 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755895AbYKCPFi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 3 Nov 2008 10:05:38 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755865AbYKCPFi
-	(ORCPT <rfc822;git-outgoing>); Mon, 3 Nov 2008 10:05:38 -0500
-Received: from main.gmane.org ([80.91.229.2]:50840 "EHLO ciao.gmane.org"
+	id S1755845AbYKCPSc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 3 Nov 2008 10:18:32 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753643AbYKCPSc
+	(ORCPT <rfc822;git-outgoing>); Mon, 3 Nov 2008 10:18:32 -0500
+Received: from pan.madism.org ([88.191.52.104]:45328 "EHLO hermes.madism.org"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755824AbYKCPFh (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 3 Nov 2008 10:05:37 -0500
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1Kx0zn-0005fc-I5
-	for git@vger.kernel.org; Mon, 03 Nov 2008 15:05:35 +0000
-Received: from s2.org ([195.197.64.39])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Mon, 03 Nov 2008 15:05:35 +0000
-Received: from azure by s2.org with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Mon, 03 Nov 2008 15:05:35 +0000
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@ger.gmane.org
-X-Gmane-NNTP-Posting-Host: s2.org
-User-Agent: Gnus/5.110011 (No Gnus v0.11) Emacs/22.2 (gnu/linux)
-Cancel-Lock: sha1:JuoyLxJ0K4mDjOFOWxCpRRLO/Gc=
+	id S1753824AbYKCPSb (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 3 Nov 2008 10:18:31 -0500
+Received: from madism.org (def92-12-88-177-251-208.fbx.proxad.net [88.177.251.208])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(Client CN "artemis.madism.org", Issuer "madism.org" (verified OK))
+	by hermes.madism.org (Postfix) with ESMTPS id 1A3AA3BC85;
+	Mon,  3 Nov 2008 16:18:27 +0100 (CET)
+Received: by madism.org (Postfix, from userid 1000)
+	id CB6B755AC1C; Mon,  3 Nov 2008 16:18:26 +0100 (CET)
+Content-Disposition: inline
+In-Reply-To: <20081103092729.GE13930@artemis.corp>
+X-Face: $(^e[V4D-[`f2EmMGz@fgWK!e.B~2g.{08lKPU(nc1J~z\4B>*JEVq:E]7G-\6$Ycr4<;Z!|VY6Grt]+RsS$IMV)f>2)M="tY:ZPcU;&%it2D81X^kNya0=L]"vZmLP+UmKhgq+u*\.dJ8G!N&=EvlD
+User-Agent: Madmutt/devel (Linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/99951>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/99952>
 
-Jeff King <peff@peff.net> writes:
 
-> I think your analysis is incorrect. I will try to explain what is
-> happening.
+--xQR6quUbZ63TTuTU
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Yes, you are right.  The behaviour I saw in my actual use case was
-so odd that I got completely confused.
+On Mon, Nov 03, 2008 at 09:27:29AM +0000, Pierre Habouzit wrote:
+> On Mon, Nov 03, 2008 at 04:58:44AM +0000, Junio C Hamano wrote:
+> > > diff --git a/t/t7003-filter-branch.sh b/t/t7003-filter-branch.sh
+> > > index b0a9d7d..352b56b 100755
+> > > --- a/t/t7003-filter-branch.sh
+> > > +++ b/t/t7003-filter-branch.sh
+> > > @@ -262,4 +262,12 @@ test_expect_success 'Tag name filtering allows s=
+lashes in tag names' '
+> > >  	test_cmp expect actual
+> > >  '
+> > > =20
+> > > +test_expect_success 'Prune empty commits' '
+> > > +	make_commit to_remove &&
+> > > +	(git rev-list HEAD | grep -v $(git rev-parse HEAD)) > expect &&
+> >=20
+> > I am not sure what this one is doing.
+> >=20
+> >  - Isn't this the same as "git rev-list HEAD^"?
+> >  - Do you need a subshell?
+>=20
+> The filter-branch is supposed to prune the last commit done (current
+> HEAD) from the revision list. So I build the rev-list we're supposed to
+> have in the end, and remove the matching ref from it. I don't see how to
+> avoid the subshell though, but if someone knows better please do :)
 
-I suspect one part of that "oddness" was caused by git applying its
-heuristics in checkout as it doesn't use .gitattributes at that
-time.  For example, it seems that it recognized some of my .sh
-files as text files and the rest as binary files.  I suppose I was
-correct to assume that it would be stupid to rely on git guessing
-file type and the only sensible way is to use .gitattributes.  If
-it was supported in checkout too, that is.
+Actually one can write the test this way:
 
-I don't know what purpose the autodetection aims to serve but I'd
-add a big warning in the core.autocrlf documentation about it and
-instructions on how to configure things so that it is never applied
-but instead the types must always be specified explicitly.
+test_expect_success 'Prune empty commits' '
+       git rev-list HEAD > expect &&
+       make_commit to_remove &&
+       git filter-branch -f --index-filter "git update-index --remove to_re=
+move" --prune-empty HEAD &&
+       git rev-list HEAD > actual &&
+       test_cmp expect actual
+'
 
-> The problem, again, is that we have inconsistently applied the
-> gitattributes. They were _not_ applied during checkout (because
-> .gitattributes did not exist yet), but they _are_ being applied here.
->
-> To "fix" this, you can then do a "git reset --hard" which will respect
-> your .gitattributes (since it is now checked out). And further file
-> creation and checkout should work OK.
+Which basically:
+  - remembers the current list of revisions,
+  - makes a commit,
+  - runs an index-filter that makes that last commit void,
+  - checks the last commit has been removed.
 
-Since I'm trying to launch git in a company environment, I think I
-can't rely on people remembering to do that.
+below is the updated patch with your comment and this fix
+---8<---
+=46rom: Pierre Habouzit <madcoder@debian.org>
+Date: Fri, 31 Oct 2008 10:12:21 +0100
+Subject: [PATCH] filter-branch: add git_commit_non_empty_tree and --prune-e=
+mpty.
 
-Actually, even if .gitattributes were applied in checkout, I think
-the whole CRLF support is broken by design because people will have
-to remember to use -n in clone, then enable core.autocrlf support
-and then checkout.  This makes it unneccessarily complicated to
-create "quick local clones" as well.  You might suggest that
-Windows users should enable core.autocrlf globally but it may not
-be the right thing to do for all projects/repositories either.
+git_commit_non_empty_tree is added to the functions that can be run from
+commit filters. Its effect is to commit only commits actually touching the
+tree and that are not merge points either.
 
-I think CRLF conversion support should have some attribute (be it
-.gitattributes attribute or something else) that is somehow
-inherited from the parent repository.  It would basically say that
-"you should use platform's native line end type for text files with
-this repository and its children".  To go with that, one would
-maybe have a configuration option to tell what that platform
-default line end type is (just in case someone wants to pretend
-Cygwin is Unix or something like that).
+The option --prune-empty is added. It defaults the commit-filter to
+'git_commit_non_empty_tree "$@"', and can be used with any other
+combination of filters, except --commit-hook that must used
+'git_commit_non_empty_tree "$@"' where one puts 'git commit-tree "$@"'
+usually to achieve the same result.
 
-I also observed this problem:
+Signed-off-by: Pierre Habouzit <madcoder@debian.org>
+---
+ Documentation/git-filter-branch.txt |   14 ++++++++++++++
+ git-filter-branch.sh                |   29 ++++++++++++++++++++++++++++-
+ t/t7003-filter-branch.sh            |    8 ++++++++
+ 3 files changed, 50 insertions(+), 1 deletions(-)
 
-# Pretend someone does this on Unix
-mkdir test1
-cd test1
-git init
-echo "*.c crlf" > .gitattributes
-echo -en "foo\r\nfoo\r\nfoo\r\n" > kala.c
-git add .gitattributes kala.c
-git commit -m "* Initial checkin."
-cd ..
-# Pretend someone else does this on Windows
-git clone -n test1 test2
-cd test2
-git config core.autocrlf true
-git checkout
-git status
+diff --git a/Documentation/git-filter-branch.txt b/Documentation/git-filter=
+-branch.txt
+index fed6de6..451950b 100644
+--- a/Documentation/git-filter-branch.txt
++++ b/Documentation/git-filter-branch.txt
+@@ -122,6 +122,10 @@ You can use the 'map' convenience function in this fil=
+ter, and other
+ convenience functions, too.  For example, calling 'skip_commit "$@"'
+ will leave out the current commit (but not its changes! If you want
+ that, use 'git-rebase' instead).
+++
++You can also use the 'git_commit_non_empty_tree "$@"' instead of
++'git commit-tree "$@"' if you don't wish to keep commits with a single par=
+ent
++and that makes no change to the tree.
+=20
+ --tag-name-filter <command>::
+ 	This is the filter for rewriting tag names. When passed,
+@@ -151,6 +155,16 @@ to other tags will be rewritten to point to the underl=
+ying commit.
+ 	The result will contain that directory (and only that) as its
+ 	project root.
+=20
++--prune-empty::
++	Some kind of filters will generate empty commits, that left the tree
++	untouched.  This switch allow git-filter-branch to ignore such
++	commits.  Though, this switch only applies for commits that have one
++	and only one parent, it will hence keep merges points. Also, this
++	option is not compatible with the use of '--commit-filter'. Though you
++	just need to use the function 'git_commit_non_empty_tree "$@"' instead
++	of the 'git commit-tree "$@"' idiom in your commit filter to make that
++	happen.
++
+ --original <namespace>::
+ 	Use this option to set the namespace where the original commits
+ 	will be stored. The default value is 'refs/original'.
+diff --git a/git-filter-branch.sh b/git-filter-branch.sh
+index 81392ad..331724d 100755
+--- a/git-filter-branch.sh
++++ b/git-filter-branch.sh
+@@ -40,6 +40,16 @@ skip_commit()
+ 	done;
+ }
+=20
++# if you run 'git_commit_non_empty_tree "$@"' in a commit filter,
++# it will skip commits that leave the tree untouched, commit the other.
++git_commit_non_empty_tree()
++{
++	if test $# =3D 3 && test "$1" =3D $(git rev-parse "$3^{tree}"); then
++		map "$3"
++	else
++		git commit-tree "$@"
++	fi
++}
+ # override die(): this version puts in an extra line break, so that
+ # the progress is still visible
+=20
+@@ -109,11 +119,12 @@ filter_tree=3D
+ filter_index=3D
+ filter_parent=3D
+ filter_msg=3Dcat
+-filter_commit=3D'git commit-tree "$@"'
++filter_commit=3D
+ filter_tag_name=3D
+ filter_subdir=3D
+ orig_namespace=3Drefs/original/
+ force=3D
++prune_empty=3D
+ while :
+ do
+ 	case "$1" in
+@@ -126,6 +137,11 @@ do
+ 		force=3Dt
+ 		continue
+ 		;;
++	--prune-empty)
++		shift
++		prune_empty=3Dt
++		continue
++		;;
+ 	-*)
+ 		;;
+ 	*)
+@@ -176,6 +192,17 @@ do
+ 	esac
+ done
+=20
++case "$prune_empty,$filter_commit" in
++,)
++	filter_commit=3D'git commit-tree "$@"';;
++t,)
++	filter_commit=3D"$functions;"' git_commit_non_empty_tree "$@"';;
++,*)
++	;;
++*)
++	die "Cannot set --prune-empty and --filter-commit at the same time"
++esac
++
+ case "$force" in
+ t)
+ 	rm -rf "$tempdir"
+diff --git a/t/t7003-filter-branch.sh b/t/t7003-filter-branch.sh
+index b0a9d7d..8537bf9 100755
+--- a/t/t7003-filter-branch.sh
++++ b/t/t7003-filter-branch.sh
+@@ -262,4 +262,12 @@ test_expect_success 'Tag name filtering allows slashes=
+ in tag names' '
+ 	test_cmp expect actual
+ '
+=20
++test_expect_success 'Prune empty commits' '
++	git rev-list HEAD > expect &&
++	make_commit to_remove &&
++	git filter-branch -f --index-filter "git update-index --remove to_remove"=
+ --prune-empty HEAD &&
++	git rev-list HEAD > actual &&
++	test_cmp expect actual
++'
++
+ test_done
+--=20
+1.6.0.3.795.g892be
 
-...
-#       modified:   kala.c
-...
 
-git reset --hard
-git status
-...
-#       modified:   kala.c
-...
+--xQR6quUbZ63TTuTU
+Content-Type: application/pgp-signature
+Content-Disposition: inline
 
-Now, even if .gitattributes were obeyed by checkout, I suspect the end
-result would be the same(?)  I'm sure someone argues that this makes
-sense.  But try to put yourself in the position of a random Window
-user.  I think it's far from obvious what is going on and what
-should be done in this situation.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.9 (GNU/Linux)
 
--- 
-Hannu
+iEYEABECAAYFAkkPFkIACgkQvGr7W6HudhwVHACdGykOdIq0ooAZqiXBS0wDflBx
+zI0AniaaOzMihJMJ8PWvyAYXo0VPIYE4
+=PMcH
+-----END PGP SIGNATURE-----
+
+--xQR6quUbZ63TTuTU--
