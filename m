@@ -1,73 +1,97 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: Git and Media repositories....
-Date: Mon, 3 Nov 2008 07:56:33 +0100 (CET)
-Message-ID: <alpine.DEB.1.00.0811030755270.22125@pacific.mpi-cbg.de.mpi-cbg.de>
-References: <1225655428.11693.10.camel@vaio>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH] Documentation: add a planning document for the next
+	CLI revamp
+Date: Mon, 3 Nov 2008 01:56:37 -0500
+Message-ID: <20081103065636.GB10772@coredump.intra.peff.net>
+References: <20081030002239.D453B21D14E@mail.utsl.gen.nz> <20081031003154.GA5745@sigill.intra.peff.net> <7v3ai9226q.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org
-To: Tim Ansell <mithro@mithis.com>
-X-From: git-owner@vger.kernel.org Mon Nov 03 07:50:29 2008
+Content-Type: text/plain; charset=utf-8
+Cc: Sam Vilain <samv@vilain.net>, git@vger.kernel.org,
+	Johannes Schindelin <johannes.schindelin@gmx.de>,
+	Scott Chacon <schacon@gmail.com>,
+	Tom Preston-Werner <tom@github.com>,
+	"J.H." <warthog19@eaglescrag.net>,
+	Christian Couder <chriscool@tuxfamily.org>,
+	Kai Blin <kai@samba.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Nov 03 07:59:47 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KwtGc-0000BA-UQ
-	for gcvg-git-2@gmane.org; Mon, 03 Nov 2008 07:50:27 +0100
+	id 1KwtPb-0001i1-0H
+	for gcvg-git-2@gmane.org; Mon, 03 Nov 2008 07:59:43 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752105AbYKCGtL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 3 Nov 2008 01:49:11 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751942AbYKCGtK
-	(ORCPT <rfc822;git-outgoing>); Mon, 3 Nov 2008 01:49:10 -0500
-Received: from mail.gmx.net ([213.165.64.20]:52202 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751995AbYKCGtJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 3 Nov 2008 01:49:09 -0500
-Received: (qmail invoked by alias); 03 Nov 2008 06:49:07 -0000
-Received: from pacific.mpi-cbg.de (EHLO pacific.mpi-cbg.de) [141.5.10.38]
-  by mail.gmx.net (mp065) with SMTP; 03 Nov 2008 07:49:07 +0100
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1/gV1BjXjLgHzrmN/QhF4xmC3A8UXlk2ktqXzN+ap
-	gDZJ0f0/V8Qvqf
-X-X-Sender: schindelin@pacific.mpi-cbg.de.mpi-cbg.de
-In-Reply-To: <1225655428.11693.10.camel@vaio>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.6899999999999999
+	id S1751819AbYKCG4k (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 3 Nov 2008 01:56:40 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751924AbYKCG4k
+	(ORCPT <rfc822;git-outgoing>); Mon, 3 Nov 2008 01:56:40 -0500
+Received: from peff.net ([208.65.91.99]:2529 "EHLO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751751AbYKCG4j (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 3 Nov 2008 01:56:39 -0500
+Received: (qmail 29147 invoked by uid 111); 3 Nov 2008 06:56:38 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+    by peff.net (qpsmtpd/0.32) with SMTP; Mon, 03 Nov 2008 01:56:38 -0500
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Mon, 03 Nov 2008 01:56:37 -0500
+Content-Disposition: inline
+In-Reply-To: <7v3ai9226q.fsf@gitster.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/99905>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/99906>
 
-Hi,
+On Sun, Nov 02, 2008 at 02:27:57PM -0800, Junio C Hamano wrote:
 
-On Sun, 2 Nov 2008, Tim Ansell wrote:
-
-> Last week at the gittogether I lead some discussions about how we could 
-> make Git better support large media repositories (which is one area 
-> where Subversion still make sense). It was suggested that I post to this 
-> list to get a discussion going.
+> >> +  * 'git push --matching' does what 'git push' does today (without
+> >> +    explicit configuration)
+> >
+> > I think this is reasonable even without other changes, just to override
+> > any configuration.
 > 
-> The general idea is that we always clone the complete meta-data (tags, 
-> commits and trees) and then only clone blobs when they are needed (using 
-> something like alternates). This allows us to support shallow, narrow 
-> and sparse checkouts while still being able to perform operations such 
-> as committing and merging.
-> 
-> You can find a copy of the summary presentation at
->  http://www.thousandparsec.net/~tim/media+git.pdf
-> 
-> I have started working on adapting git to check a remote http alternate 
-> to provide a proof of concept.
-> 
-> I appreciate any help or suggestions.
+> I don't.  Can't you say "git push $there HEAD" these days?  I vaguely
+> recall that there is a way to configure push that way for people too lazy
+> to type "origin HEAD" after "git push".
 
-You might find this message (and others from the same time frame and 
-author) pretty interesting:
+I think you are reading more into my statement than I intended. I meant
+that adding an explicit --matching was reasonable, _even if it matches
+the default_. I can think of two reasons:
 
-http://article.gmane.org/gmane.comp.version-control.git/48485
+ 1. Even if it is a no-op, it is more explicit for showing newbies what
+    is going on. And it also means that _if_ we wanted to introduce
+    new behavior or configurability, we will have already had
+    "--matching" for some time. So it will be safe(r) at that point to
+    immediately start saying "--matching" in your scripts to specify the
+    behavior you want, without as much worry about confusing an older
+    version.
 
-Ciao,
-Dscho
+ 2. Even today, the behavior of push can be modified with configuration
+    in remote.*.mirror. I would expect "git push --matching" to override
+    this. Though perhaps that is too confusing a behavior, as mirroring
+    does more than just ref selection, including force-updating.
+
+So my statement was not anything about "git push $there HEAD", but just
+that adding "--matching" was reasonable.
+
+> I think I was neutral in the discussion that led to the removal of
+> "git-export", but the rationale IIRC was exactly because "git-export" can
+> be done by simply piping "git-tar" to tar.  On the other hand, if all you
+> had was "export" and you wanted to create a release tar/zip ball, you have
+> to first create a (potentially huge) hierarchy in the filesystem only to
+> archive it.  This change needs to defend that the benefit of being able to
+> create a new non-git checkout elsewhere on the filesystem far outweighs
+> the downside of addition of another command (i.e. "eek, why does git have
+> that many commands" from new people).
+
+I think the complaint is just that it is awkward to have to pipe to tar
+(and harder to check error status), when "export to directory" is a
+reasonably common request.
+
+If the concern is about another command, then perhaps rather than "git
+export" it would be simpler to have "git archive --format=dir" as a
+convenience (and it could even use the checkout-index optimization in
+the local case, rather than generating a tar).
+
+-Peff
