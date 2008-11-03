@@ -1,87 +1,104 @@
-From: Pierre Habouzit <madcoder@debian.org>
-Subject: Re: [PATCH 1/3] git send-email: make the message file name more   specific.
-Date: Mon, 03 Nov 2008 09:53:37 +0100
-Message-ID: <20081103085337.GB13930@artemis.corp>
-References: <1225450632-7230-1-git-send-email-madcoder@debian.org> <1225456609-694-1-git-send-email-madcoder@debian.org> <1225456609-694-2-git-send-email-madcoder@debian.org> <7vwsfm3b33.fsf@gitster.siamese.dyndns.org> <20081102093533.GE4066@artemis> <alpine.LFD.2.00.0811021629110.25369@sys-0.hiltweb.site>
+From: Jeff King <peff@peff.net>
+Subject: Re: .gitattributes glob matching broken
+Date: Mon, 3 Nov 2008 04:09:33 -0500
+Message-ID: <20081103090932.GA18424@coredump.intra.peff.net>
+References: <83od0yaxzk.fsf@kalahari.s2.org>
 Mime-Version: 1.0
-Content-Type: multipart/signed; boundary="6sX45UoQRIJXqkqR";
-	protocol="application/pgp-signature"; micalg=SHA1
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Ian Hilt <ian.hilt@gmx.com>
-X-From: git-owner@vger.kernel.org Mon Nov 03 09:54:53 2008
+Content-Type: text/plain; charset=utf-8
+Cc: git@vger.kernel.org
+To: Hannu Koivisto <azure@iki.fi>
+X-From: git-owner@vger.kernel.org Mon Nov 03 10:11:13 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KwvD2-0001xl-Ni
-	for gcvg-git-2@gmane.org; Mon, 03 Nov 2008 09:54:53 +0100
+	id 1KwvSr-0005y8-13
+	for gcvg-git-2@gmane.org; Mon, 03 Nov 2008 10:11:13 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754811AbYKCIxj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 3 Nov 2008 03:53:39 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754772AbYKCIxj
-	(ORCPT <rfc822;git-outgoing>); Mon, 3 Nov 2008 03:53:39 -0500
-Received: from pan.madism.org ([88.191.52.104]:45821 "EHLO hermes.madism.org"
+	id S1754779AbYKCJJw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 3 Nov 2008 04:09:52 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754790AbYKCJJv
+	(ORCPT <rfc822;git-outgoing>); Mon, 3 Nov 2008 04:09:51 -0500
+Received: from peff.net ([208.65.91.99]:4373 "EHLO peff.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754648AbYKCIxj (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 3 Nov 2008 03:53:39 -0500
-Received: from madism.org (def92-12-88-177-251-208.fbx.proxad.net [88.177.251.208])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(Client CN "artemis.madism.org", Issuer "madism.org" (verified OK))
-	by hermes.madism.org (Postfix) with ESMTPS id 0E95B3BBA8;
-	Mon,  3 Nov 2008 09:53:38 +0100 (CET)
-Received: by madism.org (Postfix, from userid 1000)
-	id 2DA0355AC1C; Mon,  3 Nov 2008 09:53:37 +0100 (CET)
+	id S1754779AbYKCJJh (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 3 Nov 2008 04:09:37 -0500
+Received: (qmail 29747 invoked by uid 111); 3 Nov 2008 09:09:34 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+    by peff.net (qpsmtpd/0.32) with SMTP; Mon, 03 Nov 2008 04:09:34 -0500
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Mon, 03 Nov 2008 04:09:33 -0500
 Content-Disposition: inline
-In-Reply-To: <alpine.LFD.2.00.0811021629110.25369@sys-0.hiltweb.site>
-X-Face: $(^e[V4D-[`f2EmMGz@fgWK!e.B~2g.{08lKPU(nc1J~z\4B>*JEVq:E]7G-\6$Ycr4<;Z!|VY6Grt]+RsS$IMV)f>2)M="tY:ZPcU;&%it2D81X^kNya0=L]"vZmLP+UmKhgq+u*\.dJ8G!N&=EvlD
-User-Agent: Madmutt/devel (Linux)
+In-Reply-To: <83od0yaxzk.fsf@kalahari.s2.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/99914>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/99915>
 
+On Sun, Nov 02, 2008 at 06:33:51PM +0200, Hannu Koivisto wrote:
 
---6sX45UoQRIJXqkqR
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+> It seems that, for example, glob pattern *.s matches files with .sh
+> extension at least with checkout and reset --hard but git status
+> thinks otherwise:
 
-On Sun, Nov 02, 2008 at 09:34:53PM +0000, Ian Hilt wrote:
-> On Sun, 2 Nov 2008, Pierre Habouzit wrote:
-> > On Sun, Nov 02, 2008 at 06:18:08AM +0000, Junio C Hamano wrote:
-> > > Having said that, if we were to do this, let's do it the right way an=
-d put
-> > > these "temporary" files under $GIT_DIR.
-> >=20
-> > Agreed, I should have done that.
->=20
-> Perhaps like this:
->=20
-> 	my $compose_filename =3D $repo->repo_path() . "/sendemail.msg.$$";
->=20
-> where $repo is a repository instance.
+I think your analysis is incorrect. I will try to explain what is
+happening.
 
-$repo is a repository instance, I'm waiting for all the comments to fade
-up to take them into account and resend a proper series.
+> mkdir test
+> cd test
+> git init
+> echo -e "*.sh -crlf\n*.s crlf" > .gitattributes
+> echo -e "foobar\nfoobar\nfoobar" > kala.s
+> echo -e "foobar\nfoobar\nfoobar" > kala.sh
+> git add .gitattributes kala.s kala.sh
+> git commit -m "Foo."
 
---=20
-=C2=B7O=C2=B7  Pierre Habouzit
-=C2=B7=C2=B7O                                                madcoder@debia=
-n.org
-OOO                                                http://www.madism.org
+OK, so here we have two files, one of which we are telling git is text
+and one of which we are telling git is not text. Since we don't have
+autocrlf set at all, of course nothing happens here.
 
---6sX45UoQRIJXqkqR
-Content-Type: application/pgp-signature
-Content-Disposition: inline
+> git clone -n test test2
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.9 (GNU/Linux)
+And here we clone without checking out, so there are no files yet.
 
-iEYEABECAAYFAkkOvBEACgkQvGr7W6HudhxgxACdEK6zBQ4kh6ESCJIyMZdlzbkj
-IJwAoKS2/Oi4peplevAYR6nOTFwWzjKR
-=3FKj
------END PGP SIGNATURE-----
+> cd test2
+> git config core.autocrlf true
+> git checkout
 
---6sX45UoQRIJXqkqR--
+And now we do check out the files, with autocrlf applied. But what are
+we left with? When I run this, _both_ files were detected as text and
+have CRLF line endings. So here I think is where git didn't do what you
+expected: kala.sh should not have had CRLF conversion applied.
+
+This is a known limitation of the attributes mechanism: it only reads
+from .gitattributes in the filesystem (or from .git/info/attributes),
+and not from the tree that is being checked out. This is something that
+should be addressed, but nobody has stepped up with a patch yet (though
+there has been some preliminary discussion).
+
+> git status
+> 
+> # On branch master
+> # Changed but not updated:
+> #   (use "git add <file>..." to update what will be committed)
+> #   (use "git checkout -- <file>..." to discard changes in working
+> # directory)
+> #
+> #       modified:   kala.sh
+> #
+> no changes added to commit (use "git add" and/or "git commit -a")
+
+So yes, this status makes perfect sense, then. The file "kala.sh" has
+CRLFs in the filesystem, but we have told git that it is not a file
+which gets converted. So it looks like those CRs have been added.
+
+The problem, again, is that we have inconsistently applied the
+gitattributes. They were _not_ applied during checkout (because
+.gitattributes did not exist yet), but they _are_ being applied here.
+
+To "fix" this, you can then do a "git reset --hard" which will respect
+your .gitattributes (since it is now checked out). And further file
+creation and checkout should work OK.
+
+-Peff
