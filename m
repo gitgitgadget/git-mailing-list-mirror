@@ -1,110 +1,75 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: Merging two projects
-Date: Mon, 3 Nov 2008 23:56:44 -0500
-Message-ID: <20081104045644.GC31276@coredump.intra.peff.net>
-References: <216e54900811031933n346e8c68se9226e79366c3eb6@mail.gmail.com>
+From: Linus Torvalds <torvalds@linux-foundation.org>
+Subject: Re: [Q] Abbreviated history graph?
+Date: Mon, 3 Nov 2008 11:32:37 -0800 (PST)
+Message-ID: <alpine.LFD.2.00.0811031129060.3419@nehalem.linux-foundation.org>
+References: <200811031439.12111.brian.foster@innova-card.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org
-To: Andrew Arnott <andrewarnott@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Nov 04 05:58:58 2008
+Content-Type: TEXT/PLAIN; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Brian Foster <brian.foster@innova-card.com>,
+	Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Nov 03 20:34:55 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KxE0I-0007I6-C9
-	for gcvg-git-2@gmane.org; Tue, 04 Nov 2008 05:58:58 +0100
+	id 1Kx5C8-0000ML-F8
+	for gcvg-git-2@gmane.org; Mon, 03 Nov 2008 20:34:36 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751064AbYKDE4r (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 3 Nov 2008 23:56:47 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751110AbYKDE4r
-	(ORCPT <rfc822;git-outgoing>); Mon, 3 Nov 2008 23:56:47 -0500
-Received: from peff.net ([208.65.91.99]:2338 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751052AbYKDE4q (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 3 Nov 2008 23:56:46 -0500
-Received: (qmail 5146 invoked by uid 111); 4 Nov 2008 04:56:45 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.32) with SMTP; Mon, 03 Nov 2008 23:56:45 -0500
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Mon, 03 Nov 2008 23:56:44 -0500
-Content-Disposition: inline
-In-Reply-To: <216e54900811031933n346e8c68se9226e79366c3eb6@mail.gmail.com>
+	id S1752242AbYKCTdV convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 3 Nov 2008 14:33:21 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752740AbYKCTdV
+	(ORCPT <rfc822;git-outgoing>); Mon, 3 Nov 2008 14:33:21 -0500
+Received: from smtp1.linux-foundation.org ([140.211.169.13]:59401 "EHLO
+	smtp1.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751016AbYKCTdU (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 3 Nov 2008 14:33:20 -0500
+Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [140.211.169.55])
+	by smtp1.linux-foundation.org (8.14.2/8.13.5/Debian-3ubuntu1.1) with ESMTP id mA3JWdRT021964
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Mon, 3 Nov 2008 11:32:40 -0800
+Received: from localhost (localhost [127.0.0.1])
+	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id mA3JWbgJ022473;
+	Mon, 3 Nov 2008 11:32:38 -0800
+In-Reply-To: <200811031439.12111.brian.foster@innova-card.com>
+User-Agent: Alpine 2.00 (LFD 1167 2008-08-23)
+X-Spam-Status: No, hits=-3.94 required=5 tests=AWL,BAYES_00,OSDL_HEADER_SUBJECT_BRACKETED
+X-Spam-Checker-Version: SpamAssassin 3.2.4-osdl_revision__1.47__
+X-MIMEDefang-Filter: lf$Revision: 1.188 $
+X-Scanned-By: MIMEDefang 2.63 on 140.211.169.13
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/100035>
 
-On Mon, Nov 03, 2008 at 07:33:21PM -0800, Andrew Arnott wrote:
 
-> I have two projects, both with histories, that I want to merge into
-> just one library.  I'd like to preserve both histories, perhaps as if
-> there were two branches being merged into one.  (Although each project
-> has its own branches that will make the history interesting).
-> 
-> Is there a standard way to do this?
 
-You have two options:
+On Mon, 3 Nov 2008, Brian Foster wrote:
+>=20
+>   A colleague and I recently wanted to examine the
+>  history in a broad sense without worrying too much
+>  about the individual commits.  What we (think we)
+>  wanted is a =E2=80=98gitk --all=E2=80=99 history graph showing only
+>  =E2=80=9Cnamed=E2=80=9D historical points;
 
- - just merge the history as if they were two branches:
+Ok, this is actually really easy to do with git. We have all the=20
+infrastructure in place, and what you're asking for is fundamentally=20
+really just an odd form of commit history simplification. Instead of=20
+comparing the *contents* of the commits (the trees) to see if they are=20
+interesting, you'd only check if there is a decoration (ie a tag or a=20
+branch) pointing to the commit.
 
-     # make a new combined repo
-     mkdir merged && cd merged && git init
+I'll post a simple series of four commits in a moment. They're all=20
+trivial, and the first three are just setting stuff up (in fact, the ve=
+ry=20
+first one is a commit I've already posted, and it's technically totally=
+=20
+unrelated, but since it touches the same area as one of the other ones,=
+=20
+I'm too lazy to try to separate it out).
 
-     # pull in each library
-     for lib in lib1 lib2; do
-       git fetch /path/to/$lib master:$lib
-       git checkout $lib
-       # do any pre-merging fixups
-       mkdir $lib
-       mv * $lib
-       git add -u
-       git add $lib
-       git commit -m "move files into $lib in preparation for project merge"
-     done
+Patchbombing to commence in 5.. 4.. 3.. 2.. 1..
 
-     # and then merge; order isn't really important
-     git checkout lib1
-     git merge lib2
-
-   This method is nice because it preserves the original histories, and
-   you can still merge from the original projects (if people are still
-   working on them as individual projects).
-
-   Note that this is basically what the subtree merge strategy does, so
-   you could also use that. I showed all the steps here to give a sense
-   of what is going on, and because you might want to do additional
-   fixups besides moving files into the subtree.
-
- - The other alternative is rewriting the history. The advantage here
-   is that the history looks as if the projects had always been part of
-   the repo, so there is no big rename event. You can even annotate the
-   commit messages to indicate which project is being worked on.
-
-   The downside, of course, is that having rewritten history, merges
-   with the original project become more difficult. But that is not a
-   problem if you are going to throw away the original repositories.
-
-   You can accomplish this with filter-branch:
-
-     mkdir merged && cd merged && git init
-     for lib in lib1 lib2; do
-       git fetch /path/to/$lib master:$lib
-       git checkout $lib
-       git filter-branch -f \
-         --index-filter '
-             git ls-files -s |
-             sed "s,\t,&'$lib'/," |
-             GIT_INDEX_FILE=$GIT_INDEX_FILE.new \
-               git update-index --index-info &&
-               mv $GIT_INDEX_FILE.new $GIT_INDEX_FILE' \
-         --msg-filter "sed '1s/^/[$lib] /'" \
-         $lib
-     done
-
-   and then merge the resulting branches as usual.
-
-Hope that helps.
-
--Peff
+		Linus
