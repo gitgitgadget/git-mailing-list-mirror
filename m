@@ -1,58 +1,108 @@
-From: Kalle Olavi Niemitalo <kon@iki.fi>
-Subject: Re: [PATCH] asciidoc: add minor workaround to add an empty line after code blocks
-Date: Mon, 03 Nov 2008 02:12:01 +0200
-Message-ID: <87k5blsm5q.fsf@Astalo.kon.iki.fi>
-References: <87skqfus7v.fsf@iki.fi>
-	<2c6b72b30810291235j554cc21dw4e3da4fdbfe633ee@mail.gmail.com>
-	<87od13ujm4.fsf@iki.fi> <20081030104503.GA17131@diku.dk>
-	<7v7i7n3vwe.fsf@gitster.siamese.dyndns.org>
-	<18071eea0811011642g6bc36530sf2036ef15ce0df82@mail.gmail.com>
+From: "Geoff Russell" <geoffrey.russell@gmail.com>
+Subject: Re: exporting the last N days of a repository
+Date: Mon, 3 Nov 2008 11:46:52 +1030
+Message-ID: <93c3eada0811021716y37ba999fkc2085b1060fbea2d@mail.gmail.com>
+References: <93c3eada0810281801l29253e02g95c7a6851c4c4db3@mail.gmail.com>
+	 <alpine.DEB.1.00.0810291610340.22125@pacific.mpi-cbg.de.mpi-cbg.de>
+Reply-To: geoffrey.russell@gmail.com
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Nov 03 01:13:26 2008
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: "Johannes Schindelin" <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Mon Nov 03 02:19:02 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Kwn4N-0004pA-O3
-	for gcvg-git-2@gmane.org; Mon, 03 Nov 2008 01:13:24 +0100
+	id 1Kwo5t-0001fC-S5
+	for gcvg-git-2@gmane.org; Mon, 03 Nov 2008 02:19:02 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753966AbYKCAMH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 2 Nov 2008 19:12:07 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753947AbYKCAMG
-	(ORCPT <rfc822;git-outgoing>); Sun, 2 Nov 2008 19:12:06 -0500
-Received: from smtp1.dnainternet.fi ([87.94.96.108]:60202 "EHLO
-	smtp1.dnainternet.fi" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753945AbYKCAMF (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 2 Nov 2008 19:12:05 -0500
-Received: from Astalo.kon.iki.fi (85-23-32-64-Rajakyla-TR1.suomi.net [85.23.32.64])
-	(using TLSv1 with cipher AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by smtp1.dnainternet.fi (Postfix) with ESMTP id 307F4CCAA
-	for <git@vger.kernel.org>; Mon,  3 Nov 2008 02:12:01 +0200 (EET)
-Received: from Kalle by Astalo.kon.iki.fi with local (Exim 4.52)
-	id 1Kwn33-0006Jm-Fx; Mon, 03 Nov 2008 02:12:01 +0200
-In-Reply-To: <18071eea0811011642g6bc36530sf2036ef15ce0df82@mail.gmail.com>
-	(Thomas Adam's message of "Sat, 1 Nov 2008 23:42:44 +0000")
-User-Agent: Gnus/5.110007 (No Gnus v0.7) Emacs/23.0.51 (gnu/linux)
-X-Accept-Language: fi;q=1.0, en;q=0.9, sv;q=0.5, de;q=0.1
+	id S1751689AbYKCBQy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 2 Nov 2008 20:16:54 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751493AbYKCBQy
+	(ORCPT <rfc822;git-outgoing>); Sun, 2 Nov 2008 20:16:54 -0500
+Received: from yw-out-2324.google.com ([74.125.46.31]:49096 "EHLO
+	yw-out-2324.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751174AbYKCBQx (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 2 Nov 2008 20:16:53 -0500
+Received: by yw-out-2324.google.com with SMTP id 9so888737ywe.1
+        for <git@vger.kernel.org>; Sun, 02 Nov 2008 17:16:52 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:reply-to
+         :to:subject:cc:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:references;
+        bh=JiRLnq0+IxqueKUnggcJ4QZAH8qvDUkmB8L+i+BCqM8=;
+        b=jh9YjTpuU9emVkgYuy44+5RbDG69g9Fl0sA8uCVswKHS77XymRbOsdMezFVNGApS1u
+         mhvEQg8py3WCn5Bh5nBZbIFXoEE4LHNNZ21pZkDChmE9uJwMluwV97K6kwQQSO5zMSZ/
+         trF4/duSulU3VhMd94wxTFKCEybASLCVa+koA=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:reply-to:to:subject:cc:in-reply-to
+         :mime-version:content-type:content-transfer-encoding
+         :content-disposition:references;
+        b=VDqyNgvIZ224tkeHByheidpf9Z1bkJZ7TAzuGhpk68yUbXw6xrDEYUM1hRxqXjMGXq
+         7cHiqnjRemGUQxCrgBaVCD/NqXcFjxQ126giMRDgcFcA0lOSRT2OQtGpqEubxHVh9GoX
+         kAWCDdyYYVOs7Tj6F5CvpQme+Rux7xIGR7l9w=
+Received: by 10.151.12.1 with SMTP id p1mr6328418ybi.177.1225675012364;
+        Sun, 02 Nov 2008 17:16:52 -0800 (PST)
+Received: by 10.150.181.6 with HTTP; Sun, 2 Nov 2008 17:16:52 -0800 (PST)
+In-Reply-To: <alpine.DEB.1.00.0810291610340.22125@pacific.mpi-cbg.de.mpi-cbg.de>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/99893>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/99894>
 
-"Thomas Adam" <thomas.adam22@gmail.com> writes:
+On Thu, Oct 30, 2008 at 1:40 AM, Johannes Schindelin
+<Johannes.Schindelin@gmx.de> wrote:
+> Hi,
+>
+> On Wed, 29 Oct 2008, Geoff Russell wrote:
+>
+>> I want to export "the last N days" of a repository to create a copy
+>> which has an origin which is the state of the repository N days ago and
+>> has all the history between then and now.
+>>
+>> Can fast-export do this?
+>
+> Yes.  See the --since=... option.
 
-> Something the ELinks project does is distribute a fixed version
-> of the asciidoc script to avoid annoying asciidoc errors each
-> time there's a new asciidoc release.
+Sorry, I didn't explain what I want very well.  N days ago I had a
+working directory in
+a state S with files F1,F2,F3,...    I want to dump all the history
+before then so that
+this is my new starting point, so I want to keep all changes since
+then.  In general,
+this is impossible if there are multiple branches which influence what
+happens between
+N and now, but in the simple non-branching case it should be possible.
 
-Actually, we only distribute the AsciiDoc configuration files.
-I should perhaps add the actual asciidoc Python script to the
-ELinks source tree as well.  That seems to be the recommendation
-in the AsciiDoc manual.
+Fast-export with From..To revisions (or with --since=...) just gives changes
+since the point N days ago.
 
-http://www.methods.co.nz/asciidoc/userguide.html#_shipping_stand_alone_asciidoc_source
+Basically I'm trying to do an "rcs -o:1.xyz" where xyz  is
+a version and I want to prune before that to shrink a large and unwanted
+history.
+
+Thanks,
+Geoff Russell
+
+
+
+>
+> Hth,
+> Dscho
+>
+>
+
+
+
+-- 
+6 Fifth Ave,
+St Morris, S.A. 5068
+Australia
+Ph: 041 8805 184 / 08 8332 5069
