@@ -1,101 +1,72 @@
-From: Linus Torvalds <torvalds@linux-foundation.org>
-Subject: Re: [PATCH 4/4] Add support for 'namespace' history simplification
-Date: Mon, 3 Nov 2008 14:05:04 -0800 (PST)
-Message-ID: <alpine.LFD.2.00.0811031358460.3419@nehalem.linux-foundation.org>
-References: <200811031439.12111.brian.foster@innova-card.com>  <alpine.LFD.2.00.0811031129060.3419@nehalem.linux-foundation.org>  <alpine.LFD.2.00.0811031132520.3419@nehalem.linux-foundation.org>  <alpine.LFD.2.00.0811031133590.3419@nehalem.linux-foundation.org>
-  <alpine.LFD.2.00.0811031135410.3419@nehalem.linux-foundation.org>  <alpine.LFD.2.00.0811031139520.3419@nehalem.linux-foundation.org> <adf1fd3d0811031345j4582e109jaf95aede0f33eff7@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] Add autoconf tests for pthreads
+Date: Mon, 03 Nov 2008 14:07:14 -0800
+Message-ID: <7vd4hcv4z1.fsf@gitster.siamese.dyndns.org>
+References: <1225736068-97988-1-git-send-email-david.syzdek@acsalaska.net>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Brian Foster <brian.foster@innova-card.com>,
-	Junio C Hamano <gitster@pobox.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: =?ISO-8859-15?Q?Santi_B=E9jar?= <santi@agolina.net>
-X-From: git-owner@vger.kernel.org Mon Nov 03 23:07:19 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, jnareb@gmail.com
+To: david.syzdek@acsalaska.net
+X-From: git-owner@vger.kernel.org Mon Nov 03 23:08:46 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Kx7Zl-0006pB-AG
-	for gcvg-git-2@gmane.org; Mon, 03 Nov 2008 23:07:09 +0100
+	id 1Kx7bI-0007MG-F6
+	for gcvg-git-2@gmane.org; Mon, 03 Nov 2008 23:08:44 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752875AbYKCWFz convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 3 Nov 2008 17:05:55 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752937AbYKCWFz
-	(ORCPT <rfc822;git-outgoing>); Mon, 3 Nov 2008 17:05:55 -0500
-Received: from smtp1.linux-foundation.org ([140.211.169.13]:56277 "EHLO
-	smtp1.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1752324AbYKCWFy (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 3 Nov 2008 17:05:54 -0500
-Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [140.211.169.55])
-	by smtp1.linux-foundation.org (8.14.2/8.13.5/Debian-3ubuntu1.1) with ESMTP id mA3M55v7032695
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Mon, 3 Nov 2008 14:05:06 -0800
-Received: from localhost (localhost [127.0.0.1])
-	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id mA3M54Nt026442;
-	Mon, 3 Nov 2008 14:05:05 -0800
-In-Reply-To: <adf1fd3d0811031345j4582e109jaf95aede0f33eff7@mail.gmail.com>
-User-Agent: Alpine 2.00 (LFD 1167 2008-08-23)
-X-Spam-Status: No, hits=-3.94 required=5 tests=AWL,BAYES_00,OSDL_HEADER_SUBJECT_BRACKETED
-X-Spam-Checker-Version: SpamAssassin 3.2.4-osdl_revision__1.47__
-X-MIMEDefang-Filter: lf$Revision: 1.188 $
-X-Scanned-By: MIMEDefang 2.63 on 140.211.169.13
+	id S1753407AbYKCWHb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 3 Nov 2008 17:07:31 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753377AbYKCWHb
+	(ORCPT <rfc822;git-outgoing>); Mon, 3 Nov 2008 17:07:31 -0500
+Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:46906 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753407AbYKCWHa (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 3 Nov 2008 17:07:30 -0500
+Received: from localhost.localdomain (localhost [127.0.0.1])
+	by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id F086C92627;
+	Mon,  3 Nov 2008 17:07:28 -0500 (EST)
+Received: from pobox.com (ip68-225-240-211.oc.oc.cox.net [68.225.240.211])
+ (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
+ certificate requested) by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with
+ ESMTPSA id 69F4792624; Mon,  3 Nov 2008 17:07:16 -0500 (EST)
+In-Reply-To: <1225736068-97988-1-git-send-email-david.syzdek@acsalaska.net>
+ (david syzdek's message of "Mon, 3 Nov 2008 09:14:28 -0900")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: CE07A92C-A9F3-11DD-86AA-4F5276724C3F-77302942!a-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/100002>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/100003>
 
+david.syzdek@acsalaska.net writes:
 
+> +# Define PTHREAD_LIBS to the linker flag used for Pthread support and define
+> +# THREADED_DELTA_SEARCH if Pthreads are available.
 
-On Mon, 3 Nov 2008, Santi B=E9jar wrote:
->=20
-> I tried it once, but I had problems simplifying the merges, and it is=
- trivial...
+This may affect platforms that do have pthread library but choose not to
+use threaded delta search for whatever reason by suddenly turning it on.
 
-It depends on the new --simplify-merges code which does that.
+Which arguably may be a good thing to do, but it is a change unrelated to
+porting to FreeBSD.
 
-> Not that it matters a lot, but if you try it on master you get some
-> extra merges without a ref like:
->=20
-> 373a273 (Merge git-gui 0.11.0, 2008-08-17)
+> +AC_LANG_CONFTEST([AC_LANG_PROGRAM(
+> +  [[#include <pthread.h>]],
+> +  [[pthread_mutex_t test_mutex;]]
+> +)])
+> +${CC} -pthread conftest.c -o conftest.o > /dev/null 2>&1
+> +if test $? -eq 0;then
+> + PTHREAD_LIBS="-pthread"
+> + THREADED_DELTA_SEARCH=YesPlease
+> +else
+> + ${CC} -lpthread conftest.c -o conftest.o > /dev/null 2>&1
 
-Umm? Your point is?
+Maybe I am old fashioned, but having "-library" very near the beginning of
+the command line and naming the final link product (i.e. not with -c) *.o
+makes me go "Huh?"  If it were written like this,
 
-That merge itself doesn't have a ref, but it's required becase there ar=
-e=20
-refs along both legs of the merge - one side has the "gitgui-0.11.0" ta=
-g,=20
-while the other has (for example) v16.0-rc3.
+	$CC -o conftest$ac_exeext conftest.c -lpthread
 
-> f44bc33 (Sync with 1.5.6.5, 2008-08-06)
-
-Again, the merge doesn't have a ref, but it's needed because there are=20
-refs on both parents (v1.5.6.5 vs v1.6.0-rc[01]).
-
-So no, --simplify-namespace in no way guarantees that all resulting=20
-commits will have refs pointing to them, because it also needs to retur=
-n=20
-enough of the merges to make it a real and meaningful DAG.
-
-The one thing I note is that when you have lots and lots of refs in the=
-=20
-gitk output, the gitk window itself becomes very ugly. I'd love to get =
-rid=20
-of the black line between the ref (tag or branch name) and the circle,=20
-because with "gitk --simplify-namespace" it ends up looking like some k=
-ind=20
-of insane "ladder" due to all those vertical lines.
-
-And they really aren't necessary, and it would probably be better to ju=
-st=20
-make selecting a commit highlight the whole row (and thus avoid any=20
-ambiguity between that highlighted commit message and the circle in the=
-=20
-graph it goes with if you have a very wide graph).
-
-But I can't read tcl/tk enough to even figure out where it's being=20
-painted.
-
-			Linus
+it might have been easier to swallow.  I dunno.
