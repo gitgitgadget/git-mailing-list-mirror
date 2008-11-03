@@ -1,105 +1,53 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: Re: [PATCH v2 3/3] pack-objects: honor '.keep' files
-Date: Mon, 3 Nov 2008 12:49:58 -0800
-Message-ID: <20081103204958.GN15463@spearce.org>
-References: <-RiFxYEd9Wiq2fWX74zYGUiEwrzLeoFDb1KuG3-Xo-s@cipher.nrlssc.navy.mil> <LSyxMgVV7zAWRvSezvxyUc6-kz2gK6MRVKonKSf1pAmdqO-jeuMFIw@cipher.nrlssc.navy.mil>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Git Mailing List <git@vger.kernel.org>,
-	Nicolas Pitre <nico@cam.org>
-To: Brandon Casey <casey@nrlssc.navy.mil>
-X-From: git-owner@vger.kernel.org Mon Nov 03 21:51:19 2008
+From: Pieter de Bie <pdebie@ai.rug.nl>
+Subject: Re: Are binary xdeltas only used if you use git-gc?
+Date: Mon, 3 Nov 2008 21:52:05 +0100
+Message-ID: <EC47BA70-B80D-4D27-A8C2-26C3E2C31382@ai.rug.nl>
+References: <f1d2d9ca0810310243r669840bbj2c5ee7183e0caaed@mail.gmail.com> <m37i7pggnk.fsf@localhost.localdomain> <f1d2d9ca0810310428o166dc075wbb43c00c1a555350@mail.gmail.com> <200810311726.57122.jnareb@gmail.com> <vpqej1wra1c.fsf@bauges.imag.fr> <alpine.LFD.2.00.0810311549570.13034@xanadu.home> <f1d2d9ca0811010454u203a7c88x1e09735b3fc1358f@mail.gmail.com> <alpine.LFD.2.00.0811010924550.13034@xanadu.home> <f1d2d9ca0811031235w3581f7ffnc7380b4cb488e71a@mail.gmail.com>
+Mime-Version: 1.0 (Apple Message framework v929.2)
+Content-Type: text/plain; charset=US-ASCII; format=flowed; delsp=yes
+Content-Transfer-Encoding: 7bit
+Cc: "Nicolas Pitre" <nico@cam.org>,
+	"Matthieu Moy" <Matthieu.Moy@imag.fr>,
+	"Jakub Narebski" <jnareb@gmail.com>, git@vger.kernel.org
+To: Thanassis Tsiodras <ttsiodras@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Nov 03 21:54:08 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Kx6OH-0008Id-FF
-	for gcvg-git-2@gmane.org; Mon, 03 Nov 2008 21:51:13 +0100
+	id 1Kx6Qt-0000iz-Pr
+	for gcvg-git-2@gmane.org; Mon, 03 Nov 2008 21:53:56 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753098AbYKCUt7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 3 Nov 2008 15:49:59 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753649AbYKCUt7
-	(ORCPT <rfc822;git-outgoing>); Mon, 3 Nov 2008 15:49:59 -0500
-Received: from george.spearce.org ([209.20.77.23]:40130 "EHLO
-	george.spearce.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751530AbYKCUt6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 3 Nov 2008 15:49:58 -0500
-Received: by george.spearce.org (Postfix, from userid 1001)
-	id 1CE0D3835F; Mon,  3 Nov 2008 20:49:58 +0000 (UTC)
-Content-Disposition: inline
-In-Reply-To: <LSyxMgVV7zAWRvSezvxyUc6-kz2gK6MRVKonKSf1pAmdqO-jeuMFIw@cipher.nrlssc.navy.mil>
-User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
+	id S1755612AbYKCUwY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 3 Nov 2008 15:52:24 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755942AbYKCUwX
+	(ORCPT <rfc822;git-outgoing>); Mon, 3 Nov 2008 15:52:23 -0500
+Received: from frim.nl ([87.230.85.232]:35153 "EHLO
+	lvps87-230-85-232.dedicated.hosteurope.de" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1756628AbYKCUwV (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 3 Nov 2008 15:52:21 -0500
+Received: from s5591931c.adsl.wanadoo.nl ([85.145.147.28] helo=[192.168.1.11])
+	by lvps87-230-85-232.dedicated.hosteurope.de with esmtpsa (TLS-1.0:RSA_AES_128_CBC_SHA1:16)
+	(Exim 4.63)
+	(envelope-from <pdebie@ai.rug.nl>)
+	id 1Kx6PE-0008Sf-8f; Mon, 03 Nov 2008 21:52:12 +0100
+In-Reply-To: <f1d2d9ca0811031235w3581f7ffnc7380b4cb488e71a@mail.gmail.com>
+X-Mailer: Apple Mail (2.929.2)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/99994>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/99995>
 
-Brandon Casey <casey@nrlssc.navy.mil> wrote:
-> From: Brandon Casey <drafnel@gmail.com>
-> 
-> By default, pack-objects creates a pack file with every object specified by
-> the user. There are two options which can be used to exclude objects which
-> are accessible by the repository.
-> 
->    1) --incremental
->      This excludes any object which already exists in an accessible pack.
-> 
->    2) --local
->      This excludes any object which exists in a non-local pack.
-> 
-> With this patch, both arguments also cause objects which exist in packs
-> marked with a .keep file to be excluded. Only the --local option requires
-> an explicit check for the .keep file. If the user doesn't want the objects
-> in a pack marked with .keep to be exclude, then the .keep file should be
-> removed.
-> 
-> Additionally, this fixes the repack bug which allowed porcelain repack to
-> create packs which contained objects already contained in existing packs
-> marked with a .keep file.
-> 
-> Signed-off-by: Brandon Casey <casey@nrlssc.navy.mil>
 
-This one and the one before it (2/3):
+On 3 nov 2008, at 21:35, Thanassis Tsiodras wrote:
 
-Acked-by: Shawn O. Pearce <spearce@spearce.org>
+> Any help/advice on what to try next would be most welcome...
 
-> ---
->  builtin-pack-objects.c |    2 +-
->  t/t7700-repack.sh      |    2 +-
->  2 files changed, 2 insertions(+), 2 deletions(-)
-> 
-> diff --git a/builtin-pack-objects.c b/builtin-pack-objects.c
-> index 15b80db..8be9113 100644
-> --- a/builtin-pack-objects.c
-> +++ b/builtin-pack-objects.c
-> @@ -701,7 +701,7 @@ static int add_object_entry(const unsigned char *sha1, enum object_type type,
->  				break;
->  			if (incremental)
->  				return 0;
-> -			if (local && !p->pack_local)
-> +			if (local && (!p->pack_local || p->pack_keep))
->  				return 0;
->  		}
->  	}
-> diff --git a/t/t7700-repack.sh b/t/t7700-repack.sh
-> index 27af5ab..5b1cd05 100755
-> --- a/t/t7700-repack.sh
-> +++ b/t/t7700-repack.sh
-> @@ -4,7 +4,7 @@ test_description='git repack works correctly'
->  
->  . ./test-lib.sh
->  
-> -test_expect_failure 'objects in packs marked .keep are not repacked' '
-> +test_expect_success 'objects in packs marked .keep are not repacked' '
->  	echo content1 > file1 &&
->  	echo content2 > file2 &&
->  	git add . &&
-> -- 
-> 1.6.0.3.552.g12334
-> 
+Perhaps this is one of the cases that can be handled by the tellme- 
+more extension?
 
--- 
-Shawn.
+http://repo.or.cz/w/git.git?a=commitdiff;h=5a9574c0100d287a4f2729dbaa64d057a5ee02e7
+
+- Pieter
