@@ -1,78 +1,91 @@
-From: 7rans <transfire@gmail.com>
-Subject: Re: commit type
-Date: Mon, 3 Nov 2008 01:34:39 +0000 (UTC)
-Message-ID: <loom.20081103T011526-296@post.gmane.org>
-References: <loom.20081031T174821-603@post.gmane.org>  <ee77f5c20810311104m6044bf70r1d9d405fa04454e0@mail.gmail.com>  <loom.20081031T191102-81@post.gmane.org>  <alpine.DEB.1.00.0811010025570.22125@pacific.mpi-cbg.de.mpi-cbg.de>  <loom.20081101T034635-562@post.gmane.org> <3e8340490811021502p70ab40a1ocdc9fca012769a29@mail.gmail.com>
+From: "Peter Teoh" <htmldeveloper@gmail.com>
+Subject: error: non-monotonic index
+Date: Mon, 3 Nov 2008 10:32:44 +0800
+Message-ID: <804dabb00811021832k28276bf7ke0146a8bbd648574@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Nov 03 02:36:33 2008
+X-From: git-owner@vger.kernel.org Mon Nov 03 03:35:16 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KwoMh-00050W-GM
-	for gcvg-git-2@gmane.org; Mon, 03 Nov 2008 02:36:23 +0100
+	id 1KwpHg-0007H3-6V
+	for gcvg-git-2@gmane.org; Mon, 03 Nov 2008 03:35:16 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752881AbYKCBe4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 2 Nov 2008 20:34:56 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753163AbYKCBe4
-	(ORCPT <rfc822;git-outgoing>); Sun, 2 Nov 2008 20:34:56 -0500
-Received: from main.gmane.org ([80.91.229.2]:33335 "EHLO ciao.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752878AbYKCBez (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 2 Nov 2008 20:34:55 -0500
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1KwoLA-0003q1-Cs
-	for git@vger.kernel.org; Mon, 03 Nov 2008 01:34:48 +0000
-Received: from 216.241.118.70.cfl.res.rr.com ([70.118.241.216])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Mon, 03 Nov 2008 01:34:48 +0000
-Received: from transfire by 216.241.118.70.cfl.res.rr.com with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Mon, 03 Nov 2008 01:34:48 +0000
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@ger.gmane.org
-X-Gmane-NNTP-Posting-Host: main.gmane.org
-User-Agent: Loom/3.14 (http://gmane.org/)
-X-Loom-IP: 70.118.241.216 (Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.0.3) Gecko/2008092510 Ubuntu/8.04 (hardy) Firefox/3.0.3)
+	id S1754124AbYKCCcs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 2 Nov 2008 21:32:48 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754093AbYKCCcs
+	(ORCPT <rfc822;git-outgoing>); Sun, 2 Nov 2008 21:32:48 -0500
+Received: from fg-out-1718.google.com ([72.14.220.152]:24121 "EHLO
+	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754095AbYKCCcr (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 2 Nov 2008 21:32:47 -0500
+Received: by fg-out-1718.google.com with SMTP id 19so2012326fgg.17
+        for <git@vger.kernel.org>; Sun, 02 Nov 2008 18:32:45 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to
+         :subject:mime-version:content-type:content-transfer-encoding
+         :content-disposition;
+        bh=NYdgynGYqmkW4FkDDcKPgfHRaPxaBgas5YywjgGrsFU=;
+        b=bsJFJl/v6OSo3XFlRbO5UH7xJWFHD2WcDzur0rtqh7p6YZUkAhROdk1DgAm1iesqZU
+         BbC6hMjNI9gw6fbHgMdVpwOIckcEHNnYYapx9yQuvBke3jL4SxJRCEvmcpvo2givCsjs
+         uY7/wzV8RM7vpKF0Bgz5tn9ZFmdWIYel/eyJw=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:to:subject:mime-version:content-type
+         :content-transfer-encoding:content-disposition;
+        b=xlOIwdA/pxNrkFQLvOY1cp7fzC33Fc3s+qm0nDjaZU3kcfopWv59uJiQetkHoonKAv
+         FlbB2/Wm1rLvJrspnDzF/Dbqg7E00zKjdXdacNv7KcEeEDQOr0oPpsn3GeaSuaSLLwbr
+         osrqibq+FudjCx3LntQmMSpjbAJRzgh1Fd7G8=
+Received: by 10.181.151.19 with SMTP id d19mr1699589bko.173.1225679564686;
+        Sun, 02 Nov 2008 18:32:44 -0800 (PST)
+Received: by 10.180.228.4 with HTTP; Sun, 2 Nov 2008 18:32:44 -0800 (PST)
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/99895>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/99896>
 
-bd_ <bdonlan <at> gmail.com> writes:
+I git pull and got errors, then git repack and pull again......the
+error increased....what happened?
 
-> The problem with this approach is that it begins to dictate a set of
-> annotations which are considered 'more important' by the git core than
-> others. By allowing in your 'commit type', it sets a precedent that
-> git will add random, possibly not backwards compatible metadata
-> changes just to support the local policies of some subset of git
-> users. It's far better to provide a generic feature that will cover
-> all users; and using the commit description, with hooks to enforce
-> proper format according to local policy, is just that.
-> 
-> If using the commit description, with hooks to enforce whatever
-> formatting you prefer, is not sufficient for your needs, then it would
-> be useful to discuss exactly how this would be deficient, and then
-> possibly think about adding a /generic/ feature that meets your needs.
 
-Except for going so far as to add full-on tagging to commits, I'd don't see how
-it could be more generic. Perhaps I'm misunderstood. I'm not suggesting any
-particular set of types, if that's what you think. Just the ability to add one.
-For example:
 
-  git commit -m "describe some change" --type anything-at-all
+/hdc1/download/2.6/linux26-acer>git pull
+remote: Counting objects: 3959, done.
+remote: Compressing objects: 100% (668/668), done.
+remote: Total 2422 (delta 1934), reused 2154 (delta 1702)
+Receiving objects: 100% (2422/2422), 409.97 KiB | 8 KiB/s, done.
+Resolving deltas: 100% (1934/1934), completed with 757 local objects.
+From git://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux-2.6
+   e946217..45beca0  master     -> origin/master
+ * [new tag]         v2.6.28-rc3 -> v2.6.28-rc3
+error: non-monotonic index
+error: non-monotonic index
+error: non-monotonic index
+fatal: Needed a single revision
+45beca08dd8b6d6a65c5ffd730af2eac7a2c7a03 - not something we can merge
+/hdc1/download/2.6/linux26-acer>git repack
+Counting objects: 9, done.
+Compressing objects: 100% (9/9), done.
+Writing objects: 100% (9/9), done.
+Total 9 (delta 0), reused 0 (delta 0)
+/hdc1/download/2.6/linux26-acer>git pull
+error: non-monotonic index
+error: non-monotonic index
+error: non-monotonic index
+error: non-monotonic index
+error: non-monotonic index
+error: non-monotonic index
+fatal: Needed a single revision
+45beca08dd8b6d6a65c5ffd730af2eac7a2c7a03 - not something we can merge
 
-So the types *I* would use are 'major', 'minor' and 'bug', but others could use
-whatever types they'd like. Ie. developers could have their one type policies.
-And I agree, it would be cool to define hooks to enforce the policy.
 
-The problem with adding them to the description is that other tools have no idea
-about them and so can't not display them when they aren't wanted --a logging
-tool is a good example. It is also means more complicated scripting is required
-to do anything with them, not a huge deal, but a pita nonetheless.
+-- 
+Regards,
+Peter Teoh
