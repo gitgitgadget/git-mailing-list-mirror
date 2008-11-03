@@ -1,92 +1,88 @@
-From: Hannu Koivisto <azure@iki.fi>
-Subject: Re: CRLF support bugs
-Date: Mon, 03 Nov 2008 17:25:18 +0200
-Organization: NOYB
-Message-ID: <83skq8al29.fsf@kalahari.s2.org>
-References: <83od0yaxzk.fsf@kalahari.s2.org>
-	<20081103090932.GA18424@coredump.intra.peff.net>
-	<83y700alzf.fsf_-_@kalahari.s2.org>
+From: Brian Foster <brian.foster@innova-card.com>
+Subject: Re: [Q] Abbreviated history graph?
+Date: Mon, 3 Nov 2008 16:46:20 +0100
+Message-ID: <200811031646.20404.brian.foster@innova-card.com>
+References: <200811031439.12111.brian.foster@innova-card.com> <adf1fd3d0811030620x1bc53db3y2afb26242e9906ac@mail.gmail.com>
+Reply-To: Brian Foster <brian.foster@innova-card.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Jeff King <peff@peff.net>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Nov 03 16:26:48 2008
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: "Git Mailing List" <git@vger.kernel.org>
+To: "Santi =?utf-8?q?B=C3=A9jar?=" <santi@agolina.net>
+X-From: git-owner@vger.kernel.org Mon Nov 03 16:47:55 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Kx1KH-0005ni-7M
-	for gcvg-git-2@gmane.org; Mon, 03 Nov 2008 16:26:45 +0100
+	id 1Kx1ea-0004q3-5s
+	for gcvg-git-2@gmane.org; Mon, 03 Nov 2008 16:47:44 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754806AbYKCPZa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 3 Nov 2008 10:25:30 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754033AbYKCPZa
-	(ORCPT <rfc822;git-outgoing>); Mon, 3 Nov 2008 10:25:30 -0500
-Received: from main.gmane.org ([80.91.229.2]:33016 "EHLO ciao.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753824AbYKCPZ3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 3 Nov 2008 10:25:29 -0500
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1Kx1J0-0006SL-9p
-	for git@vger.kernel.org; Mon, 03 Nov 2008 15:25:26 +0000
-Received: from s2.org ([195.197.64.39])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Mon, 03 Nov 2008 15:25:26 +0000
-Received: from azure by s2.org with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Mon, 03 Nov 2008 15:25:26 +0000
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@ger.gmane.org
-X-Gmane-NNTP-Posting-Host: s2.org
-User-Agent: Gnus/5.110011 (No Gnus v0.11) Emacs/22.2 (gnu/linux)
-Cancel-Lock: sha1:iQ/h+ryU8Cu8eqO9jCvg2RFBaLs=
+	id S1754829AbYKCPq3 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 3 Nov 2008 10:46:29 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755252AbYKCPq3
+	(ORCPT <rfc822;git-outgoing>); Mon, 3 Nov 2008 10:46:29 -0500
+Received: from ug-out-1314.google.com ([66.249.92.168]:62862 "EHLO
+	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754439AbYKCPq2 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 3 Nov 2008 10:46:28 -0500
+Received: by ug-out-1314.google.com with SMTP id 39so1752387ugf.37
+        for <git@vger.kernel.org>; Mon, 03 Nov 2008 07:46:26 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:from:reply-to:to:subject:date
+         :user-agent:cc:references:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:message-id:sender;
+        bh=KeNK9/oO5fLnQ5m0+WaM8X6qoPAncQ1auNsLQYKlViY=;
+        b=Y76efcCNfXm36UqoSiS4X6EKOfD9mMMbDI6oh/EfJ9GZUvfDF3gHyggUkVb5uLYL0Y
+         +hlP/a/9FxkopWRPLpybEeWBwu4z80UlBJzND9GrATqn0en/mWTaiuyhZbN7EKAEslW0
+         PoTypyuJWR71daG5natAiiSXyfp489dXRdo3E=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=from:reply-to:to:subject:date:user-agent:cc:references:in-reply-to
+         :mime-version:content-type:content-transfer-encoding
+         :content-disposition:message-id:sender;
+        b=tTCsgj5JCtAikQKzoYE7YbOHWIOWZrkkDxyQLsh/d/q02c6UsPLSGCJjogsaC3MVsx
+         1HVDzN+pjFjdmEu5SOi5LCYE8F3jsVP/T3QHPdLrJBe/DFEVaBMIvrq25sxz7uTTFwRi
+         iQJCLljL3xO/Gq1N2A2vquTnOP2y85zqsUMoU=
+Received: by 10.86.54.3 with SMTP id c3mr264649fga.33.1225727186520;
+        Mon, 03 Nov 2008 07:46:26 -0800 (PST)
+Received: from innova-card.com (1-61.252-81.static-ip.oleane.fr [81.252.61.1])
+        by mx.google.com with ESMTPS id l19sm8684344fgb.7.2008.11.03.07.46.23
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Mon, 03 Nov 2008 07:46:24 -0800 (PST)
+User-Agent: KMail/1.9.6 (enterprise 0.20070907.709405)
+In-Reply-To: <adf1fd3d0811030620x1bc53db3y2afb26242e9906ac@mail.gmail.com>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/99953>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/99954>
 
-Hannu Koivisto <azure@iki.fi> writes:
+On Monday 03 November 2008 15:20:30 Santi B=C3=A9jar wrote:
+>[ ... ]
+> >  Is there some way of doing something similar [ the example ]
+> >  (git v1.6.0.2)?  In addition to 'gitk', we also (rather
+> >  quickly!) tried both 'qgit' and 'giggle', but without
+> >  any apparent success.
+>=20
+> Not in git.git but you can use the script at the bottom [ ... ].
 
-> Actually, even if .gitattributes were applied in checkout, I think
-> the whole CRLF support is broken by design because people will have
-> to remember to use -n in clone, then enable core.autocrlf support
-> and then checkout.  This makes it unneccessarily complicated to
+Santi,
 
-I forgot one thing: so what if someone forgets to use -n or just
-imagines that you can set core.autocrlf afterwards?
+   Thanks.  Unfortunately, neither I nor my colleague can try
+  it at the moment:  It uses  `git log --pretty=3Dformat:%d'
+  which is very new (added c.9-Sept) and not in the versions
+  of git we are currently using.  End result is the tempfile
+  is always empty, and hence `gitk' shows everything.
 
-# Pretend someone does this on Unix
-mkdir test1
-cd test1
-git init
-echo "*.c crlf" > .gitattributes
-echo -e "foo\nfoo\nfoo" > kala.c
-git add .gitattributes kala.c
-git commit -m "Initial checkin."
-cd ..
-# Pretend test1 is not a local repository and someone else does this on Windows
-git clone test1 test2
-cd test2
-git config core.autocrlf true
-git status
+cheers!
+	-blf-
 
-# On branch master
-nothing to commit (working directory clean)
-
-Now the user would have to know that even though git status claims
-everything is ok, that is not the case.  The user would have to
-know to say (according to #git):
-
-rm .git/index
-git reset --hard
-
-Just for the record, when I started to learn git, one of the first
-questions I had was "how do I undo checkout?"  It wasn't until now
-that I learned I need to remove .git/index (in addition to all
-files).
-
--- 
-Hannu
+--=20
+=E2=80=9CHow many surrealists does it take to   | Brian Foster
+ change a lightbulb? Three. One calms   | somewhere in south of France
+ the warthog, and two fill the bathtub  |   Stop E$$o (ExxonMobil)!
+ with brightly-coloured machine tools.=E2=80=9D |      http://www.stope=
+sso.com
