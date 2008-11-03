@@ -1,78 +1,95 @@
-From: "David Syzdek" <syzdek@gmail.com>
-Subject: Re: [PATCH] Make Pthread link flags configurable
-Date: Mon, 3 Nov 2008 09:18:42 -0900
-Message-ID: <9a0027270811031018t2b90ee64kcd2ef5e9afa73f6a@mail.gmail.com>
-References: <1225669400-79505-1-git-send-email-david.syzdek@acsalaska.net>
-	 <m3hc6pf8k6.fsf@localhost.localdomain>
+From: Alejandro Riveira <ariveira@gmail.com>
+Subject: Re: git bisect v2.6.27 v2.6.26 problem/bug
+Date: Mon, 3 Nov 2008 18:23:10 +0000 (UTC)
+Message-ID: <genfie$vbs$1@ger.gmane.org>
+References: <20081103173911.GA12363@xs4all.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: "David M. Syzdek" <david.syzdek@acsalaska.net>, git@vger.kernel.org
-To: "Jakub Narebski" <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Nov 03 19:20:05 2008
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Nov 03 19:24:49 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Kx41s-0002JZ-TF
-	for gcvg-git-2@gmane.org; Mon, 03 Nov 2008 19:19:57 +0100
+	id 1Kx46N-00043J-Ii
+	for gcvg-git-2@gmane.org; Mon, 03 Nov 2008 19:24:36 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751606AbYKCSSo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 3 Nov 2008 13:18:44 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751548AbYKCSSo
-	(ORCPT <rfc822;git-outgoing>); Mon, 3 Nov 2008 13:18:44 -0500
-Received: from rv-out-0506.google.com ([209.85.198.235]:12406 "EHLO
-	rv-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751474AbYKCSSn (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 3 Nov 2008 13:18:43 -0500
-Received: by rv-out-0506.google.com with SMTP id g9so1161960rvb.4
-        for <git@vger.kernel.org>; Mon, 03 Nov 2008 10:18:42 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to
-         :subject:cc:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:references;
-        bh=fQhD2cP3532XRTqurr92C0IPBB8mrsCO+DuodheRXrY=;
-        b=vLcJLZPI6DiaKVw1mw+y0Ka0U2QfdApH11XZCoYfBgb5xdNAu6/jA+fL4teWtLhDuV
-         2OKmTRxjIJxqnbH3x8o4fAr27dtbXksmwZvmIEUErEzxh/dHwc2SxnpWQs+Z4dd2+sxt
-         /oSSnPusjNDleoZb5xys7LuaN9emTxGui/KzE=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
-         :content-type:content-transfer-encoding:content-disposition
-         :references;
-        b=UWhlfx1UVK1WRZ4/XwA1NlWbUlgMiBuLED6xFHHsQ2H4VV8D8lp29IeiXO4CshlV8t
-         N/An2N4LDbXo91MvYAXyIf/qb4AIfFGnynPc9iZ9GlSBu8rLgLfzgjrCH0ZU9tAvLaxd
-         YS1+n4Gq4ESGswgIYiu717gN5q0bcpCSJxsbc=
-Received: by 10.141.42.10 with SMTP id u10mr253491rvj.141.1225736322567;
-        Mon, 03 Nov 2008 10:18:42 -0800 (PST)
-Received: by 10.141.77.7 with HTTP; Mon, 3 Nov 2008 10:18:42 -0800 (PST)
-In-Reply-To: <m3hc6pf8k6.fsf@localhost.localdomain>
-Content-Disposition: inline
+	id S1751593AbYKCSXW convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 3 Nov 2008 13:23:22 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751580AbYKCSXW
+	(ORCPT <rfc822;git-outgoing>); Mon, 3 Nov 2008 13:23:22 -0500
+Received: from main.gmane.org ([80.91.229.2]:39683 "EHLO ciao.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751565AbYKCSXV (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 3 Nov 2008 13:23:21 -0500
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1Kx45A-0005Pa-8v
+	for git@vger.kernel.org; Mon, 03 Nov 2008 18:23:20 +0000
+Received: from 68.red-83-43-193.dynamicip.rima-tde.net ([83.43.193.68])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Mon, 03 Nov 2008 18:23:20 +0000
+Received: from ariveira by 68.red-83-43-193.dynamicip.rima-tde.net with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Mon, 03 Nov 2008 18:23:20 +0000
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@ger.gmane.org
+X-Gmane-NNTP-Posting-Host: 68.red-83-43-193.dynamicip.rima-tde.net
+User-Agent: Pan/0.132 (Waxed in Black)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/99969>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/99970>
 
-On Mon, Nov 3, 2008 at 12:44 AM, Jakub Narebski <jnareb@gmail.com> wrote:
-> david.syzdek@acsalaska.net writes:
->
->> From: David M. Syzdek <david.syzdek@acsalaska.net>
->>
->> FreeBSD 4.x systems use the linker flags `-pthread' instead of the
->> linker flags `-lpthread' when linking against the pthread library.
->>
->> Signed-off-by: David M. Syzdek <david.syzdek@acsalaska.net>
->> ---
->>  Makefile |    4 +++-
->>  1 files changed, 3 insertions(+), 1 deletions(-)
->
-> Would it be possible to add support for this also to configure.ac
-> (and config.mak.in)?
->
+El Mon, 03 Nov 2008 18:39:15 +0100, Miquel van Smoorenburg escribi=C3=B3=
+:
 
-I just sent a patch to the list that adds autoconf tests for pthreads.
- If the test is able to determine which flag to use, then it also sets
-THREADED_DELTA_SEARCH.
+> I'm trying to nail down a disk statistics issue that was introduced i=
+n
+> 2.6.27, while 2.6.26 was working OK. So I decided to use git bisect.
+>=20
+> However, sometimes I end up with a version before 2.6.26:
+>=20
+> $ cat .git/BISECT_LOG
+> git-bisect start
+> # good: [bce7f793daec3e65ec5c5705d2457b81fe7b5725] Linux 2.6.26
+> git-bisect good bce7f793daec3e65ec5c5705d2457b81fe7b5725 # bad:
+> [3fa8749e584b55f1180411ab1b51117190bac1e5] Linux 2.6.27 git-bisect ba=
+d
+> 3fa8749e584b55f1180411ab1b51117190bac1e5 # bad:
+> [dd9ca5d9be7eba99d685d733e23d5be7110e9556] USB: usb-serial: fix a spa=
+rse
+> warning about different signedness git-bisect bad
+> dd9ca5d9be7eba99d685d733e23d5be7110e9556 # good:
+> [84c3d4aaec3338201b449034beac41635866bddf] Merge commit 'origin/maste=
+r'
+> git-bisect good 84c3d4aaec3338201b449034beac41635866bddf
+>=20
+> $ head -4 Makefile
+> VERSION =3D 2
+> PATCHLEVEL =3D 6
+> SUBLEVEL =3D 26
+> EXTRAVERSION =3D -rc8
+>=20
+> If at this point I do a 'git bisect good' I end up in a 2.6.26 branch=
+,
+> which is good, but after a few bisects I end up at a version before
+> v2.6.26 (2.6.26-rc5) again, which should be impossible right ?
+
+ Afaik it is not imposible with git you do not get a linear history
+
+
+>=20
+> Anyway - at the end I end up with a 'good' version that is
+> 2.6.26-rc<something> which is kind of useless. I know that version up=
+ to
+> 2.6.26 are good ...
+>=20
+> What am I doing wrong ?
+>=20
+> (git version 1.5.6.5 from debian/lenny)
+>=20
+> Mike.
