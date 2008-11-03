@@ -1,93 +1,81 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] filter-branch: add git_commit_non_empty_tree and
- --prune-empty.
-Date: Sun, 02 Nov 2008 20:58:44 -0800
-Message-ID: <7viqr5wgl7.fsf@gitster.siamese.dyndns.org>
-References: <20081030132623.GC24098@artemis.corp>
- <1225445204-28000-1-git-send-email-madcoder@debian.org>
+From: Sam Vilain <sam@vilain.net>
+Subject: Re: [PATCH] Documentation: add a planning document for the next
+	CLI revamp
+Date: Mon, 03 Nov 2008 18:59:20 +1300
+Message-ID: <1225691960.20883.41.camel@maia.lan>
+References: <20081030002239.D453B21D14E@mail.utsl.gen.nz>
+	 <20081031003154.GA5745@sigill.intra.peff.net>
+	 <7v3ai9226q.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, pasky@suse.cz, srabbelier@gmail.com
-To: Pierre Habouzit <madcoder@debian.org>
-X-From: git-owner@vger.kernel.org Mon Nov 03 06:00:25 2008
+Content-Type: text/plain
+Content-Transfer-Encoding: 7bit
+Cc: Jeff King <peff@peff.net>, Sam Vilain <samv@vilain.net>,
+	git@vger.kernel.org,
+	Johannes Schindelin <johannes.schindelin@gmx.de>,
+	Scott Chacon <schacon@gmail.com>,
+	Tom Preston-Werner <tom@github.com>,
+	"J.H." <warthog19@eaglescrag.net>,
+	Christian Couder <chriscool@tuxfamily.org>,
+	Kai Blin <kai@samba.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Nov 03 07:02:54 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KwrY8-0007RP-Bu
-	for gcvg-git-2@gmane.org; Mon, 03 Nov 2008 06:00:24 +0100
+	id 1KwsWW-0000J4-TQ
+	for gcvg-git-2@gmane.org; Mon, 03 Nov 2008 07:02:49 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754552AbYKCE7H (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 2 Nov 2008 23:59:07 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754543AbYKCE7G
-	(ORCPT <rfc822;git-outgoing>); Sun, 2 Nov 2008 23:59:06 -0500
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:62901 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754529AbYKCE7F (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 2 Nov 2008 23:59:05 -0500
-Received: from localhost.localdomain (localhost [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 85D6378B44;
-	Sun,  2 Nov 2008 23:59:02 -0500 (EST)
-Received: from pobox.com (ip68-225-240-211.oc.oc.cox.net [68.225.240.211])
- (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
- certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
- ESMTPSA id 5508A78B40; Sun,  2 Nov 2008 23:58:51 -0500 (EST)
-In-Reply-To: <1225445204-28000-1-git-send-email-madcoder@debian.org> (Pierre
- Habouzit's message of "Fri, 31 Oct 2008 10:26:44 +0100")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: 22206C46-A964-11DD-9B95-9CEDC82D7133-77302942!a-sasl-fastnet.pobox.com
+	id S1751286AbYKCF7a (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 3 Nov 2008 00:59:30 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751184AbYKCF7a
+	(ORCPT <rfc822;git-outgoing>); Mon, 3 Nov 2008 00:59:30 -0500
+Received: from watts.utsl.gen.nz ([202.78.240.73]:59684 "EHLO mail.utsl.gen.nz"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751143AbYKCF73 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 3 Nov 2008 00:59:29 -0500
+Received: by mail.utsl.gen.nz (Postfix, from userid 1004)
+	id 6F7FBC4002; Mon,  3 Nov 2008 18:59:27 +1300 (NZDT)
+X-Spam-Checker-Version: SpamAssassin 3.2.5 (2008-06-10) on
+	mail.musashi.utsl.gen.nz
+X-Spam-Level: 
+X-Spam-Status: No, score=-4.4 required=5.0 tests=ALL_TRUSTED,BAYES_00
+	autolearn=ham version=3.2.5
+Received: from [127.0.0.1] (longdrop.musashi.utsl.gen.nz [192.168.253.12])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by mail.utsl.gen.nz (Postfix) with ESMTPSA id 4B5C5C4001;
+	Mon,  3 Nov 2008 18:59:21 +1300 (NZDT)
+In-Reply-To: <7v3ai9226q.fsf@gitster.siamese.dyndns.org>
+X-Mailer: Evolution 2.22.3.1 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/99898>
 
-Pierre Habouzit <madcoder@debian.org> writes:
+On Sun, 2008-11-02 at 14:27 -0800, Junio C Hamano wrote:
+> Jeff King <peff@peff.net> writes:
+> 
+> >> +  * 'git push --matching' does what 'git push' does today (without
+> >> +    explicit configuration)
+> >
+> > I think this is reasonable even without other changes, just to override
+> > any configuration.
+> 
+> I don't.  Can't you say "git push $there HEAD" these days?  I vaguely
+> recall that there is a way to configure push that way for people too lazy
+> to type "origin HEAD" after "git push".
 
-> +case "$prune_empty,$filter_commit" in
-> +',')
-> +	filter_commit='git commit-tree "$@"';;
-> +'t,')
-> +	filter_commit="$functions;"' git_commit_non_empty_tree "$@"';;
-> +','*)
-> +	;;
-> +*)
-> +	die "Cannot set --prune-empty and --filter-commit at the same time"
-> +esac
+I don't think it's about laziness, it's more about making sure that
+without specifying behaviour, the action of the command is conservative.
+Pushing all matching refs is not conservative; it's "magic".  And in my
+experience, people get bitten by it, because they think, "ok, time to
+push this branch", type "git push" and then a lot more than they
+expected gets pushed.
 
-This is only style issue, but I find the above extremely difficult to
-read.  If it were either:
+I can see that some people want this behaviour by default; but to me
+"push the current branch back to where it came from" seems like far more
+a rational default for at least 90% of users.
 
-	case ... in
-        ,) do "neither set case" ;;
-        t,) do "prune but not filter case" ;;
-        *) do "both set case" ;;
-        esac
-
-or (rather amateurish but conveys what it wants to do more clearly):
-        
-	case ... in
-        '','') do "neither set case" ;;
-        t,'') do "prune but not filter case" ;;
-        t,t) do "both set case" ;;
-        esac
-
-I wouldn't have to wonder which sq pairs with which one.
-
-> diff --git a/t/t7003-filter-branch.sh b/t/t7003-filter-branch.sh
-> index b0a9d7d..352b56b 100755
-> --- a/t/t7003-filter-branch.sh
-> +++ b/t/t7003-filter-branch.sh
-> @@ -262,4 +262,12 @@ test_expect_success 'Tag name filtering allows slashes in tag names' '
->  	test_cmp expect actual
->  '
->  
-> +test_expect_success 'Prune empty commits' '
-> +	make_commit to_remove &&
-> +	(git rev-list HEAD | grep -v $(git rev-parse HEAD)) > expect &&
-
-I am not sure what this one is doing.
-
- - Isn't this the same as "git rev-list HEAD^"?
- - Do you need a subshell?
+Sam.
