@@ -1,75 +1,77 @@
-From: "Sverre Rabbelier" <alturin@gmail.com>
-Subject: Re: Pull request for sub-tree merge into /contrib/gitstats
-Date: Mon, 3 Nov 2008 09:40:51 +0100
-Message-ID: <bd6139dc0811030040q1dd8de49t23f7924e03ad289d@mail.gmail.com>
-References: <bd6139dc0810291606o2efe4254me378335b76861340@mail.gmail.com>
-	 <7vljw5evj5.fsf@gitster.siamese.dyndns.org>
-	 <bd6139dc0811021124q5ba22d6bm6655f735aaeb379b@mail.gmail.com>
-	 <alpine.DEB.1.00.0811030729071.22125@pacific.mpi-cbg.de.mpi-cbg.de>
-	 <ee77f5c20811022307r59dc4d09m20551a339a2993ea@mail.gmail.com>
-Reply-To: sverre@rabbelier.nl
+From: Sam Vilain <sam@vilain.net>
+Subject: Re: [PATCH] Documentation: add a planning document for the next
+	CLI revamp
+Date: Mon, 03 Nov 2008 21:43:33 +1300
+Message-ID: <1225701813.20883.85.camel@maia.lan>
+References: <1225338485-11046-1-git-send-email-sam@vilain.net>
+	 <gedhh6$urq$1@ger.gmane.org> <1225435899.20883.25.camel@maia.lan>
+	 <200810310836.02908.jnareb@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain
 Content-Transfer-Encoding: 7bit
-Cc: "Johannes Schindelin" <Johannes.Schindelin@gmx.de>,
-	"Junio C Hamano" <gitster@pobox.com>, git@vger.kernel.org
-To: "David Symonds" <dsymonds@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Nov 03 09:42:14 2008
+Cc: git@vger.kernel.org, Nicolas Pitre <nico@cam.org>
+To: Jakub Narebski <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Nov 03 09:44:59 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Kwv0h-0007Rc-PS
-	for gcvg-git-2@gmane.org; Mon, 03 Nov 2008 09:42:08 +0100
+	id 1Kwv3O-00088D-3b
+	for gcvg-git-2@gmane.org; Mon, 03 Nov 2008 09:44:54 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754789AbYKCIky (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 3 Nov 2008 03:40:54 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754785AbYKCIky
-	(ORCPT <rfc822;git-outgoing>); Mon, 3 Nov 2008 03:40:54 -0500
-Received: from fg-out-1718.google.com ([72.14.220.159]:25053 "EHLO
-	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754779AbYKCIkx (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 3 Nov 2008 03:40:53 -0500
-Received: by fg-out-1718.google.com with SMTP id 19so2109812fgg.17
-        for <git@vger.kernel.org>; Mon, 03 Nov 2008 00:40:51 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:reply-to
-         :to:subject:cc:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:references;
-        bh=5oQmbDqYFI8KoogS2EhSQTd+Bslrg0iGR4cbYM7IRbI=;
-        b=sH90TFvOt4fyIBiRFW/8LVZasioHWvlDOV7nJqVL+VfIC2MINnQ7BL7z9KZN2ds7VE
-         G0Isgr6YPpwSeOvZBdgdUc+Qq/i3QI2/3uFOz2sIXlgQRmIeZNVzWnwiJMGKd2vVxy3H
-         DiwNQMFhjLNnIh1fy8lcJKW+uFWUjcd3khx1E=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:reply-to:to:subject:cc:in-reply-to
-         :mime-version:content-type:content-transfer-encoding
-         :content-disposition:references;
-        b=tFWoebO8dNAQq2EAT2CZkbmQMDFHM/yp6lw8p123csXNsYKl/rtnCJS/4Mhy3S7ODG
-         mBRNRDNTmWg5qUaCvectGs+gEc/Sb2mb8sFD4KVjNIU1jtynYckNwMX00gFrGtBOedOX
-         VYheK5KQODJiy169cbcKT//1ZbWCs67q++Hik=
-Received: by 10.187.211.3 with SMTP id n3mr1861334faq.60.1225701651689;
-        Mon, 03 Nov 2008 00:40:51 -0800 (PST)
-Received: by 10.187.213.8 with HTTP; Mon, 3 Nov 2008 00:40:51 -0800 (PST)
-In-Reply-To: <ee77f5c20811022307r59dc4d09m20551a339a2993ea@mail.gmail.com>
-Content-Disposition: inline
+	id S1754795AbYKCInl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 3 Nov 2008 03:43:41 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754791AbYKCInl
+	(ORCPT <rfc822;git-outgoing>); Mon, 3 Nov 2008 03:43:41 -0500
+Received: from watts.utsl.gen.nz ([202.78.240.73]:34435 "EHLO mail.utsl.gen.nz"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754790AbYKCInj (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 3 Nov 2008 03:43:39 -0500
+Received: by mail.utsl.gen.nz (Postfix, from userid 1004)
+	id D0FF621C382; Mon,  3 Nov 2008 21:43:37 +1300 (NZDT)
+X-Spam-Checker-Version: SpamAssassin 3.2.5 (2008-06-10) on
+	mail.musashi.utsl.gen.nz
+X-Spam-Level: 
+X-Spam-Status: No, score=-4.4 required=5.0 tests=ALL_TRUSTED,BAYES_00
+	autolearn=ham version=3.2.5
+Received: from [127.0.0.1] (longdrop.musashi.utsl.gen.nz [192.168.253.12])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by mail.utsl.gen.nz (Postfix) with ESMTPSA id 88D4A21C362;
+	Mon,  3 Nov 2008 21:43:32 +1300 (NZDT)
+In-Reply-To: <200810310836.02908.jnareb@gmail.com>
+X-Mailer: Evolution 2.22.3.1 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/99911>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/99912>
 
-On Mon, Nov 3, 2008 at 08:07, David Symonds <dsymonds@gmail.com> wrote:
-> I chatted to Sverre separately, and I think we concluded that we could
-> probably just do a single patch (no history, no changelogs, etc.), and
-> just point to the complete git-stats.git repo for folk who want the
-> detail.
+On Fri, 2008-10-31 at 08:36 +0100, Jakub Narebski wrote:
+> > >     git checkout --track origin/wr34251-do-something
+> > 
+> > Ah, that's a new feature.  Still, I think it's poorly Huffman coded; far
+> > too verbose.
+> 
+> Well, either you have a little bit more verbose, or you have to have
+> some DWIM-mery, which (as usual with DWIM) can go wrong.
 
-Either is fine with me, anything to get more exposure is fine with me :).
+That's right, you need to choose when to assume that the user meant
+something that they didn't write very carefully.
 
--- 
-Cheers,
+But look at this:
 
-Sverre Rabbelier
+  git checkout origin/master
+
+  git checkout -t origin/master
+
+The option is called "--track", yet in this case what it actually means
+in the default situation where you have autosetupmerge (or whatever it's
+really called) set to true, is that it modifies the command to imply "-b
+master".  So, in this situation, that is clearly what was meant.
+
+Perhaps you can give an example of why this particular piece of DWIM
+might not be WYM?
+
+Sam.
