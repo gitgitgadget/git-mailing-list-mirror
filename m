@@ -1,80 +1,75 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH] git-diff: Add --staged as a synonym for --cached.
-Date: Mon, 3 Nov 2008 02:14:20 -0500
-Message-ID: <20081103071420.GD10772@coredump.intra.peff.net>
-References: <1225296936-1357-1-git-send-email-dsymonds@gmail.com> <20081029164253.GA3172@sigill.intra.peff.net> <ee77f5c20810290950k6d7acfcbt90b6280c290bd532@mail.gmail.com> <alpine.DEB.1.00.0810291804400.22125@pacific.mpi-cbg.de.mpi-cbg.de> <20081029171122.GA12167@sigill.intra.peff.net> <20081102123519.GA21251@atjola.homenet> <7vljw2yo93.fsf@gitster.siamese.dyndns.org>
+From: "Sverre Rabbelier" <alturin@gmail.com>
+Subject: Re: Pull request for sub-tree merge into /contrib/gitstats
+Date: Mon, 3 Nov 2008 09:40:51 +0100
+Message-ID: <bd6139dc0811030040q1dd8de49t23f7924e03ad289d@mail.gmail.com>
+References: <bd6139dc0810291606o2efe4254me378335b76861340@mail.gmail.com>
+	 <7vljw5evj5.fsf@gitster.siamese.dyndns.org>
+	 <bd6139dc0811021124q5ba22d6bm6655f735aaeb379b@mail.gmail.com>
+	 <alpine.DEB.1.00.0811030729071.22125@pacific.mpi-cbg.de.mpi-cbg.de>
+	 <ee77f5c20811022307r59dc4d09m20551a339a2993ea@mail.gmail.com>
+Reply-To: sverre@rabbelier.nl
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: =?utf-8?B?QmrDtnJu?= Steinbrink <B.Steinbrink@gmx.de>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	David Symonds <dsymonds@gmail.com>, git@vger.kernel.org,
-	Stephan Beyer <s-beyer@gmx.net>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Nov 03 08:15:41 2008
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: "Johannes Schindelin" <Johannes.Schindelin@gmx.de>,
+	"Junio C Hamano" <gitster@pobox.com>, git@vger.kernel.org
+To: "David Symonds" <dsymonds@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Nov 03 09:42:14 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Kwtf0-0004ZW-I0
-	for gcvg-git-2@gmane.org; Mon, 03 Nov 2008 08:15:38 +0100
+	id 1Kwv0h-0007Rc-PS
+	for gcvg-git-2@gmane.org; Mon, 03 Nov 2008 09:42:08 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752237AbYKCHOX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 3 Nov 2008 02:14:23 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752173AbYKCHOW
-	(ORCPT <rfc822;git-outgoing>); Mon, 3 Nov 2008 02:14:22 -0500
-Received: from peff.net ([208.65.91.99]:3687 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752162AbYKCHOW (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 3 Nov 2008 02:14:22 -0500
-Received: (qmail 29266 invoked by uid 111); 3 Nov 2008 07:14:21 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.32) with SMTP; Mon, 03 Nov 2008 02:14:21 -0500
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Mon, 03 Nov 2008 02:14:20 -0500
+	id S1754789AbYKCIky (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 3 Nov 2008 03:40:54 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754785AbYKCIky
+	(ORCPT <rfc822;git-outgoing>); Mon, 3 Nov 2008 03:40:54 -0500
+Received: from fg-out-1718.google.com ([72.14.220.159]:25053 "EHLO
+	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754779AbYKCIkx (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 3 Nov 2008 03:40:53 -0500
+Received: by fg-out-1718.google.com with SMTP id 19so2109812fgg.17
+        for <git@vger.kernel.org>; Mon, 03 Nov 2008 00:40:51 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:reply-to
+         :to:subject:cc:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:references;
+        bh=5oQmbDqYFI8KoogS2EhSQTd+Bslrg0iGR4cbYM7IRbI=;
+        b=sH90TFvOt4fyIBiRFW/8LVZasioHWvlDOV7nJqVL+VfIC2MINnQ7BL7z9KZN2ds7VE
+         G0Isgr6YPpwSeOvZBdgdUc+Qq/i3QI2/3uFOz2sIXlgQRmIeZNVzWnwiJMGKd2vVxy3H
+         DiwNQMFhjLNnIh1fy8lcJKW+uFWUjcd3khx1E=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:reply-to:to:subject:cc:in-reply-to
+         :mime-version:content-type:content-transfer-encoding
+         :content-disposition:references;
+        b=tFWoebO8dNAQq2EAT2CZkbmQMDFHM/yp6lw8p123csXNsYKl/rtnCJS/4Mhy3S7ODG
+         mBRNRDNTmWg5qUaCvectGs+gEc/Sb2mb8sFD4KVjNIU1jtynYckNwMX00gFrGtBOedOX
+         VYheK5KQODJiy169cbcKT//1ZbWCs67q++Hik=
+Received: by 10.187.211.3 with SMTP id n3mr1861334faq.60.1225701651689;
+        Mon, 03 Nov 2008 00:40:51 -0800 (PST)
+Received: by 10.187.213.8 with HTTP; Mon, 3 Nov 2008 00:40:51 -0800 (PST)
+In-Reply-To: <ee77f5c20811022307r59dc4d09m20551a339a2993ea@mail.gmail.com>
 Content-Disposition: inline
-In-Reply-To: <7vljw2yo93.fsf@gitster.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/99910>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/99911>
 
-On Sun, Nov 02, 2008 at 10:30:16AM -0800, Junio C Hamano wrote:
+On Mon, Nov 3, 2008 at 08:07, David Symonds <dsymonds@gmail.com> wrote:
+> I chatted to Sverre separately, and I think we concluded that we could
+> probably just do a single patch (no history, no changelogs, etc.), and
+> just point to the complete git-stats.git repo for folk who want the
+> detail.
 
-> > Looking at --cached/--index we have basically three things:
-> >
-> >   --cached to refer to the state of the index (diff, grep, [stash], ...)
-> >   --cached to _work on_ the index only (rm, apply, ...)
-> >   --index to _work on_ both the index and the working tree (apply, ...)
-> 
-> I think the earlier two are the same thing.  The only difference between
-> them is that in the first one, the definition of your "work on" happens to
-> be a read-only operation.  Am I mistaken?
+Either is fine with me, anything to get more exposure is fine with me :).
 
-I think that is somewhat the case for "grep", for example. But the
-confusion is that diff is really a different beast, because you are
-comparing two _different_ locations.
+-- 
+Cheers,
 
-So "git diff --staged", while it makes sense to us (since we are asking
-"what is staged"), is not consistent with the discussed rules. In
-particular:
-
-  1. It operates on just the "stage" and not the working tree, so it
-     should be "--staged-only". But the only there is nonsensical.
-
-  2. The default is _already_ operating on the staging area, so you are
-     really switching up the working tree for the HEAD in what you are
-     diffing. So in that sense, it doesn't convey the change in
-     operation very well.
-
-And I am not proposing a change here (except to perhaps "git diff
---staged" instead of "--cached"). Just pointing out that it does not
-follow the "--staged operates on both, --staged-only operates on just
-the index" rule.
-
-Hrm. For that matter, grep is a bit different, too. Since I would expect
-"git grep --staged" to find only staged things, not things in both the
-working tree and the index. So perhaps there is a difference between
-commands that modify and commands that inspect.
-
--Peff
+Sverre Rabbelier
