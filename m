@@ -1,85 +1,90 @@
-From: Andreas Ericsson <ae@op5.se>
-Subject: Re: Offtopic [Re: Can't use gitk.]
-Date: Mon, 03 Nov 2008 11:50:55 +0100
-Message-ID: <490ED78F.3010005@op5.se>
-References: <cda58cb80511140253s92f28e2g@mail.gmail.com>	 <437870AF.8060607@op5.se>	 <cda58cb80511140322v686e4ee0g@mail.gmail.com>	 <43787831.3030404@op5.se>	 <cda58cb80511140355q1add0ba5n@mail.gmail.com>	 <Pine.LNX.4.64.0511141005590.3263@g5.osdl.org> <4d8e3fd30811021128q5f172a97pbc8e657d08f9ac8c@mail.gmail.com>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: how to ignore all .xvpics directories
+Date: Mon, 03 Nov 2008 03:49:55 -0800 (PST)
+Message-ID: <m3d4hdf2qp.fsf@localhost.localdomain>
+References: <490ECE54.5090505@melosgmbh.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15;
-	format=flowed
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Mon Nov 03 11:52:23 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Christoph Duelli <duelli@melosgmbh.de>
+X-From: git-owner@vger.kernel.org Mon Nov 03 12:51:28 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Kwx2j-0006Kv-AB
-	for gcvg-git-2@gmane.org; Mon, 03 Nov 2008 11:52:21 +0100
+	id 1Kwxxp-0005pr-UF
+	for gcvg-git-2@gmane.org; Mon, 03 Nov 2008 12:51:22 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755120AbYKCKvE convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 3 Nov 2008 05:51:04 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755115AbYKCKvE
-	(ORCPT <rfc822;git-outgoing>); Mon, 3 Nov 2008 05:51:04 -0500
-Received: from mail.op5.se ([193.201.96.20]:59822 "EHLO mail.op5.se"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754981AbYKCKvA (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 3 Nov 2008 05:51:00 -0500
-Received: from localhost (localhost.localdomain [127.0.0.1])
-	by mail.op5.se (Postfix) with ESMTP id 443AC1B80C9D
-	for <git@vger.kernel.org>; Mon,  3 Nov 2008 11:45:57 +0100 (CET)
-X-Virus-Scanned: amavisd-new at 
-X-Spam-Flag: NO
-X-Spam-Score: -4.399
-X-Spam-Level: 
-X-Spam-Status: No, score=-4.399 tagged_above=-10 required=6.6
-	tests=[ALL_TRUSTED=-1.8, BAYES_00=-2.599]
-Received: from mail.op5.se ([127.0.0.1])
-	by localhost (mail.op5.se [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id 5ETqClvGwqUj for <git@vger.kernel.org>;
-	Mon,  3 Nov 2008 11:45:53 +0100 (CET)
-Received: from clix.int.op5.se (unknown [192.168.1.20])
-	by mail.op5.se (Postfix) with ESMTP id 81E781B80CA0
-	for <git@vger.kernel.org>; Mon,  3 Nov 2008 11:45:52 +0100 (CET)
-User-Agent: Thunderbird 2.0.0.16 (X11/20080723)
-In-Reply-To: <4d8e3fd30811021128q5f172a97pbc8e657d08f9ac8c@mail.gmail.com>
+	id S1752548AbYKCLuD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 3 Nov 2008 06:50:03 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752522AbYKCLuB
+	(ORCPT <rfc822;git-outgoing>); Mon, 3 Nov 2008 06:50:01 -0500
+Received: from ey-out-2122.google.com ([74.125.78.24]:16676 "EHLO
+	ey-out-2122.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752521AbYKCLuA (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 3 Nov 2008 06:50:00 -0500
+Received: by ey-out-2122.google.com with SMTP id 6so811060eyi.37
+        for <git@vger.kernel.org>; Mon, 03 Nov 2008 03:49:59 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:received:received
+         :x-authentication-warning:to:cc:subject:references:from:in-reply-to
+         :message-id:lines:user-agent:mime-version:content-type:date;
+        bh=bH2Ktqm7zwDkC7h/yRAh7xFo+w5qvigdG5Jp9sCyXZM=;
+        b=soyqfwaDCMYwTbgEhcKfqaXv+uPvOosjSUxYJl+uRb0fz1OKOiw1moH1fy0/CQZe9W
+         Ud1zBD/yX6o6IW2nOYzB//QMLYSLGIE5YElcbaOFKVzJ3gSGm3vtix+H3PvCIQRaZLic
+         80dWDsUp9LMconDMjy91iu9CwSwqW0iYJKfj8=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=x-authentication-warning:to:cc:subject:references:from:in-reply-to
+         :message-id:lines:user-agent:mime-version:content-type:date;
+        b=Tca7Mp9wLjCbH07XTTBd8s4/fnJou40oCnUvm1ZQ1DEGHnuCDxnEP5SaTQIEyCDfUI
+         J75ZbKJ6blYMEui02SPoQQHSiSP7QywKK/T+OqbEfF8gy1WrTz150TLbKfiV7O4Pg07d
+         Slmrh4ng8QDllEQQ+mesZkszID+loO7Bwsykg=
+Received: by 10.210.74.17 with SMTP id w17mr15660734eba.148.1225712998439;
+        Mon, 03 Nov 2008 03:49:58 -0800 (PST)
+Received: from localhost.localdomain (abvp247.neoplus.adsl.tpnet.pl [83.8.213.247])
+        by mx.google.com with ESMTPS id 3sm9615248eyi.5.2008.11.03.03.49.54
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Mon, 03 Nov 2008 03:49:55 -0800 (PST)
+Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
+	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id mA3BnqBq017948;
+	Mon, 3 Nov 2008 12:49:52 +0100
+Received: (from jnareb@localhost)
+	by localhost.localdomain (8.13.4/8.13.4/Submit) id mA3BnoXC017945;
+	Mon, 3 Nov 2008 12:49:50 +0100
+X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
+In-Reply-To: <490ECE54.5090505@melosgmbh.de>
+User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/99932>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/99933>
 
-Paolo Ciarrocchi wrote:
-> On Mon, Nov 14, 2005 at 7:24 PM, Linus Torvalds <torvalds@osdl.org> w=
-rote:
->> On Mon, 14 Nov 2005, Franck wrote:
->=20
-> Sorry for commenting on this email only now but I found it in my
-> archive while looking for a different thread :-)
->=20
->>> oops, sorry Andreas for that ! I use to spelling this name without =
-'s'
->>> that's why I did the mistake I think.
->> In Finland and Sweden Andrea without the "s" is a girls name, while
->> Andreas with the "s" (or Andr=E9 without "-as") is a boy.
->>
->> It's not even very rare. "Andrea" was the 84th most popular female n=
-ame in
->> Sweden in 2000.
->>
->> It can be confusing, since in Italy (and, I think, southern Germany =
-and
->> much of Eastern Europe), "Andrea" is a boy, and in fact, the name
->> originally comes from the Greek meaning "man".
->=20
-> In Italy Andrea might be a girl as well even if that name is often
-> used for a boy.
->=20
+Christoph Duelli <duelli@melosgmbh.de> writes:
 
-Little did my parents know that the name they gave me would spawn a
-discussion lasting very nearly three years.
+> Is it possible to ignore (once and for all) that directories like
+> .pics or .xvpics (that might occur all over the place where xv was
+> called) should be ignored?
+> 
+> [ Note: some time ago this issue has already popped up:
+> http://thread.gmane.org/gmane.comp.version-control.git/50504
+> 
+> However, adding a line with just .xvpics in the toplevel .gitignore
+> does not help. Neither does /**/.xvpics
 
---=20
-Andreas Ericsson                   andreas.ericsson@op5.se
-OP5 AB                             www.op5.se
-Tel: +46 8-230225                  Fax: +46 8-230231
+Could you reproduce the steps you tried? Because I have checked, and
+putting .xvpics or .xvpics/ in top level .gitignore (or in
+.git/info/excludes, or ~/.gitignore) works as expected: filename
+without '/' in it is match agains _basename_.
+
+Note that .gitignore is about contents which is not tracked (not known
+to git). If you added .xvpics to commit by accident, .gitignore will
+do nothing then.
+
+-- 
+Jakub Narebski
+Poland
+ShadeHawk on #git
