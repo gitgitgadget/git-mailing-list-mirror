@@ -1,112 +1,96 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: [RFC PATCH] gitweb: Support filtering projects by .htaccess files.
-Date: Mon, 03 Nov 2008 10:18:56 -0800 (PST)
-Message-ID: <m38ws0fzca.fsf@localhost.localdomain>
-References: <200811031943.30033.angavrilov@gmail.com>
-	<200811031754.00545.fg@one2team.net>
-	<bb6f213e0811030926n32c1befcj5d9add6378f7dce4@mail.gmail.com>
-	<200811031845.46451.fg@one2team.net>
+From: Linus Torvalds <torvalds@linux-foundation.org>
+Subject: Re: git bisect v2.6.27 v2.6.26 problem/bug
+Date: Mon, 3 Nov 2008 10:43:09 -0800 (PST)
+Message-ID: <alpine.LFD.2.00.0811031035390.3419@nehalem.linux-foundation.org>
+References: <20081103173911.GA12363@xs4all.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: "Alexander Gavrilov" <angavrilov@gmail.com>, git@vger.kernel.org
-To: Francis Galiegue <fg@one2team.net>
-X-From: git-owner@vger.kernel.org Mon Nov 03 19:30:18 2008
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org
+To: Miquel van Smoorenburg <mikevs@xs4all.net>
+X-From: git-owner@vger.kernel.org Mon Nov 03 19:44:40 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Kx4Bq-0005oD-Nr
-	for gcvg-git-2@gmane.org; Mon, 03 Nov 2008 19:30:15 +0100
+	id 1Kx4Pn-0002Ix-U0
+	for gcvg-git-2@gmane.org; Mon, 03 Nov 2008 19:44:40 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752078AbYKCS3A convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 3 Nov 2008 13:29:00 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752055AbYKCS3A
-	(ORCPT <rfc822;git-outgoing>); Mon, 3 Nov 2008 13:29:00 -0500
-Received: from nf-out-0910.google.com ([64.233.182.190]:59078 "EHLO
-	nf-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752045AbYKCS27 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 3 Nov 2008 13:28:59 -0500
-Received: by nf-out-0910.google.com with SMTP id d3so1055845nfc.21
-        for <git@vger.kernel.org>; Mon, 03 Nov 2008 10:28:57 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:received:received
-         :x-authentication-warning:to:cc:subject:references:from:in-reply-to
-         :message-id:lines:user-agent:mime-version:content-type
-         :content-transfer-encoding:date;
-        bh=+WFpTiokltdkkD0uY1PWnyROicUMBExaU1l/iH0YZ7I=;
-        b=gySxUl4axQCezC+BJUn/JCjakVj8TqLqyp0RcU4v97rtus/ZBwcjJBh1UHkzkfV0ox
-         y3v3Z4LAoMRq37iVaGPceIz8Bf34REPZCdwQyGaqbutc08ijgJBGSLli4V80RzMcDE8g
-         YmoDp9lsJU+Fuvv90uFu/qWWxOs2dNbxAsJA8=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=x-authentication-warning:to:cc:subject:references:from:in-reply-to
-         :message-id:lines:user-agent:mime-version:content-type
-         :content-transfer-encoding:date;
-        b=VvvMQqLLi3IqYxOF8FADu1JXue9aOGpxgSAHT375TC1of5RlpaJeW8aatJjxfbu398
-         f3lW67v0Q6xCdvIqgy5n22+V6PdNczCiXTO7vMgcgfeHZMTgAdV1tTdAenH64et8Ba2b
-         tafM8KIK/tUlQ+22lAvuwGMe/G+BSS60Cz+KI=
-Received: by 10.210.139.15 with SMTP id m15mr440853ebd.182.1225736337844;
-        Mon, 03 Nov 2008 10:18:57 -0800 (PST)
-Received: from localhost.localdomain (abvp247.neoplus.adsl.tpnet.pl [83.8.213.247])
-        by mx.google.com with ESMTPS id c9sm5142366nfi.26.2008.11.03.10.18.55
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Mon, 03 Nov 2008 10:18:56 -0800 (PST)
-Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id mA3IIDY3020100;
-	Mon, 3 Nov 2008 19:18:18 +0100
-Received: (from jnareb@localhost)
-	by localhost.localdomain (8.13.4/8.13.4/Submit) id mA3IHvx4020096;
-	Mon, 3 Nov 2008 19:17:57 +0100
-X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
-In-Reply-To: <200811031845.46451.fg@one2team.net>
-User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
+	id S1751520AbYKCSnN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 3 Nov 2008 13:43:13 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751481AbYKCSnM
+	(ORCPT <rfc822;git-outgoing>); Mon, 3 Nov 2008 13:43:12 -0500
+Received: from smtp1.linux-foundation.org ([140.211.169.13]:52685 "EHLO
+	smtp1.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751474AbYKCSnL (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 3 Nov 2008 13:43:11 -0500
+Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [140.211.169.55])
+	by smtp1.linux-foundation.org (8.14.2/8.13.5/Debian-3ubuntu1.1) with ESMTP id mA3Ih9fu018564
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Mon, 3 Nov 2008 10:43:10 -0800
+Received: from localhost (localhost [127.0.0.1])
+	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id mA3Ih9PK032678;
+	Mon, 3 Nov 2008 10:43:09 -0800
+In-Reply-To: <20081103173911.GA12363@xs4all.net>
+User-Agent: Alpine 2.00 (LFD 1167 2008-08-23)
+X-Spam-Status: No, hits=-3.44 required=5 tests=AWL,BAYES_00
+X-Spam-Checker-Version: SpamAssassin 3.2.4-osdl_revision__1.47__
+X-MIMEDefang-Filter: lf$Revision: 1.188 $
+X-Scanned-By: MIMEDefang 2.63 on 140.211.169.13
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/99976>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/99977>
 
-=46rancis Galiegue <fg@one2team.net> writes:
-> Le Monday 03 November 2008 18:26:44 Alexander Gavrilov, vous avez =C3=
-=A9crit=C2=A0:
->> On Mon, Nov 3, 2008 at 7:54 PM, Francis Galiegue <fg@one2team.net> w=
-rote:
->>>
->>> It just seems to me that this is emulating functionality that
->>> multiple Web servers already provide...
->>>
->>> What's more, knowledge about these Web servers are _much_ more
->>> widespread than knowledge about gitweb.
->>>
->>> Why reinvent the wheel?
-[...]
 
->> If you are speaking of web servers as in 'Apache', then how would it
->> know which files are going to be accessed when it executes
->> cgi-bin/gitweb.cgi?p=3Dvery/private/project.git to check permissions=
-?
->>=20
->=20
-> Well, as far as Apache is concerned, it can do:
->=20
-> * basic .htpasswd authentication,
-> * LDAP,
-> * PAM,
-> * SSL certificate check (via mod_ssl),
-> * probably others.
->=20
-> Plenty of possibilities.
-[...]
 
-Well, the question is if Apache (and other web servers used with
-gitweb) can do authentication based on path_info or on query-string.
-Because it is encoded in gitweb (via $projectroot) where to find git
-repositories...
+On Mon, 3 Nov 2008, Miquel van Smoorenburg wrote:
+> 
+> If at this point I do a 'git bisect good' I end up in a 2.6.26
+> branch, which is good, but after a few bisects I end up at
+> a version before v2.6.26 (2.6.26-rc5) again, which should be
+> impossible right ?
 
---=20
-Jakub Narebski
-Poland
-ShadeHawk on #git
+No, not at all.
+
+What is going on is that you are hitting commits that were not merged into 
+2.6.26 (so they are _not_ in the "good" part), but they were _developed_ 
+before it. So the kernel Makefile says "v2.6.26-rc8" (not quite 2.6.26 
+yet), but that's because the version in the Makefile ends up being a 
+linear explanation of what the nearest _earlier_ version was, but is not 
+at all indicative of the much more complex non-linear development model.
+
+IOW, you have history that looks like
+
+	- A -> B -> C->
+	    \     /
+	     - D -
+
+And let's say that 'A' is v2.6.26-rc8, while 'B' is the final v2.6.26 
+release, and is your 'good', while 'C' is 2.6.27, and is your 'bad'.
+
+What does that make 'D' then?
+
+It is clearly potentially bad, because it is _not_ in the good set (it was 
+merged after 2.6.26, and could very well be the source of your bug. But 
+think about what 'Makefile' must contain in 'D'. 
+
+The difference between linear history and non-linear history is very 
+important, and "git bisect" very much is all about getting it right. It 
+does't take a "linear" half-way point, it really does a _set_ operation, 
+and it bisects the set of commits. And that set of commits is a DAG, not a 
+linear series.
+
+> Anyway - at the end I end up with a 'good' version that is
+> 2.6.26-rc<something> which is kind of useless. I know that
+> version up to 2.6.26 are good ...
+
+Not at all. It's not "kind of useless", it's very important.
+
+> What am I doing wrong ?
+
+You're not doing anything wrong, you just didn't realize how non-linear 
+development works.
+
+			Linus
