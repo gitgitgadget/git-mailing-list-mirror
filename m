@@ -1,79 +1,83 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: libxdiff and patience diff
-Date: Tue, 4 Nov 2008 06:39:48 +0100 (CET)
-Message-ID: <alpine.DEB.1.00.0811040627020.24407@pacific.mpi-cbg.de>
-References: <20081104004001.GB29458@artemis.corp>
+From: Liu Yubao <yubao.liu@gmail.com>
+Subject: Re: How to send patch series without storing them to disk?
+Date: Tue, 04 Nov 2008 14:01:41 +0800
+Message-ID: <490FE545.9000106@gmail.com>
+References: <490EC57E.4080200@gmail.com> <alpine.LFD.2.00.0811032242080.1791@sys-0.hiltweb.site>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: davidel@xmailserver.org, Git ML <git@vger.kernel.org>
-To: Pierre Habouzit <madcoder@debian.org>
-X-From: git-owner@vger.kernel.org Tue Nov 04 06:34:07 2008
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Ian Hilt <ian.hilt@gmx.com>
+X-From: git-owner@vger.kernel.org Tue Nov 04 07:04:01 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KxEYJ-0004kW-2Z
-	for gcvg-git-2@gmane.org; Tue, 04 Nov 2008 06:34:07 +0100
+	id 1KxF0z-0002HE-LL
+	for gcvg-git-2@gmane.org; Tue, 04 Nov 2008 07:03:46 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750897AbYKDFcY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 4 Nov 2008 00:32:24 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751141AbYKDFcY
-	(ORCPT <rfc822;git-outgoing>); Tue, 4 Nov 2008 00:32:24 -0500
-Received: from mail.gmx.net ([213.165.64.20]:52581 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1750855AbYKDFcX (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 4 Nov 2008 00:32:23 -0500
-Received: (qmail invoked by alias); 04 Nov 2008 05:32:21 -0000
-Received: from pacific.mpi-cbg.de (EHLO pacific.mpi-cbg.de) [141.5.10.38]
-  by mail.gmx.net (mp013) with SMTP; 04 Nov 2008 06:32:21 +0100
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1/fRSQKSJHfDY+6X4RUe+3E1+HVo+mbDz6OdVF6eA
-	Z90T/w7QyQCTjU
-X-X-Sender: schindelin@pacific.mpi-cbg.de
-In-Reply-To: <20081104004001.GB29458@artemis.corp>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.67
+	id S1753737AbYKDGBx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 4 Nov 2008 01:01:53 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751716AbYKDGBx
+	(ORCPT <rfc822;git-outgoing>); Tue, 4 Nov 2008 01:01:53 -0500
+Received: from ti-out-0910.google.com ([209.85.142.187]:4975 "EHLO
+	ti-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753738AbYKDGBw (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 4 Nov 2008 01:01:52 -0500
+Received: by ti-out-0910.google.com with SMTP id b6so1557824tic.23
+        for <git@vger.kernel.org>; Mon, 03 Nov 2008 22:01:50 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from
+         :user-agent:mime-version:to:cc:subject:references:in-reply-to
+         :content-type:content-transfer-encoding;
+        bh=nYiFBWl8aqIEH6Gmr2KEqEmicqDo/skAqKg5zYPkafM=;
+        b=bcTwxNdW4vMkMn9UxsC2D1q7+eadKocbW69B2FosOY6DzBdEZGTYptUv8QthxbeNa2
+         qxMRDrhJ3h8AmOTr6GO92umT8zVZP08jxZwVoSJqOj/j4SUybRBK3YmTcTi9ROxZTBAy
+         FOoE9nkPHsyFek9483wuwSU51ixp/MlWTJOTg=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:user-agent:mime-version:to:cc:subject
+         :references:in-reply-to:content-type:content-transfer-encoding;
+        b=PmMPh2YJ0A2MJDrVQHiwRhv1jsBS9PBqsgaCnoktqLpIqgPyW3MFpjMsAuuQ0Pax+i
+         oIlOAyiRBchI/1GZIoY2hGEDlGFw9SFN39XEzC01TSfJwYasgIEmAAd2Af8/KPgGZLNJ
+         ZhTBpK+MfdsZQWVCg+tdSBluNT7DR12WvnSMc=
+Received: by 10.110.10.16 with SMTP id 16mr736149tij.25.1225778510364;
+        Mon, 03 Nov 2008 22:01:50 -0800 (PST)
+Received: from ?10.64.1.142? ([211.157.41.194])
+        by mx.google.com with ESMTPS id i6sm15257654tid.5.2008.11.03.22.01.48
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Mon, 03 Nov 2008 22:01:49 -0800 (PST)
+User-Agent: Thunderbird 2.0.0.17 (Windows/20080914)
+In-Reply-To: <alpine.LFD.2.00.0811032242080.1791@sys-0.hiltweb.site>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/100040>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/100041>
 
-Hi,
+Ian Hilt wrote:
+> On Mon, 3 Nov 2008, Liu Yubao wrote:
+>> Hi,
+>> I tried to send one patch using git-send-email, it reported "Syntax: AUTH mechanism".
+>>   git send-email --from <myemail> --to <my-another-email> \
+>>                  --smtp-pass <mypass> --smtp-user <myaccount> \
+>>                  --smtp-server <the-smtp-server> \
+>>                  --smtp-encryption auth          \
+>>                  0001-just-a-test.patch
+>>
+>> The parameters about smtp are right, I tested with msmtp. What's wrong?
+>>
+>> I have MIME::Base64 and Authen::SASL installed and the smtp server doesn't use
+>> ssl and tls.
+> 
+> Try removing --smtp-encryption and add --envelope-sender <youremail>.
+> 
 
-On Tue, 4 Nov 2008, Pierre Habouzit wrote:
+I traced the related Perl modules and found Authen::SASL in Ubuntu Gutsy is buggy,
+the problem is resolved after I install the module from CPAN.
 
-> I've been working tonight, trying to make libxdiff support the patience 
-> diff algorithm, but I've totally failed, because I _thought_ I 
-> understood what xdl_split was doing, but it appears I don't.
-
-I thought about it, too, at the GitTogether, although I want to finish my 
-jGit diff first.
-
-The main idea I had about patience diff is that you can reuse a lot of 
-functions in libxdiff.
-
-But the requirement of taking just unique lines/hashes into account, and 
-_after_ splitting up, _again_ determine uniqueness _just_ in the 
-between-hunk part made me think that it may be wiser to have a separate 
-function for the patience diff stuff.
-
-Basically, you would start to have libxdiff split the lines and hash them 
-as normal, but then determine the unique hashes (I'd start with the 
-smaller text, just to have a better chance to end up with unique hashes).
-
-Once they are determined, you can search for those exact lines (hash 
-first) in the post-document.
-
-Once that is done, you'd have to find the longest common subsequence, 
-which you could do using the existing infrastructure, but that would 
-require more work (as we already know the lines are unique).
-
-After that, you would have to recurse to the same algorithm _between_ 
-known chunks.  Eventually, that would have to resort to classical libxdiff 
-(if there are no, or not enough, unique lines).
-
-Ciao,
-Dscho
+> 
+> 	Ian
+> 
