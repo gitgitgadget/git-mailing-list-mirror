@@ -1,83 +1,75 @@
-From: Sam Vilain <sam@vilain.net>
-Subject: Re: [PATCH] Documentation: add a planning document for the next
-	CLI revamp
-Date: Wed, 05 Nov 2008 07:10:31 +1300
-Message-ID: <1225822231.6722.3.camel@maia.lan>
-References: <20081030002239.D453B21D14E@mail.utsl.gen.nz>
-	 <20081031003154.GA5745@sigill.intra.peff.net>
-	 <7v3ai9226q.fsf@gitster.siamese.dyndns.org>
-	 <1225691960.20883.41.camel@maia.lan>
-	 <20081104091800.GB24100@dpotapov.dyndns.org>
+From: Andreas Ericsson <ae@op5.se>
+Subject: Re: [PATCH v2 1/3] t7700: demonstrate mishandling of objects in packs
+ with a .keep file
+Date: Tue, 04 Nov 2008 20:17:40 +0100
+Message-ID: <49109FD4.30003@op5.se>
+References: <20081103161202.GJ15463@spearce.org> <muOuA1nLBoljLnZoguxeFeKt-8Q-I9Y3ljvxnLWLt9KyA8HwVtMa4Q@cipher.nrlssc.navy.mil>
 Mime-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=ISO-8859-15; format=flowed
 Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
-	Sam Vilain <samv@vilain.net>, git@vger.kernel.org,
-	Johannes Schindelin <johannes.schindelin@gmx.de>,
-	Scott Chacon <schacon@gmail.com>,
-	Tom Preston-Werner <tom@github.com>,
-	"J.H." <warthog19@eaglescrag.net>,
-	Christian Couder <chriscool@tuxfamily.org>,
-	Kai Blin <kai@samba.org>
-To: Dmitry Potapov <dpotapov@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Nov 04 19:12:10 2008
+Cc: Junio C Hamano <gitster@pobox.com>,
+	"Shawn O. Pearce" <spearce@spearce.org>,
+	Git Mailing List <git@vger.kernel.org>,
+	Nicolas Pitre <nico@cam.org>
+To: Brandon Casey <casey@nrlssc.navy.mil>
+X-From: git-owner@vger.kernel.org Tue Nov 04 20:19:40 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KxQNt-0008P7-4Z
-	for gcvg-git-2@gmane.org; Tue, 04 Nov 2008 19:12:09 +0100
+	id 1KxRR9-0000qu-6x
+	for gcvg-git-2@gmane.org; Tue, 04 Nov 2008 20:19:35 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753276AbYKDSKz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 4 Nov 2008 13:10:55 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752938AbYKDSKz
-	(ORCPT <rfc822;git-outgoing>); Tue, 4 Nov 2008 13:10:55 -0500
-Received: from watts.utsl.gen.nz ([202.78.240.73]:53282 "EHLO mail.utsl.gen.nz"
+	id S1753955AbYKDTSQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 4 Nov 2008 14:18:16 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753867AbYKDTSQ
+	(ORCPT <rfc822;git-outgoing>); Tue, 4 Nov 2008 14:18:16 -0500
+Received: from mail.op5.se ([193.201.96.20]:54631 "EHLO mail.op5.se"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752771AbYKDSKy (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 4 Nov 2008 13:10:54 -0500
-Received: by mail.utsl.gen.nz (Postfix, from userid 1004)
-	id 1E6F021C3BC; Wed,  5 Nov 2008 07:10:49 +1300 (NZDT)
-X-Spam-Checker-Version: SpamAssassin 3.2.5 (2008-06-10) on
-	mail.musashi.utsl.gen.nz
+	id S1753307AbYKDTSP (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 4 Nov 2008 14:18:15 -0500
+Received: from localhost (localhost.localdomain [127.0.0.1])
+	by mail.op5.se (Postfix) with ESMTP id 5B9291B80CA3;
+	Tue,  4 Nov 2008 20:13:21 +0100 (CET)
+X-Virus-Scanned: amavisd-new at 
+X-Spam-Flag: NO
+X-Spam-Score: -2.974
 X-Spam-Level: 
-X-Spam-Status: No, score=-4.4 required=5.0 tests=ALL_TRUSTED,BAYES_00
-	autolearn=ham version=3.2.5
-Received: from [127.0.0.1] (longdrop.musashi.utsl.gen.nz [192.168.253.12])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by mail.utsl.gen.nz (Postfix) with ESMTPSA id AD0D921C39C;
-	Wed,  5 Nov 2008 07:10:35 +1300 (NZDT)
-In-Reply-To: <20081104091800.GB24100@dpotapov.dyndns.org>
-X-Mailer: Evolution 2.22.3.1 
+X-Spam-Status: No, score=-2.974 tagged_above=-10 required=6.6
+	tests=[AWL=-0.475, BAYES_00=-2.599, RDNS_NONE=0.1]
+Received: from mail.op5.se ([127.0.0.1])
+	by localhost (mail.op5.se [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id uyX8Ca3P1tOk; Tue,  4 Nov 2008 20:13:18 +0100 (CET)
+Received: from clix.int.op5.se (unknown [172.27.78.22])
+	by mail.op5.se (Postfix) with ESMTP id 8F5481B800B1;
+	Tue,  4 Nov 2008 20:13:14 +0100 (CET)
+User-Agent: Thunderbird 2.0.0.16 (X11/20080723)
+In-Reply-To: <muOuA1nLBoljLnZoguxeFeKt-8Q-I9Y3ljvxnLWLt9KyA8HwVtMa4Q@cipher.nrlssc.navy.mil>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/100095>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/100096>
 
-On Tue, 2008-11-04 at 12:18 +0300, Dmitry Potapov wrote:
-> > I can see that some people want this behaviour by default; but to me
-> > "push the current branch back to where it came from" seems like far more
-> > a rational default for at least 90% of users.
+Brandon Casey wrote:
+> From: Brandon Casey <drafnel@gmail.com>
 > 
-> I think it depends on one's workflow. If you use a centralized workflow
-> as with CVS then yes, 90% cases you want to push the current branch. On
-> the other hand, if people push their changes to the server only for
-> review, it means that accidentally pushing more than one intended is not
-> a big deal.
+> Objects residing in pack files that have an associated .keep file are not
+> supposed to be repacked into new pack files, but they are.
+> 
+> Signed-off-by: Brandon Casey <casey@nrlssc.navy.mil>
+> ---
+> 
+> 
+> This version replaces the use of 'head -n -1' with a grep, and should work on
+> all platforms.
+> 
 
-Perhaps not, but it was still unintended.  I really can't understand the
-opposition to making this command make many people less angry at it.
+sed 1q is faster, as it stops parsing after the first line (the same as 'head
+-n 1' does, but in a more portable fashion).
 
->  The only one who does publishing to the official repository
-> is the maintainer, and the maintainer is most likely to run some tests
-> after merging all changes, which takes some time. So, it is rarely push
-> the current branch, it is usually the branch that has been tested, so
-> the name of the branch should be specified explicitly anyway.
-
-Why is that relevant?  That person can still use the explicit version of
-the command.
-
-Sam.
+-- 
+Andreas Ericsson                   andreas.ericsson@op5.se
+OP5 AB                             www.op5.se
+Tel: +46 8-230225                  Fax: +46 8-230231
