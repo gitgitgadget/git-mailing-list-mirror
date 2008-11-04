@@ -1,86 +1,69 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] Documentation: add a planning document for the next CLI
- revamp
-Date: Tue, 04 Nov 2008 11:46:36 -0800
-Message-ID: <7vr65rqnoj.fsf@gitster.siamese.dyndns.org>
-References: <20081030002239.D453B21D14E@mail.utsl.gen.nz>
- <20081031003154.GA5745@sigill.intra.peff.net>
- <7v3ai9226q.fsf@gitster.siamese.dyndns.org>
- <1225691960.20883.41.camel@maia.lan>
- <20081104091800.GB24100@dpotapov.dyndns.org>
- <1225822231.6722.3.camel@maia.lan>
+From: Brandon Casey <casey@nrlssc.navy.mil>
+Subject: Re: [PATCH v2 1/3] t7700: demonstrate mishandling of objects in packs
+ with a .keep file
+Date: Tue, 04 Nov 2008 13:49:41 -0600
+Message-ID: <V78jOMhdYwpSlLU-YzsqEHZxJyrvKbXRQbKsuNPZOEtB8E0kZ5Wi7Q@cipher.nrlssc.navy.mil>
+References: <20081103161202.GJ15463@spearce.org> <muOuA1nLBoljLnZoguxeFeKt-8Q-I9Y3ljvxnLWLt9KyA8HwVtMa4Q@cipher.nrlssc.navy.mil> <49109FD4.30003@op5.se>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Dmitry Potapov <dpotapov@gmail.com>, Jeff King <peff@peff.net>,
-	Sam Vilain <samv@vilain.net>, git@vger.kernel.org,
-	Johannes Schindelin <johannes.schindelin@gmx.de>,
-	Scott Chacon <schacon@gmail.com>,
-	Tom Preston-Werner <tom@github.com>,
-	"J.H." <warthog19@eaglescrag.net>,
-	Christian Couder <chriscool@tuxfamily.org>,
-	Kai Blin <kai@samba.org>
-To: Sam Vilain <sam@vilain.net>
-X-From: git-owner@vger.kernel.org Tue Nov 04 20:50:11 2008
+Content-Type: text/plain; charset=ISO-8859-15
+Content-Transfer-Encoding: 7bit
+Cc: Junio C Hamano <gitster@pobox.com>,
+	"Shawn O. Pearce" <spearce@spearce.org>,
+	Git Mailing List <git@vger.kernel.org>,
+	Nicolas Pitre <nico@cam.org>
+To: Andreas Ericsson <ae@op5.se>
+X-From: git-owner@vger.kernel.org Tue Nov 04 20:51:34 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KxRui-000370-9D
-	for gcvg-git-2@gmane.org; Tue, 04 Nov 2008 20:50:08 +0100
+	id 1KxRw5-0003dN-HG
+	for gcvg-git-2@gmane.org; Tue, 04 Nov 2008 20:51:34 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754237AbYKDTsi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 4 Nov 2008 14:48:38 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753804AbYKDTsi
-	(ORCPT <rfc822;git-outgoing>); Tue, 4 Nov 2008 14:48:38 -0500
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:45423 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753307AbYKDTsh (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 4 Nov 2008 14:48:37 -0500
-Received: from localhost.localdomain (localhost [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 1336F795D2;
-	Tue,  4 Nov 2008 14:48:35 -0500 (EST)
-Received: from pobox.com (ip68-225-240-211.oc.oc.cox.net [68.225.240.211])
- (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
- certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
- ESMTPSA id 853F0795A8; Tue,  4 Nov 2008 14:46:43 -0500 (EST)
-In-Reply-To: <1225822231.6722.3.camel@maia.lan> (Sam Vilain's message of
- "Wed, 05 Nov 2008 07:10:31 +1300")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: 910BCF60-AAA9-11DD-85F6-9CEDC82D7133-77302942!a-sasl-fastnet.pobox.com
+	id S1753570AbYKDTuT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 4 Nov 2008 14:50:19 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753517AbYKDTuT
+	(ORCPT <rfc822;git-outgoing>); Tue, 4 Nov 2008 14:50:19 -0500
+Received: from mail1.nrlssc.navy.mil ([128.160.35.1]:42933 "EHLO
+	mail.nrlssc.navy.mil" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753425AbYKDTuS (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 4 Nov 2008 14:50:18 -0500
+Received: by mail.nrlssc.navy.mil id mA4JnfUh004693; Tue, 4 Nov 2008 13:49:41 -0600
+In-Reply-To: <49109FD4.30003@op5.se>
+X-OriginalArrivalTime: 04 Nov 2008 19:49:41.0393 (UTC) FILETIME=[7A51F010:01C93EB6]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/100098>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/100099>
 
-Sam Vilain <sam@vilain.net> writes:
+Andreas Ericsson wrote:
+> Brandon Casey wrote:
+>> From: Brandon Casey <drafnel@gmail.com>
+>>
+>> Objects residing in pack files that have an associated .keep file are not
+>> supposed to be repacked into new pack files, but they are.
+>>
+>> Signed-off-by: Brandon Casey <casey@nrlssc.navy.mil>
+>> ---
+>>
+>>
+>> This version replaces the use of 'head -n -1' with a grep, and should
+>> work on
+>> all platforms.
+>>
+> 
+> sed 1q is faster, as it stops parsing after the first line (the same as
+> 'head
+> -n 1' does, but in a more portable fashion).
 
-> On Tue, 2008-11-04 at 12:18 +0300, Dmitry Potapov wrote:
-> ...
->>  The only one who does publishing to the official repository
->> is the maintainer, and the maintainer is most likely to run some tests
->> after merging all changes, which takes some time. So, it is rarely push
->> the current branch, it is usually the branch that has been tested, so
->> the name of the branch should be specified explicitly anyway.
->
-> Why is that relevant?  That person can still use the explicit version of
-> the command.
+Except that I wanted all but the _last_ line though.
 
-Back when "git push $there :" were not available, the default matching
-behaviour was the _only_ way to say "I know the set of branches I want to
-publish, and I have many more private branches in my primary work
-repository.  I do not want to list the set of branches to publish every
-time when I type 'git push', nor I want to configure it --- Heck, I
-shouldn't have to list them, the public repository I am pushing to already
-has that list, and it is the set of branches that exist there".
+I didn't think about using sed. Perhaps I could have used something like
 
-These days, people who would want the maching behaviour can explicitly ask
-for it, so there is one less reason to resist changing the default
-(i.e. earlier explicitly askinf for "matching" was impossible, but now we
-can).  The remaining reason of resistance is pure inertia (i.e. not
-changing the behaviour of the command only because you upgraded your git),
-and the only way to address it is to start issuing the warning when "git
-push" or "git push $there" is used and the matching behaviour was chosen
-without configuration (i.e. no "remote.<there>.push = :"), and keep it
-that way for two release cycles, and finally change the default.
+   sed -n -e '$q' -e 'p'
+
+The grep works though.
+
+-brandon
