@@ -1,70 +1,53 @@
-From: Samuel Tardieu <sam@rfc1149.net>
-Subject: [(v2) PATCH 2/2] tag: Add more tests about mixing incompatible modes
-	and options
-Date: Wed, 05 Nov 2008 00:20:36 +0100
-Message-ID: <20081104232036.19090.6085.stgit@arrakis.enst.fr>
-References: <20081104232031.19090.47633.stgit@arrakis.enst.fr>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: git pull regression?
+Date: Tue, 04 Nov 2008 15:37:03 -0800
+Message-ID: <7vtzanoyg0.fsf@gitster.siamese.dyndns.org>
+References: <20081104222749.GA9296@localhost.aei.mpg.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Nov 05 00:21:53 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: "Carlos R. Mafra" <crmafra2@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Nov 05 00:38:36 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KxVDa-0004el-UM
-	for gcvg-git-2@gmane.org; Wed, 05 Nov 2008 00:21:51 +0100
+	id 1KxVTj-0001OE-9d
+	for gcvg-git-2@gmane.org; Wed, 05 Nov 2008 00:38:31 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754233AbYKDXUi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 4 Nov 2008 18:20:38 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754315AbYKDXUi
-	(ORCPT <rfc822;git-outgoing>); Tue, 4 Nov 2008 18:20:38 -0500
-Received: from revol1.enst.fr ([137.194.2.7]:52039 "EHLO smtp2.enst.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753570AbYKDXUi (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 4 Nov 2008 18:20:38 -0500
-Received: from localhost (localhost.enst.fr [127.0.0.1])
-	by smtp2.enst.fr (Postfix) with ESMTP id 6695384459;
-	Wed,  5 Nov 2008 00:20:36 +0100 (CET)
-X-Virus-Scanned: amavisd-new at enst.fr
-Received: from arrakis.enst.fr (arrakis.enst.fr [137.194.161.143])
-	by smtp2.enst.fr (Postfix) with ESMTP id 35F6884415;
-	Wed,  5 Nov 2008 00:20:36 +0100 (CET)
-Received: from arrakis.enst.fr (localhost [127.0.0.1])
-	by arrakis.enst.fr (Postfix) with ESMTP id 319E3203DF;
-	Wed,  5 Nov 2008 00:20:36 +0100 (CET)
-In-Reply-To: <20081104232031.19090.47633.stgit@arrakis.enst.fr>
-User-Agent: StGIT/unknown-version
+	id S1754353AbYKDXhQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 4 Nov 2008 18:37:16 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753759AbYKDXhQ
+	(ORCPT <rfc822;git-outgoing>); Tue, 4 Nov 2008 18:37:16 -0500
+Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:50183 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753898AbYKDXhP (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 4 Nov 2008 18:37:15 -0500
+Received: from localhost.localdomain (unknown [127.0.0.1])
+	by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id 2522993DA4;
+	Tue,  4 Nov 2008 18:37:14 -0500 (EST)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES256-SHA (256/256 bits)) (No client certificate requested) by
+ a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTPSA id 3CF9393DA3; Tue, 
+ 4 Nov 2008 18:37:04 -0500 (EST)
+In-Reply-To: <20081104222749.GA9296@localhost.aei.mpg.de> (Carlos R. Mafra's
+ message of "Tue, 4 Nov 2008 23:27:49 +0100")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: 824054D6-AAC9-11DD-8AFB-4F5276724C3F-77302942!a-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/100118>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/100119>
 
-Signed-off-by: Samuel Tardieu <sam@rfc1149.net>
----
- t/t7004-tag.sh |   11 +++++++++++
- 1 files changed, 11 insertions(+), 0 deletions(-)
+"Carlos R. Mafra" <crmafra2@gmail.com> writes:
 
-diff --git a/t/t7004-tag.sh b/t/t7004-tag.sh
-index f0edbf1..f377fea 100755
---- a/t/t7004-tag.sh
-+++ b/t/t7004-tag.sh
-@@ -1090,4 +1090,15 @@ test_expect_success 'filename for the message is relative to cwd' '
- 	git cat-file tag tag-from-subdir-2 | grep "in sub directory"
- '
- 
-+# mixing modes and options:
-+
-+test_expect_success 'mixing incompatibles modes and options is forbidden' '
-+	test_must_fail git tag -a
-+	test_must_fail git tag -l -v
-+	test_must_fail git tag -n 100
-+	test_must_fail git tag -l -m msg
-+	test_must_fail git tag -l -F some file
-+	test_must_fail git tag -v -s
-+'
-+
- test_done
+> It looks like a regression to me. I can finish
+> the bisection if people in the list say that
+> I am not making a mistake somewhere :-)
+
+Interesting, and _sounds_ like a regression, but I do not think anybody
+can tell if it is without looking at what .git/config and exact command
+sequence you are using for this "git pull" and where you are starting
+from.
