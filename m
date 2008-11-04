@@ -1,129 +1,113 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: CRLF support bugs (was: Re: .gitattributes glob matching
-	broken)
-Date: Tue, 4 Nov 2008 00:14:32 -0500
-Message-ID: <20081104051432.GD31276@coredump.intra.peff.net>
-References: <83od0yaxzk.fsf@kalahari.s2.org> <20081103090932.GA18424@coredump.intra.peff.net> <83y700alzf.fsf_-_@kalahari.s2.org>
+From: "Andrew Arnott" <andrewarnott@gmail.com>
+Subject: Re: Intensive rename detection
+Date: Mon, 3 Nov 2008 21:19:30 -0800
+Message-ID: <216e54900811032119h4cb51327v2d85712acc444185@mail.gmail.com>
+References: <216e54900811031717j70669868p3c7503357ceb5138@mail.gmail.com>
+	 <216e54900811031718o4cc81294sc0c32be1e71b9372@mail.gmail.com>
+	 <alpine.LFD.2.00.0811032021210.3419@nehalem.linux-foundation.org>
+	 <216e54900811032107p159e98ecn8958f0a78efde8f2@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org
-To: Hannu Koivisto <azure@iki.fi>
-X-From: git-owner@vger.kernel.org Tue Nov 04 06:15:53 2008
+To: "Linus Torvalds" <torvalds@linux-foundation.org>
+X-From: git-owner@vger.kernel.org Tue Nov 04 06:20:47 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KxEGd-0001ak-0B
-	for gcvg-git-2@gmane.org; Tue, 04 Nov 2008 06:15:51 +0100
+	id 1KxELO-0002Cs-6M
+	for gcvg-git-2@gmane.org; Tue, 04 Nov 2008 06:20:46 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751152AbYKDFOf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 4 Nov 2008 00:14:35 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751141AbYKDFOf
-	(ORCPT <rfc822;git-outgoing>); Tue, 4 Nov 2008 00:14:35 -0500
-Received: from peff.net ([208.65.91.99]:1308 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751132AbYKDFOe (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 4 Nov 2008 00:14:34 -0500
-Received: (qmail 5187 invoked by uid 111); 4 Nov 2008 05:14:33 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.32) with SMTP; Tue, 04 Nov 2008 00:14:33 -0500
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Tue, 04 Nov 2008 00:14:32 -0500
+	id S1751052AbYKDFTc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 4 Nov 2008 00:19:32 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750855AbYKDFTc
+	(ORCPT <rfc822;git-outgoing>); Tue, 4 Nov 2008 00:19:32 -0500
+Received: from yw-out-2324.google.com ([74.125.46.28]:24657 "EHLO
+	yw-out-2324.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750750AbYKDFTc (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 4 Nov 2008 00:19:32 -0500
+Received: by yw-out-2324.google.com with SMTP id 9so1117340ywe.1
+        for <git@vger.kernel.org>; Mon, 03 Nov 2008 21:19:30 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to
+         :subject:cc:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:references;
+        bh=1KjO8RZn1YUB3tN5A5OTBuo9q8jVtpQrSyFYY2hH7mA=;
+        b=YzjyrL1Y8NxLKvlMNYkmjq6mzU1UyY1KLi0S7/Sy1BtUiqad8h1lLaSghYsnNxMXaP
+         z891JY0Ycwpvy7XrFnWJcKau6JpDF94f3pAMvBjUMZb4FOtC/P0WV1VPjoT4iH/wJdYi
+         wqi9axxiCuRHprMqsXCrY2h2WqLQnchLokr64=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
+         :content-type:content-transfer-encoding:content-disposition
+         :references;
+        b=sFIaPiS92FvcjwBdrdNkBlu+h/aJzHm5DxMPTkc0cR0HVlO7JwEfThJVoHIgRyteji
+         YzLLJ9m6E9GtxWy7NrgiFGcVExaMzQV/SI/0OBwSInPqhU3nzWzok+TXfujBhDfm+Wjm
+         kLSpFDN9J9Hl4UDIykasWD49QSHA6bkcpN5ro=
+Received: by 10.151.148.2 with SMTP id a2mr1733671ybo.56.1225775970529;
+        Mon, 03 Nov 2008 21:19:30 -0800 (PST)
+Received: by 10.151.142.12 with HTTP; Mon, 3 Nov 2008 21:19:30 -0800 (PST)
+In-Reply-To: <216e54900811032107p159e98ecn8958f0a78efde8f2@mail.gmail.com>
 Content-Disposition: inline
-In-Reply-To: <83y700alzf.fsf_-_@kalahari.s2.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/100037>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/100038>
 
-On Mon, Nov 03, 2008 at 05:05:24PM +0200, Hannu Koivisto wrote:
+Awesome.  Per Linus' tip, I just noticed at the top of a long list of
+messages git said:
+warning: too many files, skipping inexact rename detection
 
-> I suspect one part of that "oddness" was caused by git applying its
-> heuristics in checkout as it doesn't use .gitattributes at that
-> time.
+So I added the config file change, and that did the trick.  Thanks, everyone!
 
-It _does_ apply them in checkout, you just didn't have a .gitattributes
-file yet. So it is part of the same problem.
+Here's a related but slightly different question: I've been stashing
+and unstashing in the midst of all these renames and refactoring, and
+now I'm left with some files listed in git status 3 times.  I
+understand why this is, but I don't know the best way to proceed.  Git
+is telling me:
 
-> For example, it seems that it recognized some of my .sh
-> files as text files and the rest as binary files.  I suppose I was
-> correct to assume that it would be stupid to rely on git guessing
-> file type and the only sensible way is to use .gitattributes.  If
+$ git status | grep MessageBase
+src/DotNetOAuth/Messages/MessageBase.cs: needs merge
+src/DotNetOAuth/OAuth/Messages/MessageBase.cs: needs merge
+src/DotNetOpenAuth/Messages/MessageBase.cs: needs merge
+#       unmerged:   src/DotNetOAuth/Messages/MessageBase.cs
+#       unmerged:   src/DotNetOAuth/OAuth/Messages/MessageBase.cs
+#       unmerged:   src/DotNetOpenAuth/Messages/MessageBase.cs
 
-I think it depends on what's in your scripts, since many people have not
-had trouble with the auto-detection. Perhaps some are UTF-16 which
-contain NULs?
+I want to end up with MessageBase.cs in
+src/DotNetOpenAuth/OAuth/Messages/MessageBase.cs, which ironically is
+none of these three.  And the couple of lines that changed in the file
+need to be merged.  Only two of these listed files exist on disk.  How
+can I best leverage git to merge the two files on disk while moving it
+to a new location?
 
-If the auto-detection is not working, I am sure people would love to see
-samples of what fooled it (since it is, after all, just a guess, and we
-would like to make the guess more accurate).
-
-> > To "fix" this, you can then do a "git reset --hard" which will respect
-> > your .gitattributes (since it is now checked out). And further file
-> > creation and checkout should work OK.
-> 
-> Since I'm trying to launch git in a company environment, I think I
-> can't rely on people remembering to do that.
-
-Oh, absolutely. I think this is a shortcoming in git. The reset is
-simply a workaround until it is actually fixed.
-
-> Actually, even if .gitattributes were applied in checkout, I think
-> the whole CRLF support is broken by design because people will have
-> to remember to use -n in clone, then enable core.autocrlf support
-> and then checkout.  This makes it unneccessarily complicated to
-
-Yes, that is a little bit annoying. I think there are four options:
-
-  - people set core.autocrlf in their global ~/.gitconfig. The downside,
-    as you mentioned, is that you might not want it for all projects
-
-  - clone should take an extra "options" parameter which can set this up
-    after doing the 'init'. Like:
-
-      git clone -O core.autocrlf=true /path/to/repo
-
-  - after setting autocrlf, people need to tell git to re-checkout with
-    the updated settings. I don't know of a straightforward way to tell
-    git everything needs to be updated. So I would do:
-
-      git ls-files | xargs touch
-      git reset --hard
-
-    which is not ideal. Probably some sort of "re-checkout" option to
-    git-checkout would be better.
-
-  - you could do this "re-checkout" automagically when core.autocrlf is
-    set via "git config". There are two obvious problems with this
-    magic, though:
-
-      - that may not be what the user wants, if they have work in
-        progress in the directory. And normally calling "git config"
-        has no such side effects, so it is certainly unexpected.
-
-      - we don't even know when the config is updated, since the user
-        may simply edit the file behind git's back
-
-    So that is a little too magic for my taste.
-
-> I think CRLF conversion support should have some attribute (be it
-> .gitattributes attribute or something else) that is somehow
-> inherited from the parent repository.  It would basically say that
-> "you should use platform's native line end type for text files with
-> this repository and its children".  To go with that, one would
-> maybe have a configuration option to tell what that platform
-> default line end type is (just in case someone wants to pretend
-> Cygwin is Unix or something like that).
-
-I think others have complained before about something like this, in that
-it really is a _local_ decision and not a _project_ decision to make. I
-am fortunate enough to work exclusively on platforms with sane line
-endings, so I don't know what is normal.
-
-But if you really wanted to do such a thing for some set of corporate
-users, maybe it would make sense to have a "clone" hook that runs after
-init and can set up any relevant config (e.g., by copying certain config
-values from the parent repo).
-
--Peff
+> On Mon, Nov 3, 2008 at 8:22 PM, Linus Torvalds <torvalds@linux-foundation.org> wrote:
+>>
+>>
+>> On Mon, 3 Nov 2008, Andrew Arnott wrote:
+>> >
+>> > I'm refactoring a library including renaming both files and
+>> > directories.  A few lines of each file are also changed, but they are
+>> > substantially unchanged in content.  I've done a git add to put all my
+>> > changes into the index, but a git status shows that git only detected
+>> > a few of the renames... most of them are delete-add operations.  Is
+>> > there anything I can do to help git recognize the rename so that
+>> > history is preserved across this commit?
+>>
+>> How many renames do you have? Modern versions of git will do any number of
+>> exact renames, but the (rather expensive) inexact rename detection has a
+>> default limit of something fairly small.
+>>
+>> You could try adding
+>>
+>>        [diff]
+>>                renamelimit=0
+>>
+>> to your ~/.gitconfig file. It can be quite expensive though.
+>>
+>>                        Linus
+>
