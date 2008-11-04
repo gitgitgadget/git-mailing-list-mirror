@@ -1,75 +1,72 @@
-From: Eric Wong <normalperson@yhbt.net>
-Subject: Re: Git SVN Rebranching Issue
-Date: Tue, 4 Nov 2008 00:41:11 -0800
-Message-ID: <20081104084111.GB14405@untitled>
-References: <20081103140746.GA5969@mars.cyantechnology.local>
+From: dhruva <dhruvakm@gmail.com>
+Subject: git-p4: Importing multiple p4 prods into same git repo
+Date: Tue, 4 Nov 2008 14:12:59 +0530
+Message-ID: <e3f230850811040042m5f07994btf70680c4fdac13cf@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Matt Kern <matt.kern@undue.org>
-X-From: git-owner@vger.kernel.org Tue Nov 04 09:42:27 2008
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+To: Git <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Tue Nov 04 09:44:36 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KxHUZ-0000Ry-15
-	for gcvg-git-2@gmane.org; Tue, 04 Nov 2008 09:42:27 +0100
+	id 1KxHWP-0000wG-Cw
+	for gcvg-git-2@gmane.org; Tue, 04 Nov 2008 09:44:21 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753727AbYKDIlM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 4 Nov 2008 03:41:12 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753796AbYKDIlM
-	(ORCPT <rfc822;git-outgoing>); Tue, 4 Nov 2008 03:41:12 -0500
-Received: from hand.yhbt.net ([66.150.188.102]:35020 "EHLO hand.yhbt.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753548AbYKDIlM (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 4 Nov 2008 03:41:12 -0500
-Received: from localhost.localdomain (localhost [127.0.0.1])
-	by hand.yhbt.net (Postfix) with ESMTP id 638332DC01B;
-	Tue,  4 Nov 2008 08:41:11 +0000 (UTC)
+	id S1753872AbYKDInE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 4 Nov 2008 03:43:04 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753853AbYKDInD
+	(ORCPT <rfc822;git-outgoing>); Tue, 4 Nov 2008 03:43:03 -0500
+Received: from ti-out-0910.google.com ([209.85.142.185]:14985 "EHLO
+	ti-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753796AbYKDInB (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 4 Nov 2008 03:43:01 -0500
+Received: by ti-out-0910.google.com with SMTP id b6so1620649tic.23
+        for <git@vger.kernel.org>; Tue, 04 Nov 2008 00:42:59 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to
+         :subject:mime-version:content-type:content-transfer-encoding
+         :content-disposition;
+        bh=rYL0muyYUJdRssihz8Iyfo3N10Ca1extr4SDNkPsTMo=;
+        b=R8tyCZ6NXBu+FlF8FnE7HQWYA4+YB6O4tfHyliaPFgsHLXXSRxHBhFRXSQ9cOZTbFf
+         SWo1En3QFidYearTOYeLb1Gkhwaa/yeb4D5KoEo8Tb0WIYtUTqSeSSN9CmEu/k+UoXm/
+         OzQBC0nsRlYPt1+GriLd5IPrR02x4lEvCpdSY=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:to:subject:mime-version:content-type
+         :content-transfer-encoding:content-disposition;
+        b=rasrB2zfL283/T3G17vDhaPvwzzAk2dVaP0vBIk/nNG4I7piumXW/DCJCCz0J2C66P
+         K5BOs6AXZW55Fpz4I5IBSaLf2YaDdXR0KzGeVPwDvIIotRl5DoAs0tKhmXXpq66mox9X
+         Zb38+/emwO9XuTtXxw7MFkB6c2R10311mkuK8=
+Received: by 10.110.16.9 with SMTP id 9mr907793tip.54.1225788179255;
+        Tue, 04 Nov 2008 00:42:59 -0800 (PST)
+Received: by 10.110.93.2 with HTTP; Tue, 4 Nov 2008 00:42:59 -0800 (PST)
 Content-Disposition: inline
-In-Reply-To: <20081103140746.GA5969@mars.cyantechnology.local>
-User-Agent: Mutt/1.5.18 (2008-05-17)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/100058>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/100059>
 
-Matt Kern <matt.kern@undue.org> wrote:
-> I have a git-svn issue which keeps biting me.
-> 
-> My company uses svn as its primary version control system.  We
-> frequently create branches, e.g. /branches/somebranch, by forking the
-> trunk to ensure stability over the "somebranch" code.  The problem is
-> that we also frequently blow away /branches/somebranch and refork it
-> from the trunk.
-> 
-> git-svn does a good job for most work, but I notice that if you delete
-> the "somebranch" branch in svn and then refork it, also in svn, then
-> when you git-svn fetch, the git commit at the head of remotes/somebranch
-> will have two parents: the first is the previous head of
-> remotes/somebranch, and the second is the head of remotes/trunk.  Surely
-> only the remotes/trunk parent should be listed?  Any connection with the
-> previous remotes/somebranch is an accident of naming.  The real problem
-> then comes when you come to look at the history in gitk.  If
-> "somebranch" is rebranched many times, the git history starts looking
-> pretty complicated, when in fact it should simply be the linear history
-> of remotes/trunk up to the branch point followed by a few,
-> branch-specific commits.  Is there any way to prevent (or modify) the
-> git history to remove the errant parent?
+Hi,
+ I have the p4 layout as follows:
+1. //depot/prod/devel/main
+2. //depot/prod/devel/hacks
 
-Hi Matt,
+where #2 is a sort of fork of #1. There are lot of common objects
+between them and #2 can trace its history to #1. I would like to
+import both the above paths under the same git repository as 2 remote
+branches so that they can share objects and reduce overall size. Is
+this possible using 'git-p4'. I went through the code and got lost in
+the complexities...
+ I urgently need this to consolidate multiple paths under the same git
+folder and be able to serve them soon. Any help is greatly
+appreciated.
 
-Short answer: you can use grafts to remove parents.
-
-
-It was actually an intentional design decision on my part preserve
-parents based on branch name.  We would eventually otherwise lose
-history of the now-deleted branches, as reflogs can expire.
-
-To me, it's easier to drop history connections you don't want with
-grafts than to recover it by refetching.
+-dhruva
 
 -- 
-Eric Wong
+Contents reflect my personal views only!
