@@ -1,105 +1,55 @@
-From: "Andrew Arnott" <andrewarnott@gmail.com>
-Subject: Repo corrupted somehow?
-Date: Mon, 3 Nov 2008 23:09:03 -0800
-Message-ID: <216e54900811032309s51c8cb1fr64054ff18c450b1d@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Nov 04 08:10:25 2008
+From: Pete Harlan <pgit@pcharlan.com>
+Subject: [PATCH v2 0/2] post-receive-email configurable rev display
+Date: Mon,  3 Nov 2008 23:19:52 -0800
+Message-ID: <1225783194-24640-1-git-send-email-pgit@pcharlan.com>
+References: <7v7i7kthkc.fsf@gitster.siamese.dyndns.org>
+Cc: Pete Harlan <pgit@pcharlan.com>
+To: Andy Parkins <andyparkins@gmail.com>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Nov 04 08:21:30 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KxG3U-00062c-Qh
-	for gcvg-git-2@gmane.org; Tue, 04 Nov 2008 08:10:25 +0100
+	id 1KxGED-0007yx-VF
+	for gcvg-git-2@gmane.org; Tue, 04 Nov 2008 08:21:30 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752942AbYKDHJH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 4 Nov 2008 02:09:07 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752918AbYKDHJH
-	(ORCPT <rfc822;git-outgoing>); Tue, 4 Nov 2008 02:09:07 -0500
-Received: from yx-out-2324.google.com ([74.125.44.29]:34445 "EHLO
-	yx-out-2324.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752594AbYKDHJF (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 4 Nov 2008 02:09:05 -0500
-Received: by yx-out-2324.google.com with SMTP id 8so1122446yxm.1
-        for <git@vger.kernel.org>; Mon, 03 Nov 2008 23:09:03 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to
-         :subject:mime-version:content-type:content-transfer-encoding
-         :content-disposition;
-        bh=QWyVkp6pTnnKMa8DXYw2CTU2zDvkRL0nHSTA21thdnY=;
-        b=dRTIEDfoXw/QJ5ja4I7WB8NYDlLhe8ZuW/dv1oTUdvhcAedqGawlUYtiy3L6xS9Gfx
-         M7lyZT2gkMVNQozmN27vl2bk/ogdimuI1pELyTOvFSnudn7qDcTwwYqnpjeM0AvZx74D
-         ana68lpuar0fFJZi3cS9596ZcYyM2cVy62OtY=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:mime-version:content-type
-         :content-transfer-encoding:content-disposition;
-        b=RRchGP7WzfzJfB5E+mzaWThEUuRyXR0VtdbUJDa5lXe8Dgq91T9LGGh3Bg8dXWx3ez
-         C6QuGCxgJpXzVnzHvNEWGlEHcupgDqDMJ8hTUSlaBsIId/7/VY28ixoQA/Qz9L55h5Wc
-         xpTvLKA8FSYlX6fZiQpe/m/DzHQ2s2Efy/htw=
-Received: by 10.151.156.19 with SMTP id i19mr1869335ybo.118.1225782543669;
-        Mon, 03 Nov 2008 23:09:03 -0800 (PST)
-Received: by 10.151.142.12 with HTTP; Mon, 3 Nov 2008 23:09:03 -0800 (PST)
-Content-Disposition: inline
+	id S1752918AbYKDHT5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 4 Nov 2008 02:19:57 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752764AbYKDHT4
+	(ORCPT <rfc822;git-outgoing>); Tue, 4 Nov 2008 02:19:56 -0500
+Received: from lax-green-bigip-5.dreamhost.com ([208.113.200.5]:46332 "EHLO
+	swarthymail-a6.g.dreamhost.com" rhost-flags-OK-OK-OK-FAIL)
+	by vger.kernel.org with ESMTP id S1752028AbYKDHT4 (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 4 Nov 2008 02:19:56 -0500
+Received: from localhost.localdomain (031.132-78-65.ftth.swbr.surewest.net [65.78.132.31])
+	by swarthymail-a6.g.dreamhost.com (Postfix) with ESMTP id C4E471063D7;
+	Mon,  3 Nov 2008 23:19:54 -0800 (PST)
+X-Mailer: git-send-email 1.6.0.3.533.ge0502
+In-Reply-To: <7v7i7kthkc.fsf@gitster.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/100046>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/100047>
 
-I was just git commit'ing, and then I was doing a git rebase to squash
-several commits into one when the rebase failed.  I then did a
-git checkout -f master
-git reset --hard
-but no matter what I do, git thinks that several files have changed.
-The diff shows all the lines in these several files removed and then
-added, yet without any changes made to them.  git reset --hard doesn't
-revert the change. When I jump around history with git checkout these
-files remain in their "changed" state.  I even tried "git clone" to
-create a whole new repo, but one of these several files STILL
-registered as changed before I made any changes.
+This is the second version of the user-configurable revision display
+patch.  The first version decreased the efficiency of the default
+case, while this avoids it thanks to a suggestion by Junio.
 
-Any idea what's wrong and how to recover?
+The first version of this patch also failed to customize the display
+of revisions included in newly-created branches; this version displays
+those revisions in the same manner as for updated branches.
 
-Observe the below command buffer: (I can upload my repo so you can
-clone it and perhaps repro it if you want).
+The two places (new vs. updated branches) where the original code
+displayed revisions used similar code.  The first patch in this series
+factors that out to a separate routine that handles both cases, in
+order to avoid duplicating the code introduced in the second patch.
 
-Andrew@LACKY /c/git/dotnetoauth
-$ git status
-# On branch master
-# Changed but not updated:
-#   (use "git add <file>..." to update what will be committed)
-#
-#       modified:   tools/Documentation.targets
-#       modified:   tools/DotNetOpenAuth.Common.Settings.targets
-#       modified:   tools/DotNetOpenAuth.Versioning.targets
-#       modified:
-tools/Sandcastle/Presentation/vs2005/Content/reference_content.xml
-#       modified:   tools/libcheck.ps1
-#       modified:   tools/sandcastle.targets
-#
-no changes added to commit (use "git add" and/or "git commit -a")
+Pete Harlan (2):
+  contrib/hooks/post-receive-email: Put rev display in separate
+    function
+  contrib/hooks/post-receive-email: Make revision display configurable
 
-Andrew@LACKY /c/git/dotnetoauth
-$ git reset --hard
-HEAD is now at 13d37b8 Patching up the bad merges in the phases.
-
-Andrew@LACKY /c/git/dotnetoauth
-$ git status
-# On branch master
-# Changed but not updated:
-#   (use "git add <file>..." to update what will be committed)
-#
-#       modified:   tools/Documentation.targets
-#       modified:   tools/DotNetOpenAuth.Common.Settings.targets
-#       modified:   tools/DotNetOpenAuth.Versioning.targets
-#       modified:
-tools/Sandcastle/Presentation/vs2005/Content/reference_content.xml
-#       modified:   tools/libcheck.ps1
-#       modified:   tools/sandcastle.targets
-#
-no changes added to commit (use "git add" and/or "git commit -a")
+ contrib/hooks/post-receive-email |   57 ++++++++++++++++++++++++++++++++------
+ 1 files changed, 48 insertions(+), 9 deletions(-)
