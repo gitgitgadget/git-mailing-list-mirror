@@ -1,72 +1,69 @@
-From: dhruva <dhruvakm@gmail.com>
-Subject: git-p4: Importing multiple p4 prods into same git repo
-Date: Tue, 4 Nov 2008 14:12:59 +0530
-Message-ID: <e3f230850811040042m5f07994btf70680c4fdac13cf@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [Q] Abbreviated history graph?
+Date: Tue, 04 Nov 2008 00:45:12 -0800
+Message-ID: <7vzlkfriav.fsf@gitster.siamese.dyndns.org>
+References: <200811031439.12111.brian.foster@innova-card.com>
+ <alpine.LFD.2.00.0811031129060.3419@nehalem.linux-foundation.org>
+ <alpine.LFD.2.00.0811031211180.3419@nehalem.linux-foundation.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-To: Git <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Tue Nov 04 09:44:36 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: Brian Foster <brian.foster@innova-card.com>,
+	Git Mailing List <git@vger.kernel.org>
+To: Linus Torvalds <torvalds@linux-foundation.org>
+X-From: git-owner@vger.kernel.org Tue Nov 04 09:46:44 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KxHWP-0000wG-Cw
-	for gcvg-git-2@gmane.org; Tue, 04 Nov 2008 09:44:21 +0100
+	id 1KxHYg-0001Th-Ab
+	for gcvg-git-2@gmane.org; Tue, 04 Nov 2008 09:46:42 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753872AbYKDInE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 4 Nov 2008 03:43:04 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753853AbYKDInD
-	(ORCPT <rfc822;git-outgoing>); Tue, 4 Nov 2008 03:43:03 -0500
-Received: from ti-out-0910.google.com ([209.85.142.185]:14985 "EHLO
-	ti-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753796AbYKDInB (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 4 Nov 2008 03:43:01 -0500
-Received: by ti-out-0910.google.com with SMTP id b6so1620649tic.23
-        for <git@vger.kernel.org>; Tue, 04 Nov 2008 00:42:59 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to
-         :subject:mime-version:content-type:content-transfer-encoding
-         :content-disposition;
-        bh=rYL0muyYUJdRssihz8Iyfo3N10Ca1extr4SDNkPsTMo=;
-        b=R8tyCZ6NXBu+FlF8FnE7HQWYA4+YB6O4tfHyliaPFgsHLXXSRxHBhFRXSQ9cOZTbFf
-         SWo1En3QFidYearTOYeLb1Gkhwaa/yeb4D5KoEo8Tb0WIYtUTqSeSSN9CmEu/k+UoXm/
-         OzQBC0nsRlYPt1+GriLd5IPrR02x4lEvCpdSY=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:mime-version:content-type
-         :content-transfer-encoding:content-disposition;
-        b=rasrB2zfL283/T3G17vDhaPvwzzAk2dVaP0vBIk/nNG4I7piumXW/DCJCCz0J2C66P
-         K5BOs6AXZW55Fpz4I5IBSaLf2YaDdXR0KzGeVPwDvIIotRl5DoAs0tKhmXXpq66mox9X
-         Zb38+/emwO9XuTtXxw7MFkB6c2R10311mkuK8=
-Received: by 10.110.16.9 with SMTP id 9mr907793tip.54.1225788179255;
-        Tue, 04 Nov 2008 00:42:59 -0800 (PST)
-Received: by 10.110.93.2 with HTTP; Tue, 4 Nov 2008 00:42:59 -0800 (PST)
-Content-Disposition: inline
+	id S1753434AbYKDIp2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 4 Nov 2008 03:45:28 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753396AbYKDIp2
+	(ORCPT <rfc822;git-outgoing>); Tue, 4 Nov 2008 03:45:28 -0500
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:44429 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753381AbYKDIp1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 4 Nov 2008 03:45:27 -0500
+Received: from localhost.localdomain (localhost [127.0.0.1])
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id E05CA7895A;
+	Tue,  4 Nov 2008 03:45:26 -0500 (EST)
+Received: from pobox.com (ip68-225-240-211.oc.oc.cox.net [68.225.240.211])
+ (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
+ certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
+ ESMTPSA id 020CC78959; Tue,  4 Nov 2008 03:45:19 -0500 (EST)
+In-Reply-To: <alpine.LFD.2.00.0811031211180.3419@nehalem.linux-foundation.org> (Linus
+ Torvalds's message of "Mon, 3 Nov 2008 12:15:05 -0800 (PST)")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: ED748EC0-AA4C-11DD-B9F8-9CEDC82D7133-77302942!a-sasl-fastnet.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/100059>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/100060>
 
-Hi,
- I have the p4 layout as follows:
-1. //depot/prod/devel/main
-2. //depot/prod/devel/hacks
+Linus Torvalds <torvalds@linux-foundation.org> writes:
 
-where #2 is a sort of fork of #1. There are lot of common objects
-between them and #2 can trace its history to #1. I would like to
-import both the above paths under the same git repository as 2 remote
-branches so that they can share objects and reduce overall size. Is
-this possible using 'git-p4'. I went through the code and got lost in
-the complexities...
- I urgently need this to consolidate multiple paths under the same git
-folder and be able to serve them soon. Any help is greatly
-appreciated.
+> On Mon, 3 Nov 2008, Linus Torvalds wrote:
+>>
+>> I'll post a simple series of four commits in a moment.
+> ...
+> Side note: it's certainly possible that we could improve on this. Right 
+> now, "--simplify-namespace" will totally override any path simplification, 
+> so you can't get a combination of pathnames _and_ naming commits. I don't 
+> know exactly what the rules should be, but I could imagine that we could 
+> do something like:
+>
+>  - if no pathnames are given, work the way the current patch-series works.
+>
+>  - if path-names are given, make rev_compare_tree() truen 
+>    REV_TREE_DIFFERENT if a name decoration _or_ a tree difference exists.
+>
+> Anyway, that's a fairly trivial extension to the idea, and doesn't really 
+> matter for the basic code. It can easily be left for later.
 
--dhruva
+Thanks.
 
--- 
-Contents reflect my personal views only!
+Including this (and the --source one), the series looks reasonable.
