@@ -1,62 +1,65 @@
-From: Pieter de Bie <pdebie@ai.rug.nl>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
 Subject: Re: git log -S doesn't find some commits
-Date: Wed, 5 Nov 2008 00:06:42 +0100
-Message-ID: <0A948471-7FAA-489A-A86C-D014C6E4C8C9@ai.rug.nl>
+Date: Wed, 5 Nov 2008 00:15:44 +0100 (CET)
+Message-ID: <alpine.DEB.1.00.0811050014310.30769@pacific.mpi-cbg.de>
 References: <87fxm7rtb7.fsf@gollum.intra.norang.ca>
-Mime-Version: 1.0 (Apple Message framework v929.2)
-Content-Type: text/plain; charset=US-ASCII; format=flowed; delsp=yes
-Content-Transfer-Encoding: 7bit
+Mime-Version: 1.0
+Content-Type: TEXT/PLAIN; charset=US-ASCII
 Cc: git@vger.kernel.org
 To: Bernt Hansen <bernt@norang.ca>
-X-From: git-owner@vger.kernel.org Wed Nov 05 00:08:10 2008
+X-From: git-owner@vger.kernel.org Wed Nov 05 00:09:46 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KxV0J-0000Df-Qm
-	for gcvg-git-2@gmane.org; Wed, 05 Nov 2008 00:08:08 +0100
+	id 1KxV1k-0000lf-VZ
+	for gcvg-git-2@gmane.org; Wed, 05 Nov 2008 00:09:37 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752207AbYKDXGy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 4 Nov 2008 18:06:54 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752286AbYKDXGy
-	(ORCPT <rfc822;git-outgoing>); Tue, 4 Nov 2008 18:06:54 -0500
-Received: from smtp-1.orange.nl ([193.252.22.241]:51503 "EHLO smtp-1.orange.nl"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751606AbYKDXGx (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 4 Nov 2008 18:06:53 -0500
-Received: from me-wanadoo.net (localhost [127.0.0.1])
-	by mwinf6001.online.nl (SMTP Server) with ESMTP id A2C001C00087;
-	Wed,  5 Nov 2008 00:06:51 +0100 (CET)
-Received: from [192.168.1.12] (s55918ba6.adsl.wanadoo.nl [85.145.139.166])
-	by mwinf6001.online.nl (SMTP Server) with ESMTP id A9A351C00082;
-	Wed,  5 Nov 2008 00:06:43 +0100 (CET)
-X-ME-UUID: 20081104230647694.A9A351C00082@mwinf6001.online.nl
+	id S1754302AbYKDXIX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 4 Nov 2008 18:08:23 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754221AbYKDXIX
+	(ORCPT <rfc822;git-outgoing>); Tue, 4 Nov 2008 18:08:23 -0500
+Received: from mail.gmx.net ([213.165.64.20]:55943 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1754042AbYKDXIX (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 4 Nov 2008 18:08:23 -0500
+Received: (qmail invoked by alias); 04 Nov 2008 23:08:20 -0000
+Received: from pacific.mpi-cbg.de (EHLO [141.5.10.38]) [141.5.10.38]
+  by mail.gmx.net (mp004) with SMTP; 05 Nov 2008 00:08:20 +0100
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX19S2ep6E9JSHeL3sdo99DudL9zT2N8KIeyEKdLjYm
+	zO+hxcN01AstP9
+X-X-Sender: schindelin@pacific.mpi-cbg.de
 In-Reply-To: <87fxm7rtb7.fsf@gollum.intra.norang.ca>
-X-Mailer: Apple Mail (2.929.2)
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.73
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/100114>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/100115>
 
+Hi,
 
-On Nov 4, 2008, at 11:59 PM, Bernt Hansen wrote:
+On Tue, 4 Nov 2008, Bernt Hansen wrote:
 
->                  o--o--o--o-------------------M--F--o-- .. --o master
->                 /                            /
-> A--o-- .. --o--o-------------o--o--B--C--X--D
->
->
-> where commits A, B, C, D, and F all modify lines with
-> 'org-publish-validate-link'.  M is a merge commit and X has an empty  
-> log
-> message.
->
-> $ git checkout 8ea076e2de2b3721bd813ea5a2df1b53d0c25055 # commit F
-> $ git log -Sorg-publish-validate-link
+> Commits B, C, and D are not included in the git log -S output even
+> though with gitk you can see that 'org-publish-validate-link' is in the
+> patch.
 
-B,C,X and D are not part of 'F', so why should they be included?
+It is not sufficient for it to be in the patch, it has to be added or 
+deleted in whole.  So for example if you had a line
 
-You can do something like 'git log -S... F D' to show commits that are  
-also in D, or git log --all to show all commits.
+	org-publish-validate-link Hello
+
+and you changed it to
+
+	org-publish-validate-link World
+
+git log -SWorld will find the commit, but git log 
+-Sorg-publish-validate-link will not.
+
+Hth,
+Dscho
