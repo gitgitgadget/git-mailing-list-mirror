@@ -1,126 +1,64 @@
-From: Pierre Habouzit <madcoder@debian.org>
-Subject: Re: libxdiff and patience diff
-Date: Tue, 04 Nov 2008 09:33:03 +0100
-Message-ID: <20081104083303.GC3788@artemis.corp>
-References: <20081104004001.GB29458@artemis.corp> <Pine.LNX.4.64.0811031904130.9116@alien.or.mcafeemobile.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] push: fix local refs update if already up-to-date
+Date: Tue, 04 Nov 2008 00:38:37 -0800
+Message-ID: <7v7i7jsx6a.fsf@gitster.siamese.dyndns.org>
+References: <20081104000745.GA28480@localhost>
+ <20081104042643.GA31276@coredump.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: multipart/signed; boundary="iFRdW5/EC4oqxDHL";
-	protocol="application/pgp-signature"; micalg=SHA1
-Cc: Git ML <git@vger.kernel.org>
-To: Davide Libenzi <davidel@xmailserver.org>
-X-From: git-owner@vger.kernel.org Tue Nov 04 09:34:32 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: Clemens Buchacher <drizzd@aon.at>, git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Tue Nov 04 09:40:34 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KxHMs-0006zh-VX
-	for gcvg-git-2@gmane.org; Tue, 04 Nov 2008 09:34:31 +0100
+	id 1KxHSj-0008S6-So
+	for gcvg-git-2@gmane.org; Tue, 04 Nov 2008 09:40:34 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753695AbYKDIdN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 4 Nov 2008 03:33:13 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753719AbYKDIdN
-	(ORCPT <rfc822;git-outgoing>); Tue, 4 Nov 2008 03:33:13 -0500
-Received: from pan.madism.org ([88.191.52.104]:34221 "EHLO hermes.madism.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753665AbYKDIdM (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 4 Nov 2008 03:33:12 -0500
-Received: from madism.org (olympe.madism.org [82.243.245.108])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(Client CN "artemis.madism.org", Issuer "madism.org" (verified OK))
-	by hermes.madism.org (Postfix) with ESMTPS id F0EEF3BEA8;
-	Tue,  4 Nov 2008 09:33:07 +0100 (CET)
-Received: by madism.org (Postfix, from userid 1000)
-	id A663F110A3F; Tue,  4 Nov 2008 09:33:03 +0100 (CET)
-Content-Disposition: inline
-In-Reply-To: <Pine.LNX.4.64.0811031904130.9116@alien.or.mcafeemobile.com>
-X-Face: $(^e[V4D-[`f2EmMGz@fgWK!e.B~2g.{08lKPU(nc1J~z\4B>*JEVq:E]7G-\6$Ycr4<;Z!|VY6Grt]+RsS$IMV)f>2)M="tY:ZPcU;&%it2D81X^kNya0=L]"vZmLP+UmKhgq+u*\.dJ8G!N&=EvlD
-User-Agent: Madmutt/devel (Linux)
+	id S1753802AbYKDIiy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 4 Nov 2008 03:38:54 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753796AbYKDIiy
+	(ORCPT <rfc822;git-outgoing>); Tue, 4 Nov 2008 03:38:54 -0500
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:43559 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753516AbYKDIix (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 4 Nov 2008 03:38:53 -0500
+Received: from localhost.localdomain (localhost [127.0.0.1])
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 78C617890F;
+	Tue,  4 Nov 2008 03:38:52 -0500 (EST)
+Received: from pobox.com (ip68-225-240-211.oc.oc.cox.net [68.225.240.211])
+ (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
+ certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
+ ESMTPSA id 0B2707890E; Tue,  4 Nov 2008 03:38:45 -0500 (EST)
+In-Reply-To: <20081104042643.GA31276@coredump.intra.peff.net> (Jeff King's
+ message of "Mon, 3 Nov 2008 23:26:44 -0500")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: 025C308C-AA4C-11DD-94D9-9CEDC82D7133-77302942!a-sasl-fastnet.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/100056>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/100057>
 
+Jeff King <peff@peff.net> writes:
 
---iFRdW5/EC4oqxDHL
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+> Though I am not happy that we have to look up the tracking ref for every
+> uptodate ref. I think it shouldn't be a big performance problem with
+> packed refs, though, since they are cached (i.e., we pay only to compare
+> the hashes, not touch the filesystem for each ref).
 
-On Tue, Nov 04, 2008 at 03:17:37AM +0000, Davide Libenzi wrote:
-> On Tue, 4 Nov 2008, Pierre Habouzit wrote:
->=20
-> > Hi Davide,
-> >=20
-> > I've been working tonight, trying to make libxdiff support the patience
-> > diff algorithm, but I've totally failed, because I _thought_ I
-> > understood what xdl_split was doing, but it appears I don't.
-> >=20
-> >=20
-> > [ For the readers playing at home, the patience diff algorithm is
-> >   explained after my sig. ]
-> >=20
-> >=20
-> > What I did is to:
-> > (1) add a flag to the xenv in xdl_split that says that I want a
-> >     patience "split".
-> > (2) Then in xdl_split, if that bit is set, I compute the longest common
-> >     subsequence from the patience diff.
-> > (3) for each split it computes I call xdl_recs_cmp on that interval.
-> >=20
-> >=20
-> > What I thought it would achieve is that I force some boundaries at which
-> > libxdiff _must_ resync. Though, it seems that for some reason it doesn't
-> > work, probably because the "ha" stuff and the boundaries absolutely
-> > don't work the way I thought it did.
-> >=20
-> > So where is the place I should do that ? I suspect it should be
-> > partly in xprepare.c but I'm a bit stuck right now.
-> >=20
-> >=20
-> > Any pointer on how the stuff in xprepare.c and xdiffi.c work would help
-> > greatly, it's really not self-evident to me :)
->=20
-> What makes you think it'd self-evident to me? :)
-> Seriously, I forgot stuff I wrote the last month, this is way beyond my=
-=20
-> memory limits.
-> You definitely need to look at xprepare.c, especially at xdl_trim_ends()=
-=20
-> and xdl_cleanup_records(). Lines are re-arranged in indexes, and this=20
-> might screw up your logic if you're not prepared for it.
-> What xdl_split() does, is find the start of an LCS and return the=20
-> coordinate. Then xdl_recs_cmp() does the box reducing (first two "for"=20
-> loops) and different-lines marking (first and second "if").
+It is either (1) the user pays the cost of finding what remote tracking
+branch we are mirroring when you push for all up-to-date refs, like you
+did in your "here is an improvement" patch; or (2) the user pays the cost
+of fetching from there, immediately after pushing.  I'd imagine that the
+cost to do (1) would be smaller than (2).  The question is if seeing stale
+tracking branches is such a big deal, as next "git fetch" from there will
+update them anyway.  If it is a big deal, (1) would be a price worth
+paying.
 
-Well it's what I thought it did indeed, that's why before recursing into
-that bit, I tried to extract a full LCS from the patience diff algorithm
-and recurse into that for each interval it gives, which _should_ work,
-but doesn't at all :/
+In short, I agree with everything you said in your analysis.  Thanks for
+being a very good reviewer.
 
-Okay maybe I should re-read my algorithm slowly and check that I've not
-made something silly (like chaining the list in the reverse order or god
-knows what), but my debug functions let me believe that I did that fine.
-
-I'll look into it tonight.
-
---=20
-=C2=B7O=C2=B7  Pierre Habouzit
-=C2=B7=C2=B7O                                                madcoder@debia=
-n.org
-OOO                                                http://www.madism.org
-
---iFRdW5/EC4oqxDHL
-Content-Type: application/pgp-signature
-Content-Disposition: inline
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.9 (GNU/Linux)
-
-iEYEABECAAYFAkkQCL8ACgkQvGr7W6HudhytlQCgqPfUtDl0K2Vk3njMzyrJKVD1
-EDYAni9fooQzAj0TYKjVi0QKqokJDoTh
-=SttJ
------END PGP SIGNATURE-----
-
---iFRdW5/EC4oqxDHL--
+Clemens, care to reroll the patch?
