@@ -1,62 +1,69 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Intensive rename detection
-Date: Mon, 03 Nov 2008 17:39:02 -0800
-Message-ID: <7vy700s215.fsf@gitster.siamese.dyndns.org>
-References: <216e54900811031717j70669868p3c7503357ceb5138@mail.gmail.com>
- <216e54900811031718o4cc81294sc0c32be1e71b9372@mail.gmail.com>
+From: Nicolas Pitre <nico@cam.org>
+Subject: Re: Are binary xdeltas only used if you use git-gc?
+Date: Mon, 03 Nov 2008 20:57:04 -0500 (EST)
+Message-ID: <alpine.LFD.2.00.0811032053410.13034@xanadu.home>
+References: <f1d2d9ca0810310243r669840bbj2c5ee7183e0caaed@mail.gmail.com>
+ <m37i7pggnk.fsf@localhost.localdomain>
+ <f1d2d9ca0810310428o166dc075wbb43c00c1a555350@mail.gmail.com>
+ <200810311726.57122.jnareb@gmail.com> <vpqej1wra1c.fsf@bauges.imag.fr>
+ <alpine.LFD.2.00.0810311549570.13034@xanadu.home>
+ <f1d2d9ca0811010454u203a7c88x1e09735b3fc1358f@mail.gmail.com>
+ <alpine.LFD.2.00.0811010924550.13034@xanadu.home>
+ <f1d2d9ca0811031235w3581f7ffnc7380b4cb488e71a@mail.gmail.com>
+ <alpine.LFD.2.00.0811031611060.13034@xanadu.home>
+ <f1d2d9ca0811031453p49390911p956149ca76b9b80d@mail.gmail.com>
+ <alpine.LFD.2.00.0811031959070.13034@xanadu.home>
+ <7v3ai8tgq9.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: "Andrew Arnott" <andrewarnott@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Nov 04 02:40:34 2008
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+Cc: Thanassis Tsiodras <ttsiodras@gmail.com>,
+	Matthieu Moy <Matthieu.Moy@imag.fr>,
+	Jakub Narebski <jnareb@gmail.com>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Nov 04 02:58:36 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KxAuI-0004eL-4i
-	for gcvg-git-2@gmane.org; Tue, 04 Nov 2008 02:40:34 +0100
+	id 1KxBBe-00008S-9P
+	for gcvg-git-2@gmane.org; Tue, 04 Nov 2008 02:58:30 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752273AbYKDBjU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 3 Nov 2008 20:39:20 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752221AbYKDBjU
-	(ORCPT <rfc822;git-outgoing>); Mon, 3 Nov 2008 20:39:20 -0500
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:38493 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752186AbYKDBjU (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 3 Nov 2008 20:39:20 -0500
-Received: from localhost.localdomain (localhost [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 00EA178354;
-	Mon,  3 Nov 2008 20:39:18 -0500 (EST)
-Received: from pobox.com (ip68-225-240-211.oc.oc.cox.net [68.225.240.211])
- (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
- certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
- ESMTPSA id B7AF178351; Mon,  3 Nov 2008 20:39:09 -0500 (EST)
-In-Reply-To: <216e54900811031718o4cc81294sc0c32be1e71b9372@mail.gmail.com>
- (Andrew Arnott's message of "Mon, 3 Nov 2008 17:18:20 -0800")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: 6531E2F0-AA11-11DD-BC17-9CEDC82D7133-77302942!a-sasl-fastnet.pobox.com
+	id S1752118AbYKDB5L (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 3 Nov 2008 20:57:11 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752035AbYKDB5L
+	(ORCPT <rfc822;git-outgoing>); Mon, 3 Nov 2008 20:57:11 -0500
+Received: from relais.videotron.ca ([24.201.245.36]:54809 "EHLO
+	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751447AbYKDB5K (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 3 Nov 2008 20:57:10 -0500
+Received: from xanadu.home ([66.131.194.97]) by VL-MH-MR001.ip.videotron.ca
+ (Sun Java(tm) System Messaging Server 6.3-4.01 (built Aug  3 2007; 32bit))
+ with ESMTP id <0K9S00DJ8DF441B0@VL-MH-MR001.ip.videotron.ca> for
+ git@vger.kernel.org; Mon, 03 Nov 2008 20:57:04 -0500 (EST)
+X-X-Sender: nico@xanadu.home
+In-reply-to: <7v3ai8tgq9.fsf@gitster.siamese.dyndns.org>
+User-Agent: Alpine 2.00 (LFD 1167 2008-08-23)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/100023>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/100024>
 
-"Andrew Arnott" <andrewarnott@gmail.com> writes:
+On Mon, 3 Nov 2008, Junio C Hamano wrote:
 
-> I'm refactoring a library including renaming both files and
-> directories.  A few lines of each file are also changed, but they are
-> substantially unchanged in content.  I've done a git add to put all my
-> changes into the index, but a git status shows that git only detected
-> a few of the renames... most of them are delete-add operations.  Is
-> there anything I can do to help git recognize the rename so that
-> history is preserved across this commit?
+> Nicolas Pitre <nico@cam.org> writes:
+> 
+> > Right.  Those thin packs were designed for different versions of the 
+> > same file in mind, not different files with almost the same content.  
+> > This could possibly be improved at some point...
+> 
+> Wouldn't using a large --window help by going across name-hash boundaries?
 
-There is no need to do anything at commit time.
+The issue is to decide what preferred delta base to add to the list of 
+objects.  Currently only objects with the same path as those being 
+modified are considered.
 
-After making the commit, you can look at it with lower similarity
-threashold, e.g.
 
-	git show --stat -M1 HEAD
-
-The default behaviour IIRC corresponds to -M5 (that is 50%).
+Nicolas
