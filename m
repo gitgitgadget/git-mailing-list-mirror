@@ -1,84 +1,97 @@
-From: "Geoff Russell" <geoffrey.russell@gmail.com>
-Subject: Re: exporting the last N days of a repository
-Date: Wed, 5 Nov 2008 09:19:33 +1030
-Message-ID: <93c3eada0811041449u20e0fc74gf6a1cb420923e484@mail.gmail.com>
-References: <93c3eada0810281801l29253e02g95c7a6851c4c4db3@mail.gmail.com>
-	 <alpine.DEB.1.00.0810291610340.22125@pacific.mpi-cbg.de.mpi-cbg.de>
-	 <93c3eada0811021716y37ba999fkc2085b1060fbea2d@mail.gmail.com>
-	 <cc29171c0811030855s2fb0d7a5ncdfdd6acd7c71537@mail.gmail.com>
-Reply-To: geoffrey.russell@gmail.com
+From: Bernt Hansen <bernt@norang.ca>
+Subject: git log -S doesn't find some commits
+Date: Tue, 04 Nov 2008 17:59:40 -0500
+Organization: Norang Consulting Inc
+Message-ID: <87fxm7rtb7.fsf@gollum.intra.norang.ca>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Nov 04 23:50:56 2008
+X-From: git-owner@vger.kernel.org Wed Nov 05 00:01:26 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KxUjZ-0002OQ-Dw
-	for gcvg-git-2@gmane.org; Tue, 04 Nov 2008 23:50:49 +0100
+	id 1KxUtc-00069G-Qk
+	for gcvg-git-2@gmane.org; Wed, 05 Nov 2008 00:01:13 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754382AbYKDWtf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 4 Nov 2008 17:49:35 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754445AbYKDWtf
-	(ORCPT <rfc822;git-outgoing>); Tue, 4 Nov 2008 17:49:35 -0500
-Received: from yw-out-2324.google.com ([74.125.46.30]:25076 "EHLO
-	yw-out-2324.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754380AbYKDWte (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 4 Nov 2008 17:49:34 -0500
-Received: by yw-out-2324.google.com with SMTP id 9so1300400ywe.1
-        for <git@vger.kernel.org>; Tue, 04 Nov 2008 14:49:33 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:reply-to
-         :to:subject:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:references;
-        bh=rsINFRlxmTRwwIOVAYyLhz/UG8ezN6yboed7kO//r1s=;
-        b=Wuq89J05+Oz3aM99ap75d2g0Q/+hOw4KwKRSZz+iXPOs9OxuCOE9ZKxYRBs07p+snW
-         bQn5hDyHdy1sVPtIQl+NrNPRr2qth/TPI6o7Qpc15IJrvBdTuKBvZmRIEtlD0Cav1kuZ
-         BVEVGU/Z/XX9DQrMeYhLpvRMOHPgVJzVKQ89k=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:reply-to:to:subject:in-reply-to:mime-version
-         :content-type:content-transfer-encoding:content-disposition
-         :references;
-        b=mslmmklwf89tmsCAS/eDFgyRq3q/sg16leSaa3lhjhdelPkNAMzEkyGoCfe40q1Ao4
-         xpweQ8qCwjGfJflwcmP7R2w2Bp89Ol5FMZFPmUJoN7P3/0+ukPyZ8thszekjyk1+Uaki
-         81ZhaJGM3bvQqXtB0IFZ41ynX4iF7dDDQF99c=
-Received: by 10.150.137.12 with SMTP id k12mr394066ybd.141.1225838973315;
-        Tue, 04 Nov 2008 14:49:33 -0800 (PST)
-Received: by 10.150.181.6 with HTTP; Tue, 4 Nov 2008 14:49:33 -0800 (PST)
-In-Reply-To: <cc29171c0811030855s2fb0d7a5ncdfdd6acd7c71537@mail.gmail.com>
-Content-Disposition: inline
+	id S1754789AbYKDW74 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 4 Nov 2008 17:59:56 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754428AbYKDW74
+	(ORCPT <rfc822;git-outgoing>); Tue, 4 Nov 2008 17:59:56 -0500
+Received: from main.gmane.org ([80.91.229.2]:41684 "EHLO ciao.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754460AbYKDW74 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 4 Nov 2008 17:59:56 -0500
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1KxUsM-00071F-32
+	for git@vger.kernel.org; Tue, 04 Nov 2008 22:59:54 +0000
+Received: from cpe000102d0fe75-cm0012256ecbde.cpe.net.cable.rogers.com ([99.239.148.180])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Tue, 04 Nov 2008 22:59:54 +0000
+Received: from bernt by cpe000102d0fe75-cm0012256ecbde.cpe.net.cable.rogers.com with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Tue, 04 Nov 2008 22:59:54 +0000
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@ger.gmane.org
+X-Gmane-NNTP-Posting-Host: cpe000102d0fe75-cm0012256ecbde.cpe.net.cable.rogers.com
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+Cancel-Lock: sha1:QiaaVz8o7Cq1RVDN3kj12WLrOJY=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/100112>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/100113>
 
-Apologies to Johannes and Bob who have tried to help
-but I'm still having difficulties, here is my current non-working script:
+Hi!
 
-------------------------------------------------------------------
-#!/bin/sh
-DIR=/tmp/gitdemo
-# for testing just arbitrarily
-# select the 15th most recent commit as our new origin
-NEWORIGIN=$(git rev-list master@{15} | head -1)
-echo $NEWORIGIN
-# checkout earlist point we are interested in
-# we want to drop any history before this point
-git checkout $NEWORIGIN
-# now make a new directory, initialise with new origin
-# and apply all commits after that point
-mkdir $DIR && (cd $DIR ; git init) &&  \
-    rsync -aHv --exclude=.git ./ $DIR && \
-    (cd $DIR ; git add . ; git commit -m "starting point" </dev/null ) && \
-    git fast-export $NEWORIGIN..master | (cd $DIR ; git fast-import )
+The org-mode repository at git://repo.or.cz/org-mode.git has history
+that looks like this:
 
------------------ end of script
 
-The fast-import gives me a message I don't understand and doesn't
-do the import.
+                  o--o--o--o-------------------M--F--o-- .. --o master
+                 /                            /
+ A--o-- .. --o--o-------------o--o--B--C--X--D
+
+
+where commits A, B, C, D, and F all modify lines with
+'org-publish-validate-link'.  M is a merge commit and X has an empty log
+message.
+
+$ git checkout 8ea076e2de2b3721bd813ea5a2df1b53d0c25055 # commit F
+$ git log -Sorg-publish-validate-link
+
+reports 3 commits
+
+F, A, and something earlier than A
+
+Commits B, C, and D are not included in the git log -S output even
+though with gitk you can see that 'org-publish-validate-link' is in the
+patch.
+
+Am I doing something wrong or is this a bug?
+
+$ git --version
+git version 1.6.0.3.523.g304d0
+
+I've marked the commits in column one below.
+
+  $ git log --pretty=oneline
+
+F 8ea076e2de2b3721bd813ea5a2df1b53d0c25055 Updated org-publish.el (now version 1.8
+  e322abfd14267a154a06deb1e7ef5a432b17f68a Merge branch 'add-recursion-to-org-publ
+  6208fb43cb1bbab852560cf506c7d12674307492 Minor docstring fix.
+  df54646ab324b11e99279dc0b6dfa161a1c72c7d Fixed the Timeline node.
+D 4dcecb97bf4586c26f7e955980caa7e9630ae9a7 More cleaning.
+X eda5a993cab01acd6878ab6c982b075d2cba167b *** empty log message ***
+C b05bc10e6794c902df679b906d8bd6ec3f5633a9 Cleaned up code.
+B 837c81ce51d90427bbcc32b06d84505b1a1e6b2a Use alist instead of a hashtable.
+  960449c9e93725f791bd450d3c85fd71339efb09 Cleaned up the buffer.
+  bf09955fec57307616926959b31e19af42520db0 Bugfix for `org-archive-subtree'.
+  f247d16417f17140a5bd5d03db164cc74191d9c1 Added support for :maxlevel and :skip-e
+  bd172412fafaa0386762826677f9929c9c4fc41c Added support for recursive publication
+  96e96fa684585e9916f4d6cdde20d4df7ff3f7d7 Added (require 'erc-log).
+
+Thanks for git!
+Bernt
