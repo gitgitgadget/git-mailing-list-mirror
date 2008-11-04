@@ -1,92 +1,89 @@
-From: "Li Frank" <Frank.Li@freescale.com>
-Subject: RE: why not TortoiseGit
-Date: Tue, 4 Nov 2008 14:36:36 +0800
-Message-ID: <7FD1F85C96D70C4A89DA1DF7667EAE961E75EA@zch01exm23.fsl.freescale.net>
-References: <7FD1F85C96D70C4A89DA1DF7667EAE96125890@zch01exm23.fsl.freescale.net> <20081031121913.GE18221@sys-0.hiltweb.site> <490AFBA5.5090700@op5.se> <d411cc4a0810310857y5b4f8c46ue33e1f6a9e2c13d1@mail.gmail.com> <7FD1F85C96D70C4A89DA1DF7667EAE961E728C@zch01exm23.fsl.freescale.net> <320075ff0811030200q606b76a8i16496cf7b8b1b7d2@mail.gmail.com>
+From: "Andrew Arnott" <andrewarnott@gmail.com>
+Subject: Re: Intensive rename detection
+Date: Mon, 3 Nov 2008 22:36:42 -0800
+Message-ID: <216e54900811032236l5ae4bde5v16ab6519962e428f@mail.gmail.com>
+References: <216e54900811031717j70669868p3c7503357ceb5138@mail.gmail.com>
+	 <216e54900811031718o4cc81294sc0c32be1e71b9372@mail.gmail.com>
+	 <alpine.LFD.2.00.0811032021210.3419@nehalem.linux-foundation.org>
+	 <216e54900811032107p159e98ecn8958f0a78efde8f2@mail.gmail.com>
+	 <216e54900811032119h4cb51327v2d85712acc444185@mail.gmail.com>
+	 <216e54900811032202h5c82e3a9j30100e5b82f6a16a@mail.gmail.com>
+	 <20081104061647.GA18297@coredump.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain;
-	charset="us-ascii"
-Content-Transfer-Encoding: 8BIT
-Cc: "Scott Chacon" <schacon@gmail.com>, "Andreas Ericsson" <ae@op5.se>,
-	"Ian Hilt" <ian.hilt@gmx.com>, <git@vger.kernel.org>
-To: "Nigel Magnay" <nigel.magnay@gmail.com>
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: "Junio C Hamano" <gitster@pobox.com>,
+	"Linus Torvalds" <torvalds@linux-foundation.org>,
+	git@vger.kernel.org
+To: "Jeff King" <peff@peff.net>
 X-From: git-owner@vger.kernel.org Tue Nov 04 07:38:08 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KxFYF-0000OU-KU
-	for gcvg-git-2@gmane.org; Tue, 04 Nov 2008 07:38:08 +0100
+	id 1KxFYE-0000OU-Su
+	for gcvg-git-2@gmane.org; Tue, 04 Nov 2008 07:38:07 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752441AbYKDGgu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 4 Nov 2008 01:36:50 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752035AbYKDGgu
-	(ORCPT <rfc822;git-outgoing>); Tue, 4 Nov 2008 01:36:50 -0500
-Received: from az33egw02.freescale.net ([192.88.158.103]:38456 "EHLO
-	az33egw02.freescale.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751506AbYKDGgt convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 4 Nov 2008 01:36:49 -0500
-Received: from de01smr01.freescale.net (de01smr01.freescale.net [10.208.0.31])
-	by az33egw02.freescale.net (8.12.11/az33egw02) with ESMTP id mA46aeDt007312
-	for <git@vger.kernel.org>; Mon, 3 Nov 2008 23:36:41 -0700 (MST)
-Received: from zch01exm23.fsl.freescale.net (zch01exm23.ap.freescale.net [10.192.129.207])
-	by de01smr01.freescale.net (8.13.1/8.13.0) with ESMTP id mA46acjK010110
-	for <git@vger.kernel.org>; Tue, 4 Nov 2008 00:36:39 -0600 (CST)
-Content-class: urn:content-classes:message
-X-MimeOLE: Produced By Microsoft Exchange V6.5
-In-Reply-To: <320075ff0811030200q606b76a8i16496cf7b8b1b7d2@mail.gmail.com>
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-Thread-Topic: why not TortoiseGit
-Thread-Index: Ack9mv3pe30kC1okSEmNP8ZMeHbrXAArFcTg
+	id S1752092AbYKDGgq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 4 Nov 2008 01:36:46 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752035AbYKDGgq
+	(ORCPT <rfc822;git-outgoing>); Tue, 4 Nov 2008 01:36:46 -0500
+Received: from el-out-1112.google.com ([209.85.162.177]:4887 "EHLO
+	el-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752028AbYKDGgp (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 4 Nov 2008 01:36:45 -0500
+Received: by el-out-1112.google.com with SMTP id z25so1384975ele.1
+        for <git@vger.kernel.org>; Mon, 03 Nov 2008 22:36:43 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to
+         :subject:cc:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:references;
+        bh=2ER21tNFgCYD8X0uhRZ8Ahl1884dXNU2EjY4fWE8tco=;
+        b=TqJHmk/nHIwLSpJjlQxdJx3yMXXXuojpe4VoAG6G56owFyMrITodb0zCjdFXNxX/Ce
+         8cO3KMBcBhsqyly/q4f78lZavc0ZYK58cYIb4jIEGpiLkoAM9AXMaloeCjhgHakfJGPQ
+         JXL7dPsRmC0eMNFPil17nUoBIrcpmicosn+Do=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
+         :content-type:content-transfer-encoding:content-disposition
+         :references;
+        b=hrL002mPhORv3/85ej8G/X6StkJfqPlHeZf/89bCZMW591Ly8TcN6b3jPJSRwpD2jd
+         Yz4Q7FeAf2xeIARsg3b6QMIV/emH18n+V3qw4eyjCWf2WGofFd92SmnWO6QK0BRDMPo5
+         jK94s3g0B0qooOAzXQgqT/EgbDwcFrNwQNGUQ=
+Received: by 10.151.155.21 with SMTP id h21mr1826996ybo.110.1225780603005;
+        Mon, 03 Nov 2008 22:36:43 -0800 (PST)
+Received: by 10.151.142.12 with HTTP; Mon, 3 Nov 2008 22:36:42 -0800 (PST)
+In-Reply-To: <20081104061647.GA18297@coredump.intra.peff.net>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/100044>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/100045>
 
-I also think it is best choose base on Tortoise SVN.  TortoriseGIt
-should be in windows platform only because it is extension of explore.
+Yes, on git status.  I'm afraid I don't know how to look up the
+reference you gave.
 
-Best regards
-Frank Li 
-
------Original Message-----
-From: Nigel Magnay [mailto:nigel.magnay@gmail.com] 
-Sent: Monday, November 03, 2008 6:00 PM
-To: Li Frank-B20596
-Cc: Scott Chacon; Andreas Ericsson; Ian Hilt; git@vger.kernel.org
-Subject: Re: why not TortoiseGit
-
-> I read some code of TortoiseSVN and TortoiseHg Code.
-> At beginning, TortoiseGit can git command to get information like
-Qgit.
-> After linkable library ready, replace "git command".
+On Mon, Nov 3, 2008 at 10:16 PM, Jeff King <peff@peff.net> wrote:
+> On Mon, Nov 03, 2008 at 10:02:37PM -0800, Andrew Arnott wrote:
 >
-> I think TortoiseGit can start base on below way.
+>> Hmmm.... actually on second run I am still getting the too many files
+>> warning.  I put the [diff] section in a ~/.gitconfig file, a
+>> .gitconfig file in the root of my repo, and in the .git/config file,
+>> but none of them seem to get rid of the message.
 >
-> 1.  Base on TortoiseHg, It is python Script.  Replace below hg 
-> operator with Git.
-> 2.  Base on TortoiseSVN, It is developed with C++. Need VS2008.
-> ToritoiseSVN provide some built in diff and merge tools.
-> 3.  Base on Qgit, which provide some basic UI, such comment dialogbox,
-
-> history view and file annotate.
+> Where are you getting the warning? On "git status"?
 >
+> If so, then this is an instance of the problem I mentioned here:
 >
-
-TortoiseSVN is a good place to start because it separates out the
-windows icon decorators into a separate DLL (shared with TortoiseCVS).
-This is significant, as these are a finite resource in the windows
-shell, and so having a TortoiseSVN + TortoiseGIT on one machine and you
-might run out, and I'd imagine lots of people wanting both.
-
-On the minus side, building (Tortoise)SVN requires a lot of environment
-setup just to get it to build - most of which can be immediately thrown
-away as it's specific to SVN.
-
-But it doesn't look like a hard project to me, just requires stripping
-out a lot of junk and re-patching callouts to a git executable (which
-could be the standard git tools) and a minimal git library that knows if
-files are dirty.
+>  [PATCH v3 7/8] wt-status: load diff ui config
+>  20081026044935.GG21047@coredump.intra.peff.net
+>
+> (sorry, I would link to gmane, but it seems to be down at the moment).
+> Junio, maybe it is worth applying after all (we could also do just the
+> diff "basic" config instead).
+>
+> -Peff
+>
