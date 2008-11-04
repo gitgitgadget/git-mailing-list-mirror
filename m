@@ -1,84 +1,123 @@
-From: "Jon Smirl" <jonsmirl@gmail.com>
-Subject: Re: Stgit and refresh-temp
-Date: Tue, 4 Nov 2008 09:50:33 -0500
-Message-ID: <9e4733910811040650k2b63856fpf20f4b654780c658@mail.gmail.com>
-References: <9e4733910811040537p4e88c09an94370154eca12778@mail.gmail.com>
-	 <9e4733910811040538v604d33e3jf0b312d809630af2@mail.gmail.com>
+From: "Andrew Arnott" <andrewarnott@gmail.com>
+Subject: Re: Repo corrupted somehow?
+Date: Tue, 4 Nov 2008 07:12:40 -0800
+Message-ID: <216e54900811040712k51db6fbfu44c59d9f90f1eabd@mail.gmail.com>
+References: <216e54900811032309s51c8cb1fr64054ff18c450b1d@mail.gmail.com>
+	 <216e54900811032334y35ada7daw753c0ad3073c0317@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-To: "=?ISO-8859-1?Q?Karl_Hasselstr=F6m?=" <kha@treskal.com>,
-	"Catalin Marinas" <catalin.marinas@gmail.com>,
-	"Git Mailing List" <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Tue Nov 04 15:51:54 2008
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Nov 04 16:14:01 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KxNG3-0000I6-Ri
-	for gcvg-git-2@gmane.org; Tue, 04 Nov 2008 15:51:52 +0100
+	id 1KxNbS-0007Zj-Dz
+	for gcvg-git-2@gmane.org; Tue, 04 Nov 2008 16:13:58 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752658AbYKDOuf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 4 Nov 2008 09:50:35 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751677AbYKDOuf
-	(ORCPT <rfc822;git-outgoing>); Tue, 4 Nov 2008 09:50:35 -0500
-Received: from rv-out-0506.google.com ([209.85.198.239]:63244 "EHLO
-	rv-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754681AbYKDOud (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 4 Nov 2008 09:50:33 -0500
-Received: by rv-out-0506.google.com with SMTP id k40so3317328rvb.1
-        for <git@vger.kernel.org>; Tue, 04 Nov 2008 06:50:33 -0800 (PST)
+	id S1752557AbYKDPMn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 4 Nov 2008 10:12:43 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753053AbYKDPMn
+	(ORCPT <rfc822;git-outgoing>); Tue, 4 Nov 2008 10:12:43 -0500
+Received: from rn-out-0910.google.com ([64.233.170.191]:4677 "EHLO
+	rn-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750943AbYKDPMm (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 4 Nov 2008 10:12:42 -0500
+Received: by rn-out-0910.google.com with SMTP id k40so2275899rnd.17
+        for <git@vger.kernel.org>; Tue, 04 Nov 2008 07:12:40 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:received:received:message-id:date:from:to
          :subject:in-reply-to:mime-version:content-type
          :content-transfer-encoding:content-disposition:references;
-        bh=5FIXuKjbh0iLxl+/2Y0gN/2RWf7RqIppKMlrQsLRxMg=;
-        b=FWr4wRXzYzNO2NuDwhijycPA9LDzq/KV/0aS5HRb3bj993LwMJ0n4qCOp3TKz34YXH
-         VFr3xt5gytx+rIKK8t3Y0c40v1kPCd2x6l8k2C+7p9orBK+/VJjndkkU4lfR2TgnvQkX
-         51kOyHCOnv1QCB1QAkE5UoCdyR3ZjvsJqwa3M=
+        bh=7+HR7jawU6k1dOmeNTOKQNq1fG/Zeomb9h91qQhVd5Y=;
+        b=G7ksnVLc/fIqFhE5hclLhGxPa27hJEIrDWKhUsnTQE/UmWGKFtJn0CtE2fKP+NG/xq
+         LgPeiAWH+7PJxxD/rucWFHVxkhIDiZ6qrYElmOGf64XECL6mRWtu0x0jiANNzsT1rpic
+         dcXccRjm8SbV3wdrsjCKFCznoyv4y8Mxv6pmM=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=message-id:date:from:to:subject:in-reply-to:mime-version
          :content-type:content-transfer-encoding:content-disposition
          :references;
-        b=FejA7mtdZMznK6CZk+wdY3U2ql7AxH72+y3jgjA+nmv0lDNZdT2uHck5Wk2Gc4NlEn
-         m2Q32H7YBQ7M0UOJ33RTXjIJh2f2YrlUhQ8j/LewZUVEgJ6KJJTemeSRCj5yaWyCxJfa
-         w5DYA968LW4KGTLwMNMHxxUGw6fLbfozU9wGI=
-Received: by 10.141.69.1 with SMTP id w1mr906432rvk.147.1225810233090;
-        Tue, 04 Nov 2008 06:50:33 -0800 (PST)
-Received: by 10.140.208.10 with HTTP; Tue, 4 Nov 2008 06:50:33 -0800 (PST)
-In-Reply-To: <9e4733910811040538v604d33e3jf0b312d809630af2@mail.gmail.com>
+        b=PUZrdA9OsmL8GmwLYZg/b9A/rEoYxYvWrmMZalGgRu5+Ou02CfaK2Y0BXyH7Ytf0it
+         AqKYDSQv7oBcNQz9ernEDyqtIoOPL6oqRuaFJ/rx/eacyYZsTgmykXs7qmVHRI3BlWET
+         RxfED0C84lf8FEaN3xvNEYVH/7Vc+3VzjgiQc=
+Received: by 10.151.149.14 with SMTP id b14mr2543419ybo.232.1225811560253;
+        Tue, 04 Nov 2008 07:12:40 -0800 (PST)
+Received: by 10.151.142.12 with HTTP; Tue, 4 Nov 2008 07:12:40 -0800 (PST)
+In-Reply-To: <216e54900811032334y35ada7daw753c0ad3073c0317@mail.gmail.com>
 Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/100080>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/100081>
 
-I think I fixed my tree up. After a stg repair I was able to delete
-'refresh-temp' which was empty, then apply the changes to jds-lirc.
+Nah, that wasn't a false alarm after all.  It's happening again, only
+this time for dozens of files, and
+git rebase --abort
+git reset --hard
 
-It may have been possible to make the merge smarter. The conflicts
-were with things in the popped-off patches. Your typical end of file
-append merge conflicts.
+is not helping.
 
-On Tue, Nov 4, 2008 at 8:38 AM, Jon Smirl <jonsmirl@gmail.com> wrote:
-> jonsmirl@terra:~/fs$ stg version
-> Stacked GIT 0.14.3.270.g0f36
-> git version 1.6.0.3.523.g304d0
-> Python version 2.5.2 (r252:60911, Oct  5 2008, 19:29:17)
-> [GCC 4.3.2]
-> jonsmirl@terra:~/fs$
+On Mon, Nov 3, 2008 at 11:34 PM, Andrew Arnott <andrewarnott@gmail.com> wrote:
+> I guess I was still in the middle of a rebase.  git rebase --abort
+> sort of ultimately fixed it.
 >
-> --
-> Jon Smirl
-> jonsmirl@gmail.com
+> On Mon, Nov 3, 2008 at 11:09 PM, Andrew Arnott <andrewarnott@gmail.com> wrote:
+>> I was just git commit'ing, and then I was doing a git rebase to squash
+>> several commits into one when the rebase failed.  I then did a
+>> git checkout -f master
+>> git reset --hard
+>> but no matter what I do, git thinks that several files have changed.
+>> The diff shows all the lines in these several files removed and then
+>> added, yet without any changes made to them.  git reset --hard doesn't
+>> revert the change. When I jump around history with git checkout these
+>> files remain in their "changed" state.  I even tried "git clone" to
+>> create a whole new repo, but one of these several files STILL
+>> registered as changed before I made any changes.
+>>
+>> Any idea what's wrong and how to recover?
+>>
+>> Observe the below command buffer: (I can upload my repo so you can
+>> clone it and perhaps repro it if you want).
+>>
+>> Andrew@LACKY /c/git/dotnetoauth
+>> $ git status
+>> # On branch master
+>> # Changed but not updated:
+>> #   (use "git add <file>..." to update what will be committed)
+>> #
+>> #       modified:   tools/Documentation.targets
+>> #       modified:   tools/DotNetOpenAuth.Common.Settings.targets
+>> #       modified:   tools/DotNetOpenAuth.Versioning.targets
+>> #       modified:
+>> tools/Sandcastle/Presentation/vs2005/Content/reference_content.xml
+>> #       modified:   tools/libcheck.ps1
+>> #       modified:   tools/sandcastle.targets
+>> #
+>> no changes added to commit (use "git add" and/or "git commit -a")
+>>
+>> Andrew@LACKY /c/git/dotnetoauth
+>> $ git reset --hard
+>> HEAD is now at 13d37b8 Patching up the bad merges in the phases.
+>>
+>> Andrew@LACKY /c/git/dotnetoauth
+>> $ git status
+>> # On branch master
+>> # Changed but not updated:
+>> #   (use "git add <file>..." to update what will be committed)
+>> #
+>> #       modified:   tools/Documentation.targets
+>> #       modified:   tools/DotNetOpenAuth.Common.Settings.targets
+>> #       modified:   tools/DotNetOpenAuth.Versioning.targets
+>> #       modified:
+>> tools/Sandcastle/Presentation/vs2005/Content/reference_content.xml
+>> #       modified:   tools/libcheck.ps1
+>> #       modified:   tools/sandcastle.targets
+>> #
+>> no changes added to commit (use "git add" and/or "git commit -a")
+>>
 >
-
-
-
--- 
-Jon Smirl
-jonsmirl@gmail.com
