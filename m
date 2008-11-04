@@ -1,65 +1,76 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: git log -S doesn't find some commits
-Date: Wed, 5 Nov 2008 00:15:44 +0100 (CET)
-Message-ID: <alpine.DEB.1.00.0811050014310.30769@pacific.mpi-cbg.de>
-References: <87fxm7rtb7.fsf@gollum.intra.norang.ca>
+From: Samuel Tardieu <sam@rfc1149.net>
+Subject: Re: [PATCH 1/3] tag: Do not allow to call "git tag" in more than
+	one operating mode
+Date: Wed, 5 Nov 2008 00:11:10 +0100
+Organization: RFC 1149 (see http://www.rfc1149.net/)
+Message-ID: <2008-11-05-00-11-10+trackit+sam@rfc1149.net>
+References: <20081104124207.18273.31679.stgit@arrakis.enst.fr> <7vej1rqfar.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 8bit
 Cc: git@vger.kernel.org
-To: Bernt Hansen <bernt@norang.ca>
-X-From: git-owner@vger.kernel.org Wed Nov 05 00:09:46 2008
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Nov 05 00:12:35 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KxV1k-0000lf-VZ
-	for gcvg-git-2@gmane.org; Wed, 05 Nov 2008 00:09:37 +0100
+	id 1KxV4X-0001dp-Pn
+	for gcvg-git-2@gmane.org; Wed, 05 Nov 2008 00:12:30 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754302AbYKDXIX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 4 Nov 2008 18:08:23 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754221AbYKDXIX
-	(ORCPT <rfc822;git-outgoing>); Tue, 4 Nov 2008 18:08:23 -0500
-Received: from mail.gmx.net ([213.165.64.20]:55943 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1754042AbYKDXIX (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 4 Nov 2008 18:08:23 -0500
-Received: (qmail invoked by alias); 04 Nov 2008 23:08:20 -0000
-Received: from pacific.mpi-cbg.de (EHLO [141.5.10.38]) [141.5.10.38]
-  by mail.gmx.net (mp004) with SMTP; 05 Nov 2008 00:08:20 +0100
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX19S2ep6E9JSHeL3sdo99DudL9zT2N8KIeyEKdLjYm
-	zO+hxcN01AstP9
-X-X-Sender: schindelin@pacific.mpi-cbg.de
-In-Reply-To: <87fxm7rtb7.fsf@gollum.intra.norang.ca>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.73
+	id S1754510AbYKDXLQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 4 Nov 2008 18:11:16 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754445AbYKDXLQ
+	(ORCPT <rfc822;git-outgoing>); Tue, 4 Nov 2008 18:11:16 -0500
+Received: from zoidberg.rfc1149.net ([91.121.19.179]:52247 "EHLO
+	zoidberg.rfc1149.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754049AbYKDXLP (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 4 Nov 2008 18:11:15 -0500
+Received: from localhost (localhost [127.0.0.1])
+	by zoidberg.rfc1149.net (Postfix) with ESMTP id 563C310F093;
+	Wed,  5 Nov 2008 00:11:09 +0100 (CET)
+X-Virus-Scanned: amavisd-new at rfc1149.net
+Received: from zoidberg.rfc1149.net ([127.0.0.1])
+	by localhost (zaphod.rfc1149.net [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id HK43dsZ8EcN0; Wed,  5 Nov 2008 00:11:07 +0100 (CET)
+Received: from mail2.rfc1149.net (willow.rfc1149.net [IPv6:2001:6f8:37a:2::2])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(Client CN "mail2.rfc1149.net", Issuer "rfc1149.net" (verified OK))
+	by zoidberg.rfc1149.net (Postfix) with ESMTPS id 07A0310F105;
+	Wed,  5 Nov 2008 00:11:07 +0100 (CET)
+Received: from localhost (localhost [127.0.0.1])
+	by mail2.rfc1149.net (Postfix) with ESMTP id 9609EC40BC;
+	Wed,  5 Nov 2008 00:11:10 +0100 (CET)
+Received: from mail2.rfc1149.net ([127.0.0.1])
+	by localhost (localhost [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id eHso5N2O6t19; Wed,  5 Nov 2008 00:11:10 +0100 (CET)
+Received: by mail2.rfc1149.net (Postfix, from userid 1000)
+	id 6C781C40BF; Wed,  5 Nov 2008 00:11:10 +0100 (CET)
+Content-Disposition: inline
+In-Reply-To: <7vej1rqfar.fsf@gitster.siamese.dyndns.org>
+User-Agent: Mutt/1.5.18 (2008-05-17)
+X-WWW: http://www.rfc1149.net/sam
+X-Jabber: <sam@rfc1149.net> (see http://www.jabber.org/)
+X-OpenPGP-Fingerprint: 79C0 AE3C CEA8 F17B 0EF1  45A5 F133 2241 1B80 ADE6 (see http://www.gnupg.org/)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/100115>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/100116>
 
-Hi,
+* Junio C Hamano <gitster@pobox.com> [2008-11-04 14:47:40 -0800]
 
-On Tue, 4 Nov 2008, Bernt Hansen wrote:
+| I think this patch breaks "git tag -a" or "git tag -s", but I didn't try.
+| Run
+| 
+| 	$ git tag -s
+| 
+| with and without your patch.
 
-> Commits B, C, and D are not included in the git log -S output even
-> though with gitk you can see that 'org-publish-validate-link' is in the
-> patch.
+That's right. I didn't notice it because I developped the 2/3 at
+the same time and tested with both applied at the same time.
 
-It is not sufficient for it to be in the patch, it has to be added or 
-deleted in whole.  So for example if you had a line
-
-	org-publish-validate-link Hello
-
-and you changed it to
-
-	org-publish-validate-link World
-
-git log -SWorld will find the commit, but git log 
--Sorg-publish-validate-link will not.
-
-Hth,
-Dscho
+I will resubmit the serie with the first two merged together,
+as they are both short, on the same topic and fix the same
+problem.
