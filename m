@@ -1,69 +1,87 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [Q] Abbreviated history graph?
-Date: Tue, 04 Nov 2008 00:45:12 -0800
-Message-ID: <7vzlkfriav.fsf@gitster.siamese.dyndns.org>
-References: <200811031439.12111.brian.foster@innova-card.com>
- <alpine.LFD.2.00.0811031129060.3419@nehalem.linux-foundation.org>
- <alpine.LFD.2.00.0811031211180.3419@nehalem.linux-foundation.org>
+From: Clemens Buchacher <drizzd@aon.at>
+Subject: Re: [PATCH] push: fix local refs update if already up-to-date
+Date: Tue, 4 Nov 2008 09:56:30 +0100
+Message-ID: <20081104085630.GA22530@localhost>
+References: <20081104000745.GA28480@localhost> <20081104042643.GA31276@coredump.intra.peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Brian Foster <brian.foster@innova-card.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: Linus Torvalds <torvalds@linux-foundation.org>
-X-From: git-owner@vger.kernel.org Tue Nov 04 09:46:44 2008
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Tue Nov 04 09:57:38 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KxHYg-0001Th-Ab
-	for gcvg-git-2@gmane.org; Tue, 04 Nov 2008 09:46:42 +0100
+	id 1KxHjF-0004Ba-9z
+	for gcvg-git-2@gmane.org; Tue, 04 Nov 2008 09:57:37 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753434AbYKDIp2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 4 Nov 2008 03:45:28 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753396AbYKDIp2
-	(ORCPT <rfc822;git-outgoing>); Tue, 4 Nov 2008 03:45:28 -0500
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:44429 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753381AbYKDIp1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 4 Nov 2008 03:45:27 -0500
-Received: from localhost.localdomain (localhost [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id E05CA7895A;
-	Tue,  4 Nov 2008 03:45:26 -0500 (EST)
-Received: from pobox.com (ip68-225-240-211.oc.oc.cox.net [68.225.240.211])
- (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
- certificate requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with
- ESMTPSA id 020CC78959; Tue,  4 Nov 2008 03:45:19 -0500 (EST)
-In-Reply-To: <alpine.LFD.2.00.0811031211180.3419@nehalem.linux-foundation.org> (Linus
- Torvalds's message of "Mon, 3 Nov 2008 12:15:05 -0800 (PST)")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: ED748EC0-AA4C-11DD-B9F8-9CEDC82D7133-77302942!a-sasl-fastnet.pobox.com
+	id S1753520AbYKDI4W (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 4 Nov 2008 03:56:22 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753516AbYKDI4W
+	(ORCPT <rfc822;git-outgoing>); Tue, 4 Nov 2008 03:56:22 -0500
+Received: from postman.fh-hagenberg.at ([193.170.124.96]:40412 "EHLO
+	mail.fh-hagenberg.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753414AbYKDI4V (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 4 Nov 2008 03:56:21 -0500
+Received: from darc.dyndns.org ([84.154.77.179]) by mail.fh-hagenberg.at over TLS secured channel with Microsoft SMTPSVC(6.0.3790.3959);
+	 Tue, 4 Nov 2008 09:56:18 +0100
+Received: from drizzd by darc.dyndns.org with local (Exim 4.69)
+	(envelope-from <drizzd@aon.at>)
+	id 1KxHiA-0005xT-J2; Tue, 04 Nov 2008 09:56:30 +0100
+Content-Disposition: inline
+In-Reply-To: <20081104042643.GA31276@coredump.intra.peff.net>
+User-Agent: Mutt/1.5.18 (2008-05-17)
+X-OriginalArrivalTime: 04 Nov 2008 08:56:19.0804 (UTC) FILETIME=[345A29C0:01C93E5B]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/100060>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/100061>
 
-Linus Torvalds <torvalds@linux-foundation.org> writes:
+On Mon, Nov 03, 2008 at 11:26:44PM -0500, Jeff King wrote:
+> > The hashcpy for new_ref is now executed more often than absolutely
+> > necessary. But this is not a critical path, right? So I decided to keep
+> > things simple.
+> 
+[...]
+> Your patch makes ref->new_sha1 "valid" for every status case. Ordinarily
+> I would be in favor of that, since it reduces coupling with other parts
+> of the code (which have to know _which_ status flags provide a useful
+> value in ->new_sha1). But in this case, I think the value we would be
+> sticking in is not necessarily useful for every status flag we end up
+> setting; so any consumers of the ref structure still need to know which
+> flags set it. So even though it has a defined value, it is not really
+> "valid" in all cases.
 
-> On Mon, 3 Nov 2008, Linus Torvalds wrote:
->>
->> I'll post a simple series of four commits in a moment.
-> ...
-> Side note: it's certainly possible that we could improve on this. Right 
-> now, "--simplify-namespace" will totally override any path simplification, 
-> so you can't get a combination of pathnames _and_ naming commits. I don't 
-> know exactly what the rules should be, but I could imagine that we could 
-> do something like:
->
->  - if no pathnames are given, work the way the current patch-series works.
->
->  - if path-names are given, make rev_compare_tree() truen 
->    REV_TREE_DIFFERENT if a name decoration _or_ a tree difference exists.
->
-> Anyway, that's a fairly trivial extension to the idea, and doesn't really 
-> matter for the basic code. It can easily be left for later.
+The other status flags are REF_STATUS_REJECT_NODELETE and
+REF_STATUS_REJECT_NONFASTFORWARD. So in these cases the "new sha1" is going
+to be the "old sha1". The default for new_sha1 is the null sha1. So while
+the sha1 we're trying to push may not be more valid than the null sha1, it's
+not less valid either, is it? And it even makes sense if you interpret
+new_sha1 as the sha1 the client attempts to push.
 
-Thanks.
+> Hmm. I was hoping to see more in update_tracking_ref. With your patch,
+> we end up calling update_ref for _every_ uptodate ref, which results in
+> writing a new unpacked ref file for each one. And that _is_ a
+> performance problem for people with large numbers of refs.
+> 
+> So I think we need a check to make sure we aren't just updating with the
+> same value. Something like:
 
-Including this (and the --source one), the series looks reasonable.
+I think update_ref already takes care of that. See this check in
+write_ref_sha1:
+
+        if (!lock->force_write && !hashcmp(lock->old_sha1, sha1)) {
+                unlock_ref(lock);
+                return 0;
+        }
+
+> Though I am not happy that we have to look up the tracking ref for every
+> uptodate ref. I think it shouldn't be a big performance problem with
+> packed refs, though, since they are cached (i.e., we pay only to compare
+> the hashes, not touch the filesystem for each ref).
+
+I don't think we can avoid that, though.
+
+I agree with your other comments.
