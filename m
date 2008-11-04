@@ -1,67 +1,83 @@
-From: Clemens Buchacher <drizzd@aon.at>
-Subject: Re: [PATCH] push: fix local refs update if already up-to-date
-Date: Tue, 4 Nov 2008 10:05:19 +0100
-Message-ID: <20081104090519.GB22530@localhost>
-References: <20081104000745.GA28480@localhost> <20081104042643.GA31276@coredump.intra.peff.net> <7v7i7jsx6a.fsf@gitster.siamese.dyndns.org>
+From: Dmitry Potapov <dpotapov@gmail.com>
+Subject: Re: [PATCH] Documentation: add a planning document for the next CLI revamp
+Date: Tue, 4 Nov 2008 12:18:00 +0300
+Message-ID: <20081104091800.GB24100@dpotapov.dyndns.org>
+References: <20081030002239.D453B21D14E@mail.utsl.gen.nz> <20081031003154.GA5745@sigill.intra.peff.net> <7v3ai9226q.fsf@gitster.siamese.dyndns.org> <1225691960.20883.41.camel@maia.lan>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Jeff King <peff@peff.net>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Nov 04 10:06:45 2008
+Cc: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
+	Sam Vilain <samv@vilain.net>, git@vger.kernel.org,
+	Johannes Schindelin <johannes.schindelin@gmx.de>,
+	Scott Chacon <schacon@gmail.com>,
+	Tom Preston-Werner <tom@github.com>,
+	"J.H." <warthog19@eaglescrag.net>,
+	Christian Couder <chriscool@tuxfamily.org>,
+	Kai Blin <kai@samba.org>
+To: Sam Vilain <sam@vilain.net>
+X-From: git-owner@vger.kernel.org Tue Nov 04 10:19:34 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KxHrr-0006Jm-2x
-	for gcvg-git-2@gmane.org; Tue, 04 Nov 2008 10:06:31 +0100
+	id 1KxI4T-00014h-Fk
+	for gcvg-git-2@gmane.org; Tue, 04 Nov 2008 10:19:33 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755248AbYKDJFM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 4 Nov 2008 04:05:12 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754042AbYKDJFM
-	(ORCPT <rfc822;git-outgoing>); Tue, 4 Nov 2008 04:05:12 -0500
-Received: from postman.fh-hagenberg.at ([193.170.124.96]:41995 "EHLO
-	mail.fh-hagenberg.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755248AbYKDJFI (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 4 Nov 2008 04:05:08 -0500
-Received: from darc.dyndns.org ([84.154.77.179]) by mail.fh-hagenberg.at over TLS secured channel with Microsoft SMTPSVC(6.0.3790.3959);
-	 Tue, 4 Nov 2008 10:05:06 +0100
-Received: from drizzd by darc.dyndns.org with local (Exim 4.69)
-	(envelope-from <drizzd@aon.at>)
-	id 1KxHqh-0005yC-Kl; Tue, 04 Nov 2008 10:05:19 +0100
+	id S1754168AbYKDJSK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 4 Nov 2008 04:18:10 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753912AbYKDJSJ
+	(ORCPT <rfc822;git-outgoing>); Tue, 4 Nov 2008 04:18:09 -0500
+Received: from fk-out-0910.google.com ([209.85.128.187]:39280 "EHLO
+	fk-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754168AbYKDJSH (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 4 Nov 2008 04:18:07 -0500
+Received: by fk-out-0910.google.com with SMTP id 18so3660154fkq.5
+        for <git@vger.kernel.org>; Tue, 04 Nov 2008 01:18:05 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:date:from:to:cc:subject
+         :message-id:references:mime-version:content-type:content-disposition
+         :in-reply-to:user-agent;
+        bh=ng+epZnz7EpJWorT33txTPlFKOcsiyjSiiHdIrFTh8k=;
+        b=cyv8WVY5ef1N2tuBZbxHupgoCpkj0gxswEV8rEW58kkSc0BJJkg4WwozTzHNifz6KF
+         f8HWYd9+PE9Ikwgxe7yQNPXKu1QW1eDqV0A5+oeUTgnYCbcTKScI5oc0nrqjWQUbm/Sh
+         UYSSVocHbYLLArkfSHMosPMILekkw8EjjRrDk=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        b=iBopi7QPNNvXeOYgsuu/xyz6YcW/DQC8XTRjAeqPLxMxlmeBujhufwSq51sO2FvbVS
+         U79SPzlVvWKm1pegT/RETFvakR1uTni87WH1JQdGONhqvAVhCXNDX5ii3kcBp5gTQUAW
+         GmO/9StR/hFo68zYFB1zTa0JeSIZ3c3P3H4O0=
+Received: by 10.181.197.2 with SMTP id z2mr272282bkp.100.1225790285398;
+        Tue, 04 Nov 2008 01:18:05 -0800 (PST)
+Received: from localhost (ppp85-141-189-211.pppoe.mtu-net.ru [85.141.189.211])
+        by mx.google.com with ESMTPS id 22sm11790298fkr.4.2008.11.04.01.18.02
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Tue, 04 Nov 2008 01:18:04 -0800 (PST)
 Content-Disposition: inline
-In-Reply-To: <7v7i7jsx6a.fsf@gitster.siamese.dyndns.org>
-User-Agent: Mutt/1.5.18 (2008-05-17)
-X-OriginalArrivalTime: 04 Nov 2008 09:05:07.0018 (UTC) FILETIME=[6E98A2A0:01C93E5C]
+In-Reply-To: <1225691960.20883.41.camel@maia.lan>
+User-Agent: Mutt/1.5.13 (2006-08-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/100062>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/100063>
 
-On Tue, Nov 04, 2008 at 12:38:37AM -0800, Junio C Hamano wrote:
-> Jeff King <peff@peff.net> writes:
+On Mon, Nov 03, 2008 at 06:59:20PM +1300, Sam Vilain wrote:
 > 
-> > Though I am not happy that we have to look up the tracking ref for every
-> > uptodate ref. I think it shouldn't be a big performance problem with
-> > packed refs, though, since they are cached (i.e., we pay only to compare
-> > the hashes, not touch the filesystem for each ref).
-> 
-> It is either (1) the user pays the cost of finding what remote tracking
-> branch we are mirroring when you push for all up-to-date refs, like you
-> did in your "here is an improvement" patch; or (2) the user pays the cost
-> of fetching from there, immediately after pushing.  I'd imagine that the
-> cost to do (1) would be smaller than (2).  The question is if seeing stale
-> tracking branches is such a big deal, as next "git fetch" from there will
-> update them anyway.  If it is a big deal, (1) would be a price worth
-> paying.
+> I can see that some people want this behaviour by default; but to me
+> "push the current branch back to where it came from" seems like far more
+> a rational default for at least 90% of users.
 
-Right. I think it is a big deal. I found out about this bug, because a user
-on #git was confused by the fact that push reported "Everything up-to-date",
-even though there were changes. A fetch fixed that, of course. But it is
-confusing and inconsistent with normal push behavior. So I really think it's
-worth a small performance hit.
+I think it depends on one's workflow. If you use a centralized workflow
+as with CVS then yes, 90% cases you want to push the current branch. On
+the other hand, if people push their changes to the server only for
+review, it means that accidentally pushing more than one intended is not
+a big deal. The only one who does publishing to the official repository
+is the maintainer, and the maintainer is most likely to run some tests
+after merging all changes, which takes some time. So, it is rarely push
+the current branch, it is usually the branch that has been tested, so
+the name of the branch should be specified explicitly anyway.
 
-> Clemens, care to reroll the patch?
-
-I will do so later today.
+Dmitry
