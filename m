@@ -1,65 +1,116 @@
-From: "Andrew Arnott" <andrewarnott@gmail.com>
-Subject: Re: Intensive rename detection
-Date: Mon, 3 Nov 2008 17:18:20 -0800
-Message-ID: <216e54900811031718o4cc81294sc0c32be1e71b9372@mail.gmail.com>
-References: <216e54900811031717j70669868p3c7503357ceb5138@mail.gmail.com>
+From: Nicolas Pitre <nico@cam.org>
+Subject: Re: Are binary xdeltas only used if you use git-gc?
+Date: Mon, 03 Nov 2008 20:18:37 -0500 (EST)
+Message-ID: <alpine.LFD.2.00.0811031959070.13034@xanadu.home>
+References: <f1d2d9ca0810310243r669840bbj2c5ee7183e0caaed@mail.gmail.com>
+ <m37i7pggnk.fsf@localhost.localdomain>
+ <f1d2d9ca0810310428o166dc075wbb43c00c1a555350@mail.gmail.com>
+ <200810311726.57122.jnareb@gmail.com> <vpqej1wra1c.fsf@bauges.imag.fr>
+ <alpine.LFD.2.00.0810311549570.13034@xanadu.home>
+ <f1d2d9ca0811010454u203a7c88x1e09735b3fc1358f@mail.gmail.com>
+ <alpine.LFD.2.00.0811010924550.13034@xanadu.home>
+ <f1d2d9ca0811031235w3581f7ffnc7380b4cb488e71a@mail.gmail.com>
+ <alpine.LFD.2.00.0811031611060.13034@xanadu.home>
+ <f1d2d9ca0811031453p49390911p956149ca76b9b80d@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Nov 04 02:19:36 2008
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+Cc: Matthieu Moy <Matthieu.Moy@imag.fr>,
+	Jakub Narebski <jnareb@gmail.com>, git@vger.kernel.org
+To: Thanassis Tsiodras <ttsiodras@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Nov 04 02:20:00 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KxAZz-0000Ez-Ux
-	for gcvg-git-2@gmane.org; Tue, 04 Nov 2008 02:19:36 +0100
+	id 1KxAaM-0000KM-IO
+	for gcvg-git-2@gmane.org; Tue, 04 Nov 2008 02:19:59 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752745AbYKDBSW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 3 Nov 2008 20:18:22 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752549AbYKDBSW
-	(ORCPT <rfc822;git-outgoing>); Mon, 3 Nov 2008 20:18:22 -0500
-Received: from yw-out-2324.google.com ([74.125.46.29]:23594 "EHLO
-	yw-out-2324.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750827AbYKDBSV (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 3 Nov 2008 20:18:21 -0500
-Received: by yw-out-2324.google.com with SMTP id 9so1092165ywe.1
-        for <git@vger.kernel.org>; Mon, 03 Nov 2008 17:18:20 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to
-         :subject:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:references;
-        bh=pe3FK0A8Angeo8cE0j/MHKFimFfT0QJvoWCNo7rGa/o=;
-        b=AvAKYpY6MA9DgNbZuGTCjGwslpY9L97WqwiPb+ugMxgFfdBa70KpfgB+jafjGU5HVe
-         Ub583JXkwBAl9H85O3B8UAbKCWV04JEt+PNqg/qryfS5ODdhSNXh8NYFJqCekzov/ezp
-         7p3yZh8oQw0XT/penDBloHuKxOWlWrc9z7cTA=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:in-reply-to:mime-version
-         :content-type:content-transfer-encoding:content-disposition
-         :references;
-        b=qOQ3nTBl6N2eBiLOeLFcMKVsUHCY00NnwoJruFWAKowUA1r4PjxJXkCTgVc7kaDv23
-         1MoMT+UQlxPTBtuvfzmXqydz7UNgos2yguU542KnJpEeRDD+lFGrxrtT/tf4QWKeMmeq
-         QQYTA770fKEptJ/Rv0Q9IOkajQ0KbrSb9J8gw=
-Received: by 10.150.52.10 with SMTP id z10mr1349367ybz.130.1225761500273;
-        Mon, 03 Nov 2008 17:18:20 -0800 (PST)
-Received: by 10.151.142.12 with HTTP; Mon, 3 Nov 2008 17:18:20 -0800 (PST)
-In-Reply-To: <216e54900811031717j70669868p3c7503357ceb5138@mail.gmail.com>
-Content-Disposition: inline
+	id S1754354AbYKDBSo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 3 Nov 2008 20:18:44 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754202AbYKDBSo
+	(ORCPT <rfc822;git-outgoing>); Mon, 3 Nov 2008 20:18:44 -0500
+Received: from relais.videotron.ca ([24.201.245.36]:18101 "EHLO
+	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753918AbYKDBSo (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 3 Nov 2008 20:18:44 -0500
+Received: from xanadu.home ([66.131.194.97]) by VL-MO-MR005.ip.videotron.ca
+ (Sun Java(tm) System Messaging Server 6.3-4.01 (built Aug  3 2007; 32bit))
+ with ESMTP id <0K9S006MVBLYVFH0@VL-MO-MR005.ip.videotron.ca> for
+ git@vger.kernel.org; Mon, 03 Nov 2008 20:17:58 -0500 (EST)
+X-X-Sender: nico@xanadu.home
+In-reply-to: <f1d2d9ca0811031453p49390911p956149ca76b9b80d@mail.gmail.com>
+User-Agent: Alpine 2.00 (LFD 1167 2008-08-23)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/100020>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/100021>
 
-I'm refactoring a library including renaming both files and
-directories.  A few lines of each file are also changed, but they are
-substantially unchanged in content.  I've done a git add to put all my
-changes into the index, but a git status shows that git only detected
-a few of the renames... most of them are delete-add operations.  Is
-there anything I can do to help git recognize the rename so that
-history is preserved across this commit?
+On Tue, 4 Nov 2008, Thanassis Tsiodras wrote:
 
-Thanks.
+> RESOLVED!!!
+> 
+> Finally...
+> What happened was actually quite reasonable, in hindsight...
+> As I said in the original mail, this was what I did:
+> 
+> cp version7.1.tar version7.2.tar
+> git add version7.2.tar
+> git commit -m "same data as old, so git will use old blob"
+> echo MAGICPLACE read below...
+> cp /path/to/work/realNewVersion7.2.tar version7.2.tar
+> git add version7.2.tar
+> git commit -m "and now, commit the really new version, so git can xdelta"
+> git push --thin
+> 
+> The problem was solved (that is, the "git push" became optimal,
+> when I added a "git push" right after the MAGICPLACE mark above...
+> In that way, the remote repo learned about the "dummy" commit that
+> referenced the old blob... and when I did the subsequent "git push"
+> at the end, the remote side could see that it already had this "dummy"
+> commit to "xdelta on", and that it only needed the delta...
+> 
+> Originally, when I used only one "git push --thin" at the end, the remote
+> side didn't have the "dummy" commit, so it probably said: "I can't
+> apply a delta, give me the full object".
+
+Oh! But of course...
+
+In fact, the way thin packs work is to store delta against a base object 
+which is not included in the pack.  Those objects which are not included 
+but used as delta base are currently only the previous version of a file 
+which is part of the update to be pushed/fetched.  In other words, there 
+must be a previous version under the same name for this to work.  Doing 
+otherwise wouldn't scale if the previous commit had thousands of files 
+to test against.
+
+But this particularity had escaped my mind somehow.
+
+> Phew.
+> 
+> So it seems that if you must introduce a new file that is
+> very similar to an existing one (in my case, a new version
+> of software kept in an uncompressed .tar file),
+> you have to do what I did above to allow for optimal "git push"es:
+> that is:
+> 
+> 1. Create the new filename by just copying the old
+>  (so the old blob is used)
+> 2. commit
+> 3. PUSH
+> 4. copy the real new file
+> 5. commit
+> 6. PUSH.
+> 
+> If you omit the middle PUSH in step 3, neither "git push", nor "git push --thin"
+> can realize that this new file can be "incrementally built" on the remote side
+> (even though git-gc totally squashes it in the pack).
+
+Right.  Those thin packs were designed for different versions of the 
+same file in mind, not different files with almost the same content.  
+This could possibly be improved at some point...
+
+
+Nicolas
