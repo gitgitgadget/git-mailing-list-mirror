@@ -1,96 +1,208 @@
-From: "Bob Hiestand" <bob.hiestand@gmail.com>
-Subject: Re: exporting the last N days of a repository
-Date: Wed, 5 Nov 2008 13:49:31 -0600
-Message-ID: <cc29171c0811051149qaf8b980s37c53cd48c481ab4@mail.gmail.com>
-References: <93c3eada0810281801l29253e02g95c7a6851c4c4db3@mail.gmail.com>
-	 <alpine.DEB.1.00.0810291610340.22125@pacific.mpi-cbg.de.mpi-cbg.de>
-	 <93c3eada0811021716y37ba999fkc2085b1060fbea2d@mail.gmail.com>
-	 <cc29171c0811030855s2fb0d7a5ncdfdd6acd7c71537@mail.gmail.com>
-	 <93c3eada0811041449u20e0fc74gf6a1cb420923e484@mail.gmail.com>
-	 <cc29171c0811041618jfbcb293l42a19805f06803a0@mail.gmail.com>
-	 <93c3eada0811041954i24a15e33tcdd89f50c162b8d2@mail.gmail.com>
+From: Roderik van der Veer |Smartlounge| 
+	<roderik.van.der.veer@smartlounge.be>
+Subject: Looking for the perfect git workflow
+Date: Wed, 05 Nov 2008 21:10:07 +0100
+Message-ID: <4911FD9F.9010103@smartlounge.be>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org,
-	"Johannes Schindelin" <Johannes.Schindelin@gmx.de>
-To: geoffrey.russell@gmail.com
-X-From: git-owner@vger.kernel.org Wed Nov 05 20:51:05 2008
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Nov 05 21:12:00 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KxoP2-00047Y-UI
-	for gcvg-git-2@gmane.org; Wed, 05 Nov 2008 20:50:57 +0100
+	id 1KxojI-0003Ic-1i
+	for gcvg-git-2@gmane.org; Wed, 05 Nov 2008 21:11:53 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757243AbYKETte (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 5 Nov 2008 14:49:34 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757542AbYKETte
-	(ORCPT <rfc822;git-outgoing>); Wed, 5 Nov 2008 14:49:34 -0500
-Received: from rv-out-0506.google.com ([209.85.198.236]:23935 "EHLO
-	rv-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757530AbYKETtc (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 5 Nov 2008 14:49:32 -0500
-Received: by rv-out-0506.google.com with SMTP id k40so174495rvb.1
-        for <git@vger.kernel.org>; Wed, 05 Nov 2008 11:49:31 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to
-         :subject:cc:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:references;
-        bh=dqYAk3Oqkq0WbYJ/vj9i3JeViFgpp8gF0W02hPNwklY=;
-        b=bNkInotWQD5SYwOVvuYkoFe82acTDdeXr5ydAvgDsq0TZM6spAtu1EZ8XpLmnU7d1k
-         iyl+Q4Tws5qQeI0Zg1jnvQjVJnegZkWHb4zn5VHp3PADoc2gxEdAmq0pjr9ZGUn2WyGS
-         zomrQhtjF5PfMmmZhDtbRL5wh/7yXhaLlTCtg=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
-         :content-type:content-transfer-encoding:content-disposition
-         :references;
-        b=YvCbo+0A5lycDdRs4l7V/SC/eyhFaXHlQEFfku6aE5KjV+K1VQ875KF8HjXJYfbTir
-         YfFml+/lcCYi1FggbJ63ku4HivNr0OAWh4ESPiY8kS7+PRTGCMgkbixw5DYaHUgDyIqU
-         WsyQjX87+hF8gmMRHG1a7xS0NrxhBjDYFawBM=
-Received: by 10.141.4.3 with SMTP id g3mr645340rvi.284.1225914571232;
-        Wed, 05 Nov 2008 11:49:31 -0800 (PST)
-Received: by 10.114.123.10 with HTTP; Wed, 5 Nov 2008 11:49:31 -0800 (PST)
-In-Reply-To: <93c3eada0811041954i24a15e33tcdd89f50c162b8d2@mail.gmail.com>
-Content-Disposition: inline
+	id S1756566AbYKEUKk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 5 Nov 2008 15:10:40 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756306AbYKEUKk
+	(ORCPT <rfc822;git-outgoing>); Wed, 5 Nov 2008 15:10:40 -0500
+Received: from yorgi.telenet-ops.be ([195.130.133.69]:33097 "EHLO
+	yorgi.telenet-ops.be" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755867AbYKEUKj (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 5 Nov 2008 15:10:39 -0500
+Received: from edna.telenet-ops.be (edna.telenet-ops.be [195.130.132.58])
+	by yorgi.telenet-ops.be (Postfix) with ESMTP id C1A17681E9D
+	for <git@vger.kernel.org>; Wed,  5 Nov 2008 21:10:37 +0100 (CET)
+Received: from localhost (localhost.localdomain [127.0.0.1])
+	by edna.telenet-ops.be (Postfix) with SMTP id 35DC5E4063
+	for <git@vger.kernel.org>; Wed,  5 Nov 2008 21:10:05 +0100 (CET)
+Received: from mercurius.leuven.smartlounge.be (d5152FE02.access.telenet.be [81.82.254.2])
+	by edna.telenet-ops.be (Postfix) with ESMTP id 267C8E4037
+	for <git@vger.kernel.org>; Wed,  5 Nov 2008 21:10:05 +0100 (CET)
+Received: from [172.17.16.54] (unknown [172.17.16.54])
+	by mercurius.leuven.smartlounge.be (Postfix) with ESMTP id 37E496800BE9
+	for <git@vger.kernel.org>; Wed,  5 Nov 2008 21:10:03 +0100 (CET)
+User-Agent: Thunderbird 2.0.0.17 (Windows/20080914)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/100178>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/100179>
 
-On Tue, Nov 4, 2008 at 9:54 PM, Geoff Russell
-<geoffrey.russell@gmail.com> wrote:
+Hello,
 
-> Thanks Bob but when I ran your version (using master@{15} instead of
-> --since =...) it
-> effectively dropped the recent history, not the old history. Imagine a sequence
-> of 30 commits, no branches.  I want to keep, for example, 15 through
-> 30 and dump 1
-> to 15.  So I need to have the working directory as at commit 15 and
-> then all the changes
-> to bring it up to 30.
->
->       ... 11--12--13--14--15 ... 28--29--30
->
->       ... Dump 1 to 15           keep 15 to 30.
->
-> Your script kept 1 to 15 and dumped the rest.
+I'm trying to work out the best way to use git in the workflow for our 
+projects. We have
+migrated from CVS in 2007 and are happy with it, but we have a need for 
+a more structured
+way of working with our different repositories.
 
-I guess that's because you're using reflog syntax and pulling up a
-commit that isn't on the current branch, due to rebasing, resetting,
-or any such activity.  Using the reflog syntax, for the few commits I
-tried, produced the desired result.
+Let me describe the project to begin with, we have developed a 
+java+velocity based cms
+system, and all out client sites are based upon this cms. The CMS is in 
+constant
+development, so there are no set releases, only new features when a 
+customer has a need
+for it, or bugfixes. Our project structure, that we cannot changed for 
+backward
+compatibility is something like this:
 
-I'm not sure why you'd use reflogs, however, as I believe the
---max-age or --since parameters to rev-list seem to be more in line
-with your request.  Actually, I'd be surprised if you couldn't
-identify the one commit that you wanted to use and use it directly;
-the rev-list was just to show an example.
+   * project x
+         o src
+               + cms
+               + components
+                     # forum
+                     # blog
+                     # etc
+               + shop
+               + project x
+         o Webroot
+               + images
+               + html
+               + velocity
+                     # cms
+                     # components
+                           * forum
+                           * blog
+                           * etc
+                     # shop
+                     # project x
 
-Thank you,
 
-bob
+We have a git repository for the base cms system containing everything 
+but the "project
+x" folders and the html folder. This git repository contains the base 
+files (database
+transaction layer etc) but also global modules like the "blog" module. 
+The projects
+extend these base files to create the client's website, the project 
+files are contained
+in folders different from the base folders. An added difficulty is that 
+every java source
+folder, has a velocity template folder structure, so for the module 
+"blog" there are two
+folders "blog" in src and "blog" in webroot. The html folder in webroot 
+contains the html
+files and images created by a third party and are updated by a rsync 
+script from their
+server (they cannot use git). So to summarise:
+
+   * project x
+         o src
+               + cms (BASE)
+               + components
+                     # forum (BASE - FORUM)
+                     # blog (BASE - BLOG)
+                     # etc (BASE - ETC)
+               + shop (BASE - SHOP)
+               + project x (PROJECT)
+         o Webroot
+               + images (BASE)
+               + html (THIRD PARTY)
+               + velocity
+                     # cms (BASE)
+                     # components
+                           * forum (BASE - FORUM)
+                           * blog (BASE - BLOG)
+                           * etc (BASE - ETC)
+                     # shop (BASE - SHOP)
+                     # project x (PROJECT)
+
+
+The cvs and basic git workflow was:
+
+changes from BASE went into the project like this: BASE -> a custom 
+rsync script ->
+PROJECT
+changes for BASE from PROJECT were merged back by hand, eighter in 
+master, or in a
+feature branch
+
+Since moving to git we started using the feature branches for big new 
+features, and just
+used master for bugfixes. We developped the client sites using the 
+master branch combined
+with some feature branches. The moment the site was live, the feature 
+branches were
+considered stable and supported, and were merged into master.
+
+So, what's the problem,
+
+1. regressions, because to get a bugfix, you get stuffed with some new 
+feature or
+refactoring. Just keeping everything as branches means you have a lot of 
+work to build a complete version for the project.
+2. merging back by hand is a pain, since you can't forget any templates etc.
+3. since BASE contains all the global, non site specific modules, every 
+project has the
+SHOP code, even if it isn't a webshop.
+
+What have we looked at:
+
+1. git submodules -> since every module has two folders, and we don't 
+want two git
+repositories for one module
+
+2. A currently running experiment has an origin remote (the project repo 
+on our central
+server) for it's master and some feature branches. And a remote to the 
+BASE repo, with a
+checked out branch for that specific project.
+
+   * PROJECT X
+         o BASE - remote
+               + project-x
+         o ORIGIN - remote
+               + master
+               + feature x
+               + feature y
+
+When we start the project x project, we merge the BASE/project-x branch 
+into
+ORIGIN/master and start from there. This way we can cherry pick changes 
+to BASE, and
+control the flow from BASE/master to BASE/project-x and from 
+BASE/project-x into
+ORIGIN/master
+
+This works fairly good except that plain "git push" wants to put the 
+local version of master into
+BASE/master (and that is really not the way we want it) and it's bound 
+to happen that someone forgets to add extra params to the command. And 
+we have no real way of dealing with problem number 3 (the modules)
+
+So in short, i'm looking for some insight, to create a foolproof 
+framework to deal with
+this kind of setup.
+
+Regards,
+Roderik
+
+-- 
+==========================================
+Roderik van der Veer
+roderik.van.der.veer@smartlounge.be
+==========================================
+Smartlounge
+JP Minckelersstraat 78
+B-3000 Leuven
+tel: +32 16 311 412
+gsm: +32 486 36 66 39
+==========================================
+http://www.smartlounge.be
+==========================================
+internet application development & hosting
