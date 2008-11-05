@@ -1,168 +1,120 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re* Slow "git rev-list origin/master --not --all" or "git fetch"
- slow when downloading nothing
-Date: Wed, 05 Nov 2008 09:32:51 -0800
-Message-ID: <7vprlakri4.fsf@gitster.siamese.dyndns.org>
-References: <adf1fd3d0811050138j7b8bbed1nd94a999f55e38d61@mail.gmail.com>
+From: Johan Herland <johan@herland.net>
+Subject: [RFC] Referring to a submodule state recorded in a supermodule from within the submodule
+Date: Wed, 5 Nov 2008 18:24:28 +0100
+Message-ID: <200811051824.28374.johan@herland.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: "Git Mailing List" <git@vger.kernel.org>
-To: =?utf-8?Q?Santi_B=C3=A9jar?= <santi@agolina.net>
-X-From: git-owner@vger.kernel.org Wed Nov 05 18:35:06 2008
+Content-Type: text/plain;
+  charset="utf-8"
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Nov 05 18:38:07 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KxmGz-00022B-HY
-	for gcvg-git-2@gmane.org; Wed, 05 Nov 2008 18:34:29 +0100
+	id 1KxmKV-0003gu-3X
+	for gcvg-git-2@gmane.org; Wed, 05 Nov 2008 18:38:07 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753036AbYKERdH convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 5 Nov 2008 12:33:07 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752836AbYKERdG
-	(ORCPT <rfc822;git-outgoing>); Wed, 5 Nov 2008 12:33:06 -0500
-Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:63748 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753004AbYKERdF convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 5 Nov 2008 12:33:05 -0500
-Received: from localhost.localdomain (unknown [127.0.0.1])
-	by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id D62E1936CF;
-	Wed,  5 Nov 2008 12:33:03 -0500 (EST)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES256-SHA (256/256 bits)) (No client certificate requested) by
- a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTPSA id 76807936CA; Wed, 
- 5 Nov 2008 12:32:55 -0500 (EST)
-In-Reply-To: <adf1fd3d0811050138j7b8bbed1nd94a999f55e38d61@mail.gmail.com>
- (Santi =?utf-8?Q?B=C3=A9jar's?= message of "Wed, 5 Nov 2008 10:38:31 +0100")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: CCE25610-AB5F-11DD-8950-4F5276724C3F-77302942!a-sasl-quonix.pobox.com
+	id S1753263AbYKERgw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 5 Nov 2008 12:36:52 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753622AbYKERgv
+	(ORCPT <rfc822;git-outgoing>); Wed, 5 Nov 2008 12:36:51 -0500
+Received: from sam.opera.com ([213.236.208.81]:49255 "EHLO smtp.opera.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753421AbYKERgv (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 5 Nov 2008 12:36:51 -0500
+X-Greylist: delayed 734 seconds by postgrey-1.27 at vger.kernel.org; Wed, 05 Nov 2008 12:36:50 EST
+Received: from pc107.coreteam.oslo.opera.com (pat-tdc.opera.com [213.236.208.22])
+	by smtp.opera.com (8.13.4/8.13.4/Debian-3sarge3) with ESMTP id mA5HOSXa005982
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT)
+	for <git@vger.kernel.org>; Wed, 5 Nov 2008 17:24:34 GMT
+User-Agent: KMail/1.9.9
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/100162>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/100163>
 
-"Santi B=C3=A9jar" <santi@agolina.net> writes:
+Hi,
 
->   In cold cache "git rev-list origin/master --not --all" is slow
-> reading many files:
->
-> cold cache:
-> $ /usr/bin/time git rev-list origin/master --not --all
-> 0.03user 0.02system 0:04.57elapsed 1%CPU (0avgtext+0avgdata 0maxresid=
-ent)k
-> 77848inputs+0outputs (410major+1798minor)pagefaults 0swaps
->
-> hot cache:
-> $ /usr/bin/time git rev-list origin/master --not --all
-> 0.01user 0.00system 0:00.06elapsed 31%CPU (0avgtext+0avgdata 0maxresi=
-dent)k
-> 0inputs+0outputs (0major+2207minor)pagefaults 0swaps
->
-> I think that, in this particular case (when the arguments are the tip=
-s
-> of some of the branches), this should not read that many files.
+I have a stand-alone project, "foo", that I work on myself. The "foo" 
+project is included as a submodule in two other projects, "bar" 
+and "baz", that I don't have any direct affiliation with.
 
-What kind of "many files" are you making git read?  Do you have too man=
-y
-unpacked refs?  Too many loose objects? =20
+Semi-regularly, I like to keep tabs on bar and baz, to see what versions 
+of foo they are using, what changes they have made to foo, and if there 
+are things I could pick up from them, or maybe even things they could 
+learn from eachother.
 
-> ... When nothing has changed in the remote repository (so
-> refs/<remote>/* has all the remote refs) the "git fetch" could be alm=
-ost
-> instantaneous (even in coldcache),...
+Doing this currently is quite tedious:
+1. Clone/Fetch bar and initialize/update its foo submodule
+2. Clone/Fetch baz and initialize/update its foo submodule
+3. Set up remotes bar_foo and baz_foo in my main foo repo,
+   pointing to bar/foo and baz/foo, respectively. Fetch.
+4. Create tags bar_foo_current and baz_foo_current pointing
+   to the foo SHA1 sum recorded in baz and baz, respectively.
+5. Start comparing bar_foo_current and baz_foo_current to
+   eachother, and to my own master branch.
 
-You at least need to read:
 
- - what "--all" refs point at; to find this out, you need to read all
-   unpacked refs files, and one packed-refs file;
+Now, bring this into a larger company setting. There are many (~100) 
+different foo-type projects owned by (~50) different developers. These 
+projects are included as submodules by several (~20) different 
+bar/baz-type projects. In addition, each bar/baz-type project has 
+multiple (~3) branches using various versions of the foo-type 
+submodules.
 
- - commit objects that these refs point at; to cull refs that do not po=
-int
-   at committish and dereference tag objects that point at commit, you
-   need to read these objects (either loose objects or in packs);
+Finally, throw in questions like "What are the differences in submodule 
+FOO between branch X of BAR, and branch Y of BAZ?", for random values 
+of FOO, X, BAR, Y, and BAZ. It is apparent that the above approach just 
+doesn't cut it.
 
- - commit objects on the ancestry graph starting from the commit pointe=
-d
-   at by origin/master and the commits from "--all" refs, until your
-   traversal from origin/master hit one of the ancestors of "--all" ref=
-s.
+Ironically, these questions are fairly easily answered by our current 
+CVS setup (which applies the supermodule tags/branches to the entire 
+source tree (including submodules)):
+1. cd FOO
+2. cvs diff -r BAR_X -r BAZ_Y
 
-I noticed that when you "git pack-refs" (or "git gc"), we do not remove
-the leading directories of loose refs that become empty because of
-pruning.  This can cause many opendir() when you used to have too many
-hierachy of refs even after packing them.
+What I'd like, is some way to refer to the state of a repo as specified 
+by the appropriate submodule blob in a superproject commit. Ideally 
+this should be done remotely as well, so that I don't have to clone the 
+entire superproject just to get at the appropriate submodule blob.
 
- dir.c       |   13 +++++++++----
- pack-refs.c |    5 +++++
- 2 files changed, 14 insertions(+), 4 deletions(-)
 
-diff --git c/dir.c w/dir.c
-index 0131983..7241631 100644
---- c/dir.c
-+++ w/dir.c
-@@ -779,7 +779,12 @@ int is_inside_dir(const char *dir)
- 	return get_relative_cwd(buffer, sizeof(buffer), dir) !=3D NULL;
- }
-=20
--int remove_dir_recursively(struct strbuf *path, int only_empty)
-+/*
-+ * option:
-+ * 1: remove empty directory;
-+ * 2: remove empty subdirectories, but not the directory itself
-+ */
-+int remove_dir_recursively(struct strbuf *path, int option)
- {
- 	DIR *dir =3D opendir(path->buf);
- 	struct dirent *e;
-@@ -803,9 +808,9 @@ int remove_dir_recursively(struct strbuf *path, int=
- only_empty)
- 		if (lstat(path->buf, &st))
- 			; /* fall thru */
- 		else if (S_ISDIR(st.st_mode)) {
--			if (!remove_dir_recursively(path, only_empty))
-+			if (!remove_dir_recursively(path, !!option))
- 				continue; /* happy */
--		} else if (!only_empty && !unlink(path->buf))
-+		} else if (!option && !unlink(path->buf))
- 			continue; /* happy, too */
-=20
- 		/* path too long, stat fails, or non-directory still exists */
-@@ -815,7 +820,7 @@ int remove_dir_recursively(struct strbuf *path, int=
- only_empty)
- 	closedir(dir);
-=20
- 	strbuf_setlen(path, original_len);
--	if (!ret)
-+	if (!ret && option !=3D 2)
- 		ret =3D rmdir(path->buf);
- 	return ret;
- }
-diff --git c/pack-refs.c w/pack-refs.c
-index 2c76fb1..30fbae8 100644
---- c/pack-refs.c
-+++ w/pack-refs.c
-@@ -2,6 +2,7 @@
- #include "refs.h"
- #include "tag.h"
- #include "pack-refs.h"
-+#include "dir.h"
-=20
- struct ref_to_prune {
- 	struct ref_to_prune *next;
-@@ -73,10 +74,14 @@ static void prune_ref(struct ref_to_prune *r)
-=20
- static void prune_refs(struct ref_to_prune *r)
- {
-+	struct strbuf refs =3D STRBUF_INIT;
-+
-+	strbuf_addstr(&refs, git_path("refs"));
- 	while (r) {
- 		prune_ref(r);
- 		r =3D r->next;
- 	}
-+	remove_dir_recursively(&refs, 2);
- }
-=20
- static struct lock_file packed;
+Crude Proposal:
+
+Define a new "git submodule" subcommand that takes three arguments:
+   <superURL> <tree-ish> <submoduleName>
+The command does the following steps:
+1. Locate git repo at <superURL>
+2. Resolve <tree-ish> to the tree object within the git repo in #1
+3. Locate .gitmodules within the tree object in #2
+4. Lookup <submoduleName> in .gitmodules to find its path and URL
+5. Locate the submodule blob from the path in #4 within the tree from #2
+6. Record the object name (SHA1) stored in the submodule blob from #4
+7. Fetch the object name (#7) from the submodule repo (its URL was
+   found in #4) into the local git repo
+8. Store a reference to the fetched object
+
+
+Given the above command, the tedious steps described at the top can be 
+reduced to the following (which is reasonably close to the equivalent 
+CVS commands):
+1. git submodule magic-command url/to/bar master foo
+2. git submodule magic-command url/to/baz master foo
+3. Start comparing the fetched refs to eachother, and
+   to my own master branch.
+
+If this sounds reasonable, I'd be happy to start coding the above 
+proposal.
+
+
+Have fun! :)
+
+...Johan
+
+-- 
+Johan Herland, <johan@herland.net>
+www.herland.net
