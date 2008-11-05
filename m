@@ -1,68 +1,66 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 2/5] git send-email: interpret unknown files as revision 
- lists
-Date: Wed, 05 Nov 2008 07:17:48 -0800
-Message-ID: <7vd4hamcbn.fsf@gitster.siamese.dyndns.org>
-References: <1225815858-30617-2-git-send-email-madcoder@debian.org>
- <1225815858-30617-3-git-send-email-madcoder@debian.org>
- <1225815858-30617-4-git-send-email-madcoder@debian.org>
- <1225815858-30617-5-git-send-email-madcoder@debian.org>
- <7vvdv3nj28.fsf@gitster.siamese.dyndns.org>
- <1225450632-7230-1-git-send-email-madcoder@debian.org>
- <1225815858-30617-1-git-send-email-madcoder@debian.org>
- <1225815858-30617-2-git-send-email-madcoder@debian.org>
- <1225815858-30617-3-git-send-email-madcoder@debian.org>
- <7v1vxroxn1.fsf@gitster.siamese.dyndns.org>
- <20081105104001.GA22272@artemis.corp>
+From: "Marc Fargas" <telenieko@telenieko.com>
+Subject: Re: git-svn: Having a "rare" structure
+Date: Wed, 5 Nov 2008 16:36:34 +0100
+Message-ID: <2686a05b0811050736q520f1771t6ffa2840bfb3c308@mail.gmail.com>
+References: <2686a05b0811050204v59edc4a3h7f9ce6c6ecd13058@mail.gmail.com>
+	 <49119AAD.2010803@drmicha.warpmail.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Jeff King <peff@peff.net>
-To: Pierre Habouzit <madcoder@debian.org>
-X-From: git-owner@vger.kernel.org Wed Nov 05 16:20:00 2008
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: "Michael J Gruber" <git@drmicha.warpmail.net>
+X-From: git-owner@vger.kernel.org Wed Nov 05 16:45:16 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KxkAe-0003Nw-Pc
-	for gcvg-git-2@gmane.org; Wed, 05 Nov 2008 16:19:49 +0100
+	id 1KxkZ3-0007dV-H9
+	for gcvg-git-2@gmane.org; Wed, 05 Nov 2008 16:45:01 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751937AbYKEPSf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 5 Nov 2008 10:18:35 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751639AbYKEPSf
-	(ORCPT <rfc822;git-outgoing>); Wed, 5 Nov 2008 10:18:35 -0500
-Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:48181 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751513AbYKEPSe (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 5 Nov 2008 10:18:34 -0500
-Received: from localhost.localdomain (unknown [127.0.0.1])
-	by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id 563DA93A2D;
-	Wed,  5 Nov 2008 10:18:33 -0500 (EST)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES256-SHA (256/256 bits)) (No client certificate requested) by
- a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTPSA id 7391693A1D; Wed, 
- 5 Nov 2008 10:17:50 -0500 (EST)
-In-Reply-To: <20081105104001.GA22272@artemis.corp> (Pierre Habouzit's message
- of "Wed, 05 Nov 2008 11:40:01 +0100")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: 025822EC-AB4D-11DD-B4EF-4F5276724C3F-77302942!a-sasl-quonix.pobox.com
+	id S1752582AbYKEPns (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 5 Nov 2008 10:43:48 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752271AbYKEPnr
+	(ORCPT <rfc822;git-outgoing>); Wed, 5 Nov 2008 10:43:47 -0500
+Received: from yx-out-2324.google.com ([74.125.44.28]:32405 "EHLO
+	yx-out-2324.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751864AbYKEPnr (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 5 Nov 2008 10:43:47 -0500
+Received: by yx-out-2324.google.com with SMTP id 8so27161yxm.1
+        for <git@vger.kernel.org>; Wed, 05 Nov 2008 07:43:46 -0800 (PST)
+Received: by 10.90.98.13 with SMTP id v13mr753365agb.105.1225899394109;
+        Wed, 05 Nov 2008 07:36:34 -0800 (PST)
+Received: by 10.100.7.20 with HTTP; Wed, 5 Nov 2008 07:36:34 -0800 (PST)
+In-Reply-To: <49119AAD.2010803@drmicha.warpmail.net>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/100160>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/100161>
 
-Pierre Habouzit <madcoder@debian.org> writes:
+Hi,
 
-> On Tue, Nov 04, 2008 at 11:54:26PM +0000, Junio C Hamano wrote:
+On Wed, Nov 5, 2008 at 2:07 PM, Michael J Gruber
+<git@drmicha.warpmail.net> wrote:
+> git config svn-remote.svn.branches
+> 'django/branches/features/*:refs/remotes/svn/features/*'
 >
->> Somebody already suggested this but I really think GIT: lines should be at
->> the end and use '# ' prefix instead.
+> git config --add svn-remote.svn.branches
+> 'django/branches/releases/*:refs/remotes/svn/releases/*'
 >
-> This will break previous editor syntax hilighting stuff even more, and
-> has the drawback that you can't put shell sniplets in here. I think it's
-> why GIT: was chosen. But maybe we just don't care.
+> In fact, you should be able to use your previous branches config when
+> fetching up to r9093, then switch to the config I suggested, and the
+> fetch from r9094.
 
-Ah, please scratch that "I really think" --- my mistake.
+I'll try it right now, I have one q... I've been fetching from svn so
+I now have "like a mess" in the branches dir (and their history) is
+there a way to make git-svn forget about everything after r9093 so I
+can do the config change and re-fetch since then? That'd be awesome.
 
-I did not check nor realize "GIT:" is what send-email already does.
+Thanks a lot for the tip! ;)
+
+Sincerelly,
+Marc
+-- 
+http://www.marcfargas.com - will be finished someday.
