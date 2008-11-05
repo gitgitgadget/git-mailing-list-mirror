@@ -1,94 +1,88 @@
-From: Dmitry Potapov <dpotapov@gmail.com>
-Subject: Re: [PATCH] Documentation: add a planning document for the next CLI revamp
-Date: Thu, 6 Nov 2008 01:53:27 +0300
-Message-ID: <20081105225327.GD24100@dpotapov.dyndns.org>
-References: <20081030002239.D453B21D14E@mail.utsl.gen.nz> <20081031003154.GA5745@sigill.intra.peff.net> <7v3ai9226q.fsf@gitster.siamese.dyndns.org> <1225691960.20883.41.camel@maia.lan> <20081104091800.GB24100@dpotapov.dyndns.org> <1225822231.6722.3.camel@maia.lan>
+From: Francis Galiegue <fg@one2team.net>
+Subject: Need help for migration from CVS to git in one go (ie, FORGETTING CVS history)
+Date: Thu, 6 Nov 2008 00:14:56 +0100
+Organization: One2team
+Message-ID: <200811060014.57046.fg@one2team.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
-	Sam Vilain <samv@vilain.net>, git@vger.kernel.org,
-	Johannes Schindelin <johannes.schindelin@gmx.de>,
-	Scott Chacon <schacon@gmail.com>,
-	Tom Preston-Werner <tom@github.com>,
-	"J.H." <warthog19@eaglescrag.net>,
-	Christian Couder <chriscool@tuxfamily.org>,
-	Kai Blin <kai@samba.org>
-To: Sam Vilain <sam@vilain.net>
-X-From: git-owner@vger.kernel.org Wed Nov 05 23:54:50 2008
+Content-Type: text/plain;
+  charset="us-ascii"
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Nov 06 00:18:06 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KxrH0-0007mJ-Fe
-	for gcvg-git-2@gmane.org; Wed, 05 Nov 2008 23:54:50 +0100
+	id 1KxrdU-0006hj-Su
+	for gcvg-git-2@gmane.org; Thu, 06 Nov 2008 00:18:05 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751594AbYKEWxg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 5 Nov 2008 17:53:36 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751540AbYKEWxg
-	(ORCPT <rfc822;git-outgoing>); Wed, 5 Nov 2008 17:53:36 -0500
-Received: from fg-out-1718.google.com ([72.14.220.157]:44207 "EHLO
-	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751504AbYKEWxe (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 5 Nov 2008 17:53:34 -0500
-Received: by fg-out-1718.google.com with SMTP id 19so163025fgg.17
-        for <git@vger.kernel.org>; Wed, 05 Nov 2008 14:53:32 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:cc:subject
-         :message-id:references:mime-version:content-type:content-disposition
-         :in-reply-to:user-agent;
-        bh=xuXa3JFiemnFndaHGNesRY3lS7qo5+5r8AvpeLBBLwQ=;
-        b=n8sEbeop3aWzW+cK3qewo++/gO1zQ1Zlqgib48Gj6UWIVOT47bu0JvvtnWd7/+t8rE
-         BFcmJ562xcK654XMlgRn/+9Je9oXQUPERzBSUqOpmsg6fwh4cD/SIK61JgHeO5QRuUFX
-         glWItxjF4Uxl/NapG3YFDK2Lip207yLpbEdKA=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        b=sZKVOo4W30EEs6V90XyFAd8w38h52ROLN6ofKKBpaoWITAEIyYgumEMs63vgsmEzGO
-         3UMrvnqRfjfnHoXDGMtlZ0JKRqFmqwPY4I+Jy0+5SRs+prNpwihbOiFqD1zygz3ULtTt
-         DEx10Z88pzTioVQpFsXMZ13q7QcW82U3/fxUQ=
-Received: by 10.181.5.14 with SMTP id h14mr398733bki.22.1225925611908;
-        Wed, 05 Nov 2008 14:53:31 -0800 (PST)
-Received: from localhost (ppp85-141-189-97.pppoe.mtu-net.ru [85.141.189.97])
-        by mx.google.com with ESMTPS id f31sm786101fkf.0.2008.11.05.14.53.29
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Wed, 05 Nov 2008 14:53:30 -0800 (PST)
+	id S1752475AbYKEXQt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 5 Nov 2008 18:16:49 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752427AbYKEXQt
+	(ORCPT <rfc822;git-outgoing>); Wed, 5 Nov 2008 18:16:49 -0500
+Received: from ns35774.ovh.net ([213.251.185.197]:60761 "EHLO ns35774.ovh.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752135AbYKEXQs (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 5 Nov 2008 18:16:48 -0500
+Received: from erwin.kitchen.eel (AOrleans-157-1-121-89.w90-20.abo.wanadoo.fr [90.20.196.89])
+	(Authenticated sender: fg@one2team.net)
+	by ns35774.ovh.net (Postfix) with ESMTP id 5F48092C011
+	for <git@vger.kernel.org>; Thu,  6 Nov 2008 00:16:34 +0100 (CET)
+User-Agent: KMail/1.9.9
 Content-Disposition: inline
-In-Reply-To: <1225822231.6722.3.camel@maia.lan>
-User-Agent: Mutt/1.5.13 (2006-08-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/100198>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/100199>
 
-On Wed, Nov 05, 2008 at 07:10:31AM +1300, Sam Vilain wrote:
-> On Tue, 2008-11-04 at 12:18 +0300, Dmitry Potapov wrote:
-> > > I can see that some people want this behaviour by default; but to me
-> > > "push the current branch back to where it came from" seems like far more
-> > > a rational default for at least 90% of users.
-> > 
-> > I think it depends on one's workflow. If you use a centralized workflow
-> > as with CVS then yes, 90% cases you want to push the current branch. On
-> > the other hand, if people push their changes to the server only for
-> > review, it means that accidentally pushing more than one intended is not
-> > a big deal.
-> 
-> Perhaps not, but it was still unintended.
+Hello list,
 
-Even if it were unintended, it will be noticed and corrected immediately,
-while forgetting to push some changes is not so obvious... Anyway, your
-workflow assumes that one wants to push changes immediately before
-switching to another branch, while there are many people who do that
-later (after some additional testing or just at the end of their workday).
+Since my first email where I said that we wanted to migrate from CVS to a 
+distributed SCM, we have had a lot of discussions with developers and my 
+chief (which happens to be a developer too). We have come to the following 
+conclusions:
 
-> I really can't understand the
-> opposition to making this command make many people less angry at it.
+* git has credentials (heck, it "runs" the Linux kernel, Wine, Samba, and 
+other);
+* the "distributed" part of it is indeed an advantage (planned developments 
+with huge technical/functional impacts);
+* 52 CVS modules, fine; but then this can become one and 52 subdirectories in 
+them and still act as separate modules from the build system point of view 
+(which I have implemented, so I can change it);
+* we have enough resources that the old CVS tree can be kept, even on tape, 
+the day we decide to "scrap it all" and start anew;
+* CVS "good practices" have barely been observed, so "we" might as well start 
+again from a sane base.
 
-Because it breaks how this command works now. So I don't think it is a
-good idea to make some people less angry while enraging many others over
-breaking their workflow. Compatibility should not be taken lightly.
+So, git looks like a great solution. The Eclipse plugin evolves nicely, you 
+still can decide on a "central" repository... Looks good.
 
-Dmitry
+There are, however, a few problems:
+* first: I am not an Eclipse user, and the two main developers use Eclipse 
+extensively (but even they are lost because of CVS, which is to "my" 
+advantage), so some questions below will focus on the Eclipse plugin;
+* second: even though this may be a "non problem", we use Bonsai, which has 
+the ability to see what was commited by whom, given a time interval (from d1 
+to d2): the base gitweb allows to search by commiter, which is good, but it 
+has no date boundaries: do tools exist for git that can do this? If not, that 
+wouldn't be a big deal, however...
+* third: also Bonsai-related; Bonsai can link to Bugzilla by matching (wild 
+guess) /\b(?:#?)(\d+)\b/ and transforming this into 
+http://your.bugzilla.fqdn.here/show_bug.cgi?id=$1. Does gitweb have this 
+built-in? (haven't looked yet) Is this planned, or has it been discussed and 
+been considered not worth the hassle?
+
+Finally, about the Eclipse plugin:
+* the README says that it has no push capacity, the popup menu says otherwise 
+(last checked last Saturday)... What should I believe?
+* if the plugin can push, can you configure from within the plugin what 
+branches can be pushed where, or should you edit .git/config by hand?
+* "git stash": is it supported?
+* can you "copy" a commit, or even a set of commits, and "cherry-pick" them 
+into another branch? Or even rebase a branch onto antoher?
+
+Thanks,
+-- 
+fge
