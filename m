@@ -1,111 +1,85 @@
-From: "Bob Hiestand" <bob.hiestand@gmail.com>
-Subject: Re: exporting the last N days of a repository
-Date: Tue, 4 Nov 2008 18:18:23 -0600
-Message-ID: <cc29171c0811041618jfbcb293l42a19805f06803a0@mail.gmail.com>
-References: <93c3eada0810281801l29253e02g95c7a6851c4c4db3@mail.gmail.com>
-	 <alpine.DEB.1.00.0810291610340.22125@pacific.mpi-cbg.de.mpi-cbg.de>
-	 <93c3eada0811021716y37ba999fkc2085b1060fbea2d@mail.gmail.com>
-	 <cc29171c0811030855s2fb0d7a5ncdfdd6acd7c71537@mail.gmail.com>
-	 <93c3eada0811041449u20e0fc74gf6a1cb420923e484@mail.gmail.com>
+From: Bernt Hansen <bernt@norang.ca>
+Subject: Re: git log -S doesn't find some commits
+Date: Tue, 04 Nov 2008 19:25:51 -0500
+Organization: Norang Consulting Inc
+Message-ID: <87bpwvrpbk.fsf@gollum.intra.norang.ca>
+References: <87fxm7rtb7.fsf@gollum.intra.norang.ca>
+	<alpine.DEB.1.00.0811050014310.30769@pacific.mpi-cbg.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org,
-	"Johannes Schindelin" <Johannes.Schindelin@gmx.de>
-To: geoffrey.russell@gmail.com
-X-From: git-owner@vger.kernel.org Wed Nov 05 01:19:51 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Wed Nov 05 01:27:19 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KxW7i-00054C-Oi
-	for gcvg-git-2@gmane.org; Wed, 05 Nov 2008 01:19:51 +0100
+	id 1KxWEp-0007uj-Ca
+	for gcvg-git-2@gmane.org; Wed, 05 Nov 2008 01:27:11 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754384AbYKEASZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 4 Nov 2008 19:18:25 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753759AbYKEASZ
-	(ORCPT <rfc822;git-outgoing>); Tue, 4 Nov 2008 19:18:25 -0500
-Received: from wa-out-1112.google.com ([209.85.146.179]:10253 "EHLO
-	wa-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753867AbYKEASY (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 4 Nov 2008 19:18:24 -0500
-Received: by wa-out-1112.google.com with SMTP id v27so1952742wah.21
-        for <git@vger.kernel.org>; Tue, 04 Nov 2008 16:18:23 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to
-         :subject:cc:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:references;
-        bh=MhKwxRY4TLVoDCDgnckeTHvfQzg5HUQPyv4889i8QF4=;
-        b=DihEBBqJmkKDhDf9CykUzUFFE5GRMPykrBNiT2YxoYtcp6ITk0Xdbgt9/7RPWRQZ+k
-         gl+iVIrdbS5DBr0o2Slq06rxuEyPoQkvVled6qyxQ1CHKxuaKCtO9Frn8xWav/B+zLQx
-         L/DYJCm9W5mzqhrGDxNH1e2wQs57Gg4j89FeU=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
-         :content-type:content-transfer-encoding:content-disposition
-         :references;
-        b=bvnKpFD1lqHXjosh8WT3qW6WCoAAtrO0OSFKcAFjEKXed7LSG58l+nXgcKw0S4ESah
-         jD1ncphHL11aA1dELSzqF6dVWDn3ptniuTuiXlkXtEOO/1mPK8aTZ8B5Y62VLEqZvSy0
-         oP878uYO1ubTB5gFj0Hmpeuov48u2yUwjUXFo=
-Received: by 10.115.89.18 with SMTP id r18mr168577wal.37.1225844303332;
-        Tue, 04 Nov 2008 16:18:23 -0800 (PST)
-Received: by 10.114.123.10 with HTTP; Tue, 4 Nov 2008 16:18:23 -0800 (PST)
-In-Reply-To: <93c3eada0811041449u20e0fc74gf6a1cb420923e484@mail.gmail.com>
-Content-Disposition: inline
+	id S1753725AbYKEAZ5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 4 Nov 2008 19:25:57 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753487AbYKEAZ5
+	(ORCPT <rfc822;git-outgoing>); Tue, 4 Nov 2008 19:25:57 -0500
+Received: from mho-02-bos.mailhop.org ([63.208.196.179]:65303 "EHLO
+	mho-02-bos.mailhop.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753333AbYKEAZ5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 4 Nov 2008 19:25:57 -0500
+Received: from cpe000102d0fe75-cm0012256ecbde.cpe.net.cable.rogers.com ([99.239.148.180] helo=mail.norang.ca)
+	by mho-02-bos.mailhop.org with esmtpsa (TLSv1:AES256-SHA:256)
+	(Exim 4.68)
+	(envelope-from <bernt@norang.ca>)
+	id 1KxWDa-0007Af-TQ; Wed, 05 Nov 2008 00:25:55 +0000
+Received: from gollum.intra.norang.ca (gollum.intra.norang.ca [192.168.1.5])
+	by mail.norang.ca (8.13.8/8.13.8/Debian-3) with ESMTP id mA50PqJ3031559
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
+	Tue, 4 Nov 2008 19:25:53 -0500
+Received: from gollum.intra.norang.ca (localhost [127.0.0.1])
+	by gollum.intra.norang.ca (8.14.3/8.14.3/Debian-5) with ESMTP id mA50PqdX014155;
+	Tue, 4 Nov 2008 19:25:52 -0500
+Received: (from bernt@localhost)
+	by gollum.intra.norang.ca (8.14.3/8.14.3/Submit) id mA50Ppag014154;
+	Tue, 4 Nov 2008 19:25:51 -0500
+X-Mail-Handler: MailHop Outbound by DynDNS
+X-Originating-IP: 99.239.148.180
+X-Report-Abuse-To: abuse@dyndns.com (see http://www.mailhop.org/outbound/abuse.html for abuse reporting information)
+X-MHO-User: U2FsdGVkX18xj+KoAW26ZMRbHkTvoik2
+In-Reply-To: <alpine.DEB.1.00.0811050014310.30769@pacific.mpi-cbg.de> (Johannes Schindelin's message of "Wed\, 5 Nov 2008 00\:15\:44 +0100 \(CET\)")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/100128>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/100129>
 
-On Tue, Nov 4, 2008 at 4:49 PM, Geoff Russell
-<geoffrey.russell@gmail.com> wrote:
-> Apologies to Johannes and Bob who have tried to help
-> but I'm still having difficulties, here is my current non-working script:
+Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+
+> On Tue, 4 Nov 2008, Bernt Hansen wrote:
 >
-> ------------------------------------------------------------------
-> #!/bin/sh
-> DIR=/tmp/gitdemo
-> # for testing just arbitrarily
-> # select the 15th most recent commit as our new origin
-> NEWORIGIN=$(git rev-list master@{15} | head -1)
-> echo $NEWORIGIN
-> # checkout earlist point we are interested in
-> # we want to drop any history before this point
-> git checkout $NEWORIGIN
-> # now make a new directory, initialise with new origin
-> # and apply all commits after that point
-> mkdir $DIR && (cd $DIR ; git init) &&  \
->    rsync -aHv --exclude=.git ./ $DIR && \
->    (cd $DIR ; git add . ; git commit -m "starting point" </dev/null ) && \
->    git fast-export $NEWORIGIN..master | (cd $DIR ; git fast-import )
+>> Commits B, C, and D are not included in the git log -S output even
+>> though with gitk you can see that 'org-publish-validate-link' is in the
+>> patch.
 >
-> ----------------- end of script
+> It is not sufficient for it to be in the patch, it has to be added or 
+> deleted in whole.  So for example if you had a line
 >
-> The fast-import gives me a message I don't understand and doesn't
-> do the import.
+> 	org-publish-validate-link Hello
+>
+> and you changed it to
+>
+> 	org-publish-validate-link World
+>
+> git log -SWorld will find the commit, but git log 
+> -Sorg-publish-validate-link will not.
 
-If I understood your requirement (I know nothing about fast-export),
-it would look like this:
+Ah I wasn't aware of that.
 
-#!/bin/sh
-DIR=/tmp/gitdemo
-ORIGDIR=$PWD
-git checkout -b shorthistory
-NEWORIGIN=$(git rev-list --since='5 months ago' --reverse HEAD| head -1)
-echo $NEWORIGIN
-git filter-branch --parent-filter '
-        test $GIT_COMMIT = '$NEWORIGIN' &&
-        echo || cat' \
-        --tag-name-filter cat $NEWORIGIN^..
-mkdir $DIR
-cd $DIR
-git init
-git fetch $ORIGDIR shorthistory:master
+In this case the function 'org-publish-validate-link' was commented out,
+and then in a later commit the comments were removed.
 
+I was expecting these commits to be found by git log -S.
 
-Thank you,
+Thanks!
 
-bob
+Bernt
