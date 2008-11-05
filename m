@@ -1,77 +1,94 @@
-From: "Carlos R. Mafra" <crmafra2@gmail.com>
-Subject: Re: git pull regression?
-Date: Wed, 5 Nov 2008 10:48:35 +0100
-Message-ID: <20081105094835.GA29316@localhost.aei.mpg.de>
-References: <20081104222749.GA9296@localhost.aei.mpg.de> <7vtzanoyg0.fsf@gitster.siamese.dyndns.org> <20081105083810.GA22318@localhost.aei.mpg.de>
+From: "Marc Fargas" <telenieko@telenieko.com>
+Subject: git-svn: Having a "rare" structure
+Date: Wed, 5 Nov 2008 11:04:14 +0100
+Message-ID: <2686a05b0811050204v59edc4a3h7f9ce6c6ecd13058@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Nov 05 10:49:32 2008
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Nov 05 11:06:06 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Kxf0y-0001BT-Ad
-	for gcvg-git-2@gmane.org; Wed, 05 Nov 2008 10:49:28 +0100
+	id 1KxfGW-0005qC-02
+	for gcvg-git-2@gmane.org; Wed, 05 Nov 2008 11:05:52 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753682AbYKEJsL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 5 Nov 2008 04:48:11 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754124AbYKEJsL
-	(ORCPT <rfc822;git-outgoing>); Wed, 5 Nov 2008 04:48:11 -0500
-Received: from ox1.aei.mpg.de ([194.94.224.6]:38440 "EHLO ox1.aei.mpg.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752925AbYKEJsK (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 5 Nov 2008 04:48:10 -0500
-Received: from localhost.aei.mpg.de (unknown [172.18.254.253])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(Client did not present a certificate)
-	by ox1.aei.mpg.de (Postfix) with ESMTP id E9ACF8805A74A;
-	Wed,  5 Nov 2008 10:48:07 +0100 (CET)
+	id S1754230AbYKEKES (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 5 Nov 2008 05:04:18 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754210AbYKEKES
+	(ORCPT <rfc822;git-outgoing>); Wed, 5 Nov 2008 05:04:18 -0500
+Received: from yx-out-2324.google.com ([74.125.44.28]:1257 "EHLO
+	yx-out-2324.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754168AbYKEKER (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 5 Nov 2008 05:04:17 -0500
+Received: by yx-out-2324.google.com with SMTP id 8so1358910yxm.1
+        for <git@vger.kernel.org>; Wed, 05 Nov 2008 02:04:16 -0800 (PST)
+Received: by 10.100.93.19 with SMTP id q19mr376697anb.156.1225879455001;
+        Wed, 05 Nov 2008 02:04:15 -0800 (PST)
+Received: by 10.100.7.20 with HTTP; Wed, 5 Nov 2008 02:04:14 -0800 (PST)
 Content-Disposition: inline
-In-Reply-To: <20081105083810.GA22318@localhost.aei.mpg.de>
-User-Agent: Mutt/1.5.17 (2007-11-01)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/100152>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/100153>
 
-On Wed  5.Nov'08 at  9:38:10 +0100, Carlos R. Mafra wrote:
-> On Tue  4.Nov'08 at 15:37:03 -0800, Junio C Hamano wrote:
-> > "Carlos R. Mafra" <crmafra2@gmail.com> writes:
-> > 
-> > > It looks like a regression to me. I can finish
-> > > the bisection if people in the list say that
-> > > I am not making a mistake somewhere :-)
-> > 
-> > Interesting, and _sounds_ like a regression, but I do not think anybody
-> > can tell if it is without looking at what .git/config and exact command
-> > sequence you are using for this "git pull" and where you are starting
-> > from.
+Hi all,
 
-Hm...that what I feared most has just happened.
+First of all, please CC responses to me as I'm not subscribed to this list ;)
 
-I tried to bisect my problem when I realized that it wasn't
-goint to take 2 hours and a lot of reboots like with the kernel :-)
+On the subject, I use git-svn to for most of my stuff and also to
+"interact" with some SVN projects out there, there's one that is
+driving me mad.
 
-And I soon realized that something was wrong when I was
-running 'make install'. I had two terminals open, one with
-the regular user with which I was compiling git, and the
-other with the root user where I run 'make install'.
+The Django project has a (somehow) rare SVN structure that I almost
+managet to make git-svn understand, but a recent "rarity" to the
+structure broke it again and I haven't succeeded in making git-svn
+understand it, so I'm trying to get some guidance on how to make
+git-svn understand the structure.
 
-After compiling with the regular user and running
-'make install' with the root user from the other terminal
-the whole compilation was happening again and strangely
-it was installing things in the prefix /root instead of
-/usr/local
+Right know the Django SVN repo is like that:
+browse: http://code.djangoproject.com/browser/django
+svn url:  http://code.djangoproject.com/svn/django
 
-I simply don't know why this happened nor how. But 
-somehow my git installation was screwed.
+trunk/
+tags/notable_moments/
+tags/releases/
+branches/*
+branches/features/
+branches/releases/
 
-I have just compiled the latest git and it is ok now.
+Until now, the last two didn't exist and git-svn was working nicely,
+but now "features" and "releases" were created, and git-svn is taking
+them as if they were branches, while they arent (branches are in
+subdirectories of those two).
 
-I am really sorry for all the noise, but I was 
-sincerely fooled by the symptoms (as you can see
-in the previous email).
+My git repo was done like that until now:
+
+    git svn init --prefix svn/
+http://code.djangoproject.com/svn/django -T trunk -b branches -t
+'tags/*/*'
+    git svn fetch
+
+With that, git-svn understood that tags were in the subdirectories of
+tags/{notable_moments,releases}/ but I can't do that with the branches
+as there are branches also in the top branches/ directory.
+
+I do not really care about those branches on the top directory as
+those are old, so I really only need git-svn to understand the
+{features,releases}/* thing. So:
+
+How can I do something like "-b branches/{features,releases}/*" making
+git-svn ignore the other top-level branches? Or, can I make it
+understand both, the top-level ones and the ones inside those two
+subdirectories?
+
+Note that I just gueesed the "-b branches/{features,releases}/*"
+thing; I didn't try it, tryiing takes lots of time and bandwidth ;\\
+
+Thanks for all,
+Marc
+-- 
+http://www.marcfargas.com - will be finished someday.
