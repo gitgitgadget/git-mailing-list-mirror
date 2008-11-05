@@ -1,78 +1,100 @@
-From: Robin Rosenberg <robin.rosenberg@dewire.com>
-Subject: [EGIT PATCH] Respect background when drawing history in SWT.
-Date: Wed,  5 Nov 2008 01:40:43 +0100
-Message-ID: <1225845643-28736-1-git-send-email-robin.rosenberg@dewire.com>
-Cc: git@vger.kernel.org, Robin Rosenberg <robin.rosenberg@dewire.com>
-To: spearce@spearce.org
-X-From: git-owner@vger.kernel.org Wed Nov 05 01:42:08 2008
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: git log -S doesn't find some commits
+Date: Tue, 04 Nov 2008 17:30:20 -0800
+Message-ID: <7vy6zzm02b.fsf@gitster.siamese.dyndns.org>
+References: <87fxm7rtb7.fsf@gollum.intra.norang.ca>
+ <alpine.DEB.1.00.0811050014310.30769@pacific.mpi-cbg.de>
+ <7vod0voy22.fsf@gitster.siamese.dyndns.org>
+ <877i7jrp67.fsf@gollum.intra.norang.ca>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	git@vger.kernel.org
+To: Bernt Hansen <bernt@norang.ca>
+X-From: git-owner@vger.kernel.org Wed Nov 05 02:32:02 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KxWTH-00044r-RW
-	for gcvg-git-2@gmane.org; Wed, 05 Nov 2008 01:42:08 +0100
+	id 1KxXFT-00071b-8l
+	for gcvg-git-2@gmane.org; Wed, 05 Nov 2008 02:31:55 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754605AbYKEAks (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 4 Nov 2008 19:40:48 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754595AbYKEAks
-	(ORCPT <rfc822;git-outgoing>); Tue, 4 Nov 2008 19:40:48 -0500
-Received: from mail.dewire.com ([83.140.172.130]:28099 "EHLO dewire.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754484AbYKEAkr (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 4 Nov 2008 19:40:47 -0500
-Received: from localhost (localhost [127.0.0.1])
-	by dewire.com (Postfix) with ESMTP id 4B354147CF91;
-	Wed,  5 Nov 2008 01:40:45 +0100 (CET)
-X-Virus-Scanned: by amavisd-new at dewire.com
-Received: from dewire.com ([127.0.0.1])
-	by localhost (torino.dewire.com [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id 5YGC-MjetwFg; Wed,  5 Nov 2008 01:40:44 +0100 (CET)
-Received: from localhost.localdomain (unknown [10.9.0.16])
-	by dewire.com (Postfix) with ESMTP id 8D7DC147EACF;
-	Wed,  5 Nov 2008 01:40:44 +0100 (CET)
-X-Mailer: git-send-email 1.6.0.3.578.g6a50
+	id S1753563AbYKEBal (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 4 Nov 2008 20:30:41 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753643AbYKEBal
+	(ORCPT <rfc822;git-outgoing>); Tue, 4 Nov 2008 20:30:41 -0500
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:47430 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753546AbYKEBak (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 4 Nov 2008 20:30:40 -0500
+Received: from localhost.localdomain (unknown [127.0.0.1])
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id DEA8079C1F;
+	Tue,  4 Nov 2008 20:30:37 -0500 (EST)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES256-SHA (256/256 bits)) (No client certificate requested) by
+ a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTPSA id 1466679C1C; Tue,
+  4 Nov 2008 20:30:27 -0500 (EST)
+In-Reply-To: <877i7jrp67.fsf@gollum.intra.norang.ca> (Bernt Hansen's message
+ of "Tue, 04 Nov 2008 19:29:04 -0500")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: 599BEA30-AAD9-11DD-AE51-9CEDC82D7133-77302942!a-sasl-fastnet.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/100133>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/100134>
 
-Use transparent text background for drawing text to make the history
-look nice when there is a background pattern or effects like alternating
-background colors for each row.
+Bernt Hansen <bernt@norang.ca> writes:
 
-Signed-off-by: Robin Rosenberg <robin.rosenberg@dewire.com>
----
- .../egit/ui/internal/history/CommitGraphTable.java |    2 +-
- .../egit/ui/internal/history/SWTPlotRenderer.java  |    2 +-
- 2 files changed, 2 insertions(+), 2 deletions(-)
+> Junio C Hamano <gitster@pobox.com> writes:
+> ...
+>> There seems to be a misconception on what -S<foo> does.  It does *NOT*
+>> grep for string <foo> in the patch text.  It counts number of <foo> in
+>> preimage and postimage and decides that the commit is worth showing iff
+>> they differ.
+>>
+>> If you look at, for example (B):
+>>
+>>     http://repo.or.cz/w/org-mode.git?a=commitdiff;h=837c81ce51
+>>
+>> You can see that in org-publish.el, org-publish-validate-link appears once
+>> as removed and once as added, so the total number of the appearance of the
+>> symbol in preimage and postimage are the same.
+>
+> Now I get it :)
+>
+> Thanks both of you!
 
-diff --git a/org.spearce.egit.ui/src/org/spearce/egit/ui/internal/history/CommitGraphTable.java b/org.spearce.egit.ui/src/org/spearce/egit/ui/internal/history/CommitGraphTable.java
-index a28e3c4..2bccf99 100644
---- a/org.spearce.egit.ui/src/org/spearce/egit/ui/internal/history/CommitGraphTable.java
-+++ b/org.spearce.egit.ui/src/org/spearce/egit/ui/internal/history/CommitGraphTable.java
-@@ -224,7 +224,7 @@ void doPaint(final Event event) {
- 
- 		final Point textsz = event.gc.textExtent(txt);
- 		final int texty = (event.height - textsz.y) / 2;
--		event.gc.drawString(txt, event.x, event.y + texty);
-+		event.gc.drawString(txt, event.x, event.y + texty, true);
- 	}
- 
- 	/**
-diff --git a/org.spearce.egit.ui/src/org/spearce/egit/ui/internal/history/SWTPlotRenderer.java b/org.spearce.egit.ui/src/org/spearce/egit/ui/internal/history/SWTPlotRenderer.java
-index 23ec255..c4ee282 100644
---- a/org.spearce.egit.ui/src/org/spearce/egit/ui/internal/history/SWTPlotRenderer.java
-+++ b/org.spearce.egit.ui/src/org/spearce/egit/ui/internal/history/SWTPlotRenderer.java
-@@ -89,7 +89,7 @@ protected void drawText(final String msg, final int x, final int y) {
- 		final int texty = (y * 2 - textsz.y) / 2;
- 		g.setForeground(cellFG);
- 		g.setBackground(cellBG);
--		g.drawString(msg, cellX + x, cellY + texty);
-+		g.drawString(msg, cellX + x, cellY + texty, true);
- 	}
- 
- 	protected Color laneColor(final SWTLane myLane) {
--- 
-1.6.0.3.578.g6a50
+By the way, I would not be opposed to a new feature, perhaps triggered
+with -G<foo>, that acts as if it is grepping inside the patch text.
+
+The reason behind -S<foo>'s behaviour is because it was designed as a part
+ofa "incremetal digging" tool before the current "git-blame" that allows
+to track even line-movements.
+
+That is, you could write a tool to help the following interactively:
+
+ (1) get interested in a block of text in a recent version;
+
+ (2) feed that to 'git log' like this:
+
+ 	git log -1 -p -S"$potentially_multi_line_text" $rev
+
+     this will find an old rev R whose parent R^ did not have the lines
+     in the exact form you fed with -S.
+
+ (3) inspect the output, and decide what to do next:
+
+     (3-a) you may want to adjust the text you look for, taking into
+     account how the neighbouring lines used to look like in R^, and run
+     another "git log -S" starting at R^; and/or
+
+     (3-b) you may want to run "git grep" for the text in the entire
+     tree in R^, to see if this was a code refactoring that consolidates
+     multiple copies of the same thing into a single place.
+
+     and go back to step (2).
+
+
+cf. http://thread.gmane.org/gmane.comp.version-control.git/27/focus=217
