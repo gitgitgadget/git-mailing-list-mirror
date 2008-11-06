@@ -1,71 +1,105 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH/RFC v3] git add -i: Answer questions with a single
- keypress
-Date: Thu, 06 Nov 2008 09:06:59 -0800
-Message-ID: <7vk5bgiy18.fsf@gitster.siamese.dyndns.org>
-References: <200811042215.31147.sunaku@gmail.com>
- <200811050959.25824.sunaku@gmail.com>
- <20081106084230.GA4407@sigill.intra.peff.net>
- <200811060815.16797.sunaku@gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Jeff King <peff@peff.net>, git@vger.kernel.org
-To: "Suraj N. Kurapati" <sunaku@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Nov 06 18:08:58 2008
+From: Steve Walker <steve@idibu.com>
+Subject: Issue updating files during a checkout from a remote push
+Date: Thu, 6 Nov 2008 18:04:20 +0100
+Message-ID: <334B3AB1-125A-4163-BEBC-9A73C4F569B5@idibu.com>
+Mime-Version: 1.0 (Apple Message framework v929.2)
+Content-Type: text/plain; charset=US-ASCII; format=flowed; delsp=yes
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Nov 06 18:10:42 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Ky8LY-0003gR-HM
-	for gcvg-git-2@gmane.org; Thu, 06 Nov 2008 18:08:41 +0100
+	id 1Ky8NV-0004cr-RD
+	for gcvg-git-2@gmane.org; Thu, 06 Nov 2008 18:10:42 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752005AbYKFRH0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 6 Nov 2008 12:07:26 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750812AbYKFRH0
-	(ORCPT <rfc822;git-outgoing>); Thu, 6 Nov 2008 12:07:26 -0500
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:40738 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752005AbYKFRHY (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 6 Nov 2008 12:07:24 -0500
-Received: from localhost.localdomain (unknown [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 23A1279A7C;
-	Thu,  6 Nov 2008 12:07:22 -0500 (EST)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES256-SHA (256/256 bits)) (No client certificate requested) by
- a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTPSA id 5EA7779A74; Thu,
-  6 Nov 2008 12:07:07 -0500 (EST)
-In-Reply-To: <200811060815.16797.sunaku@gmail.com> (Suraj N. Kurapati's
- message of "Thu, 6 Nov 2008 08:15:16 -0800")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: 605B2FDC-AC25-11DD-91F5-9CEDC82D7133-77302942!a-sasl-fastnet.pobox.com
+	id S1750759AbYKFRJ2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 6 Nov 2008 12:09:28 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750757AbYKFRJ2
+	(ORCPT <rfc822;git-outgoing>); Thu, 6 Nov 2008 12:09:28 -0500
+Received: from moutng.kundenserver.de ([212.227.126.186]:49993 "EHLO
+	moutng.kundenserver.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750704AbYKFRJ1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 6 Nov 2008 12:09:27 -0500
+Received: from [192.168.0.198] (static-109-195-228-77.ipcom.comunitel.net [77.228.195.109])
+	by mrelayeu.kundenserver.de (node=mrelayeu5) with ESMTP (Nemesis)
+	id 0ML25U-1Ky8HN24kT-0001h3; Thu, 06 Nov 2008 18:04:22 +0100
+X-Mailer: Apple Mail (2.929.2)
+X-Provags-ID: V01U2FsdGVkX1+SGFES1/h8Y+Uk9WuHLxT+av5uPV7y1qRzaa+
+ oUCiLhDtOFXRhnmXwpZClaG80gh0A5fvrBRoeZ07fFF6wia68/
+ oVWcIgcF/fa2rJN+XKh/t81AAcX3zDu
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/100247>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/100248>
 
-"Suraj N. Kurapati" <sunaku@gmail.com> writes:
+Hi there,
 
-> On Thursday 06 November 2008 00:42:36 Jeff King wrote:
->> On Wed, Nov 05, 2008 at 09:59:25AM -0800, Suraj N. Kurapati wrote:
->> > Allows the user to answer 'Stage this hunk' questions with a
->> > single keypress, just like in Darcs.  Previously, the user was
->> > forced to press the Return key after every choice they made.
->> > This quickly becomes tiring, burdensome work for the fingers.
->>
->> I think this is a reasonable goal, but I have a few questions/concerns.
->>
->>  - There are three versions of your patch, but nobody has commented.
->>    Clearly we can see what changed, but it is not clear what advantage
->>    one patch has over the other. Care to elaborate?
->
-> v1 and v2 make the mistake of setting raw mode, which prevent the user from 
-> pressing Control-C to exit the program.  v3 fixes this by using cbreak mode.
+Hoping someone could point me in the right direction here.
 
-When I was reading the last round I noticed the above change myself, but
-it is customary to write this kind of "patch changelog" under --- line in
-your patch around here.  That way you can save everybody's time.
+The overall issue is that with files that have been pushed into our  
+repo on our server, when we then check out into local working copy the  
+new files appear, but the updated files dont update even though the  
+output suggests it has. The flow I'm doing:
 
-Thanks.  And thanks, Jeff, for being a good reviewer.
- 
+1. The file I'm testing an update to is this:
+
+-rw-r--r--   1 root    www-data       0 2008-11-06 16:13 steve-git- 
+test3.txt
+
+2. On my local box I change file, add it, commit, then push it from my  
+local box to our server repo:
+
+StevePoota:public_html steve$ vi steve-git-test3.txt
+StevePoota:public_html steve$ git add steve-git-test3.txt
+StevePoota:public_html steve$ git commit
+Created commit e29b724: testing only
+  1 files changed, 1 insertions(+), 0 deletions(-)
+StevePoota:public_html steve$ git push ssh://idibu.com/home/beta_idibu/public_html 
+  master:master
+Counting objects: 5, done.
+Compressing objects: 100% (2/2), done.
+Writing objects: 100% (3/3), 272 bytes, done.
+Total 3 (delta 1), reused 0 (delta 0)
+To ssh://idibu.com/home/beta_idibu/public_html
+    a28332a..e29b724  master -> master
+
+3. It all looks good, on my server if i do a 'git log' I can see in  
+the latest update:
+
+oneworld:/home/beta_idibu/public_html# git log
+commit e29b7246beab458d6a7b53cb245a5596adc8c198
+Author: Steve <steve@StevePoota.local>
+Date:   Thu Nov 6 17:55:21 2008 +0100
+
+     testing only
+
+4. So I check out:
+
+oneworld:/home/beta_idibu/public_html# git checkout master
+M	.gitignore
+M	steve-git-test.txt
+M	steve-git-test2.txt
+M	steve-git-test3.txt
+Already on branch "master"
+oneworld:/home/beta_idibu/public_html#
+
+and its telling me that file has been modified
+
+but checking my file it hasnt changed by date stamp, and looking insie  
+the file my changes arent there :((
+
+-rw-r--r--   1 root    www-data       0 2008-11-06 16:13 steve-git- 
+test3.txt
+
+I'm stumped. I tried 777'ing that file temporarily in case git couldnt  
+write to that file on checkout. What is strange is that when I add new  
+files to the system it works - for example this file I'm testing no  
+was originally added to the server via an external push.
+
+If anyone could give me some help I'd be very grateful.
+
+Kind regards, Steve.
