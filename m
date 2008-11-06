@@ -1,117 +1,96 @@
-From: Jens Seidel <jensseidel@users.sf.net>
-Subject: Re: Bug: "git-svn fetch" segfaults on unknown user
-Date: Thu, 6 Nov 2008 16:48:09 +0100
-Message-ID: <20081106154808.GA27102@merkur.sol.de>
-References: <20081106143826.GA26900@merkur.sol.de> <237967ef0811060643g1037b8dbuf3660dfa8e3ff625@mail.gmail.com>
+From: "Suraj N. Kurapati" <sunaku@gmail.com>
+Subject: Re: [PATCH/RFC v3] git add -i: Answer questions with a single keypress
+Date: Thu, 6 Nov 2008 08:15:16 -0800
+Message-ID: <200811060815.16797.sunaku@gmail.com>
+References: <200811042215.31147.sunaku@gmail.com> <200811050959.25824.sunaku@gmail.com> <20081106084230.GA4407@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Nov 06 16:50:37 2008
+Content-Type: text/plain;
+  charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Thu Nov 06 17:16:48 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Ky77u-0005I2-16
-	for gcvg-git-2@gmane.org; Thu, 06 Nov 2008 16:50:30 +0100
+	id 1Ky7X9-0007cL-4Y
+	for gcvg-git-2@gmane.org; Thu, 06 Nov 2008 17:16:35 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750972AbYKFPtK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 6 Nov 2008 10:49:10 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751158AbYKFPtI
-	(ORCPT <rfc822;git-outgoing>); Thu, 6 Nov 2008 10:49:08 -0500
-Received: from fmmailgate03.web.de ([217.72.192.234]:55209 "EHLO
-	fmmailgate03.web.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750892AbYKFPtH (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 6 Nov 2008 10:49:07 -0500
-Received: from smtp06.web.de (fmsmtp06.dlan.cinetic.de [172.20.5.172])
-	by fmmailgate03.web.de (Postfix) with ESMTP id E658DF3F5818
-	for <git@vger.kernel.org>; Thu,  6 Nov 2008 16:49:05 +0100 (CET)
-Received: from [77.179.124.209] (helo=merkur.sol.de)
-	by smtp06.web.de with asmtp (TLSv1:AES256-SHA:256)
-	(WEB.DE 4.109 #226)
-	id 1Ky76X-0004cI-00
-	for git@vger.kernel.org; Thu, 06 Nov 2008 16:49:05 +0100
-Received: from jens by merkur.sol.de with local (Exim 4.69)
-	(envelope-from <tux-master@web.de>)
-	id 1Ky75d-00073P-Os
-	for git@vger.kernel.org; Thu, 06 Nov 2008 16:48:10 +0100
-Mail-Followup-To: git@vger.kernel.org
+	id S1751227AbYKFQPV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 6 Nov 2008 11:15:21 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751080AbYKFQPU
+	(ORCPT <rfc822;git-outgoing>); Thu, 6 Nov 2008 11:15:20 -0500
+Received: from rv-out-0506.google.com ([209.85.198.237]:63855 "EHLO
+	rv-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751225AbYKFQPU (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 6 Nov 2008 11:15:20 -0500
+Received: by rv-out-0506.google.com with SMTP id k40so771827rvb.1
+        for <git@vger.kernel.org>; Thu, 06 Nov 2008 08:15:19 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:from:to:subject:date
+         :user-agent:cc:references:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:message-id;
+        bh=rPXW+hoo6XuMWnJOZV2LDyKxBq5N/KeRbIeeqZNvTbY=;
+        b=AWD/uckZCQJPvJMFkGwcWYTXufhtpmq9FH6t4KrR61JN7nf8h9mLyOTKUYrXCwCXoN
+         0gZQ2sSetmfIk1Uko6veD/iF78LSXu8GnvZy3wqc8SIRSeQd/9I3ogGwxEIJyn1uTJ2F
+         uEwIay783plj/8R8khYKm13Ayqom5BcP6DvA8=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=from:to:subject:date:user-agent:cc:references:in-reply-to
+         :mime-version:content-type:content-transfer-encoding
+         :content-disposition:message-id;
+        b=XlwMmEdcikVgvhuE7e/3wuVJM6XSSoZ740BFbawc9Wx+SUCU/KOcH1y54cc++XV9ca
+         Y8yJFUTgJc7+3c8bigr+GpHgfg/ZpVy4hQvTUc/e8dzotpfNVyN10bJotk94dIbEaB3J
+         dTcVKryEQU/BH6fU36nwjsQpGzbJRtozupcEQ=
+Received: by 10.141.49.18 with SMTP id b18mr1280500rvk.96.1225988119364;
+        Thu, 06 Nov 2008 08:15:19 -0800 (PST)
+Received: from yantram.localnet (adsl-76-221-202-142.dsl.pltn13.sbcglobal.net [76.221.202.142])
+        by mx.google.com with ESMTPS id b8sm4777443rvf.3.2008.11.06.08.15.18
+        (version=SSLv3 cipher=RC4-MD5);
+        Thu, 06 Nov 2008 08:15:18 -0800 (PST)
+User-Agent: KMail/1.10.1 (Linux/2.6.27-ARCH; KDE/4.1.2; i686; ; )
+In-Reply-To: <20081106084230.GA4407@sigill.intra.peff.net>
 Content-Disposition: inline
-In-Reply-To: <237967ef0811060643g1037b8dbuf3660dfa8e3ff625@mail.gmail.com>
-User-Agent: Mutt/1.5.18 (2008-05-17)
-X-Sender: tux-master@web.de
-X-Provags-ID: V01U2FsdGVkX1/OxUoe3TlW2aohS9Gqpkyx2+g6GR+J5ZL19WlG
-	6YCZOpCl5byk95RcDrCz71gZbJfaGxMzjk9eUR0Dt/JAnYV1eN
-	jv/2IYiUo=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/100242>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/100243>
 
-On Thu, Nov 06, 2008 at 03:43:18PM +0100, Mikael Magnusson wrote:
-> 2008/11/6 Jens Seidel <jensseidel@users.sf.net>:
-> > I noticed the following bug in git-svn version 1.6.0.3 (svn 1.5.5):
-> >
-> > "git-svn fetch" segfaults if I provide an incomplete svn.authorsfile config
-> > file setting with account<-->email mappings. This happens if an unknown user
-> > account is found in the Subversion log.
+On Thursday 06 November 2008 00:42:36 Jeff King wrote:
+> On Wed, Nov 05, 2008 at 09:59:25AM -0800, Suraj N. Kurapati wrote:
+> > Allows the user to answer 'Stage this hunk' questions with a
+> > single keypress, just like in Darcs.  Previously, the user was
+> > forced to press the Return key after every choice they made.
+> > This quickly becomes tiring, burdensome work for the fingers.
+>
+> I think this is a reasonable goal, but I have a few questions/concerns.
+>
+>  - There are three versions of your patch, but nobody has commented.
+>    Clearly we can see what changed, but it is not clear what advantage
+>    one patch has over the other. Care to elaborate?
 
-I should really provide more information:
+v1 and v2 make the mistake of setting raw mode, which prevent the user from 
+pressing Control-C to exit the program.  v3 fixes this by using cbreak mode.
 
-I imported my Subversion repository in the past succesfully from my server
-(svn+ssh protocol). Since I'm new to git (and still confused by the large
-amount of git tools) I decided to start on a svnsync'ed copy of my repository
-(file protocol) to avoid any harm. I added also some new config settings
-including svn.authorsfile and fetching revisions started to fail.  The last
-output was:
+>  - Term::ReadKey, while common, is not part of base perl. So I think
+>    using it needs to be conditional, and on systems without it we can
+>    degrade to the current behavior.
 
-r38 = 4dca32e3d82a32206fd11545d4f270e118f51f12 (trunk@166)
-        M       myproject/file
+The git-svn.perl script also uses Term::ReadKey.  Since it is already in the 
+git source repository, I thought it was okay to use Term::ReadKey.
 
-Revision 39 contained the unknown user account so I suspected the error
-is related to an incomplete authors file.
+>  - There's no facility in your patch for restoring the terminal if we
+>    break out of the loop in an unexpected way (e.g., via the user
+>    hitting ^C).
 
-I used following versions of Subversion:
-Client: 1.5.5
-Server: 1.5.3
+Good point.  I'll try to address this in a v4 patch.
 
-After adding the missing account to the authors file it fetched all revisions,
-called the garbage collector and stilled crashed with a core dump. Last
-output:
+>  - This only enhances one particular input, the patch loop. It is
+>    probably worth being consistent and allowing these behavior for other
+>    menus (though the numeric inputs are a bit trickier).
 
-Checked out HEAD:
-  file:///home/jens/Subversion-Repository.synced/myproject/trunk r1700
-Abgebrochen (core dumped)
-
-This happened also after I removed the svn.authorsfile config setting.
-My current settings:
-
-[user]
-  name = Jens Seidel
-  email = jensseidel@users.sf.net
-[color]
-  diff = auto
-  branch = auto
-  interactive = auto
-[svn]
-  findcopiesharder = true
-  rmdir = true
-
-"gdb -c core" is useless, it just mentions the error occured in
-"perl git-svn fetch" and there is no stacktrace (don't know how to
-debug perl).
-
-I removed now both [svn] options and it failed again. So it seems a problem
-with file:// access while svn+ssh:// works well.
-
-> Are you sure this isn't the regular svn 1.5.x crash? Ie, does
-> compiling subversion with --disable-runtime-module-search fix it?
-
-Huch? I follow the Subversion developer list and I'm not not aware of
-such a problem. Will try it now ...
-
-PS: Compared to previous releases of git the import is at least 10 times
-faster. Good job!
-
-Jens
+Understood.
