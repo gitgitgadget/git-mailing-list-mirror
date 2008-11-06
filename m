@@ -1,88 +1,107 @@
-From: Steve Walker <steve@idibu.com>
-Subject: Re: Question: 'git pull' hangs on local machine
-Date: Thu, 6 Nov 2008 12:34:08 +0100
-Message-ID: <2088BFCB-99FF-42EE-91F0-0FD0592D6E19@idibu.com>
-References: <C520D4F3-1B6B-4049-911E-F1D82209A7B4@idibu.com>
-Mime-Version: 1.0 (Apple Message framework v929.2)
-Content-Type: text/plain; charset=US-ASCII; format=flowed; delsp=yes
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Nov 06 12:35:28 2008
+From: "Christian MICHON" <christian.michon@gmail.com>
+Subject: Re: More help needed on merging unrelated repos
+Date: Thu, 6 Nov 2008 13:13:42 +0100
+Message-ID: <46d6db660811060413q7f4e2437maa6d87a27b8704b@mail.gmail.com>
+References: <46d6db660811040514qc6c9663u17bd231e1ba662ad@mail.gmail.com>
+	 <4910ACCA.7080007@op5.se>
+	 <46d6db660811041308o19f1131dm4d49b6703fa6d22b@mail.gmail.com>
+	 <4910C6F4.5010407@op5.se>
+	 <46d6db660811041430l74d9a100kc15ac46dea8ff63f@mail.gmail.com>
+	 <20081106083751.GA10359@diana.vm.bytemark.co.uk>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: "Andreas Ericsson" <ae@op5.se>,
+	"Git Mailing List" <git@vger.kernel.org>
+To: "=?ISO-8859-1?Q?Karl_Hasselstr=F6m?=" <kha@treskal.com>
+X-From: git-owner@vger.kernel.org Thu Nov 06 13:15:07 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Ky395-0000MN-JE
-	for gcvg-git-2@gmane.org; Thu, 06 Nov 2008 12:35:28 +0100
+	id 1Ky3lS-0003vd-ES
+	for gcvg-git-2@gmane.org; Thu, 06 Nov 2008 13:15:06 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753770AbYKFLeM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 6 Nov 2008 06:34:12 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753710AbYKFLeM
-	(ORCPT <rfc822;git-outgoing>); Thu, 6 Nov 2008 06:34:12 -0500
-Received: from moutng.kundenserver.de ([212.227.126.177]:53761 "EHLO
-	moutng.kundenserver.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752539AbYKFLeL (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 6 Nov 2008 06:34:11 -0500
-Received: from [192.168.0.198] (static-109-195-228-77.ipcom.comunitel.net [77.228.195.109])
-	by mrelayeu.kundenserver.de (node=mrelayeu1) with ESMTP (Nemesis)
-	id 0MKwpI-1Ky37p2XZx-0001OR; Thu, 06 Nov 2008 12:34:10 +0100
-In-Reply-To: <C520D4F3-1B6B-4049-911E-F1D82209A7B4@idibu.com>
-X-Mailer: Apple Mail (2.929.2)
-X-Provags-ID: V01U2FsdGVkX18Tk2kr4Bix+4rwh6adbz23mv088WfsUr/BLL/
- LpcB3zyWFQ+KMMHlFaCQCcPWtbjatS3N9/dGD5Nq35OCApGNYz
- Wbc9USALbga/GzCXjNKbEZhV23z77X7
+	id S1753686AbYKFMNo convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 6 Nov 2008 07:13:44 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753657AbYKFMNo
+	(ORCPT <rfc822;git-outgoing>); Thu, 6 Nov 2008 07:13:44 -0500
+Received: from wf-out-1314.google.com ([209.85.200.168]:62730 "EHLO
+	wf-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753600AbYKFMNn convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 6 Nov 2008 07:13:43 -0500
+Received: by wf-out-1314.google.com with SMTP id 27so633153wfd.4
+        for <git@vger.kernel.org>; Thu, 06 Nov 2008 04:13:42 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to
+         :subject:cc:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:references;
+        bh=RZFcHjFPHm0GosX+e53nrm5B3lJwLV9CC/SZsZwwexY=;
+        b=j7AM5p83+8VhjSafAxLj/UJNpIL1ZdxJb6mbgkTt2yl7W1O0nnswPqh8CvuS4DJvej
+         lBOsH0bkL9dZtIACJC/ZHpxwKoLWWDIVdprgrr6sZvgctdX0IMI/UfKHMSYIUf8JX4fz
+         30YUNsc/CiQBQuBdyf+7qUJwppDd4TY3vyiz8=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
+         :content-type:content-transfer-encoding:content-disposition
+         :references;
+        b=P+Uz1Qot5FacFEyoO+8rEUoOAHLXuV31LbT4n97Io2vEX0Q5brwhevXBp4M3LOc6Vu
+         PYSH2DDi4O0UI3NuKG6jbfuEC41ukK08uGIDCkvhEVeQ1xjHzY2ZE6+GuH7FiAVyjZYR
+         YSlPSKdtnvkYJUachSTmyXQ3GvNeb25oe5I6Q=
+Received: by 10.143.28.7 with SMTP id f7mr422048wfj.156.1225973622582;
+        Thu, 06 Nov 2008 04:13:42 -0800 (PST)
+Received: by 10.143.1.15 with HTTP; Thu, 6 Nov 2008 04:13:42 -0800 (PST)
+In-Reply-To: <20081106083751.GA10359@diana.vm.bytemark.co.uk>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/100229>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/100230>
 
-All,
-Please now ignore this - have tried it on a different connection and  
-its now worked :)
-
-Kind regards, Steve.
-
-On Nov 5, 2008, at 10:49 PM, Steve Walker wrote:
-
-> Hi there,
+On Thu, Nov 6, 2008 at 9:37 AM, Karl Hasselstr=F6m <kha@treskal.com> wr=
+ote:
+> On 2008-11-04 23:30:56 +0100, Christian MICHON wrote:
 >
-> We have git on our server - I can pull between repo's no problem on  
-> the server. I've also cloned a repo on my local box to dev on. The  
-> clone has worked perfectly.
+>> note the merge can work, but it's still done in 2 steps. :(
+>> thanks for suggesting this.
 >
-> The problem occurs when I try to do a 'git pull' to update my local  
-> repo with updates we've made on the server, i see this:
+> If it had worked, you'd have gotten just one merge commit. What you
+> want to do is entirely possible, but it seems the high-level commands
+> were not designed with your use-case in mind.
 >
-> StevePoota:public_html steve$ git pull
-> remote: Counting objects: 89, done.
-> remote: Compressing objects: 100% (63/63), done.
-> Unpacking objects: 35% (24/67)
+> Another thing you could try is to merge the two branches separately,
+> getting a history like this:
 >
-> It hangs on the unpacking objects stage. I tried pulling from  
-> different repo, but got the same issue.
+>  p1----\
+>         \
+>  p2---A--B
+>      /
+>  p3--
 >
-> I've done some test updates on the server repo's in case they were  
-> corrupt but they seem to be ok...
+> And then use grafts to convince git that B has parents p1, p2, and p3
+> (instead of its actual parents p1 and A). (Grep for "graft" in the
+> Documentation directory.)
 >
-> Has anyone got any ideas how to fix this?
->
-> Kind regards, Steve
->
->
+> And then use git-filter-branch to rewrite history so that the grafted
+> history becomes the real history.
 >
 > --
-> To unsubscribe from this list: send the line "unsubscribe git" in
-> the body of a message to majordomo@vger.kernel.org
-> More majordomo info at  http://vger.kernel.org/majordomo-info.html
+> Karl Hasselstr=F6m, kha@treskal.com
+>      www.treskal.com/kalle
+>
 
-www.idibu.co.uk
-steve@idibu.com
+nice suggestion Karl! it took a while to understand all the
+consequences and workflow.
+On top of your suggestion, I had to remove the
+refs/original/refs/heads/master and the grafts file.
 
-Sales: +44 (0)800 311 2750
-Support: +44 (0)870 626 4268
-Fax: +44 (0)8701 417 136
+It worked well: quite a spell, but an efficient one. Kudo++
 
-Mobile: +34 661 785 387
-www.linkedin.com/in/stevejwalker
+--=20
+Christian
+--
+http://detaolb.sourceforge.net/, a linux distribution for Qemu with Git=
+ inside !
