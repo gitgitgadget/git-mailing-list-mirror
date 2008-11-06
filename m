@@ -1,176 +1,91 @@
-From: Alexander Gavrilov <angavrilov@gmail.com>
-Subject: Re: [RFC PATCH] gitweb: Support filtering projects by .htaccess files.
-Date: Thu, 6 Nov 2008 22:43:26 +0300
-Organization: HOME
-Message-ID: <200811062243.27348.angavrilov@gmail.com>
-References: <200811031943.30033.angavrilov@gmail.com> <200811060136.23806.angavrilov@gmail.com> <200811060026.59340.jnareb@gmail.com>
+From: Yang Zhang <yanghatespam@gmail.com>
+Subject: Re: How to rebase for git svn?
+Date: Thu, 06 Nov 2008 15:05:46 -0500
+Message-ID: <49134E1A.9090908@gmail.com>
+References: <4911EF4C.8030703@gmail.com> <20081106095500.GA9587@untitled> <bd6139dc0811060215j1ad7ee0ahd0b568283da06cb@mail.gmail.com> <20081106102425.GA4192@atjola.homenet>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, Petr Baudis <pasky@suse.cz>,
-	Giuseppe Bilotta <giuseppe.bilotta@gmail.com>
-To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Nov 06 20:46:53 2008
+Content-Type: text/plain; charset=ISO-8859-1;
+	format=flowed
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: sverre@rabbelier.nl, Eric Wong <normalperson@yhbt.net>,
+	git@vger.kernel.org
+To: =?ISO-8859-1?Q?Bj=F6rn_Steinbrink?= <B.Steinbrink@gmx.de>
+X-From: git-owner@vger.kernel.org Thu Nov 06 21:07:08 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KyAoX-0008Hu-OT
-	for gcvg-git-2@gmane.org; Thu, 06 Nov 2008 20:46:46 +0100
+	id 1KyB8F-0007J8-Uh
+	for gcvg-git-2@gmane.org; Thu, 06 Nov 2008 21:07:08 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750865AbYKFTpb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 6 Nov 2008 14:45:31 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750733AbYKFTpb
-	(ORCPT <rfc822;git-outgoing>); Thu, 6 Nov 2008 14:45:31 -0500
-Received: from fg-out-1718.google.com ([72.14.220.158]:33725 "EHLO
-	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750804AbYKFTpa (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 6 Nov 2008 14:45:30 -0500
-Received: by fg-out-1718.google.com with SMTP id 19so605367fgg.17
-        for <git@vger.kernel.org>; Thu, 06 Nov 2008 11:45:28 -0800 (PST)
+	id S1750989AbYKFUFu convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 6 Nov 2008 15:05:50 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751106AbYKFUFu
+	(ORCPT <rfc822;git-outgoing>); Thu, 6 Nov 2008 15:05:50 -0500
+Received: from qw-out-2122.google.com ([74.125.92.24]:43612 "EHLO
+	qw-out-2122.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750900AbYKFUFt (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 6 Nov 2008 15:05:49 -0500
+Received: by qw-out-2122.google.com with SMTP id 3so506004qwe.37
+        for <git@vger.kernel.org>; Thu, 06 Nov 2008 12:05:47 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:organization:to:subject
-         :date:user-agent:cc:references:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:message-id;
-        bh=jTW2zjzkefLJMXcbRP8IjSdp+YWIXWXHhK1sN5nZnjQ=;
-        b=m/IRcqPrnMveE/F7bQgGLQqcA98kJjc0z33p9/cDBYc4dtuJWZd3gSmTuSdF+iPJQy
-         YTu+6Fw2QMYqu8QoYJFYHiYUFXxV1QpJLZzao6/ZmP25yZWkBNzU/Dtw6QzUUelDZWFV
-         enK7z3cSIkIDInrP/kLYwFQhU8LIlkB6UjAKQ=
+        h=domainkey-signature:received:received:message-id:date:from
+         :user-agent:mime-version:to:cc:subject:references:in-reply-to
+         :content-type:content-transfer-encoding;
+        bh=FrAmKAqPaPYdnv4EyTdyDsUfPFcNHhPZPNL/NzIK84k=;
+        b=UWLfdLdQdSdMu6JUzymwJNSi7imn58tCcQ9D5iZqwgEfUq1Y63PNXVYz4rQ7U7XffM
+         zsKpQOGvnHw/PET5h8L36xmVdygRuNxo8RJGEc6EnQ/OIMNJ9Dvzpqfq/ED+BHfQjeff
+         Rpr17qsSotExO3qbsRVW3bb+4BixYsYSUzXb4=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=from:organization:to:subject:date:user-agent:cc:references
-         :in-reply-to:mime-version:content-type:content-transfer-encoding
-         :content-disposition:message-id;
-        b=Ds4Vr5TlhFomDnFN3kq402Mbg68GAA1pw6dIzQ3k1emaDuq93LWbu2ZbusN4neh2Fr
-         Q0SHhQSV7kwo8PcpOotMF5FoqXSiHDfVRGMtOQOeEDaVqzvDvnpUetKtewVwq+U8Dwaa
-         xf88j4kq0nbM/EDVhpDibv1BP+Uz6rBSJDJbY=
-Received: by 10.187.203.16 with SMTP id f16mr527451faq.34.1226000728043;
-        Thu, 06 Nov 2008 11:45:28 -0800 (PST)
-Received: from keydesk.localnet ([92.255.85.78])
-        by mx.google.com with ESMTPS id 31sm2889563fkt.3.2008.11.06.11.45.26
+        h=message-id:date:from:user-agent:mime-version:to:cc:subject
+         :references:in-reply-to:content-type:content-transfer-encoding;
+        b=ZuPxx3ATeH+GF+2aOD36DlRoHPdMisC5IS508U5XRSXrFqKQOslx/Yxgx7PtANNEjQ
+         ccRLHl/oRK7cElraikNT57+WVh7OM7SjNcLbZ0zXU704bPVTRoPWQDRYzvYmDzRIodlm
+         W3/wuCQWY1HAkrmBQHfu8Nsb1BT8dNhBQ/bd4=
+Received: by 10.215.12.6 with SMTP id p6mr2863184qai.282.1226001947689;
+        Thu, 06 Nov 2008 12:05:47 -0800 (PST)
+Received: from harvard.csail.mit.edu ( [18.26.1.77])
+        by mx.google.com with ESMTPS id 5sm4777175yxt.1.2008.11.06.12.05.45
         (version=SSLv3 cipher=RC4-MD5);
-        Thu, 06 Nov 2008 11:45:26 -0800 (PST)
-User-Agent: KMail/1.10.1 (Linux/2.6.26.6-79.fc9.i686; KDE/4.1.2; i686; ; )
-In-Reply-To: <200811060026.59340.jnareb@gmail.com>
-Content-Disposition: inline
+        Thu, 06 Nov 2008 12:05:45 -0800 (PST)
+User-Agent: Thunderbird 2.0.0.17 (X11/20080925)
+In-Reply-To: <20081106102425.GA4192@atjola.homenet>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/100262>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/100263>
 
-On Thursday 06 November 2008 02:26:58 Jakub Narebski wrote:
-> Alexander Gavrilov wrote:
-> > +  For example, if you use mod_perl to run the script, and have dumb
-> > +  http protocol authentication configured for your repositories, you
-> > +  can use the following hook to allow access only if the user is
-> > +  authorized to read the files:
-> > +
-> > +    $export_auth_hook = sub {
-> > +        use Apache2::SubRequest ();
-> > +        use Apache2::Const -compile => qw(HTTP_OK);
-> > +        my $path = "$_[0]/HEAD";
-> > +        my $r    = Apache2::RequestUtil->request;
-> > +        my $sub  = $r->lookup_file($path);
-> > +        return $sub->filename eq $path 
-> > +            && $sub->status == Apache2::Const::HTTP_OK;
-> > +    };
-> 
-> Can anybody check this? Or was it checked by author?
+Bj=F6rn Steinbrink wrote:
+> On 2008.11.06 11:15:21 +0100, Sverre Rabbelier wrote:
+>> On Thu, Nov 6, 2008 at 10:55, Eric Wong <normalperson@yhbt.net> wrot=
+e:
+>>> Yang Zhang <yanghatespam@gmail.com> wrote:
+>>>> Thanks in advance for any help!
+>>> Try passing --rebase or --squash with "git pull" to keep history li=
+near
+>>> for SVN.
+>> Consider doing the following:
+>> git config alias.repull "pull --rebase"
+>> And then using 'git repull' instead of 'git pull'.
+>=20
+> Or set branch.<name>.rebase in your config and just use "git pull" ;-=
+)
+> Setting branch.autosetuprebase might also be useful in that case.
+>=20
+> You should be careful to make sure that the other side does not lag
+> behind WRT svn, though. Otherwise, you end up rebasing commits that
+> corresponds to svn revisions. Bad.
+>=20
+> Bj=F6rn
 
-Well, it seems to do what is intended on my home server,
-although it has a known limitation, so here is an updated
-version that warns about it.
+git pull --rebase doesn't seem to be working either....
 
-By the way, do you know how to deal with Apache or ModPerl's
-urge to append standard error messages to the script output, other
-than adding a bunch of lines like the following to the config?
-
-  ErrorMessage 400 " "
-
-I couldn't find any solutions so far.
-
-
---- >8 ---
-Subject: [PATCH] gitweb: Add a per-repository authorization hook.
-
-Add a configuration variable that can be used to specify an
-arbitrary subroutine that will be called in the same situations
-where $export_ok is checked, and its return value will be used
-to decide whether the repository is to be shown.
-
-This allows the user to implement custom authentication
-schemes, for example by issuing a subrequest through mod_perl
-and checking if Apache will authorize it.
-
-Signed-off-by: Alexander Gavrilov <angavrilov@gmail.com>
----
- gitweb/INSTALL     |   23 +++++++++++++++++++++++
- gitweb/gitweb.perl |    8 +++++++-
- 2 files changed, 30 insertions(+), 1 deletions(-)
-
-diff --git a/gitweb/INSTALL b/gitweb/INSTALL
-index 26967e2..72a1322 100644
---- a/gitweb/INSTALL
-+++ b/gitweb/INSTALL
-@@ -166,6 +166,29 @@ Gitweb repositories
-   shows repositories only if this file exists in its object database
-   (if directory has the magic file named $export_ok).
- 
-+- Finally, it is possible to specify an arbitrary perl subroutine that
-+  will be called for each project to determine if it can be exported.
-+  The subroutine receives an absolute path to the project as its only
-+  parameter.
-+
-+  For example, if you use mod_perl to run the script, and have dumb
-+  http protocol authentication configured for your repositories, you
-+  can use the following hook to allow access only if the user is
-+  authorized to read the files:
-+
-+    $export_auth_hook = sub {
-+        use Apache2::SubRequest ();
-+        use Apache2::Const -compile => qw(HTTP_OK);
-+        my $path = "$_[0]/HEAD";
-+        my $r    = Apache2::RequestUtil->request;
-+        my $sub  = $r->lookup_file($path);
-+        return $sub->filename eq $path 
-+            && $sub->status == Apache2::Const::HTTP_OK;
-+    };
-+
-+  Note that since this sample works exclusively in the filesystem
-+  namespace, <Location> sections of the configuration have no effect.
-+
- Generating projects list using gitweb
- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
- 
-diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
-index 172ea6b..9329880 100755
---- a/gitweb/gitweb.perl
-+++ b/gitweb/gitweb.perl
-@@ -95,6 +95,11 @@ our $default_projects_order = "project";
- # (only effective if this variable evaluates to true)
- our $export_ok = "++GITWEB_EXPORT_OK++";
- 
-+# show repository only if this subroutine returns true
-+# when given the path to the project, for example:
-+#    sub { return -e "$_[0]/git-daemon-export-ok"; }
-+our $export_auth_hook = undef;
-+
- # only allow viewing of repositories also shown on the overview page
- our $strict_export = "++GITWEB_STRICT_EXPORT++";
- 
-@@ -400,7 +405,8 @@ sub check_head_link {
- sub check_export_ok {
- 	my ($dir) = @_;
- 	return (check_head_link($dir) &&
--		(!$export_ok || -e "$dir/$export_ok"));
-+		(!$export_ok || -e "$dir/$export_ok") &&
-+		(!$export_auth_hook || $export_auth_hook->($dir)));
- }
- 
- # process alternate names for backward compatibility
--- 
-tg: (0d4f9de..) t/authenticate/hook (depends on: t/authenticate/unify-exportok)
+http://assorted.svn.sourceforge.net/viewvc/assorted/sandbox/trunk/src/g=
+it/gitsvn.bash?revision=3D1064&view=3Dmarkup
+--=20
+Yang Zhang
+http://www.mit.edu/~y_z/
