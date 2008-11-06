@@ -1,70 +1,68 @@
-From: "Sverre Rabbelier" <alturin@gmail.com>
-Subject: Re: [PATCH] Added test case for mirror to not push stash refs
-Date: Thu, 6 Nov 2008 09:34:36 +0100
-Message-ID: <bd6139dc0811060034q14e47232n5f00471e5420efbb@mail.gmail.com>
-References: <20081028212327.GA25358@sigill.intra.peff.net>
-	 <1225942397-20513-1-git-send-email-david@statichacks.org>
-Reply-To: sverre@rabbelier.nl
+From: Karl =?iso-8859-1?Q?Hasselstr=F6m?= <kha@treskal.com>
+Subject: Re: More help needed on merging unrelated repos
+Date: Thu, 6 Nov 2008 09:37:51 +0100
+Message-ID: <20081106083751.GA10359@diana.vm.bytemark.co.uk>
+References: <46d6db660811040514qc6c9663u17bd231e1ba662ad@mail.gmail.com> <4910ACCA.7080007@op5.se> <46d6db660811041308o19f1131dm4d49b6703fa6d22b@mail.gmail.com> <4910C6F4.5010407@op5.se> <46d6db660811041430l74d9a100kc15ac46dea8ff63f@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: david@statichacks.org
-X-From: git-owner@vger.kernel.org Thu Nov 06 09:35:54 2008
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Andreas Ericsson <ae@op5.se>,
+	Git Mailing List <git@vger.kernel.org>
+To: Christian MICHON <christian.michon@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Nov 06 09:39:35 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Ky0LJ-0003JP-EP
-	for gcvg-git-2@gmane.org; Thu, 06 Nov 2008 09:35:53 +0100
+	id 1Ky0Op-0004Qx-MD
+	for gcvg-git-2@gmane.org; Thu, 06 Nov 2008 09:39:32 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753023AbYKFIek (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 6 Nov 2008 03:34:40 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753094AbYKFIej
-	(ORCPT <rfc822;git-outgoing>); Thu, 6 Nov 2008 03:34:39 -0500
-Received: from fk-out-0910.google.com ([209.85.128.191]:11457 "EHLO
-	fk-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752997AbYKFIei (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 6 Nov 2008 03:34:38 -0500
-Received: by fk-out-0910.google.com with SMTP id 18so497856fkq.5
-        for <git@vger.kernel.org>; Thu, 06 Nov 2008 00:34:36 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:reply-to
-         :to:subject:cc:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:references;
-        bh=wWzoKvbJiklbDKAtdsnp3dI/X/512BzfVexmxIxCtMY=;
-        b=fNLJK+jG0SQofygHjCh3ajxt/76VwbESAOWfdVlnyuVFLBhAyJVhpmyjpZ2aPI8gcm
-         DPS/Y7DsvcVtLM9R14lVp4mZ5IE37+fOQ5ehQdKHP3VqGGd0rmg96m7FDG4DFzPVTIFV
-         tRmdG/FqBj0mZJvD2Oa5LxBBAeVH3DpvmiAeI=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:reply-to:to:subject:cc:in-reply-to
-         :mime-version:content-type:content-transfer-encoding
-         :content-disposition:references;
-        b=wrWWlADo2EfMl2tPTBYK2gIpGb9soSl6sw5gbM65r8+FQo3zlVFm8UycnU0qhuADOW
-         tzAz2x0HKYfw9aD/TCwOO/kr7VWWX35ly88/4S2LCNN89ZMsRFbItb1b0GOzR+Fibinx
-         KkKjPfnCKr2Ela7RMlTXoq8+EyboxEcvKNJYw=
-Received: by 10.187.204.16 with SMTP id g16mr403212faq.14.1225960476689;
-        Thu, 06 Nov 2008 00:34:36 -0800 (PST)
-Received: by 10.187.213.8 with HTTP; Thu, 6 Nov 2008 00:34:36 -0800 (PST)
-In-Reply-To: <1225942397-20513-1-git-send-email-david@statichacks.org>
+	id S1753284AbYKFIiR convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 6 Nov 2008 03:38:17 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753273AbYKFIiQ
+	(ORCPT <rfc822;git-outgoing>); Thu, 6 Nov 2008 03:38:16 -0500
+Received: from diana.vm.bytemark.co.uk ([80.68.90.142]:3691 "EHLO
+	diana.vm.bytemark.co.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753210AbYKFIiQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 6 Nov 2008 03:38:16 -0500
+Received: from kha by diana.vm.bytemark.co.uk with local (Exim 3.36 #1 (Debian))
+	id 1Ky0ND-0002nB-00; Thu, 06 Nov 2008 08:37:51 +0000
 Content-Disposition: inline
+In-Reply-To: <46d6db660811041430l74d9a100kc15ac46dea8ff63f@mail.gmail.com>
+X-Manual-Spam-Check: kha@treskal.com, clean
+User-Agent: Mutt/1.5.9i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/100218>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/100219>
 
-> +               git push --mirror up
-> +       )
-> +'
+On 2008-11-04 23:30:56 +0100, Christian MICHON wrote:
 
-I don't quite get how this works, I don't see a test here anywhere to
-actually test that the stash refs were not pushed?
+> note the merge can work, but it's still done in 2 steps. :(
+> thanks for suggesting this.
 
--- 
-Cheers,
+If it had worked, you'd have gotten just one merge commit. What you
+want to do is entirely possible, but it seems the high-level commands
+were not designed with your use-case in mind.
 
-Sverre Rabbelier
+Another thing you could try is to merge the two branches separately,
+getting a history like this:
+
+  p1----\
+         \
+  p2---A--B
+      /
+  p3--
+
+And then use grafts to convince git that B has parents p1, p2, and p3
+(instead of its actual parents p1 and A). (Grep for "graft" in the
+Documentation directory.)
+
+And then use git-filter-branch to rewrite history so that the grafted
+history becomes the real history.
+
+--=20
+Karl Hasselstr=F6m, kha@treskal.com
+      www.treskal.com/kalle
