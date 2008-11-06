@@ -1,92 +1,59 @@
-From: "Yaser Raja" <yrraja@gmail.com>
-Subject: Setting Up a GIT Repository Mirror
-Date: Thu, 6 Nov 2008 20:08:24 +0500
-Message-ID: <e97d51700811060708y5deb9e9ek4a36c012726b3a63@mail.gmail.com>
-References: <e97d51700811060706t40433bb9k7a3704429f244164@mail.gmail.com>
+From: Karl =?iso-8859-1?Q?Hasselstr=F6m?= <kha@treskal.com>
+Subject: Re: More help needed on merging unrelated repos
+Date: Thu, 6 Nov 2008 16:28:43 +0100
+Message-ID: <20081106152843.GA16238@diana.vm.bytemark.co.uk>
+References: <46d6db660811040514qc6c9663u17bd231e1ba662ad@mail.gmail.com> <4910ACCA.7080007@op5.se> <46d6db660811041308o19f1131dm4d49b6703fa6d22b@mail.gmail.com> <4910C6F4.5010407@op5.se> <46d6db660811041430l74d9a100kc15ac46dea8ff63f@mail.gmail.com> <20081106083751.GA10359@diana.vm.bytemark.co.uk> <46d6db660811060413q7f4e2437maa6d87a27b8704b@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Nov 06 16:10:30 2008
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Andreas Ericsson <ae@op5.se>,
+	Git Mailing List <git@vger.kernel.org>
+To: Christian MICHON <christian.michon@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Nov 06 16:30:08 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Ky6V6-0006Qt-Ec
-	for gcvg-git-2@gmane.org; Thu, 06 Nov 2008 16:10:24 +0100
+	id 1Ky6o7-0005KO-Go
+	for gcvg-git-2@gmane.org; Thu, 06 Nov 2008 16:30:03 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750897AbYKFPI1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 6 Nov 2008 10:08:27 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751444AbYKFPI1
-	(ORCPT <rfc822;git-outgoing>); Thu, 6 Nov 2008 10:08:27 -0500
-Received: from hs-out-0708.google.com ([64.233.178.251]:19796 "EHLO
-	hs-out-0708.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751984AbYKFPIZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 6 Nov 2008 10:08:25 -0500
-Received: by hs-out-0708.google.com with SMTP id 4so262194hsl.5
-        for <git@vger.kernel.org>; Thu, 06 Nov 2008 07:08:24 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to
-         :subject:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:references;
-        bh=AAGJvAzMkYQzyPx9XpEsajYR+Y0dwt92MffKmQllSOY=;
-        b=v0ILkxU1Y4CFHFy+ox011/NhrgzXCxEJxLuO0e1dSqKPpcAvL2kLTc/mmqRj5U4vT/
-         FnaXhqM0fu9+g65HuPBG9M9yOwNgvfXUAahxxLsuvsHevTz5zqxz+3BiXNuF+5M9yYmk
-         dXArxVrvPKDyzRpAPKk4LB2rqacL5HHAFYTlQ=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:in-reply-to:mime-version
-         :content-type:content-transfer-encoding:content-disposition
-         :references;
-        b=cGyvZonbtnhOPcCuJUT06CM+L2gqs2Le1PN/G83K3cDtg3bp2auRsORZlKe6dQ93Th
-         /AjV32++XabELxGs7IynOuiwjGGxX4CWDDYQpbNlGSQqIVfDtvhcoKu8maqQjQrR32M0
-         Ml9Aslx7e+0JqwZ7lFGasWjjnvIFDKTJqele8=
-Received: by 10.150.144.9 with SMTP id r9mr1552240ybd.170.1225984104383;
-        Thu, 06 Nov 2008 07:08:24 -0800 (PST)
-Received: by 10.150.190.12 with HTTP; Thu, 6 Nov 2008 07:08:24 -0800 (PST)
-In-Reply-To: <e97d51700811060706t40433bb9k7a3704429f244164@mail.gmail.com>
+	id S1751885AbYKFP2t convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 6 Nov 2008 10:28:49 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751713AbYKFP2s
+	(ORCPT <rfc822;git-outgoing>); Thu, 6 Nov 2008 10:28:48 -0500
+Received: from diana.vm.bytemark.co.uk ([80.68.90.142]:3883 "EHLO
+	diana.vm.bytemark.co.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751689AbYKFP2s (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 6 Nov 2008 10:28:48 -0500
+Received: from kha by diana.vm.bytemark.co.uk with local (Exim 3.36 #1 (Debian))
+	id 1Ky6mp-0004FQ-00; Thu, 06 Nov 2008 15:28:43 +0000
 Content-Disposition: inline
+In-Reply-To: <46d6db660811060413q7f4e2437maa6d87a27b8704b@mail.gmail.com>
+X-Manual-Spam-Check: kha@treskal.com, clean
+User-Agent: Mutt/1.5.9i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/100239>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/100240>
 
-Hi
+On 2008-11-06 13:13:42 +0100, Christian MICHON wrote:
 
-I have a main repository placed at a remote location and i want to
-have a read-only mirror of this repository available locally. The
-users/automated processes will use this local mirror to get the latest
-code.
+> nice suggestion Karl! it took a while to understand all the
+> consequences and workflow. On top of your suggestion, I had to
+> remove the refs/original/refs/heads/master and the grafts file.
 
-Can anyone guide me how to implement this? I did make a basic setup as
-follows but it has some issues:
+I've never tried to use git-filter-branch, so I was deliberately
+vague. I was hoping you would be the enterprising type who would
+figure out the details anyway ... ;-)
 
-1. Create a clone (MirrorRep) of the remote git repository (MainRep)
-on a local machine using "git-clone" command
-         git-clone ssh://<user>@<remote machine addr> MyMirror
+> It worked well: quite a spell, but an efficient one. Kudo++
 
-2. Use "git-pull" to keep this repository (MirrorRep) in sync with the
-main repository. I added entry in /etc/crontab to invoke "git-pull"
-after every 10 minutes to update this repository.
+Well, that's Git for you. Once you get the (really simple) underlying
+data model you know what _can_ be done, even if it's not always
+obvious _how_ to do it.
 
-3. Launch "git-daemon" so that local users can access and clone from
-this  Mirror Repository.
-         git-daemon --export-all --verbose --base-path=<base path to
-MyMirror directory>
-
-After this the users can easily clone from the local repository and
-work with it. The problem is that the branches that were present in
-MainRep are not visible in the clones made using MirrorRep. When
-MirrorRep was created all the branches of MainRep became remote
-branches for MirrorRep. And when users make a clone from MirrorRep
-none of the remote branches are transfered over.
-
-I came to know about --mirror option of git-clone and used it to make
-a bare repository replica of the MainRep. Now i am not sure how to
-keep it in sync with the MainRep.
-
-Thanks
-Yaser
+--=20
+Karl Hasselstr=F6m, kha@treskal.com
+      www.treskal.com/kalle
