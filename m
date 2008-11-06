@@ -1,115 +1,77 @@
-From: Michael Haggerty <mhagger@alum.mit.edu>
-Subject: Re: cvs2git
-Date: Thu, 06 Nov 2008 13:42:00 +0100
-Message-ID: <4912E618.1060801@alum.mit.edu>
-References: <200811052319.04879.fg@one2team.net>
+From: "Dilip M" <dilipm79@gmail.com>
+Subject: Re: Fetch via http and proxy which requires authentication
+Date: Thu, 6 Nov 2008 18:59:41 +0530
+Message-ID: <c94f8e120811060529i4e51ebefr2e14f8212ead6752@mail.gmail.com>
+References: <4d8e3fd30808272300g58d92dd8pd877d72805bc29c0@mail.gmail.com>
+	 <4d8e3fd30808280313i70f572cfh9c14fbc2adbf5cea@mail.gmail.com>
+	 <c94f8e120811030602p57007278p5a2c48ce7663282d@mail.gmail.com>
+	 <4d8e3fd30811040313x44290557yecfedb2fbc8cad0b@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-Cc: cvs2svn developers <dev@cvs2svn.tigris.org>,
-        Git Mailing List <git@vger.kernel.org>
-To: Francis Galiegue <fg@one2team.net>
-X-From: dev-return-2295-gcvscd-dev=m.gmane.org@cvs2svn.tigris.org Thu Nov 06 13:43:23 2008
+Cc: "Git Mailing List" <git@vger.kernel.org>
+To: "Paolo Ciarrocchi" <paolo.ciarrocchi@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Nov 06 14:31:02 2008
 connect(): Connection refused
-Return-path: <dev-return-2295-gcvscd-dev=m.gmane.org@cvs2svn.tigris.org>
-Envelope-to: gcvscd-dev@gmane.org
-Received: from sc157.sjc.collab.net ([204.16.104.146] helo=tigris.org)
-	by lo.gmane.org with smtp (Exim 4.50)
-	id 1Ky4Ck-0004K7-5Z
-	for gcvscd-dev@gmane.org; Thu, 06 Nov 2008 13:43:18 +0100
-Received: (qmail 5822 invoked by uid 5000); 6 Nov 2008 12:42:04 -0000
-Mailing-List: contact dev-help@cvs2svn.tigris.org; run by ezmlm
+Return-path: <git-owner@vger.kernel.org>
+Envelope-to: gcvg-git-2@gmane.org
+Received: from vger.kernel.org ([209.132.176.167])
+	by lo.gmane.org with esmtp (Exim 4.50)
+	id 1Ky4ws-0003DQ-Ri
+	for gcvg-git-2@gmane.org; Thu, 06 Nov 2008 14:30:59 +0100
+Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
+	id S1753744AbYKFN3o (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 6 Nov 2008 08:29:44 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753421AbYKFN3o
+	(ORCPT <rfc822;git-outgoing>); Thu, 6 Nov 2008 08:29:44 -0500
+Received: from ug-out-1314.google.com ([66.249.92.168]:61054 "EHLO
+	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753387AbYKFN3n (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 6 Nov 2008 08:29:43 -0500
+Received: by ug-out-1314.google.com with SMTP id 39so822641ugf.37
+        for <git@vger.kernel.org>; Thu, 06 Nov 2008 05:29:42 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to
+         :subject:cc:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:references;
+        bh=FSqb4t6vbQ6tI4MtTjXezpjKUnxcLsRO9PV7sMp31vo=;
+        b=g94MbygQfD6ytn4VxvZcVPbB2EwlBS+HYy4F6ZA8YsPjspoPQ2quhw8Wp2o5Cmnb0s
+         L6kqxBZzivODig6NRNSmhNy70uYbW50aLUbdjFFxm2Q8sY+QLmajAjBWJHdRjqRPi3ug
+         8/VeYZ4ptoAaevFPuVDzkTbtwVO8mV3BBlUjQ=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
+         :content-type:content-transfer-encoding:content-disposition
+         :references;
+        b=CYPrt7LrOHRf1CuOlEk2YiveQFA4UiMLw89UWXkQdkzPRtQ9eJAO5ErgS9W47PbaX2
+         jd1DyZQf+qnZyZTxpeMscq1z2NkXRXlGkZ3NcqPBaLppSGPtgFfgKmXEolsP/C4uYqkE
+         Ak8GYWR/hPYcbsK2Zon7J7ZE4U1tBMLSGNkdo=
+Received: by 10.66.250.17 with SMTP id x17mr568712ugh.67.1225978182040;
+        Thu, 06 Nov 2008 05:29:42 -0800 (PST)
+Received: by 10.66.220.11 with HTTP; Thu, 6 Nov 2008 05:29:41 -0800 (PST)
+In-Reply-To: <4d8e3fd30811040313x44290557yecfedb2fbc8cad0b@mail.gmail.com>
+Content-Disposition: inline
+Sender: git-owner@vger.kernel.org
 Precedence: bulk
-list-help: <mailto:dev-help@cvs2svn.tigris.org>
-list-unsubscribe: <mailto:dev-unsubscribe@cvs2svn.tigris.org>
-list-post: <mailto:dev@cvs2svn.tigris.org>
-Delivered-To: mailing list dev@cvs2svn.tigris.org
-Received: (qmail 5812 invoked from network); 6 Nov 2008 12:42:04 -0000
-X-IronPort-Anti-Spam-Filtered: true
-X-IronPort-Anti-Spam-Result: At0CAG90EknAbSoIgWdsb2JhbACUGgEBFiKqGIYlhDmDVQ
-X-IronPort-AV: E=Sophos;i="4.33,557,1220252400"; 
-   d="scan'208";a="15481093"
-X-IRONPORT: SCANNED
-X-Envelope-From: mhagger@alum.mit.edu
-User-Agent: Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.8.1.17) Gecko/20080925 Thunderbird/2.0.0.17 Mnenhy/0.7.5.666
-In-Reply-To: <200811052319.04879.fg@one2team.net>
-X-Enigmail-Version: 0.95.0
-X-Scanned-By: MIMEDefang_at_IN-Berlin_e.V. on 192.109.42.8
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/100234>
+List-ID: <git.vger.kernel.org>
+X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/100235>
 
-Francis Galiegue wrote:
-> I don't like to reinvent the wheel and you have gone a lot further than I did
-> wrt cvs2git, with the added advantage that you work on a physical CVS tree
-> and you know a LOT more about CVS than I do. And I do, indeed, have physical
-> access to "my" CVS tree.
+On Tue, Nov 4, 2008 at 4:43 PM, <paolo.ciarrocchi@gmail.com> wrote:
+> Works for me: $ git version git version 1.6.0.2.1172.ga5ed0
+>
+> I set in the Environment Variables panel:
+>
+> Variable          Value http_proxy      http://ip_of_my_proxy
 
-Even for the few people who don't have physical access to their CVS
-tree, there is a solution [1].  I don't think this is a significant
-issue, and indeed we've had very few complaints about this over the years.
+Okay it solved now. Problem was old version of GIT. libcurl library
+problem.
 
-> I wish that cvs2svn[2git] gets things as right as possible, and am willing to
-> help in any way possible.
+Upgrade the OS ,which in turn upgraded the libs...
 
-The first step is to send in bug reports (including sample repositories)
-for anything you think can be improved.  It is very easy to produce a
-test case from even a proprietary repository [2].
+Working fine for me too..
 
-> Have you ever had a look at git-cvsimport already? Not my code, it relies on
-> cvsps, which is flawed, that's a given fact. But it builds a state-of-the-art
-> git repository.
 
-How do you define "state-of-the-art"?  Granted, the resulting git
-repository is simpler than the one created by cvs2git, but that is
-because *it is typically wrong*.  The tool produces simple output
-because it assumes away so much of the true complexity that can be
-recorded in a CVS history.
-
-I am not interested in a known-to-be-incorrect conversion, no matter how
-pretty it looks in gitk.
-
-git-cvsimport is *broken*, and the only way to fix it is to give it (and
-its output) all of the complexity of cvs2svn/cvs2git.  I know that for a
-fact because cvs2svn used to be based on simpler algorithms (though even
-then not as naive as those used by cvsps!) and we were constantly trying
-to patch up this or that edge case in a futile struggle against a system
-that was fundamentally broken.  The switch to the current
-topological-based changeset creation fixed all such bugs at once.
-
-If you try to build a robust and correct tool on cvsps, you are doomed
-to failure because (1) cvsps can crash complex CVS repositories and (2)
-cvsps doesn't even *try* to supply all information correctly, e.g.
-regarding the true contents of tags and branches [3].
-
-> By now, I have achieved the first part of my project (correctly parsing the
-> cvsps cache file), next step I'll "lighten" the git-cvsimport source (bug for
-> bug compatibility to start with).
-
-Please believe me, because I have years of suffering behind me:
-
-1. cvsps is broken and not useful for this purpose
-
-2. "parsing the cvsps cache file" is an absolutely minuscule part of
-writing a CVS -> anything converter.  You think you're making good
-progress, but you have no idea of what you are getting into.  Read [4]
-and really think about whether you want to reimplement a comparable set
-of features from scratch.  And remember that many of these features are
-not optional bells and whistles; they are *needed for correctness*.
-
-> One thing is that this program uses bare git commands, not the fast-import
-> way.
-
-This will absolutely kill performance for a large repository.  There is
-a discussion of this issue in our mailing list archives and probably
-also on the git mailing list.
-
-> Hence my first question: if I lighten git-cvsimport code, will that help
-> you for cvs2git?
-
-If I polish up my roller skates, will that help you fix your car? ;-)
-
-Michael
-
-[1] http://cvs2svn.tigris.org/faq.html#repoaccess
-[2] http://cvs2svn.tigris.org/faq.html#testcase
-[3] http://selenic.com/pipermail/mercurial-devel/2008-February/004975.html
-[4] http://cvs2svn.tigris.org/features.html
+-- 
+Dilip
