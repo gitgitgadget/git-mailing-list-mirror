@@ -1,51 +1,86 @@
-From: Daniel Stenberg <daniel@haxx.se>
-Subject: Re: [PATCH 0/4] replace unsinged long with time_t
-Date: Thu, 6 Nov 2008 22:04:27 +0100 (CET)
-Message-ID: <alpine.LRH.1.10.0811062203120.19166@yvahk3.pbagnpgbe.fr>
-References: <1225993728-4779-1-git-send-email-david@statichacks.org> <alpine.LFD.2.00.0811061000430.3419@nehalem.linux-foundation.org>
+From: Robin Rosenberg <robin.rosenberg@dewire.com>
+Subject: Re: Need help for migration from CVS to git in one go (ie, FORGETTING CVS history)
+Date: Thu, 6 Nov 2008 22:18:25 +0100
+Message-ID: <200811062218.26428.robin.rosenberg@dewire.com>
+References: <200811060014.57046.fg@one2team.net> <20081105234425.GA2932@spearce.org> <200811060228.21124.fg@one2team.net>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII; format=flowed
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Nov 06 22:08:57 2008
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
+Cc: "Shawn O. Pearce" <spearce@spearce.org>, git@vger.kernel.org
+To: Francis Galiegue <fg@one2team.net>
+X-From: git-owner@vger.kernel.org Thu Nov 06 22:19:55 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KyC60-0005Uf-Mg
-	for gcvg-git-2@gmane.org; Thu, 06 Nov 2008 22:08:53 +0100
+	id 1KyCGa-0001oG-1Y
+	for gcvg-git-2@gmane.org; Thu, 06 Nov 2008 22:19:48 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751041AbYKFVHi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 6 Nov 2008 16:07:38 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751106AbYKFVHi
-	(ORCPT <rfc822;git-outgoing>); Thu, 6 Nov 2008 16:07:38 -0500
-Received: from kluster1.contactor.se ([91.191.140.11]:33461 "EHLO
-	kluster1.contactor.se" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750932AbYKFVHh (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 6 Nov 2008 16:07:37 -0500
-Received: from linux3.contactor.se (linux3.contactor.se [91.191.140.23])
-	by kluster1.contactor.se (8.13.8/8.13.8/Debian-3) with ESMTP id mA6L7Z9V002953
-	for <git@vger.kernel.org>; Thu, 6 Nov 2008 22:07:35 +0100
-X-X-Sender: dast@linux3.contactor.se
-In-Reply-To: <alpine.LFD.2.00.0811061000430.3419@nehalem.linux-foundation.org>
-User-Agent: Alpine 1.10 (LRH 962 2008-03-14)
-X-fromdanielhimself: yes
+	id S1751340AbYKFVSc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 6 Nov 2008 16:18:32 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751272AbYKFVSb
+	(ORCPT <rfc822;git-outgoing>); Thu, 6 Nov 2008 16:18:31 -0500
+Received: from pne-smtpout2-sn1.fre.skanova.net ([81.228.11.159]:60644 "EHLO
+	pne-smtpout2-sn1.fre.skanova.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751200AbYKFVSb (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 6 Nov 2008 16:18:31 -0500
+Received: from sleipner.localnet (213.67.100.250) by pne-smtpout2-sn1.fre.skanova.net (7.3.129)
+        id 4843FAEB025972EE; Thu, 6 Nov 2008 22:18:27 +0100
+User-Agent: KMail/1.10.1 (Linux/2.6.27-7-generic; KDE/4.1.3; i686; ; )
+In-Reply-To: <200811060228.21124.fg@one2team.net>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/100266>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/100267>
 
-On Thu, 6 Nov 2008, Linus Torvalds wrote:
+torsdag 06 november 2008 02:28:20 skrev Francis Galiegue:
+> [...]
+>  
+> > > > > * "git stash": is it supported?
+> > > >
+> > > > Not in Eclipse, no.
+> > >
+> > > What do you mean by this?
+> >
+> > I mean there's no implementation of git stash.  Eclipse doesn't
+> > support git stash, the notion of the stash, the branch the stash
+> > is on.  Its not in the Eclipse plugin.
+> >
+> 
+> While I'm a total newbie to Eclipse, and not that fluent with Java, this looks 
+> surprising. Is it really Eclipse that is at fault here? Eclipse saves its 
+> workspace (whatever it means to "save a workspace") when it exits, isn't 
+> there an interface that you can implement that does "partial" saves, hence 
+> git stashes?
 
-> In theory, some platform might have a 64-but "unsigned long long" time_t 
-> even if the architecture is 32-bit (apparently windows used to do that if 
-> you included <time64.h>, for example), but since we wouldn't take advantage 
-> of that anyway, even then there is no real advantage.
+The fault is that it has not been implemented yet, It's not Eclipse's fault. The
+plugin simply lacks support for it. You can do that with Git though. I use both
+tools side by side.
 
-It could also be worth to notice that there are even 64-bit architectures that 
-feature 32-bit 'time_t'...
+> > > > > * can you "copy" a commit, or even a set of commits, and
+> > > > > "cherry-pick" them into another branch? Or even rebase a branch onto
+> > > > > antoher?
+> > > >
+> > > > Not in Eclipse, no.
+> > >
+> > > Same question... What exactly is the problem with Eclipse wrt this kind
+> > > of operation?
+> >
+> > Its also not implemented in the eclipse UI.
+> 
+> Eclipse has the ability to apply patches AFAIK... Even though this may not be 
+> equivalent to a git cherry-pick, wouldn't there be a way to extract at least 
+> the diffs and commit messages and apply?
 
--- 
+Sure. Solving everything that is missing is a matter of actually coding the feature.
+Unfortunately we have very little time at our disposal, which is why we welcome
+contributions. 
 
-  / daniel.haxx.se
+-- robin
+
+
+-- robin
