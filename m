@@ -1,85 +1,64 @@
-From: Marcin Kasperski <Marcin.Kasperski@softax.com.pl>
-Subject: Re: [VOTE] git versus mercurial (for DragonflyBSD)
-Date: Thu, 06 Nov 2008 17:25:27 +0100
-Message-ID: <878wrwom88.fsf@softax.com.pl>
-References: <ge0rla$mce$1@ger.gmane.org> <200810272230.51683.arne_bab@web.de>
-	<4907506C.8090609@op5.se> <200810282011.40647.arne_bab@web.de>
-	<20081028193841.GA23637@neumann>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH (MINGW) Resend] Windows: Make OpenSSH properly detect tty
+ detachment.
+Date: Thu, 06 Nov 2008 08:55:05 -0800
+Message-ID: <7vvdv0iyl2.fsf@gitster.siamese.dyndns.org>
+References: <200811022011.13970.angavrilov@gmail.com>
+ <49129E47.4080209@viscovery.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: mercurial@selenic.com
-X-From: mercurial-bounces@selenic.com Thu Nov 06 17:32:09 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: Alexander Gavrilov <angavrilov@gmail.com>, git@vger.kernel.org
+To: Johannes Sixt <j.sixt@viscovery.net>
+X-From: git-owner@vger.kernel.org Thu Nov 06 17:57:12 2008
 connect(): Connection refused
-Return-path: <mercurial-bounces@selenic.com>
-Envelope-to: gcvmd-mercurial@gmane.org
-Received: from waste.org ([66.93.16.53] helo=mail.waste.org)
+Return-path: <git-owner@vger.kernel.org>
+Envelope-to: gcvg-git-2@gmane.org
+Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Ky7m2-00058Y-3l
-	for gcvmd-mercurial@gmane.org; Thu, 06 Nov 2008 17:31:59 +0100
-Received: from waste.org (staticwaste [66.93.16.53])
-	by mail.waste.org (Postfix) with ESMTP id 750EE5C80BD;
-	Thu,  6 Nov 2008 10:30:44 -0600 (CST)
-Received: from ciao.gmane.org (main.gmane.org [80.91.229.2])
-	by waste.org (8.13.8/8.13.8/Debian-3) with ESMTP id mA6GdxkM020714
-	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NOT)
-	for <mercurial@selenic.com>; Thu, 6 Nov 2008 10:40:01 -0600
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1Ky7ka-00043w-Et
-	for mercurial@selenic.com; Thu, 06 Nov 2008 16:30:28 +0000
-Received: from bozon2.n.softax.com.pl ([83.238.10.48])
-	by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-	id 1AlnuQ-0007hv-00
-	for <mercurial@selenic.com>; Thu, 06 Nov 2008 16:30:28 +0000
-Received: from Marcin.Kasperski by bozon2.n.softax.com.pl with local (Gmexim
-	0.1 (Debian)) id 1AlnuQ-0007hv-00
-	for <mercurial@selenic.com>; Thu, 06 Nov 2008 16:30:28 +0000
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@ger.gmane.org
-X-Gmane-NNTP-Posting-Host: bozon2.n.softax.com.pl
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-Cancel-Lock: sha1:kthJ+aKQgR5fsRQSlmfKJjf0w7w=
-X-Virus-Scanned: by amavisd-new
-X-BeenThere: mercurial@selenic.com
-X-Mailman-Version: 2.1.9
-Precedence: list
-List-Id: <mercurial.selenic.com>
-List-Unsubscribe: <http://selenic.com/mailman/listinfo/mercurial>,
-	<mailto:mercurial-request@selenic.com?subject=unsubscribe>
-List-Archive: <http://selenic.com/pipermail/mercurial>
-List-Post: <mailto:mercurial@selenic.com>
-List-Help: <mailto:mercurial-request@selenic.com?subject=help>
-List-Subscribe: <http://selenic.com/mailman/listinfo/mercurial>,
-	<mailto:mercurial-request@selenic.com?subject=subscribe>
-Sender: mercurial-bounces@selenic.com
-Errors-To: mercurial-bounces@selenic.com
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/100244>
+	id 1Ky8AQ-0007YP-Q7
+	for gcvg-git-2@gmane.org; Thu, 06 Nov 2008 17:57:11 +0100
+Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
+	id S1752601AbYKFQzr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 6 Nov 2008 11:55:47 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752568AbYKFQzq
+	(ORCPT <rfc822;git-outgoing>); Thu, 6 Nov 2008 11:55:46 -0500
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:34158 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752435AbYKFQzp (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 6 Nov 2008 11:55:45 -0500
+Received: from localhost.localdomain (unknown [127.0.0.1])
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id E6E04798AF;
+	Thu,  6 Nov 2008 11:55:43 -0500 (EST)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES256-SHA (256/256 bits)) (No client certificate requested) by
+ a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTPSA id D69F3798A4; Thu,
+  6 Nov 2008 11:55:17 -0500 (EST)
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: C032415E-AC23-11DD-9D6E-9CEDC82D7133-77302942!a-sasl-fastnet.pobox.com
+Sender: git-owner@vger.kernel.org
+Precedence: bulk
+List-ID: <git.vger.kernel.org>
+X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/100245>
 
->> > How many perl gurus have skipped writing
->> > stuff for hg because it's a "python-or-bust" thing?
+Johannes Sixt <j.sixt@viscovery.net> writes:
+
+> The latest "What's cooking in git.git" report still doesn't mention this
+> patch. The reason might be ...
+
+Sorry, my mistake.
+
+>> Signed-off-by: Alexander Gavrilov <angavrilov@gmail.com>
+>> Acked-by: Johannes Sixt <johannes.sixt@telecom.at>
+>> ---
 >> 
->> How many Python people decided to write an extension for hg, because it can 
->> very nicely be accessed via Python? 
->
-> And wouldn't they contribute at all, if there would be hg bindings for
-> other programming languages, would they?
+>> 	This patch appears to have been overlooked,
 
-Are really programming languages that important? If I find a tool
-which is useful and has features I need, and while using it I find
-some drawback, and I am able to find how could I work on it, I can
-pick up enough of the language it is written in. I am not a "guru"
-if I can't. 
+Indeed.  It was lost in the noise because it was marked MinGW and I failed
+to see your Ack.
 
-Main showstoppers in this area are not the programming languages, but
-lack of documentation, miserable APIs, or lack of process. Or ... the
-fact that the tool is so good that it does not really need extensions.
+Do people build and test MinGW port out of my 'next'?  If so, I'll queue
+this on its own topic branch and have it go through the usual "cook then
+graduate" cycle.  Otherwise, I'll apply this directly on top of 'master'.
 
-
-
--- 
-----------------------------------------------------------------------
-| Marcin Kasperski   | If we are to be successful, we must still have
-| http://mekk.waw.pl |    the courage to put our faith in people as
-|                    |  opposed to a process. (Booch,Martin,Newkirk)
-----------------------------------------------------------------------
+Thanks.
