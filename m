@@ -1,81 +1,65 @@
-From: Deskin Miller <deskinm@umich.edu>
-Subject: Re: multiple-commit cherry-pick?
-Date: Wed, 5 Nov 2008 22:24:37 -0500
-Message-ID: <20081106032437.GA27237@euler>
-References: <buoiqr18tdk.fsf@dhapc248.dev.necel.com>
+From: Pau Garcia i Quiles <pgquiles@elpauer.org>
+Subject: fetch --tags --no-tags
+Date: Thu, 06 Nov 2008 04:42:06 +0100
+Message-ID: <20081106044206.az9hgqffqccgo4gk@www.elpauer.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Miles Bader <miles@gnu.org>
-X-From: git-owner@vger.kernel.org Thu Nov 06 04:26:09 2008
+Content-Type: text/plain;
+	charset=ISO-8859-15;
+	DelSp="Yes";
+	format="flowed"
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Nov 06 04:49:02 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KxvVY-0007oG-BB
-	for gcvg-git-2@gmane.org; Thu, 06 Nov 2008 04:26:09 +0100
+	id 1Kxvrg-0003k2-0Z
+	for gcvg-git-2@gmane.org; Thu, 06 Nov 2008 04:49:02 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752846AbYKFDYq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 5 Nov 2008 22:24:46 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752812AbYKFDYq
-	(ORCPT <rfc822;git-outgoing>); Wed, 5 Nov 2008 22:24:46 -0500
-Received: from rn-out-0910.google.com ([64.233.170.188]:49002 "EHLO
-	rn-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752803AbYKFDYq (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 5 Nov 2008 22:24:46 -0500
-Received: by rn-out-0910.google.com with SMTP id k40so344830rnd.17
-        for <git@vger.kernel.org>; Wed, 05 Nov 2008 19:24:44 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:cc:subject
-         :message-id:references:mime-version:content-type:content-disposition
-         :in-reply-to:user-agent:sender;
-        bh=glKCj3B+AB8VUlRrT7+tdKj39E2PjzFF7/xmfl7q8iw=;
-        b=xV7iZkrz5h1dFH3j+O1j4OP5GDeJJRDeXYaUIMQeXm5MsyckBeH5UcXFtYMBRPsBvC
-         oErZZfaUhs9CbuK5UiwZ/L/DLFfzHaGNV8i0Zn/vPv2qfrRta0HSQNkTAkGG7Me5XrTY
-         pwSeTxaWxVEVU2TsKbt0vikai6NO1aygqUt+4=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent:sender;
-        b=N5ccxYDlfzLGeLETuoFx1Mt8t1Yiy4EwW2kg05k88Z0EPAnzbbDjQtfTMN6iMQbeXA
-         +y2akmtOGVIl4i0oPSMy9qrjOM+6Y9+G8AG3iASjAAAcUy9u9878RTE/MQQiPNCtVxGH
-         SyR1nl+1xMQL2aFO1DMx0IsbqSTJcOSt2OX7k=
-Received: by 10.64.7.5 with SMTP id 5mr1675000qbg.86.1225941884254;
-        Wed, 05 Nov 2008 19:24:44 -0800 (PST)
-Received: from euler ([68.40.49.130])
-        by mx.google.com with ESMTPS id s27sm723627qbs.12.2008.11.05.19.24.42
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Wed, 05 Nov 2008 19:24:43 -0800 (PST)
+	id S1752858AbYKFDrk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 5 Nov 2008 22:47:40 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752797AbYKFDrk
+	(ORCPT <rfc822;git-outgoing>); Wed, 5 Nov 2008 22:47:40 -0500
+Received: from server7.vnpages.net ([64.182.139.33]:55514 "EHLO
+	server7.vnpages.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752677AbYKFDrk (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 5 Nov 2008 22:47:40 -0500
+X-Greylist: delayed 346 seconds by postgrey-1.27 at vger.kernel.org; Wed, 05 Nov 2008 22:47:40 EST
+Received: from localhost ([127.0.0.1]:55373)
+	by server7.vnpages.net with esmtpa (Exim 4.69)
+	(envelope-from <pgquiles@elpauer.org>)
+	id 1Kxvl0-0008NP-6D
+	for git@vger.kernel.org; Wed, 05 Nov 2008 19:42:06 -0800
+Received: from 81.35.100.228 ([81.35.100.228]) by www.elpauer.org (Horde
+	MIME library) with HTTP; Thu, 06 Nov 2008 04:42:06 +0100
 Content-Disposition: inline
-In-Reply-To: <buoiqr18tdk.fsf@dhapc248.dev.necel.com>
-User-Agent: Mutt/1.5.18 (2008-05-17)
+User-Agent: Internet Messaging Program (IMP) H3 (4.1.6)
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - server7.vnpages.net
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
+X-AntiAbuse: Sender Address Domain - elpauer.org
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/100211>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/100212>
 
-On Thu, Nov 06, 2008 at 11:45:27AM +0900, Miles Bader wrote:
-> Is there any easy way to cherry pick a _range_ of commits from some other
-> branch to the current branch, instead of just one?
-> 
-> I thought maybe git-rebase could be coerced to do this somehow, but I
-> couldn't figure a way.
+Hello,
 
-Rebase is exactly what you want.  Given something like this:
+Why doesn't 'git fetch --tags --no-tags' not return an error?
 
-o--o--o--A--B--C--o--o--X
-    \
-     o--o--D
+It looks like it does nothing and, in fact, allowing --tags and  
+--no-tags seems a contradiction to me!
 
-where you want A, B, C to go on top of D:
+Thank you.
 
-$ git checkout -b newbranch C
-$ git rebase --onto D ^A
-
-newbranch will have <...> --D--A--B--C
-
-Hope that helps,
-Deskin Miller
+-- 
+Pau Garcia i Quiles
+http://www.elpauer.org
+(Due to my workload, I may need 10 days to answer)
