@@ -1,76 +1,55 @@
-From: david@statichacks.org
-Subject: [PATCH] Added test case for mirror to not push stash refs
-Date: Wed,  5 Nov 2008 19:33:17 -0800
-Message-ID: <1225942397-20513-1-git-send-email-david@statichacks.org>
-References: <20081028212327.GA25358@sigill.intra.peff.net>
-Cc: David Bryson <david@statichacks.org>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Nov 06 09:12:39 2008
+From: "Sam Liddicott" <sam@liddicott.com>
+Subject: Re: let git-diff allow patch to delete empty files?
+Date: Thu, 06 Nov 2008 08:30:24 -0000
+Organization: Liddicott.com
+Message-ID: <4912AB20.4070608@liddicott.com>
+References: <49118FEE.30408@liddicott.com> <20081106060940.6117@nanako3.lavabit.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Nanako Shiraishi <nanako3@lavabit.com>
+X-From: git-owner@vger.kernel.org Thu Nov 06 09:32:56 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Kxzyj-0005EQ-By
-	for gcvg-git-2@gmane.org; Thu, 06 Nov 2008 09:12:33 +0100
+	id 1Ky0IH-0002Tq-KF
+	for gcvg-git-2@gmane.org; Thu, 06 Nov 2008 09:32:46 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752330AbYKFILO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 6 Nov 2008 03:11:14 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752034AbYKFILO
-	(ORCPT <rfc822;git-outgoing>); Thu, 6 Nov 2008 03:11:14 -0500
-Received: from cryptobackpack.org ([64.105.32.74]:56859 "EHLO
-	mail.cryptobackpack.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751816AbYKFILN (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 6 Nov 2008 03:11:13 -0500
-X-Greylist: delayed 4200 seconds by postgrey-1.27 at vger.kernel.org; Thu, 06 Nov 2008 03:11:13 EST
-Received: by mail.cryptobackpack.org (Postfix, from userid 1000)
-	id E295810D00FD; Wed,  5 Nov 2008 19:33:18 -0800 (PST)
-X-Spam-Checker-Version: SpamAssassin 3.2.1-gr1 (2007-05-02) on
-	ptolemy.cryptobackpack.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-4.4 required=5.0 tests=ALL_TRUSTED,BAYES_00,
-	DNS_FROM_SECURITYSAGE autolearn=no version=3.2.1-gr1
-Received: from eratosthenes.statichacks.org (heliosphan.cryptobackpack.org [10.6.6.6])
-	by mail.cryptobackpack.org (Postfix) with ESMTP id 65F8210D0089;
-	Wed,  5 Nov 2008 19:33:18 -0800 (PST)
-Received: by eratosthenes.statichacks.org (Postfix, from userid 1000)
-	id 1CE5214457; Wed,  5 Nov 2008 19:33:17 -0800 (PST)
-X-Mailer: git-send-email 1.6.0.1
-In-Reply-To: <20081028212327.GA25358@sigill.intra.peff.net>
+	id S1752986AbYKFIbU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 6 Nov 2008 03:31:20 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753213AbYKFIbU
+	(ORCPT <rfc822;git-outgoing>); Thu, 6 Nov 2008 03:31:20 -0500
+Received: from timbuctoo.liddicott.com ([206.123.89.57]:50496 "EHLO
+	timbuctoo.liddicott.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752986AbYKFIbT (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 6 Nov 2008 03:31:19 -0500
+Received: from [192.168.0.180] (82.153.158.114 [82.153.158.114])
+	by timbuctoo.liddicott.com; Thu, 06 Nov 2008 08:30:31 -0000
+User-Agent: Thunderbird 2.0.0.17 (X11/20080925)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/100216>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/100217>
 
-From: David Bryson <david@statichacks.org>
+* Nanako Shiraishi wrote, On 05/11/08 21:09:
+> Quoting "Sam Liddicott" <sam@liddicott.com>:
+>
+>   
+>> In some cases "patch" cannot apply diff's generated using git-diff, I've
+>> had a "git diff" output look like this when an empty file was removed as
+>> the only change:
+>>     
+>
+> Even if you do not use git to manage your changes, you can use "git apply" from outside of a git repository as a replacement for "patch".
+>
+>   
+Good tip, thanks.
 
-This test case checks to make sure mirror does not push stashed refs
+In this case it is rpmbuild that is doing the patching, and making git a
+build-requires would not be popular.
 
----
- t/t5517-push-mirror.sh |   10 ++++++++++
- 1 files changed, 10 insertions(+), 0 deletions(-)
-
-diff --git a/t/t5517-push-mirror.sh b/t/t5517-push-mirror.sh
-index ea49ded..bb263cd 100755
---- a/t/t5517-push-mirror.sh
-+++ b/t/t5517-push-mirror.sh
-@@ -123,6 +123,16 @@ test_expect_success 'push mirror adds, updates and removes branches together' '
- 
- '
- 
-+test_expect_success 'push mirror does not push stash refs' '
-+
-+	mk_repo_pair &&
-+	(
-+		cd master &&
-+		echo foo >foo && git add foo && git commit -m 'foo' &&
-+		echo bar >foo && git stash save 'WIP' &&
-+		git push --mirror up
-+	)
-+'
- 
- # TAG tests
- test_expect_success 'push mirror creates new tags' '
--- 
-1.6.0.1
+Sam
