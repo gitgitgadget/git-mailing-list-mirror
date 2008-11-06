@@ -1,117 +1,76 @@
-From: Johannes Sixt <j.sixt@viscovery.net>
-Subject: Re: [PATCH (MINGW) Resend] Windows: Make OpenSSH properly detect
- tty detachment.
-Date: Thu, 06 Nov 2008 08:35:35 +0100
-Message-ID: <49129E47.4080209@viscovery.net>
-References: <200811022011.13970.angavrilov@gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-To: Alexander Gavrilov <angavrilov@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Nov 06 08:37:02 2008
+From: david@statichacks.org
+Subject: [PATCH] Added test case for mirror to not push stash refs
+Date: Wed,  5 Nov 2008 19:33:17 -0800
+Message-ID: <1225942397-20513-1-git-send-email-david@statichacks.org>
+References: <20081028212327.GA25358@sigill.intra.peff.net>
+Cc: David Bryson <david@statichacks.org>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Nov 06 09:12:39 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KxzQL-0004zP-6O
-	for gcvg-git-2@gmane.org; Thu, 06 Nov 2008 08:37:01 +0100
+	id 1Kxzyj-0005EQ-By
+	for gcvg-git-2@gmane.org; Thu, 06 Nov 2008 09:12:33 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752946AbYKFHfp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 6 Nov 2008 02:35:45 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752918AbYKFHfp
-	(ORCPT <rfc822;git-outgoing>); Thu, 6 Nov 2008 02:35:45 -0500
-Received: from lilzmailso01.liwest.at ([212.33.55.23]:61541 "EHLO
-	lilzmailso01.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752034AbYKFHfo (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 6 Nov 2008 02:35:44 -0500
-Received: from cm56-163-160.liwest.at ([86.56.163.160] helo=linz.eudaptics.com)
-	by lilzmailso01.liwest.at with esmtpa (Exim 4.69)
-	(envelope-from <j.sixt@viscovery.net>)
-	id 1KxzP0-0008Pk-Ib; Thu, 06 Nov 2008 08:35:39 +0100
-Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.96])
-	by linz.eudaptics.com (Postfix) with ESMTP
-	id 0FA614E4; Thu,  6 Nov 2008 08:35:36 +0100 (CET)
-User-Agent: Thunderbird 2.0.0.6 (Windows/20070728)
-In-Reply-To: <200811022011.13970.angavrilov@gmail.com>
-X-Spam-Score: 1.7 (+)
-X-Spam-Report: ALL_TRUSTED=-1.8, BAYES_99=3.5
+	id S1752330AbYKFILO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 6 Nov 2008 03:11:14 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752034AbYKFILO
+	(ORCPT <rfc822;git-outgoing>); Thu, 6 Nov 2008 03:11:14 -0500
+Received: from cryptobackpack.org ([64.105.32.74]:56859 "EHLO
+	mail.cryptobackpack.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751816AbYKFILN (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 6 Nov 2008 03:11:13 -0500
+X-Greylist: delayed 4200 seconds by postgrey-1.27 at vger.kernel.org; Thu, 06 Nov 2008 03:11:13 EST
+Received: by mail.cryptobackpack.org (Postfix, from userid 1000)
+	id E295810D00FD; Wed,  5 Nov 2008 19:33:18 -0800 (PST)
+X-Spam-Checker-Version: SpamAssassin 3.2.1-gr1 (2007-05-02) on
+	ptolemy.cryptobackpack.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-4.4 required=5.0 tests=ALL_TRUSTED,BAYES_00,
+	DNS_FROM_SECURITYSAGE autolearn=no version=3.2.1-gr1
+Received: from eratosthenes.statichacks.org (heliosphan.cryptobackpack.org [10.6.6.6])
+	by mail.cryptobackpack.org (Postfix) with ESMTP id 65F8210D0089;
+	Wed,  5 Nov 2008 19:33:18 -0800 (PST)
+Received: by eratosthenes.statichacks.org (Postfix, from userid 1000)
+	id 1CE5214457; Wed,  5 Nov 2008 19:33:17 -0800 (PST)
+X-Mailer: git-send-email 1.6.0.1
+In-Reply-To: <20081028212327.GA25358@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/100215>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/100216>
 
-Alexander Gavrilov schrieb:
-> Apparently, CREATE_NO_WINDOW makes the OS tell the process
-> that it has a console, but without actually creating the
-> window. As a result, when git is started from GUI, ssh
-> tries to ask its questions on the invisible console.
-> 
-> This patch uses DETACHED_PROCESS instead, which clearly
-> means that the process should be left without a console.
-> The downside is that if the process manually calls
-> AllocConsole, the window will appear. A similar thing
-> might occur if it calls another console executable.
+From: David Bryson <david@statichacks.org>
 
-The latest "What's cooking in git.git" report still doesn't mention this
-patch. The reason might be that you mention some scary downsides in this
-paragraph. I think you should either not mention the downsides, or
-describe further why they do not make a difference in our case:
+This test case checks to make sure mirror does not push stashed refs
 
-- We never call AllocConsole(). If some third-party program calls it, then
-it gets what it requested. (But, yes, the behavior would indeed be
-different from what it used to be.)
+---
+ t/t5517-push-mirror.sh |   10 ++++++++++
+ 1 files changed, 10 insertions(+), 0 deletions(-)
 
-- There are two possible circumstances when another console executable is
-called:
-
-  * A program that has no console - e.g. git-gui - runs a git process.
-Then we are entering the "then" branch, and the new process is started
-with DETACH_PROCESS. No new console window appears.
-
-  * A program that already has a console runs a git process. Then we are
-entering the "else" branch, and we do not change the process flags nor are
-we requesting a new console. No new console window appears.
-
-I'm using this patch since weeks without noticing any downsides.
-
--- Hannes
-
-> 
-> Signed-off-by: Alexander Gavrilov <angavrilov@gmail.com>
-> Acked-by: Johannes Sixt <johannes.sixt@telecom.at>
-> ---
-> 
-> 	This patch appears to have been overlooked, so I	resend
-> 	it just in case. It fixes a long standing problem in msysgit.
-> 
-> 	-- Alexander
-> 
->  compat/mingw.c |    8 ++++++--
->  1 files changed, 6 insertions(+), 2 deletions(-)
-> 
-> diff --git a/compat/mingw.c b/compat/mingw.c
-> index 1e29b88..b6fcf69 100644
-> --- a/compat/mingw.c
-> +++ b/compat/mingw.c
-> @@ -586,12 +586,16 @@ static pid_t mingw_spawnve(const char *cmd, const char **argv, char **env,
->  		 * would normally create a console window. But
->  		 * since we'll be redirecting std streams, we do
->  		 * not need the console.
-> +		 * It is necessary to use DETACHED_PROCESS
-> +		 * instead of CREATE_NO_WINDOW to make ssh
-> +		 * recognize that it has no console.
->  		 */
-> -		flags = CREATE_NO_WINDOW;
-> +		flags = DETACHED_PROCESS;
->  	} else {
->  		/* There is already a console. If we specified
-> -		 * CREATE_NO_WINDOW here, too, Windows would
-> +		 * DETACHED_PROCESS here, too, Windows would
->  		 * disassociate the child from the console.
-> +		 * The same is true for CREATE_NO_WINDOW.
->  		 * Go figure!
->  		 */
->  		flags = 0;
+diff --git a/t/t5517-push-mirror.sh b/t/t5517-push-mirror.sh
+index ea49ded..bb263cd 100755
+--- a/t/t5517-push-mirror.sh
++++ b/t/t5517-push-mirror.sh
+@@ -123,6 +123,16 @@ test_expect_success 'push mirror adds, updates and removes branches together' '
+ 
+ '
+ 
++test_expect_success 'push mirror does not push stash refs' '
++
++	mk_repo_pair &&
++	(
++		cd master &&
++		echo foo >foo && git add foo && git commit -m 'foo' &&
++		echo bar >foo && git stash save 'WIP' &&
++		git push --mirror up
++	)
++'
+ 
+ # TAG tests
+ test_expect_success 'push mirror creates new tags' '
+-- 
+1.6.0.1
