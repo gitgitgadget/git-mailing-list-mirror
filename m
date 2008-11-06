@@ -1,67 +1,92 @@
-From: =?iso-8859-1?Q?Bj=F6rn?= Steinbrink <B.Steinbrink@gmx.de>
-Subject: Re: How to rebase for git svn?
-Date: Thu, 6 Nov 2008 11:24:25 +0100
-Message-ID: <20081106102425.GA4192@atjola.homenet>
-References: <4911EF4C.8030703@gmail.com> <20081106095500.GA9587@untitled> <bd6139dc0811060215j1ad7ee0ahd0b568283da06cb@mail.gmail.com>
+From: David =?utf-8?q?K=C3=A5gedal?= <davidk@lysator.liu.se>
+Subject: [StGit PATCH] stgit.el: Try to make the point stay on the coalesced
+	patch.
+Date: Thu, 06 Nov 2008 11:27:14 +0100
+Message-ID: <20081106102655.32048.21145.stgit@krank>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Eric Wong <normalperson@yhbt.net>,
-	Yang Zhang <yanghatespam@gmail.com>, git@vger.kernel.org
-To: sverre@rabbelier.nl
-X-From: git-owner@vger.kernel.org Thu Nov 06 11:25:44 2008
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: kha@treskal.com, catalin.marinas@gmail.com
+X-From: git-owner@vger.kernel.org Thu Nov 06 11:28:32 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Ky23a-0002NW-Ve
-	for gcvg-git-2@gmane.org; Thu, 06 Nov 2008 11:25:43 +0100
+	id 1Ky26J-0003BK-DF
+	for gcvg-git-2@gmane.org; Thu, 06 Nov 2008 11:28:31 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753496AbYKFKY3 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 6 Nov 2008 05:24:29 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753453AbYKFKY3
-	(ORCPT <rfc822;git-outgoing>); Thu, 6 Nov 2008 05:24:29 -0500
-Received: from mail.gmx.net ([213.165.64.20]:50008 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1753452AbYKFKY2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 6 Nov 2008 05:24:28 -0500
-Received: (qmail invoked by alias); 06 Nov 2008 10:24:26 -0000
-Received: from i577BA50B.versanet.de (EHLO atjola.local) [87.123.165.11]
-  by mail.gmx.net (mp033) with SMTP; 06 Nov 2008 11:24:26 +0100
-X-Authenticated: #5039886
-X-Provags-ID: V01U2FsdGVkX18IIi5eASMIthe9ZZaI1FdN58qFtKo9JcWT1m5Wdi
-	qZQh7dMvvplYxR
-Content-Disposition: inline
-In-Reply-To: <bd6139dc0811060215j1ad7ee0ahd0b568283da06cb@mail.gmail.com>
-User-Agent: Mutt/1.5.18 (2008-05-17)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.62
+	id S1753538AbYKFK1R (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 6 Nov 2008 05:27:17 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753476AbYKFK1R
+	(ORCPT <rfc822;git-outgoing>); Thu, 6 Nov 2008 05:27:17 -0500
+Received: from mail.lysator.liu.se ([130.236.254.3]:47565 "EHLO
+	mail.lysator.liu.se" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753471AbYKFK1Q (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 6 Nov 2008 05:27:16 -0500
+Received: from mail.lysator.liu.se (localhost [127.0.0.1])
+	by mail.lysator.liu.se (Postfix) with ESMTP id 7C89340013;
+	Thu,  6 Nov 2008 11:27:12 +0100 (CET)
+Received: by mail.lysator.liu.se (Postfix, from userid 1674)
+	id 704FE4001B; Thu,  6 Nov 2008 11:27:12 +0100 (CET)
+X-Spam-Checker-Version: SpamAssassin 3.1.7-deb (2006-10-05) on 
+	bernadotte.lysator.liu.se
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.6 required=5.0 tests=BAYES_00 autolearn=ham 
+	version=3.1.7-deb
+Received: from krank (vtab.com [62.20.90.195])
+	(using TLSv1 with cipher ADH-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by mail.lysator.liu.se (Postfix) with ESMTP id 2026340013;
+	Thu,  6 Nov 2008 11:27:12 +0100 (CET)
+Received: from [127.0.1.1] (localhost [127.0.0.1])
+	by krank (Postfix) with ESMTP id 9512DDC0A4;
+	Thu,  6 Nov 2008 11:27:14 +0100 (CET)
+User-Agent: StGIT/0.14.3.278.g6f7d
+X-Virus-Scanned: ClamAV using ClamSMTP
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/100227>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/100228>
 
-On 2008.11.06 11:15:21 +0100, Sverre Rabbelier wrote:
-> On Thu, Nov 6, 2008 at 10:55, Eric Wong <normalperson@yhbt.net> wrote=
-:
-> > Yang Zhang <yanghatespam@gmail.com> wrote:
-> >> Thanks in advance for any help!
-> >
-> > Try passing --rebase or --squash with "git pull" to keep history li=
-near
-> > for SVN.
->=20
-> Consider doing the following:
-> git config alias.repull "pull --rebase"
-> And then using 'git repull' instead of 'git pull'.
+It might not be spot on if all the coalesced patches were unapplied.
+---
 
-Or set branch.<name>.rebase in your config and just use "git pull" ;-)
-Setting branch.autosetuprebase might also be useful in that case.
+This fixes a small annoyance with the 'c' command.
 
-You should be careful to make sure that the other side does not lag
-behind WRT svn, though. Otherwise, you end up rebasing commits that
-corresponds to svn revisions. Bad.
+ contrib/stgit.el |   12 +++++++++++-
+ 1 files changed, 11 insertions(+), 1 deletions(-)
 
-Bj=F6rn
+diff --git a/contrib/stgit.el b/contrib/stgit.el
+index d0f19c3..971ecd1 100644
+--- a/contrib/stgit.el
++++ b/contrib/stgit.el
+@@ -193,6 +193,9 @@ Commands:
+   (let ((patchsym (intern patch)))
+     (setq stgit-marked-patches (delq patchsym stgit-marked-patches))))
+ 
++(defun stgit-clear-marks ()
++  (setq stgit-marked-patches '()))
++
+ (defun stgit-marked-patches ()
+   "Return the names of the marked patches."
+   (mapcar 'symbol-name stgit-marked-patches))
+@@ -406,8 +409,15 @@ With numeric prefix argument, pop that many patches."
+     (write-region (point-min) (point-max) file)
+     (stgit-capture-output nil
+       (apply 'stgit-run "coalesce" "-f" file stgit-patches))
++    (stgit-clear-marks)
+     (with-current-buffer log-edit-parent-buffer
+-      (stgit-refresh))))
++      ;; Go to first marked patch and stay there
++      (goto-char (point-min))
++      (re-search-forward (concat "^[>+-]\\*") nil t)
++      (move-to-column goal-column)
++      (let ((pos (point)))
++        (stgit-refresh)
++        (goto-char pos)))))
+ 
+ (defun stgit-help ()
+   "Display help for the StGit mode."
