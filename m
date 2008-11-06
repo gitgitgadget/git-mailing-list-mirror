@@ -1,70 +1,59 @@
-From: Miklos Vajna <vmiklos@frugalware.org>
-Subject: Re: What's cooking in git.git (Nov 2008, #02; Wed, 05)
-Date: Thu, 6 Nov 2008 15:29:03 +0100
-Message-ID: <20081106142903.GF24201@genesis.frugalware.org>
-References: <7v1vxplku2.fsf@gitster.siamese.dyndns.org>
+From: Jens Seidel <jensseidel@users.sf.net>
+Subject: Bug: "git-svn fetch" segfaults on unknown user
+Date: Thu, 6 Nov 2008 15:38:31 +0100
+Message-ID: <20081106143826.GA26900@merkur.sol.de>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="+QoFl77rH4lq6But"
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Nov 06 15:31:17 2008
+Content-Type: text/plain; charset=us-ascii
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Nov 06 15:40:41 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Ky5tC-0008N9-Cd
-	for gcvg-git-2@gmane.org; Thu, 06 Nov 2008 15:31:14 +0100
+	id 1Ky62L-0003h9-Ab
+	for gcvg-git-2@gmane.org; Thu, 06 Nov 2008 15:40:41 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752219AbYKFO3I (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 6 Nov 2008 09:29:08 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751488AbYKFO3I
-	(ORCPT <rfc822;git-outgoing>); Thu, 6 Nov 2008 09:29:08 -0500
-Received: from virgo.iok.hu ([193.202.89.103]:47751 "EHLO virgo.iok.hu"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752137AbYKFO3G (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 6 Nov 2008 09:29:06 -0500
-Received: from kag.elte.hu (kag.elte.hu [157.181.177.1])
-	by virgo.iok.hu (Postfix) with ESMTP id B1A54580CD;
-	Thu,  6 Nov 2008 15:29:03 +0100 (CET)
-Received: from genesis.frugalware.org (frugalware.elte.hu [157.181.177.34])
-	by kag.elte.hu (Postfix) with ESMTP id 9D8944465E;
-	Thu,  6 Nov 2008 15:29:03 +0100 (CET)
-Received: by genesis.frugalware.org (Postfix, from userid 1000)
-	id 5B759119019E; Thu,  6 Nov 2008 15:29:03 +0100 (CET)
+	id S1750886AbYKFOj1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 6 Nov 2008 09:39:27 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750925AbYKFOj1
+	(ORCPT <rfc822;git-outgoing>); Thu, 6 Nov 2008 09:39:27 -0500
+Received: from fmmailgate03.web.de ([217.72.192.234]:42783 "EHLO
+	fmmailgate03.web.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750886AbYKFOj0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 6 Nov 2008 09:39:26 -0500
+Received: from smtp05.web.de (fmsmtp05.dlan.cinetic.de [172.20.4.166])
+	by fmmailgate03.web.de (Postfix) with ESMTP id 52013F3F41DE
+	for <git@vger.kernel.org>; Thu,  6 Nov 2008 15:39:25 +0100 (CET)
+Received: from [77.179.124.209] (helo=merkur.sol.de)
+	by smtp05.web.de with asmtp (TLSv1:AES256-SHA:256)
+	(WEB.DE 4.109 #226)
+	id 1Ky616-0002Z1-00
+	for git@vger.kernel.org; Thu, 06 Nov 2008 15:39:25 +0100
+Received: from jens by merkur.sol.de with local (Exim 4.69)
+	(envelope-from <tux-master@web.de>)
+	id 1Ky60F-00070O-M5
+	for git@vger.kernel.org; Thu, 06 Nov 2008 15:38:31 +0100
 Content-Disposition: inline
-In-Reply-To: <7v1vxplku2.fsf@gitster.siamese.dyndns.org>
-User-Agent: Mutt/1.5.17 (2007-11-01)
+User-Agent: Mutt/1.5.18 (2008-05-17)
+X-Sender: tux-master@web.de
+X-Provags-ID: V01U2FsdGVkX1/51c3BYZm6E21NQk78fns6p/xKIdhPPoPxpNq2
+	eBego+XDqKB62gRH6LH3yLBp7+fUGaxcGU2zYUfb68Kq7x/uZq
+	pX8IUd0nw=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/100236>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/100237>
 
+Hi,
 
---+QoFl77rH4lq6But
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+I noticed the following bug in git-svn version 1.6.0.3 (svn 1.5.5):
 
-On Wed, Nov 05, 2008 at 05:11:33PM -0800, Junio C Hamano <gitster@pobox.com> wrote:
-> * mv/remote-rename (Mon Nov 3 19:26:18 2008 +0100) 1 commit
->  . Implement git remote rename
+"git-svn fetch" segfaults if I provide an incomplete svn.authorsfile config
+file setting with account<-->email mappings. This happens if an unknown user
+account is found in the Subversion log.
 
-I plan to send a second patch on top of this to support migration from
-.git/branches and .git/remotes, but probably I can do so only next week
-due to lack of time.
+If I do not provide svn.authorsfile at all, it doesn't crash.
 
---+QoFl77rH4lq6But
-Content-Type: application/pgp-signature
-Content-Disposition: inline
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.9 (GNU/Linux)
-
-iEYEARECAAYFAkkS/y8ACgkQe81tAgORUJaJvQCeMm3fw8hwxuNq+HPd0k74HAy1
-VrgAnjuRf97Lr2NTNb9OglK08ORU1HPL
-=kkXp
------END PGP SIGNATURE-----
-
---+QoFl77rH4lq6But--
+Jens
