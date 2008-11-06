@@ -1,68 +1,66 @@
-From: Karl =?iso-8859-1?Q?Hasselstr=F6m?= <kha@treskal.com>
-Subject: Re: More help needed on merging unrelated repos
-Date: Thu, 6 Nov 2008 09:37:51 +0100
-Message-ID: <20081106083751.GA10359@diana.vm.bytemark.co.uk>
-References: <46d6db660811040514qc6c9663u17bd231e1ba662ad@mail.gmail.com> <4910ACCA.7080007@op5.se> <46d6db660811041308o19f1131dm4d49b6703fa6d22b@mail.gmail.com> <4910C6F4.5010407@op5.se> <46d6db660811041430l74d9a100kc15ac46dea8ff63f@mail.gmail.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH/RFC v3] git add -i: Answer questions with a single
+	keypress
+Date: Thu, 6 Nov 2008 03:42:36 -0500
+Message-ID: <20081106084230.GA4407@sigill.intra.peff.net>
+References: <200811042215.31147.sunaku@gmail.com> <200811050959.25824.sunaku@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Andreas Ericsson <ae@op5.se>,
-	Git Mailing List <git@vger.kernel.org>
-To: Christian MICHON <christian.michon@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Nov 06 09:39:35 2008
+Content-Type: text/plain; charset=utf-8
+Cc: git@vger.kernel.org
+To: "Suraj N. Kurapati" <sunaku@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Nov 06 09:44:36 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Ky0Op-0004Qx-MD
-	for gcvg-git-2@gmane.org; Thu, 06 Nov 2008 09:39:32 +0100
+	id 1Ky0Tf-0005si-Ib
+	for gcvg-git-2@gmane.org; Thu, 06 Nov 2008 09:44:32 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753284AbYKFIiR convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 6 Nov 2008 03:38:17 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753273AbYKFIiQ
-	(ORCPT <rfc822;git-outgoing>); Thu, 6 Nov 2008 03:38:16 -0500
-Received: from diana.vm.bytemark.co.uk ([80.68.90.142]:3691 "EHLO
-	diana.vm.bytemark.co.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753210AbYKFIiQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 6 Nov 2008 03:38:16 -0500
-Received: from kha by diana.vm.bytemark.co.uk with local (Exim 3.36 #1 (Debian))
-	id 1Ky0ND-0002nB-00; Thu, 06 Nov 2008 08:37:51 +0000
+	id S1753386AbYKFIm7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 6 Nov 2008 03:42:59 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753364AbYKFIm7
+	(ORCPT <rfc822;git-outgoing>); Thu, 6 Nov 2008 03:42:59 -0500
+Received: from peff.net ([208.65.91.99]:2240 "EHLO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753386AbYKFIm6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 6 Nov 2008 03:42:58 -0500
+Received: (qmail 18908 invoked by uid 111); 6 Nov 2008 08:42:57 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.32) with ESMTP; Thu, 06 Nov 2008 03:42:57 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 06 Nov 2008 03:42:36 -0500
 Content-Disposition: inline
-In-Reply-To: <46d6db660811041430l74d9a100kc15ac46dea8ff63f@mail.gmail.com>
-X-Manual-Spam-Check: kha@treskal.com, clean
-User-Agent: Mutt/1.5.9i
+In-Reply-To: <200811050959.25824.sunaku@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/100219>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/100220>
 
-On 2008-11-04 23:30:56 +0100, Christian MICHON wrote:
+On Wed, Nov 05, 2008 at 09:59:25AM -0800, Suraj N. Kurapati wrote:
 
-> note the merge can work, but it's still done in 2 steps. :(
-> thanks for suggesting this.
+> Allows the user to answer 'Stage this hunk' questions with a
+> single keypress, just like in Darcs.  Previously, the user was
+> forced to press the Return key after every choice they made.
+> This quickly becomes tiring, burdensome work for the fingers.
 
-If it had worked, you'd have gotten just one merge commit. What you
-want to do is entirely possible, but it seems the high-level commands
-were not designed with your use-case in mind.
+I think this is a reasonable goal, but I have a few questions/concerns.
 
-Another thing you could try is to merge the two branches separately,
-getting a history like this:
+ - There are three versions of your patch, but nobody has commented.
+   Clearly we can see what changed, but it is not clear what advantage
+   one patch has over the other. Care to elaborate?
 
-  p1----\
-         \
-  p2---A--B
-      /
-  p3--
+ - Term::ReadKey, while common, is not part of base perl. So I think
+   using it needs to be conditional, and on systems without it we can
+   degrade to the current behavior.
 
-And then use grafts to convince git that B has parents p1, p2, and p3
-(instead of its actual parents p1 and A). (Grep for "graft" in the
-Documentation directory.)
+ - There's no facility in your patch for restoring the terminal if we
+   break out of the loop in an unexpected way (e.g., via the user
+   hitting ^C).
 
-And then use git-filter-branch to rewrite history so that the grafted
-history becomes the real history.
+ - This only enhances one particular input, the patch loop. It is
+   probably worth being consistent and allowing these behavior for other
+   menus (though the numeric inputs are a bit trickier).
 
---=20
-Karl Hasselstr=F6m, kha@treskal.com
-      www.treskal.com/kalle
+-Peff
