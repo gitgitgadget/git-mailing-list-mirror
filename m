@@ -1,218 +1,110 @@
-From: "Piotr Findeisen" <piotr.findeisen@gmail.com>
-Subject: Fwd: Documentation/user-manual.txt, asciidoc and "--" escapes
-Date: Fri, 7 Nov 2008 04:09:58 +0100
-Message-ID: <ddb82bf60811061909m6f8a7b72o4b03ebcde8b9d188@mail.gmail.com>
-References: <ddb82bf60811061904t5defc492m80cd1b759674eb6@mail.gmail.com>
+From: "Tuncer Ayaz" <tuncer.ayaz@gmail.com>
+Subject: Re: [PATCH] Teach/Fix pull/fetch -q/-v options
+Date: Fri, 7 Nov 2008 04:26:09 +0100
+Message-ID: <4ac8254d0811061926m32183c2fx69ec5b5f4559e608@mail.gmail.com>
+References: <1224606624-5082-1-git-send-email-tuncer.ayaz@gmail.com>
+	 <20081027190816.6117@nanako3.lavabit.com>
+	 <7vprllh0ao.fsf@gitster.siamese.dyndns.org>
+	 <4ac8254d0811011023r10a4ce45ka962344ceef564f0@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: multipart/mixed; 
-	boundary="----=_Part_18655_30617450.1226027398317"
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Nov 07 04:11:25 2008
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: "Nanako Shiraishi" <nanako3@lavabit.com>, git@vger.kernel.org
+To: "Junio C Hamano" <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Nov 07 04:27:30 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KyHkq-0004oj-Kz
-	for gcvg-git-2@gmane.org; Fri, 07 Nov 2008 04:11:25 +0100
+	id 1KyI0P-0007rk-GR
+	for gcvg-git-2@gmane.org; Fri, 07 Nov 2008 04:27:29 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750938AbYKGDKA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 6 Nov 2008 22:10:00 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750904AbYKGDKA
-	(ORCPT <rfc822;git-outgoing>); Thu, 6 Nov 2008 22:10:00 -0500
-Received: from wa-out-1112.google.com ([209.85.146.182]:44938 "EHLO
-	wa-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750806AbYKGDJ7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 6 Nov 2008 22:09:59 -0500
-Received: by wa-out-1112.google.com with SMTP id v27so539353wah.21
-        for <git@vger.kernel.org>; Thu, 06 Nov 2008 19:09:58 -0800 (PST)
+	id S1750905AbYKGD0L (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 6 Nov 2008 22:26:11 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750954AbYKGD0L
+	(ORCPT <rfc822;git-outgoing>); Thu, 6 Nov 2008 22:26:11 -0500
+Received: from rv-out-0506.google.com ([209.85.198.236]:65451 "EHLO
+	rv-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750904AbYKGD0K (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 6 Nov 2008 22:26:10 -0500
+Received: by rv-out-0506.google.com with SMTP id k40so1105202rvb.1
+        for <git@vger.kernel.org>; Thu, 06 Nov 2008 19:26:09 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:received:received:message-id:date:from:to
-         :subject:in-reply-to:mime-version:content-type:references;
-        bh=Lp9rG+zLOlPMkUdNKCz1bxKEl81eD5SAdchMu0bizGM=;
-        b=s7/93W79yLSijw1glyPd6OAZq1ZL8JoUQAWwBDzUmEPD4sZwY8WcsWAvhiko8yOM60
-         D2a58mPti7uvZtV4miMKByDVzMxScz8ymGAa5pwgPApl307WdnYrIL6V7y/Vy/wfXSpH
-         VswOEHpGc8+J2+x9ZtfrZp0SWKAuxYuE/UtpM=
+         :subject:cc:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:references;
+        bh=/DdQUQir/GGZ4rbYDrc4UWHwYZxvI2I9L0QjgjmgcNM=;
+        b=xekAAQXnB6OWM2Nyk/fCL/eaW+SfcWW2nMD2bN3b94oyLUhKsosgaADGBngo5ztBaI
+         xQkqfITjN/hcM7oRjkDz/53nah04VDJVlHXDiJHxVMkrJdRE82Pd795E0LlPgg/xcU+F
+         U3/mNqH9ecd/6n3c0fkON7797jY6mn3z29w6U=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:in-reply-to:mime-version
-         :content-type:references;
-        b=FutQnxM4d2ChT0FRhuJ/axzDB7mapquhjkAgWLM1MkQAJIJoE80zhwuS67MB3U++Zf
-         /eMi/EwLjdV/Ll64yaE2chJdzctFuhKRgwwsfo/vSf7wHGCYK+hHPvDOzQqnkysgmWBU
-         VI/WENkB93x07clgVRf1vtdW7UhosnEyu5tN4=
-Received: by 10.114.201.1 with SMTP id y1mr1171999waf.154.1226027398327;
-        Thu, 06 Nov 2008 19:09:58 -0800 (PST)
-Received: by 10.114.123.12 with HTTP; Thu, 6 Nov 2008 19:09:58 -0800 (PST)
-In-Reply-To: <ddb82bf60811061904t5defc492m80cd1b759674eb6@mail.gmail.com>
+        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
+         :content-type:content-transfer-encoding:content-disposition
+         :references;
+        b=tS/+22U/V8X5NAXyTIj3Psbf+javik3M4Gwcr+IA6LTn4Rpg3Qz59bGa8mFFusRCBp
+         iOxi74BroFsbL/P/E5fBzBfb7JmK54lMMYH9n0TK9U80/7UXnyAekW+VkpKblgNLJWDf
+         d7mm8O79fSsjGIWWAnPGycOJYgM0SMRJ/sTc4=
+Received: by 10.141.115.6 with SMTP id s6mr1634796rvm.235.1226028369215;
+        Thu, 06 Nov 2008 19:26:09 -0800 (PST)
+Received: by 10.141.33.13 with HTTP; Thu, 6 Nov 2008 19:26:09 -0800 (PST)
+In-Reply-To: <4ac8254d0811011023r10a4ce45ka962344ceef564f0@mail.gmail.com>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/100281>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/100282>
 
-------=_Part_18655_30617450.1226027398317
-Content-Type: text/plain; charset=WINDOWS-1252
-Content-Transfer-Encoding: quoted-printable
-Content-Disposition: inline
+On Sat, Nov 1, 2008 at 6:23 PM, Tuncer Ayaz <tuncer.ayaz@gmail.com> wrote:
+> On Tue, Oct 28, 2008 at 4:21 AM, Junio C Hamano <gitster@pobox.com> wrote:
+>> Nanako Shiraishi <nanako3@lavabit.com> writes:
+>>
+>>> Quoting Tuncer Ayaz <tuncer.ayaz@gmail.com>:
+>>>
+>>>> After fixing clone -q I noticed that pull -q does not do what
+>>>> it's supposed to do and implemented --quiet/--verbose by
+>>>> adding it to builtin-merge and fixing two places in builtin-fetch.
+>>>
+>>> Junio, may I ask what the status of this patch is? Maybe the patch was
+>>> lost in the noise? The commit log message is written very differently from
+>>> existing commits in the history of git, and I am thinking that maybe that is
+>>> why you did not like the whole patch? Or is it lack of any test script?
+>>
+>> Well, perhaps you've been with us long enough to get too picky like
+>> myself, but this was genuinely lost in the noise and my scrambling to get
+>> back to normal.  We do not typically say "I did this, I did that", but the
+>> first paragraph in Tuncer's message is perfectly fine.  I would probably
+>> liked the second paragraph better if it were after --- lines (it is more
+>> about the possible enhancements in other areas, and does not belong to the
+>> commit log message for this change), but it is not a grave enough offence
+>> to get the patch rejected.
+>
+> Should I resend the patch with a short and simple commit message
+> like the following?
+> --8<--
+> Implement git-pull --quiet and --verbose by adding the
+> options to git-pull and fixing verbosity handling in git-fetch.
+> -->8--
+>
+>> The patch itself looks Ok; the lack of test script additions does indeed
+>> bother me somewhat, but it is not too big a deal.
+>
+> I took a look at t/ and am not quite sure whether I should test -v/-q
+> by analyzing stdout output's length & content.
+>
+> I think testing -q and -v makes more sense on a global and not
+> git-pull or git-fetch level. For that to be possible I envision building
+> common verbosity-based logging functions/macros.
+>
+> I don't like the idea of scanning stdout for length or content as
+> long as we're not sure that all errors and warnings are sent
+> to stderr and stdout is for info and verbose only.
+>
+>> P.S. We are having fun at GitTogether'08 in the first half of this week,
+>> so please expect slower response than usual.
+>
 
-Hello!
-
-I've been reading
-http://www.kernel.org/pub/software/scm/git/docs/user-manual.html till
-late night and found that "--" prefixing options names (like in "git
-diff --cached") are replaced by asciidoc with a single unicode
-character "=97" which makes them unsuitable for pasting them to a
-terminal.
-
-I've cloned the git repository from
-git://git.kernel.org/pub/scm/git/git.git, made some changes to
-Documentation/user-manual.txt, tested the results and commited my work
-locally.
-The attached file is a result of running `git diff HEAD~1`.
-
-My local log message:
-------------------
-asciidoc escaping of "--"
-
-Asciidoc replaces "--" with "=97" when not in verbatim mode. This is
-sometimes unwanted -- especially when citing command line options like
-"git diff --cached". This commit includes proper quotes in user-manual.txt.
-------------------
-
-Hope that's of any use.
-
-Best regards,
-Piotr
-
-------=_Part_18655_30617450.1226027398317
-Content-Type: text/x-diff; name=user-manual.txt.patch
-Content-Transfer-Encoding: base64
-X-Attachment-Id: f_fn891tv40
-Content-Disposition: attachment; filename=user-manual.txt.patch
-
-ZGlmZiAtLWdpdCBhL0RvY3VtZW50YXRpb24vdXNlci1tYW51YWwudHh0IGIvRG9jdW1lbnRhdGlv
-bi91c2VyLW1hbnVhbC50eHQKaW5kZXggNjQ1ZDc1Mi4uNjZkMGNjYSAxMDA2NDQKLS0tIGEvRG9j
-dW1lbnRhdGlvbi91c2VyLW1hbnVhbC50eHQKKysrIGIvRG9jdW1lbnRhdGlvbi91c2VyLW1hbnVh
-bC50eHQKQEAgLTUyNyw4ICs1MjcsOCBAQCAkIGdpdCByZXNldCAtLWhhcmQgZmI0N2RkYjJkYi4u
-LgogdGhlbiB0ZXN0LCBydW4gImJpc2VjdCBnb29kIiBvciAiYmlzZWN0IGJhZCIgYXMgYXBwcm9w
-cmlhdGUsIGFuZAogY29udGludWUuCiAKLUluc3RlYWQgb2YgImdpdCBiaXNlY3QgdmlzdWFsaXpl
-IiBhbmQgdGhlbiAiZ2l0IHJlc2V0IC0taGFyZAotZmI0N2RkYjJkYi4uLiIsIHlvdSBtaWdodCBq
-dXN0IHdhbnQgdG8gdGVsbCBnaXQgdGhhdCB5b3Ugd2FudCB0byBza2lwCitJbnN0ZWFkIG9mICJn
-aXQgYmlzZWN0IHZpc3VhbGl6ZSIgYW5kIHRoZW4gIisrK2dpdCByZXNldCAtLWhhcmQKK2ZiNDdk
-ZGIyZGIuLi4rKysiLCB5b3UgbWlnaHQganVzdCB3YW50IHRvIHRlbGwgZ2l0IHRoYXQgeW91IHdh
-bnQgdG8gc2tpcAogdGhlIGN1cnJlbnQgY29tbWl0OgogCiAtLS0tLS0tLS0tLS0tLS0tLS0tLS0t
-LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tCkBAIC02NjAsNyArNjYwLDcgQEAgWW91IGNhbiBh
-bHNvIGFzayBnaXQgbG9nIHRvIHNob3cgcGF0Y2hlczoKICQgZ2l0IGxvZyAtcAogLS0tLS0tLS0t
-LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLQogCi1TZWUgdGhlICItLXBy
-ZXR0eSIgb3B0aW9uIGluIHRoZSBsaW5rZ2l0OmdpdC1sb2dbMV0gbWFuIHBhZ2UgZm9yIG1vcmUK
-K1NlZSB0aGUgIisrKy0tcHJldHR5KysrIiBvcHRpb24gaW4gdGhlIGxpbmtnaXQ6Z2l0LWxvZ1sx
-XSBtYW4gcGFnZSBmb3IgbW9yZQogZGlzcGxheSBvcHRpb25zLgogCiBOb3RlIHRoYXQgZ2l0IGxv
-ZyBzdGFydHMgd2l0aCB0aGUgbW9zdCByZWNlbnQgY29tbWl0IGFuZCB3b3JrcwpAQCAtOTAwLDcg
-KzkwMCw3IEBAICQgZ2l0ayAkKCBnaXQgc2hvdy1yZWYgLS1oZWFkcyApIC0tbm90ICAkKCBnaXQg
-c2hvdy1yZWYgLS10YWdzICkKIC0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
-LS0tLS0tLS0tLS0KIAogKFNlZSBsaW5rZ2l0OmdpdC1yZXYtcGFyc2VbMV0gZm9yIGV4cGxhbmF0
-aW9ucyBvZiBjb21taXQtc2VsZWN0aW5nCi1zeW50YXggc3VjaCBhcyBgLS1ub3RgLikKK3N5bnRh
-eCBzdWNoIGFzIGArKystLW5vdCsrK2AuKQogCiBbW21ha2luZy1hLXJlbGVhc2VdXQogQ3JlYXRp
-bmcgYSBjaGFuZ2Vsb2cgYW5kIHRhcmJhbGwgZm9yIGEgc29mdHdhcmUgcmVsZWFzZQpAQCAtMTAy
-NCw3ICsxMDI0LDcgQEAgYXQgc3RlcCAzLCBnaXQgbWFpbnRhaW5zIGEgc25hcHNob3Qgb2YgdGhl
-IHRyZWUncyBjb250ZW50cyBpbiBhCiBzcGVjaWFsIHN0YWdpbmcgYXJlYSBjYWxsZWQgInRoZSBp
-bmRleC4iCiAKIEF0IHRoZSBiZWdpbm5pbmcsIHRoZSBjb250ZW50IG9mIHRoZSBpbmRleCB3aWxs
-IGJlIGlkZW50aWNhbCB0bwotdGhhdCBvZiB0aGUgSEVBRC4gIFRoZSBjb21tYW5kICJnaXQgZGlm
-ZiAtLWNhY2hlZCIsIHdoaWNoIHNob3dzCit0aGF0IG9mIHRoZSBIRUFELiAgVGhlIGNvbW1hbmQg
-IisrK2dpdCBkaWZmIC0tY2FjaGVkKysrIiwgd2hpY2ggc2hvd3MKIHRoZSBkaWZmZXJlbmNlIGJl
-dHdlZW4gdGhlIEhFQUQgYW5kIHRoZSBpbmRleCwgc2hvdWxkIHRoZXJlZm9yZQogcHJvZHVjZSBu
-byBvdXRwdXQgYXQgdGhhdCBwb2ludC4KIApAQCAtMTU3Miw3ICsxNTcyLDcgQEAgUmVjb3Zlcmlu
-ZyBsb3N0IGNoYW5nZXMKIFJlZmxvZ3MKIF5eXl5eXl4KIAotU2F5IHlvdSBtb2RpZnkgYSBicmFu
-Y2ggd2l0aCBgbGlua2dpdDpnaXQtcmVzZXRbMV0gLS1oYXJkYCwgYW5kIHRoZW4KK1NheSB5b3Ug
-bW9kaWZ5IGEgYnJhbmNoIHdpdGggYGxpbmtnaXQ6Z2l0LXJlc2V0WzFdICsrKy0taGFyZCsrK2As
-IGFuZCB0aGVuCiByZWFsaXplIHRoYXQgdGhlIGJyYW5jaCB3YXMgdGhlIG9ubHkgcmVmZXJlbmNl
-IHlvdSBoYWQgdG8gdGhhdCBwb2ludCBpbgogaGlzdG9yeS4KIApAQCAtMTcwMSw3ICsxNzAxLDcg
-QEAgJCBnaXQgcHVsbAogTW9yZSBnZW5lcmFsbHksIGEgYnJhbmNoIHRoYXQgaXMgY3JlYXRlZCBm
-cm9tIGEgcmVtb3RlIGJyYW5jaCB3aWxsIHB1bGwKIGJ5IGRlZmF1bHQgZnJvbSB0aGF0IGJyYW5j
-aC4gIFNlZSB0aGUgZGVzY3JpcHRpb25zIG9mIHRoZQogYnJhbmNoLjxuYW1lPi5yZW1vdGUgYW5k
-IGJyYW5jaC48bmFtZT4ubWVyZ2Ugb3B0aW9ucyBpbgotbGlua2dpdDpnaXQtY29uZmlnWzFdLCBh
-bmQgdGhlIGRpc2N1c3Npb24gb2YgdGhlIGAtLXRyYWNrYCBvcHRpb24gaW4KK2xpbmtnaXQ6Z2l0
-LWNvbmZpZ1sxXSwgYW5kIHRoZSBkaXNjdXNzaW9uIG9mIHRoZSBgKysrLS10cmFjaysrK2Agb3B0
-aW9uIGluCiBsaW5rZ2l0OmdpdC1jaGVja291dFsxXSwgdG8gbGVhcm4gaG93IHRvIGNvbnRyb2wg
-dGhlc2UgZGVmYXVsdHMuCiAKIEluIGFkZGl0aW9uIHRvIHNhdmluZyB5b3Uga2V5c3Ryb2tlcywg
-ImdpdCBwdWxsIiBhbHNvIGhlbHBzIHlvdSBieQpAQCAtMTk3OCw4ICsxOTc4LDggQEAgZXJyb3I6
-IGZhaWxlZCB0byBwdXNoIHRvICdzc2g6Ly95b3Vyc2VydmVyLmNvbS9+eW91L3Byb2ouZ2l0Jwog
-CiBUaGlzIGNhbiBoYXBwZW4sIGZvciBleGFtcGxlLCBpZiB5b3U6CiAKLQktIHVzZSBgZ2l0LXJl
-c2V0IC0taGFyZGAgdG8gcmVtb3ZlIGFscmVhZHktcHVibGlzaGVkIGNvbW1pdHMsIG9yCi0JLSB1
-c2UgYGdpdC1jb21taXQgLS1hbWVuZGAgdG8gcmVwbGFjZSBhbHJlYWR5LXB1Ymxpc2hlZCBjb21t
-aXRzCisJLSB1c2UgYCsrK2dpdC1yZXNldCAtLWhhcmQrKytgIHRvIHJlbW92ZSBhbHJlYWR5LXB1
-Ymxpc2hlZCBjb21taXRzLCBvcgorCS0gdXNlIGArKytnaXQtY29tbWl0IC0tYW1lbmQrKytgIHRv
-IHJlcGxhY2UgYWxyZWFkeS1wdWJsaXNoZWQgY29tbWl0cwogCSAgKGFzIGluIDw8Zml4aW5nLWEt
-bWlzdGFrZS1ieS1yZXdyaXRpbmctaGlzdG9yeT4+KSwgb3IKIAktIHVzZSBgZ2l0LXJlYmFzZWAg
-dG8gcmViYXNlIGFueSBhbHJlYWR5LXB1Ymxpc2hlZCBjb21taXRzIChhcwogCSAgaW4gPDx1c2lu
-Zy1naXQtcmViYXNlPj4pLgpAQCAtMjA4OCw3ICsyMDg4LDcgQEAgbGlua2dpdDpnaXQtZmV0Y2hb
-MV0gdG8ga2VlcCB0aGVtIHVwLXRvLWRhdGU7IHNlZQogCiBOb3cgY3JlYXRlIHRoZSBicmFuY2hl
-cyBpbiB3aGljaCB5b3UgYXJlIGdvaW5nIHRvIHdvcms7IHRoZXNlIHN0YXJ0IG91dAogYXQgdGhl
-IGN1cnJlbnQgdGlwIG9mIG9yaWdpbi9tYXN0ZXIgYnJhbmNoLCBhbmQgc2hvdWxkIGJlIHNldCB1
-cCAodXNpbmcKLXRoZSAtLXRyYWNrIG9wdGlvbiB0byBsaW5rZ2l0OmdpdC1icmFuY2hbMV0pIHRv
-IG1lcmdlIGNoYW5nZXMgaW4gZnJvbQordGhlICsrKy0tdHJhY2srKysgb3B0aW9uIHRvIGxpbmtn
-aXQ6Z2l0LWJyYW5jaFsxXSkgdG8gbWVyZ2UgY2hhbmdlcyBpbiBmcm9tCiBMaW51cyBieSBkZWZh
-dWx0LgogCiAtLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
-CkBAIC0yNDY4LDcgKzI0NjgsNyBAQCAkIGdpdCByZWJhc2UgLS1jb250aW51ZQogCiBhbmQgZ2l0
-IHdpbGwgY29udGludWUgYXBwbHlpbmcgdGhlIHJlc3Qgb2YgdGhlIHBhdGNoZXMuCiAKLUF0IGFu
-eSBwb2ludCB5b3UgbWF5IHVzZSB0aGUgYC0tYWJvcnRgIG9wdGlvbiB0byBhYm9ydCB0aGlzIHBy
-b2Nlc3MgYW5kCitBdCBhbnkgcG9pbnQgeW91IG1heSB1c2UgdGhlIGArKystLWFib3J0KysrYCBv
-cHRpb24gdG8gYWJvcnQgdGhpcyBwcm9jZXNzIGFuZAogcmV0dXJuIG15d29yayB0byB0aGUgc3Rh
-dGUgaXQgaGFkIGJlZm9yZSB5b3Ugc3RhcnRlZCB0aGUgcmViYXNlOgogCiAtLS0tLS0tLS0tLS0t
-LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tCkBAIC0yNTM5LDcgKzI1MzksNyBA
-QCAkIGdpdGsgb3JpZ2luLi5teXdvcmsgJgogCiBhbmQgYnJvd3NlIHRocm91Z2ggdGhlIGxpc3Qg
-b2YgcGF0Y2hlcyBpbiB0aGUgbXl3b3JrIGJyYW5jaCB1c2luZyBnaXRrLAogYXBwbHlpbmcgdGhl
-bSAocG9zc2libHkgaW4gYSBkaWZmZXJlbnQgb3JkZXIpIHRvIG15d29yay1uZXcgdXNpbmcKLWNo
-ZXJyeS1waWNrLCBhbmQgcG9zc2libHkgbW9kaWZ5aW5nIHRoZW0gYXMgeW91IGdvIHVzaW5nIGBj
-b21taXQgLS1hbWVuZGAuCitjaGVycnktcGljaywgYW5kIHBvc3NpYmx5IG1vZGlmeWluZyB0aGVt
-IGFzIHlvdSBnbyB1c2luZyBgKysrY29tbWl0IC0tYW1lbmQrKytgLgogVGhlIGxpbmtnaXQ6Z2l0
-LWd1aVsxXSBjb21tYW5kIG1heSBhbHNvIGhlbHAgYXMgaXQgYWxsb3dzIHlvdSB0bwogaW5kaXZp
-ZHVhbGx5IHNlbGVjdCBkaWZmIGh1bmtzIGZvciBpbmNsdXNpb24gaW4gdGhlIGluZGV4IChieQog
-cmlnaHQtY2xpY2tpbmcgb24gdGhlIGRpZmYgaHVuayBhbmQgY2hvb3NpbmcgIlN0YWdlIEh1bmsg
-Zm9yIENvbW1pdCIpLgpAQCAtMjg5Nyw3ICsyODk3LDcgQEAgQ29tbWl0IE9iamVjdAogfn5+fn5+
-fn5+fn5+fgogCiBUaGUgImNvbW1pdCIgb2JqZWN0IGxpbmtzIGEgcGh5c2ljYWwgc3RhdGUgb2Yg
-YSB0cmVlIHdpdGggYSBkZXNjcmlwdGlvbgotb2YgaG93IHdlIGdvdCB0aGVyZSBhbmQgd2h5LiAg
-VXNlIHRoZSAtLXByZXR0eT1yYXcgb3B0aW9uIHRvCitvZiBob3cgd2UgZ290IHRoZXJlIGFuZCB3
-aHkuICBVc2UgdGhlICsrKy0tcHJldHR5PXJhdysrKyBvcHRpb24gdG8KIGxpbmtnaXQ6Z2l0LXNo
-b3dbMV0gb3IgbGlua2dpdDpnaXQtbG9nWzFdIHRvIGV4YW1pbmUgeW91ciBmYXZvcml0ZQogY29t
-bWl0OgogCkBAIC0zNzAwLDE2ICszNzAwLDE2IEBAIGkuZS4gaXQgd2lsbCBub3JtYWxseSBqdXN0
-IHVwZGF0ZSBleGlzdGluZyBjYWNoZSBlbnRyaWVzLgogCiBUbyB0ZWxsIGdpdCB0aGF0IHllcywg
-eW91IHJlYWxseSBkbyByZWFsaXplIHRoYXQgY2VydGFpbiBmaWxlcyBubwogbG9uZ2VyIGV4aXN0
-LCBvciB0aGF0IG5ldyBmaWxlcyBzaG91bGQgYmUgYWRkZWQsIHlvdQotc2hvdWxkIHVzZSB0aGUg
-YC0tcmVtb3ZlYCBhbmQgYC0tYWRkYCBmbGFncyByZXNwZWN0aXZlbHkuCitzaG91bGQgdXNlIHRo
-ZSBgKysrLS1yZW1vdmUrKytgIGFuZCBgKysrLS1hZGQrKytgIGZsYWdzIHJlc3BlY3RpdmVseS4K
-IAotTk9URSEgQSBgLS1yZW1vdmVgIGZsYWcgZG9lcyAnbm90JyBtZWFuIHRoYXQgc3Vic2VxdWVu
-dCBmaWxlbmFtZXMgd2lsbAorTk9URSEgQSBgKysrLS1yZW1vdmUrKytgIGZsYWcgZG9lcyAnbm90
-JyBtZWFuIHRoYXQgc3Vic2VxdWVudCBmaWxlbmFtZXMgd2lsbAogbmVjZXNzYXJpbHkgYmUgcmVt
-b3ZlZDogaWYgdGhlIGZpbGVzIHN0aWxsIGV4aXN0IGluIHlvdXIgZGlyZWN0b3J5CiBzdHJ1Y3R1
-cmUsIHRoZSBpbmRleCB3aWxsIGJlIHVwZGF0ZWQgd2l0aCB0aGVpciBuZXcgc3RhdHVzLCBub3QK
-LXJlbW92ZWQuIFRoZSBvbmx5IHRoaW5nIGAtLXJlbW92ZWAgbWVhbnMgaXMgdGhhdCB1cGRhdGUt
-aW5kZXggd2lsbCBiZQorcmVtb3ZlZC4gVGhlIG9ubHkgdGhpbmcgYCsrKy0tcmVtb3ZlKysrYCBt
-ZWFucyBpcyB0aGF0IHVwZGF0ZS1pbmRleCB3aWxsIGJlCiBjb25zaWRlcmluZyBhIHJlbW92ZWQg
-ZmlsZSB0byBiZSBhIHZhbGlkIHRoaW5nLCBhbmQgaWYgdGhlIGZpbGUgcmVhbGx5CiBkb2VzIG5v
-dCBleGlzdCBhbnkgbW9yZSwgaXQgd2lsbCB1cGRhdGUgdGhlIGluZGV4IGFjY29yZGluZ2x5Lgog
-Ci1BcyBhIHNwZWNpYWwgY2FzZSwgeW91IGNhbiBhbHNvIGRvIGBnaXQgdXBkYXRlLWluZGV4IC0t
-cmVmcmVzaGAsIHdoaWNoCitBcyBhIHNwZWNpYWwgY2FzZSwgeW91IGNhbiBhbHNvIGRvIGArKytn
-aXQgdXBkYXRlLWluZGV4IC0tcmVmcmVzaCsrK2AsIHdoaWNoCiB3aWxsIHJlZnJlc2ggdGhlICJz
-dGF0IiBpbmZvcm1hdGlvbiBvZiBlYWNoIGluZGV4IHRvIG1hdGNoIHRoZSBjdXJyZW50CiBzdGF0
-IGluZm9ybWF0aW9uLiBJdCB3aWxsICdub3QnIHVwZGF0ZSB0aGUgb2JqZWN0IHN0YXR1cyBpdHNl
-bGYsIGFuZAogaXQgd2lsbCBvbmx5IHVwZGF0ZSB0aGUgZmllbGRzIHRoYXQgYXJlIHVzZWQgdG8g
-cXVpY2tseSB0ZXN0IHdoZXRoZXIKQEAgLTM5NTYsNyArMzk1Niw3IEBAIGVudHJpZXMiIGluIGl0
-LiBTdWNoIGFuIGluZGV4IHRyZWUgY2FuICdOT1QnIGJlIHdyaXR0ZW4gb3V0IHRvIGEgdHJlZQog
-b2JqZWN0LCBhbmQgeW91IHdpbGwgaGF2ZSB0byByZXNvbHZlIGFueSBzdWNoIG1lcmdlIGNsYXNo
-ZXMgdXNpbmcKIG90aGVyIHRvb2xzIGJlZm9yZSB5b3UgY2FuIHdyaXRlIG91dCB0aGUgcmVzdWx0
-LgogCi1Zb3UgY2FuIGV4YW1pbmUgc3VjaCBpbmRleCBzdGF0ZSB3aXRoIGBnaXQgbHMtZmlsZXMg
-LS11bm1lcmdlZGAKK1lvdSBjYW4gZXhhbWluZSBzdWNoIGluZGV4IHN0YXRlIHdpdGggYCsrK2dp
-dCBscy1maWxlcyAtLXVubWVyZ2VkKysrYAogY29tbWFuZC4gIEFuIGV4YW1wbGU6CiAKIC0tLS0t
-LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLQpAQCAtMzk2Nyw3ICsz
-OTY3LDcgQEAgJCBnaXQgbHMtZmlsZXMgLS11bm1lcmdlZAogMTAwNjQ0IGNjNDRjNzNlYjc4MzU2
-NWRhNTgzMWI0ZDgyMGM5NjI5NTQwMTliNjkgMwloZWxsby5jCiAtLS0tLS0tLS0tLS0tLS0tLS0t
-LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0KIAotRWFjaCBsaW5lIG9mIHRoZSBgZ2l0IGxz
-LWZpbGVzIC0tdW5tZXJnZWRgIG91dHB1dCBiZWdpbnMgd2l0aAorRWFjaCBsaW5lIG9mIHRoZSBg
-KysrZ2l0IGxzLWZpbGVzIC0tdW5tZXJnZWQrKytgIG91dHB1dCBiZWdpbnMgd2l0aAogdGhlIGJs
-b2IgbW9kZSBiaXRzLCBibG9iIFNIQTEsICdzdGFnZSBudW1iZXInLCBhbmQgdGhlCiBmaWxlbmFt
-ZS4gIFRoZSAnc3RhZ2UgbnVtYmVyJyBpcyBnaXQncyB3YXkgdG8gc2F5IHdoaWNoIHRyZWUgaXQK
-IGNhbWUgZnJvbTogc3RhZ2UgMSBjb3JyZXNwb25kcyB0byBgJG9yaWdgIHRyZWUsIHN0YWdlIDIg
-YEhFQURgCg==
-------=_Part_18655_30617450.1226027398317--
+Please see my next patch revision arriving here in a moment.
