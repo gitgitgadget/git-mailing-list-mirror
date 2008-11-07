@@ -1,89 +1,173 @@
-From: Alexandre Julliard <julliard@winehq.org>
-Subject: Re: [PATCH] checkout: Don't crash when switching away from an invalid branch.
-Date: Fri, 07 Nov 2008 23:28:16 +0100
-Message-ID: <87od0r9nnj.fsf@wine.dyndns.org>
-References: <871vxnbhbh.fsf@wine.dyndns.org>
-	<alpine.DEB.1.00.0811071903300.30769@pacific.mpi-cbg.de>
+From: Jeff King <peff@peff.net>
+Subject: [PATCH 4/4] receive-pack: deny push to current branch of non-bare
+	repo
+Date: Fri, 7 Nov 2008 17:28:30 -0500
+Message-ID: <20081107222830.GD16058@coredump.intra.peff.net>
+References: <20081107220730.GA15942@coredump.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Content-Type: text/plain; charset=utf-8
+Cc: Junio C Hamano <gitster@pobox.com>, Sam Vilain <sam@vilain.net>
+To: git@vger.kernel.org
 X-From: git-owner@vger.kernel.org Fri Nov 07 23:29:54 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KyZpw-0006An-CD
-	for gcvg-git-2@gmane.org; Fri, 07 Nov 2008 23:29:52 +0100
+	id 1KyZpx-0006An-1Z
+	for gcvg-git-2@gmane.org; Fri, 07 Nov 2008 23:29:53 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752172AbYKGW21 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 7 Nov 2008 17:28:27 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751832AbYKGW21
-	(ORCPT <rfc822;git-outgoing>); Fri, 7 Nov 2008 17:28:27 -0500
-Received: from mail.codeweavers.com ([216.251.189.131]:41662 "EHLO
-	mail.codeweavers.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752163AbYKGW21 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 7 Nov 2008 17:28:27 -0500
-Received: from adsl-84-226-29-112.adslplus.ch ([84.226.29.112] helo=wine.dyndns.org)
-	by mail.codeweavers.com with esmtpsa (TLS-1.0:DHE_RSA_AES_256_CBC_SHA1:32)
-	(Exim 4.63)
-	(envelope-from <julliard@winehq.org>)
-	id 1KyZoR-0003Z1-G5; Fri, 07 Nov 2008 16:28:25 -0600
-Received: by wine.dyndns.org (Postfix, from userid 1000)
-	id F24F01E73B5; Fri,  7 Nov 2008 23:28:16 +0100 (CET)
-In-Reply-To: <alpine.DEB.1.00.0811071903300.30769@pacific.mpi-cbg.de>
-	(Johannes Schindelin's message of "Fri, 7 Nov 2008 19:05:29 +0100
-	(CET)")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.0.60 (gnu/linux)
-X-Spam-Score: -3.4
+	id S1752171AbYKGW2e (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 7 Nov 2008 17:28:34 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752127AbYKGW2d
+	(ORCPT <rfc822;git-outgoing>); Fri, 7 Nov 2008 17:28:33 -0500
+Received: from peff.net ([208.65.91.99]:1767 "EHLO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751832AbYKGW2c (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 7 Nov 2008 17:28:32 -0500
+Received: (qmail 2977 invoked by uid 111); 7 Nov 2008 22:28:32 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+    by peff.net (qpsmtpd/0.32) with SMTP; Fri, 07 Nov 2008 17:28:31 -0500
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Fri, 07 Nov 2008 17:28:30 -0500
+Content-Disposition: inline
+In-Reply-To: <20081107220730.GA15942@coredump.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/100353>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/100354>
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+Pushing into the currently checked out branch of a non-bare
+repository can be dangerous; the HEAD then loses sync with
+the index and working tree, and it looks in the receiving
+repo as if the pushed changes have been reverted in the
+index (since they were never there in the first place).
 
->> diff --git a/builtin-checkout.c b/builtin-checkout.c
->> index 57b94d2..7c1b8cd 100644
->> --- a/builtin-checkout.c
->> +++ b/builtin-checkout.c
->> @@ -47,7 +47,8 @@ static int post_checkout_hook(struct commit *old, struct commit *new,
->>  
->>  	memset(&proc, 0, sizeof(proc));
->>  	argv[0] = name;
->> -	argv[1] = xstrdup(sha1_to_hex(old->object.sha1));
->> +	argv[1] = old ? xstrdup(sha1_to_hex(old->object.sha1))
->> +		      : "0000000000000000000000000000000000000000";
->
-> I guess you want to use the variable null_sha1 here.
+This patch adds a safety valve that checks for this
+condition and denies the push. We trigger the check only on
+a non-bare repository, since a bare does not have a working
+tree (and in fact, pushing to the HEAD branch is a common
+workflow for publishing repositories).
 
-I could, though it seemed to me a bit silly to format and strdup a
-string that is a known constant. But I'm happy to change it if needed.
+This behavior is still configurable, though, since some very
+specific setups may want to allow such a push if they know
+they will take action to reconcile the working tree and HEAD
+afterwards (e.g., a post-receive hook that does "git reset
+--hard").
 
->> @@ -492,10 +493,13 @@ static void update_refs_for_switch(struct checkout_opts *opts,
->>  	}
->>  
->>  	old_desc = old->name;
->> -	if (!old_desc)
->> +	if (!old_desc && old->commit)
->>  		old_desc = sha1_to_hex(old->commit->object.sha1);
->> -	strbuf_addf(&msg, "checkout: moving from %s to %s",
->> -		    old_desc, new->name);
->> +	if (old_desc)
->> +		strbuf_addf(&msg, "checkout: moving from %s to %s",
->> +			    old_desc, new->name);
->> +	else
->> +		strbuf_addf(&msg, "checkout: moving to %s", new->name);
->
-> Why not
-> 		old_desc ? old_desc : "(invalid)"
-> ?
+Signed-off-by: Jeff King <peff@peff.net>
+---
+My feeling is that this is dangerous behavior that we see new users
+confused by, so it is worth addressing. The other obvious route is to
+at least _try_ the merge, and if it comes out cleanly, to allow it.
 
-IMO it looks more friendly to not display a branch that doesn't exist,
-rather than printing something like (invalid) or (null).
+But it looks like Sam is promoting that as a hook, which makes a lot
+more sense to me. And we can still support that, but the user of the
+hook must now not only install the hook, but also set the config value.
 
+I am open to comments on the name of the config value. Somebody at the
+GitTogether suggested (possibly under the influence of beer) that it be
+receive.PEBKAC (since you should only turn it off if you really know
+what you're doing, you would set PEBKAC to "false"), but I didn't want
+to give the impression that git wasn't user-friendly. ;)
+
+One final issue: do we need to make a special exception for "branch yet
+to be born"? I believe we do so for the analagous "fetch" situation.
+
+ Documentation/config.txt |    8 ++++++++
+ builtin-receive-pack.c   |   16 ++++++++++++++++
+ t/t5516-fetch-push.sh    |   21 +++++++++++++++++++++
+ 3 files changed, 45 insertions(+), 0 deletions(-)
+
+diff --git a/Documentation/config.txt b/Documentation/config.txt
+index 965ed74..971f01e 100644
+--- a/Documentation/config.txt
++++ b/Documentation/config.txt
+@@ -1198,6 +1198,14 @@ receive.denyNonFastForwards::
+ 	even if that push is forced. This configuration variable is
+ 	set when initializing a shared repository.
+ 
++receive.denyCurrentBranch::
++	If set to true, receive-pack will deny a ref update to the
++	currently checked out branch of a non-bare repository. Such a
++	push is potentially dangerous because it brings the HEAD out of
++	sync with the index and working tree; only set this to "false"
++	if you know what you are doing (e.g., you have a post-receive
++	hook which resets the working tree). Defaults to "true".
++
+ transfer.unpackLimit::
+ 	When `fetch.unpackLimit` or `receive.unpackLimit` are
+ 	not set, the value of this variable is used instead.
+diff --git a/builtin-receive-pack.c b/builtin-receive-pack.c
+index 7f9f134..06ad545 100644
+--- a/builtin-receive-pack.c
++++ b/builtin-receive-pack.c
+@@ -13,6 +13,7 @@ static const char receive_pack_usage[] = "git-receive-pack <git-dir>";
+ 
+ static int deny_deletes = 0;
+ static int deny_non_fast_forwards = 0;
++static int deny_current_branch = 1;
+ static int receive_fsck_objects;
+ static int receive_unpack_limit = -1;
+ static int transfer_unpack_limit = -1;
+@@ -49,6 +50,11 @@ static int receive_pack_config(const char *var, const char *value, void *cb)
+ 		return 0;
+ 	}
+ 
++	if (!strcmp(var, "receive.denycurrentbranch")) {
++		deny_current_branch = git_config_bool(var, value);
++		return 0;
++	}
++
+ 	return git_default_config(var, value, cb);
+ }
+ 
+@@ -186,6 +192,16 @@ static const char *update(struct command *cmd)
+ 		return "funny refname";
+ 	}
+ 
++	if (deny_current_branch && !is_bare_repository()) {
++		unsigned char sha1[20];
++		const char *head = resolve_ref("HEAD", sha1, 0, NULL);
++		if (!strcmp(head, name)) {
++			error("refusing to update checked out branch: %s",
++				name);
++			return "branch is currently checked out";
++		}
++	}
++
+ 	if (!is_null_sha1(new_sha1) && !has_sha1_file(new_sha1)) {
+ 		error("unpack should have generated %s, "
+ 		      "but I can't find it!", sha1_to_hex(new_sha1));
+diff --git a/t/t5516-fetch-push.sh b/t/t5516-fetch-push.sh
+index 7070171..579c3d8 100755
+--- a/t/t5516-fetch-push.sh
++++ b/t/t5516-fetch-push.sh
+@@ -487,4 +487,25 @@ test_expect_success 'allow deleting an invalid remote ref' '
+ 
+ '
+ 
++test_expect_success 'deny push to HEAD to non-bare repository' '
++	mk_test heads/master
++	(cd testrepo && git checkout master) &&
++	test_must_fail git push testrepo master
++'
++
++test_expect_success 'allow push to HEAD of bare repository' '
++	mk_test heads/master
++	(cd testrepo && git checkout master && git config core.bare true) &&
++	git push testrepo master
++'
++
++test_expect_success 'allow push to HEAD of non-bare repository w/ config' '
++	mk_test heads/master
++	(cd testrepo &&
++		git checkout master &&
++		git config receive.denyCurrentBranch false
++	) &&
++	git push testrepo master
++'
++
+ test_done
 -- 
-Alexandre Julliard
-julliard@winehq.org
+1.6.0.3.866.gc189b
