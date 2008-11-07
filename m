@@ -1,94 +1,63 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH] checkout: Don't crash when switching away from an invalid
- branch.
-Date: Fri, 7 Nov 2008 19:05:29 +0100 (CET)
-Message-ID: <alpine.DEB.1.00.0811071903300.30769@pacific.mpi-cbg.de>
-References: <871vxnbhbh.fsf@wine.dyndns.org>
+From: Linus Torvalds <torvalds@linux-foundation.org>
+Subject: Re: multiple-commit cherry-pick?
+Date: Fri, 7 Nov 2008 10:08:36 -0800 (PST)
+Message-ID: <alpine.LFD.2.00.0811071004170.3468@nehalem.linux-foundation.org>
+References: <buoiqr18tdk.fsf@dhapc248.dev.necel.com> <20081106213711.GA4334@blimp.localdomain> <alpine.LFD.2.00.0811061925300.3451@nehalem.linux-foundation.org> <7vskq4gmf5.fsf@gitster.siamese.dyndns.org> <20081107071231.GA4063@blimp.localdomain>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org
-To: Alexandre Julliard <julliard@winehq.org>
-X-From: git-owner@vger.kernel.org Fri Nov 07 18:59:36 2008
+Cc: Junio C Hamano <gitster@pobox.com>, Miles Bader <miles@gnu.org>,
+	git@vger.kernel.org
+To: Alex Riesen <raa.lkml@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Nov 07 19:10:49 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KyVc2-0001gO-Cv
-	for gcvg-git-2@gmane.org; Fri, 07 Nov 2008 18:59:14 +0100
+	id 1KyVnF-0006OU-0w
+	for gcvg-git-2@gmane.org; Fri, 07 Nov 2008 19:10:49 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750929AbYKGR56 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 7 Nov 2008 12:57:58 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750953AbYKGR56
-	(ORCPT <rfc822;git-outgoing>); Fri, 7 Nov 2008 12:57:58 -0500
-Received: from mail.gmx.net ([213.165.64.20]:45943 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1750911AbYKGR56 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 7 Nov 2008 12:57:58 -0500
-Received: (qmail invoked by alias); 07 Nov 2008 17:57:55 -0000
-Received: from pacific.mpi-cbg.de (EHLO pacific.mpi-cbg.de) [141.5.10.38]
-  by mail.gmx.net (mp050) with SMTP; 07 Nov 2008 18:57:55 +0100
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX19OntlEHoROLr/pJzt9+GgEnH1mH57MYFhUnVkRsf
-	P6e+LEqrP+Dagj
-X-X-Sender: schindelin@pacific.mpi-cbg.de
-In-Reply-To: <871vxnbhbh.fsf@wine.dyndns.org>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.53
+	id S1751300AbYKGSJ1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 7 Nov 2008 13:09:27 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751286AbYKGSJ0
+	(ORCPT <rfc822;git-outgoing>); Fri, 7 Nov 2008 13:09:26 -0500
+Received: from smtp1.linux-foundation.org ([140.211.169.13]:55530 "EHLO
+	smtp1.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751080AbYKGSJ0 (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 7 Nov 2008 13:09:26 -0500
+Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [140.211.169.55])
+	by smtp1.linux-foundation.org (8.14.2/8.13.5/Debian-3ubuntu1.1) with ESMTP id mA7I8bmJ019233
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Fri, 7 Nov 2008 10:08:38 -0800
+Received: from localhost (localhost [127.0.0.1])
+	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id mA7I8aQA032551;
+	Fri, 7 Nov 2008 10:08:36 -0800
+In-Reply-To: <20081107071231.GA4063@blimp.localdomain>
+User-Agent: Alpine 2.00 (LFD 1167 2008-08-23)
+X-Spam-Status: No, hits=-3.436 required=5 tests=AWL,BAYES_00
+X-Spam-Checker-Version: SpamAssassin 3.2.4-osdl_revision__1.47__
+X-MIMEDefang-Filter: lf$Revision: 1.188 $
+X-Scanned-By: MIMEDefang 2.63 on 140.211.169.13
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/100319>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/100320>
 
-Hi,
 
-On Fri, 7 Nov 2008, Alexandre Julliard wrote:
 
-> I have a tree where for some reason HEAD was pointing to an invalid 
-> commit. I'm not sure how this happened, but git checkout should be able 
-> to recover from that situation without crashing.
+On Fri, 7 Nov 2008, Alex Riesen wrote:
+> 
+> Does not work if there are ranges given :-/
+> It'd be very nice to have: git show #c1..$c2 $c3 $c4 $c5..$c6
 
-Agree.
+Yeah, we've very fundamentally never supported that. Not for show, but 
+also not for anything else (ie "gitk a..b c..d" does _not_ give you two 
+ranges).
 
-> diff --git a/builtin-checkout.c b/builtin-checkout.c
-> index 57b94d2..7c1b8cd 100644
-> --- a/builtin-checkout.c
-> +++ b/builtin-checkout.c
-> @@ -47,7 +47,8 @@ static int post_checkout_hook(struct commit *old, struct commit *new,
->  
->  	memset(&proc, 0, sizeof(proc));
->  	argv[0] = name;
-> -	argv[1] = xstrdup(sha1_to_hex(old->object.sha1));
-> +	argv[1] = old ? xstrdup(sha1_to_hex(old->object.sha1))
-> +		      : "0000000000000000000000000000000000000000";
+It's easy to see why once you understand what 'a..b' really means (ie it 
+just expands to '^a' and 'b'), and how it's not really a "range" operation 
+as much as a set operation that interacts with all the other arguments 
+too. But unless you're very aware of that, it can be surprising.
 
-I guess you want to use the variable null_sha1 here.
-
-> @@ -492,10 +493,13 @@ static void update_refs_for_switch(struct checkout_opts *opts,
->  	}
->  
->  	old_desc = old->name;
-> -	if (!old_desc)
-> +	if (!old_desc && old->commit)
->  		old_desc = sha1_to_hex(old->commit->object.sha1);
-> -	strbuf_addf(&msg, "checkout: moving from %s to %s",
-> -		    old_desc, new->name);
-> +	if (old_desc)
-> +		strbuf_addf(&msg, "checkout: moving from %s to %s",
-> +			    old_desc, new->name);
-> +	else
-> +		strbuf_addf(&msg, "checkout: moving to %s", new->name);
-
-Why not
-		old_desc ? old_desc : "(invalid)"
-?
-
-> diff --git a/t/t2011-checkout-invalid-head.sh b/t/t2011-checkout-invalid-head.sh
-> new file mode 100755
-
-Nice!
-
-Thank you,
-Dscho
+		Linus
