@@ -1,53 +1,64 @@
-From: Jeff King <peff@peff.net>
-Subject: [RFC PATCH 0/4] deny push to current branch of non-bare repo
-Date: Fri, 7 Nov 2008 17:07:30 -0500
-Message-ID: <20081107220730.GA15942@coredump.intra.peff.net>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Junio C Hamano <gitster@pobox.com>, Sam Vilain <sam@vilain.net>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Nov 07 23:08:49 2008
+From: Robin Rosenberg <robin.rosenberg@dewire.com>
+Subject: [EGIT PATCH 2/7] Add constant for "refs/"
+Date: Fri,  7 Nov 2008 23:07:39 +0100
+Message-ID: <1226095664-13759-3-git-send-email-robin.rosenberg@dewire.com>
+References: <1226095664-13759-1-git-send-email-robin.rosenberg@dewire.com>
+ <1226095664-13759-2-git-send-email-robin.rosenberg@dewire.com>
+Cc: git@vger.kernel.org, Robin Rosenberg <robin.rosenberg@dewire.com>
+To: spearce@spearce.org
+X-From: git-owner@vger.kernel.org Fri Nov 07 23:09:11 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KyZVY-00088o-O9
-	for gcvg-git-2@gmane.org; Fri, 07 Nov 2008 23:08:49 +0100
+	id 1KyZVp-0008DU-42
+	for gcvg-git-2@gmane.org; Fri, 07 Nov 2008 23:09:05 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751525AbYKGWHe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 7 Nov 2008 17:07:34 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751279AbYKGWHe
-	(ORCPT <rfc822;git-outgoing>); Fri, 7 Nov 2008 17:07:34 -0500
-Received: from peff.net ([208.65.91.99]:4571 "EHLO peff.net"
+	id S1751690AbYKGWHv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 7 Nov 2008 17:07:51 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751658AbYKGWHu
+	(ORCPT <rfc822;git-outgoing>); Fri, 7 Nov 2008 17:07:50 -0500
+Received: from mail.dewire.com ([83.140.172.130]:11956 "EHLO dewire.com"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751016AbYKGWHd (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 7 Nov 2008 17:07:33 -0500
-Received: (qmail 2646 invoked by uid 111); 7 Nov 2008 22:07:31 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.32) with SMTP; Fri, 07 Nov 2008 17:07:31 -0500
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Fri, 07 Nov 2008 17:07:30 -0500
-Content-Disposition: inline
+	id S1751607AbYKGWHt (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 7 Nov 2008 17:07:49 -0500
+Received: from localhost (localhost [127.0.0.1])
+	by dewire.com (Postfix) with ESMTP id 4B7C0147EACF;
+	Fri,  7 Nov 2008 23:07:48 +0100 (CET)
+X-Virus-Scanned: by amavisd-new at dewire.com
+Received: from dewire.com ([127.0.0.1])
+	by localhost (torino.dewire.com [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id 3lF3o8WUB2QQ; Fri,  7 Nov 2008 23:07:46 +0100 (CET)
+Received: from localhost.localdomain (unknown [10.9.0.2])
+	by dewire.com (Postfix) with ESMTP id C1556147EAE3;
+	Fri,  7 Nov 2008 23:07:45 +0100 (CET)
+X-Mailer: git-send-email 1.6.0.3.578.g6a50
+In-Reply-To: <1226095664-13759-2-git-send-email-robin.rosenberg@dewire.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/100339>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/100340>
 
-The short of it is that it's dangerous, we see people confused by it
-(there was another one just yesterday), and it's a FAQ:
+Signed-off-by: Robin Rosenberg <robin.rosenberg@dewire.com>
+---
+ .../src/org/spearce/jgit/lib/Constants.java        |    3 +++
+ 1 files changed, 3 insertions(+), 0 deletions(-)
 
-  http://git.or.cz/gitwiki/GitFaq#head-b96f48bc9c925074be9f95c0fce69bcece5f6e73
-
-The FAQ even says "don't do this until you know what you are doing." So
-the safety valve is configurable, so that those who know what they are
-doing can switch it off.
-
-And it's even on Sam's "UI improvements" list. :)
-
-Patch 4/4 is the interesting one. 1/4 is a cleanup I saw while fixing
-tests. 2/4 is a cleanup to prepare for 3/4. And 3/4 fixes a bunch of
-tests which were inadvertently doing such a push (but didn't care
-because they didn't look at the working directory).
-
--Peff
+diff --git a/org.spearce.jgit/src/org/spearce/jgit/lib/Constants.java b/org.spearce.jgit/src/org/spearce/jgit/lib/Constants.java
+index f316881..9613d07 100644
+--- a/org.spearce.jgit/src/org/spearce/jgit/lib/Constants.java
++++ b/org.spearce.jgit/src/org/spearce/jgit/lib/Constants.java
+@@ -216,6 +216,9 @@
+ 	/** Prefix for tag refs */
+ 	public static final String R_TAGS = "refs/tags/";
+ 
++	/** Prefix for any ref */
++	public static final String R_REFS = "refs/";
++
+ 	/** Logs folder name */
+ 	public static final String LOGS = "logs";
+ 
+-- 
+1.6.0.3.578.g6a50
