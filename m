@@ -1,60 +1,53 @@
-From: Stephen Haberman <stephen@exigencecorp.com>
-Subject: pull --preserve-merges
-Date: Fri, 7 Nov 2008 16:01:38 -0600
-Organization: Exigence
-Message-ID: <20081107160138.aa96405c.stephen@exigencecorp.com>
+From: Jeff King <peff@peff.net>
+Subject: [RFC PATCH 0/4] deny push to current branch of non-bare repo
+Date: Fri, 7 Nov 2008 17:07:30 -0500
+Message-ID: <20081107220730.GA15942@coredump.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=utf-8
+Cc: Junio C Hamano <gitster@pobox.com>, Sam Vilain <sam@vilain.net>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Nov 07 23:03:01 2008
+X-From: git-owner@vger.kernel.org Fri Nov 07 23:08:49 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KyZPt-0006B5-2k
-	for gcvg-git-2@gmane.org; Fri, 07 Nov 2008 23:02:57 +0100
+	id 1KyZVY-00088o-O9
+	for gcvg-git-2@gmane.org; Fri, 07 Nov 2008 23:08:49 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751188AbYKGWBn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 7 Nov 2008 17:01:43 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751345AbYKGWBn
-	(ORCPT <rfc822;git-outgoing>); Fri, 7 Nov 2008 17:01:43 -0500
-Received: from smtp202.sat.emailsrvr.com ([66.216.121.202]:59015 "EHLO
-	smtp202.sat.emailsrvr.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751016AbYKGWBn (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 7 Nov 2008 17:01:43 -0500
-Received: from relay10.relay.sat.mlsrvr.com (localhost [127.0.0.1])
-	by relay10.relay.sat.mlsrvr.com (SMTP Server) with ESMTP id ACD711D5E3A
-	for <git@vger.kernel.org>; Fri,  7 Nov 2008 17:01:42 -0500 (EST)
-Received: by relay10.relay.sat.mlsrvr.com (Authenticated sender: stephen-AT-exigencecorp.com) with ESMTP id 494BE1D5E56
-	for <git@vger.kernel.org>; Fri,  7 Nov 2008 17:01:42 -0500 (EST)
-X-Mailer: Sylpheed 2.5.0 (GTK+ 2.10.14; i686-pc-mingw32)
+	id S1751525AbYKGWHe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 7 Nov 2008 17:07:34 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751279AbYKGWHe
+	(ORCPT <rfc822;git-outgoing>); Fri, 7 Nov 2008 17:07:34 -0500
+Received: from peff.net ([208.65.91.99]:4571 "EHLO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751016AbYKGWHd (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 7 Nov 2008 17:07:33 -0500
+Received: (qmail 2646 invoked by uid 111); 7 Nov 2008 22:07:31 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+    by peff.net (qpsmtpd/0.32) with SMTP; Fri, 07 Nov 2008 17:07:31 -0500
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Fri, 07 Nov 2008 17:07:30 -0500
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/100338>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/100339>
 
-Hi,
+The short of it is that it's dangerous, we see people confused by it
+(there was another one just yesterday), and it's a FAQ:
 
-Awhile ago I brought up wanting to have a "rebase with preserve merges"
-option for `git pull`:
+  http://git.or.cz/gitwiki/GitFaq#head-b96f48bc9c925074be9f95c0fce69bcece5f6e73
 
-http://thread.gmane.org/gmane.comp.version-control.git/96513
+The FAQ even says "don't do this until you know what you are doing." So
+the safety valve is configurable, so that those who know what they are
+doing can switch it off.
 
-Andreas had a patch to help by supporting manually typing out `git pull
---rebase --preserve-merges`:
+And it's even on Sam's "UI improvements" list. :)
 
-http://thread.gmane.org/gmane.comp.version-control.git/96593
+Patch 4/4 is the interesting one. 1/4 is a cleanup I saw while fixing
+tests. 2/4 is a cleanup to prepare for 3/4. And 3/4 fixes a bunch of
+tests which were inadvertently doing such a push (but didn't care
+because they didn't look at the working directory).
 
-And then I did another small copy/paste patch on top to add a config
-setting of `branch.<name>.preservemerges` much like the existing
-`branch.<name>.rebase`.
-
-The patches haven't gotten an explicit "no" that I noticed, nor have
-they been applied...is there anything I can do to move them along?
-Resubmit them or what not?
-
-Thanks,
-Stephen
+-Peff
