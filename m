@@ -1,101 +1,88 @@
-From: "Yaser Raja" <yrraja@gmail.com>
-Subject: Re: Setting Up a GIT Repository Mirror
-Date: Fri, 7 Nov 2008 12:17:58 +0500
-Message-ID: <e97d51700811062317s351e165eh14d4343223a8e91f@mail.gmail.com>
-References: <e97d51700811060706t40433bb9k7a3704429f244164@mail.gmail.com>
-	 <e97d51700811060708y5deb9e9ek4a36c012726b3a63@mail.gmail.com>
-	 <adf1fd3d0811060733t28008f0cld1a3b3c5bf4ff4d8@mail.gmail.com>
+From: Andreas Ericsson <ae@op5.se>
+Subject: Re: [PATCH v2 3/3] pack-objects: honor '.keep' files
+Date: Fri, 07 Nov 2008 09:12:09 +0100
+Message-ID: <4913F859.8070500@op5.se>
+References: <-RiFxYEd9Wiq2fWX74zYGUiEwrzLeoFDb1KuG3-Xo-s@cipher.nrlssc.navy.mil> <LSyxMgVV7zAWRvSezvxyUc6-kz2gK6MRVKonKSf1pAmdqO-jeuMFIw@cipher.nrlssc.navy.mil> <GV8cY3fn8l5UV5cNoPN8bHchWt9u2tbZ8j_ypkiY-ZLfO1tx9d7ebA@cipher.nrlssc.navy.mil> <HBFmgmcvgPzZ0xq-fRUt98ZOBXGCvwxHGyEwF9bNcgpDgS-t-D3viw@cipher.nrlssc.navy.mil> <7v8wrwidi3.fsf@gitster.siamese.dyndns.org> <BgEXN35P6wpio928OZi_34hs22vqUQxIAIGxR5hR8LqmfPIyw565Mg@cipher.nrlssc.navy.mil>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: "=?ISO-8859-1?Q?Santi_B=E9jar?=" <santi@agolina.net>
-X-From: git-owner@vger.kernel.org Fri Nov 07 08:19:17 2008
+Content-Type: text/plain; charset=ISO-8859-15; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Git Mailing List <git@vger.kernel.org>,
+	"Shawn O. Pearce" <spearce@spearce.org>,
+	Nicolas Pitre <nico@cam.org>
+To: Brandon Casey <casey@nrlssc.navy.mil>
+X-From: git-owner@vger.kernel.org Fri Nov 07 09:13:32 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KyLci-0000V6-TJ
-	for gcvg-git-2@gmane.org; Fri, 07 Nov 2008 08:19:17 +0100
+	id 1KyMTC-0004CT-Nw
+	for gcvg-git-2@gmane.org; Fri, 07 Nov 2008 09:13:31 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751211AbYKGHSB convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 7 Nov 2008 02:18:01 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751199AbYKGHSA
-	(ORCPT <rfc822;git-outgoing>); Fri, 7 Nov 2008 02:18:00 -0500
-Received: from yw-out-2324.google.com ([74.125.46.29]:51614 "EHLO
-	yw-out-2324.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751124AbYKGHSA convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 7 Nov 2008 02:18:00 -0500
-Received: by yw-out-2324.google.com with SMTP id 9so428070ywe.1
-        for <git@vger.kernel.org>; Thu, 06 Nov 2008 23:17:58 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to
-         :subject:cc:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:references;
-        bh=4nNMoSv/16INHZGqFieaE9uJZxc9DFX3gLQYhcDJE/0=;
-        b=tHFCEx03SHUPcBsv/KSJqY+xnJCiKSgX0R9unPs/9oZXO3YyCpPcxvTm8r+l47tRyt
-         UAagwTTc+aj76SClu9FWMJHTC6pTrk79y+4cJFdkU4VGJ+vJoIfh6P1lLrP2bT+9vOgR
-         88zrBKkXCXDNDhzUZ0TGMYaafj/6+40SZg2Xw=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
-         :content-type:content-transfer-encoding:content-disposition
-         :references;
-        b=XPp7morKf54aCO8O+yX7UpOSZ8Gp9WXU5tWVizL6yFIOTUqzOn9eQx5jCOIyFZl/ph
-         pfq/OjGFX6I63+fQr3D5f4rX18ung7Yhf1tFgfs8UOwBHZjzQFBbiSCmhjE3f09QHGT7
-         YKhO6u9u6/1KNJCGXzrG9sxOgpQMSehB+/PQo=
-Received: by 10.150.150.3 with SMTP id x3mr2994460ybd.10.1226042278687;
-        Thu, 06 Nov 2008 23:17:58 -0800 (PST)
-Received: by 10.150.190.12 with HTTP; Thu, 6 Nov 2008 23:17:58 -0800 (PST)
-In-Reply-To: <adf1fd3d0811060733t28008f0cld1a3b3c5bf4ff4d8@mail.gmail.com>
-Content-Disposition: inline
+	id S1752951AbYKGIMT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 7 Nov 2008 03:12:19 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751255AbYKGIMT
+	(ORCPT <rfc822;git-outgoing>); Fri, 7 Nov 2008 03:12:19 -0500
+Received: from mail.op5.se ([193.201.96.20]:55151 "EHLO mail.op5.se"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751132AbYKGIMR (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 7 Nov 2008 03:12:17 -0500
+Received: from localhost (localhost.localdomain [127.0.0.1])
+	by mail.op5.se (Postfix) with ESMTP id E346A1B800AF;
+	Fri,  7 Nov 2008 09:05:57 +0100 (CET)
+X-Virus-Scanned: amavisd-new at 
+X-Spam-Flag: NO
+X-Spam-Score: -4.399
+X-Spam-Level: 
+X-Spam-Status: No, score=-4.399 tagged_above=-10 required=6.6
+	tests=[ALL_TRUSTED=-1.8, BAYES_00=-2.599]
+Received: from mail.op5.se ([127.0.0.1])
+	by localhost (mail.op5.se [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id SXr18DfhSVxw; Fri,  7 Nov 2008 09:05:53 +0100 (CET)
+Received: from clix.int.op5.se (unknown [192.168.1.20])
+	by mail.op5.se (Postfix) with ESMTP id 7CB081B80005;
+	Fri,  7 Nov 2008 09:05:53 +0100 (CET)
+User-Agent: Thunderbird 2.0.0.16 (X11/20080723)
+In-Reply-To: <BgEXN35P6wpio928OZi_34hs22vqUQxIAIGxR5hR8LqmfPIyw565Mg@cipher.nrlssc.navy.mil>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/100291>
 
-On Thu, Nov 6, 2008 at 8:33 PM, Santi B=E9jar <santi@agolina.net> wrote=
-:
-> On Thu, Nov 6, 2008 at 4:08 PM, Yaser Raja <yrraja@gmail.com> wrote:
->> Hi
-> [...]
->
->> I came to know about --mirror option of git-clone and used it to mak=
-e
->> a bare repository replica of the MainRep. Now i am not sure how to
->> keep it in sync with the MainRep.
->
-> $ git fetch
->
-> as it is bare you cannot merge, so you cannot pull.
->
-> HTH,
-> Santi
->
+Brandon Casey wrote:
+> Junio C Hamano wrote:
+>> Brandon Casey <casey@nrlssc.navy.mil> writes:
+>>
+>>>   <-a>
+>>>     -create a new pack containing all objects required by the repository
+>>>      including those accessible through alternates, but excluding objects
+>>>      in _local_ packs with .keep
+>> I have a feeling that it is debatable if this "fattening to dissociate
+>> from alternates" is what people want.
+> 
+> I'm not sure I understand you here.
+> 
+> Andreas has suggested previously that 'repack -a' should pack everything,
+> including objects in packs with .keep. Is that what you mean?
+> 
+> With my current understanding it seems that that would muddy the semantics
+> of repack. If -a does not honor packs with .keep, then would it be intuitive
+> to expect that adding -l (i.e. exclude alternate packed objects) _would_
+> honor .keep?
+> 
 
-Here is what i get when i try to use git-fetch:
+Only -d should honor .keep, imo. .keep-files is nothing about "don't copy
+objects from this file" and all about "never delete this file".
 
-# git fetch
-ssh: : Name or service not known
-fatal: The remote end hung up unexpectedly
+The only muddying comes from you, who decided that .keep-files should
+have impact on anything else than deleting the protected pack. Before that,
+.keep files had a clear semantic, and repack's documentation was correct.
 
-=46ollowing is the current content of my config file:
+How do you explain .keep-files now? "protects pack-files that will forever
+be used"? Then why the hell is it called ".keep" instead of "eternal"?
 
-[core]
-        repositoryformatversion =3D 0
-        filemode =3D true
-        bare =3D true
-[remote "origin"]
-        url =3D ssh://gituser@<addr removed>
-        fetch =3D +refs/*:refs/*
-        mirror =3D yes
-
-I also tried git-fetch with the url as argument but that also gave the
-same error. Do i need to do some additional configurations to make
-fetch work?
-
-Thanks
-Yaser
+-- 
+Andreas Ericsson                   andreas.ericsson@op5.se
+OP5 AB                             www.op5.se
+Tel: +46 8-230225                  Fax: +46 8-230231
