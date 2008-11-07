@@ -1,87 +1,192 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2 3/3] pack-objects: honor '.keep' files
-Date: Thu, 06 Nov 2008 16:30:28 -0800
-Message-ID: <7v8wrwidi3.fsf@gitster.siamese.dyndns.org>
-References: <-RiFxYEd9Wiq2fWX74zYGUiEwrzLeoFDb1KuG3-Xo-s@cipher.nrlssc.navy.mil>
- <LSyxMgVV7zAWRvSezvxyUc6-kz2gK6MRVKonKSf1pAmdqO-jeuMFIw@cipher.nrlssc.navy.mil> <GV8cY3fn8l5UV5cNoPN8bHchWt9u2tbZ8j_ypkiY-ZLfO1tx9d7ebA@cipher.nrlssc.navy.mil> <HBFmgmcvgPzZ0xq-fRUt98ZOBXGCvwxHGyEwF9bNcgpDgS-t-D3viw@cipher.nrlssc.navy.mil>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: Need help for migration from CVS to git in one go (ie, FORGETTING CVS history)
+Date: Fri, 7 Nov 2008 01:34:41 +0100
+Message-ID: <200811070134.42637.jnareb@gmail.com>
+References: <200811060014.57046.fg@one2team.net> <m3zlkdeelm.fsf@localhost.localdomain> <200811061313.50711.fg@one2team.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Git Mailing List <git@vger.kernel.org>,
-	"Shawn O. Pearce" <spearce@spearce.org>,
-	Nicolas Pitre <nico@cam.org>, Andreas Ericsson <ae@op5.se>
-To: Brandon Casey <casey@nrlssc.navy.mil>
-X-From: git-owner@vger.kernel.org Fri Nov 07 01:32:36 2008
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: Francis Galiegue <fg@one2team.net>
+X-From: git-owner@vger.kernel.org Fri Nov 07 01:36:19 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KyFH1-0003ia-8C
-	for gcvg-git-2@gmane.org; Fri, 07 Nov 2008 01:32:27 +0100
+	id 1KyFKd-0004hT-N9
+	for gcvg-git-2@gmane.org; Fri, 07 Nov 2008 01:36:12 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754815AbYKGAav (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 6 Nov 2008 19:30:51 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752324AbYKGAav
-	(ORCPT <rfc822;git-outgoing>); Thu, 6 Nov 2008 19:30:51 -0500
-Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:50984 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754807AbYKGAau (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 6 Nov 2008 19:30:50 -0500
-Received: from localhost.localdomain (unknown [127.0.0.1])
-	by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id 0CDDA921DB;
-	Thu,  6 Nov 2008 19:30:49 -0500 (EST)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES256-SHA (256/256 bits)) (No client certificate requested) by
- a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTPSA id 9C596921D3; Thu, 
- 6 Nov 2008 19:30:30 -0500 (EST)
-In-Reply-To: <HBFmgmcvgPzZ0xq-fRUt98ZOBXGCvwxHGyEwF9bNcgpDgS-t-D3viw@cipher.nrlssc.navy.mil> (Brandon Casey's message of "Thu, 06 Nov 2008 17:22:41 -0600")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: 534F436C-AC63-11DD-8E9A-4F5276724C3F-77302942!a-sasl-quonix.pobox.com
+	id S1753250AbYKGAe5 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 6 Nov 2008 19:34:57 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752807AbYKGAe5
+	(ORCPT <rfc822;git-outgoing>); Thu, 6 Nov 2008 19:34:57 -0500
+Received: from nf-out-0910.google.com ([64.233.182.187]:64599 "EHLO
+	nf-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751164AbYKGAe4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 6 Nov 2008 19:34:56 -0500
+Received: by nf-out-0910.google.com with SMTP id d3so495660nfc.21
+        for <git@vger.kernel.org>; Thu, 06 Nov 2008 16:34:54 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:from:to:subject:date
+         :user-agent:cc:references:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:message-id;
+        bh=0MTWPLvU51dhCcyqtyYYGnJGMkK+W/zDt+Rt8kzdPcU=;
+        b=Mb9rbkR2WjjfufGNgbTeFmtaitCuiA0PWM6YVYZ5RC/o0YHkxIi72vxEbHQSsf+Sap
+         EkAdjsvNs3iKDj1wTHKTRy4Qg1vxH4SytMVAeFG6ZbD5puoknV19kk9YHr/PmPFdU2O4
+         oBCLGCScILUqs2WO7o2rmq0lwNxQzNRvW+WWg=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=from:to:subject:date:user-agent:cc:references:in-reply-to
+         :mime-version:content-type:content-transfer-encoding
+         :content-disposition:message-id;
+        b=PfwYIZLFb7SKsbZAPWvb3urn3id/rrL9Mx1IPb/c2l+mzQtPX1Wp2eARrhxaPXxYzy
+         VQtr7xanL68ce5xCj2I4duYPtIsBI7/TEXhAxRn25QnwABaaD4uchfbHL/hNGpYV4scG
+         ZT3sWMN24MbYKTdQvYeorAdcyzv8hnUXEWxUs=
+Received: by 10.210.18.8 with SMTP id 8mr3004187ebr.47.1226018094706;
+        Thu, 06 Nov 2008 16:34:54 -0800 (PST)
+Received: from ?192.168.1.11? (abvq140.neoplus.adsl.tpnet.pl [83.8.214.140])
+        by mx.google.com with ESMTPS id c4sm10382284nfi.13.2008.11.06.16.34.51
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Thu, 06 Nov 2008 16:34:52 -0800 (PST)
+User-Agent: KMail/1.9.3
+In-Reply-To: <200811061313.50711.fg@one2team.net>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/100272>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/100273>
 
-Brandon Casey <casey@nrlssc.navy.mil> writes:
+On Thu, 6 Nov 2008, Francis Galiegue wrote:
+> Le Thursday 06 November 2008 04:08:16 Jakub Narebski, vous avez =E9cr=
+it=A0:
+> Hello,
+> [...]
+> > >
+> > > * 52 CVS modules, fine; but then this can become one and 52
+> > >   subdirectories in them and still act as separate modules from
+> > >   the build system point of view (which I have implemented, so
+> > >   I can change it);
+> >
+> > I think that those CVS modules should become separate repositories,
+> > perhaps joined together using submodules. This is one of more
+> > difficult things during conversion.
+> >
+> > Note that in Git commits are always whole tree (whole project)
+> > commits.
+> >
+>=20
+> Honestly, I'm not fond of this approach. The problem with submodules =
+as far as=20
+> I'm concerned is that documentation is "not really there", and (unles=
+s the=20
+> README of egit is _really_ outdated) that there's no support in egit.
+>=20
+> I know about commits affecting the whole tree, and even branches and =
+tags, and=20
+> that's more of an advantage to my eyes, for two reasons:
+>=20
+> * 99+% of queries currently done on the CVS tree (with Bonsai) cover =
+all=20
+> modules; only rarely is a single module concerned, and in this case y=
+ou just=20
+> fill in the appropriate field in the search page anyway;
 
->   <-a>
->     -create a new pack containing all objects required by the repository
->      including those accessible through alternates, but excluding objects
->      in _local_ packs with .keep
+Well, the mapping of CVS modules into Git repositories, and perhaps
+also later binding those Git repositories together using submodules
+support is IMHO one of more difficult decisions when deciding on
+migration from CVS to Git.
 
-I have a feeling that it is debatable if this "fattening to dissociate
-from alternates" is what people want.
+What you would have to ask yourself is which of those CVS modules
+are independent, for example having independent version numbers (tags)
+and independent branches. And if commit really affects whole tree...
 
->   <-a -l>
->      -Restrict operation to only local objects. Only has any effect with -a|-A.
->      -Like -a, but additionally exclude objects in packs accessible through
->       alternates.
+> * creating a branch is one command and that's it. It may also be one =
+command=20
+> with submodules, but again, the documentation makes me uncomfortable;=
+ with=20
+> CVS, well... You get the picture.
 
-Presumably you meant "exclude objects accessible through alternates,
-either in packs or in loose form"?  If so then I think it is a good thing
-to have.
+Submodules are Git repositories of their own. So you have branching
+there (almost) as easy as otherwise in Git. The only problem is a bit
+lacking UI for binding those submodules together.
 
-I am not sure if listing the behaviour by combination of flags is a good
-way to start thinking about this.  Wouldn't it be more productive to list
-what kinds of repacking are needed, and then label them with combination
-of flags?  Otherwise you would miss a potentially useful operation that
-cannot be expressed with the current set of flags you have.
+>=20
+> What's more, I don't think we have the requirement of making specific=
+=20
+> per-module tags. Not as far as this has been discussed so far, anyway=
+, and=20
+> not as far as the history shows.
 
-I think the useful kinds are only these five:
+Well, that is one issue that would help in mapping CVS modules to Git
+repositories (and submodules).
 
- - scoop loose objects that exist in local repository into a new pack,
-   without touching existing packs at all; exclude anything available in
-   any existing pack or in alternate repository (either loose or packed);
+>=20
+> > > * second: even though this may be a "non problem", we use Bonsai,
+> > > which has the ability to see what was commited by whom, given a t=
+ime
+> > > interval (from d1 to d2): the base gitweb allows to search by
+> > > commiter, which is good, but it has no date boundaries: do tools
+> > > exist for git that can do this? If not, that wouldn't be a big de=
+al,
+> > > however...
+> >
+> > First, there are more web interfaces than gitweb, see
+> > http://git.or.cz/gitweb/InterfacesFrontendsAndTools
+>=20
+> Yep, I've yet to try those... There are quite a few!
+>=20
+> > Second, you can do this from command line, using combination of com=
+mit
+> > limiting a..b and a...b, or --since=3D<date> or --after=3D<date> an=
+d
+> > --before=3D<date>, commit message searching --author, --committer, =
+and
+> > --grep, and path limiting "git log -- <pathspec>".
+>=20
+> Well, a Web-based search engine is kind of a requirement. I'm the onl=
+y one to=20
+> do command line... Thanks for the hints, though!
 
- - pack everything that is needed by the local ref, except the ones that
-   are borrowed from alternate repositories (either loose or packed), into
-   a single new pack.  There are two variants of this: eject what is
-   currently packed but unnecessary into loose format when existing local
-   packs are replaced with the new pack, or lose them (i.e. -A).
+You can also use one of GUI; qgit and gitk + git-gui seems to be quite
+mature and cross-platform.
 
- - fatten local repository by packing everything that is needed by the
-   local ref into a single new pack, including things that are currently
-   borrowed from alternates.  There are two variants of this: eject what
-   is currently packed but unnecessary into loose format when existing
-   local packs are replaced with the new pack, or lose them (i.e. -A).
+> > Third, it would be not that hard to add more advanced search suppor=
+t
+> > to gitweb; this is even one of planned features.
+
+I think there are two possible ways of doing it: have a kind of
+"advanced search" form, where one can have fill search terms, like
+date limit, path limiting etc; or have an option to limit search to
+current view context (for example current file or current directory).
+
+> Which brings back to the subject of submodules, since as I said above=
+, we=20
+> generally search on the entire tree, and per-module searches are rare=
+=2E
+
+Hmmm...
+
+>=20
+> > > * third: also Bonsai-related; Bonsai can link to Bugzilla by
+> > > matching (wild guess) /\b(?:#?)(\d+)\b/ and transforming this int=
+o
+> > > http://your.bugzilla.fqdn.here/show_bug.cgi?id=3D$1. Does gitweb =
+have
+> > > this built-in? (haven't looked yet) Is this planned, or has it be=
+en
+> > > discussed and been considered not worth the hassle?
+> >
+> > This is (under name of 'committags') in gitweb TODO; gitweb-xmms2
+> > support this IIRC or supported this (for Mantis and not Bugzilla
+> > though...)
+>=20
+> Interesting... I'll have a look at it.
+
+Well, now I have bumped priority of this item in my gitweb TODO list...
+
+--=20
+Jakub Narebski
+Poland
