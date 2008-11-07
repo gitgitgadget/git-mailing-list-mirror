@@ -1,394 +1,283 @@
 From: =?utf-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
 	<pclouds@gmail.com>
-Subject: [PATCH 1/2] diffcore-rename: support rename cache
-Date: Fri,  7 Nov 2008 21:35:32 +0700
-Message-ID: <1226068533-10152-1-git-send-email-pclouds@gmail.com>
+Subject: [PATCH 2/2] diffcore-rename: add config option to allow to cache renames
+Date: Fri,  7 Nov 2008 21:35:33 +0700
+Message-ID: <1226068533-10152-2-git-send-email-pclouds@gmail.com>
+References: <1226068533-10152-1-git-send-email-pclouds@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: =?utf-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
 	<pclouds@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Nov 07 15:37:10 2008
+X-From: git-owner@vger.kernel.org Fri Nov 07 15:37:30 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KySSO-0000Vs-EU
-	for gcvg-git-2@gmane.org; Fri, 07 Nov 2008 15:37:05 +0100
+	id 1KySSe-0000bb-N7
+	for gcvg-git-2@gmane.org; Fri, 07 Nov 2008 15:37:21 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751919AbYKGOfs convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 7 Nov 2008 09:35:48 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751912AbYKGOfs
-	(ORCPT <rfc822;git-outgoing>); Fri, 7 Nov 2008 09:35:48 -0500
+	id S1751820AbYKGOf7 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 7 Nov 2008 09:35:59 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751864AbYKGOf7
+	(ORCPT <rfc822;git-outgoing>); Fri, 7 Nov 2008 09:35:59 -0500
 Received: from wa-out-1112.google.com ([209.85.146.182]:27862 "EHLO
 	wa-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750771AbYKGOfr (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 7 Nov 2008 09:35:47 -0500
+	with ESMTP id S1751736AbYKGOf6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 7 Nov 2008 09:35:58 -0500
 Received: by wa-out-1112.google.com with SMTP id v27so620382wah.21
-        for <git@vger.kernel.org>; Fri, 07 Nov 2008 06:35:46 -0800 (PST)
+        for <git@vger.kernel.org>; Fri, 07 Nov 2008 06:35:58 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:received:received:received:from:to:cc:subject
-         :date:message-id:x-mailer:mime-version:content-type
-         :content-transfer-encoding;
-        bh=A/ZlxMDqcsDUFMz1q3ciEVeB2qFTr+lTsFD9oVD3K4A=;
-        b=A9/NLg2tte120FiGxIH2a4HSlLID2wRtQGJnLv9uLVY/AUYq+0bqFDMgPXt7NUClOV
-         nbNFBhGmLPyX6MndFr5cni7RR4PuPEtNxLeJUh1S3wWelFslCkmcubtlGAZxIzD3NX5Z
-         HeBxazfc2j4GWYD5vocLZs4Jmw9qbYz5fVhls=
+         :date:message-id:x-mailer:in-reply-to:references:mime-version
+         :content-type:content-transfer-encoding;
+        bh=LPn38FYs/gedJ0d1MByQ0jt111sodZ1AF4IUwHGzuOQ=;
+        b=FtyfZkhiqsQAHW5KHxtgg7HTU1xbuDHoHxnTkPIYmVtJgwO01h4zvxpVMfoYaX5Lbb
+         28DtKKvxMtR3Y680QqkxyI/XiZdex9Bwhfcv6gbupFCqwCIFttZEZuph7uvv4uIjUKGK
+         2SxoumIyrW3O/U8gdQ/rUTmDHMoECOBBmASz0=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer:mime-version
-         :content-type:content-transfer-encoding;
-        b=TPz/xlUTSKz48GCTKO9vpuGUPdCCKZ24bVryxkh+0YQmsrSIDZP4NEDWY8EbtUkyk/
-         b0QGCX+JtwdIypfEfBGDlQGqAKAdmFW99rzjjj8lwvvIjAeNMm2PYxMKhdn3JEL7pgkE
-         zSYxogz0C04fWoIxfSrP2dq6zFeDpq/QhQXH4=
-Received: by 10.114.160.17 with SMTP id i17mr1400515wae.125.1226068546260;
-        Fri, 07 Nov 2008 06:35:46 -0800 (PST)
+        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references
+         :mime-version:content-type:content-transfer-encoding;
+        b=bipWaFGD+ZnpFIZETwadbSFgkvfUl9T9JYtBAG5WYOa73uRj/iZ6fBsaH+NwzWSuNJ
+         yI5H93l4I0PRzMG6BLQk9XoDAAk3I88yayMygsCNwCu8dYKRYEZh54UmoNAC4DNv/jqp
+         ZeUR1f67WN0Bxqht2mgzWsWuqoWqYDBnyNgYE=
+Received: by 10.114.126.1 with SMTP id y1mr1402256wac.201.1226068558032;
+        Fri, 07 Nov 2008 06:35:58 -0800 (PST)
 Received: from pclouds@gmail.com ([117.5.61.191])
-        by mx.google.com with ESMTPS id q18sm5998741pog.25.2008.11.07.06.35.40
+        by mx.google.com with ESMTPS id t1sm5062043poh.2.2008.11.07.06.35.49
         (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Fri, 07 Nov 2008 06:35:43 -0800 (PST)
-Received: by pclouds@gmail.com (sSMTP sendmail emulation); Fri,  7 Nov 2008 21:35:33 +0700
+        Fri, 07 Nov 2008 06:35:52 -0800 (PST)
+Received: by pclouds@gmail.com (sSMTP sendmail emulation); Fri,  7 Nov 2008 21:35:42 +0700
 X-Mailer: git-send-email 1.6.0.3.802.g47c38
+In-Reply-To: <1226068533-10152-1-git-send-email-pclouds@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/100314>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/100315>
 
-This patch teaches diffcore_rename() to look into
-$GIT_DIR/rename-cache and make use of it to recreate diff_filepair.
-With proper cache, there should be no available entry for estimation
-after exact matching.
-
-Rename caching is per commit. I don't think abitrary tree-tree caching
-is worth it.
-
-$GIT_DIR/rename-cache spans out like $GIT_DIR/objects. Each file
-corresponds to one commit. Its content consists of lines like this
-
-<Destination SHA-1> <SPC> <Source SHA-1> <SPC> <Score in decimal> <NL>
-
-This can be used to:
-
- - Make --find-copies-harder pratically usable for moderate-size
-   repositories. The first "git show" on a linux kernel commit was 5.3
-   sec, it then went down to 0.13 sec.
- - Give git-svn a chance to (locally) import explicit renames from
-   Subversion
- - People may correct rename results for better diff, if automatic
-   rename detection is not good enough.
+If diff.cacherenames is true, then renames will be cached to
+$GIT_DIR/rename-cache. By default, it will not overwrite existing
+cache. Add --refresh-cache to overwrite.
 
 Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
 =2Ecom>
 ---
- diff.h                  |    2 +
- diffcore-rename.c       |  142 +++++++++++++++++++++++++++++++++++++++=
-+++++++-
- log-tree.c              |    2 +
- t/t4030-rename-cache.sh |   55 ++++++++++++++++++
- 4 files changed, 199 insertions(+), 2 deletions(-)
- create mode 100755 t/t4030-rename-cache.sh
+ if git-svn is going to use this, then perharps we should add a rule to=
+ prevent
+ overwriting certain cache files with .keep files, so that git-svn gene=
+rated cache
+ does not get lost
 
+ Documentation/config.txt       |    5 ++++
+ Documentation/diff-options.txt |    5 ++++
+ diff.c                         |   12 +++++++++++
+ diff.h                         |    2 +
+ diffcore-rename.c              |   41 ++++++++++++++++++++++++++++++++=
+++++++++
+ t/t4030-rename-cache.sh        |   27 ++++++++++++++++++++++++++
+ 6 files changed, 92 insertions(+), 0 deletions(-)
+
+diff --git a/Documentation/config.txt b/Documentation/config.txt
+index 29369d0..81160d3 100644
+--- a/Documentation/config.txt
++++ b/Documentation/config.txt
+@@ -630,6 +630,11 @@ diff.renames::
+ 	will enable basic rename detection.  If set to "copies" or
+ 	"copy", it will detect copies, as well.
+=20
++diff.cacherenames::
++	Tells git to automatically cache renames when detected. The
++	cache resides in $GIT_DIR/rename-cache, which is used by git
++	if exists.
++
+ fetch.unpackLimit::
+ 	If the number of objects fetched over the git native
+ 	transfer is below this
+diff --git a/Documentation/diff-options.txt b/Documentation/diff-option=
+s.txt
+index c62b45c..d477a40 100644
+--- a/Documentation/diff-options.txt
++++ b/Documentation/diff-options.txt
+@@ -102,6 +102,11 @@ endif::git-format-patch[]
+ 	Turn off rename detection, even when the configuration
+ 	file gives the default to do so.
+=20
++--refresh-rename-cache::
++	By default, when git finds a cached version of a commit, it
++	will not overwrite the cache. This option makes git overwrite
++	old cache or create a new one.
++
+ --check::
+ 	Warn if changes introduce trailing whitespace
+ 	or an indent that uses a space before a tab. Exits with
+diff --git a/diff.c b/diff.c
+index e368fef..1d65bd9 100644
+--- a/diff.c
++++ b/diff.c
+@@ -26,6 +26,7 @@ int diff_use_color_default =3D -1;
+ static const char *external_diff_cmd_cfg;
+ int diff_auto_refresh_index =3D 1;
+ static int diff_mnemonic_prefix;
++static int diff_cache_renames;
+=20
+ static char diff_colors[][COLOR_MAXLEN] =3D {
+ 	"\033[m",	/* reset */
+@@ -109,6 +110,11 @@ int git_diff_basic_config(const char *var, const c=
+har *value, void *cb)
+ 		return 0;
+ 	}
+=20
++	if (!strcmp(var, "diff.cacherenames")) {
++		diff_cache_renames =3D git_config_bool(var, value);
++		return 0;
++	}
++
+ 	if (!prefixcmp(var, "diff.color.") || !prefixcmp(var, "color.diff."))=
+ {
+ 		int slot =3D parse_diff_color_slot(var, 11);
+ 		if (!value)
+@@ -2248,6 +2254,8 @@ int diff_setup_done(struct diff_options *options)
+=20
+ 	if (options->detect_rename && options->rename_limit < 0)
+ 		options->rename_limit =3D diff_rename_limit_default;
++	if (options->detect_rename)
++		options->cache_renames =3D diff_cache_renames;
+ 	if (options->setup & DIFF_SETUP_USE_CACHE) {
+ 		if (!active_cache)
+ 			/* read-cache does not die even when it fails
+@@ -2415,6 +2423,10 @@ int diff_opt_parse(struct diff_options *options,=
+ const char **av, int ac)
+ 		DIFF_OPT_SET(options, RELATIVE_NAME);
+ 		options->prefix =3D arg + 11;
+ 	}
++	else if (!strcmp(arg, "--refresh-rename-cache")) {
++		options->cache_renames =3D 1;
++		options->refresh_rename_cache =3D 1;
++	}
+=20
+ 	/* xdiff options */
+ 	else if (!strcmp(arg, "-w") || !strcmp(arg, "--ignore-all-space"))
 diff --git a/diff.h b/diff.h
-index a49d865..8b68f6f 100644
+index 8b68f6f..eb97955 100644
 --- a/diff.h
 +++ b/diff.h
-@@ -110,6 +110,8 @@ struct diff_options {
- 	add_remove_fn_t add_remove;
- 	diff_format_fn_t format_callback;
- 	void *format_callback_data;
-+
-+	struct commit *commit;
- };
-=20
- enum color_diff {
+@@ -85,6 +85,8 @@ struct diff_options {
+ 	int pickaxe_opts;
+ 	int rename_score;
+ 	int rename_limit;
++	int cache_renames;
++	int refresh_rename_cache;
+ 	int warn_on_too_large_rename;
+ 	int dirstat_percent;
+ 	int setup;
 diff --git a/diffcore-rename.c b/diffcore-rename.c
-index 168a95b..598cc8d 100644
+index 598cc8d..2b87e4e 100644
 --- a/diffcore-rename.c
 +++ b/diffcore-rename.c
-@@ -5,6 +5,7 @@
- #include "diff.h"
- #include "diffcore.h"
- #include "hash.h"
-+#include "commit.h"
-=20
- /* Table of rename/copy destinations */
-=20
-@@ -409,13 +410,130 @@ static void record_if_better(struct diff_score m=
-[], struct diff_score *o)
- 		m[worst] =3D *o;
+@@ -527,6 +527,44 @@ static void load_rename_cache(struct diff_queue_st=
+ruct *q,
+ 	free_hash(&filepair_table);
  }
 =20
-+struct cached_filepair {
-+	unsigned char dst[20];
-+	unsigned char src[20];
-+	int score;
-+};
-+
-+static int free_cached_filepair(void *p)
-+{
-+	free(p);
-+	return 0;
-+}
-+
-+static void load_rename_cache(struct diff_queue_struct *q,
-+			      struct diff_queue_struct *cacheq,
++static void save_rename_cache(struct diff_queue_struct *outq,
 +			      struct diff_options *options)
 +{
-+	char *sha1_hex;
-+	FILE *fp;
-+	struct hash_table filepair_table;
-+	struct hash_table src_table;
-+	struct cached_filepair *pp;
-+	int i, hash;
-+	static int no_cache_available =3D -1;
++	int i;
++	FILE *fp =3D NULL;
 +	struct stat st;
-+	char *path;
 +
-+	if (no_cache_available =3D=3D -1)
-+		no_cache_available =3D stat(git_path("rename-cache"), &st) || !S_ISD=
-IR(st.st_mode);
++	for (i =3D 0;i < outq->nr; i++) {
++		struct diff_filepair *dp =3D outq->queue[i];
 +
-+	/* return soon so we don't need to waste CPU */
-+	if (no_cache_available > 0)
-+		return;
++		if (!(dp->renamed_pair || /* rename pair */
++		      (!DIFF_FILE_VALID(dp->one) && DIFF_FILE_VALID(dp->two)))) /* c=
+reate pair */
++			continue;
 +
++		if (!fp) {
++			char *sha1 =3D sha1_to_hex(options->commit->object.sha1);
++			char *path =3D git_path("rename-cache/%c%c/%s", sha1[0], sha1[1], s=
+ha1+2);
 +
-+	/* src_table initialization */
-+	init_hash(&src_table);
-+	for (i =3D 0; i < q->nr; i++) {
-+		struct diff_filepair *p =3D q->queue[i];
-+		if (DIFF_FILE_VALID(p->one)) {
-+			unsigned int hash =3D hash_filespec(p->one);
-+			insert_hash(hash, p, &src_table);
++			/* Already cached. If not force refresh, move on */
++			if (!stat(path, &st) && !options->refresh_rename_cache)
++				return;
++
++			safe_create_leading_directories(path);
++			fp =3D fopen(path, "w");
++
++			if (!fp)
++				return;
 +		}
++
++		fprintf(fp, "%s ", sha1_to_hex(dp->two->sha1));
++		fprintf(fp, "%s %d\n",
++			sha1_to_hex(DIFF_FILE_VALID(dp->one) ?  dp->one->sha1 : null_sha1),
++			dp->score);
 +	}
-+
-+	/* filepair_table initialization */
-+	init_hash(&filepair_table);
-+	sha1_hex =3D sha1_to_hex(options->commit->object.sha1);
-+	path =3D git_path("rename-cache/%c%c/%s",sha1_hex[0], sha1_hex[1], sh=
-a1_hex+2);
-+	if (stat(path, &st))
-+		fp =3D NULL;
-+	else
-+		fp =3D fopen(path, "r");
-+	if (fp) {
-+		char src_sha1_hex[41], dst_sha1_hex[41];
-+		struct cached_filepair p;
-+
-+		src_sha1_hex[40] =3D dst_sha1_hex[40] =3D '\0';
-+		while (fscanf(fp, "%40c %40c %d\n", dst_sha1_hex, src_sha1_hex, &p.s=
-core) =3D=3D 3) {
-+			if (get_sha1_hex(src_sha1_hex, p.src) ||
-+			    get_sha1_hex(dst_sha1_hex, p.dst))
-+				break;
-+
-+			pp =3D xmalloc(sizeof(*pp));
-+			memcpy(pp, &p, sizeof(*pp));
-+			memcpy(&hash, p.dst, sizeof(hash));
-+			insert_hash(hash, pp, &filepair_table);
-+		}
++	if (fp)
 +		fclose(fp);
-+	}
-+
-+	for (i =3D 0; i < q->nr; i++) {
-+		struct diff_filepair *p =3D q->queue[i];
-+		struct diff_filepair *dp, *src;
-+
-+		/* find remote_dst */
-+		if (DIFF_FILE_VALID(p->one) ||
-+		    !DIFF_FILE_VALID(p->two) ||
-+		    (options->single_follow && strcmp(options->single_follow, p->two=
-->path)))
-+			continue;
-+
-+		memcpy(&hash, p->two->sha1, sizeof(hash));
-+		pp =3D lookup_hash(hash, &filepair_table);
-+		if (!pp || memcmp(p->two->sha1, pp->dst, 20))
-+			continue;
-+
-+		/* create pair */
-+		if (is_null_sha1(pp->src)) {
-+			if (DIFF_FILE_VALID(p->one))
-+				continue;
-+			diff_q(cacheq, p);
-+			q->queue[i] =3D NULL;
-+			continue;
-+		}
-+
-+		memcpy(&hash, pp->src, sizeof(hash));
-+		src =3D lookup_hash(hash, &src_table);
-+		if (!src || memcmp(pp->src, src->one->sha1, 20))
-+			continue;
-+
-+		src->one->rename_used++;
-+		src->one->count++;
-+		p->two->count++;
-+
-+		dp =3D diff_queue(NULL, src->one, p->two);
-+		dp->renamed_pair =3D 1;
-+		dp->score =3D pp->score;
-+
-+		diff_q(cacheq, dp);
-+		q->queue[i] =3D NULL;
-+		diff_free_filepair(p);
-+	}
-+
-+	for_each_hash(&filepair_table, free_cached_filepair);
-+	free_hash(&src_table);
-+	free_hash(&filepair_table);
 +}
 +
  void diffcore_rename(struct diff_options *options)
  {
  	int detect_rename =3D options->detect_rename;
- 	int minimum_score =3D options->rename_score;
- 	int rename_limit =3D options->rename_limit;
- 	struct diff_queue_struct *q =3D &diff_queued_diff;
--	struct diff_queue_struct outq;
-+	struct diff_queue_struct outq, cacheq;
- 	struct diff_score *mx;
- 	int i, j, rename_count;
- 	int num_create, num_src, dst_cnt;
-@@ -423,8 +541,19 @@ void diffcore_rename(struct diff_options *options)
- 	if (!minimum_score)
- 		minimum_score =3D DEFAULT_RENAME_SCORE;
-=20
-+	cacheq.queue =3D NULL;
-+	cacheq.nr =3D cacheq.alloc =3D 0;
-+
-+	if (detect_rename && options->commit)
-+		load_rename_cache(q, &cacheq, options);
-+
- 	for (i =3D 0; i < q->nr; i++) {
- 		struct diff_filepair *p =3D q->queue[i];
-+
-+		/* was consumed by rename cache */
-+		if (!p)
-+			continue;
-+
- 		if (!DIFF_FILE_VALID(p->one)) {
- 			if (!DIFF_FILE_VALID(p->two))
- 				continue; /* unmerged */
-@@ -563,10 +692,17 @@ void diffcore_rename(struct diff_options *options=
-)
- 	 */
- 	outq.queue =3D NULL;
- 	outq.nr =3D outq.alloc =3D 0;
--	for (i =3D 0; i < q->nr; i++) {
-+	for (i =3D j =3D 0; i < q->nr; i++) {
- 		struct diff_filepair *p =3D q->queue[i];
- 		struct diff_filepair *pair_to_free =3D NULL;
-=20
-+		if (!p) {
-+			if (j >=3D cacheq.nr)
-+				die("Internal error: running out of cacheq.");
-+			diff_q(&outq, cacheq.queue[j++]);
-+			continue;
-+		}
-+
- 		if (!DIFF_FILE_VALID(p->one) && DIFF_FILE_VALID(p->two)) {
- 			/*
- 			 * Creation
-@@ -635,6 +771,8 @@ void diffcore_rename(struct diff_options *options)
+@@ -770,6 +808,9 @@ void diffcore_rename(struct diff_options *options)
+ 	}
  	diff_debug_queue("done copying original", &outq);
 =20
++	if (options->commit && options->cache_renames)
++		save_rename_cache(&outq, options);
++
  	free(q->queue);
-+	if (cacheq.queue)
-+		free(cacheq.queue);
- 	*q =3D outq;
- 	diff_debug_queue("done collapsing", q);
-=20
-diff --git a/log-tree.c b/log-tree.c
-index cec3c06..a67ef6d 100644
---- a/log-tree.c
-+++ b/log-tree.c
-@@ -518,6 +518,7 @@ int log_tree_commit(struct rev_info *opt, struct co=
-mmit *commit)
- 	log.commit =3D commit;
- 	log.parent =3D NULL;
- 	opt->loginfo =3D &log;
-+	opt->diffopt.commit =3D commit;
-=20
- 	shown =3D log_tree_diff(opt, commit, &log);
- 	if (!shown && opt->loginfo && opt->always_show_header) {
-@@ -527,5 +528,6 @@ int log_tree_commit(struct rev_info *opt, struct co=
-mmit *commit)
- 	}
- 	opt->loginfo =3D NULL;
- 	maybe_flush_or_die(stdout, "stdout");
-+	opt->diffopt.commit =3D NULL;
- 	return shown;
- }
+ 	if (cacheq.queue)
+ 		free(cacheq.queue);
 diff --git a/t/t4030-rename-cache.sh b/t/t4030-rename-cache.sh
-new file mode 100755
-index 0000000..0d8390c
---- /dev/null
+index 0d8390c..24d3667 100755
+--- a/t/t4030-rename-cache.sh
 +++ b/t/t4030-rename-cache.sh
-@@ -0,0 +1,55 @@
-+#!/bin/sh
-+#
-+# Copyright (c) 2008 Nguyen Thai Ngoc Duy
-+#
-+
-+test_description=3D'Test diff rename cache'
-+. ./test-lib.sh
-+
+@@ -52,4 +52,31 @@ test_expect_success 'load create pair cache' '
+ 	test_cmp expected result
+ '
+=20
 +cat >expected <<EOF
-+ create mode 100644 c
-+ copy a =3D> d (100%)
++f2ad6c76f0115a6ba5b00456a849810e7ec0af20 00000000000000000000000000000=
+00000000000 0
++78981922613b2afb6025042ff6bd878ac1994e85 78981922613b2afb6025042ff6bd8=
+78ac1994e85 60000
 +EOF
-+test_expect_success 'setup' '
-+	for i in a b c
-+	do
-+		echo $i > $i
-+	done
-+	cp a d
-+	A_SHA1=3D$(git hash-object a)
-+	B_SHA1=3D$(git hash-object b)
-+	C_SHA1=3D$(git hash-object c)
-+	D_SHA1=3D$(git hash-object d)
-+	git add a b
-+	git commit -m first
-+	git add c d
-+	git commit -m second
-+	git show --pretty=3Doneline --summary -C -M --find-copies-harder HEAD=
-|sed 1d > result
-+	test_cmp expected result
-+'
-+
-+cat >expected <<EOF
-+ copy a =3D> c (100%)
-+ copy a =3D> d (100%)
-+EOF
-+test_expect_success 'load rename pair cache' '
++test_expect_success 'save rename cache' '
 +	P=3D.git/rename-cache/$(git rev-parse HEAD|sed "s,\(..\)\(.*\),\1/\2,=
 ") &&
-+	mkdir -p $(dirname $P)
-+	echo $C_SHA1 $A_SHA1 60000 >> $P
-+	git show --pretty=3Doneline --summary -C -M --find-copies-harder HEAD=
-|sed 1d > result
-+	test_cmp expected result
++	rm -r .git/rename-cache
++	git config diff.cacherenames true
++	git show --summary -C -M --find-copies-harder > /dev/null
++	test_cmp expected $P
 +'
 +
-+cat >expected <<EOF
-+ copy a =3D> c (100%)
-+ create mode 100644 d
-+EOF
-+test_expect_success 'load create pair cache' '
++test_expect_success 'subsequent command does not change cache' '
 +	P=3D.git/rename-cache/$(git rev-parse HEAD|sed "s,\(..\)\(.*\),\1/\2,=
 ") &&
-+	mkdir -p $(dirname $P)
-+	echo $D_SHA1 0000000000000000000000000000000000000000 0 >> $P
-+	git show --pretty=3Doneline --summary -C -M --find-copies-harder HEAD=
-|sed 1d > result
-+	test_cmp expected result
++	echo corrupted >> $P
++	! test_cmp expected $P &&
++	git show --summary -C -M --find-copies-harder HEAD > /dev/null &&
++	! test_cmp expected $P
 +'
 +
-+test_done
++test_expect_success 'overwrite cache with --refresh-rename-cache' '
++	P=3D.git/rename-cache/$(git rev-parse HEAD|sed "s,\(..\)\(.*\),\1/\2,=
+") &&
++	! test_cmp expected $P &&
++	git show --summary -C -M --find-copies-harder --refresh-rename-cache =
+HEAD > /dev/null &&
++	test_cmp expected $P
++'
++
+ test_done
 --=20
 1.6.0.3.802.g47c38
