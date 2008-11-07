@@ -1,62 +1,89 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: git-push and $GIT_DIR/branches
-Date: Fri, 07 Nov 2008 14:27:07 -0800
-Message-ID: <7vfxm3f9z8.fsf@gitster.siamese.dyndns.org>
-References: <20081107082629.GA27158@auto.tuwien.ac.at>
- <7vljvvh61y.fsf@gitster.siamese.dyndns.org>
- <20081107204451.GA10394@auto.tuwien.ac.at>
+From: Alexandre Julliard <julliard@winehq.org>
+Subject: Re: [PATCH] checkout: Don't crash when switching away from an invalid branch.
+Date: Fri, 07 Nov 2008 23:28:16 +0100
+Message-ID: <87od0r9nnj.fsf@wine.dyndns.org>
+References: <871vxnbhbh.fsf@wine.dyndns.org>
+	<alpine.DEB.1.00.0811071903300.30769@pacific.mpi-cbg.de>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-To: mkoegler@auto.tuwien.ac.at (Martin Koegler)
-X-From: git-owner@vger.kernel.org Fri Nov 07 23:29:07 2008
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Fri Nov 07 23:29:54 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KyZpD-0005z2-CA
-	for gcvg-git-2@gmane.org; Fri, 07 Nov 2008 23:29:07 +0100
+	id 1KyZpw-0006An-CD
+	for gcvg-git-2@gmane.org; Fri, 07 Nov 2008 23:29:52 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751998AbYKGW1b (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 7 Nov 2008 17:27:31 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751636AbYKGW1b
-	(ORCPT <rfc822;git-outgoing>); Fri, 7 Nov 2008 17:27:31 -0500
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:53108 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751171AbYKGW1a (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 7 Nov 2008 17:27:30 -0500
-Received: from localhost.localdomain (unknown [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 2CBF17A16D;
-	Fri,  7 Nov 2008 17:27:29 -0500 (EST)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES256-SHA (256/256 bits)) (No client certificate requested) by
- a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTPSA id 815787A16B; Fri,
-  7 Nov 2008 17:27:14 -0500 (EST)
-In-Reply-To: <20081107204451.GA10394@auto.tuwien.ac.at> (Martin Koegler's
- message of "Fri, 7 Nov 2008 21:44:51 +0100")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: 430E1BFA-AD1B-11DD-BAD8-9CEDC82D7133-77302942!a-sasl-fastnet.pobox.com
+	id S1752172AbYKGW21 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 7 Nov 2008 17:28:27 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751832AbYKGW21
+	(ORCPT <rfc822;git-outgoing>); Fri, 7 Nov 2008 17:28:27 -0500
+Received: from mail.codeweavers.com ([216.251.189.131]:41662 "EHLO
+	mail.codeweavers.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752163AbYKGW21 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 7 Nov 2008 17:28:27 -0500
+Received: from adsl-84-226-29-112.adslplus.ch ([84.226.29.112] helo=wine.dyndns.org)
+	by mail.codeweavers.com with esmtpsa (TLS-1.0:DHE_RSA_AES_256_CBC_SHA1:32)
+	(Exim 4.63)
+	(envelope-from <julliard@winehq.org>)
+	id 1KyZoR-0003Z1-G5; Fri, 07 Nov 2008 16:28:25 -0600
+Received: by wine.dyndns.org (Postfix, from userid 1000)
+	id F24F01E73B5; Fri,  7 Nov 2008 23:28:16 +0100 (CET)
+In-Reply-To: <alpine.DEB.1.00.0811071903300.30769@pacific.mpi-cbg.de>
+	(Johannes Schindelin's message of "Fri, 7 Nov 2008 19:05:29 +0100
+	(CET)")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.0.60 (gnu/linux)
+X-Spam-Score: -3.4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/100352>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/100353>
 
-mkoegler@auto.tuwien.ac.at (Martin Koegler) writes:
+Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
-> I asume, that you [and probably many other] are not very interrested
-> in this feature. But would you accept a patch changing the push
-> refspec to HEAD:refs/heads/<head>?
+>> diff --git a/builtin-checkout.c b/builtin-checkout.c
+>> index 57b94d2..7c1b8cd 100644
+>> --- a/builtin-checkout.c
+>> +++ b/builtin-checkout.c
+>> @@ -47,7 +47,8 @@ static int post_checkout_hook(struct commit *old, struct commit *new,
+>>  
+>>  	memset(&proc, 0, sizeof(proc));
+>>  	argv[0] = name;
+>> -	argv[1] = xstrdup(sha1_to_hex(old->object.sha1));
+>> +	argv[1] = old ? xstrdup(sha1_to_hex(old->object.sha1))
+>> +		      : "0000000000000000000000000000000000000000";
+>
+> I guess you want to use the variable null_sha1 here.
 
-I believe "git-push foo" with .git/branches/foo has worked the way it does
-now from day one, so the above change you suggest breaks peoples'
-expectations and documented behaviour, _if_ people are using "branches"
-with git-push.  It definitely is a no-go to just change the behaviour
-without warning and deprecation period, but with a careful transition
-plan, I personally do not think there is a fundamental reason not to
-improve it (others may disagree).
+I could, though it seemed to me a bit silly to format and strdup a
+string that is a known constant. But I'm happy to change it if needed.
 
-I do not know what Cogito did when you told it to push with such a
-configuration, though.  Its "branches" had quite different semantics from
-the concept of "remote" in git.
+>> @@ -492,10 +493,13 @@ static void update_refs_for_switch(struct checkout_opts *opts,
+>>  	}
+>>  
+>>  	old_desc = old->name;
+>> -	if (!old_desc)
+>> +	if (!old_desc && old->commit)
+>>  		old_desc = sha1_to_hex(old->commit->object.sha1);
+>> -	strbuf_addf(&msg, "checkout: moving from %s to %s",
+>> -		    old_desc, new->name);
+>> +	if (old_desc)
+>> +		strbuf_addf(&msg, "checkout: moving from %s to %s",
+>> +			    old_desc, new->name);
+>> +	else
+>> +		strbuf_addf(&msg, "checkout: moving to %s", new->name);
+>
+> Why not
+> 		old_desc ? old_desc : "(invalid)"
+> ?
+
+IMO it looks more friendly to not display a branch that doesn't exist,
+rather than printing something like (invalid) or (null).
+
+-- 
+Alexandre Julliard
+julliard@winehq.org
