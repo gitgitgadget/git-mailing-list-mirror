@@ -1,116 +1,81 @@
-From: Alexandre Julliard <julliard@winehq.org>
-Subject: [PATCH] checkout: Don't crash when switching away from an invalid branch.
-Date: Sat, 08 Nov 2008 13:03:59 +0100
-Message-ID: <87fxm2a0gg.fsf@wine.dyndns.org>
+From: dennis <dennis.yxun@gmail.com>
+Subject: [question] git svn fail to fetch GCC source due to index mismatch
+Date: Sat, 08 Nov 2008 04:24:51 +0800
+Message-ID: <4914A413.80301@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Nov 08 13:05:50 2008
+X-From: git-owner@vger.kernel.org Sat Nov 08 13:26:32 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KymZI-0000mp-Cl
-	for gcvg-git-2@gmane.org; Sat, 08 Nov 2008 13:05:47 +0100
+	id 1Kymta-0006Gu-4m
+	for gcvg-git-2@gmane.org; Sat, 08 Nov 2008 13:26:30 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753135AbYKHMES (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 8 Nov 2008 07:04:18 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753125AbYKHMES
-	(ORCPT <rfc822;git-outgoing>); Sat, 8 Nov 2008 07:04:18 -0500
-Received: from mail.codeweavers.com ([216.251.189.131]:50344 "EHLO
-	mail.codeweavers.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753122AbYKHMER (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 8 Nov 2008 07:04:17 -0500
-Received: from adsl-84-226-9-85.adslplus.ch ([84.226.9.85] helo=wine.dyndns.org)
-	by mail.codeweavers.com with esmtpsa (TLS-1.0:DHE_RSA_AES_256_CBC_SHA1:32)
-	(Exim 4.63)
-	(envelope-from <julliard@winehq.org>)
-	id 1KymXu-0003Xq-2Y
-	for git@vger.kernel.org; Sat, 08 Nov 2008 06:04:16 -0600
-Received: by wine.dyndns.org (Postfix, from userid 1000)
-	id D94B71E73B5; Sat,  8 Nov 2008 13:03:59 +0100 (CET)
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.0.60 (gnu/linux)
-X-Spam-Score: -3.4
+	id S1753191AbYKHMZC (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 8 Nov 2008 07:25:02 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753153AbYKHMZB
+	(ORCPT <rfc822;git-outgoing>); Sat, 8 Nov 2008 07:25:01 -0500
+Received: from ti-out-0910.google.com ([209.85.142.189]:17816 "EHLO
+	ti-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753122AbYKHMZB (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 8 Nov 2008 07:25:01 -0500
+Received: by ti-out-0910.google.com with SMTP id b6so939129tic.23
+        for <git@vger.kernel.org>; Sat, 08 Nov 2008 04:24:59 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from
+         :user-agent:mime-version:to:subject:content-type
+         :content-transfer-encoding;
+        bh=gws4ePyqsd2GKq9jHlSy5a9J5Dw8RVJDF/g0L2zMCtI=;
+        b=iSyEsMTi+v/vcvVEiYoIsnMnfclW7lZeBhGd5AdP7Nks5zknpWJrN1JkfWcUsB7xyU
+         heYweHR1gsk6kANZJR+tnAp+7III1BlU7WL/L7X8V2wQr6JT222oTPxZHz3bsZmVpuyT
+         NlJaZY2veA++MeJM2xeZ3OUkdwG2da/QRG8qg=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:user-agent:mime-version:to:subject
+         :content-type:content-transfer-encoding;
+        b=lE8lD7m4MvHTMn4Z+0GPMeyJT1TCPDFVY1fXX0KqY8NQsShA2ZNjMhsczmCJauVTwh
+         yO3pHU1D8NSoqe0YgN0LZUsBiTTxhZagyS6CUYBTyRAlo3Wsy2gJlq4jbb9Xce0sgXSM
+         BokZAlSSlAkPLrc4r+t/N6LV0vE0MRejHOQ8Y=
+Received: by 10.110.105.5 with SMTP id d5mr5116411tic.37.1226147099500;
+        Sat, 08 Nov 2008 04:24:59 -0800 (PST)
+Received: from ?192.168.0.18? ([222.65.132.11])
+        by mx.google.com with ESMTPS id u12sm4293049tia.3.2008.11.08.04.24.58
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Sat, 08 Nov 2008 04:24:59 -0800 (PST)
+User-Agent: Thunderbird 2.0.0.17 (X11/20081005)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/100399>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/100400>
 
-When using alternates, it is possible for HEAD to end up pointing to
-an invalid commit. git checkout should be able to recover from that
-situation without crashing.
+HI:
+   I have problem when use git svn fetch command to
+retrieve the GCC source code.
+It says index mismatch, then  abort,  any suggestion?
 
-Signed-off-by: Alexandre Julliard <julliard@winehq.org>
----
- builtin-checkout.c               |    8 ++++----
- t/t2011-checkout-invalid-head.sh |   18 ++++++++++++++++++
- 2 files changed, 22 insertions(+), 4 deletions(-)
- create mode 100755 t/t2011-checkout-invalid-head.sh
+  
+$git svn fetch
+Index mismatch: 98ba56dbceddf50ebfab9e4649e9b1b1a319b377 !=
+4f40f4619690f89454614be0eba63d584d25523e
+rereading 19e22aa4cbc9f7e3667243481f33c859e3bba358
+Found possible branch point: svn://gcc.gnu.org/svn/gcc/trunk =>
+svn://gcc.gnu.org/svn/gcc/trunk, 130802
+Initializing parent: git-svn@130802
+Found branch parent: (git-svn) 9a08076e1ad241080838d547f64a2a9aceb083ca
+Index mismatch: 4f40f4619690f89454614be0eba63d584d25523e !=
+98ba56dbceddf50ebfab9e4649e9b1b1a319b377
+rereading 9a08076e1ad241080838d547f64a2a9aceb083ca
+Following parent with do_switch
+Malformed network data: Malformed network data at
+/usr/libexec/git-core/git-svn line 2340
 
-diff --git a/builtin-checkout.c b/builtin-checkout.c
-index 57b94d2..06904c3 100644
---- a/builtin-checkout.c
-+++ b/builtin-checkout.c
-@@ -47,7 +47,7 @@ static int post_checkout_hook(struct commit *old, struct commit *new,
+$git branch -a
+git-svn
+git-svn@130802
  
- 	memset(&proc, 0, sizeof(proc));
- 	argv[0] = name;
--	argv[1] = xstrdup(sha1_to_hex(old->object.sha1));
-+	argv[1] = xstrdup(sha1_to_hex(old ? old->object.sha1 : null_sha1));
- 	argv[2] = xstrdup(sha1_to_hex(new->object.sha1));
- 	argv[3] = changed ? "1" : "0";
- 	argv[4] = NULL;
-@@ -492,10 +492,10 @@ static void update_refs_for_switch(struct checkout_opts *opts,
- 	}
- 
- 	old_desc = old->name;
--	if (!old_desc)
-+	if (!old_desc && old->commit)
- 		old_desc = sha1_to_hex(old->commit->object.sha1);
- 	strbuf_addf(&msg, "checkout: moving from %s to %s",
--		    old_desc, new->name);
-+		    old_desc ? old_desc : "(invalid)", new->name);
- 
- 	if (new->path) {
- 		create_symref("HEAD", new->path, msg.buf);
-@@ -551,7 +551,7 @@ static int switch_branches(struct checkout_opts *opts, struct branch_info *new)
- 	 * a new commit, we want to mention the old commit once more
- 	 * to remind the user that it might be lost.
- 	 */
--	if (!opts->quiet && !old.path && new->commit != old.commit)
-+	if (!opts->quiet && !old.path && old.commit && new->commit != old.commit)
- 		describe_detached_head("Previous HEAD position was", old.commit);
- 
- 	if (!old.commit) {
-diff --git a/t/t2011-checkout-invalid-head.sh b/t/t2011-checkout-invalid-head.sh
-new file mode 100755
-index 0000000..764bb0a
---- /dev/null
-+++ b/t/t2011-checkout-invalid-head.sh
-@@ -0,0 +1,18 @@
-+#!/bin/sh
-+
-+test_description='checkout switching away from an invalid branch'
-+
-+. ./test-lib.sh
-+
-+test_expect_success 'setup' '
-+	echo hello >world &&
-+	git add world &&
-+	git commit -m initial
-+'
-+
-+test_expect_success 'checkout master from invalid HEAD' '
-+	echo 0000000000000000000000000000000000000000 >.git/HEAD &&
-+	git checkout master --
-+'
-+
-+test_done
--- 
-1.6.0.3.669.g76740
-
--- 
-Alexandre Julliard
-julliard@winehq.org
