@@ -1,65 +1,64 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] checkout: Don't crash when switching away from an
- invalid branch.
-Date: Fri, 07 Nov 2008 15:06:18 -0800
-Message-ID: <7vbpwrf85x.fsf@gitster.siamese.dyndns.org>
-References: <871vxnbhbh.fsf@wine.dyndns.org>
- <alpine.DEB.1.00.0811071903300.30769@pacific.mpi-cbg.de>
- <87od0r9nnj.fsf@wine.dyndns.org>
+Subject: Re: [RFC PATCH 0/4] deny push to current branch of non-bare repo
+Date: Fri, 07 Nov 2008 15:16:53 -0800
+Message-ID: <7v3ai3f7oa.fsf@gitster.siamese.dyndns.org>
+References: <20081107220730.GA15942@coredump.intra.peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	git@vger.kernel.org
-To: Alexandre Julliard <julliard@winehq.org>
-X-From: git-owner@vger.kernel.org Sat Nov 08 00:07:45 2008
+Cc: git@vger.kernel.org, Sam Vilain <sam@vilain.net>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Sat Nov 08 00:18:29 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KyaQb-0002N2-0E
-	for gcvg-git-2@gmane.org; Sat, 08 Nov 2008 00:07:45 +0100
+	id 1Kyaav-0005fG-A2
+	for gcvg-git-2@gmane.org; Sat, 08 Nov 2008 00:18:25 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752591AbYKGXGc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 7 Nov 2008 18:06:32 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752749AbYKGXGc
-	(ORCPT <rfc822;git-outgoing>); Fri, 7 Nov 2008 18:06:32 -0500
-Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:50034 "EHLO
+	id S1752135AbYKGXRH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 7 Nov 2008 18:17:07 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751676AbYKGXRF
+	(ORCPT <rfc822;git-outgoing>); Fri, 7 Nov 2008 18:17:05 -0500
+Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:50569 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752268AbYKGXGb (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 7 Nov 2008 18:06:31 -0500
+	with ESMTP id S1751390AbYKGXRD (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 7 Nov 2008 18:17:03 -0500
 Received: from localhost.localdomain (unknown [127.0.0.1])
-	by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id 8CA469415A;
-	Fri,  7 Nov 2008 18:06:29 -0500 (EST)
+	by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id E54DB94218;
+	Fri,  7 Nov 2008 18:17:02 -0500 (EST)
 Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
  DHE-RSA-AES256-SHA (256/256 bits)) (No client certificate requested) by
- a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTPSA id 5FEEF94159; Fri, 
- 7 Nov 2008 18:06:20 -0500 (EST)
-In-Reply-To: <87od0r9nnj.fsf@wine.dyndns.org> (Alexandre Julliard's message
- of "Fri, 07 Nov 2008 23:28:16 +0100")
+ a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTPSA id BF2A294217; Fri, 
+ 7 Nov 2008 18:16:54 -0500 (EST)
+In-Reply-To: <20081107220730.GA15942@coredump.intra.peff.net> (Jeff King's
+ message of "Fri, 7 Nov 2008 17:07:30 -0500")
 User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: B609B83A-AD20-11DD-8A0D-4F5276724C3F-77302942!a-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: 2F89C2A8-AD22-11DD-B500-4F5276724C3F-77302942!a-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/100359>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/100360>
 
-Alexandre Julliard <julliard@winehq.org> writes:
+Jeff King <peff@peff.net> writes:
 
-> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
-> ...
->> Why not
->> 		old_desc ? old_desc : "(invalid)"
->> ?
->
-> IMO it looks more friendly to not display a branch that doesn't exist,
-> rather than printing something like (invalid) or (null).
+> The FAQ even says "don't do this until you know what you are doing." So
+> the safety valve is configurable, so that those who know what they are
+> doing can switch it off.
 
-Actually I think it is a good idea to remind that you were in a funny
-state.
+"We are breaking your existing working setup but you can add a new
+configuration to unbreak it" should not be done lightly.  I think as the
+end result it is a reasonable thing to aim for for this particular
+feature, but we do need a transition plan patch in between that introduces
+a step that warns but not forbids.  We can ship 1.6.1 with it and then
+switch the default to forbid in 1.6.3, for example.
 
-For that matter, dying without removing the trace of that funny state
-might be even preferrable if you need to do postmortem to figure out why
-you got into such a funny state to begin with, but not everybody uses git
-to debug git.  I think Dscho's suggestion is a reasonable middle ground.
+> Patch 4/4 is the interesting one. 1/4 is a cleanup I saw while fixing
+> tests. 2/4 is a cleanup to prepare for 3/4. And 3/4 fixes a bunch of
+> tests which were inadvertently doing such a push (but didn't care
+> because they didn't look at the working directory).
+
+I wonder if you can use the tests 3/4 touches as the test for your "keep
+existing setup" configuration variable, pretending that they are old
+timer's repositories?
