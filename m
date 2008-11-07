@@ -1,76 +1,89 @@
-From: Mark Burton <markb@ordern.com>
-Subject: Re: [RFC PATCH 0/4] deny push to current branch of non-bare repo
-Date: Fri, 7 Nov 2008 22:39:26 +0000 (UTC)
-Message-ID: <loom.20081107T222744-932@post.gmane.org>
-References: <20081107220730.GA15942@coredump.intra.peff.net>
+From: Yann Dirson <ydirson@altern.org>
+Subject: Re: [PATCH 2/3] Introduce rename factorization in diffcore.
+Date: Fri, 7 Nov 2008 23:12:24 +0100
+Message-ID: <20081107221224.GK5158@nan92-1-81-57-214-146.fbx.proxad.net>
+References: <20081101215739.1116.59319.stgit@gandelf.nowhere.earth> <20081101220319.1116.50509.stgit@gandelf.nowhere.earth> <7vy6zwgx3i.fsf@gitster.siamese.dyndns.org> <20081107193957.GI5158@nan92-1-81-57-214-146.fbx.proxad.net> <7v3ai3gugt.fsf@gitster.siamese.dyndns.org> <20081107203952.GJ5158@nan92-1-81-57-214-146.fbx.proxad.net> <7vskq3fdgz.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Nov 07 23:40:57 2008
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Nov 07 23:50:57 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Kya0e-0001Nt-N1
-	for gcvg-git-2@gmane.org; Fri, 07 Nov 2008 23:40:57 +0100
+	id 1KyaAK-0004RV-TV
+	for gcvg-git-2@gmane.org; Fri, 07 Nov 2008 23:50:57 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751667AbYKGWjm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 7 Nov 2008 17:39:42 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751762AbYKGWjm
-	(ORCPT <rfc822;git-outgoing>); Fri, 7 Nov 2008 17:39:42 -0500
-Received: from main.gmane.org ([80.91.229.2]:45890 "EHLO ciao.gmane.org"
+	id S1750952AbYKGWtn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 7 Nov 2008 17:49:43 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750904AbYKGWtn
+	(ORCPT <rfc822;git-outgoing>); Fri, 7 Nov 2008 17:49:43 -0500
+Received: from smtp6-g19.free.fr ([212.27.42.36]:53198 "EHLO smtp6-g19.free.fr"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751651AbYKGWjl (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 7 Nov 2008 17:39:41 -0500
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1KyZzN-0004w0-06
-	for git@vger.kernel.org; Fri, 07 Nov 2008 22:39:37 +0000
-Received: from host86-128-20-200.range86-128.btcentralplus.com ([86.128.20.200])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Fri, 07 Nov 2008 22:39:36 +0000
-Received: from markb by host86-128-20-200.range86-128.btcentralplus.com with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Fri, 07 Nov 2008 22:39:36 +0000
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@ger.gmane.org
-X-Gmane-NNTP-Posting-Host: main.gmane.org
-User-Agent: Loom/3.14 (http://gmane.org/)
-X-Loom-IP: 86.128.20.200 (Mozilla/5.0 (X11; U; Linux i686; en-GB; rv:1.9.0.3) Gecko/2008092510 Ubuntu/8.04 (hardy) Firefox/3.0.3)
+	id S1750787AbYKGWtm (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 7 Nov 2008 17:49:42 -0500
+Received: from smtp6-g19.free.fr (localhost.localdomain [127.0.0.1])
+	by smtp6-g19.free.fr (Postfix) with ESMTP id D5EDA17288;
+	Fri,  7 Nov 2008 23:49:40 +0100 (CET)
+Received: from gandelf.nowhere.earth (nan92-1-81-57-214-146.fbx.proxad.net [81.57.214.146])
+	by smtp6-g19.free.fr (Postfix) with ESMTP id B182517266;
+	Fri,  7 Nov 2008 23:12:46 +0100 (CET)
+Received: by gandelf.nowhere.earth (Postfix, from userid 1000)
+	id 3C1D41F06A; Fri,  7 Nov 2008 23:12:24 +0100 (CET)
+Content-Disposition: inline
+In-Reply-To: <7vskq3fdgz.fsf@gitster.siamese.dyndns.org>
+User-Agent: Mutt/1.5.18 (2008-05-17)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/100355>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/100356>
 
-Jeff King <peff <at> peff.net> writes:
-
+On Fri, Nov 07, 2008 at 01:11:40PM -0800, Junio C Hamano wrote:
+> Yann Dirson <ydirson@altern.org> writes:
 > 
-> The short of it is that it's dangerous, we see people confused by it
-> (there was another one just yesterday), and it's a FAQ:
+> > On Fri, Nov 07, 2008 at 12:19:14PM -0800, Junio C Hamano wrote:
+> >> I am afraid that this is totally unacceptable, as you yourself mentioned,
+> >> the end result is unapplicable with any existing tool and would confuse
+> >> viewers like gitk and gitweb.
+> >
+> > Well, other tools will still have to be taught about a new syntax, if
+> > they're going to use the new flag - just like it was for --rename.
 > 
->   http://git.or.cz/gitwiki/GitFaq#head-b96f48bc9c925074be9f95c0fce69bcece5f6e73
-> 
-> The FAQ even says "don't do this until you know what you are doing." So
-> the safety valve is configurable, so that those who know what they are
-> doing can switch it off.
+> You are mistaken.  For a patch, you are dealing with two different
+> parties: producer and consumer.  If you are adding new feature to the
+> producer, the output format should be desigend to allow the consumer tell
+> that it is something it does not know how to handle.
 
-When I first tried to use git I was bitten by exactly this problem. I know,
-RTFM, but when everything is new, it's easy to undervalue the words of wisdom
-when you don't understand the bigger picture and the rational behind the advice.
+Agreed.
 
-I now happily work with non-bare repositories on my main machine that I push to
-from my satellite development machines but, of course, I don't push to the head
-branches but, instead, to remote branches and then merge on the main machine.
+> Marking a non patch with "diff --git" to trigger the logic to signal the
+> beginning of a patch to git-apply (and perhaps other tools) is a non
+> starter.
 
-I wouldn't have wasted as much time getting my head around this if git had
-refused to accept the push to the current branch but, instead, issued a suitable
-message telling me I probably didn't want to be doing that.
+This is not what I meant.
 
-So, from my own experience, I would say this would be a good feature to add.
+> And for this "we are giving a patch that your git-apply can apply and gitk
+> can show, but by the way we also think the whole directory foo moved to
+> new location bar" is merely an additional information.  You should still
+> be able to apply the patch with tools that are unaware of this new
+> directory move detection feature.
 
-Cheers,
+I hope I just miss your point.  Letting unaware tools handle such a
+patch "the right way" would imply just adding the information "dir foo
+moved to bar", and not removing the individual file moves, which goes
+in the way of the exact reason why I have started to work on this.
 
-Mark
+Compare this to the addition of the "file rename" feature (correct me
+if I'm wrong): it was added without bothering whether plain old
+"patch" can deal with it, and when feeding a git diff to patch(1) I
+cannot expect it to DTRT (indeed it applies the content change but not
+the rename part, without complaining, and an unsuspecting user would
+just be shot in the foot): we are precisely *not* able to apply the
+patch with tools that are unaware of this new file rename feature.
+
+This is precisely to limit this problem in the future that I proposed
+this "diff extension" stuff in my last mail: limit how the "backward
+compatibility" argument can cripple innovation.
