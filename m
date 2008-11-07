@@ -1,156 +1,87 @@
-From: Brandon Casey <casey@nrlssc.navy.mil>
+From: Junio C Hamano <gitster@pobox.com>
 Subject: Re: [PATCH v2 3/3] pack-objects: honor '.keep' files
-Date: Thu, 06 Nov 2008 17:22:41 -0600
-Message-ID: <HBFmgmcvgPzZ0xq-fRUt98ZOBXGCvwxHGyEwF9bNcgpDgS-t-D3viw@cipher.nrlssc.navy.mil>
-References: <-RiFxYEd9Wiq2fWX74zYGUiEwrzLeoFDb1KuG3-Xo-s@cipher.nrlssc.navy.mil> <LSyxMgVV7zAWRvSezvxyUc6-kz2gK6MRVKonKSf1pAmdqO-jeuMFIw@cipher.nrlssc.navy.mil> <GV8cY3fn8l5UV5cNoPN8bHchWt9u2tbZ8j_ypkiY-ZLfO1tx9d7ebA@cipher.nrlssc.navy.mil>
+Date: Thu, 06 Nov 2008 16:30:28 -0800
+Message-ID: <7v8wrwidi3.fsf@gitster.siamese.dyndns.org>
+References: <-RiFxYEd9Wiq2fWX74zYGUiEwrzLeoFDb1KuG3-Xo-s@cipher.nrlssc.navy.mil>
+ <LSyxMgVV7zAWRvSezvxyUc6-kz2gK6MRVKonKSf1pAmdqO-jeuMFIw@cipher.nrlssc.navy.mil> <GV8cY3fn8l5UV5cNoPN8bHchWt9u2tbZ8j_ypkiY-ZLfO1tx9d7ebA@cipher.nrlssc.navy.mil> <HBFmgmcvgPzZ0xq-fRUt98ZOBXGCvwxHGyEwF9bNcgpDgS-t-D3viw@cipher.nrlssc.navy.mil>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
 Cc: Git Mailing List <git@vger.kernel.org>,
 	"Shawn O. Pearce" <spearce@spearce.org>,
 	Nicolas Pitre <nico@cam.org>, Andreas Ericsson <ae@op5.se>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Nov 07 00:25:53 2008
+To: Brandon Casey <casey@nrlssc.navy.mil>
+X-From: git-owner@vger.kernel.org Fri Nov 07 01:32:36 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KyEEa-0002WZ-Vd
-	for gcvg-git-2@gmane.org; Fri, 07 Nov 2008 00:25:53 +0100
+	id 1KyFH1-0003ia-8C
+	for gcvg-git-2@gmane.org; Fri, 07 Nov 2008 01:32:27 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751792AbYKFXXD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 6 Nov 2008 18:23:03 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751491AbYKFXXB
-	(ORCPT <rfc822;git-outgoing>); Thu, 6 Nov 2008 18:23:01 -0500
-Received: from mail1.nrlssc.navy.mil ([128.160.35.1]:57586 "EHLO
-	mail.nrlssc.navy.mil" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751433AbYKFXXA (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 6 Nov 2008 18:23:00 -0500
-Received: by mail.nrlssc.navy.mil id mA6NMf7A012733; Thu, 6 Nov 2008 17:22:41 -0600
-In-Reply-To: <GV8cY3fn8l5UV5cNoPN8bHchWt9u2tbZ8j_ypkiY-ZLfO1tx9d7ebA@cipher.nrlssc.navy.mil>
-X-OriginalArrivalTime: 06 Nov 2008 23:22:41.0594 (UTC) FILETIME=[90BD59A0:01C94066]
+	id S1754815AbYKGAav (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 6 Nov 2008 19:30:51 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752324AbYKGAav
+	(ORCPT <rfc822;git-outgoing>); Thu, 6 Nov 2008 19:30:51 -0500
+Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:50984 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754807AbYKGAau (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 6 Nov 2008 19:30:50 -0500
+Received: from localhost.localdomain (unknown [127.0.0.1])
+	by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id 0CDDA921DB;
+	Thu,  6 Nov 2008 19:30:49 -0500 (EST)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES256-SHA (256/256 bits)) (No client certificate requested) by
+ a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTPSA id 9C596921D3; Thu, 
+ 6 Nov 2008 19:30:30 -0500 (EST)
+In-Reply-To: <HBFmgmcvgPzZ0xq-fRUt98ZOBXGCvwxHGyEwF9bNcgpDgS-t-D3viw@cipher.nrlssc.navy.mil> (Brandon Casey's message of "Thu, 06 Nov 2008 17:22:41 -0600")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: 534F436C-AC63-11DD-8E9A-4F5276724C3F-77302942!a-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/100271>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/100272>
 
-Brandon Casey wrote:
-> Junio,
-> 
-> Please leave this in pu for now, I have some concerns that I haven't
-> had time to write down yet.
+Brandon Casey <casey@nrlssc.navy.mil> writes:
 
-I've been thinking about pack-objects and repack.
+>   <-a>
+>     -create a new pack containing all objects required by the repository
+>      including those accessible through alternates, but excluding objects
+>      in _local_ packs with .keep
 
-Here's how I think the semantics of repack should be defined:
+I have a feeling that it is debatable if this "fattening to dissociate
+from alternates" is what people want.
 
-repack:
+>   <-a -l>
+>      -Restrict operation to only local objects. Only has any effect with -a|-A.
+>      -Like -a, but additionally exclude objects in packs accessible through
+>       alternates.
 
-  <no-options>
-    -incremental repack which does not repack any object currently packed
-     in any accessible pack.
+Presumably you meant "exclude objects accessible through alternates,
+either in packs or in loose form"?  If so then I think it is a good thing
+to have.
 
-    Works (it currently works this way).
+I am not sure if listing the behaviour by combination of flags is a good
+way to start thinking about this.  Wouldn't it be more productive to list
+what kinds of repacking are needed, and then label them with combination
+of flags?  Otherwise you would miss a potentially useful operation that
+cannot be expressed with the current set of flags you have.
 
-  <-a>
-    -create a new pack containing all objects required by the repository
-     including those accessible through alternates, but excluding objects
-     in _local_ packs with .keep
+I think the useful kinds are only these five:
 
-    Flawed, even with my recent patches.
+ - scoop loose objects that exist in local repository into a new pack,
+   without touching existing packs at all; exclude anything available in
+   any existing pack or in alternate repository (either loose or packed);
 
-    If there are no local packs (or they all have .keep files), then the
-    pack-objects call will use --incremental which will exclude objects
-    packed in alt object store, even though -l was not used.
- 
-    My patches do not differentiate local .keep files from remote .keep files,
-    which a user may have no control over.
+ - pack everything that is needed by the local ref, except the ones that
+   are borrowed from alternate repositories (either loose or packed), into
+   a single new pack.  There are two variants of this: eject what is
+   currently packed but unnecessary into loose format when existing local
+   packs are replaced with the new pack, or lose them (i.e. -A).
 
-  <-A>
-     -Like -a, but local unreferenced objects which were previously packed
-      are made to be loose.
-
-    Ditto.
-
-  <-a -l>
-     -Restrict operation to only local objects. Only has any effect with -a|-A.
-     -Like -a, but additionally exclude objects in packs accessible through
-      alternates.
-
-     Works with my recent patches.
-
-  <-A -l>
-     -Like '-a -l', but loosen unreferenced local packed objects.
-
-     Ditto.
-
-
-
-That set of repack operations needs to map to a combination of pack-objects
-options:
-
-  <no-options>
-     -Create a pack with _all_ specified objects
-
-  <--unpacked>
-     -Exclude from packing any object already in an accessible pack.
-
-     (Ahh, this came from rev-list interface, and rejects objects at an
-      earlier stage than --incremental)
-
-  <--unpacked=sha1>
-     -Like '--unpacked', exclude already packed objects, but treat the objects
-      in the pack with specified sha1 as unpacked.
-
-  <--incremental>
-     -Exclude from packing any object already in an accessible pack,
-      regardless of whether it is in a pack specified by --unpacked=
-
-      (How is this different from --unpacked, even though the exclusion
-       operation is performed at a different stage? See my epiphany above
-       about the source of the --unpacked option)
-
-  <--unpacked --incremental>
-     -seems redundant, is there any functional difference?
-
-  <--local>
-     -Exclude objects from being packed that are not in the local object store.
-
-
-The issue is how to provide my described 'repack -a' functionality.
-There does not seem to be a mapping between the above options and the
-required functionality.
-
-I see two solutions, both require introducing a new option to pack-objects.
-  1) allow specifying a set of packs such that if an object resides
-     in any of the set, the object will not be included in the produced
-     pack.
-
-     Benefits:
-     -allows keeping pack-objects ignorant of .keep mechanism
-     -repack can easily be modified to produce the set of packs to ignore
-
-     Drawback:
-     -very round-about way just to have functionality to skip packs with
-      .keep file
-
-  2) New option telling pack-objects to skip objects in local .keep'd packs
-
-     Benefits:
-     -easy to implement in pack-objects
-     -easy to modify repack
-
-     Drawbacks:
-     -introduces new concept to pack-objects
-
-
-Questions aside:
-  1) Are both --incremental and --unpacked still necessary pack-objects options?
-  2) Can --incremental become an alias for --unpacked, and go away?
-
-
-patch(es) will follow.
-
--brandon
+ - fatten local repository by packing everything that is needed by the
+   local ref into a single new pack, including things that are currently
+   borrowed from alternates.  There are two variants of this: eject what
+   is currently packed but unnecessary into loose format when existing
+   local packs are replaced with the new pack, or lose them (i.e. -A).
