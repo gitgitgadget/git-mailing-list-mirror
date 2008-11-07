@@ -1,100 +1,89 @@
-From: Davide Libenzi <davidel@xmailserver.org>
+From: Linus Torvalds <torvalds@linux-foundation.org>
 Subject: Re: absurdly slow git-diff
-Date: Fri, 7 Nov 2008 15:18:51 -0800 (PST)
-Message-ID: <alpine.DEB.1.10.0811071517280.8736@alien.or.mcafeemobile.com>
-References: <20081107200126.GA20284@toroid.org> <alpine.LFD.2.00.0811071335010.3468@nehalem.linux-foundation.org> <alpine.DEB.1.10.0811071503120.8736@alien.or.mcafeemobile.com>
+Date: Fri, 7 Nov 2008 15:42:24 -0800 (PST)
+Message-ID: <alpine.LFD.2.00.0811071540340.3468@nehalem.linux-foundation.org>
+References: <20081107200126.GA20284@toroid.org> <alpine.LFD.2.00.0811071335010.3468@nehalem.linux-foundation.org> <alpine.DEB.1.10.0811071503120.8736@alien.or.mcafeemobile.com> <alpine.DEB.1.10.0811071517280.8736@alien.or.mcafeemobile.com>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
 Cc: Abhijit Menon-Sen <ams@toroid.org>,
 	Pierre Habouzit <madcoder@debian.org>,
 	Git Mailing List <git@vger.kernel.org>
-To: Linus Torvalds <torvalds@linux-foundation.org>
-X-From: git-owner@vger.kernel.org Sat Nov 08 00:20:18 2008
+To: Davide Libenzi <davidel@xmailserver.org>
+X-From: git-owner@vger.kernel.org Sat Nov 08 00:44:13 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KyacZ-0006EP-Eh
-	for gcvg-git-2@gmane.org; Sat, 08 Nov 2008 00:20:07 +0100
+	id 1Kyazo-0005Tj-0Y
+	for gcvg-git-2@gmane.org; Sat, 08 Nov 2008 00:44:08 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752481AbYKGXSx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 7 Nov 2008 18:18:53 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752366AbYKGXSx
-	(ORCPT <rfc822;git-outgoing>); Fri, 7 Nov 2008 18:18:53 -0500
-Received: from x35.xmailserver.org ([64.71.152.41]:39837 "EHLO
-	x35.xmailserver.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751065AbYKGXSx (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 7 Nov 2008 18:18:53 -0500
-X-AuthUser: davidel@xmailserver.org
-Received: from alien.or.mcafeemobile.com
-	by x35.xmailserver.org with [XMail 1.26 ESMTP Server]
-	id <S2B7C1D> for <git@vger.kernel.org> from <davidel@xmailserver.org>;
-	Fri, 7 Nov 2008 18:18:51 -0500
-X-X-Sender: davide@alien.or.mcafeemobile.com
-In-Reply-To: <alpine.DEB.1.10.0811071503120.8736@alien.or.mcafeemobile.com>
-User-Agent: Alpine 1.10 (DEB 962 2008-03-14)
-X-GPG-FINGRPRINT: CFAE 5BEE FD36 F65E E640  56FE 0974 BF23 270F 474E
-X-GPG-PUBLIC_KEY: http://www.xmailserver.org/davidel.asc
+	id S1751474AbYKGXmx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 7 Nov 2008 18:42:53 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751449AbYKGXmx
+	(ORCPT <rfc822;git-outgoing>); Fri, 7 Nov 2008 18:42:53 -0500
+Received: from smtp1.linux-foundation.org ([140.211.169.13]:34406 "EHLO
+	smtp1.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751311AbYKGXmw (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 7 Nov 2008 18:42:52 -0500
+Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [140.211.169.55])
+	by smtp1.linux-foundation.org (8.14.2/8.13.5/Debian-3ubuntu1.1) with ESMTP id mA7NgOUl013323
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Fri, 7 Nov 2008 15:42:25 -0800
+Received: from localhost (localhost [127.0.0.1])
+	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id mA7NgOaX002658;
+	Fri, 7 Nov 2008 15:42:24 -0800
+In-Reply-To: <alpine.DEB.1.10.0811071517280.8736@alien.or.mcafeemobile.com>
+User-Agent: Alpine 2.00 (LFD 1167 2008-08-23)
+X-Spam-Status: No, hits=-3.436 required=5 tests=AWL,BAYES_00
+X-Spam-Checker-Version: SpamAssassin 3.2.4-osdl_revision__1.47__
+X-MIMEDefang-Filter: lf$Revision: 1.188 $
+X-Scanned-By: MIMEDefang 2.63 on 140.211.169.13
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/100362>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/100363>
+
+
 
 On Fri, 7 Nov 2008, Davide Libenzi wrote:
-
-> On Fri, 7 Nov 2008, Linus Torvalds wrote:
 > 
-> > On Sat, 8 Nov 2008, Abhijit Menon-Sen wrote:
-> > >
-> > > If anyone's interested, the files are http://toroid.org/misc/1 and
-> > > http://toroid.org/misc/2
-> > 
-> > Btw, you can see this by just doing
-> > 
-> > 	git diff 1 2
-> > 
-> > without even doing "git init" or doing any actual git repository.
-> > 
-> > > Does anyone understand why this slowdown might happen or have
-> > > suggestions about where I should look for it?
-> > 
-> > Sure. It's actually fairly simple. You're hitting a O(n^2) thing (possibly 
-> > higher), and it's triggered by the fact that almost all your lines are 
-> > identical, ie you have a file that basically has 40,000 lines of each of
-> > 
-> > 	xxxx: xxx, xx xxx xxxx xx:xx:xx +xxxx
-> > 	xx: xxxx xxxxxxxxxxx <xxxx@xxxx.xxx>
-> > 	xxxx: xxxx xxxxxxxxxxx <xxxx@xxxx.xxx>
-> > 
-> > and 30,000 of 
-> > 
-> > 	* xxxxx xxxxx (xxxxxx.xxxx xxx xxxxx (\Xxxxxx) xxxxxx.xxxxxx {xxx}
-> > 
-> > with a smattering of others. And this is a case where the internal git 
-> > implementation does really badly. And nobody has really cared before, 
-> > because nobody has ever had a case that mattered.
-> > 
-> > There's a number of different 'diff' algorithms, and it looks like GNU 
-> > diff has one that avoids the O(n^2) case for this case.
-> > 
-> > I'm adding Davide as the original author of the diff library to the cc. 
-> > I'm also adding Pierre, since he was talking about trying to implement
-> > another diff algorithm (although I'm not at all sure that the patience 
-> > diff really would help this case at all).
+> With +/- 100 lines (200 lines window):
 > 
-> That should be an easy fix. Just need to limit the window by which 
-> xdl_clean_mmatch() scans the current position.
+> davide@alien:~$ time ./xdiff_test --diff 1 2 > /dev/null 
+> 
+> real    0m1.534s
+> user    0m1.466s
+> sys     0m0.040s
 
-With +/- 100 lines (200 lines window):
+I assume the patch is something like the appended?
 
-davide@alien:~$ time ./xdiff_test --diff 1 2 > /dev/null 
+		Linus
 
-real    0m1.534s
-user    0m1.466s
-sys     0m0.040s
+---
+ xdiff/xprepare.c |    4 ++--
+ 1 files changed, 2 insertions(+), 2 deletions(-)
 
-
-
-- Davide
+diff --git a/xdiff/xprepare.c b/xdiff/xprepare.c
+index e87ab57..4bebd76 100644
+--- a/xdiff/xprepare.c
++++ b/xdiff/xprepare.c
+@@ -318,7 +318,7 @@ static int xdl_clean_mmatch(char const *dis, long i, long s, long e) {
+ 	 * Note that we always call this function with dis[i] > 1, so the
+ 	 * current line (i) is already a multimatch line.
+ 	 */
+-	for (r = 1, rdis0 = 0, rpdis0 = 1; (i - r) >= s; r++) {
++	for (r = 1, rdis0 = 0, rpdis0 = 1; r < 100 && (i - r) >= s; r++) {
+ 		if (!dis[i - r])
+ 			rdis0++;
+ 		else if (dis[i - r] == 2)
+@@ -334,7 +334,7 @@ static int xdl_clean_mmatch(char const *dis, long i, long s, long e) {
+ 	 */
+ 	if (rdis0 == 0)
+ 		return 0;
+-	for (r = 1, rdis1 = 0, rpdis1 = 1; (i + r) <= e; r++) {
++	for (r = 1, rdis1 = 0, rpdis1 = 1; r < 100 && (i + r) <= e; r++) {
+ 		if (!dis[i + r])
+ 			rdis1++;
+ 		else if (dis[i + r] == 2)
