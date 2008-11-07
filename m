@@ -1,8 +1,8 @@
 From: Brandon Casey <casey@nrlssc.navy.mil>
-Subject: Re: [PATCH v2 3/3] pack-objects: honor '.keep' files
-Date: Thu, 06 Nov 2008 19:17:49 -0600
-Message-ID: <BgEXN35P6wpio928OZi_34hs22vqUQxIAIGxR5hR8LqmfPIyw565Mg@cipher.nrlssc.navy.mil>
-References: <-RiFxYEd9Wiq2fWX74zYGUiEwrzLeoFDb1KuG3-Xo-s@cipher.nrlssc.navy.mil> <LSyxMgVV7zAWRvSezvxyUc6-kz2gK6MRVKonKSf1pAmdqO-jeuMFIw@cipher.nrlssc.navy.mil> <GV8cY3fn8l5UV5cNoPN8bHchWt9u2tbZ8j_ypkiY-ZLfO1tx9d7ebA@cipher.nrlssc.navy.mil> <HBFmgmcvgPzZ0xq-fRUt98ZOBXGCvwxHGyEwF9bNcgpDgS-t-D3viw@cipher.nrlssc.navy.mil> <7v8wrwidi3.fsf@gitster.siamese.dyndns.org>
+Subject: [PATCH 1/4] pack-objects: new option --honor-pack-keep
+Date: Thu, 06 Nov 2008 19:52:56 -0600
+Message-ID: <oDevG_2ETMLvy6rfSqvxfmFqABeVqlDUcU6FjP07E5IzqLaopWkQbQ@cipher.nrlssc.navy.mil>
+References: <HBFmgmcvgPzZ0xq-fRUt98ZOBXGCvwxHGyEwF9bNcgpDgS-t-D3viw@cipher.nrlssc.navy.mil>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
@@ -10,104 +10,106 @@ Cc: Git Mailing List <git@vger.kernel.org>,
 	"Shawn O. Pearce" <spearce@spearce.org>,
 	Nicolas Pitre <nico@cam.org>, Andreas Ericsson <ae@op5.se>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Nov 07 02:19:17 2008
+X-From: git-owner@vger.kernel.org Fri Nov 07 02:54:36 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KyG0H-0006Xk-Ng
-	for gcvg-git-2@gmane.org; Fri, 07 Nov 2008 02:19:14 +0100
+	id 1KyGYQ-0005l5-Ar
+	for gcvg-git-2@gmane.org; Fri, 07 Nov 2008 02:54:30 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752596AbYKGBR7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 6 Nov 2008 20:17:59 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752657AbYKGBR7
-	(ORCPT <rfc822;git-outgoing>); Thu, 6 Nov 2008 20:17:59 -0500
-Received: from mail1.nrlssc.navy.mil ([128.160.35.1]:38416 "EHLO
+	id S1750772AbYKGBxH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 6 Nov 2008 20:53:07 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750757AbYKGBxH
+	(ORCPT <rfc822;git-outgoing>); Thu, 6 Nov 2008 20:53:07 -0500
+Received: from mail1.nrlssc.navy.mil ([128.160.35.1]:44232 "EHLO
 	mail.nrlssc.navy.mil" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752299AbYKGBR6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 6 Nov 2008 20:17:58 -0500
-Received: by mail.nrlssc.navy.mil id mA71HoaO016612; Thu, 6 Nov 2008 19:17:50 -0600
-In-Reply-To: <7v8wrwidi3.fsf@gitster.siamese.dyndns.org>
-X-OriginalArrivalTime: 07 Nov 2008 01:17:50.0078 (UTC) FILETIME=[A68459E0:01C94076]
+	with ESMTP id S1750814AbYKGBxF (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 6 Nov 2008 20:53:05 -0500
+Received: by mail.nrlssc.navy.mil id mA71qudQ017374; Thu, 6 Nov 2008 19:52:56 -0600
+In-Reply-To: <HBFmgmcvgPzZ0xq-fRUt98ZOBXGCvwxHGyEwF9bNcgpDgS-t-D3viw@cipher.nrlssc.navy.mil>
+X-OriginalArrivalTime: 07 Nov 2008 01:52:56.0768 (UTC) FILETIME=[8E33BC00:01C9407B]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/100275>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/100276>
 
-Junio C Hamano wrote:
-> Brandon Casey <casey@nrlssc.navy.mil> writes:
-> 
->>   <-a>
->>     -create a new pack containing all objects required by the repository
->>      including those accessible through alternates, but excluding objects
->>      in _local_ packs with .keep
-> 
-> I have a feeling that it is debatable if this "fattening to dissociate
-> from alternates" is what people want.
+This adds a new option to pack-objects which will cause it to ignore an
+object which appears in a local pack which has a .keep file, even if it
+was specified for packing.
 
-I'm not sure I understand you here.
+This option will be used by the porcelain repack.
 
-Andreas has suggested previously that 'repack -a' should pack everything,
-including objects in packs with .keep. Is that what you mean?
+Signed-off-by: Brandon Casey <casey@nrlssc.navy.mil>
+---
 
-With my current understanding it seems that that would muddy the semantics
-of repack. If -a does not honor packs with .keep, then would it be intuitive
-to expect that adding -l (i.e. exclude alternate packed objects) _would_
-honor .keep?
 
->>   <-a -l>
->>      -Restrict operation to only local objects. Only has any effect with -a|-A.
->>      -Like -a, but additionally exclude objects in packs accessible through
->>       alternates.
-> 
-> Presumably you meant "exclude objects accessible through alternates,
-> either in packs or in loose form"?  If so then I think it is a good thing
-> to have.
+This series replaces the previous series starting at
+6ee726bc "pack-objects: honor '.keep' files"
 
-Would that be an enhancement to the current behavior? I don't think I saw
-any mechanism to exclude packing remote loose objects.
+It should be applied on top of
+f34cf12d "packed_git: convert pack_local flag into a bitfield and add pack_keep"
 
-The documentation for pack-objects --local says:
+I created the series on top of f34cf12d rebased on top of master.
 
-  --local
-         This flag is similar to --incremental; instead of ignoring  all
-         packed objects, it only ignores objects that are packed and not
-         in the local object store (i.e. borrowed from an alternate).
-
-It only mentions packed alternate objects.
-
-> 
-> I am not sure if listing the behaviour by combination of flags is a good
-> way to start thinking about this.  Wouldn't it be more productive to list
-> what kinds of repacking are needed, and then label them with combination
-> of flags?  Otherwise you would miss a potentially useful operation that
-> cannot be expressed with the current set of flags you have.
-
-I agree. I made a list of the options because I was trying to understand what
-effect each option had, then I turned it into an email.
-
-> I think the useful kinds are only these five:
-> 
->  - scoop loose objects that exist in local repository into a new pack,
->    without touching existing packs at all; exclude anything available in
->    any existing pack or in alternate repository (either loose or packed);
->
->  - pack everything that is needed by the local ref, except the ones that
->    are borrowed from alternate repositories (either loose or packed), into
->    a single new pack.  There are two variants of this: eject what is
->    currently packed but unnecessary into loose format when existing local
->    packs are replaced with the new pack, or lose them (i.e. -A).
->
->  - fatten local repository by packing everything that is needed by the
->    local ref into a single new pack, including things that are currently
->    borrowed from alternates.  There are two variants of this: eject what
->    is currently packed but unnecessary into loose format when existing
->    local packs are replaced with the new pack, or lose them (i.e. -A).
-
-You didn't say when local .keep should be honored, i.e. objects in local
-packs with .keep should be excluded from repacking. always, never, only
-with -l, new repack option?
+Suggestions for a more appropriate name for --honor-pack-keep are very welcome.
 
 -brandon
+
+
+ Documentation/git-pack-objects.txt |    5 +++++
+ builtin-pack-objects.c             |    7 +++++++
+ 2 files changed, 12 insertions(+), 0 deletions(-)
+
+diff --git a/Documentation/git-pack-objects.txt b/Documentation/git-pack-objects.txt
+index 8c354bd..f9fac2c 100644
+--- a/Documentation/git-pack-objects.txt
++++ b/Documentation/git-pack-objects.txt
+@@ -109,6 +109,11 @@ base-name::
+ 	The default is unlimited, unless the config variable
+ 	`pack.packSizeLimit` is set.
+ 
++--honor-pack-keep::
++	This flag causes an object already in a local pack that
++	has a .keep file to be ignored, even if it appears in the
++	standard input.
++
+ --incremental::
+ 	This flag causes an object already in a pack ignored
+ 	even if it appears in the standard input.
+diff --git a/builtin-pack-objects.c b/builtin-pack-objects.c
+index 15b80db..ddec341 100644
+--- a/builtin-pack-objects.c
++++ b/builtin-pack-objects.c
+@@ -71,6 +71,7 @@ static int reuse_delta = 1, reuse_object = 1;
+ static int keep_unreachable, unpack_unreachable, include_tag;
+ static int local;
+ static int incremental;
++static int ignore_packed_keep;
+ static int allow_ofs_delta;
+ static const char *base_name;
+ static int progress = 1;
+@@ -703,6 +704,8 @@ static int add_object_entry(const unsigned char *sha1, enum object_type type,
+ 				return 0;
+ 			if (local && !p->pack_local)
+ 				return 0;
++			if (ignore_packed_keep && p->pack_local && p->pack_keep)
++				return 0;
+ 		}
+ 	}
+ 
+@@ -2048,6 +2051,10 @@ int cmd_pack_objects(int argc, const char **argv, const char *prefix)
+ 			incremental = 1;
+ 			continue;
+ 		}
++		if (!strcmp("--honor-pack-keep", arg)) {
++			ignore_packed_keep = 1;
++			continue;
++		}
+ 		if (!prefixcmp(arg, "--compression=")) {
+ 			char *end;
+ 			int level = strtoul(arg+14, &end, 0);
+-- 
+1.6.0.3.552.g12334
