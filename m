@@ -1,61 +1,76 @@
-From: Junio C Hamano <gitster@pobox.com>
+From: Miles Bader <miles@gnu.org>
 Subject: Re: multiple-commit cherry-pick?
-Date: Thu, 06 Nov 2008 21:00:46 -0800
-Message-ID: <7vskq4gmf5.fsf@gitster.siamese.dyndns.org>
+Date: Fri, 07 Nov 2008 14:09:07 +0900
+Message-ID: <buozlkcqg0c.fsf@dhapc248.dev.necel.com>
 References: <buoiqr18tdk.fsf@dhapc248.dev.necel.com>
- <20081106213711.GA4334@blimp.localdomain>
- <alpine.LFD.2.00.0811061925300.3451@nehalem.linux-foundation.org>
+	<20081106032437.GA27237@euler> <20081106095122.GA2656@atjola.homenet>
+	<buozlkd6oh1.fsf@dhapc248.dev.necel.com>
+	<20081106122658.GB4192@atjola.homenet>
+Reply-To: Miles Bader <miles@gnu.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Alex Riesen <raa.lkml@gmail.com>, Miles Bader <miles@gnu.org>,
-	git@vger.kernel.org
-To: Linus Torvalds <torvalds@linux-foundation.org>
-X-From: git-owner@vger.kernel.org Fri Nov 07 06:02:50 2008
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Deskin Miller <deskinm@umich.edu>, git@vger.kernel.org
+To: =?iso-8859-1?Q?Bj=F6rn?= Steinbrink <B.Steinbrink@gmx.de>
+X-From: git-owner@vger.kernel.org Fri Nov 07 06:10:42 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KyJUg-0007pU-7v
-	for gcvg-git-2@gmane.org; Fri, 07 Nov 2008 06:02:50 +0100
+	id 1KyJcD-0000cD-Lm
+	for gcvg-git-2@gmane.org; Fri, 07 Nov 2008 06:10:38 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750755AbYKGFBI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 7 Nov 2008 00:01:08 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750745AbYKGFBH
-	(ORCPT <rfc822;git-outgoing>); Fri, 7 Nov 2008 00:01:07 -0500
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:59073 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750724AbYKGFBG (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 7 Nov 2008 00:01:06 -0500
-Received: from localhost.localdomain (unknown [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 1C0EB7A743;
-	Fri,  7 Nov 2008 00:01:05 -0500 (EST)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES256-SHA (256/256 bits)) (No client certificate requested) by
- a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTPSA id 8D1F87A742; Fri,
-  7 Nov 2008 00:00:52 -0500 (EST)
-In-Reply-To: <alpine.LFD.2.00.0811061925300.3451@nehalem.linux-foundation.org> (Linus
- Torvalds's message of "Thu, 6 Nov 2008 19:29:04 -0800 (PST)")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: 14D59A16-AC89-11DD-8EED-9CEDC82D7133-77302942!a-sasl-fastnet.pobox.com
+	id S1750811AbYKGFJU convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 7 Nov 2008 00:09:20 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750776AbYKGFJU
+	(ORCPT <rfc822;git-outgoing>); Fri, 7 Nov 2008 00:09:20 -0500
+Received: from TYO202.gate.nec.co.jp ([202.32.8.206]:58923 "EHLO
+	tyo202.gate.nec.co.jp" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750769AbYKGFJT convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 7 Nov 2008 00:09:19 -0500
+Received: from relay31.aps.necel.com ([10.29.19.54])
+	by tyo202.gate.nec.co.jp (8.13.8/8.13.4) with ESMTP id mA7599Sp010689;
+	Fri, 7 Nov 2008 14:09:09 +0900 (JST)
+Received: from relay21.aps.necel.com ([10.29.19.24] [10.29.19.24]) by relay31.aps.necel.com with ESMTP; Fri, 7 Nov 2008 14:09:08 +0900
+Received: from dhapc248.dev.necel.com ([10.114.112.215] [10.114.112.215]) by relay21.aps.necel.com with ESMTP; Fri, 7 Nov 2008 14:09:08 +0900
+Received: by dhapc248.dev.necel.com (Postfix, from userid 31295)
+	id 6881244E; Fri,  7 Nov 2008 14:09:08 +0900 (JST)
+System-Type: i686-pc-linux-gnu
+Blat: Foop
+In-Reply-To: <20081106122658.GB4192@atjola.homenet> (=?iso-8859-1?Q?=22Bj?=
+ =?iso-8859-1?Q?=F6rn?= Steinbrink"'s
+	message of "Thu, 6 Nov 2008 13:26:58 +0100")
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/100286>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/100287>
 
-Linus Torvalds <torvalds@linux-foundation.org> writes:
-
-> On Thu, 6 Nov 2008, Alex Riesen wrote:
->> 
->> git format-patch --full-index --binary --stdout <range...> | git am -3
->> 
->> This will not work if you want to pick a list, not a range, of
->> commits.
+Bj=F6rn Steinbrink <B.Steinbrink@gmx.de> writes:
+>> > git reset --hard C
+>> > git rebase --onto ORIG_HEAD A^
+>>=20
+>> Is that safe...?  Doesn't git-rebase also set ORIG_HEAD?
 >
-> Doesn't "--no-walk" + list commits individually work?
->
-> So it _should_ be possible to pick a list of commits too. Although I think 
-> that git format-patch will reverse the order.
+> One of the first things rebase does is validating and resolving its
+> arguments. And that's happening before any actions that would touch
+> ORIG_HEAD.
 
-Or "git show --pretty=email $commit1 $commit2" ... piped to "am"?
+Ah, I see.
+
+Hmm, I guess using rebase --abort isn't a very good idea in this case
+though... :-/
+
+Kind of a shame, since it's nice being to just abort the whole operatio=
+n
+if it turns out you did something wrong and aren't sure how to recover.
+
+Thanks,
+
+-Miles
+
+--=20
+Kilt, n. A costume sometimes worn by Scotchmen [sic] in America and Ame=
+ricans
+in Scotland.
