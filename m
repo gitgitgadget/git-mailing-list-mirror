@@ -1,89 +1,103 @@
-From: Yann Dirson <ydirson@altern.org>
-Subject: Re: [PATCH 2/3] Introduce rename factorization in diffcore.
-Date: Fri, 7 Nov 2008 23:12:24 +0100
-Message-ID: <20081107221224.GK5158@nan92-1-81-57-214-146.fbx.proxad.net>
-References: <20081101215739.1116.59319.stgit@gandelf.nowhere.earth> <20081101220319.1116.50509.stgit@gandelf.nowhere.earth> <7vy6zwgx3i.fsf@gitster.siamese.dyndns.org> <20081107193957.GI5158@nan92-1-81-57-214-146.fbx.proxad.net> <7v3ai3gugt.fsf@gitster.siamese.dyndns.org> <20081107203952.GJ5158@nan92-1-81-57-214-146.fbx.proxad.net> <7vskq3fdgz.fsf@gitster.siamese.dyndns.org>
+From: "J.H." <warthog9@kernel.org>
+Subject: Re: [KORG] Master backend downtime - hardware swap
+Date: Fri, 07 Nov 2008 15:00:58 -0800
+Message-ID: <4914C8AA.1080204@kernel.org>
+References: <49139D4C.2010004@kernel.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Nov 07 23:50:57 2008
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+To: users@linux.kernel.org, git@vger.kernel.org,
+	linux-kernel <linux-kernel@vger.kernel.org>, ftpadmin@kernel.org
+X-From: git-owner@vger.kernel.org Sat Nov 08 00:02:33 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KyaAK-0004RV-TV
-	for gcvg-git-2@gmane.org; Fri, 07 Nov 2008 23:50:57 +0100
+	id 1KyaLY-0000XM-K4
+	for gcvg-git-2@gmane.org; Sat, 08 Nov 2008 00:02:33 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750952AbYKGWtn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 7 Nov 2008 17:49:43 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750904AbYKGWtn
-	(ORCPT <rfc822;git-outgoing>); Fri, 7 Nov 2008 17:49:43 -0500
-Received: from smtp6-g19.free.fr ([212.27.42.36]:53198 "EHLO smtp6-g19.free.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750787AbYKGWtm (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 7 Nov 2008 17:49:42 -0500
-Received: from smtp6-g19.free.fr (localhost.localdomain [127.0.0.1])
-	by smtp6-g19.free.fr (Postfix) with ESMTP id D5EDA17288;
-	Fri,  7 Nov 2008 23:49:40 +0100 (CET)
-Received: from gandelf.nowhere.earth (nan92-1-81-57-214-146.fbx.proxad.net [81.57.214.146])
-	by smtp6-g19.free.fr (Postfix) with ESMTP id B182517266;
-	Fri,  7 Nov 2008 23:12:46 +0100 (CET)
-Received: by gandelf.nowhere.earth (Postfix, from userid 1000)
-	id 3C1D41F06A; Fri,  7 Nov 2008 23:12:24 +0100 (CET)
-Content-Disposition: inline
-In-Reply-To: <7vskq3fdgz.fsf@gitster.siamese.dyndns.org>
-User-Agent: Mutt/1.5.18 (2008-05-17)
+	id S1752123AbYKGXBS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 7 Nov 2008 18:01:18 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751437AbYKGXBS
+	(ORCPT <rfc822;git-outgoing>); Fri, 7 Nov 2008 18:01:18 -0500
+Received: from shards.monkeyblade.net ([198.137.202.13]:34721 "EHLO
+	shards.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750904AbYKGXBR (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 7 Nov 2008 18:01:17 -0500
+Received: from voot-cruiser.eaglescrag.net (12-210-47-166.client.mchsi.com [12.210.47.166])
+	(authenticated bits=0)
+	by shards.monkeyblade.net (8.14.1/8.14.1) with ESMTP id mA7N0uL7003560
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Fri, 7 Nov 2008 15:00:57 -0800
+User-Agent: Thunderbird 2.0.0.17 (X11/20080925)
+In-Reply-To: <49139D4C.2010004@kernel.org>
+X-Enigmail-Version: 0.95.7
+X-Virus-Scanned: ClamAV 0.88.7/8589/Fri Nov  7 14:06:14 2008 on shards.monkeyblade.net
+X-Virus-Status: Clean
+X-Greylist: Sender succeeded SMTP AUTH authentication, not delayed by milter-greylist-2.1.12 (shards.monkeyblade.net [198.137.202.13]); Fri, 07 Nov 2008 15:00:58 -0800 (PST)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/100356>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/100357>
 
-On Fri, Nov 07, 2008 at 01:11:40PM -0800, Junio C Hamano wrote:
-> Yann Dirson <ydirson@altern.org> writes:
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+Just a heads up to everyone, ran slightly over (rsync took longer to
+verify the move than I expected).  But we are moved over to the much
+bigger and faster new master.kernel.org server.
+
+For those curious it's a:
+HP DL380 G5
+	2 x Intel Quad Core Xeon's
+	16G ram
+	Pile more disk (including an external MSA chassis)
+
+Thanks go out to HP for the new hardware, and their continued support of
+Kernel.org!!!
+
+If there are problems, issues or concerns please report them to
+ftpadmin@kernel.org, a quick look around seems to indicate everything
+looks good however.
+
+- - John 'Warthog9' Hawley
+Chief Kernel.org Administrator
+
+J.H. wrote:
+> Hey everyone,
 > 
-> > On Fri, Nov 07, 2008 at 12:19:14PM -0800, Junio C Hamano wrote:
-> >> I am afraid that this is totally unacceptable, as you yourself mentioned,
-> >> the end result is unapplicable with any existing tool and would confuse
-> >> viewers like gitk and gitweb.
-> >
-> > Well, other tools will still have to be taught about a new syntax, if
-> > they're going to use the new flag - just like it was for --rename.
+> Just a heads up to everyone, I'm going to be taking the master (hera)
+> backend server offline for a couple of hours tomorrow (Friday, CST)
+> afternoon.  Downtime is going to get used for finishing flipping over
+> the master to new hardware, which was very generously donated by
+> Hewlett-Packard.  We are moving up to a new DL380 G5.  That said I will
+> need time to shut everything down, get a current rsync from the old
+> hardware to the new hardware and confirm that serves are restored on the
+> new machine.
 > 
-> You are mistaken.  For a patch, you are dealing with two different
-> parties: producer and consumer.  If you are adding new feature to the
-> producer, the output format should be desigend to allow the consumer tell
-> that it is something it does not know how to handle.
+> I'm expecting the entire downtime to only take a couple of hours, but
+> since we all know things will take longer I'm going to declare the
+> window from 1200 CST (1800 UTC Friday Nov 7th).  Expect the window to
+> run through 2000 UTC, and if things are up and running before that I'll
+> let people know.  Otherwise if there are problems you'll see another
+> e-mail from me.
+> 
+> If you have questions, comments, concerns, etc - please send them to me
+> CC ftpadmin@kernel.org
+> 
+> - John 'Warthog9' Hawley
+> Chief Kernel.org Administrator
+- --
+To unsubscribe from this list: send the line "unsubscribe git" in
+the body of a message to majordomo@vger.kernel.org
+More majordomo info at  http://vger.kernel.org/majordomo-info.html
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.7 (GNU/Linux)
+Comment: Using GnuPG with Remi - http://enigmail.mozdev.org
 
-Agreed.
-
-> Marking a non patch with "diff --git" to trigger the logic to signal the
-> beginning of a patch to git-apply (and perhaps other tools) is a non
-> starter.
-
-This is not what I meant.
-
-> And for this "we are giving a patch that your git-apply can apply and gitk
-> can show, but by the way we also think the whole directory foo moved to
-> new location bar" is merely an additional information.  You should still
-> be able to apply the patch with tools that are unaware of this new
-> directory move detection feature.
-
-I hope I just miss your point.  Letting unaware tools handle such a
-patch "the right way" would imply just adding the information "dir foo
-moved to bar", and not removing the individual file moves, which goes
-in the way of the exact reason why I have started to work on this.
-
-Compare this to the addition of the "file rename" feature (correct me
-if I'm wrong): it was added without bothering whether plain old
-"patch" can deal with it, and when feeding a git diff to patch(1) I
-cannot expect it to DTRT (indeed it applies the content change but not
-the rename part, without complaining, and an unsuspecting user would
-just be shot in the foot): we are precisely *not* able to apply the
-patch with tools that are unaware of this new file rename feature.
-
-This is precisely to limit this problem in the future that I proposed
-this "diff extension" stuff in my last mail: limit how the "backward
-compatibility" argument can cripple innovation.
+iD8DBQFJFMip/E3kyWU9dicRAv4aAJ4l6dSodeAT6eGx9sb0wpsv44KY0gCePJsD
+gNdijp6x/oEHXwkxkbqxWB8=
+=CWoY
+-----END PGP SIGNATURE-----
