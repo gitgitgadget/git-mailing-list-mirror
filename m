@@ -1,76 +1,107 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [RFC PATCH 0/4] deny push to current branch of non-bare repo
-Date: Sat, 8 Nov 2008 16:12:26 +0100 (CET)
-Message-ID: <alpine.DEB.1.00.0811081609530.30769@pacific.mpi-cbg.de>
-References: <20081107220730.GA15942@coredump.intra.peff.net> <7v3ai3f7oa.fsf@gitster.siamese.dyndns.org> <20081108142756.GC17100@coredump.intra.peff.net>
+From: "Andrew Arnott" <andrewarnott@gmail.com>
+Subject: Re: Repo corrupted somehow?
+Date: Sat, 8 Nov 2008 07:19:13 -0800
+Message-ID: <216e54900811080719i43b4a631p241e9d2a54ed5ce9@mail.gmail.com>
+References: <216e54900811032309s51c8cb1fr64054ff18c450b1d@mail.gmail.com>
+	 <alpine.LNX.1.00.0811042241450.19665@iabervon.org>
+	 <216e54900811042127id69b61fqbd9d001b8bc17a6a@mail.gmail.com>
+	 <alpine.LNX.1.00.0811050043030.19665@iabervon.org>
+	 <77005B51-0170-42EC-BBA7-DCF39C7CFC5E@orakel.ntnu.no>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	Sam Vilain <sam@vilain.net>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Sat Nov 08 16:06:09 2008
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: "Daniel Barkalow" <barkalow@iabervon.org>, git@vger.kernel.org
+To: "Eyvind Bernhardsen" <eyvind-git@orakel.ntnu.no>
+X-From: git-owner@vger.kernel.org Sat Nov 08 16:23:37 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KypO2-00070B-TK
-	for gcvg-git-2@gmane.org; Sat, 08 Nov 2008 16:06:07 +0100
+	id 1Kypex-0003bD-HB
+	for gcvg-git-2@gmane.org; Sat, 08 Nov 2008 16:23:35 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753320AbYKHPEx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 8 Nov 2008 10:04:53 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753026AbYKHPEx
-	(ORCPT <rfc822;git-outgoing>); Sat, 8 Nov 2008 10:04:53 -0500
-Received: from mail.gmx.net ([213.165.64.20]:33462 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1752173AbYKHPEw (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 8 Nov 2008 10:04:52 -0500
-Received: (qmail invoked by alias); 08 Nov 2008 15:04:50 -0000
-Received: from pacific.mpi-cbg.de (EHLO pacific.mpi-cbg.de) [141.5.10.38]
-  by mail.gmx.net (mp040) with SMTP; 08 Nov 2008 16:04:50 +0100
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1/i+epxGfnihXXtCZhRqTUk82H0DkhyHeWsxJbtU0
-	ZvwZKMH7cKSLzz
-X-X-Sender: schindelin@pacific.mpi-cbg.de
-In-Reply-To: <20081108142756.GC17100@coredump.intra.peff.net>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.6
+	id S1753068AbYKHPTQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 8 Nov 2008 10:19:16 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752984AbYKHPTQ
+	(ORCPT <rfc822;git-outgoing>); Sat, 8 Nov 2008 10:19:16 -0500
+Received: from mail-gx0-f11.google.com ([209.85.217.11]:65227 "EHLO
+	mail-gx0-f11.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752173AbYKHPTP (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 8 Nov 2008 10:19:15 -0500
+Received: by gxk4 with SMTP id 4so1359500gxk.13
+        for <git@vger.kernel.org>; Sat, 08 Nov 2008 07:19:13 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to
+         :subject:cc:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:references;
+        bh=5Qu+G9p9J+Di2ELjOFPj7AErhj/Ocm+e37pqHUlil0Q=;
+        b=AIg0mGoqFVrSQQY5GoMgaShvcj2DR1ANVdZTzNf1vYOAjZmn2RrAhlowfDOifdQ9DB
+         q9bKvzFglir5eCaogJJHxcgborSb9AsqO1yaWzhe6cqyWt8y8GAzOVJ5WQPfs8l/zOty
+         WLd0iGLfwnLK8mKBujqXfI9a/e3bB5KCKx75I=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
+         :content-type:content-transfer-encoding:content-disposition
+         :references;
+        b=nAah5QYGjDSG4ay+nJ/FBfrEk+SjxJ/aPRtbbVFq1oYDFKERXg/f81E8VfIGV/eSL1
+         a4JHi9rQlujgK8L8IET8E6v5y1c4rzZZJSXDDumW1sNxb6YaBMGZXqiG7NlE1a8aUizG
+         1a4zUglPzcnFc0wgQfGtvs/jrXXTr9HO8xmVU=
+Received: by 10.151.12.4 with SMTP id p4mr5807510ybi.0.1226157553705;
+        Sat, 08 Nov 2008 07:19:13 -0800 (PST)
+Received: by 10.151.142.12 with HTTP; Sat, 8 Nov 2008 07:19:13 -0800 (PST)
+In-Reply-To: <77005B51-0170-42EC-BBA7-DCF39C7CFC5E@orakel.ntnu.no>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/100406>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/100407>
 
-Hi,
+I thought that autocrlf always 'added' CRLF instead of adding merely
+CR.  Dang.  I'd rather have CRLF text files.
 
-On Sat, 8 Nov 2008, Jeff King wrote:
-
-> On Fri, Nov 07, 2008 at 03:16:53PM -0800, Junio C Hamano wrote:
-> 
-> > > The FAQ even says "don't do this until you know what you are doing." 
-> > > So the safety valve is configurable, so that those who know what 
-> > > they are doing can switch it off.
-> > 
-> > "We are breaking your existing working setup but you can add a new 
-> > configuration to unbreak it" should not be done lightly.  I think as 
-> > the end result it is a reasonable thing to aim for for this particular 
-> > feature, but we do need a transition plan patch in between that 
-> > introduces a step that warns but not forbids.  We can ship 1.6.1 with 
-> > it and then switch the default to forbid in 1.6.3, for example.
-> 
-> Yeah, I was kind of hoping we could assume that anybody relying on this
-> behavior was somewhat insane, and wouldn't be too upset when it broke.
-
-I think I have a repository with "git read-tree -u -m HEAD" as update hook 
-for that kind of behavior.
-
-But I will not be the person responsible to keep that behavior, if I am 
-the only one relying on it.
-
-I very much like the approach of defaulting to "warn" for quite some time 
-(but setting the variable to "refuse" in git-init) and then adapt the 
-default after some time.
-
-Ciao,
-Dscho
+On Wed, Nov 5, 2008 at 4:26 AM, Eyvind Bernhardsen
+<eyvind-git@orakel.ntnu.no> wrote:
+> On 5. nov.. 2008, at 06.56, Daniel Barkalow wrote:
+>
+>> On Tue, 4 Nov 2008, Andrew Arnott wrote:
+>>
+>>> It was the CRLF conversion.  When I played around with
+>>> git config --global core.autocrlf true/false
+>>> I got the problem to eventually go away.
+>>>
+>>> Thanks for all your responses.
+>>
+>> It's still worth debugging further, because git should know that it wrote
+>> the files differently and not see that as changes. It's not too helpful to
+>> have autocrlf if it causes this problem.
+>
+> I think I know what this is.  If a repository contains files with CRLFs,
+> those files will show as modified when core.autcorlf is true (if you commit
+> them, the CRLFs will be converted to CRs in the repository, so in a sense
+> they _are_ modified).  Try turning autocrlf back on, cloning the repository,
+> then touching all the files (to make git check them for changes) and see if
+> you get the same problem.
+>
+> I proposed an alternative autocrlf implementation on the list a while back:
+> making it an attribute instead of a configuration setting and adding a
+> configuration setting to tell git which line ending is preferred when the
+> autocrlf attribute is set.
+>
+> That would allow you to turn on autocrlf and let git convert all CRLFs to
+> CRs in a single commit, thus converting a repository with CRLFs to one that
+> can be used with autocrlf in a versioned way.  In theory that lets you check
+> out new commits with EOL conversion while old commits will be left alone
+> (avoiding the problem you saw), but since .gitattributes is read from the
+> working directory and not the tree to be checked out, it doesn't work
+> perfectly.
+>
+> I implemented the easy bit (reading autocrlf from .gitattributes), but for
+> various reasons the patch has just been gathering dust in my private git.git
+> repo.  Maybe I should dust it off :)
+> --
+> Eyvind
+>
+>
