@@ -1,70 +1,81 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Init on push
-Date: Sat, 08 Nov 2008 12:12:34 -0800
-Message-ID: <7v8wruc6z1.fsf@gitster.siamese.dyndns.org>
-References: <200811081708.45672.robin.rosenberg.lists@dewire.com>
- <7viqqyc93w.fsf@gitster.siamese.dyndns.org>
- <bb6f213e0811081201w22a36800j1713b91d0cf66fb2@mail.gmail.com>
+From: =?iso-8859-1?Q?Bj=F6rn?= Steinbrink <B.Steinbrink@gmx.de>
+Subject: Re: [question] git svn fail to fetch GCC source due to index
+	mismatch
+Date: Sat, 8 Nov 2008 21:34:08 +0100
+Message-ID: <20081108203408.GF3563@atjola.homenet>
+References: <4914A413.80301@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: "Robin Rosenberg" <robin.rosenberg.lists@dewire.com>,
-	git@vger.kernel.org
-To: "Alexander Gavrilov" <angavrilov@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Nov 08 21:14:07 2008
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: dennis <dennis.yxun@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Nov 08 21:35:39 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KyuC6-0002nV-52
-	for gcvg-git-2@gmane.org; Sat, 08 Nov 2008 21:14:06 +0100
+	id 1KyuWv-0000H4-N2
+	for gcvg-git-2@gmane.org; Sat, 08 Nov 2008 21:35:38 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752466AbYKHUMw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 8 Nov 2008 15:12:52 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752449AbYKHUMw
-	(ORCPT <rfc822;git-outgoing>); Sat, 8 Nov 2008 15:12:52 -0500
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:36438 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751239AbYKHUMv (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 8 Nov 2008 15:12:51 -0500
-Received: from localhost.localdomain (unknown [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 9AB397AB67;
-	Sat,  8 Nov 2008 15:12:49 -0500 (EST)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES256-SHA (256/256 bits)) (No client certificate requested) by
- a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTPSA id EDBBC7AB66; Sat,
-  8 Nov 2008 15:12:41 -0500 (EST)
-In-Reply-To: <bb6f213e0811081201w22a36800j1713b91d0cf66fb2@mail.gmail.com>
- (Alexander Gavrilov's message of "Sat, 8 Nov 2008 23:01:02 +0300")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: 9DAE7FDA-ADD1-11DD-B138-9CEDC82D7133-77302942!a-sasl-fastnet.pobox.com
+	id S1751511AbYKHUeO convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 8 Nov 2008 15:34:14 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752047AbYKHUeO
+	(ORCPT <rfc822;git-outgoing>); Sat, 8 Nov 2008 15:34:14 -0500
+Received: from mail.gmx.net ([213.165.64.20]:47185 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1751412AbYKHUeN (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 8 Nov 2008 15:34:13 -0500
+Received: (qmail invoked by alias); 08 Nov 2008 20:34:11 -0000
+Received: from i577B86C4.versanet.de (EHLO atjola.local) [87.123.134.196]
+  by mail.gmx.net (mp047) with SMTP; 08 Nov 2008 21:34:11 +0100
+X-Authenticated: #5039886
+X-Provags-ID: V01U2FsdGVkX1+2Q6E6voi275di0LjxoszScqmicjLFglfEj4xK/B
+	94VilqL11+XQ2Z
+Content-Disposition: inline
+In-Reply-To: <4914A413.80301@gmail.com>
+User-Agent: Mutt/1.5.18 (2008-05-17)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.57
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/100421>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/100422>
 
-"Alexander Gavrilov" <angavrilov@gmail.com> writes:
+On 2008.11.08 04:24:51 +0800, dennis wrote:
+> HI:
+>    I have problem when use git svn fetch command to
+> retrieve the GCC source code.
+> It says index mismatch, then  abort,  any suggestion?
+>=20
+>  =20
+> $git svn fetch
+> Index mismatch: 98ba56dbceddf50ebfab9e4649e9b1b1a319b377 !=3D
+> 4f40f4619690f89454614be0eba63d584d25523e
+> rereading 19e22aa4cbc9f7e3667243481f33c859e3bba358
+> Found possible branch point: svn://gcc.gnu.org/svn/gcc/trunk =3D>
+> svn://gcc.gnu.org/svn/gcc/trunk, 130802
+> Initializing parent: git-svn@130802
+> Found branch parent: (git-svn) 9a08076e1ad241080838d547f64a2a9aceb083=
+ca
+> Index mismatch: 4f40f4619690f89454614be0eba63d584d25523e !=3D
+> 98ba56dbceddf50ebfab9e4649e9b1b1a319b377
+> rereading 9a08076e1ad241080838d547f64a2a9aceb083ca
+> Following parent with do_switch
+> Malformed network data: Malformed network data at
+> /usr/libexec/git-core/git-svn line 2340
+>=20
+> $git branch -a
+> git-svn
+> git-svn@130802
 
-> Gitosis works by replacing the shell with a program called
-> gitosis-serve, which parses and validates the incoming commands
-> against the user access configuration. If it sees an unknown command,
-> it will simply refuse to execute it.
+ad0a82bae: git-svn: Always create a new RA when calling do_switch for s=
+vn://
 
-If you implement a new feature by enhancing receive-pack (or anything
-else), you obviously cannot use the new feature against an installation
-with an older implementation, so what you said is a known.  My point was
-how to enhance the receiving end and what constraints we would have in
-enhancing it.
+According to the commit message, that fixed a problem that caused the
+"Malformed netword data" error. It's in git v1.6.0.3, so if you have an
+older git version, try upgrading.
 
-> On the other hand it will automatically perform initialization before
-> calling receive-pack if the user is authorized to write to a certain
-> path, but the repository does not exist yet.
-
-That's good to know.  I also realize that gitosis does not need any hook
-for "git init -D $there" to decide whether a new repository can be created
-at requested location, as it reads the command line and makes decision
-before driving the underlying command in response to the request.
-
-On the other hand, people who enable 'push' access to their git-daemon
-would need it, as the daemon would not even know who is asking for --init.
+HTH
+Bj=F6rn
