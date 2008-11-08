@@ -1,58 +1,66 @@
-From: Abhijit Menon-Sen <ams@toroid.org>
-Subject: Re: absurdly slow git-diff
-Date: Sat, 8 Nov 2008 10:27:42 +0530
-Message-ID: <20081108045742.GA26716@toroid.org>
-References: <20081107200126.GA20284@toroid.org> <alpine.LFD.2.00.0811071335010.3468@nehalem.linux-foundation.org> <alpine.DEB.1.10.0811071503120.8736@alien.or.mcafeemobile.com> <alpine.DEB.1.10.0811071517280.8736@alien.or.mcafeemobile.com> <alpine.LFD.2.00.0811071540340.3468@nehalem.linux-foundation.org> <alpine.DEB.1.10.0811071547080.8736@alien.or.mcafeemobile.com> <alpine.LFD.2.00.0811071554590.3468@nehalem.linux-foundation.org>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Davide Libenzi <davidel@xmailserver.org>,
-	Junio C Hamano <gitster@pobox.com>,
-	Pierre Habouzit <madcoder@debian.org>, git@vger.kernel.org
-To: Linus Torvalds <torvalds@linux-foundation.org>
-X-From: git-owner@vger.kernel.org Sat Nov 08 06:01:12 2008
+From: John Chapman <thestar@fussycoder.id.au>
+Subject: [PATCH 2/2] Cached the git configuration, which is now noticibly faster on windows.
+Date: Sat,  8 Nov 2008 14:22:49 +1100
+Message-ID: <1226114569-8506-2-git-send-email-thestar@fussycoder.id.au>
+References: <1226114569-8506-1-git-send-email-thestar@fussycoder.id.au>
+Cc: John Chapman <thestar@fussycoder.id.au>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Nov 08 06:07:41 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Kyfwd-00077M-QM
-	for gcvg-git-2@gmane.org; Sat, 08 Nov 2008 06:01:12 +0100
+	id 1Kyg2t-00084B-UX
+	for gcvg-git-2@gmane.org; Sat, 08 Nov 2008 06:07:40 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752847AbYKHE5q (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 7 Nov 2008 23:57:46 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752783AbYKHE5q
-	(ORCPT <rfc822;git-outgoing>); Fri, 7 Nov 2008 23:57:46 -0500
-Received: from fugue.toroid.org ([85.10.196.113]:59031 "EHLO fugue.toroid.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752666AbYKHE5p (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 7 Nov 2008 23:57:45 -0500
-Received: from penne.toroid.org (penne-vpn [10.8.0.6])
-	by fugue.toroid.org (Postfix) with ESMTP id 8251555834E;
-	Sat,  8 Nov 2008 05:57:43 +0100 (CET)
-Received: by penne.toroid.org (Postfix, from userid 1000)
-	id 7424A3880C3; Sat,  8 Nov 2008 10:27:42 +0530 (IST)
-Content-Disposition: inline
-In-Reply-To: <alpine.LFD.2.00.0811071554590.3468@nehalem.linux-foundation.org>
+	id S1750833AbYKHFG1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 8 Nov 2008 00:06:27 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750749AbYKHFG1
+	(ORCPT <rfc822;git-outgoing>); Sat, 8 Nov 2008 00:06:27 -0500
+Received: from nskntqsrv01p.mx.bigpond.com ([61.9.168.231]:21031 "EHLO
+	nskntqsrv01p.mx.bigpond.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1750760AbYKHFGZ (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 8 Nov 2008 00:06:25 -0500
+Received: from nskntotgx03p.mx.bigpond.com ([58.173.132.215])
+          by nskntmtas03p.mx.bigpond.com with ESMTP
+          id <20081108031224.ZTWC5533.nskntmtas03p.mx.bigpond.com@nskntotgx03p.mx.bigpond.com>;
+          Sat, 8 Nov 2008 03:12:24 +0000
+Received: from localhost.localdomain ([58.173.132.215])
+          by nskntotgx03p.mx.bigpond.com with ESMTP
+          id <20081108031224.BPNR12257.nskntotgx03p.mx.bigpond.com@localhost.localdomain>;
+          Sat, 8 Nov 2008 03:12:24 +0000
+X-Mailer: git-send-email 1.6.0.3.643.g233db
+In-Reply-To: <1226114569-8506-1-git-send-email-thestar@fussycoder.id.au>
+X-RPD-ScanID: Class unknown; VirusThreatLevel unknown, RefID str=0001.0A150201.49150398.007A,ss=1,fgs=0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/100376>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/100377>
 
-At 2008-11-07 15:57:23 -0800, torvalds@linux-foundation.org wrote:
->
-> > Yeah, similar. Mine is below. There's one less branch in the for
-> > loops.
-> 
-> ..and has a comment and made the magic constant be named.
 
-It works fine for me (the time went from 5m17s to 1.8s).
+Signed-off-by: John Chapman <thestar@fussycoder.id.au>
+---
+ contrib/fast-import/git-p4 |    5 ++++-
+ 1 files changed, 4 insertions(+), 1 deletions(-)
 
-(By the way, my test case is certainly very odd, but it is a real file
-from my test suite, albeit with the content x'ed away; and the change
-was to adjust the expected output for all the items. I wasn't looking
-for bugs. :-)
-
-Thanks for the explanation and the patch.
-
--- ams
+diff --git a/contrib/fast-import/git-p4 b/contrib/fast-import/git-p4
+index 38d1a17..9f0a5f9 100755
+--- a/contrib/fast-import/git-p4
++++ b/contrib/fast-import/git-p4
+@@ -316,8 +316,11 @@ def gitBranchExists(branch):
+                             stderr=subprocess.PIPE, stdout=subprocess.PIPE);
+     return proc.wait() == 0;
+ 
++_gitConfig = {}
+ def gitConfig(key):
+-    return read_pipe("git config %s" % key, ignore_error=True).strip()
++    if not _gitConfig.has_key(key):
++        _gitConfig[key] = read_pipe("git config %s" % key, ignore_error=True).strip()
++    return _gitConfig[key]
+ 
+ def p4BranchesInGit(branchesAreInRemotes = True):
+     branches = {}
+-- 
+1.6.0.3.643.g233db
