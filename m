@@ -1,92 +1,87 @@
-From: Pierre Habouzit <madcoder@debian.org>
-Subject: Re: libgit2 - a true git library
-Date: Sat, 08 Nov 2008 18:27:59 +0100
-Message-ID: <20081108172759.GA31655@artemis.corp>
-References: <20081031170704.GU14786@spearce.org> <4915939B.1070306@gmail.com> <4915A3CB.5010909@op5.se>
+From: Stephen Haberman <stephen@exigencecorp.com>
+Subject: Re: pull --preserve-merges
+Date: Sat, 8 Nov 2008 11:57:10 -0600
+Organization: Exigence
+Message-ID: <20081108115710.7f501aa9.stephen@exigencecorp.com>
+References: <20081107160138.aa96405c.stephen@exigencecorp.com>
+	<alpine.DEB.1.00.0811081607300.30769@pacific.mpi-cbg.de>
+	<200811081807.53199.fg@one2team.net>
 Mime-Version: 1.0
-Content-Type: multipart/signed; boundary="AqsLC8rIMeq19msA";
-	protocol="application/pgp-signature"; micalg=SHA1
-Cc: Steve =?utf-8?Q?Fr=C3=A9cinaux?= <nudrema@gmail.com>,
-	"Shawn O. Pearce" <spearce@spearce.org>, git@vger.kernel.org,
-	Scott Chacon <schacon@gmail.com>
-To: Andreas Ericsson <ae@op5.se>
-X-From: git-owner@vger.kernel.org Sat Nov 08 18:29:42 2008
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	git@vger.kernel.org
+To: Francis Galiegue <fg@one2team.net>
+X-From: git-owner@vger.kernel.org Sat Nov 08 18:58:37 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Kyrcq-0000CD-PW
-	for gcvg-git-2@gmane.org; Sat, 08 Nov 2008 18:29:33 +0100
+	id 1Kys4v-00019g-Dj
+	for gcvg-git-2@gmane.org; Sat, 08 Nov 2008 18:58:33 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751160AbYKHR2H (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 8 Nov 2008 12:28:07 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753601AbYKHR2G
-	(ORCPT <rfc822;git-outgoing>); Sat, 8 Nov 2008 12:28:06 -0500
-Received: from pan.madism.org ([88.191.52.104]:39963 "EHLO hermes.madism.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753597AbYKHR2F (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 8 Nov 2008 12:28:05 -0500
-Received: from madism.org (olympe.madism.org [82.243.245.108])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(Client CN "artemis.madism.org", Issuer "madism.org" (verified OK))
-	by hermes.madism.org (Postfix) with ESMTPS id DC6383C80B;
-	Sat,  8 Nov 2008 18:28:01 +0100 (CET)
-Received: by madism.org (Postfix, from userid 1000)
-	id 527D97D511E; Sat,  8 Nov 2008 18:27:59 +0100 (CET)
-Content-Disposition: inline
-In-Reply-To: <4915A3CB.5010909@op5.se>
-X-Face: $(^e[V4D-[`f2EmMGz@fgWK!e.B~2g.{08lKPU(nc1J~z\4B>*JEVq:E]7G-\6$Ycr4<;Z!|VY6Grt]+RsS$IMV)f>2)M="tY:ZPcU;&%it2D81X^kNya0=L]"vZmLP+UmKhgq+u*\.dJ8G!N&=EvlD
-User-Agent: Madmutt/devel (Linux)
+	id S1752014AbYKHR5O (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 8 Nov 2008 12:57:14 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751272AbYKHR5O
+	(ORCPT <rfc822;git-outgoing>); Sat, 8 Nov 2008 12:57:14 -0500
+Received: from smtp182.sat.emailsrvr.com ([66.216.121.182]:57650 "EHLO
+	smtp182.sat.emailsrvr.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751239AbYKHR5N (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 8 Nov 2008 12:57:13 -0500
+Received: from relay8.relay.sat.mlsrvr.com (localhost [127.0.0.1])
+	by relay8.relay.sat.mlsrvr.com (SMTP Server) with ESMTP id 297A411B0BF0;
+	Sat,  8 Nov 2008 12:57:12 -0500 (EST)
+Received: by relay8.relay.sat.mlsrvr.com (Authenticated sender: stephen-AT-exigencecorp.com) with ESMTP id A1FB511B0BEC;
+	Sat,  8 Nov 2008 12:57:11 -0500 (EST)
+In-Reply-To: <200811081807.53199.fg@one2team.net>
+X-Mailer: Sylpheed 2.5.0 (GTK+ 2.10.14; i686-pc-mingw32)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/100413>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/100414>
 
 
---AqsLC8rIMeq19msA
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Replying to both Johannes and Francis...
 
-On Sat, Nov 08, 2008 at 02:35:55PM +0000, Andreas Ericsson wrote:
-> Steve Fr=C3=A9cinaux wrote:
-> > Just a random question: is there a reason why you have put all the
-> > .h in a separate includes/ directory instead of relying on the
-> > install target to put the include files at the right place ?
-> > To me it makes it much harder to hack on the files as one is always
-> > required to switch between both directories...
->=20
-> I agree with this, but as I guess Shawn will do roughly 45 times more
-> work on it than me (according to current commit-count in git.git), I'll
-> live with it.
+> > > Awhile ago I brought up wanting to have a "rebase with preserve merges"
+> > > option for `git pull`
+> >
+> > That might be something you want, but you cannot call it
+> >
+> > 	git pull --preserve-merges
+> >
+> > since everybody used to "pull = fetch && merge" would go "Huh? A merge
+> > _does_ preserve merges".
 
-I don't, modifying the public includes may break the ABI and the API.
+Ah, right, sorry, Johannes, I know it only makes sense in the context if
+--rebase is also being in use, I was just being too brief.
 
-I believe it to be a good practice to put them in a separate directory
-so that people modifying them will know this particular header is
-public. Yes you can name your private headers differently, but it's not
-really the same, it doesn't make editing public headers hard, and it has
-to. People modifying them _have_ to thing "err why am I modifying this
-specific header in the first place" before doing anything in it.
+> > If at all, you could call it "--rebase=preserve-merges".
 
---=20
-=C2=B7O=C2=B7  Pierre Habouzit
-=C2=B7=C2=B7O                                                madcoder@debia=
-n.org
-OOO                                                http://www.madism.org
+I'd be fine with that, I had not thought of it.
 
---AqsLC8rIMeq19msA
-Content-Type: application/pgp-signature
-Content-Disposition: inline
+> Why not --rebase --keep-merges? Personnally, I think it makes things clearer 
+> since in general options are either standalone or have a value.
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.9 (GNU/Linux)
+I originally had --rebase --preserve-merges in mind because it matches
+the existing -p/--preserve-merges flag that git rebase has that I'd
+like git pull to just pass along.
 
-iEYEABECAAYFAkkVzB0ACgkQvGr7W6Hudhwi5wCgpvzRNocRLt7bUQdfXV213Q39
-chgAnjqdWA0su6wNpoBZhvuYOoImz0Ig
-=tykx
------END PGP SIGNATURE-----
+If they were separate flags, passing just --preserve-merges without
+--rebase should likely report an error. Probably the same thing if
+someone sets `branch.name.preservemerges` but `branch.name.rebase` is
+not set.
 
---AqsLC8rIMeq19msA--
+Unless instead of separate config parameters, `branch.name.rebase` uses
+Johannes's suggestion and has separate values...true or false or
+preserve-merges. That would probably better parallelize with the
+--rebase=preserve-merges style command line argument.
+
+Between one flag/config parameter or two flags/config parameters, I
+could go either way and would be willing to patch together either one
+to get it in.
+
+Thanks,
+Stephen
