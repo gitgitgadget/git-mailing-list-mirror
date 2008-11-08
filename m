@@ -1,69 +1,70 @@
-From: Francis Galiegue <fg@one2team.com>
+From: Junio C Hamano <gitster@pobox.com>
 Subject: Re: Init on push
-Date: Sat, 8 Nov 2008 21:08:34 +0100
-Organization: One2team
-Message-ID: <200811082108.34535.fg@one2team.com>
-References: <200811081708.45672.robin.rosenberg.lists@dewire.com> <7viqqyc93w.fsf@gitster.siamese.dyndns.org> <gf4rf6$v52$1@ger.gmane.org>
+Date: Sat, 08 Nov 2008 12:12:34 -0800
+Message-ID: <7v8wruc6z1.fsf@gitster.siamese.dyndns.org>
+References: <200811081708.45672.robin.rosenberg.lists@dewire.com>
+ <7viqqyc93w.fsf@gitster.siamese.dyndns.org>
+ <bb6f213e0811081201w22a36800j1713b91d0cf66fb2@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Nov 08 21:12:29 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: "Robin Rosenberg" <robin.rosenberg.lists@dewire.com>,
+	git@vger.kernel.org
+To: "Alexander Gavrilov" <angavrilov@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Nov 08 21:14:07 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KyuAU-0002AF-A7
-	for gcvg-git-2@gmane.org; Sat, 08 Nov 2008 21:12:26 +0100
+	id 1KyuC6-0002nV-52
+	for gcvg-git-2@gmane.org; Sat, 08 Nov 2008 21:14:06 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752352AbYKHULL convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 8 Nov 2008 15:11:11 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751511AbYKHULK
-	(ORCPT <rfc822;git-outgoing>); Sat, 8 Nov 2008 15:11:10 -0500
-Received: from ns35774.ovh.net ([213.251.185.197]:57805 "EHLO ns35774.ovh.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751056AbYKHULJ convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 8 Nov 2008 15:11:09 -0500
-Received: from smtp.olympe.o2t (138.193.65-86.rev.gaoland.net [86.65.193.138])
-	by ns35774.ovh.net (Postfix) with ESMTP id 1D78B92C011;
-	Sat,  8 Nov 2008 21:10:57 +0100 (CET)
-Received: from erwin.kitchen.eel (unknown [10.8.0.6])
-	by smtp.olympe.o2t (Postfix) with ESMTP id 521587001F;
-	Sat,  8 Nov 2008 21:11:07 +0100 (CET)
-User-Agent: KMail/1.9.9
-In-Reply-To: <gf4rf6$v52$1@ger.gmane.org>
-Content-Disposition: inline
+	id S1752466AbYKHUMw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 8 Nov 2008 15:12:52 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752449AbYKHUMw
+	(ORCPT <rfc822;git-outgoing>); Sat, 8 Nov 2008 15:12:52 -0500
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:36438 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751239AbYKHUMv (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 8 Nov 2008 15:12:51 -0500
+Received: from localhost.localdomain (unknown [127.0.0.1])
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 9AB397AB67;
+	Sat,  8 Nov 2008 15:12:49 -0500 (EST)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES256-SHA (256/256 bits)) (No client certificate requested) by
+ a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTPSA id EDBBC7AB66; Sat,
+  8 Nov 2008 15:12:41 -0500 (EST)
+In-Reply-To: <bb6f213e0811081201w22a36800j1713b91d0cf66fb2@mail.gmail.com>
+ (Alexander Gavrilov's message of "Sat, 8 Nov 2008 23:01:02 +0300")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: 9DAE7FDA-ADD1-11DD-B138-9CEDC82D7133-77302942!a-sasl-fastnet.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/100420>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/100421>
 
-Le Saturday 08 November 2008 21:06:01 Jakub Narebski, vous avez =E9crit=
-=A0:
-> Junio C Hamano wrote:
-> >  - Teach "-D $there" option to "git init", which does an "mkdir -p =
-$it &&
-> >    chdird $it" before it does its work.
->
-> Shouldn't it be "-C $there" (like make and tar)?
+"Alexander Gavrilov" <angavrilov@gmail.com> writes:
 
-I agree with that. It's pretty much a standard for quite a few "command=
- line=20
-people", insofar as I always look for such an option in case I want to =
-know=20
-whether a command has the ability to chdir() to a different directory t=
-han=20
-the current one :p
+> Gitosis works by replacing the shell with a program called
+> gitosis-serve, which parses and validates the incoming commands
+> against the user access configuration. If it sees an unknown command,
+> it will simply refuse to execute it.
 
---=20
-=46rancis Galiegue
-ONE2TEAM
-Ing=E9nieur syst=E8me
-Mob : +33 (0) 6 83 87 78 75
-Tel : +33 (0) 1 78 94 55 52
-fge@one2team.com
-40 avenue Raymond Poincar=E9
-75116 Paris
+If you implement a new feature by enhancing receive-pack (or anything
+else), you obviously cannot use the new feature against an installation
+with an older implementation, so what you said is a known.  My point was
+how to enhance the receiving end and what constraints we would have in
+enhancing it.
+
+> On the other hand it will automatically perform initialization before
+> calling receive-pack if the user is authorized to write to a certain
+> path, but the repository does not exist yet.
+
+That's good to know.  I also realize that gitosis does not need any hook
+for "git init -D $there" to decide whether a new repository can be created
+at requested location, as it reads the command line and makes decision
+before driving the underlying command in response to the request.
+
+On the other hand, people who enable 'push' access to their git-daemon
+would need it, as the daemon would not even know who is asking for --init.
