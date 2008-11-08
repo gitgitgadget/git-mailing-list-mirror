@@ -1,67 +1,96 @@
-From: Alexandre Julliard <julliard@winehq.org>
-Subject: Re: [PATCH] checkout: Don't crash when switching away from an invalid branch.
-Date: Sat, 08 Nov 2008 11:07:25 +0100
-Message-ID: <87k5bea5uq.fsf@wine.dyndns.org>
-References: <871vxnbhbh.fsf@wine.dyndns.org>
-	<alpine.DEB.1.00.0811071903300.30769@pacific.mpi-cbg.de>
-	<87od0r9nnj.fsf@wine.dyndns.org>
-	<7vbpwrf85x.fsf@gitster.siamese.dyndns.org>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: [PATCH 2/2] Cached the git configuration, which is now noticibly faster on windows.
+Date: Sat, 08 Nov 2008 02:13:32 -0800 (PST)
+Message-ID: <m3mygaeda0.fsf@localhost.localdomain>
+References: <1226114569-8506-1-git-send-email-thestar@fussycoder.id.au>
+	<1226114569-8506-2-git-send-email-thestar@fussycoder.id.au>
+	<ee77f5c20811072119y65738f54o7e6792fb405c142c@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Nov 08 11:08:53 2008
+Cc: "John Chapman" <thestar@fussycoder.id.au>, git@vger.kernel.org
+To: "David Symonds" <dsymonds@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Nov 08 11:14:56 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KykkO-0005U6-B2
-	for gcvg-git-2@gmane.org; Sat, 08 Nov 2008 11:08:52 +0100
+	id 1KykqG-0006na-86
+	for gcvg-git-2@gmane.org; Sat, 08 Nov 2008 11:14:56 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751748AbYKHKHi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 8 Nov 2008 05:07:38 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751749AbYKHKHi
-	(ORCPT <rfc822;git-outgoing>); Sat, 8 Nov 2008 05:07:38 -0500
-Received: from mail.codeweavers.com ([216.251.189.131]:52205 "EHLO
-	mail.codeweavers.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751012AbYKHKHh (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 8 Nov 2008 05:07:37 -0500
-Received: from adsl-84-226-9-85.adslplus.ch ([84.226.9.85] helo=wine.dyndns.org)
-	by mail.codeweavers.com with esmtpsa (TLS-1.0:DHE_RSA_AES_256_CBC_SHA1:32)
-	(Exim 4.63)
-	(envelope-from <julliard@winehq.org>)
-	id 1Kykj2-00023d-8j; Sat, 08 Nov 2008 04:07:35 -0600
-Received: by wine.dyndns.org (Postfix, from userid 1000)
-	id 91BB81E73B5; Sat,  8 Nov 2008 11:07:25 +0100 (CET)
-In-Reply-To: <7vbpwrf85x.fsf@gitster.siamese.dyndns.org> (Junio C. Hamano's
-	message of "Fri, 07 Nov 2008 15:06:18 -0800")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.0.60 (gnu/linux)
-X-Spam-Score: -3.4
+	id S1752526AbYKHKNh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 8 Nov 2008 05:13:37 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752461AbYKHKNg
+	(ORCPT <rfc822;git-outgoing>); Sat, 8 Nov 2008 05:13:36 -0500
+Received: from nf-out-0910.google.com ([64.233.182.188]:4880 "EHLO
+	nf-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752458AbYKHKNf (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 8 Nov 2008 05:13:35 -0500
+Received: by nf-out-0910.google.com with SMTP id d3so801071nfc.21
+        for <git@vger.kernel.org>; Sat, 08 Nov 2008 02:13:33 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:received:received
+         :x-authentication-warning:to:cc:subject:references:from:in-reply-to
+         :message-id:lines:user-agent:mime-version:content-type:date;
+        bh=rc6nVqNU2opTUGe0zhp6m4MZEV+TWrHOD+rzBOI6Q5A=;
+        b=B+FgI3yHQ3ZtDdN+7wnkStJ/An2TBemAQvcxSuBRY5ALfV758XkIYwzgWkVeNRnSr1
+         tbhbU2+nexV2vixfqUnBo/ndAHiSar2JMWyjjnfPIg8auNYxnNGNkkNBk5AI2+l5ImGC
+         M4k3G6KuogOFPwFRYWx6JFuCCD6ZK9TP+7/Yc=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=x-authentication-warning:to:cc:subject:references:from:in-reply-to
+         :message-id:lines:user-agent:mime-version:content-type:date;
+        b=gZAzwrG7vh1bAl53E2YuJC4IgslO2KKoe/HcOfRlFgS4KkmtQg42LmkvB0L8QQSkuq
+         Nb95t6dOY/vkTQOJRH6jTNBcMd3eTJMk4C6VJl2W8xg7dOrbguNmhEISZ/enYxRc50Lb
+         tNkFv/pKDlhbMVNIH6306x5Uoy9ObMSyUhE1g=
+Received: by 10.210.105.19 with SMTP id d19mr5067664ebc.5.1226139213531;
+        Sat, 08 Nov 2008 02:13:33 -0800 (PST)
+Received: from localhost.localdomain (abwx16.neoplus.adsl.tpnet.pl [83.8.247.16])
+        by mx.google.com with ESMTPS id 5sm5397436eyh.2.2008.11.08.02.13.31
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Sat, 08 Nov 2008 02:13:32 -0800 (PST)
+Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
+	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id mA8ADTLd025709;
+	Sat, 8 Nov 2008 11:13:29 +0100
+Received: (from jnareb@localhost)
+	by localhost.localdomain (8.13.4/8.13.4/Submit) id mA8ADRA5025706;
+	Sat, 8 Nov 2008 11:13:28 +0100
+X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
+In-Reply-To: <ee77f5c20811072119y65738f54o7e6792fb405c142c@mail.gmail.com>
+User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/100392>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/100393>
 
-Junio C Hamano <gitster@pobox.com> writes:
+"David Symonds" <dsymonds@gmail.com> writes:
 
-> For that matter, dying without removing the trace of that funny state
-> might be even preferrable if you need to do postmortem to figure out why
-> you got into such a funny state to begin with, but not everybody uses git
-> to debug git.
+> On Fri, Nov 7, 2008 at 7:22 PM, John Chapman <thestar@fussycoder.id.au> wrote:
+> 
+> > +_gitConfig = {}
+> >  def gitConfig(key):
+> > -    return read_pipe("git config %s" % key, ignore_error=True).strip()
+> > +    if not _gitConfig.has_key(key):
+> > +        _gitConfig[key] = read_pipe("git config %s" % key, ignore_error=True).strip()
+> > +    return _gitConfig[key]
+> 
+> If this is truly a noticeable bottleneck on Windows, something like
+> the following might be even better:  (completely untested!)
+> 
+> _gitConfig = None
+> def gitConfig(key):
+>   if _gitConfig is None:
+>     lines = read_pipe("git config -l", ignore_error=True).readlines():
+>     _gitConfig = dict([l.strip().split('=', 1) for l in lines])
+>   return _gitConfig.get(key, None)
 
-It turns out to be user error, that was a tree I hadn't used in a long
-time and I didn't realize it was using alternates, so HEAD was pointing
-to a commit that had been rebased and garbage-collected in the source
-repository.
-
-Most other commands die with a "bad object HEAD" in that situation, and
-checkout could certainly do that too, but I think it's nicer to provide
-an easy way of getting out of that broken state.  I'll resend an updated
-patch.
+Wouldn't it be better to use "git config -l -z", split lines at "\0"
+(NUL), and split key from value at first "\N" (CR)? This format was
+meant for scripts.
 
 -- 
-Alexandre Julliard
-julliard@winehq.org
+Jakub Narebski
+Poland
+ShadeHawk on #git
