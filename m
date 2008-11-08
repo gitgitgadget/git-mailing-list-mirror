@@ -1,103 +1,116 @@
-From: "Nguyen Thai Ngoc Duy" <pclouds@gmail.com>
-Subject: Re: [PATCH 1/2] diffcore-rename: support rename cache
-Date: Sat, 8 Nov 2008 19:00:10 +0700
-Message-ID: <fcaeb9bf0811080400h7ea5377cvaa8d658335811c23@mail.gmail.com>
-References: <1226068533-10152-1-git-send-email-pclouds@gmail.com>
-	 <20081107222128.GB4030@nan92-1-81-57-214-146.fbx.proxad.net>
-	 <7vy6zvdt25.fsf@gitster.siamese.dyndns.org>
-	 <fcaeb9bf0811072001o6df7ae00k1b1bffaadf75d3a1@mail.gmail.com>
-	 <20081108092409.GD4030@nan92-1-81-57-214-146.fbx.proxad.net>
-	 <20081108114719.GA4989@sigill.intra.peff.net>
+From: Alexandre Julliard <julliard@winehq.org>
+Subject: [PATCH] checkout: Don't crash when switching away from an invalid branch.
+Date: Sat, 08 Nov 2008 13:03:59 +0100
+Message-ID: <87fxm2a0gg.fsf@wine.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: "Yann Dirson" <ydirson@altern.org>,
-	"Junio C Hamano" <gitster@pobox.com>, git@vger.kernel.org
-To: "Jeff King" <peff@peff.net>
-X-From: git-owner@vger.kernel.org Sat Nov 08 13:01:34 2008
+Content-Type: text/plain; charset=us-ascii
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Nov 08 13:05:50 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KymVQ-0008HW-4m
-	for gcvg-git-2@gmane.org; Sat, 08 Nov 2008 13:01:32 +0100
+	id 1KymZI-0000mp-Cl
+	for gcvg-git-2@gmane.org; Sat, 08 Nov 2008 13:05:47 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753055AbYKHMAN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 8 Nov 2008 07:00:13 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752974AbYKHMAN
-	(ORCPT <rfc822;git-outgoing>); Sat, 8 Nov 2008 07:00:13 -0500
-Received: from fg-out-1718.google.com ([72.14.220.154]:3922 "EHLO
-	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752782AbYKHMAM (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 8 Nov 2008 07:00:12 -0500
-Received: by fg-out-1718.google.com with SMTP id 19so1410309fgg.17
-        for <git@vger.kernel.org>; Sat, 08 Nov 2008 04:00:10 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to
-         :subject:cc:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:references;
-        bh=tp+jnouCVwqvPlqdoLYUwaRaKEgKZmYnhjQ8Y2ldqqc=;
-        b=GsV0JUWDYpSTftRNPLYNIp54qWwkzkSDumfXR7gfB/EvQfum7S5AdCvslKz8GgkAjN
-         dZbz6wKo1So7Ck78txO/1VNiSCF+AUh10oC+FBv+eUy8Cd330d/7RF03vuDaSVjj2SW2
-         DCo/BlykEzP7fnGlNPERmwZ4d5SZLzNJzSn4o=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
-         :content-type:content-transfer-encoding:content-disposition
-         :references;
-        b=K4cyQWvPg2SHdKlS4eZa7ROpHwonSqMPntglkAguftVuBzxhvIKcZ4iH7IqF5zWihy
-         7WeUDRibY/5NMyRrWZutWbtdT5/J7/4xOiXDzn3vdj8KEqePYR9Aay4O2oC1l4k+7n/5
-         ntI3VbZhAriX7fKcncaHc9jRj0FTy8E75JfD8=
-Received: by 10.86.52.6 with SMTP id z6mr4974776fgz.20.1226145610165;
-        Sat, 08 Nov 2008 04:00:10 -0800 (PST)
-Received: by 10.86.27.20 with HTTP; Sat, 8 Nov 2008 04:00:10 -0800 (PST)
-In-Reply-To: <20081108114719.GA4989@sigill.intra.peff.net>
-Content-Disposition: inline
+	id S1753135AbYKHMES (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 8 Nov 2008 07:04:18 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753125AbYKHMES
+	(ORCPT <rfc822;git-outgoing>); Sat, 8 Nov 2008 07:04:18 -0500
+Received: from mail.codeweavers.com ([216.251.189.131]:50344 "EHLO
+	mail.codeweavers.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753122AbYKHMER (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 8 Nov 2008 07:04:17 -0500
+Received: from adsl-84-226-9-85.adslplus.ch ([84.226.9.85] helo=wine.dyndns.org)
+	by mail.codeweavers.com with esmtpsa (TLS-1.0:DHE_RSA_AES_256_CBC_SHA1:32)
+	(Exim 4.63)
+	(envelope-from <julliard@winehq.org>)
+	id 1KymXu-0003Xq-2Y
+	for git@vger.kernel.org; Sat, 08 Nov 2008 06:04:16 -0600
+Received: by wine.dyndns.org (Postfix, from userid 1000)
+	id D94B71E73B5; Sat,  8 Nov 2008 13:03:59 +0100 (CET)
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.0.60 (gnu/linux)
+X-Spam-Score: -3.4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/100398>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/100399>
 
-On 11/8/08, Jeff King <peff@peff.net> wrote:
-> On Sat, Nov 08, 2008 at 10:24:10AM +0100, Yann Dirson wrote:
->
->  > Well, it could be that an out-of-pathspec pair would have a better
->  > score than an in-pathspec one.  Maybe cache recording should be turned
->  > off when doing pathspec limitation ?
->
->
-> One thing I notice is that the cache works at the level of "here is the
->  best rename for this commit." Maybe it could go down a level and say
->  "here is the inexact rename score between these blobs". Then you would
->  still find the best score between two blobs each time, but save the
->  really computationally intensive part (which is comparing the actual
->  _content_ of the blobs).
->  That should work in the face of path limiting or any other option,
->  because it is caching something immutable: this is the similarity score
->  between two pieces of content. And then you get arbitrary tree-to-tree
->  speedups for free, since such a cache would be valid for every commit.
+When using alternates, it is possible for HEAD to end up pointing to
+an invalid commit. git checkout should be able to recover from that
+situation without crashing.
 
-I did that and realized the cost was not from each diff, in
---find-copies-harder case, but from the number of diffs you had to do.
-Even with exact matching on linux-2.6.git, it could take significant
-time (it was about 5 minutes in no-cache case, 1 minute without exact
-match cache, and less than 1 sec if everything is cached).
+Signed-off-by: Alexandre Julliard <julliard@winehq.org>
+---
+ builtin-checkout.c               |    8 ++++----
+ t/t2011-checkout-invalid-head.sh |   18 ++++++++++++++++++
+ 2 files changed, 22 insertions(+), 4 deletions(-)
+ create mode 100755 t/t2011-checkout-invalid-head.sh
 
->
->  The downsides are:
->
->   - your cache is potentially bigger, since you are caching the score of
->    every pair you look at, instead of just "good" pairs (OTOH, you are
->    not doing a per-commit cache, which helps reduce the size)
-
-It is huge if you accidentially add --find-copies-harder to your
-command, considering that every new file will be compared against
-every files in tree (about 25k).
-
->   - you can still "lie" about a score to pre-seed imported SVN renames,
->    but such lying will actually apply to all commits.
+diff --git a/builtin-checkout.c b/builtin-checkout.c
+index 57b94d2..06904c3 100644
+--- a/builtin-checkout.c
++++ b/builtin-checkout.c
+@@ -47,7 +47,7 @@ static int post_checkout_hook(struct commit *old, struct commit *new,
+ 
+ 	memset(&proc, 0, sizeof(proc));
+ 	argv[0] = name;
+-	argv[1] = xstrdup(sha1_to_hex(old->object.sha1));
++	argv[1] = xstrdup(sha1_to_hex(old ? old->object.sha1 : null_sha1));
+ 	argv[2] = xstrdup(sha1_to_hex(new->object.sha1));
+ 	argv[3] = changed ? "1" : "0";
+ 	argv[4] = NULL;
+@@ -492,10 +492,10 @@ static void update_refs_for_switch(struct checkout_opts *opts,
+ 	}
+ 
+ 	old_desc = old->name;
+-	if (!old_desc)
++	if (!old_desc && old->commit)
+ 		old_desc = sha1_to_hex(old->commit->object.sha1);
+ 	strbuf_addf(&msg, "checkout: moving from %s to %s",
+-		    old_desc, new->name);
++		    old_desc ? old_desc : "(invalid)", new->name);
+ 
+ 	if (new->path) {
+ 		create_symref("HEAD", new->path, msg.buf);
+@@ -551,7 +551,7 @@ static int switch_branches(struct checkout_opts *opts, struct branch_info *new)
+ 	 * a new commit, we want to mention the old commit once more
+ 	 * to remind the user that it might be lost.
+ 	 */
+-	if (!opts->quiet && !old.path && new->commit != old.commit)
++	if (!opts->quiet && !old.path && old.commit && new->commit != old.commit)
+ 		describe_detached_head("Previous HEAD position was", old.commit);
+ 
+ 	if (!old.commit) {
+diff --git a/t/t2011-checkout-invalid-head.sh b/t/t2011-checkout-invalid-head.sh
+new file mode 100755
+index 0000000..764bb0a
+--- /dev/null
++++ b/t/t2011-checkout-invalid-head.sh
+@@ -0,0 +1,18 @@
++#!/bin/sh
++
++test_description='checkout switching away from an invalid branch'
++
++. ./test-lib.sh
++
++test_expect_success 'setup' '
++	echo hello >world &&
++	git add world &&
++	git commit -m initial
++'
++
++test_expect_success 'checkout master from invalid HEAD' '
++	echo 0000000000000000000000000000000000000000 >.git/HEAD &&
++	git checkout master --
++'
++
++test_done
 -- 
-Duy
+1.6.0.3.669.g76740
+
+-- 
+Alexandre Julliard
+julliard@winehq.org
