@@ -1,79 +1,92 @@
-From: Linus Torvalds <torvalds@linux-foundation.org>
+From: Pierre Habouzit <madcoder@debian.org>
 Subject: Re: absurdly slow git-diff
-Date: Fri, 7 Nov 2008 15:57:23 -0800 (PST)
-Message-ID: <alpine.LFD.2.00.0811071554590.3468@nehalem.linux-foundation.org>
-References: <20081107200126.GA20284@toroid.org> <alpine.LFD.2.00.0811071335010.3468@nehalem.linux-foundation.org> <alpine.DEB.1.10.0811071503120.8736@alien.or.mcafeemobile.com> <alpine.DEB.1.10.0811071517280.8736@alien.or.mcafeemobile.com>
- <alpine.LFD.2.00.0811071540340.3468@nehalem.linux-foundation.org> <alpine.DEB.1.10.0811071547080.8736@alien.or.mcafeemobile.com>
+Date: Sat, 08 Nov 2008 01:14:26 +0100
+Message-ID: <20081108001426.GA19357@artemis.corp>
+References: <20081107200126.GA20284@toroid.org> <alpine.LFD.2.00.0811071335010.3468@nehalem.linux-foundation.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
+Content-Type: multipart/signed; boundary="G4iJoqBmSsgzjUCe";
+	protocol="application/pgp-signature"; micalg=SHA1
 Cc: Abhijit Menon-Sen <ams@toroid.org>,
-	Pierre Habouzit <madcoder@debian.org>,
+	Davide Libenzi <davidel@xmailserver.org>,
 	Git Mailing List <git@vger.kernel.org>
-To: Davide Libenzi <davidel@xmailserver.org>,
-	Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Nov 08 00:59:33 2008
+To: Linus Torvalds <torvalds@linux-foundation.org>
+X-From: git-owner@vger.kernel.org Sat Nov 08 01:17:40 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KybEi-000175-O0
-	for gcvg-git-2@gmane.org; Sat, 08 Nov 2008 00:59:33 +0100
+	id 1KybWF-0005JL-MP
+	for gcvg-git-2@gmane.org; Sat, 08 Nov 2008 01:17:40 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753011AbYKGX6R (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 7 Nov 2008 18:58:17 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753238AbYKGX6Q
-	(ORCPT <rfc822;git-outgoing>); Fri, 7 Nov 2008 18:58:16 -0500
-Received: from smtp1.linux-foundation.org ([140.211.169.13]:45083 "EHLO
-	smtp1.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1753151AbYKGX6P (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 7 Nov 2008 18:58:15 -0500
-Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [140.211.169.55])
-	by smtp1.linux-foundation.org (8.14.2/8.13.5/Debian-3ubuntu1.1) with ESMTP id mA7NvOfx014572
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Fri, 7 Nov 2008 15:57:25 -0800
-Received: from localhost (localhost [127.0.0.1])
-	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id mA7NvNt3010196;
-	Fri, 7 Nov 2008 15:57:24 -0800
-In-Reply-To: <alpine.DEB.1.10.0811071547080.8736@alien.or.mcafeemobile.com>
-User-Agent: Alpine 2.00 (LFD 1167 2008-08-23)
-X-Spam-Status: No, hits=-3.436 required=5 tests=AWL,BAYES_00
-X-Spam-Checker-Version: SpamAssassin 3.2.4-osdl_revision__1.47__
-X-MIMEDefang-Filter: lf$Revision: 1.188 $
-X-Scanned-By: MIMEDefang 2.63 on 140.211.169.13
+	id S1751635AbYKHAOa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 7 Nov 2008 19:14:30 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752000AbYKHAOa
+	(ORCPT <rfc822;git-outgoing>); Fri, 7 Nov 2008 19:14:30 -0500
+Received: from pan.madism.org ([88.191.52.104]:58719 "EHLO hermes.madism.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751619AbYKHAO3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 7 Nov 2008 19:14:29 -0500
+Received: from madism.org (olympe.madism.org [82.243.245.108])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(Client CN "artemis.madism.org", Issuer "madism.org" (verified OK))
+	by hermes.madism.org (Postfix) with ESMTPS id 612FF3C363;
+	Sat,  8 Nov 2008 01:14:28 +0100 (CET)
+Received: by madism.org (Postfix, from userid 1000)
+	id C53BB7D511F; Sat,  8 Nov 2008 01:14:26 +0100 (CET)
+Content-Disposition: inline
+In-Reply-To: <alpine.LFD.2.00.0811071335010.3468@nehalem.linux-foundation.org>
+X-Face: $(^e[V4D-[`f2EmMGz@fgWK!e.B~2g.{08lKPU(nc1J~z\4B>*JEVq:E]7G-\6$Ycr4<;Z!|VY6Grt]+RsS$IMV)f>2)M="tY:ZPcU;&%it2D81X^kNya0=L]"vZmLP+UmKhgq+u*\.dJ8G!N&=EvlD
+User-Agent: Madmutt/devel (Linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/100366>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/100367>
 
 
+--G4iJoqBmSsgzjUCe
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-On Fri, 7 Nov 2008, Davide Libenzi wrote:
-> 
-> Yeah, similar. Mine is below. There's one less branch in the for loops.
+On Fri, Nov 07, 2008 at 09:37:29PM +0000, Linus Torvalds wrote:
+>=20
+> On Sat, 8 Nov 2008, Abhijit Menon-Sen wrote:
+> >
+> > If anyone's interested, the files are http://toroid.org/misc/1 and
+> > http://toroid.org/misc/2
 
-..and has a comment and made the magic constant be named.
+> I'm also adding Pierre, since he was talking about trying to implement
+> another diff algorithm (although I'm not at all sure that the patience=20
+> diff really would help this case at all).
 
-Junio, the time difference is quite big for Abhijit's admittedly odd 
-test-case:
+FWIW Patience diff wouldn't help at all here. Patience diff is just a
+matter of preseeding your preferred diff algorithm with better (wrt
+human readability) candidate for the invariant lines. IOW it helps
+dividing the problem into smaller bits, but requires *unique lines* to
+start with. If you haven't any, then basically, Patience diff does
+nothing and calls your usual diff algorithm on the whole files.
 
- - Before:
+It does so in a pseudo linear complexity, hence should not make overall
+time really worse, but will not help for the ending time usually either.
 
-	[torvalds@nehalem slow-diff]$ time git diff 1 2 > out.old
-	
-	real	2m19.912s
-	user	2m19.885s
-	sys	0m0.024s
+--=20
+=C2=B7O=C2=B7  Pierre Habouzit
+=C2=B7=C2=B7O                                                madcoder@debia=
+n.org
+OOO                                                http://www.madism.org
 
- - After:
+--G4iJoqBmSsgzjUCe
+Content-Type: application/pgp-signature
+Content-Disposition: inline
 
-	[torvalds@nehalem slow-diff]$ time ~/git/git diff 1 2 > out
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.9 (GNU/Linux)
 
-	real	0m0.841s
-	user	0m0.816s
-	sys	0m0.024s
+iEYEABECAAYFAkkU2eEACgkQvGr7W6HudhwIAACfes2RpcnQoK3Bwn+DHCvE5Hdl
+T7MAn0T4OLgtwoyMoiU8Ku/qVUyEI6HR
+=Uu/2
+-----END PGP SIGNATURE-----
 
-with no difference in output.
-
-			Linus
+--G4iJoqBmSsgzjUCe--
