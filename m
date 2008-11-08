@@ -1,88 +1,67 @@
-From: "Nguyen Thai Ngoc Duy" <pclouds@gmail.com>
-Subject: Re: [PATCH 1/2] diffcore-rename: support rename cache
-Date: Sat, 8 Nov 2008 16:29:47 +0700
-Message-ID: <fcaeb9bf0811080129g7b97dd0au872ec66484a9a7f5@mail.gmail.com>
-References: <1226068533-10152-1-git-send-email-pclouds@gmail.com>
-	 <20081107222128.GB4030@nan92-1-81-57-214-146.fbx.proxad.net>
-	 <7vy6zvdt25.fsf@gitster.siamese.dyndns.org>
-	 <fcaeb9bf0811072001o6df7ae00k1b1bffaadf75d3a1@mail.gmail.com>
-	 <20081108092409.GD4030@nan92-1-81-57-214-146.fbx.proxad.net>
+From: Alexandre Julliard <julliard@winehq.org>
+Subject: Re: [PATCH] checkout: Don't crash when switching away from an invalid branch.
+Date: Sat, 08 Nov 2008 11:07:25 +0100
+Message-ID: <87k5bea5uq.fsf@wine.dyndns.org>
+References: <871vxnbhbh.fsf@wine.dyndns.org>
+	<alpine.DEB.1.00.0811071903300.30769@pacific.mpi-cbg.de>
+	<87od0r9nnj.fsf@wine.dyndns.org>
+	<7vbpwrf85x.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: base64
-Cc: "Junio C Hamano" <gitster@pobox.com>, git@vger.kernel.org
-To: "Yann Dirson" <ydirson@altern.org>
-X-From: git-owner@vger.kernel.org Sat Nov 08 10:31:11 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sat Nov 08 11:08:53 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Kyk9o-00055l-GL
-	for gcvg-git-2@gmane.org; Sat, 08 Nov 2008 10:31:04 +0100
+	id 1KykkO-0005U6-B2
+	for gcvg-git-2@gmane.org; Sat, 08 Nov 2008 11:08:52 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751243AbYKHJ3u (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 8 Nov 2008 04:29:50 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751584AbYKHJ3u
-	(ORCPT <rfc822;git-outgoing>); Sat, 8 Nov 2008 04:29:50 -0500
-Received: from fg-out-1718.google.com ([72.14.220.152]:10358 "EHLO
-	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750985AbYKHJ3t (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 8 Nov 2008 04:29:49 -0500
-Received: by fg-out-1718.google.com with SMTP id 19so1364955fgg.17
-        for <git@vger.kernel.org>; Sat, 08 Nov 2008 01:29:47 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to
-         :subject:cc:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:references;
-        bh=3UkFU0AuAtuBB9HpJFSHoCgDcwTs88TSFg20WRh0N50=;
-        b=HT3x/5LOzSUcc6hFhzkDWkuH4P35yR7UkwCx5+5noEnFHuJj3FVJF2ZuRukdp9IDtV
-         lR/C3zHGeE+iglp3nBksFUsVw0I7nHxOV5Aq5nV8DC80b1FubVQFDTBxBs6RQmlHbivD
-         tnndxJ8Q+yK/qoW6UA1jUK7ZLCCei6SupN6nk=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
-         :content-type:content-transfer-encoding:content-disposition
-         :references;
-        b=oGmb+v2a+TVRMcaSmNli+lkrt1L4hl5hxy/kiuXZ23Vuq1FrGePSw2GKwPJDikXtBA
-         VMP9lfVgCE73ZuyIl+uXbPvL8l4sDlXF0DP8B4Mh7vTZXSMeLM96qxOwyiVnW/H9ogXG
-         rvWQM7Rrm74fj535YenSe00xI8VV+Sy/gy/Ys=
-Received: by 10.86.62.3 with SMTP id k3mr4812358fga.6.1226136587787;
-        Sat, 08 Nov 2008 01:29:47 -0800 (PST)
-Received: by 10.86.27.20 with HTTP; Sat, 8 Nov 2008 01:29:47 -0800 (PST)
-In-Reply-To: <20081108092409.GD4030@nan92-1-81-57-214-146.fbx.proxad.net>
-Content-Disposition: inline
+	id S1751748AbYKHKHi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 8 Nov 2008 05:07:38 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751749AbYKHKHi
+	(ORCPT <rfc822;git-outgoing>); Sat, 8 Nov 2008 05:07:38 -0500
+Received: from mail.codeweavers.com ([216.251.189.131]:52205 "EHLO
+	mail.codeweavers.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751012AbYKHKHh (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 8 Nov 2008 05:07:37 -0500
+Received: from adsl-84-226-9-85.adslplus.ch ([84.226.9.85] helo=wine.dyndns.org)
+	by mail.codeweavers.com with esmtpsa (TLS-1.0:DHE_RSA_AES_256_CBC_SHA1:32)
+	(Exim 4.63)
+	(envelope-from <julliard@winehq.org>)
+	id 1Kykj2-00023d-8j; Sat, 08 Nov 2008 04:07:35 -0600
+Received: by wine.dyndns.org (Postfix, from userid 1000)
+	id 91BB81E73B5; Sat,  8 Nov 2008 11:07:25 +0100 (CET)
+In-Reply-To: <7vbpwrf85x.fsf@gitster.siamese.dyndns.org> (Junio C. Hamano's
+	message of "Fri, 07 Nov 2008 15:06:18 -0800")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.0.60 (gnu/linux)
+X-Spam-Score: -3.4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/100391>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/100392>
 
-T24gMTEvOC8wOCwgWWFubiBEaXJzb24gPHlkaXJzb25AYWx0ZXJuLm9yZz4gd3JvdGU6Cj4gT24g
-U2F0LCBOb3YgMDgsIDIwMDggYXQgMTE6MDE6MjBBTSArMDcwMCwgTmd1eWVuIFRoYWkgTmdvYyBE
-dXkgd3JvdGU6Cj4gID4gT24gMTEvOC8wOCwgSnVuaW8gQyBIYW1hbm8gPGdpdHN0ZXJAcG9ib3gu
-Y29tPiB3cm90ZToKPiAgPiA+IFlhbm4gRGlyc29uIDx5ZGlyc29uQGFsdGVybi5vcmc+IHdyaXRl
-czoKPiAgPiA+Cj4gID4gPiAgPiBPbiBGcmksIE5vdiAwNywgMjAwOCBhdCAwOTozNTozMlBNICsw
-NzAwLCBOZ3V5Pz8/biBUaMOhaSBOZz8/P2MgRHV5IHdyb3RlOgo+ICA+ID4gID4+IFRoaXMgcGF0
-Y2ggdGVhY2hlcyBkaWZmY29yZV9yZW5hbWUoKSB0byBsb29rIGludG8KPiAgPiA+ICA+PiAkR0lU
-X0RJUi9yZW5hbWUtY2FjaGUgYW5kIG1ha2UgdXNlIG9mIGl0IHRvIHJlY3JlYXRlIGRpZmZfZmls
-ZXBhaXIuCj4gID4gPiAgPj4gV2l0aCBwcm9wZXIgY2FjaGUsIHRoZXJlIHNob3VsZCBiZSBubyBh
-dmFpbGFibGUgZW50cnkgZm9yIGVzdGltYXRpb24KPiAgPiA+ICA+PiBhZnRlciBleGFjdCBtYXRj
-aGluZy4KPiAgPiA+ICA+Cj4gID4gPiAgPiBUaGlzIGlzIHNvbWV0aGluZyBJIGhhdmUgdGhvdWdo
-dCBhYm91dCBpbiB0aGUgcGFzdCwgZ29vZCB0byBzZWUgdGhhdAo+ICA+ID4gID4gaW1wbGVtZW50
-ZWQgOikKPiAgPiA+ICA+Cj4gID4gPiAgPj4gUmVuYW1lIGNhY2hpbmcgaXMgcGVyIGNvbW1pdC4g
-SSBkb24ndCB0aGluayBhYml0cmFyeSB0cmVlLXRyZWUgY2FjaGluZwo+ICA+ID4gID4+IGlzIHdv
-cnRoIGl0Lgo+ICA+ID4gID4KPiAgPiA+ICA+IFRoYXQgY291bGQgYmUgYSBuaWNlIGNvbXBsZW1l
-bnQgdG8gbXkgZGlyZWN0b3J5LXJlbmFtZSBwYXRjaC4KPiAgPiA+Cj4gID4gPgo+ICA+ID4gSGFz
-IGFueWJvZHkgdGhvdWdodCBhYm91dCBpbnRlcmFjdGlvbiBiZXR3ZWVuIHRoYXQgY2FjaGluZyBh
-bmQgcGF0aHNwZWMKPiAgPiA+ICBsaW1pdGVkIG9wZXJhdGlvbj8KPiAgPiA+Cj4gID4KPiAgPiBJ
-IGRpZG4ndC4gQnV0IEkgdGhpbmsgYWxsIG91dC1vZi1wYXRoc3BlYyBkaWZmIHBhaXJzIGFyZSBy
-ZW1vdmVkCj4gID4gYmVmb3JlIGl0IHJlYWNoZXMgZGlmZmNvcmVfcmVuYW1lKCkgc28gdGhlIGNh
-Y2hlIGhhcyBub3RoaW5nIHRvIGRvCj4gID4gd2l0aCBpdCAoZXhjZXB0IGl0IHN0aWxsIGxvYWRz
-IGZ1bGwgY2FjaGUgZm9yIGEgY29tbWl0KS4KPgo+Cj4gV2VsbCwgaXQgY291bGQgYmUgdGhhdCBh
-biBvdXQtb2YtcGF0aHNwZWMgcGFpciB3b3VsZCBoYXZlIGEgYmV0dGVyCj4gIHNjb3JlIHRoYW4g
-YW4gaW4tcGF0aHNwZWMgb25lLiAgTWF5YmUgY2FjaGUgcmVjb3JkaW5nIHNob3VsZCBiZSB0dXJu
-ZWQKPiAgb2ZmIHdoZW4gZG9pbmcgcGF0aHNwZWMgbGltaXRhdGlvbiA/CgpSaWdodCwgcmVjb3Jk
-aW5nIHNob3VsZCBiZSB0dXJuZWQgb2ZmIG9yIHNvbWV0aGluZy4gTGV0IG1lIHNlZS4uCi0tIApE
-dXkK
+Junio C Hamano <gitster@pobox.com> writes:
+
+> For that matter, dying without removing the trace of that funny state
+> might be even preferrable if you need to do postmortem to figure out why
+> you got into such a funny state to begin with, but not everybody uses git
+> to debug git.
+
+It turns out to be user error, that was a tree I hadn't used in a long
+time and I didn't realize it was using alternates, so HEAD was pointing
+to a commit that had been rebased and garbage-collected in the source
+repository.
+
+Most other commands die with a "bad object HEAD" in that situation, and
+checkout could certainly do that too, but I think it's nicer to provide
+an easy way of getting out of that broken state.  I'll resend an updated
+patch.
+
+-- 
+Alexandre Julliard
+julliard@winehq.org
