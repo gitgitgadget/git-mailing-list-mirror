@@ -1,106 +1,74 @@
 From: Jeff King <peff@peff.net>
-Subject: Re: How it was at GitTogether'08 ?
-Date: Sat, 8 Nov 2008 09:17:27 -0500
-Message-ID: <20081108141727.GA17100@coredump.intra.peff.net>
-References: <200811080254.53202.jnareb@gmail.com> <200811080441.25796.johan@herland.net>
+Subject: Re: [RFC PATCH 0/4] deny push to current branch of non-bare repo
+Date: Sat, 8 Nov 2008 09:27:56 -0500
+Message-ID: <20081108142756.GC17100@coredump.intra.peff.net>
+References: <20081107220730.GA15942@coredump.intra.peff.net> <7v3ai3f7oa.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org, Jakub Narebski <jnareb@gmail.com>
-To: Johan Herland <johan@herland.net>
-X-From: git-owner@vger.kernel.org Sat Nov 08 15:18:59 2008
+Cc: git@vger.kernel.org, Sam Vilain <sam@vilain.net>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sat Nov 08 15:29:15 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KyoeQ-0001zP-Ol
-	for gcvg-git-2@gmane.org; Sat, 08 Nov 2008 15:18:59 +0100
+	id 1KyooM-0004rY-90
+	for gcvg-git-2@gmane.org; Sat, 08 Nov 2008 15:29:14 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753470AbYKHORd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 8 Nov 2008 09:17:33 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753060AbYKHORc
-	(ORCPT <rfc822;git-outgoing>); Sat, 8 Nov 2008 09:17:32 -0500
-Received: from peff.net ([208.65.91.99]:1744 "EHLO peff.net"
+	id S1753269AbYKHO17 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 8 Nov 2008 09:27:59 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753286AbYKHO17
+	(ORCPT <rfc822;git-outgoing>); Sat, 8 Nov 2008 09:27:59 -0500
+Received: from peff.net ([208.65.91.99]:2728 "EHLO peff.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753320AbYKHORb (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 8 Nov 2008 09:17:31 -0500
-Received: (qmail 6270 invoked by uid 111); 8 Nov 2008 14:17:29 -0000
+	id S1753060AbYKHO16 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 8 Nov 2008 09:27:58 -0500
+Received: (qmail 6307 invoked by uid 111); 8 Nov 2008 14:27:57 -0000
 Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.32) with SMTP; Sat, 08 Nov 2008 09:17:29 -0500
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Sat, 08 Nov 2008 09:17:27 -0500
+    by peff.net (qpsmtpd/0.32) with SMTP; Sat, 08 Nov 2008 09:27:57 -0500
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Sat, 08 Nov 2008 09:27:56 -0500
 Content-Disposition: inline
-In-Reply-To: <200811080441.25796.johan@herland.net>
+In-Reply-To: <7v3ai3f7oa.fsf@gitster.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/100402>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/100403>
 
-On Sat, Nov 08, 2008 at 04:41:25AM +0100, Johan Herland wrote:
+On Fri, Nov 07, 2008 at 03:16:53PM -0800, Junio C Hamano wrote:
 
-> > * Discussion on notes
+> > The FAQ even says "don't do this until you know what you are doing." So
+> > the safety valve is configurable, so that those who know what they are
+> > doing can switch it off.
 > 
-> Can someone elaborate on this? AFAIK, notes have popped up on this list 
-> often enough that I'm convinced it would be a _really_ useful feature. The 
-> only drawback I was aware of, was the lack of an efficient implementation, 
-> but then Jeff comes out of the blue and posts some interesting numbers [1] 
-> a week or so ago. Does this mean there are no remaining obstacles?
+> "We are breaking your existing working setup but you can add a new
+> configuration to unbreak it" should not be done lightly.  I think as the
+> end result it is a reasonable thing to aim for for this particular
+> feature, but we do need a transition plan patch in between that introduces
+> a step that warns but not forbids.  We can ship 1.6.1 with it and then
+> switch the default to forbid in 1.6.3, for example.
+
+Yeah, I was kind of hoping we could assume that anybody relying on this
+behavior was somewhat insane, and wouldn't be too upset when it broke.
+But you're probably right that we should be more conservative. I'll
+rework it with a "yes/no/warn" option for the config, and we can set it
+to "warn" (and those who really do want it can shut off the warning with
+"no"). Or we can even start with just leaving it on "no", but I think
+the deprecation period should begin when we switch it to "warn".
+
+> > Patch 4/4 is the interesting one. 1/4 is a cleanup I saw while fixing
+> > tests. 2/4 is a cleanup to prepare for 3/4. And 3/4 fixes a bunch of
+> > tests which were inadvertently doing such a push (but didn't care
+> > because they didn't look at the working directory).
 > 
-> [1]: http://article.gmane.org/gmane.comp.version-control.git/99415
+> I wonder if you can use the tests 3/4 touches as the test for your "keep
+> existing setup" configuration variable, pretending that they are old
+> timer's repositories?
 
-The discussion was along the lines of "here are some more cool things we
-could do, if we had notes." I don't remember the specifics of the cool
-things, but they were related to annotating patches with review
-information. Shawn can probably elaborate more.
-
-That led to a "notes as a tree are nice, but too slow because looking up
-a tree entry is linear" (and obviously you do a ton of lookups in the
-notes tree during "git log"). Dscho had posted an implementation with a
-persistent notes cache long ago. Since I failed to actually look at
-that, I started on a slightly different approach, which is simply doing
-an in-memory hash table to speedup the notes tree. And those are the
-numbers and patch I posted.
-
-My eventual plan was to re-work Dscho's patches with this performance
-approach. But it is not at the top of my queue, so if somebody else
-wanted to pick it up, I would be very happy. Everything I have done so
-far is in the post you referenced.
-
-The only other thing I remember discussing was notes namespaces. The two
-obvious approaches are:
-
- 1. a separate ref for each notes namespace, with each note ending up a
-    blob in a tree. So you might have refs/notes/acked-by:$SHA1 as a
-    blob.
-
- 2. one notes ref, with the notes tree pointing a sub-tree that has
-    named entries, one for each note type. So you might have
-    refs/notes:$SHA1/acked-by as a blob.
-
-The advantage of '1' is that it keeps your different note types
-separate, which means it is easy to distribute one type but not the
-other. The advantage of '2' is that I do one lookup per-commit, and then
-I can see all of the notes, which keeps performance nice when you want
-to annotate with several note types.
-
-After some discussion, I think Dscho and I came to the conclusion that
-supporting both might be desirable. And it should be pretty
-straightforward. You can just have multiple note refs (but default to a
-"main" one), and within each one, either point to a tree or blob (and we
-will see which and use it appropriately).
-
-And then depending on which notes the user wants, they can refer to them
-appropriately. My suggestion for naming (and this wasn't discussed
-earlier, so Dscho has not endorsed this) would be something like
-"$X:$Y", which would mean "to get the notes for $SHA1, look at the tree
-in refs/notes/$X for the file $SHA1/$Y". If $Y is empty, then expect
-$SHA1 to be a blob (if it's a tree, maybe look at $SHA1/default). If
-"$X" is empty, then use "refs/notes/default". If there is no colon,
-assume we have "$Y".
-
-So you could have a bunch of notes in some "main" namespace just by
-calling them some name; without a name, you get some "default" note. But
-if you wanted a separate database (say, for SVN information), you could
-use "svn:" or "svn:name".
+Yes, they do break with 4/4 applied without 3/4 (that was how I found
+them, but "git rebase -i" let me pretend I had the proper foresight. ;)
+). We can keep 3/4 back until the switch from "warn" to "yes", if that's
+what you are suggesting.
 
 -Peff
