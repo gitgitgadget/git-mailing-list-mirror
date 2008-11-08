@@ -1,107 +1,180 @@
-From: "Andrew Arnott" <andrewarnott@gmail.com>
-Subject: Re: Repo corrupted somehow?
-Date: Sat, 8 Nov 2008 07:19:13 -0800
-Message-ID: <216e54900811080719i43b4a631p241e9d2a54ed5ce9@mail.gmail.com>
-References: <216e54900811032309s51c8cb1fr64054ff18c450b1d@mail.gmail.com>
-	 <alpine.LNX.1.00.0811042241450.19665@iabervon.org>
-	 <216e54900811042127id69b61fqbd9d001b8bc17a6a@mail.gmail.com>
-	 <alpine.LNX.1.00.0811050043030.19665@iabervon.org>
-	 <77005B51-0170-42EC-BBA7-DCF39C7CFC5E@orakel.ntnu.no>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: How it was at GitTogether'08 ?
+Date: Sat, 8 Nov 2008 16:31:04 +0100
+Message-ID: <200811081631.06229.jnareb@gmail.com>
+References: <200811080254.53202.jnareb@gmail.com> <ee77f5c20811072108o21f97c97i8174f4f7ecd67030@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain;
+  charset="iso-8859-1"
 Content-Transfer-Encoding: 7bit
-Cc: "Daniel Barkalow" <barkalow@iabervon.org>, git@vger.kernel.org
-To: "Eyvind Bernhardsen" <eyvind-git@orakel.ntnu.no>
-X-From: git-owner@vger.kernel.org Sat Nov 08 16:23:37 2008
+Cc: git@vger.kernel.org,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>
+To: "David Symonds" <dsymonds@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Nov 08 16:32:41 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Kypex-0003bD-HB
-	for gcvg-git-2@gmane.org; Sat, 08 Nov 2008 16:23:35 +0100
+	id 1Kypnf-0006IG-GE
+	for gcvg-git-2@gmane.org; Sat, 08 Nov 2008 16:32:36 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753068AbYKHPTQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 8 Nov 2008 10:19:16 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752984AbYKHPTQ
-	(ORCPT <rfc822;git-outgoing>); Sat, 8 Nov 2008 10:19:16 -0500
-Received: from mail-gx0-f11.google.com ([209.85.217.11]:65227 "EHLO
-	mail-gx0-f11.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752173AbYKHPTP (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 8 Nov 2008 10:19:15 -0500
-Received: by gxk4 with SMTP id 4so1359500gxk.13
-        for <git@vger.kernel.org>; Sat, 08 Nov 2008 07:19:13 -0800 (PST)
+	id S1753026AbYKHPbQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 8 Nov 2008 10:31:16 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753286AbYKHPbQ
+	(ORCPT <rfc822;git-outgoing>); Sat, 8 Nov 2008 10:31:16 -0500
+Received: from nf-out-0910.google.com ([64.233.182.188]:34952 "EHLO
+	nf-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752984AbYKHPbO (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 8 Nov 2008 10:31:14 -0500
+Received: by nf-out-0910.google.com with SMTP id d3so826362nfc.21
+        for <git@vger.kernel.org>; Sat, 08 Nov 2008 07:31:12 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to
-         :subject:cc:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:references;
-        bh=5Qu+G9p9J+Di2ELjOFPj7AErhj/Ocm+e37pqHUlil0Q=;
-        b=AIg0mGoqFVrSQQY5GoMgaShvcj2DR1ANVdZTzNf1vYOAjZmn2RrAhlowfDOifdQ9DB
-         q9bKvzFglir5eCaogJJHxcgborSb9AsqO1yaWzhe6cqyWt8y8GAzOVJ5WQPfs8l/zOty
-         WLd0iGLfwnLK8mKBujqXfI9a/e3bB5KCKx75I=
+        h=domainkey-signature:received:received:from:to:subject:date
+         :user-agent:cc:references:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:message-id;
+        bh=P1fxZCrRJKTk0SfHzkFcrnu43cLXxhCw2rIW8u4ayaI=;
+        b=JWGBsXBPpYrSRrwXbkuEIVNvROYVHhU7ymdU2O3yAyTb2W0Bmtjrsq+u2qPREKj2Ql
+         YxbOSongU/qMncUHN0IaL/qVqLcRXleQYPlTBR6etaiNpoBPy3iI2sc2QlnDXxpxk64A
+         DU2u7Fnz2iNjaCVXIkrXWCd+POcLBkZtEsPKQ=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
-         :content-type:content-transfer-encoding:content-disposition
-         :references;
-        b=nAah5QYGjDSG4ay+nJ/FBfrEk+SjxJ/aPRtbbVFq1oYDFKERXg/f81E8VfIGV/eSL1
-         a4JHi9rQlujgK8L8IET8E6v5y1c4rzZZJSXDDumW1sNxb6YaBMGZXqiG7NlE1a8aUizG
-         1a4zUglPzcnFc0wgQfGtvs/jrXXTr9HO8xmVU=
-Received: by 10.151.12.4 with SMTP id p4mr5807510ybi.0.1226157553705;
-        Sat, 08 Nov 2008 07:19:13 -0800 (PST)
-Received: by 10.151.142.12 with HTTP; Sat, 8 Nov 2008 07:19:13 -0800 (PST)
-In-Reply-To: <77005B51-0170-42EC-BBA7-DCF39C7CFC5E@orakel.ntnu.no>
+        h=from:to:subject:date:user-agent:cc:references:in-reply-to
+         :mime-version:content-type:content-transfer-encoding
+         :content-disposition:message-id;
+        b=BiKx8S09iDsa9XEGFiPpGR07fbKIFqdI0kR9U+2I5uhzSfZfZE4jfH/hJ2XHL6xII2
+         KEhQw/+LbyHa7ODrYgYFZcKKroP89L8+JgXW9QKgH5emN4De0mmmNWZryQrLsdsZxFsH
+         H3w668ibU23a8XfjJu1SFXHPfAlPQmvTt9ces=
+Received: by 10.210.12.18 with SMTP id 18mr5361238ebl.42.1226158272858;
+        Sat, 08 Nov 2008 07:31:12 -0800 (PST)
+Received: from ?192.168.1.11? (abwx16.neoplus.adsl.tpnet.pl [83.8.247.16])
+        by mx.google.com with ESMTPS id 7sm6017704eyb.1.2008.11.08.07.31.07
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Sat, 08 Nov 2008 07:31:10 -0800 (PST)
+User-Agent: KMail/1.9.3
+In-Reply-To: <ee77f5c20811072108o21f97c97i8174f4f7ecd67030@mail.gmail.com>
 Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/100407>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/100408>
 
-I thought that autocrlf always 'added' CRLF instead of adding merely
-CR.  Dang.  I'd rather have CRLF text files.
+On Sat, 8 Nov 2008, David Symonds wrote:
+> On Fri, Nov 7, 2008 at 5:54 PM, Jakub Narebski <jnareb@gmail.com> wrote:
+> 
+> Here's my thoughts on some of these talks.
+> 
+> > Mon, Oct 27, 2008
+> > -----------------
+> > * Dscho: Contributing with Git
+> >  http://www.youtube.com/watch?v=j45cs5_nY2k
+> 
+> It was a good intro, but I was expecting a few more non-GitTogether
+> people. We had quite a large room, but there was only about a dozen
+> other people who came along. I don't know whether that was the fault
+> of the timing, lack of advertising, or a lack of interest.
 
-On Wed, Nov 5, 2008 at 4:26 AM, Eyvind Bernhardsen
-<eyvind-git@orakel.ntnu.no> wrote:
-> On 5. nov.. 2008, at 06.56, Daniel Barkalow wrote:
->
->> On Tue, 4 Nov 2008, Andrew Arnott wrote:
->>
->>> It was the CRLF conversion.  When I played around with
->>> git config --global core.autocrlf true/false
->>> I got the problem to eventually go away.
->>>
->>> Thanks for all your responses.
->>
->> It's still worth debugging further, because git should know that it wrote
->> the files differently and not see that as changes. It's not too helpful to
->> have autocrlf if it causes this problem.
->
-> I think I know what this is.  If a repository contains files with CRLFs,
-> those files will show as modified when core.autcorlf is true (if you commit
-> them, the CRLFs will be converted to CRs in the repository, so in a sense
-> they _are_ modified).  Try turning autocrlf back on, cloning the repository,
-> then touching all the files (to make git check them for changes) and see if
-> you get the same problem.
->
-> I proposed an alternative autocrlf implementation on the list a while back:
-> making it an attribute instead of a configuration setting and adding a
-> configuration setting to tell git which line ending is preferred when the
-> autocrlf attribute is set.
->
-> That would allow you to turn on autocrlf and let git convert all CRLFs to
-> CRs in a single commit, thus converting a repository with CRLFs to one that
-> can be used with autocrlf in a versioned way.  In theory that lets you check
-> out new commits with EOL conversion while old commits will be left alone
-> (avoiding the problem you saw), but since .gitattributes is read from the
-> working directory and not the tree to be checked out, it doesn't work
-> perfectly.
->
-> I implemented the easy bit (reading autocrlf from .gitattributes), but for
-> various reasons the patch has just been gathering dust in my private git.git
-> repo.  Maybe I should dust it off :)
-> --
-> Eyvind
->
->
+By the way, it would be nice to have transcript for this talk, just
+like there is for Linus talk:
+  http://git.or.cz/gitwiki/LinusTalk200705Transcript
+(but this would take some doing).
+ 
+It would be also nice to have slides for the talk available somewhere,
+just like slides for "Git Chronicle".
+
+> > * Junio: Git Chronicle
+> >
+> >  blog: Junio went though a sort of statistical history of the Git project
+> >  that was fascinating (turns out there are still about 220 lines of code
+> >  still around from Linus original first commit).
+> 
+> This was really interesting. It would be great to put this on a
+> general web page instead of in a PDF.
+
+Something like Sam Vilain slides from "perl.git" talk?, 
+  http://utsl.gen.nz/talks/perl-history/slides/
+
+It shouldn't be that hard, depending on the original program the slides
+were made... well, it was made in Impress from OpenOffice.org 2.4; it
+might have export to (X)HTML + images, and to SWF (Flash presentation).
+
+> > * Petr: Renames Again and Again and Again
+> >
+> >  IRC: detection of wholesame renames of directories (WIP) and '--follow'
+> >  limitation were mentioned, but outcome is unclear; pasky plans to hack
+> >  together some patch implementing explicit renames hinting
+> 
+> One thing I didn't get around to bringing up: one of the benefits of
+> diff-time rename detection that is often touted is that algorithms can
+> improve over time. Do folk here know whether that has actually
+> happened recently, in a general way? Do people actually expect major
+> improvements in the future?
+
+If I remember correctly there was at least one improvement in rename
+detection, namely better talking into account filename similarity score,
+so for example similar files moved (or copied) didn't get marked as
+coming from one source (and rest deleted).
+
+> > * Tom: GitHub
+> >
+> >  IRC: a tour, some history, and insight into how it works; some nice
+> >  gimmicks, such as "gist" (a git backed pastebin), or like network graphs
+> >  (look graphically at forks of a repository).
+> >
+> >  blog: Tom got to demonstrate GitHub and Gist to the group, most of whom
+> >  are very command line oriented and had not used either before.
+> 
+> The demo of iGitHub (an iPhone app that can act as a clone/push
+> target) looked really cool, if it can get further development. It
+> could potentially be really handy for travellers who could push to
+> their iPhone, and then push from there to an internet server.
+
+iGitHub has nothing to do with GitHub; I think you put the comment in
+a wrong place; the iGitHub (or iGit / iGitRouter) was a separate talk
+in "Lighting Round Talks" next day.
+
+> > * Scott: Linkable Library
+> >
+> >  blog: got to talk about the need for a linkable git library
+> >
+> >  http://thread.gmane.org/gmane.comp.version-control.git/99608
+> 
+> It's good to see this starting to get wider traction. I think we
+> discussed that there could be benefits to git itself, beyond just
+> helping other programs access git repositories faster than fork/exec.
+
+What benefits would be those? Current design of "fire and forget",
+which stopped libification efforts till now was used for a reason...
+
+> > * Sam: perl.git
+> >
+> >  blog: Sam demonstrated the work he went through to import 20 years of Perl
+> >  history into the git repository that the Perl team is just now finishing
+> >  transitioning to from Perforce.
+> >
+> >  http://utsl.gen.nz/talks/perl-history/slides/
+> 
+> It was very cool to see old-school email addresses like <isis!aburt>
+> in git, handled just fine.
+
+This is not suprising, as Git treats committer and author email data
+as opaque data, not analysing it at all (some commits from early
+versions of git might not have this data at all, IIRC).
+ 
+> > * Tim: Git as a Media Repository
+> >  http://www.thousandparsec.net/~tim/media+git.pdf
+> 
+> This has kicked off some mailing list discussion; I think this can be
+> a major weak point for git, since checking out only a subtree (and
+> only the latest revision) is the common SVN way, which copes with
+> media repositories and the like just fine.
+
+Well, you can workaround this weakness by (ab)using submodules...
+...and one should always remember that casual partial checkouts
+interfere a bit with whole-tree commits.
+
+-- 
+Jakub Narebski
+Poland
