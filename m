@@ -1,83 +1,61 @@
-From: Andreas Ericsson <ae@op5.se>
-Subject: Re: libgit2 - a true git library
-Date: Sat, 08 Nov 2008 15:35:55 +0100
-Message-ID: <4915A3CB.5010909@op5.se>
-References: <20081031170704.GU14786@spearce.org> <4915939B.1070306@gmail.com>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: pull --preserve-merges
+Date: Sat, 8 Nov 2008 16:08:41 +0100 (CET)
+Message-ID: <alpine.DEB.1.00.0811081607300.30769@pacific.mpi-cbg.de>
+References: <20081107160138.aa96405c.stephen@exigencecorp.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15;
-	format=flowed
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: "Shawn O. Pearce" <spearce@spearce.org>, git@vger.kernel.org,
-	Scott Chacon <schacon@gmail.com>
-To: =?ISO-8859-15?Q?Steve_Fr=E9cinaux?= <nudrema@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Nov 08 15:37:27 2008
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org
+To: Stephen Haberman <stephen@exigencecorp.com>
+X-From: git-owner@vger.kernel.org Sat Nov 08 16:02:27 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KyowF-00077h-9z
-	for gcvg-git-2@gmane.org; Sat, 08 Nov 2008 15:37:23 +0100
+	id 1KypKU-0005xf-Gq
+	for gcvg-git-2@gmane.org; Sat, 08 Nov 2008 16:02:26 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753451AbYKHOgE convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 8 Nov 2008 09:36:04 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753447AbYKHOgD
-	(ORCPT <rfc822;git-outgoing>); Sat, 8 Nov 2008 09:36:03 -0500
-Received: from mail.op5.se ([193.201.96.20]:40099 "EHLO mail.op5.se"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753040AbYKHOgB (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 8 Nov 2008 09:36:01 -0500
-Received: from localhost (localhost.localdomain [127.0.0.1])
-	by mail.op5.se (Postfix) with ESMTP id 2A5461B80066;
-	Sat,  8 Nov 2008 15:29:51 +0100 (CET)
-X-Virus-Scanned: amavisd-new at 
-X-Spam-Flag: NO
-X-Spam-Score: -2.499
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.499 tagged_above=-10 required=6.6
-	tests=[BAYES_00=-2.599, RDNS_NONE=0.1]
-Received: from mail.op5.se ([127.0.0.1])
-	by localhost (mail.op5.se [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id DkJY4f622GaL; Sat,  8 Nov 2008 15:29:48 +0100 (CET)
-Received: from clix.int.op5.se (unknown [172.27.78.10])
-	by mail.op5.se (Postfix) with ESMTP id 7CC201B80076;
-	Sat,  8 Nov 2008 15:29:47 +0100 (CET)
-User-Agent: Thunderbird 2.0.0.16 (X11/20080723)
-In-Reply-To: <4915939B.1070306@gmail.com>
+	id S1753317AbYKHPBL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 8 Nov 2008 10:01:11 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753286AbYKHPBK
+	(ORCPT <rfc822;git-outgoing>); Sat, 8 Nov 2008 10:01:10 -0500
+Received: from mail.gmx.net ([213.165.64.20]:54658 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1752173AbYKHPBJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 8 Nov 2008 10:01:09 -0500
+Received: (qmail invoked by alias); 08 Nov 2008 15:01:05 -0000
+Received: from pacific.mpi-cbg.de (EHLO pacific.mpi-cbg.de) [141.5.10.38]
+  by mail.gmx.net (mp025) with SMTP; 08 Nov 2008 16:01:05 +0100
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX19gVzd9BB5gl86UyS6aHazPsnN2/b0SWAsEGQKuGv
+	FwE9tJVz8a3XIi
+X-X-Sender: schindelin@pacific.mpi-cbg.de
+In-Reply-To: <20081107160138.aa96405c.stephen@exigencecorp.com>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.71
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/100404>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/100405>
 
-Steve Fr=E9cinaux wrote:
-> Shawn O. Pearce wrote:
->> During the GitTogether we were kicking around the idea of a ground-u=
-p
->> implementation of a Git library.  This may be easier than trying
->> to grind down git.git into a library, as we aren't tied to any
->> of the current global state baggage or the current die() based
->> error handling.
->>
->> I've started an _extremely_ rough draft.  The code compiles into a
->> libgit.a but it doesn't even implement what it describes in the API,
->> let alone a working Git implementation.  Really what I'm trying to
->> incite here is some discussion on what the API looks like.
->=20
-> Just a random question: is there a reason why you have put all the .h=
- in=20
-> a separate includes/ directory instead of relying on the install targ=
-et=20
-> to put the include files at the right place ?
->=20
-> To me it makes it much harder to hack on the files as one is always=20
-> required to switch between both directories...
+Hi,
 
-I agree with this, but as I guess Shawn will do roughly 45 times more
-work on it than me (according to current commit-count in git.git), I'll
-live with it.
+On Fri, 7 Nov 2008, Stephen Haberman wrote:
 
---=20
-Andreas Ericsson                   andreas.ericsson@op5.se
-OP5 AB                             www.op5.se
-Tel: +46 8-230225                  Fax: +46 8-230231
+> Awhile ago I brought up wanting to have a "rebase with preserve merges"
+> option for `git pull`
+
+That might be something you want, but you cannot call it
+
+	git pull --preserve-merges
+
+since everybody used to "pull = fetch && merge" would go "Huh? A merge 
+_does_ preserve merges".
+
+If at all, you could call it "--rebase=preserve-merges".
+
+Ciao,
+Dscho
