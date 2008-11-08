@@ -1,81 +1,67 @@
-From: =?iso-8859-1?Q?Bj=F6rn?= Steinbrink <B.Steinbrink@gmx.de>
-Subject: Re: [question] git svn fail to fetch GCC source due to index
-	mismatch
-Date: Sat, 8 Nov 2008 21:34:08 +0100
-Message-ID: <20081108203408.GF3563@atjola.homenet>
-References: <4914A413.80301@gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: Init on push
+Date: Sat, 08 Nov 2008 12:38:10 -0800
+Message-ID: <7v3ai2c5sd.fsf@gitster.siamese.dyndns.org>
+References: <200811081708.45672.robin.rosenberg.lists@dewire.com>
+ <7viqqyc93w.fsf@gitster.siamese.dyndns.org> <gf4rf6$v52$1@ger.gmane.org>
+ <200811082108.34535.fg@one2team.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: dennis <dennis.yxun@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Nov 08 21:35:39 2008
+Cc: Jakub Narebski <jnareb@gmail.com>, git@vger.kernel.org
+To: Francis Galiegue <fg@one2team.com>
+X-From: git-owner@vger.kernel.org Sat Nov 08 21:39:52 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KyuWv-0000H4-N2
-	for gcvg-git-2@gmane.org; Sat, 08 Nov 2008 21:35:38 +0100
+	id 1Kyub1-0001Tu-RH
+	for gcvg-git-2@gmane.org; Sat, 08 Nov 2008 21:39:52 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751511AbYKHUeO convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 8 Nov 2008 15:34:14 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752047AbYKHUeO
-	(ORCPT <rfc822;git-outgoing>); Sat, 8 Nov 2008 15:34:14 -0500
-Received: from mail.gmx.net ([213.165.64.20]:47185 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751412AbYKHUeN (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 8 Nov 2008 15:34:13 -0500
-Received: (qmail invoked by alias); 08 Nov 2008 20:34:11 -0000
-Received: from i577B86C4.versanet.de (EHLO atjola.local) [87.123.134.196]
-  by mail.gmx.net (mp047) with SMTP; 08 Nov 2008 21:34:11 +0100
-X-Authenticated: #5039886
-X-Provags-ID: V01U2FsdGVkX1+2Q6E6voi275di0LjxoszScqmicjLFglfEj4xK/B
-	94VilqL11+XQ2Z
-Content-Disposition: inline
-In-Reply-To: <4914A413.80301@gmail.com>
-User-Agent: Mutt/1.5.18 (2008-05-17)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.57
+	id S1752047AbYKHUid convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 8 Nov 2008 15:38:33 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752245AbYKHUic
+	(ORCPT <rfc822;git-outgoing>); Sat, 8 Nov 2008 15:38:32 -0500
+Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:61972 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751080AbYKHUic convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 8 Nov 2008 15:38:32 -0500
+Received: from localhost.localdomain (unknown [127.0.0.1])
+	by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id 1C9AD94435;
+	Sat,  8 Nov 2008 15:38:25 -0500 (EST)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES256-SHA (256/256 bits)) (No client certificate requested) by
+ a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTPSA id C782794434; Sat, 
+ 8 Nov 2008 15:38:12 -0500 (EST)
+In-Reply-To: <200811082108.34535.fg@one2team.com> (Francis Galiegue's message
+ of "Sat, 8 Nov 2008 21:08:34 +0100")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: 30E38F40-ADD5-11DD-AD79-4F5276724C3F-77302942!a-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/100422>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/100423>
 
-On 2008.11.08 04:24:51 +0800, dennis wrote:
-> HI:
->    I have problem when use git svn fetch command to
-> retrieve the GCC source code.
-> It says index mismatch, then  abort,  any suggestion?
->=20
->  =20
-> $git svn fetch
-> Index mismatch: 98ba56dbceddf50ebfab9e4649e9b1b1a319b377 !=3D
-> 4f40f4619690f89454614be0eba63d584d25523e
-> rereading 19e22aa4cbc9f7e3667243481f33c859e3bba358
-> Found possible branch point: svn://gcc.gnu.org/svn/gcc/trunk =3D>
-> svn://gcc.gnu.org/svn/gcc/trunk, 130802
-> Initializing parent: git-svn@130802
-> Found branch parent: (git-svn) 9a08076e1ad241080838d547f64a2a9aceb083=
-ca
-> Index mismatch: 4f40f4619690f89454614be0eba63d584d25523e !=3D
-> 98ba56dbceddf50ebfab9e4649e9b1b1a319b377
-> rereading 9a08076e1ad241080838d547f64a2a9aceb083ca
-> Following parent with do_switch
-> Malformed network data: Malformed network data at
-> /usr/libexec/git-core/git-svn line 2340
->=20
-> $git branch -a
-> git-svn
-> git-svn@130802
+=46rancis Galiegue <fg@one2team.com> writes:
 
-ad0a82bae: git-svn: Always create a new RA when calling do_switch for s=
-vn://
+> Le Saturday 08 November 2008 21:06:01 Jakub Narebski, vous avez =C3=A9=
+crit=C2=A0:
+>> Junio C Hamano wrote:
+>> >  - Teach "-D $there" option to "git init", which does an "mkdir -p=
+ $it &&
+>> >    chdird $it" before it does its work.
+>>
+>> Shouldn't it be "-C $there" (like make and tar)?
+>
+> I agree with that. It's pretty much a standard for quite a few "comma=
+nd line=20
+> people", insofar as I always look for such an option in case I want t=
+o know=20
+> whether a command has the ability to chdir() to a different directory=
+ than=20
+> the current one :p
 
-According to the commit message, that fixed a problem that caused the
-"Malformed netword data" error. It's in git v1.6.0.3, so if you have an
-older git version, try upgrading.
-
-HTH
-Bj=F6rn
+In this particular case, it is not "chdir() before starting" but "mkdir
+and then chdir() into it".  Using -C would be counterproductive.
