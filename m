@@ -1,63 +1,67 @@
-From: Davide Libenzi <davidel@xmailserver.org>
-Subject: Re: absurdly slow git-diff
-Date: Sat, 8 Nov 2008 08:27:34 -0800 (PST)
-Message-ID: <Pine.LNX.4.64.0811080825080.10880@alien.or.mcafeemobile.com>
-References: <20081107200126.GA20284@toroid.org>
- <alpine.LFD.2.00.0811071335010.3468@nehalem.linux-foundation.org>
- <alpine.DEB.1.10.0811071503120.8736@alien.or.mcafeemobile.com>
- <alpine.DEB.1.10.0811071517280.8736@alien.or.mcafeemobile.com>
- <alpine.LFD.2.00.0811071540340.3468@nehalem.linux-foundation.org>
- <alpine.DEB.1.10.0811071547080.8736@alien.or.mcafeemobile.com>
- <7v7i7eeqcz.fsf@gitster.siamese.dyndns.org>
+From: Francis Galiegue <fg@one2team.net>
+Subject: Re: pull --preserve-merges
+Date: Sat, 8 Nov 2008 18:07:52 +0100
+Organization: One2team
+Message-ID: <200811081807.53199.fg@one2team.net>
+References: <20081107160138.aa96405c.stephen@exigencecorp.com> <alpine.DEB.1.00.0811081607300.30769@pacific.mpi-cbg.de>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Linus Torvalds <torvalds@linux-foundation.org>,
-	Abhijit Menon-Sen <ams@toroid.org>,
-	Pierre Habouzit <madcoder@debian.org>,
-	Git Mailing List <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Nov 08 17:29:32 2008
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Stephen Haberman <stephen@exigencecorp.com>, git@vger.kernel.org
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Sat Nov 08 18:12:16 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Kyqgl-0007HI-Jn
-	for gcvg-git-2@gmane.org; Sat, 08 Nov 2008 17:29:32 +0100
+	id 1KyrM3-0003Lo-KU
+	for gcvg-git-2@gmane.org; Sat, 08 Nov 2008 18:12:12 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753534AbYKHQ1l (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 8 Nov 2008 11:27:41 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753370AbYKHQ1l
-	(ORCPT <rfc822;git-outgoing>); Sat, 8 Nov 2008 11:27:41 -0500
-Received: from x35.xmailserver.org ([64.71.152.41]:59779 "EHLO
-	x35.xmailserver.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753112AbYKHQ1l (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 8 Nov 2008 11:27:41 -0500
-X-AuthUser: davidel@xmailserver.org
-Received: from alien.or.mcafeemobile.com
-	by x35.xmailserver.org with [XMail 1.26 ESMTP Server]
-	id <S2B7EF6> for <git@vger.kernel.org> from <davidel@xmailserver.org>;
-	Sat, 8 Nov 2008 11:27:39 -0500
-X-X-Sender: davide@alien.or.mcafeemobile.com
-In-Reply-To: <7v7i7eeqcz.fsf@gitster.siamese.dyndns.org>
-X-GPG-FINGRPRINT: CFAE 5BEE FD36 F65E E640  56FE 0974 BF23 270F 474E
-X-GPG-PUBLIC_KEY: http://www.xmailserver.org/davidel.asc
+	id S1753604AbYKHRK0 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 8 Nov 2008 12:10:26 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753601AbYKHRK0
+	(ORCPT <rfc822;git-outgoing>); Sat, 8 Nov 2008 12:10:26 -0500
+Received: from ns35774.ovh.net ([213.251.185.197]:35675 "EHLO ns35774.ovh.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753591AbYKHRKZ convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 8 Nov 2008 12:10:25 -0500
+Received: from erwin.kitchen.eel (AOrleans-157-1-139-113.w90-24.abo.wanadoo.fr [90.24.114.113])
+	(Authenticated sender: fg@one2team.net)
+	by ns35774.ovh.net (Postfix) with ESMTP id 7E9AF92C011;
+	Sat,  8 Nov 2008 18:10:15 +0100 (CET)
+User-Agent: KMail/1.9.9
+In-Reply-To: <alpine.DEB.1.00.0811081607300.30769@pacific.mpi-cbg.de>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/100410>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/100411>
 
-On Fri, 7 Nov 2008, Junio C Hamano wrote:
+Le Saturday 08 November 2008 16:08:41 Johannes Schindelin, vous avez =E9=
+crit=A0:
+> Hi,
+>
+> On Fri, 7 Nov 2008, Stephen Haberman wrote:
+> > Awhile ago I brought up wanting to have a "rebase with preserve mer=
+ges"
+> > option for `git pull`
+>
+> That might be something you want, but you cannot call it
+>
+> 	git pull --preserve-merges
+>
+> since everybody used to "pull =3D fetch && merge" would go "Huh? A me=
+rge
+> _does_ preserve merges".
+>
+> If at all, you could call it "--rebase=3Dpreserve-merges".
+>
 
-> Davide Libenzi <davidel@xmailserver.org> writes:
-> 
-> > Yeah, similar. Mine is below. There's one less branch in the for loops.
-> 
-> Thanks, will apply like this, but I am not sure if you meant windowN or
-> just window...
+Why not --rebase --keep-merges? Personnally, I think it makes things cl=
+earer=20
+since in general options are either standalone or have a value.
 
-Whoops, just WINDOW.
-
-
-- Davide
+--=20
+fge
