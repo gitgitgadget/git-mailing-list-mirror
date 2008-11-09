@@ -1,74 +1,69 @@
-From: Ian Hilt <ian.hilt@gmx.com>
-Subject: Re: [PATCH] git send-email: edit recipient addresses with the 
- --compose flag
-Date: Sun, 9 Nov 2008 15:09:21 -0500 (EST)
-Message-ID: <alpine.LFD.2.00.0811091344480.20499@sys-0.hiltweb.site>
-References: <1226235588-2997-1-git-send-email-ian.hilt@gmx.com> <200811091513.55544.fg@one2team.com>
+From: "Caleb Cushing" <xenoterracide@gmail.com>
+Subject: Re: force a merge conflict
+Date: Sun, 9 Nov 2008 15:19:57 -0500
+Message-ID: <81bfc67a0811091219t393ab1faj8d1c4df6de3c260c@mail.gmail.com>
+References: <81bfc67a0811090709s483506c1h6f9cb0f96216ef22@mail.gmail.com>
+	 <20081109183917.GA18415@euler>
 Mime-Version: 1.0
-Content-Type: MULTIPART/MIXED; boundary="8323328-822990668-1226259065=:20499"
-Cc: Git Mailing List <git@vger.kernel.org>,
-	Pierre Habouzit <madcoder@debian.org>
-To: Francis Galiegue <fg@one2team.com>
-X-From: git-owner@vger.kernel.org Sun Nov 09 21:11:32 2008
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: "Deskin Miller" <deskinm@umich.edu>
+X-From: git-owner@vger.kernel.org Sun Nov 09 21:21:20 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KzGd9-0003QH-Ic
-	for gcvg-git-2@gmane.org; Sun, 09 Nov 2008 21:11:32 +0100
+	id 1KzGmX-0006yE-VD
+	for gcvg-git-2@gmane.org; Sun, 09 Nov 2008 21:21:14 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758900AbYKIUJb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 9 Nov 2008 15:09:31 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758896AbYKIUJa
-	(ORCPT <rfc822;git-outgoing>); Sun, 9 Nov 2008 15:09:30 -0500
-Received: from mail.gmx.com ([74.208.5.67]:60548 "HELO mail.gmx.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1758893AbYKIUJ3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 9 Nov 2008 15:09:29 -0500
-Received: (qmail invoked by alias); 09 Nov 2008 20:09:27 -0000
-Received: from cpe-75-185-223-130.woh.res.rr.com [75.185.223.130]
-  by mail.gmx.com (mp-us003) with SMTP; 09 Nov 2008 15:09:27 -0500
-X-Authenticated: #47758715
-X-Provags-ID: V01U2FsdGVkX18dKwEoAj8d20lRusXG3wGKKJgKrlor28HmaN7Xoq
-	6x4wdnwmYTwKpX
-In-Reply-To: <200811091513.55544.fg@one2team.com>
-User-Agent: Alpine 2.00 (LFD 1167 2008-08-23)
-Content-ID: <alpine.LFD.2.00.0811091503300.21142@sys-0.hiltweb.site>
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.58
+	id S1755923AbYKIUT6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 9 Nov 2008 15:19:58 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755900AbYKIUT6
+	(ORCPT <rfc822;git-outgoing>); Sun, 9 Nov 2008 15:19:58 -0500
+Received: from rv-out-0506.google.com ([209.85.198.230]:59144 "EHLO
+	rv-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755829AbYKIUT5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 9 Nov 2008 15:19:57 -0500
+Received: by rv-out-0506.google.com with SMTP id k40so2146781rvb.1
+        for <git@vger.kernel.org>; Sun, 09 Nov 2008 12:19:57 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to
+         :subject:cc:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:references;
+        bh=XdluW0WapGh/umNX1Hbl8AUHywE5I3nMCB80Lu384ds=;
+        b=QKBYQ3mCz4Ofxdn1shon7jxRKNWox2hzwdSPmlDVTHxZ5rn0+8Fns3uLjQVO51ddER
+         gbimboDAPt0NXKMf17v56NcWEkwo/T3WrEDpC7mfzPQn/TfMzJmLOZAXm+y9MSH/I9T2
+         O+VVtvE1hJbdzZTXWrWsKYaKJVjJr1kvKO0us=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
+         :content-type:content-transfer-encoding:content-disposition
+         :references;
+        b=obT1dM5jaO/5K0H3BYch/l0aGGmdLSxopXHvnPIXsA6A8BM/V2idHcKNmf2vtfxxHy
+         tStoXy2ltaNE0J/On/0lonm/aBQLXgjf0aWDGqHAzGCZyKJsgcgVLmcrHU3EGmLHJJpY
+         uPio4mTl+Ndi8cx76pV/vn7JBIixiHeQJP3MM=
+Received: by 10.141.132.1 with SMTP id j1mr3141773rvn.282.1226261997187;
+        Sun, 09 Nov 2008 12:19:57 -0800 (PST)
+Received: by 10.141.34.3 with HTTP; Sun, 9 Nov 2008 12:19:57 -0800 (PST)
+In-Reply-To: <20081109183917.GA18415@euler>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/100467>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/100468>
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
+> I'm not sure a 'conflict' is what you want, based on what you say below;
+>  rather, it seems you simply want to force a 'merge commit', i.e. a commit with
+>  multiple parents.
 
---8323328-822990668-1226259065=:20499
-Content-Type: TEXT/PLAIN; charset=ISO-8859-15
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Content-ID: <alpine.LFD.2.00.0811091503301.21142@sys-0.hiltweb.site>
-
-On Sun, 9 Nov 2008, Francis Galiegue wrote:
-> Le Sunday 09 November 2008 13:59:48 Ian Hilt, vous avez =E9crit=A0:
-> > +=09if ($c_file =3D~ /^To:\s*+(.+)\s*\nCc:/ism) {
->=20
-> Greedy operators are only supported with perl 5.10 or more... I think it'=
-s a=20
-> bad idea to use them...
-
-The problem here was that a space should follow the field, but it may
-not.  The user may unwarily backup over it.  "\s*" would match this
-case.
-
-But if there is a space, it is included in the "(.+)".  So I tried
-"\s+", which did not include the space, but it won't include the first
-address if there isn't a space after the field.
-
-The quantified subpattern seemed to do the trick.  But, if it could
-result in a dependency issue, I would agree this would be a bad idea.
-
-
-=09Ian
---8323328-822990668-1226259065=:20499--
+>
+> git merge --no-ff ?
+>
+I tried that but I don't see that it's any different than a fast
+forward in this scenario. Actually I don't see any difference between
+it and a fast-forward.
+-- 
+Caleb Cushing
