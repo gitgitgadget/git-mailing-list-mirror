@@ -1,82 +1,90 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: How it was at GitTogether'08 ?
-Date: Sun, 9 Nov 2008 18:54:09 +0100
-Message-ID: <200811091854.11411.jnareb@gmail.com>
-References: <200811080254.53202.jnareb@gmail.com> <200811091249.40735.jnareb@gmail.com> <F0422D64-2A35-4755-BD28-782BFA634AAC@midwinter.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: [ANNOUNCE] GIT 1.6.0.4
+Date: Sun, 09 Nov 2008 10:07:29 -0800
+Message-ID: <7v8wrsbwny.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, "Shawn O. Pearce" <spearce@spearce.org>,
-	Jeff King <peff@peff.net>, Petr Baudis <pasky@suse.cz>,
-	Tim Ansell <mithro@mithis.com>
-To: Steven Grimm <koreth@midwinter.com>
-X-From: git-owner@vger.kernel.org Sun Nov 09 18:55:45 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: linux-kernel@vger.kernel.org
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Nov 09 19:09:10 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KzEVc-0005fq-2T
-	for gcvg-git-2@gmane.org; Sun, 09 Nov 2008 18:55:36 +0100
+	id 1KzEif-0001JV-R3
+	for gcvg-git-2@gmane.org; Sun, 09 Nov 2008 19:09:06 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755409AbYKIRyT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 9 Nov 2008 12:54:19 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755208AbYKIRyT
-	(ORCPT <rfc822;git-outgoing>); Sun, 9 Nov 2008 12:54:19 -0500
-Received: from ug-out-1314.google.com ([66.249.92.169]:37798 "EHLO
-	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754552AbYKIRyS (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 9 Nov 2008 12:54:18 -0500
-Received: by ug-out-1314.google.com with SMTP id 39so213766ugf.37
-        for <git@vger.kernel.org>; Sun, 09 Nov 2008 09:54:17 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:subject:date
-         :user-agent:cc:references:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:message-id;
-        bh=VRZLC3CZEDLIUSqbwchesq7vmI//xEnbmc1boT71DBM=;
-        b=UTs7d+6kMt9Q++a4bV5PdkXacOsRBIgNxY+IO7wEgfMaQ5UbxgEirZyEDMFrGSRvY4
-         Ot+laJw7Ue6GIemgUYGpGwf/F9tvKRAv8ixrU36z/i2Styo44UKqKAM6hvG4CtqBAiOK
-         ejapKtt+xKZptRXvPALLa9XRZ/bCbpOLZtNa0=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=from:to:subject:date:user-agent:cc:references:in-reply-to
-         :mime-version:content-type:content-transfer-encoding
-         :content-disposition:message-id;
-        b=J0qtBS/bCKCQ8f8ua8gILcXcLNun4nK1c8OZsxLEKAab5aBTDZs6Z9FPfT37CvDVHb
-         ZhB+Tjt8z/kbxcZMD0rrXTrQ4erv8tttuGqXynDahQuNErNvfGurlBA1YWCKLIfovOe8
-         lnEJA3/6ZU4Z0PV3gs8qn1Ngb3M74zW6STk24=
-Received: by 10.66.241.13 with SMTP id o13mr1350102ugh.31.1226253256297;
-        Sun, 09 Nov 2008 09:54:16 -0800 (PST)
-Received: from ?192.168.1.11? (abww18.neoplus.adsl.tpnet.pl [83.8.246.18])
-        by mx.google.com with ESMTPS id p39sm2495313ugd.56.2008.11.09.09.54.13
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Sun, 09 Nov 2008 09:54:14 -0800 (PST)
-User-Agent: KMail/1.9.3
-In-Reply-To: <F0422D64-2A35-4755-BD28-782BFA634AAC@midwinter.com>
-Content-Disposition: inline
+	id S1755550AbYKISHq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 9 Nov 2008 13:07:46 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750805AbYKISHq
+	(ORCPT <rfc822;git-outgoing>); Sun, 9 Nov 2008 13:07:46 -0500
+Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:34674 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755542AbYKISHp (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 9 Nov 2008 13:07:45 -0500
+Received: from localhost.localdomain (unknown [127.0.0.1])
+	by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id 9A50495492;
+	Sun,  9 Nov 2008 13:07:42 -0500 (EST)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES256-SHA (256/256 bits)) (No client certificate requested) by
+ a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTPSA id 38BB895491; Sun, 
+ 9 Nov 2008 13:07:31 -0500 (EST)
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: 4D92E528-AE89-11DD-A3C5-4F5276724C3F-77302942!a-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/100457>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/100458>
 
-Steven Grimm wrote:
-> On Nov 9, 2008, at 3:49 AM, Jakub Narebski wrote:
->>
->> Still missing (neither video, nor slides, nor description, nor email)
->> are the following talks from GitTogether'08
->>
->>> * Steven: Life with git-svn
-> 
-> Here are the slides from David's and my talk:
-> 
-> http://docs.google.com/Presentation?id=dhhs72s2_1wtzbnsnj&invite=v4t8kr
+The latest maintenance release GIT 1.6.0.4 is available at the
+usual places:
 
-Thanks. Added to http://git.or.cz/gitwiki/GitTogether
-(even if I cannot view them in my old web browser).
+  http://www.kernel.org/pub/software/scm/git/
 
--- 
-Jakub Narebski
-Poland
+  git-1.6.0.4.tar.{gz,bz2}			(source tarball)
+  git-htmldocs-1.6.0.4.tar.{gz,bz2}		(preformatted docs)
+  git-manpages-1.6.0.4.tar.{gz,bz2}		(preformatted docs)
+
+The RPM binary packages for a few architectures are also provided
+as courtesy.
+
+  RPMS/$arch/git-*-1.6.0.4-1.fc9.$arch.rpm	(RPM)
+
+Fixes since v1.6.0.3
+--------------------
+
+* 'git add -p' said "No changes" when only binary files were changed.
+
+* 'git archive' did not work correctly in bare repositories.
+
+* 'git checkout -t -b newbranch' when you are on detached HEAD was broken.
+
+* when we refuse to detect renames because there are too many new or
+  deleted files, 'git diff' did not say how many there are.
+
+* 'git push --mirror' tried and failed to push the stash; there is no
+  point in sending it to begin with.
+
+* 'git push' did not update the remote tracking reference if the corresponding
+  ref on the remote end happened to be already up to date.
+
+* 'git pull $there $branch:$current_branch' did not work when you were on
+  a branch yet to be born.
+
+* when giving up resolving a conflicted merge, 'git reset --hard' failed
+  to remove new paths from the working tree.
+
+* 'git send-email' had a small fd leak while scanning directory.
+
+* 'git status' incorrectly reported a submodule directory as an untracked
+  directory.
+
+* 'git svn' used deprecated 'git-foo' form of subcommand invocaition.
+
+* 'git update-ref -d' to remove a reference did not honor --no-deref option.
+
+* Plugged small memleaks here and there.
+
+* Also contains many documentation updates.
