@@ -1,66 +1,74 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: Re: How it was at GitTogether'08 ?
-Date: Sun, 9 Nov 2008 11:55:38 -0800
-Message-ID: <20081109195538.GD2932@spearce.org>
-References: <200811080254.53202.jnareb@gmail.com> <200811091249.40735.jnareb@gmail.com> <F0422D64-2A35-4755-BD28-782BFA634AAC@midwinter.com> <200811091958.32893.robin.rosenberg@dewire.com>
+From: Ian Hilt <ian.hilt@gmx.com>
+Subject: Re: [PATCH] git send-email: edit recipient addresses with the 
+ --compose flag
+Date: Sun, 9 Nov 2008 15:09:21 -0500 (EST)
+Message-ID: <alpine.LFD.2.00.0811091344480.20499@sys-0.hiltweb.site>
+References: <1226235588-2997-1-git-send-email-ian.hilt@gmx.com> <200811091513.55544.fg@one2team.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Steven Grimm <koreth@midwinter.com>,
-	Jakub Narebski <jnareb@gmail.com>, git@vger.kernel.org,
-	Jeff King <peff@peff.net>, Petr Baudis <pasky@suse.cz>,
-	Tim Ansell <mithro@mithis.com>
-To: Robin Rosenberg <robin.rosenberg@dewire.com>
-X-From: git-owner@vger.kernel.org Sun Nov 09 20:57:02 2008
+Content-Type: MULTIPART/MIXED; boundary="8323328-822990668-1226259065=:20499"
+Cc: Git Mailing List <git@vger.kernel.org>,
+	Pierre Habouzit <madcoder@debian.org>
+To: Francis Galiegue <fg@one2team.com>
+X-From: git-owner@vger.kernel.org Sun Nov 09 21:11:32 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KzGP3-0006s8-IB
-	for gcvg-git-2@gmane.org; Sun, 09 Nov 2008 20:56:58 +0100
+	id 1KzGd9-0003QH-Ic
+	for gcvg-git-2@gmane.org; Sun, 09 Nov 2008 21:11:32 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756212AbYKITzk convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 9 Nov 2008 14:55:40 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756496AbYKITzk
-	(ORCPT <rfc822;git-outgoing>); Sun, 9 Nov 2008 14:55:40 -0500
-Received: from george.spearce.org ([209.20.77.23]:50336 "EHLO
-	george.spearce.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756483AbYKITzj (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 9 Nov 2008 14:55:39 -0500
-Received: by george.spearce.org (Postfix, from userid 1001)
-	id BA396381FE; Sun,  9 Nov 2008 19:55:38 +0000 (UTC)
-Content-Disposition: inline
-In-Reply-To: <200811091958.32893.robin.rosenberg@dewire.com>
-User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
+	id S1758900AbYKIUJb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 9 Nov 2008 15:09:31 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758896AbYKIUJa
+	(ORCPT <rfc822;git-outgoing>); Sun, 9 Nov 2008 15:09:30 -0500
+Received: from mail.gmx.com ([74.208.5.67]:60548 "HELO mail.gmx.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1758893AbYKIUJ3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 9 Nov 2008 15:09:29 -0500
+Received: (qmail invoked by alias); 09 Nov 2008 20:09:27 -0000
+Received: from cpe-75-185-223-130.woh.res.rr.com [75.185.223.130]
+  by mail.gmx.com (mp-us003) with SMTP; 09 Nov 2008 15:09:27 -0500
+X-Authenticated: #47758715
+X-Provags-ID: V01U2FsdGVkX18dKwEoAj8d20lRusXG3wGKKJgKrlor28HmaN7Xoq
+	6x4wdnwmYTwKpX
+In-Reply-To: <200811091513.55544.fg@one2team.com>
+User-Agent: Alpine 2.00 (LFD 1167 2008-08-23)
+Content-ID: <alpine.LFD.2.00.0811091503300.21142@sys-0.hiltweb.site>
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.58
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/100466>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/100467>
 
-Robin Rosenberg <robin.rosenberg@dewire.com> wrote:
-> s=F6ndag 09 november 2008 17:52:58 skrev Steven Grimm:
-> > On Nov 9, 2008, at 3:49 AM, Jakub Narebski wrote:
-> > > Still missing (neither video, nor slides, nor description, nor em=
-ail)
-> > > are the following talks from GitTogether'08
-> > >> * Steven: Life with git-svn
-> >=20
-> > Here are the slides from David's and my talk:
-> >=20
-> > http://docs.google.com/Presentation?id=3Ddhhs72s2_1wtzbnsnj&invite=3D=
-v4t8kr
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
+
+--8323328-822990668-1226259065=:20499
+Content-Type: TEXT/PLAIN; charset=ISO-8859-15
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Content-ID: <alpine.LFD.2.00.0811091503301.21142@sys-0.hiltweb.site>
+
+On Sun, 9 Nov 2008, Francis Galiegue wrote:
+> Le Sunday 09 November 2008 13:59:48 Ian Hilt, vous avez =E9crit=A0:
+> > +=09if ($c_file =3D~ /^To:\s*+(.+)\s*\nCc:/ism) {
 >=20
-> Requiring a google (or facebook for that matter) account is read publ=
-ic documents
-> is not nice.
+> Greedy operators are only supported with perl 5.10 or more... I think it'=
+s a=20
+> bad idea to use them...
 
-No, its not.  The owner of the document can publish the document,
-making it world-readable, *without* needing a login.  I think they
-just forgot to do that on this particular presentation.
+The problem here was that a space should follow the field, but it may
+not.  The user may unwarily backup over it.  "\s*" would match this
+case.
 
-Steven, can you publish that doc, so it doesn't require login
-to read?
+But if there is a space, it is included in the "(.+)".  So I tried
+"\s+", which did not include the space, but it won't include the first
+address if there isn't a space after the field.
 
---=20
-Shawn.
+The quantified subpattern seemed to do the trick.  But, if it could
+result in a dependency issue, I would agree this would be a bad idea.
+
+
+=09Ian
+--8323328-822990668-1226259065=:20499--
