@@ -1,76 +1,74 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH 1/2] diffcore-rename: support rename cache
-Date: Sat, 8 Nov 2008 21:04:13 -0500
-Message-ID: <20081109020413.GA31408@coredump.intra.peff.net>
-References: <1226068533-10152-1-git-send-email-pclouds@gmail.com> <20081107222128.GB4030@nan92-1-81-57-214-146.fbx.proxad.net> <7vy6zvdt25.fsf@gitster.siamese.dyndns.org> <fcaeb9bf0811072001o6df7ae00k1b1bffaadf75d3a1@mail.gmail.com> <20081108092409.GD4030@nan92-1-81-57-214-146.fbx.proxad.net> <20081108114719.GA4989@sigill.intra.peff.net> <fcaeb9bf0811080400h7ea5377cvaa8d658335811c23@mail.gmail.com>
+From: "Nguyen Thai Ngoc Duy" <pclouds@gmail.com>
+Subject: Re: Git and Media repositories....
+Date: Sun, 9 Nov 2008 11:58:41 +0700
+Message-ID: <fcaeb9bf0811082058i2d0dab9et3de216f7bdb8036d@mail.gmail.com>
+References: <1225655428.11693.10.camel@vaio>
+	 <adf1fd3d0811070519qc54369vf0da3bc28182460a@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Yann Dirson <ydirson@altern.org>,
-	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Nov 09 03:06:21 2008
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: base64
+Cc: "Tim Ansell" <mithro@mithis.com>, git@vger.kernel.org
+To: "=?UTF-8?Q?Santi_B=C3=A9jar?=" <santi@agolina.net>
+X-From: git-owner@vger.kernel.org Sun Nov 09 06:00:02 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Kyzgv-0007N8-Tx
-	for gcvg-git-2@gmane.org; Sun, 09 Nov 2008 03:06:18 +0100
+	id 1Kz2P3-00048I-CL
+	for gcvg-git-2@gmane.org; Sun, 09 Nov 2008 06:00:01 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753735AbYKICER (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 8 Nov 2008 21:04:17 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753572AbYKICER
-	(ORCPT <rfc822;git-outgoing>); Sat, 8 Nov 2008 21:04:17 -0500
-Received: from peff.net ([208.65.91.99]:3865 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752148AbYKICEQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 8 Nov 2008 21:04:16 -0500
-Received: (qmail 8775 invoked by uid 111); 9 Nov 2008 02:04:15 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.32) with SMTP; Sat, 08 Nov 2008 21:04:14 -0500
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Sat, 08 Nov 2008 21:04:13 -0500
+	id S1753951AbYKIE6p (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 8 Nov 2008 23:58:45 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753924AbYKIE6p
+	(ORCPT <rfc822;git-outgoing>); Sat, 8 Nov 2008 23:58:45 -0500
+Received: from fg-out-1718.google.com ([72.14.220.159]:4063 "EHLO
+	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753919AbYKIE6o (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 8 Nov 2008 23:58:44 -0500
+Received: by fg-out-1718.google.com with SMTP id 19so1727563fgg.17
+        for <git@vger.kernel.org>; Sat, 08 Nov 2008 20:58:41 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to
+         :subject:cc:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:references;
+        bh=VK3W0zzEr4FX09t9C4VYUcQGb8qmWuX85p5bXUcbw70=;
+        b=bNLawl9M5PVVNS4DadwTReSbpJR6fDHqK/ts11T01i3AEL4URhFObhNpMmDHWVy+nk
+         bXrLEvQsyslzJX2tV2Bm+UpXGAfJn/ywoBx8v9/LWgCYlZl2qmk2E/A+1spfwhI/qrXu
+         oe57RoMYDEK0gWphvGla/LJFlS4XAjSmNbrRw=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
+         :content-type:content-transfer-encoding:content-disposition
+         :references;
+        b=JoaS8cgEO2pkHs9TRZUQ5cdkaUDJOaU8clwg/3dlMcLHlQO7Kf6uVHLcRxA1DNeCSa
+         qQ1rgVfT0huhS/1ppVQuvXYJ+x28rlbALgyMU96OWfvhV0AImQsNPIRBaLZma3mPwihQ
+         JKUQ2JOWWljJY6DXVYSLfUAWFBn786V9BxoA0=
+Received: by 10.86.28.2 with SMTP id b2mr5794138fgb.54.1226206721652;
+        Sat, 08 Nov 2008 20:58:41 -0800 (PST)
+Received: by 10.86.27.20 with HTTP; Sat, 8 Nov 2008 20:58:41 -0800 (PST)
+In-Reply-To: <adf1fd3d0811070519qc54369vf0da3bc28182460a@mail.gmail.com>
 Content-Disposition: inline
-In-Reply-To: <fcaeb9bf0811080400h7ea5377cvaa8d658335811c23@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/100434>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/100435>
 
-On Sat, Nov 08, 2008 at 07:00:10PM +0700, Nguyen Thai Ngoc Duy wrote:
-
-> >  The downsides are:
-> >
-> >   - your cache is potentially bigger, since you are caching the score of
-> >    every pair you look at, instead of just "good" pairs (OTOH, you are
-> >    not doing a per-commit cache, which helps reduce the size)
-> 
-> It is huge if you accidentially add --find-copies-harder to your
-> command, considering that every new file will be compared against
-> every files in tree (about 25k).
-
-Hmm, yeah. I was thinking you might be able to do some kind of cut-off
-on the caching (i.e., don't bother storing anything that didn't come
-close). But you can't safely assume that because an entry isn't there,
-it isn't worth seeing (since it might also just not have been computed
-yet). You could still organize by commit, and then each commit is either
-fully computed or not. But then you still have a pathspec problem.
-
-One thing you could do is just compute the rename score between all
-pairs, even if a pathspec is given, limit it to values over "0.5" (or
-something low, but that eliminates the totally uninteresting cases), and
-then store that as the complete cache for that commit (or tree pair, if
-you want to support that).
-
-Then you would have the full information and could do an arbitrary
-pathspec limit on it. If you wanted to set the rename threshold below
-0.5, then we would have to recompute without the cache (but in practice,
-that should be rare).
-
-The real downside is that you pay for the whole-tree detection when you
-have asked for a pathspec (but only the first time, after which you can
-always generate from cache).
-
-Just thinking out loud...
-
--Peff
+T24gMTEvNy8wOCwgU2FudGkgQsOpamFyIDxzYW50aUBhZ29saW5hLm5ldD4gd3JvdGU6Cj4gT24g
+U3VuLCBOb3YgMiwgMjAwOCBhdCA4OjUwIFBNLCBUaW0gQW5zZWxsIDxtaXRocm9AbWl0aGlzLmNv
+bT4gd3JvdGU6Cj4gID4gSGV5IGd1eXMsCj4gID4KPgo+ICBbLi4uXQo+Cj4KPiAgPgo+ICA+IFRo
+ZSBnZW5lcmFsIGlkZWEgaXMgdGhhdCB3ZSBhbHdheXMgY2xvbmUgdGhlIGNvbXBsZXRlIG1ldGEt
+ZGF0YSAodGFncywKPiAgPiBjb21taXRzIGFuZCB0cmVlcykgYW5kIHRoZW4gb25seSBjbG9uZSBi
+bG9icyB3aGVuIHRoZXkgYXJlIG5lZWRlZCAodXNpbmcKPiAgPiBzb21ldGhpbmcgbGlrZSBhbHRl
+cm5hdGVzKS4gVGhpcyBhbGxvd3MgdXMgdG8gc3VwcG9ydCBzaGFsbG93LCBuYXJyb3cKPiAgPiBh
+bmQgc3BhcnNlIGNoZWNrb3V0cyB3aGlsZSBzdGlsbCBiZWluZyBhYmxlIHRvIHBlcmZvcm0gb3Bl
+cmF0aW9ucyBzdWNoCj4gID4gYXMgY29tbWl0dGluZyBhbmQgbWVyZ2luZy4KPiAgPgo+Cj4KPiBB
+IHJlbGF0ZWQgdXNlIGNhc2UgY291bGQgYmUgdG8gcmVtb3ZlIGEgYmxvYiBmcm9tIGEgcmVwbyBi
+dXQgYmVpbmcKPiAgYWJsZSB0byB3b3JrIG5vcm1hbGx5IHdpdGggaXQsIHNpbWlsYXIgdG86Cj4K
+PiAgaHR0cDovL3dpa2kuZnJlZWJzZC5vcmcvVkNTRmVhdHVyZU9ibGl0ZXJhdGUKCk1heWJlIGFu
+b3RoZXIgdXNlIGNhc2U6IGVuY3J5cHRlZCBibG9icyAodGhvc2UgYXJlIGdlbmVyYWxseQp1bmF2
+YWlsYWJsZSB1bnRpbCBjb3JyZWN0ZWQgcGFzc3dvcmQgaXMgZ2l2ZW4sIHNvIHRoZXkgYXJlICJo
+b2xlcyIgaW4KY2hlY2tvdXQvY2xvbmUpLiBJdCBjb3VsZCBiZSB1c2VkIHRvIHN0b3JlIHNlbnNp
+dGl2ZSBjb250ZW50IChpbiAkSE9NRQpmb3IgZXhhbXBsZSkKLS0gCkR1eQo=
