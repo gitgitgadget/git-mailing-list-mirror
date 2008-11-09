@@ -1,53 +1,58 @@
-From: "Jan =?UTF-8?B?S3LDvGdlcg==?=" <jk@jk.gs>
-Subject: Re: [PATCH 1/4] t5400: expect success for denying deletion
-Date: Sun, 9 Nov 2008 11:38:41 +0100
-Message-ID: <20081109113841.1382380a@perceptron>
-References: <20081107220730.GA15942@coredump.intra.peff.net>
-	<20081107220955.GA16058@coredump.intra.peff.net>
+From: Paul Mackerras <paulus@samba.org>
+Subject: Re: [PATCH (GITK) v3 6/6] gitk: Explicitly position popup windows.
+Date: Sun, 9 Nov 2008 22:12:14 +1100
+Message-ID: <18710.50575.738.7798@cargo.ozlabs.ibm.com>
+References: <1225652389-22082-1-git-send-email-angavrilov@gmail.com>
+	<1225652389-22082-2-git-send-email-angavrilov@gmail.com>
+	<1225652389-22082-3-git-send-email-angavrilov@gmail.com>
+	<1225652389-22082-4-git-send-email-angavrilov@gmail.com>
+	<1225652389-22082-5-git-send-email-angavrilov@gmail.com>
+	<1225652389-22082-6-git-send-email-angavrilov@gmail.com>
+	<1225652389-22082-7-git-send-email-angavrilov@gmail.com>
+	<18708.11537.229423.296701@cargo.ozlabs.ibm.com>
+	<81b0412b0811070639q47244bc4t10791781fb0ec43b@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
+Content-Type: text/plain; charset=us-ascii
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-	Sam Vilain <sam@vilain.net>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Sun Nov 09 11:40:51 2008
+Cc: "Alexander Gavrilov" <angavrilov@gmail.com>, git@vger.kernel.org
+To: "Alex Riesen" <raa.lkml@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Nov 09 12:13:39 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Kz7ir-0008T0-5e
-	for gcvg-git-2@gmane.org; Sun, 09 Nov 2008 11:40:49 +0100
+	id 1Kz8Eb-0007Ne-CZ
+	for gcvg-git-2@gmane.org; Sun, 09 Nov 2008 12:13:37 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753968AbYKIKj3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 9 Nov 2008 05:39:29 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753691AbYKIKj3
-	(ORCPT <rfc822;git-outgoing>); Sun, 9 Nov 2008 05:39:29 -0500
-Received: from zoidberg.org ([213.133.99.5]:48560 "EHLO cthulhu.zoidberg.org"
+	id S1754333AbYKILMW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 9 Nov 2008 06:12:22 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754415AbYKILMW
+	(ORCPT <rfc822;git-outgoing>); Sun, 9 Nov 2008 06:12:22 -0500
+Received: from ozlabs.org ([203.10.76.45]:51530 "EHLO ozlabs.org"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751784AbYKIKj3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 9 Nov 2008 05:39:29 -0500
-Received: from perceptron (p54BB9E64.dip0.t-ipconnect.de [::ffff:84.187.158.100])
-  (AUTH: LOGIN jast, TLS: TLSv1/SSLv3,256bits,AES256-SHA)
-  by cthulhu.zoidberg.org with esmtp; Sun, 09 Nov 2008 11:39:23 +0100
-  id 0015AFB2.4916BDDB.0000254A
-In-Reply-To: <20081107220955.GA16058@coredump.intra.peff.net>
-X-Mailer: Claws Mail 3.5.0 (GTK+ 2.14.4; i486-pc-linux-gnu)
+	id S1753087AbYKILMV (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 9 Nov 2008 06:12:21 -0500
+Received: by ozlabs.org (Postfix, from userid 1003)
+	id 42845DDE00; Sun,  9 Nov 2008 22:12:20 +1100 (EST)
+In-Reply-To: <81b0412b0811070639q47244bc4t10791781fb0ec43b@mail.gmail.com>
+X-Mailer: VM 8.0.9 under Emacs 22.2.1 (i486-pc-linux-gnu)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/100438>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/100439>
 
-Hi,
+Alex Riesen writes:
 
-On Fri, 7 Nov 2008 17:09:55 -0500, Jeff King <peff@peff.net> wrote:
-> Reading over the mailing list postings which led to a240de11, I think
-> it is simply a case that Jan didn't fully understand what
-> expect_failure meant
+> > Is there any reason to call tk::PlaceWindow under Linux or MacOS?
+> > If not I'd rather add an if statement so we only call it on Windows.
+> >
+> 
+> Yes, please. I rather like the smart placement in compiz.
 
+Do you mean "please add the if statement", i.e. don't call
+tk::PlaceWindow under Linux?  Like Johannes Sixt, I find your request
+ambiguous. :)
 
-Yes, that's exactly what happened, and it won't likely happen again.
-Thanks for fixing and for the Cc.
-
--Jan
+Paul.
