@@ -1,55 +1,71 @@
-From: Steven Grimm <koreth@midwinter.com>
-Subject: Re: How it was at GitTogether'08 ?
-Date: Sun, 9 Nov 2008 13:58:15 -0800
-Message-ID: <2E4FE676-0128-4664-86A1-5EED75876A37@midwinter.com>
-References: <200811080254.53202.jnareb@gmail.com> <200811091249.40735.jnareb@gmail.com> <F0422D64-2A35-4755-BD28-782BFA634AAC@midwinter.com> <200811091958.32893.robin.rosenberg@dewire.com> <20081109195538.GD2932@spearce.org>
-Mime-Version: 1.0 (Apple Message framework v929.2)
-Content-Type: text/plain; charset=US-ASCII; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: Robin Rosenberg <robin.rosenberg@dewire.com>,
-	Jakub Narebski <jnareb@gmail.com>, git@vger.kernel.org,
-	Jeff King <peff@peff.net>, Petr Baudis <pasky@suse.cz>,
-	Tim Ansell <mithro@mithis.com>
-To: "Shawn O. Pearce" <spearce@spearce.org>
-X-From: git-owner@vger.kernel.org Sun Nov 09 22:59:43 2008
+From: "Jan =?UTF-8?B?S3LDvGdlcg==?=" <jk@jk.gs>
+Subject: [PATCH] Documentation: git-svn: fix example for centralized SVN
+ clone
+Date: Sun, 9 Nov 2008 23:00:12 +0100
+Message-ID: <20081109230012.47adbb32@perceptron>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Eric Wong <normalperson@yhbt.net>
+To: Git ML <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Sun Nov 09 23:01:46 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KzIJj-0000tX-2H
-	for gcvg-git-2@gmane.org; Sun, 09 Nov 2008 22:59:35 +0100
+	id 1KzILi-0001YY-3G
+	for gcvg-git-2@gmane.org; Sun, 09 Nov 2008 23:01:38 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757252AbYKIV6S (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 9 Nov 2008 16:58:18 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757230AbYKIV6S
-	(ORCPT <rfc822;git-outgoing>); Sun, 9 Nov 2008 16:58:18 -0500
-Received: from tater.midwinter.com ([216.32.86.90]:33134 "HELO midwinter.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1757209AbYKIV6R (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 9 Nov 2008 16:58:17 -0500
-Received: (qmail 15835 invoked from network); 9 Nov 2008 21:58:16 -0000
-Comment: DomainKeys? See http://antispam.yahoo.com/domainkeys
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-  s=200606; d=midwinter.com;
-  b=bnV75I/y+ZkUMtCj4RQq48X0ffwBN0N8GuRgu0PQPRwrJida5MLq+TZHfna0cDZi  ;
-Received: from localhost (HELO ?IPv6:::1?) (127.0.0.1)
-  by localhost with SMTP; 9 Nov 2008 21:58:16 -0000
-In-Reply-To: <20081109195538.GD2932@spearce.org>
-X-Mailer: Apple Mail (2.929.2)
+	id S1756255AbYKIWAV convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 9 Nov 2008 17:00:21 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756186AbYKIWAU
+	(ORCPT <rfc822;git-outgoing>); Sun, 9 Nov 2008 17:00:20 -0500
+Received: from zoidberg.org ([213.133.99.5]:60928 "EHLO cthulhu.zoidberg.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755932AbYKIWAT convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 9 Nov 2008 17:00:19 -0500
+Received: from perceptron (xdsl-87-78-94-105.netcologne.de [::ffff:87.78.94.105])
+  (IDENT: unknown, AUTH: LOGIN jast, TLS: TLSv1/SSLv3,256bits,AES256-SHA)
+  by cthulhu.zoidberg.org with esmtp; Sun, 09 Nov 2008 23:00:17 +0100
+  id 0015AFFF.49175D71.00006598
+X-Mailer: Claws Mail 3.5.0 (GTK+ 2.14.4; i486-pc-linux-gnu)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/100471>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/100472>
 
-On Nov 9, 2008, at 11:55 AM, Shawn O. Pearce wrote:
-> No, its not.  The owner of the document can publish the document,
-> making it world-readable, *without* needing a login.  I think they
-> just forgot to do that on this particular presentation.
+The example that tells users how to centralize the effort of the initia=
+l
+git svn clone operation doesn't work properly. It uses rebase but that
+only works if HEAD exists. This adds one extra command to create a
+somewhat sensible HEAD that should work in all cases.
 
+Signed-off-by: Jan Kr=C3=BCger <jk@jk.gs>
+---
+I have a feeling this looks a bit ugly, but I can't think of a simpler
+solution (especially since we're not fetching the central repo's HEAD).
+Still, it's certainly better than a broken example.
 
-My bad. Here's the published, no-login-required version:
+ Documentation/git-svn.txt |    2 ++
+ 1 files changed, 2 insertions(+), 0 deletions(-)
 
-http://docs.google.com/Presentation?id=dhhs72s2_1wtzbnsnj
-
--Steve
+diff --git a/Documentation/git-svn.txt b/Documentation/git-svn.txt
+index 84c8f3c..ba94cd1 100644
+--- a/Documentation/git-svn.txt
++++ b/Documentation/git-svn.txt
+@@ -544,6 +544,8 @@ have each person clone that repository with 'git-cl=
+one':
+        git remote add origin server:/pub/project
+        git config --add remote.origin.fetch '+refs/remotes/*:refs/remo=
+tes/*'
+        git fetch
++# Create a local branch from one of the branches just fetched
++       git checkout -b master FETCH_HEAD
+ # Initialize git-svn locally (be sure to use the same URL and -T/-b/-t=
+ options as were used on server)
+        git svn init http://svn.example.com/project
+ # Pull the latest changes from Subversion
+--
+1.6.0.3.578.g6a50
