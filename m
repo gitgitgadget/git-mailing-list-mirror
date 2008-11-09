@@ -1,218 +1,91 @@
-From: "Piotr Findeisen" <piotr.findeisen@gmail.com>
-Subject: Re: Documentation/user-manual.txt, asciidoc and "--" escapes
-Date: Sun, 9 Nov 2008 09:44:35 +0100
-Message-ID: <ddb82bf60811090044l43eb4bb1ga5a16718a4176c29@mail.gmail.com>
-References: <ddb82bf60811061904t5defc492m80cd1b759674eb6@mail.gmail.com>
-	 <ddb82bf60811061909m6f8a7b72o4b03ebcde8b9d188@mail.gmail.com>
+From: Andreas Ericsson <ae@op5.se>
+Subject: Re: libgit2 - a true git library
+Date: Sun, 09 Nov 2008 11:17:14 +0100
+Message-ID: <4916B8AA.2080602@op5.se>
+References: <20081031170704.GU14786@spearce.org> <4915939B.1070306@gmail.com> <4915A3CB.5010909@op5.se> <20081108172759.GA31655@artemis.corp>
 Mime-Version: 1.0
-Content-Type: multipart/mixed; 
-	boundary="----=_Part_74399_12063030.1226220275956"
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Nov 09 09:45:57 2008
+Content-Type: text/plain; charset=ISO-8859-15;
+	format=flowed
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: =?ISO-8859-15?Q?Steve_Fr=E9cinaux?= <nudrema@gmail.com>,
+	"Shawn O. Pearce" <spearce@spearce.org>, git@vger.kernel.org,
+	Scott Chacon <schacon@gmail.com>
+To: Pierre Habouzit <madcoder@debian.org>
+X-From: git-owner@vger.kernel.org Sun Nov 09 11:18:54 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Kz5vc-00054Y-OD
-	for gcvg-git-2@gmane.org; Sun, 09 Nov 2008 09:45:53 +0100
+	id 1Kz7Na-00038G-Ca
+	for gcvg-git-2@gmane.org; Sun, 09 Nov 2008 11:18:50 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753924AbYKIIoh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 9 Nov 2008 03:44:37 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751996AbYKIIoh
-	(ORCPT <rfc822;git-outgoing>); Sun, 9 Nov 2008 03:44:37 -0500
-Received: from wf-out-1314.google.com ([209.85.200.169]:32249 "EHLO
-	wf-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751195AbYKIIog (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 9 Nov 2008 03:44:36 -0500
-Received: by wf-out-1314.google.com with SMTP id 27so2022588wfd.4
-        for <git@vger.kernel.org>; Sun, 09 Nov 2008 00:44:36 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to
-         :subject:in-reply-to:mime-version:content-type:references;
-        bh=HAcZtGC32fueljT9wv4WHhrsQoZB/QrZeuqMA/ZFQC4=;
-        b=fLSbNkubdajtLbABRmR6qB4z7KbgRk9E+XnTcPpPqct9G97hVfvjizdNo2ccMjOmLE
-         jkeSk5cIu5KCJ4gSFU8TPAxmcopqdVHPuWKoB2anJcpQTkfjdHAh5woiaSzIT3AUOMmd
-         xsitg3fYDYUK6Mc0M/OuiUb9GetLGt8JBbpK8=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:in-reply-to:mime-version
-         :content-type:references;
-        b=SP/PdEuT3MSQ9z7pivGMMXMMIhx8syd/UA7xY+xw6zdn4pNkJzv0GtqRF+w6p8+EfW
-         SJvqf7FseLTFCC2elmHt6N9hWz6EhpxCWT8IbjfAltaY7I6RIfwc2HMdzx4MI02UpN1o
-         6+kJIfsrlMuCmy8JQv6gNN6tY+mY7UHJPAbyc=
-Received: by 10.143.31.11 with SMTP id i11mr1725279wfj.163.1226220275960;
-        Sun, 09 Nov 2008 00:44:35 -0800 (PST)
-Received: by 10.142.157.6 with HTTP; Sun, 9 Nov 2008 00:44:35 -0800 (PST)
-In-Reply-To: <ddb82bf60811061909m6f8a7b72o4b03ebcde8b9d188@mail.gmail.com>
+	id S1754136AbYKIKRe convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 9 Nov 2008 05:17:34 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753980AbYKIKRe
+	(ORCPT <rfc822;git-outgoing>); Sun, 9 Nov 2008 05:17:34 -0500
+Received: from mail.op5.se ([193.201.96.20]:44018 "EHLO mail.op5.se"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753876AbYKIKRd (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 9 Nov 2008 05:17:33 -0500
+Received: from localhost (localhost.localdomain [127.0.0.1])
+	by mail.op5.se (Postfix) with ESMTP id CB64B1B8037F;
+	Sun,  9 Nov 2008 11:11:27 +0100 (CET)
+X-Virus-Scanned: amavisd-new at 
+X-Spam-Flag: NO
+X-Spam-Score: -2.499
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.499 tagged_above=-10 required=6.6
+	tests=[BAYES_00=-2.599, RDNS_NONE=0.1]
+Received: from mail.op5.se ([127.0.0.1])
+	by localhost (mail.op5.se [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id uRI3CDLX3kPg; Sun,  9 Nov 2008 11:11:25 +0100 (CET)
+Received: from clix.int.op5.se (unknown [172.27.78.10])
+	by mail.op5.se (Postfix) with ESMTP id 8F8331B8005E;
+	Sun,  9 Nov 2008 11:11:21 +0100 (CET)
+User-Agent: Thunderbird 2.0.0.16 (X11/20080723)
+In-Reply-To: <20081108172759.GA31655@artemis.corp>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/100436>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/100437>
 
-------=_Part_74399_12063030.1226220275956
-Content-Type: text/plain; charset=WINDOWS-1252
-Content-Transfer-Encoding: quoted-printable
-Content-Disposition: inline
+Pierre Habouzit wrote:
+> On Sat, Nov 08, 2008 at 02:35:55PM +0000, Andreas Ericsson wrote:
+>> Steve Fr=E9cinaux wrote:
+>>> Just a random question: is there a reason why you have put all the
+>>> .h in a separate includes/ directory instead of relying on the
+>>> install target to put the include files at the right place ?
+>>> To me it makes it much harder to hack on the files as one is always
+>>> required to switch between both directories...
+>> I agree with this, but as I guess Shawn will do roughly 45 times mor=
+e
+>> work on it than me (according to current commit-count in git.git), I=
+'ll
+>> live with it.
+>=20
+> I don't, modifying the public includes may break the ABI and the API.
+>=20
+> I believe it to be a good practice to put them in a separate director=
+y
+> so that people modifying them will know this particular header is
+> public. Yes you can name your private headers differently, but it's n=
+ot
+> really the same, it doesn't make editing public headers hard, and it =
+has
+> to. People modifying them _have_ to thing "err why am I modifying thi=
+s
+> specific header in the first place" before doing anything in it.
+>=20
 
-Same thing done the right way.
+Well, I suggested putting "src/public/public_header.h" quite early on,
+with private headers next to the source. AFAIU, the private and public
+headers both are now located in the same directory, and that directory =
+is
+separate from the .c files.
 
-regards,
-P.
-
-On Fri, Nov 7, 2008 at 04:09, Piotr Findeisen <piotr.findeisen@gmail.com> w=
-rote:
->
-> Hello!
->
-> I've been reading
-> http://www.kernel.org/pub/software/scm/git/docs/user-manual.html till
-> late night and found that "--" prefixing options names (like in "git
-> diff --cached") are replaced by asciidoc with a single unicode
-> character "=97" which makes them unsuitable for pasting them to a
-> terminal.
->
-> I've cloned the git repository from
-> git://git.kernel.org/pub/scm/git/git.git, made some changes to
-> Documentation/user-manual.txt, tested the results and commited my work
-> locally.
-> The attached file is a result of running `git diff HEAD~1`.
->
-> My local log message:
-> ------------------
-> asciidoc escaping of "--"
->
-> Asciidoc replaces "--" with "=97" when not in verbatim mode. This is
-> sometimes unwanted -- especially when citing command line options like
-> "git diff --cached". This commit includes proper quotes in user-manual.tx=
-t.
-> ------------------
->
-> Hope that's of any use.
->
-> Best regards,
-> Piotr
-
-------=_Part_74399_12063030.1226220275956
-Content-Type: text/x-diff; name=user-manual.txt.patch
-Content-Transfer-Encoding: base64
-X-Attachment-Id: f_fnbfu5su1
-Content-Disposition: attachment; filename=user-manual.txt.patch
-
-ZGlmZiAtLWdpdCBhL0RvY3VtZW50YXRpb24vdXNlci1tYW51YWwudHh0IGIvRG9jdW1lbnRhdGlv
-bi91c2VyLW1hbnVhbC50eHQKaW5kZXggNjQ1ZDc1Mi4uZDIwMDc1OSAxMDA2NDQKLS0tIGEvRG9j
-dW1lbnRhdGlvbi91c2VyLW1hbnVhbC50eHQKKysrIGIvRG9jdW1lbnRhdGlvbi91c2VyLW1hbnVh
-bC50eHQKQEAgLTUyNyw3ICs1MjcsNyBAQCAkIGdpdCByZXNldCAtLWhhcmQgZmI0N2RkYjJkYi4u
-LgogdGhlbiB0ZXN0LCBydW4gImJpc2VjdCBnb29kIiBvciAiYmlzZWN0IGJhZCIgYXMgYXBwcm9w
-cmlhdGUsIGFuZAogY29udGludWUuCiAKLUluc3RlYWQgb2YgImdpdCBiaXNlY3QgdmlzdWFsaXpl
-IiBhbmQgdGhlbiAiZ2l0IHJlc2V0IC0taGFyZAorSW5zdGVhZCBvZiAiZ2l0IGJpc2VjdCB2aXN1
-YWxpemUiIGFuZCB0aGVuICJnaXQgcmVzZXQgXC0taGFyZAogZmI0N2RkYjJkYi4uLiIsIHlvdSBt
-aWdodCBqdXN0IHdhbnQgdG8gdGVsbCBnaXQgdGhhdCB5b3Ugd2FudCB0byBza2lwCiB0aGUgY3Vy
-cmVudCBjb21taXQ6CiAKQEAgLTkwMCw3ICs5MDAsNyBAQCAkIGdpdGsgJCggZ2l0IHNob3ctcmVm
-IC0taGVhZHMgKSAtLW5vdCAgJCggZ2l0IHNob3ctcmVmIC0tdGFncyApCiAtLS0tLS0tLS0tLS0t
-LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tCiAKIChTZWUgbGlua2dpdDpnaXQt
-cmV2LXBhcnNlWzFdIGZvciBleHBsYW5hdGlvbnMgb2YgY29tbWl0LXNlbGVjdGluZwotc3ludGF4
-IHN1Y2ggYXMgYC0tbm90YC4pCitzeW50YXggc3VjaCBhcyBgXC0tbm90YC4pCiAKIFtbbWFraW5n
-LWEtcmVsZWFzZV1dCiBDcmVhdGluZyBhIGNoYW5nZWxvZyBhbmQgdGFyYmFsbCBmb3IgYSBzb2Z0
-d2FyZSByZWxlYXNlCkBAIC0xMDI0LDcgKzEwMjQsNyBAQCBhdCBzdGVwIDMsIGdpdCBtYWludGFp
-bnMgYSBzbmFwc2hvdCBvZiB0aGUgdHJlZSdzIGNvbnRlbnRzIGluIGEKIHNwZWNpYWwgc3RhZ2lu
-ZyBhcmVhIGNhbGxlZCAidGhlIGluZGV4LiIKIAogQXQgdGhlIGJlZ2lubmluZywgdGhlIGNvbnRl
-bnQgb2YgdGhlIGluZGV4IHdpbGwgYmUgaWRlbnRpY2FsIHRvCi10aGF0IG9mIHRoZSBIRUFELiAg
-VGhlIGNvbW1hbmQgImdpdCBkaWZmIC0tY2FjaGVkIiwgd2hpY2ggc2hvd3MKK3RoYXQgb2YgdGhl
-IEhFQUQuICBUaGUgY29tbWFuZCAiZ2l0IGRpZmYgXC0tY2FjaGVkIiwgd2hpY2ggc2hvd3MKIHRo
-ZSBkaWZmZXJlbmNlIGJldHdlZW4gdGhlIEhFQUQgYW5kIHRoZSBpbmRleCwgc2hvdWxkIHRoZXJl
-Zm9yZQogcHJvZHVjZSBubyBvdXRwdXQgYXQgdGhhdCBwb2ludC4KIApAQCAtMTU3Miw3ICsxNTcy
-LDcgQEAgUmVjb3ZlcmluZyBsb3N0IGNoYW5nZXMKIFJlZmxvZ3MKIF5eXl5eXl4KIAotU2F5IHlv
-dSBtb2RpZnkgYSBicmFuY2ggd2l0aCBgbGlua2dpdDpnaXQtcmVzZXRbMV0gLS1oYXJkYCwgYW5k
-IHRoZW4KK1NheSB5b3UgbW9kaWZ5IGEgYnJhbmNoIHdpdGggYGxpbmtnaXQ6Z2l0LXJlc2V0WzFd
-IFwtLWhhcmRgLCBhbmQgdGhlbgogcmVhbGl6ZSB0aGF0IHRoZSBicmFuY2ggd2FzIHRoZSBvbmx5
-IHJlZmVyZW5jZSB5b3UgaGFkIHRvIHRoYXQgcG9pbnQgaW4KIGhpc3RvcnkuCiAKQEAgLTE3MDEs
-NyArMTcwMSw3IEBAICQgZ2l0IHB1bGwKIE1vcmUgZ2VuZXJhbGx5LCBhIGJyYW5jaCB0aGF0IGlz
-IGNyZWF0ZWQgZnJvbSBhIHJlbW90ZSBicmFuY2ggd2lsbCBwdWxsCiBieSBkZWZhdWx0IGZyb20g
-dGhhdCBicmFuY2guICBTZWUgdGhlIGRlc2NyaXB0aW9ucyBvZiB0aGUKIGJyYW5jaC48bmFtZT4u
-cmVtb3RlIGFuZCBicmFuY2guPG5hbWU+Lm1lcmdlIG9wdGlvbnMgaW4KLWxpbmtnaXQ6Z2l0LWNv
-bmZpZ1sxXSwgYW5kIHRoZSBkaXNjdXNzaW9uIG9mIHRoZSBgLS10cmFja2Agb3B0aW9uIGluCits
-aW5rZ2l0OmdpdC1jb25maWdbMV0sIGFuZCB0aGUgZGlzY3Vzc2lvbiBvZiB0aGUgYFwtLXRyYWNr
-YCBvcHRpb24gaW4KIGxpbmtnaXQ6Z2l0LWNoZWNrb3V0WzFdLCB0byBsZWFybiBob3cgdG8gY29u
-dHJvbCB0aGVzZSBkZWZhdWx0cy4KIAogSW4gYWRkaXRpb24gdG8gc2F2aW5nIHlvdSBrZXlzdHJv
-a2VzLCAiZ2l0IHB1bGwiIGFsc28gaGVscHMgeW91IGJ5CkBAIC0xOTc4LDggKzE5NzgsOCBAQCBl
-cnJvcjogZmFpbGVkIHRvIHB1c2ggdG8gJ3NzaDovL3lvdXJzZXJ2ZXIuY29tL355b3UvcHJvai5n
-aXQnCiAKIFRoaXMgY2FuIGhhcHBlbiwgZm9yIGV4YW1wbGUsIGlmIHlvdToKIAotCS0gdXNlIGBn
-aXQtcmVzZXQgLS1oYXJkYCB0byByZW1vdmUgYWxyZWFkeS1wdWJsaXNoZWQgY29tbWl0cywgb3IK
-LQktIHVzZSBgZ2l0LWNvbW1pdCAtLWFtZW5kYCB0byByZXBsYWNlIGFscmVhZHktcHVibGlzaGVk
-IGNvbW1pdHMKKwktIHVzZSBgZ2l0LXJlc2V0IFwtLWhhcmRgIHRvIHJlbW92ZSBhbHJlYWR5LXB1
-Ymxpc2hlZCBjb21taXRzLCBvcgorCS0gdXNlIGBnaXQtY29tbWl0IFwtLWFtZW5kYCB0byByZXBs
-YWNlIGFscmVhZHktcHVibGlzaGVkIGNvbW1pdHMKIAkgIChhcyBpbiA8PGZpeGluZy1hLW1pc3Rh
-a2UtYnktcmV3cml0aW5nLWhpc3Rvcnk+PiksIG9yCiAJLSB1c2UgYGdpdC1yZWJhc2VgIHRvIHJl
-YmFzZSBhbnkgYWxyZWFkeS1wdWJsaXNoZWQgY29tbWl0cyAoYXMKIAkgIGluIDw8dXNpbmctZ2l0
-LXJlYmFzZT4+KS4KQEAgLTIwODgsNyArMjA4OCw3IEBAIGxpbmtnaXQ6Z2l0LWZldGNoWzFdIHRv
-IGtlZXAgdGhlbSB1cC10by1kYXRlOyBzZWUKIAogTm93IGNyZWF0ZSB0aGUgYnJhbmNoZXMgaW4g
-d2hpY2ggeW91IGFyZSBnb2luZyB0byB3b3JrOyB0aGVzZSBzdGFydCBvdXQKIGF0IHRoZSBjdXJy
-ZW50IHRpcCBvZiBvcmlnaW4vbWFzdGVyIGJyYW5jaCwgYW5kIHNob3VsZCBiZSBzZXQgdXAgKHVz
-aW5nCi10aGUgLS10cmFjayBvcHRpb24gdG8gbGlua2dpdDpnaXQtYnJhbmNoWzFdKSB0byBtZXJn
-ZSBjaGFuZ2VzIGluIGZyb20KK3RoZSBcLS10cmFjayBvcHRpb24gdG8gbGlua2dpdDpnaXQtYnJh
-bmNoWzFdKSB0byBtZXJnZSBjaGFuZ2VzIGluIGZyb20KIExpbnVzIGJ5IGRlZmF1bHQuCiAKIC0t
-LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0KQEAgLTI0Njgs
-NyArMjQ2OCw3IEBAICQgZ2l0IHJlYmFzZSAtLWNvbnRpbnVlCiAKIGFuZCBnaXQgd2lsbCBjb250
-aW51ZSBhcHBseWluZyB0aGUgcmVzdCBvZiB0aGUgcGF0Y2hlcy4KIAotQXQgYW55IHBvaW50IHlv
-dSBtYXkgdXNlIHRoZSBgLS1hYm9ydGAgb3B0aW9uIHRvIGFib3J0IHRoaXMgcHJvY2VzcyBhbmQK
-K0F0IGFueSBwb2ludCB5b3UgbWF5IHVzZSB0aGUgYFwtLWFib3J0YCBvcHRpb24gdG8gYWJvcnQg
-dGhpcyBwcm9jZXNzIGFuZAogcmV0dXJuIG15d29yayB0byB0aGUgc3RhdGUgaXQgaGFkIGJlZm9y
-ZSB5b3Ugc3RhcnRlZCB0aGUgcmViYXNlOgogCiAtLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
-LS0tLS0tLS0tLS0tLS0tLS0tLS0tCkBAIC0yNTM5LDcgKzI1MzksNyBAQCAkIGdpdGsgb3JpZ2lu
-Li5teXdvcmsgJgogCiBhbmQgYnJvd3NlIHRocm91Z2ggdGhlIGxpc3Qgb2YgcGF0Y2hlcyBpbiB0
-aGUgbXl3b3JrIGJyYW5jaCB1c2luZyBnaXRrLAogYXBwbHlpbmcgdGhlbSAocG9zc2libHkgaW4g
-YSBkaWZmZXJlbnQgb3JkZXIpIHRvIG15d29yay1uZXcgdXNpbmcKLWNoZXJyeS1waWNrLCBhbmQg
-cG9zc2libHkgbW9kaWZ5aW5nIHRoZW0gYXMgeW91IGdvIHVzaW5nIGBjb21taXQgLS1hbWVuZGAu
-CitjaGVycnktcGljaywgYW5kIHBvc3NpYmx5IG1vZGlmeWluZyB0aGVtIGFzIHlvdSBnbyB1c2lu
-ZyBgY29tbWl0IFwtLWFtZW5kYC4KIFRoZSBsaW5rZ2l0OmdpdC1ndWlbMV0gY29tbWFuZCBtYXkg
-YWxzbyBoZWxwIGFzIGl0IGFsbG93cyB5b3UgdG8KIGluZGl2aWR1YWxseSBzZWxlY3QgZGlmZiBo
-dW5rcyBmb3IgaW5jbHVzaW9uIGluIHRoZSBpbmRleCAoYnkKIHJpZ2h0LWNsaWNraW5nIG9uIHRo
-ZSBkaWZmIGh1bmsgYW5kIGNob29zaW5nICJTdGFnZSBIdW5rIGZvciBDb21taXQiKS4KQEAgLTI4
-OTcsNyArMjg5Nyw3IEBAIENvbW1pdCBPYmplY3QKIH5+fn5+fn5+fn5+fn4KIAogVGhlICJjb21t
-aXQiIG9iamVjdCBsaW5rcyBhIHBoeXNpY2FsIHN0YXRlIG9mIGEgdHJlZSB3aXRoIGEgZGVzY3Jp
-cHRpb24KLW9mIGhvdyB3ZSBnb3QgdGhlcmUgYW5kIHdoeS4gIFVzZSB0aGUgLS1wcmV0dHk9cmF3
-IG9wdGlvbiB0bworb2YgaG93IHdlIGdvdCB0aGVyZSBhbmQgd2h5LiAgVXNlIHRoZSBcLS1wcmV0
-dHk9cmF3IG9wdGlvbiB0bwogbGlua2dpdDpnaXQtc2hvd1sxXSBvciBsaW5rZ2l0OmdpdC1sb2db
-MV0gdG8gZXhhbWluZSB5b3VyIGZhdm9yaXRlCiBjb21taXQ6CiAKQEAgLTM3MDAsMTYgKzM3MDAs
-MTYgQEAgaS5lLiBpdCB3aWxsIG5vcm1hbGx5IGp1c3QgdXBkYXRlIGV4aXN0aW5nIGNhY2hlIGVu
-dHJpZXMuCiAKIFRvIHRlbGwgZ2l0IHRoYXQgeWVzLCB5b3UgcmVhbGx5IGRvIHJlYWxpemUgdGhh
-dCBjZXJ0YWluIGZpbGVzIG5vCiBsb25nZXIgZXhpc3QsIG9yIHRoYXQgbmV3IGZpbGVzIHNob3Vs
-ZCBiZSBhZGRlZCwgeW91Ci1zaG91bGQgdXNlIHRoZSBgLS1yZW1vdmVgIGFuZCBgLS1hZGRgIGZs
-YWdzIHJlc3BlY3RpdmVseS4KK3Nob3VsZCB1c2UgdGhlIGBcLS1yZW1vdmVgIGFuZCBgXC0tYWRk
-YCBmbGFncyByZXNwZWN0aXZlbHkuCiAKLU5PVEUhIEEgYC0tcmVtb3ZlYCBmbGFnIGRvZXMgJ25v
-dCcgbWVhbiB0aGF0IHN1YnNlcXVlbnQgZmlsZW5hbWVzIHdpbGwKK05PVEUhIEEgYFwtLXJlbW92
-ZWAgZmxhZyBkb2VzICdub3QnIG1lYW4gdGhhdCBzdWJzZXF1ZW50IGZpbGVuYW1lcyB3aWxsCiBu
-ZWNlc3NhcmlseSBiZSByZW1vdmVkOiBpZiB0aGUgZmlsZXMgc3RpbGwgZXhpc3QgaW4geW91ciBk
-aXJlY3RvcnkKIHN0cnVjdHVyZSwgdGhlIGluZGV4IHdpbGwgYmUgdXBkYXRlZCB3aXRoIHRoZWly
-IG5ldyBzdGF0dXMsIG5vdAotcmVtb3ZlZC4gVGhlIG9ubHkgdGhpbmcgYC0tcmVtb3ZlYCBtZWFu
-cyBpcyB0aGF0IHVwZGF0ZS1pbmRleCB3aWxsIGJlCityZW1vdmVkLiBUaGUgb25seSB0aGluZyBg
-XC0tcmVtb3ZlYCBtZWFucyBpcyB0aGF0IHVwZGF0ZS1pbmRleCB3aWxsIGJlCiBjb25zaWRlcmlu
-ZyBhIHJlbW92ZWQgZmlsZSB0byBiZSBhIHZhbGlkIHRoaW5nLCBhbmQgaWYgdGhlIGZpbGUgcmVh
-bGx5CiBkb2VzIG5vdCBleGlzdCBhbnkgbW9yZSwgaXQgd2lsbCB1cGRhdGUgdGhlIGluZGV4IGFj
-Y29yZGluZ2x5LgogCi1BcyBhIHNwZWNpYWwgY2FzZSwgeW91IGNhbiBhbHNvIGRvIGBnaXQgdXBk
-YXRlLWluZGV4IC0tcmVmcmVzaGAsIHdoaWNoCitBcyBhIHNwZWNpYWwgY2FzZSwgeW91IGNhbiBh
-bHNvIGRvIGBnaXQgdXBkYXRlLWluZGV4IFwtLXJlZnJlc2hgLCB3aGljaAogd2lsbCByZWZyZXNo
-IHRoZSAic3RhdCIgaW5mb3JtYXRpb24gb2YgZWFjaCBpbmRleCB0byBtYXRjaCB0aGUgY3VycmVu
-dAogc3RhdCBpbmZvcm1hdGlvbi4gSXQgd2lsbCAnbm90JyB1cGRhdGUgdGhlIG9iamVjdCBzdGF0
-dXMgaXRzZWxmLCBhbmQKIGl0IHdpbGwgb25seSB1cGRhdGUgdGhlIGZpZWxkcyB0aGF0IGFyZSB1
-c2VkIHRvIHF1aWNrbHkgdGVzdCB3aGV0aGVyCkBAIC0zOTU2LDcgKzM5NTYsNyBAQCBlbnRyaWVz
-IiBpbiBpdC4gU3VjaCBhbiBpbmRleCB0cmVlIGNhbiAnTk9UJyBiZSB3cml0dGVuIG91dCB0byBh
-IHRyZWUKIG9iamVjdCwgYW5kIHlvdSB3aWxsIGhhdmUgdG8gcmVzb2x2ZSBhbnkgc3VjaCBtZXJn
-ZSBjbGFzaGVzIHVzaW5nCiBvdGhlciB0b29scyBiZWZvcmUgeW91IGNhbiB3cml0ZSBvdXQgdGhl
-IHJlc3VsdC4KIAotWW91IGNhbiBleGFtaW5lIHN1Y2ggaW5kZXggc3RhdGUgd2l0aCBgZ2l0IGxz
-LWZpbGVzIC0tdW5tZXJnZWRgCitZb3UgY2FuIGV4YW1pbmUgc3VjaCBpbmRleCBzdGF0ZSB3aXRo
-IGBnaXQgbHMtZmlsZXMgXC0tdW5tZXJnZWRgCiBjb21tYW5kLiAgQW4gZXhhbXBsZToKIAogLS0t
-LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tCkBAIC0zOTY3LDcg
-KzM5NjcsNyBAQCAkIGdpdCBscy1maWxlcyAtLXVubWVyZ2VkCiAxMDA2NDQgY2M0NGM3M2ViNzgz
-NTY1ZGE1ODMxYjRkODIwYzk2Mjk1NDAxOWI2OSAzCWhlbGxvLmMKIC0tLS0tLS0tLS0tLS0tLS0t
-LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLQogCi1FYWNoIGxpbmUgb2YgdGhlIGBnaXQg
-bHMtZmlsZXMgLS11bm1lcmdlZGAgb3V0cHV0IGJlZ2lucyB3aXRoCitFYWNoIGxpbmUgb2YgdGhl
-IGBnaXQgbHMtZmlsZXMgXC0tdW5tZXJnZWRgIG91dHB1dCBiZWdpbnMgd2l0aAogdGhlIGJsb2Ig
-bW9kZSBiaXRzLCBibG9iIFNIQTEsICdzdGFnZSBudW1iZXInLCBhbmQgdGhlCiBmaWxlbmFtZS4g
-IFRoZSAnc3RhZ2UgbnVtYmVyJyBpcyBnaXQncyB3YXkgdG8gc2F5IHdoaWNoIHRyZWUgaXQKIGNh
-bWUgZnJvbTogc3RhZ2UgMSBjb3JyZXNwb25kcyB0byBgJG9yaWdgIHRyZWUsIHN0YWdlIDIgYEhF
-QURgCg==
-------=_Part_74399_12063030.1226220275956--
+--=20
+Andreas Ericsson                   andreas.ericsson@op5.se
+OP5 AB                             www.op5.se
+Tel: +46 8-230225                  Fax: +46 8-230231
