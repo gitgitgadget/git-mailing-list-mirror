@@ -1,67 +1,65 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 2/5] git send-email: interpret unknown files as revision 
- lists
-Date: Sun, 09 Nov 2008 10:56:19 -0800
-Message-ID: <7vmyg8afu4.fsf@gitster.siamese.dyndns.org>
-References: <1225815858-30617-2-git-send-email-madcoder@debian.org>
- <1225815858-30617-3-git-send-email-madcoder@debian.org>
- <1225815858-30617-4-git-send-email-madcoder@debian.org>
- <1225815858-30617-5-git-send-email-madcoder@debian.org>
- <7vvdv3nj28.fsf@gitster.siamese.dyndns.org>
- <1225450632-7230-1-git-send-email-madcoder@debian.org>
- <1225815858-30617-1-git-send-email-madcoder@debian.org>
- <1225815858-30617-2-git-send-email-madcoder@debian.org>
- <1225815858-30617-3-git-send-email-madcoder@debian.org>
- <7v1vxroxn1.fsf@gitster.siamese.dyndns.org>
- <20081105104001.GA22272@artemis.corp>
+From: Robin Rosenberg <robin.rosenberg@dewire.com>
+Subject: Re: How it was at GitTogether'08 ?
+Date: Sun, 9 Nov 2008 19:58:32 +0100
+Message-ID: <200811091958.32893.robin.rosenberg@dewire.com>
+References: <200811080254.53202.jnareb@gmail.com> <200811091249.40735.jnareb@gmail.com> <F0422D64-2A35-4755-BD28-782BFA634AAC@midwinter.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Jeff King <peff@peff.net>
-To: Pierre Habouzit <madcoder@debian.org>
-X-From: git-owner@vger.kernel.org Sun Nov 09 19:58:01 2008
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Jakub Narebski <jnareb@gmail.com>, git@vger.kernel.org,
+	"Shawn O. Pearce" <spearce@spearce.org>, Jeff King <peff@peff.net>,
+	Petr Baudis <pasky@suse.cz>, Tim Ansell <mithro@mithis.com>
+To: Steven Grimm <koreth@midwinter.com>
+X-From: git-owner@vger.kernel.org Sun Nov 09 19:59:57 2008
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KzFTo-0006qr-Pr
-	for gcvg-git-2@gmane.org; Sun, 09 Nov 2008 19:57:49 +0100
+	id 1KzFVo-0007Q1-CD
+	for gcvg-git-2@gmane.org; Sun, 09 Nov 2008 19:59:52 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755642AbYKIS4e (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 9 Nov 2008 13:56:34 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755643AbYKIS4e
-	(ORCPT <rfc822;git-outgoing>); Sun, 9 Nov 2008 13:56:34 -0500
-Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:38011 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755607AbYKIS4d (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 9 Nov 2008 13:56:33 -0500
-Received: from localhost.localdomain (unknown [127.0.0.1])
-	by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id 191C795730;
-	Sun,  9 Nov 2008 13:56:31 -0500 (EST)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES256-SHA (256/256 bits)) (No client certificate requested) by
- a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTPSA id 3E9A79572D; Sun, 
- 9 Nov 2008 13:56:21 -0500 (EST)
-In-Reply-To: <20081105104001.GA22272@artemis.corp> (Pierre Habouzit's message
- of "Wed, 05 Nov 2008 11:40:01 +0100")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: 1F142228-AE90-11DD-933C-4F5276724C3F-77302942!a-sasl-quonix.pobox.com
+	id S1756015AbYKIS6k convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 9 Nov 2008 13:58:40 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756017AbYKIS6j
+	(ORCPT <rfc822;git-outgoing>); Sun, 9 Nov 2008 13:58:39 -0500
+Received: from mail.dewire.com ([83.140.172.130]:27363 "EHLO dewire.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755573AbYKIS6j convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 9 Nov 2008 13:58:39 -0500
+Received: from localhost (localhost [127.0.0.1])
+	by dewire.com (Postfix) with ESMTP id 3BF201474487;
+	Sun,  9 Nov 2008 19:58:37 +0100 (CET)
+X-Virus-Scanned: by amavisd-new at dewire.com
+Received: from dewire.com ([127.0.0.1])
+	by localhost (torino.dewire.com [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id 1BTq2EBjxpom; Sun,  9 Nov 2008 19:58:34 +0100 (CET)
+Received: from sleipner.localnet (unknown [10.9.0.2])
+	by dewire.com (Postfix) with ESMTP id D1EF6147EACF;
+	Sun,  9 Nov 2008 19:58:33 +0100 (CET)
+User-Agent: KMail/1.10.3 (Linux/2.6.27-7-generic; KDE/4.1.3; i686; ; )
+In-Reply-To: <F0422D64-2A35-4755-BD28-782BFA634AAC@midwinter.com>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/100463>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/100464>
 
-Pierre Habouzit <madcoder@debian.org> writes:
+s=F6ndag 09 november 2008 17:52:58 skrev Steven Grimm:
+> On Nov 9, 2008, at 3:49 AM, Jakub Narebski wrote:
+> > Still missing (neither video, nor slides, nor description, nor emai=
+l)
+> > are the following talks from GitTogether'08
+> >> * Steven: Life with git-svn
+>=20
+> Here are the slides from David's and my talk:
+>=20
+> http://docs.google.com/Presentation?id=3Ddhhs72s2_1wtzbnsnj&invite=3D=
+v4t8kr
 
-> Okay, still having --[no-]format-patch is probably a good idea indeed
-> for scripts. Will do.
-> ...
-> Probably, I kept what was done as is, but we probably want do_edit() to
-> die() if the user killed it.
-> ...
->> So I am not opposed to a sendemail.foo configuration option.
->
-> Will do
+Requiring a google (or facebook for that matter) account is read public=
+ documents
+is not nice.
 
-Thanks.
+-- robin
