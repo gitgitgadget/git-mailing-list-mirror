@@ -1,104 +1,102 @@
-From: "David D. Kilzer" <ddkilzer@kilzer.net>
-Subject: [PATCH] 3-way merge with file move fails when diff.renames = copies
-Date: Mon, 10 Nov 2008 14:26:10 -0800
-Message-ID: <1226355970-2542-1-git-send-email-ddkilzer@kilzer.net>
-Cc: "David D. Kilzer" <ddkilzer@kilzer.net>,
-	Johannes Schindelin <johannes.schindelin@gmx.de>,
-	gitster@pobox.com
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Nov 10 23:38:04 2008
+From: "Jon Smirl" <jonsmirl@gmail.com>
+Subject: Re: Stgit and refresh-temp
+Date: Mon, 10 Nov 2008 18:08:54 -0500
+Message-ID: <9e4733910811101508h3cb30752o77b61926aeefed5b@mail.gmail.com>
+References: <9e4733910811040537p4e88c09an94370154eca12778@mail.gmail.com>
+	 <20081107054419.GA27146@diana.vm.bytemark.co.uk>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: "Catalin Marinas" <catalin.marinas@gmail.com>,
+	"Git Mailing List" <git@vger.kernel.org>
+To: "=?ISO-8859-1?Q?Karl_Hasselstr=F6m?=" <kha@treskal.com>
+X-From: git-owner@vger.kernel.org Tue Nov 11 00:10:23 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KzfOT-0007HM-Ce
-	for gcvg-git-2@gmane.org; Mon, 10 Nov 2008 23:38:01 +0100
+	id 1Kzftj-0002L4-S3
+	for gcvg-git-2@gmane.org; Tue, 11 Nov 2008 00:10:20 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752836AbYKJWgq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 10 Nov 2008 17:36:46 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752701AbYKJWgq
-	(ORCPT <rfc822;git-outgoing>); Mon, 10 Nov 2008 17:36:46 -0500
-Received: from mail-out4.apple.com ([17.254.13.23]:55707 "EHLO
-	mail-out4.apple.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752540AbYKJWgp (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 10 Nov 2008 17:36:45 -0500
-X-Greylist: delayed 634 seconds by postgrey-1.27 at vger.kernel.org; Mon, 10 Nov 2008 17:36:45 EST
-Received: from relay12.apple.com (relay12.apple.com [17.128.113.53])
-	by mail-out4.apple.com (Postfix) with ESMTP id 5710F4638519;
-	Mon, 10 Nov 2008 14:26:11 -0800 (PST)
-Received: from relay12.apple.com (unknown [127.0.0.1])
-	by relay12.apple.com (Symantec Mail Security) with ESMTP id 3A817464029;
-	Mon, 10 Nov 2008 14:26:11 -0800 (PST)
-X-AuditID: 11807135-a11eebb000002c9b-3f-4918b5039370
-Received: from localhost.localdomain (ddkilzer.apple.com [17.202.20.50])
-	by relay12.apple.com (Apple SCV relay) with ESMTP id 22417420002;
-	Mon, 10 Nov 2008 14:26:11 -0800 (PST)
-X-Mailer: git-send-email 1.6.0
-X-Brightmail-Tracker: AAAAAA==
+	id S1750982AbYKJXI5 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 10 Nov 2008 18:08:57 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752162AbYKJXI5
+	(ORCPT <rfc822;git-outgoing>); Mon, 10 Nov 2008 18:08:57 -0500
+Received: from qw-out-2122.google.com ([74.125.92.26]:56740 "EHLO
+	qw-out-2122.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750865AbYKJXI4 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 10 Nov 2008 18:08:56 -0500
+Received: by qw-out-2122.google.com with SMTP id 3so1592893qwe.37
+        for <git@vger.kernel.org>; Mon, 10 Nov 2008 15:08:54 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to
+         :subject:cc:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:references;
+        bh=pCfsQ87vTvtVlqTz7nyfRYYuZ98BSQ27zjD3uTF9Irc=;
+        b=e52vLryYhaS61L6h2qw0neIXb7ObFgJKDW0jsNfFES8tf9Fw+D1pQhftRoAPSMhD3Y
+         9aYXBJcWnHCDh/kWDXgZTs1Wn1ywiAEIlQIaipooIgC9FeVAFvnzK3NaWEzQJfuAWZPK
+         GXMd1wtwXi0dxJQcaBpSpopI5V/R8fSIyt8jk=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
+         :content-type:content-transfer-encoding:content-disposition
+         :references;
+        b=KtO0BAf+lzQWU3fe/eSXwGvWnto4EPqPPHRji67XHSsnr0d6AqKYkfCj2PjA/e3QXx
+         D+H7NL2m86+7P9KX0xnIUjTD0F0raeVHwS3lnM0hyUXSO0W0TqeYJ5JKi5wJIZgVhqTu
+         SfMoR85vrkOX3iLnjLZH6cSAyGNIK80TKK2kw=
+Received: by 10.215.14.12 with SMTP id r12mr7448506qai.189.1226358534465;
+        Mon, 10 Nov 2008 15:08:54 -0800 (PST)
+Received: by 10.214.10.19 with HTTP; Mon, 10 Nov 2008 15:08:54 -0800 (PST)
+In-Reply-To: <20081107054419.GA27146@diana.vm.bytemark.co.uk>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/100583>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/100584>
 
-With diff.renames = copies, a 3-way merge (e.g. "git rebase") would
-fail with the following error:
+On Fri, Nov 7, 2008 at 12:44 AM, Karl Hasselstr=F6m <kha@treskal.com> w=
+rote:
+> On 2008-11-04 08:37:24 -0500, Jon Smirl wrote:
+>
+>> I hit a case when refreshing a buried patch that needed a merge
+>> conflict sorted out. I'm unable to recover out of the state.
+>
+> Hmm, so what you're saying is basically that you did something with
+> "stg refresh -p" that caused a merge conflict, and that messed things
+> up so that you needed to run "stg repair". Is that right?
 
-    fatal: mode change for <file>, which is not in current HEAD
-    Repository lacks necessary blobs to fall back on 3-way merge.
-    Cannot fall back to three-way merge.
-    Patch failed at 0001.
+Missed the reply.
 
-The bug is a logic error added in ece7b749, which attempts to find
-an sha1 for a patch with no index line in build_fake_ancestor().
-Instead of failing unless an sha1 is found for both the old file and
-the new file, a failure should only be reported if neither the old
-file nor the new file is found.
+Yes, that is what happed.
 
-Signed-off-by: David D. Kilzer <ddkilzer@kilzer.net>
----
- builtin-apply.c   |    2 +-
- t/t3400-rebase.sh |   17 +++++++++++++++++
- 2 files changed, 18 insertions(+), 1 deletions(-)
+I think the problem was this:
 
-diff --git a/builtin-apply.c b/builtin-apply.c
-index 4c4d1e1..cfeb6cc 100644
---- a/builtin-apply.c
-+++ b/builtin-apply.c
-@@ -2573,7 +2573,7 @@ static void build_fake_ancestor(struct patch *list, const char *filename)
- 		else if (get_sha1(patch->old_sha1_prefix, sha1))
- 			/* git diff has no index line for mode/type changes */
- 			if (!patch->lines_added && !patch->lines_deleted) {
--				if (get_current_sha1(patch->new_name, sha1) ||
-+				if (get_current_sha1(patch->new_name, sha1) &&
- 				    get_current_sha1(patch->old_name, sha1))
- 					die("mode change for %s, which is not "
- 						"in current HEAD", name);
-diff --git a/t/t3400-rebase.sh b/t/t3400-rebase.sh
-index b7a670e..a156850 100755
---- a/t/t3400-rebase.sh
-+++ b/t/t3400-rebase.sh
-@@ -84,4 +84,21 @@ test_expect_success 'rebase a single mode change' '
-      GIT_TRACE=1 git rebase master
- '
- 
-+test_expect_success 'rebase a single file move with diff.renames = copies' '
-+     git config diff.renames copies &&
-+     git checkout master &&
-+     echo 1 > Y &&
-+     git add Y &&
-+     test_tick &&
-+     git commit -m "prepare file move" &&
-+     git checkout -b filemove HEAD^ &&
-+     echo 1 > Y &&
-+     git add Y &&
-+     mkdir D &&
-+     git mv A D/A &&
-+     test_tick &&
-+     git commit -m filemove &&
-+     GIT_TRACE=1 git rebase master
-+'
-+
- test_done
--- 
-1.6.0
+=46ile - xxxxxxx
+Patch A adds a line
+=46ile - xxxxxxxa
+Patch B in the middle adds a line
+=46ile - xxxxxxxab
+I edit it and add a line
+=46ile - xxxxxxxabc
+Line c needs to be patch A
+stg refresh -p A
+=2E.messed up tree
+
+
+
+>
+> Have you been able to reproduce it? (I would like to add the failing
+> case to the test suite.)
+>
+> --
+> Karl Hasselstr=F6m, kha@treskal.com
+>      www.treskal.com/kalle
+>
+
+
+
+--=20
+Jon Smirl
+jonsmirl@gmail.com
