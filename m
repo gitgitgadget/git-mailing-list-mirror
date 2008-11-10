@@ -1,76 +1,69 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: git commit -v does not removes the patch
-Date: Mon, 10 Nov 2008 15:27:18 -0800
-Message-ID: <7vej1j40x5.fsf@gitster.siamese.dyndns.org>
-References: <adf1fd3d0811100720n52ac1d47id9b7f402412aa0d3@mail.gmail.com>
- <20081110181023.GA22753@coredump.intra.peff.net>
- <adf1fd3d0811101434j658b2e8aj83d8cbe2293f5021@mail.gmail.com>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: JGIT: discuss: diff/patch implementation
+Date: Tue, 11 Nov 2008 00:37:02 +0100 (CET)
+Message-ID: <alpine.DEB.1.00.0811110031510.30769@pacific.mpi-cbg.de>
+References: <200811101522.13558.fg@one2team.net> <7v63mv5mro.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: "Jeff King" <peff@peff.net>,
-	"Git Mailing List" <git@vger.kernel.org>
-To: =?utf-8?Q?Santi_B=C3=A9jar?= <santi@agolina.net>
-X-From: git-owner@vger.kernel.org Tue Nov 11 00:30:14 2008
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Francis Galiegue <fg@one2team.net>,
+	Git Mailing List <git@vger.kernel.org>,
+	"Shawn O. Pearce" <spearce@spearce.org>,
+	Robin Rosenberg <robin.rosenberg.lists@dewire.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Nov 11 00:32:06 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KzgBj-0000yS-38
-	for gcvg-git-2@gmane.org; Tue, 11 Nov 2008 00:28:55 +0100
+	id 1KzgDV-0001rP-5J
+	for gcvg-git-2@gmane.org; Tue, 11 Nov 2008 00:30:45 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752768AbYKJX1l convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 10 Nov 2008 18:27:41 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752668AbYKJX1k
-	(ORCPT <rfc822;git-outgoing>); Mon, 10 Nov 2008 18:27:40 -0500
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:43199 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752702AbYKJX1k convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 10 Nov 2008 18:27:40 -0500
-Received: from localhost.localdomain (unknown [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 3C68D7BF18;
-	Mon, 10 Nov 2008 18:27:39 -0500 (EST)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES256-SHA (256/256 bits)) (No client certificate requested) by
- a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTPSA id B4D417BF14; Mon,
- 10 Nov 2008 18:27:25 -0500 (EST)
-In-Reply-To: <adf1fd3d0811101434j658b2e8aj83d8cbe2293f5021@mail.gmail.com>
- (Santi =?utf-8?Q?B=C3=A9jar's?= message of "Mon, 10 Nov 2008 23:34:51 +0100")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: 2A0F9E74-AF7F-11DD-8794-9CEDC82D7133-77302942!a-sasl-fastnet.pobox.com
+	id S1751064AbYKJX3b (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 10 Nov 2008 18:29:31 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751434AbYKJX3b
+	(ORCPT <rfc822;git-outgoing>); Mon, 10 Nov 2008 18:29:31 -0500
+Received: from mail.gmx.net ([213.165.64.20]:59752 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1750989AbYKJX3a (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 10 Nov 2008 18:29:30 -0500
+Received: (qmail invoked by alias); 10 Nov 2008 23:29:28 -0000
+Received: from pacific.mpi-cbg.de (EHLO [141.5.10.38]) [141.5.10.38]
+  by mail.gmx.net (mp048) with SMTP; 11 Nov 2008 00:29:28 +0100
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1/REX5Elz/RJfZ81miRjwni0KLnsvqEdeSIgqmHuH
+	ZJRrn8i8lIhSPj
+X-X-Sender: schindelin@pacific.mpi-cbg.de
+In-Reply-To: <7v63mv5mro.fsf@gitster.siamese.dyndns.org>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.67
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/100588>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/100589>
 
-"Santi B=C3=A9jar" <santi@agolina.net> writes:
+Hi,
 
-> On Mon, Nov 10, 2008 at 7:10 PM, Jeff King <peff@peff.net> wrote:
->> On Mon, Nov 10, 2008 at 04:20:51PM +0100, Santi B=C3=A9jar wrote:
->>
->>> Hi *,
->>>
->>>   $subject since:
->>>
->>> 4f672ad (wt-status: load diff ui config, 2008-10-26)
->>>
->>> I tried to make a test case, but failed. I think because it is a bi=
-t
->>> tricky the fake_editor/stdin/stdout stuff, so at the end I bisected=
- it
->>> by hand
->>
->> Sorry, I don't quite understand what the problem is. From reading yo=
-ur
->> subject line, I expected that "git commit -v" would show the diff in
->> your editor, but then accidentally also include it in the final comm=
-it
->> message. But I can't seem to reproduce that.
->>
->> Can you describe the problem in more detail?
->
-> It is exactly as you described. I'll try in other systems.
+On Mon, 10 Nov 2008, Junio C Hamano wrote:
 
-Guess in the dark... by any chance are you enabling color unconditional=
-ly?
+> Francis Galiegue <fg@one2team.net> writes:
+> 
+> > A very nice git feature, without even going as far as merges, is the 
+> > cherry pick feature.
+> 
+> I thought cherry-picking needs to be done in terms of 3-way merge, not 
+> diff piped to patch, for correctness's sake.
+
+I haven't checked how RCS merge does it, but I know how xdiff/xmerge.c 
+does it ;-)
+
+Basically, it takes the two diffs relative to the base file and works on 
+the overlapping hunks (i.e. on hunks where the ranges in the base file 
+overlap).
+
+So we need a diff algorithm very much if we were to imitate that code in 
+JGit, which I very much plan to do.
+
+Ciao,
+Dscho
