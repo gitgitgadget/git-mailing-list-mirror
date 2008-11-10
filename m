@@ -1,84 +1,66 @@
-From: Johan Herland <johan@herland.net>
-Subject: Re: Git Notes - Track rebase/etc + reverse-lookup for bugs ideas
-Date: Mon, 10 Nov 2008 22:51:36 +0100
-Message-ID: <200811102251.37044.johan@herland.net>
-References: <6A0F154C-B9FE-4770-BF70-82A5BEBF907C@gmail.com>
- <200811102101.15285.johan@herland.net>
- <20081110203437.GW24201@genesis.frugalware.org>
+From: "=?ISO-8859-1?Q?Santi_B=E9jar?=" <santi@agolina.net>
+Subject: Re: git commit -v does not removes the patch
+Date: Mon, 10 Nov 2008 23:34:51 +0100
+Message-ID: <adf1fd3d0811101434j658b2e8aj83d8cbe2293f5021@mail.gmail.com>
+References: <adf1fd3d0811100720n52ac1d47id9b7f402412aa0d3@mail.gmail.com>
+	 <20081110181023.GA22753@coredump.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 7BIT
-Cc: git@vger.kernel.org, Jeff King <peff@peff.net>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Thomas Harning <harningt@gmail.com>
-To: Miklos Vajna <vmiklos@frugalware.org>
-X-From: git-owner@vger.kernel.org Mon Nov 10 22:53:35 2008
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: "Git Mailing List" <git@vger.kernel.org>
+To: "Jeff King" <peff@peff.net>
+X-From: git-owner@vger.kernel.org Mon Nov 10 23:36:14 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KzehI-0005z3-Gh
-	for gcvg-git-2@gmane.org; Mon, 10 Nov 2008 22:53:25 +0100
+	id 1KzfMg-0006Vl-22
+	for gcvg-git-2@gmane.org; Mon, 10 Nov 2008 23:36:10 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751530AbYKJVwI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 10 Nov 2008 16:52:08 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751487AbYKJVwI
-	(ORCPT <rfc822;git-outgoing>); Mon, 10 Nov 2008 16:52:08 -0500
-Received: from smtp.getmail.no ([84.208.20.33]:54486 "EHLO smtp.getmail.no"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751472AbYKJVwH (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 10 Nov 2008 16:52:07 -0500
-Received: from pmxchannel-daemon.no-osl-m323-srv-004-z2.isp.get.no by
- no-osl-m323-srv-004-z2.isp.get.no
- (Sun Java System Messaging Server 6.2-7.05 (built Sep  5 2006))
- id <0KA50072Z0QSLW00@no-osl-m323-srv-004-z2.isp.get.no> for
- git@vger.kernel.org; Mon, 10 Nov 2008 22:52:04 +0100 (CET)
-Received: from smtp.getmail.no ([10.5.16.1])
- by no-osl-m323-srv-004-z2.isp.get.no
- (Sun Java System Messaging Server 6.2-7.05 (built Sep  5 2006))
- with ESMTP id <0KA500J3H0Q18J00@no-osl-m323-srv-004-z2.isp.get.no> for
- git@vger.kernel.org; Mon, 10 Nov 2008 22:51:37 +0100 (CET)
-Received: from alpha.herland ([84.215.102.95])
- by no-osl-m323-srv-009-z1.isp.get.no
- (Sun Java System Messaging Server 6.2-7.05 (built Sep  5 2006))
- with ESMTP id <0KA50001P0Q16Y60@no-osl-m323-srv-009-z1.isp.get.no> for
- git@vger.kernel.org; Mon, 10 Nov 2008 22:51:37 +0100 (CET)
-In-reply-to: <20081110203437.GW24201@genesis.frugalware.org>
-Content-disposition: inline
-User-Agent: KMail/1.9.9
+	id S1752543AbYKJWey convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 10 Nov 2008 17:34:54 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752766AbYKJWey
+	(ORCPT <rfc822;git-outgoing>); Mon, 10 Nov 2008 17:34:54 -0500
+Received: from rn-out-0910.google.com ([64.233.170.185]:25296 "EHLO
+	rn-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752543AbYKJWex convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 10 Nov 2008 17:34:53 -0500
+Received: by rn-out-0910.google.com with SMTP id k40so1625729rnd.17
+        for <git@vger.kernel.org>; Mon, 10 Nov 2008 14:34:52 -0800 (PST)
+Received: by 10.103.240.5 with SMTP id s5mr4087589mur.133.1226356491230;
+        Mon, 10 Nov 2008 14:34:51 -0800 (PST)
+Received: by 10.103.165.1 with HTTP; Mon, 10 Nov 2008 14:34:51 -0800 (PST)
+In-Reply-To: <20081110181023.GA22753@coredump.intra.peff.net>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/100581>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/100582>
 
-On Monday 10 November 2008, Miklos Vajna wrote:
-> On Mon, Nov 10, 2008 at 09:01:15PM +0100, Johan Herland 
-<johan@herland.net> wrote:
-> > Does it make sense to teach "git rebase" the -x option from "git
-> > cherry-pick"? As with "git cherry-pick -x" it only makes sense to use
-> > it if your rebasing from a public branch.
+On Mon, Nov 10, 2008 at 7:10 PM, Jeff King <peff@peff.net> wrote:
+> On Mon, Nov 10, 2008 at 04:20:51PM +0100, Santi B=E9jar wrote:
 >
-> But rebasing a public branch is always something we try to prevent. So
-> basically -x would be useful only in case the user does what we asked
-> not to do. ;-)
+>> Hi *,
+>>
+>>   $subject since:
+>>
+>> 4f672ad (wt-status: load diff ui config, 2008-10-26)
+>>
+>> I tried to make a test case, but failed. I think because it is a bit
+>> tricky the fake_editor/stdin/stdout stuff, so at the end I bisected =
+it
+>> by hand
+>
+> Sorry, I don't quite understand what the problem is. From reading you=
+r
+> subject line, I expected that "git commit -v" would show the diff in
+> your editor, but then accidentally also include it in the final commi=
+t
+> message. But I can't seem to reproduce that.
+>
+> Can you describe the problem in more detail?
 
-Sorry, I wasn't clear enough: I am talking about a copy-rebase, that is, the 
-original public branch is unchanged, but you copy patches from it by making 
-a local temporary branch that starts out in the same place and then 
-rebasing it onto the other public branch where your want the patches to end 
-up (followed by fast-forwarding the target branch and removing the temp 
-branch). This is basically identical to cherry-picking a range of commits, 
-but since "git cherry-pick" does not support cherry-picking a range of 
-commits, this is the only alternative, AFAICS.
+It is exactly as you described. I'll try in other systems.
 
-However, it would probably be a better solution to make "git cherry-pick" 
-work on a commit range... (cf. the ongoing "multiple-commit cherry-pick" 
-thread)
-
-
-...Johan
-
--- 
-Johan Herland, <johan@herland.net>
-www.herland.net
+Santi
