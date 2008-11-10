@@ -1,90 +1,103 @@
-From: Brian Gernhardt <benji@silverinsanity.com>
-Subject: Re: Something like $Id$, $Revision$ or $Date$?
-Date: Mon, 10 Nov 2008 15:58:35 -0500
-Message-ID: <866D073C-57B9-457E-80BA-0C87B6D14E23@silverinsanity.com>
-References: <87ljvsjuq7.fsf@erwin.mina86.com> <200811102117.30372.jnareb@gmail.com> <200811102124.59973.fg@one2team.com> <200811102132.05472.jnareb@gmail.com>
-Mime-Version: 1.0 (Apple Message framework v929.2)
-Content-Type: text/plain; charset=UTF-8;
-	format=flowed	delsp=yes
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Francis Galiegue <fg@one2team.com>,
-	Michal Nazarewicz <mina86@tlen.pl>, git@vger.kernel.org
-To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Nov 10 22:00:47 2008
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: recognize loose local objects during repack
+Date: Mon, 10 Nov 2008 13:03:10 -0800
+Message-ID: <7vtzaf47ld.fsf@gitster.siamese.dyndns.org>
+References: <7v8wrwidi3.fsf@gitster.siamese.dyndns.org>
+ <2390436.1226296705080.JavaMail.teamon@b307.teamon.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, spearce@spearce.org, nico@cam.org, ae@op5.se
+To: drafnel@gmail.com
+X-From: git-owner@vger.kernel.org Mon Nov 10 22:06:12 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KzdsB-0002Ep-5f
-	for gcvg-git-2@gmane.org; Mon, 10 Nov 2008 22:00:35 +0100
+	id 1Kzdwr-00047S-Oh
+	for gcvg-git-2@gmane.org; Mon, 10 Nov 2008 22:05:54 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754767AbYKJU6u convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 10 Nov 2008 15:58:50 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754719AbYKJU6t
-	(ORCPT <rfc822;git-outgoing>); Mon, 10 Nov 2008 15:58:49 -0500
-Received: from vs072.rosehosting.com ([216.114.78.72]:56483 "EHLO
-	silverinsanity.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754685AbYKJU6s convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 10 Nov 2008 15:58:48 -0500
-Received: by silverinsanity.com (Postfix, from userid 5001)
-	id 70A951FFC17B; Mon, 10 Nov 2008 20:58:39 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.1.7-deb (2006-10-05) on 
-	silverinsanity.com
-X-Spam-Level: 
-X-Spam-Status: No, score=-1.0 required=5.0 tests=AWL,BAYES_00,RCVD_IN_PBL,
-	RCVD_IN_SORBS_DUL autolearn=no version=3.1.7-deb
-Received: from [192.168.1.109] (cpe-69-205-127-75.rochester.res.rr.com [69.205.127.75])
-	(using TLSv1 with cipher AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by silverinsanity.com (Postfix) with ESMTP id C92AB1FFC02E;
-	Mon, 10 Nov 2008 20:58:31 +0000 (UTC)
-In-Reply-To: <200811102132.05472.jnareb@gmail.com>
-X-Mailer: Apple Mail (2.929.2)
+	id S1752601AbYKJVEF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 10 Nov 2008 16:04:05 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753054AbYKJVEE
+	(ORCPT <rfc822;git-outgoing>); Mon, 10 Nov 2008 16:04:04 -0500
+Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:61109 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752323AbYKJVED (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 10 Nov 2008 16:04:03 -0500
+Received: from localhost.localdomain (unknown [127.0.0.1])
+	by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id DB055953E4;
+	Mon, 10 Nov 2008 16:03:56 -0500 (EST)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES256-SHA (256/256 bits)) (No client certificate requested) by
+ a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTPSA id AAEA8953CC; Mon,
+ 10 Nov 2008 16:03:12 -0500 (EST)
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: 16BD1040-AF6B-11DD-B519-4F5276724C3F-77302942!a-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/100573>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/100574>
 
+drafnel@gmail.com writes:
 
-On Nov 10, 2008, at 3:32 PM, Jakub Narebski wrote:
+> This was developed on top of the previous repack/pack-objects series.
 
-> Dnia poniedzia=C5=82ek 10. listopada 2008 21:24, Francis Galiegue =20
-> napisa=C5=82:
->> Le Monday 10 November 2008 21:17:29 Jakub Narebski, vous avez =20
->> =C3=A9crit :
->
->>> Well, _some_ command has to be invoked to expand keywords. "git add=
-"
->>> doesn't do that (perhaps it should?), so you need to use checkout.
->>>
->>
->> If "git add" aims to do that, you'd have to be very, VERY careful, =20
->> not to
->> substitute in the wrong place to start with, not to attempt =20
->> substitution in
->> binary files...
->>
->> And this would have a sizeable cost, imho. If you really want to do =
-=20
->> this,
->> isn't there a hook somewhere that can do that for you, instead of =20
->> modifying
->> git add directly?
->
-> If I remember correctly there was idea to add 'pre-add' or 'post-add'
-> hook...
+Thanks.  Looked alright from a cursory reading.
 
-Without adding any additional hooks, you could use the post-commit =20
-hook to look for any added/changed files containing $Id$ lines and =20
-force a checkout of them.
+By the way, I've been meaning to suggest that we should straighten out the
+semantics of "unpacked" vs "incremental".
 
-Perhaps something as simple as the following in your .git/hooks/post-=20
-commit (untested, caveat emptor, YMMV):
+What the latter means is quite clear.  We are creating a new packfile to
+bundle loose ones into one, and after the new packfile is installed we can
+remove the loose objects.
 
-git diff --name-only --diff-filter=3DAM HEAD^ HEAD | \
-while read file; do
-   rm "$file" && git checkout -- "$file"
-end
+But what --unpacked means often confuses people, primarily because it is a
+performance heuristics that makes certain assumptions on how the objects
+are packed.
 
-~~ Brian
+Namely, "unpacked" is about discovery process of objects to be packed.
+Without the option, we enumerate all objects that are reachable from the
+commits in the given range, excluding the trees and blobs that should
+exist in commits that are excluded (e.g, if you say "--objects A..B", we
+exclude trees and blobs referenced by commit A).
+
+With the option, we also omit commits that are packed.  What's funny is
+that their trees and blobs are omitted, even if they are loose ;-)
+
+This is typically not an issue, because you do not say "pack only this
+commit object, without its trees or blobs" when repacking, and because you
+must have all the trees and blobs necessary for a commit available when
+you pack a commit; for these reasons, the trees and blobs are typically
+packed together with the commit.  It is not an issue that the rev-list
+with --unpacked option does not list loose trees and blobs that belong to
+a packed commit for this reason.
+
+You could however arrange so that a commit itself is packed but some of
+the tree and blob objects it refers to are loose, in which case these
+loose objects may not ever get repacked incrementally.
+
+In an empty directory, try this:
+
+        git init &&
+        echo 0 >file && git add file && git commit -m initial &&
+
+        P=$(git rev-list HEAD | git pack-objects pack) &&
+        mv pack-$P.* .git/objects/pack/ &&
+        git prune && git count-objects -v
+
+        git repack && git count-objects -v
+
+It packs only the commit object (and prunes it), leaving a tree and a blob
+loose.  The repack won't find anything to pack.
+
+This is not so bad in the sense that it will never corrupt your
+repository, but it is confusing.  Admittedly, not peeking into a commit
+that is packed is a reasonable good heuristics for performance reasons.
+
+Interestingly enough, the object listing machinery do traverse into
+parents of packed commits when --unpacked is given.  So if you pack a
+commit and arrange to keep its parents unpacked, they are subject to the
+incremental repacking.  In other words, the performance heuristics may not
+be buying us very much --- we are traversing the history down to the root
+commits regardless.
