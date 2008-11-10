@@ -1,99 +1,86 @@
 From: Miklos Vajna <vmiklos@frugalware.org>
-Subject: [PATCH 1/4] remote: add a new 'origin' variable to the struct
-Date: Mon, 10 Nov 2008 21:43:00 +0100
-Message-ID: <95e56b46e30b41af31da86789625c93511f1faef.1226349595.git.vmiklos@frugalware.org>
+Subject: [PATCH 3/4] git-remote rename: support branches->config migration
+Date: Mon, 10 Nov 2008 21:43:02 +0100
+Message-ID: <b32cf68df41e417079a49dc02e46ffc0c571029b.1226349595.git.vmiklos@frugalware.org>
 References: <cover.1226349595.git.vmiklos@frugalware.org>
+ <95e56b46e30b41af31da86789625c93511f1faef.1226349595.git.vmiklos@frugalware.org>
+ <033bc63195299e494791e4e6d8a41f142d848bba.1226349595.git.vmiklos@frugalware.org>
 Cc: Jeff King <peff@peff.net>, Brandon Casey <casey@nrlssc.navy.mil>,
 	git@vger.kernel.org
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Nov 10 21:43:35 2008
+X-From: git-owner@vger.kernel.org Mon Nov 10 21:43:57 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KzdbX-0003i8-9l
-	for gcvg-git-2@gmane.org; Mon, 10 Nov 2008 21:43:23 +0100
+	id 1Kzdc3-0003ug-LO
+	for gcvg-git-2@gmane.org; Mon, 10 Nov 2008 21:43:56 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752192AbYKJUmI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 10 Nov 2008 15:42:08 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751748AbYKJUmH
-	(ORCPT <rfc822;git-outgoing>); Mon, 10 Nov 2008 15:42:07 -0500
-Received: from yugo.dsd.sztaki.hu ([195.111.2.114]:57751 "EHLO
+	id S1753843AbYKJUmP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 10 Nov 2008 15:42:15 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751870AbYKJUmO
+	(ORCPT <rfc822;git-outgoing>); Mon, 10 Nov 2008 15:42:14 -0500
+Received: from yugo.dsd.sztaki.hu ([195.111.2.114]:57753 "EHLO
 	yugo.frugalware.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751401AbYKJUmG (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 10 Nov 2008 15:42:06 -0500
+	with ESMTP id S1752066AbYKJUmH (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 10 Nov 2008 15:42:07 -0500
 Received: from vmobile.example.net (dsl5401C2D3.pool.t-online.hu [84.1.194.211])
-	by yugo.frugalware.org (Postfix) with ESMTPA id 2DF8E446CCE;
+	by yugo.frugalware.org (Postfix) with ESMTPA id 56DF7446CD0;
 	Mon, 10 Nov 2008 21:42:04 +0100 (CET)
 Received: by vmobile.example.net (Postfix, from userid 1003)
-	id 280EC19DB13; Mon, 10 Nov 2008 21:43:03 +0100 (CET)
+	id B349D19DB15; Mon, 10 Nov 2008 21:43:04 +0100 (CET)
 X-Mailer: git-send-email 1.6.0.2
-In-Reply-To: <cover.1226349595.git.vmiklos@frugalware.org>
+In-Reply-To: <033bc63195299e494791e4e6d8a41f142d848bba.1226349595.git.vmiklos@frugalware.org>
 In-Reply-To: <cover.1226349595.git.vmiklos@frugalware.org>
 References: <cover.1226349595.git.vmiklos@frugalware.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/100567>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/100568>
 
-This allows one to track where was the remote's original source, so that
-it's possible to decide if it makes sense to migrate it to the config
-format or not.
+This is similar to the remotes->config one, but it makes the
+branches->config conversion possible.
 
 Signed-off-by: Miklos Vajna <vmiklos@frugalware.org>
 ---
- remote.c |    3 +++
- remote.h |    7 +++++++
- 2 files changed, 10 insertions(+), 0 deletions(-)
+ builtin-remote.c  |    2 ++
+ t/t5505-remote.sh |   12 ++++++++++++
+ 2 files changed, 14 insertions(+), 0 deletions(-)
 
-diff --git a/remote.c b/remote.c
-index e530a21..cbb3e48 100644
---- a/remote.c
-+++ b/remote.c
-@@ -201,6 +201,7 @@ static void read_remotes_file(struct remote *remote)
+diff --git a/builtin-remote.c b/builtin-remote.c
+index d9d0ba3..3af1876 100644
+--- a/builtin-remote.c
++++ b/builtin-remote.c
+@@ -384,6 +384,8 @@ static int migrate_file(struct remote *remote)
+ 					remote->fetch_refspec[i], buf.buf);
+ 	if (remote->origin == REMOTE_REMOTES)
+ 		path = git_path("remotes/%s", remote->name);
++	else if (remote->origin == REMOTE_BRANCHES)
++		path = git_path("branches/%s", remote->name);
+ 	if (path && unlink(path))
+ 		warning("failed to remove '%s'", path);
+ 	return 0;
+diff --git a/t/t5505-remote.sh b/t/t5505-remote.sh
+index 1567631..1f59960 100755
+--- a/t/t5505-remote.sh
++++ b/t/t5505-remote.sh
+@@ -364,4 +364,16 @@ test_expect_success 'migrate a remote from named file in $GIT_DIR/remotes' '
+ 	 test "$(git config remote.origin.fetch)" = "refs/heads/master:refs/heads/origin")
+ '
  
- 	if (!f)
- 		return;
-+	remote->origin = REMOTE_REMOTES;
- 	while (fgets(buffer, BUF_SIZE, f)) {
- 		int value_list;
- 		char *s, *p;
-@@ -261,6 +262,7 @@ static void read_branches_file(struct remote *remote)
- 		s++;
- 	if (!*s)
- 		return;
-+	remote->origin = REMOTE_BRANCHES;
- 	p = s + strlen(s);
- 	while (isspace(p[-1]))
- 		*--p = 0;
-@@ -350,6 +352,7 @@ static int handle_config(const char *key, const char *value, void *cb)
- 	if (!subkey)
- 		return error("Config with no key for remote %s", name);
- 	remote = make_remote(name, subkey - name);
-+	remote->origin = REMOTE_CONFIG;
- 	if (!strcmp(subkey, ".mirror"))
- 		remote->mirror = git_config_bool(key, value);
- 	else if (!strcmp(subkey, ".skipdefaultupdate"))
-diff --git a/remote.h b/remote.h
-index d2e170c..a46a5be 100644
---- a/remote.h
-+++ b/remote.h
-@@ -1,8 +1,15 @@
- #ifndef REMOTE_H
- #define REMOTE_H
- 
-+enum {
-+	REMOTE_CONFIG,
-+	REMOTE_REMOTES,
-+	REMOTE_BRANCHES
-+};
++test_expect_success 'migrate a remote from named file in $GIT_DIR/branches' '
++	git clone one six &&
++	origin_url=$(pwd)/one &&
++	(cd six &&
++	 git remote rm origin &&
++	 echo "$origin_url" > .git/branches/origin &&
++	 git remote rename origin origin &&
++	 ! test -f .git/branches/origin &&
++	 test "$(git config remote.origin.url)" = "$origin_url" &&
++	 test "$(git config remote.origin.fetch)" = "refs/heads/master:refs/heads/origin")
++'
 +
- struct remote {
- 	const char *name;
-+	int origin;
- 
- 	const char **url;
- 	int url_nr;
+ test_done
 -- 
 1.6.0.2
