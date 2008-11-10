@@ -1,61 +1,59 @@
-From: Alex Riesen <raa.lkml@gmail.com>
-Subject: Re: [PATCH (GITK) v3 6/6] gitk: Explicitly position popup windows.
-Date: Sun, 9 Nov 2008 11:26:12 +0100
-Message-ID: <20081109102612.GB5463@blimp.localdomain>
-References: <1225652389-22082-1-git-send-email-angavrilov@gmail.com> <1225652389-22082-2-git-send-email-angavrilov@gmail.com> <1225652389-22082-3-git-send-email-angavrilov@gmail.com> <1225652389-22082-4-git-send-email-angavrilov@gmail.com> <1225652389-22082-5-git-send-email-angavrilov@gmail.com> <1225652389-22082-6-git-send-email-angavrilov@gmail.com> <1225652389-22082-7-git-send-email-angavrilov@gmail.com> <18708.11537.229423.296701@cargo.ozlabs.ibm.com> <81b0412b0811070639q47244bc4t10791781fb0ec43b@mail.gmail.com> <49146EC0.4050006@viscovery.net>
-Reply-To: Alex Riesen <raa.lkml@gmail.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: git commit -v does not removes the patch
+Date: Mon, 10 Nov 2008 13:10:24 -0500
+Message-ID: <20081110181023.GA22753@coredump.intra.peff.net>
+References: <adf1fd3d0811100720n52ac1d47id9b7f402412aa0d3@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Paul Mackerras <paulus@samba.org>,
-	Alexander Gavrilov <angavrilov@gmail.com>, git@vger.kernel.org
-To: Johannes Sixt <j.sixt@viscovery.net>
-X-From: git-owner@vger.kernel.org Mon Nov 10 19:07:37 2008
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Santi =?utf-8?B?QsOpamFy?= <santi@agolina.net>
+X-From: git-owner@vger.kernel.org Mon Nov 10 19:12:33 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Kzb9P-00040H-Ge
-	for gcvg-git-2@gmane.org; Mon, 10 Nov 2008 19:06:11 +0100
+	id 1KzbEn-0006cl-EB
+	for gcvg-git-2@gmane.org; Mon, 10 Nov 2008 19:11:45 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753622AbYKJSEz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 10 Nov 2008 13:04:55 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753934AbYKJSEz
-	(ORCPT <rfc822;git-outgoing>); Mon, 10 Nov 2008 13:04:55 -0500
-Received: from mo-p05-ob.rzone.de ([81.169.146.180]:24076 "EHLO
-	mo-p05-ob.rzone.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753036AbYKJSEz (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 10 Nov 2008 13:04:55 -0500
-X-RZG-CLASS-ID: mo05
-X-RZG-AUTH: :Pm0FVUW6aauhRGJJc5OfA4AU8DM8ZlijdmJYxKn/UQvEQQx8A081oLA=
-Received: from tigra.home (Fac0f.f.strato-dslnet.de [195.4.172.15])
-	by post.webmailer.de (klopstock mo4) (RZmta 17.18)
-	with ESMTP id h0653ckAAGgvrX ; Mon, 10 Nov 2008 19:04:40 +0100 (MET)
-Received: from blimp.localdomain (unknown [192.168.0.8])
-	by tigra.home (Postfix) with ESMTP id 45EE3277C8;
-	Mon, 10 Nov 2008 19:04:40 +0100 (CET)
-Received: by blimp.localdomain (Postfix, from userid 1000)
-	id A7BB636D28; Sun,  9 Nov 2008 11:26:12 +0100 (CET)
+	id S1754535AbYKJSK1 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 10 Nov 2008 13:10:27 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754368AbYKJSK1
+	(ORCPT <rfc822;git-outgoing>); Mon, 10 Nov 2008 13:10:27 -0500
+Received: from peff.net ([208.65.91.99]:2261 "EHLO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754114AbYKJSK0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 10 Nov 2008 13:10:26 -0500
+Received: (qmail 28122 invoked by uid 111); 10 Nov 2008 18:10:25 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+    by peff.net (qpsmtpd/0.32) with SMTP; Mon, 10 Nov 2008 13:10:25 -0500
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Mon, 10 Nov 2008 13:10:24 -0500
 Content-Disposition: inline
-In-Reply-To: <49146EC0.4050006@viscovery.net>
-User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
+In-Reply-To: <adf1fd3d0811100720n52ac1d47id9b7f402412aa0d3@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/100538>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/100539>
 
-Johannes Sixt, Fri, Nov 07, 2008 17:37:20 +0100:
-> Alex Riesen schrieb:
-> > 2008/11/7 Paul Mackerras <paulus@samba.org>:
-> >> Is there any reason to call tk::PlaceWindow under Linux or MacOS?
-> >> If not I'd rather add an if statement so we only call it on Windows.
-> >>
-> > 
-> > Yes, please. I rather like the smart placement in compiz.
-> 
-> Just out of curiosity because I don't use compiz: Did you mean
->    "Yes, please call tk::PlaceWindow on Linux"
-> or
->    "Yes, please add the if statement"
+On Mon, Nov 10, 2008 at 04:20:51PM +0100, Santi B=C3=A9jar wrote:
 
-That one. So PlaceWindow is NOT called.
+> Hi *,
+>=20
+>   $subject since:
+>=20
+> 4f672ad (wt-status: load diff ui config, 2008-10-26)
+>=20
+> I tried to make a test case, but failed. I think because it is a bit
+> tricky the fake_editor/stdin/stdout stuff, so at the end I bisected i=
+t
+> by hand
+
+Sorry, I don't quite understand what the problem is. From reading your
+subject line, I expected that "git commit -v" would show the diff in
+your editor, but then accidentally also include it in the final commit
+message. But I can't seem to reproduce that.
+
+Can you describe the problem in more detail?
+
+-Peff
