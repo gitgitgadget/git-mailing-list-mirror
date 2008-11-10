@@ -1,74 +1,72 @@
-From: Stephen Haberman <stephen@exigencecorp.com>
-Subject: Re: pull --preserve-merges
-Date: Mon, 10 Nov 2008 13:05:18 -0600
-Organization: Exigence
-Message-ID: <20081110130518.3eb64ceb.stephen@exigencecorp.com>
-References: <20081107160138.aa96405c.stephen@exigencecorp.com>
+From: Francis Galiegue <fg@one2team.net>
+Subject: Re: [PATCH] very small cleanup: #undef a macro that isn't used anywhere else
+Date: Mon, 10 Nov 2008 20:09:58 +0100
+Organization: One2team
+Message-ID: <200811102009.58332.fg@one2team.net>
+References: <200811101928.27207.fg@one2team.net> <alpine.DEB.1.00.0811102008330.30769@pacific.mpi-cbg.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
-Cc: Johannes.Schindelin@gmx.de, fg@one2team.net
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Nov 10 20:06:49 2008
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Mon Nov 10 20:12:33 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Kzc5t-0003lj-0t
-	for gcvg-git-2@gmane.org; Mon, 10 Nov 2008 20:06:37 +0100
+	id 1KzcAn-000647-Po
+	for gcvg-git-2@gmane.org; Mon, 10 Nov 2008 20:11:42 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754749AbYKJTFW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 10 Nov 2008 14:05:22 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754732AbYKJTFW
-	(ORCPT <rfc822;git-outgoing>); Mon, 10 Nov 2008 14:05:22 -0500
-Received: from smtp162.sat.emailsrvr.com ([66.216.121.162]:48324 "EHLO
-	smtp162.sat.emailsrvr.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754715AbYKJTFW (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 10 Nov 2008 14:05:22 -0500
-Received: from relay16.relay.sat.mlsrvr.com (localhost [127.0.0.1])
-	by relay16.relay.sat.mlsrvr.com (SMTP Server) with ESMTP id 325FA1B4750;
-	Mon, 10 Nov 2008 14:05:21 -0500 (EST)
-Received: by relay16.relay.sat.mlsrvr.com (Authenticated sender: stephen-AT-exigencecorp.com) with ESMTP id 2F38F1B475B;
-	Mon, 10 Nov 2008 14:05:19 -0500 (EST)
-In-Reply-To: <20081107160138.aa96405c.stephen@exigencecorp.com>
-X-Mailer: Sylpheed 2.5.0 (GTK+ 2.10.14; i686-pc-mingw32)
+	id S1750759AbYKJTK1 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 10 Nov 2008 14:10:27 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750757AbYKJTK1
+	(ORCPT <rfc822;git-outgoing>); Mon, 10 Nov 2008 14:10:27 -0500
+Received: from ns35774.ovh.net ([213.251.185.197]:48459 "EHLO ns35774.ovh.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750755AbYKJTK0 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 10 Nov 2008 14:10:26 -0500
+Received: from erwin.kitchen.eel (AOrleans-157-1-115-179.w90-20.abo.wanadoo.fr [90.20.190.179])
+	(Authenticated sender: fg@one2team.net)
+	by ns35774.ovh.net (Postfix) with ESMTP id 56D3692C003;
+	Mon, 10 Nov 2008 20:10:15 +0100 (CET)
+User-Agent: KMail/1.9.9
+In-Reply-To: <alpine.DEB.1.00.0811102008330.30769@pacific.mpi-cbg.de>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/100544>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/100545>
 
-
-> Awhile ago I brought up wanting to have a "rebase with preserve merges"
-> option for `git pull`:
+Le Monday 10 November 2008 20:09:21 Johannes Schindelin, vous avez =E9c=
+rit=A0:
+> Hi,
 >
-> http://thread.gmane.org/gmane.comp.version-control.git/96513
+> On Mon, 10 Nov 2008, Francis Galiegue wrote:
+> > In xdiff-interface.c, the FIRST_FEW_BYTES macro is defined, is neve=
+r
+> > used anwhere else, so we might as well undefine it after we're done=
+ with
+> > it.
 >
-> Andreas had a patch to help by supporting manually typing out `git pull
-> --rebase --preserve-merges`:
+> Would not the consequence be that we end up with a ton of #undefines =
+all
+> over the place, reducing readability incredibly?
 >
-> http://thread.gmane.org/gmane.comp.version-control.git/96593
->
-> And then I did another small copy/paste patch on top to add a config
-> setting of `branch.<name>.preservemerges` much like the existing
-> `branch.<name>.rebase`.
 
-I just noticed the `branch.<name>.mergeoptions` flag in the merge docs.
-Instead of having both `branch.<name>.rebase` and `.preservemerges`, and
-possibly even more config parameters for whatever other people what to
-configure as well, would something like `branch.<name>.pulloptions` be a
-better idea?
+Hmwell, this is a twofold argument, I guess...
 
-In our case, we could then set all the `branch.<name>.pulloptions` to
-"--rebase --preserve-merges" (likely via a post-checkout hook) and be
-happy with `git pull` "just working".
+* for: the macro is defined, not undefined: it means that potentially, =
+it can=20
+be used somewhere else in the file; but it isn't (in this case);
+* against: macros defined in a C file only ever have scope in said file=
+=20
+(unless so mischievous Makefile cats two C files together before compil=
+e and=20
+file order is important -- but git doesn't do that), so why #undefine=20
+anything?
 
-Adding pulloptions would make the patch a little bit trickier, for me
-to implement anyway, and I assume the rebase flag would have to stay
-for backwards compatibility, but if a pulloptions config parameter
-approach would be more acceptable than an explicit preservemerges
-config (and hence more likely to get the patches accepted), I'd be
-willing to work on that.
+Personally, I'm with the first argument. YMMV, of course.
 
-Thanks,
-Stephen
+--=20
+fge
