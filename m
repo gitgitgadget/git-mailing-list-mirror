@@ -1,73 +1,71 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: How it was at GitTogether'08 ?
-Date: Mon, 10 Nov 2008 11:38:23 +0100 (CET)
-Message-ID: <alpine.DEB.1.00.0811101125360.30769@pacific.mpi-cbg.de>
-References: <200811080254.53202.jnareb@gmail.com> <ee77f5c20811072108o21f97c97i8174f4f7ecd67030@mail.gmail.com> <200811081631.06229.jnareb@gmail.com>
+From: "=?ISO-8859-1?Q?Santi_B=E9jar?=" <santi@agolina.net>
+Subject: Re: [PATCH 2/2] Document "git log --simplify-by-decoration"
+Date: Mon, 10 Nov 2008 11:47:44 +0100
+Message-ID: <adf1fd3d0811100247n18d54644h9a0238832d22be7c@mail.gmail.com>
+References: <20081110185817.6117@nanako3.lavabit.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: David Symonds <dsymonds@gmail.com>, git@vger.kernel.org
-To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Nov 10 11:32:17 2008
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, "Junio C Hamano" <gitster@pobox.com>
+To: "Nanako Shiraishi" <nanako3@lavabit.com>
+X-From: git-owner@vger.kernel.org Mon Nov 10 11:49:04 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KzU3y-0002tC-Gj
-	for gcvg-git-2@gmane.org; Mon, 10 Nov 2008 11:32:06 +0100
+	id 1KzUKM-0007oG-J0
+	for gcvg-git-2@gmane.org; Mon, 10 Nov 2008 11:49:03 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754300AbYKJKaw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 10 Nov 2008 05:30:52 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754285AbYKJKaw
-	(ORCPT <rfc822;git-outgoing>); Mon, 10 Nov 2008 05:30:52 -0500
-Received: from mail.gmx.net ([213.165.64.20]:43106 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1754192AbYKJKav (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 10 Nov 2008 05:30:51 -0500
-Received: (qmail invoked by alias); 10 Nov 2008 10:30:49 -0000
-Received: from pacific.mpi-cbg.de (EHLO [141.5.10.38]) [141.5.10.38]
-  by mail.gmx.net (mp059) with SMTP; 10 Nov 2008 11:30:49 +0100
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX19HT0xyzPNHA0dbPbDILpTox4uzf122EjE0tyCbBq
-	6SOfBE5RNVXIwz
-X-X-Sender: schindelin@pacific.mpi-cbg.de
-In-Reply-To: <200811081631.06229.jnareb@gmail.com>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.57
+	id S1754227AbYKJKrq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 10 Nov 2008 05:47:46 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754192AbYKJKrq
+	(ORCPT <rfc822;git-outgoing>); Mon, 10 Nov 2008 05:47:46 -0500
+Received: from ey-out-2122.google.com ([74.125.78.27]:9078 "EHLO
+	ey-out-2122.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754003AbYKJKrq (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 10 Nov 2008 05:47:46 -0500
+Received: by ey-out-2122.google.com with SMTP id 6so889279eyi.37
+        for <git@vger.kernel.org>; Mon, 10 Nov 2008 02:47:44 -0800 (PST)
+Received: by 10.103.244.4 with SMTP id w4mr3594600mur.11.1226314064063;
+        Mon, 10 Nov 2008 02:47:44 -0800 (PST)
+Received: by 10.103.165.1 with HTTP; Mon, 10 Nov 2008 02:47:44 -0800 (PST)
+In-Reply-To: <20081110185817.6117@nanako3.lavabit.com>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/100512>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/100513>
 
-Hi,
-
-On Sat, 8 Nov 2008, Jakub Narebski wrote:
-
-> On Sat, 8 Nov 2008, David Symonds wrote:
-> > On Fri, Nov 7, 2008 at 5:54 PM, Jakub Narebski <jnareb@gmail.com> wrote:
-> > 
-> > > Mon, Oct 27, 2008
-> > > -----------------
-> > > * Dscho: Contributing with Git
-> > >  http://www.youtube.com/watch?v=j45cs5_nY2k
-> > 
-> > It was a good intro, but I was expecting a few more non-GitTogether 
-> > people. We had quite a large room, but there was only about a dozen 
-> > other people who came along. I don't know whether that was the fault 
-> > of the timing, lack of advertising, or a lack of interest.
-> 
-> By the way, it would be nice to have transcript for this talk, just
-> like there is for Linus talk:
->   http://git.or.cz/gitwiki/LinusTalk200705Transcript
-> (but this would take some doing).
+On Mon, Nov 10, 2008 at 10:58 AM, Nanako Shiraishi <nanako3@lavabit.com> wrote:
+> Signed-off-by: Nanako Shiraishi <nanako3@lavabit.com>
+> ---
+>  Documentation/rev-list-options.txt |    7 +++++++
+>  1 files changed, 7 insertions(+), 0 deletions(-)
 >
-> It would be also nice to have slides for the talk available somewhere, 
-> just like slides for "Git Chronicle".
+> diff --git a/Documentation/rev-list-options.txt b/Documentation/rev-list-options.txt
+> index 966276b..977290c 100644
+> --- a/Documentation/rev-list-options.txt
+> +++ b/Documentation/rev-list-options.txt
+> @@ -456,6 +456,13 @@ Note the major differences in `N` and `P` over '\--full-history':
+>   removed completely, because it had one parent and is TREESAME.
+>  --
+>
+> +The '\--simplify-by-decoration' option can be used to treat commits that
+> +are not referenced by tags as TREESAME, and treat commits that are tagged
+> +as !TREESAME (even when they have exactly the same tree as their parents).
+> +This can be used when you are only interested in the big picture of the
+> +topology of the history.
+> +
+> +
 
-Voila:
+I prefer the other way around, first what it does, and then how it
+does it (but it is a general comment about the help in "History
+Simplification", at least when viewing the help for "git log"). And
+you should rewrite the line 416:
 
-http://repo.or.cz/w/git/dscho.git?a=blob_plain;f=all-your-rebase.pdf;hb=f23c1c9868256cae8591bddafd64422f95d67b02
+Finally, there is a fourth simplification mode available
 
-Ciao,
-Dscho
+as it is no longer "Finally".
+
+Santi
