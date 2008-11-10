@@ -1,117 +1,73 @@
-From: "Jon Smirl" <jonsmirl@gmail.com>
-Subject: Re: Stgit and refresh-temp
-Date: Mon, 10 Nov 2008 18:10:34 -0500
-Message-ID: <9e4733910811101510p74ea9d5hda7d47dc3bf16b5c@mail.gmail.com>
-References: <9e4733910811040537p4e88c09an94370154eca12778@mail.gmail.com>
-	 <20081107054419.GA27146@diana.vm.bytemark.co.uk>
-	 <9e4733910811101508h3cb30752o77b61926aeefed5b@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: overly smart rebase - bug or feature?
+Date: Mon, 10 Nov 2008 15:14:42 -0800
+Message-ID: <7vod0n41i5.fsf@gitster.siamese.dyndns.org>
+References: <20081110212333.GU6799@sun.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: "Catalin Marinas" <catalin.marinas@gmail.com>,
-	"Git Mailing List" <git@vger.kernel.org>
-To: "=?ISO-8859-1?Q?Karl_Hasselstr=F6m?=" <kha@treskal.com>
-X-From: git-owner@vger.kernel.org Tue Nov 11 00:11:52 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: Roman.Shaposhnick@Sun.COM, git@vger.kernel.org
+To: Fedor Sergeev <Fedor.Sergeev@Sun.COM>
+X-From: git-owner@vger.kernel.org Tue Nov 11 00:17:01 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KzfvC-0002pN-IK
-	for gcvg-git-2@gmane.org; Tue, 11 Nov 2008 00:11:51 +0100
+	id 1Kzg03-0004fY-Mv
+	for gcvg-git-2@gmane.org; Tue, 11 Nov 2008 00:16:52 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752155AbYKJXKg convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 10 Nov 2008 18:10:36 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752126AbYKJXKg
-	(ORCPT <rfc822;git-outgoing>); Mon, 10 Nov 2008 18:10:36 -0500
-Received: from qw-out-2122.google.com ([74.125.92.24]:51302 "EHLO
-	qw-out-2122.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752030AbYKJXKf convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 10 Nov 2008 18:10:35 -0500
-Received: by qw-out-2122.google.com with SMTP id 3so1593262qwe.37
-        for <git@vger.kernel.org>; Mon, 10 Nov 2008 15:10:34 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to
-         :subject:cc:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:references;
-        bh=ewDmaua5gSTDb/BmN0VJ3+2v7jYrEWZ5LP0k83+c31Y=;
-        b=mUeZMaFhjdsB8kJjPe6Y9EatOeKf8MhBRL584E9OZUr8abg7nPcko99OXgkn3XdxEj
-         fLZiHwq5ui5T2n5+IHRabocsNDMkr/SOnEyx43uVbVca82vx99NenUFYhwHUsOrQ76Vz
-         jrltncpZKECwCwSBLLTOJ1cHVeZs+RtMg66SI=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
-         :content-type:content-transfer-encoding:content-disposition
-         :references;
-        b=mswVk6vCEmGQhsoYq0hSDNPpmEMy4NdkbAh4xk1jx9DaMNpMEFRoWXVQhcfhqOPTPL
-         bsgifc1GPxdBj0Mvv+6/eUCt/+QDqVV06qXAHxyvZz5wPqHjIUcVAnqdEDI+TwIjPrwT
-         i95Ptldbw7In3CZ2tc6DXtJh5zLYtLcFZev+A=
-Received: by 10.214.114.10 with SMTP id m10mr7450736qac.306.1226358634048;
-        Mon, 10 Nov 2008 15:10:34 -0800 (PST)
-Received: by 10.214.10.19 with HTTP; Mon, 10 Nov 2008 15:10:34 -0800 (PST)
-In-Reply-To: <9e4733910811101508h3cb30752o77b61926aeefed5b@mail.gmail.com>
-Content-Disposition: inline
+	id S1753535AbYKJXPf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 10 Nov 2008 18:15:35 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753451AbYKJXPf
+	(ORCPT <rfc822;git-outgoing>); Mon, 10 Nov 2008 18:15:35 -0500
+Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:40011 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753320AbYKJXPe (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 10 Nov 2008 18:15:34 -0500
+Received: from localhost.localdomain (unknown [127.0.0.1])
+	by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id C43E69517F;
+	Mon, 10 Nov 2008 18:15:31 -0500 (EST)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES256-SHA (256/256 bits)) (No client certificate requested) by
+ a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTPSA id 5929D9516C; Mon,
+ 10 Nov 2008 18:14:48 -0500 (EST)
+In-Reply-To: <20081110212333.GU6799@sun.com> (Fedor Sergeev's message of
+ "Tue, 11 Nov 2008 00:23:34 +0300")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: 7878C3DA-AF7D-11DD-9380-4F5276724C3F-77302942!a-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/100585>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/100586>
 
-On Mon, Nov 10, 2008 at 6:08 PM, Jon Smirl <jonsmirl@gmail.com> wrote:
-> On Fri, Nov 7, 2008 at 12:44 AM, Karl Hasselstr=F6m <kha@treskal.com>=
- wrote:
->> On 2008-11-04 08:37:24 -0500, Jon Smirl wrote:
->>
->>> I hit a case when refreshing a buried patch that needed a merge
->>> conflict sorted out. I'm unable to recover out of the state.
->>
->> Hmm, so what you're saying is basically that you did something with
->> "stg refresh -p" that caused a merge conflict, and that messed thing=
-s
->> up so that you needed to run "stg repair". Is that right?
->
-> Missed the reply.
->
-> Yes, that is what happed.
->
-> I think the problem was this:
->
-> File - xxxxxxx
-> Patch A adds a line
-> File - xxxxxxxa
-> Patch B in the middle adds a line
-> File - xxxxxxxab
-> I edit it and add a line
-> File - xxxxxxxabc
-> Line c needs to be patch A
-> stg refresh -p A
-> ..messed up tree
->
->
->
->>
->> Have you been able to reproduce it? (I would like to add the failing
->> case to the test suite.)
+Fedor Sergeev <Fedor.Sergeev@Sun.COM> writes:
 
-Yes, it happens every time the 'stg refresh -p' triggers a merge confli=
-ct.
-stg repair seem to fix it and then I touch things up manually.
+> I have recently hit a behavior which might well be a feature, 
+> but it was very surprising (in a bad sense) to me.
 
->>
->> --
->> Karl Hasselstr=F6m, kha@treskal.com
->>      www.treskal.com/kalle
->>
->
->
->
-> --
-> Jon Smirl
-> jonsmirl@gmail.com
->
+It is a feature misfiring.
 
+Rebase is essentially a repeated cherry-pick, and a cherry-pick of commit
+A on top of commit B is done by a simplified 3-way merge between A and B
+using the parent of A as the common ancestor.
 
+     A                          A'
+    /                          /
+   A^... pseudo history ...---B
 
---=20
-Jon Smirl
-jonsmirl@gmail.com
+When your history has renamed Makefile to Makefile2 (thereby losing
+Makefile) while transition from A^ to A modified Makefile, the difference
+between A^ to A that is applied to B to produce A' contains only the
+change about Makefile (and does not talk about the unchangedness of
+Makefile1 nor Makefile2 --- in fact, when A' is created, the machinery
+does not even know if A^ and A had Makefile1 or Makefile2).
+
+When applying the change to Makefile, it notices that B does not have
+Makefile, but there is a path that is _identical_ to the preimage your
+change applies to (namely, Makefile2).  To support people who rename
+Makefile to Makefile2 in the history that led to B, rebase (actually the
+underlying "am -3" it calls is where this rename detection smart lies)
+applies the changes to the "renamed" path.
+
+You might be able to work this around by forcing rebase not to use the
+simplified 3-way merge, by saying "rebase -m".
