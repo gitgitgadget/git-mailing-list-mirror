@@ -1,79 +1,125 @@
-From: Francis Galiegue <fg@one2team.net>
-Subject: Re: JGIT: discuss: diff/patch implementation
-Date: Mon, 10 Nov 2008 22:31:30 +0100
-Organization: One2team
-Message-ID: <200811102231.31263.fg@one2team.net>
-References: <200811101522.13558.fg@one2team.net> <7v63mv5mro.fsf@gitster.siamese.dyndns.org> <20081110205242.GH2932@spearce.org>
+From: Fedor Sergeev <Fedor.Sergeev@Sun.COM>
+Subject: overly smart rebase - bug or feature?
+Date: Tue, 11 Nov 2008 00:23:34 +0300
+Message-ID: <20081110212333.GU6799@sun.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Git Mailing List <git@vger.kernel.org>,
-	Robin Rosenberg <robin.rosenberg.lists@dewire.com>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>
-To: "Shawn O. Pearce" <spearce@spearce.org>
-X-From: git-owner@vger.kernel.org Mon Nov 10 22:33:23 2008
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7BIT
+Cc: Junio C Hamano <gitster@pobox.com>, Roman.Shaposhnick@Sun.COM
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Nov 10 22:43:58 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KzeNs-0006zp-Hf
-	for gcvg-git-2@gmane.org; Mon, 10 Nov 2008 22:33:21 +0100
+	id 1KzeY3-0002VP-Ip
+	for gcvg-git-2@gmane.org; Mon, 10 Nov 2008 22:43:52 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751399AbYKJVcF convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 10 Nov 2008 16:32:05 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751294AbYKJVcD
-	(ORCPT <rfc822;git-outgoing>); Mon, 10 Nov 2008 16:32:03 -0500
-Received: from ns35774.ovh.net ([213.251.185.197]:48510 "EHLO ns35774.ovh.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751243AbYKJVcD convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 10 Nov 2008 16:32:03 -0500
-Received: from erwin.kitchen.eel (AOrleans-157-1-64-185.w90-20.abo.wanadoo.fr [90.20.51.185])
-	(Authenticated sender: fg@one2team.net)
-	by ns35774.ovh.net (Postfix) with ESMTP id 7606B92C003;
-	Mon, 10 Nov 2008 22:31:48 +0100 (CET)
-User-Agent: KMail/1.9.9
-In-Reply-To: <20081110205242.GH2932@spearce.org>
-Content-Disposition: inline
+	id S1753951AbYKJVmc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 10 Nov 2008 16:42:32 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754047AbYKJVmc
+	(ORCPT <rfc822;git-outgoing>); Mon, 10 Nov 2008 16:42:32 -0500
+Received: from gmp-eb-inf-1.sun.com ([192.18.6.21]:34650 "EHLO
+	gmp-eb-inf-1.sun.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753634AbYKJVm3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 10 Nov 2008 16:42:29 -0500
+X-Greylist: delayed 1112 seconds by postgrey-1.27 at vger.kernel.org; Mon, 10 Nov 2008 16:42:29 EST
+Received: from fe-emea-09.sun.com (gmp-eb-lb-2-fe2.eu.sun.com [192.18.6.11])
+	by gmp-eb-inf-1.sun.com (8.13.7+Sun/8.12.9) with ESMTP id mAALNtY9020218
+	for <git@vger.kernel.org>; Mon, 10 Nov 2008 21:23:55 GMT
+Received: from conversion-daemon.fe-emea-09.sun.com by fe-emea-09.sun.com
+ (Sun Java System Messaging Server 6.2-8.04 (built Feb 28 2007))
+ id <0KA400301ZCCMF00@fe-emea-09.sun.com>
+ (original mail from Fedor.Sergeev@Sun.COM) for git@vger.kernel.org; Mon,
+ 10 Nov 2008 21:23:55 +0000 (GMT)
+Received: from localhost ([129.159.126.120])
+ by fe-emea-09.sun.com (Sun Java System Messaging Server 6.2-8.04 (built Feb 28
+ 2007)) with ESMTPSA id <0KA400IYFZFTRG20@fe-emea-09.sun.com>; Mon,
+ 10 Nov 2008 21:23:55 +0000 (GMT)
+Mail-followup-to: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+ Roman.Shaposhnick@Sun.COM
+Content-disposition: inline
+User-Agent: Mutt/1.5.7i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/100578>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/100579>
 
-Le Monday 10 November 2008 21:52:42 Shawn O. Pearce, vous avez =E9crit=A0=
-:
-> Junio C Hamano <gitster@pobox.com> wrote:
-> > Francis Galiegue <fg@one2team.net> writes:
-> > > A very nice git feature, without even going as far as merges, is =
-the
-> > > cherry pick feature.
-> >
-> > I thought cherry-picking needs to be done in terms of 3-way merge, =
-not
-> > diff piped to patch, for correctness's sake.
->
-> Yea, the 3-way merge cherry-pick is better.  But in a pinch you
-> can (usually) get correct results from a "diff | patch" pipeline.
-> Of course that doesn't always work, resulting in patches that don't
-> apply cleanly, or worse, that apply at the wrong place silently.
+Folks,
 
-Well, in this case, I'd say it's a case of a bottle being "half full" o=
-r "half=20
-empty".
+I have recently hit a behavior which might well be a feature, 
+but it was very surprising (in a bad sense) to me.
 
-The availability of even a simple diff|patch in jgit, and its being ava=
-ilable=20
-in egit, would generally be seen as a "half full" bottle, and would, im=
-ho,=20
-GREATLY increase the appeal factor of egit, all the more that you have =
-plenty=20
-of undo/redo ability in Eclipse... And, dare I say it, of git in genera=
-l as=20
-an SCM to be used in many environments where Eclipse is the de facto ID=
-E.
+I was trying to rebase a branch with changes in some file onto a branch
+where this file was recently deleted. I would expect rebase to fail and 
+suggest me to  resolve conflict manually.
+However it somehow succeeded managing to find another file to patch instead 
+of the initial one:
 
-I know, I may sound irritating, but...
+] cat git-rebase-bug.sh
+#!/bin/sh
+git init
+# create three files with the same contents
+perl -e ' for ($i=0; $i < 10; $i++) { print "$i\n" } ' >Makefile
+cp Makefile Makefile1
+cp Makefile Makefile2
+git add .
+git commit -m"created 3 makefiles"
+# delete one file
+git rm Makefile
+git commit -m"deleted 1 makefile"
+# go to another branch, one step back
+git checkout -b mod HEAD^
+# modify contents of the file deleted in master branch
+echo "#10" >>Makefile
+git add -u
+git commit -m"modified 1 makefile"
+# now rebase "mod" on top of "master" not expecting it to succeed
+git rebase master mod
+]
 
---=20
-fge
+] mkdir git-bug; cd git-bug
+] ../git-rebase-bug.sh
+....
+First, rewinding head to replay your work on top of it...
+Applying: modified 1 makefile
+error: Makefile: does not exist in index
+Using index info to reconstruct a base tree...
+Falling back to patching base and 3-way merge...
+]
+
+Now if I look at the rebase result I see that it chose to patch "Makefile2" 
+instead of my lovely "Makefile" (why not Makefile1, btw ;) ):
+
+] git log --stat -1 --pretty=oneline
+ce0101fc7884bce3eb9724b75d654e7c40abf0fd modified 1 makefile
+ Makefile2 |    1 +
+ 1 files changed, 1 insertions(+), 0 deletions(-)
+]
+
+I has always agreed with the claim that simple but reliable merge
+(rebase, whatever) is much better than smartass one smarter than yourself.
+
+And, to be honest, both merge and cherry-pick do not try to play smart:
+
+] git reset --hard mod@{1}
+] git checkout master
+] git merge mod
+CCONFLICT (delete/modify): Makefile deleted in HEAD and modified in mod. Version mod of Makefile left in tree.
+Automatic merge failed; fix conflicts and then commit the result.
+] git reset --hard
+] git cherry-pick mod
+Automatic cherry-pick failed.  After resolving the conflicts,
+mark the corrected paths with 'git add <paths>' or 'git rm <paths>' and commit the result.
+When commiting, use the option '-c f782a81' to retain authorship and message.
+]
+
+So, why rebase is smarter?
+
+Yeah, and if it matters I tried it on 1.6.0.2 and 1.5.3.8 on Solaris and Linux.
+
+best regards,
+  Fedor.
+PS I had problems reaching this list, thus ccing Junio explicitly.
+I'm not on the list, btw..
