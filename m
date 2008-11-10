@@ -1,115 +1,78 @@
-From: Michal Nazarewicz <mina86@tlen.pl>
-Subject: Re: Something like $Id$, $Revision$ or $Date$?
-Date: Mon, 10 Nov 2008 10:49:31 +0100
-Message-ID: <8763mvoqqc.fsf@erwin.mina86.com>
-References: <87ljvsjuq7.fsf@erwin.mina86.com>
-	<bd6139dc0811091643m31ff6f49o55a4c581be7f38b2@mail.gmail.com>
-	<87hc6gjs7v.fsf@erwin.mina86.com>
-	<e3f230850811091943k63e4a93n566402458a6947dd@mail.gmail.com>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: How it was at GitTogether'08 ?
+Date: Mon, 10 Nov 2008 10:58:05 +0100 (CET)
+Message-ID: <alpine.DEB.1.00.0811101055020.30769@pacific.mpi-cbg.de>
+References: <200811080254.53202.jnareb@gmail.com> <200811091636.55343.kai@samba.org> <200811091731.48694.jnareb@gmail.com> <200811091955.19304.kai@samba.org>
 Mime-Version: 1.0
-Content-Type: multipart/signed; boundary="=-=-=";
-	micalg=pgp-sha1; protocol="application/pgp-signature"
-Cc: sverre@rabbelier.nl, git@vger.kernel.org
-To: dhruva <dhruvakm@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Nov 10 10:50:59 2008
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Jakub Narebski <jnareb@gmail.com>,
+	David Symonds <dsymonds@gmail.com>, git@vger.kernel.org,
+	Tim Ansell <mithro@mithis.com>
+To: Kai Blin <kai@samba.org>
+X-From: git-owner@vger.kernel.org Mon Nov 10 10:51:53 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KzTQ9-0006Hp-Hx
-	for gcvg-git-2@gmane.org; Mon, 10 Nov 2008 10:50:58 +0100
+	id 1KzTR2-0006Yg-PX
+	for gcvg-git-2@gmane.org; Mon, 10 Nov 2008 10:51:53 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754183AbYKJJtn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 10 Nov 2008 04:49:43 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754182AbYKJJtn
-	(ORCPT <rfc822;git-outgoing>); Mon, 10 Nov 2008 04:49:43 -0500
-Received: from ug-out-1314.google.com ([66.249.92.168]:7107 "EHLO
-	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754181AbYKJJtm (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 10 Nov 2008 04:49:42 -0500
-Received: by ug-out-1314.google.com with SMTP id 39so317260ugf.37
-        for <git@vger.kernel.org>; Mon, 10 Nov 2008 01:49:40 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:cc:subject:references
-         :x-url:x-pgp-fp:x-pgp:date:in-reply-to:message-id:user-agent
-         :mime-version:content-type:sender;
-        bh=+GtrYBjL/IzgXqU3i3tGQI9+3NDi+UER+1y7afKPjoU=;
-        b=LSfktdaTM8/xG3b+kajmPnUZgg96S/z3hPqoVrslRVsKq/gejPmuzWf/LkYqUkFAII
-         D1+MEOO4QA8yUOpkLYC8N/noXe7WtQkKyxyry6PGv+1ZNsS2SRVtuQ7S6klbI2Uh47ki
-         js9DrlJNfz6VHepPpYR7mUbheKHqX4adZc8ro=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=from:to:cc:subject:references:x-url:x-pgp-fp:x-pgp:date:in-reply-to
-         :message-id:user-agent:mime-version:content-type:sender;
-        b=ZplWLYDQN8p3F1WgCTMymxWmSQDYKaZnaM7xHYyVVAt3o+qj3F/F55RVlly3VbjBj+
-         sxikxh13mcWvmC/MI6RzFCn4ek+65Q41Inuv48/bLt7kMp4joZ0PWLW5OfIk3JtyERiO
-         xGBX5+qVRdJaRg4TcoWUJv7K0Pb8IvNyNWpJ4=
-Received: by 10.67.90.10 with SMTP id s10mr1893819ugl.8.1226310580453;
-        Mon, 10 Nov 2008 01:49:40 -0800 (PST)
-Received: from erwin.piotrekn (cno208.neoplus.adsl.tpnet.pl [83.31.168.208])
-        by mx.google.com with ESMTPS id m38sm3421561ugd.51.2008.11.10.01.49.38
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Mon, 10 Nov 2008 01:49:39 -0800 (PST)
-X-Url: http://mina86.com/
-X-PGP-FP: 9134 06FA 7AD8 D134 9D0C  C33F 532C CB00 B7C6 DF1E
-X-PGP: B7C6DF1E
-In-Reply-To: <e3f230850811091943k63e4a93n566402458a6947dd@mail.gmail.com>
-	(dhruva's message of "Mon, 10 Nov 2008 09:13:04 +0530")
-User-Agent: Gnus/5.110011 (No Gnus v0.11) Emacs/23.0 (Slckware Linux)
+	id S1753831AbYKJJue (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 10 Nov 2008 04:50:34 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753784AbYKJJue
+	(ORCPT <rfc822;git-outgoing>); Mon, 10 Nov 2008 04:50:34 -0500
+Received: from mail.gmx.net ([213.165.64.20]:38522 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1753487AbYKJJud (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 10 Nov 2008 04:50:33 -0500
+Received: (qmail invoked by alias); 10 Nov 2008 09:50:31 -0000
+Received: from pacific.mpi-cbg.de (EHLO [141.5.10.38]) [141.5.10.38]
+  by mail.gmx.net (mp026) with SMTP; 10 Nov 2008 10:50:31 +0100
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1+n80xBMo6nXwFP+hugqs+E7at5/lTbvBx5LTcI2j
+	o2aAlafXVCptaS
+X-X-Sender: schindelin@pacific.mpi-cbg.de
+In-Reply-To: <200811091955.19304.kai@samba.org>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.62
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/100503>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/100504>
 
---=-=-=
-Content-Transfer-Encoding: quoted-printable
+Hi,
 
-> On Mon, Nov 10, 2008 at 6:46 AM, Michal Nazarewicz <mina86@tlen.pl> wrote:
->> I would like the "$Id$" sequences to be updated automatically after
->> a commit (ie. without the need to check out).
+On Sun, 9 Nov 2008, Kai Blin wrote:
 
-dhruva <dhruvakm@gmail.com> writes:
-> There is no direct way to get this $Id$ expansion in git, however you
-> can use a simple pre-commit hook (alpha state, more a proof of concept
-> that happens to work for me)
->
-> #!/usr/bin/env bash
->
-> for file in `git diff-index --name-only --diff-filter=3DAM HEAD` ; do
->         perl -pi -e 's/(\$[ \t]*Id)(.*)([ \t]*\$)/"\$Id: git
-> ".time()." \$"/e' ${file}
->         git add ${file} > /dev/null
-> done
+> On Sunday 09 November 2008 17:31:47 Jakub Narebski wrote:
+> 
+> > The workaround is to put all large files for example in 'media/' 
+> > folder, and make this folder be submodule. Each clone of repository 
+> > can have this 'media' submodule either present (both in object 
+> > database, although usually separate from main project object 
+> > database), or not present (not cloned and not checked out).
+> 
+> Tim was talking about that media/ folder and managing that in git. If 
+> you want to work on the media, you might end up getting hundreds of 
+> gigabytes of data to get that folder, even if you only need to change 
+> one single file.
+> 
+> That's the issue we're running into, and I don't thing submodules solve 
+> this at all.
 
-In fact the following works just as well:
+You'd have to have a single repository for each and every media file, and 
+you'd need to use shallow clones and shallow fetches.
 
-#v+
-files=3D$(git diff-index --name-only --diff-filter=3DAM HEAD)
-perl -pi -e 's/\$\s*Id.*?\$/\$Id: git '$(TZ=3DUTC date +%s)' \$/g' $files
-git add $files
-#v-
+However, a push-conflict will probably be beyond any non-programmer 
+skillz.
 
-But then again, it has two unpleasant side effects: (i) all modified
-files are added and (ii) if I abort a commit the file stays modified.
-(i) can be fixed by removing "git add" but then again (iii) even files
-which are not committed will be modified.
+I'd rather propose to have a different interface, like through a web 
+server, where the user can say "I have some cool new graphics, in this 
+.zip file" together with a commit message.
 
-=2D-=20
-Best regards,                                         _     _
- .o. | Liege of Serenly Enlightened Majesty of      o' \,=3D./ `o
- ..o | Computer Science,  Michal "mina86" Nazarewicz   (o o)
- ooo +--<mina86*tlen.pl>--<jid:mina86*jabber.org>--ooO--(_)--Ooo--
+Kind of a git-gui via browser.
 
---=-=-=
-Content-Type: application/pgp-signature
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.0.9 (GNU/Linux)
-
-iEYEARECAAYFAkkYA7AACgkQUyzLALfG3x6dKACfU+9KBooZSa/UW0yoOlZoX4Ol
-R/0AoKp1vlYehDZYyGxWpUA496jFKH1U
-=Iybg
------END PGP SIGNATURE-----
---=-=-=--
+Ciao,
+Dscho
