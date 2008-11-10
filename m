@@ -1,206 +1,137 @@
-From: Pierre Habouzit <madcoder@debian.org>
-Subject: [PATCH 2/4] git send-email: interpret unknown files as revision lists
-Date: Tue, 11 Nov 2008 00:54:00 +0100
-Message-ID: <1226361242-2516-3-git-send-email-madcoder@debian.org>
-References: <1225450632-7230-1-git-send-email-madcoder@debian.org>
- <1226361242-2516-1-git-send-email-madcoder@debian.org>
- <1226361242-2516-2-git-send-email-madcoder@debian.org>
-Cc: Pierre Habouzit <madcoder@debian.org>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Nov 11 00:55:55 2008
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: overly smart rebase - bug or feature?
+Date: Mon, 10 Nov 2008 15:57:14 -0800
+Message-ID: <7v1vxj3zj9.fsf@gitster.siamese.dyndns.org>
+References: <20081110212333.GU6799@sun.com>
+ <7vod0n41i5.fsf@gitster.siamese.dyndns.org> <20081110233649.GI6799@sun.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Roman.Shaposhnick@Sun.COM
+X-From: git-owner@vger.kernel.org Tue Nov 11 00:59:21 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KzgbZ-0003dS-7a
-	for gcvg-git-2@gmane.org; Tue, 11 Nov 2008 00:55:37 +0100
+	id 1Kzgf5-0004xM-U0
+	for gcvg-git-2@gmane.org; Tue, 11 Nov 2008 00:59:16 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753175AbYKJXyP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 10 Nov 2008 18:54:15 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753022AbYKJXyL
-	(ORCPT <rfc822;git-outgoing>); Mon, 10 Nov 2008 18:54:11 -0500
-Received: from pan.madism.org ([88.191.52.104]:37659 "EHLO hermes.madism.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752528AbYKJXyI (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 10 Nov 2008 18:54:08 -0500
-Received: from madism.org (olympe.madism.org [82.243.245.108])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(Client CN "artemis.madism.org", Issuer "madism.org" (verified OK))
-	by hermes.madism.org (Postfix) with ESMTPS id 471F63CD89;
-	Tue, 11 Nov 2008 00:54:06 +0100 (CET)
-Received: by madism.org (Postfix, from userid 1000)
-	id 027D02A251; Tue, 11 Nov 2008 00:54:02 +0100 (CET)
-X-Mailer: git-send-email 1.6.0.4.862.g3e9be
-In-Reply-To: <1226361242-2516-2-git-send-email-madcoder@debian.org>
+	id S1753531AbYKJX6A (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 10 Nov 2008 18:58:00 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753513AbYKJX6A
+	(ORCPT <rfc822;git-outgoing>); Mon, 10 Nov 2008 18:58:00 -0500
+Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:43231 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753504AbYKJX57 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 10 Nov 2008 18:57:59 -0500
+Received: from localhost.localdomain (unknown [127.0.0.1])
+	by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id 319929552B;
+	Mon, 10 Nov 2008 18:57:57 -0500 (EST)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES256-SHA (256/256 bits)) (No client certificate requested) by
+ a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTPSA id E8F9195522; Mon,
+ 10 Nov 2008 18:57:16 -0500 (EST)
+In-Reply-To: <20081110233649.GI6799@sun.com> (Fedor Sergeev's message of
+ "Tue, 11 Nov 2008 02:36:49 +0300")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: 65A29AA0-AF83-11DD-B67D-4F5276724C3F-77302942!a-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/100601>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/100602>
 
-Filter out all the arguments git-send-email doesn't like to a
-git format-patch command, that dumps its content to a safe directory.
+Fedor Sergeev <Fedor.Sergeev@Sun.COM> writes:
 
-Barf when a file/revision conflict occurs, allow it to be overriden
---[no-]format-patch.
+> On Mon, Nov 10, 2008 at 03:14:42PM -0800, Junio C Hamano wrote:
+>> Fedor Sergeev <Fedor.Sergeev@Sun.COM> writes:
+>> 
+>> > I have recently hit a behavior which might well be a feature, 
+>> > but it was very surprising (in a bad sense) to me.
+>> 
+>> It is a feature misfiring.
+>> 
+>> Rebase is essentially a repeated cherry-pick, and a cherry-pick of commit
+>
+> But cherry-pick does fail, as shown in my original mail!
+>
+>> A on top of commit B is done by a simplified 3-way merge between A and B
+>> using the parent of A as the common ancestor.
+>> 
+>>      A                          A'
+>>     /                          /
+>>    A^... pseudo history ...---B
+>
+> Well, my history is exactly that, not pseudo (and I dont quite follow your reasoning
+> yet to understand whether this is important or not):
+>
+>    A   B
+>     \ /
+>      A^
+>
+> A^ *is* a common ancestor of both A and B.
+>
+>> 
+>> When your history has renamed Makefile to Makefile2 (thereby losing
+>> Makefile)
+>
+> My history did not rename Makefile.
+> There were three identical Makefiles (in A^)
+> After that one was deleted (in B).
+> On alternative branch it was edited (in A).
+>
+> If I do *merge* A into B then it fails.
+> If I do *cherry-pick* A into B then it fails.
+> If I do *rebase* A onto B then it succeeds.
+>
+>> while transition from A^ to A modified Makefile, the difference
+>> between A^ to A that is applied to B to produce A' contains only the
+>> change about Makefile (and does not talk about the unchangedness of
+>> Makefile1 nor Makefile2 --- in fact, when A' is created, the machinery
+>> does not even know if A^ and A had Makefile1 or Makefile2).
+>> 
+>> When applying the change to Makefile, it notices that B does not have
+>> Makefile, but there is a path that is _identical_ to the preimage your
+>> change applies to (namely, Makefile2).  To support people who rename
+>> Makefile to Makefile2 in the history that led to B
+>
+> There was no rename. There was a copy in initial commit (and you cant say if it
+> was Makefile copied into Makefile2 or vice verse).
+> I dont believe it should really be called "rename", even if one of the copies was killed later.
+>
+>>, rebase (actually the
+>> underlying "am -3" it calls is where this rename detection smart lies)
+>> applies the changes to the "renamed" path.
+>
+> In this given case both Makefile1 and Makefile2 were absolutely equal. 
+> If rebase chose to edit Makefile2 why didnt it change Makefile1?
+>
+>> 
+>> You might be able to work this around by forcing rebase not to use the
+>> simplified 3-way merge, by saying "rebase -m".
+>
+> Yeah, it worked.
+> ...
+> CONFLICT (delete/modify): Makefile deleted in master and modified in HEAD~0. Version HEAD~0 of Makefile left in tree.
+> ...
+>
+> Though it does make me wonder why *simplified* 3-way merge is smarter than git merge ;)))
 
-Signed-off-by: Pierre Habouzit <madcoder@debian.org>
----
- Documentation/git-send-email.txt |    8 +++++-
- git-send-email.perl              |   47 +++++++++++++++++++++++++++++++++----
- t/t9001-send-email.sh            |    8 ++++++
- 3 files changed, 57 insertions(+), 6 deletions(-)
+Simplified one is not _smarter_.  It is merely _faster_, exactly because
+it only looks at the paths between A^..A and nothing else.
 
-diff --git a/Documentation/git-send-email.txt b/Documentation/git-send-email.txt
-index 82f5056..0beaad4 100644
---- a/Documentation/git-send-email.txt
-+++ b/Documentation/git-send-email.txt
-@@ -8,7 +8,7 @@ git-send-email - Send a collection of patches as emails
- 
- SYNOPSIS
- --------
--'git send-email' [options] <file|directory> [... file|directory]
-+'git send-email' [options] <file|directory|rev-list options>...
- 
- 
- DESCRIPTION
-@@ -183,6 +183,12 @@ Administering
- --[no-]validate::
- 	Perform sanity checks on patches.
- 	Currently, validation means the following:
-+
-+--[no-]format-patch::
-+	When an argument may be understood either as a reference or as a file name,
-+	choose to understand it as a format-patch argument ('--format-patch')
-+	or as a file name ('--no-format-patch'). By default, when such a conflict
-+	occurs, git send-email will fail.
- +
- --
- 		*	Warn of patches that contain lines longer than 998 characters; this
-diff --git a/git-send-email.perl b/git-send-email.perl
-index aaace02..6f5a613 100755
---- a/git-send-email.perl
-+++ b/git-send-email.perl
-@@ -22,8 +22,12 @@ use Term::ReadLine;
- use Getopt::Long;
- use Data::Dumper;
- use Term::ANSIColor;
-+use File::Temp qw/ tempdir /;
-+use Error qw(:try);
- use Git;
- 
-+Getopt::Long::Configure qw/ pass_through /;
-+
- package FakeTerm;
- sub new {
- 	my ($class, $reason) = @_;
-@@ -38,7 +42,7 @@ package main;
- 
- sub usage {
- 	print <<EOT;
--git send-email [options] <file | directory>...
-+git send-email [options] <file | directory | rev-list options >
- 
-   Composing:
-     --from                  <str>  * Email From:
-@@ -73,6 +77,8 @@ git send-email [options] <file | directory>...
-     --quiet                        * Output one line of info per email.
-     --dry-run                      * Don't actually send the emails.
-     --[no-]validate                * Perform patch sanity checks. Default on.
-+    --[no-]format-patch            * understand any non optional arguments as
-+                                     `git format-patch` ones.
- 
- EOT
- 	exit(1);
-@@ -146,6 +152,7 @@ if ($@) {
- 
- # Behavior modification variables
- my ($quiet, $dry_run) = (0, 0);
-+my $format_patch;
- my $compose_filename = $repo->repo_path() . "/.gitsendemail.msg.$$";
- 
- # Variables with corresponding config settings
-@@ -229,6 +236,7 @@ my $rc = GetOptions("sender|from=s" => \$sender,
- 		    "envelope-sender=s" => \$envelope_sender,
- 		    "thread!" => \$thread,
- 		    "validate!" => \$validate,
-+		    "format-patch!" => \$format_patch,
- 	 );
- 
- unless ($rc) {
-@@ -363,23 +371,52 @@ if (@alias_files and $aliasfiletype and defined $parse_alias{$aliasfiletype}) {
- 
- ($sender) = expand_aliases($sender) if defined $sender;
- 
-+# returns 1 if the conflict must be solved using it as a format-patch argument
-+sub check_file_rev_conflict($) {
-+	my $f = shift;
-+	try {
-+		$repo->command('rev-parse', '--verify', '--quiet', $f);
-+		if (defined($format_patch)) {
-+			print "foo\n";
-+			return $format_patch;
-+		}
-+		die(<<EOF);
-+File '$f' exists but it could also be the range of commits
-+to produce patches for.  Please disambiguate by...
-+
-+    * Saying "./$f" if you mean a file; or
-+    * Giving --format-patch option if you mean a range.
-+EOF
-+	} catch Git::Error::Command with {
-+		return 0;
-+	}
-+}
-+
- # Now that all the defaults are set, process the rest of the command line
- # arguments and collect up the files that need to be processed.
--for my $f (@ARGV) {
--	if (-d $f) {
-+my @rev_list_opts;
-+while (my $f = pop @ARGV) {
-+	if ($f eq "--") {
-+		push @rev_list_opts, "--", @ARGV;
-+		@ARGV = ();
-+	} elsif (-d $f and !check_file_rev_conflict($f)) {
- 		opendir(DH,$f)
- 			or die "Failed to opendir $f: $!";
- 
- 		push @files, grep { -f $_ } map { +$f . "/" . $_ }
- 				sort readdir(DH);
- 		closedir(DH);
--	} elsif (-f $f or -p $f) {
-+	} elsif ((-f $f or -p $f) and !check_file_rev_conflict($f)) {
- 		push @files, $f;
- 	} else {
--		print STDERR "Skipping $f - not found.\n";
-+		push @rev_list_opts, $f;
- 	}
- }
- 
-+if (@rev_list_opts) {
-+	push @files, $repo->command('format-patch', '-o', tempdir(CLEANUP => 1), @rev_list_opts);
-+}
-+
- if ($validate) {
- 	foreach my $f (@files) {
- 		unless (-p $f) {
-diff --git a/t/t9001-send-email.sh b/t/t9001-send-email.sh
-index 561ae7d..b4bddd1 100755
---- a/t/t9001-send-email.sh
-+++ b/t/t9001-send-email.sh
-@@ -292,4 +292,12 @@ test_expect_success '--compose adds MIME for utf8 subject' '
- 	grep "^Subject: =?utf-8?q?utf8-s=C3=BCbj=C3=ABct?=" msgtxt1
- '
- 
-+test_expect_success 'detects ambiguous reference/file conflict' '
-+	echo master > master &&
-+	git add master &&
-+	git commit -m"add master" &&
-+	test_must_fail git send-email --dry-run master > errors &&
-+	grep disambiguate errors
-+'
-+
- test_done
--- 
-1.6.0.4.859.g7ecd.dirty
+And that is why it cannot tell between the case where both A^ and A have
+Makefile2 or they both lack it.  And that is exactly why application of
+this change on top of B is mistaken as a patch to a renamed path.  From
+B's point of view:
+
+ - Incoming change says "I changed Makefile from this shape to that
+   shape", and nothing else;
+
+ - B does not have Makefile, but it happens to have the contents at path
+   Makefile2 that is identical to the preimage of that incoming change.
+
+which makes it guess (when falling back to 3-way merge) that somewhere
+leading to B what used to be at Makefile (which is what the incoming
+change claims to change) may have been renamed to Makefile2 (because B
+does not have Makefile but does have it).
