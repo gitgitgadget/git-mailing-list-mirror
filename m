@@ -1,64 +1,69 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: Git Notes - Track rebase/etc + reverse-lookup for bugs ideas
-Date: Mon, 10 Nov 2008 20:51:50 +0100 (CET)
-Message-ID: <alpine.DEB.1.00.0811102049460.30769@pacific.mpi-cbg.de>
-References: <6A0F154C-B9FE-4770-BF70-82A5BEBF907C@gmail.com> <20081110191134.GA3329@sigill.intra.peff.net>
+From: Brandon Casey <casey@nrlssc.navy.mil>
+Subject: Re: [PATCH] Fixed non-literal format in printf-style calls
+Date: Mon, 10 Nov 2008 13:47:55 -0600
+Message-ID: <3t9bmcAj9kThyafdZ9mPENosknipZInn9Qq9u9oVuN7X7qwiI4GqZg@cipher.nrlssc.navy.mil>
+References: <1226344517-16120-1-git-send-email-dlowe@bitmuse.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Thomas Harning <harningt@gmail.com>, git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Mon Nov 10 20:45:47 2008
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Daniel Lowe <dlowe@bitmuse.com>
+X-From: git-owner@vger.kernel.org Mon Nov 10 20:49:38 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Kzchk-0003mM-SE
-	for gcvg-git-2@gmane.org; Mon, 10 Nov 2008 20:45:45 +0100
+	id 1KzclJ-0005Pt-Ci
+	for gcvg-git-2@gmane.org; Mon, 10 Nov 2008 20:49:25 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751236AbYKJTob (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 10 Nov 2008 14:44:31 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751160AbYKJTob
-	(ORCPT <rfc822;git-outgoing>); Mon, 10 Nov 2008 14:44:31 -0500
-Received: from mail.gmx.net ([213.165.64.20]:58390 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751158AbYKJToa (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 10 Nov 2008 14:44:30 -0500
-Received: (qmail invoked by alias); 10 Nov 2008 19:44:21 -0000
-Received: from pacific.mpi-cbg.de (EHLO [141.5.10.38]) [141.5.10.38]
-  by mail.gmx.net (mp049) with SMTP; 10 Nov 2008 20:44:21 +0100
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1+1L7kkuL21u+N3MzL0tASwC2OsDt2IXlAAo/+yl7
-	/u80YmcJzt3Qxc
-X-X-Sender: schindelin@pacific.mpi-cbg.de
-In-Reply-To: <20081110191134.GA3329@sigill.intra.peff.net>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.64
+	id S1751399AbYKJTsJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 10 Nov 2008 14:48:09 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751393AbYKJTsI
+	(ORCPT <rfc822;git-outgoing>); Mon, 10 Nov 2008 14:48:08 -0500
+Received: from mail1.nrlssc.navy.mil ([128.160.35.1]:57264 "EHLO
+	mail.nrlssc.navy.mil" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751300AbYKJTsH (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 10 Nov 2008 14:48:07 -0500
+Received: by mail.nrlssc.navy.mil id mAAJlueQ019132; Mon, 10 Nov 2008 13:47:56 -0600
+In-Reply-To: <1226344517-16120-1-git-send-email-dlowe@bitmuse.com>
+X-OriginalArrivalTime: 10 Nov 2008 19:47:56.0126 (UTC) FILETIME=[3A0DF7E0:01C9436D]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/100551>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/100552>
 
-Hi,
+Daniel Lowe wrote:
 
-On Mon, 10 Nov 2008, Jeff King wrote:
+<snip>
 
-> On Mon, Nov 10, 2008 at 12:37:20PM -0500, Thomas Harning wrote:
-> 
-> > Just wondering, has there been any looking into whether the git-notes 
-> > concept can track rebases?
-> 
-> Not that I know of, but then again, I'm not sure exactly what you mean 
-> by "track rebases".
+>  }
+> diff --git a/grep.c b/grep.c
+> index e2c190a..1db60d9 100644
+> --- a/grep.c
+> +++ b/grep.c
+> @@ -514,7 +514,7 @@ static int grep_buffer_1(struct grep_opt *opt, const char *name,
+>  				if (from <= last_shown)
+>  					from = last_shown + 1;
+>  				if (last_shown && from != last_shown + 1)
+> -					printf(hunk_mark);
+> +					printf("%s", hunk_mark);
 
-I guess he means that you could have something like this
+Perhaps these should by changed to use fputs() instead.
 
-	rebased from <SHA-1>
+<snip>
 
-in the notes for any given commit, so that _if_ you have the commit, e.g. 
-gitk could show that connection (maybe dashed in the graphical history 
-display, and as a "Rebased from:" link).
+> diff --git a/path.c b/path.c
+> index eb24017..ae2c724 100644
+> --- a/path.c
+> +++ b/path.c
+> @@ -41,7 +41,7 @@ char *mksnpath(char *buf, size_t n, const char *fmt, ...)
+>  	len = vsnprintf(buf, n, fmt, args);
+>  	va_end(args);
+>  	if (len >= n) {
+> -		snprintf(buf, n, bad_path);
+> +		snprintf(buf, n, "%s", bad_path);
 
-Ciao,
-Dscho
+and these should use strlcpy.
+
+-brandon
