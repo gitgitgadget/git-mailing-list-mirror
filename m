@@ -1,82 +1,67 @@
-From: "Alexander Gavrilov" <angavrilov@gmail.com>
-Subject: Re: [PATCH (GITK) v3 6/6] gitk: Explicitly position popup windows.
-Date: Mon, 10 Nov 2008 15:15:54 +0300
-Message-ID: <bb6f213e0811100415s212893eeu7702f8714ce4440f@mail.gmail.com>
-References: <1225652389-22082-1-git-send-email-angavrilov@gmail.com>
-	 <1225652389-22082-7-git-send-email-angavrilov@gmail.com>
-	 <18708.11537.229423.296701@cargo.ozlabs.ibm.com>
-	 <200811091753.31198.angavrilov@gmail.com>
-	 <18712.8025.148318.526469@cargo.ozlabs.ibm.com>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: Something like $Id$, $Revision$ or $Date$?
+Date: Mon, 10 Nov 2008 13:25:14 +0100 (CET)
+Message-ID: <alpine.DEB.1.00.0811101319570.30769@pacific.mpi-cbg.de>
+References: <87ljvsjuq7.fsf@erwin.mina86.com> <bd6139dc0811091643m31ff6f49o55a4c581be7f38b2@mail.gmail.com> <87hc6gjs7v.fsf@erwin.mina86.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: "Paul Mackerras" <paulus@samba.org>
-X-From: git-owner@vger.kernel.org Mon Nov 10 13:17:12 2008
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: sverre@rabbelier.nl, git@vger.kernel.org
+To: Michal Nazarewicz <mina86@tlen.pl>
+X-From: git-owner@vger.kernel.org Mon Nov 10 13:18:59 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KzVhe-0002fZ-SZ
-	for gcvg-git-2@gmane.org; Mon, 10 Nov 2008 13:17:11 +0100
+	id 1KzVjM-0003Ck-Q4
+	for gcvg-git-2@gmane.org; Mon, 10 Nov 2008 13:18:57 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754065AbYKJMPz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 10 Nov 2008 07:15:55 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754033AbYKJMPz
-	(ORCPT <rfc822;git-outgoing>); Mon, 10 Nov 2008 07:15:55 -0500
-Received: from rv-out-0506.google.com ([209.85.198.234]:63955 "EHLO
-	rv-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753960AbYKJMPy (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 10 Nov 2008 07:15:54 -0500
-Received: by rv-out-0506.google.com with SMTP id k40so2449724rvb.1
-        for <git@vger.kernel.org>; Mon, 10 Nov 2008 04:15:54 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to
-         :subject:cc:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:references;
-        bh=EFByMjAHKYNPQVtckT6FISP7/+/VnM/JtPKQHy1zohM=;
-        b=it5ZvE4dKRe2wvOUSGAiyZfzWMsE/kJN3Baq7w5sX0OBePWtJIW5F0UzHungHXN+IS
-         NweUBkiSAEoK7ceTQPiTUOibZ1rrarg5ellk/pgNcyXVp2XGyq2wYPXdfPBrzWYY4HuQ
-         UPK4BCA9Px7Ksd6VLq8wfKGoKZPO28MHQSDPo=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
-         :content-type:content-transfer-encoding:content-disposition
-         :references;
-        b=kFedEjTTHaLvoJInn4Y/JmzSBtYJE6vraKtFTV/8M3r7BNh0FJeIpRAk7kyVYDiBNK
-         e/ZrNtHh3dikYYDcLvbujPBtZAMpevY3WKIQOeQyPfk3fV1HAO4sL1DKaYFrMdrP86ZM
-         2+MsPccIR90iLNnraNhxoDKdTtqjcaducJ4y8=
-Received: by 10.143.163.10 with SMTP id q10mr2359604wfo.324.1226319354073;
-        Mon, 10 Nov 2008 04:15:54 -0800 (PST)
-Received: by 10.142.216.21 with HTTP; Mon, 10 Nov 2008 04:15:54 -0800 (PST)
-In-Reply-To: <18712.8025.148318.526469@cargo.ozlabs.ibm.com>
-Content-Disposition: inline
+	id S1754344AbYKJMRm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 10 Nov 2008 07:17:42 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754430AbYKJMRm
+	(ORCPT <rfc822;git-outgoing>); Mon, 10 Nov 2008 07:17:42 -0500
+Received: from mail.gmx.net ([213.165.64.20]:46473 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1754332AbYKJMRm (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 10 Nov 2008 07:17:42 -0500
+Received: (qmail invoked by alias); 10 Nov 2008 12:17:40 -0000
+Received: from pacific.mpi-cbg.de (EHLO [141.5.10.38]) [141.5.10.38]
+  by mail.gmx.net (mp034) with SMTP; 10 Nov 2008 13:17:40 +0100
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX18cjDQFk7wc0IFVu2BzBgc2TldSR5ReebSW0tUWhV
+	y9pEa0tbSOi8Nh
+X-X-Sender: schindelin@pacific.mpi-cbg.de
+In-Reply-To: <87hc6gjs7v.fsf@erwin.mina86.com>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.67
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/100521>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/100522>
 
-On Mon, Nov 10, 2008 at 2:47 PM, Paul Mackerras <paulus@samba.org> wrote:
-> Alexander Gavrilov writes:
->
->> I don't know about MacOS, but in Linux it does seem unnecessary, so:
->
-> OK.  Do you mostly develop on windows or on linux?
+Hi,
 
-I use Linux at home (using a VirtualBox to compile msysgit when I need
-to), and Windows at work.
+On Mon, 10 Nov 2008, Michal Nazarewicz wrote:
 
-Actually, since last Thursday I also have to use MacOS at work for
-some things, but I haven't figured out anything beyond the bare
-minimum yet.
+> I would like the "$Id$" sequences to be updated automatically after a 
+> commit (ie. without the need to check out).  (Besides I would prefer 
+> $Date$ more but I can live with $Id$ I guess ;) ).
 
->> +    if {$::tcl_platform(platform) ne {windows}} return
->
-> Any particular reason why you used $tcl_platform(platform) rather than
-> if {[tk windowingsystem] != "win32"} like we do elsewhere in gitk?
+No, you don't.
 
-No partucular reason, I simply copied that from git-gui.
+At least most likely you do not want that behavior.  Typically, you have 
+the $Id$ stuff in released versions to indicate what revision that version 
+came from even if the files are no longer in a Git repository.
 
-Alexander.
+And you can have that without ever committing anything in-between, by 
+using the export-subst attributes with git-archive.  Have a look at 
+Documentation/gitattributes.txt (I agree it is underdocumented in 
+git-archive.txt).
+
+If that is not your use case, then it may be wise to let us Git people 
+know what you _actually_ want (i.e. instead of asking for a specific 
+solution, you could tell us what your problem is).
+
+Ciao,
+Dscho
