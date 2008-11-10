@@ -1,60 +1,73 @@
-From: Karl =?iso-8859-1?Q?Hasselstr=F6m?= <kha@treskal.com>
-Subject: Re: StGit: stgit mail configuration options
-Date: Mon, 10 Nov 2008 11:19:58 +0100
-Message-ID: <20081110101958.GA14955@diana.vm.bytemark.co.uk>
-References: <871vxptasf.fsf@krank.kagedal.org>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: How it was at GitTogether'08 ?
+Date: Mon, 10 Nov 2008 11:38:23 +0100 (CET)
+Message-ID: <alpine.DEB.1.00.0811101125360.30769@pacific.mpi-cbg.de>
+References: <200811080254.53202.jnareb@gmail.com> <ee77f5c20811072108o21f97c97i8174f4f7ecd67030@mail.gmail.com> <200811081631.06229.jnareb@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Catalin Marinas <catalin.marinas@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: David =?iso-8859-1?Q?K=E5gedal?= <davidk@lysator.liu.se>
-X-From: git-owner@vger.kernel.org Mon Nov 10 11:22:12 2008
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: David Symonds <dsymonds@gmail.com>, git@vger.kernel.org
+To: Jakub Narebski <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Nov 10 11:32:17 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KzTuK-0008Pi-Tr
-	for gcvg-git-2@gmane.org; Mon, 10 Nov 2008 11:22:09 +0100
+	id 1KzU3y-0002tC-Gj
+	for gcvg-git-2@gmane.org; Mon, 10 Nov 2008 11:32:06 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754211AbYKJKU3 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 10 Nov 2008 05:20:29 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753936AbYKJKU3
-	(ORCPT <rfc822;git-outgoing>); Mon, 10 Nov 2008 05:20:29 -0500
-Received: from diana.vm.bytemark.co.uk ([80.68.90.142]:2819 "EHLO
-	diana.vm.bytemark.co.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751335AbYKJKU3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 10 Nov 2008 05:20:29 -0500
-Received: from kha by diana.vm.bytemark.co.uk with local (Exim 3.36 #1 (Debian))
-	id 1KzTsE-000439-00; Mon, 10 Nov 2008 10:19:58 +0000
-Content-Disposition: inline
-In-Reply-To: <871vxptasf.fsf@krank.kagedal.org>
-X-Manual-Spam-Check: kha@treskal.com, clean
-User-Agent: Mutt/1.5.9i
+	id S1754300AbYKJKaw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 10 Nov 2008 05:30:52 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754285AbYKJKaw
+	(ORCPT <rfc822;git-outgoing>); Mon, 10 Nov 2008 05:30:52 -0500
+Received: from mail.gmx.net ([213.165.64.20]:43106 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1754192AbYKJKav (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 10 Nov 2008 05:30:51 -0500
+Received: (qmail invoked by alias); 10 Nov 2008 10:30:49 -0000
+Received: from pacific.mpi-cbg.de (EHLO [141.5.10.38]) [141.5.10.38]
+  by mail.gmx.net (mp059) with SMTP; 10 Nov 2008 11:30:49 +0100
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX19HT0xyzPNHA0dbPbDILpTox4uzf122EjE0tyCbBq
+	6SOfBE5RNVXIwz
+X-X-Sender: schindelin@pacific.mpi-cbg.de
+In-Reply-To: <200811081631.06229.jnareb@gmail.com>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.57
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/100511>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/100512>
 
-On 2008-11-06 11:21:20 +0100, David K=E5gedal wrote:
+Hi,
 
-> The "stg mail" command uses a couple of configuration options that
-> are completely undocumented, and don't fit well together.
+On Sat, 8 Nov 2008, Jakub Narebski wrote:
 
-I agree that they definitely need documenting.
+> On Sat, 8 Nov 2008, David Symonds wrote:
+> > On Fri, Nov 7, 2008 at 5:54 PM, Jakub Narebski <jnareb@gmail.com> wrote:
+> > 
+> > > Mon, Oct 27, 2008
+> > > -----------------
+> > > * Dscho: Contributing with Git
+> > >  http://www.youtube.com/watch?v=j45cs5_nY2k
+> > 
+> > It was a good intro, but I was expecting a few more non-GitTogether 
+> > people. We had quite a large room, but there was only about a dozen 
+> > other people who came along. I don't know whether that was the fault 
+> > of the timing, lack of advertising, or a lack of interest.
+> 
+> By the way, it would be nice to have transcript for this talk, just
+> like there is for Linus talk:
+>   http://git.or.cz/gitwiki/LinusTalk200705Transcript
+> (but this would take some doing).
+>
+> It would be also nice to have slides for the talk available somewhere, 
+> just like slides for "Git Chronicle".
 
-As for renaming them and/or changing their types, that's probably a
-good idea too. And once they are documented, we could e.g. rename and
-only mention the new name in the docs, but keep the old name as well
-for backward compatibility.
+Voila:
 
-One interesting twist would be to fix StGit's config parser so that it
-can automatically generate a man page listing all the config options
-it recognizes. It needs updating anyway for other reasons (I believe
-it still calls git-config several times instead of just once), and
-this could be done at the same time.
+http://repo.or.cz/w/git/dscho.git?a=blob_plain;f=all-your-rebase.pdf;hb=f23c1c9868256cae8591bddafd64422f95d67b02
 
---=20
-Karl Hasselstr=F6m, kha@treskal.com
-      www.treskal.com/kalle
+Ciao,
+Dscho
