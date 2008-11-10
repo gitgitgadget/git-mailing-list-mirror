@@ -1,71 +1,86 @@
-From: Francis Galiegue <fg@one2team.com>
-Subject: Re: [PATCH] git send-email: edit recipient addresses with the --compose flag
-Date: Mon, 10 Nov 2008 08:59:48 +0100
-Organization: One2team
-Message-ID: <200811100859.48918.fg@one2team.com>
-References: <1226235588-2997-1-git-send-email-ian.hilt@gmx.com> <200811100857.10802.fg@one2team.net>
+From: Aristotle Pagaltzis <pagaltzis@gmx.de>
+Subject: Re: [PATCH] git send-email: edit recipient addresses with the
+	--compose flag
+Date: Mon, 10 Nov 2008 09:08:48 +0100
+Message-ID: <20081110080848.GA325@klangraum.plasmasturm.org>
+References: <1226235588-2997-1-git-send-email-ian.hilt@gmx.com> <7viqqwa6wo.fsf@gitster.siamese.dyndns.org> <alpine.LFD.2.00.0811091910570.21142@sys-0.hiltweb.site> <200811100849.36736.fg@one2team.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Git Mailing List <git@vger.kernel.org>,
-	Pierre Habouzit <madcoder@debian.org>,
-	Junio C Hamano <gitster@pobox.com>
-To: Ian Hilt <ian.hilt@gmx.com>
-X-From: git-owner@vger.kernel.org Mon Nov 10 09:01:30 2008
+To: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Mon Nov 10 09:10:08 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KzRiB-0000BZ-De
-	for gcvg-git-2@gmane.org; Mon, 10 Nov 2008 09:01:27 +0100
+	id 1KzRqX-0002EQ-Oh
+	for gcvg-git-2@gmane.org; Mon, 10 Nov 2008 09:10:06 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753509AbYKJIAM convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 10 Nov 2008 03:00:12 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753497AbYKJIAL
-	(ORCPT <rfc822;git-outgoing>); Mon, 10 Nov 2008 03:00:11 -0500
-Received: from ns35774.ovh.net ([213.251.185.197]:47493 "EHLO ns35774.ovh.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753353AbYKJIAK convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 10 Nov 2008 03:00:10 -0500
-Received: from smtp.olympe.o2t (138.193.65-86.rev.gaoland.net [86.65.193.138])
-	by ns35774.ovh.net (Postfix) with ESMTP id F0ADB92C003;
-	Mon, 10 Nov 2008 09:00:05 +0100 (CET)
-Received: from erwin.kitchen.eel (unknown [10.8.0.6])
-	by smtp.olympe.o2t (Postfix) with ESMTP id F0B567001F;
-	Mon, 10 Nov 2008 09:00:08 +0100 (CET)
-User-Agent: KMail/1.9.9
-In-Reply-To: <200811100857.10802.fg@one2team.net>
+	id S1752928AbYKJIIv convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 10 Nov 2008 03:08:51 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753353AbYKJIIv
+	(ORCPT <rfc822;git-outgoing>); Mon, 10 Nov 2008 03:08:51 -0500
+Received: from mail.gmx.net ([213.165.64.20]:41510 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1750970AbYKJIIv (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 10 Nov 2008 03:08:51 -0500
+Received: (qmail invoked by alias); 10 Nov 2008 08:08:48 -0000
+Received: from static-87-79-236-202.netcologne.de (EHLO klangraum) [87.79.236.202]
+  by mail.gmx.net (mp005) with SMTP; 10 Nov 2008 09:08:48 +0100
+X-Authenticated: #163624
+X-Provags-ID: V01U2FsdGVkX18ZNsNXL88ZKmZUZnfYyte52YCOsVYnDKdRK3og/V
+	y825LRyuLODvLg
+Mail-Followup-To: Git Mailing List <git@vger.kernel.org>
 Content-Disposition: inline
+In-Reply-To: <200811100849.36736.fg@one2team.com>
+User-Agent: Mutt/1.5.18 (2008-05-17)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.54
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/100498>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/100499>
 
-Le Monday 10 November 2008 08:57:10 Francis Galiegue, vous avez =E9crit=
+* Francis Galiegue <fg@one2team.com> [2008-11-10 08:55]:
+> Le Monday 10 November 2008 01:38:30 Ian Hilt, vous avez =C3=A9crit=C2=
 =A0:
-> Le Sunday 09 November 2008 13:59:48 Ian Hilt, vous avez =E9crit=A0:
-> [...]
->
-> > +	my @recipients =3D split(/\s*,\s*/, $match);
->
-> This is where it gets complicated, for the "hey, I am" <some@one> cas=
-e...
->
-> But then there is a solution: use a negative lookahead for the split =
-regex.
->
-> I thought about splitting against /\s*,\s*(?![^"]+(?:\"[^*]*)*)"/.
->
+> > On Sun, 9 Nov 2008, Junio C Hamano wrote:
+> > > Ian Hilt <ian.hilt@gmx.com> writes:
+> > > > On Sun, 9 Nov 2008, Francis Galiegue wrote:
+> > > >> Le Sunday 09 November 2008 13:59:48 Ian Hilt, vous avez =C3=A9=
+crit=C2=A0:
+> > > >> > +	if ($c_file =3D~ /^To:\s*+(.+)\s*\nCc:/ism) {
+> > > >>
+> > > >> Greedy operators are only supported with perl 5.10 or more... =
+I think
+> > > >> it's a bad idea to use them...
 
-Oops, that should have been /\s*,\s*(?![^"]+(?:\"[^*]*)*")/, sorry :/
+Possessive quantification is supported in much earlier versions
+of Perl, it=E2=80=99s just more awkward syntactically:
 
+    /^To:(?>\s*)(.+)\s*\nCc:/ism
+
+But possessification is not going to make a difference in this
+regex, since .+ can match anything that \s* can also match, so
+the only difference is that if the regex does happen to
+backtrack, it will backtrack over all the spaces after the To:
+at once instead of one at a time.
+
+I have only just subscribed so I do not have enough context to
+know what the problem is, but based on what I have seen so far it
+seems to me that all you want is simply
+
+    /^To:\s?(.+)\s*\nCc:/ism
+
+although I have to wonder if the /s modifier here is really what
+you want.
+
+> I think the correct term for *+, ++, ?+ etc is "possessive"
+> quantifiers, I'm just not sure.
+
+That is correct.
+
+Regards,
 --=20
-=46rancis Galiegue
-ONE2TEAM
-Ing=E9nieur syst=E8me
-Mob : +33 (0) 6 83 87 78 75
-Tel : +33 (0) 1 78 94 55 52
-fge@one2team.com
-40 avenue Raymond Poincar=E9
-75116 Paris
+Aristotle Pagaltzis // <http://plasmasturm.org/>
