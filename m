@@ -1,83 +1,102 @@
-From: Eric Wong <normalperson@yhbt.net>
-Subject: Re: [PATCH] Documentation: git-svn: fix example for centralized SVN clone
-Date: Sun, 9 Nov 2008 17:12:32 -0800
-Message-ID: <20081110011232.GA11666@hand.yhbt.net>
-References: <20081109230012.47adbb32@perceptron>
+From: Michal Nazarewicz <mina86@tlen.pl>
+Subject: Re: Something like $Id$, $Revision$ or $Date$?
+Date: Mon, 10 Nov 2008 02:16:20 +0100
+Message-ID: <87hc6gjs7v.fsf@erwin.mina86.com>
+References: <87ljvsjuq7.fsf@erwin.mina86.com>
+	<bd6139dc0811091643m31ff6f49o55a4c581be7f38b2@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: aroben@hand.yhbt.net, Git ML <git@vger.kernel.org>,
-	Junio C Hamano <gitster@pobox.com>
-To: Jan =?iso-8859-1?Q?Kr=FCger?= <jk@jk.gs>
-X-From: git-owner@vger.kernel.org Mon Nov 10 02:14:39 2008
+Content-Type: multipart/signed; boundary="=-=-=";
+	micalg=pgp-sha1; protocol="application/pgp-signature"
+Cc: git@vger.kernel.org
+To: sverre@rabbelier.nl
+X-From: git-owner@vger.kernel.org Mon Nov 10 02:18:04 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KzLMU-00024g-9b
-	for gcvg-git-2@gmane.org; Mon, 10 Nov 2008 02:14:38 +0100
+	id 1KzLPj-0002ym-5g
+	for gcvg-git-2@gmane.org; Mon, 10 Nov 2008 02:17:59 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757016AbYKJBMh convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 9 Nov 2008 20:12:37 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756976AbYKJBMh
-	(ORCPT <rfc822;git-outgoing>); Sun, 9 Nov 2008 20:12:37 -0500
-Received: from hand.yhbt.net ([66.150.188.102]:43599 "EHLO hand.yhbt.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756909AbYKJBMg (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 9 Nov 2008 20:12:36 -0500
-Received: from localhost.localdomain (localhost [127.0.0.1])
-	by hand.yhbt.net (Postfix) with ESMTP id ED6722DC01A;
-	Mon, 10 Nov 2008 01:12:32 +0000 (UTC)
-Content-Disposition: inline
-In-Reply-To: <20081109230012.47adbb32@perceptron>
-User-Agent: Mutt/1.5.13 (2006-08-11)
+	id S1755407AbYKJBQo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 9 Nov 2008 20:16:44 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755345AbYKJBQo
+	(ORCPT <rfc822;git-outgoing>); Sun, 9 Nov 2008 20:16:44 -0500
+Received: from nf-out-0910.google.com ([64.233.182.188]:28396 "EHLO
+	nf-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755310AbYKJBQn (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 9 Nov 2008 20:16:43 -0500
+Received: by nf-out-0910.google.com with SMTP id d3so986618nfc.21
+        for <git@vger.kernel.org>; Sun, 09 Nov 2008 17:16:41 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:from:to:cc:subject:references
+         :x-url:x-pgp-fp:x-pgp:date:in-reply-to:message-id:user-agent
+         :mime-version:content-type:sender;
+        bh=aDNp+rJj5HkwKfsER9cKNkscUtdWbl+lkowmFWF0A8s=;
+        b=UA2do3yIXUdERVqNS6qYjP3uesVlINCo1tToMlY2bNWeGC1ethXvaGloZeAexQwruI
+         XzcOe76oRtR8Z0e26ffyttxQ4rlolgPtf9amHfQowpN0bTUJDsOOpQ8dopQz5nP0RoyY
+         ulmp0Cmb681mQrU8ME5T3Ut1dlhX0/O6xeIc8=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=from:to:cc:subject:references:x-url:x-pgp-fp:x-pgp:date:in-reply-to
+         :message-id:user-agent:mime-version:content-type:sender;
+        b=r4gnHz5pzlebvfjPJy1oS02ZRxQmEiZm0vYzPiyfhJeD9SDf9Onw4U22BbHMuAMQ9K
+         vfQ6ciWW5L/G0Fv+rlbvFJrVk3bdSmMkaCAt173XLNLct0YoCQwku+5QNNRpuL+gWn5D
+         cBSxkphIIAmcFOHherZmMATuup1izwAVlCdbk=
+Received: by 10.210.119.16 with SMTP id r16mr895146ebc.147.1226279801558;
+        Sun, 09 Nov 2008 17:16:41 -0800 (PST)
+Received: from erwin.piotrekn (dng132.neoplus.adsl.tpnet.pl [83.24.88.132])
+        by mx.google.com with ESMTPS id c24sm225508ika.23.2008.11.09.17.16.39
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Sun, 09 Nov 2008 17:16:40 -0800 (PST)
+X-Url: http://mina86.com/
+X-PGP-FP: 9134 06FA 7AD8 D134 9D0C  C33F 532C CB00 B7C6 DF1E
+X-PGP: B7C6DF1E
+In-Reply-To: <bd6139dc0811091643m31ff6f49o55a4c581be7f38b2@mail.gmail.com>
+	(Sverre Rabbelier's message of "Mon, 10 Nov 2008 01:43:41 +0100")
+User-Agent: Gnus/5.110011 (No Gnus v0.11) Emacs/23.0 (Slckware Linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/100484>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/100485>
 
-Jan Kr=FCger <jk@jk.gs> wrote:
-> The example that tells users how to centralize the effort of the init=
-ial
-> git svn clone operation doesn't work properly. It uses rebase but tha=
-t
-> only works if HEAD exists. This adds one extra command to create a
-> somewhat sensible HEAD that should work in all cases.
->=20
-> Signed-off-by: Jan Kr=FCger <jk@jk.gs>
-> ---
-> I have a feeling this looks a bit ugly, but I can't think of a simple=
-r
-> solution (especially since we're not fetching the central repo's HEAD=
-).
-> Still, it's certainly better than a broken example.
+--=-=-=
+Content-Transfer-Encoding: quoted-printable
 
-*shrug*  Seems alright with me.
+"Sverre Rabbelier" <alturin@gmail.com> writes:
 
-Adam wrote the original example, maybe he knows better.
+> On Mon, Nov 10, 2008 at 01:22, Michal Nazarewicz <mina86@tlen.pl> wrote:
+>> Now, what I need is such feature in GIT.  Upon committing I would like
+>> some magic string (say "$Date$") to be replaced with some value
+>> identifying uniquely given version of a file (a date of the commit would
+>> be sufficient).
+>
+> Please have a look at the relevant entry in the faq [0].
+>
+> [0] http://git.or.cz/gitwiki/GitFaq#head-4a0afe71a2bb7734777a8b0b345e0308=
+aefdbd40
 
->  Documentation/git-svn.txt |    2 ++
->  1 files changed, 2 insertions(+), 0 deletions(-)
->=20
-> diff --git a/Documentation/git-svn.txt b/Documentation/git-svn.txt
-> index 84c8f3c..ba94cd1 100644
-> --- a/Documentation/git-svn.txt
-> +++ b/Documentation/git-svn.txt
-> @@ -544,6 +544,8 @@ have each person clone that repository with 'git-=
-clone':
->         git remote add origin server:/pub/project
->         git config --add remote.origin.fetch '+refs/remotes/*:refs/re=
-motes/*'
->         git fetch
-> +# Create a local branch from one of the branches just fetched
-> +       git checkout -b master FETCH_HEAD
->  # Initialize git-svn locally (be sure to use the same URL and -T/-b/=
--t options as were used on server)
->         git svn init http://svn.example.com/project
->  # Pull the latest changes from Subversion
-> --
-> 1.6.0.3.578.g6a50
+Thanks for the quick reply (and yes, I can't believe I couldn't find
+that myself...) but it still lacks one thing that I'd like to have.
+I would like the "$Id$" sequences to be updated automatically after
+a commit (ie. without the need to check out).  (Besides I would prefer
+$Date$ more but I can live with $Id$ I guess ;) ).
 
---=20
-Eric Wong
+=2D-=20
+Best regards,                                         _     _
+ .o. | Liege of Serenly Enlightened Majesty of      o' \,=3D./ `o
+ ..o | Computer Science,  Michal "mina86" Nazarewicz   (o o)
+ ooo +--<mina86*tlen.pl>--<jid:mina86*jabber.org>--ooO--(_)--Ooo--
+
+--=-=-=
+Content-Type: application/pgp-signature
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.0.9 (GNU/Linux)
+
+iEYEARECAAYFAkkXi3UACgkQUyzLALfG3x71DgCfXL+bitgjLKU81XhTaGdDQcEs
+3TUAoI8GLea6WuwVDiXk4BBudQXhnAom
+=4PBH
+-----END PGP SIGNATURE-----
+--=-=-=--
