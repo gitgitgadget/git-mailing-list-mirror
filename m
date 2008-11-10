@@ -1,71 +1,79 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: multiple-commit cherry-pick?
-Date: Mon, 10 Nov 2008 22:34:49 +0100 (CET)
-Message-ID: <alpine.DEB.1.00.0811102234040.30769@pacific.mpi-cbg.de>
-References: <buoiqr18tdk.fsf@dhapc248.dev.necel.com> <20081106213711.GA4334@blimp.localdomain> <alpine.LFD.2.00.0811061925300.3451@nehalem.linux-foundation.org> <7vskq4gmf5.fsf@gitster.siamese.dyndns.org> <20081107071231.GA4063@blimp.localdomain>
- <alpine.LFD.2.00.0811071004170.3468@nehalem.linux-foundation.org> <20081109102528.GA5463@blimp.localdomain> <alpine.DEB.1.00.0811102054470.30769@pacific.mpi-cbg.de> <7vabc75n5q.fsf@gitster.siamese.dyndns.org>
+From: Francis Galiegue <fg@one2team.net>
+Subject: Re: JGIT: discuss: diff/patch implementation
+Date: Mon, 10 Nov 2008 22:31:30 +0100
+Organization: One2team
+Message-ID: <200811102231.31263.fg@one2team.net>
+References: <200811101522.13558.fg@one2team.net> <7v63mv5mro.fsf@gitster.siamese.dyndns.org> <20081110205242.GH2932@spearce.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Alex Riesen <raa.lkml@gmail.com>,
-	Linus Torvalds <torvalds@linux-foundation.org>,
-	Miles Bader <miles@gnu.org>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Nov 10 22:28:48 2008
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Git Mailing List <git@vger.kernel.org>,
+	Robin Rosenberg <robin.rosenberg.lists@dewire.com>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>
+To: "Shawn O. Pearce" <spearce@spearce.org>
+X-From: git-owner@vger.kernel.org Mon Nov 10 22:33:23 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KzeJH-0004xf-Nd
-	for gcvg-git-2@gmane.org; Mon, 10 Nov 2008 22:28:36 +0100
+	id 1KzeNs-0006zp-Hf
+	for gcvg-git-2@gmane.org; Mon, 10 Nov 2008 22:33:21 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751060AbYKJV1V (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 10 Nov 2008 16:27:21 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751132AbYKJV1V
-	(ORCPT <rfc822;git-outgoing>); Mon, 10 Nov 2008 16:27:21 -0500
-Received: from mail.gmx.net ([213.165.64.20]:37601 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751005AbYKJV1V (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 10 Nov 2008 16:27:21 -0500
-Received: (qmail invoked by alias); 10 Nov 2008 21:27:18 -0000
-Received: from pacific.mpi-cbg.de (EHLO [141.5.10.38]) [141.5.10.38]
-  by mail.gmx.net (mp059) with SMTP; 10 Nov 2008 22:27:18 +0100
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1+c7V5DDQmcFTPjBHhWe3/VgN286cfgM8UAcesZlL
-	p+45RNZx1yuTD4
-X-X-Sender: schindelin@pacific.mpi-cbg.de
-In-Reply-To: <7vabc75n5q.fsf@gitster.siamese.dyndns.org>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.66
+	id S1751399AbYKJVcF convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 10 Nov 2008 16:32:05 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751294AbYKJVcD
+	(ORCPT <rfc822;git-outgoing>); Mon, 10 Nov 2008 16:32:03 -0500
+Received: from ns35774.ovh.net ([213.251.185.197]:48510 "EHLO ns35774.ovh.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751243AbYKJVcD convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 10 Nov 2008 16:32:03 -0500
+Received: from erwin.kitchen.eel (AOrleans-157-1-64-185.w90-20.abo.wanadoo.fr [90.20.51.185])
+	(Authenticated sender: fg@one2team.net)
+	by ns35774.ovh.net (Postfix) with ESMTP id 7606B92C003;
+	Mon, 10 Nov 2008 22:31:48 +0100 (CET)
+User-Agent: KMail/1.9.9
+In-Reply-To: <20081110205242.GH2932@spearce.org>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/100577>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/100578>
 
-Hi,
+Le Monday 10 November 2008 21:52:42 Shawn O. Pearce, vous avez =E9crit=A0=
+:
+> Junio C Hamano <gitster@pobox.com> wrote:
+> > Francis Galiegue <fg@one2team.net> writes:
+> > > A very nice git feature, without even going as far as merges, is =
+the
+> > > cherry pick feature.
+> >
+> > I thought cherry-picking needs to be done in terms of 3-way merge, =
+not
+> > diff piped to patch, for correctness's sake.
+>
+> Yea, the 3-way merge cherry-pick is better.  But in a pinch you
+> can (usually) get correct results from a "diff | patch" pipeline.
+> Of course that doesn't always work, resulting in patches that don't
+> apply cleanly, or worse, that apply at the wrong place silently.
 
-On Mon, 10 Nov 2008, Junio C Hamano wrote:
+Well, in this case, I'd say it's a case of a bottle being "half full" o=
+r "half=20
+empty".
 
-> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
-> 
-> Alex could also change the command to show the HEAD and HEAD~10, by 
-> changing the way series of range parameters are evaluated by the 
-> revision parsing machinery.  You take HEAD^..HEAD and come up with one 
-> set (that has only one commit, HEAD), you take the next parameter 
-> HEAD~10 and come up with another set (that also has only one commit, 
-> HEAD~10, because show does not walk), then you take union.
-> 
-> I personally do not want to see that happen, though.  The way multiple
-> "ranges" that come from separate command line parameters combine using set
-> operator semantics is so useful to do something like...
-> 
-> 	git log ko/master..master ^maint
-> 
-> which is my way to ask "Which commits on master are the ones that I
-> haven't pushed out?
+The availability of even a simple diff|patch in jgit, and its being ava=
+ilable=20
+in egit, would generally be seen as a "half full" bottle, and would, im=
+ho,=20
+GREATLY increase the appeal factor of egit, all the more that you have =
+plenty=20
+of undo/redo ability in Eclipse... And, dare I say it, of git in genera=
+l as=20
+an SCM to be used in many environments where Eclipse is the de facto ID=
+E.
 
-Exactly one of my use cases, since we do not have ko/master,maint..master.
+I know, I may sound irritating, but...
 
-Ciao,
-Dscho
+--=20
+fge
