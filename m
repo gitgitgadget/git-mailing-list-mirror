@@ -1,66 +1,89 @@
-From: =?ISO-8859-1?Q?Steve_Fr=E9cinaux?= <nudrema@gmail.com>
-Subject: Re: [PATCH 2/2] Cached the git configuration, which is now noticibly
- faster on windows.
-Date: Mon, 10 Nov 2008 09:38:11 +0100
-Message-ID: <4917F2F3.8000408@gmail.com>
-References: <1226114569-8506-1-git-send-email-thestar@fussycoder.id.au>	 <1226114569-8506-2-git-send-email-thestar@fussycoder.id.au>	 <ee77f5c20811072119y65738f54o7e6792fb405c142c@mail.gmail.com> <1226127130.8252.6.camel@therock.nsw.bigpond.net.au>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: Large media in git (was: How it was at GitTogether'08)?
+Date: Mon, 10 Nov 2008 10:30:53 +0100
+Message-ID: <200811101030.54070.jnareb@gmail.com>
+References: <200811080254.53202.jnareb@gmail.com> <200811091731.48694.jnareb@gmail.com> <200811091955.19304.kai@samba.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Type: text/plain;
+  charset="iso-8859-2"
 Content-Transfer-Encoding: 7bit
-Cc: David Symonds <dsymonds@gmail.com>, git@vger.kernel.org
-To: Arafangion <thestar@fussycoder.id.au>
-X-From: git-owner@vger.kernel.org Mon Nov 10 09:39:36 2008
+Cc: git@vger.kernel.org, Tim Ansell <mithro@mithis.com>
+To: Kai Blin <kai@samba.org>
+X-From: git-owner@vger.kernel.org Mon Nov 10 10:32:38 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KzSJ0-0001XE-Ab
-	for gcvg-git-2@gmane.org; Mon, 10 Nov 2008 09:39:30 +0100
+	id 1KzT8H-0001ET-3B
+	for gcvg-git-2@gmane.org; Mon, 10 Nov 2008 10:32:29 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753989AbYKJIiP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 10 Nov 2008 03:38:15 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753885AbYKJIiP
-	(ORCPT <rfc822;git-outgoing>); Mon, 10 Nov 2008 03:38:15 -0500
-Received: from www.multitel.be ([193.190.194.194]:44779 "EHLO smtp.multitel.be"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753822AbYKJIiO (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 10 Nov 2008 03:38:14 -0500
-Received: from localhost (localhost [127.0.0.1])
-	by smtp.multitel.be (Postfix) with ESMTP id C01994E80D6;
-	Mon, 10 Nov 2008 09:38:12 +0100 (CET)
-X-Virus-Scanned: Debian amavisd-new at pop.multitel.be.multitel.be
-Received: from smtp.multitel.be ([127.0.0.1])
-	by localhost (pop.multitel.be [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id Hge7qYXdq7q9; Mon, 10 Nov 2008 09:38:12 +0100 (CET)
-Received: from [172.30.201.110] (ip-213-177-152-201.dsl-static.scarlet.be [213.177.152.201])
-	by smtp.multitel.be (Postfix) with ESMTP id D1F014E80BA;
-	Mon, 10 Nov 2008 09:38:11 +0100 (CET)
-User-Agent: Mozilla-Thunderbird 2.0.0.17 (X11/20081018)
-In-Reply-To: <1226127130.8252.6.camel@therock.nsw.bigpond.net.au>
+	id S1753626AbYKJJbM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 10 Nov 2008 04:31:12 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753703AbYKJJbM
+	(ORCPT <rfc822;git-outgoing>); Mon, 10 Nov 2008 04:31:12 -0500
+Received: from ug-out-1314.google.com ([66.249.92.168]:4920 "EHLO
+	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753626AbYKJJbK (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 10 Nov 2008 04:31:10 -0500
+Received: by ug-out-1314.google.com with SMTP id 39so313826ugf.37
+        for <git@vger.kernel.org>; Mon, 10 Nov 2008 01:31:08 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:from:to:subject:date
+         :user-agent:cc:references:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:message-id;
+        bh=uANM35iXFALtT4mBvgx71BzVTm7fOYuUn6PQ5ql0L5s=;
+        b=gXLv6O82qvlk5yg4lOnmT9GpGicNRzKu7/pJNfnSkJCOPfFTH7NvPaPEn/t7ZuiyWe
+         flt410diNTgXB16QRq3lQfAESux3zNjNP5WEq1OqWIqdVplXwFJ/63IVpZyRa+WkZ1R4
+         FH1A0UMzEzJ60clI1gQfkeJhfZVc8z76gClGw=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=from:to:subject:date:user-agent:cc:references:in-reply-to
+         :mime-version:content-type:content-transfer-encoding
+         :content-disposition:message-id;
+        b=g4gInJKelM362K1alnJgKJIBSnmNe69w8uaVWJDBtFGhiDmIWLKFlBQBxTfsP5mF1I
+         xsjbgVZcWO3u82N7dtGdwgdbd05CzbKWYRyvrYQg3zUHg14Do0GwowQY/4TPyhU8pCmQ
+         j77rHPPcMo8V3BulEbTQpoCbETpRw2K275/Rc=
+Received: by 10.67.96.9 with SMTP id y9mr1863233ugl.64.1226309468324;
+        Mon, 10 Nov 2008 01:31:08 -0800 (PST)
+Received: from ?192.168.1.11? (abww18.neoplus.adsl.tpnet.pl [83.8.246.18])
+        by mx.google.com with ESMTPS id e1sm7098983ugf.7.2008.11.10.01.31.06
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Mon, 10 Nov 2008 01:31:07 -0800 (PST)
+User-Agent: KMail/1.9.3
+In-Reply-To: <200811091955.19304.kai@samba.org>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/100500>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/100501>
 
-Arafangion wrote:
-> On Fri, 2008-11-07 at 21:19 -0800, David Symonds wrote:
-> <snip>
->> _gitConfig = None
->> def gitConfig(key):
->>   if _gitConfig is None:
->>     lines = read_pipe("git config -l", ignore_error=True).readlines():
->>     _gitConfig = dict([l.strip().split('=', 1) for l in lines])
->>   return _gitConfig.get(key, None)
+On Sun, 9 Nov 2008, Kai Blin wrote:
+> On Sunday 09 November 2008 17:31:47 Jakub Narebski wrote:
 > 
-> That certainly is better, if one can assume that git's configuration is
-> small. (And relative to the memory usage of the script, it will
-> definetly be small).
+> > The workaround is to put all large files for example in 'media/' folder,
+> > and make this folder be submodule. Each clone of repository can have
+> > this 'media' submodule either present (both in object database, although
+> > usually separate from main project object database), or not present
+> > (not cloned and not checked out).
+> 
+> Tim was talking about that media/ folder and managing that in git. If you want 
+> to work on the media, you might end up getting hundreds of gigabytes of data 
+> to get that folder, even if you only need to change one single file.
+> 
+> That's the issue we're running into, and I don't thing submodules solve this 
+> at all.
 
-What about using git config --get-regexp to only get the p4-related 
-settings ?
+Ah, well... Submodules cannot be workaround for _this_ issue. You can
+have only all or nothing: either all files in media/ or none of them,
+both in working directory like in repository object database... well
+unless you subdivide further.
 
-I don't really know the options used by git-p4, but something like this 
-seems like a good candidate to address every trade-off concerns?
+I guess that mentioned work on the media is in remote setting (you
+cannot have main repository on network drive) so Dana How's proposed
+solution would not work for you, is it?
 
-git-config --get-regexp '^(p4|user)\.'
+-- 
+Jakub Narebski
+Poland
