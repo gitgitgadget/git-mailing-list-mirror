@@ -1,88 +1,75 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: Something like $Id$, $Revision$ or $Date$?
-Date: Mon, 10 Nov 2008 21:32:03 +0100
-Message-ID: <200811102132.05472.jnareb@gmail.com>
-References: <87ljvsjuq7.fsf@erwin.mina86.com> <200811102117.30372.jnareb@gmail.com> <200811102124.59973.fg@one2team.com>
+From: Miklos Vajna <vmiklos@frugalware.org>
+Subject: Re: Git Notes - Track rebase/etc + reverse-lookup for bugs ideas
+Date: Mon, 10 Nov 2008 21:34:37 +0100
+Message-ID: <20081110203437.GW24201@genesis.frugalware.org>
+References: <6A0F154C-B9FE-4770-BF70-82A5BEBF907C@gmail.com> <alpine.DEB.1.00.0811102049460.30769@pacific.mpi-cbg.de> <20081110195120.GA3688@sigill.intra.peff.net> <200811102101.15285.johan@herland.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Michal Nazarewicz <mina86@tlen.pl>, git@vger.kernel.org
-To: Francis Galiegue <fg@one2team.com>
-X-From: git-owner@vger.kernel.org Mon Nov 10 21:34:18 2008
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="wFcEkHhPyqONlKAq"
+Cc: git@vger.kernel.org, Jeff King <peff@peff.net>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Thomas Harning <harningt@gmail.com>
+To: Johan Herland <johan@herland.net>
+X-From: git-owner@vger.kernel.org Mon Nov 10 21:36:31 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KzdRz-0007qO-9R
-	for gcvg-git-2@gmane.org; Mon, 10 Nov 2008 21:33:31 +0100
+	id 1KzdUQ-0000ZQ-C6
+	for gcvg-git-2@gmane.org; Mon, 10 Nov 2008 21:36:02 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752839AbYKJUcM convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 10 Nov 2008 15:32:12 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752713AbYKJUcM
-	(ORCPT <rfc822;git-outgoing>); Mon, 10 Nov 2008 15:32:12 -0500
-Received: from nf-out-0910.google.com ([64.233.182.190]:64746 "EHLO
-	nf-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752766AbYKJUcL (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 10 Nov 2008 15:32:11 -0500
-Received: by nf-out-0910.google.com with SMTP id d3so1200779nfc.21
-        for <git@vger.kernel.org>; Mon, 10 Nov 2008 12:32:09 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:subject:date
-         :user-agent:cc:references:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:message-id;
-        bh=X6Sr8Lhq+fH2DWqQecptfOxdmmV5suX6dMvT/5h0HnU=;
-        b=avUSMbdF4R9OpezxXLgZ525vDPAsaCHi7Pr7x0GNJbE2VdeKMFQxyv52WKQPzS5Epe
-         3/xGKcL08Iy27VqR/rcDRLOKdwojcB65Al+El5zy/XP25TfVGyXle2JhVHXGIaftDXd2
-         +S1xqKWz++a8KKZVOTEAdy5tQx7J4SMZhhD8U=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=from:to:subject:date:user-agent:cc:references:in-reply-to
-         :mime-version:content-type:content-transfer-encoding
-         :content-disposition:message-id;
-        b=rKfJmwxBiaCdAprK5qwfQl98vBodzQvzHfaMEPeNpSGP5aA1Eh8RQ2KDOekD/wwqoZ
-         310xanqMwl4U/thoVmX+aESLHEJCkRWtlQDJHFuLLDT4uV2MQ2e37eaTrfk4Lju2jvLW
-         66VbUZlrEGis4IYgYsrX6xom5rjPvodnzaJL4=
-Received: by 10.210.81.3 with SMTP id e3mr8089120ebb.112.1226349129395;
-        Mon, 10 Nov 2008 12:32:09 -0800 (PST)
-Received: from ?192.168.1.11? (abwz230.neoplus.adsl.tpnet.pl [83.8.249.230])
-        by mx.google.com with ESMTPS id 5sm279497eyh.2.2008.11.10.12.32.06
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Mon, 10 Nov 2008 12:32:07 -0800 (PST)
-User-Agent: KMail/1.9.3
-In-Reply-To: <200811102124.59973.fg@one2team.com>
+	id S1753470AbYKJUel (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 10 Nov 2008 15:34:41 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753446AbYKJUel
+	(ORCPT <rfc822;git-outgoing>); Mon, 10 Nov 2008 15:34:41 -0500
+Received: from virgo.iok.hu ([193.202.89.103]:35848 "EHLO virgo.iok.hu"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753435AbYKJUej (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 10 Nov 2008 15:34:39 -0500
+Received: from kag.elte.hu (kag.elte.hu [157.181.177.1])
+	by virgo.iok.hu (Postfix) with ESMTP id 126A858095;
+	Mon, 10 Nov 2008 21:34:38 +0100 (CET)
+Received: from genesis.frugalware.org (frugalware.elte.hu [157.181.177.34])
+	by kag.elte.hu (Postfix) with ESMTP id A1C5C4465E;
+	Mon, 10 Nov 2008 21:34:37 +0100 (CET)
+Received: by genesis.frugalware.org (Postfix, from userid 1000)
+	id 8F23C119019E; Mon, 10 Nov 2008 21:34:37 +0100 (CET)
 Content-Disposition: inline
+In-Reply-To: <200811102101.15285.johan@herland.net>
+User-Agent: Mutt/1.5.17 (2007-11-01)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/100562>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/100563>
 
-Dnia poniedzia=C5=82ek 10. listopada 2008 21:24, Francis Galiegue napis=
-a=C5=82:
-> Le Monday 10 November 2008 21:17:29 Jakub Narebski, vous avez =C3=A9c=
-rit=C2=A0:
 
-> > Well, _some_ command has to be invoked to expand keywords. "git add=
-"
-> > doesn't do that (perhaps it should?), so you need to use checkout.
-> >
->=20
-> If "git add" aims to do that, you'd have to be very, VERY careful, no=
-t to=20
-> substitute in the wrong place to start with, not to attempt substitut=
-ion in=20
-> binary files...
->=20
-> And this would have a sizeable cost, imho. If you really want to do t=
-his,=20
-> isn't there a hook somewhere that can do that for you, instead of mod=
-ifying=20
-> git add directly?
+--wFcEkHhPyqONlKAq
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-If I remember correctly there was idea to add 'pre-add' or 'post-add'
-hook...
+On Mon, Nov 10, 2008 at 09:01:15PM +0100, Johan Herland <johan@herland.net>=
+ wrote:
+> Does it make sense to teach "git rebase" the -x option from "git=20
+> cherry-pick"? As with "git cherry-pick -x" it only makes sense to use it =
+if=20
+> your rebasing from a public branch.
 
---=20
-Jakub Narebski
-Poland
+But rebasing a public branch is always something we try to prevent. So
+basically -x would be useful only in case the user does what we asked
+not to do. ;-)
+
+--wFcEkHhPyqONlKAq
+Content-Type: application/pgp-signature
+Content-Disposition: inline
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.9 (GNU/Linux)
+
+iEYEARECAAYFAkkYmt0ACgkQe81tAgORUJYraACfel3kI7Kzhndw9jft65aW+BMY
+sLQAoKmc8OHdL2j1p8pQwXPooZt0tPup
+=CWPS
+-----END PGP SIGNATURE-----
+
+--wFcEkHhPyqONlKAq--
