@@ -1,102 +1,78 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: Something like $Id$, $Revision$ or $Date$?
-Date: Mon, 10 Nov 2008 21:17:29 +0100
-Message-ID: <200811102117.30372.jnareb@gmail.com>
-References: <87ljvsjuq7.fsf@erwin.mina86.com> <200811101903.27685.jnareb@gmail.com> <871vxjl5af.fsf@erwin.mina86.com>
+From: Francis Galiegue <fg@one2team.net>
+Subject: Re: JGIT: discuss: diff/patch implementation
+Date: Mon, 10 Nov 2008 21:21:17 +0100
+Organization: One2team
+Message-ID: <200811102121.17835.fg@one2team.net>
+References: <200811101522.13558.fg@one2team.net> <alpine.DEB.1.00.0811102030180.30769@pacific.mpi-cbg.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-2
+Content-Type: text/plain; charset=iso-8859-1
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Michal Nazarewicz <mina86@tlen.pl>
-X-From: git-owner@vger.kernel.org Mon Nov 10 21:19:04 2008
+Cc: Git Mailing List <git@vger.kernel.org>,
+	"Shawn O. Pearce" <spearce@spearce.org>,
+	Robin Rosenberg <robin.rosenberg.lists@dewire.com>
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Mon Nov 10 21:23:25 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KzdDp-0001F1-86
-	for gcvg-git-2@gmane.org; Mon, 10 Nov 2008 21:18:53 +0100
+	id 1KzdHp-00031w-B2
+	for gcvg-git-2@gmane.org; Mon, 10 Nov 2008 21:23:01 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750923AbYKJURi convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 10 Nov 2008 15:17:38 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750899AbYKJURi
-	(ORCPT <rfc822;git-outgoing>); Mon, 10 Nov 2008 15:17:38 -0500
-Received: from ug-out-1314.google.com ([66.249.92.169]:37463 "EHLO
-	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750865AbYKJURh (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 10 Nov 2008 15:17:37 -0500
-Received: by ug-out-1314.google.com with SMTP id 39so515385ugf.37
-        for <git@vger.kernel.org>; Mon, 10 Nov 2008 12:17:36 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:subject:date
-         :user-agent:cc:references:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:message-id;
-        bh=kZKfwVzCz+a6cn3jbYlXftTdLT3Yy2q347rVopSn3qg=;
-        b=etbQtI/ZtNrM5iUrQcoeyonDeWbdflC4e6ie1o+ZBwCpG0mUKI3FeLF/hQ9oy9AFXa
-         dsG9vzdaBDu0gLKYBu7j21Q2i4+Z4sLAf6faEeQxOzyYaPRtYE9JQEi9VhJiDt4UEMfL
-         ghyfYjlA+MOa0U6DTqSisjyHnPjHpYo906ITk=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=from:to:subject:date:user-agent:cc:references:in-reply-to
-         :mime-version:content-type:content-transfer-encoding
-         :content-disposition:message-id;
-        b=b+0jp4Wz6dnCtlZ/2l9s2ywAgu238rwT1cJ5SeIHgqS8bzxVFI0q7xyhkX+445geIq
-         pyoTgs2eSmT4+9g1uAnfOaTr1qOHPYVPNfHPBbjm/f0xCyXYImOobCQfnBeqFFdYut48
-         rby0FcPPnefnv6tOY3nnfyrIAFv6dHjlhPguo=
-Received: by 10.67.116.16 with SMTP id t16mr2366048ugm.51.1226348255970;
-        Mon, 10 Nov 2008 12:17:35 -0800 (PST)
-Received: from ?192.168.1.11? (abwz230.neoplus.adsl.tpnet.pl [83.8.249.230])
-        by mx.google.com with ESMTPS id w40sm4206846ugc.6.2008.11.10.12.17.31
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Mon, 10 Nov 2008 12:17:34 -0800 (PST)
-User-Agent: KMail/1.9.3
-In-Reply-To: <871vxjl5af.fsf@erwin.mina86.com>
+	id S1751484AbYKJUVr convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 10 Nov 2008 15:21:47 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751481AbYKJUVr
+	(ORCPT <rfc822;git-outgoing>); Mon, 10 Nov 2008 15:21:47 -0500
+Received: from ns35774.ovh.net ([213.251.185.197]:46202 "EHLO ns35774.ovh.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751479AbYKJUVq convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 10 Nov 2008 15:21:46 -0500
+Received: from erwin.kitchen.eel (AOrleans-157-1-115-179.w90-20.abo.wanadoo.fr [90.20.190.179])
+	(Authenticated sender: fg@one2team.net)
+	by ns35774.ovh.net (Postfix) with ESMTP id CC7C192C003;
+	Mon, 10 Nov 2008 21:21:34 +0100 (CET)
+User-Agent: KMail/1.9.9
+In-Reply-To: <alpine.DEB.1.00.0811102030180.30769@pacific.mpi-cbg.de>
 Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/100557>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/100558>
 
-Michal Nazarewicz wrote:
-> Jakub Narebski <jnareb@gmail.com> writes:
->> Dnia poniedzia=B3ek 10. listopada 2008 18:38, Michal Nazarewicz napi=
-sa=B3:
->>> Jakub Narebski <jnareb@gmail.com> writes:
->>>=20
->>>> The reason why git doesn't support keywords like $Revision$ or $Da=
-te$
->>>> is performance: the $Revision$ and $Date$ are keywords related to
->>>> _commit_ data, not blob data.=20
->>>=20
->>> In my case identifying content not commit would be even better.
->>
->> Well, in that case using `ident` attribute would be enough
->> (but cryptic).
->=20
-> Yes, but it forces me to do some voodoo magic (ie. checkout) to get t=
-he
-> Id in the file, ;) like so:
->=20
-> #v+
-> $ echo '$Id$'>bar && git add bar && git commit -m 'Added bar' && cat =
-bar
-> Created commit d49d436: Added bar
->  1 files changed, 1 insertions(+), 0 deletions(-)
->  create mode 100644 bar
-> $Id$
-> $ rm bar && git checkout bar && cat bar
-> $Id: 055c8729cdcc372500a08db659c045e16c4409fb $
-> #v-
+Le Monday 10 November 2008 20:46:02 Johannes Schindelin, vous avez =E9c=
+rit=A0:
+> Hi,
+>
+> On Mon, 10 Nov 2008, Francis Galiegue wrote:
+> > A very nice git feature, without even going as far as merges, is th=
+e
+> > cherry pick feature.
+> >
+> > For this to be doable from within the Eclipse Git plugin, a diff/pa=
+tch
+> > implementation needs to be found, in a license compatible with the
+> > current JGit license (3-clause BSD, as far as I can tell). Or a new
+> > implementation can be rewritten from scratch, of course.
+>
+> Do not forget creating efficient packs.  They also need an efficient =
+diff
+> engine.
+>
 
-Well, _some_ command has to be invoked to expand keywords. "git add"
-doesn't do that (perhaps it should?), so you need to use checkout.
+I wasn't even thinking about this, honestly :p
 
-And checkout doesn't touch file if it is identical, so you need
-to remove it first; nevertheless you don't need to use commit in
-betwen, as "git checkout bar" would checkout file out of index (you
-added contents of file to index with "git add bar").
+Let's say that as far as IDE users are concerned, they do have disk spa=
+ce, and=20
+having the ability to cherry-pick is more of a priority than packs ;) E=
+ven a=20
+less efficient but "to the point" engine will be good enough for the ti=
+me=20
+being, or at least, this is what I think.
+
+I understand way too little about the algorithm myself to tell whether =
+it's=20
+also efficient for such a purpose. Maybe it is...
 
 --=20
-Jakub Narebski
-Poland
+fge
