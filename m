@@ -1,84 +1,71 @@
-From: Ian Hilt <ian.hilt@gmx.com>
-Subject: Re: [PATCH] git send-email: edit recipient addresses with the 
- --compose flag
-Date: Sun, 9 Nov 2008 19:38:30 -0500 (EST)
-Message-ID: <alpine.LFD.2.00.0811091910570.21142@sys-0.hiltweb.site>
-References: <1226235588-2997-1-git-send-email-ian.hilt@gmx.com> <200811091513.55544.fg@one2team.com> <alpine.LFD.2.00.0811091344480.20499@sys-0.hiltweb.site> <7viqqwa6wo.fsf@gitster.siamese.dyndns.org>
+From: "Sverre Rabbelier" <alturin@gmail.com>
+Subject: Re: Something like $Id$, $Revision$ or $Date$?
+Date: Mon, 10 Nov 2008 01:43:41 +0100
+Message-ID: <bd6139dc0811091643m31ff6f49o55a4c581be7f38b2@mail.gmail.com>
+References: <87ljvsjuq7.fsf@erwin.mina86.com>
+Reply-To: sverre@rabbelier.nl
 Mime-Version: 1.0
-Content-Type: MULTIPART/MIXED; BOUNDARY="8323328-960896940-1226277531=:21142"
-Cc: Francis Galiegue <fg@one2team.com>,
-	Git Mailing List <git@vger.kernel.org>,
-	Pierre Habouzit <madcoder@debian.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Nov 10 01:40:28 2008
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: "Michal Nazarewicz" <mina86@tlen.pl>
+X-From: git-owner@vger.kernel.org Mon Nov 10 01:45:00 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KzKpP-0000QQ-0p
-	for gcvg-git-2@gmane.org; Mon, 10 Nov 2008 01:40:27 +0100
+	id 1KzKtl-00020C-Qs
+	for gcvg-git-2@gmane.org; Mon, 10 Nov 2008 01:44:58 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756610AbYKJAjG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 9 Nov 2008 19:39:06 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756585AbYKJAjF
-	(ORCPT <rfc822;git-outgoing>); Sun, 9 Nov 2008 19:39:05 -0500
-Received: from mail.gmx.com ([74.208.5.67]:55269 "HELO mail.gmx.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1756570AbYKJAjE (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 9 Nov 2008 19:39:04 -0500
-Received: (qmail invoked by alias); 10 Nov 2008 00:39:00 -0000
-Received: from cpe-75-185-223-130.woh.res.rr.com [75.185.223.130]
-  by mail.gmx.com (mp-us005) with SMTP; 09 Nov 2008 19:39:00 -0500
-X-Authenticated: #47758715
-X-Provags-ID: V01U2FsdGVkX1+nfot60/WnYkx5AGUFLgYTssEuIdXDZT97xKF2kZ
-	nABb6GA8tLyQQP
-In-Reply-To: <7viqqwa6wo.fsf@gitster.siamese.dyndns.org>
-User-Agent: Alpine 2.00 (LFD 1167 2008-08-23)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.54
+	id S1756649AbYKJAnn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 9 Nov 2008 19:43:43 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756447AbYKJAnn
+	(ORCPT <rfc822;git-outgoing>); Sun, 9 Nov 2008 19:43:43 -0500
+Received: from fg-out-1718.google.com ([72.14.220.153]:65083 "EHLO
+	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756649AbYKJAnm (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 9 Nov 2008 19:43:42 -0500
+Received: by fg-out-1718.google.com with SMTP id 19so2056005fgg.17
+        for <git@vger.kernel.org>; Sun, 09 Nov 2008 16:43:41 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:reply-to
+         :to:subject:cc:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:references;
+        bh=bOV8WF4EELIxeHeX04xVWGTPorQCcf61w3UZw+uTgek=;
+        b=i3bPzIyMdf7FsuEefb/XiaZZl27rH2MgmKBftgHGOQfXf76EWOyzPJLL1BVoBap/uf
+         TZCaCN08HQ6oSUdzgmS5uni2ikUjEhTfs9ANpRIaWnx6NV7dE1tstX/35lc7hwnUsgbH
+         EflgYvBAKmfhmZoes4f4fewT2ryNTdeHq7+u4=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:reply-to:to:subject:cc:in-reply-to
+         :mime-version:content-type:content-transfer-encoding
+         :content-disposition:references;
+        b=OniNv6ZW/oS6150XhLs9DZlp5YByvuXGa0DV6s/n3qSP/Z5yosWMJTx352igmPjDk/
+         B9PoWpRS0hS6Vu+2ixE7X1Gc5PLT20jdA2Vrd2v39ZSx+7K9eKjl4O6eRcNw8BJ5Fk6W
+         lxmliQkZIPl28/4Fd/zIZq0uU/HD83PzyVPlY=
+Received: by 10.187.213.16 with SMTP id p16mr1526870faq.0.1226277821234;
+        Sun, 09 Nov 2008 16:43:41 -0800 (PST)
+Received: by 10.187.213.8 with HTTP; Sun, 9 Nov 2008 16:43:41 -0800 (PST)
+In-Reply-To: <87ljvsjuq7.fsf@erwin.mina86.com>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/100482>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/100483>
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
+On Mon, Nov 10, 2008 at 01:22, Michal Nazarewicz <mina86@tlen.pl> wrote:
+> Now, what I need is such feature in GIT.  Upon committing I would like
+> some magic string (say "$Date$") to be replaced with some value
+> identifying uniquely given version of a file (a date of the commit would
+> be sufficient).
 
---8323328-960896940-1226277531=:21142
-Content-Type: TEXT/PLAIN; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+Please have a look at the relevant entry in the faq [0].
 
-On Sun, 9 Nov 2008, Junio C Hamano wrote:
-> Ian Hilt <ian.hilt@gmx.com> writes:
->=20
-> > On Sun, 9 Nov 2008, Francis Galiegue wrote:
-> >> Le Sunday 09 November 2008 13:59:48 Ian Hilt, vous avez =C3=A9crit=C2=
-=A0:
-> >> > +=09if ($c_file =3D~ /^To:\s*+(.+)\s*\nCc:/ism) {
-> >>=20
-> >> Greedy operators are only supported with perl 5.10 or more... I think =
-it's a=20
-> >> bad idea to use them...
-> >
-> > The problem here was that a space should follow the field, but it may
-> > not.  The user may unwarily backup over it.  "\s*" would match this
-> > case.
-> >
-> > But if there is a space, it is included in the "(.+)".  So I tried
-> > "\s+", which did not include the space, but it won't include the first
-> > address if there isn't a space after the field.
-> >
-> > The quantified subpattern seemed to do the trick.  But, if it could
-> > result in a dependency issue, I would agree this would be a bad idea.
->=20
-> You expect something non-blank there anyway, so why not do:
->=20
-> =09To:\s*(\S.*?)\s*\n....
+[0] http://git.or.cz/gitwiki/GitFaq#head-4a0afe71a2bb7734777a8b0b345e0308aefdbd40
 
-That works.  Although, I seem to be missing Francis' point.  According
-to perlre, a quantified subpattern is "greedy".  So a "greedy operator"
-is any one of the standard quantified subpatterns.  The "+" and "?"
-modify its matching behavior.  And it seems to me that it _has_ to use a
-q.s. to work ...
---8323328-960896940-1226277531=:21142--
+-- 
+Cheers,
+
+Sverre Rabbelier
