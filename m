@@ -1,137 +1,67 @@
-From: Miklos Vajna <vmiklos@frugalware.org>
-Subject: [ANNOUNCE] darcs-fast-export
-Date: Tue, 11 Nov 2008 02:53:13 +0100
-Message-ID: <20081111015313.GB24201@genesis.frugalware.org>
+From: Tait <git.git@t41t.com>
+Subject: Re: [PATCH] git send-email: edit recipient addresses with the --compose flag
+Date: Mon, 10 Nov 2008 17:49:19 -0800
+Message-ID: <20081111014919.GI7408@ece.pdx.edu>
+References: <1226235588-2997-1-git-send-email-ian.hilt@gmx.com> <200811091513.55544.fg@one2team.com> <alpine.LFD.2.00.0811091344480.20499@sys-0.hiltweb.site>
 Mime-Version: 1.0
-Content-Type: multipart/mixed; boundary="===============8989743173931662555=="
-Cc: bazaar@lists.canonical.com, mercurial@selenic.com, darcs-users@darcs.net
-To: git@vger.kernel.org
-X-From: darcs-users-bounces@darcs.net Tue Nov 11 02:54:34 2008
-Return-path: <darcs-users-bounces@darcs.net>
-Envelope-to: gcvdu-darcs-users@gmane.org
-Received: from fraxinus.osuosl.org ([140.211.166.137])
-	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KziSd-0003Qp-1o
-	for gcvdu-darcs-users@gmane.org; Tue, 11 Nov 2008 02:54:31 +0100
-Received: from localhost (localhost [127.0.0.1])
-	by fraxinus.osuosl.org (Postfix) with ESMTP id 7C0523D96A;
-	Tue, 11 Nov 2008 01:53:19 +0000 (UTC)
-X-Virus-Scanned: amavisd-new at osuosl.org
-Received: from fraxinus.osuosl.org ([127.0.0.1])
-	by localhost (.osuosl.org [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id XlLQpuys0tSG; Tue, 11 Nov 2008 01:53:18 +0000 (UTC)
-Received: from ash.osuosl.org (ash.osuosl.org [140.211.166.34])
-	by fraxinus.osuosl.org (Postfix) with ESMTP id B6D493D96B;
-	Tue, 11 Nov 2008 01:53:18 +0000 (UTC)
-X-Original-To: darcs-users@lists.darcs.net
-Delivered-To: darcs-users@osuosl.org
-Received: from whitealder.osuosl.org (whitealder.osuosl.org [140.211.166.138])
-	by ash.osuosl.org (Postfix) with ESMTP id 3AEA78F74E
-	for <darcs-users@lists.darcs.net>; Tue, 11 Nov 2008 01:53:17 +0000 (UTC)
-Received: from localhost (localhost [127.0.0.1])
-	by whitealder.osuosl.org (Postfix) with ESMTP id 2A3C41099EE
-	for <darcs-users@lists.darcs.net>; Tue, 11 Nov 2008 01:53:17 +0000 (UTC)
-X-Virus-Scanned: amavisd-new at osuosl.org
-Received: from whitealder.osuosl.org ([127.0.0.1])
-	by localhost (.osuosl.org [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id 5+Z7JDGpu8nx for <darcs-users@lists.darcs.net>;
-	Tue, 11 Nov 2008 01:53:16 +0000 (UTC)
-X-Greylist: domain auto-whitelisted by SQLgrey-1.7.4
-Received: from virgo.iok.hu (virgo.iok.hu [193.202.89.103])
-	by whitealder.osuosl.org (Postfix) with ESMTP id 5E8601099B0
-	for <darcs-users@darcs.net>; Tue, 11 Nov 2008 01:53:15 +0000 (UTC)
-Received: from kag.elte.hu (kag.elte.hu [157.181.177.1])
-	by virgo.iok.hu (Postfix) with ESMTP id 2C1BE5808F;
-	Tue, 11 Nov 2008 02:53:14 +0100 (CET)
-Received: from genesis.frugalware.org (frugalware.elte.hu [157.181.177.34])
-	by kag.elte.hu (Postfix) with ESMTP id B31E04465E;
-	Tue, 11 Nov 2008 02:53:13 +0100 (CET)
-Received: by genesis.frugalware.org (Postfix, from userid 1000)
-	id 8F0F6119019E; Tue, 11 Nov 2008 02:53:13 +0100 (CET)
-User-Agent: Mutt/1.5.17 (2007-11-01)
-X-BeenThere: darcs-users@darcs.net
-X-Mailman-Version: 2.1.9
-Precedence: list
-List-Id: A list for users of darcs <darcs-users.darcs.net>
-List-Unsubscribe: <http://lists.osuosl.org/mailman/listinfo/darcs-users>,
-	<mailto:darcs-users-request@darcs.net?subject=unsubscribe>
-List-Archive: <http://lists.osuosl.org/pipermail/darcs-users>
-List-Post: <mailto:darcs-users@darcs.net>
-List-Help: <mailto:darcs-users-request@darcs.net?subject=help>
-List-Subscribe: <http://lists.osuosl.org/mailman/listinfo/darcs-users>,
-	<mailto:darcs-users-request@darcs.net?subject=subscribe>
-Sender: darcs-users-bounces@darcs.net
-Errors-To: darcs-users-bounces@darcs.net
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/100610>
-
-
---===============8989743173931662555==
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="7w6n1xPQJploaIC9"
-Content-Disposition: inline
-
-
---7w6n1xPQJploaIC9
 Content-Type: text/plain; charset=us-ascii
+To: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Tue Nov 11 03:04:28 2008
+Return-path: <git-owner@vger.kernel.org>
+Envelope-to: gcvg-git-2@gmane.org
+Received: from vger.kernel.org ([209.132.176.167])
+	by lo.gmane.org with esmtp (Exim 4.50)
+	id 1KzicF-0006Sv-Ag
+	for gcvg-git-2@gmane.org; Tue, 11 Nov 2008 03:04:27 +0100
+Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
+	id S1753703AbYKKCDH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 10 Nov 2008 21:03:07 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753473AbYKKCDH
+	(ORCPT <rfc822;git-outgoing>); Mon, 10 Nov 2008 21:03:07 -0500
+Received: from ehlo.cat.pdx.edu ([131.252.208.106]:36719 "EHLO
+	ehlo.cat.pdx.edu" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753703AbYKKCDG (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 10 Nov 2008 21:03:06 -0500
+X-Greylist: delayed 822 seconds by postgrey-1.27 at vger.kernel.org; Mon, 10 Nov 2008 21:03:06 EST
+Received: from nemo.ece.pdx.edu (root@nemo.ece.pdx.edu [131.252.209.162])
+	by ehlo.cat.pdx.edu (8.14.2/8.14.2/Debian-2build1) with ESMTP id mAB1nLnu029241
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO)
+	for <git@vger.kernel.org>; Mon, 10 Nov 2008 17:49:21 -0800
+Received: from nemo.ece.pdx.edu (tait@localhost [127.0.0.1])
+	by nemo.ece.pdx.edu (8.13.6/8.13.1) with ESMTP id mAB1nKkv025873
+	for <git@vger.kernel.org>; Mon, 10 Nov 2008 17:49:21 -0800 (PST)
+Received: (from tait@localhost)
+	by nemo.ece.pdx.edu (8.13.6/8.12.6/Submit) id mAB1nJoH025872
+	for git@vger.kernel.org; Mon, 10 Nov 2008 17:49:19 -0800 (PST)
+X-Authentication-Warning: nemo.ece.pdx.edu: tait set sender to git.git@t41t.com using -f
 Content-Disposition: inline
+In-Reply-To: <alpine.LFD.2.00.0811091344480.20499@sys-0.hiltweb.site>
+User-Agent: Mutt/1.5.7i
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-3.0 (ehlo.cat.pdx.edu [131.252.208.106]); Mon, 10 Nov 2008 17:49:21 -0800 (PST)
+X-Spam-Status: No, score=0.0 required=6.0 tests=none autolearn=failed
+	version=3.2.5
+X-Spam-Checker-Version: SpamAssassin 3.2.5 (2008-06-10) on ehlo.cat.pdx.edu
+X-Virus-Scanned: ClamAV 0.92.1/8605/Mon Nov 10 17:11:29 2008 on ehlo.cat.pdx.edu
+X-Virus-Status: Clean
+Sender: git-owner@vger.kernel.org
+Precedence: bulk
+List-ID: <git.vger.kernel.org>
+X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/100611>
 
-Hi,
+> > > +	if ($c_file =~ /^To:\s*+(.+)\s*\nCc:/ism) {
+> > 
+> > Greedy operators are only supported with perl 5.10 or more... I think it's a 
+> > bad idea to use them...
+> 
+> The problem here was that a space should follow the field, but it may
+> not.  The user may unwarily backup over it.  "\s*" would match this
+> case.
+> 
+> But if there is a space, it is included in the "(.+)".
 
-I'm happy to announce a small project I recently stated to work on. It's
-a darcs backend for fast importers.
+Not in any version of Perl to which I have access. 
 
-This means that it allows you to export patches/commits from a darcs
-repo and import to any version control system where a fast importer is
-implemented.
-
-Current features:
-
-- According to its name, it tries to be really fast, even for large
-  repos.
-
-- Independent. It has been tested with git fast-import, hg fastimport
-  and bzr fast-import. (Let me know if you know other fast-importers!)
-
-- It supports both (darcs1 and darcs2) darcs repo formats.
-
-- It supports incremental conversions.
-
-More info on the homepage:
-
-http://vmiklos.hu/project/darcs-fast-export/
-
-Including a list of alternatives, where I try to compare them to
-darcs-fast-export.
-
-Any feedback or comment is appreciated.
-
-I'm not on the bazaar and the mercurial list, so there please CC me.
-
-Thanks.
-
---7w6n1xPQJploaIC9
-Content-Type: application/pgp-signature
-Content-Disposition: inline
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.9 (GNU/Linux)
-
-iEYEARECAAYFAkkY5YkACgkQe81tAgORUJYH4wCfSUPneNWTPTcZiMNNoEa3yT0t
-Fp8An3bH1C1OieJZAR9amFIbjiOQtqBw
-=r1l0
------END PGP SIGNATURE-----
-
---7w6n1xPQJploaIC9--
-
---===============8989743173931662555==
-Content-Type: text/plain; charset="us-ascii"
-MIME-Version: 1.0
-Content-Transfer-Encoding: 7bit
-Content-Disposition: inline
-
-_______________________________________________
-darcs-users mailing list
-darcs-users@darcs.net
-http://lists.osuosl.org/mailman/listinfo/darcs-users
-
---===============8989743173931662555==--
+Why doesn't
+	/^To:\s*(.+)\s*\nCc:/ism
+work?
