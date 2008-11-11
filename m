@@ -1,86 +1,59 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] 3-way merge with file move fails when diff.renames =
- copies
-Date: Mon, 10 Nov 2008 16:15:49 -0800
-Message-ID: <7vwsfb2k3u.fsf@gitster.siamese.dyndns.org>
-References: <1226355970-2542-1-git-send-email-ddkilzer@kilzer.net>
- <7v63mv3zww.fsf@gitster.siamese.dyndns.org>
+From: Jeff King <peff@peff.net>
+Subject: Re: Git Notes - Track rebase/etc + reverse-lookup for bugs ideas
+Date: Mon, 10 Nov 2008 19:31:36 -0500
+Message-ID: <20081111003136.GA26481@coredump.intra.peff.net>
+References: <6A0F154C-B9FE-4770-BF70-82A5BEBF907C@gmail.com> <20081110191134.GA3329@sigill.intra.peff.net> <alpine.DEB.1.00.0811102049460.30769@pacific.mpi-cbg.de> <74EBEC20-FC39-444E-8B96-31E5B36894B8@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org,
-	Johannes Schindelin <johannes.schindelin@gmx.de>
-To: "David D. Kilzer" <ddkilzer@kilzer.net>
-X-From: git-owner@vger.kernel.org Tue Nov 11 01:17:37 2008
+Content-Type: text/plain; charset=utf-8
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	git@vger.kernel.org
+To: Thomas Harning <harningt@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Nov 11 01:32:56 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Kzgwo-0004gp-S2
-	for gcvg-git-2@gmane.org; Tue, 11 Nov 2008 01:17:35 +0100
+	id 1KzhBe-0001n7-5o
+	for gcvg-git-2@gmane.org; Tue, 11 Nov 2008 01:32:54 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752593AbYKKAQU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 10 Nov 2008 19:16:20 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752377AbYKKAQU
-	(ORCPT <rfc822;git-outgoing>); Mon, 10 Nov 2008 19:16:20 -0500
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:48535 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751251AbYKKAQT (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 10 Nov 2008 19:16:19 -0500
-Received: from localhost.localdomain (unknown [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 0E8A17B32C;
-	Mon, 10 Nov 2008 19:16:17 -0500 (EST)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES256-SHA (256/256 bits)) (No client certificate requested) by
- a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTPSA id D860A7B327; Mon,
- 10 Nov 2008 19:16:01 -0500 (EST)
-In-Reply-To: <7v63mv3zww.fsf@gitster.siamese.dyndns.org> (Junio C. Hamano's
- message of "Mon, 10 Nov 2008 15:49:03 -0800")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: F5363846-AF85-11DD-89E7-9CEDC82D7133-77302942!a-sasl-fastnet.pobox.com
+	id S1752268AbYKKAbj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 10 Nov 2008 19:31:39 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750905AbYKKAbj
+	(ORCPT <rfc822;git-outgoing>); Mon, 10 Nov 2008 19:31:39 -0500
+Received: from peff.net ([208.65.91.99]:1512 "EHLO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750811AbYKKAbj (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 10 Nov 2008 19:31:39 -0500
+Received: (qmail 9868 invoked by uid 111); 11 Nov 2008 00:31:37 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+    by peff.net (qpsmtpd/0.32) with SMTP; Mon, 10 Nov 2008 19:31:37 -0500
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Mon, 10 Nov 2008 19:31:36 -0500
+Content-Disposition: inline
+In-Reply-To: <74EBEC20-FC39-444E-8B96-31E5B36894B8@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/100606>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/100607>
 
-Junio C Hamano <gitster@pobox.com> writes:
+On Mon, Nov 10, 2008 at 03:26:52PM -0500, Thomas Harning wrote:
 
-> "David D. Kilzer" <ddkilzer@kilzer.net> writes:
->
->> With diff.renames = copies, a 3-way merge (e.g. "git rebase") would
->> fail with the following error:
+> What I intended is that if notes are attached to 'A',  A` (after a  
+> rebase) will have the exact same note.
 
-By the way, I think the real issue with this one is that we currently do
-not disable diff.renames configuration while rebase internally runs
-"format-patch" to feed "am -3".
+I think that may have been brought up at the GitTogether. It would be
+very easy, when rebasing A to A', to copy any notes for A to A'
+(retroactively applying notes for A' to A (or vice versa) is much
+harder, since we don't maintain any mapping between the two).
 
-The end user configuration for "diff" should not affect the result
-produced by the higher level command that is related to "diff" only
-because internally it is implemented in terms of it.
+_But_ that is not necessarily a good idea in all cases, because your
+notes may say certain things about A like "I tested this on system X".
+But you _haven't_ tested A', and it might not pass your test. Leaving
+aside editing the commits with "rebase -i", there might just be a bad
+interaction with the commit you rebased onto.
 
-For that matter, I have a feeling that format-patch should not even look
-at diff.renames, but we seem to have been doing this for a long time so
-there is no easy way to fix this thinko.
+So I think it would probably make sense to add a "--copy-notes" option
+to rebase for those times when the user knows it makes sense, but doing
+so by default is probably a mistake.
 
-In any case, here is a much straightforward fix for "rebase".  
-
-Running "am -3" on a copying patch would still need a patch to the
-index-info codepath, and my earlier comment on it still stands, but it is
-irrelevant/orthogonal to your particular test script.
-
- git-rebase.sh |    2 +-
- 1 files changed, 1 insertions(+), 1 deletions(-)
-
-diff --git c/git-rebase.sh w/git-rebase.sh
-index 023a6dc..159ccb3 100755
---- c/git-rebase.sh
-+++ w/git-rebase.sh
-@@ -429,7 +429,7 @@ fi
- if test -z "$do_merge"
- then
- 	git format-patch -k --stdout --full-index --ignore-if-in-upstream \
--		"$upstream..$orig_head" |
-+		--no-renames "$upstream..$orig_head" |
- 	git am $git_am_opt --rebasing --resolvemsg="$RESOLVEMSG" &&
- 	move_to_original_branch
- 	ret=$?
+-Peff
