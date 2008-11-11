@@ -1,77 +1,79 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Install issues
-Date: Tue, 11 Nov 2008 09:47:00 -0800
-Message-ID: <7vhc6e17fv.fsf@gitster.siamese.dyndns.org>
-References: <20081110121739.15f77a01@pc09.procura.nl>
- <20081110113924.GR24201@genesis.frugalware.org>
- <20081110173101.3d76613b@pc09.procura.nl>
- <20081110175123.GV24201@genesis.frugalware.org>
+From: "Catalin Marinas" <catalin.marinas@gmail.com>
+Subject: Re: Stgit and refresh-temp
+Date: Tue, 11 Nov 2008 17:59:02 +0000
+Message-ID: <b0943d9e0811110959t4eb236bvd648fbca5e482911@mail.gmail.com>
+References: <9e4733910811040537p4e88c09an94370154eca12778@mail.gmail.com>
+	 <20081107054419.GA27146@diana.vm.bytemark.co.uk>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: "H.Merijn Brand" <h.m.brand@xs4all.nl>, git@vger.kernel.org
-To: Miklos Vajna <vmiklos@frugalware.org>
-X-From: git-owner@vger.kernel.org Tue Nov 11 18:49:18 2008
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: "Jon Smirl" <jonsmirl@gmail.com>,
+	"Git Mailing List" <git@vger.kernel.org>
+To: "=?ISO-8859-1?Q?Karl_Hasselstr=F6m?=" <kha@treskal.com>
+X-From: git-owner@vger.kernel.org Tue Nov 11 19:00:24 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KzxMW-0003i2-63
-	for gcvg-git-2@gmane.org; Tue, 11 Nov 2008 18:49:12 +0100
+	id 1KzxXG-0000Ag-8s
+	for gcvg-git-2@gmane.org; Tue, 11 Nov 2008 19:00:18 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752060AbYKKRr5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 11 Nov 2008 12:47:57 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751392AbYKKRr4
-	(ORCPT <rfc822;git-outgoing>); Tue, 11 Nov 2008 12:47:56 -0500
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:47195 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752208AbYKKRr4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 11 Nov 2008 12:47:56 -0500
-Received: from localhost.localdomain (unknown [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 845EB7B91A;
-	Tue, 11 Nov 2008 12:47:54 -0500 (EST)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES256-SHA (256/256 bits)) (No client certificate requested) by
- a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTPSA id D9ED97B918; Tue,
- 11 Nov 2008 12:47:40 -0500 (EST)
-In-Reply-To: <20081110175123.GV24201@genesis.frugalware.org> (Miklos Vajna's
- message of "Mon, 10 Nov 2008 18:51:23 +0100")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: DE3E0612-B018-11DD-8C85-9CEDC82D7133-77302942!a-sasl-fastnet.pobox.com
+	id S1752799AbYKKR7G convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 11 Nov 2008 12:59:06 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752857AbYKKR7G
+	(ORCPT <rfc822;git-outgoing>); Tue, 11 Nov 2008 12:59:06 -0500
+Received: from nf-out-0910.google.com ([64.233.182.184]:18343 "EHLO
+	nf-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752697AbYKKR7F convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 11 Nov 2008 12:59:05 -0500
+Received: by nf-out-0910.google.com with SMTP id d3so3288nfc.21
+        for <git@vger.kernel.org>; Tue, 11 Nov 2008 09:59:02 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to
+         :subject:cc:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:references;
+        bh=BDCyPij/a0ktXQkFDFcFZPKGzHK3Ok2US5WuAIzVBWU=;
+        b=uiomaDC8788TjLbABVqhCipLSQBm+fldZTyh5c+dUD6VQD6Sw+dy8ZiYc05y39d+PI
+         FcA1HuQyOqK3TH50NhHIXz59oN5vjg5fEsFHtg1MNwBMrtZKnkwng/JhT0g7qPK9R8HR
+         I45XrSCUD48aL7O00ToO/ze3tv5ibxGKsebYI=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
+         :content-type:content-transfer-encoding:content-disposition
+         :references;
+        b=nzda/f9xGvCq4aOJNwF6rmLD7CPV4Do6EDMgiMVlUJI3f5zbbmlqqjIIryYCWYZDUW
+         Pxbdycw+zDMeXJIL6pR+6maxEbG2NhIiSMiJmHqC7NDR0AT+ztp4yxFwZSj4EeIKtPl4
+         wMLZEUAkDOuyILO3/bDx4JNh1nfIh2UMEHRqc=
+Received: by 10.187.243.17 with SMTP id v17mr2792671far.67.1226426342210;
+        Tue, 11 Nov 2008 09:59:02 -0800 (PST)
+Received: by 10.187.191.12 with HTTP; Tue, 11 Nov 2008 09:59:02 -0800 (PST)
+In-Reply-To: <20081107054419.GA27146@diana.vm.bytemark.co.uk>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/100661>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/100662>
 
-Miklos Vajna <vmiklos@frugalware.org> writes:
-
-> On Mon, Nov 10, 2008 at 05:31:01PM +0100, "H.Merijn Brand" <h.m.brand@xs4all.nl> wrote:
->> --- Makefile.org	2008-11-10 17:29:53.000000000 +0100
->> +++ Makefile	2008-11-10 17:29:39.000000000 +0100
->> @@ -1329,6 +1329,10 @@ check-sha1:: test-sha1$X
->>  	./test-sha1.sh
->>  
->>  check: common-cmds.h
->> +	@`sparse </dev/null 2>/dev/null` || (\
->> +	    echo "The 'sparse' command is not available, so I cannot make the 'check' target" ;\
->> +	    echo "Did you mean 'make test' instead?" ;\
->> +	    exit 1 )
->>  	for i in *.c; do sparse $(ALL_CFLAGS) $(SPARSE_FLAGS) $$i || exit; done
+2008/11/7 Karl Hasselstr=F6m <kha@treskal.com>:
+> On 2008-11-04 08:37:24 -0500, Jon Smirl wrote:
 >
-> Please read Documentation/SubmittingPatches, your patch lacks a signoff
-> and a commit message.
+>> I hit a case when refreshing a buried patch that needed a merge
+>> conflict sorted out. I'm unable to recover out of the state.
+>
+> Hmm, so what you're saying is basically that you did something with
+> "stg refresh -p" that caused a merge conflict, and that messed things
+> up so that you needed to run "stg repair". Is that right?
+>
+> Have you been able to reproduce it? (I would like to add the failing
+> case to the test suite.)
 
-Heh, for something small and obvious like this, that's asking a tad too
-much, although a properly formatted message does reduce my workload and is
-appreciated.
+Could be related to this - if I run 'stg goto some-patch' and it fails
+with a conflict, the HEAD points to the previous patch though the
+stack has the conflicting patch as empty (which is normal) and the
+conflicts in the index. Anything after that says HEAD and top not
+equal and 'stg repair' is needed.
 
-I said "obvious" not in the sense that it is "obviously good".  It is
-obvious what issue the patch wants to address.
-
-Having said that, it is far from clear if special casing "make check" like
-this is a good thing, though.  The crufts resulting from "Four extra lines
-won't hurt" kind of reasoning can accumulate and snowball.  Is reading the
-Makefile when your build fails in order to see if the target was what you
-really wanted to invoke (ideally, it should rater be "_before_ running
-make, reading the Makefile to find out what you want to run") a lost art
-these days?
+--=20
+Catalin
