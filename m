@@ -1,83 +1,84 @@
-From: Tait <git.git@t41t.com>
-Subject: Re: [PATCH] git send-email: edit recipient addresses with the --compose flag
-Date: Tue, 11 Nov 2008 14:14:21 -0800
-Message-ID: <20081111221421.GJ7408@ece.pdx.edu>
-References: <1226235588-2997-1-git-send-email-ian.hilt@gmx.com> <alpine.LFD.2.00.0811091344480.20499@sys-0.hiltweb.site> <20081111014919.GI7408@ece.pdx.edu> <200811111230.28076.fg@one2team.com> <alpine.LFD.2.00.0811111542230.24205@sys-0.hiltweb.site>
+From: Boyd Lynn Gerber <gerberb@zenez.com>
+Subject: Re: Install issues
+Date: Tue, 11 Nov 2008 16:03:50 -0700
+Message-ID: <alpine.LNX.2.00.0811111554530.19159@suse104.zenez.com>
+References: <20081110121739.15f77a01@pc09.procura.nl> <20081110113924.GR24201@genesis.frugalware.org> <20081110173101.3d76613b@pc09.procura.nl> <20081110175123.GV24201@genesis.frugalware.org> <7vhc6e17fv.fsf@gitster.siamese.dyndns.org>
+ <20081111190243.7044d6cb@pc09.procura.nl>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Ian Hilt <ian.hilt@gmx.com>, Francis Galiegue <fg@one2team.com>
-To: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Tue Nov 11 23:15:54 2008
+Content-Type: TEXT/PLAIN; charset=US-ASCII; format=flowed
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Miklos Vajna <vmiklos@frugalware.org>, git@vger.kernel.org
+To: "H.Merijn Brand" <h.m.brand@xs4all.nl>
+X-From: git-owner@vger.kernel.org Wed Nov 12 00:05:57 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1L01Wb-0004JZ-Jl
-	for gcvg-git-2@gmane.org; Tue, 11 Nov 2008 23:15:54 +0100
+	id 1L02Iy-000711-OJ
+	for gcvg-git-2@gmane.org; Wed, 12 Nov 2008 00:05:53 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751771AbYKKWOi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 11 Nov 2008 17:14:38 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751680AbYKKWOi
-	(ORCPT <rfc822;git-outgoing>); Tue, 11 Nov 2008 17:14:38 -0500
-Received: from rcpt.cat.pdx.edu ([131.252.208.107]:51780 "EHLO
-	rcpt.cat.pdx.edu" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751647AbYKKWOh (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 11 Nov 2008 17:14:37 -0500
-Received: from nemo.ece.pdx.edu (root@nemo.ece.pdx.edu [131.252.209.162])
-	by rcpt.cat.pdx.edu (8.14.2/8.14.2/Debian-2build1) with ESMTP id mABMEO0p013777
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Tue, 11 Nov 2008 14:14:25 -0800
-Received: from nemo.ece.pdx.edu (tait@localhost [127.0.0.1])
-	by nemo.ece.pdx.edu (8.13.6/8.13.1) with ESMTP id mABMENbt024632;
-	Tue, 11 Nov 2008 14:14:24 -0800 (PST)
-Received: (from tait@localhost)
-	by nemo.ece.pdx.edu (8.13.6/8.12.6/Submit) id mABMEL59024631;
-	Tue, 11 Nov 2008 14:14:21 -0800 (PST)
-X-Authentication-Warning: nemo.ece.pdx.edu: tait set sender to git.git@t41t.com using -f
-Content-Disposition: inline
-In-Reply-To: <alpine.LFD.2.00.0811111542230.24205@sys-0.hiltweb.site>
-User-Agent: Mutt/1.5.7i
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-3.0 (rcpt.cat.pdx.edu [131.252.208.107]); Tue, 11 Nov 2008 14:14:26 -0800 (PST)
-X-Spam-Status: No, score=0.0 required=6.0 tests=none autolearn=failed
-	version=3.2.5
-X-Spam-Checker-Version: SpamAssassin 3.2.5 (2008-06-10) on rcpt.cat.pdx.edu
-X-Virus-Scanned: ClamAV 0.92.1/8611/Tue Nov 11 11:42:18 2008 on rcpt.cat.pdx.edu
-X-Virus-Status: Clean
+	id S1751754AbYKKXDx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 11 Nov 2008 18:03:53 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751708AbYKKXDx
+	(ORCPT <rfc822;git-outgoing>); Tue, 11 Nov 2008 18:03:53 -0500
+Received: from suse104.zenez.com ([198.60.105.164]:7710 "EHLO
+	suse104.zenez.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751438AbYKKXDw (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 11 Nov 2008 18:03:52 -0500
+Received: by suse104.zenez.com (Postfix, from userid 1000)
+	id B4891A7C9D4; Tue, 11 Nov 2008 16:03:50 -0700 (MST)
+Received: from localhost (localhost [127.0.0.1])
+	by suse104.zenez.com (Postfix) with ESMTP id A8E5FA7C9D3;
+	Tue, 11 Nov 2008 16:03:50 -0700 (MST)
+In-Reply-To: <20081111190243.7044d6cb@pc09.procura.nl>
+User-Agent: Alpine 2.00 (LNX 1167 2008-08-23)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/100688>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/100689>
 
-> > > > > > +	if ($c_file =~ /^To:\s*+(.+)\s*\nCc:/ism) {
-> > > > >
-> > > > > Greedy operators are only supported with perl 5.10 or more... I think
-> > > > > it's a bad idea to use them...
-> > > >
-> > > > The problem here was that a space should follow the field, but it may
-> > > > not.  The user may unwarily backup over it.  "\s*" would match this
-> > > > case.
-> > > >
-> > > > But if there is a space, it is included in the "(.+)".
-> > >
-> > > Not in any version of Perl to which I have access.
-> > >
-> > 
-> > And if you see a space in (.+), your regex engine is buggy anyway.
-> 
-> So what does this script produce on your systems?
-> 
-> --8<--
-> #!/usr/bin/perl -Tw
-> use strict;
-> my $ws = "To: \nCc:";
-> 
-> $ws =~ /^To:\s*(.+)\s*\nCc:/ism;
-> 
-> if ($1 eq ' ') {
-> 	print "\$1 is equal to a space.\n";
-> }
-> -->8--
+On Tue, 11 Nov 2008, H.Merijn Brand wrote:
+> On Tue, 11 Nov 2008 09:47:00 -0800, Junio C Hamano <gitster@pobox.com>
+> wrote:
+>> Miklos Vajna <vmiklos@frugalware.org> writes:
+>>> On Mon, Nov 10, 2008 at 05:31:01PM +0100, "H.Merijn Brand" <h.m.brand@xs4all.nl> wrote:
+>>>> --- Makefile.org	2008-11-10 17:29:53.000000000 +0100
+>>>> +++ Makefile	2008-11-10 17:29:39.000000000 +0100
+>>>> @@ -1329,6 +1329,10 @@ check-sha1:: test-sha1$X
+>>>>  	./test-sha1.sh
+>>>>
+>>>>  check: common-cmds.h
+>>>> +	@`sparse </dev/null 2>/dev/null` || (\
+>>>> +	    echo "The 'sparse' command is not available, so I cannot make the 'check' target" ;\
+>>>> +	    echo "Did you mean 'make test' instead?" ;\
+>>>> +	    exit 1 )
+>>>>  	for i in *.c; do sparse $(ALL_CFLAGS) $(SPARSE_FLAGS) $$i || exit; done
+>>>
+>>> Please read Documentation/SubmittingPatches, your patch lacks a signoff
+>>> and a commit message.
 
-It does match a space in that case. I misunderstood the problem this was 
-trying to solve. (Sorry for the confusion.)
+Here is a check list I use to make sure my patches are OK.
+
+http://repo.or.cz/w/git.git?a=blob_plain;f=Documentation/SubmittingPatches;hb=HEAD
+
+...
+> I'm by now way offended or scared away if you reject these kind of
+> patches
+
+The crowed here may seem harsh but they really are not.  They just have a 
+lot to do and getting things to them in a format that is easy to follow 
+and uses the above URL guildlines assists them in looking at the patches, 
+commit messages and sign-off.  Git requires a sign-off in order for them 
+to use the patches.  It is a way to make sure everything is kept above 
+board and proper.  This allow ever line of code to have a resource as to 
+where and whence it ...
+
+Do not give up.  Just try to do things in a manner that is easy to allow 
+your patches into Git.
+
+Good Luck,
+
+--
+Boyd Gerber <gerberb@zenez.com>
+ZENEZ	1042 East Fort Union #135, Midvale Utah  84047
