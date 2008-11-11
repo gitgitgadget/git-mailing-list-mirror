@@ -1,80 +1,111 @@
-From: "Alexander Gavrilov" <angavrilov@gmail.com>
-Subject: Re: [PATCH (GITK) v3 6/6] gitk: Explicitly position popup windows.
-Date: Tue, 11 Nov 2008 14:00:03 +0300
-Message-ID: <bb6f213e0811110300maedee6bife5592afb27b48b7@mail.gmail.com>
-References: <1225652389-22082-1-git-send-email-angavrilov@gmail.com>
-	 <1225652389-22082-2-git-send-email-angavrilov@gmail.com>
-	 <1225652389-22082-3-git-send-email-angavrilov@gmail.com>
-	 <1225652389-22082-4-git-send-email-angavrilov@gmail.com>
-	 <1225652389-22082-5-git-send-email-angavrilov@gmail.com>
-	 <1225652389-22082-6-git-send-email-angavrilov@gmail.com>
-	 <1225652389-22082-7-git-send-email-angavrilov@gmail.com>
-	 <18708.11537.229423.296701@cargo.ozlabs.ibm.com>
+From: "=?ISO-8859-1?Q?Santi_B=E9jar?=" <santi@agolina.net>
+Subject: Re: [PATCH 2/2] Document "git log --simplify-by-decoration"
+Date: Tue, 11 Nov 2008 12:03:48 +0100
+Message-ID: <adf1fd3d0811110303x4a8be5f7vd91979858dcfba59@mail.gmail.com>
+References: <20081111184700.6117@nanako3.lavabit.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: "Paul Mackerras" <paulus@samba.org>
-X-From: git-owner@vger.kernel.org Tue Nov 11 12:01:23 2008
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, "Junio C Hamano" <gitster@pobox.com>
+To: "Nanako Shiraishi" <nanako3@lavabit.com>
+X-From: git-owner@vger.kernel.org Tue Nov 11 12:06:05 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Kzqzq-0008Cx-Ps
-	for gcvg-git-2@gmane.org; Tue, 11 Nov 2008 12:01:23 +0100
+	id 1Kzr3S-0000tS-AS
+	for gcvg-git-2@gmane.org; Tue, 11 Nov 2008 12:05:24 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755346AbYKKLAG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 11 Nov 2008 06:00:06 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755099AbYKKLAF
-	(ORCPT <rfc822;git-outgoing>); Tue, 11 Nov 2008 06:00:05 -0500
-Received: from wf-out-1314.google.com ([209.85.200.170]:34453 "EHLO
-	wf-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754895AbYKKLAE (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 11 Nov 2008 06:00:04 -0500
-Received: by wf-out-1314.google.com with SMTP id 27so3136762wfd.4
-        for <git@vger.kernel.org>; Tue, 11 Nov 2008 03:00:03 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to
-         :subject:cc:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:references;
-        bh=GoKEEUF3DUSk20oyb7K6Xy5Lu8ha8tfbFWzCAvJ4A40=;
-        b=jk1rRFwprwA1GY9DHqSJ3ElwzRbQc/rcmhJQi06OCjgmI4/JpA3E/hF3ZIr5i5Fylu
-         /qs0REP8vXjtS9K+Rsi6jb9jRk8R0BLfGiUxWCQtbxOLUzWIrXiezckdzAmLLE5Q4i2H
-         uaXZ4/a2HseToN4WvkXtFrPFi+nOeY8BAJLQ0=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
-         :content-type:content-transfer-encoding:content-disposition
-         :references;
-        b=tHvYXiCKXertPRawjXC1QhkwkhMLH+Jf5aFKT784qm4oo78lhtkeICrUAD+fl8V3cU
-         pQkXMBWqksNC/YmPsxhodgm3wATVe49F5xqL5h/yuzpUiJHmHm90P0ESOFpIw3TI1I94
-         mGZkxvsv9FIJGh8QFTGxRNdWWy7kI++0/dJCs=
-Received: by 10.143.8.17 with SMTP id l17mr2924930wfi.173.1226401203832;
-        Tue, 11 Nov 2008 03:00:03 -0800 (PST)
-Received: by 10.142.216.21 with HTTP; Tue, 11 Nov 2008 03:00:03 -0800 (PST)
-In-Reply-To: <18708.11537.229423.296701@cargo.ozlabs.ibm.com>
+	id S1755345AbYKKLDv convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 11 Nov 2008 06:03:51 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755099AbYKKLDv
+	(ORCPT <rfc822;git-outgoing>); Tue, 11 Nov 2008 06:03:51 -0500
+Received: from ug-out-1314.google.com ([66.249.92.175]:45569 "EHLO
+	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754625AbYKKLDu convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 11 Nov 2008 06:03:50 -0500
+Received: by ug-out-1314.google.com with SMTP id 39so694153ugf.37
+        for <git@vger.kernel.org>; Tue, 11 Nov 2008 03:03:48 -0800 (PST)
+Received: by 10.103.161.16 with SMTP id n16mr4427876muo.79.1226401428302;
+        Tue, 11 Nov 2008 03:03:48 -0800 (PST)
+Received: by 10.103.165.1 with HTTP; Tue, 11 Nov 2008 03:03:48 -0800 (PST)
+In-Reply-To: <20081111184700.6117@nanako3.lavabit.com>
 Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/100638>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/100639>
 
-On Fri, Nov 7, 2008 at 2:57 PM, Paul Mackerras <paulus@samba.org> wrote:
-> Alexander Gavrilov writes:
+On Tue, Nov 11, 2008 at 10:47 AM, Nanako Shiraishi <nanako3@lavabit.com=
+> wrote:
+> Quoting "Santi B=E9jar" <santi@agolina.net>:
 >
->> For some reason, on Windows all transient windows are placed
->> in the upper left corner of the screen. Thus, it is necessary
->> to explicitly position the windows relative to their parent.
->> For simplicity this patch uses the function that is used
->> internally by Tk dialogs.
+>>> +The '\--simplify-by-decoration' option can be used to treat commit=
+s that
+>>> +are not referenced by tags as TREESAME, and treat commits that are=
+ tagged
+>>> +as !TREESAME (even when they have exactly the same tree as their p=
+arents).
+>>> +This can be used when you are only interested in the big picture o=
+f the
+>>> +topology of the history.
+>>> +
+>>> +
+>>
+>> I prefer the other way around, first what it does, and then how it
+>> does it (but it is a general comment about the help in "History
+>> Simplification", at least when viewing the help for "git log").
 >
-> Is there any reason to call tk::PlaceWindow under Linux or MacOS?
-> If not I'd rather add an if statement so we only call it on Windows.
+> Thank you for your comments.
+>
+> In the earlier part of the description, TREESAME (or !TREESAME) is ex=
+plained as a prerequisite concept for understanding how the history sim=
+plification works.  I think my description first talks about what it do=
+es using the concept that was already explained (in other words, "which=
+ commits are marked as TREESAME"), and then talks about what the conseq=
+uence of what it does is (in other words, "only shows the big picture")=
+=2E
+>
+> I can swap them around.  Let's see if you like this better:
+>
+>        The '\--simplify-by-decoration' option allows you to view only=
+ the
+>        big picture of the topology of the history, by omitting commit=
+s
+>        that are not referenced by tags.  Commits are marked as !TREES=
+AME
+>        (in other words, kept after history simplification rules descr=
+ibed
+>        above) if (1) they are referenced by tags, or (2) they change =
+the
+>        contents of the paths given on the command line.  All other
+>        commits are marked as TREESAME (subject to be simplified away)=
+=2E
+>
 
-I checked it on MacOS, and there the consequences of wm transient are
-even worse that on Windows, so scrap this patch -- I'll redo it to fix
-both cases.
+Better. I think it also makes sense to present the options at the
+beginning of the section, explain what they do, and then explain them
+in detail. I'll try to do it.
 
-Alexander
+>> And you should rewrite the line 416:
+>>
+>> Finally, there is a fourth simplification mode available
+>>
+>> as it is no longer "Finally".
+>
+> Yes, I thought about it, but describing the new option at the end doe=
+s not change the fact that the fourth simplification mode is the final =
+one.
+
+I take "Finally" as the last thing is explained in the section.
+
+>
+> The new option is not about a "simplification mode".  Given a set of =
+commits marked as TREESAME and !TREESAME, simplification modes decide h=
+ow the history is simplified.  The new option does not add any new mode=
+=2E Instead, it affects which commits are marked as TREESAME/!TREESAME.
+
+Make sense.
+
+Santi
