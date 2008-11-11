@@ -1,82 +1,85 @@
-From: Miklos Vajna <vmiklos@frugalware.org>
-Subject: Re: [darcs-users] [ANNOUNCE] darcs-fast-export
-Date: Tue, 11 Nov 2008 14:37:40 +0100
-Message-ID: <20081111133740.GE24201@genesis.frugalware.org>
-References: <20081111015313.GB24201@genesis.frugalware.org> <AC24F62F-9CFC-442D-8744-813F1930C2F7@zooko.com>
+From: Patrick Ohly <patrick.ohly@intel.com>
+Subject: git rebase --whitespace
+Date: Tue, 11 Nov 2008 15:12:50 +0100
+Message-ID: <1226412770.17450.839.camel@ecld0pohly>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="+GDz8FH0cDPsW8g2"
-Cc: git@vger.kernel.org, bazaar@lists.canonical.com,
-	mercurial@selenic.com, darcs-users@darcs.net
-To: zooko <zooko@zooko.com>
-X-From: git-owner@vger.kernel.org Tue Nov 11 14:39:03 2008
+Content-Type: multipart/mixed; boundary="=-0zil7GhaeHbTiJuOKk8G"
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Nov 11 15:14:12 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KztSN-0003wI-JS
-	for gcvg-git-2@gmane.org; Tue, 11 Nov 2008 14:39:00 +0100
+	id 1Kzu0N-0000jz-SJ
+	for gcvg-git-2@gmane.org; Tue, 11 Nov 2008 15:14:08 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755837AbYKKNho (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 11 Nov 2008 08:37:44 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755317AbYKKNho
-	(ORCPT <rfc822;git-outgoing>); Tue, 11 Nov 2008 08:37:44 -0500
-Received: from virgo.iok.hu ([193.202.89.103]:39078 "EHLO virgo.iok.hu"
+	id S1755831AbYKKOMx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 11 Nov 2008 09:12:53 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755842AbYKKOMx
+	(ORCPT <rfc822;git-outgoing>); Tue, 11 Nov 2008 09:12:53 -0500
+Received: from mga01.intel.com ([192.55.52.88]:63750 "EHLO mga01.intel.com"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752155AbYKKNhn (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 11 Nov 2008 08:37:43 -0500
-Received: from kag.elte.hu (kag.elte.hu [157.181.177.1])
-	by virgo.iok.hu (Postfix) with ESMTP id E0A605809C;
-	Tue, 11 Nov 2008 14:37:41 +0100 (CET)
-Received: from genesis.frugalware.org (frugalware.elte.hu [157.181.177.34])
-	by kag.elte.hu (Postfix) with ESMTP id 3588044698;
-	Tue, 11 Nov 2008 14:37:41 +0100 (CET)
-Received: by genesis.frugalware.org (Postfix, from userid 1000)
-	id 1498F119019E; Tue, 11 Nov 2008 14:37:41 +0100 (CET)
-Content-Disposition: inline
-In-Reply-To: <AC24F62F-9CFC-442D-8744-813F1930C2F7@zooko.com>
-User-Agent: Mutt/1.5.17 (2007-11-01)
+	id S1754906AbYKKOMw (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 11 Nov 2008 09:12:52 -0500
+Received: from fmsmga001.fm.intel.com ([10.253.24.23])
+  by fmsmga101.fm.intel.com with ESMTP; 11 Nov 2008 06:06:28 -0800
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="4.33,584,1220252400"; 
+   d="scan'208";a="637886471"
+Received: from ecld0pohly.ikn.intel.com (HELO [172.28.75.199]) ([172.28.75.199])
+  by fmsmga001.fm.intel.com with ESMTP; 11 Nov 2008 06:13:33 -0800
+X-Mailer: Evolution 2.22.2 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/100644>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/100645>
 
 
---+GDz8FH0cDPsW8g2
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+--=-0zil7GhaeHbTiJuOKk8G
+Content-Type: text/plain
+Content-Transfer-Encoding: 7bit
 
-On Mon, Nov 10, 2008 at 07:39:26PM -0700, zooko <zooko@zooko.com> wrote:
-> If you can show an example of the end result differing from the original=
-=20
-> repo then that is a bug in tailor, and please report it!
+Hello!
 
-Example:
+I tried to use "git --rebase --whitespace=..." and noticed some
+oddities. Git 1.6.0.4.
 
-http://git.frugalware.org/gitweb/gitweb.cgi?p=3Dfrugalware-current.git;a=3D=
-commit;h=3Db75189e1689d268f7efa4610ff12c48a67221dc0
+      * --whitespace is not supported when using --interactive. Should
+        be mentioned in the docs.
+      * Without --interactive, rebase will bail out early if the current
+        branch is up-to-date. I was trying to use --whitespace=fix to
+        clean up my patches and had to patch git-rebase (see attached),
+        otherwise it didn't let me do that.
+      * The documentation mentions --whitespace=check, but "check" is
+        not a valid option.
 
-Original darcs repo:
+I don't have time to fix the documentation, but I thought I should at
+least mention the issues and send the patch your way in case someone
+finds it useful.
 
-http://ftp.frugalware.org/pub/archive/other/darcs/frugalware-current/
+-- 
+Best Regards, Patrick Ohly
 
-If you have a look at the history of the tailor darcs repo, you can see
-I contributed a number of fixes later to fix these (where 'these' means
-the ones which were pointed out by this particular conversion only)
-issues.
+The content of this message is my personal opinion only and although
+I am an employee of Intel, the statements I make here in no way
+represent Intel's position on the issue, nor am I authorized to speak
+on behalf of Intel on this matter.
 
---+GDz8FH0cDPsW8g2
-Content-Type: application/pgp-signature
-Content-Disposition: inline
+--=-0zil7GhaeHbTiJuOKk8G
+Content-Disposition: attachment; filename=git-rebase-whitespace.patch
+Content-Type: text/x-patch; name=git-rebase-whitespace.patch; charset=ANSI_X3.4-1968
+Content-Transfer-Encoding: 7bit
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.9 (GNU/Linux)
+--- git-1.6.0.4/git-rebase.sh	2008-11-09 07:53:38.000000000 +0100
++++ git-1.6.0.4/git-rebase.sh.patched	2008-11-11 15:10:27.000000000 +0100
+@@ -375,6 +375,7 @@
+ # but this should be done only when upstream and onto are the same.
+ mb=$(git merge-base "$onto" "$branch")
+ if test "$upstream" = "$onto" && test "$mb" = "$onto" &&
++        ! (echo $git_am_opt | grep -e --whitespace ) > /dev/null &&
+ 	# linear history?
+ 	! (git rev-list --parents "$onto".."$branch" | grep " .* ") > /dev/null
+ then
 
-iEYEARECAAYFAkkZiqQACgkQe81tAgORUJYGEACdExyp1zi+dVHDb2ZoWAIEkr3o
-19oAoJg7gNCS0gMGwP1v6B9S0KHkk2BF
-=Win+
------END PGP SIGNATURE-----
-
---+GDz8FH0cDPsW8g2--
+--=-0zil7GhaeHbTiJuOKk8G--
