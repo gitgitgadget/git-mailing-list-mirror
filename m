@@ -1,103 +1,80 @@
-From: "Ondrej Certik" <ondrej@certik.cz>
-Subject: Re: importing mercurial patch
-Date: Tue, 11 Nov 2008 11:59:43 +0100
-Message-ID: <85b5c3130811110259x5d659f7ah74e7774773bdcc58@mail.gmail.com>
-References: <85b5c3130811110258h53d389co97a3c33e10667ae8@mail.gmail.com>
+From: "Alexander Gavrilov" <angavrilov@gmail.com>
+Subject: Re: [PATCH (GITK) v3 6/6] gitk: Explicitly position popup windows.
+Date: Tue, 11 Nov 2008 14:00:03 +0300
+Message-ID: <bb6f213e0811110300maedee6bife5592afb27b48b7@mail.gmail.com>
+References: <1225652389-22082-1-git-send-email-angavrilov@gmail.com>
+	 <1225652389-22082-2-git-send-email-angavrilov@gmail.com>
+	 <1225652389-22082-3-git-send-email-angavrilov@gmail.com>
+	 <1225652389-22082-4-git-send-email-angavrilov@gmail.com>
+	 <1225652389-22082-5-git-send-email-angavrilov@gmail.com>
+	 <1225652389-22082-6-git-send-email-angavrilov@gmail.com>
+	 <1225652389-22082-7-git-send-email-angavrilov@gmail.com>
+	 <18708.11537.229423.296701@cargo.ozlabs.ibm.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-To: "Git Mailing List" <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Tue Nov 11 12:01:11 2008
+Cc: git@vger.kernel.org
+To: "Paul Mackerras" <paulus@samba.org>
+X-From: git-owner@vger.kernel.org Tue Nov 11 12:01:23 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KzqzV-00085Z-Fv
-	for gcvg-git-2@gmane.org; Tue, 11 Nov 2008 12:01:01 +0100
+	id 1Kzqzq-0008Cx-Ps
+	for gcvg-git-2@gmane.org; Tue, 11 Nov 2008 12:01:23 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755324AbYKKK7q (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 11 Nov 2008 05:59:46 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755099AbYKKK7q
-	(ORCPT <rfc822;git-outgoing>); Tue, 11 Nov 2008 05:59:46 -0500
-Received: from fk-out-0910.google.com ([209.85.128.185]:45936 "EHLO
-	fk-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754895AbYKKK7p (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 11 Nov 2008 05:59:45 -0500
-Received: by fk-out-0910.google.com with SMTP id 18so3808973fkq.5
-        for <git@vger.kernel.org>; Tue, 11 Nov 2008 02:59:43 -0800 (PST)
+	id S1755346AbYKKLAG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 11 Nov 2008 06:00:06 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755099AbYKKLAF
+	(ORCPT <rfc822;git-outgoing>); Tue, 11 Nov 2008 06:00:05 -0500
+Received: from wf-out-1314.google.com ([209.85.200.170]:34453 "EHLO
+	wf-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754895AbYKKLAE (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 11 Nov 2008 06:00:04 -0500
+Received: by wf-out-1314.google.com with SMTP id 27so3136762wfd.4
+        for <git@vger.kernel.org>; Tue, 11 Nov 2008 03:00:03 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:sender
-         :to:subject:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:references
-         :x-google-sender-auth;
-        bh=PVI7ax93aRf5y3ONNvlk1HWl2LxLuz7H1gc7dfJUG2Y=;
-        b=guwv2aV3yw2xO2ECPjfbGJaurs1h8KLxnCqjmJpges+k6GpJrChSjbc86f6ogQHqWx
-         D7PAiBtvO0fbMWiOmObQh0yMjMDE/pt1p2BsiBDYp0wbedW99pWSp3NzgcDVChqIVGSV
-         Mg+bENZtSFTw8kCxFCGzFN5mp8tAMCLSRjXAw=
+        h=domainkey-signature:received:received:message-id:date:from:to
+         :subject:cc:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:references;
+        bh=GoKEEUF3DUSk20oyb7K6Xy5Lu8ha8tfbFWzCAvJ4A40=;
+        b=jk1rRFwprwA1GY9DHqSJ3ElwzRbQc/rcmhJQi06OCjgmI4/JpA3E/hF3ZIr5i5Fylu
+         /qs0REP8vXjtS9K+Rsi6jb9jRk8R0BLfGiUxWCQtbxOLUzWIrXiezckdzAmLLE5Q4i2H
+         uaXZ4/a2HseToN4WvkXtFrPFi+nOeY8BAJLQ0=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=message-id:date:from:sender:to:subject:in-reply-to:mime-version
+        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
          :content-type:content-transfer-encoding:content-disposition
-         :references:x-google-sender-auth;
-        b=uldZaEw6h8juRwU90sQ+gRTG8ncrvuu1QNxoIcXmgFcnNWfm8aI500ogcXc+Hal7ba
-         89RDiuChOy8fVLGNqY/ErTasSnLJYPJLzrTNBS6/sRuWNm4IkuCmsv6CemHt0+0lpQHT
-         Y6Atd5fsJcr1qYI2GagJgkuhfSgcp5r7zjB6w=
-Received: by 10.181.197.2 with SMTP id z2mr2459342bkp.65.1226401183424;
-        Tue, 11 Nov 2008 02:59:43 -0800 (PST)
-Received: by 10.86.99.20 with HTTP; Tue, 11 Nov 2008 02:59:43 -0800 (PST)
-In-Reply-To: <85b5c3130811110258h53d389co97a3c33e10667ae8@mail.gmail.com>
+         :references;
+        b=tHvYXiCKXertPRawjXC1QhkwkhMLH+Jf5aFKT784qm4oo78lhtkeICrUAD+fl8V3cU
+         pQkXMBWqksNC/YmPsxhodgm3wATVe49F5xqL5h/yuzpUiJHmHm90P0ESOFpIw3TI1I94
+         mGZkxvsv9FIJGh8QFTGxRNdWWy7kI++0/dJCs=
+Received: by 10.143.8.17 with SMTP id l17mr2924930wfi.173.1226401203832;
+        Tue, 11 Nov 2008 03:00:03 -0800 (PST)
+Received: by 10.142.216.21 with HTTP; Tue, 11 Nov 2008 03:00:03 -0800 (PST)
+In-Reply-To: <18708.11537.229423.296701@cargo.ozlabs.ibm.com>
 Content-Disposition: inline
-X-Google-Sender-Auth: e2ccccbe35a6ada3
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/100637>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/100638>
 
-On Tue, Nov 11, 2008 at 11:58 AM, Ondrej Certik <ondrej@certik.cz> wrote:
-> Hi,
+On Fri, Nov 7, 2008 at 2:57 PM, Paul Mackerras <paulus@samba.org> wrote:
+> Alexander Gavrilov writes:
 >
-> I'd like git to be able to import mercurial-exported patches. This
-> short Python program does it:
+>> For some reason, on Windows all transient windows are placed
+>> in the upper left corner of the screen. Thus, it is necessary
+>> to explicitly position the windows relative to their parent.
+>> For simplicity this patch uses the function that is used
+>> internally by Tk dialogs.
 >
->
-> -------------------------------------
-> #! /usr/bin/python
->
-> import os
-> import sys
-> import re
-> import tempfile
->
-> def run(cmd):
->    print cmd
->    os.system(cmd)
->
-> patch = sys.argv[1]
-> p = open(patch).read()
-> author = re.search("# User (.+)", p).groups()[0]
-> p = p.split("\n")
-> while not p[0].startswith("# Parent"):
->    del p[0]
-> i = 1
-> while not p[i].startswith("diff -r "):
->    i += 1
-> commit_message = "\n".join(p[1:i])
-> _, filename = tempfile.mkstemp()
-> f = open(filename, "w")
-> f.write(commit_message)
-> f.close()
->
-> run("git apply %s" % patch)
-> run("git ci -a --author='%s' -F %s" % (author, filename) )
-> ---------------------
->
->
-> How should this be implemented in git? Should I try to extend
-> "git-am.sh" to handle it?
+> Is there any reason to call tk::PlaceWindow under Linux or MacOS?
+> If not I'd rather add an if statement so we only call it on Windows.
 
-Just to make it clear --- I will of course use sh or C with git, I
-only used Python above because that's the language I know the best.
+I checked it on MacOS, and there the consequences of wm transient are
+even worse that on Windows, so scrap this patch -- I'll redo it to fix
+both cases.
 
-Ondrej
+Alexander
