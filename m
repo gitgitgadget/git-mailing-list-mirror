@@ -1,89 +1,71 @@
 From: "Juan Jose Comellas" <juanjo@comellas.org>
 Subject: Re: [RFC] mtn to git conversion script
-Date: Tue, 11 Nov 2008 14:30:53 -0200
-Message-ID: <1c3be50f0811110830y5045717csc5ddb1c0576cb046@mail.gmail.com>
+Date: Tue, 11 Nov 2008 14:40:46 -0200
+Message-ID: <1c3be50f0811110840p7dff8972r2a5ef7193a0306c2@mail.gmail.com>
 References: <94a0d4530808240218j4bedbe3di99303da9addc93a4@mail.gmail.com>
-	<20080825163530.GJ31114@lavos.net>
+	 <20080825163530.GJ31114@lavos.net>
 Mime-Version: 1.0
 Content-Type: multipart/mixed; 
-	boundary="----=_Part_34613_17515205.1226421053319"
-Cc: monotone-devel@nongnu.org, git@vger.kernel.org
+	boundary="----=_Part_34829_12416505.1226421646200"
+Cc: git@vger.kernel.org, monotone-devel@nongnu.org
 To: "Brian Downing" <bdowning@lavos.net>
-X-From: monotone-devel-bounces+gcvmd-monotone-devel=m.gmane.org@nongnu.org Tue Nov 11 17:32:52 2008
-Return-path: <monotone-devel-bounces+gcvmd-monotone-devel=m.gmane.org@nongnu.org>
-Envelope-to: gcvmd-monotone-devel@m.gmane.org
-Received: from lists.gnu.org ([199.232.76.165])
+X-From: git-owner@vger.kernel.org Tue Nov 11 17:42:28 2008
+Return-path: <git-owner@vger.kernel.org>
+Envelope-to: gcvg-git-2@gmane.org
+Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KzwAA-0002cl-HL
-	for gcvmd-monotone-devel@m.gmane.org; Tue, 11 Nov 2008 17:32:23 +0100
-Received: from localhost ([127.0.0.1]:58304 helo=lists.gnu.org)
-	by lists.gnu.org with esmtp (Exim 4.43)
-	id 1Kzw92-0000Wi-JH
-	for gcvmd-monotone-devel@m.gmane.org; Tue, 11 Nov 2008 11:31:12 -0500
-Received: from mailman by lists.gnu.org with tmda-scanned (Exim 4.43)
-	id 1Kzw8z-0000WG-DI
-	for monotone-devel@nongnu.org; Tue, 11 Nov 2008 11:31:09 -0500
-Received: from exim by lists.gnu.org with spam-scanned (Exim 4.43)
-	id 1Kzw8y-0000Va-D4
-	for monotone-devel@nongnu.org; Tue, 11 Nov 2008 11:31:09 -0500
-Received: from [199.232.76.173] (port=36182 helo=monty-python.gnu.org)
-	by lists.gnu.org with esmtp (Exim 4.43) id 1Kzw8y-0000VE-3q
-	for monotone-devel@nongnu.org; Tue, 11 Nov 2008 11:31:08 -0500
-Received: from fg-out-1718.google.com ([72.14.220.156]:2357)
-	by monty-python.gnu.org with esmtp (Exim 4.60)
-	(envelope-from <juanjo@comellas.org>) id 1Kzw8x-00041Q-Vo
-	for monotone-devel@nongnu.org; Tue, 11 Nov 2008 11:31:08 -0500
-Received: by fg-out-1718.google.com with SMTP id l26so65079fgb.8
-	for <monotone-devel@nongnu.org>; Tue, 11 Nov 2008 08:30:53 -0800 (PST)
-Received: by 10.181.199.6 with SMTP id b6mr2549783bkq.137.1226421053330;
-	Tue, 11 Nov 2008 08:30:53 -0800 (PST)
-Received: by 10.180.242.8 with HTTP; Tue, 11 Nov 2008 08:30:53 -0800 (PST)
+	id 1KzwJf-0007KL-Sn
+	for gcvg-git-2@gmane.org; Tue, 11 Nov 2008 17:42:12 +0100
+Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
+	id S1751145AbYKKQku (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 11 Nov 2008 11:40:50 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751144AbYKKQku
+	(ORCPT <rfc822;git-outgoing>); Tue, 11 Nov 2008 11:40:50 -0500
+Received: from fg-out-1718.google.com ([72.14.220.159]:4436 "EHLO
+	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751068AbYKKQku (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 11 Nov 2008 11:40:50 -0500
+Received: by fg-out-1718.google.com with SMTP id 19so69985fgg.17
+        for <git@vger.kernel.org>; Tue, 11 Nov 2008 08:40:46 -0800 (PST)
+Received: by 10.181.226.19 with SMTP id d19mr2558832bkr.35.1226421646211;
+        Tue, 11 Nov 2008 08:40:46 -0800 (PST)
+Received: by 10.180.242.8 with HTTP; Tue, 11 Nov 2008 08:40:46 -0800 (PST)
 In-Reply-To: <20080825163530.GJ31114@lavos.net>
-X-detected-operating-system: by monty-python.gnu.org: GNU/Linux 2.6 (newer, 2)
-X-BeenThere: monotone-devel@nongnu.org
-X-Mailman-Version: 2.1.5
-Precedence: list
-List-Id: developer discussion for monotone <monotone-devel.nongnu.org>
-List-Unsubscribe: <http://lists.nongnu.org/mailman/listinfo/monotone-devel>,
-	<mailto:monotone-devel-request@nongnu.org?subject=unsubscribe>
-List-Archive: <http://lists.gnu.org/pipermail/monotone-devel>
-List-Post: <mailto:monotone-devel@nongnu.org>
-List-Help: <mailto:monotone-devel-request@nongnu.org?subject=help>
-List-Subscribe: <http://lists.nongnu.org/mailman/listinfo/monotone-devel>,
-	<mailto:monotone-devel-request@nongnu.org?subject=subscribe>
-Sender: monotone-devel-bounces+gcvmd-monotone-devel=m.gmane.org@nongnu.org
-Errors-To: monotone-devel-bounces+gcvmd-monotone-devel=m.gmane.org@nongnu.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/100649>
+Sender: git-owner@vger.kernel.org
+Precedence: bulk
+List-ID: <git.vger.kernel.org>
+X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/100650>
 
-------=_Part_34613_17515205.1226421053319
-Content-Type: multipart/alternative; 
-	boundary="----=_Part_34614_16726607.1226421053319"
-
-------=_Part_34614_16726607.1226421053319
+------=_Part_34829_12416505.1226421646200
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 Content-Disposition: inline
 
-I made some modifications to the script that converts Monotone repositories
-to Git to make it work with what I had. I also added support for renaming
-commit authors. To use the modified script just call it passing the name of
-the repository file as the first argument. You can add a second optional
-argument with the name of the file that holds the authors' names and email
-addresses. In this file you should have one line per commit author with the
-following format:
+I made some modifications to the script that converts Monotone
+repositories to Git to make it work with what I had. I also added
+support for renaming commit authors.
+
+To use the modified script just call it passing the name of the
+repository file as the first argument. You can add a second optional
+argument with the name of the file that holds the authors' names and
+email addresses. In this file you should have one line per commit
+author with the following format:
 
 Firstname Lastname <email@example.com>
 
-This script still uses the AutomateStdio.pm Perl module that can be found in
-the net.venge.monotone.contrib.lib.automate-stdio branch of Monotone's main
-repository.
+This script still uses the AutomateStdio.pm Perl module that can be
+found in the net.venge.monotone.contrib.lib.automate-stdio branch of
+Monotone's main repository.
 
-PS. I'm no Perl guru so there might be some bugs lurking in the code I
+I'm no Perl guru so there might be some bugs lurking in the code I
 added. It did work for my repositories, though.
+
+PS. Resending because I mistakenly sent the previous message as HTML mail.
 
 
 On Mon, Aug 25, 2008 at 2:35 PM, Brian Downing <bdowning@lavos.net> wrote:
-
+>
 > On Sun, Aug 24, 2008 at 12:18:50PM +0300, Felipe Contreras wrote:
 > > I developed a script that converts a monotone repository into a git
 > > one (exact clone), I want to contribute it so everybody can use it.
@@ -126,69 +108,11 @@ On Mon, Aug 25, 2008 at 2:35 PM, Brian Downing <bdowning@lavos.net> wrote:
 > (With one exception, which I'll elaborate on in a different email.)
 >
 > -bcd
->
 
-------=_Part_34614_16726607.1226421053319
-Content-Type: text/html; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Content-Disposition: inline
-
-I made some modifications to the script that converts Monotone repositories to Git to make it work with what I had. I also added support for renaming commit authors. To use the modified script just call it passing the name of the repository file as the first argument. You can add a second optional argument with the name of the file that holds the authors&#39; names and email addresses. In this file you should have one line per commit author with the following format:<br>
-
-<br>Firstname Lastname &lt;<a href="mailto:email@example.com" target="_blank">email@example.com</a>&gt;<br><br>This script still uses the AutomateStdio.pm Perl module that can be found in the net.venge.monotone.contrib.lib.automate-stdio branch of Monotone&#39;s main repository.<br>
-
-<br>PS. I&#39;m no Perl guru so there might be some bugs lurking in the code I added. It did work for my repositories, though.<br><br><br><div class="gmail_quote">On Mon, Aug 25, 2008 at 2:35 PM, Brian Downing <span dir="ltr">&lt;<a href="mailto:bdowning@lavos.net" target="_blank">bdowning@lavos.net</a>&gt;</span> wrote:<br>
-
-<blockquote class="gmail_quote" style="border-left: 1px solid rgb(204, 204, 204); margin: 0pt 0pt 0pt 0.8ex; padding-left: 1ex;"><div>On Sun, Aug 24, 2008 at 12:18:50PM +0300, Felipe Contreras wrote:<br>
-&gt; I developed a script that converts a monotone repository into a git<br>
-&gt; one (exact clone), I want to contribute it so everybody can use it.<br>
-&gt;<br>
-</div><div>&gt; This is the gist of the script:<br>
-&gt;<br>
-&gt; mtn update --revision #{@id} --reallyquiet<br>
-&gt; git ls-files --modified --others --exclude-standard -z | git<br>
-&gt; update-index --add --remove -z --stdin<br>
-&gt; git write-tree<br>
-&gt; git write-raw &lt; /tmp/commit.txt<br>
-&gt; git update-ref refs/mtn/#{@id} #{@git_id}<br>
-&gt;<br>
-&gt; branches.each do |e|<br>
-&gt; &nbsp; &nbsp; git update-ref refs/heads/#{e} #{@git_id}<br>
-&gt; end<br>
-<br>
-</div>You definitely want to use fast-import, but you probably want to do<br>
-something a lot closer to fast-export for monotone (read: use its<br>
-automate stdio interface and avoid expensive calls).<br>
-<br>
-Here&#39;s a simple monotone to git converter I wrote. &nbsp;You&#39;ll need the<br>
-Monotone::AutomateStdio perl module to use it (which I think I got it<br>
-from monotone&#39;s net.venge.monotone.contrib.lib.automate-stdio branch).<br>
-It is very fast; it can convert the OpenEmbedded repo in something like<br>
-5-10 minutes on my machine.<br>
-<br>
-Note that for monotone export to go fast you absolutely /must/ avoid the<br>
-get_manifest operation. &nbsp;In my converter I use the revision information<br>
-directly. &nbsp;Getting the renames right with this is a little tricky; IIRC,<br>
-the ordering that works is:<br>
-<br>
-* Rename all renamed files, innermost files first, to temporary names.<br>
-* Delete all deleted files, innermost first.<br>
-* Rename all temporary names to permanent names, outermost first.<br>
-* Add all new/modified files.<br>
-<br>
-Conveniently, all of the above can be done by directly emitting<br>
-fast-import commands, so you don&#39;t have to keep track of trees directly.<br>
-(With one exception, which I&#39;ll elaborate on in a different email.)<br>
-<br>
--bcd<br>
-</blockquote></div><br>
-
-------=_Part_34614_16726607.1226421053319--
-
-------=_Part_34613_17515205.1226421053319
+------=_Part_34829_12416505.1226421646200
 Content-Type: text/x-perl; name=mtn-to-git.pl
 Content-Transfer-Encoding: base64
-X-Attachment-Id: f_fner45om1
+X-Attachment-Id: f_fnern58u1
 Content-Disposition: attachment; filename=mtn-to-git.pl
 
 IyEvdXNyL2Jpbi9wZXJsCiMgQ29weXJpZ2h0IChDKSAyMDA3LTIwMDggIEJyaWFuIERvd25pbmcK
@@ -293,15 +217,4 @@ IH0KICAgIG15ICRyID0gJGJyYW5jaGVzLT57JGJyYW5jaH07CiAgICAkYnJhbmNoZXMtPnskYnJh
 bmNofS0tOwogICAgaWYgKCRtYXJrcy0+eyRyZXZ9KSB7CiAgICAgICAgcHJpbnQgJGZpICJyZXNl
 dCByZWZzL2hlYWRzLyRicmFuY2gkclxuIjsKICAgICAgICBwcmludCAkZmkgImZyb20gOiRtYXJr
 cy0+eyRyZXZ9XG5cbiI7CiAgICB9Cn0KCmNsb3NlICRmaTsK
-------=_Part_34613_17515205.1226421053319
-Content-Type: text/plain; charset="us-ascii"
-MIME-Version: 1.0
-Content-Transfer-Encoding: 7bit
-Content-Disposition: inline
-
-_______________________________________________
-Monotone-devel mailing list
-Monotone-devel@nongnu.org
-http://lists.nongnu.org/mailman/listinfo/monotone-devel
-
-------=_Part_34613_17515205.1226421053319--
+------=_Part_34829_12416505.1226421646200--
