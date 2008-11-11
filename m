@@ -1,61 +1,71 @@
-From: Raimund Bauer <ray007@gmx.net>
-Subject: Re: JGIT: discuss: diff/patch implementation
-Date: Tue, 11 Nov 2008 11:06:40 +0100
-Message-ID: <1226398000.7541.11.camel@minastirith.xtradesoft.lan>
-References: <200811101522.13558.fg@one2team.net>
-	 <7v63mv5mro.fsf@gitster.siamese.dyndns.org>
+From: Jeff King <peff@peff.net>
+Subject: Re: git commit -v does not removes the patch
+Date: Tue, 11 Nov 2008 05:29:15 -0500
+Message-ID: <20081111102914.GA30330@coredump.intra.peff.net>
+References: <adf1fd3d0811100720n52ac1d47id9b7f402412aa0d3@mail.gmail.com> <20081110181023.GA22753@coredump.intra.peff.net> <adf1fd3d0811101434j658b2e8aj83d8cbe2293f5021@mail.gmail.com> <7vej1j40x5.fsf@gitster.siamese.dyndns.org> <20081111000706.GA26223@coredump.intra.peff.net> <adf1fd3d0811102356u6e671dcfj6491f81cf462ec2e@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Content-Transfer-Encoding: 7bit
-Cc: Francis Galiegue <fg@one2team.net>,
-	Git Mailing List <git@vger.kernel.org>,
-	"Shawn O. Pearce" <spearce@spearce.org>,
-	Robin Rosenberg <robin.rosenberg.lists@dewire.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Nov 11 11:08:01 2008
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Git Mailing List <git@vger.kernel.org>
+To: Santi =?utf-8?B?QsOpamFy?= <santi@agolina.net>
+X-From: git-owner@vger.kernel.org Tue Nov 11 11:30:37 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KzqAC-0005Ia-G1
-	for gcvg-git-2@gmane.org; Tue, 11 Nov 2008 11:08:00 +0100
+	id 1KzqW5-00042t-8B
+	for gcvg-git-2@gmane.org; Tue, 11 Nov 2008 11:30:37 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755099AbYKKKGp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 11 Nov 2008 05:06:45 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755138AbYKKKGp
-	(ORCPT <rfc822;git-outgoing>); Tue, 11 Nov 2008 05:06:45 -0500
-Received: from mail.gmx.net ([213.165.64.20]:58461 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1752852AbYKKKGo (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 11 Nov 2008 05:06:44 -0500
-Received: (qmail invoked by alias); 11 Nov 2008 10:06:42 -0000
-Received: from unknown (EHLO [192.168.1.100]) [213.185.179.42]
-  by mail.gmx.net (mp003) with SMTP; 11 Nov 2008 11:06:42 +0100
-X-Authenticated: #20693823
-X-Provags-ID: V01U2FsdGVkX1/aNEJ6OfDagDebebjlLNm5WpAXgSnvDz1MIMEtp9
-	4FP2y6y+jX6f5M
-In-Reply-To: <7v63mv5mro.fsf@gitster.siamese.dyndns.org>
-X-Mailer: Evolution 2.12.1 
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.71
+	id S1755876AbYKKK3U convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 11 Nov 2008 05:29:20 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755865AbYKKK3U
+	(ORCPT <rfc822;git-outgoing>); Tue, 11 Nov 2008 05:29:20 -0500
+Received: from peff.net ([208.65.91.99]:4489 "EHLO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755724AbYKKK3S (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 11 Nov 2008 05:29:18 -0500
+Received: (qmail 11884 invoked by uid 111); 11 Nov 2008 10:29:17 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+    by peff.net (qpsmtpd/0.32) with SMTP; Tue, 11 Nov 2008 05:29:17 -0500
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Tue, 11 Nov 2008 05:29:15 -0500
+Content-Disposition: inline
+In-Reply-To: <adf1fd3d0811102356u6e671dcfj6491f81cf462ec2e@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/100634>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/100635>
 
+On Tue, Nov 11, 2008 at 08:56:34AM +0100, Santi B=C3=A9jar wrote:
 
-On Mon, 2008-11-10 at 12:50 -0800, Junio C Hamano wrote:
-> Francis Galiegue <fg@one2team.net> writes:
-> 
-> > A very nice git feature, without even going as far as merges, is the cherry 
-> > pick feature.
-> 
-> I thought cherry-picking needs to be done in terms of 3-way merge, not
-> diff piped to patch, for correctness's sake.
+> Almost! I have diff.mnemonicprefix=3Dtrue, if I unset it everything w=
+orks.
 
-What about http://sourceforge.net/projects/jlibdiff ?
-Maybe a bit old, but claims to have diff3 and is under LGPL.
+Ah, indeed. The obvious fix is just loosening our match a little bit:
 
-best regards,
-Ray
+diff --git a/builtin-commit.c b/builtin-commit.c
+index 93ca496..a721990 100644
+--- a/builtin-commit.c
++++ b/builtin-commit.c
+@@ -1015,7 +1015,7 @@ int cmd_commit(int argc, const char **argv, const=
+ char *prefix)
+ 	}
+=20
+ 	/* Truncate the message just before the diff, if any. */
+-	p =3D strstr(sb.buf, "\ndiff --git a/");
++	p =3D strstr(sb.buf, "\ndiff --git ");
+ 	if (p !=3D NULL)
+ 		strbuf_setlen(&sb, p - sb.buf + 1);
+=20
+
+But I have to wonder if there is some more robust solution. It seems
+like this can have false positives if you include diff output in your
+commit message, and a potential false negative if you delete the newlin=
+e
+(e.g., delete everything up to "diff --git", making it the first line).
+
+But I guess we haven't seen a lot of complaints, so maybe those
+conditions aren't worth worrying about.
+
+-Peff
