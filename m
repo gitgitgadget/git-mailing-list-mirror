@@ -1,72 +1,137 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH] git-diff: Add --staged as a synonym for --cached.
-Date: Mon, 10 Nov 2008 20:22:10 -0500
-Message-ID: <20081111012210.GA26920@coredump.intra.peff.net>
-References: <1225296936-1357-1-git-send-email-dsymonds@gmail.com> <20081029164253.GA3172@sigill.intra.peff.net> <ee77f5c20810290950k6d7acfcbt90b6280c290bd532@mail.gmail.com> <alpine.DEB.1.00.0810291804400.22125@pacific.mpi-cbg.de.mpi-cbg.de> <20081029171122.GA12167@sigill.intra.peff.net> <20081102123519.GA21251@atjola.homenet> <7vljw2yo93.fsf@gitster.siamese.dyndns.org> <20081103071420.GD10772@coredump.intra.peff.net> <ee77f5c20811101537u6061e5b4w420e9692e0cefad3@mail.gmail.com> <7vljvr2hjn.fsf@gitster.siamese.dyndns.org>
+From: Miklos Vajna <vmiklos@frugalware.org>
+Subject: [ANNOUNCE] darcs-fast-export
+Date: Tue, 11 Nov 2008 02:53:13 +0100
+Message-ID: <20081111015313.GB24201@genesis.frugalware.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: David Symonds <dsymonds@gmail.com>,
-	=?utf-8?B?QmrDtnJu?= Steinbrink <B.Steinbrink@gmx.de>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	git@vger.kernel.org, Stephan Beyer <s-beyer@gmx.net>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Nov 11 02:23:30 2008
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git-2@gmane.org
-Received: from vger.kernel.org ([209.132.176.167])
+Content-Type: multipart/mixed; boundary="===============8989743173931662555=="
+Cc: bazaar@lists.canonical.com, mercurial@selenic.com, darcs-users@darcs.net
+To: git@vger.kernel.org
+X-From: darcs-users-bounces@darcs.net Tue Nov 11 02:54:34 2008
+Return-path: <darcs-users-bounces@darcs.net>
+Envelope-to: gcvdu-darcs-users@gmane.org
+Received: from fraxinus.osuosl.org ([140.211.166.137])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Kzhyb-0001Yd-5v
-	for gcvg-git-2@gmane.org; Tue, 11 Nov 2008 02:23:29 +0100
-Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754077AbYKKBWO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 10 Nov 2008 20:22:14 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753722AbYKKBWN
-	(ORCPT <rfc822;git-outgoing>); Mon, 10 Nov 2008 20:22:13 -0500
-Received: from peff.net ([208.65.91.99]:2236 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753461AbYKKBWN (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 10 Nov 2008 20:22:13 -0500
-Received: (qmail 10062 invoked by uid 111); 11 Nov 2008 01:22:11 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.32) with SMTP; Mon, 10 Nov 2008 20:22:11 -0500
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Mon, 10 Nov 2008 20:22:10 -0500
+	id 1KziSd-0003Qp-1o
+	for gcvdu-darcs-users@gmane.org; Tue, 11 Nov 2008 02:54:31 +0100
+Received: from localhost (localhost [127.0.0.1])
+	by fraxinus.osuosl.org (Postfix) with ESMTP id 7C0523D96A;
+	Tue, 11 Nov 2008 01:53:19 +0000 (UTC)
+X-Virus-Scanned: amavisd-new at osuosl.org
+Received: from fraxinus.osuosl.org ([127.0.0.1])
+	by localhost (.osuosl.org [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id XlLQpuys0tSG; Tue, 11 Nov 2008 01:53:18 +0000 (UTC)
+Received: from ash.osuosl.org (ash.osuosl.org [140.211.166.34])
+	by fraxinus.osuosl.org (Postfix) with ESMTP id B6D493D96B;
+	Tue, 11 Nov 2008 01:53:18 +0000 (UTC)
+X-Original-To: darcs-users@lists.darcs.net
+Delivered-To: darcs-users@osuosl.org
+Received: from whitealder.osuosl.org (whitealder.osuosl.org [140.211.166.138])
+	by ash.osuosl.org (Postfix) with ESMTP id 3AEA78F74E
+	for <darcs-users@lists.darcs.net>; Tue, 11 Nov 2008 01:53:17 +0000 (UTC)
+Received: from localhost (localhost [127.0.0.1])
+	by whitealder.osuosl.org (Postfix) with ESMTP id 2A3C41099EE
+	for <darcs-users@lists.darcs.net>; Tue, 11 Nov 2008 01:53:17 +0000 (UTC)
+X-Virus-Scanned: amavisd-new at osuosl.org
+Received: from whitealder.osuosl.org ([127.0.0.1])
+	by localhost (.osuosl.org [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id 5+Z7JDGpu8nx for <darcs-users@lists.darcs.net>;
+	Tue, 11 Nov 2008 01:53:16 +0000 (UTC)
+X-Greylist: domain auto-whitelisted by SQLgrey-1.7.4
+Received: from virgo.iok.hu (virgo.iok.hu [193.202.89.103])
+	by whitealder.osuosl.org (Postfix) with ESMTP id 5E8601099B0
+	for <darcs-users@darcs.net>; Tue, 11 Nov 2008 01:53:15 +0000 (UTC)
+Received: from kag.elte.hu (kag.elte.hu [157.181.177.1])
+	by virgo.iok.hu (Postfix) with ESMTP id 2C1BE5808F;
+	Tue, 11 Nov 2008 02:53:14 +0100 (CET)
+Received: from genesis.frugalware.org (frugalware.elte.hu [157.181.177.34])
+	by kag.elte.hu (Postfix) with ESMTP id B31E04465E;
+	Tue, 11 Nov 2008 02:53:13 +0100 (CET)
+Received: by genesis.frugalware.org (Postfix, from userid 1000)
+	id 8F0F6119019E; Tue, 11 Nov 2008 02:53:13 +0100 (CET)
+User-Agent: Mutt/1.5.17 (2007-11-01)
+X-BeenThere: darcs-users@darcs.net
+X-Mailman-Version: 2.1.9
+Precedence: list
+List-Id: A list for users of darcs <darcs-users.darcs.net>
+List-Unsubscribe: <http://lists.osuosl.org/mailman/listinfo/darcs-users>,
+	<mailto:darcs-users-request@darcs.net?subject=unsubscribe>
+List-Archive: <http://lists.osuosl.org/pipermail/darcs-users>
+List-Post: <mailto:darcs-users@darcs.net>
+List-Help: <mailto:darcs-users-request@darcs.net?subject=help>
+List-Subscribe: <http://lists.osuosl.org/mailman/listinfo/darcs-users>,
+	<mailto:darcs-users-request@darcs.net?subject=subscribe>
+Sender: darcs-users-bounces@darcs.net
+Errors-To: darcs-users-bounces@darcs.net
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/100610>
+
+
+--===============8989743173931662555==
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="7w6n1xPQJploaIC9"
 Content-Disposition: inline
-In-Reply-To: <7vljvr2hjn.fsf@gitster.siamese.dyndns.org>
-Sender: git-owner@vger.kernel.org
-Precedence: bulk
-List-ID: <git.vger.kernel.org>
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/100609>
 
-On Mon, Nov 10, 2008 at 05:11:08PM -0800, Junio C Hamano wrote:
 
-> I doubt "Is there any further discussion on THIS ONE ALONE?" is a valid
-> question to ask.  What are the other command options we are introducing
-> synonyms for?  There is no need for two variants of staged for "diff" (you
-> don't have --staged-too option but instead you give a committish argument,
-> e.g. HEAD), so --staged-only can be abbreviated to --staged without
-> risking any ambiguity.  But at least a fully-spelled-out --staged-only
-> should also be accepted, shouldn't it?
+--7w6n1xPQJploaIC9
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
 
-I'm not sure that "staged-only" really makes sense here. In modification
-commands like "apply", it is about "do this one thing to the working
-tree, to both the index and the working tree, or to just the index".
+Hi,
 
-But here, you are selecting two points for comparison. So while it is
-tempting to say "the default for diff just happens to work on the index
-and the working tree, so we don't need --staged-too", I don't think that
-is right. Doing "--staged-only" is _not_ about saying "do the thing we
-would have done to the working tree and the index to just the index." It
-is about "use HEAD as one of the points instead of the working tree
-(and reverse the order of points :) )".
+I'm happy to announce a small project I recently stated to work on. It's
+a darcs backend for fast importers.
 
-To me, what is really being asked with "git diff --staged" (or "git
-diff --cached" for that matter), is "what is staged?" That is, diff is
-not about an operation on a data location (like HEAD, index, or working
-tree), but rather an operatoin on a data _relationship_. So you ask for
-"what is not staged" (the relationship between index and working tree),
-"what is staged" (the relationship between HEAD and index), "what is
-different between the working tree and HEAD", or "what is different
-between these two trees".
+This means that it allows you to export patches/commits from a darcs
+repo and import to any version control system where a fast importer is
+implemented.
 
--Peff
+Current features:
+
+- According to its name, it tries to be really fast, even for large
+  repos.
+
+- Independent. It has been tested with git fast-import, hg fastimport
+  and bzr fast-import. (Let me know if you know other fast-importers!)
+
+- It supports both (darcs1 and darcs2) darcs repo formats.
+
+- It supports incremental conversions.
+
+More info on the homepage:
+
+http://vmiklos.hu/project/darcs-fast-export/
+
+Including a list of alternatives, where I try to compare them to
+darcs-fast-export.
+
+Any feedback or comment is appreciated.
+
+I'm not on the bazaar and the mercurial list, so there please CC me.
+
+Thanks.
+
+--7w6n1xPQJploaIC9
+Content-Type: application/pgp-signature
+Content-Disposition: inline
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.9 (GNU/Linux)
+
+iEYEARECAAYFAkkY5YkACgkQe81tAgORUJYH4wCfSUPneNWTPTcZiMNNoEa3yT0t
+Fp8An3bH1C1OieJZAR9amFIbjiOQtqBw
+=r1l0
+-----END PGP SIGNATURE-----
+
+--7w6n1xPQJploaIC9--
+
+--===============8989743173931662555==
+Content-Type: text/plain; charset="us-ascii"
+MIME-Version: 1.0
+Content-Transfer-Encoding: 7bit
+Content-Disposition: inline
+
+_______________________________________________
+darcs-users mailing list
+darcs-users@darcs.net
+http://lists.osuosl.org/mailman/listinfo/darcs-users
+
+--===============8989743173931662555==--
