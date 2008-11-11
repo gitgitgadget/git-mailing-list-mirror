@@ -1,55 +1,59 @@
-From: Alex Riesen <raa.lkml@gmail.com>
-Subject: Re: [PATCH] Tell users that git protocol is not for pushing
-Date: Tue, 11 Nov 2008 08:24:55 +0100
-Message-ID: <20081111072455.GA4206@blimp.localdomain>
-References: <1226379976-5959-1-git-send-email-nathan.panike@gmail.com>
-Reply-To: Alex Riesen <raa.lkml@gmail.com>
+From: Rogan Dawes <lists@dawes.za.net>
+Subject: Re: JGIT: discuss: diff/patch implementation
+Date: Tue, 11 Nov 2008 09:27:27 +0200
+Message-ID: <491933DF.3060307@dawes.za.net>
+References: <200811101522.13558.fg@one2team.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: "Nathan W. Panike" <nathan.panike@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Nov 11 08:26:16 2008
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: Git Mailing List <git@vger.kernel.org>,
+	"Shawn O. Pearce" <spearce@spearce.org>,
+	Robin Rosenberg <robin.rosenberg.lists@dewire.com>
+To: Francis Galiegue <fg@one2team.net>
+X-From: git-owner@vger.kernel.org Tue Nov 11 08:31:25 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Kznde-0002qc-U9
-	for gcvg-git-2@gmane.org; Tue, 11 Nov 2008 08:26:15 +0100
+	id 1Kznid-0003zm-0x
+	for gcvg-git-2@gmane.org; Tue, 11 Nov 2008 08:31:23 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754816AbYKKHY7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 11 Nov 2008 02:24:59 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754749AbYKKHY7
-	(ORCPT <rfc822;git-outgoing>); Tue, 11 Nov 2008 02:24:59 -0500
-Received: from mo-p05-ob.rzone.de ([81.169.146.181]:55536 "EHLO
-	mo-p05-ob.rzone.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754734AbYKKHY6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 11 Nov 2008 02:24:58 -0500
-X-RZG-CLASS-ID: mo05
-X-RZG-AUTH: :Pm0FVUW6aauhRGJJc5OfA4AU8DM8ZlijdmJYxKn/UQvEQQx8BU83pbQ=
-Received: from tigra.home (Fae1e.f.strato-dslnet.de [195.4.174.30])
-	by post.webmailer.de (fruni mo4) (RZmta 17.18)
-	with ESMTP id h05533kAB5CEn9 ; Tue, 11 Nov 2008 08:24:56 +0100 (MET)
-Received: from blimp.localdomain (unknown [192.168.0.8])
-	by tigra.home (Postfix) with ESMTP id 3302A277C8;
-	Tue, 11 Nov 2008 08:24:56 +0100 (CET)
-Received: by blimp.localdomain (Postfix, from userid 1000)
-	id BB88D36D27; Tue, 11 Nov 2008 08:24:55 +0100 (CET)
-Content-Disposition: inline
-In-Reply-To: <1226379976-5959-1-git-send-email-nathan.panike@gmail.com>
-User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
+	id S1754749AbYKKH36 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 11 Nov 2008 02:29:58 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754757AbYKKH35
+	(ORCPT <rfc822;git-outgoing>); Tue, 11 Nov 2008 02:29:57 -0500
+Received: from hapkido.dreamhost.com ([66.33.216.122]:35472 "EHLO
+	hapkido.dreamhost.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754651AbYKKH35 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 11 Nov 2008 02:29:57 -0500
+Received: from spunkymail-a17.g.dreamhost.com (sd-green-bigip-177.dreamhost.com [208.97.132.177])
+	by hapkido.dreamhost.com (Postfix) with ESMTP id 448B0178823
+	for <git@vger.kernel.org>; Mon, 10 Nov 2008 23:29:56 -0800 (PST)
+Received: from [192.168.201.100] (dsl-243-206-70.telkomadsl.co.za [41.243.206.70])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by spunkymail-a17.g.dreamhost.com (Postfix) with ESMTP id E7991734F2;
+	Mon, 10 Nov 2008 23:28:13 -0800 (PST)
+User-Agent: Thunderbird 2.0.0.17 (Windows/20080914)
+In-Reply-To: <200811101522.13558.fg@one2team.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/100626>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/100627>
 
-Nathan W. Panike, Tue, Nov 11, 2008 06:06:16 +0100:
-> When one attempts to push to a git-protocol repository, one gets the
-> line:
+Francis Galiegue wrote:
+> Hello,
 > 
-> fatal: The remote end hung up unexpectedly
+> A very nice git feature, without even going as far as merges, is the cherry 
+> pick feature.
 > 
-> This seems a bit obscure to me.  It is better to inform the user that git://
-> does not allow pushing.
+> For this to be doable from within the Eclipse Git plugin, a diff/patch 
+> implementation needs to be found, in a license compatible with the current 
+> JGit license (3-clause BSD, as far as I can tell). Or a new implementation 
+> can be rewritten from scratch, of course.
 
-But it does. See git daemon --help, look for receive-pack.
+Shouldn't Eclipse already *have* a diff/patch implementation, for its 
+other "team work" plugins?
+
+Rogan
