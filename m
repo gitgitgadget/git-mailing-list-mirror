@@ -1,105 +1,79 @@
-From: "Avery Pennarun" <apenwarr@gmail.com>
-Subject: Re: [PATCH] git-diff: Add --staged as a synonym for --cached.
-Date: Mon, 10 Nov 2008 23:04:42 -0500
-Message-ID: <32541b130811102004n54a47331v48ba8d299039897f@mail.gmail.com>
-References: <1225296936-1357-1-git-send-email-dsymonds@gmail.com>
-	 <20081029164253.GA3172@sigill.intra.peff.net>
-	 <ee77f5c20810290950k6d7acfcbt90b6280c290bd532@mail.gmail.com>
-	 <alpine.DEB.1.00.0810291804400.22125@pacific.mpi-cbg.de.mpi-cbg.de>
-	 <20081029171122.GA12167@sigill.intra.peff.net>
-	 <20081102123519.GA21251@atjola.homenet>
-	 <7vljw2yo93.fsf@gitster.siamese.dyndns.org>
-	 <20081103071420.GD10772@coredump.intra.peff.net>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: "Junio C Hamano" <gitster@pobox.com>,
-	"=?ISO-8859-1?Q?Bj=F6rn_Steinbrink?=" <B.Steinbrink@gmx.de>,
-	"Johannes Schindelin" <Johannes.Schindelin@gmx.de>,
-	"David Symonds" <dsymonds@gmail.com>, git@vger.kernel.org,
-	"Stephan Beyer" <s-beyer@gmx.net>
-To: "Jeff King" <peff@peff.net>
-X-From: git-owner@vger.kernel.org Tue Nov 11 05:06:17 2008
+From: "Nathan W. Panike" <nathan.panike@gmail.com>
+Subject: [PATCH] Tell users that git protocol is not for pushing
+Date: Mon, 10 Nov 2008 23:06:16 -0600
+Message-ID: <1226379976-5959-1-git-send-email-nathan.panike@gmail.com>
+Cc: "Nathan W. Panike" <nathan.panike@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Nov 11 06:07:38 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KzkVr-000696-LQ
-	for gcvg-git-2@gmane.org; Tue, 11 Nov 2008 05:06:00 +0100
+	id 1KzlTV-0004kG-Lk
+	for gcvg-git-2@gmane.org; Tue, 11 Nov 2008 06:07:38 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753961AbYKKEEo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 10 Nov 2008 23:04:44 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753926AbYKKEEo
-	(ORCPT <rfc822;git-outgoing>); Mon, 10 Nov 2008 23:04:44 -0500
-Received: from hs-out-0708.google.com ([64.233.178.242]:24887 "EHLO
-	hs-out-0708.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753539AbYKKEEn (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 10 Nov 2008 23:04:43 -0500
-Received: by hs-out-0708.google.com with SMTP id 4so1223586hsl.5
-        for <git@vger.kernel.org>; Mon, 10 Nov 2008 20:04:42 -0800 (PST)
+	id S1750792AbYKKFGW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 11 Nov 2008 00:06:22 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750709AbYKKFGW
+	(ORCPT <rfc822;git-outgoing>); Tue, 11 Nov 2008 00:06:22 -0500
+Received: from yw-out-2324.google.com ([74.125.46.30]:23646 "EHLO
+	yw-out-2324.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750748AbYKKFGV (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 11 Nov 2008 00:06:21 -0500
+Received: by yw-out-2324.google.com with SMTP id 9so1100745ywe.1
+        for <git@vger.kernel.org>; Mon, 10 Nov 2008 21:06:20 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to
-         :subject:cc:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:references;
-        bh=dFtz/ApxyhmrXxsdy0H5Tnfpi0YcyxXUIqxmh1Xr14s=;
-        b=ed4w7q0Gxbk19163KUveVweZCUluaVSuI1Bb97CkV5tE4zdX4E8rWWW2kqffc8MqoU
-         l+KlQonzaUZj4N/3cl7ZCJP0vvOVTNkJmY86+BaWfRvekSuX1EvkXUQ6lFFWugKzviuG
-         b3YJqNnpIyVLVzQVuL5K4mhxv99VctTHA02EQ=
+        h=domainkey-signature:received:received:from:to:cc:subject:date
+         :message-id:x-mailer;
+        bh=lXsQEv63IbrX/kPMBk0FJaKAAN8sA0YwxpxJ/yhJzU0=;
+        b=KEXVUdAIYt3+e6DJHTyeeZzGR/oWs8l65favc8iPhgHnyvLxV9mAXEK5LsTPf3mxU6
+         3Ssdj8h1Tfm7YdF3k3hGTH3vNboTS8r0M377REv9uHEpNYDW33AmRbKMut3a8r+v9wGJ
+         BHUz+qL5JhJtd52tgQFLH36ZTSNppZj84y9ak=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
-         :content-type:content-transfer-encoding:content-disposition
-         :references;
-        b=LPgFz4L83Gp5kNOVd7LOAznIv8CnI3T5ldWWubPK5JcyiRDLI5k/Oqh6QFzo3a/Qoj
-         A5bJPaCrZknkDFBDRHSowUg1cB+USYxTLJOc3gKk9usvlm0nhslF8oTvsN1gI0yKy7H9
-         s+gQxkHuijpSQkWjSefz2PLkGAlG1on/EKlLM=
-Received: by 10.150.228.12 with SMTP id a12mr3934700ybh.99.1226376282197;
-        Mon, 10 Nov 2008 20:04:42 -0800 (PST)
-Received: by 10.150.98.19 with HTTP; Mon, 10 Nov 2008 20:04:42 -0800 (PST)
-In-Reply-To: <20081103071420.GD10772@coredump.intra.peff.net>
-Content-Disposition: inline
+        h=from:to:cc:subject:date:message-id:x-mailer;
+        b=E2z05q1vt5Z0zbv9iYJS1V+uaMQma/fbCxPnK9ghdn5ebz7NyLpNm3/iC5HnxSdLgm
+         +GwEBezsujZ62xDKlY2D/C8ySA0cgoQlycSKqM53I8jHiMnykDSaceXBxmrLJ3T259Xv
+         yvOP7P9i/xN8ewOziMrKnaqnEY23EhaUZ+9iU=
+Received: by 10.64.183.1 with SMTP id g1mr7354562qbf.26.1226379980149;
+        Mon, 10 Nov 2008 21:06:20 -0800 (PST)
+Received: from localhost (ppp-70-226-174-120.dsl.mdsnwi.ameritech.net [70.226.174.120])
+        by mx.google.com with ESMTPS id k29sm12910188qba.7.2008.11.10.21.06.18
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Mon, 10 Nov 2008 21:06:19 -0800 (PST)
+X-Mailer: git-send-email 1.6.0.4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/100614>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/100615>
 
-On Mon, Nov 3, 2008 at 2:14 AM, Jeff King <peff@peff.net> wrote:
-> So "git diff --staged", while it makes sense to us (since we are asking
-> "what is staged"), is not consistent with the discussed rules. In
-> particular:
->
->  1. It operates on just the "stage" and not the working tree, so it
->     should be "--staged-only". But the only there is nonsensical.
->
->  2. The default is _already_ operating on the staging area, so you are
->     really switching up the working tree for the HEAD in what you are
->     diffing. So in that sense, it doesn't convey the change in
->     operation very well.
->
-> And I am not proposing a change here (except to perhaps "git diff
-> --staged" instead of "--cached"). Just pointing out that it does not
-> follow the "--staged operates on both, --staged-only operates on just
-> the index" rule.
->
-> Hrm. For that matter, grep is a bit different, too. Since I would expect
-> "git grep --staged" to find only staged things, not things in both the
-> working tree and the index. So perhaps there is a difference between
-> commands that modify and commands that inspect.
+When one attempts to push to a git-protocol repository, one gets the
+line:
 
-Speaking just for myself, I would find this all a lot less confusing
-if "staged" were a refspec of some sort, not an option at all.
+fatal: The remote end hung up unexpectedly
 
-   git diff HEAD..STAGED
-   git diff STAGED..WORKTREE
-   git grep pattern STAGED HEAD sillybranch WORKTREE ^ignorebranch --
-path/to/files
+This seems a bit obscure to me.  It is better to inform the user that git://
+does not allow pushing.
+---
+ transport.c |    4 +++-
+ 1 files changed, 3 insertions(+), 1 deletions(-)
 
-git-rev-parse already gives us a nice syntax for including/excluding
-particular trees as much as we like; the only problem is you can't
-talk about the work tree or index as if they were revisions.
-
-Have fun,
-
-Avery
+diff --git a/transport.c b/transport.c
+index 56831c5..2c1577e 100644
+--- a/transport.c
++++ b/transport.c
+@@ -684,7 +684,9 @@ static int git_transport_push(struct transport *transport, int refspec_nr, const
+ 	args.use_thin_pack = data->thin;
+ 	args.verbose = !!(flags & TRANSPORT_PUSH_VERBOSE);
+ 	args.dry_run = !!(flags & TRANSPORT_PUSH_DRY_RUN);
+-
++	if(strncmp(transport->url,"git",3)==0){
++		fprintf(stderr,"git protocol does not support push.\n");
++	}
+ 	return send_pack(&args, transport->url, transport->remote, refspec_nr, refspec);
+ }
+ 
+-- 
+1.6.0.4
