@@ -1,98 +1,87 @@
-From: "Li Frank" <Frank.Li@freescale.com>
-Subject: RE: why not TortoiseGit
-Date: Tue, 11 Nov 2008 09:51:06 +0800
-Message-ID: <7FD1F85C96D70C4A89DA1DF7667EAE961E7EF2@zch01exm23.fsl.freescale.net>
-References: <7FD1F85C96D70C4A89DA1DF7667EAE96125890@zch01exm23.fsl.freescale.net> <20081031121913.GE18221@sys-0.hiltweb.site> <490AFBA5.5090700@op5.se> <d411cc4a0810310857y5b4f8c46ue33e1f6a9e2c13d1@mail.gmail.com> <7FD1F85C96D70C4A89DA1DF7667EAE961E728C@zch01exm23.fsl.freescale.net> <320075ff0811030200q606b76a8i16496cf7b8b1b7d2@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain;
-	charset="us-ascii"
-Content-Transfer-Encoding: 8BIT
-Cc: "Scott Chacon" <schacon@gmail.com>, "Andreas Ericsson" <ae@op5.se>,
-	"Ian Hilt" <ian.hilt@gmx.com>, <git@vger.kernel.org>
-To: "Nigel Magnay" <nigel.magnay@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Nov 11 03:16:46 2008
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git-2@gmane.org
-Received: from vger.kernel.org ([209.132.176.167])
+From: zooko <zooko@zooko.com>
+Subject: Re: [ANNOUNCE] darcs-fast-export
+Date: Mon, 10 Nov 2008 19:39:26 -0700
+Message-ID: <AC24F62F-9CFC-442D-8744-813F1930C2F7@zooko.com>
+References: <20081111015313.GB24201@genesis.frugalware.org>
+Mime-Version: 1.0 (Apple Message framework v753.1)
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: 7bit
+Cc: bazaar@lists.canonical.com, mercurial@selenic.com, git@vger.kernel.org,
+	darcs-users@darcs.net
+To: Miklos Vajna <vmiklos@frugalware.org>
+X-From: darcs-users-bounces@darcs.net Tue Nov 11 03:42:03 2008
+Return-path: <darcs-users-bounces@darcs.net>
+Envelope-to: gcvdu-darcs-users@gmane.org
+Received: from fraxinus.osuosl.org ([140.211.166.137])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Kzio9-0001rN-Mc
-	for gcvg-git-2@gmane.org; Tue, 11 Nov 2008 03:16:46 +0100
-Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753861AbYKKCPb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 10 Nov 2008 21:15:31 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753626AbYKKCPa
-	(ORCPT <rfc822;git-outgoing>); Mon, 10 Nov 2008 21:15:30 -0500
-Received: from az33egw02.freescale.net ([192.88.158.103]:49682 "EHLO
-	az33egw02.freescale.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752947AbYKKCPa convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 10 Nov 2008 21:15:30 -0500
-Received: from az33smr01.freescale.net (az33smr01.freescale.net [10.64.34.199])
-	by az33egw02.freescale.net (8.12.11/az33egw02) with ESMTP id mAB2F8Xa021020
-	for <git@vger.kernel.org>; Mon, 10 Nov 2008 19:15:25 -0700 (MST)
-Received: from zch01exm23.fsl.freescale.net (zch01exm23.ap.freescale.net [10.192.129.207])
-	by az33smr01.freescale.net (8.13.1/8.13.0) with ESMTP id mAB1p7N1017612
-	for <git@vger.kernel.org>; Mon, 10 Nov 2008 19:51:08 -0600 (CST)
-X-MimeOLE: Produced By Microsoft Exchange V6.5
-Content-class: urn:content-classes:message
-In-Reply-To: <320075ff0811030200q606b76a8i16496cf7b8b1b7d2@mail.gmail.com>
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-Thread-Topic: why not TortoiseGit
-Thread-Index: Ack9mv3pe30kC1okSEmNP8ZMeHbrXAGAH0tQ
-Sender: git-owner@vger.kernel.org
-Precedence: bulk
-List-ID: <git.vger.kernel.org>
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/100612>
+	id 1KzjCd-0000sr-2k
+	for gcvdu-darcs-users@gmane.org; Tue, 11 Nov 2008 03:42:03 +0100
+Received: from localhost (localhost [127.0.0.1])
+	by fraxinus.osuosl.org (Postfix) with ESMTP id F25793DB8F;
+	Tue, 11 Nov 2008 02:40:51 +0000 (UTC)
+X-Virus-Scanned: amavisd-new at osuosl.org
+Received: from fraxinus.osuosl.org ([127.0.0.1])
+	by localhost (.osuosl.org [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id DArVqRuoIDRX; Tue, 11 Nov 2008 02:40:50 +0000 (UTC)
+Received: from ash.osuosl.org (ash.osuosl.org [140.211.166.34])
+	by fraxinus.osuosl.org (Postfix) with ESMTP id 4329D3DB0F;
+	Tue, 11 Nov 2008 02:40:50 +0000 (UTC)
+X-Original-To: darcs-users@lists.darcs.net
+Delivered-To: darcs-users@osuosl.org
+Received: from fraxinus.osuosl.org (fraxinus.osuosl.org [140.211.166.137])
+	by ash.osuosl.org (Postfix) with ESMTP id 3FBAA8F74E
+	for <darcs-users@lists.darcs.net>; Tue, 11 Nov 2008 02:40:49 +0000 (UTC)
+Received: from localhost (localhost [127.0.0.1])
+	by fraxinus.osuosl.org (Postfix) with ESMTP id 2E0F03DB0F
+	for <darcs-users@lists.darcs.net>; Tue, 11 Nov 2008 02:40:49 +0000 (UTC)
+X-Virus-Scanned: amavisd-new at osuosl.org
+Received: from fraxinus.osuosl.org ([127.0.0.1])
+	by localhost (.osuosl.org [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id R4n-wMSQJTTL for <darcs-users@lists.darcs.net>;
+	Tue, 11 Nov 2008 02:40:48 +0000 (UTC)
+X-Greylist: from auto-whitelisted by SQLgrey-1.7.4
+Received: from nooxie.zooko.com (nooxie.zooko.com [207.7.131.41])
+	by fraxinus.osuosl.org (Postfix) with ESMTP id 822D93DA54
+	for <darcs-users@darcs.net>; Tue, 11 Nov 2008 02:40:47 +0000 (UTC)
+Received: from [192.168.1.157] (97-118-99-189.hlrn.qwest.net [97.118.99.189])
+	by nooxie.zooko.com (Postfix) with ESMTP id E8DBC883F0;
+	Mon, 10 Nov 2008 18:41:44 -0800 (PST)
+In-Reply-To: <20081111015313.GB24201@genesis.frugalware.org>
+X-Mailer: Apple Mail (2.753.1)
+X-BeenThere: darcs-users@darcs.net
+X-Mailman-Version: 2.1.9
+Precedence: list
+List-Id: A list for users of darcs <darcs-users.darcs.net>
+List-Unsubscribe: <http://lists.osuosl.org/mailman/listinfo/darcs-users>,
+	<mailto:darcs-users-request@darcs.net?subject=unsubscribe>
+List-Archive: <http://lists.osuosl.org/pipermail/darcs-users>
+List-Post: <mailto:darcs-users@darcs.net>
+List-Help: <mailto:darcs-users-request@darcs.net?subject=help>
+List-Subscribe: <http://lists.osuosl.org/mailman/listinfo/darcs-users>,
+	<mailto:darcs-users-request@darcs.net?subject=subscribe>
+Sender: darcs-users-bounces@darcs.net
+Errors-To: darcs-users-bounces@darcs.net
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/100613>
 
-Nigel Magnay:
+Hello Miklos Vajna:
 
-I create a tortoisegit project at repo.or.cz. 
-http://repo.or.cz/w/TortoiseGit.git
+Thanks for announcing this project.
 
-It is coming from TortoiseSVN. It is very early stage.  The context menu
-have worked.  TortoiseGitProc.exe help command have been worked.  
+I looked at the "alternatives" section, and you wrote:
 
-Welcome contribute. 
+"tailor is a nice any2any VCS converter, but the end result can  
+easily differ to the original repo because tailor replays all the  
+changesets itself, while darcs-fast-export just leaves this task to  
+darcs."
 
-Best regards
-Frank Li
+If you can show an example of the end result differing from the  
+original repo then that is a bug in tailor, and please report it!
 
------Original Message-----
-From: Nigel Magnay [mailto:nigel.magnay@gmail.com] 
-Sent: Monday, November 03, 2008 6:00 PM
-To: Li Frank-B20596
-Cc: Scott Chacon; Andreas Ericsson; Ian Hilt; git@vger.kernel.org
-Subject: Re: why not TortoiseGit
+Thanks.
 
-> I read some code of TortoiseSVN and TortoiseHg Code.
-> At beginning, TortoiseGit can git command to get information like
-Qgit.
-> After linkable library ready, replace "git command".
->
-> I think TortoiseGit can start base on below way.
->
-> 1.  Base on TortoiseHg, It is python Script.  Replace below hg 
-> operator with Git.
-> 2.  Base on TortoiseSVN, It is developed with C++. Need VS2008.
-> ToritoiseSVN provide some built in diff and merge tools.
-> 3.  Base on Qgit, which provide some basic UI, such comment dialogbox,
+Regards,
 
-> history view and file annotate.
->
->
-
-TortoiseSVN is a good place to start because it separates out the
-windows icon decorators into a separate DLL (shared with TortoiseCVS).
-This is significant, as these are a finite resource in the windows
-shell, and so having a TortoiseSVN + TortoiseGIT on one machine and you
-might run out, and I'd imagine lots of people wanting both.
-
-On the minus side, building (Tortoise)SVN requires a lot of environment
-setup just to get it to build - most of which can be immediately thrown
-away as it's specific to SVN.
-
-But it doesn't look like a hard project to me, just requires stripping
-out a lot of junk and re-patching callouts to a git executable (which
-could be the standard git tools) and a minimal git library that knows if
-files are dirty.
+Zooko
+---
+http://allmydata.org -- Tahoe, the Least-Authority Filesystem
+http://allmydata.com -- back up all your files for $10/month
