@@ -1,113 +1,89 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 1/9 v4] bisect: add "git bisect replace" subcommand
-Date: Tue, 11 Nov 2008 15:23:27 -0800
-Message-ID: <7v8wrpyhhs.fsf@gitster.siamese.dyndns.org>
-References: <20081111063904.7da4df94.chriscool@tuxfamily.org>
+From: "H.Merijn Brand" <h.m.brand@xs4all.nl>
+Subject: Re: Install issues
+Date: Wed, 12 Nov 2008 00:35:47 +0100
+Message-ID: <20081112003547.38081e09@pc09.procura.nl>
+References: <20081110121739.15f77a01@pc09.procura.nl>
+	<20081110113924.GR24201@genesis.frugalware.org>
+	<20081110173101.3d76613b@pc09.procura.nl>
+	<20081110175123.GV24201@genesis.frugalware.org>
+	<7vhc6e17fv.fsf@gitster.siamese.dyndns.org>
+	<20081111190243.7044d6cb@pc09.procura.nl>
+	<alpine.LNX.2.00.0811111554530.19159@suse104.zenez.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	git@vger.kernel.org
-To: Christian Couder <chriscool@tuxfamily.org>
-X-From: git-owner@vger.kernel.org Wed Nov 12 00:25:18 2008
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Miklos Vajna <vmiklos@frugalware.org>, git@vger.kernel.org
+To: Boyd Lynn Gerber <gerberb@zenez.com>
+X-From: git-owner@vger.kernel.org Wed Nov 12 00:37:28 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1L02bb-00068Z-KG
-	for gcvg-git-2@gmane.org; Wed, 12 Nov 2008 00:25:08 +0100
+	id 1L02nW-0002Y2-O7
+	for gcvg-git-2@gmane.org; Wed, 12 Nov 2008 00:37:27 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751667AbYKKXXw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 11 Nov 2008 18:23:52 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751568AbYKKXXw
-	(ORCPT <rfc822;git-outgoing>); Tue, 11 Nov 2008 18:23:52 -0500
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:39961 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751472AbYKKXXw (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 11 Nov 2008 18:23:52 -0500
-Received: from localhost.localdomain (unknown [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 275547BCA9;
-	Tue, 11 Nov 2008 18:23:48 -0500 (EST)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES256-SHA (256/256 bits)) (No client certificate requested) by
- a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTPSA id A686F7BCA8; Tue,
- 11 Nov 2008 18:23:34 -0500 (EST)
-In-Reply-To: <20081111063904.7da4df94.chriscool@tuxfamily.org> (Christian
- Couder's message of "Tue, 11 Nov 2008 06:39:04 +0100")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: CABC3ADA-B047-11DD-AC8B-9CEDC82D7133-77302942!a-sasl-fastnet.pobox.com
+	id S1751754AbYKKXgL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 11 Nov 2008 18:36:11 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751771AbYKKXgJ
+	(ORCPT <rfc822;git-outgoing>); Tue, 11 Nov 2008 18:36:09 -0500
+Received: from smtp-vbr16.xs4all.nl ([194.109.24.36]:2350 "EHLO
+	smtp-vbr16.xs4all.nl" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751726AbYKKXgI (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 11 Nov 2008 18:36:08 -0500
+Received: from pc09.procura.nl (procura.xs4all.nl [82.95.216.29])
+	(authenticated bits=0)
+	by smtp-vbr16.xs4all.nl (8.13.8/8.13.8) with ESMTP id mABNZm91010480
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NO);
+	Wed, 12 Nov 2008 00:35:49 +0100 (CET)
+	(envelope-from h.m.brand@xs4all.nl)
+In-Reply-To: <alpine.LNX.2.00.0811111554530.19159@suse104.zenez.com>
+X-Mailer: Claws Mail 3.6.1cvs12 (GTK+ 2.12.0; x86_64-unknown-linux-gnu)
+Face: iVBORw0KGgoAAAANSUhEUgAAADAAAAAwEAIAAACI8LKTAAAACXBIWXMAAABIAAAASABGyWs+AAAC
+ JElEQVRo3u2aMY4CMQxFczZ6RItEzRm4DBINDbRUSPRInIRbsNK6+dJfezN4kokn48IaCSjysL8d
+ e9Knoj2fr9f9/gllqQ6U9/vxWK3EdwdIEGjRIVCu18NhuxUfK46SH81+fzrdbuKPx/P5ctHQdAdI
+ TKAgpvV6s9ntBEfXEYSGgMQzIHnuFBBjkshCNJ2KtJZ04hHNAugP8bZr3NIHhbcF0AKoK0CoaHXU
+ LUWBIs1n+jV+Fl8CVqOApEXAwyMO/DSR4XVntoAYDR7eBjQupuYAYTMph8Rj21D4m7MChN02tpqs
+ NSnb/KqU2oHCXu5xDCgflj/RAgBiKBIXnICzAsSjWBsTz5K4/HeXYvb8yK5lY3VGEwPi2aONKT+5
+ AlcxrTPOwcTiraGRChgMEKJh0bVVifGVTq6qgBiNVl8QE29EsK6VE+YJAOG2wz5AvsqUS6uqgHCA
+ n4NGvBYpnJ64Jgg27sCtxtBk1CJIA4S/GhdWKh07QxUB48jWGhZ4jKamRRr/T8/M0AaEyctry6YB
+ 4dTGj9iWZNs3DahES5kPCJOu0RQbF/fQOBprsB9gaO9JtPDzII9U5ySXX7AnuIt91y54AAW7rPpT
+ LCe5gt3F+CLqr2UarGB3MXvMylWGq4+9RCx3TW1oJq1t3HPQlFs6N1fFNEB4s8dn7Ne7ACSm7TPQ
+ I5quAWmw6qBpulHM33B0Csge4Nd8JTTYG2b1XyRe3lH8x34ABJ6aePuQ2N4AAAAASUVORK5CYII=
+X-Virus-Scanned: by XS4ALL Virus Scanner
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/100692>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/100693>
 
-Christian Couder <chriscool@tuxfamily.org> writes:
+On Tue, 11 Nov 2008 16:03:50 -0700, Boyd Lynn Gerber <gerberb@zenez.com> wrote:
 
-> This subcommand should be used when you have a branch or a part of a
-> branch that isn't easily bisectable because of a bug that has been
-> fixed latter.
+> Here is a check list I use to make sure my patches are OK.
+> 
+> http://repo.or.cz/w/git.git?a=blob_plain;f=Documentation/SubmittingPatches;hb=HEAD
+> ...
+> > I'm by now way offended or scared away if you reject these kind of
+             ^
+/me meant "no" where he wrote "now" :( :(
+I can imagine people interpreting that sentence very very wrong.
 
-While I acknowledge your effort to make bisect easier to use, I do
-not think this is going in the right direction, from the point of view of
-the workflow.
+> > patches
+> 
+> The crowed here may seem harsh but they really are not.  They just have a 
+> lot to do and getting things to them in a format that is easy to follow 
+> and uses the above URL guildlines assists them in looking at the patches, 
+> commit messages and sign-off.  Git requires a sign-off in order for them 
+> to use the patches.  It is a way to make sure everything is kept above 
+> board and proper.  This allow ever line of code to have a resource as to 
+> where and whence it ...
+> 
+> Do not give up.  Just try to do things in a manner that is easy to allow 
+> your patches into Git.
 
-I do agree that the issue it tries to solve is a problem in real life.
-When you want to hunt for a bug, it is certainly possible that your tests
-fail for a bug that is unrelated to what you are hunting for for a range
-of commits.  Borrowing from your picture:
-
-    ...--O--A--X1--X2--...--Xn--B--...
-
-non of the commit marked as Xi may not be testable.
-
-But at that point, will you really spend time to rebuild history between A
-and B by fixing an unrelated bug that hinders your bisect, so that you can
-have a parallel history that is bisectable?  I doubt anybody would.
-
-Even if we assume that somebody wants to adopt the workflow to first fix
-an unrelated bug (that may be totally uninteresting for the purpose of
-solving the original issue he set out to figure out) to rewrite the
-history, what he first needs to do is to find out what part of the history
-to rewrite.  IOW, he needs to know A and B (and in general, the history is
-not even linear).  Maybe he guesses what A and B is.  But for one thing,
-after making the guess, he would certainly test A and B to see if the
-original issue exists at these commits.  The sequence of commits Xi become
-irrelevant if A turns out to be bad or B turns out to be good.
-
-And if A is good and B is bad, then the _original bug_ is in the very
-sequence of Xi you are going to rewrite.  By the time you made a rewritten
-history with sequence of commits Yi to be grafted like this:
-
-
-         C--Y1--Y2--...--Yn
-       /
- ...--O--A--X1--X2--...--Xn--B--...
-
-to make it bisectable, it is very likely that you would have already seen
-the original bug.
-
-In such a case where you need to figure out what an unrelated bug is, and
-which commit A and B are involved while bisecting, I think you are much
-better off using bisect skip, as Johannes mentioned earlier.
-
-On the other hand, if you already have a well-known bug that was
-introduced at A whose fix at B is also very well-known, you would not even
-need a separate "bisect replace" command nor replace_parents() machinery
-only for the purpose of bisection, would you?  In such a case I think you
-can just use a usual graft.
-
-
-I have a separate idea make 'grafts' easier on object transfer, that is
-somewhat related to this one, by the way.  Instead of making the grafts
-completely a local matter as we do now, we can reserve refs/replace/
-namespace, and record a new commit object to replace an existing commit
-whose object name is $sha1 as refs/replace/$sha1.  We make almost all the
-commands except object enumeration (fsck, receive-pack, send-pack, prune,
-etc.  Roughly speaking, anything that involves "rev-list --objects") honor
-this commit replacement, so that any time you ask for commit $sha1, the
-object layer gives you the replacement commit object back.  In this way,
-you can clone or fetch from such a repository (along with refs in
-refs/replace/ hierarchy) and fsck/prune won't lose the original parents
-(because it does not see replacements).  Things like paranoid update hook
-needs to become very careful about refs/replace/ for security reasons, but
-I think this would make the grafts much easier to use.
+-- 
+H.Merijn Brand          Amsterdam Perl Mongers  http://amsterdam.pm.org/
+using & porting perl 5.6.2, 5.8.x, 5.10.x, 5.11.x on HP-UX 10.20, 11.00,
+11.11, 11.23, and 11.31, SuSE 10.1, 10.2, and 10.3, AIX 5.2, and Cygwin.
+http://mirrors.develooper.com/hpux/           http://www.test-smoke.org/
+http://qa.perl.org      http://www.goldmark.org/jeff/stupid-disclaimers/
