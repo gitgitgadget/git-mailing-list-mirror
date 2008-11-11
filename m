@@ -1,71 +1,100 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: git commit -v does not removes the patch
-Date: Tue, 11 Nov 2008 05:29:15 -0500
-Message-ID: <20081111102914.GA30330@coredump.intra.peff.net>
-References: <adf1fd3d0811100720n52ac1d47id9b7f402412aa0d3@mail.gmail.com> <20081110181023.GA22753@coredump.intra.peff.net> <adf1fd3d0811101434j658b2e8aj83d8cbe2293f5021@mail.gmail.com> <7vej1j40x5.fsf@gitster.siamese.dyndns.org> <20081111000706.GA26223@coredump.intra.peff.net> <adf1fd3d0811102356u6e671dcfj6491f81cf462ec2e@mail.gmail.com>
+From: "Ondrej Certik" <ondrej@certik.cz>
+Subject: importing mercurial patch
+Date: Tue, 11 Nov 2008 11:58:33 +0100
+Message-ID: <85b5c3130811110258h53d389co97a3c33e10667ae8@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: Santi =?utf-8?B?QsOpamFy?= <santi@agolina.net>
-X-From: git-owner@vger.kernel.org Tue Nov 11 11:30:37 2008
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+To: "Git Mailing List" <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Tue Nov 11 12:00:21 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1KzqW5-00042t-8B
-	for gcvg-git-2@gmane.org; Tue, 11 Nov 2008 11:30:37 +0100
+	id 1Kzqyi-0007qq-Eu
+	for gcvg-git-2@gmane.org; Tue, 11 Nov 2008 12:00:12 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755876AbYKKK3U convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 11 Nov 2008 05:29:20 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755865AbYKKK3U
-	(ORCPT <rfc822;git-outgoing>); Tue, 11 Nov 2008 05:29:20 -0500
-Received: from peff.net ([208.65.91.99]:4489 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755724AbYKKK3S (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 11 Nov 2008 05:29:18 -0500
-Received: (qmail 11884 invoked by uid 111); 11 Nov 2008 10:29:17 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.32) with SMTP; Tue, 11 Nov 2008 05:29:17 -0500
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Tue, 11 Nov 2008 05:29:15 -0500
+	id S1755945AbYKKK6g (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 11 Nov 2008 05:58:36 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755946AbYKKK6g
+	(ORCPT <rfc822;git-outgoing>); Tue, 11 Nov 2008 05:58:36 -0500
+Received: from fk-out-0910.google.com ([209.85.128.191]:51838 "EHLO
+	fk-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755945AbYKKK6f (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 11 Nov 2008 05:58:35 -0500
+Received: by fk-out-0910.google.com with SMTP id 18so3808591fkq.5
+        for <git@vger.kernel.org>; Tue, 11 Nov 2008 02:58:33 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:sender
+         :to:subject:mime-version:content-type:content-transfer-encoding
+         :content-disposition:x-google-sender-auth;
+        bh=VESxAQjbZkUvCdjD0kyxQKfx53UogxIYfxSZKmw387I=;
+        b=lD6n8GA7RhsK2Mb8wUa5SImkCDYg6l1yIBnTqshObByvMOQGYuGZGcPjkNRp6ZB6E6
+         2ITMBYlK07xWAlcG99ruuMj77zWbgFbKoeH8dkCfU+KOmPB0LpMyCEezIWZo37OpWFSa
+         IAxmNKP9VvqLnvip8PqRcFO1WpvL8nPBtmyYY=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:sender:to:subject:mime-version:content-type
+         :content-transfer-encoding:content-disposition:x-google-sender-auth;
+        b=oZTZ0gZ32mL0xorqPFp/DIxsvYSLOiJK+6Cvf3AXFVNFI1UN9eVuyN2yigszh0RGxc
+         W9JRPuRmeIerRk7YAEHzy3wM+lleFY3LMRTKPNEt4CN2lngTrXtKgrAbhvmCqYB5YtS3
+         W+g/04ICFKCqIMEQTaZPbBPkkSnGFbNv8XQQk=
+Received: by 10.181.238.16 with SMTP id p16mr2460386bkr.115.1226401113201;
+        Tue, 11 Nov 2008 02:58:33 -0800 (PST)
+Received: by 10.86.99.20 with HTTP; Tue, 11 Nov 2008 02:58:33 -0800 (PST)
 Content-Disposition: inline
-In-Reply-To: <adf1fd3d0811102356u6e671dcfj6491f81cf462ec2e@mail.gmail.com>
+X-Google-Sender-Auth: 01c45326b845b52c
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/100635>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/100636>
 
-On Tue, Nov 11, 2008 at 08:56:34AM +0100, Santi B=C3=A9jar wrote:
+Hi,
 
-> Almost! I have diff.mnemonicprefix=3Dtrue, if I unset it everything w=
-orks.
+I'd like git to be able to import mercurial-exported patches. This
+short Python program does it:
 
-Ah, indeed. The obvious fix is just loosening our match a little bit:
 
-diff --git a/builtin-commit.c b/builtin-commit.c
-index 93ca496..a721990 100644
---- a/builtin-commit.c
-+++ b/builtin-commit.c
-@@ -1015,7 +1015,7 @@ int cmd_commit(int argc, const char **argv, const=
- char *prefix)
- 	}
-=20
- 	/* Truncate the message just before the diff, if any. */
--	p =3D strstr(sb.buf, "\ndiff --git a/");
-+	p =3D strstr(sb.buf, "\ndiff --git ");
- 	if (p !=3D NULL)
- 		strbuf_setlen(&sb, p - sb.buf + 1);
-=20
+-------------------------------------
+#! /usr/bin/python
 
-But I have to wonder if there is some more robust solution. It seems
-like this can have false positives if you include diff output in your
-commit message, and a potential false negative if you delete the newlin=
-e
-(e.g., delete everything up to "diff --git", making it the first line).
+import os
+import sys
+import re
+import tempfile
 
-But I guess we haven't seen a lot of complaints, so maybe those
-conditions aren't worth worrying about.
+def run(cmd):
+    print cmd
+    os.system(cmd)
 
--Peff
+patch = sys.argv[1]
+p = open(patch).read()
+author = re.search("# User (.+)", p).groups()[0]
+p = p.split("\n")
+while not p[0].startswith("# Parent"):
+    del p[0]
+i = 1
+while not p[i].startswith("diff -r "):
+    i += 1
+commit_message = "\n".join(p[1:i])
+_, filename = tempfile.mkstemp()
+f = open(filename, "w")
+f.write(commit_message)
+f.close()
+
+run("git apply %s" % patch)
+run("git ci -a --author='%s' -F %s" % (author, filename) )
+---------------------
+
+
+How should this be implemented in git? Should I try to extend
+"git-am.sh" to handle it?
+
+For better imagination, this is how the patch looks like:
+
+http://paste.debian.net/21210/
+
+Thanks for any feedback,
+Ondrej
