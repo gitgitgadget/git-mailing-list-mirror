@@ -1,67 +1,74 @@
-From: "Constantine Plotnikov" <constantine.plotnikov@gmail.com>
-Subject: Forcing encoding for "git commit"
-Date: Tue, 11 Nov 2008 20:10:46 +0300
-Message-ID: <85647ef50811110910p7b40fd5dhcd79f8ae38709b95@mail.gmail.com>
+From: "Shawn O. Pearce" <spearce@spearce.org>
+Subject: Re: JGIT: discuss: diff/patch implementation
+Date: Tue, 11 Nov 2008 09:13:42 -0800
+Message-ID: <20081111171342.GJ2932@spearce.org>
+References: <200811101522.13558.fg@one2team.net> <491933DF.3060307@dawes.za.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Nov 11 18:12:49 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: Francis Galiegue <fg@one2team.net>,
+	Git Mailing List <git@vger.kernel.org>,
+	Robin Rosenberg <robin.rosenberg.lists@dewire.com>
+To: Rogan Dawes <lists@dawes.za.net>
+X-From: git-owner@vger.kernel.org Tue Nov 11 18:15:17 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Kzwmb-00043d-JW
-	for gcvg-git-2@gmane.org; Tue, 11 Nov 2008 18:12:06 +0100
+	id 1KzwpP-0005KW-Ru
+	for gcvg-git-2@gmane.org; Tue, 11 Nov 2008 18:15:00 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752250AbYKKRKt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 11 Nov 2008 12:10:49 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752303AbYKKRKt
-	(ORCPT <rfc822;git-outgoing>); Tue, 11 Nov 2008 12:10:49 -0500
-Received: from fg-out-1718.google.com ([72.14.220.158]:24619 "EHLO
-	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752248AbYKKRKs (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 11 Nov 2008 12:10:48 -0500
-Received: by fg-out-1718.google.com with SMTP id 19so77431fgg.17
-        for <git@vger.kernel.org>; Tue, 11 Nov 2008 09:10:46 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to
-         :subject:mime-version:content-type:content-transfer-encoding
-         :content-disposition;
-        bh=LBpASMI0OQNtqQVl3GIEtn+SxduSx/Ud4U9YFrHYZL0=;
-        b=T2epay895XIHzEHjugn+xljSjmlq9MWraYoTAIa6pX1InA8BQnWt5UD3NmqAngLSqj
-         vkkca7BlNiMstVhlKO0rzW60ZaNYb6R2DlxksDaBpJZvE4aRBRoTuM2o601PyI15JiAQ
-         ibl1vcEAMmh5r+zxJS4skVBxESA99GzFaVBX8=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:mime-version:content-type
-         :content-transfer-encoding:content-disposition;
-        b=O5nlSwoVL62DXnAJTqLkSgLInyO04PrRCI4k+AoeFkdePke7TCVp/usP0w015182N9
-         CyuPgUmSk24FIDHxbYZN1cGiRXpckSeyoz4Ew/M+B7DIaOTG6B5gWdOATB11+4PcVilm
-         Allge7DujF0k/7t7ctsUvNUeQadRO8zjwz5Ic=
-Received: by 10.181.24.14 with SMTP id b14mr2565701bkj.104.1226423446414;
-        Tue, 11 Nov 2008 09:10:46 -0800 (PST)
-Received: by 10.180.230.10 with HTTP; Tue, 11 Nov 2008 09:10:46 -0800 (PST)
+	id S1752722AbYKKRNo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 11 Nov 2008 12:13:44 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752252AbYKKRNn
+	(ORCPT <rfc822;git-outgoing>); Tue, 11 Nov 2008 12:13:43 -0500
+Received: from george.spearce.org ([209.20.77.23]:54104 "EHLO
+	george.spearce.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752175AbYKKRNn (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 11 Nov 2008 12:13:43 -0500
+Received: by george.spearce.org (Postfix, from userid 1001)
+	id 6CFCD381FF; Tue, 11 Nov 2008 17:13:42 +0000 (UTC)
 Content-Disposition: inline
+In-Reply-To: <491933DF.3060307@dawes.za.net>
+User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/100653>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/100654>
 
-I would like to see a possibility to force encoding for the "git
-commit" command. Currently only way to change encoding used by "git
-commit" is to set "i18n.commitencoding" configuration variable. But
-there is no way to override this variable for the specific commit like
-it is possible for "show" and "log" commands.
+Rogan Dawes <lists@dawes.za.net> wrote:
+> Francis Galiegue wrote:
+>>
+>> For this to be doable from within the Eclipse Git plugin, a diff/patch  
+>> implementation needs to be found, in a license compatible with the 
+>> current JGit license (3-clause BSD, as far as I can tell). Or a new 
+>> implementation can be rewritten from scratch, of course.
+>
+> Shouldn't Eclipse already *have* a diff/patch implementation, for its  
+> other "team work" plugins?
 
-This would be useful when git is invoked from the tools. Currently
-tools have to query configuration variable and to encode message
-according to the value of the variable. And it might happen that not
-all characters produced by tool are supported by target encoding.
-Forcing the encoding, would have allowed the tool use the suitable
-encoding without changing user preferences.
+Err, uhm, sort of.
 
-Regards,
-Constantine
+Eclipse has patch available as an internal API, but it is exposed
+in the UI for any team provider (or no team provider at all) to
+use to apply patches to a project in the workspace.
+
+The team provider API assumes the VCS implementation has its own
+diff, and therefore the diff implementation inside Eclipse is only
+used for the native Compare view
+
+I've dug around that part of the text compare plugin and its mostly
+internal APIs, and mostly still low-level LCS generation from
+arbitrary object input.  It doesn't seem well suited to producing
+fast diffs of text.
+
+Its under the EPL.  We could take the code and simplify it down,
+but I think by that point we'd mostly just want to rewrite it, or
+use a different library anyway.  At which point we wouldn't want
+to bring in the EPL baggage if we can have a BSD implementation.
+
+So yea, there's some implementation in there, but its not easy to
+use or get to...
+
+-- 
+Shawn.
