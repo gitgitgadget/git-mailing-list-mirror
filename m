@@ -1,67 +1,66 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH] git-diff: Add --staged as a synonym for --cached.
-Date: Wed, 12 Nov 2008 14:37:47 -0500
-Message-ID: <20081112193747.GA21567@coredump.intra.peff.net>
-References: <20081102123519.GA21251@atjola.homenet> <7vljw2yo93.fsf@gitster.siamese.dyndns.org> <20081103071420.GD10772@coredump.intra.peff.net> <32541b130811102004n54a47331v48ba8d299039897f@mail.gmail.com> <20081112083353.GB3817@coredump.intra.peff.net> <alpine.DEB.1.00.0811121205100.30769@pacific.mpi-cbg.de> <20081112110629.GA20473@coredump.intra.peff.net> <32541b130811120739t95455d8n9b8056a8033491c3@mail.gmail.com> <20081112191512.GA21401@coredump.intra.peff.net> <7vljvooi8w.fsf@gitster.siamese.dyndns.org>
+From: Bruce Stephens <bruce.stephens@isode.com>
+Subject: Re: Change in "git checkout" behaviour between 1.6.0.2 and 1.6.0.3
+Date: Wed, 12 Nov 2008 19:44:47 +0000
+Message-ID: <80od0ksp8w.fsf@tiny.isode.net>
+References: <80wsf9ovsp.fsf@tiny.isode.net>
+            <491B131D.2050501@drmicha.warpmail.net>
+            <80r65gon3m.fsf@tiny.isode.net>
+            <7vprl0oiw6.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Avery Pennarun <apenwarr@gmail.com>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	=?utf-8?B?QmrDtnJu?= Steinbrink <B.Steinbrink@gmx.de>,
-	David Symonds <dsymonds@gmail.com>, git@vger.kernel.org,
-	Stephan Beyer <s-beyer@gmx.net>
+Content-Type: text/plain; charset=us-ascii
+Cc: Michael J Gruber <git@drmicha.warpmail.net>, git@vger.kernel.org
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Nov 12 20:39:18 2008
+X-From: git-owner@vger.kernel.org Wed Nov 12 20:46:08 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1L0LYQ-0000t6-2T
-	for gcvg-git-2@gmane.org; Wed, 12 Nov 2008 20:39:06 +0100
+	id 1L0LfC-0003iJ-Uc
+	for gcvg-git-2@gmane.org; Wed, 12 Nov 2008 20:46:07 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751746AbYKLThv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 12 Nov 2008 14:37:51 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752063AbYKLThu
-	(ORCPT <rfc822;git-outgoing>); Wed, 12 Nov 2008 14:37:50 -0500
-Received: from peff.net ([208.65.91.99]:4426 "EHLO peff.net"
+	id S1752636AbYKLTov (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 12 Nov 2008 14:44:51 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752604AbYKLTov
+	(ORCPT <rfc822;git-outgoing>); Wed, 12 Nov 2008 14:44:51 -0500
+Received: from rufus.isode.com ([62.3.217.251]:43774 "EHLO rufus.isode.com"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751726AbYKLThu (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 12 Nov 2008 14:37:50 -0500
-Received: (qmail 21670 invoked by uid 111); 12 Nov 2008 19:37:49 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.32) with SMTP; Wed, 12 Nov 2008 14:37:49 -0500
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Wed, 12 Nov 2008 14:37:47 -0500
-Content-Disposition: inline
-In-Reply-To: <7vljvooi8w.fsf@gitster.siamese.dyndns.org>
+	id S1752583AbYKLTou (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 12 Nov 2008 14:44:50 -0500
+Received: from tiny.isode.net (shiny.isode.com [62.3.217.250]) 
+          by rufus.isode.com (smtp internal) via TCP with SMTP 
+          id <SRsyLwAJxXun@rufus.isode.com>; Wed, 12 Nov 2008 19:44:47 +0000
+Received: by tiny.isode.net (sSMTP sendmail emulation);
+          Wed, 12 Nov 2008 19:44:47 +0000
+X-Hashcash: 1:20:081112:gitster@pobox.com::+itcnGTN4/nuDv/9:000000000000000000000000000000000000000000005g5t
+X-Hashcash: 1:20:081112:git@drmicha.warpmail.net::2q3qaskjDgN71MEi:00000000000000000000000000000000000004Wmm
+X-Hashcash: 1:20:081112:git@vger.kernel.org::z6n99FyNBG2AAITd:000000000000000000000000000000000000000000424q
+In-Reply-To: <7vprl0oiw6.fsf@gitster.siamese.dyndns.org> (Junio C. Hamano's message of "Wed\, 12 Nov 2008 11\:15\:37 -0800")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/100808>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/100809>
 
-On Wed, Nov 12, 2008 at 11:29:35AM -0800, Junio C Hamano wrote:
+Junio C Hamano <gitster@pobox.com> writes:
 
-> I think you guys are barking up a wrong tree.
-> 
-> The staged state, the work tree state and the committed states are three
-> conceptually different things.  Making them stand out as distinct entities
-> at the UI level is a _good thing_.
+[...]
 
-I'm not sure I agree. They _are_ different things, but in the case of
-diff, you are really treating each of them like a tree (which makes
-range operators a little silly, but then that is a silliness already
-present in "git diff tree1..tree2").
+> Yeah, it was meant to allow:
+>
+> 	git clone -n $there $here
+>         cd $here
+>         git checkout
+>
+> and was not taking care of the case to switch branches when the initial
+> checkout is made.
 
-But again, I would not be convinced this is a good direction until I
-saw:
+That specific sequence does work.  I guess that's why I hadn't noticed
+the issue for so long (I guess git's test suite has some tests using
+"clone -n", and perhaps they're of that form).
 
- - the actual design, especially to what degree any ugliness is exposed
-   when we realize that they _aren't_ trees. IOW, how badly does this
-   abstraction leak?
+> Perhaps this would help.
 
- - numbers showing that it isn't going to perform significantly worse
+Works for me.
 
-And I'm still not volunteering to work on it, so somebody else will have
-to come up with those things. ;)
-
--Peff
+[...]
