@@ -1,69 +1,65 @@
-From: Johannes Sixt <j.sixt@viscovery.net>
-Subject: Re: [PATCH (GITK)] gitk: Fix transient windows on Win32 and MacOS.
-Date: Wed, 12 Nov 2008 09:28:08 +0100
-Message-ID: <491A9398.1060100@viscovery.net>
-References: <200811112355.43352.angavrilov@gmail.com>	<491A827C.3010000@viscovery.net> <18714.36964.666759.654975@cargo.ozlabs.ibm.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH 5/5] commit: only strip diff from message in verbose
+	mode
+Date: Wed, 12 Nov 2008 03:29:47 -0500
+Message-ID: <20081112082947.GA3817@coredump.intra.peff.net>
+References: <20081112081609.GA3720@coredump.intra.peff.net> <20081112082552.GE3751@coredump.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: Alexander Gavrilov <angavrilov@gmail.com>, git@vger.kernel.org
-To: Paul Mackerras <paulus@samba.org>
-X-From: git-owner@vger.kernel.org Wed Nov 12 09:29:27 2008
+Content-Type: text/plain; charset=utf-8
+Cc: Santi =?utf-8?B?QsOpamFy?= <santi@agolina.net>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Nov 12 09:31:07 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1L0B6M-0001ej-EK
-	for gcvg-git-2@gmane.org; Wed, 12 Nov 2008 09:29:26 +0100
+	id 1L0B7x-00029H-KR
+	for gcvg-git-2@gmane.org; Wed, 12 Nov 2008 09:31:06 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751476AbYKLI2M (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 12 Nov 2008 03:28:12 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751471AbYKLI2M
-	(ORCPT <rfc822;git-outgoing>); Wed, 12 Nov 2008 03:28:12 -0500
-Received: from lilzmailso02.liwest.at ([212.33.55.13]:31410 "EHLO
-	lilzmailso02.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751470AbYKLI2L (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 12 Nov 2008 03:28:11 -0500
-Received: from cm56-163-160.liwest.at ([86.56.163.160] helo=linz.eudaptics.com)
-	by lilzmailso02.liwest.at with esmtpa (Exim 4.69)
-	(envelope-from <j.sixt@viscovery.net>)
-	id 1L0B57-0007k5-Gb; Wed, 12 Nov 2008 09:28:09 +0100
-Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.96])
-	by linz.eudaptics.com (Postfix) with ESMTP
-	id 205B44E4; Wed, 12 Nov 2008 09:28:09 +0100 (CET)
-User-Agent: Thunderbird 2.0.0.6 (Windows/20070728)
-In-Reply-To: <18714.36964.666759.654975@cargo.ozlabs.ibm.com>
-X-Enigmail-Version: 0.95.5
-X-Spam-Score: 1.7 (+)
-X-Spam-Report: ALL_TRUSTED=-1.8, BAYES_99=3.5
+	id S1751471AbYKLI3v (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 12 Nov 2008 03:29:51 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751466AbYKLI3u
+	(ORCPT <rfc822;git-outgoing>); Wed, 12 Nov 2008 03:29:50 -0500
+Received: from peff.net ([208.65.91.99]:1462 "EHLO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751375AbYKLI3u (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 12 Nov 2008 03:29:50 -0500
+Received: (qmail 17766 invoked by uid 111); 12 Nov 2008 08:29:49 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+    by peff.net (qpsmtpd/0.32) with SMTP; Wed, 12 Nov 2008 03:29:49 -0500
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Wed, 12 Nov 2008 03:29:47 -0500
+Content-Disposition: inline
+In-Reply-To: <20081112082552.GE3751@coredump.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/100727>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/100728>
 
-Paul Mackerras schrieb:
-> Johannes Sixt writes:
->> Alexander Gavrilov schrieb:
->>> Transient windows cause problems on these platforms:
->> ...
->>> diff --git a/gitk b/gitk
->>> index 9b2a6e5..e6aafe8 100755
->> I'd appreciate if you could make it a habit to base your patches on
->> versions of gitk etc. that are available from a public repository
-> 
-> You mean, like, git://git.kernel.org/pub/scm/gitk/gitk.git, for
-> instance? :)  That is the primary repository for gitk and it seems to
-> be what Alexander bases his patches on.
+On Wed, Nov 12, 2008 at 03:25:52AM -0500, Jeff King wrote:
 
-Yes, I mean exactly this repository. It doesn't have 9b2a6e5:
+> +test_expect_success 'diff in message is retained without -v' '
+> +	git commit --amend -F diff &&
+> +	check_message diff
+> +'
+> +
+> +test_expect_failure 'diff in message is retained with -v' '
+> +	git commit --amend -F diff -v &&
+> +	check_message diff
+> +'
 
-$ git fetch gitk
-$ git show 9b2a6e5 --
-fatal: bad revision '9b2a6e5'
+I put in this expect_failure to remind us that we could be doing better.
+The solution you proposed would fix this test. Another idea I had was to
+use a bogus diff header, and match on that. Something like:
 
-I assume that Alexander has another patch applied in addition to the one
-that he submitted, which, therefore, is no longer "based on a publically
-available version".
+  diff --git --verbose-commit a/file b/file
 
--- Hannes
+and searching for "diff --git --verbose-commit", which would not trigger
+on any diffs (unless, of course, you were trying to explain how the
+verbose mode worked in your commit message :) ).
+
+But that doesn't cover any other special input (i.e., lines beginning
+with '#'), and would probably require an ugly hack to the diff machinery
+(some diff option for "add these bogus diff command line options").
+
+-Peff
