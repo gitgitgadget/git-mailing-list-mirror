@@ -1,54 +1,91 @@
-From: Robin Rosenberg <robin.rosenberg.lists@dewire.com>
-Subject: Re: EGIT branch checkout errors
-Date: Wed, 12 Nov 2008 23:48:31 +0100
-Message-ID: <200811122348.31423.robin.rosenberg.lists@dewire.com>
-References: <491AFB40.4000800@oanda.com>
+From: "Avery Pennarun" <apenwarr@gmail.com>
+Subject: Re: [PATCH] git-diff: Add --staged as a synonym for --cached.
+Date: Wed, 12 Nov 2008 17:39:05 -0500
+Message-ID: <32541b130811121439tbfc54aeq2999dbebf149d5bc@mail.gmail.com>
+References: <20081102123519.GA21251@atjola.homenet>
+	 <32541b130811102004n54a47331v48ba8d299039897f@mail.gmail.com>
+	 <20081112083353.GB3817@coredump.intra.peff.net>
+	 <alpine.DEB.1.00.0811121205100.30769@pacific.mpi-cbg.de>
+	 <20081112110629.GA20473@coredump.intra.peff.net>
+	 <32541b130811120739t95455d8n9b8056a8033491c3@mail.gmail.com>
+	 <20081112191512.GA21401@coredump.intra.peff.net>
+	 <7vljvooi8w.fsf@gitster.siamese.dyndns.org>
+	 <20081112193747.GA21567@coredump.intra.peff.net>
+	 <7vbpwkogxq.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Chris Dumoulin <dumoulin@oanda.com>
-X-From: git-owner@vger.kernel.org Wed Nov 12 23:49:52 2008
+Cc: "Jeff King" <peff@peff.net>,
+	"Johannes Schindelin" <Johannes.Schindelin@gmx.de>,
+	"=?ISO-8859-1?Q?Bj=F6rn_Steinbrink?=" <B.Steinbrink@gmx.de>,
+	"David Symonds" <dsymonds@gmail.com>, git@vger.kernel.org,
+	"Stephan Beyer" <s-beyer@gmx.net>
+To: "Junio C Hamano" <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Nov 12 23:50:06 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1L0OX1-00033O-Hv
-	for gcvg-git-2@gmane.org; Wed, 12 Nov 2008 23:49:52 +0100
+	id 1L0OXE-00036Z-2d
+	for gcvg-git-2@gmane.org; Wed, 12 Nov 2008 23:50:04 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752291AbYKLWsg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 12 Nov 2008 17:48:36 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750956AbYKLWsg
-	(ORCPT <rfc822;git-outgoing>); Wed, 12 Nov 2008 17:48:36 -0500
-Received: from pne-smtpout2-sn2.hy.skanova.net ([81.228.8.164]:34169 "EHLO
-	pne-smtpout2-sn2.hy.skanova.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1752064AbYKLWsf (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 12 Nov 2008 17:48:35 -0500
-Received: from sleipner.localnet (213.67.100.250) by pne-smtpout2-sn2.hy.skanova.net (7.3.129)
-        id 4873CA9501F74A35; Wed, 12 Nov 2008 23:48:32 +0100
-User-Agent: KMail/1.10.3 (Linux/2.6.27-7-generic; KDE/4.1.3; i686; ; )
-In-Reply-To: <491AFB40.4000800@oanda.com>
+	id S1752909AbYKLWso (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 12 Nov 2008 17:48:44 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752856AbYKLWso
+	(ORCPT <rfc822;git-outgoing>); Wed, 12 Nov 2008 17:48:44 -0500
+Received: from yx-out-2324.google.com ([74.125.44.28]:22455 "EHLO
+	yx-out-2324.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752725AbYKLWsn (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 12 Nov 2008 17:48:43 -0500
+Received: by yx-out-2324.google.com with SMTP id 8so308194yxm.1
+        for <git@vger.kernel.org>; Wed, 12 Nov 2008 14:48:41 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to
+         :subject:cc:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:references;
+        bh=bl5B1qVOEczgplLa9OlWLW02/CLBPo0IOgHbNEqEtO4=;
+        b=og3D/Nb4ySc0hz0rbKfS6WBc95C5nktNjCL2+tO4F5Ba8elMxneU+IAOHySbZo5CXj
+         4vIJibvkPJQSftQXjXDqiuF3+2227KiZx4O+3qqAZjnQZRykugFifzTmAFuQxi/ID7lD
+         uaFTBN0IjuMYd3AaPCDxZG8jqVu88DuGI8O/o=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
+         :content-type:content-transfer-encoding:content-disposition
+         :references;
+        b=iYcyQHBwGYGRE046XHrDnh2XdySgF+vbQSIm+9J6/QWalUAO4vWBLT/QKoRLfbH2eO
+         JKtv3FzQAILv9+gr/7kZbR9MsmuWckv9A8lEWazXQbiyHK1OZhJowPM4n/OvqsIcFjqg
+         fqwg/HRFrK3n1IgT942P+q58aGLXFuqzjngrA=
+Received: by 10.150.156.20 with SMTP id d20mr9466125ybe.135.1226529546029;
+        Wed, 12 Nov 2008 14:39:06 -0800 (PST)
+Received: by 10.150.98.19 with HTTP; Wed, 12 Nov 2008 14:39:05 -0800 (PST)
+In-Reply-To: <7vbpwkogxq.fsf@gitster.siamese.dyndns.org>
 Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/100827>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/100828>
 
-onsdag 12 november 2008 16:50:24 skrev Chris Dumoulin:
-> Using EGIT in Eclipse, I'm able to create a new branch, but not able to 
-> checkout a branch. When I try Team->Branch...->Checkout, nothing 
-> happens, so I launched Eclipse from a terminal to see any output it 
-> might be giving. Here's what I got:
+On Wed, Nov 12, 2008 at 2:57 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> Jeff King <peff@peff.net> writes:
+>
+>> I'm not sure I agree. They _are_ different things, but in the case of
+>> diff, you are really treating each of them like a tree (which makes
+>> range operators a little silly, but then that is a silliness already
+>> present in "git diff tree1..tree2").
+>
+> It is not _little_ silly, but quite silly.  It is a historical accident
+> and I personally suggest against using it when I teach git to others.
 
-Something is wrong in the WorkDirCheckout class. Could you send these
-things
+I assume the reason is that "git diff tree1..tree2" works with the
+differences between tree1 and tree2, much like "git log tree1..tree2"
+does.  On the other hand, "git log tree1 tree2" is something
+completely different.
 
-git ls-tree -r HEAD
-git-ls-tree -r branch-you-try-to-switch-to
-git diff --name-only
+So at least in my mental model, it's "git diff tree1 tree2" that's out
+of place, not really the one with the range specifier.
 
-Then post it to http://code.google.com/p/egit/issues/list
+Apparently what's intuitive to one person isn't always intuitive to the next.
 
--- robin
+Avery
