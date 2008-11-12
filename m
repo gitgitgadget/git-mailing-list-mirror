@@ -1,111 +1,97 @@
-From: Michael Adam <obnox@samba.org>
-Subject: [PATCH v2] contrib/hooks/post-receive-email: send individual mails to recipients
-Date: Wed, 12 Nov 2008 17:50:15 +0100
-Organization: SerNet GmbH, Goettingen, Germany
-Message-ID: <E1L0Iv1-00BwsF-Jh@intern.SerNet.DE>
-Cc: Andy Parkins <andyparkins@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>,
-	Michael Adam <obnox@samba.org>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Nov 12 17:51:36 2008
+From: "Alexander Gavrilov" <angavrilov@gmail.com>
+Subject: Re: Bug: UTF-16, UCS-4 and non-existing encodings for git log result in incorrect behavior
+Date: Wed, 12 Nov 2008 19:58:11 +0300
+Message-ID: <bb6f213e0811120858lbcefa25v47a4fb14d8537839@mail.gmail.com>
+References: <85647ef50811120532h778769ddx69f0b111dbad359a@mail.gmail.com>
+	 <alpine.DEB.1.00.0811121521390.30769@pacific.mpi-cbg.de>
+	 <85647ef50811120727j730cb6e3lf4103c200d042fb9@mail.gmail.com>
+	 <alpine.DEB.1.00.0811121714280.30769@pacific.mpi-cbg.de>
+	 <bb6f213e0811120817i20d5c0ajf0c9e289c11387a6@mail.gmail.com>
+	 <alpine.DEB.1.00.0811121740120.30769@pacific.mpi-cbg.de>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: "Constantine Plotnikov" <constantine.plotnikov@gmail.com>,
+	git@vger.kernel.org
+To: "Johannes Schindelin" <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Wed Nov 12 17:59:50 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1L0IwI-0005FF-Az
-	for gcvg-git-2@gmane.org; Wed, 12 Nov 2008 17:51:34 +0100
+	id 1L0J40-0000mC-Cr
+	for gcvg-git-2@gmane.org; Wed, 12 Nov 2008 17:59:32 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751507AbYKLQuU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 12 Nov 2008 11:50:20 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751077AbYKLQuT
-	(ORCPT <rfc822;git-outgoing>); Wed, 12 Nov 2008 11:50:19 -0500
-Received: from mail.SerNet.de ([193.175.80.2]:56013 "EHLO mail.SerNet.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751425AbYKLQuS (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 12 Nov 2008 11:50:18 -0500
-Received: from intern.SerNet.DE by mail.SerNet.DE
-	with esmtp (Exim 4.63 #1)
-	id 1L0Iv1-0001CM-RB; Wed, 12 Nov 2008 17:50:15 +0100
-Received: by intern.SerNet.DE
-	id 1L0Iv1-00BwsF-Jh; Wed, 12 Nov 2008 17:50:15 +0100
-Received: from intern.SerNet.DE (localhost [127.0.0.1])
-	by localhost (AvMailGate-2.1.4-7) id 2847918-BgNbnT;
-	Wed, 12 Nov 2008 17:50:15 +0100 (CET)
-Received: by intern.SerNet.DE
-	id 1L0Iv1-00Bws5-EH; Wed, 12 Nov 2008 17:50:15 +0100
+	id S1751324AbYKLQ6N (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 12 Nov 2008 11:58:13 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751261AbYKLQ6N
+	(ORCPT <rfc822;git-outgoing>); Wed, 12 Nov 2008 11:58:13 -0500
+Received: from wf-out-1314.google.com ([209.85.200.175]:63837 "EHLO
+	wf-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751060AbYKLQ6M (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 12 Nov 2008 11:58:12 -0500
+Received: by wf-out-1314.google.com with SMTP id 27so502590wfd.4
+        for <git@vger.kernel.org>; Wed, 12 Nov 2008 08:58:11 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to
+         :subject:cc:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:references;
+        bh=BxwwPIKLW63Z8N9B4t3y7Zgo95FX67FOYTqWp6WyyYg=;
+        b=hkdRIbNA72+A15et+4rqyv60xcbaiMoDzXtYABS3fkWYnHnc1EwHOvWI72OyJjftsK
+         cvLZZxm0/6Zf+IDeot2qrg1bm7iOjaqaD5wFchuTWd/yIomgl6LeQTIaOczDvjjLPrzD
+         qWmzk88COkM+e/eEiOVbqLePnPV04Li7dnDMc=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
+         :content-type:content-transfer-encoding:content-disposition
+         :references;
+        b=qMLqH8b1v2oblLcA5h7m2Mr5EnNvLS4o0oanOs7joHP65n94CsCNOPPvPQJBaPoh0/
+         1CcQx9WKK4kbqjUjUQANNlXI2vKypLftr7h7rMB5e091er35oypaw4M09I4CGEhDbOhH
+         43fQQOialI/Dr/6Ay+0ofNEgzYJZxxmNRQ4cY=
+Received: by 10.142.221.11 with SMTP id t11mr3575773wfg.238.1226509091422;
+        Wed, 12 Nov 2008 08:58:11 -0800 (PST)
+Received: by 10.142.216.21 with HTTP; Wed, 12 Nov 2008 08:58:11 -0800 (PST)
+In-Reply-To: <alpine.DEB.1.00.0811121740120.30769@pacific.mpi-cbg.de>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/100768>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/100769>
 
-This changes the behaviour of post-receive-email when a list of recipients
-(separated by commas) is specified as hooks.mailinglist. With this modification,
-an individual mail is sent out for each recipient entry in the list, instead
-of sending a single mail with all the recipients in the "To: " field.
+On Wed, Nov 12, 2008 at 7:42 PM, Johannes Schindelin
+<Johannes.Schindelin@gmx.de> wrote:
+> On Wed, 12 Nov 2008, Alexander Gavrilov wrote:
+>> On Wed, Nov 12, 2008 at 7:15 PM, Johannes Schindelin
+>> <Johannes.Schindelin@gmx.de> wrote:
+>> > On Wed, 12 Nov 2008, Constantine Plotnikov wrote:
+>> >> Commit encoding is set correctly. The problem is that git log and git
+>> >> show do not support the *output* encodings UTF-16 and UCS-4 and
+>> >> silently fail in that case instead of reporting the error.
+>> >
+>> > That looks more like an iconv bug to me.  I assume you are using Windows?
+>>
+>> Iconv has no way to know that git cannot work with ASCII-incompatible
+>> encodings, and UTF-16 is incompatible, because it fills the output with
+>> loads of zero bytes. Git both truncates messages on these bytes, and
+>> forgets inserting them in strings that it produces itself.
+>
+> Ah, I thought that the issue was that Git would not handle commits in that
+> encoding correctly.  Instead, it appears that Git cannot work with UTF-16
+> _displays_.
 
-Signed-off-by: Michael Adam <obnox@samba.org>
----
-Sorry, in the first version of the patch, I forgot to
-adapt the generate_email_header() function fill the "To"
-field only with "$recipient" instad of "$recipients".
+Actually, I think that using those encodings in commits is asking for
+trouble too, because the encoding conversion is, as far as I remember,
+applied to the entire contents of the commit object, and Git,
+naturally, doesn't insert any null bytes in the commit headers to
+please the decoder. The result is a completely trashed object on
+output.
 
-Cheers - Michael
+Also, I think that they are generally a poor choice of an encoding for
+data transmission, because they are ASCII-incompatible,
+stdlib-incompatible, unreliable to loss and addition of single bytes,
+and have no way to detect encoding mismatch except by metadata or
+heuristics: almost any string of shorts is "valid".
 
- contrib/hooks/post-receive-email |   32 ++++++++++++++++++--------------
- 1 files changed, 18 insertions(+), 14 deletions(-)
-
-diff --git a/contrib/hooks/post-receive-email b/contrib/hooks/post-receive-email
-index 28a3c0e..f8bbeab 100644
---- a/contrib/hooks/post-receive-email
-+++ b/contrib/hooks/post-receive-email
-@@ -169,21 +169,25 @@ generate_email()
- 		describe=$rev
- 	fi
- 
--	generate_email_header
-+	# loop over the recipients to send individual mails
-+	echo $recipients | sed -e 's/\s*,\s*/\n/' | while read recipient
-+	do
-+		generate_email_header
- 
--	# Call the correct body generation function
--	fn_name=general
--	case "$refname_type" in
--	"tracking branch"|branch)
--		fn_name=branch
--		;;
--	"annotated tag")
--		fn_name=atag
--		;;
--	esac
--	generate_${change_type}_${fn_name}_email
-+		# Call the correct body generation function
-+		fn_name=general
-+		case "$refname_type" in
-+		"tracking branch"|branch)
-+			fn_name=branch
-+			;;
-+		"annotated tag")
-+			fn_name=atag
-+			;;
-+		esac
-+		generate_${change_type}_${fn_name}_email
- 
--	generate_email_footer
-+		generate_email_footer
-+	done
- }
- 
- generate_email_header()
-@@ -191,7 +195,7 @@ generate_email_header()
- 	# --- Email (all stdout will be the email)
- 	# Generate header
- 	cat <<-EOF
--	To: $recipients
-+	To: $recipient
- 	Subject: ${emailprefix}$projectdesc $refname_type, $short_refname, ${change_type}d. $describe
- 	X-Git-Refname: $refname
- 	X-Git-Reftype: $refname_type
--- 
-1.5.6
+Alexander
