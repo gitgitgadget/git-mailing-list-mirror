@@ -1,144 +1,80 @@
-From: Nicolas Pitre <nico@cam.org>
-Subject: [PATCH] fix pack.packSizeLimit and --max-pack-size handling
-Date: Wed, 12 Nov 2008 13:23:58 -0500 (EST)
-Message-ID: <alpine.LFD.2.00.0811121255330.27509@xanadu.home>
-References: <cccedfc60811120712o7fcbf648l9f4b8e6f52e50e39@mail.gmail.com>
- <alpine.LFD.2.00.0811121109420.27509@xanadu.home>
- <7vk5b8q1l4.fsf@gitster.siamese.dyndns.org>
+From: "Jonas Fonseca" <jonas.fonseca@gmail.com>
+Subject: Re: Newbie questions regarding jgit
+Date: Wed, 12 Nov 2008 19:30:39 +0100
+Message-ID: <2c6b72b30811121030k73ed42d4q5bea76e2f8198656@mail.gmail.com>
+References: <4919EECB.7070408@wellfleetsoftware.com>
+	 <2c6b72b30811111337v2fe23c75v25251838f721a007@mail.gmail.com>
+	 <491AE2BD.7080103@wellfleetsoftware.com>
+	 <491AE91C.4020402@wellfleetsoftware.com>
+	 <491B18C4.2070000@wellfleetsoftware.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: Jon Nelson <jnelson@jamponi.net>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Nov 12 19:25:28 2008
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: "Farrukh Najmi" <farrukh@wellfleetsoftware.com>
+X-From: git-owner@vger.kernel.org Wed Nov 12 19:32:15 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1L0KP6-0004Sw-Mc
-	for gcvg-git-2@gmane.org; Wed, 12 Nov 2008 19:25:25 +0100
+	id 1L0KVh-0007FB-Jd
+	for gcvg-git-2@gmane.org; Wed, 12 Nov 2008 19:32:14 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752122AbYKLSYJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 12 Nov 2008 13:24:09 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751961AbYKLSYI
-	(ORCPT <rfc822;git-outgoing>); Wed, 12 Nov 2008 13:24:08 -0500
-Received: from relais.videotron.ca ([24.201.245.36]:64709 "EHLO
-	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751763AbYKLSYG (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 12 Nov 2008 13:24:06 -0500
-Received: from xanadu.home ([66.131.194.97]) by VL-MH-MR002.ip.videotron.ca
- (Sun Java(tm) System Messaging Server 6.3-4.01 (built Aug  3 2007; 32bit))
- with ESMTP id <0KA800IYEGFY89N0@VL-MH-MR002.ip.videotron.ca> for
- git@vger.kernel.org; Wed, 12 Nov 2008 13:23:58 -0500 (EST)
-X-X-Sender: nico@xanadu.home
-In-reply-to: <7vk5b8q1l4.fsf@gitster.siamese.dyndns.org>
-User-Agent: Alpine 2.00 (LFD 1167 2008-08-23)
+	id S1752470AbYKLSa4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 12 Nov 2008 13:30:56 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752375AbYKLSa4
+	(ORCPT <rfc822;git-outgoing>); Wed, 12 Nov 2008 13:30:56 -0500
+Received: from ey-out-2122.google.com ([74.125.78.27]:3976 "EHLO
+	ey-out-2122.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752417AbYKLSaz (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 12 Nov 2008 13:30:55 -0500
+Received: by ey-out-2122.google.com with SMTP id 6so224613eyi.37
+        for <git@vger.kernel.org>; Wed, 12 Nov 2008 10:30:40 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to
+         :subject:cc:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:references;
+        bh=nmMc3mL45XcSe6CiSOx0tQbx39cBMv9hqGjHbaKYoa4=;
+        b=a7afV25+/UHLgvtsazrkD0hdDap/o+MrNX4g7ZTkoCs9ygy9GHkRGaBd0r8Oxvhg4P
+         npWK4DleJ69yIuHoL3Kwsc0zq0PAs0mJmItrfSyI3kqLszONmcrAL8m83OXsKCfOSR33
+         AyXsH1CMK3Uy4alOY32fohqsuP2RJWOmFeF/A=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
+         :content-type:content-transfer-encoding:content-disposition
+         :references;
+        b=CA9Gv4J7l06YaarekURBQE0CWOaNL2Vh6TAZwuxnild7R+7QZjqb0xNi7pZlTxBSVt
+         HNmtptZcgXp0FUWYVbsB7i0jtKVlcQiLlZoh2MKL8vMpCVjPP6Vv2xR1shl/qpNZBI6v
+         oBs0v2Ttwjocm8gndGxGGDB3mAys2inBUUy9U=
+Received: by 10.181.201.13 with SMTP id d13mr1292728bkq.105.1226514640058;
+        Wed, 12 Nov 2008 10:30:40 -0800 (PST)
+Received: by 10.181.157.5 with HTTP; Wed, 12 Nov 2008 10:30:39 -0800 (PST)
+In-Reply-To: <491B18C4.2070000@wellfleetsoftware.com>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/100800>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/100801>
 
-First, pack.packSizeLimit and --max-pack-size didn't use the same base
-unit which was confusing.  They both use suffixable value arguments now.
+On Wed, Nov 12, 2008 at 18:56, Farrukh Najmi
+<farrukh@wellfleetsoftware.com> wrote:
+> So far I have figured out how to get the treeWalk for the path filter as
+> shown below.
+> Now I am lost as to how to get the blob associated with the treeWalk. TIA
+> for your help.
 
-Also, if the limit was sufficiently low, having a single object written
-could bust the limit (by design), but caused the remaining allowed size
-to go negative for subsequent objects, which for an unsigned variable is
-a rather huge limit.
+For ideas take a look at how the NetBeans git plugin accomplishes some
+of the most common git tasks take a look at the GitCommand.java file.
+It contains code for adding and removing files, committing updates to
+the index. There is also some code trying to get "git-status"
+information, but it is not very smart or clean. Something equivalent
+to "git cat-file" (getting the blob data) can be seen at line 120:
 
-Signed-off-by: Nicolas Pitre <nico@cam.org>
----
+ - http://github.com/myabc/nbgit/tree/master/src/org/nbgit/util/GitCommand.java#L120
 
-On Wed, 12 Nov 2008, Junio C Hamano wrote:
+Sorry, I should have suggested this earlier.
 
-> Nicolas Pitre <nico@cam.org> writes:
-> 
-> > First, pack.packSizeLimit and --max-pack-size didn't use the same base
-> > unit which was confusing.  They both use MiB now.
-> >
-> > Also, if the limit was sufficiently low, having a single object written
-> > could bust the limit (by design), but caused the remaining allowed size 
-> > to go negative for subsequent objects, which for an unsigned variable is 
-> > a rather huge limit.
-> >
-> > Signed-off-by: Nicolas Pitre <nico@cam.org>
-> > ---
-> 
-> > @@ -1844,7 +1848,7 @@ static int git_pack_config(const char *k, const char *v, void *cb)
-> >  		return 0;
-> >  	}
-> >  	if (!strcmp(k, "pack.packsizelimit")) {
-> > -		pack_size_limit_cfg = git_config_ulong(k, v);
-> > +		pack_size_limit_cfg = git_config_ulong(k, v) * 1024 * 1024;
-> 
-> The fix to tweak the limit for subsequent split pack is a good thing to
-> have, but this change would break existing repositories where people
-> specified 20971520 (or worse yet "20m") to limit the size to 20MB.
-> 
-> I think --max-pack-size is what should be fixed to use git_parse_ulong()
-> to match the configuration, if you find the discrepancy disturbing.
-
-Fair enough.
-
-diff --git a/Documentation/git-pack-objects.txt b/Documentation/git-pack-objects.txt
-index 1c4fb43..d60409a 100644
---- a/Documentation/git-pack-objects.txt
-+++ b/Documentation/git-pack-objects.txt
-@@ -104,10 +104,11 @@ base-name::
- 	default.
- 
- --max-pack-size=<n>::
--	Maximum size of each output packfile, expressed in MiB.
-+	Maximum size of each output packfile.
- 	If specified,  multiple packfiles may be created.
- 	The default is unlimited, unless the config variable
--	`pack.packSizeLimit` is set.
-+	`pack.packSizeLimit` is set. The size can be suffixed with
-+	"k", "m", or "g".
- 
- --incremental::
- 	This flag causes an object already in a pack ignored
-diff --git a/builtin-pack-objects.c b/builtin-pack-objects.c
-index 0c4649c..9c4333b 100644
---- a/builtin-pack-objects.c
-+++ b/builtin-pack-objects.c
-@@ -75,7 +75,7 @@ static int allow_ofs_delta;
- static const char *base_name;
- static int progress = 1;
- static int window = 10;
--static uint32_t pack_size_limit, pack_size_limit_cfg;
-+static unsigned long pack_size_limit, pack_size_limit_cfg;
- static int depth = 50;
- static int delta_search_threads = 1;
- static int pack_to_stdout;
-@@ -245,8 +245,12 @@ static unsigned long write_object(struct sha1file *f,
- 	type = entry->type;
- 
- 	/* write limit if limited packsize and not first object */
--	limit = pack_size_limit && nr_written ?
--			pack_size_limit - write_offset : 0;
-+	if (!pack_size_limit || !nr_written)
-+		limit = 0;
-+	else if (pack_size_limit <= write_offset)
-+		limit = 1;
-+	else
-+		limit = pack_size_limit - write_offset;
- 
- 	if (!entry->delta)
- 		usable_delta = 0;	/* no delta */
-@@ -2103,11 +2107,10 @@ int cmd_pack_objects(int argc, const char **argv, const char *prefix)
- 			continue;
- 		}
- 		if (!prefixcmp(arg, "--max-pack-size=")) {
--			char *end;
--			pack_size_limit_cfg = 0;
--			pack_size_limit = strtoul(arg+16, &end, 0) * 1024 * 1024;
--			if (!arg[16] || *end)
-+			if (!git_parse_ulong(arg+16, &pack_size_limit))
- 				usage(pack_usage);
-+			else
-+				pack_size_limit_cfg = 0;
- 			continue;
- 		}
- 		if (!prefixcmp(arg, "--window=")) {
+-- 
+Jonas Fonseca
