@@ -1,86 +1,89 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] fix pack.packSizeLimit and --max-pack-size handling
-Date: Wed, 12 Nov 2008 13:23:09 -0800
-Message-ID: <7vmyg4myf6.fsf@gitster.siamese.dyndns.org>
-References: <cccedfc60811120712o7fcbf648l9f4b8e6f52e50e39@mail.gmail.com>
- <alpine.LFD.2.00.0811121109420.27509@xanadu.home>
- <7vk5b8q1l4.fsf@gitster.siamese.dyndns.org>
- <alpine.LFD.2.00.0811121255330.27509@xanadu.home>
+From: Fedor Sergeev <Fedor.Sergeev@Sun.COM>
+Subject: Re: overly smart rebase - bug or feature?
+Date: Thu, 13 Nov 2008 00:39:21 +0300
+Message-ID: <20081112213920.GB5018@sun.com>
+References: <20081110212333.GU6799@sun.com>
+ <7vod0n41i5.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Jon Nelson <jnelson@jamponi.net>, git@vger.kernel.org
-To: Nicolas Pitre <nico@cam.org>
-X-From: git-owner@vger.kernel.org Wed Nov 12 22:25:58 2008
+Content-Transfer-Encoding: 7BIT
+Cc: Roman.Shaposhnick@Sun.COM, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Nov 12 22:41:14 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1L0NDS-0003z2-9I
-	for gcvg-git-2@gmane.org; Wed, 12 Nov 2008 22:25:34 +0100
+	id 1L0NSW-0001dX-3h
+	for gcvg-git-2@gmane.org; Wed, 12 Nov 2008 22:41:08 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752246AbYKLVXp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 12 Nov 2008 16:23:45 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752649AbYKLVXp
-	(ORCPT <rfc822;git-outgoing>); Wed, 12 Nov 2008 16:23:45 -0500
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:65058 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752246AbYKLVXp (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 12 Nov 2008 16:23:45 -0500
-Received: from localhost.localdomain (unknown [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id D05EF7CC4B;
-	Wed, 12 Nov 2008 16:23:40 -0500 (EST)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES256-SHA (256/256 bits)) (No client certificate requested) by
- a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTPSA id 5706F7CC3C; Wed,
- 12 Nov 2008 16:23:16 -0500 (EST)
-In-Reply-To: <alpine.LFD.2.00.0811121255330.27509@xanadu.home> (Nicolas
- Pitre's message of "Wed, 12 Nov 2008 13:23:58 -0500 (EST)")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: 2D42350C-B100-11DD-97CA-9CEDC82D7133-77302942!a-sasl-fastnet.pobox.com
+	id S1751804AbYKLVju (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 12 Nov 2008 16:39:50 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751829AbYKLVju
+	(ORCPT <rfc822;git-outgoing>); Wed, 12 Nov 2008 16:39:50 -0500
+Received: from gmp-eb-inf-1.sun.com ([192.18.6.21]:45490 "EHLO
+	gmp-eb-inf-1.sun.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751633AbYKLVjt (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 12 Nov 2008 16:39:49 -0500
+Received: from fe-emea-09.sun.com (gmp-eb-lb-2-fe3.eu.sun.com [192.18.6.12])
+	by gmp-eb-inf-1.sun.com (8.13.7+Sun/8.12.9) with ESMTP id mACLdjMc021348
+	for <git@vger.kernel.org>; Wed, 12 Nov 2008 21:39:45 GMT
+Received: from conversion-daemon.fe-emea-09.sun.com by fe-emea-09.sun.com
+ (Sun Java System Messaging Server 6.2-8.04 (built Feb 28 2007))
+ id <0KA800901PC4MJ00@fe-emea-09.sun.com>
+ (original mail from Fedor.Sergeev@Sun.COM) for git@vger.kernel.org; Wed,
+ 12 Nov 2008 21:39:45 +0000 (GMT)
+Received: from localhost ([129.159.126.120])
+ by fe-emea-09.sun.com (Sun Java System Messaging Server 6.2-8.04 (built Feb 28
+ 2007)) with ESMTPSA id <0KA8007OSPI7FTA0@fe-emea-09.sun.com>; Wed,
+ 12 Nov 2008 21:39:44 +0000 (GMT)
+In-reply-to: <7vod0n41i5.fsf@gitster.siamese.dyndns.org>
+Mail-followup-to: Junio C Hamano <gitster@pobox.com>,
+ Roman.Shaposhnick@Sun.COM, git@vger.kernel.org
+Content-disposition: inline
+User-Agent: Mutt/1.5.7i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/100815>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/100816>
 
-Nicolas Pitre <nico@cam.org> writes:
+On Mon, Nov 10, 2008, Junio C Hamano wrote:
+> Fedor Sergeev <Fedor.Sergeev@Sun.COM> writes:
+> >> You might be able to work this around by forcing rebase not to use the
+> >> simplified 3-way merge, by saying "rebase -m".
+> >
+> > Yeah, it worked.
+> > ...
+> > CONFLICT (delete/modify): Makefile deleted in master and modified in HEAD~0. Version HEAD~0 of Makefile left in tree.
+> > ...
+> >
+> > Though it does make me wonder why *simplified* 3-way merge is smarter than git merge ;)))
+> 
+> Simplified one is not _smarter_.  It is merely _faster_, exactly because
+> it only looks at the paths between A^..A and nothing else.
 
-> @@ -2103,11 +2107,10 @@ int cmd_pack_objects(int argc, const char **argv, const char *prefix)
->  			continue;
->  		}
->  		if (!prefixcmp(arg, "--max-pack-size=")) {
-> -			char *end;
-> -			pack_size_limit_cfg = 0;
-> -			pack_size_limit = strtoul(arg+16, &end, 0) * 1024 * 1024;
-> -			if (!arg[16] || *end)
-> +			if (!git_parse_ulong(arg+16, &pack_size_limit))
->  				usage(pack_usage);
-> +			else
-> +				pack_size_limit_cfg = 0;
->  			continue;
->  		}
->  		if (!prefixcmp(arg, "--window=")) {
+I seem to start getting grasp on it.
+Please, correct me if I'm wrong:
+  - by default rebase uses "simplified" merge, which (roughly speaking) 
+    simply goes around patching parent with changes from either branches A and B
 
-Hmm, an unrelated funniness here is why the code even needs to futz with
-the value read from the configuration.  Later in the code we have:
+  - rebase -m applies 'recursive' merge (default merge strategy) which is 
+    kind of smarter and determines a conflict in my case
 
-	if (!pack_to_stdout && !pack_size_limit)
-		pack_size_limit = pack_size_limit_cfg;
+  - literally the same happens when I do merge instead of rebase 
 
-and the intent seems to be:
+  - cherry-pick fails just because "patch B" can not apply to A and that is
+    literally why rebase started falling out to *some* merge first hand
 
- - if there is nothing on the command line, use config;
- - if there is something on the command line, ignore config.
+If the above is true then can you, please, answer the following questions:
+  - is there any merge strategy that can do "simplified" merge just like that in rebase?
+    (not that I need it, but just for educational purpose)
 
-But if you have a configured limit and would want to override from the
-command line, this won't work.
+  - does rebase perform simplified merge only because of speed considerations?
+    (e.g. are there any correctness/usability issues with using smarter merge algo on rebase) 
 
-I will apply the wraparound avoidance as a separate "pure fix" patch to
-'maint' first.
+  - is there any .git/config variable that affects which merge to use upon rebase?
 
-Besides, --max-pack-size has been defined as megabytes for the entirety of
-its existence, and I am a bit worried about changing the semantics at this
-point without any warning.  I realize that I am worried too much for
-people with a script that give an explicit --max-pack-size=1 to obtain a
-set of split packs that would fit on floppies, who probably would not
-exist ;-)
+best regards,
+  Fedor.
