@@ -1,70 +1,61 @@
-From: Michael J Gruber <git@drmicha.warpmail.net>
-Subject: Re: Change in "git checkout" behaviour between 1.6.0.2 and 1.6.0.3
-Date: Wed, 12 Nov 2008 18:32:13 +0100
-Message-ID: <491B131D.2050501@drmicha.warpmail.net>
-References: <80wsf9ovsp.fsf@tiny.isode.net>
+From: David Brown <git@davidb.org>
+Subject: Re: hosting git on a nfs
+Date: Wed, 12 Nov 2008 09:36:52 -0800
+Message-ID: <20081112173651.GA9127@linode.davidb.org>
+References: <200811121029.34841.thomas@koch.ro>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-To: Bruce Stephens <bruce.stephens@isode.com>
-X-From: git-owner@vger.kernel.org Wed Nov 12 18:33:50 2008
+Content-Type: text/plain; charset=us-ascii; format=flowed
+Cc: git@vger.kernel.org, dabe@ymc.ch
+To: Thomas Koch <thomas@koch.ro>
+X-From: git-owner@vger.kernel.org Wed Nov 12 18:38:22 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1L0Jav-0007Pw-TZ
-	for gcvg-git-2@gmane.org; Wed, 12 Nov 2008 18:33:34 +0100
+	id 1L0JfO-00010O-VI
+	for gcvg-git-2@gmane.org; Wed, 12 Nov 2008 18:38:11 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751703AbYKLRcS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 12 Nov 2008 12:32:18 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751593AbYKLRcS
-	(ORCPT <rfc822;git-outgoing>); Wed, 12 Nov 2008 12:32:18 -0500
-Received: from out5.smtp.messagingengine.com ([66.111.4.29]:51889 "EHLO
-	out5.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751368AbYKLRcS (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 12 Nov 2008 12:32:18 -0500
-Received: from compute2.internal (compute2.internal [10.202.2.42])
-	by out1.messagingengine.com (Postfix) with ESMTP id EF0671ACCC2;
-	Wed, 12 Nov 2008 12:32:16 -0500 (EST)
-Received: from heartbeat2.messagingengine.com ([10.202.2.161])
-  by compute2.internal (MEProxy); Wed, 12 Nov 2008 12:32:16 -0500
-X-Sasl-enc: 8sdUJkTgb3AG0BXZMP9s2gqtwqnm8XnOM3VbP8p5PRZd 1226511136
-Received: from [139.174.44.12] (whitehead.math.tu-clausthal.de [139.174.44.12])
-	by mail.messagingengine.com (Postfix) with ESMTPSA id 46C0E2A573;
-	Wed, 12 Nov 2008 12:32:16 -0500 (EST)
-User-Agent: Thunderbird 2.0.0.17 (X11/20080914)
-In-Reply-To: <80wsf9ovsp.fsf@tiny.isode.net>
+	id S1751990AbYKLRgz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 12 Nov 2008 12:36:55 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752013AbYKLRgy
+	(ORCPT <rfc822;git-outgoing>); Wed, 12 Nov 2008 12:36:54 -0500
+Received: from linode.davidb.org ([72.14.176.16]:56331 "EHLO mail.davidb.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751541AbYKLRgy (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 12 Nov 2008 12:36:54 -0500
+Received: from davidb by mail.davidb.org with local (Exim 4.69 #1 (Debian))
+	id 1L0Je8-0002R1-A6; Wed, 12 Nov 2008 09:36:52 -0800
+Content-Disposition: inline
+In-Reply-To: <200811121029.34841.thomas@koch.ro>
+User-Agent: Mutt/1.5.16 (2007-06-09)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/100778>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/100779>
 
-Bruce Stephens venit, vidit, dixit 12.11.2008 15:36:
-> The following works fine with 1.6.0.2 and before, but not 1.6.0.3 or
-> later:
-> 
-> 	git clone -n git git-test
->         cd git-test
->         git checkout -b work v1.6.0.2
-> 
-> When it breaks, the error is:
-> 
-> 	error: Entry '.gitignore' would be overwritten by merge. Cannot merge.
-> 
-> I'm guessing it's a bug rather than a deliberate change?
+On Wed, Nov 12, 2008 at 10:29:34AM +0100, Thomas Koch wrote:
 
-Bisecting gives:
+>finally I managed to convince a critical mass of developers (our chief
+>dev :-) in our company so that we are starting to migrate to GIT.
+>
+>The final question is, whether GIT will life peacefully on our cluster
+>fileservers. The GIT repository dir (/var/cache/git) should be mounted
+>via NFS via PAN on top of DRBD (so I was told).
+>
+>Are there any known problems with this setup? We're asking, because
+>there are problems with SVN on such a setup[1].
 
+We had occasionally run into locking problems with 1.5.4.x with
+renames between different directories.  This should be fixed in
+1.6.0.3, but we have since migrated to a server model so I don't have
+any way of testing this.
 
-5521883490e85f4d973141972cf16f89a79f1979 is first bad commit
-commit 5521883490e85f4d973141972cf16f89a79f1979
-Author: Junio C Hamano <gitster@pobox.com>
-Date:   Sun Sep 7 19:49:25 2008 -0700
+None of these problems ever caused repository corruption, only errors
+during fetch/clone that were resolved by repeating the operation.
 
-    checkout: do not lose staged removal
+Using ssh: or git: does seem to be a bit faster than NFS.  The
+configuration we did find completely unworkable was using git with the
+work tree on NFS.
 
-CCing Junio...
-
-Michael
+David
