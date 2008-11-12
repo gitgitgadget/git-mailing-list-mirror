@@ -1,61 +1,132 @@
-From: Johannes Sixt <j.sixt@viscovery.net>
-Subject: Re: [PATCH v2] contrib/hooks/post-receive-email: send individual
- mails to recipients
-Date: Wed, 12 Nov 2008 18:08:43 +0100
-Message-ID: <491B0D9B.7080306@viscovery.net>
-References: <E1L0Iv1-00BwsF-Jh@intern.SerNet.DE>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, Andy Parkins <andyparkins@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>
-To: Michael Adam <obnox@samba.org>
-X-From: git-owner@vger.kernel.org Wed Nov 12 18:10:27 2008
+From: Miklos Vajna <vmiklos@frugalware.org>
+Subject: [PATCH 2/4] git-remote rename: support remotes->config migration
+Date: Wed, 12 Nov 2008 18:11:02 +0100
+Message-ID: <d99804ad3579d4882e8241d9dcaee1b7dd6508af.1226508805.git.vmiklos@frugalware.org>
+References: <cover.1226508805.git.vmiklos@frugalware.org>
+ <95e56b46e30b41af31da86789625c93511f1faef.1226508805.git.vmiklos@frugalware.org>
+Cc: Jeff King <peff@peff.net>, Brandon Casey <casey@nrlssc.navy.mil>,
+	git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Nov 12 18:12:00 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1L0JEL-0005NR-Ip
-	for gcvg-git-2@gmane.org; Wed, 12 Nov 2008 18:10:14 +0100
+	id 1L0JFs-00065i-ND
+	for gcvg-git-2@gmane.org; Wed, 12 Nov 2008 18:11:49 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752988AbYKLRIu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 12 Nov 2008 12:08:50 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752770AbYKLRIu
-	(ORCPT <rfc822;git-outgoing>); Wed, 12 Nov 2008 12:08:50 -0500
-Received: from lilzmailso02.liwest.at ([212.33.55.13]:57188 "EHLO
-	lilzmailso02.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752621AbYKLRIt (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 12 Nov 2008 12:08:49 -0500
-Received: from cm56-163-160.liwest.at ([86.56.163.160] helo=linz.eudaptics.com)
-	by lilzmailso02.liwest.at with esmtpa (Exim 4.69)
-	(envelope-from <j.sixt@viscovery.net>)
-	id 1L0JCu-0002og-Aj; Wed, 12 Nov 2008 18:08:44 +0100
-Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.96])
-	by linz.eudaptics.com (Postfix) with ESMTP
-	id 0606A4E4; Wed, 12 Nov 2008 18:08:43 +0100 (CET)
-User-Agent: Thunderbird 2.0.0.6 (Windows/20070728)
-In-Reply-To: <E1L0Iv1-00BwsF-Jh@intern.SerNet.DE>
-X-Spam-Score: 1.2 (+)
-X-Spam-Report: ALL_TRUSTED=-1.8, BAYES_95=3
+	id S1752404AbYKLRKM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 12 Nov 2008 12:10:12 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752366AbYKLRKM
+	(ORCPT <rfc822;git-outgoing>); Wed, 12 Nov 2008 12:10:12 -0500
+Received: from yugo.dsd.sztaki.hu ([195.111.2.114]:50006 "EHLO
+	yugo.frugalware.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753281AbYKLRKG (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 12 Nov 2008 12:10:06 -0500
+Received: from vmobile.example.net (dsl5401C37A.pool.t-online.hu [84.1.195.122])
+	by yugo.frugalware.org (Postfix) with ESMTPA id 66BAB446CD0;
+	Wed, 12 Nov 2008 18:10:03 +0100 (CET)
+Received: by vmobile.example.net (Postfix, from userid 1003)
+	id 9B1AC19DB14; Wed, 12 Nov 2008 18:11:04 +0100 (CET)
+X-Mailer: git-send-email 1.6.0.2
+In-Reply-To: <95e56b46e30b41af31da86789625c93511f1faef.1226508805.git.vmiklos@frugalware.org>
+In-Reply-To: <cover.1226508805.git.vmiklos@frugalware.org>
+References: <cover.1226508805.git.vmiklos@frugalware.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/100770>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/100771>
 
-Michael Adam schrieb:
-> This changes the behaviour of post-receive-email when a list of recipients
-> (separated by commas) is specified as hooks.mailinglist. With this modification,
-> an individual mail is sent out for each recipient entry in the list, instead
-> of sending a single mail with all the recipients in the "To: " field.
+This patch makes it possible to migrate a remote stored in a
+$GIT_DIR/remotes/nick file to the configuration file format.
 
-I don't think this is well-behaved:
+Signed-off-by: Miklos Vajna <vmiklos@frugalware.org>
+---
+ builtin-remote.c  |   33 +++++++++++++++++++++++++++++++++
+ t/t5505-remote.sh |   21 +++++++++++++++++++++
+ 2 files changed, 54 insertions(+), 0 deletions(-)
 
-- The load multiplies for the sender (typically a repository server).
-
-- And wouldn't each recipient get a new Message-Id? This would break
-threading if further communication takes place among the recipients.
-
-But I may be wrong on both accounts.
-
--- Hannes
+diff --git a/builtin-remote.c b/builtin-remote.c
+index 1ca6cdb..4fa64a2 100644
+--- a/builtin-remote.c
++++ b/builtin-remote.c
+@@ -359,6 +359,36 @@ static int read_remote_branches(const char *refname,
+ 	return 0;
+ }
+ 
++static int migrate_file(struct remote *remote)
++{
++	struct strbuf buf = STRBUF_INIT;
++	int i;
++	char *path = NULL;
++
++	strbuf_addf(&buf, "remote.%s.url", remote->name);
++	for (i = 0; i < remote->url_nr; i++)
++		if (git_config_set_multivar(buf.buf, remote->url[i], "^$", 0))
++			return error("Could not append '%s' to '%s'",
++					remote->url[i], buf.buf);
++	strbuf_reset(&buf);
++	strbuf_addf(&buf, "remote.%s.push", remote->name);
++	for (i = 0; i < remote->push_refspec_nr; i++)
++		if (git_config_set_multivar(buf.buf, remote->push_refspec[i], "^$", 0))
++			return error("Could not append '%s' to '%s'",
++					remote->push_refspec[i], buf.buf);
++	strbuf_reset(&buf);
++	strbuf_addf(&buf, "remote.%s.fetch", remote->name);
++	for (i = 0; i < remote->fetch_refspec_nr; i++)
++		if (git_config_set_multivar(buf.buf, remote->fetch_refspec[i], "^$", 0))
++			return error("Could not append '%s' to '%s'",
++					remote->fetch_refspec[i], buf.buf);
++	if (remote->origin == REMOTE_REMOTES)
++		path = git_path("remotes/%s", remote->name);
++	if (path && unlink(path))
++		warning("failed to remove '%s'", path);
++	return 0;
++}
++
+ static int mv(int argc, const char **argv)
+ {
+ 	struct option options[] = {
+@@ -381,6 +411,9 @@ static int mv(int argc, const char **argv)
+ 	if (!oldremote)
+ 		die("No such remote: %s", rename.old);
+ 
++	if (!strcmp(rename.old, rename.new) && oldremote->origin == REMOTE_REMOTES)
++		return migrate_file(oldremote);
++
+ 	newremote = remote_get(rename.new);
+ 	if (newremote && (newremote->url_nr > 1 || newremote->fetch_refspec_nr))
+ 		die("remote %s already exists.", rename.new);
+diff --git a/t/t5505-remote.sh b/t/t5505-remote.sh
+index 0c956ba..1567631 100755
+--- a/t/t5505-remote.sh
++++ b/t/t5505-remote.sh
+@@ -343,4 +343,25 @@ test_expect_success 'rename a remote' '
+ 	 test "$(git config branch.master.remote)" = "upstream")
+ 
+ '
++
++cat > remotes_origin << EOF
++URL: $(pwd)/one
++Push: refs/heads/master:refs/heads/upstream
++Pull: refs/heads/master:refs/heads/origin
++EOF
++
++test_expect_success 'migrate a remote from named file in $GIT_DIR/remotes' '
++	git clone one five &&
++	origin_url=$(pwd)/one &&
++	(cd five &&
++	 git remote rm origin &&
++	 mkdir -p .git/remotes &&
++	 cat ../remotes_origin > .git/remotes/origin &&
++	 git remote rename origin origin &&
++	 ! test -f .git/remotes/origin &&
++	 test "$(git config remote.origin.url)" = "$origin_url" &&
++	 test "$(git config remote.origin.push)" = "refs/heads/master:refs/heads/upstream" &&
++	 test "$(git config remote.origin.fetch)" = "refs/heads/master:refs/heads/origin")
++'
++
+ test_done
+-- 
+1.6.0.2
