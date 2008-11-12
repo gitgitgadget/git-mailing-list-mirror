@@ -1,60 +1,71 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] git-diff: Add --staged as a synonym for --cached.
-Date: Tue, 11 Nov 2008 16:57:21 -0800
-Message-ID: <7v63mtu5fy.fsf@gitster.siamese.dyndns.org>
-References: <1225296936-1357-1-git-send-email-dsymonds@gmail.com>
- <20081029164253.GA3172@sigill.intra.peff.net>
- <ee77f5c20810290950k6d7acfcbt90b6280c290bd532@mail.gmail.com>
- <alpine.DEB.1.00.0810291804400.22125@pacific.mpi-cbg.de.mpi-cbg.de>
- <20081029171122.GA12167@sigill.intra.peff.net>
- <20081102123519.GA21251@atjola.homenet>
- <7vljw2yo93.fsf@gitster.siamese.dyndns.org>
- <20081103071420.GD10772@coredump.intra.peff.net>
- <ee77f5c20811101537u6061e5b4w420e9692e0cefad3@mail.gmail.com>
- <7vljvr2hjn.fsf@gitster.siamese.dyndns.org>
- <20081111012210.GA26920@coredump.intra.peff.net>
+From: "Shawn O. Pearce" <spearce@spearce.org>
+Subject: Re: [PATCH] Add maven distribution management info for the new
+	snapshot repository
+Date: Tue, 11 Nov 2008 16:58:38 -0800
+Message-ID: <20081112005838.GU2932@spearce.org>
+References: <4919EECB.7070408@wellfleetsoftware.com> <2c6b72b30811111337v2fe23c75v25251838f721a007@mail.gmail.com> <20081111214434.GS2932@spearce.org> <2c6b72b30811111401i3c995889n54407243a1072599@mail.gmail.com> <20081111231106.GT2932@spearce.org> <20081111234858.GA17662@diku.dk>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: David Symonds <dsymonds@gmail.com>,
-	=?utf-8?Q?Bj=C3=B6rn?= Steinbrink <B.Steinbrink@gmx.de>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	git@vger.kernel.org, Stephan Beyer <s-beyer@gmx.net>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Wed Nov 12 01:59:47 2008
+Cc: Jonas Fonseca <jonas.fonseca@gmail.com>,
+	Farrukh Najmi <farrukh@wellfleetsoftware.com>,
+	git@vger.kernel.org
+To: Jonas Fonseca <fonseca@diku.dk>
+X-From: git-owner@vger.kernel.org Wed Nov 12 02:00:03 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1L045C-0004tr-MB
-	for gcvg-git-2@gmane.org; Wed, 12 Nov 2008 01:59:47 +0100
+	id 1L045Q-0004yF-9n
+	for gcvg-git-2@gmane.org; Wed, 12 Nov 2008 02:00:00 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750956AbYKLA6T (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 11 Nov 2008 19:58:19 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751399AbYKLA6S
-	(ORCPT <rfc822;git-outgoing>); Tue, 11 Nov 2008 19:58:18 -0500
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:56643 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750929AbYKLA6R (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 11 Nov 2008 19:58:17 -0500
-Received: from localhost.localdomain (unknown [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id DEFB47C619;
-	Tue, 11 Nov 2008 19:58:12 -0500 (EST)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES256-SHA (256/256 bits)) (No client certificate requested) by
- a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTPSA id 710957C60F; Tue,
- 11 Nov 2008 19:57:28 -0500 (EST)
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: FB30F144-B054-11DD-877A-9CEDC82D7133-77302942!a-sasl-fastnet.pobox.com
+	id S1752116AbYKLA6j (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 11 Nov 2008 19:58:39 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752106AbYKLA6j
+	(ORCPT <rfc822;git-outgoing>); Tue, 11 Nov 2008 19:58:39 -0500
+Received: from george.spearce.org ([209.20.77.23]:54234 "EHLO
+	george.spearce.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752079AbYKLA6i (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 11 Nov 2008 19:58:38 -0500
+Received: by george.spearce.org (Postfix, from userid 1001)
+	id 0F396381FF; Wed, 12 Nov 2008 00:58:38 +0000 (UTC)
+Content-Disposition: inline
+In-Reply-To: <20081111234858.GA17662@diku.dk>
+User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/100709>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/100710>
 
-Jeff King <peff@peff.net> writes:
+Jonas Fonseca <fonseca@diku.dk> wrote:
+>  Shawn O. Pearce <spearce@spearce.org> wrote Tue, Nov 11, 2008:
+>  > Jonas Fonseca <jonas.fonseca@gmail.com> wrote:
+>  > > I don't think admin rights are necessary as long as I have
+>  > > "commit"/webdav access. And no svn or git-svn interaction should be
+>  > > needed to upload to the maven repository.
+>  > 
+>  > Then have at it.  It sounds like it would be worthwhile setting up.
+> 
+>  Instructions at http://code.google.com/p/egit/wiki/ConfiguringMaven
+> 
+> diff --git a/jgit-maven/jgit/pom.xml b/jgit-maven/jgit/pom.xml
+> index a123470..c370783 100644
+> --- a/jgit-maven/jgit/pom.xml
+> +++ b/jgit-maven/jgit/pom.xml
+> @@ -185,4 +185,12 @@ ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+>              <scope>compile</scope>
+>          </dependency>
+>      </dependencies>
+> +    <distributionManagement>
+> +        <snapshotRepository>
+> +            <id>jgit-maven-snapshot-repository</id>
+> +            <name>JGit Maven Snapshot Repository</name>
+> +            <url>dav:https://egit.googlecode.com/svn/maven/snapshot-repository/</url>
 
-> To me, what is really being asked with "git diff --staged" (or "git
-> diff --cached" for that matter), is "what is staged?"
+Shouldn't that be http:// and not https:// ?
 
-Ok, "what is staged (in index)?", relative to the named commit which
-defaults to HEAD, is a good argument.  Let's apply it.
+The https interface asked me for a username/password, the
+http:// one doesn't.  We want this to be public, don't we?
+
+-- 
+Shawn.
