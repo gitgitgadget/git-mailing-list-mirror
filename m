@@ -1,64 +1,43 @@
-From: "Kyle Moffett" <kyle@moffetthome.net>
-Subject: Re: [RFC PATCH 0/4] deny push to current branch of non-bare repo
-Date: Tue, 11 Nov 2008 19:44:06 -0500
-Message-ID: <f73f7ab80811111644y14f0e0ccweed44440356a6508@mail.gmail.com>
-References: <20081107220730.GA15942@coredump.intra.peff.net>
-	 <7v3ai3f7oa.fsf@gitster.siamese.dyndns.org>
-	 <20081108142756.GC17100@coredump.intra.peff.net>
-	 <7vwsfeaqpa.fsf@gitster.siamese.dyndns.org>
-	 <20081109014926.GA31276@coredump.intra.peff.net>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 1/2] Document "git log --source"
+Date: Tue, 11 Nov 2008 16:48:18 -0800
+Message-ID: <7vbpwlvkfh.fsf@gitster.siamese.dyndns.org>
+References: <20081110185815.6117@nanako3.lavabit.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: "Junio C Hamano" <gitster@pobox.com>, git@vger.kernel.org,
-	"Sam Vilain" <sam@vilain.net>
-To: "Jeff King" <peff@peff.net>
-X-From: git-owner@vger.kernel.org Wed Nov 12 01:45:46 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org,
+	=?utf-8?Q?Santi_B=C3=A9jar?= <santi@agolina.net>
+To: Nanako Shiraishi <nanako3@lavabit.com>
+X-From: git-owner@vger.kernel.org Wed Nov 12 01:50:34 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1L03ra-0000Lw-Qw
-	for gcvg-git-2@gmane.org; Wed, 12 Nov 2008 01:45:43 +0100
+	id 1L03wI-0001uO-2d
+	for gcvg-git-2@gmane.org; Wed, 12 Nov 2008 01:50:34 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756692AbYKLAoK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 11 Nov 2008 19:44:10 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756662AbYKLAoK
-	(ORCPT <rfc822;git-outgoing>); Tue, 11 Nov 2008 19:44:10 -0500
-Received: from yx-out-2324.google.com ([74.125.44.29]:42875 "EHLO
-	yx-out-2324.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752429AbYKLAoH (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 11 Nov 2008 19:44:07 -0500
-Received: by yx-out-2324.google.com with SMTP id 8so101526yxm.1
-        for <git@vger.kernel.org>; Tue, 11 Nov 2008 16:44:06 -0800 (PST)
-Received: by 10.100.134.10 with SMTP id h10mr3634478and.150.1226450646085;
-        Tue, 11 Nov 2008 16:44:06 -0800 (PST)
-Received: by 10.100.241.4 with HTTP; Tue, 11 Nov 2008 16:44:06 -0800 (PST)
-In-Reply-To: <20081109014926.GA31276@coredump.intra.peff.net>
-Content-Disposition: inline
+	id S1751997AbYKLAtR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 11 Nov 2008 19:49:17 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751984AbYKLAtR
+	(ORCPT <rfc822;git-outgoing>); Tue, 11 Nov 2008 19:49:17 -0500
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:55291 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751899AbYKLAtQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 11 Nov 2008 19:49:16 -0500
+Received: from localhost.localdomain (unknown [127.0.0.1])
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 0EA467C556;
+	Tue, 11 Nov 2008 19:49:14 -0500 (EST)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES256-SHA (256/256 bits)) (No client certificate requested) by
+ a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTPSA id B67617C549; Tue,
+ 11 Nov 2008 19:48:26 -0500 (EST)
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: BA024B42-B053-11DD-9C53-9CEDC82D7133-77302942!a-sasl-fastnet.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/100701>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/100702>
 
-On Sat, Nov 8, 2008 at 8:49 PM, Jeff King <peff@peff.net> wrote:
-> The behavior is configurable via receive.denyCurrentBranch,
-> defaulting to "warn" so as not to break existing setups
-> (though it may, after a deprecation period, switch to
-> "refuse" by default). For users who know what they are doing
-> and want to silence the warning (e.g., because they have a
-> post-receive hook that reconciles the HEAD and working
-> tree), they can turn off the warning by setting it to false
-> or "ignore".
-
-Hmm, I wonder if it would be possible to also add a "detach" variant;
-which would create a detached-HEAD at the current commit when
-automatically receiving a push to the working branch.  I have a
-post-receive script that does so right now on a couple repositories.
-It's still a little confusing to someone actively working in the
-repository being pushed to, but it's much easier to explain than the
-current default behavior.
-
-Cheers,
-Kyle Moffett
+Thanks; will queue this one, but Santi said he'll work on a replacement
+for 2/2 so I'll drop 2/2 from you for now.
