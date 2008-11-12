@@ -1,123 +1,86 @@
-From: =?utf-8?q?Santi=20B=C3=A9jar?= <santi@agolina.net>
-Subject: [PATCH] Doc: Add a simplified help on top of the "History Simplification"
-Date: Wed, 12 Nov 2008 11:51:28 +0100
-Message-ID: <1226487088-5308-1-git-send-email-santi@agolina.net>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH] git-diff: Add --staged as a synonym for --cached.
+Date: Wed, 12 Nov 2008 12:10:57 +0100 (CET)
+Message-ID: <alpine.DEB.1.00.0811121205100.30769@pacific.mpi-cbg.de>
+References: <1225296936-1357-1-git-send-email-dsymonds@gmail.com> <20081029164253.GA3172@sigill.intra.peff.net> <ee77f5c20810290950k6d7acfcbt90b6280c290bd532@mail.gmail.com> <alpine.DEB.1.00.0810291804400.22125@pacific.mpi-cbg.de.mpi-cbg.de>
+ <20081029171122.GA12167@sigill.intra.peff.net> <20081102123519.GA21251@atjola.homenet> <7vljw2yo93.fsf@gitster.siamese.dyndns.org> <20081103071420.GD10772@coredump.intra.peff.net> <32541b130811102004n54a47331v48ba8d299039897f@mail.gmail.com>
+ <20081112083353.GB3817@coredump.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Nanako Shiraishi <nanako3@lavabit.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Nov 12 11:53:08 2008
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Avery Pennarun <apenwarr@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>,
+	=?ISO-8859-15?Q?Bj=F6rn_Steinbrink?= <B.Steinbrink@gmx.de>,
+	David Symonds <dsymonds@gmail.com>, git@vger.kernel.org,
+	Stephan Beyer <s-beyer@gmx.net>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Wed Nov 12 12:04:35 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1L0DLF-0005Us-QQ
-	for gcvg-git-2@gmane.org; Wed, 12 Nov 2008 11:52:58 +0100
+	id 1L0DWT-0000in-OP
+	for gcvg-git-2@gmane.org; Wed, 12 Nov 2008 12:04:34 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751213AbYKLKvm convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 12 Nov 2008 05:51:42 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750924AbYKLKvm
-	(ORCPT <rfc822;git-outgoing>); Wed, 12 Nov 2008 05:51:42 -0500
-Received: from nf-out-0910.google.com ([64.233.182.185]:1283 "EHLO
-	nf-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750808AbYKLKvl (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 12 Nov 2008 05:51:41 -0500
-Received: by nf-out-0910.google.com with SMTP id d3so179082nfc.21
-        for <git@vger.kernel.org>; Wed, 12 Nov 2008 02:51:39 -0800 (PST)
-Received: by 10.86.3.4 with SMTP id 4mr9092579fgc.44.1226487099261;
-        Wed, 12 Nov 2008 02:51:39 -0800 (PST)
-Received: from localhost (p5B0D5CF0.dip.t-dialin.net [91.13.92.240])
-        by mx.google.com with ESMTPS id 12sm1948819fgg.0.2008.11.12.02.51.37
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Wed, 12 Nov 2008 02:51:38 -0800 (PST)
-X-Mailer: git-send-email 1.6.0.rc1.27.g9b6bf
+	id S1751526AbYKLLDS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 12 Nov 2008 06:03:18 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751522AbYKLLDS
+	(ORCPT <rfc822;git-outgoing>); Wed, 12 Nov 2008 06:03:18 -0500
+Received: from mail.gmx.net ([213.165.64.20]:37549 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1751470AbYKLLDR (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 12 Nov 2008 06:03:17 -0500
+Received: (qmail invoked by alias); 12 Nov 2008 11:03:15 -0000
+Received: from pacific.mpi-cbg.de (EHLO pacific.mpi-cbg.de) [141.5.10.38]
+  by mail.gmx.net (mp039) with SMTP; 12 Nov 2008 12:03:15 +0100
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1+l/+BVrqqlRxHQwcWI7HCJ918gu7fShRdQ01qGhU
+	sQkiI7eyJpuL5h
+X-X-Sender: schindelin@pacific.mpi-cbg.de
+In-Reply-To: <20081112083353.GB3817@coredump.intra.peff.net>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.57
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/100740>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/100741>
 
-Signed-off-by: Santi B=C3=A9jar <santi@agolina.net>
----
 Hi,
 
-  This is conceptually on top of:
+On Wed, 12 Nov 2008, Jeff King wrote:
 
-  [PATCH 2/2] Document "git log --simplify-by-decoration"
+> On Mon, Nov 10, 2008 at 11:04:42PM -0500, Avery Pennarun wrote:
+> 
+> > Speaking just for myself, I would find this all a lot less confusing 
+> > if "staged" were a refspec of some sort, not an option at all.
+> > 
+> >    git diff HEAD..STAGED
+> >    git diff STAGED..WORKTREE
+> >    git grep pattern STAGED HEAD sillybranch WORKTREE ^ignorebranch --
+> > path/to/files
+> 
+> I agree that such a thing is reasonably intuitive. I have thought about 
+> "magic" refspecs before; my local git has an "EMPTY" refspec which 
+> points to the empty tree for diffing. However, that was trivial to 
+> implement (since it turns into a sha1), and yours is very hard (since 
+> you will have to pass these "pretend" objects around).
+> 
+> So I think it is a neat idea, but I am not volunteering to work on it.
+> :)
 
-  from Nanako. I do not touch the detailed help, I only add a simplifie=
-d one at the top.
+Just in case anybody thought about creating tree objects on the fly and 
+use their SHA-1s: that won't fly, as you can have unmerged entries in the 
+index.  So STAGED.. is a _fundamentally_ different thing from HEAD^..
 
-  Santi
+Maybe we could play tricks with a special staged_commit (pretending to be 
+a commit with SHA-1 000000... so that git log STAGED.. would do the same 
+as plain git log, the rationale being that STAGED is no commit, so ^STAGED 
+should be a nop).
 
- Documentation/rev-list-options.txt |   48 ++++++++++++++++++++++++++++=
-++++++-
- 1 files changed, 46 insertions(+), 2 deletions(-)
+"git diff" would then have some special handling for the case that there 
+are exactly two revs, exactly one of them negative, and exactly one of 
+them being the staged_commit, passing off to the respective diff backends.
 
-diff --git a/Documentation/rev-list-options.txt b/Documentation/rev-lis=
-t-options.txt
-index 68a253f..8adce65 100644
---- a/Documentation/rev-list-options.txt
-+++ b/Documentation/rev-list-options.txt
-@@ -285,8 +285,52 @@ See also linkgit:git-reflog[1].
- History Simplification
- ~~~~~~~~~~~~~~~~~~~~~~
-=20
--When optional paths are given, 'git rev-list' simplifies commits with
--various strategies, according to the options you have selected.
-+Sometimes you are only interested in part of the history, for example =
-the
-+commits modifying a particular <paths>. But there are two parts of
-+'History Simplification', one part is selecting the commits and the ot=
-her
-+is how to do it, as there are various strategies to simplify the histo=
-ry.
-+
-+The following options select the commits to be shown:
-+
-+<paths>::
-+
-+	Commits modifying the given <paths> are selected.
-+
-+--simplify-by-decoration::
-+
-+	Commits that are referred by some branch or tag are selected.
-+
-+Note that extra commits can be shown to give a meaningful history.
-+
-+The following options affect the way the simplification is performed:
-+
-+Default mode::
-+
-+	Simplifies the history to the simplest history explaining the
-+	final state of the tree. Simplest because it prunes some side
-+	branches if the end result is the same (i.e. merging branches
-+	with the same content)
-+
-+--full-history::
-+
-+	As the default mode but does not prune some history.
-+
-+--dense::
-+
-+	Only the selected commits are shown, plus some to have a
-+	meaningful history.
-+
-+--sparse::
-+
-+	All commits in the simplified history are shown.
-+
-+--simplify-merges::
-+
-+	Additional option to '--full-history' to remove some needless
-+	merges from the resulting history, as there are no selected
-+	commits contributing to this merge.
-+
-+A more detailed explanation follows.
-=20
- Suppose you specified `foo` as the <paths>.  We shall call commits
- that modify `foo` !TREESAME, and the rest TREESAME.  (In a diff
---=20
-1.6.0.rc1.27.g9b6bf
+Ciao,
+Dscho
