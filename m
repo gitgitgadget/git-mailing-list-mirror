@@ -1,88 +1,78 @@
-From: "H.Merijn Brand" <h.m.brand@xs4all.nl>
-Subject: Re: Install issues
-Date: Wed, 12 Nov 2008 00:53:03 +0100
-Message-ID: <20081112005303.5ab54c0e@pc09.procura.nl>
-References: <20081110121739.15f77a01@pc09.procura.nl>
-	<20081110113924.GR24201@genesis.frugalware.org>
-	<20081110173101.3d76613b@pc09.procura.nl>
-	<20081110175123.GV24201@genesis.frugalware.org>
-	<7vhc6e17fv.fsf@gitster.siamese.dyndns.org>
-	<20081111190243.7044d6cb@pc09.procura.nl>
-	<alpine.LNX.2.00.0811111554530.19159@suse104.zenez.com>
-	<20081112003547.38081e09@pc09.procura.nl>
-	<7vzlk5x21p.fsf@gitster.siamese.dyndns.org>
+From: Jonas Fonseca <fonseca@diku.dk>
+Subject: Re: Documentation/user-manual.txt, asciidoc and "--" escapes
+Date: Wed, 12 Nov 2008 01:04:45 +0100
+Message-ID: <20081112000445.GB17662@diku.dk>
+References: <ddb82bf60811061904t5defc492m80cd1b759674eb6@mail.gmail.com> <ddb82bf60811061909m6f8a7b72o4b03ebcde8b9d188@mail.gmail.com> <ddb82bf60811090044l43eb4bb1ga5a16718a4176c29@mail.gmail.com> <2c6b72b30811091052k77200785j722c8aed2beb7684@mail.gmail.com> <ddb82bf60811092338m3aad8041w20de23f18aa7d56e@mail.gmail.com> <20081110100757.GA12868@diku.dk> <ddb82bf60811100214j4246cf25yc1263c2ae8cd10fc@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
-Cc: Boyd Lynn Gerber <gerberb@zenez.com>,
-	Miklos Vajna <vmiklos@frugalware.org>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Nov 12 00:54:42 2008
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: Piotr Findeisen <piotr.findeisen@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Nov 12 01:06:28 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1L034C-0008Pd-UI
-	for gcvg-git-2@gmane.org; Wed, 12 Nov 2008 00:54:41 +0100
+	id 1L03FI-00040V-Pm
+	for gcvg-git-2@gmane.org; Wed, 12 Nov 2008 01:06:09 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752007AbYKKXx0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 11 Nov 2008 18:53:26 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752000AbYKKXx0
-	(ORCPT <rfc822;git-outgoing>); Tue, 11 Nov 2008 18:53:26 -0500
-Received: from smtp-vbr13.xs4all.nl ([194.109.24.33]:1959 "EHLO
-	smtp-vbr13.xs4all.nl" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751988AbYKKXxZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 11 Nov 2008 18:53:25 -0500
-Received: from pc09.procura.nl (procura.xs4all.nl [82.95.216.29])
-	(authenticated bits=0)
-	by smtp-vbr13.xs4all.nl (8.13.8/8.13.8) with ESMTP id mABNr4cY024731
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NO);
-	Wed, 12 Nov 2008 00:53:05 +0100 (CET)
-	(envelope-from h.m.brand@xs4all.nl)
-In-Reply-To: <7vzlk5x21p.fsf@gitster.siamese.dyndns.org>
-X-Mailer: Claws Mail 3.6.1cvs12 (GTK+ 2.12.0; x86_64-unknown-linux-gnu)
-Face: iVBORw0KGgoAAAANSUhEUgAAADAAAAAwEAIAAACI8LKTAAAACXBIWXMAAABIAAAASABGyWs+AAAC
- JElEQVRo3u2aMY4CMQxFczZ6RItEzRm4DBINDbRUSPRInIRbsNK6+dJfezN4kokn48IaCSjysL8d
- e9Knoj2fr9f9/gllqQ6U9/vxWK3EdwdIEGjRIVCu18NhuxUfK46SH81+fzrdbuKPx/P5ctHQdAdI
- TKAgpvV6s9ntBEfXEYSGgMQzIHnuFBBjkshCNJ2KtJZ04hHNAugP8bZr3NIHhbcF0AKoK0CoaHXU
- LUWBIs1n+jV+Fl8CVqOApEXAwyMO/DSR4XVntoAYDR7eBjQupuYAYTMph8Rj21D4m7MChN02tpqs
- NSnb/KqU2oHCXu5xDCgflj/RAgBiKBIXnICzAsSjWBsTz5K4/HeXYvb8yK5lY3VGEwPi2aONKT+5
- AlcxrTPOwcTiraGRChgMEKJh0bVVifGVTq6qgBiNVl8QE29EsK6VE+YJAOG2wz5AvsqUS6uqgHCA
- n4NGvBYpnJ64Jgg27sCtxtBk1CJIA4S/GhdWKh07QxUB48jWGhZ4jKamRRr/T8/M0AaEyctry6YB
- 4dTGj9iWZNs3DahES5kPCJOu0RQbF/fQOBprsB9gaO9JtPDzII9U5ySXX7AnuIt91y54AAW7rPpT
- LCe5gt3F+CLqr2UarGB3MXvMylWGq4+9RCx3TW1oJq1t3HPQlFs6N1fFNEB4s8dn7Ne7ACSm7TPQ
- I5quAWmw6qBpulHM33B0Csge4Nd8JTTYG2b1XyRe3lH8x34ABJ6aePuQ2N4AAAAASUVORK5CYII=
-X-Virus-Scanned: by XS4ALL Virus Scanner
+	id S1751963AbYKLAEt convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 11 Nov 2008 19:04:49 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751918AbYKLAEt
+	(ORCPT <rfc822;git-outgoing>); Tue, 11 Nov 2008 19:04:49 -0500
+Received: from mgw1.diku.dk ([130.225.96.91]:50919 "EHLO mgw1.diku.dk"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751881AbYKLAEt (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 11 Nov 2008 19:04:49 -0500
+Received: from localhost (localhost [127.0.0.1])
+	by mgw1.diku.dk (Postfix) with ESMTP id EF8BD52C365;
+	Wed, 12 Nov 2008 01:04:46 +0100 (CET)
+X-Virus-Scanned: amavisd-new at diku.dk
+Received: from mgw1.diku.dk ([127.0.0.1])
+	by localhost (mgw1.diku.dk [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id xZnBJ59+yMNO; Wed, 12 Nov 2008 01:04:45 +0100 (CET)
+Received: from nhugin.diku.dk (nhugin.diku.dk [130.225.96.140])
+	by mgw1.diku.dk (Postfix) with ESMTP id 9879B52C364;
+	Wed, 12 Nov 2008 01:04:45 +0100 (CET)
+Received: from tyr.diku.dk (tyr.diku.dk [130.225.96.226])
+	by nhugin.diku.dk (Postfix) with ESMTP
+	id 595E76DFD0A; Wed, 12 Nov 2008 01:02:59 +0100 (CET)
+Received: by tyr.diku.dk (Postfix, from userid 3873)
+	id 7D95B39A355; Wed, 12 Nov 2008 01:04:45 +0100 (CET)
+Content-Disposition: inline
+In-Reply-To: <ddb82bf60811100214j4246cf25yc1263c2ae8cd10fc@mail.gmail.com>
+User-Agent: Mutt/1.5.16 (2007-06-09)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/100697>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/100698>
 
-On Tue, 11 Nov 2008 15:42:26 -0800, Junio C Hamano <gitster@pobox.com>
-wrote:
-
-> "H.Merijn Brand" <h.m.brand@xs4all.nl> writes:
-> 
-> > On Tue, 11 Nov 2008 16:03:50 -0700, Boyd Lynn Gerber <gerberb@zenez.com> wrote:
+Piotr Findeisen <piotr.findeisen@gmail.com> wrote Mon, Nov 10, 2008:
+> > This would also fix the usage of "--" in the manpages, e.g.
 > >
-> >> Here is a check list I use to make sure my patches are OK.
-> >> 
-> >> http://repo.or.cz/w/git.git?a=blob_plain;f=Documentation/SubmittingPatches;hb=HEAD
-> >> ...
-> >> > I'm by now way offended or scared away if you reject these kind of
-> >              ^
-> > /me meant "no" where he wrote "now" :( :(
-> > I can imagine people interpreting that sentence very very wrong.
-> 
-> That is not even "interpretation".  You _literally_ wrote the exact
-> opposite of what you meant ;-).
+> >        You've now initialized the working directory--you may notice=
+ ...
+> >
+> > in gittutorial(7). On my setup, with "--" replaced with "=E2=80=94"=
+, I get the
+> > following nroff code:
+>=20
+> On my machine, make gittutorial.7 produces manpage that displays "--"
+> in this place :)
 
-I'm really really sorry. That must have sounded harsh.
+At least you don't loose anything compared to the current behavior. ;)
 
--- 
-H.Merijn Brand          Amsterdam Perl Mongers  http://amsterdam.pm.org/
-using & porting perl 5.6.2, 5.8.x, 5.10.x, 5.11.x on HP-UX 10.20, 11.00,
-11.11, 11.23, and 11.31, SuSE 10.1, 10.2, and 10.3, AIX 5.2, and Cygwin.
-http://mirrors.develooper.com/hpux/           http://www.test-smoke.org/
-http://qa.perl.org      http://www.goldmark.org/jeff/stupid-disclaimers/
+> >        You've now initialized the working directory\(emyou may noti=
+ce
+>=20
+> Anyway, this may be a good idea to use unambiguous "=E2=80=94" (thoug=
+h people
+> writing docs may be used to using "--" as a punctuation). I can run
+> through the Documentation replacing "\w--\w" with m-dash, if you want=
+=2E
+
+I would like to see such a patch.
+
+--=20
+Jonas Fonseca
