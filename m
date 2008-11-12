@@ -1,99 +1,124 @@
-From: "Avery Pennarun" <apenwarr@gmail.com>
-Subject: Re: [PATCH] git-diff: Add --staged as a synonym for --cached.
-Date: Wed, 12 Nov 2008 10:46:50 -0500
-Message-ID: <32541b130811120746m7b0eadd3y1240d1252dbd441d@mail.gmail.com>
-References: <1225296936-1357-1-git-send-email-dsymonds@gmail.com>
-	 <ee77f5c20810290950k6d7acfcbt90b6280c290bd532@mail.gmail.com>
-	 <alpine.DEB.1.00.0810291804400.22125@pacific.mpi-cbg.de.mpi-cbg.de>
-	 <20081029171122.GA12167@sigill.intra.peff.net>
-	 <20081102123519.GA21251@atjola.homenet>
-	 <7vljw2yo93.fsf@gitster.siamese.dyndns.org>
-	 <20081103071420.GD10772@coredump.intra.peff.net>
-	 <32541b130811102004n54a47331v48ba8d299039897f@mail.gmail.com>
-	 <20081112083353.GB3817@coredump.intra.peff.net>
-	 <alpine.DEB.1.00.0811121205100.30769@pacific.mpi-cbg.de>
+From: Chris Dumoulin <dumoulin@oanda.com>
+Subject: EGIT branch checkout errors
+Date: Wed, 12 Nov 2008 10:50:24 -0500
+Message-ID: <491AFB40.4000800@oanda.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
 Content-Transfer-Encoding: 7bit
-Cc: "Jeff King" <peff@peff.net>, "Junio C Hamano" <gitster@pobox.com>,
-	"=?ISO-8859-1?Q?Bj=F6rn_Steinbrink?=" <B.Steinbrink@gmx.de>,
-	"David Symonds" <dsymonds@gmail.com>, git@vger.kernel.org,
-	"Stephan Beyer" <s-beyer@gmx.net>
-To: "Johannes Schindelin" <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Wed Nov 12 16:48:22 2008
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Nov 12 16:51:37 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1L0Hwx-00020g-8g
-	for gcvg-git-2@gmane.org; Wed, 12 Nov 2008 16:48:11 +0100
+	id 1L0I0F-0003U9-S2
+	for gcvg-git-2@gmane.org; Wed, 12 Nov 2008 16:51:36 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752722AbYKLPqx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 12 Nov 2008 10:46:53 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752705AbYKLPqx
-	(ORCPT <rfc822;git-outgoing>); Wed, 12 Nov 2008 10:46:53 -0500
-Received: from yx-out-2324.google.com ([74.125.44.29]:10591 "EHLO
-	yx-out-2324.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752701AbYKLPqw (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 12 Nov 2008 10:46:52 -0500
-Received: by yx-out-2324.google.com with SMTP id 8so207423yxm.1
-        for <git@vger.kernel.org>; Wed, 12 Nov 2008 07:46:51 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to
-         :subject:cc:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:references;
-        bh=v3RFt6PeMPH7Kt30Tbs1Qwbozh9nAm65omGp7Us2DWs=;
-        b=ewI4MZlOvdup9jN1Uv5KDj1VQib8q7SoZteDpQbFk6vSvJZzibkTUVnQabLXwnNcR2
-         NfgD7G6/SpEadvTyhKcgLi6yIEhYd/1tv//ZBm8p7Rcq63cd5fbu7URo+AUCxAJU7+v5
-         BWQF3YeUnNQkJZ3TdU8YW9bJtFtFAhQG/xgUk=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
-         :content-type:content-transfer-encoding:content-disposition
-         :references;
-        b=L1WiAbYZzTe9F7jvZe6yA8Eg+eTM7RY6qFT/I+YNNsRxHpBw46gHUJy1054bHAKiFn
-         JktQwgZSWfluszPM3b/dIGj1/AKhCBHzcrv9nMrqKYaoo41jFrOZT91DeANg495kfzK4
-         cQ9abt2YbOqdZ891apCAxGsz4MynbHNyia6QI=
-Received: by 10.150.205.20 with SMTP id c20mr6537571ybg.193.1226504811061;
-        Wed, 12 Nov 2008 07:46:51 -0800 (PST)
-Received: by 10.150.98.19 with HTTP; Wed, 12 Nov 2008 07:46:50 -0800 (PST)
-In-Reply-To: <alpine.DEB.1.00.0811121205100.30769@pacific.mpi-cbg.de>
-Content-Disposition: inline
+	id S1752824AbYKLPuU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 12 Nov 2008 10:50:20 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752762AbYKLPuT
+	(ORCPT <rfc822;git-outgoing>); Wed, 12 Nov 2008 10:50:19 -0500
+Received: from mail.oanda.com ([216.220.44.220]:39049 "EHLO mail.oanda.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752751AbYKLPuR (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 12 Nov 2008 10:50:17 -0500
+Received: from localhost (localhost [127.0.0.1])
+	by mail.oanda.com (Postfix) with ESMTP id 0819EEC09B
+	for <git@vger.kernel.org>; Wed, 12 Nov 2008 10:50:17 -0500 (EST)
+Received: from mail.oanda.com ([127.0.0.1])
+	by localhost (mail.q9.oanda.com [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id 14594-02 for <git@vger.kernel.org>;
+	Wed, 12 Nov 2008 10:50:16 -0500 (EST)
+Received: from gateway.oanda.com (unknown [216.235.10.210])
+	(using TLSv1 with cipher ADH-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by mail.oanda.com (Postfix) with ESMTPS id DF571EC00D
+	for <git@vger.kernel.org>; Wed, 12 Nov 2008 10:50:16 -0500 (EST)
+Received: from [10.0.10.50] (unknown [10.0.10.50])
+	by eddie.dev.oanda.com (Postfix) with ESMTP id 7DF8F64080
+	for <git@vger.kernel.org>; Wed, 12 Nov 2008 10:50:16 -0500 (EST)
+User-Agent: Thunderbird 2.0.0.17 (X11/20080925)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/100759>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/100760>
 
-On Wed, Nov 12, 2008 at 6:10 AM, Johannes Schindelin
-<Johannes.Schindelin@gmx.de> wrote:
-> Just in case anybody thought about creating tree objects on the fly and
-> use their SHA-1s: that won't fly, as you can have unmerged entries in the
-> index.  So STAGED.. is a _fundamentally_ different thing from HEAD^..
+Using EGIT in Eclipse, I'm able to create a new branch, but not able to 
+checkout a branch. When I try Team->Branch...->Checkout, nothing 
+happens, so I launched Eclipse from a terminal to see any output it 
+might be giving. Here's what I got:
 
-Hmm, I tried it to see, and "git diff --cached branchname" when there
-are unmerged entries looks like this (one line):
+java.lang.reflect.InvocationTargetException
+    at org.eclipse.jface.operation.ModalContext.run(ModalContext.java:415)
+    at 
+org.eclipse.jface.window.ApplicationWindow$1.run(ApplicationWindow.java:758)
+    at org.eclipse.swt.custom.BusyIndicator.showWhile(BusyIndicator.java:70)
+    at 
+org.eclipse.jface.window.ApplicationWindow.run(ApplicationWindow.java:755)
+    at 
+org.eclipse.ui.internal.WorkbenchWindow.run(WorkbenchWindow.java:2487)
+    at 
+org.spearce.egit.ui.internal.actions.BranchAction.run(BranchAction.java:53)
+    at 
+org.eclipse.team.internal.ui.actions.TeamAction.runWithEvent(TeamAction.java:548)
+    at 
+org.eclipse.ui.internal.PluginAction.runWithEvent(PluginAction.java:241)
+    at 
+org.eclipse.jface.action.ActionContributionItem.handleWidgetSelection(ActionContributionItem.java:583)
+    at 
+org.eclipse.jface.action.ActionContributionItem.access$2(ActionContributionItem.java:500)
+    at 
+org.eclipse.jface.action.ActionContributionItem$5.handleEvent(ActionContributionItem.java:411)
+    at org.eclipse.swt.widgets.EventTable.sendEvent(EventTable.java:84)
+    at org.eclipse.swt.widgets.Widget.sendEvent(Widget.java:1158)
+    at org.eclipse.swt.widgets.Display.runDeferredEvents(Display.java:3401)
+    at org.eclipse.swt.widgets.Display.readAndDispatch(Display.java:3033)
+    at org.eclipse.ui.internal.Workbench.runEventLoop(Workbench.java:2382)
+    at org.eclipse.ui.internal.Workbench.runUI(Workbench.java:2346)
+    at org.eclipse.ui.internal.Workbench.access$4(Workbench.java:2198)
+    at org.eclipse.ui.internal.Workbench$5.run(Workbench.java:493)
+    at 
+org.eclipse.core.databinding.observable.Realm.runWithDefault(Realm.java:288)
+    at 
+org.eclipse.ui.internal.Workbench.createAndRunWorkbench(Workbench.java:488)
+    at org.eclipse.ui.PlatformUI.createAndRunWorkbench(PlatformUI.java:149)
+    at 
+org.eclipse.ui.internal.ide.application.IDEApplication.start(IDEApplication.java:113)
+    at 
+org.eclipse.equinox.internal.app.EclipseAppHandle.run(EclipseAppHandle.java:193)
+    at 
+org.eclipse.core.runtime.internal.adaptor.EclipseAppLauncher.runApplication(EclipseAppLauncher.java:110)
+    at 
+org.eclipse.core.runtime.internal.adaptor.EclipseAppLauncher.start(EclipseAppLauncher.java:79)
+    at 
+org.eclipse.core.runtime.adaptor.EclipseStarter.run(EclipseStarter.java:386)
+    at 
+org.eclipse.core.runtime.adaptor.EclipseStarter.run(EclipseStarter.java:179)
+    at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+    at 
+sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:57)
+    at 
+sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+    at java.lang.reflect.Method.invoke(Method.java:616)
+    at org.eclipse.equinox.launcher.Main.invokeFramework(Main.java:549)
+    at org.eclipse.equinox.launcher.Main.basicRun(Main.java:504)
+    at org.eclipse.equinox.launcher.Main.run(Main.java:1236)
+    at org.eclipse.equinox.launcher.Main.main(Main.java:1212)
+Caused by: java.lang.NullPointerException
+    at org.spearce.jgit.lib.GitIndex.addEntry(GitIndex.java:746)
+    at 
+org.spearce.jgit.lib.WorkDirCheckout.checkoutTwoTrees(WorkDirCheckout.java:146)
+    at 
+org.spearce.jgit.lib.WorkDirCheckout.checkout(WorkDirCheckout.java:137)
+    at 
+org.spearce.egit.core.op.BranchOperation.checkoutTree(BranchOperation.java:133)
+    at org.spearce.egit.core.op.BranchOperation.run(BranchOperation.java:69)
+    at 
+org.spearce.egit.ui.internal.actions.BranchAction$1.run(BranchAction.java:58)
+    at 
+org.eclipse.jface.operation.ModalContext$ModalContextThread.run(ModalContext.java:121)
 
-* Unmerged path /whatever/file
-
-Which is pretty unhelpful anyhow (although I don't know what would be
-better).  I can think of several ways to produce the same output,
-including using a magic SHA-1 that means "unmerged", or using a
-different filemode for unmerged files in the tree object, or actually
-including all three versions of the file in the tree object, each with
-a different mode.  I admit that sounds pretty gross, though.
-
-> Maybe we could play tricks with a special staged_commit (pretending to be
-> a commit with SHA-1 000000... so that git log STAGED.. would do the same
-> as plain git log, the rationale being that STAGED is no commit, so ^STAGED
-> should be a nop).
-
-I might have imagined STAGED to be a child commit of HEAD (or rather,
-its parents should be the same as if you did 'git commit'), but I
-don't really know for sure.  In such a case, ^STAGED would definitely
-have a meaning.
-
-Have fun,
-
-Avery
+Any help would be appreciated.
+Thanks,
+Chris
