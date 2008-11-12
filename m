@@ -1,103 +1,84 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: [MonoDevelop] git integration with monodevelop
-Date: Wed, 12 Nov 2008 14:19:38 -0800 (PST)
-Message-ID: <m33ahwio3v.fsf@localhost.localdomain>
-References: <491AAE6D.8030304@op5.se> <1226519288.4483.176.camel@erandi.site>
+From: Michael Adam <obnox@samba.org>
+Subject: Re: [PATCH] contrib/hooks/post-receive-email: send individual mails to recipients
+Date: Wed, 12 Nov 2008 23:21:23 +0100
+Organization: SerNet GmbH, Goettingen, Germany
+Message-ID: <E1L0O5U-00CBIw-3Y@intern.SerNet.DE>
+References: <E1L0ITB-00Bv9t-72@intern.SerNet.DE> <7vfxlwq1gn.fsf@gitster.siamese.dyndns.org> <E1L0Jyh-00Bzdi-7r@intern.SerNet.DE> <7v3ahwq043.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Andreas Ericsson <ae@op5.se>,
-	Git Mailing List <git@vger.kernel.org>,
-	Shawn Pearce <spearce@spearce.org>,
-	monodevelop-list@lists.ximian.com,
-	Michael Hutchinson <m.j.hutchinson@gmail.com>
-To: Miguel de Icaza <miguel@ximian.com>
-X-From: git-owner@vger.kernel.org Wed Nov 12 23:21:14 2008
+Cc: git@vger.kernel.org, Andy Parkins <andyparkins@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Nov 12 23:22:50 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1L0O56-0000Oj-L7
-	for gcvg-git-2@gmane.org; Wed, 12 Nov 2008 23:21:01 +0100
+	id 1L0O6n-00018I-5c
+	for gcvg-git-2@gmane.org; Wed, 12 Nov 2008 23:22:45 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752384AbYKLWTp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 12 Nov 2008 17:19:45 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752282AbYKLWTp
-	(ORCPT <rfc822;git-outgoing>); Wed, 12 Nov 2008 17:19:45 -0500
-Received: from ug-out-1314.google.com ([66.249.92.168]:59937 "EHLO
-	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751829AbYKLWTo (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 12 Nov 2008 17:19:44 -0500
-Received: by ug-out-1314.google.com with SMTP id 39so1184234ugf.37
-        for <git@vger.kernel.org>; Wed, 12 Nov 2008 14:19:39 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:received:received
-         :x-authentication-warning:to:cc:subject:references:from:in-reply-to
-         :message-id:lines:user-agent:mime-version:content-type:date;
-        bh=R/ShA4xgSPtjtKjEpK8WWkXZb9U4KpOOcfHvpDKUoxE=;
-        b=b3BSUTeU9b0Wq1ySqQLfXzypPOmp2sfqUFqoU0EVZJKf+YXlD5z6U9LQr+xIzq1K8I
-         mclu/+9h8tLJJ9TvtZSgDDYIz6km7W+4HBCxrwtBhGWABfdxb1Umgn0ZcqdRo43j8IkN
-         pXZdyTvQu1RkRgC327vhCNuTvF16yIOVc7/8A=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=x-authentication-warning:to:cc:subject:references:from:in-reply-to
-         :message-id:lines:user-agent:mime-version:content-type:date;
-        b=uJwM7pOHNyiJByG6c6noSKYY809juSrt4oO1Hc6qpzi41mYqGgxzqvGpgcgU6P+hJe
-         m8xVHVked/v0FkvG1SVIQDWUIz8we94ZiTdGk5JKP09MZ/aqBVard0ygA0klhz+CXywY
-         kbLz90z8mX469cz7QDRjCm9ti1dE9593rA5Vg=
-Received: by 10.210.92.8 with SMTP id p8mr10846479ebb.12.1226528379862;
-        Wed, 12 Nov 2008 14:19:39 -0800 (PST)
-Received: from localhost.localdomain (abwt78.neoplus.adsl.tpnet.pl [83.8.243.78])
-        by mx.google.com with ESMTPS id 10sm3540788eyd.6.2008.11.12.14.19.36
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Wed, 12 Nov 2008 14:19:38 -0800 (PST)
-Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id mACMJa1l003842;
-	Wed, 12 Nov 2008 23:19:36 +0100
-Received: (from jnareb@localhost)
-	by localhost.localdomain (8.13.4/8.13.4/Submit) id mACMJWNb003839;
-	Wed, 12 Nov 2008 23:19:32 +0100
-X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
-In-Reply-To: <1226519288.4483.176.camel@erandi.site>
-User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
+	id S1755374AbYKLWVd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 12 Nov 2008 17:21:33 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755360AbYKLWVd
+	(ORCPT <rfc822;git-outgoing>); Wed, 12 Nov 2008 17:21:33 -0500
+Received: from mail.SerNet.de ([193.175.80.2]:40542 "EHLO mail.SerNet.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752486AbYKLWVc (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 12 Nov 2008 17:21:32 -0500
+Received: from intern.SerNet.DE by mail.SerNet.DE
+	with esmtp (Exim 4.63 #1)
+	id 1L0O5U-0003PY-FA; Wed, 12 Nov 2008 23:21:24 +0100
+Received: by intern.SerNet.DE
+	id 1L0O5U-00CBIw-3Y; Wed, 12 Nov 2008 23:21:24 +0100
+Received: from intern.SerNet.DE (localhost [127.0.0.1])
+	by localhost (AvMailGate-2.1.4-7) id 2903386-YKl6pM;
+	Wed, 12 Nov 2008 23:21:24 +0100 (CET)
+Received: by intern.SerNet.DE
+	id 1L0O5T-00CBIj-SY; Wed, 12 Nov 2008 23:21:23 +0100
+Content-Disposition: inline
+In-Reply-To: <7v3ahwq043.fsf@gitster.siamese.dyndns.org>
+User-Agent: Mutt/1.5.9i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/100820>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/100821>
 
-Miguel de Icaza <miguel@ximian.com> writes:
-> Andreas Ericsson <ae@op5.se> writes
+Junio C Hamano wrote:
+> Michael Adam <obnox@samba.org> writes:
 > 
-> > So in an effort to learn C#, I've decided to play along with this
-> > (hopefully with some help from the MonoDevelop team), but it seems
-> > to me that the best place to start is the fledgling libgit2 and link
-> > that with git-sharp. The primary reason for this is ofcourse that I
-> > think it'd be a terrible waste to have yet another from-scratch
-> > implementation of git in a new language (ruby, java, C#, C...). The
-> > secondary reason is that it would be neat to have more OSS projects
-> > use my favourite scm.
-> > 
-> > Besides, getting something to rely on libgit2 early on is probably
-> > the best way to get more people interested in making development of
-> > it proceed rapidly.
-> > 
-> > Thoughts anyone?
+> > Junio C Hamano wrote:
+> >> Michael Adam <obnox@samba.org> writes:
+> >> 
+> >> > This changes the behaviour of post-receive-email when a list of recipients
+> >> > (separated by commas) is specified as hooks.mailinglist. With this modification,
+> >> > an individual mail is sent out for each recipient entry in the list, instead
+> >> > of sending a single mail with all the recipients in the "To: " field.
+> >> 
+> >> Why can that be an improvement?
+> >
+> > My use case is that I have a repository where I want to send
+> > commit messages to an "official" mailing list and to a private
+> > recipient list that might not want to be seen on the official
+> > mailing list.
 > 
-> We would still like to see a port of jgit to C# as a fully managed
-> implementation, one that does not make P/Invoke calls into C code can
-> run on the sandboxed versions of .NET (Like the one available in
-> SecondLife, Unity3D, Silverlight and Mesh).
+> Ah.  What you want is a capability to add Bcc:, not a misfeature to run
+> the log formatter repeatedly wasting cycles only to generate the same
+> message contents.
 
-I assume that results of Mono's Google Summer of Code 2008 projects
-to create managed git implementation in C# (git#)[1][2] were not
-very successfull?  Taking into account that JGit isn't yet full git
-implementation, after much longer development...
+The intent was to send out the mail not to a (large) list of
+individual recipients but to some (few) mailing lists separately.
+A Bcc would be a partial solution. I also thought about that, but
+I did not like it since it might make those recipients in the bcc
+field feel strange because they seem to be getting mail from a
+list they might not be subscribed to. Group-replying to such
+mails may also cause confusion...
 
-[1] http://code.google.com/soc/2008/mono/appinfo.html?csaid=E6D8A717A88A7632
-[2] http://code.google.com/soc/2008/mono/appinfo.html?csaid=F2E71A4D93E7EF37
+Of course my patch could be optimized for not wasting cycles by
+only running generate_email_header() multiple times and caching
+the results of the log formatter and generate_email_footer().
 
--- 
-Jakub Narebski
-Poland
-ShadeHawk on #git
+But I understand that my problem is a very specific one and that
+generally no benefit but only disadvantage is seen in the
+modification I suggested.  --  Sorry for the noise. :-)
+
+Cheers - Michael
