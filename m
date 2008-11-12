@@ -1,167 +1,90 @@
-From: Farrukh Najmi <farrukh@wellfleetsoftware.com>
-Subject: Re: Newbie questions regarding jgit
-Date: Wed, 12 Nov 2008 09:33:00 -0500
-Message-ID: <491AE91C.4020402@wellfleetsoftware.com>
-References: <4919EECB.7070408@wellfleetsoftware.com>
- <2c6b72b30811111337v2fe23c75v25251838f721a007@mail.gmail.com>
- <491AE2BD.7080103@wellfleetsoftware.com>
+From: "Marten Svanfeldt (dev)" <developer@svanfeldt.com>
+Subject: [PATCH] git-svn: Update git-svn to use the ability to place temporary
+ files within repository directory
+Date: Wed, 12 Nov 2008 22:33:25 +0800
+Message-ID: <491AE935.4040406@svanfeldt.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Jonas Fonseca <jonas.fonseca@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Nov 12 15:34:21 2008
+Cc: normalperson@yhbt.net
+To: msysgit@googlegroups.com, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Nov 12 15:35:10 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1L0GnT-0002ix-1P
-	for gcvg-git-2@gmane.org; Wed, 12 Nov 2008 15:34:19 +0100
+	id 1L0GoB-00032M-GM
+	for gcvg-git-2@gmane.org; Wed, 12 Nov 2008 15:35:03 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752583AbYKLOdE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 12 Nov 2008 09:33:04 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752561AbYKLOdD
-	(ORCPT <rfc822;git-outgoing>); Wed, 12 Nov 2008 09:33:03 -0500
-Received: from vms173003pub.verizon.net ([206.46.173.3]:39063 "EHLO
-	vms173003pub.verizon.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752526AbYKLOdA (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 12 Nov 2008 09:33:00 -0500
-Received: from [192.168.1.101] ([71.184.206.167]) by vms173003.mailsrvcs.net
- (Sun Java System Messaging Server 6.2-6.01 (built Apr  3 2006))
- with ESMTPA id <0KA800DLT5QZY3J1@vms173003.mailsrvcs.net> for
- git@vger.kernel.org; Wed, 12 Nov 2008 08:33:00 -0600 (CST)
-In-reply-to: <491AE2BD.7080103@wellfleetsoftware.com>
-User-Agent: Thunderbird 2.0.0.17 (X11/20080925)
+	id S1752648AbYKLOds (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 12 Nov 2008 09:33:48 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752625AbYKLOds
+	(ORCPT <rfc822;git-outgoing>); Wed, 12 Nov 2008 09:33:48 -0500
+Received: from mail.anarazel.de ([217.115.131.40]:43613 "EHLO smtp.anarazel.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752597AbYKLOdr (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 12 Nov 2008 09:33:47 -0500
+Received: by smtp.anarazel.de (Postfix, from userid 108)
+	id 82A10448005; Wed, 12 Nov 2008 15:33:46 +0100 (CET)
+X-Spam-Checker-Version: SpamAssassin 3.2.5 (2008-06-10) on mail
+X-Spam-Level: 
+X-Spam-Status: No, score=-4.2 required=5.0 tests=ALL_TRUSTED,AWL,BAYES_00
+	autolearn=ham version=3.2.5
+Received: from [140.114.202.94] (x970003.HUNG.ab.nthu.edu.tw [140.114.202.94])
+	by smtp.anarazel.de (Postfix) with ESMTPSA id C3829448004;
+	Wed, 12 Nov 2008 15:33:41 +0100 (CET)
+User-Agent: Thunderbird 2.0.0.17 (Windows/20080914)
+X-Enigmail-Version: 0.95.7
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/100753>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/100754>
 
+This fixes git-svn within msys where Perl will provide temporary files
+with path such as /tmp while the git suit expects native Windows paths.
 
-BTW, the context for what I am doing is as follows. I am implementing 
-OASIS ebXML Registry/Repository (RegRep) 4 specs:
+Signed-off-by: Marten Svanfeldt <developer@svanfeldt.com>
+---
+ git-svn.perl |    9 +++++----
+ 1 files changed, 5 insertions(+), 4 deletions(-)
 
-<http://www.oasis-open.org/committees/download.php/29972>
+diff --git a/git-svn.perl b/git-svn.perl
+index ef6d773..f09f981 100755
+--- a/git-svn.perl
++++ b/git-svn.perl
+@@ -3312,11 +3312,11 @@ sub change_file_prop {
 
-I would like to use git for the Repository part of the RegRep while a 
-relational database will hold the registry part which contains extensive 
-metadata about repository files. Later I will also evaluate if I can 
-somehow use git for the Registry part so I can leverage versioning 
-features of git. I would still need to have the Registry content 
-duplicated in relational database to support querying of the metadata. 
-The standard eventually needs to support CheckIn/Checkout and I think a 
-distributed VCS like git would be very helpful in an implementation.
+ sub apply_textdelta {
+ 	my ($self, $fb, $exp) = @_;
+-	my $fh = Git::temp_acquire('svn_delta');
++	my $fh = $_repository->temp_acquire('svn_delta');
+ 	# $fh gets auto-closed() by SVN::TxDelta::apply(),
+ 	# (but $base does not,) so dup() it for reading in close_file
+ 	open my $dup, '<&', $fh or croak $!;
+-	my $base = Git::temp_acquire('git_blob');
++	my $base = $_repository->temp_acquire('git_blob');
+ 	if ($fb->{blob}) {
+ 		print $base 'link ' if ($fb->{mode_a} == 120000);
+ 		my $size = $::_repository->cat_blob($fb->{blob}, $base);
+@@ -3357,7 +3357,8 @@ sub close_file {
+ 				warn "$path has mode 120000",
+ 						" but is not a link\n";
+ 			} else {
+-				my $tmp_fh = Git::temp_acquire('svn_hash');
++				my $tmp_fh = $_repository->temp_acquire(
++					'svn_hash');
+ 				my $res;
+ 				while ($res = sysread($fh, my $str, 1024)) {
+ 					my $out = syswrite($tmp_fh, $str, $res);
+@@ -3745,7 +3746,7 @@ sub change_file_prop {
 
-For those unfamiliar with RegRep as a technology think of it as 
-providing added value on top of a generic VCS, database or Content 
-Management system.
-
-For my immediate needs, I need to implement a GitRepository class with 
-two methods using gjit as shown below. I would appreciate any guidance 
-and pseudo-code examples on how to implement these methods. Please keep 
-in mind that I am just getting to know git itself and gjit was key to my 
-considering git over Mercurial and other distributed VCSs.
-
-public class GitRepositoryManager {
-
-    Repository gitRepo;
-
-    ...
-
-    /**
-     * Gets the content of specified file in git Repo.
-     *
-     * @parameter relativePath the relative path in jitRepo for  desired 
-file to get
-     * @parameter versionName the versionName for the desired file. It 
-will be unmarshalled from String to ObjectId.
-     * @return the content of the desired file version packaged as a 
-DataHandler.
-     */
-    public DataHandler get(String relativePath, String versionName) 
-throws RepositoryException {
-        DataHandler dh = null;
-
-        ...
-       
-        return dh;
-    }
-
-    /**
-     * Creates a new version of specified version of file in git Repo.
-     *
-     * @parameter relativePath the relative path in jitRepo for  desired 
-file to get
-     * @parameter versionName the versionName for the desired file. It 
-will be unmarshalled from String to ObjectId.
-     * @parameter content the content of the new version for specified 
-file packaged as a DataHandler.
-     */
-    public void update(String relativePath, String versionName, 
-DataHandler content) throws RepositoryException {
-        ...
-    }
-
-}
-
-Farrukh Najmi wrote:
-> Jonas Fonseca wrote:
-> ...
->>  
->>> Now I am wondering where to begin to learn how to do the equivalent 
->>> of the
->>> following commands via the gjit Java API:
->>>
->>>   * git add /file/
->>>   * git rm /file/
->>>   * git mv /file
->>>   * Whatever is the git way to get a specific version of a file
->>>     
->>
->> JGit currently has two APIs for working with the index, which will
->> allow you to add, remove and move data around in the tree. In nbgit I
->> ended up using GitIndex, which I found easier to figure out. As I
->> understand it, in the long run you want to use the DirCache API, but
->> it is still a work in progress.
->>   
->
-> I am happy to use GitIndex now and switch to DirCache API later when 
-> it is ready.
-> Can I please get some pseudo-code fragments on how to do the use cases 
-> I identified above?
-> The javadoc is still not obvious to me.
->>  
->>> I am hoping that there aremore docs, samples, tutorials etc. 
->>> somewhere that
->>> I am missing. Thanks for any help you can provide. Some pointers or 
->>> code
->>> fragments would be terrific.
->>>     
->>
->> I started working on a tutorial for JGit, but didn't get very far so
->> it mostly consists of stub pages.
->>
->>  - http://code.google.com/docreader/#p=egit&s=egit&t=JGitTutorial
->>
->> I have been working on moving the tutorial to maven project before
->> starting to write the more code heavy topics. This would make it
->> possible to include code snippets in the tutorial, while also allowing
->> to compile and test the examples.
->>   
->
-> The wiki is an awesome resource even in its current state. Thank you.
-> I would be glad to help contribute improvements to wiki if you give me
-> write privilege. What I could do is take the help I get from the list and
-> then update wiki carefully as appropriate if you want me to help.
->
-> Thanks again to all of you for helping get me bootstrapped with gjit 
-> and git.
->
-
-
+ sub _chg_file_get_blob ($$$$) {
+ 	my ($self, $fbat, $m, $which) = @_;
+-	my $fh = Git::temp_acquire("git_blob_$which");
++	my $fh = $_repository->temp_acquire("git_blob_$which");
+ 	if ($m->{"mode_$which"} =~ /^120/) {
+ 		print $fh 'link ' or croak $!;
+ 		$self->change_file_prop($fbat,'svn:special','*');
 -- 
-Regards,
-Farrukh Najmi
-
-Web: http://www.wellfleetsoftware.com
+1.6.0.3.1437.g6c121.dirty
