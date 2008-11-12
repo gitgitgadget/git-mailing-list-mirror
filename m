@@ -1,99 +1,72 @@
-From: "Marten Svanfeldt (dev)" <developer@svanfeldt.com>
-Subject: Re: [PATCH] Git.pm: Make _temp_cache use the repository
- directory
-Date: Thu, 13 Nov 2008 07:27:27 +0800
-Message-ID: <491B665F.3090103@svanfeldt.com>
-References: <491AE80A.5060807@svanfeldt.com> <1f748ec60811121406j7ac72c7eqcfbe68132b2ebfc0@mail.gmail.com>
-Reply-To: developer@svanfeldt.com
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] git-diff: Add --staged as a synonym for --cached.
+Date: Wed, 12 Nov 2008 15:42:00 -0800
+Message-ID: <7vk5b8ldfb.fsf@gitster.siamese.dyndns.org>
+References: <20081102123519.GA21251@atjola.homenet>
+ <32541b130811102004n54a47331v48ba8d299039897f@mail.gmail.com>
+ <20081112083353.GB3817@coredump.intra.peff.net>
+ <alpine.DEB.1.00.0811121205100.30769@pacific.mpi-cbg.de>
+ <20081112110629.GA20473@coredump.intra.peff.net>
+ <32541b130811120739t95455d8n9b8056a8033491c3@mail.gmail.com>
+ <20081112191512.GA21401@coredump.intra.peff.net>
+ <7vljvooi8w.fsf@gitster.siamese.dyndns.org>
+ <20081112193747.GA21567@coredump.intra.peff.net>
+ <7vbpwkogxq.fsf@gitster.siamese.dyndns.org>
+ <32541b130811121439tbfc54aeq2999dbebf149d5bc@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: msysgit@googlegroups.com, git@vger.kernel.org,  Eric Wong <normalperson@yhbt.net>
-To: piyo@users.sourceforge.net
-X-From: grbounce-SUPTvwUAAABqUyiVh9Fi-Slj5a_0adWQ=gcvm-msysgit=m.gmane.org@googlegroups.com Thu Nov 13 00:29:25 2008
-Return-path: <grbounce-SUPTvwUAAABqUyiVh9Fi-Slj5a_0adWQ=gcvm-msysgit=m.gmane.org@googlegroups.com>
-Envelope-to: gcvm-msysgit@m.gmane.org
-Received: from wa-out-1516.google.com ([209.85.146.163])
+Content-Type: text/plain; charset=us-ascii
+Cc: "Junio C Hamano" <gitster@pobox.com>, "Jeff King" <peff@peff.net>,
+	"Johannes Schindelin" <Johannes.Schindelin@gmx.de>,
+	=?utf-8?Q?Bj=C3=B6r?= =?utf-8?Q?n_Steinbrink?= 
+	<B.Steinbrink@gmx.de>, "David Symonds" <dsymonds@gmail.com>,
+	git@vger.kernel.org, "Stephan Beyer" <s-beyer@gmx.net>
+To: "Avery Pennarun" <apenwarr@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Nov 13 00:44:34 2008
+Return-path: <git-owner@vger.kernel.org>
+Envelope-to: gcvg-git-2@gmane.org
+Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1L0P98-00005A-G1
-	for gcvm-msysgit@m.gmane.org; Thu, 13 Nov 2008 00:29:14 +0100
-Received: by wa-out-1516.google.com with SMTP id k6so610939wah.53
-        for <gcvm-msysgit@m.gmane.org>; Wed, 12 Nov 2008 15:28:04 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlegroups.com; s=beta;
-        h=domainkey-signature:received:received:x-sender:x-apparently-to
-         :received:received:received-spf:authentication-results:received
-         :x-spam-checker-version:x-spam-level:x-spam-status:received
-         :message-id:date:from:user-agent:mime-version:to:cc:subject
-         :references:in-reply-to:x-enigmail-version:content-type
-         :content-transfer-encoding:reply-to:sender:precedence:x-google-loop
-         :mailing-list:list-id:list-post:list-help:list-unsubscribe
-         :x-beenthere-env:x-beenthere;
-        bh=A56g5p71pdjKXJHudQI5WoL9SeON4K5bhvoWLdmzOig=;
-        b=bMmrKPfP2GeBVxCHbMvEZZUOU1tCiuVbUaO6kfFlIUB1s4gghcHpXLlQWvB6BK2fK/
-         ihswIzu8HcmgotGlvAbteREQe59KYFAgUkczUD/KYs7GIba7levkgtQO1abEfglk0SyW
-         JsAtYdEJiFNJcNxoadDcTzNMDVz8Rei5KfvHQ=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=googlegroups.com; s=beta;
-        h=x-sender:x-apparently-to:received-spf:authentication-results
-         :x-spam-checker-version:x-spam-level:x-spam-status:message-id:date
-         :from:user-agent:mime-version:to:cc:subject:references:in-reply-to
-         :x-enigmail-version:content-type:content-transfer-encoding:reply-to
-         :sender:precedence:x-google-loop:mailing-list:list-id:list-post
-         :list-help:list-unsubscribe:x-beenthere-env:x-beenthere;
-        b=cXGrAkuCi7iW2oGAAGmkshE2OSE/eIKjEjjQHNE/y29Wpmf0DXcqt7J+evbMqR4sba
-         EyllNCiYF0ZCj4gaWKemmANiEg5dpsp32FBrOo3z4RmHtI0kpwJmCgS3zgJ+q1F1mkO+
-         /0j0QzCWrQbyr+VB4FUysfWAMZlQgwkhzHowI=
-Received: by 10.114.154.12 with SMTP id b12mr811889wae.10.1226532478187;
-        Wed, 12 Nov 2008 15:27:58 -0800 (PST)
-Received: by 10.106.151.34 with SMTP id y34gr3156prd.0;
-	Wed, 12 Nov 2008 15:27:58 -0800 (PST)
-X-Sender: developer@svanfeldt.com
-X-Apparently-To: msysgit@googlegroups.com
-Received: by 10.151.10.7 with SMTP id n7mr6677281ybi.14.1226532473361; Wed, 12 Nov 2008 15:27:53 -0800 (PST)
-Received: from smtp.anarazel.de (mail.anarazel.de [217.115.131.40]) by mx.google.com with ESMTP id 7si16217773yxg.0.2008.11.12.15.27.52; Wed, 12 Nov 2008 15:27:53 -0800 (PST)
-Received-SPF: neutral (google.com: 217.115.131.40 is neither permitted nor denied by best guess record for domain of developer@svanfeldt.com) client-ip=217.115.131.40;
-Authentication-Results: mx.google.com; spf=neutral (google.com: 217.115.131.40 is neither permitted nor denied by best guess record for domain of developer@svanfeldt.com) smtp.mail=developer@svanfeldt.com
-Received: by smtp.anarazel.de (Postfix, from userid 108) id ADFA9448005; Thu, 13 Nov 2008 00:27:51 +0100 (CET)
-X-Spam-Checker-Version: SpamAssassin 3.2.5 (2008-06-10) on mail
-X-Spam-Level: 
-X-Spam-Status: No, score=-4.4 required=5.0 tests=ALL_TRUSTED,AWL,BAYES_00 autolearn=ham version=3.2.5
-Received: from [140.114.202.94] (x970003.HUNG.ab.nthu.edu.tw [140.114.202.94]) by smtp.anarazel.de (Postfix) with ESMTPSA id 67F78448004; Thu, 13 Nov 2008 00:27:45 +0100 (CET)
-User-Agent: Thunderbird 2.0.0.17 (Windows/20080914)
-In-Reply-To: <1f748ec60811121406j7ac72c7eqcfbe68132b2ebfc0@mail.gmail.com>
-X-Enigmail-Version: 0.95.7
-Sender: msysgit@googlegroups.com
+	id 1L0PNw-0005TR-Oj
+	for gcvg-git-2@gmane.org; Thu, 13 Nov 2008 00:44:33 +0100
+Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
+	id S1757133AbYKLXmx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 12 Nov 2008 18:42:53 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754818AbYKLXmw
+	(ORCPT <rfc822;git-outgoing>); Wed, 12 Nov 2008 18:42:52 -0500
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:52776 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757035AbYKLXmv (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 12 Nov 2008 18:42:51 -0500
+Received: from localhost.localdomain (unknown [127.0.0.1])
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id DFE2B7CAC6;
+	Wed, 12 Nov 2008 18:42:49 -0500 (EST)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES256-SHA (256/256 bits)) (No client certificate requested) by
+ a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTPSA id B90527CABA; Wed,
+ 12 Nov 2008 18:42:07 -0500 (EST)
+In-Reply-To: <32541b130811121439tbfc54aeq2999dbebf149d5bc@mail.gmail.com>
+ (Avery Pennarun's message of "Wed, 12 Nov 2008 17:39:05 -0500")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: 9DAF8EF8-B113-11DD-9745-9CEDC82D7133-77302942!a-sasl-fastnet.pobox.com
+Sender: git-owner@vger.kernel.org
 Precedence: bulk
-X-Google-Loop: groups
-Mailing-List: list msysgit@googlegroups.com;
-	contact msysgit+owner@googlegroups.com
-List-Id: <msysgit.googlegroups.com>
-List-Post: <mailto:msysgit@googlegroups.com>
-List-Help: <mailto:msysgit+help@googlegroups.com>
-List-Unsubscribe: <http://googlegroups.com/group/msysgit/subscribe>,
-	<mailto:msysgit+unsubscribe@googlegroups.com>
-X-BeenThere-Env: msysgit@googlegroups.com
-X-BeenThere: msysgit@googlegroups.com
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/100833>
+List-ID: <git.vger.kernel.org>
+X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/100834>
 
+"Avery Pennarun" <apenwarr@gmail.com> writes:
 
-Hi,
+> I assume the reason is that "git diff tree1..tree2" works with the
+> differences between tree1 and tree2, much like "git log tree1..tree2"
+> does.
 
-Clifford Caoile wrote:
-> Hi Marten Svanfeldt:
-> 
-> On Wed, Nov 12, 2008 at 11:28 PM, Marten Svanfeldt (dev)
-> <developer@svanfeldt.com> wrote:
-..
-> I suppose if I wanted to used ${workingdir}/.git instead of
-> ${workingdir}, I should replace the $tmpdir line above with $tmpdir =
-> $self->repo_path() . "/.git" ?
+Actually, that perception is already confused.  The analogue to "log A..B"
+is expressed as "diff A...B", and not "diff A..B".
 
-No. repo_path() is the path to the repository, so the .git directory. If
-you instead want within the working directory it is wc_path().
+That is one of the reasons why I tend to teach against using "diff A..B"
+unless you know what it is doing. I'd suggest to get out of that habit
+before you confuse yourself even more ;-).
 
-> 
-> Best regards,
-> Clifford Caoile
-
--Marten Svanfeldt
+The _only_ reason diff takes A..B and A...B syntax is because the command
+line parameter parser was easy to write that way.  IOW, it was an artifact
+of the implementation convenience.
