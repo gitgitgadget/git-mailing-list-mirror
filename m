@@ -1,81 +1,103 @@
-From: "Clifford Caoile" <piyo@users.sourceforge.net>
-Subject: Re: [msysGit] [PATCH] Git.pm: Make _temp_cache use the repository directory
-Date: Thu, 13 Nov 2008 07:06:27 +0900
-Message-ID: <1f748ec60811121406j7ac72c7eqcfbe68132b2ebfc0@mail.gmail.com>
-References: <491AE80A.5060807@svanfeldt.com>
-Reply-To: piyo@users.sourceforge.net
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: [MonoDevelop] git integration with monodevelop
+Date: Wed, 12 Nov 2008 14:19:38 -0800 (PST)
+Message-ID: <m33ahwio3v.fsf@localhost.localdomain>
+References: <491AAE6D.8030304@op5.se> <1226519288.4483.176.camel@erandi.site>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: msysgit@googlegroups.com, git@vger.kernel.org,
-	"Eric Wong" <normalperson@yhbt.net>
-To: developer@svanfeldt.com
-X-From: git-owner@vger.kernel.org Wed Nov 12 23:08:10 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: Andreas Ericsson <ae@op5.se>,
+	Git Mailing List <git@vger.kernel.org>,
+	Shawn Pearce <spearce@spearce.org>,
+	monodevelop-list@lists.ximian.com,
+	Michael Hutchinson <m.j.hutchinson@gmail.com>
+To: Miguel de Icaza <miguel@ximian.com>
+X-From: git-owner@vger.kernel.org Wed Nov 12 23:21:14 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1L0NsK-0003iO-Ng
-	for gcvg-git-2@gmane.org; Wed, 12 Nov 2008 23:07:49 +0100
+	id 1L0O56-0000Oj-L7
+	for gcvg-git-2@gmane.org; Wed, 12 Nov 2008 23:21:01 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754653AbYKLWGa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 12 Nov 2008 17:06:30 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754566AbYKLWGa
-	(ORCPT <rfc822;git-outgoing>); Wed, 12 Nov 2008 17:06:30 -0500
-Received: from yx-out-2324.google.com ([74.125.44.29]:20220 "EHLO
-	yx-out-2324.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753461AbYKLWG2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 12 Nov 2008 17:06:28 -0500
-Received: by yx-out-2324.google.com with SMTP id 8so301260yxm.1
-        for <git@vger.kernel.org>; Wed, 12 Nov 2008 14:06:27 -0800 (PST)
+	id S1752384AbYKLWTp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 12 Nov 2008 17:19:45 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752282AbYKLWTp
+	(ORCPT <rfc822;git-outgoing>); Wed, 12 Nov 2008 17:19:45 -0500
+Received: from ug-out-1314.google.com ([66.249.92.168]:59937 "EHLO
+	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751829AbYKLWTo (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 12 Nov 2008 17:19:44 -0500
+Received: by ug-out-1314.google.com with SMTP id 39so1184234ugf.37
+        for <git@vger.kernel.org>; Wed, 12 Nov 2008 14:19:39 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:reply-to
-         :sender:to:subject:cc:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:references
-         :x-google-sender-auth;
-        bh=HQkMRCSc3EfvA7IZtKvMvpHD+lBJ3dJNgZkdMazRyw8=;
-        b=IIXPb2yX295sYfnH6u9bEZfuagOtQRsPi0Cc3lrdfaCRX1vo/UqLNeo9ALb2YOPlho
-         cPJXKMYEDM/Pg6ZiyHtV+CNA3LNwRKpVJuqb1LDvxfuErWvUoq2vS8k1cNgud9NcJK+R
-         e5LfXXDEb0v2veVxPOYaCY398jIZFiiiZQq6E=
+        h=domainkey-signature:received:received:received:received
+         :x-authentication-warning:to:cc:subject:references:from:in-reply-to
+         :message-id:lines:user-agent:mime-version:content-type:date;
+        bh=R/ShA4xgSPtjtKjEpK8WWkXZb9U4KpOOcfHvpDKUoxE=;
+        b=b3BSUTeU9b0Wq1ySqQLfXzypPOmp2sfqUFqoU0EVZJKf+YXlD5z6U9LQr+xIzq1K8I
+         mclu/+9h8tLJJ9TvtZSgDDYIz6km7W+4HBCxrwtBhGWABfdxb1Umgn0ZcqdRo43j8IkN
+         pXZdyTvQu1RkRgC327vhCNuTvF16yIOVc7/8A=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=message-id:date:from:reply-to:sender:to:subject:cc:in-reply-to
-         :mime-version:content-type:content-transfer-encoding
-         :content-disposition:references:x-google-sender-auth;
-        b=jDv++U/eR6nvmOdv/cnFCZ9HKRoq8x/WygvI3XyS6PEU+CZfhVtYXY9/kUqHslD7Xk
-         cjE7bzD55HkMn+cnrnJRGpK4+P3JZa/TGfHM+4lsCBsf91LhsMjLv6phf9jAYTIKKn+o
-         sBa1N3/fKeXGFud9JVQFphurHGlPSk/X7THrM=
-Received: by 10.100.125.12 with SMTP id x12mr4277318anc.4.1226527587473;
-        Wed, 12 Nov 2008 14:06:27 -0800 (PST)
-Received: by 10.100.254.9 with HTTP; Wed, 12 Nov 2008 14:06:27 -0800 (PST)
-In-Reply-To: <491AE80A.5060807@svanfeldt.com>
-Content-Disposition: inline
-X-Google-Sender-Auth: 74ea153406aeff8b
+        h=x-authentication-warning:to:cc:subject:references:from:in-reply-to
+         :message-id:lines:user-agent:mime-version:content-type:date;
+        b=uJwM7pOHNyiJByG6c6noSKYY809juSrt4oO1Hc6qpzi41mYqGgxzqvGpgcgU6P+hJe
+         m8xVHVked/v0FkvG1SVIQDWUIz8we94ZiTdGk5JKP09MZ/aqBVard0ygA0klhz+CXywY
+         kbLz90z8mX469cz7QDRjCm9ti1dE9593rA5Vg=
+Received: by 10.210.92.8 with SMTP id p8mr10846479ebb.12.1226528379862;
+        Wed, 12 Nov 2008 14:19:39 -0800 (PST)
+Received: from localhost.localdomain (abwt78.neoplus.adsl.tpnet.pl [83.8.243.78])
+        by mx.google.com with ESMTPS id 10sm3540788eyd.6.2008.11.12.14.19.36
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Wed, 12 Nov 2008 14:19:38 -0800 (PST)
+Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
+	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id mACMJa1l003842;
+	Wed, 12 Nov 2008 23:19:36 +0100
+Received: (from jnareb@localhost)
+	by localhost.localdomain (8.13.4/8.13.4/Submit) id mACMJWNb003839;
+	Wed, 12 Nov 2008 23:19:32 +0100
+X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
+In-Reply-To: <1226519288.4483.176.camel@erandi.site>
+User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/100819>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/100820>
 
-Hi Marten Svanfeldt:
+Miguel de Icaza <miguel@ximian.com> writes:
+> Andreas Ericsson <ae@op5.se> writes
+> 
+> > So in an effort to learn C#, I've decided to play along with this
+> > (hopefully with some help from the MonoDevelop team), but it seems
+> > to me that the best place to start is the fledgling libgit2 and link
+> > that with git-sharp. The primary reason for this is ofcourse that I
+> > think it'd be a terrible waste to have yet another from-scratch
+> > implementation of git in a new language (ruby, java, C#, C...). The
+> > secondary reason is that it would be neat to have more OSS projects
+> > use my favourite scm.
+> > 
+> > Besides, getting something to rely on libgit2 early on is probably
+> > the best way to get more people interested in making development of
+> > it proceed rapidly.
+> > 
+> > Thoughts anyone?
+> 
+> We would still like to see a port of jgit to C# as a fully managed
+> implementation, one that does not make P/Invoke calls into C code can
+> run on the sandboxed versions of .NET (Like the one available in
+> SecondLife, Unity3D, Silverlight and Mesh).
 
-On Wed, Nov 12, 2008 at 11:28 PM, Marten Svanfeldt (dev)
-<developer@svanfeldt.com> wrote:
->
-> Update the usage of File::Temp->tempfile to place the temporary files
-> within the repository directory instead of just letting Perl decide what
-> [snip]
-> +
-> +               my $tmpdir;
-> +               if (defined $self) {
-> +                       $tmpdir = $self->repo_path();
-> +               }
-> +
+I assume that results of Mono's Google Summer of Code 2008 projects
+to create managed git implementation in C# (git#)[1][2] were not
+very successfull?  Taking into account that JGit isn't yet full git
+implementation, after much longer development...
 
-I suppose if I wanted to used ${workingdir}/.git instead of
-${workingdir}, I should replace the $tmpdir line above with $tmpdir =
-$self->repo_path() . "/.git" ?
+[1] http://code.google.com/soc/2008/mono/appinfo.html?csaid=E6D8A717A88A7632
+[2] http://code.google.com/soc/2008/mono/appinfo.html?csaid=F2E71A4D93E7EF37
 
-Best regards,
-Clifford Caoile
+-- 
+Jakub Narebski
+Poland
+ShadeHawk on #git
