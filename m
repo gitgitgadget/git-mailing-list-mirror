@@ -1,73 +1,99 @@
-From: Felipe Balbi <me@felipebalbi.com>
-Subject: Re: fixing duplicated history
-Date: Thu, 13 Nov 2008 00:57:48 +0200
-Message-ID: <20081112225739.GB24013@frodo>
-References: <20081112222346.GA24013@frodo> <7vod0klfng.fsf@gitster.siamese.dyndns.org>
-Reply-To: me@felipebalbi.com
+From: "Marten Svanfeldt (dev)" <developer@svanfeldt.com>
+Subject: Re: [PATCH] Git.pm: Make _temp_cache use the repository
+ directory
+Date: Thu, 13 Nov 2008 07:27:27 +0800
+Message-ID: <491B665F.3090103@svanfeldt.com>
+References: <491AE80A.5060807@svanfeldt.com> <1f748ec60811121406j7ac72c7eqcfbe68132b2ebfc0@mail.gmail.com>
+Reply-To: developer@svanfeldt.com
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: me@felipebalbi.com, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Nov 13 00:01:53 2008
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git-2@gmane.org
-Received: from vger.kernel.org ([209.132.176.167])
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: msysgit@googlegroups.com, git@vger.kernel.org,  Eric Wong <normalperson@yhbt.net>
+To: piyo@users.sourceforge.net
+X-From: grbounce-SUPTvwUAAABqUyiVh9Fi-Slj5a_0adWQ=gcvm-msysgit=m.gmane.org@googlegroups.com Thu Nov 13 00:29:25 2008
+Return-path: <grbounce-SUPTvwUAAABqUyiVh9Fi-Slj5a_0adWQ=gcvm-msysgit=m.gmane.org@googlegroups.com>
+Envelope-to: gcvm-msysgit@m.gmane.org
+Received: from wa-out-1516.google.com ([209.85.146.163])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1L0Oid-0007Zp-8N
-	for gcvg-git-2@gmane.org; Thu, 13 Nov 2008 00:01:51 +0100
-Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751298AbYKLXAf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 12 Nov 2008 18:00:35 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752810AbYKLXAf
-	(ORCPT <rfc822;git-outgoing>); Wed, 12 Nov 2008 18:00:35 -0500
-Received: from ns1.siteground211.com ([209.62.36.12]:58488 "EHLO
-	serv01.siteground211.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750953AbYKLXAf (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 12 Nov 2008 18:00:35 -0500
-Received: from a91-154-126-168.elisa-laajakaista.fi ([91.154.126.168]:14237 helo=frodo)
-	by serv01.siteground211.com with esmtpsa (TLSv1:AES128-SHA:128)
-	(Exim 4.69)
-	(envelope-from <me@felipebalbi.com>)
-	id 1L0OhL-00067T-Bu; Wed, 12 Nov 2008 17:00:31 -0600
-Content-Disposition: inline
-In-Reply-To: <7vod0klfng.fsf@gitster.siamese.dyndns.org>
-User-Agent: Mutt/1.5.18 (2008-05-17)
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - serv01.siteground211.com
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
-X-AntiAbuse: Sender Address Domain - felipebalbi.com
-Sender: git-owner@vger.kernel.org
+	id 1L0P98-00005A-G1
+	for gcvm-msysgit@m.gmane.org; Thu, 13 Nov 2008 00:29:14 +0100
+Received: by wa-out-1516.google.com with SMTP id k6so610939wah.53
+        for <gcvm-msysgit@m.gmane.org>; Wed, 12 Nov 2008 15:28:04 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=googlegroups.com; s=beta;
+        h=domainkey-signature:received:received:x-sender:x-apparently-to
+         :received:received:received-spf:authentication-results:received
+         :x-spam-checker-version:x-spam-level:x-spam-status:received
+         :message-id:date:from:user-agent:mime-version:to:cc:subject
+         :references:in-reply-to:x-enigmail-version:content-type
+         :content-transfer-encoding:reply-to:sender:precedence:x-google-loop
+         :mailing-list:list-id:list-post:list-help:list-unsubscribe
+         :x-beenthere-env:x-beenthere;
+        bh=A56g5p71pdjKXJHudQI5WoL9SeON4K5bhvoWLdmzOig=;
+        b=bMmrKPfP2GeBVxCHbMvEZZUOU1tCiuVbUaO6kfFlIUB1s4gghcHpXLlQWvB6BK2fK/
+         ihswIzu8HcmgotGlvAbteREQe59KYFAgUkczUD/KYs7GIba7levkgtQO1abEfglk0SyW
+         JsAtYdEJiFNJcNxoadDcTzNMDVz8Rei5KfvHQ=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=googlegroups.com; s=beta;
+        h=x-sender:x-apparently-to:received-spf:authentication-results
+         :x-spam-checker-version:x-spam-level:x-spam-status:message-id:date
+         :from:user-agent:mime-version:to:cc:subject:references:in-reply-to
+         :x-enigmail-version:content-type:content-transfer-encoding:reply-to
+         :sender:precedence:x-google-loop:mailing-list:list-id:list-post
+         :list-help:list-unsubscribe:x-beenthere-env:x-beenthere;
+        b=cXGrAkuCi7iW2oGAAGmkshE2OSE/eIKjEjjQHNE/y29Wpmf0DXcqt7J+evbMqR4sba
+         EyllNCiYF0ZCj4gaWKemmANiEg5dpsp32FBrOo3z4RmHtI0kpwJmCgS3zgJ+q1F1mkO+
+         /0j0QzCWrQbyr+VB4FUysfWAMZlQgwkhzHowI=
+Received: by 10.114.154.12 with SMTP id b12mr811889wae.10.1226532478187;
+        Wed, 12 Nov 2008 15:27:58 -0800 (PST)
+Received: by 10.106.151.34 with SMTP id y34gr3156prd.0;
+	Wed, 12 Nov 2008 15:27:58 -0800 (PST)
+X-Sender: developer@svanfeldt.com
+X-Apparently-To: msysgit@googlegroups.com
+Received: by 10.151.10.7 with SMTP id n7mr6677281ybi.14.1226532473361; Wed, 12 Nov 2008 15:27:53 -0800 (PST)
+Received: from smtp.anarazel.de (mail.anarazel.de [217.115.131.40]) by mx.google.com with ESMTP id 7si16217773yxg.0.2008.11.12.15.27.52; Wed, 12 Nov 2008 15:27:53 -0800 (PST)
+Received-SPF: neutral (google.com: 217.115.131.40 is neither permitted nor denied by best guess record for domain of developer@svanfeldt.com) client-ip=217.115.131.40;
+Authentication-Results: mx.google.com; spf=neutral (google.com: 217.115.131.40 is neither permitted nor denied by best guess record for domain of developer@svanfeldt.com) smtp.mail=developer@svanfeldt.com
+Received: by smtp.anarazel.de (Postfix, from userid 108) id ADFA9448005; Thu, 13 Nov 2008 00:27:51 +0100 (CET)
+X-Spam-Checker-Version: SpamAssassin 3.2.5 (2008-06-10) on mail
+X-Spam-Level: 
+X-Spam-Status: No, score=-4.4 required=5.0 tests=ALL_TRUSTED,AWL,BAYES_00 autolearn=ham version=3.2.5
+Received: from [140.114.202.94] (x970003.HUNG.ab.nthu.edu.tw [140.114.202.94]) by smtp.anarazel.de (Postfix) with ESMTPSA id 67F78448004; Thu, 13 Nov 2008 00:27:45 +0100 (CET)
+User-Agent: Thunderbird 2.0.0.17 (Windows/20080914)
+In-Reply-To: <1f748ec60811121406j7ac72c7eqcfbe68132b2ebfc0@mail.gmail.com>
+X-Enigmail-Version: 0.95.7
+Sender: msysgit@googlegroups.com
 Precedence: bulk
-List-ID: <git.vger.kernel.org>
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/100832>
+X-Google-Loop: groups
+Mailing-List: list msysgit@googlegroups.com;
+	contact msysgit+owner@googlegroups.com
+List-Id: <msysgit.googlegroups.com>
+List-Post: <mailto:msysgit@googlegroups.com>
+List-Help: <mailto:msysgit+help@googlegroups.com>
+List-Unsubscribe: <http://googlegroups.com/group/msysgit/subscribe>,
+	<mailto:msysgit+unsubscribe@googlegroups.com>
+X-BeenThere-Env: msysgit@googlegroups.com
+X-BeenThere: msysgit@googlegroups.com
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/100833>
 
-On Wed, Nov 12, 2008 at 02:53:55PM -0800, Junio C Hamano wrote:
-> Felipe Balbi <me@felipebalbi.com> writes:
+
+Hi,
+
+Clifford Caoile wrote:
+> Hi Marten Svanfeldt:
 > 
-> > I have a git tree which history is completely messed up with duplicated
-> > entries. By reading git man pages I saw that it might be possible to
-> > delete those duplicated entries with git reflog delete, am I reading it
-> > right ?
-> >
-> > If so, would it cause any problems to the users who already cloned the
-> > original tree ? I mean, will git see it as a different history line and
-> > try a merge or will it figure it's the same tree with the duplicated
-> > entries removed ?
+> On Wed, Nov 12, 2008 at 11:28 PM, Marten Svanfeldt (dev)
+> <developer@svanfeldt.com> wrote:
+..
+> I suppose if I wanted to used ${workingdir}/.git instead of
+> ${workingdir}, I should replace the $tmpdir line above with $tmpdir =
+> $self->repo_path() . "/.git" ?
+
+No. repo_path() is the path to the repository, so the .git directory. If
+you instead want within the working directory it is wc_path().
+
 > 
-> I assume that you meant "commit" by "entry", and also I assume that you
-> read "git filter-branch" not "git reflog delete".  Then you are right.
-> 
-> And rewriting history with filter-branch will cause problems to the
-> downstream users.
+> Best regards,
+> Clifford Caoile
 
-Yes, you got me right. Hmm, so if it'll cause problems to the downstream
-users I can't do anything, unfortunately :-(
-
-Unless they wanna clone the tree again :-p
-
-Thanks for the info Junio.
-
--- 
-balbi
+-Marten Svanfeldt
