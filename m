@@ -1,90 +1,70 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [RFC PATCH 0/4] deny push to current branch of non-bare repo
-Date: Wed, 12 Nov 2008 03:44:13 -0500
-Message-ID: <20081112084412.GA3860@coredump.intra.peff.net>
-References: <20081107220730.GA15942@coredump.intra.peff.net> <7v3ai3f7oa.fsf@gitster.siamese.dyndns.org> <20081108142756.GC17100@coredump.intra.peff.net> <7vwsfeaqpa.fsf@gitster.siamese.dyndns.org> <20081109014926.GA31276@coredump.intra.peff.net> <f73f7ab80811111644y14f0e0ccweed44440356a6508@mail.gmail.com>
+From: Thomas Koch <thomas@koch.ro>
+Subject: hosting git on a nfs
+Date: Wed, 12 Nov 2008 10:29:34 +0100
+Organization: Young Media Concepts
+Message-ID: <200811121029.34841.thomas@koch.ro>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	Sam Vilain <sam@vilain.net>
-To: Kyle Moffett <kyle@moffetthome.net>
-X-From: git-owner@vger.kernel.org Wed Nov 12 09:45:32 2008
+Content-Type: text/plain;
+  charset="us-ascii"
+Content-Transfer-Encoding: 7bit
+Cc: dabe@ymc.ch
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Nov 12 10:56:15 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1L0BLv-00068w-In
-	for gcvg-git-2@gmane.org; Wed, 12 Nov 2008 09:45:32 +0100
+	id 1L0CSC-0002Qg-5P
+	for gcvg-git-2@gmane.org; Wed, 12 Nov 2008 10:56:04 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751498AbYKLIoQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 12 Nov 2008 03:44:16 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751481AbYKLIoP
-	(ORCPT <rfc822;git-outgoing>); Wed, 12 Nov 2008 03:44:15 -0500
-Received: from peff.net ([208.65.91.99]:3185 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751402AbYKLIoP (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 12 Nov 2008 03:44:15 -0500
-Received: (qmail 17851 invoked by uid 111); 12 Nov 2008 08:44:14 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.32) with SMTP; Wed, 12 Nov 2008 03:44:14 -0500
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Wed, 12 Nov 2008 03:44:13 -0500
+	id S1751261AbYKLJyg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 12 Nov 2008 04:54:36 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751155AbYKLJyg
+	(ORCPT <rfc822;git-outgoing>); Wed, 12 Nov 2008 04:54:36 -0500
+Received: from koch.ro ([195.34.83.107]:33446 "EHLO
+	ve825703057.providerbox.net" rhost-flags-OK-OK-OK-FAIL)
+	by vger.kernel.org with ESMTP id S1751081AbYKLJyf (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 12 Nov 2008 04:54:35 -0500
+X-Greylist: delayed 1495 seconds by postgrey-1.27 at vger.kernel.org; Wed, 12 Nov 2008 04:54:35 EST
+Received: from 80-218-104-120.dclient.hispeed.ch ([80.218.104.120] helo=jona.local)
+	by ve825703057.providerbox.net with esmtpsa (TLS1.0:DHE_RSA_AES_256_CBC_SHA1:32)
+	(Exim 4.69)
+	(envelope-from <thomas@koch.ro>)
+	id 1L0C2Y-0000wI-Rf; Wed, 12 Nov 2008 10:29:34 +0100
+User-Agent: KMail/1.9.9
+X-Face: ##Diipbu!WHqpJ%Eb+k:m;]n%VcrM\f\MJ-:0\<0.r?ULf7g"kC!"Cg,o;D]
 Content-Disposition: inline
-In-Reply-To: <f73f7ab80811111644y14f0e0ccweed44440356a6508@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/100731>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/100732>
 
-On Tue, Nov 11, 2008 at 07:44:06PM -0500, Kyle Moffett wrote:
+Hi,
 
-> Hmm, I wonder if it would be possible to also add a "detach" variant;
-> which would create a detached-HEAD at the current commit when
-> automatically receiving a push to the working branch.  I have a
-> post-receive script that does so right now on a couple repositories.
-> It's still a little confusing to someone actively working in the
-> repository being pushed to, but it's much easier to explain than the
-> current default behavior.
+finally I managed to convince a critical mass of developers (our chief
+dev :-) in our company so that we are starting to migrate to GIT.
 
-A neat idea, but I'm not sure what workflow that is meant to support.
+The final question is, whether GIT will life peacefully on our cluster
+fileservers. The GIT repository dir (/var/cache/git) should be mounted
+via NFS via PAN on top of DRBD (so I was told).
 
-Before you had:
+Are there any known problems with this setup? We're asking, because
+there are problems with SVN on such a setup[1].
 
-  1. git push non-bare-remote theirHEAD
-  2a. echo Oops, I've just screwed myself.
-    3a. ssh remote 'git reset --soft HEAD@{1}'
-  2b. echo Oops, I just screwed somebody else.
-    3b. echo sorry | mail somebody.else
+[1] http://subversion.tigris.org/faq.html#nfs
 
-With "refuse" you have:
+Best regards,
+-- 
+Thomas Koch, Software Developer
+http://www.koch.ro
 
-  1. git push non-bare-remote theirHEAD
-  2. echo Oops, rejected.
-  3. git push non-bare-remote theirHEAD:elsewhere
-  4a. ssh remote 'git merge elsewhere'
-  4b. echo 'please merge elsewhere' | mail somebody.else
+Young Media Concepts GmbH
+Sonnenstr. 4
+CH-8280 Kreuzlingen
+Switzerland
 
-which is an improvement. With "detach" you have:
-
-  1. git push non-bare-remote theirHEAD
-  2. echo Oh, now we've detached on the remote.
-  3a. ssh remote 'git checkout theirHEAD'
-  3b. echo 'please merge theirHEAD. BTW, you have been detached without
-            realizing it, so make sure you didn't lose any commits.' |
-            mail somebody.else
-
-So I think in the case that you are working by yourself, you haven't
-really saved much effort (you didn't have to repeat your push, but you
-still have to go to the remote and checkout instead of merge). But if
-you are pushing into somebody _else_'s repo, you have just mightily
-confused them as they start to make commits on top of the detached HEAD.
-
-Still, there may be some instances where moving to the detached HEAD is
-preferable. But, like the "try to merge if we can" strategy, I think it
-is better implemented by setting denyCurrentBranch to ignore and using a
-hook for those instances. And if either hook becomes ubiquitous, maybe
-it will be worth implementing within git itself (but I doubt it for
-either, as the desired behavior is highly dependent on your personal
-workflow).
-
--Peff
+Tel    +41 (0)71 / 508 24 86
+Fax    +41 (0)71 / 560 53 89
+Mobile +49 (0)170 / 753 89 16
+Web    www.ymc.ch
