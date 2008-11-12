@@ -1,82 +1,71 @@
-From: "Catalin Marinas" <catalin.marinas@gmail.com>
-Subject: Re: Stgit and refresh-temp
-Date: Wed, 12 Nov 2008 10:02:10 +0000
-Message-ID: <b0943d9e0811120202wae88381j9fbc9f919b49dce5@mail.gmail.com>
-References: <9e4733910811040537p4e88c09an94370154eca12778@mail.gmail.com>
-	 <20081107054419.GA27146@diana.vm.bytemark.co.uk>
-	 <b0943d9e0811110959t4eb236bvd648fbca5e482911@mail.gmail.com>
-	 <20081112080103.GA25454@diana.vm.bytemark.co.uk>
+From: Julian Phillips <julian@quantumfyre.co.uk>
+Subject: Re: hosting git on a nfs
+Date: Wed, 12 Nov 2008 10:10:03 +0000 (GMT)
+Message-ID: <alpine.LNX.2.00.0811121006400.23345@reaper.quantumfyre.co.uk>
+References: <200811121029.34841.thomas@koch.ro>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: "Jon Smirl" <jonsmirl@gmail.com>,
-	"Git Mailing List" <git@vger.kernel.org>
-To: "=?ISO-8859-1?Q?Karl_Hasselstr=F6m?=" <kha@treskal.com>
-X-From: git-owner@vger.kernel.org Wed Nov 12 11:03:36 2008
+Content-Type: TEXT/PLAIN; charset=US-ASCII; format=flowed
+Cc: git@vger.kernel.org, dabe@ymc.ch
+To: Thomas Koch <thomas@koch.ro>
+X-From: git-owner@vger.kernel.org Wed Nov 12 11:12:25 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1L0CZO-0004fQ-Ew
-	for gcvg-git-2@gmane.org; Wed, 12 Nov 2008 11:03:30 +0100
+	id 1L0Chy-0007mp-5H
+	for gcvg-git-2@gmane.org; Wed, 12 Nov 2008 11:12:22 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751595AbYKLKCP convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 12 Nov 2008 05:02:15 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751544AbYKLKCP
-	(ORCPT <rfc822;git-outgoing>); Wed, 12 Nov 2008 05:02:15 -0500
-Received: from mu-out-0910.google.com ([209.85.134.187]:1861 "EHLO
-	mu-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751060AbYKLKCN convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 12 Nov 2008 05:02:13 -0500
-Received: by mu-out-0910.google.com with SMTP id g7so332639muf.1
-        for <git@vger.kernel.org>; Wed, 12 Nov 2008 02:02:10 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to
-         :subject:cc:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:references;
-        bh=ZoYxESgSONvw1oojMJIdlpE9iVFrgdALm9TQgppn/tE=;
-        b=N7OMvcnarZ23aV/LKG59j9xMF6rRKBbonolqzAuaOr9nkgUQioyNA8FigK2BOJXc+R
-         mifypTKJZVguxUfy4YkWQvc1nQ73DV4MVL6+ZxshWaSluikd//GEhrys3tz196Bv/1LC
-         +OS1hLdPByVg2pRC9ktqPk3/IoDdejKstAW3s=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
-         :content-type:content-transfer-encoding:content-disposition
-         :references;
-        b=fiOPiLF3AgD/zfzFU5qxFRzx5HHKnXCScZLA4+nib8ryydK5Wh+Nfm7J3+GQrdRQTT
-         i/foUvfLH40p4eTxMCyLvNLHBAVMNac8yq4fAcB2+7ykSNSGN8FRkyTeqRTcOlfT4hhb
-         fLvghNdZxK2u41Y7Q+LpMyiSxhA6EYi3V5qq0=
-Received: by 10.187.166.4 with SMTP id t4mr3122406fao.73.1226484130433;
-        Wed, 12 Nov 2008 02:02:10 -0800 (PST)
-Received: by 10.187.191.12 with HTTP; Wed, 12 Nov 2008 02:02:10 -0800 (PST)
-In-Reply-To: <20081112080103.GA25454@diana.vm.bytemark.co.uk>
-Content-Disposition: inline
+	id S1751804AbYKLKK4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 12 Nov 2008 05:10:56 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751795AbYKLKK4
+	(ORCPT <rfc822;git-outgoing>); Wed, 12 Nov 2008 05:10:56 -0500
+Received: from electron.quantumfyre.co.uk ([87.106.55.16]:53260 "EHLO
+	electron.quantumfyre.co.uk" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751802AbYKLKKz (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 12 Nov 2008 05:10:55 -0500
+Received: from neutron.quantumfyre.co.uk (neutron.quantumfyre.co.uk [212.159.54.235])
+	by electron.quantumfyre.co.uk (Postfix) with ESMTP id 9758A1A8C04
+	for <git@vger.kernel.org>; Wed, 12 Nov 2008 10:10:53 +0000 (GMT)
+Received: (qmail 17187 invoked by uid 103); 12 Nov 2008 10:10:03 +0000
+Received: from 212.159.54.234 by neutron.quantumfyre.co.uk (envelope-from <julian@quantumfyre.co.uk>, uid 201) with qmail-scanner-1.25st 
+ (clamdscan: 0.94/8612. spamassassin: 3.2.1. perlscan: 1.25st.  
+ Clear:RC:1(212.159.54.234):. 
+ Processed in 0.028287 secs); 12 Nov 2008 10:10:03 -0000
+Received: from darkphoton.datavampyre.co.uk (212.159.54.234)
+  by neutron.quantumfyre.co.uk with SMTP; 12 Nov 2008 10:10:03 +0000
+X-X-Sender: jp3@reaper.quantumfyre.co.uk
+In-Reply-To: <200811121029.34841.thomas@koch.ro>
+User-Agent: Alpine 2.00 (LNX 1167 2008-08-23)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/100733>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/100734>
 
-2008/11/12 Karl Hasselstr=F6m <kha@treskal.com>:
-> On 2008-11-11 17:59:02 +0000, Catalin Marinas wrote:
->> Could be related to this - if I run 'stg goto some-patch' and it
->> fails with a conflict, the HEAD points to the previous patch though
->> the stack has the conflicting patch as empty (which is normal) and
->> the conflicts in the index. Anything after that says HEAD and top
->> not equal and 'stg repair' is needed.
+On Wed, 12 Nov 2008, Thomas Koch wrote:
+
+> Hi,
 >
-> Ah, yes, that could definitely be the same problem, since those two
-> things end up calling the same functions to handle the conflict.
+> finally I managed to convince a critical mass of developers (our chief
+> dev :-) in our company so that we are starting to migrate to GIT.
+>
+> The final question is, whether GIT will life peacefully on our cluster
+> fileservers. The GIT repository dir (/var/cache/git) should be mounted
+> via NFS via PAN on top of DRBD (so I was told).
+>
+> Are there any known problems with this setup? We're asking, because
+> there are problems with SVN on such a setup[1].
+>
+> [1] http://subversion.tigris.org/faq.html#nfs
 
-I think it's just a matter of updating HEAD on the "merge_conflict"
-path but I'm still not fully confident in modifying the new lib
-infrastructure.
+I've been running git on NFS for years (though it's only NFS exported 
+software RAID), and the only issue I've encountered is that it's not quite 
+as blisteringly fast as running git on a local disk.
 
-> I'll build a test case for that as well.
+-- 
+Julian
 
-We test the conflicts quite a lot in the "push" tests but this command
-hasn't been converted to the new infrastructure yet.
-
---=20
-Catalin
+  ---
+There's something different about us -- different from people of Europe,
+Africa, Asia ... a deep and abiding belief in the Easter Bunny.
+ 		-- G. Gordon Liddy
