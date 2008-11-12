@@ -1,91 +1,55 @@
-From: Michael Adam <obnox@samba.org>
-Subject: Re: [PATCH] contrib/hooks/post-receive-email: send individual mails to recipients
-Date: Wed, 12 Nov 2008 18:58:07 +0100
-Organization: SerNet GmbH, Goettingen, Germany
-Message-ID: <E1L0Jyh-00Bzdi-7r@intern.SerNet.DE>
-References: <E1L0ITB-00Bv9t-72@intern.SerNet.DE> <7vfxlwq1gn.fsf@gitster.siamese.dyndns.org>
+From: "Jon Nelson" <jnelson@jamponi.net>
+Subject: Re: [PATCH] fix pack.packSizeLimit and --max-pack-size handling
+Date: Wed, 12 Nov 2008 11:58:29 -0600
+Message-ID: <cccedfc60811120958u3e1625e4y4ffee1d073102ab8@mail.gmail.com>
+References: <cccedfc60811120712o7fcbf648l9f4b8e6f52e50e39@mail.gmail.com>
+	 <alpine.LFD.2.00.0811121109420.27509@xanadu.home>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="jRrlDaCa9Eh922E4"
-Cc: Michael Adam <obnox@samba.org>, git@vger.kernel.org,
-	Andy Parkins <andyparkins@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Nov 12 18:59:35 2008
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: "Nicolas Pitre" <nico@cam.org>
+X-From: git-owner@vger.kernel.org Wed Nov 12 18:59:47 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1L0K00-0001qB-Te
-	for gcvg-git-2@gmane.org; Wed, 12 Nov 2008 18:59:29 +0100
+	id 1L0K0I-0001x6-FY
+	for gcvg-git-2@gmane.org; Wed, 12 Nov 2008 18:59:46 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751859AbYKLR6M (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 12 Nov 2008 12:58:12 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751604AbYKLR6K
-	(ORCPT <rfc822;git-outgoing>); Wed, 12 Nov 2008 12:58:10 -0500
-Received: from mail1.SerNet.de ([193.175.80.2]:45276 "EHLO mail.SerNet.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751438AbYKLR6K (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 12 Nov 2008 12:58:10 -0500
-Received: from intern.SerNet.DE by mail.SerNet.DE
-	with esmtp (Exim 4.63 #1)
-	id 1L0Jyh-0005bG-Lu; Wed, 12 Nov 2008 18:58:07 +0100
-Received: by intern.SerNet.DE
-	id 1L0Jyh-00Bzdi-7r; Wed, 12 Nov 2008 18:58:07 +0100
-Received: from intern.SerNet.DE (localhost [127.0.0.1])
-	by localhost (AvMailGate-2.1.4-7) id 2858544-cFrZwb;
-	Wed, 12 Nov 2008 18:58:07 +0100 (CET)
-Received: by intern.SerNet.DE
-	id 1L0Jyh-00BzdV-0n; Wed, 12 Nov 2008 18:58:07 +0100
+	id S1751795AbYKLR6c (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 12 Nov 2008 12:58:32 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751975AbYKLR6b
+	(ORCPT <rfc822;git-outgoing>); Wed, 12 Nov 2008 12:58:31 -0500
+Received: from rn-out-0910.google.com ([64.233.170.185]:52291 "EHLO
+	rn-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751604AbYKLR6b (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 12 Nov 2008 12:58:31 -0500
+Received: by rn-out-0910.google.com with SMTP id k40so452631rnd.17
+        for <git@vger.kernel.org>; Wed, 12 Nov 2008 09:58:30 -0800 (PST)
+Received: by 10.65.212.17 with SMTP id o17mr8991245qbq.60.1226512709388;
+        Wed, 12 Nov 2008 09:58:29 -0800 (PST)
+Received: by 10.65.107.14 with HTTP; Wed, 12 Nov 2008 09:58:29 -0800 (PST)
+In-Reply-To: <alpine.LFD.2.00.0811121109420.27509@xanadu.home>
 Content-Disposition: inline
-In-Reply-To: <7vfxlwq1gn.fsf@gitster.siamese.dyndns.org>
-User-Agent: Mutt/1.5.9i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/100786>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/100787>
 
+On Wed, Nov 12, 2008 at 10:17 AM, Nicolas Pitre <nico@cam.org> wrote:
+> First, pack.packSizeLimit and --max-pack-size didn't use the same base
+> unit which was confusing.  They both use MiB now.
+>
+> Also, if the limit was sufficiently low, having a single object written
+> could bust the limit (by design), but caused the remaining allowed size
+> to go negative for subsequent objects, which for an unsigned variable is
+> a rather huge limit.
+>
+> Signed-off-by: Nicolas Pitre <nico@cam.org>
 
---jRrlDaCa9Eh922E4
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+The patch does appear to resolve the issue!
 
-Junio C Hamano wrote:
-> Michael Adam <obnox@samba.org> writes:
->=20
-> > This changes the behaviour of post-receive-email when a list of recipie=
-nts
-> > (separated by commas) is specified as hooks.mailinglist. With this modi=
-fication,
-> > an individual mail is sent out for each recipient entry in the list, in=
-stead
-> > of sending a single mail with all the recipients in the "To: " field.
->=20
-> Why can that be an improvement?
-
-My use case is that I have a repository where I want to send
-commit messages to an "official" mailing list and to a private
-recipient list that might not want to be seen on the official
-mailing list.
-
-If this is not generally useful, I could make it optional or
-add s/th like a secondary mailing list argument to hooks.
-
-Cheers - Michael
-
-
---jRrlDaCa9Eh922E4
-Content-Type: application/pgp-signature
-Content-Disposition: inline
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.2 (GNU/Linux)
-Comment: comment
-
-iD8DBQFJGxkuyU9JOBhPkDQRAiL6AJ47L4ocTvubqsI7/ly/vGOWrO/d1gCdFtTt
-Nta34ly3cyg2r8VjUHJfuvA=
-=v6uO
------END PGP SIGNATURE-----
-
---jRrlDaCa9Eh922E4--
+-- 
+Jon
