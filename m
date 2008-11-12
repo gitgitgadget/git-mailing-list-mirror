@@ -1,115 +1,69 @@
-From: Jeff King <peff@peff.net>
-Subject: [PATCH 5/5] commit: only strip diff from message in verbose mode
-Date: Wed, 12 Nov 2008 03:25:52 -0500
-Message-ID: <20081112082552.GE3751@coredump.intra.peff.net>
-References: <20081112081609.GA3720@coredump.intra.peff.net>
+From: Johannes Sixt <j.sixt@viscovery.net>
+Subject: Re: [PATCH (GITK)] gitk: Fix transient windows on Win32 and MacOS.
+Date: Wed, 12 Nov 2008 09:28:08 +0100
+Message-ID: <491A9398.1060100@viscovery.net>
+References: <200811112355.43352.angavrilov@gmail.com>	<491A827C.3010000@viscovery.net> <18714.36964.666759.654975@cargo.ozlabs.ibm.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Santi =?utf-8?B?QsOpamFy?= <santi@agolina.net>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Nov 12 09:27:14 2008
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: Alexander Gavrilov <angavrilov@gmail.com>, git@vger.kernel.org
+To: Paul Mackerras <paulus@samba.org>
+X-From: git-owner@vger.kernel.org Wed Nov 12 09:29:27 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1L0B49-0000wW-VJ
-	for gcvg-git-2@gmane.org; Wed, 12 Nov 2008 09:27:10 +0100
+	id 1L0B6M-0001ej-EK
+	for gcvg-git-2@gmane.org; Wed, 12 Nov 2008 09:29:26 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751437AbYKLIZ4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 12 Nov 2008 03:25:56 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751428AbYKLIZz
-	(ORCPT <rfc822;git-outgoing>); Wed, 12 Nov 2008 03:25:55 -0500
-Received: from peff.net ([208.65.91.99]:2363 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751382AbYKLIZz (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 12 Nov 2008 03:25:55 -0500
-Received: (qmail 17721 invoked by uid 111); 12 Nov 2008 08:25:53 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.32) with SMTP; Wed, 12 Nov 2008 03:25:53 -0500
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Wed, 12 Nov 2008 03:25:52 -0500
-Content-Disposition: inline
-In-Reply-To: <20081112081609.GA3720@coredump.intra.peff.net>
+	id S1751476AbYKLI2M (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 12 Nov 2008 03:28:12 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751471AbYKLI2M
+	(ORCPT <rfc822;git-outgoing>); Wed, 12 Nov 2008 03:28:12 -0500
+Received: from lilzmailso02.liwest.at ([212.33.55.13]:31410 "EHLO
+	lilzmailso02.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751470AbYKLI2L (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 12 Nov 2008 03:28:11 -0500
+Received: from cm56-163-160.liwest.at ([86.56.163.160] helo=linz.eudaptics.com)
+	by lilzmailso02.liwest.at with esmtpa (Exim 4.69)
+	(envelope-from <j.sixt@viscovery.net>)
+	id 1L0B57-0007k5-Gb; Wed, 12 Nov 2008 09:28:09 +0100
+Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.96])
+	by linz.eudaptics.com (Postfix) with ESMTP
+	id 205B44E4; Wed, 12 Nov 2008 09:28:09 +0100 (CET)
+User-Agent: Thunderbird 2.0.0.6 (Windows/20070728)
+In-Reply-To: <18714.36964.666759.654975@cargo.ozlabs.ibm.com>
+X-Enigmail-Version: 0.95.5
+X-Spam-Score: 1.7 (+)
+X-Spam-Report: ALL_TRUSTED=-1.8, BAYES_99=3.5
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/100726>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/100727>
 
-When the "-v" option is given, we put diff of what is to be
-committed into the commit template, and then strip it back
-out again after the user has edited it.
+Paul Mackerras schrieb:
+> Johannes Sixt writes:
+>> Alexander Gavrilov schrieb:
+>>> Transient windows cause problems on these platforms:
+>> ...
+>>> diff --git a/gitk b/gitk
+>>> index 9b2a6e5..e6aafe8 100755
+>> I'd appreciate if you could make it a habit to base your patches on
+>> versions of gitk etc. that are available from a public repository
+> 
+> You mean, like, git://git.kernel.org/pub/scm/gitk/gitk.git, for
+> instance? :)  That is the primary repository for gitk and it seems to
+> be what Alexander bases his patches on.
 
-We guess at the location of the diff by searching for the
-"diff --git" header. This means that if the user puts their
-own diff in the message (e.g., as a sample output), then we
-will accidentally trigger the pattern, removing part of
-their output.
+Yes, I mean exactly this repository. It doesn't have 9b2a6e5:
 
-We can avoid doing this stripping altogether if the user
-didn't use "-v" in the first place, so we know that any
-match we find will be a false positive.
+$ git fetch gitk
+$ git show 9b2a6e5 --
+fatal: bad revision '9b2a6e5'
 
-Signed-off-by: Jeff King <peff@peff.net>
----
-Obviously this doesn't solve the problem entirely, but it at least makes
-a reasonable rule: if we accidentally eat your sample diff output with
-"-v", then try without it. :)
+I assume that Alexander has another patch applied in addition to the one
+that he submitted, which, therefore, is no longer "based on a publically
+available version".
 
-But more importantly, I suspect "-v" is used infrequently, so in
-practice this should fix most cases.
-
- builtin-commit.c          |    8 +++++---
- t/t7507-commit-verbose.sh |   21 +++++++++++++++++++++
- 2 files changed, 26 insertions(+), 3 deletions(-)
-
-diff --git a/builtin-commit.c b/builtin-commit.c
-index a721990..591d16b 100644
---- a/builtin-commit.c
-+++ b/builtin-commit.c
-@@ -1015,9 +1015,11 @@ int cmd_commit(int argc, const char **argv, const char *prefix)
- 	}
- 
- 	/* Truncate the message just before the diff, if any. */
--	p = strstr(sb.buf, "\ndiff --git ");
--	if (p != NULL)
--		strbuf_setlen(&sb, p - sb.buf + 1);
-+	if (verbose) {
-+		p = strstr(sb.buf, "\ndiff --git ");
-+		if (p != NULL)
-+			strbuf_setlen(&sb, p - sb.buf + 1);
-+	}
- 
- 	if (cleanup_mode != CLEANUP_NONE)
- 		stripspace(&sb, cleanup_mode == CLEANUP_ALL);
-diff --git a/t/t7507-commit-verbose.sh b/t/t7507-commit-verbose.sh
-index be70166..2a3ea7a 100755
---- a/t/t7507-commit-verbose.sh
-+++ b/t/t7507-commit-verbose.sh
-@@ -42,4 +42,25 @@ test_expect_success 'verbose diff is stripped out (mnemonicprefix)' '
- 	check_message message
- '
- 
-+cat >diff <<'EOF'
-+This is an example commit message that contains a diff.
-+
-+diff --git c/file i/file
-+new file mode 100644
-+index 0000000..f95c11d
-+--- /dev/null
-++++ i/file
-+@@ -0,0 +1 @@
-++this is some content
-+EOF
-+
-+test_expect_success 'diff in message is retained without -v' '
-+	git commit --amend -F diff &&
-+	check_message diff
-+'
-+
-+test_expect_failure 'diff in message is retained with -v' '
-+	git commit --amend -F diff -v &&
-+	check_message diff
-+'
- test_done
--- 
-1.6.0.4.883.g4593ee.dirty
+-- Hannes
