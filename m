@@ -1,80 +1,60 @@
-From: Robin Rosenberg <robin.rosenberg@dewire.com>
+From: Robin Rosenberg <robin.rosenberg.lists@dewire.com>
 Subject: Re: Newbie questions regarding jgit
-Date: Wed, 12 Nov 2008 23:36:54 +0100
-Message-ID: <200811122336.55408.robin.rosenberg@dewire.com>
+Date: Wed, 12 Nov 2008 23:37:33 +0100
+Message-ID: <200811122337.33816.robin.rosenberg.lists@dewire.com>
 Mime-Version: 1.0
 Content-Type: text/plain;
   charset="iso-8859-1"
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Farrukh Najmi <farrukh@wellfleetsoftware.com>
-X-From: git-owner@vger.kernel.org Wed Nov 12 23:38:27 2008
+Cc: "Farrukh Najmi" <farrukh@wellfleetsoftware.com>,
+	git@vger.kernel.org
+To: "Jonas Fonseca" <jonas.fonseca@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Nov 12 23:39:13 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1L0OLs-0007Ff-L1
-	for gcvg-git-2@gmane.org; Wed, 12 Nov 2008 23:38:21 +0100
+	id 1L0OMg-0007XR-Lk
+	for gcvg-git-2@gmane.org; Wed, 12 Nov 2008 23:39:11 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751019AbYKLWhA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 12 Nov 2008 17:37:00 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751023AbYKLWg7
-	(ORCPT <rfc822;git-outgoing>); Wed, 12 Nov 2008 17:36:59 -0500
-Received: from mail.dewire.com ([83.140.172.130]:18277 "EHLO dewire.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750929AbYKLWg6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 12 Nov 2008 17:36:58 -0500
-Received: from localhost (localhost [127.0.0.1])
-	by dewire.com (Postfix) with ESMTP id CE0D0147D0ED;
-	Wed, 12 Nov 2008 23:36:56 +0100 (CET)
-X-Virus-Scanned: by amavisd-new at dewire.com
-Received: from dewire.com ([127.0.0.1])
-	by localhost (torino.dewire.com [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id BCxliTu19lWO; Wed, 12 Nov 2008 23:36:56 +0100 (CET)
-Received: from sleipner.localnet (unknown [10.9.0.5])
-	by dewire.com (Postfix) with ESMTP id 41EC38028B5;
-	Wed, 12 Nov 2008 23:36:56 +0100 (CET)
+	id S1752428AbYKLWho (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 12 Nov 2008 17:37:44 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752709AbYKLWho
+	(ORCPT <rfc822;git-outgoing>); Wed, 12 Nov 2008 17:37:44 -0500
+Received: from pne-smtpout2-sn2.hy.skanova.net ([81.228.8.164]:62183 "EHLO
+	pne-smtpout2-sn2.hy.skanova.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1752428AbYKLWhn (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 12 Nov 2008 17:37:43 -0500
+Received: from sleipner.localnet (213.67.100.250) by pne-smtpout2-sn2.hy.skanova.net (7.3.129)
+        id 4873CA9501F745D8; Wed, 12 Nov 2008 23:37:35 +0100
 Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/100824>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/100825>
 
 (resend without HTML)
-tisdag 11 november 2008 22:12:58 skrev Farrukh Najmi:
+tisdag 11 november 2008 22:37:40 skrev Jonas Fonseca:
+> On Tue, Nov 11, 2008 at 21:44, Farrukh Najmi
+> <farrukh@wellfleetsoftware.com> wrote:
+> > Hi all,
 > 
-> I should clarify that I am not using eclipse nor am I using any GUI. My 
-> objective is to have Java API access to git from within a servlet using 
-> jgit. At present, all I have to go on is javadoc and its not clear where 
-> to begin if I simply wish to create, read and update files in a git repo 
-> from within the servlet java code.
->
-We do not have a tutorial. The JUnit tests are the best examples on 
-how to use the API today. I did some experiement wit J2EE and created
-some jsp tags, but that's for JSP only and mostly experimental. To
-comply with the JEE spec one should create a resource manager for
-Git to deal with scalability when many users try to access repos.
-
+> Hello,
+> 
 > > I am git newbie and looking to use jgit in a servlet endpoint.
-> >
-> > Where can I find a public maven repo for gjit? It seems there is one 
-> > somewhere because of the following file in src tree:
-> >
-> > jgit-maven/jgit/pom.xml
+> 
+> Sounds interesting. I have been thinking about how hard it would be to
+> write a very simpe jgitweb kind of thing and am very interested to
+> hear more about your experiences.
 
-We do not use maven ourselves right now, though that might change, so
-there is not public maven repository for jgit just yet. What do I need to
-do to set it up?
+Consider this: 
+http://www.jgit.org/cgi-bin/gitweb/gitweb.cgi?p=EGIT-jee.git;a=shortlog;h=rr/jeegitweb
 
-> >
-> > For now I have built the jar using /make_jgit.sh and installed the pom 
-> > manually using m
-> >
-> > mvn install:install-file -DpomFile=jgit-maven/jgit/pom.xml 
-> > -Dfile=jgit.jar
+It's an toy experiment with taglibs. Unfortunately the JSP doesn't even compile (!) anymore,
+maybe someone can spot the error. Something very close to this did work a while ago.
 
-The pom.xml works for building jgit. cd to the mave dir and type mvn
-and watch it build (and run unit tests if you ask it to).
+The example jsp is here:
+http://www.jgit.org/cgi-bin/gitweb/gitweb.cgi?p=EGIT-jee.git;a=blob;f=org.spearce.jeegit web/WebContent/index.jsp;h=d065d9f5a725a161a640e58e3be4d5b3a0666b5e;hb=fabffb50f0a020ff9b1653c090675bbd56dcc80a
 
 -- robin
