@@ -1,148 +1,56 @@
-From: Alexander Gavrilov <angavrilov@gmail.com>
-Subject: [PATCH (GIT-GUI) 1/3] git-gui: Implement system-wide configuration handling.
-Date: Thu, 13 Nov 2008 22:35:48 +0300
-Message-ID: <1226604950-18667-2-git-send-email-angavrilov@gmail.com>
-References: <1226604950-18667-1-git-send-email-angavrilov@gmail.com>
-Cc: "Shawn O. Pearce" <spearce@spearce.org>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Nov 13 20:39:44 2008
+From: Robin Rosenberg <robin.rosenberg.lists@dewire.com>
+Subject: Re: Any plans to support JTA and XA in jgit?
+Date: Thu, 13 Nov 2008 20:59:16 +0100
+Message-ID: <200811132059.16616.robin.rosenberg.lists@dewire.com>
+Mime-Version: 1.0
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Farrukh Najmi <farrukh@wellfleetsoftware.com>
+X-From: git-owner@vger.kernel.org Thu Nov 13 21:00:52 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1L0i2L-00079I-Il
-	for gcvg-git-2@gmane.org; Thu, 13 Nov 2008 20:39:30 +0100
+	id 1L0iMu-0007kZ-Vq
+	for gcvg-git-2@gmane.org; Thu, 13 Nov 2008 21:00:45 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755300AbYKMTiG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 13 Nov 2008 14:38:06 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755222AbYKMTiF
-	(ORCPT <rfc822;git-outgoing>); Thu, 13 Nov 2008 14:38:05 -0500
-Received: from fg-out-1718.google.com ([72.14.220.159]:29585 "EHLO
-	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755814AbYKMTiA (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 13 Nov 2008 14:38:00 -0500
-Received: by fg-out-1718.google.com with SMTP id 19so860538fgg.17
-        for <git@vger.kernel.org>; Thu, 13 Nov 2008 11:37:57 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:cc:subject:date
-         :message-id:x-mailer:in-reply-to:references;
-        bh=UtOvTB9NQMeACRJAE8JSwXrJbAgrddHDbVs5azX20vQ=;
-        b=rf6UigTI+6nzaTAFVBviAMULSgtu7TCii6cmfOkY9yJBgne7hMOyWxbwDKhNbZMUm8
-         IVmrPyfrxnox3k6RrvXphBio11GLuakpRUjt2XeA41UCI4k8QkqPyHGNLznQ24+yjbrf
-         oM8P3UhmAVFpVNsBHmZBpXd+6fqTR+cUUqZU8=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        b=RigqLjpuIVu86rnMvjQKyB5uO/oGWbsufX7xwCKwMyNktHKQISJQMq8bD0BQ4M5p0Q
-         MTgExL+I3vC9+pG9QhBMgkx8molFTqRMAipnllufamKHn5CUgHPgN74ZyK1rE84CcNSw
-         yYlXeXbe6Mys2cjf8tVEw1V+QFNjJ8IvS9iV4=
-Received: by 10.181.152.14 with SMTP id e14mr21670bko.189.1226605077621;
-        Thu, 13 Nov 2008 11:37:57 -0800 (PST)
-Received: from localhost.localdomain ([92.255.85.78])
-        by mx.google.com with ESMTPS id h2sm5268685fkh.11.2008.11.13.11.37.54
-        (version=SSLv3 cipher=RC4-MD5);
-        Thu, 13 Nov 2008 11:37:56 -0800 (PST)
-X-Mailer: git-send-email 1.6.0.3.15.gb8d36
-In-Reply-To: <1226604950-18667-1-git-send-email-angavrilov@gmail.com>
+	id S1754616AbYKMT72 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 13 Nov 2008 14:59:28 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751823AbYKMT70
+	(ORCPT <rfc822;git-outgoing>); Thu, 13 Nov 2008 14:59:26 -0500
+Received: from pne-smtpout2-sn1.fre.skanova.net ([81.228.11.159]:60650 "EHLO
+	pne-smtpout2-sn1.fre.skanova.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1755427AbYKMT7Z (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 13 Nov 2008 14:59:25 -0500
+Received: from sleipner.localnet (213.67.100.250) by pne-smtpout2-sn1.fre.skanova.net (7.3.129)
+        id 4843FAEB02778C40; Thu, 13 Nov 2008 20:59:17 +0100
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/100903>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/100904>
 
-With the old implementation any system-wide options appear
-to be set locally in the current repository. This commit
-adds explicit handling of system options, essentially
-interpreting them as customized default_config.
+torsdag 13 november 2008 20:20:49 skrev Farrukh Najmi:
+> 
+> Does the gjit team have any plans to implement support for JTA in gjit 
+> so as to allow distributed transactions using 2 phase commit? This would 
+> be very powerful when git is being used in conjunction with other 
+> transaction resource managers such as databases.
 
-The difficulty in interpreting system options stems from
-the fact that simple 'git config' lists all values, while
-'git config --global' only values set in ~/.gitconfig,
-excluding both local and system options.
+No such plans exist. We do not even have a J2EE Resource Manager yet. I
+did some toying implementing one. As for XA support, I guess that would
+not be very hard per se, but my thoughts on JEE support was more in the direction
+of gitweb-like stuff, i.e. reading.
 
-Signed-off-by: Alexander Gavrilov <angavrilov@gmail.com>
----
- git-gui.sh     |   12 +++++++++---
- lib/option.tcl |   12 ++++++------
- 2 files changed, 15 insertions(+), 9 deletions(-)
+Trying to involve git in distributed database transactions might be cool, but seriously: Do you
+need it? As for JEE my ideas are: A nice JSP tag library and a resource manager. When is
+an entirely different question, as is who. Did you look at  my experiment in a reply of mine
+in another recent jgit thread?
 
-diff --git a/git-gui.sh b/git-gui.sh
-index cf9ef6e..34214b6 100755
---- a/git-gui.sh
-+++ b/git-gui.sh
-@@ -918,19 +918,25 @@ git-version proc _parse_config {arr_name args} {
- }
- 
- proc load_config {include_global} {
--	global repo_config global_config default_config
-+	global repo_config global_config system_config default_config
- 
- 	if {$include_global} {
-+		_parse_config system_config --system
- 		_parse_config global_config --global
- 	}
- 	_parse_config repo_config
- 
- 	foreach name [array names default_config] {
-+		if {[catch {set v $system_config($name)}]} {
-+			set system_config($name) $default_config($name)
-+		}
-+	}
-+	foreach name [array names system_config] {
- 		if {[catch {set v $global_config($name)}]} {
--			set global_config($name) $default_config($name)
-+			set global_config($name) $system_config($name)
- 		}
- 		if {[catch {set v $repo_config($name)}]} {
--			set repo_config($name) $default_config($name)
-+			set repo_config($name) $system_config($name)
- 		}
- 	}
- }
-diff --git a/lib/option.tcl b/lib/option.tcl
-index c80c939..1d55b49 100644
---- a/lib/option.tcl
-+++ b/lib/option.tcl
-@@ -25,7 +25,7 @@ proc config_check_encodings {} {
- 
- proc save_config {} {
- 	global default_config font_descs
--	global repo_config global_config
-+	global repo_config global_config system_config
- 	global repo_config_new global_config_new
- 	global ui_comm_spell
- 
-@@ -49,7 +49,7 @@ proc save_config {} {
- 	foreach name [array names default_config] {
- 		set value $global_config_new($name)
- 		if {$value ne $global_config($name)} {
--			if {$value eq $default_config($name)} {
-+			if {$value eq $system_config($name)} {
- 				catch {git config --global --unset $name}
- 			} else {
- 				regsub -all "\[{}\]" $value {"} value
-@@ -284,17 +284,17 @@ proc do_options {} {
- }
- 
- proc do_restore_defaults {} {
--	global font_descs default_config repo_config
-+	global font_descs default_config repo_config system_config
- 	global repo_config_new global_config_new
- 
- 	foreach name [array names default_config] {
--		set repo_config_new($name) $default_config($name)
--		set global_config_new($name) $default_config($name)
-+		set repo_config_new($name) $system_config($name)
-+		set global_config_new($name) $system_config($name)
- 	}
- 
- 	foreach option $font_descs {
- 		set name [lindex $option 0]
--		set repo_config(gui.$name) $default_config(gui.$name)
-+		set repo_config(gui.$name) $system_config(gui.$name)
- 	}
- 	apply_config
- 
--- 
-1.6.0.3.15.gb8d36
+The term "distributed" in XA is not quite the same as in distributed verison control. If it would,
+then we'd send SQL commands over e-mail (now, /that/ would be cool :).
+
+-- robin
