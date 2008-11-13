@@ -1,63 +1,99 @@
-From: SZEDER =?iso-8859-1?Q?G=E1bor?= <szeder@ira.uka.de>
-Subject: Re: [BUG] fatal error during merge
-Date: Thu, 13 Nov 2008 19:09:31 +0100
-Message-ID: <20081113180931.GE29274@neumann>
-References: <53328.bFoQE3daRhY=.1226568134.squirrel@webmail.hotelhot.dk>
-	<2008-11-13-14-23-19+trackit+sam@rfc1149.net>
-	<20081113140323.GA10267@neumann>
-	<2008-11-13-15-26-33+trackit+sam@rfc1149.net>
-	<20081113145325.GD29274@neumann>
-	<57814.N1gUGH5fRhE=.1226596012.squirrel@webmail.hotelhot.dk>
+From: "J. Bruce Fields" <bfields@fieldses.org>
+Subject: Re: hosting git on a nfs
+Date: Thu, 13 Nov 2008 13:18:26 -0500
+Message-ID: <20081113181826.GA16741@fieldses.org>
+References: <200811121029.34841.thomas@koch.ro> <20081112173651.GA9127@linode.davidb.org> <alpine.LFD.2.00.0811120959050.3468@nehalem.linux-foundation.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Alex Riesen <raa.lkml@gmail.com>, Samuel Tardieu <sam@rfc1149.net>,
-	Linus Torvalds <torvalds@linux-foundation.org>,
-	Anders Melchiorsen <mail@cup.kalibalik.dk>, git@vger.kernel.org
-To: Anders Melchiorsen <mail@cup.kalibalik.dk>
-X-From: git-owner@vger.kernel.org Thu Nov 13 19:10:57 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: David Brown <git@davidb.org>, Thomas Koch <thomas@koch.ro>,
+	git@vger.kernel.org, dabe@ymc.ch
+To: Linus Torvalds <torvalds@linux-foundation.org>
+X-From: git-owner@vger.kernel.org Thu Nov 13 19:19:58 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1L0geb-0003qY-7o
-	for gcvg-git-2@gmane.org; Thu, 13 Nov 2008 19:10:53 +0100
+	id 1L0gnO-0007lW-5s
+	for gcvg-git-2@gmane.org; Thu, 13 Nov 2008 19:19:58 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751617AbYKMSJc convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 13 Nov 2008 13:09:32 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751595AbYKMSJc
-	(ORCPT <rfc822;git-outgoing>); Thu, 13 Nov 2008 13:09:32 -0500
-Received: from francis.fzi.de ([141.21.7.5]:12785 "EHLO exchange.fzi.de"
-	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-	id S1751530AbYKMSJc (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 13 Nov 2008 13:09:32 -0500
-Received: from [127.0.1.1] ([141.21.4.196]) by exchange.fzi.de with Microsoft SMTPSVC(6.0.3790.3959);
-	 Thu, 13 Nov 2008 19:09:29 +0100
+	id S1754345AbYKMSSi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 13 Nov 2008 13:18:38 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754325AbYKMSSh
+	(ORCPT <rfc822;git-outgoing>); Thu, 13 Nov 2008 13:18:37 -0500
+Received: from mail.fieldses.org ([66.93.2.214]:37674 "EHLO fieldses.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754264AbYKMSSg (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 13 Nov 2008 13:18:36 -0500
+Received: from bfields by fieldses.org with local (Exim 4.69)
+	(envelope-from <bfields@fieldses.org>)
+	id 1L0glu-0004VR-ML; Thu, 13 Nov 2008 13:18:26 -0500
 Content-Disposition: inline
-In-Reply-To: <57814.N1gUGH5fRhE=.1226596012.squirrel@webmail.hotelhot.dk>
-User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
-X-OriginalArrivalTime: 13 Nov 2008 18:09:29.0940 (UTC) FILETIME=[F8EEC140:01C945BA]
+In-Reply-To: <alpine.LFD.2.00.0811120959050.3468@nehalem.linux-foundation.org>
+User-Agent: Mutt/1.5.18 (2008-05-17)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/100893>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/100894>
 
-On Thu, Nov 13, 2008 at 06:06:52PM +0100, Anders Melchiorsen wrote:
-> SZEDER G=E1bor wrote:
-> > It doesn't matter.  The test script errors out at the merge, and no=
-t
-> > at the checkout.  Furthermore, it doesn't matter, whether HEAD~,
-> > HEAD~, or HEAD^ is checked out, the results are the same.
->=20
-> Just to be sure, I tried reverting the commit that you bisected -- an=
-d my
-> test case still fails.
+On Wed, Nov 12, 2008 at 10:14:44AM -0800, Linus Torvalds wrote:
+> 
+> 
+> On Wed, 12 Nov 2008, David Brown wrote:
+> > 
+> > We had occasionally run into locking problems with 1.5.4.x with
+> > renames between different directories.  This should be fixed in
+> > 1.6.0.3, but we have since migrated to a server model so I don't have
+> > any way of testing this.
+> 
+> I suspect it also depends very much on the particular client/server 
+> combination. Renaming across directories is one of those NFS things that 
+> some servers don't mind at all.
 
-Well, oddly enough, your second test case behaves somewhat differently
-than the first one, at least as far as bisect is concerned.  Bisect
-nails down the second test case to 0d5e6c97 (Ignore merged status of
-the file-level merge, 2007-04-26; put Alex on Cc).  Reverting this
-commit on master makes both of your test cases pass.
+On the linux server you want to make sure you're exporting with
+no_subtree_check (see "man exports").
 
-G=E1bor
+> > The configuration we did find completely unworkable was using git with 
+> > the work tree on NFS.
+> 
+> Doing an 'lstat()' on every single file in the tree would tend to do that 
+> to you, yes. Even with a fast network and a good NFS server, we're talking 
+> millisecond-range latencies, and if your tree has tens of thousands of 
+> files, you're going to have each "git diff" take several seconds.
+> 
+> NFS metadata caching can help, but not all clients do it, and even clients 
+> that _do_ do it tend to have rather low timeouts or rather limited cache 
+> sizes, so doing "git diff" twice may speed up the second one only if it's 
+> done really back-to-back - if even then.
+> 
+> And once you get used to "git diff" being instantaneous, I don't think 
+> anybody is ever agan willing to go back to it taking "a few seconds" (and 
+> depending on speed of network/server and size of project, the "few" can be 
+> quite many ;)
+
+Yep.
+
+> So putting the work-tree on NFS certainly _works_, but yes, from a 
+> performance angle it is going to be really irritatingly slower. I don't 
+> even think the newer versions of NFS will help with directory and 
+> attribute caching - the delegations are per-file afaik, and there is no 
+> good support for extending the caching to directories.
+
+File delegations do cover a file's attributes, so in theory they could
+help.  But they're only given out on open.  The upcoming 4.1 spec has a
+few improvements here, and it might be worth looking at whether they're
+sufficient to make this work.
+
+--b.
+
+> That said, I don't think git is any _worse_ than anybody else in the 
+> "worktree on NFS" model. A "git diff" will still be superior ot a CVS diff 
+> in every way. It's just that when people compare to their home machines 
+> where they have the work tree on local disk and aggressively cached, when 
+> they then use a NFS work-tree, they'll likely be very very disappointed.
+> 
+> 				Linus
+> --
+> To unsubscribe from this list: send the line "unsubscribe git" in
+> the body of a message to majordomo@vger.kernel.org
+> More majordomo info at  http://vger.kernel.org/majordomo-info.html
