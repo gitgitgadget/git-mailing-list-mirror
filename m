@@ -1,141 +1,116 @@
-From: Ian Hilt <ian.hilt@gmx.com>
-Subject: [PATCH v2] Edit recipient addresses with the --compose flag
-Date: Wed, 12 Nov 2008 21:50:02 -0500
-Message-ID: <1226544602-1839-1-git-send-email-ian.hilt@gmx.com>
-To: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Thu Nov 13 03:51:45 2008
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v2] Edit recipient addresses with the --compose flag
+Date: Wed, 12 Nov 2008 19:18:50 -0800
+Message-ID: <7vskpwia91.fsf@gitster.siamese.dyndns.org>
+References: <1226544602-1839-1-git-send-email-ian.hilt@gmx.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: Git Mailing List <git@vger.kernel.org>,
+	Pierre Habouzit <madcoder@debian.org>
+To: Ian Hilt <ian.hilt@gmx.com>
+X-From: git-owner@vger.kernel.org Thu Nov 13 04:20:40 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1L0SJ3-0003ig-Os
-	for gcvg-git-2@gmane.org; Thu, 13 Nov 2008 03:51:42 +0100
+	id 1L0Sl4-000235-Ss
+	for gcvg-git-2@gmane.org; Thu, 13 Nov 2008 04:20:39 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751846AbYKMCuP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 12 Nov 2008 21:50:15 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750927AbYKMCuO
-	(ORCPT <rfc822;git-outgoing>); Wed, 12 Nov 2008 21:50:14 -0500
-Received: from mail.gmx.com ([74.208.5.67]:51083 "HELO mail.gmx.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1753510AbYKMCuN (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 12 Nov 2008 21:50:13 -0500
-Received: (qmail invoked by alias); 13 Nov 2008 02:50:09 -0000
-Received: from cpe-75-185-223-130.woh.res.rr.com [75.185.223.130]
-  by mail.gmx.com (mp-us002) with SMTP; 12 Nov 2008 21:50:09 -0500
-X-Authenticated: #47758715
-X-Provags-ID: V01U2FsdGVkX19z3PpW9FtzSPphqhfyZ+BTtVTtoBhbWD5fSh2uqI
-	j1/q+R/LOA9ZRx
-X-Mailer: git-send-email 1.6.0.3.523.g304d0
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.48
+	id S1751081AbYKMDTX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 12 Nov 2008 22:19:23 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751122AbYKMDTX
+	(ORCPT <rfc822;git-outgoing>); Wed, 12 Nov 2008 22:19:23 -0500
+Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:58615 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751026AbYKMDTW (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 12 Nov 2008 22:19:22 -0500
+Received: from localhost.localdomain (localhost [127.0.0.1])
+	by b-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id 98832168A1;
+	Wed, 12 Nov 2008 22:19:19 -0500 (EST)
+Received: from pobox.com (ip68-225-240-211.oc.oc.cox.net [68.225.240.211])
+ (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
+ certificate requested) by b-sasl-quonix.sasl.smtp.pobox.com (Postfix) with
+ ESMTPSA id 4068E168E1; Wed, 12 Nov 2008 22:18:52 -0500 (EST)
+In-Reply-To: <1226544602-1839-1-git-send-email-ian.hilt@gmx.com> (Ian Hilt's
+ message of "Wed, 12 Nov 2008 21:50:02 -0500")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: DC28363A-B131-11DD-A5B4-C128113D384A-77302942!a-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/100847>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/100848>
 
-Sometimes specifying the recipient addresses can be tedious on the
-command-line.  This commit allows the user to edit the recipient
-addresses in their editor of choice.
+Ian Hilt <ian.hilt@gmx.com> writes:
 
-Signed-off-by: Ian Hilt <ian.hilt@gmx.com>
----
-Here's an updated commit with improved regex's from Junio and Francis.
+> Sometimes specifying the recipient addresses can be tedious on the
+> command-line.  This commit allows the user to edit the recipient
+> addresses in their editor of choice.
+>
+> Signed-off-by: Ian Hilt <ian.hilt@gmx.com>
+> ---
+> Here's an updated commit with improved regex's from Junio and Francis.
 
- git-send-email.perl |   47 ++++++++++++++++++++++++++++++++++++++++++++---
- 1 files changed, 44 insertions(+), 3 deletions(-)
+This heavily depends on Pierre's patch, so I am CC'ing him for comments.
+Until his series settles down, I cannot apply this anyway.
 
-diff --git a/git-send-email.perl b/git-send-email.perl
-index 9039cfd..4d8aaa7 100755
---- a/git-send-email.perl
-+++ b/git-send-email.perl
-@@ -480,6 +480,9 @@ if ($compose) {
- 	my $tpl_sender = $sender || $repoauthor || $repocommitter || '';
- 	my $tpl_subject = $initial_subject || '';
- 	my $tpl_reply_to = $initial_reply_to || '';
-+	my $tpl_to = join(', ', @to);
-+	my $tpl_cc = join(', ', @initial_cc);
-+	my $tpl_bcc = join(', ', @bcclist);
- 
- 	print C <<EOT;
- From $tpl_sender # This line is ignored.
-@@ -489,6 +492,9 @@ GIT: for the patch you are writing.
- GIT:
- GIT: Clear the body content if you don't wish to send a summary.
- From: $tpl_sender
-+To: $tpl_to
-+Cc: $tpl_cc
-+Bcc: $tpl_bcc
- Subject: $tpl_subject
- In-Reply-To: $tpl_reply_to
- 
-@@ -512,9 +518,31 @@ EOT
- 	open(C,"<",$compose_filename)
- 		or die "Failed to open $compose_filename : " . $!;
- 
-+	local $/;
-+	my $c_file = <C>;
-+	$/ = "\n";
-+	close(C);
-+
-+	my (@tmp_to, @tmp_cc, @tmp_bcc);
-+
-+	if ($c_file =~ /^To:\s*(\S.+?)\s*\nCc:/ism) {
-+		@tmp_to = get_recipients($1);
-+	}
-+	if ($c_file =~ /^Cc:\s*(\S.+?)\s*\nBcc:/ism) {
-+		@tmp_cc = get_recipients($1);
-+	}
-+	if ($c_file =~ /^Bcc:\s*(\S.+?)\s*\nSubject:/ism) {
-+		@tmp_bcc = get_recipients($1);
-+	}
-+
-+
- 	my $need_8bit_cte = file_has_nonascii($compose_filename);
- 	my $in_body = 0;
- 	my $summary_empty = 1;
-+
-+	open(C,"<",$compose_filename)
-+		or die "Failed to open $compose_filename : " . $!;
-+
- 	while(<C>) {
- 		next if m/^GIT: /;
- 		if ($in_body) {
-@@ -543,15 +571,21 @@ EOT
- 		} elsif (/^From:\s*(.+)\s*$/i) {
- 			$sender = $1;
- 			next;
--		} elsif (/^(?:To|Cc|Bcc):/i) {
--			print "To/Cc/Bcc fields are not interpreted yet, they have been ignored\n";
--			next;
- 		}
- 		print C2 $_;
- 	}
- 	close(C);
- 	close(C2);
- 
-+	if (@tmp_to) {
-+		@to = @tmp_to;
-+	}
-+	if (@tmp_cc) {
-+		@initial_cc = @tmp_cc;
-+	}
-+	if (@tmp_bcc) {
-+		@bcclist = @tmp_bcc;
-+	}
- 	if ($summary_empty) {
- 		print "Summary email is empty, skipping it\n";
- 		$compose = -1;
-@@ -1095,3 +1129,10 @@ sub file_has_nonascii {
- 	}
- 	return 0;
- }
-+
-+sub get_recipients {
-+	my $match = shift(@_);
-+	my @recipients = split(/\s*,\s*(?![^"]+(?:\"[^*]*)*")/, $match);
-+
-+	return @recipients;
-+}
--- 
-1.6.0.3.523.g304d0
+> @@ -489,6 +492,9 @@ GIT: for the patch you are writing.
+>  GIT:
+>  GIT: Clear the body content if you don't wish to send a summary.
+>  From: $tpl_sender
+> +To: $tpl_to
+> +Cc: $tpl_cc
+> +Bcc: $tpl_bcc
+>  Subject: $tpl_subject
+>  In-Reply-To: $tpl_reply_to
+>  
+> @@ -512,9 +518,31 @@ EOT
+>  	open(C,"<",$compose_filename)
+>  		or die "Failed to open $compose_filename : " . $!;
+>  
+> +	local $/;
+> +	my $c_file = <C>;
+> +	$/ = "\n";
+> +	close(C);
+> +
+> +	my (@tmp_to, @tmp_cc, @tmp_bcc);
+> +
+> +	if ($c_file =~ /^To:\s*(\S.+?)\s*\nCc:/ism) {
+> +		@tmp_to = get_recipients($1);
+> +	}
+
+Why "\S.+?" and not "\S.*?"?  A local user whose login name is 'q' is
+disallowed?
+
+Why does the user must keep "Cc:" in order for this new code to pick up
+the list of recipients?  In other words, you are forbidding the user from
+removing the entire "Cc:" line, even when the message should not be Cc'ed
+to anywhere.  Instead there has to remain an empty Cc: line.  Worse yet,
+such an empty "Cc:" line is printed to C2 with your patch and eventually
+fed to sendmail.  I think it is a violation of 2822 to have Cc: that is
+empty, as the format is specified as:
+
+    cc              =       "Cc:" address-list CRLF
+    bcc             =       "Bcc:" (address-list / [CFWS]) CRLF
+    address-list    =       (address *("," address)) / obs-addr-list
+
+> +	if ($c_file =~ /^Cc:\s*(\S.+?)\s*\nBcc:/ism) {
+> +		@tmp_cc = get_recipients($1);
+> +	}
+> +	if ($c_file =~ /^Bcc:\s*(\S.+?)\s*\nSubject:/ism) {
+> +		@tmp_bcc = get_recipients($1);
+> +	}
+
+Exactly the same comment applies to Bcc and Subject part of the parsing.
+
+I think the parsing code you introduced simply suck.  Why isn't it done as
+a part of the main loop to read the same file that already exists?
+
+Unlike your additional code above that reads the whole file into a scalar
+only to discard, the existing main loop processes one line at a file
+(which should be more memory efficient), and you are not handling the
+header continuation line anyway, processing one line at a time would make
+your code much simpler (for one thing, you do not have to do /sm at all).
+Also it won't be confused as your version would if the message happens to
+have "To:" or "Cc:" in the message part, thanks to $in_body variable check
+that is already in the code.
