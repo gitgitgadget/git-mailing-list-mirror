@@ -1,10 +1,9 @@
 From: Giuseppe Bilotta <giuseppe.bilotta@gmail.com>
-Subject: [PATCH v2 03/11] gitweb: separate heads and remotes list in summary view
-Date: Thu, 13 Nov 2008 23:49:09 +0100
-Message-ID: <1226616555-24503-4-git-send-email-giuseppe.bilotta@gmail.com>
+Subject: [PATCH v2 02/11] gitweb: git_get_heads_list accepts an optional list of refs.
+Date: Thu, 13 Nov 2008 23:49:08 +0100
+Message-ID: <1226616555-24503-3-git-send-email-giuseppe.bilotta@gmail.com>
 References: <1226616555-24503-1-git-send-email-giuseppe.bilotta@gmail.com>
  <1226616555-24503-2-git-send-email-giuseppe.bilotta@gmail.com>
- <1226616555-24503-3-git-send-email-giuseppe.bilotta@gmail.com>
 Cc: Jakub Narebski <jnareb@gmail.com>, Petr Baudis <pasky@suse.cz>,
 	Junio C Hamano <gitster@pobox.com>,
 	Giuseppe Bilotta <giuseppe.bilotta@gmail.com>
@@ -14,86 +13,81 @@ Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1L0l1T-0004iw-JK
-	for gcvg-git-2@gmane.org; Thu, 13 Nov 2008 23:50:48 +0100
+	id 1L0l1S-0004iw-U0
+	for gcvg-git-2@gmane.org; Thu, 13 Nov 2008 23:50:47 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752826AbYKMWtH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 13 Nov 2008 17:49:07 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752713AbYKMWtH
-	(ORCPT <rfc822;git-outgoing>); Thu, 13 Nov 2008 17:49:07 -0500
-Received: from fg-out-1718.google.com ([72.14.220.154]:31154 "EHLO
-	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752631AbYKMWtB (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 13 Nov 2008 17:49:01 -0500
-Received: by fg-out-1718.google.com with SMTP id 19so912881fgg.17
-        for <git@vger.kernel.org>; Thu, 13 Nov 2008 14:49:01 -0800 (PST)
+	id S1752725AbYKMWtE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 13 Nov 2008 17:49:04 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752713AbYKMWtD
+	(ORCPT <rfc822;git-outgoing>); Thu, 13 Nov 2008 17:49:03 -0500
+Received: from mu-out-0910.google.com ([209.85.134.184]:43326 "EHLO
+	mu-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752625AbYKMWs7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 13 Nov 2008 17:48:59 -0500
+Received: by mu-out-0910.google.com with SMTP id g7so1096018muf.1
+        for <git@vger.kernel.org>; Thu, 13 Nov 2008 14:48:58 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:received:received:from:to:cc:subject:date
          :message-id:x-mailer:in-reply-to:references;
-        bh=d/NCBtYvXLayJEUSogKm4AZxn08/JZDreFmvE3/68Lk=;
-        b=BCRxh1kB3o3UJpnum6NSjCzOL0tLT6mAup1Z+yaZmtNn1nMMqgrwBW9NOqm7XE14hN
-         BMKWv1yA3gIwkzJRX8S3mRelBJOJ3+7bkZG6Cow/WdlBtO3OS/33zjfv2bGMGKQ089ML
-         xrsDEGVAH8E/n2l4DtfjKR5/HBDOGo4gVfsSU=
+        bh=NoLxIrrkRO7ICfZlWbHC8J6786SeHIgGJ0DqFBN7F7Q=;
+        b=AUjZM/O6tdj7bmU8o3qPZ1mbxWFdVfAIYAyWvau27d+KS15vZLFjRB6QfoqlxMAzVG
+         ZtEjdVVyaXQofSgvDpDZ99eMFC3iO9P3Zv9jMhB6TwMhlb4kzXz/YdiYgpb4FeUIQWQS
+         7GHABg//mMTvbuJuz3kVX216YGZzqdQwlcOIk=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        b=oir7d6M3bUSUVM97aO1kShyfiRxy6NmxJBPGdwAmi6hluGsVXzs/LvAgxFMoZ+8Sso
-         9SjWPR6eYAEDEp/g9xRwJk89/u7Nwam+KtC9xYXO9N1OmTwJC6QM3Gpd6aMMMcis9evT
-         elmes7YyNHmJ06vX1ihpQ1ydnSE6xgQgFkuAw=
-Received: by 10.180.252.8 with SMTP id z8mr66601bkh.158.1226616541036;
-        Thu, 13 Nov 2008 14:49:01 -0800 (PST)
+        b=OCKTy2AH9/zHeLBsITqdZdzacX5dQAP2YuRjFIMINML5HArQic99LyoQ3wbPI+FNlQ
+         4Gh6L3r6PYOFAyNxYwH8lUHFJr9yg+NUOFlKO+6NG72MUmZyQFJWXGGW/n2FdyiJEzNe
+         gPPxX4B4r4ebhU3VolSJ4w7L8yVP5bR06lMOs=
+Received: by 10.180.233.15 with SMTP id f15mr64628bkh.188.1226616538084;
+        Thu, 13 Nov 2008 14:48:58 -0800 (PST)
 Received: from localhost ([78.15.2.247])
-        by mx.google.com with ESMTPS id h2sm5419962fkh.11.2008.11.13.14.48.59
+        by mx.google.com with ESMTPS id f31sm5905255fkf.0.2008.11.13.14.48.56
         (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Thu, 13 Nov 2008 14:49:00 -0800 (PST)
+        Thu, 13 Nov 2008 14:48:57 -0800 (PST)
 X-Mailer: git-send-email 1.5.6.5
-In-Reply-To: <1226616555-24503-3-git-send-email-giuseppe.bilotta@gmail.com>
+In-Reply-To: <1226616555-24503-2-git-send-email-giuseppe.bilotta@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+git_get_heads_list(limit, dir1, dir2, ...) can now be used to retrieve
+refs/dir1, refs/dir2 etc. Defaults to ('heads') or ('heads', 'remotes')
+depending on the remote_heads option.
+
 Signed-off-by: Giuseppe Bilotta <giuseppe.bilotta@gmail.com>
 ---
- gitweb/gitweb.perl |   11 ++++++++++-
- 1 files changed, 10 insertions(+), 1 deletions(-)
+ gitweb/gitweb.perl |   11 +++++++----
+ 1 files changed, 7 insertions(+), 4 deletions(-)
 
 diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
-index d7c97a3..ab29aec 100755
+index b6c4233..d7c97a3 100755
 --- a/gitweb/gitweb.perl
 +++ b/gitweb/gitweb.perl
-@@ -4449,6 +4449,7 @@ sub git_summary {
- 	my %co = parse_commit("HEAD");
- 	my %cd = %co ? parse_date($co{'committer_epoch'}, $co{'committer_tz'}) : ();
- 	my $head = $co{'id'};
-+	my ($remote_heads) = gitweb_check_feature('remote_heads');
+@@ -2663,15 +2663,18 @@ sub parse_from_to_diffinfo {
+ ## parse to array of hashes functions
  
- 	my $owner = git_get_project_owner($project);
- 
-@@ -4456,7 +4457,8 @@ sub git_summary {
- 	# These get_*_list functions return one more to allow us to see if
- 	# there are more ...
- 	my @taglist  = git_get_tags_list(16);
--	my @headlist = git_get_heads_list(16);
-+	my @headlist = git_get_heads_list(16, 'heads');
-+	my @remotelist = $remote_heads ? git_get_heads_list(16, 'remotes') : ();
- 	my @forklist;
- 	my ($check_forks) = gitweb_check_feature('forks');
- 
-@@ -4535,6 +4537,13 @@ sub git_summary {
- 		               $cgi->a({-href => href(action=>"heads")}, "..."));
- 	}
- 
-+	if (@remotelist) {
-+		git_print_header_div('remotes');
-+		git_heads_body(\@remotelist, $head, 0, 15,
-+		               $#remotelist <= 15 ? undef :
-+		               $cgi->a({-href => href(action=>"heads")}, "..."));
+ sub git_get_heads_list {
+-	my $limit = shift;
++	my ($limit, @class) = @_;
++	unless (defined @class) {
++		my ($remote_heads) = gitweb_check_feature('remote_heads');
++		@class = ('heads', $remote_heads ? 'remotes' : undef);
 +	}
-+
- 	if (@forklist) {
- 		git_print_header_div('forks');
- 		git_project_list_body(\@forklist, 'age', 0, 15,
++	my @refs = map { "refs/$_" } @class;
+ 	my @headslist;
+ 
+-	my ($remote_heads) = gitweb_check_feature('remote_heads');
+-
+ 	open my $fd, '-|', git_cmd(), 'for-each-ref',
+ 		($limit ? '--count='.($limit+1) : ()), '--sort=-committerdate',
+ 		'--format=%(objectname) %(refname) %(subject)%00%(committer)',
+-		'refs/heads', ( $remote_heads ? 'refs/remotes' : '')
++		@refs
+ 		or return;
+ 	while (my $line = <$fd>) {
+ 		my %ref_item;
 -- 
 1.5.6.5
