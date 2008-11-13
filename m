@@ -1,100 +1,104 @@
-From: Farrukh Najmi <farrukh@wellfleetsoftware.com>
-Subject: Re: Any plans to support JTA and XA in jgit?
-Date: Thu, 13 Nov 2008 15:27:42 -0500
-Message-ID: <491C8DBE.9080105@wellfleetsoftware.com>
-References: <200811132059.16616.robin.rosenberg.lists@dewire.com>
+From: Alexander Gavrilov <angavrilov@gmail.com>
+Subject: [PATCH (GITK)] gitk: Make line origin search update the busy status.
+Date: Thu, 13 Nov 2008 23:43:13 +0300
+Organization: HOME
+Message-ID: <200811132343.13910.angavrilov@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Type: text/plain;
+  charset="us-ascii"
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Robin Rosenberg <robin.rosenberg.lists@dewire.com>
-X-From: git-owner@vger.kernel.org Thu Nov 13 21:29:07 2008
+Cc: Paul Mackerras <paulus@samba.org>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Nov 13 21:46:45 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1L0ioJ-0001rK-Vp
-	for gcvg-git-2@gmane.org; Thu, 13 Nov 2008 21:29:04 +0100
+	id 1L0j5N-0008Qw-Ae
+	for gcvg-git-2@gmane.org; Thu, 13 Nov 2008 21:46:41 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752141AbYKMU1o (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 13 Nov 2008 15:27:44 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752009AbYKMU1n
-	(ORCPT <rfc822;git-outgoing>); Thu, 13 Nov 2008 15:27:43 -0500
-Received: from vms046pub.verizon.net ([206.46.252.46]:53493 "EHLO
-	vms046pub.verizon.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751869AbYKMU1m (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 13 Nov 2008 15:27:42 -0500
-Received: from [192.168.1.101] ([71.184.206.167])
- by vms046.mailsrvcs.net (Sun Java System Messaging Server 6.2-6.01 (built Apr
- 3 2006)) with ESMTPA id <0KAA003PAGU5UA91@vms046.mailsrvcs.net> for
- git@vger.kernel.org; Thu, 13 Nov 2008 14:27:42 -0600 (CST)
-In-reply-to: <200811132059.16616.robin.rosenberg.lists@dewire.com>
-User-Agent: Thunderbird 2.0.0.17 (X11/20080925)
+	id S1751626AbYKMUpT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 13 Nov 2008 15:45:19 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751579AbYKMUpS
+	(ORCPT <rfc822;git-outgoing>); Thu, 13 Nov 2008 15:45:18 -0500
+Received: from fk-out-0910.google.com ([209.85.128.184]:46318 "EHLO
+	fk-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751505AbYKMUpQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 13 Nov 2008 15:45:16 -0500
+Received: by fk-out-0910.google.com with SMTP id 18so1121445fkq.5
+        for <git@vger.kernel.org>; Thu, 13 Nov 2008 12:45:15 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:from:organization:to:subject
+         :date:user-agent:cc:mime-version:content-type
+         :content-transfer-encoding:content-disposition:message-id;
+        bh=Dz/NfPHo49FaAA6n+OAx5+RiyfHtv8c4suhOcYTV4X4=;
+        b=Qf36f14N5g1YuJjlJdLhX/6Xv4Ogn4fOfdkDeN1UgAWICrTQbQ8SJoW29H9dSxqD+6
+         SKf/VNVhPUDDwErz5/OV3eKuCDKf/Sljrm0aU7vc4YPjys0e3MK0etYDY6bLkqAKPOO/
+         z0Yyz43MY6PS7sL8nNo9pS+JYIVIHlvdnVhCI=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=from:organization:to:subject:date:user-agent:cc:mime-version
+         :content-type:content-transfer-encoding:content-disposition
+         :message-id;
+        b=NrW9RETl0fKntZY7TXFOD6qzbRSJQ77ZytDq7KCr/hGmevOgeYgF+zv96HRQlTnNrK
+         jY0DmiMo2pklO3d9ln2BT8PvbyEmEtcEnicXEH+GUCnvQ83K2BT5bg24HEBe3PoU2Ych
+         KZ+2+zxP1E+LM0Snxtkc2Wz6cBJuCWCiefc8U=
+Received: by 10.181.137.13 with SMTP id p13mr38079bkn.173.1226609114851;
+        Thu, 13 Nov 2008 12:45:14 -0800 (PST)
+Received: from keydesk.localnet ([92.255.85.78])
+        by mx.google.com with ESMTPS id h2sm5342703fkh.11.2008.11.13.12.45.12
+        (version=SSLv3 cipher=RC4-MD5);
+        Thu, 13 Nov 2008 12:45:13 -0800 (PST)
+User-Agent: KMail/1.10.1 (Linux/2.6.26.6-79.fc9.i686; KDE/4.1.2; i686; ; )
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/100913>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/100914>
 
-Robin Rosenberg wrote:
-> torsdag 13 november 2008 20:20:49 skrev Farrukh Najmi:
->   
->> Does the gjit team have any plans to implement support for JTA in gjit 
->> so as to allow distributed transactions using 2 phase commit? This would 
->> be very powerful when git is being used in conjunction with other 
->> transaction resource managers such as databases.
->>     
->
-> No such plans exist. We do not even have a J2EE Resource Manager yet. I
-> did some toying implementing one. As for XA support, I guess that would
-> not be very hard per se, but my thoughts on JEE support was more in the direction
-> of gitweb-like stuff, i.e. reading.
->   
+Currently the 'show origin of this line' feature does
+not update the status field of the gitk window, so it
+is not evident that any processing is going on. It may
+seem at first that clicking the item had no effect.
 
-I am not an expert on this but what I thought could be done is to 
-enhance jgit so it can serve the role of a JTA compliant transactional 
-resource manager similar to that in JDBC, JMS etc. As part of that it 
-could serve resources as JTA XAResource.
-Not sure how hard all this could be though.
-> Trying to involve git in distributed database transactions might be cool, but seriously: Do you
-> need it? 
+This commit adds calls to set and clear the busy
+status with an appropriate title, similar to other
+search commands.
 
-The problem I am trying to solve is this. In my service I need to store 
-metadata in a relational db and content in git such that both either 
-commit or not in a single transaction. If one commits and the other does 
-not that is a serious integrity issue. Seems to me, two phase commit 
-would be the right solution for that in the long run. This what JDBC + 
-JMS topologies do.
+Signed-off-by: Alexander Gavrilov <angavrilov@gmail.com>
+---
+ gitk |    3 +++
+ 1 files changed, 3 insertions(+), 0 deletions(-)
 
-A totally separate issue I have to sort out is how to handle multiple 
-unrelated transactions that are modifying the same git repo. If a 
-transaction needs to be rolled back how do roll back exactly some 
-changes in some files in git that were impacted by the transaction. This 
-is not easy because git (and most VCS) do not have transaction isolation 
-like databases do. Any suggestions?
-
-> As for JEE my ideas are: A nice JSP tag library and a resource manager. When is
-> an entirely different question, as is who. Did you look at  my experiment in a reply of mine
-> in another recent jgit thread?
->   
-
-I am not very well versed in tag libraries myself. My situation is one 
-where everything happens inside a SOAP service endpoint and so I suspect 
-JSP tag libraries are not likely to be useful in that situation. Let me 
-know if I am wrong in this assessment.
-
-> The term "distributed" in XA is not quite the same as in distributed verison control. 
-That is correct.
-
-> If it would,
-> then we'd send SQL commands over e-mail (now, /that/ would be cool :)
-
-+1
-
-Thanks very much for your help and that of other colleagues on the list.
-
+diff --git a/gitk b/gitk
+index e4562d7..3fb9c44 100755
+--- a/gitk
++++ b/gitk
+@@ -3400,6 +3400,7 @@ proc show_line_source {} {
+ 	error_popup [mc "Couldn't start git blame: %s" $err]
+ 	return
+     }
++    nowbusy blaming [mc "Blaming"]
+     fconfigure $f -blocking 0
+     set i [reg_instance $f]
+     set blamestuff($i) {}
+@@ -3413,6 +3414,7 @@ proc stopblaming {} {
+     if {[info exists blameinst]} {
+ 	stop_instance $blameinst
+ 	unset blameinst
++	notbusy blaming
+     }
+ }
+ 
+@@ -3427,6 +3429,7 @@ proc read_line_source {fd inst} {
+     }
+     unset commfd($inst)
+     unset blameinst
++    notbusy blaming
+     fconfigure $fd -blocking 1
+     if {[catch {close $fd} err]} {
+ 	error_popup [mc "Error running git blame: %s" $err]
 -- 
-Regards,
-Farrukh Najmi
-
-Web: http://www.wellfleetsoftware.com
+1.6.0.3.15.gb8d36
