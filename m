@@ -1,121 +1,209 @@
-From: Brandon Casey <casey@nrlssc.navy.mil>
-Subject: [RFC PATCH] repack: make repack -a equivalent to repack -A and drop previous -a behavior
-Date: Thu, 13 Nov 2008 17:20:59 -0600
-Message-ID: <ovvL4JafR2God4TM6Qy0TKZ40xPemeYIPepBW8CggUHFP9JMODfGHmkQH3maiogNAHvCY7E-2U0@cipher.nrlssc.navy.mil>
-Cc: Brandon Casey <casey@nrlssc.navy.mil>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Nov 14 00:41:43 2008
+From: Linus Torvalds <torvalds@linux-foundation.org>
+Subject: Re: hosting git on a nfs
+Date: Thu, 13 Nov 2008 15:42:29 -0800 (PST)
+Message-ID: <alpine.LFD.2.00.0811131518070.3468@nehalem.linux-foundation.org>
+References: <200811121029.34841.thomas@koch.ro> <20081112173651.GA9127@linode.davidb.org> <alpine.LFD.2.00.0811120959050.3468@nehalem.linux-foundation.org> <loom.20081113T174625-994@post.gmane.org> <alpine.LFD.2.00.0811131214020.3468@nehalem.linux-foundation.org>
+ <alpine.LFD.2.00.0811131252040.3468@nehalem.linux-foundation.org>
+Mime-Version: 1.0
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Git Mailing List <git@vger.kernel.org>
+To: James Pickens <jepicken@gmail.com>,
+	Bruce Fields <bfields@fieldses.org>,
+	Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Nov 14 00:44:02 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1L0lok-0005Kz-3k
-	for gcvg-git-2@gmane.org; Fri, 14 Nov 2008 00:41:42 +0100
+	id 1L0lqy-00062s-1V
+	for gcvg-git-2@gmane.org; Fri, 14 Nov 2008 00:44:00 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752303AbYKMXk1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 13 Nov 2008 18:40:27 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751706AbYKMXk0
-	(ORCPT <rfc822;git-outgoing>); Thu, 13 Nov 2008 18:40:26 -0500
-Received: from mail1.nrlssc.navy.mil ([128.160.35.1]:58110 "EHLO
-	mail.nrlssc.navy.mil" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751374AbYKMXk0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 13 Nov 2008 18:40:26 -0500
-X-Greylist: delayed 1165 seconds by postgrey-1.27 at vger.kernel.org; Thu, 13 Nov 2008 18:40:26 EST
-Received: by mail.nrlssc.navy.mil id mADNL0kw003182; Thu, 13 Nov 2008 17:21:00 -0600
+	id S1752042AbYKMXmp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 13 Nov 2008 18:42:45 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752723AbYKMXmp
+	(ORCPT <rfc822;git-outgoing>); Thu, 13 Nov 2008 18:42:45 -0500
+Received: from smtp1.linux-foundation.org ([140.211.169.13]:50897 "EHLO
+	smtp1.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751715AbYKMXmo (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 13 Nov 2008 18:42:44 -0500
+Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [140.211.169.55])
+	by smtp1.linux-foundation.org (8.14.2/8.13.5/Debian-3ubuntu1.1) with ESMTP id mADNgTgp023299
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Thu, 13 Nov 2008 15:42:30 -0800
+Received: from localhost (localhost [127.0.0.1])
+	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id mADNgTc6030697;
+	Thu, 13 Nov 2008 15:42:29 -0800
+In-Reply-To: <alpine.LFD.2.00.0811131252040.3468@nehalem.linux-foundation.org>
+User-Agent: Alpine 2.00 (LFD 1167 2008-08-23)
+X-Spam-Status: No, hits=-3.433 required=5 tests=AWL,BAYES_00
+X-Spam-Checker-Version: SpamAssassin 3.2.4-osdl_revision__1.47__
+X-MIMEDefang-Filter: lf$Revision: 1.188 $
+X-Scanned-By: MIMEDefang 2.63 on 140.211.169.13
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/100928>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/100929>
 
-Once upon a time, repack had only a single option which began with the first
-letter of the alphabet.  Then, a second was created which would repack
-unreachable objects into the newly created pack so that git-gc --auto could
-be invented.  But, the -a option was still necessary so that it could be
-called every now and then to discard the unreachable objects that were being
-repacked over and over and over into newly generated packs. Later, -A was
-changed so that instead of repacking the unreachable objects, it ejected
-them from the pack so that they resided in the object store in loose form,
-to be garbage collected by prune-packed according to normal expiry rules.
 
-And so, -a lost its raison d'etre.
 
-Signed-off-by: Brandon Casey <casey@nrlssc.navy.mil>
+On Thu, 13 Nov 2008, Linus Torvalds wrote:
+>
+> And if there are per-directory locking etc that screws this up, we can 
+> look at using different heuristics for the lstat() patterns. Right now I 
+> divvy it up so that thread 0 gets entries 0, 10, 20, 30.. and thread 1 
+> does entries 1, 11, 21, 31.., but we could easily split it up differently, 
+> and do 0,1,2,3.. and 1000,1001,1002,1003.. instead. That migth avoid some 
+> per-directory locks. Dunno.
+
+Yeah, I just checked. We really should to the lookups in clusters, because 
+yes, we do have directory locks that limit parallel lookups in the same 
+directory, so to get good parallelism you want to look up in different 
+places.
+
+Admittedly that's really a Linux kernel deficiency, and I'd love to fix it 
+(in the long run), but we optimize file lookup for the common (cached) 
+case, and the uncommon case of parallel misses in the same directory has 
+been written for simplicity and robustness.
+
+So don't even bother trying the previous patch, even if it might work. At 
+least not on Linux. Try this one instead, which does the parallel things 
+in batches, so that we hopefully hit different directories.
+
+Parallelism is hard. 
+
+The good news is that I seem to actualluy see a bit of a win from this 
+even on a disk, now that the kernel doesn't serialize things. So it may 
+be worth it. So I have some hope that it actually helps on NFS too. 
+The numbers for five runs (with clearing of the caches in between, of 
+course) are:
+
+Before:
+
+	0.01user 0.23system 0:10.87elapsed 2%CPU
+	0.04user 0.19system 0:10.86elapsed 2%CPU
+	0.03user 0.26system 0:10.82elapsed 2%CPU
+	0.02user 0.27system 0:12.67elapsed 2%CPU
+	0.01user 0.22system 0:10.86elapsed 2%CPU
+
+After:
+
+	0.03user 0.26system 0:07.88elapsed 3%CPU
+	0.02user 0.25system 0:07.63elapsed 3%CPU
+	0.01user 0.26system 0:08.62elapsed 3%CPU
+	0.01user 0.26system 0:07.27elapsed 3%CPU
+	0.05user 0.28system 0:08.61elapsed 3%CPU
+
+so it really does seem like it has possibly given a 30% improvement in 
+cold-cache performance even on a disk. 
+
+NOTE NOTE NOTE! This is still a total hack. If this was done properly, we 
+would do the "preload_uptodate()" thing when we load the cache for all the 
+different programs where it can matter, not just the one special case 
+place. So see this as a proof-of-concept, nothing more.
+
+		Linus
+
 ---
+ diff-lib.c |   74 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ 1 files changed, 74 insertions(+), 0 deletions(-)
 
-
-This is on top of bc/maint-keep-pack
-
--brandon
-
-
- Documentation/git-repack.txt |   25 ++++++++++++-------------
- git-repack.sh                |    8 ++++----
- 2 files changed, 16 insertions(+), 17 deletions(-)
-
-diff --git a/Documentation/git-repack.txt b/Documentation/git-repack.txt
-index aaa8852..d04d5c2 100644
---- a/Documentation/git-repack.txt
-+++ b/Documentation/git-repack.txt
-@@ -32,21 +32,20 @@ OPTIONS
- 	pack everything referenced into a single pack.
- 	Especially useful when packing a repository that is used
- 	for private development and there is no need to worry
--	about people fetching via dumb protocols from it.  Use
--	with '-d'.  This will clean up the objects that `git prune`
--	leaves behind, but `git fsck --full` shows as
--	dangling.
-+	about people fetching via dumb protocols from it.  If used
-+	with '-d' , then any unreachable objects in a previous pack will
-+	become loose, unpacked objects, instead of being left in the
-+	old pack.  Unreachable objects are never intentionally added to
-+	a pack, even when repacking.  This option prevents unreachable
-+	objects from being immediately deleted by way of being left in
-+	the old pack and then removed.  Instead, the loose unreachable
-+	objects will be pruned according to normal expiry rules
-+	with the next 'git-gc' invocation. See linkgit:git-gc[1].
+diff --git a/diff-lib.c b/diff-lib.c
+index ae96c64..83c180d 100644
+--- a/diff-lib.c
++++ b/diff-lib.c
+@@ -1,6 +1,7 @@
+ /*
+  * Copyright (C) 2005 Junio C Hamano
+  */
++#include <pthread.h>
+ #include "cache.h"
+ #include "quote.h"
+ #include "commit.h"
+@@ -54,6 +55,77 @@ static int check_removed(const struct cache_entry *ce, struct stat *st)
+ 	return 0;
+ }
  
- -A::
--	Same as `-a`, unless '-d' is used.  Then any unreachable
--	objects in a previous pack become loose, unpacked objects,
--	instead of being left in the old pack.  Unreachable objects
--	are never intentionally added to a pack, even when repacking.
--	This option prevents unreachable objects from being immediately
--	deleted by way of being left in the old pack and then
--	removed.  Instead, the loose unreachable objects
--	will be pruned according to normal expiry rules
--	with the next 'git-gc' invocation. See linkgit:git-gc[1].
-+	Same as `-a`. Historical note: the -a and -A options used to differ
-+	in that -a did not leave unreachable objects unpacked.  Instead,
-+	they were removed along with the redundant pack (when -d was used).
- 
- -d::
- 	After packing, if the newly created packs make some
-diff --git a/git-repack.sh b/git-repack.sh
-index 458a497..f1e21b9 100755
---- a/git-repack.sh
-+++ b/git-repack.sh
-@@ -7,8 +7,9 @@ OPTIONS_KEEPDASHDASH=
- OPTIONS_SPEC="\
- git repack [options]
- --
--a               pack everything in a single pack
--A               same as -a, and turn unreachable objects loose
-+a               pack everything in a single pack, and turn unreachable objects
-+                loose
-+A               same as -a
- d               remove redundant packs, and run git-prune-packed
- f               pass --no-reuse-object to git-pack-objects
- n               do not run git-update-server-info
-@@ -29,8 +30,7 @@ while test $# != 0
- do
- 	case "$1" in
- 	-n)	no_update_info=t ;;
--	-a)	all_into_one=t ;;
--	-A)	all_into_one=t
-+	-a|-A)	all_into_one=t
- 		unpack_unreachable=--unpack-unreachable ;;
- 	-d)	remove_redundant=t ;;
- 	-q)	quiet=-q ;;
--- 
-1.6.0.3.552.g12334
++/* Hacky hack-hack start */
++#define MAX_PARALLEL (10)
++static int parallel_lstats = 1;
++
++struct thread_data {
++	pthread_t pthread;
++	struct index_state *index;
++	const char **pathspec;
++	int offset, nr;
++};
++
++static void *preload_thread(void *_data)
++{
++	int nr;
++	struct thread_data *p = _data;
++	struct index_state *index = p->index;
++	struct cache_entry **cep = index->cache + p->offset;
++
++	nr = p->nr;
++	if (nr + p->offset > index->cache_nr)
++		nr = index->cache_nr - p->offset;
++
++	do {
++		struct cache_entry *ce = *cep++;
++		struct stat st;
++
++		if (ce_stage(ce))
++			continue;
++		if (ce_uptodate(ce))
++			continue;
++		if (!ce_path_match(ce, p->pathspec))
++			continue;
++		if (lstat(ce->name, &st))
++			continue;
++		if (ie_match_stat(index, ce, &st, 0))
++			continue;
++		ce_mark_uptodate(ce);
++	} while (--nr > 0);
++	return NULL;
++}
++
++static void preload_uptodate(const char **pathspec, struct index_state *index)
++{
++	int i, work, offset;
++	int threads = index->cache_nr / 100;
++	struct thread_data data[MAX_PARALLEL];
++
++	if (threads < 2)
++		return;
++	if (threads > MAX_PARALLEL)
++		threads = MAX_PARALLEL;
++	offset = 0;
++	work = (index->cache_nr + threads - 1) / threads;
++	for (i = 0; i < threads; i++) {
++		struct thread_data *p = data+i;
++		p->index = index;
++		p->pathspec = pathspec;
++		p->offset = offset;
++		p->nr = work;
++		offset += work;
++		if (pthread_create(&p->pthread, NULL, preload_thread, p))
++			die("unable to create threaded lstat");
++	}
++	for (i = 0; i < threads; i++) {
++		struct thread_data *p = data+i;
++		if (pthread_join(p->pthread, NULL))
++			die("unable to join threaded lstat");
++	}
++}
++/* Hacky hack-hack mostly ends */
++
+ int run_diff_files(struct rev_info *revs, unsigned int option)
+ {
+ 	int entries, i;
+@@ -68,6 +140,8 @@ int run_diff_files(struct rev_info *revs, unsigned int option)
+ 	if (diff_unmerged_stage < 0)
+ 		diff_unmerged_stage = 2;
+ 	entries = active_nr;
++	if (parallel_lstats)
++		preload_uptodate(revs->prune_data, &the_index);
+ 	symcache[0] = '\0';
+ 	for (i = 0; i < entries; i++) {
+ 		struct stat st;
