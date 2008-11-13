@@ -1,157 +1,85 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re* [take 2] git send-email updates
-Date: Wed, 12 Nov 2008 16:01:46 -0800
-Message-ID: <7vfxlwlcid.fsf_-_@gitster.siamese.dyndns.org>
-References: <1225450632-7230-1-git-send-email-madcoder@debian.org>
- <1226361242-2516-1-git-send-email-madcoder@debian.org>
- <7v4p2e0zus.fsf@gitster.siamese.dyndns.org>
- <20081111221351.GE10073@artemis.corp>
- <7vk5b9x0kj.fsf@gitster.siamese.dyndns.org>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Pierre Habouzit <madcoder@debian.org>
-X-From: git-owner@vger.kernel.org Thu Nov 13 01:03:32 2008
+From: Brandon Casey <casey@nrlssc.navy.mil>
+Subject: [PATCH] t7700: test that 'repack -a' packs alternate packed objects
+Date: Wed, 12 Nov 2008 18:50:26 -0600
+Message-ID: <E9qVE-t4Yve7ucbU-qz4xNKAAKLQr2fsS-7YejFpq3D1nvYFAzALqOj8GLVYLfJ_AlbpSpUJ_6o@cipher.nrlssc.navy.mil>
+References: <WFmMnhNsYRw3IUD8hZk59At-5jc1rZU5GaB35sb1epRZ6zwd7IMw9V94SQyEliIEyriM4J5j3AM@cipher.nrlssc.navy.mil>
+Cc: peff@peff.net, git@vger.kernel.org, spearce@spearce.org,
+	nico@cam.org, Brandon Casey <casey@nrlssc.navy.mil>
+To: gitster@pobox.com
+X-From: git-owner@vger.kernel.org Thu Nov 13 01:52:15 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1L0PgJ-0002dZ-0D
-	for gcvg-git-2@gmane.org; Thu, 13 Nov 2008 01:03:31 +0100
+	id 1L0QRS-0008DS-7K
+	for gcvg-git-2@gmane.org; Thu, 13 Nov 2008 01:52:14 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752117AbYKMACM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 12 Nov 2008 19:02:12 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752154AbYKMACK
-	(ORCPT <rfc822;git-outgoing>); Wed, 12 Nov 2008 19:02:10 -0500
-Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:50194 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750924AbYKMACJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 12 Nov 2008 19:02:09 -0500
-Received: from localhost.localdomain (localhost [127.0.0.1])
-	by b-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id E4C05168A1;
-	Wed, 12 Nov 2008 19:02:07 -0500 (EST)
-Received: from pobox.com (ip68-225-240-211.oc.oc.cox.net [68.225.240.211])
- (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
- certificate requested) by b-sasl-quonix.sasl.smtp.pobox.com (Postfix) with
- ESMTPSA id 890AD16884; Wed, 12 Nov 2008 19:01:48 -0500 (EST)
-In-Reply-To: <7vk5b9x0kj.fsf@gitster.siamese.dyndns.org> (Junio C. Hamano's
- message of "Tue, 11 Nov 2008 16:14:20 -0800")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: 4FEC0194-B116-11DD-9475-C128113D384A-77302942!a-sasl-quonix.pobox.com
+	id S1751315AbYKMAu7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 12 Nov 2008 19:50:59 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751235AbYKMAu7
+	(ORCPT <rfc822;git-outgoing>); Wed, 12 Nov 2008 19:50:59 -0500
+Received: from mail1.nrlssc.navy.mil ([128.160.35.1]:37373 "EHLO
+	mail.nrlssc.navy.mil" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751198AbYKMAu6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 12 Nov 2008 19:50:58 -0500
+Received: by mail.nrlssc.navy.mil id mAD0oa0b009905; Wed, 12 Nov 2008 18:50:36 -0600
+In-Reply-To: <WFmMnhNsYRw3IUD8hZk59At-5jc1rZU5GaB35sb1epRZ6zwd7IMw9V94SQyEliIEyriM4J5j3AM@cipher.nrlssc.navy.mil>
+X-OriginalArrivalTime: 13 Nov 2008 00:50:36.0283 (UTC) FILETIME=[D72D84B0:01C94529]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/100838>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/100839>
 
-Junio C Hamano <gitster@pobox.com> writes:
+Previously, when 'repack -a' was called and there were no packs in the local
+repository without a .keep file, the repack would fall back to calling
+pack-objects with '--unpacked --incremental'. This resulted in the created
+pack file, if any, to be missing the packed objects in the alternate object
+store. Test that this specific case has been fixed.
 
-> Actually, "send-email --format-patch master..fixes Documentation/" may be
-> a useful command to send out only documentation fixes.  For such a usage,
-> Documentation/ should not be taken as a maildir.  If we would want to
-> support such usage (and I'd say why not), a token can fall into one (or
-> two) of three categories:
->
->     - can it be a rev?
->
->     - is it a tracked path (either blob or a leading dir)?
->
->     - is it a file/dir that is not tracked?
->
-> The first two would be format-patch candidate.  The last one is the
-> traditional mail source.  Because the latter two are disjoint set, and
-> because it does not matter if you have a tracked file 'master' and a
-> branch 'master' in your repo (either will be passed to format-patch
-> anyway), the actual disambiguity is reduced, but it still is different
-> from what you have in your patch, I suspect.
->
-> As to options, how about doing this:
->
->     --no-format-patch means never ever run format-patch, behave exactly as
->     before;
->
->     --format-patch means what you have in your patch.  guess and favor 
->     format-patch parameter when ambiguous;
->
->     without either option, guess and favor mbox/maildir but still run
->     format-patch if remaining parameters and options need to
->     (e.g. "send-email my-cover-letter origin/master..master" will find
->     my-cover-letter which is not tracked and take it as mbox, and grab
->     patches from commits between origin/master..master, and send all of
->     them).
+Signed-off-by: Brandon Casey <casey@nrlssc.navy.mil>
+---
 
-This patch on top of your [2/4] illustrates what I had in mind (it also
-removes the "print foo" while at it).
 
- git-send-email.perl |   35 +++++++++++++++++++++++++++++++----
- 1 files changed, 31 insertions(+), 4 deletions(-)
+Here is a test to demonstrate what
+  [PATCH 5/6] repack: do not fall back to incremental repacking with [-a|-A]
+fixes.
 
-diff --git c/git-send-email.perl w/git-send-email.perl
-index 6f5a613..9aa3500 100755
---- c/git-send-email.perl
-+++ w/git-send-email.perl
-@@ -152,7 +152,7 @@ if ($@) {
+This should apply cleanly to next since it includes
+  a836cfa3 t7700: demonstrate mishandling of loose objects in an alternate ODB
+which has a few context lines showing through in the diff below.
+
+-brandon
+
+
+ t/t7700-repack.sh |   16 ++++++++++++++++
+ 1 files changed, 16 insertions(+), 0 deletions(-)
+
+diff --git a/t/t7700-repack.sh b/t/t7700-repack.sh
+index 960bff4..3f602ea 100755
+--- a/t/t7700-repack.sh
++++ b/t/t7700-repack.sh
+@@ -53,5 +53,21 @@ test_expect_success 'loose objects in alternate ODB are not repacked' '
+ 	test -z "$found_duplicate_object"
+ '
  
- # Behavior modification variables
- my ($quiet, $dry_run) = (0, 0);
--my $format_patch;
-+my $format_patch = 'unspecified';
- my $compose_filename = $repo->repo_path() . "/.gitsendemail.msg.$$";
++test_expect_success 'packed obs in alt ODB are repacked even when local repo is packless' '
++	mkdir alt_objects/pack
++	mv .git/objects/pack/* alt_objects/pack &&
++	git repack -a &&
++	myidx=$(ls -1 .git/objects/pack/*.idx) &&
++	test -f "$myidx" &&
++	for p in alt_objects/pack/*.idx; do
++		git verify-pack -v $p | sed -n -e "/^[0-9a-f]\{40\}/p"
++	done | while read sha1 rest; do
++		if ! ( git verify-pack -v $myidx | grep "^$sha1" ); then
++			echo "Missing object in local pack: $sha1"
++			return 1
++		fi
++	done
++'
++
+ test_done
  
- # Variables with corresponding config settings
-@@ -243,6 +243,15 @@ unless ($rc) {
-     usage();
- }
- 
-+if ($format_patch && $format_patch eq 'unspecified') {
-+	# No --format-patch nor --no-format-patch on the command line
-+	$format_patch = 0;
-+} elsif (!$format_patch) {
-+	$format_patch = undef;
-+} else {
-+	$format_patch = 1;
-+}
-+
- # Now, let's fill any that aren't set in with defaults:
- 
- sub read_config {
-@@ -374,11 +383,27 @@ if (@alias_files and $aliasfiletype and defined $parse_alias{$aliasfiletype}) {
- # returns 1 if the conflict must be solved using it as a format-patch argument
- sub check_file_rev_conflict($) {
- 	my $f = shift;
-+
-+	if (!defined $format_patch) {
-+		# The command line explicitly forbids acting as a wrapper
-+		return 0;
-+	}
-+
-+	# If it is a tracked path it can't be tracking the e-mails you
-+	# are going to send out to describe the change to this repository.
-+	eval {
-+		$repo->command(['ls-files', '--error-unmatch', $f],
-+			       { STDERR => 0 });
-+	};
-+	if (!$@) {
-+		return 1;
-+	}
-+
-+	# Can it be interpreted as a rev?
- 	try {
- 		$repo->command('rev-parse', '--verify', '--quiet', $f);
--		if (defined($format_patch)) {
--			print "foo\n";
--			return $format_patch;
-+		if ($format_patch) {
-+			return 1;
- 		}
- 		die(<<EOF);
- File '$f' exists but it could also be the range of commits
-@@ -408,6 +433,8 @@ while (my $f = pop @ARGV) {
- 		closedir(DH);
- 	} elsif ((-f $f or -p $f) and !check_file_rev_conflict($f)) {
- 		push @files, $f;
-+	} elsif (!defined $format_patch) {
-+		die("--no-format-patch was given but $f is not a valid send-email argument");
- 	} else {
- 		push @rev_list_opts, $f;
- 	}
+-- 
+1.6.0.3.552.g12334
