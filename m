@@ -1,69 +1,78 @@
-From: Pascal Obry <pascal@obry.net>
-Subject: Re: problem with git gui on cygwin.
-Date: Thu, 13 Nov 2008 22:06:15 +0100
-Organization: Home - http://www.obry.net
-Message-ID: <491C96C7.6090904@obry.net>
-References: <loom.20081111T155614-227@post.gmane.org>
-Reply-To: pascal@obry.net
+From: "Anders Melchiorsen" <mail@cup.kalibalik.dk>
+Subject: [BUG] git ls-files -m --with-tree does double output
+Date: Thu, 13 Nov 2008 22:53:48 +0100 (CET)
+Message-ID: <37512.N1gUGH5fRhE=.1226613228.squirrel@webmail.hotelhot.dk>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
 Cc: git@vger.kernel.org
-To: Jim Jensen <jhjjhjjhj@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Nov 13 22:07:54 2008
+To: gitster@pobox.com
+X-From: git-owner@vger.kernel.org Thu Nov 13 22:55:06 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1L0jPo-0008GO-5Q
-	for gcvg-git-2@gmane.org; Thu, 13 Nov 2008 22:07:48 +0100
+	id 1L0k9Y-0000P3-LE
+	for gcvg-git-2@gmane.org; Thu, 13 Nov 2008 22:55:05 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752181AbYKMVGc convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 13 Nov 2008 16:06:32 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752043AbYKMVGc
-	(ORCPT <rfc822;git-outgoing>); Thu, 13 Nov 2008 16:06:32 -0500
-Received: from gv-out-0910.google.com ([216.239.58.190]:39191 "EHLO
-	gv-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752171AbYKMVGc (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 13 Nov 2008 16:06:32 -0500
-Received: by gv-out-0910.google.com with SMTP id e6so245340gvc.37
-        for <git@vger.kernel.org>; Thu, 13 Nov 2008 13:06:24 -0800 (PST)
-Received: by 10.103.11.7 with SMTP id o7mr57036mui.103.1226610383329;
-        Thu, 13 Nov 2008 13:06:23 -0800 (PST)
-Received: from ?192.168.0.100? (AVelizy-154-1-22-141.w82-124.abo.wanadoo.fr [82.124.78.141])
-        by mx.google.com with ESMTPS id e10sm18847232muf.14.2008.11.13.13.06.20
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Thu, 13 Nov 2008 13:06:21 -0800 (PST)
-User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.1; fr-FR; rv:1.8.1.17) Gecko/20080914 Thunderbird/2.0.0.17 Mnenhy/0.7.5.0
-In-Reply-To: <loom.20081111T155614-227@post.gmane.org>
-X-Enigmail-Version: 0.95.7
+	id S1752363AbYKMVxt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 13 Nov 2008 16:53:49 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751706AbYKMVxt
+	(ORCPT <rfc822;git-outgoing>); Thu, 13 Nov 2008 16:53:49 -0500
+Received: from mail.hotelhot.dk ([77.75.163.100]:57241 "EHLO mail.hotelhot.dk"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751374AbYKMVxs (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 13 Nov 2008 16:53:48 -0500
+Received: from mail.hotelhot.dk (localhost [127.0.0.1])
+	by mail.hotelhot.dk (Postfix) with ESMTP id 0271814068;
+	Thu, 13 Nov 2008 22:53:49 +0100 (CET)
+Received: from webmail.hotelhot.dk (mail.hotelhot.dk [192.168.0.190])
+	by mail.hotelhot.dk (Postfix) with ESMTP id C9DC014062;
+	Thu, 13 Nov 2008 22:53:48 +0100 (CET)
+X-Squirrel-UserHash: NQYRRTwcNktTVUlTWFZaWRRVWg==
+X-Squirrel-FromHash: N1gUGH5fRhE=
+User-Agent: SquirrelMail/1.4.13
+X-Priority: 3 (Normal)
+Importance: Normal
+X-Virus-Scanned: ClamAV using ClamSMTP
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/100916>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/100917>
 
-Jim Jensen a =E9crit :
-> I have been trying to use git for a small project using cygwin.  I co=
-pied my
-> repository from one windows XP system to a Vista system using a usb d=
-rive.  On
-> the new system when I use "git gui" I get a pop up that says "Git dir=
-ectory not
-> found: .git"
+Junio, I am resending this one because I am not sure whether you ignored
+it on purpose, or it got lost during your vacation.
 
-I had some problems with Git UI and Tk. It does not look like the
-problem you have but we never know. Can you try:
+The combination of -m and --with-tree shows duplicate entries:
 
-   $ CYGWIN=3D"" gitk
+and@dylle:~$ mkdir repo ; cd repo
+and@dylle:~/repo$ git init
+Initialized empty Git repository in /home/and/repo/.git/
+and@dylle:~/repo$ date >a ; git add a ; git commit -m'Add 1'
+Created initial commit c027435: Add 1
+ 1 files changed, 1 insertions(+), 0 deletions(-)
+ create mode 100644 a
+and@dylle:~/repo$ date >a
+and@dylle:~/repo$ git ls-files -m --with-tree=HEAD
+a
+a
 
---=20
 
---|------------------------------------------------------
---| Pascal Obry                           Team-Ada Member
---| 45, rue Gabriel Peri - 78114 Magny Les Hameaux FRANCE
---|------------------------------------------------------
---|              http://www.obry.net
---| "The best way to travel is by means of imagination"
---|
---| gpg --keyserver wwwkeys.pgp.net --recv-key C1082595
+Jeff King added:
+
+I have confirmed this, and it looks like it has always been that way. It
+looks like overlay_tree_on_cache just does a read_tree to pull the tree
+into the index, and then we end up with duplicate entries.
+
+I'm not too familiar with the read_tree code, so I am cc'ing Junio (who
+is out of touch for a little while) and Linus, who are much more clueful
+in this area.
+
+It isn't clear to me which code is _supposed_ to be pulling out such
+duplicates here. That is, is read_tree broken, or is
+overlay_tree_on_cache just calling it wrong?
+
+
+
+Anders.
