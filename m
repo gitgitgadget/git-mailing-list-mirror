@@ -1,110 +1,116 @@
-From: Giuseppe Bilotta <giuseppe.bilotta@gmail.com>
-Subject: [PATCH v2 07/11] gitweb: add 'remotes' action
-Date: Thu, 13 Nov 2008 23:49:13 +0100
-Message-ID: <1226616555-24503-8-git-send-email-giuseppe.bilotta@gmail.com>
-References: <1226616555-24503-1-git-send-email-giuseppe.bilotta@gmail.com>
- <1226616555-24503-2-git-send-email-giuseppe.bilotta@gmail.com>
- <1226616555-24503-3-git-send-email-giuseppe.bilotta@gmail.com>
- <1226616555-24503-4-git-send-email-giuseppe.bilotta@gmail.com>
- <1226616555-24503-5-git-send-email-giuseppe.bilotta@gmail.com>
- <1226616555-24503-6-git-send-email-giuseppe.bilotta@gmail.com>
- <1226616555-24503-7-git-send-email-giuseppe.bilotta@gmail.com>
-Cc: Jakub Narebski <jnareb@gmail.com>, Petr Baudis <pasky@suse.cz>,
-	Junio C Hamano <gitster@pobox.com>,
-	Giuseppe Bilotta <giuseppe.bilotta@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Nov 13 23:50:59 2008
+From: Alex Riesen <raa.lkml@gmail.com>
+Subject: Re: [BUG] fatal error during merge
+Date: Fri, 14 Nov 2008 00:09:32 +0100
+Message-ID: <20081113230932.GA8552@blimp.localdomain>
+References: <53328.bFoQE3daRhY=.1226568134.squirrel@webmail.hotelhot.dk> <2008-11-13-14-23-19+trackit+sam@rfc1149.net> <20081113140323.GA10267@neumann> <2008-11-13-15-26-33+trackit+sam@rfc1149.net> <20081113145325.GD29274@neumann> <57814.N1gUGH5fRhE=.1226596012.squirrel@webmail.hotelhot.dk> <20081113180931.GE29274@neumann>
+Reply-To: Alex Riesen <raa.lkml@gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=iso-8859-15
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Anders Melchiorsen <mail@cup.kalibalik.dk>,
+	Samuel Tardieu <sam@rfc1149.net>,
+	Linus Torvalds <torvalds@linux-foundation.org>,
+	git@vger.kernel.org,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Junio C Hamano <gitster@pobox.com>
+To: SZEDER =?iso-8859-15?Q?G=E1bor?= <szeder@ira.uka.de>
+X-From: git-owner@vger.kernel.org Fri Nov 14 00:10:54 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1L0l1W-0004iw-Ar
-	for gcvg-git-2@gmane.org; Thu, 13 Nov 2008 23:50:50 +0100
+	id 1L0lKv-0003z2-LN
+	for gcvg-git-2@gmane.org; Fri, 14 Nov 2008 00:10:54 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753364AbYKMWtU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 13 Nov 2008 17:49:20 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753286AbYKMWtU
-	(ORCPT <rfc822;git-outgoing>); Thu, 13 Nov 2008 17:49:20 -0500
-Received: from fg-out-1718.google.com ([72.14.220.154]:31154 "EHLO
-	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753132AbYKMWtO (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 13 Nov 2008 17:49:14 -0500
-Received: by fg-out-1718.google.com with SMTP id 19so912881fgg.17
-        for <git@vger.kernel.org>; Thu, 13 Nov 2008 14:49:13 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:cc:subject:date
-         :message-id:x-mailer:in-reply-to:references;
-        bh=VdzSPnmhpRsCEsuSq3PZYdxFZfG8+QLtR8nXIZGa6IE=;
-        b=fIP1MgoHnKeDBVAK2fR4HhaJH9I2i/va7DzHeNV+Vk0k0gh2PW7LGwbtU55F4pVYMB
-         cr81OeePpHE+PAayBvwCdznauSAYY9rNwAw4HlFZhIBVSjCRRCSsAFb/FbdVvoVkNtEE
-         q4HeW4huHhIoJIODZvp/4d4opBBsJWuzGatRw=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        b=YW3qwNu7WUy+NFBxBi14S+5AbFZQcZVZXLYG7FspgL1g8zfr4HFRVzDJaZ7kld5iMP
-         UB+A16DYkTq9qb8+J6xsjFqoRjR3hnGmsgk1lvTiXrdb4wecAZKFQGWyM+nEBIzy5BYR
-         ofzt7BNvxZ9u6W6+3XNtTwkVEpV4EPuckT/D4=
-Received: by 10.181.141.7 with SMTP id t7mr76330bkn.10.1226616553645;
-        Thu, 13 Nov 2008 14:49:13 -0800 (PST)
-Received: from localhost ([78.15.2.247])
-        by mx.google.com with ESMTPS id y15sm5455482fkd.17.2008.11.13.14.49.12
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Thu, 13 Nov 2008 14:49:13 -0800 (PST)
-X-Mailer: git-send-email 1.5.6.5
-In-Reply-To: <1226616555-24503-7-git-send-email-giuseppe.bilotta@gmail.com>
+	id S1753373AbYKMXJh convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 13 Nov 2008 18:09:37 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753293AbYKMXJh
+	(ORCPT <rfc822;git-outgoing>); Thu, 13 Nov 2008 18:09:37 -0500
+Received: from mo-p05-ob.rzone.de ([81.169.146.182]:47182 "EHLO
+	mo-p05-ob.rzone.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752628AbYKMXJg (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 13 Nov 2008 18:09:36 -0500
+X-RZG-CLASS-ID: mo05
+X-RZG-AUTH: :Pm0FVUW6aauhRGJJc5OfA4AU8DM8ZlijdmJYxKn/UQvEQQx9CU82p9Cj
+Received: from tigra.home (Fa8e1.f.strato-dslnet.de [195.4.168.225])
+	by post.strato.de (mrclete mo13) (RZmta 17.20)
+	with ESMTP id y03365kADN94UF ; Fri, 14 Nov 2008 00:09:33 +0100 (MET)
+Received: from blimp.localdomain (unknown [192.168.0.8])
+	by tigra.home (Postfix) with ESMTP id C31E1277C8;
+	Fri, 14 Nov 2008 00:09:32 +0100 (CET)
+Received: by blimp.localdomain (Postfix, from userid 1000)
+	id 5C29D36D27; Fri, 14 Nov 2008 00:09:32 +0100 (CET)
+Content-Disposition: inline
+In-Reply-To: <20081113180931.GE29274@neumann>
+User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This action is similar to the 'heads' action, but it displays
-remote heads, grouped by remote repository.
+SZEDER G=E1bor, Thu, Nov 13, 2008 19:09:31 +0100:
+> On Thu, Nov 13, 2008 at 06:06:52PM +0100, Anders Melchiorsen wrote:
+> > SZEDER G=E1bor wrote:
+> > > It doesn't matter.  The test script errors out at the merge, and =
+not
+> > > at the checkout.  Furthermore, it doesn't matter, whether HEAD~,
+> > > HEAD~, or HEAD^ is checked out, the results are the same.
+> >=20
+> > Just to be sure, I tried reverting the commit that you bisected -- =
+and my
+> > test case still fails.
+>=20
+> Well, oddly enough, your second test case behaves somewhat differentl=
+y
+> than the first one, at least as far as bisect is concerned.  Bisect
+> nails down the second test case to 0d5e6c97 (Ignore merged status of
+> the file-level merge, 2007-04-26; put Alex on Cc).  Reverting this
+> commit on master makes both of your test cases pass.
 
-Signed-off-by: Giuseppe Bilotta <giuseppe.bilotta@gmail.com>
----
- gitweb/gitweb.perl |   16 +++++++++++++++-
- 1 files changed, 15 insertions(+), 1 deletions(-)
+Well, the case is a bit unfair: all files have the same SHA-1!
 
-diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
-index 03e0b21..09728cb 100755
---- a/gitweb/gitweb.perl
-+++ b/gitweb/gitweb.perl
-@@ -507,6 +507,7 @@ our %actions = (
- 	"commit" => \&git_commit,
- 	"forks" => \&git_forks,
- 	"heads" => \&git_heads,
-+	"remotes" => \&git_remotes,
- 	"history" => \&git_history,
- 	"log" => \&git_log,
- 	"rss" => \&git_rss,
-@@ -4755,13 +4756,26 @@ sub git_heads {
- 	git_print_page_nav('','', $head,undef,$head);
- 	git_print_header_div('summary', $project);
- 
--	my @headslist = git_get_heads_list();
-+	my @headslist = git_get_heads_list(undef, 'heads');
- 	if (@headslist) {
- 		git_heads_body(\@headslist, $head);
- 	}
- 	git_footer_html();
- }
- 
-+sub git_remotes {
-+	my $head = git_get_head_hash($project);
-+	git_header_html();
-+	git_print_page_nav('','', $head,undef,$head);
-+	git_print_header_div('summary', $project . ' remotes');
-+
-+	my @headslist = git_get_heads_list(undef, 'remotes');
-+	if (@headslist) {
-+		git_split_heads_body(\@headslist, $head);
-+	}
-+	git_footer_html();
-+}
-+
- sub git_blob_plain {
- 	my $type = shift;
- 	my $expires;
--- 
-1.5.6.5
+Whatever, the code pointed by the commit you bisected does look like a
+problem: it does not update the index after refusing to rewrite the
+worktree file (because its SHA-1 matches the SHA-1 of the data it
+would be rewritten with. So updating the file would be a no-op, just
+wasted effort). Instead of reverting the commit, I suggest the
+attached patch. It is a long time ago since I looked at the code
+(and it is a mess, which I'm feeling a bit ashamed of), so another
+lot of reviewing eyeglasses is definitely in order.
+
+=46rom c395f4234ca5492206923e1821a316a777c651cd Mon Sep 17 00:00:00 200=
+1
+=46rom: Alex Riesen <raa.lkml@gmail.com>
+Date: Thu, 13 Nov 2008 23:55:04 +0100
+Subject: [PATCH] Update index after refusing to rewrite unchanged files
+
+Specifically, which were not changed during recursive merge.
+Otherwise the path can stay marked as unresolved in the index,
+causing the merge to fail.
+
+Signed-off-by: Alex Riesen <raa.lkml@gmail.com>
+
+diff --git a/merge-recursive.c b/merge-recursive.c
+index 7472d3e..28f9e12 100644
+--- a/merge-recursive.c
++++ b/merge-recursive.c
+@@ -944,14 +944,15 @@ static int process_renames(struct merge_options *=
+o,
+=20
+ 				if (mfi.clean &&
+ 				    sha_eq(mfi.sha, ren1->pair->two->sha1) &&
+-				    mfi.mode =3D=3D ren1->pair->two->mode)
++				    mfi.mode =3D=3D ren1->pair->two->mode) {
+ 					/*
+ 					 * This messaged is part of
+ 					 * t6022 test. If you change
+ 					 * it update the test too.
+ 					 */
+ 					output(o, 3, "Skipped %s (merged same as existing)", ren1_dst);
+-				else {
++					add_cacheinfo(mfi.mode, mfi.sha, ren1_dst, 0, 0, ADD_CACHE_OK_TO_=
+ADD);
++				} else {
+ 					if (mfi.merge || !mfi.clean)
+ 						output(o, 1, "Renaming %s =3D> %s", ren1_src, ren1_dst);
+ 					if (mfi.merge)
