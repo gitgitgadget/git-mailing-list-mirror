@@ -1,93 +1,100 @@
 From: Giuseppe Bilotta <giuseppe.bilotta@gmail.com>
-Subject: [PATCH v2 02/11] gitweb: git_get_heads_list accepts an optional list of refs.
-Date: Thu, 13 Nov 2008 23:49:08 +0100
-Message-ID: <1226616555-24503-3-git-send-email-giuseppe.bilotta@gmail.com>
+Subject: [PATCH v2 08/11] gitweb: display HEAD in heads list when detached
+Date: Thu, 13 Nov 2008 23:49:14 +0100
+Message-ID: <1226616555-24503-9-git-send-email-giuseppe.bilotta@gmail.com>
 References: <1226616555-24503-1-git-send-email-giuseppe.bilotta@gmail.com>
  <1226616555-24503-2-git-send-email-giuseppe.bilotta@gmail.com>
+ <1226616555-24503-3-git-send-email-giuseppe.bilotta@gmail.com>
+ <1226616555-24503-4-git-send-email-giuseppe.bilotta@gmail.com>
+ <1226616555-24503-5-git-send-email-giuseppe.bilotta@gmail.com>
+ <1226616555-24503-6-git-send-email-giuseppe.bilotta@gmail.com>
+ <1226616555-24503-7-git-send-email-giuseppe.bilotta@gmail.com>
+ <1226616555-24503-8-git-send-email-giuseppe.bilotta@gmail.com>
 Cc: Jakub Narebski <jnareb@gmail.com>, Petr Baudis <pasky@suse.cz>,
 	Junio C Hamano <gitster@pobox.com>,
 	Giuseppe Bilotta <giuseppe.bilotta@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Nov 13 23:50:50 2008
+X-From: git-owner@vger.kernel.org Thu Nov 13 23:50:52 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1L0l1S-0004iw-U0
-	for gcvg-git-2@gmane.org; Thu, 13 Nov 2008 23:50:47 +0100
+	id 1L0l1X-0004iw-0F
+	for gcvg-git-2@gmane.org; Thu, 13 Nov 2008 23:50:51 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752725AbYKMWtE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 13 Nov 2008 17:49:04 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752713AbYKMWtD
-	(ORCPT <rfc822;git-outgoing>); Thu, 13 Nov 2008 17:49:03 -0500
-Received: from mu-out-0910.google.com ([209.85.134.184]:43326 "EHLO
-	mu-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752625AbYKMWs7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 13 Nov 2008 17:48:59 -0500
-Received: by mu-out-0910.google.com with SMTP id g7so1096018muf.1
-        for <git@vger.kernel.org>; Thu, 13 Nov 2008 14:48:58 -0800 (PST)
+	id S1753286AbYKMWtX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 13 Nov 2008 17:49:23 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753372AbYKMWtV
+	(ORCPT <rfc822;git-outgoing>); Thu, 13 Nov 2008 17:49:21 -0500
+Received: from fg-out-1718.google.com ([72.14.220.158]:37802 "EHLO
+	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753197AbYKMWtR (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 13 Nov 2008 17:49:17 -0500
+Received: by fg-out-1718.google.com with SMTP id 19so912917fgg.17
+        for <git@vger.kernel.org>; Thu, 13 Nov 2008 14:49:16 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:received:received:from:to:cc:subject:date
          :message-id:x-mailer:in-reply-to:references;
-        bh=NoLxIrrkRO7ICfZlWbHC8J6786SeHIgGJ0DqFBN7F7Q=;
-        b=AUjZM/O6tdj7bmU8o3qPZ1mbxWFdVfAIYAyWvau27d+KS15vZLFjRB6QfoqlxMAzVG
-         ZtEjdVVyaXQofSgvDpDZ99eMFC3iO9P3Zv9jMhB6TwMhlb4kzXz/YdiYgpb4FeUIQWQS
-         7GHABg//mMTvbuJuz3kVX216YGZzqdQwlcOIk=
+        bh=QktGzREdIqaZ1kO45FSksy0+t8a5kOTzu8LE+w7fRmI=;
+        b=IKyTMvnQ0t3tir/ShfAYPLczH0tQlRn3YTwIHYef20oFnzI0rM15S6sb31tAh2a2bg
+         lDTge+IEDgxXdk2sDEiA7FG6Rwp2O8ziJs8/grG1pdFrocz1tLsGORGsGJOt9ZxKCEdK
+         R9zFtsb2a/FVfhA3cPRRK1YHpBP/WVg+5VcVU=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        b=OCKTy2AH9/zHeLBsITqdZdzacX5dQAP2YuRjFIMINML5HArQic99LyoQ3wbPI+FNlQ
-         4Gh6L3r6PYOFAyNxYwH8lUHFJr9yg+NUOFlKO+6NG72MUmZyQFJWXGGW/n2FdyiJEzNe
-         gPPxX4B4r4ebhU3VolSJ4w7L8yVP5bR06lMOs=
-Received: by 10.180.233.15 with SMTP id f15mr64628bkh.188.1226616538084;
-        Thu, 13 Nov 2008 14:48:58 -0800 (PST)
+        b=C/cLfly6zYERlDBnXx0dRaCXWaRL7ijhPFbW9QsXOnUu/m7xYoQdO27YLPvJ4wm8GJ
+         m+htzfcrdknLMU9iEWajRVcmHC3/yCevE81v8cw/BpY/OVPsCqdtRoECPdJ3XK0nTWw4
+         PYO820Tc/B5tRDjDWMyiMGJaRWU0WdM7Noy2g=
+Received: by 10.180.228.19 with SMTP id a19mr70103bkh.93.1226616556637;
+        Thu, 13 Nov 2008 14:49:16 -0800 (PST)
 Received: from localhost ([78.15.2.247])
-        by mx.google.com with ESMTPS id f31sm5905255fkf.0.2008.11.13.14.48.56
+        by mx.google.com with ESMTPS id p9sm5902580fkb.5.2008.11.13.14.49.15
         (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Thu, 13 Nov 2008 14:48:57 -0800 (PST)
+        Thu, 13 Nov 2008 14:49:16 -0800 (PST)
 X-Mailer: git-send-email 1.5.6.5
-In-Reply-To: <1226616555-24503-2-git-send-email-giuseppe.bilotta@gmail.com>
+In-Reply-To: <1226616555-24503-8-git-send-email-giuseppe.bilotta@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-git_get_heads_list(limit, dir1, dir2, ...) can now be used to retrieve
-refs/dir1, refs/dir2 etc. Defaults to ('heads') or ('heads', 'remotes')
-depending on the remote_heads option.
-
 Signed-off-by: Giuseppe Bilotta <giuseppe.bilotta@gmail.com>
 ---
- gitweb/gitweb.perl |   11 +++++++----
- 1 files changed, 7 insertions(+), 4 deletions(-)
+ gitweb/gitweb.perl |   21 +++++++++++++++++++++
+ 1 files changed, 21 insertions(+), 0 deletions(-)
 
 diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
-index b6c4233..d7c97a3 100755
+index 09728cb..a168f6f 100755
 --- a/gitweb/gitweb.perl
 +++ b/gitweb/gitweb.perl
-@@ -2663,15 +2663,18 @@ sub parse_from_to_diffinfo {
- ## parse to array of hashes functions
- 
- sub git_get_heads_list {
--	my $limit = shift;
-+	my ($limit, @class) = @_;
-+	unless (defined @class) {
-+		my ($remote_heads) = gitweb_check_feature('remote_heads');
-+		@class = ('heads', $remote_heads ? 'remotes' : undef);
-+	}
-+	my @refs = map { "refs/$_" } @class;
+@@ -2672,6 +2672,27 @@ sub git_get_heads_list {
+ 	my @refs = map { "refs/$_" } @class;
  	my @headslist;
  
--	my ($remote_heads) = gitweb_check_feature('remote_heads');
--
++	if (grep { $_ eq 'heads' } @class) {
++		my @x = (git_cmd(), 'branch');
++		my @ret = split("\n", qx(@x));
++		if (grep { /^\* \(no branch\)$/ } @ret) { ;
++			my %ref_item;
++			@x = (git_cmd(), 'log', '-1', '--pretty=format:%H%n%ct%n%s');
++			my ($hash, $epoch, $title) = split("\n", qx(@x), 3);
++
++			$ref_item{'class'} = 'head';
++			$ref_item{'name'} = 'HEAD';
++			$ref_item{'id'} = $hash;
++			$ref_item{'title'} = $title || '(no commit message)';
++			if ($ref_item{'epoch'} = $epoch) {
++				$ref_item{'age'} = age_string(time - $ref_item{'epoch'});
++			} else {
++				$ref_item{'age'} = "unknown";
++			}
++			push @headslist, \%ref_item;
++		}
++	}
++
  	open my $fd, '-|', git_cmd(), 'for-each-ref',
  		($limit ? '--count='.($limit+1) : ()), '--sort=-committerdate',
  		'--format=%(objectname) %(refname) %(subject)%00%(committer)',
--		'refs/heads', ( $remote_heads ? 'refs/remotes' : '')
-+		@refs
- 		or return;
- 	while (my $line = <$fd>) {
- 		my %ref_item;
 -- 
 1.5.6.5
