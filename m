@@ -1,12 +1,16 @@
 From: Giuseppe Bilotta <giuseppe.bilotta@gmail.com>
-Subject: [PATCH v2 05/11] gitweb: git_split_heads_body function.
-Date: Thu, 13 Nov 2008 23:49:11 +0100
-Message-ID: <1226616555-24503-6-git-send-email-giuseppe.bilotta@gmail.com>
+Subject: [PATCH v2 09/11] gitweb: git_is_head_detached() function
+Date: Thu, 13 Nov 2008 23:49:15 +0100
+Message-ID: <1226616555-24503-10-git-send-email-giuseppe.bilotta@gmail.com>
 References: <1226616555-24503-1-git-send-email-giuseppe.bilotta@gmail.com>
  <1226616555-24503-2-git-send-email-giuseppe.bilotta@gmail.com>
  <1226616555-24503-3-git-send-email-giuseppe.bilotta@gmail.com>
  <1226616555-24503-4-git-send-email-giuseppe.bilotta@gmail.com>
  <1226616555-24503-5-git-send-email-giuseppe.bilotta@gmail.com>
+ <1226616555-24503-6-git-send-email-giuseppe.bilotta@gmail.com>
+ <1226616555-24503-7-git-send-email-giuseppe.bilotta@gmail.com>
+ <1226616555-24503-8-git-send-email-giuseppe.bilotta@gmail.com>
+ <1226616555-24503-9-git-send-email-giuseppe.bilotta@gmail.com>
 Cc: Jakub Narebski <jnareb@gmail.com>, Petr Baudis <pasky@suse.cz>,
 	Junio C Hamano <gitster@pobox.com>,
 	Giuseppe Bilotta <giuseppe.bilotta@gmail.com>
@@ -16,105 +20,85 @@ Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1L0l1U-0004iw-V4
-	for gcvg-git-2@gmane.org; Thu, 13 Nov 2008 23:50:49 +0100
+	id 1L0l1X-0004iw-NG
+	for gcvg-git-2@gmane.org; Thu, 13 Nov 2008 23:50:52 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753142AbYKMWtP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 13 Nov 2008 17:49:15 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753116AbYKMWtO
-	(ORCPT <rfc822;git-outgoing>); Thu, 13 Nov 2008 17:49:14 -0500
-Received: from fk-out-0910.google.com ([209.85.128.190]:61591 "EHLO
-	fk-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752713AbYKMWtK (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 13 Nov 2008 17:49:10 -0500
-Received: by fk-out-0910.google.com with SMTP id 18so1167024fkq.5
-        for <git@vger.kernel.org>; Thu, 13 Nov 2008 14:49:07 -0800 (PST)
+	id S1753396AbYKMWt0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 13 Nov 2008 17:49:26 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753391AbYKMWtY
+	(ORCPT <rfc822;git-outgoing>); Thu, 13 Nov 2008 17:49:24 -0500
+Received: from fg-out-1718.google.com ([72.14.220.154]:31154 "EHLO
+	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753293AbYKMWtU (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 13 Nov 2008 17:49:20 -0500
+Received: by fg-out-1718.google.com with SMTP id 19so912881fgg.17
+        for <git@vger.kernel.org>; Thu, 13 Nov 2008 14:49:19 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:received:received:from:to:cc:subject:date
          :message-id:x-mailer:in-reply-to:references;
-        bh=dHizDpXfsTMEOcRnelH1wTloy1BarXKd5F/uo7XQftM=;
-        b=yHrn9jws6sY8CQg6IHLCLoZGAMn4Mj7D+baCn/Ruxl0Kkq2fw+uWwvQkShRaCP+CTy
-         y0DqDfKEgkNhY5LXnchCiC3FJhKK96M59KtQcBsjqnLyqMrBcSrv3FZ8LwMFSfP8sWle
-         twWfsc0TPQQxggRyDm87ZbQMIENosfzqdIfZQ=
+        bh=WkuVtTpgxq0LaummoiDZt82BOUn2FSGvoxUwyjlu7xQ=;
+        b=bhaUhIhis3hSsWFcKD2Lgr+pKHzFsjCKdhRaianH173ikP1hnW1xYDXj3tIhs5+x35
+         XVasX6MoQvdVK9IZJhDnWD6h/u3DDwzfPdWbywzh96qZQ4cxFdGXyvx399Uk8Ye0l34X
+         rx5x46M8NMsknbrbeTf9F9scM5EeSNGMoYe9Y=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        b=m3TXE442llCBeYdRqsvxIZSVTY8SQF/2vpBiJ6C6weg8vLVQ0JwqxBUWEerRMGWn4+
-         2KCiCOFOYCvOz3rlO/F5NUbM6egUAvUhS47Trv1rbF7pr8B47icOLXNAZ/i1I3eprt4Z
-         EhBRL9Yj3d35afnfmAIeQHP9Hh8+zFCh+f4xg=
-Received: by 10.181.226.2 with SMTP id d2mr63077bkr.204.1226616547147;
-        Thu, 13 Nov 2008 14:49:07 -0800 (PST)
+        b=feB96jwBwu1od6zcqSLIPQSHY35EwSgmxs68Hz/uJ5Sj93YNyvw7cupjvWki8UAVRE
+         d3tNdkQKtwxk5sGlMUPR3QSlMnJxsnToNOJ+KCghLZ33e+kNLjimUGqqy4NgDzr7IoLY
+         xZoYSniY1FFEVzlIzv2NAWme8BVmuqUHT9Z9A=
+Received: by 10.180.222.1 with SMTP id u1mr72412bkg.62.1226616559583;
+        Thu, 13 Nov 2008 14:49:19 -0800 (PST)
 Received: from localhost ([78.15.2.247])
-        by mx.google.com with ESMTPS id y15sm5455403fkd.17.2008.11.13.14.49.05
+        by mx.google.com with ESMTPS id y15sm5455564fkd.17.2008.11.13.14.49.18
         (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Thu, 13 Nov 2008 14:49:06 -0800 (PST)
+        Thu, 13 Nov 2008 14:49:19 -0800 (PST)
 X-Mailer: git-send-email 1.5.6.5
-In-Reply-To: <1226616555-24503-5-git-send-email-giuseppe.bilotta@gmail.com>
+In-Reply-To: <1226616555-24503-9-git-send-email-giuseppe.bilotta@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The purpose of this function is to split a headlist into groups
-determined by the leading part of the refname, and call git_heads_body()
-on each group.
+The function checks if the HEAD for the current project is detached by
+checking if 'git branch' returns "* (no branch)"
 
 Signed-off-by: Giuseppe Bilotta <giuseppe.bilotta@gmail.com>
 ---
- gitweb/gitweb.perl |   33 ++++++++++++++++++++++++++++++++-
- 1 files changed, 32 insertions(+), 1 deletions(-)
+ gitweb/gitweb.perl |   13 +++++++++----
+ 1 files changed, 9 insertions(+), 4 deletions(-)
 
 diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
-index a736f2a..836b6ba 100755
+index a168f6f..ceb0271 100755
 --- a/gitweb/gitweb.perl
 +++ b/gitweb/gitweb.perl
-@@ -4271,6 +4271,37 @@ sub git_tags_body {
- 	print "</table>\n";
+@@ -1844,6 +1844,13 @@ sub git_get_head_hash {
+ 	return $retval;
  }
  
-+sub git_split_heads_body {
-+	my ($headlist, $head, $from, $to, $extra) = @_;
-+	my %headlists;
-+	my $leader; my $list; my @list;
-+
-+	# Split @$headlist into a hash of lists
-+	map {
-+		my %ref = %$_;
-+		$ref{'hname'} = $ref{'name'};
-+		if ($ref{'name'} =~ /\//) {
-+			$ref{'name'} =~ s!^([^/]+)/!!;
-+			$leader = $1;
-+		} else {
-+			$leader = "\000";
-+		}
-+		if (defined $headlists{$leader}) {
-+			@list = @{$headlists{$leader}}
-+		} else {
-+			@list = ()
-+		}
-+		push @list, \%ref;
-+		$headlists{$leader} = [@list];
-+	} @$headlist;
-+
-+	foreach $leader (sort(keys %headlists)) {
-+		print "<b>$leader</b><br/>\n" unless $leader eq "\000";
-+		$list = $headlists{$leader};
-+		git_heads_body($list, $head, $from, $to, $extra);
-+	}
++# check if current HEAD is detached
++sub git_is_head_detached {
++	my @x = (git_cmd(), 'branch');
++	my @ret = split("\n", qx(@x));
++	return 0 + grep { /^\* \(no branch\)$/ } @ret;
 +}
 +
- sub git_heads_body {
- 	# uses global variable $project
- 	my ($headlist, $head, $from, $to, $extra) = @_;
-@@ -4541,7 +4572,7 @@ sub git_summary {
+ # get type of given object
+ sub git_get_type {
+ 	my $hash = shift;
+@@ -2673,11 +2680,9 @@ sub git_get_heads_list {
+ 	my @headslist;
  
- 	if (@remotelist) {
- 		git_print_header_div('remotes');
--		git_heads_body(\@remotelist, $head, 0, 15,
-+		git_split_heads_body(\@remotelist, $head, 0, 15,
- 		               $#remotelist <= 15 ? undef :
- 		               $cgi->a({-href => href(action=>"heads")}, "..."));
- 	}
+ 	if (grep { $_ eq 'heads' } @class) {
+-		my @x = (git_cmd(), 'branch');
+-		my @ret = split("\n", qx(@x));
+-		if (grep { /^\* \(no branch\)$/ } @ret) { ;
++		if (git_is_head_detached()) {
+ 			my %ref_item;
+-			@x = (git_cmd(), 'log', '-1', '--pretty=format:%H%n%ct%n%s');
++			my @x = (git_cmd(), 'log', '-1', '--pretty=format:%H%n%ct%n%s');
+ 			my ($hash, $epoch, $title) = split("\n", qx(@x), 3);
+ 
+ 			$ref_item{'class'} = 'head';
 -- 
 1.5.6.5
