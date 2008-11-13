@@ -1,62 +1,78 @@
-From: Michael J Gruber <git@drmicha.warpmail.net>
-Subject: Re: git svn branch
-Date: Thu, 13 Nov 2008 09:34:09 +0100
-Message-ID: <491BE681.3050700@drmicha.warpmail.net>
-References: <ac92b632-f300-4cbd-8450-6a908fc2c762@t39g2000prh.googlegroups.com>
+From: "Anders Melchiorsen" <mail@cup.kalibalik.dk>
+Subject: [BUG] fatal error during merge
+Date: Thu, 13 Nov 2008 10:22:14 +0100 (CET)
+Message-ID: <53328.bFoQE3daRhY=.1226568134.squirrel@webmail.hotelhot.dk>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: yb_Art <kineticac@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Nov 13 09:35:34 2008
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Nov 13 10:23:42 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1L0Xfo-0002el-Gq
-	for gcvg-git-2@gmane.org; Thu, 13 Nov 2008 09:35:32 +0100
+	id 1L0YQN-0008QA-DS
+	for gcvg-git-2@gmane.org; Thu, 13 Nov 2008 10:23:39 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751066AbYKMIeN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 13 Nov 2008 03:34:13 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751053AbYKMIeN
-	(ORCPT <rfc822;git-outgoing>); Thu, 13 Nov 2008 03:34:13 -0500
-Received: from out5.smtp.messagingengine.com ([66.111.4.29]:50397 "EHLO
-	out5.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1750824AbYKMIeM (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 13 Nov 2008 03:34:12 -0500
-Received: from compute1.internal (compute1.internal [10.202.2.41])
-	by out1.messagingengine.com (Postfix) with ESMTP id 39EEB1AE28B;
-	Thu, 13 Nov 2008 03:34:11 -0500 (EST)
-Received: from heartbeat1.messagingengine.com ([10.202.2.160])
-  by compute1.internal (MEProxy); Thu, 13 Nov 2008 03:34:11 -0500
-X-Sasl-enc: Q2BrE0eNLGSZaRoKKDRHqVo8mEjGDLwyaBYjyBtx+945 1226565250
-Received: from [139.174.44.12] (whitehead.math.tu-clausthal.de [139.174.44.12])
-	by mail.messagingengine.com (Postfix) with ESMTPSA id 90011D904;
-	Thu, 13 Nov 2008 03:34:10 -0500 (EST)
-User-Agent: Thunderbird 2.0.0.17 (X11/20080914)
-In-Reply-To: <ac92b632-f300-4cbd-8450-6a908fc2c762@t39g2000prh.googlegroups.com>
+	id S1751595AbYKMJWS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 13 Nov 2008 04:22:18 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751367AbYKMJWS
+	(ORCPT <rfc822;git-outgoing>); Thu, 13 Nov 2008 04:22:18 -0500
+Received: from mail.hotelhot.dk ([77.75.163.100]:35361 "EHLO mail.hotelhot.dk"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751497AbYKMJWQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 13 Nov 2008 04:22:16 -0500
+Received: from mail.hotelhot.dk (localhost [127.0.0.1])
+	by mail.hotelhot.dk (Postfix) with ESMTP id 4DCAF14068
+	for <git@vger.kernel.org>; Thu, 13 Nov 2008 10:22:14 +0100 (CET)
+Received: from webmail.hotelhot.dk (mail.hotelhot.dk [192.168.0.190])
+	by mail.hotelhot.dk (Postfix) with ESMTP id 0F1ED14062
+	for <git@vger.kernel.org>; Thu, 13 Nov 2008 10:22:14 +0100 (CET)
+X-Squirrel-UserHash: NQYRRTwcNktTVUlTWFZaWRRVWg==
+X-Squirrel-FromHash: bFoQE3daRhY=
+User-Agent: SquirrelMail/1.4.13
+X-Priority: 3 (Normal)
+Importance: Normal
+X-Virus-Scanned: ClamAV using ClamSMTP
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/100858>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/100859>
 
-yb_Art venit, vidit, dixit 13.11.2008 00:47:
-> I'm using the binary from google code on my mac os-x leopard machine,
-> and it doesn't have git svn branch.  How can I work around this
-> issue?  Is there anyway to create a branch on the svn repository using
-> git?
+It took a while to make a minimal test case for this, but I think that all
+the below steps are required. It ends up with this message:
 
-I don't know which version google code has, but git-svn is a perl script
-which you can download directly from
+after/one: unmerged (e69de29bb2d1d6434b8b29ae775ad8c2e48c5391)
+fatal: git write-tree failed to write a tree
 
-http://repo.or.cz/w/git.git?a=blob_plain;f=git-svn.perl;hb=HEAD
+and the file that was moved has disappeared from the working tree.
 
-Note that in git-svn.perl as downloaded you will have to adjust the
-first few lines (maybe a uselib in the second line; @@GIT_VERSION@@) to
-match what you have in your current git-svn. If your git is not too
-ancient then current git-svn should work with it.
+I have tested the script with Git 1.6.0.2, but the real scenario that made
+this appear seems to also fail with master and next from git.git.
 
-Actually, I think compiling yourself is easier...
+Cheers,
+Anders.
 
-Michael
+
+Test script:
+
+mkdir am-merge-fail
+cd am-merge-fail
+git init
+
+mkdir before
+touch before/one after
+git add -A
+git commit -minitial
+
+rm -f after
+git mv before after
+git commit -mmove
+
+git checkout -b parallel HEAD~
+touch another
+git add -A
+git commit -mparallel
+
+git merge master
