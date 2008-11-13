@@ -1,77 +1,49 @@
-From: Miguel de Icaza <miguel@ximian.com>
-Subject: Re: git integration with monodevelop
-Date: Wed, 12 Nov 2008 20:42:15 -0500
-Organization: Novell.
-Message-ID: <1226540535.4483.203.camel@erandi.site>
-References: <491AAE6D.8030304@op5.se> <1226519288.4483.176.camel@erandi.site>
-	<m33ahwio3v.fsf@localhost.localdomain>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] Remove the period after the git-check-attr summary
+Date: Wed, 12 Nov 2008 18:15:22 -0800
+Message-ID: <7vprl0jrr9.fsf@gitster.siamese.dyndns.org>
+References: <1226060815-7548-1-git-send-email-kraai@ftbfs.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 7bit
-Cc: monodevelop-list@lists.ximian.com, Andreas Ericsson <ae@op5.se>,
-	Git Mailing List <git@vger.kernel.org>, Shawn Pearce <spearce@spearce.org>
-To: Jakub Narebski <jnareb@gmail.com>
-X-From: monodevelop-list-bounces@lists.ximian.com Thu Nov 13 02:44:53 2008
-Return-path: <monodevelop-list-bounces@lists.ximian.com>
-Envelope-to: gcgmm-monodevelop-list@m.gmane.org
-Received: from galactus.ximian.com ([130.57.169.22] helo=lists.ximian.com)
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Matt Kraai <kraai@ftbfs.org>
+X-From: git-owner@vger.kernel.org Thu Nov 13 03:17:12 2008
+Return-path: <git-owner@vger.kernel.org>
+Envelope-to: gcvg-git-2@gmane.org
+Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1L0RGP-0004ra-DI
-	for gcgmm-monodevelop-list@m.gmane.org; Thu, 13 Nov 2008 02:44:53 +0100
-Received: from galactus.ximian.com (localhost.localdomain [127.0.0.1])
-	by lists.ximian.com (Postfix) with ESMTP id 39BE4D7951;
-	Wed, 12 Nov 2008 20:43:42 -0500 (EST)
-X-Original-To: monodevelop-list@lists.ximian.com
-Delivered-To: monodevelop-list@lists.ximian.com
-Received: from herald.ximian.com (frontgate.ximian.com [130.57.169.19])
-	by lists.ximian.com (Postfix) with ESMTP id 3EF691CFD63
-	for <monodevelop-list@lists.ximian.com>;
-	Wed, 12 Nov 2008 20:43:40 -0500 (EST)
-Received: by herald.ximian.com (Postfix, from userid 2601)
-	id 25D4270055; Wed, 12 Nov 2008 20:43:40 -0500 (EST)
-Received: from victor.provo.novell.com (victor.provo.novell.com
-	[137.65.250.26])
-	by herald.ximian.com (Postfix) with ESMTP id 8013F70042
-	for <monodevelop-list@lists.ximian.com>;
-	Wed, 12 Nov 2008 20:43:39 -0500 (EST)
-Received: from [164.99.121.39] (prv-ext-foundry1.gns.novell.com
-	[137.65.251.240])
-	by victor.provo.novell.com with ESMTP (TLS encrypted);
-	Wed, 12 Nov 2008 18:43:34 -0700
-In-Reply-To: <m33ahwio3v.fsf@localhost.localdomain>
-X-Mailer: Evolution 2.22.1.1 
-X-Spam-Checker-Version: SpamAssassin 3.0.3 (2005-04-27) on 
-	frontgate.ximian.com
-X-Spam-Level: *
-X-Spam-Status: No, score=1.1 required=5.0 tests=AWL version=3.0.3
-X-BeenThere: monodevelop-list@lists.ximian.com
-X-Mailman-Version: 2.1.8
-Precedence: list
-List-Id: MonoDevelop discussion mailing list
-	<monodevelop-list.lists.ximian.com>
-List-Unsubscribe: <http://lists.ximian.com/mailman/listinfo/monodevelop-list>, 
-	<mailto:monodevelop-list-request@lists.ximian.com?subject=unsubscribe>
-List-Archive: <http://lists.ximian.com/pipermail/monodevelop-list>
-List-Post: <mailto:monodevelop-list@lists.ximian.com>
-List-Help: <mailto:monodevelop-list-request@lists.ximian.com?subject=help>
-List-Subscribe: <http://lists.ximian.com/mailman/listinfo/monodevelop-list>,
-	<mailto:monodevelop-list-request@lists.ximian.com?subject=subscribe>
-Sender: monodevelop-list-bounces@lists.ximian.com
-Errors-To: monodevelop-list-bounces@lists.ximian.com
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/100841>
+	id 1L0Rlf-0004aT-6O
+	for gcvg-git-2@gmane.org; Thu, 13 Nov 2008 03:17:11 +0100
+Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
+	id S1751511AbYKMCPv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 12 Nov 2008 21:15:51 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751055AbYKMCPv
+	(ORCPT <rfc822;git-outgoing>); Wed, 12 Nov 2008 21:15:51 -0500
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:57441 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751019AbYKMCPv (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 12 Nov 2008 21:15:51 -0500
+Received: from localhost.localdomain (unknown [127.0.0.1])
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 1B4407C8A6;
+	Wed, 12 Nov 2008 21:15:45 -0500 (EST)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES256-SHA (256/256 bits)) (No client certificate requested) by
+ a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTPSA id 518EB7C89E; Wed,
+ 12 Nov 2008 21:15:29 -0500 (EST)
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: FA87B708-B128-11DD-A333-9CEDC82D7133-77302942!a-sasl-fastnet.pobox.com
+Sender: git-owner@vger.kernel.org
+Precedence: bulk
+List-ID: <git.vger.kernel.org>
+X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/100842>
 
+Matt Kraai <kraai@ftbfs.org> writes:
 
-> I assume that results of Mono's Google Summer of Code 2008 projects
-> to create managed git implementation in C# (git#)[1][2] were not
-> very successfull?  Taking into account that JGit isn't yet full git
-> implementation, after much longer development...
+> The period at the end of the git-check-attr summary causes there to be
+> two periods after the summary in the git(1) manual page.
+>
+> Signed-off-by: Matt Kraai <kraai@ftbfs.org>
 
-They were a complete disaster, one student was going to focus on the
-front-end, the other on the back-end.   
-
-Nothing came out of it.
-
-> 
-> [1] http://code.google.com/soc/2008/mono/appinfo.html?csaid=E6D8A717A88A7632
-> [2] http://code.google.com/soc/2008/mono/appinfo.html?csaid=F2E71A4D93E7EF37
-> 
+Thanks.  I think what you wrote after the --- marker is a perfect
+justification of this change, so I lifted them up.
