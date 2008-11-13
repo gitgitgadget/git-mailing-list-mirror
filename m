@@ -1,69 +1,87 @@
-From: Samuel Tardieu <sam@rfc1149.net>
-Subject: Re: [BUG] fatal error during merge
-Date: Thu, 13 Nov 2008 14:23:19 +0100
-Organization: RFC 1149 (see http://www.rfc1149.net/)
-Message-ID: <2008-11-13-14-23-19+trackit+sam@rfc1149.net>
-References: <53328.bFoQE3daRhY=.1226568134.squirrel@webmail.hotelhot.dk>
+From: "Kyle Moffett" <kyle@moffetthome.net>
+Subject: Re: [RFC PATCH 0/4] deny push to current branch of non-bare repo
+Date: Thu, 13 Nov 2008 08:58:50 -0500
+Message-ID: <f73f7ab80811130558h34cb1220q76ef5536e853151c@mail.gmail.com>
+References: <20081107220730.GA15942@coredump.intra.peff.net>
+	 <7v3ai3f7oa.fsf@gitster.siamese.dyndns.org>
+	 <20081108142756.GC17100@coredump.intra.peff.net>
+	 <7vwsfeaqpa.fsf@gitster.siamese.dyndns.org>
+	 <20081109014926.GA31276@coredump.intra.peff.net>
+	 <f73f7ab80811111644y14f0e0ccweed44440356a6508@mail.gmail.com>
+	 <20081112084412.GA3860@coredump.intra.peff.net>
+	 <f73f7ab80811122122i4ae3ba6dn2ceb314b86660a70@mail.gmail.com>
+	 <20081113053735.GA5343@coredump.intra.peff.net>
+	 <7vhc6ci24o.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 8bit
-Cc: git@vger.kernel.org
-To: "Anders Melchiorsen" <mail@cup.kalibalik.dk>
-X-From: git-owner@vger.kernel.org Thu Nov 13 14:24:33 2008
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: "Jeff King" <peff@peff.net>, git@vger.kernel.org,
+	"Sam Vilain" <sam@vilain.net>
+To: "Junio C Hamano" <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Nov 13 15:00:31 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1L0cBS-0006Bm-BA
-	for gcvg-git-2@gmane.org; Thu, 13 Nov 2008 14:24:30 +0100
+	id 1L0ckH-00031t-IO
+	for gcvg-git-2@gmane.org; Thu, 13 Nov 2008 15:00:30 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752204AbYKMNXL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 13 Nov 2008 08:23:11 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752171AbYKMNXK
-	(ORCPT <rfc822;git-outgoing>); Thu, 13 Nov 2008 08:23:10 -0500
-Received: from zoidberg.rfc1149.net ([91.121.19.179]:39864 "EHLO
-	zoidberg.rfc1149.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752042AbYKMNXJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 13 Nov 2008 08:23:09 -0500
-Received: from localhost (localhost [127.0.0.1])
-	by zoidberg.rfc1149.net (Postfix) with ESMTP id 271DB10EAE3;
-	Thu, 13 Nov 2008 14:23:06 +0100 (CET)
-X-Virus-Scanned: amavisd-new at rfc1149.net
-Received: from zoidberg.rfc1149.net ([127.0.0.1])
-	by localhost (zaphod.rfc1149.net [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id 4vJ8U3u32lsD; Thu, 13 Nov 2008 14:23:04 +0100 (CET)
-Received: from mail2.rfc1149.net (willow.rfc1149.net [IPv6:2001:6f8:37a:2::2])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(Client CN "mail2.rfc1149.net", Issuer "rfc1149.net" (verified OK))
-	by zoidberg.rfc1149.net (Postfix) with ESMTPS id D36FE10F4B2;
-	Thu, 13 Nov 2008 14:23:04 +0100 (CET)
-Received: from localhost (localhost [127.0.0.1])
-	by mail2.rfc1149.net (Postfix) with ESMTP id 92698C40BC;
-	Thu, 13 Nov 2008 14:23:19 +0100 (CET)
-Received: from mail2.rfc1149.net ([127.0.0.1])
-	by localhost (localhost [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id MRuIzQvsuNJf; Thu, 13 Nov 2008 14:23:19 +0100 (CET)
-Received: by mail2.rfc1149.net (Postfix, from userid 1000)
-	id 6E83CC40BE; Thu, 13 Nov 2008 14:23:19 +0100 (CET)
-In-Reply-To: <53328.bFoQE3daRhY=.1226568134.squirrel@webmail.hotelhot.dk> (Anders Melchiorsen's message of "Thu\, 13 Nov 2008 10\:22\:14 +0100 \(CET\)")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-WWW: http://www.rfc1149.net/sam
-X-Jabber: <sam@rfc1149.net> (see http://www.jabber.org/)
-X-OpenPGP-Fingerprint: 79C0 AE3C CEA8 F17B 0EF1  45A5 F133 2241 1B80 ADE6 (see http://www.gnupg.org/)
+	id S1752723AbYKMN6x (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 13 Nov 2008 08:58:53 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751963AbYKMN6x
+	(ORCPT <rfc822;git-outgoing>); Thu, 13 Nov 2008 08:58:53 -0500
+Received: from yw-out-2324.google.com ([74.125.46.29]:39285 "EHLO
+	yw-out-2324.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754324AbYKMN6w (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 13 Nov 2008 08:58:52 -0500
+Received: by yw-out-2324.google.com with SMTP id 9so399175ywe.1
+        for <git@vger.kernel.org>; Thu, 13 Nov 2008 05:58:50 -0800 (PST)
+Received: by 10.100.196.17 with SMTP id t17mr4681985anf.84.1226584730807;
+        Thu, 13 Nov 2008 05:58:50 -0800 (PST)
+Received: by 10.100.241.4 with HTTP; Thu, 13 Nov 2008 05:58:50 -0800 (PST)
+In-Reply-To: <7vhc6ci24o.fsf@gitster.siamese.dyndns.org>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/100873>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/100874>
 
->>>>> "Anders" == Anders Melchiorsen <mail@cup.kalibalik.dk> writes:
+On Thu, Nov 13, 2008 at 1:14 AM, Junio C Hamano <gitster@pobox.com> wrote:
+> Jeff King <peff@peff.net> writes:
+>> And then the "push to current branch" problem is neatly solved: you have
+>> no current branch.
+>>
+>> So:
+>>
+>>   $ git checkout new/branch/to/test^0
+>>   $ make, configure, etc
+>
+> Exactly.
+>
+> I keep a handful pseudo worktrees around (created with git-new-workdir on
+> top of a single repository) for quick patch test and build purposes.  I do
+> not push into them but pushing into a non-bare repository and checking out
+> the same branch twice in such a setup share exactly the same issue, and I
+> keep their HEADs all detached for exactly the same reason.
 
-Anders> I have tested the script with Git 1.6.0.2, but the real
-Anders> scenario that made this appear seems to also fail with master
-Anders> and next from git.git.
+I guess the issue comes down to a UI complication.  It would very easy
+for me to tell somebody how to check out and test their branch in my
+testbed if I'm not around, except for that little bit of arcane
+syntax.  Moreover, the consequences if they forget are really
+frustrating and hard to figure out.  It's also very easy with a GUI to
+do the simple *rightclick branch, click "Checkout"*, but would be much
+harder to do the detached HEAD checkout correctly.
 
-I confirm that your test case also fails with the current "next".
+If it didn't involve reconfiguring a lot of other people's
+repositories, I might consider having them push to "refs/remotes/*".
+In theory that's actually much closer to what I'm doing anyways.  That
+would force any checkouts to be bare, but it would require lots of
+git-foo on the pushing side.  Perhaps some way to "git push" which
+asks the remote repository where it wants the stuff?
 
-  Sam
--- 
-Samuel Tardieu -- sam@rfc1149.net -- http://www.rfc1149.net/
+Alternatively, it might be possible to add ref attributes or a config
+option to force detached HEAD checkouts.
+
+Cheers,
+Kyle Moffett
