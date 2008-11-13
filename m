@@ -1,60 +1,69 @@
-From: Robin Rosenberg <robin.rosenberg.lists@dewire.com>
-Subject: Re: [EGIT PATCH 1/7] Test the origName part of the key vs the ref itself
-Date: Thu, 13 Nov 2008 23:13:14 +0100
-Message-ID: <200811132313.14590.robin.rosenberg.lists@dewire.com>
-References: <1226095664-13759-1-git-send-email-robin.rosenberg@dewire.com> <1226095664-13759-2-git-send-email-robin.rosenberg@dewire.com> <20081111180520.GN2932@spearce.org>
+From: "Anders Melchiorsen" <mail@cup.kalibalik.dk>
+Subject: Re: [BUG] fatal error during merge
+Date: Thu, 13 Nov 2008 23:25:19 +0100 (CET)
+Message-ID: <55583.N1gUGH5fRhE=.1226615119.squirrel@webmail.hotelhot.dk>
+References: <53328.bFoQE3daRhY=.1226568134.squirrel@webmail.hotelhot.dk>
+    <2008-11-13-14-23-19+trackit+sam@rfc1149.net>
+    <20081113140323.GA10267@neumann>
+    <2008-11-13-15-26-33+trackit+sam@rfc1149.net>
+    <20081113145325.GD29274@neumann>
+    <57814.N1gUGH5fRhE=.1226596012.squirrel@webmail.hotelhot.dk>
+    <20081113180931.GE29274@neumann>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: "Shawn O. Pearce" <spearce@spearce.org>
-X-From: git-owner@vger.kernel.org Thu Nov 13 23:14:39 2008
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: "Alex Riesen" <raa.lkml@gmail.com>, git@vger.kernel.org
+To: SZEDER =?iso-8859-1?Q?G=E1bor?= <szeder@ira.uka.de>
+X-From: git-owner@vger.kernel.org Thu Nov 13 23:26:49 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1L0kSS-0007y7-Na
-	for gcvg-git-2@gmane.org; Thu, 13 Nov 2008 23:14:37 +0100
+	id 1L0ke9-0004BA-Fq
+	for gcvg-git-2@gmane.org; Thu, 13 Nov 2008 23:26:41 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752303AbYKMWNT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 13 Nov 2008 17:13:19 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751268AbYKMWNT
-	(ORCPT <rfc822;git-outgoing>); Thu, 13 Nov 2008 17:13:19 -0500
-Received: from pne-smtpout2-sn1.fre.skanova.net ([81.228.11.159]:43504 "EHLO
-	pne-smtpout2-sn1.fre.skanova.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751697AbYKMWNS (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 13 Nov 2008 17:13:18 -0500
-Received: from sleipner.localnet (213.67.100.250) by pne-smtpout2-sn1.fre.skanova.net (7.3.129)
-        id 4843FAEB0277FA83; Thu, 13 Nov 2008 23:13:15 +0100
-User-Agent: KMail/1.10.3 (Linux/2.6.27-7-generic; KDE/4.1.3; i686; ; )
-In-Reply-To: <20081111180520.GN2932@spearce.org>
-Content-Disposition: inline
+	id S1755280AbYKMWZY convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 13 Nov 2008 17:25:24 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755260AbYKMWZX
+	(ORCPT <rfc822;git-outgoing>); Thu, 13 Nov 2008 17:25:23 -0500
+Received: from mail.hotelhot.dk ([77.75.163.100]:41380 "EHLO mail.hotelhot.dk"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755227AbYKMWZU (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 13 Nov 2008 17:25:20 -0500
+Received: from mail.hotelhot.dk (localhost [127.0.0.1])
+	by mail.hotelhot.dk (Postfix) with ESMTP id 0BF0914068;
+	Thu, 13 Nov 2008 23:25:20 +0100 (CET)
+Received: from webmail.hotelhot.dk (mail.hotelhot.dk [192.168.0.190])
+	by mail.hotelhot.dk (Postfix) with ESMTP id CCBCA14062;
+	Thu, 13 Nov 2008 23:25:19 +0100 (CET)
+X-Squirrel-UserHash: NQYRRTwcNktTVUlTWFZaWRRVWg==
+X-Squirrel-FromHash: N1gUGH5fRhE=
+In-Reply-To: <20081113180931.GE29274@neumann>
+User-Agent: SquirrelMail/1.4.13
+X-Priority: 3 (Normal)
+Importance: Normal
+X-Virus-Scanned: ClamAV using ClamSMTP
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/100921>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/100922>
 
-tisdag 11 november 2008 19:05:20 skrev Shawn O. Pearce:
-> Robin Rosenberg <robin.rosenberg@dewire.com> wrote:
-> > @@ -127,4 +129,12 @@ public void testDeleteEmptyDirs() throws IOException {
-> >  	private void assertExists(final boolean expected, final String name) {
-> >  		assertEquals(expected, new File(db.getDirectory(), name).exists());
-> >  	}
-> > +
-> > +	public void testRefKeySameAsOrigName() {
-> > +		Map<String, Ref> allRefs = db.getAllRefs();
-> > +		for (Entry<String, Ref> e : allRefs.entrySet()) {
-> > +			assertEquals(e.getKey(), e.getValue().getOrigName());
-> > +
-> > +		}
-> > +	}
-> 
-> Hmm, doesn't this have to go after "Keep original ref name ..."
-> so getOrigName() is actually defined?
+SZEDER G=E1bor wrote:
 
-Oops, Seems we should try to build each new commit before accepting
-a push. Shouldn't be too hard.
+> Well, oddly enough, your second test case behaves somewhat differentl=
+y
+> than the first one, at least as far as bisect is concerned.  Bisect
+> nails down the second test case to 0d5e6c97 (Ignore merged status of
+> the file-level merge, 2007-04-26; put Alex on Cc).  Reverting this
+> commit on master makes both of your test cases pass.
 
--- robin
+Hmm. With that one reverted, git prints out this error instead:
+
+error: failed to create path 'after/one': perhaps a D/F conflict?
+
+and still has the moved file disapper in the working tree. The merge is
+successful, though, and the moved file is in the committed tree.
+
+
+Anders.
