@@ -1,61 +1,119 @@
-From: Linus Torvalds <torvalds@linux-foundation.org>
-Subject: Re: bugreport: git does not like subseconds
-Date: Thu, 13 Nov 2008 08:45:58 -0800 (PST)
-Message-ID: <alpine.LFD.2.00.0811130842550.3468@nehalem.linux-foundation.org>
-References: <alpine.LNX.1.10.0811131722360.13330@fbirervta.pbzchgretzou.qr>
+From: Jan Engelhardt <jengelh@medozas.de>
+Subject: git-daemon: single-line logging
+Date: Thu, 13 Nov 2008 17:51:04 +0100 (CET)
+Message-ID: <alpine.LNX.1.10.0811131749420.16134@fbirervta.pbzchgretzou.qr>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org
-To: Jan Engelhardt <jengelh@medozas.de>
-X-From: git-owner@vger.kernel.org Thu Nov 13 17:47:53 2008
+Cc: jengelh@medozas.de
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Nov 13 17:52:34 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1L0fME-0008R4-V7
-	for gcvg-git-2@gmane.org; Thu, 13 Nov 2008 17:47:51 +0100
+	id 1L0fQg-0001pF-3E
+	for gcvg-git-2@gmane.org; Thu, 13 Nov 2008 17:52:26 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751427AbYKMQqg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 13 Nov 2008 11:46:36 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751420AbYKMQqf
-	(ORCPT <rfc822;git-outgoing>); Thu, 13 Nov 2008 11:46:35 -0500
-Received: from smtp1.linux-foundation.org ([140.211.169.13]:34216 "EHLO
-	smtp1.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751353AbYKMQqf (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 13 Nov 2008 11:46:35 -0500
-Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [140.211.169.55])
-	by smtp1.linux-foundation.org (8.14.2/8.13.5/Debian-3ubuntu1.1) with ESMTP id mADGjx8p026223
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Thu, 13 Nov 2008 08:46:00 -0800
+	id S1751479AbYKMQvI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 13 Nov 2008 11:51:08 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751447AbYKMQvI
+	(ORCPT <rfc822;git-outgoing>); Thu, 13 Nov 2008 11:51:08 -0500
+Received: from sovereign.computergmbh.de ([85.214.69.204]:41323 "EHLO
+	sovereign.computergmbh.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751420AbYKMQvG (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 13 Nov 2008 11:51:06 -0500
+Received: by sovereign.computergmbh.de (Postfix, from userid 25121)
+	id 9B6971839E1E0; Thu, 13 Nov 2008 17:51:04 +0100 (CET)
 Received: from localhost (localhost [127.0.0.1])
-	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id mADGjwRE017175;
-	Thu, 13 Nov 2008 08:45:59 -0800
-In-Reply-To: <alpine.LNX.1.10.0811131722360.13330@fbirervta.pbzchgretzou.qr>
-User-Agent: Alpine 2.00 (LFD 1167 2008-08-23)
-X-Spam-Status: No, hits=-3.434 required=5 tests=AWL,BAYES_00
-X-Spam-Checker-Version: SpamAssassin 3.2.4-osdl_revision__1.47__
-X-MIMEDefang-Filter: lf$Revision: 1.188 $
-X-Scanned-By: MIMEDefang 2.63 on 140.211.169.13
+	by sovereign.computergmbh.de (Postfix) with ESMTP id 93C391D3C061F;
+	Thu, 13 Nov 2008 17:51:04 +0100 (CET)
+User-Agent: Alpine 1.10 (LNX 962 2008-03-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/100884>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/100885>
+
+Hi,
 
 
+I wrote this patch for my git-daemon to make it much easier to parse 
+/var/log/git-daemon.log -- namely reducing the output from three lines 
+per connected client to just one.
 
-On Thu, 13 Nov 2008, Jan Engelhardt wrote:
-> 
-> 
-> Git does not like subseconds in $GIT_{AUTHOR,COMMITTER}_DATE,
-> and somehow does time travel instead. Perhaps this is a Glibc
-> limitation? Running openSUSE 11's glibc-2.8(which is actually
-> a 2.7 snapshot I think: glibc-2.8-2008042513.tar.bz2).
+commit 4dc99ff38c7e09aabf253bd9f65e8b4958654f7e
+against v1.6.0.4
+Author: Jan Engelhardt <jengelh@medozas.de>
+Date:   Sun Aug 24 12:12:29 2008 -0400
 
-This should have been fixed by 9f2b6d2936a7c4bb3155de8efec7b10869ca935e 
-("date/time: do not get confused by fractional seconds").
+    git-daemon: single-line logs
+    
+    Signed-off-by: Jan Engelhardt <jengelh@medozas.de>
+---
+ daemon.c |   18 +++++++-----------
+ 1 files changed, 7 insertions(+), 11 deletions(-)
 
-But maybe that hasn't made it into any release yet? It's in master, but 
-maybe it never made it into stable? Junio?
-
-		Linus
+diff --git a/daemon.c b/daemon.c
+index 8dcde73..8ecfe7b 100644
+--- a/daemon.c
++++ b/daemon.c
+@@ -319,14 +319,15 @@ static int git_daemon_config(const char *var, const char *value, void *cb)
+ 	return 0;
+ }
+ 
+-static int run_service(struct interp *itable, struct daemon_service *service)
++static int run_service(struct interp *itable, struct daemon_service *service,
++    const char *origin)
+ {
+ 	const char *path;
+ 	int enabled = service->enabled;
+ 
+-	loginfo("Request %s for '%s'",
+-		service->name,
+-		itable[INTERP_SLOT_DIR].value);
++	loginfo("%s->%s %s \"%s\"\n",
++		origin, itable[INTERP_SLOT_HOST].value,
++		service->name, itable[INTERP_SLOT_DIR].value);
+ 
+ 	if (!enabled && !service->overridable) {
+ 		logerror("'%s': service not enabled.", service->name);
+@@ -534,10 +535,10 @@ static void fill_in_extra_table_entries(struct interp *itable)
+ static int execute(struct sockaddr *addr)
+ {
+ 	static char line[1000];
++	char addrbuf[256] = "";
+ 	int pktlen, len, i;
+ 
+ 	if (addr) {
+-		char addrbuf[256] = "";
+ 		int port = -1;
+ 
+ 		if (addr->sa_family == AF_INET) {
+@@ -556,7 +557,6 @@ static int execute(struct sockaddr *addr)
+ 			port = ntohs(sin6_addr->sin6_port);
+ #endif
+ 		}
+-		loginfo("Connection from %s:%d", addrbuf, port);
+ 	}
+ 
+ 	alarm(init_timeout ? init_timeout : timeout);
+@@ -564,10 +564,6 @@ static int execute(struct sockaddr *addr)
+ 	alarm(0);
+ 
+ 	len = strlen(line);
+-	if (pktlen != len)
+-		loginfo("Extended attributes (%d bytes) exist <%.*s>",
+-			(int) pktlen - len,
+-			(int) pktlen - len, line + len + 1);
+ 	if (len && line[len-1] == '\n') {
+ 		line[--len] = 0;
+ 		pktlen--;
+@@ -596,7 +592,7 @@ static int execute(struct sockaddr *addr)
+ 			 */
+ 			interp_set_entry(interp_table,
+ 					 INTERP_SLOT_DIR, line + namelen + 5);
+-			return run_service(interp_table, s);
++			return run_service(interp_table, s, addrbuf);
+ 		}
+ 	}
+ 
