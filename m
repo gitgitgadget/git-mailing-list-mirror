@@ -1,68 +1,77 @@
-From: Linus Torvalds <torvalds@linux-foundation.org>
-Subject: Re: hosting git on a nfs
-Date: Thu, 13 Nov 2008 15:48:30 -0800 (PST)
-Message-ID: <alpine.LFD.2.00.0811131545071.3468@nehalem.linux-foundation.org>
-References: <200811121029.34841.thomas@koch.ro>  <20081112173651.GA9127@linode.davidb.org>  <alpine.LFD.2.00.0811120959050.3468@nehalem.linux-foundation.org>  <loom.20081113T174625-994@post.gmane.org>  <alpine.LFD.2.00.0811131214020.3468@nehalem.linux-foundation.org>
-  <alpine.LFD.2.00.0811131252040.3468@nehalem.linux-foundation.org> <885649360811131523h2e10dc44x8603c9793dae03b8@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Bruce Fields <bfields@fieldses.org>,
+From: Giuseppe Bilotta <giuseppe.bilotta@gmail.com>
+Subject: [PATCH v2 10/11] gitweb: add HEAD to list of shortlog refs if detached
+Date: Fri, 14 Nov 2008 00:54:20 +0100
+Message-ID: <1226620461-25168-1-git-send-email-giuseppe.bilotta@gmail.com>
+References: <1226616555-24503-10-git-send-email-giuseppe.bilotta@gmail.com>
+Cc: Jakub Narebski <jnareb@gmail.com>, Petr Baudis <pasky@suse.cz>,
 	Junio C Hamano <gitster@pobox.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: James Pickens <jepicken@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Nov 14 00:50:11 2008
+	Giuseppe Bilotta <giuseppe.bilotta@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Nov 14 00:55:30 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1L0lwx-0007fh-6P
-	for gcvg-git-2@gmane.org; Fri, 14 Nov 2008 00:50:11 +0100
+	id 1L0m20-0000jn-NU
+	for gcvg-git-2@gmane.org; Fri, 14 Nov 2008 00:55:25 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752832AbYKMXsr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 13 Nov 2008 18:48:47 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752827AbYKMXsq
-	(ORCPT <rfc822;git-outgoing>); Thu, 13 Nov 2008 18:48:46 -0500
-Received: from smtp1.linux-foundation.org ([140.211.169.13]:47468 "EHLO
-	smtp1.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1752723AbYKMXsp (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 13 Nov 2008 18:48:45 -0500
-Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [140.211.169.55])
-	by smtp1.linux-foundation.org (8.14.2/8.13.5/Debian-3ubuntu1.1) with ESMTP id mADNmWjo023787
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Thu, 13 Nov 2008 15:48:33 -0800
-Received: from localhost (localhost [127.0.0.1])
-	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id mADNmV1X001227;
-	Thu, 13 Nov 2008 15:48:32 -0800
-In-Reply-To: <885649360811131523h2e10dc44x8603c9793dae03b8@mail.gmail.com>
-User-Agent: Alpine 2.00 (LFD 1167 2008-08-23)
-X-Spam-Status: No, hits=-3.432 required=5 tests=AWL,BAYES_00
-X-Spam-Checker-Version: SpamAssassin 3.2.4-osdl_revision__1.47__
-X-MIMEDefang-Filter: lf$Revision: 1.188 $
-X-Scanned-By: MIMEDefang 2.63 on 140.211.169.13
+	id S1754052AbYKMXyA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 13 Nov 2008 18:54:00 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753625AbYKMXyA
+	(ORCPT <rfc822;git-outgoing>); Thu, 13 Nov 2008 18:54:00 -0500
+Received: from ug-out-1314.google.com ([66.249.92.168]:53312 "EHLO
+	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751358AbYKMXx6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 13 Nov 2008 18:53:58 -0500
+Received: by ug-out-1314.google.com with SMTP id 39so1512463ugf.37
+        for <git@vger.kernel.org>; Thu, 13 Nov 2008 15:53:57 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:from:to:cc:subject:date
+         :message-id:x-mailer:in-reply-to:references;
+        bh=2u9EP5V9F/6OX0ocRboEB2ad3GzvoFn5pPzYB8nJZQ4=;
+        b=jbndDv80sQxmdE7f6opUxtAKPut2n+TcjxIMjnB2mJNMDm6e0uFaQ2tha9HTJQefNz
+         iA6jgLbu5KbexpYIX0JZx88aAuLEjb5j8yNlU8ND0rGYlcIO90BBbausOypF8dtYsmTR
+         fqFM8fEpj406r5Du2hZwPIdBj2vF42kXgrccU=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
+        b=gDH+oVguLyR6eUwYjKrqOTjPTcHX8ETBxn5wiLfgJyjGdcXxPofcvJxrAseivL/mW3
+         ZO31qGu7/9jkTqrRthRYAQC3fxn8xUnF12KLnzK6AJXM3FO0W06VhnU8JloIEA1GmKi+
+         erVvuCqirDDoZDLkR9ma+Y65JsMnMshN7kL10=
+Received: by 10.67.28.14 with SMTP id f14mr4459361ugj.79.1226620437149;
+        Thu, 13 Nov 2008 15:53:57 -0800 (PST)
+Received: from localhost ([78.15.2.247])
+        by mx.google.com with ESMTPS id 6sm10197ugc.39.2008.11.13.15.53.56
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Thu, 13 Nov 2008 15:53:56 -0800 (PST)
+X-Mailer: git-send-email 1.5.6.5
+In-Reply-To: <1226616555-24503-10-git-send-email-giuseppe.bilotta@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/100930>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/100931>
 
+Signed-off-by: Giuseppe Bilotta <giuseppe.bilotta@gmail.com>
+---
+ gitweb/gitweb.perl |    4 ++++
+ 1 files changed, 4 insertions(+), 0 deletions(-)
 
-
-On Thu, 13 Nov 2008, James Pickens wrote:
-> 
-> I'm trying to test this and so far I'm not seeing any effect.
-
-Ok, try my second version. The first version would get _some_ parallelism, 
-but very little due to all the threads often trying to just look up in the 
-same directory. The second version should hopefully have less of that 
-effect.
-
-Also, under Linux, try it with caches cleared in between runs, so that you 
-can avoid any issues of the Linux client caching the directory lookup data 
-(which linux _will_ do - I think the default timeout is 30 seconds or 
-something like that):
-
-	echo 3 > /proc/sys/vm/drop_caches ; time git diff
-
-which should hopefully get you more reliable timings.
-
-			Linus
+diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
+index ceb0271..256c962 100755
+--- a/gitweb/gitweb.perl
++++ b/gitweb/gitweb.perl
+@@ -2296,6 +2296,10 @@ sub git_get_last_activity {
+ sub git_get_references {
+ 	my $type = shift || "";
+ 	my %refs;
++	if (git_is_head_detached()) {
++		my $hash = git_get_head_hash($project);
++		$refs{$hash} = [ 'HEAD' ];
++	}
+ 	# 5dc01c595e6c6ec9ccda4f6f69c131c0dd945f8c refs/tags/v2.6.11
+ 	# c39ae07f393806ccf406ef966e9a15afc43cc36a refs/tags/v2.6.11^{}
+ 	open my $fd, "-|", git_cmd(), "show-ref", "--dereference",
+-- 
+1.5.6.5
