@@ -1,69 +1,65 @@
-From: Sam Vilain <sam@vilain.net>
-Subject: [PATCH] sha1_file: make sure correct error is propagated
-Date: Fri, 14 Nov 2008 20:19:34 +1300
-Message-ID: <1226647174-15844-1-git-send-email-sam@vilain.net>
-Cc: Sam Vilain <samv@maia.lan>, Sam Vilain <sam@vilain.net>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Nov 14 08:21:18 2008
+From: Francis Galiegue <fge@one2team.com>
+Subject: Re: [PATCH] sha1_file: make sure correct error is propagated
+Date: Fri, 14 Nov 2008 08:44:58 +0100
+Organization: One2team
+Message-ID: <200811140844.58746.fge@one2team.com>
+References: <1226647174-15844-1-git-send-email-sam@vilain.net>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: Sam Vilain <sam@vilain.net>
+X-From: git-owner@vger.kernel.org Fri Nov 14 08:49:10 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1L0szV-0004H1-Ls
-	for gcvg-git-2@gmane.org; Fri, 14 Nov 2008 08:21:18 +0100
+	id 1L0tQQ-0002IC-LR
+	for gcvg-git-2@gmane.org; Fri, 14 Nov 2008 08:49:07 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753728AbYKNHTm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 14 Nov 2008 02:19:42 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751040AbYKNHTm
-	(ORCPT <rfc822;git-outgoing>); Fri, 14 Nov 2008 02:19:42 -0500
-Received: from watts.utsl.gen.nz ([202.78.240.73]:52908 "EHLO mail.utsl.gen.nz"
+	id S1750957AbYKNHrw convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 14 Nov 2008 02:47:52 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750777AbYKNHrw
+	(ORCPT <rfc822;git-outgoing>); Fri, 14 Nov 2008 02:47:52 -0500
+Received: from ns35774.ovh.net ([213.251.185.197]:58482 "EHLO ns35774.ovh.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751037AbYKNHTl (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 14 Nov 2008 02:19:41 -0500
-Received: by mail.utsl.gen.nz (Postfix, from userid 1004)
-	id ECB1921C3F3; Fri, 14 Nov 2008 20:19:39 +1300 (NZDT)
-X-Spam-Checker-Version: SpamAssassin 3.2.5 (2008-06-10) on
-	mail.musashi.utsl.gen.nz
-X-Spam-Level: 
-X-Spam-Status: No, score=-4.4 required=5.0 tests=ALL_TRUSTED,BAYES_00
-	autolearn=ham version=3.2.5
-Received: from localhost.localdomain (longdrop.musashi.utsl.gen.nz [192.168.253.12])
-	by mail.utsl.gen.nz (Postfix) with ESMTP id 808AA21C3B6;
-	Fri, 14 Nov 2008 20:19:34 +1300 (NZDT)
-X-Mailer: git-send-email debian.1.5.6.1
+	id S1750734AbYKNHrv convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 14 Nov 2008 02:47:51 -0500
+Received: from smtp.olympe.o2t (138.193.65-86.rev.gaoland.net [86.65.193.138])
+	by ns35774.ovh.net (Postfix) with ESMTP id BB73692C002;
+	Fri, 14 Nov 2008 08:47:44 +0100 (CET)
+Received: from erwin.olympe.o2t (erwin.olympe.o2t [192.168.1.21])
+	by smtp.olympe.o2t (Postfix) with ESMTP id 5AC827001F;
+	Fri, 14 Nov 2008 03:45:57 +0100 (CET)
+User-Agent: KMail/1.9.9
+In-Reply-To: <1226647174-15844-1-git-send-email-sam@vilain.net>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/100957>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/100958>
 
-From: Sam Vilain <samv@maia.lan>
+Le vendredi 14 novembre 2008, Sam Vilain a =E9crit=A0:
+> From: Sam Vilain <samv@maia.lan>
+>=20
+> In the case that a object directory exists, but is not writable, the
+> code path that tries to create it is followed and the returned errno
+> and path that of the directory tried to be created.  The resultant
+> error message is confusing.
+>=20
+> So, if the mkstemp() fails with EPERM, don't try to create the
+> directory - return straight away.
+>=20
 
-In the case that a object directory exists, but is not writable, the
-code path that tries to create it is followed and the returned errno
-and path that of the directory tried to be created.  The resultant
-error message is confusing.
+Are you sure you didn't mean EACCESS?
 
-So, if the mkstemp() fails with EPERM, don't try to create the
-directory - return straight away.
-
-Signed-off-by: Sam Vilain <sam@vilain.net>
----
- sha1_file.c |    2 +-
- 1 files changed, 1 insertions(+), 1 deletions(-)
-
-diff --git a/sha1_file.c b/sha1_file.c
-index ab2b520..7662330 100644
---- a/sha1_file.c
-+++ b/sha1_file.c
-@@ -2231,7 +2231,7 @@ static int create_tmpfile(char *buffer, size_t bufsiz, const char *filename)
- 	memcpy(buffer, filename, dirlen);
- 	strcpy(buffer + dirlen, "tmp_obj_XXXXXX");
- 	fd = mkstemp(buffer);
--	if (fd < 0 && dirlen) {
-+	if (fd < 0 && dirlen && (errno != EPERM)) {
- 		/* Make sure the directory exists */
- 		memcpy(buffer, filename, dirlen);
- 		buffer[dirlen-1] = 0;
--- 
-debian.1.5.6.1
+--=20
+=46rancis Galiegue
+ONE2TEAM
+Ing=E9nieur syst=E8me
+Mob=A0: +33 (0) 6 83 87 78 75
+Tel=A0: +33 (0) 1 78 94 55 52
+fge@one2team.com
+40 avenue Raymond Poincar=E9
+75116 Paris
