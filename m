@@ -1,86 +1,69 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: git integration with monodevelop
-Date: Fri, 14 Nov 2008 15:55:59 +0100 (CET)
-Message-ID: <alpine.DEB.1.00.0811141553020.30769@pacific.mpi-cbg.de>
-References: <491AAE6D.8030304@op5.se> <491AF20D.4070600@kde.ru> <491AF768.3010607@op5.se> <491B02FF.2060204@kde.ru> <491BD532.9090200@op5.se> <alpine.DEB.1.00.0811141429040.30769@pacific.mpi-cbg.de> <491D82F3.2090807@op5.se>
+From: Jens Seidel <jensseidel@users.sf.net>
+Subject: Error in git-cherry-pick manpage?
+Date: Fri, 14 Nov 2008 16:14:26 +0100
+Message-ID: <20081114151426.GA20985@merkur.sol.de>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Evgeniy Ivanov <powerfox@kde.ru>,
-	Shawn Pearce <spearce@spearce.org>,
-	Git Mailing List <git@vger.kernel.org>
-To: Andreas Ericsson <ae@op5.se>
-X-From: git-owner@vger.kernel.org Fri Nov 14 15:49:42 2008
+Content-Type: text/plain; charset=us-ascii
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Nov 14 16:17:34 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1L0zzH-0007bI-2F
-	for gcvg-git-2@gmane.org; Fri, 14 Nov 2008 15:49:31 +0100
+	id 1L10QG-0002dA-J8
+	for gcvg-git-2@gmane.org; Fri, 14 Nov 2008 16:17:25 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751368AbYKNOsP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 14 Nov 2008 09:48:15 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751278AbYKNOsP
-	(ORCPT <rfc822;git-outgoing>); Fri, 14 Nov 2008 09:48:15 -0500
-Received: from mail.gmx.net ([213.165.64.20]:54157 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751295AbYKNOsO (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 14 Nov 2008 09:48:14 -0500
-Received: (qmail invoked by alias); 14 Nov 2008 14:48:12 -0000
-Received: from pacific.mpi-cbg.de (EHLO pacific.mpi-cbg.de) [141.5.10.38]
-  by mail.gmx.net (mp065) with SMTP; 14 Nov 2008 15:48:12 +0100
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX19pBUFmewxpNc/ZOTRYp+iQa/W6y4Y/eV5a2peSor
-	0TXUAtfncW8GUm
-X-X-Sender: schindelin@pacific.mpi-cbg.de
-In-Reply-To: <491D82F3.2090807@op5.se>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.65
+	id S1752350AbYKNPPn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 14 Nov 2008 10:15:43 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751289AbYKNPPn
+	(ORCPT <rfc822;git-outgoing>); Fri, 14 Nov 2008 10:15:43 -0500
+Received: from fmmailgate02.web.de ([217.72.192.227]:34772 "EHLO
+	fmmailgate02.web.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751376AbYKNPPm (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 14 Nov 2008 10:15:42 -0500
+Received: from smtp07.web.de (fmsmtp07.dlan.cinetic.de [172.20.5.215])
+	by fmmailgate02.web.de (Postfix) with ESMTP id AE5A3F6B4583
+	for <git@vger.kernel.org>; Fri, 14 Nov 2008 16:15:40 +0100 (CET)
+Received: from [77.188.140.134] (helo=merkur.sol.de)
+	by smtp07.web.de with asmtp (TLSv1:AES256-SHA:256)
+	(WEB.DE 4.109 #226)
+	id 1L10Oa-0001HM-00
+	for git@vger.kernel.org; Fri, 14 Nov 2008 16:15:40 +0100
+Received: from jens by merkur.sol.de with local (Exim 4.69)
+	(envelope-from <tux-master@web.de>)
+	id 1L10NO-0005So-Sc
+	for git@vger.kernel.org; Fri, 14 Nov 2008 16:14:26 +0100
+Mail-Followup-To: git@vger.kernel.org
+Content-Disposition: inline
+User-Agent: Mutt/1.5.18 (2008-05-17)
+X-Sender: tux-master@web.de
+X-Provags-ID: V01U2FsdGVkX1+JCzn6ILZbSrRh0gAta0DEy+aqUSEesduliPEr
+	cXFgaGwnAqMETv5Dimyn2ZoPz7AxF1WdwLrNmOwoTNxQm4KJni
+	jA6I0rTgE=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/100981>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/100982>
 
 Hi,
 
-On Fri, 14 Nov 2008, Andreas Ericsson wrote:
+I try to use git cherry-pick to combine multiple commits but I'm confused
+about the second sentence of the description:
 
-> Johannes Schindelin wrote:
-> > Hi,
-> > 
-> > On Thu, 13 Nov 2008, Andreas Ericsson wrote:
-> > 
-> > > Evgeniy Ivanov wrote:
-> > >
-> > > > But this is the same things Shawn has suggested to my mentor and 
-> > > > me at the beginning of SoC...
-> > > Oh? I didn't know libgit2 started as a SoC project.
-> > 
-> > It did not.  It started as a request from GitHub, and following 
-> > discussion, at the GitTogether '08.
-> > 
-> > There _was_ a SoC project last year, libgit-thin, but the problem as 
-> > far as GitHub is concerned was that it was a tear-down approach: it 
-> > took git.git and tried to make a small library of it, and by this 
-> > approach was bound to the GPL.
-> > 
-> 
-> Oh. I was under the impression that libgit2 would also be able to reuse 
-> code from git.git, since there was that huge license thread a couple of 
-> months ago. Did I misinterpret that thread, and everything in libgit2 
-> has to be implemented from scratch?
+"Given one existing commit, apply the change the patch introduces, and
+record a new commit that records it. This requires your working tree to be
+clean (no modifications from the HEAD commit)."
 
-You misinterpreted.
+I intent to use it as follows:
 
-A lot can be reused, because the original authors agree to let the code be 
-relicensed (including Shawn and me, for example).  But a few others have 
-raised concerns with everything non-GPL (and that includes GPL+gcc 
-exception), and even stated explicitely that they are not okay with their 
-code being reused (or adapted) to something as permissive as BSD, for 
-example.
+ git cherry-pick -x --no-commit 2e855ae
+ git cherry-pick -x --no-commit 0c1151
+ ...
 
-However, let's not revive the license wars.  The topic is kinda boring.
+After the first invocation my working tree will not be clean but contain
+changes in the index.
 
-Ciao,
-Dscho
+Does this mean that's a wrong usage of cherry-pick?
+
+Jens
