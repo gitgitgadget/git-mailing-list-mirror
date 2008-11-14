@@ -1,80 +1,84 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2 09/11] gitweb: git_is_head_detached() function
-Date: Thu, 13 Nov 2008 22:40:38 -0800
-Message-ID: <7vk5b6dd3t.fsf@gitster.siamese.dyndns.org>
-References: <1226616555-24503-1-git-send-email-giuseppe.bilotta@gmail.com>
- <1226616555-24503-2-git-send-email-giuseppe.bilotta@gmail.com>
- <1226616555-24503-3-git-send-email-giuseppe.bilotta@gmail.com>
- <1226616555-24503-4-git-send-email-giuseppe.bilotta@gmail.com>
- <1226616555-24503-5-git-send-email-giuseppe.bilotta@gmail.com>
- <1226616555-24503-6-git-send-email-giuseppe.bilotta@gmail.com>
- <1226616555-24503-7-git-send-email-giuseppe.bilotta@gmail.com>
- <1226616555-24503-8-git-send-email-giuseppe.bilotta@gmail.com>
- <1226616555-24503-9-git-send-email-giuseppe.bilotta@gmail.com>
- <1226616555-24503-10-git-send-email-giuseppe.bilotta@gmail.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH 3/3] Add -k/--keep-going option to mergetool
+Date: Fri, 14 Nov 2008 01:47:56 -0500
+Message-ID: <20081114064756.GB11907@coredump.intra.peff.net>
+References: <1226580075-29289-1-git-send-email-charles@hashpling.org> <1226580075-29289-2-git-send-email-charles@hashpling.org> <1226580075-29289-3-git-send-email-charles@hashpling.org> <1226580075-29289-4-git-send-email-charles@hashpling.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Jakub Narebski <jnareb@gmail.com>,
-	Petr Baudis <pasky@suse.cz>
-To: Giuseppe Bilotta <giuseppe.bilotta@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Nov 14 07:42:19 2008
+Content-Type: text/plain; charset=utf-8
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+	Andreas Ericsson <ae@op5.se>, Theodore Ts'o <tytso@mit.edu>,
+	William Pursell <bill.pursell@gmail.com>
+To: Charles Bailey <charles@hashpling.org>
+X-From: git-owner@vger.kernel.org Fri Nov 14 07:49:21 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1L0sNk-0004T5-O8
-	for gcvg-git-2@gmane.org; Fri, 14 Nov 2008 07:42:17 +0100
+	id 1L0sUa-0005s4-FD
+	for gcvg-git-2@gmane.org; Fri, 14 Nov 2008 07:49:20 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750977AbYKNGlA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 14 Nov 2008 01:41:00 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750840AbYKNGlA
-	(ORCPT <rfc822;git-outgoing>); Fri, 14 Nov 2008 01:41:00 -0500
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:47484 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750813AbYKNGk7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 14 Nov 2008 01:40:59 -0500
-Received: from localhost.localdomain (unknown [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 744F17DEBA;
-	Fri, 14 Nov 2008 01:40:58 -0500 (EST)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES256-SHA (256/256 bits)) (No client certificate requested) by
- a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTPSA id 8D0897DEB9; Fri,
- 14 Nov 2008 01:40:45 -0500 (EST)
-In-Reply-To: <1226616555-24503-10-git-send-email-giuseppe.bilotta@gmail.com>
- (Giuseppe Bilotta's message of "Thu, 13 Nov 2008 23:49:15 +0100")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: 320C56D6-B217-11DD-B467-9CEDC82D7133-77302942!a-sasl-fastnet.pobox.com
+	id S1750918AbYKNGr7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 14 Nov 2008 01:47:59 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750813AbYKNGr7
+	(ORCPT <rfc822;git-outgoing>); Fri, 14 Nov 2008 01:47:59 -0500
+Received: from peff.net ([208.65.91.99]:2017 "EHLO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750727AbYKNGr6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 14 Nov 2008 01:47:58 -0500
+Received: (qmail 31772 invoked by uid 111); 14 Nov 2008 06:47:57 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+    by peff.net (qpsmtpd/0.32) with SMTP; Fri, 14 Nov 2008 01:47:57 -0500
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Fri, 14 Nov 2008 01:47:56 -0500
+Content-Disposition: inline
+In-Reply-To: <1226580075-29289-4-git-send-email-charles@hashpling.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/100954>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/100955>
 
-Giuseppe Bilotta <giuseppe.bilotta@gmail.com> writes:
+On Thu, Nov 13, 2008 at 12:41:15PM +0000, Charles Bailey wrote:
 
-> The function checks if the HEAD for the current project is detached by
-> checking if 'git branch' returns "* (no branch)"
+> This option stops git mergetool from aborting at the first failed merge.
+> This allows some additional use patterns. Merge conflicts can now be
+> previewed one at time and merges can also be skipped so that they can be
+> performed in a later pass.
+> 
+> There is also a mergetool.keepGoing configuration variable covering the
+> same behaviour.
 
-This one looks more like "oops, the way detached HEAD is detected in 08 is
-sucky, let's cover it up by introducing a function as an afterthought."
+I think this series addresses the questions I remember from the first
+posting, and it looks sane overall to me. My only two complaints are:
 
-Have a patch that introduces git_is_head_detached() first, and then use
-that function to implement the feature.  I personally think the user (that
-is, 08/11) is small and isolated enough that these two can be a single
-patch.
+>  Documentation/config.txt        |    4 +++
+>  Documentation/git-mergetool.txt |   12 +++++++++-
+>  git-mergetool.sh                |   46 ++++++++++++++++++++++++++++++--------
+>  3 files changed, 51 insertions(+), 11 deletions(-)
 
-> +# check if current HEAD is detached
-> +sub git_is_head_detached {
-> +	my @x = (git_cmd(), 'branch');
-> +	my @ret = split("\n", qx(@x));
-> +	return 0 + grep { /^\* \(no branch\)$/ } @ret;
-> +}
+This patch in particular changes some of the innards of mergetool, and
+while the changes look good to me via reading, I would feel even more
+comfortable if there were some tests (it looks like your previous t7610
+gives at least a basic sanity check, but it might be nice to test to
+make sure we detect merge failures, too).
 
-Do not read from Porcelain in scripts.
+> -		return
+> +		return 0
+> [...]
+> -		return
+> +		return 0
+> [...]
+> -		exit 1
+> +		return 1
+> [...]
+> -	exit 1
+> +	return 1
+> [...]
+> -	exit 1
+> +	cleanup_temp_files
+> +	return 1
 
-"git symbolic-ref HEAD" should error out when your HEAD is detached, and
-will return refs/heads/frotz when you are on frotz branch.
+One of these is not like the others. Is there a reason to add a
+cleanup_temp_files here (and if so, should it be noted in the commit
+message, and/or be in a separate commit?).
 
-But realistically speaking, what does it mean to have a detached HEAD in a
-repository published via gitweb?  First of all these things are supposed
-to be bare and there would be no checkout.
+-Peff
