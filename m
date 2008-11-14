@@ -1,113 +1,77 @@
-From: Christian Couder <chriscool@tuxfamily.org>
-Subject: [PATCH 3/3] Documentation: tutorial: add information about
- "git help" at the beginning
-Date: Fri, 14 Nov 2008 13:27:22 +0100
-Message-ID: <20081114132722.c98c4db1.chriscool@tuxfamily.org>
+From: "Tor Arvid Lund" <torarvid@gmail.com>
+Subject: Re: getting started with git
+Date: Fri, 14 Nov 2008 13:56:14 +0100
+Message-ID: <1a6be5fa0811140456j10fd8703w74e485571e3c70af@mail.gmail.com>
+References: <20497802.post@talk.nabble.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Nov 14 13:26:41 2008
+To: "Ivan Senji" <ivan.senji@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Nov 14 14:04:20 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1L0xkr-0004az-So
-	for gcvg-git-2@gmane.org; Fri, 14 Nov 2008 13:26:30 +0100
+	id 1L0yLU-0000hQ-7V
+	for gcvg-git-2@gmane.org; Fri, 14 Nov 2008 14:04:20 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751454AbYKNMZO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 14 Nov 2008 07:25:14 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751497AbYKNMZN
-	(ORCPT <rfc822;git-outgoing>); Fri, 14 Nov 2008 07:25:13 -0500
-Received: from smtp2-g19.free.fr ([212.27.42.28]:47928 "EHLO smtp2-g19.free.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750918AbYKNMZM (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 14 Nov 2008 07:25:12 -0500
-Received: from smtp2-g19.free.fr (localhost.localdomain [127.0.0.1])
-	by smtp2-g19.free.fr (Postfix) with ESMTP id ECDFA12B713;
-	Fri, 14 Nov 2008 13:25:10 +0100 (CET)
-Received: from localhost.boubyland (gre92-7-82-243-130-161.fbx.proxad.net [82.243.130.161])
-	by smtp2-g19.free.fr (Postfix) with SMTP id AC36412B6E3;
-	Fri, 14 Nov 2008 13:25:10 +0100 (CET)
-X-Mailer: Sylpheed 2.5.0 (GTK+ 2.12.11; i486-pc-linux-gnu)
+	id S1751204AbYKNM4R (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 14 Nov 2008 07:56:17 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751126AbYKNM4Q
+	(ORCPT <rfc822;git-outgoing>); Fri, 14 Nov 2008 07:56:16 -0500
+Received: from fg-out-1718.google.com ([72.14.220.152]:40556 "EHLO
+	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751055AbYKNM4Q (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 14 Nov 2008 07:56:16 -0500
+Received: by fg-out-1718.google.com with SMTP id 19so1122220fgg.17
+        for <git@vger.kernel.org>; Fri, 14 Nov 2008 04:56:14 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to
+         :subject:cc:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:references;
+        bh=E0xhl0sGl2DgsoXz0B3wpndJs3Yn+wucOWZqyWCjVEM=;
+        b=nG9ombCov/M0Lmn+L10FArKsi8nJm30YluAw45V3Odox3Ys9/jadFuULerKWe+2khr
+         KNeGjMaLByt8IVbgSIiyR6ADv1KMKmCeIy4i1aMjTnsIIM5EFUBMId6UE729kueSENjD
+         djhuL5l3tBmw2n6paI+jB3F6Ee4Pe5fu5Leoo=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
+         :content-type:content-transfer-encoding:content-disposition
+         :references;
+        b=diVC/pNHfoZU/0TK7AkVuwY8x+6dSqZIcQFewM7Z3+dF+MKA+yIu81PhjNGymGT36n
+         H5UPzsdJl1Y0ogoGGmbRnqZvM8M36rh1+ywI//BF4c4rNt7zZ7NW0OWt26+qVefpenYh
+         sVlbU9oqWh518BtaRJwQcw5J0jWhppNBkIkUM=
+Received: by 10.86.9.8 with SMTP id 8mr572189fgi.48.1226667374131;
+        Fri, 14 Nov 2008 04:56:14 -0800 (PST)
+Received: by 10.86.9.6 with HTTP; Fri, 14 Nov 2008 04:56:14 -0800 (PST)
+In-Reply-To: <20497802.post@talk.nabble.com>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/100967>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/100968>
 
-Talking about "git help" is useful because it has a few more
-features (like when using it without arguments or with "-a") and
-it may work on non unix like platforms.
+On Fri, Nov 14, 2008 at 11:16 AM, Ivan Senji <ivan.senji@gmail.com> wrote:
+> On each location that i develop some project and configuration files are
+> different. But i would like them to be in the repository as a starting point
+> when checking out a project (example: opening a project on a dfferent OS in
+> eclipse... eclipse will find an error in the path to jdk and ask me to fix
+> that error by selecting a different jdk).
+>
+> How to achieve that these files are in the repository but that any further
+> changes to them are not commited (or are commited localy but not pushed to a
+> remote repository)?
 
-Also add a few links to git-help(1) in "See also" sections.
+Hi,
 
-Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
----
- Documentation/gitcore-tutorial.txt |    1 +
- Documentation/gittutorial-2.txt    |    1 +
- Documentation/gittutorial.txt      |   14 ++++++++++++++
- 3 files changed, 16 insertions(+), 0 deletions(-)
+Well, if it were me, I think I would commit that eclipse config file
+under a different name... Say, ".classpath.defaults" instead of
+".classpath". Then your README file could tell your users to start by
+copying the .classpath.defaults to .classpath, and update its contents
+as necessary. Put .classpath in your .gitignore file, so it won't be
+committed to the repository.
 
-diff --git a/Documentation/gitcore-tutorial.txt b/Documentation/gitcore-tutorial.txt
-index 61fc5d7..96bf353 100644
---- a/Documentation/gitcore-tutorial.txt
-+++ b/Documentation/gitcore-tutorial.txt
-@@ -1693,6 +1693,7 @@ SEE ALSO
- linkgit:gittutorial[7],
- linkgit:gittutorial-2[7],
- linkgit:gitcvs-migration[7],
-+linkgit:git-help[1],
- link:everyday.html[Everyday git],
- link:user-manual.html[The Git User's Manual]
- 
-diff --git a/Documentation/gittutorial-2.txt b/Documentation/gittutorial-2.txt
-index bab0f34..a057b50 100644
---- a/Documentation/gittutorial-2.txt
-+++ b/Documentation/gittutorial-2.txt
-@@ -425,6 +425,7 @@ linkgit:gittutorial[7],
- linkgit:gitcvs-migration[7],
- linkgit:gitcore-tutorial[7],
- linkgit:gitglossary[7],
-+linkgit:git-help[1],
- link:everyday.html[Everyday git],
- link:user-manual.html[The Git User's Manual]
- 
-diff --git a/Documentation/gittutorial.txt b/Documentation/gittutorial.txt
-index 384972c..2859a21 100644
---- a/Documentation/gittutorial.txt
-+++ b/Documentation/gittutorial.txt
-@@ -23,9 +23,22 @@ First, note that you can get documentation for a command such as
- `git log --graph` with:
- 
- ------------------------------------------------
-+$ git help log
-+------------------------------------------------
-+
-+or:
-+
-+------------------------------------------------
- $ man git-log
- ------------------------------------------------
- 
-+linkgit:git-help[1] has a few more features and is self-documenting
-+using:
-+
-+------------------------------------------------
-+$ git help help
-+------------------------------------------------
-+
- It is a good idea to introduce yourself to git with your name and
- public email address before doing any operation.  The easiest
- way to do so is:
-@@ -653,6 +666,7 @@ linkgit:gittutorial-2[7],
- linkgit:gitcvs-migration[7],
- linkgit:gitcore-tutorial[7],
- linkgit:gitglossary[7],
-+linkgit:git-help[1],
- link:everyday.html[Everyday git],
- link:user-manual.html[The Git User's Manual]
- 
--- 
-1.6.0.4.617.g621cb
+-Tor Arvid-
