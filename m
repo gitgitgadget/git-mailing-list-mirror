@@ -1,84 +1,90 @@
-From: Andreas Ericsson <ae@op5.se>
-Subject: Re: [PATCH] sha1_file: make sure correct error is propagated
-Date: Fri, 14 Nov 2008 20:50:09 +0100
-Message-ID: <491DD671.8070801@op5.se>
-References: <1226647174-15844-1-git-send-email-sam@vilain.net> <1226655681.17731.4.camel@maia.lan> <7vfxlu9lhs.fsf@gitster.siamese.dyndns.org> <200811142009.51803.fg@one2team.com>
+From: Alan <alan@clueserver.org>
+Subject: Re: Can git ignore parts of files
+Date: Fri, 14 Nov 2008 11:58:45 -0800
+Message-ID: <1226692725.6176.10.camel@rotwang.fnordora.org>
+References: <1226690252.6176.9.camel@rotwang.fnordora.org>
+	 <200811142033.51019.fg@one2team.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15;
-	format=flowed
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>, Sam Vilain <sam@vilain.net>,
-	Francis Galiegue <fge@one2team.com>, git@vger.kernel.org
-To: Francis Galiegue <fg@one2team.com>
-X-From: git-owner@vger.kernel.org Fri Nov 14 20:51:41 2008
+Cc: git@vger.kernel.org
+To: Francis Galiegue <fg@one2team.net>
+X-From: git-owner@vger.kernel.org Fri Nov 14 21:00:07 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1L14hf-0006Uc-Ju
-	for gcvg-git-2@gmane.org; Fri, 14 Nov 2008 20:51:40 +0100
+	id 1L14pn-0001J9-5y
+	for gcvg-git-2@gmane.org; Fri, 14 Nov 2008 21:00:03 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751295AbYKNTuY convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 14 Nov 2008 14:50:24 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751259AbYKNTuY
-	(ORCPT <rfc822;git-outgoing>); Fri, 14 Nov 2008 14:50:24 -0500
-Received: from mail.op5.se ([193.201.96.20]:42240 "EHLO mail.op5.se"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751233AbYKNTuY (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 14 Nov 2008 14:50:24 -0500
-Received: from localhost (localhost.localdomain [127.0.0.1])
-	by mail.op5.se (Postfix) with ESMTP id 433C01B80090;
-	Fri, 14 Nov 2008 20:44:54 +0100 (CET)
-X-Virus-Scanned: amavisd-new at 
-X-Spam-Flag: NO
-X-Spam-Score: -2.499
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.499 tagged_above=-10 required=6.6
-	tests=[BAYES_00=-2.599, RDNS_NONE=0.1]
-Received: from mail.op5.se ([127.0.0.1])
-	by localhost (mail.op5.se [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id KEtmOcFBg2Zj; Fri, 14 Nov 2008 20:44:52 +0100 (CET)
-Received: from clix.int.op5.se (unknown [172.27.78.10])
-	by mail.op5.se (Postfix) with ESMTP id AE92E1B80088;
-	Fri, 14 Nov 2008 20:44:51 +0100 (CET)
-User-Agent: Thunderbird 2.0.0.16 (X11/20080723)
-In-Reply-To: <200811142009.51803.fg@one2team.com>
+	id S1752818AbYKNT6s convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 14 Nov 2008 14:58:48 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752335AbYKNT6r
+	(ORCPT <rfc822;git-outgoing>); Fri, 14 Nov 2008 14:58:47 -0500
+Received: from 216-99-213-120.dsl.aracnet.com ([216.99.213.120]:51375 "EHLO
+	clueserver.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751888AbYKNT6r (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 14 Nov 2008 14:58:47 -0500
+Received: from [127.0.0.1] (blackbox.fnordora.org [127.0.0.1])
+	by clueserver.org (Postfix) with ESMTP id 51922F50033;
+	Fri, 14 Nov 2008 11:58:46 -0800 (PST)
+In-Reply-To: <200811142033.51019.fg@one2team.net>
+X-Mailer: Evolution 2.24.1 (2.24.1-2.fc10) 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/101008>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/101009>
 
-=46rancis Galiegue wrote:
-> Le Friday 14 November 2008 20:05:19 Junio C Hamano, vous avez =E9crit=
- :
-> [...]
->>>  	fd =3D mkstemp(buffer);
->>> -	if (fd < 0 && dirlen && (errno !=3D EPERM)) {
->>> +	if (fd < 0 && dirlen && (errno !=3D EACCESS)) {
->> Is this accepting the two as equivalents???
->> --
->> To unsubscribe from this list: send the line "unsubscribe git" in
->> the body of a message to majordomo@vger.kernel.org
->> More majordomo info at  http://vger.kernel.org/majordomo-info.html
+On Fri, 2008-11-14 at 20:33 +0100, Francis Galiegue wrote:
+> Le Friday 14 November 2008 20:17:32 Alan, vous avez =C3=A9crit :
+> > I have kind of an odd problem that is causing me grief in git.  I f=
+igure
+> > someone has a good solution here.  (Or not, they will soon.)
+> >
+> > I have a couple of kernel .config files that are checked into git. =
+ They
+> > are used to test kernel configurations for the nightly builds where=
+ I
+> > work.
+> >
+> > We have a bunch of kernel developers working on drivers.  When they=
+ add
+> > a new driver, they add in the options in the test file to make it
+> > compile in the test builds.
+> >
+> > The problem is that the kernel config file has a timestamp at the t=
+op of
+> > the file that is generated by "make oldconfig" or "make config".  O=
+ther
+> > than removing the timestamp each time manually, is there a way to g=
+et
+> > git to ignore the timestamp on a merge?
+> >
+> > What happens is that the authors submit the changes on a branch in =
+most
+> > cases.  Sometimes they have a version of that file that is quite ou=
+t of
+> > date.  When I go to merge, that one file gives me grief 95% of the =
+time.
+> >
+> > Is there an easy way around this?  Am I approaching the problem wro=
+ng?
+> > Is there a better way to do this?
+> >
 >=20
-> Well, looking at mkdir(2), it says:
+> Do they ever touch to the kernel core? You say that they are developi=
+ng=20
+> drivers, they basically use core kernel interfaces but not modify the=
+m right?
 >=20
->        EPERM  The file system containing pathname does not support th=
-e=20
-> creation of directories.
->=20
-> Hmm, err... git would fail at an earlier point anyway, wouldn't it? E=
-ven git=20
-> init would fail there.
->=20
+> For quite a few years now, the kernel build system has allowed one to=
+ build=20
+> drivers out of the kernel tree (but _using_ the kernel tree) fairly e=
+asily.=20
+> Why not go this route? You won't have any conflict problems anymore, =
+_and_=20
+> you can maintain (and update) your kernel tree regularly.
 
-Not necessarily. .git could be mounted erroneously from via a networked
-filesystem but without write permissions. Yes, other things would fail
-then too, but both EPERM and EACCESS are valid and possible return code=
-s.
-
---=20
-Andreas Ericsson                   andreas.ericsson@op5.se
-OP5 AB                             www.op5.se
-Tel: +46 8-230225                  Fax: +46 8-230231
+Because these will go into core at some later date.  (I work for Intel.=
+)
