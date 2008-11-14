@@ -1,62 +1,143 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: git compile error on AIX
-Date: Fri, 14 Nov 2008 12:21:37 -0800
-Message-ID: <7v1vxe9hym.fsf@gitster.siamese.dyndns.org>
-References: <1226691918584-1499908.post@n2.nabble.com>
+From: Andreas Ericsson <ae@op5.se>
+Subject: git to libgit2 code relicensing
+Date: Fri, 14 Nov 2008 21:59:56 +0100
+Message-ID: <491DE6CC.6060201@op5.se>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Dinakar <desas2@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Nov 14 21:23:57 2008
+Content-Type: multipart/mixed;
+ boundary="------------040100020904040705030602"
+To: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Fri Nov 14 22:01:45 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1L15Cm-0001UC-Q5
-	for gcvg-git-2@gmane.org; Fri, 14 Nov 2008 21:23:49 +0100
+	id 1L15nM-0006cq-Uw
+	for gcvg-git-2@gmane.org; Fri, 14 Nov 2008 22:01:37 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751888AbYKNUWX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 14 Nov 2008 15:22:23 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751560AbYKNUWW
-	(ORCPT <rfc822;git-outgoing>); Fri, 14 Nov 2008 15:22:22 -0500
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:51557 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751259AbYKNUWW (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 14 Nov 2008 15:22:22 -0500
-Received: from localhost.localdomain (unknown [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 49AA37D2DE;
-	Fri, 14 Nov 2008 15:22:20 -0500 (EST)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES256-SHA (256/256 bits)) (No client certificate requested) by
- a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTPSA id BB9897D2C1; Fri,
- 14 Nov 2008 15:21:44 -0500 (EST)
-In-Reply-To: <1226691918584-1499908.post@n2.nabble.com> (desas2@gmail.com's
- message of "Fri, 14 Nov 2008 11:45:18 -0800 (PST)")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: F04E06AE-B289-11DD-B650-9CEDC82D7133-77302942!a-sasl-fastnet.pobox.com
+	id S1751040AbYKNVAV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 14 Nov 2008 16:00:21 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751204AbYKNVAV
+	(ORCPT <rfc822;git-outgoing>); Fri, 14 Nov 2008 16:00:21 -0500
+Received: from mail.op5.se ([193.201.96.20]:57011 "EHLO mail.op5.se"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750936AbYKNVAU (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 14 Nov 2008 16:00:20 -0500
+Received: from localhost (localhost.localdomain [127.0.0.1])
+	by mail.op5.se (Postfix) with ESMTP id 7A2D51B80092;
+	Fri, 14 Nov 2008 21:54:42 +0100 (CET)
+X-Virus-Scanned: amavisd-new at 
+X-Spam-Flag: NO
+X-Spam-Score: -2.499
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.499 tagged_above=-10 required=6.6
+	tests=[AWL=0.000, BAYES_00=-2.599, RDNS_NONE=0.1]
+Received: from mail.op5.se ([127.0.0.1])
+	by localhost (mail.op5.se [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id Tf8Z6-hOoFKe; Fri, 14 Nov 2008 21:54:39 +0100 (CET)
+Received: from clix.int.op5.se (unknown [172.27.78.10])
+	by mail.op5.se (Postfix) with ESMTP id DBAF91B80090;
+	Fri, 14 Nov 2008 21:54:38 +0100 (CET)
+User-Agent: Thunderbird 2.0.0.16 (X11/20080723)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/101014>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/101015>
 
-Dinakar <desas2@gmail.com> writes:
+This is a multi-part message in MIME format.
+--------------040100020904040705030602
+Content-Type: text/plain; charset=ISO-8859-15; format=flowed
+Content-Transfer-Encoding: 7bit
 
-> /usr/bin/getopt: Not a recognized flag: d
-> Usage: install [-c DirectoryA] [-f DirectoryB] [-i] [-m] [-M Mode] [-O
-> Owner]
->                [-G Group] [-S] [-n DirectoryC] [-o] [-s] File [DirectoryX
-> ...]
+I've been working quite a lot on git -> libgit2 code moving,
+but the licensing stuff is a bit depressing, as I can't know
+if the work I'm doing is for nothing or not.
 
-Your "install" program is telling you that it does not understand 'd'
-option ("install -d" to create a directory, I presume).
+The license decided for libgit2 is "GPL with gcc exception".
+Those who are OK with relicensing their contributions under
+that license for the purpose of libgit2, can you please say
+so?
 
-> gmake[1]: *** [boilerplates.made] Error 2
-> gmake: *** [all] Error 2
+I'm planning on writing a tool for this that will have "ok",
+"not ok" and "ask-each-patch" as options.
 
-> I would appreciate, if you could help me to resolve this issue.
+The list of people whose position I know is rather short.
+Please correct me if you're on it and would like not to be.
+Junio C. Hamano		ask
+Johannes Schindelin	ok
+Shawn O. Pearce		ok
+Andreas Ericsson	ok
+Pierre Habouzit		ok
+Brian Gernhardt		ok
 
-An obvious solution would be to get a better install.
 
-You seem to be using gmake, so perhaps you already have ginstall and can
-use it like "gmake INSTALL=ginstall"?
+I've put everyone who "owns" more than 500 lines of code
+on the bcc list, figuring your permission is important
+but that you don't want the hundreds (well, one can hope)
+of emails from people saying "ok". The list of major owners
+was generated with "git showners *.c" in a worktree from
+the next branch of git.git.
+
+-- 
+Andreas Ericsson                   andreas.ericsson@op5.se
+OP5 AB                             www.op5.se
+Tel: +46 8-230225                  Fax: +46 8-230231
+
+--------------040100020904040705030602
+Content-Type: text/plain;
+ name="git-showners"
+Content-Transfer-Encoding: 7bit
+Content-Disposition: inline;
+ filename="git-showners"
+
+#!/bin/sh
+
+test "$#" -gt 0 || { echo "Usage: $0 <file>"; exit 1; }
+combined=t
+while test "$#" -gt 0
+do
+	case "$1" in
+	-c|--combined)
+		combined=t
+	;;
+	-i|--individual)
+		combined=
+	;;
+	--)
+		shift
+		break
+	;;
+	*)
+		break
+	;;
+	esac
+	shift
+done
+
+sort_enumerate ()
+{
+	sed -e 's/[^(]*(\([^0-9]*\).*/\1/' -e 's/[\t ]*$//' \
+		| sort | uniq -c | sort -nr
+}
+
+show_owners ()
+{
+	for f in "$@"; do
+		test -d "$f" && { show_owners "$f"/*; continue; }
+
+		git blame -C -C -M "$f"
+	done
+}
+
+if test "$combined" = t; then
+	echo "$@"
+	show_owners "$@" | sort_enumerate
+else
+	echo "Showing one-at-a-time ownership"
+	for f in "$@"; do
+		echo "$f"
+		show_owners "$f" | sort_enumerate
+	done
+fi
+
+--------------040100020904040705030602--
