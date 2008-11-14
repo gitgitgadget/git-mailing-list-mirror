@@ -1,61 +1,61 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2 09/11] gitweb: git_is_head_detached() function
-Date: Fri, 14 Nov 2008 09:44:40 -0800
-Message-ID: <7vk5b69p87.fsf@gitster.siamese.dyndns.org>
-References: <1226616555-24503-1-git-send-email-giuseppe.bilotta@gmail.com>
- <1226616555-24503-3-git-send-email-giuseppe.bilotta@gmail.com>
- <1226616555-24503-4-git-send-email-giuseppe.bilotta@gmail.com>
- <1226616555-24503-5-git-send-email-giuseppe.bilotta@gmail.com>
- <1226616555-24503-6-git-send-email-giuseppe.bilotta@gmail.com>
- <1226616555-24503-7-git-send-email-giuseppe.bilotta@gmail.com>
- <1226616555-24503-8-git-send-email-giuseppe.bilotta@gmail.com>
- <1226616555-24503-9-git-send-email-giuseppe.bilotta@gmail.com>
- <1226616555-24503-10-git-send-email-giuseppe.bilotta@gmail.com>
- <7vk5b6dd3t.fsf@gitster.siamese.dyndns.org>
- <cb7bb73a0811140052h1b7aac6cp6b0b376fa59548a9@mail.gmail.com>
+From: Mark Burton <markb@ordern.com>
+Subject: gitk touching paths highlighting oddity
+Date: Fri, 14 Nov 2008 17:51:59 +0000 (UTC)
+Message-ID: <loom.20081114T173548-920@post.gmane.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, "Jakub Narebski" <jnareb@gmail.com>,
-	"Petr Baudis" <pasky@suse.cz>
-To: "Giuseppe Bilotta" <giuseppe.bilotta@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Nov 14 18:47:24 2008
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Nov 14 18:53:42 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1L12lG-00081o-2n
-	for gcvg-git-2@gmane.org; Fri, 14 Nov 2008 18:47:14 +0100
+	id 1L12rL-00022O-2o
+	for gcvg-git-2@gmane.org; Fri, 14 Nov 2008 18:53:31 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752683AbYKNRp6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 14 Nov 2008 12:45:58 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753484AbYKNRp6
-	(ORCPT <rfc822;git-outgoing>); Fri, 14 Nov 2008 12:45:58 -0500
-Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:55126 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752337AbYKNRp5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 14 Nov 2008 12:45:57 -0500
-Received: from localhost.localdomain (localhost [127.0.0.1])
-	by b-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id C638D16ADA;
-	Fri, 14 Nov 2008 12:45:55 -0500 (EST)
-Received: from pobox.com (ip68-225-240-211.oc.oc.cox.net [68.225.240.211])
- (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
- certificate requested) by b-sasl-quonix.sasl.smtp.pobox.com (Postfix) with
- ESMTPSA id 7C16A16A8D; Fri, 14 Nov 2008 12:44:42 -0500 (EST)
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: 16B607E4-B274-11DD-A480-C128113D384A-77302942!a-sasl-quonix.pobox.com
+	id S1751345AbYKNRwR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 14 Nov 2008 12:52:17 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752042AbYKNRwR
+	(ORCPT <rfc822;git-outgoing>); Fri, 14 Nov 2008 12:52:17 -0500
+Received: from main.gmane.org ([80.91.229.2]:55186 "EHLO ciao.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750936AbYKNRwQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 14 Nov 2008 12:52:16 -0500
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1L12q1-0007s5-38
+	for git@vger.kernel.org; Fri, 14 Nov 2008 17:52:09 +0000
+Received: from host86-128-20-200.range86-128.btcentralplus.com ([86.128.20.200])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Fri, 14 Nov 2008 17:52:09 +0000
+Received: from markb by host86-128-20-200.range86-128.btcentralplus.com with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Fri, 14 Nov 2008 17:52:09 +0000
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@ger.gmane.org
+X-Gmane-NNTP-Posting-Host: main.gmane.org
+User-Agent: Loom/3.14 (http://gmane.org/)
+X-Loom-IP: 86.128.20.200 (Mozilla/5.0 (X11; U; Linux i686; en-GB; rv:1.9.0.3) Gecko/2008092510 Ubuntu/8.04 (hardy) Firefox/3.0.3)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/100992>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/100993>
 
-"Giuseppe Bilotta" <giuseppe.bilotta@gmail.com> writes:
 
-> I have been thinking about making this detached HEAD thing an
-> additional option, but it _really_ seemed like overkill.
+Hi,
 
-I agree that it does not make much sense to make this feature an option.
-Detaching the HEAD in the repository itself is an enough clue from the
-user to the code that the user wants to trigger the feature.
+Using gitk (1.6.0.4) within a given subdirectory of a working tree, I wanted to
+see those commits that affected files in the current directory so I selected
+touching paths" and then typed "." into the entry field (That's right isn't it?)
 
-Thanks.
+On pressing the Next button, not only was a relevant commit successfully found
+and highlighted (commit message boldened) but all of the "." characters in the
+commit message list were given a yellow background (as if I was 
+searching the text for "."). Surely the yellow text highlighting shouldn't
+happen when finding paths?
+
+A quick look at the gitk code left me no wiser hence this email.
+
+Mark
