@@ -1,58 +1,100 @@
-From: Robin Rosenberg <robin.rosenberg@dewire.com>
-Subject: Re: [EGIT PATCH 6/7] Add tags to the graphical history display.
-Date: Fri, 14 Nov 2008 01:49:27 +0100
-Message-ID: <200811140149.27414.robin.rosenberg@dewire.com>
-References: <1226095664-13759-1-git-send-email-robin.rosenberg@dewire.com> <1226095664-13759-7-git-send-email-robin.rosenberg@dewire.com> <20081111182816.GQ2932@spearce.org>
+From: Brandon Casey <casey@nrlssc.navy.mil>
+Subject: Re: [RFC PATCH] repack: make repack -a equivalent to repack -A and
+ drop previous -a behavior
+Date: Thu, 13 Nov 2008 18:53:29 -0600
+Message-ID: <jKWdt94ZxgNW0UAgUUW-qjTtpWohpQXMfvw-AUmOXND8SD5yFw0N8w@cipher.nrlssc.navy.mil>
+References: <7xh1_tFsJkHTjg4Hjm-R4mGSRfYyGFmLI62OMmaNg32f86EbVIYvYrGiYpEGkvooY4pUM1e7CHk@cipher.nrlssc.navy.mil> <20081114000219.GB5285@atjola.homenet>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: git@vger.kernel.org
-To: "Shawn O. Pearce" <spearce@spearce.org>
-X-From: git-owner@vger.kernel.org Fri Nov 14 01:50:47 2008
+To: =?ISO-8859-1?Q?Bj=F6rn_Steinbrink?= <B.Steinbrink@gmx.de>
+X-From: git-owner@vger.kernel.org Fri Nov 14 01:54:49 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1L0mta-0007DV-Q5
-	for gcvg-git-2@gmane.org; Fri, 14 Nov 2008 01:50:47 +0100
+	id 1L0mxU-0008Gc-GL
+	for gcvg-git-2@gmane.org; Fri, 14 Nov 2008 01:54:48 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752632AbYKNAtb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 13 Nov 2008 19:49:31 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751946AbYKNAtb
-	(ORCPT <rfc822;git-outgoing>); Thu, 13 Nov 2008 19:49:31 -0500
-Received: from mail.dewire.com ([83.140.172.130]:9227 "EHLO dewire.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751869AbYKNAta convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 13 Nov 2008 19:49:30 -0500
-Received: from localhost (localhost [127.0.0.1])
-	by dewire.com (Postfix) with ESMTP id D4D93147D0DD;
-	Fri, 14 Nov 2008 01:49:28 +0100 (CET)
-X-Virus-Scanned: by amavisd-new at dewire.com
-Received: from dewire.com ([127.0.0.1])
-	by localhost (torino.dewire.com [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id 5QEV+B1vqKsT; Fri, 14 Nov 2008 01:49:28 +0100 (CET)
-Received: from sleipner.localnet (unknown [10.9.0.2])
-	by dewire.com (Postfix) with ESMTP id 5E7D38030C5;
-	Fri, 14 Nov 2008 01:49:28 +0100 (CET)
-User-Agent: KMail/1.10.3 (Linux/2.6.27-7-generic; KDE/4.1.3; i686; ; )
-In-Reply-To: <20081111182816.GQ2932@spearce.org>
-Content-Disposition: inline
+	id S1752662AbYKNAxd convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 13 Nov 2008 19:53:33 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752631AbYKNAxd
+	(ORCPT <rfc822;git-outgoing>); Thu, 13 Nov 2008 19:53:33 -0500
+Received: from mail1.nrlssc.navy.mil ([128.160.35.1]:49999 "EHLO
+	mail.nrlssc.navy.mil" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751505AbYKNAxd (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 13 Nov 2008 19:53:33 -0500
+Received: by mail.nrlssc.navy.mil id mAE0rU6I006537; Thu, 13 Nov 2008 18:53:30 -0600
+In-Reply-To: <20081114000219.GB5285@atjola.homenet>
+X-OriginalArrivalTime: 14 Nov 2008 00:53:30.0188 (UTC) FILETIME=[693F10C0:01C945F3]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/100939>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/100940>
 
-tisdag 11 november 2008 19:28:16 skrev Shawn O. Pearce:
-> Robin Rosenberg <robin.rosenberg@dewire.com> wrote:
-> > @@ -92,7 +104,64 @@ protected void drawText(final String msg, final int x, final int y) {
-> >  		g.drawString(msg, cellX + x, cellY + texty, true);
-> >  	}
-> 
-> My SWTPlotRenderer doesn't have this context line.  Am I missing
-> a patch in the series?
+Bj=F6rn Steinbrink wrote:
+> On 2008.11.13 17:22:36 -0600, Brandon Casey wrote:
+>> Once upon a time, repack had only a single option which began with t=
+he first
+>> letter of the alphabet.  Then, a second was created which would repa=
+ck
+>> unreachable objects into the newly created pack so that git-gc --aut=
+o could
+>> be invented.  But, the -a option was still necessary so that it coul=
+d be
+>> called every now and then to discard the unreachable objects that we=
+re being
+>> repacked over and over and over into newly generated packs. Later, -=
+A was
+>> changed so that instead of repacking the unreachable objects, it eje=
+cted
+>> them from the pack so that they resided in the object store in loose=
+ form,
+>> to be garbage collected by prune-packed according to normal expiry r=
+ules.
+>>
+>> And so, -a lost its raison d'etre.
+>>
+>> Signed-off-by: Brandon Casey <casey@nrlssc.navy.mil>
+>> ---
+>>
+>>
+>> This is on top of bc/maint-keep-pack
+>=20
+> I didn't check all the (proposed) commits for that branch, so just le=
+t
+> me know if I'm missing anything, but doesn't this change mean that yo=
+u
+> just lose what "-ad" did?
 
->From the "Respect background when drawing history " patch sent to you after the first version
-of this series.
+yes.
 
--- robin
+> We have:
+> 	-a	Create a new pack, containing all reachable objects
+> 	-A	Same as -a
+> 	-ad	Same as -a, and drop all old packs and loose objects
+
+by loose objects, I assume you mean packed unreachable objects.
+
+> 	-Ad	Sama as -ad, but keep unreachable objects loose
+>=20
+> -Ad is nice regarding it's safety-net value, but eg. after a large
+> filter-branch run, when refs/original and the reflogs have been clean=
+ed,
+> you just want to get rid of all those old unreachable objects,
+> immediately. For example after importing and massaging some large
+> history from SVN, the -Ad behaviour is definitely _not_ what I want
+> there. Writing a few thousand loose objects just to prune them is jus=
+t a
+> waste of time.
+
+hmm. That's a good point. Even though I think it is likely that the tho=
+usand
+loose objects that are written will be small commit objects and not blo=
+bs,
+this use case may be enough to trump the safety benefit provided by the
+proposed change.
+
+-brandon
