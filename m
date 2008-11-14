@@ -1,94 +1,81 @@
-From: Andreas Ericsson <ae@op5.se>
-Subject: Re: git to libgit2 code relicensing
-Date: Fri, 14 Nov 2008 23:57:03 +0100
-Message-ID: <491E023F.9030605@op5.se>
-References: <491DE6CC.6060201@op5.se>	 <20081114213352.GA12134@auto.tuwien.ac.at> <bd6139dc0811141346w194ae4c5m9f7b0fdb106108fc@mail.gmail.com>
+From: Linus Torvalds <torvalds@linux-foundation.org>
+Subject: Re: hosting git on a nfs
+Date: Fri, 14 Nov 2008 15:10:24 -0800 (PST)
+Message-ID: <alpine.LFD.2.00.0811141505100.3468@nehalem.linux-foundation.org>
+References: <200811121029.34841.thomas@koch.ro> <20081112173651.GA9127@linode.davidb.org> <alpine.LFD.2.00.0811120959050.3468@nehalem.linux-foundation.org> <loom.20081113T174625-994@post.gmane.org> <alpine.LFD.2.00.0811131214020.3468@nehalem.linux-foundation.org>
+ <alpine.LFD.2.00.0811131252040.3468@nehalem.linux-foundation.org> <alpine.LFD.2.00.0811131518070.3468@nehalem.linux-foundation.org> <371xaQfxsMMQ-9LK24q-nhcS4loEggn8Cj3J1IzfMbzzYDGE6HKbQQ@cipher.nrlssc.navy.mil> <alpine.LFD.2.00.0811131630470.3468@nehalem.linux-foundation.org>
+ <alpine.LFD.2.00.0811131707090.3468@nehalem.linux-foundation.org> <vzAozXmaOLEpyz-7DHx4nMusAdaTsFp7iZ8xfFsgAIraex6_wfvyuw@cipher.nrlssc.navy.mil> <alpine.LFD.2.00.0811141109580.3468@nehalem.linux-foundation.org> <7v63mq9iao.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: Martin Koegler <mkoegler@auto.tuwien.ac.at>,
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Brandon Casey <casey@nrlssc.navy.mil>,
+	James Pickens <jepicken@gmail.com>,
+	Bruce Fields <bfields@fieldses.org>,
 	Git Mailing List <git@vger.kernel.org>
-To: sverre@rabbelier.nl
-X-From: git-owner@vger.kernel.org Fri Nov 14 23:58:27 2008
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sat Nov 15 00:12:26 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1L17cP-0004pf-TS
-	for gcvg-git-2@gmane.org; Fri, 14 Nov 2008 23:58:26 +0100
+	id 1L17pp-0000Oo-7T
+	for gcvg-git-2@gmane.org; Sat, 15 Nov 2008 00:12:17 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751613AbYKNW5L (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 14 Nov 2008 17:57:11 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751416AbYKNW5L
-	(ORCPT <rfc822;git-outgoing>); Fri, 14 Nov 2008 17:57:11 -0500
-Received: from mail.op5.se ([193.201.96.20]:55419 "EHLO mail.op5.se"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751204AbYKNW5K (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 14 Nov 2008 17:57:10 -0500
-Received: from localhost (localhost.localdomain [127.0.0.1])
-	by mail.op5.se (Postfix) with ESMTP id E8AD31B80088;
-	Fri, 14 Nov 2008 23:51:40 +0100 (CET)
-X-Virus-Scanned: amavisd-new at 
-X-Spam-Flag: NO
-X-Spam-Score: -2.499
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.499 tagged_above=-10 required=6.6
-	tests=[BAYES_00=-2.599, RDNS_NONE=0.1]
-Received: from mail.op5.se ([127.0.0.1])
-	by localhost (mail.op5.se [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id u5lBhSbVM7pS; Fri, 14 Nov 2008 23:51:37 +0100 (CET)
-Received: from clix.int.op5.se (unknown [172.27.78.10])
-	by mail.op5.se (Postfix) with ESMTP id 695D61B8009E;
-	Fri, 14 Nov 2008 23:51:36 +0100 (CET)
-User-Agent: Thunderbird 2.0.0.16 (X11/20080723)
-In-Reply-To: <bd6139dc0811141346w194ae4c5m9f7b0fdb106108fc@mail.gmail.com>
+	id S1751770AbYKNXLA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 14 Nov 2008 18:11:00 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751536AbYKNXLA
+	(ORCPT <rfc822;git-outgoing>); Fri, 14 Nov 2008 18:11:00 -0500
+Received: from smtp1.linux-foundation.org ([140.211.169.13]:55583 "EHLO
+	smtp1.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751505AbYKNXLA (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 14 Nov 2008 18:11:00 -0500
+Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [140.211.169.55])
+	by smtp1.linux-foundation.org (8.14.2/8.13.5/Debian-3ubuntu1.1) with ESMTP id mAENAQg2030524
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Fri, 14 Nov 2008 15:10:27 -0800
+Received: from localhost (localhost [127.0.0.1])
+	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id mAENAODV014247;
+	Fri, 14 Nov 2008 15:10:25 -0800
+In-Reply-To: <7v63mq9iao.fsf@gitster.siamese.dyndns.org>
+User-Agent: Alpine 2.00 (LFD 1167 2008-08-23)
+X-Spam-Status: No, hits=-3.431 required=5 tests=AWL,BAYES_00
+X-Spam-Checker-Version: SpamAssassin 3.2.4-osdl_revision__1.47__
+X-MIMEDefang-Filter: lf$Revision: 1.188 $
+X-Scanned-By: MIMEDefang 2.63 on 140.211.169.13
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/101025>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/101026>
 
-Sverre Rabbelier wrote:
-> On Fri, Nov 14, 2008 at 22:33, Martin Koegler
-> <mkoegler@auto.tuwien.ac.at> wrote:
->> On Fri, Nov 14, 2008 at 09:59:56PM +0100, Andreas Ericsson wrote:
->>> I've put everyone who "owns" more than 500 lines of code
->>> on the bcc list, figuring your permission is important
->>> but that you don't want the hundreds (well, one can hope)
->>> of emails from people saying "ok". The list of major owners
->>> was generated with "git showners *.c" in a worktree from
->>> the next branch of git.git.
->> I don't think, that your way for relicensing is bullet proof:
->>
->> I consider many of my GIT patches as derived work from other parts of
->> GIT, even if git blame is stating me as author. I can gurantee you,
->> that I comply with the "Developer's Certificate of Origin 1.1" point
->> b, as its based on code out of git.git. But I can't tell you, from
->> which files I reused code anymore.
->>
->> Probably other people did the same.
->>
->> Your method is ignoring such derived code.
+
+
+On Fri, 14 Nov 2008, Junio C Hamano wrote:
 > 
-> Perhaps git stats can be of assistance here, it can summarize how much
-> lines a person changed (per file, or in total), that should be a
-> better metric (at least for code reused from within git.git, ofcourse
-> GPL-ed code taken from somewhere else is not covered).
-> 
+> If you have 1000 files in a single directory, do you still want 2 threads
+> following the "1/500" rule, or they would compete reading the same
+> directory and using a single thread is better off?
 
-That will almost certainly not be a problem. I'm working on reading stuff
-into git-specific structures and then updating those structures. I doubt
-any such code exists outside git. If it does, it's more likely derived
-from git than the other way around.
+Well, first off, the "single directory" thing is really a Linux kernel 
+deficiency, and it's entirely possible that it doesn't even exist on other 
+systems. Linux has a very special directory cache (dcache) model that is 
+pretty unique - it's part of why cached 'lstat()' calls are so cheap on 
+Linux - but it is also part of the reason for why we serialize lookups 
+when we do miss in the cache (*).
 
-It's also worth noting that I'm aiming for the really low-level core
-stuff at first. It would be beneficial to get such simple things going
-as updating the index (with an entire file) and then creating a commit
-from that index. Such a thing would definitely be enough for (very basic)
-IDE integration, and then we can build further on that but utilizing
-developers from other projects than the git developer community.
+Secondly, anybody who has a thousand tracked files in a single directory 
+can damn well blame themselves for being stupid. So I don't think it's a 
+case that is worth worrying too much about. Git will slow down for that 
+kind of situation for other reasons (ie a lot of the tree pruning 
+optimization won't work for projects that have large flat directories).
 
--- 
-Andreas Ericsson                   andreas.ericsson@op5.se
-OP5 AB                             www.op5.se
-Tel: +46 8-230225                  Fax: +46 8-230231
+So i wouldn't worry about it. That said, with the second patch, we default 
+to having people enable this explicitly, so it's something that people can 
+decide on their own.
+
+			Linus
+
+(*) That said - the Linux dcache consistency is just _one_ reason why we 
+serialize lookups. I would not be in the least surprised if other OS's 
+have the exact same issue. I'd love to fix it in Linux, but quiet 
+honestly, it has never actually come up before now, and we've literally 
+worked on multi-threading the _cached_ case, not the uncached one.
