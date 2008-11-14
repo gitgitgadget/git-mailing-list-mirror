@@ -1,97 +1,90 @@
-From: "Giuseppe Bilotta" <giuseppe.bilotta@gmail.com>
-Subject: Re: [PATCH v2 01/11] gitweb: introduce remote_heads feature
-Date: Fri, 14 Nov 2008 22:44:02 +0100
-Message-ID: <cb7bb73a0811141344q4360351do346def5515ec157b@mail.gmail.com>
-References: <1226616555-24503-1-git-send-email-giuseppe.bilotta@gmail.com>
-	 <1226616555-24503-2-git-send-email-giuseppe.bilotta@gmail.com>
-	 <200811141915.17680.jnareb@gmail.com>
+From: "Sverre Rabbelier" <alturin@gmail.com>
+Subject: Re: git to libgit2 code relicensing
+Date: Fri, 14 Nov 2008 22:46:31 +0100
+Message-ID: <bd6139dc0811141346w194ae4c5m9f7b0fdb106108fc@mail.gmail.com>
+References: <491DE6CC.6060201@op5.se>
+	 <20081114213352.GA12134@auto.tuwien.ac.at>
+Reply-To: sverre@rabbelier.nl
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, "Petr Baudis" <pasky@suse.cz>,
-	"Junio C Hamano" <gitster@pobox.com>
-To: "Jakub Narebski" <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Nov 14 22:45:23 2008
+Cc: "Andreas Ericsson" <ae@op5.se>,
+	"Git Mailing List" <git@vger.kernel.org>
+To: "Martin Koegler" <mkoegler@auto.tuwien.ac.at>
+X-From: git-owner@vger.kernel.org Fri Nov 14 22:47:49 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1L16Ti-0005YG-56
-	for gcvg-git-2@gmane.org; Fri, 14 Nov 2008 22:45:22 +0100
+	id 1L16W4-0006Qg-EG
+	for gcvg-git-2@gmane.org; Fri, 14 Nov 2008 22:47:48 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751447AbYKNVoH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 14 Nov 2008 16:44:07 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751349AbYKNVoF
-	(ORCPT <rfc822;git-outgoing>); Fri, 14 Nov 2008 16:44:05 -0500
-Received: from qb-out-0506.google.com ([72.14.204.225]:10972 "EHLO
-	qb-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751437AbYKNVoE (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 14 Nov 2008 16:44:04 -0500
-Received: by qb-out-0506.google.com with SMTP id f11so1601318qba.17
-        for <git@vger.kernel.org>; Fri, 14 Nov 2008 13:44:02 -0800 (PST)
+	id S1751736AbYKNVqd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 14 Nov 2008 16:46:33 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751770AbYKNVqd
+	(ORCPT <rfc822;git-outgoing>); Fri, 14 Nov 2008 16:46:33 -0500
+Received: from yw-out-2324.google.com ([74.125.46.31]:8708 "EHLO
+	yw-out-2324.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751734AbYKNVqd (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 14 Nov 2008 16:46:33 -0500
+Received: by yw-out-2324.google.com with SMTP id 9so717935ywe.1
+        for <git@vger.kernel.org>; Fri, 14 Nov 2008 13:46:31 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to
-         :subject:cc:in-reply-to:mime-version:content-type
+        h=domainkey-signature:received:received:message-id:date:from:reply-to
+         :to:subject:cc:in-reply-to:mime-version:content-type
          :content-transfer-encoding:content-disposition:references;
-        bh=GTyCvlc8CsaJ9qG92/gUzzrJ6iZRB1X9mvJJw1xrxvs=;
-        b=B305RA0w7JOTm6PcnK6mJJL3vM8xd9i6Fcmijp44Q6I05iWu5ritmD6Gt0Q2dYXLUt
-         sSyHA7fjoxcPRiQqRP5fqVAz64Yehf5mcPQJrohZ3CSSZ3VKwuql1RpBc7Tvmfd+aRTY
-         VQ9GZuUTesN3I2dVZ0g9i2cwEDbhlC6Bih4zU=
+        bh=dHmm87wiNbhZ1dx7mIR8nUrJLwgdIvP6uUmnNc3rcQk=;
+        b=FSmk0Jwe9g8CxcIoPNQOTZSBsufuZMcvP5hW9zWIWbuoWLQ0vfnnK5XpH6dXZyUkdj
+         vfbqJeMw9SCceTvxiJII8Wp+iXlx5ikDNDZmo9m0y96lUyU95dtgJ9A2EeKHr2Q0+uXf
+         Nh4Hpj+NUALG3EEZNWZvPeAnFannH9lt8kcnY=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
-         :content-type:content-transfer-encoding:content-disposition
-         :references;
-        b=kyKQz7NK73N4Bg1iO+nMKuhT3ZsL10sj1MPbFmEoNDL5gR3FRDEzLHjV/sKYu3r+0k
-         85+7tr5L4VbFSpCppW/eu2ugNxveZsNanK7WiSwVNC9yyhtzgXemUra5quSXY/G8iPUv
-         hJP32RInra6aRwMF4TEHEAN3h+9P7pTeVjKc8=
-Received: by 10.210.88.7 with SMTP id l7mr1564123ebb.67.1226699042130;
-        Fri, 14 Nov 2008 13:44:02 -0800 (PST)
-Received: by 10.210.132.16 with HTTP; Fri, 14 Nov 2008 13:44:02 -0800 (PST)
-In-Reply-To: <200811141915.17680.jnareb@gmail.com>
+        h=message-id:date:from:reply-to:to:subject:cc:in-reply-to
+         :mime-version:content-type:content-transfer-encoding
+         :content-disposition:references;
+        b=s0sttwJf6gfy3JW2ormBLPrGnS7H1RtUs99HersECz+kj4jxwSxTCF4miAMufWcOgb
+         1E4WQMeryP1rMOKzoyLNPpQFFhymPWrN+VvInfWTufrBJgpUSKR8QiH3icu/RAjCRHpC
+         5IgdiIi443G4atFDJGIyHNzYGd39u5GN6vNk8=
+Received: by 10.151.15.9 with SMTP id s9mr2614701ybi.70.1226699191650;
+        Fri, 14 Nov 2008 13:46:31 -0800 (PST)
+Received: by 10.150.149.14 with HTTP; Fri, 14 Nov 2008 13:46:31 -0800 (PST)
+In-Reply-To: <20081114213352.GA12134@auto.tuwien.ac.at>
 Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/101018>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/101019>
 
-On Fri, Nov 14, 2008 at 7:15 PM, Jakub Narebski <jnareb@gmail.com> wrote:
-> On Thu, 13 Nov 2008, Giuseppe Bilotta wrote:
+On Fri, Nov 14, 2008 at 22:33, Martin Koegler
+<mkoegler@auto.tuwien.ac.at> wrote:
+> On Fri, Nov 14, 2008 at 09:59:56PM +0100, Andreas Ericsson wrote:
+>> I've put everyone who "owns" more than 500 lines of code
+>> on the bcc list, figuring your permission is important
+>> but that you don't want the hundreds (well, one can hope)
+>> of emails from people saying "ok". The list of major owners
+>> was generated with "git showners *.c" in a worktree from
+>> the next branch of git.git.
 >
->> With this feature enabled, remotes are retrieved (and displayed)
->> when getting (and displaying) the heads list.
+> I don't think, that your way for relicensing is bullet proof:
 >
-> I think it would be good idea to add in commit message idea _why_
-> such feature would be useful, for example
+> I consider many of my GIT patches as derived work from other parts of
+> GIT, even if git blame is stating me as author. I can gurantee you,
+> that I comply with the "Developer's Certificate of Origin 1.1" point
+> b, as its based on code out of git.git. But I can't tell you, from
+> which files I reused code anymore.
 >
->  This is useful if you want to use git-instaweb to examine the state
->  of repository, influding remote-tracking branches, or a repository
->  is fork of other repository, and remote-tracking branches are used
->  to see what commits this fork has in addition to those from forked
->  (main) repository.
+> Probably other people did the same.
 >
-> Or something like that.
+> Your method is ignoring such derived code.
 
-Ah yes, many commit messages in this patchset are way too terse. A
-side effect of this being something like the first patchset I ever
-prepared. I'll rework them to something more sensible.
-
-> It would be also in my opinion a good idea to modify git-instaweb.sh
-> (I guess better in separate commit) to make it make use of this new
-> feature... unless it does it already, doesn't it?
-
-It doesn't, but it's something I have considered. I'll work on it (on
-a separate patch)
-
-
->> +     # Make gitweb show remotes too in the heads list
->
-> I'm not native engish speaker, but shouldn't instead of "remotes too"
-> be "also remotes" or "remotes also"?
-
-No idea, I guess we'll wait for a native english speaker opinion 8-D
+Perhaps git stats can be of assistance here, it can summarize how much
+lines a person changed (per file, or in total), that should be a
+better metric (at least for code reused from within git.git, ofcourse
+GPL-ed code taken from somewhere else is not covered).
 
 -- 
-Giuseppe "Oblomov" Bilotta
+Cheers,
+
+Sverre Rabbelier
