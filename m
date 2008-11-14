@@ -1,70 +1,82 @@
-From: Michael J Gruber <git@drmicha.warpmail.net>
-Subject: Re: hosting git on a nfs
-Date: Fri, 14 Nov 2008 14:01:27 +0100
-Message-ID: <491D76A7.9090809@drmicha.warpmail.net>
-References: <200811121029.34841.thomas@koch.ro> <20081112173651.GA9127@linode.davidb.org> <alpine.LFD.2.00.0811120959050.3468@nehalem.linux-foundation.org> <loom.20081113T174625-994@post.gmane.org> <alpine.LFD.2.00.0811131214020.3468@nehalem.linux-foundation.org> <alpine.LFD.2.00.0811131252040.3468@nehalem.linux-foundation.org> <alpine.LFD.2.00.0811131518070.3468@nehalem.linux-foundation.org> <371xaQfxsMMQ-9LK24q-nhcS4loEggn8Cj3J1IzfMbzzYDGE6HKbQQ@cipher.nrlssc.navy.mil> <alpine.LFD.2.00.0811131630470.3468@nehalem.linux-foundation.org> <alpine.LFD.2.00.0811131707090.3468@nehalem.linux-foundation.org>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [MonoDevelop] git integration with monodevelop
+Date: Fri, 14 Nov 2008 14:26:10 +0100 (CET)
+Message-ID: <alpine.DEB.1.00.0811141419520.30769@pacific.mpi-cbg.de>
+References: <491AAE6D.8030304@op5.se>  <1226519288.4483.176.camel@erandi.site>  <m33ahwio3v.fsf@localhost.localdomain> <1226540535.4483.203.camel@erandi.site>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: Brandon Casey <casey@nrlssc.navy.mil>,
-	James Pickens <jepicken@gmail.com>,
-	Bruce Fields <bfields@fieldses.org>,
-	Junio C Hamano <gitster@pobox.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: Linus Torvalds <torvalds@linux-foundation.org>
-X-From: git-owner@vger.kernel.org Fri Nov 14 14:04:22 2008
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Jakub Narebski <jnareb@gmail.com>, Andreas Ericsson <ae@op5.se>,
+	Git Mailing List <git@vger.kernel.org>,
+	Shawn Pearce <spearce@spearce.org>,
+	monodevelop-list@lists.ximian.com,
+	Michael Hutchinson <m.j.hutchinson@gmail.com>
+To: Miguel de Icaza <miguel@ximian.com>
+X-From: git-owner@vger.kernel.org Fri Nov 14 14:19:50 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1L0yLU-0000hQ-T4
-	for gcvg-git-2@gmane.org; Fri, 14 Nov 2008 14:04:21 +0100
+	id 1L0yaT-0006Tr-1J
+	for gcvg-git-2@gmane.org; Fri, 14 Nov 2008 14:19:49 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751376AbYKNNBe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 14 Nov 2008 08:01:34 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751295AbYKNNBd
-	(ORCPT <rfc822;git-outgoing>); Fri, 14 Nov 2008 08:01:33 -0500
-Received: from out1.smtp.messagingengine.com ([66.111.4.25]:54373 "EHLO
-	out1.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751289AbYKNNBd (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 14 Nov 2008 08:01:33 -0500
-Received: from compute2.internal (compute2.internal [10.202.2.42])
-	by out1.messagingengine.com (Postfix) with ESMTP id 259851B4E3C;
-	Fri, 14 Nov 2008 08:01:30 -0500 (EST)
-Received: from heartbeat1.messagingengine.com ([10.202.2.160])
-  by compute2.internal (MEProxy); Fri, 14 Nov 2008 08:01:30 -0500
-X-Sasl-enc: 4ifpM2ShTz/aKDx8j0KZD38VAbgH3chCTIWIoU8E9t+S 1226667689
-Received: from [139.174.44.12] (whitehead.math.tu-clausthal.de [139.174.44.12])
-	by mail.messagingengine.com (Postfix) with ESMTPSA id 201C3B535;
-	Fri, 14 Nov 2008 08:01:29 -0500 (EST)
-User-Agent: Thunderbird 2.0.0.17 (X11/20080914)
-In-Reply-To: <alpine.LFD.2.00.0811131707090.3468@nehalem.linux-foundation.org>
+	id S1751628AbYKNNSe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 14 Nov 2008 08:18:34 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751635AbYKNNSe
+	(ORCPT <rfc822;git-outgoing>); Fri, 14 Nov 2008 08:18:34 -0500
+Received: from mail.gmx.net ([213.165.64.20]:44756 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1751618AbYKNNSd (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 14 Nov 2008 08:18:33 -0500
+Received: (qmail invoked by alias); 14 Nov 2008 13:18:30 -0000
+Received: from pacific.mpi-cbg.de (EHLO [141.5.10.38]) [141.5.10.38]
+  by mail.gmx.net (mp022) with SMTP; 14 Nov 2008 14:18:30 +0100
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1/7Hfd0Pcf74bXOB5Qyvdpk6Om1HA2LQx7G2G0mR6
+	8AvHEdchuM1r1M
+X-X-Sender: schindelin@pacific.mpi-cbg.de
+In-Reply-To: <1226540535.4483.203.camel@erandi.site>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.59
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/100970>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/100971>
 
-Linus Torvalds venit, vidit, dixit 14.11.2008 02:15:
+Hi,
+
+On Wed, 12 Nov 2008, Miguel de Icaza wrote:
+
+> > I assume that results of Mono's Google Summer of Code 2008 projects to 
+> > create managed git implementation in C# (git#)[1][2] were not very 
+> > successfull?  Taking into account that JGit isn't yet full git 
+> > implementation, after much longer development...
 > 
-> On Thu, 13 Nov 2008, Linus Torvalds wrote:
->> I'll clean it up a bit and make a less hacky version. And I'll try to make 
->> it work for "git status" and friends too.
-> 
-> Ok, this is a no-longer-totally-hacky thing, which also adds support for 
-> doing the same for "git status". I haven't actually done any timings, but 
-> the preload algorithm is all the same. The interface is just a much more 
-> natural one.
-> 
-> NOTE NOTE NOTE! It may not be totally hacky, but it's still not 
-> "finished". There's a few more things to look at:
+> They were a complete disaster, one student was going to focus on the 
+> front-end, the other on the back-end.
 
-Doing nicely already. Over here, cold cache (i.e. sleep 70) "git status"
-goes from 0.8s to around 0.4s. Nice. Hot cache goes from 0.18s to 0.23s.
-This is really worthwhile if you hack for more than 60s between
-diffs/stats ;)
+I kinda followed the last few weeks via your svn repository (which was not 
+helped by the commits being a complete mix of the individual projects).
 
-This is already with the server doing some caching (first status was 8s
-or so; hardly reproducible), which I can't control.
+I was a bit disappointed that nobody asked things on the Git mailing list; 
+quite a number of very important lessons were learnt during the first 
+implementation of jgit, and you guys could have benefitted tremendously by 
+hearing them.
 
-Michael
+By the time I got aware of your effort, it was too late; for example, the 
+code already relied on the fact that every blob's contents were read into 
+memory at once (IIU the code correctly).
+
+Note: personally, I do not like C# all that much, so I am not that 
+interested in the port myself.  However, we get quite a number of 
+questions in that direction ("do you support .NET yet?"), so I am quite 
+interested to know what's available.
+
+May I suggest respectfully, that the next time communication channels 
+between the Mono-mentor and at least one knowledgable Git guy are 
+established early in the project?  IIRC there was a GSoC project to 
+reimplement Git in C# last year, too, which failed, too.
+
+Ciao,
+Dscho
