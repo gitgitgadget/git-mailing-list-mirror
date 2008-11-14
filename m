@@ -1,80 +1,65 @@
-From: Andreas Ericsson <ae@op5.se>
-Subject: Re: git integration with monodevelop
-Date: Fri, 14 Nov 2008 14:53:55 +0100
-Message-ID: <491D82F3.2090807@op5.se>
-References: <491AAE6D.8030304@op5.se> <491AF20D.4070600@kde.ru> <491AF768.3010607@op5.se> <491B02FF.2060204@kde.ru> <491BD532.9090200@op5.se> <alpine.DEB.1.00.0811141429040.30769@pacific.mpi-cbg.de>
+From: "Lars Hoss" <lars@woeye.net>
+Subject: Re: getting started with git
+Date: Fri, 14 Nov 2008 15:29:45 +0100 (CET)
+Message-ID: <fc0c0c65f69439eede2e4565c5f930fd.squirrel@webmail.highteq.net>
+References: <20497802.post@talk.nabble.com>
+    <1a6be5fa0811140456j10fd8703w74e485571e3c70af@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: Evgeniy Ivanov <powerfox@kde.ru>,
-	Shawn Pearce <spearce@spearce.org>,
-	Git Mailing List <git@vger.kernel.org>
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Fri Nov 14 14:55:27 2008
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+Cc: "Ivan Senji" <ivan.senji@gmail.com>, git@vger.kernel.org
+To: "Tor Arvid Lund" <torarvid@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Nov 14 15:26:23 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1L0z8m-0002bE-MW
-	for gcvg-git-2@gmane.org; Fri, 14 Nov 2008 14:55:17 +0100
+	id 1L0zck-0006Yv-5J
+	for gcvg-git-2@gmane.org; Fri, 14 Nov 2008 15:26:14 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751635AbYKNNx7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 14 Nov 2008 08:53:59 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751620AbYKNNx7
-	(ORCPT <rfc822;git-outgoing>); Fri, 14 Nov 2008 08:53:59 -0500
-Received: from mail.op5.se ([193.201.96.20]:50604 "EHLO mail.op5.se"
+	id S1751192AbYKNOY6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 14 Nov 2008 09:24:58 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751190AbYKNOY6
+	(ORCPT <rfc822;git-outgoing>); Fri, 14 Nov 2008 09:24:58 -0500
+Received: from mail.codewut.de ([78.47.135.140]:48481 "EHLO mail.codewut.de"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751511AbYKNNx7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 14 Nov 2008 08:53:59 -0500
-Received: from localhost (localhost.localdomain [127.0.0.1])
-	by mail.op5.se (Postfix) with ESMTP id 6797524B0019;
-	Fri, 14 Nov 2008 14:48:27 +0100 (CET)
-X-Virus-Scanned: amavisd-new at 
-X-Spam-Flag: NO
-X-Spam-Score: -2.499
+	id S1751176AbYKNOY5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 14 Nov 2008 09:24:57 -0500
+Received: by mail.codewut.de (Postfix, from userid 65534)
+	id 13FA57BF44; Fri, 14 Nov 2008 15:29:47 +0100 (CET)
+X-Spam-Checker-Version: SpamAssassin 3.1.7-deb (2006-10-05) on mail.codewut.de
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.499 tagged_above=-10 required=6.6
-	tests=[AWL=0.000, BAYES_00=-2.599, RDNS_NONE=0.1]
-Received: from mail.op5.se ([127.0.0.1])
-	by localhost (mail.op5.se [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id 7gyMTztXTJV7; Fri, 14 Nov 2008 14:48:26 +0100 (CET)
-Received: from clix.int.op5.se (unknown [172.27.78.10])
-	by mail.op5.se (Postfix) with ESMTP id C1B041B80046;
-	Fri, 14 Nov 2008 14:48:25 +0100 (CET)
-User-Agent: Thunderbird 2.0.0.16 (X11/20080723)
-In-Reply-To: <alpine.DEB.1.00.0811141429040.30769@pacific.mpi-cbg.de>
+X-Spam-Status: No, score=-2.6 required=5.0 tests=AWL,BAYES_00 autolearn=ham 
+	version=3.1.7-deb
+Received: from webmail.highteq.net (web.highteq.net [78.47.135.138])
+	by mail.codewut.de (Postfix) with ESMTP id 85D737BEAF;
+	Fri, 14 Nov 2008 15:29:45 +0100 (CET)
+Received: from 194.127.8.17
+        (SquirrelMail authenticated user lars)
+        by webmail.highteq.net with HTTP;
+        Fri, 14 Nov 2008 15:29:45 +0100 (CET)
+In-Reply-To: <1a6be5fa0811140456j10fd8703w74e485571e3c70af@mail.gmail.com>
+User-Agent: SquirrelMail/1.4.15
+X-Priority: 3 (Normal)
+Importance: Normal
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/100975>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/100976>
 
-Johannes Schindelin wrote:
-> Hi,
-> 
-> On Thu, 13 Nov 2008, Andreas Ericsson wrote:
-> 
->> Evgeniy Ivanov wrote:
->>
->>> But this is the same things Shawn has suggested to my mentor and me at 
->>> the beginning of SoC...
->> Oh? I didn't know libgit2 started as a SoC project.
-> 
-> It did not.  It started as a request from GitHub, and following 
-> discussion, at the GitTogether '08.
-> 
-> There _was_ a SoC project last year, libgit-thin, but the problem as far 
-> as GitHub is concerned was that it was a tear-down approach: it took 
-> git.git and tried to make a small library of it, and by this approach was 
-> bound to the GPL.
-> 
+>
+> Well, if it were me, I think I would commit that eclipse config file
+> under a different name... Say, ".classpath.defaults" instead of
+> ".classpath". Then your README file could tell your users to start by
+> copying the .classpath.defaults to .classpath, and update its contents
+> as necessary. Put .classpath in your .gitignore file, so it won't be
+> committed to the repository.
 
-Oh. I was under the impression that libgit2 would also be able to reuse
-code from git.git, since there was that huge license thread a couple of
-months ago. Did I misinterpret that thread, and everything in libgit2
-has to be implemented from scratch?
+Template files (x.default) is a good idea. But regarding your example
+with .classpath: it's safe to add it to git since it's developer
+independent and project oriented. Therefore it's useful for every
+developer in the project who uses eclipse :-)
 
--- 
-Andreas Ericsson                   andreas.ericsson@op5.se
-OP5 AB                             www.op5.se
-Tel: +46 8-230225                  Fax: +46 8-230231
+Yours,
+Lars
