@@ -1,93 +1,93 @@
-From: Giuseppe Bilotta <giuseppe.bilotta@gmail.com>
-Subject: [PATCH v2 11/11] gitweb: CSS style and refs mark for detached HEAD
-Date: Fri, 14 Nov 2008 00:54:21 +0100
-Message-ID: <1226620461-25168-2-git-send-email-giuseppe.bilotta@gmail.com>
-References: <1226616555-24503-10-git-send-email-giuseppe.bilotta@gmail.com>
- <1226620461-25168-1-git-send-email-giuseppe.bilotta@gmail.com>
-Cc: Jakub Narebski <jnareb@gmail.com>, Petr Baudis <pasky@suse.cz>,
-	Junio C Hamano <gitster@pobox.com>,
-	Giuseppe Bilotta <giuseppe.bilotta@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Nov 14 00:55:32 2008
+From: =?iso-8859-1?Q?Bj=F6rn?= Steinbrink <B.Steinbrink@gmx.de>
+Subject: Re: [RFC PATCH] repack: make repack -a equivalent to repack -A and
+	drop previous -a behavior
+Date: Fri, 14 Nov 2008 01:02:19 +0100
+Message-ID: <20081114000219.GB5285@atjola.homenet>
+References: <7xh1_tFsJkHTjg4Hjm-R4mGSRfYyGFmLI62OMmaNg32f86EbVIYvYrGiYpEGkvooY4pUM1e7CHk@cipher.nrlssc.navy.mil>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: Brandon Casey <casey@nrlssc.navy.mil>
+X-From: git-owner@vger.kernel.org Fri Nov 14 01:03:39 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1L0m22-0000jn-Pb
-	for gcvg-git-2@gmane.org; Fri, 14 Nov 2008 00:55:27 +0100
+	id 1L0m9y-00034K-VW
+	for gcvg-git-2@gmane.org; Fri, 14 Nov 2008 01:03:39 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755182AbYKMXyM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 13 Nov 2008 18:54:12 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755102AbYKMXyL
-	(ORCPT <rfc822;git-outgoing>); Thu, 13 Nov 2008 18:54:11 -0500
-Received: from ug-out-1314.google.com ([66.249.92.168]:53312 "EHLO
-	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752566AbYKMXyA (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 13 Nov 2008 18:54:00 -0500
-Received: by ug-out-1314.google.com with SMTP id 39so1512463ugf.37
-        for <git@vger.kernel.org>; Thu, 13 Nov 2008 15:53:59 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:cc:subject:date
-         :message-id:x-mailer:in-reply-to:references;
-        bh=1fds4lJlfYXC/2nL/WkO2i12VBP9BFRKHPmYndAUrnI=;
-        b=gD/WXR8k76yILLcKqA9SsfucYIvIlhpFFu53CIP/or6jupvnT+faJj052gQDI+xqVH
-         ZdtKMnS3uLU/BIuPU9yJmUMPtuPIjpDFltGDxJ2JAGvakXXZKn4UmaSdqA/AbHlqQ3/i
-         SHisBcMhbi8UUUvz2jXCqhJvel7w9xTDZMFRY=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        b=A0Y44eMXTTZGdwFOmy6DwN5UlG3midVIA0TKS9tp4KyaM79s0oaR5wn2eu82hLNSnG
-         ZZfjr0SHwzcQlzkicLRzC0V/LRhLfOhSAnY6AhVJmBc6mEzHlMBYGbvkfHzav82QQ3TY
-         yhDDEIDvbVu6MWAUqxkXYlHx8n6SKZK4gSDVo=
-Received: by 10.67.119.20 with SMTP id w20mr4451082ugm.78.1226620439743;
-        Thu, 13 Nov 2008 15:53:59 -0800 (PST)
-Received: from localhost ([78.15.2.247])
-        by mx.google.com with ESMTPS id e33sm18127ugd.41.2008.11.13.15.53.58
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Thu, 13 Nov 2008 15:53:59 -0800 (PST)
-X-Mailer: git-send-email 1.5.6.5
-In-Reply-To: <1226620461-25168-1-git-send-email-giuseppe.bilotta@gmail.com>
+	id S1752054AbYKNACY convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 13 Nov 2008 19:02:24 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751807AbYKNACY
+	(ORCPT <rfc822;git-outgoing>); Thu, 13 Nov 2008 19:02:24 -0500
+Received: from mail.gmx.net ([213.165.64.20]:32791 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1751268AbYKNACX (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 13 Nov 2008 19:02:23 -0500
+Received: (qmail invoked by alias); 14 Nov 2008 00:02:21 -0000
+Received: from i577B96AD.versanet.de (EHLO atjola.local) [87.123.150.173]
+  by mail.gmx.net (mp004) with SMTP; 14 Nov 2008 01:02:21 +0100
+X-Authenticated: #5039886
+X-Provags-ID: V01U2FsdGVkX1+6o/ksEH26uzF8Sik5oZyzmDkBJq3trowMlsynXE
+	a+I5lh+0b8RlPU
+Content-Disposition: inline
+In-Reply-To: <7xh1_tFsJkHTjg4Hjm-R4mGSRfYyGFmLI62OMmaNg32f86EbVIYvYrGiYpEGkvooY4pUM1e7CHk@cipher.nrlssc.navy.mil>
+User-Agent: Mutt/1.5.18 (2008-05-17)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.6
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/100932>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/100933>
 
-Signed-off-by: Giuseppe Bilotta <giuseppe.bilotta@gmail.com>
----
- gitweb/gitweb.css  |    5 +++++
- gitweb/gitweb.perl |    2 +-
- 2 files changed, 6 insertions(+), 1 deletions(-)
+On 2008.11.13 17:22:36 -0600, Brandon Casey wrote:
+> Once upon a time, repack had only a single option which began with th=
+e first
+> letter of the alphabet.  Then, a second was created which would repac=
+k
+> unreachable objects into the newly created pack so that git-gc --auto=
+ could
+> be invented.  But, the -a option was still necessary so that it could=
+ be
+> called every now and then to discard the unreachable objects that wer=
+e being
+> repacked over and over and over into newly generated packs. Later, -A=
+ was
+> changed so that instead of repacking the unreachable objects, it ejec=
+ted
+> them from the pack so that they resided in the object store in loose =
+form,
+> to be garbage collected by prune-packed according to normal expiry ru=
+les.
+>=20
+> And so, -a lost its raison d'etre.
+>=20
+> Signed-off-by: Brandon Casey <casey@nrlssc.navy.mil>
+> ---
+>=20
+>=20
+> This is on top of bc/maint-keep-pack
 
-diff --git a/gitweb/gitweb.css b/gitweb/gitweb.css
-index 751749f..c0c4540 100644
---- a/gitweb/gitweb.css
-+++ b/gitweb/gitweb.css
-@@ -523,6 +523,11 @@ span.refs span.head {
- 	border-color: #ccffcc #00cc33 #00cc33 #ccffcc;
- }
- 
-+span.refs span.detached {
-+	background-color: #ffaaaa;
-+	border-color: #ccffcc #00cc33 #00cc33 #ccffcc;
-+}
-+
- span.atnight {
- 	color: #cc0000;
- }
-diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
-index 256c962..51e133d 100755
---- a/gitweb/gitweb.perl
-+++ b/gitweb/gitweb.perl
-@@ -2298,7 +2298,7 @@ sub git_get_references {
- 	my %refs;
- 	if (git_is_head_detached()) {
- 		my $hash = git_get_head_hash($project);
--		$refs{$hash} = [ 'HEAD' ];
-+		$refs{$hash} = [ 'detached/HEAD' ];
- 	}
- 	# 5dc01c595e6c6ec9ccda4f6f69c131c0dd945f8c refs/tags/v2.6.11
- 	# c39ae07f393806ccf406ef966e9a15afc43cc36a refs/tags/v2.6.11^{}
--- 
-1.5.6.5
+I didn't check all the (proposed) commits for that branch, so just let
+me know if I'm missing anything, but doesn't this change mean that you
+just lose what "-ad" did?
+
+We have:
+	-a	Create a new pack, containing all reachable objects
+	-A	Same as -a
+	-ad	Same as -a, and drop all old packs and loose objects
+	-Ad	Sama as -ad, but keep unreachable objects loose
+
+-Ad is nice regarding it's safety-net value, but eg. after a large
+filter-branch run, when refs/original and the reflogs have been cleaned=
+,
+you just want to get rid of all those old unreachable objects,
+immediately. For example after importing and massaging some large
+history from SVN, the -Ad behaviour is definitely _not_ what I want
+there. Writing a few thousand loose objects just to prune them is just =
+a
+waste of time.
+
+Bj=F6rn
