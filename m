@@ -1,65 +1,81 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH 3/3] Add -k/--keep-going option to mergetool
-Date: Fri, 14 Nov 2008 11:21:50 -0500
-Message-ID: <20081114162149.GA19312@coredump.intra.peff.net>
-References: <1226580075-29289-1-git-send-email-charles@hashpling.org> <1226580075-29289-2-git-send-email-charles@hashpling.org> <1226580075-29289-3-git-send-email-charles@hashpling.org> <1226580075-29289-4-git-send-email-charles@hashpling.org> <20081114064756.GB11907@coredump.intra.peff.net> <491D7C38.7070906@hashpling.org>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: multiple-commit cherry-pick?
+Date: Fri, 14 Nov 2008 17:59:22 +0100 (CET)
+Message-ID: <alpine.DEB.1.00.0811141758230.30769@pacific.mpi-cbg.de>
+References: <buoiqr18tdk.fsf@dhapc248.dev.necel.com> <20081106213711.GA4334@blimp.localdomain> <alpine.LFD.2.00.0811061925300.3451@nehalem.linux-foundation.org> <7vskq4gmf5.fsf@gitster.siamese.dyndns.org> <20081107071231.GA4063@blimp.localdomain>
+ <alpine.LFD.2.00.0811071004170.3468@nehalem.linux-foundation.org> <20081109102528.GA5463@blimp.localdomain> <alpine.DEB.1.00.0811102054470.30769@pacific.mpi-cbg.de> <81b0412b0811101224gcffc958o6dbfcdc45e022874@mail.gmail.com> <alpine.DEB.1.00.0811102230330.30769@pacific.mpi-cbg.de>
+ <20081114050822.GA23963@foursquare.net> <alpine.LFD.2.00.0811140800540.3468@nehalem.linux-foundation.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	Andreas Ericsson <ae@op5.se>, Theodore Ts'o <tytso@mit.edu>,
-	William Pursell <bill.pursell@gmail.com>
-To: Charles Bailey <charles@hashpling.org>
-X-From: git-owner@vger.kernel.org Fri Nov 14 17:23:36 2008
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Chris Frey <cdfrey@foursquare.net>,
+	Alex Riesen <raa.lkml@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>,
+	Miles Bader <miles@gnu.org>, git@vger.kernel.org
+To: Linus Torvalds <torvalds@linux-foundation.org>
+X-From: git-owner@vger.kernel.org Fri Nov 14 17:53:34 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1L11S7-0005jM-Pk
-	for gcvg-git-2@gmane.org; Fri, 14 Nov 2008 17:23:24 +0100
+	id 1L11v9-0001hw-M9
+	for gcvg-git-2@gmane.org; Fri, 14 Nov 2008 17:53:24 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751635AbYKNQVx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 14 Nov 2008 11:21:53 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751610AbYKNQVx
-	(ORCPT <rfc822;git-outgoing>); Fri, 14 Nov 2008 11:21:53 -0500
-Received: from peff.net ([208.65.91.99]:1883 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751368AbYKNQVw (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 14 Nov 2008 11:21:52 -0500
-Received: (qmail 1219 invoked by uid 111); 14 Nov 2008 16:21:51 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.32) with SMTP; Fri, 14 Nov 2008 11:21:51 -0500
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Fri, 14 Nov 2008 11:21:50 -0500
-Content-Disposition: inline
-In-Reply-To: <491D7C38.7070906@hashpling.org>
+	id S1751803AbYKNQvj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 14 Nov 2008 11:51:39 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751664AbYKNQvj
+	(ORCPT <rfc822;git-outgoing>); Fri, 14 Nov 2008 11:51:39 -0500
+Received: from mail.gmx.net ([213.165.64.20]:33872 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1750845AbYKNQvi (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 14 Nov 2008 11:51:38 -0500
+Received: (qmail invoked by alias); 14 Nov 2008 16:51:36 -0000
+Received: from pacific.mpi-cbg.de (EHLO pacific.mpi-cbg.de) [141.5.10.38]
+  by mail.gmx.net (mp051) with SMTP; 14 Nov 2008 17:51:36 +0100
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1/2LYwcV8/2aU/L/gQ2y7kC9wD/kfzk9li0Dd9im6
+	qGOTrKyBNoojK9
+X-X-Sender: schindelin@pacific.mpi-cbg.de
+In-Reply-To: <alpine.LFD.2.00.0811140800540.3468@nehalem.linux-foundation.org>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.57
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/100985>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/100986>
 
-On Fri, Nov 14, 2008 at 01:25:12PM +0000, Charles Bailey wrote:
+Hi,
 
-> Previously, if you aborted a merge, you were left with the
-> base/local/remote temporaries for the merge that you aborted.
+On Fri, 14 Nov 2008, Linus Torvalds wrote:
+
+> So we _could_ do something like
 > 
-> To be honest, I found this a little irritating. The base, local and
-> remote temporaries are inputs so are accessible from slots 1,2 and 3 of
-> the index, and any intermediate output will be in the target file. You
-> can git clean, but if you have other temporaries you need to keep, you
-> end up having to manually clean them up in any case.
+> 	git log {a..b} {c..d ^e}
 > 
-> With --keep-going, the problem is compounded. If you make several passes
-> through a list of complex merges you end up with fistfuls of these
-> temporary trios in your working tree. It goes from slightly annoying to
-> very irritating.
+> and just declare that { $args } is a self-contained "subset", and 
+> effectively becomes the same thing as "$(git rev-list $args)" but with 
+> magic no-walking semantics (ie all walking is done only _within_ the { 
+> }, not between different groups.
+> 
+> You literally _can_ do it right now that way:
+> 
+> 	git log --no-walk $(git rev-list HEAD~5..HEAD~3) $(git rev-list 
+> 	HEAD~1..)
+> 
+> actually works, but that will hit argument size limits on many platforms 
+> really quickly.
+> 
+> So we could make a '{ }' in the argument space basically do a SHA1 
+> expansion of the range inside, and imply --no-walk. It's _not_ entirely 
+> trivial, because we'd need to handle the fact that object flags are 
+> sticky, and clear them in between invocations of multiple ranges, but 
+> it's not _fundmanetally_ difficult. It's just that somebody would need 
+> to do it.
 
-I agree; I have never found the temporary files left by mergetool from a
-failed merge to be useful, and get a little annoyed that I have to "git
-clean" them away afterwards. Even without --keep-going, I would often
-look at and abort a merge several times before resolving it and end up
-with several copies.
+Well, do not forget the case
 
-But I definitely think that is an issue for a separate patch, and one
-that needs input from Ted and from other mergetool users.
+	git log ^HEAD^ {HEAD^..HEAD} $BLUB
 
--Peff
+Ciao,
+Dscho
