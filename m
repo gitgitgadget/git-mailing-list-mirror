@@ -1,56 +1,382 @@
-From: Linus Torvalds <torvalds@linux-foundation.org>
-Subject: Re: git to libgit2 code relicensing
-Date: Fri, 14 Nov 2008 15:13:29 -0800 (PST)
-Message-ID: <alpine.LFD.2.00.0811141512480.3468@nehalem.linux-foundation.org>
-References: <491DE6CC.6060201@op5.se>
-Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Andreas Ericsson <ae@op5.se>
-X-From: git-owner@vger.kernel.org Sat Nov 15 00:15:11 2008
+From: Robin Rosenberg <robin.rosenberg@dewire.com>
+Subject: [EGIT PATCH 2/7 v3] Keep original ref name when reading refs
+Date: Sat, 15 Nov 2008 00:24:56 +0100
+Message-ID: <1226705099-18066-2-git-send-email-robin.rosenberg@dewire.com>
+References: <20081111183248.GR2932@spearce.org>
+ <1226705099-18066-1-git-send-email-robin.rosenberg@dewire.com>
+Cc: git@vger.kernel.org, Robin Rosenberg <robin.rosenberg@dewire.com>
+To: spearce@spearce.org
+X-From: git-owner@vger.kernel.org Sat Nov 15 00:26:37 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1L17sc-0001F5-8L
-	for gcvg-git-2@gmane.org; Sat, 15 Nov 2008 00:15:10 +0100
+	id 1L183f-0004bR-8J
+	for gcvg-git-2@gmane.org; Sat, 15 Nov 2008 00:26:36 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751670AbYKNXNz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 14 Nov 2008 18:13:55 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751704AbYKNXNz
-	(ORCPT <rfc822;git-outgoing>); Fri, 14 Nov 2008 18:13:55 -0500
-Received: from smtp1.linux-foundation.org ([140.211.169.13]:37454 "EHLO
-	smtp1.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751536AbYKNXNy (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 14 Nov 2008 18:13:54 -0500
-Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [140.211.169.55])
-	by smtp1.linux-foundation.org (8.14.2/8.13.5/Debian-3ubuntu1.1) with ESMTP id mAENDTWM030650
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Fri, 14 Nov 2008 15:13:30 -0800
+	id S1751454AbYKNXZN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 14 Nov 2008 18:25:13 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751906AbYKNXZK
+	(ORCPT <rfc822;git-outgoing>); Fri, 14 Nov 2008 18:25:10 -0500
+Received: from mail.dewire.com ([83.140.172.130]:13625 "EHLO dewire.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751454AbYKNXZH (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 14 Nov 2008 18:25:07 -0500
 Received: from localhost (localhost [127.0.0.1])
-	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id mAENDTTN015774;
-	Fri, 14 Nov 2008 15:13:29 -0800
-In-Reply-To: <491DE6CC.6060201@op5.se>
-User-Agent: Alpine 2.00 (LFD 1167 2008-08-23)
-X-Spam-Status: No, hits=-3.431 required=5 tests=AWL,BAYES_00
-X-Spam-Checker-Version: SpamAssassin 3.2.4-osdl_revision__1.47__
-X-MIMEDefang-Filter: lf$Revision: 1.188 $
-X-Scanned-By: MIMEDefang 2.63 on 140.211.169.13
+	by dewire.com (Postfix) with ESMTP id 21F77147D4F0;
+	Sat, 15 Nov 2008 00:25:05 +0100 (CET)
+X-Virus-Scanned: by amavisd-new at dewire.com
+Received: from dewire.com ([127.0.0.1])
+	by localhost (torino.dewire.com [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id 7AYF3V0c8zP4; Sat, 15 Nov 2008 00:25:01 +0100 (CET)
+Received: from localhost.localdomain (unknown [10.9.0.2])
+	by dewire.com (Postfix) with ESMTP id 45B05147D4E1;
+	Sat, 15 Nov 2008 00:25:00 +0100 (CET)
+X-Mailer: git-send-email 1.6.0.3.640.g6331a.dirty
+In-Reply-To: <1226705099-18066-1-git-send-email-robin.rosenberg@dewire.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/101027>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/101028>
 
+We want to know the original name of refs, not just the target name.
 
+Signed-off-by: Robin Rosenberg <robin.rosenberg@dewire.com>
+---
+ org.spearce.jgit/src/org/spearce/jgit/lib/Ref.java |   63 +++++++++++++++++++-
+ .../src/org/spearce/jgit/lib/RefDatabase.java      |   45 +++++++++-----
+ .../src/org/spearce/jgit/lib/RefUpdate.java        |   14 ++---
+ 3 files changed, 94 insertions(+), 28 deletions(-)
 
-On Fri, 14 Nov 2008, Andreas Ericsson wrote:
-> 
-> The license decided for libgit2 is "GPL with gcc exception".
-
-What's the exact language? 
-
-I'm likely ok with GPLv2 + libgcc-like exception, but I'd like to see the 
-exact one. I haven't followed the discussions much..
-
-		Linus
+diff --git a/org.spearce.jgit/src/org/spearce/jgit/lib/Ref.java b/org.spearce.jgit/src/org/spearce/jgit/lib/Ref.java
+index db94875..2f102af 100644
+--- a/org.spearce.jgit/src/org/spearce/jgit/lib/Ref.java
++++ b/org.spearce.jgit/src/org/spearce/jgit/lib/Ref.java
+@@ -43,6 +43,11 @@
+  * A ref in Git is (more or less) a variable that holds a single object
+  * identifier. The object identifier can be any valid Git object (blob, tree,
+  * commit, annotated tag, ...).
++ * <p>
++ * The ref name has the attributes of the ref that was asked for as well as
++ * the ref it was resolved to for symbolic refs plus the object id it points
++ * to and (for tags) the peeled target object id, i.e. the tag resolved
++ * recursively until a non-tag object is referenced.
+  */
+ public class Ref {
+ 	/** Location where a {@link Ref} is stored. */
+@@ -119,19 +124,24 @@ public boolean isPacked() {
+ 
+ 	private ObjectId peeledObjectId;
+ 
++	private final String origName;
++
+ 	/**
+ 	 * Create a new ref pairing.
+ 	 * 
+ 	 * @param st
+ 	 *            method used to store this ref.
++	 * @param origName
++	 *            The name used to resolve this ref
+ 	 * @param refName
+ 	 *            name of this ref.
+ 	 * @param id
+ 	 *            current value of the ref. May be null to indicate a ref that
+ 	 *            does not exist yet.
+ 	 */
+-	public Ref(final Storage st, final String refName, final ObjectId id) {
++	public Ref(final Storage st, final String origName, final String refName, final ObjectId id) {
+ 		storage = st;
++		this.origName = origName;
+ 		name = refName;
+ 		objectId = id;
+ 	}
+@@ -146,19 +156,56 @@ public Ref(final Storage st, final String refName, final ObjectId id) {
+ 	 * @param id
+ 	 *            current value of the ref. May be null to indicate a ref that
+ 	 *            does not exist yet.
++	 */
++	public Ref(final Storage st, final String refName, final ObjectId id) {
++		this(st, refName, refName, id);
++	}
++
++	/**
++	 * Create a new ref pairing.
++	 * 
++	 * @param st
++	 *            method used to store this ref.
++	 * @param origName
++	 *            The name used to resolve this ref
++	 * @param refName
++	 *            name of this ref.
++	 * @param id
++	 *            current value of the ref. May be null to indicate a ref that
++	 *            does not exist yet.
+ 	 * @param peel
+ 	 *            peeled value of the ref's tag. May be null if this is not a
+ 	 *            tag or the peeled value is not known.
+ 	 */
+-	public Ref(final Storage st, final String refName, final ObjectId id,
++	public Ref(final Storage st, final String origName, final String refName, final ObjectId id,
+ 			final ObjectId peel) {
+ 		storage = st;
++		this.origName = origName;
+ 		name = refName;
+ 		objectId = id;
+ 		peeledObjectId = peel;
+ 	}
+ 
+ 	/**
++	 * Create a new ref pairing.
++	 * 
++	 * @param st
++	 *            method used to store this ref.
++	 * @param refName
++	 *            name of this ref.
++	 * @param id
++	 *            current value of the ref. May be null to indicate a ref that
++	 *            does not exist yet.
++	 * @param peel
++	 *            peeled value of the ref's tag. May be null if this is not a
++	 *            tag or the peeled value is not known.
++	 */
++	public Ref(final Storage st, final String refName, final ObjectId id,
++			final ObjectId peel) {
++		this(st, refName, refName, id, peel);
++	}
++
++	/**
+ 	 * What this ref is called within the repository.
+ 	 * 
+ 	 * @return name of this ref.
+@@ -168,6 +215,13 @@ public String getName() {
+ 	}
+ 
+ 	/**
++	 * @return the originally resolved name
++	 */
++	public String getOrigName() {
++		return origName;
++	}
++
++	/**
+ 	 * Cached value of this ref.
+ 	 * 
+ 	 * @return the value of this ref at the last time we read it.
+@@ -200,6 +254,9 @@ public Storage getStorage() {
+ 	}
+ 
+ 	public String toString() {
+-		return "Ref[" + name + "=" + ObjectId.toString(getObjectId()) + "]";
++		String o = "";
++		if (!origName.equals(name))
++			o = "(" + origName + ")";
++		return "Ref[" + o + name + "=" + ObjectId.toString(getObjectId()) + "]";
+ 	}
+ }
+diff --git a/org.spearce.jgit/src/org/spearce/jgit/lib/RefDatabase.java b/org.spearce.jgit/src/org/spearce/jgit/lib/RefDatabase.java
+index 5c1f060..5a1b85f 100644
+--- a/org.spearce.jgit/src/org/spearce/jgit/lib/RefDatabase.java
++++ b/org.spearce.jgit/src/org/spearce/jgit/lib/RefDatabase.java
+@@ -51,6 +51,7 @@
+ import java.util.Map;
+ 
+ import org.spearce.jgit.errors.ObjectWritingException;
++import org.spearce.jgit.lib.Ref.Storage;
+ import org.spearce.jgit.util.FS;
+ import org.spearce.jgit.util.NB;
+ 
+@@ -135,8 +136,8 @@ RefUpdate newUpdate(final String name) throws IOException {
+ 		return new RefUpdate(this, r, fileForRef(r.getName()));
+ 	}
+ 
+-	void stored(final String name, final ObjectId id, final long time) {
+-		looseRefs.put(name, new Ref(Ref.Storage.LOOSE, name, id));
++	void stored(final String origName, final String name, final ObjectId id, final long time) {
++		looseRefs.put(name, new Ref(Ref.Storage.LOOSE, origName, name, id));
+ 		looseRefsMTime.put(name, time);
+ 		setModified();
+ 		db.fireRefsMaybeChanged();
+@@ -222,12 +223,12 @@ private void readLooseRefs(final Map<String, Ref> avail,
+ 			final String entName = ent.getName();
+ 			if (".".equals(entName) || "..".equals(entName))
+ 				continue;
+-			readOneLooseRef(avail, prefix + entName, ent);
++			readOneLooseRef(avail, prefix + entName, prefix + entName, ent);
+ 		}
+ 	}
+ 
+ 	private void readOneLooseRef(final Map<String, Ref> avail,
+-			final String refName, final File ent) {
++			final String origName, final String refName, final File ent) {
+ 		// Unchanged and cached? Don't read it again.
+ 		//
+ 		Ref ref = looseRefs.get(refName);
+@@ -270,7 +271,7 @@ private void readOneLooseRef(final Map<String, Ref> avail,
+ 					return;
+ 				}
+ 
+-				ref = new Ref(Ref.Storage.LOOSE, refName, id);
++				ref = new Ref(Ref.Storage.LOOSE, origName, refName, id);
+ 				looseRefs.put(ref.getName(), ref);
+ 				looseRefsMTime.put(ref.getName(), ent.lastModified());
+ 				avail.put(ref.getName(), ref);
+@@ -293,27 +294,35 @@ private File fileForRef(final String name) {
+ 		return new File(gitDir, name);
+ 	}
+ 
+-	private Ref readRefBasic(final String name, final int depth)
++	private Ref readRefBasic(final String name, final int depth) throws IOException {
++		return readRefBasic(name, name, depth);
++	}
++
++	private Ref readRefBasic(final String origName, final String name, final int depth)
+ 			throws IOException {
+ 		// Prefer loose ref to packed ref as the loose
+ 		// file can be more up-to-date than a packed one.
+ 		//
+-		Ref ref = looseRefs.get(name);
++		Ref ref = looseRefs.get(origName);
+ 		final File loose = fileForRef(name);
+ 		final long mtime = loose.lastModified();
+ 		if (ref != null) {
+ 			Long cachedlastModified = looseRefsMTime.get(name);
+ 			if (cachedlastModified != null && cachedlastModified == mtime)
+ 				return ref;
+-			looseRefs.remove(name);
+-			looseRefsMTime.remove(name);
++			looseRefs.remove(origName);
++			looseRefsMTime.remove(origName);
+ 		}
+ 
+ 		if (mtime == 0) {
+ 			// If last modified is 0 the file does not exist.
+ 			// Try packed cache.
+ 			//
+-			return packedRefs.get(name);
++			ref = packedRefs.get(name);
++			if (ref != null)
++				if (!ref.getOrigName().equals(origName))
++					ref = new Ref(Storage.LOOSE_PACKED, origName, name, ref.getObjectId());
++			return ref;
+ 		}
+ 
+ 		final String line;
+@@ -324,7 +333,7 @@ private Ref readRefBasic(final String name, final int depth)
+ 		}
+ 
+ 		if (line == null || line.length() == 0)
+-			return new Ref(Ref.Storage.LOOSE, name, null);
++			return new Ref(Ref.Storage.LOOSE, origName, name, null);
+ 
+ 		if (line.startsWith("ref: ")) {
+ 			if (depth >= 5) {
+@@ -333,12 +342,16 @@ private Ref readRefBasic(final String name, final int depth)
+ 			}
+ 
+ 			final String target = line.substring("ref: ".length());
+-			final Ref r = readRefBasic(target, depth + 1);
++			Ref r = readRefBasic(target, target, depth + 1);
+ 			Long cachedMtime = looseRefsMTime.get(name);
+ 			if (cachedMtime != null && cachedMtime != mtime)
+ 				setModified();
+ 			looseRefsMTime.put(name, mtime);
+-			return r != null ? r : new Ref(Ref.Storage.LOOSE, target, null);
++			if (r == null)
++				return new Ref(Ref.Storage.LOOSE, origName, target, null);
++			if (!origName.equals(r.getName()))
++				r = new Ref(Ref.Storage.LOOSE_PACKED, origName, r.getName(), r.getObjectId(), r.getPeeledObjectId());
++			return r; 
+ 		}
+ 
+ 		setModified();
+@@ -350,7 +363,7 @@ private Ref readRefBasic(final String name, final int depth)
+ 			throw new IOException("Not a ref: " + name + ": " + line);
+ 		}
+ 
+-		ref = new Ref(Ref.Storage.LOOSE, name, id);
++		ref = new Ref(Ref.Storage.LOOSE, origName, name, id);
+ 		looseRefs.put(name, ref);
+ 		looseRefsMTime.put(name, mtime);
+ 		return ref;
+@@ -384,7 +397,7 @@ private void refreshPackedRefs() {
+ 
+ 						final ObjectId id = ObjectId.fromString(p.substring(1));
+ 						last = new Ref(Ref.Storage.PACKED, last.getName(), last
+-								.getObjectId(), id);
++								.getName(), last.getObjectId(), id);
+ 						newPackedRefs.put(last.getName(), last);
+ 						continue;
+ 					}
+@@ -392,7 +405,7 @@ private void refreshPackedRefs() {
+ 					final int sp = p.indexOf(' ');
+ 					final ObjectId id = ObjectId.fromString(p.substring(0, sp));
+ 					final String name = new String(p.substring(sp + 1));
+-					last = new Ref(Ref.Storage.PACKED, name, id);
++					last = new Ref(Ref.Storage.PACKED, name, name, id);
+ 					newPackedRefs.put(last.getName(), last);
+ 				}
+ 			} finally {
+diff --git a/org.spearce.jgit/src/org/spearce/jgit/lib/RefUpdate.java b/org.spearce.jgit/src/org/spearce/jgit/lib/RefUpdate.java
+index 86b44c5..235c2fd 100644
+--- a/org.spearce.jgit/src/org/spearce/jgit/lib/RefUpdate.java
++++ b/org.spearce.jgit/src/org/spearce/jgit/lib/RefUpdate.java
+@@ -131,9 +131,6 @@
+ 	/** Repository the ref is stored in. */
+ 	private final RefDatabase db;
+ 
+-	/** Name of the ref. */
+-	private final String name;
+-
+ 	/** Location of the loose file holding the value of this ref. */
+ 	private final File looseFile;
+ 
+@@ -160,7 +157,6 @@
+ 	RefUpdate(final RefDatabase r, final Ref ref, final File f) {
+ 		db = r;
+ 		this.ref = ref;
+-		name = ref.getName();
+ 		oldValue = ref.getObjectId();
+ 		looseFile = f;
+ 	}
+@@ -171,7 +167,7 @@ RefUpdate(final RefDatabase r, final Ref ref, final File f) {
+ 	 * @return name of this ref.
+ 	 */
+ 	public String getName() {
+-		return name;
++		return ref.getName();
+ 	}
+ 
+ 	/**
+@@ -349,9 +345,9 @@ public Result delete() throws IOException {
+ 	 * @throws IOException
+ 	 */
+ 	public Result delete(final RevWalk walk) throws IOException {
+-		if (name.startsWith(Constants.R_HEADS)) {
++		if (getName().startsWith(Constants.R_HEADS)) {
+ 			final Ref head = db.readRef(Constants.HEAD);
+-			if (head != null && name.equals(head.getName()))
++			if (head != null && getName().equals(head.getName()))
+ 				return Result.REJECTED_CURRENT_BRANCH;
+ 		}
+ 
+@@ -373,7 +369,7 @@ private Result updateImpl(final RevWalk walk, final Store store)
+ 		if (!lock.lock())
+ 			return Result.LOCK_FAILURE;
+ 		try {
+-			oldValue = db.idOf(name);
++			oldValue = db.idOf(getName());
+ 			if (oldValue == null)
+ 				return store.store(lock, Result.NEW);
+ 
+@@ -428,7 +424,7 @@ else if (status == Result.NEW)
+ 				getName());
+ 		if (!lock.commit())
+ 			return Result.LOCK_FAILURE;
+-		db.stored(name, newValue, lock.getCommitLastModified());
++		db.stored(this.ref.getOrigName(),  ref.getName(), newValue, lock.getCommitLastModified());
+ 		return status;
+ 	}
+ 
+-- 
+1.6.0.3.640.g6331a.dirty
