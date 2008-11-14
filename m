@@ -1,79 +1,66 @@
-From: Miguel de Icaza <miguel@ximian.com>
-Subject: Re: git integration with monodevelop
-Date: Fri, 14 Nov 2008 12:28:18 -0500
-Organization: Novell.
-Message-ID: <1226683698.4483.265.camel@erandi.site>
-References: <491AAE6D.8030304@op5.se> <1226519288.4483.176.camel@erandi.site>
-	<m33ahwio3v.fsf@localhost.localdomain>
-	<1226540535.4483.203.camel@erandi.site>
-	<alpine.DEB.1.00.0811141419520.30769@pacific.mpi-cbg.de>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: multiple-commit cherry-pick?
+Date: Fri, 14 Nov 2008 09:29:06 -0800
+Message-ID: <7v1vxeb4il.fsf@gitster.siamese.dyndns.org>
+References: <buoiqr18tdk.fsf@dhapc248.dev.necel.com>
+ <20081106213711.GA4334@blimp.localdomain>
+ <alpine.LFD.2.00.0811061925300.3451@nehalem.linux-foundation.org>
+ <7vskq4gmf5.fsf@gitster.siamese.dyndns.org>
+ <20081107071231.GA4063@blimp.localdomain>
+ <alpine.LFD.2.00.0811071004170.3468@nehalem.linux-foundation.org>
+ <20081109102528.GA5463@blimp.localdomain>
+ <alpine.DEB.1.00.0811102054470.30769@pacific.mpi-cbg.de>
+ <81b0412b0811101224gcffc958o6dbfcdc45e022874@mail.gmail.com>
+ <alpine.DEB.1.00.0811102230330.30769@pacific.mpi-cbg.de>
+ <20081114050822.GA23963@foursquare.net>
+ <alpine.LFD.2.00.0811140800540.3468@nehalem.linux-foundation.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 7bit
-Cc: monodevelop-list@lists.ximian.com, Jakub Narebski <jnareb@gmail.com>,
-	Shawn Pearce <spearce@spearce.org>, Git Mailing List <git@vger.kernel.org>
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: monodevelop-list-bounces@lists.ximian.com Fri Nov 14 18:30:56 2008
-Return-path: <monodevelop-list-bounces@lists.ximian.com>
-Envelope-to: gcgmm-monodevelop-list@m.gmane.org
-Received: from galactus.ximian.com ([130.57.169.22] helo=lists.ximian.com)
+Content-Type: text/plain; charset=us-ascii
+Cc: Chris Frey <cdfrey@foursquare.net>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Alex Riesen <raa.lkml@gmail.com>, Miles Bader <miles@gnu.org>,
+	git@vger.kernel.org
+To: Linus Torvalds <torvalds@linux-foundation.org>
+X-From: git-owner@vger.kernel.org Fri Nov 14 18:31:06 2008
+Return-path: <git-owner@vger.kernel.org>
+Envelope-to: gcvg-git-2@gmane.org
+Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1L12VR-0001GO-If
-	for gcgmm-monodevelop-list@m.gmane.org; Fri, 14 Nov 2008 18:30:53 +0100
-Received: from galactus.ximian.com (localhost.localdomain [127.0.0.1])
-	by lists.ximian.com (Postfix) with ESMTP id DD4A81CFB9A;
-	Fri, 14 Nov 2008 12:29:42 -0500 (EST)
-X-Original-To: monodevelop-list@lists.ximian.com
-Delivered-To: monodevelop-list@lists.ximian.com
-Received: from herald.ximian.com (frontgate.ximian.com [130.57.169.19])
-	by lists.ximian.com (Postfix) with ESMTP id 41F891CFB55
-	for <monodevelop-list@lists.ximian.com>;
-	Fri, 14 Nov 2008 12:29:42 -0500 (EST)
-Received: by herald.ximian.com (Postfix, from userid 2601)
-	id 3252B7002D; Fri, 14 Nov 2008 12:29:42 -0500 (EST)
-Received: from victor.provo.novell.com (victor.provo.novell.com
-	[137.65.250.26])
-	by herald.ximian.com (Postfix) with ESMTP id 888EB70030
-	for <monodevelop-list@lists.ximian.com>;
-	Fri, 14 Nov 2008 12:29:41 -0500 (EST)
-Received: from [164.99.121.39] (prv-ext-foundry1.gns.novell.com
-	[137.65.251.240])
-	by victor.provo.novell.com with ESMTP (TLS encrypted);
-	Fri, 14 Nov 2008 10:29:38 -0700
-In-Reply-To: <alpine.DEB.1.00.0811141419520.30769@pacific.mpi-cbg.de>
-X-Mailer: Evolution 2.22.1.1 
-X-Spam-Checker-Version: SpamAssassin 3.0.3 (2005-04-27) on 
-	frontgate.ximian.com
-X-Spam-Level: *
-X-Spam-Status: No, score=1.5 required=5.0 tests=AWL,MY_OBFUT version=3.0.3
-X-BeenThere: monodevelop-list@lists.ximian.com
-X-Mailman-Version: 2.1.8
-Precedence: list
-List-Id: MonoDevelop discussion mailing list
-	<monodevelop-list.lists.ximian.com>
-List-Unsubscribe: <http://lists.ximian.com/mailman/listinfo/monodevelop-list>, 
-	<mailto:monodevelop-list-request@lists.ximian.com?subject=unsubscribe>
-List-Archive: <http://lists.ximian.com/pipermail/monodevelop-list>
-List-Post: <mailto:monodevelop-list@lists.ximian.com>
-List-Help: <mailto:monodevelop-list-request@lists.ximian.com?subject=help>
-List-Subscribe: <http://lists.ximian.com/mailman/listinfo/monodevelop-list>,
-	<mailto:monodevelop-list-request@lists.ximian.com?subject=subscribe>
-Sender: monodevelop-list-bounces@lists.ximian.com
-Errors-To: monodevelop-list-bounces@lists.ximian.com
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/100988>
+	id 1L12VZ-0001Iq-JF
+	for gcvg-git-2@gmane.org; Fri, 14 Nov 2008 18:31:02 +0100
+Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
+	id S1751968AbYKNR3s (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 14 Nov 2008 12:29:48 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751959AbYKNR3s
+	(ORCPT <rfc822;git-outgoing>); Fri, 14 Nov 2008 12:29:48 -0500
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:46828 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751953AbYKNR3r (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 14 Nov 2008 12:29:47 -0500
+Received: from localhost.localdomain (unknown [127.0.0.1])
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id E2FE67D17D;
+	Fri, 14 Nov 2008 12:29:44 -0500 (EST)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES256-SHA (256/256 bits)) (No client certificate requested) by
+ a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTPSA id DF8C27D171; Fri,
+ 14 Nov 2008 12:29:13 -0500 (EST)
+In-Reply-To: <alpine.LFD.2.00.0811140800540.3468@nehalem.linux-foundation.org> (Linus
+ Torvalds's message of "Fri, 14 Nov 2008 08:11:41 -0800 (PST)")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: D405B72A-B271-11DD-A431-9CEDC82D7133-77302942!a-sasl-fastnet.pobox.com
+Sender: git-owner@vger.kernel.org
+Precedence: bulk
+List-ID: <git.vger.kernel.org>
+X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/100989>
 
-Hello,
+Linus Torvalds <torvalds@linux-foundation.org> writes:
 
-> May I suggest respectfully, that the next time communication channels 
-> between the Mono-mentor and at least one knowledgable Git guy are 
-> established early in the project?  IIRC there was a GSoC project to 
-> reimplement Git in C# last year, too, which failed, too.
+> So we could make a '{ }' in the argument space basically do a SHA1 
+> expansion of the range inside, and imply --no-walk. It's _not_ entirely 
+> trivial, because we'd need to handle the fact that object flags are 
+> sticky, and clear them in between invocations of multiple ranges, but it's 
+> not _fundmanetally_ difficult. It's just that somebody would need to do 
+> it.
 
-The first year effort failed because the student never started, he got a
-job before the official SoC start.
-
-This year one of the students vanished before the SoC started, the other
-one did some minimal work, probably because the work was above his
-comfort zone.
-
-Miguel.
+Wouldn't you lose the nice streaming output (iow short latency)?
