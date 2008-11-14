@@ -1,61 +1,84 @@
-From: Dinakar <desas2@gmail.com>
-Subject: git compile error on AIX
-Date: Fri, 14 Nov 2008 11:45:18 -0800 (PST)
-Message-ID: <1226691918584-1499908.post@n2.nabble.com>
+From: Andreas Ericsson <ae@op5.se>
+Subject: Re: [PATCH] sha1_file: make sure correct error is propagated
+Date: Fri, 14 Nov 2008 20:50:09 +0100
+Message-ID: <491DD671.8070801@op5.se>
+References: <1226647174-15844-1-git-send-email-sam@vilain.net> <1226655681.17731.4.camel@maia.lan> <7vfxlu9lhs.fsf@gitster.siamese.dyndns.org> <200811142009.51803.fg@one2team.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Nov 14 20:46:42 2008
+Content-Type: text/plain; charset=ISO-8859-15;
+	format=flowed
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Junio C Hamano <gitster@pobox.com>, Sam Vilain <sam@vilain.net>,
+	Francis Galiegue <fge@one2team.com>, git@vger.kernel.org
+To: Francis Galiegue <fg@one2team.com>
+X-From: git-owner@vger.kernel.org Fri Nov 14 20:51:41 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1L14ck-0004Pz-3e
-	for gcvg-git-2@gmane.org; Fri, 14 Nov 2008 20:46:34 +0100
+	id 1L14hf-0006Uc-Ju
+	for gcvg-git-2@gmane.org; Fri, 14 Nov 2008 20:51:40 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753484AbYKNTpV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 14 Nov 2008 14:45:21 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752864AbYKNTpU
-	(ORCPT <rfc822;git-outgoing>); Fri, 14 Nov 2008 14:45:20 -0500
-Received: from kuber.nabble.com ([216.139.236.158]:50168 "EHLO
-	kuber.nabble.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751159AbYKNTpT (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 14 Nov 2008 14:45:19 -0500
-Received: from tervel.nabble.com ([192.168.236.150])
-	by kuber.nabble.com with esmtp (Exim 4.63)
-	(envelope-from <lists+1217463532682-661346@n2.nabble.com>)
-	id 1L14bW-0006Zt-J9
-	for git@vger.kernel.org; Fri, 14 Nov 2008 11:45:18 -0800
-X-Nabble-From: desas2@gmail.com
+	id S1751295AbYKNTuY convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 14 Nov 2008 14:50:24 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751259AbYKNTuY
+	(ORCPT <rfc822;git-outgoing>); Fri, 14 Nov 2008 14:50:24 -0500
+Received: from mail.op5.se ([193.201.96.20]:42240 "EHLO mail.op5.se"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751233AbYKNTuY (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 14 Nov 2008 14:50:24 -0500
+Received: from localhost (localhost.localdomain [127.0.0.1])
+	by mail.op5.se (Postfix) with ESMTP id 433C01B80090;
+	Fri, 14 Nov 2008 20:44:54 +0100 (CET)
+X-Virus-Scanned: amavisd-new at 
+X-Spam-Flag: NO
+X-Spam-Score: -2.499
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.499 tagged_above=-10 required=6.6
+	tests=[BAYES_00=-2.599, RDNS_NONE=0.1]
+Received: from mail.op5.se ([127.0.0.1])
+	by localhost (mail.op5.se [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id KEtmOcFBg2Zj; Fri, 14 Nov 2008 20:44:52 +0100 (CET)
+Received: from clix.int.op5.se (unknown [172.27.78.10])
+	by mail.op5.se (Postfix) with ESMTP id AE92E1B80088;
+	Fri, 14 Nov 2008 20:44:51 +0100 (CET)
+User-Agent: Thunderbird 2.0.0.16 (X11/20080723)
+In-Reply-To: <200811142009.51803.fg@one2team.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/101007>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/101008>
 
+=46rancis Galiegue wrote:
+> Le Friday 14 November 2008 20:05:19 Junio C Hamano, vous avez =E9crit=
+ :
+> [...]
+>>>  	fd =3D mkstemp(buffer);
+>>> -	if (fd < 0 && dirlen && (errno !=3D EPERM)) {
+>>> +	if (fd < 0 && dirlen && (errno !=3D EACCESS)) {
+>> Is this accepting the two as equivalents???
+>> --
+>> To unsubscribe from this list: send the line "unsubscribe git" in
+>> the body of a message to majordomo@vger.kernel.org
+>> More majordomo info at  http://vger.kernel.org/majordomo-info.html
+>=20
+> Well, looking at mkdir(2), it says:
+>=20
+>        EPERM  The file system containing pathname does not support th=
+e=20
+> creation of directories.
+>=20
+> Hmm, err... git would fail at an earlier point anyway, wouldn't it? E=
+ven git=20
+> init would fail there.
+>=20
 
-Hello:
-I am trying to compile git-1.6.0 on AIX 5.3 with gcc (GCC) 4.2.3. I getting
-following error.
-cp private-Error.pm blib/lib/Error.pm
-cp Git.pm blib/lib/Git.pm
-Manifying blib/man3/private-Error.3
-Manifying blib/man3/Git.3
-    SUBDIR templates
-/usr/bin/getopt: Not a recognized flag: d
-Usage: install [-c DirectoryA] [-f DirectoryB] [-i] [-m] [-M Mode] [-O
-Owner]
-               [-G Group] [-S] [-n DirectoryC] [-o] [-s] File [DirectoryX
-...]
-gmake[1]: *** [boilerplates.made] Error 2
-gmake: *** [all] Error 2
+Not necessarily. .git could be mounted erroneously from via a networked
+filesystem but without write permissions. Yes, other things would fail
+then too, but both EPERM and EACCESS are valid and possible return code=
+s.
 
-
-I would appreciate, if you could help me to resolve this issue.
-
-Thank you.
-Dinakar
--- 
-View this message in context: http://n2.nabble.com/git-compile-error-on-AIX-tp1499908p1499908.html
-Sent from the git mailing list archive at Nabble.com.
+--=20
+Andreas Ericsson                   andreas.ericsson@op5.se
+OP5 AB                             www.op5.se
+Tel: +46 8-230225                  Fax: +46 8-230231
