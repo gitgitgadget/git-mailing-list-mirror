@@ -1,86 +1,102 @@
-From: Brandon Casey <casey@nrlssc.navy.mil>
-Subject: Re: hosting git on a nfs
-Date: Fri, 14 Nov 2008 12:32:01 -0600
-Message-ID: <vzAozXmaOLEpyz-7DHx4nMusAdaTsFp7iZ8xfFsgAIraex6_wfvyuw@cipher.nrlssc.navy.mil>
-References: <200811121029.34841.thomas@koch.ro> <20081112173651.GA9127@linode.davidb.org> <alpine.LFD.2.00.0811120959050.3468@nehalem.linux-foundation.org> <loom.20081113T174625-994@post.gmane.org> <alpine.LFD.2.00.0811131214020.3468@nehalem.linux-foundation.org> <alpine.LFD.2.00.0811131252040.3468@nehalem.linux-foundation.org> <alpine.LFD.2.00.0811131518070.3468@nehalem.linux-foundation.org> <371xaQfxsMMQ-9LK24q-nhcS4loEggn8Cj3J1IzfMbzzYDGE6HKbQQ@cipher.nrlssc.navy.mil> <alpine.LFD.2.00.0811131630470.3468@nehalem.linux-foundation.org> <alpine.LFD.2.00.0811131707090.3468@nehalem.linux-foundation.org>
+From: "Giuseppe Bilotta" <giuseppe.bilotta@gmail.com>
+Subject: Re: [PATCH v2 00/11] gitweb: display remote heads
+Date: Fri, 14 Nov 2008 19:37:36 +0100
+Message-ID: <cb7bb73a0811141037o26532f34k6a3e0193cd06e79a@mail.gmail.com>
+References: <1226616555-24503-1-git-send-email-giuseppe.bilotta@gmail.com>
+	 <200811141533.15427.jnareb@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-Cc: James Pickens <jepicken@gmail.com>,
-	Bruce Fields <bfields@fieldses.org>,
-	Junio C Hamano <gitster@pobox.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: Linus Torvalds <torvalds@linux-foundation.org>
-X-From: git-owner@vger.kernel.org Fri Nov 14 19:33:50 2008
+Cc: git@vger.kernel.org, "Petr Baudis" <pasky@suse.cz>,
+	"Junio C Hamano" <gitster@pobox.com>
+To: "Jakub Narebski" <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Nov 14 19:39:10 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1L13UL-0001P3-PU
-	for gcvg-git-2@gmane.org; Fri, 14 Nov 2008 19:33:50 +0100
+	id 1L13ZH-0003Gb-Mr
+	for gcvg-git-2@gmane.org; Fri, 14 Nov 2008 19:38:56 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752722AbYKNSce (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 14 Nov 2008 13:32:34 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752510AbYKNSce
-	(ORCPT <rfc822;git-outgoing>); Fri, 14 Nov 2008 13:32:34 -0500
-Received: from mail1.nrlssc.navy.mil ([128.160.35.1]:40034 "EHLO
-	mail.nrlssc.navy.mil" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751888AbYKNSce (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 14 Nov 2008 13:32:34 -0500
-Received: by mail.nrlssc.navy.mil id mAEIW2k2008247; Fri, 14 Nov 2008 12:32:04 -0600
-In-Reply-To: <alpine.LFD.2.00.0811131707090.3468@nehalem.linux-foundation.org>
-X-OriginalArrivalTime: 14 Nov 2008 18:32:02.0084 (UTC) FILETIME=[49494E40:01C94687]
+	id S1753406AbYKNShk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 14 Nov 2008 13:37:40 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752510AbYKNShk
+	(ORCPT <rfc822;git-outgoing>); Fri, 14 Nov 2008 13:37:40 -0500
+Received: from qb-out-0506.google.com ([72.14.204.227]:47748 "EHLO
+	qb-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752070AbYKNShj (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 14 Nov 2008 13:37:39 -0500
+Received: by qb-out-0506.google.com with SMTP id f11so1536238qba.17
+        for <git@vger.kernel.org>; Fri, 14 Nov 2008 10:37:38 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to
+         :subject:cc:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:references;
+        bh=gZaYtZtG57tuf8IFpDkyL274WDPpzr7B0Lad3ckoIxo=;
+        b=FEwqYujMZgtGtx/JCvdYOSBc+1BV2EWVB0A7wE6V6va6PK7xDEmGhIcXL3kxmHch9Q
+         394exNuyqSZY9fTyNum7OtwTL7XqOEew0QcH33pLtMBNlG8uNeUA3ZdN5XyfoNtzvCU9
+         dqzOMl4wITHtJBCNwncQZkpiuxErCx/5p9G9I=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
+         :content-type:content-transfer-encoding:content-disposition
+         :references;
+        b=QRM0iQLvH2X3CFtcRisZPFlhgPEKEx/yfduaHXL06v4yEUgnVM6HNhox88iNbdGLDh
+         Hq3JradFVt/JsT0ZS3vqUQEnrKKJYuwhZiBRgF0ofJoOj0ODl+NhrmgRZTHX3B6N9vvw
+         WP8Ztth4wv+vtk8IhAf8RJ6v23Zd2XUhkksmg=
+Received: by 10.210.16.16 with SMTP id 16mr1381433ebp.81.1226687856448;
+        Fri, 14 Nov 2008 10:37:36 -0800 (PST)
+Received: by 10.210.132.16 with HTTP; Fri, 14 Nov 2008 10:37:36 -0800 (PST)
+In-Reply-To: <200811141533.15427.jnareb@gmail.com>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/100998>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/100999>
 
-Linus Torvalds wrote:
-> 
-> On Thu, 13 Nov 2008, Linus Torvalds wrote:
->> I'll clean it up a bit and make a less hacky version. And I'll try to make 
->> it work for "git status" and friends too.
-> 
-> Ok, this is a no-longer-totally-hacky thing, which also adds support for 
-> doing the same for "git status". I haven't actually done any timings, but 
-> the preload algorithm is all the same. The interface is just a much more 
-> natural one.
+On Fri, Nov 14, 2008 at 3:33 PM, Jakub Narebski <jnareb@gmail.com> wrote:
+> On Thu, 13 Nov 2008, Giuseppe Bilotta wrote:
+>
+>> This is a patchset I presented about a year ago or so, but after a lively
+>> discussion it dropped into silence. I'm now presenting it again, with minor
+>> cleanups and adjustements.
+>
+> That is very nice of you to resend this series. If you could provide
+> link to earlier discussion of this series...
 
-git status > /dev/null
+There was no actual discussion after I sent the series, although there
+was some while I was preparing it. Plus, gmane is quite unresponsive
+for me at the moment, but the whereabous of the past discussions are
+these http://kerneltrap.org/mailarchive/git/2007/8/30/256411/thread
 
-Before:
+>> Giuseppe Bilotta (11):
+>>   gitweb: introduce remote_heads feature
+>>   gitweb: git_get_heads_list accepts an optional list of refs.
+>>   gitweb: separate heads and remotes list in summary view
+>>   gitweb: optional custom name for refs in git_heads_body
+>>   gitweb: git_split_heads_body function.
+>>   gitweb: use CSS to style split head lists.
+>>   gitweb: add 'remotes' action
+>>   gitweb: display HEAD in heads list when detached
+>>   gitweb: git_is_head_detached() function
+>>   gitweb: add HEAD to list of shortlog refs if detached
+>>   gitweb: CSS style and refs mark for detached HEAD
+>
+> I'll try to review individual patches, but I haven't examined them
+> yet, so perhaps there is a reason why there are so many patches in
+> this series?
 
-   0.06user 0.37system 0:03.04elapsed 14%CPU
-   0.07user 0.36system 0:03.25elapsed 13%CPU
-   0.07user 0.36system 0:03.08elapsed 14%CPU
+And I actually squashed some! The original patchset was 14 patches.
+Now it's about 10, of which the first 6 as the actual remote heads
+stuff, and the last 4 are the detached HEAD stuff.
 
-After:
+> Note that on GMane NNTP (news) interface I can see only two last
+> patches. Could anyone not CC-ed confirm or deny if this is VGER
+> anti-SPAM filter at work, or some GMane archive hiccup?
 
-   0.06user 0.53system 0:01.02elapsed 58%CPU
-   0.05user 0.54system 0:01.01elapsed 58%CPU
-   0.06user 0.52system 0:01.04elapsed 57%CPU
+Seems to be a gmane problem, I can see it too.
 
-
-git diff > /dev/null
-
-Before:
-
-   0.02user 0.31system 0:02.88elapsed 11%CPU
-   0.01user 0.32system 0:02.53elapsed 13%CPU
-   0.01user 0.28system 0:02.78elapsed 10%CPU
-
-After:
-
-   0.01user 0.47system 0:00.52elapsed 92%CPU
-   0.01user 0.48system 0:00.52elapsed 94%CPU
-   0.01user 0.47system 0:00.54elapsed 88%CPU
-
-
-I have no explanation for why the diff numbers are different from yesterday.
-Could be that there was some nightly cron job running last night which
-slowed things down. Still, the same ~5x speedup is observed!
-
-Wow! Thanks!
-
--brandon
+-- 
+Giuseppe "Oblomov" Bilotta
