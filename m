@@ -1,85 +1,74 @@
-From: Linus Torvalds <torvalds@linux-foundation.org>
-Subject: Re: multiple-commit cherry-pick?
-Date: Fri, 14 Nov 2008 09:41:08 -0800 (PST)
-Message-ID: <alpine.LFD.2.00.0811140936050.3468@nehalem.linux-foundation.org>
-References: <buoiqr18tdk.fsf@dhapc248.dev.necel.com> <20081106213711.GA4334@blimp.localdomain> <alpine.LFD.2.00.0811061925300.3451@nehalem.linux-foundation.org> <7vskq4gmf5.fsf@gitster.siamese.dyndns.org> <20081107071231.GA4063@blimp.localdomain>
- <alpine.LFD.2.00.0811071004170.3468@nehalem.linux-foundation.org> <20081109102528.GA5463@blimp.localdomain> <alpine.DEB.1.00.0811102054470.30769@pacific.mpi-cbg.de> <81b0412b0811101224gcffc958o6dbfcdc45e022874@mail.gmail.com> <alpine.DEB.1.00.0811102230330.30769@pacific.mpi-cbg.de>
- <20081114050822.GA23963@foursquare.net> <alpine.LFD.2.00.0811140800540.3468@nehalem.linux-foundation.org> <7v1vxeb4il.fsf@gitster.siamese.dyndns.org>
+From: "Jan =?UTF-8?B?S3LDvGdlcg==?=" <jk@jk.gs>
+Subject: [PATCH resend] Documentation: git-svn: fix example for centralized
+ SVN clone
+Date: Fri, 14 Nov 2008 18:45:14 +0100
+Message-ID: <20081114184514.6f7d437a@perceptron>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Chris Frey <cdfrey@foursquare.net>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Alex Riesen <raa.lkml@gmail.com>, Miles Bader <miles@gnu.org>,
-	git@vger.kernel.org
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Git ML <git@vger.kernel.org>, Eric Wong <normalperson@yhbt.net>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Nov 14 18:43:25 2008
+X-From: git-owner@vger.kernel.org Fri Nov 14 18:46:51 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1L12hH-0006Lm-11
-	for gcvg-git-2@gmane.org; Fri, 14 Nov 2008 18:43:07 +0100
+	id 1L12kq-0007pb-Dn
+	for gcvg-git-2@gmane.org; Fri, 14 Nov 2008 18:46:48 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755406AbYKNRlp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 14 Nov 2008 12:41:45 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755405AbYKNRlo
-	(ORCPT <rfc822;git-outgoing>); Fri, 14 Nov 2008 12:41:44 -0500
-Received: from smtp1.linux-foundation.org ([140.211.169.13]:40823 "EHLO
-	smtp1.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1755391AbYKNRln (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 14 Nov 2008 12:41:43 -0500
-Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [140.211.169.55])
-	by smtp1.linux-foundation.org (8.14.2/8.13.5/Debian-3ubuntu1.1) with ESMTP id mAEHf9u2012103
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Fri, 14 Nov 2008 09:41:10 -0800
-Received: from localhost (localhost [127.0.0.1])
-	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id mAEHf8pR012803;
-	Fri, 14 Nov 2008 09:41:09 -0800
-In-Reply-To: <7v1vxeb4il.fsf@gitster.siamese.dyndns.org>
-User-Agent: Alpine 2.00 (LFD 1167 2008-08-23)
-X-Spam-Status: No, hits=-3.432 required=5 tests=AWL,BAYES_00
-X-Spam-Checker-Version: SpamAssassin 3.2.4-osdl_revision__1.47__
-X-MIMEDefang-Filter: lf$Revision: 1.188 $
-X-Scanned-By: MIMEDefang 2.63 on 140.211.169.13
+	id S1752055AbYKNRpc convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 14 Nov 2008 12:45:32 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752198AbYKNRpc
+	(ORCPT <rfc822;git-outgoing>); Fri, 14 Nov 2008 12:45:32 -0500
+Received: from zoidberg.org ([213.133.99.5]:59979 "EHLO cthulhu.zoidberg.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751634AbYKNRpb convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 14 Nov 2008 12:45:31 -0500
+Received: from perceptron (xdsl-87-79-252-221.netcologne.de [::ffff:87.79.252.221])
+  (IDENT: unknown, AUTH: LOGIN jast, TLS: TLSv1/SSLv3,256bits,AES256-SHA)
+  by cthulhu.zoidberg.org with esmtp; Fri, 14 Nov 2008 18:45:28 +0100
+  id 00165FAE.491DB939.00002F48
+X-Mailer: Claws Mail 3.5.0 (GTK+ 2.14.4; i486-pc-linux-gnu)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/100990>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/100991>
 
+The example that tells users how to centralize the effort of the initia=
+l
+git svn clone operation doesn't work properly. It uses rebase but that
+only works if HEAD exists. This adds one extra command to create a
+somewhat sensible HEAD that should work in all cases.
 
+Signed-off-by: Jan Kr=C3=BCger <jk@jk.gs>
+---
+When I first sent this one I said I didn't like the solution all that
+much (it would be nicer to use origin/HEAD but we didn't fetch that)
+but Eric said he thinks it's okay and the original author of the
+section hasn't piped in. It's still better than a nonfunctional example
+in any case.
 
-On Fri, 14 Nov 2008, Junio C Hamano wrote:
-> Linus Torvalds <torvalds@linux-foundation.org> writes:
-> 
-> > So we could make a '{ }' in the argument space basically do a SHA1 
-> > expansion of the range inside, and imply --no-walk. It's _not_ entirely 
-> > trivial, because we'd need to handle the fact that object flags are 
-> > sticky, and clear them in between invocations of multiple ranges, but it's 
-> > not _fundmanetally_ difficult. It's just that somebody would need to do 
-> > it.
-> 
-> Wouldn't you lose the nice streaming output (iow short latency)?
+Previous discussion at
+<http://thread.gmane.org/gmane.comp.version-control.git/100472>.
 
-Oh, absolutely. So the '{x}' format would be not be a replacement for 
-non-{} format - it would be an addition to.
+ Documentation/git-svn.txt |    2 ++
+ 1 files changed, 2 insertions(+), 0 deletions(-)
 
-But it's no different from 'a..b' in that sense: anything that sets 
-'revs->limited' automatically forces a synchronous revision walk. So you'd 
-be crazy to do
-
-	gitk {HEAD}
-
-because
- (a) there would be no point
- (b) it indeed loses the streaming data and would become synchronous.
-
-but if you already do
-
-	gitk a..b
-
-then you're _already_ doing a revision limiter and forcing the revision 
-walk to be synchronous, so there would be no interactivity downside 
-between 'a..b' and '{a..b}'.
-
-		Linus
+diff --git a/Documentation/git-svn.txt b/Documentation/git-svn.txt
+index 84c8f3c..ba94cd1 100644
+--- a/Documentation/git-svn.txt
++++ b/Documentation/git-svn.txt
+@@ -544,6 +544,8 @@ have each person clone that repository with 'git-cl=
+one':
+ 	git remote add origin server:/pub/project
+ 	git config --add remote.origin.fetch '+refs/remotes/*:refs/remotes/*'
+ 	git fetch
++# Create a local branch from one of the branches just fetched
++	git checkout -b master FETCH_HEAD
+ # Initialize git-svn locally (be sure to use the same URL and -T/-b/-t=
+ options as were used on server)
+ 	git svn init http://svn.example.com/project
+ # Pull the latest changes from Subversion
+--=20
+1.6.0.3.578.g6a50
