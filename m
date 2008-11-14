@@ -1,90 +1,92 @@
-From: "Sverre Rabbelier" <alturin@gmail.com>
-Subject: Re: git to libgit2 code relicensing
-Date: Fri, 14 Nov 2008 22:46:31 +0100
-Message-ID: <bd6139dc0811141346w194ae4c5m9f7b0fdb106108fc@mail.gmail.com>
-References: <491DE6CC.6060201@op5.se>
-	 <20081114213352.GA12134@auto.tuwien.ac.at>
-Reply-To: sverre@rabbelier.nl
+From: "Giuseppe Bilotta" <giuseppe.bilotta@gmail.com>
+Subject: Re: [PATCH v2 02/11] gitweb: git_get_heads_list accepts an optional list of refs.
+Date: Fri, 14 Nov 2008 22:52:45 +0100
+Message-ID: <cb7bb73a0811141352p6e46196cq9272b60bba89b951@mail.gmail.com>
+References: <1226616555-24503-1-git-send-email-giuseppe.bilotta@gmail.com>
+	 <1226616555-24503-2-git-send-email-giuseppe.bilotta@gmail.com>
+	 <1226616555-24503-3-git-send-email-giuseppe.bilotta@gmail.com>
+	 <200811141948.57785.jnareb@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: "Andreas Ericsson" <ae@op5.se>,
-	"Git Mailing List" <git@vger.kernel.org>
-To: "Martin Koegler" <mkoegler@auto.tuwien.ac.at>
-X-From: git-owner@vger.kernel.org Fri Nov 14 22:47:49 2008
+Content-Type: text/plain; charset=ISO-8859-2
+Content-Transfer-Encoding: base64
+Cc: git@vger.kernel.org, "Petr Baudis" <pasky@suse.cz>,
+	"Junio C Hamano" <gitster@pobox.com>
+To: "Jakub Narebski" <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Nov 14 22:54:04 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1L16W4-0006Qg-EG
-	for gcvg-git-2@gmane.org; Fri, 14 Nov 2008 22:47:48 +0100
+	id 1L16c7-00006w-Hr
+	for gcvg-git-2@gmane.org; Fri, 14 Nov 2008 22:54:03 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751736AbYKNVqd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 14 Nov 2008 16:46:33 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751770AbYKNVqd
-	(ORCPT <rfc822;git-outgoing>); Fri, 14 Nov 2008 16:46:33 -0500
-Received: from yw-out-2324.google.com ([74.125.46.31]:8708 "EHLO
-	yw-out-2324.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751734AbYKNVqd (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 14 Nov 2008 16:46:33 -0500
-Received: by yw-out-2324.google.com with SMTP id 9so717935ywe.1
-        for <git@vger.kernel.org>; Fri, 14 Nov 2008 13:46:31 -0800 (PST)
+	id S1751621AbYKNVws (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 14 Nov 2008 16:52:48 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751704AbYKNVws
+	(ORCPT <rfc822;git-outgoing>); Fri, 14 Nov 2008 16:52:48 -0500
+Received: from qb-out-0506.google.com ([72.14.204.237]:21122 "EHLO
+	qb-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751620AbYKNVwr (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 14 Nov 2008 16:52:47 -0500
+Received: by qb-out-0506.google.com with SMTP id f11so1604266qba.17
+        for <git@vger.kernel.org>; Fri, 14 Nov 2008 13:52:46 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:reply-to
-         :to:subject:cc:in-reply-to:mime-version:content-type
+        h=domainkey-signature:received:received:message-id:date:from:to
+         :subject:cc:in-reply-to:mime-version:content-type
          :content-transfer-encoding:content-disposition:references;
-        bh=dHmm87wiNbhZ1dx7mIR8nUrJLwgdIvP6uUmnNc3rcQk=;
-        b=FSmk0Jwe9g8CxcIoPNQOTZSBsufuZMcvP5hW9zWIWbuoWLQ0vfnnK5XpH6dXZyUkdj
-         vfbqJeMw9SCceTvxiJII8Wp+iXlx5ikDNDZmo9m0y96lUyU95dtgJ9A2EeKHr2Q0+uXf
-         Nh4Hpj+NUALG3EEZNWZvPeAnFannH9lt8kcnY=
+        bh=F7+vCiJhgx61Q31Ch0hvMhDmn8OpZ9/7vSGRgRUCGt8=;
+        b=r5Tmf+rakOz6dzfF2UPrHOfJkiLoCKBHNdFcUky9BF0llWv0Zqh0brguyU9Gr8jCMN
+         RnhaXMYXNW/Y7Z7Yczju4CjT9qCQqCnlX/AzJP5hpfvPfJprhYQVebMLFtzu95Qxbn5E
+         jg6APmvRyaC9TfqUqp5d9LdMkah74DhTDPpJg=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=message-id:date:from:reply-to:to:subject:cc:in-reply-to
-         :mime-version:content-type:content-transfer-encoding
-         :content-disposition:references;
-        b=s0sttwJf6gfy3JW2ormBLPrGnS7H1RtUs99HersECz+kj4jxwSxTCF4miAMufWcOgb
-         1E4WQMeryP1rMOKzoyLNPpQFFhymPWrN+VvInfWTufrBJgpUSKR8QiH3icu/RAjCRHpC
-         5IgdiIi443G4atFDJGIyHNzYGd39u5GN6vNk8=
-Received: by 10.151.15.9 with SMTP id s9mr2614701ybi.70.1226699191650;
-        Fri, 14 Nov 2008 13:46:31 -0800 (PST)
-Received: by 10.150.149.14 with HTTP; Fri, 14 Nov 2008 13:46:31 -0800 (PST)
-In-Reply-To: <20081114213352.GA12134@auto.tuwien.ac.at>
+        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
+         :content-type:content-transfer-encoding:content-disposition
+         :references;
+        b=Pm9sAPEamqaXfDTz6d9/TaaRYze3EI3WPs5F4lwy0xYTwWuEf4NqX4qeFzmRXSddw+
+         dXhq6VUtJ2OTKLEuzC4ot9reRbvBpVKT8dmrK/0DUMujqjzwsqMqjPgGHCLRcXZ2bOl2
+         JCJ5r9xtEx6DRrzs9oG/7kTM57jNHUtj6XjyQ=
+Received: by 10.210.51.10 with SMTP id y10mr1559316eby.98.1226699565698;
+        Fri, 14 Nov 2008 13:52:45 -0800 (PST)
+Received: by 10.210.132.16 with HTTP; Fri, 14 Nov 2008 13:52:45 -0800 (PST)
+In-Reply-To: <200811141948.57785.jnareb@gmail.com>
 Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/101019>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/101020>
 
-On Fri, Nov 14, 2008 at 22:33, Martin Koegler
-<mkoegler@auto.tuwien.ac.at> wrote:
-> On Fri, Nov 14, 2008 at 09:59:56PM +0100, Andreas Ericsson wrote:
->> I've put everyone who "owns" more than 500 lines of code
->> on the bcc list, figuring your permission is important
->> but that you don't want the hundreds (well, one can hope)
->> of emails from people saying "ok". The list of major owners
->> was generated with "git showners *.c" in a worktree from
->> the next branch of git.git.
->
-> I don't think, that your way for relicensing is bullet proof:
->
-> I consider many of my GIT patches as derived work from other parts of
-> GIT, even if git blame is stating me as author. I can gurantee you,
-> that I comply with the "Developer's Certificate of Origin 1.1" point
-> b, as its based on code out of git.git. But I can't tell you, from
-> which files I reused code anymore.
->
-> Probably other people did the same.
->
-> Your method is ignoring such derived code.
-
-Perhaps git stats can be of assistance here, it can summarize how much
-lines a person changed (per file, or in total), that should be a
-better metric (at least for code reused from within git.git, ofcourse
-GPL-ed code taken from somewhere else is not covered).
-
--- 
-Cheers,
-
-Sverre Rabbelier
+T24gRnJpLCBOb3YgMTQsIDIwMDggYXQgNzo0OCBQTSwgSmFrdWIgTmFyZWJza2kgPGpuYXJlYkBn
+bWFpbC5jb20+IHdyb3RlOgo+IERuaWEgY3p3YXJ0ZWsgMTMuIGxpc3RvcGFkYSAyMDA4IDIzOjQ5
+LCBHaXVzZXBwZSBCaWxvdHRhIG5hcGlzYbM6Cj4KPj4gZ2l0X2dldF9oZWFkc19saXN0KGxpbWl0
+LCBkaXIxLCBkaXIyLCAuLi4pIGNhbiBub3cgYmUgdXNlZCB0byByZXRyaWV2ZQo+PiByZWZzL2Rp
+cjEsIHJlZnMvZGlyMiBldGMuIERlZmF1bHRzIHRvICgnaGVhZHMnKSBvciAoJ2hlYWRzJywgJ3Jl
+bW90ZXMnKQo+PiBkZXBlbmRpbmcgb24gdGhlIHJlbW90ZV9oZWFkcyBvcHRpb24uCj4KPiBNaW5v
+ciBuaXQ6IEkgdGhpbmsgaXQgd291bGQgYmUgYmV0dGVyIHRvIHVzZSB0aGUgc2FtZSB0ZXJtaW5v
+bG9neSBpbgo+IGNvbW1pdCBtZXNzYWdlIGFzIGluIGNvZGUsIGkuZS4gJ2NsYXNzMScgaW5zdGVh
+ZCBvZiAnZGlyMScsIG9yIHBlcmhhcHMKPiAncmVmX2NsYXNzMScgaWYgaXQgd291bGQgYmUgYmV0
+dGVyLgoKVWhtLCByZWYvcmVmX2NsYXNzMSByZWFkcyBob3JyaWJsZSwgYnV0IHN0aWNraW5nIHdp
+dGggYSB1bmlmb3JtCnRlcm1pbm9sb2d5IGlzIGEgZ29vZCBwb2ludC4gSSBhZGp1c3RlZCB0aGUg
+Y29tbWl0IG1lc3NhZ2UKY29uc2VxdWVudGx5LgoKPiBUaGlzIGlzIG9ubHkgYSBzdWdnZXN0aW9u
+LCBidXQgcGVyaGFwcyB0aGlzIHBhdGNoIGNvdWxkIGJlIHNxdWFzaGVkCj4gd2l0aCBhIGxhdGVy
+IG9uZT8KCk9yIHdpdGggdGhlIHByZXZpb3VzIG9uZSwgc2luY2UgYXMgeW91IHJlbWFyayBpdCdz
+IGEgZ2VuZXJhbGl6YXRpb24gb2YKdGhlIHByZXZpb3VzLgoKPj4gICAgICAgbXkgQGhlYWRzbGlz
+dDsKPj4KPj4gLSAgICAgbXkgKCRyZW1vdGVfaGVhZHMpID0gZ2l0d2ViX2NoZWNrX2ZlYXR1cmUo
+J3JlbW90ZV9oZWFkcycpOwo+PiAtCj4+ICAgICAgIG9wZW4gbXkgJGZkLCAnLXwnLCBnaXRfY21k
+KCksICdmb3ItZWFjaC1yZWYnLAo+PiAgICAgICAgICAgICAgICgkbGltaXQgPyAnLS1jb3VudD0n
+LigkbGltaXQrMSkgOiAoKSksICctLXNvcnQ9LWNvbW1pdHRlcmRhdGUnLAo+PiAgICAgICAgICAg
+ICAgICctLWZvcm1hdD0lKG9iamVjdG5hbWUpICUocmVmbmFtZSkgJShzdWJqZWN0KSUwMCUoY29t
+bWl0dGVyKScsCj4+IC0gICAgICAgICAgICAgJ3JlZnMvaGVhZHMnLCAoICRyZW1vdGVfaGVhZHMg
+PyAncmVmcy9yZW1vdGVzJyA6ICcnKQo+PiArICAgICAgICAgICAgIEByZWZzCj4+ICAgICAgICAg
+ICAgICAgb3IgcmV0dXJuOwo+PiAgICAgICB3aGlsZSAobXkgJGxpbmUgPSA8JGZkPikgewo+PiAg
+ICAgICAgICAgICAgIG15ICVyZWZfaXRlbTsKPgo+IFNvIHRoaXMgaXMgYSBiaXQgb2YgZ2VuZXJh
+bGl6YXRpb24gb2YgKHBhcnQgb2YpIHByZXZpb3VzIHBhdGNoLAo+IGlzbid0IGl0PwoKUHJlY2lz
+ZWx5LiBJIG11c3Qgc2F5IEkgaGFkIHByb2JsZW1zIGZpbmRpbmcgdGhlIHByb3BlciBzcGxpdHRp
+bmcKcG9pbnQgZm9yIHNvbWUgb2YgdGhlc2UgcGF0Y2hlcywgYmVjYXVzZSB0aGV5IGhhZCBhIHZl
+cnkgb3JnYW5pYwpldm9sdXRpb24sIGJ1dCBhdCB0aGUgc2FtZSB0aW1lIHNxYXNoaW5nIHRoZW0g
+dG9nZXRoZXIgd291bGQgZ2l2ZSB0b28KbGFyZ2UgY2hhbmdlc2V0cyBhdCBvbmNlLiBZb3UnbGwg
+ZmluZCB0aGF0IHRoaXMgaXMgbm90IHRoZSBvbmx5IHBhdGNoCnRoYXQgbWFrZXMgdGhlIG1vc3Qg
+c2Vuc2Ugb25seSBhZnRlciBzZWVpbmcgd2hhdCBjb21lcyBsYXRlci4KCi0tIApHaXVzZXBwZSAi
+T2Jsb21vdiIgQmlsb3R0YQo=
