@@ -1,75 +1,158 @@
-From: Linus Torvalds <torvalds@linux-foundation.org>
-Subject: Re: hosting git on a nfs
-Date: Thu, 13 Nov 2008 16:38:15 -0800 (PST)
-Message-ID: <alpine.LFD.2.00.0811131630470.3468@nehalem.linux-foundation.org>
-References: <200811121029.34841.thomas@koch.ro> <20081112173651.GA9127@linode.davidb.org> <alpine.LFD.2.00.0811120959050.3468@nehalem.linux-foundation.org> <loom.20081113T174625-994@post.gmane.org> <alpine.LFD.2.00.0811131214020.3468@nehalem.linux-foundation.org>
- <alpine.LFD.2.00.0811131252040.3468@nehalem.linux-foundation.org> <alpine.LFD.2.00.0811131518070.3468@nehalem.linux-foundation.org> <371xaQfxsMMQ-9LK24q-nhcS4loEggn8Cj3J1IzfMbzzYDGE6HKbQQ@cipher.nrlssc.navy.mil>
+From: Robin Rosenberg <robin.rosenberg.lists@dewire.com>
+Subject: Re: [EGIT PATCH 4/7] Handle peeling of loose refs.
+Date: Fri, 14 Nov 2008 01:38:52 +0100
+Message-ID: <200811140138.52362.robin.rosenberg.lists@dewire.com>
+References: <1226095664-13759-1-git-send-email-robin.rosenberg@dewire.com> <1226095664-13759-5-git-send-email-robin.rosenberg@dewire.com> <20081111182357.GO2932@spearce.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: James Pickens <jepicken@gmail.com>,
-	Bruce Fields <bfields@fieldses.org>,
-	Junio C Hamano <gitster@pobox.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: Brandon Casey <casey@nrlssc.navy.mil>
-X-From: git-owner@vger.kernel.org Fri Nov 14 01:39:48 2008
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: "Shawn O. Pearce" <spearce@spearce.org>
+X-From: git-owner@vger.kernel.org Fri Nov 14 01:40:16 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1L0mix-0004J6-DR
-	for gcvg-git-2@gmane.org; Fri, 14 Nov 2008 01:39:47 +0100
+	id 1L0mjL-0004Q8-Ll
+	for gcvg-git-2@gmane.org; Fri, 14 Nov 2008 01:40:12 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752721AbYKNAic (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 13 Nov 2008 19:38:32 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752717AbYKNAic
-	(ORCPT <rfc822;git-outgoing>); Thu, 13 Nov 2008 19:38:32 -0500
-Received: from smtp1.linux-foundation.org ([140.211.169.13]:52479 "EHLO
-	smtp1.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751946AbYKNAib (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 13 Nov 2008 19:38:31 -0500
-Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [140.211.169.55])
-	by smtp1.linux-foundation.org (8.14.2/8.13.5/Debian-3ubuntu1.1) with ESMTP id mAE0cHki026692
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Thu, 13 Nov 2008 16:38:18 -0800
-Received: from localhost (localhost [127.0.0.1])
-	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id mAE0cFis026170;
-	Thu, 13 Nov 2008 16:38:16 -0800
-In-Reply-To: <371xaQfxsMMQ-9LK24q-nhcS4loEggn8Cj3J1IzfMbzzYDGE6HKbQQ@cipher.nrlssc.navy.mil>
-User-Agent: Alpine 2.00 (LFD 1167 2008-08-23)
-X-Spam-Status: No, hits=-3.432 required=5 tests=AWL,BAYES_00
-X-Spam-Checker-Version: SpamAssassin 3.2.4-osdl_revision__1.47__
-X-MIMEDefang-Filter: lf$Revision: 1.188 $
-X-Scanned-By: MIMEDefang 2.63 on 140.211.169.13
+	id S1752943AbYKNAi5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 13 Nov 2008 19:38:57 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752717AbYKNAi4
+	(ORCPT <rfc822;git-outgoing>); Thu, 13 Nov 2008 19:38:56 -0500
+Received: from pne-smtpout1-sn1.fre.skanova.net ([81.228.11.98]:52088 "EHLO
+	pne-smtpout1-sn1.fre.skanova.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1752668AbYKNAiz (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 13 Nov 2008 19:38:55 -0500
+Received: from sleipner.localnet (213.67.100.250) by pne-smtpout1-sn1.fre.skanova.net (7.3.129)
+        id 47A9795004B3D505; Fri, 14 Nov 2008 01:38:53 +0100
+User-Agent: KMail/1.10.3 (Linux/2.6.27-7-generic; KDE/4.1.3; i686; ; )
+In-Reply-To: <20081111182357.GO2932@spearce.org>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/100937>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/100938>
 
-
-
-On Thu, 13 Nov 2008, Brandon Casey wrote:
->
-> Cold cache* (over NFS):
+tisdag 11 november 2008 19:23:58 skrev Shawn O. Pearce:
+> Robin Rosenberg <robin.rosenberg@dewire.com> wrote:
+> > @@ -238,10 +235,19 @@ public ObjectId getObjectId() {
+> >  	 *         refer to an annotated tag.
+> >  	 */
+> >  	public ObjectId getPeeledObjectId() {
+> > +		if (peeledObjectId == ObjectId.zeroId())
+> > +			return null;
+> >  		return peeledObjectId;
+> >  	}
+> >  
+> >  	/**
+> > +	 * @return whether the Ref represents a peeled tag
+> > +	 */
+> > +	public boolean isPeeled() {
+> > +		return peeledObjectId != null && peeledObjectId != ObjectId.zeroId();
+> > +	}
 > 
-> Before:
-> 
-> 0.01user 0.31system 0:04.40elapsed 7%CPU
-> 0.01user 0.31system 0:06.47elapsed 5%CPU
-> 0.01user 0.26system 0:04.19elapsed 6%CPU
-> 0.01user 0.30system 0:04.99elapsed 6%CPU
-> 
-> After:
-> 
-> 0.01user 0.46system 0:01.39elapsed 34%CPU
-> 0.01user 0.41system 0:00.88elapsed 47%CPU
-> 0.01user 0.45system 0:01.16elapsed 40%CPU
-> 0.01user 0.45system 0:00.99elapsed 47%CPU
-> 0.01user 0.45system 0:01.02elapsed 45%CPU
+> Huh.  So peeledObjectId == ObjectId.zeroId() means what, exactly?
+> That we tried to peel this but we cannot because its not a tag?
+Means we haven't tried to peel it yet. I could use an extra flags instead. We may
+have thousands of refs but perhaps not zillions.
 
-Ok, both you and Julian do seem to be getting a nice speedup from this.
+> 
+> What does a packed-refs record which has no peel data but which
+> is in a packed-refs with-peeled file have for peeledObjectId?
+> null or ObjectId.zeroId()?
+> 
+> > @@ -288,6 +289,28 @@ private void readOneLooseRef(final Map<String, Ref> avail,
+> >  		}
+> >  	}
+> >  
+> > +	Ref peel(final Ref ref) {
+> > +		if (ref.isPeeled())
+> > +			return ref;
+> 
+> I think you mean something more like:
+> 
+> 	if (ref.peeledObjectId != null)
+> 		return ref;
+> 
+> as the ref is already peeled, or at least attempted.
+No, if it is a loose ref we did not yet attempt to peel it. null means we have tried
+zeroId means we haven't tried (see above).
 
-I'll clean it up a bit and make a less hacky version. And I'll try to make 
-it work for "git status" and friends too.
+> 
+> > +		try {
+> > +			Object tt = db.mapObject(ref.getObjectId(), ref.getName());
+> > +			if (tt != null && tt instanceof Tag) {
+> > +				Tag t = (Tag)tt;
+> > +				while (t != null && t.getType().equals(Constants.TYPE_TAG))
+> > +					t = db.mapTag(t.getTag(), t.getObjId());
+> > +				if (t != null)
+> > +					ref.setPeeledObjectId(t.getObjId());
+> > +				else
+> > +					ref.setPeeledObjectId(null);
+> > +			} else
+> > +				ref.setPeeledObjectId(ref.getObjectId());
+> > +		} catch (IOException e) {
+> > +			// Serious error. Caller knows a ref should never be null
+> > +			ref.setPeeledObjectId(null);
+> > +		}
+> > +		return ref;
+> 
+> This whole block is simpler to write as:
+ok..
+>         try {
+>                 Object target = db.mapObject(ref.getObjectId(), ref.getName());
+>                 while (target instanceof Tag) {
+>                         final Tag tag = (Tag)target;
+>                         ref.setPeeledObjectId(tag.getObjId());
+>                         if (Constants.TYPE_TAG.equals(tag.getType()))
+>                                 target = db.mapObject(tag.getObjId(), ref.getName());
+>                         else
+>                                 break;
+>                 }
+>         } catch (IOException e) {
+>                 // Ignore a read error.  Callers will also get the same error
+>                 // if they try to use the result of getPeeledObjectId.
+>         }
+> 
+That gives a different behavior, but which is also ok...
 
-		Linus
+> >  	/**
+> > +	 * Peel a possibly unpeeled ref and updates it. If the ref cannot be peeled
+> > +	 * the peeled id is set to {@link ObjectId#zeroId()}
+> 
+> But applications never see ObjectId.zeroId() because you earlier defined
+> getPeeledObjectId() to return null in that case.  So why is this part of
+> the documentation relevant? 
+...it's wrong, and thus irrelevant.
+
+> > +	 * 
+> > +	 * @param ref
+> > +	 *            The ref to peel
+> > +	 * @return The same, an updated ref with peeled info or a new instance with
+> > +	 *         more information
+> > +	 */
+> > +	public Ref peel(final Ref ref) {
+> > +		return refs.peel(ref);
+> 
+> Can we tighten this contract?  Are we always going to update the
+> current ref in-place, or are we going to return the caller a new
+> Ref instance?  I'd like it to be consistent one way or the other.
+Ack. 
+> 
+> If we are updating in-place then the caller needs to realize there
+> may be some cache synchronization issues when using multiple threads
+> to access the same Ref instances and peeling them.  I.e. they may
+> need to go through their own synchornization barrier to ensure the
+> processor caches are coherent.
+> 
+> Given that almost everywhere else we treat the Ref as immutable
+> I'm tempted to say this should always return a new Ref object if we
+> peeled; but return the parameter if the parameter is already peeled
+> (or is known to be unpeelable, e.g. a branch head).
+
+I pick the copy.
+
+-- robin
