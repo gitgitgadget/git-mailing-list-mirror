@@ -1,87 +1,103 @@
-From: "Elijah Newren" <newren@gmail.com>
-Subject: Re: Can git ignore parts of files
-Date: Fri, 14 Nov 2008 13:06:41 -0700
-Message-ID: <51419b2c0811141206s2fcedfa4udc609702299cc366@mail.gmail.com>
-References: <1226690252.6176.9.camel@rotwang.fnordora.org>
+From: Francis Galiegue <fg@one2team.net>
+Subject: Re: [PATCH] sha1_file: make sure correct error is propagated
+Date: Fri, 14 Nov 2008 21:08:46 +0100
+Organization: One2team
+Message-ID: <200811142108.46762.fg@one2team.net>
+References: <1226647174-15844-1-git-send-email-sam@vilain.net> <200811142009.51803.fg@one2team.com> <491DD671.8070801@op5.se>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Alan <alan@clueserver.org>
-X-From: git-owner@vger.kernel.org Fri Nov 14 21:08:03 2008
+Content-Type: text/plain; charset=iso-8859-15
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Junio C Hamano <gitster@pobox.com>, Sam Vilain <sam@vilain.net>,
+	git@vger.kernel.org
+To: Andreas Ericsson <ae@op5.se>
+X-From: git-owner@vger.kernel.org Fri Nov 14 21:11:43 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1L14xR-0004JD-5e
-	for gcvg-git-2@gmane.org; Fri, 14 Nov 2008 21:07:57 +0100
+	id 1L150u-0005Tx-98
+	for gcvg-git-2@gmane.org; Fri, 14 Nov 2008 21:11:32 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753710AbYKNUGm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 14 Nov 2008 15:06:42 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753286AbYKNUGm
-	(ORCPT <rfc822;git-outgoing>); Fri, 14 Nov 2008 15:06:42 -0500
-Received: from rv-out-0506.google.com ([209.85.198.234]:52298 "EHLO
-	rv-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751898AbYKNUGm (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 14 Nov 2008 15:06:42 -0500
-Received: by rv-out-0506.google.com with SMTP id k40so1531512rvb.1
-        for <git@vger.kernel.org>; Fri, 14 Nov 2008 12:06:41 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to
-         :subject:cc:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:references;
-        bh=VcWE7tsQq8wV0SdhVyTXvSSvW1jrGNW2qvMGFBfXdKc=;
-        b=jjlCb0fA2M5JgjbhgzIWf5vogndG8mZLm/26rGzDl4wafLUg8/7uI8W0rCeGyJACyf
-         PYbcAME/9MUTAmLjtRL5bn6WBZ9itbvp5DsvMvByB5KF1V02CF8V8JyAsdWyDLTgYNMG
-         I6+8i2NyhoCmZukIuEUGD05Y7i971M6vpzrMU=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
-         :content-type:content-transfer-encoding:content-disposition
-         :references;
-        b=AFMU1lsAIdkKOAIhTpQH6FG2HGCi0s81Jsdea20RxqiARnXIJkM5W4jUyvMNwWN9xi
-         i8HfQ3b5746andkX8nAEE5Hliqms6XikelkYuzFV7WeEX4ESJ/+Ev19z4sD3KWF/I90f
-         1GkfO21R3dwHuedFvtRGK4kMfhhuc7SJrv5r0=
-Received: by 10.141.37.8 with SMTP id p8mr722517rvj.227.1226693201359;
-        Fri, 14 Nov 2008 12:06:41 -0800 (PST)
-Received: by 10.140.169.18 with HTTP; Fri, 14 Nov 2008 12:06:41 -0800 (PST)
-In-Reply-To: <1226690252.6176.9.camel@rotwang.fnordora.org>
+	id S1752335AbYKNUKR convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 14 Nov 2008 15:10:17 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753015AbYKNUKR
+	(ORCPT <rfc822;git-outgoing>); Fri, 14 Nov 2008 15:10:17 -0500
+Received: from ns35774.ovh.net ([213.251.185.197]:48505 "EHLO ns35774.ovh.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751641AbYKNUKQ convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 14 Nov 2008 15:10:16 -0500
+Received: from erwin.kitchen.eel (AOrleans-157-1-134-72.w90-24.abo.wanadoo.fr [90.24.53.72])
+	(Authenticated sender: fg@one2team.net)
+	by ns35774.ovh.net (Postfix) with ESMTP id 8FDB392C002;
+	Fri, 14 Nov 2008 21:10:03 +0100 (CET)
+User-Agent: KMail/1.9.9
+In-Reply-To: <491DD671.8070801@op5.se>
 Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/101011>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/101012>
 
-On Fri, Nov 14, 2008 at 12:17 PM, Alan <alan@clueserver.org> wrote:
-> I have kind of an odd problem that is causing me grief in git.  I figure
-> someone has a good solution here.  (Or not, they will soon.)
+Le Friday 14 November 2008 20:50:09 Andreas Ericsson, vous avez =E9crit=
+=A0:
+> Francis Galiegue wrote:
+> > Le Friday 14 November 2008 20:05:19 Junio C Hamano, vous avez =E9cr=
+it :
+> > [...]
+> >
+> >>>  	fd =3D mkstemp(buffer);
+> >>> -	if (fd < 0 && dirlen && (errno !=3D EPERM)) {
+> >>> +	if (fd < 0 && dirlen && (errno !=3D EACCESS)) {
+> >>
+> >> Is this accepting the two as equivalents???
+> >> --
+> >> To unsubscribe from this list: send the line "unsubscribe git" in
+> >> the body of a message to majordomo@vger.kernel.org
+> >> More majordomo info at  http://vger.kernel.org/majordomo-info.html
+> >
+> > Well, looking at mkdir(2), it says:
+> >
+> >        EPERM  The file system containing pathname does not support =
+the
+> > creation of directories.
+> >
+> > Hmm, err... git would fail at an earlier point anyway, wouldn't it?=
+ Even
+> > git init would fail there.
 >
-> I have a couple of kernel .config files that are checked into git.  They
-> are used to test kernel configurations for the nightly builds where I
-> work.
->
-> We have a bunch of kernel developers working on drivers.  When they add
-> a new driver, they add in the options in the test file to make it
-> compile in the test builds.
->
-> The problem is that the kernel config file has a timestamp at the top of
-> the file that is generated by "make oldconfig" or "make config".  Other
-> than removing the timestamp each time manually, is there a way to get
-> git to ignore the timestamp on a merge?
->
-> What happens is that the authors submit the changes on a branch in most
-> cases.  Sometimes they have a version of that file that is quite out of
-> date.  When I go to merge, that one file gives me grief 95% of the time.
->
-> Is there an easy way around this?  Am I approaching the problem wrong?
-> Is there a better way to do this?
+> Not necessarily. .git could be mounted erroneously from via a network=
+ed
+> filesystem but without write permissions.=20
 
-Someone wrote a special merge algorithm to handle similar conflicts in
-tracked ChangeLog files (see
-http://www.mail-archive.com/bug-gnulib@gnu.org/msg09183.html).
-Perhaps you could write a similar merge algorithm and use it?
+In which case EACCESS would be returned anyway. There is quite a differ=
+ence=20
+between EACCESS (Permission denied) and EPERM (operation not permitted)=
+=2E
 
-Hope that helps,
-Elijah
+Basically, my understanding is that mkdir() will only return EPERM if t=
+he=20
+underlying filesystem can not even CREATE directories on the filesystem=
+=2E So,=20
+unless you are doing very bizarre things with your git repository, I ca=
+nnot=20
+see how you can even trigger an EPERM unless you asked for it.
+
+> Yes, other things would fail=20
+> then too, but both EPERM and EACCESS are valid and possible return co=
+des.
+
+And so is ENOSPC, and so is EIO, and so is... It's endless. I think foc=
+us=20
+should be made on the most common ones, and EACCESS _is_ such one. Othe=
+rs=20
+just aren't.
+
+This is why I suggested replacing EPERM with EACCESS in the first place=
+:=20
+EACCESS is by far the most common error code you will get (even root wi=
+ll get=20
+that on a read-only filesystem, not EPERM).
+
+--=20
+fge
