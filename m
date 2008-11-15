@@ -1,108 +1,131 @@
-From: Farrukh Najmi <farrukh@wellfleetsoftware.com>
-Subject: Any overview available on jgit codebase?
-Date: Sat, 15 Nov 2008 15:21:50 -0500
-Message-ID: <491F2F5E.20206@wellfleetsoftware.com>
-References: <200811132059.16616.robin.rosenberg.lists@dewire.com>
- <491C8DBE.9080105@wellfleetsoftware.com>
- <f73f7ab80811140638m4045cf83p311c593aff066002@mail.gmail.com>
+From: Pierre Habouzit <madcoder@debian.org>
+Subject: Re: [take 2] git send-email updates
+Date: Sat, 15 Nov 2008 23:05:10 +0100
+Message-ID: <20081115220510.GA11895@artemis.corp>
+References: <1225450632-7230-1-git-send-email-madcoder@debian.org> <1226361242-2516-1-git-send-email-madcoder@debian.org> <7v4p2e0zus.fsf@gitster.siamese.dyndns.org> <20081111221351.GE10073@artemis.corp> <7vk5b9x0kj.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: Robin Rosenberg <robin.rosenberg.lists@dewire.com>,
-	git@vger.kernel.org
-To: Kyle Moffett <kyle@moffetthome.net>
-X-From: git-owner@vger.kernel.org Sat Nov 15 21:23:25 2008
+Content-Type: multipart/signed; boundary="fdj2RfSjLxBAspz7";
+	protocol="application/pgp-signature"; micalg=SHA1
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sat Nov 15 23:06:33 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1L1Rfu-0002pS-CV
-	for gcvg-git-2@gmane.org; Sat, 15 Nov 2008 21:23:22 +0100
+	id 1L1THk-0006Vr-Oz
+	for gcvg-git-2@gmane.org; Sat, 15 Nov 2008 23:06:33 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751536AbYKOUV7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 15 Nov 2008 15:21:59 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751575AbYKOUV7
-	(ORCPT <rfc822;git-outgoing>); Sat, 15 Nov 2008 15:21:59 -0500
-Received: from vms173005pub.verizon.net ([206.46.173.5]:39855 "EHLO
-	vms173005pub.verizon.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751518AbYKOUV6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 15 Nov 2008 15:21:58 -0500
-Received: from [192.168.1.101] ([71.184.206.167]) by vms173005.mailsrvcs.net
- (Sun Java System Messaging Server 6.2-6.01 (built Apr  3 2006))
- with ESMTPA id <0KAE00HPG5WDKI71@vms173005.mailsrvcs.net> for
- git@vger.kernel.org; Sat, 15 Nov 2008 14:21:50 -0600 (CST)
-In-reply-to: <f73f7ab80811140638m4045cf83p311c593aff066002@mail.gmail.com>
-User-Agent: Thunderbird 2.0.0.17 (X11/20080925)
+	id S1752207AbYKOWFQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 15 Nov 2008 17:05:16 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752187AbYKOWFQ
+	(ORCPT <rfc822;git-outgoing>); Sat, 15 Nov 2008 17:05:16 -0500
+Received: from pan.madism.org ([88.191.52.104]:49009 "EHLO hermes.madism.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752101AbYKOWFP (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 15 Nov 2008 17:05:15 -0500
+Received: from madism.org (olympe.madism.org [82.243.245.108])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(Client CN "artemis.madism.org", Issuer "madism.org" (verified OK))
+	by hermes.madism.org (Postfix) with ESMTPS id DFF693B429;
+	Sat, 15 Nov 2008 23:05:12 +0100 (CET)
+Received: by madism.org (Postfix, from userid 1000)
+	id B3F4A2A346; Sat, 15 Nov 2008 23:05:10 +0100 (CET)
+Content-Disposition: inline
+In-Reply-To: <7vk5b9x0kj.fsf@gitster.siamese.dyndns.org>
+X-Face: $(^e[V4D-[`f2EmMGz@fgWK!e.B~2g.{08lKPU(nc1J~z\4B>*JEVq:E]7G-\6$Ycr4<;Z!|VY6Grt]+RsS$IMV)f>2)M="tY:ZPcU;&%it2D81X^kNya0=L]"vZmLP+UmKhgq+u*\.dJ8G!N&=EvlD
+User-Agent: Madmutt/devel (Linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/101089>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/101090>
 
 
-I am looking for any available docs that will help me learn the layout 
-of the jgit code base.
+--fdj2RfSjLxBAspz7
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-In the ideal world here is what would help newbies get productive with 
-the project quickly:
+On Wed, Nov 12, 2008 at 12:14:20AM +0000, Junio C Hamano wrote:
+> Pierre Habouzit <madcoder@debian.org> writes:
+>=20
+> > Oh you mean that if one use --no-format-patch you don't wan't _any_
+> > option to be passed to format-patch?
+>=20
+> The option name --no-format-patch sounded like "I do not want you to act
+> as a frontend, ever", i.e. if you type master..next by mistake on the
+> command line, the command would barf when the option is given.  Not even
+> "pass to format-patch", but "do not run format-patch to begin with".
+>=20
+> It is not a big deal especially for interactive use (and that is why I
+> said "somewhat" unfortunate).
+>=20
+> > If we're really doing this, then maybe we want a 5-state kind of option:
+> >   1 disallow any file name ;
+> >   2 if conflict, chose the revision ;
+> >   3 barf if any conflict arises (default) ;
+> >   4 if conflict chose the file ;
+> >   5 disallow any kind of revision argument.
+> >
+> > My proposal implements 2 as --format-patch, 3 as default, and 4 as
+> > --no-format-patch. You propose basically (5) for --no-format-patch
+> > instead, well I say this makes sense, but it's somehow "sad" not to have
+> > (1) too in that case.
+>=20
+> Actually, "send-email --format-patch master..fixes Documentation/" may be
+> a useful command to send out only documentation fixes.  For such a usage,
+> Documentation/ should not be taken as a maildir.  If we would want to
+> support such usage (and I'd say why not), a token can fall into one (or
+> two) of three categories:
 
-1. Have a clear one line description available in the javadocs for each 
-package.
-2. Have a clear one line description available in javadocs for each 
-class in each package.
-3. Have a clear one line description available in javadocs for each 
-method in each class.
+You can do that doing:
 
-I would gladly do this and contribute the changes back but its a chicken 
-and egg situation since I do not know the code base.
+git send-email --format-patch master..fixes -- Documentation/
 
-I realize its a lot to ask but would anyone familiar with code base 
-volunteer to do at least (1) above?
+I've kept the `--` usual meaning, and it's sent to git-format-patch
+verbatim and it'll work, so it's not required to change the meaning of
+the options for that.
 
-At minimum could anyone tell me what packages and classes to look at in 
-order to make changes to jgit so it uses a database instead of 
-filesystem to references.
+[sorry for the late reply, I've been somehow busy lately]
 
-Lastly, where can I find information on the structure of the .git directory?
+The sole conflict we have is when there is a path/rev conflict *before*
+the `--` because of the legacy of git-send-email. I believe that
+--format-patch should still allow to send patches passed on the command
+line, this way.
 
-Thanks for your help.
+> As to options, how about doing this:
+>=20
+>     --no-format-patch means never ever run format-patch, behave exactly as
+>     before;
+>=20
+>     --format-patch means what you have in your patch.  guess and favor=20
+>     format-patch parameter when ambiguous;
+>=20
+>     without either option, guess and favor mbox/maildir but still run
+>     format-patch if remaining parameters and options need to
+>     (e.g. "send-email my-cover-letter origin/master..master" will find
+>     my-cover-letter which is not tracked and take it as mbox, and grab
+>     patches from commits between origin/master..master, and send all of
+>     them).
 
-Kyle Moffett wrote:
-> On Thu, Nov 13, 2008 at 3:27 PM, Farrukh Najmi
-> <farrukh@wellfleetsoftware.com> wrote:
->   
->> The problem I am trying to solve is this. In my service I need to store
->> metadata in a relational db and content in git such that both either commit
->> or not in a single transaction. If one commits and the other does not that
->> is a serious integrity issue. Seems to me, two phase commit would be the
->> right solution for that in the long run. This what JDBC + JMS topologies do.
->>     
->
-> That's really easy!  First tweak jgit so that *instead* of using
-> .git/refs, it uses your database to store references and exports them
-> on a routine basis to .git/refs for debugging purposes.  Then, for
-> each database update:
->
-> (1)  Start transaction
-> (2)  Commit the change to GIT (adds ref update to the transaction)
-> (3)  Make other metadata updates
-> (4)  Commit transaction
->
-> Then set up periodic garbage collection and you're done!  If the
-> transaction is aborted, there will simply be a bunch of random loose
-> objects in the git repository, which will be cleaned up the next time
-> you garbage collect.  The ref update will be atomic and conditional
-> with the rest of the transaction, and in git the *only* part that
-> really matters for atomicity is the ref.
->
-> Cheers,
-> Kyle Moffett
->
->   
+That's sane and I like it.
+--=20
+=C2=B7O=C2=B7  Pierre Habouzit
+=C2=B7=C2=B7O                                                madcoder@debia=
+n.org
+OOO                                                http://www.madism.org
 
+--fdj2RfSjLxBAspz7
+Content-Type: application/pgp-signature
+Content-Disposition: inline
 
--- 
-Regards,
-Farrukh Najmi
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.9 (GNU/Linux)
 
-Web: http://www.wellfleetsoftware.com
+iEYEABECAAYFAkkfR5UACgkQvGr7W6Hudhz0PwCeLNGAoL9S6hr6uviGyITm3bWb
+JVQAnjAW3FLHwXzEgYvITJT6nNblcpmf
+=sLl2
+-----END PGP SIGNATURE-----
+
+--fdj2RfSjLxBAspz7--
