@@ -1,137 +1,157 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: [PATCH v2 09/11] gitweb: git_is_head_detached() function
-Date: Sun, 16 Nov 2008 00:43:45 +0100
-Message-ID: <200811160043.46017.jnareb@gmail.com>
-References: <1226616555-24503-1-git-send-email-giuseppe.bilotta@gmail.com> <1226616555-24503-9-git-send-email-giuseppe.bilotta@gmail.com> <1226616555-24503-10-git-send-email-giuseppe.bilotta@gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-2"
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, Petr Baudis <pasky@suse.cz>,
-	Junio C Hamano <gitster@pobox.com>
-To: Giuseppe Bilotta <giuseppe.bilotta@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Nov 16 00:45:06 2008
+From: Giuseppe Bilotta <giuseppe.bilotta@gmail.com>
+Subject: [PATCH] gitk: try to set program icon
+Date: Sun, 16 Nov 2008 00:45:45 +0100
+Message-ID: <1226792745-18408-1-git-send-email-giuseppe.bilotta@gmail.com>
+Cc: Paul Mackerras <paulus@samba.org>,
+	Junio C Hamano <gitster@pobox.com>,
+	Giuseppe Bilotta <giuseppe.bilotta@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Nov 16 00:46:53 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1L1Up7-00077X-AL
-	for gcvg-git-2@gmane.org; Sun, 16 Nov 2008 00:45:05 +0100
+	id 1L1Uqo-0007W6-PL
+	for gcvg-git-2@gmane.org; Sun, 16 Nov 2008 00:46:51 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751888AbYKOXnu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 15 Nov 2008 18:43:50 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751861AbYKOXnu
-	(ORCPT <rfc822;git-outgoing>); Sat, 15 Nov 2008 18:43:50 -0500
-Received: from ug-out-1314.google.com ([66.249.92.172]:20938 "EHLO
-	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751343AbYKOXnt (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 15 Nov 2008 18:43:49 -0500
-Received: by ug-out-1314.google.com with SMTP id 39so162350ugf.37
-        for <git@vger.kernel.org>; Sat, 15 Nov 2008 15:43:47 -0800 (PST)
+	id S1751711AbYKOXpg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 15 Nov 2008 18:45:36 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751897AbYKOXpg
+	(ORCPT <rfc822;git-outgoing>); Sat, 15 Nov 2008 18:45:36 -0500
+Received: from ey-out-2122.google.com ([74.125.78.27]:4401 "EHLO
+	ey-out-2122.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751685AbYKOXpf (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 15 Nov 2008 18:45:35 -0500
+Received: by ey-out-2122.google.com with SMTP id 6so778007eyi.37
+        for <git@vger.kernel.org>; Sat, 15 Nov 2008 15:45:33 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:subject:date
-         :user-agent:cc:references:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:message-id;
-        bh=E0seau5/iZi2nwP6T75VDvlVbATKD+MMI+PDcTainVs=;
-        b=lBjbVq4bcakn/d8L3vPSlOXXruFukXOdGmUWbpsGnO18AAi+3Izo6HTeoMoq1Z7wA2
-         jpXapemuOZI7CIrIkvgUsu3zuuc64Gi//4W33BieAkQNTu02euW1hLyMO+oRKZIWKBPP
-         dxlQYxMJvpq6yfWofajg7+xVer6cCTmakmKoU=
+        h=domainkey-signature:received:received:from:to:cc:subject:date
+         :message-id:x-mailer;
+        bh=I8uZzmDFJZtML7UpXaXmsp1rjJO9LQwmNzVoCXO6olk=;
+        b=UmUStD+DV17edNiWjckZN5V86zdr32rba/zQKrxygh8DYVodDrU5DRgFWhddGxfhBK
+         Dz4/zi9YVahD6IEd5Kmfh5G0xFf2W+q+dwLhoObYsbf/sSJf0Wpbeat1rNDEqH0YkCNi
+         uaJzjn2qjGuCQDk5W5fzxGsXnIPRsmXosxOf4=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=from:to:subject:date:user-agent:cc:references:in-reply-to
-         :mime-version:content-type:content-transfer-encoding
-         :content-disposition:message-id;
-        b=XjtFb2lB5GidH29ys/WDqsl834lJpWRcK2ShleEE2Ur4xKFjm9oaXIcZ2q3lTbi+Sw
-         tAqGdC6OLCWlse6aI+yG+nm5utsqW7ssPWscZ05Mo6mUVMi2Mff63R0u4B4bZkfRsxoy
-         gQn/tflH/h3sYPp1UESQHCpQK1S3Zmn9DCyPE=
-Received: by 10.67.94.12 with SMTP id w12mr553574ugl.88.1226792627599;
-        Sat, 15 Nov 2008 15:43:47 -0800 (PST)
-Received: from ?192.168.1.11? (abwb4.neoplus.adsl.tpnet.pl [83.8.225.4])
-        by mx.google.com with ESMTPS id 32sm1672617ugf.40.2008.11.15.15.43.44
+        h=from:to:cc:subject:date:message-id:x-mailer;
+        b=a+Ec2YHvNV0ekyJ/CBt/LvU6QYRNKMEcuXHp+P96H5nyTxtmMm1sjFj59N30suisnZ
+         Y2Q0PesQCCysIlpzoIps4nLkpSTlLvzNgAgt+7RRbWgtJ8LD8L4ruCA73MESbB14GsTA
+         fK5CfZhmOkjLXsJuN0loD8pjF3o9VplmN1DxE=
+Received: by 10.210.17.2 with SMTP id 2mr2525742ebq.157.1226792733421;
+        Sat, 15 Nov 2008 15:45:33 -0800 (PST)
+Received: from localhost ([94.37.6.2])
+        by mx.google.com with ESMTPS id 7sm1640003eyg.9.2008.11.15.15.45.32
         (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Sat, 15 Nov 2008 15:43:46 -0800 (PST)
-User-Agent: KMail/1.9.3
-In-Reply-To: <1226616555-24503-10-git-send-email-giuseppe.bilotta@gmail.com>
-Content-Disposition: inline
+        Sat, 15 Nov 2008 15:45:33 -0800 (PST)
+X-Mailer: git-send-email 1.5.6.5
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/101097>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/101098>
 
-On Thu, 13 Nov 2008, Giuseppe Bilotta wrote:
+We add the git icon in three formats (.xbm, .ico, .ppm), which we try to
+set as window icon.
+---
 
-> The function checks if the HEAD for the current project is detached by
-> checking if 'git branch' returns "* (no branch)"
-> 
-> Signed-off-by: Giuseppe Bilotta <giuseppe.bilotta@gmail.com>
+Ugh. This rather simple patch cost me _way_ more time than I expected to
+dedicate to it. Making those pesky iconbitmap and iconphoto commands do what
+they were supposed to do is not as trivial as it seems. Thanks the people on
+Freenode/#tcl for giving me a hand in understading they very restricted way in
+which they could work.
 
-In my opinion this patch should really be squashed together with
-previous one. They belong together.
+Also, I'm not really sure the gitk program path itself is the best place to put
+the icon files in, but I couldn't think of a better place so feel free to
+suggest alternatives (it's a real pity that you can't embed the icon data in
+the program itself).
 
-> ---
->  gitweb/gitweb.perl |   13 +++++++++----
->  1 files changed, 9 insertions(+), 4 deletions(-)
-> 
-> diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
-> index a168f6f..ceb0271 100755
-> --- a/gitweb/gitweb.perl
-> +++ b/gitweb/gitweb.perl
-> @@ -1844,6 +1844,13 @@ sub git_get_head_hash {
->  	return $retval;
->  }
->  
-> +# check if current HEAD is detached
-> +sub git_is_head_detached {
-> +	my @x = (git_cmd(), 'branch');
-> +	my @ret = split("\n", qx(@x));
-> +	return 0 + grep { /^\* \(no branch\)$/ } @ret;
-> +}
+ gitk-git/Makefile |    3 +++
+ gitk-git/gitk     |    9 +++++++++
+ gitk-git/gitk.ico |  Bin 0 -> 318 bytes
+ gitk-git/gitk.ppm |  Bin 0 -> 781 bytes
+ gitk-git/gitk.xbm |    6 ++++++
+ 5 files changed, 18 insertions(+), 0 deletions(-)
+ create mode 100644 gitk-git/gitk.ico
+ create mode 100644 gitk-git/gitk.ppm
+ create mode 100644 gitk-git/gitk.xbm
 
-First, not git-branch. Second, you can use Perl-only solution:
-
-+# check if current HEAD is detached
-+sub git_is_head_detached {
-+	my $head_file = "$project/HEAD";
-+	return if -l $head_file; # symlink
-+	open my $fd, '<', $head_file
-+		or return;
-+	my $head_hash = <$fd>;
-+	close $fd;
-+	return if $head_hash =~ /^ref: /;
-+	return $head_hash;
+diff --git a/gitk-git/Makefile b/gitk-git/Makefile
+index e1b6045..a55f905 100644
+--- a/gitk-git/Makefile
++++ b/gitk-git/Makefile
+@@ -31,6 +31,7 @@ endif
+ PO_TEMPLATE = po/gitk.pot
+ ALL_POFILES = $(wildcard po/*.po)
+ ALL_MSGFILES = $(subst .po,.msg,$(ALL_POFILES))
++LOGO_FILES = gitk.ico gitk.xbm gitk.ppm
+ 
+ ifndef V
+ 	QUIET          = @
+@@ -43,8 +44,10 @@ install:: all
+ 	$(INSTALL) -m 755 gitk-wish '$(DESTDIR_SQ)$(bindir_SQ)'/gitk
+ 	$(INSTALL) -d -m 755 '$(DESTDIR_SQ)$(msgsdir_SQ)'
+ 	$(foreach p,$(ALL_MSGFILES), $(INSTALL) -m 644 $p '$(DESTDIR_SQ)$(msgsdir_SQ)' &&) true
++	$(foreach p,$(LOGO_FILES), $(INSTALL) -m 644 $p '$(DESTDIR_SQ)$(bindir_SQ)' &&) true
+ 
+ uninstall::
++	$(foreach p,$(LOGO_FILES), $(RM) '$(DESTDIR_SQ)$(bindir_SQ)'/$(notdir $p) &&) true
+ 	$(foreach p,$(ALL_MSGFILES), $(RM) '$(DESTDIR_SQ)$(msgsdir_SQ)'/$(notdir $p) &&) true
+ 	$(RM) '$(DESTDIR_SQ)$(bindir_SQ)'/gitk
+ 
+diff --git a/gitk-git/gitk b/gitk-git/gitk
+index 3353f4a..25cf627 100644
+--- a/gitk-git/gitk
++++ b/gitk-git/gitk
+@@ -10797,6 +10797,15 @@ set lserial 0
+ set isworktree [expr {[exec git rev-parse --is-inside-work-tree] == "true"}]
+ setcoords
+ makewindow
++# try to set the window icon, testing the logos from the worst to the best
++# quality. XBM is likely to fail on Windows, ICO is likely to fail on other
++# systems, and PPM with iconphoto only works for 8.4.9 or later
++catch { wm iconbitmap . @[file join [file dirname [file normalize $argv0]] gitk.xbm] }
++catch { wm iconbitmap . @[file join [file dirname [file normalize $argv0]] gitk.ico] }
++catch {
++	image create photo gitlogo -file [file join [file dirname [file normalize $argv0]] gitk.ppm]
++	wm iconphoto . -default gitlogo
 +}
+ # wait for the window to become visible
+ tkwait visibility .
+ wm title . "[file tail $argv0]: [file tail [pwd]]"
+diff --git a/gitk-git/gitk.ico b/gitk-git/gitk.ico
+new file mode 100644
+index 0000000000000000000000000000000000000000..db349141ec3f510d98751fc117ff63eb4fc465c0
+GIT binary patch
+literal 318
+zcmb7;u?~PB5JL-bbGgIB8JYM@Kg~bGR>MNVK*{Tc_J#ujpPA7&)Bv0SDlw9Ya_J_=
+p{-aI+&sVh8AXZgo@^Ym@^W;wJQ<3sf8Bxc^KF5CcU%hwSe*yPC7a#xt
 
-Alternate solution would be to create git_get_symbolic_ref, and use
-"!defined $current_branch" in place of "git_is_head_detached()".
+literal 0
+HcmV?d00001
 
-> +
->  # get type of given object
->  sub git_get_type {
->  	my $hash = shift;
-> @@ -2673,11 +2680,9 @@ sub git_get_heads_list {
->  	my @headslist;
->  
->  	if (grep { $_ eq 'heads' } @class) {
-> -		my @x = (git_cmd(), 'branch');
-> -		my @ret = split("\n", qx(@x));
-> -		if (grep { /^\* \(no branch\)$/ } @ret) { ;
-> +		if (git_is_head_detached()) {
->  			my %ref_item;
-> -			@x = (git_cmd(), 'log', '-1', '--pretty=format:%H%n%ct%n%s');
-> +			my @x = (git_cmd(), 'log', '-1', '--pretty=format:%H%n%ct%n%s');
+diff --git a/gitk-git/gitk.ppm b/gitk-git/gitk.ppm
+new file mode 100644
+index 0000000000000000000000000000000000000000..b6ea231fc8eb12827dced0cee8390bd0a2a424d1
+GIT binary patch
+literal 781
+zcmWGA<1#c;Ff`*bGBxG;Kk~o<1_n3+`X0^(GBCNAA_UdbAw(G(7=Q?F5iwl28VCay
+X7icDa1!%GmH^5CJh6{K0U|;|M>w9nk
 
-Hmmm... git-log, git-show, or perhaps parse_commit?
+literal 0
+HcmV?d00001
 
->  			my ($hash, $epoch, $title) = split("\n", qx(@x), 3);
->  
->  			$ref_item{'class'} = 'head';
-> -- 
-> 1.5.6.5
-> 
-> 
-
+diff --git a/gitk-git/gitk.xbm b/gitk-git/gitk.xbm
+new file mode 100644
+index 0000000..ce5871d
+--- /dev/null
++++ b/gitk-git/gitk.xbm
+@@ -0,0 +1,6 @@
++#define gitk_width 16
++#define gitk_height 16
++static char gitk_bits[] = {
++  0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xDE, 0x7B, 
++  0xDE, 0x7B, 0x00, 0x00, 0x00, 0x00, 0x8C, 0x31, 0xDE, 0x7B, 0xDE, 0x7B, 
++  0x8C, 0x31, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, };
 -- 
-Jakub Narebski
-Poland
+1.5.6.5
