@@ -1,70 +1,63 @@
 From: David Brown <git@davidb.org>
 Subject: Re: git to libgit2 code relicensing
-Date: Sat, 15 Nov 2008 10:49:25 -0800
-Message-ID: <20081115184925.GB22714@linode.davidb.org>
-References: <491DE6CC.6060201@op5.se> <alpine.LFD.2.00.0811141512480.3468@nehalem.linux-foundation.org> <20081114234658.GA2932@spearce.org> <20081115123916.GN24201@genesis.frugalware.org>
+Date: Sat, 15 Nov 2008 10:53:19 -0800
+Message-ID: <20081115185318.GC22714@linode.davidb.org>
+References: <491DE6CC.6060201@op5.se> <alpine.LFD.2.00.0811141512480.3468@nehalem.linux-foundation.org> <491EA1CC.9020605@op5.se> <3af572ac0811150228k291b8850idc34cb474f455aa7@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii; format=flowed
-Cc: "Shawn O. Pearce" <spearce@spearce.org>,
-	Linus Torvalds <torvalds@linux-foundation.org>,
-	Andreas Ericsson <ae@op5.se>,
-	Git Mailing List <git@vger.kernel.org>
-To: Miklos Vajna <vmiklos@frugalware.org>
-X-From: git-owner@vger.kernel.org Sat Nov 15 19:50:47 2008
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Pau Garcia i Quiles <pgquiles@elpauer.org>
+X-From: git-owner@vger.kernel.org Sat Nov 15 19:54:38 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1L1QEI-0000r3-RI
-	for gcvg-git-2@gmane.org; Sat, 15 Nov 2008 19:50:47 +0100
+	id 1L1QHz-0001z6-2J
+	for gcvg-git-2@gmane.org; Sat, 15 Nov 2008 19:54:35 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751756AbYKOStc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 15 Nov 2008 13:49:32 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751877AbYKOStc
-	(ORCPT <rfc822;git-outgoing>); Sat, 15 Nov 2008 13:49:32 -0500
-Received: from linode.davidb.org ([72.14.176.16]:38288 "EHLO mail.davidb.org"
+	id S1751877AbYKOSxU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 15 Nov 2008 13:53:20 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751888AbYKOSxU
+	(ORCPT <rfc822;git-outgoing>); Sat, 15 Nov 2008 13:53:20 -0500
+Received: from linode.davidb.org ([72.14.176.16]:38292 "EHLO mail.davidb.org"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751734AbYKOStb (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 15 Nov 2008 13:49:31 -0500
+	id S1751734AbYKOSxT (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 15 Nov 2008 13:53:19 -0500
 Received: from davidb by mail.davidb.org with local (Exim 4.69 #1 (Debian))
-	id 1L1QCz-00061P-QU; Sat, 15 Nov 2008 10:49:25 -0800
+	id 1L1QGl-00062Y-2S; Sat, 15 Nov 2008 10:53:19 -0800
 Content-Disposition: inline
-In-Reply-To: <20081115123916.GN24201@genesis.frugalware.org>
+In-Reply-To: <3af572ac0811150228k291b8850idc34cb474f455aa7@mail.gmail.com>
 User-Agent: Mutt/1.5.16 (2007-06-09)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/101084>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/101085>
 
-On Sat, Nov 15, 2008 at 01:39:16PM +0100, Miklos Vajna wrote:
->On Fri, Nov 14, 2008 at 03:46:58PM -0800, "Shawn O. Pearce" <spearce@spearce.org> wrote:
->>  Note that the only valid version of the GPL as far as this project
->>  is concerned is _this_ particular version of the license (ie v2, not
->>  v2.2 or v3.x or whatever), unless explicitly otherwise stated.
->> 
->>  In addition to the permissions in the GNU General Public License,
->>  the authors give you unlimited permission to link the compiled
->>  version of this file into combinations with other programs,
->>  and to distribute those combinations without any restriction
->>  coming from the use of this file.  (The General Public License
->>  restrictions do apply in other respects; for example, they cover
->>  modification of the file, and distribution when not linked into
->>  a combined executable.)
+On Sat, Nov 15, 2008 at 11:28:39AM +0100, Pau Garcia i Quiles wrote:
+>> Shawn posted the exact text. The spirit of that license is that anyone can
+>> use an unmodified version of the library for whatever they want, but it's
+>> illegal to link non-GPL software to an altered version of the library. That
+>> is, the git community will get all changes back while other projects can
+>> use the official version of the library without having to worry about
+>> licensing issues. EvilCompany cannot make changes to the library and then
+>> link non-GPL'd software to their changed version. They can do that if they
+>> send their library changes upstream and then only use them once they're
+>> considered "official" though.
 >
->IANAL - what is the difference between this and the LGPL?
+>Do you mean if I write a patch to libgit2, send it upstream and make
+>it public on my website but it is not accepted upstream, I cannot link
+>my modified libgit2 version (i. e. libgit2 + my patch) to my non-GPL
+>software? It looks insane to me: I wrote the patch and made it public
+>but you guys did not accept it!
 
-This clause allows static linking, and distribution of only the final
-binary.  The LGPL always requires source to be made available to the
-libaray.  This clause does not require that source to be distributed.
+The license is not clear on this, at all.  Since under the GPLv2, you
+are allowed to make a derivative work, and distribute that, you are
+then basing your binary off of your particular distribution.  The
+license does not have a notion of an "official" version.  So, it might
+be satisfied as long as you base it off of something that is
+distributed.
 
-In other words, it allows libgit2 to be linked into a proprietary
-program and the distributor of that program to _not_ include the
-source of libgit2.  It is not clear if they have to provide source to
-modifications that they have made, or if making those modifications
-under the exception is even allowed.
-
-There are numerous other versions of this exception, some of which
-might be better worded than this.
+But, yes, it is vaguely worded and unclear in it's intent.
 
 David
