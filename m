@@ -1,53 +1,76 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH 3/3] Add -k/--keep-going option to mergetool
-Date: Sat, 15 Nov 2008 00:38:41 -0500
-Message-ID: <20081115053841.GA20763@coredump.intra.peff.net>
-References: <1226580075-29289-1-git-send-email-charles@hashpling.org> <1226580075-29289-2-git-send-email-charles@hashpling.org> <1226580075-29289-3-git-send-email-charles@hashpling.org> <1226580075-29289-4-git-send-email-charles@hashpling.org> <7vy6zl7drn.fsf@gitster.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] sha1_file: make sure correct error is propagated
+Date: Fri, 14 Nov 2008 21:44:02 -0800
+Message-ID: <7vr65d7dct.fsf@gitster.siamese.dyndns.org>
+References: <1226647174-15844-1-git-send-email-sam@vilain.net>
+ <1226655681.17731.4.camel@maia.lan>
+ <7vfxlu9lhs.fsf@gitster.siamese.dyndns.org>
+ <200811142009.51803.fg@one2team.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Cc: Charles Bailey <charles@hashpling.org>, git@vger.kernel.org,
-	Andreas Ericsson <ae@op5.se>, Theodore Ts'o <tytso@mit.edu>,
-	William Pursell <bill.pursell@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Nov 15 06:40:01 2008
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Sam Vilain <sam@vilain.net>, Francis Galiegue <fge@one2team.com>,
+	git@vger.kernel.org
+To: Francis Galiegue <fg@one2team.com>
+X-From: git-owner@vger.kernel.org Sat Nov 15 06:49:55 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1L1Dt1-0000Hs-Rt
-	for gcvg-git-2@gmane.org; Sat, 15 Nov 2008 06:40:00 +0100
+	id 1L1E2c-0001vu-Kl
+	for gcvg-git-2@gmane.org; Sat, 15 Nov 2008 06:49:55 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751756AbYKOFio (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 15 Nov 2008 00:38:44 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751509AbYKOFio
-	(ORCPT <rfc822;git-outgoing>); Sat, 15 Nov 2008 00:38:44 -0500
-Received: from peff.net ([208.65.91.99]:1717 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751426AbYKOFio (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 15 Nov 2008 00:38:44 -0500
-Received: (qmail 3786 invoked by uid 111); 15 Nov 2008 05:38:42 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.32) with SMTP; Sat, 15 Nov 2008 00:38:42 -0500
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Sat, 15 Nov 2008 00:38:41 -0500
-Content-Disposition: inline
-In-Reply-To: <7vy6zl7drn.fsf@gitster.siamese.dyndns.org>
+	id S1751518AbYKOFos convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 15 Nov 2008 00:44:48 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751509AbYKOFor
+	(ORCPT <rfc822;git-outgoing>); Sat, 15 Nov 2008 00:44:47 -0500
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:62308 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751346AbYKOFor convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 15 Nov 2008 00:44:47 -0500
+Received: from localhost.localdomain (unknown [127.0.0.1])
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 482A67D2BB;
+	Sat, 15 Nov 2008 00:44:43 -0500 (EST)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES256-SHA (256/256 bits)) (No client certificate requested) by
+ a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTPSA id 1FE0C7D2AF; Sat,
+ 15 Nov 2008 00:44:09 -0500 (EST)
+In-Reply-To: <200811142009.51803.fg@one2team.com> (Francis Galiegue's message
+ of "Fri, 14 Nov 2008 20:09:51 +0100")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: 80B239C4-B2D8-11DD-8671-9CEDC82D7133-77302942!a-sasl-fastnet.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/101047>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/101048>
 
-On Fri, Nov 14, 2008 at 09:35:08PM -0800, Junio C Hamano wrote:
+=46rancis Galiegue <fg@one2team.com> writes:
 
-> > -'git mergetool' [--tool=<tool>] [-y|--no-prompt|--prompt] [<file>]...
-> 
-> I wonder why this even needs to be an option.  If you do not want to
-> resolve all of them, you can limit the amount of work you would do by
-> giving list of paths to work on, can't you?
+> Le Friday 14 November 2008 20:05:19 Junio C Hamano, vous avez =C3=A9c=
+rit=C2=A0:
+> [...]
+>> >  	fd =3D mkstemp(buffer);
+>> > -	if (fd < 0 && dirlen && (errno !=3D EPERM)) {
+>> > +	if (fd < 0 && dirlen && (errno !=3D EACCESS)) {
+>>
+>> Is this accepting the two as equivalents???
+>> --
+>> To unsubscribe from this list: send the line "unsubscribe git" in
+>> the body of a message to majordomo@vger.kernel.org
+>> More majordomo info at  http://vger.kernel.org/majordomo-info.html
+>
+> Well, looking at mkdir(2), it says:
+>
+>        EPERM  The file system containing pathname does not support th=
+e=20
+> creation of directories.
+>
+> Hmm, err... git would fail at an earlier point anyway, wouldn't it? E=
+ven git=20
+> init would fail there.
 
-I don't know about Charles, but I often don't know that I don't want to
-merge a file using the graphical tool until I see it in the graphical
-tool. IOW, I start trying to merge it there and realize the conflict is
-such that I am better off doing it in my editor with conflict markers.
-
--Peff
+Actually, POSIX does not even talk about EPERM for mkdir(2), but that w=
+as
+not my point.  The code does something different from what the proposed
+commit log message talks about.  That was what bothered me.
