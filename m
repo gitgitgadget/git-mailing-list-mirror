@@ -1,83 +1,108 @@
-From: Miklos Vajna <vmiklos@frugalware.org>
-Subject: Re: git to libgit2 code relicensing
-Date: Sat, 15 Nov 2008 20:33:27 +0100
-Message-ID: <20081115193327.GS24201@genesis.frugalware.org>
-References: <491DE6CC.6060201@op5.se> <alpine.LFD.2.00.0811141512480.3468@nehalem.linux-foundation.org> <20081114234658.GA2932@spearce.org> <20081115123916.GN24201@genesis.frugalware.org> <7vk5b55ekb.fsf@gitster.siamese.dyndns.org>
+From: Farrukh Najmi <farrukh@wellfleetsoftware.com>
+Subject: Any overview available on jgit codebase?
+Date: Sat, 15 Nov 2008 15:21:50 -0500
+Message-ID: <491F2F5E.20206@wellfleetsoftware.com>
+References: <200811132059.16616.robin.rosenberg.lists@dewire.com>
+ <491C8DBE.9080105@wellfleetsoftware.com>
+ <f73f7ab80811140638m4045cf83p311c593aff066002@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="lXBubL3wS507qnlw"
-Cc: "Shawn O. Pearce" <spearce@spearce.org>,
-	Linus Torvalds <torvalds@linux-foundation.org>,
-	Andreas Ericsson <ae@op5.se>,
-	Git Mailing List <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Nov 15 20:34:52 2008
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: Robin Rosenberg <robin.rosenberg.lists@dewire.com>,
+	git@vger.kernel.org
+To: Kyle Moffett <kyle@moffetthome.net>
+X-From: git-owner@vger.kernel.org Sat Nov 15 21:23:25 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1L1Quw-0005Gg-Fd
-	for gcvg-git-2@gmane.org; Sat, 15 Nov 2008 20:34:50 +0100
+	id 1L1Rfu-0002pS-CV
+	for gcvg-git-2@gmane.org; Sat, 15 Nov 2008 21:23:22 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751985AbYKOTdb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 15 Nov 2008 14:33:31 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751963AbYKOTdb
-	(ORCPT <rfc822;git-outgoing>); Sat, 15 Nov 2008 14:33:31 -0500
-Received: from virgo.iok.hu ([193.202.89.103]:58668 "EHLO virgo.iok.hu"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751959AbYKOTda (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 15 Nov 2008 14:33:30 -0500
-Received: from kag.elte.hu (kag.elte.hu [157.181.177.1])
-	by virgo.iok.hu (Postfix) with ESMTP id 63D85580C9;
-	Sat, 15 Nov 2008 20:33:29 +0100 (CET)
-Received: from genesis.frugalware.org (frugalware.elte.hu [157.181.177.34])
-	by kag.elte.hu (Postfix) with ESMTP id 31FCF44698;
-	Sat, 15 Nov 2008 20:33:27 +0100 (CET)
-Received: by genesis.frugalware.org (Postfix, from userid 1000)
-	id C09B5119019E; Sat, 15 Nov 2008 20:33:27 +0100 (CET)
-Content-Disposition: inline
-In-Reply-To: <7vk5b55ekb.fsf@gitster.siamese.dyndns.org>
-User-Agent: Mutt/1.5.17 (2007-11-01)
+	id S1751536AbYKOUV7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 15 Nov 2008 15:21:59 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751575AbYKOUV7
+	(ORCPT <rfc822;git-outgoing>); Sat, 15 Nov 2008 15:21:59 -0500
+Received: from vms173005pub.verizon.net ([206.46.173.5]:39855 "EHLO
+	vms173005pub.verizon.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751518AbYKOUV6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 15 Nov 2008 15:21:58 -0500
+Received: from [192.168.1.101] ([71.184.206.167]) by vms173005.mailsrvcs.net
+ (Sun Java System Messaging Server 6.2-6.01 (built Apr  3 2006))
+ with ESMTPA id <0KAE00HPG5WDKI71@vms173005.mailsrvcs.net> for
+ git@vger.kernel.org; Sat, 15 Nov 2008 14:21:50 -0600 (CST)
+In-reply-to: <f73f7ab80811140638m4045cf83p311c593aff066002@mail.gmail.com>
+User-Agent: Thunderbird 2.0.0.17 (X11/20080925)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/101088>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/101089>
 
 
---lXBubL3wS507qnlw
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+I am looking for any available docs that will help me learn the layout 
+of the jgit code base.
 
-On Sat, Nov 15, 2008 at 05:00:52AM -0800, Junio C Hamano <gitster@pobox.com=
-> wrote:
-> Under LGPL, you must provide linkable object files to your (possibly
-> closed source) program, so that people who made changes to (or obtained an
-> updated version of) a LGPL'ed library can re-link your program and use the
-> updated library.  The above does not ask you to do so.
->=20
-> The way I read LGPL is that "We deeply care about our LGPL library and any
-> improvements to it.  Although we do not care at all about how your crappy
-> closed source program is written, we want to make sure that the users can
-> keep using your program after improvements are made to our library.".  I
-> do not think it makes a practical difference when your program uses the
-> LGPL library as a shard library from that point of view.
+In the ideal world here is what would help newbies get productive with 
+the project quickly:
 
-Ah, I see - so this is a "Lesser LGPL". :)
+1. Have a clear one line description available in the javadocs for each 
+package.
+2. Have a clear one line description available in javadocs for each 
+class in each package.
+3. Have a clear one line description available in javadocs for each 
+method in each class.
 
-Thank you both Junio and David.
+I would gladly do this and contribute the changes back but its a chicken 
+and egg situation since I do not know the code base.
 
---lXBubL3wS507qnlw
-Content-Type: application/pgp-signature
-Content-Disposition: inline
+I realize its a lot to ask but would anyone familiar with code base 
+volunteer to do at least (1) above?
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.9 (GNU/Linux)
+At minimum could anyone tell me what packages and classes to look at in 
+order to make changes to jgit so it uses a database instead of 
+filesystem to references.
 
-iEUEARECAAYFAkkfJAcACgkQe81tAgORUJY5EgCglKIphd6wzda+EuA47Xxv0kO8
-RcEAlRhxGq5ZjrvFyCT/eYb+4DUumT4=
-=nw6L
------END PGP SIGNATURE-----
+Lastly, where can I find information on the structure of the .git directory?
 
---lXBubL3wS507qnlw--
+Thanks for your help.
+
+Kyle Moffett wrote:
+> On Thu, Nov 13, 2008 at 3:27 PM, Farrukh Najmi
+> <farrukh@wellfleetsoftware.com> wrote:
+>   
+>> The problem I am trying to solve is this. In my service I need to store
+>> metadata in a relational db and content in git such that both either commit
+>> or not in a single transaction. If one commits and the other does not that
+>> is a serious integrity issue. Seems to me, two phase commit would be the
+>> right solution for that in the long run. This what JDBC + JMS topologies do.
+>>     
+>
+> That's really easy!  First tweak jgit so that *instead* of using
+> .git/refs, it uses your database to store references and exports them
+> on a routine basis to .git/refs for debugging purposes.  Then, for
+> each database update:
+>
+> (1)  Start transaction
+> (2)  Commit the change to GIT (adds ref update to the transaction)
+> (3)  Make other metadata updates
+> (4)  Commit transaction
+>
+> Then set up periodic garbage collection and you're done!  If the
+> transaction is aborted, there will simply be a bunch of random loose
+> objects in the git repository, which will be cleaned up the next time
+> you garbage collect.  The ref update will be atomic and conditional
+> with the rest of the transaction, and in git the *only* part that
+> really matters for atomicity is the ref.
+>
+> Cheers,
+> Kyle Moffett
+>
+>   
+
+
+-- 
+Regards,
+Farrukh Najmi
+
+Web: http://www.wellfleetsoftware.com
