@@ -1,95 +1,148 @@
 From: "Giuseppe Bilotta" <giuseppe.bilotta@gmail.com>
-Subject: Re: [PATCH v2 05/11] gitweb: git_split_heads_body function.
-Date: Sat, 15 Nov 2008 13:25:59 +0100
-Message-ID: <cb7bb73a0811150425j2475db8dsdee57c1cc5e208ab@mail.gmail.com>
+Subject: Re: [PATCH v2 07/11] gitweb: add 'remotes' action
+Date: Sat, 15 Nov 2008 13:32:54 +0100
+Message-ID: <cb7bb73a0811150432s2f3ae4bfkc0fc29d92accc635@mail.gmail.com>
 References: <1226616555-24503-1-git-send-email-giuseppe.bilotta@gmail.com>
-	 <1226616555-24503-5-git-send-email-giuseppe.bilotta@gmail.com>
-	 <1226616555-24503-6-git-send-email-giuseppe.bilotta@gmail.com>
-	 <200811150059.14515.jnareb@gmail.com>
-	 <7vprkx5gqb.fsf@gitster.siamese.dyndns.org>
+	 <1226616555-24503-7-git-send-email-giuseppe.bilotta@gmail.com>
+	 <1226616555-24503-8-git-send-email-giuseppe.bilotta@gmail.com>
+	 <200811151316.32024.jnareb@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-Cc: "Jakub Narebski" <jnareb@gmail.com>, git@vger.kernel.org,
-	"Petr Baudis" <pasky@suse.cz>
-To: "Junio C Hamano" <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Nov 15 13:27:49 2008
+Cc: git@vger.kernel.org, "Petr Baudis" <pasky@suse.cz>,
+	"Junio C Hamano" <gitster@pobox.com>
+To: "Jakub Narebski" <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Nov 15 13:34:30 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1L1KFe-0002fz-G4
-	for gcvg-git-2@gmane.org; Sat, 15 Nov 2008 13:27:46 +0100
+	id 1L1KM5-0004cD-N5
+	for gcvg-git-2@gmane.org; Sat, 15 Nov 2008 13:34:26 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754592AbYKOM0E (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 15 Nov 2008 07:26:04 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754547AbYKOM0D
-	(ORCPT <rfc822;git-outgoing>); Sat, 15 Nov 2008 07:26:03 -0500
-Received: from ey-out-2122.google.com ([74.125.78.24]:17043 "EHLO
+	id S1755315AbYKOMc5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 15 Nov 2008 07:32:57 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752940AbYKOMc5
+	(ORCPT <rfc822;git-outgoing>); Sat, 15 Nov 2008 07:32:57 -0500
+Received: from ey-out-2122.google.com ([74.125.78.26]:20095 "EHLO
 	ey-out-2122.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754110AbYKOM0B (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 15 Nov 2008 07:26:01 -0500
-Received: by ey-out-2122.google.com with SMTP id 6so719579eyi.37
-        for <git@vger.kernel.org>; Sat, 15 Nov 2008 04:26:00 -0800 (PST)
+	with ESMTP id S1755315AbYKOMc4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 15 Nov 2008 07:32:56 -0500
+Received: by ey-out-2122.google.com with SMTP id 6so719949eyi.37
+        for <git@vger.kernel.org>; Sat, 15 Nov 2008 04:32:54 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:received:received:message-id:date:from:to
          :subject:cc:in-reply-to:mime-version:content-type
          :content-transfer-encoding:content-disposition:references;
-        bh=DTysRy++lF7Gn+6CqcSeYkGr+daoepXq1AegIkhLepo=;
-        b=MjG/d4pVqo/Ie20DUoOUmdbDtvyOB7P+HWLkJl8a5QyBoCyO1AaudbPpEwEjs+jWYq
-         zUDUeBCgAAtuA7/huaaZILOcqTYKeG6mb1khtLl3CdjAB4qZ4OTGwjr9uRcVM6GY1pdh
-         K8RMsIHOPfNy71x0mUn4PCy91DL6EZyvbtXBc=
+        bh=tgwC5B54QkrsB1OFHZFOmlfg8+BOQwPaNfUCgnmbq6c=;
+        b=dz4sEujaV1ho+fbb9ZX4gT/ljAlUU53v4bShYEcUsborizmAt7QjBoOu2oNFGewd7E
+         UHkiYK3tNT+eBNFSIqNrk/67FZxTxFJy1zofzDCrjRk/yojgsFC2vnvujUVKvgxkjhPh
+         2Bg4SMbTmp/UKFrQfUWOMYVpim67PAMagOCpw=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
          :content-type:content-transfer-encoding:content-disposition
          :references;
-        b=Te57onY5nNPIppHd9zi6jeSkH7NthmI96dB6t0Y98pYHPbr8G9ZhraTS12577xMd4O
-         WY6nnS56PipiWQWaw1ZTWzMiqkCp6XzwmSfQz2SKyN7L+2WESbTywVwQkVAAu8O5U3hr
-         ZfmAoecvKKGBSWRkuehoYLuCk3vTef77yrUFw=
-Received: by 10.210.56.7 with SMTP id e7mr2110500eba.32.1226751959980;
-        Sat, 15 Nov 2008 04:25:59 -0800 (PST)
-Received: by 10.210.132.16 with HTTP; Sat, 15 Nov 2008 04:25:59 -0800 (PST)
-In-Reply-To: <7vprkx5gqb.fsf@gitster.siamese.dyndns.org>
+        b=by5uYHOVaoDcJO+7OAQS5nonEqF+H9JTcV2fdKutCu48ZYtUAOXmFh1wvp1rwNoh+H
+         hAlehM/sBJKRv+4YgNcQiNv+VoitTRrTLlSL3whfgnaLaZ6YLZ4rTDBecz669ijxG58k
+         BDl4R0sZPprR3CtmznWiPrt0p81Z7fIEPBHnA=
+Received: by 10.210.66.1 with SMTP id o1mr2076181eba.174.1226752374552;
+        Sat, 15 Nov 2008 04:32:54 -0800 (PST)
+Received: by 10.210.132.16 with HTTP; Sat, 15 Nov 2008 04:32:54 -0800 (PST)
+In-Reply-To: <200811151316.32024.jnareb@gmail.com>
 Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/101065>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/101066>
 
-On Sat, Nov 15, 2008 at 1:14 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> Jakub Narebski <jnareb@gmail.com> writes:
+On Sat, Nov 15, 2008 at 1:16 PM, Jakub Narebski <jnareb@gmail.com> wrote:
+> On Thu, 13 Nov 2008, Giuseppe "Oblomov" Bilotta wrote:
 >
->> Second, this patch wouldn't do what you want from it if there are
->> remotes with '/' in name.  I for example use "gsoc2008/gitweb-caching"
->> for Lea Wiemann repository with her GSoC 2008 work on adding caching
->> to gitweb.
+>> This action is similar to the 'heads' action, but it displays
+>> remote heads, grouped by remote repository.
 >
-> I think your point is if you also use gsoc2008/gitstats from another
-> remote repository, these two sets of remote tracking branches will be
-> shown grouped together.  But is it a bad thing?  After all, you chose to
-> use hierarchical names for them, _and_ you chose to use the same toplevel
-> hierarchy name for them.  Doesn't that mean you _wanted_ to have them both
-> appear in the same GSoC 2008 group?
+> I think I would prefer would go together with the change that split
+> the 'heads' ('branches') part of summary view into 'heads' and
+> 'remotes', so that both section title header, and '...' continuation
+> if present, lead to proper view.
+>
+> So either
+>
+>  [heads]  # or [branches]
+>  master
+>  to-submit
+>  origin/master
+>  origin/next
+>  ...
+>
+> where both '[heads]' and (possibly) '...' link to 'heads' view showing
+> _both_ local branches (refs/heads/*) and remote-tracking branches
+> (refs/remotes/*), like in first patch of series (perhaps with some
+> subdivision).
+>
+> Or
+>
+>  [heads]
+>  master
+>  to-submit
+>  ...
+>  [remotes]
+>  origin/master
+>  origin/next
+>  ...
+>
+> where '[heads]' link to 'heads' view which shows only local branches
+> (refs/heads/*), and '[remotes]' link to 'remotes' view which shows only
+> remote-tracking branches.
 
-The problem is that we have gsoc2008/gitweb-caching/branch1
-gsoc2008/gitweb-caching/branch2 gsoc2008/gitstats/branch3
-gsoc2008/gitstats/branch3, and my current code would show
-gitweb-caching/branch1, gitweb-caching/branch2 etc under gsoc2008.
+That's funny, I just squashed this patch with the summary list split
+view patch 8-) I'm going for the second option, to have [heads] link
+to heads which only lists local heads, and [remotes] linking to
+remotes that lists the remotes. We may or may not want to rather have
+[branches] instead of [heads], and keep the heads action to mean *all*
+heads, local and remote, but I'm not sure about it.
 
-Having branch1 and branch2 under gsoc2008/gitweb-caching, and branch3
-and branch4 under gsoc2008/gitstats would be more logical,
-remote-wise, but it would of course lose the coupling between all the
-gsoc2008 remotes.
+>> -     my @headslist = git_get_heads_list();
+>> +     my @headslist = git_get_heads_list(undef, 'heads');
+>
+> Hmmm... I wonder if it would be possible to use some DWIM-mery on
+> the side of git_get_heads_list (for example checking if first argument
+> is a number, and assuming that nobody would be insane enough to use
+> refs/15 for namespace), and just use git_get_heads_list('heads') here.
+>
+> But I guess that this form is good enough...
 
-If deep nesting is not a problem, I can code something to have
-gitweb-caching and gistats under gsoc2008, and the respective branches
-within.
+I've been wondering about this myself. Another possibility would be to
+use named options instead of positional parameters, but then again it
+all looks like overkill, at least for the time being.
 
+>>       if (@headslist) {
+>>               git_heads_body(\@headslist, $head);
+>>       }
+>>       git_footer_html();
+>>  }
+>>
+>> +sub git_remotes {
+>> +     my $head = git_get_head_hash($project);
+>> +     git_header_html();
+>> +     git_print_page_nav('','', $head,undef,$head);
+>> +     git_print_header_div('summary', $project . ' remotes');
+>> +
+>> +     my @headslist = git_get_heads_list(undef, 'remotes');
+>> +     if (@headslist) {
+>> +             git_split_heads_body(\@headslist, $head);
+>> +     }
+>> +     git_footer_html();
+>> +}
+>
+> Nice. I see the difference from git_heads is using $project . ' remotes'
+> in place of $project in git_print_header_div() (why?),
 
-
+FWIW, I decided to scratch that additional ' remotes' string when
+squashing this patch.
 
 -- 
 Giuseppe "Oblomov" Bilotta
