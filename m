@@ -1,64 +1,52 @@
-From: Sam Vilain <sam@vilain.net>
-Subject: Re: [PATCH] sha1_file: make sure correct error is propagated
-Date: Sat, 15 Nov 2008 19:30:23 +1300
-Message-ID: <1226730623.26334.2.camel@maia.lan>
-References: <1226647174-15844-1-git-send-email-sam@vilain.net>
-	 <1226655681.17731.4.camel@maia.lan>
-	 <7vfxlu9lhs.fsf@gitster.siamese.dyndns.org>
-	 <200811142009.51803.fg@one2team.com>
-	 <7vr65d7dct.fsf@gitster.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH resend] Documentation: git-svn: fix example for
+ centralized SVN clone
+Date: Fri, 14 Nov 2008 23:56:58 -0800
+Message-ID: <7vhc697779.fsf@gitster.siamese.dyndns.org>
+References: <20081114184514.6f7d437a@perceptron>
+ <7vljvl7d3k.fsf@gitster.siamese.dyndns.org>
+ <20081115062927.GA426@hand.yhbt.net>
 Mime-Version: 1.0
-Content-Type: text/plain
-Content-Transfer-Encoding: 7bit
-Cc: Francis Galiegue <fg@one2team.com>,
-	Francis Galiegue <fge@one2team.com>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Nov 15 07:31:54 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: Jan =?utf-8?Q?Kr=C3=BCger?= <jk@jk.gs>,
+	Git ML <git@vger.kernel.org>
+To: Eric Wong <normalperson@yhbt.net>
+X-From: git-owner@vger.kernel.org Sat Nov 15 08:58:42 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1L1EhD-00015b-M4
-	for gcvg-git-2@gmane.org; Sat, 15 Nov 2008 07:31:52 +0100
+	id 1L1G3F-000884-GM
+	for gcvg-git-2@gmane.org; Sat, 15 Nov 2008 08:58:41 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752512AbYKOGad (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 15 Nov 2008 01:30:33 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752510AbYKOGad
-	(ORCPT <rfc822;git-outgoing>); Sat, 15 Nov 2008 01:30:33 -0500
-Received: from watts.utsl.gen.nz ([202.78.240.73]:39851 "EHLO mail.utsl.gen.nz"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752495AbYKOGac (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 15 Nov 2008 01:30:32 -0500
-Received: by mail.utsl.gen.nz (Postfix, from userid 1004)
-	id 34F0021C413; Sat, 15 Nov 2008 19:30:31 +1300 (NZDT)
-X-Spam-Checker-Version: SpamAssassin 3.2.5 (2008-06-10) on
-	mail.musashi.utsl.gen.nz
-X-Spam-Level: 
-X-Spam-Status: No, score=-4.4 required=5.0 tests=ALL_TRUSTED,BAYES_00
-	autolearn=ham version=3.2.5
-Received: from [127.0.0.1] (longdrop.musashi.utsl.gen.nz [192.168.253.12])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by mail.utsl.gen.nz (Postfix) with ESMTPSA id 8812121C413;
-	Sat, 15 Nov 2008 19:30:22 +1300 (NZDT)
-In-Reply-To: <7vr65d7dct.fsf@gitster.siamese.dyndns.org>
-X-Mailer: Evolution 2.22.3.1 
+	id S1753406AbYKOH5X (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 15 Nov 2008 02:57:23 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753408AbYKOH5X
+	(ORCPT <rfc822;git-outgoing>); Sat, 15 Nov 2008 02:57:23 -0500
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:55251 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752864AbYKOH5W (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 15 Nov 2008 02:57:22 -0500
+Received: from localhost.localdomain (unknown [127.0.0.1])
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 9DB6F7DA86;
+	Sat, 15 Nov 2008 02:57:19 -0500 (EST)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES256-SHA (256/256 bits)) (No client certificate requested) by
+ a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTPSA id F122A7DA70; Sat,
+ 15 Nov 2008 02:57:05 -0500 (EST)
+In-Reply-To: <20081115062927.GA426@hand.yhbt.net> (Eric Wong's message of
+ "Fri, 14 Nov 2008 22:30:06 -0800")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: 070CD4B8-B2EB-11DD-A6F4-9CEDC82D7133-77302942!a-sasl-fastnet.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/101051>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/101052>
 
-On Fri, 2008-11-14 at 21:44 -0800, Junio C Hamano wrote:
-> Actually, POSIX does not even talk about EPERM for mkdir(2), but that was
-> not my point.  The code does something different from what the proposed
-> commit log message talks about.  That was what bothered me.
+Eric Wong <normalperson@yhbt.net> writes:
 
-My wording was a little terse and confusing.  Here's a new one;
+> I see what happened: I mis-CC-ed Adam as never had him in my aliases
+> file :x
 
-Subject: sha1_file.c: resolve confusion EACCESS vs EPERM
-
-EPERM or 'Operation not permitted' is an unlikely error from
-mkstemp(); test for EACCESS 'Access Denied' instead.  Make the
-special branch which prints the error to the user nicely also
-understand EACCESS.
+Ah, I see.  I should have checked with my "git who" alias.
