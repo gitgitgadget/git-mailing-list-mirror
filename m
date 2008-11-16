@@ -1,48 +1,58 @@
-From: "Gennady Kushnir" <genkush@rujel.net>
-Subject: publish since current state?
-Date: Sun, 16 Nov 2008 23:42:26 +0300
-Message-ID: <96ed5eac0811161242o4c800e37u7c96872a9a4351ef@mail.gmail.com>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: git to libgit2 code relicensing
+Date: Sun, 16 Nov 2008 22:00:32 +0100 (CET)
+Message-ID: <alpine.DEB.1.00.0811162159280.30769@pacific.mpi-cbg.de>
+References: <491DE6CC.6060201@op5.se> <200811151615.42345.chriscool@tuxfamily.org> <49200914.6090506@op5.se>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Nov 16 21:43:43 2008
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Christian Couder <chriscool@tuxfamily.org>,
+	Git Mailing List <git@vger.kernel.org>
+To: Andreas Ericsson <ae@op5.se>
+X-From: git-owner@vger.kernel.org Sun Nov 16 21:54:05 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1L1oT9-0006WG-3x
-	for gcvg-git-2@gmane.org; Sun, 16 Nov 2008 21:43:43 +0100
+	id 1L1odB-0001mP-3k
+	for gcvg-git-2@gmane.org; Sun, 16 Nov 2008 21:54:05 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752628AbYKPUm2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 16 Nov 2008 15:42:28 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752622AbYKPUm1
-	(ORCPT <rfc822;git-outgoing>); Sun, 16 Nov 2008 15:42:27 -0500
-Received: from rv-out-0506.google.com ([209.85.198.228]:64445 "EHLO
-	rv-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752542AbYKPUm1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 16 Nov 2008 15:42:27 -0500
-Received: by rv-out-0506.google.com with SMTP id k40so2137355rvb.1
-        for <git@vger.kernel.org>; Sun, 16 Nov 2008 12:42:26 -0800 (PST)
-Received: by 10.142.107.1 with SMTP id f1mr1605076wfc.140.1226868146548;
-        Sun, 16 Nov 2008 12:42:26 -0800 (PST)
-Received: by 10.142.192.16 with HTTP; Sun, 16 Nov 2008 12:42:26 -0800 (PST)
-Content-Disposition: inline
+	id S1752499AbYKPUwo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 16 Nov 2008 15:52:44 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752245AbYKPUwn
+	(ORCPT <rfc822;git-outgoing>); Sun, 16 Nov 2008 15:52:43 -0500
+Received: from mail.gmx.net ([213.165.64.20]:34502 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1752100AbYKPUwn (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 16 Nov 2008 15:52:43 -0500
+Received: (qmail invoked by alias); 16 Nov 2008 20:52:40 -0000
+Received: from pacific.mpi-cbg.de (EHLO pacific.mpi-cbg.de) [141.5.10.38]
+  by mail.gmx.net (mp065) with SMTP; 16 Nov 2008 21:52:41 +0100
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX18rk3cKjL0rM3dciNW5l9GyD+RMVpY3aoebGQI/Uf
+	suBqkleqKHOhn6
+X-X-Sender: schindelin@pacific.mpi-cbg.de
+In-Reply-To: <49200914.6090506@op5.se>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.7
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/101156>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/101157>
 
-Hello list.
-I'm going to publish my work into online public repository.
-I have several months of previous history in my local git repo. And I
-don't want to make it all public.
-Is it possible to publish just a shallow copy of my repository storing
-my current tree?
-I'd also like to keep my local history private but push new commits
-from it into that online repo.
+Hi,
 
-Gennady
+On Sun, 16 Nov 2008, Andreas Ericsson wrote:
 
-P.S. please reply to my email directly as I'm not signed up to mail list yet.
+> With the current list of ok's 73.09% of the code in git.git seems to be 
+> relicenseable for the purpose of libgit2. That will provide quite a 
+> kickstart.
+
+I doubt it.  Most of that code was written with the execute-once 
+mentality.  And with the we-have-posix mentality.
+
+Two things we do not _want_ in libgit2.
+
+Ciao,
+Dscho
