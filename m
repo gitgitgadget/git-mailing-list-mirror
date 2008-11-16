@@ -1,71 +1,56 @@
-From: Samuel Tardieu <sam@rfc1149.net>
-Subject: Re: Conflict-free merging (i.e. concat) of conflicting branches?
-Date: Sun, 16 Nov 2008 15:19:47 +0100
-Organization: RFC 1149 (see http://www.rfc1149.net/)
-Message-ID: <2008-11-16-15-19-47+trackit+sam@rfc1149.net>
-References: <2d460de70811160550g75e50e00gb50d3b2045c460af@mail.gmail.com>
+From: Martin <html-kurs@gmx.de>
+Subject: git svn problem with malformed svn revision
+Date: Sun, 16 Nov 2008 15:18:15 +0100
+Message-ID: <49202BA7.9060203@gmx.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 8bit
-Cc: git@vger.kernel.org, markus.heidelberg@web.de
-To: "Richard Hartmann" <richih.mailinglist@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Nov 16 15:22:58 2008
+Content-Type: text/plain; charset=ISO-8859-15; format=flowed
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Nov 16 15:22:59 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1L1iWW-0007gL-Ki
-	for gcvg-git-2@gmane.org; Sun, 16 Nov 2008 15:22:49 +0100
+	id 1L1iWV-0007gL-VM
+	for gcvg-git-2@gmane.org; Sun, 16 Nov 2008 15:22:48 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751657AbYKPOTe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 16 Nov 2008 09:19:34 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751706AbYKPOTe
-	(ORCPT <rfc822;git-outgoing>); Sun, 16 Nov 2008 09:19:34 -0500
-Received: from zoidberg.rfc1149.net ([91.121.19.179]:56963 "EHLO
-	zoidberg.rfc1149.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751630AbYKPOTd (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 16 Nov 2008 09:19:33 -0500
-Received: from localhost (localhost [127.0.0.1])
-	by zoidberg.rfc1149.net (Postfix) with ESMTP id 565EE10E6DF;
-	Sun, 16 Nov 2008 15:19:30 +0100 (CET)
-X-Virus-Scanned: amavisd-new at rfc1149.net
-Received: from zoidberg.rfc1149.net ([127.0.0.1])
-	by localhost (zaphod.rfc1149.net [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id eJzESbOdqeWF; Sun, 16 Nov 2008 15:19:29 +0100 (CET)
-Received: from mail2.rfc1149.net (willow.rfc1149.net [IPv6:2001:6f8:37a:2::2])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(Client CN "mail2.rfc1149.net", Issuer "rfc1149.net" (verified OK))
-	by zoidberg.rfc1149.net (Postfix) with ESMTPS id F01D410E6DB;
-	Sun, 16 Nov 2008 15:19:28 +0100 (CET)
-Received: from localhost (localhost [127.0.0.1])
-	by mail2.rfc1149.net (Postfix) with ESMTP id 9B52CC40BE;
-	Sun, 16 Nov 2008 15:19:47 +0100 (CET)
-Received: from mail2.rfc1149.net ([127.0.0.1])
-	by localhost (localhost [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id KZjKKdgv2cmH; Sun, 16 Nov 2008 15:19:47 +0100 (CET)
-Received: by mail2.rfc1149.net (Postfix, from userid 1000)
-	id 69BF7C40C4; Sun, 16 Nov 2008 15:19:47 +0100 (CET)
-In-Reply-To: <2d460de70811160550g75e50e00gb50d3b2045c460af@mail.gmail.com> (Richard Hartmann's message of "Sun\, 16 Nov 2008 14\:50\:34 +0100")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-WWW: http://www.rfc1149.net/sam
-X-Jabber: <sam@rfc1149.net> (see http://www.jabber.org/)
-X-OpenPGP-Fingerprint: 79C0 AE3C CEA8 F17B 0EF1  45A5 F133 2241 1B80 ADE6 (see http://www.gnupg.org/)
+	id S1751540AbYKPOSm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 16 Nov 2008 09:18:42 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751417AbYKPOSl
+	(ORCPT <rfc822;git-outgoing>); Sun, 16 Nov 2008 09:18:41 -0500
+Received: from mail.gmx.net ([213.165.64.20]:53736 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1751274AbYKPOSl (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 16 Nov 2008 09:18:41 -0500
+Received: (qmail invoked by alias); 16 Nov 2008 14:18:39 -0000
+Received: from p54B20CD1.dip0.t-ipconnect.de (EHLO [192.168.0.106]) [84.178.12.209]
+  by mail.gmx.net (mp053) with SMTP; 16 Nov 2008 15:18:39 +0100
+X-Authenticated: #4107867
+X-Provags-ID: V01U2FsdGVkX18m8xRM6lkm165HjxUTi6Kf4TDkYzfG7NGxHS+vwD
+	xrkp/f2nPX3Uaf
+User-Agent: Thunderbird 2.0.0.17 (Windows/20080914)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.76
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/101131>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/101132>
 
->>>>> "Richard" == Richard Hartmann <richih.mailinglist@gmail.com> writes:
+Hi,
 
-Richard> The question is if there is a way to to merge these branches
-Richard> in a way that is conflict-free and includes all
-Richard> lines. Obviously, the order of the lines is irrelevant and
-Richard> can be random.
+I'm using git svn to access a subversion repository and committing to it.
+Unfortunately this svn repository contains a malformed commit:
+There's an empty file with svn-property svn:special *. It was created
+using a windows client.
 
-You can use a custom merge driver especially designed for this case.
-See gitattributes(5) man page for an explanation of how it works.
+If you try to checkout this revision using svn on linux you get an
+error. But using svn you have the possibility to checkout the next
+revision which corrects the content of the file to "link foo/bar". So
+the symlink is added to the working copy.
 
-  Sam
--- 
-Samuel Tardieu -- sam@rfc1149.net -- http://www.rfc1149.net/
+But with git svn I get an error when running git svn rebase. Is there
+any way to skip this revision when running git svn rebase?
+
+Thanks,
+Martin
