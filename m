@@ -1,148 +1,196 @@
 From: Alexander Gavrilov <angavrilov@gmail.com>
-Subject: [PATCH (GIT-GUI) v2 1/5] git-gui: Implement system-wide configuration handling.
-Date: Sun, 16 Nov 2008 21:46:47 +0300
-Message-ID: <1226861211-16995-2-git-send-email-angavrilov@gmail.com>
+Subject: [PATCH (GIT-GUI) v2 2/5] git-gui: Fix the after callback execution in rescan.
+Date: Sun, 16 Nov 2008 21:46:48 +0300
+Message-ID: <1226861211-16995-3-git-send-email-angavrilov@gmail.com>
 References: <1226861211-16995-1-git-send-email-angavrilov@gmail.com>
+ <1226861211-16995-2-git-send-email-angavrilov@gmail.com>
 Cc: "Shawn O. Pearce" <spearce@spearce.org>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Nov 16 19:50:17 2008
+X-From: git-owner@vger.kernel.org Sun Nov 16 19:50:40 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1L1mhI-0001g2-JI
-	for gcvg-git-2@gmane.org; Sun, 16 Nov 2008 19:50:13 +0100
+	id 1L1mhj-0001pL-LR
+	for gcvg-git-2@gmane.org; Sun, 16 Nov 2008 19:50:40 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752849AbYKPSs7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 16 Nov 2008 13:48:59 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752753AbYKPSs6
-	(ORCPT <rfc822;git-outgoing>); Sun, 16 Nov 2008 13:48:58 -0500
-Received: from fg-out-1718.google.com ([72.14.220.156]:22132 "EHLO
+	id S1753067AbYKPStE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 16 Nov 2008 13:49:04 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752944AbYKPStD
+	(ORCPT <rfc822;git-outgoing>); Sun, 16 Nov 2008 13:49:03 -0500
+Received: from fg-out-1718.google.com ([72.14.220.156]:22145 "EHLO
 	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752306AbYKPSs5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 16 Nov 2008 13:48:57 -0500
-Received: by fg-out-1718.google.com with SMTP id 19so1819459fgg.17
-        for <git@vger.kernel.org>; Sun, 16 Nov 2008 10:48:55 -0800 (PST)
+	with ESMTP id S1752697AbYKPStA (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 16 Nov 2008 13:49:00 -0500
+Received: by fg-out-1718.google.com with SMTP id 19so1819464fgg.17
+        for <git@vger.kernel.org>; Sun, 16 Nov 2008 10:48:58 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:received:received:from:to:cc:subject:date
          :message-id:x-mailer:in-reply-to:references;
-        bh=UtOvTB9NQMeACRJAE8JSwXrJbAgrddHDbVs5azX20vQ=;
-        b=WhWaA37ljC1tNe/FU8CyZVLkiZB+q1dCu1xeFyookBxOrFH2vTfx59qzKvJfg7Ybsl
-         Vv2B53GW9I9adMZ4sunsESi116aakbbgwk1BaVj0kNKg2C7vu7CuaHHJtaSR2ef4sQ5s
-         hDCDPMf4kjmXxpdn/ZGAV1HA1YZRN4qO8MZyY=
+        bh=HGOdSMmvQUAbV/BIKz6rbtOcNbcdisHVpPH4mw8RjfI=;
+        b=POxoyLkkvj207tM/yT8v/kFqtKy49MZxGIzoA0ICnqQXeHv2iETCUy4DQsmQ2XD4Ld
+         lsfiBN5Eq0kd26b2K1ym223/45MsxPkPDHw7x7pFKa4LYBqbqTs9hMM3y3a9md0uWPnK
+         RWGhLsWrpZ65v/+tqdK5tpl7Fq2DWgBBYk1uQ=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        b=tQcjNLIM5az/RQwr9IXJOgoQwBMQ/kDvEP6AdpfsILnOVKe3GgeU17PU9JkKm58mZ2
-         dyN8kDdt5a8CIBXYzOPyEI9EKD8xdZ8csi3EpvlM0XMpKooqvMqgRO+2Qag6ol9zZdxw
-         bLMUb1hRbjmBEVV6cmjfxEg/4A+IvICws2qIE=
-Received: by 10.181.239.8 with SMTP id q8mr799945bkr.109.1226861335144;
-        Sun, 16 Nov 2008 10:48:55 -0800 (PST)
+        b=v1ZKsjbAFHtySdN7iYBcUQWiWsJVzYB5+wJJWlRcCJFWIrDrQ0WmYhG4A5CDD7z0Jq
+         Yx81mPt1xO1MX3qhRWny+66RO+JvviQY+yu6YsD5jWNhImjx5lZZ9IC/lgMPBWCFsCt8
+         SQWA1VuVoubwWvkFmsckbh8JVF0tQaP4hjZg4=
+Received: by 10.181.216.12 with SMTP id t12mr798146bkq.122.1226861337818;
+        Sun, 16 Nov 2008 10:48:57 -0800 (PST)
 Received: from localhost.localdomain ([92.255.85.78])
-        by mx.google.com with ESMTPS id z15sm3020368fkz.16.2008.11.16.10.48.52
+        by mx.google.com with ESMTPS id z15sm3020368fkz.16.2008.11.16.10.48.55
         (version=SSLv3 cipher=RC4-MD5);
-        Sun, 16 Nov 2008 10:48:53 -0800 (PST)
+        Sun, 16 Nov 2008 10:48:56 -0800 (PST)
 X-Mailer: git-send-email 1.6.0.3.15.gb8d36
-In-Reply-To: <1226861211-16995-1-git-send-email-angavrilov@gmail.com>
+In-Reply-To: <1226861211-16995-2-git-send-email-angavrilov@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/101151>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/101152>
 
-With the old implementation any system-wide options appear
-to be set locally in the current repository. This commit
-adds explicit handling of system options, essentially
-interpreting them as customized default_config.
+The rescan function receives a callback command
+as its parameter, which is supposed to be executed
+after the scan finishes. It is generally used to
+update status. However, rescan may initiate a
+loading of a diff, which always calls ui_ready after
+completion. If the after handler is called before
+that, ui_ready will override the new status.
 
-The difficulty in interpreting system options stems from
-the fact that simple 'git config' lists all values, while
-'git config --global' only values set in ~/.gitconfig,
-excluding both local and system options.
+This commit ensures that the after callback is
+properly threaded through the diff machinery.
+
+Since it uncovered the fact that force_first_diff
+actually didn't work due to an undeclared global
+variable, and the desired effects appeared only
+because of the race condition between the diff
+system and the rescan callback, I also reimplement
+this function to make it behave as originally
+intended.
 
 Signed-off-by: Alexander Gavrilov <angavrilov@gmail.com>
 ---
- git-gui.sh     |   12 +++++++++---
- lib/option.tcl |   12 ++++++------
- 2 files changed, 15 insertions(+), 9 deletions(-)
+ git-gui.sh   |   41 ++++++++++++++++++++++++++++-------------
+ lib/diff.tcl |    6 +++---
+ 2 files changed, 31 insertions(+), 16 deletions(-)
 
 diff --git a/git-gui.sh b/git-gui.sh
-index cf9ef6e..34214b6 100755
+index 34214b6..2709f6e 100755
 --- a/git-gui.sh
 +++ b/git-gui.sh
-@@ -918,19 +918,25 @@ git-version proc _parse_config {arr_name args} {
+@@ -1469,10 +1469,8 @@ proc rescan_done {fd buf after} {
+ 	prune_selection
+ 	unlock_index
+ 	display_all_files
+-	if {$current_diff_path ne {}} reshow_diff
+-	if {$current_diff_path eq {}} select_first_diff
+-
+-	uplevel #0 $after
++	if {$current_diff_path ne {}} { reshow_diff $after }
++	if {$current_diff_path eq {}} { select_first_diff $after }
  }
  
- proc load_config {include_global} {
--	global repo_config global_config default_config
-+	global repo_config global_config system_config default_config
+ proc prune_selection {} {
+@@ -1984,16 +1982,16 @@ proc do_rescan {} {
+ }
  
- 	if {$include_global} {
-+		_parse_config system_config --system
- 		_parse_config global_config --global
+ proc ui_do_rescan {} {
+-	rescan {force_first_diff; ui_ready}
++	rescan {force_first_diff ui_ready}
+ }
+ 
+ proc do_commit {} {
+ 	commit_tree
+ }
+ 
+-proc next_diff {} {
++proc next_diff {{after {}}} {
+ 	global next_diff_p next_diff_w next_diff_i
+-	show_diff $next_diff_p $next_diff_w {}
++	show_diff $next_diff_p $next_diff_w {} {} $after
+ }
+ 
+ proc find_anchor_pos {lst name} {
+@@ -2078,25 +2076,42 @@ proc next_diff_after_action {w path {lno {}} {mmask {}}} {
  	}
- 	_parse_config repo_config
+ }
  
- 	foreach name [array names default_config] {
-+		if {[catch {set v $system_config($name)}]} {
-+			set system_config($name) $default_config($name)
-+		}
+-proc select_first_diff {} {
++proc select_first_diff {after} {
+ 	global ui_workdir
+ 
+ 	if {[find_next_diff $ui_workdir {} 1 {^_?U}] ||
+ 	    [find_next_diff $ui_workdir {} 1 {[^O]$}]} {
+-		next_diff
++		next_diff $after
++	} else {
++		uplevel #0 $after
+ 	}
+ }
+ 
+-proc force_first_diff {} {
+-	global current_diff_path
++proc force_first_diff {after} {
++	global ui_workdir current_diff_path file_states
+ 
+ 	if {[info exists file_states($current_diff_path)]} {
+ 		set state [lindex $file_states($current_diff_path) 0]
++	} else {
++		set state {OO}
 +	}
-+	foreach name [array names system_config] {
- 		if {[catch {set v $global_config($name)}]} {
--			set global_config($name) $default_config($name)
-+			set global_config($name) $system_config($name)
- 		}
- 		if {[catch {set v $repo_config($name)}]} {
--			set repo_config($name) $default_config($name)
-+			set repo_config($name) $system_config($name)
- 		}
+ 
+-		if {[string index $state 1] ne {O}} return
++	set reselect 0
++	if {[string first {U} $state] >= 0} {
++		# Already a conflict, do nothing
++	} elseif {[find_next_diff $ui_workdir $current_diff_path {} {^_?U}]} {
++		set reselect 1
++	} elseif {[string index $state 1] ne {O}} {
++		# Already a diff & no conflicts, do nothing
++	} elseif {[find_next_diff $ui_workdir $current_diff_path {} {[^O]$}]} {
++		set reselect 1
  	}
- }
-diff --git a/lib/option.tcl b/lib/option.tcl
-index c80c939..1d55b49 100644
---- a/lib/option.tcl
-+++ b/lib/option.tcl
-@@ -25,7 +25,7 @@ proc config_check_encodings {} {
  
- proc save_config {} {
- 	global default_config font_descs
--	global repo_config global_config
-+	global repo_config global_config system_config
- 	global repo_config_new global_config_new
- 	global ui_comm_spell
- 
-@@ -49,7 +49,7 @@ proc save_config {} {
- 	foreach name [array names default_config] {
- 		set value $global_config_new($name)
- 		if {$value ne $global_config($name)} {
--			if {$value eq $default_config($name)} {
-+			if {$value eq $system_config($name)} {
- 				catch {git config --global --unset $name}
- 			} else {
- 				regsub -all "\[{}\]" $value {"} value
-@@ -284,17 +284,17 @@ proc do_options {} {
+-	select_first_diff
++	if {$reselect} {
++		next_diff $after
++	} else {
++		uplevel #0 $after
++	}
  }
  
- proc do_restore_defaults {} {
--	global font_descs default_config repo_config
-+	global font_descs default_config repo_config system_config
- 	global repo_config_new global_config_new
+ proc toggle_or_diff {w x y} {
+diff --git a/lib/diff.tcl b/lib/diff.tcl
+index 94ee38c..bbbf15c 100644
+--- a/lib/diff.tcl
++++ b/lib/diff.tcl
+@@ -16,7 +16,7 @@ proc clear_diff {} {
+ 	$ui_workdir tag remove in_diff 0.0 end
+ }
  
- 	foreach name [array names default_config] {
--		set repo_config_new($name) $default_config($name)
--		set global_config_new($name) $default_config($name)
-+		set repo_config_new($name) $system_config($name)
-+		set global_config_new($name) $system_config($name)
- 	}
+-proc reshow_diff {} {
++proc reshow_diff {{after {}}} {
+ 	global file_states file_lists
+ 	global current_diff_path current_diff_side
+ 	global ui_diff
+@@ -30,13 +30,13 @@ proc reshow_diff {} {
+ 		|| [lsearch -sorted -exact $file_lists($current_diff_side) $p] == -1} {
  
- 	foreach option $font_descs {
- 		set name [lindex $option 0]
--		set repo_config(gui.$name) $default_config(gui.$name)
-+		set repo_config(gui.$name) $system_config(gui.$name)
+ 		if {[find_next_diff $current_diff_side $p {} {[^O]}]} {
+-			next_diff
++			next_diff $after
+ 		} else {
+ 			clear_diff
+ 		}
+ 	} else {
+ 		set save_pos [lindex [$ui_diff yview] 0]
+-		show_diff $p $current_diff_side {} $save_pos
++		show_diff $p $current_diff_side {} $save_pos $after
  	}
- 	apply_config
+ }
  
 -- 
 1.6.0.3.15.gb8d36
