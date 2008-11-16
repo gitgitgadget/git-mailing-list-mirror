@@ -1,103 +1,74 @@
-From: Giuseppe Bilotta <giuseppe.bilotta@gmail.com>
-Subject: [PATCH] git-gui: try to provide a window icon under X
-Date: Sun, 16 Nov 2008 03:42:32 +0100
-Message-ID: <1226803352-26513-1-git-send-email-giuseppe.bilotta@gmail.com>
-References: <1226801378-25501-1-git-send-email-giuseppe.bilotta@gmail.com>
-Cc: Alexander Gavrilov <angavrilov@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>,
-	Giuseppe Bilotta <giuseppe.bilotta@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Nov 16 03:43:37 2008
+From: "Giuseppe Bilotta" <giuseppe.bilotta@gmail.com>
+Subject: Re: [PATCH v2 07/11] gitweb: add 'remotes' action
+Date: Sun, 16 Nov 2008 03:47:55 +0100
+Message-ID: <cb7bb73a0811151847r536e3e57wc1502bcf734e7930@mail.gmail.com>
+References: <1226616555-24503-1-git-send-email-giuseppe.bilotta@gmail.com>
+	 <200811151316.32024.jnareb@gmail.com>
+	 <cb7bb73a0811150432s2f3ae4bfkc0fc29d92accc635@mail.gmail.com>
+	 <200811160129.17319.jnareb@gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, "Petr Baudis" <pasky@suse.cz>,
+	"Junio C Hamano" <gitster@pobox.com>
+To: "Jakub Narebski" <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Nov 16 03:53:00 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1L1Xbt-0003KR-8w
-	for gcvg-git-2@gmane.org; Sun, 16 Nov 2008 03:43:37 +0100
+	id 1L1Xkx-00054w-B9
+	for gcvg-git-2@gmane.org; Sun, 16 Nov 2008 03:52:59 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753758AbYKPCmW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 15 Nov 2008 21:42:22 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753649AbYKPCmV
-	(ORCPT <rfc822;git-outgoing>); Sat, 15 Nov 2008 21:42:21 -0500
-Received: from nf-out-0910.google.com ([64.233.182.188]:14421 "EHLO
-	nf-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753523AbYKPCmV (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 15 Nov 2008 21:42:21 -0500
-Received: by nf-out-0910.google.com with SMTP id d3so955601nfc.21
-        for <git@vger.kernel.org>; Sat, 15 Nov 2008 18:42:19 -0800 (PST)
+	id S1753509AbYKPCr6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 15 Nov 2008 21:47:58 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753452AbYKPCr6
+	(ORCPT <rfc822;git-outgoing>); Sat, 15 Nov 2008 21:47:58 -0500
+Received: from ey-out-2122.google.com ([74.125.78.24]:32978 "EHLO
+	ey-out-2122.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753422AbYKPCr5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 15 Nov 2008 21:47:57 -0500
+Received: by ey-out-2122.google.com with SMTP id 6so787423eyi.37
+        for <git@vger.kernel.org>; Sat, 15 Nov 2008 18:47:55 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:cc:subject:date
-         :message-id:x-mailer:in-reply-to:references;
-        bh=B99/I3IK3WjKqY1AgFtWwwhKAuM0zTqAhBkZUVWwh4A=;
-        b=XfPB/I5rqgprdWaTLgc9urbbHBavfr5PTe06FZ+jbbNwcbyNJAOpygTU1QUzF0tj8S
-         +EMbfnuOA57xj3lsXgvhuJ40RGEK7HFYC4mSEOQcDhszuOeBo+StgfXfSu2cfucqqMpK
-         pF3M+UeVh0SjeyCK6XK+b8iANhCcC8wW0jcp8=
+        h=domainkey-signature:received:received:message-id:date:from:to
+         :subject:cc:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:references;
+        bh=2pJiytLrZoQWSQLh4lQXSzw4j1pnMbiYzb3A7lwdh3M=;
+        b=pXyOXye19iwN9yKcsF9Cew+JytSaNBn6og9PN/HIr67Kdk2ygzHblMp6Ja4xf+nNBw
+         rI3CiY4zy8ljEKxnk150AKlSOvIUDgKO7oovbKmIOSqVKAX8trJKyDRppsTzIkRox5pr
+         3KH4OpSuqRvaXJHwLj8D3XVD2YMGp/mRpC8ic=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        b=tcwfrtcpO0YBqm3iisZszPTgUWYa5V58TzkF2M6cnuPfNEAmVPjDV1IeHE0Hy9Z02K
-         zmNupvtLuJxzVexHtAoTlA4LbNu8tMhhBGw/y8OeTN6w4l63jCiVs7KIpPbz92KnTcfK
-         zHKSYglq/CiXmsdoH5f/s6mDF+TqW3yZ0wSIk=
-Received: by 10.210.21.6 with SMTP id 6mr2666291ebu.18.1226803339385;
-        Sat, 15 Nov 2008 18:42:19 -0800 (PST)
-Received: from localhost ([94.37.6.2])
-        by mx.google.com with ESMTPS id 5sm1700338eyh.2.2008.11.15.18.42.18
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Sat, 15 Nov 2008 18:42:18 -0800 (PST)
-X-Mailer: git-send-email 1.5.6.5
-In-Reply-To: <1226801378-25501-1-git-send-email-giuseppe.bilotta@gmail.com>
+        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
+         :content-type:content-transfer-encoding:content-disposition
+         :references;
+        b=m+v6/5iNe3jWemk8y+qOv2Ar6q4SF8O2Y0exIZN8vbYid59DplHKUkWWPsiGHWj9G7
+         mSiIUpY7pGEWI3F73Th15HxHjfzj95EXKugDXorLLl30a2/nsiquXZmU13YMVlt3Yz5S
+         hGRcdThwtM4s3tmtlxfHGofko0/evcyLZ7qC0=
+Received: by 10.210.142.6 with SMTP id p6mr2645345ebd.100.1226803675612;
+        Sat, 15 Nov 2008 18:47:55 -0800 (PST)
+Received: by 10.210.132.16 with HTTP; Sat, 15 Nov 2008 18:47:55 -0800 (PST)
+In-Reply-To: <200811160129.17319.jnareb@gmail.com>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/101114>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/101115>
 
-When running under X, we try to set up a window icon by providing a
-hand-crafted 16x16 Tk photo image equivalent to the .ico. Wrap in a
-catch because the earlier Tcl/Tk 8.4 releases didn't provide the 'wm
-iconphoto' command.
+On Sun, Nov 16, 2008 at 1:29 AM, Jakub Narebski <jnareb@gmail.com> wrote:
+> On Sat, 15 Nov 2008, Giuseppe Bilotta wrote:
+>> FWIW, I decided to scratch that additional ' remotes' string when
+>> squashing this patch.
+>
+> Hmmm... I'm not sure if $project in git_print_header_div() for those
+> two actions is good thing to have...
 
-Signed-off-by: Giuseppe Bilotta <giuseppe.bilotta@gmail.com>
----
+Considering it links back to summary view, it makes sense to say
+$project in there.  If we decide to make it link to something else, we
+should change the text accordingly. Suggestions?
 
-Resend, forgot the signed-off line
-
- git-gui/git-gui.sh |   22 ++++++++++++++++++++++
- 1 files changed, 22 insertions(+), 0 deletions(-)
-
-diff --git a/git-gui/git-gui.sh b/git-gui/git-gui.sh
-index cf9ef6e..6ed6230 100755
---- a/git-gui/git-gui.sh
-+++ b/git-gui/git-gui.sh
-@@ -597,6 +597,28 @@ if {[is_Windows]} {
- 	if {![info exists env(DISPLAY)]} {
- 		set env(DISPLAY) :9999
- 	}
-+} else {
-+	catch {
-+		image create photo gitlogo -width 16 -height 16
-+
-+		gitlogo put #33CC33 -to  7  0  9  2
-+		gitlogo put #33CC33 -to  4  2 12  4
-+		gitlogo put #33CC33 -to  7  4  9  6
-+		gitlogo put #CC3333 -to  4  6 12  8
-+		gitlogo put gray26  -to  4  9  6 10
-+		gitlogo put gray26  -to  3 10  6 12
-+		gitlogo put gray26  -to  8  9 13 11
-+		gitlogo put gray26  -to  8 11 10 12
-+		gitlogo put gray26  -to 11 11 13 14
-+		gitlogo put gray26  -to  3 12  5 14
-+		gitlogo put gray26  -to  5 13
-+		gitlogo put gray26  -to 10 13
-+		gitlogo put gray26  -to  4 14 12 15
-+		gitlogo put gray26  -to  5 15 11 16
-+		gitlogo redither
-+
-+		wm iconphoto . -default gitlogo
-+	}
- }
- 
- ######################################################################
 -- 
-1.5.6.5
+Giuseppe "Oblomov" Bilotta
