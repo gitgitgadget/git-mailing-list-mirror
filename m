@@ -1,172 +1,133 @@
-From: "Giuseppe Bilotta" <giuseppe.bilotta@gmail.com>
-Subject: Re: [PATCHv3 1/4] gitweb: introduce remote_heads feature
-Date: Sun, 16 Nov 2008 18:40:19 +0100
-Message-ID: <cb7bb73a0811160940wd3624ccl4f1f184cff729b6@mail.gmail.com>
-References: <1226842089-1159-1-git-send-email-giuseppe.bilotta@gmail.com>
-	 <1226842089-1159-2-git-send-email-giuseppe.bilotta@gmail.com>
-	 <7vvdun3827.fsf@gitster.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 1/2 resend] Documentation: user-manual: add information
+ about "git help" at the beginning
+Date: Sun, 16 Nov 2008 10:09:48 -0800
+Message-ID: <7vej1b35lf.fsf@gitster.siamese.dyndns.org>
+References: <20081116181001.97c45196.chriscool@tuxfamily.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, "Jakub Narebski" <jnareb@gmail.com>,
-	"Petr Baudis" <pasky@suse.cz>
-To: "Junio C Hamano" <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sun Nov 16 18:41:40 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: Petr Baudis <pasky@suse.cz>, git@vger.kernel.org
+To: Christian Couder <chriscool@tuxfamily.org>
+X-From: git-owner@vger.kernel.org Sun Nov 16 19:11:29 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1L1lcv-0006Sd-4c
-	for gcvg-git-2@gmane.org; Sun, 16 Nov 2008 18:41:37 +0100
+	id 1L1m5n-0006Uo-Tv
+	for gcvg-git-2@gmane.org; Sun, 16 Nov 2008 19:11:28 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751980AbYKPRkW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 16 Nov 2008 12:40:22 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751834AbYKPRkW
-	(ORCPT <rfc822;git-outgoing>); Sun, 16 Nov 2008 12:40:22 -0500
-Received: from qb-out-0506.google.com ([72.14.204.231]:11351 "EHLO
-	qb-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751802AbYKPRkV (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 16 Nov 2008 12:40:21 -0500
-Received: by qb-out-0506.google.com with SMTP id f11so2093345qba.17
-        for <git@vger.kernel.org>; Sun, 16 Nov 2008 09:40:20 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to
-         :subject:cc:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:references;
-        bh=pC7Uya9CY1F1+SQkN+PBkdzSgndZCKiRSq3wSlFxwqE=;
-        b=rg3CI+J0TfSmcXBukCzF92dZjVSDKTp9eUGZO6f77X0hoXPAG+kIIwsBjqPE6WEkPm
-         moa4uojYTLvE4XBHyjjBSI19FLtFvwrYk/ulglhr1rjaL9feAbOuR3FPzbVeA4ZowBak
-         mLI1I5GUiwxqo9aOA2Xp48/1i5Vz8R2YRkw64=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
-         :content-type:content-transfer-encoding:content-disposition
-         :references;
-        b=FwPmanJa4qYDw2Ejj8KbQATdHAdytxJAZ17xnM2wi9v87FguGX6v6Brt5jvLcGxBZM
-         ey46j7dKFeBM8LVPVytqO+/gUOw5fHFj3wf9BnPX3s9dzW7CkyFPYycub8nDRBGcNO1x
-         FDJXG7/NojVsmsKbGTY1t2LVmLqneuBZg6R2g=
-Received: by 10.210.40.10 with SMTP id n10mr3166572ebn.102.1226857219446;
-        Sun, 16 Nov 2008 09:40:19 -0800 (PST)
-Received: by 10.210.132.16 with HTTP; Sun, 16 Nov 2008 09:40:19 -0800 (PST)
-In-Reply-To: <7vvdun3827.fsf@gitster.siamese.dyndns.org>
-Content-Disposition: inline
+	id S1752721AbYKPSKM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 16 Nov 2008 13:10:12 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752717AbYKPSKL
+	(ORCPT <rfc822;git-outgoing>); Sun, 16 Nov 2008 13:10:11 -0500
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:58275 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752670AbYKPSKK (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 16 Nov 2008 13:10:10 -0500
+Received: from localhost.localdomain (unknown [127.0.0.1])
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id BE67D7E677;
+	Sun, 16 Nov 2008 13:10:08 -0500 (EST)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES256-SHA (256/256 bits)) (No client certificate requested) by
+ a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTPSA id 3FFCD7E676; Sun,
+ 16 Nov 2008 13:09:54 -0500 (EST)
+In-Reply-To: <20081116181001.97c45196.chriscool@tuxfamily.org> (Christian
+ Couder's message of "Sun, 16 Nov 2008 18:10:01 +0100")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: CD936506-B409-11DD-9E60-9CEDC82D7133-77302942!a-sasl-fastnet.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/101146>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/101147>
 
-On Sun, Nov 16, 2008 at 6:16 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> Giuseppe Bilotta <giuseppe.bilotta@gmail.com> writes:
->
->> With this feature enabled, remotes are retrieved (and displayed)
->> when getting (and displaying) the heads list.
->
-> Wouldn't it be easier to read if you just said: "Include 'remotes' in the
-> heads_list", because:
+Christian Couder <chriscool@tuxfamily.org> writes:
 
-[snip]
+> Talking about "git help" is useful because it has a few more
+> features (like when using it without arguments or with "-a") and
+> it may work on non unix like platforms.
 
-> I am also suggesting to drop "With this feature enabled"; I do not think
-> of a case where somebody runs gitweb on a repository with refs/remotes and
-> does not want to show them.
+First of all, I disagree with your idea to advocate "git help" as _the
+first way_ to read the manual pages.  The way the current user manual is
+organized is to help command line users, and _the_ way to get to the
+manual is through the "man" command.  Yes, it is very nice of us to
+provide them _other ways_ to get to them, but that is additional frill.
+IOW, we _should not_ give impression that you have to use "git" (and "git
+help") to get to the documentation.
 
-[snip]
+> diff --git a/Documentation/user-manual.txt b/Documentation/user-manual.txt
+> index 645d752..48f7189 100644
+> --- a/Documentation/user-manual.txt
+> +++ b/Documentation/user-manual.txt
+> @@ -17,13 +17,27 @@ People needing to do actual development will also want to read
+>  
+>  Further chapters cover more specialized topics.
+>  
+> -Comprehensive reference documentation is available through the man
+> -pages.  For a command such as "git clone <repo>", just use
+> +Comprehensive reference documentation is available through either the
+> +linkgit:git-help[1] command or the man pages.  For a command such as
+> +"git clone <repo>", you can use:
+> +
+> +------------------------------------------------
+> +$ git help clone
+> +------------------------------------------------
+> +
+> +or:
+>  
+>  ------------------------------------------------
+>  $ man git-clone
+>  ------------------------------------------------
 
-> When proofreading what you've written, it is usually a good idea to read
-> it without anything you wrote in parentheses once, and then re-read it
-> with parentheses removed (but the stuff in your parentheses kept), and
-> compare which one you like better.  More often than not, you'd find that
-> either parenthesized parts are unnecessary, or they are important enough
-> that you shouldn't put them in parentheses.
+I am not opposed to mentioning "git help" in the early part of the manual,
+but for the above stated reason, I'd rather swap the above:
 
-Good points, I'll rewrite the commit messagge following the suggestions.
+	... through the man pages, or linkgit:git-help[1] command.  For
+	example, for the command "git clone <repo>", you can either use:
 
->> diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
->> index b0d00ea..e1f81f6 100755
->> --- a/gitweb/gitweb.perl
->> +++ b/gitweb/gitweb.perl
->> @@ -329,6 +329,18 @@ our %feature = (
->> ...
->> @@ -410,6 +422,18 @@ sub feature_pickaxe {
->> ...
->> +sub feature_remote_heads {
->> ...
->> +}
->
-> When would somebody want to disable this?  Please explain; I'd like to
-> understand the motivation behind it.
->
-> One argument for making this feature optional I can think of is to retain
-> backward compatibility because we didn't show them before, but I would say
-> that is a weak argument.  Before release 1.5.0 made the separate remotes
-> layout the default, everything was in refs/heads/, so you could even argue
-> that this "fixes" the gitweb bug introduced in that release that stopped
-> showing the branches you copied from elsewhere.
+	------------
+        $ man git-clone
+        ------------
 
-For example, because the only remote for the tree is the author's own
-private tree, or because the only remotes are the mirrors on gitorious
-or github. In both cases, there would be no reaso to waste resources,
-bandwidth and screen estate loading and displaying the remote
-references.
+	or:
 
-OTOH, it might make sense to make remote_heads enabled by default (and
-overridable).
+	------------
+        $ git help clone
+        ------------
 
->> @@ -2660,10 +2684,12 @@ sub git_get_heads_list {
->>       my $limit = shift;
->>       my @headslist;
->>
->> +     my $remote_heads = gitweb_check_feature('remote_heads');
->> +
->>       open my $fd, '-|', git_cmd(), 'for-each-ref',
->>               ($limit ? '--count='.($limit+1) : ()), '--sort=-committerdate',
->>               '--format=%(objectname) %(refname) %(subject)%00%(committer)',
->> -             'refs/heads'
->> +             'refs/heads', ( $remote_heads ? 'refs/remotes' : '')
->>               or return;
->>       while (my $line = <$fd>) {
->>               my %ref_item;
->
-> Imagine a later version of git may introduce 'refs/frotz/nitfol' namespace
-> hierarchy that is commonly known as the 'xyzzy class' and is also useful
-> to show.  Wouldn't it be easier to update gitweb to match such a change if
-> this part of the code were written like this?
->
->        my %head_class = ('refs/heads' => 'head');
->        $head_class{'refs/remotes'} = 'remote'
->                if ( this feature is used );
->        $head_class{'refs/frotz/nitfol'} = 'xyzzy'
->                if ( the xyzzy class is used);
->        open my $fd, ... (keys %head_class);
->
->> @@ -2674,8 +2700,9 @@ sub git_get_heads_list {
->>               my ($committer, $epoch, $tz) =
->>                       ($committerinfo =~ /^(.*) ([0-9]+) (.*)$/);
->>               $ref_item{'fullname'}  = $name;
->> -             $name =~ s!^refs/heads/!!;
->> +             $name =~ s!^refs/(head|remote)s/!!;
->>
->> +             $ref_item{'class'} = $1;
->
-> And then outside the loop, you'd prepare:
->
->        my $headpat = join('|', map { quotemeta($_) } keys %head_class);
->
-> and inside the loop you would do:
->
->        if ($name =~ s{^($headpat)/}{}) {
->                $ref_item{'class'} = $head_class{$1};
->                ...
->
-> Only one place to configure the list of classes, and make everybody use
-> that list instead of hardcoding the assumption that there are two and only
-> two kinds of things "head" vs "remote".
+This is a very early part of the user manual, and it would be a good idea
+to tell the user about the presense of the comprehensive set of manual
+pages.  I also think it is a good idea to tell them that they do not have
+to use "man" but they can also use "git help", and hint that the "git
+help" is a separate command (which is already done with the above
+rewording).
 
-Ah, good point. This change, and the one about extending
-git_get_heads_list, could also be turned into prelliminary patches to
-the actual remote_heads feature.
+However, this part troubles me heavily in a few ways:
 
--- 
-Giuseppe "Oblomov" Bilotta
+> +linkgit:git-help[1] has a few more features and is self-documenting
+> +using:
+
+ - "A few more features" may be good in the commit log message for this
+   change, but look out of place here.  What additional benefit are the
+   readers of the user manual getting here?
+
+   You already told them that a separate "git help" command is available,
+   so they can learn how to use it by either "man git-help" or "git help
+   help" if they are interested (and I do not think we need a separate
+   example for that, after we've shown the use of these two ways for "git
+   clone").
+
+ - "self-documenting" is like saying git is self documenting, and/or there
+   is a documentation.  Again, I find this an additional noise that does
+   not help the readers very much.
+
+It would probably be less objectionable if instead this part said
+something like:
+
+	With the latter, you can use the manual viewer of your choice; see
+	linkgit:git-help[1] for more information.
+
+which would be way more informative than "with a few more features" and
+"self documenting", I think.  Notice that I said "with the _latter_" --
+which is consistent to the order I think man/help should be mentioned in
+the paragraph before this part.
