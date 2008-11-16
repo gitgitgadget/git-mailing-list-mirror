@@ -1,58 +1,109 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: git to libgit2 code relicensing
-Date: Sun, 16 Nov 2008 22:00:32 +0100 (CET)
-Message-ID: <alpine.DEB.1.00.0811162159280.30769@pacific.mpi-cbg.de>
-References: <491DE6CC.6060201@op5.se> <200811151615.42345.chriscool@tuxfamily.org> <49200914.6090506@op5.se>
+From: =?ISO-8859-1?Q?Steve_Fr=E9cinaux?= <nudrema@gmail.com>
+Subject: git-bugzilla
+Date: Sun, 16 Nov 2008 22:00:26 +0100
+Message-ID: <492089EA.60205@gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Christian Couder <chriscool@tuxfamily.org>,
-	Git Mailing List <git@vger.kernel.org>
-To: Andreas Ericsson <ae@op5.se>
-X-From: git-owner@vger.kernel.org Sun Nov 16 21:54:05 2008
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Nov 16 22:02:05 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1L1odB-0001mP-3k
-	for gcvg-git-2@gmane.org; Sun, 16 Nov 2008 21:54:05 +0100
+	id 1L1oks-0004OD-Lv
+	for gcvg-git-2@gmane.org; Sun, 16 Nov 2008 22:02:03 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752499AbYKPUwo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 16 Nov 2008 15:52:44 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752245AbYKPUwn
-	(ORCPT <rfc822;git-outgoing>); Sun, 16 Nov 2008 15:52:43 -0500
-Received: from mail.gmx.net ([213.165.64.20]:34502 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1752100AbYKPUwn (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 16 Nov 2008 15:52:43 -0500
-Received: (qmail invoked by alias); 16 Nov 2008 20:52:40 -0000
-Received: from pacific.mpi-cbg.de (EHLO pacific.mpi-cbg.de) [141.5.10.38]
-  by mail.gmx.net (mp065) with SMTP; 16 Nov 2008 21:52:41 +0100
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX18rk3cKjL0rM3dciNW5l9GyD+RMVpY3aoebGQI/Uf
-	suBqkleqKHOhn6
-X-X-Sender: schindelin@pacific.mpi-cbg.de
-In-Reply-To: <49200914.6090506@op5.se>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.7
+	id S1754171AbYKPVAj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 16 Nov 2008 16:00:39 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752053AbYKPVAj
+	(ORCPT <rfc822;git-outgoing>); Sun, 16 Nov 2008 16:00:39 -0500
+Received: from www.multitel.be ([193.190.194.194]:49541 "EHLO smtp.multitel.be"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754142AbYKPVAi (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 16 Nov 2008 16:00:38 -0500
+Received: from localhost (localhost [127.0.0.1])
+	by smtp.multitel.be (Postfix) with ESMTP id 99D434E81C9
+	for <git@vger.kernel.org>; Sun, 16 Nov 2008 22:00:36 +0100 (CET)
+X-Virus-Scanned: Debian amavisd-new at pop.multitel.be.multitel.be
+Received: from smtp.multitel.be ([127.0.0.1])
+	by localhost (pop.multitel.be [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id iZe9iHjF6pEe for <git@vger.kernel.org>;
+	Sun, 16 Nov 2008 22:00:35 +0100 (CET)
+Received: from [192.168.1.138] (unknown [91.86.81.88])
+	by smtp.multitel.be (Postfix) with ESMTP id 466724E80DF
+	for <git@vger.kernel.org>; Sun, 16 Nov 2008 22:00:35 +0100 (CET)
+User-Agent: Mozilla-Thunderbird 2.0.0.17 (X11/20081018)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/101157>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/101158>
 
-Hi,
+Hi folks,
 
-On Sun, 16 Nov 2008, Andreas Ericsson wrote:
+Here is a chunk of code I wrote a few time ago, to post patches to 
+bugzilla, modelled mostly after git-format-patch/git-send-email.
 
-> With the current list of ok's 73.09% of the code in git.git seems to be 
-> relicenseable for the purpose of libgit2. That will provide quite a 
-> kickstart.
+You can find it there:
+http://code.istique.net/?p=git-bugzilla.git
 
-I doubt it.  Most of that code was written with the execute-once 
-mentality.  And with the we-have-posix mentality.
+It is written in perl and requires WWW::Mechanize.
 
-Two things we do not _want_ in libgit2.
+Hope you like it.
 
-Ciao,
-Dscho
+
+Here is an excerpt of the man page:
+
+NAME
+----
+git-send-bugzilla - Attach patches to a bugzilla bug
+
+
+SYNOPSIS
+--------
+'git-send-bugzilla' [OPTIONS] (--dry-run | <bugid>)
+                     <since>[..<until>]
+
+DESCRIPTION
+-----------
+
+Attach each commit between <since> and <until> to the bug <bugid>
+on GNOME's bugzilla.
+If ..<until> is not specified, the head of the current working
+tree is implied.
+
+If -n (or bugzilla.numbered in the repository configuration) is
+specified, instead of "[PATCH] Subject", the first line is
+formatted as "[n/m] Subject".
+
+OPTIONS
+-------
+-b|--url <url>::
+         The Bugzilla URL.
+
+-u|--username <username>::
+         Your Bugzilla user name.
+
+-p|--password <password>::
+         Your Bugzilla password.
+
+-s|--squash::
+         Send all the selected commits as a single patch.
+
+-n|--numbered::
+         Prefix attachment names with [n/m].
+
+--start-number <n>::
+         Start numbering the patches at <n> instead of 1.
+
+--dry-run::
+         Don't do anything for real. If you use this option you
+         shouldn't specify a bug id.
+
+EXAMPLES
+--------
+git-send-bugzilla -n 12345 master
+         Extract all commits which are in the current branch but
+         not in the 'master' branch. Each commit will be attached as
+         a single patch to the bug #12345
