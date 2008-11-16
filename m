@@ -1,99 +1,130 @@
-From: Andreas Ericsson <ae@op5.se>
-Subject: Re: git to libgit2 code relicensing
-Date: Sun, 16 Nov 2008 12:50:44 +0100
-Message-ID: <49200914.6090506@op5.se>
-References: <491DE6CC.6060201@op5.se> <200811151615.42345.chriscool@tuxfamily.org>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: [PATCH v2 05/11] gitweb: git_split_heads_body function.
+Date: Sun, 16 Nov 2008 13:12:48 +0100
+Message-ID: <200811161312.50090.jnareb@gmail.com>
+References: <1226616555-24503-1-git-send-email-giuseppe.bilotta@gmail.com> <7vprkx5gqb.fsf@gitster.siamese.dyndns.org> <cb7bb73a0811150425j2475db8dsdee57c1cc5e208ab@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15;
-	format=flowed
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Christian Couder <chriscool@tuxfamily.org>
-X-From: git-owner@vger.kernel.org Sun Nov 16 12:52:10 2008
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
+Cc: "Junio C Hamano" <gitster@pobox.com>, git@vger.kernel.org,
+	"Petr Baudis" <pasky@suse.cz>
+To: "Giuseppe Bilotta" <giuseppe.bilotta@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Nov 16 13:14:30 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1L1gAj-0003B2-1n
-	for gcvg-git-2@gmane.org; Sun, 16 Nov 2008 12:52:09 +0100
+	id 1L1gWJ-00007v-S2
+	for gcvg-git-2@gmane.org; Sun, 16 Nov 2008 13:14:28 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751795AbYKPLux convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 16 Nov 2008 06:50:53 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751777AbYKPLux
-	(ORCPT <rfc822;git-outgoing>); Sun, 16 Nov 2008 06:50:53 -0500
-Received: from mail.op5.se ([193.201.96.20]:46827 "EHLO mail.op5.se"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751770AbYKPLuw (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 16 Nov 2008 06:50:52 -0500
-Received: from localhost (localhost.localdomain [127.0.0.1])
-	by mail.op5.se (Postfix) with ESMTP id CAB591B80C10;
-	Sun, 16 Nov 2008 12:45:32 +0100 (CET)
-X-Virus-Scanned: amavisd-new at 
-X-Spam-Flag: NO
-X-Spam-Score: -2.499
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.499 tagged_above=-10 required=6.6
-	tests=[BAYES_00=-2.599, RDNS_NONE=0.1]
-Received: from mail.op5.se ([127.0.0.1])
-	by localhost (mail.op5.se [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id XhVA8mj9XSa2; Sun, 16 Nov 2008 12:45:29 +0100 (CET)
-Received: from clix.int.op5.se (unknown [172.27.78.6])
-	by mail.op5.se (Postfix) with ESMTP id BA25A1B803D3;
-	Sun, 16 Nov 2008 12:45:28 +0100 (CET)
-User-Agent: Thunderbird 2.0.0.16 (X11/20080723)
-In-Reply-To: <200811151615.42345.chriscool@tuxfamily.org>
+	id S1751846AbYKPMNH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 16 Nov 2008 07:13:07 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751892AbYKPMNG
+	(ORCPT <rfc822;git-outgoing>); Sun, 16 Nov 2008 07:13:06 -0500
+Received: from ug-out-1314.google.com ([66.249.92.174]:47183 "EHLO
+	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751888AbYKPMNF (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 16 Nov 2008 07:13:05 -0500
+Received: by ug-out-1314.google.com with SMTP id 39so213239ugf.37
+        for <git@vger.kernel.org>; Sun, 16 Nov 2008 04:13:02 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:from:to:subject:date
+         :user-agent:cc:references:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:message-id;
+        bh=dOlSSsINQfHvc6XI0DZ94xMw0V8ZHLPgMPRXv53cJfY=;
+        b=C13+L8PIJotYOsbjMxXrEDWeKJLck2amgaA73OdgdNrhlhxO7uEh/ZSyS6GfzOfqXQ
+         c4cIUCosjiWejFMOUw6ma+3dusJ5k9fbHWieOUGa9g+qH4rI1zLTUD9TEmS3B406WQsO
+         WZoYWz4rhtZcMotJ7ZkQhCwy8CH0qDfMxgZc4=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=from:to:subject:date:user-agent:cc:references:in-reply-to
+         :mime-version:content-type:content-transfer-encoding
+         :content-disposition:message-id;
+        b=aT8F8Mbs1xDfkJ0yRTzJXfWFdTYuK+5aWuz/eooL8Y8xoW0dDRi/XQkMReB0V+5uW1
+         I0Y0pKnopweajDcfNFoSjCmiQhUTw+BSpIQhjoFc+bpK5Z+oNxTenVqfK0Vhm3oupuUX
+         25AZF91nyZlayZ7yi2l7O1sbdQ6sp4wCbz3mA=
+Received: by 10.210.52.9 with SMTP id z9mr2916989ebz.177.1226837581933;
+        Sun, 16 Nov 2008 04:13:01 -0800 (PST)
+Received: from ?192.168.1.11? (abwa41.neoplus.adsl.tpnet.pl [83.8.224.41])
+        by mx.google.com with ESMTPS id 7sm2521432eyg.9.2008.11.16.04.12.58
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Sun, 16 Nov 2008 04:13:00 -0800 (PST)
+User-Agent: KMail/1.9.3
+In-Reply-To: <cb7bb73a0811150425j2475db8dsdee57c1cc5e208ab@mail.gmail.com>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/101122>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/101123>
 
-Christian Couder wrote:
-> Hi Andreas,
->=20
-> Le vendredi 14 novembre 2008, Andreas Ericsson a =E9crit :
->> I've been working quite a lot on git -> libgit2 code moving,
->=20
-> It would be nice if there was somewhere on the web where your work co=
-uld be=20
-> seen. If there is already, could you send (or resend) the URL? This w=
-ay=20
-> people might have look and perhaps even help you. (Though I don't pro=
-mise=20
-> anything as I have already a lot of things on my TODO list.) Thanks i=
-n=20
-> advance.
->=20
-
-When I was about to, I realized these licensing issues actually made it
-illegal to do so without getting the permissions from the involved auth=
-ors.
-Now that Linus and a lot of other core contributors have given their co=
-nsent,
-I'll be able to start re-ordering the commits so I can publish those pa=
-rts
-originating from consenting authors while holding off on those that I c=
-an't
-tell for sure are ok with it. Legal issues are no fun what so ever.
-
->> but the licensing stuff is a bit depressing, as I can't know
->> if the work I'm doing is for nothing or not.
+Giuseppe Bilotta wrote:
+> On Sat, Nov 15, 2008 at 1:14 PM, Junio C Hamano <gitster@pobox.com> wrote:
+>> Jakub Narebski <jnareb@gmail.com> writes:
 >>
->> The license decided for libgit2 is "GPL with gcc exception".
->> Those who are OK with relicensing their contributions under
->> that license for the purpose of libgit2, can you please say
->> so?
->=20
-> It's ok to relicense my git related work under the "GPL with gcc exce=
-ption"=20
-> license.
->=20
+>>> Second, this patch wouldn't do what you want from it if there are
+>>> remotes with '/' in name.  I for example use "gsoc2008/gitweb-caching"
+>>> for Lea Wiemann repository with her GSoC 2008 work on adding caching
+>>> to gitweb.
+>>
+>> I think your point is if you also use gsoc2008/gitstats from another
+>> remote repository, these two sets of remote tracking branches will be
+>> shown grouped together.  But is it a bad thing?  After all, you chose to
+>> use hierarchical names for them, _and_ you chose to use the same toplevel
+>> hierarchy name for them.  Doesn't that mean you _wanted_ to have them both
+>> appear in the same GSoC 2008 group?
 
-Thank you. With the current list of ok's 73.09% of the code in git.git
-seems to be relicenseable for the purpose of libgit2. That will provide
-quite a kickstart.
+Actually I _don't_ have 'gsoc2008/gitstats' remote, nor gsoc2008/gitstats/*
+remote-tracking branches. 'gsoc2008/gitweb-caching' is the only remote
+with hierarchical name. But I digress...
 
---=20
-Andreas Ericsson                   andreas.ericsson@op5.se
-OP5 AB                             www.op5.se
-Tel: +46 8-230225                  Fax: +46 8-230231
+> The problem is that we have gsoc2008/gitweb-caching/branch1
+> gsoc2008/gitweb-caching/branch2 gsoc2008/gitstats/branch3
+> gsoc2008/gitstats/branch3, and my current code would show
+> gitweb-caching/branch1, gitweb-caching/branch2 etc under gsoc2008.
+
+I'm not sure if it wouldn't be simpler solution to just code _sorting_
+heads-like view ('heads', 'remotes', 'tags') by ref name, or by age.
+It would be best to have both, even...
+
+Even without dividing 'remotes' view into subcategories (and
+subsubcategories) you would have natural grouping:
+
+ gsoc2008/gitweb-caching/branch1
+ gsoc2008/gitweb-caching/branch2
+ gsoc2008/gitstats/branch3
+ gsoc2008/gitstats/branch4
+
+if sorted by branch (ref) name, and not (possibly)
+
+ gsoc2008/gitweb-caching/branch1
+ gsoc2008/gitstats/branch4
+ origin/todo
+ gsoc2008/gitweb-caching/branch2
+ gsoc2008/gitstats/branch3
+
+when sorted by age (hmmm... committerdate or authordate?)
+
+> Having branch1 and branch2 under gsoc2008/gitweb-caching, and branch3
+> and branch4 under gsoc2008/gitstats would be more logical,
+> remote-wise, but it would of course lose the coupling between all the
+> gsoc2008 remotes.
+> 
+> If deep nesting is not a problem, I can code something to have
+> gitweb-caching and gistats under gsoc2008, and the respective branches
+> within.
+
+The problems with nesting is those pesky remotes with only single
+tracked branch to them; they are I think quote common... well, unless
+you do one-shot pull, directly into local branch.
+
+All that said, splitting 'remotes' section is difficult; using first
+dirname as section is probably easiest, and good enough in most cases.
+That is why I think this part should be put into separate series, to
+not hinder rest of patches.
+
+-- 
+Jakub Narebski
+Poland
