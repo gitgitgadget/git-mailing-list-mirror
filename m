@@ -1,112 +1,59 @@
-From: "Giuseppe Bilotta" <giuseppe.bilotta@gmail.com>
-Subject: Re: [PATCHv3 3/4] gitweb: separate heads and remotes lists
-Date: Mon, 17 Nov 2008 14:31:16 +0100
-Message-ID: <cb7bb73a0811170531o45f0970cyf225ecab087ccb5@mail.gmail.com>
-References: <1226842089-1159-1-git-send-email-giuseppe.bilotta@gmail.com>
-	 <1226842089-1159-2-git-send-email-giuseppe.bilotta@gmail.com>
-	 <1226842089-1159-3-git-send-email-giuseppe.bilotta@gmail.com>
-	 <1226842089-1159-4-git-send-email-giuseppe.bilotta@gmail.com>
-	 <7viqqn377m.fsf@gitster.siamese.dyndns.org>
-	 <cb7bb73a0811170511s4df6efbbl220fa89469388aca@mail.gmail.com>
+From: "Shawn O. Pearce" <spearce@spearce.org>
+Subject: Re: git to libgit2 code relicensing
+Date: Mon, 17 Nov 2008 07:40:40 -0800
+Message-ID: <20081117154040.GO2932@spearce.org>
+References: <491DE6CC.6060201@op5.se> <200811151615.42345.chriscool@tuxfamily.org> <49200914.6090506@op5.se> <alpine.DEB.1.00.0811162159280.30769@pacific.mpi-cbg.de> <49211C19.5010409@op5.se>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, "Jakub Narebski" <jnareb@gmail.com>,
-	"Petr Baudis" <pasky@suse.cz>
-To: "Junio C Hamano" <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Nov 17 14:32:42 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Christian Couder <chriscool@tuxfamily.org>,
+	Git Mailing List <git@vger.kernel.org>
+To: Andreas Ericsson <ae@op5.se>
+X-From: git-owner@vger.kernel.org Mon Nov 17 16:42:09 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1L24DS-0007Wg-DF
-	for gcvg-git-2@gmane.org; Mon, 17 Nov 2008 14:32:34 +0100
+	id 1L26Eh-00045v-T6
+	for gcvg-git-2@gmane.org; Mon, 17 Nov 2008 16:42:00 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751502AbYKQNbS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 17 Nov 2008 08:31:18 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751654AbYKQNbS
-	(ORCPT <rfc822;git-outgoing>); Mon, 17 Nov 2008 08:31:18 -0500
-Received: from ey-out-2122.google.com ([74.125.78.27]:39652 "EHLO
-	ey-out-2122.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751331AbYKQNbR (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 17 Nov 2008 08:31:17 -0500
-Received: by ey-out-2122.google.com with SMTP id 6so944809eyi.37
-        for <git@vger.kernel.org>; Mon, 17 Nov 2008 05:31:16 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to
-         :subject:cc:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:references;
-        bh=yXU8qi4YbI7KTEDVyNO+UP1svVIRQ71gCyGzAjZ26h8=;
-        b=ABRqORTWtEZsfCxGZlhViZ6dsx5KjacTn3BMDl/vIG/0lC/nzKwddsOofrkYnFzfWJ
-         4iCGufFcGyNORmqM/35J0hcOL0hUayF5EnQZYddknwR2Ls7jqHPRKdQiM0qtqce7F+Yj
-         396dkeCLCFzy+bpygS315HTs60JwVZW0HJBNs=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
-         :content-type:content-transfer-encoding:content-disposition
-         :references;
-        b=Ti0Kex8GsTA3+fuWyWmqSctTLl+vI5/82O4XxrU/x65mp6yAhvCBDDwHRCMV501sOX
-         6N7wYtRN4KgJdG2O879PfajtoiuJtj72+XKYnnQYStrqozne4d8uyOIfvbSIDrpH+WRc
-         W5ZfPwkkb/9uGLgrQ9Cjjob0GRAXAAxSDG8u8=
-Received: by 10.210.43.11 with SMTP id q11mr3948500ebq.51.1226928676183;
-        Mon, 17 Nov 2008 05:31:16 -0800 (PST)
-Received: by 10.210.132.16 with HTTP; Mon, 17 Nov 2008 05:31:16 -0800 (PST)
-In-Reply-To: <cb7bb73a0811170511s4df6efbbl220fa89469388aca@mail.gmail.com>
+	id S1751745AbYKQPkn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 17 Nov 2008 10:40:43 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752063AbYKQPkn
+	(ORCPT <rfc822;git-outgoing>); Mon, 17 Nov 2008 10:40:43 -0500
+Received: from george.spearce.org ([209.20.77.23]:46163 "EHLO
+	george.spearce.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750919AbYKQPkl (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 17 Nov 2008 10:40:41 -0500
+Received: by george.spearce.org (Postfix, from userid 1001)
+	id E5324381FF; Mon, 17 Nov 2008 15:40:40 +0000 (UTC)
 Content-Disposition: inline
+In-Reply-To: <49211C19.5010409@op5.se>
+User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/101226>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/101227>
 
-On Mon, Nov 17, 2008 at 2:11 PM, Giuseppe Bilotta
-<giuseppe.bilotta@gmail.com> wrote:
-> On Sun, Nov 16, 2008 at 6:34 PM, Junio C Hamano <gitster@pobox.com> wrote:
->> Giuseppe Bilotta <giuseppe.bilotta@gmail.com> writes:
->>> -     my @headlist = git_get_heads_list(16);
->>> +     my @headlist = git_get_heads_list(16, 'heads');
->>> +     my @remotelist = $remote_heads ? git_get_heads_list(16, 'remotes') : ();
->>
->> Wasteful to run one for-each-ref for each list.
->>
->> You earlier introduced $ref_item{'class'} so that you can differenciate
->> what you got from git_get_heads_list(); make use of it, perhaps like:
->>
->>        my @heads_list = git_get_heads_list(16, \%head_class);
->>        my @headlist = grep { $_->{'class'} eq 'head' } @heads_list;
->>        my @remotelist = grep { $_->{'class'} eq 'remote' } @heads_list;
->>
->> By the way, your [2/4] used "heads" and "remotes" as class, while your
->> [1/4] stored 'head' and 'remote' in $ref_item{'class'}.  Notice the above
->> suggestion corrects this discrepancy as well.
+Andreas Ericsson <ae@op5.se> wrote:
 >
-> Although I agree with the head_class idea, I would like to point out
-> that doing a single git call to retrieve all refs and then selecting
-> the ones we want and doing multiple git calls are not equivalent.
->
-> First of all, with multiple calls we can limit the calls to retrieve
-> at most 16 refs of each kind, whereas this cannot be done with a
-> single call for all the refs. I'm not sure however, performance-wise,
-> if it's faster to filter the first 16 refs of each after retrieving
-> all of them, or doing multiple calls, especially with lots of refs.
->
-> Moreover, gitweb is already doing multiple for-each-ref calls to get
-> tags and heads. I guess that at this point we could go the extra mile
-> and include tags in the refs management. Of course, the problem of how
-> to handle the rate limiting remains.
+> "Copy-rewrite", naturally. Being able to lift much of the data-munging code
+> is a great benefit. It's basically just the revision traversal (which is
+> heavy on state-dependant code) that I haven't quite figured out how to do
+> yet, but I believe Shawn's idea of using revision pools is most likely the
+> way to go. Each application has to make sure a pool isn't modified by more
+> than one thread, but each application can have as many pools as it likes.
 
-Sorry, replying to myself here. After more careful reading and some
-more accurate testing, I gather that tags and heads management is
-different enough to justify totally separate methods, and the cost of
-an additional git call. It *could* still be merged (possibly with a
-slightly different format string to accomodate both cases), but we
-would have to do sorting ourselves, and such stuff. Not sure it's
-worth it (yet).
+I also like Pierre's idea of using annotation data in different
+annotation pools, and storing the rewritten parents in such a pool.
+Then an application can more easily reuse a revision pool, by just
+tossing the rewritten parent pool, or any other annotations it
+wants to recompute.
 
-My perplexity about rate limiting and separate calls for separate head
-classes still remains, though.
-
+It may still be important to have revision pools and make them
+not thread-safe, so we can void fine-grained locking costs in
+the library during the tight revision traversal loops.
 
 -- 
-Giuseppe "Oblomov" Bilotta
+Shawn.
