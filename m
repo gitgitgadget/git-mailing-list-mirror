@@ -1,136 +1,90 @@
-From: "Geoff Russell" <geoffrey.russell@gmail.com>
-Subject: Re: purging unwanted history
-Date: Mon, 17 Nov 2008 13:33:07 +1030
-Message-ID: <93c3eada0811161903v7b6c7abaq58cb6712190d03d5@mail.gmail.com>
-References: <93c3eada0811161626h69929cd7va3fa4007a2341bae@mail.gmail.com>
-	 <20081117022412.GB3911@atjola.homenet>
-	 <20081117022714.GC3911@atjola.homenet>
-Reply-To: geoffrey.russell@gmail.com
+From: "Giuseppe Bilotta" <giuseppe.bilotta@gmail.com>
+Subject: Re: [PATCH] gitweb: fixes to gitweb feature check code
+Date: Mon, 17 Nov 2008 07:10:49 +0100
+Message-ID: <cb7bb73a0811162210iadb7511rc3474272c8e60c59@mail.gmail.com>
+References: <1226759165-6894-1-git-send-email-giuseppe.bilotta@gmail.com>
+	 <200811170202.27893.jnareb@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: "=?ISO-8859-1?Q?Bj=F6rn_Steinbrink?=" <B.Steinbrink@gmx.de>
-X-From: git-owner@vger.kernel.org Mon Nov 17 04:04:37 2008
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, "Petr Baudis" <pasky@suse.cz>,
+	"Junio C Hamano" <gitster@pobox.com>
+To: "Jakub Narebski" <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Nov 17 07:12:36 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1L1uPg-0003Zr-WB
-	for gcvg-git-2@gmane.org; Mon, 17 Nov 2008 04:04:33 +0100
+	id 1L1xLf-0003eJ-1L
+	for gcvg-git-2@gmane.org; Mon, 17 Nov 2008 07:12:35 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755075AbYKQDDM convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 16 Nov 2008 22:03:12 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754776AbYKQDDL
-	(ORCPT <rfc822;git-outgoing>); Sun, 16 Nov 2008 22:03:11 -0500
-Received: from mail-gx0-f11.google.com ([209.85.217.11]:46536 "EHLO
-	mail-gx0-f11.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754904AbYKQDDJ convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 16 Nov 2008 22:03:09 -0500
-Received: by gxk4 with SMTP id 4so1375876gxk.13
-        for <git@vger.kernel.org>; Sun, 16 Nov 2008 19:03:07 -0800 (PST)
+	id S1752076AbYKQGKv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 17 Nov 2008 01:10:51 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752120AbYKQGKv
+	(ORCPT <rfc822;git-outgoing>); Mon, 17 Nov 2008 01:10:51 -0500
+Received: from qb-out-0506.google.com ([72.14.204.224]:55697 "EHLO
+	qb-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751732AbYKQGKu (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 17 Nov 2008 01:10:50 -0500
+Received: by qb-out-0506.google.com with SMTP id f11so2240707qba.17
+        for <git@vger.kernel.org>; Sun, 16 Nov 2008 22:10:49 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:reply-to
-         :to:subject:cc:in-reply-to:mime-version:content-type
+        h=domainkey-signature:received:received:message-id:date:from:to
+         :subject:cc:in-reply-to:mime-version:content-type
          :content-transfer-encoding:content-disposition:references;
-        bh=t4QP0ptcjdgeZcp5H3C8eN7ZTw7GzbRtSqKsIfxqOBk=;
-        b=rzulG/5OZ269TE/teVDN6XS8y1wykpexj1gPdx1HAStaRMf1BMjyi9JT07Z/XJtkFi
-         zrzhrtoDyWg7E8DEAaBk+Pt4oA6+z/CBhfqbRbREpSl2/XdSzs1cztSGbRxN/Dpuj6HL
-         TlQWJ/zzBufWJnN+Bdf1XxJNA///ZrM+S40b8=
+        bh=JuH1c+86WvxPy8K8ctUibGAP2hztB7yspELNMG/6dZ4=;
+        b=RmgHZtMWTk8Y2lCDAZYb+NmZH48Ps2wVv6e/PawSuFK+RUdcgKznZgtT6RFaRwJK7V
+         YcWq5L74jhrzLjyGN3hI9tqlDbuwJzXZYDsH3ianWacEH5YyYo2uvkZWekD04GWGACig
+         KCZivfsE/XlyCZHU12JmgDNuz0N8hV7WhyrT8=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=message-id:date:from:reply-to:to:subject:cc:in-reply-to
-         :mime-version:content-type:content-transfer-encoding
-         :content-disposition:references;
-        b=xH1JUPx+1rtovkWzb15K2wAlWnxqiaA59DgyXGnpJarwovqxSj8lHhT6BtNEzMFqfB
-         oz7eSUBGEjn8pW/ZZa51gxTTLJA3J1GvRD/sdV7QlYeVroTrdeI5aIS97hwFeN3Gd4Xi
-         8wtwpwTYw7QQ77TnZm2tlf+WGUts24Tpm75ho=
-Received: by 10.151.6.16 with SMTP id j16mr7029237ybi.67.1226890987293;
-        Sun, 16 Nov 2008 19:03:07 -0800 (PST)
-Received: by 10.150.121.2 with HTTP; Sun, 16 Nov 2008 19:03:07 -0800 (PST)
-In-Reply-To: <20081117022714.GC3911@atjola.homenet>
+        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
+         :content-type:content-transfer-encoding:content-disposition
+         :references;
+        b=ZBFzmnr6P95LulmHyhYWjwqSFIAD7ga5OtW1IyjnY9jft1udgStjtzQz7cxE309fTC
+         qNb2ECczivaGmUZSMKOZaVzkArnNMGqYy1i3yFCl6genLLPcyKOryeiKyMLQ2oChTzYx
+         HOe8xxaYusEJ7BvsZCjgiNYfhgrMCDdxx/oEY=
+Received: by 10.210.81.10 with SMTP id e10mr3620216ebb.122.1226902249106;
+        Sun, 16 Nov 2008 22:10:49 -0800 (PST)
+Received: by 10.210.132.16 with HTTP; Sun, 16 Nov 2008 22:10:49 -0800 (PST)
+In-Reply-To: <200811170202.27893.jnareb@gmail.com>
 Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/101194>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/101195>
 
-On Mon, Nov 17, 2008 at 12:57 PM, Bj=F6rn Steinbrink <B.Steinbrink@gmx.=
-de> wrote:
-> On 2008.11.17 03:24:12 +0100, Bj=F6rn Steinbrink wrote:
->> On 2008.11.17 10:56:23 +1030, Geoff Russell wrote:
->> > I have a repository with 5 years worth of history, I only want to =
-keep
->> > 1 year, so I want to purge the first 4 years. As it happens, the
->> > repository only has a single branch which should simplify the prob=
-lem.
->>
->> Use filter-branch to drop the parents on the first commit you want t=
-o
->> keep, and then drop the old cruft.
->>
->> Let's say $drop is the hash of the latest commit you want to drop. T=
-o
->> keep things sane and simple, make sure the first commit you want to
->> keep, ie. the child of $drop, is not a merge commit. Then you can us=
-e:
->>
->> git filter-branch --parent-filter "sed -e 's/-p $drop//'" \
->>       --tag-name-filter cat -- \
->>       --all ^$drop
->>
->> The above rewrites the parents of all commits that come "after" $dro=
-p.
->>
->> Check the results with gitk.
->>
->>
->> Then, to clean out all the old cruft.
->>
->> First, the backup references from filter-branch:
->>
->> git for-each-ref --format=3D'%(refname)' refs/original | \
->>       while read ref
->>       do
->>               git update-ref -d "$ref"
->>       done
->>
->> Then clean your reflogs:
->> git reflog expire --expire=3D0 --all
->>
->> And finally, repack and drop all the old unreachable objects:
->> git repack -ad
->> git prune # For objects that repack -ad might have left around
->>
->> At that point, everything leading up to and including $drop should b=
-e
->> gone.
+On Mon, Nov 17, 2008 at 2:02 AM, Jakub Narebski <jnareb@gmail.com> wrote:
+> On Sat, 15 Nov 2008, Giuseppe Bilotta wrote:
 >
-> Hm, on second thought, if you have tags referencing some of the old
-> history, they'll still be around, I think. Just delete those before y=
-ou
-> start the rewriting.
+>> The gitweb_check_feature routine was being used for two different
+>> purposes: retrieving the actual feature value (such as the list of
+>> snapshot formats or the list of additional actions), and to check if a
+>> feature was enabled.
+>>
+>> For the latter use, since all features return an array, it led to either
+>> clumsy code or subtle bugs, with disabled features appearing enabled
+>> because (0) evaluates to 1.
+>>
+>> We fix these bugs, and simplify the code, by separating feature (list)
+>> value retrieval (gitweb_get_feature) from boolean feature check (i.e.
+>> retrieving the first/only item in the feature value list). Usage of
+>> gitweb_check_feature across gitweb is replaced by the appropriate call
+>> wherever needed.
+>> ---
 >
-> And of course do the above with a copy of your repo. Just in case.
+> First, you forgot the signoff, but you have addressed that already.
 >
-> Bj=F6rn
 >
+> Second, I thought at first that it would be good for the patch to also
+> simplify %feature hash, using "'default' => 1" instead of current bit
+> convoluted "'default' => [1]", at the cost of bit more code for
+> defensive programming.  But now I think that if it is to be done,
+> it should be put as separate patch.
 
-Great, I've just tested this and it is exactly what I want. I'm still
-getting my head around
-why, but understanding will arrive with a little more thought.
+Is this an ACK? 8-D
 
-
-Many thanks,
-
-Geoff
-
-
-
---=20
-6 Fifth Ave,
-St Morris, S.A. 5068
-Australia
-Ph: 041 8805 184 / 08 8332 5069
+-- 
+Giuseppe "Oblomov" Bilotta
