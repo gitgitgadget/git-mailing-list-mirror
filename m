@@ -1,109 +1,96 @@
-From: "Mike Ralphson" <mike.ralphson@gmail.com>
-Subject: Re: [PATCH] Makefile: introduce NO_PTHREADS
-Date: Mon, 17 Nov 2008 10:45:28 +0000
-Message-ID: <e2b179460811170245t1845cc66h7cb2a18c43a79359@mail.gmail.com>
-References: <200811121029.34841.thomas@koch.ro>
-	 <371xaQfxsMMQ-9LK24q-nhcS4loEggn8Cj3J1IzfMbzzYDGE6HKbQQ@cipher.nrlssc.navy.mil>
-	 <alpine.LFD.2.00.0811131630470.3468@nehalem.linux-foundation.org>
-	 <alpine.LFD.2.00.0811131707090.3468@nehalem.linux-foundation.org>
-	 <vzAozXmaOLEpyz-7DHx4nMusAdaTsFp7iZ8xfFsgAIraex6_wfvyuw@cipher.nrlssc.navy.mil>
-	 <alpine.LFD.2.00.0811141109580.3468@nehalem.linux-foundation.org>
-	 <7vtza95h01.fsf@gitster.siamese.dyndns.org>
-	 <alpine.LFD.2.00.0811150915240.3468@nehalem.linux-foundation.org>
-	 <e2b179460811170203v41e54ecclc3d6526bcc0fe928@mail.gmail.com>
-	 <492148AD.1090604@viscovery.net>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: [PATCH] gitweb: fixes to gitweb feature check code
+Date: Mon, 17 Nov 2008 11:48:03 +0100
+Message-ID: <200811171148.03649.jnareb@gmail.com>
+References: <1226759165-6894-1-git-send-email-giuseppe.bilotta@gmail.com> <200811171028.19807.jnareb@gmail.com> <7vskpqzms5.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: "Junio C Hamano" <gitster@pobox.com>,
-	"Git Mailing List" <git@vger.kernel.org>,
-	"Linus Torvalds" <torvalds@linux-foundation.org>
-To: "Johannes Sixt" <j.sixt@viscovery.net>
-X-From: git-owner@vger.kernel.org Mon Nov 17 11:46:51 2008
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: "Giuseppe Bilotta" <giuseppe.bilotta@gmail.com>,
+	git@vger.kernel.org, "Petr Baudis" <pasky@suse.cz>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Nov 17 11:49:29 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1L21cz-00012d-4r
-	for gcvg-git-2@gmane.org; Mon, 17 Nov 2008 11:46:45 +0100
+	id 1L21fb-0001tZ-Sn
+	for gcvg-git-2@gmane.org; Mon, 17 Nov 2008 11:49:28 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752817AbYKQKpa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 17 Nov 2008 05:45:30 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752290AbYKQKpa
-	(ORCPT <rfc822;git-outgoing>); Mon, 17 Nov 2008 05:45:30 -0500
-Received: from qw-out-2122.google.com ([74.125.92.24]:50335 "EHLO
-	qw-out-2122.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751945AbYKQKp3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 17 Nov 2008 05:45:29 -0500
-Received: by qw-out-2122.google.com with SMTP id 3so1158179qwe.37
-        for <git@vger.kernel.org>; Mon, 17 Nov 2008 02:45:28 -0800 (PST)
+	id S1753009AbYKQKsN convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 17 Nov 2008 05:48:13 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752958AbYKQKsN
+	(ORCPT <rfc822;git-outgoing>); Mon, 17 Nov 2008 05:48:13 -0500
+Received: from ug-out-1314.google.com ([66.249.92.168]:64163 "EHLO
+	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752835AbYKQKsM (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 17 Nov 2008 05:48:12 -0500
+Received: by ug-out-1314.google.com with SMTP id 39so366845ugf.37
+        for <git@vger.kernel.org>; Mon, 17 Nov 2008 02:48:09 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to
-         :subject:cc:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:references;
-        bh=49HRoSKuUPAs3v17cs8tYrM7mYZ+3eIr8Mzi6aIiWk4=;
-        b=Fc6f1MQomzeO+XaBlclNTw6UeDEFfFgQCmxJJIt/MAY8Zr19MRiqQU+KzRbBrPPmUu
-         RM0uuEBydLlGUG/xfvxpPn1fSgS2EXi8bPB1r2zHuDl9Ey0WWoA7jQDtPf50FEll7O3S
-         dEGmV+9R7sy8bpf3U+6vxQzr2AwPyScFUoIFU=
+        h=domainkey-signature:received:received:from:to:subject:date
+         :user-agent:cc:references:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:message-id;
+        bh=kiyPcU3aqrBk+wzpmuMhtOBjjbMFO70393NyQXfhEQU=;
+        b=rQI5xyw+G1vTQ8ls65RFDtUnxGQsIyvAg/vIxU7q5/uFrsVqq6XAMy1hjbvicQepgt
+         KOLl4h9sobarTKupUBTLlTlEaNCGh8vwcHXzXdID8ekGa/0YCOX/8sNOgaU+GQmMT3TZ
+         UhnTZPwtd8MkGeEo25E6fOwbiPaDOcg+53sTU=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
-         :content-type:content-transfer-encoding:content-disposition
-         :references;
-        b=NtoHd/k/CFrUbo6hW7d8kSSXh/786eHOfRy9putYTY15nFfFMMdLKpIq1ttIkN6zJG
-         A+zY3sbyD7asbt61nZvubKbf9YXlWhklvIVapxOuzt+FgpYs1sSoLkFA8GZ2BFrV7Lz5
-         WUieJGWv3C2N2nep0WrX3a1ZWvtKWSNEo9Fyg=
-Received: by 10.214.184.8 with SMTP id h8mr2258859qaf.313.1226918728125;
-        Mon, 17 Nov 2008 02:45:28 -0800 (PST)
-Received: by 10.214.81.4 with HTTP; Mon, 17 Nov 2008 02:45:28 -0800 (PST)
-In-Reply-To: <492148AD.1090604@viscovery.net>
+        h=from:to:subject:date:user-agent:cc:references:in-reply-to
+         :mime-version:content-type:content-transfer-encoding
+         :content-disposition:message-id;
+        b=JgPnLH9WJM0UUgMK/gCYn8osxUHtOc4leg41u0x0qGZo1GIk5yyhJnv03pWfuQenQK
+         1f2YVn8BaDp4Jn2ZIK4eAJFOn0GOEjjYTZFyop1t14hfS9NJQ4XsmbDEcBCSKhtn3bGg
+         NvkA2f22ScfeJiu0pb6KVmGs51LYcDO3K+L58=
+Received: by 10.67.19.17 with SMTP id w17mr1218872ugi.0.1226918889142;
+        Mon, 17 Nov 2008 02:48:09 -0800 (PST)
+Received: from ?192.168.1.11? (abwi102.neoplus.adsl.tpnet.pl [83.8.232.102])
+        by mx.google.com with ESMTPS id e1sm3831798ugf.7.2008.11.17.02.48.06
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Mon, 17 Nov 2008 02:48:07 -0800 (PST)
+User-Agent: KMail/1.9.3
+In-Reply-To: <7vskpqzms5.fsf@gitster.siamese.dyndns.org>
 Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/101214>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/101215>
 
-2008/11/17 Johannes Sixt <j.sixt@viscovery.net>:
-> Mike Ralphson schrieb:
->> 2008/11/15 Linus Torvalds <torvalds@linux-foundation.org>:
->>> On Sat, 15 Nov 2008, Junio C Hamano wrote:
->>>> This introduces make variable NO_PTHREADS for platforms that lack the
->>>> support for pthreads library or people who do not want to use it for
->>>> whatever reason.  When defined, it makes the multi-threaded index
->>>> preloading into a no-op, and also disables threaded delta searching by
->>>> pack-objects.
->>> Ack. Makes sense.
+On Mon, 17 Nov 2008, Junio C Hamano wrote:
+> Jakub Narebski <jnareb@gmail.com> writes:
+>> Dnia poniedzia=C5=82ek 17. listopada 2008 07:10, Giuseppe Bilotta na=
+pisa=C5=82:
+>>> On Mon, Nov 17, 2008 at 2:02 AM, Jakub Narebski <jnareb@gmail.com> =
+wrote:
 >>
->> I'd be minded to make this the default on AIX to keep the prerequisite
->> list as small as possible, then people can opt-in for the performance
->> benefits if required.
->
-> Is pthreads not a standard shipment on AIX? I would set NO_PTHREADS only
-> if we know in advance that there are many installations without pthreads.
-> (And I don't know what the situation is.)
+>> [...]
+>>>> First, you forgot the signoff, but you have addressed that already=
+=2E
+>>>>
+>>>>
+>>>> Second, I thought at first that it would be good for the patch to =
+also
+>>>> simplify %feature hash, using "'default' =3D> 1" instead of curren=
+t bit
+>>>> convoluted "'default' =3D> [1]", at the cost of bit more code for
+>>>> defensive programming.  But now I think that if it is to be done,
+>>>> it should be put as separate patch.
+>>>=20
+>>> Is this an ACK? 8-D
+>>
+>> I'm sorry. Yes, it is.
+>=20
+> Are you sure, even with those unnecessary changes from list context
+> assignments to scalar ones?
 
-I should have dug a bit further, it seems to be present on my 5.3
-machines but I still need to determine whether it got installed by
-default. Either way it must need some other link flags...
+Well, on one hand this change is not _necessary_, as it would work
+without it. On the other hand it feels like cleanup (like e.g. using
+tabs to indent but spaces to align, or word-wrapping too long lines).
 
-> BTW, this needs to be squashed in, because we don't have pthreads on Windows:
->
-> diff --git a/Makefile b/Makefile
-> index ffc9531..3a30b8c 100644
-> --- a/Makefile
-> +++ b/Makefile
-> @@ -769,6 +769,7 @@ ifneq (,$(findstring MINGW,$(uname_S)))
->        NO_STRCASESTR = YesPlease
->        NO_STRLCPY = YesPlease
->        NO_MEMMEM = YesPlease
-> +       NO_PTHREADS = YesPlease
->        NEEDS_LIBICONV = YesPlease
->        OLD_ICONV = YesPlease
->        NO_C99_FORMAT = YesPlease
->
-
-Ta. Ok to add your S-o-B on a squashed patch?
-
-Mike
+So I think I'll pass the ball to you... your call ;-)
+--=20
+Jakub Narebski
+Poland
