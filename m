@@ -1,73 +1,64 @@
-From: Christian Couder <chriscool@tuxfamily.org>
+From: walt <w41ter@gmail.com>
 Subject: Re: git-bisect not working correctly in the kvm.git repository?
-Date: Mon, 17 Nov 2008 20:47:02 +0100
-Message-ID: <200811172047.03669.chriscool@tuxfamily.org>
-References: <gfs9hn$hq9$1@ger.gmane.org>
+Date: Mon, 17 Nov 2008 12:19:03 -0800
+Message-ID: <gfsjjp$o42$1@ger.gmane.org>
+References: <gfs9hn$hq9$1@ger.gmane.org> <alpine.LFD.2.00.0811171131330.18283@nehalem.linux-foundation.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: walt <w41ter@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Nov 17 20:46:54 2008
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Nov 17 21:20:47 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1L2A3g-0003m4-Rh
-	for gcvg-git-2@gmane.org; Mon, 17 Nov 2008 20:46:53 +0100
+	id 1L2AaM-00086W-5V
+	for gcvg-git-2@gmane.org; Mon, 17 Nov 2008 21:20:38 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751988AbYKQTpi convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 17 Nov 2008 14:45:38 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751982AbYKQTph
-	(ORCPT <rfc822;git-outgoing>); Mon, 17 Nov 2008 14:45:37 -0500
-Received: from smtp2-g19.free.fr ([212.27.42.28]:55006 "EHLO smtp2-g19.free.fr"
+	id S1752154AbYKQUTS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 17 Nov 2008 15:19:18 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752152AbYKQUTS
+	(ORCPT <rfc822;git-outgoing>); Mon, 17 Nov 2008 15:19:18 -0500
+Received: from main.gmane.org ([80.91.229.2]:37475 "EHLO ciao.gmane.org"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751861AbYKQTph convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 17 Nov 2008 14:45:37 -0500
-Received: from smtp2-g19.free.fr (localhost.localdomain [127.0.0.1])
-	by smtp2-g19.free.fr (Postfix) with ESMTP id DADC012BDBC;
-	Mon, 17 Nov 2008 20:45:34 +0100 (CET)
-Received: from bureau.boubyland (gre92-7-82-243-130-161.fbx.proxad.net [82.243.130.161])
-	by smtp2-g19.free.fr (Postfix) with ESMTP id 0BF9612C07A;
-	Mon, 17 Nov 2008 20:45:03 +0100 (CET)
-User-Agent: KMail/1.9.9
-In-Reply-To: <gfs9hn$hq9$1@ger.gmane.org>
-Content-Disposition: inline
+	id S1751931AbYKQUTR (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 17 Nov 2008 15:19:17 -0500
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1L2AYz-0004cC-Uh
+	for git@vger.kernel.org; Mon, 17 Nov 2008 20:19:13 +0000
+Received: from adsl-69-234-203-176.dsl.irvnca.pacbell.net ([69.234.203.176])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Mon, 17 Nov 2008 20:19:13 +0000
+Received: from w41ter by adsl-69-234-203-176.dsl.irvnca.pacbell.net with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Mon, 17 Nov 2008 20:19:13 +0000
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@ger.gmane.org
+X-Gmane-NNTP-Posting-Host: adsl-69-234-203-176.dsl.irvnca.pacbell.net
+User-Agent: Thunderbird/3.0a2pre (X11; 2008111706)
+In-Reply-To: <alpine.LFD.2.00.0811171131330.18283@nehalem.linux-foundation.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/101238>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/101239>
 
-Le lundi 17 novembre 2008, walt a =E9crit :
-> I'm trying to find a bug introduced somewhere between kvm-69
-> and kvm-70, so of course I want to git-bisect down to it.
+Linus Torvalds wrote:
 >
-> The weirdness is that when I give git-bisect the good and
-> bad tags, almost everything in my working directory just
-> disappears, leaving only the qemu subdirectory behind.
->
-> Can anyone else reproduce this with the kvm.git repo?
-> (I don't see this problem with the linux.git repo or the
-> git.git repo, so it seems to be something with the kvm.git
-> repo itself.)
+> On Mon, 17 Nov 2008, walt wrote:
+>> I'm trying to find a bug introduced somewhere between kvm-69
+>> and kvm-70, so of course I want to git-bisect down to it.
+>>
+>> The weirdness is that when I give git-bisect the good and
+>> bad tags, almost everything in my working directory just
+>> disappears, leaving only the qemu subdirectory behind.
 
-I cannot reproduce this:
+> ...
+> If you merge stuff from another project that isn't a full repository, then
+> you are merging commits that simply don't _have_ the full tree of your
+> repo...
 
-$ git bisect start kvm-70 kvm-69
-Bisecting: 846 revisions left to test after this
-[80bfc25f42db6d4715c7688ae2352c5a8038fe7e] ntfs: le*_add_cpu conversion
-$ find . -type f |wc -l
-24286
-$ git bisect reset
-Previous HEAD position was 80bfc25... ntfs: le*_add_cpu conversion
-Switched to branch "master"
-$ find . -type f |wc -l
-24384
-
-Could you give more information, like your git version and the result o=
-f the=20
-above commands?
-
-Thanks,
-Christian.
+Okay, that's clearly what's happening to me.  The kvm.git repo
+contains hundred of commits just like that.  How would you deal
+with the same situation?  Is git-bisect skip the easiest way?
