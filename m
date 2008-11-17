@@ -1,84 +1,105 @@
-From: Christian Couder <chriscool@tuxfamily.org>
-Subject: [PATCH 1/2 v2] Documentation: user-manual: add information about
- "git help" at the beginning
-Date: Mon, 17 Nov 2008 16:42:47 +0100
-Message-ID: <20081117164247.52181daf.chriscool@tuxfamily.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] Makefile: introduce NO_PTHREADS
+Date: Mon, 17 Nov 2008 08:38:20 -0800
+Message-ID: <7vvdumwbnn.fsf@gitster.siamese.dyndns.org>
+References: <200811121029.34841.thomas@koch.ro>
+ <20081112173651.GA9127@linode.davidb.org>
+ <alpine.LFD.2.00.0811120959050.3468@nehalem.linux-foundation.org>
+ <loom.20081113T174625-994@post.gmane.org>
+ <alpine.LFD.2.00.0811131214020.3468@nehalem.linux-foundation.org>
+ <alpine.LFD.2.00.0811131252040.3468@nehalem.linux-foundation.org>
+ <alpine.LFD.2.00.0811131518070.3468@nehalem.linux-foundation.org>
+ <371xaQfxsMMQ-9LK24q-nhcS4loEggn8Cj3J1IzfMbzzYDGE6HKbQQ@cipher.nrlssc.navy.mil> <alpine.LFD.2.00.0811131630470.3468@nehalem.linux-foundation.org> <alpine.LFD.2.00.0811131707090.3468@nehalem.linux-foundation.org> <vzAozXmaOLEpyz-7DHx4nMusAdaTsFp7iZ8xfFsgAIraex6_wfvyuw@cipher.nrlssc.navy.mil> <alpine.LFD.2.00.0811141109580.3468@nehalem.linux-foundation.org> <7vtza95h01.fsf@gitster.siamese.dyndns.org> <alpine.LFD.2.00.0811150915240.3468@nehalem.linux-foundation.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Nov 17 16:42:23 2008
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Linus Torvalds <torvalds@linux-foundation.org>
+X-From: git-owner@vger.kernel.org Mon Nov 17 17:41:39 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1L26Ew-0004Bf-Oj
-	for gcvg-git-2@gmane.org; Mon, 17 Nov 2008 16:42:15 +0100
+	id 1L27AQ-0002Kx-0c
+	for gcvg-git-2@gmane.org; Mon, 17 Nov 2008 17:41:38 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752122AbYKQPkt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 17 Nov 2008 10:40:49 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752120AbYKQPkt
-	(ORCPT <rfc822;git-outgoing>); Mon, 17 Nov 2008 10:40:49 -0500
-Received: from smtp6-g19.free.fr ([212.27.42.36]:54811 "EHLO smtp6-g19.free.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752063AbYKQPks (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 17 Nov 2008 10:40:48 -0500
-Received: from smtp6-g19.free.fr (localhost.localdomain [127.0.0.1])
-	by smtp6-g19.free.fr (Postfix) with ESMTP id 21E4D172A2;
-	Mon, 17 Nov 2008 16:40:47 +0100 (CET)
-Received: from localhost.boubyland (gre92-7-82-243-130-161.fbx.proxad.net [82.243.130.161])
-	by smtp6-g19.free.fr (Postfix) with SMTP id E3DBD19759;
-	Mon, 17 Nov 2008 16:40:44 +0100 (CET)
-X-Mailer: Sylpheed 2.5.0 (GTK+ 2.12.11; i486-pc-linux-gnu)
+	id S1751630AbYKQQkV convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 17 Nov 2008 11:40:21 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752141AbYKQQkV
+	(ORCPT <rfc822;git-outgoing>); Mon, 17 Nov 2008 11:40:21 -0500
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:45921 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751620AbYKQQkU convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 17 Nov 2008 11:40:20 -0500
+Received: from localhost.localdomain (unknown [127.0.0.1])
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 4E8FE7F130;
+	Mon, 17 Nov 2008 11:40:18 -0500 (EST)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES256-SHA (256/256 bits)) (No client certificate requested) by
+ a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTPSA id 80DBD7F114; Mon,
+ 17 Nov 2008 11:38:27 -0500 (EST)
+In-Reply-To: <alpine.LFD.2.00.0811150915240.3468@nehalem.linux-foundation.org> (Linus
+ Torvalds's message of "Sat, 15 Nov 2008 09:15:52 -0800 (PST)")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: 6B067938-B4C6-11DD-930B-9CEDC82D7133-77302942!a-sasl-fastnet.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/101229>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/101230>
 
-Talking about "git help" is useful because it has a few more
-features (like when using it without arguments or with "-a") and
-it may work on non unix like platforms.
+Linus Torvalds <torvalds@linux-foundation.org> writes:
 
-Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
----
- Documentation/user-manual.txt |   12 +++++++++++-
- 1 files changed, 11 insertions(+), 1 deletions(-)
+> On Sat, 15 Nov 2008, Junio C Hamano wrote:
+>>
+>> This introduces make variable NO_PTHREADS for platforms that lack th=
+e
+>> support for pthreads library or people who do not want to use it for
+>> whatever reason.  When defined, it makes the multi-threaded index
+>> preloading into a no-op, and also disables threaded delta searching =
+by
+>> pack-objects.
+>
+> Ack. Makes sense.
 
-	Here is a new version of this patch series with the changes
-	from Junio.
+Hmm, I started getting random segfaults that sometimes reproduces.  For
+example, this is what I just got from "git diff --stat $some_commit".
 
-	Thanks,
-	Christian.
+#0  0x00002b952568b090 in strlen () from /lib/libc.so.6
+#1  0x000000000044ed42 in git_checkattr (path=3D0x2b95284b3970 "parse-o=
+ptions.c",
+    num=3D3, check=3D0x41000e90) at attr.c:512
+#2  0x0000000000458921 in convert_to_git (
+    path=3D0x2b95284b3970 "parse-options.c",
+    src=3D0x2aaaaaabb000 <Address 0x2aaaaaabb000 out of bounds>, len=3D=
+12594,
+    dst=3D0x41000f30, checksafe=3DSAFE_CRLF_FALSE) at convert.c:578
+#3  0x0000000000489ac3 in index_mem (
+    sha1=3D0x41000ff0 "\210f=EF=BF=BD=E2=BD=A1x=EF=BF=BD\207=EF=BF=BD=EF=
+=BF=BD 7R}\217\032=EF=BF=BD=EF=BF=BD", buf=3D0x2aaaaaabb000,
+    size=3D12594, write_object=3D0, type=3D<value optimized out>,
+    path=3D0x2f2f2f2f2f2f2f2f <Address 0x2f2f2f2f2f2f2f2f out of bounds=
+>)
+    at sha1_file.c:2451
+#4  0x0000000000489c3d in index_fd (
+    sha1=3D0x41000ff0 "\210f=EF=BF=BD=E2=BD=A1x=EF=BF=BD\207=EF=BF=BD=EF=
+=BF=BD 7R}\217\032=EF=BF=BD=EF=BF=BD", fd=3D5,
+    st=3D<value optimized out>, write_object=3D0, type=3DOBJ_BLOB,
+    path=3D0x2b95284b3970 "parse-options.c") at sha1_file.c:2483
+#5  0x000000000047857a in ce_modified_check_fs (ce=3D0x2b95284b3930,
+    st=3D0x41001080) at read-cache.c:92
+#6  0x00000000004786a2 in ie_match_stat (istate=3D0x71c860, ce=3D0x2b95=
+284b3930,
+    st=3D0x41001080, options=3D<value optimized out>) at read-cache.c:2=
+82
+#7  0x0000000000497e65 in preload_thread (_data=3D<value optimized out>=
+)
+    at preload-index.c:46
+#8  0x00002b9525964017 in start_thread () from /lib/libpthread.so.0
+#9  0x00002b95256da5bd in clone () from /lib/libc.so.6
+#10 0x0000000000000000 in ?? ()
 
-diff --git a/Documentation/user-manual.txt b/Documentation/user-manual.txt
-index 645d752..c0d8caf 100644
---- a/Documentation/user-manual.txt
-+++ b/Documentation/user-manual.txt
-@@ -18,12 +18,22 @@ People needing to do actual development will also want to read
- Further chapters cover more specialized topics.
- 
- Comprehensive reference documentation is available through the man
--pages.  For a command such as "git clone <repo>", just use
-+pages, or linkgit:git-help[1] command.  For example, for the command
-+"git clone <repo>", you can either use:
- 
- ------------------------------------------------
- $ man git-clone
- ------------------------------------------------
- 
-+or:
-+
-+------------------------------------------------
-+$ git help clone
-+------------------------------------------------
-+
-+With the latter, you can use the manual viewer of your choice; see
-+linkgit:git-help[1] for more information.
-+
- See also <<git-quick-start>> for a brief overview of git commands,
- without any explanation.
- 
--- 
-1.6.0.4.617.g621cb
+I suspect that the callpath around ce_modified_check_fs() uses a buffer
+obtained from path.c:get_pathname() and parallel threads stomp on each
+other, but I do not have time to debug this right now (I will be on a
+14-hour flight in a few hours).
