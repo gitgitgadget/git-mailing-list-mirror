@@ -1,86 +1,108 @@
-From: Peter Kirk <peter.kirk@gmx.de>
-Subject: git svn rebase creates some commits with empty author, commiter and date fields
-Date: Tue, 18 Nov 2008 11:21:14 +0100
-Message-ID: <200811181121.18264.peter.kirk@gmx.de>
-Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="us-ascii"
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Nov 18 11:22:45 2008
+From: crquan@gmail.com
+Subject: [PATCH 2/2] git-remote: add verbose mode to git remote update
+Date: Tue, 18 Nov 2008 19:04:02 +0800
+Message-ID: <1227006242-21290-1-git-send-email-crquan@gmail.com>
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Nov 18 12:04:44 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1L2Nj9-0003Vc-N0
-	for gcvg-git-2@gmane.org; Tue, 18 Nov 2008 11:22:36 +0100
+	id 1L2ONv-0007yS-A5
+	for gcvg-git-2@gmane.org; Tue, 18 Nov 2008 12:04:43 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751712AbYKRKVV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 18 Nov 2008 05:21:21 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751461AbYKRKVV
-	(ORCPT <rfc822;git-outgoing>); Tue, 18 Nov 2008 05:21:21 -0500
-Received: from mail.gmx.net ([213.165.64.20]:52826 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751361AbYKRKVU (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 18 Nov 2008 05:21:20 -0500
-Received: (qmail invoked by alias); 18 Nov 2008 10:21:17 -0000
-Received: from p54ACA023.dip0.t-ipconnect.de (EHLO schizo.localnet) [84.172.160.35]
-  by mail.gmx.net (mp034) with SMTP; 18 Nov 2008 11:21:17 +0100
-X-Authenticated: #3744494
-X-Provags-ID: V01U2FsdGVkX1+bNDEzYEubDFHgiGzfz0Rj2RN0285ZREU0F/V2Ga
-	XLuHrl3l86kDwS
-User-Agent: KMail/1.10.1 (Linux/2.6.27-7-generic; KDE/4.1.2; x86_64; ; )
-Content-Disposition: inline
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.59
+	id S1751917AbYKRLD2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 18 Nov 2008 06:03:28 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751905AbYKRLD2
+	(ORCPT <rfc822;git-outgoing>); Tue, 18 Nov 2008 06:03:28 -0500
+Received: from ti-out-0910.google.com ([209.85.142.188]:43028 "EHLO
+	ti-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751361AbYKRLD1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 18 Nov 2008 06:03:27 -0500
+Received: by ti-out-0910.google.com with SMTP id b6so1826127tic.23
+        for <git@vger.kernel.org>; Tue, 18 Nov 2008 03:03:25 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:received:from:to:cc:subject
+         :date:message-id:x-mailer;
+        bh=gw3L2iMQQCHamZJ4LZQnuLCOK88FFhwFzhM1QnZUl8E=;
+        b=fvzN/KtvSWSdLZdopa6Wk8/C1SoOKSflLqZ9k6mJW89MDUd7uXJ4jhJU9Fatrzuya+
+         FANYlX4mPgXnlQ4jdEwIcK4fGoAsLhUiTysc14Etd6q6gZbzk9arzyN6hrqJEASZp6oA
+         IZXSchAkOnxtLartYIuN8cSE400O37Ay+lmVo=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=from:to:cc:subject:date:message-id:x-mailer;
+        b=YEvTUvg/86ALIGl+yQgIllS+T6jMXQuJ9PNToETGRgy2MX3LuyJpbOa3u+HSwW6g9A
+         hFpo9eUGahOr9mxgTUResi/Ry9r1a14rxk5MSOQkCKXzCDDa9UEuWnOwmn8wthzhjDfp
+         qMcBcnDhykt0S1E9v1ixMZ5UrncwSGWF+SC4U=
+Received: by 10.110.105.5 with SMTP id d5mr6444126tic.39.1227006205270;
+        Tue, 18 Nov 2008 03:03:25 -0800 (PST)
+Received: from tux ([219.134.89.155])
+        by mx.google.com with ESMTPS id w5sm1206456tib.14.2008.11.18.03.03.21
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Tue, 18 Nov 2008 03:03:23 -0800 (PST)
+Received: by tux (sSMTP sendmail emulation); Tue, 18 Nov 2008 19:04:02 +0800
+X-Mailer: git-send-email 1.6.0.4.757.g6d002.dirty
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/101268>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/101269>
 
-Hi there,
+From: Cheng Renquan <crquan@gmail.com>
 
-I am using git version 1.6.0.3, which I compiled myself from sources on my 
-linux/amd64 box which runns kubuntu 8.10.
+Pass the verbose mode parameter to the underlying fetch command.
 
-Now, when I do "git svn clone" to retrieve the entire history from the svn 
-server then everything works fine. Then I start working with this, commit some 
-myself, and run "git svn rebase" frequently. What happens (and I don't see the 
-pattern) is that *some* commits that are retrieved via "git svn rebase" are 
-broken...they don't contain a valid author field, the date is at 1970 and, most 
-importantly (for me) the commit message is empty except for the "git-svn-id:" 
-line that "git svn" adds automatically. The diff is fine, and I can still use 
-the checkout fine...but I cannot view the log-message/author/date of some 
-commits, which becomes tiresome quickly.
-The only way to "fix" these broken commits is to do a clean "git svn clone", 
-but as new commits are pulled via "git svn rebase", my repository will again 
-become polluted with broken commits.
+  $ ./git remote -v update
+  Updating origin
+  From git://git.kernel.org/pub/scm/git/git
+   = [up to date]      html       -> origin/html
+   = [up to date]      maint      -> origin/maint
+   = [up to date]      man        -> origin/man
+   = [up to date]      master     -> origin/master
+   = [up to date]      next       -> origin/next
+   = [up to date]      pu         -> origin/pu
+   = [up to date]      todo       -> origin/todo
 
-When I run "git fsck" I get a line like this for every broken commit:
+Signed-off-by: Cheng Renquan <crquan@gmail.com>
+---
 
-error in commit 94a0eb26b0843f6b4db28d24b41301bd295d0794: invalid 
-author/committer line
+To Junio:
+  I found that fetch's verbose mode will dump the url, that's really
+what I need, so with passing verbose mode to fetch, the fetch_remote
+function doesn't need a url parameter, and changes to get_one_remote_for_update
+are also not required.
+  So now the patch looks very simple.
 
-When I run git show on one of the broken commits the output looks like so:
-########### snip ###########
-commit 420be3a37353e3f2a968a2a8686a7169b31b9c3e
-Author: (no author) <(no author)@596c1c1d-4ad6-0310-94f8-b98c4e649a3b>
-Date:   Thu Jan 1 00:00:00 1970 +0000
+ builtin-remote.c |    8 ++++++--
+ 1 files changed, 6 insertions(+), 2 deletions(-)
+
+diff --git a/builtin-remote.c b/builtin-remote.c
+index 14774e3..0af742b 100644
+--- a/builtin-remote.c
++++ b/builtin-remote.c
+@@ -14,7 +14,7 @@ static const char * const builtin_remote_usage[] = {
+ 	"git remote rm <name>",
+ 	"git remote show [-n] <name>",
+ 	"git remote prune [-n | --dry-run] <name>",
+-	"git remote update [group]",
++	"git remote update [-v | --verbose] [group]",
+ 	NULL
+ };
  
-    git-svn-id: svn+ssh://hiddenhost@5681 596c1c1d-4ad6-0310-94f8-b98c4e649a3b
+@@ -42,7 +42,11 @@ static int opt_parse_track(const struct option *opt, const char *arg, int not)
  
- 
-diff --git a/bla/foo.cpp b/bla/foo.cpp
-...the correct diff output follows...
-############# snap ##########
-
-While trying to find a solution to my problem with google I stumbled accross an 
-old thread from 2007, but it sounds similar to my problem so I will link it 
-for reference: https://kerneltrap.org/mailarchive/git/2007/10/30/368150
-Note that in that case the changesets themselves seemed to be empty though 
-though, for me it is only "author+date+commit message". Also I don't 
-(knowingly) have any "authors file" provided.
-
-Thanks in advance for any help, and please ask if any info is missing,
-Peter
+ static int fetch_remote(const char *name)
+ {
+-	const char *argv[] = { "fetch", name, NULL };
++	const char *argv[] = { "fetch", name, NULL, NULL };
++	if (verbose) {
++		argv[1] = "-v";
++		argv[2] = name;
++	}
+ 	printf("Updating %s\n", name);
+ 	if (run_command_v_opt(argv, RUN_GIT_CMD))
+ 		return error("Could not fetch %s", name);
+-- 
+1.6.0.4.757.g6d002.dirty
