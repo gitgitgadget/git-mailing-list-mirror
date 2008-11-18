@@ -1,72 +1,60 @@
-From: Mark Burton <markb@ordern.com>
-Subject: [PATCH] git-commit.txt - mention that files listed on the command
- line must be known to git.
-Date: Tue, 18 Nov 2008 22:33:44 +0000
-Organization: Order N Ltd.
-Message-ID: <20081118223344.5c1f2de1@crow>
+From: Gary Yang <garyyang6@yahoo.com>
+Subject: How to make public repository GIT_DIR=my-git.git git-init  Command not found.
+Date: Tue, 18 Nov 2008 15:16:02 -0800 (PST)
+Message-ID: <138223.4849.qm@web37905.mail.mud.yahoo.com>
+Reply-To: garyyang6@yahoo.com
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Nov 18 23:35:14 2008
+X-From: git-owner@vger.kernel.org Wed Nov 19 00:17:33 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1L2ZAA-0007ax-2Q
-	for gcvg-git-2@gmane.org; Tue, 18 Nov 2008 23:35:14 +0100
+	id 1L2Zp2-0006D2-Dz
+	for gcvg-git-2@gmane.org; Wed, 19 Nov 2008 00:17:28 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753050AbYKRWdw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 18 Nov 2008 17:33:52 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753408AbYKRWdw
-	(ORCPT <rfc822;git-outgoing>); Tue, 18 Nov 2008 17:33:52 -0500
-Received: from c2bthomr07.btconnect.com ([213.123.20.125]:26466 "EHLO
-	c2bthomr07.btconnect.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752926AbYKRWdv (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 18 Nov 2008 17:33:51 -0500
-Received: from crow.ordern.com (host86-128-20-200.range86-128.btcentralplus.com [86.128.20.200])
-	by c2bthomr07.btconnect.com
-	with ESMTP id CDQ11521;
-	Tue, 18 Nov 2008 22:33:45 GMT
-Received: from crow (localhost [127.0.0.1])
-	by crow.ordern.com (Postfix) with ESMTP id CB961190CA9
-	for <git@vger.kernel.org>; Tue, 18 Nov 2008 22:33:44 +0000 (GMT)
-X-Mailer: Claws Mail 3.6.1 (GTK+ 2.12.9; x86_64-pc-linux-gnu)
-X-Junkmail-Status: score=10/50, host=c2bthomr07.btconnect.com
-X-Junkmail-SD-Raw: score=unknown,
-	refid=str=0001.0A090203.492342CD.00DF,ss=1,fgs=0,
-	ip=86.128.20.200,
-	so=2007-10-30 19:00:17,
-	dmn=5.7.1/2008-09-02
-X-Junkmail-IWF: false
+	id S1752166AbYKRXQH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 18 Nov 2008 18:16:07 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752086AbYKRXQG
+	(ORCPT <rfc822;git-outgoing>); Tue, 18 Nov 2008 18:16:06 -0500
+Received: from web37905.mail.mud.yahoo.com ([209.191.91.167]:33116 "HELO
+	web37905.mail.mud.yahoo.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with SMTP id S1751737AbYKRXQF (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 18 Nov 2008 18:16:05 -0500
+Received: (qmail 5320 invoked by uid 60001); 18 Nov 2008 23:16:03 -0000
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+  s=s1024; d=yahoo.com;
+  h=X-YMail-OSG:Received:X-Mailer:Date:From:Reply-To:Subject:To:MIME-Version:Content-Type:Message-ID;
+  b=bUx1tfElbp3FwC4nvapzKVY8u4c6jB/xiXOj88WrnQDfY1YS3gEgqGcu15TckdJ1eLvrv/J4gCcuci58jSlFkU2bJodkPPkiCRceSQm5QkN4n0KxaVO6PEd0Dx5APpMELiJJknmRsk1FEPWSJRR0yu4IhMhcb+JxFzWnJgH7w2U=;
+X-YMail-OSG: APX1vg4VM1kFYjEvENBK3PxAQQppyo.uOZeheBfTilcqVFvdMf1N4L54QFLMFrtOgQPQCrKXu7B_DNGOBU8wTTHZp4NrvA91iM.q1Rybs6Y7si5OnYDo4uMInlLc.qlAYU6iyRa6T7lU9YE8PQFHgeh2jVTEnspsNNXi9_eJL1kDR9Wd1eo7Inrktrw6
+Received: from [76.195.33.70] by web37905.mail.mud.yahoo.com via HTTP; Tue, 18 Nov 2008 15:16:02 PST
+X-Mailer: YahooMailWebService/0.7.260.1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/101291>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/101292>
 
-Signed-off-by: Mark Burton <markb@ordern.com>
----
+Hi,
 
- Adding this advertises the current behaviour and should stop anyone else
- asking the same question!
+I want to make a public repository. I followed the instructions in gitcore-tutorial. I typed "GIT_DIR=my-git.git git init" per instruction. But, I got command not found. I do not think this is the correct command. How should I do? I use C-Shell.
 
- Documentation/git-commit.txt |    3 ++-
- 1 files changed, 2 insertions(+), 1 deletions(-)
+http://manpages.ubuntu.com/manpages/intrepid/man7/gitcore-tutorial.html
 
-diff --git a/Documentation/git-commit.txt b/Documentation/git-commit.txt
-index 2e62165..a1ce9a8 100644
---- a/Documentation/git-commit.txt
-+++ b/Documentation/git-commit.txt
-@@ -29,7 +29,8 @@ The content to be added can be specified in several ways:
- 
- 3. by listing files as arguments to the 'commit' command, in which
-    case the commit will ignore changes staged in the index, and instead
--   record the current content of the listed files;
-+   record the current content of the listed files (which must already
-+   be known to git);
- 
- 4. by using the -a switch with the 'commit' command to automatically
-    "add" changes from all known files (i.e. all files that are already
--- 
-1.6.0.4
+%mkdir my-git.git
+%GIT_DIR=my-git.git git init
+
+GIT_DIR=my-git.git: Command not found.
+
+
+Thank you,
+
+
+Gary
+
+
+
+
+
+      
