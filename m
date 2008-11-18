@@ -1,79 +1,99 @@
-From: Johannes Sixt <j.sixt@viscovery.net>
-Subject: Re: git-bisect not working correctly in the kvm.git repository?
-Date: Tue, 18 Nov 2008 08:13:42 +0100
-Message-ID: <49226B26.4000807@viscovery.net>
-References: <gfs9hn$hq9$1@ger.gmane.org> <alpine.LFD.2.00.0811171131330.18283@nehalem.linux-foundation.org> <gfsjjp$o42$1@ger.gmane.org>
+From: Andreas Ericsson <ae@op5.se>
+Subject: Re: git-submodule/before-rebase hook
+Date: Tue, 18 Nov 2008 08:47:32 +0100
+Message-ID: <49227314.4080709@op5.se>
+References: <CC8B9B47-4985-4B96-B8DB-0B351633C849@justinbalthrop.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain; charset=ISO-8859-15; format=flowed
 Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org
-To: walt <w41ter@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Nov 18 08:15:02 2008
+To: justin <juddhuck@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Nov 18 08:48:53 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1L2Knc-0003MB-Qp
-	for gcvg-git-2@gmane.org; Tue, 18 Nov 2008 08:15:01 +0100
+	id 1L2LKN-0002De-Or
+	for gcvg-git-2@gmane.org; Tue, 18 Nov 2008 08:48:52 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751361AbYKRHNp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 18 Nov 2008 02:13:45 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751201AbYKRHNp
-	(ORCPT <rfc822;git-outgoing>); Tue, 18 Nov 2008 02:13:45 -0500
-Received: from lilzmailso02.liwest.at ([212.33.55.13]:62473 "EHLO
-	lilzmailso02.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751094AbYKRHNo (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 18 Nov 2008 02:13:44 -0500
-Received: from cm56-163-160.liwest.at ([86.56.163.160] helo=linz.eudaptics.com)
-	by lilzmailso02.liwest.at with esmtpa (Exim 4.69)
-	(envelope-from <j.sixt@viscovery.net>)
-	id 1L2KmM-0004et-CN; Tue, 18 Nov 2008 08:13:42 +0100
-Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.96])
-	by linz.eudaptics.com (Postfix) with ESMTP
-	id 217CB4E4; Tue, 18 Nov 2008 08:13:42 +0100 (CET)
-User-Agent: Thunderbird 2.0.0.6 (Windows/20070728)
-In-Reply-To: <gfsjjp$o42$1@ger.gmane.org>
-X-Spam-Score: 1.7 (+)
-X-Spam-Report: ALL_TRUSTED=-1.8, BAYES_99=3.5
+	id S1751135AbYKRHrh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 18 Nov 2008 02:47:37 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751127AbYKRHrh
+	(ORCPT <rfc822;git-outgoing>); Tue, 18 Nov 2008 02:47:37 -0500
+Received: from mail.op5.se ([193.201.96.20]:53537 "EHLO mail.op5.se"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751094AbYKRHrg (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 18 Nov 2008 02:47:36 -0500
+Received: from localhost (localhost.localdomain [127.0.0.1])
+	by mail.op5.se (Postfix) with ESMTP id 400021B8116A;
+	Tue, 18 Nov 2008 08:42:28 +0100 (CET)
+X-Virus-Scanned: amavisd-new at 
+X-Spam-Flag: NO
+X-Spam-Score: -2.499
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.499 tagged_above=-10 required=6.6
+	tests=[BAYES_00=-2.599, RDNS_NONE=0.1]
+Received: from mail.op5.se ([127.0.0.1])
+	by localhost (mail.op5.se [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id 9zQNp3pjepPH; Tue, 18 Nov 2008 08:42:25 +0100 (CET)
+Received: from clix.int.op5.se (unknown [172.27.78.6])
+	by mail.op5.se (Postfix) with ESMTP id 55B8B1B81169;
+	Tue, 18 Nov 2008 08:42:25 +0100 (CET)
+User-Agent: Thunderbird 2.0.0.16 (X11/20080723)
+In-Reply-To: <CC8B9B47-4985-4B96-B8DB-0B351633C849@justinbalthrop.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/101262>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/101263>
 
-walt schrieb:
-> Linus Torvalds wrote:
->>
->> On Mon, 17 Nov 2008, walt wrote:
->>> I'm trying to find a bug introduced somewhere between kvm-69
->>> and kvm-70, so of course I want to git-bisect down to it.
->>>
->>> The weirdness is that when I give git-bisect the good and
->>> bad tags, almost everything in my working directory just
->>> disappears, leaving only the qemu subdirectory behind.
+justin wrote:
+> I just discovered git-submodule today, and already I can see it making 
+> my life a lot easier. I develop several modules that are used in two 
+> different projects, and being able to check in changes from the 
+> submodule in either project is something I have been wanting to do for a 
+> while. But there is one shortcoming in git-submodule that I haven't 
+> figured out how to overcome... yet.
 > 
->> ...
->> If you merge stuff from another project that isn't a full repository,
->> then
->> you are merging commits that simply don't _have_ the full tree of your
->> repo...
+> When I make a change to a submodule and push that change to the parent 
+> repository, the change appears to all other users of the repository as a 
+> modification to the submodule commit version.
+
+It shouldn't, unless you push the change into a non-bare copy of a checked
+out submodule, but that would be rather insane as the submodule rather
+than the superproject then gets to decide which version of the submodule
+to use.
+
+> A few people at our 
+> company use 'git ci -a' to add all of their changes, and I'm afraid they 
+> are going to unknowingly revert the submodule back to a previous 
+> version.
+
+Ah, now I see where you're coming from. After you issue "git pull" in
+the submodule you have to sync the new version of the submodule to the
+superproject using "git submodule sync".
+
+> So my plan was to add a post-pull hook that does 'git submodule 
+> update --init', so that people who don't do development on the submodule 
+> will get updates every time they pull.
+
+Ok, I didn't. Why do you pull into the submodules if you don't want to
+sync the code so the superproject gets the benefit of the changes?
+
+> Unfortunately though, there is no 
+> such hook in git. I thought post-merge was going to work, but most 
+> people at our company use 'git pull --rebase', and post-merge isn't 
+> called in that case. The post-checkout hook is called, but the pull 
+> hasn't been completed at that point, so updating the submodule doesn't 
+> work. Alas, if only there was a post-rebase hook.
 > 
-> Okay, that's clearly what's happening to me.  The kvm.git repo
-> contains hundred of commits just like that.  How would you deal
-> with the same situation?  Is git-bisect skip the easiest way?
+> Any ideas other than patching every employee's git source to add a 
+> post-rebase hook?
+> 
 
-If you are pretty sure that the bug you are looking for was *not*
-introduced in the branch that was subtree-merged, you can mark it as
-"good" like so:
+Yes. Only pull in submodules if you intend to sync them afterwards.
 
-  $ git bisect start kvm-69 kvm-70 $BRANCH
-
-where $BRANCH is the most recent commit on the subtree-merged branch.
-Watch out that you do *not* accidentally pick the *merge* commit that
-merged the branch in, but the (second) parent[*], the one that was merged
-in.  Then your bisect sequence won't ever end up in that branch.
-
-[*] If you happen to have the branch lying around as a remote ref, you can
-use that instead, even if it is ahead of what was merged in.
-
--- Hannes
+-- 
+Andreas Ericsson                   andreas.ericsson@op5.se
+OP5 AB                             www.op5.se
+Tel: +46 8-230225                  Fax: +46 8-230231
