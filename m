@@ -1,93 +1,116 @@
-From: "rae l" <crquan@gmail.com>
-Subject: Re: [PATCH 3/3] git-remote: simplifying get_one_entry
-Date: Tue, 18 Nov 2008 08:56:12 +0800
-Message-ID: <91b13c310811171656v54363993rfe0f149e7d1da0b0@mail.gmail.com>
-References: <1226920551-28303-1-git-send-email-crquan@gmail.com>
-	 <1226920551-28303-2-git-send-email-crquan@gmail.com>
-	 <1226920551-28303-3-git-send-email-crquan@gmail.com>
-	 <7vabbywb75.fsf@gitster.siamese.dyndns.org>
+From: Gary Yang <garyyang6@yahoo.com>
+Subject: Re: "secret key not available". "unable to sign the tag".
+Date: Mon, 17 Nov 2008 17:59:10 -0800 (PST)
+Message-ID: <424422.27374.qm@web37902.mail.mud.yahoo.com>
+References: <20081115035743.GA19633@coredump.intra.peff.net>
+Reply-To: garyyang6@yahoo.com
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-To: "Junio C Hamano" <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Nov 18 01:57:42 2008
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Tue Nov 18 03:00:35 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1L2EuI-0000iM-II
-	for gcvg-git-2@gmane.org; Tue, 18 Nov 2008 01:57:31 +0100
+	id 1L2FtK-0007Hl-Pl
+	for gcvg-git-2@gmane.org; Tue, 18 Nov 2008 03:00:35 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751461AbYKRA4P (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 17 Nov 2008 19:56:15 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751479AbYKRA4P
-	(ORCPT <rfc822;git-outgoing>); Mon, 17 Nov 2008 19:56:15 -0500
-Received: from nf-out-0910.google.com ([64.233.182.191]:43825 "EHLO
-	nf-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751076AbYKRA4O (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 17 Nov 2008 19:56:14 -0500
-Received: by nf-out-0910.google.com with SMTP id d3so1306214nfc.21
-        for <git@vger.kernel.org>; Mon, 17 Nov 2008 16:56:13 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to
-         :subject:cc:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:references;
-        bh=VsMfyyzIPXHdY0ZaL2DN1BvPcJLec/Lfcr93D9yqsEk=;
-        b=TkDr96iekoEoOYgzbKssp2r1ex9sbPCoQ9qrYHWMC1BuwN21E3qgFejyy86M7oO4F5
-         ydVpbJ5orLXSXlo2cpKwLaNga0yMJtgp90jArdUs0n8iuYX3jwm7j5qz3/OSv6Da6qtJ
-         wRkIocNCiv4MpBI+eB/exc8JqLnJt946q8jd0=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
-         :content-type:content-transfer-encoding:content-disposition
-         :references;
-        b=m7MKEF51Sh8TzYVNto+89705hVVZ88O4C3Fw5wy2DhqEJ4MCyfrmCQbVj39qGdxYjE
-         72gkJa6luY7Un1ABQfOkGMo84QWLfilvhocNaioLR1ao4g6bfy6WDUzH/KY5cICLFWwh
-         2KI6fQDQPA6EkwZeyIv1zpxDEX9aQSrwtc/sk=
-Received: by 10.103.102.17 with SMTP id e17mr1493582mum.119.1226969772826;
-        Mon, 17 Nov 2008 16:56:12 -0800 (PST)
-Received: by 10.103.191.7 with HTTP; Mon, 17 Nov 2008 16:56:12 -0800 (PST)
-In-Reply-To: <7vabbywb75.fsf@gitster.siamese.dyndns.org>
-Content-Disposition: inline
+	id S1751931AbYKRB7N (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 17 Nov 2008 20:59:13 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751876AbYKRB7N
+	(ORCPT <rfc822;git-outgoing>); Mon, 17 Nov 2008 20:59:13 -0500
+Received: from web37902.mail.mud.yahoo.com ([209.191.91.164]:39120 "HELO
+	web37902.mail.mud.yahoo.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with SMTP id S1751767AbYKRB7M (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 17 Nov 2008 20:59:12 -0500
+Received: (qmail 27489 invoked by uid 60001); 18 Nov 2008 01:59:11 -0000
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+  s=s1024; d=yahoo.com;
+  h=X-YMail-OSG:Received:X-Mailer:Date:From:Reply-To:Subject:To:Cc:In-Reply-To:MIME-Version:Content-Type:Message-ID;
+  b=u1nFuFjcAdNvqePXokjXRHDkDNOSPVi2YtlV5PSBiubMwBhWaE7kGssKwj13Uy97bVl+V7WuP8e9q49M0JAxXfixRzyX7JTcX0lZDjrYo+hwsrK4eE1e++uGrFiozNPaH4BC3xynFVhw6oriAkLB6A21A6mgA1wANmjo7vtx+TE=;
+X-YMail-OSG: iXykY2YVM1lK4VHhJopqvlmQieANpWOhitFwYQS0793Yxn.EvCOaqZgPAEPSvENkVx4eatwb2UdXLhuFXzH4f9cvmvxnyUJo6OLU3XYl5vWHLKRoN6GkeVEogmRrDqCX_qIp6Pqe9daqFK5GdaMixNwV3eNrOS92Ph3.E0VdbPiCVyBlv9sTgm9nMmIx
+Received: from [76.195.33.70] by web37902.mail.mud.yahoo.com via HTTP; Mon, 17 Nov 2008 17:59:10 PST
+X-Mailer: YahooMailWebService/0.7.260.1
+In-Reply-To: <20081115035743.GA19633@coredump.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/101256>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/101257>
 
-On Tue, Nov 18, 2008 at 12:48 AM, Junio C Hamano <gitster@pobox.com> wrote:
-> crquan@gmail.com writes:
->
->> From: Cheng Renquan <crquan@gmail.com>
->>
->> The loop for remote->url_nr is really useless, set to the last one
->> directly is better.
->
-> Is it really useless?  Be more descriptive.
->
->> -     if (remote->url_nr > 0) {
->> -             int i;
->> -
->> -             for (i = 0; i < remote->url_nr; i++)
->> -                     string_list_append(remote->name, list)->util = (void *)remote->url[i];
->> -     } else
->> -             string_list_append(remote->name, list)->util = NULL;
->> +     string_list_append(remote->name, list)->util =
->> +             remote->url_nr > 0
->> +             ? (void *)remote->url[remote->url_nr-1] : NULL;
->
-> When you have more than one URL associated with the remote (this makes
-> sense only for pushing), the current code adds that many string_list_item
-> to the list, each holding the URL.  "git remote -v" shows all of them.
->
-> Your change instead creates only one string_list_item and hold the last
-> URL.  Doesn't it make show_all() to show only one URL for the remote?
-Sorry, this patch is totally wrong, I will regenerate the other two and resend.
+Jeff King,
 
-Thanks for your patience.
+I followed your instruction. But, I still got error when I tag the code. Can you please tell me why?
 
--- 
-Cheng Renquan, Shenzhen, China
-Steven Wright  - "Cross country skiing is great if you live in a small country."
+>   git config --global user.email garyyang6@yahoo.com
+
+git tag -s my-second-tag
+
+gpg: WARNING: using insecure memory!
+gpg: please see http://www.gnupg.org/faq.html for more information
+gpg: skipped `Gary Yang <garyyang6@yahoo.com>': secret key not available
+gpg: signing failed: secret key not available
+error: gpg failed to sign the tag
+fatal: unable to sign the tag
+
+
+
+Thanks,
+
+
+Gary
+
+--- On Fri, 11/14/08, Jeff King <peff@peff.net> wrote:
+
+> From: Jeff King <peff@peff.net>
+> Subject: Re: "secret key not available". "unable to sign the tag".
+> To: "Gary Yang" <garyyang6@yahoo.com>
+> Cc: git@vger.kernel.org
+> Date: Friday, November 14, 2008, 7:57 PM
+> On Fri, Nov 14, 2008 at 03:28:44PM -0800, Gary Yang wrote:
+> 
+> > I got errors and warnings when I used "git tag -s
+> my-tag". It says,
+> > "secret key not available". "unable to
+> sign the tag". 
+> 
+> Probably because it can't find your secret key, like it
+> says.
+> 
+> > gpg: please see http://www.gnupg.org/faq.html for more
+> information
+> > gpg: skipped `Gary Yang
+> <gyang@linux123.(none)>': secret key not available
+> > gpg: signing failed: secret key not available
+> > error: gpg failed to sign the tag
+> > fatal: unable to sign the tag
+> > 
+> > I ran "gpg --gen-key" and generated keypair.
+> But, still got the same
+> > error. Please help.
+> 
+> Did the key you generated have the email address
+> "gyang@linux123.(none)"? If not, then that is
+> your problem.
+> 
+> You need to tell git who you are, since it is unable to
+> deduce it from
+> doing host lookups. Try:
+> 
+>   git config --global user.email garyyang6@yahoo.com
+> 
+> or whatever email address you used when you created the
+> key, and then
+> gpg should find it appropriately.
+> 
+> -Peff
+> --
+> To unsubscribe from this list: send the line
+> "unsubscribe git" in
+> the body of a message to majordomo@vger.kernel.org
+> More majordomo info at 
+> http://vger.kernel.org/majordomo-info.html
+
+
+      
