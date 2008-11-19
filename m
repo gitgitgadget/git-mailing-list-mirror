@@ -1,60 +1,70 @@
-From: Gary Yang <garyyang6@yahoo.com>
-Subject: fatal: did you run git update-server-info on the server? mv post-update.sample post-update
-Date: Wed, 19 Nov 2008 10:59:41 -0800 (PST)
-Message-ID: <155056.88492.qm@web37905.mail.mud.yahoo.com>
-Reply-To: garyyang6@yahoo.com
+From: Neil Schemenauer <nas@arctrix.com>
+Subject: New converstion tool: svn2git.py
+Date: Wed, 19 Nov 2008 13:13:21 -0600
+Message-ID: <20081119191320.GA20870@arctrix.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Nov 19 20:01:13 2008
+X-From: git-owner@vger.kernel.org Wed Nov 19 20:21:31 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1L2sIT-0005mS-8O
-	for gcvg-git-2@gmane.org; Wed, 19 Nov 2008 20:01:05 +0100
+	id 1L2scC-0005h1-Mj
+	for gcvg-git-2@gmane.org; Wed, 19 Nov 2008 20:21:29 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754032AbYKSS7n (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 19 Nov 2008 13:59:43 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754592AbYKSS7m
-	(ORCPT <rfc822;git-outgoing>); Wed, 19 Nov 2008 13:59:42 -0500
-Received: from web37905.mail.mud.yahoo.com ([209.191.91.167]:26367 "HELO
-	web37905.mail.mud.yahoo.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with SMTP id S1754849AbYKSS7m (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 19 Nov 2008 13:59:42 -0500
-Received: (qmail 88674 invoked by uid 60001); 19 Nov 2008 18:59:41 -0000
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-  s=s1024; d=yahoo.com;
-  h=X-YMail-OSG:Received:X-Mailer:Date:From:Reply-To:Subject:To:MIME-Version:Content-Type:Message-ID;
-  b=bwSoM81pQLwTTLrJmGTOczABcpmOffVA9nUsZnTuWlIx9yg07hrNvfGvOU8yYv8xY5393T5qcZeUJJtNldJy1MlxpEL5uH2WjJbmfAYcnKSyQTt+BGXI/gBtoefjuAirKneP/f+qV1j1fNB7LQOc1bRqxGR0lWhN+kRdm/DGFZA=;
-X-YMail-OSG: pO2d6TIVM1nFtvi27TbHvUKl8sCuFqg.fLF4KevAxPJ2sjs1bpWSPUT6NRhBEihRtGPX.5HPbi6MqKL1th7lP9xutRd.EHQ8yhrp.EeO0IIAMoiWnx49wuSywmb1Stu_ppH.uUhNzyB.xmeim_Dzz90kBdPx1UxI3hycvBFCL0OTTzFsa1K3wvhD5Tdr
-Received: from [76.195.33.70] by web37905.mail.mud.yahoo.com via HTTP; Wed, 19 Nov 2008 10:59:41 PST
-X-Mailer: YahooMailWebService/0.7.260.1
+	id S1753803AbYKSTUF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 19 Nov 2008 14:20:05 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754245AbYKSTUE
+	(ORCPT <rfc822;git-outgoing>); Wed, 19 Nov 2008 14:20:04 -0500
+Received: from vapor.arctrix.com ([66.220.1.99]:35786 "HELO vapor.arctrix.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1752884AbYKSTUE (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 19 Nov 2008 14:20:04 -0500
+X-Greylist: delayed 400 seconds by postgrey-1.27 at vger.kernel.org; Wed, 19 Nov 2008 14:20:03 EST
+Received: (qmail 20950 invoked by uid 1000); 19 Nov 2008 19:13:21 -0000
+Content-Disposition: inline
+User-Agent: Mutt/1.5.13 (2006-08-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/101369>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/101370>
 
-The doc, http://www.kernel.org/pub/software/scm/git/docs/gitcore-tutorial.html, at the the section, "Working with Others" says that
-mv post-update.sample post-update under the $GIT_DIR/hooks directory for the public repository. I did that. The file permission is executable.
+Hi,
 
-ls -alF /pub/git/u-boot.git/hooks/post-update
--rwxr-xr-x  1 garyyang6 engr 189 Nov 18 15:54 /pub/git/u-boot.git/hooks/post-update*
+I'm working on a tool to do conversions from SVN to git using a SVN
+dump.  It's in early development but perhaps some people would be
+interested in it:
 
-But, I got error, "did you run git update-server-info on the server" when I tried to "git pull". Any idea why I got this error?
+    http://python.ca/nas/python/svn2git.py
 
-I did not run post-update at public repository manually. Do I need to run it for the very first time?
+I would like to improve it so that it intelligently converts SVN
+branches and tags into git branches (when possible).  The basic idea
+is to map SVN paths into git branches, e.g. trunk -> master,
+branches/foo -> branch-foo, tags/bar -> tags-bar.  Next, specific
+SVN dump actions like:
 
-At my private repository, I did:
-git pull http://git01.my.com /pub/git/u-boot.git HEAD
-fatal: http://git01.my.com/info/refs not found: did you run git update-server-info on the server?
+    Node-path: branches/foo
+    Node-kind: dir
+    Node-action: add
+    Node-copyfrom-rev: 3
+    Node-copyfrom-path: trunk
 
-Thank you,
+need to be detected and the commit needs to performed with the
+correct parent.  One complication is that SVN can create a branch or
+tag from anywhere, for example, the action
 
-Gary
+    Node-path: tags/bar
+    Node-kind: dir
+    Node-action: add
+    Node-copyfrom-rev: 3
+    Node-copyfrom-path: trunk/subdir
 
+would create tags/bar based on revision 3 of trunk/subdir.  There
+doesn't seem to be a good way to convert that into git.  I was
+thinking that the tags-bar branch in that case would have no parent.
+Would git still efficently pack that or would you end up with extra
+blobs?
 
-
-
-      
+  Neil
