@@ -1,75 +1,68 @@
-From: Johannes Sixt <j.sixt@viscovery.net>
-Subject: Re: [PATCH] Fix handle leak in builtin-pack-objects
-Date: Wed, 19 Nov 2008 14:06:53 +0100
-Message-ID: <49240F6D.3030203@viscovery.net>
-References: <81b0412b0811190313p643c0cb4vad620ea942aeea93@mail.gmail.com> <4923FE58.3090503@viscovery.net> <alpine.LFD.2.00.0811190753420.27509@xanadu.home>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] Fix deletion of last character in levenshtein distance
+Date: Wed, 19 Nov 2008 05:13:46 -0800
+Message-ID: <7vhc63svsl.fsf@gitster.siamese.dyndns.org>
+References: <20081118185326.12721.71576.stgit@arrakis.enst.fr>
+ <alpine.DEB.1.00.0811190151000.30769@pacific.mpi-cbg.de>
+ <2008-11-19-09-42-45+trackit+sam@rfc1149.net>
+ <alpine.DEB.1.00.0811191053250.30769@pacific.mpi-cbg.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: Alex Riesen <raa.lkml@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: Nicolas Pitre <nico@cam.org>
-X-From: git-owner@vger.kernel.org Wed Nov 19 14:08:17 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: Samuel Tardieu <sam@rfc1149.net>, git@vger.kernel.org
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Wed Nov 19 14:15:40 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1L2mn1-0005cj-7z
-	for gcvg-git-2@gmane.org; Wed, 19 Nov 2008 14:08:15 +0100
+	id 1L2mu0-0008Dy-6W
+	for gcvg-git-2@gmane.org; Wed, 19 Nov 2008 14:15:28 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752861AbYKSNHA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 19 Nov 2008 08:07:00 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752832AbYKSNHA
-	(ORCPT <rfc822;git-outgoing>); Wed, 19 Nov 2008 08:07:00 -0500
-Received: from lilzmailso02.liwest.at ([212.33.55.13]:55713 "EHLO
-	lilzmailso02.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752824AbYKSNG7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 19 Nov 2008 08:06:59 -0500
-Received: from cm56-163-160.liwest.at ([86.56.163.160] helo=linz.eudaptics.com)
-	by lilzmailso02.liwest.at with esmtpa (Exim 4.69)
-	(envelope-from <j.sixt@viscovery.net>)
-	id 1L2mlh-0003jT-Hl; Wed, 19 Nov 2008 14:06:55 +0100
-Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.96])
-	by linz.eudaptics.com (Postfix) with ESMTP
-	id 50FE769F; Wed, 19 Nov 2008 14:06:53 +0100 (CET)
-User-Agent: Thunderbird 2.0.0.6 (Windows/20070728)
-In-Reply-To: <alpine.LFD.2.00.0811190753420.27509@xanadu.home>
-X-Enigmail-Version: 0.95.5
-X-Spam-Score: 1.7 (+)
-X-Spam-Report: ALL_TRUSTED=-1.8, BAYES_99=3.5
+	id S1752857AbYKSNON (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 19 Nov 2008 08:14:13 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752852AbYKSNON
+	(ORCPT <rfc822;git-outgoing>); Wed, 19 Nov 2008 08:14:13 -0500
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:33281 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752824AbYKSNOM (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 19 Nov 2008 08:14:12 -0500
+Received: from localhost.localdomain (unknown [127.0.0.1])
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 6508F7FC61;
+	Wed, 19 Nov 2008 08:14:10 -0500 (EST)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES256-SHA (256/256 bits)) (No client certificate requested) by
+ a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTPSA id D43E37FC60; Wed,
+ 19 Nov 2008 08:13:53 -0500 (EST)
+In-Reply-To: <alpine.DEB.1.00.0811191053250.30769@pacific.mpi-cbg.de>
+ (Johannes Schindelin's message of "Wed, 19 Nov 2008 10:57:26 +0100 (CET)")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: F400B660-B63B-11DD-A035-9CEDC82D7133-77302942!a-sasl-fastnet.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/101338>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/101339>
 
-Nicolas Pitre schrieb:
-> On Wed, 19 Nov 2008, Johannes Sixt wrote:
-> 
->> Alex Riesen schrieb:
->>> The opened packs seem to stay open forever.
->> In my MinGW port I have the patch below that avoids that t5303 fails
->> because of a pack file that remains open. (Open files cannot be replaced
->> on Windows.) I had hoped that your patch would help, but it does not.
->> Something else still keeps the pack file open. Can anything be done about
->> that?
->>
->> -- Hannes
->>
->> From: Johannes Sixt <j6t@kdbg.org>
->> Date: Mon, 17 Nov 2008 09:25:19 +0100
->> Subject: [PATCH] t5303: Do not overwrite an existing pack
->>
-...
-> Acked-by: Nicolas Pitre <nico@cam.org>
+Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
-Thanks, but I should have mentioned that at this time this patch was just
-meant for exposition, not inclusion. [It's just one of many, many patches
-needed to make the test suite pass on MinGW.]
+> Okay, I understand now, _after_ having looked at the original 
+> levenshtein.c.
+>
+> IOW you could have made my task of reviewing your patch much easier.
+>
+> Anyway, here is my
+>
+> 	Acked-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+>
+> Thanks for the bugfix,
 
-I'd prefer a solution to the problem that the pack file remains open. Do
-you have an idea where git-pack-objects keeps the pack file open, even
-with Alex's two patches applied?
+In other words, even the original author's head exploded without looking
+at extra context lines around the patch.
 
--- Hannes
+It is a sure sign that the original implementation was too scantily
+described, and that the fix was not explained well in the proposed commit
+log message (i.e. in what corner cases the original was bad in what way,
+and how the patch fixes it).
+
+I shouldn't have to decipher the original and the fixed version with
+pencil and paper when re-reviewing Dscho's Ack.
