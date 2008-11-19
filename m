@@ -1,88 +1,62 @@
 From: nadim khemir <nadim@khemir.net>
-Subject: git workshop in Sweden/Denmark
-Date: Wed, 19 Nov 2008 18:58:21 +0100
-Message-ID: <200811191858.21990.nadim@khemir.net>
+Subject: Git.pm
+Date: Wed, 19 Nov 2008 18:56:44 +0100
+Message-ID: <200811191856.44252.nadim@khemir.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=iso-8859-1
 Content-Transfer-Encoding: QUOTED-PRINTABLE
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Nov 19 19:24:51 2008
+X-From: git-owner@vger.kernel.org Wed Nov 19 19:25:21 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1L2rjC-0007AH-FZ
-	for gcvg-git-2@gmane.org; Wed, 19 Nov 2008 19:24:39 +0100
+	id 1L2rjs-0007SM-Cz
+	for gcvg-git-2@gmane.org; Wed, 19 Nov 2008 19:25:20 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754468AbYKSSXZ convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 19 Nov 2008 13:23:25 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754464AbYKSSXY
-	(ORCPT <rfc822;git-outgoing>); Wed, 19 Nov 2008 13:23:24 -0500
-Received: from mail1.perspektivbredband.net ([81.186.254.13]:35006 "EHLO
+	id S1754471AbYKSSX1 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 19 Nov 2008 13:23:27 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754467AbYKSSXZ
+	(ORCPT <rfc822;git-outgoing>); Wed, 19 Nov 2008 13:23:25 -0500
+Received: from mail1.perspektivbredband.net ([81.186.254.13]:35020 "EHLO
 	mail1.perspektivbredband.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1753259AbYKSSXX convert rfc822-to-8bit
+	by vger.kernel.org with ESMTP id S1754466AbYKSSXY convert rfc822-to-8bit
 	(ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 19 Nov 2008 13:23:23 -0500
-X-Greylist: delayed 1633 seconds by postgrey-1.27 at vger.kernel.org; Wed, 19 Nov 2008 13:23:23 EST
+	Wed, 19 Nov 2008 13:23:24 -0500
 Received: from khemir.net (h51bafc0a.c46-01-06.sta.perspektivbredband.net [81.186.252.10])
-	by mail1.perspektivbredband.net (Postfix) with ESMTP id 2531F94004D
-	for <git@vger.kernel.org>; Wed, 19 Nov 2008 18:57:46 +0100 (CET)
+	by mail1.perspektivbredband.net (Postfix) with ESMTP id 82CCE940046
+	for <git@vger.kernel.org>; Wed, 19 Nov 2008 18:56:08 +0100 (CET)
 Received: from naquadim.khemir.lan (naquadim.khemir.lan [192.168.1.234])
-	by khemir.net (Postfix) with ESMTP id 0F4571264ECF
-	for <git@vger.kernel.org>; Wed, 19 Nov 2008 18:57:46 +0100 (CET)
+	by khemir.net (Postfix) with ESMTP id 6D0661264ECF
+	for <git@vger.kernel.org>; Wed, 19 Nov 2008 18:56:08 +0100 (CET)
 User-Agent: KMail/1.9.9
 Content-Disposition: inline
-X-Spam-Status: No, score=0.1 required=5.0 tests=AWL,UNPARSEABLE_RELAY
+X-Spam-Status: No, score=0.2 required=5.0 tests=AWL,UNPARSEABLE_RELAY
 	autolearn=ham version=3.2.5-gr0
 X-Spam-Checker-Version: SpamAssassin 3.2.5-gr0 (2008-06-10) on firewall
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/101363>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/101364>
 
-Hi,
+Hi, I'm new on this mailing list and quite new to git too. I named on i=
+rc that=20
+I develop mainly in Perl (http://search.cpan.org/~nkh/) when I do open=20
+source. I heard that Git.pm needed some love and I can take over its=20
+maintenance if there are things that need to be done.
 
-Lund.pm and Data-foreningen are trying to organize a 'git' workshop.
+I need to know:
 
-The workshop will consist of a presentation in the morning followed by =
-a lunch=20
-in a local restaurant and a workshop after lunch.
+=A0=A0=A0=A0=A0=A0=A0=A0- what needs to be done
+=A0=A0=A0=A0=A0=A0=A0=A0- who was doing maintenanace before
+=A0=A0=A0=A0=A0=A0=A0=A0- how do you want to release it (perl modules a=
+re best placed on CPAN=20
+(too))
+=A0=A0=A0=A0=A0=A0=A0=A0- what (and who) is depending on Git.pm
+=A0=A0=A0=A0=A0=A0=A0=A0- what would be expected of me
 
-We already have a location where the workshop will take place. =A0Most =
-probably=20
-a Saturday to allow as many people as possible to join us. The location=
- is in=20
-Malm=F6 the biggest town in the south of Sweden and only 30mn by train =
-from=20
-Copenhagen capital of Danmark. We, of course, welcome people from other=
- places=20
-too.
-
-We are already working on securing one or two speakers that will enligh=
-ten us.=20
-
-I would like the git community to help us with:
-
-- has a git workshop already been organized?
-=A0=A0=A0=A0=A0=A0=A0=A0is there material that we could get?
-=A0=A0=A0=A0=A0=A0=A0=A0any conference organization existing (something=
- like YAPC)?
-
-- what's the interrest? I'm sure I can get 30 ppl to join but if there =
-is=20
-interrest we can organize something bigger.
-
-- Can you be :
-=A0=A0=A0=A0=A0=A0=A0=A0- a speaker
-=A0=A0=A0=A0=A0=A0=A0=A0- a sponsor
-
-- If you come, what would you like to learn, discuss?
+As you may have seen in another mail, the Perl community is getting=20
+interrested in git.
 
 Cheers, Nadim.
-
-PS: there's a lot of interrest for git in the Perl community right now =
-and=20
-rumors has it that Perl itself is going over to git. Next year YAPC in=20
-Portugal would be a great opportunity to present git in depth to perl=20
-developers. If someone is interrested, please let me know.
