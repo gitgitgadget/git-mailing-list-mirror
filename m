@@ -1,91 +1,88 @@
-From: "Lars Hjemli" <hjemli@gmail.com>
-Subject: Re: [PATCH 3/3] builtin-branch: use strbuf in rename_branch()
-Date: Wed, 19 Nov 2008 20:48:48 +0100
-Message-ID: <8c5c35580811191148m45cdff68vbe190ef911066da8@mail.gmail.com>
-References: <cover.1226954771.git.vmiklos@frugalware.org>
-	 <b3716161b2a3d508ec4306623c5c8889d9367e1d.1226954771.git.vmiklos@frugalware.org>
-	 <5dee4e908190e7a4ed4a693fdf0fb3b3af88fc57.1226954771.git.vmiklos@frugalware.org>
-	 <225d83c1ead50340eed97c64fbb8995017bf1ca8.1226954771.git.vmiklos@frugalware.org>
-	 <7vbpwcvb8i.fsf@gitster.siamese.dyndns.org>
-	 <alpine.DEB.1.00.0811190209470.30769@pacific.mpi-cbg.de>
+From: Christian Couder <chriscool@tuxfamily.org>
+Subject: Re: git workshop in Sweden/Denmark
+Date: Wed, 19 Nov 2008 21:35:23 +0100
+Message-ID: <200811192135.23157.chriscool@tuxfamily.org>
+References: <200811191858.21990.nadim@khemir.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: "Junio C Hamano" <gitster@pobox.com>,
-	"Miklos Vajna" <vmiklos@frugalware.org>, git@vger.kernel.org
-To: "Johannes Schindelin" <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Wed Nov 19 20:50:06 2008
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: nadim khemir <nadim@khemir.net>
+X-From: git-owner@vger.kernel.org Wed Nov 19 21:34:48 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1L2t3t-0001j6-Jl
-	for gcvg-git-2@gmane.org; Wed, 19 Nov 2008 20:50:06 +0100
+	id 1L2tl9-0003xI-1L
+	for gcvg-git-2@gmane.org; Wed, 19 Nov 2008 21:34:47 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752059AbYKSTsv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 19 Nov 2008 14:48:51 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751944AbYKSTsv
-	(ORCPT <rfc822;git-outgoing>); Wed, 19 Nov 2008 14:48:51 -0500
-Received: from wf-out-1314.google.com ([209.85.200.173]:55918 "EHLO
-	wf-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751765AbYKSTsu (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 19 Nov 2008 14:48:50 -0500
-Received: by wf-out-1314.google.com with SMTP id 27so99224wfd.4
-        for <git@vger.kernel.org>; Wed, 19 Nov 2008 11:48:48 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to
-         :subject:cc:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:references;
-        bh=kjOna3pqTzRD9DO4OUvithLOkv51xStWapYt2llHC6s=;
-        b=rzJW6VKGyvS8onW0TmbsQ3k+OlqsCmzfCGZC5n5DUkk/McUF5uN5ybflc7/UvAGOGj
-         oFm4Vcpy/d1WQZ+rELCjnjVr6R29Uv7XXPBhRZcQuOYHSlwNZ4zVe/HeXK+MMJk6Dv+m
-         aLoKvZnNS/KFCA14ysiydROE/6PIEq+rQvrCo=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
-         :content-type:content-transfer-encoding:content-disposition
-         :references;
-        b=B2Y3Myd80pPj11DHQmXv+ExmPE7WCW5FhehllLkmKoC9d4dohsPFPXsLMdggKxEBxi
-         kjxgiA6b7wP0TDUZ3177aYccEJDRSezG3Ebbely2er18VeaY30iPMWdbXSExyUhJsLaz
-         zLA6uiwygOkRX2DFDqBhk4py1/qSbRLM/G4ZU=
-Received: by 10.114.12.9 with SMTP id 9mr831955wal.216.1227124128325;
-        Wed, 19 Nov 2008 11:48:48 -0800 (PST)
-Received: by 10.114.196.11 with HTTP; Wed, 19 Nov 2008 11:48:48 -0800 (PST)
-In-Reply-To: <alpine.DEB.1.00.0811190209470.30769@pacific.mpi-cbg.de>
+	id S1752825AbYKSUdb convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 19 Nov 2008 15:33:31 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752773AbYKSUdb
+	(ORCPT <rfc822;git-outgoing>); Wed, 19 Nov 2008 15:33:31 -0500
+Received: from smtp7-g19.free.fr ([212.27.42.64]:58319 "EHLO smtp7-g19.free.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752589AbYKSUda convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 19 Nov 2008 15:33:30 -0500
+Received: from smtp7-g19.free.fr (localhost [127.0.0.1])
+	by smtp7-g19.free.fr (Postfix) with ESMTP id A7021B05DA;
+	Wed, 19 Nov 2008 21:33:27 +0100 (CET)
+Received: from bureau.boubyland (gre92-7-82-243-130-161.fbx.proxad.net [82.243.130.161])
+	by smtp7-g19.free.fr (Postfix) with ESMTP id 9AD5CB1BEF;
+	Wed, 19 Nov 2008 21:33:26 +0100 (CET)
+User-Agent: KMail/1.9.9
+In-Reply-To: <200811191858.21990.nadim@khemir.net>
 Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/101372>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/101373>
 
-On Wed, Nov 19, 2008 at 02:11, Johannes Schindelin
-<Johannes.Schindelin@gmx.de> wrote:
+Le mercredi 19 novembre 2008, nadim khemir a =E9crit :
 > Hi,
 >
-> On Tue, 18 Nov 2008, Junio C Hamano wrote:
+> Lund.pm and Data-foreningen are trying to organize a 'git' workshop.
+
+Nice!
+
+> The workshop will consist of a presentation in the morning followed b=
+y a
+> lunch in a local restaurant and a workshop after lunch.
 >
->> Miklos Vajna <vmiklos@frugalware.org> writes:
->>
->> > -   snprintf(logmsg, sizeof(logmsg), "Branch: renamed %s to %s",
->> > -            oldref, newref);
->> > +   strbuf_addf(&logmsg, "Branch: renamed %s to %s",
->> > +            oldref.buf, newref.buf);
->>
->> I am wondering why nobody has complained until now, but shouldn't this
->> be oldname and newname?
+> We already have a location where the workshop will take place. =A0Mos=
+t
+> probably a Saturday to allow as many people as possible to join us. T=
+he
+> location is in Malm=F6 the biggest town in the south of Sweden and on=
+ly
+> 30mn by train from Copenhagen capital of Danmark. We, of course, welc=
+ome
+> people from other places too.
+
+Great, but some people may have exhausted their git available time with=
+=20
+GitTogether'08 (see below).
+
+> We are already working on securing one or two speakers that will
+> enlighten us.
 >
-> I think that was the intention.  Lars?
+> I would like the git community to help us with:
+>
+> - has a git workshop already been organized?
+> =A0=A0=A0=A0=A0=A0=A0=A0is there material that we could get?
+> =A0=A0=A0=A0=A0=A0=A0=A0any conference organization existing (somethi=
+ng like YAPC)?
 
-Some background: the message was first generated internally (in
-c976d415) by refs.c:rename_ref() and thus it made sense to use the
-full refname. Sometime later (in 678d0f4c), rename_ref() was modified
-to get the message as an argument from
-builtin_branch.c:rename_branch() but the format of the message was
-kept (almost) identical.
+There was GitTogether'08 one month ago, see:
 
-Personally, I think it's nice if the reflog contains the full refname.
+http://git.or.cz/gitwiki/GitTogether
 
---
-larsh
+Some material is available from the "Speakers" section of the page.
+Other material may be available from the wiki (perhaps=20
+http://git.or.cz/gitwiki/GitLinks).
+
+But there is no conference organization.
+
+Regards,
+Christian.
