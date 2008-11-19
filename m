@@ -1,64 +1,71 @@
-From: nadim khemir <nadim@khemir.net>
-Subject: Cygwin error?
-Date: Wed, 19 Nov 2008 18:57:30 +0100
-Message-ID: <200811191857.30793.nadim@khemir.net>
+From: Petr Baudis <pasky@suse.cz>
+Subject: Re: [TopGit PATCH] Check for help invocation before setup
+Date: Wed, 19 Nov 2008 19:24:36 +0100
+Message-ID: <20081119182436.GB10544@machine.or.cz>
+References: <1227110623-4474-1-git-send-email-madduck@debian.org> <1227110623-4474-2-git-send-email-madduck@debian.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Nov 19 19:25:24 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: "martin f. krafft" <madduck@debian.org>
+X-From: git-owner@vger.kernel.org Wed Nov 19 19:26:06 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1L2rjt-0007SM-4W
-	for gcvg-git-2@gmane.org; Wed, 19 Nov 2008 19:25:21 +0100
+	id 1L2rkT-0007ic-5j
+	for gcvg-git-2@gmane.org; Wed, 19 Nov 2008 19:25:57 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754467AbYKSSX3 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 19 Nov 2008 13:23:29 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754470AbYKSSX1
-	(ORCPT <rfc822;git-outgoing>); Wed, 19 Nov 2008 13:23:27 -0500
-Received: from mail1.perspektivbredband.net ([81.186.254.13]:35030 "EHLO
-	mail1.perspektivbredband.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1754465AbYKSSXZ convert rfc822-to-8bit
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 19 Nov 2008 13:23:25 -0500
-Received: from khemir.net (h51bafc0a.c46-01-06.sta.perspektivbredband.net [81.186.252.10])
-	by mail1.perspektivbredband.net (Postfix) with ESMTP id E2D9A94000E
-	for <git@vger.kernel.org>; Wed, 19 Nov 2008 18:56:54 +0100 (CET)
-Received: from naquadim.khemir.lan (naquadim.khemir.lan [192.168.1.234])
-	by khemir.net (Postfix) with ESMTP id D0C751264ECF
-	for <git@vger.kernel.org>; Wed, 19 Nov 2008 18:56:54 +0100 (CET)
-User-Agent: KMail/1.9.9
+	id S1753735AbYKSSYm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 19 Nov 2008 13:24:42 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753470AbYKSSYm
+	(ORCPT <rfc822;git-outgoing>); Wed, 19 Nov 2008 13:24:42 -0500
+Received: from w241.dkm.cz ([62.24.88.241]:42117 "EHLO machine.or.cz"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753225AbYKSSYl (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 19 Nov 2008 13:24:41 -0500
+Received: by machine.or.cz (Postfix, from userid 2001)
+	id 87D153939719; Wed, 19 Nov 2008 19:24:36 +0100 (CET)
 Content-Disposition: inline
-X-Spam-Status: No, score=0.1 required=5.0 tests=AWL,UNPARSEABLE_RELAY
-	autolearn=ham version=3.2.5-gr0
-X-Spam-Checker-Version: SpamAssassin 3.2.5-gr0 (2008-06-10) on firewall
+In-Reply-To: <1227110623-4474-2-git-send-email-madduck@debian.org>
+User-Agent: Mutt/1.5.16 (2007-06-09)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/101365>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/101366>
 
-Hi, Given:
+On Wed, Nov 19, 2008 at 05:03:40PM +0100, martin f. krafft wrote:
+> diff --git a/tg.sh b/tg.sh
+> index 2961106..40c4ab7 100644
+> --- a/tg.sh
+> +++ b/tg.sh
+> @@ -235,6 +235,20 @@ do_help()
+>  	fi
+>  }
+>  
+> +## Startup
+> +
+> +args_saved="$@"
+> +while [ -n "$1" ]; do
+> +	case "$1" in
+> +	help|--help|-h)
+> +		shift
+> +		do_help "$1"
+> +		exit 1;;
+> +	esac
+> +	shift
+> +done
+> +set -- $args_saved
+> +unset args_saved
+>  
+>  ## Initial setup
 
-$ git pull
-remote: Counting objects: 46, done.
-=2E..
-Updating b80286d..a543dae
-error: Untracked working tree file 'xxx.txt' would be overwritten by me=
-rge.
+Huh, why do you actually need $args_saved at all? :-) This is bound to
+do horrible things with space-containing arguments etc., I think. You
+don't need to do the outer shift and then drop $args_saved altogether,
+no?
 
-
-This is due to a rename of xxx.txt to Xxx.txt. I =A0understand that thi=
-s is due=20
-to files being just case preserving on Cycwin/Win32.
-
-The only I found was to remove the xxx.txt localy and do a pull. The=20
-interresting thing is that Xxx.txt is no present in my file system. I c=
-an=20
-check it out from HEAD though.
-
-What did I missunderstood and do wrong?
-
-Cheers, Nadim.
+-- 
+				Petr "Pasky" Baudis
+People who take cold baths never have rheumatism, but they have
+cold baths.
