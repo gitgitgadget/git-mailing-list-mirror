@@ -1,78 +1,88 @@
-From: Daniel Barkalow <barkalow@iabervon.org>
-Subject: Re: Git commit won't add an untracked file given on the command
- line
-Date: Wed, 19 Nov 2008 13:01:04 -0500 (EST)
-Message-ID: <alpine.LNX.1.00.0811191247560.19665@iabervon.org>
-References: <20081118211237.234d8035@crow> <200811182227.20076.fge@one2team.com> <20081118214730.005fc72d@crow> <alpine.DEB.1.00.0811190206170.30769@pacific.mpi-cbg.de> <20081119095452.3018d2de@crow> <alpine.DEB.1.00.0811191226530.30769@pacific.mpi-cbg.de>
- <7vd4grsveo.fsf@gitster.siamese.dyndns.org>
+From: nadim khemir <nadim@khemir.net>
+Subject: git workshop in Sweden/Denmark
+Date: Wed, 19 Nov 2008 18:58:21 +0100
+Message-ID: <200811191858.21990.nadim@khemir.net>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Mark Burton <markb@ordern.com>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Nov 19 19:02:38 2008
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Nov 19 19:24:51 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1L2rNg-0006Fb-US
-	for gcvg-git-2@gmane.org; Wed, 19 Nov 2008 19:02:25 +0100
+	id 1L2rjC-0007AH-FZ
+	for gcvg-git-2@gmane.org; Wed, 19 Nov 2008 19:24:39 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752906AbYKSSBJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 19 Nov 2008 13:01:09 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752388AbYKSSBI
-	(ORCPT <rfc822;git-outgoing>); Wed, 19 Nov 2008 13:01:08 -0500
-Received: from iabervon.org ([66.92.72.58]:54883 "EHLO iabervon.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752107AbYKSSBG (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 19 Nov 2008 13:01:06 -0500
-Received: (qmail 14973 invoked by uid 1000); 19 Nov 2008 18:01:04 -0000
-Received: from localhost (sendmail-bs@127.0.0.1)
-  by localhost with SMTP; 19 Nov 2008 18:01:04 -0000
-In-Reply-To: <7vd4grsveo.fsf@gitster.siamese.dyndns.org>
-User-Agent: Alpine 1.00 (LNX 882 2007-12-20)
+	id S1754468AbYKSSXZ convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 19 Nov 2008 13:23:25 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754464AbYKSSXY
+	(ORCPT <rfc822;git-outgoing>); Wed, 19 Nov 2008 13:23:24 -0500
+Received: from mail1.perspektivbredband.net ([81.186.254.13]:35006 "EHLO
+	mail1.perspektivbredband.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1753259AbYKSSXX convert rfc822-to-8bit
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 19 Nov 2008 13:23:23 -0500
+X-Greylist: delayed 1633 seconds by postgrey-1.27 at vger.kernel.org; Wed, 19 Nov 2008 13:23:23 EST
+Received: from khemir.net (h51bafc0a.c46-01-06.sta.perspektivbredband.net [81.186.252.10])
+	by mail1.perspektivbredband.net (Postfix) with ESMTP id 2531F94004D
+	for <git@vger.kernel.org>; Wed, 19 Nov 2008 18:57:46 +0100 (CET)
+Received: from naquadim.khemir.lan (naquadim.khemir.lan [192.168.1.234])
+	by khemir.net (Postfix) with ESMTP id 0F4571264ECF
+	for <git@vger.kernel.org>; Wed, 19 Nov 2008 18:57:46 +0100 (CET)
+User-Agent: KMail/1.9.9
+Content-Disposition: inline
+X-Spam-Status: No, score=0.1 required=5.0 tests=AWL,UNPARSEABLE_RELAY
+	autolearn=ham version=3.2.5-gr0
+X-Spam-Checker-Version: SpamAssassin 3.2.5-gr0 (2008-06-10) on firewall
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/101362>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/101363>
 
-On Wed, 19 Nov 2008, Junio C Hamano wrote:
+Hi,
 
-> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
-> 
-> > On Wed, 19 Nov 2008, Mark Burton wrote:
-> >
-> >> Having said that, I still like the concept of being able to add named 
-> >> files without touching the index.
-> >
-> > That's just impossible.  You cannot create a tree object, let alone a 
-> > commit object, without touching the index (AKA staging area).
-> 
-> I do not think Mark really _means_ "not in the index".
-> 
-> The wish is more like "I want to let git know that I am interested in this
-> path, but I'm not ready to say what exact content I want for that path in
-> the next commit, not just yet".
-> 
-> I do not think that is an unreasonable wish.  On the other hand, it is
-> unreasonable for anybody to insist that we satisfy the wish without
-> touching the index.  The index is the most natural place to do that.
+Lund.pm and Data-foreningen are trying to organize a 'git' workshop.
 
-I don't think that's what Mark wants, in this case. He's looking for the 
-ability to have "git commit" act on a temporary index created by adding to 
-the parent commit explicitly named files which aren't in the non-temporary 
-index. That is, Mark doesn't want to touch *the* index, which is fine; git 
-can commit with *an* index.
+The workshop will consist of a presentation in the morning followed by =
+a lunch=20
+in a local restaurant and a workshop after lunch.
 
-> We have a half (probably a quarter) of what we need for that implemented
-> already, by the way.
+We already have a location where the workshop will take place. =A0Most =
+probably=20
+a Saturday to allow as many people as possible to join us. The location=
+ is in=20
+Malm=F6 the biggest town in the south of Sweden and only 30mn by train =
+from=20
+Copenhagen capital of Danmark. We, of course, welcome people from other=
+ places=20
+too.
 
-I've looked into what you're suggesting on occasion; the main issue is 
-getting the various index users to avoid getting confused. I was stumped 
-by the diff code, which was confusing the "intent to add something" token 
-with its "compare against the work tree" token. I'd say, it's half 
-implemented, but testing is a major unstarted undertaking.
+We are already working on securing one or two speakers that will enligh=
+ten us.=20
 
-	-Daniel
-*This .sig left intentionally blank*
+I would like the git community to help us with:
+
+- has a git workshop already been organized?
+=A0=A0=A0=A0=A0=A0=A0=A0is there material that we could get?
+=A0=A0=A0=A0=A0=A0=A0=A0any conference organization existing (something=
+ like YAPC)?
+
+- what's the interrest? I'm sure I can get 30 ppl to join but if there =
+is=20
+interrest we can organize something bigger.
+
+- Can you be :
+=A0=A0=A0=A0=A0=A0=A0=A0- a speaker
+=A0=A0=A0=A0=A0=A0=A0=A0- a sponsor
+
+- If you come, what would you like to learn, discuss?
+
+Cheers, Nadim.
+
+PS: there's a lot of interrest for git in the Perl community right now =
+and=20
+rumors has it that Perl itself is going over to git. Next year YAPC in=20
+Portugal would be a great opportunity to present git in depth to perl=20
+developers. If someone is interrested, please let me know.
