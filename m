@@ -1,85 +1,77 @@
-From: Samuel Tardieu <sam@rfc1149.net>
-Subject: Re: [PATCH] Fix deletion of last character in levenshtein distance
-Date: Wed, 19 Nov 2008 09:42:45 +0100
-Organization: RFC 1149 (see http://www.rfc1149.net/)
-Message-ID: <2008-11-19-09-42-45+trackit+sam@rfc1149.net>
-References: <20081118185326.12721.71576.stgit@arrakis.enst.fr> <alpine.DEB.1.00.0811190151000.30769@pacific.mpi-cbg.de>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: Git commit won't add an untracked file given on the command
+ line
+Date: Wed, 19 Nov 2008 10:41:44 +0100 (CET)
+Message-ID: <alpine.DEB.1.00.0811191036340.30769@pacific.mpi-cbg.de>
+References: <20081118211237.234d8035@crow> <200811182227.20076.fge@one2team.com> <20081118214730.005fc72d@crow> <alpine.DEB.1.00.0811190206170.30769@pacific.mpi-cbg.de> <87tza41pf4.fsf@catnip.gol.com> <alpine.DEB.1.00.0811190238360.30769@pacific.mpi-cbg.de>
+ <buomyfwmldj.fsf@dhapc248.dev.necel.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 8bit
-Cc: git@vger.kernel.org
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Wed Nov 19 09:43:56 2008
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Mark Burton <markb@ordern.com>,
+	Francis Galiegue <fge@one2team.com>, git@vger.kernel.org
+To: Miles Bader <miles@gnu.org>
+X-From: git-owner@vger.kernel.org Wed Nov 19 10:35:13 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1L2ifB-0005Dk-PY
-	for gcvg-git-2@gmane.org; Wed, 19 Nov 2008 09:43:54 +0100
+	id 1L2jSm-0003yZ-1D
+	for gcvg-git-2@gmane.org; Wed, 19 Nov 2008 10:35:08 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752170AbYKSImb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 19 Nov 2008 03:42:31 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752143AbYKSIma
-	(ORCPT <rfc822;git-outgoing>); Wed, 19 Nov 2008 03:42:30 -0500
-Received: from zoidberg.rfc1149.net ([91.121.19.179]:59562 "EHLO
-	zoidberg.rfc1149.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751818AbYKSIm3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 19 Nov 2008 03:42:29 -0500
-Received: from localhost (localhost [127.0.0.1])
-	by zoidberg.rfc1149.net (Postfix) with ESMTP id A171D10EAEB;
-	Wed, 19 Nov 2008 09:42:27 +0100 (CET)
-X-Virus-Scanned: amavisd-new at rfc1149.net
-Received: from zoidberg.rfc1149.net ([127.0.0.1])
-	by localhost (zaphod.rfc1149.net [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id M0vLKjOGHUUK; Wed, 19 Nov 2008 09:42:26 +0100 (CET)
-Received: from mail2.rfc1149.net (willow.rfc1149.net [IPv6:2001:6f8:37a:2::2])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(Client CN "mail2.rfc1149.net", Issuer "rfc1149.net" (verified OK))
-	by zoidberg.rfc1149.net (Postfix) with ESMTPS id 4C42310E9AB;
-	Wed, 19 Nov 2008 09:42:26 +0100 (CET)
-Received: from localhost (localhost [127.0.0.1])
-	by mail2.rfc1149.net (Postfix) with ESMTP id 96CE2C40BE;
-	Wed, 19 Nov 2008 09:42:48 +0100 (CET)
-Received: from mail2.rfc1149.net ([127.0.0.1])
-	by localhost (localhost [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id ggRJ53enHWKD; Wed, 19 Nov 2008 09:42:47 +0100 (CET)
-Received: by mail2.rfc1149.net (Postfix, from userid 1000)
-	id CE461C40CA; Wed, 19 Nov 2008 09:42:45 +0100 (CET)
-Content-Disposition: inline
-In-Reply-To: <alpine.DEB.1.00.0811190151000.30769@pacific.mpi-cbg.de>
-User-Agent: Mutt/1.5.18 (2008-05-17)
-X-WWW: http://www.rfc1149.net/sam
-X-Jabber: <sam@rfc1149.net> (see http://www.jabber.org/)
-X-OpenPGP-Fingerprint: 79C0 AE3C CEA8 F17B 0EF1  45A5 F133 2241 1B80 ADE6 (see http://www.gnupg.org/)
+	id S1752530AbYKSJdv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 19 Nov 2008 04:33:51 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752305AbYKSJdv
+	(ORCPT <rfc822;git-outgoing>); Wed, 19 Nov 2008 04:33:51 -0500
+Received: from mail.gmx.net ([213.165.64.20]:45133 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1751818AbYKSJdu (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 19 Nov 2008 04:33:50 -0500
+Received: (qmail invoked by alias); 19 Nov 2008 09:33:48 -0000
+Received: from pacific.mpi-cbg.de (EHLO pacific.mpi-cbg.de) [141.5.10.38]
+  by mail.gmx.net (mp055) with SMTP; 19 Nov 2008 10:33:48 +0100
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1+SGZ06i9CS2T7McI7ekmRtNWdl1t1GLL06hkzXuc
+	IcR2gy80PZTo1H
+X-X-Sender: schindelin@pacific.mpi-cbg.de
+In-Reply-To: <buomyfwmldj.fsf@dhapc248.dev.necel.com>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.67
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/101317>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/101318>
 
-* Johannes Schindelin <Johannes.Schindelin@gmx.de> [2008-11-19 01:53:45 +0100]
+Hi,
 
-| Hi,
-| 
-| On Tue, 18 Nov 2008, Samuel Tardieu wrote:
-| 
-| > diff --git a/levenshtein.c b/levenshtein.c
-| > index db52f2c..98fea72 100644
-| > --- a/levenshtein.c
-| > +++ b/levenshtein.c
-| > @@ -25,7 +25,7 @@ int levenshtein(const char *string1, const char *string2,
-| >  					row2[j + 1] > row0[j - 1] + w)
-| >  				row2[j + 1] = row0[j - 1] + w;
-| >  			/* deletion */
-| > -			if (j + 1 < len2 && row2[j + 1] > row1[j + 1] + d)
-| > +			if (row2[j + 1] > row1[j + 1] + d)
-| 
-| I do not understand: does row2 have more entries than len2?
+On Wed, 19 Nov 2008, Miles Bader wrote:
 
-Yes it does: int *row2 = xmalloc(sizeof(int) * (len2 + 1));
+> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+> >> I agree, but it would kinda handy to have an exception for files 
+> >> explicitly named on the command line.
+> >
+> > Only if you do not have a clear picture of what the staging area is 
+> > about, IMHO.
+> 
+> That's such a vague statement, I've not sure how to take it.
+> 
+> I use the staging area a lot, so I think I have a pretty clear idea of 
+> what it's "about", but I also often use "commit FILE" or "commit -a" for 
+> simple cases; even when splitting a change into multiple commits, it's 
+> often more convenient to do "commit FILE..." instead of "add FILE; 
+> commit".
 
-| In any case, you will _have_ to guard against accessing elements
-| outside the reserved memory.
+What I meant was this: the "commit <file>" paradigm is not what you should 
+do most of the time.  In order to work with the staging area efficiently, 
+you should make staging and committing two separate steps.
 
-Why would that be needed? j belongs to [0, len2[, so j+1 is always
-in [0, len2+1[ which is ok for both row2 and row1.
+I regularly encounter people who never call "git diff --cached" before 
+committing, and guess who introduces all kinds of debug statements and 
+other cruft into their commits?  Exactly.
+
+So my point is this: stage first, verify, then commit.  That saves you a 
+lot of embarrassment.
+
+Ciao,
+Dscho
