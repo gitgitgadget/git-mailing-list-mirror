@@ -1,106 +1,104 @@
-From: Nicolas Pitre <nico@cam.org>
-Subject: Re: [PATCH] Fix handle leak in builtin-pack-objects
-Date: Wed, 19 Nov 2008 07:55:03 -0500 (EST)
-Message-ID: <alpine.LFD.2.00.0811190753420.27509@xanadu.home>
-References: <81b0412b0811190313p643c0cb4vad620ea942aeea93@mail.gmail.com>
- <4923FE58.3090503@viscovery.net>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: git bisect do not work when good reversion is newer than bad
+ reversion
+Date: Wed, 19 Nov 2008 05:00:35 -0800
+Message-ID: <7vljvfswek.fsf@gitster.siamese.dyndns.org>
+References: <6077B97E85E7374DAE87B42B5AA997970D0B12@sshaexmb1.amd.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: Alex Riesen <raa.lkml@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: Johannes Sixt <j.sixt@viscovery.net>
-X-From: git-owner@vger.kernel.org Wed Nov 19 13:56:42 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: "Cai, Crane" <Crane.Cai@amd.com>
+X-From: git-owner@vger.kernel.org Wed Nov 19 14:02:16 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1L2mbl-0001ac-7j
-	for gcvg-git-2@gmane.org; Wed, 19 Nov 2008 13:56:37 +0100
+	id 1L2mh9-0003Yv-2K
+	for gcvg-git-2@gmane.org; Wed, 19 Nov 2008 14:02:11 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752804AbYKSMzW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 19 Nov 2008 07:55:22 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752781AbYKSMzW
-	(ORCPT <rfc822;git-outgoing>); Wed, 19 Nov 2008 07:55:22 -0500
-Received: from relais.videotron.ca ([24.201.245.36]:45643 "EHLO
-	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752470AbYKSMzW (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 19 Nov 2008 07:55:22 -0500
-Received: from xanadu.home ([66.131.194.97]) by VL-MO-MR005.ip.videotron.ca
- (Sun Java(tm) System Messaging Server 6.3-4.01 (built Aug  3 2007; 32bit))
- with ESMTP id <0KAK00H0IZUNIQG0@VL-MO-MR005.ip.videotron.ca> for
- git@vger.kernel.org; Wed, 19 Nov 2008 07:54:23 -0500 (EST)
-X-X-Sender: nico@xanadu.home
-In-reply-to: <4923FE58.3090503@viscovery.net>
-User-Agent: Alpine 2.00 (LFD 1167 2008-08-23)
+	id S1752920AbYKSNA4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 19 Nov 2008 08:00:56 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752924AbYKSNAz
+	(ORCPT <rfc822;git-outgoing>); Wed, 19 Nov 2008 08:00:55 -0500
+Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:52205 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752917AbYKSNAz (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 19 Nov 2008 08:00:55 -0500
+Received: from localhost.localdomain (unknown [127.0.0.1])
+	by b-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id E470F170B3;
+	Wed, 19 Nov 2008 08:00:53 -0500 (EST)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES256-SHA (256/256 bits)) (No client certificate requested) by
+ b-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTPSA id 8EBEC170A8; Wed,
+ 19 Nov 2008 08:00:37 -0500 (EST)
+In-Reply-To: <6077B97E85E7374DAE87B42B5AA997970D0B12@sshaexmb1.amd.com>
+ (Crane Cai's message of "Wed, 19 Nov 2008 13:20:13 +0800")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: 19440BB8-B63A-11DD-BE33-C128113D384A-77302942!a-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/101335>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/101336>
 
-On Wed, 19 Nov 2008, Johannes Sixt wrote:
+"Cai, Crane" <Crane.Cai@amd.com> writes:
 
-> Alex Riesen schrieb:
-> > The opened packs seem to stay open forever.
-> 
-> In my MinGW port I have the patch below that avoids that t5303 fails
-> because of a pack file that remains open. (Open files cannot be replaced
-> on Windows.) I had hoped that your patch would help, but it does not.
-> Something else still keeps the pack file open. Can anything be done about
-> that?
-> 
-> -- Hannes
-> 
-> From: Johannes Sixt <j6t@kdbg.org>
-> Date: Mon, 17 Nov 2008 09:25:19 +0100
-> Subject: [PATCH] t5303: Do not overwrite an existing pack
-> 
-> This test corrupts a pack file, then repacks the objects. The consequence
-> is that the repacked pack file has the same name as the original file
-> (that has been corrupted).
-> 
-> During its operation, git-pack-objects opens the corrupted file and keeps
-> it open at all times. On Windows, this is a problem because a file that is
-> open in any process cannot be delete or replaced, but that is what we do
-> in some of the test cases, and so they fail.
-> 
-> The work-around is to write the repacked objects to a file of a different
-> name, and replace the original after git-pack-objects has terminated.
-> 
-> Signed-off-by: Johannes Sixt <j6t@kdbg.org>
+> Hi Junio,
+>
+> Sorry to disturb you. Here the requirement I met can not find answer
+> from website. That's why I directly ask you.
+>
+> I need to use "git bisect" to find what patch can fix a problem.
+> I found v2.6.25 has this problem.
+> And v2.6.26 does NOT has this problem.
+>
+> Then I use bisect as this:
+>
+> #git bisect start
+> #git bisect good v2.6.26
+> #git bisect bad v2.6.25
+>
+> No reversion cut via these steps. Do you know whether git command can
+> achieve this requirement or not?
 
-Acked-by: Nicolas Pitre <nico@cam.org>
+You can use "git bisect" to find a single change that fixed the issue
+(_provided if_ such a single change exists).  There is a small mental
+trick you need to exercise.
 
+First, realize that bisect is about "it used to be like this, but later it
+turned into that.  Where did that single transition from this to that
+happened"?  Usually, "this" is "had this particular bug and was broken"
+and "that" is "that bug was fixed and things work smoothly".  In your
+case, however, "this" is "broken" and "that" is "fixed".  IOW, the
+question you ask "bisect" is "it used to be broken but later it was fixed;
+where did that exactly happen?".
 
-> ---
->  t/t5303-pack-corruption-resilience.sh |    7 +++++--
->  1 files changed, 5 insertions(+), 2 deletions(-)
-> 
-> diff --git a/t/t5303-pack-corruption-resilience.sh
-> b/t/t5303-pack-corruption-resilience.sh
-> index 5132d41..41c83e3 100755
-> --- a/t/t5303-pack-corruption-resilience.sh
-> +++ b/t/t5303-pack-corruption-resilience.sh
-> @@ -43,8 +43,11 @@ create_new_pack() {
-> 
->  do_repack() {
->      pack=`printf "$blob_1\n$blob_2\n$blob_3\n" |
-> -          git pack-objects $@ .git/objects/pack/pack` &&
-> -    pack=".git/objects/pack/pack-${pack}"
-> +          git pack-objects $@ .git/objects/pack/packtmp` &&
-> +    packtmp=".git/objects/pack/packtmp-${pack}" &&
-> +    pack=".git/objects/pack/pack-${pack}" &&
-> +    mv "${packtmp}.pack" "${pack}.pack" &&
-> +    mv "${packtmp}.idx" "${pack}.idx"
->  }
-> 
->  do_corrupt_object() {
-> -- 
-> 1.6.0.4.1683.g35125
-> 
-> 
+The mental trick is to swap "good" and "bad" in order to adjust to your
+use, because you are using bisect in a reverse way from the usual.  Usual
+case uses "good" mark "this" while "bad" is used to mark "that" in the
+sentence "it used to be like this, but later it turned into that".
 
+So what you would do is...
 
-Nicolas
+	(1) First of all, write on a piece of paper:
+
+	    good - the version _STILL_ has the bug.
+            bad  - the version does not have the bug _ANYMORE_
+
+	(2) Start with "git bisect v2.6.25 v2.6.26";
+
+        (3) As you test each revision, look at the memo you made.  Say
+            "good" if it still has the bug you are interested in; say
+            "bad" if it does not have the bug anymore..
+
+    cf. http://thread.gmane.org/gmane.comp.version-control.git/86063
+
+By the way, I usually drop requests-for-help on the floor unless it is
+CC'ed to the mailing list, because my time spent on writing the response
+like this message will be wasted and wouldn't help the git community at
+all.  I simply do not have enough time to give unpaid support for
+individuals.  I am making exception this time only because I am waiting
+for something and I happen to have nothing else to do while doing so.
+
+Please send this kind of request-for-help to <git@vger.kernel.org>, the
+main mailing list, to which anybody can send messages without subscribing.
