@@ -1,55 +1,68 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: Git commit won't add an untracked file given on the command
- line
-Date: Wed, 19 Nov 2008 12:27:45 +0100 (CET)
-Message-ID: <alpine.DEB.1.00.0811191226530.30769@pacific.mpi-cbg.de>
-References: <20081118211237.234d8035@crow> <200811182227.20076.fge@one2team.com> <20081118214730.005fc72d@crow> <alpine.DEB.1.00.0811190206170.30769@pacific.mpi-cbg.de> <20081119095452.3018d2de@crow>
+From: "Constantine Plotnikov" <constantine.plotnikov@gmail.com>
+Subject: Re: [PATCH] Retain multiple -q/-v occurrences in git pull
+Date: Wed, 19 Nov 2008 14:46:30 +0300
+Message-ID: <85647ef50811190346x11aea0fay3a8a7dfd8ddf6abc@mail.gmail.com>
+References: <1226959770-4252-1-git-send-email-tuncer.ayaz@gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org
-To: Mark Burton <markb@ordern.com>
-X-From: git-owner@vger.kernel.org Wed Nov 19 12:21:10 2008
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, gitster@vger.kernel.org
+To: "Tuncer Ayaz" <tuncer.ayaz@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Nov 19 12:47:49 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1L2l7L-0004KU-4Z
-	for gcvg-git-2@gmane.org; Wed, 19 Nov 2008 12:21:07 +0100
+	id 1L2lXA-0004Pi-0W
+	for gcvg-git-2@gmane.org; Wed, 19 Nov 2008 12:47:48 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752197AbYKSLTw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 19 Nov 2008 06:19:52 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752133AbYKSLTw
-	(ORCPT <rfc822;git-outgoing>); Wed, 19 Nov 2008 06:19:52 -0500
-Received: from mail.gmx.net ([213.165.64.20]:60438 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1752009AbYKSLTv (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 19 Nov 2008 06:19:51 -0500
-Received: (qmail invoked by alias); 19 Nov 2008 11:19:49 -0000
-Received: from pacific.mpi-cbg.de (EHLO pacific.mpi-cbg.de) [141.5.10.38]
-  by mail.gmx.net (mp037) with SMTP; 19 Nov 2008 12:19:49 +0100
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1/YVbZB+L3YjR6BH1O/n2Kvj98Ifx4+LKdt7qRcEl
-	2yGvv6jIWaKJYE
-X-X-Sender: schindelin@pacific.mpi-cbg.de
-In-Reply-To: <20081119095452.3018d2de@crow>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.71
+	id S1751938AbYKSLqc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 19 Nov 2008 06:46:32 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752197AbYKSLqc
+	(ORCPT <rfc822;git-outgoing>); Wed, 19 Nov 2008 06:46:32 -0500
+Received: from fk-out-0910.google.com ([209.85.128.185]:3915 "EHLO
+	fk-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751657AbYKSLqc (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 19 Nov 2008 06:46:32 -0500
+Received: by fk-out-0910.google.com with SMTP id 18so3915424fkq.5
+        for <git@vger.kernel.org>; Wed, 19 Nov 2008 03:46:30 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to
+         :subject:cc:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:references;
+        bh=VRHVLccT4TjkcqZ7POnwbeJDA0puCv7xJhI6NvW6Iac=;
+        b=IY/TCXWzptQv9uFKXuBLns6gOsnxpW1RV3gvnNpp/MB0VKAQD8mCEsyCGkFoBMgAAY
+         +Mx+lsJSrqkM+0QInu48U5yJbnX21Z+TbGKoREDkT9mQmtFBcNDHtEXzLTw8X/2IYv68
+         nOq49MJDoMP9QrDH6g7VDxv4RsjsH5KnPgEB0=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
+         :content-type:content-transfer-encoding:content-disposition
+         :references;
+        b=gHNcyRoaI5Ad3WD4Xrd0KTz1h/J1/hoJVehyM+/LvsRFvPEYEFPlSbDKp6Lo8Vl5LH
+         61mlzoS22Hj1Iq7qWMttbASMQ9D7wpIh2LbSTU2DCy60P8WkWGA8EyLfKIWGsTyeI75P
+         HT+1L+NvZ3/Zf6u2RtMFax69Mti4w+Fd4UoQM=
+Received: by 10.180.233.15 with SMTP id f15mr289483bkh.188.1227095190250;
+        Wed, 19 Nov 2008 03:46:30 -0800 (PST)
+Received: by 10.180.230.10 with HTTP; Wed, 19 Nov 2008 03:46:30 -0800 (PST)
+In-Reply-To: <1226959770-4252-1-git-send-email-tuncer.ayaz@gmail.com>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/101325>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/101326>
 
-Hi,
+On Tue, Nov 18, 2008 at 1:09 AM, Tuncer Ayaz <tuncer.ayaz@gmail.com> wrote:
+> To support counting -q/-v options in git pull retain
+> them by concatenating.
+>
+[rest of message cut]
 
-On Wed, 19 Nov 2008, Mark Burton wrote:
+By the way, there is yet another way to invoke git fetch. It is "git
+remote update". Possibly it should support "-v" and "-q" options for
+consistency as well.
 
-> Having said that, I still like the concept of being able to add named 
-> files without touching the index.
-
-That's just impossible.  You cannot create a tree object, let alone a 
-commit object, without touching the index (AKA staging area).
-
-Ciao,
-Dscho
+Regards,
+Constantine
