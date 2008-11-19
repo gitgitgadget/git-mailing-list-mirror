@@ -1,90 +1,80 @@
-From: Mark Burton <markb@ordern.com>
-Subject: Re: Git commit won't add an untracked file given on the command
- line
-Date: Wed, 19 Nov 2008 14:41:39 +0000
-Organization: Order N Ltd.
-Message-ID: <20081119144139.602f3334@crow>
-References: <20081118211237.234d8035@crow>
-	<200811182227.20076.fge@one2team.com>
-	<20081118214730.005fc72d@crow>
-	<alpine.DEB.1.00.0811190206170.30769@pacific.mpi-cbg.de>
-	<20081119095452.3018d2de@crow>
-	<alpine.DEB.1.00.0811191226530.30769@pacific.mpi-cbg.de>
-	<7vd4grsveo.fsf@gitster.siamese.dyndns.org>
+From: Nicolas Pitre <nico@cam.org>
+Subject: Re: [PATCH] Fix handle leak in builtin-pack-objects
+Date: Wed, 19 Nov 2008 09:42:43 -0500 (EST)
+Message-ID: <alpine.LFD.2.00.0811190940480.27509@xanadu.home>
+References: <81b0412b0811190313p643c0cb4vad620ea942aeea93@mail.gmail.com>
+ <4923FE58.3090503@viscovery.net>
+ <alpine.LFD.2.00.0811190753420.27509@xanadu.home>
+ <81b0412b0811190534r4f71f981s53de415f79e56e25@mail.gmail.com>
+ <49241AEF.1080808@viscovery.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Nov 19 15:43:26 2008
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+Cc: Alex Riesen <raa.lkml@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>,
+	Git Mailing List <git@vger.kernel.org>
+To: Johannes Sixt <j.sixt@viscovery.net>
+X-From: git-owner@vger.kernel.org Wed Nov 19 15:44:18 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1L2oGw-0001PZ-KM
-	for gcvg-git-2@gmane.org; Wed, 19 Nov 2008 15:43:15 +0100
+	id 1L2oHl-0001mD-Dd
+	for gcvg-git-2@gmane.org; Wed, 19 Nov 2008 15:44:05 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753374AbYKSOl7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 19 Nov 2008 09:41:59 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753285AbYKSOl7
-	(ORCPT <rfc822;git-outgoing>); Wed, 19 Nov 2008 09:41:59 -0500
-Received: from c2bthomr14.btconnect.com ([213.123.20.132]:4770 "EHLO
-	c2bthomr14.btconnect.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753071AbYKSOl6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 19 Nov 2008 09:41:58 -0500
-Received: from crow.ordern.com (host86-128-20-200.range86-128.btcentralplus.com [86.128.20.200])
-	by c2bthomr14.btconnect.com
-	with ESMTP id BXV88742;
-	Wed, 19 Nov 2008 14:41:40 GMT
-Received: from crow (localhost [127.0.0.1])
-	by crow.ordern.com (Postfix) with ESMTP id 2BE18190CA9;
-	Wed, 19 Nov 2008 14:41:40 +0000 (GMT)
-In-Reply-To: <7vd4grsveo.fsf@gitster.siamese.dyndns.org>
-X-Mailer: Claws Mail 3.6.1 (GTK+ 2.12.9; x86_64-pc-linux-gnu)
-X-Junkmail-Status: score=10/50, host=c2bthomr14.btconnect.com
-X-Junkmail-SD-Raw: score=unknown,
-	refid=str=0001.0A090203.492425A7.004A,ss=1,fgs=0,
-	ip=86.128.20.200,
-	so=2007-10-30 19:00:17,
-	dmn=5.7.1/2008-09-02
-X-Junkmail-IWF: false
+	id S1753386AbYKSOmu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 19 Nov 2008 09:42:50 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753380AbYKSOmu
+	(ORCPT <rfc822;git-outgoing>); Wed, 19 Nov 2008 09:42:50 -0500
+Received: from relais.videotron.ca ([24.201.245.36]:27907 "EHLO
+	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753285AbYKSOmu (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 19 Nov 2008 09:42:50 -0500
+Received: from xanadu.home ([66.131.194.97]) by VL-MH-MR002.ip.videotron.ca
+ (Sun Java(tm) System Messaging Server 6.3-4.01 (built Aug  3 2007; 32bit))
+ with ESMTP id <0KAL00LGS4V7NQ00@VL-MH-MR002.ip.videotron.ca> for
+ git@vger.kernel.org; Wed, 19 Nov 2008 09:42:44 -0500 (EST)
+X-X-Sender: nico@xanadu.home
+In-reply-to: <49241AEF.1080808@viscovery.net>
+User-Agent: Alpine 2.00 (LFD 1167 2008-08-23)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/101348>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/101349>
 
+On Wed, 19 Nov 2008, Johannes Sixt wrote:
 
-Hi,
-
-> > That's just impossible.  You cannot create a tree object, let alone a 
-> > commit object, without touching the index (AKA staging area).
+> Alex Riesen schrieb:
+> > 2008/11/19 Nicolas Pitre <nico@cam.org>:
+> >> On Wed, 19 Nov 2008, Johannes Sixt wrote:
+> >>> The work-around is to write the repacked objects to a file of a different
+> >>> name, and replace the original after git-pack-objects has terminated.
+> >>>
+> >>> Signed-off-by: Johannes Sixt <j6t@kdbg.org>
+> >> Acked-by: Nicolas Pitre <nico@cam.org>
+> > 
+> > Are you sure? Will it work in a real repository? Were noone does
+> > rename the previous pack files into packtmp-something?
 > 
-> I do not think Mark really _means_ "not in the index".
+> Oh, the patch only works around the failure in the test case. In a real
+> repository there is usually no problem because the destination pack file
+> does not exist.
 > 
-> The wish is more like "I want to let git know that I am interested in this
-> path, but I'm not ready to say what exact content I want for that path in
-> the next commit, not just yet".
+> The unusual case is where you do this:
 > 
-> I do not think that is an unreasonable wish.  On the other hand, it is
-> unreasonable for anybody to insist that we satisfy the wish without
-> touching the index.  The index is the most natural place to do that.
+>  $ git rev-list -10 HEAD | git pack-objects foobar
 > 
-> We have a half (probably a quarter) of what we need for that implemented
-> already, by the way.
+> twice in a row: In this case the second invocation fails on Windows
+> because the destination pack file already exists *and* is open. But not
+> even git-repack does this even if it is called twice. OTOH, the test case
+> *does* exactly this.
 
-Sorry, poor choice of words on my part - you have to remember my
-viewpoint is one of user more than developer.
+OK.... Well, despite my earlier assertion, I think the above should be a 
+valid operation.
 
-My wish was really just based on the advertised behaviour that
-specifying a file on the command line would commit the contents of that
-file while leaving the index intact. Whether the index was temporarily
-used/altered during the execution of the commit didn't cross my mind.
+I'm looking at it now.  I'm therefore revoking my earlier ACK as well 
+(better keep that test case alive).
 
-Hey, it's not a big deal and with the accepted patch to the
-documentation it need not take any more of anyone's time.
 
-Cheers,
-
-Mark
+Nicolas
