@@ -1,63 +1,67 @@
-From: Miles Bader <miles@gnu.org>
-Subject: Re: Git commit won't add an untracked file given on the command line
-Date: Wed, 19 Nov 2008 10:21:19 +0900
-Message-ID: <87tza41pf4.fsf@catnip.gol.com>
-References: <20081118211237.234d8035@crow>
-	<200811182227.20076.fge@one2team.com> <20081118214730.005fc72d@crow>
-	<alpine.DEB.1.00.0811190206170.30769@pacific.mpi-cbg.de>
-Reply-To: Miles Bader <miles@gnu.org>
+From: "Matt Graham" <mdg149@gmail.com>
+Subject: removing svn remotes
+Date: Tue, 18 Nov 2008 20:47:24 -0500
+Message-ID: <1c5969370811181747i240ed22bk73ca62e09b3d0172@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Mark Burton <markb@ordern.com>,
-	Francis Galiegue <fge@one2team.com>, git@vger.kernel.org
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Wed Nov 19 02:39:49 2008
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Nov 19 02:48:47 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1L2c2l-00051l-WB
-	for gcvg-git-2@gmane.org; Wed, 19 Nov 2008 02:39:48 +0100
+	id 1L2cBO-0007HL-Co
+	for gcvg-git-2@gmane.org; Wed, 19 Nov 2008 02:48:42 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751617AbYKSBie (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 18 Nov 2008 20:38:34 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751549AbYKSBid
-	(ORCPT <rfc822;git-outgoing>); Tue, 18 Nov 2008 20:38:33 -0500
-Received: from smtp11.dentaku.gol.com ([203.216.5.73]:35591 "EHLO
-	smtp11.dentaku.gol.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751419AbYKSBid (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 18 Nov 2008 20:38:33 -0500
-X-Greylist: delayed 1022 seconds by postgrey-1.27 at vger.kernel.org; Tue, 18 Nov 2008 20:38:33 EST
-Received: from 218.231.109.191.eo.eaccess.ne.jp ([218.231.109.191] helo=catnip.gol.com)
-	by smtp11.dentaku.gol.com with esmtpa (Dentaku)
-	id 1L2bkw-0005bo-IN; Wed, 19 Nov 2008 10:21:22 +0900
-Received: by catnip.gol.com (Postfix, from userid 1000)
-	id DE41FDFC7; Wed, 19 Nov 2008 10:21:19 +0900 (JST)
-System-Type: x86_64-unknown-linux-gnu
-In-Reply-To: <alpine.DEB.1.00.0811190206170.30769@pacific.mpi-cbg.de>
-	(Johannes Schindelin's message of "Wed, 19 Nov 2008 02:07:41 +0100
-	(CET)")
-X-Virus-Scanned: ClamAV GOL (outbound)
-X-Abuse-Complaints: abuse@gol.com
+	id S1751716AbYKSBr0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 18 Nov 2008 20:47:26 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751706AbYKSBr0
+	(ORCPT <rfc822;git-outgoing>); Tue, 18 Nov 2008 20:47:26 -0500
+Received: from fk-out-0910.google.com ([209.85.128.189]:40689 "EHLO
+	fk-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751408AbYKSBrZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 18 Nov 2008 20:47:25 -0500
+Received: by fk-out-0910.google.com with SMTP id 18so3696039fkq.5
+        for <git@vger.kernel.org>; Tue, 18 Nov 2008 17:47:24 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to
+         :subject:mime-version:content-type:content-transfer-encoding
+         :content-disposition;
+        bh=7sM8IBmj5wZmfWwmY12CXaf66B7VEn/I3ZV5Yqkjdu8=;
+        b=YhDbBGNQqQtwXqGncxrUCjjCiToNlR9mX8itn0bFmneucfFvYTzeRMGX4atZNmmcDd
+         eQQr8jvtjey3j0wEEcJL6XvlciT4Kj5YomrVHeICFzjGAUM31PUC3kSb7FQ892HZ2vk8
+         5LxCC2hrrawqDz+6GG4fhpS3xyEZmhv+F/ADE=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:to:subject:mime-version:content-type
+         :content-transfer-encoding:content-disposition;
+        b=rJLozvjOwpCwPt9dyBy9X+JnWyyRlH/pt4p5ys+HOAeSshRYZDF/lpCcdBEJ9y/tl0
+         fckmDtJRigoNcgX1u7VRvsIk04i75PsVt0kVtMSJdGz9pLJdS7tqsGXclgZXW+4Q/2hK
+         u2IqZiuDMyEob5UHNVKk+Sma3reaVtzd7bZiw=
+Received: by 10.187.211.3 with SMTP id n3mr73218faq.60.1227059244310;
+        Tue, 18 Nov 2008 17:47:24 -0800 (PST)
+Received: by 10.187.187.7 with HTTP; Tue, 18 Nov 2008 17:47:24 -0800 (PST)
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/101302>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/101303>
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
-> It may be a traditional wart, but a helpful one.  Remember, you can also 
-> say:
->
-> 	git commit that/directory/
->
-> I do _not_ want Git to add all untracked (and unignored) files in that 
-> directory automatically.
+Hi,
+I have a svn repo cloned into a git repo.  There are several remote
+refs that are there that I don't care about and don't want to fetch.
 
-I agree, but it would kinda handy to have an exception for files
-explicitly named on the command line.
+git svn fetch --fetch-all gets a bunch of stuff from branches I don't want
+git svn fetch requires I checkout the branches I care about before fetching
 
--Miles
+git svn fetch doesn't accept a branch name
+git remote rm isn't able to see the svn remotes
 
--- 
-Apologize, v. To lay the foundation for a future offense.
+Is there a way to either:
+1) get rid of the svn remotes that I don't want?
+2) fetch only the remotes that I do want?
+
+Thanks!
