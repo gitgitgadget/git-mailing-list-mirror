@@ -1,81 +1,106 @@
-From: "Matt Graham" <mdg149@gmail.com>
-Subject: Re: removing svn remotes
-Date: Wed, 19 Nov 2008 16:26:13 -0500
-Message-ID: <1c5969370811191326j46b8ae1r6e916c239cc6be82@mail.gmail.com>
-References: <1c5969370811181747i240ed22bk73ca62e09b3d0172@mail.gmail.com>
-	 <20081119083219.GB3538@atjola.homenet>
+From: Evgeniy Ivanov <lolkaantimat@gmail.com>
+Subject: Re: [git-p4] Can't submit: Something I do in a wrong way.
+Date: Thu, 20 Nov 2008 01:16:40 +0300
+Message-ID: <49249048.5030504@gmail.com>
+References: <49247E5D.7070601@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: base64
+Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org
-To: "=?UTF-8?Q?Bj=C3=B6rn_Steinbrink?=" <B.Steinbrink@gmx.de>
-X-From: git-owner@vger.kernel.org Wed Nov 19 22:27:38 2008
+To: unlisted-recipients:; (no To-header on input)
+X-From: git-owner@vger.kernel.org Wed Nov 19 23:19:02 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1L2uaF-0000hf-D2
-	for gcvg-git-2@gmane.org; Wed, 19 Nov 2008 22:27:35 +0100
+	id 1L2vNz-0003zD-Oj
+	for gcvg-git-2@gmane.org; Wed, 19 Nov 2008 23:19:00 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755232AbYKSV0R (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 19 Nov 2008 16:26:17 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753934AbYKSV0Q
-	(ORCPT <rfc822;git-outgoing>); Wed, 19 Nov 2008 16:26:16 -0500
-Received: from ug-out-1314.google.com ([66.249.92.175]:42538 "EHLO
-	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754570AbYKSV0P (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 19 Nov 2008 16:26:15 -0500
-Received: by ug-out-1314.google.com with SMTP id 39so97902ugf.37
-        for <git@vger.kernel.org>; Wed, 19 Nov 2008 13:26:13 -0800 (PST)
+	id S1751181AbYKSWRo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 19 Nov 2008 17:17:44 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751262AbYKSWRo
+	(ORCPT <rfc822;git-outgoing>); Wed, 19 Nov 2008 17:17:44 -0500
+Received: from fg-out-1718.google.com ([72.14.220.156]:9243 "EHLO
+	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750969AbYKSWRo (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 19 Nov 2008 17:17:44 -0500
+Received: by fg-out-1718.google.com with SMTP id 19so131849fgg.17
+        for <git@vger.kernel.org>; Wed, 19 Nov 2008 14:17:41 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to
-         :subject:cc:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:references;
-        bh=OIfMYc0mEH/6oW3g7EbpX6H0LVp/dNaFPx8glzsPikg=;
-        b=gbHu92smwIxkMlcOe6mcLFlW03/k6PF6FWDBeh8VkBeKnBrqAz5PeHoYNhTv8wnEJx
-         9Wf3LrXwtfR3YC18ZReq3eW61MkeiQmdVnaC2yMSNl8UtJWpQLeGOT9QGSYGGTSNAsdl
-         NzsWdsqESsGnI4i4ub3uC5YpAYUX6jJGi9dPM=
+        h=domainkey-signature:received:received:message-id:date:from
+         :user-agent:mime-version:cc:subject:references:in-reply-to
+         :x-enigmail-version:content-type:content-transfer-encoding;
+        bh=kn25rzVNIfZpsaR/+2taaDxXwb1WTRCwUokhZtCgURg=;
+        b=faUrTvhu2JGfekt2Dt4Owc3rDJXZQwTKV0ZF7AZt3S/tkTFPdbYycgbmWId0JtkbBZ
+         y6lQMw2DtR8WxqNNkcz4rEMzn8Ednyqd9Y7VoEF9lJ1hVy5OJUO7S/vYMuljvhv8Syz9
+         rlVfgnmUEod7Lz/pS608hWxjbKZKHRQU7yG4s=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
-         :content-type:content-transfer-encoding:content-disposition
-         :references;
-        b=A3HorrjoCHKrY1L4HRhomVsxeBd7dVLSc2Lg5K1BxRZVBerx+4Nbs1cDt5bBoGsolH
-         3MRXRELHwq0vT+wIGf/JFWThSmMc2UGy1j0gGHkLe3lCdP2zTCEENirbdYbR+0fpa/xi
-         6px6KauzuJbmglJIFTxpoH5NztJ6eKpvmumMg=
-Received: by 10.187.239.18 with SMTP id q18mr323774far.16.1227129973152;
-        Wed, 19 Nov 2008 13:26:13 -0800 (PST)
-Received: by 10.187.187.7 with HTTP; Wed, 19 Nov 2008 13:26:13 -0800 (PST)
-In-Reply-To: <20081119083219.GB3538@atjola.homenet>
-Content-Disposition: inline
+        h=message-id:date:from:user-agent:mime-version:cc:subject:references
+         :in-reply-to:x-enigmail-version:content-type
+         :content-transfer-encoding;
+        b=F+FP6CK1psfRwSaWb/q3TCJ0anKk5jFCc/7Dq9m1y5SIelLGj3c7mu3Wop/UAJ5IMw
+         g+k14etSfFJmEbG635GTM5CpndR7ty5yLrBnTQs4BKq9RP64uxTpc6ZVLIEo4QWP03kf
+         YoRWG8HyJg8OzA/5ra/CVXyYM4HPtdrbs4Wzw=
+Received: by 10.181.149.19 with SMTP id b19mr475763bko.82.1227133061355;
+        Wed, 19 Nov 2008 14:17:41 -0800 (PST)
+Received: from ?93.81.248.228? ([93.81.248.228])
+        by mx.google.com with ESMTPS id e17sm188872fke.10.2008.11.19.14.17.39
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Wed, 19 Nov 2008 14:17:40 -0800 (PST)
+User-Agent: Thunderbird 2.0.0.17 (X11/20080922)
+In-Reply-To: <49247E5D.7070601@gmail.com>
+X-Enigmail-Version: 0.95.7
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/101377>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/101378>
 
-T24gV2VkLCBOb3YgMTksIDIwMDggYXQgMDM6MzIsIEJqw7ZybiBTdGVpbmJyaW5rIDxCLlN0ZWlu
-YnJpbmtAZ214LmRlPiB3cm90ZToKPiBPbiAyMDA4LjExLjE4IDIwOjQ3OjI0IC0wNTAwLCBNYXR0
-IEdyYWhhbSB3cm90ZToKPj4gSGksCj4+IEkgaGF2ZSBhIHN2biByZXBvIGNsb25lZCBpbnRvIGEg
-Z2l0IHJlcG8uICBUaGVyZSBhcmUgc2V2ZXJhbCByZW1vdGUKPj4gcmVmcyB0aGF0IGFyZSB0aGVy
-ZSB0aGF0IEkgZG9uJ3QgY2FyZSBhYm91dCBhbmQgZG9uJ3Qgd2FudCB0byBmZXRjaC4KPj4KPj4g
-Z2l0IHN2biBmZXRjaCAtLWZldGNoLWFsbCBnZXRzIGEgYnVuY2ggb2Ygc3R1ZmYgZnJvbSBicmFu
-Y2hlcyBJIGRvbid0IHdhbnQKPj4gZ2l0IHN2biBmZXRjaCByZXF1aXJlcyBJIGNoZWNrb3V0IHRo
-ZSBicmFuY2hlcyBJIGNhcmUgYWJvdXQgYmVmb3JlIGZldGNoaW5nCj4+Cj4+IGdpdCBzdm4gZmV0
-Y2ggZG9lc24ndCBhY2NlcHQgYSBicmFuY2ggbmFtZQo+PiBnaXQgcmVtb3RlIHJtIGlzbid0IGFi
-bGUgdG8gc2VlIHRoZSBzdm4gcmVtb3Rlcwo+Pgo+PiBJcyB0aGVyZSBhIHdheSB0byBlaXRoZXI6
-Cj4+IDEpIGdldCByaWQgb2YgdGhlIHN2biByZW1vdGVzIHRoYXQgSSBkb24ndCB3YW50Pwo+PiAy
-KSBmZXRjaCBvbmx5IHRoZSByZW1vdGVzIHRoYXQgSSBkbyB3YW50Pwo+Cj4gVWhtLCBhcmUgeW91
-IHRhbGtpbmcgYWJvdXQgcmVtb3RlIHRyYWNraW5nIGJyYW5jaGVzICh3aGF0ICJnaXQgYnJhbmNo
-Cj4gLXIiIHNob3dzKSwgb3Igc3ZuLXJlbW90ZXMgKG5vdCBzdXJlIGlmIGdpdC1zdm4gY2FuIGxp
-c3QgdGhlbSwgdGhleSdyZQo+IGluIC5naXQvY29uZmlnKT8KPgo+IFRoZSBiZWhhdmlvdXIgeW91
-IGRlc2NyaWJlIGRvZXNuJ3QgbWF0Y2ggbXkgZXhwZXJpZW5jZSB3aXRoIGdpdC1zdm4sIHNvCj4g
-bWF5YmUgeW91IGNvdWxkIGVsYWJvcmF0ZSBhIGJpdCBvbiB0aGUgZXhhY3QgcHJvYmxlbT8KClNv
-cnJ5IHRoZSBxdWVzdGlvbiB3YXMgbm90IGNsZWFyLgoKZ2l0IGJyYW5jaCAtciAtZApkaWQgZXhh
-Y3RseSB3aGF0IEkgbmVlZC4gIEkgZ3Vlc3MgSSBqdXN0IGRpZG4ndCBrbm93IGhvdyB0byBhc2sg
-Zm9yCml0LiAgQW5vdGhlciBoYXBweSBkaXNjb3ZlcnkuCgpVc2luZyBnaXQgYnJhbmNoIC1yIC1k
-LCBJIHdhcyBhYmxlIHRvIGRlbGV0ZSBteSBzdm4tcmVtb3Rlcy4KTm93IHdoZW4gSSBydW4gZ2l0
-IHN2biBmZXRjaCAtLWZldGNoLWFsbCwgaXQgYXBwZWFycyB0byBmZXRjaCBvbmx5CmZyb20gdGhl
-IHJlbWFpbmluZyBicmFuY2hlcyB0aGF0IEkgZGlkbid0IGRlbGV0ZS4gIEkgaG9wZSB0aGF0CmNs
-YXJpZmllcyBpdC4KCnRoYW5rIHlvdSEK
+Retried and noticed that if I do:
+/dir1/1> git-p4 submit --git-dir=../../git/1/ --origin=master
+Then everything works fine. Strange, but docs say:
+"This requires a Perforce checkout separate to your git
+repository. To submit all changes that are in the current git branch but
+not in
+the "p4" branch (or "origin" if "p4" doesn't exist) simply call
+
+    git-p4 submit
+
+in your git repository."
+And my approach is a bit vice versa.
+Any suggestions? I can go with it, but I want almost forget about thing
+that I have perforce :)
+
+
+Evgeniy Ivanov wrote:
+> Hi list,
+> I need a help with git-p4.
+> 
+> There are //1, //2, //3 in perforce's depot, and /dir1 is a client's root.
+> So:
+> Root:   /dir1/
+> //1/... //client/1... etc
+> I've checkouted //1, //2 and //3.
+> 
+> In /git I did "git clone //1; git clone //2", So I have /git/1, /git/2.
+> Now I run in /git/1 "git-p4 submit commitBr" and choose 'y' to sync,
+> where comitBr has one more commit than master.
+> I get "Path /git/1/... is not under client's root /dir1/". Without
+> syncing it says I have opened files, but when I do in /dir1/1 "p4 -a
+> revert" I get: "file(s) not opened on this client".
+> Looks like "git-p4 rebase" works fine.
+> 
+> Also I tried to keep git in the same dir as perforce workspace: I did 1
+> commit and then failed to do anything, because got strange conflicts.
+> 
+> 
+> P.S. Please don't forget to keep me in CC :)
+> 
+> 
+
+
+-- 
+Cheers, Evgeniy.
+Key fingerprint: F316 B5A1 F6D2 054F CD18 B74A 9540 0ABB 1FE5 67A3
