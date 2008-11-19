@@ -1,76 +1,82 @@
-From: Miles Bader <miles@gnu.org>
-Subject: Re: Git commit won't add an untracked file given on the command line
-Date: Wed, 19 Nov 2008 12:43:04 +0900
-Message-ID: <buomyfwmldj.fsf@dhapc248.dev.necel.com>
-References: <20081118211237.234d8035@crow>
-	<200811182227.20076.fge@one2team.com> <20081118214730.005fc72d@crow>
-	<alpine.DEB.1.00.0811190206170.30769@pacific.mpi-cbg.de>
-	<87tza41pf4.fsf@catnip.gol.com>
-	<alpine.DEB.1.00.0811190238360.30769@pacific.mpi-cbg.de>
-Reply-To: Miles Bader <miles@gnu.org>
+From: "rae l" <crquan@gmail.com>
+Subject: Re: [RFC] On how to manage tags fetched from remote?
+Date: Wed, 19 Nov 2008 12:03:58 +0800
+Message-ID: <91b13c310811182003o451c8222kc336aea7ed6eeb6@mail.gmail.com>
+References: <91b13c310811181827y4e37815egaa34ba164d9f4269@mail.gmail.com>
+	 <7vzljwsads.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Mark Burton <markb@ordern.com>,
-	Francis Galiegue <fge@one2team.com>, git@vger.kernel.org
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Wed Nov 19 04:44:45 2008
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: "Junio C Hamano" <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Nov 19 05:07:33 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1L2dzh-0007Mx-1S
-	for gcvg-git-2@gmane.org; Wed, 19 Nov 2008 04:44:45 +0100
+	id 1L2eLk-0003kE-TR
+	for gcvg-git-2@gmane.org; Wed, 19 Nov 2008 05:07:33 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750945AbYKSDnX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 18 Nov 2008 22:43:23 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751116AbYKSDnX
-	(ORCPT <rfc822;git-outgoing>); Tue, 18 Nov 2008 22:43:23 -0500
-Received: from TYO202.gate.nec.co.jp ([202.32.8.206]:63086 "EHLO
-	tyo202.gate.nec.co.jp" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750928AbYKSDnW (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 18 Nov 2008 22:43:22 -0500
-Received: from relay11.aps.necel.com ([10.29.19.46])
-	by tyo202.gate.nec.co.jp (8.13.8/8.13.4) with ESMTP id mAJ3guZB023024;
-	Wed, 19 Nov 2008 12:43:05 +0900 (JST)
-Received: from relay11.aps.necel.com ([10.29.19.24] [10.29.19.24]) by relay11.aps.necel.com with ESMTP; Wed, 19 Nov 2008 12:43:05 +0900
-Received: from dhapc248.dev.necel.com ([10.114.112.215] [10.114.112.215]) by relay11.aps.necel.com with ESMTP; Wed, 19 Nov 2008 12:43:05 +0900
-Received: by dhapc248.dev.necel.com (Postfix, from userid 31295)
-	id 417563BD; Wed, 19 Nov 2008 12:43:05 +0900 (JST)
-System-Type: i686-pc-linux-gnu
-Blat: Foop
-In-Reply-To: <alpine.DEB.1.00.0811190238360.30769@pacific.mpi-cbg.de>
-	(Johannes Schindelin's message of "Wed, 19 Nov 2008 02:39:27 +0100
-	(CET)")
+	id S1751483AbYKSEED (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 18 Nov 2008 23:04:03 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751408AbYKSEEC
+	(ORCPT <rfc822;git-outgoing>); Tue, 18 Nov 2008 23:04:02 -0500
+Received: from fk-out-0910.google.com ([209.85.128.190]:59409 "EHLO
+	fk-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751116AbYKSEEA (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 18 Nov 2008 23:04:00 -0500
+Received: by fk-out-0910.google.com with SMTP id 18so3746844fkq.5
+        for <git@vger.kernel.org>; Tue, 18 Nov 2008 20:03:58 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to
+         :subject:cc:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:references;
+        bh=mbTn9nt4OcDppY9qGr0rcKs12WSfddD2g7QfRAVSbxY=;
+        b=rprmx+ra0vTHcbFQgYi5z7rQ6jHW4lzJSRQE4Cjr1ClxkK/VQyykXfwO9z93XywRj9
+         bQR6/F6TDNoQrIGr8KB3EvYAK4+usknylfBPaOkv2Fx4S65ZRw0YTw94eqwcuInARA4I
+         A0XrESG64XsE2UITk3KuQTGHbhqH78fqAbvDw=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
+         :content-type:content-transfer-encoding:content-disposition
+         :references;
+        b=HbEBTsj6nUylrcJk6EY2hV5v3m0EvsW9N95Uu5nfkkUTjocrkIelwQKDVfFX8MgVBc
+         cynB/yeYXvWcaQCdOKItKusqyQ6zFIfiZue9CFih/aumsfVt0lMvb9Lp+0raCePoPFNV
+         fRTuHKHl3htw0shnLVf/ZerKfbdZyElxA4LPU=
+Received: by 10.103.221.5 with SMTP id y5mr216943muq.66.1227067438661;
+        Tue, 18 Nov 2008 20:03:58 -0800 (PST)
+Received: by 10.103.191.7 with HTTP; Tue, 18 Nov 2008 20:03:58 -0800 (PST)
+In-Reply-To: <7vzljwsads.fsf@gitster.siamese.dyndns.org>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/101312>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/101313>
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
->> I agree, but it would kinda handy to have an exception for files 
->> explicitly named on the command line.
->
-> Only if you do not have a clear picture of what the staging area is about, 
-> IMHO.
+On Wed, Nov 19, 2008 at 10:43 AM, Junio C Hamano <gitster@pobox.com> wrote:
+> Slurping very many (possibly unrelated) projects into one repository is
+No. They are all kernel development related. You know the linux kernel
+has many subsystem,
+from http://git.kernel.org/, hundreds of repos, most are kernel
+development related.
+Every subsystem has a single maintainer git repository, with linus's
+git repos is the center,
+So if one want to track the kernel development, he needs to track many repo.
 
-That's such a vague statement, I've not sure how to take it.
+The kernel is in developing at a very high speed, so always complex
+and different than other projbects.
 
-I use the staging area a lot, so I think I have a pretty clear idea of what
-it's "about", but I also often use "commit FILE" or "commit -a" for simple
-cases; even when splitting a change into multiple commits, it's often more
-convenient to do "commit FILE..." instead of "add FILE; commit".
+> your choice (I wouldn't comment if it is a sane choice -- I do not have
+> time to ponder the pros and cons.  If it suits your needs, that's good
+> enough) If you do not want tags from some repositories but do want from
+> some others copied to that repository, per remote configuration feature is
+> exactly how it was designed to be used.
 
-I agree that having "commit DIR" add new files would likely be more
-annoying than helpful (it's not uncommon to have some temporary files
-laying around), but given that "commit FILE" is _explicitly_ naming the new
-file, it seems hard to imagine somebody would be surprised if it worked
-even when FILE was a new file...
-
--Miles
+I think this is a good idea for me and I will implement it. Thanks for review.
 
 -- 
-=====
-(^o^;
-(()))
-*This is the cute octopus virus, please copy it into your sig so it can spread.
+Cheng Renquan, Shenzhen, China
+Lily Tomlin  - "The trouble with the rat race is that even if you win,
+you're still a rat."
