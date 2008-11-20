@@ -1,98 +1,111 @@
-From: martin f krafft <madduck@debian.org>
-Subject: Re: [PATCH] Allow help/--help/-h to be run outside of a TopGit repo
-Date: Thu, 20 Nov 2008 16:11:00 +0100
-Organization: The Debian project
-Message-ID: <20081120151100.GA2354@piper.oerlikon.madduck.net>
-References: <1227181594-15123-1-git-send-email-madduck@debian.org> <20081120142702.GG10491@machine.or.cz> <20081120145511.GD29789@piper.oerlikon.madduck.net> <20081120150832.GI10491@machine.or.cz>
+From: Roger Leigh <rleigh@codelibre.net>
+Subject: Re: git and mtime
+Date: Thu, 20 Nov 2008 15:19:25 +0000
+Message-ID: <20081120151925.GE6023@codelibre.net>
+References: <20081119113752.GA13611@ravenclaw.codelibre.net> <46d6db660811190818r3aa2a392pda9106ac4a579cf0@mail.gmail.com> <20081120112708.GC22787@ravenclaw.codelibre.net> <492560C5.5070308@op5.se> <20081120141533.GC6023@codelibre.net> <49257949.4070308@op5.se>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="/9DWx/yDrRhgMJTb"
-Cc: git@vger.kernel.org
-To: Petr Baudis <pasky@suse.cz>
-X-From: git-owner@vger.kernel.org Thu Nov 20 16:13:41 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: Christian MICHON <christian.michon@gmail.com>, git@vger.kernel.org
+To: Andreas Ericsson <ae@op5.se>
+X-From: git-owner@vger.kernel.org Thu Nov 20 16:21:21 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1L3BCr-0000Hr-Az
-	for gcvg-git-2@gmane.org; Thu, 20 Nov 2008 16:12:33 +0100
+	id 1L3BKl-0004jO-8Y
+	for gcvg-git-2@gmane.org; Thu, 20 Nov 2008 16:20:43 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755009AbYKTPLM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 20 Nov 2008 10:11:12 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755177AbYKTPLL
-	(ORCPT <rfc822;git-outgoing>); Thu, 20 Nov 2008 10:11:11 -0500
-Received: from clegg.madduck.net ([193.242.105.96]:33667 "EHLO
-	clegg.madduck.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754918AbYKTPLJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 20 Nov 2008 10:11:09 -0500
-Received: from wall.oerlikon.madduck.net (wall.oerlikon.madduck.net [IPv6:2001:41e0:ff12::1])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(Client CN "wall.oerlikon.madduck.net", Issuer "CAcert Class 3 Root" (verified OK))
-	by clegg.madduck.net (postfix) with ESMTPS id 7BBA51D40A9;
-	Thu, 20 Nov 2008 16:11:02 +0100 (CET)
-Received: from piper.oerlikon.madduck.net (piper.oerlikon.madduck.net [IPv6:2001:41e0:ff12:0:211:2fff:fe6b:c869])
-	by wall.oerlikon.madduck.net (Postfix) with ESMTP id D4D2A9F34F;
-	Thu, 20 Nov 2008 16:11:00 +0100 (CET)
-Received: by piper.oerlikon.madduck.net (Postfix, from userid 1000)
-	id 3C08B45F4; Thu, 20 Nov 2008 16:11:00 +0100 (CET)
+	id S1755083AbYKTPT2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 20 Nov 2008 10:19:28 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754871AbYKTPT1
+	(ORCPT <rfc822;git-outgoing>); Thu, 20 Nov 2008 10:19:27 -0500
+Received: from nagini.codelibre.net ([80.68.93.164]:49119 "EHLO
+	nagini.codelibre.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751307AbYKTPT1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 20 Nov 2008 10:19:27 -0500
+Received: by nagini.codelibre.net (Postfix, from userid 1000)
+	id 728D394672; Thu, 20 Nov 2008 15:19:25 +0000 (GMT)
 Content-Disposition: inline
-In-Reply-To: <20081120150832.GI10491@machine.or.cz>
-X-Motto: Keep the good times rollin'
-X-OS: Debian GNU/Linux lenny/sid kernel 2.6.26-1-amd64 x86_64
+In-Reply-To: <49257949.4070308@op5.se>
+X-GPG-Key: 0x25BFB848
+X-Debian: testing/unstable
+X-OS-Uptime: 13:26:52 up 13 days,  1:44,  3 users,  load average: 0.01,
+	0.11, 0.09
 User-Agent: Mutt/1.5.18 (2008-05-17)
-X-Virus-Scanned: ClamAV 0.94.1/8653/Thu Nov 20 10:04:07 2008 on clegg.madduck.net
-X-Virus-Status: Clean
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/101449>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/101450>
+
+On Thu, Nov 20, 2008 at 03:50:49PM +0100, Andreas Ericsson wrote:
+> Roger Leigh wrote:
+>> On Thu, Nov 20, 2008 at 02:06:13PM +0100, Andreas Ericsson wrote:
+>>> Roger Leigh wrote:
+>>>> On Wed, Nov 19, 2008 at 05:18:16PM +0100, Christian MICHON wrote:
+>>>>> On Wed, Nov 19, 2008 at 12:37 PM, Roger Leigh <rleigh@codelibre.net> wrote:
+>>>>>> Would it be possible for git to store the mtime of files in the tree?
+>>>>>>
+>>>>>> This would make it possible to do this type of work in git, since it's
+>>>>>> currently a bit random as to whether it works or not.  This only
+>>>>>> started when I upgraded to an amd64 architecture from powerpc32,
+>>>>>> I guess it's maybe using high-resolution timestamps.
+>>>>>>
+>>> Caring about meta-data the way you mean it would mean that
+>>>
+>>>  git add foo.c; git commit -m "kapooie"; touch foo.c; git status
+>>>
+>>> would show "foo.c" as modified. How sane is that?
+>>
+>> I've never come close to suggesting we do anything so insane.
+>>
+>> What I am suggesting is that on add/commit, the inode metadata
+>> be recorded in the tree (like we already store perms), so that
+>> it can be (**optionally**) reused/restored on checkout.
+>>
+>> Whether it's stored in the tree or not is a separate concern from
+>> whether to *use* it or not.  For most situations, it won't be
+>> useful, as has been made quite clear from all of the replies, and I
+>> don't disagree with this.  However, for some, the ability to have
+>> this information to hand to make use of would be invaluable.
+>>
+>
+> Then write a hook for it. You agree that for most users this will be
+> totally insane, and yet you request that it's added in a place where
+> everyone will have to pay the performance/diskspace penalty for it
+> but only a handful will get any benefits. That's patently absurd.
+
+The cost is tiny.  The extra space would be smaller than a single
+SHA1 hash.
+
+> Especially since there are such easy workarounds that you can put in
+> place yourself instead.
 
 
---/9DWx/yDrRhgMJTb
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+>> There have been quite a few suggestions to look into using hooks,
+>> and I'll investigate this.  However, I do have some concerns
+>> about *where* I would store this "extended tree" data, since it
+>> is implicitly tied to a single tree object, and I wouldn't
+>> want to store it directly as content.
+>
+> Store it as a blob targeted by a lightweight tag named
+> "metadata.$sha1" and you'll have the easiest time in the world when
+> writing the hooks. Also, the tags won't be propagated by default,
+> which is a good thing since your timestamps/uid's whatever almost
+> certainly will not work well on other developers repositories.
 
-also sprach Petr Baudis <pasky@suse.cz> [2008.11.20.1608 +0100]:
-> What is that?
+And yet the fact that it won't propagate makes it totally useless:
+all the other people using the repo won't get the extra metadata
+that will prevent build failures.  Having the extra data locally
+is nice, but not exactly what I'd call a solution.  The whole point
+of what I want is to have it as an integral part of the repo.
 
-http://en.wikipedia.org/wiki/Law_of_Demeter
 
-In the context of our discussion, it basically means that if
-should_do_help calls do_help, then we cannot test should_do_help
-independently (without mocking out do_help, which is plain ugly).
-Not that we have a testing infrastructure (yet) anyway, but...
+Regards,
+Roger
 
-> > True, but then we are parsing command lines. Would you be opposed to
-> > a getopt (POSIX) approach to normalising/parsing the command line?
->=20
-> No. :-)
-
-Good. I will see what I can do about this. In the mean time, I will
-just leave things as they are.
-
---=20
- .''`.   martin f. krafft <madduck@debian.org>
-: :'  :  proud Debian developer, author, administrator, and user
-`. `'`   http://people.debian.org/~madduck - http://debiansystem.info
-  `-  Debian - when you have better things to do than fixing systems
-=20
-windoze nt crashed.
-i am the blue screen of death.
-no one hears your screams.
-
---/9DWx/yDrRhgMJTb
-Content-Type: application/pgp-signature; name="digital_signature_gpg.asc"
-Content-Description: Digital signature (see http://martin-krafft.net/gpg/)
-Content-Disposition: inline
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.9 (GNU/Linux)
-
-iEYEARECAAYFAkklfgMACgkQIgvIgzMMSnUfQgCeLziy1+WoOvF7BHmLUp8hZpDY
-sh0AoNvRrGZVwXTbZLOMiP9+gB01UDiG
-=nj84
------END PGP SIGNATURE-----
-
---/9DWx/yDrRhgMJTb--
+-- 
+  .''`.  Roger Leigh
+ : :' :  Debian GNU/Linux             http://people.debian.org/~rleigh/
+ `. `'   Printing on GNU/Linux?       http://gutenprint.sourceforge.net/
+   `-    GPG Public Key: 0x25BFB848   Please GPG sign your mail.
