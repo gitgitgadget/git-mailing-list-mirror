@@ -1,71 +1,76 @@
-From: Roger Leigh <rleigh@codelibre.net>
-Subject: Re: git and mtime
-Date: Thu, 20 Nov 2008 14:22:17 +0000
-Message-ID: <20081120142217.GD6023@codelibre.net>
-References: <20081119113752.GA13611@ravenclaw.codelibre.net> <20081120132107.GA27571@piper.oerlikon.madduck.net> <20081120133546.GA6023@codelibre.net> <alpine.DEB.1.00.0811201506390.30769@pacific.mpi-cbg.de>
+From: "Jonas Fonseca" <jonas.fonseca@gmail.com>
+Subject: Re: [TopGit PATCH] README: Fix spelling
+Date: Thu, 20 Nov 2008 15:23:51 +0100
+Message-ID: <2c6b72b30811200623t3326f69bu4c8570a3c41cc764@mail.gmail.com>
+References: <1227189062-11951-1-git-send-email-fonseca@diku.dk>
+	 <2c6b72b30811200552h46004299w881ad61134ec5555@mail.gmail.com>
+	 <20081120141725.GB25425@piper.oerlikon.madduck.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: martin f krafft <madduck@madduck.net>, git@vger.kernel.org
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Thu Nov 20 15:23:40 2008
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: "martin f krafft" <madduck@debian.org>
+X-From: git-owner@vger.kernel.org Thu Nov 20 15:25:37 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1L3ART-0003BG-47
-	for gcvg-git-2@gmane.org; Thu, 20 Nov 2008 15:23:35 +0100
+	id 1L3ATE-0003tb-IJ
+	for gcvg-git-2@gmane.org; Thu, 20 Nov 2008 15:25:25 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754776AbYKTOWU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 20 Nov 2008 09:22:20 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752298AbYKTOWU
-	(ORCPT <rfc822;git-outgoing>); Thu, 20 Nov 2008 09:22:20 -0500
-Received: from nagini.codelibre.net ([80.68.93.164]:47536 "EHLO
-	nagini.codelibre.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754715AbYKTOWT (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 20 Nov 2008 09:22:19 -0500
-Received: by nagini.codelibre.net (Postfix, from userid 1000)
-	id 202949467C; Thu, 20 Nov 2008 14:22:17 +0000 (GMT)
+	id S1756022AbYKTOXz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 20 Nov 2008 09:23:55 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755657AbYKTOXz
+	(ORCPT <rfc822;git-outgoing>); Thu, 20 Nov 2008 09:23:55 -0500
+Received: from mu-out-0910.google.com ([209.85.134.188]:2996 "EHLO
+	mu-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755983AbYKTOXx (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 20 Nov 2008 09:23:53 -0500
+Received: by mu-out-0910.google.com with SMTP id g7so459721muf.1
+        for <git@vger.kernel.org>; Thu, 20 Nov 2008 06:23:51 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to
+         :subject:cc:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:references;
+        bh=n6yXSkYwueBB+ZXa0Dp23RJBAkYnNiW8rDSpvO3NF6o=;
+        b=WK9ipobiE6TusjygafRIyiFxqnapaRXIHLTckB87h/riYABuGUlmMJq0fgeIi3YbKh
+         qtdpN9JUru7BLKbKdWseDvDfoFCVgoYX4ZNpyLaY+fABs1chM1xs9+NdkxVRBAQ7AWEV
+         KbSRmvA3dCc55qiI26M/LOEKg3wcH4BGL3sA8=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
+         :content-type:content-transfer-encoding:content-disposition
+         :references;
+        b=rpwCqXDmNU7Y3tcIxfvVymKsPn0Ao2n7n7T//vtVgj2eiJd6L3eVCCMRDnFj4R33M6
+         UnFVflGcVzvv7aYpQoOVHMV6xMapIU+ecfoyIZZ5TY9709Wrrvl10h7T0NOhU83yCEKU
+         t/MYwt19H0/0zEkysyiZPR9Yo/4dxF+SFW5C0=
+Received: by 10.181.219.15 with SMTP id w15mr743828bkq.90.1227191031443;
+        Thu, 20 Nov 2008 06:23:51 -0800 (PST)
+Received: by 10.181.195.3 with HTTP; Thu, 20 Nov 2008 06:23:51 -0800 (PST)
+In-Reply-To: <20081120141725.GB25425@piper.oerlikon.madduck.net>
 Content-Disposition: inline
-In-Reply-To: <alpine.DEB.1.00.0811201506390.30769@pacific.mpi-cbg.de>
-X-GPG-Key: 0x25BFB848
-X-Debian: testing/unstable
-X-OS-Uptime: 13:26:52 up 13 days,  1:44,  3 users,  load average: 0.01,
-	0.11, 0.09
-User-Agent: Mutt/1.5.18 (2008-05-17)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/101439>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/101440>
 
-On Thu, Nov 20, 2008 at 03:07:46PM +0100, Johannes Schindelin wrote:
-> Hi,
-> 
-> On Thu, 20 Nov 2008, Roger Leigh wrote:
-> 
-> > They are optional build depdendencies.  They are provided pre-built, and 
-> > won't be rebuilt unless they get outdated.  In the release tarball, the 
-> > timestamps are correct, ensuring this never happens. When checking out 
-> > with git, the timestamps are incorrect, and it attempts to rebuild 
-> > something that's *already built*.
-> 
-> I'll try just one more time.  Why don't you teach your build process to 
-> check if the generated files can be generated, and if not, fall back to 
-> the committed ones?
+On Thu, Nov 20, 2008 at 15:17, martin f krafft <madduck@debian.org> wrote:
+> also sprach Jonas Fonseca <jonas.fonseca@gmail.com> [2008.11.20.1452 +0100]:
+>> Oops sorry about this one!!! :-/
+>
+> What about it? The patch seems perfectly alright. Only the quoted
+> version is broken, which I think is your fault.
 
-Well, it's definitely not a good idea to try rebuilding when the tools
-aren't available, and I'll update the Makefiles to only attempt a
-rebuild when this is the case.  So yes, making the build a bit more
-intelligent is definitely something to do.  However, this is really
-a separate issue, since the repo dates back eight years, and I don't
-want to break older stuff.  This will only fix things for the future.
+Well, it looks very broken in Gmail ...
 
+> Should I apply the README patch?
 
-Regards,
-Roger
+Yes, if you can salvage it. Else it is also available in branch
+jf/readme-update at
+
+  git://repo.or.cz/topgit/fonseca.git
 
 -- 
-  .''`.  Roger Leigh
- : :' :  Debian GNU/Linux             http://people.debian.org/~rleigh/
- `. `'   Printing on GNU/Linux?       http://gutenprint.sourceforge.net/
-   `-    GPG Public Key: 0x25BFB848   Please GPG sign your mail.
+Jonas Fonseca
