@@ -1,115 +1,91 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: [PATCH v2] Document levenshtein.c
-Date: Thu, 20 Nov 2008 14:27:27 +0100 (CET)
-Message-ID: <alpine.DEB.1.00.0811201426100.30769@pacific.mpi-cbg.de>
-References: <20081118185326.12721.71576.stgit@arrakis.enst.fr> <alpine.DEB.1.00.0811190151000.30769@pacific.mpi-cbg.de> <2008-11-19-09-42-45+trackit+sam@rfc1149.net> <alpine.DEB.1.00.0811191053250.30769@pacific.mpi-cbg.de> <7vhc63svsl.fsf@gitster.siamese.dyndns.org>
- <alpine.DEB.1.00.0811201255120.30769@pacific.mpi-cbg.de> <2008-11-20-13-00-31+trackit+sam@rfc1149.net>
+From: martin f krafft <madduck@madduck.net>
+Subject: Re: git and mtime
+Date: Thu, 20 Nov 2008 14:21:07 +0100
+Message-ID: <20081120132107.GA27571@piper.oerlikon.madduck.net>
+References: <20081119113752.GA13611@ravenclaw.codelibre.net>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Samuel Tardieu <sam@rfc1149.net>
-X-From: git-owner@vger.kernel.org Thu Nov 20 14:20:47 2008
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="45Z9DzgjV8m4Oswq"
+Cc: git@vger.kernel.org
+To: Roger Leigh <rleigh@codelibre.net>
+X-From: git-owner@vger.kernel.org Thu Nov 20 14:22:34 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1L39Sf-0002Ys-Hf
-	for gcvg-git-2@gmane.org; Thu, 20 Nov 2008 14:20:45 +0100
+	id 1L39UO-0003Gd-RW
+	for gcvg-git-2@gmane.org; Thu, 20 Nov 2008 14:22:33 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754712AbYKTNTb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 20 Nov 2008 08:19:31 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754736AbYKTNTa
-	(ORCPT <rfc822;git-outgoing>); Thu, 20 Nov 2008 08:19:30 -0500
-Received: from mail.gmx.net ([213.165.64.20]:51754 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1752394AbYKTNTa (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 20 Nov 2008 08:19:30 -0500
-Received: (qmail invoked by alias); 20 Nov 2008 13:19:28 -0000
-Received: from pacific.mpi-cbg.de (EHLO pacific.mpi-cbg.de) [141.5.10.38]
-  by mail.gmx.net (mp010) with SMTP; 20 Nov 2008 14:19:28 +0100
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX18sGJgJP0UsmBXwkYwq4GumMOumHdEl8/d2eUfai9
-	LYauseJepR3F3O
-X-X-Sender: schindelin@pacific.mpi-cbg.de
-In-Reply-To: <2008-11-20-13-00-31+trackit+sam@rfc1149.net>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.57
+	id S1754747AbYKTNVS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 20 Nov 2008 08:21:18 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754746AbYKTNVS
+	(ORCPT <rfc822;git-outgoing>); Thu, 20 Nov 2008 08:21:18 -0500
+Received: from clegg.madduck.net ([193.242.105.96]:48523 "EHLO
+	clegg.madduck.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754616AbYKTNVR (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 20 Nov 2008 08:21:17 -0500
+Received: from wall.oerlikon.madduck.net (wall.oerlikon.madduck.net [IPv6:2001:41e0:ff12::1])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(Client CN "wall.oerlikon.madduck.net", Issuer "CAcert Class 3 Root" (verified OK))
+	by clegg.madduck.net (postfix) with ESMTPS id C456B1D40AF;
+	Thu, 20 Nov 2008 14:21:09 +0100 (CET)
+Received: from piper.oerlikon.madduck.net (piper.oerlikon.madduck.net [IPv6:2001:41e0:ff12:0:211:2fff:fe6b:c869])
+	by wall.oerlikon.madduck.net (Postfix) with ESMTP id A324B9F34F;
+	Thu, 20 Nov 2008 14:21:07 +0100 (CET)
+Received: by piper.oerlikon.madduck.net (Postfix, from userid 1000)
+	id 1FA5E45F4; Thu, 20 Nov 2008 14:21:07 +0100 (CET)
+Content-Disposition: inline
+In-Reply-To: <20081119113752.GA13611@ravenclaw.codelibre.net>
+X-Motto: Keep the good times rollin'
+X-OS: Debian GNU/Linux lenny/sid kernel 2.6.26-1-amd64 x86_64
+X-Spamtrap: madduck.bogus@madduck.net
+X-Subliminal-Message: debian/rules!
+User-Agent: Mutt/1.5.18 (2008-05-17)
+X-Virus-Scanned: ClamAV 0.94.1/8653/Thu Nov 20 10:04:07 2008 on clegg.madduck.net
+X-Virus-Status: Clean
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/101425>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/101426>
 
 
-Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
----
+--45Z9DzgjV8m4Oswq
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-	On Thu, 20 Nov 2008, Samuel Tardieu wrote:
+also sprach Roger Leigh <rleigh@codelibre.net> [2008.11.19.1237 +0100]:
+> These are provided by upstream so that end users don't need these tools
+> installed (particularly docbook, since the toolchain is so flaky on
+> different systems).  However, the fact that git isn't storing the
+> mtime of the files confuses make, so it then tries to regenerate these
+> (already up-to-date) files, and fails in the process since the tools
+> aren't available.
 
-	> * Johannes Schindelin <Johannes.Schindelin@gmx.de> [2008-11-20 
-	>   13:00:35 +0100]
-	> 
-	> | 	How about this?
-	> 
-	> I think it still lacks a note about what "deletion" and 
-	> "insertion" means (is that a character deleted from string1 to obtain 
-	> string2 or the reverse?). In most implementation, you use the same
-	> cost for insertion and deletion so the function is symetrical, but
-	> this implementation is more powerful.
+I don't get it. Why are end users running make in the first place?
+Why aren't those in the build-dependencies?
 
-	Second paragraph and last sentence were added.
+--=20
+martin | http://madduck.net/ | http://two.sentenc.es/
+=20
+it is better to have loft and lost
+than to never have loft at all.
+                                                       -- groucho marx
+=20
+spamtraps: madduck.bogus@madduck.net
 
- levenshtein.c |   37 +++++++++++++++++++++++++++++++++++++
- 1 files changed, 37 insertions(+), 0 deletions(-)
+--45Z9DzgjV8m4Oswq
+Content-Type: application/pgp-signature; name="digital_signature_gpg.asc"
+Content-Description: Digital signature (see http://martin-krafft.net/gpg/)
+Content-Disposition: inline
 
-diff --git a/levenshtein.c b/levenshtein.c
-index db52f2c..ebef34b 100644
---- a/levenshtein.c
-+++ b/levenshtein.c
-@@ -1,6 +1,43 @@
- #include "cache.h"
- #include "levenshtein.h"
- 
-+/*
-+ * This function implements the Damerau-Levenshtein algorithm to
-+ * calculate a distance between strings.
-+ *
-+ * Basically, it says how many letters need to be swapped, substituted,
-+ * deleted from, or added to string1, at least, to get string2.
-+ *
-+ * The idea is to build a distance matrix for the substrings of both
-+ * strings.  To avoid a large space complexity, only the last three rows
-+ * are kept in memory (if swaps had the same or higher cost as one deletion
-+ * plus one insertion, only two rows would be needed).
-+ *
-+ * At any stage, "i + 1" denotes the length of the current substring of
-+ * string1 that the distance is calculated for.
-+ *
-+ * row2 holds the current row, row1 the previous row (i.e. for the substring
-+ * of string1 of length "i"), and row0 the row before that.
-+ *
-+ * In other words, at the start of the big loop, row2[j + 1] contains the
-+ * Damerau-Levenshtein distance between the substring of string1 of length
-+ * "i" and the substring of string2 of length "j + 1".
-+ *
-+ * All the big loop does is determine the partial minimum-cost paths.
-+ *
-+ * It does so by calculating the costs of the path ending in characters
-+ * i (in string1) and j (in string2), respectively, given that the last
-+ * operation is a substition, a swap, a deletion, or an insertion.
-+ *
-+ * This implementation allows the costs to be weighted:
-+ *
-+ * - w (as in "sWap")
-+ * - s (as in "Substition")
-+ * - a (for insertion, AKA "Add")
-+ * - d (as in "Deletion")
-+ *
-+ * Note that this algorithm calculates a distance _iff_ d == a.
-+ */
- int levenshtein(const char *string1, const char *string2,
- 		int w, int s, int a, int d)
- {
--- 
-1.6.0.2.763.g72663
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.9 (GNU/Linux)
+
+iEYEARECAAYFAkklZD0ACgkQIgvIgzMMSnW6gQCffErQ3upPEoGlyHqvbRYa3mi/
++sgAoMNhoxTz1wDDLOO+8WcfIbcdhP24
+=ZuyD
+-----END PGP SIGNATURE-----
+
+--45Z9DzgjV8m4Oswq--
