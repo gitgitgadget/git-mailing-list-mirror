@@ -1,111 +1,74 @@
-From: Roger Leigh <rleigh@codelibre.net>
-Subject: Re: git and mtime
-Date: Thu, 20 Nov 2008 15:19:25 +0000
-Message-ID: <20081120151925.GE6023@codelibre.net>
-References: <20081119113752.GA13611@ravenclaw.codelibre.net> <46d6db660811190818r3aa2a392pda9106ac4a579cf0@mail.gmail.com> <20081120112708.GC22787@ravenclaw.codelibre.net> <492560C5.5070308@op5.se> <20081120141533.GC6023@codelibre.net> <49257949.4070308@op5.se>
+From: Jeff King <peff@peff.net>
+Subject: Re: git commit -v does not removes the patch
+Date: Thu, 20 Nov 2008 10:20:16 -0500
+Message-ID: <20081120152015.GA6283@coredump.intra.peff.net>
+References: <adf1fd3d0811100720n52ac1d47id9b7f402412aa0d3@mail.gmail.com> <20081110181023.GA22753@coredump.intra.peff.net> <adf1fd3d0811101434j658b2e8aj83d8cbe2293f5021@mail.gmail.com> <7vej1j40x5.fsf@gitster.siamese.dyndns.org> <20081111000706.GA26223@coredump.intra.peff.net> <adf1fd3d0811102356u6e671dcfj6491f81cf462ec2e@mail.gmail.com> <20081111102914.GA30330@coredump.intra.peff.net> <7v4p2e2nkg.fsf@gitster.siamese.dyndns.org> <20081112081609.GA3720@coredump.intra.peff.net> <20081120130851.GA17608@neumann>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Christian MICHON <christian.michon@gmail.com>, git@vger.kernel.org
-To: Andreas Ericsson <ae@op5.se>
-X-From: git-owner@vger.kernel.org Thu Nov 20 16:21:21 2008
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Santi =?utf-8?B?QsOpamFy?= <santi@agolina.net>,
+	Git Mailing List <git@vger.kernel.org>
+To: SZEDER =?utf-8?B?R8OhYm9y?= <szeder@ira.uka.de>
+X-From: git-owner@vger.kernel.org Thu Nov 20 16:22:13 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1L3BKl-0004jO-8Y
-	for gcvg-git-2@gmane.org; Thu, 20 Nov 2008 16:20:43 +0100
+	id 1L3BLb-0005BK-9w
+	for gcvg-git-2@gmane.org; Thu, 20 Nov 2008 16:21:35 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755083AbYKTPT2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 20 Nov 2008 10:19:28 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754871AbYKTPT1
-	(ORCPT <rfc822;git-outgoing>); Thu, 20 Nov 2008 10:19:27 -0500
-Received: from nagini.codelibre.net ([80.68.93.164]:49119 "EHLO
-	nagini.codelibre.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751307AbYKTPT1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 20 Nov 2008 10:19:27 -0500
-Received: by nagini.codelibre.net (Postfix, from userid 1000)
-	id 728D394672; Thu, 20 Nov 2008 15:19:25 +0000 (GMT)
+	id S1754923AbYKTPUU convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 20 Nov 2008 10:20:20 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754920AbYKTPUU
+	(ORCPT <rfc822;git-outgoing>); Thu, 20 Nov 2008 10:20:20 -0500
+Received: from peff.net ([208.65.91.99]:3211 "EHLO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754891AbYKTPUT (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 20 Nov 2008 10:20:19 -0500
+Received: (qmail 18242 invoked by uid 111); 20 Nov 2008 15:20:17 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+    by peff.net (qpsmtpd/0.32) with SMTP; Thu, 20 Nov 2008 10:20:17 -0500
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Thu, 20 Nov 2008 10:20:16 -0500
 Content-Disposition: inline
-In-Reply-To: <49257949.4070308@op5.se>
-X-GPG-Key: 0x25BFB848
-X-Debian: testing/unstable
-X-OS-Uptime: 13:26:52 up 13 days,  1:44,  3 users,  load average: 0.01,
-	0.11, 0.09
-User-Agent: Mutt/1.5.18 (2008-05-17)
+In-Reply-To: <20081120130851.GA17608@neumann>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/101450>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/101451>
 
-On Thu, Nov 20, 2008 at 03:50:49PM +0100, Andreas Ericsson wrote:
-> Roger Leigh wrote:
->> On Thu, Nov 20, 2008 at 02:06:13PM +0100, Andreas Ericsson wrote:
->>> Roger Leigh wrote:
->>>> On Wed, Nov 19, 2008 at 05:18:16PM +0100, Christian MICHON wrote:
->>>>> On Wed, Nov 19, 2008 at 12:37 PM, Roger Leigh <rleigh@codelibre.net> wrote:
->>>>>> Would it be possible for git to store the mtime of files in the tree?
->>>>>>
->>>>>> This would make it possible to do this type of work in git, since it's
->>>>>> currently a bit random as to whether it works or not.  This only
->>>>>> started when I upgraded to an amd64 architecture from powerpc32,
->>>>>> I guess it's maybe using high-resolution timestamps.
->>>>>>
->>> Caring about meta-data the way you mean it would mean that
->>>
->>>  git add foo.c; git commit -m "kapooie"; touch foo.c; git status
->>>
->>> would show "foo.c" as modified. How sane is that?
->>
->> I've never come close to suggesting we do anything so insane.
->>
->> What I am suggesting is that on add/commit, the inode metadata
->> be recorded in the tree (like we already store perms), so that
->> it can be (**optionally**) reused/restored on checkout.
->>
->> Whether it's stored in the tree or not is a separate concern from
->> whether to *use* it or not.  For most situations, it won't be
->> useful, as has been made quite clear from all of the replies, and I
->> don't disagree with this.  However, for some, the ability to have
->> this information to hand to make use of would be invaluable.
->>
->
-> Then write a hook for it. You agree that for most users this will be
-> totally insane, and yet you request that it's added in a place where
-> everyone will have to pay the performance/diskspace penalty for it
-> but only a handful will get any benefits. That's patently absurd.
+On Thu, Nov 20, 2008 at 02:09:28PM +0100, SZEDER G=C3=A1bor wrote:
 
-The cost is tiny.  The extra space would be smaller than a single
-SHA1 hash.
+> I always want to see the diff while editing a commit message, even if
+> it's the commit message of a merge, a revert, a squash in rebase.
+> Since these commands do not have an option equivalent to 'git commit
+> -v', I wrote a little prepare-commit-msg hook to always append the
+> appropriate diff to the end of the appropriate commit message file.
+> This worked pretty well for the last couple of months, until 5/5 got
+> into maint.
 
-> Especially since there are such easy workarounds that you can put in
-> place yourself instead.
+Hmm. I am sad that this change has broken somebody's existing workflow.
+OTOH, I'm not convinced that workflow wasn't a little crazy to begin
+with, depending on this undocumented munging.
 
+> So, what is the/is there a preferred way to always include the diff i=
+n
+> the commit message template and get it removed automatically?  Are
+> there any workarounds other than revert that commit locally?
 
->> There have been quite a few suggestions to look into using hooks,
->> and I'll investigate this.  However, I do have some concerns
->> about *where* I would store this "extended tree" data, since it
->> is implicitly tied to a single tree object, and I wouldn't
->> want to store it directly as content.
->
-> Store it as a blob targeted by a lightweight tag named
-> "metadata.$sha1" and you'll have the easiest time in the world when
-> writing the hooks. Also, the tags won't be propagated by default,
-> which is a good thing since your timestamps/uid's whatever almost
-> certainly will not work well on other developers repositories.
+How about:
 
-And yet the fact that it won't propagate makes it totally useless:
-all the other people using the repo won't get the extra metadata
-that will prevent build failures.  Having the extra data locally
-is nice, but not exactly what I'd call a solution.  The whole point
-of what I want is to have it as an integral part of the repo.
+    $ cat .git/hooks/prepare-commit-msg
+    #!/bin/sh
+    git diff --cached >>"$1"
 
+    $ cat .git/hooks/commit-msg
+    #!/bin/sh
+    sed -i '/^diff --git/Q' "$1"
 
-Regards,
-Roger
+which is more or less the original behavior. The only downside I see is
+that "--no-verify" will turn off the commit-msg hook, but not the
+prepare-commit-msg hook.
 
--- 
-  .''`.  Roger Leigh
- : :' :  Debian GNU/Linux             http://people.debian.org/~rleigh/
- `. `'   Printing on GNU/Linux?       http://gutenprint.sourceforge.net/
-   `-    GPG Public Key: 0x25BFB848   Please GPG sign your mail.
+-Peff
