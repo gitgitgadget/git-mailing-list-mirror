@@ -1,85 +1,75 @@
-From: Andreas Ericsson <ae@op5.se>
-Subject: Re: Cygwin error?
-Date: Thu, 20 Nov 2008 09:57:13 +0100
-Message-ID: <49252669.7060304@op5.se>
-References: <200811191857.30793.nadim@khemir.net>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: nadim khemir <nadim@khemir.net>
-X-From: git-owner@vger.kernel.org Thu Nov 20 09:59:15 2008
+From: "martin f. krafft" <madduck@debian.org>
+Subject: [TopGit PATCH] Use the topological order when exporting explicitly listed branches.
+Date: Thu, 20 Nov 2008 10:38:22 +0100
+Message-ID: <1227173902-21180-1-git-send-email-madduck@debian.org>
+Cc: Niko Tyni <ntyni@debian.org>,
+	"martin f. krafft" <madduck@debian.org>
+To: git@vger.kernel.org, pasky@suse.cz
+X-From: git-owner@vger.kernel.org Thu Nov 20 10:39:59 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1L35NS-0000N6-2D
-	for gcvg-git-2@gmane.org; Thu, 20 Nov 2008 09:59:06 +0100
+	id 1L360x-0004eU-JK
+	for gcvg-git-2@gmane.org; Thu, 20 Nov 2008 10:39:56 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754049AbYKTI5o (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 20 Nov 2008 03:57:44 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754034AbYKTI5o
-	(ORCPT <rfc822;git-outgoing>); Thu, 20 Nov 2008 03:57:44 -0500
-Received: from mail.op5.se ([193.201.96.20]:45538 "EHLO mail.op5.se"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754036AbYKTI5n (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 20 Nov 2008 03:57:43 -0500
-Received: from localhost (localhost.localdomain [127.0.0.1])
-	by mail.op5.se (Postfix) with ESMTP id E454724B000D;
-	Thu, 20 Nov 2008 09:52:48 +0100 (CET)
-X-Virus-Scanned: amavisd-new at 
-X-Spam-Flag: NO
-X-Spam-Score: -4.399
-X-Spam-Level: 
-X-Spam-Status: No, score=-4.399 tagged_above=-10 required=6.6
-	tests=[ALL_TRUSTED=-1.8, BAYES_00=-2.599]
-Received: from mail.op5.se ([127.0.0.1])
-	by localhost (mail.op5.se [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id W+WEDEPG+uDs; Thu, 20 Nov 2008 09:52:15 +0100 (CET)
-Received: from clix.int.op5.se (unknown [192.168.1.20])
-	by mail.op5.se (Postfix) with ESMTP id 2B92A24B000C;
-	Thu, 20 Nov 2008 09:52:15 +0100 (CET)
-User-Agent: Thunderbird 2.0.0.16 (X11/20080723)
-In-Reply-To: <200811191857.30793.nadim@khemir.net>
+	id S1753305AbYKTJik (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 20 Nov 2008 04:38:40 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752920AbYKTJik
+	(ORCPT <rfc822;git-outgoing>); Thu, 20 Nov 2008 04:38:40 -0500
+Received: from clegg.madduck.net ([193.242.105.96]:47310 "EHLO
+	clegg.madduck.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753206AbYKTJij (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 20 Nov 2008 04:38:39 -0500
+Received: from wall.oerlikon.madduck.net (wall.oerlikon.madduck.net [IPv6:2001:41e0:ff12::1])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(Client CN "wall.oerlikon.madduck.net", Issuer "CAcert Class 3 Root" (verified OK))
+	by clegg.madduck.net (postfix) with ESMTPS id AAD201D40A9;
+	Thu, 20 Nov 2008 10:38:24 +0100 (CET)
+Received: from piper.oerlikon.madduck.net (piper.oerlikon.madduck.net [IPv6:2001:41e0:ff12:0:211:2fff:fe6b:c869])
+	by wall.oerlikon.madduck.net (Postfix) with ESMTP id 54C179F34F;
+	Thu, 20 Nov 2008 10:38:23 +0100 (CET)
+Received: by piper.oerlikon.madduck.net (Postfix, from userid 1000)
+	id 0713E45F4; Thu, 20 Nov 2008 10:38:23 +0100 (CET)
+X-Mailer: git-send-email 1.6.0.2
+X-Virus-Scanned: ClamAV 0.94.1/8653/Thu Nov 20 10:04:07 2008 on clegg.madduck.net
+X-Virus-Status: Clean
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/101395>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/101396>
 
-nadim khemir wrote:
-> Hi, Given:
-> 
-> $ git pull
-> remote: Counting objects: 46, done.
-> ...
-> Updating b80286d..a543dae
-> error: Untracked working tree file 'xxx.txt' would be overwritten by merge.
-> 
-> 
-> This is due to a rename of xxx.txt to Xxx.txt. I  understand that this is due 
-> to files being just case preserving on Cycwin/Win32.
-> 
-> The only I found was to remove the xxx.txt localy and do a pull. The 
-> interresting thing is that Xxx.txt is no present in my file system. I can 
-> check it out from HEAD though.
-> 
-> What did I missunderstood and do wrong?
-> 
+From: Niko Tyni <ntyni@debian.org>
 
-You ran into a corner-case. Git expects the "Xxx.txt" and "xxx.txt" to be
-different. Cross-OS projects should never, ever rename files so that they
-end up with case ambiguity. Since they did, the only thing you can really
-do is this:
+When exporting explicitly listed branches (tg export -b), the branch
+dependencies were not taken into account.
 
-git fetch
-rm xxx.txt
-git reset --hard origin/master; # or whatever branch you're interested in
+Signed-off-by: martin f. krafft <madduck@debian.org>
+Tested-by: martin f. krafft <madduck@debian.org>
+---
+Arguably, lines 178:189 need to be refactored due to the code duplication, but
+the patch does what it should for now.
 
-I'm afraid you'll have problems with this until all the branches you're
-interested in have this change.
+ tg-export.sh |    6 +++---
+ 1 files changed, 3 insertions(+), 3 deletions(-)
 
+diff --git a/tg-export.sh b/tg-export.sh
+index 52af88d..037b991 100644
+--- a/tg-export.sh
++++ b/tg-export.sh
+@@ -181,9 +181,9 @@ if [ -z "$branches" ]; then
+ 	recurse_deps driver "$name"
+ 	(_ret=0; _dep="$name"; _name=""; _dep_is_tgish=1; driver)
+ else
+-	echo "$branches" | tr ',' '\n' | while read _dep; do
+-		_dep_is_tgish=1
+-		$driver
++	echo "$branches" | tr ',' '\n' | while read name; do
++		recurse_deps driver "$name"
++		(_ret=0; _dep="$name"; _name=""; _dep_is_tgish=1; driver)
+ 	done
+ 	name="$(echo "$branches" | sed 's/.*,//')"
+ fi
 -- 
-Andreas Ericsson                   andreas.ericsson@op5.se
-OP5 AB                             www.op5.se
-Tel: +46 8-230225                  Fax: +46 8-230231
+1.5.6.5
