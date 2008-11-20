@@ -1,135 +1,94 @@
-From: Andreas Ericsson <ae@op5.se>
-Subject: Re: git and mtime
-Date: Thu, 20 Nov 2008 15:50:49 +0100
-Message-ID: <49257949.4070308@op5.se>
-References: <20081119113752.GA13611@ravenclaw.codelibre.net> <46d6db660811190818r3aa2a392pda9106ac4a579cf0@mail.gmail.com> <20081120112708.GC22787@ravenclaw.codelibre.net> <492560C5.5070308@op5.se> <20081120141533.GC6023@codelibre.net>
+From: martin f krafft <madduck@debian.org>
+Subject: Re: [PATCH] Allow help/--help/-h to be run outside of a TopGit repo
+Date: Thu, 20 Nov 2008 15:55:11 +0100
+Organization: The Debian project
+Message-ID: <20081120145511.GD29789@piper.oerlikon.madduck.net>
+References: <1227181594-15123-1-git-send-email-madduck@debian.org> <20081120142702.GG10491@machine.or.cz>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: Christian MICHON <christian.michon@gmail.com>, git@vger.kernel.org
-To: Roger Leigh <rleigh@codelibre.net>
-X-From: git-owner@vger.kernel.org Thu Nov 20 15:53:59 2008
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="a2FkP9tdjPU2nyhF"
+Cc: git@vger.kernel.org
+To: Petr Baudis <pasky@suse.cz>
+X-From: git-owner@vger.kernel.org Thu Nov 20 15:57:24 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1L3Aud-0008NC-Jn
-	for gcvg-git-2@gmane.org; Thu, 20 Nov 2008 15:53:44 +0100
+	id 1L3Ay0-0001WU-Jn
+	for gcvg-git-2@gmane.org; Thu, 20 Nov 2008 15:57:13 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757543AbYKTOvX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 20 Nov 2008 09:51:23 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757235AbYKTOvW
-	(ORCPT <rfc822;git-outgoing>); Thu, 20 Nov 2008 09:51:22 -0500
-Received: from mail.op5.se ([193.201.96.20]:60564 "EHLO mail.op5.se"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756642AbYKTOvT (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 20 Nov 2008 09:51:19 -0500
-Received: from localhost (localhost.localdomain [127.0.0.1])
-	by mail.op5.se (Postfix) with ESMTP id BD4D31B8006D;
-	Thu, 20 Nov 2008 15:46:26 +0100 (CET)
-X-Virus-Scanned: amavisd-new at 
-X-Spam-Flag: NO
-X-Spam-Score: -4.399
-X-Spam-Level: 
-X-Spam-Status: No, score=-4.399 tagged_above=-10 required=6.6
-	tests=[ALL_TRUSTED=-1.8, BAYES_00=-2.599]
-Received: from mail.op5.se ([127.0.0.1])
-	by localhost (mail.op5.se [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id K6ailpzZoIyQ; Thu, 20 Nov 2008 15:45:53 +0100 (CET)
-Received: from clix.int.op5.se (unknown [192.168.1.20])
-	by mail.op5.se (Postfix) with ESMTP id C881F1B8005E;
-	Thu, 20 Nov 2008 15:45:52 +0100 (CET)
-User-Agent: Thunderbird 2.0.0.16 (X11/20080723)
-In-Reply-To: <20081120141533.GC6023@codelibre.net>
+	id S1758274AbYKTOzZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 20 Nov 2008 09:55:25 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756878AbYKTOzY
+	(ORCPT <rfc822;git-outgoing>); Thu, 20 Nov 2008 09:55:24 -0500
+Received: from clegg.madduck.net ([193.242.105.96]:59446 "EHLO
+	clegg.madduck.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757645AbYKTOzW (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 20 Nov 2008 09:55:22 -0500
+Received: from wall.oerlikon.madduck.net (wall.oerlikon.madduck.net [IPv6:2001:41e0:ff12::1])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(Client CN "wall.oerlikon.madduck.net", Issuer "CAcert Class 3 Root" (verified OK))
+	by clegg.madduck.net (postfix) with ESMTPS id E530F1D40A9;
+	Thu, 20 Nov 2008 15:55:13 +0100 (CET)
+Received: from piper.oerlikon.madduck.net (piper.oerlikon.madduck.net [IPv6:2001:41e0:ff12:0:211:2fff:fe6b:c869])
+	by wall.oerlikon.madduck.net (Postfix) with ESMTP id 8B0579F34F;
+	Thu, 20 Nov 2008 15:55:12 +0100 (CET)
+Received: by piper.oerlikon.madduck.net (Postfix, from userid 1000)
+	id E9C6F45F5; Thu, 20 Nov 2008 15:55:11 +0100 (CET)
+Content-Disposition: inline
+In-Reply-To: <20081120142702.GG10491@machine.or.cz>
+X-Motto: Keep the good times rollin'
+X-OS: Debian GNU/Linux lenny/sid kernel 2.6.26-1-amd64 x86_64
+User-Agent: Mutt/1.5.18 (2008-05-17)
+X-Virus-Scanned: ClamAV 0.94.1/8653/Thu Nov 20 10:04:07 2008 on clegg.madduck.net
+X-Virus-Status: Clean
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/101444>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/101445>
 
-Roger Leigh wrote:
-> On Thu, Nov 20, 2008 at 02:06:13PM +0100, Andreas Ericsson wrote:
->> Roger Leigh wrote:
->>> On Wed, Nov 19, 2008 at 05:18:16PM +0100, Christian MICHON wrote:
->>>> On Wed, Nov 19, 2008 at 12:37 PM, Roger Leigh <rleigh@codelibre.net> wrote:
->>>>> Would it be possible for git to store the mtime of files in the tree?
->>>>>
->>>>> This would make it possible to do this type of work in git, since it's
->>>>> currently a bit random as to whether it works or not.  This only
->>>>> started when I upgraded to an amd64 architecture from powerpc32,
->>>>> I guess it's maybe using high-resolution timestamps.
->>>>>
->>>> beside the obvious answer it comes back often as a request, it is
->>>> possible in theory to create a shell script which, for each file
->>>> present in the sandbox in the current branch, would find the mtime of
->>>> the last commit on that file (quite an expensive operation) and apply
->>>> it.
->>> Surely this is only expensive because you're not already storing the
->>> information in the tree; if it was there, it would be (relatively)
->>> cheap?
->> No, it's because git is *snapshot* based and doesn't care about anything
->> but contents. Storing filestate information in the tree would be a
->> backwards incompatible change that would require a major version change.
-> 
-> It's not strictly true that it's only caring about contents.  The
-> contents are of course in the blobs, but the tree is already
-> effectively storing inode data, since it's a directory of
-> filenames/subtrees, just one that only cares to store the
-> permissions part of the total inode data.
-> 
-> I understand that git stored the permissions tacked onto the hash;
-> would it be feasable to tack on the other bits as well.
 
-No, that would break backwards compatibility with cross-repo
-transfers.
+--a2FkP9tdjPU2nyhF
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-> If I understand correctly, it's binary encoded in the pack format,
-> and that would require updating the format to hold the additional
-> data?
-> 
->> Caring about meta-data the way you mean it would mean that
->>
->>  git add foo.c; git commit -m "kapooie"; touch foo.c; git status
->>
->> would show "foo.c" as modified. How sane is that?
-> 
-> I've never come close to suggesting we do anything so insane.
-> 
-> What I am suggesting is that on add/commit, the inode metadata
-> be recorded in the tree (like we already store perms), so that
-> it can be (**optionally**) reused/restored on checkout.
-> 
-> Whether it's stored in the tree or not is a separate concern from
-> whether to *use* it or not.  For most situations, it won't be
-> useful, as has been made quite clear from all of the replies, and I
-> don't disagree with this.  However, for some, the ability to have
-> this information to hand to make use of would be invaluable.
-> 
+also sprach Petr Baudis <pasky@suse.cz> [2008.11.20.1527 +0100]:
+> Why is this so complicated? Can't you just do_help from
+> should_do_help()?
 
-Then write a hook for it. You agree that for most users this will be
-totally insane, and yet you request that it's added in a place where
-everyone will have to pay the performance/diskspace penalty for it
-but only a handful will get any benefits. That's patently absurd.
-Especially since there are such easy workarounds that you can put in
-place yourself instead.
+Yes, I could, but that would be in conflict with my understanding of
+the Law of Demeter.
 
-> 
-> There have been quite a few suggestions to look into using hooks,
-> and I'll investigate this.  However, I do have some concerns
-> about *where* I would store this "extended tree" data, since it
-> is implicitly tied to a single tree object, and I wouldn't
-> want to store it directly as content.
-> 
+> The overall semantics seems strange anyway, though - it seems that
+> 'tg mail --help -r' will try to show help for '-r' instead of
+> 'mail'.
 
-Store it as a blob targeted by a lightweight tag named
-"metadata.$sha1" and you'll have the easiest time in the world when
-writing the hooks. Also, the tags won't be propagated by default,
-which is a good thing since your timestamps/uid's whatever almost
-certainly will not work well on other developers repositories.
+True, but then we are parsing command lines. Would you be opposed to
+a getopt (POSIX) approach to normalising/parsing the command line?
 
-That's what I'd do anyways.
+Cheers,
 
--- 
-Andreas Ericsson                   andreas.ericsson@op5.se
-OP5 AB                             www.op5.se
-Tel: +46 8-230225                  Fax: +46 8-230231
+--=20
+ .''`.   martin f. krafft <madduck@debian.org>
+: :'  :  proud Debian developer, author, administrator, and user
+`. `'`   http://people.debian.org/~madduck - http://debiansystem.info
+  `-  Debian - when you have better things to do than fixing systems
+=20
+this space intentionally left occupied.
+
+--a2FkP9tdjPU2nyhF
+Content-Type: application/pgp-signature; name="digital_signature_gpg.asc"
+Content-Description: Digital signature (see http://martin-krafft.net/gpg/)
+Content-Disposition: inline
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.9 (GNU/Linux)
+
+iEYEARECAAYFAkklek8ACgkQIgvIgzMMSnXSgQCgvoWbN6nolVuserqaTPIcY5aN
+oP0An3tuYGT3ZqCmp2U9AnkBEOlT0d4/
+=yTjS
+-----END PGP SIGNATURE-----
+
+--a2FkP9tdjPU2nyhF--
