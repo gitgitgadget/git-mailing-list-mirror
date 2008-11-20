@@ -1,200 +1,97 @@
-From: Gary Yang <garyyang6@yahoo.com>
+From: Deskin Miller <deskinm@umich.edu>
 Subject: Re: Challenge of setting up git server (repository). Please help!
-Date: Thu, 20 Nov 2008 14:43:30 -0800 (PST)
-Message-ID: <146002.93100.qm@web37908.mail.mud.yahoo.com>
-References: <20081120221321.GA6349@euler>
-Reply-To: garyyang6@yahoo.com
+Date: Thu, 20 Nov 2008 18:08:59 -0500
+Message-ID: <20081120230859.GA13683@euler>
+References: <20081120221321.GA6349@euler> <146002.93100.qm@web37908.mail.mud.yahoo.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-To: Deskin Miller <deskinm@umich.edu>
-X-From: git-owner@vger.kernel.org Thu Nov 20 23:45:02 2008
+To: Gary Yang <garyyang6@yahoo.com>
+X-From: git-owner@vger.kernel.org Fri Nov 21 00:10:42 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1L3IGY-0003N2-8O
-	for gcvg-git-2@gmane.org; Thu, 20 Nov 2008 23:44:50 +0100
+	id 1L3IfZ-0003kf-Fa
+	for gcvg-git-2@gmane.org; Fri, 21 Nov 2008 00:10:41 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753011AbYKTWnd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 20 Nov 2008 17:43:33 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751827AbYKTWnd
-	(ORCPT <rfc822;git-outgoing>); Thu, 20 Nov 2008 17:43:33 -0500
-Received: from web37908.mail.mud.yahoo.com ([209.191.91.170]:23379 "HELO
-	web37908.mail.mud.yahoo.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with SMTP id S1751308AbYKTWnb (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 20 Nov 2008 17:43:31 -0500
-Received: (qmail 93249 invoked by uid 60001); 20 Nov 2008 22:43:31 -0000
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-  s=s1024; d=yahoo.com;
-  h=X-YMail-OSG:Received:X-Mailer:Date:From:Reply-To:Subject:To:Cc:In-Reply-To:MIME-Version:Content-Type:Message-ID;
-  b=qnOQcTw7wRgI59C1NU7Z2QLM92Mm9wVQ5B9j8K4e60ToqicW2oDSncTu5zUx5ur1f/ury7NsYeL7THdbG2/+vAhToGNfQlhRUtQtxlFUwsHgFRjn5CEuG8+2/0v3FWFCFIMCucLEurADK8XqsOlk4g+9LG5QZn38sqW7OFALwLQ=;
-X-YMail-OSG: 313gadAVM1ngTpe59KDBMytUu4UVwfrboL8zfc5bxeHg6V66pyWZziGIs9qfof2NtLumU3iGG6NbLW47ZuhT3dFWsKehtsVfI..DPCreQydOrZc_ohNdcF38d8FNjSrDdCGVf5qWNb2HZ4kUl_J6nKgEHyDs0EKvJfqmlrzpo0saWmjiPtNt_H_XAEYu
-Received: from [76.195.33.70] by web37908.mail.mud.yahoo.com via HTTP; Thu, 20 Nov 2008 14:43:30 PST
-X-Mailer: YahooMailWebService/0.7.260.1
-In-Reply-To: <20081120221321.GA6349@euler>
+	id S1754709AbYKTXJQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 20 Nov 2008 18:09:16 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754649AbYKTXJQ
+	(ORCPT <rfc822;git-outgoing>); Thu, 20 Nov 2008 18:09:16 -0500
+Received: from ug-out-1314.google.com ([66.249.92.174]:51120 "EHLO
+	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754174AbYKTXJP (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 20 Nov 2008 18:09:15 -0500
+Received: by ug-out-1314.google.com with SMTP id 39so434300ugf.37
+        for <git@vger.kernel.org>; Thu, 20 Nov 2008 15:09:13 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:date:from:to:cc:subject
+         :message-id:references:mime-version:content-type:content-disposition
+         :in-reply-to:user-agent:sender;
+        bh=4wCnMrhiWLGrvJFQshSBBzp95u45gy9fbSJNITyj0/Y=;
+        b=okcKNbzQF3U0Ug4apnicgwODe1x4NCnfWXLZYHrCRKB/ymUYj/hVJDyrPknYBc63P6
+         IPRo6eviW6ajr0/VXkBBSA4bdTroRHiuiHv9ZuGSLVW39BT01bNpKLRCdu/kNRN3hMNe
+         ay+KV+UEblMNdaE7Y7y6a2OoTYO5aS9qtKGKE=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent:sender;
+        b=WKQV8wjnLrlaz/cq7f78h8wVF2wRH7o772mInUAo7EhjYTlUWPQE0OZtg0R5VH+3+s
+         kQW95i1SO6HgUpor+3p/EwE2oIZLm5/tUkrjHxfJC2wlmAQziGSU2n07ICNNwYm4+nTW
+         3SgZkJ6CmLNklkRhgtSCjPvtT+kd6b06Cd8qE=
+Received: by 10.67.19.13 with SMTP id w13mr3906790ugi.12.1227222552814;
+        Thu, 20 Nov 2008 15:09:12 -0800 (PST)
+Received: from euler ([68.40.49.130])
+        by mx.google.com with ESMTPS id s1sm73737uge.27.2008.11.20.15.09.10
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Thu, 20 Nov 2008 15:09:11 -0800 (PST)
+Content-Disposition: inline
+In-Reply-To: <146002.93100.qm@web37908.mail.mud.yahoo.com>
+User-Agent: Mutt/1.5.18 (2008-05-17)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/101476>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/101477>
 
-Deskin,
+On Thu, Nov 20, 2008 at 02:43:30PM -0800, Gary Yang wrote:
+> Many thanks for your explanation. I hope I understand what you said. I deleted /etc/xinetd.d/git-daemon. Then, I tried to git pull. But, I got connection refused. git uses port 9418. Should I request IT Admin to open the port 9418 for me?
 
-Many thanks for your explanation. I hope I understand what you said. I deleted /etc/xinetd.d/git-daemon. Then, I tried to git pull. But, I got connection refused. git uses port 9418. Should I request IT Admin to open the port 9418 for me?
+You'll need port 9418 open, yes; but since it's an unprivileged port (1024 or
+higher), you can use it as a regular user and don't need IT intervention unless you have some firewall set up which they need to override for you.
 
-git pull git://git.mycompany.com/pub/git/u-boot.git HEAD
-git.mycompany.com[0: 10.66.4.168]: errno=Connection refused
-fatal: unable to connect a socket (Connection refused)
+> git pull git://git.mycompany.com/pub/git/u-boot.git HEAD
+> git.mycompany.com[0: 10.66.4.168]: errno=Connection refused
+> fatal: unable to connect a socket (Connection refused)
 
-Another question, I got no output of "netstat | grep 9418". It means no program runs at port 9418 at the public repository machine. Is it correct?
+It's possible, and likely simpler, to use git-daemon directly, instead of
+having it be managed by inetd; especially for initial debugging, I'd recommend
+getting that working before trying to determine if you're having issues with
+inetd configuration: to do so, just run git-daemon with all the same arguments
+except for --inetd.
 
-netstat | grep 9418
+You said you deleted the xinetd config, but that's only relevant if your
+machine actually uses inetd as its super-server.  You should do 'ps -A | grep
+inetd' (which will match either inetd or xinetd), and see which one is running.
+If it's inetd, you should be all set, and the issue doesn't look like inetd
+(assuming you sent it a signal to reload its config file).  If on the other
+hand xinetd is running, you need to use the xinetd config file, and fix the
+server_args to look like the arguments which exist in the inetd file.  Again,
+you need to signal xinetd at this point to reload its configuration.
 
+Based on the linux kernel version you're reporting, I'm guessing you have some
+sort of Red Hat based system, which uses xinetd to the best of my knowledge.
 
---- On Thu, 11/20/08, Deskin Miller <deskinm@umich.edu> wrote:
-
-> From: Deskin Miller <deskinm@umich.edu>
-> Subject: Re: Challenge of setting up git server (repository). Please help!
-> To: "Gary Yang" <garyyang6@yahoo.com>
-> Cc: git@vger.kernel.org
-> Date: Thursday, November 20, 2008, 2:13 PM
-> On Thu, Nov 20, 2008 at 01:39:12PM -0800, Gary Yang wrote:
-> > 
-> > I am working on setting up a git server so that people
-> can clone, pull and push their code at
-> git.mycompany.com/pub/git+project path. 
-> > However, I am having challenges. For people who setup
-> their git servers, please share your experneces with me and
-> tell me what I did wrong.
-> > I greatly appreciate it.
-> > 
-> > After I made configurations, I ran the command, git
-> update-server-info at the public repository machine. But, I
-> got the error.
-> > 
-> > git pull http://git.mycompany.com/pub/git/u-boot.git
-> HEAD
-> > fatal:
-> http://git.mycompany.com/pub/git/u-boot.git/info/refs not
-> found: did you run git update-server-info on the server?
-> > 
-> > The file /pub/git/u-boot.git/info/refs dose exist.
-> > 
-> > cat /pub/git/u-boot.git/info/refs
-> > 87ee4576c4c31b7046fe2bbbdf309eaba5c3f346       
-> refs/heads/master
-> > 
-> > My question:
-> > 
-> > Is the contet of /pub/git/u-boot.git/hooks/post-update
-> correct? Should I change "exec
-> git-update-server-info" to "exec git
-> update-server-info"?
-> > 
-> > cat /pub/git/u-boot.git/hooks/post-update
-> > #!/bin/sh
-> > #
-> > # An example hook script to prepare a packed
-> repository for use over
-> > # dumb transports.
-> > #
-> > # To enable this hook, rename this file to
-> "post-update".
-> > exec git-update-server-info
-> > 
-> > I tried and changed "exec
-> git-update-server-info" to "exec git
-> update-server-info" in
-> /pub/git/u-boot.git/hooks/post-update. But, I still got same
-> error.
-> > git pull http://git.mycompany.com/pub/git/u-boot.git
-> HEAD
-> > fatal:
-> http://git.mycompany.com/pub/git/u-boot.git/info/refs not
-> found: did you run git update-server-info on the server?
-> > 
-> > Which one is correct? "exec
-> git-update-server-info" or "exec git
-> update-server-info"? Eventhogh none of them working.
-> > 
-> > Below are my settings:
-> > 
-> > grep 9418 /etc/services
-> > git             9418/tcp                        # Git
-> Version Control System
-> > 
-> > 
-> > grep git /etc/inetd.conf
-> > git     stream  tcp     nowait  nobody 
-> /usr/local/libexec/git-core/git-daemon git-daemon --inetd
-> --export-all /pub/git
-> > 
-> > 
-> > cat /etc/xinetd.d/git-daemon
-> > # default: off
-> > # description: The git server offers access to git
-> repositories
-> > service git
-> > {
-> >         disable = no
-> >         type            = UNLISTED
-> >         port            = 9418
-> >         socket_type     = stream
-> >         wait            = no
-> >         user            = nobody
-> >         server          =
-> /usr/local/libexec/git-core/git-daemon
-> >         server_args     = --inetd --export-all
-> --base-path=/pub/git
-> >         log_on_failure  += USERID
-> > }
-> > 
-> > 
-> > I am running git at Linux box:
-> > uname -a
-> > Linux svdclw004 2.6.9-67.ELsmp #1 SMP Wed Nov 7
-> 13:56:44 EST 2007 x86_64 GNU/Linux
-> > 
-> > Are there anything wrong? Please let me know.
+> Another question, I got no output of "netstat | grep 9418". It means no program runs at port 9418 at the public repository machine. Is it correct?
 > 
-> You tried to fetch from a http url, but your settings make
-> no mention of
-> running a web server.  git-update-server-info is only
-> relevant in the context
-> of using a web server to serve git repositories via the
-> same http protocol as
-> is used by web servers everywhere.  git-daemon, on the
-> other hand, which is
-> what you show configured here, is used to serve git
-> repositories via a git://
-> url.  Its configuration has no effect on whether using http
-> to fetch a git
-> repository will work or not.
-> 
-> Either use a git:// url to fetch the project, or set up a
-> web server which
-> serves stuff under /pub/git.
-> 
-> I'll also mention that you appear to have configuration
-> for both inetd and
-> xinetd, which are two generally mutually-exclusive
-> 'super-servers'; and
-> furthermore, your configurations are inconsistent in the
-> arguments they pass to
-> git-daemon: it looks like, were you to replace http:// with
-> git://, the inetd
-> config would work as listed, while xinetd would not.
-> 
-> Hope that helps,
-> Deskin Miller
-> 
-> --
-> To unsubscribe from this list: send the line
-> "unsubscribe git" in
-> the body of a message to majordomo@vger.kernel.org
-> More majordomo info at 
-> http://vger.kernel.org/majordomo-info.html
+> netstat | grep 9418
 
+netstat translates IP addresses to dns names, and ports to service names by
+default; so, given the line listed in /etc/services, this will show
+'0.0.0.0:git' or something.  Also, it lists established connections, not
+listening sockets, by default.  I'd recommend spending some time with the man
+page if you're going to use it to debug your setup.
 
-      
+Deskin Miller
