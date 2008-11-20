@@ -1,85 +1,60 @@
-From: David Aguilar <davvid@gmail.com>
-Subject: Re: Git commit won't add an untracked file given on the command
-	line
-Date: Thu, 20 Nov 2008 02:18:46 -0800
-Message-ID: <20081120101845.GA3291@gmail.com>
-References: <20081118211237.234d8035@crow> <200811182227.20076.fge@one2team.com> <20081118214730.005fc72d@crow> <alpine.DEB.1.00.0811190206170.30769@pacific.mpi-cbg.de> <20081119095452.3018d2de@crow>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: git and mtime
+Date: Thu, 20 Nov 2008 11:34:08 +0100 (CET)
+Message-ID: <alpine.DEB.1.00.0811201132220.30769@pacific.mpi-cbg.de>
+References: <20081119113752.GA13611@ravenclaw.codelibre.net> <1227098252.11370.8.camel@therock.nsw.bigpond.net.au> <vpqhc63zrz2.fsf@bauges.imag.fr>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Mark Burton <markb@ordern.com>
-X-From: git-owner@vger.kernel.org Thu Nov 20 11:24:34 2008
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Arafangion <thestar@fussycoder.id.au>,
+	Roger Leigh <rleigh@codelibre.net>, git@vger.kernel.org
+To: Matthieu Moy <Matthieu.Moy@imag.fr>
+X-From: git-owner@vger.kernel.org Thu Nov 20 11:27:30 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1L36i5-0001sB-9u
-	for gcvg-git-2@gmane.org; Thu, 20 Nov 2008 11:24:29 +0100
+	id 1L36kz-0002pU-I6
+	for gcvg-git-2@gmane.org; Thu, 20 Nov 2008 11:27:29 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753633AbYKTKXO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 20 Nov 2008 05:23:14 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753566AbYKTKXO
-	(ORCPT <rfc822;git-outgoing>); Thu, 20 Nov 2008 05:23:14 -0500
-Received: from rv-out-0506.google.com ([209.85.198.227]:39600 "EHLO
-	rv-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753455AbYKTKXN (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 20 Nov 2008 05:23:13 -0500
-Received: by rv-out-0506.google.com with SMTP id k40so393837rvb.1
-        for <git@vger.kernel.org>; Thu, 20 Nov 2008 02:23:13 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:cc:subject
-         :message-id:references:mime-version:content-type:content-disposition
-         :in-reply-to:user-agent;
-        bh=E1ToT5JBwaoGbvif/IdRR4eVQJKA8i99IdMWTkKAlHM=;
-        b=IaAoATBUxHLmmPZ7J304Fo8hUNkMQngw7t1JhBQkEii3GX5dCFtd07nr2VbrcIhSiR
-         kCdXZ8nCsfXOyr2BoUm2+itiV7zzEKYlKDEPJiQ+kPAvj0otAYkx4DdGLSJvtFSSXGrV
-         sKrSGdy4Z1MxkFyKCgjXXntBCCjiJ+qDSP8As=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        b=cPS9JFJoW0ZHhwGxz6cp5RK/YAZgzltk6tb9iUldKThe/CU7cFMjp8fJjzDM907+Zc
-         FejlnJ8Mq24zU9jX8s8XKfbJD7lSFdurM4T3sqqJgURX44zCSPKwTYMYPT8Todjb1TbG
-         jMcC6RMvOvIKnlnDrSdICLxRz1KVcS7TOzHjs=
-Received: by 10.141.122.1 with SMTP id z1mr1163469rvm.49.1227176592400;
-        Thu, 20 Nov 2008 02:23:12 -0800 (PST)
-Received: from gmail.com (208-106-56-2.static.dsltransport.net [208.106.56.2])
-        by mx.google.com with ESMTPS id k41sm1140944rvb.4.2008.11.20.02.23.11
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Thu, 20 Nov 2008 02:23:11 -0800 (PST)
-Content-Disposition: inline
-In-Reply-To: <20081119095452.3018d2de@crow>
-User-Agent: Mutt/1.5.18 (2008-05-17)
+	id S1753841AbYKTK0O (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 20 Nov 2008 05:26:14 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753860AbYKTK0O
+	(ORCPT <rfc822;git-outgoing>); Thu, 20 Nov 2008 05:26:14 -0500
+Received: from mail.gmx.net ([213.165.64.20]:45838 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1753746AbYKTK0N (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 20 Nov 2008 05:26:13 -0500
+Received: (qmail invoked by alias); 20 Nov 2008 10:26:10 -0000
+Received: from pacific.mpi-cbg.de (EHLO pacific.mpi-cbg.de) [141.5.10.38]
+  by mail.gmx.net (mp054) with SMTP; 20 Nov 2008 11:26:10 +0100
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX18VLUY/iYUVpStna1k6VR5NShvVY24PDtr1U5c5MZ
+	SNzW0Fk787IlSE
+X-X-Sender: schindelin@pacific.mpi-cbg.de
+In-Reply-To: <vpqhc63zrz2.fsf@bauges.imag.fr>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.71
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/101400>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/101401>
 
-On  0, Mark Burton <markb@ordern.com> wrote:
+Hi,
+
+On Wed, 19 Nov 2008, Matthieu Moy wrote:
+
+> Arafangion <thestar@fussycoder.id.au> writes:
 > 
-> Hi,
+> > You should probably fix your build script,
 > 
-> Feature request for the git gui people:
-> 
->   It would be nice if git gui was able to stage a highlighted region
->   rather than either the whole hunk or just the line under the cursor
->   as I believe it behaves now. I might be wrong but I don't think it
->   can do that at the moment. I think that would be useful because
->   although it's a step forward to be able to stage individual lines in
->   a hunk, it can be laborious if you want to pick out more than just a
->   couple of lines.
-> 
-> Cheers,
-> 
-> Mark
+> ccache should help:
 
+Only if you _allow_ the problem that makes ccache necessary.  Which we 
+don't.
 
-git-cola can do that.
-http://cola.tuxfamily.org/
+Ciao,
+Dscho
 
-
--- 
-
-	David
+P.S.: reminds me -- once again -- of the complicator's glove.
