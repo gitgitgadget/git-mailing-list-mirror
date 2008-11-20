@@ -1,96 +1,54 @@
 From: Petr Baudis <pasky@suse.cz>
-Subject: Re: [PATCH] Allow help/--help/-h to be run outside of a TopGit repo
-Date: Thu, 20 Nov 2008 15:27:03 +0100
-Message-ID: <20081120142702.GG10491@machine.or.cz>
-References: <1227181594-15123-1-git-send-email-madduck@debian.org>
+Subject: Re: [TopGit PATCH] tg patch: disable pager and colors for git-diff
+Date: Thu, 20 Nov 2008 15:34:55 +0100
+Message-ID: <20081120143455.GH10544@machine.or.cz>
+References: <1227189062-11951-1-git-send-email-fonseca@diku.dk> <20081120135710.GA16303@diku.dk>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: "martin f. krafft" <madduck@debian.org>
-X-From: git-owner@vger.kernel.org Thu Nov 20 15:30:56 2008
+Cc: madduck@debian.org, git@vger.kernel.org
+To: Jonas Fonseca <fonseca@diku.dk>
+X-From: git-owner@vger.kernel.org Thu Nov 20 15:36:35 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1L3AWC-0005Hn-3d
-	for gcvg-git-2@gmane.org; Thu, 20 Nov 2008 15:28:28 +0100
+	id 1L3Adh-0000Yv-4Z
+	for gcvg-git-2@gmane.org; Thu, 20 Nov 2008 15:36:13 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756418AbYKTO1I (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 20 Nov 2008 09:27:08 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756077AbYKTO1H
-	(ORCPT <rfc822;git-outgoing>); Thu, 20 Nov 2008 09:27:07 -0500
-Received: from w241.dkm.cz ([62.24.88.241]:49082 "EHLO machine.or.cz"
+	id S1754797AbYKTOe6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 20 Nov 2008 09:34:58 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754819AbYKTOe6
+	(ORCPT <rfc822;git-outgoing>); Thu, 20 Nov 2008 09:34:58 -0500
+Received: from w241.dkm.cz ([62.24.88.241]:37843 "EHLO machine.or.cz"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756684AbYKTO1G (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 20 Nov 2008 09:27:06 -0500
+	id S1754413AbYKTOe5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 20 Nov 2008 09:34:57 -0500
 Received: by machine.or.cz (Postfix, from userid 2001)
-	id 107E83939836; Thu, 20 Nov 2008 15:27:03 +0100 (CET)
+	id A4FC63939836; Thu, 20 Nov 2008 15:34:55 +0100 (CET)
 Content-Disposition: inline
-In-Reply-To: <1227181594-15123-1-git-send-email-madduck@debian.org>
+In-Reply-To: <20081120135710.GA16303@diku.dk>
 User-Agent: Mutt/1.5.16 (2007-06-09)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/101441>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/101442>
 
-On Thu, Nov 20, 2008 at 12:46:34PM +0100, martin f. krafft wrote:
-> The user ought to be able to call `tg help` from anywhere in the filesystem,
-> not just Git repositories, so the help parsing has to happen before the calls
-> to git git binary.
+On Thu, Nov 20, 2008 at 02:57:10PM +0100, Jonas Fonseca wrote:
+> When output is not redirected to a file, git brings up the pager for
+> only the diff, which can be confusing, so disable with --no-pager.
+> git-diff is a porcelain command and thus subject to color options. Use
+> --no-color, to avoid the patch being corrupted with terminal escape
+> characters when color.diff=always.
 > 
-> Debian bug: #501982
-> 
-> Signed-off-by: martin f. krafft <madduck@debian.org>
-> 
-> ---
->  tg.sh |   28 +++++++++++++++++++++++++---
->  1 files changed, 25 insertions(+), 3 deletions(-)
-> 
-> diff --git a/tg.sh b/tg.sh
-> index 4dcc15e..258f8ce 100644
-> --- a/tg.sh
-> +++ b/tg.sh
-> @@ -235,12 +235,37 @@ do_help()
->  	fi
->  }
->  
-> +# Check whether we are supposed to output the help message
-> +should_do_help()
-> +{
-> +	# we are being sourced for utility functions, never run help
-> +	[ -z "$tg__include" ] || return 1
-> +
-> +	local prev
-> +	while [ -n "$1" ]; do
-> +		case "$1" in
-> +		help|--help|-h)
-> +			shift
-> +			echo "${1:-$prev}"
-> +			return 0
-> +		esac
-> +		prev="$1"
-> +		shift
-> +	done
-> +
-> +	# run help when there was no previous topic, meaning that there where
-> +	# no arguments at all
-> +	test -z "$prev"
-> +}
->  
->  ## Startup
->  
->  [ -d "@cmddir@" ] ||
->  	die "No command directory: '@cmddir@'"
->  
-> +# check if we should run help and get the topic while we're at it
-> +help_topic="$(should_do_help "$@")" && { do_help "$help_topic"; exit 0; }
-> +
+> Signed-off-by: Jonas Fonseca <fonseca@diku.dk>
 
-Why is this so complicated? Can't you just do_help from
-should_do_help()? The overall semantics seems strange anyway, though -
-it seems that 'tg mail --help -r' will try to show help for '-r' instead
-of 'mail'.
+I still don't understand how did that color thing happen - shouldn't
+git diff avoid spewing out colors when the output is not a tty? And when
+it is, I want the colors myself, too.
+
+Good point with the --no-pager, but in that case, tg patch itself should
+by default invoke the pager, since it really is very desirable.
 
 -- 
 				Petr "Pasky" Baudis
