@@ -1,74 +1,98 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: git commit -v does not removes the patch
-Date: Thu, 20 Nov 2008 10:20:16 -0500
-Message-ID: <20081120152015.GA6283@coredump.intra.peff.net>
-References: <adf1fd3d0811100720n52ac1d47id9b7f402412aa0d3@mail.gmail.com> <20081110181023.GA22753@coredump.intra.peff.net> <adf1fd3d0811101434j658b2e8aj83d8cbe2293f5021@mail.gmail.com> <7vej1j40x5.fsf@gitster.siamese.dyndns.org> <20081111000706.GA26223@coredump.intra.peff.net> <adf1fd3d0811102356u6e671dcfj6491f81cf462ec2e@mail.gmail.com> <20081111102914.GA30330@coredump.intra.peff.net> <7v4p2e2nkg.fsf@gitster.siamese.dyndns.org> <20081112081609.GA3720@coredump.intra.peff.net> <20081120130851.GA17608@neumann>
+From: "Nguyen Thai Ngoc Duy" <pclouds@gmail.com>
+Subject: Re: [PATCH 5/9] update-index: add --checkout/--no-checkout to update CE_NO_CHECKOUT bit
+Date: Thu, 20 Nov 2008 22:26:48 +0700
+Message-ID: <fcaeb9bf0811200726x1f2956c6k6f2ca16543a0fbc@mail.gmail.com>
+References: <1222833849-22129-1-git-send-email-pclouds@gmail.com>
+	 <1222833849-22129-2-git-send-email-pclouds@gmail.com>
+	 <1222833849-22129-3-git-send-email-pclouds@gmail.com>
+	 <1222833849-22129-4-git-send-email-pclouds@gmail.com>
+	 <1222833849-22129-5-git-send-email-pclouds@gmail.com>
+	 <1222833849-22129-6-git-send-email-pclouds@gmail.com>
+	 <20081118113316.GA18610@segfault.peff.net>
+	 <7vk5b0vp19.fsf@gitster.siamese.dyndns.org>
+	 <7v4p24tq59.fsf@gitster.siamese.dyndns.org>
+	 <20081119130223.GA27893@segfault.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Santi =?utf-8?B?QsOpamFy?= <santi@agolina.net>,
-	Git Mailing List <git@vger.kernel.org>
-To: SZEDER =?utf-8?B?R8OhYm9y?= <szeder@ira.uka.de>
-X-From: git-owner@vger.kernel.org Thu Nov 20 16:22:13 2008
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: "Junio C Hamano" <gitster@pobox.com>, git@vger.kernel.org,
+	"Shawn O. Pearce" <spearce@spearce.org>
+To: "Jeff King" <peff@peff.net>
+X-From: git-owner@vger.kernel.org Thu Nov 20 16:28:08 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1L3BLb-0005BK-9w
-	for gcvg-git-2@gmane.org; Thu, 20 Nov 2008 16:21:35 +0100
+	id 1L3BRu-0008Tx-QI
+	for gcvg-git-2@gmane.org; Thu, 20 Nov 2008 16:28:07 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754923AbYKTPUU convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 20 Nov 2008 10:20:20 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754920AbYKTPUU
-	(ORCPT <rfc822;git-outgoing>); Thu, 20 Nov 2008 10:20:20 -0500
-Received: from peff.net ([208.65.91.99]:3211 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754891AbYKTPUT (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 20 Nov 2008 10:20:19 -0500
-Received: (qmail 18242 invoked by uid 111); 20 Nov 2008 15:20:17 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.32) with SMTP; Thu, 20 Nov 2008 10:20:17 -0500
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Thu, 20 Nov 2008 10:20:16 -0500
+	id S1755027AbYKTP0v (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 20 Nov 2008 10:26:51 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754990AbYKTP0v
+	(ORCPT <rfc822;git-outgoing>); Thu, 20 Nov 2008 10:26:51 -0500
+Received: from ug-out-1314.google.com ([66.249.92.173]:26335 "EHLO
+	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754846AbYKTP0u (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 20 Nov 2008 10:26:50 -0500
+Received: by ug-out-1314.google.com with SMTP id 39so307701ugf.37
+        for <git@vger.kernel.org>; Thu, 20 Nov 2008 07:26:48 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to
+         :subject:cc:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:references;
+        bh=yR/iuLzUWaOvN18nteNW/8g1i+8jSyXi3e2nWjsW9X4=;
+        b=Obm3QI6JxLxeMw5mDu1FVwmThsMz7X1VEpznrMqHwqd+cNGLvyt7zqybRpvamcnMSE
+         zWfNAoqe76Rt0Jcu9c3sYgMSc9dXrbMaVdneMcqM9QyEyAYKVC3WGMwA1vOS8a3gS7yy
+         FiJknTtu7QGIGSvxlP5YuluTi8tfqK6eIZvws=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
+         :content-type:content-transfer-encoding:content-disposition
+         :references;
+        b=qXoqAz1Jk7p3VoRzBfIMDGyIIwuBblyyEFS2o6esir51J45icr4tx1QhD/C6Fw0/37
+         zQSCI4nK8dLBeeWr9t1qBd/WcXWHp9S1+D/dT2ZpTcmS41xNOinrUNFqZTUyJBD/mMIn
+         bTX796KKF6LNduGOoXzd7atQxn8l1DZEWj1eo=
+Received: by 10.86.84.5 with SMTP id h5mr1625086fgb.59.1227194808556;
+        Thu, 20 Nov 2008 07:26:48 -0800 (PST)
+Received: by 10.86.62.13 with HTTP; Thu, 20 Nov 2008 07:26:48 -0800 (PST)
+In-Reply-To: <20081119130223.GA27893@segfault.peff.net>
 Content-Disposition: inline
-In-Reply-To: <20081120130851.GA17608@neumann>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/101451>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/101452>
 
-On Thu, Nov 20, 2008 at 02:09:28PM +0100, SZEDER G=C3=A1bor wrote:
+On 11/19/08, Jeff King <peff@peff.net> wrote:
+> On Tue, Nov 18, 2008 at 06:18:10PM -0800, Junio C Hamano wrote:
+>
+>  > Having said all that, I wouldn't suggest redoing the patch using >>
+>  > redirection.  But change from "touch 1 nondigit" to "touch nondigit 1"
+>  > is a bit too subtle to my taste.  Let's write it this way instead:
+>
+>
+> Yes, I also dislike the subtlety, but my "obvious" idea was something
+>  like:
+>
+>   for i in 1 2 sub/1 sub/2; do
+>     touch $i
+>   done
+>
+>  which just seemed clunky. But:
+>
+>
+>  > -     touch 1 2 sub/1 sub/2 &&
+>  > +     touch ./1 ./2 sub/1 sub/2 &&
+>
+>
+> this is less clunky, and I have confirmed that it solves the problem. I
+>  just wasn't clever enough to think of it in the first place. ;)
 
-> I always want to see the diff while editing a commit message, even if
-> it's the commit message of a merge, a revert, a squash in rebase.
-> Since these commands do not have an option equivalent to 'git commit
-> -v', I wrote a little prepare-commit-msg hook to always append the
-> appropriate diff to the end of the appropriate commit message file.
-> This worked pretty well for the last couple of months, until 5/5 got
-> into maint.
+Thanks for catching. The last half also has the same problem. Another
+way is maybe just stay away for those numbers, naming the files by
+alphabet. Just wonder if we could have some ways to automatically
+catch this kind of bug in the future.
 
-Hmm. I am sad that this change has broken somebody's existing workflow.
-OTOH, I'm not convinced that workflow wasn't a little crazy to begin
-with, depending on this undocumented munging.
-
-> So, what is the/is there a preferred way to always include the diff i=
-n
-> the commit message template and get it removed automatically?  Are
-> there any workarounds other than revert that commit locally?
-
-How about:
-
-    $ cat .git/hooks/prepare-commit-msg
-    #!/bin/sh
-    git diff --cached >>"$1"
-
-    $ cat .git/hooks/commit-msg
-    #!/bin/sh
-    sed -i '/^diff --git/Q' "$1"
-
-which is more or less the original behavior. The only downside I see is
-that "--no-verify" will turn off the commit-msg hook, but not the
-prepare-commit-msg hook.
-
--Peff
+-- 
+Duy
