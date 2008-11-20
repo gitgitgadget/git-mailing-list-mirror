@@ -1,78 +1,75 @@
-From: Samuel Tardieu <sam@rfc1149.net>
-Subject: Re: git and mtime
-Date: Thu, 20 Nov 2008 16:56:33 +0100
-Organization: RFC 1149 (see http://www.rfc1149.net/)
-Message-ID: <2008-11-20-16-56-33+trackit+sam@rfc1149.net>
-References: <20081119113752.GA13611@ravenclaw.codelibre.net>
-	<20081120132107.GA27571@piper.oerlikon.madduck.net>
-	<20081120133546.GA6023@codelibre.net>
-	<20081120135956.GA29789@piper.oerlikon.madduck.net>
+From: "Nguyen Thai Ngoc Duy" <pclouds@gmail.com>
+Subject: Media repositories and memory usage
+Date: Thu, 20 Nov 2008 23:19:35 +0700
+Message-ID: <fcaeb9bf0811200819v721a8d83s2890d8e19a3e4e4e@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 8bit
-Cc: Roger Leigh <rleigh@codelibre.net>, git@vger.kernel.org
-To: martin f krafft <madduck@madduck.net>
-X-From: git-owner@vger.kernel.org Thu Nov 20 17:10:49 2008
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+To: "Git Mailing List" <git@vger.kernel.org>,
+	"Tim Ansell" <mithro@mithis.com>
+X-From: git-owner@vger.kernel.org Thu Nov 20 17:22:28 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1L3BuM-0004qv-CB
-	for gcvg-git-2@gmane.org; Thu, 20 Nov 2008 16:57:30 +0100
+	id 1L3CH3-0006aU-NN
+	for gcvg-git-2@gmane.org; Thu, 20 Nov 2008 17:20:58 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755140AbYKTP4O (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 20 Nov 2008 10:56:14 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754905AbYKTP4O
-	(ORCPT <rfc822;git-outgoing>); Thu, 20 Nov 2008 10:56:14 -0500
-Received: from zoidberg.rfc1149.net ([91.121.19.179]:45459 "EHLO
-	zoidberg.rfc1149.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754760AbYKTP4N (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 20 Nov 2008 10:56:13 -0500
-Received: from localhost (localhost [127.0.0.1])
-	by zoidberg.rfc1149.net (Postfix) with ESMTP id A432911046C;
-	Thu, 20 Nov 2008 16:56:11 +0100 (CET)
-X-Virus-Scanned: amavisd-new at rfc1149.net
-Received: from zoidberg.rfc1149.net ([127.0.0.1])
-	by localhost (zaphod.rfc1149.net [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id cuL5i8eUi31F; Thu, 20 Nov 2008 16:56:10 +0100 (CET)
-Received: from mail2.rfc1149.net (willow.rfc1149.net [IPv6:2001:6f8:37a:2::2])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(Client CN "mail2.rfc1149.net", Issuer "rfc1149.net" (verified OK))
-	by zoidberg.rfc1149.net (Postfix) with ESMTPS id 2036810E81F;
-	Thu, 20 Nov 2008 16:56:10 +0100 (CET)
-Received: from localhost (localhost [127.0.0.1])
-	by mail2.rfc1149.net (Postfix) with ESMTP id 1AAD6C40BE;
-	Thu, 20 Nov 2008 16:56:34 +0100 (CET)
-Received: from mail2.rfc1149.net ([127.0.0.1])
-	by localhost (localhost [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id yw+l5VWWZh13; Thu, 20 Nov 2008 16:56:33 +0100 (CET)
-Received: by mail2.rfc1149.net (Postfix, from userid 1000)
-	id E1500C40CD; Thu, 20 Nov 2008 16:56:33 +0100 (CET)
-In-Reply-To: <20081120135956.GA29789@piper.oerlikon.madduck.net> (martin f. krafft's message of "Thu\, 20 Nov 2008 14\:59\:56 +0100")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-WWW: http://www.rfc1149.net/sam
-X-Jabber: <sam@rfc1149.net> (see http://www.jabber.org/)
-X-OpenPGP-Fingerprint: 79C0 AE3C CEA8 F17B 0EF1  45A5 F133 2241 1B80 ADE6 (see http://www.gnupg.org/)
+	id S1753533AbYKTQTi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 20 Nov 2008 11:19:38 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753367AbYKTQTi
+	(ORCPT <rfc822;git-outgoing>); Thu, 20 Nov 2008 11:19:38 -0500
+Received: from ey-out-2122.google.com ([74.125.78.26]:19582 "EHLO
+	ey-out-2122.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752637AbYKTQTh (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 20 Nov 2008 11:19:37 -0500
+Received: by ey-out-2122.google.com with SMTP id 6so219241eyi.37
+        for <git@vger.kernel.org>; Thu, 20 Nov 2008 08:19:35 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to
+         :subject:mime-version:content-type:content-transfer-encoding
+         :content-disposition;
+        bh=u6yRLsFFC/0qRz7eFx+6ouwex4VMbEzuuTEx9bLsSLg=;
+        b=nXignQTdjYBoQcDeiB2llJwTBjK9v1mSgg3gNtWBlR7zSEOPBVvJMSnFcBEOG0cmub
+         /a6XXCwuHs05pMvDahE9Rwx73tjfSpEkmIxDdgUimiguZAiLbTTciD/AMRr+rae1p257
+         iY13N0dP1B5f4W0VqOB40iQ1aewg5OEG0Bzak=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:to:subject:mime-version:content-type
+         :content-transfer-encoding:content-disposition;
+        b=FYlwwcmqLMp7ME8i0MxizwOpYSzc0priQib6xYgfFIF+oa1QRDYkc5fNlQpmznluCm
+         0ITgMEHqEs5nps4pfKB4E3JGCQpCE4m0kA1ROguzFRiNgIWWo2ZNqkzQXy7QWnzvbtrG
+         mmFvYRXX8z6X9Mz2wgif7ASOOz3fPI1bmB+l0=
+Received: by 10.86.50.6 with SMTP id x6mr1669124fgx.71.1227197975297;
+        Thu, 20 Nov 2008 08:19:35 -0800 (PST)
+Received: by 10.86.62.13 with HTTP; Thu, 20 Nov 2008 08:19:35 -0800 (PST)
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/101457>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/101458>
 
->>>>> "martin" == martin f krafft <madduck@madduck.net> writes:
+Hi,
 
-martin> I know you will hate me, but I think the solution here is to
-martin> fix the toolchain and make those build dependencies required.
+There is another aspect I did not see Tim mention in his slides:
+memory usage with large blobs. Git has tradition of loading the whole
+blob in memory for easy manipulation. It could consume a lot of memory
+in large blob case (and particularly worse in mingw port because it
+does not support mmap).
 
-I agree with martin here. Your planned solution of not rebuilding the
-files if the tools are not present may lead to serious problems if the
-user modifies the source files and happens not to have the tools
-around.
+I see these operations that need access to blobs:
+ 1. checkout blobs
+ 2. checkin blobs
+ 3. diff/delta blobs
 
-Moreover, requiring the build dependencies would allow you to drop the
-generated files from the repository and rebuild them in your packaging
-(source or binary) process.
+Diffing blobs should be avoided any way for large blobs. Checking in
+blobs does not require lots of memory. I'm working on checkout case to
+reduce memory footprint. Is there any other case that will need full
+blob in memory?
 
-  Sam
+PS. For checkout/checkin case, if you do any conversion, full blob in
+memory is still needed. But I guess that is rare for large blobs.
 -- 
-Samuel Tardieu -- sam@rfc1149.net -- http://www.rfc1149.net/
+Duy
