@@ -1,94 +1,87 @@
-From: martin f krafft <madduck@debian.org>
-Subject: Re: [PATCH] Allow help/--help/-h to be run outside of a TopGit repo
-Date: Thu, 20 Nov 2008 15:55:11 +0100
-Organization: The Debian project
-Message-ID: <20081120145511.GD29789@piper.oerlikon.madduck.net>
-References: <1227181594-15123-1-git-send-email-madduck@debian.org> <20081120142702.GG10491@machine.or.cz>
+From: "Jonas Fonseca" <fonseca@diku.dk>
+Subject: Re: [TopGit PATCH] tg patch: disable pager and colors for git-diff
+Date: Thu, 20 Nov 2008 15:55:47 +0100
+Message-ID: <2c6b72b30811200655o770efd63u4101f44683f2bc0d@mail.gmail.com>
+References: <1227189062-11951-1-git-send-email-fonseca@diku.dk>
+	 <20081120135710.GA16303@diku.dk>
+	 <20081120143455.GH10544@machine.or.cz>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="a2FkP9tdjPU2nyhF"
-Cc: git@vger.kernel.org
-To: Petr Baudis <pasky@suse.cz>
-X-From: git-owner@vger.kernel.org Thu Nov 20 15:57:24 2008
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: madduck@debian.org, git@vger.kernel.org
+To: "Petr Baudis" <pasky@suse.cz>
+X-From: git-owner@vger.kernel.org Thu Nov 20 15:57:29 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1L3Ay0-0001WU-Jn
-	for gcvg-git-2@gmane.org; Thu, 20 Nov 2008 15:57:13 +0100
+	id 1L3Ay1-0001WU-Ux
+	for gcvg-git-2@gmane.org; Thu, 20 Nov 2008 15:57:14 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758274AbYKTOzZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 20 Nov 2008 09:55:25 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756878AbYKTOzY
-	(ORCPT <rfc822;git-outgoing>); Thu, 20 Nov 2008 09:55:24 -0500
-Received: from clegg.madduck.net ([193.242.105.96]:59446 "EHLO
-	clegg.madduck.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757645AbYKTOzW (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 20 Nov 2008 09:55:22 -0500
-Received: from wall.oerlikon.madduck.net (wall.oerlikon.madduck.net [IPv6:2001:41e0:ff12::1])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(Client CN "wall.oerlikon.madduck.net", Issuer "CAcert Class 3 Root" (verified OK))
-	by clegg.madduck.net (postfix) with ESMTPS id E530F1D40A9;
-	Thu, 20 Nov 2008 15:55:13 +0100 (CET)
-Received: from piper.oerlikon.madduck.net (piper.oerlikon.madduck.net [IPv6:2001:41e0:ff12:0:211:2fff:fe6b:c869])
-	by wall.oerlikon.madduck.net (Postfix) with ESMTP id 8B0579F34F;
-	Thu, 20 Nov 2008 15:55:12 +0100 (CET)
-Received: by piper.oerlikon.madduck.net (Postfix, from userid 1000)
-	id E9C6F45F5; Thu, 20 Nov 2008 15:55:11 +0100 (CET)
+	id S1758356AbYKTOzw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 20 Nov 2008 09:55:52 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758347AbYKTOzw
+	(ORCPT <rfc822;git-outgoing>); Thu, 20 Nov 2008 09:55:52 -0500
+Received: from fg-out-1718.google.com ([72.14.220.157]:9726 "EHLO
+	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1758334AbYKTOzu (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 20 Nov 2008 09:55:50 -0500
+Received: by fg-out-1718.google.com with SMTP id 19so385135fgg.17
+        for <git@vger.kernel.org>; Thu, 20 Nov 2008 06:55:47 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:sender
+         :to:subject:cc:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:references
+         :x-google-sender-auth;
+        bh=V3RWLYwOOEIj0BArnMbyS7TN8oJE6ocyUXTgqbyDXNg=;
+        b=qeAtcrw78GPZ7ELWE6ButXTZ2t3fRd6/LBTG2bWJcmc5yBZf9cReVAuQF8xCAZ+EoR
+         nnN0jPLZaxQy1Q2ZjGmKfMJNQQBYz2YwJZkaKNHNX+XgluPMRZte1iRPu+rr2y/G6RYB
+         YyeIok3UvNT9KARtwpyvcw0kvCi+9j/N1c7Ws=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:sender:to:subject:cc:in-reply-to:mime-version
+         :content-type:content-transfer-encoding:content-disposition
+         :references:x-google-sender-auth;
+        b=G07tU/HZYpD5LERxhqSz0cjWZs3AqPWu50J+2+7wUM7h1BShil/ya7Jp9+iRzntSz0
+         bwuMN/SJL0FwGLRS/OfFYbYh1kQ58IAI/uwPi6BSM8Uh2blNrIKaLblAZ/FuLGT75XI4
+         JhyrDAArdOlQicNeoJqeUVS27iZv1OBbVtEdQ=
+Received: by 10.181.58.9 with SMTP id l9mr754085bkk.98.1227192947773;
+        Thu, 20 Nov 2008 06:55:47 -0800 (PST)
+Received: by 10.181.195.3 with HTTP; Thu, 20 Nov 2008 06:55:47 -0800 (PST)
+In-Reply-To: <20081120143455.GH10544@machine.or.cz>
 Content-Disposition: inline
-In-Reply-To: <20081120142702.GG10491@machine.or.cz>
-X-Motto: Keep the good times rollin'
-X-OS: Debian GNU/Linux lenny/sid kernel 2.6.26-1-amd64 x86_64
-User-Agent: Mutt/1.5.18 (2008-05-17)
-X-Virus-Scanned: ClamAV 0.94.1/8653/Thu Nov 20 10:04:07 2008 on clegg.madduck.net
-X-Virus-Status: Clean
+X-Google-Sender-Auth: 347e06cd1d9216df
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/101445>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/101446>
 
+On Thu, Nov 20, 2008 at 15:34, Petr Baudis <pasky@suse.cz> wrote:
+> On Thu, Nov 20, 2008 at 02:57:10PM +0100, Jonas Fonseca wrote:
+>> When output is not redirected to a file, git brings up the pager for
+>> only the diff, which can be confusing, so disable with --no-pager.
+>> git-diff is a porcelain command and thus subject to color options. Use
+>> --no-color, to avoid the patch being corrupted with terminal escape
+>> characters when color.diff=always.
+>>
+>> Signed-off-by: Jonas Fonseca <fonseca@diku.dk>
+>
+> I still don't understand how did that color thing happen - shouldn't
+> git diff avoid spewing out colors when the output is not a tty? And when
+> it is, I want the colors myself, too.
 
---a2FkP9tdjPU2nyhF
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+As I wrote in the commit message, git diff always spews out colors
+with color.diff=always. This was what I for experimental reasons had
+in my .git/config (and forgotten all about) before sending the README
+update patch. Topgit could check the git color configuration but that
+seems more hacky.
 
-also sprach Petr Baudis <pasky@suse.cz> [2008.11.20.1527 +0100]:
-> Why is this so complicated? Can't you just do_help from
-> should_do_help()?
+> Good point with the --no-pager, but in that case, tg patch itself should
+> by default invoke the pager, since it really is very desirable.
 
-Yes, I could, but that would be in conflict with my understanding of
-the Law of Demeter.
+Yes, probably.
 
-> The overall semantics seems strange anyway, though - it seems that
-> 'tg mail --help -r' will try to show help for '-r' instead of
-> 'mail'.
-
-True, but then we are parsing command lines. Would you be opposed to
-a getopt (POSIX) approach to normalising/parsing the command line?
-
-Cheers,
-
---=20
- .''`.   martin f. krafft <madduck@debian.org>
-: :'  :  proud Debian developer, author, administrator, and user
-`. `'`   http://people.debian.org/~madduck - http://debiansystem.info
-  `-  Debian - when you have better things to do than fixing systems
-=20
-this space intentionally left occupied.
-
---a2FkP9tdjPU2nyhF
-Content-Type: application/pgp-signature; name="digital_signature_gpg.asc"
-Content-Description: Digital signature (see http://martin-krafft.net/gpg/)
-Content-Disposition: inline
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.9 (GNU/Linux)
-
-iEYEARECAAYFAkklek8ACgkQIgvIgzMMSnXSgQCgvoWbN6nolVuserqaTPIcY5aN
-oP0An3tuYGT3ZqCmp2U9AnkBEOlT0d4/
-=yTjS
------END PGP SIGNATURE-----
-
---a2FkP9tdjPU2nyhF--
+-- 
+Jonas Fonseca
