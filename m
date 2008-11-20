@@ -1,107 +1,91 @@
-From: "martin f. krafft" <madduck@debian.org>
-Subject: [PATCH] Allow help/--help/-h to be run outside of a TopGit repo
-Date: Thu, 20 Nov 2008 12:46:34 +0100
-Message-ID: <1227181594-15123-1-git-send-email-madduck@debian.org>
-Cc: "martin f. krafft" <madduck@debian.org>
-To: git@vger.kernel.org, pasky@suse.cz
-X-From: git-owner@vger.kernel.org Thu Nov 20 12:48:16 2008
+From: martin f krafft <madduck@debian.org>
+Subject: Re: [TopGit PATCH] Check for help invocation before setup
+Date: Thu, 20 Nov 2008 12:48:13 +0100
+Organization: The Debian project
+Message-ID: <20081120114813.GA8401@piper.oerlikon.madduck.net>
+References: <1227110623-4474-1-git-send-email-madduck@debian.org> <1227110623-4474-2-git-send-email-madduck@debian.org> <20081119182436.GB10544@machine.or.cz> <20081119183234.GA19781@piper.oerlikon.madduck.net> <20081119183902.GX10491@machine.or.cz>
+Mime-Version: 1.0
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="PNTmBPCT7hxwcZjr"
+Cc: git discussion list <git@vger.kernel.org>
+To: Petr Baudis <pasky@suse.cz>
+X-From: git-owner@vger.kernel.org Thu Nov 20 12:49:40 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1L3813-0003ie-VZ
-	for gcvg-git-2@gmane.org; Thu, 20 Nov 2008 12:48:10 +0100
+	id 1L382T-00049M-Us
+	for gcvg-git-2@gmane.org; Thu, 20 Nov 2008 12:49:38 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754250AbYKTLqx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 20 Nov 2008 06:46:53 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754189AbYKTLqx
-	(ORCPT <rfc822;git-outgoing>); Thu, 20 Nov 2008 06:46:53 -0500
-Received: from clegg.madduck.net ([193.242.105.96]:47786 "EHLO
+	id S1753063AbYKTLsX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 20 Nov 2008 06:48:23 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752494AbYKTLsX
+	(ORCPT <rfc822;git-outgoing>); Thu, 20 Nov 2008 06:48:23 -0500
+Received: from clegg.madduck.net ([193.242.105.96]:47788 "EHLO
 	clegg.madduck.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754052AbYKTLqx (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 20 Nov 2008 06:46:53 -0500
+	with ESMTP id S1751310AbYKTLsW (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 20 Nov 2008 06:48:22 -0500
 Received: from wall.oerlikon.madduck.net (wall.oerlikon.madduck.net [IPv6:2001:41e0:ff12::1])
 	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
 	(Client CN "wall.oerlikon.madduck.net", Issuer "CAcert Class 3 Root" (verified OK))
-	by clegg.madduck.net (postfix) with ESMTPS id C8F481D40AF;
-	Thu, 20 Nov 2008 12:46:36 +0100 (CET)
+	by clegg.madduck.net (postfix) with ESMTPS id C4D0C1D40AF;
+	Thu, 20 Nov 2008 12:48:14 +0100 (CET)
 Received: from piper.oerlikon.madduck.net (piper.oerlikon.madduck.net [IPv6:2001:41e0:ff12:0:211:2fff:fe6b:c869])
-	by wall.oerlikon.madduck.net (Postfix) with ESMTP id 298A29F34F;
-	Thu, 20 Nov 2008 12:46:35 +0100 (CET)
+	by wall.oerlikon.madduck.net (Postfix) with ESMTP id 6B3DA9F34F;
+	Thu, 20 Nov 2008 12:48:13 +0100 (CET)
 Received: by piper.oerlikon.madduck.net (Postfix, from userid 1000)
-	id BDD2945F4; Thu, 20 Nov 2008 12:46:34 +0100 (CET)
-X-Mailer: git-send-email 1.6.0.2
+	id 2738D45F4; Thu, 20 Nov 2008 12:48:13 +0100 (CET)
+Content-Disposition: inline
+In-Reply-To: <20081119183902.GX10491@machine.or.cz>
+X-Motto: Keep the good times rollin'
+X-OS: Debian GNU/Linux lenny/sid kernel 2.6.26-1-amd64 x86_64
+User-Agent: Mutt/1.5.18 (2008-05-17)
 X-Virus-Scanned: ClamAV 0.94.1/8653/Thu Nov 20 10:04:07 2008 on clegg.madduck.net
 X-Virus-Status: Clean
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/101407>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/101408>
 
-The user ought to be able to call `tg help` from anywhere in the filesystem,
-not just Git repositories, so the help parsing has to happen before the calls
-to git git binary.
 
-Debian bug: #501982
+--PNTmBPCT7hxwcZjr
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Signed-off-by: martin f. krafft <madduck@debian.org>
+also sprach Petr Baudis <pasky@suse.cz> [2008.11.19.1939 +0100]:
+> Oh, oops - I missed the loop, I should get some lunch. ;-)
+> Thus, something like this?
+>=20
+> 	check_help() { while [ -n "$1" ]; do ...; shift; done }
+> 	check_help "$@"
 
----
- tg.sh |   28 +++++++++++++++++++++++++---
- 1 files changed, 25 insertions(+), 3 deletions(-)
+Why didn't I think of that???
 
-diff --git a/tg.sh b/tg.sh
-index 4dcc15e..258f8ce 100644
---- a/tg.sh
-+++ b/tg.sh
-@@ -235,12 +235,37 @@ do_help()
- 	fi
- }
- 
-+# Check whether we are supposed to output the help message
-+should_do_help()
-+{
-+	# we are being sourced for utility functions, never run help
-+	[ -z "$tg__include" ] || return 1
-+
-+	local prev
-+	while [ -n "$1" ]; do
-+		case "$1" in
-+		help|--help|-h)
-+			shift
-+			echo "${1:-$prev}"
-+			return 0
-+		esac
-+		prev="$1"
-+		shift
-+	done
-+
-+	# run help when there was no previous topic, meaning that there where
-+	# no arguments at all
-+	test -z "$prev"
-+}
- 
- ## Startup
- 
- [ -d "@cmddir@" ] ||
- 	die "No command directory: '@cmddir@'"
- 
-+# check if we should run help and get the topic while we're at it
-+help_topic="$(should_do_help "$@")" && { do_help "$help_topic"; exit 0; }
-+
- ## Initial setup
- 
- set -e
-@@ -270,9 +295,6 @@ cmd="$1"
- shift
- 
- case "$cmd" in
--help|--help|-h)
--	do_help "$1"
--	exit 0;;
- --hooks-path)
- 	# Internal command
- 	echo "@hooksdir@";;
--- 
-tg: (f17218e..) fixes/independent-help (depends on: upstream)
+I just sent an updated patch without threading, sorry. tg-mail just
+fires without confirmation... :/
+
+--=20
+ .''`.   martin f. krafft <madduck@debian.org>
+: :'  :  proud Debian developer, author, administrator, and user
+`. `'`   http://people.debian.org/~madduck - http://debiansystem.info
+  `-  Debian - when you have better things to do than fixing systems
+=20
+"the pure and simple truth is rarely pure and never simple."
+                                                      -- oscar wilde
+
+--PNTmBPCT7hxwcZjr
+Content-Type: application/pgp-signature; name="digital_signature_gpg.asc"
+Content-Description: Digital signature (see http://martin-krafft.net/gpg/)
+Content-Disposition: inline
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.9 (GNU/Linux)
+
+iEYEARECAAYFAkklTnoACgkQIgvIgzMMSnWAyACgvNQn2Esmfue7yPBd/kuawZ8R
+ZPkAoL1/iAMZNIWKZvumDoqj4EszoUwR
+=34cL
+-----END PGP SIGNATURE-----
+
+--PNTmBPCT7hxwcZjr--
