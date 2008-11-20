@@ -1,65 +1,56 @@
 From: Petr Baudis <pasky@suse.cz>
-Subject: Re: [TopGit PATCH] tg patch: disable pager and colors for git-diff
-Date: Thu, 20 Nov 2008 16:07:54 +0100
-Message-ID: <20081120150754.GH10491@machine.or.cz>
-References: <1227189062-11951-1-git-send-email-fonseca@diku.dk> <20081120135710.GA16303@diku.dk> <20081120143455.GH10544@machine.or.cz> <2c6b72b30811200655o770efd63u4101f44683f2bc0d@mail.gmail.com>
+Subject: Re: [PATCH] Allow help/--help/-h to be run outside of a TopGit repo
+Date: Thu, 20 Nov 2008 16:08:32 +0100
+Message-ID: <20081120150832.GI10491@machine.or.cz>
+References: <1227181594-15123-1-git-send-email-madduck@debian.org> <20081120142702.GG10491@machine.or.cz> <20081120145511.GD29789@piper.oerlikon.madduck.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: madduck@debian.org, git@vger.kernel.org
-To: Jonas Fonseca <fonseca@diku.dk>
-X-From: git-owner@vger.kernel.org Thu Nov 20 16:12:00 2008
+Cc: git@vger.kernel.org
+To: martin f krafft <madduck@debian.org>
+X-From: git-owner@vger.kernel.org Thu Nov 20 16:12:04 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1L3B9c-0006tj-HP
-	for gcvg-git-2@gmane.org; Thu, 20 Nov 2008 16:09:12 +0100
+	id 1L3BAD-0007Eg-07
+	for gcvg-git-2@gmane.org; Thu, 20 Nov 2008 16:09:49 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754554AbYKTPH5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 20 Nov 2008 10:07:57 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755186AbYKTPH5
-	(ORCPT <rfc822;git-outgoing>); Thu, 20 Nov 2008 10:07:57 -0500
-Received: from w241.dkm.cz ([62.24.88.241]:33168 "EHLO machine.or.cz"
+	id S1755239AbYKTPIe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 20 Nov 2008 10:08:34 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755259AbYKTPId
+	(ORCPT <rfc822;git-outgoing>); Thu, 20 Nov 2008 10:08:33 -0500
+Received: from w241.dkm.cz ([62.24.88.241]:33177 "EHLO machine.or.cz"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754413AbYKTPH4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 20 Nov 2008 10:07:56 -0500
+	id S1755007AbYKTPId (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 20 Nov 2008 10:08:33 -0500
 Received: by machine.or.cz (Postfix, from userid 2001)
-	id 37C933939836; Thu, 20 Nov 2008 16:07:54 +0100 (CET)
+	id 2C84B3939836; Thu, 20 Nov 2008 16:08:32 +0100 (CET)
 Content-Disposition: inline
-In-Reply-To: <2c6b72b30811200655o770efd63u4101f44683f2bc0d@mail.gmail.com>
+In-Reply-To: <20081120145511.GD29789@piper.oerlikon.madduck.net>
 User-Agent: Mutt/1.5.16 (2007-06-09)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/101447>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/101448>
 
-On Thu, Nov 20, 2008 at 03:55:47PM +0100, Jonas Fonseca wrote:
-> On Thu, Nov 20, 2008 at 15:34, Petr Baudis <pasky@suse.cz> wrote:
-> > On Thu, Nov 20, 2008 at 02:57:10PM +0100, Jonas Fonseca wrote:
-> >> When output is not redirected to a file, git brings up the pager for
-> >> only the diff, which can be confusing, so disable with --no-pager.
-> >> git-diff is a porcelain command and thus subject to color options. Use
-> >> --no-color, to avoid the patch being corrupted with terminal escape
-> >> characters when color.diff=always.
-> >>
-> >> Signed-off-by: Jonas Fonseca <fonseca@diku.dk>
-> >
-> > I still don't understand how did that color thing happen - shouldn't
-> > git diff avoid spewing out colors when the output is not a tty? And when
-> > it is, I want the colors myself, too.
+On Thu, Nov 20, 2008 at 03:55:11PM +0100, martin f krafft wrote:
+> also sprach Petr Baudis <pasky@suse.cz> [2008.11.20.1527 +0100]:
+> > Why is this so complicated? Can't you just do_help from
+> > should_do_help()?
 > 
-> As I wrote in the commit message, git diff always spews out colors
-> with color.diff=always. This was what I for experimental reasons had
-> in my .git/config (and forgotten all about) before sending the README
-> update patch. Topgit could check the git color configuration but that
-> seems more hacky.
+> Yes, I could, but that would be in conflict with my understanding of
+> the Law of Demeter.
 
-This shows just that color.diff=always is asking for trouble. ;-)
-I think we shouldn't try to outsmart the user if they _force_ that they
-really always want the colors.
+What is that?
 
--- 
+> > The overall semantics seems strange anyway, though - it seems that
+> > 'tg mail --help -r' will try to show help for '-r' instead of
+> > 'mail'.
+> 
+> True, but then we are parsing command lines. Would you be opposed to
+> a getopt (POSIX) approach to normalising/parsing the command line?
+
+No. :-)
+
 				Petr "Pasky" Baudis
-People who take cold baths never have rheumatism, but they have
-cold baths.
