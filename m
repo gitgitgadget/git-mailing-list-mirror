@@ -1,76 +1,98 @@
-From: "Jonas Fonseca" <jonas.fonseca@gmail.com>
-Subject: Re: [TopGit PATCH] README: Fix spelling
-Date: Thu, 20 Nov 2008 15:23:51 +0100
-Message-ID: <2c6b72b30811200623t3326f69bu4c8570a3c41cc764@mail.gmail.com>
-References: <1227189062-11951-1-git-send-email-fonseca@diku.dk>
-	 <2c6b72b30811200552h46004299w881ad61134ec5555@mail.gmail.com>
-	 <20081120141725.GB25425@piper.oerlikon.madduck.net>
+From: Petr Baudis <pasky@suse.cz>
+Subject: Re: [PATCH] Allow help/--help/-h to be run outside of a TopGit repo
+Date: Thu, 20 Nov 2008 15:27:03 +0100
+Message-ID: <20081120142702.GG10491@machine.or.cz>
+References: <1227181594-15123-1-git-send-email-madduck@debian.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-To: "martin f krafft" <madduck@debian.org>
-X-From: git-owner@vger.kernel.org Thu Nov 20 15:25:37 2008
+To: "martin f. krafft" <madduck@debian.org>
+X-From: git-owner@vger.kernel.org Thu Nov 20 15:30:56 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1L3ATE-0003tb-IJ
-	for gcvg-git-2@gmane.org; Thu, 20 Nov 2008 15:25:25 +0100
+	id 1L3AWC-0005Hn-3d
+	for gcvg-git-2@gmane.org; Thu, 20 Nov 2008 15:28:28 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756022AbYKTOXz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 20 Nov 2008 09:23:55 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755657AbYKTOXz
-	(ORCPT <rfc822;git-outgoing>); Thu, 20 Nov 2008 09:23:55 -0500
-Received: from mu-out-0910.google.com ([209.85.134.188]:2996 "EHLO
-	mu-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755983AbYKTOXx (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 20 Nov 2008 09:23:53 -0500
-Received: by mu-out-0910.google.com with SMTP id g7so459721muf.1
-        for <git@vger.kernel.org>; Thu, 20 Nov 2008 06:23:51 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to
-         :subject:cc:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:references;
-        bh=n6yXSkYwueBB+ZXa0Dp23RJBAkYnNiW8rDSpvO3NF6o=;
-        b=WK9ipobiE6TusjygafRIyiFxqnapaRXIHLTckB87h/riYABuGUlmMJq0fgeIi3YbKh
-         qtdpN9JUru7BLKbKdWseDvDfoFCVgoYX4ZNpyLaY+fABs1chM1xs9+NdkxVRBAQ7AWEV
-         KbSRmvA3dCc55qiI26M/LOEKg3wcH4BGL3sA8=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
-         :content-type:content-transfer-encoding:content-disposition
-         :references;
-        b=rpwCqXDmNU7Y3tcIxfvVymKsPn0Ao2n7n7T//vtVgj2eiJd6L3eVCCMRDnFj4R33M6
-         UnFVflGcVzvv7aYpQoOVHMV6xMapIU+ecfoyIZZ5TY9709Wrrvl10h7T0NOhU83yCEKU
-         t/MYwt19H0/0zEkysyiZPR9Yo/4dxF+SFW5C0=
-Received: by 10.181.219.15 with SMTP id w15mr743828bkq.90.1227191031443;
-        Thu, 20 Nov 2008 06:23:51 -0800 (PST)
-Received: by 10.181.195.3 with HTTP; Thu, 20 Nov 2008 06:23:51 -0800 (PST)
-In-Reply-To: <20081120141725.GB25425@piper.oerlikon.madduck.net>
+	id S1756418AbYKTO1I (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 20 Nov 2008 09:27:08 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756077AbYKTO1H
+	(ORCPT <rfc822;git-outgoing>); Thu, 20 Nov 2008 09:27:07 -0500
+Received: from w241.dkm.cz ([62.24.88.241]:49082 "EHLO machine.or.cz"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1756684AbYKTO1G (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 20 Nov 2008 09:27:06 -0500
+Received: by machine.or.cz (Postfix, from userid 2001)
+	id 107E83939836; Thu, 20 Nov 2008 15:27:03 +0100 (CET)
 Content-Disposition: inline
+In-Reply-To: <1227181594-15123-1-git-send-email-madduck@debian.org>
+User-Agent: Mutt/1.5.16 (2007-06-09)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/101440>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/101441>
 
-On Thu, Nov 20, 2008 at 15:17, martin f krafft <madduck@debian.org> wrote:
-> also sprach Jonas Fonseca <jonas.fonseca@gmail.com> [2008.11.20.1452 +0100]:
->> Oops sorry about this one!!! :-/
->
-> What about it? The patch seems perfectly alright. Only the quoted
-> version is broken, which I think is your fault.
+On Thu, Nov 20, 2008 at 12:46:34PM +0100, martin f. krafft wrote:
+> The user ought to be able to call `tg help` from anywhere in the filesystem,
+> not just Git repositories, so the help parsing has to happen before the calls
+> to git git binary.
+> 
+> Debian bug: #501982
+> 
+> Signed-off-by: martin f. krafft <madduck@debian.org>
+> 
+> ---
+>  tg.sh |   28 +++++++++++++++++++++++++---
+>  1 files changed, 25 insertions(+), 3 deletions(-)
+> 
+> diff --git a/tg.sh b/tg.sh
+> index 4dcc15e..258f8ce 100644
+> --- a/tg.sh
+> +++ b/tg.sh
+> @@ -235,12 +235,37 @@ do_help()
+>  	fi
+>  }
+>  
+> +# Check whether we are supposed to output the help message
+> +should_do_help()
+> +{
+> +	# we are being sourced for utility functions, never run help
+> +	[ -z "$tg__include" ] || return 1
+> +
+> +	local prev
+> +	while [ -n "$1" ]; do
+> +		case "$1" in
+> +		help|--help|-h)
+> +			shift
+> +			echo "${1:-$prev}"
+> +			return 0
+> +		esac
+> +		prev="$1"
+> +		shift
+> +	done
+> +
+> +	# run help when there was no previous topic, meaning that there where
+> +	# no arguments at all
+> +	test -z "$prev"
+> +}
+>  
+>  ## Startup
+>  
+>  [ -d "@cmddir@" ] ||
+>  	die "No command directory: '@cmddir@'"
+>  
+> +# check if we should run help and get the topic while we're at it
+> +help_topic="$(should_do_help "$@")" && { do_help "$help_topic"; exit 0; }
+> +
 
-Well, it looks very broken in Gmail ...
-
-> Should I apply the README patch?
-
-Yes, if you can salvage it. Else it is also available in branch
-jf/readme-update at
-
-  git://repo.or.cz/topgit/fonseca.git
+Why is this so complicated? Can't you just do_help from
+should_do_help()? The overall semantics seems strange anyway, though -
+it seems that 'tg mail --help -r' will try to show help for '-r' instead
+of 'mail'.
 
 -- 
-Jonas Fonseca
+				Petr "Pasky" Baudis
+People who take cold baths never have rheumatism, but they have
+cold baths.
