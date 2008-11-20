@@ -1,55 +1,83 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: fatal: did you run git update-server-info on the server? mv
- post-update.sample post-update
-Date: Thu, 20 Nov 2008 12:05:03 +0100 (CET)
-Message-ID: <alpine.DEB.1.00.0811201204300.30769@pacific.mpi-cbg.de>
-References: <155056.88492.qm@web37905.mail.mud.yahoo.com>
+From: Matthieu Moy <Matthieu.Moy@imag.fr>
+Subject: Re: git and mtime
+Date: Thu, 20 Nov 2008 11:53:40 +0100
+Message-ID: <vpqwseypt1n.fsf@bauges.imag.fr>
+References: <20081119113752.GA13611@ravenclaw.codelibre.net>
+	<1227098252.11370.8.camel@therock.nsw.bigpond.net.au>
+	<vpqhc63zrz2.fsf@bauges.imag.fr>
+	<alpine.DEB.1.00.0811201132220.30769@pacific.mpi-cbg.de>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org
-To: Gary Yang <garyyang6@yahoo.com>
-X-From: git-owner@vger.kernel.org Thu Nov 20 11:58:31 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: Arafangion <thestar@fussycoder.id.au>,
+	Roger Leigh <rleigh@codelibre.net>, git@vger.kernel.org
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Thu Nov 20 11:58:43 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1L37Ey-0004AV-Ky
-	for gcvg-git-2@gmane.org; Thu, 20 Nov 2008 11:58:29 +0100
+	id 1L37FA-0004Dv-On
+	for gcvg-git-2@gmane.org; Thu, 20 Nov 2008 11:58:41 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753988AbYKTK5J (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 20 Nov 2008 05:57:09 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753993AbYKTK5I
-	(ORCPT <rfc822;git-outgoing>); Thu, 20 Nov 2008 05:57:08 -0500
-Received: from mail.gmx.net ([213.165.64.20]:39284 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1752995AbYKTK5H (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 20 Nov 2008 05:57:07 -0500
-Received: (qmail invoked by alias); 20 Nov 2008 10:57:04 -0000
-Received: from pacific.mpi-cbg.de (EHLO pacific.mpi-cbg.de) [141.5.10.38]
-  by mail.gmx.net (mp021) with SMTP; 20 Nov 2008 11:57:04 +0100
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1+ylwxiXyyyM4T7GoTdqrDHrc/t7/NCRrF6jHfFmC
-	sn1NrhddQZi7lT
-X-X-Sender: schindelin@pacific.mpi-cbg.de
-In-Reply-To: <155056.88492.qm@web37905.mail.mud.yahoo.com>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.78
+	id S1754031AbYKTK5Z (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 20 Nov 2008 05:57:25 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754025AbYKTK5Z
+	(ORCPT <rfc822;git-outgoing>); Thu, 20 Nov 2008 05:57:25 -0500
+Received: from imag.imag.fr ([129.88.30.1]:51369 "EHLO imag.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753993AbYKTK5Y (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 20 Nov 2008 05:57:24 -0500
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by imag.imag.fr (8.13.8/8.13.8) with ESMTP id mAKAreZi009322
+	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
+	Thu, 20 Nov 2008 11:53:40 +0100 (CET)
+Received: from bauges.imag.fr ([129.88.43.5])
+	by mail-veri.imag.fr with esmtps (TLS-1.0:RSA_AES_256_CBC_SHA:32)
+	(Exim 4.50)
+	id 1L37AK-0002aL-Ky; Thu, 20 Nov 2008 11:53:40 +0100
+Received: from moy by bauges.imag.fr with local (Exim 4.63)
+	(envelope-from <moy@imag.fr>)
+	id 1L37AK-0007m5-IB; Thu, 20 Nov 2008 11:53:40 +0100
+In-Reply-To: <alpine.DEB.1.00.0811201132220.30769@pacific.mpi-cbg.de> (Johannes Schindelin's message of "Thu\, 20 Nov 2008 11\:34\:08 +0100 \(CET\)")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/23.0.60 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-3.0 (imag.imag.fr [129.88.30.1]); Thu, 20 Nov 2008 11:53:41 +0100 (CET)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM for more information
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: moy@imag.fr
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/101404>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/101405>
 
-Hi,
+Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
-On Wed, 19 Nov 2008, Gary Yang wrote:
+> Hi,
+>
+> On Wed, 19 Nov 2008, Matthieu Moy wrote:
+>
+>> Arafangion <thestar@fussycoder.id.au> writes:
+>> 
+>> > You should probably fix your build script,
+>> 
+>> ccache should help:
+>
+> Only if you _allow_ the problem that makes ccache necessary.  Which we 
+> don't.
 
-> I did not run post-update at public repository manually. Do I need to 
-> run it for the very first time?
+You do, for some definition of "problem".
 
-You need to run it when you installed the hook _after_ seeing the message 
-"did you run...".
+make
+git checkout whatever
+make
+git checkout where-you-were-before
+make # <--- this one
 
-Ciao,
-Dscho
+The last make is correct with plain git and plain make, but it can be
+slow. With a cache in your build system, it can just reuse the objects
+created during the first "make". It doesn't change correctness, only
+performance.
+
+-- 
+Matthieu
