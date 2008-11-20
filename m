@@ -1,82 +1,94 @@
-From: "Sverre Rabbelier" <alturin@gmail.com>
-Subject: Re: [PATCH v2] Document levenshtein.c
-Date: Thu, 20 Nov 2008 18:48:55 +0100
-Message-ID: <bd6139dc0811200948u7d2cf8e9qfaada22d21f6d01c@mail.gmail.com>
-References: <20081118185326.12721.71576.stgit@arrakis.enst.fr>
-	 <alpine.DEB.1.00.0811190151000.30769@pacific.mpi-cbg.de>
-	 <2008-11-19-09-42-45+trackit+sam@rfc1149.net>
-	 <alpine.DEB.1.00.0811191053250.30769@pacific.mpi-cbg.de>
-	 <7vhc63svsl.fsf@gitster.siamese.dyndns.org>
-	 <alpine.DEB.1.00.0811201255120.30769@pacific.mpi-cbg.de>
-	 <2008-11-20-13-00-31+trackit+sam@rfc1149.net>
-	 <alpine.DEB.1.00.0811201426100.30769@pacific.mpi-cbg.de>
-	 <1227201710.22668.2.camel@ld0161-tx32>
-Reply-To: sverre@rabbelier.nl
+From: Daniel Barkalow <barkalow@iabervon.org>
+Subject: Re: git and mtime
+Date: Thu, 20 Nov 2008 12:59:08 -0500 (EST)
+Message-ID: <alpine.LNX.1.00.0811201223300.19665@iabervon.org>
+References: <20081119113752.GA13611@ravenclaw.codelibre.net> <46d6db660811190818r3aa2a392pda9106ac4a579cf0@mail.gmail.com> <20081120112708.GC22787@ravenclaw.codelibre.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: "Johannes Schindelin" <Johannes.Schindelin@gmx.de>,
-	"Samuel Tardieu" <sam@rfc1149.net>,
-	"Junio C Hamano" <gitster@pobox.com>,
-	"Git List" <git@vger.kernel.org>
-To: "Jon Loeliger" <jdl@freescale.com>
-X-From: git-owner@vger.kernel.org Thu Nov 20 18:50:13 2008
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Christian MICHON <christian.michon@gmail.com>, git@vger.kernel.org
+To: Roger Leigh <rleigh@codelibre.net>
+X-From: git-owner@vger.kernel.org Thu Nov 20 19:00:32 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1L3DfQ-0004eG-Cn
-	for gcvg-git-2@gmane.org; Thu, 20 Nov 2008 18:50:12 +0100
+	id 1L3DpP-0000vf-6z
+	for gcvg-git-2@gmane.org; Thu, 20 Nov 2008 19:00:31 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753518AbYKTRs5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 20 Nov 2008 12:48:57 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753471AbYKTRs5
-	(ORCPT <rfc822;git-outgoing>); Thu, 20 Nov 2008 12:48:57 -0500
-Received: from yx-out-2324.google.com ([74.125.44.28]:19169 "EHLO
-	yx-out-2324.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753367AbYKTRs4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 20 Nov 2008 12:48:56 -0500
-Received: by yx-out-2324.google.com with SMTP id 8so259050yxm.1
-        for <git@vger.kernel.org>; Thu, 20 Nov 2008 09:48:55 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:reply-to
-         :to:subject:cc:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:references;
-        bh=khbU+ctJ5EF14sYkf7sFbO6HsKtfvCEzNNRfJI2rTlQ=;
-        b=DOL6gE7DNiw4OpJt0uQVR2CBxwkUYTq99Zsf0gc0K0eu9JebFQfjUCwUL/v8+V7oc1
-         NzfI8lAej+JUfNCE+Kgf+wZqmcBVSpa4ICV8yFYcLCFfMnZLRxQX5slCIslqe6m24P7r
-         lXDOwLxcEX+T4n27xqEw17wpSyZwXH91DbsTI=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:reply-to:to:subject:cc:in-reply-to
-         :mime-version:content-type:content-transfer-encoding
-         :content-disposition:references;
-        b=xqpI/IUyZkwOToZXSTxsEivuyE9f0UseUNZiKwZZJRABnifARhba9NaNpQqsLmnBED
-         pdTv1njv3iDFdQfzvuNnyf2enhDycdiD5kXnkCmrwODX1uBlHSa5AJt4W9Q3FLUu5iOZ
-         5ErbrpU1lj/j6YlBVOXXJw5BonQYngBUaLfZc=
-Received: by 10.151.83.12 with SMTP id k12mr4633145ybl.46.1227203335839;
-        Thu, 20 Nov 2008 09:48:55 -0800 (PST)
-Received: by 10.150.149.14 with HTTP; Thu, 20 Nov 2008 09:48:55 -0800 (PST)
-In-Reply-To: <1227201710.22668.2.camel@ld0161-tx32>
-Content-Disposition: inline
+	id S1754013AbYKTR7M (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 20 Nov 2008 12:59:12 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753949AbYKTR7K
+	(ORCPT <rfc822;git-outgoing>); Thu, 20 Nov 2008 12:59:10 -0500
+Received: from iabervon.org ([66.92.72.58]:43871 "EHLO iabervon.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753756AbYKTR7K (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 20 Nov 2008 12:59:10 -0500
+Received: (qmail 861 invoked by uid 1000); 20 Nov 2008 17:59:08 -0000
+Received: from localhost (sendmail-bs@127.0.0.1)
+  by localhost with SMTP; 20 Nov 2008 17:59:08 -0000
+In-Reply-To: <20081120112708.GC22787@ravenclaw.codelibre.net>
+User-Agent: Alpine 1.00 (LNX 882 2007-12-20)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/101463>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/101464>
 
-On Thu, Nov 20, 2008 at 18:21, Jon Loeliger <jdl@freescale.com> wrote:
-> Were these supposed to be examples or definitions?
-> The first looks like a definition by example.
-> I'm not sure what "Substition" is besides a misspelling.
-> Is it the definition "Substitution"?  Or was it an
-> example "Substitition" poorly spelled?
-> The final two look like straight definitions.
+On Thu, 20 Nov 2008, Roger Leigh wrote:
 
-Err, I'm pretty sure it's documenting the parameters?
+> On Wed, Nov 19, 2008 at 05:18:16PM +0100, Christian MICHON wrote:
+> > On Wed, Nov 19, 2008 at 12:37 PM, Roger Leigh <rleigh@codelibre.net> wrote:
+> > > Would it be possible for git to store the mtime of files in the tree?
+> > >
+> > > This would make it possible to do this type of work in git, since it's
+> > > currently a bit random as to whether it works or not.  This only
+> > > started when I upgraded to an amd64 architecture from powerpc32,
+> > > I guess it's maybe using high-resolution timestamps.
+> > >
+> > 
+> > beside the obvious answer it comes back often as a request, it is
+> > possible in theory to create a shell script which, for each file
+> > present in the sandbox in the current branch, would find the mtime of
+> > the last commit on that file (quite an expensive operation) and apply
+> > it.
+> 
+> Surely this is only expensive because you're not already storing the
+> information in the tree; if it was there, it would be (relatively)
+> cheap?  You could even compare the old and new trees to see if you
+> needed to touch a file at all.
+> 
+> > You should store mostly content of source files. You should do a make
+> > in your first cloned repo at least once before committing anything to
+> > the repo. That's what I did and I saved days...
+> 
+> Except in this case I'm storing the content of *tarballs* (along with
+> pristine-tar).  I'm committing exactly what's in the tarball with
+> no changes (this is a requirement).  I can't change the source prior
+> to commit.
 
--- 
-Cheers,
+Can you store the tarballs in the repository, instead of the contents of 
+the tarballs? The tarballs will contain the dates you want, and you can 
+obviously get tar to set the timestamps the way you want. (Then you add a 
+higher-level Makefile that knows how to unpack the tarball to a directory, 
+maintaining the timestamps, patch anything you're changing, and run make 
+in that directory.)
 
-Sverre Rabbelier
+That is to say, from your perspective, the sources include the upstream 
+distributed tarballs, but the individual files in upstream tarballs aren't 
+source files for you, since you can't (by policy) modify them (within the 
+pristine tarball). If you want to change the sources of the packaged 
+project, you add a patch file to do it, rather than simply changing the 
+source (which, as you say, you're required not to do).
+
+Git really wants to store the inputs to your workflow, each of which might
+change independently. That's why the files in your work tree have 
+timestamps based on when they came to be in your work tree (get set to the 
+current time whenever git puts different content there, and leaves them 
+unchanged if their contents don't change when moving from commit to 
+commit). The "sources" in your workflow are a different set of files from 
+the sources in the project, and git really wants *your* repository to 
+match *your* workflow and not the workflow of the upstream project, when 
+you're acting as a packager rather than an upstream developer.
+
+	-Daniel
+*This .sig left intentionally blank*
