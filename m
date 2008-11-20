@@ -1,91 +1,104 @@
-From: martin f krafft <madduck@debian.org>
-Subject: Re: [TopGit PATCH] Check for help invocation before setup
-Date: Thu, 20 Nov 2008 12:48:13 +0100
-Organization: The Debian project
-Message-ID: <20081120114813.GA8401@piper.oerlikon.madduck.net>
-References: <1227110623-4474-1-git-send-email-madduck@debian.org> <1227110623-4474-2-git-send-email-madduck@debian.org> <20081119182436.GB10544@machine.or.cz> <20081119183234.GA19781@piper.oerlikon.madduck.net> <20081119183902.GX10491@machine.or.cz>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: [PATCH] Document levenshtein.c
+Date: Thu, 20 Nov 2008 13:00:35 +0100 (CET)
+Message-ID: <alpine.DEB.1.00.0811201255120.30769@pacific.mpi-cbg.de>
+References: <20081118185326.12721.71576.stgit@arrakis.enst.fr> <alpine.DEB.1.00.0811190151000.30769@pacific.mpi-cbg.de> <2008-11-19-09-42-45+trackit+sam@rfc1149.net> <alpine.DEB.1.00.0811191053250.30769@pacific.mpi-cbg.de>
+ <7vhc63svsl.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="PNTmBPCT7hxwcZjr"
-Cc: git discussion list <git@vger.kernel.org>
-To: Petr Baudis <pasky@suse.cz>
-X-From: git-owner@vger.kernel.org Thu Nov 20 12:49:40 2008
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Samuel Tardieu <sam@rfc1149.net>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Nov 20 12:54:06 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1L382T-00049M-Us
-	for gcvg-git-2@gmane.org; Thu, 20 Nov 2008 12:49:38 +0100
+	id 1L386d-0005Yp-A1
+	for gcvg-git-2@gmane.org; Thu, 20 Nov 2008 12:53:55 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753063AbYKTLsX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 20 Nov 2008 06:48:23 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752494AbYKTLsX
-	(ORCPT <rfc822;git-outgoing>); Thu, 20 Nov 2008 06:48:23 -0500
-Received: from clegg.madduck.net ([193.242.105.96]:47788 "EHLO
-	clegg.madduck.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751310AbYKTLsW (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 20 Nov 2008 06:48:22 -0500
-Received: from wall.oerlikon.madduck.net (wall.oerlikon.madduck.net [IPv6:2001:41e0:ff12::1])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(Client CN "wall.oerlikon.madduck.net", Issuer "CAcert Class 3 Root" (verified OK))
-	by clegg.madduck.net (postfix) with ESMTPS id C4D0C1D40AF;
-	Thu, 20 Nov 2008 12:48:14 +0100 (CET)
-Received: from piper.oerlikon.madduck.net (piper.oerlikon.madduck.net [IPv6:2001:41e0:ff12:0:211:2fff:fe6b:c869])
-	by wall.oerlikon.madduck.net (Postfix) with ESMTP id 6B3DA9F34F;
-	Thu, 20 Nov 2008 12:48:13 +0100 (CET)
-Received: by piper.oerlikon.madduck.net (Postfix, from userid 1000)
-	id 2738D45F4; Thu, 20 Nov 2008 12:48:13 +0100 (CET)
-Content-Disposition: inline
-In-Reply-To: <20081119183902.GX10491@machine.or.cz>
-X-Motto: Keep the good times rollin'
-X-OS: Debian GNU/Linux lenny/sid kernel 2.6.26-1-amd64 x86_64
-User-Agent: Mutt/1.5.18 (2008-05-17)
-X-Virus-Scanned: ClamAV 0.94.1/8653/Thu Nov 20 10:04:07 2008 on clegg.madduck.net
-X-Virus-Status: Clean
+	id S1755450AbYKTLwj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 20 Nov 2008 06:52:39 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755323AbYKTLwj
+	(ORCPT <rfc822;git-outgoing>); Thu, 20 Nov 2008 06:52:39 -0500
+Received: from mail.gmx.net ([213.165.64.20]:39844 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1755450AbYKTLwi (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 20 Nov 2008 06:52:38 -0500
+Received: (qmail invoked by alias); 20 Nov 2008 11:52:36 -0000
+Received: from pacific.mpi-cbg.de (EHLO pacific.mpi-cbg.de) [141.5.10.38]
+  by mail.gmx.net (mp038) with SMTP; 20 Nov 2008 12:52:36 +0100
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX18+HF5zM1A+mL1pxgnzEV3tnswKmGVfShrg61AYcB
+	m20JBOv5vEx7JV
+X-X-Sender: schindelin@pacific.mpi-cbg.de
+In-Reply-To: <7vhc63svsl.fsf@gitster.siamese.dyndns.org>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.55
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/101408>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/101409>
 
 
---PNTmBPCT7hxwcZjr
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+---
+	On Wed, 19 Nov 2008, Junio C Hamano wrote:
 
-also sprach Petr Baudis <pasky@suse.cz> [2008.11.19.1939 +0100]:
-> Oh, oops - I missed the loop, I should get some lunch. ;-)
-> Thus, something like this?
->=20
-> 	check_help() { while [ -n "$1" ]; do ...; shift; done }
-> 	check_help "$@"
+	> It is a sure sign that the original implementation was too 
+	> scantily described, and that the fix was not explained well in the 
+	> proposed commit log message (i.e. in what corner cases the original
+	> was bad in what way, and how the patch fixes it).
 
-Why didn't I think of that???
+	How about this?
 
-I just sent an updated patch without threading, sorry. tg-mail just
-fires without confirmation... :/
+ levenshtein.c |   31 +++++++++++++++++++++++++++++++
+ 1 files changed, 31 insertions(+), 0 deletions(-)
 
---=20
- .''`.   martin f. krafft <madduck@debian.org>
-: :'  :  proud Debian developer, author, administrator, and user
-`. `'`   http://people.debian.org/~madduck - http://debiansystem.info
-  `-  Debian - when you have better things to do than fixing systems
-=20
-"the pure and simple truth is rarely pure and never simple."
-                                                      -- oscar wilde
-
---PNTmBPCT7hxwcZjr
-Content-Type: application/pgp-signature; name="digital_signature_gpg.asc"
-Content-Description: Digital signature (see http://martin-krafft.net/gpg/)
-Content-Disposition: inline
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.9 (GNU/Linux)
-
-iEYEARECAAYFAkklTnoACgkQIgvIgzMMSnWAyACgvNQn2Esmfue7yPBd/kuawZ8R
-ZPkAoL1/iAMZNIWKZvumDoqj4EszoUwR
-=34cL
------END PGP SIGNATURE-----
-
---PNTmBPCT7hxwcZjr--
+diff --git a/levenshtein.c b/levenshtein.c
+index db52f2c..298907a 100644
+--- a/levenshtein.c
++++ b/levenshtein.c
+@@ -1,6 +1,39 @@
+ #include "cache.h"
+ #include "levenshtein.h"
+ 
++/*
++ * This function implements the Damerau-Levenshtein algorithm to 
++ * calculate a distance between strings.
++ *
++ * The idea is to build a distance matrix for the substrings of both
++ * strings.  To avoid a large space complexity, only the last three rows
++ * are kept in memory (if swaps had the same or higher cost as one deletion
++ * plus one insertion, only two rows would be needed).
++ *
++ * At any stage, "i + 1" denotes the length of the current substring of
++ * string1 that the distance is calculated for (likewise "j + 1" for 
++ * string2).
++ *
++ * row2 holds the current row, row1 the previous row (i.e. for the substring
++ * of string1 of length "i"), and row0 the row before that.
++ *
++ * In other words, at the start of the big loop, row1[j + 1] contains the
++ * Damerau-Levenshtein distance between the substring of string1 of length
++ * "i" and the substring of string2 of length "j + 1".
++ *
++ * All the big loop does is determine the partial minimum-cost paths.
++ *
++ * It does so by calculating the costs of the path ending in characters
++ * i (in string1) and j (in string2), respectively, given that the last
++ * operation is a substition, a swap, a deletion, or an insertion.
++ *
++ * This implementation allows the costs to be weighted:
++ *
++ * - w (as in "sWap")
++ * - s (as in "Substition")
++ * - a (for insertion, AKA "Add")
++ * - d (as in "Deletion")
++ */
+ int levenshtein(const char *string1, const char *string2,
+ 		int w, int s, int a, int d)
+ {
+-- 
+1.6.0.2.763.g72663
