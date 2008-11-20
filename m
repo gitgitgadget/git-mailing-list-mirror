@@ -1,64 +1,82 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH 5/9] update-index: add --checkout/--no-checkout to
-	update CE_NO_CHECKOUT bit
-Date: Thu, 20 Nov 2008 10:32:52 -0500
-Message-ID: <20081120153252.GA7374@coredump.intra.peff.net>
-References: <1222833849-22129-2-git-send-email-pclouds@gmail.com> <1222833849-22129-3-git-send-email-pclouds@gmail.com> <1222833849-22129-4-git-send-email-pclouds@gmail.com> <1222833849-22129-5-git-send-email-pclouds@gmail.com> <1222833849-22129-6-git-send-email-pclouds@gmail.com> <20081118113316.GA18610@segfault.peff.net> <7vk5b0vp19.fsf@gitster.siamese.dyndns.org> <7v4p24tq59.fsf@gitster.siamese.dyndns.org> <20081119130223.GA27893@segfault.peff.net> <fcaeb9bf0811200726x1f2956c6k6f2ca16543a0fbc@mail.gmail.com>
+From: "Kyle Moffett" <kyle@moffetthome.net>
+Subject: Re: git and mtime
+Date: Thu, 20 Nov 2008 10:33:46 -0500
+Message-ID: <f73f7ab80811200733u46ba63f3h11bf13cc476a5f9f@mail.gmail.com>
+References: <20081119113752.GA13611@ravenclaw.codelibre.net>
+	 <46d6db660811190818r3aa2a392pda9106ac4a579cf0@mail.gmail.com>
+	 <20081120112708.GC22787@ravenclaw.codelibre.net>
+	 <492560C5.5070308@op5.se> <20081120141533.GC6023@codelibre.net>
+	 <49257949.4070308@op5.se> <20081120151925.GE6023@codelibre.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	"Shawn O. Pearce" <spearce@spearce.org>
-To: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Nov 20 16:34:18 2008
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: "Andreas Ericsson" <ae@op5.se>,
+	"Christian MICHON" <christian.michon@gmail.com>,
+	git@vger.kernel.org
+To: "Roger Leigh" <rleigh@codelibre.net>
+X-From: git-owner@vger.kernel.org Thu Nov 20 16:35:08 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1L3BXn-00037c-Aj
-	for gcvg-git-2@gmane.org; Thu, 20 Nov 2008 16:34:11 +0100
+	id 1L3BYd-0003Ym-4z
+	for gcvg-git-2@gmane.org; Thu, 20 Nov 2008 16:35:03 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754958AbYKTPc4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 20 Nov 2008 10:32:56 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755084AbYKTPc4
-	(ORCPT <rfc822;git-outgoing>); Thu, 20 Nov 2008 10:32:56 -0500
-Received: from peff.net ([208.65.91.99]:3598 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754930AbYKTPc4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 20 Nov 2008 10:32:56 -0500
-Received: (qmail 18436 invoked by uid 111); 20 Nov 2008 15:32:53 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.32) with SMTP; Thu, 20 Nov 2008 10:32:53 -0500
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Thu, 20 Nov 2008 10:32:52 -0500
+	id S1755183AbYKTPds (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 20 Nov 2008 10:33:48 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755233AbYKTPds
+	(ORCPT <rfc822;git-outgoing>); Thu, 20 Nov 2008 10:33:48 -0500
+Received: from an-out-0708.google.com ([209.85.132.250]:61586 "EHLO
+	an-out-0708.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755123AbYKTPdr (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 20 Nov 2008 10:33:47 -0500
+Received: by an-out-0708.google.com with SMTP id d40so225343and.1
+        for <git@vger.kernel.org>; Thu, 20 Nov 2008 07:33:46 -0800 (PST)
+Received: by 10.100.251.8 with SMTP id y8mr1192617anh.119.1227195226183;
+        Thu, 20 Nov 2008 07:33:46 -0800 (PST)
+Received: by 10.100.38.13 with HTTP; Thu, 20 Nov 2008 07:33:46 -0800 (PST)
+In-Reply-To: <20081120151925.GE6023@codelibre.net>
 Content-Disposition: inline
-In-Reply-To: <fcaeb9bf0811200726x1f2956c6k6f2ca16543a0fbc@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/101453>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/101454>
 
-On Thu, Nov 20, 2008 at 10:26:48PM +0700, Nguyen Thai Ngoc Duy wrote:
+On Thu, Nov 20, 2008 at 10:19 AM, Roger Leigh <rleigh@codelibre.net> wrote:
+> And yet the fact that it won't propagate makes it totally useless:
+> all the other people using the repo won't get the extra metadata
+> that will prevent build failures.  Having the extra data locally
+> is nice, but not exactly what I'd call a solution.  The whole point
+> of what I want is to have it as an integral part of the repo.
 
-> Thanks for catching. The last half also has the same problem. Another
+Easiest way is typically something like this in the makefile:
 
-I'm not sure what you mean by "the last half also has the same problem";
-with the patch I posted (or Junio's patch) the test works fine for me.
+docbook_version = $(shell docbook2man --version 2>/dev/null)
+ifneq "$docbook_version",""
 
-> way is maybe just stay away for those numbers, naming the files by
-> alphabet. Just wonder if we could have some ways to automatically
-> catch this kind of bug in the future.
+mymanpage.1:
+        ## Real docbook build rules here
 
-Dscho suggested something similar. I would be happy if somebody wrote a
-portability lint that found problems in shell constructs and calling
-conventions of tools. In practice, though, I think it ends up being
-quite hard to catalog all of the quirks of every platform (and
-certainly, I would never have thought that this would break -- as it
-was, after it _did_ break I had to sit scratching my head wondering how
-that piece of code could be wrong).
+else
 
-So I think a simpler approach makes sense: write tests that make sure
-the system is doing what you want, and then run those tests periodically
-in the environments that you care about checking. When it breaks, you
-know there is a problem. :) And that is exactly how this bug was caught.
+mymanpage.1:
+        if [ -e $@ ]; then \
+                echo "No 'docbook' installed, using pregenerated man
+pages" >&2 ; \
+        else \
+                echo "Pregenerated manpages are missing and no docbook
+found!" >&2 ; \
+                exit 1 ; \
+        fi
 
--Peff
+endif
+
+Such stuff will take an order of magnitude less time than trying to
+patch GIT to preserve metadata that most projects don't want
+preserved.  You may also find it's easier to just comment out the
+documentation build rules if you are always guaranteeing that the docs
+have been compiled.
+
+Cheers,
+Kyle Moffett
