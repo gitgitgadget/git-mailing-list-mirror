@@ -1,91 +1,90 @@
-From: Mike Galbraith <efault@gmx.de>
-Subject: Re: Challenge of setting up git server (repository). Please help!
-Date: Fri, 21 Nov 2008 08:22:24 +0100
-Message-ID: <1227252144.4879.90.camel@marge.simson.net>
-References: <546971.60895.qm@web37907.mail.mud.yahoo.com>
+From: Johannes Sixt <j.sixt@viscovery.net>
+Subject: Re: '/pub/git/u-boot.git': not in whitelist. Please help!
+Date: Fri, 21 Nov 2008 08:26:38 +0100
+Message-ID: <492662AE.6020202@viscovery.net>
+References: <202329.35126.qm@web37906.mail.mud.yahoo.com>
 Mime-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-Cc: "J.H." <warthog19@eaglescrag.net>,
-	Deskin Miller <deskinm@umich.edu>, git@vger.kernel.org
+Cc: git@vger.kernel.org
 To: garyyang6@yahoo.com
-X-From: git-owner@vger.kernel.org Fri Nov 21 08:23:45 2008
+X-From: git-owner@vger.kernel.org Fri Nov 21 08:28:10 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1L3QMj-0006B8-8K
-	for gcvg-git-2@gmane.org; Fri, 21 Nov 2008 08:23:45 +0100
+	id 1L3QQz-00076P-3N
+	for gcvg-git-2@gmane.org; Fri, 21 Nov 2008 08:28:09 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752068AbYKUHW3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 21 Nov 2008 02:22:29 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751445AbYKUHW3
-	(ORCPT <rfc822;git-outgoing>); Fri, 21 Nov 2008 02:22:29 -0500
-Received: from mail.gmx.net ([213.165.64.20]:43944 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751178AbYKUHW3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 21 Nov 2008 02:22:29 -0500
-Received: (qmail invoked by alias); 21 Nov 2008 07:22:26 -0000
-Received: from p54B5A124.dip0.t-ipconnect.de (EHLO [192.168.178.27]) [84.181.161.36]
-  by mail.gmx.net (mp054) with SMTP; 21 Nov 2008 08:22:26 +0100
-X-Authenticated: #14349625
-X-Provags-ID: V01U2FsdGVkX1/PDogMufLPQnxcBhQ9ylIW7Crg3i4ffcEfXIGa/h
-	Y4cSnQO2TQAS3p
-In-Reply-To: <546971.60895.qm@web37907.mail.mud.yahoo.com>
-X-Mailer: Evolution 2.22.1.1 
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.6
+	id S1751570AbYKUH0y (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 21 Nov 2008 02:26:54 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751408AbYKUH0y
+	(ORCPT <rfc822;git-outgoing>); Fri, 21 Nov 2008 02:26:54 -0500
+Received: from lilzmailso02.liwest.at ([212.33.55.13]:2383 "EHLO
+	lilzmailso02.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751178AbYKUH0x (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 21 Nov 2008 02:26:53 -0500
+Received: from cm56-163-160.liwest.at ([86.56.163.160] helo=linz.eudaptics.com)
+	by lilzmailso02.liwest.at with esmtpa (Exim 4.69)
+	(envelope-from <j.sixt@viscovery.net>)
+	id 1L3QPW-0000jo-Hi; Fri, 21 Nov 2008 08:26:47 +0100
+Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.96])
+	by linz.eudaptics.com (Postfix) with ESMTP
+	id 3D163AFCC; Fri, 21 Nov 2008 08:26:38 +0100 (CET)
+User-Agent: Thunderbird 2.0.0.6 (Windows/20070728)
+In-Reply-To: <202329.35126.qm@web37906.mail.mud.yahoo.com>
+X-Spam-Score: -1.4 (-)
+X-Spam-Report: Spam detection software, running on the system "lilzmailsa01.liwest.at", has
+	identified this incoming email as possible spam.  The original message
+	has been attached to this so you can view it (if it isn't spam) or label
+	similar future email.  If you have any questions, see
+	the administrator of that system for details.
+	Content preview:  Gary Yang schrieb: > At git public repository server, I started
+	git-daemon > > sudo git-daemon git-daemon -verbose --inetd --export-all --base-path=/pub/git
+	& Did you mean $ sudo git daemon --verbose --inetd --export-all --base-path=/pub/git
+	& [...] 
+	Content analysis details:   (-1.4 points, 7.0 required)
+	pts rule name              description
+	---- ---------------------- --------------------------------------------------
+	-1.4 ALL_TRUSTED            Passed through trusted hosts only via SMTP
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/101497>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/101498>
 
-On Thu, 2008-11-20 at 16:39 -0800, Gary Yang wrote:
-> I killed xinetd. Restarted with sudo xinetd -stayalive -pidfile /var/run/xinetd.pid. 
+Gary Yang schrieb:
+> At git public repository server, I started git-daemon
 > 
-> I back to my private box. I did 
+> sudo git-daemon git-daemon -verbose --inetd --export-all --base-path=/pub/git &
+
+Did you mean
+
+  $ sudo git daemon --verbose --inetd --export-all --base-path=/pub/git &
+
+(Notice the duplicated 'git-daemon' in your command.)
+
+> grep 9418 /etc/services
+> git             9418/tcp                        # Git Version Control System
 > 
-> git pull git://git.mycompany.com/pub/git/u-boot.git HEAD
+> At my private machine:
+> git pull git://svdcgit01.amcc.com/pub/git/u-boot.git
+> fatal: The remote end hung up unexpectedly
 > 
-> This command hangs for over half hour and is still hanging. Again, below is the content of /etc/xinetd.d/git-daemon. What I did wrong?
-> 
-> cat /etc/xinetd.d/git-daemon
-> # default: off
-> # description: The git server offers access to git repositories
-> service git
-> {
->         disable = no
->         type            = UNLISTED
->         port            = 9418
->         socket_type     = stream
->         wait            = no
->         user            = nobody
->         server          = /usr/local/libexec/git-core/git-daemon
->         server_args     = git-daemon --inetd --export-all --base-path=/pub/git
->         log_on_failure  += USERID
-> }
+> At the git public repository server, I got:
+> '/pub/git/u-boot.git': not in whitelist
 
-The way I set it up was to create a user 'git' who is my central
-repository owner/manager.  All repositories live in ~git.
+They way in which you invoked git-daemon said that the following
+directories are white-listed:
 
-service git
-{
-        socket_type     = stream
-        protocol        = tcp
-        wait            = no
-        user            = git
-        group           = daemon
-        server          = /usr/bin/git
-        server_args     = daemon --inetd --export-all --user-path --reuseaddr --detach
-        type            = UNLISTED
-        port            = 9418
-        log_on_failure  += USERID
-}
+ git-daemon
+ -verbose
+ --inetd
+ --export-all
+ --base-path=/pub/git
 
-marge:..kernel/linux-2.6.28 # git remote -v
-master  git://localhost/~git/linux-2.6
+Nowhere in this list is /pub/git/u-boot.git.
 
->From host homer, with a hole poked in marge's firewall, works fine.
+;)
 
-	-Mike
+-- Hannes
