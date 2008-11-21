@@ -1,132 +1,67 @@
-From: Johannes Sixt <j.sixt@viscovery.net>
-Subject: Re: [PATCH] mmap implementation for mingw.
-Date: Fri, 21 Nov 2008 08:59:21 +0100
-Message-ID: <49266A59.4010404@viscovery.net>
-References: <loom.20081121T024302-370@post.gmane.org>
+From: "David Symonds" <dsymonds@gmail.com>
+Subject: Re: Cannot git pull using http from my git.mycompany.com
+Date: Fri, 21 Nov 2008 19:43:52 +1100
+Message-ID: <ee77f5c20811210043v1f3af6c5l6f5a25c12d697d2d@mail.gmail.com>
+References: <562019.27220.qm@web37908.mail.mud.yahoo.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org
-To: Vasyl Vavrychuk <vvavrychuk@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Nov 21 09:00:49 2008
+To: garyyang6@yahoo.com
+X-From: git-owner@vger.kernel.org Fri Nov 21 09:45:15 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1L3QwY-0006PF-Nv
-	for gcvg-git-2@gmane.org; Fri, 21 Nov 2008 09:00:47 +0100
+	id 1L3RdY-0001Tk-66
+	for gcvg-git-2@gmane.org; Fri, 21 Nov 2008 09:45:12 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752596AbYKUH7b (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 21 Nov 2008 02:59:31 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752588AbYKUH7b
-	(ORCPT <rfc822;git-outgoing>); Fri, 21 Nov 2008 02:59:31 -0500
-Received: from lilzmailso02.liwest.at ([212.33.55.13]:16741 "EHLO
-	lilzmailso02.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752482AbYKUH7a (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 21 Nov 2008 02:59:30 -0500
-Received: from cm56-163-160.liwest.at ([86.56.163.160] helo=linz.eudaptics.com)
-	by lilzmailso02.liwest.at with esmtpa (Exim 4.69)
-	(envelope-from <j.sixt@viscovery.net>)
-	id 1L3QvB-00021s-BT; Fri, 21 Nov 2008 08:59:28 +0100
-Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.96])
-	by linz.eudaptics.com (Postfix) with ESMTP
-	id 2480BAFCC; Fri, 21 Nov 2008 08:59:21 +0100 (CET)
-User-Agent: Thunderbird 2.0.0.6 (Windows/20070728)
-In-Reply-To: <loom.20081121T024302-370@post.gmane.org>
-X-Enigmail-Version: 0.95.5
-X-Spam-Score: -1.4 (-)
-X-Spam-Report: Spam detection software, running on the system "lilzmailsa01.liwest.at", has
-	identified this incoming email as possible spam.  The original message
-	has been attached to this so you can view it (if it isn't spam) or label
-	similar future email.  If you have any questions, see
-	the administrator of that system for details.
-	Content preview:  Vasyl Vavrychuk schrieb: > Here is simple and restricted implementation
-	of mmap using CreateFileMapping, > MapViewOfFile. Thanks. Sign-off? Did you
-	notice any differences with this? Or is this change just because-we-can?
-	[...] 
-	Content analysis details:   (-1.4 points, 7.0 required)
-	pts rule name              description
-	---- ---------------------- --------------------------------------------------
-	-1.4 ALL_TRUSTED            Passed through trusted hosts only via SMTP
+	id S1752621AbYKUIn4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 21 Nov 2008 03:43:56 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752482AbYKUIn4
+	(ORCPT <rfc822;git-outgoing>); Fri, 21 Nov 2008 03:43:56 -0500
+Received: from nf-out-0910.google.com ([64.233.182.185]:20049 "EHLO
+	nf-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751769AbYKUInz (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 21 Nov 2008 03:43:55 -0500
+Received: by nf-out-0910.google.com with SMTP id d3so409847nfc.21
+        for <git@vger.kernel.org>; Fri, 21 Nov 2008 00:43:53 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to
+         :subject:cc:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:references;
+        bh=qiEpv/BrUrAxCpjPmj+DKyRhZhGVf58ozQ8qyYaj5Go=;
+        b=MQRaoxdVT/eiuqPOZsSg1DO7GI8edE5mwul+RXMFCzE6U+vhfUSZ+zXPL4YZsc8/IK
+         nRXycn5CrlwBcTsEpendYQ+uKOrdSzSNha9sqRECgbwvmBJh1AYR+DvgqXZd0S6PhaH8
+         OW6NrhCH+9niV7ZxZMD0od0w7VOj7i3inSP50=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
+         :content-type:content-transfer-encoding:content-disposition
+         :references;
+        b=ii//JjLpdj0ApsyC3fBzUnaLve/9FPnuBZu/GN9k4gM4rxAOii8a0MgQy85WEiW9vS
+         O8szybq7FW6W3AQeX4NJ8X6qJTsKF0Kwjq//q/Hhx+g9ETPX2erQyiRZCcyxYQ0QDoqv
+         Mbu+XgdOPG+mWujrHVlnq05Jcwml6NhE5mFF0=
+Received: by 10.210.121.8 with SMTP id t8mr246936ebc.180.1227257033204;
+        Fri, 21 Nov 2008 00:43:53 -0800 (PST)
+Received: by 10.210.10.2 with HTTP; Fri, 21 Nov 2008 00:43:52 -0800 (PST)
+In-Reply-To: <562019.27220.qm@web37908.mail.mud.yahoo.com>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/101500>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/101501>
 
-Vasyl Vavrychuk schrieb:
-> Here is simple and restricted implementation of mmap using CreateFileMapping, 
-> MapViewOfFile.
+On Fri, Nov 21, 2008 at 12:13 PM, Gary Yang <garyyang6@yahoo.com> wrote:
 
-Thanks. Sign-off?
+> git pull http://git.mycompany.com/pub/git/u-boot.git HEAD
+> fatal: http://git.mycompany.com/pub/git/u-boot.git/info/refs not found: did you run git update-server-info on the server?
+>
+> Below are related gitweb configs. What did I do wrong?
 
-Did you notice any differences with this? Or is this change just
-because-we-can?
+As the error message asks, did you run git update-server-info on the server?
 
-It doesn't pass the test suite, for example t5301-sliding-window.sh fails.
 
-> --- a/compat/mingw.c
-> +++ b/compat/mingw.c
-> @@ -994,3 +994,30 @@ void mingw_open_html(const char *unixpath)
->  	printf("Launching default browser to display HTML ...\n");
->  	ShellExecute(NULL, "open", htmlpath, NULL, "\\", 0);
->  }
-> +
-> +void *mingw_mmap(void *start, size_t length, int prot, int flags, int fd, 
-> off_t offset)
-> +{
-> +	HANDLE handle;
-> +
-> +	if (start != NULL || !(flags & MAP_PRIVATE))
-> +		die("Invalid usage of mingw_mmap");
-
-I tend to use this idiom:
-
-		return errno = EINVAL,
-			 error("Invalid usage of mingw_mmap");
-
-> +	if (offset % getpagesize() != 0)
-> +		die("Offset does not match the memory allocation granularity");
-
-This is dangerous. Because on MinGW getpagesize() is hard-coded to 0x1000.
-getpagesize() does not consult GetSystemInfo(). Just skip the check;
-MapViewOfFile() will report the error later anyway. Or better carefully
-compute a suitable offset and adjust the length accordingly.
-
-> +
-> +	handle = CreateFileMapping((HANDLE)_get_osfhandle(fd), NULL, 
-> PAGE_WRITECOPY,
-> +			0, 0, NULL);
-> +
-> +	if (handle != NULL) {
-> +		start = MapViewOfFile(handle, FILE_MAP_COPY, 0, offset, 
-> length);
-> +		CloseHandle(handle);
-> +	}
-> +
-> +	return start;
-
-Upon failure you should return MAP_FAILED, not NULL.
-
-> --- a/git-compat-util.h
-> +++ b/git-compat-util.h
-> @@ -175,10 +175,12 @@ static inline const char *skip_prefix(const char *str, 
-> const char *prefix)
->  #define MAP_FAILED ((void*)-1)
->  #endif
->  
-> +#ifndef __MINGW32__
->  #define mmap git_mmap
->  #define munmap git_munmap
->  extern void *git_mmap(void *start, size_t length, int prot, int flags, int fd, 
-> off_t offset);
->  extern int git_munmap(void *start, size_t length);
-> +#endif
->  
->  /* This value must be multiple of (pagesize * 2) */
->  #define DEFAULT_PACKED_GIT_WINDOW_SIZE (1 * 1024 * 1024)
-
-This is inside #ifdef NO_MMAP ... #else section. Isn't that a bit strange?
-I.e. we say NO_MMAP, but then we do have mmap() now?
-
--- Hannes
+Dave.
