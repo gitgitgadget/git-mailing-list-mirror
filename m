@@ -1,74 +1,81 @@
-From: Chris Frey <cdfrey@foursquare.net>
-Subject: Re: git-status for submodules
-Date: Fri, 21 Nov 2008 17:42:47 -0500
-Message-ID: <20081121224247.GB27049@foursquare.net>
-References: <20081120033615.GA21128@foursquare.net> <7vabbtqga8.fsf@gitster.siamese.dyndns.org>
+From: Baz <brian.ewins@gmail.com>
+Subject: Re: why no "git fetch --dry-run" ?
+Date: Fri, 21 Nov 2008 23:14:59 +0000
+Message-ID: <2faad3050811211514u1f3eb3deg7ae597a0328c981c@mail.gmail.com>
+References: <ee2a733e0811211341j1e49fad7o64577605951fa5c0@mail.gmail.com>
+	 <20081121221826.GM21815@genesis.frugalware.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Nov 21 23:44:55 2008
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: "Leo Razoumov" <slonik.az@gmail.com>,
+	"Git Mailing List" <git@vger.kernel.org>
+To: "Miklos Vajna" <vmiklos@frugalware.org>
+X-From: git-owner@vger.kernel.org Sat Nov 22 00:16:18 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1L3ek1-0008El-RO
-	for gcvg-git-2@gmane.org; Fri, 21 Nov 2008 23:44:46 +0100
+	id 1L3fEX-0001gt-Od
+	for gcvg-git-2@gmane.org; Sat, 22 Nov 2008 00:16:18 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754268AbYKUWna (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 21 Nov 2008 17:43:30 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754207AbYKUWna
-	(ORCPT <rfc822;git-outgoing>); Fri, 21 Nov 2008 17:43:30 -0500
-Received: from nic.NetDirect.CA ([216.16.235.2]:50513 "EHLO
-	rubicon.netdirect.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754198AbYKUWn3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 21 Nov 2008 17:43:29 -0500
-X-Originating-Ip: 216.16.235.2
-Received: from localhost (rubicon.netdirect.ca [216.16.235.2])
-	by rubicon.netdirect.ca (8.13.1/8.13.1) with ESMTP id mALMgmxB003937;
-	Fri, 21 Nov 2008 17:42:48 -0500
+	id S1752840AbYKUXPB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 21 Nov 2008 18:15:01 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753335AbYKUXPB
+	(ORCPT <rfc822;git-outgoing>); Fri, 21 Nov 2008 18:15:01 -0500
+Received: from rv-out-0506.google.com ([209.85.198.227]:31013 "EHLO
+	rv-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752361AbYKUXPA (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 21 Nov 2008 18:15:00 -0500
+Received: by rv-out-0506.google.com with SMTP id k40so1155852rvb.1
+        for <git@vger.kernel.org>; Fri, 21 Nov 2008 15:14:59 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to
+         :subject:cc:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:references;
+        bh=o3pawm7wwUYhHJ9bUH7HPgv41/rZ6WwDQJqpm+UYhGk=;
+        b=UJlNNUCIiWsQ8MegB26j0MW9F69EKozc5yGDoGI5BX5p44S3qIxO+uIyACYgL1rt+h
+         S13jqvTWl0R7CF1WlJWfwO89gs2YeFZq4btyiHWDXlEVX5m8DCBmaAtShxU/5ABFKw4B
+         SXm7ZOkl7LDYncg6WuzDjETc2nnF2bK3WfyCM=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
+         :content-type:content-transfer-encoding:content-disposition
+         :references;
+        b=l0CDuKWtpNlmlDlpPJWiMHuaAjgNRLlOpF0FEkhmVtgpYLYnWACD9YrPokud0bjUmV
+         Uu5Mat4iKxDQs3075kJW20fyPNt/zOHPchtGsiyX2HRrygMvp2qBxqNJBEqcJtC0ynK7
+         GP3bq5RNSgUg7+GyIoqRkiLcLS29M7R69b4Ws=
+Received: by 10.141.13.16 with SMTP id q16mr545313rvi.272.1227309299587;
+        Fri, 21 Nov 2008 15:14:59 -0800 (PST)
+Received: by 10.140.177.7 with HTTP; Fri, 21 Nov 2008 15:14:59 -0800 (PST)
+In-Reply-To: <20081121221826.GM21815@genesis.frugalware.org>
 Content-Disposition: inline
-In-Reply-To: <7vabbtqga8.fsf@gitster.siamese.dyndns.org>
-User-Agent: Mutt/1.4.1i
-X-Net-Direct-Inc-MailScanner-Information: Please contact the ISP for more information
-X-Net-Direct-Inc-MailScanner: Found to be clean
-X-Net-Direct-Inc-MailScanner-SpamCheck: not spam (whitelisted),
-	SpamAssassin (not cached, score=-16.8, required 5,
-	autolearn=not spam, ALL_TRUSTED -1.80, BAYES_00 -15.00)
-X-Net-Direct-Inc-MailScanner-From: <cdfrey@netdirect.ca>
-X-Spam-Status: No
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/101545>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/101546>
 
-On Fri, Nov 21, 2008 at 06:56:15AM -0800, Junio C Hamano wrote:
-> My understanding is that this is exactly by design.  The supermodule
-> tracks which commit in the subproject is bound to the tree location.
+2008/11/21 Miklos Vajna <vmiklos@frugalware.org>:
+> On Fri, Nov 21, 2008 at 04:41:57PM -0500, Leo Razoumov <slonik.az@gmail.com> wrote:
+>> I am curious why there is "git push --dry-run" and no "git fetch
+>> --dry-run" nor "git pull --dry-run". It would make sense to keep
+>> push/pull/fetch as symmetric as possible.
+>> For example, I just want to see which branches, if any, changed on a
+>> remote repository since my last fetch. "git fetch -v --dry-run" would
+>> be handy in this case.
+>
+> Actually fetch - at a core level - isn't symmetric to push, the protocol
+> is completely different. I haven't checked the source, but I suppose
+> that the push protocol has "dry run" support, while the fetch one
+> doesn't have.
+>
 
+I wrote the patch for "push --dry-run" because I was more worried
+about messing up the central repository (which I can't fix) than
+messing up my local repository (which I can). It just needed a few
+checks added to send-pack to make it work. I guess it's not been done
+for fetch yet because nobody had that itch, shouldn't be too hard to
+write. Certainly, other people have asked for it.
 
-> the submodule support is geared toward supporting this layout:
-> 
-> 	- "super" has a subproject X at "sub"
-> 
->         - When you do a real work on the subproject X, you do so as if
->           there is no supermodule.  IOW, subproject X has to be able to
->           stand on its own.
-
-It's true that subproject X has to be able to stand on its own.  That
-is important from git's perspective as well as for managing subprojects
-in general.
-
-But I don't see the advantage in hiding submodule information from the
-supermodule, and if that hiding is by design, I think the design is wrong.
-In order to manage the various modules effectively (actually, in order to
-manage any git repo effectively), you need to know what's changed,
-and git-status is the way to do that.  I don't see why submodules should
-break that.
-
-With the new submodule foreach command, though, it should be possible
-to add that as a config option, similar to the way submodule summary
-is handled now.  Maybe I can cook up a patch for that.
-
-- Chris
+-Baz
