@@ -1,50 +1,81 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH] git-send-email: provide hook to send lines more than
-	998 symbols
-Date: Fri, 21 Nov 2008 09:08:04 -0500
-Message-ID: <20081121140803.GA32323@coredump.intra.peff.net>
-References: <1227261564-13268-1-git-send-email-andy.shevchenko@gmail.com> <20081121115813.GB3747@sigill.intra.peff.net> <4926AE4E.5000604@drmicha.warpmail.net>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: git-status for submodules
+Date: Fri, 21 Nov 2008 06:56:15 -0800
+Message-ID: <7vabbtqga8.fsf@gitster.siamese.dyndns.org>
+References: <20081120033615.GA21128@foursquare.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Andy Shevchenko <andy.shevchenko@gmail.com>, git@vger.kernel.org
-To: Michael J Gruber <git@drmicha.warpmail.net>
-X-From: git-owner@vger.kernel.org Fri Nov 21 15:09:49 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Chris Frey <cdfrey@foursquare.net>
+X-From: git-owner@vger.kernel.org Fri Nov 21 15:57:51 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1L3WhQ-0007ux-15
-	for gcvg-git-2@gmane.org; Fri, 21 Nov 2008 15:09:32 +0100
+	id 1L3XSA-0003TH-8p
+	for gcvg-git-2@gmane.org; Fri, 21 Nov 2008 15:57:50 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753038AbYKUOIK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 21 Nov 2008 09:08:10 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752988AbYKUOIJ
-	(ORCPT <rfc822;git-outgoing>); Fri, 21 Nov 2008 09:08:09 -0500
-Received: from peff.net ([208.65.91.99]:2774 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752973AbYKUOII (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 21 Nov 2008 09:08:08 -0500
-Received: (qmail 29916 invoked by uid 111); 21 Nov 2008 14:08:06 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.32) with SMTP; Fri, 21 Nov 2008 09:08:06 -0500
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Fri, 21 Nov 2008 09:08:04 -0500
-Content-Disposition: inline
-In-Reply-To: <4926AE4E.5000604@drmicha.warpmail.net>
+	id S1753308AbYKUO4e (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 21 Nov 2008 09:56:34 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753292AbYKUO4e
+	(ORCPT <rfc822;git-outgoing>); Fri, 21 Nov 2008 09:56:34 -0500
+Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:53061 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751909AbYKUO4d (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 21 Nov 2008 09:56:33 -0500
+Received: from localhost.localdomain (unknown [127.0.0.1])
+	by b-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id C63611739A;
+	Fri, 21 Nov 2008 09:56:31 -0500 (EST)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES256-SHA (256/256 bits)) (No client certificate requested) by
+ b-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTPSA id 7158C1732A; Fri,
+ 21 Nov 2008 09:56:17 -0500 (EST)
+In-Reply-To: <20081120033615.GA21128@foursquare.net> (Chris Frey's message of
+ "Wed, 19 Nov 2008 22:36:15 -0500")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: 95635C8C-B7DC-11DD-A5E0-F83E113D384A-77302942!a-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/101530>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/101531>
 
-On Fri, Nov 21, 2008 at 01:49:18PM +0100, Michael J Gruber wrote:
+Chris Frey <cdfrey@foursquare.net> writes:
 
-> In fact it is documented in git-send-email.txt:
-> 
-> --[no-]validate::
->         Perform sanity checks on patches.
->         Currently, validation means the following:
+> I'm using git 1.6.0.4 and trying to make submodules work for me.  The
+> init/add/update steps are a bit tedious, but workable.  The problem I have
+> is when I make a change in a submodule, then git-status does not show
+> the change.
 
-Oh, right. Sorry, I stupidly looked at an older installed manpage
-instead of going right to the source. So yes, it is documented.
+My understanding is that this is exactly by design.  The supermodule
+tracks which commit in the subproject is bound to the tree location.
 
--Peff
+A mere act of changing something in the subproject directory is just a
+single, incomplete step to create a new commit in the subproject and will
+not be seen by the superproject's status.  Instead of this workflow:
+
+> 	cd super
+> 	vi newsuper
+> 	vi existing_file
+> 	cd sub
+> 	vi newsub
+> 	cd ..
+> 	git status
+
+the submodule support is geared toward supporting this layout:
+
+	- "super" has a subproject X at "sub"
+
+        - When you do a real work on the subproject X, you do so as if
+          there is no supermodule.  IOW, subproject X has to be able to
+          stand on its own.
+
+One extreme case is you have a(nother) clone of subproject X that is
+independent from "super", do the real work there and create new commit,
+and update the subproject X inside "super".  In such a workflow, "super"
+will never see an intermediate state between commits in the subproject
+directory.
+
+
+
+	
