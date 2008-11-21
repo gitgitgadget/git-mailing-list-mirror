@@ -1,78 +1,121 @@
-From: Rogan Dawes <lists@dawes.za.net>
-Subject: Re: What about allowing multiple hooks?
-Date: Fri, 21 Nov 2008 16:56:03 +0200
-Message-ID: <4926CC03.4000009@dawes.za.net>
-References: <20081121133828.GB5912@gmx.de>
+From: Michael J Gruber <git@drmicha.warpmail.net>
+Subject: Re: Bad git status performance
+Date: Fri, 21 Nov 2008 16:19:50 +0100
+Message-ID: <4926D196.3000301@drmicha.warpmail.net>
+References: <4926009E.4040203@gmx.ch> <c9e534200811201711y887ddd2t33013ec4a7db3c9a@mail.gmail.com> <4926ADB8.5000307@gmx.ch>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-To: Marc Weber <marco-oweber@gmx.de>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Nov 21 15:59:40 2008
+Cc: Glenn Griffin <ggriffin.kernel@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>,
+	Junio C Hamano <gitster@pobox.com>
+To: Jean-Luc Herren <jlh@gmx.ch>
+X-From: git-owner@vger.kernel.org Fri Nov 21 16:21:16 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1L3XTu-0004FP-L5
-	for gcvg-git-2@gmane.org; Fri, 21 Nov 2008 15:59:39 +0100
+	id 1L3Xol-0005Ci-El
+	for gcvg-git-2@gmane.org; Fri, 21 Nov 2008 16:21:11 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752998AbYKUO6S (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 21 Nov 2008 09:58:18 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753358AbYKUO6R
-	(ORCPT <rfc822;git-outgoing>); Fri, 21 Nov 2008 09:58:17 -0500
-Received: from hapkido.dreamhost.com ([66.33.216.122]:35776 "EHLO
-	hapkido.dreamhost.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752973AbYKUO6R (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 21 Nov 2008 09:58:17 -0500
-Received: from spunkymail-a17.g.dreamhost.com (sd-green-bigip-202.dreamhost.com [208.97.132.202])
-	by hapkido.dreamhost.com (Postfix) with ESMTP id 7BB62196BFA
-	for <git@vger.kernel.org>; Fri, 21 Nov 2008 06:58:16 -0800 (PST)
-Received: from [192.168.201.100] (dsl-243-208-159.telkomadsl.co.za [41.243.208.159])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by spunkymail-a17.g.dreamhost.com (Postfix) with ESMTP id A8B59733DC;
-	Fri, 21 Nov 2008 06:56:43 -0800 (PST)
-User-Agent: Thunderbird 2.0.0.17 (Windows/20080914)
-In-Reply-To: <20081121133828.GB5912@gmx.de>
+	id S1753867AbYKUPT4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 21 Nov 2008 10:19:56 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753859AbYKUPT4
+	(ORCPT <rfc822;git-outgoing>); Fri, 21 Nov 2008 10:19:56 -0500
+Received: from out1.smtp.messagingengine.com ([66.111.4.25]:40268 "EHLO
+	out1.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1753487AbYKUPTz (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 21 Nov 2008 10:19:55 -0500
+Received: from compute1.internal (compute1.internal [10.202.2.41])
+	by out1.messagingengine.com (Postfix) with ESMTP id 817361C650B;
+	Fri, 21 Nov 2008 10:19:54 -0500 (EST)
+Received: from heartbeat1.messagingengine.com ([10.202.2.160])
+  by compute1.internal (MEProxy); Fri, 21 Nov 2008 10:19:54 -0500
+X-Sasl-enc: ubFgbopLziwhpjPNKy2eH2AcHhoFKc61T1IbIfWlzWVT 1227280794
+Received: from [139.174.44.12] (whitehead.math.tu-clausthal.de [139.174.44.12])
+	by mail.messagingengine.com (Postfix) with ESMTPSA id 9ADF85788;
+	Fri, 21 Nov 2008 10:19:53 -0500 (EST)
+User-Agent: Thunderbird 2.0.0.18 (X11/20081105)
+In-Reply-To: <4926ADB8.5000307@gmx.ch>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/101532>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/101533>
 
-Marc Weber wrote:
-> Use case:
+Jean-Luc Herren venit, vidit, dixit 21.11.2008 13:46:
+> Glenn Griffin wrote:
+>> On Thu, Nov 20, 2008 at 4:28 PM, Jean-Luc Herren <jlh@gmx.ch> wrote:
+>>> The first 'git status' shows the same difference as the second,
+>>> just the second time it's staged instead of unstaged.  Why does it
+>>> take 16 seconds the second time when it's instant the first time?
+>> I believe the two runs of git status need to do very different things.
+>>  When run the first time, git knows the files in your working
+>> directory are not in the index so it can easily say those files are
+>> 'Changed but not updated' just from their existence.
 > 
-> I've been reading parts of the topGit code. And it does make for it to
-> add its own checks. However having to change the existing scripts
-> insterting a call to the tg hooks isn't the best way.
-> Why? one is using #/bin/sh the next is using #/bin/ruby maybe..
+> I might be mistaken about how the index works, but those paths
+> *are* in the index at that time.  They just have the old content,
+> i.e. the same content as in HEAD.  When HEAD == index, then
+> nothing is staged.
 > 
-> So what about allowing (or even enforcing) ths directory layout?
+> But the presence of those files alone doesn't tell you that they
+> have changed.  You have to look at the content and compare it to
+> the index (== HEAD in this situation) to see whether they have
+> changed or not and for some reason git can do this very quickly.
 > 
-> .git/hooks/pre-commit/hook1.sh
-> .git/hooks/pre-commit/hook2.sh
-> .git/hooks/pre-commit/topGitcheck.sh
+>> The second run
+>> those files do exist in both the index and the working directory, so
+>> git status first shows the files that are 'Changes to be committed'
+>> and that should be fast, but additionally git status will check to see
+>> if those files in your working directory have changed since you added
+>> them to the index.
+> 
+> Which is basically the same comparision as above, just it turns
+> out that they have not changed.  But even then, we're talking
+> about comparing a 1 byte file in the index to a 1 byte file in the
+> work tree.  That doesn't take 16 seconds, even for 100 files.
+> 
+> So this makes me believe it's the first step (comparing HEAD to
+> the index to show staged changes) that is slow.  And when you
+> compare a 1MB file to a 1 byte file, you don't need to read all of
+> the big file, you can tell they're not the same right after the
+> first byte.  (Even an doing stat() is enough, since the size is
+> not the same.)
+> 
+> Another thing that came to my mind is maybe rename detection kicks
+> in, even though no path vanished and none is new.  I believe
+> rename detection doesn't happen for unstaged changes, which might
+> explain the difference in speed.
+> 
+> btw, I forgot to mention that I get this with branches maint,
+> master, next and pu.
 
-I second Martin's suggestion, that you implement:
+Interestingly, all of
 
-.git/hooks/pre-commit
-.git/hooks/pre-commit.d/hook1.sh
+git diff --stat
+git diff --stat --cached
+git diff --stat HEAD
 
-where hooks/pre-commit is e.g. a shell script much like the init scripts 
-that iterate over the executables in the corresponding .d/ directory, 
-and execute them one at a time. Basing your script on initscripts will 
-likely save you some time, since they have already considered things 
-like script ordering, backups, etc.
+are "fast" (0.2s or so), i.e. diffing index-wtree, HEAD-index,
+HEAD-wtree. Linus' threaded stat doesn't help either for status, btw (20s).
 
-I'm also inclined to think that this is likely to be a local 
-customisation, because you need to decide what makes sense in your 
-context, aborting if a script exits with a non-zero result, or 
-continuing to see if the next script manages to exit with a zero result.
+Experimenting further: Using 10 files with 10MB each (rather than 100
+times 1MB) brings down the time by a factor 10 roughly - and so does
+using 100 files with 100k each. Huh? Latter may be expected (10MB
+total), but former (100MB total)?
 
-e.g. in the pre-commit case, it *probably* makes sense to allow any 
-script to abort the commit, but your site-specific requirements might be 
-that all hooks must fail to abort the commit.
+Now it's getting funny: Changing your "echo >" to "echo ">>" (in your
+100 files 1MB case) makes things "almost fast" again (1.3s).
 
-Regards,
+OK, it's "use the source, Luke" time... Actually the part you don't see
+takes the most time:
+wt_status_print_updated()
 
-Rogan
+And in fact I can confirm your suspicion: wt_status_print_updated()
+enforces rename detection (ignoring any config). Forcing it off
+(rev.diffopt.detect_rename = 0;) cuts down the 20s to 0.75s.
+
+How about a config option status.renames (or something like -M) for status?
+
+Michael
