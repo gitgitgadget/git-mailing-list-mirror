@@ -1,69 +1,90 @@
-From: "Andy Shevchenko" <andy.shevchenko@gmail.com>
-Subject: Re: [PATCH] git-send-email: provide hook to send lines more than 998 symbols
-Date: Fri, 21 Nov 2008 15:29:34 +0200
-Message-ID: <5ec8ebd50811210529q3b97c977y5d880502aa111e3c@mail.gmail.com>
-References: <1227261564-13268-1-git-send-email-andy.shevchenko@gmail.com>
-	 <20081121115813.GB3747@sigill.intra.peff.net>
-	 <4926AE4E.5000604@drmicha.warpmail.net>
+From: Marc Weber <marco-oweber@gmx.de>
+Subject: What about allowing multiple hooks?
+Date: Fri, 21 Nov 2008 14:38:28 +0100
+Message-ID: <20081121133828.GB5912@gmx.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: "Jeff King" <peff@peff.net>, git@vger.kernel.org
-To: "Michael J Gruber" <git@drmicha.warpmail.net>
-X-From: git-owner@vger.kernel.org Fri Nov 21 14:30:52 2008
+Content-Type: text/plain; charset=utf-8
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Nov 21 14:40:05 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1L3W5z-0001Fr-UT
-	for gcvg-git-2@gmane.org; Fri, 21 Nov 2008 14:30:52 +0100
+	id 1L3WEj-0004fw-RG
+	for gcvg-git-2@gmane.org; Fri, 21 Nov 2008 14:39:54 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753382AbYKUN3h (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 21 Nov 2008 08:29:37 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753358AbYKUN3h
-	(ORCPT <rfc822;git-outgoing>); Fri, 21 Nov 2008 08:29:37 -0500
-Received: from nf-out-0910.google.com ([64.233.182.186]:1967 "EHLO
-	nf-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753143AbYKUN3g (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 21 Nov 2008 08:29:36 -0500
-Received: by nf-out-0910.google.com with SMTP id d3so460118nfc.21
-        for <git@vger.kernel.org>; Fri, 21 Nov 2008 05:29:34 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to
-         :subject:cc:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:references;
-        bh=szPB85mNf0PnVhKdFMD6OaTvMfkpqZkZttamUW3M5zI=;
-        b=FrFyIacZr93VvPTozbnNgj6a0o4G62E22k1wjhA7LQWhx9K1Q3eEsbL+S9LICQi8ld
-         LN/dea2NtO0PygrRIOpcXqVyyPVjGfe8q+ZEPL8x2U9QjCQ+C+qbU5PYczwtM43Ze1fO
-         RGT47t3gKoitsuCPXBXUrQ2YKzmPjdYUAfJSU=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
-         :content-type:content-transfer-encoding:content-disposition
-         :references;
-        b=uglTSRnsDLdr2NhQilOdBwRmtCiecJtoyDiN/HZA/EV1v7FS4mtP/0blwMxcd/kXqJ
-         2IO8dmLyXJm2KhKRwEILtUIYY6vVd+MFUWhHUtb4B5euycWmK9Lkx0dM+plTwGMPSQJx
-         1SxBYmcYW64pcleYhJtZ9BVcaGWf7Z2gchYGE=
-Received: by 10.210.123.2 with SMTP id v2mr597460ebc.0.1227274174553;
-        Fri, 21 Nov 2008 05:29:34 -0800 (PST)
-Received: by 10.210.54.12 with HTTP; Fri, 21 Nov 2008 05:29:34 -0800 (PST)
-In-Reply-To: <4926AE4E.5000604@drmicha.warpmail.net>
+	id S1753143AbYKUNid (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 21 Nov 2008 08:38:33 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753135AbYKUNic
+	(ORCPT <rfc822;git-outgoing>); Fri, 21 Nov 2008 08:38:32 -0500
+Received: from mail.gmx.net ([213.165.64.20]:33087 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1753113AbYKUNib (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 21 Nov 2008 08:38:31 -0500
+Received: (qmail invoked by alias); 21 Nov 2008 13:38:28 -0000
+Received: from pD9E09E33.dip.t-dialin.net (EHLO nixos) [217.224.158.51]
+  by mail.gmx.net (mp053) with SMTP; 21 Nov 2008 14:38:28 +0100
+X-Authenticated: #9006135
+X-Provags-ID: V01U2FsdGVkX19hvDIBwzphjGeNeKnSga2HxUsd7CvSGNNI4vqjOP
+	XC2lXKR0qI/kS4
+Received: by nixos (sSMTP sendmail emulation); Fri, 21 Nov 2008 14:38:28 +0100
+Mail-Followup-To: Marc Weber <marco-oweber@gmx.de>, git@vger.kernel.org
 Content-Disposition: inline
+User-Agent: Mutt/1.5.15 (2007-04-06)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.71
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/101526>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/101527>
 
-On Fri, Nov 21, 2008 at 2:49 PM, Michael J Gruber
-<git@drmicha.warpmail.net> wrote:
-> In fact it is documented in git-send-email.txt:
-> --[no-]validate::
-That is I found just after I have sent the first email.
+Use case:
 
-P.S. Thanks for all, patch is wrong.
+I've been reading parts of the topGit code. And it does make for it to
+add its own checks. However having to change the existing scripts
+insterting a call to the tg hooks isn't the best way.
+Why? one is using #/bin/sh the next is using #/bin/ruby maybe..
 
--- 
-With Best Regards,
-Andy Shevchenko
+So what about allowing (or even enforcing) ths directory layout?
+
+.git/hooks/pre-commit/hook1.sh
+.git/hooks/pre-commit/hook2.sh
+.git/hooks/pre-commit/topGitcheck.sh
+
+instead of
+.git/hooks/pre-commit # <- the one and only pre-commit hook
+
+so that all can be run in squence?
+
+This way you can keep the original git sample files and update them
+while adding you very own checks more easily.
+
+But maybe this isn't the best choice either and the way to go is
+
+.git/hooks/list-of-hook-directories # eg containing ".git/hooks/samples\n.git/hooks/topgit" ?
+
+.git/hooks/sample/<all the sample hook files>
+.git/hooks/topgit/pro-commit
+
+?
+
+Then you can actually link in your own personal check script directories
+easily *and* you can add them to the repository eg by using
+comitted-repo-hooks instead of .git/hooks
+?
+This way you could provide different hook directories for different
+platforms and all you have to do is enabling them by adding the path to
+.git/list-of-hook-directories ?
+
+I guess the second approach of defining kind of overlays is better
+because it doesn't interfer with the existiing scheme?
+Maybe it should be implemented as git config option instead of a file
+containing the list of directories?
+
+The hook direcotry list apporach is better because you've more control
+about order of execution..
+
+Thoughts?
+
+Marc Weber
