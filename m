@@ -1,100 +1,103 @@
-From: Gary Yang <garyyang6@yahoo.com>
-Subject: Cannot git pull using http from my git.mycompany.com
-Date: Thu, 20 Nov 2008 17:13:06 -0800 (PST)
-Message-ID: <562019.27220.qm@web37908.mail.mud.yahoo.com>
-Reply-To: garyyang6@yahoo.com
+From: paulfred <paul.fredrickson@gmail.com>
+Subject: Re: git-svn confused by "empty" (svn prop change) commit
+Date: Thu, 20 Nov 2008 17:30:17 -0800
+Message-ID: <m23ahlj26u.fsf@gmail.com>
+References: <m28wrfhz17.fsf@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Nov 21 02:14:40 2008
+X-From: git-owner@vger.kernel.org Fri Nov 21 02:33:07 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1L3KbV-0006Hl-Us
-	for gcvg-git-2@gmane.org; Fri, 21 Nov 2008 02:14:38 +0100
+	id 1L3KtN-0002Iz-9J
+	for gcvg-git-2@gmane.org; Fri, 21 Nov 2008 02:33:05 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754872AbYKUBNL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 20 Nov 2008 20:13:11 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752927AbYKUBNK
-	(ORCPT <rfc822;git-outgoing>); Thu, 20 Nov 2008 20:13:10 -0500
-Received: from web37908.mail.mud.yahoo.com ([209.191.91.170]:37588 "HELO
-	web37908.mail.mud.yahoo.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with SMTP id S1753137AbYKUBNJ (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 20 Nov 2008 20:13:09 -0500
-Received: (qmail 27979 invoked by uid 60001); 21 Nov 2008 01:13:06 -0000
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-  s=s1024; d=yahoo.com;
-  h=X-YMail-OSG:Received:X-Mailer:Date:From:Reply-To:Subject:To:MIME-Version:Content-Type:Message-ID;
-  b=5HEhLKSo9dvIw2FbN8LHto3T6V1vYjcDY+hNmGQxWw57MRxQrWNiLr4rTLEMh/ZB9rmE2obRPWG03C1QaY+dKP+Eu/UF0daGKq8Peu0cDFxiWgsajlJOEmDdFj90Waor7A+P9FBCBRi3HPo4tdWy7vyrG29b5L3mSUbJgPMY/nA=;
-X-YMail-OSG: 4rR9Q7wVM1nba44JSbBIHlNYZYAmWfq3FSCcvWq9vPOnc6DVNCI1sl39CXpDLneF_Y3aHTUrF.pD1TUcy.GYz2935oVF5Ax_ufrWefumzjDZDv9NAGxVKnVB0Ru1RmERl1VYvCBobFDYSFvG0CM5.5zF_9fvaf9QBcha3q2XRTA3H8.LNc7lh3G9UI79
-Received: from [76.195.33.70] by web37908.mail.mud.yahoo.com via HTTP; Thu, 20 Nov 2008 17:13:06 PST
-X-Mailer: YahooMailWebService/0.7.260.1
+	id S1752138AbYKUBbp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 20 Nov 2008 20:31:45 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752132AbYKUBbo
+	(ORCPT <rfc822;git-outgoing>); Thu, 20 Nov 2008 20:31:44 -0500
+Received: from main.gmane.org ([80.91.229.2]:58780 "EHLO ciao.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752027AbYKUBbo (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 20 Nov 2008 20:31:44 -0500
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1L3Krz-00036k-G8
+	for git@vger.kernel.org; Fri, 21 Nov 2008 01:31:39 +0000
+Received: from dhcp39016.vcd.hp.com ([15.252.39.16])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Fri, 21 Nov 2008 01:31:39 +0000
+Received: from paul.fredrickson by dhcp39016.vcd.hp.com with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Fri, 21 Nov 2008 01:31:39 +0000
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@ger.gmane.org
+X-Gmane-NNTP-Posting-Host: dhcp39016.vcd.hp.com
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.1.91 (darwin)
+Cancel-Lock: sha1:Nw7Lank+x1Tn5e8HT7wpdImeq38=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/101491>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/101492>
 
+paulfred <paul.fredrickson@gmail.com> writes:
+>
+> Other (perhaps important) details: I created the repository several months
+> ago,and only recently put "[svn] noMetadata = true" in my config file because
+> I'm the only person on the team using git, and nobody else wanted to see the
+> git-svn-id messages.
+>
 
-git pull http://git.mycompany.com/pub/git/u-boot.git HEAD
-fatal: http://git.mycompany.com/pub/git/u-boot.git/info/refs not found: did you run git update-server-info on the server?
+Okay, I see that I missed in the documentation where it says setting noMetadata
+"must be done *before* any history is imported and these settings should never
+be changed once they are set.  User error.
 
-Below are related gitweb configs. What did I do wrong?
+>
+> I suppose I could nuke everything and clone another shallow copy of the code
+> from some point after the bad commit, but I'd be happy with any kind of
+> work around that gets me dcommitting again.
+>
 
+So, that is what I tried to do today, only it doesn't appear to work either!
+Here's what I tried in more detail:
 
-httpd.confg
+$ git svn init -T http://project.com/svn/trunk project --no-metadata
 
-<VirtualHost 10.66.4.168>
-    ServerName svdcgit01
-     DocumentRoot /pub/git
-     <Directory /var/www/cgi-bin>
-          Allow from all
-          AllowOverride all
-          Order allow,deny
-          Options ExecCGI
-          <Files gitweb.cgi>
-               SetHandler cgi-script
-          </Files>
-     </Directory>
-     DirectoryIndex /cgi-bin/gitweb.cgi
-     SetEnv  GITWEB_CONFIG  /etc/gitweb.conf
-#       RewriteEngine on
-#       RewriteRule ^/(.*\.git/(?!/?(HEAD|info|objects|refs)).*)?$ /cgi-bin/gitweb.cgi%{REQUEST_URI}  [L,PT]
+Then I edited my config to look like this:
 
+[svn-remote "svn"]
+            noMetadata = 1
+            url = http://project.com/svn
+            fetch = trunk/dev:refs/remotes/trunk
 
-cat /etc/gitweb.conf
-# path to git projects (<project>.git)
-$projectroot = "/pub/git";
+only changing the fetch line (I don't want to track web pages, etc. which
+are also under trunk).  Followed by:
 
-# directory to use for temp files
-$git_temp = "/tmp";
+$ git svn fetch --revision 1156
+$ git svn fetch
+  (now it actually pulls everything since 1156 and checks out master)
+  [hack, hack, hack]
+$ git svn rebase
+Unable to determine upstream SVN information from working tree history
 
-# target of the home link on top of all pages
-$home_link = $my_uri;
+at which point I realize I am probably screwed.  But I try it anyway,
+since svn tells me no one else has checked anything in yet:
 
-# html text to include at home page
-$home_text = "indextext.html";
+$ git svn dcommit
+Unable to determine upstream SVN information from HEAD history.
+Perhaps the repository is empty. at /usr/local/libexec/git-core/git-svn line 435.
 
-# file with project list; by default, simply scan the projectroot dir.
-$projects_list = $projectroot;
+So apparently my problem is NOT the empty commit at all, but trying to use
+noMetadata.  I am surprised that it fails on a fresh download though. Is there
+something I might have done while hacking that would cause git-svn to lose
+track of trunk again?  Is my only option to convince everyone to ignore
+the "noise" in my comments?
 
-# stylesheet to use
-$stylesheet = "/gitweb/gitweb.css";
+Thanks,
 
-# logo to use
-#$logo = "/git-logo.png";
-$logo = "/gitweb/git-logo.png";
+--Paul
 
-# the 'favicon'
-$favicon = "/gitweb/git-favicon.png";
-
-$projects_list_description_width = 60;
-#$feature{'pathinfo'}{'default'} = [1];
-
-
-
-
-
-
-      
+ 
