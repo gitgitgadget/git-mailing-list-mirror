@@ -1,90 +1,100 @@
-From: Marc Weber <marco-oweber@gmx.de>
-Subject: What about allowing multiple hooks?
-Date: Fri, 21 Nov 2008 14:38:28 +0100
-Message-ID: <20081121133828.GB5912@gmx.de>
+From: martin f krafft <madduck@madduck.net>
+Subject: Re: What about allowing multiple hooks?
+Date: Fri, 21 Nov 2008 14:55:07 +0100
+Message-ID: <20081121135507.GA24516@piper.oerlikon.madduck.net>
+References: <20081121133828.GB5912@gmx.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Nov 21 14:40:05 2008
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="a8Wt8u1KmwUX3Y2C"
+To: Marc Weber <marco-oweber@gmx.de>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Nov 21 14:56:43 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1L3WEj-0004fw-RG
-	for gcvg-git-2@gmane.org; Fri, 21 Nov 2008 14:39:54 +0100
+	id 1L3WUt-0002aW-9X
+	for gcvg-git-2@gmane.org; Fri, 21 Nov 2008 14:56:35 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753143AbYKUNid (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 21 Nov 2008 08:38:33 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753135AbYKUNic
-	(ORCPT <rfc822;git-outgoing>); Fri, 21 Nov 2008 08:38:32 -0500
-Received: from mail.gmx.net ([213.165.64.20]:33087 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1753113AbYKUNib (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 21 Nov 2008 08:38:31 -0500
-Received: (qmail invoked by alias); 21 Nov 2008 13:38:28 -0000
-Received: from pD9E09E33.dip.t-dialin.net (EHLO nixos) [217.224.158.51]
-  by mail.gmx.net (mp053) with SMTP; 21 Nov 2008 14:38:28 +0100
-X-Authenticated: #9006135
-X-Provags-ID: V01U2FsdGVkX19hvDIBwzphjGeNeKnSga2HxUsd7CvSGNNI4vqjOP
-	XC2lXKR0qI/kS4
-Received: by nixos (sSMTP sendmail emulation); Fri, 21 Nov 2008 14:38:28 +0100
-Mail-Followup-To: Marc Weber <marco-oweber@gmx.de>, git@vger.kernel.org
+	id S1753245AbYKUNzU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 21 Nov 2008 08:55:20 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753135AbYKUNzU
+	(ORCPT <rfc822;git-outgoing>); Fri, 21 Nov 2008 08:55:20 -0500
+Received: from clegg.madduck.net ([193.242.105.96]:36726 "EHLO
+	clegg.madduck.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753113AbYKUNzT (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 21 Nov 2008 08:55:19 -0500
+Received: from wall.oerlikon.madduck.net (wall.oerlikon.madduck.net [IPv6:2001:41e0:ff12::1])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(Client CN "wall.oerlikon.madduck.net", Issuer "CAcert Class 3 Root" (verified OK))
+	by clegg.madduck.net (postfix) with ESMTPS id C18C11D40A9;
+	Fri, 21 Nov 2008 14:55:09 +0100 (CET)
+Received: from piper.oerlikon.madduck.net (piper.oerlikon.madduck.net [IPv6:2001:41e0:ff12:0:211:2fff:fe6b:c869])
+	by wall.oerlikon.madduck.net (Postfix) with ESMTP id E90FF9F355;
+	Fri, 21 Nov 2008 14:55:07 +0100 (CET)
+Received: by piper.oerlikon.madduck.net (Postfix, from userid 1000)
+	id 4998645F5; Fri, 21 Nov 2008 14:55:07 +0100 (CET)
 Content-Disposition: inline
-User-Agent: Mutt/1.5.15 (2007-04-06)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.71
+In-Reply-To: <20081121133828.GB5912@gmx.de>
+X-Motto: Keep the good times rollin'
+X-OS: Debian GNU/Linux lenny/sid kernel 2.6.26-1-amd64 x86_64
+X-Spamtrap: madduck.bogus@madduck.net
+X-Subliminal-Message: debian/rules!
+User-Agent: Mutt/1.5.18 (2008-05-17)
+X-Virus-Scanned: ClamAV 0.94.1/8659/Fri Nov 21 13:49:26 2008 on clegg.madduck.net
+X-Virus-Status: Clean
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/101527>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/101528>
 
-Use case:
 
-I've been reading parts of the topGit code. And it does make for it to
-add its own checks. However having to change the existing scripts
-insterting a call to the tg hooks isn't the best way.
-Why? one is using #/bin/sh the next is using #/bin/ruby maybe..
+--a8Wt8u1KmwUX3Y2C
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-So what about allowing (or even enforcing) ths directory layout?
+also sprach Marc Weber <marco-oweber@gmx.de> [2008.11.21.1438 +0100]:
+> So what about allowing (or even enforcing) ths directory layout?
+>=20
+> .git/hooks/pre-commit/hook1.sh
+> .git/hooks/pre-commit/hook2.sh
+> .git/hooks/pre-commit/topGitcheck.sh
+>=20
+> instead of
+> .git/hooks/pre-commit # <- the one and only pre-commit hook
 
-.git/hooks/pre-commit/hook1.sh
-.git/hooks/pre-commit/hook2.sh
-.git/hooks/pre-commit/topGitcheck.sh
+If you do this, I strongly suggest .git/hooks/pre-commit.d, and to
+use .git/hooks/pre-commit to invoke it, which adds to transparency.
+Debian does this all over the place. You need to ignore backup files
+and/or only execute *.hook files, to be able to have other files in
+there. Or the +x flag, as it is used now.
 
-instead of
-.git/hooks/pre-commit # <- the one and only pre-commit hook
+> The hook direcotry list apporach is better because you've more
+> control about order of execution..
 
-so that all can be run in squence?
+It's also way more transparent and natural.
 
-This way you can keep the original git sample files and update them
-while adding you very own checks more easily.
+--=20
+martin | http://madduck.net/ | http://two.sentenc.es/
+=20
+"america may be unique in being a country which has leapt
+ from barbarism to decadence without touching civilization."
+                                                        -- john o'hara
+=20
+spamtraps: madduck.bogus@madduck.net
 
-But maybe this isn't the best choice either and the way to go is
+--a8Wt8u1KmwUX3Y2C
+Content-Type: application/pgp-signature; name="digital_signature_gpg.asc"
+Content-Description: Digital signature (see http://martin-krafft.net/gpg/)
+Content-Disposition: inline
 
-.git/hooks/list-of-hook-directories # eg containing ".git/hooks/samples\n.git/hooks/topgit" ?
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.9 (GNU/Linux)
 
-.git/hooks/sample/<all the sample hook files>
-.git/hooks/topgit/pro-commit
+iEYEARECAAYFAkkmvbsACgkQIgvIgzMMSnW78gCdFmX/qKzfRf/XP2U32wUrdpQy
+zD0An0mrjbzy+mwYH0yFBfBSPiemrs0g
+=M5I7
+-----END PGP SIGNATURE-----
 
-?
-
-Then you can actually link in your own personal check script directories
-easily *and* you can add them to the repository eg by using
-comitted-repo-hooks instead of .git/hooks
-?
-This way you could provide different hook directories for different
-platforms and all you have to do is enabling them by adding the path to
-.git/list-of-hook-directories ?
-
-I guess the second approach of defining kind of overlays is better
-because it doesn't interfer with the existiing scheme?
-Maybe it should be implemented as git config option instead of a file
-containing the list of directories?
-
-The hook direcotry list apporach is better because you've more control
-about order of execution..
-
-Thoughts?
-
-Marc Weber
+--a8Wt8u1KmwUX3Y2C--
