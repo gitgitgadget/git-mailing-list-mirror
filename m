@@ -1,70 +1,88 @@
-From: Jean-Luc Herren <jlh@gmx.ch>
-Subject: Re: Bad git status performance
-Date: Fri, 21 Nov 2008 21:07:16 +0100
-Message-ID: <492714F4.1090807@gmx.ch>
-References: <4926009E.4040203@gmx.ch> <c9e534200811201711y887ddd2t33013ec4a7db3c9a@mail.gmail.com> <4926ADB8.5000307@gmx.ch> <4926D196.3000301@drmicha.warpmail.net>
+From: "Bryan Donlan" <bdonlan@gmail.com>
+Subject: Re: [PATCH] mmap implementation for mingw.
+Date: Fri, 21 Nov 2008 15:25:58 -0500
+Message-ID: <3e8340490811211225g6e479dcbyeeb793eb0f825441@mail.gmail.com>
+References: <loom.20081121T024302-370@post.gmane.org>
+	 <49266A59.4010404@viscovery.net> <gg5t5s$qc8$1@ger.gmane.org>
+	 <alpine.DEB.1.00.0811211143550.30769@pacific.mpi-cbg.de>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-Cc: Glenn Griffin <ggriffin.kernel@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>,
-	Junio C Hamano <gitster@pobox.com>
-To: Michael J Gruber <git@drmicha.warpmail.net>
-X-From: git-owner@vger.kernel.org Fri Nov 21 21:08:39 2008
+Cc: "Vasyl' Vavrychuk" <vvavrychuk@gmail.com>, git@vger.kernel.org,
+	"Johannes Sixt" <j.sixt@viscovery.net>
+To: "Johannes Schindelin" <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Fri Nov 21 21:27:18 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1L3cIu-0005XM-GA
-	for gcvg-git-2@gmane.org; Fri, 21 Nov 2008 21:08:36 +0100
+	id 1L3cay-0003XM-2W
+	for gcvg-git-2@gmane.org; Fri, 21 Nov 2008 21:27:16 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754017AbYKUUHV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 21 Nov 2008 15:07:21 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753855AbYKUUHV
-	(ORCPT <rfc822;git-outgoing>); Fri, 21 Nov 2008 15:07:21 -0500
-Received: from mail.gmx.net ([213.165.64.20]:58116 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1753786AbYKUUHU (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 21 Nov 2008 15:07:20 -0500
-Received: (qmail invoked by alias); 21 Nov 2008 20:07:17 -0000
-Received: from 74-186.0-85.cust.bluewin.ch (EHLO [192.168.123.204]) [85.0.186.74]
-  by mail.gmx.net (mp006) with SMTP; 21 Nov 2008 21:07:17 +0100
-X-Authenticated: #14737133
-X-Provags-ID: V01U2FsdGVkX1+qJkIIGOWqzg7Mu6JlgCYgJL+5/uk80hY+YZiMmJ
-	jG8nleAjsxV1E8
-User-Agent: Thunderbird 2.0.0.17 (X11/20080928)
-In-Reply-To: <4926D196.3000301@drmicha.warpmail.net>
-X-Enigmail-Version: 0.95.7
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.64
+	id S1754534AbYKUU0A (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 21 Nov 2008 15:26:00 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754532AbYKUU0A
+	(ORCPT <rfc822;git-outgoing>); Fri, 21 Nov 2008 15:26:00 -0500
+Received: from qw-out-2122.google.com ([74.125.92.27]:38249 "EHLO
+	qw-out-2122.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752635AbYKUUZ7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 21 Nov 2008 15:25:59 -0500
+Received: by qw-out-2122.google.com with SMTP id 3so214242qwe.37
+        for <git@vger.kernel.org>; Fri, 21 Nov 2008 12:25:58 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to
+         :subject:cc:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:references;
+        bh=4C8NYYmO8xbO4y1CCS0FRpaicaMIxKmSFhdRffpuHBA=;
+        b=xUQ0XQl/PlW+3pZNzbGypJBRuw5S7OPt/eil6juMpv9cMoSiMuzu+DGr0mD3VBlLy9
+         3S7MHNzZ3GrsGXlj8YXbrWQimtPM7cUa/WNSSkCAvO9XDnMwEWZnrAni5zxkJvkgpzPE
+         jizzLXUIciVWTV7xmlL/zlhn4DOs7x9JpTtbw=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
+         :content-type:content-transfer-encoding:content-disposition
+         :references;
+        b=nHH2Oo6oWc3YrW+UUHMXKJvQc8w7D28AzUZlwU2cTqmaIvjHzWCoSSEAwmNytVkC6C
+         Y0tziIi/ha4A7M4daI12PbA9HfomWjHVKVUENu6ylQX9bbWttbdarVDx1BXz30sL1Pd0
+         Tyq2PYzI2ZKNTfVgBLzwe9ehZ6KbjsINFItaQ=
+Received: by 10.214.26.17 with SMTP id 17mr866378qaz.54.1227299158693;
+        Fri, 21 Nov 2008 12:25:58 -0800 (PST)
+Received: by 10.214.215.5 with HTTP; Fri, 21 Nov 2008 12:25:58 -0800 (PST)
+In-Reply-To: <alpine.DEB.1.00.0811211143550.30769@pacific.mpi-cbg.de>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/101539>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/101540>
 
-Michael J Gruber wrote:
-> Experimenting further: Using 10 files with 10MB each (rather than 100
-> times 1MB) brings down the time by a factor 10 roughly - and so does
-> using 100 files with 100k each. Huh? Latter may be expected (10MB
-> total), but former (100MB total)?
+On Fri, Nov 21, 2008 at 5:48 AM, Johannes Schindelin
+<Johannes.Schindelin@gmx.de> wrote:
+> Hi,
+>
+> [re-Cc:ed j6t]
+>
+> On Fri, 21 Nov 2008, Vasyl' Vavrychuk wrote:
+>
+>> [Dscho knows that j6t wrote this:]
+>>
+>> > It doesn't pass the test suite, for example t5301-sliding-window.sh
+>> > fails.
+>>
+>> I will investigate.
+>
+> Note that I quickly discarded the idea of mmap() on MinGW because at least
+> in the past, we used to rename files that were mmap()ed.  That is a no-go
+> with CreateFile().
 
-100 files at each 100k gives me 1.73s, so about 10x speed up.  So
-it seems git indeed looks at the content of the files and having a
-tenth of the content means it's ten times as fast.
+Hi,
 
-Interestingly, using only a single file of 100MB gives me 0.6s.
-Which is still very slow for the job of telling that a 100MB file
-is not equal to a 1 byte file.  And certainly there's no renaming
-going on with a single file.
+I'm not overly familiar with the windows API, but wouldn't passing
+FILE_SHARE_DELETE | FILE_SHARE_READ in the dwShareMode argument of
+CreateFile() be enough to allow rename/deletion of the file in
+question while it is mapped?
 
-> Now it's getting funny: Changing your "echo >" to "echo ">>" (in your
-> 100 files 1MB case) makes things "almost fast" again (1.3s).
+Thanks,
 
-Same here and that's pretty interesting, because in this situation
-I can understand the slow down: Comparing two 1MB files that
-differ only at their ends is expected to take some time, as you
-have to go through the entire file until you notice they're not
-the same.
-
-jlh
+Bryan Donlan
