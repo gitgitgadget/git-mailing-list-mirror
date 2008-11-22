@@ -1,73 +1,82 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: why no "git fetch --dry-run" ?
-Date: Fri, 21 Nov 2008 16:40:13 -0800
-Message-ID: <7vtza0pp8y.fsf@gitster.siamese.dyndns.org>
-References: <ee2a733e0811211341j1e49fad7o64577605951fa5c0@mail.gmail.com>
+Subject: Re: git-status for submodules
+Date: Fri, 21 Nov 2008 16:55:41 -0800
+Message-ID: <7vod08poj6.fsf@gitster.siamese.dyndns.org>
+References: <20081120033615.GA21128@foursquare.net>
+ <7vabbtqga8.fsf@gitster.siamese.dyndns.org>
+ <20081121224247.GB27049@foursquare.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: "Git Mailing List" <git@vger.kernel.org>
-To: SLONIK.AZ@gmail.com
-X-From: git-owner@vger.kernel.org Sat Nov 22 01:41:50 2008
+Cc: git@vger.kernel.org
+To: Chris Frey <cdfrey@foursquare.net>
+X-From: git-owner@vger.kernel.org Sat Nov 22 01:57:33 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1L3gZK-0000bt-CQ
-	for gcvg-git-2@gmane.org; Sat, 22 Nov 2008 01:41:50 +0100
+	id 1L3goV-0004FS-G1
+	for gcvg-git-2@gmane.org; Sat, 22 Nov 2008 01:57:32 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753925AbYKVAkf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 21 Nov 2008 19:40:35 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754314AbYKVAkf
-	(ORCPT <rfc822;git-outgoing>); Fri, 21 Nov 2008 19:40:35 -0500
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:38935 "EHLO
+	id S1755016AbYKVA4G (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 21 Nov 2008 19:56:06 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755600AbYKVA4F
+	(ORCPT <rfc822;git-outgoing>); Fri, 21 Nov 2008 19:56:05 -0500
+Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:41413 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753669AbYKVAke (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 21 Nov 2008 19:40:34 -0500
+	with ESMTP id S1753724AbYKVA4E (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 21 Nov 2008 19:56:04 -0500
 Received: from localhost.localdomain (unknown [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 1B10E80921;
-	Fri, 21 Nov 2008 19:40:33 -0500 (EST)
+	by b-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id 699E617414;
+	Fri, 21 Nov 2008 19:56:01 -0500 (EST)
 Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
  DHE-RSA-AES256-SHA (256/256 bits)) (No client certificate requested) by
- a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTPSA id 3942380920; Fri,
- 21 Nov 2008 19:40:15 -0500 (EST)
-In-Reply-To: <ee2a733e0811211341j1e49fad7o64577605951fa5c0@mail.gmail.com>
- (Leo Razoumov's message of "Fri, 21 Nov 2008 16:41:57 -0500")
+ b-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTPSA id CC82C17419; Fri,
+ 21 Nov 2008 19:55:42 -0500 (EST)
+In-Reply-To: <20081121224247.GB27049@foursquare.net> (Chris Frey's message of
+ "Fri, 21 Nov 2008 17:42:47 -0500")
 User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: 2BA15DA6-B82E-11DD-AB3A-8214C92D7133-77302942!a-sasl-fastnet.pobox.com
+X-Pobox-Relay-ID: 54F3F09A-B830-11DD-86D4-F83E113D384A-77302942!a-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/101548>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/101549>
 
-"Leo Razoumov" <slonik.az@gmail.com> writes:
+Chris Frey <cdfrey@foursquare.net> writes:
 
-> I am curious why there is "git push --dry-run" and no "git fetch
-> --dry-run" nor "git pull --dry-run". It would make sense to keep
-> push/pull/fetch as symmetric as possible.
+> It's true that subproject X has to be able to stand on its own.  That
+> is important from git's perspective as well as for managing subprojects
+> in general.
+>
+> But I don't see the advantage in hiding submodule information from the
+> supermodule, and if that hiding is by design, I think the design is wrong.
 
-There are things that are not implemented in git because they do not make
-sense, and there are things that are not implemented in git because nobody
-had itch to scratch for.  To put it differently, we tend to implement only
-things that there are actual, demonstrated needs for from real world and
-only when the addition makes sense as a coherent part of the system.
+There is no "wrong" design in git.  There are ones that do not cover 360
+degrees of the field, because nobody designed out let alone coded to cover
+such use cases.
 
-"fetch --dry-run" falls into the latter category.
+> In order to manage the various modules effectively (actually, in order to
+> manage any git repo effectively), you need to know what's changed,
+> and git-status is the way to do that.  I don't see why submodules should
+> break that.
 
-"push" is hard to undo because it affects the outside world, but "fetch"
-is only about your local object store and its remote tracking branches, so
-the need to have --dry-run mode to "push" was much more real than to the
-need for "fetch --dry-run" and was implemented.
+Changes to parts of submodules are fundamentally different from changes to
+parts of your main project.  A change to what commit the superproject
+wants for a submodule is at the same level as a change to what content the
+superprojects wants for a blob.
 
-If you have the itch for the latter, I do not think anybody objects to it
-on the ground that such a feature does not make sense.
+It is not unreasonable to want to have both modes of operation, one that
+shows the uncommitted details in the submodule even when you are viewing
+from the superproject (which does not exist), and one that does not (which
+does exist, because somebody felt need for it and coded so).
 
-Having said that, "fetch --dry-run" probably has little value in practice.
-You cannot tell how much data will be transferred before actually running
-a fetch, so it won't be a tool for you to decide if you can afford the
-time to run fetch now or do that later ("push --dry-run" will let you gain
-the necessary information for doing this this if your push is
-fast-forward, which should mostly be the case).  The only information you
-would get is if an actual "fetch" will have any update to each of the
-branches you are tracking (so that's one bit per branch) and if you have a
-connection to the other end, and that is about it.
+In order to see the status of your working tree, you may want to take into
+account what untracked files are in there, but some people do not want to,
+so there is an option to pick which behaviour you want.  We would need a
+similar switch.
+
+> With the new submodule foreach command, though, it should be possible
+> to add that as a config option, similar to the way submodule summary
+> is handled now.  Maybe I can cook up a patch for that.
+
+Yup, that's the spirit.
