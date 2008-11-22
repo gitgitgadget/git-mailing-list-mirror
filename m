@@ -1,295 +1,85 @@
-From: "Marcel M. Cary" <marcel@oak.homeunix.org>
-Subject: [PATCH] rev-parse: Fix shell scripts whose cwd is a symlink into a git work-dir
-Date: Sat, 22 Nov 2008 13:33:34 -0800
-Message-ID: <1227389614-10946-1-git-send-email-marcel@oak.homeunix.org>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: [PATCH] rev-parse: Fix shell scripts whose cwd is a symlink into a git work-dir
+Date: Sat, 22 Nov 2008 13:54:09 -0800 (PST)
+Message-ID: <m31vx3l94x.fsf@localhost.localdomain>
 References: <cover.1226759762.git.marcel@oak.homeunix.org>
-Cc: "Marcel M. Cary" <marcel@oak.homeunix.org>
-To: gitster@pobox.com, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Nov 22 22:35:39 2008
+	<1227389614-10946-1-git-send-email-marcel@oak.homeunix.org>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: gitster@pobox.com, git@vger.kernel.org
+To: "Marcel M. Cary" <marcel@oak.homeunix.org>
+X-From: git-owner@vger.kernel.org Sat Nov 22 22:55:33 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1L408e-0000kL-CR
-	for gcvg-git-2@gmane.org; Sat, 22 Nov 2008 22:35:37 +0100
+	id 1L40Rt-0006Fo-OU
+	for gcvg-git-2@gmane.org; Sat, 22 Nov 2008 22:55:30 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752888AbYKVVdk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 22 Nov 2008 16:33:40 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752893AbYKVVdj
-	(ORCPT <rfc822;git-outgoing>); Sat, 22 Nov 2008 16:33:39 -0500
-Received: from smtp109.sbc.mail.mud.yahoo.com ([68.142.198.208]:34947 "HELO
-	smtp109.sbc.mail.mud.yahoo.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with SMTP id S1752876AbYKVVdi (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 22 Nov 2008 16:33:38 -0500
-Received: (qmail 89384 invoked from network); 22 Nov 2008 21:33:37 -0000
-Received: from unknown (HELO ordinateur.home.org) (marcel@76.231.190.99 with plain)
-  by smtp109.sbc.mail.mud.yahoo.com with SMTP; 22 Nov 2008 21:33:37 -0000
-X-YMail-OSG: JA.l4SkVM1kmjyvFsPC72dp2FOOCfL0dmLDI77iiAIkONRQE8GFemo78cGJE04vACKHni_z8EeGMeZVCRN6lfqMeIpRhsKOFAIfb1sWq3PvGC6d42okK0yDxdyYRm.R6tfZQnRXS0V9eBO_Fv3oB74xuWdBfmgFk030dxSzYBzLdcUjI
-X-Yahoo-Newman-Property: ymail-5
-Received: from polliwog.home.org ([192.168.0.18] helo=localhost.localdomain)
-	by ordinateur.home.org with esmtp (Exim 4.63)
-	(envelope-from <marcel@oak.homeunix.org>)
-	id 1L406g-0000DS-8C; Sat, 22 Nov 2008 13:33:34 -0800
-X-Mailer: git-send-email 1.6.0.3
-In-Reply-To: <cover.1226759762.git.marcel@oak.homeunix.org>
+	id S1753275AbYKVVyN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 22 Nov 2008 16:54:13 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753188AbYKVVyN
+	(ORCPT <rfc822;git-outgoing>); Sat, 22 Nov 2008 16:54:13 -0500
+Received: from ey-out-2122.google.com ([74.125.78.25]:23498 "EHLO
+	ey-out-2122.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752486AbYKVVyM (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 22 Nov 2008 16:54:12 -0500
+Received: by ey-out-2122.google.com with SMTP id 6so614876eyi.37
+        for <git@vger.kernel.org>; Sat, 22 Nov 2008 13:54:10 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:received:received
+         :x-authentication-warning:to:cc:subject:references:from:in-reply-to
+         :message-id:lines:user-agent:mime-version:content-type:date;
+        bh=Io0vPBFDiHejQFKztHt+PZzg96Q8zw5nVpr7zOgxWws=;
+        b=ZSMJVQGM198VdL+b7cuFh26t6W3D6ll32n7fqKL1IDtf8KhuNiwuw0Mltl3syIBjs3
+         9bP1sZv5cbX/Is8SOKr8n4TTlwmXCkYQ/ENXoFqzJR3Uj2S09rTlLf/F/mYUn7egxMr0
+         981zl+c4+xmrQo9XJk/OzQI7TkdhpNTuyOulQ=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=x-authentication-warning:to:cc:subject:references:from:in-reply-to
+         :message-id:lines:user-agent:mime-version:content-type:date;
+        b=P3gEuBEin39lcjAfjZ3IFgEe2EPAABUvAFZgsxtsNa6fb3S9X+Xjkc6fwTtzzh3jEH
+         TLUnp5uirmsmSEiz8r4PbpRhSYGYPunv2bTfPXCHx+lRf6cEDwPXq9/r3SvzCHLOd4HK
+         IaQ6OtVAta8SWdW0/K3oVPwte7blj4HEvUr9w=
+Received: by 10.210.19.11 with SMTP id 11mr2061936ebs.168.1227390850724;
+        Sat, 22 Nov 2008 13:54:10 -0800 (PST)
+Received: from localhost.localdomain (abwv41.neoplus.adsl.tpnet.pl [83.8.245.41])
+        by mx.google.com with ESMTPS id b30sm3598728ika.7.2008.11.22.13.54.08
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Sat, 22 Nov 2008 13:54:09 -0800 (PST)
+Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
+	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id mAMLs9eE022303;
+	Sat, 22 Nov 2008 22:54:09 +0100
+Received: (from jnareb@localhost)
+	by localhost.localdomain (8.13.4/8.13.4/Submit) id mAMLs7Mq022300;
+	Sat, 22 Nov 2008 22:54:07 +0100
+X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
+In-Reply-To: <1227389614-10946-1-git-send-email-marcel@oak.homeunix.org>
+User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/101557>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/101558>
 
-* Change "git rev-parse --show-cdup" to print a full path instead of
-  a series of "../" when it prints anything
-* Added a special case to support some existing scripts that rely
-  on --show-cdup's prior behavior of printing a blank line when in
-  the work-tree root
-* Add some tests for "git rev-parse --show-cdup" in existing scenarios
-  and add a symlinked scenario that failed before this fix
-* Add a test for "git pull" in a symlinked directory that failed
-  before this fix, plus constrasting already working scenarios
+"Marcel M. Cary" <marcel@oak.homeunix.org> writes:
 
-Signed-off-by: Marcel M. Cary <marcel@oak.homeunix.org>
----
+> * Change "git rev-parse --show-cdup" to print a full path instead of
+>   a series of "../" when it prints anything
 
-I suggested use of realpath() but then realized that git seems to
-chdir to the work-dir before processing the "--show-cdup" option,
-so getcwd() is a simpler option.  
+But that is contrary to the _name_ of option. It is --show-cdup, as
+in "show cd up". And I think your change will break a few scripts.
 
-By changing rev-parse instead of cd_to_toplevel, the fix will
-help shell scripts that call rev-parse directly as well.  Hopefully
-the change from "../" to /full/path/to/work-dir will not be too
-disruptive -- no tests fail at least.
+I think you should use "git rev-parse --work-tree" for full path
+to working directory:
 
- builtin-rev-parse.c     |   25 ++++++++++++-----
- t/t1501-worktree.sh     |   53 ++++++++++++++++++++++++++-----------
- t/t5521-pull-symlink.sh |   67 +++++++++++++++++++++++++++++++++++++++++++++++
- 3 files changed, 122 insertions(+), 23 deletions(-)
- create mode 100755 t/t5521-pull-symlink.sh
+    --show-cdup
+        When the command is invoked from a subdirectory, show the path
+        of the top-level directory relative to the current directory
+        (typically a sequence of "../", or an empty string).
 
-diff --git a/builtin-rev-parse.c b/builtin-rev-parse.c
-index 81d5a6f..9cf5f82 100644
---- a/builtin-rev-parse.c
-+++ b/builtin-rev-parse.c
-@@ -536,14 +536,25 @@ int cmd_rev_parse(int argc, const char **argv, const char *prefix)
- 						printf("%s\n", work_tree);
- 					continue;
- 				}
--				while (pfx) {
--					pfx = strchr(pfx, '/');
--					if (pfx) {
--						pfx++;
--						printf("../");
--					}
-+				/*
-+				 * An empty line tells some scripts they are at
-+				 * the work dir's root.  For example,
-+				 * rebase --interactive.
-+				 */
-+				if (!prefix) {
-+					putchar('\n');
-+					continue;
- 				}
--				putchar('\n');
-+				/*
-+				 * A full path is less ambiguous than ../ when
-+				 * the shell arrived at it's cwd via a symlink.
-+				 * Otherwise the shell's "cd" may choose the
-+				 * symbolic parent.
-+				 */
-+				static char cwd[PATH_MAX];
-+				if (!getcwd(cwd, PATH_MAX))
-+					die("unable to get current working directory");
-+				printf("%s\n", cwd);
- 				continue;
- 			}
- 			if (!strcmp(arg, "--git-dir")) {
-diff --git a/t/t1501-worktree.sh b/t/t1501-worktree.sh
-index f6a6f83..7e83c81 100755
---- a/t/t1501-worktree.sh
-+++ b/t/t1501-worktree.sh
-@@ -22,15 +22,35 @@ test_rev_parse() {
- 	shift
- 	[ $# -eq 0 ] && return
- 
-+	test_expect_success "$name: cdup" \
-+	"test '$1' = \"\$(git rev-parse --show-cdup)\""
-+	shift
-+	[ $# -eq 0 ] && return
-+
- 	test_expect_success "$name: prefix" \
- 	"test '$1' = \"\$(git rev-parse --show-prefix)\""
- 	shift
- 	[ $# -eq 0 ] && return
- }
- 
-+D="$(pwd)"
-+
- EMPTY_TREE=$(git write-tree)
--mkdir -p work/sub/dir || exit 1
--mv .git repo.git || exit 1
-+mkdir -p repo/sub/dir || exit 1
-+ln -s repo/sub/dir lnk || exit 1
-+mv .git repo/ || exit 1
-+work="$(pwd)/repo"
-+cd lnk
-+
-+say "worktree is parent of symlink"
-+test_rev_parse 'symlink'      false false true "$work" sub/dir/
-+cd "$D"
-+
-+
-+mv repo/.git repo.git || exit 1
-+mv repo work || exit 1
-+rm lnk || exit 1
-+work="$(pwd)/work"
- 
- say "core.worktree = relative path"
- GIT_DIR=repo.git
-@@ -38,26 +58,26 @@ GIT_CONFIG="$(pwd)"/$GIT_DIR/config
- export GIT_DIR GIT_CONFIG
- unset GIT_WORK_TREE
- git config core.worktree ../work
--test_rev_parse 'outside'      false false false
-+test_rev_parse 'outside'      false false false "$work"
- cd work || exit 1
- GIT_DIR=../repo.git
- GIT_CONFIG="$(pwd)"/$GIT_DIR/config
--test_rev_parse 'inside'       false false true ''
-+test_rev_parse 'inside'       false false true '' ''
- cd sub/dir || exit 1
- GIT_DIR=../../../repo.git
- GIT_CONFIG="$(pwd)"/$GIT_DIR/config
--test_rev_parse 'subdirectory' false false true sub/dir/
-+test_rev_parse 'subdirectory' false false true "$work" sub/dir/
- cd ../../.. || exit 1
- 
- say "core.worktree = absolute path"
- GIT_DIR=$(pwd)/repo.git
- GIT_CONFIG=$GIT_DIR/config
- git config core.worktree "$(pwd)/work"
--test_rev_parse 'outside'      false false false
-+test_rev_parse 'outside'      false false false "$work"
- cd work || exit 1
--test_rev_parse 'inside'       false false true ''
-+test_rev_parse 'inside'       false false true '' ''
- cd sub/dir || exit 1
--test_rev_parse 'subdirectory' false false true sub/dir/
-+test_rev_parse 'subdirectory' false false true "$work" sub/dir/
- cd ../../.. || exit 1
- 
- say "GIT_WORK_TREE=relative path (override core.worktree)"
-@@ -66,30 +86,31 @@ GIT_CONFIG=$GIT_DIR/config
- git config core.worktree non-existent
- GIT_WORK_TREE=work
- export GIT_WORK_TREE
--test_rev_parse 'outside'      false false false
-+test_rev_parse 'outside'      false false false "$work"
- cd work || exit 1
- GIT_WORK_TREE=.
--test_rev_parse 'inside'       false false true ''
-+test_rev_parse 'inside'       false false true '' ''
- cd sub/dir || exit 1
- GIT_WORK_TREE=../..
--test_rev_parse 'subdirectory' false false true sub/dir/
-+test_rev_parse 'subdirectory' false false true "$work" sub/dir/
- cd ../../.. || exit 1
- 
- mv work repo.git/work
-+work="$(pwd)/repo.git/work"
- 
- say "GIT_WORK_TREE=absolute path, work tree below git dir"
- GIT_DIR=$(pwd)/repo.git
- GIT_CONFIG=$GIT_DIR/config
- GIT_WORK_TREE=$(pwd)/repo.git/work
--test_rev_parse 'outside'              false false false
-+test_rev_parse 'outside'              false false false "$work"
- cd repo.git || exit 1
--test_rev_parse 'in repo.git'              false true  false
-+test_rev_parse 'in repo.git'              false true  false "$work"
- cd objects || exit 1
--test_rev_parse 'in repo.git/objects'      false true  false
-+test_rev_parse 'in repo.git/objects'      false true  false "$work"
- cd ../work || exit 1
--test_rev_parse 'in repo.git/work'         false true true ''
-+test_rev_parse 'in repo.git/work'         false true true '' ''
- cd sub/dir || exit 1
--test_rev_parse 'in repo.git/sub/dir' false true true sub/dir/
-+test_rev_parse 'in repo.git/sub/dir' false true true "$work" sub/dir/
- cd ../../../.. || exit 1
- 
- test_expect_success 'repo finds its work tree' '
-diff --git a/t/t5521-pull-symlink.sh b/t/t5521-pull-symlink.sh
-new file mode 100755
-index 0000000..f18fec7
---- /dev/null
-+++ b/t/t5521-pull-symlink.sh
-@@ -0,0 +1,67 @@
-+#!/bin/sh
-+
-+test_description='pulling from symlinked subdir'
-+
-+. ./test-lib.sh
-+
-+D=`pwd`
-+
-+# The scenario we are building:
-+#
-+#   trash\ directory/
-+#     clone-repo/
-+#       subdir/
-+#         bar
-+#     subdir-link -> clone-repo/subdir/
-+#
-+# The working directory is subdir-link.
-+#
-+test_expect_success setup '
-+
-+    mkdir subdir &&
-+    touch subdir/bar &&
-+    git add subdir/bar &&
-+    git commit -m empty &&
-+    git clone . clone-repo &&
-+    # demonstrate that things work without the symlink
-+    test_debug "cd clone-repo/subdir/ && git pull; cd ../.." &&
-+    ln -s clone-repo/subdir/ subdir-link &&
-+    cd subdir-link/ &&
-+    test_debug "set +x"
-+'
-+
-+# From subdir-link, pulling should work as it does from
-+# clone-repo/subdir/.
-+#
-+# Instead, the error pull gave was:
-+#
-+#   fatal: 'origin': unable to chdir or not a git archive
-+#   fatal: The remote end hung up unexpectedly
-+#
-+# because git would find the .git/config for the "trash directory"
-+# repo, not for the clone-repo repo.  The "trash directory" repo
-+# had no entry for origin.  Git found the wrong .git because
-+# git rev-parse --show-cdup printed a path relative to
-+# clone-repo/subdir/, not subdir-link/.  Git rev-parse --show-cdup
-+# used the correct .git, but when the git pull shell script did
-+# "cd `git rev-parse --show-cdup`", it ended up in the wrong
-+# directory.  Shell "cd" works a little different from chdir() in C.
-+# Bash's "cd -P" works like chdir() in C.
-+#
-+test_expect_success 'pulling from symlinked subdir' '
-+
-+    git pull
-+'
-+
-+# Prove that the remote end really is a repo, and other commands
-+# work fine in this context.
-+#
-+test_debug "
-+    test_expect_success 'pushing from symlinked subdir' '
-+
-+        git push
-+    '
-+"
-+cd "$D"
-+
-+test_done
 -- 
-1.6.0.3
+Jakub Narebski
+Poland
+ShadeHawk on #git
