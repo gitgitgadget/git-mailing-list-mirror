@@ -1,85 +1,87 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: [PATCH] rev-parse: Fix shell scripts whose cwd is a symlink into a git work-dir
-Date: Sat, 22 Nov 2008 13:54:09 -0800 (PST)
-Message-ID: <m31vx3l94x.fsf@localhost.localdomain>
-References: <cover.1226759762.git.marcel@oak.homeunix.org>
-	<1227389614-10946-1-git-send-email-marcel@oak.homeunix.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: git commit -v does not removes the patch
+Date: Sat, 22 Nov 2008 14:43:30 -0800
+Message-ID: <7v4p1zpejx.fsf@gitster.siamese.dyndns.org>
+References: <20081110181023.GA22753@coredump.intra.peff.net>
+ <adf1fd3d0811101434j658b2e8aj83d8cbe2293f5021@mail.gmail.com>
+ <7vej1j40x5.fsf@gitster.siamese.dyndns.org>
+ <20081111000706.GA26223@coredump.intra.peff.net>
+ <adf1fd3d0811102356u6e671dcfj6491f81cf462ec2e@mail.gmail.com>
+ <20081111102914.GA30330@coredump.intra.peff.net>
+ <7v4p2e2nkg.fsf@gitster.siamese.dyndns.org>
+ <20081112081609.GA3720@coredump.intra.peff.net>
+ <20081120130851.GA17608@neumann>
+ <20081120152015.GA6283@coredump.intra.peff.net>
+ <20081122155541.GC6885@neumann>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: gitster@pobox.com, git@vger.kernel.org
-To: "Marcel M. Cary" <marcel@oak.homeunix.org>
-X-From: git-owner@vger.kernel.org Sat Nov 22 22:55:33 2008
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Jeff King <peff@peff.net>,
+	Santi =?utf-8?Q?B=C3=A9jar?= <santi@agolina.net>,
+	Git Mailing List <git@vger.kernel.org>
+To: SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder@ira.uka.de>
+X-From: git-owner@vger.kernel.org Sat Nov 22 23:45:21 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1L40Rt-0006Fo-OU
-	for gcvg-git-2@gmane.org; Sat, 22 Nov 2008 22:55:30 +0100
+	id 1L41E9-0002nv-Cr
+	for gcvg-git-2@gmane.org; Sat, 22 Nov 2008 23:45:21 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753275AbYKVVyN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 22 Nov 2008 16:54:13 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753188AbYKVVyN
-	(ORCPT <rfc822;git-outgoing>); Sat, 22 Nov 2008 16:54:13 -0500
-Received: from ey-out-2122.google.com ([74.125.78.25]:23498 "EHLO
-	ey-out-2122.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752486AbYKVVyM (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 22 Nov 2008 16:54:12 -0500
-Received: by ey-out-2122.google.com with SMTP id 6so614876eyi.37
-        for <git@vger.kernel.org>; Sat, 22 Nov 2008 13:54:10 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:received:received
-         :x-authentication-warning:to:cc:subject:references:from:in-reply-to
-         :message-id:lines:user-agent:mime-version:content-type:date;
-        bh=Io0vPBFDiHejQFKztHt+PZzg96Q8zw5nVpr7zOgxWws=;
-        b=ZSMJVQGM198VdL+b7cuFh26t6W3D6ll32n7fqKL1IDtf8KhuNiwuw0Mltl3syIBjs3
-         9bP1sZv5cbX/Is8SOKr8n4TTlwmXCkYQ/ENXoFqzJR3Uj2S09rTlLf/F/mYUn7egxMr0
-         981zl+c4+xmrQo9XJk/OzQI7TkdhpNTuyOulQ=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=x-authentication-warning:to:cc:subject:references:from:in-reply-to
-         :message-id:lines:user-agent:mime-version:content-type:date;
-        b=P3gEuBEin39lcjAfjZ3IFgEe2EPAABUvAFZgsxtsNa6fb3S9X+Xjkc6fwTtzzh3jEH
-         TLUnp5uirmsmSEiz8r4PbpRhSYGYPunv2bTfPXCHx+lRf6cEDwPXq9/r3SvzCHLOd4HK
-         IaQ6OtVAta8SWdW0/K3oVPwte7blj4HEvUr9w=
-Received: by 10.210.19.11 with SMTP id 11mr2061936ebs.168.1227390850724;
-        Sat, 22 Nov 2008 13:54:10 -0800 (PST)
-Received: from localhost.localdomain (abwv41.neoplus.adsl.tpnet.pl [83.8.245.41])
-        by mx.google.com with ESMTPS id b30sm3598728ika.7.2008.11.22.13.54.08
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Sat, 22 Nov 2008 13:54:09 -0800 (PST)
-Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id mAMLs9eE022303;
-	Sat, 22 Nov 2008 22:54:09 +0100
-Received: (from jnareb@localhost)
-	by localhost.localdomain (8.13.4/8.13.4/Submit) id mAMLs7Mq022300;
-	Sat, 22 Nov 2008 22:54:07 +0100
-X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
-In-Reply-To: <1227389614-10946-1-git-send-email-marcel@oak.homeunix.org>
-User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
+	id S1753634AbYKVWoG convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 22 Nov 2008 17:44:06 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757412AbYKVWoF
+	(ORCPT <rfc822;git-outgoing>); Sat, 22 Nov 2008 17:44:05 -0500
+Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:65459 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753599AbYKVWoE convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 22 Nov 2008 17:44:04 -0500
+Received: from localhost.localdomain (unknown [127.0.0.1])
+	by b-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id B3D591750D;
+	Sat, 22 Nov 2008 17:43:57 -0500 (EST)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES256-SHA (256/256 bits)) (No client certificate requested) by
+ b-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTPSA id 7B433173A2; Sat,
+ 22 Nov 2008 17:43:34 -0500 (EST)
+In-Reply-To: <20081122155541.GC6885@neumann> (SZEDER =?utf-8?Q?G=C3=A1bor'?=
+ =?utf-8?Q?s?= message of "Sat, 22 Nov 2008 16:55:41 +0100")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: 0C79BBA8-B8E7-11DD-B0B0-F83E113D384A-77302942!a-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/101558>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/101559>
 
-"Marcel M. Cary" <marcel@oak.homeunix.org> writes:
+SZEDER G=C3=A1bor <szeder@ira.uka.de> writes:
 
-> * Change "git rev-parse --show-cdup" to print a full path instead of
->   a series of "../" when it prints anything
+> So, I wonder whether those '--no-verify' options are still required i=
+n
+> 'git rebase -i'.
 
-But that is contrary to the _name_ of option. It is --show-cdup, as
-in "show cd up". And I think your change will break a few scripts.
+The use of --no-verify there does not have anything to do with "whitesp=
+ace
+errors".  It is to override _any_ validation the users want to do when
+using "git commit" in their interactive workflow.  It so happens that t=
+he
+example hook we ship demonstrates how you hunt for whitespace errors, b=
+ut
+you have to remember that it is just an example.
 
-I think you should use "git rev-parse --work-tree" for full path
-to working directory:
+We may want to disable the checking of exit status from commit-msg hook
+while still calling the hook itself, though.  The primary purpose of th=
+e
+hook is to allow users to reformat (say, passing "fmt -64") the message=
+,
+but it is allowed to interfere and that was meant to happen when using
+"git commit" but we probably do not want it when rebasing.
 
-    --show-cdup
-        When the command is invoked from a subdirectory, show the path
-        of the top-level directory relative to the current directory
-        (typically a sequence of "../", or an empty string).
-
--- 
-Jakub Narebski
-Poland
-ShadeHawk on #git
+=46urther, we also may want to make the use of --no-verify overridable =
+from
+the command line when running rebase.  The primary purpose of the rebas=
+e
+command is to transplant a sequence of commits to someplace else withou=
+t
+molesting its contents and message unnecessarily, and --no-verify is a
+good thing to use in general for that reason, but people may sometimes
+want to use it as a way to clean up the changes.
