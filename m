@@ -1,115 +1,84 @@
-From: =?ISO-8859-15?Q?Ren=E9_Scharfe?= <rene.scharfe@lsrfire.ath.cx>
-Subject: [PATCH 3.2/4] daemon: deglobalize variable 'directory'
-Date: Sun, 23 Nov 2008 00:21:52 +0100
-Message-ID: <49289410.2080001@lsrfire.ath.cx>
-References: <4928912A.5050307@lsrfire.ath.cx> <492891FC.6000908@lsrfire.ath.cx> <49289275.7090003@lsrfire.ath.cx> <4928936D.8010404@lsrfire.ath.cx>
+From: Andreas Ericsson <ae@op5.se>
+Subject: Re: [PATCH] rev-parse: Fix shell scripts whose cwd is a symlink into
+ a git work-dir
+Date: Sun, 23 Nov 2008 08:10:59 +0100
+Message-ID: <49290203.7060808@op5.se>
+References: <cover.1226759762.git.marcel@oak.homeunix.org>	<1227389614-10946-1-git-send-email-marcel@oak.homeunix.org> <m31vx3l94x.fsf@localhost.localdomain>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15
+Content-Type: text/plain; charset=ISO-8859-15; format=flowed
 Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Jon Loeliger <jdl@freescale.com>
-To: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Sun Nov 23 00:23:18 2008
+Cc: "Marcel M. Cary" <marcel@oak.homeunix.org>, gitster@pobox.com,
+	git@vger.kernel.org
+To: Jakub Narebski <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Nov 23 08:12:55 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1L41op-00042O-Ru
-	for gcvg-git-2@gmane.org; Sun, 23 Nov 2008 00:23:16 +0100
+	id 1L499J-0001e0-Ft
+	for gcvg-git-2@gmane.org; Sun, 23 Nov 2008 08:12:54 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753297AbYKVXV7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 22 Nov 2008 18:21:59 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753410AbYKVXV7
-	(ORCPT <rfc822;git-outgoing>); Sat, 22 Nov 2008 18:21:59 -0500
-Received: from india601.server4you.de ([85.25.151.105]:42637 "EHLO
-	india601.server4you.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752401AbYKVXV6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 22 Nov 2008 18:21:58 -0500
-Received: from [10.0.1.101] (p57B7B890.dip.t-dialin.net [87.183.184.144])
-	by india601.server4you.de (Postfix) with ESMTPSA id B8EB52F8057;
-	Sun, 23 Nov 2008 00:21:56 +0100 (CET)
-User-Agent: Thunderbird 2.0.0.18 (Windows/20081105)
-In-Reply-To: <4928936D.8010404@lsrfire.ath.cx>
+	id S1751513AbYKWHLZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 23 Nov 2008 02:11:25 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750890AbYKWHLZ
+	(ORCPT <rfc822;git-outgoing>); Sun, 23 Nov 2008 02:11:25 -0500
+Received: from mail.op5.se ([193.201.96.20]:38101 "EHLO mail.op5.se"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750832AbYKWHLZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 23 Nov 2008 02:11:25 -0500
+Received: from localhost (localhost.localdomain [127.0.0.1])
+	by mail.op5.se (Postfix) with ESMTP id C7BE11B80052;
+	Sun, 23 Nov 2008 08:06:21 +0100 (CET)
+X-Virus-Scanned: amavisd-new at 
+X-Spam-Flag: NO
+X-Spam-Score: -2.499
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.499 tagged_above=-10 required=6.6
+	tests=[BAYES_00=-2.599, RDNS_NONE=0.1]
+Received: from mail.op5.se ([127.0.0.1])
+	by localhost (mail.op5.se [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id D5nosooJJ6ay; Sun, 23 Nov 2008 08:06:17 +0100 (CET)
+Received: from clix.int.op5.se (unknown [172.27.78.10])
+	by mail.op5.se (Postfix) with ESMTP id DFF751B8004E;
+	Sun, 23 Nov 2008 08:06:15 +0100 (CET)
+User-Agent: Thunderbird 2.0.0.16 (X11/20080723)
+In-Reply-To: <m31vx3l94x.fsf@localhost.localdomain>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/101565>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/101566>
 
-Remove the global variable 'directory' and pass it as a parameter of
-the two functions that use it instead, (almost) restoring their
-interface to how it was before 49ba83fb67d9e447b86953965ce5f949c6a93b81.
+Jakub Narebski wrote:
+> "Marcel M. Cary" <marcel@oak.homeunix.org> writes:
+> 
+>> * Change "git rev-parse --show-cdup" to print a full path instead of
+>>   a series of "../" when it prints anything
+> 
+> But that is contrary to the _name_ of option. It is --show-cdup, as
+> in "show cd up". And I think your change will break a few scripts.
+> 
+> I think you should use "git rev-parse --work-tree" for full path
+> to working directory:
+> 
+>     --show-cdup
+>         When the command is invoked from a subdirectory, show the path
+>         of the top-level directory relative to the current directory
+>         (typically a sequence of "../", or an empty string).
+> 
 
-Signed-off-by: Rene Scharfe <rene.scharfe@lsrfire.ath.cx>
----
- daemon.c |   16 ++++++----------
- 1 files changed, 6 insertions(+), 10 deletions(-)
+AFAIR, it was introduced to make test-builds of really large projects in
+really deep directories with a ton of symlinks leading to the path work a
+lot faster.
 
-diff --git a/daemon.c b/daemon.c
-index fbf61ca..1cef309 100644
---- a/daemon.c
-+++ b/daemon.c
-@@ -57,7 +57,6 @@ static char *hostname;
- static char *canon_hostname;
- static char *ip_address;
- static char *tcp_port;
--static char *directory;
- 
- static void logreport(int priority, const char *err, va_list params)
- {
-@@ -147,7 +146,7 @@ static int avoid_alias(char *p)
- 	}
- }
- 
--static char *path_ok(void)
-+static char *path_ok(char *directory)
- {
- 	static char rpath[PATH_MAX];
- 	static char interp_path[PATH_MAX];
-@@ -296,12 +295,12 @@ static int git_daemon_config(const char *var, const char *value, void *cb)
- 	return 0;
- }
- 
--static int run_service(struct daemon_service *service)
-+static int run_service(char *dir, struct daemon_service *service)
- {
- 	const char *path;
- 	int enabled = service->enabled;
- 
--	loginfo("Request %s for '%s'", service->name, directory);
-+	loginfo("Request %s for '%s'", service->name, dir);
- 
- 	if (!enabled && !service->overridable) {
- 		logerror("'%s': service not enabled.", service->name);
-@@ -309,7 +308,7 @@ static int run_service(struct daemon_service *service)
- 		return -1;
- 	}
- 
--	if (!(path = path_ok()))
-+	if (!(path = path_ok(dir)))
- 		return -1;
- 
- 	/*
-@@ -555,8 +554,7 @@ static int execute(struct sockaddr *addr)
- 	free(canon_hostname);
- 	free(ip_address);
- 	free(tcp_port);
--	free(directory);
--	hostname = canon_hostname = ip_address = tcp_port = directory = NULL;
-+	hostname = canon_hostname = ip_address = tcp_port = NULL;
- 
- 	if (len != pktlen)
- 		parse_extra_args(line + len + 1, pktlen - len - 1);
-@@ -571,9 +569,7 @@ static int execute(struct sockaddr *addr)
- 			 * Note: The directory here is probably context sensitive,
- 			 * and might depend on the actual service being performed.
- 			 */
--			free(directory);
--			directory = xstrdup(line + namelen + 5);
--			return run_service(s);
-+			return run_service(line + namelen + 5, s);
- 		}
- 	}
- 
+The thing to remember about git and its UI is that it was evolved from
+users' actual needs. Very, very little of what is in the UI can be reworked
+without breaking something for someone, so it's (almost) always better to
+add a new option. For this, I'd suggest "--show-absolute-worktree-path" if
+that's what it does. Since it's an option primarily targeting scripts, I'm
+not too worried that it's half a mile long.
+
 -- 
-1.6.0.4.755.g6e139
+Andreas Ericsson                   andreas.ericsson@op5.se
+OP5 AB                             www.op5.se
+Tel: +46 8-230225                  Fax: +46 8-230231
