@@ -1,84 +1,105 @@
-From: Andreas Ericsson <ae@op5.se>
-Subject: Re: [PATCH] rev-parse: Fix shell scripts whose cwd is a symlink into
- a git work-dir
-Date: Sun, 23 Nov 2008 08:10:59 +0100
-Message-ID: <49290203.7060808@op5.se>
-References: <cover.1226759762.git.marcel@oak.homeunix.org>	<1227389614-10946-1-git-send-email-marcel@oak.homeunix.org> <m31vx3l94x.fsf@localhost.localdomain>
+From: Michael Haggerty <mhagger@alum.mit.edu>
+Subject: cvs2svn/cvs2git version 2.2.0 has been released
+Followup-To: gmane.comp.version-control.subversion.cvs2svn.user
+Date: Sun, 23 Nov 2008 10:00:18 +0100
+Message-ID: <49291BA2.2050604@alum.mit.edu>
+Reply-To: cvs2svn users <users@cvs2svn.tigris.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15; format=flowed
+Content-Type: text/plain; charset=ISO-8859-15
 Content-Transfer-Encoding: 7bit
-Cc: "Marcel M. Cary" <marcel@oak.homeunix.org>, gitster@pobox.com,
-	git@vger.kernel.org
-To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Nov 23 08:12:55 2008
+To: announce@cvs2svn.tigris.org,
+	Git Mailing List <git@vger.kernel.org>,
+	mercurial@selenic.com, Bazaar <bazaar@lists.canonical.com>
+X-From: git-owner@vger.kernel.org Sun Nov 23 10:01:54 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1L499J-0001e0-Ft
-	for gcvg-git-2@gmane.org; Sun, 23 Nov 2008 08:12:54 +0100
+	id 1L4Aqk-0002wP-46
+	for gcvg-git-2@gmane.org; Sun, 23 Nov 2008 10:01:50 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751513AbYKWHLZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 23 Nov 2008 02:11:25 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750890AbYKWHLZ
-	(ORCPT <rfc822;git-outgoing>); Sun, 23 Nov 2008 02:11:25 -0500
-Received: from mail.op5.se ([193.201.96.20]:38101 "EHLO mail.op5.se"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750832AbYKWHLZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 23 Nov 2008 02:11:25 -0500
-Received: from localhost (localhost.localdomain [127.0.0.1])
-	by mail.op5.se (Postfix) with ESMTP id C7BE11B80052;
-	Sun, 23 Nov 2008 08:06:21 +0100 (CET)
-X-Virus-Scanned: amavisd-new at 
-X-Spam-Flag: NO
-X-Spam-Score: -2.499
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.499 tagged_above=-10 required=6.6
-	tests=[BAYES_00=-2.599, RDNS_NONE=0.1]
-Received: from mail.op5.se ([127.0.0.1])
-	by localhost (mail.op5.se [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id D5nosooJJ6ay; Sun, 23 Nov 2008 08:06:17 +0100 (CET)
-Received: from clix.int.op5.se (unknown [172.27.78.10])
-	by mail.op5.se (Postfix) with ESMTP id DFF751B8004E;
-	Sun, 23 Nov 2008 08:06:15 +0100 (CET)
-User-Agent: Thunderbird 2.0.0.16 (X11/20080723)
-In-Reply-To: <m31vx3l94x.fsf@localhost.localdomain>
+	id S1752812AbYKWJAd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 23 Nov 2008 04:00:33 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752828AbYKWJAd
+	(ORCPT <rfc822;git-outgoing>); Sun, 23 Nov 2008 04:00:33 -0500
+Received: from einhorn.in-berlin.de ([192.109.42.8]:38257 "EHLO
+	einhorn.in-berlin.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752411AbYKWJAc (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 23 Nov 2008 04:00:32 -0500
+X-Envelope-From: mhagger@alum.mit.edu
+Received: from [192.168.69.129] ([77.21.84.251])
+	(authenticated bits=0)
+	by einhorn.in-berlin.de (8.13.6/8.13.6/Debian-1) with ESMTP id mAN90IKM031972
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
+	Sun, 23 Nov 2008 10:00:19 +0100
+User-Agent: Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.8.1.17) Gecko/20080925 Thunderbird/2.0.0.17 Mnenhy/0.7.5.666
+X-Enigmail-Version: 0.95.0
+X-Scanned-By: MIMEDefang_at_IN-Berlin_e.V. on 192.109.42.8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/101566>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/101567>
 
-Jakub Narebski wrote:
-> "Marcel M. Cary" <marcel@oak.homeunix.org> writes:
-> 
->> * Change "git rev-parse --show-cdup" to print a full path instead of
->>   a series of "../" when it prints anything
-> 
-> But that is contrary to the _name_ of option. It is --show-cdup, as
-> in "show cd up". And I think your change will break a few scripts.
-> 
-> I think you should use "git rev-parse --work-tree" for full path
-> to working directory:
-> 
->     --show-cdup
->         When the command is invoked from a subdirectory, show the path
->         of the top-level directory relative to the current directory
->         (typically a sequence of "../", or an empty string).
-> 
+cvs2svn/cvs2git 2.2.0 has been released.
 
-AFAIR, it was introduced to make test-builds of really large projects in
-really deep directories with a ton of symlinks leading to the path work a
-lot faster.
+cvs2svn/cvs2git [1] is a free program that converts CVS repositories to
+Subversion, git, Mercurial, or Bazaar, including all project history and
+metadata.  cvs2svn can convert just about any CVS repository we've ever
+seen, including gcc, Mozilla, FreeBSD, KDE, and GNOME.  Conversion to
+the DVCSs is via dumping output in git-fast-import format.
 
-The thing to remember about git and its UI is that it was evolved from
-users' actual needs. Very, very little of what is in the UI can be reworked
-without breaking something for someone, so it's (almost) always better to
-add a new option. For this, I'd suggest "--show-absolute-worktree-path" if
-that's what it does. Since it's an option primarily targeting scripts, I'm
-not too worried that it's half a mile long.
+cvs2svn infers what happened in the history of your CVS repository and
+replicates that history as accurately as possible in the target SCM.
+All revisions, branches, tags, log messages, author names, and commit
+dates are converted.  cvs2svn deduces what CVS modifications were made
+at the same time, and outputs these modifications grouped together as
+changesets in the target SCM.  cvs2svn also deals with many CVS quirks
+and is highly configurable.  See the comprehensive feature list [2].
 
--- 
-Andreas Ericsson                   andreas.ericsson@op5.se
-OP5 AB                             www.op5.se
-Tel: +46 8-230225                  Fax: +46 8-230231
+
+Significant changes in release 2.2.0:
+
+* By default, omit trivial CVS import branches from conversion.
+
+* Allow vendor branches to be excluded (grafting child symbols to
+  trunk).
+
+* By default, don't include .cvsignore files in output (except as
+  svn:ignore).
+
+* Allow arbitrary SVN directories to be created when a project is
+  created.
+
+* cvs2git:
+  - Omit the tag fixup branch if a tag can be copied from an existing
+    revision.
+  - Generate lightweight rather than annotated tags.
+
+* Converting to Mercurial:
+  - Add an option to set the maximum number of merge sources per commit.
+    (Mercurial only allows a commit to have 0, 1, or 2 ancestors.)
+  - Allow file contents to be written inline in git-fast-import streams
+    (hg fast-import doesn't support predefined blobs).
+
+* Allow the user to specify templates for cvs2svn-generated log
+  messages.
+
+* Fixed a few minor bugs.
+
+
+For more information, see the latest CHANGES file [3].
+
+You can download the new release here [4].  (Its MD5 checksum is
+466b757fdef5378a46bba4ceefd047a4.)
+
+Please send any bug reports and comments to users@cvs2svn.tigris.org.
+
+Michael Haggerty, on behalf of the cvs2svn development team.
+
+[1] http://cvs2svn.tigris.org
+[2] http://cvs2svn.tigris.org/features.html
+[3]
+http://cvs2svn.tigris.org/source/browse/cvs2svn/tags/2.2.0/CHANGES?view=markup
+[4]
+http://cvs2svn.tigris.org/files/documents/1462/44372/cvs2svn-2.2.0.tar.gz
