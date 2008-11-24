@@ -1,92 +1,104 @@
-From: "Peter Harris" <git@peter.is-a-geek.org>
-Subject: Re: Best practices for maintaining a subversion mirror?
-Date: Mon, 24 Nov 2008 10:37:35 -0500
-Message-ID: <eaa105840811240737t37578c8dp77adf5da27ac7e45@mail.gmail.com>
-References: <5641883d0811240255i21aef729ld202bd5a3211dad9@mail.gmail.com>
+From: Michael J Gruber <git@drmicha.warpmail.net>
+Subject: Re: How do I delete a git submodule?
+Date: Mon, 24 Nov 2008 16:51:16 +0100
+Message-ID: <492ACD74.30108@drmicha.warpmail.net>
+References: <Pine.LNX.4.64.0811241537580.22925@ds9.cixit.se>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: "Oliver Charles" <oliver.g.charles@googlemail.com>
-X-From: git-owner@vger.kernel.org Mon Nov 24 16:39:27 2008
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Peter Krefting <peter@softwolves.pp.se>
+X-From: git-owner@vger.kernel.org Mon Nov 24 16:52:51 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1L4dWY-0000m6-V5
-	for gcvg-git-2@gmane.org; Mon, 24 Nov 2008 16:38:55 +0100
+	id 1L4djp-0006P9-Bb
+	for gcvg-git-2@gmane.org; Mon, 24 Nov 2008 16:52:37 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752389AbYKXPhj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 24 Nov 2008 10:37:39 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752225AbYKXPhi
-	(ORCPT <rfc822;git-outgoing>); Mon, 24 Nov 2008 10:37:38 -0500
-Received: from yw-out-2324.google.com ([74.125.46.28]:40692 "EHLO
-	yw-out-2324.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751920AbYKXPhi (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 24 Nov 2008 10:37:38 -0500
-Received: by yw-out-2324.google.com with SMTP id 9so845265ywe.1
-        for <git@vger.kernel.org>; Mon, 24 Nov 2008 07:37:36 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:sender
-         :to:subject:cc:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:references
-         :x-google-sender-auth;
-        bh=TkwuVVCSMK3H+6aGMFDUgy+pvL/uQF1OJ6UQhuQ0Wu8=;
-        b=iVt222Ntw0nCyrFSYJIaNEImxqgM88OwkCCHsJbUDNvm9JfUgBKCYKH3k7yN755OCJ
-         NilEdJhqDUIsltS4qZY8Z6zahSOS7ADTmCOQXy4depioLkiUhAjmLBBC0rC5kH1BE2je
-         znKxpRiid0g97saqPQl3Z+YjKs+sLijPUQCoo=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:sender:to:subject:cc:in-reply-to:mime-version
-         :content-type:content-transfer-encoding:content-disposition
-         :references:x-google-sender-auth;
-        b=ZZR4MsGRdOIgvFHjnNcb2gBbbmmss230CltZOsvihDfy8+tTCXYYvbCKSNbtHF07C0
-         XFZejUZV2w0EApPa+8EAsnOe1oSpTTjviXaSAVWPFvj5v3eVGKLFrtHeclKJtvA1Aiti
-         OpNGLFkz8DmypbK33f4ovDaSETIVccYHv8naI=
-Received: by 10.65.214.19 with SMTP id r19mr3441191qbq.20.1227541055938;
-        Mon, 24 Nov 2008 07:37:35 -0800 (PST)
-Received: by 10.65.177.2 with HTTP; Mon, 24 Nov 2008 07:37:35 -0800 (PST)
-In-Reply-To: <5641883d0811240255i21aef729ld202bd5a3211dad9@mail.gmail.com>
-Content-Disposition: inline
-X-Google-Sender-Auth: 36f4c7756560241d
+	id S1752909AbYKXPvW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 24 Nov 2008 10:51:22 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752889AbYKXPvV
+	(ORCPT <rfc822;git-outgoing>); Mon, 24 Nov 2008 10:51:21 -0500
+Received: from out1.smtp.messagingengine.com ([66.111.4.25]:57905 "EHLO
+	out1.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1752810AbYKXPvV (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 24 Nov 2008 10:51:21 -0500
+Received: from compute1.internal (compute1.internal [10.202.2.41])
+	by out1.messagingengine.com (Postfix) with ESMTP id CE2AA1C770E;
+	Mon, 24 Nov 2008 10:51:19 -0500 (EST)
+Received: from heartbeat1.messagingengine.com ([10.202.2.160])
+  by compute1.internal (MEProxy); Mon, 24 Nov 2008 10:51:19 -0500
+X-Sasl-enc: IYRwqFLMGbie5HeTmwScu4/BpsRoQ5VJDhUGHCc66r46 1227541879
+Received: from [139.174.44.12] (whitehead.math.tu-clausthal.de [139.174.44.12])
+	by mail.messagingengine.com (Postfix) with ESMTPSA id 3FC8FA81D;
+	Mon, 24 Nov 2008 10:51:19 -0500 (EST)
+User-Agent: Thunderbird 2.0.0.18 (X11/20081105)
+In-Reply-To: <Pine.LNX.4.64.0811241537580.22925@ds9.cixit.se>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/101609>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/101610>
 
-On Mon, Nov 24, 2008 at 5:55 AM, Oliver Charles wrote:
-> This seems to be working nicely as a readonly interface, but when I
-> clone this repository (git clone git://foo/repo.git) - served via
-> git-daemon - I can't seem to get svn rebase to work on it, which means
-> I can't dcommit my changes back to Subversion.
->
-> Am I doing things generally the right way, or am I doing it completely
-> wrong? :-) Any tips appreciated!
+Peter Krefting venit, vidit, dixit 24.11.2008 15:44:
+> Hi!
+> 
+> I am trying to remove a submodule from a project, but can't figure out
+> how to do it. With "modules/aldc" as a submodule:
+> 
+>   $ cat .gitmodules
+>   [submodule "modules/aldc"]
+>           path = modules/aldc
+>           url = [...cut...]
+>   [...more entries here...]
+>   $ git status
+>   [...cut...]
+>   nothing to commit (working directory clean)
+> 
+> Starting from a clean set-up.
+> 
+>   $ git submodule rm modules/aldc
+>   -ff17d9e0e76d01e99d26aa16b28cf327c5abb48a modules/aldc
+>   $ git status
+>   [...cut...]
+>   nothing to commit (working directory clean)
+> 
+> The obvious command didn't give any errors, but didn't do anything,
+> either. (I notice that there is no mention of a "git submodule rm" on
+> the git-submodule man page.)
+> 
+>   $ git rm modules/aldc
+>   rm 'modules/aldc'
+>   fatal: git rm: modules/aldc: Permission denied
+>   $ git status
+>   [...cut...]
+>   nothing to commit (working directory clean)
+> 
+> Nope, that didn't work either.
+> 
+> What am I missing?
 
-First, make sure you aren't using the --no-metadata flag. git svn
-rebase needs that metadata to rebuild its index.
+The last line of git help/man on git submodule status:
 
-Second, a simple "git clone" will not set up the svn remotes; you have
-to do that by hand. This is what I do when I clone my svn mirror:
+"This command is the default command for git-submodule."
 
-mkdir project
-cd project
-git init
-git remote add origin git://mirror/project
-git config --add remote.origin.fetch +refs/remotes/*:refs/remotes/*
-git fetch
-git svn init -Ttrunk svn://upstream/project
-git config --add svn-remote.svn.fetch branches/foo:refs/remotes/foo
-git config --add svn-remote.svn.fetch branches/bar:refs/remotes/bar
-git reset --hard trunk
-git svn rebase
+git submodule ignores the "rm" (because it doesn't know that command)
+and does a "status" on modules/aldc.
 
-Once you have it nailed down, you can put it into a script so all your
-co-workers don't have to do that by hand too.
+OTOH, git rm refuses to do its thing, as you noticed. The brute force
+method seems to work:
 
-(Also, I quickly reset my cron job to run every five minutes; I found
-an hour was way too long for my taste. YMMV, of course)
+rm -Rf modules/aldc
+#remove module from .gitmodules
+#remove module from .git/config
+git add -u
+git commit -m "get thee hence, modules/aldc"
 
-Peter Harris
+I edited the two config files manually, but this can be scripted.
+git log -p shows a perfect diff including removal of the subproject
+commit, so I think the result of the above is fine. I think I'll work on
+a patch if nobody stops or beats me...
+
+Cheers,
+Michael
