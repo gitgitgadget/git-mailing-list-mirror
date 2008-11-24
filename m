@@ -1,206 +1,102 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [RFC PATCH 1/4] Refactor builtin-verify-tag.c
-Date: Mon, 24 Nov 2008 12:04:59 +0100 (CET)
-Message-ID: <alpine.DEB.1.00.0811241147490.30769@pacific.mpi-cbg.de>
-References: <1227497000-8684-1-git-send-email-deskinm@umich.edu> <1227497000-8684-2-git-send-email-deskinm@umich.edu>
+From: Karl =?iso-8859-1?Q?Hasselstr=F6m?= <kha@treskal.com>
+Subject: Re: Stgit and refresh-temp
+Date: Mon, 24 Nov 2008 12:16:35 +0100
+Message-ID: <20081124111635.GA31986@diana.vm.bytemark.co.uk>
+References: <9e4733910811040537p4e88c09an94370154eca12778@mail.gmail.com> <20081107054419.GA27146@diana.vm.bytemark.co.uk> <b0943d9e0811110959t4eb236bvd648fbca5e482911@mail.gmail.com> <20081112080103.GA25454@diana.vm.bytemark.co.uk> <b0943d9e0811120202wae88381j9fbc9f919b49dce5@mail.gmail.com> <20081112101439.GA27469@diana.vm.bytemark.co.uk> <b0943d9e0811231320s804eff0k5aecbac84cb2ffe7@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org
-To: Deskin Miller <deskinm@umich.edu>
-X-From: git-owner@vger.kernel.org Mon Nov 24 11:58:17 2008
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Jon Smirl <jonsmirl@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>
+To: Catalin Marinas <catalin.marinas@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Nov 24 12:18:24 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1L4Z8u-0005xD-Kb
-	for gcvg-git-2@gmane.org; Mon, 24 Nov 2008 11:58:13 +0100
+	id 1L4ZSC-0003Of-IB
+	for gcvg-git-2@gmane.org; Mon, 24 Nov 2008 12:18:09 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752933AbYKXK45 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 24 Nov 2008 05:56:57 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751643AbYKXK44
-	(ORCPT <rfc822;git-outgoing>); Mon, 24 Nov 2008 05:56:56 -0500
-Received: from mail.gmx.net ([213.165.64.20]:39190 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1752869AbYKXK4y (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 24 Nov 2008 05:56:54 -0500
-Received: (qmail invoked by alias); 24 Nov 2008 10:56:52 -0000
-Received: from pacific.mpi-cbg.de (EHLO pacific.mpi-cbg.de) [141.5.10.38]
-  by mail.gmx.net (mp022) with SMTP; 24 Nov 2008 11:56:52 +0100
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1/vLncm49HvPghI6zDuAFc/E5l0muLotZbv+Q+Ux6
-	T1AjfydR1df4im
-X-X-Sender: schindelin@pacific.mpi-cbg.de
-In-Reply-To: <1227497000-8684-2-git-send-email-deskinm@umich.edu>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.42
+	id S1751824AbYKXLQw convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 24 Nov 2008 06:16:52 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751806AbYKXLQw
+	(ORCPT <rfc822;git-outgoing>); Mon, 24 Nov 2008 06:16:52 -0500
+Received: from diana.vm.bytemark.co.uk ([80.68.90.142]:3218 "EHLO
+	diana.vm.bytemark.co.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751442AbYKXLQv (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 24 Nov 2008 06:16:51 -0500
+Received: from kha by diana.vm.bytemark.co.uk with local (Exim 3.36 #1 (Debian))
+	id 1L4ZQh-0008Qt-00; Mon, 24 Nov 2008 11:16:35 +0000
+Content-Disposition: inline
+In-Reply-To: <b0943d9e0811231320s804eff0k5aecbac84cb2ffe7@mail.gmail.com>
+X-Manual-Spam-Check: kha@treskal.com, clean
+User-Agent: Mutt/1.5.9i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/101599>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/101600>
 
-Hi,
+On 2008-11-23 21:20:59 +0000, Catalin Marinas wrote:
 
-On Sun, 23 Nov 2008, Deskin Miller wrote:
-
-> builtin-verify-tag.c didn't expose any of its functionality to be used
-> internally.  Refactor some of it into new verify-tag.c and expose
-> verify_tag_sha1 able to be called from elsewhere in git.
-> 
-> Signed-off-by: Deskin Miller <deskinm@umich.edu>
-> ---
->  Makefile             |    2 +
->  builtin-verify-tag.c |   61 ++-------------------------------------
->  verify-tag.c         |   77 ++++++++++++++++++++++++++++++++++++++++++++++++++
->  verify-tag.h         |   10 ++++++
->  4 files changed, 93 insertions(+), 57 deletions(-)
->  create mode 100644 verify-tag.c
->  create mode 100644 verify-tag.h
-
-I'll comment on the output of "format-patch -n -C -C" instead, as that 
-makes it much easier to see what you actually did:
-
->  Makefile                             |    2 +
->  builtin-verify-tag.c                 |   61 ++-------------------------------
->  builtin-verify-tag.c => verify-tag.c |   48 ++++-----------------------
->  verify-tag.h                         |   10 +++++
->  4 files changed, 23 insertions(+), 98 deletions(-)
->  copy builtin-verify-tag.c => verify-tag.c (56%)
->  create mode 100644 verify-tag.h
+> 2008/11/12 Karl Hasselstr=F6m <kha@treskal.com>:
 >
-> [...] 
-> diff --git a/builtin-verify-tag.c b/verify-tag.c
-> similarity index 56%
-> copy from builtin-verify-tag.c
-> copy to verify-tag.c
-> index 729a159..c9be331 100644
-> --- a/builtin-verify-tag.c
-> +++ b/verify-tag.c
-> @@ -1,18 +1,12 @@
->  /*
-> - * Builtin "git verify-tag"
-> + * Internals for "git verify-tag"
+> > On 2008-11-12 10:02:10 +0000, Catalin Marinas wrote:
+> >
+> > > I think it's just a matter of updating HEAD on the
+> > > "merge_conflict" path but I'm still not fully confident in
+> > > modifying the new lib infrastructure.
+> >
+> > You're probably right.
+>
+> The simple patch below seems to fix it the goto issue. Could you
+> please confirm its correctness (the patch might be wrapped by the web
+> interface)?
+>
+> diff --git a/stgit/lib/transaction.py b/stgit/lib/transaction.py
+> index 6623645..0f414d8 100644
+> --- a/stgit/lib/transaction.py
+> +++ b/stgit/lib/transaction.py
+> @@ -321,6 +321,7 @@ class StackTransaction(object):
+>          if any(getattr(cd, a) !=3D getattr(orig_cd, a) for a in
+>                 ['parent', 'tree', 'author', 'message']):
+>              comm =3D self.__stack.repository.commit(cd)
+> +            self.head =3D comm
+>          else:
+>              comm =3D None
+>              s =3D ' (unmodified)'
 
-Agree.
+OK, so I just took a quick look, and my understanding of the problem
+(without having had time to actually run any code to confirm) is that
+the following happens:
 
->   *
-> - * Copyright (c) 2007 Carlos Rica <jasampler@gmail.com>
-> + * Copyright (c) 2008 Deskin Miller <deskinm@umich.edu>
+  1. In push_patch(), we delay the final stack update (the update()
+     function) since we want to record the state just before the
+     conflict in the stack log.
 
-Disagree.
+  2. In run(), we update the branch head before running the delayed
+     stack update (self.__conflicting_push()).
 
-Even if Carlos seemed to stop his work on Git entirely, which I find 
-disappointing, you are _not_ free to pretend his work is yours.  And given 
-this diff:
+Your patch works around this problem by explicitly specifying what the
+branch head should be; this mechanism is used by undo etc. to be able
+to set the branch head to something that isn't the stack top.
 
->   *
-> - * Based on git-verify-tag.sh
->   */
->  #include "cache.h"
-> -#include "builtin.h"
-> -#include "tag.h"
-> +#include "object.h"
->  #include "run-command.h"
-> -#include <signal.h>
-> -
-> -static const char builtin_verify_tag_usage[] =
-> -		"git verify-tag [-v|--verbose] <tag>...";
->  
->  #define PGP_SIGNATURE "-----BEGIN PGP SIGNATURE-----"
->  
-> @@ -60,52 +54,24 @@ static int run_gpg_verify(const char *buf, unsigned long size, int verbose)
->  	return ret;
->  }
->  
-> -static int verify_tag(const char *name, int verbose)
-> +int verify_tag_sha1(const unsigned char *sha1, int verbose)
->  {
->  	enum object_type type;
-> -	unsigned char sha1[20];
->  	char *buf;
->  	unsigned long size;
->  	int ret;
->  
-> -	if (get_sha1(name, sha1))
-> -		return error("tag '%s' not found.", name);
-> -
->  	type = sha1_object_info(sha1, NULL);
->  	if (type != OBJ_TAG)
-> -		return error("%s: cannot verify a non-tag object of type %s.",
-> -				name, typename(type));
-> +		return error("Cannot verify a non-tag object of type %s.",
-> +				typename(type));
->  
->  	buf = read_sha1_file(sha1, &type, &size);
->  	if (!buf)
-> -		return error("%s: unable to read file.", name);
-> +		return error("Cnable to read file.");
->  
->  	ret = run_gpg_verify(buf, size, verbose);
->  
->  	free(buf);
->  	return ret;
->  }
-> -
-> -int cmd_verify_tag(int argc, const char **argv, const char *prefix)
-> -{
-> -	int i = 1, verbose = 0, had_error = 0;
-> -
-> -	git_config(git_default_config, NULL);
-> -
-> -	if (argc > 1 &&
-> -	    (!strcmp(argv[i], "-v") || !strcmp(argv[i], "--verbose"))) {
-> -		verbose = 1;
-> -		i++;
-> -	}
-> -
-> -	if (argc <= i)
-> -		usage(builtin_verify_tag_usage);
-> -
-> -	/* sometimes the program was terminated because this signal
-> -	 * was received in the process of writing the gpg input: */
-> -	signal(SIGPIPE, SIG_IGN);
-> -	while (i < argc)
-> -		if (verify_tag(argv[i++], verbose))
-> -			had_error = 1;
-> -	return had_error;
-> -}
+At first I thought it was something of a hack, and that the run()
+function should probably be modified to do something clever when
+self.__conflicting_push !=3D None, such as writing the branch head
+later. But there's a reason the checkout is done first in run(): it's
+the one and only thing that can go wrong, in which case we have to
+roll back. So I guess your solution is indeed at least as right and
+proper as anything I would have come up with.
 
-I think pretty much all you did was deleting (and thereby you do not gain 
-any copyright).
+But I would recommend a big fat comment just before the line you
+insert that explains why we have to set self.head hard in this case
+(namely, that the update() function is run _after_ checkout in run()).
 
-Except for one change: why on earth did you think it a good idea to 
-suppress telling the user the _name_ of the tag when an error occurs?
+With that comment,
 
-I, for one, would find it way less than helpful to read
+Acked-by: Karl Hasselstr=F6m <kha@treskal.com>
 
-	Cannot verify a non-tag object of type blob.
-
-than to read
-
-	refs/tags/dscho-key: cannot verify a non-tag object of type blob.
-
-Besides, I do not see where you warn that "tag <name> not found."  Changes 
-like this one need to be justified (by saying in the commit message where 
-the warning is already issued, and not letting the reviewer/reader leave 
-wondering).
-
-Please, next time you submit a patch like this, do the -C -C yourself.  
-Letting all the reviewers do it looks lousy on the overall time balance 
-sheet, and it may also lead to a potential reviewer preferring to do 
-something else instead.
-
-Now, Junio already said that he is not (yet) convinced that this change 
-should be in Git proper, rather than a hook, so it is up to you to decide 
-if you deem it important enough to try harder to convince people.
-
-I, for one, would think that it may be a good change: AFAIK only hard-core 
-gits use hooks, everybody else avoids them.  So if we deem verifying 
-signatures important enough, we might want to have better support for it 
-than some example hooks.
-
-So color me half-convinced.
-
-Ciao,
-Dscho
+--=20
+Karl Hasselstr=F6m, kha@treskal.com
+      www.treskal.com/kalle
