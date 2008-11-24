@@ -1,79 +1,86 @@
-From: "Jon Smirl" <jonsmirl@gmail.com>
-Subject: Re: Stgit and refresh-temp
-Date: Mon, 24 Nov 2008 09:11:51 -0500
-Message-ID: <9e4733910811240611x605b539am6a659ab29437035@mail.gmail.com>
-References: <9e4733910811040537p4e88c09an94370154eca12778@mail.gmail.com>
-	 <20081107054419.GA27146@diana.vm.bytemark.co.uk>
-	 <b0943d9e0811110959t4eb236bvd648fbca5e482911@mail.gmail.com>
-	 <20081112080103.GA25454@diana.vm.bytemark.co.uk>
-	 <b0943d9e0811120202wae88381j9fbc9f919b49dce5@mail.gmail.com>
-	 <20081112101439.GA27469@diana.vm.bytemark.co.uk>
-	 <b0943d9e0811231320s804eff0k5aecbac84cb2ffe7@mail.gmail.com>
-	 <20081124111635.GA31986@diana.vm.bytemark.co.uk>
+From: Peter Krefting <peter@softwolves.pp.se>
+Subject: How do I delete a git submodule?
+Date: Mon, 24 Nov 2008 15:44:17 +0100 (CET)
+Organization: /universe/earth/europe/norway/oslo
+Message-ID: <Pine.LNX.4.64.0811241537580.22925@ds9.cixit.se>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: "Catalin Marinas" <catalin.marinas@gmail.com>,
-	"Git Mailing List" <git@vger.kernel.org>
-To: "=?ISO-8859-1?Q?Karl_Hasselstr=F6m?=" <kha@treskal.com>
-X-From: git-owner@vger.kernel.org Mon Nov 24 15:13:16 2008
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+To: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Mon Nov 24 15:45:54 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1L4cBZ-0008TM-OH
-	for gcvg-git-2@gmane.org; Mon, 24 Nov 2008 15:13:10 +0100
+	id 1L4cgz-0004Vp-C5
+	for gcvg-git-2@gmane.org; Mon, 24 Nov 2008 15:45:37 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751570AbYKXOLx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 24 Nov 2008 09:11:53 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751856AbYKXOLx
-	(ORCPT <rfc822;git-outgoing>); Mon, 24 Nov 2008 09:11:53 -0500
-Received: from qw-out-2122.google.com ([74.125.92.27]:29760 "EHLO
-	qw-out-2122.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750983AbYKXOLw (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 24 Nov 2008 09:11:52 -0500
-Received: by qw-out-2122.google.com with SMTP id 3so352526qwe.37
-        for <git@vger.kernel.org>; Mon, 24 Nov 2008 06:11:51 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to
-         :subject:cc:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:references;
-        bh=g20mwv6YqOeppxUaZgr+cwCt6Rx5yZUauCSNlC7DXx4=;
-        b=ky9mSnt9IEUeQkjzYvR7e0gHIX0vkwSJC+hdDRUF85nLE9BNMreyt5BvOpVz5tnPT4
-         0y/iQiqmGsvstPjOAr5FXtIyqpxqwkPnj5Ol2a2U+J/1D5/1LJyyi7VH50It4jWviV4Z
-         rg+yTDVwjdymeQvQSuFwpj8f2UMAhvXdxyXtk=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
-         :content-type:content-transfer-encoding:content-disposition
-         :references;
-        b=qkVqSODX/5E9EJm+AzIsLexHhfoap+hjl9mb8yBOyh2zDBSkE9z6twwwYTW1QP1wpM
-         UusCrXz7jj1qWVzjf25/4C2tY4WGhHN86mzxHTAzcaHNtNI334ri2fFXDOypajJ/yIS3
-         T6tBeOUBpv4tQiNhNCFZ2Kqj+CCc8dDpbNo1I=
-Received: by 10.214.115.12 with SMTP id n12mr2037056qac.52.1227535911570;
-        Mon, 24 Nov 2008 06:11:51 -0800 (PST)
-Received: by 10.214.181.3 with HTTP; Mon, 24 Nov 2008 06:11:51 -0800 (PST)
-In-Reply-To: <20081124111635.GA31986@diana.vm.bytemark.co.uk>
-Content-Disposition: inline
+	id S1752692AbYKXOoV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 24 Nov 2008 09:44:21 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752687AbYKXOoV
+	(ORCPT <rfc822;git-outgoing>); Mon, 24 Nov 2008 09:44:21 -0500
+Received: from ds9.cixit.se ([193.15.169.228]:50144 "EHLO ds9.cixit.se"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752685AbYKXOoV (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 24 Nov 2008 09:44:21 -0500
+Received: from ds9.cixit.se (peter@localhost [127.0.0.1])
+	by ds9.cixit.se (8.12.3/8.12.3/Debian-7.2) with ESMTP id mAOEiIY1007522
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Mon, 24 Nov 2008 15:44:18 +0100
+Received: from localhost (peter@localhost)
+	by ds9.cixit.se (8.12.3/8.12.3/Debian-7.2) with ESMTP id mAOEiHtS007517;
+	Mon, 24 Nov 2008 15:44:17 +0100
+X-Authentication-Warning: ds9.cixit.se: peter owned process doing -bs
+Accept: text/plain
+X-Warning: Junk / bulk email will be reported
+X-Rating: This message is not to be eaten by humans
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-3.0 (ds9.cixit.se [127.0.0.1]); Mon, 24 Nov 2008 15:44:18 +0100 (CET)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/101605>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/101606>
 
-A useful future enhancement would be to adjust patches that insert
-adjacent areas so that they can pass each other in a pop/pop
-operation. The most common case of this being appends to end of file.
+Hi!
 
-This would be a form of automatic conflict resolution. The pending
-patch would be automatically corrected to resolve the adjacent insert
-conflict.  You might want a prompt asking if this was ok andt then
-remember the answer so that question is not asked repeatedly.
+I am trying to remove a submodule from a project, but can't figure out
+how to do it. With "modules/aldc" as a submodule:
 
-It's a mechanism to say that multiple insertions at point X in the
-original file don't matter in their order of insertion.
+  $ cat .gitmodules
+  [submodule "modules/aldc"]
+          path = modules/aldc
+          url = [...cut...]
+  [...more entries here...]
+  $ git status
+  [...cut...]
+  nothing to commit (working directory clean)
+
+Starting from a clean set-up.
+
+  $ git submodule rm modules/aldc
+  -ff17d9e0e76d01e99d26aa16b28cf327c5abb48a modules/aldc
+  $ git status
+  [...cut...]
+  nothing to commit (working directory clean)
+
+The obvious command didn't give any errors, but didn't do anything,
+either. (I notice that there is no mention of a "git submodule rm" on
+the git-submodule man page.)
+
+  $ git rm modules/aldc
+  rm 'modules/aldc'
+  fatal: git rm: modules/aldc: Permission denied
+  $ git status
+  [...cut...]
+  nothing to commit (working directory clean)
+
+Nope, that didn't work either.
+
+What am I missing?
+
+  $ git --version
+  git version 1.6.0.2.1172.ga5ed0
+
+(This is Git-1.6.0.2-preview20080923 on Windows XP)
 
 -- 
-Jon Smirl
-jonsmirl@gmail.com
+\\// Peter - http://www.softwolves.pp.se/
