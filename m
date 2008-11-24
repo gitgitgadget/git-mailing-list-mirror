@@ -1,146 +1,128 @@
-From: Andriy Gapon <avg@icyb.net.ua>
-Subject: Re: git-svn and svnsync
-Date: Mon, 24 Nov 2008 19:33:43 +0200
-Message-ID: <492AE577.30308@icyb.net.ua>
-References: <48F6F631.90709@icyb.net.ua> <492AA464.5070404@icyb.net.ua> <492AE13D.5070102@drmicha.warpmail.net>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: Hello All and Seeking Information
+Date: Mon, 24 Nov 2008 10:22:03 -0800 (PST)
+Message-ID: <m3wsetj87v.fsf@localhost.localdomain>
+References: <c115fd3c0811240828y61e7bfecka1cacdd37865a4e8@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: multipart/mixed;
- boundary="------------070901020208010709070007"
+Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-To: Michael J Gruber <git@drmicha.warpmail.net>
-X-From: git-owner@vger.kernel.org Mon Nov 24 18:35:09 2008
+To: "Tim Visher" <tim.visher@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Nov 24 19:23:33 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1L4fKz-0005G8-71
-	for gcvg-git-2@gmane.org; Mon, 24 Nov 2008 18:35:05 +0100
+	id 1L4g5s-00071q-Q8
+	for gcvg-git-2@gmane.org; Mon, 24 Nov 2008 19:23:33 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753084AbYKXRdu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 24 Nov 2008 12:33:50 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752841AbYKXRdt
-	(ORCPT <rfc822;git-outgoing>); Mon, 24 Nov 2008 12:33:49 -0500
-Received: from citadel.icyb.net.ua ([212.40.38.140]:2719 "EHLO
-	citadel.icyb.net.ua" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751178AbYKXRdt (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 24 Nov 2008 12:33:49 -0500
-Received: from odyssey.starpoint.kiev.ua (alpha-e.starpoint.kiev.ua [212.40.38.101])
-	by citadel.icyb.net.ua (8.8.8p3/ICyb-2.3exp) with ESMTP id TAA19138;
-	Mon, 24 Nov 2008 19:33:43 +0200 (EET)
-	(envelope-from avg@icyb.net.ua)
-User-Agent: Thunderbird 2.0.0.17 (X11/20081106)
-In-Reply-To: <492AE13D.5070102@drmicha.warpmail.net>
+	id S1751150AbYKXSWK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 24 Nov 2008 13:22:10 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751128AbYKXSWJ
+	(ORCPT <rfc822;git-outgoing>); Mon, 24 Nov 2008 13:22:09 -0500
+Received: from ti-out-0910.google.com ([209.85.142.184]:17887 "EHLO
+	ti-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750890AbYKXSWH (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 24 Nov 2008 13:22:07 -0500
+Received: by ti-out-0910.google.com with SMTP id b6so1399736tic.23
+        for <git@vger.kernel.org>; Mon, 24 Nov 2008 10:22:05 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:received:received
+         :x-authentication-warning:to:cc:subject:references:from:in-reply-to
+         :message-id:lines:user-agent:mime-version:content-type:date;
+        bh=rK5Fl/4mCRCyp3pkDd++t1sylnvT/ly5u21Z7+oAKIg=;
+        b=jJDxr6BOwyNoJzrp/V0gyTwzoDz7vrIb/7WU2ol9gaLkvaF4FJvmtUMbOcscp1Nbhj
+         16kpeVGbDRoY5FcBU1ZwBuRvJftNgCVm1kauzNi/ta0XpLkWFPbSVJcsknGbyHflMqZY
+         +BzZ6gTjROLob0mWQfQUJFSthDSlS+smPe0mo=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=x-authentication-warning:to:cc:subject:references:from:in-reply-to
+         :message-id:lines:user-agent:mime-version:content-type:date;
+        b=xC5fT1mM0XbxS8oufSfKh6s2M4TdHL06xwi+4nvWs4xqWDmgu4JvZOOGHxhDsHx5dA
+         KSYD6NSU6GNZNkdmLhTXtPWUWJG52bvsvZ7siEKSTR1LIeNOD+UUNO76NCadMSawMnoy
+         5EHnJqkw0wcG6Pog1IzYHXR7Qt6yNKanpa7iQ=
+Received: by 10.110.42.17 with SMTP id p17mr1789077tip.24.1227550925447;
+        Mon, 24 Nov 2008 10:22:05 -0800 (PST)
+Received: from localhost.localdomain (abxd219.neoplus.adsl.tpnet.pl [83.8.253.219])
+        by mx.google.com with ESMTPS id w5sm1448603tib.14.2008.11.24.10.21.59
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Mon, 24 Nov 2008 10:22:03 -0800 (PST)
+Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
+	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id mAOILZIm021514;
+	Mon, 24 Nov 2008 19:21:46 +0100
+Received: (from jnareb@localhost)
+	by localhost.localdomain (8.13.4/8.13.4/Submit) id mAOILOgo021510;
+	Mon, 24 Nov 2008 19:21:24 +0100
+X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
+In-Reply-To: <c115fd3c0811240828y61e7bfecka1cacdd37865a4e8@mail.gmail.com>
+User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/101619>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/101620>
 
-This is a multi-part message in MIME format.
---------------070901020208010709070007
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+"Tim Visher" <tim.visher@gmail.com> writes:
 
-on 24/11/2008 19:15 Michael J Gruber said the following:
-> Andriy Gapon venit, vidit, dixit 24.11.2008 13:56:
->> on 16/10/2008 11:07 Andriy Gapon said the following:
->>> I did the following:
->>> 1. mirror svn repository using svnsync
->>> 2. clone the mirror with git-svn --use-svnsync-props and some tweaking[*]
->>> 3. run git svn info in the clone
->>> 4. get error "Unable to determine upstream SVN information from working
->>> tree history"
->>>
->>> git svn log and git svn rebase do not work either.
->>> git log does work.
->>>
->>> I have git version 1.6.0.2 (from FreeBSD ports).
->>> [*] About the tweaking - I manually massaged config file to get the
->>> branches I was interested in, so .git/config is this:
->>> [core]
->>>         repositoryformatversion = 0
->>>         filemode = true
->>>         bare = false
->>>         logallrefupdates = true
->>> [svn-remote "svn"]
->>>         useSvnsyncProps = 1
->>>         url = file:///system/devel/svn/base
->>>         fetch = head:refs/remotes/trunk
->>>         fetch = stable/6:refs/remotes/stable_6
->>>         fetch = stable/7:refs/remotes/stable_7
->>>         fetch = releng/6.3:refs/remotes/releng_6_3
->>>         fetch = releng/6.4:refs/remotes/releng_6_4
->>>         fetch = releng/7.0:refs/remotes/releng_7_0
->>>         fetch = release/6.3.0:refs/remotes/release_6_3_0
->>>         fetch = release/7.0.0:refs/remotes/release_7_0_0
->>>
->>> This is .git/svn/.metadata:
->>> ; This file is used internally by git-svn
->>> ; You should not have to edit it
->>> [svn-remote "svn"]
->>>         reposRoot = file:///system/devel/svn/base
->>>         uuid = ccf9f872-aa2e-dd11-9fc8-001c23d0bc1f
->>>         svnsync-uuid = ccf9f872-aa2e-dd11-9fc8-001c23d0bc1f
->>>         svnsync-url = svn://svn.freebsd.org/base
->>>
->>> So you can see the original svn repository URL.
->>>
->>> git log reports svn info like the following:
->>> git-svn-id: svn://svn.freebsd.org/base/stable/7@183898
->>> ccf9f872-aa2e-dd11-9fc8-001c23d0bc1f
->>>
->>> It seems that the problem is that the code in find_by_url() and/or
->>> read_all_remotes() subroutines (in git-svn.perl) are not aware of
->>> svnsync and do not realize an URL in logs and URL in svn-remote are
->>> different.
->>> BTW, I see that there is some special svm logic in read_all_remotes.
->>>
->>> Thank you very much for any help in advance.
->>>
->> Anyone?
->> I wonder if this is my local problem/misconfiguration or an issue with
->> git-svn.
+> Hello Everyone,
 > 
-> Same happens here, so it's a general issue ;)
+> I'm new to the list so I figured I'd introduce myself instead of just
+> wall-flowering... "Hello"... :)
 > 
-> I think I encountered that before and ended up experimenting with
-> git-svn cloning from a svnsync source until I found the final config,
-> with which I git-svn cloned directly from upstream, so that I had to
-> wait only twice.
+> Anyway, I really like a lot of the concepts found in Git and the
+> reported power and flexibility of it are very intriguing.  However,
+> there are some issues that I can't wrap my head around, such as how
+> you can guarantee that all developers are working on the same
+> code-base without a central repo.  I would classify a lot of my issues
+> as paradigm rather than technically related. I understand a lot of
+> Git's underpinnings and the basic usage of it, I just can't wrap my
+> head around the higher-order parts of it.
 
-I hacked together an ugly patch that replaces svm support with snvsync
-support. This works for me, not sure if it will be useful in general.
+The idea behind Git repository format is content adressed filesystem,
+which if I remember correctly was taken from Monotone (well, not
+addressed by actual content, but SHA-1 cryptographic hash of
+content+type). So if there is 134b8687c59e65ce06562ffb0e8be63ab7aa618b
+object in some repository, it is the same object in all repositories,
+even if it was created independently. That is one thing.
 
+The other thing is that typical workflow calls for downloading changes
+(fetching in git jargon) from some 'upstream' repository, the official
+repository (one of official repositories) with code you are supposed
+to base your changes upon.
+
+Also easy to create branches, and very good support for merging (and
+rebasing) makes it possible and easy to join (merge) lines of
+development done independently from some older point of history. So
+that even if you are not working on the same code-base I can
+incorporate your changes, and you can incorporate mine.
+
+> 
+> I've done some Googling and I can't find a good 'Introduction to
+> Distributed SCM Concepts for Centralized SCM Developers' article yet.
+> Ideally, this would be an article all about the high-level thought
+> processes that go into utilizing Distributed SCM in a team environment
+> where having a single canonical representation of your project that
+> all developers are working off of is important.
+
+See http://git.or.cz/gitwiki/GitDocumentation (and also main page of
+this git wiki, Documentation mentioned on git homepage
+(http://git.or.cz) including "Git User's Manual", and "The Git
+Community Book" at http://book.git-scm.com
+
+> P.S. Anyone want to tell me why the Git Mailing List was set-up
+> monolithically rather than the typical git-dev, git-user, git-admin,
+> git-x etc.?  I don't plan on hacking on Git so having the Dev mail in
+> the list is just noise for me.  I'm sure other people think that too.
+> Just wondering.
+
+Because this Git is not so large project, and traffic on git mailing
+list is not so large to support split? IIRC there was "Git for Human
+Beings" aka git-users Google Group, but it doesn't seem to be there
+any more.  Also having common mailing list allow for better contact
+between developers and git users (which hopefully would allow us to
+avoid comon pitfalls with 'developers for developers' approach).
 
 -- 
-Andriy Gapon
-
---------------070901020208010709070007
-Content-Type: text/plain;
- name="git-svn.patch"
-Content-Transfer-Encoding: base64
-Content-Disposition: attachment;
- filename="git-svn.patch"
-
-LS0tIGdpdC1zdm4JMjAwOC0xMS0xMSAxMDoyMDozOC43MTQ2MjA0NDIgKzAyMDAKKysrIGdp
-dC1zdm4JMjAwOC0xMS0wNyAxNzoxMDo0OS4yNDU2ODEyMTMgKzAyMDAKQEAgLTE0MzMsNyAr
-MTQzMyw3IEBACiBzdWIgcmVhZF9hbGxfcmVtb3RlcyB7CiAJbXkgJHIgPSB7fTsKIAlteSAk
-dXNlX3N2bV9wcm9wcyA9IGV2YWwgeyBjb21tYW5kX29uZWxpbmUocXcvY29uZmlnIC0tYm9v
-bAotCSAgICBzdm4udXNlU3ZtUHJvcHMvKSB9OworCSAgICBzdm4udXNlU3Zuc3luY1Byb3Bz
-LykgfTsKIAkkdXNlX3N2bV9wcm9wcyA9ICR1c2Vfc3ZtX3Byb3BzIGVxICd0cnVlJyBpZiAk
-dXNlX3N2bV9wcm9wczsKIAlmb3JlYWNoIChncmVwIHsgcy9ec3ZuLXJlbW90ZVwuLy8gfSBj
-b21tYW5kKHF3L2NvbmZpZyAtbC8pKSB7CiAJCWlmIChtIV4oLispXC5mZXRjaD1ccyooLiop
-XHMqOlxzKiguKylccyokISkgewpAQCAtMTQ0NSw3ICsxNDQ1LDcgQEAKIAkJCSRsb2NhbF9y
-ZWYgPX4gc3teL317fTsKIAkJCSRyLT57JHJlbW90ZX0tPntmZXRjaH0tPnskbG9jYWxfcmVm
-fSA9ICRyZW1vdGVfcmVmOwogCQkJJHItPnskcmVtb3RlfS0+e3N2bX0gPSB7fSBpZiAkdXNl
-X3N2bV9wcm9wczsKLQkJfSBlbHNpZiAobSFeKC4rKVwudXNlc3ZtcHJvcHM9XHMqKC4qKVxz
-KiQhKSB7CisJCX0gZWxzaWYgKG0hXiguKylcLnVzZXN2bnN5bmNwcm9wcz1ccyooLiopXHMq
-JCEpIHsKIAkJCSRyLT57JDF9LT57c3ZtfSA9IHt9OwogCQl9IGVsc2lmIChtIV4oLispXC51
-cmw9XHMqKC4qKVxzKiQhKSB7CiAJCQkkci0+eyQxfS0+e3VybH0gPSAkMjsKQEAgLTE0NzEs
-OSArMTQ3MSw4IEBACiAJCQkJbXkgJHNlY3Rpb24gPSAic3ZuLXJlbW90ZS4kXyI7CiAJCQkJ
-JHN2bSA9IHsKIAkJCQkJc291cmNlID0+IHRtcF9jb25maWcoJy0tZ2V0JywKLQkJCQkJICAg
-ICIkc2VjdGlvbi5zdm0tc291cmNlIiksCi0JCQkJCXJlcGxhY2UgPT4gdG1wX2NvbmZpZygn
-LS1nZXQnLAotCQkJCQkgICAgIiRzZWN0aW9uLnN2bS1yZXBsYWNlIiksCisJCQkJCSAgICAi
-JHNlY3Rpb24uc3Zuc3luYy11cmwiKSwKKwkJCQkJcmVwbGFjZSA9PiAnJywKIAkJCQl9CiAJ
-CQl9OwogCQkJJHItPnskX30tPntzdm19ID0gJHN2bTsK
---------------070901020208010709070007--
+Jakub Narebski
+Poland
+ShadeHawk on #git
