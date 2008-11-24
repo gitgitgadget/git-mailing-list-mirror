@@ -1,71 +1,60 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [RFC PATCH 0/4] Teach git fetch to verify signed tags
- automatically
-Date: Sun, 23 Nov 2008 21:30:56 -0800
-Message-ID: <7vmyfpn10v.fsf@gitster.siamese.dyndns.org>
-References: <1227497000-8684-1-git-send-email-deskinm@umich.edu>
- <7v4p1xohbw.fsf@gitster.siamese.dyndns.org>
+From: Matt McCutchen <matt@mattmccutchen.net>
+Subject: [PATCH] git checkout: don't warn about unborn branch if -f is
+	already passed
+Date: Mon, 24 Nov 2008 01:55:22 -0500
+Message-ID: <1227509722.32583.0.camel@mattlaptop2.local>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Deskin Miller <deskinm@umich.edu>
-X-From: git-owner@vger.kernel.org Mon Nov 24 06:33:01 2008
+Content-Type: text/plain
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Nov 24 07:56:51 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1L4U42-00022x-81
-	for gcvg-git-2@gmane.org; Mon, 24 Nov 2008 06:32:50 +0100
+	id 1L4VNK-0007o3-8p
+	for gcvg-git-2@gmane.org; Mon, 24 Nov 2008 07:56:50 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750722AbYKXFbc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 24 Nov 2008 00:31:32 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750719AbYKXFbc
-	(ORCPT <rfc822;git-outgoing>); Mon, 24 Nov 2008 00:31:32 -0500
-Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:59618 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750704AbYKXFbb (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 24 Nov 2008 00:31:31 -0500
-Received: from localhost.localdomain (unknown [127.0.0.1])
-	by b-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id 1C6821713A;
-	Mon, 24 Nov 2008 00:31:30 -0500 (EST)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES256-SHA (256/256 bits)) (No client certificate requested) by
- b-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTPSA id 43756170C5; Mon,
- 24 Nov 2008 00:30:57 -0500 (EST)
-In-Reply-To: <7v4p1xohbw.fsf@gitster.siamese.dyndns.org> (Junio C. Hamano's
- message of "Sun, 23 Nov 2008 20:53:23 -0800")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: 25A47D40-B9E9-11DD-A2A4-F83E113D384A-77302942!a-sasl-quonix.pobox.com
+	id S1751410AbYKXGze (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 24 Nov 2008 01:55:34 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751372AbYKXGze
+	(ORCPT <rfc822;git-outgoing>); Mon, 24 Nov 2008 01:55:34 -0500
+Received: from mailbigip.dreamhost.com ([208.97.132.5]:54671 "EHLO
+	jankymail-a5.g.dreamhost.com" rhost-flags-OK-OK-OK-FAIL)
+	by vger.kernel.org with ESMTP id S1751087AbYKXGze (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 24 Nov 2008 01:55:34 -0500
+Received: from [129.2.207.232] (ml2.student.umd.edu [129.2.207.232])
+	by jankymail-a5.g.dreamhost.com (Postfix) with ESMTP id E9A2D13EA9;
+	Sun, 23 Nov 2008 22:55:32 -0800 (PST)
+X-Mailer: Evolution 2.22.3.1 (2.22.3.1-1.fc9) 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/101590>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/101591>
 
-Junio C Hamano <gitster@pobox.com> writes:
+I think it's unnecessary to warn that the checkout has been forced due to an
+unborn current branch if -f has been explicitly passed.  For one project, I am
+using git-new-workdir to create workdirs from a bare repository whose HEAD is
+set to an unborn branch, and this warning started to irritate me.
 
-> Deskin Miller <deskinm@umich.edu> writes:
->
->> It struck me a while back when I fetched a new tagged release from git.git that
->> if I wanted to verify the tag's signature, I'd have to issue another command to
->> do so.  Shouldn't git be able to do that for me automatically, when it fetches
->> signed tags?  Now it does.  Also, 'git remote update' gets this for free.
->
-> I think this should be done inside your own hook.  Not interested at all
-> in a solution to touch builtin-fetch.c, unless if the patch is about
-> adding a new hook so that people with other needs can use it as well.
+Signed-off-by: Matt McCutchen <matt@mattmccutchen.net>
+---
+ builtin-checkout.c |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
 
-... or a much stronger case can be made why this shouldn't be done in a
-hook.
-
-I realize "not interested at all" was a bit too strong, so I am trying to
-rephrase it here.  The cycle that begins with an RFC that leads to
-discussion and review is about clarifying the rationale and design
-incrementally, so please do not get offended by my no, and sorry for using
-unnecessarily strong wording.
-
-What I meant was more like "The justification as given in the message does
-not interest me in the patch at all as it stands.  I do not understand why
-this has to be done as a patch to git-fetch itself, not in a hook script,
-or why doing it inside git-fetch is a better approach than doing it in a
-hook (if there already is a hook mechanism to do this)".
+diff --git a/builtin-checkout.c b/builtin-checkout.c
+index 464fd25..7f3bd7b 100644
+--- a/builtin-checkout.c
++++ b/builtin-checkout.c
+@@ -553,7 +553,7 @@ static int switch_branches(struct checkout_opts *opts, struct branch_info *new)
+ 	if (!opts->quiet && !old.path && old.commit && new->commit != old.commit)
+ 		describe_detached_head("Previous HEAD position was", old.commit);
+ 
+-	if (!old.commit) {
++	if (!old.commit && !opts->force) {
+ 		if (!opts->quiet) {
+ 			fprintf(stderr, "warning: You appear to be on a branch yet to be born.\n");
+ 			fprintf(stderr, "warning: Forcing checkout of %s.\n", new->name);
+-- 
+1.6.0.2.593.g91df
