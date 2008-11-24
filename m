@@ -1,109 +1,89 @@
-From: =?utf-8?q?Uwe=20Kleine-K=C3=B6nig?= 
-	<u.kleine-koenig@pengutronix.de>
-Subject: [PATCH] tg export: implement skipping empty patches for quilt mode
-Date: Mon, 24 Nov 2008 22:56:50 +0100
-Message-ID: <1227563810-5426-1-git-send-email-u.kleine-koenig@pengutronix.de>
+From: Jean-Luc Herren <jlh@gmx.ch>
+Subject: Confusion with git rebase -i
+Date: Tue, 25 Nov 2008 00:02:05 +0100
+Message-ID: <492B326D.1050901@gmx.ch>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: "martin f. krafft" <madduck@debian.org>,
-	Petr Baudis <pasky@suse.cz>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Nov 24 23:29:15 2008
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+To: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Tue Nov 25 00:03:35 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1L4jvc-0004bu-1W
-	for gcvg-git-2@gmane.org; Mon, 24 Nov 2008 23:29:12 +0100
+	id 1L4kSq-000897-Md
+	for gcvg-git-2@gmane.org; Tue, 25 Nov 2008 00:03:33 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753192AbYKXW1z convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 24 Nov 2008 17:27:55 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752888AbYKXW1z
-	(ORCPT <rfc822;git-outgoing>); Mon, 24 Nov 2008 17:27:55 -0500
-Received: from metis.ext.pengutronix.de ([92.198.50.35]:53871 "EHLO
-	metis.ext.pengutronix.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752637AbYKXW1y (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 24 Nov 2008 17:27:54 -0500
-X-Greylist: delayed 1843 seconds by postgrey-1.27 at vger.kernel.org; Mon, 24 Nov 2008 17:27:53 EST
-Received: from themisto.ext.pengutronix.de ([92.198.50.58] helo=localhost.localdomain)
-	by metis.ext.pengutronix.de with esmtp (Exim 4.63)
-	(envelope-from <u.kleine-koenig@pengutronix.de>)
-	id 1L4jQK-0007v9-NM; Mon, 24 Nov 2008 22:57:08 +0100
-X-Mailer: git-send-email 1.5.6.5
-X-SA-Exim-Connect-IP: 92.198.50.58
-X-SA-Exim-Mail-From: u.kleine-koenig@pengutronix.de
-X-Spam-Checker-Version: SpamAssassin 3.2.4 (2008-01-01) on
-	metis.extern.pengutronix.de
-X-Spam-Level: 
-X-Spam-Status: No, score=-0.5 required=4.5 tests=BAYES_00,HELO_LH_LD,
-	RCVD_IN_PBL shortcircuit=no autolearn=no version=3.2.4
-X-SA-Exim-Version: 4.2.1 (built Tue, 09 Jan 2007 17:23:22 +0000)
-X-SA-Exim-Scanned: Yes (on metis.ext.pengutronix.de)
-X-PTX-Original-Recipient: git@vger.kernel.org
+	id S1752547AbYKXXCL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 24 Nov 2008 18:02:11 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752801AbYKXXCK
+	(ORCPT <rfc822;git-outgoing>); Mon, 24 Nov 2008 18:02:10 -0500
+Received: from mail.gmx.net ([213.165.64.20]:59926 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1752367AbYKXXCJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 24 Nov 2008 18:02:09 -0500
+Received: (qmail invoked by alias); 24 Nov 2008 23:02:06 -0000
+Received: from 68-13.78-83.cust.bluewin.ch (EHLO [192.168.123.204]) [83.78.13.68]
+  by mail.gmx.net (mp048) with SMTP; 25 Nov 2008 00:02:06 +0100
+X-Authenticated: #14737133
+X-Provags-ID: V01U2FsdGVkX19NF2J9pZdNu9AZzGktIKqlUjwTijBiWlgxVcEv+u
+	SNs5/OLVbZ4m/z
+User-Agent: Thunderbird 2.0.0.18 (X11/20081123)
+X-Enigmail-Version: 0.95.7
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.6
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/101630>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/101631>
 
-Signed-off-by: Uwe Kleine-K=C3=B6nig <u.kleine-koenig@pengutronix.de>
-Cc: martin f. krafft <madduck@debian.org>
-Cc: Petr Baudis <pasky@suse.cz>
----
- tg-export.sh |   18 ++++++++++++++----
- 1 files changed, 14 insertions(+), 4 deletions(-)
+Hi list!
 
-diff --git a/tg-export.sh b/tg-export.sh
-index 52af88d..6f1d226 100644
---- a/tg-export.sh
-+++ b/tg-export.sh
-@@ -7,6 +7,7 @@ name=3D
- branches=3D
- output=3D
- driver=3Dcollapse
-+skipempty=3Dfalse
-=20
-=20
- ## Parse options
-@@ -20,6 +21,8 @@ while [ -n "$1" ]; do
- 		driver=3Dquilt;;
- 	--collapse)
- 		driver=3Dcollapse;;
-+	-n)
-+		skipempty=3Dtrue;;
- 	-*)
- 		echo "Usage: tg [...] export ([--collapse] NEWBRANCH | [-b BRANCH1,B=
-RANCH2...] --quilt DIRECTORY)" >&2
- 		exit 1;;
-@@ -34,6 +37,9 @@ done
- [ -z "$branches" -o "$driver" =3D "quilt" ] ||
- 	die "-b works only with the quilt driver"
-=20
-+! "$skipempty" || [ "$driver" =3D "quilt" ] ||
-+	die "-n is only implemented for the quilt driver"
-+
- if [ -z "$branches" ]; then
- 	# this check is only needed when no branches have been passed
- 	name=3D"$(git symbolic-ref HEAD | sed 's#^refs/heads/##')"
-@@ -140,10 +146,14 @@ quilt()
- 		return
- 	fi
-=20
--	echo "Exporting $_dep"
--	mkdir -p "$(dirname "$filename")"
--	$tg patch "$_dep" >"$filename"
--	echo "$_dep.diff -p1" >>"$output/series"
-+	if "$skipempty" && branch_empty "$_dep"; then
-+		echo "Skip empty patch $_dep";
-+	else
-+		echo "Exporting $_dep"
-+		mkdir -p "$(dirname "$filename")"
-+		$tg patch "$_dep" >"$filename"
-+		echo "$_dep.diff -p1" >>"$output/series"
-+	fi
- }
-=20
-=20
---=20
-1.5.6.5
+I often edit recent commits I haven't pushed out yet using "git
+rebase -i HEAD~5".  And it's very helpful that whenever "git
+rebase" stops, it tells me what to do next.  So normally it stops
+and tells me that I can now ammend the commit and then run "git
+rebase --continue", or if a conflict happens, it tells to fix
+that, "git add", "git rebase --continue".  But I stumbled over a
+situation where doing what it says doesn't do what I want.
+
+Let's say my HEAD commit is fine, but I want to edit HEAD~1 and
+HEAD~2, so I run "git rebase -i HEAD~3" and change 'pick' to
+'edit' on the two lines I'm interested in.  It stops after the
+first commit, letting me amend it and then I do "git rebase
+--continue".  Unfortunately my fix to the first commit conflicts
+with the second commit, and I get this:
+
+    Auto-merged filename
+    CONFLICT (content): Merge conflict in filename
+    Automatic cherry-pick failed.  After resolving the conflicts,
+    mark the corrected paths with 'git add <paths>', and
+    run 'git rebase --continue'
+    Could not apply abcdefa... Commit message
+
+Reading this message, I understand this isn't yet my chance to
+amend the second commit, this is merely a rebase conflict I need
+to fix before I can proceed.  So I do what it says and fix only
+the conflict and do "git add" and "git rebase --continue", but
+then to my surprise I now won't get a chance to edit the second
+commit.
+
+What I have to do instead in that situation, is to resolve the
+conflict *and also* add my fix to the second commit, and then
+remember to do "git add" and "git commit" *without the --amend*.
+And then finally "git rebase --continue".  But it doesn't tell me
+any of that...
+
+I don't know if the message above is wrong, or if there's a bug
+that just prevents it to stop again after a conflict of a commit
+that has been marked "edit".  Though stopping twice (once to
+resolve conflict, once to amend the commit) at almost the same
+place can be just as confusing, so fixing the conflict *and*
+introduce my change to the commit at once is fine, but then it
+should say so, or I'll be confused.
+
+Or am I missing something?  Using git 1.6.0.4.
+
+Thanks,
+jlh
