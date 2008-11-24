@@ -1,46 +1,92 @@
-From: Karl =?iso-8859-1?Q?Hasselstr=F6m?= <kha@treskal.com>
-Subject: Re: [StGit PATCH] stgit.el: Show running commands
-Date: Mon, 24 Nov 2008 16:34:00 +0100
-Message-ID: <20081124153400.GA3094@diana.vm.bytemark.co.uk>
-References: <20081124120136.9163.70947.stgit@krank>
+From: "Peter Harris" <git@peter.is-a-geek.org>
+Subject: Re: Best practices for maintaining a subversion mirror?
+Date: Mon, 24 Nov 2008 10:37:35 -0500
+Message-ID: <eaa105840811240737t37578c8dp77adf5da27ac7e45@mail.gmail.com>
+References: <5641883d0811240255i21aef729ld202bd5a3211dad9@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: catalin.marinas@gmail.com, git@vger.kernel.org
-To: David =?iso-8859-1?Q?K=E5gedal?= <davidk@lysator.liu.se>
-X-From: git-owner@vger.kernel.org Mon Nov 24 16:35:47 2008
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: "Oliver Charles" <oliver.g.charles@googlemail.com>
+X-From: git-owner@vger.kernel.org Mon Nov 24 16:39:27 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1L4dT8-0007b4-JI
-	for gcvg-git-2@gmane.org; Mon, 24 Nov 2008 16:35:23 +0100
+	id 1L4dWY-0000m6-V5
+	for gcvg-git-2@gmane.org; Mon, 24 Nov 2008 16:38:55 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753180AbYKXPeH convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 24 Nov 2008 10:34:07 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753258AbYKXPeG
-	(ORCPT <rfc822;git-outgoing>); Mon, 24 Nov 2008 10:34:06 -0500
-Received: from diana.vm.bytemark.co.uk ([80.68.90.142]:4706 "EHLO
-	diana.vm.bytemark.co.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753180AbYKXPeF (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 24 Nov 2008 10:34:05 -0500
-Received: from kha by diana.vm.bytemark.co.uk with local (Exim 3.36 #1 (Debian))
-	id 1L4dRo-0000pI-00; Mon, 24 Nov 2008 15:34:00 +0000
+	id S1752389AbYKXPhj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 24 Nov 2008 10:37:39 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752225AbYKXPhi
+	(ORCPT <rfc822;git-outgoing>); Mon, 24 Nov 2008 10:37:38 -0500
+Received: from yw-out-2324.google.com ([74.125.46.28]:40692 "EHLO
+	yw-out-2324.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751920AbYKXPhi (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 24 Nov 2008 10:37:38 -0500
+Received: by yw-out-2324.google.com with SMTP id 9so845265ywe.1
+        for <git@vger.kernel.org>; Mon, 24 Nov 2008 07:37:36 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:sender
+         :to:subject:cc:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:references
+         :x-google-sender-auth;
+        bh=TkwuVVCSMK3H+6aGMFDUgy+pvL/uQF1OJ6UQhuQ0Wu8=;
+        b=iVt222Ntw0nCyrFSYJIaNEImxqgM88OwkCCHsJbUDNvm9JfUgBKCYKH3k7yN755OCJ
+         NilEdJhqDUIsltS4qZY8Z6zahSOS7ADTmCOQXy4depioLkiUhAjmLBBC0rC5kH1BE2je
+         znKxpRiid0g97saqPQl3Z+YjKs+sLijPUQCoo=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:sender:to:subject:cc:in-reply-to:mime-version
+         :content-type:content-transfer-encoding:content-disposition
+         :references:x-google-sender-auth;
+        b=ZZR4MsGRdOIgvFHjnNcb2gBbbmmss230CltZOsvihDfy8+tTCXYYvbCKSNbtHF07C0
+         XFZejUZV2w0EApPa+8EAsnOe1oSpTTjviXaSAVWPFvj5v3eVGKLFrtHeclKJtvA1Aiti
+         OpNGLFkz8DmypbK33f4ovDaSETIVccYHv8naI=
+Received: by 10.65.214.19 with SMTP id r19mr3441191qbq.20.1227541055938;
+        Mon, 24 Nov 2008 07:37:35 -0800 (PST)
+Received: by 10.65.177.2 with HTTP; Mon, 24 Nov 2008 07:37:35 -0800 (PST)
+In-Reply-To: <5641883d0811240255i21aef729ld202bd5a3211dad9@mail.gmail.com>
 Content-Disposition: inline
-In-Reply-To: <20081124120136.9163.70947.stgit@krank>
-X-Manual-Spam-Check: kha@treskal.com, clean
-User-Agent: Mutt/1.5.9i
+X-Google-Sender-Auth: 36f4c7756560241d
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/101608>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/101609>
 
-Thanks, looks useful.
+On Mon, Nov 24, 2008 at 5:55 AM, Oliver Charles wrote:
+> This seems to be working nicely as a readonly interface, but when I
+> clone this repository (git clone git://foo/repo.git) - served via
+> git-daemon - I can't seem to get svn rebase to work on it, which means
+> I can't dcommit my changes back to Subversion.
+>
+> Am I doing things generally the right way, or am I doing it completely
+> wrong? :-) Any tips appreciated!
 
-Sorry I haven't taken the time to apply & push out your patches. I'm
-hoping it'll happen Real Soon Now(tm) ...
+First, make sure you aren't using the --no-metadata flag. git svn
+rebase needs that metadata to rebuild its index.
 
---=20
-Karl Hasselstr=F6m, kha@treskal.com
-      www.treskal.com/kalle
+Second, a simple "git clone" will not set up the svn remotes; you have
+to do that by hand. This is what I do when I clone my svn mirror:
+
+mkdir project
+cd project
+git init
+git remote add origin git://mirror/project
+git config --add remote.origin.fetch +refs/remotes/*:refs/remotes/*
+git fetch
+git svn init -Ttrunk svn://upstream/project
+git config --add svn-remote.svn.fetch branches/foo:refs/remotes/foo
+git config --add svn-remote.svn.fetch branches/bar:refs/remotes/bar
+git reset --hard trunk
+git svn rebase
+
+Once you have it nailed down, you can put it into a script so all your
+co-workers don't have to do that by hand too.
+
+(Also, I quickly reset my cron job to run every five minutes; I found
+an hour was way too long for my taste. YMMV, of course)
+
+Peter Harris
