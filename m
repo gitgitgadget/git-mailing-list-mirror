@@ -1,63 +1,73 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: javagit
-Date: Tue, 25 Nov 2008 01:46:47 +0100 (CET)
-Message-ID: <alpine.DEB.1.00.0811250146140.30769@pacific.mpi-cbg.de>
-References: <alpine.DEB.1.00.0811250036560.30769@pacific.mpi-cbg.de> <20081124235900.GG2932@spearce.org>
+From: Christian Couder <chriscool@tuxfamily.org>
+Subject: [PATCH 5/9 v5] commit: add "bisect_replace_all" prototype to
+ "commit.h"
+Date: Mon, 24 Nov 2008 22:16:22 +0100
+Message-ID: <20081124221622.9ab2253b.chriscool@tuxfamily.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org
-To: "Shawn O. Pearce" <spearce@spearce.org>
-X-From: git-owner@vger.kernel.org Tue Nov 25 01:39:58 2008
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	"H. Peter Anvin" <hpa@zytor.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Nov 25 01:46:36 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1L4ly9-0002D8-O3
-	for gcvg-git-2@gmane.org; Tue, 25 Nov 2008 01:39:58 +0100
+	id 1L4m4Z-0003kZ-8F
+	for gcvg-git-2@gmane.org; Tue, 25 Nov 2008 01:46:35 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753780AbYKYAim (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 24 Nov 2008 19:38:42 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752892AbYKYAim
-	(ORCPT <rfc822;git-outgoing>); Mon, 24 Nov 2008 19:38:42 -0500
-Received: from mail.gmx.net ([213.165.64.20]:44462 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1752827AbYKYAil (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 24 Nov 2008 19:38:41 -0500
-Received: (qmail invoked by alias); 25 Nov 2008 00:38:40 -0000
-Received: from pacific.mpi-cbg.de (EHLO pacific.mpi-cbg.de) [141.5.10.38]
-  by mail.gmx.net (mp018) with SMTP; 25 Nov 2008 01:38:40 +0100
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX18WwRIhL5AW2a7jvvY9sEJfSUF8MQRlNpEpljsCQt
-	n7S7onZbawcBf6
-X-X-Sender: schindelin@pacific.mpi-cbg.de
-In-Reply-To: <20081124235900.GG2932@spearce.org>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.67
+	id S1753027AbYKYApP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 24 Nov 2008 19:45:15 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753310AbYKYApO
+	(ORCPT <rfc822;git-outgoing>); Mon, 24 Nov 2008 19:45:14 -0500
+Received: from smtp6-g19.free.fr ([212.27.42.36]:45200 "EHLO smtp6-g19.free.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752892AbYKYApN (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 24 Nov 2008 19:45:13 -0500
+Received: from smtp6-g19.free.fr (localhost.localdomain [127.0.0.1])
+	by smtp6-g19.free.fr (Postfix) with ESMTP id 1A55683CD;
+	Tue, 25 Nov 2008 00:09:44 +0100 (CET)
+Received: from localhost.boubyland (gre92-7-82-243-130-161.fbx.proxad.net [82.243.130.161])
+	by smtp6-g19.free.fr (Postfix) with SMTP id 62F8719C63;
+	Mon, 24 Nov 2008 22:14:50 +0100 (CET)
+X-Mailer: Sylpheed 2.5.0 (GTK+ 2.12.11; i486-pc-linux-gnu)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/101638>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/101639>
 
-Hi,
+Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
+---
+ builtin-rev-list.c |    2 +-
+ commit.h           |    2 ++
+ 2 files changed, 3 insertions(+), 1 deletions(-)
 
-On Mon, 24 Nov 2008, Shawn O. Pearce wrote:
-
-> Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
-> > I just had a giggle and thought I'd share it with you.
-> > 
-> > By pure chance, I stumbled upon this project: 
-> > http://sourceforge.net/projects/javagit/.  It sports 12 members, has a 
-> > Subversion repository (!) and aims to simplify working with Git using Java 
-> > by providing an easy API to the Git commands.
-> 
-> I think we already discussed this project back in August:
-> 
->   http://thread.gmane.org/gmane.comp.version-control.git/91381
-
-Heh, I had forgotten about that, even if I participated in the discussion, 
-praising jgit.
-
-Oh well,
-Dscho
+diff --git a/builtin-rev-list.c b/builtin-rev-list.c
+index 693023f..1b18c65 100644
+--- a/builtin-rev-list.c
++++ b/builtin-rev-list.c
+@@ -637,7 +637,7 @@ static int bisect_replace(const char *refname, const unsigned char *sha1,
+ 	return 0;
+ }
+ 
+-static void bisect_replace_all(void)
++void bisect_replace_all(void)
+ {
+ 	for_each_replace_ref(bisect_replace, NULL);
+ }
+diff --git a/commit.h b/commit.h
+index 3a7b06a..a0ec2a0 100644
+--- a/commit.h
++++ b/commit.h
+@@ -144,4 +144,6 @@ static inline int single_parent(struct commit *commit)
+ 
+ struct commit_list *reduce_heads(struct commit_list *heads);
+ 
++void bisect_replace_all(void);
++
+ #endif /* COMMIT_H */
+-- 
+1.5.6.1.1657.g6a50
