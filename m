@@ -1,159 +1,109 @@
-From: Christian Couder <chriscool@tuxfamily.org>
-Subject: [PATCH 4/9 v5] rev-list: add "--bisect-replace" to list revisions
- with fixed up history
-Date: Mon, 24 Nov 2008 22:15:28 +0100
-Message-ID: <20081124221528.69162e85.chriscool@tuxfamily.org>
+From: =?utf-8?q?Uwe=20Kleine-K=C3=B6nig?= 
+	<u.kleine-koenig@pengutronix.de>
+Subject: [PATCH] tg export: implement skipping empty patches for quilt mode
+Date: Mon, 24 Nov 2008 22:56:50 +0100
+Message-ID: <1227563810-5426-1-git-send-email-u.kleine-koenig@pengutronix.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	"H. Peter Anvin" <hpa@zytor.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Nov 24 23:24:40 2008
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: "martin f. krafft" <madduck@debian.org>,
+	Petr Baudis <pasky@suse.cz>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Nov 24 23:29:15 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1L4jr1-00037P-B0
-	for gcvg-git-2@gmane.org; Mon, 24 Nov 2008 23:24:27 +0100
+	id 1L4jvc-0004bu-1W
+	for gcvg-git-2@gmane.org; Mon, 24 Nov 2008 23:29:12 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753184AbYKXWXL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 24 Nov 2008 17:23:11 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753153AbYKXWXL
-	(ORCPT <rfc822;git-outgoing>); Mon, 24 Nov 2008 17:23:11 -0500
-Received: from smtp2-g19.free.fr ([212.27.42.28]:52245 "EHLO smtp2-g19.free.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753126AbYKXWXK (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 24 Nov 2008 17:23:10 -0500
-Received: from smtp2-g19.free.fr (localhost.localdomain [127.0.0.1])
-	by smtp2-g19.free.fr (Postfix) with ESMTP id A820F87BDB;
-	Mon, 24 Nov 2008 22:53:49 +0100 (CET)
-Received: from localhost.boubyland (gre92-7-82-243-130-161.fbx.proxad.net [82.243.130.161])
-	by smtp2-g19.free.fr (Postfix) with SMTP id DD28D12EE89;
-	Mon, 24 Nov 2008 22:13:44 +0100 (CET)
-X-Mailer: Sylpheed 2.5.0 (GTK+ 2.12.11; i486-pc-linux-gnu)
+	id S1753192AbYKXW1z convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 24 Nov 2008 17:27:55 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752888AbYKXW1z
+	(ORCPT <rfc822;git-outgoing>); Mon, 24 Nov 2008 17:27:55 -0500
+Received: from metis.ext.pengutronix.de ([92.198.50.35]:53871 "EHLO
+	metis.ext.pengutronix.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752637AbYKXW1y (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 24 Nov 2008 17:27:54 -0500
+X-Greylist: delayed 1843 seconds by postgrey-1.27 at vger.kernel.org; Mon, 24 Nov 2008 17:27:53 EST
+Received: from themisto.ext.pengutronix.de ([92.198.50.58] helo=localhost.localdomain)
+	by metis.ext.pengutronix.de with esmtp (Exim 4.63)
+	(envelope-from <u.kleine-koenig@pengutronix.de>)
+	id 1L4jQK-0007v9-NM; Mon, 24 Nov 2008 22:57:08 +0100
+X-Mailer: git-send-email 1.5.6.5
+X-SA-Exim-Connect-IP: 92.198.50.58
+X-SA-Exim-Mail-From: u.kleine-koenig@pengutronix.de
+X-Spam-Checker-Version: SpamAssassin 3.2.4 (2008-01-01) on
+	metis.extern.pengutronix.de
+X-Spam-Level: 
+X-Spam-Status: No, score=-0.5 required=4.5 tests=BAYES_00,HELO_LH_LD,
+	RCVD_IN_PBL shortcircuit=no autolearn=no version=3.2.4
+X-SA-Exim-Version: 4.2.1 (built Tue, 09 Jan 2007 17:23:22 +0000)
+X-SA-Exim-Scanned: Yes (on metis.ext.pengutronix.de)
+X-PTX-Original-Recipient: git@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/101629>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/101630>
 
-This should help both human and scripts deal better with
-"refs/replace/bisect/*" refs.
-
-Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
+Signed-off-by: Uwe Kleine-K=C3=B6nig <u.kleine-koenig@pengutronix.de>
+Cc: martin f. krafft <madduck@debian.org>
+Cc: Petr Baudis <pasky@suse.cz>
 ---
- Documentation/git-rev-list.txt     |    1 +
- Documentation/rev-list-options.txt |   15 +++++++++++++++
- builtin-rev-list.c                 |   12 +++++++++---
- t/t6035-bisect-replace.sh          |   12 ++++++++++++
- 4 files changed, 37 insertions(+), 3 deletions(-)
+ tg-export.sh |   18 ++++++++++++++----
+ 1 files changed, 14 insertions(+), 4 deletions(-)
 
-diff --git a/Documentation/git-rev-list.txt b/Documentation/git-rev-list.txt
-index 1c9cc28..4cc8abf 100644
---- a/Documentation/git-rev-list.txt
-+++ b/Documentation/git-rev-list.txt
-@@ -41,6 +41,7 @@ SYNOPSIS
- 	     [ \--bisect ]
- 	     [ \--bisect-vars ]
- 	     [ \--bisect-all ]
-+	     [ \--bisect-replace ]
- 	     [ \--merge ]
- 	     [ \--reverse ]
- 	     [ \--walk-reflogs ]
-diff --git a/Documentation/rev-list-options.txt b/Documentation/rev-list-options.txt
-index b9f6e4d..b35f9d8 100644
---- a/Documentation/rev-list-options.txt
-+++ b/Documentation/rev-list-options.txt
-@@ -574,6 +574,21 @@ may not compile for example).
- This option can be used along with `--bisect-vars`, in this case,
- after all the sorted commit objects, there will be the same text as if
- `--bisect-vars` had been used alone.
+diff --git a/tg-export.sh b/tg-export.sh
+index 52af88d..6f1d226 100644
+--- a/tg-export.sh
++++ b/tg-export.sh
+@@ -7,6 +7,7 @@ name=3D
+ branches=3D
+ output=3D
+ driver=3Dcollapse
++skipempty=3Dfalse
+=20
+=20
+ ## Parse options
+@@ -20,6 +21,8 @@ while [ -n "$1" ]; do
+ 		driver=3Dquilt;;
+ 	--collapse)
+ 		driver=3Dcollapse;;
++	-n)
++		skipempty=3Dtrue;;
+ 	-*)
+ 		echo "Usage: tg [...] export ([--collapse] NEWBRANCH | [-b BRANCH1,B=
+RANCH2...] --quilt DIRECTORY)" >&2
+ 		exit 1;;
+@@ -34,6 +37,9 @@ done
+ [ -z "$branches" -o "$driver" =3D "quilt" ] ||
+ 	die "-b works only with the quilt driver"
+=20
++! "$skipempty" || [ "$driver" =3D "quilt" ] ||
++	die "-n is only implemented for the quilt driver"
 +
-+--bisect-replace::
-+
-+This option will make use of the "refs/replace/bisect/*" refs if any,
-+but will not perform other bisection calculation.
-+
-+The purpose of the "refs/replace/bisect/*" refs is to be grafted into
-+other branches when bisecting, so that bisection can be performed on a
-+fixed up history.
-+
-+The other `--bisect*` options use the "refs/replace/bisect/*" refs by
-+default when they perform their bisection calculations. With the
-+"--bisect-replace" option, you can see what is the result of using the
-+"refs/replace/bisect/*" refs without the effects of other bisection
-+calculations.
- endif::git-rev-list[]
- 
- 
-diff --git a/builtin-rev-list.c b/builtin-rev-list.c
-index 8adf269..693023f 100644
---- a/builtin-rev-list.c
-+++ b/builtin-rev-list.c
-@@ -47,12 +47,14 @@ static const char rev_list_usage[] =
- "  special purpose:\n"
- "    --bisect\n"
- "    --bisect-vars\n"
--"    --bisect-all"
-+"    --bisect-all\n"
-+"    --bisect-replace"
- ;
- 
- static struct rev_info revs;
- 
- static int bisect_list;
-+static int bisect_replace_only;
- static int show_timestamp;
- static int hdr_termination;
- static const char *header_prefix;
-@@ -681,6 +683,10 @@ int cmd_rev_list(int argc, const char **argv, const char *prefix)
- 			bisect_show_vars = 1;
- 			continue;
- 		}
-+		if (!strcmp(arg, "--bisect-replace")) {
-+			bisect_replace_only = 1;
-+			continue;
-+		}
- 		if (!strcmp(arg, "--stdin")) {
- 			if (read_from_stdin++)
- 				die("--stdin given twice?");
-@@ -713,10 +719,10 @@ int cmd_rev_list(int argc, const char **argv, const char *prefix)
- 	save_commit_buffer = revs.verbose_header ||
- 		revs.grep_filter.pattern_list;
- 
--	if (bisect_list) {
-+	if (bisect_list || bisect_replace_only)
- 		bisect_replace_all();
-+	if (bisect_list)
- 		revs.limited = 1;
--	}
- 
- 	if (prepare_revision_walk(&revs))
- 		die("revision walk setup failed");
-diff --git a/t/t6035-bisect-replace.sh b/t/t6035-bisect-replace.sh
-index 6ab3667..bc07206 100755
---- a/t/t6035-bisect-replace.sh
-+++ b/t/t6035-bisect-replace.sh
-@@ -125,6 +125,18 @@ test_expect_success 'standard bisect works' '
-      git bisect reset
- '
- 
-+test_expect_success '"git rev-list --bisect-replace" works' '
-+     echo "$HASH7" >> rev_list.expect &&
-+     echo "$HASH6" >> rev_list.expect &&
-+     echo "$HASH5" >> rev_list.expect &&
-+     echo "$HASHFIX4" >> rev_list.expect &&
-+     echo "$HASHFIX3" >> rev_list.expect &&
-+     echo "$HASHFIX2" >> rev_list.expect &&
-+     echo "$HASH1" >> rev_list.expect &&
-+     git rev-list --bisect-replace $HASH7 > rev_list.output &&
-+     test_cmp rev_list.expect rev_list.output
-+'
-+
- #
- #
- test_done
--- 
-1.5.6.1.1657.g6a50
+ if [ -z "$branches" ]; then
+ 	# this check is only needed when no branches have been passed
+ 	name=3D"$(git symbolic-ref HEAD | sed 's#^refs/heads/##')"
+@@ -140,10 +146,14 @@ quilt()
+ 		return
+ 	fi
+=20
+-	echo "Exporting $_dep"
+-	mkdir -p "$(dirname "$filename")"
+-	$tg patch "$_dep" >"$filename"
+-	echo "$_dep.diff -p1" >>"$output/series"
++	if "$skipempty" && branch_empty "$_dep"; then
++		echo "Skip empty patch $_dep";
++	else
++		echo "Exporting $_dep"
++		mkdir -p "$(dirname "$filename")"
++		$tg patch "$_dep" >"$filename"
++		echo "$_dep.diff -p1" >>"$output/series"
++	fi
+ }
+=20
+=20
+--=20
+1.5.6.5
