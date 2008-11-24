@@ -1,85 +1,184 @@
-From: Matt McCutchen <matt@mattmccutchen.net>
-Subject: Re: [PATCH] config.txt: alphabetize configuration variable groups
-Date: Mon, 24 Nov 2008 15:00:09 -0500
-Message-ID: <1227556809.2628.8.camel@mattlaptop2.local>
-References: <1227510109.32583.2.camel@mattlaptop2.local>
-	 <492A579B.5000304@viscovery.net>
+From: Christian Couder <chriscool@tuxfamily.org>
+Subject: [PATCH 2/9 v5] bisect: add test cases for "git bisect replace"
+Date: Mon, 24 Nov 2008 22:13:56 +0100
+Message-ID: <20081124221356.8617a418.chriscool@tuxfamily.org>
 Mime-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=US-ASCII
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Johannes Sixt <j.sixt@viscovery.net>
-X-From: git-owner@vger.kernel.org Mon Nov 24 21:02:10 2008
+Cc: git@vger.kernel.org,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	"H. Peter Anvin" <hpa@zytor.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Nov 24 22:14:02 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1L4hcz-0001BZ-BV
-	for gcvg-git-2@gmane.org; Mon, 24 Nov 2008 21:01:49 +0100
+	id 1L4ikO-0002ua-Ub
+	for gcvg-git-2@gmane.org; Mon, 24 Nov 2008 22:13:33 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753335AbYKXUAX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 24 Nov 2008 15:00:23 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753233AbYKXUAX
-	(ORCPT <rfc822;git-outgoing>); Mon, 24 Nov 2008 15:00:23 -0500
-Received: from sd-green-bigip-202.dreamhost.com ([208.97.132.202]:59567 "EHLO
-	jankymail-a1.g.dreamhost.com" rhost-flags-OK-OK-OK-FAIL)
-	by vger.kernel.org with ESMTP id S1753201AbYKXUAW (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 24 Nov 2008 15:00:22 -0500
-Received: from [129.2.134.244] (129-2-134-244.wireless.umd.edu [129.2.134.244])
-	by jankymail-a1.g.dreamhost.com (Postfix) with ESMTP id C62B5986D3;
-	Mon, 24 Nov 2008 12:00:20 -0800 (PST)
-In-Reply-To: <492A579B.5000304@viscovery.net>
-X-Mailer: Evolution 2.22.3.1 (2.22.3.1-1.fc9) 
+	id S1751939AbYKXVMQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 24 Nov 2008 16:12:16 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752887AbYKXVMQ
+	(ORCPT <rfc822;git-outgoing>); Mon, 24 Nov 2008 16:12:16 -0500
+Received: from smtp3-g19.free.fr ([212.27.42.29]:40860 "EHLO smtp3-g19.free.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751589AbYKXVMQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 24 Nov 2008 16:12:16 -0500
+Received: from smtp3-g19.free.fr (localhost.localdomain [127.0.0.1])
+	by smtp3-g19.free.fr (Postfix) with ESMTP id 4E35617B58A;
+	Mon, 24 Nov 2008 22:12:13 +0100 (CET)
+Received: from localhost.boubyland (gre92-7-82-243-130-161.fbx.proxad.net [82.243.130.161])
+	by smtp3-g19.free.fr (Postfix) with SMTP id C6AC917B550;
+	Mon, 24 Nov 2008 22:12:12 +0100 (CET)
+X-Mailer: Sylpheed 2.5.0 (GTK+ 2.12.11; i486-pc-linux-gnu)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/101621>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/101622>
 
-On Mon, 2008-11-24 at 08:28 +0100, Johannes Sixt wrote:
-> Matt McCutchen schrieb:
-> > @@ -963,6 +953,8 @@ man.<tool>.path::
-> >  	Override the path for the given tool that may be used to
-> >  	display help in the 'man' format. See linkgit:git-help[1].
-> >  
-> > +include::merge-config.txt[]
-> > +
-> >  merge.conflictstyle::
-> >  	Specify the style in which conflicted hunks are written out to
-> >  	working tree files upon merge.  The default is "merge", which
-> 
-> Here, the list is not in alphabetic order anymore.
+Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
+---
+ t/t6035-bisect-replace.sh |  130 +++++++++++++++++++++++++++++++++++++++++++++
+ 1 files changed, 130 insertions(+), 0 deletions(-)
+ create mode 100755 t/t6035-bisect-replace.sh
 
-After my change, the list is in alphabetical order by the first
-component (before the first dot).  I assume you're pointing out that I
-haven't separated the merge.<driver> parameters from the non-<driver>
-merge parameters.
-
-The reason I left it that way was I thought there might be some reason
-why merge.conflictstyle is in config.txt rather than merge-config.txt
-(the difference being that it appears in "man git-config" but not
-"man git-merge"), and to keep that arrangement while grouping together
-the non-<driver> merge parameters, I would have to split
-merge-config.txt into two separately included files.
-
-I went back and looked at the commit (b5412484) that documented
-merge.conflictstyle, and it appears that the placement in config.txt may
-have been a mistake arising from the unsortedness of config.txt rather
-than a conscious decision.  Thus, I'll move that entry to
-merge-config.txt for the better grouping.  That does mean "man
-git-merge" will contain two explanations of merge.conflictstyle (the
-brief config-parameter one and the "HOW CONFLICTS ARE PRESENTED"
-section), but I don't see that as a big problem.
-
-> BTW, your commit message should emphasize the use-cases where an
-> alphabetic order is a real benefit. Otherwise, this is just code churn.
-
-I don't see alphabetization as a major benefit except that it might help
-people add new parameters in the right place (case in point: the
-addition of merge.conflictstyle).  And I figured that the config
-parameters might as well be in /some/ order.  I'll state that in the
-commit message.
-
-Updated patch to follow.
-
-Matt
+diff --git a/t/t6035-bisect-replace.sh b/t/t6035-bisect-replace.sh
+new file mode 100755
+index 0000000..6ab3667
+--- /dev/null
++++ b/t/t6035-bisect-replace.sh
+@@ -0,0 +1,130 @@
++#!/bin/sh
++#
++# Copyright (c) 2008 Christian Couder
++#
++test_description='Test git bisect replace functionality'
++
++exec </dev/null
++
++. ./test-lib.sh
++
++add_and_commit_file()
++{
++    _file="$1"
++    _msg="$2"
++
++    git add $_file || return $?
++    test_tick || return $?
++    git commit --quiet -m "$_file: $_msg"
++}
++
++HASH1=
++HASH2=
++HASH3=
++HASH4=
++HASH5=
++HASH6=
++HASH7=
++
++test_expect_success 'set up buggy branch' '
++     echo "line 1" >> hello &&
++     echo "line 2" >> hello &&
++     echo "line 3" >> hello &&
++     echo "line 4" >> hello &&
++     add_and_commit_file hello "4 lines" &&
++     HASH1=$(git rev-parse --verify HEAD) &&
++     echo "line BUG" >> hello &&
++     echo "line 6" >> hello &&
++     echo "line 7" >> hello &&
++     echo "line 8" >> hello &&
++     add_and_commit_file hello "4 more lines with a BUG" &&
++     HASH2=$(git rev-parse --verify HEAD) &&
++     echo "line 9" >> hello &&
++     echo "line 10" >> hello &&
++     add_and_commit_file hello "2 more lines" &&
++     HASH3=$(git rev-parse --verify HEAD) &&
++     echo "line 11" >> hello &&
++     add_and_commit_file hello "1 more line" &&
++     HASH4=$(git rev-parse --verify HEAD) &&
++     sed -e "s/BUG/5/" hello > hello.new &&
++     mv hello.new hello &&
++     add_and_commit_file hello "BUG fixed" &&
++     HASH5=$(git rev-parse --verify HEAD) &&
++     echo "line 12" >> hello &&
++     echo "line 13" >> hello &&
++     add_and_commit_file hello "2 more lines" &&
++     HASH6=$(git rev-parse --verify HEAD)
++     echo "line 14" >> hello &&
++     echo "line 15" >> hello &&
++     echo "line 16" >> hello &&
++     add_and_commit_file hello "again 3 more lines" &&
++     HASH7=$(git rev-parse --verify HEAD)
++'
++
++HASHFIX2=
++HASHFIX3=
++HASHFIX4=
++
++test_expect_success 'set up fixed branch' '
++     git checkout $HASH1 &&
++     echo "line 5" >> hello &&
++     echo "line 6" >> hello &&
++     echo "line 7" >> hello &&
++     echo "line 8" >> hello &&
++     add_and_commit_file hello "4 more lines with no BUG" &&
++     HASHFIX2=$(git rev-parse --verify HEAD) &&
++     git cherry-pick $HASH3 &&
++     HASHFIX3=$(git rev-parse --verify HEAD) &&
++     git cherry-pick $HASH4 &&
++     HASHFIX4=$(git rev-parse --verify HEAD)
++'
++
++test_expect_success '"git bisect replace" buggy branch with fixed one' '
++     git bisect replace $HASH5 HEAD
++'
++
++test_expect_success 'replace works when bisecting with a later bad commit' '
++     git rev-list --bisect-all $HASH7 > rev_list.txt &&
++     grep $HASHFIX2 rev_list.txt &&
++     grep $HASHFIX3 rev_list.txt &&
++     grep $HASHFIX4 rev_list.txt &&
++     test_must_fail grep $HASH2 rev_list.txt &&
++     test_must_fail grep $HASH3 rev_list.txt &&
++     test_must_fail grep $HASH4 rev_list.txt
++'
++
++test_expect_success 'replace works starting just after replaced commit' '
++     git rev-list --bisect-all $HASH6 > rev_list.txt &&
++     grep $HASHFIX2 rev_list.txt &&
++     grep $HASHFIX3 rev_list.txt &&
++     grep $HASHFIX4 rev_list.txt &&
++     test_must_fail grep $HASH2 rev_list.txt &&
++     test_must_fail grep $HASH3 rev_list.txt &&
++     test_must_fail grep $HASH4 rev_list.txt
++'
++
++test_expect_success 'replace works starting from replaced commit' '
++     git rev-list --bisect-all $HASH5 > rev_list.txt &&
++     grep $HASHFIX2 rev_list.txt &&
++     grep $HASHFIX3 rev_list.txt &&
++     grep $HASHFIX4 rev_list.txt &&
++     test_must_fail grep $HASH2 rev_list.txt &&
++     test_must_fail grep $HASH3 rev_list.txt &&
++     test_must_fail grep $HASH4 rev_list.txt
++'
++
++test_expect_success 'standard bisect works' '
++     git bisect start $HASH6 $HASH1 &&
++     test "$(git rev-parse --verify HEAD)" = "$HASHFIX3" &&
++     git bisect good &&
++     test "$(git rev-parse --verify HEAD)" = "$HASH5" &&
++     git bisect bad &&
++     test "$(git rev-parse --verify HEAD)" = "$HASHFIX4" &&
++     git bisect bad > my_bisect_log.txt &&
++     grep "$HASHFIX4 is first bad commit" my_bisect_log.txt &&
++     git bisect reset
++'
++
++#
++#
++test_done
+-- 
+1.5.6.1.1657.g6a50
