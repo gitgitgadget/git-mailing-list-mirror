@@ -1,65 +1,75 @@
-From: Johannes Sixt <j.sixt@viscovery.net>
-Subject: Re: [PATCH] rev-parse: Fix shell scripts whose cwd is a symlink into
- a git work-dir
-Date: Tue, 25 Nov 2008 08:30:32 +0100
-Message-ID: <492BA998.5050106@viscovery.net>
-References: <cover.1226759762.git.marcel@oak.homeunix.org> <1227389614-10946-1-git-send-email-marcel@oak.homeunix.org>
+From: Pete Harlan <pgit@pcharlan.com>
+Subject: Re: Hello All and Seeking Information
+Date: Mon, 24 Nov 2008 23:57:21 -0800
+Message-ID: <492BAFE1.5010904@pcharlan.com>
+References: <c115fd3c0811240828y61e7bfecka1cacdd37865a4e8@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-Cc: gitster@pobox.com, git@vger.kernel.org
-To: "Marcel M. Cary" <marcel@oak.homeunix.org>
-X-From: git-owner@vger.kernel.org Tue Nov 25 08:32:09 2008
+Cc: git@vger.kernel.org
+To: Tim Visher <tim.visher@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Nov 25 08:58:39 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1L4sOz-0005yb-Gz
-	for gcvg-git-2@gmane.org; Tue, 25 Nov 2008 08:32:05 +0100
+	id 1L4soh-0003q4-9o
+	for gcvg-git-2@gmane.org; Tue, 25 Nov 2008 08:58:39 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751304AbYKYHau (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 25 Nov 2008 02:30:50 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751390AbYKYHau
-	(ORCPT <rfc822;git-outgoing>); Tue, 25 Nov 2008 02:30:50 -0500
-Received: from lilzmailso01.liwest.at ([212.33.55.23]:35393 "EHLO
-	lilzmailso01.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750958AbYKYHat (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 25 Nov 2008 02:30:49 -0500
-Received: from cm56-163-160.liwest.at ([86.56.163.160] helo=linz.eudaptics.com)
-	by lilzmailso01.liwest.at with esmtpa (Exim 4.69)
-	(envelope-from <j.sixt@viscovery.net>)
-	id 1L4sNV-0002fp-B3; Tue, 25 Nov 2008 08:30:40 +0100
-Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.96])
-	by linz.eudaptics.com (Postfix) with ESMTP
-	id ECF4169F; Tue, 25 Nov 2008 08:30:32 +0100 (CET)
-User-Agent: Thunderbird 2.0.0.18 (Windows/20081105)
-In-Reply-To: <1227389614-10946-1-git-send-email-marcel@oak.homeunix.org>
-X-Spam-Score: -1.4 (-)
-X-Spam-Report: Spam detection software, running on the system "lilzmailsa01.liwest.at", has
-	identified this incoming email as possible spam.  The original message
-	has been attached to this so you can view it (if it isn't spam) or label
-	similar future email.  If you have any questions, see
-	the administrator of that system for details.
-	Content preview:  Marcel M. Cary schrieb: > * Change "git rev-parse --show-cdup"
-	to print a full path instead of > a series of "../" when it prints anything
-	http://thread.gmane.org/gmane.comp.version-control.git/88557/focus=88562
-	[...] 
-	Content analysis details:   (-1.4 points, 7.0 required)
-	pts rule name              description
-	---- ---------------------- --------------------------------------------------
-	-1.4 ALL_TRUSTED            Passed through trusted hosts only via SMTP
+	id S1751607AbYKYH5X (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 25 Nov 2008 02:57:23 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751534AbYKYH5X
+	(ORCPT <rfc822;git-outgoing>); Tue, 25 Nov 2008 02:57:23 -0500
+Received: from lax-green-bigip-5.dreamhost.com ([208.113.200.5]:60013 "EHLO
+	swarthymail-a7.g.dreamhost.com" rhost-flags-OK-OK-OK-FAIL)
+	by vger.kernel.org with ESMTP id S1751025AbYKYH5W (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 25 Nov 2008 02:57:22 -0500
+Received: from [192.168.0.2] (031.132-78-65.ftth.swbr.surewest.net [65.78.132.31])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by swarthymail-a7.g.dreamhost.com (Postfix) with ESMTP id B0D81DE52F;
+	Mon, 24 Nov 2008 23:57:21 -0800 (PST)
+User-Agent: Mozilla-Thunderbird 2.0.0.17 (X11/20081018)
+In-Reply-To: <c115fd3c0811240828y61e7bfecka1cacdd37865a4e8@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/101651>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/101652>
 
-Marcel M. Cary schrieb:
-> * Change "git rev-parse --show-cdup" to print a full path instead of
->   a series of "../" when it prints anything
+Tim Visher wrote:
+> there are some issues that I can't wrap my head around, such as how
+> you can guarantee that all developers are working on the same
+> code-base without a central repo.
 
-http://thread.gmane.org/gmane.comp.version-control.git/88557/focus=88562
+You can have a central repo that represents the official lines of
+development (branches, but "official" branches), and each developer
+has local copies of those branches so they can compare their own work
+against them.
 
-I don't see that you bring in any new arguments.
+If you don't have a central repo, then the developers can keep local
+copies of other developers' branches when they're interested in them,
+and compare their work against those.
 
--- Hannes
+Using the git project as an example, when you clone from
+git://git.kernel.org/pub/scm/git/git.git you will find "remote
+branches" origin/master, origin/maint, etc.  They're stored locally in
+your repo; the name "remote" only refers to the fact that at one time
+(when you last cloned or fetched) they corresponded to branches in the
+origin repo.  You can list your copies of these branches with "git
+branch -r".  You can freshen them to agree with the origin with "git
+fetch origin".
+
+Your local branches ("local" referring to the fact that they exist
+_only_ locally), listed by "git branch", are what you develop on.
+
+After you do "git fetch", you can compare your local branches against
+your copies of the remote branches to see if the remote repo has new
+work you haven't yet incorporated into your local branches.  You can
+also compare against them to see if you have work they don't.
+
+So each developer can compare what they have against what others have,
+and keep things in sync as much as they wish to (and no more), fairly
+easily.
+
+--Pete
