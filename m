@@ -1,107 +1,77 @@
-From: Brian Foster <brian.foster@innova-card.com>
+From: Arafangion <thestar@fussycoder.id.au>
 Subject: Re: inted problems when upgrading to 1.6.0.4
-Date: Tue, 25 Nov 2008 11:36:03 +0100
-Message-ID: <200811251136.03546.brian.foster@innova-card.com>
+Date: Tue, 25 Nov 2008 21:54:19 +1100
+Message-ID: <1227610459.3222.4.camel@therock.nsw.bigpond.net.au>
 References: <492BC56A.6040506@xmos.com>
-Reply-To: Brian Foster <brian.foster@innova-card.com>
+	 <1227608420.3222.2.camel@therock.nsw.bigpond.net.au>
+	 <492BCFA0.5030708@xmos.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+Content-Type: text/plain
+Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org
 To: Luis Gutierrez <luis.gutierrez@xmos.com>
-X-From: git-owner@vger.kernel.org Tue Nov 25 11:37:36 2008
+X-From: git-owner@vger.kernel.org Tue Nov 25 11:45:20 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1L4vIW-0000ZK-5G
-	for gcvg-git-2@gmane.org; Tue, 25 Nov 2008 11:37:36 +0100
+	id 1L4vPv-0003D0-BW
+	for gcvg-git-2@gmane.org; Tue, 25 Nov 2008 11:45:15 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752307AbYKYKgU convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 25 Nov 2008 05:36:20 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752340AbYKYKgU
-	(ORCPT <rfc822;git-outgoing>); Tue, 25 Nov 2008 05:36:20 -0500
-Received: from nf-out-0910.google.com ([64.233.182.188]:59196 "EHLO
-	nf-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752290AbYKYKgT convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 25 Nov 2008 05:36:19 -0500
-Received: by nf-out-0910.google.com with SMTP id d3so1276844nfc.21
-        for <git@vger.kernel.org>; Tue, 25 Nov 2008 02:36:17 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:reply-to:to:subject:date
-         :user-agent:cc:references:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:message-id:sender;
-        bh=SGxzrr5xb/JJwQtwldEVe3s34/MQuSDSB8zkJ2SYlAk=;
-        b=nAUTfhKi/7FhCMroa9ZCXVfJBB2XDf+iWr4Yjp2YEoO3XB0SDOjkq08cHfrpKceBSJ
-         E/jL53mjGNqg3ncI8r/sszJT7XTm7hhGleiLwJWiQ9KuzvWLmTv1IcQlTrWFipy8GZdS
-         tW5ax4EjKCoGkE2BxFWziI+zOSjkJC2bfirlg=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=from:reply-to:to:subject:date:user-agent:cc:references:in-reply-to
-         :mime-version:content-type:content-transfer-encoding
-         :content-disposition:message-id:sender;
-        b=AfVo9tXgMEniA1oXw9DtIiGqqGYx4jx03fEeH8izB7GwVQ4mfB5VYKf/dT0qXyqFg3
-         CkcoI7RSn1tauIl2X2tDmDydVnyG+ZQlW3KWby92gGkmgpTM9ep9gIZiCVrrGJBCuVhZ
-         ptqGDUkCpagr6NVSFpYpJ3VrR+IpT+NkwVN94=
-Received: by 10.210.54.19 with SMTP id c19mr4592728eba.116.1227609376307;
-        Tue, 25 Nov 2008 02:36:16 -0800 (PST)
-Received: from innova-card.com (1-61.252-81.static-ip.oleane.fr [81.252.61.1])
-        by mx.google.com with ESMTPS id 10sm1574320eyd.33.2008.11.25.02.36.12
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Tue, 25 Nov 2008 02:36:14 -0800 (PST)
-User-Agent: KMail/1.9.6 (enterprise 0.20070907.709405)
-In-Reply-To: <492BC56A.6040506@xmos.com>
-Content-Disposition: inline
+	id S1753341AbYKYKnk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 25 Nov 2008 05:43:40 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753347AbYKYKnk
+	(ORCPT <rfc822;git-outgoing>); Tue, 25 Nov 2008 05:43:40 -0500
+Received: from nschwmtas04p.mx.bigpond.com ([61.9.189.146]:16989 "EHLO
+	nschwmtas04p.mx.bigpond.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1752571AbYKYKnj (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 25 Nov 2008 05:43:39 -0500
+Received: from nschwotgx03p.mx.bigpond.com ([58.173.132.215])
+          by nschwmtas04p.mx.bigpond.com with ESMTP
+          id <20081125104336.TNRG1796.nschwmtas04p.mx.bigpond.com@nschwotgx03p.mx.bigpond.com>;
+          Tue, 25 Nov 2008 10:43:36 +0000
+Received: from therock.local ([58.173.132.215])
+          by nschwotgx03p.mx.bigpond.com with ESMTP
+          id <20081125104332.BAPZ7031.nschwotgx03p.mx.bigpond.com@therock.local>;
+          Tue, 25 Nov 2008 10:43:32 +0000
+In-Reply-To: <492BCFA0.5030708@xmos.com>
+X-Mailer: Evolution 2.6.3 
+X-RPD-ScanID: Class unknown; VirusThreatLevel unknown, RefID str=0001.0A150202.492BD6D4.0103,ss=1,fgs=0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/101656>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/101657>
 
-On Tuesday 25 November 2008 10:29:14 Luis Gutierrez wrote:
->[ ... ]
-> This is my current xinetd config:
-> service git
-> {
->     disable      =3D yes
->     socket_type  =3D stream
->     wait         =3D no
->     user         =3D git
->     type         =3D UNLISTED
->     protocol     =3D tcp
->     log_on_failure    +=3D USERID
->     port         =3D 9418
->     server       =3D /usr/local/bin/git
->     server_args  =3D daemon --inetd --syslog --verbose --export-all -=
--base-path=3D/vol0/git/projects --allow-override=3Duploadpack
-> }
+On Tue, 2008-11-25 at 10:12 +0000, Luis Gutierrez wrote:
+> Arafangion wrote: 
+> > On Tue, 2008-11-25 at 09:29 +0000, Luis Gutierrez wrote:
+> > <snip>
+> >   
+> > > All push/pull/clone operations were failing with the dreaded 'fatal: The 
+> > > remote end hung up unexpectedly'. After a few tests, this is what I found:
+> > > 
+> > > - I can clone/pull/push if I do it through ssh (ie, git clone 
+> > > ssh://server/project)
+> > > - I can clone/pull/push if I start git daemon on the command line through
+> > > git daemon --syslog --verbose --export-all 
+> > > --base-path=/vol0/git/projects --verbose --reuseaddr
+> > > 
+> > > But the way I had setup git, through xinetd is broken.
+> > >     
+> > 
+> > I'm just guessing, as I'm too new to the git world to respond with more
+> > expertise, but I will suggest that perhaps your problem is that your
+> > $PATH is different with the xinitd configuration as contrasted with your
+> > ssh configuration, as the locations of the git binaries could be
+> > different.
+> > 
+> >   
+> I've tried that, they are the same:
+> 
+> # which git
+> /usr/local/bin/git
 
-   In the past I also had a problem when git was installed
-  in /usr/local/bin and git-daemon was launched from xinetd.
-  I don't recall the details now, but believe all the obvious
-  suspects (conflicting git installation, /usr/local/bin not
-  in PATH, mis-installed/mis-configured git, et al.) seemed Ok.
-  In any case, I debugged the problem by adding:
+What about the other git-* commands?
 
-     env  +=3D  GIT_TRACE=3D/tmp/LOG-git-daemon
-
-  to the xinetd config.  I suggest trying that and seeing
-  what the logfile contains.
-
-cheers!
-	-blf-
-
-p.s.  In my case, *using the information in the logfile*,
-     I eventually worked-around it by adding
-     =E2=80=98--exec-path=3D/usr/local/bin=E2=80=99 to the =E2=80=98ser=
-ver_args=E2=80=99.
-     I never did work out exactly what was going wrong (this
-     was with a self-built git v1.5.5 on CentOS release 5).
-
---=20
-=E2=80=9CHow many surrealists does it take to   | Brian Foster
- change a lightbulb? Three. One calms   | somewhere in south of France
- the warthog, and two fill the bathtub  |   Stop E$$o (ExxonMobil)!
- with brightly-coloured machine tools.=E2=80=9D |      http://www.stope=
-sso.com
+> 
