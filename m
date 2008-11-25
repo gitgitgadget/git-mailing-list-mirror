@@ -1,89 +1,70 @@
-From: "Marcel M. Cary" <marcel@oak.homeunix.org>
-Subject: Re: [PATCH] rev-parse: Fix shell scripts whose cwd is a symlink into
- a git work-dir
-Date: Tue, 25 Nov 2008 08:16:20 -0800
-Message-ID: <492C24D4.1010306@oak.homeunix.org>
-References: <cover.1226759762.git.marcel@oak.homeunix.org> <1227389614-10946-1-git-send-email-marcel@oak.homeunix.org> <492BA998.5050106@viscovery.net>
+From: Jean-Luc Herren <jlh@gmx.ch>
+Subject: [PATCH] Invoke "gc --auto" from git commit
+Date: Tue, 25 Nov 2008 17:15:53 +0100
+Message-ID: <492C24B9.6090200@gmx.ch>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-Cc: gitster@pobox.com, git@vger.kernel.org
-To: Johannes Sixt <j.sixt@viscovery.net>
-X-From: git-owner@vger.kernel.org Tue Nov 25 17:17:54 2008
+To: Git Mailing List <git@vger.kernel.org>,
+	Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Nov 25 17:18:04 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1L50bd-0001ZX-JG
-	for gcvg-git-2@gmane.org; Tue, 25 Nov 2008 17:17:42 +0100
+	id 1L50bJ-0001UV-8f
+	for gcvg-git-2@gmane.org; Tue, 25 Nov 2008 17:17:21 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752044AbYKYQQ0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 25 Nov 2008 11:16:26 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751676AbYKYQQZ
-	(ORCPT <rfc822;git-outgoing>); Tue, 25 Nov 2008 11:16:25 -0500
-Received: from smtp118.sbc.mail.sp1.yahoo.com ([69.147.64.91]:47108 "HELO
-	smtp118.sbc.mail.sp1.yahoo.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with SMTP id S1751287AbYKYQQZ (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 25 Nov 2008 11:16:25 -0500
-Received: (qmail 19590 invoked from network); 25 Nov 2008 16:16:24 -0000
-Received: from unknown (HELO ordinateur.home.org) (marcel@76.231.190.99 with plain)
-  by smtp118.sbc.mail.sp1.yahoo.com with SMTP; 25 Nov 2008 16:16:23 -0000
-X-YMail-OSG: DPsfdcIVM1k1s4ddniszsj1soBfgRYjWmWiUL1kXHFQsTTCINW02Z4lrkpOW1AUPvexbYeZr6o2xKNvW1hXhPjKOyVQOIxHL1tPoKVe0SeHP6EyaVQQKt0AAhGZwS5ZEgeyC1WtXCZZyHmae2rsj.VVy
-X-Yahoo-Newman-Property: ymail-3
-Received: from polliwog.home.org ([192.168.0.18])
-	by ordinateur.home.org with esmtpsa (TLS-1.0:DHE_RSA_AES_256_CBC_SHA1:32)
-	(Exim 4.63)
-	(envelope-from <marcel@oak.homeunix.org>)
-	id 1L50aM-0001yn-4r; Tue, 25 Nov 2008 08:16:22 -0800
-User-Agent: Thunderbird 2.0.0.6 (X11/20070801)
-In-Reply-To: <492BA998.5050106@viscovery.net>
+	id S1752007AbYKYQP6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 25 Nov 2008 11:15:58 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751676AbYKYQP5
+	(ORCPT <rfc822;git-outgoing>); Tue, 25 Nov 2008 11:15:57 -0500
+Received: from mail.gmx.net ([213.165.64.20]:45560 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1751287AbYKYQP5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 25 Nov 2008 11:15:57 -0500
+Received: (qmail invoked by alias); 25 Nov 2008 16:15:54 -0000
+Received: from 70-46.78-83.cust.bluewin.ch (EHLO [192.168.123.204]) [83.78.46.70]
+  by mail.gmx.net (mp009) with SMTP; 25 Nov 2008 17:15:54 +0100
+X-Authenticated: #14737133
+X-Provags-ID: V01U2FsdGVkX18EDYtNYbcEvds65x+u6BiHw6xTUyPqmwhqwmpTOu
+	qOsoI9q/T5OA7T
+User-Agent: Thunderbird 2.0.0.18 (X11/20081123)
+X-Enigmail-Version: 0.95.7
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.51
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/101666>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/101667>
 
-Johannes Sixt wrote:
-> Marcel M. Cary schrieb:
->> * Change "git rev-parse --show-cdup" to print a full path instead of
->>   a series of "../" when it prints anything
-> 
-> http://thread.gmane.org/gmane.comp.version-control.git/88557/focus=88562
-> 
-> I don't see that you bring in any new arguments.
+This feature was lost during the port of git commit to C.
 
-To be clear, as mentioned here:
+Signed-off-by: Jean-Luc Herren <jlh@gmx.ch>
+---
+ builtin-commit.c |    2 ++
+ 1 files changed, 2 insertions(+), 0 deletions(-)
 
-http://thread.gmane.org/gmane.comp.version-control.git/88557/focus=88573
-
-I'm not talking about a situation where the symlink is in the working
-tree pointing outwards.  I'm talking about a symlink outside pointing
-in.  And as mentioned later in that thread, the --work-tree workaround
-doesn't actually work.
-
-
-One new thing I have to add is that the reason --show-cdup prints a
-correct path but pull fails is because it's the *shell* who
-misinterprets the path.  So telling git rev-parse where the work-tree is
-helps nothing.  It already knows.
-
-http://thread.gmane.org/gmane.comp.version-control.git/88557/focus=88581
-
-So far I've seen no response to the idea, which Yves mentions, about
-trying to restrict the absolute path behavior to times when bash would
-interpret the "../" incorrectly.
-
-Nor have I seen a response to the idea of correcting the shell's
-behavior in cd_to_toplevel, for example by adding a "cd `pwd`", and I
-don't really understand the scenario where this would be a performance
-concern; I think I haven't found a particular discussion that several
-people have referenced.  Perhaps I should prepare a patch for that so I
-can verify that it works as I expect and so we have something more
-concrete to discuss?
-
-Any tips on how to follow the reference
-7vk5sly3h9.fsf@assigned-by-dhcp.cox.net in the first url above?  It
-looks to be about performance.  Message-Id seems to not be indexed for
-searching.
-
-Marcel
+diff --git a/builtin-commit.c b/builtin-commit.c
+index 591d16b..209805b 100644
+--- a/builtin-commit.c
++++ b/builtin-commit.c
+@@ -947,6 +947,7 @@ int cmd_commit(int argc, const char **argv, const char *prefix)
+ 	struct commit_list *parents = NULL, **pptr = &parents;
+ 	struct stat statbuf;
+ 	int allow_fast_forward = 1;
++	const char *argv_gc_auto[] = { "gc", "--auto", NULL };
+ 
+ 	git_config(git_commit_config, NULL);
+ 
+@@ -1068,6 +1069,7 @@ int cmd_commit(int argc, const char **argv, const char *prefix)
+ 		     "not exceeded, and then \"git reset HEAD\" to recover.");
+ 
+ 	rerere();
++	run_command_v_opt(argv_gc_auto, RUN_GIT_CMD);
+ 	run_hook(get_index_file(), "post-commit", NULL);
+ 	if (!quiet)
+ 		print_summary(prefix, commit_sha1);
+-- 
+1.6.0.4
