@@ -1,77 +1,54 @@
-From: Miklos Vajna <vmiklos@frugalware.org>
-Subject: Re: git fast-export | git fast-import doesn't work
-Date: Tue, 25 Nov 2008 21:41:08 +0100
-Message-ID: <20081125204108.GF4746@genesis.frugalware.org>
-References: <85b5c3130811250844u498fbb97m9d1aef6e1397b8c7@mail.gmail.com> <492C367D.3030209@drmicha.warpmail.net>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: How to hide a git repository?
+Date: Tue, 25 Nov 2008 13:03:06 -0800
+Message-ID: <7vprkjjz79.fsf@gitster.siamese.dyndns.org>
+References: <900638.56188.qm@web37904.mail.mud.yahoo.com>
+ <alpine.LNX.1.00.0811251327480.19665@iabervon.org>
+ <200811252001.37259.thomas@koch.ro> <m3skpfk1mp.fsf@localhost.localdomain>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="YIwHDYD8sUXtBKvt"
-Cc: Ondrej Certik <ondrej@certik.cz>,
-	Git Mailing List <git@vger.kernel.org>,
-	Fabian Seoane <fabian@fseoane.net>,
-	"Shawn O. Pearce" <spearce@spearce.org>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>
-To: Michael J Gruber <git@drmicha.warpmail.net>
-X-From: git-owner@vger.kernel.org Tue Nov 25 21:58:10 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: Thomas Koch <thomas@koch.ro>,
+	Daniel Barkalow <barkalow@iabervon.org>,
+	Gary Yang <garyyang6@yahoo.com>, git@vger.kernel.org
+To: Jakub Narebski <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Nov 25 22:06:02 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1L54yh-0006dX-GX
-	for gcvg-git-2@gmane.org; Tue, 25 Nov 2008 21:57:47 +0100
+	id 1L5564-0001Aq-V4
+	for gcvg-git-2@gmane.org; Tue, 25 Nov 2008 22:05:49 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752110AbYKYU4b (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 25 Nov 2008 15:56:31 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752086AbYKYU4b
-	(ORCPT <rfc822;git-outgoing>); Tue, 25 Nov 2008 15:56:31 -0500
-Received: from virgo.iok.hu ([212.40.97.103]:36878 "EHLO virgo.iok.hu"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751832AbYKYU4b (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 25 Nov 2008 15:56:31 -0500
-X-Greylist: delayed 919 seconds by postgrey-1.27 at vger.kernel.org; Tue, 25 Nov 2008 15:56:30 EST
-Received: from kag.elte.hu (kag.elte.hu [157.181.177.1])
-	by virgo.iok.hu (Postfix) with ESMTP id 181C65809B;
-	Tue, 25 Nov 2008 21:41:09 +0100 (CET)
-Received: from genesis.frugalware.org (frugalware.elte.hu [157.181.177.34])
-	by kag.elte.hu (Postfix) with ESMTP id 6101D4465E;
-	Tue, 25 Nov 2008 21:41:08 +0100 (CET)
-Received: by genesis.frugalware.org (Postfix, from userid 1000)
-	id 3EB6A11901A1; Tue, 25 Nov 2008 21:41:08 +0100 (CET)
-Content-Disposition: inline
-In-Reply-To: <492C367D.3030209@drmicha.warpmail.net>
-User-Agent: Mutt/1.5.18 (2008-05-17)
+	id S1751939AbYKYVEG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 25 Nov 2008 16:04:06 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751553AbYKYVEF
+	(ORCPT <rfc822;git-outgoing>); Tue, 25 Nov 2008 16:04:05 -0500
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:33437 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751857AbYKYVEE (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 25 Nov 2008 16:04:04 -0500
+Received: from localhost.localdomain (unknown [127.0.0.1])
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 539AA8107C;
+	Tue, 25 Nov 2008 16:03:57 -0500 (EST)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES256-SHA (256/256 bits)) (No client certificate requested) by
+ a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTPSA id 174398106A; Tue,
+ 25 Nov 2008 16:03:08 -0500 (EST)
+In-Reply-To: <m3skpfk1mp.fsf@localhost.localdomain> (Jakub Narebski's message
+ of "Tue, 25 Nov 2008 12:10:43 -0800 (PST)")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: 933377CA-BB34-11DD-B2F4-8214C92D7133-77302942!a-sasl-fastnet.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/101681>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/101682>
 
+Jakub Narebski <jnareb@gmail.com> writes:
 
---YIwHDYD8sUXtBKvt
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+> If you have something more fancy, check out newest gitweb and take a
+> look at gitweb/INSTALL: you can now, thanks to commit dd7f5f1 by
+> Alexander Gavrilov, see
+>   http://permalink.gmane.org/gmane.comp.version-control.git/99962
 
-On Tue, Nov 25, 2008 at 06:31:41PM +0100, Michael J Gruber <git@drmicha.warpmail.net> wrote:
-> I don't know, I just noticed that turning on rename and copy detection
-> makes git-fast-import crash, which shouldn't happen either. Something's
-> not right here. CC'ing the authors of im- and export.
-
-Could you please write a testcase that reproduces your problem?
-
-> Why export|import directly to git?
-
-I guess he did not know about filter-branch. :)
-
---YIwHDYD8sUXtBKvt
-Content-Type: application/pgp-signature
-Content-Disposition: inline
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.9 (GNU/Linux)
-
-iEYEARECAAYFAkksYuQACgkQe81tAgORUJYYwgCeNWAJ6MIcBXWGTCqW1HrV74kW
-UCgAniev+k56x+7PJu2CEhsFUxppOfmh
-=yglj
------END PGP SIGNATURE-----
-
---YIwHDYD8sUXtBKvt--
+Somehow I had an impression that you weren't enthused about that patch.
