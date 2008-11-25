@@ -1,54 +1,72 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: How to hide a git repository?
-Date: Tue, 25 Nov 2008 13:03:06 -0800
-Message-ID: <7vprkjjz79.fsf@gitster.siamese.dyndns.org>
-References: <900638.56188.qm@web37904.mail.mud.yahoo.com>
- <alpine.LNX.1.00.0811251327480.19665@iabervon.org>
- <200811252001.37259.thomas@koch.ro> <m3skpfk1mp.fsf@localhost.localdomain>
+From: Hannu Koivisto <azure@iki.fi>
+Subject: Unable to clone empty repositories remotely
+Date: Tue, 25 Nov 2008 23:05:54 +0200
+Organization: NOYB
+Message-ID: <837i6rplcd.fsf@kalahari.s2.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Thomas Koch <thomas@koch.ro>,
-	Daniel Barkalow <barkalow@iabervon.org>,
-	Gary Yang <garyyang6@yahoo.com>, git@vger.kernel.org
-To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Nov 25 22:06:02 2008
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Nov 25 22:07:48 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1L5564-0001Aq-V4
-	for gcvg-git-2@gmane.org; Tue, 25 Nov 2008 22:05:49 +0100
+	id 1L5587-0002CJ-3x
+	for gcvg-git-2@gmane.org; Tue, 25 Nov 2008 22:07:31 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751939AbYKYVEG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 25 Nov 2008 16:04:06 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751553AbYKYVEF
-	(ORCPT <rfc822;git-outgoing>); Tue, 25 Nov 2008 16:04:05 -0500
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:33437 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751857AbYKYVEE (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 25 Nov 2008 16:04:04 -0500
-Received: from localhost.localdomain (unknown [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 539AA8107C;
-	Tue, 25 Nov 2008 16:03:57 -0500 (EST)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES256-SHA (256/256 bits)) (No client certificate requested) by
- a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTPSA id 174398106A; Tue,
- 25 Nov 2008 16:03:08 -0500 (EST)
-In-Reply-To: <m3skpfk1mp.fsf@localhost.localdomain> (Jakub Narebski's message
- of "Tue, 25 Nov 2008 12:10:43 -0800 (PST)")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: 933377CA-BB34-11DD-B2F4-8214C92D7133-77302942!a-sasl-fastnet.pobox.com
+	id S1751832AbYKYVGL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 25 Nov 2008 16:06:11 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751550AbYKYVGL
+	(ORCPT <rfc822;git-outgoing>); Tue, 25 Nov 2008 16:06:11 -0500
+Received: from main.gmane.org ([80.91.229.2]:34604 "EHLO ciao.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751325AbYKYVGK (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 25 Nov 2008 16:06:10 -0500
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1L556j-00083w-0C
+	for git@vger.kernel.org; Tue, 25 Nov 2008 21:06:05 +0000
+Received: from s2.org ([195.197.64.39])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Tue, 25 Nov 2008 21:06:04 +0000
+Received: from azure by s2.org with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Tue, 25 Nov 2008 21:06:04 +0000
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@ger.gmane.org
+X-Gmane-NNTP-Posting-Host: s2.org
+User-Agent: Gnus/5.110011 (No Gnus v0.11) Emacs/22.2 (gnu/linux)
+Cancel-Lock: sha1:/6DbVxhMe3duJL8mKf5NJvjv/4M=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/101682>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/101683>
 
-Jakub Narebski <jnareb@gmail.com> writes:
+Greetings,
 
-> If you have something more fancy, check out newest gitweb and take a
-> look at gitweb/INSTALL: you can now, thanks to commit dd7f5f1 by
-> Alexander Gavrilov, see
->   http://permalink.gmane.org/gmane.comp.version-control.git/99962
+mkdir test
+cd test
+git init --bare --shared=group
+cd ..
+git clone test test2
 
-Somehow I had an impression that you weren't enthused about that patch.
+works, though clone says it cannot checkout, which is expected.
+This is nevertheless very useful when you create a shared
+repository for a new project; you can then create a personal clone
+and start adding stuff to it.  If, however, you normally work on
+another machine and want to have your personal clone there
+(i.e. git clone ssh://therepomachine/somewhere/test), cloning
+doesn't work at all (tested with git 1.6.0.3.525.ge32c2 in Cygwin):
+
+Initialized empty Git repository in /cygdrive/c/temp/test/.git/
+fatal: no matching remote head
+
+This behaviour isn't documented by either git-init(1) or
+git-clone(1).  I think it would be very convenient if this worked
+for the reasons mentioned above.  I'm sure you could create your
+personal repository with git init and then git remote add the
+shared repository to it but that's much more difficult.
+
+-- 
+Hannu
