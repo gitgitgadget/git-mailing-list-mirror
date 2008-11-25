@@ -1,56 +1,65 @@
-From: Michael J Gruber <git@drmicha.warpmail.net>
+From: Peter Baumann <waste.manager@gmx.de>
 Subject: Re: git fast-export | git fast-import doesn't work
-Date: Tue, 25 Nov 2008 18:31:41 +0100
-Message-ID: <492C367D.3030209@drmicha.warpmail.net>
+Date: Tue, 25 Nov 2008 18:34:47 +0100
+Message-ID: <20081125173447.GB13935@m62s10.vlinux.de>
 References: <85b5c3130811250844u498fbb97m9d1aef6e1397b8c7@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
 Cc: Git Mailing List <git@vger.kernel.org>,
-	Fabian Seoane <fabian@fseoane.net>,
-	"Shawn O. Pearce" <spearce@spearce.org>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>
+	Fabian Seoane <fabian@fseoane.net>
 To: Ondrej Certik <ondrej@certik.cz>
-X-From: git-owner@vger.kernel.org Tue Nov 25 18:33:29 2008
+X-From: git-owner@vger.kernel.org Tue Nov 25 18:36:09 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1L51mb-0001Fd-91
-	for gcvg-git-2@gmane.org; Tue, 25 Nov 2008 18:33:05 +0100
+	id 1L51pX-0002he-VP
+	for gcvg-git-2@gmane.org; Tue, 25 Nov 2008 18:36:08 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752393AbYKYRbs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 25 Nov 2008 12:31:48 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752403AbYKYRbs
-	(ORCPT <rfc822;git-outgoing>); Tue, 25 Nov 2008 12:31:48 -0500
-Received: from out1.smtp.messagingengine.com ([66.111.4.25]:42062 "EHLO
-	out1.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1752317AbYKYRbr (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 25 Nov 2008 12:31:47 -0500
-Received: from compute2.internal (compute2.internal [10.202.2.42])
-	by out1.messagingengine.com (Postfix) with ESMTP id 555D31C8AF3;
-	Tue, 25 Nov 2008 12:31:46 -0500 (EST)
-Received: from heartbeat1.messagingengine.com ([10.202.2.160])
-  by compute2.internal (MEProxy); Tue, 25 Nov 2008 12:31:46 -0500
-X-Sasl-enc: vUIelm4+2FZm7lwwlC1FgMobdyHlecl55HFhPOIr1sf1 1227634305
-Received: from [139.174.44.12] (whitehead.math.tu-clausthal.de [139.174.44.12])
-	by mail.messagingengine.com (Postfix) with ESMTPSA id 4221CABD9;
-	Tue, 25 Nov 2008 12:31:45 -0500 (EST)
-User-Agent: Thunderbird 2.0.0.18 (X11/20081105)
+	id S1752775AbYKYRew (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 25 Nov 2008 12:34:52 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752750AbYKYRew
+	(ORCPT <rfc822;git-outgoing>); Tue, 25 Nov 2008 12:34:52 -0500
+Received: from mail.gmx.net ([213.165.64.20]:33207 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1752747AbYKYRev (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 25 Nov 2008 12:34:51 -0500
+Received: (qmail invoked by alias); 25 Nov 2008 17:34:49 -0000
+Received: from m62s10.vlinux.de (EHLO m62s10.vlinux.de) [83.151.21.204]
+  by mail.gmx.net (mp042) with SMTP; 25 Nov 2008 18:34:49 +0100
+X-Authenticated: #1252284
+X-Provags-ID: V01U2FsdGVkX1+qJtF7LA+qUiUerkybkI3Ap+dd+ZBq5I1ytG0R9n
+	cEg/Ad+Jsfw3wg
+Received: by m62s10.vlinux.de (Postfix, from userid 1000)
+	id 8FFA91818B; Tue, 25 Nov 2008 18:34:47 +0100 (CET)
+Content-Disposition: inline
 In-Reply-To: <85b5c3130811250844u498fbb97m9d1aef6e1397b8c7@mail.gmail.com>
+User-Agent: Mutt/1.5.13 (2006-08-11)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.52
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/101671>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/101672>
 
-Ondrej Certik venit, vidit, dixit 25.11.2008 17:44:
+On Tue, Nov 25, 2008 at 05:44:28PM +0100, Ondrej Certik wrote:
 > Hi,
 > 
 > I would like to export our whole git repository to patches, and then
 > reconstruct it again from scratch. Following the man page of "git
 > fast-export":
 > 
+
+Perhabs you are looking for git filter-branch, because it seems you want
+to change the history in some way (e.g. remove a wrongly committed file)?
+
+Nevertheless, I expect your shown commands below to procude the same
+repo again, so you might be on something ...
+
+-Peter
+
+
 > $ git clone git://git.sympy.org/sympy-full-history-20081023.git
 > $ cd sympy-full-history-20081023
 > $ git fast-export --all --export-marks=marks > patches
@@ -95,20 +104,10 @@ Ondrej Certik venit, vidit, dixit 25.11.2008 17:44:
 > 
 > $ git log --pretty=oneline | wc -l
 > 2719
-
-I get the same stats (with the dups) but a perfect rev count, when I use
-git log --all. The reason is that the history in the imported repo is
-disconnected at various places (at tagging commits)! Your command counts
-only the revs backwards to the first "disconnection".
-
-So, the real issue is: Why has the result these cuts in the history?
-I don't know, I just noticed that turning on rename and copy detection
-makes git-fast-import crash, which shouldn't happen either. Something's
-not right here. CC'ing the authors of im- and export.
-
-BTW: Maybe you can accomplish what you want with different means? Why
-export|import directly to git?
-
-Michael
---
-git 1.6.0.4.608.ga9645
+> 
+> What am I doing wrong? Is there some other way to do it? I also tried
+> "git format-patch" and "git am" and that almost works, only it changes
+> hashes. Is there some way to tell "git am" to preserve the hash?
+> 
+> Thanks,
+> Ondrej
