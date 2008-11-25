@@ -1,70 +1,66 @@
-From: Jean-Luc Herren <jlh@gmx.ch>
-Subject: [PATCH] Invoke "gc --auto" from git commit
-Date: Tue, 25 Nov 2008 17:15:53 +0100
-Message-ID: <492C24B9.6090200@gmx.ch>
+From: Johannes Sixt <j.sixt@viscovery.net>
+Subject: Re: [PATCH] rev-parse: Fix shell scripts whose cwd is a symlink into
+ a git work-dir
+Date: Tue, 25 Nov 2008 17:30:33 +0100
+Message-ID: <492C2829.1000108@viscovery.net>
+References: <cover.1226759762.git.marcel@oak.homeunix.org> <1227389614-10946-1-git-send-email-marcel@oak.homeunix.org> <492BA998.5050106@viscovery.net> <492C24D4.1010306@oak.homeunix.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain; charset=ISO-8859-15
 Content-Transfer-Encoding: 7bit
-To: Git Mailing List <git@vger.kernel.org>,
-	Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Nov 25 17:18:04 2008
+Cc: gitster@pobox.com, git@vger.kernel.org
+To: "Marcel M. Cary" <marcel@oak.homeunix.org>
+X-From: git-owner@vger.kernel.org Tue Nov 25 17:32:44 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1L50bJ-0001UV-8f
-	for gcvg-git-2@gmane.org; Tue, 25 Nov 2008 17:17:21 +0100
+	id 1L50pW-0007pJ-Tx
+	for gcvg-git-2@gmane.org; Tue, 25 Nov 2008 17:32:03 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752007AbYKYQP6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 25 Nov 2008 11:15:58 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751676AbYKYQP5
-	(ORCPT <rfc822;git-outgoing>); Tue, 25 Nov 2008 11:15:57 -0500
-Received: from mail.gmx.net ([213.165.64.20]:45560 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751287AbYKYQP5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 25 Nov 2008 11:15:57 -0500
-Received: (qmail invoked by alias); 25 Nov 2008 16:15:54 -0000
-Received: from 70-46.78-83.cust.bluewin.ch (EHLO [192.168.123.204]) [83.78.46.70]
-  by mail.gmx.net (mp009) with SMTP; 25 Nov 2008 17:15:54 +0100
-X-Authenticated: #14737133
-X-Provags-ID: V01U2FsdGVkX18EDYtNYbcEvds65x+u6BiHw6xTUyPqmwhqwmpTOu
-	qOsoI9q/T5OA7T
-User-Agent: Thunderbird 2.0.0.18 (X11/20081123)
-X-Enigmail-Version: 0.95.7
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.51
+	id S1751924AbYKYQar (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 25 Nov 2008 11:30:47 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751776AbYKYQar
+	(ORCPT <rfc822;git-outgoing>); Tue, 25 Nov 2008 11:30:47 -0500
+Received: from lilzmailso02.liwest.at ([212.33.55.13]:54529 "EHLO
+	lilzmailso02.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750823AbYKYQaq (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 25 Nov 2008 11:30:46 -0500
+Received: from cm56-163-160.liwest.at ([86.56.163.160] helo=linz.eudaptics.com)
+	by lilzmailso02.liwest.at with esmtpa (Exim 4.69)
+	(envelope-from <j.sixt@viscovery.net>)
+	id 1L50o6-0004by-38; Tue, 25 Nov 2008 17:30:41 +0100
+Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.96])
+	by linz.eudaptics.com (Postfix) with ESMTP
+	id CFCBD69F; Tue, 25 Nov 2008 17:30:33 +0100 (CET)
+User-Agent: Thunderbird 2.0.0.18 (Windows/20081105)
+In-Reply-To: <492C24D4.1010306@oak.homeunix.org>
+X-Enigmail-Version: 0.95.5
+X-Spam-Score: -1.4 (-)
+X-Spam-Report: Spam detection software, running on the system "lilzmailsa01.liwest.at", has
+	identified this incoming email as possible spam.  The original message
+	has been attached to this so you can view it (if it isn't spam) or label
+	similar future email.  If you have any questions, see
+	the administrator of that system for details.
+	Content preview:  Marcel M. Cary schrieb: > Any tips on how to follow the reference
+	> 7vk5sly3h9.fsf@assigned-by-dhcp.cox.net in the first url above? It > looks
+	to be about performance. Message-Id seems to not be indexed for > searching.
+	[...] 
+	Content analysis details:   (-1.4 points, 7.0 required)
+	pts rule name              description
+	---- ---------------------- --------------------------------------------------
+	-1.4 ALL_TRUSTED            Passed through trusted hosts only via SMTP
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/101667>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/101668>
 
-This feature was lost during the port of git commit to C.
+Marcel M. Cary schrieb:
+> Any tips on how to follow the reference
+> 7vk5sly3h9.fsf@assigned-by-dhcp.cox.net in the first url above?  It
+> looks to be about performance.  Message-Id seems to not be indexed for
+> searching.
 
-Signed-off-by: Jean-Luc Herren <jlh@gmx.ch>
----
- builtin-commit.c |    2 ++
- 1 files changed, 2 insertions(+), 0 deletions(-)
+http://mid.gmane.org/7vk5sly3h9.fsf@assigned-by-dhcp.cox.net
 
-diff --git a/builtin-commit.c b/builtin-commit.c
-index 591d16b..209805b 100644
---- a/builtin-commit.c
-+++ b/builtin-commit.c
-@@ -947,6 +947,7 @@ int cmd_commit(int argc, const char **argv, const char *prefix)
- 	struct commit_list *parents = NULL, **pptr = &parents;
- 	struct stat statbuf;
- 	int allow_fast_forward = 1;
-+	const char *argv_gc_auto[] = { "gc", "--auto", NULL };
- 
- 	git_config(git_commit_config, NULL);
- 
-@@ -1068,6 +1069,7 @@ int cmd_commit(int argc, const char **argv, const char *prefix)
- 		     "not exceeded, and then \"git reset HEAD\" to recover.");
- 
- 	rerere();
-+	run_command_v_opt(argv_gc_auto, RUN_GIT_CMD);
- 	run_hook(get_index_file(), "post-commit", NULL);
- 	if (!quiet)
- 		print_summary(prefix, commit_sha1);
--- 
-1.6.0.4
+-- Hannes
