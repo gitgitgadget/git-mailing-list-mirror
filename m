@@ -1,75 +1,91 @@
-From: Pete Harlan <pgit@pcharlan.com>
-Subject: Re: Hello All and Seeking Information
-Date: Mon, 24 Nov 2008 23:57:21 -0800
-Message-ID: <492BAFE1.5010904@pcharlan.com>
-References: <c115fd3c0811240828y61e7bfecka1cacdd37865a4e8@mail.gmail.com>
+From: Luis Gutierrez <luis.gutierrez@xmos.com>
+Subject: inted problems when upgrading to 1.6.0.4
+Date: Tue, 25 Nov 2008 09:29:14 +0000
+Message-ID: <492BC56A.6040506@xmos.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Tim Visher <tim.visher@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Nov 25 08:58:39 2008
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Nov 25 10:30:16 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1L4soh-0003q4-9o
-	for gcvg-git-2@gmane.org; Tue, 25 Nov 2008 08:58:39 +0100
+	id 1L4uFH-0004Am-Ji
+	for gcvg-git-2@gmane.org; Tue, 25 Nov 2008 10:30:12 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751607AbYKYH5X (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 25 Nov 2008 02:57:23 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751534AbYKYH5X
-	(ORCPT <rfc822;git-outgoing>); Tue, 25 Nov 2008 02:57:23 -0500
-Received: from lax-green-bigip-5.dreamhost.com ([208.113.200.5]:60013 "EHLO
-	swarthymail-a7.g.dreamhost.com" rhost-flags-OK-OK-OK-FAIL)
-	by vger.kernel.org with ESMTP id S1751025AbYKYH5W (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 25 Nov 2008 02:57:22 -0500
-Received: from [192.168.0.2] (031.132-78-65.ftth.swbr.surewest.net [65.78.132.31])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by swarthymail-a7.g.dreamhost.com (Postfix) with ESMTP id B0D81DE52F;
-	Mon, 24 Nov 2008 23:57:21 -0800 (PST)
-User-Agent: Mozilla-Thunderbird 2.0.0.17 (X11/20081018)
-In-Reply-To: <c115fd3c0811240828y61e7bfecka1cacdd37865a4e8@mail.gmail.com>
+	id S1752133AbYKYJ2u (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 25 Nov 2008 04:28:50 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752081AbYKYJ2u
+	(ORCPT <rfc822;git-outgoing>); Tue, 25 Nov 2008 04:28:50 -0500
+Received: from smtp-out-68.livemail.co.uk ([213.171.216.68]:53605 "EHLO
+	smtp-out-68.livemail.co.uk" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1752121AbYKYJ2t (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 25 Nov 2008 04:28:49 -0500
+Received: from [10.0.102.43] (unknown [195.26.247.140])
+	by smtp-out-68.livemail.co.uk (Postfix) with ESMTP id C75DB45EF21
+	for <git@vger.kernel.org>; Tue, 25 Nov 2008 09:28:47 +0000 (GMT)
+User-Agent: Thunderbird 2.0.0.17 (X11/20080925)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/101652>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/101653>
 
-Tim Visher wrote:
-> there are some issues that I can't wrap my head around, such as how
-> you can guarantee that all developers are working on the same
-> code-base without a central repo.
+Hi All,
 
-You can have a central repo that represents the official lines of
-development (branches, but "official" branches), and each developer
-has local copies of those branches so they can compare their own work
-against them.
+At my company we have been using git for the past months, and except for 
+a few people, everyone is happy with it. Last week, we discovered that 
+the mac version of git was misbehaving (v1.5.6.4), but upgrading the 
+client to the latest one (v1.6.0.4) fixed the issue. Fearing consistency 
+issue between version, I decided to update the version of the central 
+repository (ie, the place were people can go and synchronize their code) 
+on a RHEL4 box from 1.5.6.4 to 1.6.0.4.
+went to my git directory, pulled, checkout v1.6.0.4, and compiled with 
+'make --prefix=/usr/loca/ all' and installed with the same comamnd. 
+xinted dameon was restarted and then all hell broke loose.
 
-If you don't have a central repo, then the developers can keep local
-copies of other developers' branches when they're interested in them,
-and compare their work against those.
+All push/pull/clone operations were failing with the dreaded 'fatal: The 
+remote end hung up unexpectedly'. After a few tests, this is what I found:
 
-Using the git project as an example, when you clone from
-git://git.kernel.org/pub/scm/git/git.git you will find "remote
-branches" origin/master, origin/maint, etc.  They're stored locally in
-your repo; the name "remote" only refers to the fact that at one time
-(when you last cloned or fetched) they corresponded to branches in the
-origin repo.  You can list your copies of these branches with "git
-branch -r".  You can freshen them to agree with the origin with "git
-fetch origin".
+- I can clone/pull/push if I do it through ssh (ie, git clone 
+ssh://server/project)
+- I can clone/pull/push if I start git daemon on the command line through
+git daemon --syslog --verbose --export-all 
+--base-path=/vol0/git/projects --verbose --reuseaddr
 
-Your local branches ("local" referring to the fact that they exist
-_only_ locally), listed by "git branch", are what you develop on.
+But the way I had setup git, through xinetd is broken.
 
-After you do "git fetch", you can compare your local branches against
-your copies of the remote branches to see if the remote repo has new
-work you haven't yet incorporated into your local branches.  You can
-also compare against them to see if you have work they don't.
+This is my current xinetd config:
+service git
+{
+    disable      = yes
+    socket_type  = stream
+    wait         = no
+    user         = git
+    type         = UNLISTED
+    protocol     = tcp
+    log_on_failure    += USERID
+    port         = 9418
+    server       = /usr/local/bin/git
+    server_args  = daemon --inetd --syslog --verbose --export-all 
+--base-path=/vol0/git/projects --allow-override=uploadpack
+}
 
-So each developer can compare what they have against what others have,
-and keep things in sync as much as they wish to (and no more), fairly
-easily.
+And I'm getting the following errors:
+ > git clone git://romanticism/tutorial tutorial.git
+Initialized empty Git repository in /tmp/tutorial.git/.git/
+fatal: protocol error: bad line length character
 
---Pete
+before adding the --allow-override=uploadpack I was getting this:
+ > git clone git://romanticism/tutorial tutorial.git
+Initialized empty Git repository in /tmp/tutorial.git/.git/
+fatal: The remote end hung up unexpectedly
+
+Since the error appeared after the upgrade, it seems likely it is either 
+a but, or something change regarding inte/xinetd, but I can't find any 
+documentation about changes here.
+
+Any help will be appreciated.
+
+Luis Gutierrez
