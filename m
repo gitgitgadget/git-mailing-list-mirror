@@ -1,140 +1,57 @@
-From: =?utf-8?q?Uwe=20Kleine-K=C3=B6nig?= 
-	<u.kleine-koenig@pengutronix.de>
-Subject: [PATCH] tg-export: add flag -n to get numbered patches
-Date: Wed, 26 Nov 2008 22:17:35 +0100
-Message-ID: <1227734255-30425-1-git-send-email-u.kleine-koenig@pengutronix.de>
+From: Uwe =?iso-8859-1?Q?Kleine-K=F6nig?= <ukleinek@strlen.de>
+Subject: Re: [PATCH] tg export: implement skipping empty patches for quilt
+	mode
+Date: Wed, 26 Nov 2008 22:19:19 +0100
+Message-ID: <20081126211919.GA22474@strlen.de>
+References: <1227701580-9762-1-git-send-email-u.kleine-koenig@pengutronix.de> <20081126203959.GB31563@piper.oerlikon.madduck.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=iso-8859-1
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: "martin f. krafft" <madduck@debian.org>,
-	Petr Baudis <pasky@suse.cz>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Nov 26 22:19:19 2008
+Cc: Uwe =?iso-8859-1?Q?Kleine-K=F6nig?= 
+	<u.kleine-koenig@pengutronix.de>, git@vger.kernel.org
+To: martin f krafft <madduck@debian.org>
+X-From: git-owner@vger.kernel.org Wed Nov 26 22:20:43 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1L5Rmw-000760-SC
-	for gcvg-git-2@gmane.org; Wed, 26 Nov 2008 22:19:11 +0100
+	id 1L5RoQ-0007fu-4J
+	for gcvg-git-2@gmane.org; Wed, 26 Nov 2008 22:20:42 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752938AbYKZVRn convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 26 Nov 2008 16:17:43 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752935AbYKZVRn
-	(ORCPT <rfc822;git-outgoing>); Wed, 26 Nov 2008 16:17:43 -0500
-Received: from metis.ext.pengutronix.de ([92.198.50.35]:47589 "EHLO
-	metis.ext.pengutronix.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752882AbYKZVRm (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 26 Nov 2008 16:17:42 -0500
-Received: from themisto.ext.pengutronix.de ([92.198.50.58] helo=localhost.localdomain)
-	by metis.ext.pengutronix.de with esmtp (Exim 4.63)
-	(envelope-from <u.kleine-koenig@pengutronix.de>)
-	id 1L5RlR-0003Cf-LG; Wed, 26 Nov 2008 22:17:40 +0100
-X-Mailer: git-send-email 1.5.6.5
-X-SA-Exim-Connect-IP: 92.198.50.58
-X-SA-Exim-Mail-From: u.kleine-koenig@pengutronix.de
-X-Spam-Checker-Version: SpamAssassin 3.2.4 (2008-01-01) on
-	metis.extern.pengutronix.de
-X-Spam-Level: 
-X-Spam-Status: No, score=-0.5 required=4.5 tests=BAYES_00,HELO_LH_LD,
-	RCVD_IN_PBL shortcircuit=no autolearn=no version=3.2.4
-X-SA-Exim-Version: 4.2.1 (built Tue, 09 Jan 2007 17:23:22 +0000)
-X-SA-Exim-Scanned: Yes (on metis.ext.pengutronix.de)
-X-PTX-Original-Recipient: git@vger.kernel.org
+	id S1755291AbYKZVTZ convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 26 Nov 2008 16:19:25 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755283AbYKZVTZ
+	(ORCPT <rfc822;git-outgoing>); Wed, 26 Nov 2008 16:19:25 -0500
+Received: from Chamillionaire.breakpoint.cc ([85.10.199.196]:40351 "EHLO
+	Chamillionaire.breakpoint.cc" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1755180AbYKZVTX (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 26 Nov 2008 16:19:23 -0500
+Received: id: ukleinek by Chamillionaire.breakpoint.cc authenticated by ukleinek with local
+	(easymta 1.00 BETA 1)
+	id 1L5Rn5-0005vF-DH; Wed, 26 Nov 2008 22:19:19 +0100
+Content-Disposition: inline
+In-Reply-To: <20081126203959.GB31563@piper.oerlikon.madduck.net>
+User-Agent: Mutt/1.5.16 (2007-06-09)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/101769>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/101770>
 
-This eases sending the patches out in the right order using git
-send-email.  Of course this only works nicely if all patches end in the
-same directory (e.g. all dependant patches use the same prefix)
+Hi,
 
-Note this patch depends a bit on my previous one that deprecates using
--n for not exporting empty patches.
+On Wed, Nov 26, 2008 at 09:39:59PM +0100, martin f krafft wrote:
+> also sprach Uwe Kleine-K=F6nig <u.kleine-koenig@pengutronix.de> [2008=
+=2E11.26.1313 +0100]:
+> > addionally fix the README item for skipping the export of empty pat=
+ches
+> > not to need an option (-n) as this should be the default.
+> [...]
+> > -	TODO: -n option to prevent exporting of empty patches
+> > +	TODO: prevent exporting of empty patches
+>=20
+> Is it still a TODO? Looks like your patch fixes it, no?
+No, it's still a TODO for the collapse driver.
 
-Signed-off-by: Uwe Kleine-K=C3=B6nig <u.kleine-koenig@pengutronix.de>
-Cc: martin f. krafft <madduck@debian.org>
-Cc: Petr Baudis <pasky@suse.cz>
----
- tg-export.sh |   26 +++++++++++++++++++++++---
- 1 files changed, 23 insertions(+), 3 deletions(-)
-
-diff --git a/tg-export.sh b/tg-export.sh
-index f133fb8..b667b82 100644
---- a/tg-export.sh
-+++ b/tg-export.sh
-@@ -7,6 +7,7 @@ name=3D
- branches=3D
- output=3D
- driver=3Dcollapse
-+numbered=3Dfalse
-=20
-=20
- ## Parse options
-@@ -20,6 +21,8 @@ while [ -n "$1" ]; do
- 		driver=3Dquilt;;
- 	--collapse)
- 		driver=3Dcollapse;;
-+	-n)
-+		numbered=3Dtrue;;
- 	-*)
- 		echo "Usage: tg [...] export ([--collapse] NEWBRANCH | [-b BRANCH1,B=
-RANCH2...] --quilt DIRECTORY)" >&2
- 		exit 1;;
-@@ -34,6 +37,9 @@ done
- [ -z "$branches" -o "$driver" =3D "quilt" ] ||
- 	die "-b works only with the quilt driver"
-=20
-+[ "$driver" =3D "quilt" ] || ! "$numbered" ||
-+	die "-n works only with the quilt driver"
-+
- if [ -z "$branches" ]; then
- 	# this check is only needed when no branches have been passed
- 	name=3D"$(git symbolic-ref HEAD | sed 's#^refs/heads/##')"
-@@ -134,19 +140,31 @@ quilt()
- 		return
- 	fi
-=20
--	filename=3D"$output/$_dep.diff"
--	if [ -e "$filename" ]; then
-+	if "$numbered"; then
-+		number=3D$(printf "%04u" $((number + 1)))
-+		bn=3D"$(basename "$_dep.diff")";
-+		dn=3D"$(dirname "$_dep.diff")";
-+		num_dep=3D"$dn/$number-$bn"
-+	else
-+		num_dep=3D"$_dep.diff";
-+	fi
-+	filename=3D"$output/$num_dep"
-+
-+	if [ -e "$playground/$_dep" ]; then
- 		# We've already seen this dep
- 		return
- 	fi
-=20
-+	mkdir -p "$playground/$(dirname "$_dep")"
-+	touch "$playground/$_dep"
-+
- 	if branch_empty "$_dep"; then
- 		echo "Skip empty patch $_dep";
- 	else
- 		echo "Exporting $_dep"
- 		mkdir -p "$(dirname "$filename")"
- 		$tg patch "$_dep" >"$filename"
--		echo "$_dep.diff -p1" >>"$output/series"
-+		echo "$num_dep.diff -p1" >>"$output/series"
- 	fi
- }
-=20
-@@ -166,6 +184,8 @@ elif [ "$driver" =3D "quilt" ]; then
- 		die "target directory already exists: $output"
-=20
- 	mkdir -p "$output"
-+
-+	number=3D"0000";
- fi
-=20
-=20
---=20
-1.5.6.5
+Best regards
+Uwe
