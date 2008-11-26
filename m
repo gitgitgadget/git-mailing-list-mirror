@@ -1,115 +1,65 @@
-From: "Ondrej Certik" <ondrej@certik.cz>
-Subject: Re: git fast-export | git fast-import doesn't work
-Date: Wed, 26 Nov 2008 18:21:32 +0100
-Message-ID: <85b5c3130811260921s474bc724hb74b54e21e8be912@mail.gmail.com>
-References: <85b5c3130811250844u498fbb97m9d1aef6e1397b8c7@mail.gmail.com>
-	 <alpine.DEB.1.00.0811260113140.30769@pacific.mpi-cbg.de>
-	 <85b5c3130811260135g4646bf72iaf57f599fdd21a0c@mail.gmail.com>
-	 <85b5c3130811260218s7529914eyb56a05ec1ca34b8f@mail.gmail.com>
-	 <492D6CC3.2050408@drmicha.warpmail.net>
-	 <85b5c3130811260750y2e24436ye2426ccfc2f66071@mail.gmail.com>
-	 <alpine.DEB.1.00.0811261739110.30769@pacific.mpi-cbg.de>
+From: Pascal Obry <pascal@obry.net>
+Subject: Re: French git user
+Date: Wed, 26 Nov 2008 18:55:26 +0100
+Organization: Home - http://www.obry.net
+Message-ID: <492D8D8E.8010900@obry.net>
+References: <492B9985.10103@morey-chaisemartin.com> <492C2F2E.2050200@morey-chaisemartin.com> <492D0295.6060808@morey-chaisemartin.com> <200811260955.57421.johan@herland.net>
+Reply-To: pascal@obry.net
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-Cc: "Michael J Gruber" <git@drmicha.warpmail.net>,
-	"Git Mailing List" <git@vger.kernel.org>,
-	"Fabian Seoane" <fabian@fseoane.net>
-To: "Johannes Schindelin" <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Wed Nov 26 18:22:57 2008
+Cc: git@vger.kernel.org, devel@morey-chaisemartin.com,
+	Jean-Francois Veillette <jean_francois_veillette@yahoo.ca>
+To: Johan Herland <johan@herland.net>
+X-From: git-owner@vger.kernel.org Wed Nov 26 18:56:53 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1L5O6E-0004Q7-Br
-	for gcvg-git-2@gmane.org; Wed, 26 Nov 2008 18:22:50 +0100
+	id 1L5OdA-0002Fg-UI
+	for gcvg-git-2@gmane.org; Wed, 26 Nov 2008 18:56:53 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753006AbYKZRVf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 26 Nov 2008 12:21:35 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753221AbYKZRVf
-	(ORCPT <rfc822;git-outgoing>); Wed, 26 Nov 2008 12:21:35 -0500
-Received: from gv-out-0910.google.com ([216.239.58.187]:11807 "EHLO
-	gv-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752938AbYKZRVe (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 26 Nov 2008 12:21:34 -0500
-Received: by gv-out-0910.google.com with SMTP id e6so206254gvc.37
-        for <git@vger.kernel.org>; Wed, 26 Nov 2008 09:21:32 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:sender
-         :to:subject:cc:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:references
-         :x-google-sender-auth;
-        bh=BMD0lSyrs5sub5I84eaoTOx2P6ymSyM968H3ykBeFwA=;
-        b=T5zpv5xl1A3Y1QI+PYgW8CKrGr7U3sGcabml1RU2gjJch1h1mPn/Nzzu8Yta2K+mlv
-         k2TbDhVpyRB9afmgGC+Z0E9N8qw8e0mPM9FuHRcIWWCgmEonMdozwJYr2ilfkyXuBceu
-         JgC6RRV2bHdDFMPtiuxGVx9hwUYMD0H9ySdqY=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:sender:to:subject:cc:in-reply-to:mime-version
-         :content-type:content-transfer-encoding:content-disposition
-         :references:x-google-sender-auth;
-        b=wNNrcVkmvjtONP1r+ypa+In/u7NoVzqB/1rBbAA5uu+ZNSctCFo2j7JFtJgvgagKxZ
-         elcxB5rkQcTQM9K4g9FivVTHor54doqZ6RbdYKusBsja1MGsMmR8ChufjggbzpfsAbcp
-         vXF2N8Al51roGpM4be6pj8icoJH1Y7lyt9Fi4=
-Received: by 10.86.51.10 with SMTP id y10mr3951621fgy.51.1227720092173;
-        Wed, 26 Nov 2008 09:21:32 -0800 (PST)
-Received: by 10.86.33.8 with HTTP; Wed, 26 Nov 2008 09:21:32 -0800 (PST)
-In-Reply-To: <alpine.DEB.1.00.0811261739110.30769@pacific.mpi-cbg.de>
-Content-Disposition: inline
-X-Google-Sender-Auth: c3f3052a0a80b4b6
+	id S1752381AbYKZRzg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 26 Nov 2008 12:55:36 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752440AbYKZRzg
+	(ORCPT <rfc822;git-outgoing>); Wed, 26 Nov 2008 12:55:36 -0500
+Received: from yx-out-2324.google.com ([74.125.44.29]:4441 "EHLO
+	yx-out-2324.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752296AbYKZRzf (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 26 Nov 2008 12:55:35 -0500
+Received: by yx-out-2324.google.com with SMTP id 8so291681yxm.1
+        for <git@vger.kernel.org>; Wed, 26 Nov 2008 09:55:33 -0800 (PST)
+Received: by 10.103.171.20 with SMTP id y20mr2235135muo.122.1227722133123;
+        Wed, 26 Nov 2008 09:55:33 -0800 (PST)
+Received: from ?192.168.0.100? (AVelizy-154-1-42-242.w82-124.abo.wanadoo.fr [82.124.146.242])
+        by mx.google.com with ESMTPS id y6sm692825mug.2.2008.11.26.09.55.30
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Wed, 26 Nov 2008 09:55:31 -0800 (PST)
+User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.1; fr-FR; rv:1.8.1.18) Gecko/20081105 Thunderbird/2.0.0.18 Mnenhy/0.7.5.0
+In-Reply-To: <200811260955.57421.johan@herland.net>
+X-Enigmail-Version: 0.95.7
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/101750>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/101751>
 
-On Wed, Nov 26, 2008 at 5:40 PM, Johannes Schindelin
-<Johannes.Schindelin@gmx.de> wrote:
-> Hi,
->
-> On Wed, 26 Nov 2008, Ondrej Certik wrote:
->
->> I am also trying to make the example simpler. I tried to squash the
->> first uninteresting ~1500 commits into one, but "git rebase -i" uterrly
->> fails after squashing about 600 commits. Still investigating.
->
-> 1500... wow.
->
-> The best idea would probably be to just "edit" the first, delete the rest
-> of the 1500, and then 'git read-tree -u -m <last-of-the-1500-commits>"' on
-> the command line (when git rebase stops after the "edit" command).
+Johan,
 
-That worked, thanks! My original repo:
+You said that the form git-<cmd> version is deprecated. That's true. But
+in the suit of the document you use only git-<cmd>. This is not working
+anymore with recent Git version. I would recommend using only the "git
+<cmd>" form.
 
-A -- B -- ... --- D --- E --- ...
+Pascal.
 
-where E and the rest of the commits (there are branches and merges in
-there) are the ones that I need to preserve, but all the commits
-between B and D can be squashed (~1500 of them). So I created a
-branch:
+-- 
 
-A -- B -- ... --- D
-
-then squashed the commits using the technique you described above, so
-now I have:
-
-A -- BD --
-
-and now I would like to append "E -- ..." to it -- is there any way to
-do that? I tried rebase, but that destroys all the branches and merges
-and those are necessary to reproduce the fast-export bug.
-
->
-> rebase -i was _never_ meant for such _massive_ interactions; that's just
-> too much for a shell script.
-
-In fact, I think it would work, but there is probably another bug,
-that I am hitting, maybe due to whitespace problems --- in the
-original repository, the patches are linear, but when I create a
-branch before the failing patch and then cherry-pick it (that should
-work), it fails and creates conflicts. The same behavior is with git
-rebase. So I'll investigate more and report it in a separate thread,
-as it is not related to fast-export.
-
-Ondrej
+--|------------------------------------------------------
+--| Pascal Obry                           Team-Ada Member
+--| 45, rue Gabriel Peri - 78114 Magny Les Hameaux FRANCE
+--|------------------------------------------------------
+--|              http://www.obry.net
+--| "The best way to travel is by means of imagination"
+--|
+--| gpg --keyserver wwwkeys.pgp.net --recv-key C1082595
