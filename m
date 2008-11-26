@@ -1,94 +1,142 @@
-From: Alexander Gavrilov <angavrilov@gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
 Subject: Re: [PATCH] git-gui: update Japanese translation
-Date: Thu, 27 Nov 2008 00:27:37 +0300
-Organization: HOME
-Message-ID: <200811270027.38629.angavrilov@gmail.com>
+Date: Wed, 26 Nov 2008 13:50:31 -0800
+Message-ID: <7vskpedumw.fsf@gitster.siamese.dyndns.org>
 References: <20081126192144.6117@nanako3.lavabit.com>
+ <20081126212828.GA20382@spearce.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: "Shawn O. Pearce" <spearce@spearce.org>, git@vger.kernel.org
-To: Nanako Shiraishi <nanako3@lavabit.com>
-X-From: git-owner@vger.kernel.org Wed Nov 26 22:30:40 2008
+Content-Type: multipart/mixed; boundary="=-=-="
+Cc: Nanako Shiraishi <nanako3@lavabit.com>, git@vger.kernel.org
+To: "Shawn O. Pearce" <spearce@spearce.org>
+X-From: git-owner@vger.kernel.org Wed Nov 26 22:52:40 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1L5Ry3-0002yr-7Z
-	for gcvg-git-2@gmane.org; Wed, 26 Nov 2008 22:30:39 +0100
+	id 1L5SJB-0002OB-PX
+	for gcvg-git-2@gmane.org; Wed, 26 Nov 2008 22:52:30 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752028AbYKZV3S convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 26 Nov 2008 16:29:18 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752022AbYKZV3S
-	(ORCPT <rfc822;git-outgoing>); Wed, 26 Nov 2008 16:29:18 -0500
-Received: from mu-out-0910.google.com ([209.85.134.184]:14361 "EHLO
-	mu-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751836AbYKZV3R convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 26 Nov 2008 16:29:17 -0500
-Received: by mu-out-0910.google.com with SMTP id g7so544559muf.1
-        for <git@vger.kernel.org>; Wed, 26 Nov 2008 13:29:15 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:organization:to:subject
-         :date:user-agent:cc:references:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:message-id;
-        bh=/emvHQKKJ9m3pMdaUnyG1PF3llNYGBAKHfDnFrNwkok=;
-        b=O9EEpqt9CV1A4pykuNCJGgLKr8yLl56yxxhu3cRINdLJMiM8Zm74O/ojlDTANpszE6
-         NmuSB9YP3y6ah/TGeuPsBJKWEQ+fnujg1QlO7OEuxgnwRBQs2P6Wku4ZSoOoF7cmi61/
-         9q5OAFI044VMHfbcjB31qF7/wH0cLP0EpbNkE=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=from:organization:to:subject:date:user-agent:cc:references
-         :in-reply-to:mime-version:content-type:content-transfer-encoding
-         :content-disposition:message-id;
-        b=c6yIygDOzSQjkxNqQ/6DnXagVi0xEBDHieA9ZdR1S14Z7mnZ6BhuvTEd6rum520aoU
-         E1bjEw95dvTvEXopV+mLZRTpLkvYRvvmiEC0B4WrCaUaja/774X4hkoogarqeHFhqX0u
-         D3sQw2tJsXmxMN7FrCeRtthg9K0ZBul4+47Zs=
-Received: by 10.181.240.7 with SMTP id s7mr2083112bkr.110.1227734955029;
-        Wed, 26 Nov 2008 13:29:15 -0800 (PST)
-Received: from keydesk.localnet ([92.255.85.78])
-        by mx.google.com with ESMTPS id k29sm1074672fkk.17.2008.11.26.13.29.14
-        (version=SSLv3 cipher=RC4-MD5);
-        Wed, 26 Nov 2008 13:29:14 -0800 (PST)
-User-Agent: KMail/1.10.1 (Linux/2.6.27.5-117.fc10.i686; KDE/4.1.2; i686; ; )
-In-Reply-To: <20081126192144.6117@nanako3.lavabit.com>
-Content-Disposition: inline
+	id S1752502AbYKZVvL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 26 Nov 2008 16:51:11 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752404AbYKZVvL
+	(ORCPT <rfc822;git-outgoing>); Wed, 26 Nov 2008 16:51:11 -0500
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:64326 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752119AbYKZVvK (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 26 Nov 2008 16:51:10 -0500
+Received: from localhost.localdomain (unknown [127.0.0.1])
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 7FE4E81CE8;
+	Wed, 26 Nov 2008 16:51:08 -0500 (EST)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES256-SHA (256/256 bits)) (No client certificate requested) by
+ a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTPSA id 6B83581CCE; Wed,
+ 26 Nov 2008 16:50:34 -0500 (EST)
+In-Reply-To: <20081126212828.GA20382@spearce.org> (Shawn O. Pearce's message
+ of "Wed, 26 Nov 2008 13:28:28 -0800")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: 55213B5E-BC04-11DD-94A0-465CC92D7133-77302942!a-sasl-fastnet.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/101772>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/101773>
 
-On Wednesday 26 November 2008 13:21:44 Nanako Shiraishi wrote:
-> -#: lib/blame.tcl:388
-> +#: lib/blame.tcl:288
-> +msgid "Show History Context"
-> +msgstr "=E6=96=87=E8=84=88=E3=82=92=E8=A6=8B=E3=81=9B=E3=82=8B"
+--=-=-=
 
-> -#: lib/option.tcl:128
-> +#: lib/option.tcl:151
-> +msgid "Blame History Context Radius (days)"
-> +msgstr "=E8=A8=BB=E9=87=88=E3=81=99=E3=82=8B=E5=B1=A5=E6=AD=B4=E5=8D=
-=8A=E5=BE=84=EF=BC=88=E6=97=A5=E6=95=B0=EF=BC=89"
+"Shawn O. Pearce" <spearce@spearce.org> writes:
 
-I obviosly should have chosen a less ambiguous name for this
-option. Everybody seems to think that the key item here is Blame,
-while actually it is "History Context", i.e. the option specifies the
-Radius of the History Context that is shown by the corresponding
-menu item in the Blame viewer. It was probably better to name it
-simply "History Context Radius".
+> $ make V=1
+> msgfmt --statistics --tcl -l ja -d po/ po/ja.po
+> po/ja.po:1558: `msgid' and `msgstr' entries do not both begin with '\n'
+> po/ja.po:1567: `msgid' and `msgstr' entries do not both begin with '\n'
+> po/ja.po:1602: `msgid' and `msgstr' entries do not both begin with '\n'
+> po/ja.po:1883: `msgid' and `msgstr' entries do not both begin with '\n'
+> po/ja.po:1931: `msgid' and `msgstr' entries do not both begin with '\n'
+> po/ja.po:1941: `msgid' and `msgstr' entries do not both begin with '\n'
+> po/ja.po:2342: `msgid' and `msgstr' entries do not both begin with '\n'
+> po/ja.po:2455: `msgid' and `msgstr' entries do not both begin with '\n'
+> msgfmt: found 8 fatal errors
+> make: *** [po/ja.msg] Error 1
 
-This menu item starts gitk, auto-selecting the commit that the clicked
-line of the blame viewer is annotated with, and restricting view to
-commits that are within the specified time radius of it. The feature is=
- mainly
-intended to aid analysis of repositories with poorly structured history=
-,
-where related changes are often scattered into multiple nearby commits.
-It can easily happen as a consequence of importing history from
-a file-centered VCS, like CVS or Visual SourceSafe. That's why no
-limiting on file path is done.
+Feel free to squash this in; I just removed the extra "\n" at the
+beginning of these messages.
 
-Of course, it is also a handy way to view the commit diff...
 
-Alexander
+--=-=-=
+Content-Type: text/plain; charset=iso-2022-jp
+Content-Disposition: inline; filename=1
+Content-Description: po/ja.po fixup
+
+ po/ja.po |    8 --------
+ 1 files changed, 0 insertions(+), 8 deletions(-)
+
+diff --git c/po/ja.po i/po/ja.po
+index 0cd6740..8ba6417 100644
+--- c/po/ja.po
++++ i/po/ja.po
+@@ -1559,7 +1559,6 @@ msgid ""
+ "LOCAL: deleted\n"
+ "REMOTE:\n"
+ msgstr ""
+-"\n"
+ "LOCAL: 削除\n"
+ "Remote:\n"
+ 
+@@ -1568,7 +1567,6 @@ msgid ""
+ "REMOTE: deleted\n"
+ "LOCAL:\n"
+ msgstr ""
+-"\n"
+ "REMOTE: 削除\n"
+ "LOCAL:\n"
+ 
+@@ -1603,7 +1601,6 @@ msgid ""
+ "* Untracked file is %d bytes.\n"
+ "* Showing only first %d bytes.\n"
+ msgstr ""
+-"\n"
+ "* 管理外のファイルの大きさは %d バイトです。\n"
+ "* 最初の %d バイトだけ表示しています。\n"
+ 
+@@ -1887,7 +1884,6 @@ msgid ""
+ "\n"
+ "This operation can be undone only by restarting the merge."
+ msgstr ""
+-"\n"
+ "競合する変更点だけが表示されていることに注意してください。\n"
+ "\n"
+ "%s は上書きされます。\n"
+@@ -1932,7 +1928,6 @@ msgid ""
+ "Error retrieving versions:\n"
+ "%s"
+ msgstr ""
+-"\n"
+ "版の取り出し時にエラーが出ました:\n"
+ "%s"
+ 
+@@ -1943,7 +1938,6 @@ msgid ""
+ "\n"
+ "%s"
+ msgstr ""
+-"\n"
+ "マージツールが起動できません:\n"
+ "\n"
+ "%s"
+@@ -2344,7 +2338,6 @@ msgid ""
+ "\n"
+ "%s"
+ msgstr ""
+-"\n"
+ "ssh-keygen を起動できません:\n"
+ "\n"
+ "%s"
+@@ -2456,7 +2449,6 @@ msgid ""
+ "Could not add tool:\n"
+ "%s"
+ msgstr ""
+-"\n"
+ "ツールを追加できません:\n"
+ "%s"
+ 
+
+--=-=-=--
