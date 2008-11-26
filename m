@@ -1,61 +1,63 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: git fast-export | git fast-import doesn't work
-Date: Wed, 26 Nov 2008 01:14:37 +0100 (CET)
-Message-ID: <alpine.DEB.1.00.0811260113140.30769@pacific.mpi-cbg.de>
-References: <85b5c3130811250844u498fbb97m9d1aef6e1397b8c7@mail.gmail.com>
+From: "=?ISO-8859-1?Q?Santi_B=E9jar?=" <santi@agolina.net>
+Subject: Re: Extra pair of double quotes in "git commit" output?
+Date: Wed, 26 Nov 2008 01:06:34 +0100
+Message-ID: <adf1fd3d0811251606t7f49eb84y53075427859bd26a@mail.gmail.com>
+References: <20081126064906.6117@nanako3.lavabit.com>
+	 <20081125232521.GC30942@coredump.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Git Mailing List <git@vger.kernel.org>,
-	Fabian Seoane <fabian@fseoane.net>
-To: Ondrej Certik <ondrej@certik.cz>
-X-From: git-owner@vger.kernel.org Wed Nov 26 01:07:49 2008
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: "Nanako Shiraishi" <nanako3@lavabit.com>, git@vger.kernel.org
+To: "Jeff King" <peff@peff.net>
+X-From: git-owner@vger.kernel.org Wed Nov 26 01:08:03 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1L57wY-0001tP-I1
-	for gcvg-git-2@gmane.org; Wed, 26 Nov 2008 01:07:46 +0100
+	id 1L57wk-0001vi-0S
+	for gcvg-git-2@gmane.org; Wed, 26 Nov 2008 01:07:58 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751379AbYKZAGb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 25 Nov 2008 19:06:31 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752190AbYKZAGa
-	(ORCPT <rfc822;git-outgoing>); Tue, 25 Nov 2008 19:06:30 -0500
-Received: from mail.gmx.net ([213.165.64.20]:32812 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1750998AbYKZAGa (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 25 Nov 2008 19:06:30 -0500
-Received: (qmail invoked by alias); 26 Nov 2008 00:06:28 -0000
-Received: from pacific.mpi-cbg.de (EHLO pacific.mpi-cbg.de) [141.5.10.38]
-  by mail.gmx.net (mp042) with SMTP; 26 Nov 2008 01:06:28 +0100
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX19zcOBdswlz6D6BXaHV6c3UzlDm8UWDi+zuZIOY5h
-	24kQycv/SVKBho
-X-X-Sender: schindelin@pacific.mpi-cbg.de
-In-Reply-To: <85b5c3130811250844u498fbb97m9d1aef6e1397b8c7@mail.gmail.com>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.64
+	id S1752366AbYKZAGh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 25 Nov 2008 19:06:37 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752377AbYKZAGh
+	(ORCPT <rfc822;git-outgoing>); Tue, 25 Nov 2008 19:06:37 -0500
+Received: from nf-out-0910.google.com ([64.233.182.187]:3894 "EHLO
+	nf-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752362AbYKZAGg (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 25 Nov 2008 19:06:36 -0500
+Received: by nf-out-0910.google.com with SMTP id d3so116582nfc.21
+        for <git@vger.kernel.org>; Tue, 25 Nov 2008 16:06:35 -0800 (PST)
+Received: by 10.103.175.9 with SMTP id c9mr1857104mup.3.1227657994651;
+        Tue, 25 Nov 2008 16:06:34 -0800 (PST)
+Received: by 10.103.176.11 with HTTP; Tue, 25 Nov 2008 16:06:34 -0800 (PST)
+In-Reply-To: <20081125232521.GC30942@coredump.intra.peff.net>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/101697>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/101698>
 
-Hi,
+On Wed, Nov 26, 2008 at 12:25 AM, Jeff King <peff@peff.net> wrote:
 
-On Tue, 25 Nov 2008, Ondrej Certik wrote:
+[...]
 
-> I would like to export our whole git repository to patches, and then 
-> reconstruct it again from scratch. Following the man page of "git 
-> fast-export":
 >
-> [...] 
-> 
-> However, the repository is very different to the original one. It 
-> contains only 191 patches:
+> So I sympathize with the desire to remove the quotes, as they look bad
+> and are obviously not too rare. But I'd like to find a solution which
+> maintains a better visual separation between the subject and the other
+> text than simply removing them.
 
-Can you try again with a Git version that contains the commit 
-2075ffb5(fast-export: use an unsorted string list for extra_refs)?
+Maybe just use the output of "git branch -v":
 
-Ciao,
-Dscho
+master d9a5491 foo: bar
+
+or even literally:
+
+* master d9a5491 [ahead 1] foo: bar
+
+or to make the separation more evident:
+
+[master d9a5491] foo: bar
+
+Santi
