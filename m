@@ -1,75 +1,270 @@
-From: Jens Neuhalfen <JensNeuhalfen@gmx.de>
-Subject: git svn dcommit crashed -- how do I resume?
-Date: Wed, 26 Nov 2008 09:22:36 +0100
-Message-ID: <E8293DEF-109A-4F57-BD4F-7F189976DA79@gmx.de>
-Mime-Version: 1.0 (Apple Message framework v929.2)
-Content-Type: text/plain; charset=US-ASCII; format=flowed; delsp=yes
+From: Matt McCutchen <matt@mattmccutchen.net>
+Subject: [PATCH v2] config.txt: alphabetize configuration sections
+Date: Wed, 26 Nov 2008 03:26:50 -0500
+Message-ID: <1227688010.2680.0.camel@mattlaptop2.local>
+References: <1227556809.2628.8.camel@mattlaptop2.local>
+Mime-Version: 1.0
+Content-Type: text/plain
 Content-Transfer-Encoding: 7bit
+Cc: Johannes Sixt <j.sixt@viscovery.net>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Nov 26 09:24:04 2008
+X-From: git-owner@vger.kernel.org Wed Nov 26 09:28:35 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1L5Fgi-00005D-L1
-	for gcvg-git-2@gmane.org; Wed, 26 Nov 2008 09:23:57 +0100
+	id 1L5FlC-0001al-K7
+	for gcvg-git-2@gmane.org; Wed, 26 Nov 2008 09:28:35 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751677AbYKZIWl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 26 Nov 2008 03:22:41 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751400AbYKZIWl
-	(ORCPT <rfc822;git-outgoing>); Wed, 26 Nov 2008 03:22:41 -0500
-Received: from mail.gmx.net ([213.165.64.20]:35231 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751364AbYKZIWk (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 26 Nov 2008 03:22:40 -0500
-Received: (qmail invoked by alias); 26 Nov 2008 08:22:38 -0000
-Received: from static-87-79-238-78.netcologne.de (EHLO [172.20.0.119]) [87.79.238.78]
-  by mail.gmx.net (mp036) with SMTP; 26 Nov 2008 09:22:38 +0100
-X-Authenticated: #1271396
-X-Provags-ID: V01U2FsdGVkX19NVqRLBZpNBoMee2OHFD9gMCuz5M4PaZCe4bRDze
-	Ru838psHly/7CP
-X-Mailer: Apple Mail (2.929.2)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.5600000000000001
+	id S1751827AbYKZI1N (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 26 Nov 2008 03:27:13 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751547AbYKZI1M
+	(ORCPT <rfc822;git-outgoing>); Wed, 26 Nov 2008 03:27:12 -0500
+Received: from sd-green-bigip-145.dreamhost.com ([208.97.132.145]:56730 "EHLO
+	jankymail-a1.g.dreamhost.com" rhost-flags-OK-OK-OK-FAIL)
+	by vger.kernel.org with ESMTP id S1750981AbYKZI1K (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 26 Nov 2008 03:27:10 -0500
+Received: from [129.2.207.232] (ml2.student.umd.edu [129.2.207.232])
+	by jankymail-a1.g.dreamhost.com (Postfix) with ESMTP id D152E986C3;
+	Wed, 26 Nov 2008 00:27:04 -0800 (PST)
+In-Reply-To: <1227556809.2628.8.camel@mattlaptop2.local>
+X-Mailer: Evolution 2.22.3.1 (2.22.3.1-1.fc9) 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/101711>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/101712>
 
-Hi,
+I figured the sections might as well be in some order, so I chose alphabetical
+but with "core" at the beginning.  This should help people add new variables
+in the right places.
 
-I am using git as a frontend to my SVN-Repository. When I tried to  
-"git svn dcommit" several changes from my local git-repository, git  
-crashed (SEGFAULT, AFAIR).
+Signed-off-by: Matt McCutchen <matt@mattmccutchen.net>
+---
+ Documentation/config.txt       |  128 +++++++++++++++++++---------------------
+ Documentation/merge-config.txt |    8 +++
+ 2 files changed, 68 insertions(+), 68 deletions(-)
 
-Now I have a working copy (master branch) that points "somewhere in  
-the past" (at least my files are old). I have a git-svn remote branch  
-that points to the same SHA1.
-
-$ git branch -a
-   dokument-zusammenfuehren
-* master
-   git-svn
-
-I cannot dcommit
-$ git svn dcommit
-Cannot dcommit with a dirty index.  Commit your changes first, or  
-stash them with `git stash'.
-  at /Users/jens/libexec/git-core/git-svn line 415
-
-And, indeed, the index is dirty.
-
-
-I am confused (an slightly panicked), because my old commits seem to  
-be "gone", my WC does not contain the most recent files and there  
-seems to be no "backup-branch" with my old HEAD.
-
-Any idea, how I might get my data back and how to 'resume' the dead  
-dcommit? Google did not turn up anything usefull, unfortunally.
-
-
-BTW: I am currently using git version 1.6.0.rc0.24.gf45e0.dirty.
-
-
-Jens
+diff --git a/Documentation/config.txt b/Documentation/config.txt
+index d536732..17627ac 100644
+--- a/Documentation/config.txt
++++ b/Documentation/config.txt
+@@ -572,9 +572,6 @@ color.status.<slot>::
+ 	to red). The values of these variables may be specified as in
+ 	color.branch.<slot>.
+ 
+-commit.template::
+-	Specify a file to use as the template for new commit messages.
+-
+ color.ui::
+ 	When set to `always`, always use colors in all git commands which
+ 	are capable of colored output. When false (or `never`), never. When
+@@ -582,6 +579,9 @@ color.ui::
+ 	terminal. When more specific variables of color.* are set, they always
+ 	take precedence over this setting. Defaults to false.
+ 
++commit.template::
++	Specify a file to use as the template for new commit messages.
++
+ diff.autorefreshindex::
+ 	When using 'git-diff' to compare with work tree
+ 	files, do not consider stat-only change as changed.
+@@ -714,18 +714,6 @@ gc.rerereunresolved::
+ 	kept for this many days when 'git-rerere gc' is run.
+ 	The default is 15 days.  See linkgit:git-rerere[1].
+ 
+-rerere.autoupdate::
+-	When set to true, `git-rerere` updates the index with the
+-	resulting contents after it cleanly resolves conflicts using
+-	previously recorded resolution.  Defaults to false.
+-
+-rerere.enabled::
+-	Activate recording of resolved conflicts, so that identical
+-	conflict hunks can be resolved automatically, should they
+-	be encountered again.  linkgit:git-rerere[1] command is by
+-	default enabled if you create `rr-cache` directory under
+-	`$GIT_DIR`, but can be disabled by setting this option to false.
+-
+ gitcvs.enabled::
+ 	Whether the CVS server interface is enabled for this repository.
+ 	See linkgit:git-cvsserver[1].
+@@ -917,6 +905,10 @@ i18n.logOutputEncoding::
+ 	Character encoding the commit messages are converted to when
+ 	running 'git-log' and friends.
+ 
++imap::
++	The configuration variables in the 'imap' section are described
++	in linkgit:git-imap-send[1].
++
+ instaweb.browser::
+ 	Specify the program that will be used to browse your working
+ 	repository in gitweb. See linkgit:git-instaweb[1].
+@@ -952,8 +944,6 @@ man.viewer::
+ 	Specify the programs that may be used to display help in the
+ 	'man' format. See linkgit:git-help[1].
+ 
+-include::merge-config.txt[]
+-
+ man.<tool>.cmd::
+ 	Specify the command to invoke the specified man viewer. The
+ 	specified command is evaluated in shell with the man page
+@@ -963,13 +953,7 @@ man.<tool>.path::
+ 	Override the path for the given tool that may be used to
+ 	display help in the 'man' format. See linkgit:git-help[1].
+ 
+-merge.conflictstyle::
+-	Specify the style in which conflicted hunks are written out to
+-	working tree files upon merge.  The default is "merge", which
+-	shows `<<<<<<<` conflict marker, change made by one side,
+-	`=======` marker, change made by the other side, and then
+-	`>>>>>>>` marker.  An alternate style, "diff3", adds `|||||||`
+-	marker and the original text before `=======` marker.
++include::merge-config.txt[]
+ 
+ mergetool.<tool>.path::
+ 	Override the path for the given tool.  This is useful in case
+@@ -1079,6 +1063,41 @@ pull.octopus::
+ pull.twohead::
+ 	The default merge strategy to use when pulling a single branch.
+ 
++receive.fsckObjects::
++	If it is set to true, git-receive-pack will check all received
++	objects. It will abort in the case of a malformed object or a
++	broken link. The result of an abort are only dangling objects.
++	Defaults to false.
++
++receive.unpackLimit::
++	If the number of objects received in a push is below this
++	limit then the objects will be unpacked into loose object
++	files. However if the number of received objects equals or
++	exceeds this limit then the received pack will be stored as
++	a pack, after adding any missing delta bases.  Storing the
++	pack from a push can make the push operation complete faster,
++	especially on slow filesystems.  If not set, the value of
++	`transfer.unpackLimit` is used instead.
++
++receive.denyDeletes::
++	If set to true, git-receive-pack will deny a ref update that deletes
++	the ref. Use this to prevent such a ref deletion via a push.
++
++receive.denyNonFastForwards::
++	If set to true, git-receive-pack will deny a ref update which is
++	not a fast forward. Use this to prevent such an update via a push,
++	even if that push is forced. This configuration variable is
++	set when initializing a shared repository.
++
++receive.denyCurrentBranch::
++	If set to true or "refuse", receive-pack will deny a ref update
++	to the currently checked out branch of a non-bare repository.
++	Such a push is potentially dangerous because it brings the HEAD
++	out of sync with the index and working tree. If set to "warn",
++	print a warning of such a push to stderr, but allow the push to
++	proceed. If set to false or "ignore", allow such pushes with no
++	message. Defaults to "warn".
++
+ remote.<name>.url::
+ 	The URL of a remote repository.  See linkgit:git-fetch[1] or
+ 	linkgit:git-push[1].
+@@ -1128,6 +1147,18 @@ repack.usedeltabaseoffset::
+ 	"false" and repack. Access from old git versions over the
+ 	native protocol are unaffected by this option.
+ 
++rerere.autoupdate::
++	When set to true, `git-rerere` updates the index with the
++	resulting contents after it cleanly resolves conflicts using
++	previously recorded resolution.  Defaults to false.
++
++rerere.enabled::
++	Activate recording of resolved conflicts, so that identical
++	conflict hunks can be resolved automatically, should they
++	be encountered again.  linkgit:git-rerere[1] command is by
++	default enabled if you create `rr-cache` directory under
++	`$GIT_DIR`, but can be disabled by setting this option to false.
++
+ showbranch.default::
+ 	The default set of branches for linkgit:git-show-branch[1].
+ 	See linkgit:git-show-branch[1].
+@@ -1164,6 +1195,11 @@ tar.umask::
+ 	archiving user's umask will be used instead.  See umask(2) and
+ 	linkgit:git-archive[1].
+ 
++transfer.unpackLimit::
++	When `fetch.unpackLimit` or `receive.unpackLimit` are
++	not set, the value of this variable is used instead.
++	The default value is 100.
++
+ url.<base>.insteadOf::
+ 	Any URL that starts with this value will be rewritten to
+ 	start, instead, with <base>. In cases where some site serves a
+@@ -1192,50 +1228,6 @@ user.signingkey::
+ 	unchanged to gpg's --local-user parameter, so you may specify a key
+ 	using any method that gpg supports.
+ 
+-imap::
+-	The configuration variables in the 'imap' section are described
+-	in linkgit:git-imap-send[1].
+-
+-receive.fsckObjects::
+-	If it is set to true, git-receive-pack will check all received
+-	objects. It will abort in the case of a malformed object or a
+-	broken link. The result of an abort are only dangling objects.
+-	Defaults to false.
+-
+-receive.unpackLimit::
+-	If the number of objects received in a push is below this
+-	limit then the objects will be unpacked into loose object
+-	files. However if the number of received objects equals or
+-	exceeds this limit then the received pack will be stored as
+-	a pack, after adding any missing delta bases.  Storing the
+-	pack from a push can make the push operation complete faster,
+-	especially on slow filesystems.  If not set, the value of
+-	`transfer.unpackLimit` is used instead.
+-
+-receive.denyDeletes::
+-	If set to true, git-receive-pack will deny a ref update that deletes
+-	the ref. Use this to prevent such a ref deletion via a push.
+-
+-receive.denyNonFastForwards::
+-	If set to true, git-receive-pack will deny a ref update which is
+-	not a fast forward. Use this to prevent such an update via a push,
+-	even if that push is forced. This configuration variable is
+-	set when initializing a shared repository.
+-
+-receive.denyCurrentBranch::
+-	If set to true or "refuse", receive-pack will deny a ref update
+-	to the currently checked out branch of a non-bare repository.
+-	Such a push is potentially dangerous because it brings the HEAD
+-	out of sync with the index and working tree. If set to "warn",
+-	print a warning of such a push to stderr, but allow the push to
+-	proceed. If set to false or "ignore", allow such pushes with no
+-	message. Defaults to "warn".
+-
+-transfer.unpackLimit::
+-	When `fetch.unpackLimit` or `receive.unpackLimit` are
+-	not set, the value of this variable is used instead.
+-	The default value is 100.
+-
+ web.browser::
+ 	Specify a web browser that may be used by some commands.
+ 	Currently only linkgit:git-instaweb[1] and linkgit:git-help[1]
+diff --git a/Documentation/merge-config.txt b/Documentation/merge-config.txt
+index c735788..b10ce38 100644
+--- a/Documentation/merge-config.txt
++++ b/Documentation/merge-config.txt
+@@ -26,6 +26,14 @@ merge.verbosity::
+ 	above outputs debugging information.  The default is level 2.
+ 	Can be overridden by 'GIT_MERGE_VERBOSITY' environment variable.
+ 
++merge.conflictstyle::
++	Specify the style in which conflicted hunks are written out to
++	working tree files upon merge.  The default is "merge", which
++	shows `<<<<<<<` conflict marker, change made by one side,
++	`=======` marker, change made by the other side, and then
++	`>>>>>>>` marker.  An alternate style, "diff3", adds `|||||||`
++	marker and the original text before `=======` marker.
++
+ merge.<driver>.name::
+ 	Defines a human readable name for a custom low-level
+ 	merge driver.  See linkgit:gitattributes[5] for details.
+-- 
+1.6.0.2.593.g91df
