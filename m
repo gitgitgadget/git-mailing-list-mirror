@@ -1,85 +1,98 @@
-From: "Ondrej Certik" <ondrej@certik.cz>
-Subject: Re: git fast-export | git fast-import doesn't work
-Date: Wed, 26 Nov 2008 14:03:30 +0100
-Message-ID: <85b5c3130811260503k445b0debr2f681f9766cfc361@mail.gmail.com>
-References: <85b5c3130811250844u498fbb97m9d1aef6e1397b8c7@mail.gmail.com>
-	 <alpine.DEB.1.00.0811260113140.30769@pacific.mpi-cbg.de>
-	 <492D227C.8020805@drmicha.warpmail.net>
-	 <alpine.DEB.1.00.0811261344120.30769@pacific.mpi-cbg.de>
+From: "Alex Riesen" <raa.lkml@gmail.com>
+Subject: Re: [PATCH] Fix handle leak in builtin-pack-objects
+Date: Wed, 26 Nov 2008 14:18:57 +0100
+Message-ID: <81b0412b0811260518o52adb107tbddafb324e7fd97b@mail.gmail.com>
+References: <81b0412b0811190313p643c0cb4vad620ea942aeea93@mail.gmail.com>
+	 <4923FE58.3090503@viscovery.net>
+	 <alpine.LFD.2.00.0811190753420.27509@xanadu.home>
+	 <81b0412b0811190534r4f71f981s53de415f79e56e25@mail.gmail.com>
+	 <49241AEF.1080808@viscovery.net>
+	 <alpine.LFD.2.00.0811190940480.27509@xanadu.home>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-Cc: "Michael J Gruber" <git@drmicha.warpmail.net>,
+Cc: "Johannes Sixt" <j.sixt@viscovery.net>,
+	"Junio C Hamano" <gitster@pobox.com>,
 	"Git Mailing List" <git@vger.kernel.org>
-To: "Johannes Schindelin" <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Wed Nov 26 14:06:26 2008
+To: "Nicolas Pitre" <nico@cam.org>
+X-From: git-owner@vger.kernel.org Wed Nov 26 14:20:16 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1L5K5Z-0003G4-R4
-	for gcvg-git-2@gmane.org; Wed, 26 Nov 2008 14:05:54 +0100
+	id 1L5KJT-0000nn-Fs
+	for gcvg-git-2@gmane.org; Wed, 26 Nov 2008 14:20:16 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754201AbYKZNDe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 26 Nov 2008 08:03:34 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754551AbYKZNDe
-	(ORCPT <rfc822;git-outgoing>); Wed, 26 Nov 2008 08:03:34 -0500
-Received: from gv-out-0910.google.com ([216.239.58.191]:41303 "EHLO
-	gv-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754919AbYKZNDc (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 26 Nov 2008 08:03:32 -0500
-Received: by gv-out-0910.google.com with SMTP id e6so137594gvc.37
-        for <git@vger.kernel.org>; Wed, 26 Nov 2008 05:03:30 -0800 (PST)
+	id S1752442AbYKZNS7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 26 Nov 2008 08:18:59 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752266AbYKZNS7
+	(ORCPT <rfc822;git-outgoing>); Wed, 26 Nov 2008 08:18:59 -0500
+Received: from wa-out-1112.google.com ([209.85.146.182]:14875 "EHLO
+	wa-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751954AbYKZNS6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 26 Nov 2008 08:18:58 -0500
+Received: by wa-out-1112.google.com with SMTP id v27so222648wah.21
+        for <git@vger.kernel.org>; Wed, 26 Nov 2008 05:18:57 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:sender
-         :to:subject:cc:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:references
-         :x-google-sender-auth;
-        bh=8TLPlTRcpI9WyNMgr1cXn0GzatRohEyLzsFohD7ueTE=;
-        b=UuivwrMQIOwgqFNG8PBI7WWTOJBI5L4lHbjvmxEEmBepaHJaC3wQhEcgC9/rmfC5W/
-         1F10M+p9/Rt46yL5PMxVlP1D6zxDrgaB++hREpQYunU/xdhocJ9WSsdTKpOipSFQEawT
-         JarsQxCYudywxcIdYz1TF4ydSMmnj6wWAeL28=
+        h=domainkey-signature:received:received:message-id:date:from:to
+         :subject:cc:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:references;
+        bh=MPZRE7epZm3/+wxj8YMFP8X+pKMKms4yu6YgpCEL4+g=;
+        b=HfDjHnyLHGHCOa0I/OZyWq/yg9qB2Cin+PhLBk+FkSzozZRFrKLTmVxso0kUNbtUB+
+         Q8Nmu8pF5nSxaAcBLwii8YkzFm3hBJYrz69sNjEuqsf/wALDty/5VYsHvocSIugUjEFF
+         kKNVX943O5qiECFE+jRf3g0o9DPv5VMqaAHmM=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=message-id:date:from:sender:to:subject:cc:in-reply-to:mime-version
+        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
          :content-type:content-transfer-encoding:content-disposition
-         :references:x-google-sender-auth;
-        b=FIamQxD6Mm2efL18f0KHzGmSrHiYjidG9wEKyIEeD71aeclaf9oSviRUjGkRud3vtO
-         LGSwQJpbWom77mVxP3eS9LWLxZNPyvgVXI/CfiOUmxrBx7gA9T1Fz3qo5PU0YCvhP+4a
-         wVsjRxZxzbIaXkG/RcmRFNqBYKrEonf8jKoRc=
-Received: by 10.86.91.12 with SMTP id o12mr3776634fgb.52.1227704610365;
-        Wed, 26 Nov 2008 05:03:30 -0800 (PST)
-Received: by 10.86.33.8 with HTTP; Wed, 26 Nov 2008 05:03:30 -0800 (PST)
-In-Reply-To: <alpine.DEB.1.00.0811261344120.30769@pacific.mpi-cbg.de>
+         :references;
+        b=ZeZ5PObs/L4/+qy2X9V9MgBLiKZmBpUST0B/k5O1y3zhDch0XZzP6OKlXRZBAyMsfm
+         qz38KoXTqrzoO1sdbAZFA0jsC5eUhsG1CWvOYPxR/qUBy+KXMGsEXkeGn0zx4FI+b50q
+         iA1TT1pCipE7ty2v1ChSwfWLj882SZtLunAD0=
+Received: by 10.114.24.1 with SMTP id 1mr3323550wax.179.1227705537770;
+        Wed, 26 Nov 2008 05:18:57 -0800 (PST)
+Received: by 10.114.157.9 with HTTP; Wed, 26 Nov 2008 05:18:57 -0800 (PST)
+In-Reply-To: <alpine.LFD.2.00.0811190940480.27509@xanadu.home>
 Content-Disposition: inline
-X-Google-Sender-Auth: 9156ce7d7bcaaab9
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/101731>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/101732>
 
-On Wed, Nov 26, 2008 at 1:46 PM, Johannes Schindelin
-<Johannes.Schindelin@gmx.de> wrote:
-> Hi Ondrej & Michael,
->
-> On Wed, 26 Nov 2008, Michael J Gruber wrote:
->
->> Johannes Schindelin venit, vidit, dixit 26.11.2008 01:14:
+2008/11/19 Nicolas Pitre <nico@cam.org>:
+> On Wed, 19 Nov 2008, Johannes Sixt wrote:
+>> Alex Riesen schrieb:
+>> > 2008/11/19 Nicolas Pitre <nico@cam.org>:
+>> >> On Wed, 19 Nov 2008, Johannes Sixt wrote:
+>> >>> The work-around is to write the repacked objects to a file of a different
+>> >>> name, and replace the original after git-pack-objects has terminated.
+>> >>>
+>> >>> Signed-off-by: Johannes Sixt <j6t@kdbg.org>
+>> >> Acked-by: Nicolas Pitre <nico@cam.org>
+>> >
+>> > Are you sure? Will it work in a real repository? Were noone does
+>> > rename the previous pack files into packtmp-something?
 >>
->> > Can you try again with a Git version that contains the commit
->> > 2075ffb5(fast-export: use an unsorted string list for extra_refs)?
+>> Oh, the patch only works around the failure in the test case. In a real
+>> repository there is usually no problem because the destination pack file
+>> does not exist.
+>>
+>> The unusual case is where you do this:
+>>
+>>  $ git rev-list -10 HEAD | git pack-objects foobar
+>>
+>> twice in a row: In this case the second invocation fails on Windows
+>> because the destination pack file already exists *and* is open. But not
+>> even git-repack does this even if it is called twice. OTOH, the test case
+>> *does* exactly this.
 >
-> Okay, so both of your use cases seem to be real bugs in fast-export.  May
-> I respectfully submit a request for a test script (as patch to
-> t/t9301-fast-export.sh)  which is as short as possible and shows the
-> respective bugs?
+> OK.... Well, despite my earlier assertion, I think the above should be a
+> valid operation.
 >
-> My Git time budget these days is almost negative, so I will not be able to
-> work on these issues without having a small and concise example.
+> I'm looking at it now.  I'm therefore revoking my earlier ACK as well
+> (better keep that test case alive).
+>
 
-I'll do my best and try to create a simple example. I'll report back
-if I have something.
-
-Ondrej
+Any news here?
