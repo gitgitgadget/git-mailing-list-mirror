@@ -1,81 +1,99 @@
-From: Maximilian Mehnert <maximilian.mehnert@googlemail.com>
-Subject: suggestion? only pull cleanly applying commits
-Date: Wed, 26 Nov 2008 12:48:50 +0100
-Message-ID: <492D37A2.4010500@googlemail.com>
+From: =?utf-8?q?Uwe=20Kleine-K=C3=B6nig?= 
+	<u.kleine-koenig@pengutronix.de>
+Subject: [PATCH] tg export: implement skipping empty patches for quilt mode
+Date: Wed, 26 Nov 2008 13:12:32 +0100
+Message-ID: <1227701552-9702-1-git-send-email-u.kleine-koenig@pengutronix.de>
+References: <20081126102507.GA29100@piper.oerlikon.madduck.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Nov 26 12:50:52 2008
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org,
+	=?utf-8?q?Uwe=20Kleine-K=C3=B6nig?= <ukleinek@strlen.de>
+To: martin f krafft <madduck@debian.org>
+X-From: git-owner@vger.kernel.org Wed Nov 26 13:14:06 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1L5Iux-0002UE-DC
-	for gcvg-git-2@gmane.org; Wed, 26 Nov 2008 12:50:51 +0100
+	id 1L5JHI-0002Dy-Hu
+	for gcvg-git-2@gmane.org; Wed, 26 Nov 2008 13:13:56 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752076AbYKZLtg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 26 Nov 2008 06:49:36 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751995AbYKZLtf
-	(ORCPT <rfc822;git-outgoing>); Wed, 26 Nov 2008 06:49:35 -0500
-Received: from mail-ausfall.charite.de ([193.175.70.131]:41937 "EHLO
-	mail-ausfall.charite.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751914AbYKZLtf (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 26 Nov 2008 06:49:35 -0500
-Received: from localhost (localhost [127.0.0.1])
-	by mail-ausfall.charite.de (Postfix) with ESMTP id 018A33DB74
-	for <git@vger.kernel.org>; Wed, 26 Nov 2008 12:49:34 +0100 (CET)
-X-Virus-Scanned: amavisd-new at charite.de
-Received: from mail-ausfall.charite.de ([127.0.0.1])
-	by localhost (mail-ausfall.charite.de [127.0.0.1]) (amavisd-new, port 10025)
-	with ESMTP id uDENJVVotHK6 for <git@vger.kernel.org>;
-	Wed, 26 Nov 2008 12:49:33 +0100 (CET)
-Received: from postamt.charite.de (postamt.charite.de [141.42.4.250])
-	(using TLSv1 with cipher ADH-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by mail-ausfall.charite.de (Postfix) with ESMTPS
-	for <git@vger.kernel.org>; Wed, 26 Nov 2008 12:49:33 +0100 (CET)
-Received: from [10.129.103.228] (unknown [92.116.103.228])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by postamt.charite.de (Postfix) with ESMTPSA id 59EA7B2C68
-	for <git@vger.kernel.org>; Wed, 26 Nov 2008 12:49:29 +0100 (CET)
-User-Agent: Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9.1b2pre) Gecko/20081119 Mnenhy/0.7.6.0
-X-Enigmail-Version: 0.96a
+	id S1751751AbYKZMMk convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 26 Nov 2008 07:12:40 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751676AbYKZMMk
+	(ORCPT <rfc822;git-outgoing>); Wed, 26 Nov 2008 07:12:40 -0500
+Received: from metis.ext.pengutronix.de ([92.198.50.35]:35874 "EHLO
+	metis.ext.pengutronix.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751506AbYKZMMj (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 26 Nov 2008 07:12:39 -0500
+Received: from themisto.ext.pengutronix.de ([92.198.50.58] helo=localhost.localdomain)
+	by metis.ext.pengutronix.de with esmtp (Exim 4.63)
+	(envelope-from <u.kleine-koenig@pengutronix.de>)
+	id 1L5JFx-0002tM-T1; Wed, 26 Nov 2008 13:12:38 +0100
+X-Mailer: git-send-email 1.5.6.5
+In-Reply-To: <20081126102507.GA29100@piper.oerlikon.madduck.net>
+X-SA-Exim-Connect-IP: 92.198.50.58
+X-SA-Exim-Mail-From: u.kleine-koenig@pengutronix.de
+X-Spam-Checker-Version: SpamAssassin 3.2.4 (2008-01-01) on
+	metis.extern.pengutronix.de
+X-Spam-Level: 
+X-Spam-Status: No, score=-0.5 required=4.5 tests=BAYES_00,HELO_LH_LD,
+	RCVD_IN_PBL shortcircuit=no autolearn=no version=3.2.4
+X-SA-Exim-Version: 4.2.1 (built Tue, 09 Jan 2007 17:23:22 +0000)
+X-SA-Exim-Scanned: Yes (on metis.ext.pengutronix.de)
+X-PTX-Original-Recipient: git@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/101726>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/101727>
 
-Hi!
+=46rom: Uwe Kleine-K=C3=B6nig <ukleinek@strlen.de>
 
-I've a scenario where I don't really want to do a full merge but rather
-to pull all commits from another repository that merge without conflicts.
+addionally fix the README item for skipping the export of empty patches
+not to need an option (-n) as this should be the default.
 
-I've put together the script at the bottom which seems to work ok but is
-damn slow.
+Signed-off-by: Uwe Kleine-K=C3=B6nig <u.kleine-koenig@pengutronix.de>
+---
+ README       |    2 +-
+ tg-export.sh |   12 ++++++++----
+ 2 files changed, 9 insertions(+), 5 deletions(-)
 
-Is there a smarter and faster way to do this that I missed reading the
-documentation?
-
-Any help would be really appreciated! :-)
-
-Regards,
-Maximilian
-
-
-#!/bin/sh
-
-for commit in `git rev-list --reverse HEAD..other-repository/master`; do
-        git diff-tree -p $commit|patch --dry-run -p1 -N -f >/dev/null
-        if [ $? -eq 0 ]; then
-                echo "getting $commit"
-                parents=`git rev-list --parents -n1  $commit|wc -w`
-                if [ $parents -eq 2 ]; then
-                        git cherry-pick $commit
-                else
-                        git cherry-pick -m1 $commit
-                fi
-        fi
-done
+diff --git a/README b/README
+index 5bfe3ee..9b92d43 100644
+--- a/README
++++ b/README
+@@ -414,7 +414,7 @@ tg export
+ 	TODO: Make stripping of non-essential headers configurable
+ 	TODO: Make stripping of [PATCH] and other prefixes configurable
+ 	TODO: --mbox option for other mode of operation
+-	TODO: -n option to prevent exporting of empty patches
++	TODO: prevent exporting of empty patches
+ 	TODO: -a option to export all branches
+ 	TODO: For quilt exporting, use a temporary branch and remove it when
+ 	      done - this would allow producing conflict-less series
+diff --git a/tg-export.sh b/tg-export.sh
+index 52af88d..f133fb8 100644
+--- a/tg-export.sh
++++ b/tg-export.sh
+@@ -140,10 +140,14 @@ quilt()
+ 		return
+ 	fi
+=20
+-	echo "Exporting $_dep"
+-	mkdir -p "$(dirname "$filename")"
+-	$tg patch "$_dep" >"$filename"
+-	echo "$_dep.diff -p1" >>"$output/series"
++	if branch_empty "$_dep"; then
++		echo "Skip empty patch $_dep";
++	else
++		echo "Exporting $_dep"
++		mkdir -p "$(dirname "$filename")"
++		$tg patch "$_dep" >"$filename"
++		echo "$_dep.diff -p1" >>"$output/series"
++	fi
+ }
+=20
+=20
+--=20
+1.5.6.5
