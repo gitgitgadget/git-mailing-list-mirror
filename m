@@ -1,37 +1,34 @@
 From: =?utf-8?q?Uwe=20Kleine-K=C3=B6nig?= 
 	<u.kleine-koenig@pengutronix.de>
 Subject: [PATCH] tg export: implement skipping empty patches for quilt mode
-Date: Wed, 26 Nov 2008 13:12:32 +0100
-Message-ID: <1227701552-9702-1-git-send-email-u.kleine-koenig@pengutronix.de>
-References: <20081126102507.GA29100@piper.oerlikon.madduck.net>
+Date: Wed, 26 Nov 2008 13:13:00 +0100
+Message-ID: <1227701580-9762-1-git-send-email-u.kleine-koenig@pengutronix.de>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org,
-	=?utf-8?q?Uwe=20Kleine-K=C3=B6nig?= <ukleinek@strlen.de>
+Cc: git@vger.kernel.org
 To: martin f krafft <madduck@debian.org>
-X-From: git-owner@vger.kernel.org Wed Nov 26 13:14:06 2008
+X-From: git-owner@vger.kernel.org Wed Nov 26 13:14:29 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1L5JHI-0002Dy-Hu
-	for gcvg-git-2@gmane.org; Wed, 26 Nov 2008 13:13:56 +0100
+	id 1L5JHk-0002N1-SA
+	for gcvg-git-2@gmane.org; Wed, 26 Nov 2008 13:14:25 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751751AbYKZMMk convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 26 Nov 2008 07:12:40 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751676AbYKZMMk
-	(ORCPT <rfc822;git-outgoing>); Wed, 26 Nov 2008 07:12:40 -0500
-Received: from metis.ext.pengutronix.de ([92.198.50.35]:35874 "EHLO
+	id S1752019AbYKZMNJ convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 26 Nov 2008 07:13:09 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751995AbYKZMNH
+	(ORCPT <rfc822;git-outgoing>); Wed, 26 Nov 2008 07:13:07 -0500
+Received: from metis.ext.pengutronix.de ([92.198.50.35]:35892 "EHLO
 	metis.ext.pengutronix.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751506AbYKZMMj (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 26 Nov 2008 07:12:39 -0500
+	with ESMTP id S1751954AbYKZMNF (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 26 Nov 2008 07:13:05 -0500
 Received: from themisto.ext.pengutronix.de ([92.198.50.58] helo=localhost.localdomain)
 	by metis.ext.pengutronix.de with esmtp (Exim 4.63)
 	(envelope-from <u.kleine-koenig@pengutronix.de>)
-	id 1L5JFx-0002tM-T1; Wed, 26 Nov 2008 13:12:38 +0100
+	id 1L5JGP-0002tl-HI; Wed, 26 Nov 2008 13:13:04 +0100
 X-Mailer: git-send-email 1.5.6.5
-In-Reply-To: <20081126102507.GA29100@piper.oerlikon.madduck.net>
 X-SA-Exim-Connect-IP: 92.198.50.58
 X-SA-Exim-Mail-From: u.kleine-koenig@pengutronix.de
 X-Spam-Checker-Version: SpamAssassin 3.2.4 (2008-01-01) on
@@ -46,9 +43,7 @@ Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/101727>
-
-=46rom: Uwe Kleine-K=C3=B6nig <ukleinek@strlen.de>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/101728>
 
 addionally fix the README item for skipping the export of empty patches
 not to need an option (-n) as this should be the default.
