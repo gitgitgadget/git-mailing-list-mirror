@@ -1,72 +1,64 @@
-From: Hannu Koivisto <azure@iki.fi>
-Subject: Re: French git user
-Date: Wed, 26 Nov 2008 18:22:23 +0200
-Message-ID: <83zljmo3sw.fsf@kalahari.s2.org>
-References: <492B9985.10103@morey-chaisemartin.com>
-	<200811260955.57421.johan@herland.net>
-	<492D1779.8040807@morey-chaisemartin.com>
-	<200811261123.56317.johan@herland.net>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: git fast-export | git fast-import doesn't work
+Date: Wed, 26 Nov 2008 17:40:58 +0100 (CET)
+Message-ID: <alpine.DEB.1.00.0811261739110.30769@pacific.mpi-cbg.de>
+References: <85b5c3130811250844u498fbb97m9d1aef6e1397b8c7@mail.gmail.com>  <alpine.DEB.1.00.0811260113140.30769@pacific.mpi-cbg.de>  <85b5c3130811260135g4646bf72iaf57f599fdd21a0c@mail.gmail.com>  <85b5c3130811260218s7529914eyb56a05ec1ca34b8f@mail.gmail.com>
+  <492D6CC3.2050408@drmicha.warpmail.net> <85b5c3130811260750y2e24436ye2426ccfc2f66071@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: devel@morey-chaisemartin.com, git@vger.kernel.org
-To: Johan Herland <johan@herland.net>
-X-From: git-owner@vger.kernel.org Wed Nov 26 17:23:47 2008
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Michael J Gruber <git@drmicha.warpmail.net>,
+	Git Mailing List <git@vger.kernel.org>,
+	Fabian Seoane <fabian@fseoane.net>
+To: Ondrej Certik <ondrej@certik.cz>
+X-From: git-owner@vger.kernel.org Wed Nov 26 17:34:11 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1L5NB1-0003Hu-CN
-	for gcvg-git-2@gmane.org; Wed, 26 Nov 2008 17:23:43 +0100
+	id 1L5NL8-0007yY-9K
+	for gcvg-git-2@gmane.org; Wed, 26 Nov 2008 17:34:10 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754190AbYKZQW1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 26 Nov 2008 11:22:27 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752988AbYKZQW1
-	(ORCPT <rfc822;git-outgoing>); Wed, 26 Nov 2008 11:22:27 -0500
-Received: from s2.org ([195.197.64.39]:44738 "EHLO kalahari.s2.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754109AbYKZQW0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 26 Nov 2008 11:22:26 -0500
-Received: from azure by kalahari.s2.org with local (Exim 4.69)
-	(envelope-from <azure@iki.fi>)
-	id 1L5N9j-0006xI-Ed; Wed, 26 Nov 2008 18:22:23 +0200
-In-Reply-To: <200811261123.56317.johan@herland.net> (Johan Herland's message
-	of "Wed, 26 Nov 2008 11:23:56 +0100")
-User-Agent: Gnus/5.110011 (No Gnus v0.11) Emacs/22.2 (gnu/linux)
-X-SA-Exim-Connect-IP: <locally generated>
-X-SA-Exim-Mail-From: azure@iki.fi
-X-SA-Exim-Scanned: No (on kalahari.s2.org); SAEximRunCond expanded to false
+	id S1752256AbYKZQcy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 26 Nov 2008 11:32:54 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752442AbYKZQcy
+	(ORCPT <rfc822;git-outgoing>); Wed, 26 Nov 2008 11:32:54 -0500
+Received: from mail.gmx.net ([213.165.64.20]:58673 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1752239AbYKZQcx (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 26 Nov 2008 11:32:53 -0500
+Received: (qmail invoked by alias); 26 Nov 2008 16:32:51 -0000
+Received: from pacific.mpi-cbg.de (EHLO pacific.mpi-cbg.de) [141.5.10.38]
+  by mail.gmx.net (mp023) with SMTP; 26 Nov 2008 17:32:51 +0100
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1/QLKUg7gHQ9DM7FWvx3o2X5WOtYXduVCo2F7nKvb
+	IuAEtFTG98J5WE
+X-X-Sender: schindelin@pacific.mpi-cbg.de
+In-Reply-To: <85b5c3130811260750y2e24436ye2426ccfc2f66071@mail.gmail.com>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.68
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/101743>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/101744>
 
-Johan Herland <johan@herland.net> writes:
+Hi,
 
-> On Wednesday 26 November 2008, Nicolas Morey-Chaisemartin wrote:
->> Yes I say in french that git-foo is deprecated.
->> However I'm still using it in the following slides because people
->> have directly the good command to look at the man.
->> I know it's not really consistent but asI'd rahter keep it that way
->> and insist while presenting it, it should only be used for man pages.
->
-> The man pages are also accessible _without_ using the "git-foo" form, 
-> either by doing "git foo --help" or "git help foo". I'd suggest using 
-> the "git foo" form, and using "git help foo" instead of "man git-foo".
+On Wed, 26 Nov 2008, Ondrej Certik wrote:
 
-Depending on the audience, one might want to mention that if you
-are using a modern version of zsh as your shell and have activated
-its run-help function (see
-http://zsh.dotsrc.org/Doc/Release/zsh_24.html#SEC218), you can just
-say
+> I am also trying to make the example simpler. I tried to squash the 
+> first uninteresting ~1500 commits into one, but "git rebase -i" uterrly 
+> fails after squashing about 600 commits. Still investigating.
 
-git foo -bar <M-h>
+1500... wow.
 
-and you'll get git-foo manual page.  When you exit man, you'll get
-your command line back just like it was when you hit M-h.  I think
-it handles even "echo dum ; git foo <M-h>" kind of cases.  You
-can't live without it once you have tried it.  Or the completion
-with descriptions for options etc.
+The best idea would probably be to just "edit" the first, delete the rest 
+of the 1500, and then 'git read-tree -u -m <last-of-the-1500-commits>"' on 
+the command line (when git rebase stops after the "edit" command).
 
--- 
-Hannu
+rebase -i was _never_ meant for such _massive_ interactions; that's just 
+too much for a shell script.
+
+Ciao,
+Dscho
