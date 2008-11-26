@@ -1,64 +1,43 @@
-From: neale@lanl.gov (Neale T. Pickett)
-Subject: git configure script
-Date: 26 Nov 2008 12:30:08 -0700
-Message-ID: <njx4p1ub7zz.fsf@cfl-sunray1.lanl.gov>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] git-p4: fix keyword-expansion regex
+Date: Wed, 26 Nov 2008 12:33:55 -0800
+Message-ID: <7vljv6fcr0.fsf@gitster.siamese.dyndns.org>
+References: <20081126185215.GA11037@osc.edu>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Nov 26 21:11:43 2008
+Cc: git@vger.kernel.org
+To: Pete Wyckoff <pw@padd.com>
+X-From: git-owner@vger.kernel.org Wed Nov 26 21:36:06 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1L5QjZ-00061y-K8
-	for gcvg-git-2@gmane.org; Wed, 26 Nov 2008 21:11:38 +0100
+	id 1L5R6v-0006sm-7t
+	for gcvg-git-2@gmane.org; Wed, 26 Nov 2008 21:35:45 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752408AbYKZUKQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 26 Nov 2008 15:10:16 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752301AbYKZUKQ
-	(ORCPT <rfc822;git-outgoing>); Wed, 26 Nov 2008 15:10:16 -0500
-Received: from proofpoint3.lanl.gov ([204.121.3.28]:59661 "EHLO
-	proofpoint3.lanl.gov" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752092AbYKZUKP (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 26 Nov 2008 15:10:15 -0500
-X-Greylist: delayed 2404 seconds by postgrey-1.27 at vger.kernel.org; Wed, 26 Nov 2008 15:10:15 EST
-Received: from mailrelay1.lanl.gov (mailrelay1.lanl.gov [128.165.4.101])
-	by proofpoint3.lanl.gov (8.13.8/8.13.8) with ESMTP id mAQJUBf9030424
-	for <git@vger.kernel.org>; Wed, 26 Nov 2008 12:30:11 -0700
-Received: from localhost (localhost.localdomain [127.0.0.1])
-	by mailrelay1.lanl.gov (Postfix) with ESMTP id 32B1E341158
-	for <git@vger.kernel.org>; Wed, 26 Nov 2008 12:30:11 -0700 (MST)
-X-NIE-2-Virus-Scanner: amavisd-new at mailrelay1.lanl.gov
-Received: from ccn-mail.lanl.gov (ccn-mail.lanl.gov [128.165.4.105])
-	by mailrelay1.lanl.gov (Postfix) with ESMTP id 1C1B5340CDE
-	for <git@vger.kernel.org>; Wed, 26 Nov 2008 12:30:11 -0700 (MST)
-Received: from cfl-sunray1.lanl.gov (cfl-sunray1.lanl.gov [128.165.5.23])
-	by ccn-mail.lanl.gov (Postfix) with ESMTP id 511271D0005
-	for <git@vger.kernel.org>; Wed, 26 Nov 2008 12:30:08 -0700 (MST)
-User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.3
-X-NIE-2-MailScanner-Information: Please see http://network.lanl.gov/email/virus-scan.php
-X-NIE-2-MailScanner: Found to be clean
-X-NIE-2-MailScanner-From: neale@lanl.gov
-X-Spam-Status: No
-X-Proofpoint-Virus-Version: vendor=fsecure engine=4.65.7400:2.4.4,1.2.40,4.0.164 definitions=2008-11-26_12:2008-11-24,2008-11-26,2008-11-26 signatures=0
+	id S1752608AbYKZUe3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 26 Nov 2008 15:34:29 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752240AbYKZUe2
+	(ORCPT <rfc822;git-outgoing>); Wed, 26 Nov 2008 15:34:28 -0500
+Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:55595 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752150AbYKZUe2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 26 Nov 2008 15:34:28 -0500
+Received: from localhost.localdomain (unknown [127.0.0.1])
+	by b-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id 765D8178B3;
+	Wed, 26 Nov 2008 15:34:27 -0500 (EST)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES256-SHA (256/256 bits)) (No client certificate requested) by
+ b-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTPSA id C703D178B6; Wed,
+ 26 Nov 2008 15:33:57 -0500 (EST)
+In-Reply-To: <20081126185215.GA11037@osc.edu> (Pete Wyckoff's message of
+ "Wed, 26 Nov 2008 13:52:15 -0500")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: 9EAAE5AA-BBF9-11DD-8E64-F83E113D384A-77302942!a-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/101763>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/101764>
 
-I downloaded 1.6.0.4 from
-http://kernel.org/pub/software/scm/git/git-1.6.0.4.tar.gz 
-and ran
-
-  ./configure --prefix=$HOME/opt
-
-But it installed everything in $HOME/bin and $HOME/libexec.  Looking
-into it, it seems the shipped Makefile doesn't look to see what --prefix
-is, despite the configure script claiming that "make install" would
-honor this.
-
-I'm guessing it should have shipped with a Makefile.in or something, but
-honestly Autoconf confuses the dickens out of me.
-
-Neale
+I will queue this to 'pu' and wait for an Ack from git-p4 folks.   Thanks.
