@@ -1,83 +1,81 @@
-From: Trent Piepho <tpiepho@freescale.com>
-Subject: Re: [PATCH] send-email: Fix Pine address book parsing
-Date: Wed, 26 Nov 2008 03:13:09 -0800 (PST)
-Message-ID: <Pine.LNX.4.64.0811260243440.5161@t2.domain.actdsltmp>
-References: <1227668100-5563-1-git-send-email-tpiepho@freescale.com>
- <7vod03hyna.fsf@gitster.siamese.dyndns.org> <Pine.LNX.4.64.0811252137250.5161@t2.domain.actdsltmp>
- <7vy6z7gf4x.fsf@gitster.siamese.dyndns.org>
+From: Maximilian Mehnert <maximilian.mehnert@googlemail.com>
+Subject: suggestion? only pull cleanly applying commits
+Date: Wed, 26 Nov 2008 12:48:50 +0100
+Message-ID: <492D37A2.4010500@googlemail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Nov 26 12:15:21 2008
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Nov 26 12:50:52 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1L5IMW-0006qa-8l
-	for gcvg-git-2@gmane.org; Wed, 26 Nov 2008 12:15:16 +0100
+	id 1L5Iux-0002UE-DC
+	for gcvg-git-2@gmane.org; Wed, 26 Nov 2008 12:50:51 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751928AbYKZLOA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 26 Nov 2008 06:14:00 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751914AbYKZLOA
-	(ORCPT <rfc822;git-outgoing>); Wed, 26 Nov 2008 06:14:00 -0500
-Received: from az33egw02.freescale.net ([192.88.158.103]:47018 "EHLO
-	az33egw02.freescale.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751858AbYKZLN7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 26 Nov 2008 06:13:59 -0500
-Received: from az33smr01.freescale.net (az33smr01.freescale.net [10.64.34.199])
-	by az33egw02.freescale.net (8.12.11/az33egw02) with ESMTP id mAQBDiZt010325;
-	Wed, 26 Nov 2008 04:13:45 -0700 (MST)
-Received: from [10.213.160.8] (vpn-10-213-160-8.am.freescale.net [10.213.160.8])
-	by az33smr01.freescale.net (8.13.1/8.13.0) with ESMTP id mAQBDhh0003992;
-	Wed, 26 Nov 2008 05:13:44 -0600 (CST)
-X-X-Sender: xyzzy@t2.domain.actdsltmp
-In-Reply-To: <7vy6z7gf4x.fsf@gitster.siamese.dyndns.org>
+	id S1752076AbYKZLtg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 26 Nov 2008 06:49:36 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751995AbYKZLtf
+	(ORCPT <rfc822;git-outgoing>); Wed, 26 Nov 2008 06:49:35 -0500
+Received: from mail-ausfall.charite.de ([193.175.70.131]:41937 "EHLO
+	mail-ausfall.charite.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751914AbYKZLtf (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 26 Nov 2008 06:49:35 -0500
+Received: from localhost (localhost [127.0.0.1])
+	by mail-ausfall.charite.de (Postfix) with ESMTP id 018A33DB74
+	for <git@vger.kernel.org>; Wed, 26 Nov 2008 12:49:34 +0100 (CET)
+X-Virus-Scanned: amavisd-new at charite.de
+Received: from mail-ausfall.charite.de ([127.0.0.1])
+	by localhost (mail-ausfall.charite.de [127.0.0.1]) (amavisd-new, port 10025)
+	with ESMTP id uDENJVVotHK6 for <git@vger.kernel.org>;
+	Wed, 26 Nov 2008 12:49:33 +0100 (CET)
+Received: from postamt.charite.de (postamt.charite.de [141.42.4.250])
+	(using TLSv1 with cipher ADH-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by mail-ausfall.charite.de (Postfix) with ESMTPS
+	for <git@vger.kernel.org>; Wed, 26 Nov 2008 12:49:33 +0100 (CET)
+Received: from [10.129.103.228] (unknown [92.116.103.228])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by postamt.charite.de (Postfix) with ESMTPSA id 59EA7B2C68
+	for <git@vger.kernel.org>; Wed, 26 Nov 2008 12:49:29 +0100 (CET)
+User-Agent: Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9.1b2pre) Gecko/20081119 Mnenhy/0.7.6.0
+X-Enigmail-Version: 0.96a
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/101725>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/101726>
 
-On Tue, 25 Nov 2008, Junio C Hamano wrote:
-> Trent Piepho <tpiepho@freescale.com> writes:
->
->> The tech docs I linked to just say pine continues lines with leading space,
->> but not how many spaces exactly.
->
-> My reading of the wording "spaces" it uses is that any number.  I agree it
-> is underspecified what would happen to them.
->
->> It also appears to only split lines between whitespace and
->> non-whitespace. ...
->> ... like "a b \n   c \n   d\n".  If I didn't eat the leading spaces in the
->> continuations, it would be re-assembled as "a b    c    d".  This might cause
->> an address to become "John     Doe <jdoe@anon.org>"
->
-> Which would still work.  If you had two addresses a and b and smashed them
-> together into ab on the other hand it wouldn't.  That is why I asked.
+Hi!
 
-Though if Pine decided to wrap something mid-word, e.g. "a@b.com" to
-"a@b.\n   com\n" then no eating the leading space would be wrong.
+I've a scenario where I don't really want to do a full merge but rather
+to pull all commits from another repository that merge without conflicts.
 
-> If you know for sure (e.g. by reading the Pine source) that it only splits
-> a line at a whitespace to non-whitespace transition, that it keeps the
-> whitespace at the end of the first line, and that the non-whitespace and
-> everything after that on the second line (prefixed by extra unspecified
-> number of spaces as the continuation sign), then I think what you had in
-> your patch is exactly what we want.  I just wanted to make sure you know
-> what you are doing, as I do not use Pine nor its address book myself.
+I've put together the script at the bottom which seems to work ok but is
+damn slow.
 
-I tried all kinds of extreme address book entries and it would never put
-spaces at the beginning of a line unless they had been inserted to make a
-continuation.
+Is there a smarter and faster way to do this that I missed reading the
+documentation?
 
-But just for you I downloaded the pine code, which is 20 years old and not
-a lot of fun to read.  There isn't any code that just does line wrapping. 
-The code that prints out a address book entry will at various points check
-if it should output a newline.  And it whatever it prints after those
-points isn't allowed to start with space.  The code that reads the entries
-eats all the spaces before and after each field.  If long comments are
-wrapped, it will change "a   b" into "a\n :  b\n" and effectively does 
-s/^ +: / /; when reading it back.  But email address don't get wrapped
-that way so we don't need to care about the ':'.
+Any help would be really appreciated! :-)
+
+Regards,
+Maximilian
+
+
+#!/bin/sh
+
+for commit in `git rev-list --reverse HEAD..other-repository/master`; do
+        git diff-tree -p $commit|patch --dry-run -p1 -N -f >/dev/null
+        if [ $? -eq 0 ]; then
+                echo "getting $commit"
+                parents=`git rev-list --parents -n1  $commit|wc -w`
+                if [ $parents -eq 2 ]; then
+                        git cherry-pick $commit
+                else
+                        git cherry-pick -m1 $commit
+                fi
+        fi
+done
