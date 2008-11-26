@@ -1,57 +1,98 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: Extra pair of double quotes in "git commit" output?
-Date: Wed, 26 Nov 2008 08:34:23 -0500
-Message-ID: <20081126133422.GA1761@coredump.intra.peff.net>
-References: <20081126064906.6117@nanako3.lavabit.com> <20081125232521.GC30942@coredump.intra.peff.net> <adf1fd3d0811251606t7f49eb84y53075427859bd26a@mail.gmail.com>
+From: Hannu Koivisto <azure@iki.fi>
+Subject: Re: Unable to clone empty repositories remotely
+Date: Wed, 26 Nov 2008 15:13:13 +0200
+Message-ID: <834p1ur5p2.fsf@kalahari.s2.org>
+References: <837i6rplcd.fsf@kalahari.s2.org>
+	<46d6db660811251333u583468e0ma2846796ca9df68d@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Nanako Shiraishi <nanako3@lavabit.com>, git@vger.kernel.org
-To: Santi =?utf-8?B?QsOpamFy?= <santi@agolina.net>
-X-From: git-owner@vger.kernel.org Wed Nov 26 14:35:46 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: "Christian MICHON" <christian.michon@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Nov 26 14:49:48 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1L5KYO-0006yv-VW
-	for gcvg-git-2@gmane.org; Wed, 26 Nov 2008 14:35:41 +0100
+	id 1L5Kls-00041c-W9
+	for gcvg-git-2@gmane.org; Wed, 26 Nov 2008 14:49:37 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753667AbYKZNe1 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 26 Nov 2008 08:34:27 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753669AbYKZNe0
-	(ORCPT <rfc822;git-outgoing>); Wed, 26 Nov 2008 08:34:26 -0500
-Received: from peff.net ([208.65.91.99]:3303 "EHLO peff.net"
+	id S1754734AbYKZNsF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 26 Nov 2008 08:48:05 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755046AbYKZNsF
+	(ORCPT <rfc822;git-outgoing>); Wed, 26 Nov 2008 08:48:05 -0500
+Received: from s2.org ([195.197.64.39]:50198 "EHLO kalahari.s2.org"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753646AbYKZNe0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 26 Nov 2008 08:34:26 -0500
-Received: (qmail 18472 invoked by uid 111); 26 Nov 2008 13:34:25 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.32) with SMTP; Wed, 26 Nov 2008 08:34:25 -0500
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Wed, 26 Nov 2008 08:34:23 -0500
-Content-Disposition: inline
-In-Reply-To: <adf1fd3d0811251606t7f49eb84y53075427859bd26a@mail.gmail.com>
+	id S1754515AbYKZNsC (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 26 Nov 2008 08:48:02 -0500
+X-Greylist: delayed 2087 seconds by postgrey-1.27 at vger.kernel.org; Wed, 26 Nov 2008 08:48:01 EST
+Received: from azure by kalahari.s2.org with local (Exim 4.69)
+	(envelope-from <azure@iki.fi>)
+	id 1L5KCf-0006BS-1d; Wed, 26 Nov 2008 15:13:13 +0200
+In-Reply-To: <46d6db660811251333u583468e0ma2846796ca9df68d@mail.gmail.com>
+	(Christian MICHON's message of "Tue, 25 Nov 2008 22:33:48 +0100")
+User-Agent: Gnus/5.110011 (No Gnus v0.11) Emacs/22.2 (gnu/linux)
+X-SA-Exim-Connect-IP: <locally generated>
+X-SA-Exim-Mail-From: azure@iki.fi
+X-SA-Exim-Scanned: No (on kalahari.s2.org); SAEximRunCond expanded to false
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/101735>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/101736>
 
-On Wed, Nov 26, 2008 at 01:06:34AM +0100, Santi B=C3=A9jar wrote:
+"Christian MICHON" <christian.michon@gmail.com> writes:
 
-> Maybe just use the output of "git branch -v":
->=20
-> master d9a5491 foo: bar
->=20
-> or even literally:
->=20
-> * master d9a5491 [ahead 1] foo: bar
->=20
-> or to make the separation more evident:
->=20
-> [master d9a5491] foo: bar
+> On Tue, Nov 25, 2008 at 10:05 PM, Hannu Koivisto <azure@iki.fi> wrote:
+>> Greetings,
+>>
+>> mkdir test
+>> cd test
+>> git init --bare --shared=group
+>> cd ..
+>> git clone test test2
+>>
+>> works, though clone says it cannot checkout, which is expected.
+>> This is nevertheless very useful when you create a shared
+>> repository for a new project; you can then create a personal clone
+>> and start adding stuff to it.  If, however, you normally work on
+>> another machine and want to have your personal clone there
+>> (i.e. git clone ssh://therepomachine/somewhere/test), cloning
+>> doesn't work at all (tested with git 1.6.0.3.525.ge32c2 in Cygwin):
+>>
+>> Initialized empty Git repository in /cygdrive/c/temp/test/.git/
+>> fatal: no matching remote head
+>>
+>> This behaviour isn't documented by either git-init(1) or
+>> git-clone(1).  I think it would be very convenient if this worked
+>> for the reasons mentioned above.  I'm sure you could create your
+>> personal repository with git init and then git remote add the
+>> shared repository to it but that's much more difficult.
+>>
+>> --
+>> Hannu
+>>
+>> --
+>> To unsubscribe from this list: send the line "unsubscribe git" in
+>> the body of a message to majordomo@vger.kernel.org
+>> More majordomo info at  http://vger.kernel.org/majordomo-info.html
+>>
+>
+> how about creating at least 1 empty commit before any cloning ?
+>
+> wouldn't this solve the problem ?
 
-Out of those suggestions, I find only the final one aesthetically
-acceptable. Nobody else has weighed in, so maybe they don't care. Or
-maybe they are just on vacation due to the (American) holiday.
+No, it wouldn't.  I don't doubt that there are workarounds - I
+mentioned one possibility myself.  Admittedly your workaround may
+be more convenient than mine, but it's still a workaround.
 
--Peff
+Now that I think of it, I wonder if one could go one step further
+in shared repository creation usability and make it possible to do
+that git init step remotely as well (I mean, directly with a
+one-step git command instead of ssh host "cd /repos ; mkdir foo ;
+cd foo; git init ...").  Since git init doesn't take non-option
+arguments, I suppose it could be extended to accept ssh (and file)
+urls for this purpose?  And maybe an option to create a
+corresponding local clone at the same time.
+
+-- 
+Hannu
