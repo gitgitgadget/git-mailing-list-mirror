@@ -1,104 +1,97 @@
-From: =?ISO-8859-1?Q?Ren=E9_Scharfe?= <rene.scharfe@lsrfire.ath.cx>
-Subject: Re: [PATCH (Eek!)] git diff does not honor --no-ext-diff
-Date: Wed, 26 Nov 2008 08:59:13 +0100
-Message-ID: <492D01D1.7020702@lsrfire.ath.cx>
-References: <544dda350811252312u7ef5533bwb20b37640d861487@mail.gmail.com> <7vprkihqk6.fsf@gitster.siamese.dyndns.org>
+From: Nicolas Morey-Chaisemartin <devel@morey-chaisemartin.com>
+Subject: Re: French git user
+Date: Wed, 26 Nov 2008 09:02:29 +0100
+Message-ID: <492D0295.6060808@morey-chaisemartin.com>
+References: <492B9985.10103@morey-chaisemartin.com>	 <46d6db660811242238q4bc919a6l12bfd9a38639e46e@mail.gmail.com>	 <C10BF28F-3466-4908-A5ED-6FB68FBEC3A2@yahoo.ca> <46d6db660811250741w54d34062w7766efd135c457b8@mail.gmail.com> <492C2F2E.2050200@morey-chaisemartin.com>
+Reply-To: devel@morey-chaisemartin.com
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: Nazri Ramliy <ayiehere@gmail.com>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Nov 26 09:00:39 2008
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Jean-Francois Veillette <jean_francois_veillette@yahoo.ca>,
+	git@vger.kernel.org
+To: devel@morey-chaisemartin.com
+X-From: git-owner@vger.kernel.org Wed Nov 26 09:13:51 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1L5FK9-00021k-TP
-	for gcvg-git-2@gmane.org; Wed, 26 Nov 2008 09:00:38 +0100
+	id 1L5FWl-0005Tm-57
+	for gcvg-git-2@gmane.org; Wed, 26 Nov 2008 09:13:39 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751547AbYKZH7V (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 26 Nov 2008 02:59:21 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750981AbYKZH7V
-	(ORCPT <rfc822;git-outgoing>); Wed, 26 Nov 2008 02:59:21 -0500
-Received: from india601.server4you.de ([85.25.151.105]:53901 "EHLO
-	india601.server4you.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751400AbYKZH7V (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 26 Nov 2008 02:59:21 -0500
-Received: from [10.0.1.101] (p57B7E31A.dip.t-dialin.net [87.183.227.26])
-	by india601.server4you.de (Postfix) with ESMTPSA id 8A5ED2F8051;
-	Wed, 26 Nov 2008 08:59:18 +0100 (CET)
+	id S1753288AbYKZIMY convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 26 Nov 2008 03:12:24 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753160AbYKZIMY
+	(ORCPT <rfc822;git-outgoing>); Wed, 26 Nov 2008 03:12:24 -0500
+Received: from 42.mail-out.ovh.net ([213.251.189.42]:45124 "HELO
+	42.mail-out.ovh.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with SMTP id S1753288AbYKZIMX (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 26 Nov 2008 03:12:23 -0500
+X-Greylist: delayed 399 seconds by postgrey-1.27 at vger.kernel.org; Wed, 26 Nov 2008 03:12:22 EST
+Received: (qmail 17282 invoked by uid 503); 26 Nov 2008 08:05:22 -0000
+Received: from b6.ovh.net (HELO mail240.ha.ovh.net) (213.186.33.56)
+  by 42.mail-out.ovh.net with SMTP; 26 Nov 2008 08:05:22 -0000
+Received: from b0.ovh.net (HELO queue-out) (213.186.33.50)
+	by b0.ovh.net with SMTP; 26 Nov 2008 08:05:41 -0000
+Received: from ensilinx1.imag.fr (HELO ?0.0.0.0?) (devel@morey-chaisemartin.com@195.221.227.189)
+  by ns0.ovh.net with SMTP; 26 Nov 2008 08:05:40 -0000
 User-Agent: Thunderbird 2.0.0.18 (Windows/20081105)
-In-Reply-To: <7vprkihqk6.fsf@gitster.siamese.dyndns.org>
+In-Reply-To: <492C2F2E.2050200@morey-chaisemartin.com>
+X-Enigmail-Version: 0.95.7
+X-Ovh-Tracer-Id: 239816680758234831
+X-Ovh-Remote: 195.221.227.189 (ensilinx1.imag.fr)
+X-Ovh-Local: 213.186.33.20 (ns0.ovh.net)
+X-Spam-Check: DONE|H 0.5/N
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/101709>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/101710>
 
-Junio C Hamano schrieb:
-> "Nazri Ramliy" <ayiehere@gmail.com> writes:
-> 
->> git-diff does not honor the --no-ext-diff option in both cases when the external
->> diff program is set via diff.external and gitattributes.
+Nicolas Morey-Chaisemartin a =E9crit :
+> Christian MICHON a =E9crit :
+>  =20
+>> On Tue, Nov 25, 2008 at 2:38 PM, Jean-Francois Veillette
+>> <jean_francois_veillette@yahoo.ca> wrote:
+>>  =20
+>>    =20
+>>> I'll probably need to do the same here (Montr=E9al, Qc), so if you =
+can share
+>>> your slides (or else), that would be nice.
+>>>
+>>> Merci ! (thanks),
+>>>
+>>> - jfv
+>>>
+>>>    =20
+>>>      =20
+>> you'll need to ask Nicolas. what I did was to provide feedback to hi=
+s
+>> slides only (done).
+>> it's up to him to share his work or not.
 >>
->> Is this intentional?
-> 
-> Judging from 72909be (Add diff-option --ext-diff, 2007-06-30), I think
-> this was intended in the sense that --ext-diff and --no-ext-diff were
-> meant to be no-op for "diff" itself when they were introduced.
-> 
-> Having said that, I do not know if I agree with the original intention.
-> It looks more like an oversight that came from focusing only on what a new
-> behaviour for the "log" family should be, than a logical design decision
-> to exclude "diff" from this codepath.
-> 
-> Wouldn't this be a better patch?
+>>  =20
+>>    =20
+>
+> I'd gladly share it, I just have to check my company policy.
+> I asked my boss tonight so I'll get an answer by tomorrow and post it=
+ on
+> a ftp somewhere, if I can share it
+>
+> Nicolas
+>
+> --
+> To unsubscribe from this list: send the line "unsubscribe git" in
+> the body of a message to majordomo@vger.kernel.org
+> More majordomo info at  http://vger.kernel.org/majordomo-info.html
+>
+>
+>  =20
 
-Yes.  And feel free to squash in the following. :)
+I've been allowed to share my presentation:
+http://nicolas.morey-chaisemartin.com/git_tuto.pdf
 
-diff --git a/t/t4020-diff-external.sh b/t/t4020-diff-external.sh
-index dfe3fbc..ec787b4 100755
---- a/t/t4020-diff-external.sh
-+++ b/t/t4020-diff-external.sh
-@@ -43,6 +43,13 @@ test_expect_success 'GIT_EXTERNAL_DIFF environment should apply only to diff' '
- 
- '
- 
-+test_expect_success 'GIT_EXTERNAL_DIFF environment and --no-ext-diff' '
-+
-+	GIT_EXTERNAL_DIFF=echo git diff --no-ext-diff |
-+	grep "^diff --git a/file b/file"
-+
-+'
-+
- test_expect_success 'diff attribute' '
- 
- 	git config diff.parrot.command echo &&
-@@ -68,6 +75,13 @@ test_expect_success 'diff attribute should apply only to diff' '
- 
- '
- 
-+test_expect_success 'diff attribute and --no-ext-diff' '
-+
-+	git diff --no-ext-diff |
-+	grep "^diff --git a/file b/file"
-+
-+'
-+
- test_expect_success 'diff attribute' '
- 
- 	git config --unset diff.parrot.command &&
-@@ -94,6 +108,13 @@ test_expect_success 'diff attribute should apply only to diff' '
- 
- '
- 
-+test_expect_success 'diff attribute and --no-ext-diff' '
-+
-+	git diff --no-ext-diff |
-+	grep "^diff --git a/file b/file"
-+
-+'
-+
- test_expect_success 'no diff with -diff' '
- 	echo >.gitattributes "file -diff" &&
- 	git diff | grep Binary
+Please send me any feedback, I'm always glad to imrpove my work.
+
+Regards
+
+Nicolas Morey-Chaisemartin
