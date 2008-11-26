@@ -1,61 +1,57 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] send-email: Fix Pine address book parsing
-Date: Wed, 26 Nov 2008 11:46:15 -0800
-Message-ID: <7vwseqfeyg.fsf@gitster.siamese.dyndns.org>
-References: <1227668100-5563-1-git-send-email-tpiepho@freescale.com>
- <7vod03hyna.fsf@gitster.siamese.dyndns.org>
- <Pine.LNX.4.64.0811252137250.5161@t2.domain.actdsltmp>
- <7vy6z7gf4x.fsf@gitster.siamese.dyndns.org>
- <Pine.LNX.4.64.0811260243440.5161@t2.domain.actdsltmp>
+Subject: Re: [PATCH] git checkout: don't warn about unborn branch if -f is
+ already passed
+Date: Wed, 26 Nov 2008 11:46:42 -0800
+Message-ID: <7vr64yfexp.fsf@gitster.siamese.dyndns.org>
+References: <1227509722.32583.0.camel@mattlaptop2.local>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-To: Trent Piepho <tpiepho@freescale.com>
-X-From: git-owner@vger.kernel.org Wed Nov 26 20:48:10 2008
+To: Matt McCutchen <matt@mattmccutchen.net>
+X-From: git-owner@vger.kernel.org Wed Nov 26 20:48:39 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1L5QMh-00055a-Hu
-	for gcvg-git-2@gmane.org; Wed, 26 Nov 2008 20:47:59 +0100
+	id 1L5QN8-0005I8-Mh
+	for gcvg-git-2@gmane.org; Wed, 26 Nov 2008 20:48:27 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752713AbYKZTqm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 26 Nov 2008 14:46:42 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752690AbYKZTql
-	(ORCPT <rfc822;git-outgoing>); Wed, 26 Nov 2008 14:46:41 -0500
-Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:50327 "EHLO
+	id S1752745AbYKZTrB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 26 Nov 2008 14:47:01 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752730AbYKZTrA
+	(ORCPT <rfc822;git-outgoing>); Wed, 26 Nov 2008 14:47:00 -0500
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:61682 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752491AbYKZTql (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 26 Nov 2008 14:46:41 -0500
+	with ESMTP id S1752690AbYKZTrA (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 26 Nov 2008 14:47:00 -0500
 Received: from localhost.localdomain (unknown [127.0.0.1])
-	by b-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id A584A178A2;
-	Wed, 26 Nov 2008 14:46:40 -0500 (EST)
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 157B481FD9;
+	Wed, 26 Nov 2008 14:46:59 -0500 (EST)
 Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
  DHE-RSA-AES256-SHA (256/256 bits)) (No client certificate requested) by
- b-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTPSA id 2B57D178B4; Wed,
- 26 Nov 2008 14:46:16 -0500 (EST)
+ a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTPSA id F05FA81FD7; Wed,
+ 26 Nov 2008 14:46:43 -0500 (EST)
 User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: F1F2509C-BBF2-11DD-881B-F83E113D384A-77302942!a-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: FCEB8BBC-BBF2-11DD-9BC1-465CC92D7133-77302942!a-sasl-fastnet.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/101761>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/101762>
 
-Trent Piepho <tpiepho@freescale.com> writes:
+Matt McCutchen <matt@mattmccutchen.net> writes:
 
-> ...  There isn't any code that just does line wrapping. 
-> The code that prints out a address book entry will at various points check
-> if it should output a newline.  And it whatever it prints after those
-> points isn't allowed to start with space.  The code that reads the entries
-> eats all the spaces before and after each field.  If long comments are
-> wrapped, it will change "a   b" into "a\n :  b\n" and effectively does 
-> s/^ +: / /; when reading it back.  But email address don't get wrapped
-> that way so we don't need to care about the ':'.
+> I think it's unnecessary to warn that the checkout has been forced due to an
+> unborn current branch if -f has been explicitly passed.  For one project, I am
+> using git-new-workdir to create workdirs from a bare repository whose HEAD is
+> set to an unborn branch, and this warning started to irritate me.
 
-I never was worried about eating and losing the leading space that was
-used only to signal the continuation line, but was wondering if we need to
-insert an artificial space in place of the newline we are eating, but it
-appears that we can say with confidence that worry is unfounded.
+I doubt anybody minds this particular change per-se, but I wonder what the
+justification of keeping a dangling HEAD in a bare repository is.
 
-Will queue.  Thanks.
+After all, the primary intended purpose of a bare repository is to serve
+as a distribution point (i.e. something you can clone from), and I think a
+dangling HEAD interferes with the usual operation of clone (although I've
+never tested this).
+
+Care to explain why?
