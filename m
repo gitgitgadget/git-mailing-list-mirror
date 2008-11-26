@@ -1,82 +1,67 @@
-From: Junio C Hamano <gitster@pobox.com>
+From: Nanako Shiraishi <nanako3@lavabit.com>
 Subject: Re: [PATCH] git-gui: update Japanese translation
-Date: Wed, 26 Nov 2008 14:03:34 -0800
-Message-ID: <7vy6z6cfgp.fsf@gitster.siamese.dyndns.org>
-References: <20081126192144.6117@nanako3.lavabit.com>
- <20081126212828.GA20382@spearce.org>
- <7vskpedumw.fsf@gitster.siamese.dyndns.org>
+Date: Thu, 27 Nov 2008 07:10:03 +0900
+Message-ID: <20081127071003.6117@nanako3.lavabit.com>
+References: <7vskpedumw.fsf@gitster.siamese.dyndns.org>
+ <20081126192144.6117@nanako3.lavabit.com> <20081126212828.GA20382@spearce.org>
 Mime-Version: 1.0
-Content-Type: multipart/mixed; boundary="=-=-="
-Cc: Nanako Shiraishi <nanako3@lavabit.com>, git@vger.kernel.org
-To: "Shawn O. Pearce" <spearce@spearce.org>
-X-From: git-owner@vger.kernel.org Wed Nov 26 23:06:24 2008
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Cc: "Shawn O. Pearce" <spearce@spearce.org>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Nov 26 23:11:51 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1L5SVp-0007SC-8E
-	for gcvg-git-2@gmane.org; Wed, 26 Nov 2008 23:05:53 +0100
+	id 1L5Sbt-0001at-2J
+	for gcvg-git-2@gmane.org; Wed, 26 Nov 2008 23:11:49 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752371AbYKZWEQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 26 Nov 2008 17:04:16 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752068AbYKZWEQ
-	(ORCPT <rfc822;git-outgoing>); Wed, 26 Nov 2008 17:04:16 -0500
-Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:63822 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751956AbYKZWEP (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 26 Nov 2008 17:04:15 -0500
-Received: from localhost.localdomain (unknown [127.0.0.1])
-	by b-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id 9DCF8178D3;
-	Wed, 26 Nov 2008 17:04:14 -0500 (EST)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES256-SHA (256/256 bits)) (No client certificate requested) by
- b-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTPSA id 856441725D; Wed,
- 26 Nov 2008 17:03:36 -0500 (EST)
-In-Reply-To: <7vskpedumw.fsf@gitster.siamese.dyndns.org> (Junio C. Hamano's
- message of "Wed, 26 Nov 2008 13:50:31 -0800")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: 29B19DF4-BC06-11DD-AC3A-F83E113D384A-77302942!a-sasl-quonix.pobox.com
+	id S1752488AbYKZWKc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 26 Nov 2008 17:10:32 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752227AbYKZWKc
+	(ORCPT <rfc822;git-outgoing>); Wed, 26 Nov 2008 17:10:32 -0500
+Received: from karen.lavabit.com ([72.249.41.33]:46216 "EHLO karen.lavabit.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752189AbYKZWKb (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 26 Nov 2008 17:10:31 -0500
+Received: from a.earth.lavabit.com (a.earth.lavabit.com [192.168.111.10])
+	by karen.lavabit.com (Postfix) with ESMTP id CB4DCC7AF1;
+	Wed, 26 Nov 2008 16:10:30 -0600 (CST)
+Received: from 1291.lavabit.com (212.62.97.20)
+	by lavabit.com with ESMTP id MD5QO2ILLTAJ; Wed, 26 Nov 2008 16:10:30 -0600
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws; s=lavabit; d=lavabit.com;
+  b=vZGsH3/F+j6XbIq7gkX8N+rEFz3MwdZdDEhgvkOCxeBgGAOyFE5gb2f84Swo+oDXHEsWwxnmrxG5fSwW4+RUBK76HGHUWODjxI2ZpBr872K/YBI9MedUxIhfz0QXJ4uTqgIwFSuOBHWUkD+iLlNOx1MORXLarRnAVjFT26PhS/Q=;
+  h=From:To:Cc:Subject:Date:In-Reply-To:References:MIME-Version:Content-Type:Content-Transfer-Encoding:Message-Id;
+In-Reply-To: <7vskpedumw.fsf@gitster.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/101777>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/101778>
 
---=-=-=
+Quoting Junio C Hamano <gitster@pobox.com>:
 
-Feel free to squash this in; I just removed the extra "\n" at the
-beginning of these messages.
+> "Shawn O. Pearce" <spearce@spearce.org> writes:
+>
+>> $ make V=1
+>> msgfmt --statistics --tcl -l ja -d po/ po/ja.po
+>> po/ja.po:1558: `msgid' and `msgstr' entries do not both begin with '\n'
+>> po/ja.po:1567: `msgid' and `msgstr' entries do not both begin with '\n'
+>> po/ja.po:1602: `msgid' and `msgstr' entries do not both begin with '\n'
+>> po/ja.po:1883: `msgid' and `msgstr' entries do not both begin with '\n'
+>> po/ja.po:1931: `msgid' and `msgstr' entries do not both begin with '\n'
+>> po/ja.po:1941: `msgid' and `msgstr' entries do not both begin with '\n'
+>> po/ja.po:2342: `msgid' and `msgstr' entries do not both begin with '\n'
+>> po/ja.po:2455: `msgid' and `msgstr' entries do not both begin with '\n'
+>> msgfmt: found 8 fatal errors
+>> make: *** [po/ja.msg] Error 1
+>
+> Feel free to squash this in; I just removed the extra "\n" at the
+> beginning of these messages.
 
+Thank you for catching and fixing my mistakes.
 
---=-=-=
-Content-Type: application/octet-stream
-Content-Disposition: attachment; filename=1
-Content-Transfer-Encoding: base64
-Content-Description: po/ja.po fixup
-
-IHBvL2phLnBvIHwgICAgOCAtLS0tLS0tLQogMSBmaWxlcyBjaGFuZ2VkLCAwIGluc2VydGlvbnMo
-KyksIDggZGVsZXRpb25zKC0pCgpkaWZmIC0tZ2l0IGMvcG8vamEucG8gaS9wby9qYS5wbwppbmRl
-eCAwY2Q2NzQwLi44YmE2NDE3IDEwMDY0NAotLS0gYy9wby9qYS5wbworKysgaS9wby9qYS5wbwpA
-QCAtMTU1OSw3ICsxNTU5LDYgQEAgbXNnaWQgIiIKICJMT0NBTDogZGVsZXRlZFxuIgogIlJFTU9U
-RTpcbiIKIG1zZ3N0ciAiIgotIlxuIgogIkxPQ0FMOiDliYrpmaRcbiIKICJSZW1vdGU6XG4iCiAK
-QEAgLTE1NjgsNyArMTU2Nyw2IEBAIG1zZ2lkICIiCiAiUkVNT1RFOiBkZWxldGVkXG4iCiAiTE9D
-QUw6XG4iCiBtc2dzdHIgIiIKLSJcbiIKICJSRU1PVEU6IOWJiumZpFxuIgogIkxPQ0FMOlxuIgog
-CkBAIC0xNjAzLDcgKzE2MDEsNiBAQCBtc2dpZCAiIgogIiogVW50cmFja2VkIGZpbGUgaXMgJWQg
-Ynl0ZXMuXG4iCiAiKiBTaG93aW5nIG9ubHkgZmlyc3QgJWQgYnl0ZXMuXG4iCiBtc2dzdHIgIiIK
-LSJcbiIKICIqIOeuoeeQhuWkluOBruODleOCoeOCpOODq+OBruWkp+OBjeOBleOBryAlZCDjg5Dj
-gqTjg4jjgafjgZnjgIJcbiIKICIqIOacgOWIneOBriAlZCDjg5DjgqTjg4jjgaDjgZHooajnpLrj
-gZfjgabjgYTjgb7jgZnjgIJcbiIKIApAQCAtMTg4Nyw3ICsxODg0LDYgQEAgbXNnaWQgIiIKICJc
-biIKICJUaGlzIG9wZXJhdGlvbiBjYW4gYmUgdW5kb25lIG9ubHkgYnkgcmVzdGFydGluZyB0aGUg
-bWVyZ2UuIgogbXNnc3RyICIiCi0iXG4iCiAi56u25ZCI44GZ44KL5aSJ5pu054K544Gg44GR44GM
-6KGo56S644GV44KM44Gm44GE44KL44GT44Go44Gr5rOo5oSP44GX44Gm44GP44Gg44GV44GE44CC
-XG4iCiAiXG4iCiAiJXMg44Gv5LiK5pu444GN44GV44KM44G+44GZ44CCXG4iCkBAIC0xOTMyLDcg
-KzE5MjgsNiBAQCBtc2dpZCAiIgogIkVycm9yIHJldHJpZXZpbmcgdmVyc2lvbnM6XG4iCiAiJXMi
-CiBtc2dzdHIgIiIKLSJcbiIKICLniYjjga7lj5bjgorlh7rjgZfmmYLjgavjgqjjg6njg7zjgYzl
-h7rjgb7jgZfjgZ86XG4iCiAiJXMiCiAKQEAgLTE5NDMsNyArMTkzOCw2IEBAIG1zZ2lkICIiCiAi
-XG4iCiAiJXMiCiBtc2dzdHIgIiIKLSJcbiIKICLjg57jg7zjgrjjg4Tjg7zjg6vjgYzotbfli5Xj
-gafjgY3jgb7jgZvjgpM6XG4iCiAiXG4iCiAiJXMiCkBAIC0yMzQ0LDcgKzIzMzgsNiBAQCBtc2dp
-ZCAiIgogIlxuIgogIiVzIgogbXNnc3RyICIiCi0iXG4iCiAic3NoLWtleWdlbiDjgpLotbfli5Xj
-gafjgY3jgb7jgZvjgpM6XG4iCiAiXG4iCiAiJXMiCkBAIC0yNDU2LDcgKzI0NDksNiBAQCBtc2dp
-ZCAiIgogIkNvdWxkIG5vdCBhZGQgdG9vbDpcbiIKICIlcyIKIG1zZ3N0ciAiIgotIlxuIgogIuOD
-hOODvOODq+OCkui/veWKoOOBp+OBjeOBvuOBm+OCkzpcbiIKICIlcyIKIAo=
---=-=-=--
+-- 
+Nanako Shiraishi
+http://ivory.ap.teacup.com/nanako3/
