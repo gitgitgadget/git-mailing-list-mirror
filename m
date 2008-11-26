@@ -1,100 +1,91 @@
-From: Jean-Francois Veillette <jean_francois_veillette@yahoo.ca>
-Subject: Re: French git user
-Date: Wed, 26 Nov 2008 09:16:39 -0500
-Message-ID: <D5EC3E78-C9BD-4897-A535-85736734FA00@yahoo.ca>
-References: <492B9985.10103@morey-chaisemartin.com> <492C2F2E.2050200@morey-chaisemartin.com> <492D0295.6060808@morey-chaisemartin.com> <200811260955.57421.johan@herland.net> <492D1779.8040807@morey-chaisemartin.com>
-Mime-Version: 1.0 (Apple Message framework v929.2)
-Content-Type: text/plain; charset=ISO-8859-1;
-	format=flowed	delsp=yes
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Johan Herland <johan@herland.net>, git@vger.kernel.org
-To: devel@morey-chaisemartin.com
-X-From: git-owner@vger.kernel.org Wed Nov 26 15:24:47 2008
+From: Nicolas Pitre <nico@cam.org>
+Subject: Re: [PATCH] Fix handle leak in builtin-pack-objects
+Date: Wed, 26 Nov 2008 09:33:51 -0500 (EST)
+Message-ID: <alpine.LFD.2.00.0811260931030.14328@xanadu.home>
+References: <81b0412b0811190313p643c0cb4vad620ea942aeea93@mail.gmail.com>
+ <4923FE58.3090503@viscovery.net>
+ <alpine.LFD.2.00.0811190753420.27509@xanadu.home>
+ <81b0412b0811190534r4f71f981s53de415f79e56e25@mail.gmail.com>
+ <49241AEF.1080808@viscovery.net>
+ <alpine.LFD.2.00.0811190940480.27509@xanadu.home>
+ <81b0412b0811260518o52adb107tbddafb324e7fd97b@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+Cc: Johannes Sixt <j.sixt@viscovery.net>,
+	Junio C Hamano <gitster@pobox.com>,
+	Git Mailing List <git@vger.kernel.org>
+To: Alex Riesen <raa.lkml@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Nov 26 15:35:34 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1L5LJm-0001DT-8Y
-	for gcvg-git-2@gmane.org; Wed, 26 Nov 2008 15:24:38 +0100
+	id 1L5LUC-0005uJ-OY
+	for gcvg-git-2@gmane.org; Wed, 26 Nov 2008 15:35:25 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752629AbYKZOXW convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 26 Nov 2008 09:23:22 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752762AbYKZOXW
-	(ORCPT <rfc822;git-outgoing>); Wed, 26 Nov 2008 09:23:22 -0500
-Received: from smtp123.mail.mud.yahoo.com ([209.191.84.226]:39677 "HELO
-	smtp123.mail.mud.yahoo.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with SMTP id S1752403AbYKZOXV convert rfc822-to-8bit
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 26 Nov 2008 09:23:21 -0500
-X-Greylist: delayed 402 seconds by postgrey-1.27 at vger.kernel.org; Wed, 26 Nov 2008 09:23:21 EST
-Received: (qmail 44000 invoked from network); 26 Nov 2008 14:16:39 -0000
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-  s=s1024; d=yahoo.ca;
-  h=Received:X-YMail-OSG:X-Yahoo-Newman-Property:Cc:Message-Id:From:To:In-Reply-To:Content-Type:Content-Transfer-Encoding:Mime-Version:Subject:Date:References:X-Mailer;
-  b=w29W5nygldJzsqhqV6wALXs8FyEOXF8QMjoK0O14ze3zc9Wr08V2tmRwBocdCiIBC25oPM6Y6jGp1EJ+/AZ7TAVk4WT+VB+VcCvj1Wqt8OSQup8lAelBI0Wavk14jVI4pxk1uhPHC1tzOZn8F8zBUFw9vv9aAZ2tfKHFYPoTJTg=  ;
-Received: from unknown (HELO ?192.168.3.246?) (jean_francois_veillette@207.96.147.134 with plain)
-  by smtp123.mail.mud.yahoo.com with SMTP; 26 Nov 2008 14:16:38 -0000
-X-YMail-OSG: BgqttsAVM1mZ57FiOsadPQJqYRQkMVIvm0vUzkbvjlwreDm1RHtDLqkcdRbnZmMck84E1SVmNeWaGlnwUJyuH6SyhB4R_rVyW71U5aBkaXfBDH4amMZoj03Mv6Zh9i2tQWsaa384oGtT0HkUr1p0QFyAdxcWP07RBpoE1CzBF_RM9vMVljveEijL4MwM
-X-Yahoo-Newman-Property: ymail-3
-In-Reply-To: <492D1779.8040807@morey-chaisemartin.com>
-X-Mailer: Apple Mail (2.929.2)
+	id S1751958AbYKZOd7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 26 Nov 2008 09:33:59 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751827AbYKZOd7
+	(ORCPT <rfc822;git-outgoing>); Wed, 26 Nov 2008 09:33:59 -0500
+Received: from relais.videotron.ca ([24.201.245.36]:54568 "EHLO
+	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751506AbYKZOd6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 26 Nov 2008 09:33:58 -0500
+Received: from xanadu.home ([66.131.194.97]) by VL-MO-MR005.ip.videotron.ca
+ (Sun Java(tm) System Messaging Server 6.3-4.01 (built Aug  3 2007; 32bit))
+ with ESMTP id <0KAY00335338LV80@VL-MO-MR005.ip.videotron.ca> for
+ git@vger.kernel.org; Wed, 26 Nov 2008 09:33:08 -0500 (EST)
+X-X-Sender: nico@xanadu.home
+In-reply-to: <81b0412b0811260518o52adb107tbddafb324e7fd97b@mail.gmail.com>
+User-Agent: Alpine 2.00 (LFD 1167 2008-08-23)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/101737>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/101738>
 
-I've quickly read the document.
-Many thanks Nicolas !
+On Wed, 26 Nov 2008, Alex Riesen wrote:
 
-- jfv
+> 2008/11/19 Nicolas Pitre <nico@cam.org>:
+> > On Wed, 19 Nov 2008, Johannes Sixt wrote:
+> >> Alex Riesen schrieb:
+> >> > 2008/11/19 Nicolas Pitre <nico@cam.org>:
+> >> >> On Wed, 19 Nov 2008, Johannes Sixt wrote:
+> >> >>> The work-around is to write the repacked objects to a file of a different
+> >> >>> name, and replace the original after git-pack-objects has terminated.
+> >> >>>
+> >> >>> Signed-off-by: Johannes Sixt <j6t@kdbg.org>
+> >> >> Acked-by: Nicolas Pitre <nico@cam.org>
+> >> >
+> >> > Are you sure? Will it work in a real repository? Were noone does
+> >> > rename the previous pack files into packtmp-something?
+> >>
+> >> Oh, the patch only works around the failure in the test case. In a real
+> >> repository there is usually no problem because the destination pack file
+> >> does not exist.
+> >>
+> >> The unusual case is where you do this:
+> >>
+> >>  $ git rev-list -10 HEAD | git pack-objects foobar
+> >>
+> >> twice in a row: In this case the second invocation fails on Windows
+> >> because the destination pack file already exists *and* is open. But not
+> >> even git-repack does this even if it is called twice. OTOH, the test case
+> >> *does* exactly this.
+> >
+> > OK.... Well, despite my earlier assertion, I think the above should be a
+> > valid operation.
+> >
+> > I'm looking at it now.  I'm therefore revoking my earlier ACK as well
+> > (better keep that test case alive).
+> >
+> 
+> Any news here?
 
-Le 08-11-26 =E0 04:31, Nicolas Morey-Chaisemartin a =E9crit :
+Yes: my hard disk crashed a couple hours after I mentioned this, so most 
+of my time has been spent on recovery since then.  I'll come back to it 
+eventually.
 
-> Johan Herland a =E9crit :
->> On Wednesday 26 November 2008, Nicolas Morey-Chaisemartin wrote:
->>
->>> I've been allowed to share my presentation:
->>> http://nicolas.morey-chaisemartin.com/git_tuto.pdf
->>>
->>> Please send me any feedback, I'm always glad to imrpove my work.
->>>
->>
->> I have no knowledge of French, but on page 15 the command
->> "git-commit --append" is mentioned. There is no "--append"
->> option. I'm guessing the "--amend" option is meant instead.
->>
->> Also, the very next command is "git-revert COMIT_ID".
->> "COMIT_ID" should probably have an extra "M".
->>
->> Finally, on page 11, you say something about "git foo" vs.
->> "git-foo" (hopefully that the "git-foo" form is deprecated),
->> but in the rest of the presentation you use a mix of "git foo"
->> and "git-foo" (mostly "git-foo"). This seems inconsistent.
->>
->>
->> Have fun! :)
->>
->> ...Johan
->>
->>
->
->
-> Thanks, good catch.
-> Yes I say in french that git-foo is deprecated.
-> However I'm still using it in the following slides because people hav=
-e
-> directly the good command to look at the man.
-> I know it's not really consistent but asI'd rahter keep it that way =20
-> and
-> insist while presenting it, it should only be used for man pages.
->
-> I added your vchanged and updated the pdf.
->
-> Thanks
->
-> Nicolas
-> --
-> To unsubscribe from this list: send the line "unsubscribe git" in
-> the body of a message to majordomo@vger.kernel.org
-> More majordomo info at  http://vger.kernel.org/majordomo-info.html
+
+Nicolas
