@@ -1,71 +1,88 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: Extra pair of double quotes in "git commit" output?
-Date: Wed, 26 Nov 2008 16:07:13 +0100
-Organization: At home
-Message-ID: <ggjolt$t7t$1@ger.gmane.org>
-References: <20081126064906.6117@nanako3.lavabit.com> <20081125232521.GC30942@coredump.intra.peff.net> <adf1fd3d0811251606t7f49eb84y53075427859bd26a@mail.gmail.com> <20081126133422.GA1761@coredump.intra.peff.net>
+From: Michael J Gruber <git@drmicha.warpmail.net>
+Subject: Re: git fast-export | git fast-import doesn't work
+Date: Wed, 26 Nov 2008 16:35:31 +0100
+Message-ID: <492D6CC3.2050408@drmicha.warpmail.net>
+References: <85b5c3130811250844u498fbb97m9d1aef6e1397b8c7@mail.gmail.com>	 <alpine.DEB.1.00.0811260113140.30769@pacific.mpi-cbg.de>	 <85b5c3130811260135g4646bf72iaf57f599fdd21a0c@mail.gmail.com> <85b5c3130811260218s7529914eyb56a05ec1ca34b8f@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-2
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Nov 26 16:08:25 2008
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Git Mailing List <git@vger.kernel.org>,
+	Fabian Seoane <fabian@fseoane.net>
+To: Ondrej Certik <ondrej@certik.cz>
+X-From: git-owner@vger.kernel.org Wed Nov 26 16:37:14 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1L5Lzn-0003Fc-GU
-	for gcvg-git-2@gmane.org; Wed, 26 Nov 2008 16:08:03 +0100
+	id 1L5MRn-0007zS-H8
+	for gcvg-git-2@gmane.org; Wed, 26 Nov 2008 16:36:59 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752260AbYKZPGr convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 26 Nov 2008 10:06:47 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752168AbYKZPGr
-	(ORCPT <rfc822;git-outgoing>); Wed, 26 Nov 2008 10:06:47 -0500
-Received: from main.gmane.org ([80.91.229.2]:36987 "EHLO ciao.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752068AbYKZPGq (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 26 Nov 2008 10:06:46 -0500
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1L5LyW-0002SV-Sw
-	for git@vger.kernel.org; Wed, 26 Nov 2008 15:06:44 +0000
-Received: from abwq245.neoplus.adsl.tpnet.pl ([83.8.240.245])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Wed, 26 Nov 2008 15:06:44 +0000
-Received: from jnareb by abwq245.neoplus.adsl.tpnet.pl with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Wed, 26 Nov 2008 15:06:44 +0000
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@ger.gmane.org
-X-Gmane-NNTP-Posting-Host: abwq245.neoplus.adsl.tpnet.pl
-Mail-Copies-To: Jakub Narebski <jnareb@gmail.com>
-User-Agent: KNode/0.10.2
+	id S1752635AbYKZPfj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 26 Nov 2008 10:35:39 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752435AbYKZPfi
+	(ORCPT <rfc822;git-outgoing>); Wed, 26 Nov 2008 10:35:38 -0500
+Received: from out1.smtp.messagingengine.com ([66.111.4.25]:46859 "EHLO
+	out1.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1752269AbYKZPfh (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 26 Nov 2008 10:35:37 -0500
+Received: from compute1.internal (compute1.internal [10.202.2.41])
+	by out1.messagingengine.com (Postfix) with ESMTP id 94D761C62B2;
+	Wed, 26 Nov 2008 10:35:34 -0500 (EST)
+Received: from heartbeat1.messagingengine.com ([10.202.2.160])
+  by compute1.internal (MEProxy); Wed, 26 Nov 2008 10:35:34 -0500
+X-Sasl-enc: G4BEdhPD+6RuYWzlletoJwms664z1XeO2TPnUDIuwR/P 1227713734
+Received: from [139.174.44.12] (whitehead.math.tu-clausthal.de [139.174.44.12])
+	by mail.messagingengine.com (Postfix) with ESMTPSA id ABEFD3ABD;
+	Wed, 26 Nov 2008 10:35:33 -0500 (EST)
+User-Agent: Thunderbird 2.0.0.18 (X11/20081105)
+In-Reply-To: <85b5c3130811260218s7529914eyb56a05ec1ca34b8f@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/101739>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/101740>
 
-Jeff King wrote:
-> On Wed, Nov 26, 2008 at 01:06:34AM +0100, Santi B=E9jar wrote:
->=20
->> Maybe just use the output of "git branch -v":
->>=20
->> master d9a5491 foo: bar
->>=20
->> or even literally:
->>=20
->> * master d9a5491 [ahead 1] foo: bar
->>=20
->> or to make the separation more evident:
->>=20
->> [master d9a5491] foo: bar
->=20
-> Out of those suggestions, I find only the final one aesthetically
-> acceptable. Nobody else has weighed in, so maybe they don't care. Or
-> maybe they are just on vacation due to the (American) holiday.
+Ondrej Certik venit, vidit, dixit 26.11.2008 11:18:
+> On Wed, Nov 26, 2008 at 10:35 AM, Ondrej Certik <ondrej@certik.cz> wrote:
+>> On Wed, Nov 26, 2008 at 1:14 AM, Johannes Schindelin
+>> <Johannes.Schindelin@gmx.de> wrote:
+>>> Hi,
+>>>
+>>> On Tue, 25 Nov 2008, Ondrej Certik wrote:
+>>>
+>>>> I would like to export our whole git repository to patches, and then
+>>>> reconstruct it again from scratch. Following the man page of "git
+>>>> fast-export":
+>>>>
+>>>> [...]
+>>>>
+>>>> However, the repository is very different to the original one. It
+>>>> contains only 191 patches:
+>>> Can you try again with a Git version that contains the commit
+>>> 2075ffb5(fast-export: use an unsorted string list for extra_refs)?
+>> I tried the next branch:
+>>
+>> $ git --version
+>> git version 1.6.0.4.1060.g9433b
+>>
+>> that contains the 2075ffb5 patch. I haven't observed any change ---
+>> the "git log" still only shows 191 commits (git log --all shows
+>> everything).
+> 
+> I deleted all tags and then fast-exported and imported, now all the
+> commits show in "git log", however, the patches are wrongly connected.
+> Basically, both repositories are identical (including hashes) up to
+> this commit:
+> 
+> d717177d4  (fixed downloads instructions in the README and a typo)
+> 
+> However, the original repo (sympy-full-history-20081023) contains 3
+> children at this commit:
 
-+1 for the last one.
---=20
-Jakub Narebski
-Warsaw, Poland
-ShadeHawk on #git
+There's some nice 3 way branching and double 2 way merging going on. I
+cut out the interesting part of the graph, making d717177d4 and
+6e869485f parentless. The resulting mini DAG is reproduced correctly by
+export|import, even with -M -C.
+
+Michael
