@@ -1,92 +1,139 @@
-From: martin f krafft <madduck@debian.org>
-Subject: Re: [PATCH] tg export: implement skipping empty patches for quilt
-	mode
-Date: Wed, 26 Nov 2008 21:39:59 +0100
-Organization: The Debian project
-Message-ID: <20081126203959.GB31563@piper.oerlikon.madduck.net>
-References: <1227701580-9762-1-git-send-email-u.kleine-koenig@pengutronix.de>
+From: William Pursell <bill.pursell@gmail.com>
+Subject: [PATCH 1/2] Add / command in add --patch (feature request)
+Date: Wed, 26 Nov 2008 20:51:20 +0000
+Message-ID: <492DB6C8.7010205@gmail.com>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="MfFXiAuoTsnnDAfZ"
-Cc: git@vger.kernel.org
-To: Uwe =?iso-8859-1?Q?Kleine-K=F6nig?= 
-	<u.kleine-koenig@pengutronix.de>
-X-From: git-owner@vger.kernel.org Wed Nov 26 21:41:57 2008
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Nov 26 21:52:46 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1L5RCu-0000wq-Oe
-	for gcvg-git-2@gmane.org; Wed, 26 Nov 2008 21:41:57 +0100
+	id 1L5RNM-0005DL-0s
+	for gcvg-git-2@gmane.org; Wed, 26 Nov 2008 21:52:44 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752983AbYKZUkS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 26 Nov 2008 15:40:18 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753288AbYKZUkR
-	(ORCPT <rfc822;git-outgoing>); Wed, 26 Nov 2008 15:40:17 -0500
-Received: from clegg.madduck.net ([193.242.105.96]:41947 "EHLO
-	clegg.madduck.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755354AbYKZUkP (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 26 Nov 2008 15:40:15 -0500
-Received: from wall.oerlikon.madduck.net (wall.oerlikon.madduck.net [IPv6:2001:41e0:ff12::1])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(Client CN "wall.oerlikon.madduck.net", Issuer "CAcert Class 3 Root" (verified OK))
-	by clegg.madduck.net (postfix) with ESMTPS id C520E1D40A9;
-	Wed, 26 Nov 2008 21:40:00 +0100 (CET)
-Received: from piper.oerlikon.madduck.net (piper.oerlikon.madduck.net [IPv6:2001:41e0:ff12:0:211:2fff:fe6b:c869])
-	by wall.oerlikon.madduck.net (Postfix) with ESMTP id A0C539F34F;
-	Wed, 26 Nov 2008 21:39:59 +0100 (CET)
-Received: by piper.oerlikon.madduck.net (Postfix, from userid 1000)
-	id 5F55DB1C3D; Wed, 26 Nov 2008 21:39:59 +0100 (CET)
-Content-Disposition: inline
-In-Reply-To: <1227701580-9762-1-git-send-email-u.kleine-koenig@pengutronix.de>
-X-Motto: Keep the good times rollin'
-X-OS: Debian GNU/Linux lenny/sid kernel 2.6.26-1-amd64 x86_64
-User-Agent: Mutt/1.5.18 (2008-05-17)
-X-Virus-Scanned: ClamAV 0.94.1/8684/Wed Nov 26 16:37:33 2008 on clegg.madduck.net
-X-Virus-Status: Clean
+	id S1752798AbYKZUv1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 26 Nov 2008 15:51:27 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752596AbYKZUv1
+	(ORCPT <rfc822;git-outgoing>); Wed, 26 Nov 2008 15:51:27 -0500
+Received: from ug-out-1314.google.com ([66.249.92.170]:48934 "EHLO
+	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752473AbYKZUv1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 26 Nov 2008 15:51:27 -0500
+Received: by ug-out-1314.google.com with SMTP id 39so1525723ugf.37
+        for <git@vger.kernel.org>; Wed, 26 Nov 2008 12:51:25 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from
+         :user-agent:mime-version:to:subject:content-type
+         :content-transfer-encoding;
+        bh=k6mFXUmzo5YuWQzU3cKLdoZAkkEkD7XtaCKC3gJ4wWY=;
+        b=VBhEhehC1WqbohJfF1xAgblGGcbcus2OjjEjD1scW0pfYUcsEhMHYzkQUxvEHQBM3E
+         lwtgmlp3sARp0eKSGWYVo2P4E5N2YEuV0kfOIHeG6WZ+ZPh/KN0WYhwZHPu9647pEF+Q
+         g7dirkZVXJGGgi3iE6H7P49lgkYyC9C8S24X4=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:user-agent:mime-version:to:subject
+         :content-type:content-transfer-encoding;
+        b=C5BvUBxL1Y3sGzMwx2uDXXBkDz3yVEWHctiZ+w4b5E4e2c35wf6vb/7UqcGX8AXp2C
+         9a8ZzGunlYrmlTEYV4Nr3BZTTiH9DKFzhdin5bdpL0i+JH2c0sbCVZUz9k+iVD2VxDTQ
+         1VwG30csWomQRSHiQ5qi9nPoDNJDU0lO+/WjA=
+Received: by 10.66.252.18 with SMTP id z18mr3857047ugh.30.1227732684442;
+        Wed, 26 Nov 2008 12:51:24 -0800 (PST)
+Received: from clam.local (5ad934ac.bb.sky.com [90.217.52.172])
+        by mx.google.com with ESMTPS id k27sm583702ugd.48.2008.11.26.12.51.22
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Wed, 26 Nov 2008 12:51:23 -0800 (PST)
+User-Agent: Thunderbird 2.0.0.18 (Macintosh/20081105)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/101765>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/101766>
 
 
---MfFXiAuoTsnnDAfZ
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+This sequence of 2 patches adds a '/' command to
+add --patch that allows the user to search for
+a hunk that matches a regex, and deals with j,k slightly
+more gracefully.  (Rather than printing the
+help menu if k is invalid, it will print
+a relevant error message.)
 
-also sprach Uwe Kleine-K=F6nig <u.kleine-koenig@pengutronix.de> [2008.11.26=
-=2E1313 +0100]:
-> addionally fix the README item for skipping the export of empty patches
-> not to need an option (-n) as this should be the default.
-[...]
-> -	TODO: -n option to prevent exporting of empty patches
-> +	TODO: prevent exporting of empty patches
+This is naive, and it is easy for an invalid
+search string to cause a perl error.
 
-Is it still a TODO? Looks like your patch fixes it, no?
+I think it could be useful functionality to make
+robust.
 
---=20
- .''`.   martin f. krafft <madduck@d.o>      Related projects:
-: :'  :  proud Debian developer               http://debiansystem.info
-`. `'`   http://people.debian.org/~madduck    http://vcs-pkg.org
-  `-  Debian - when you have better things to do than fixing systems
-=20
-"the difference between genius and stupidity
- is that genius has it's limits."
-                                                    -- albert einstein
+(Please CC me in any response)
 
---MfFXiAuoTsnnDAfZ
-Content-Type: application/pgp-signature; name="digital_signature_gpg.asc"
-Content-Description: Digital signature (see http://martin-krafft.net/gpg/)
-Content-Disposition: inline
+---
+  git-add--interactive.perl |   26 ++++++++++++++++++++++----
+  1 files changed, 22 insertions(+), 4 deletions(-)
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.9 (GNU/Linux)
+diff --git a/git-add--interactive.perl b/git-add--interactive.perl
+index b0223c3..7ad4ee0 100755
+--- a/git-add--interactive.perl
++++ b/git-add--interactive.perl
+@@ -876,12 +876,14 @@ sub patch_update_file {
 
-iEYEARECAAYFAkkttB8ACgkQIgvIgzMMSnWXDwCdH5Nk2fCuyVLHSqZ7pnVKfzwJ
-7zsAoNhTx4JmFPLL+KotNEx4XZPBIbdF
-=OZdM
------END PGP SIGNATURE-----
+  	$num = scalar @hunk;
+  	$ix = 0;
++	my $search_s; # User entered string to match a hunk.
 
---MfFXiAuoTsnnDAfZ--
+  	while (1) {
+  		my ($prev, $next, $other, $undecided, $i);
+  		$other = '';
+
+  		if ($num <= $ix) {
++			$search_s = 0;
+  			$ix = 0;
+  		}
+  		for ($i = 0; $i < $ix; $i++) {
+@@ -916,11 +918,24 @@ sub patch_update_file {
+  			$other .= '/s';
+  		}
+  		$other .= '/e';
+-		for (@{$hunk[$ix]{DISPLAY}}) {
+-			print;
++
++		my $line;
++		if( $search_s ) {
++			my $text = join( "", @{$hunk[$ix]{DISPLAY}} );
++			if( $text !~ $search_s ) {
++				$line = "n\n";
++			} else {
++				print $text;
++			}
++		} else {
++			for (@{$hunk[$ix]{DISPLAY}}) {
++				print;
++			}
++		}
++		if (!$line) {
++			print colored $prompt_color, "Stage this hunk [y/n/a/d///$other/?]? ";
++			$line = <STDIN>;
+  		}
+-		print colored $prompt_color, "Stage this hunk [y/n/a/d$other/?]? ";
+-		my $line = <STDIN>;
+  		if ($line) {
+  			if ($line =~ /^y/i) {
+  				$hunk[$ix]{USE} = 1;
+@@ -946,6 +961,9 @@ sub patch_update_file {
+  				}
+  				next;
+  			}
++			elsif ($line =~ m|^/(.*)|) {
++				$search_s = $1;
++			}
+  			elsif ($other =~ /K/ && $line =~ /^K/) {
+  				$ix--;
+  				next;
+-- 
+1.6.0.4.781.gf2070.dirty
+
+
+-- 
+William Pursell
