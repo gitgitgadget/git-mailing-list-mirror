@@ -1,79 +1,73 @@
-From: Pascal Obry <pascal@obry.net>
-Subject: Re: French git user
-Date: Wed, 26 Nov 2008 19:06:27 +0100
-Organization: Home - http://www.obry.net
-Message-ID: <492D9023.9010508@obry.net>
-References: <492B9985.10103@morey-chaisemartin.com>	 <46d6db660811242238q4bc919a6l12bfd9a38639e46e@mail.gmail.com>	 <C10BF28F-3466-4908-A5ED-6FB68FBEC3A2@yahoo.ca> <46d6db660811250741w54d34062w7766efd135c457b8@mail.gmail.com> <492C2F2E.2050200@morey-chaisemartin.com> <492D0295.6060808@morey-chaisemartin.com>
-Reply-To: pascal@obry.net
+From: Joey Hess <joey@kitenet.net>
+Subject: Re: [PATCH] sha1_file: avoid bogus "file exists" error message
+Date: Wed, 26 Nov 2008 13:19:28 -0500
+Message-ID: <20081126181928.GA31007@kodama.kitenet.net>
+References: <20081120185628.GA25604@kodama.kitenet.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: Jean-Francois Veillette <jean_francois_veillette@yahoo.ca>,
-	git@vger.kernel.org
-To: devel@morey-chaisemartin.com
-X-From: git-owner@vger.kernel.org Wed Nov 26 19:08:51 2008
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="nFreZHaLTZJo0R7j"
+To: Git List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Wed Nov 26 19:20:50 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1L5Onz-0006vl-Oc
-	for gcvg-git-2@gmane.org; Wed, 26 Nov 2008 19:08:04 +0100
+	id 1L5P0L-0003i1-N6
+	for gcvg-git-2@gmane.org; Wed, 26 Nov 2008 19:20:50 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752305AbYKZSGh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 26 Nov 2008 13:06:37 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752312AbYKZSGg
-	(ORCPT <rfc822;git-outgoing>); Wed, 26 Nov 2008 13:06:36 -0500
-Received: from fk-out-0910.google.com ([209.85.128.190]:10876 "EHLO
-	fk-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752305AbYKZSGg (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 26 Nov 2008 13:06:36 -0500
-Received: by fk-out-0910.google.com with SMTP id 18so518029fkq.5
-        for <git@vger.kernel.org>; Wed, 26 Nov 2008 10:06:34 -0800 (PST)
-Received: by 10.181.60.13 with SMTP id n13mr2028603bkk.92.1227722794175;
-        Wed, 26 Nov 2008 10:06:34 -0800 (PST)
-Received: from ?192.168.0.100? (AVelizy-154-1-42-242.w82-124.abo.wanadoo.fr [82.124.146.242])
-        by mx.google.com with ESMTPS id p17sm925743fka.36.2008.11.26.10.06.31
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Wed, 26 Nov 2008 10:06:32 -0800 (PST)
-User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.1; fr-FR; rv:1.8.1.18) Gecko/20081105 Thunderbird/2.0.0.18 Mnenhy/0.7.5.0
-In-Reply-To: <492D0295.6060808@morey-chaisemartin.com>
-X-Enigmail-Version: 0.95.7
+	id S1752168AbYKZSTd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 26 Nov 2008 13:19:33 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751449AbYKZSTc
+	(ORCPT <rfc822;git-outgoing>); Wed, 26 Nov 2008 13:19:32 -0500
+Received: from wren.kitenet.net ([80.68.85.49]:35043 "EHLO kitenet.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752168AbYKZSTc (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 26 Nov 2008 13:19:32 -0500
+Received: from kodama.kitenet.net (fttu-67-223-5-142.btes.tv [67.223.5.142])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(Client CN "Joey Hess", Issuer "Joey Hess" (verified OK))
+	by kitenet.net (Postfix) with ESMTPS id 364C2314372
+	for <git@vger.kernel.org>; Wed, 26 Nov 2008 13:19:30 -0500 (EST)
+Received: by kodama.kitenet.net (Postfix, from userid 1000)
+	id E71399C075; Wed, 26 Nov 2008 13:19:28 -0500 (EST)
+Content-Disposition: inline
+In-Reply-To: <20081120185628.GA25604@kodama.kitenet.net>
+User-Agent: Mutt/1.5.18 (2008-05-17)
+X-Virus-Scanned: ClamAV 0.94.1/8684/Wed Nov 26 10:37:33 2008 on wren.kitenet.net
+X-Virus-Status: Clean
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/101755>
 
-Nicolas,
 
-There is also at least two commands that I used often that are missing
-to me:
+--nFreZHaLTZJo0R7j
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-   $ git checkout -b branch_name branch_point
+Joey Hess wrote:
+> Note that in both occasions that I've seen this failure, it has not been
+> due to a missing directory, or bad permissions
 
-Which is equivalent to:
+Actually, it was due to bad permissions. :-) Once git was fixed to
+actually say that, I figured out where to look to fix them.
 
-   $ git branch branch_name branch_point
-   $ git checkout branch_name
+--=20
+see shy jo
 
-The other missing command is:
+--nFreZHaLTZJo0R7j
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: Digital signature
+Content-Disposition: inline
 
-   $ git add [-p|-i]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.9 (GNU/Linux)
 
-Very important to create a set tightly related commits out of a dirty tree.
+iD8DBQFJLZMwd8HHehbQuO8RAk+MAJ9OusksbBW1E/lp1PAB1b0dv6mD1gCfa3+S
+cvnT9WAwH1iPVYFTFpo3t8g=
+=6GpU
+-----END PGP SIGNATURE-----
 
-Maybe also adding a note about aliases:
-
-   $ git config --global alias.co checkout
-
-Pascal.
-
--- 
-
---|------------------------------------------------------
---| Pascal Obry                           Team-Ada Member
---| 45, rue Gabriel Peri - 78114 Magny Les Hameaux FRANCE
---|------------------------------------------------------
---|              http://www.obry.net
---| "The best way to travel is by means of imagination"
---|
---| gpg --keyserver wwwkeys.pgp.net --recv-key C1082595
+--nFreZHaLTZJo0R7j--
