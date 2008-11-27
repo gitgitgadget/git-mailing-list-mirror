@@ -1,71 +1,51 @@
-From: =?iso-8859-1?Q?Bj=F6rn?= Steinbrink <B.Steinbrink@gmx.de>
-Subject: Re: format-patch problem when using relative
-Date: Thu, 27 Nov 2008 10:42:58 +0100
-Message-ID: <20081127094258.GA12018@atjola.homenet>
-References: <17081052-4480-4971-9F38-BD5C48087379@gmail.com> <20081126180154.GA7584@coredump.intra.peff.net> <06D676E3-6C24-4ACC-9874-8B19549BC3A1@gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: How to know where a reference name comes from?
+Date: Thu, 27 Nov 2008 01:47:11 -0800
+Message-ID: <7v4p1tbiw0.fsf@gitster.siamese.dyndns.org>
+References: <vpqk5ap5xy1.fsf@bauges.imag.fr>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Jeff King <peff@peff.net>, git@vger.kernel.org
-To: Nikola =?utf-8?B?S25lxb5ldmnEhw==?= <laladelausanne@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Nov 27 10:44:28 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: git <git@vger.kernel.org>
+To: Matthieu Moy <Matthieu.Moy@imag.fr>
+X-From: git-owner@vger.kernel.org Thu Nov 27 10:49:15 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1L5dQB-0006AV-9Y
-	for gcvg-git-2@gmane.org; Thu, 27 Nov 2008 10:44:27 +0100
+	id 1L5dUm-0007lx-3R
+	for gcvg-git-2@gmane.org; Thu, 27 Nov 2008 10:49:12 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751380AbYK0JnF convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 27 Nov 2008 04:43:05 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751668AbYK0JnE
-	(ORCPT <rfc822;git-outgoing>); Thu, 27 Nov 2008 04:43:04 -0500
-Received: from mail.gmx.net ([213.165.64.20]:53426 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1750947AbYK0JnC (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 27 Nov 2008 04:43:02 -0500
-Received: (qmail invoked by alias); 27 Nov 2008 09:43:00 -0000
-Received: from i577B9FBC.versanet.de (EHLO atjola.local) [87.123.159.188]
-  by mail.gmx.net (mp030) with SMTP; 27 Nov 2008 10:43:00 +0100
-X-Authenticated: #5039886
-X-Provags-ID: V01U2FsdGVkX1/2unkm07L2CsKbIcFPdNdW9XRdsFKAbZhMbUTjxG
-	lznGb8f4sghnLy
-Content-Disposition: inline
-In-Reply-To: <06D676E3-6C24-4ACC-9874-8B19549BC3A1@gmail.com>
-User-Agent: Mutt/1.5.18 (2008-05-17)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.59
+	id S1751996AbYK0Jrz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 27 Nov 2008 04:47:55 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752269AbYK0Jrz
+	(ORCPT <rfc822;git-outgoing>); Thu, 27 Nov 2008 04:47:55 -0500
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:37299 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751691AbYK0Jry (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 27 Nov 2008 04:47:54 -0500
+Received: from localhost.localdomain (unknown [127.0.0.1])
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id A1F7C81FE6;
+	Thu, 27 Nov 2008 04:47:52 -0500 (EST)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES256-SHA (256/256 bits)) (No client certificate requested) by
+ a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTPSA id 943EA81FC6; Thu,
+ 27 Nov 2008 04:47:13 -0500 (EST)
+In-Reply-To: <vpqk5ap5xy1.fsf@bauges.imag.fr> (Matthieu Moy's message of
+ "Thu, 27 Nov 2008 10:18:30 +0100")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: 7593CCDA-BC68-11DD-9F8F-465CC92D7133-77302942!a-sasl-fastnet.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/101803>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/101804>
 
-On 2008.11.26 19:58:34 +0100, Nikola Kne=C5=BEevi=C4=87 wrote:
-> On 26 Nov 2008, at 19:01 , Jeff King wrote:
->
->> So I think what you really want is:
->>
->>  git format-patch --relative=3Dclick click/master myclick -- click
->>
->> to limit the path pruning to the 'click' directory.
->
-> Yes, that did the trick. Also, when I think about it, it makes sense =
-- =20
-> do checks relative to a path, but prune using path.
+Matthieu Moy <Matthieu.Moy@imag.fr> writes:
 
-Ah, now that makes sense to me, too. You just didn't use the actual
-command I told you on IRC ;-)
+> (I ended up doing "strace -e open git rev-parse git-svn", and found
+> out I had a .git/git-svn file lying around)
 
-<doener> git format-patch --relative=3Dclick/ click/master click
-
-That already had the path limiting "click" in it, I really meant "click=
-"
-there, not "myclick" ;-) I guess the confusion was caused by how
-format-patch takes the range it's supposed to work on. If you only give
-it a single committish, that is interpreted as "since". So the above is
-equal to
-
-git format-patch --relative=3Dclick/ click/master..HEAD click
-
-Bj=C3=B6rn
+This has been proposed for a couple of times now but I think it might be
+time to start insisting on a ref directly underneath $GIT_DIR to be in all
+caps (plus underscore) to avoid issues like this while still allowing
+traditional MERGE_HEAD, ORIG_HEAD and friends.
