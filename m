@@ -1,51 +1,59 @@
-From: Ian Hilt <ian.hilt@gmx.com>
-Subject: Re: [PATCH] sha1_file: avoid bogus "file exists" error message
-Date: Thu, 27 Nov 2008 12:41:18 -0500 (EST)
-Message-ID: <alpine.LFD.2.00.0811271233590.2883@sys-0.hiltweb.site>
-References: <20081120185628.GA25604@kodama.kitenet.net> <20081126181928.GA31007@kodama.kitenet.net>
+From: Nicolas Pitre <nico@cam.org>
+Subject: Re: git fsck segmentation fault
+Date: Thu, 27 Nov 2008 12:47:41 -0500 (EST)
+Message-ID: <alpine.LFD.2.00.0811271243250.14328@xanadu.home>
+References: <200811271814.06941.simon@lst.de>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Git List <git@vger.kernel.org>
-To: Joey Hess <joey@kitenet.net>
-X-From: git-owner@vger.kernel.org Thu Nov 27 18:42:42 2008
+Content-Transfer-Encoding: 7BIT
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Simon Hausmann <simon@lst.de>
+X-From: git-owner@vger.kernel.org Thu Nov 27 18:49:31 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1L5ksz-0006hf-V2
-	for gcvg-git-2@gmane.org; Thu, 27 Nov 2008 18:42:42 +0100
+	id 1L5kzZ-0000rz-WA
+	for gcvg-git-2@gmane.org; Thu, 27 Nov 2008 18:49:30 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752082AbYK0RlY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 27 Nov 2008 12:41:24 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752132AbYK0RlY
-	(ORCPT <rfc822;git-outgoing>); Thu, 27 Nov 2008 12:41:24 -0500
-Received: from mail.gmx.com ([74.208.5.67]:57830 "HELO mail.gmx.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751706AbYK0RlY (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 27 Nov 2008 12:41:24 -0500
-Received: (qmail invoked by alias); 27 Nov 2008 17:41:22 -0000
-Received: from cpe-75-185-223-130.woh.res.rr.com [75.185.223.130]
-  by mail.gmx.com (mp-us003) with SMTP; 27 Nov 2008 12:41:22 -0500
-X-Authenticated: #47758715
-X-Provags-ID: V01U2FsdGVkX19CKEQfCQBCHGHX0J619L4dqVypcfrKupor0lf/Ez
-	KDjZ0eB7mvcoQs
-In-Reply-To: <20081126181928.GA31007@kodama.kitenet.net>
+	id S1752425AbYK0Rrx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 27 Nov 2008 12:47:53 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752343AbYK0Rrx
+	(ORCPT <rfc822;git-outgoing>); Thu, 27 Nov 2008 12:47:53 -0500
+Received: from relais.videotron.ca ([24.201.245.36]:23098 "EHLO
+	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752280AbYK0Rrw (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 27 Nov 2008 12:47:52 -0500
+Received: from xanadu.home ([66.131.194.97]) by VL-MO-MR005.ip.videotron.ca
+ (Sun Java(tm) System Messaging Server 6.3-4.01 (built Aug  3 2007; 32bit))
+ with ESMTP id <0KB0009QJ6QBLKE0@VL-MO-MR005.ip.videotron.ca> for
+ git@vger.kernel.org; Thu, 27 Nov 2008 12:46:59 -0500 (EST)
+X-X-Sender: nico@xanadu.home
+In-reply-to: <200811271814.06941.simon@lst.de>
 User-Agent: Alpine 2.00 (LFD 1167 2008-08-23)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.68
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/101818>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/101819>
 
-On Wed, 26 Nov 2008, Joey Hess wrote:
-> Joey Hess wrote:
-> > Note that in both occasions that I've seen this failure, it has not been
-> > due to a missing directory, or bad permissions
+On Thu, 27 Nov 2008, Simon Hausmann wrote:
+
+> Hi,
 > 
-> Actually, it was due to bad permissions. :-) Once git was fixed to
-> actually say that, I figured out where to look to fix them.
+> when running git fsck --full -v (version 1.6.0.4.26.g7c30c) on a medium sized
 
-This is strange since write_loose_object() which calls create_tmpfile()
-checks for EPERM.  Perhaps this should be done in create_tmpfile()?
+That version doesn't exist in the git repo.
+
+> (930M) repository I get a segfault.
+> 
+> The backtrace indicates an infinite recursion. Here's the output from the last
+> few lines:
+[...]
+
+Could you try with latest master branch please?  It is more robust 
+against some kind of pack corruptions that could send the code into 
+infinite loops.
+
+
+Nicolas
