@@ -1,132 +1,49 @@
-From: William Pursell <bill.pursell@gmail.com>
-Subject: [PATCH 3/3] In add --patch, Handle K,k,J,j slightly more gracefully.
-Date: Thu, 27 Nov 2008 04:08:03 +0000
-Message-ID: <492E1D23.7010709@gmail.com>
+From: jidanni@jidanni.org
+Subject: know wget URL, need git-clone URL
+Date: Thu, 27 Nov 2008 12:10:30 +0800
+Message-ID: <87bpw1hkqx.fsf@jidanni.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Type: text/plain; charset="us-ascii"
 Content-Transfer-Encoding: 7bit
+Cc: smartphones-userland@linuxtogo.org
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Nov 27 05:09:39 2008
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git-2@gmane.org
-Received: from vger.kernel.org ([209.132.176.167])
+X-From: smartphones-userland-bounces@linuxtogo.org Thu Nov 27 05:12:32 2008
+Return-path: <smartphones-userland-bounces@linuxtogo.org>
+Envelope-to: gjltogisybwsu-smartphones-userland@m.gmane.org
+Received: from linuxtogo.org ([85.214.40.226])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1L5YC5-0005Gi-Lt
-	for gcvg-git-2@gmane.org; Thu, 27 Nov 2008 05:09:34 +0100
-Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752295AbYK0EIL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 26 Nov 2008 23:08:11 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752270AbYK0EIK
-	(ORCPT <rfc822;git-outgoing>); Wed, 26 Nov 2008 23:08:10 -0500
-Received: from nf-out-0910.google.com ([64.233.182.191]:17118 "EHLO
-	nf-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752017AbYK0EIJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 26 Nov 2008 23:08:09 -0500
-Received: by nf-out-0910.google.com with SMTP id d3so430512nfc.21
-        for <git@vger.kernel.org>; Wed, 26 Nov 2008 20:08:06 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from
-         :user-agent:mime-version:to:subject:content-type
-         :content-transfer-encoding;
-        bh=vTyuycRjzP8bVqoFWbKaLyvsBusaheZqftjOoDnOZJg=;
-        b=xrt/KnEfvq4OYFV3zIwrw5SHDQ7fL+fKeQQVOiL0/gUvjoK28aPMPs3dlJqQeE8zPL
-         h2c/U9ocLjYeawyuq3qLksEBVeriDwgodc2ckjlnhFaRfUPxpPY2A0+KqpEamIVBWVVb
-         4gbrU4v598a5REaZd0pLFNDsifINTBLiBsw6o=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:user-agent:mime-version:to:subject
-         :content-type:content-transfer-encoding;
-        b=W1p6aJG/wXOa5ose9vcCUmb8bhE3cnH9bXBB36k4F6LFWyAcDL3FiRpIcNOziRe/zh
-         Gg+lRZLkrnBqP7Mq+bKvuCT8Nr3mHkfYLd0hKBoh4R41FCzbsp+7W7acYdsWXfm8Lyml
-         dUGtRMXFfSqarkoYWXSwirBPtMfTCic9u4kzA=
-Received: by 10.210.130.14 with SMTP id c14mr6885618ebd.131.1227758886412;
-        Wed, 26 Nov 2008 20:08:06 -0800 (PST)
-Received: from clam.local (5ad934ac.bb.sky.com [90.217.52.172])
-        by mx.google.com with ESMTPS id k9sm4281134nfh.23.2008.11.26.20.08.04
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Wed, 26 Nov 2008 20:08:05 -0800 (PST)
-User-Agent: Thunderbird 2.0.0.18 (Macintosh/20081105)
-Sender: git-owner@vger.kernel.org
-Precedence: bulk
-List-ID: <git.vger.kernel.org>
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/101790>
+	id 1L5YEw-0005rB-Oo
+	for gjltogisybwsu-smartphones-userland@m.gmane.org; Thu, 27 Nov 2008 05:12:30 +0100
+Received: from [127.0.0.1]
+	by linuxtogo.org with esmtp (Exim 4.69)
+	(envelope-from <smartphones-userland-bounces@linuxtogo.org>)
+	id 1L5YGO-0000zt-Ef; Thu, 27 Nov 2008 05:14:00 +0100
+Received: from [208.97.132.145] (helo=homiemail-a1.g.dreamhost.com)
+	by linuxtogo.org with esmtp (Exim 4.69)
+	(envelope-from <jidanni@jidanni.org>) id 1L5YFz-0000zo-BM
+	for smartphones-userland@linuxtogo.org; Thu, 27 Nov 2008 05:13:35 +0100
+Received: from jidanni2.jidanni.org (122-127-37-237.dynamic.hinet.net
+	[122.127.37.237]) (using TLSv1 with cipher AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by homiemail-a1.g.dreamhost.com (Postfix) with ESMTP id 689C4119DCA;
+	Wed, 26 Nov 2008 20:10:32 -0800 (PST)
+X-BeenThere: smartphones-userland@linuxtogo.org
+X-Mailman-Version: 2.1.11
+Precedence: list
+List-Id: "Implementations of the freesmartphone.org API"
+	<smartphones-userland.linuxtogo.org>
+List-Unsubscribe: <http://lists.linuxtogo.org/cgi-bin/mailman/options/smartphones-userland>,
+	<mailto:smartphones-userland-request@linuxtogo.org?subject=unsubscribe>
+List-Archive: <http://lists.linuxtogo.org/pipermail/smartphones-userland>
+List-Post: <mailto:smartphones-userland@linuxtogo.org>
+List-Help: <mailto:smartphones-userland-request@linuxtogo.org?subject=help>
+List-Subscribe: <http://lists.linuxtogo.org/cgi-bin/mailman/listinfo/smartphones-userland>,
+	<mailto:smartphones-userland-request@linuxtogo.org?subject=subscribe>
+Sender: smartphones-userland-bounces@linuxtogo.org
+Errors-To: smartphones-userland-bounces@linuxtogo.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/101791>
 
-
-Instead of printing the help menu, this will print
-"No next hunk" and then process the given hunk again.
-
-Signed-off-by: William Pursell <bill.pursell@gmail.com>
----
-  git-add--interactive.perl |   43 ++++++++++++++++++++++++++++---------------
-  1 files changed, 28 insertions(+), 15 deletions(-)
-
-diff --git a/git-add--interactive.perl b/git-add--interactive.perl
-index 547b5c8..66f6629 100755
---- a/git-add--interactive.perl
-+++ b/git-add--interactive.perl
-@@ -965,29 +965,42 @@ sub patch_update_file {
-  			elsif ($line =~ m|^/(.*)|) {
-  				$search_s = qr{$1}m;
-  			}
--			elsif ($other =~ /K/ && $line =~ /^K/) {
--				$ix--;
-+			elsif ($line =~ /^K/) {
-+				if ($other =~ /K/) {
-+					$ix--;
-+				}
-+				else {
-+					print STDERR "No previous hunk\n";
-+				}
-  				next;
-  			}
--			elsif ($other =~ /J/ && $line =~ /^J/) {
--				$ix++;
-+			elsif ($line =~ /^J/) {
-+				if ($other =~ /J/) {
-+					$ix++;
-+				}
-+				else {
-+					print STDERR "No next hunk\n";
-+				}
-  				next;
-  			}
--			elsif ($other =~ /k/ && $line =~ /^k/) {
--				while (1) {
--					$ix--;
--					last if (!$ix ||
--						 !defined $hunk[$ix]{USE});
-+			elsif ($line =~ /^k/) {
-+				if ($other =~ /k/) {
-+					while (1) {
-+						$ix--;
-+						last if (!$ix ||
-+							 !defined $hunk[$ix]{USE});
-+					}
-+				}
-+				else {
-+					print STDERR "No previous hunk\n";
-  				}
-  				next;
-  			}
--			elsif ($other =~ /j/ && $line =~ /^j/) {
--				while (1) {
--					$ix++;
--					last if ($ix >= $num ||
--						 !defined $hunk[$ix]{USE});
-+			elsif ($line =~ /^j/) {
-+				if ($other !~ /j/) {
-+					print STDERR "No next hunk\n";
-+					next;
-  				}
--				next;
-  			}
-  			elsif ($other =~ /s/ && $line =~ /^s/) {
-  				my @split = split_hunk($hunk[$ix]{TEXT}, $hunk[$ix]{DISPLAY});
--- 
-1.6.0.4.782.geea74.dirty
-
-
--- 
-William Pursell
+I wish the git beginner documentation would tell one how to translate
+e.g., http://git.debian.org/?p=pkg-fso/files.git&a=blob_plain&f=install.sh
+which is good for wget, to the URL one needs for git-clone to get the
+same file.
