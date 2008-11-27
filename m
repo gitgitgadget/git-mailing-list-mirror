@@ -1,212 +1,91 @@
-From: Ralf Wildenhues <Ralf.Wildenhues@gmx.de>
-Subject: [PATCH] Fix typos in the documentation.
-Date: Thu, 27 Nov 2008 08:32:01 +0100
-Organization: Department of Numerical Simulation, University of Bonn
-Message-ID: <20081127073201.GD8267@ins.uni-bonn.de>
+From: Josef Wolf <jw@raven.inka.de>
+Subject: git-svn clone behaves non-deterministic
+Date: Thu, 27 Nov 2008 08:53:51 +0100
+Message-ID: <20081127075351.GA12716@raven.wolf.lan>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Nov 27 08:53:49 2008
+X-From: git-owner@vger.kernel.org Thu Nov 27 09:01:51 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1L5bh6-0007pH-Lt
-	for gcvg-git-2@gmane.org; Thu, 27 Nov 2008 08:53:49 +0100
+	id 1L5bor-0001FJ-FX
+	for gcvg-git-2@gmane.org; Thu, 27 Nov 2008 09:01:49 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751890AbYK0HvQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 27 Nov 2008 02:51:16 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751939AbYK0HvQ
-	(ORCPT <rfc822;git-outgoing>); Thu, 27 Nov 2008 02:51:16 -0500
-Received: from merkur.ins.uni-bonn.de ([131.220.223.13]:46862 "EHLO
-	merkur.ins.uni-bonn.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750904AbYK0HvP (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 27 Nov 2008 02:51:15 -0500
-X-Greylist: delayed 1146 seconds by postgrey-1.27 at vger.kernel.org; Thu, 27 Nov 2008 02:51:14 EST
-Received: from localhost.localdomain (xdsl-87-78-127-29.netcologne.de [87.78.127.29])
-	by merkur.ins.uni-bonn.de (Postfix) with ESMTP id B2A0040002609
-	for <git@vger.kernel.org>; Thu, 27 Nov 2008 08:32:06 +0100 (CET)
-Received: from ralf by localhost.localdomain with local (Exim 4.69)
-	(envelope-from <Ralf.Wildenhues@gmx.de>)
-	id 1L5bM1-0002LF-NN
-	for git@vger.kernel.org; Thu, 27 Nov 2008 08:32:01 +0100
-Mail-Followup-To: Ralf Wildenhues <Ralf.Wildenhues@gmx.de>,
-	git@vger.kernel.org
+	id S1752915AbYK0IAW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 27 Nov 2008 03:00:22 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752799AbYK0IAW
+	(ORCPT <rfc822;git-outgoing>); Thu, 27 Nov 2008 03:00:22 -0500
+Received: from quechua.inka.de ([193.197.184.2]:37732 "EHLO mail.inka.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752679AbYK0IAU (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 27 Nov 2008 03:00:20 -0500
+Received: from raven.inka.de (uucp@[127.0.0.1])
+	by mail.inka.de with uucp (rmailwrap 0.5) 
+	id 1L5bnO-00038g-Nd; Thu, 27 Nov 2008 09:00:18 +0100
+Received: by raven.inka.de (Postfix, from userid 1000)
+	id AAF973A72C; Thu, 27 Nov 2008 08:53:51 +0100 (CET)
+Mail-Followup-To: Josef Wolf <jw@raven.inka.de>, git@vger.kernel.org
 Content-Disposition: inline
-User-Agent: Mutt/1.5.18 (2008-05-17)
+User-Agent: Mutt/1.5.9i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/101796>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/101797>
 
-Signed-off-by: Ralf Wildenhues <Ralf.Wildenhues@gmx.de>
----
+Hello,
 
-This patch is against pu.
+I am new to git and decided to get my feet wet by first cloning and
+playing with my existing svn repositories.  Thus, I've done this:
 
-Cheers, and thanks for git,
-Ralf
+ cd /my/test/repos
+ for i in repo1 repo2 repo3; do
+   repos=https://my.repos.server/repos/$i/trunk
+   svn co        $repos svn/$i
+   git-svn clone $repos git/$i
+ done
 
- Documentation/RelNotes-1.6.0.4.txt        |    2 +-
- Documentation/RelNotes-1.6.1.txt          |    6 +++---
- Documentation/config.txt                  |    2 +-
- Documentation/git-add.txt                 |    2 +-
- Documentation/git-bisect.txt              |    6 +++---
- Documentation/git-commit.txt              |    2 +-
- Documentation/git-svn.txt                 |    2 +-
- Documentation/technical/pack-protocol.txt |    4 ++--
- Documentation/user-manual.txt             |    2 +-
- 9 files changed, 14 insertions(+), 14 deletions(-)
+ for i in `cd svn; echo *`; do diff --exclude /.svn -Nruw */$i; done
 
-diff --git a/Documentation/RelNotes-1.6.0.4.txt b/Documentation/RelNotes-1.6.0.4.txt
-index fba3f30..d522661 100644
---- a/Documentation/RelNotes-1.6.0.4.txt
-+++ b/Documentation/RelNotes-1.6.0.4.txt
-@@ -30,7 +30,7 @@ Fixes since v1.6.0.3
- * 'git status' incorrectly reported a submodule directory as an untracked
-   directory.
- 
--* 'git svn' used deprecated 'git-foo' form of subcommand invocaition.
-+* 'git svn' used deprecated 'git-foo' form of subcommand invocation.
- 
- * 'git update-ref -d' to remove a reference did not honor --no-deref option.
- 
-diff --git a/Documentation/RelNotes-1.6.1.txt b/Documentation/RelNotes-1.6.1.txt
-index 7fdf83f..848541a 100644
---- a/Documentation/RelNotes-1.6.1.txt
-+++ b/Documentation/RelNotes-1.6.1.txt
-@@ -55,9 +55,9 @@ on.
-   to a non-zero value to accept the suggestion when git can uniquely
-   guess.
- 
--* The packfile machinery hopefully is more robust when dealilng with
-+* The packfile machinery hopefully is more robust when dealing with
-   corrupt packs if redundant objects involved in the corruption are
--  available elsehwere.
-+  available elsewhere.
- 
- * "git add -N path..." adds the named paths as an empty blob, so that
-   subsequent "git diff" will show a diff as if they are creation events.
-@@ -157,7 +157,7 @@ on.
- * "git log" learned "--source" to show what ref each commit was reached
-   from.
- 
--* "git log" also learned "--simplify-by-decration" to show the
-+* "git log" also learned "--simplify-by-decoration" to show the
-   birds-eye-view of the topology of the history.
- 
- * "git log --pretty=format:" learned "%d" format element that inserts
-diff --git a/Documentation/config.txt b/Documentation/config.txt
-index 2283300..6d51967 100644
---- a/Documentation/config.txt
-+++ b/Documentation/config.txt
-@@ -841,7 +841,7 @@ gui.fastcopyblame::
- 	repositories at the expense of less thorough copy detection.
- 
- gui.copyblamethreshold::
--	Specifies the theshold to use in 'git gui blame' original location
-+	Specifies the threshold to use in 'git gui blame' original location
- 	detection, measured in alphanumeric characters. See the
- 	linkgit:git-blame[1] manual for more information on copy detection.
- 
-diff --git a/Documentation/git-add.txt b/Documentation/git-add.txt
-index 6fc20b0..7c129cb 100644
---- a/Documentation/git-add.txt
-+++ b/Documentation/git-add.txt
-@@ -98,7 +98,7 @@ OPTIONS
- 	Record only the fact that the path will be added later. An entry
- 	for the path is placed in the index with no content. This is
- 	useful for, among other things, showing the unstaged content of
--	such files with 'git diff' and commiting them with 'git commit
-+	such files with 'git diff' and committing them with 'git commit
- 	-a'.
- 
- --refresh::
-diff --git a/Documentation/git-bisect.txt b/Documentation/git-bisect.txt
-index 2ac77fb..75083e6 100644
---- a/Documentation/git-bisect.txt
-+++ b/Documentation/git-bisect.txt
-@@ -192,10 +192,10 @@ Bisect replace
- 
- This subcommand can help when you have a branch or a part of a
- branch that isn't easily bisectable because of a bug that has been
--fixed latter.
-+fixed later.
- 
- We suppose that a bug as been introduced at some point, say A, and
--that it has been fixed latter at another point, say B, but that
-+that it has been fixed later at another point, say B, but that
- between these points the code is not easily testable because of the
- bug, so it's not easy to bisect between these points.
- 
-@@ -244,7 +244,7 @@ because the bug introduced by commit A and fixed by commit B will not
- annoy you anymore.
- 
- As the refs created by "git bisect replace" can be shared between
--developers, this feature might be especially usefull on big projects
-+developers, this feature might be especially useful on big projects
- where many people often bisect the same code base.
- 
- If you give the `--no-replace` to "git bisect start", then the
-diff --git a/Documentation/git-commit.txt b/Documentation/git-commit.txt
-index a1ce9a8..6203461 100644
---- a/Documentation/git-commit.txt
-+++ b/Documentation/git-commit.txt
-@@ -95,7 +95,7 @@ OPTIONS
- 
- -s::
- --signoff::
--	Add Signed-off-by line by the commiter at the end of the commit
-+	Add Signed-off-by line by the committer at the end of the commit
- 	log message.
- 
- -n::
-diff --git a/Documentation/git-svn.txt b/Documentation/git-svn.txt
-index ba94cd1..8d0c421 100644
---- a/Documentation/git-svn.txt
-+++ b/Documentation/git-svn.txt
-@@ -109,7 +109,7 @@ COMMANDS
- 
- This works similarly to `svn update` or 'git-pull' except that
- it preserves linear history with 'git-rebase' instead of
--'git-merge' for ease of dcommiting with 'git-svn'.
-+'git-merge' for ease of dcommitting with 'git-svn'.
- 
- This accepts all options that 'git-svn fetch' and 'git-rebase'
- accept.  However, '--fetch-all' only fetches from the current
-diff --git a/Documentation/technical/pack-protocol.txt b/Documentation/technical/pack-protocol.txt
-index 7396f69..696dd00 100644
---- a/Documentation/technical/pack-protocol.txt
-+++ b/Documentation/technical/pack-protocol.txt
-@@ -59,13 +59,13 @@ When tellme-more extension is used:
- 	C: SHA1 old-SHA1 -- This is ancestor of that, you might know
- 	C: SHA1 old-SHA1
- 	C: ...
--	C: # flush -- have you heard ehough?
-+	C: # flush -- have you heard enough?
- 	S: tellme-more old-SHA1' -- I still want to know more about this one
- 	S: # flush -- please give me more
- 	C: SHA1 old-SHA1'
- 	C: SHA1 old-SHA1'
- 	C: ...
--	C: # flush -- have you heard ehough?
-+	C: # flush -- have you heard enough?
- 	S: # flush -- yes, thanks, we've heard enough
- 	S: XXXXXXX --- packfile contents.
- 
-diff --git a/Documentation/user-manual.txt b/Documentation/user-manual.txt
-index c0d8caf..da9c6b2 100644
---- a/Documentation/user-manual.txt
-+++ b/Documentation/user-manual.txt
-@@ -546,7 +546,7 @@ $ git bisect skip
- -------------------------------------------------
- 
- In this case, though, git may not eventually be able to tell the first
--bad one between some first skipped commits and a latter bad commit.
-+bad one between some first skipped commits and a later bad commit.
- 
- There are also ways to automate the bisecting process if you have a
- test script that can tell a good from a bad commit. See
--- 
-1.6.0.4.766.g6fc4a
+With this, I see that four of the repositories are cloned as expected,
+but the fifth has only the .git directory in it.  It appears that
+the clone command stopped cloning at r2008, while the repository is
+currently at r3761.  So almost the half of the history was not
+cloned at all.  I've investigated the offending revision and the
+revisions around it, but I can't see anything special about them.
+The effect is perfectly reproducible and it stops always on the very
+same revision.  I get no error message at all.  I've attached the
+last lines of the clone operation at the end of this mail.
+
+Then I go to another machine and enter exactly the same commands as
+above.  Both machines are fresh ubuntu-8.10 default installs.
+
+To my surprise, on this other machine the clone operation seems to
+have worked for all the repositories.  But the diff command shows
+me that arbitrary files are missing in _all_ of the repositories.
+
+Since the repositories were not modified in the mean time, it looks
+to me like there's a problem with the "git-svn clone" command.
+
+Any ideas?
+
+  r2005 = e487699eb8f94d6c5e9b732ba75e1c50cae3bb5e (git-svn)
+          A       misc/ubuntu-remaster/Rakefile
+  r2006 = 8b15a1a5bdc8e6a3bfd7e6eb717ef4c2db0f1dbf (git-svn)
+          M       misc/ubuntu-remaster/Rakefile
+  r2007 = 27678a3bd98400abdaaaf9af543f9558593fc224 (git-svn)
+          M       misc/ubuntu-remaster/Rakefile
+  r2008 = bbc2d0cbe4419a499d29afda281b85b5e744a5e6 (git-svn)
+  Auto packing your repository for optimum performance. You may also
+  run "git gc" manually. See "git help gc" for more information.
+  Counting objects: 12446, done.
+  Compressing objects: 100% (11999/11999), done.
+  Writing objects: 100% (12446/12446), done.
+  Total 12446 (delta 7657), reused 0 (delta 0)
+  jw@vdr1:/my/test/repos$ l git/misc/
+  total 12
+  drwxr-xr-x 3 jw jw 4096 Nov 27 08:27 ./
+  drwxr-xr-x 3 jw jw 4096 Nov 27 08:27 ../
+  drwxr-xr-x 9 jw jw 4096 Nov 27 08:38 .git/
