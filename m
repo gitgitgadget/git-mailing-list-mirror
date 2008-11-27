@@ -1,142 +1,63 @@
 From: Robin Rosenberg <robin.rosenberg@dewire.com>
-Subject: [JGIT PATCH 1/4] Make the cleanup less verbose when it fails to delete temporary stuff.
-Date: Thu, 27 Nov 2008 22:15:32 +0100
-Message-ID: <1227820535-9785-2-git-send-email-robin.rosenberg@dewire.com>
-References: <1227820535-9785-1-git-send-email-robin.rosenberg@dewire.com>
+Subject: [JGIT PATCH 0/4] RepositoryTestCase cleanups
+Date: Thu, 27 Nov 2008 22:15:31 +0100
+Message-ID: <1227820535-9785-1-git-send-email-robin.rosenberg@dewire.com>
 Cc: git@vger.kernel.org, fonseca@diku.dk,
 	Robin Rosenberg <robin.rosenberg@dewire.com>
 To: spearce@spearce.org
-X-From: git-owner@vger.kernel.org Thu Nov 27 22:16:56 2008
+X-From: git-owner@vger.kernel.org Thu Nov 27 22:16:58 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1L5oEI-00069M-MP
-	for gcvg-git-2@gmane.org; Thu, 27 Nov 2008 22:16:55 +0100
+	id 1L5oEI-00069M-0d
+	for gcvg-git-2@gmane.org; Thu, 27 Nov 2008 22:16:54 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752909AbYK0VPk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 27 Nov 2008 16:15:40 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752848AbYK0VPk
-	(ORCPT <rfc822;git-outgoing>); Thu, 27 Nov 2008 16:15:40 -0500
-Received: from mail.dewire.com ([83.140.172.130]:6567 "EHLO dewire.com"
+	id S1752777AbYK0VPh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 27 Nov 2008 16:15:37 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752736AbYK0VPh
+	(ORCPT <rfc822;git-outgoing>); Thu, 27 Nov 2008 16:15:37 -0500
+Received: from mail.dewire.com ([83.140.172.130]:6557 "EHLO dewire.com"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752719AbYK0VPi (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 27 Nov 2008 16:15:38 -0500
+	id S1752713AbYK0VPh (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 27 Nov 2008 16:15:37 -0500
 Received: from localhost (localhost [127.0.0.1])
-	by dewire.com (Postfix) with ESMTP id C4904147D53E;
-	Thu, 27 Nov 2008 22:15:36 +0100 (CET)
+	by dewire.com (Postfix) with ESMTP id DB616147D53B;
+	Thu, 27 Nov 2008 22:15:35 +0100 (CET)
 X-Virus-Scanned: by amavisd-new at dewire.com
 Received: from dewire.com ([127.0.0.1])
 	by localhost (torino.dewire.com [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id OAb+TItMiyGY; Thu, 27 Nov 2008 22:15:35 +0100 (CET)
+	with ESMTP id OV6i7JRk8-Fa; Thu, 27 Nov 2008 22:15:35 +0100 (CET)
 Received: from localhost.localdomain (unknown [10.9.0.4])
-	by dewire.com (Postfix) with ESMTP id BD8C0147D53A;
+	by dewire.com (Postfix) with ESMTP id 914F4147D535;
 	Thu, 27 Nov 2008 22:15:35 +0100 (CET)
 X-Mailer: git-send-email 1.6.0.3.640.g6331a
-In-Reply-To: <1227820535-9785-1-git-send-email-robin.rosenberg@dewire.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/101831>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/101832>
 
-Pass the test case name for easier tracking of the test case that
-causes problems.
+Ok, so here is an attempt to improve the ability of the JGit's unit
+tests to delete temporary repositories. This has probably been seen
+by many, but Jonas Fonseca raised the issue.
 
-Signed-off-by: Robin Rosenberg <robin.rosenberg@dewire.com>
----
- .../org/spearce/jgit/lib/RepositoryTestCase.java   |   59 ++++++++++++++-----
- 1 files changed, 43 insertions(+), 16 deletions(-)
+The background is that on Windows you cannot delete files that are
+open and mmapped files are open until they get unmapped, which in
+Java is beyond explicit programmer control. You can only free the
+resources and pray that the GC does the work. Fortunately it usually
+does. It turned out our testcases weren't even trying to clean up
+properly. 
 
-diff --git a/org.spearce.jgit.test/tst/org/spearce/jgit/lib/RepositoryTestCase.java b/org.spearce.jgit.test/tst/org/spearce/jgit/lib/RepositoryTestCase.java
-index 9d7d133..9c272f6 100644
---- a/org.spearce.jgit.test/tst/org/spearce/jgit/lib/RepositoryTestCase.java
-+++ b/org.spearce.jgit.test/tst/org/spearce/jgit/lib/RepositoryTestCase.java
-@@ -66,22 +66,43 @@
- 		jcommitter = new PersonIdent("J. Committer", "jcommitter@example.com");
- 	}
- 
--	protected static void recursiveDelete(final File dir) {
-+	protected static boolean recursiveDelete(final File dir) {
-+		return recursiveDelete(dir, false, null);
-+	}
-+
-+	protected static boolean recursiveDelete(final File dir, boolean silent,
-+			final String name) {
-+		if (!dir.exists())
-+			return silent;
- 		final File[] ls = dir.listFiles();
- 		if (ls != null) {
- 			for (int k = 0; k < ls.length; k++) {
- 				final File e = ls[k];
- 				if (e.isDirectory()) {
--					recursiveDelete(e);
-+					silent = recursiveDelete(e, silent, name);
- 				} else {
--					e.delete();
-+					if (!e.delete()) {
-+						if (!silent) {
-+							String msg = "Warning: Failed to delete " + e;
-+							if (name != null)
-+								msg += " in " + name;
-+							System.out.println(msg);
-+						}
-+						silent = true;
-+					}
- 				}
- 			}
- 		}
--		dir.delete();
--		if (dir.exists()) {
--			System.out.println("Warning: Failed to delete " + dir);
-+		if (!dir.delete()) {
-+			if (!silent) {
-+				String msg = "Warning: Failed to delete " + dir;
-+				if (name != null)
-+					msg += " in " + name;
-+				System.out.println(msg);
-+			}
-+			silent = true;
- 		}
-+		return silent;
- 	}
- 
- 	protected static void copyFile(final File src, final File dst)
-@@ -121,19 +142,25 @@ protected static void checkFile(File f, final String checkData)
- 
- 	protected Repository db;
- 
-+	private static int testcount;
-+	private static Thread shutdownhook;
-+
- 	public void setUp() throws Exception {
- 		super.setUp();
--		recursiveDelete(trashParent);
--		trash = new File(trashParent,"trash"+System.currentTimeMillis());
-+		System.gc();
-+		trash = new File(trashParent,"trash"+System.currentTimeMillis()+"."+(testcount++));
-+		final String name = getClass().getName() + "." + getName();
-+		recursiveDelete(trashParent, true, name);
- 		trash_git = new File(trash, ".git");
--
--		Runtime.getRuntime().addShutdownHook(new Thread() {
--			@Override
--			public void run() {
--				recursiveDelete(trashParent);
--			}
--		});
--
-+		if (shutdownhook == null) {
-+			shutdownhook = new Thread() {
-+				@Override
-+				public void run() {
-+					recursiveDelete(trashParent, false, name);
-+				}
-+			};
-+			Runtime.getRuntime().addShutdownHook(shutdownhook);
-+		}
- 		db = new Repository(trash_git);
- 		db.create();
- 
--- 
-1.6.0.3.640.g6331a
+-- robin
+
+Robin Rosenberg (4):
+  Make the cleanup less verbose when it fails to delete temporary
+    stuff.
+  Add shutdown hooks to try to clean up after unit tests anyway
+  Cleanup malformed test cases
+  Automatically clean up any repositories created by the test cases
+
+ .../tst/org/spearce/jgit/lib/PackWriterTest.java   |    3 +
+ .../org/spearce/jgit/lib/RepositoryTestCase.java   |   82 +++++++++++++++++---
+ 2 files changed, 73 insertions(+), 12 deletions(-)
