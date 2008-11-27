@@ -1,75 +1,75 @@
-From: "Catalin Marinas" <catalin.marinas@gmail.com>
-Subject: Re: [StGit] Import file(s) problem
-Date: Thu, 27 Nov 2008 22:06:01 +0000
-Message-ID: <b0943d9e0811271406u6768f45csdb5ae775436404b8@mail.gmail.com>
-References: <492EC5F5.2050807@ruby.dti.ne.jp>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: What's cooking in git.git (Nov 2008, #06; Wed, 26)
+Date: Thu, 27 Nov 2008 23:49:40 +0100 (CET)
+Message-ID: <alpine.DEB.1.00.0811272347010.30769@pacific.mpi-cbg.de>
+References: <7v7i6qc8r0.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: kha@treskal.com, git@vger.kernel.org
-To: "Shinya Kuribayashi" <skuribay@ruby.dti.ne.jp>
-X-From: git-owner@vger.kernel.org Thu Nov 27 23:07:38 2008
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Nov 27 23:42:46 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1L5p1F-00056n-FH
-	for gcvg-git-2@gmane.org; Thu, 27 Nov 2008 23:07:29 +0100
+	id 1L5pZO-0007wE-9Z
+	for gcvg-git-2@gmane.org; Thu, 27 Nov 2008 23:42:46 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753359AbYK0WGG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 27 Nov 2008 17:06:06 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753342AbYK0WGF
-	(ORCPT <rfc822;git-outgoing>); Thu, 27 Nov 2008 17:06:05 -0500
-Received: from mu-out-0910.google.com ([209.85.134.185]:27298 "EHLO
-	mu-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753120AbYK0WGC (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 27 Nov 2008 17:06:02 -0500
-Received: by mu-out-0910.google.com with SMTP id g7so970253muf.1
-        for <git@vger.kernel.org>; Thu, 27 Nov 2008 14:06:01 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to
-         :subject:cc:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:references;
-        bh=C3IyfwYXke6GnfoZfy9jmI08chm9ozShJ7VkWFlOkGY=;
-        b=J2NiEB/fnhNJ8DKUdbYPpPJzu76j7p1h/aGURhfp5X25JOcXjY3XhieZcJoKeuaPnS
-         P7Vdm3hfgH3S5+OVDy0pgsbycfqbcokHEFglUT9a43Hlu2sawMCUnAD4dNRCWXhZggrW
-         1tt3SPMLako82xio9EPG5LBFs2Yb7OI88ldSU=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
-         :content-type:content-transfer-encoding:content-disposition
-         :references;
-        b=IBhTGT6Fm6TkB7CRFtksGeAPrxyMC/ElSyMUPUao5337PV2fjccwgDHSe8tcFE1237
-         LmQBwKOqIYDzInSJD7MT79uCekkRlj/l0Q69qkoJ9yzubYjOi7ogmUgTiWTW7c1xaPb2
-         cO07IHOwfwXEUgc0YQ4/bavBksw1oaFnIeCkI=
-Received: by 10.187.173.6 with SMTP id a6mr1693066fap.83.1227823561189;
-        Thu, 27 Nov 2008 14:06:01 -0800 (PST)
-Received: by 10.187.191.12 with HTTP; Thu, 27 Nov 2008 14:06:01 -0800 (PST)
-In-Reply-To: <492EC5F5.2050807@ruby.dti.ne.jp>
-Content-Disposition: inline
+	id S1751729AbYK0Wl3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 27 Nov 2008 17:41:29 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751585AbYK0Wl3
+	(ORCPT <rfc822;git-outgoing>); Thu, 27 Nov 2008 17:41:29 -0500
+Received: from mail.gmx.net ([213.165.64.20]:38607 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1751449AbYK0Wl2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 27 Nov 2008 17:41:28 -0500
+Received: (qmail invoked by alias); 27 Nov 2008 22:41:26 -0000
+Received: from pacific.mpi-cbg.de (EHLO pacific.mpi-cbg.de) [141.5.10.38]
+  by mail.gmx.net (mp033) with SMTP; 27 Nov 2008 23:41:26 +0100
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX18de4IHbWkdpypneo+oW7RtCwbT6uBKaP6ijhTBf2
+	gQ4OMiF1LZBvlK
+X-X-Sender: schindelin@pacific.mpi-cbg.de
+In-Reply-To: <7v7i6qc8r0.fsf@gitster.siamese.dyndns.org>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.58
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/101842>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/101843>
 
-2008/11/27 Shinya Kuribayashi <skuribay@ruby.dti.ne.jp>:
-> Today I encountered a problem when importing a patch.  I don't know this
-> is a known issue or not. If there are good workarounds for this, I'd
-> like to know that.  Any comments are appreciated.
->
->
-> Steps to reproduce
-> -------------------
->
-> 1. Prepare a patch, say stg-test.patch
->
-> 2. Rename it to have '..' extension
+Hi,
 
-The '..' construct has special meaning in both Git and StGit meaning
-an interval of commits or patches. We'll need to reject patch names
-with '..' to avoid such errors.
+On Wed, 26 Nov 2008, Junio C Hamano wrote:
 
--- 
-Catalin
+> ----------------------------------------------------------------
+> [Will merge to "master" soon]
+>
+> [...]
+> 
+> * nd/narrow (Tue Nov 18 06:33:16 2008 -0500) 10 commits
+>  + t2104: touch portability fix
+>  + grep: skip files outside sparse checkout area
+>  + checkout_entry(): CE_NO_CHECKOUT on checked out entries.
+>  + Prevent diff machinery from examining worktree outside sparse
+>    checkout
+>  + ls-files: Add tests for --sparse and friends
+>  + update-index: add --checkout/--no-checkout to update
+>    CE_NO_CHECKOUT bit
+>  + update-index: refactor mark_valid() in preparation for new options
+>  + ls-files: add options to support sparse checkout
+>  + Introduce CE_NO_CHECKOUT bit
+>  + Extend index to save more flags
+
+I have a strong suspicion that the narrow stuff will make the worktree 
+mess pale in comparison.
+
+Note that I do not have time to review this myself (which is not helped at 
+all by it being no longer a trivial single patch, but a full 10 patches!), 
+but I really have a bad feeling about this.  IMO it is substantially 
+under-reviewed.
+
+Ciao,
+Dscho
