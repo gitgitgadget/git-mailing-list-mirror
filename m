@@ -1,77 +1,71 @@
-From: "Mike Ralphson" <mike.ralphson@gmail.com>
-Subject: Re: git configure script
-Date: Thu, 27 Nov 2008 09:25:32 +0000
-Message-ID: <e2b179460811270125r2b64fc23sdcb244de0594fbc0@mail.gmail.com>
-References: <njx4p1ub7zz.fsf@cfl-sunray1.lanl.gov>
-	 <vpq7i6q8azp.fsf@bauges.imag.fr>
+From: =?iso-8859-1?Q?Bj=F6rn?= Steinbrink <B.Steinbrink@gmx.de>
+Subject: Re: format-patch problem when using relative
+Date: Thu, 27 Nov 2008 10:42:58 +0100
+Message-ID: <20081127094258.GA12018@atjola.homenet>
+References: <17081052-4480-4971-9F38-BD5C48087379@gmail.com> <20081126180154.GA7584@coredump.intra.peff.net> <06D676E3-6C24-4ACC-9874-8B19549BC3A1@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, "Matthieu Moy" <Matthieu.Moy@imag.fr>
-To: "Neale T. Pickett" <neale@lanl.gov>
-X-From: git-owner@vger.kernel.org Thu Nov 27 10:27:00 2008
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Jeff King <peff@peff.net>, git@vger.kernel.org
+To: Nikola =?utf-8?B?S25lxb5ldmnEhw==?= <laladelausanne@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Nov 27 10:44:28 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1L5d9F-0000ZN-0x
-	for gcvg-git-2@gmane.org; Thu, 27 Nov 2008 10:26:57 +0100
+	id 1L5dQB-0006AV-9Y
+	for gcvg-git-2@gmane.org; Thu, 27 Nov 2008 10:44:27 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752225AbYK0JZg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 27 Nov 2008 04:25:36 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750894AbYK0JZe
-	(ORCPT <rfc822;git-outgoing>); Thu, 27 Nov 2008 04:25:34 -0500
-Received: from qw-out-2122.google.com ([74.125.92.24]:27476 "EHLO
-	qw-out-2122.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752168AbYK0JZd (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 27 Nov 2008 04:25:33 -0500
-Received: by qw-out-2122.google.com with SMTP id 3so227219qwe.37
-        for <git@vger.kernel.org>; Thu, 27 Nov 2008 01:25:32 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to
-         :subject:cc:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:references;
-        bh=fu6f6UKIuurUP47/RkN5xumVGtmFw0Me/z92g8Z/ll0=;
-        b=JaNS9MZ3sZbr649Mrm6IYHynMFi5bNe6OJNdZn4z3WoW3iyKsLABG2X7IAwcNCzB1U
-         GxzfDdToL5/WVa/QXqXO4atzduiwzdas9h6TAvuLpp1JiEcNaXXugLuVH9oQEFLGkR/t
-         NlDtGkSYvuKMl3dKWZqSXF7JT+uapa6kABtfE=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
-         :content-type:content-transfer-encoding:content-disposition
-         :references;
-        b=pQdGUnWFpcq0jD4bPzeM3OLudAkYrVt624asvxECmBE0i2lbs9U7KUcnrHlhu2ekFS
-         sf0o5OKBrSsZF5rbDM97/1QeKyOrAsFBDKdAB0FkxXHI+GNn6DLDvqkdB/gw3kCMEPLu
-         oVei3CVgtwuGtp0BP4HxI+BbNuHLphnuCtDXg=
-Received: by 10.214.216.4 with SMTP id o4mr6546332qag.256.1227777932161;
-        Thu, 27 Nov 2008 01:25:32 -0800 (PST)
-Received: by 10.215.101.13 with HTTP; Thu, 27 Nov 2008 01:25:32 -0800 (PST)
-In-Reply-To: <vpq7i6q8azp.fsf@bauges.imag.fr>
+	id S1751380AbYK0JnF convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 27 Nov 2008 04:43:05 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751668AbYK0JnE
+	(ORCPT <rfc822;git-outgoing>); Thu, 27 Nov 2008 04:43:04 -0500
+Received: from mail.gmx.net ([213.165.64.20]:53426 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1750947AbYK0JnC (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 27 Nov 2008 04:43:02 -0500
+Received: (qmail invoked by alias); 27 Nov 2008 09:43:00 -0000
+Received: from i577B9FBC.versanet.de (EHLO atjola.local) [87.123.159.188]
+  by mail.gmx.net (mp030) with SMTP; 27 Nov 2008 10:43:00 +0100
+X-Authenticated: #5039886
+X-Provags-ID: V01U2FsdGVkX1/2unkm07L2CsKbIcFPdNdW9XRdsFKAbZhMbUTjxG
+	lznGb8f4sghnLy
 Content-Disposition: inline
+In-Reply-To: <06D676E3-6C24-4ACC-9874-8B19549BC3A1@gmail.com>
+User-Agent: Mutt/1.5.18 (2008-05-17)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.59
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/101802>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/101803>
 
-2008/11/26 Matthieu Moy <Matthieu.Moy@imag.fr>
+On 2008.11.26 19:58:34 +0100, Nikola Kne=C5=BEevi=C4=87 wrote:
+> On 26 Nov 2008, at 19:01 , Jeff King wrote:
 >
-> neale@lanl.gov (Neale T. Pickett) writes:
+>> So I think what you really want is:
+>>
+>>  git format-patch --relative=3Dclick click/master myclick -- click
+>>
+>> to limit the path pruning to the 'click' directory.
 >
-> > But it installed everything in $HOME/bin and $HOME/libexec.  Looking
-> > into it, it seems the shipped Makefile doesn't look to see what --prefix
-> > is, despite the configure script claiming that "make install" would
-> > honor this.
->
-> It does, since it includes config.mak.autogen which overrides prefix
-> defined in Makefile.
->
-> I'm 99% sure you did something wrong. You should investigate by
-> looking into config.mak.autogen after running configure.
+> Yes, that did the trick. Also, when I think about it, it makes sense =
+- =20
+> do checks relative to a path, but prune using path.
 
-Indeed. I believe something goes a little funny if you build as root.
-Can you try again running ./configure and (g)make as a non-root user,
-then only (g)make install as root / under sudo etc.
+Ah, now that makes sense to me, too. You just didn't use the actual
+command I told you on IRC ;-)
 
-Cheers, Mike
+<doener> git format-patch --relative=3Dclick/ click/master click
+
+That already had the path limiting "click" in it, I really meant "click=
+"
+there, not "myclick" ;-) I guess the confusion was caused by how
+format-patch takes the range it's supposed to work on. If you only give
+it a single committish, that is interpreted as "since". So the above is
+equal to
+
+git format-patch --relative=3Dclick/ click/master..HEAD click
+
+Bj=C3=B6rn
