@@ -1,70 +1,44 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [RFC PATCH 0/4] Teach git fetch to verify signed tags
- automatically
-Date: Fri, 28 Nov 2008 02:18:55 +0100 (CET)
-Message-ID: <alpine.DEB.1.00.0811280213140.30769@pacific.mpi-cbg.de>
-References: <1227497000-8684-1-git-send-email-deskinm@umich.edu> <7v4p1xohbw.fsf@gitster.siamese.dyndns.org> <7vmyfpn10v.fsf@gitster.siamese.dyndns.org> <20081128000606.GB2759@euler>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 2/5] Name change: other -> commands.
+Date: Thu, 27 Nov 2008 17:27:01 -0800
+Message-ID: <7vej0wabdm.fsf@gitster.siamese.dyndns.org>
+References: <492F0CB8.2080808@gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Deskin Miller <deskinm@umich.edu>
-X-From: git-owner@vger.kernel.org Fri Nov 28 02:12:12 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: William Pursell <bill.pursell@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Nov 28 02:29:04 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1L5rtz-0005EZ-Jb
-	for gcvg-git-2@gmane.org; Fri, 28 Nov 2008 02:12:12 +0100
+	id 1L5sA8-0000W6-9i
+	for gcvg-git-2@gmane.org; Fri, 28 Nov 2008 02:28:52 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752689AbYK1BKq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 27 Nov 2008 20:10:46 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752602AbYK1BKp
-	(ORCPT <rfc822;git-outgoing>); Thu, 27 Nov 2008 20:10:45 -0500
-Received: from mail.gmx.net ([213.165.64.20]:33697 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1752521AbYK1BKp (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 27 Nov 2008 20:10:45 -0500
-Received: (qmail invoked by alias); 28 Nov 2008 01:10:42 -0000
-Received: from pacific.mpi-cbg.de (EHLO pacific.mpi-cbg.de) [141.5.10.38]
-  by mail.gmx.net (mp039) with SMTP; 28 Nov 2008 02:10:42 +0100
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1/zwYRhmTXz1dolR3ntoaPp5DVV0/JIRhbQMcxyxz
-	sjhRdnuVgwfueC
-X-X-Sender: schindelin@pacific.mpi-cbg.de
-In-Reply-To: <20081128000606.GB2759@euler>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.7
+	id S1752571AbYK1B1O (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 27 Nov 2008 20:27:14 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752557AbYK1B1O
+	(ORCPT <rfc822;git-outgoing>); Thu, 27 Nov 2008 20:27:14 -0500
+Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:56795 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752449AbYK1B1O (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 27 Nov 2008 20:27:14 -0500
+Received: from localhost.localdomain (unknown [127.0.0.1])
+	by b-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id 1033917A13;
+	Thu, 27 Nov 2008 20:27:13 -0500 (EST)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES256-SHA (256/256 bits)) (No client certificate requested) by
+ b-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTPSA id 6DA9217A10; Thu,
+ 27 Nov 2008 20:27:02 -0500 (EST)
+In-Reply-To: <492F0CB8.2080808@gmail.com> (William Pursell's message of "Thu,
+ 27 Nov 2008 21:10:16 +0000")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: AF0319F2-BCEB-11DD-94A7-F83E113D384A-77302942!a-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/101853>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/101854>
 
-Hi,
-
-On Thu, 27 Nov 2008, Deskin Miller wrote:
-
-> This patch series mitigates this risk by trying to verify each signed 
-> tag when it is first fetched.  Since, however, not everyone is concerned 
-> with the security of signed tags, this feature tries to be conservative 
-> insofar as signatures with public keys which are missing from the user's 
-> keyring do not cause anything to be said about the tag's validity;
-
-Now, in the context of security, this is not conservative.  Conservative 
-would be to fail as soon as a signature could not be verified, be it that 
-there is no key to match against, or that the signature is corrupt.
-
-Your notion to fail silently if the necessary keys were not found makes 
-your patch series rather useless, no?
-
-After all, the whole idea is to let Git check if every signature is 
-correct, and when Git does not fail, rely on them being valid.
-
-So I think that the _only_ thing that would make sense is to fail _unless_ 
-all the signatures were verified to be correct.
-
-_That_ is why I want this feature to be off by default.
-
-Ciao,
-Dscho
+I see this needless churn.  Some commands are always available, so these
+are indeed other commands.
