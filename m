@@ -1,50 +1,87 @@
-From: Shinya Kuribayashi <skuribay@ruby.dti.ne.jp>
-Subject: Re: [StGit] Import file(s) problem
-Date: Sat, 29 Nov 2008 00:31:23 +0900
-Message-ID: <49300ECB.5090401@ruby.dti.ne.jp>
-References: <492EC5F5.2050807@ruby.dti.ne.jp> <b0943d9e0811271406u6768f45csdb5ae775436404b8@mail.gmail.com> <20081128092556.GA4380@diana.vm.bytemark.co.uk>
+From: Joey Hess <joey@kitenet.net>
+Subject: Re: [PATCH] sha1_file: avoid bogus "file exists" error message
+Date: Fri, 28 Nov 2008 09:00:15 -0800
+Message-ID: <20081128170015.GA9744@kodama.kitenet.net>
+References: <20081120185628.GA25604@kodama.kitenet.net> <20081126181928.GA31007@kodama.kitenet.net> <alpine.LFD.2.00.0811271233590.2883@sys-0.hiltweb.site>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1;
-	format=flowed
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Catalin Marinas <catalin.marinas@gmail.com>, git@vger.kernel.org
-To: =?ISO-8859-1?Q?Karl_Hasselstr=F6m?= <kha@treskal.com>
-X-From: git-owner@vger.kernel.org Fri Nov 28 16:35:14 2008
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="bp/iNruPH9dso1Pn"
+Cc: Git List <git@vger.kernel.org>
+To: Ian Hilt <ian.hilt@gmx.com>
+X-From: git-owner@vger.kernel.org Fri Nov 28 18:01:53 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1L65N6-0000G5-JM
-	for gcvg-git-2@gmane.org; Fri, 28 Nov 2008 16:35:09 +0100
+	id 1L66is-00082V-47
+	for gcvg-git-2@gmane.org; Fri, 28 Nov 2008 18:01:42 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752295AbYK1Pbe convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 28 Nov 2008 10:31:34 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752277AbYK1Pbe
-	(ORCPT <rfc822;git-outgoing>); Fri, 28 Nov 2008 10:31:34 -0500
-Received: from smtp14.dti.ne.jp ([202.216.231.189]:65350 "EHLO
-	smtp14.dti.ne.jp" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752058AbYK1Pbd (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 28 Nov 2008 10:31:33 -0500
-Received: from [192.168.1.3] (PPPax805.tokyo-ip.dti.ne.jp [210.159.155.55]) by smtp14.dti.ne.jp (3.11s) with ESMTP AUTH id mASFVNnC013697;Sat, 29 Nov 2008 00:31:26 +0900 (JST)
-User-Agent: Thunderbird 2.0.0.17 (X11/20080925)
-In-Reply-To: <20081128092556.GA4380@diana.vm.bytemark.co.uk>
+	id S1751832AbYK1RAY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 28 Nov 2008 12:00:24 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751334AbYK1RAX
+	(ORCPT <rfc822;git-outgoing>); Fri, 28 Nov 2008 12:00:23 -0500
+Received: from wren.kitenet.net ([80.68.85.49]:45702 "EHLO kitenet.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751286AbYK1RAX (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 28 Nov 2008 12:00:23 -0500
+Received: from kodama.kitenet.net (adsl-76-200-143-96.dsl.pltn13.sbcglobal.net [76.200.143.96])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(Client CN "Joey Hess", Issuer "Joey Hess" (verified OK))
+	by kitenet.net (Postfix) with ESMTPS id ECA91314372;
+	Fri, 28 Nov 2008 12:00:18 -0500 (EST)
+Received: by kodama.kitenet.net (Postfix, from userid 1000)
+	id 638631142DD; Fri, 28 Nov 2008 12:00:15 -0500 (EST)
+Content-Disposition: inline
+In-Reply-To: <alpine.LFD.2.00.0811271233590.2883@sys-0.hiltweb.site>
+User-Agent: Mutt/1.5.18 (2008-05-17)
+X-Virus-Scanned: ClamAV 0.94.1/8693/Fri Nov 28 07:00:04 2008 on wren.kitenet.net
+X-Virus-Status: Clean
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/101878>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/101879>
 
-Karl Hasselstr=F6m wrote:
-> On 2008-11-27 22:06:01 +0000, Catalin Marinas wrote:
->=20
->> The '..' construct has special meaning in both Git and StGit meaning
->> an interval of commits or patches. We'll need to reject patch names
->> with '..' to avoid such errors.
->=20
-> I added a note to the bug database:
->=20
->   https://gna.org/bugs/index.php?10919
 
-Looking forward to being fixed, thanks.
+--bp/iNruPH9dso1Pn
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-  Shinya
+Ian Hilt wrote:
+> On Wed, 26 Nov 2008, Joey Hess wrote:
+> > Joey Hess wrote:
+> > > Note that in both occasions that I've seen this failure, it has not b=
+een
+> > > due to a missing directory, or bad permissions
+> >=20
+> > Actually, it was due to bad permissions. :-) Once git was fixed to
+> > actually say that, I figured out where to look to fix them.
+>=20
+> This is strange since write_loose_object() which calls create_tmpfile()
+> checks for EPERM.  Perhaps this should be done in create_tmpfile()?
+
+errno is clobbered by the mkdir in create_tmpfile(), that's what my patch
+corrects.
+
+I suspect that in my case, mkstemp failed with EACCES, not EPERM. git
+was running as a group that did not have write access to (some) object
+directories.
+
+--=20
+see shy jo
+
+--bp/iNruPH9dso1Pn
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: Digital signature
+Content-Disposition: inline
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.9 (GNU/Linux)
+
+iD8DBQFJMCOYd8HHehbQuO8RAmvVAKC2KvO4b9WKHdMkjFxqWGYdiIAQswCg3d9J
+enspepZZVcSjyQPb1NLSrpI=
+=1F5v
+-----END PGP SIGNATURE-----
+
+--bp/iNruPH9dso1Pn--
