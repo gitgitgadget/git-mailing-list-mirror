@@ -1,79 +1,66 @@
-From: "Reece Dunn" <msclrhd@googlemail.com>
-Subject: Re: C# Git Implementation
-Date: Fri, 28 Nov 2008 13:45:00 +0000
-Message-ID: <3f4fd2640811280545m21302134mbde19b074967afc6@mail.gmail.com>
-References: <001501c9515e$66e8ac70$34ba0550$@com>
+From: Peter Krefting <peter@softwolves.pp.se>
+Subject: Re: timestamps not git-cloned
+Date: Fri, 28 Nov 2008 15:59:56 +0100 (CET)
+Organization: /universe/earth/europe/norway/oslo
+Message-ID: <Pine.LNX.4.64.0811281554560.14606@ds9.cixit.se>
+References: <87ej0wwptn.fsf@jidanni.org> <e3f230850811271908g1be6b3f9t3e678081088de06b@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: "JD Guzman" <jd@jdguzman.com>
-X-From: git-owner@vger.kernel.org Fri Nov 28 14:46:31 2008
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: jidanni@jidanni.org, Git Mailing List <git@vger.kernel.org>
+To: dhruva <dhruvakm@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Nov 28 16:01:43 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1L63fo-0001I3-Pv
-	for gcvg-git-2@gmane.org; Fri, 28 Nov 2008 14:46:21 +0100
+	id 1L64qj-0004Sf-T1
+	for gcvg-git-2@gmane.org; Fri, 28 Nov 2008 16:01:42 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751691AbYK1NpD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 28 Nov 2008 08:45:03 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751528AbYK1NpD
-	(ORCPT <rfc822;git-outgoing>); Fri, 28 Nov 2008 08:45:03 -0500
-Received: from wf-out-1314.google.com ([209.85.200.175]:6499 "EHLO
-	wf-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751254AbYK1NpB (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 28 Nov 2008 08:45:01 -0500
-Received: by wf-out-1314.google.com with SMTP id 27so1462482wfd.4
-        for <git@vger.kernel.org>; Fri, 28 Nov 2008 05:45:00 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlemail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to
-         :subject:cc:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:references;
-        bh=G5Zy3j+JanWna5omUtwVt9gdVRAlV9YQjS9A1chaI9A=;
-        b=l+7ivRnCx+UG320RVhJNBhW6PoaGE+glxkk9BMbv/9/hxXHy4pjQnhindDfx6nygPg
-         NaRJFrKjskyg6tI47vg5+geSF8EFH+6uc1hBsg2oLzUYyqy8hCqYevlt8bAyQHGgco8O
-         56KhFoaO3pYQ2eicrLeFYL2zbwjP6dlFtjRfs=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=googlemail.com; s=gamma;
-        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
-         :content-type:content-transfer-encoding:content-disposition
-         :references;
-        b=mkaF2/ldXZ09ehcKAPn9eVqZJICCuBwv83wCaFIRO3OztERXEG0HOTuJ2UMeGdnLtp
-         l4lywoYa3XQS0MbuwlqwcOUwpwy3lcSIfilI5rPhaD+OYjwUT8q7obvepffaNAbsVjgi
-         VaHJs/0yMIzkZGFCeK2XP7kgQIujXUC/RoIZI=
-Received: by 10.142.187.8 with SMTP id k8mr3364642wff.48.1227879900370;
-        Fri, 28 Nov 2008 05:45:00 -0800 (PST)
-Received: by 10.142.161.21 with HTTP; Fri, 28 Nov 2008 05:45:00 -0800 (PST)
-In-Reply-To: <001501c9515e$66e8ac70$34ba0550$@com>
-Content-Disposition: inline
+	id S1751996AbYK1PAL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 28 Nov 2008 10:00:11 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752058AbYK1PAK
+	(ORCPT <rfc822;git-outgoing>); Fri, 28 Nov 2008 10:00:10 -0500
+Received: from ds9.cixit.se ([193.15.169.228]:48264 "EHLO ds9.cixit.se"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751380AbYK1PAJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 28 Nov 2008 10:00:09 -0500
+Received: from ds9.cixit.se (peter@localhost [127.0.0.1])
+	by ds9.cixit.se (8.12.3/8.12.3/Debian-7.2) with ESMTP id mASExwY1028140
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Fri, 28 Nov 2008 15:59:58 +0100
+Received: from localhost (peter@localhost)
+	by ds9.cixit.se (8.12.3/8.12.3/Debian-7.2) with ESMTP id mASExu19028131;
+	Fri, 28 Nov 2008 15:59:57 +0100
+X-Authentication-Warning: ds9.cixit.se: peter owned process doing -bs
+In-Reply-To: <e3f230850811271908g1be6b3f9t3e678081088de06b@mail.gmail.com>
+Accept: text/plain
+X-Warning: Junk / bulk email will be reported
+X-Rating: This message is not to be eaten by humans
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-3.0 (ds9.cixit.se [127.0.0.1]); Fri, 28 Nov 2008 15:59:58 +0100 (CET)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/101876>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/101877>
 
-2008/11/28 JD Guzman <jd@jdguzman.com>:
-> I read in the archives that there was once talk of porting Git over to C#
-> and was wondering if anything ever came of this?  I realize there were some
-> that didn't see the use for this but as Git is becoming more and more
-> popular a more native implementation of Git for windows users would be a
-> good endevour IMHO.
+Hi!
 
-There were several efforts made, but these have fallen by the wayside.
+dhruva:
 
-Since then, the mingw/msys port has made progress to the point where
-git will use native calls. Most - if not all of this - has been merged
-back into upstream git as of version 1.6.
+> I do not think there is an VCS that records timestamps. Only file
+> contents are tracked.
 
-Git works well on Windows and msysGit even provides a native installer
-that installs the necessary companion tools and libraries.
+CVS sort of does. The initial checkout sets the time stamp of files to
+their last *check-in* time (and you can import a file with -D to set
+its commit time to the current timestamp). Updates do, however, set to
+current time (to not break make and friends).
 
-Therefore, there is already a native version of Git for Windows that
-is always up-to-date with the latest Git functionality (since it is
-the same sourcecode!)
+I miss this behaviour in Git, but I have learnt to live with it. I
+guess it is like a difference in philosophy on what time-stamps are
+supposed to record, like how UNIX "cp" sets the time of the new-born
+copy to now, while DOS "copy" sets it to the old time-stamp. Coming
+to Unix and Linux from DOS (via OS/2), I find "cp" behaviour weird. But
+have learnt to live with it (and use "cp -a" a lot).
 
-BTW: Kudos to everyone involved in the Windows port.
-
-- Reece
+-- 
+\\// Peter - http://www.softwolves.pp.se/
