@@ -1,87 +1,123 @@
-From: Joey Hess <joey@kitenet.net>
-Subject: Re: [PATCH] sha1_file: avoid bogus "file exists" error message
-Date: Fri, 28 Nov 2008 09:00:15 -0800
-Message-ID: <20081128170015.GA9744@kodama.kitenet.net>
-References: <20081120185628.GA25604@kodama.kitenet.net> <20081126181928.GA31007@kodama.kitenet.net> <alpine.LFD.2.00.0811271233590.2883@sys-0.hiltweb.site>
-Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="bp/iNruPH9dso1Pn"
-Cc: Git List <git@vger.kernel.org>
-To: Ian Hilt <ian.hilt@gmx.com>
-X-From: git-owner@vger.kernel.org Fri Nov 28 18:01:53 2008
+From: =?ISO-8859-1?Q?Dirk_H=F6rner?= <dirker@gmail.com>
+Subject: [PATCH] git-cvsimport: add support for cvs pserver password scrambling.
+Date: Fri, 28 Nov 2008 20:06:40 +0200
+Message-ID: <5794AED2-43FF-4441-8292-0C9BFB3139A2@gmail.com>
+Mime-Version: 1.0 (Apple Message framework v929.2)
+Content-Type: text/plain; charset=US-ASCII; format=flowed
+Content-Transfer-Encoding: 7bit
+To: git <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Fri Nov 28 19:08:27 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1L66is-00082V-47
-	for gcvg-git-2@gmane.org; Fri, 28 Nov 2008 18:01:42 +0100
+	id 1L67lR-0007YO-IG
+	for gcvg-git-2@gmane.org; Fri, 28 Nov 2008 19:08:26 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751832AbYK1RAY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 28 Nov 2008 12:00:24 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751334AbYK1RAX
-	(ORCPT <rfc822;git-outgoing>); Fri, 28 Nov 2008 12:00:23 -0500
-Received: from wren.kitenet.net ([80.68.85.49]:45702 "EHLO kitenet.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751286AbYK1RAX (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 28 Nov 2008 12:00:23 -0500
-Received: from kodama.kitenet.net (adsl-76-200-143-96.dsl.pltn13.sbcglobal.net [76.200.143.96])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(Client CN "Joey Hess", Issuer "Joey Hess" (verified OK))
-	by kitenet.net (Postfix) with ESMTPS id ECA91314372;
-	Fri, 28 Nov 2008 12:00:18 -0500 (EST)
-Received: by kodama.kitenet.net (Postfix, from userid 1000)
-	id 638631142DD; Fri, 28 Nov 2008 12:00:15 -0500 (EST)
-Content-Disposition: inline
-In-Reply-To: <alpine.LFD.2.00.0811271233590.2883@sys-0.hiltweb.site>
-User-Agent: Mutt/1.5.18 (2008-05-17)
-X-Virus-Scanned: ClamAV 0.94.1/8693/Fri Nov 28 07:00:04 2008 on wren.kitenet.net
-X-Virus-Status: Clean
+	id S1752343AbYK1SHF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 28 Nov 2008 13:07:05 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752350AbYK1SHE
+	(ORCPT <rfc822;git-outgoing>); Fri, 28 Nov 2008 13:07:04 -0500
+Received: from ug-out-1314.google.com ([66.249.92.169]:52019 "EHLO
+	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751528AbYK1SHC (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 28 Nov 2008 13:07:02 -0500
+Received: by ug-out-1314.google.com with SMTP id 39so2048358ugf.37
+        for <git@vger.kernel.org>; Fri, 28 Nov 2008 10:07:00 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:from:to
+         :content-type:content-transfer-encoding:mime-version:subject:date
+         :x-mailer;
+        bh=2B0Gm5pSUiaOBOi5sE1vI0rJ2yFlhSQLOHBJWdceWhs=;
+        b=hSq66u/H/KfSXocHlnFVHOim1QXTIyWTge2rzQ3NW21xJ/vYTf6M/AvLMVNCzibI7t
+         MzP9Lgo0NDyz1RTNhWVKA+XbXlckysMNOzyD430+e4oARMhzBAIQxCRmOGUCJ0+m3hBy
+         LHStbBgSMnXK+ITLrwY2QJ1BJGV2qF98vdj28=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:from:to:content-type:content-transfer-encoding
+         :mime-version:subject:date:x-mailer;
+        b=WGw8kxH0xDmRy+JwdqAZl4/U3H6yeoyab1rh/FiZk5KjV3j9ipPTM6wRuPvFsgaozv
+         TpWnVEn2Tbw3i8O/sjgbNPAlU/GP47GDiyRxCbXpkhhmKfHbuAtcve38jsYm8Ua9rlxa
+         Zjb53SCtBH8ZWzZJgvl8bt1tiafIlrdy0FEB4=
+Received: by 10.67.40.15 with SMTP id s15mr1153656ugj.89.1227895620200;
+        Fri, 28 Nov 2008 10:07:00 -0800 (PST)
+Received: from ACA8144B.ipt.aol.com (mymail.dr-gav.co.il [199.203.56.34])
+        by mx.google.com with ESMTPS id j4sm1163504ugf.16.2008.11.28.10.06.57
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Fri, 28 Nov 2008 10:06:59 -0800 (PST)
+X-Mailer: Apple Mail (2.929.2)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/101879>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/101880>
 
+Instead of a cleartext password, the CVS pserver expects a scrambled one
+in the authentication request. With this patch it is possible to import
+CVS repositories only accessible via pserver and user/password.
 
---bp/iNruPH9dso1Pn
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Signed-off-by: Dirk Hoerner <dirker@gmail.com>
+---
+  git-cvsimport.perl |   39 ++++++++++++++++++++++++++++++++++++++-
+  1 files changed, 38 insertions(+), 1 deletions(-)
 
-Ian Hilt wrote:
-> On Wed, 26 Nov 2008, Joey Hess wrote:
-> > Joey Hess wrote:
-> > > Note that in both occasions that I've seen this failure, it has not b=
-een
-> > > due to a missing directory, or bad permissions
-> >=20
-> > Actually, it was due to bad permissions. :-) Once git was fixed to
-> > actually say that, I figured out where to look to fix them.
->=20
-> This is strange since write_loose_object() which calls create_tmpfile()
-> checks for EPERM.  Perhaps this should be done in create_tmpfile()?
+diff --git a/git-cvsimport.perl b/git-cvsimport.perl
+index e439202..593832d 100755
+--- a/git-cvsimport.perl
++++ b/git-cvsimport.perl
+@@ -252,7 +252,8 @@ sub conn {
+  				}
+  			};
+  		}
+-		$pass="A" unless $pass;
++
++		$pass = $self->_scramble($pass);
 
-errno is clobbered by the mkdir in create_tmpfile(), that's what my patch
-corrects.
+  		my ($s, $rep);
+  		if ($proxyhost) {
+@@ -484,6 +485,42 @@ sub _fetchfile {
+  	return $res;
+  }
 
-I suspect that in my case, mkstemp failed with EACCES, not EPERM. git
-was running as a group that did not have write access to (some) object
-directories.
++sub _scramble {
++	my ($self, $pass) = @_;
++	my $scrambled = "A";
++
++	return $scrambled unless $pass;
++
++	my $pass_len = length($pass);
++	my @pass_arr = split("", $pass);
++	my $i;
++
++	# from cvs/src/scramble.c
++	my @shifts = (
++		  0,  1,  2,  3,  4,  5,  6,  7,  8,  9, 10, 11, 12, 13, 14, 15,
++		 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31,
++		114,120, 53, 79, 96,109, 72,108, 70, 64, 76, 67,116, 74, 68, 87,
++		111, 52, 75,119, 49, 34, 82, 81, 95, 65,112, 86,118,110,122,105,
++		 41, 57, 83, 43, 46,102, 40, 89, 38,103, 45, 50, 42,123, 91, 35,
++		125, 55, 54, 66,124,126, 59, 47, 92, 71,115, 78, 88,107,106, 56,
++		 36,121,117,104,101,100, 69, 73, 99, 63, 94, 93, 39, 37, 61, 48,
++		 58,113, 32, 90, 44, 98, 60, 51, 33, 97, 62, 77, 84, 80, 85,223,
++		225,216,187,166,229,189,222,188,141,249,148,200,184,136,248,190,
++		199,170,181,204,138,232,218,183,255,234,220,247,213,203,226,193,
++		174,172,228,252,217,201,131,230,197,211,145,238,161,179,160,212,
++		207,221,254,173,202,146,224,151,140,196,205,130,135,133,143,246,
++		192,159,244,239,185,168,215,144,139,165,180,157,147,186,214,176,
++		227,231,219,169,175,156,206,198,129,164,150,210,154,177,134,127,
++		182,128,158,208,162,132,167,209,149,241,153,251,237,236,171,195,
++		243,233,253,240,194,250,191,155,142,137,245,235,163,242,178,152
++	);
++
++	for ($i = 0; $i < $pass_len; $i++) {
++		$scrambled .= pack("C", $shifts[ord($pass_arr[$i])]);
++	}
++
++	return $scrambled;
++}
 
---=20
-see shy jo
+  package main;
 
---bp/iNruPH9dso1Pn
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: Digital signature
-Content-Disposition: inline
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.9 (GNU/Linux)
-
-iD8DBQFJMCOYd8HHehbQuO8RAmvVAKC2KvO4b9WKHdMkjFxqWGYdiIAQswCg3d9J
-enspepZZVcSjyQPb1NLSrpI=
-=1F5v
------END PGP SIGNATURE-----
-
---bp/iNruPH9dso1Pn--
+-- 
+1.6.0.4.837.gae258
