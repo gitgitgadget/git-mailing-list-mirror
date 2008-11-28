@@ -1,162 +1,98 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: summaries in git add --patch
-Date: Thu, 27 Nov 2008 23:24:35 -0800
-Message-ID: <7v8wr48g98.fsf@gitster.siamese.dyndns.org>
-References: <492F0CAD.3010101@gmail.com>
- <7viqq8adsf.fsf@gitster.siamese.dyndns.org> <492F92C9.7030301@gmail.com>
+From: Simon Hausmann <simon@lst.de>
+Subject: Re: git fsck segmentation fault
+Date: Fri, 28 Nov 2008 09:19:09 +0100
+Message-ID: <200811280919.10685.simon@lst.de>
+References: <200811271814.06941.simon@lst.de> <200811272021.56108.simon@lst.de> <alpine.LFD.2.00.0811271449500.14328@xanadu.home>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: William Pursell <bill.pursell@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Nov 28 08:28:45 2008
+Content-Type: text/plain;
+  charset="us-ascii"
+Content-Transfer-Encoding: 7bit
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Nicolas Pitre <nico@cam.org>
+X-From: git-owner@vger.kernel.org Fri Nov 28 09:21:00 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1L5xmM-0001Vt-94
-	for gcvg-git-2@gmane.org; Fri, 28 Nov 2008 08:28:42 +0100
+	id 1L5yav-0005YT-2e
+	for gcvg-git-2@gmane.org; Fri, 28 Nov 2008 09:20:57 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752188AbYK1HYy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 28 Nov 2008 02:24:54 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752109AbYK1HYy
-	(ORCPT <rfc822;git-outgoing>); Fri, 28 Nov 2008 02:24:54 -0500
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:55549 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752030AbYK1HYy (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 28 Nov 2008 02:24:54 -0500
-Received: from localhost.localdomain (unknown [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id AED11821CA;
-	Fri, 28 Nov 2008 02:24:52 -0500 (EST)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES256-SHA (256/256 bits)) (No client certificate requested) by
- a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTPSA id 05467821C4; Fri,
- 28 Nov 2008 02:24:37 -0500 (EST)
-In-Reply-To: <492F92C9.7030301@gmail.com> (William Pursell's message of "Fri,
- 28 Nov 2008 06:42:17 +0000")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: A5F5B310-BD1D-11DD-A33B-465CC92D7133-77302942!a-sasl-fastnet.pobox.com
+	id S1751460AbYK1ITO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 28 Nov 2008 03:19:14 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750899AbYK1ITO
+	(ORCPT <rfc822;git-outgoing>); Fri, 28 Nov 2008 03:19:14 -0500
+Received: from verein.lst.de ([213.95.11.210]:52350 "EHLO verein.lst.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751220AbYK1ITN (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 28 Nov 2008 03:19:13 -0500
+Received: from rhea.localnet ([62.70.27.104])
+	(authenticated bits=0)
+	by verein.lst.de (8.12.3/8.12.3/Debian-7.1) with ESMTP id mAS8J5IF026764
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Fri, 28 Nov 2008 09:19:05 +0100
+User-Agent: KMail/1.10.3 (Linux/2.6.27-7-generic; KDE/4.1.3; x86_64; ; )
+In-Reply-To: <alpine.LFD.2.00.0811271449500.14328@xanadu.home>
+Content-Disposition: inline
+X-Spam-Score: 1.789 (*) BAYES_60
+X-Scanned-By: MIMEDefang 2.39
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/101867>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/101868>
 
-William Pursell <bill.pursell@gmail.com> writes:
-
-> Here's a new patch.  Instead of displaying the summary and then
-> the current hunk, it implements a 'goto' command.
-
-I take it that this is for discussion not for immediate inclusion.
-
-> @@ -799,6 +801,7 @@ sub help_patch_cmd {
->  y - stage this hunk
->  n - do not stage this hunk
->  a - stage this and all the remaining hunks in the file
-> +g - select a hunk to jump to
->  d - do not stage this hunk nor any of the remaining hunks in the file
->  j - leave this hunk undecided, see next undecided hunk
->  J - leave this hunk undecided, see next hunk
-
-Since you took 'g' after "go to", help text should also say "go to",
-instead of "jump to" for the mnemonics value, iow, to help people
-remember.
-
-> @@ -836,6 +839,27 @@ sub patch_update_cmd {
->  	}
->  }
+On Thursday 27 November 2008 Nicolas Pitre, wrote:
+> On Thu, 27 Nov 2008, Simon Hausmann wrote:
+> > On Thursday 27 November 2008 20:10:20 Simon Hausmann wrote:
+> > > On Thursday 27 November 2008 18:47:41 Nicolas Pitre wrote:
+> > > > On Thu, 27 Nov 2008, Simon Hausmann wrote:
+> > > > > Hi,
+> > > > >
+> > > > > when running git fsck --full -v (version 1.6.0.4.26.g7c30c) on a
+> > > > > medium sized
+> > > >
+> > > > That version doesn't exist in the git repo.
+> > >
+> > > Ah, oops, it was a merge commit, corresponding to maint as of 5aa3bd.
+> > >
+> > > > > (930M) repository I get a segfault.
+> > > > >
+> > > > > The backtrace indicates an infinite recursion. Here's the output
+> > > > > from the last few lines:
+> > > >
+> > > > [...]
+> > > >
+> > > > Could you try with latest master branch please?  It is more robust
+> > > > against some kind of pack corruptions that could send the code into
+> > > > infinite loops.
+> > >
+> > > Same problem with git version 1.6.0.4.790.gaa14a
+> >
+> > Forgot to paste the changed line numbers of the recursion:
 >
-> +sub select_new_hunk {
-> +	my $ri = shift;
-> +	my @hunk = @_;
-> +	my ($i, $response);
-> +	print "   '+' stage, '-' don't stage\n";
-> +	for ( $i = 0; $i < @hunk; $i++ ) {
-> +		my $status = " ";
-> +		if( defined $hunk[$i]{USE} ) {
-> +			$status = $hunk[$i]{USE} ? "+" : "-";
-> +		}
-
-Style.
-
-    (1) SP between language construct and open parenthesis, as opposed to
-        no extra SP between function name and open parenthesis;
-
-    (2) No extra SP around what is enclosed in parentheses.
-
-> +		printf "%s%3d: %s",
-> +			$status,
-> +			$i + 1,
-> +			$hunk[$i]{SUMMARY};
-> +	}
-
-I think this "for ()" loop part, including the comment about +/- notation,
-should be separated into a function so that you can implement a separate
-"l"ist command like you did in the other patch, using the same function.
-
-> +	printf "goto which hunk? ";
-> +	$response = <STDIN>;
-> +	chomp $response;
-> +	$$ri = $response - 1;
-
-What happens when $response is (1) a non number, (2) outside range (both
-negative and positive), or (3) EOF?
-
-Sending ref to scalar and returning the value by assigning is a bad taste.
-Why shouldn't this function just return an integer to be assigned to $ix
-by the caller?  If you want to use pass-by-ref to show off your Perl-fu, I
-think \@hunk would be what you would want to for performance reasons.
-
-> @@ -919,7 +943,7 @@ sub patch_update_file {
->  		for (@{$hunk[$ix]{DISPLAY}}) {
->  			print;
->  		}
-> -		print colored $prompt_color, "Stage this hunk [y/n/a/d$other/?]? ";
-> +		print colored $prompt_color, "Stage this hunk [y/n/a/d/g$other/?]? ";
-
-When there is only one hunk, we do not give j nor k.  Should we give g in
-such a case?  Why?
-
-> @@ -937,6 +961,16 @@ sub patch_update_file {
->  				}
->  				next;
->  			}
-> +			elsif ($line =~ /^g/) {
-> +				chomp ($line);
-> +				if ($line =~ /^g$/) {
-> +					select_new_hunk (\$ix, @hunk);
-> +				}
-> +				else {
-> +					$ix = (substr $line, 1) - 1;
-> +				}
-
-The same "input validation" issue exists here.  it would make sense to:
-
- - Make choose_hunk(@hunk) that calls list_hunks(@hunk) that gives the
-   summary, reads one line, and returns that line;
-
- - Make the caller here to look like this:
-
-	elsif ($line =~ s/^g//) {
-        	chomp($line);
-                if ($line eq '') {
-                	$line = choose_hunk(@hunk);
-		}
-		if ($line !~ /^\d+$/) {
-			print STDERR "Eh '$line', what number is that?\n";
-                        next;
-		} elsif (0 < $line && $line <= $num) {
-			$ix = $line - 1;
-                } else {
-                	print STDERR "Sorry, you have only $num hunks\n";
-                }
-	}
-
-> +				next;
-> +			}
->  			elsif ($line =~ /^d/i) {
->  				while ($ix < $num) {
->  					if (!defined $hunk[$ix]{USE}) {
+> [...]
 >
+> Well... Your initial backtrace showed recursion in unpack_entry() which
+> was rather odd in the first place.  Your latest backtrace shows a loop
+> in make_object() which has nothing to do what so ever with
+> unpack_entry().  So the backtrace might not be really useful.
 >
-> -- 
-> William Pursell
+> I suspect you'll have to bisect git to find the issue, given that some
+> old version can be found to be good.  For example, does it work with
+> v1.5.2.5?
+
+Ah yes, v1.5.2.5 works! (phew, and it verified that the repo is fine)
+
+Ok, I bisected and "git bisect run" identified the following commit as first bad 
+commit:
+
+commit 271b8d25b25e49b367087440e093e755e5f35aa9
+Author: Martin Koegler <mkoegler@auto.tuwien.ac.at>
+Date:   Mon Feb 25 22:46:05 2008 +0100
+
+    builtin-fsck: move away from object-refs to fsck_walk
+
+
+
+
+Simon
