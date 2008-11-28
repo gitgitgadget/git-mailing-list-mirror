@@ -1,78 +1,74 @@
-From: Miklos Vajna <vmiklos@frugalware.org>
-Subject: Re: Removing part of the history
-Date: Fri, 28 Nov 2008 22:34:54 +0100
-Message-ID: <20081128213454.GE19355@genesis.frugalware.org>
-References: <49306150.6010701@datacom.ind.br>
+From: "Sudipta GHOSH" <sudipta.in@gmail.com>
+Subject: remote branch checkout issue, why its *(no branch)
+Date: Sat, 29 Nov 2008 00:15:14 +0200
+Message-ID: <9e6474ae0811281415n7b4596afq7b3ce25816d9a639@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="xo44VMWPx7vlQ2+2"
-Cc: git@vger.kernel.org
-To: Samuel Lucas Vaz de Mello <samuellucas@datacom.ind.br>
-X-From: git-owner@vger.kernel.org Fri Nov 28 22:36:16 2008
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Nov 28 23:16:35 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1L6B0Z-0006fy-Rv
-	for gcvg-git-2@gmane.org; Fri, 28 Nov 2008 22:36:16 +0100
+	id 1L6Bda-00017R-Ko
+	for gcvg-git-2@gmane.org; Fri, 28 Nov 2008 23:16:35 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752697AbYK1Ve6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 28 Nov 2008 16:34:58 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752636AbYK1Ve6
-	(ORCPT <rfc822;git-outgoing>); Fri, 28 Nov 2008 16:34:58 -0500
-Received: from virgo.iok.hu ([212.40.97.103]:35401 "EHLO virgo.iok.hu"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752177AbYK1Ve5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 28 Nov 2008 16:34:57 -0500
-Received: from kag.elte.hu (kag.elte.hu [157.181.177.1])
-	by virgo.iok.hu (Postfix) with ESMTP id 9E6025809A;
-	Fri, 28 Nov 2008 22:34:55 +0100 (CET)
-Received: from genesis.frugalware.org (frugalware.elte.hu [157.181.177.34])
-	by kag.elte.hu (Postfix) with ESMTP id 858CB4465E;
-	Fri, 28 Nov 2008 22:34:55 +0100 (CET)
-Received: by genesis.frugalware.org (Postfix, from userid 1000)
-	id 09B4411901A1; Fri, 28 Nov 2008 22:34:54 +0100 (CET)
+	id S1752720AbYK1WPR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 28 Nov 2008 17:15:17 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752714AbYK1WPR
+	(ORCPT <rfc822;git-outgoing>); Fri, 28 Nov 2008 17:15:17 -0500
+Received: from fg-out-1718.google.com ([72.14.220.154]:23342 "EHLO
+	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752710AbYK1WPQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 28 Nov 2008 17:15:16 -0500
+Received: by fg-out-1718.google.com with SMTP id 19so1105088fgg.17
+        for <git@vger.kernel.org>; Fri, 28 Nov 2008 14:15:14 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to
+         :subject:mime-version:content-type:content-transfer-encoding
+         :content-disposition;
+        bh=K3pXbPsrNpeLw1oTWzZOvspF5GENnK3E3kdx4Nug4Ng=;
+        b=tZOYAYFGLIxzJtHliY1Pg3C8lyldLcZE9ri7BFwA+sbQdxT2q8RCs/Ml+7JjAcF1R1
+         hlWrzEcvAWhP8FChoffWSNWwLAl/XFv4LnFD/RCofKoMxlXV+mKmC2bI7gctFe3/1teY
+         SPJJAjT6bsPPZI8vyOAjWrKZMQN4OKuJH3s2Q=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:to:subject:mime-version:content-type
+         :content-transfer-encoding:content-disposition;
+        b=DVc1BlkpcraQFwQeI5F8UhFYIM9pyOZSV5iDgRIoZ8aBIv4akWiibSxxP/3ztuxTv/
+         OSZ5ZDZgCO21GXY2kIZBmZf1xbNxMscKlUKbLbk7DS8fMSQzp1C7ouDO/AyGBe+QQ6WV
+         aGtmH1xHlOuAM/N5Kmu39Pqgo0qgXhPw1Ds88=
+Received: by 10.86.59.18 with SMTP id h18mr5473370fga.77.1227910514248;
+        Fri, 28 Nov 2008 14:15:14 -0800 (PST)
+Received: by 10.86.97.5 with HTTP; Fri, 28 Nov 2008 14:15:14 -0800 (PST)
 Content-Disposition: inline
-In-Reply-To: <49306150.6010701@datacom.ind.br>
-User-Agent: Mutt/1.5.18 (2008-05-17)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/101886>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/101887>
 
+Hi,
 
---xo44VMWPx7vlQ2+2
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+In Our git repository there are few branches like
 
-On Fri, Nov 28, 2008 at 07:23:28PM -0200, Samuel Lucas Vaz de Mello <samuel=
-lucas@datacom.ind.br> wrote:
-> There is any way to get rid of the (broken) cvs-old tree?
->=20
-> I've tried to rebase, but the commits from A' and A are different, it
-> tries to reapply all history in CVS.
+master
+orgin/B1
+origin/B2
 
-Have you tried git rebase --onto?
+After doing  #git checkout orgin/B1 I found that my current branch is
+*(no branch)
 
-> I've tried to checkout a point before our changes start (B') and then,
-> using a script, cherry-pick all commits up to HEAD that are not in
-> cvs-old branch. This approach didn't handled well merges between our
-> branches (K-L-M and X-Y).
+#git branch
+*(no branch)
+master
 
-git rebase --preserve-merges is probably what you are searching for.
+Why its showing *(no branch) why not origin/B1
 
---xo44VMWPx7vlQ2+2
-Content-Type: application/pgp-signature
-Content-Disposition: inline
+How I can checkout orgin/B1 and after that my current branch will be
+orgin/B1 not the *(no branch)
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.9 (GNU/Linux)
-
-iEYEARECAAYFAkkwY/4ACgkQe81tAgORUJadjgCgqOgGWdHVriVlLBgRAv/MtItu
-lQgAnj0AVDRkHVycpToUd0qy+qgKQx3S
-=/utv
------END PGP SIGNATURE-----
-
---xo44VMWPx7vlQ2+2--
+Regards,
+-SG
