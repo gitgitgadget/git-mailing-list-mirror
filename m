@@ -1,76 +1,74 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: Re: What's cooking in git.git (Nov 2008, #06; Wed, 26)
-Date: Fri, 28 Nov 2008 11:20:33 -0800
-Message-ID: <20081128192033.GF23984@spearce.org>
-References: <7v7i6qc8r0.fsf@gitster.siamese.dyndns.org> <alpine.DEB.1.00.0811272347010.30769@pacific.mpi-cbg.de> <7vtz9s8uzu.fsf@gitster.siamese.dyndns.org> <alpine.DEB.1.00.0811281225040.30769@pacific.mpi-cbg.de>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Fri Nov 28 20:21:55 2008
+From: Giuseppe Bilotta <giuseppe.bilotta@gmail.com>
+Subject: [PATCHv2 0/2] fixes to gitweb feature check code
+Date: Fri, 28 Nov 2008 21:39:51 +0100
+Message-ID: <1227904793-1821-1-git-send-email-giuseppe.bilotta@gmail.com>
+Cc: Jakub Narebski <jnareb@gmail.com>, Petr Baudis <pasky@suse.cz>,
+	Junio C Hamano <gitster@pobox.com>,
+	Giuseppe Bilotta <giuseppe.bilotta@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Nov 28 21:40:55 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1L68uV-0006WK-D4
-	for gcvg-git-2@gmane.org; Fri, 28 Nov 2008 20:21:51 +0100
+	id 1L6A90-0007Jo-4W
+	for gcvg-git-2@gmane.org; Fri, 28 Nov 2008 21:40:54 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752519AbYK1TUf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 28 Nov 2008 14:20:35 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752518AbYK1TUf
-	(ORCPT <rfc822;git-outgoing>); Fri, 28 Nov 2008 14:20:35 -0500
-Received: from george.spearce.org ([209.20.77.23]:58470 "EHLO
-	george.spearce.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752479AbYK1TUe (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 28 Nov 2008 14:20:34 -0500
-Received: by george.spearce.org (Postfix, from userid 1001)
-	id C19F438200; Fri, 28 Nov 2008 19:20:33 +0000 (UTC)
-Content-Disposition: inline
-In-Reply-To: <alpine.DEB.1.00.0811281225040.30769@pacific.mpi-cbg.de>
-User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
+	id S1752636AbYK1Ujd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 28 Nov 2008 15:39:33 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752635AbYK1Ujd
+	(ORCPT <rfc822;git-outgoing>); Fri, 28 Nov 2008 15:39:33 -0500
+Received: from ug-out-1314.google.com ([66.249.92.173]:16189 "EHLO
+	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752629AbYK1Ujd (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 28 Nov 2008 15:39:33 -0500
+Received: by ug-out-1314.google.com with SMTP id 39so2079235ugf.37
+        for <git@vger.kernel.org>; Fri, 28 Nov 2008 12:39:31 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:from:to:cc:subject:date
+         :message-id:x-mailer;
+        bh=vmC5OOND87Pm6GERtO/sAe8sZ/uXh8TbpwhQUto6sPQ=;
+        b=AwUM6R1hNJtJmZ0oZ3gHy4Dtd2lpMWpBfBg4QhdI2b6iXj4u8pd102joHit6Mk4aTr
+         X3kYs5WzMh6BWjLOCq0qRjmjG5oHSij4ech+DvX2V6Jep01YcXxlKOiZLn2uusr6qbMF
+         tlur3lGw/RTTD6vn3A94I4H1LxkOYqsdQY/98=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=from:to:cc:subject:date:message-id:x-mailer;
+        b=I2DzJaeFOwJKlhzzpDmPe+sUqI0zYanIiIShkzHYXcFKgEaWEZZs3jiSye9QthPVc2
+         kwu4sVx5kdl0P++u7dXvC6JrYFpY3ARyQvVSt8Rn9jQKjo0hX63ETb+GfjsxwLM3PkU3
+         dzaaPjOcs9J1maZioJkzGESvjYqbef5dlSFDw=
+Received: by 10.103.222.1 with SMTP id z1mr3289600muq.100.1227904771128;
+        Fri, 28 Nov 2008 12:39:31 -0800 (PST)
+Received: from localhost ([78.15.14.10])
+        by mx.google.com with ESMTPS id u9sm2666243muf.34.2008.11.28.12.39.29
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Fri, 28 Nov 2008 12:39:30 -0800 (PST)
+X-Mailer: git-send-email 1.5.6.5
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/101881>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/101882>
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
-> On Thu, 27 Nov 2008, Junio C Hamano wrote:
-> > Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
-> > 
-> > > I have a strong suspicion that the narrow stuff will make the worktree 
-> > > mess pale in comparison.
-> > >
-> > > Note that I do not have time to review this myself (which is not 
-> > > helped at all by it being no longer a trivial single patch, but a full 
-> > > 10 patches!), but I really have a bad feeling about this.  IMO it is 
-> > > substantially under-reviewed.
-> > 
-> > Well, "a bad feeling" is not a convincing enough argument either, is it? 
-> > What kind of bad interaction are you fearing?
-...
-> And the worst part: I think that as with worktree, there has not been 
-> enough of kicking forth and back ideas how to design the beast, so I fully 
-> expect a subtle breakage that would require a redesign (which will be 
-> painful, with existing users of the feature).
-> 
-> Maybe I am crying "wolf", but I _do_ want to caution against risking too 
-> much, too fast, with that feature.
-> 
-> In other words, unless there is more interest in that feature, enough to 
-> generate a well-understood design before a good implementation, I'd rather 
-> see this patch series dropped.
+This is v2 of the gitweb feature check fix patch, which has now been
+split into into a code patch and cleanup patch.
 
-Ack.  I agree with every remark made by Dscho, and also want to cry "wolf".
+The first patch introduces git_get_feature() to clearly distinguish the
+feature retrieval from the boolean feature check (which is kept at
+git_check_feature()). The new function is used where appropriate.
 
-I haven't had time to read the patch series.  Its big and intrusive
-and I just don't need the feature.
+The second patch cleans up use of git_check_feature(): since the
+function now returns a boolean instead of an array, the often-used
+construct
+  my ($somevar) = git_check_feature('somefeat');
+although still valid, becomes a rather clumsy stylistic choice, as it
+introduces an unnecessary ambiguity. Make it clear that we're now
+dealing with scalars by using scalar assignment.
 
-But I feel like if it were in fact merged I'll fall over some bug
-in it sometime soon and be forced to stop and debug it.  Heck at
-the least I'll have to go back to JGit's index code and implement
-the new file format.  That shouldn't cause git.git's development to
-stop, but I am whining (a little) about the file format change.  ;-)
+Giuseppe Bilotta (2):
+  gitweb: fixes to gitweb feature check code
+  gitweb: clean up git_check_feature() calls
 
--- 
-Shawn.
+ gitweb/gitweb.perl |   52 +++++++++++++++++++++++++++++++++++-----------------
+ 1 files changed, 35 insertions(+), 17 deletions(-)
