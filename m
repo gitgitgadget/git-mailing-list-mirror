@@ -1,58 +1,54 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: timestamps not git-cloned
-Date: Fri, 28 Nov 2008 14:20:55 +0100 (CET)
-Message-ID: <alpine.DEB.1.00.0811281418530.30769@pacific.mpi-cbg.de>
-References: <87ej0wwptn.fsf@jidanni.org> <200811281358.24592.robin.rosenberg.lists@dewire.com>
+From: "JD Guzman" <jd@jdguzman.com>
+Subject: C# Git Implementation
+Date: Fri, 28 Nov 2008 13:37:02 -0000
+Message-ID: <001501c9515e$66e8ac70$34ba0550$@com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: jidanni@jidanni.org, git@vger.kernel.org
-To: Robin Rosenberg <robin.rosenberg.lists@dewire.com>
-X-From: git-owner@vger.kernel.org Fri Nov 28 14:14:01 2008
+Content-Type: text/plain;
+	charset="us-ascii"
+Content-Transfer-Encoding: 7bit
+To: <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Fri Nov 28 14:38:33 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1L63AV-0006aJ-Hy
-	for gcvg-git-2@gmane.org; Fri, 28 Nov 2008 14:13:59 +0100
+	id 1L63Y8-00078V-AN
+	for gcvg-git-2@gmane.org; Fri, 28 Nov 2008 14:38:24 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750894AbYK1NMn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 28 Nov 2008 08:12:43 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751254AbYK1NMn
-	(ORCPT <rfc822;git-outgoing>); Fri, 28 Nov 2008 08:12:43 -0500
-Received: from mail.gmx.net ([213.165.64.20]:51182 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1750894AbYK1NMm (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 28 Nov 2008 08:12:42 -0500
-Received: (qmail invoked by alias); 28 Nov 2008 13:12:40 -0000
-Received: from pacific.mpi-cbg.de (EHLO pacific.mpi-cbg.de) [141.5.10.38]
-  by mail.gmx.net (mp010) with SMTP; 28 Nov 2008 14:12:40 +0100
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX18Msi17x4AM8iEqeEX0Ah0V4HgFTKhOP7qOAsIoIj
-	SJ/1HPYKEmm8XN
-X-X-Sender: schindelin@pacific.mpi-cbg.de
-In-Reply-To: <200811281358.24592.robin.rosenberg.lists@dewire.com>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.73
+	id S1751380AbYK1NhI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 28 Nov 2008 08:37:08 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751355AbYK1NhI
+	(ORCPT <rfc822;git-outgoing>); Fri, 28 Nov 2008 08:37:08 -0500
+Received: from mout.perfora.net ([74.208.4.197]:64256 "EHLO mout.perfora.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751254AbYK1NhH (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 28 Nov 2008 08:37:07 -0500
+Received: from JDPC (host86-166-37-99.range86-166.btcentralplus.com [86.166.37.99])
+	by mrelay.perfora.net (node=mrus1) with ESMTP (Nemesis)
+	id 0MKpCa-1L63Wr0fho-0001T2; Fri, 28 Nov 2008 08:37:06 -0500
+X-Mailer: Microsoft Office Outlook 12.0
+Thread-Index: AclRXmUr2gaQHswvS0qMyFuipul5ww==
+Content-Language: en-us
+X-Provags-ID: V01U2FsdGVkX19b8Vc1oBwWXNcpuwLZ0ZCG+I757VESvVstJKy
+ DVDx+OlLeoSt7qaFjG1NYmRNXP385+C2ETOBNZje1BFkmXrKyE
+ oKoMKBM8z3/ZfxDFB4x6w==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/101874>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/101875>
 
-Hi,
+Hello I am new to the list and if I am not following some kind of list
+ettiquite please let me know. 
 
-On Fri, 28 Nov 2008, Robin Rosenberg wrote:
+I read in the archives that there was once talk of porting Git over to C#
+and was wondering if anything ever came of this?  I realize there were some
+that didn't see the use for this but as Git is becoming more and more
+popular a more native implementation of Git for windows users would be a
+good endevour IMHO.
 
-> I recommend every new Git user to scan the FAQ. It's not just clone,
-> it's in everything git does in the file system. There is a very good 
-> reason git behaves this way in general, although clone could be
-> exception, but then we would have a ton of questions about that
-> inconsistency.
+At any rate any info would be greatly appreciated.
 
-No, clone cannot be an exception.  The information is just not stored, and 
-for a good reason: a file's timestamp is nothing you want to commit in 
-source code management.  It just does not make sense at all.
+Regards,
 
-Ciao,
-Dscho
+JD Guzman
