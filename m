@@ -1,62 +1,76 @@
-From: "Caleb Cushing" <xenoterracide@gmail.com>
-Subject: more merge strategies : feature request
-Date: Sat, 29 Nov 2008 11:48:45 -0500
-Message-ID: <81bfc67a0811290848m6cb219c0y71a7266001096f2d@mail.gmail.com>
+From: "Sverre Rabbelier" <alturin@gmail.com>
+Subject: Re: [PATCH 1/2] gitweb: add patch view
+Date: Sat, 29 Nov 2008 17:50:46 +0100
+Message-ID: <bd6139dc0811290850r404da348yda5dd5f1eb5dc95c@mail.gmail.com>
+References: <1227966071-11104-1-git-send-email-giuseppe.bilotta@gmail.com>
+	 <1227966071-11104-2-git-send-email-giuseppe.bilotta@gmail.com>
+	 <bd6139dc0811290743s6cf8e534nddd8a09698ea22b9@mail.gmail.com>
+	 <200811291710.27891.jnareb@gmail.com>
+	 <cb7bb73a0811290848j1b77fe89m66ead7cc4f5ca2bb@mail.gmail.com>
+Reply-To: sverre@rabbelier.nl
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Nov 29 17:50:08 2008
+Cc: "Jakub Narebski" <jnareb@gmail.com>, git@vger.kernel.org,
+	"Petr Baudis" <pasky@suse.cz>, "Junio C Hamano" <gitster@pobox.com>
+To: "Giuseppe Bilotta" <giuseppe.bilotta@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Nov 29 17:52:14 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1L6T1A-0000WG-Mp
-	for gcvg-git-2@gmane.org; Sat, 29 Nov 2008 17:50:05 +0100
+	id 1L6T36-00016k-Pr
+	for gcvg-git-2@gmane.org; Sat, 29 Nov 2008 17:52:05 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752315AbYK2Qss (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 29 Nov 2008 11:48:48 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752270AbYK2Qss
-	(ORCPT <rfc822;git-outgoing>); Sat, 29 Nov 2008 11:48:48 -0500
-Received: from fg-out-1718.google.com ([72.14.220.153]:35888 "EHLO
-	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752177AbYK2Qsr (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 29 Nov 2008 11:48:47 -0500
-Received: by fg-out-1718.google.com with SMTP id 19so1290964fgg.17
-        for <git@vger.kernel.org>; Sat, 29 Nov 2008 08:48:46 -0800 (PST)
+	id S1752308AbYK2Qus (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 29 Nov 2008 11:50:48 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752006AbYK2Qus
+	(ORCPT <rfc822;git-outgoing>); Sat, 29 Nov 2008 11:50:48 -0500
+Received: from yw-out-2324.google.com ([74.125.46.30]:50148 "EHLO
+	yw-out-2324.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751908AbYK2Qur (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 29 Nov 2008 11:50:47 -0500
+Received: by yw-out-2324.google.com with SMTP id 9so706985ywe.1
+        for <git@vger.kernel.org>; Sat, 29 Nov 2008 08:50:46 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to
-         :subject:mime-version:content-type:content-transfer-encoding
-         :content-disposition;
-        bh=AEE+apg5RZE7h8W+08Hr/9PqePTWtHOkDhhu4MJ67KM=;
-        b=C2qM//Z6wb4vQeVepPZCxHXvN4rF+qC/jue106sUKn/mvKq7X8gUw6SN/p+a2w3wat
-         La5oQCCwWPBmsigyGMpgaMOUvGJf+Ki1ecoHlX1g8duuYc2XKRcLegIHYat6xOz/9LSW
-         9OA2lEdGVxdEkm6pBfBdGTMWxIfZ3QtprpB2w=
+        h=domainkey-signature:received:received:message-id:date:from:reply-to
+         :to:subject:cc:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:references;
+        bh=1XvePicEC1+gw4/bInnXrzhjoUKZQWhasFHbcfFBjZY=;
+        b=c/cP8v3CdT5fSF2Z/fBap471cYcdEwTNQhckEFRGDroIyCTdhkMlCoPOhMztpqWtw8
+         HhVkUZzS9UP9e+t+Pum9uXq3orZRwwi4qdh1N0QGwg+RJf82z09tLMC3U2i+JXZMMi5G
+         PkbQuJY4+UIzGWXlWQm6iVMvsXKDUz5cFGhaM=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:mime-version:content-type
-         :content-transfer-encoding:content-disposition;
-        b=ggeUcJLIhIFneem6QjGGAuA6tQtqbkzbVKDhzQ2u9QO2h0GoJot6z9pIopl1ujZplJ
-         F6ZFagB+BX+ifYF6y8l5bk59yJYz0yXNGek5Dj8rRvB0RdLDLjAUUEw3qTTOM2GXvK6x
-         v24f9BdE9JM8ZfQ3PPSLrSagdWEbrwmuViWr4=
-Received: by 10.187.210.3 with SMTP id m3mr2158735faq.59.1227977325798;
-        Sat, 29 Nov 2008 08:48:45 -0800 (PST)
-Received: by 10.187.193.13 with HTTP; Sat, 29 Nov 2008 08:48:45 -0800 (PST)
+        h=message-id:date:from:reply-to:to:subject:cc:in-reply-to
+         :mime-version:content-type:content-transfer-encoding
+         :content-disposition:references;
+        b=aWNCzP4JR3rxnU+ZCzOc59UGqTJATt540HzBG1GVlCyy8KEyaha99rrdQj9r2qVPlW
+         2ADwJ69rwTIq6t3gizyAk6BsCCymsDPyvp9jd9HVH+p7I7m3Xk1jgA3wdxt3lcPS07yb
+         tR23APVrLdN5AgViCVkb8ddgs09lQnBiFx254=
+Received: by 10.151.78.15 with SMTP id f15mr5614992ybl.148.1227977446663;
+        Sat, 29 Nov 2008 08:50:46 -0800 (PST)
+Received: by 10.151.108.18 with HTTP; Sat, 29 Nov 2008 08:50:46 -0800 (PST)
+In-Reply-To: <cb7bb73a0811290848j1b77fe89m66ead7cc4f5ca2bb@mail.gmail.com>
 Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/101918>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/101919>
 
-conflict: this strategy would always resolve in a merge conflict
-allowing you to use git mergetool to piece the files back together.
+On Sat, Nov 29, 2008 at 17:48, Giuseppe Bilotta
+<giuseppe.bilotta@gmail.com> wrote:
+> Also, I was in doubt about the name for the new view, and I did
+> consider 'patchset' (which you mention in your email). I chose to
+> stick with the shorter form in the end, since many people complain
+> that gitweb already produces paths that are too long.
 
-no-overwrite: if a change from the branch being merged in would
-overwrite something in the current branch don't merge it. (I think it
-needs a better name)
-
+Heh, what do I care about the length of the url, there's so many url
+shorteners out there, that's not really a problem to me :).
 
 -- 
-Caleb Cushing
+Cheers,
+
+Sverre Rabbelier
