@@ -1,76 +1,86 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: [PATCHv2ter 2/2] gitweb: clean up gitweb_check_feature() calls
-Date: Sat, 29 Nov 2008 23:38:27 +0100
-Message-ID: <200811292338.28156.jnareb@gmail.com>
-References: <1227904793-1821-3-git-send-email-giuseppe.bilotta@gmail.com> <7viqq6yxqu.fsf@gitster.siamese.dyndns.org> <200811292337.00380.jnareb@gmail.com>
+From: Evgeniy Ivanov <lolkaantimat@gmail.com>
+Subject: gitweb doesn't work with bare repositories
+Date: Sun, 30 Nov 2008 02:37:30 +0300
+Message-ID: <4931D23A.10402@gmail.com>
+Reply-To: lolkaantimat@gmail.com
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-Cc: "Giuseppe Bilotta" <giuseppe.bilotta@gmail.com>,
-	git@vger.kernel.org, "Petr Baudis" <pasky@suse.cz>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Nov 29 23:39:49 2008
+Cc: lolkaantimat@gmail.com
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Nov 30 00:39:56 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1L6YTc-0007TQ-Je
-	for gcvg-git-2@gmane.org; Sat, 29 Nov 2008 23:39:49 +0100
+	id 1L6ZPm-00057J-4i
+	for gcvg-git-2@gmane.org; Sun, 30 Nov 2008 00:39:54 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752887AbYK2Wic (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 29 Nov 2008 17:38:32 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752873AbYK2Wic
-	(ORCPT <rfc822;git-outgoing>); Sat, 29 Nov 2008 17:38:32 -0500
-Received: from ey-out-2122.google.com ([74.125.78.26]:57953 "EHLO
+	id S1752990AbYK2Xih (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 29 Nov 2008 18:38:37 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752952AbYK2Xig
+	(ORCPT <rfc822;git-outgoing>); Sat, 29 Nov 2008 18:38:36 -0500
+Received: from ey-out-2122.google.com ([74.125.78.26]:7951 "EHLO
 	ey-out-2122.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752769AbYK2Wib (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 29 Nov 2008 17:38:31 -0500
-Received: by ey-out-2122.google.com with SMTP id 6so818047eyi.37
-        for <git@vger.kernel.org>; Sat, 29 Nov 2008 14:38:30 -0800 (PST)
+	with ESMTP id S1752887AbYK2Xig (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 29 Nov 2008 18:38:36 -0500
+Received: by ey-out-2122.google.com with SMTP id 6so822447eyi.37
+        for <git@vger.kernel.org>; Sat, 29 Nov 2008 15:38:34 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:subject:date
-         :user-agent:cc:references:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:message-id;
-        bh=G91OumoGr60CClnm71BFPOV7ktoNiebIbwpVk6xBdlU=;
-        b=e08J6OWoqyjsl5Ch1R/dm9tWTrgrkZjVNihWBpt2zEdxwL7Y29q3qm+iaV8QOizsLU
-         ZOGqPqnboH5+VuGp6w9eC4J8Y8kJbI5Gfdw5WJnz9b5DY5GUqP0krjS8Hcref6QgGbsR
-         CtiXmwj/WD8eZWTzN6bzAYVquii/al7VaMB54=
+        h=domainkey-signature:received:received:message-id:date:from:reply-to
+         :user-agent:mime-version:to:cc:subject:x-enigmail-version
+         :content-type:content-transfer-encoding;
+        bh=o+sKw3VTfK1eCwuRyzsETpIMzh5g6c/KpFoKGDhj4C8=;
+        b=UnIIBmt7KU68wexH5AiEFxRSHiUg5QehoxdDVfN3SapYjc6sp8lwKZ+mak6aB/E9Ds
+         z76kdvCla+Hbm2Dss+mEumGtiFFJaMabsi5HItPHCoJjGu3e6LhE+sw8q7TyWdOJS12r
+         mgPmFUELEeAAcf6Nf2l43N/tAOVXnHWJpA0GA=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=from:to:subject:date:user-agent:cc:references:in-reply-to
-         :mime-version:content-type:content-transfer-encoding
-         :content-disposition:message-id;
-        b=LojFb3Wo6uPxgel/9LZt4I4SCMqFZbSuMwnzo/Wt+1vGL65OV9xcpgbZnjP/QEVaxa
-         KxGRlFMBQBQVNSAgeH8xGB+eYsq6d4deCzZ0ux69GjK7k7HHF5F5hO6QToUk+xutU49S
-         KEjuYCEwQED83463SSCZ6E/fZ4E39ue3QlvhU=
-Received: by 10.210.65.17 with SMTP id n17mr5409554eba.76.1227998310299;
-        Sat, 29 Nov 2008 14:38:30 -0800 (PST)
-Received: from ?192.168.1.11? (abvs96.neoplus.adsl.tpnet.pl [83.8.216.96])
-        by mx.google.com with ESMTPS id 20sm7937374eyk.59.2008.11.29.14.38.27
+        h=message-id:date:from:reply-to:user-agent:mime-version:to:cc:subject
+         :x-enigmail-version:content-type:content-transfer-encoding;
+        b=DWGZmVOJqKBGIZcEv6OtB+KJ8BKtcVkq/vWjbRQ9/Xta0dq/pgUo/YUSNVe1jkz39H
+         5STPaO+kOMp9Q1SRGeaBrqzXA/wKGoMrs3kYxxkWaeXwfTXw0jCDekIOe+3gvCpqI7Kk
+         0Zl1v0gMx79332zJkw7qtry5MCOW384hTrmSc=
+Received: by 10.210.144.3 with SMTP id r3mr10711163ebd.115.1228001914161;
+        Sat, 29 Nov 2008 15:38:34 -0800 (PST)
+Received: from ?10.180.88.13? ([89.113.219.166])
+        by mx.google.com with ESMTPS id 5sm2411685nfv.15.2008.11.29.15.38.32
         (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Sat, 29 Nov 2008 14:38:29 -0800 (PST)
-User-Agent: KMail/1.9.3
-In-Reply-To: <200811292337.00380.jnareb@gmail.com>
-Content-Disposition: inline
+        Sat, 29 Nov 2008 15:38:33 -0800 (PST)
+User-Agent: Thunderbird 2.0.0.17 (X11/20080922)
+X-Enigmail-Version: 0.95.7
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/101933>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/101934>
 
-Jakub Narebski wrote:
+Hi,
+I have installed gitweb and can't make it work with bare repos.
+I have such config:
+$my_uri = "http://mysite.org:8000";
+$projectroot = "/srv/www/gamekeeper/htdocs/projects";
 
-> 
-> Well, I think now that it would be best to split this series into
-> _two_ patches: first Junio's patch fixing (!) gitweb_check_feature()
-> calls, second original v1 Guiseppe's renaming gitweb_check_feature()
-> to gitweb_get_feature(), and adding gitweb_check_feature(), and using
-> gitweb_get_feature() only where needed; optionally fixing "style".
+In projects I have created bare repo:
+mkdir some
+cd some.git
+git --bare init
+cd /some_git_repo
+git push /srv/www/gamekeeper/htdocs/projects master
 
-It means: first fixup patch, then futureproof patch.
+Everything fine, but when I click the link on some.git I don't have a
+page (just "Error 404").
+
+But if I clone /some_git_repo with some in the projects, I have a link
+"some/.git" and it works fine.
+
+Permissions are ok, virtual host is ok since I get main page and have
+access to cloned repo.
+
+What can be wrong?
+
 
 -- 
-Jakub Narebski
-Poland
+Cheers, Evgeniy.
+Key fingerprint: F316 B5A1 F6D2 054F CD18 B74A 9540 0ABB 1FE5 67A3
