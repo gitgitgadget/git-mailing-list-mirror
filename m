@@ -1,220 +1,223 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH] git add --intent-to-add: fix removal of cached emptiness
-Date: Fri, 28 Nov 2008 16:15:37 -0800
-Message-ID: <7vk5an4cba.fsf_-_@gitster.siamese.dyndns.org>
-References: <7v7i6qc8r0.fsf@gitster.siamese.dyndns.org>
- <alpine.DEB.1.00.0811272347010.30769@pacific.mpi-cbg.de>
- <7vtz9s8uzu.fsf@gitster.siamese.dyndns.org>
- <alpine.DEB.1.00.0811281225040.30769@pacific.mpi-cbg.de>
- <20081128192033.GF23984@spearce.org>
- <7voczz4cfb.fsf@gitster.siamese.dyndns.org>
+From: William Pursell <bill.pursell@gmail.com>
+Subject: Re: summaries in git add --patch
+Date: Sat, 29 Nov 2008 00:22:35 +0000
+Message-ID: <49308B4B.3070703@gmail.com>
+References: <492F0CAD.3010101@gmail.com> <7viqq8adsf.fsf@gitster.siamese.dyndns.org> <492F92C9.7030301@gmail.com> <7v8wr48g98.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	git@vger.kernel.org
-To: "Shawn O. Pearce" <spearce@spearce.org>
-X-From: git-owner@vger.kernel.org Sat Nov 29 01:17:22 2008
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sat Nov 29 01:24:02 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1L6DWT-0007gp-QG
-	for gcvg-git-2@gmane.org; Sat, 29 Nov 2008 01:17:22 +0100
+	id 1L6Dct-0000rH-U8
+	for gcvg-git-2@gmane.org; Sat, 29 Nov 2008 01:24:00 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753040AbYK2AQF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 28 Nov 2008 19:16:05 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753014AbYK2AQE
-	(ORCPT <rfc822;git-outgoing>); Fri, 28 Nov 2008 19:16:04 -0500
-Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:59845 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750897AbYK2AQD (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 28 Nov 2008 19:16:03 -0500
-Received: from localhost.localdomain (unknown [127.0.0.1])
-	by b-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id B583817B30;
-	Fri, 28 Nov 2008 19:16:00 -0500 (EST)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES256-SHA (256/256 bits)) (No client certificate requested) by
- b-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTPSA id 03ED617B16; Fri,
- 28 Nov 2008 19:15:39 -0500 (EST)
-In-Reply-To: <7voczz4cfb.fsf@gitster.siamese.dyndns.org> (Junio C. Hamano's
- message of "Fri, 28 Nov 2008 16:13:12 -0800")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: E6EC30A0-BDAA-11DD-A110-F83E113D384A-77302942!a-sasl-quonix.pobox.com
+	id S1752887AbYK2AWn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 28 Nov 2008 19:22:43 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752876AbYK2AWn
+	(ORCPT <rfc822;git-outgoing>); Fri, 28 Nov 2008 19:22:43 -0500
+Received: from nf-out-0910.google.com ([64.233.182.186]:43693 "EHLO
+	nf-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750856AbYK2AWl (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 28 Nov 2008 19:22:41 -0500
+Received: by nf-out-0910.google.com with SMTP id d3so881222nfc.21
+        for <git@vger.kernel.org>; Fri, 28 Nov 2008 16:22:39 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from
+         :user-agent:mime-version:to:cc:subject:references:in-reply-to
+         :content-type:content-transfer-encoding;
+        bh=MmW+bT1bITmOPyukPuHs4P3ZnuiVIUBaYri0/+O7xdw=;
+        b=PEtn172BK4Cm14GP5noe6nVh2BzxNsJ23TDFMWDtYZqrUEKTf7555KVsNXi1ti3Fyj
+         +x3VLLxrEiqclwi+nQBEuZNlmCVeTX3ae7RiG5zpx/WbHIqs8/RLCWEYiKWVdazibX78
+         pr4cdbPMWoTqKiPEWKu98DSyn/kAJLeYVwLxE=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:user-agent:mime-version:to:cc:subject
+         :references:in-reply-to:content-type:content-transfer-encoding;
+        b=cKdZ53qRMP0vjhyAnbZ9SD9m8ZC8DykBlmgm11VWiZ5s0ReDUrsuntUYtLFIMRi0qB
+         NjWBeKCdjm+9aqU6Xvx1OiUXXLgDvdWxlmXvkvXJuuxctj03QwE+hXEh8LG9hHWb1m4a
+         zRhMntFjFjOYuofQnWbPKqpQ9BgTM6wFOJBJE=
+Received: by 10.210.34.19 with SMTP id h19mr9483103ebh.136.1227918159754;
+        Fri, 28 Nov 2008 16:22:39 -0800 (PST)
+Received: from clam.local (5ace135b.bb.sky.com [90.206.19.91])
+        by mx.google.com with ESMTPS id i6sm465454gve.14.2008.11.28.16.22.37
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Fri, 28 Nov 2008 16:22:38 -0800 (PST)
+User-Agent: Thunderbird 2.0.0.18 (Macintosh/20081105)
+In-Reply-To: <7v8wr48g98.fsf@gitster.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/101894>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/101895>
 
-This uses the extended index flag mechanism introduced earlier to mark
-the entries added to the index via "git add -N" with CE_INTENT_TO_ADD.
+Junio C Hamano wrote:
+> William Pursell <bill.pursell@gmail.com> writes:
+> 
+>> Here's a new patch.  Instead of displaying the summary and then
+>> the current hunk, it implements a 'goto' command.
+> 
+> I take it that this is for discussion not for immediate inclusion.
+> 
 
-The logic to detect an "intent to add" entry for the purpose of allowing
-"git rm --cached $path" is tightened to check not just for a staged empty
-blob, but with the CE_INTENT_TO_ADD bit.  This protects an empty blob that
-was explicitly added and then modified in the work tree from being dropped
-with this sequence:
+Yes.  I tend to think of all of my patches as being merely
+for discussion since I'm not terribly familiar with the code
+base and expect to miss many things.  I'm flattered that
+you would even consider them for inclusion.  For that matter,
+I'm flattered that you have even responded to my submissions!
 
-	$ >empty
-	$ git add empty
-	$ echo "non empty" >empty
-	$ git rm --cached empty
+>> @@ -799,6 +801,7 @@ sub help_patch_cmd {
+>>  y - stage this hunk
+>>  n - do not stage this hunk
+>>  a - stage this and all the remaining hunks in the file
+>> +g - select a hunk to jump to
+>>  d - do not stage this hunk nor any of the remaining hunks in the file
+>>  j - leave this hunk undecided, see next undecided hunk
+>>  J - leave this hunk undecided, see next hunk
+> 
+> Since you took 'g' after "go to", help text should also say "go to",
+> instead of "jump to" for the mnemonics value, iow, to help people
+> remember.
 
-An index an "intent to add" entry is blocked.  This implies that you
-cannot "git commit" from such a state; however "git commit -a" still
-works.
+Agreed.
 
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
----
+>> @@ -836,6 +839,27 @@ sub patch_update_cmd {
+>>  	}
+>>  }
+>>
+>> +sub select_new_hunk {
+>> +	my $ri = shift;
+>> +	my @hunk = @_;
+>> +	my ($i, $response);
+>> +	print "   '+' stage, '-' don't stage\n";
+>> +	for ( $i = 0; $i < @hunk; $i++ ) {
+>> +		my $status = " ";
+>> +		if( defined $hunk[$i]{USE} ) {
+>> +			$status = $hunk[$i]{USE} ? "+" : "-";
+>> +		}
+> 
+> Style.
+> 
+>     (1) SP between language construct and open parenthesis, as opposed to
+>         no extra SP between function name and open parenthesis;
+> 
+>     (2) No extra SP around what is enclosed in parentheses.
 
- * This applies on top of the result of merging commit 06aaaa0 (Extend
-   index to save more flags, 2008-10-01) from nd/narrow topic into 'master'.
+My apologies for that.  I do try to conform, but this
+sort of habit is hard to change.  Especially in perl,
+where code so often looks like a cartoon character's
+speech bubble while swearing (eg #@$!%#@@), I
+like to put space inside my parens.  I'm fully aware
+that this is not the preferred style here, and I
+am trying to conform.  Is there a style validating
+pre-commit hook script available?
 
- builtin-rm.c               |   11 ++++++-----
- builtin-write-tree.c       |    2 +-
- cache-tree.c               |   10 +++++++---
- cache.h                    |    3 ++-
- read-cache.c               |    2 ++
- t/t3600-rm.sh              |    4 ++--
- t/t3701-add-interactive.sh |   18 ++++++++++++++++++
- 7 files changed, 38 insertions(+), 12 deletions(-)
+>> +		printf "%s%3d: %s",
+>> +			$status,
+>> +			$i + 1,
+>> +			$hunk[$i]{SUMMARY};
+>> +	}
+> 
+> I think this "for ()" loop part, including the comment about +/- notation,
+> should be separated into a function so that you can implement a separate
+> "l"ist command like you did in the other patch, using the same function.
 
-diff --git a/builtin-rm.c b/builtin-rm.c
-index b7126e3..8debcec 100644
---- a/builtin-rm.c
-+++ b/builtin-rm.c
-@@ -73,14 +73,15 @@ static int check_local_mod(unsigned char *head, int index_only)
- 		}
- 		if (ce_match_stat(ce, &st, 0))
- 			local_changes = 1;
--		if (no_head
--		     || get_tree_entry(head, name, sha1, &mode)
--		     || ce->ce_mode != create_ce_mode(mode)
--		     || hashcmp(ce->sha1, sha1))
-+		if (no_head ||
-+		    ((get_tree_entry(head, name, sha1, &mode)
-+		      || ce->ce_mode != create_ce_mode(mode)
-+		      || hashcmp(ce->sha1, sha1)) &&
-+		     !(ce->ce_flags & CE_INTENT_TO_ADD)))
- 			staged_changes = 1;
- 
- 		if (local_changes && staged_changes &&
--		    !(index_only && is_empty_blob_sha1(ce->sha1)))
-+		    !(index_only && (ce->ce_flags & CE_INTENT_TO_ADD)))
- 			errs = error("'%s' has staged content different "
- 				     "from both the file and the HEAD\n"
- 				     "(use -f to force removal)", name);
-diff --git a/builtin-write-tree.c b/builtin-write-tree.c
-index 52a3c01..9d64050 100644
---- a/builtin-write-tree.c
-+++ b/builtin-write-tree.c
-@@ -42,7 +42,7 @@ int cmd_write_tree(int argc, const char **argv, const char *unused_prefix)
- 		die("%s: error reading the index", me);
- 		break;
- 	case WRITE_TREE_UNMERGED_INDEX:
--		die("%s: error building trees; the index is unmerged?", me);
-+		die("%s: error building trees", me);
- 		break;
- 	case WRITE_TREE_PREFIX_ERROR:
- 		die("%s: prefix %s not found", me, prefix);
-diff --git a/cache-tree.c b/cache-tree.c
-index 5f8ee87..3d8f218 100644
---- a/cache-tree.c
-+++ b/cache-tree.c
-@@ -155,13 +155,17 @@ static int verify_cache(struct cache_entry **cache,
- 	funny = 0;
- 	for (i = 0; i < entries; i++) {
- 		struct cache_entry *ce = cache[i];
--		if (ce_stage(ce)) {
-+		if (ce_stage(ce) || (ce->ce_flags & CE_INTENT_TO_ADD)) {
- 			if (10 < ++funny) {
- 				fprintf(stderr, "...\n");
- 				break;
- 			}
--			fprintf(stderr, "%s: unmerged (%s)\n",
--				ce->name, sha1_to_hex(ce->sha1));
-+			if (ce_stage(ce))
-+				fprintf(stderr, "%s: unmerged (%s)\n",
-+					ce->name, sha1_to_hex(ce->sha1));
-+			else
-+				fprintf(stderr, "%s: not added yet\n",
-+					ce->name);
- 		}
- 	}
- 	if (funny)
-diff --git a/cache.h b/cache.h
-index ef2e7f9..f15b3fc 100644
---- a/cache.h
-+++ b/cache.h
-@@ -176,10 +176,11 @@ struct cache_entry {
- /*
-  * Extended on-disk flags
-  */
-+#define CE_INTENT_TO_ADD 0x20000000
- /* CE_EXTENDED2 is for future extension */
- #define CE_EXTENDED2 0x80000000
- 
--#define CE_EXTENDED_FLAGS (0)
-+#define CE_EXTENDED_FLAGS (CE_INTENT_TO_ADD)
- 
- /*
-  * Safeguard to avoid saving wrong flags:
-diff --git a/read-cache.c b/read-cache.c
-index abc627b..fa30a0f 100644
---- a/read-cache.c
-+++ b/read-cache.c
-@@ -546,6 +546,8 @@ int add_to_index(struct index_state *istate, const char *path, struct stat *st,
- 	ce->ce_flags = namelen;
- 	if (!intent_only)
- 		fill_stat_cache_info(ce, st);
-+	else
-+		ce->ce_flags |= CE_INTENT_TO_ADD;
- 
- 	if (trust_executable_bit && has_symlinks)
- 		ce->ce_mode = create_ce_mode(st_mode);
-diff --git a/t/t3600-rm.sh b/t/t3600-rm.sh
-index 5b4d6f7..b7d46e5 100755
---- a/t/t3600-rm.sh
-+++ b/t/t3600-rm.sh
-@@ -187,8 +187,8 @@ test_expect_success 'but with -f it should work.' '
- 	test_must_fail git ls-files --error-unmatch baz
- '
- 
--test_expect_failure 'refuse to remove cached empty file with modifications' '
--	touch empty &&
-+test_expect_success 'refuse to remove cached empty file with modifications' '
-+	>empty &&
- 	git add empty &&
- 	echo content >empty &&
- 	test_must_fail git rm --cached empty
-diff --git a/t/t3701-add-interactive.sh b/t/t3701-add-interactive.sh
-index e95663d..473ef85 100755
---- a/t/t3701-add-interactive.sh
-+++ b/t/t3701-add-interactive.sh
-@@ -133,6 +133,24 @@ test_expect_success 'real edit works' '
- 	test_cmp expected output
- '
- 
-+test_expect_success 'cannot commit with i-t-a entry' '
-+	git reset --hard &&
-+	echo xyzzy >rezrov &&
-+	echo frotz >nitfol &&
-+	git add rezrov &&
-+	git add -N nitfol &&
-+	test_must_fail git commit
-+'
-+
-+test_expect_success 'can commit with an unrelated i-t-a entry in index' '
-+	git reset --hard &&
-+	echo xyzzy >rezrov &&
-+	echo frotz >nitfol &&
-+	git add rezrov &&
-+	git add -N nitfol &&
-+	git commit -m partial rezrov
-+'
-+
- if test "$(git config --bool core.filemode)" = false
- then
-     say 'skipping filemode tests (filesystem does not properly support modes)'
+My thought is that 'g' would replace 'l', but as per your previous
+email 'l' would be a reasonable status command, so it
+makes sense to factor it out.
+> 
+>> +	printf "goto which hunk? ";
+>> +	$response = <STDIN>;
+>> +	chomp $response;
+>> +	$$ri = $response - 1;
+> 
+> What happens when $response is (1) a non number, (2) outside range (both
+> negative and positive), or (3) EOF?
+> 
+> Sending ref to scalar and returning the value by assigning is a bad taste.
+> Why shouldn't this function just return an integer to be assigned to $ix
+> by the caller?  If you want to use pass-by-ref to show off your Perl-fu, I
+> think \@hunk would be what you would want to for performance reasons.
+
+Ack.  I have no Perl-fu, I'm just not familiar with the
+idioms and thought this was accepted in perl.  I agree
+that it's poor judgement, and can only attribute my
+usage of it here to laziness. ( At one point I was passing
+$ix, and when I realized I wanted to modify it at the caller
+it was just easier to pass by reference.)
+
+> 
+>> @@ -919,7 +943,7 @@ sub patch_update_file {
+>>  		for (@{$hunk[$ix]{DISPLAY}}) {
+>>  			print;
+>>  		}
+>> -		print colored $prompt_color, "Stage this hunk [y/n/a/d$other/?]? ";
+>> +		print colored $prompt_color, "Stage this hunk [y/n/a/d/g$other/?]? ";
+> 
+> When there is only one hunk, we do not give j nor k.  Should we give g in
+> such a case?  Why?
+
+I would agree that g should be invalid when only one hunk is
+available.  I hadn't considered that case.
+
+> 
+>> @@ -937,6 +961,16 @@ sub patch_update_file {
+>>  				}
+>>  				next;
+>>  			}
+>> +			elsif ($line =~ /^g/) {
+>> +				chomp ($line);
+>> +				if ($line =~ /^g$/) {
+>> +					select_new_hunk (\$ix, @hunk);
+>> +				}
+>> +				else {
+>> +					$ix = (substr $line, 1) - 1;
+>> +				}
+> 
+> The same "input validation" issue exists here.  it would make sense to:
+> 
+>  - Make choose_hunk(@hunk) that calls list_hunks(@hunk) that gives the
+>    summary, reads one line, and returns that line;
+> 
+>  - Make the caller here to look like this:
+> 
+> 	elsif ($line =~ s/^g//) {
+>         	chomp($line);
+>                 if ($line eq '') {
+>                 	$line = choose_hunk(@hunk);
+> 		}
+> 		if ($line !~ /^\d+$/) {
+> 			print STDERR "Eh '$line', what number is that?\n";
+>                         next;
+> 		} elsif (0 < $line && $line <= $num) {
+> 			$ix = $line - 1;
+>                 } else {
+>                 	print STDERR "Sorry, you have only $num hunks\n";
+>                 }
+> 	}
+> 
+>> +				next;
+>> +			}
+>>  			elsif ($line =~ /^d/i) {
+>>  				while ($ix < $num) {
+>>  					if (!defined $hunk[$ix]{USE}) {
+
+
+I will try to incorporate your ideas into a workable,
+includable patch.  I think the '/' regex search can
+become part of the choose_hunk() routine so that
+an integer response means select by number while
+a '/re' response means jump forward to next matching
+hunk.  Also, instead of storing the summary line in
+the hunk, it will probably be better to generate on
+the fly during the display routine.
+
+Thanks for the feedback.
+
 -- 
-1.6.0.4.850.g6bd829
+William Pursell
