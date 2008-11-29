@@ -1,63 +1,83 @@
-From: =?iso-8859-1?Q?Bj=F6rn?= Steinbrink <B.Steinbrink@gmx.de>
-Subject: Re: remote branch checkout issue, why its *(no branch)
-Date: Sat, 29 Nov 2008 00:24:59 +0100
-Message-ID: <20081128232459.GA5956@atjola.homenet>
-References: <9e6474ae0811281415n7b4596afq7b3ce25816d9a639@mail.gmail.com> <m3k5anjxcd.fsf@localhost.localdomain>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: What's cooking in git.git (Nov 2008, #06; Wed, 26)
+Date: Fri, 28 Nov 2008 16:13:12 -0800
+Message-ID: <7voczz4cfb.fsf@gitster.siamese.dyndns.org>
+References: <7v7i6qc8r0.fsf@gitster.siamese.dyndns.org>
+ <alpine.DEB.1.00.0811272347010.30769@pacific.mpi-cbg.de>
+ <7vtz9s8uzu.fsf@gitster.siamese.dyndns.org>
+ <alpine.DEB.1.00.0811281225040.30769@pacific.mpi-cbg.de>
+ <20081128192033.GF23984@spearce.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Sudipta GHOSH <sudipta.in@gmail.com>, git@vger.kernel.org
-To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Nov 29 00:26:26 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	git@vger.kernel.org
+To: "Shawn O. Pearce" <spearce@spearce.org>
+X-From: git-owner@vger.kernel.org Sat Nov 29 01:15:01 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1L6Cj7-0003gc-EJ
-	for gcvg-git-2@gmane.org; Sat, 29 Nov 2008 00:26:21 +0100
+	id 1L6DUB-000794-Ml
+	for gcvg-git-2@gmane.org; Sat, 29 Nov 2008 01:15:00 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752800AbYK1XZF convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 28 Nov 2008 18:25:05 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752872AbYK1XZF
-	(ORCPT <rfc822;git-outgoing>); Fri, 28 Nov 2008 18:25:05 -0500
-Received: from mail.gmx.net ([213.165.64.20]:58973 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1752720AbYK1XZE (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 28 Nov 2008 18:25:04 -0500
-Received: (qmail invoked by alias); 28 Nov 2008 23:25:00 -0000
-Received: from i577B9A57.versanet.de (EHLO atjola.local) [87.123.154.87]
-  by mail.gmx.net (mp067) with SMTP; 29 Nov 2008 00:25:00 +0100
-X-Authenticated: #5039886
-X-Provags-ID: V01U2FsdGVkX19KEx58G+lKb4D+tUtemolUAqlKCiw5c11zlNarLE
-	7QJ710mDohEgQo
-Content-Disposition: inline
-In-Reply-To: <m3k5anjxcd.fsf@localhost.localdomain>
-User-Agent: Mutt/1.5.18 (2008-05-17)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.7
+	id S1751313AbYK2ANm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 28 Nov 2008 19:13:42 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750897AbYK2ANm
+	(ORCPT <rfc822;git-outgoing>); Fri, 28 Nov 2008 19:13:42 -0500
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:53314 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750841AbYK2ANm (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 28 Nov 2008 19:13:42 -0500
+Received: from localhost.localdomain (unknown [127.0.0.1])
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 810F082D12;
+	Fri, 28 Nov 2008 19:13:40 -0500 (EST)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES256-SHA (256/256 bits)) (No client certificate requested) by
+ a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTPSA id CBB8782D11; Fri,
+ 28 Nov 2008 19:13:15 -0500 (EST)
+In-Reply-To: <20081128192033.GF23984@spearce.org> (Shawn O. Pearce's message
+ of "Fri, 28 Nov 2008 11:20:33 -0800")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: 93590C92-BDAA-11DD-B9BF-465CC92D7133-77302942!a-sasl-fastnet.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/101892>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/101893>
 
-On 2008.11.28 14:32:56 -0800, Jakub Narebski wrote:
-> What you can do is to create _local_ branch, closely tied to
-> remote-tracking branch 'origin/B1', by using:
->=20
->   $ git branch -b B1 --track origin/B1
+"Shawn O. Pearce" <spearce@spearce.org> writes:
 
-You mixed up checkout and branch there ;-)
+> Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
+> ...
+>> In other words, unless there is more interest in that feature, enough to 
+>> generate a well-understood design before a good implementation, I'd rather 
+>> see this patch series dropped.
+>
+> Ack.  I agree with every remark made by Dscho, and also want to cry "wolf".
+>
+> I haven't had time to read the patch series.  Its big and intrusive
+> and I just don't need the feature.
 
-It's either
+Well, "me neither".  Although I personally think resisting changes until
+it becomes absolutely necessary is a good discipline, we also need to
+recognise that there is a chicken-and-egg problem.  When you have a
+potentially useful feature, unless people actually try using it in the
+field, you won't discover the drawbacks in either the design nor the
+implementation, let alone any improvements.
 
-git branch B1 origin/B1 # Just create a branch B1
+> But I feel like if it were in fact merged I'll fall over some bug
+> in it sometime soon and be forced to stop and debug it.
 
-or
+Exactly.  That is how you make progress.
 
-git checkout -b B1 origin/B1 # Create and checkout B1
+Having said that, I am willing to carry it over in 'next' outside 'master'
+for the 1.6.1 cycle, as three people who are most likely to be able to fix
+any potential issues are not using that feature.
 
-I omitted the "--track" as, by default, it is implied when you create a
-new branch from a remote tracking branch.
+> Heck at
+> the least I'll have to go back to JGit's index code and implement
+> the new file format.
 
-Bj=F6rn
+I am sorry to dissapoint you but I am planning to use the first one in the
+series, which is the one that adds extended index flag bits, for the fix
+to an unrelated feature.
