@@ -1,56 +1,111 @@
-From: Pete Harlan <pgit@pcharlan.com>
-Subject: Re: how to hide some branches
-Date: Sun, 30 Nov 2008 12:09:33 -0800
-Message-ID: <4932F2FD.9030603@pcharlan.com>
-References: <493261C9.4040608@obry.net>
+From: Daniel Barkalow <barkalow@iabervon.org>
+Subject: Re: What's cooking in git.git (Nov 2008, #06; Wed, 26)
+Date: Sun, 30 Nov 2008 16:26:19 -0500 (EST)
+Message-ID: <alpine.LNX.1.00.0811301509070.19665@iabervon.org>
+References: <7v7i6qc8r0.fsf@gitster.siamese.dyndns.org>  <alpine.DEB.1.00.0811272347010.30769@pacific.mpi-cbg.de>  <7vtz9s8uzu.fsf@gitster.siamese.dyndns.org>  <alpine.DEB.1.00.0811281225040.30769@pacific.mpi-cbg.de>  <20081128192033.GF23984@spearce.org> 
+ <7voczz4cfb.fsf@gitster.siamese.dyndns.org>  <alpine.LNX.1.00.0811281938250.19665@iabervon.org>  <fcaeb9bf0811290502j5db4056fo9b125aaa8b564314@mail.gmail.com> <fcaeb9bf0811300229v4e7bfbb7g9a0ac72dcddb4326@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: git list <git@vger.kernel.org>
-To: pascal@obry.net
-X-From: git-owner@vger.kernel.org Sun Nov 30 21:10:57 2008
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Junio C Hamano <gitster@pobox.com>,
+	"Shawn O. Pearce" <spearce@spearce.org>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	git@vger.kernel.org
+To: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Nov 30 22:27:54 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1L6sd2-0003Ne-Dv
-	for gcvg-git-2@gmane.org; Sun, 30 Nov 2008 21:10:52 +0100
+	id 1L6tpZ-0008Iu-Le
+	for gcvg-git-2@gmane.org; Sun, 30 Nov 2008 22:27:54 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752883AbYK3UJf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 30 Nov 2008 15:09:35 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752834AbYK3UJf
-	(ORCPT <rfc822;git-outgoing>); Sun, 30 Nov 2008 15:09:35 -0500
-Received: from lax-green-bigip-5.dreamhost.com ([208.113.200.5]:59507 "EHLO
-	swarthymail-a4.g.dreamhost.com" rhost-flags-OK-OK-OK-FAIL)
-	by vger.kernel.org with ESMTP id S1752786AbYK3UJe (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 30 Nov 2008 15:09:34 -0500
-Received: from [192.168.0.101] (031.132-78-65.ftth.swbr.surewest.net [65.78.132.31])
-	by swarthymail-a4.g.dreamhost.com (Postfix) with ESMTP id E057E129A83;
-	Sun, 30 Nov 2008 12:09:33 -0800 (PST)
-User-Agent: Thunderbird 2.0.0.18 (X11/20081125)
-In-Reply-To: <493261C9.4040608@obry.net>
+	id S1752747AbYK3V0W (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 30 Nov 2008 16:26:22 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752617AbYK3V0V
+	(ORCPT <rfc822;git-outgoing>); Sun, 30 Nov 2008 16:26:21 -0500
+Received: from iabervon.org ([66.92.72.58]:40553 "EHLO iabervon.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752086AbYK3V0V (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 30 Nov 2008 16:26:21 -0500
+Received: (qmail 7556 invoked by uid 1000); 30 Nov 2008 21:26:19 -0000
+Received: from localhost (sendmail-bs@127.0.0.1)
+  by localhost with SMTP; 30 Nov 2008 21:26:19 -0000
+In-Reply-To: <fcaeb9bf0811300229v4e7bfbb7g9a0ac72dcddb4326@mail.gmail.com>
+User-Agent: Alpine 1.00 (LNX 882 2007-12-20)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/101984>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/101985>
 
-Pascal Obry wrote:
-> Hello everyone,
-> 
-> I create a new branch for every new feature/fix I work on. After some
-> time I have many (too much) branch listed when doing:
-> 
->    $ git branch
-> 
-> I'd like to hide some (not removing them).
-> 
-> Is there a solution for this?
+On Sun, 30 Nov 2008, Nguyen Thai Ngoc Duy wrote:
 
->From a suggestion by Jakub Narebski, I use an alias "lb" that shows
-the most recently-active 8 branches:
+> On 11/29/08, Nguyen Thai Ngoc Duy <pclouds@gmail.com> wrote:
+> > On 11/29/08, Daniel Barkalow <barkalow@iabervon.org> wrote:
+> >  >  If there's any need for this to be distinguished from "assume unchanged",
+> >  >  I think it should be used with, not instead of, the CE_VALID bit; and it
+> >  >  could probably use some bit in the stat info section, since we don't need
+> >  >  stat info if we know by assumption that the entry is valid.
+> >
+> >
+> > Interesting. I'll think more about this.
+> >
+> 
+> As I said, CE_VALID implies all files are present.
 
-  for-each-ref --format='%(refname:short)' \
-       --sort=-authordate --count=8 refs/heads/
+My first question is whether this actually should be true. Going back to 
+the message for 5f73076c1a9b4b8dc94f77eac98eb558d25e33c0, it sounds like 
+the CE_VALID code is designed to be safe and sort of correct even if the 
+files are not actually unchanged; I don't think it would be out-of-spec 
+for CE_VALID to (1) always produce output as if the working tree contained 
+what the index contains, while (2) refusing to make any changes to working 
+tree files that do not actually match the index. As it is now, (2) is 
+explicitly true, but (1) is left vague-- commands may fail entirely or 
+produce different output if CE_VALID is set in the index for a file that 
+has changes in the working tree, but not in any particular way.
 
---Pete
+Now, it might be necessary for CE_NO_CHECKOUT to differ from CE_VALID in 
+some ways in (2): if a file is CE_NO_CHECKOUT and absent, code which would 
+modify it could probably just report sucess, while CE_VALID on a file 
+with changes should probably report failure. On the other hand, that could 
+just as easily be at the porcelain layer, with the porcelain instructing 
+the plumbing to change the index without changing the working tree for 
+those files outside the sparse checkout, and the plumbing would report 
+errors if the porcelain did not do this.
+
+> I could make CE_NO_CHECKOUT to be used with CE_VALID, but I would need 
+> to check all CE_VALID code path to make sure the behaviour remains if
+> CE_NO_CHECKOUT is absent. It's just more intrusive.
+
+I would expect all code that has a CE_VALID path to do something actually 
+wrong if it took the non-CE_VALID code path on CE_NO_CHECKOUT and there 
+was no CE_NO_CHECKOUT code path. So I'd expect that your patch is 
+insufficient to the extent that CE_NO_CHECKOUT doesn't imply CE_VALID 
+(since there is very little in the way of CE_NO_CHECKOUT-specific 
+handling in your patch).
+
+The only case I can think of where NO_CHECKOUT is more like !VALID than 
+VALID is with respect to whether we can report the content in the index by 
+looking in the filesystem instead of in the database; I don't think this 
+is an intentional optimization anywhere, and I think it would be a likely 
+source of bugs if it were (e.g., it would have to know about files which 
+are up-to-date with respect to stat info, but which have been "smudged" on 
+disk and therefore don't match byte-for-byte with the database). Actually, 
+it might be most accurate to treat --no-checkout as being CE_VALID with a 
+smudge filter of "rm". If the combination of CE_VALID and on-disk 
+conversion works (which is likely to be the common pattern for Windows 
+users, who need autocrlf and have a slow lstat(), and is therefore 
+maintained), surely this combination would work for CE_NO_CHECKOUT.
+
+> I have nothing against storing CE_NO_CHECKOUT in stat info except that
+> it seems inappropriate/hidden place to do. ce_flags is more obvious
+> choice. I haven't looked closely to stat info code in read-cache.c
+> though.
+
+It should be pretty clean to check CE_VALID when reading an entry from 
+disk and remap bits from it to additional flags in memory. I wouldn't 
+suggest overlaying them in memory, but there's also no shortage of space 
+for flags in memory.
+
+	-Daniel
+*This .sig left intentionally blank*
