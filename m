@@ -1,136 +1,94 @@
-From: "Giuseppe Bilotta" <giuseppe.bilotta@gmail.com>
-Subject: Re: [PATCH 0/2] gitweb: patch view
-Date: Sun, 30 Nov 2008 02:44:38 +0100
-Message-ID: <cb7bb73a0811291744t2bb9c8c1t1dac497705e2c3c2@mail.gmail.com>
-References: <1227966071-11104-1-git-send-email-giuseppe.bilotta@gmail.com>
-	 <200811300206.23240.jnareb@gmail.com>
+From: Brian Dessent <brian@dessent.net>
+Subject: Re: A better approach to diffing and merging
+Date: Sat, 29 Nov 2008 17:56:44 -0800
+Organization: My own little world...
+Message-ID: <4931F2DC.CE9B1E35@dessent.net>
+References: <823242bd0811291012g15c4d442qa5d7afc9cc762b20@mail.gmail.com>
+Reply-To: git@vger.kernel.org
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain; charset=us-ascii
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, "Petr Baudis" <pasky@suse.cz>,
-	"Junio C Hamano" <gitster@pobox.com>
-To: "Jakub Narebski" <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Nov 30 02:46:34 2008
+Cc: git@vger.kernel.org
+To: Ian Clarke <ian.clarke@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Nov 30 03:38:53 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1L6bOL-00051T-87
-	for gcvg-git-2@gmane.org; Sun, 30 Nov 2008 02:46:33 +0100
+	id 1L6cCw-0004vc-Ue
+	for gcvg-git-2@gmane.org; Sun, 30 Nov 2008 03:38:51 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753722AbYK3Bol (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 29 Nov 2008 20:44:41 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753634AbYK3Bok
-	(ORCPT <rfc822;git-outgoing>); Sat, 29 Nov 2008 20:44:40 -0500
-Received: from ey-out-2122.google.com ([74.125.78.26]:36767 "EHLO
-	ey-out-2122.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753444AbYK3Bok (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 29 Nov 2008 20:44:40 -0500
-Received: by ey-out-2122.google.com with SMTP id 6so829605eyi.37
-        for <git@vger.kernel.org>; Sat, 29 Nov 2008 17:44:38 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to
-         :subject:cc:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:references;
-        bh=0gIfw1bQm5V9QJlkKpZX+Ah2I87AnCi9/yN5PwO4Kz0=;
-        b=WrBFd2ehZTJsF5WaEoZRxSHSju0fCziUjYkdbrNBrj5UtecXotzjEinXF4Lbro0UYi
-         HXIcpPUKoeh7W11OUKMhkW8sVFVNbqdSzZdVqq8ADgErfyzG/0AvZwwbMT5qHc9Khoue
-         TpFqvUUCd2dEodTDyUH1yBhPYEc83DQRl0rP0=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
-         :content-type:content-transfer-encoding:content-disposition
-         :references;
-        b=Mh30mkqkwcs3NzrN2fDP1WM6Z2ZkJttTZob5V98CFqVomO160G27Prj1jwnfiWyFMO
-         eFSg7mFr/ellO96GJ0oTy6PsIOmuB9qCkG8p0Je/TMiUIhBu8cuobpIg18FZr319ZstQ
-         ymPWyeDzrSeXMw2/nXNLxJC5jLx/+5J1f5qGk=
-Received: by 10.210.120.7 with SMTP id s7mr10823732ebc.78.1228009478155;
-        Sat, 29 Nov 2008 17:44:38 -0800 (PST)
-Received: by 10.210.79.12 with HTTP; Sat, 29 Nov 2008 17:44:38 -0800 (PST)
-In-Reply-To: <200811300206.23240.jnareb@gmail.com>
-Content-Disposition: inline
+	id S1753908AbYK3Cd2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 29 Nov 2008 21:33:28 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753877AbYK3Cd2
+	(ORCPT <rfc822;git-outgoing>); Sat, 29 Nov 2008 21:33:28 -0500
+Received: from dessent.net ([69.60.119.225]:38169 "EHLO dessent.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752848AbYK3Cd2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 29 Nov 2008 21:33:28 -0500
+X-Greylist: delayed 2201 seconds by postgrey-1.27 at vger.kernel.org; Sat, 29 Nov 2008 21:33:27 EST
+Received: from localhost.localdomain ([127.0.0.1] helo=dessent.net)
+	by dessent.net with esmtp (Exim 4.50)
+	id 1L6bYD-0002Eu-Iy; Sun, 30 Nov 2008 01:56:45 +0000
+X-Mailer: Mozilla 4.79 [en] (Windows NT 5.0; U)
+X-Accept-Language: en,en-US
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/101946>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/101947>
 
-On Sun, Nov 30, 2008 at 2:06 AM, Jakub Narebski <jnareb@gmail.com> wrote:
-> On Sat, 29 Nov 2008, Giuseppe Bilotta wrote:
->
->> I recently discovered that the commitdiff_plain view is not exactly
->> something that can be used by git am directly (for example, the subject
->> line gets duplicated in the commit message body after using git am).
->
-> That's because gitweb generates email-like format "by hand", instead
-> of using '--format=email' or git-format-patch like in your series. On
-> the other hand that allows us to add extra headers, namely X-Git-Tag:
-> (which hasn't best implementation, anyway) and X-Git-Url: with URL
-> for given output.
+Ian Clarke wrote:
 
-> By the way, we still might want to add somehow X-Git-Url and X-Git-Tag
-> headers later to 'patch' ('patchset') output format.
+> Provide the merge algorithm with the grammar of the programming
+> language, perhaps in the form of a Bison grammar file, or some other
+> standardized way to represent a grammar.
+> 
+> The merge algorithm then uses this to parse the files to be diffed
+> and/or merged into trees, and then the diff and merge are treated as
+> operations on these trees.  These operations may include creating,
+> deleting, or moving nodes or branches, renaming nodes, etc.  There has
+> been quite a bit (pdf) of academic research on this topic, although I
+> haven't yet found off-the-shelf code that will do what we need.
+> Still, it shouldn't be terribly hard to implement.
 
-Yeah, I've been thinking about it, but I couldn't find an easy and
-robust way to do it. Plus, should we add them for each patch, or just
-once for the whole patchset?
+There's a huge flaw in that approach for C/C++: in order to parse C/C++
+you have to first preprocess it -- consider the twisty mazes that
+#ifdef/#else/#endif can create.  But in order to preprocess source code
+you need a whole heap of extra information that is not in the repository
+(or if it is, cannot be automatically extracted.)
 
->> Since I'm not sure if it was the case to fix the plain view because I
->> don't know what its intended usage was, I prepared a new view,
->> uncreatively called 'patch', that exposes git format-patch output
->> directly.
->
-> Perhaps 'format_patch' would be better... hmmm... ?
+For example, you'd have to know all the -D/-U/-I flags that the makefile
+or the user might pass to the compiler.  You'd have to replicate the
+compiler's complicated header search path algorithm, which can depend on
+the directives in the code as well as command line arguments,
+environment variables, and values specific to the toolchain.  (Don't
+forget that you can have code in a repository that's meant to be
+cross-compiled and which uses a toolchain that has its own headers and
+not the ones in /usr/include.)  You'd have to know all the built-in
+predefined symbols of that toolchain, e.g. what's the value of
+__GNUC_MINOR__ or __GNUC_PATCHLEVEL__, is __mips__ or __i386__ defined,
+and on and on.  And of course the natural conclusion of this
+progression: a change can be perfectly grammatically correct for one
+particular platform/toolchain/setting of CFLAGS, and completely broken
+for another.  There's no way for a VCS to know any of this, it takes
+human comprehension.
 
-Considering I think commitdiff is ugly and long, you can guess my
-opinion on format_patch 8-P. 'patchset' might be a good candidate,
-considering it's what it does when both hash_parent and hash are
-given.
+If you look at a tool like doxygen that attempts to parse C/C++, it
+don't actually do full preprocessing, only a very limited subset: it
+only expands macros that the user names as relevant in the config file,
+and it only preprocesses included headers that match a pathspec the user
+provides.  Consequently it cannot fully parse the code to see if it's
+grammatically correct, only to the limited extent that it can infer the
+location where things appear to be defined.  And it is easily confused,
+e.g. it will "see" code in both halves of an #ifdef section if it wasn't
+told anything about the value of the macro in the config file, which can
+cause it to incorrectly think that a function or variable was defined
+there when in reality that section was discarded.
 
-> Actually IMHO both 'commitdiff' and 'commitdiff_plain' try to do two
-> things at once. First to show diff _for_ a commit, i.e. equivalent of
-> "git show" or "git show --pretty=email", perhaps choosing one of
-> parents for a merge commit. Then showing commit message for $hash has
-> sense. The fact that 'commit' view doesn't show patchset, while
-> 'commitdiff' does might be result of historical situation.
->
-> Second, to show diff _between_ commits, i.e. equivalent of
-> "git diff branch master". Then there doesn't make much sense to show
-> full commit message _only_ for one side of diff. IMHO that should be
-> main purpose of 'commitdiff' and 'commitdiff_plain' views, or simply
-> 'diff' / 'diff_plain' future views.
+The idea may have value for langauges that are easy to parse and do not
+have all this preprocessor cruft, but I just don't see how it would be
+able to provide anything useful for non-trivial changes to real world
+C/C++, which require human eyes to decipher.
 
-We can probably consider deprecating commitdiff(_plain) and have the
-following three views:
-
-* commit(_plain): do what commitdiff(_plain) currently does for a single commit
-* diff(_plain): do what commitdiff(_plain) currently does for
-parent..hash views, modulo something to be discussed for commit
-messages (a shortlog rather maybe?)
-* patch[set?][_plain?]: format-patch style output (maybe with option
-for HTML stuff too)
-
-> What 'patch' view does, what might be not obvious from this description
-> and from first patch in series, is to show diffs for _series_ of
-> commits. It means equivalent of "git log -p" or "git whatchanged".
-> It might make more sense to have plain git-format-patch output, but it
-> could be useful to have some kind of 'git log -p' HTML output.
->
-> So even if 'commitdiff' / 'commitdiff_plain' is fixed, 'patch' whould
-> still have its place.
-
-Nice to know. Do consider the current version more of a
-proof-of-concept that some definitive code.
-
->> The second patch exposes it from commitdiff view (obviosly), but also
->> from shortlog view, when less than 16 patches are begin shown.
->
-> Why this nonconfigurable limit?
-
-Because the patch was actually a quick hack for the proof of concept
-8-) I wasn't even sure the patch idea would have been worth it (as
-opposed to email-izing commitdiff_plain).
-
--- 
-Giuseppe "Oblomov" Bilotta
+Brian
