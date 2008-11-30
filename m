@@ -1,70 +1,58 @@
 From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH 3/3] git add --intent-to-add: do not let an empty blob
-	committed by accident
-Date: Sun, 30 Nov 2008 14:14:44 -0500
-Message-ID: <20081130191444.GC10981@coredump.intra.peff.net>
-References: <7v7i6qc8r0.fsf@gitster.siamese.dyndns.org> <alpine.DEB.1.00.0811272347010.30769@pacific.mpi-cbg.de> <7vtz9s8uzu.fsf@gitster.siamese.dyndns.org> <alpine.DEB.1.00.0811281225040.30769@pacific.mpi-cbg.de> <20081128192033.GF23984@spearce.org> <7voczz4cfb.fsf@gitster.siamese.dyndns.org> <7vk5an4cba.fsf_-_@gitster.siamese.dyndns.org> <7vvdu72nq9.fsf@gitster.siamese.dyndns.org> <7vk5an2nil.fsf_-_@gitster.siamese.dyndns.org>
+Subject: Re: [PATCH 2/3] git add --intent-to-add: fix removal of cached
+	emptiness
+Date: Sun, 30 Nov 2008 14:21:01 -0500
+Message-ID: <20081130192101.GD10981@coredump.intra.peff.net>
+References: <7v7i6qc8r0.fsf@gitster.siamese.dyndns.org> <alpine.DEB.1.00.0811272347010.30769@pacific.mpi-cbg.de> <7vtz9s8uzu.fsf@gitster.siamese.dyndns.org> <alpine.DEB.1.00.0811281225040.30769@pacific.mpi-cbg.de> <20081128192033.GF23984@spearce.org> <7voczz4cfb.fsf@gitster.siamese.dyndns.org> <7vk5an4cba.fsf_-_@gitster.siamese.dyndns.org> <7vvdu72nq9.fsf@gitster.siamese.dyndns.org> <7vprkf2nki.fsf_-_@gitster.siamese.dyndns.org> <bd6139dc0811290738qbd93ff6oa7aa854708009075@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Cc: "Shawn O. Pearce" <spearce@spearce.org>,
+Cc: Junio C Hamano <gitster@pobox.com>,
+	"Shawn O. Pearce" <spearce@spearce.org>,
 	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
 	git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sun Nov 30 20:16:04 2008
+To: sverre@rabbelier.nl
+X-From: git-owner@vger.kernel.org Sun Nov 30 20:22:36 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1L6rlz-00053d-UP
-	for gcvg-git-2@gmane.org; Sun, 30 Nov 2008 20:16:04 +0100
+	id 1L6rsE-0006pR-6m
+	for gcvg-git-2@gmane.org; Sun, 30 Nov 2008 20:22:30 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752629AbYK3TOr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 30 Nov 2008 14:14:47 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752617AbYK3TOr
-	(ORCPT <rfc822;git-outgoing>); Sun, 30 Nov 2008 14:14:47 -0500
-Received: from peff.net ([208.65.91.99]:2011 "EHLO peff.net"
+	id S1752557AbYK3TVF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 30 Nov 2008 14:21:05 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752492AbYK3TVE
+	(ORCPT <rfc822;git-outgoing>); Sun, 30 Nov 2008 14:21:04 -0500
+Received: from peff.net ([208.65.91.99]:2441 "EHLO peff.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752557AbYK3TOq (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 30 Nov 2008 14:14:46 -0500
-Received: (qmail 9519 invoked by uid 111); 30 Nov 2008 19:14:45 -0000
+	id S1752545AbYK3TVE (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 30 Nov 2008 14:21:04 -0500
+Received: (qmail 9571 invoked by uid 111); 30 Nov 2008 19:21:02 -0000
 Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.32) with SMTP; Sun, 30 Nov 2008 14:14:45 -0500
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Sun, 30 Nov 2008 14:14:44 -0500
+    by peff.net (qpsmtpd/0.32) with SMTP; Sun, 30 Nov 2008 14:21:02 -0500
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Sun, 30 Nov 2008 14:21:01 -0500
 Content-Disposition: inline
-In-Reply-To: <7vk5an2nil.fsf_-_@gitster.siamese.dyndns.org>
+In-Reply-To: <bd6139dc0811290738qbd93ff6oa7aa854708009075@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/101982>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/101983>
 
-On Fri, Nov 28, 2008 at 07:56:34PM -0800, Junio C Hamano wrote:
+On Sat, Nov 29, 2008 at 04:38:12PM +0100, Sverre Rabbelier wrote:
 
-> Subject: Re: [PATCH 3/3] git add --intent-to-add: do not let an empty blob
->	committed by accident
+> On Sat, Nov 29, 2008 at 04:55, Junio C Hamano <gitster@pobox.com> wrote:
+> > This uses the extended index flag mechanism introduced earlier to mark
+> > the entries added to the index via "git add -N" with CE_INTENT_TO_ADD.
+> 
+> Is 'intent' [0] used properly here? Should it not be 'intend' [1]?
+> 
+> [0] http://en.wiktionary.org/wiki/intent
+> [1] http://en.wiktionary.org/wiki/intend
 
-Minor nit: grammatical error in the subject.
-
-> This implies that you cannot "git commit" from such a state; however "git
-> commit -a" still works.
-
-I was going to provide a test for "git commit -a" to squash in, but it
-looks like the version in 'pu' already has one.
-
->  	case WRITE_TREE_UNMERGED_INDEX:
-> -		die("%s: error building trees; the index is unmerged?", me);
-> +		die("%s: error building trees", me);
-
-This caught me by surprise while reading, but I assume the rationale is
-"now there is a new, different reason not to be able to build the trees,
-so our guess is less likely to be correct". I wonder if we can do better
-by actually passing out a more exact error value (though it looks like
-we will already have said "foo: not added yet" by that point anyway, so
-maybe it is just pointless to say more).
-
-> diff --git a/t/t3701-add-interactive.sh b/t/t3701-add-interactive.sh
-
-Why in t3701? These don't have anything to do with interactive add, and
-there is a already a t2203-add-intent.
+I think it's fine. The flags describe the entry, not the user (e.g.,
+CE_VALID). So the entry does not _intend_ to add anything, but rather
+there exists _intent_ to add this entry (you might also say the entry is
+"_intended_ to be added", but that is getting a bit clunky).
 
 -Peff
