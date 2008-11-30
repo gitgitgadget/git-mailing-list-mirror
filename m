@@ -1,92 +1,98 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: [RFC] Git Perl bindings, and OO interface
-Date: Sun, 30 Nov 2008 06:50:38 -0800 (PST)
-Message-ID: <m37i6ljmjy.fsf@localhost.localdomain>
-References: <200811270258.50898.jnareb@gmail.com>
-	<200811301445.18969.nadim@khemir.net>
+From: Evgeniy Ivanov <lolkaantimat@gmail.com>
+Subject: Re: gitweb doesn't work with bare repositories
+Date: Sun, 30 Nov 2008 17:52:46 +0300
+Message-ID: <4932A8BE.9080302@gmail.com>
+References: <4931D23A.10402@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: nadim khemir <nadim@khemir.net>
-X-From: git-owner@vger.kernel.org Sun Nov 30 15:52:35 2008
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Nov 30 15:55:09 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1L6nf0-0005NG-Tz
-	for gcvg-git-2@gmane.org; Sun, 30 Nov 2008 15:52:35 +0100
+	id 1L6nhU-00060n-WB
+	for gcvg-git-2@gmane.org; Sun, 30 Nov 2008 15:55:09 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751937AbYK3Oum (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 30 Nov 2008 09:50:42 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751912AbYK3Oum
-	(ORCPT <rfc822;git-outgoing>); Sun, 30 Nov 2008 09:50:42 -0500
-Received: from nf-out-0910.google.com ([64.233.182.187]:54889 "EHLO
-	nf-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751706AbYK3Oul (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 30 Nov 2008 09:50:41 -0500
-Received: by nf-out-0910.google.com with SMTP id d3so1089922nfc.21
-        for <git@vger.kernel.org>; Sun, 30 Nov 2008 06:50:39 -0800 (PST)
+	id S1752492AbYK3Oxw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 30 Nov 2008 09:53:52 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752156AbYK3Oxw
+	(ORCPT <rfc822;git-outgoing>); Sun, 30 Nov 2008 09:53:52 -0500
+Received: from ey-out-2122.google.com ([74.125.78.25]:39559 "EHLO
+	ey-out-2122.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751096AbYK3Oxv (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 30 Nov 2008 09:53:51 -0500
+Received: by ey-out-2122.google.com with SMTP id 6so877602eyi.37
+        for <git@vger.kernel.org>; Sun, 30 Nov 2008 06:53:49 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:received:received
-         :x-authentication-warning:to:cc:subject:references:from:in-reply-to
-         :message-id:lines:user-agent:mime-version:content-type:date;
-        bh=2sn4kgYIGOWGNrz7JMmPQ4wPI6gnoKVZwfbwrOeOBn4=;
-        b=VaH6faUZD48GQV9dvDn9nf0A/Z9CmgZOqurs+9p5IkQQVWPAlW0XMbD2A/rOAYW8Da
-         dnmiwwl/04/J8tGwq+2PMLCYaEQPUrdUHpF9yKLmWtFJQdfsC4jH81BJygwDcsfnm00g
-         aBjDGHmyxR4YVwsYiw4RE6anV8iy/Ku5EjCJo=
+        h=domainkey-signature:received:received:message-id:date:from
+         :user-agent:mime-version:to:subject:references:in-reply-to
+         :x-enigmail-version:content-type:content-transfer-encoding;
+        bh=izbacZy5IKFDWcx05w5/43pQeF4fKjmG9AwSe+F5ZM8=;
+        b=QmvifWe5sWeOrzsH28Kex0MCuNFkYkdff0JBgtXn8gt6Gxex8sYuqUms8mZx4rmoa0
+         qCbyiJVibW0SCN7Ssnlrk3YFo3j3XgNIYXiiAnqEGtDmDqUUbG5s9I3yj1yAw92h53GL
+         i+T3ViWn+A4QH7WU6d9txvHdX6q55trfB0Z1I=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=x-authentication-warning:to:cc:subject:references:from:in-reply-to
-         :message-id:lines:user-agent:mime-version:content-type:date;
-        b=Kq/KeO5jR+WoJi2i76jx/z8u++z3zvu2oCEHz4dTTF+qXcyL/RBRCoAiYkmSRLD0E5
-         G8Qmpk8h+SQbAYXnmkKfTz607cxHyIbdaZuoYuCtHKy6UuEGktNpPUH6+gPGAEAPBuFT
-         4h8kkS9+wikRYAlB49vdVSnF0K+r3b1Q+N/gY=
-Received: by 10.210.27.20 with SMTP id a20mr11466891eba.138.1228056639568;
-        Sun, 30 Nov 2008 06:50:39 -0800 (PST)
-Received: from localhost.localdomain (abvs96.neoplus.adsl.tpnet.pl [83.8.216.96])
-        by mx.google.com with ESMTPS id 3sm7927522eyj.51.2008.11.30.06.50.37
+        h=message-id:date:from:user-agent:mime-version:to:subject:references
+         :in-reply-to:x-enigmail-version:content-type
+         :content-transfer-encoding;
+        b=BMnjB0jZFrAi9kOTRDyU5TXCaXd3hRmgEVdMsWa4zP2y+Gf6+BFy9ivXG95BdaWARW
+         VMOhsi5E2N8Hqy3rwnqTsOjkY+Jctz+wWOr5dqmy6QvJbEdohT7DCSxnRKv6+Ekuehk/
+         dvLHSzJsE4KB9Aj4PepNIIa8FtKmaukb9UfLM=
+Received: by 10.210.10.8 with SMTP id 8mr11436845ebj.172.1228056829895;
+        Sun, 30 Nov 2008 06:53:49 -0800 (PST)
+Received: from ?10.180.88.13? ([89.113.219.166])
+        by mx.google.com with ESMTPS id k9sm15808106nfh.23.2008.11.30.06.53.48
         (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Sun, 30 Nov 2008 06:50:38 -0800 (PST)
-Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id mAUEo4lE001730;
-	Sun, 30 Nov 2008 15:50:15 +0100
-Received: (from jnareb@localhost)
-	by localhost.localdomain (8.13.4/8.13.4/Submit) id mAUEnrYX001718;
-	Sun, 30 Nov 2008 15:49:53 +0100
-X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
-In-Reply-To: <200811301445.18969.nadim@khemir.net>
-User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
+        Sun, 30 Nov 2008 06:53:49 -0800 (PST)
+User-Agent: Thunderbird 2.0.0.17 (X11/20080922)
+In-Reply-To: <4931D23A.10402@gmail.com>
+X-Enigmail-Version: 0.95.7
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/101974>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/101975>
 
-nadim khemir <nadim@khemir.net> writes:
-> On Thursday 27 November 2008 02.58.49 Jakub Narebski wrote:
-> > ...
-> >
-> > 7. Git::Refs
-> >
-> >    It is meant to represent references, mainly branches, and be filled
-> >    using git-for-each-ref... and for example used for ref markers.
-> >
-> > There are probably a few things I have forgot about...
+Thanks to everybody for answers. I'm not subscribed and saw them in the
+list archive.
+All things you have noticed are typos, sure I typed commands correctly.
+The problem was caused by "$feature{'pathinfo'}{'default'} = [1];" in
+the config. So the problem is solved now.
+Good luck :)
+
+Evgeniy Ivanov wrote:
+> Hi,
+> I have installed gitweb and can't make it work with bare repos.
+> I have such config:
+> $my_uri = "http://mysite.org:8000";
+> $projectroot = "/srv/www/gamekeeper/htdocs/projects";
 > 
-> Thank you for writing the RFC, it's a very good start. I would like to see 
-> some strategy for libgit[2] in the RFC. What is your opinion about that?
+> In projects I have created bare repo:
+> mkdir some
+> cd some.git
+> git --bare init
+> cd /some_git_repo
+> git push /srv/www/gamekeeper/htdocs/projects master
+> 
+> Everything fine, but when I click the link on some.git I don't have a
+> page (just "Error 404").
+> 
+> But if I clone /some_git_repo with some in the projects, I have a link
+> "some/.git" and it works fine.
+> 
+> Permissions are ok, virtual host is ok since I get main page and have
+> access to cloned repo.
+> 
+> What can be wrong?
+> 
+> 
 
-I do not know enought about libgit2 or even git unofficial internal C
-API to talk about it.
 
-I did not plan for Perl interface to be actual Perl bindings, using
-libgit2.  Please remember that earlier effort of using XS (Perl <-> C
-interface) failed because it relied on GCC support for -fPIC and was
-not sufficiently portable... if I remember it correctly.  Calling Git
-commands and massaging output would be enough for me.
 
 -- 
-Jakub Narebski
-Poland
-ShadeHawk on #git
+Cheers, Evgeniy.
+Key fingerprint: F316 B5A1 F6D2 054F CD18 B74A 9540 0ABB 1FE5 67A3
