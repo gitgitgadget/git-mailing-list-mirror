@@ -1,84 +1,103 @@
-From: "Sitaram Chamarty" <sitaramc@gmail.com>
-Subject: Re: timestamps not git-cloned
-Date: Sun, 30 Nov 2008 06:44:38 +0530
-Message-ID: <2e24e5b90811291714s4388289bwa4b2e22ff1f75a83@mail.gmail.com>
-References: <e3f230850811271908g1be6b3f9t3e678081088de06b@mail.gmail.com>
-	 <20081129085406.GA20428@foursquare.net>
-	 <20081129092231.GA32630@cuci.nl>
-	 <200811291117.01655.trast@student.ethz.ch>
+From: "Giuseppe Bilotta" <giuseppe.bilotta@gmail.com>
+Subject: Re: [PATCH 3/3] gitweb: make gitweb_check_feature a boolean wrapper
+Date: Sun, 30 Nov 2008 02:31:12 +0100
+Message-ID: <cb7bb73a0811291731g7f8770f7p89e924c00d2ab004@mail.gmail.com>
+References: <1227904793-1821-3-git-send-email-giuseppe.bilotta@gmail.com>
+	 <1227959616-8056-1-git-send-email-giuseppe.bilotta@gmail.com>
+	 <7vej0u1d2c.fsf@gitster.siamese.dyndns.org>
+	 <7vzljiz1qn.fsf@gitster.siamese.dyndns.org>
+	 <7vmyfiz0zf.fsf_-_@gitster.siamese.dyndns.org>
+	 <cb7bb73a0811291427n7922ab1fq50caedafe7163f9e@mail.gmail.com>
+	 <7vej0uysbs.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-Cc: "Stephen R. van den Berg" <srb@cuci.nl>,
-	"Chris Frey" <cdfrey@foursquare.net>, jidanni@jidanni.org,
-	dhruvakm@gmail.com, git@vger.kernel.org
-To: "Thomas Rast" <trast@student.ethz.ch>
-X-From: git-owner@vger.kernel.org Sun Nov 30 02:18:34 2008
+Cc: git@vger.kernel.org, "Jakub Narebski" <jnareb@gmail.com>,
+	"Petr Baudis" <pasky@suse.cz>
+To: "Junio C Hamano" <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sun Nov 30 02:32:34 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1L6axF-0008P6-KA
-	for gcvg-git-2@gmane.org; Sun, 30 Nov 2008 02:18:34 +0100
+	id 1L6bAn-0002QL-A5
+	for gcvg-git-2@gmane.org; Sun, 30 Nov 2008 02:32:33 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753679AbYK3BOl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 29 Nov 2008 20:14:41 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753649AbYK3BOl
-	(ORCPT <rfc822;git-outgoing>); Sat, 29 Nov 2008 20:14:41 -0500
-Received: from ti-out-0910.google.com ([209.85.142.191]:57358 "EHLO
-	ti-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753634AbYK3BOk (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 29 Nov 2008 20:14:40 -0500
-Received: by ti-out-0910.google.com with SMTP id b6so1288031tic.23
-        for <git@vger.kernel.org>; Sat, 29 Nov 2008 17:14:38 -0800 (PST)
+	id S1753835AbYK3BbQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 29 Nov 2008 20:31:16 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753634AbYK3BbQ
+	(ORCPT <rfc822;git-outgoing>); Sat, 29 Nov 2008 20:31:16 -0500
+Received: from ik-out-1112.google.com ([66.249.90.181]:18553 "EHLO
+	ik-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753412AbYK3BbP (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 29 Nov 2008 20:31:15 -0500
+Received: by ik-out-1112.google.com with SMTP id c29so1594002ika.5
+        for <git@vger.kernel.org>; Sat, 29 Nov 2008 17:31:13 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:received:received:message-id:date:from:to
          :subject:cc:in-reply-to:mime-version:content-type
          :content-transfer-encoding:content-disposition:references;
-        bh=BUmfQk5kFORnzBJcxXdmzjP5w99/rKVCY+WCiBGdBG4=;
-        b=xjK3quDDtFXy1HmlXhnHOUwybs8/StwvmrJXIzKzgsKT6OIU8IwlBeQFy+vuiAcPBh
-         FyR4PEFlvU7+OAgDJP/vAVzo5UzDgKjLHKD+sTBln5zA2pUfPCZUF5bAScuZCZvcc2c+
-         F9oH5yxLZeg5Uypk7CUdku/rnlb775+wBXW4c=
+        bh=yLvs/72CDojqVSFZcBohsA0Ah0ApFhFHJDngIrmXk0Q=;
+        b=RMCWAz5L8sRwgMCMkWmc24FunRKM0rs4RLBn11xw56cMelfIXwDMvYIeFgj1brgB3H
+         gUlKuyMI1m1e6SmddhyG5hXh4ueKCH30aJIeS9MLeQ+YajzbZlsOSyJ6hM8qOrudkBL7
+         uiB1BvWfgzsyLekDXwOb3u4D/OCs5Zzrlul4Y=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
          :content-type:content-transfer-encoding:content-disposition
          :references;
-        b=f4dGO6/k+CLaSAHTFzn0EnEdz64xWUbqBRZlNnNX6iH/uUL04PPno4poJXgcun3l8T
-         9NV9loG2VQrNNyz5326vNHQHW7RqcEUqAwO4vSTTRvXB2yLkHhjLkFPi/mL9joe2H+lO
-         GpNxZQYz2dd5/1AYCrmPNmhtheUOklJeECDIo=
-Received: by 10.110.15.9 with SMTP id 9mr14092826tio.27.1228007678851;
-        Sat, 29 Nov 2008 17:14:38 -0800 (PST)
-Received: by 10.110.60.15 with HTTP; Sat, 29 Nov 2008 17:14:38 -0800 (PST)
-In-Reply-To: <200811291117.01655.trast@student.ethz.ch>
+        b=WKp4zdzj2wopMT+8OY2fNjqqdFb7vj34ptHr+C2A77mCoY4VBqfMhM3//PXKIdq/Qq
+         ZMfNajvG9x9zRw/y3B6uYm1J38YAUJEj6wOwCr5/0cpalWiGtOvkTi+S0ciqTwZ15VqL
+         RHljyUlt+Hrsyr18L0/Yz4Wc+0QVv88how0kE=
+Received: by 10.210.120.7 with SMTP id s7mr10813361ebc.78.1228008672330;
+        Sat, 29 Nov 2008 17:31:12 -0800 (PST)
+Received: by 10.210.79.12 with HTTP; Sat, 29 Nov 2008 17:31:12 -0800 (PST)
+In-Reply-To: <7vej0uysbs.fsf@gitster.siamese.dyndns.org>
 Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/101943>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/101944>
 
-On Sat, Nov 29, 2008 at 3:46 PM, Thomas Rast <trast@student.ethz.ch> wrote:
-> Stephen R. van den Berg wrote:
->> Chris Frey wrote:
->> >If this is the important bit, perhaps git-archive could be changed
->> >to create tarballs with file timestamps based on their commit dates.
->>
->> Based on the principle of least surprise, I'd consider this a rather good
->> idea.
+On Sun, Nov 30, 2008 at 1:23 AM, Junio C Hamano <gitster@pobox.com> wrote:
+> "Giuseppe Bilotta" <giuseppe.bilotta@gmail.com> writes:
 >
-> Unless I'm missing something, this would make git-archive rather more
-> expensive than it is now: Tree objects do not record any timestamps,
+>> On Sat, Nov 29, 2008 at 10:16 PM, Junio C Hamano <gitster@pobox.com> wrote:
+>>>  * Again, this is to demonstrate how I would have liked to see your
+>>>   patches as a reviewable series.  Notice how this naturally justifies
+>>>   the dropping of parentheses in many lines that begin with "my", and
+>>>   makes it easier to review?  You can review the patch easily by knowing
+>>>   that callers that have s/get/check/ are now safe to use scalar context.
+>>
+>> Yes, I get the point: do less things under the hood. I also still
+>> think that three patches with code going ping-pong are way too much,
+>> though 8-P
+>>
+>> For what it's worth, you get my Ack: to your patchset 8-)
+>
+> Well, I am not interested in taking credits for this series.  I am very
+> much interested in reducing my future workload by showing people how an
+> easily reviewable series should look like.
+>
+> So if you still think it is "way too much", I did not succeed what I tried
+> to do X-<.
 
-How many people use git-archive and how many times a day do they use
-it?  For example, kernel.org seems to put out linux-2.x.y.z.tar.bz2
-once every 2 to 7 days.
+At least as far as this patch goes, from my point of view, the
+'clueless/careless' usages of gitweb_check_feature are the
+conceptually (although not code-wise) correct ones, so they shouldn't
+be the ones touched by the patch, considering that in addition to the
+futureproofing, (implicit) fixing those usages is one of the main
+points of the patch itself.
 
-The overhead of this new option (and certainly it should be an option,
-not the default) should be measured not against the old running time,
-but against the frequency of usage of the tool.  Look at it on those
-time scales, it may not be a big deal.
+OTOH, I _do_ get the point about ease of review. But for example (and
+for future reference for myself): would you say that it would have
+been enough to have a cleaner commit message explicitly mentioning the
+fact that formerly incorrect usages of the gitweb_check_feature() were
+left intact because they were now correct?
 
-By all accounts, this overhead will not affect the "giterate" [meaning
-git-literate ;-)] people too much.
+Something like this http://git.oblomov.eu/git/patch/gitweb/check-feature-v3
+
+-- 
+Giuseppe "Oblomov" Bilotta
