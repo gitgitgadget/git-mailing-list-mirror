@@ -1,264 +1,136 @@
-From: Giuseppe Bilotta <giuseppe.bilotta@gmail.com>
-Subject: [PATCH] gitweb: fixes to gitweb feature check code
-Date: Sun, 30 Nov 2008 02:34:04 +0100
-Message-ID: <1228008844-12506-1-git-send-email-giuseppe.bilotta@gmail.com>
-References: <Message-ID: <cb7bb73a0811291731g7f8770f7p89e924c00d2ab004@mail.gmail.com>
-Cc: Jakub Narebski <jnareb@gmail.com>, Petr Baudis <pasky@suse.cz>,
-	Junio C Hamano <gitster@pobox.com>,
-	Giuseppe Bilotta <giuseppe.bilotta@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Nov 30 02:35:08 2008
+From: "Giuseppe Bilotta" <giuseppe.bilotta@gmail.com>
+Subject: Re: [PATCH 0/2] gitweb: patch view
+Date: Sun, 30 Nov 2008 02:44:38 +0100
+Message-ID: <cb7bb73a0811291744t2bb9c8c1t1dac497705e2c3c2@mail.gmail.com>
+References: <1227966071-11104-1-git-send-email-giuseppe.bilotta@gmail.com>
+	 <200811300206.23240.jnareb@gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, "Petr Baudis" <pasky@suse.cz>,
+	"Junio C Hamano" <gitster@pobox.com>
+To: "Jakub Narebski" <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Nov 30 02:46:34 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1L6bDH-0002se-0N
-	for gcvg-git-2@gmane.org; Sun, 30 Nov 2008 02:35:07 +0100
+	id 1L6bOL-00051T-87
+	for gcvg-git-2@gmane.org; Sun, 30 Nov 2008 02:46:33 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753804AbYK3Bdu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 29 Nov 2008 20:33:50 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753722AbYK3Bdu
-	(ORCPT <rfc822;git-outgoing>); Sat, 29 Nov 2008 20:33:50 -0500
-Received: from nf-out-0910.google.com ([64.233.182.188]:32973 "EHLO
-	nf-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753634AbYK3Bdt (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 29 Nov 2008 20:33:49 -0500
-Received: by nf-out-0910.google.com with SMTP id d3so1030365nfc.21
-        for <git@vger.kernel.org>; Sat, 29 Nov 2008 17:33:48 -0800 (PST)
+	id S1753722AbYK3Bol (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 29 Nov 2008 20:44:41 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753634AbYK3Bok
+	(ORCPT <rfc822;git-outgoing>); Sat, 29 Nov 2008 20:44:40 -0500
+Received: from ey-out-2122.google.com ([74.125.78.26]:36767 "EHLO
+	ey-out-2122.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753444AbYK3Bok (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 29 Nov 2008 20:44:40 -0500
+Received: by ey-out-2122.google.com with SMTP id 6so829605eyi.37
+        for <git@vger.kernel.org>; Sat, 29 Nov 2008 17:44:38 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:cc:subject:date
-         :message-id:x-mailer:in-reply-to:references;
-        bh=4cVWjhFT0fnEL8jGOTuV+G3O3HPbKbX430e4k8QNGUw=;
-        b=vXsxy9Q0kVBCrOmy0HvvFI5sebe50jXmOxmNuniVBpCnJzflpmj5GILnqi8E3jcx+m
-         WpMLaD5fOtXm5sTkrBiE8G1ciHPsxo5B9/XsdhHpOd6mBgiFpml6v3sLkrziAt+Y7tJz
-         J1qMtBW+uGStAZchHAQdTQsw8Hukutnsv+UKo=
+        h=domainkey-signature:received:received:message-id:date:from:to
+         :subject:cc:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:references;
+        bh=0gIfw1bQm5V9QJlkKpZX+Ah2I87AnCi9/yN5PwO4Kz0=;
+        b=WrBFd2ehZTJsF5WaEoZRxSHSju0fCziUjYkdbrNBrj5UtecXotzjEinXF4Lbro0UYi
+         HXIcpPUKoeh7W11OUKMhkW8sVFVNbqdSzZdVqq8ADgErfyzG/0AvZwwbMT5qHc9Khoue
+         TpFqvUUCd2dEodTDyUH1yBhPYEc83DQRl0rP0=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        b=NcV0Uyrop8dGU/6Sx6xZYEcYoK9GZFjwj6DuSbCpA7bAFbU5hUv9msrWgIh6VP4tWg
-         pnWNaKQSQNrKlWEvuUAfFl/0rfu44PXh7OID4Q/KpQOwfw3sVb02KiTjuHKSWGIBcxPU
-         ltFGcN8VERWgMD5xDhhUTbqqU5tXUUXCswsUc=
-Received: by 10.210.51.10 with SMTP id y10mr10831646eby.98.1228008827778;
-        Sat, 29 Nov 2008 17:33:47 -0800 (PST)
-Received: from localhost ([78.15.11.205])
-        by mx.google.com with ESMTPS id 23sm173786eya.7.2008.11.29.17.33.46
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Sat, 29 Nov 2008 17:33:47 -0800 (PST)
-X-Mailer: git-send-email 1.5.6.5
-In-Reply-To: <Message-ID: <cb7bb73a0811291731g7f8770f7p89e924c00d2ab004@mail.gmail.com>
+        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
+         :content-type:content-transfer-encoding:content-disposition
+         :references;
+        b=Mh30mkqkwcs3NzrN2fDP1WM6Z2ZkJttTZob5V98CFqVomO160G27Prj1jwnfiWyFMO
+         eFSg7mFr/ellO96GJ0oTy6PsIOmuB9qCkG8p0Je/TMiUIhBu8cuobpIg18FZr319ZstQ
+         ymPWyeDzrSeXMw2/nXNLxJC5jLx/+5J1f5qGk=
+Received: by 10.210.120.7 with SMTP id s7mr10823732ebc.78.1228009478155;
+        Sat, 29 Nov 2008 17:44:38 -0800 (PST)
+Received: by 10.210.79.12 with HTTP; Sat, 29 Nov 2008 17:44:38 -0800 (PST)
+In-Reply-To: <200811300206.23240.jnareb@gmail.com>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/101945>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/101946>
 
-The gitweb_check_feature routine was being used for two different
-purposes: retrieving the actual feature value (such as the list of
-snapshot formats or the list of additional actions), and checking if a
-feature was enabled.
+On Sun, Nov 30, 2008 at 2:06 AM, Jakub Narebski <jnareb@gmail.com> wrote:
+> On Sat, 29 Nov 2008, Giuseppe Bilotta wrote:
+>
+>> I recently discovered that the commitdiff_plain view is not exactly
+>> something that can be used by git am directly (for example, the subject
+>> line gets duplicated in the commit message body after using git am).
+>
+> That's because gitweb generates email-like format "by hand", instead
+> of using '--format=email' or git-format-patch like in your series. On
+> the other hand that allows us to add extra headers, namely X-Git-Tag:
+> (which hasn't best implementation, anyway) and X-Git-Url: with URL
+> for given output.
 
-This led to subtle bugs in feature checking code: gitweb_check_feature
-would return (0) for disabled features, so its use in scalar context
-would return true instead of false.
+> By the way, we still might want to add somehow X-Git-Url and X-Git-Tag
+> headers later to 'patch' ('patchset') output format.
 
-To fix this issue and future-proof the code, we split feature value
-retrieval into its own gitweb_get_feature()function , and ensure that
-the boolean feature check function gitweb_check_feature() always returns
-a scalar (precisely, the first/only item in the feature value list).
+Yeah, I've been thinking about it, but I couldn't find an easy and
+robust way to do it. Plus, should we add them for each patch, or just
+once for the whole patchset?
 
-Usage of gitweb_check_feature() across gitweb is replaced with
-gitweb_get_feature() where appropriate, and list evaluation of
-gitweb_check_feature() is demoted to scalar evaluation to prevent
-ambiguity. The few previously incorrect uses of gitweb_check_feature()
-in scalar context are left untouched because they are now correct.
+>> Since I'm not sure if it was the case to fix the plain view because I
+>> don't know what its intended usage was, I prepared a new view,
+>> uncreatively called 'patch', that exposes git format-patch output
+>> directly.
+>
+> Perhaps 'format_patch' would be better... hmmm... ?
 
-Signed-off-by: Giuseppe Bilotta <giuseppe.bilotta@gmail.com>
----
- gitweb/gitweb.perl |   52 +++++++++++++++++++++++++++++++++++-----------------
- 1 files changed, 35 insertions(+), 17 deletions(-)
+Considering I think commitdiff is ugly and long, you can guess my
+opinion on format_patch 8-P. 'patchset' might be a good candidate,
+considering it's what it does when both hash_parent and hash are
+given.
 
-diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
-index 933e137..4246819 100755
---- a/gitweb/gitweb.perl
-+++ b/gitweb/gitweb.perl
-@@ -190,7 +190,9 @@ our %feature = (
- 	# if there is no 'sub' key (no feature-sub), then feature cannot be
- 	# overriden
- 	#
--	# use gitweb_check_feature(<feature>) to check if <feature> is enabled
-+	# use gitweb_get_feature(<feature>) to retrieve the <feature> value
-+	# (an array) or gitweb_check_feature(<feature>) to check if <feature>
-+	# is enabled
- 
- 	# Enable the 'blame' blob view, showing the last commit that modified
- 	# each line in the file. This can be very CPU-intensive.
-@@ -329,7 +331,8 @@ our %feature = (
- 		'default' => [0]},
- );
- 
--sub gitweb_check_feature {
-+# retrieve the value of a given feature, as an array
-+sub gitweb_get_feature {
- 	my ($name) = @_;
- 	return unless exists $feature{$name};
- 	my ($sub, $override, @defaults) = (
-@@ -344,6 +347,21 @@ sub gitweb_check_feature {
- 	return $sub->(@defaults);
- }
- 
-+# check if a given feature is enabled or not, returning the first (and only)
-+# value of the feature. This allows us to write
-+#   my $bool_feat = gitweb_check_feature('bool_feat');
-+# or
-+#   gitweb_check_feature('bool_feat') or somecode;
-+# instead of
-+#   my ($bool_feat) = gitweb_get_feature('bool_feat');
-+# or
-+#   (gitweb_get_feature('bool_feat'))[0] or somecode;
-+# respectively
-+sub gitweb_check_feature {
-+	return (gitweb_get_feature(@_))[0];
-+}
-+
-+
- sub feature_blame {
- 	my ($val) = git_get_project_config('blame', '--bool');
- 
-@@ -767,7 +785,7 @@ our $git_dir;
- $git_dir = "$projectroot/$project" if $project;
- 
- # list of supported snapshot formats
--our @snapshot_fmts = gitweb_check_feature('snapshot');
-+our @snapshot_fmts = gitweb_get_feature('snapshot');
- @snapshot_fmts = filter_snapshot_fmts(@snapshot_fmts);
- 
- # dispatch
-@@ -810,7 +828,7 @@ sub href (%) {
- 		}
- 	}
- 
--	my ($use_pathinfo) = gitweb_check_feature('pathinfo');
-+	my $use_pathinfo = gitweb_check_feature('pathinfo');
- 	if ($use_pathinfo) {
- 		# try to put as many parameters as possible in PATH_INFO:
- 		#   - project name
-@@ -2101,7 +2119,7 @@ sub git_get_projects_list {
- 	$filter ||= '';
- 	$filter =~ s/\.git$//;
- 
--	my ($check_forks) = gitweb_check_feature('forks');
-+	my $check_forks = gitweb_check_feature('forks');
- 
- 	if (-d $projects_list) {
- 		# search in directory
-@@ -2947,7 +2965,7 @@ EOF
- 	}
- 	print "</div>\n";
- 
--	my ($have_search) = gitweb_check_feature('search');
-+	my $have_search = gitweb_check_feature('search');
- 	if (defined $project && $have_search) {
- 		if (!defined $searchtext) {
- 			$searchtext = "";
-@@ -2961,7 +2979,7 @@ EOF
- 			$search_hash = "HEAD";
- 		}
- 		my $action = $my_uri;
--		my ($use_pathinfo) = gitweb_check_feature('pathinfo');
-+		my $use_pathinfo = gitweb_check_feature('pathinfo');
- 		if ($use_pathinfo) {
- 			$action .= "/".esc_url($project);
- 		}
-@@ -3084,7 +3102,7 @@ sub git_print_page_nav {
- 	$arg{'tree'}{'hash'} = $treehead if defined $treehead;
- 	$arg{'tree'}{'hash_base'} = $treebase if defined $treebase;
- 
--	my @actions = gitweb_check_feature('actions');
-+	my @actions = gitweb_get_feature('actions');
- 	my %repl = (
- 		'%' => '%',
- 		'n' => $project,         # project name
-@@ -3454,7 +3472,7 @@ sub is_patch_split {
- sub git_difftree_body {
- 	my ($difftree, $hash, @parents) = @_;
- 	my ($parent) = $parents[0];
--	my ($have_blame) = gitweb_check_feature('blame');
-+	my $have_blame = gitweb_check_feature('blame');
- 	print "<div class=\"list_head\">\n";
- 	if ($#{$difftree} > 10) {
- 		print(($#{$difftree} + 1) . " files changed:\n");
-@@ -3968,7 +3986,7 @@ sub git_project_list_body {
- 	# actually uses global variable $project
- 	my ($projlist, $order, $from, $to, $extra, $no_header) = @_;
- 
--	my ($check_forks) = gitweb_check_feature('forks');
-+	my $check_forks = gitweb_check_feature('forks');
- 	my @projects = fill_project_list_info($projlist, $check_forks);
- 
- 	$order ||= $default_projects_order;
-@@ -4428,7 +4446,7 @@ sub git_summary {
- 	my @taglist  = git_get_tags_list(16);
- 	my @headlist = git_get_heads_list(16);
- 	my @forklist;
--	my ($check_forks) = gitweb_check_feature('forks');
-+	my $check_forks = gitweb_check_feature('forks');
- 
- 	if ($check_forks) {
- 		@forklist = git_get_projects_list($project);
-@@ -4457,7 +4475,7 @@ sub git_summary {
- 	}
- 
- 	# Tag cloud
--	my $show_ctags = (gitweb_check_feature('ctags'))[0];
-+	my $show_ctags = gitweb_check_feature('ctags');
- 	if ($show_ctags) {
- 		my $ctags = git_get_project_ctags($project);
- 		my $cloud = git_populate_project_tagcloud($ctags);
-@@ -4747,7 +4765,7 @@ sub git_blob {
- 		$expires = "+1d";
- 	}
- 
--	my ($have_blame) = gitweb_check_feature('blame');
-+	my $have_blame = gitweb_check_feature('blame');
- 	open my $fd, "-|", git_cmd(), "cat-file", "blob", $hash
- 		or die_error(500, "Couldn't cat $file_name, $hash");
- 	my $mimetype = blob_mimetype($fd, $file_name);
-@@ -4840,7 +4858,7 @@ sub git_tree {
- 	my $ref = format_ref_marker($refs, $hash_base);
- 	git_header_html();
- 	my $basedir = '';
--	my ($have_blame) = gitweb_check_feature('blame');
-+	my $have_blame = gitweb_check_feature('blame');
- 	if (defined $hash_base && (my %co = parse_commit($hash_base))) {
- 		my @views_nav = ();
- 		if (defined $file_name) {
-@@ -5838,7 +5856,7 @@ insensitive).</p>
- <dt><b>commit</b></dt>
- <dd>The commit messages and authorship information will be scanned for the given pattern.</dd>
- EOT
--	my ($have_grep) = gitweb_check_feature('grep');
-+	my $have_grep = gitweb_check_feature('grep');
- 	if ($have_grep) {
- 		print <<EOT;
- <dt><b>grep</b></dt>
-@@ -5855,7 +5873,7 @@ EOT
- <dt><b>committer</b></dt>
- <dd>Name and e-mail of the committer and date of commit will be scanned for the given pattern.</dd>
- EOT
--	my ($have_pickaxe) = gitweb_check_feature('pickaxe');
-+	my $have_pickaxe = gitweb_check_feature('pickaxe');
- 	if ($have_pickaxe) {
- 		print <<EOT;
- <dt><b>pickaxe</b></dt>
-@@ -5907,7 +5925,7 @@ sub git_shortlog {
- 
- sub git_feed {
- 	my $format = shift || 'atom';
--	my ($have_blame) = gitweb_check_feature('blame');
-+	my $have_blame = gitweb_check_feature('blame');
- 
- 	# Atom: http://www.atomenabled.org/developers/syndication/
- 	# RSS:  http://www.notestips.com/80256B3A007F2692/1/NAMO5P9UPQ
+> Actually IMHO both 'commitdiff' and 'commitdiff_plain' try to do two
+> things at once. First to show diff _for_ a commit, i.e. equivalent of
+> "git show" or "git show --pretty=email", perhaps choosing one of
+> parents for a merge commit. Then showing commit message for $hash has
+> sense. The fact that 'commit' view doesn't show patchset, while
+> 'commitdiff' does might be result of historical situation.
+>
+> Second, to show diff _between_ commits, i.e. equivalent of
+> "git diff branch master". Then there doesn't make much sense to show
+> full commit message _only_ for one side of diff. IMHO that should be
+> main purpose of 'commitdiff' and 'commitdiff_plain' views, or simply
+> 'diff' / 'diff_plain' future views.
+
+We can probably consider deprecating commitdiff(_plain) and have the
+following three views:
+
+* commit(_plain): do what commitdiff(_plain) currently does for a single commit
+* diff(_plain): do what commitdiff(_plain) currently does for
+parent..hash views, modulo something to be discussed for commit
+messages (a shortlog rather maybe?)
+* patch[set?][_plain?]: format-patch style output (maybe with option
+for HTML stuff too)
+
+> What 'patch' view does, what might be not obvious from this description
+> and from first patch in series, is to show diffs for _series_ of
+> commits. It means equivalent of "git log -p" or "git whatchanged".
+> It might make more sense to have plain git-format-patch output, but it
+> could be useful to have some kind of 'git log -p' HTML output.
+>
+> So even if 'commitdiff' / 'commitdiff_plain' is fixed, 'patch' whould
+> still have its place.
+
+Nice to know. Do consider the current version more of a
+proof-of-concept that some definitive code.
+
+>> The second patch exposes it from commitdiff view (obviosly), but also
+>> from shortlog view, when less than 16 patches are begin shown.
+>
+> Why this nonconfigurable limit?
+
+Because the patch was actually a quick hack for the proof of concept
+8-) I wasn't even sure the patch idea would have been worth it (as
+opposed to email-izing commitdiff_plain).
+
 -- 
-1.5.6.5
+Giuseppe "Oblomov" Bilotta
