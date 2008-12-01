@@ -1,93 +1,83 @@
-From: Johannes Sixt <j.sixt@viscovery.net>
-Subject: gitk: git bisect view doesn't work
-Date: Mon, 01 Dec 2008 15:43:37 +0100
-Message-ID: <4933F819.1010701@viscovery.net>
+From: "Shawn O. Pearce" <spearce@spearce.org>
+Subject: Re: two questions about the format of loose object
+Date: Mon, 1 Dec 2008 07:21:48 -0800
+Message-ID: <20081201152148.GG23984@spearce.org>
+References: <493399B7.5000505@gmail.com> <7voczws3np.fsf@gitster.siamese.dyndns.org> <4933AE55.2090007@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15
-Content-Transfer-Encoding: 7bit
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Paul Mackerras <paulus@samba.org>
-X-From: git-owner@vger.kernel.org Mon Dec 01 15:45:04 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: Junio C Hamano <gitster@pobox.com>, git list <git@vger.kernel.org>
+To: Liu Yubao <yubao.liu@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Dec 01 16:23:11 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1L7A1H-0002Nf-4H
-	for gcvg-git-2@gmane.org; Mon, 01 Dec 2008 15:45:03 +0100
+	id 1L7Ac7-0008TC-A4
+	for gcvg-git-2@gmane.org; Mon, 01 Dec 2008 16:23:07 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751155AbYLAOno (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 1 Dec 2008 09:43:44 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750748AbYLAOno
-	(ORCPT <rfc822;git-outgoing>); Mon, 1 Dec 2008 09:43:44 -0500
-Received: from lilzmailso01.liwest.at ([212.33.55.23]:34863 "EHLO
-	lilzmailso01.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751155AbYLAOnn (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 1 Dec 2008 09:43:43 -0500
-Received: from cm56-163-160.liwest.at ([86.56.163.160] helo=linz.eudaptics.com)
-	by lilzmailso01.liwest.at with esmtpa (Exim 4.69)
-	(envelope-from <j.sixt@viscovery.net>)
-	id 1L79zu-0000Mh-O6; Mon, 01 Dec 2008 15:43:39 +0100
-Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.96])
-	by linz.eudaptics.com (Postfix) with ESMTP
-	id 4876669F; Mon,  1 Dec 2008 15:43:38 +0100 (CET)
-User-Agent: Thunderbird 2.0.0.18 (Windows/20081105)
-X-Enigmail-Version: 0.95.5
-X-Spam-Score: -1.4 (-)
-X-Spam-Report: Spam detection software, running on the system "lilzmailsa03.liwest.at", has
-	identified this incoming email as possible spam.  The original message
-	has been attached to this so you can view it (if it isn't spam) or label
-	similar future email.  If you have any questions, see
-	the administrator of that system for details.
-	Content preview:  gitk bails out like this if I do "git bisect view": $ git
-	bisect start HEAD HEAD~2 Bisecting: 0 revisions left to test after this [9a61060c7e0d112d0742f5b845210ea8c41b6c6b]
-	Added encoding $ git bisect view Error in startup script: can't read "notflag":
-	no such variable while executing "expr {!$notflag}" ("--not" arm line 2)
-	invoked from within "switch -glob -- $arg { "-d" - "--date-order" { set vdatemode($n)
-	1 # remove from origargs in case we hit an unknown option set origarg..."
-	(procedure "parseviewargs" line 21) invoked from within "parseviewargs $view
-	$args" (procedure "start_rev_list" line 27) invoked from within "start_rev_list
-	$curview" (procedure "getcommits" line 5) invoked from within "getcommits
-	{}" (file "/usr/local/bin/gitk" line 10897) [...] 
-	Content analysis details:   (-1.4 points, 7.0 required)
-	pts rule name              description
-	---- ---------------------- --------------------------------------------------
-	-1.4 ALL_TRUSTED            Passed through trusted hosts only via SMTP
+	id S1751337AbYLAPVu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 1 Dec 2008 10:21:50 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751334AbYLAPVu
+	(ORCPT <rfc822;git-outgoing>); Mon, 1 Dec 2008 10:21:50 -0500
+Received: from george.spearce.org ([209.20.77.23]:52303 "EHLO
+	george.spearce.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751252AbYLAPVt (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 1 Dec 2008 10:21:49 -0500
+Received: by george.spearce.org (Postfix, from userid 1001)
+	id 9FD7A38200; Mon,  1 Dec 2008 15:21:48 +0000 (UTC)
+Content-Disposition: inline
+In-Reply-To: <4933AE55.2090007@gmail.com>
+User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/102047>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/102048>
 
-gitk bails out like this if I do "git bisect view":
+Liu Yubao <yubao.liu@gmail.com> wrote:
+> Thanks for your explanation, but I doubt if it's too costly to change the
+> format of loose object, after all this doesn't change the format of pack
+> file and affect git-pull/fetch of old git client. 
 
-$ git bisect start HEAD HEAD~2
-Bisecting: 0 revisions left to test after this
-[9a61060c7e0d112d0742f5b845210ea8c41b6c6b] Added encoding
+It is too costly; Jakub pointed out the dumb protocol clients
+would have issues with the new format.  Anyone copying a repository
+between machines using scp or a USB memory stick may also run into
+a problem.  Etc.
+ 
+> Some cons and pros.
+> 
+> cons:
+> 
+> * old git client can't read loose objects in new format
+>   (People degrade git rarely and old git can read pack files
+>    generated by new git, so it's not a big problem)
 
-$ git bisect view
-Error in startup script: can't read "notflag": no such variable
-    while executing
-"expr {!$notflag}"
-    ("--not" arm line 2)
-    invoked from within
-"switch -glob -- $arg {
-            "-d" -
-            "--date-order" {
-                set vdatemode($n) 1
-                # remove from origargs in case we hit an unknown option
-                set origarg..."
-    (procedure "parseviewargs" line 21)
-    invoked from within
-"parseviewargs $view $args"
-    (procedure "start_rev_list" line 27)
-    invoked from within
-"start_rev_list $curview"
-    (procedure "getcommits" line 5)
-    invoked from within
-"getcommits {}"
-    (file "/usr/local/bin/gitk" line 10897)
+That's a pretty big con.  We can also add slower performance on NFS,
+as has been reported already by others.
+ 
+> pros:
+> 
+> * avoid compressing and uncompressing loose objects that are likely
+>   frequently used when you are coding/merging
 
-$ git version
-git version 1.6.1.rc1
+True, loose objects are among the more frequently accessed items.
 
--- Hannes
+> * share loose objects among multipe git processes
+
+Probably not a huge issue.  How many concurrent git processes are
+you running on the same object store at once?  During development?
+Its probably not more than 1.  So sharing the objects doesn't make
+a very compelling argument.
+
+> * the new code path is simpler although we will have more code paths for
+>   compatibility
+
+The new code path is more complex, because although one branch is
+very simple (mmap and use) the other code paths have to stay for
+backwards compatibility.  Every time you add a branch point the
+code gets more complex.  It works well enough now, and is at least
+one branch point simpler than what you are proposing.  So I'm not
+really interested in seeing the change made.
+
+-- 
+Shawn.
