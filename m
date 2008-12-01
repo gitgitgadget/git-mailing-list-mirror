@@ -1,65 +1,64 @@
-From: Johannes Sixt <j.sixt@viscovery.net>
+From: dhruva <dhruvakm@gmail.com>
 Subject: Re: git build on msys fails (and fix)
-Date: Mon, 01 Dec 2008 12:57:02 +0100
-Message-ID: <4933D10E.6020706@viscovery.net>
-References: <e3f230850811300302y68992b9doe4897d97d513de3a@mail.gmail.com> <4933A922.7080300@viscovery.net> <e3f230850812010132g48fcdf2fm46310b601990e51d@mail.gmail.com> <e3f230850812010252i67d9846cg439b5951485ee7fe@mail.gmail.com> <e3f230850812010348w793e17c2q6ab92cf9b2c04972@mail.gmail.com>
-Reply-To: j.sixt@viscovery.net
+Date: Mon, 1 Dec 2008 17:32:20 +0530
+Message-ID: <e3f230850812010402n69cced19s3f36a5bcb84977c6@mail.gmail.com>
+References: <e3f230850811300302y68992b9doe4897d97d513de3a@mail.gmail.com> <4933A922.7080300@viscovery.net> <e3f230850812010132g48fcdf2fm46310b601990e51d@mail.gmail.com> <e3f230850812010252i67d9846cg439b5951485ee7fe@mail.gmail.com> <e3f230850812010348w793e17c2q6ab92cf9b2c04972@mail.gmail.com> <4933D10E.6020706@viscovery.net>
+Reply-To: dhruvakm@gmail.com
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
 Cc: Git <git@vger.kernel.org>, msysGit <msysgit@googlegroups.com>
-To: dhruvakm@gmail.com
-X-From: grbounce-SUPTvwUAAABqUyiVh9Fi-Slj5a_0adWQ=gcvm-msysgit=m.gmane.org@googlegroups.com Mon Dec 01 12:58:29 2008
+To: "Johannes Sixt" <j.sixt@viscovery.net>
+X-From: grbounce-SUPTvwUAAABqUyiVh9Fi-Slj5a_0adWQ=gcvm-msysgit=m.gmane.org@googlegroups.com Mon Dec 01 13:03:45 2008
 Return-path: <grbounce-SUPTvwUAAABqUyiVh9Fi-Slj5a_0adWQ=gcvm-msysgit=m.gmane.org@googlegroups.com>
 Envelope-to: gcvm-msysgit@m.gmane.org
-Received: from mail-gx0-f59.google.com ([209.85.217.59])
+Received: from wa-out-1516.google.com ([209.85.146.162])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1L77Q4-00052q-1q
-	for gcvm-msysgit@m.gmane.org; Mon, 01 Dec 2008 12:58:28 +0100
-Received: by mail-gx0-f59.google.com with SMTP id 19so2923206gxk.21
-        for <gcvm-msysgit@m.gmane.org>; Mon, 01 Dec 2008 03:57:16 -0800 (PST)
+	id 1L77V7-0006dZ-SY
+	for gcvm-msysgit@m.gmane.org; Mon, 01 Dec 2008 13:03:42 +0100
+Received: by wa-out-1516.google.com with SMTP id k6so397168wah.53
+        for <gcvm-msysgit@m.gmane.org>; Mon, 01 Dec 2008 04:02:28 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=googlegroups.com; s=beta;
         h=domainkey-signature:received:received:x-sender:x-apparently-to
          :received:received:received-spf:authentication-results:received
-         :received:message-id:date:from:user-agent:mime-version:to:cc:subject
-         :references:in-reply-to:x-enigmail-version:content-type
-         :content-transfer-encoding:x-spam-score:x-spam-report:reply-to
+         :dkim-signature:domainkey-signature:received:received:message-id
+         :date:from:to:subject:cc:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:references:reply-to
          :sender:precedence:x-google-loop:mailing-list:list-id:list-post
          :list-help:list-unsubscribe:x-beenthere-env:x-beenthere;
-        bh=Ovak4v0UVbTK+tS7ToXQRtJ6iDh4hPE0QCZMtCX+nCQ=;
-        b=jYP+TrJmOT3kCQem1WCsaf3P6HAE9bNVO+h4PDzxCbEKmqmtggYJebwFix95P/hQQD
-         We6fKMKQKr7RPOt8QNdRBvF5Xjn6yuguqRQf9q0HMXcc06fXl7cEYI9Abi4+yBSJvvsJ
-         4uwz7M73n2XESSJ0u4TagSPw/E/7bBPXf191w=
+        bh=Np3NIEOq5R8LP1O8zRdNAKT1OFUS6M5SeEH5fFyWkDE=;
+        b=vOxt4Xe+HotKlY4geMYL0Wgr+2jDVBAr9cMKagfDlJFcMOGm/Wvaht9IMm9Ap1DrqH
+         lpdjpN7wcBVQ9QF7hDZUx9c1B54jVFW+d1JT+JQgQwtecgve+/hCOtsu6T0lyGYPAFr+
+         Ebo28SRyrXJgPu47j6tHl3LaoJRqLbAh+f9Go=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=googlegroups.com; s=beta;
         h=x-sender:x-apparently-to:received-spf:authentication-results
-         :message-id:date:from:user-agent:mime-version:to:cc:subject
-         :references:in-reply-to:x-enigmail-version:content-type
-         :content-transfer-encoding:x-spam-score:x-spam-report:reply-to
-         :sender:precedence:x-google-loop:mailing-list:list-id:list-post
-         :list-help:list-unsubscribe:x-beenthere-env:x-beenthere;
-        b=WY67fWpSvSKtaN9aDb7OxpCmBe7qux9QdDhvBiMq2jd9B213EXC0gJcdZ4ZnvefLgh
-         KfhIaeF7M6kI7MLJ9slIHJM1hUZNgmFrlC9ljPSLGoQgp8y6SZTaVWz/IP3699RD+1bk
-         mnM2AMPnJqRjD/y9RB/+uOu39bJaCGiaFGEkY=
-Received: by 10.100.212.5 with SMTP id k5mr897654ang.22.1228132629967;
-        Mon, 01 Dec 2008 03:57:09 -0800 (PST)
-Received: by 10.176.13.33 with SMTP id 33gr3192yqm.0;
-	Mon, 01 Dec 2008 03:57:09 -0800 (PST)
-X-Sender: j.sixt@viscovery.net
+         :dkim-signature:domainkey-signature:message-id:date:from:to:subject
+         :cc:in-reply-to:mime-version:content-type:content-transfer-encoding
+         :content-disposition:references:reply-to:sender:precedence
+         :x-google-loop:mailing-list:list-id:list-post:list-help
+         :list-unsubscribe:x-beenthere-env:x-beenthere;
+        b=LGzxwCc4jwnHvA26MShnG5bcafoluGSAjANvYdi5Vs44m2zn1Ip5smFPLmR2kEGJ5R
+         1g3J4kXqsq1K7bsP8CwoFO12lVuXrzHTsnjRX+HE1SaZmNoTSBTyZRdtn/S6UoyUefdG
+         5q8OmPN42rT7tts4v4B4RCiCAdfcXNUAulUvM=
+Received: by 10.114.180.1 with SMTP id c1mr504839waf.17.1228132941999;
+        Mon, 01 Dec 2008 04:02:21 -0800 (PST)
+Received: by 10.106.176.3 with SMTP id y3gr3193pre.0;
+	Mon, 01 Dec 2008 04:02:21 -0800 (PST)
+X-Sender: dhruvakm@gmail.com
 X-Apparently-To: msysgit@googlegroups.com
-Received: by 10.90.82.8 with SMTP id f8mr3968515agb.28.1228132629166; Mon, 01 Dec 2008 03:57:09 -0800 (PST)
-Received: from lilzmailso02.liwest.at (lilzmailso02.liwest.at [212.33.55.13]) by mx.google.com with ESMTP id 22si5650286yxr.1.2008.12.01.03.57.08; Mon, 01 Dec 2008 03:57:08 -0800 (PST)
-Received-SPF: neutral (google.com: 212.33.55.13 is neither permitted nor denied by best guess record for domain of j.sixt@viscovery.net) client-ip=212.33.55.13;
-Authentication-Results: mx.google.com; spf=neutral (google.com: 212.33.55.13 is neither permitted nor denied by best guess record for domain of j.sixt@viscovery.net) smtp.mail=j.sixt@viscovery.net
-Received: from cm56-163-160.liwest.at ([86.56.163.160] helo=linz.eudaptics.com) by lilzmailso02.liwest.at with esmtpa (Exim 4.69) (envelope-from <j.sixt@viscovery.net>) id 1L77Ok-00038G-MK; Mon, 01 Dec 2008 12:57:06 +0100
-Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.96]) by linz.eudaptics.com (Postfix) with ESMTP id 66A4F69F; Mon,  1 Dec 2008 12:57:06 +0100 (CET)
-User-Agent: Thunderbird 2.0.0.18 (Windows/20081105)
-In-Reply-To: <e3f230850812010348w793e17c2q6ab92cf9b2c04972@mail.gmail.com>
-X-Enigmail-Version: 0.95.5
-X-Spam-Score: -1.4 (-)
-X-Spam-Report: Spam detection software, running on the system "lilzmailsa01.liwest.at", has identified this incoming email as possible spam.  The original message has been attached to this so you can view it (if it isn't spam) or label similar future email.  If you have any questions, see the administrator of that system for details. Content preview:  dhruva schrieb: > I got the mob branch and I fail to see the Makefile. I decided to > just add the pthread related files and push so that someone could > build, I get authentication failures. I had tried to push perl > sometime back when I had a gcc compiler perl (before strawberry perl) > and had similar problems. I am fairly certain I am doing something > wrong but cannot figure it out! [...]  Content analysis details:   (-1.4 points, 7.0 r
- equired) pts rule name              description ---- ---------------------- -------------------------------------------------- -1.4 ALL_TRUSTED            Passed through trusted hosts only via SMTP
+Received: by 10.114.135.1 with SMTP id i1mr5881462wad.6.1228132941778; Mon, 01 Dec 2008 04:02:21 -0800 (PST)
+Received: from wf-out-1314.google.com (wf-out-1314.google.com [209.85.200.170]) by mx.google.com with ESMTP id m37si3424588waf.0.2008.12.01.04.02.20; Mon, 01 Dec 2008 04:02:20 -0800 (PST)
+Received-SPF: pass (google.com: domain of dhruvakm@gmail.com designates 209.85.200.170 as permitted sender) client-ip=209.85.200.170;
+Authentication-Results: mx.google.com; spf=pass (google.com: domain of dhruvakm@gmail.com designates 209.85.200.170 as permitted sender) smtp.mail=dhruvakm@gmail.com; dkim=pass (test mode) header.i=@gmail.com
+Received: by wf-out-1314.google.com with SMTP id 28so2697044wfa.25 for <msysgit@googlegroups.com>; Mon, 01 Dec 2008 04:02:20 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=gamma; h=domainkey-signature:received:received:message-id:date:from:to :subject:cc:in-reply-to:mime-version:content-type :content-transfer-encoding:content-disposition:references; bh=uPClcs0ZkSiXoZlwxHfWV7v0jYbKMlkKkFVngepCefo=; b=va/yyiT4jLiGjMhZs5CT7QdKWO7B6Ne7NaWewTcUrLUKJgYFmViCr+5YO3u+kYSqXN cYDTd3hl4rsBIETxYogLllMy/8D93U8M5uHMJqnzwpmZihVIMp9QlUB7wMKhE7+oURda Nnt2Y1eyiX4Pl5jsxPV/K0YgXrLR08n0qPg+Q=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=gmail.com; s=gamma; h=message-id:date:from:to:subject:cc:in-reply-to:mime-version :content-type:content-transfer-encoding:content-disposition :references; b=TDuRUvH00V4O04+EZB1Ka4FhFs2413M/hH/XkPaqvjuLSIeGr7E9Pqe0tTY15VmzXp xSUqW3yQbcAplpDFQ5EhH1FKti4JLngFmaUDctJNzSvU/lPVkcgF7yBZbIDUY44t6w5W h+xT83qebBaEcmahzJB9De7AtjVBmIK55Cmb4=
+Received: by 10.142.241.15 with SMTP id o15mr4480404wfh.258.1228132940724; Mon, 01 Dec 2008 04:02:20 -0800 (PST)
+Received: by 10.142.110.21 with HTTP; Mon, 1 Dec 2008 04:02:20 -0800 (PST)
+In-Reply-To: <4933D10E.6020706@viscovery.net>
+Content-Disposition: inline
 Sender: msysgit@googlegroups.com
 Precedence: bulk
 X-Google-Loop: groups
@@ -72,22 +71,33 @@ List-Unsubscribe: <http://googlegroups.com/group/msysgit/subscribe>,
 	<mailto:msysgit+unsubscribe@googlegroups.com>
 X-BeenThere-Env: msysgit@googlegroups.com
 X-BeenThere: msysgit@googlegroups.com
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/102025>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/102026>
 
 
-dhruva schrieb:
->  I got the mob branch and I fail to see the Makefile. I decided to
-> just add the pthread related files and push so that someone could
-> build, I get authentication failures. I had tried to push perl
-> sometime back when I had a gcc compiler perl (before strawberry perl)
-> and had similar problems. I am fairly certain I am doing something
-> wrong but cannot figure it out!
+Hello,
 
-msysgit.git is *not* a git.git clone; it is the MSYS/MinGW environment to
-build git.git on Windows.
+On Mon, Dec 1, 2008 at 5:27 PM, Johannes Sixt <j.sixt@viscovery.net> wrote:
+> dhruva schrieb:
+>>  I got the mob branch and I fail to see the Makefile. I decided to
+>> just add the pthread related files and push so that someone could
+>> build, I get authentication failures. I had tried to push perl
+>> sometime back when I had a gcc compiler perl (before strawberry perl)
+>> and had similar problems. I am fairly certain I am doing something
+>> wrong but cannot figure it out!
+>
+> msysgit.git is *not* a git.git clone; it is the MSYS/MinGW environment to
+> build git.git on Windows.
+>
+> You should apply the steps 1. to 4. that you mentioned in an earlier mail
+> and push the result; but you cannot apply 5. because that is a change to
+> git itself.
 
-You should apply the steps 1. to 4. that you mentioned in an earlier mail
-and push the result; but you cannot apply 5. because that is a change to
-git itself.
+I request someone to just pull the archive I have placed just this
+time, I will try again for other patches. I will create a clone in a
+separate folder for msysgit and keep it ready. Unknowingly, I just
+cleaned up the remote and lost all the changes I had pulled earlier :(
 
--- Hannes
+-dhruva
+
+-- 
+Contents reflect my personal views only!
