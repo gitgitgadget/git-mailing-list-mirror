@@ -1,74 +1,102 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: Re: [PATCH 5/6 (v2)] upload-pack: send the HEAD information
-Date: Mon, 1 Dec 2008 08:20:11 -0800
-Message-ID: <20081201162011.GI23984@spearce.org>
-References: <1228140775-29212-1-git-send-email-gitster@pobox.com> <1228140775-29212-2-git-send-email-gitster@pobox.com> <1228140775-29212-3-git-send-email-gitster@pobox.com> <1228140775-29212-4-git-send-email-gitster@pobox.com> <1228140775-29212-5-git-send-email-gitster@pobox.com> <1228140775-29212-6-git-send-email-gitster@pobox.com>
+From: Johannes Sixt <j.sixt@viscovery.net>
+Subject: Re: gitk: git bisect view doesn't work
+Date: Mon, 01 Dec 2008 17:29:53 +0100
+Message-ID: <49341101.8050400@viscovery.net>
+References: <4933F819.1010701@viscovery.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Dec 01 17:21:34 2008
+Content-Type: text/plain; charset=ISO-8859-15
+Content-Transfer-Encoding: 7bit
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Paul Mackerras <paulus@samba.org>
+X-From: git-owner@vger.kernel.org Mon Dec 01 17:31:30 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1L7BWf-0006TF-BO
-	for gcvg-git-2@gmane.org; Mon, 01 Dec 2008 17:21:33 +0100
+	id 1L7BgH-00025o-SM
+	for gcvg-git-2@gmane.org; Mon, 01 Dec 2008 17:31:30 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751065AbYLAQUP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 1 Dec 2008 11:20:15 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751054AbYLAQUP
-	(ORCPT <rfc822;git-outgoing>); Mon, 1 Dec 2008 11:20:15 -0500
-Received: from george.spearce.org ([209.20.77.23]:55758 "EHLO
-	george.spearce.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751015AbYLAQUM (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 1 Dec 2008 11:20:12 -0500
-Received: by george.spearce.org (Postfix, from userid 1001)
-	id 0C4BD38200; Mon,  1 Dec 2008 16:20:11 +0000 (UTC)
-Content-Disposition: inline
-In-Reply-To: <1228140775-29212-6-git-send-email-gitster@pobox.com>
-User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
+	id S1751081AbYLAQ36 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 1 Dec 2008 11:29:58 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751183AbYLAQ36
+	(ORCPT <rfc822;git-outgoing>); Mon, 1 Dec 2008 11:29:58 -0500
+Received: from lilzmailso02.liwest.at ([212.33.55.13]:46875 "EHLO
+	lilzmailso02.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751054AbYLAQ34 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 1 Dec 2008 11:29:56 -0500
+Received: from cm56-163-160.liwest.at ([86.56.163.160] helo=linz.eudaptics.com)
+	by lilzmailso02.liwest.at with esmtpa (Exim 4.69)
+	(envelope-from <j.sixt@viscovery.net>)
+	id 1L7Bek-0003ym-4N; Mon, 01 Dec 2008 17:29:54 +0100
+Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.96])
+	by linz.eudaptics.com (Postfix) with ESMTP
+	id DDF0969F; Mon,  1 Dec 2008 17:29:53 +0100 (CET)
+User-Agent: Thunderbird 2.0.0.18 (Windows/20081105)
+In-Reply-To: <4933F819.1010701@viscovery.net>
+X-Spam-Score: -1.4 (-)
+X-Spam-Report: Spam detection software, running on the system "lilzmailsa01.liwest.at", has
+	identified this incoming email as possible spam.  The original message
+	has been attached to this so you can view it (if it isn't spam) or label
+	similar future email.  If you have any questions, see
+	the administrator of that system for details.
+	Content preview:  Johannes Sixt schrieb: > gitk bails out like this if I do
+	"git bisect view": > > $ git bisect start HEAD HEAD~2 > Bisecting: 0 revisions
+	left to test after this > [9a61060c7e0d112d0742f5b845210ea8c41b6c6b] Added
+	encoding > > $ git bisect view > Error in startup script: can't read "notflag":
+	no such variable > while executing > "expr {!$notflag}" > ("--not" arm line
+	2) > invoked from within > "switch -glob -- $arg { > "-d" - > "--date-order"
+	{ > set vdatemode($n) 1 > # remove from origargs in case we hit an unknown
+	option > set origarg..." > (procedure "parseviewargs" line 21) > invoked
+	from within > "parseviewargs $view $args" > (procedure "start_rev_list" line
+	27) > invoked from within > "start_rev_list $curview" > (procedure "getcommits"
+	line 5) > invoked from within > "getcommits {}" > (file "/usr/local/bin/gitk"
+	line 10897) [...] 
+	Content analysis details:   (-1.4 points, 7.0 required)
+	pts rule name              description
+	---- ---------------------- --------------------------------------------------
+	-1.4 ALL_TRUSTED            Passed through trusted hosts only via SMTP
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/102056>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/102057>
 
-Junio C Hamano <gitster@pobox.com> wrote:
-> This implements the server side of protocol extension to show which branch
-> the HEAD points at.  The information is sent after the terminating NUL
-> that comes after the server capabilities list, to cause older clients to
-> ignore it, while allowing newer clients to make use of that information
+Johannes Sixt schrieb:
+> gitk bails out like this if I do "git bisect view":
+> 
+> $ git bisect start HEAD HEAD~2
+> Bisecting: 0 revisions left to test after this
+> [9a61060c7e0d112d0742f5b845210ea8c41b6c6b] Added encoding
+> 
+> $ git bisect view
+> Error in startup script: can't read "notflag": no such variable
+>     while executing
+> "expr {!$notflag}"
+>     ("--not" arm line 2)
+>     invoked from within
+> "switch -glob -- $arg {
+>             "-d" -
+>             "--date-order" {
+>                 set vdatemode($n) 1
+>                 # remove from origargs in case we hit an unknown option
+>                 set origarg..."
+>     (procedure "parseviewargs" line 21)
+>     invoked from within
+> "parseviewargs $view $args"
+>     (procedure "start_rev_list" line 27)
+>     invoked from within
+> "start_rev_list $curview"
+>     (procedure "getcommits" line 5)
+>     invoked from within
+> "getcommits {}"
+>     (file "/usr/local/bin/gitk" line 10897)
 
-Ok, not to paint the bikeshed another color or anything ... but
-can we do something to make this slightly more extensible?  I like
-the "lets hide it behind the NUL" bit a lot better than the prior
-iteration, but I wonder if we shouldn't do something slightly
-different.
+Bisection points to this commit:
 
-Maybe we put on the first capability line a flag that lets the
-client know we have symref data in the advertised list, and then
-instead of sticking only HEAD into that first ref we put the names
-of the symrefs after the ref they point to.
+commit 2958228430b63f2e38c55519d1f98d8d6d9e23f3
+Author: Paul Mackerras <paulus@samba.org>
+Date:   Tue Nov 18 19:44:20 2008 +1100
 
-So we might see something like:
+    gitk: Fix switch statement in parseviewargs
 
-  xxxx......................... refs/heads/boo\0with-symref\0
-  xxxx......................... refs/heads/master\0HEAD\0
-  xxxx......................... refs/remotes/origin/HEAD\0refs/remotes/origin/master\0
-
-etc.  Its probably harder to produce the output for, but it permits
-advertising all of the symrefs on the remote side, which may be good
-for --mirror, among other uses.  It also should make it easier to put
-multiple symrefs down pointing at the same real ref, they could just
-be a space delimited list stored after the ref name, and if its the
-first ref in the stream, after the other capability advertisement.
-
-Actually, since the capability line is space delimited and space is
-not valid in a ref name, we could just include into the capability
-line like "symref=HEAD", but I still like the idea of listing it
-after each ref, to reduce the risk of running into pkt-line length
-limitations.
-
--- 
-Shawn.
+-- Hannes
