@@ -1,78 +1,83 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 1/8] generate-cmdlist.sh: avoid selecting synopsis at
- wrong place
-Date: Mon, 01 Dec 2008 06:11:33 -0800
-Message-ID: <7vtz9oq92i.fsf@gitster.siamese.dyndns.org>
-References: <1228042478-1886-1-git-send-email-pclouds@gmail.com>
- <1228042478-1886-2-git-send-email-pclouds@gmail.com>
- <alpine.DEB.1.00.0812011505551.30769@pacific.mpi-cbg.de>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
-	git@vger.kernel.org
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Mon Dec 01 15:14:11 2008
+Subject: [PATCH 0/6 (v2)] Detecting HEAD more reliably while cloning
+Date: Mon,  1 Dec 2008 06:12:49 -0800
+Message-ID: <1228140775-29212-1-git-send-email-gitster@pobox.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Dec 01 15:14:27 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1L79Wu-0007RK-J2
-	for gcvg-git-2@gmane.org; Mon, 01 Dec 2008 15:13:41 +0100
+	id 1L79Xd-0007j4-1k
+	for gcvg-git-2@gmane.org; Mon, 01 Dec 2008 15:14:25 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751678AbYLAOMV convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 1 Dec 2008 09:12:21 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751812AbYLAOMV
-	(ORCPT <rfc822;git-outgoing>); Mon, 1 Dec 2008 09:12:21 -0500
-Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:46382 "EHLO
+	id S1752082AbYLAONI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 1 Dec 2008 09:13:08 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752031AbYLAONH
+	(ORCPT <rfc822;git-outgoing>); Mon, 1 Dec 2008 09:13:07 -0500
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:44519 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751578AbYLAOMU convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 1 Dec 2008 09:12:20 -0500
+	with ESMTP id S1752006AbYLAONF (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 1 Dec 2008 09:13:05 -0500
 Received: from localhost.localdomain (unknown [127.0.0.1])
-	by b-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id B364917E37;
-	Mon,  1 Dec 2008 09:12:19 -0500 (EST)
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 76D5E83189
+	for <git@vger.kernel.org>; Mon,  1 Dec 2008 09:13:04 -0500 (EST)
 Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
  DHE-RSA-AES256-SHA (256/256 bits)) (No client certificate requested) by
- b-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTPSA id D677717E2C; Mon, 
- 1 Dec 2008 09:11:35 -0500 (EST)
-In-Reply-To: <alpine.DEB.1.00.0812011505551.30769@pacific.mpi-cbg.de>
- (Johannes Schindelin's message of "Mon, 1 Dec 2008 15:10:38 +0100 (CET)")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: 10C21580-BFB2-11DD-B2F5-F83E113D384A-77302942!a-sasl-quonix.pobox.com
+ a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTPSA id A419683187 for
+ <git@vger.kernel.org>; Mon,  1 Dec 2008 09:12:56 -0500 (EST)
+X-Mailer: git-send-email 1.6.1.rc1.23.g38649f
+X-Pobox-Relay-ID: 2B6EA3DA-BFB2-11DD-99E3-465CC92D7133-77302942!a-sasl-fastnet.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/102038>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/102039>
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+This is another approach to the same problem that a repository cloned from
+another repository whose default branch is not 'master' can use 'master'
+as the default.
 
-> On Sun, 30 Nov 2008, Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy wrote:
->
->> In "common" man pages there is luckily no "NAME" anywhere except at=20
->> beginning of documents. If there is another "NAME", sed could mis-se=
-lect=20
->> it and lead to common-cmds.h corruption. So better nail it at beginn=
-ing=20
->> of line, which would reduce corruption chance.
->
-> I have no idea why you put this into the sparse checkout patch series=
-=2E
+The current code has to guess where the HEAD in the original repository
+points at, because the original protocol tells what object each ref points
+at but does not talk about which other ref a symbolic ref points at.  The
+implication of this is that if you prepare another branch that points at
+your master, like this:
 
-That is because a documentation that triggers the misfortune this patch
-fixes is introduced in the series.  I actually scratched head myself,
-though, and come to think of it, I should have complained that this pat=
-ch
-should state that because it does not look like it has anything do with
-the main topic of the series.
+	$ git checkout -b another master
 
-> As it is, the patch series is _already_ hard to review (as it is larg=
-e not=20
-> only in term of number of patches, but also individual patch size),=20
-> _especially_ given the fact that there is no clear, precise and short=
-=20
-> description of why/how the sparse checkout is implemented.
+and keep that other branch checked out (and in sync with 'master'), a
+clone made from such a repository may incorrectly have its HEAD pointing
+at 'master', not 'another'.
 
-Hmm, can you really tell the lack of such description without reading t=
-he
-series, I have to wonder...
+Instead of introducing a full-fledged protocol extension, this round hides
+the new information in the same place as the server capabilities list that
+is used to implement protocol extension is hidden from older clients.
+This way, it does not have to work around the code structure imposed by
+the transport API, does not have to introduce an extra round trip, and
+does not have to trigger an annoying (but harmless) error message when an
+older client contacts a new uploader.
+
+  [1/6] get_remote_heads(): refactor code to read "server capabilities"
+  [2/6] connect.c::read_extra_info(): prepare to receive more than server
+        capabilities
+  [3/6] connect.c::read_extra_info(): find where HEAD points at
+  [4/6] clone: find the current branch more explicitly
+  [5/6] upload-pack: send the HEAD information
+  [6/6] clone: test the new HEAD detection logic
+
+The first four are the client side, the fifth one is the uploader side,
+and the last one is the test.  After storing these patches in separate
+files, you would build this history (on top of 'master'):
+
+    git am 1 2 3 4
+    git reset --hard HEAD~4    5---------------M---6
+    git am 5                  /               /
+    git merge HEAD@{2}        ---1---2---3---4
+    git am 6
+
+ builtin-clone.c  |   24 +++++++++++++++++++-----
+ connect.c        |   47 +++++++++++++++++++++++++++++++++++++++++++----
+ t/t5601-clone.sh |   11 +++++++++++
+ upload-pack.c    |   14 +++++++++++---
+ 4 files changed, 84 insertions(+), 12 deletions(-)
