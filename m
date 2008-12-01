@@ -1,110 +1,83 @@
-From: Liu Yubao <yubao.liu@gmail.com>
-Subject: Re: two questions about the format of loose object
-Date: Mon, 01 Dec 2008 17:28:53 +0800
-Message-ID: <4933AE55.2090007@gmail.com>
-References: <493399B7.5000505@gmail.com> <7voczws3np.fsf@gitster.siamese.dyndns.org>
+From: Andreas Ericsson <ae@op5.se>
+Subject: Re: Overwriting untracked working tree files (when identical)
+Date: Mon, 01 Dec 2008 10:28:37 +0100
+Message-ID: <4933AE45.4050400@op5.se>
+References: <alpine.DEB.2.00.0811290018340.15382@vellum.laroia.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: git list <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Dec 01 10:30:24 2008
+Content-Type: text/plain; charset=UTF-8;
+	format=flowed
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: Asheesh Laroia <asheesh@asheesh.org>
+X-From: git-owner@vger.kernel.org Mon Dec 01 10:30:39 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1L756m-0003tJ-3X
-	for gcvg-git-2@gmane.org; Mon, 01 Dec 2008 10:30:24 +0100
+	id 1L756x-0003vJ-Op
+	for gcvg-git-2@gmane.org; Mon, 01 Dec 2008 10:30:36 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750920AbYLAJ3H (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 1 Dec 2008 04:29:07 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750924AbYLAJ3G
-	(ORCPT <rfc822;git-outgoing>); Mon, 1 Dec 2008 04:29:06 -0500
-Received: from ti-out-0910.google.com ([209.85.142.184]:28827 "EHLO
-	ti-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750876AbYLAJ3D (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 1 Dec 2008 04:29:03 -0500
-Received: by ti-out-0910.google.com with SMTP id b6so1573393tic.23
-        for <git@vger.kernel.org>; Mon, 01 Dec 2008 01:29:02 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from
-         :user-agent:mime-version:to:cc:subject:references:in-reply-to
-         :content-type:content-transfer-encoding;
-        bh=G2Hbndh9Upm0bDPxNO1UoBTgkdktaLgmNubncFlRtco=;
-        b=kgmnlGxbV51eYi/t/LoT7tptnds2esjvaaS/Pb8AB+R+IoortbCZim9Ck/NgJceEPU
-         CvnWK61OktLAmzsx/vb5Sy8ijesgCoQW3Qp2vOZPRyZ2Q0R62EDBI6YWrUQrKQF3aF66
-         quGDEmHNJ1+OSjdtzOEYa9x7uPybx2iOCQvWk=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:user-agent:mime-version:to:cc:subject
-         :references:in-reply-to:content-type:content-transfer-encoding;
-        b=I6FRDBQvWDBnhpiQk4CNnOOATXbpk1cPcP6y6tsxmXrXRidMLsU6jZkK7S4s0ru904
-         s9XqxTh2V8CVjB/XtxgWUli+AiC0XJ6sq9j0JJ1LOiUXo6ghHeonjigAlSyV6mpzEc/J
-         QzCVz8k4b/xPQnvr1wOMpVSPtwlRdNsF8niXk=
-Received: by 10.110.28.15 with SMTP id b15mr7650404tib.0.1228123741858;
-        Mon, 01 Dec 2008 01:29:01 -0800 (PST)
-Received: from ?10.64.1.142? ([211.157.41.194])
-        by mx.google.com with ESMTPS id 22sm280491tim.7.2008.12.01.01.28.58
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Mon, 01 Dec 2008 01:29:00 -0800 (PST)
-User-Agent: Thunderbird 2.0.0.18 (Windows/20081105)
-In-Reply-To: <7voczws3np.fsf@gitster.siamese.dyndns.org>
+	id S1751027AbYLAJ3P convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 1 Dec 2008 04:29:15 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751023AbYLAJ3P
+	(ORCPT <rfc822;git-outgoing>); Mon, 1 Dec 2008 04:29:15 -0500
+Received: from mail.op5.se ([193.201.96.20]:58344 "EHLO mail.op5.se"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751015AbYLAJ3N (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 1 Dec 2008 04:29:13 -0500
+Received: from localhost (localhost.localdomain [127.0.0.1])
+	by mail.op5.se (Postfix) with ESMTP id 8D14A1B814FC;
+	Mon,  1 Dec 2008 10:25:30 +0100 (CET)
+X-Virus-Scanned: amavisd-new at 
+X-Spam-Flag: NO
+X-Spam-Score: -4.399
+X-Spam-Level: 
+X-Spam-Status: No, score=-4.399 tagged_above=-10 required=6.6
+	tests=[ALL_TRUSTED=-1.8, BAYES_00=-2.599]
+Received: from mail.op5.se ([127.0.0.1])
+	by localhost (mail.op5.se [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id vfW2T-EUHOdd; Mon,  1 Dec 2008 10:24:57 +0100 (CET)
+Received: from clix.int.op5.se (unknown [192.168.1.20])
+	by mail.op5.se (Postfix) with ESMTP id 2F8E91B80052;
+	Mon,  1 Dec 2008 10:24:57 +0100 (CET)
+User-Agent: Thunderbird 2.0.0.18 (X11/20081119)
+In-Reply-To: <alpine.DEB.2.00.0811290018340.15382@vellum.laroia.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/102009>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/102010>
 
-Junio C Hamano wrote:
-> Liu Yubao <yubao.liu@gmail.com> writes:
-> 
-> 
-> A hint for understanding why loose objects are compressed is that
-> packfiles were invented much later in the history of git.
-> 
-> These are both good questions, and it might have made a difference if they
-> were posed in early April 2005.
-> 
-> At this point, the plain and clear answer to both of these "Why not"
-> questions is "because that is the way it is and it is costly to change
-> them now in thousands of repositories people use every day."
-> 
-> In other words, it is not interesting anymore to raise these questions
-> now, especially as a suggestion to change the system, unless they are
-> accompanied by arguments that convinces everybody that the cost of such a
-> change outweighs the benefits, and a clear transition plans how to upgrade
-> everybody's existing repositories without any pain.
-> 
+Asheesh Laroia wrote:
+> I was using git earlier today and got the familiar error:
+>=20
+>     "Untracked working tree file 'filename=E2=80=99 would be overwrit=
+ten by merge"
+>=20
+> As it happens, I know that filename in my local filesystem and filena=
+me=20
+> in the remote git branch have the same contents.
+>=20
+> Would it make sense for git to check for this possibility, and if the=
+=20
+> working tree file is the same as the file being merged in with that=20
+> filename, allow the overwrite?
+>=20
 
-Thanks for your explanation, but I doubt if it's too costly to change the
-format of loose object, after all this doesn't change the format of pack
-file and affect git-pull/fetch of old git client. 
+That depends. git uses the work-tree to merge things. If one file is th=
+e
+same as that about to be written, it *might* make sense to clobber it,
+but what if it's identical to the expected merge-result? Git can't know
+that, but it's almost certainly a much saner approach than the other
+case, where the merge can go wahoonie-shaped at a later stage and thus
+require conflict resolution (which might well end up with the user
+getting fed up and doing "git reset --hard" to start over). For such
+cases, the file would appear to disappear, and that's a bad thing.
 
-I ask the "why not" questions because I doubt if I miss some technical points
-that the change isn't worth at all in fact.
+Overall, I think it's best if this is left as-is. The code would be too
+complex for the gain it provides.
 
-If no severe technical problem will occur, I think it's worth breaking
-*forward* compatibility for better performance and I'm willing to implement
-it.
-
-Some cons and pros.
-
-cons:
-
-* old git client can't read loose objects in new format
-  (People degrade git rarely and old git can read pack files
-   generated by new git, so it's not a big problem)
-
-pros:
-
-* avoid compressing and uncompressing loose objects that are likely
-  frequently used when you are coding/merging
-* share loose objects among multipe git processes
-* the new code path is simpler although we will have more code paths for
-  compatibility
-
-
-Best regards,
-
-Liu Yubao
+--=20
+Andreas Ericsson                   andreas.ericsson@op5.se
+OP5 AB                             www.op5.se
+Tel: +46 8-230225                  Fax: +46 8-230231
