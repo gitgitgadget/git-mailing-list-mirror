@@ -1,85 +1,84 @@
-From: Linus Torvalds <torvalds@linux-foundation.org>
-Subject: Add backslash to list of 'crud' characters in real name
-Date: Mon, 1 Dec 2008 08:41:50 -0800 (PST)
-Message-ID: <alpine.LFD.2.00.0812010836280.3256@nehalem.linux-foundation.org>
+From: Todd Zullinger <tmz@pobox.com>
+Subject: Re: SPEC files for Git
+Date: Mon, 1 Dec 2008 11:42:46 -0500
+Message-ID: <20081201164246.GY20204@inocybe.teonanacatl.org>
+References: <4933FFC6.8080306@morey-chaisemartin.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-To: Junio C Hamano <gitster@pobox.com>,
-	Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Mon Dec 01 17:45:13 2008
+Content-Type: multipart/signed; micalg=pgp-sha1; protocol="application/pgp-signature"; boundary="pBxr27OvcVUkmud5"
+Cc: git@vger.kernel.org
+To: Nicolas Morey-Chaisemartin <devel@morey-chaisemartin.com>
+X-From: git-owner@vger.kernel.org Mon Dec 01 17:45:23 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1L7BtH-0007gB-5s
-	for gcvg-git-2@gmane.org; Mon, 01 Dec 2008 17:44:55 +0100
+	id 1L7BtL-0007gB-9f
+	for gcvg-git-2@gmane.org; Mon, 01 Dec 2008 17:44:59 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754082AbYLAQmi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 1 Dec 2008 11:42:38 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753059AbYLAQmh
-	(ORCPT <rfc822;git-outgoing>); Mon, 1 Dec 2008 11:42:37 -0500
-Received: from smtp1.linux-foundation.org ([140.211.169.13]:34950 "EHLO
-	smtp1.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1754068AbYLAQmg (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 1 Dec 2008 11:42:36 -0500
-Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [140.211.169.55])
-	by smtp1.linux-foundation.org (8.14.2/8.13.5/Debian-3ubuntu1.1) with ESMTP id mB1GfoMn029096
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Mon, 1 Dec 2008 08:41:51 -0800
-Received: from localhost (localhost [127.0.0.1])
-	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id mB1GfouU017535;
-	Mon, 1 Dec 2008 08:41:50 -0800
-User-Agent: Alpine 2.00 (LFD 1167 2008-08-23)
-X-Spam-Status: No, hits=-3.436 required=5 tests=AWL,BAYES_00
-X-Spam-Checker-Version: SpamAssassin 3.2.4-osdl_revision__1.47__
-X-MIMEDefang-Filter: lf$Revision: 1.188 $
-X-Scanned-By: MIMEDefang 2.63 on 140.211.169.13
+	id S1754325AbYLAQnh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 1 Dec 2008 11:43:37 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753925AbYLAQnh
+	(ORCPT <rfc822;git-outgoing>); Mon, 1 Dec 2008 11:43:37 -0500
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:54435 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754313AbYLAQng (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 1 Dec 2008 11:43:36 -0500
+Received: from localhost.localdomain (unknown [127.0.0.1])
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id C75C183F8C;
+	Mon,  1 Dec 2008 11:43:33 -0500 (EST)
+Received: from inocybe.teonanacatl.org (unknown [69.248.23.23]) (using TLSv1
+ with cipher AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTPSA id 4100983F7B; Mon,
+  1 Dec 2008 11:42:48 -0500 (EST)
+Content-Disposition: inline
+In-Reply-To: <4933FFC6.8080306@morey-chaisemartin.com>
+X-Listening-To: Lynyrd Skynyrd - The Last Rebel
+User-Agent: Mutt/1.5.18 (2008-05-17)
+X-Pobox-Relay-ID: 315506B2-BFC7-11DD-88D3-465CC92D7133-09356542!a-sasl-fastnet.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/102060>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/102061>
 
 
-We remove crud characters at the beginning and end of real-names so that 
-when we see email addresses like
+--pBxr27OvcVUkmud5
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-	From: "David S. Miller" <davem@davemloft.net>
+Nicolas Morey-Chaisemartin wrote:
+> I'm trying to recompile gitweb1.6.0.4-1 for RHEL5, but I'm missing
+> the spec file.  I've checked the git SRP. It generates a lot of
+> things but no RPM for gitweb.
+>=20
+> Is there any place with an official spec file? Or has anyone made
+> one which he could share?
 
-we drop the quotes around the name when we parse that and split it up into 
-name and email.
+Far from official, but here's what I've been using, based on the
+Fedora and EPEL packages: http://tmz.fedorapeople.org/tmp/git/el5/
 
-However, the list of crud characters was basically just a random list of 
-common things that are found around names, and it didn't contain the 
-backslash character that some insane scripts seem to use when quoting 
-things. So now the kernel has a number of authors listed like
+--=20
+Todd        OpenPGP -> KeyID: 0xBEAF0CE3 | URL: www.pobox.com/~tmz/pgp
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Many people are secretly interested in life.
 
-	Author: \"Rafael J. Wysocki\ <rjw@sisk.pl>
 
-because the author name had started out as
+--pBxr27OvcVUkmud5
+Content-Type: application/pgp-signature
+Content-Disposition: inline
 
-	From: \"Rafael J. Wysocki\" <rjw@sisk.pl>
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.9 (GNU/Linux)
 
-and the only "crud" character we noticed and removed was the final 
-double-quote at the end.
+iQFDBAEBAgAtBQJJNBQGJhhodHRwOi8vd3d3LnBvYm94LmNvbS9+dG16L3BncC90
+bXouYXNjAAoJEEMlk4u+rwzjgIgIALeBKoq4y6z1IjB9owk+4n+yMGpkGHajUYEt
+c8Bl6CPoiSLSRPNJhXRZp4rJLwsHEKrolqsu1Cq9KsbWJoHhqn9tyHPCIyDi7mQE
+57tO8oHyH7mAgRpQvUo7Ld051C0+1tznJ/kagyBE5LpBvSU+c07IV7cXmQ0/sfHa
++V0+ZrLCDhHx0ay2uA2I/doVQ0oFyRNl1KaqEIHCWOklhjFMdRMl8lzMk2xRMsWD
+PlLVnSJEhElBQDXGtpFGp556acFbFQsPqdEyZMlEmLL5GuqJ+L5Zsu5H+ZhbNNhn
+lgXvHYy/5KS6CJkpldQWVdf7WT+bnIINsIWi/SIJtOrvTGBQGdg=
+=Imbb
+-----END PGP SIGNATURE-----
 
-We should probably do better quote removal from names anyway, but this is 
-the minimal obvious patch.
-
-Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
----
- ident.c |    1 +
- 1 files changed, 1 insertions(+), 0 deletions(-)
-
-diff --git a/ident.c b/ident.c
-index 09cf0c9..99f1c85 100644
---- a/ident.c
-+++ b/ident.c
-@@ -121,6 +121,7 @@ static int crud(unsigned char c)
- 		c == '<' ||
- 		c == '>' ||
- 		c == '"' ||
-+		c == '\\' ||
- 		c == '\'';
- }
- 
+--pBxr27OvcVUkmud5--
