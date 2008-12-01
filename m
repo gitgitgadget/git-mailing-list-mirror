@@ -1,61 +1,50 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH] Modified the default git help message to be grouped by
-	topic
-Date: Mon, 1 Dec 2008 13:32:59 -0500
-Message-ID: <20081201183258.GB24443@coredump.intra.peff.net>
-References: <20081201173037.GA41967@agadorsparticus>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org, gitster@pobox.com
-To: Scott Chacon <schacon@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Dec 01 19:34:30 2008
+From: Miklos Vajna <vmiklos@frugalware.org>
+Subject: [PATCH] User's Manual: remove duplicated url at the end of Appendix B
+Date: Mon,  1 Dec 2008 19:50:02 +0100
+Message-ID: <1228157402-10961-1-git-send-email-vmiklos@frugalware.org>
+Cc: "J. Bruce Fields" <bfields@citi.umich.edu>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Dec 01 19:51:39 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1L7DbH-0008DY-Jc
-	for gcvg-git-2@gmane.org; Mon, 01 Dec 2008 19:34:28 +0100
+	id 1L7Drr-0006Df-Ur
+	for gcvg-git-2@gmane.org; Mon, 01 Dec 2008 19:51:36 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751530AbYLASdD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 1 Dec 2008 13:33:03 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751455AbYLASdC
-	(ORCPT <rfc822;git-outgoing>); Mon, 1 Dec 2008 13:33:02 -0500
-Received: from peff.net ([208.65.91.99]:2648 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751382AbYLASdB (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 1 Dec 2008 13:33:01 -0500
-Received: (qmail 28656 invoked by uid 111); 1 Dec 2008 18:33:00 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.32) with SMTP; Mon, 01 Dec 2008 13:33:00 -0500
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Mon, 01 Dec 2008 13:32:59 -0500
-Content-Disposition: inline
-In-Reply-To: <20081201173037.GA41967@agadorsparticus>
+	id S1752381AbYLASuL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 1 Dec 2008 13:50:11 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752327AbYLASuL
+	(ORCPT <rfc822;git-outgoing>); Mon, 1 Dec 2008 13:50:11 -0500
+Received: from yugo.dsd.sztaki.hu ([195.111.2.114]:52910 "EHLO
+	yugo.frugalware.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751254AbYLASuK (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 1 Dec 2008 13:50:10 -0500
+Received: from vmobile.example.net (dsl5401C706.pool.t-online.hu [84.1.199.6])
+	by yugo.frugalware.org (Postfix) with ESMTPA id CEC36446CDA;
+	Mon,  1 Dec 2008 19:50:07 +0100 (CET)
+Received: by vmobile.example.net (Postfix, from userid 1003)
+	id 84E8219D92A; Mon,  1 Dec 2008 19:50:02 +0100 (CET)
+X-Mailer: git-send-email 1.6.0.4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/102076>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/102077>
 
-On Mon, Dec 01, 2008 at 09:30:37AM -0800, Scott Chacon wrote:
+Signed-off-by: Miklos Vajna <vmiklos@frugalware.org>
+---
+ Documentation/user-manual.txt |    1 -
+ 1 files changed, 0 insertions(+), 1 deletions(-)
 
-> It's difficult to process 21 commands (which is what is output
-> by default for git when no command is given).  I've re-grouped
-> them into 4 groups of 5 or 6 commands each, which I think is
-> clearer and easier for new users to process.
-
-I like it (and I think the categorizations look reasonable, which is
-something that I recall caused some discussion at the GitTogether).
-
-The only downside I see is that we're now >24 lines.
-
-> This won't automatically update with the common-commands.txt file,
-> but I think it is easier to parse for the command you may be looking
-> for.
-
-Personally, I don't see a big problem. This is not a list that should
-change very frequently, and there is extra information here that would
-be annoying to encode in the list. But since the "common" flag in
-command-list.txt and the common-cmds.h file would no longer be used,
-they should probably be removed.
-
--Peff
+diff --git a/Documentation/user-manual.txt b/Documentation/user-manual.txt
+index da9c6b2..9f527d3 100644
+--- a/Documentation/user-manual.txt
++++ b/Documentation/user-manual.txt
+@@ -4572,4 +4572,3 @@ Alternates, clone -reference, etc.
+ More on recovery from repository corruption.  See:
+ 	http://marc.theaimsgroup.com/?l=git&m=117263864820799&w=2
+ 	http://marc.theaimsgroup.com/?l=git&m=117147855503798&w=2
+-	http://marc.theaimsgroup.com/?l=git&m=117147855503798&w=2
+-- 
+1.6.0.4
