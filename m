@@ -1,87 +1,70 @@
-From: Andreas Ericsson <ae@op5.se>
-Subject: Re: Is rebase always destructive?
-Date: Mon, 01 Dec 2008 17:45:08 +0100
-Message-ID: <49341494.40907@op5.se>
-References: <slrngj7jch.2srb.csaba-ml@beastie.creo.hu>
+From: Matt McCutchen <matt@mattmccutchen.net>
+Subject: Re: [PATCH] git checkout: don't warn about unborn branch if -f is
+	already passed
+Date: Mon, 01 Dec 2008 11:47:27 -0500
+Message-ID: <1228150047.2643.5.camel@mattlaptop2.local>
+References: <1227509722.32583.0.camel@mattlaptop2.local>
+	 <7vr64yfexp.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15; format=flowed
+Content-Type: text/plain
 Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org
-To: Csaba Henk <csaba-ml@creo.hu>
-X-From: git-owner@vger.kernel.org Mon Dec 01 17:47:03 2008
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Dec 01 17:49:08 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1L7Bv2-0008Ue-9v
-	for gcvg-git-2@gmane.org; Mon, 01 Dec 2008 17:46:44 +0100
+	id 1L7Bx5-0000xg-Er
+	for gcvg-git-2@gmane.org; Mon, 01 Dec 2008 17:48:51 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751672AbYLAQpQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 1 Dec 2008 11:45:16 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753556AbYLAQpO
-	(ORCPT <rfc822;git-outgoing>); Mon, 1 Dec 2008 11:45:14 -0500
-Received: from mail.op5.se ([193.201.96.20]:33839 "EHLO mail.op5.se"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753999AbYLAQpM (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 1 Dec 2008 11:45:12 -0500
-Received: from localhost (localhost.localdomain [127.0.0.1])
-	by mail.op5.se (Postfix) with ESMTP id 8A0F424B0B4A;
-	Mon,  1 Dec 2008 17:41:31 +0100 (CET)
-X-Virus-Scanned: amavisd-new at 
-X-Spam-Flag: NO
-X-Spam-Score: -2.499
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.499 tagged_above=-10 required=6.6
-	tests=[BAYES_00=-2.599, RDNS_NONE=0.1]
-Received: from mail.op5.se ([127.0.0.1])
-	by localhost (mail.op5.se [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id LCXX7EYJ1Ra6; Mon,  1 Dec 2008 17:41:29 +0100 (CET)
-Received: from clix.int.op5.se (unknown [172.27.78.22])
-	by mail.op5.se (Postfix) with ESMTP id AE2EE1B8006F;
-	Mon,  1 Dec 2008 17:41:29 +0100 (CET)
-User-Agent: Thunderbird 2.0.0.18 (X11/20081119)
-In-Reply-To: <slrngj7jch.2srb.csaba-ml@beastie.creo.hu>
+	id S1752192AbYLAQrd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 1 Dec 2008 11:47:33 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751529AbYLAQrd
+	(ORCPT <rfc822;git-outgoing>); Mon, 1 Dec 2008 11:47:33 -0500
+Received: from sd-green-bigip-202.dreamhost.com ([208.97.132.202]:34374 "EHLO
+	jankymail-a5.g.dreamhost.com" rhost-flags-OK-OK-OK-FAIL)
+	by vger.kernel.org with ESMTP id S1752568AbYLAQrc (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 1 Dec 2008 11:47:32 -0500
+Received: from [129.2.134.244] (129-2-134-244.wireless.umd.edu [129.2.134.244])
+	by jankymail-a5.g.dreamhost.com (Postfix) with ESMTP id 84C4513EC0;
+	Mon,  1 Dec 2008 08:47:31 -0800 (PST)
+In-Reply-To: <7vr64yfexp.fsf@gitster.siamese.dyndns.org>
+X-Mailer: Evolution 2.22.3.1 (2.22.3.1-1.fc9) 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/102062>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/102063>
 
-Csaba Henk wrote:
-> Hi,
+On Wed, 2008-11-26 at 11:46 -0800, Junio C Hamano wrote:
+> Matt McCutchen <matt@mattmccutchen.net> writes:
 > 
-> When doing a rebase, I can find a number of reasons for which one might
-> feel like to preserve the rebased branch (that is, perform an operation
-> which copies the branch over a new base, not moves).
+> > I think it's unnecessary to warn that the checkout has been forced due to an
+> > unborn current branch if -f has been explicitly passed.  For one project, I am
+> > using git-new-workdir to create workdirs from a bare repository whose HEAD is
+> > set to an unborn branch, and this warning started to irritate me.
 > 
-> -  For example, a successful rebase doesn't necessarily mean that the
->    code, as of the rebased branch, is consistent and compiles. That is,
->    the rebase can be broken even if git can put things together diff-wise.
->    In such a case I wouldn't be happy to lose the original instance of
->    the branch.
+> I doubt anybody minds this particular change per-se, but I wonder what the
+> justification of keeping a dangling HEAD in a bare repository is.
 > 
-> -  Or I might want to build different versions of the program, and each
->    version of it needs a given set of fixes (the same one). Then rebasing
->    my bugfix branch is not a good idea, I'd much rather copy it over all
->    those versions.
+> After all, the primary intended purpose of a bare repository is to serve
+> as a distribution point (i.e. something you can clone from), and I think a
+> dangling HEAD interferes with the usual operation of clone (although I've
+> never tested this).
 > 
-> I can't see any option for rebase which would yield this cp-like
-> behaviour. Am I missing something? Or people don't need such a feature?
-> (Then give me some LART please, my mind is not yet gittified enough to
-> see why is this not needed.) Or is it usually done by other means, not
-> rebase?
-> 
+> Care to explain why?
 
-When I feel I'm in any danger of ending up with mis-compiles or whatnot,
-I usually do
-  git checkout -b try-rebase
-  git rebase $target
-which does exactly what you want.
+I am taking a course with six programming projects.  I want a separate
+working tree for each project, but I want all the working trees
+connected to the same repository because I often copy changes from one
+project to another and that makes it more convenient to inspect the
+history of one project while I am working on another.  I didn't want to
+put the repository inside an arbitrary one of the working trees, so I
+left it bare, and I didn't want to point its HEAD to an arbitrary one of
+the projects, so I left it unborn.
 
-For almost all other operations, it's possible to get your previous
-branch-pointer back, either by referencing ORIG_HEAD, or the reflogs.
+The upshot is that I am using a bare repository as a distribution point
+for *working trees* (via git-new-workdir), not for push/pull.
 
--- 
-Andreas Ericsson                   andreas.ericsson@op5.se
-OP5 AB                             www.op5.se
-Tel: +46 8-230225                  Fax: +46 8-230231
+Matt
