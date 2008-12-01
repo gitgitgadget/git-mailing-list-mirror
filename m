@@ -1,65 +1,93 @@
-From: Uwe =?iso-8859-1?Q?Kleine-K=F6nig?= 
-	<u.kleine-koenig@pengutronix.de>
-Subject: Re: [TOPGIT] Resolving conflicts
-Date: Mon, 1 Dec 2008 15:36:40 +0100
-Message-ID: <20081201143640.GA17818@cassiopeia.tralala>
-References: <20081201121819.GB13495@pengutronix.de>
+From: Johannes Sixt <j.sixt@viscovery.net>
+Subject: gitk: git bisect view doesn't work
+Date: Mon, 01 Dec 2008 15:43:37 +0100
+Message-ID: <4933F819.1010701@viscovery.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Petr Baudis <pasky@suse.cz>,
-	martin f krafft <madduck@debian.org>
-To: Sascha Hauer <s.hauer@pengutronix.de>
-X-From: git-owner@vger.kernel.org Mon Dec 01 15:38:45 2008
+Content-Type: text/plain; charset=ISO-8859-15
+Content-Transfer-Encoding: 7bit
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Paul Mackerras <paulus@samba.org>
+X-From: git-owner@vger.kernel.org Mon Dec 01 15:45:04 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1L79uv-0008Bb-1C
-	for gcvg-git-2@gmane.org; Mon, 01 Dec 2008 15:38:29 +0100
+	id 1L7A1H-0002Nf-4H
+	for gcvg-git-2@gmane.org; Mon, 01 Dec 2008 15:45:03 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751288AbYLAOhG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 1 Dec 2008 09:37:06 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750748AbYLAOhG
-	(ORCPT <rfc822;git-outgoing>); Mon, 1 Dec 2008 09:37:06 -0500
-Received: from metis.ext.pengutronix.de ([92.198.50.35]:51863 "EHLO
-	metis.ext.pengutronix.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750955AbYLAOhF (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 1 Dec 2008 09:37:05 -0500
-Received: from themisto.ext.pengutronix.de ([92.198.50.58] helo=cassiopeia.tralala)
-	by metis.ext.pengutronix.de with esmtp (Exim 4.63)
-	(envelope-from <u.kleine-koenig@pengutronix.de>)
-	id 1L79tB-0002Av-GV; Mon, 01 Dec 2008 15:36:44 +0100
-Content-Disposition: inline
-In-Reply-To: <20081201121819.GB13495@pengutronix.de>
-User-Agent: Mutt/1.5.18 (2008-05-17)
-X-SA-Exim-Connect-IP: 92.198.50.58
-X-SA-Exim-Mail-From: u.kleine-koenig@pengutronix.de
-X-Spam-Checker-Version: SpamAssassin 3.2.4 (2008-01-01) on
-	metis.extern.pengutronix.de
-X-Spam-Level: 
-X-Spam-Status: No, score=-1.1 required=4.5 tests=AWL,BAYES_00,RCVD_IN_PBL
-	shortcircuit=no autolearn=no version=3.2.4
-X-SA-Exim-Version: 4.2.1 (built Tue, 09 Jan 2007 17:23:22 +0000)
-X-SA-Exim-Scanned: Yes (on metis.ext.pengutronix.de)
-X-PTX-Original-Recipient: git@vger.kernel.org
+	id S1751155AbYLAOno (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 1 Dec 2008 09:43:44 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750748AbYLAOno
+	(ORCPT <rfc822;git-outgoing>); Mon, 1 Dec 2008 09:43:44 -0500
+Received: from lilzmailso01.liwest.at ([212.33.55.23]:34863 "EHLO
+	lilzmailso01.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751155AbYLAOnn (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 1 Dec 2008 09:43:43 -0500
+Received: from cm56-163-160.liwest.at ([86.56.163.160] helo=linz.eudaptics.com)
+	by lilzmailso01.liwest.at with esmtpa (Exim 4.69)
+	(envelope-from <j.sixt@viscovery.net>)
+	id 1L79zu-0000Mh-O6; Mon, 01 Dec 2008 15:43:39 +0100
+Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.96])
+	by linz.eudaptics.com (Postfix) with ESMTP
+	id 4876669F; Mon,  1 Dec 2008 15:43:38 +0100 (CET)
+User-Agent: Thunderbird 2.0.0.18 (Windows/20081105)
+X-Enigmail-Version: 0.95.5
+X-Spam-Score: -1.4 (-)
+X-Spam-Report: Spam detection software, running on the system "lilzmailsa03.liwest.at", has
+	identified this incoming email as possible spam.  The original message
+	has been attached to this so you can view it (if it isn't spam) or label
+	similar future email.  If you have any questions, see
+	the administrator of that system for details.
+	Content preview:  gitk bails out like this if I do "git bisect view": $ git
+	bisect start HEAD HEAD~2 Bisecting: 0 revisions left to test after this [9a61060c7e0d112d0742f5b845210ea8c41b6c6b]
+	Added encoding $ git bisect view Error in startup script: can't read "notflag":
+	no such variable while executing "expr {!$notflag}" ("--not" arm line 2)
+	invoked from within "switch -glob -- $arg { "-d" - "--date-order" { set vdatemode($n)
+	1 # remove from origargs in case we hit an unknown option set origarg..."
+	(procedure "parseviewargs" line 21) invoked from within "parseviewargs $view
+	$args" (procedure "start_rev_list" line 27) invoked from within "start_rev_list
+	$curview" (procedure "getcommits" line 5) invoked from within "getcommits
+	{}" (file "/usr/local/bin/gitk" line 10897) [...] 
+	Content analysis details:   (-1.4 points, 7.0 required)
+	pts rule name              description
+	---- ---------------------- --------------------------------------------------
+	-1.4 ALL_TRUSTED            Passed through trusted hosts only via SMTP
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/102046>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/102047>
 
-[added martin f krafft to Cc:]
+gitk bails out like this if I do "git bisect view":
 
-Hi,
+$ git bisect start HEAD HEAD~2
+Bisecting: 0 revisions left to test after this
+[9a61060c7e0d112d0742f5b845210ea8c41b6c6b] Added encoding
 
-> Another thing is that the exported branch contains an empty commit
-> resulting from t/whatever (and a corresponding empty patch when exported
-> as a quilt series)
-I fixed one half of this in with a patch sent to the ML:
+$ git bisect view
+Error in startup script: can't read "notflag": no such variable
+    while executing
+"expr {!$notflag}"
+    ("--not" arm line 2)
+    invoked from within
+"switch -glob -- $arg {
+            "-d" -
+            "--date-order" {
+                set vdatemode($n) 1
+                # remove from origargs in case we hit an unknown option
+                set origarg..."
+    (procedure "parseviewargs" line 21)
+    invoked from within
+"parseviewargs $view $args"
+    (procedure "start_rev_list" line 27)
+    invoked from within
+"start_rev_list $curview"
+    (procedure "getcommits" line 5)
+    invoked from within
+"getcommits {}"
+    (file "/usr/local/bin/gitk" line 10897)
 
-	http://article.gmane.org/gmane.comp.version-control.git/101728
+$ git version
+git version 1.6.1.rc1
 
-it didn't made it upstream yet, though.
-
-Best regards
-Uwe
+-- Hannes
