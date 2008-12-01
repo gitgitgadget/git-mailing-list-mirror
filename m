@@ -1,229 +1,178 @@
-From: dhruva <dhruvakm@gmail.com>
-Subject: Re: git build on msys fails (and fix)
-Date: Mon, 1 Dec 2008 16:22:41 +0530
-Message-ID: <e3f230850812010252i67d9846cg439b5951485ee7fe@mail.gmail.com>
-References: <e3f230850811300302y68992b9doe4897d97d513de3a@mail.gmail.com> <4933A922.7080300@viscovery.net> <e3f230850812010132g48fcdf2fm46310b601990e51d@mail.gmail.com>
-Reply-To: dhruvakm@gmail.com
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: [PATCH 0/2] gitweb: patch view
+Date: Mon, 1 Dec 2008 12:02:39 +0100
+Message-ID: <200812011202.41300.jnareb@gmail.com>
+References: <1227966071-11104-1-git-send-email-giuseppe.bilotta@gmail.com> <200812010145.36612.jnareb@gmail.com> <cb7bb73a0811301710i383105b0j80b8dbf4563f93ca@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: Git <git@vger.kernel.org>, msysGit <msysgit@googlegroups.com>
-To: "Johannes Sixt" <j.sixt@viscovery.net>
-X-From: grbounce-SUPTvwUAAABqUyiVh9Fi-Slj5a_0adWQ=gcvm-msysgit=m.gmane.org@googlegroups.com Mon Dec 01 11:54:03 2008
-Return-path: <grbounce-SUPTvwUAAABqUyiVh9Fi-Slj5a_0adWQ=gcvm-msysgit=m.gmane.org@googlegroups.com>
-Envelope-to: gcvm-msysgit@m.gmane.org
-Received: from wa-out-1516.google.com ([209.85.146.160])
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+Cc: git@vger.kernel.org, "Petr Baudis" <pasky@suse.cz>,
+	"Junio C Hamano" <gitster@pobox.com>
+To: "Giuseppe Bilotta" <giuseppe.bilotta@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Dec 01 12:04:16 2008
+Return-path: <git-owner@vger.kernel.org>
+Envelope-to: gcvg-git-2@gmane.org
+Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1L76Pi-0002iO-Ud
-	for gcvm-msysgit@m.gmane.org; Mon, 01 Dec 2008 11:54:03 +0100
-Received: by wa-out-1516.google.com with SMTP id k6so388006wah.53
-        for <gcvm-msysgit@m.gmane.org>; Mon, 01 Dec 2008 02:52:49 -0800 (PST)
+	id 1L76Za-0005jV-UK
+	for gcvg-git-2@gmane.org; Mon, 01 Dec 2008 12:04:15 +0100
+Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
+	id S1751211AbYLALC5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 1 Dec 2008 06:02:57 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751155AbYLALC5
+	(ORCPT <rfc822;git-outgoing>); Mon, 1 Dec 2008 06:02:57 -0500
+Received: from nf-out-0910.google.com ([64.233.182.190]:52393 "EHLO
+	nf-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751124AbYLALC4 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 1 Dec 2008 06:02:56 -0500
+Received: by nf-out-0910.google.com with SMTP id d3so1257268nfc.21
+        for <git@vger.kernel.org>; Mon, 01 Dec 2008 03:02:54 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlegroups.com; s=beta;
-        h=domainkey-signature:received:received:x-sender:x-apparently-to
-         :received:received:received-spf:authentication-results:received
-         :dkim-signature:domainkey-signature:received:received:message-id
-         :date:from:to:subject:cc:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:references:reply-to
-         :sender:precedence:x-google-loop:mailing-list:list-id:list-post
-         :list-help:list-unsubscribe:x-beenthere-env:x-beenthere;
-        bh=UQJwUKATN4qqK/ptF6rWixx4uRjdqSzrrkDbiSj2gIw=;
-        b=tcroQhASFRvEpFxrDeaVen6YyM599ElcDTo88a+PUDcAYihkgKE8JruO+SgrcAKtit
-         Dym/uNBkC4e+2N5ZVIpzdjUcWdVt4Vjd4RxjNaG9rC2HvqTn3BAe4XYPPq0QBtfKLb+Q
-         YZByBXVw3H2Cd/xiMrxYJqLavrfj9jTjzeR6Y=
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:from:to:subject:date
+         :user-agent:cc:references:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:message-id;
+        bh=Uu2yJbKT73A4n8GZ7D7ZxTZWkvqhgbEHx1Vd0ABcguc=;
+        b=F1VbiiaMN+vgb8MnqGcLKvedNZeT7rOQSTsuYBi7u7QZ2PmM6d/R9hCi7uVfAriq4e
+         Cr+ADH3Qwv/GBAtY/zSHZUYp3hASCNd4kzVjQDjSIRS999jOZTkAauGUqz/fMAPljLLb
+         7PpRGCo6lbHQmY2eWU8de4ZJtjvMaoUCakZpw=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=googlegroups.com; s=beta;
-        h=x-sender:x-apparently-to:received-spf:authentication-results
-         :dkim-signature:domainkey-signature:message-id:date:from:to:subject
-         :cc:in-reply-to:mime-version:content-type:content-transfer-encoding
-         :content-disposition:references:reply-to:sender:precedence
-         :x-google-loop:mailing-list:list-id:list-post:list-help
-         :list-unsubscribe:x-beenthere-env:x-beenthere;
-        b=ZX3A+ailIwZLhL3YJ0Y4rAppwUsbWPzHkb+tTpZYs4fLN26n+5Zh9VJd9Wbr8LYWpJ
-         CUfbGw7HvdxHL8FUGM2IMEtc+hdIXqLcIJaiUA5xdMuTtyR4RxqoMnkd8/l10WbmPMmR
-         Rlz+mf25BRkTlHtfBjSj56hzVaZUdjsZj7o48=
-Received: by 10.141.175.5 with SMTP id c5mr493315rvp.22.1228128763829;
-        Mon, 01 Dec 2008 02:52:43 -0800 (PST)
-Received: by 10.106.212.23 with SMTP id k23gr3190prg.0;
-	Mon, 01 Dec 2008 02:52:43 -0800 (PST)
-X-Sender: dhruvakm@gmail.com
-X-Apparently-To: msysgit@googlegroups.com
-Received: by 10.142.108.3 with SMTP id g3mr5699224wfc.29.1228128763412; Mon, 01 Dec 2008 02:52:43 -0800 (PST)
-Received: from rv-out-0708.google.com (rv-out-0708.google.com [209.85.198.243]) by mx.google.com with ESMTP id m37si3380737waf.0.2008.12.01.02.52.42; Mon, 01 Dec 2008 02:52:42 -0800 (PST)
-Received-SPF: pass (google.com: domain of dhruvakm@gmail.com designates 209.85.198.243 as permitted sender) client-ip=209.85.198.243;
-Authentication-Results: mx.google.com; spf=pass (google.com: domain of dhruvakm@gmail.com designates 209.85.198.243 as permitted sender) smtp.mail=dhruvakm@gmail.com; dkim=pass (test mode) header.i=@gmail.com
-Received: by rv-out-0708.google.com with SMTP id c5so2479771rvf.28 for <msysgit@googlegroups.com>; Mon, 01 Dec 2008 02:52:42 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=gamma; h=domainkey-signature:received:received:message-id:date:from:to :subject:cc:in-reply-to:mime-version:content-type :content-transfer-encoding:content-disposition:references; bh=N49dyFLP4o/zDKsFYJek6fOIoYWKum5Iq+oCHhzO6Q0=; b=t6jJ+tB5aexIJRGBcD74UuaGTppTIj/UN4dFvCNlIH4wHvXwTA67ujyd8FKdLBVc+u KZurxXsO7tvhtcUe4vAaDf4FSPBDW9crkdGruTR6SYuVu/5NnEl8SB+q7whhFhotmmdO 6G++7OIDEsgrI5HdwQTuH2HfvttEIIj1sm7EI=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=gmail.com; s=gamma; h=message-id:date:from:to:subject:cc:in-reply-to:mime-version :content-type:content-transfer-encoding:content-disposition :references; b=OBaRmfXOMdEEYfK9xPGwI1FRjFZ3BM+kyK/YxcbSEOjcSQIE5+jbjSmNE7Dvy42P/F m8m6Hvkjcfh3D1CYc6FIrb50YLXvy3KbU3djAC3NqsXNGPuQwfe0/gVoJYWDPbO66Vd1 UQaC4kuy9Qa5bZAhY0MvWCAPkfmhubPNYh9FA=
-Received: by 10.142.90.16 with SMTP id n16mr4467339wfb.133.1228128761596; Mon, 01 Dec 2008 02:52:41 -0800 (PST)
-Received: by 10.142.110.21 with HTTP; Mon, 1 Dec 2008 02:52:41 -0800 (PST)
-In-Reply-To: <e3f230850812010132g48fcdf2fm46310b601990e51d@mail.gmail.com>
+        d=gmail.com; s=gamma;
+        h=from:to:subject:date:user-agent:cc:references:in-reply-to
+         :mime-version:content-type:content-transfer-encoding
+         :content-disposition:message-id;
+        b=SEhRYO9X/isx8A/cxeudCoPllW+H2PYds1O2Gn2JpkFVtROPc5zZzNwmdkZYEkz/GK
+         DPAmxBL9ki+iA72TVCVeWv6x7rnflEGLJ5wkSNFvz8bhBOAtv+Dhey3FKhshkh8WDPTn
+         e5DAbglV2wTP8GkQ0nNLvJKSl8NS0uBFaTV/o=
+Received: by 10.210.71.11 with SMTP id t11mr12426054eba.57.1228129374449;
+        Mon, 01 Dec 2008 03:02:54 -0800 (PST)
+Received: from ?192.168.1.11? (abwt156.neoplus.adsl.tpnet.pl [83.8.243.156])
+        by mx.google.com with ESMTPS id 10sm5907153eyd.43.2008.12.01.03.02.52
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Mon, 01 Dec 2008 03:02:53 -0800 (PST)
+User-Agent: KMail/1.9.3
+In-Reply-To: <cb7bb73a0811301710i383105b0j80b8dbf4563f93ca@mail.gmail.com>
 Content-Disposition: inline
-Sender: msysgit@googlegroups.com
+Sender: git-owner@vger.kernel.org
 Precedence: bulk
-X-Google-Loop: groups
-Mailing-List: list msysgit@googlegroups.com;
-	contact msysgit+owner@googlegroups.com
-List-Id: <msysgit.googlegroups.com>
-List-Post: <mailto:msysgit@googlegroups.com>
-List-Help: <mailto:msysgit+help@googlegroups.com>
-List-Unsubscribe: <http://googlegroups.com/group/msysgit/subscribe>,
-	<mailto:msysgit+unsubscribe@googlegroups.com>
-X-BeenThere-Env: msysgit@googlegroups.com
-X-BeenThere: msysgit@googlegroups.com
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/102017>
+List-ID: <git.vger.kernel.org>
+X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/102018>
 
-
-Hi,
-
-On Mon, Dec 1, 2008 at 3:02 PM, dhruva <dhruvakm@gmail.com> wrote:
-> On Mon, Dec 1, 2008 at 2:36 PM, Johannes Sixt <j.sixt@viscovery.net> wrote:
->> dhruva schrieb:
->>> Hello,
->>>  I build git on msys environment regularly. With the recent changes to
->>> add cache preload facility (commit ID:
->>> 671c9b7e315db89081cc69f83a8f405e4aca37bc) brings in dependency on
->>> pthreads. This is not available in the msys distribution which was
->>> part of the git build distro. I installed libpthread for mingw to get
->>> the related headers and libraries. I had to make some minor changes to
->>> libpthread installation. I copied the 'setjmp.h' from my other mingw
->>> installation and had to had edit it to remove some mingw specific
->>> macros.
+On Mon, 1 December 2008, Giuseppe Bilotta wrote:
+> On Mon, Dec 1, 2008 at 1:45 AM, Jakub Narebski <jnareb@gmail.com> wrote:
+>> On Sun, 30 Nov 2008, Giuseppe Bilotta wrote:
+>>> On Sun, Nov 30, 2008 at 2:06 AM, Jakub Narebski <jnareb@gmail.com> wrote:
+>>>> On Sat, 29 Nov 2008, Giuseppe Bilotta wrote:
 >>>
->>> @:/e/users/dhruva/stub/repo/git/git
->>> [520]$ diff -u /e/tools/gnu/include/setjmp.h /mingw/include/setjmp.h
->>> --- /e/tools/gnu/include/setjmp.h       Sun Oct  5 04:01:15 2008
->>> +++ /mingw/include/setjmp.h     Sun Nov 30 16:18:00 2008
->>> @@ -36,7 +36,7 @@
->>>   * The function provided by CRTDLL which appears to do the actual work
->>>   * of setjmp.
->>>   */
->>> -_CRTIMP int __cdecl __MINGW_NOTHROW _setjmp (jmp_buf);
->>> +int __cdecl _setjmp (jmp_buf);
+>>>> By the way, we still might want to add somehow X-Git-Url and X-Git-Tag
+>>>> headers later to 'patch' ('patchset') output format.
 >>>
->>>  #define        setjmp(x)       _setjmp(x)
->>>
->>> @@ -44,7 +44,7 @@
->>>   * Return to the last setjmp call and act as if setjmp had returned
->>>   * nVal (which had better be non-zero!).
->>>   */
->>> -_CRTIMP void __cdecl __MINGW_NOTHROW longjmp (jmp_buf, int)
->>> __MINGW_ATTRIB_NORETURN;
->>> +void __cdecl longjmp (jmp_buf, int);
->>>
->>>  #ifdef __cplusplus
->>>  }
->>>
->>> Also,
->>>  had to copy a pthread library with a dfferent name to the standard name:
->>> $cp libpthreadGC2.a libpthread.a
->>>
->>> The build went fine and am using the new binaries.
+>>> Yeah, I've been thinking about it, but I couldn't find an easy and
+>>> robust way to do it. Plus, should we add them for each patch, or just
+>>> once for the whole patchset?
 >>
->> Would you please push your addition to the mob branch of
->> git://repo.or.cz/msysgit.git? The push URL is repo.or.cz:/srv/git/msysgit.git
+>> True, that is a complication. Perhaps they should be added only for
+>> single patch?
+> 
+> Although that's rather easy to implement technically, it also creates
+> some kind of inconsistency.
+
+Well, it is problem also from technical point of view. Currently we can
+just stream (dump) git-format-patch output to browser (not forgetting
+adding '--encoding=utf8' if it is not used already), and do not need
+to have markers between commits. It is very simple code, which is its
+own advantage.
+
+>From theoretical point of view corrected X-Git-Tag functioning as
+a kind of ref marker but for the raw (text/plain) output could be added
+for each end every patch, so there would be no inconsistency for _this_
+extra header.
+
+I don't know what can be done about X-Git-URL.
+
+>>> Considering I think commitdiff is ugly and long, you can guess my
+>>> opinion on format_patch 8-P. 'patchset' might be a good candidate,
+>>> considering it's what it does when both hash_parent and hash are
+>>> given.
 >>
->> (But notice that some commits are on the mob branch currently that are not
->> in any other branch; hence, you better build on top of them so that they
->> are not lost when you push to mob.)
+>> True, 'patchset' might be even better, especially that it hints
+>> what it does for a range a..b (not diff of endpoints, but series
+>> of patches).
+> 
+> Good, I'll rename it.
+
+I just don't know if it would be best name. Perhaps 'patches' would
+be better?
+
+[...]
+>>> * diff(_plain): do what commitdiff(_plain) currently does for
+>>> parent..hash views, modulo something to be discussed for commit
+>>> messages (a shortlog rather maybe?)
 >>
->> -- Hannes
+>> Equivalent of "git diff" (or "git diff-tree").
 >>
->
-> I am not using git from the above repo. I am using it from:
-> git://git2.kernel.org/pub/scm/git/git.git
->
-> I will clone from the repo you have mentioned and push my changes,
-> that will take some time. I have started the clone now...
+>> Diffstat, or dirstat might be a good idea. Shortlog... I am not sure.
+>> Diff is about endpoints, and they can be in reverse, too.
+>>
+>> There is a problem how to denote endpoints.
+> 
+> Hm? Doesn't parent..hash work? Or are you talking about something else?
 
-I added a new remote to pull changes from the msys repo and it is
-taking a long time (bad network). In the meantime for some wanting to
-play:
+Errr... I meant here for the user, not for gitweb. To somehow denote
+before patch itself the endpoints. Just like for diff _for_ a commit
+we have commit message denoting :-).
 
-1. I downloaded pthreads for windows from:
-ftp://sourceware.org/pub/pthreads-win32/pthreads-w32-2-8-0-release.exe
-2. Extracted and copied the headers, libraries to
-msysgit/mingw/include and msysgit/mingw/lib folders. I made a copy of
-DLL in bin folder too so that runtime can pick it.
-3. I copied msysgit/mingw/lib/libpthreadGC2.a as
-msysgit/mingw/lib/libpthread.a as -lpthread needs a lib with that name
-4. Copied the setjmp.h header referred by pthread.h from my native
-mingw installation and modified it (refer my earlier mail). The
-modified contents of the new file that needs to go under
-msysgit/mingw/include/setjmp.h:
+>>> * patch[set?][_plain?]: format-patch style output (maybe with option
+>>> for HTML stuff too)
+>>
+>> Equivalent of "git format-patch".
+>>
+>> Actually the HTML format would be more like "git log -p", so perhaps
+>> that could be handled simply as a version of 'log' view (perhaps via
+>> @extra_options aka 'opt' parameter).
+> 
+> This is starting to get complicated ... I'm not sure how far in this I
+> can go with this patchset, so for the time being I'll probably just
+> stick to refining the (plain) patchset feature.
 
-/*
- * setjmp.h
- * This file has no copyright assigned and is placed in the Public Domain.
- * This file is a part of the mingw-runtime package.
- * No warranty is given; refer to the file DISCLAIMER within the package.
- *
- * Declarations supporting setjmp and longjump, a method for avoiding
- * the normal function call return sequence. (Bleah!)
- *
- */
+What I meant here is that it would be IMHO enough to have 'patch' view
+(or whatever it ends up named) be raw format / plain/text format only,
+and leave HTML equivalent for extra options/extra format to 'log' view.
 
-#ifndef _SETJMP_H_
-#define _SETJMP_H_
+[...]
+>>>>> The second patch exposes it from commitdiff view (obviosly), but also
+>>>>> from shortlog view, when less than 16 patches are begin shown.
+>>>>
+>>>> Why this nonconfigurable limit?
+>>>
+>>> Because the patch was actually a quick hack for the proof of concept
+>>> 8-) I wasn't even sure the patch idea would have been worth it (as
+>>> opposed to email-izing commitdiff_plain).
+>>
+>> Ah.
+>>
+>> Well, we might want to impose some limit to avoid generating and sending
+>> patchset for a whole history. Perhaps to page size (100), or some similar
+>> number?
+> 
+> The reason why I chose 16 is that (1) it's a rather commonly used
+> 'small' number across gitweb and (2) it's a rather acceptable
+> 'universal' upper limit for patchsets. There _are_ a few patchbombs
+> that considerably overtake that limit, but observe that this limit is
+> not an arbitrary limit on patchsets generated by the 'patchset' view,
+> but only a condition for which a link is generated from shortlog view.
 
-/* All the headers include this file. */
-#include <_mingw.h>
+I see.
 
-#ifndef RC_INVOKED
+> We may want to have TWO limits here: one is the absolute maximum limit
+> to the number of patches dumped in a patchset (to prevent DoS attacks
+> by repeated requests of the whole history), and the other one is the
+> limit for autogenerated patchset links.
 
-#ifdef __cplusplus
-extern "C" {
-#endif
+A pageful (100 commits) as hard limit against DoS attacks?
 
-/*
- * The buffer used by setjmp to store the information used by longjmp
- * to perform it's evil goto-like work. The size of this buffer was
- * determined through experimentation; it's contents are a mystery.
- * NOTE: This was determined on an i386 (actually a Pentium). The
- *       contents could be different on an Alpha or something else.
- */
-#define _JBLEN 16
-#define _JBTYPE int
-typedef _JBTYPE jmp_buf[_JBLEN];
-
-/*
- * The function provided by CRTDLL which appears to do the actual work
- * of setjmp.
- */
-int __cdecl _setjmp (jmp_buf);
-
-#define setjmp(x)       _setjmp(x)
-
-/*
- * Return to the last setjmp call and act as if setjmp had returned
- * nVal (which had better be non-zero!).
- */
-void __cdecl longjmp (jmp_buf, int);
-
-#ifdef __cplusplus
-}
-#endif
-
-#endif  /* Not RC_INVOKED */
-
-#endif  /* Not _SETJMP_H_ */
-
-5. I modified git Makefile as:
-diff --git a/Makefile b/Makefile
-index 649cfb8..71f995d 100644
---- a/Makefile
-+++ b/Makefile
-@@ -776,6 +776,7 @@ ifneq (,$(findstring MINGW,$(uname_S)))
-        NO_PERL_MAKEMAKER = YesPlease
-        NO_POSIX_ONLY_PROGRAMS = YesPlease
-        NO_ST_BLOCKS_IN_STRUCT_STAT = YesPlease
-+       THREADED_DELTA_SEARCH = YesPlease
-        COMPAT_CFLAGS += -D__USE_MINGW_ACCESS -DNOGDI -Icompat
--Icompat/regex -Icompat/fnmatch
-        COMPAT_CFLAGS += -DSNPRINTF_SIZE_CORR=1
-        COMPAT_CFLAGS += -DSTRIP_EXTENSION=\".exe\"
-
--dhruva
-
+[...]
 -- 
-Contents reflect my personal views only!
+Jakub Narebski
+Poland
