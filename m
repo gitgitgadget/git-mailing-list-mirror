@@ -1,38 +1,45 @@
 From: Mike Ralphson <mike@abacus.co.uk>
 Subject: [PATCH] Makefile: introduce NO_PTHREADS
-Date: Mon,  1 Dec 2008 16:09:42 +0000
-Message-ID: <1228147782-9370-1-git-send-email-mike@abacus.co.uk>
+Date: Mon,  1 Dec 2008 16:13:25 +0000
+Message-ID: <1228148005-9404-1-git-send-email-mike@abacus.co.uk>
 References: <4933A058.3050101@viscovery.net>
 Cc: git@vger.kernel.org, Mike Ralphson <mike.ralphson@gmail.com>,
 	j.sixt@viscovery.net
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Dec 01 17:31:31 2008
+X-From: git-owner@vger.kernel.org Mon Dec 01 17:31:38 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1L7BgH-00025o-6m
-	for gcvg-git-2@gmane.org; Mon, 01 Dec 2008 17:31:29 +0100
+	id 1L7BgG-00025o-HJ
+	for gcvg-git-2@gmane.org; Mon, 01 Dec 2008 17:31:28 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751015AbYLAQ3y (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 1 Dec 2008 11:29:54 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751081AbYLAQ3x
-	(ORCPT <rfc822;git-outgoing>); Mon, 1 Dec 2008 11:29:53 -0500
-Received: from [82.109.193.99] ([82.109.193.99]:10797 "EHLO orson.abacus.co.uk"
+	id S1751096AbYLAQ3w (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 1 Dec 2008 11:29:52 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751060AbYLAQ3w
+	(ORCPT <rfc822;git-outgoing>); Mon, 1 Dec 2008 11:29:52 -0500
+Received: from [82.109.193.99] ([82.109.193.99]:10798 "EHLO orson.abacus.co.uk"
 	rhost-flags-FAIL-FAIL-OK-FAIL) by vger.kernel.org with ESMTP
-	id S1751015AbYLAQ3v (ORCPT <rfc822;git@vger.kernel.org>);
+	id S1750755AbYLAQ3v (ORCPT <rfc822;git@vger.kernel.org>);
 	Mon, 1 Dec 2008 11:29:51 -0500
+X-Greylist: delayed 1792 seconds by postgrey-1.27 at vger.kernel.org; Mon, 01 Dec 2008 11:29:51 EST
 Received: by orson.abacus.co.uk (Postfix, from userid 1006)
-	id 9028118A338; Mon,  1 Dec 2008 16:09:42 +0000 (GMT)
+	id 3F17918A302; Mon,  1 Dec 2008 16:13:25 +0000 (GMT)
 X-Mailer: git-send-email 1.6.0.2.229.g1293c
 In-Reply-To: <4933A058.3050101@viscovery.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/102058>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/102059>
 
 From: Junio C Hamano <gitster@pobox.com>
+
+ This introduces make variable NO_PTHREADS for platforms that lack the
+ support for pthreads library or people who do not want to use it for
+ whatever reason.  When defined, it makes the multi-threaded index
+ preloading into a no-op, and also disables threaded delta searching by
+ pack-objects.
 
 Signed-off-by: Junio C Hamano <gitster@pobox.com>
 Signed-off-by: Johannes Sixt <j6t@kdbg.org>
@@ -45,7 +52,7 @@ Signed-off-by: Mike Ralphson <mike@abacus.co.uk>
 
  Made the default for AIX <5 and Mingw
 
- Author should still show as Junio, apologies if not
+ With correct commit message. Sorry for the previous attempt.
 
  Makefile        |   17 ++++++++++++++++-
  config.mak.in   |    1 +
