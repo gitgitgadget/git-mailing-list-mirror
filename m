@@ -1,83 +1,68 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH 0/6 (v2)] Detecting HEAD more reliably while cloning
-Date: Mon,  1 Dec 2008 06:12:49 -0800
-Message-ID: <1228140775-29212-1-git-send-email-gitster@pobox.com>
+Subject: [PATCH 2/6 (v2)] connect.c::read_extra_info(): prepare to receive
+ more than server capabilities
+Date: Mon,  1 Dec 2008 06:12:51 -0800
+Message-ID: <1228140775-29212-3-git-send-email-gitster@pobox.com>
+References: <1228140775-29212-1-git-send-email-gitster@pobox.com>
+ <1228140775-29212-2-git-send-email-gitster@pobox.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Dec 01 15:14:27 2008
+X-From: git-owner@vger.kernel.org Mon Dec 01 15:14:40 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1L79Xd-0007j4-1k
-	for gcvg-git-2@gmane.org; Mon, 01 Dec 2008 15:14:25 +0100
+	id 1L79Xr-0007ng-DB
+	for gcvg-git-2@gmane.org; Mon, 01 Dec 2008 15:14:39 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752082AbYLAONI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 1 Dec 2008 09:13:08 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752031AbYLAONH
-	(ORCPT <rfc822;git-outgoing>); Mon, 1 Dec 2008 09:13:07 -0500
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:44519 "EHLO
+	id S1752386AbYLAONT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 1 Dec 2008 09:13:19 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752473AbYLAONT
+	(ORCPT <rfc822;git-outgoing>); Mon, 1 Dec 2008 09:13:19 -0500
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:44575 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752006AbYLAONF (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 1 Dec 2008 09:13:05 -0500
+	with ESMTP id S1752381AbYLAONS (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 1 Dec 2008 09:13:18 -0500
 Received: from localhost.localdomain (unknown [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 76D5E83189
-	for <git@vger.kernel.org>; Mon,  1 Dec 2008 09:13:04 -0500 (EST)
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id D89448318F
+	for <git@vger.kernel.org>; Mon,  1 Dec 2008 09:13:17 -0500 (EST)
 Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
  DHE-RSA-AES256-SHA (256/256 bits)) (No client certificate requested) by
- a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTPSA id A419683187 for
- <git@vger.kernel.org>; Mon,  1 Dec 2008 09:12:56 -0500 (EST)
+ a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTPSA id 469788318E for
+ <git@vger.kernel.org>; Mon,  1 Dec 2008 09:13:12 -0500 (EST)
 X-Mailer: git-send-email 1.6.1.rc1.23.g38649f
-X-Pobox-Relay-ID: 2B6EA3DA-BFB2-11DD-99E3-465CC92D7133-77302942!a-sasl-fastnet.pobox.com
+In-Reply-To: <1228140775-29212-2-git-send-email-gitster@pobox.com>
+X-Pobox-Relay-ID: 336B6BAE-BFB2-11DD-8A8A-465CC92D7133-77302942!a-sasl-fastnet.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/102039>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/102040>
 
-This is another approach to the same problem that a repository cloned from
-another repository whose default branch is not 'master' can use 'master'
-as the default.
+This still does not actually parse and accept anything more than the list
+of server capabilities, but prepares for the uploader that sends more
+"extra" information than that.
 
-The current code has to guess where the HEAD in the original repository
-points at, because the original protocol tells what object each ref points
-at but does not talk about which other ref a symbolic ref points at.  The
-implication of this is that if you prepare another branch that points at
-your master, like this:
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
+---
+ connect.c |    5 ++++-
+ 1 files changed, 4 insertions(+), 1 deletions(-)
 
-	$ git checkout -b another master
-
-and keep that other branch checked out (and in sync with 'master'), a
-clone made from such a repository may incorrectly have its HEAD pointing
-at 'master', not 'another'.
-
-Instead of introducing a full-fledged protocol extension, this round hides
-the new information in the same place as the server capabilities list that
-is used to implement protocol extension is hidden from older clients.
-This way, it does not have to work around the code structure imposed by
-the transport API, does not have to introduce an extra round trip, and
-does not have to trigger an annoying (but harmless) error message when an
-older client contacts a new uploader.
-
-  [1/6] get_remote_heads(): refactor code to read "server capabilities"
-  [2/6] connect.c::read_extra_info(): prepare to receive more than server
-        capabilities
-  [3/6] connect.c::read_extra_info(): find where HEAD points at
-  [4/6] clone: find the current branch more explicitly
-  [5/6] upload-pack: send the HEAD information
-  [6/6] clone: test the new HEAD detection logic
-
-The first four are the client side, the fifth one is the uploader side,
-and the last one is the test.  After storing these patches in separate
-files, you would build this history (on top of 'master'):
-
-    git am 1 2 3 4
-    git reset --hard HEAD~4    5---------------M---6
-    git am 5                  /               /
-    git merge HEAD@{2}        ---1---2---3---4
-    git am 6
-
- builtin-clone.c  |   24 +++++++++++++++++++-----
- connect.c        |   47 +++++++++++++++++++++++++++++++++++++++++++----
- t/t5601-clone.sh |   11 +++++++++++
- upload-pack.c    |   14 +++++++++++---
- 4 files changed, 84 insertions(+), 12 deletions(-)
+diff --git a/connect.c b/connect.c
+index 932c503..114d691 100644
+--- a/connect.c
++++ b/connect.c
+@@ -59,8 +59,11 @@ static void read_extra_info(char *line, int len)
+ 	 * The first such "extra" piece of information is the list of
+ 	 * server capabilities.
+ 	 */
++	int infolen = strlen(line) + 1;
++
+ 	free(server_capabilities);
+-	server_capabilities = xstrdup(line);
++	server_capabilities = xmalloc(infolen);
++	memcpy(server_capabilities, line, infolen);
+ }
+ 
+ /*
+-- 
+1.6.0.4.864.g0f47a
