@@ -1,87 +1,59 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 0/5] Detecting HEAD more reliably while cloning
-Date: Sun, 30 Nov 2008 18:54:56 -0800
-Message-ID: <7vzljgsiyn.fsf@gitster.siamese.dyndns.org>
-References: <1228039053-31099-1-git-send-email-gitster@pobox.com>
- <1228039053-31099-2-git-send-email-gitster@pobox.com>
- <1228039053-31099-3-git-send-email-gitster@pobox.com>
- <1228039053-31099-4-git-send-email-gitster@pobox.com>
- <1228039053-31099-5-git-send-email-gitster@pobox.com>
- <1228039053-31099-6-git-send-email-gitster@pobox.com>
- <7vabbhttq0.fsf@gitster.siamese.dyndns.org>
+From: "Joe Fiorini" <joe@faithfulgeek.org>
+Subject: git-svn rebase "problems"
+Date: Sun, 30 Nov 2008 22:17:56 -0500
+Message-ID: <73fd69b50811301917j6535f289uf177976707914e46@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Pierre Habouzit <madcoder@debian.org>
-X-From: git-owner@vger.kernel.org Mon Dec 01 03:56:59 2008
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Dec 01 04:19:15 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1L6yy1-0000ER-G3
-	for gcvg-git-2@gmane.org; Mon, 01 Dec 2008 03:56:57 +0100
+	id 1L6zJZ-0004Kl-Jm
+	for gcvg-git-2@gmane.org; Mon, 01 Dec 2008 04:19:14 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752897AbYLACz2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 30 Nov 2008 21:55:28 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752627AbYLACz1
-	(ORCPT <rfc822;git-outgoing>); Sun, 30 Nov 2008 21:55:27 -0500
-Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:46021 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752473AbYLACz1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 30 Nov 2008 21:55:27 -0500
-Received: from localhost.localdomain (unknown [127.0.0.1])
-	by b-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id E0D6C17D58;
-	Sun, 30 Nov 2008 21:55:23 -0500 (EST)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES256-SHA (256/256 bits)) (No client certificate requested) by
- b-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTPSA id 3538C17D85; Sun,
- 30 Nov 2008 21:54:58 -0500 (EST)
-In-Reply-To: <7vabbhttq0.fsf@gitster.siamese.dyndns.org> (Junio C. Hamano's
- message of "Sun, 30 Nov 2008 02:04:55 -0800")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: 7FD8B83E-BF53-11DD-A178-F83E113D384A-77302942!a-sasl-quonix.pobox.com
+	id S1752798AbYLADR5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 30 Nov 2008 22:17:57 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752789AbYLADR5
+	(ORCPT <rfc822;git-outgoing>); Sun, 30 Nov 2008 22:17:57 -0500
+Received: from wf-out-1314.google.com ([209.85.200.169]:54844 "EHLO
+	wf-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752777AbYLADR5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 30 Nov 2008 22:17:57 -0500
+Received: by wf-out-1314.google.com with SMTP id 27so2448909wfd.4
+        for <git@vger.kernel.org>; Sun, 30 Nov 2008 19:17:56 -0800 (PST)
+Received: by 10.143.12.20 with SMTP id p20mr4329263wfi.169.1228101476075;
+        Sun, 30 Nov 2008 19:17:56 -0800 (PST)
+Received: by 10.142.82.4 with HTTP; Sun, 30 Nov 2008 19:17:56 -0800 (PST)
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/101997>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/101998>
 
-Junio C Hamano <gitster@pobox.com> writes:
+I'm having some problems with git svn rebase. I'm pretty sure this is
+just the way git works, not a problem per se. But it's causing trouble
+for me and my team.
+My team is currently on Subversion. I'm trying to convince some people
+that git is a good way to go.
 
-> You may have noticed that the new git-send-email reversed the order of six
-> patch files (one cover and five patches) I gave from the command line.
-> Please consider this series as a bug report ;-)
->
-> I think the bug is that "pop @ARGV" should read "shift @ARGV" or something
-> silly and trivial like that, but it is getting late, so I won't debug
-> tonight.
+So I'm using git-svn. My team tends to commit to the svn server fairly
+often. It has happened more than once that, because git svn rebase
+applies each svn commit sequentially, some of the commits will
+conflict with each other - whether or not I have ever touched the
+file. Obviously, this is a big problem because if I've never touched
+the file, then I probably won't know exactly how to resolve the merge
+(the merge markers haven't been solely reliable).
 
-Perhaps this is a good enough fix?  Very lightly tested.
+Is there anything I could do to get around this without having to
+merge code I'm unfamiliar with?
 
--- >8 --
-send-email: do not reverse the command line arguments
-
-The loop picks elements from @ARGV one by one, sifts them into arguments
-meant for format-patch and the script itself, and pushes them to @files
-and @rev_list_opts arrays.  Pick elements from @ARGV starting at the
-beginning using shift, instead of at the end using pop, as push appends
-them to the end of the array.
-
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
----
- git-send-email.perl |    2 +-
- 1 files changed, 1 insertions(+), 1 deletions(-)
-
-diff --git c/git-send-email.perl w/git-send-email.perl
-index 7508f8f..45beb9c 100755
---- c/git-send-email.perl
-+++ w/git-send-email.perl
-@@ -421,7 +421,7 @@ EOF
- # Now that all the defaults are set, process the rest of the command line
- # arguments and collect up the files that need to be processed.
- my @rev_list_opts;
--while (my $f = pop @ARGV) {
-+while (defined(my $f = shift @ARGV)) {
- 	if ($f eq "--") {
- 		push @rev_list_opts, "--", @ARGV;
- 		@ARGV = ();
+Thanks all!
+Joe Fiorini
+--
+joe fiorini
+http://www.faithfulgeek.org
+// freelancing & knowledge sharing
