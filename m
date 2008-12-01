@@ -1,76 +1,110 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 3/3] git add --intent-to-add: do not let an empty blob
- committed by accident
-Date: Mon, 01 Dec 2008 01:24:11 -0800
-Message-ID: <7vhc5os0xw.fsf@gitster.siamese.dyndns.org>
-References: <7v7i6qc8r0.fsf@gitster.siamese.dyndns.org>
- <alpine.DEB.1.00.0811272347010.30769@pacific.mpi-cbg.de>
- <7vtz9s8uzu.fsf@gitster.siamese.dyndns.org>
- <alpine.DEB.1.00.0811281225040.30769@pacific.mpi-cbg.de>
- <20081128192033.GF23984@spearce.org>
- <7voczz4cfb.fsf@gitster.siamese.dyndns.org>
- <7vk5an4cba.fsf_-_@gitster.siamese.dyndns.org>
- <7vvdu72nq9.fsf@gitster.siamese.dyndns.org>
- <7vk5an2nil.fsf_-_@gitster.siamese.dyndns.org>
- <20081130191444.GC10981@coredump.intra.peff.net>
+From: Liu Yubao <yubao.liu@gmail.com>
+Subject: Re: two questions about the format of loose object
+Date: Mon, 01 Dec 2008 17:28:53 +0800
+Message-ID: <4933AE55.2090007@gmail.com>
+References: <493399B7.5000505@gmail.com> <7voczws3np.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: "Shawn O. Pearce" <spearce@spearce.org>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Mon Dec 01 10:26:28 2008
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: git list <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Dec 01 10:30:24 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1L752w-0002t3-T7
-	for gcvg-git-2@gmane.org; Mon, 01 Dec 2008 10:26:27 +0100
+	id 1L756m-0003tJ-3X
+	for gcvg-git-2@gmane.org; Mon, 01 Dec 2008 10:30:24 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752653AbYLAJZK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 1 Dec 2008 04:25:10 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750748AbYLAJZJ
-	(ORCPT <rfc822;git-outgoing>); Mon, 1 Dec 2008 04:25:09 -0500
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:60693 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752653AbYLAJZG (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 1 Dec 2008 04:25:06 -0500
-Received: from localhost.localdomain (unknown [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 69ED783CDF;
-	Mon,  1 Dec 2008 04:25:03 -0500 (EST)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES256-SHA (256/256 bits)) (No client certificate requested) by
- a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTPSA id BE0F083CD9; Mon,
-  1 Dec 2008 04:24:13 -0500 (EST)
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: EF1F578A-BF89-11DD-A73E-465CC92D7133-77302942!a-sasl-fastnet.pobox.com
+	id S1750920AbYLAJ3H (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 1 Dec 2008 04:29:07 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750924AbYLAJ3G
+	(ORCPT <rfc822;git-outgoing>); Mon, 1 Dec 2008 04:29:06 -0500
+Received: from ti-out-0910.google.com ([209.85.142.184]:28827 "EHLO
+	ti-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750876AbYLAJ3D (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 1 Dec 2008 04:29:03 -0500
+Received: by ti-out-0910.google.com with SMTP id b6so1573393tic.23
+        for <git@vger.kernel.org>; Mon, 01 Dec 2008 01:29:02 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from
+         :user-agent:mime-version:to:cc:subject:references:in-reply-to
+         :content-type:content-transfer-encoding;
+        bh=G2Hbndh9Upm0bDPxNO1UoBTgkdktaLgmNubncFlRtco=;
+        b=kgmnlGxbV51eYi/t/LoT7tptnds2esjvaaS/Pb8AB+R+IoortbCZim9Ck/NgJceEPU
+         CvnWK61OktLAmzsx/vb5Sy8ijesgCoQW3Qp2vOZPRyZ2Q0R62EDBI6YWrUQrKQF3aF66
+         quGDEmHNJ1+OSjdtzOEYa9x7uPybx2iOCQvWk=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:user-agent:mime-version:to:cc:subject
+         :references:in-reply-to:content-type:content-transfer-encoding;
+        b=I6FRDBQvWDBnhpiQk4CNnOOATXbpk1cPcP6y6tsxmXrXRidMLsU6jZkK7S4s0ru904
+         s9XqxTh2V8CVjB/XtxgWUli+AiC0XJ6sq9j0JJ1LOiUXo6ghHeonjigAlSyV6mpzEc/J
+         QzCVz8k4b/xPQnvr1wOMpVSPtwlRdNsF8niXk=
+Received: by 10.110.28.15 with SMTP id b15mr7650404tib.0.1228123741858;
+        Mon, 01 Dec 2008 01:29:01 -0800 (PST)
+Received: from ?10.64.1.142? ([211.157.41.194])
+        by mx.google.com with ESMTPS id 22sm280491tim.7.2008.12.01.01.28.58
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Mon, 01 Dec 2008 01:29:00 -0800 (PST)
+User-Agent: Thunderbird 2.0.0.18 (Windows/20081105)
+In-Reply-To: <7voczws3np.fsf@gitster.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/102008>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/102009>
 
-Jeff King <peff@peff.net> writes:
+Junio C Hamano wrote:
+> Liu Yubao <yubao.liu@gmail.com> writes:
+> 
+> 
+> A hint for understanding why loose objects are compressed is that
+> packfiles were invented much later in the history of git.
+> 
+> These are both good questions, and it might have made a difference if they
+> were posed in early April 2005.
+> 
+> At this point, the plain and clear answer to both of these "Why not"
+> questions is "because that is the way it is and it is costly to change
+> them now in thousands of repositories people use every day."
+> 
+> In other words, it is not interesting anymore to raise these questions
+> now, especially as a suggestion to change the system, unless they are
+> accompanied by arguments that convinces everybody that the cost of such a
+> change outweighs the benefits, and a clear transition plans how to upgrade
+> everybody's existing repositories without any pain.
+> 
 
-> On Fri, Nov 28, 2008 at 07:56:34PM -0800, Junio C Hamano wrote:
-> ...
->>  	case WRITE_TREE_UNMERGED_INDEX:
->> -		die("%s: error building trees; the index is unmerged?", me);
->> +		die("%s: error building trees", me);
->
-> This caught me by surprise while reading, but I assume the rationale is
-> "now there is a new, different reason not to be able to build the trees,
-> so our guess is less likely to be correct". I wonder if we can do better
-> by actually passing out a more exact error value (though it looks like
-> we will already have said "foo: not added yet" by that point anyway, so
-> maybe it is just pointless to say more).
+Thanks for your explanation, but I doubt if it's too costly to change the
+format of loose object, after all this doesn't change the format of pack
+file and affect git-pull/fetch of old git client. 
 
-The places that detect the "unmerged" (and then newly added "intent-only")
-entries already have issued error messages in the codepath that leads to
-this error.
+I ask the "why not" questions because I doubt if I miss some technical points
+that the change isn't worth at all in fact.
 
->> diff --git a/t/t3701-add-interactive.sh b/t/t3701-add-interactive.sh
->
-> Why in t3701?
+If no severe technical problem will occur, I think it's worth breaking
+*forward* compatibility for better performance and I'm willing to implement
+it.
 
-Good question.  Brain fart, perhaps.
+Some cons and pros.
+
+cons:
+
+* old git client can't read loose objects in new format
+  (People degrade git rarely and old git can read pack files
+   generated by new git, so it's not a big problem)
+
+pros:
+
+* avoid compressing and uncompressing loose objects that are likely
+  frequently used when you are coding/merging
+* share loose objects among multipe git processes
+* the new code path is simpler although we will have more code paths for
+  compatibility
+
+
+Best regards,
+
+Liu Yubao
