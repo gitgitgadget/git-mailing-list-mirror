@@ -1,71 +1,101 @@
-From: Karl =?iso-8859-1?Q?Hasselstr=F6m?= <kha@treskal.com>
-Subject: Re: A better approach to diffing and merging
-Date: Mon, 1 Dec 2008 10:54:49 +0100
-Message-ID: <20081201095449.GA30857@diana.vm.bytemark.co.uk>
-References: <823242bd0811291012g15c4d442qa5d7afc9cc762b20@mail.gmail.com> <4931F2DC.CE9B1E35@dessent.net>
+From: "Mike Ralphson" <mike.ralphson@gmail.com>
+Subject: Re: [PATCH] Makefile: introduce NO_PTHREADS
+Date: Mon, 1 Dec 2008 09:57:56 +0000
+Message-ID: <e2b179460812010157y29ca5405ta8ff7efea3f2a167@mail.gmail.com>
+References: <200811121029.34841.thomas@koch.ro>
+	 <vzAozXmaOLEpyz-7DHx4nMusAdaTsFp7iZ8xfFsgAIraex6_wfvyuw@cipher.nrlssc.navy.mil>
+	 <alpine.LFD.2.00.0811141109580.3468@nehalem.linux-foundation.org>
+	 <7vtza95h01.fsf@gitster.siamese.dyndns.org>
+	 <alpine.LFD.2.00.0811150915240.3468@nehalem.linux-foundation.org>
+	 <e2b179460811170203v41e54ecclc3d6526bcc0fe928@mail.gmail.com>
+	 <492148AD.1090604@viscovery.net>
+	 <e2b179460811170245t1845cc66h7cb2a18c43a79359@mail.gmail.com>
+	 <4921548E.6070802@viscovery.net> <4933A058.3050101@viscovery.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Ian Clarke <ian.clarke@gmail.com>, git@vger.kernel.org
-To: Brian Dessent <brian@dessent.net>
-X-From: git-owner@vger.kernel.org Mon Dec 01 10:56:40 2008
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: "Git Mailing List" <git@vger.kernel.org>,
+	"Linus Torvalds" <torvalds@linux-foundation.org>,
+	dhruvakm@gmail.com
+To: "Johannes Sixt" <j.sixt@viscovery.net>,
+	"Junio C Hamano" <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Dec 01 10:59:15 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1L75WA-0002EC-GX
-	for gcvg-git-2@gmane.org; Mon, 01 Dec 2008 10:56:38 +0100
+	id 1L75Yg-0002zH-8J
+	for gcvg-git-2@gmane.org; Mon, 01 Dec 2008 10:59:14 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751089AbYLAJzT convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 1 Dec 2008 04:55:19 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751017AbYLAJzT
-	(ORCPT <rfc822;git-outgoing>); Mon, 1 Dec 2008 04:55:19 -0500
-Received: from diana.vm.bytemark.co.uk ([80.68.90.142]:1977 "EHLO
-	diana.vm.bytemark.co.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751079AbYLAJzS (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 1 Dec 2008 04:55:18 -0500
-Received: from kha by diana.vm.bytemark.co.uk with local (Exim 3.36 #1 (Debian))
-	id 1L75UQ-0008NI-00; Mon, 01 Dec 2008 09:54:50 +0000
+	id S1751090AbYLAJ56 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 1 Dec 2008 04:57:58 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751081AbYLAJ56
+	(ORCPT <rfc822;git-outgoing>); Mon, 1 Dec 2008 04:57:58 -0500
+Received: from qw-out-2122.google.com ([74.125.92.27]:34606 "EHLO
+	qw-out-2122.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751078AbYLAJ55 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 1 Dec 2008 04:57:57 -0500
+Received: by qw-out-2122.google.com with SMTP id 3so480906qwe.37
+        for <git@vger.kernel.org>; Mon, 01 Dec 2008 01:57:56 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to
+         :subject:cc:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:references;
+        bh=gol6UZKvASMKSJlroJh92Lu4jBMrcuFGrTA64cuvgME=;
+        b=Quwpp+D81NGUNEmaV+8gXiNSjSuy+78HbXWLb6HaubVZkFfHGAp3s+v0NC9+ISzwb4
+         AEqyWuK/QRzH+yYwV3PmVdDmYrGT4lLBQFcENmg3gBgdK3dtITKLjZARuwhDRdpuRfm9
+         nw5HKREP8+uTbHDwUPU7IuIOgyWBL9tjQGy0I=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
+         :content-type:content-transfer-encoding:content-disposition
+         :references;
+        b=sRORyduJR6QgTVHCcB3IQjo1GWVvPAc6JsioxwFbmmynU8aMfDwaZXVxDKX3d+kBkj
+         h8BsHxoXR7rGEId66B0wS0xLilyE90lz5w5Cit6PyeAvKhCj8F4sMlHhHdrqBq/Berl9
+         1wQFoXu/OmNdT2ggcRJwKoLsJhk2Gtoxuvf+8=
+Received: by 10.214.78.6 with SMTP id a6mr9408851qab.97.1228125476338;
+        Mon, 01 Dec 2008 01:57:56 -0800 (PST)
+Received: by 10.214.80.4 with HTTP; Mon, 1 Dec 2008 01:57:56 -0800 (PST)
+In-Reply-To: <4933A058.3050101@viscovery.net>
 Content-Disposition: inline
-In-Reply-To: <4931F2DC.CE9B1E35@dessent.net>
-X-Manual-Spam-Check: kha@treskal.com, clean
-User-Agent: Mutt/1.5.9i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/102013>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/102014>
 
-On 2008-11-29 17:56:44 -0800, Brian Dessent wrote:
-
-> Ian Clarke wrote:
+2008/12/1 Johannes Sixt <j.sixt@viscovery.net>
 >
-> > Provide the merge algorithm with the grammar of the programming
-> > language, perhaps in the form of a Bison grammar file, or some
-> > other standardized way to represent a grammar.
+> Johannes Sixt schrieb:
+> > Mike Ralphson schrieb:
+> >> 2008/11/17 Johannes Sixt <j.sixt@viscovery.net>:
+> >>> Mike Ralphson schrieb:
+> >>>> 2008/11/15 Linus Torvalds <torvalds@linux-foundation.org>:
+> >>>>> On Sat, 15 Nov 2008, Junio C Hamano wrote:
+> >>>>>> This introduces make variable NO_PTHREADS for platforms that lack the
+> >>>>>> support for pthreads library or people who do not want to use it for
+> >>>>>> whatever reason.  When defined, it makes the multi-threaded index
+> >>>>>> preloading into a no-op, and also disables threaded delta searching by
+> >>>>>> pack-objects.
+> >>>>> ...
+> >
+> > :-( Maybe NO_PTHREADS is indeed the safer choice? I'm not going to dig
+> > into this today, though. (I'm on AIX 4.3.something.)
+> >
+> >>> BTW, this needs to be squashed in, because we don't have pthreads on Windows:
+> >>>...
 >
-> There's a huge flaw in that approach for C/C++: in order to parse
-> C/C++ you have to first preprocess it -- consider the twisty mazes
-> that #ifdef/#else/#endif can create. But in order to preprocess
-> source code you need a whole heap of extra information that is not
-> in the repository (or if it is, cannot be automatically extracted.)
+> you said you would resend the patch, but I think you forgot about it.
+> Would you do that now, please?
 
-But it's probably not necessary to parse the input files exactly. All
-you have to do is parse it well enough that the diff of the parse
-trees is interesting.
+Not forgotten, just slow. The current state I believe is we should
+have NO_PTHREADS for AIX < v5. THREADED_DELTA_SEARCH and the new
+multi-threaded lstat are actually ok on AIX 5.3 at least - though I
+couldn't see any performance benefit on my repo / hardware
+combination.
 
-And in practice, you'd probably also generate the "normal" diff, and
-then fall back to that one if the parse tree diff was worse.
+But now after dhruva's observation I'm unsure what the desired change
+is for Windows. 8-(
 
-> The idea may have value for langauges that are easy to parse and do
-> not have all this preprocessor cruft, but I just don't see how it
-> would be able to provide anything useful for non-trivial changes to
-> real world C/C++, which require human eyes to decipher.
-
-I think it could work. But there would be quite a bit of heuristics
-involved to get the "approximate" parsing right, so I'm pretty sure
-there's no way to find out without actually trying to build the thing.
-
---=20
-Karl Hasselstr=F6m, kha@treskal.com
-      www.treskal.com/kalle
+Mike
