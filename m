@@ -1,84 +1,87 @@
-From: Todd Zullinger <tmz@pobox.com>
-Subject: Re: SPEC files for Git
-Date: Mon, 1 Dec 2008 11:42:46 -0500
-Message-ID: <20081201164246.GY20204@inocybe.teonanacatl.org>
-References: <4933FFC6.8080306@morey-chaisemartin.com>
+From: Andreas Ericsson <ae@op5.se>
+Subject: Re: Is rebase always destructive?
+Date: Mon, 01 Dec 2008 17:45:08 +0100
+Message-ID: <49341494.40907@op5.se>
+References: <slrngj7jch.2srb.csaba-ml@beastie.creo.hu>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1; protocol="application/pgp-signature"; boundary="pBxr27OvcVUkmud5"
+Content-Type: text/plain; charset=ISO-8859-15; format=flowed
+Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org
-To: Nicolas Morey-Chaisemartin <devel@morey-chaisemartin.com>
-X-From: git-owner@vger.kernel.org Mon Dec 01 17:45:23 2008
+To: Csaba Henk <csaba-ml@creo.hu>
+X-From: git-owner@vger.kernel.org Mon Dec 01 17:47:03 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1L7BtL-0007gB-9f
-	for gcvg-git-2@gmane.org; Mon, 01 Dec 2008 17:44:59 +0100
+	id 1L7Bv2-0008Ue-9v
+	for gcvg-git-2@gmane.org; Mon, 01 Dec 2008 17:46:44 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754325AbYLAQnh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 1 Dec 2008 11:43:37 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753925AbYLAQnh
-	(ORCPT <rfc822;git-outgoing>); Mon, 1 Dec 2008 11:43:37 -0500
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:54435 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754313AbYLAQng (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 1 Dec 2008 11:43:36 -0500
-Received: from localhost.localdomain (unknown [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id C75C183F8C;
-	Mon,  1 Dec 2008 11:43:33 -0500 (EST)
-Received: from inocybe.teonanacatl.org (unknown [69.248.23.23]) (using TLSv1
- with cipher AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTPSA id 4100983F7B; Mon,
-  1 Dec 2008 11:42:48 -0500 (EST)
-Content-Disposition: inline
-In-Reply-To: <4933FFC6.8080306@morey-chaisemartin.com>
-X-Listening-To: Lynyrd Skynyrd - The Last Rebel
-User-Agent: Mutt/1.5.18 (2008-05-17)
-X-Pobox-Relay-ID: 315506B2-BFC7-11DD-88D3-465CC92D7133-09356542!a-sasl-fastnet.pobox.com
+	id S1751672AbYLAQpQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 1 Dec 2008 11:45:16 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753556AbYLAQpO
+	(ORCPT <rfc822;git-outgoing>); Mon, 1 Dec 2008 11:45:14 -0500
+Received: from mail.op5.se ([193.201.96.20]:33839 "EHLO mail.op5.se"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753999AbYLAQpM (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 1 Dec 2008 11:45:12 -0500
+Received: from localhost (localhost.localdomain [127.0.0.1])
+	by mail.op5.se (Postfix) with ESMTP id 8A0F424B0B4A;
+	Mon,  1 Dec 2008 17:41:31 +0100 (CET)
+X-Virus-Scanned: amavisd-new at 
+X-Spam-Flag: NO
+X-Spam-Score: -2.499
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.499 tagged_above=-10 required=6.6
+	tests=[BAYES_00=-2.599, RDNS_NONE=0.1]
+Received: from mail.op5.se ([127.0.0.1])
+	by localhost (mail.op5.se [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id LCXX7EYJ1Ra6; Mon,  1 Dec 2008 17:41:29 +0100 (CET)
+Received: from clix.int.op5.se (unknown [172.27.78.22])
+	by mail.op5.se (Postfix) with ESMTP id AE2EE1B8006F;
+	Mon,  1 Dec 2008 17:41:29 +0100 (CET)
+User-Agent: Thunderbird 2.0.0.18 (X11/20081119)
+In-Reply-To: <slrngj7jch.2srb.csaba-ml@beastie.creo.hu>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/102061>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/102062>
 
+Csaba Henk wrote:
+> Hi,
+> 
+> When doing a rebase, I can find a number of reasons for which one might
+> feel like to preserve the rebased branch (that is, perform an operation
+> which copies the branch over a new base, not moves).
+> 
+> -  For example, a successful rebase doesn't necessarily mean that the
+>    code, as of the rebased branch, is consistent and compiles. That is,
+>    the rebase can be broken even if git can put things together diff-wise.
+>    In such a case I wouldn't be happy to lose the original instance of
+>    the branch.
+> 
+> -  Or I might want to build different versions of the program, and each
+>    version of it needs a given set of fixes (the same one). Then rebasing
+>    my bugfix branch is not a good idea, I'd much rather copy it over all
+>    those versions.
+> 
+> I can't see any option for rebase which would yield this cp-like
+> behaviour. Am I missing something? Or people don't need such a feature?
+> (Then give me some LART please, my mind is not yet gittified enough to
+> see why is this not needed.) Or is it usually done by other means, not
+> rebase?
+> 
 
---pBxr27OvcVUkmud5
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+When I feel I'm in any danger of ending up with mis-compiles or whatnot,
+I usually do
+  git checkout -b try-rebase
+  git rebase $target
+which does exactly what you want.
 
-Nicolas Morey-Chaisemartin wrote:
-> I'm trying to recompile gitweb1.6.0.4-1 for RHEL5, but I'm missing
-> the spec file.  I've checked the git SRP. It generates a lot of
-> things but no RPM for gitweb.
->=20
-> Is there any place with an official spec file? Or has anyone made
-> one which he could share?
+For almost all other operations, it's possible to get your previous
+branch-pointer back, either by referencing ORIG_HEAD, or the reflogs.
 
-Far from official, but here's what I've been using, based on the
-Fedora and EPEL packages: http://tmz.fedorapeople.org/tmp/git/el5/
-
---=20
-Todd        OpenPGP -> KeyID: 0xBEAF0CE3 | URL: www.pobox.com/~tmz/pgp
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-Many people are secretly interested in life.
-
-
---pBxr27OvcVUkmud5
-Content-Type: application/pgp-signature
-Content-Disposition: inline
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.9 (GNU/Linux)
-
-iQFDBAEBAgAtBQJJNBQGJhhodHRwOi8vd3d3LnBvYm94LmNvbS9+dG16L3BncC90
-bXouYXNjAAoJEEMlk4u+rwzjgIgIALeBKoq4y6z1IjB9owk+4n+yMGpkGHajUYEt
-c8Bl6CPoiSLSRPNJhXRZp4rJLwsHEKrolqsu1Cq9KsbWJoHhqn9tyHPCIyDi7mQE
-57tO8oHyH7mAgRpQvUo7Ld051C0+1tznJ/kagyBE5LpBvSU+c07IV7cXmQ0/sfHa
-+V0+ZrLCDhHx0ay2uA2I/doVQ0oFyRNl1KaqEIHCWOklhjFMdRMl8lzMk2xRMsWD
-PlLVnSJEhElBQDXGtpFGp556acFbFQsPqdEyZMlEmLL5GuqJ+L5Zsu5H+ZhbNNhn
-lgXvHYy/5KS6CJkpldQWVdf7WT+bnIINsIWi/SIJtOrvTGBQGdg=
-=Imbb
------END PGP SIGNATURE-----
-
---pBxr27OvcVUkmud5--
+-- 
+Andreas Ericsson                   andreas.ericsson@op5.se
+OP5 AB                             www.op5.se
+Tel: +46 8-230225                  Fax: +46 8-230231
