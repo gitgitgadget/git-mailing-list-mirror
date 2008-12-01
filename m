@@ -1,71 +1,63 @@
-From: dhruva <dhruvakm@gmail.com>
-Subject: Re: [msysGit] Re: git build on msys fails (and fix)
-Date: Mon, 1 Dec 2008 19:00:55 +0530
-Message-ID: <e3f230850812010530h49fc360eu309876a4ebbb0f9d@mail.gmail.com>
-References: <e3f230850811300302y68992b9doe4897d97d513de3a@mail.gmail.com>
-	 <4933A922.7080300@viscovery.net>
-	 <e3f230850812010132g48fcdf2fm46310b601990e51d@mail.gmail.com>
-	 <e3f230850812010252i67d9846cg439b5951485ee7fe@mail.gmail.com>
-	 <e3f230850812010348w793e17c2q6ab92cf9b2c04972@mail.gmail.com>
-	 <4933D10E.6020706@viscovery.net>
-	 <e3f230850812010402n69cced19s3f36a5bcb84977c6@mail.gmail.com>
-	 <e3f230850812010507y54dff6dh3757bf97c78c0329@mail.gmail.com>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH] git-cvsimport: add support for cvs pserver password
+ scrambling.
+Date: Mon, 1 Dec 2008 14:43:16 +0100 (CET)
+Message-ID: <alpine.DEB.1.00.0812011442530.30769@pacific.mpi-cbg.de>
+References: <5794AED2-43FF-4441-8292-0C9BFB3139A2@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: Git <git@vger.kernel.org>, msysGit <msysgit@googlegroups.com>
-To: "Johannes Sixt" <j.sixt@viscovery.net>
-X-From: git-owner@vger.kernel.org Mon Dec 01 14:32:16 2008
+Content-Type: MULTIPART/MIXED; BOUNDARY="8323328-1235365464-1228138997=:30769"
+Cc: git <git@vger.kernel.org>
+To: =?ISO-8859-15?Q?Dirk_H=F6rner?= <dirker@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Dec 01 14:36:17 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1L78sp-0001T2-Jh
-	for gcvg-git-2@gmane.org; Mon, 01 Dec 2008 14:32:16 +0100
+	id 1L78wi-0002ZX-NU
+	for gcvg-git-2@gmane.org; Mon, 01 Dec 2008 14:36:17 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751186AbYLANa5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 1 Dec 2008 08:30:57 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751286AbYLANa5
-	(ORCPT <rfc822;git-outgoing>); Mon, 1 Dec 2008 08:30:57 -0500
-Received: from wf-out-1314.google.com ([209.85.200.173]:42012 "EHLO
-	wf-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750980AbYLANa4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 1 Dec 2008 08:30:56 -0500
-Received: by wf-out-1314.google.com with SMTP id 27so2666080wfd.4
-        for <git@vger.kernel.org>; Mon, 01 Dec 2008 05:30:56 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to
-         :subject:cc:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:references;
-        bh=5i1NR3JeI4wmWwDHzqgIeRFu6Z3KGyOvwTWIBKZcgUY=;
-        b=FymOlvQFbQ+gWs3coIj2u9sxungRNYLyv9c1ztjlmxoeAVJuUMmEyrUNl5sypd9LAg
-         itziFIF0m4O2XZEx+/HBjQDbA4XucGXplCy52Pm33fStz/qjb5YsQsQlGuE2nQGwjfsH
-         r28UrxdZdH4jAayVbZLUpU++mlyaCjUm3VLTA=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
-         :content-type:content-transfer-encoding:content-disposition
-         :references;
-        b=tjS9UiJip6aZP0QNKSZiSeeaS8ZCqVe60pPDEYBgu86viQpU3N9AvXBf0EvBhlNNdo
-         xk9ncFDirfusJGZUjuZYVbs6IPYpjkqB3D0h6ig12YOAuRxTMvJRoWwi37dt3oDNCvti
-         k7w1qmpcNbxmCZsymxqZnKddsPCpYYZRgna6Q=
-Received: by 10.142.83.4 with SMTP id g4mr4511979wfb.156.1228138255511;
-        Mon, 01 Dec 2008 05:30:55 -0800 (PST)
-Received: by 10.142.110.21 with HTTP; Mon, 1 Dec 2008 05:30:55 -0800 (PST)
-In-Reply-To: <e3f230850812010507y54dff6dh3757bf97c78c0329@mail.gmail.com>
-Content-Disposition: inline
+	id S1751358AbYLANe7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 1 Dec 2008 08:34:59 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751355AbYLANe7
+	(ORCPT <rfc822;git-outgoing>); Mon, 1 Dec 2008 08:34:59 -0500
+Received: from mail.gmx.net ([213.165.64.20]:52935 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1750980AbYLANe6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 1 Dec 2008 08:34:58 -0500
+Received: (qmail invoked by alias); 01 Dec 2008 13:34:56 -0000
+Received: from pacific.mpi-cbg.de (EHLO pacific.mpi-cbg.de) [141.5.10.38]
+  by mail.gmx.net (mp037) with SMTP; 01 Dec 2008 14:34:56 +0100
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX18X25483y8Xzwz2JYPFkyQ26K7WzlPM+j/xGqe0W0
+	P2TYWhn65X29jV
+X-X-Sender: schindelin@pacific.mpi-cbg.de
+In-Reply-To: <5794AED2-43FF-4441-8292-0C9BFB3139A2@gmail.com>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.74
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/102031>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/102032>
+
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
+
+--8323328-1235365464-1228138997=:30769
+Content-Type: TEXT/PLAIN; charset=ISO-8859-15
+Content-Transfer-Encoding: 8BIT
 
 Hi,
- Sorry for all the noise, I pushed the files. I had to use:
-$ git push mob@repo.or.cz:/srv/git/msysgit.git
 
--dhruva
+On Fri, 28 Nov 2008, Dirk Hörner wrote:
 
--- 
-Contents reflect my personal views only!
+> Instead of a cleartext password, the CVS pserver expects a scrambled one 
+> in the authentication request. With this patch it is possible to import 
+> CVS repositories only accessible via pserver and user/password.
+
+The patch looks obvious enough; care to add a testcase?
+
+Ciao,
+Dscho
+--8323328-1235365464-1228138997=:30769--
