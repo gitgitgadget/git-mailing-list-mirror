@@ -1,93 +1,60 @@
-From: Sascha Hauer <s.hauer@pengutronix.de>
-Subject: [TOPGIT] Resolving conflicts
-Date: Mon, 1 Dec 2008 13:18:19 +0100
-Message-ID: <20081201121819.GB13495@pengutronix.de>
+From: Nick Andrew <nick@nick-andrew.net>
+Subject: Re: Is rebase always destructive?
+Date: Mon, 1 Dec 2008 23:11:40 +1100
+Message-ID: <20081201121140.GB32415@mail.local.tull.net>
+References: <slrngj7jch.2srb.csaba-ml@beastie.creo.hu>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Petr Baudis <pasky@suse.cz>, Uwe Kleine-Koenig <ukl@pengutronix.de>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Dec 01 13:20:20 2008
+Cc: git@vger.kernel.org
+To: Csaba Henk <csaba-ml@creo.hu>
+X-From: git-owner@vger.kernel.org Mon Dec 01 13:20:23 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1L77l9-0003nm-JG
+	id 1L77lA-0003nm-8z
 	for gcvg-git-2@gmane.org; Mon, 01 Dec 2008 13:20:16 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752900AbYLAMSW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 1 Dec 2008 07:18:22 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752457AbYLAMSV
-	(ORCPT <rfc822;git-outgoing>); Mon, 1 Dec 2008 07:18:21 -0500
-Received: from metis.ext.pengutronix.de ([92.198.50.35]:55582 "EHLO
-	metis.ext.pengutronix.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752111AbYLAMSV (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 1 Dec 2008 07:18:21 -0500
-Received: from octopus.hi.pengutronix.de ([2001:6f8:1178:2:215:17ff:fe12:23b0])
-	by metis.ext.pengutronix.de with esmtp (Exim 4.63)
-	(envelope-from <sha@pengutronix.de>)
-	id 1L77jH-0004Qw-Nr; Mon, 01 Dec 2008 13:18:19 +0100
-Received: from sha by octopus.hi.pengutronix.de with local (Exim 4.69)
-	(envelope-from <sha@pengutronix.de>)
-	id 1L77jH-0000N1-61; Mon, 01 Dec 2008 13:18:19 +0100
+	id S1753420AbYLAMSZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 1 Dec 2008 07:18:25 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753256AbYLAMSZ
+	(ORCPT <rfc822;git-outgoing>); Mon, 1 Dec 2008 07:18:25 -0500
+Received: from vps1.tull.net ([66.180.172.116]:40731 "HELO vps1.tull.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1752457AbYLAMSY (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 1 Dec 2008 07:18:24 -0500
+X-Greylist: delayed 400 seconds by postgrey-1.27 at vger.kernel.org; Mon, 01 Dec 2008 07:18:24 EST
+Received: (qmail 12749 invoked by uid 1015); 1 Dec 2008 23:11:42 +1100
+Received: from [10.0.0.67] (HELO tull.net) (10.0.0.67) by vps1.tull.net (qpsmtpd/0.26) with SMTP; Mon, 01 Dec 2008 23:11:42 +1100
+Received: (qmail 2534 invoked by uid 1000); 1 Dec 2008 23:11:40 +1100
 Content-Disposition: inline
-X-Sent-From: Pengutronix Entwicklungszentrum Nord - Hildesheim
-X-URL: http://www.pengutronix.de/
-X-IRC: #ptxdist @freenode
-X-Accept-Language: de,en
-X-Accept-Content-Type: text/plain
-X-Impressum: Pengutronix - Linux Solutions for Science and Industry
-	Handelsregister:  Amtsgericht Hildesheim, HRA 2686 Hannoversche
-	Str. 2, 31134 Hildesheim, Germany Phone: +49-5121-206917-0 |  Fax:
-	+49-5121-206917-9 Inhaber: Dipl.-Ing. Robert Schwebel
-X-Message-Flag: See Message Headers for Impressum
-X-Uptime: 12:33:09 up 4 days, 18:28, 14 users,  load average: 4.91, 4.84,
-	2.81
+In-Reply-To: <slrngj7jch.2srb.csaba-ml@beastie.creo.hu>
 User-Agent: Mutt/1.5.18 (2008-05-17)
-X-SA-Exim-Connect-IP: 2001:6f8:1178:2:215:17ff:fe12:23b0
-X-SA-Exim-Mail-From: sha@pengutronix.de
-X-SA-Exim-Scanned: No (on metis.ext.pengutronix.de); SAEximRunCond expanded to false
-X-PTX-Original-Recipient: git@vger.kernel.org
+X-SMTPD: qpsmtpd/0.26, http://develooper.com/code/qpsmtpd/
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/102027>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/102028>
 
-Hi,
+On Mon, Dec 01, 2008 at 11:41:39AM +0000, Csaba Henk wrote:
+> When doing a rebase, I can find a number of reasons for which one might
+> feel like to preserve the rebased branch (that is, perform an operation
+> which copies the branch over a new base, not moves).
 
-I'm going my first steps with topgit and this tool seems to add the
-missing link for my git experience.
+[...]
 
-I have a little problem with conflicts resulting from different topgit
-branches though. What I'm trying to do is this (taken from the topgit
-README):
+> I can't see any option for rebase which would yield this cp-like
+> behaviour. Am I missing something?
 
-## Create another topic branch depending on two others non-trivially
-$ tg create t/whatever t/revlist/author-fixed t/gitweb/nifty-links
-tg: Creating t/whatever base from t/revlist/author-fixed...
-tg: Merging t/whatever base with t/gitweb/nifty-links...
-Merge failed!
-tg: Please commit merge resolution and call: tg create
-tg: It is also safe to abort this operation using `git reset --hard`
-tg: but please remember you are on the base branch now;
-tg: you will want to switch to a different branch.
-$ ..resolve..
+How about this:
 
-After resolving I exported t/whatever to a quilt series. The series does
-not apply because it does not contain the conflict resolution. If I export
-to a git branch instead the merge is a commit of its own, resulting in a
-non linear history.
-Any chance to fix this or am I missing something?
+git checkout topic
+git branch keepme
+git rebase master
 
-Another thing is that the exported branch contains an empty commit
-resulting from t/whatever (and a corresponding empty patch when exported
-as a quilt series)
+Your 'topic' branch will now be rebased against master, and due
+to the 'keepme' branch pointer at the original topic HEAD, you can
+see the original commits before rebasing.
 
-Best regards,
-  Sascha
-
--- 
- Pengutronix - Linux Solutions for Science and Industry
-   Handelsregister:  Amtsgericht Hildesheim, HRA 2686
-     Hannoversche Str. 2, 31134 Hildesheim, Germany
-   Phone: +49-5121-206917-0 |  Fax: +49-5121-206917-9
+Nick.
