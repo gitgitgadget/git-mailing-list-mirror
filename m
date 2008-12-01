@@ -1,101 +1,77 @@
-From: Christian Couder <chriscool@tuxfamily.org>
-Subject: [PATCH 2/2] Documentation: describe how to "bisect skip" a range of
- commits
-Date: Mon, 1 Dec 2008 14:39:20 +0100
-Message-ID: <20081201143920.994acd8d.chriscool@tuxfamily.org>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH 1/8] generate-cmdlist.sh: avoid selecting synopsis at
+ wrong place
+Date: Mon, 1 Dec 2008 15:10:38 +0100 (CET)
+Message-ID: <alpine.DEB.1.00.0812011505551.30769@pacific.mpi-cbg.de>
+References: <1228042478-1886-1-git-send-email-pclouds@gmail.com> <1228042478-1886-2-git-send-email-pclouds@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, "H. Peter Anvin" <hpa@zytor.com>
-To: Junio C Hamano <gitster@pobox.com>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Johannes Sixt <j.sixt@viscovery.net>
-X-From: git-owner@vger.kernel.org Mon Dec 01 14:39:40 2008
+Content-Type: MULTIPART/MIXED; BOUNDARY="8323328-601636228-1228140551=:30769"
+Cc: git@vger.kernel.org
+To: =?VISCII?Q?Nguy=ADn_Th=E1i_Ng=F7c_Duy?= <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Dec 01 15:03:40 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1L78zu-0003gu-Ix
-	for gcvg-git-2@gmane.org; Mon, 01 Dec 2008 14:39:35 +0100
+	id 1L79NB-0003lA-J1
+	for gcvg-git-2@gmane.org; Mon, 01 Dec 2008 15:03:38 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751643AbYLANhs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 1 Dec 2008 08:37:48 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751759AbYLANhs
-	(ORCPT <rfc822;git-outgoing>); Mon, 1 Dec 2008 08:37:48 -0500
-Received: from smtp2-g19.free.fr ([212.27.42.28]:42244 "EHLO smtp2-g19.free.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751566AbYLANhr (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 1 Dec 2008 08:37:47 -0500
-Received: from smtp2-g19.free.fr (localhost.localdomain [127.0.0.1])
-	by smtp2-g19.free.fr (Postfix) with ESMTP id EACC312B70B;
-	Mon,  1 Dec 2008 14:37:44 +0100 (CET)
-Received: from localhost.boubyland (gre92-7-82-243-130-161.fbx.proxad.net [82.243.130.161])
-	by smtp2-g19.free.fr (Postfix) with SMTP id 9007C12B6E5;
-	Mon,  1 Dec 2008 14:37:44 +0100 (CET)
-X-Mailer: Sylpheed 2.5.0 (GTK+ 2.12.11; i486-pc-linux-gnu)
+	id S1751646AbYLAOCU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 1 Dec 2008 09:02:20 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751832AbYLAOCU
+	(ORCPT <rfc822;git-outgoing>); Mon, 1 Dec 2008 09:02:20 -0500
+Received: from mail.gmx.net ([213.165.64.20]:56090 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1751578AbYLAOCT (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 1 Dec 2008 09:02:19 -0500
+Received: (qmail invoked by alias); 01 Dec 2008 14:02:17 -0000
+Received: from pacific.mpi-cbg.de (EHLO pacific.mpi-cbg.de) [141.5.10.38]
+  by mail.gmx.net (mp035) with SMTP; 01 Dec 2008 15:02:17 +0100
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX18VGWA/HNQVdcr+ua41EIHUDC4IHEV2MxdnDlWOpW
+	wyKCe/Pzv0cxOp
+X-X-Sender: schindelin@pacific.mpi-cbg.de
+In-Reply-To: <1228042478-1886-2-git-send-email-pclouds@gmail.com>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+Content-ID: <alpine.DEB.1.00.0812011509350.30769@pacific.mpi-cbg.de>
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.65
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/102034>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/102035>
 
-Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
----
- Documentation/git-bisect.txt |   21 ++++++++++++++++++++-
- git-bisect.sh                |    2 +-
- 2 files changed, 21 insertions(+), 2 deletions(-)
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-diff --git a/Documentation/git-bisect.txt b/Documentation/git-bisect.txt
-index 39034ec..147ea38 100644
---- a/Documentation/git-bisect.txt
-+++ b/Documentation/git-bisect.txt
-@@ -19,7 +19,7 @@ on the subcommand:
-  git bisect start [<bad> [<good>...]] [--] [<paths>...]
-  git bisect bad [<rev>]
-  git bisect good [<rev>...]
-- git bisect skip [<rev>...]
-+ git bisect skip [(<rev>|<range>)...]
-  git bisect reset [<branch>]
-  git bisect visualize
-  git bisect replay <logfile>
-@@ -164,6 +164,25 @@ But computing the commit to test may be slower afterwards and git may
- eventually not be able to tell the first bad among a bad and one or
- more "skip"ped commits.
- 
-+You can even skip a range of commits, instead of just one commit,
-+using the "'<commit1>'..'<commit2>'" notation. For example:
-+
-+------------
-+$ git bisect skip v2.5..v2.6
-+------------
-+
-+would mean that no commit between `v2.5` excluded and `v2.6` included
-+can be tested.
-+
-+Note that if you want to also skip the first commit of a range you can
-+use something like:
-+
-+------------
-+$ git bisect skip v2.5 v2.5..v2.6
-+------------
-+
-+and the commit pointed to by `v2.5` will be skipped too.
-+
- Cutting down bisection by giving more parameters to bisect start
- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
- 
-diff --git a/git-bisect.sh b/git-bisect.sh
-index 58d6276..da92d1e 100755
---- a/git-bisect.sh
-+++ b/git-bisect.sh
-@@ -9,7 +9,7 @@ git bisect bad [<rev>]
-         mark <rev> a known-bad revision.
- git bisect good [<rev>...]
-         mark <rev>... known-good revisions.
--git bisect skip [<rev>...]
-+git bisect skip [(<rev>|<range>)...]
-         mark <rev>... untestable revisions.
- git bisect next
-         find next bisection to test and check it out.
--- 
-1.6.0.4.837.g71a67
+--8323328-601636228-1228140551=:30769
+Content-Type: TEXT/PLAIN; CHARSET=VISCII
+Content-Transfer-Encoding: 8BIT
+Content-ID: <alpine.DEB.1.00.0812011509351.30769@pacific.mpi-cbg.de>
+
+Hi,
+
+On Sun, 30 Nov 2008, Nguy­n Thái Ng÷c Duy wrote:
+
+> In "common" man pages there is luckily no "NAME" anywhere except at 
+> beginning of documents. If there is another "NAME", sed could mis-select 
+> it and lead to common-cmds.h corruption. So better nail it at beginning 
+> of line, which would reduce corruption chance.
+
+I have no idea why you put this into the sparse checkout patch series.
+
+As it is, the patch series is _already_ hard to review (as it is large not 
+only in term of number of patches, but also individual patch size), 
+_especially_ given the fact that there is no clear, precise and short 
+description of why/how the sparse checkout is implemented.
+
+For example, instead of using the BLURP area of the cover letter to put 
+forth convincing arguments why this is needed, and why it is implemented 
+in the best possible manner, you wasted two lines stating the obvious.
+
+IMO that is almost like _asking_ people not to have a look at it.
+
+Ciao,
+Dscho
+--8323328-601636228-1228140551=:30769--
