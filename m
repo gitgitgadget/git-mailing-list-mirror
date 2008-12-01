@@ -1,77 +1,68 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH 1/8] generate-cmdlist.sh: avoid selecting synopsis at
- wrong place
-Date: Mon, 1 Dec 2008 15:10:38 +0100 (CET)
-Message-ID: <alpine.DEB.1.00.0812011505551.30769@pacific.mpi-cbg.de>
-References: <1228042478-1886-1-git-send-email-pclouds@gmail.com> <1228042478-1886-2-git-send-email-pclouds@gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 4/5] upload-pack: implement protocol extension
+ "symbolic-ref"
+Date: Mon, 01 Dec 2008 06:03:41 -0800
+Message-ID: <7vy6z0q9fm.fsf@gitster.siamese.dyndns.org>
+References: <1228039053-31099-1-git-send-email-gitster@pobox.com>
+ <1228039053-31099-2-git-send-email-gitster@pobox.com>
+ <20081130180214.GA10375@coredump.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: MULTIPART/MIXED; BOUNDARY="8323328-601636228-1228140551=:30769"
+Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-To: =?VISCII?Q?Nguy=ADn_Th=E1i_Ng=F7c_Duy?= <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Dec 01 15:03:40 2008
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Mon Dec 01 15:05:52 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1L79NB-0003lA-J1
-	for gcvg-git-2@gmane.org; Mon, 01 Dec 2008 15:03:38 +0100
+	id 1L79PM-0004D7-6u
+	for gcvg-git-2@gmane.org; Mon, 01 Dec 2008 15:05:52 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751646AbYLAOCU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 1 Dec 2008 09:02:20 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751832AbYLAOCU
-	(ORCPT <rfc822;git-outgoing>); Mon, 1 Dec 2008 09:02:20 -0500
-Received: from mail.gmx.net ([213.165.64.20]:56090 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751578AbYLAOCT (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 1 Dec 2008 09:02:19 -0500
-Received: (qmail invoked by alias); 01 Dec 2008 14:02:17 -0000
-Received: from pacific.mpi-cbg.de (EHLO pacific.mpi-cbg.de) [141.5.10.38]
-  by mail.gmx.net (mp035) with SMTP; 01 Dec 2008 15:02:17 +0100
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX18VGWA/HNQVdcr+ua41EIHUDC4IHEV2MxdnDlWOpW
-	wyKCe/Pzv0cxOp
-X-X-Sender: schindelin@pacific.mpi-cbg.de
-In-Reply-To: <1228042478-1886-2-git-send-email-pclouds@gmail.com>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-Content-ID: <alpine.DEB.1.00.0812011509350.30769@pacific.mpi-cbg.de>
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.65
+	id S1751949AbYLAOEW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 1 Dec 2008 09:04:22 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751934AbYLAOEV
+	(ORCPT <rfc822;git-outgoing>); Mon, 1 Dec 2008 09:04:21 -0500
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:42501 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751342AbYLAOEV (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 1 Dec 2008 09:04:21 -0500
+Received: from localhost.localdomain (unknown [127.0.0.1])
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id CE103830BE;
+	Mon,  1 Dec 2008 09:04:19 -0500 (EST)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES256-SHA (256/256 bits)) (No client certificate requested) by
+ a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTPSA id 551D7830B9; Mon,
+  1 Dec 2008 09:03:43 -0500 (EST)
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: F2B88F98-BFB0-11DD-B483-465CC92D7133-77302942!a-sasl-fastnet.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/102035>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/102036>
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
+Jeff King <peff@peff.net> writes:
 
---8323328-601636228-1228140551=:30769
-Content-Type: TEXT/PLAIN; CHARSET=VISCII
-Content-Transfer-Encoding: 8BIT
-Content-ID: <alpine.DEB.1.00.0812011509351.30769@pacific.mpi-cbg.de>
+> On Sun, Nov 30, 2008 at 01:57:29AM -0800, Junio C Hamano wrote:
+> ...
+>> This is unfortunate because it forces an extra round trip (receiving end
+>> sends a "please tell me symbolic-ref" packet, and then upload side sends
+>> "here are the requested information" packet), but it has to be implemented
+>> this way because (1) ls-remote may need to ask for this information, in
+>> which case there is no "want" to be sent; and (2) the transport API
+>> insists that transport_get_remote_refs() returns the final list, and does
+>> not allow augmenting what was initially obtained from the call to it by
+>> later calls to transport_fetch_refs() easily.
+>
+> Hrm. For (1), could we allow either interaction method? IOW, allow
+> requesting a symref on the first want line, _or_ by separate "symbolic
+> ref" packet? That would allow clients who are using "want" to
+> piggy-back the symref request as an optimization, but not restrict those
+> that just want to ask for it?
 
-Hi,
+I think I found another hole in the protocol that we can use to carry the
+"which branch does HEAD points at" information in a backward compatible
+way, and it would be a much less intrusive although more sneaky way.  And
+it would not have to suffer from the above issues at all.
 
-On Sun, 30 Nov 2008, Nguy­n Thái Ng÷c Duy wrote:
-
-> In "common" man pages there is luckily no "NAME" anywhere except at 
-> beginning of documents. If there is another "NAME", sed could mis-select 
-> it and lead to common-cmds.h corruption. So better nail it at beginning 
-> of line, which would reduce corruption chance.
-
-I have no idea why you put this into the sparse checkout patch series.
-
-As it is, the patch series is _already_ hard to review (as it is large not 
-only in term of number of patches, but also individual patch size), 
-_especially_ given the fact that there is no clear, precise and short 
-description of why/how the sparse checkout is implemented.
-
-For example, instead of using the BLURP area of the cover letter to put 
-forth convincing arguments why this is needed, and why it is implemented 
-in the best possible manner, you wasted two lines stating the obvious.
-
-IMO that is almost like _asking_ people not to have a look at it.
-
-Ciao,
-Dscho
---8323328-601636228-1228140551=:30769--
+A patchset follows shortly...
