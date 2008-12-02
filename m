@@ -1,90 +1,68 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: Git as a BuildRequires (packaging)
-Date: Mon, 1 Dec 2008 22:09:23 -0500
-Message-ID: <20081202030922.GC6804@coredump.intra.peff.net>
-References: <20081202023004.GA30372@zod.rchland.ibm.com>
+From: Liu Yubao <yubao.liu@gmail.com>
+Subject: Re: [PATCH 0/5] support reading and writing uncompressed loose object
+Date: Tue, 02 Dec 2008 11:11:59 +0800
+Message-ID: <4934A77F.80900@gmail.com>
+References: <493399B7.5000505@gmail.com> <7voczws3np.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org, skvidal@fedoraproject.org
-To: Josh Boyer <jwboyer@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Dec 02 04:10:48 2008
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: Junio C Hamano <gitster@pobox.com>
+To: git list <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Tue Dec 02 04:13:30 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1L7Lex-0004Cg-OC
-	for gcvg-git-2@gmane.org; Tue, 02 Dec 2008 04:10:48 +0100
+	id 1L7LhY-0004ia-DW
+	for gcvg-git-2@gmane.org; Tue, 02 Dec 2008 04:13:28 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753478AbYLBDJ0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 1 Dec 2008 22:09:26 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751516AbYLBDJ0
-	(ORCPT <rfc822;git-outgoing>); Mon, 1 Dec 2008 22:09:26 -0500
-Received: from peff.net ([208.65.91.99]:4132 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753459AbYLBDJZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 1 Dec 2008 22:09:25 -0500
-Received: (qmail 8524 invoked by uid 111); 2 Dec 2008 03:09:24 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.32) with SMTP; Mon, 01 Dec 2008 22:09:24 -0500
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Mon, 01 Dec 2008 22:09:23 -0500
-Content-Disposition: inline
-In-Reply-To: <20081202023004.GA30372@zod.rchland.ibm.com>
+	id S1752657AbYLBDMK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 1 Dec 2008 22:12:10 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752503AbYLBDMJ
+	(ORCPT <rfc822;git-outgoing>); Mon, 1 Dec 2008 22:12:09 -0500
+Received: from yw-out-2324.google.com ([74.125.46.31]:21293 "EHLO
+	yw-out-2324.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751485AbYLBDMG (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 1 Dec 2008 22:12:06 -0500
+Received: by yw-out-2324.google.com with SMTP id 9so1104903ywe.1
+        for <git@vger.kernel.org>; Mon, 01 Dec 2008 19:12:05 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from
+         :user-agent:mime-version:to:cc:subject:references:in-reply-to
+         :content-type:content-transfer-encoding;
+        bh=clvHX9CqHRIDWEb6RFtb2+YmkND+MTTalSkXzxsMpWI=;
+        b=KPceKOjg/ini0IN3t73fswK2wnAxCQwSfC8jrG4WZDv524/Bjp7A6yXm20QrUGnMpf
+         QXTjehMSbBJ09auGny5JumpEvz7idXeeb42ngPty+WspLMo+Ai48kt89XI43XCWn/eWn
+         WAC0hMufH1n7KZRiD4yWAt+eqYWi8OQ7KxJmI=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:user-agent:mime-version:to:cc:subject
+         :references:in-reply-to:content-type:content-transfer-encoding;
+        b=Ec8y1BfNEijZdJjIGxqwNJ9EnWeDDjRPdTRluDdk+xZsbTyXuNJmk3UF57p3OGDQxy
+         bR48yEXY8ae/5Ho+zS60Qf8g89kMuZ+owEex8zaz3tvPAL11PvS+rGxknrPyMnRi8DE3
+         RYq323AGE52xODhY8cWbC3kud+qoB7JWsfSIU=
+Received: by 10.142.12.14 with SMTP id 14mr4752092wfl.28.1228187524980;
+        Mon, 01 Dec 2008 19:12:04 -0800 (PST)
+Received: from ?10.64.1.142? ([211.157.41.194])
+        by mx.google.com with ESMTPS id 30sm28955wfa.41.2008.12.01.19.12.02
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Mon, 01 Dec 2008 19:12:04 -0800 (PST)
+User-Agent: Thunderbird 2.0.0.18 (Windows/20081105)
+In-Reply-To: <7voczws3np.fsf@gitster.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/102117>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/102118>
 
-On Mon, Dec 01, 2008 at 09:30:04PM -0500, Josh Boyer wrote:
+Hi all,
 
-> Recently we've hit an issue where a new package being reviewed for
-> Fedora (cgit) needs to build against the git headers.  The problem
-> is that these headers aren't typically installed with the git
-> package itself, and we have no git-devel subpackage either.  This
-> is mostly due to the fact that from what I can tell the upstream
-> git Makefile doesn't install the headers anywhere.
+It seems my patch series are not in one mail thread, I'm very sorry
+for that, I replied this thread and paste my patches into Thunderbird
+with external editor plugin, don't know why they become separate topics.
 
-I don't think Linus, Junio, or anybody involved with git has _ever_
-advocated using git source files as a library. The expected method for
-interfacing with git is the plumbing API, which is stable and available
-via the installed git programs.
 
-That being said, I think linking with libgit.a has been discussed on the
-list, and Lars took part in the discussion. So I think he is aware that
-what cgit does is not officially supported, that there is no stable
-library API, and that he is taking his chances.
+Best regards,
 
-> There are a few options here.  The first is to install the git
-> headers and create a git-devel subpackage.  That seems like
-> overkill, given that the git headers are generically named and
-> would have to be installed to something like /usr/include/git/.
-
-I think that is a mistake; the headers are subject to change in ways that
-will break calling code, and creating a -devel package creates the
-impression that it's OK to link against it.
-
-> The second option is to create a patch file that includes all
-> the needed headers and use that in the cgit package.  That is
-> [...]
-> The third option is to include the entire git tarball as part of
-> the sources for the package.  That is pretty easily done with the
-> Fedora infrastructure, but isn't exactly clean from a packaging
-> standpoint.
-
-I don't know how one is usually expected to build cgit. But yes, you are
-always going to have a problem with upgrading git. I would think each
-cgit release would be tested based on a particular git version. And you
-should rely on cgit upstream to figure that out and just package (either
-in whole or as patches, as appropriate) the upstream git headers with
-it.
-
-> So, what do the git gurus recommend?  I'm not sure if other
-> distros have tackled this problem before, but some kind of
-> commonality for the 'how do you package things that need to build
-> against git' question would be nice.
-
-AFAIK, cgit is the only program that behaves in this way, and it doesn't
-seem to be in Debian at all. So you might be the first to deal with it.
-:)
-
--Peff
+Liu Yubao
