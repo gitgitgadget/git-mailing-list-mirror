@@ -1,59 +1,109 @@
-From: Karl =?iso-8859-1?Q?Hasselstr=F6m?= <kha@treskal.com>
-Subject: Re: [StGit PATCH] Print conflict details with the new infrastructure (bug #11181)
-Date: Tue, 2 Dec 2008 16:43:59 +0100
-Message-ID: <20081202154359.GB19967@diana.vm.bytemark.co.uk>
-References: <20081202144045.24372.69278.stgit@localhost.localdomain>
+From: "Shawn O. Pearce" <spearce@spearce.org>
+Subject: Re: [PATCH 1/5] avoid parse_sha1_header() accessing memory out of
+	bound
+Date: Tue, 2 Dec 2008 07:42:57 -0800
+Message-ID: <20081202154257.GK23984@spearce.org>
+References: <493399B7.5000505@gmail.com> <7voczws3np.fsf@gitster.siamese.dyndns.org> <4934949B.70307@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Catalin Marinas <catalin.marinas@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Dec 02 16:45:21 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: Junio C Hamano <gitster@pobox.com>, git list <git@vger.kernel.org>
+To: Liu Yubao <yubao.liu@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Dec 02 16:45:33 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1L7XRA-0000db-AI
-	for gcvg-git-2@gmane.org; Tue, 02 Dec 2008 16:45:20 +0100
+	id 1L7XR7-0000db-Eb
+	for gcvg-git-2@gmane.org; Tue, 02 Dec 2008 16:45:18 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752535AbYLBPoG convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 2 Dec 2008 10:44:06 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751484AbYLBPoE
-	(ORCPT <rfc822;git-outgoing>); Tue, 2 Dec 2008 10:44:04 -0500
-Received: from diana.vm.bytemark.co.uk ([80.68.90.142]:1330 "EHLO
-	diana.vm.bytemark.co.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751787AbYLBPoD (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 2 Dec 2008 10:44:03 -0500
-Received: from kha by diana.vm.bytemark.co.uk with local (Exim 3.36 #1 (Debian))
-	id 1L7XPr-0006EV-00; Tue, 02 Dec 2008 15:43:59 +0000
+	id S1755834AbYLBPnA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 2 Dec 2008 10:43:00 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755487AbYLBPm7
+	(ORCPT <rfc822;git-outgoing>); Tue, 2 Dec 2008 10:42:59 -0500
+Received: from george.spearce.org ([209.20.77.23]:33419 "EHLO
+	george.spearce.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755825AbYLBPm6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 2 Dec 2008 10:42:58 -0500
+Received: by george.spearce.org (Postfix, from userid 1001)
+	id B71B938200; Tue,  2 Dec 2008 15:42:57 +0000 (UTC)
 Content-Disposition: inline
-In-Reply-To: <20081202144045.24372.69278.stgit@localhost.localdomain>
-X-Manual-Spam-Check: kha@treskal.com, clean
-User-Agent: Mutt/1.5.9i
+In-Reply-To: <4934949B.70307@gmail.com>
+User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/102147>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/102148>
 
-On 2008-12-02 14:40:45 +0000, Catalin Marinas wrote:
+Liu Yubao <yubao.liu@gmail.com> wrote:
+> diff --git a/sha1_file.c b/sha1_file.c
+> index 6c0e251..efe6967 100644
+> --- a/sha1_file.c
+> +++ b/sha1_file.c
+> @@ -1254,10 +1255,10 @@ static int parse_sha1_header(const char *hdr, unsigned long *sizep)
+>  	/*
+>  	 * The type can be at most ten bytes (including the
+>  	 * terminating '\0' that we add), and is followed by
+> -	 * a space.
+> +	 * a space, at least one byte for size, and a '\0'.
+>  	 */
+>  	i = 0;
+> -	for (;;) {
+> +	while (hdr < hdr_end - 2) {
+>  		char c = *hdr++;
+>  		if (c == ' ')
+>  			break;
+> @@ -1265,6 +1266,8 @@ static int parse_sha1_header(const char *hdr, unsigned long *sizep)
+>  		if (i >= sizeof(type))
+>  			return -1;
 
-> The patch modifies the IndexAndWorkTree.merge() function to display
-> pass the conflict information (files) when raising an exception. The
-> logic is similar to the one in the old infrastructure.
+That first hunk I am citing is unnecessary, because of the lines
+right above.  All of the callers of this function pass in a buffer
+that is at least 32 bytes in size; this loop aborts if it does not
+find a ' ' within the first 10 bytes of the buffer.  We'll never
+access memory outside of the buffer during this loop.
 
-Good. But
+So IMHO your first three hunks here aren't necessary.
 
->          if self.__error:
-> -            out.error(self.__error)
-> +            error_lines =3D self.__error.split('\n')
-> +            out.error(*error_lines)
+> @@ -1275,7 +1278,7 @@ static int parse_sha1_header(const char *hdr, unsigned long *sizep)
+>  	if (size > 9)
+>  		return -1;
+>  	if (size) {
+> -		for (;;) {
+> +		while (hdr < hdr_end - 1) {
+>  			unsigned long c = *hdr - '0';
+>  			if (c > 9)
+>  				break;
 
-this feels like something of a hack. Wouldn't it be cleaner to modify
-MergeConflictException to hold e.g. the set of conflicting filenames,
-and let it have a method that returned a list of lines? No biggie,
-though.
+OK, there's no promise here that we don't roll off the buffer.
 
---=20
-Karl Hasselstr=F6m, kha@treskal.com
-      www.treskal.com/kalle
+This can be fixed in the caller, ensuring we always have the '\0'
+at some point in the initial header buffer we were asked to parse:
+
+diff --git a/sha1_file.c b/sha1_file.c
+index 6c0e251..26c6ffb 100644
+--- a/sha1_file.c
++++ b/sha1_file.c
+@@ -1162,9 +1162,10 @@ static int unpack_sha1_header(z_stream *stream, unsigned char *map, unsigned lon
+ 	stream->next_in = map;
+ 	stream->avail_in = mapsize;
+ 	stream->next_out = buffer;
+-	stream->avail_out = bufsiz;
+ 
+ 	if (legacy_loose_object(map)) {
++		stream->avail_out = bufsiz - 1;
++		buffer[bufsiz - 1] = '\0';
+ 		inflateInit(stream);
+ 		return inflate(stream, 0);
+ 	}
+@@ -1186,6 +1187,7 @@ static int unpack_sha1_header(z_stream *stream, unsigned char *map, unsigned lon
+ 	/* Set up the stream for the rest.. */
+ 	stream->next_in = map;
+ 	stream->avail_in = mapsize;
++	stream->avail_out = bufsiz;
+ 	inflateInit(stream);
+ 
+ 	/* And generate the fake traditional header */
+
+-- 
+Shawn.
