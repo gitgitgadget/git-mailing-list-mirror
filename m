@@ -1,130 +1,102 @@
-From: Liu Yubao <yubao.liu@gmail.com>
-Subject: [PATCH 1/5] avoid parse_sha1_header() accessing memory out of bound
-Date: Tue, 02 Dec 2008 09:51:23 +0800
-Message-ID: <4934949B.70307@gmail.com>
-References: <493399B7.5000505@gmail.com> <7voczws3np.fsf@gitster.siamese.dyndns.org>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: [PATCH] gitweb: fixes to gitweb feature check code
+Date: Tue, 2 Dec 2008 02:53:06 +0100
+Message-ID: <200812020253.09430.jnareb@gmail.com>
+References: <Message-ID: <cb7bb73a0811291731g7f8770f7p89e924c00d2ab004@mail.gmail.com> <cb7bb73a0811291731g7f8770f7p89e924c00d2ab004@mail.gmail.com> <1228008844-12506-1-git-send-email-giuseppe.bilotta@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: git list <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Dec 02 02:52:47 2008
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+Cc: git@vger.kernel.org, Petr Baudis <pasky@suse.cz>,
+	Junio C Hamano <gitster@pobox.com>
+To: Giuseppe Bilotta <giuseppe.bilotta@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Dec 02 02:54:34 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1L7KRR-0004Vb-Re
-	for gcvg-git-2@gmane.org; Tue, 02 Dec 2008 02:52:46 +0100
+	id 1L7KTB-0004s2-2M
+	for gcvg-git-2@gmane.org; Tue, 02 Dec 2008 02:54:33 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752309AbYLBBv3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 1 Dec 2008 20:51:29 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752075AbYLBBv3
-	(ORCPT <rfc822;git-outgoing>); Mon, 1 Dec 2008 20:51:29 -0500
-Received: from ti-out-0910.google.com ([209.85.142.188]:54730 "EHLO
-	ti-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752309AbYLBBv3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 1 Dec 2008 20:51:29 -0500
-Received: by ti-out-0910.google.com with SMTP id b6so1744314tic.23
-        for <git@vger.kernel.org>; Mon, 01 Dec 2008 17:51:27 -0800 (PST)
+	id S1752819AbYLBBxQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 1 Dec 2008 20:53:16 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752364AbYLBBxP
+	(ORCPT <rfc822;git-outgoing>); Mon, 1 Dec 2008 20:53:15 -0500
+Received: from ik-out-1112.google.com ([66.249.90.181]:53572 "EHLO
+	ik-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752075AbYLBBxO convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 1 Dec 2008 20:53:14 -0500
+Received: by ik-out-1112.google.com with SMTP id c29so2277080ika.5
+        for <git@vger.kernel.org>; Mon, 01 Dec 2008 17:53:12 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from
-         :user-agent:mime-version:to:cc:subject:references:in-reply-to
-         :content-type:content-transfer-encoding;
-        bh=BYT8KGsT0EFPsLFYCdNF504NTEpkeWCazIzLn8oS4kE=;
-        b=cS6zXYrCfpqWQp3LzviJWgjbRyJZeDmSfYSQh/Z5U+BJCYvybvaJQXJgHVc0uTCBLi
-         hkYcgIVrcn0k1DJ96IDZo1swUQeQpdJDeSLxDHoX9phe27vLUBTG7wM50+CUUaRfJH7d
-         JdZn4Ht/jjEOgfzR/dKsYQ//fUUyYv4f8cFyo=
+        h=domainkey-signature:received:received:from:to:subject:date
+         :user-agent:cc:references:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:message-id;
+        bh=pEcROZr233TlizMG5ku0G8/gBpW9OilYH2kWbg1NpC4=;
+        b=jWXXY8+YAr9vMStZgia1Ge6hE55o8HK1KdBezc8vRHGreRJ1SmIRi2PkNlu/djxmYp
+         JoY1dak5SeZNSPAHGXG1jLENvkEbpEYyQ/PozmNrZ4SleBTqEsVE+55d44SLHdSv2nmz
+         U9Gqp/EvFcS8hN2gaNujZ9oCyl5WkGFqt+nfY=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=message-id:date:from:user-agent:mime-version:to:cc:subject
-         :references:in-reply-to:content-type:content-transfer-encoding;
-        b=k1cLYjXvQ6h+I/vDzfoJjLA6/BiEBKqC3n2aYeOhEnJuj6x4SaegPQeRR7jO7kg9vB
-         WQ7b43OdQkHMv7gO6rcdd361yjR/LBTR9bsG+GWYXHESw4G6FMxVUoJyth+seJJukt0M
-         lzTbq+XJojX/f+eV3RRmJb/7z/er3T0HG2+5I=
-Received: by 10.110.21.17 with SMTP id 17mr1457453tiu.59.1228182687475;
-        Mon, 01 Dec 2008 17:51:27 -0800 (PST)
-Received: from ?10.64.1.142? ([211.157.41.194])
-        by mx.google.com with ESMTPS id a14sm2740827tia.12.2008.12.01.17.51.25
+        h=from:to:subject:date:user-agent:cc:references:in-reply-to
+         :mime-version:content-type:content-transfer-encoding
+         :content-disposition:message-id;
+        b=AVasDF2yQJG//cZCCOic/hjfbDxS904ThvU5KlXUtPV0xD637qf/vY2bUn8Ucol8Aq
+         5ndcuIZjkAeQnC37ET7xEWrJpwuqv78faaIwbjB7/J+jsrwEwZAiU8eDD6FTgxBBt9R6
+         QvBMqFYZ7HJIdC0dJ2NHw10sx7gtAO2eHQRnA=
+Received: by 10.210.49.19 with SMTP id w19mr13372395ebw.149.1228182791970;
+        Mon, 01 Dec 2008 17:53:11 -0800 (PST)
+Received: from ?192.168.1.11? (abvo94.neoplus.adsl.tpnet.pl [83.8.212.94])
+        by mx.google.com with ESMTPS id z33sm4378645ikz.4.2008.12.01.17.53.09
         (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Mon, 01 Dec 2008 17:51:26 -0800 (PST)
-User-Agent: Thunderbird 2.0.0.18 (Windows/20081105)
-In-Reply-To: <7voczws3np.fsf@gitster.siamese.dyndns.org>
+        Mon, 01 Dec 2008 17:53:10 -0800 (PST)
+User-Agent: KMail/1.9.3
+In-Reply-To: <1228008844-12506-1-git-send-email-giuseppe.bilotta@gmail.com>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/102095>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/102096>
+
+On Sun, 30 Nov 2008, Giuseppe Bilotta wrote:
+
+> The gitweb_check_feature routine was being used for two different
+> purposes: retrieving the actual feature value (such as the list of
+> snapshot formats or the list of additional actions), and checking if a
+> feature was enabled.
+> 
+> This led to subtle bugs in feature checking code: gitweb_check_feature
+> would return (0) for disabled features, so its use in scalar context
+> would return true instead of false.
+> 
+> To fix this issue and future-proof the code, we split feature value
+> retrieval into its own gitweb_get_feature()function , and ensure that
+
+  retrieval into its own gitweb_get_feature() function, and ensure that
+
+> the boolean feature check function gitweb_check_feature() always returns
+> a scalar (precisely, the first/only item in the feature value list).
+> 
+> Usage of gitweb_check_feature() across gitweb is replaced with
+> gitweb_get_feature() where appropriate, and list evaluation of
+> gitweb_check_feature() is demoted to scalar evaluation to prevent
+> ambiguity. The few previously incorrect uses of gitweb_check_feature()
+> in scalar context are left untouched because they are now correct.
+> 
+> Signed-off-by: Giuseppe Bilotta <giuseppe.bilotta@gmail.com>
+
+Acked-by: Jakub Narebski <jnareb@gmail.com>
 
 
-Signed-off-by: Liu Yubao <yubao.liu@gmail.com>
----
- sha1_file.c |   15 +++++++++------
- 1 files changed, 9 insertions(+), 6 deletions(-)
+What I like about having all this, i.e. fix, futureproof and style
+correction in one single patch is the fact that fix doesn't introduce
+strange looking (gitweb_check_feature('bool_feat'))[0]... well, except
+encapsulated in a subroutine.
 
-diff --git a/sha1_file.c b/sha1_file.c
-index 6c0e251..efe6967 100644
---- a/sha1_file.c
-+++ b/sha1_file.c
-@@ -1245,8 +1245,9 @@ static void *unpack_sha1_rest(z_stream *stream, void *buffer, unsigned long size
-  * too permissive for what we want to check. So do an anal
-  * object header parse by hand.
-  */
--static int parse_sha1_header(const char *hdr, unsigned long *sizep)
-+static int parse_sha1_header(const char *hdr, unsigned long length, unsigned long *sizep)
- {
-+	const char *hdr_end = hdr + length;
- 	char type[10];
- 	int i;
- 	unsigned long size;
-@@ -1254,10 +1255,10 @@ static int parse_sha1_header(const char *hdr, unsigned long *sizep)
- 	/*
- 	 * The type can be at most ten bytes (including the
- 	 * terminating '\0' that we add), and is followed by
--	 * a space.
-+	 * a space, at least one byte for size, and a '\0'.
- 	 */
- 	i = 0;
--	for (;;) {
-+	while (hdr < hdr_end - 2) {
- 		char c = *hdr++;
- 		if (c == ' ')
- 			break;
-@@ -1265,6 +1266,8 @@ static int parse_sha1_header(const char *hdr, unsigned long *sizep)
- 		if (i >= sizeof(type))
- 			return -1;
- 	}
-+	if (' ' != *(hdr - 1))
-+		return -1;
- 	type[i] = 0;
- 
- 	/*
-@@ -1275,7 +1278,7 @@ static int parse_sha1_header(const char *hdr, unsigned long *sizep)
- 	if (size > 9)
- 		return -1;
- 	if (size) {
--		for (;;) {
-+		while (hdr < hdr_end - 1) {
- 			unsigned long c = *hdr - '0';
- 			if (c > 9)
- 				break;
-@@ -1298,7 +1301,7 @@ static void *unpack_sha1_file(void *map, unsigned long mapsize, enum object_type
- 	char hdr[8192];
- 
- 	ret = unpack_sha1_header(&stream, map, mapsize, hdr, sizeof(hdr));
--	if (ret < Z_OK || (*type = parse_sha1_header(hdr, size)) < 0)
-+	if (ret < Z_OK || (*type = parse_sha1_header(hdr, stream.total_out, size)) < 0)
- 		return NULL;
- 
- 	return unpack_sha1_rest(&stream, hdr, *size, sha1);
-@@ -1982,7 +1985,7 @@ static int sha1_loose_object_info(const unsigned char *sha1, unsigned long *size
- 	if (unpack_sha1_header(&stream, map, mapsize, hdr, sizeof(hdr)) < 0)
- 		status = error("unable to unpack %s header",
- 			       sha1_to_hex(sha1));
--	else if ((status = parse_sha1_header(hdr, &size)) < 0)
-+	else if ((status = parse_sha1_header(hdr, stream.total_out, &size)) < 0)
- 		status = error("unable to parse %s header", sha1_to_hex(sha1));
- 	else if (sizep)
- 		*sizep = size;
+>From all possible splits of this feature into series of up to three
+patches I think I like the one with pure subroutine rename from *check*
+to *get* least...
 -- 
-1.6.1.rc1.5.gde86c
+Jakub Narebski
+Poland
