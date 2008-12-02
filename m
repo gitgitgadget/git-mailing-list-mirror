@@ -1,68 +1,130 @@
-From: Nicholas Wieland <nicholas.wieland@gmail.com>
-Subject: Overwrite master
-Date: Tue, 2 Dec 2008 17:10:56 +0100
-Message-ID: <D1AC0A41-E89A-4B53-A449-DA9C4422998E@zooppa.com>
-Mime-Version: 1.0 (Apple Message framework v929.2)
-Content-Type: text/plain; charset=US-ASCII; format=flowed; delsp=yes
+From: Michael J Gruber <git@drmicha.warpmail.net>
+Subject: Re: Grafting mis-aligned trees.
+Date: Tue, 02 Dec 2008 17:20:58 +0100
+Message-ID: <4935606A.8050906@drmicha.warpmail.net>
+References: <200811171645.12869.bss03@volumehost.net> <492289B0.4010903@drmicha.warpmail.net> <200811281701.46778.bss03@volumehost.net>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-15
 Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Dec 02 17:12:45 2008
+Cc: git@vger.kernel.org
+To: "Boyd Stephen Smith Jr." <bss03@volumehost.net>
+X-From: git-owner@vger.kernel.org Tue Dec 02 17:22:32 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1L7XrP-0003Mp-4w
-	for gcvg-git-2@gmane.org; Tue, 02 Dec 2008 17:12:27 +0100
+	id 1L7Y10-0007LJ-NE
+	for gcvg-git-2@gmane.org; Tue, 02 Dec 2008 17:22:23 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752201AbYLBQLH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 2 Dec 2008 11:11:07 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751979AbYLBQLG
-	(ORCPT <rfc822;git-outgoing>); Tue, 2 Dec 2008 11:11:06 -0500
-Received: from gv-out-0910.google.com ([216.239.58.188]:39745 "EHLO
-	gv-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751348AbYLBQLE (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 2 Dec 2008 11:11:04 -0500
-Received: by gv-out-0910.google.com with SMTP id e6so523686gvc.37
-        for <git@vger.kernel.org>; Tue, 02 Dec 2008 08:11:02 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:to:content-type
-         :content-transfer-encoding:mime-version:subject:date:x-mailer:from;
-        bh=ShmAsUaEMOQNegHENI8oZglh5jv8QHKY7lOYN2d2E+o=;
-        b=Qv4zkPvn9QzxU6b3SE9z2jCX0dctxyn3NStxVxOm3jh96Fk5Anx4Gl8I4+l3j0nNyW
-         FZBcLq3B6oZRMz2/Sqb9zc75Cz5XXSd3iDsfAjcdrDChPD15pn9KSjsdqqQbBhA2tGBF
-         rzZR3SiLsseLlHwThftcqRVmeFGguDCEVd8r0=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:to:content-type:content-transfer-encoding:mime-version
-         :subject:date:x-mailer:from;
-        b=XpDkm1Z2PuLHBAPbQrpjaf6kBRhphGE4GHkn/GfYUmdw0TmOygGIkDnROSbamfQ1KQ
-         A/GkNA0XWFx8Zrd9UjE/46InZ46TLVgC9Eys1BTxLyJrD1a3iTJghIqYBIt506uJhmFn
-         YSpNV8DAurFct/oP9W1iCCPnq84drd4A8HL5k=
-Received: by 10.86.93.17 with SMTP id q17mr7332125fgb.8.1228234261990;
-        Tue, 02 Dec 2008 08:11:01 -0800 (PST)
-Received: from ?1.227.88.33? (89-96-108-180.ip12.fastwebnet.it [89.96.108.180])
-        by mx.google.com with ESMTPS id 3sm1106240fge.31.2008.12.02.08.11.00
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Tue, 02 Dec 2008 08:11:01 -0800 (PST)
-X-Mailer: Apple Mail (2.929.2)
+	id S1751450AbYLBQVF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 2 Dec 2008 11:21:05 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751348AbYLBQVE
+	(ORCPT <rfc822;git-outgoing>); Tue, 2 Dec 2008 11:21:04 -0500
+Received: from out1.smtp.messagingengine.com ([66.111.4.25]:54772 "EHLO
+	out1.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751163AbYLBQVD (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 2 Dec 2008 11:21:03 -0500
+Received: from compute1.internal (compute1.internal [10.202.2.41])
+	by out1.messagingengine.com (Postfix) with ESMTP id 458041B6C05;
+	Tue,  2 Dec 2008 11:21:01 -0500 (EST)
+Received: from heartbeat2.messagingengine.com ([10.202.2.161])
+  by compute1.internal (MEProxy); Tue, 02 Dec 2008 11:21:01 -0500
+X-Sasl-enc: Cw2K4qkw38JlaIVJGs8k7blza/Z1gy2eD38rnKexf8t3 1228234860
+Received: from [139.174.44.12] (whitehead.math.tu-clausthal.de [139.174.44.12])
+	by mail.messagingengine.com (Postfix) with ESMTPSA id 968023956B;
+	Tue,  2 Dec 2008 11:21:00 -0500 (EST)
+User-Agent: Thunderbird 2.0.0.18 (X11/20081105)
+In-Reply-To: <200811281701.46778.bss03@volumehost.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/102152>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/102153>
 
-Hi *,
-I need to overwrite my master branch with another branch. I've already  
-created a backup branch of my master.
-I tried a merge but it's just too big to handle, and I don't really  
-care about what's in my master now.
-The reason I want to do something like this is to be able to branch  
-directly from my master in the future and merge back smaller branches  
-(basically what I didn't do this time ...) instead of trying to merge  
-back a huge one. This time I've used git like I've used svn, my bad,  
-very stupid thing ...
-Hope my question is clear.
+Boyd Stephen Smith Jr. venit, vidit, dixit 29.11.2008 00:01:
+> On Tuesday 2008 November 18 03:24, Michael J Gruber wrote:
+>> Boyd Stephen Smith Jr. venit, vidit, dixit 17.11.2008 23:45:
+>>> I haven't gotten a response from my subscription email, so please CC me
+>>> on any replies.
+>>>
+>>> So, I've been managaing the source I had from a client project in git and
+>>> have a non-linear history.  Currently, two tips (production and testing)
+>>> but there are many feature branches that were git-merge'd in, not
+>>> rebased.
+>>>
+>>> Now, I've gotten the full tree.  Turns out all the source code I was
+>>> working on was in a subdirectory "project/web".  I'd like to "graft" the
+>>> *changes* I made onto the full tree.
+>>>
+>>> I figured this might be a job for git-filter-branch.  Certainly, that did
+>>> the job of moving all my changes into the subdirectory.  But, now I want
+>>> to do something that's a combination or git-rebase and git-filter-branch.
+>>>  I want to replay the *patches/deltas* (like rebase) on top of the full
+>>> tree I have, but *maintain the non-liear history* (like filter-branch).
+>>>
+>>> Can anyone think of a recipe for me?
+>>>
+>>> Trees look something like this right now.
+>>>
+>>> <some history> -> FT
+>>>
+>>> TI -> <non-linear history> -> A -> <non-linear history> -> C
+>>>    \                            \                           \
+>>>     -> PI ------------------------> B ------------------------> D
+>>>
+>>> I'd like to have it look something like:
+>>>
+>>> <some history> -> FT -> <non-linear history> -> A' -> <non-linear
+>>> history> -> C' \                            \                           \
+>>> -> PI' ----------------------> B' -----------------------> D'
+>>>
+>>> A', B', C', and D' are different commits, but the diff (and history)
+>>> between FT and A' is the same as the diff (and history) between TI and A.
+>>>
+>>> Again, please CC me on any replies.
+>> [CCing is customary here anyways.]
+>>
+>> So, your base directory for TI and FT is different, right? I.e.: In the
+>> TI repo, your project sits at the root, whereas in the FT repo it sits
+>> in project/web?
+> 
+> Yes.
+> 
+>> Has FT advanced since you took the initial subdir 
+>> snapshot for TI?
+> 
+> No.  Well, maybe.  I think the subdir diff is fairly trivial if not empty.  TI 
+> is an import from the code actually present on the testing server.  FT was 
+> the a subversion repository obtained later after some hullabaloo with the 
+> ex-development house.
+> 
+> Right now this tree is effectively all mine, so I can always graft in commits 
+> to synchronize the common subtree of FT and TI, if that makes things easier.
 
-TIA,
-   ngw
+OK, here's a possibly primitive solution, but it works with my little
+toy model of your layout:
+
+- filter-branch your TI branches so that they are in the proper subdir
+(you did that already)
+
+- take a snapshot (say ftstuff.tar) of everything in FT's head (assuming
+this is where TI branched off, or else take that point) *but exclude
+project/web*
+
+- using filter-branch again, rewrite your TI branches to contain those
+missing FT files:
+git filter-branch --tree-filter 'tar -xf /tmp/ftstuff.tar && git add .'
+-f -- ti/master ti/whatever
+
+Now your TI branches produce the same diffs as before, but are based on
+the full tree. You can happily graft FT's head onto TI's root as a parent.
+In fact those two should produce no diff in between them, so you might
+as well get rid of one of them.
+
+[cleaning out refs/original and repack -adf might be in order afterwards]
+
+The tree-filter part feels hacky but does the job (probably with -f). I
+don't think a subtree merge can do what you want.
+
+Cheers,
+Michael
