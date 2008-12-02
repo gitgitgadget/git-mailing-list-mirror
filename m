@@ -1,56 +1,87 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [JGIT PATCH 0/4] RepositoryTestCase cleanups
-Date: Tue, 2 Dec 2008 00:18:42 +0100 (CET)
-Message-ID: <alpine.DEB.1.00.0812020016490.18880@intel-tinevez-2-302>
-References: <1227820410-9621-1-git-send-email-robin.rosenberg@dewire.com> <20081127214916.GD23984@spearce.org> <200811291301.12095.robin.rosenberg@dewire.com>
-Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: "Shawn O. Pearce" <spearce@spearce.org>, git@vger.kernel.org,
-	fonseca@diku.dk
-To: Robin Rosenberg <robin.rosenberg@dewire.com>
-X-From: git-owner@vger.kernel.org Tue Dec 02 00:20:24 2008
+From: Miklos Vajna <vmiklos@frugalware.org>
+Subject: [PATCH] git-stash: use git rev-parse -q
+Date: Tue,  2 Dec 2008 01:56:09 +0100
+Message-ID: <1228179369-3766-1-git-send-email-vmiklos@frugalware.org>
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Dec 02 01:57:44 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1L7I3y-0005m2-3c
-	for gcvg-git-2@gmane.org; Tue, 02 Dec 2008 00:20:22 +0100
+	id 1L7Ja9-0008BE-Iy
+	for gcvg-git-2@gmane.org; Tue, 02 Dec 2008 01:57:42 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752711AbYLAXS7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 1 Dec 2008 18:18:59 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752500AbYLAXS6
-	(ORCPT <rfc822;git-outgoing>); Mon, 1 Dec 2008 18:18:58 -0500
-Received: from mail.gmx.net ([213.165.64.20]:57622 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751594AbYLAXS6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 1 Dec 2008 18:18:58 -0500
-Received: (qmail invoked by alias); 01 Dec 2008 23:18:55 -0000
-Received: from cbg-off-client.mpi-cbg.de (EHLO intel-tinevez-2-302.mpi-cbg.de) [141.5.11.5]
-  by mail.gmx.net (mp033) with SMTP; 02 Dec 2008 00:18:55 +0100
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1/eiCUTirneiEHFumM+UemfQt125IJ4gpBYX5VsuQ
-	BlAMJmuXL3M+y+
-X-X-Sender: schindel@intel-tinevez-2-302
-In-Reply-To: <200811291301.12095.robin.rosenberg@dewire.com>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.76
+	id S1751936AbYLBA4N (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 1 Dec 2008 19:56:13 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751708AbYLBA4N
+	(ORCPT <rfc822;git-outgoing>); Mon, 1 Dec 2008 19:56:13 -0500
+Received: from yugo.dsd.sztaki.hu ([195.111.2.114]:43920 "EHLO
+	yugo.frugalware.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751636AbYLBA4M (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 1 Dec 2008 19:56:12 -0500
+Received: from vmobile.example.net (catv-80-98-230-81.catv.broadband.hu [80.98.230.81])
+	by yugo.frugalware.org (Postfix) with ESMTPA id 70BEA446CDA;
+	Tue,  2 Dec 2008 01:56:10 +0100 (CET)
+Received: by vmobile.example.net (Postfix, from userid 1003)
+	id 9F47D19D92A; Tue,  2 Dec 2008 01:56:09 +0100 (CET)
+X-Mailer: git-send-email 1.6.0.4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/102083>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/102084>
 
-Hi,
+Don't redirect stderr to /dev/null, use -q to suppress the output on
+stderr.
 
-On Sat, 29 Nov 2008, Robin Rosenberg wrote:
+Signed-off-by: Miklos Vajna <vmiklos@frugalware.org>
+---
+ git-stash.sh |   12 ++++++------
+ 1 files changed, 6 insertions(+), 6 deletions(-)
 
-> [Repository refactoring] Would be cool, but having that diff engine is 
-> more important to me.
-
-Stay tuned.  I have something that outputs something resembling a diff 
-now.  Of course, the output is not correct yet, due to bugs I introduced 
-cunnily when trying to fix another bug.
-
-I'll keep you posted,
-Dscho
+diff --git a/git-stash.sh b/git-stash.sh
+index b9ace99..c0532e8 100755
+--- a/git-stash.sh
++++ b/git-stash.sh
+@@ -30,7 +30,7 @@ clear_stash () {
+ 	then
+ 		die "git stash clear with parameters is unimplemented"
+ 	fi
+-	if current=$(git rev-parse --verify $ref_stash 2>/dev/null)
++	if current=$(git rev-parse -q --verify $ref_stash)
+ 	then
+ 		git update-ref -d $ref_stash $current
+ 	fi
+@@ -129,7 +129,7 @@ save_stash () {
+ }
+ 
+ have_stash () {
+-	git rev-parse --verify $ref_stash >/dev/null 2>&1
++	git rev-parse -q --verify $ref_stash >/dev/null
+ }
+ 
+ list_stash () {
+@@ -229,16 +229,16 @@ drop_stash () {
+ 	fi
+ 	# Verify supplied argument looks like a stash entry
+ 	s=$(git rev-parse --verify "$@") &&
+-	git rev-parse --verify "$s:"   > /dev/null 2>&1 &&
+-	git rev-parse --verify "$s^1:" > /dev/null 2>&1 &&
+-	git rev-parse --verify "$s^2:" > /dev/null 2>&1 ||
++	git rev-parse -q --verify "$s:"   > /dev/null &&
++	git rev-parse -q --verify "$s^1:" > /dev/null &&
++	git rev-parse -q --verify "$s^2:" > /dev/null ||
+ 		die "$*: not a valid stashed state"
+ 
+ 	git reflog delete --updateref --rewrite "$@" &&
+ 		echo "Dropped $* ($s)" || die "$*: Could not drop stash entry"
+ 
+ 	# clear_stash if we just dropped the last stash entry
+-	git rev-parse --verify "$ref_stash@{0}" > /dev/null 2>&1 || clear_stash
++	git rev-parse -q --verify "$ref_stash@{0}" > /dev/null || clear_stash
+ }
+ 
+ apply_to_branch () {
+-- 
+1.6.0.4
