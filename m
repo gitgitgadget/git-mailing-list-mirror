@@ -1,149 +1,85 @@
-From: Nicholas Wieland <nicholas.wieland@gmail.com>
-Subject: Re: Overwrite master
-Date: Tue, 2 Dec 2008 21:09:45 +0100
-Message-ID: <67A24C29-12A6-43B0-95D5-70910C5F8841@gmail.com>
-References: <D1AC0A41-E89A-4B53-A449-DA9C4422998E@zooppa.com> <eaa105840812020832p395ecefdq57e62f95182a3557@mail.gmail.com>
-Mime-Version: 1.0 (Apple Message framework v929.2)
-Content-Type: multipart/signed; boundary=Apple-Mail-3-833282597; micalg=sha1; protocol="application/pkcs7-signature"
-Cc: git@vger.kernel.org
-To: Peter Harris <git@peter.is-a-geek.org>
-X-From: git-owner@vger.kernel.org Tue Dec 02 21:11:43 2008
+From: "James Pickens" <jepicken@gmail.com>
+Subject: Re: [PATCH] Modified the default git help message to be grouped by topic
+Date: Tue, 2 Dec 2008 13:11:25 -0700
+Message-ID: <885649360812021211u3d547982i8e1c3070972363e8@mail.gmail.com>
+References: <20081201173037.GA41967@agadorsparticus>
+	 <20081201183258.GB24443@coredump.intra.peff.net>
+	 <7v7i6jqriv.fsf@gitster.siamese.dyndns.org>
+	 <d411cc4a0812012210h4cb59974sbda71abd2c64f93b@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: "Junio C Hamano" <gitster@pobox.com>, "Jeff King" <peff@peff.net>,
+	git@vger.kernel.org
+To: "Scott Chacon" <schacon@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Dec 02 21:12:49 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1L7bas-0006HE-5S
-	for gcvg-git-2@gmane.org; Tue, 02 Dec 2008 21:11:38 +0100
+	id 1L7bbw-0006jD-9k
+	for gcvg-git-2@gmane.org; Tue, 02 Dec 2008 21:12:44 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751042AbYLBUJ4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 2 Dec 2008 15:09:56 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751096AbYLBUJ4
-	(ORCPT <rfc822;git-outgoing>); Tue, 2 Dec 2008 15:09:56 -0500
-Received: from fk-out-0910.google.com ([209.85.128.191]:57734 "EHLO
-	fk-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750982AbYLBUJy (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 2 Dec 2008 15:09:54 -0500
-Received: by fk-out-0910.google.com with SMTP id 18so2575977fkq.5
-        for <git@vger.kernel.org>; Tue, 02 Dec 2008 12:09:52 -0800 (PST)
+	id S1750955AbYLBUL1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 2 Dec 2008 15:11:27 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750951AbYLBUL1
+	(ORCPT <rfc822;git-outgoing>); Tue, 2 Dec 2008 15:11:27 -0500
+Received: from wf-out-1314.google.com ([209.85.200.174]:52906 "EHLO
+	wf-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750877AbYLBUL0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 2 Dec 2008 15:11:26 -0500
+Received: by wf-out-1314.google.com with SMTP id 27so3331175wfd.4
+        for <git@vger.kernel.org>; Tue, 02 Dec 2008 12:11:25 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:cc:message-id:from:to
-         :in-reply-to:content-type:mime-version:subject:date:references
-         :x-mailer;
-        bh=G1PTYja726U+eyFPY9g0g3lTQAY/n8WZGTxldEFpNd4=;
-        b=KtKqN8LqKob5JXZUAjlNL5xmCQos07uVMRtM3YU/u2mI/BE5I98gc4Krn/jnl550Rf
-         yhiMTaCwPIZUKp/jcPe8yBwvAMq5ORt4wUrJmCeLkRG/f444TJ/6JjW3gIPZr/yGk6RK
-         BBgMkefhS9BAb7f1PSjFCIlvG9vWpx6CXPPPM=
+        h=domainkey-signature:received:received:message-id:date:from:to
+         :subject:cc:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:references;
+        bh=3TyIYUPDp5Wc7o+2g9gaIiqMqS558ze295QaC0bw5nk=;
+        b=a6ih3CU09/ZwhriWk49CAjbXb24mC/K5uESSLzd/nlt2XFDC2LxGCJz/iBIVkEcKUt
+         cGBlAUWBNb6mERC/YEVHSkN0it1LI3fpik044fZoLgwzgPun1c2l5N10xfwTuJbVOgrB
+         zL1yDafeYd8XMHr9GyGS3SUxo9c7e5GpJ5zKU=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=cc:message-id:from:to:in-reply-to:content-type:mime-version:subject
-         :date:references:x-mailer;
-        b=VQ/+PYwEvHB0ovcNcW2nPlzbZm3JZLJ7uwWEd78viH6GqhtyS0VNjR+8o4HlFjJQ1t
-         KbsmmzCE+WcjOGwLFJzoY4G7vWGEaS0aQLuexW6XSyO/JWJTNVBOZSzWq73XxLlGDZ7S
-         uoDta+Vq3rmocdR5QeeIUL8oDXTsihRV3W2oA=
-Received: by 10.181.60.14 with SMTP id n14mr4370761bkk.79.1228248592730;
-        Tue, 02 Dec 2008 12:09:52 -0800 (PST)
-Received: from ?1.227.88.33? (89-96-108-180.ip12.fastwebnet.it [89.96.108.180])
-        by mx.google.com with ESMTPS id d13sm6898675fka.5.2008.12.02.12.09.50
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Tue, 02 Dec 2008 12:09:51 -0800 (PST)
-In-Reply-To: <eaa105840812020832p395ecefdq57e62f95182a3557@mail.gmail.com>
-X-Mailer: Apple Mail (2.929.2)
+        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
+         :content-type:content-transfer-encoding:content-disposition
+         :references;
+        b=t2+rGH/KjKJDYiRvQVjE3fQvKMF/P7cVgVxWPfmh8d5OW9u1+JlTQ3RRDZsG49pQB7
+         At5CQC4Ne1h5N+68USQY7wolscKU4UPX+CWS7Ll5yvxqtO36aQ+bpExMDYSuMPELckeC
+         pGZBfxxMnAij8aT/CshngUgVpWOXHkd0TkDrY=
+Received: by 10.114.193.1 with SMTP id q1mr7568383waf.153.1228248685654;
+        Tue, 02 Dec 2008 12:11:25 -0800 (PST)
+Received: by 10.114.192.8 with HTTP; Tue, 2 Dec 2008 12:11:25 -0800 (PST)
+In-Reply-To: <d411cc4a0812012210h4cb59974sbda71abd2c64f93b@mail.gmail.com>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/102171>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/102172>
 
-
---Apple-Mail-3-833282597
-Content-Type: text/plain;
-	charset=US-ASCII;
-	format=flowed;
-	delsp=yes
-Content-Transfer-Encoding: 7bit
-
-Il giorno 02/dic/08, alle ore 17:32, Peter Harris ha scritto:
-
-> On Tue, Dec 2, 2008 at 11:10 AM, Nicholas Wieland wrote:
->> Hi *,
->> I need to overwrite my master branch with another branch. I've  
->> already
->> created a backup branch of my master.
+On Mon, Dec 1, 2008 at 11:10 PM, Scott Chacon <schacon@gmail.com> wrote:
+> Hi,
 >
-> While on master,
-> "git reset --hard <newbranch>"
+> On Mon, Dec 1, 2008 at 5:45 PM, Junio C Hamano <gitster@pobox.com> wrote:
+>> If this list is meant to show "the most commonly used" basics, then you
+>> can trim the list somewhat.  For example, "rm" and "mv" can be safely
+>> discarded, "status" can be replaced with "diff", and "diff" can be removed
+>> from "History Commands".
+>>
 >
-> Or while on a different branch,
-> git branch -D master
-> git branch master <newbranch>
+> I sent a new patch that removes 'rm' and 'mv' and removes the
+> common-cmd.h build process. I did keep the 'status' command, since in
+> my personal experience people tend to like having that command.
 
-That's what I tried.
-Unfortunately I don't know where to go after:
+Even though 'rm' might not be used very often, I think it's an important
+enough command that it should not be removed from the 'basics' list.
+AFAIK, the only other way to delete a file is 'rm file' followed by 'git
+add -u' or 'git commit -a'.  Imagine a git newbie trying to figure that
+out.
 
-ngw@slicingupeyeballs ~/zooppa$ git commit
-# On branch master
-# Your branch and 'origin/master' have diverged,
-# and have 444 and 25 different commit(s) each, respectively.
-#
-nothing to commit (working directory clean)
+I'm tempted to say the same thing about 'mv' as well.  And FWIW, I use
+'status' a lot more than I use 'diff', so I would vote to keep 'status' in
+the list too.
 
-Do I have to push ? If I pull it tries to merge ...
-
-
-Thanks a lot for your time,
-   ngw
-
-
---Apple-Mail-3-833282597
-Content-Disposition: attachment;
-	filename=smime.p7s
-Content-Type: application/pkcs7-signature;
-	name=smime.p7s
-Content-Transfer-Encoding: base64
-
-MIAGCSqGSIb3DQEHAqCAMIACAQExCzAJBgUrDgMCGgUAMIAGCSqGSIb3DQEHAQAAoIIGNTCCAu4w
-ggJXoAMCAQICED5xMqqxuqfS6jyxOxKsJrswDQYJKoZIhvcNAQEFBQAwYjELMAkGA1UEBhMCWkEx
-JTAjBgNVBAoTHFRoYXd0ZSBDb25zdWx0aW5nIChQdHkpIEx0ZC4xLDAqBgNVBAMTI1RoYXd0ZSBQ
-ZXJzb25hbCBGcmVlbWFpbCBJc3N1aW5nIENBMB4XDTA4MDQwODExMDI0OFoXDTA5MDQwODExMDI0
-OFowTDEfMB0GA1UEAxMWVGhhd3RlIEZyZWVtYWlsIE1lbWJlcjEpMCcGCSqGSIb3DQEJARYabmlj
-aG9sYXMud2llbGFuZEBnbWFpbC5jb20wggEiMA0GCSqGSIb3DQEBAQUAA4IBDwAwggEKAoIBAQDC
-beybG0TtTgVzg6riNdw6mpKDIP7XaKm3yE/EVchdPVKBmfru/kGuVxaP0f7s3bjQEWxgZQzl+4jK
-JlWXO52n1U/Zp6s08xVqw5zgkL4UIucwXXp3PWEYb0/FyqX0eGbYa0nk6CIZHUhEIyVAqn/shSJj
-bYWMyTOfra7ezd4EDdNjBkUACmQ/SZIGLNbBpzMoM8lh1aRjwKkbXJU0X09oVV3epMNjTh6xJcCd
-EWl5OxYr/DIpAzpScKidy7cIi0SP18B1oC8Vpe/Ych7TTV+QAtufF8r829QxsxQ2oojStM440P9j
-xVYzgYbk2gttFMpgWz9FbodJC72owAV2zdsJAgMBAAGjNzA1MCUGA1UdEQQeMByBGm5pY2hvbGFz
-LndpZWxhbmRAZ21haWwuY29tMAwGA1UdEwEB/wQCMAAwDQYJKoZIhvcNAQEFBQADgYEAvweWM4I5
-KG26YFwmDQvdmSTgQ+vyWWXRT2KwQjBMKzE35xCL/UDGpJvNpSTkc31YuH538mKAnMDLrN3ml6Bw
-T2R+oIpsIMSom+sMtwYqTFSP5ShqnPK77jE502NpEWe0Vw7Jrupt3Grszn3Roc3j1le9znBdEwXL
-YK1U1XAH+fgwggM/MIICqKADAgECAgENMA0GCSqGSIb3DQEBBQUAMIHRMQswCQYDVQQGEwJaQTEV
-MBMGA1UECBMMV2VzdGVybiBDYXBlMRIwEAYDVQQHEwlDYXBlIFRvd24xGjAYBgNVBAoTEVRoYXd0
-ZSBDb25zdWx0aW5nMSgwJgYDVQQLEx9DZXJ0aWZpY2F0aW9uIFNlcnZpY2VzIERpdmlzaW9uMSQw
-IgYDVQQDExtUaGF3dGUgUGVyc29uYWwgRnJlZW1haWwgQ0ExKzApBgkqhkiG9w0BCQEWHHBlcnNv
-bmFsLWZyZWVtYWlsQHRoYXd0ZS5jb20wHhcNMDMwNzE3MDAwMDAwWhcNMTMwNzE2MjM1OTU5WjBi
-MQswCQYDVQQGEwJaQTElMCMGA1UEChMcVGhhd3RlIENvbnN1bHRpbmcgKFB0eSkgTHRkLjEsMCoG
-A1UEAxMjVGhhd3RlIFBlcnNvbmFsIEZyZWVtYWlsIElzc3VpbmcgQ0EwgZ8wDQYJKoZIhvcNAQEB
-BQADgY0AMIGJAoGBAMSmPFVzVftOucqZWh5owHUEcJ3f6f+jHuy9zfVb8hp2vX8MOmHyv1HOAdTl
-UAow1wJjWiyJFXCO3cnwK4Vaqj9xVsuvPAsH5/EfkTYkKhPPK9Xzgnc9A74r/rsYPge/QIACZNen
-prufZdHFKlSFD0gEf6e20TxhBEAeZBlyYLf7AgMBAAGjgZQwgZEwEgYDVR0TAQH/BAgwBgEB/wIB
-ADBDBgNVHR8EPDA6MDigNqA0hjJodHRwOi8vY3JsLnRoYXd0ZS5jb20vVGhhd3RlUGVyc29uYWxG
-cmVlbWFpbENBLmNybDALBgNVHQ8EBAMCAQYwKQYDVR0RBCIwIKQeMBwxGjAYBgNVBAMTEVByaXZh
-dGVMYWJlbDItMTM4MA0GCSqGSIb3DQEBBQUAA4GBAEiM0VCD6gsuzA2jZqxnD3+vrL7CF6FDlpSd
-f0whuPg2H6otnzYvwPQcUCCTcDz9reFhYsPZOhl+hLGZGwDFGguCdJ4lUJRix9sncVcljd2pnDmO
-jCBPZV+V2vf3h9bGCE6u9uo05RAaWzVNd+NWIXiC3CEZNd4ksdMdRv9dX2VPMYIDEDCCAwwCAQEw
-djBiMQswCQYDVQQGEwJaQTElMCMGA1UEChMcVGhhd3RlIENvbnN1bHRpbmcgKFB0eSkgTHRkLjEs
-MCoGA1UEAxMjVGhhd3RlIFBlcnNvbmFsIEZyZWVtYWlsIElzc3VpbmcgQ0ECED5xMqqxuqfS6jyx
-OxKsJrswCQYFKw4DAhoFAKCCAW8wGAYJKoZIhvcNAQkDMQsGCSqGSIb3DQEHATAcBgkqhkiG9w0B
-CQUxDxcNMDgxMjAyMjAwOTQ2WjAjBgkqhkiG9w0BCQQxFgQUeqHemvBu4xESBIkpDI1csiFACM0w
-gYUGCSsGAQQBgjcQBDF4MHYwYjELMAkGA1UEBhMCWkExJTAjBgNVBAoTHFRoYXd0ZSBDb25zdWx0
-aW5nIChQdHkpIEx0ZC4xLDAqBgNVBAMTI1RoYXd0ZSBQZXJzb25hbCBGcmVlbWFpbCBJc3N1aW5n
-IENBAhA+cTKqsbqn0uo8sTsSrCa7MIGHBgsqhkiG9w0BCRACCzF4oHYwYjELMAkGA1UEBhMCWkEx
-JTAjBgNVBAoTHFRoYXd0ZSBDb25zdWx0aW5nIChQdHkpIEx0ZC4xLDAqBgNVBAMTI1RoYXd0ZSBQ
-ZXJzb25hbCBGcmVlbWFpbCBJc3N1aW5nIENBAhA+cTKqsbqn0uo8sTsSrCa7MA0GCSqGSIb3DQEB
-AQUABIIBAJWqh9Cu/HpgsbcKb6e2oAg32/+CzyF2uH++vnMQxmivll6kINAHDtIj8MWNJaxQgWPG
-gHRwhundDggjuRIt7XLBxkjl7JQMh81+ALODDz86cStEbn4xkcKIbZ/XoyaX0YswFWOo6cAubtu/
-2QcqX2r/BjRUhveOsAThrmmjTcrU3coPN59zEq05n/BT32upQYjIQ+VjyQRYDmILDOnqtipTaMZ3
-Iibru+4uq/fkW2MYZykNOAHOYQt3XBS4s5BfHB1sCIfDrJhrAcesnWt4gBO/8Sp+ffgNYJsjO6cI
-XHP4yt/IFw9mpFcPDng1sNc4/sl1vEGHodvwbZOJSW6glmQAAAAAAAA=
-
---Apple-Mail-3-833282597--
+James
