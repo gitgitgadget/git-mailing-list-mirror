@@ -1,76 +1,74 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [RFC PATCH 0/4] deny push to current branch of non-bare repo
-Date: Mon, 1 Dec 2008 21:48:37 -0500
-Message-ID: <20081202024837.GB6804@coredump.intra.peff.net>
-References: <20081107220730.GA15942@coredump.intra.peff.net> <7v3ai3f7oa.fsf@gitster.siamese.dyndns.org> <20081108142756.GC17100@coredump.intra.peff.net> <ee2a733e0812011822r4cef6a44ra68d6e84f9e30a90@mail.gmail.com>
+From: "Leo Razoumov" <slonik.az@gmail.com>
+Subject: Re: more merge strategies : feature request
+Date: Mon, 1 Dec 2008 21:49:08 -0500
+Message-ID: <ee2a733e0812011849l1b319c96u9abbb4e8dd4f53ce@mail.gmail.com>
+References: <81bfc67a0811290848m6cb219c0y71a7266001096f2d@mail.gmail.com>
+	 <4933AC03.6050300@op5.se>
+Reply-To: SLONIK.AZ@gmail.com
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	Sam Vilain <sam@vilain.net>
-To: Leo Razoumov <slonik.az@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Dec 02 03:49:59 2008
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: "Caleb Cushing" <xenoterracide@gmail.com>, git@vger.kernel.org
+To: "Andreas Ericsson" <ae@op5.se>
+X-From: git-owner@vger.kernel.org Tue Dec 02 03:50:37 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1L7LKm-0008LX-Ag
-	for gcvg-git-2@gmane.org; Tue, 02 Dec 2008 03:49:56 +0100
+	id 1L7LLM-0008SG-Sj
+	for gcvg-git-2@gmane.org; Tue, 02 Dec 2008 03:50:33 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751198AbYLBCsk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 1 Dec 2008 21:48:40 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751486AbYLBCsj
-	(ORCPT <rfc822;git-outgoing>); Mon, 1 Dec 2008 21:48:39 -0500
-Received: from peff.net ([208.65.91.99]:3377 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750980AbYLBCsj (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 1 Dec 2008 21:48:39 -0500
-Received: (qmail 8210 invoked by uid 111); 2 Dec 2008 02:48:38 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.32) with SMTP; Mon, 01 Dec 2008 21:48:38 -0500
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Mon, 01 Dec 2008 21:48:37 -0500
+	id S1753936AbYLBCtM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 1 Dec 2008 21:49:12 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753857AbYLBCtM
+	(ORCPT <rfc822;git-outgoing>); Mon, 1 Dec 2008 21:49:12 -0500
+Received: from fg-out-1718.google.com ([72.14.220.159]:34322 "EHLO
+	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753349AbYLBCtK (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 1 Dec 2008 21:49:10 -0500
+Received: by fg-out-1718.google.com with SMTP id 19so1990997fgg.17
+        for <git@vger.kernel.org>; Mon, 01 Dec 2008 18:49:09 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:reply-to
+         :to:subject:cc:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:references;
+        bh=PIP7Nexhp6QCaDr9Fd3CS8FONVR2r6DW0pkbk0H3/ew=;
+        b=AOerNDHtBS/5WLQWj5njSWegjXyAdBeOW+dqfC6xtrFCr/PKXitQHeJdUBZNXpV0q+
+         EartUM/ub/oICjEOGUlkvtTu07FPoNTY15lSFNe2UBCI78LsoO5dHlk1ZAuHuLL8XWU+
+         Oxyp2d+CzD+oHAzRM+Us5rEF1InNnpM+Za/fo=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:reply-to:to:subject:cc:in-reply-to
+         :mime-version:content-type:content-transfer-encoding
+         :content-disposition:references;
+        b=nhLrzCgx/nLdu7zhZiaJGDsxJUMVrFCE1r38yTqB8bvY5Rg7sCPIY7ix+WQA5LoBtG
+         1j76Gj10jGF7sgcZL59Mg+9kQrG6faQDdNK2tFhhsjPIWtRqNO6nM9S6PqhjcTL0BNwg
+         Okp7pk8vfK9kcOMXEscc2PdBbnZxWVh2tlRRc=
+Received: by 10.181.159.17 with SMTP id l17mr4135042bko.14.1228186149031;
+        Mon, 01 Dec 2008 18:49:09 -0800 (PST)
+Received: by 10.181.7.8 with HTTP; Mon, 1 Dec 2008 18:49:08 -0800 (PST)
+In-Reply-To: <4933AC03.6050300@op5.se>
 Content-Disposition: inline
-In-Reply-To: <ee2a733e0812011822r4cef6a44ra68d6e84f9e30a90@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/102114>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/102115>
 
-On Mon, Dec 01, 2008 at 09:22:43PM -0500, Leo Razoumov wrote:
+On 12/1/08, Andreas Ericsson <ae@op5.se> wrote:
+> Caleb Cushing wrote:
+>
+> > conflict: this strategy would always resolve in a merge conflict
+> > allowing you to use git mergetool to piece the files back together.
+> >
+> > no-overwrite: if a change from the branch being merged in would
+> > overwrite something in the current branch don't merge it. (I think it
+> > needs a better name)
+> >
 
-> I do not think that having a work-flow different from yours deserves a
-> "somewhat insane" label. But let us consider the consequences of
+I guess that "no-overwrite" can be achieved by
 
-  a) you are responding to a nearly month-old message. Please read the
-     rest of the thread where we decide that it is not so insane, and
-     that the behavior should be configurable with a default of "warn"
-     at least for now.
+git merge -s ours --no-commit
 
-  b) My comment was not that it is insane simply because it is different
-     from mine. It is because it creates a dangerous situation (where
-     dangerous implies changes might be silently lost) which requires
-     manual intervention to fix, and which the user was given no warning
-     whatsoever about. It is a direct response to frequent complaints on
-     the list about users getting bit by this.
-
-> (1) Switch target's current branch to something else (prevent a
-> conflict) before pushing and then restore it back after the push
-> 
-> (2) Use git-fetch from the target.
-
-(3) Use git-reset --hard, but set a config variable that says "I know
-what I'm doing." You don't even have to do it per-repo, you can do it
-per-user.
-
-(4) Push into a non-current branch and merge from the target.
-
-> Method (2) is even worse, because git-fetch provides no control of
-> what branches/tags to fetch, it sucks everything in from all branches.
-> "git-push", OTOH, can be instructed to be very selective.
-
-Er, what? git-fetch takes a refspec very similar to the ones used by
-git-push. The real reason that (2) is not an acceptable solution is that
-you can't necessarily connect to the source repo (e.g., it is on your
-workstation with no ssh or git server running).
-
--Peff
+--Leo--
