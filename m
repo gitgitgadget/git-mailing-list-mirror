@@ -1,86 +1,67 @@
-From: Mark Burton <markb@ordern.com>
-Subject: Bugs in git-gui and git-push when pushing src:dst to mirror?
-Date: Tue, 2 Dec 2008 13:08:59 +0000
-Organization: Order N Ltd.
-Message-ID: <20081202130859.43ba54f6@crow>
+From: "Caleb Cushing" <xenoterracide@gmail.com>
+Subject: Re: more merge strategies : feature request
+Date: Tue, 2 Dec 2008 08:46:00 -0500
+Message-ID: <81bfc67a0812020546o79906a20jcd04bd42d18dd803@mail.gmail.com>
+References: <81bfc67a0811290848m6cb219c0y71a7266001096f2d@mail.gmail.com>
+	 <4933AC03.6050300@op5.se>
+	 <ee2a733e0812011849l1b319c96u9abbb4e8dd4f53ce@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Dec 02 14:10:51 2008
+Cc: "Andreas Ericsson" <ae@op5.se>, git@vger.kernel.org
+To: SLONIK.AZ@gmail.com
+X-From: git-owner@vger.kernel.org Tue Dec 02 14:47:34 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1L7V1H-0008Q5-4b
-	for gcvg-git-2@gmane.org; Tue, 02 Dec 2008 14:10:27 +0100
+	id 1L7Vb2-0004My-Jd
+	for gcvg-git-2@gmane.org; Tue, 02 Dec 2008 14:47:25 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753649AbYLBNJJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 2 Dec 2008 08:09:09 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753347AbYLBNJH
-	(ORCPT <rfc822;git-outgoing>); Tue, 2 Dec 2008 08:09:07 -0500
-Received: from c2bthomr13.btconnect.com ([213.123.20.131]:22192 "EHLO
-	c2bthomr13.btconnect.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753407AbYLBNJG (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 2 Dec 2008 08:09:06 -0500
-Received: from crow.ordern.com (host86-128-197-104.range86-128.btcentralplus.com [86.128.197.104])
-	by c2bthomr13.btconnect.com
-	with ESMTP id BXI86752;
-	Tue, 2 Dec 2008 13:09:00 GMT
-Received: from crow (localhost [127.0.0.1])
-	by crow.ordern.com (Postfix) with ESMTP id DEFC2190CFB
-	for <git@vger.kernel.org>; Tue,  2 Dec 2008 13:08:59 +0000 (GMT)
-X-Mailer: Claws Mail 3.6.1 (GTK+ 2.12.9; x86_64-pc-linux-gnu)
-X-Junkmail-Status: score=10/50, host=c2bthomr13.btconnect.com
-X-Junkmail-SD-Raw: score=unknown,
-	refid=str=0001.0A0B0205.49353370.02CA,ss=1,fgs=0,
-	ip=86.128.197.104,
-	so=2007-10-30 19:00:17,
-	dmn=5.7.1/2008-09-02
-X-Junkmail-IWF: false
+	id S1754198AbYLBNqF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 2 Dec 2008 08:46:05 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753881AbYLBNqD
+	(ORCPT <rfc822;git-outgoing>); Tue, 2 Dec 2008 08:46:03 -0500
+Received: from rv-out-0506.google.com ([209.85.198.236]:62144 "EHLO
+	rv-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754193AbYLBNqB (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 2 Dec 2008 08:46:01 -0500
+Received: by rv-out-0506.google.com with SMTP id k40so2977109rvb.1
+        for <git@vger.kernel.org>; Tue, 02 Dec 2008 05:46:00 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to
+         :subject:cc:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:references;
+        bh=RgW9FjHrUJdZEoZ1YcY8gMw04FRwdv1KOYIN2263q3E=;
+        b=C/gTk55uTw4soWYbOrl8Wb7tdiCbYTpquopiuh+UyG2NWWow1NvQDFR4YejvqOvzhe
+         Ru5sDwNp731Mri5qiMa7RUIK9DdMZN8j2U2GMiKjSeeqSM4Uz6p8AYIyTaPv7raemrYH
+         CRVbn34zHMyApJWCQDKbxwYXqgh7G2SeWwxXU=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
+         :content-type:content-transfer-encoding:content-disposition
+         :references;
+        b=QkcgDDugIrvZfsAMxCRBP7nPzGtqfwrA3D6STdOnkG9ITMzUNYNatPYHk9mTbWMg8A
+         WBCydcOPWWRyFvLCjhykii+6KymffjbWLU1VUMr7n86oM6IaCbNLEXCr/Rzmw+XLvx24
+         O8MVcdKD4HN+b6ejCYfOuQkbi+jwIGgObYLYA=
+Received: by 10.141.197.21 with SMTP id z21mr5771970rvp.107.1228225560727;
+        Tue, 02 Dec 2008 05:46:00 -0800 (PST)
+Received: by 10.141.145.7 with HTTP; Tue, 2 Dec 2008 05:46:00 -0800 (PST)
+In-Reply-To: <ee2a733e0812011849l1b319c96u9abbb4e8dd4f53ce@mail.gmail.com>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/102132>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/102133>
 
+> I guess that "no-overwrite" can be achieved by
+>
+>  git merge -s ours --no-commit
 
-Hi,
-
-Using git 1.6.0.4.
-
-I just tried to push using git-gui to a mirror of the current
-repository and it failed because git-gui included a src:dest refspec
-and that upset git-push as the remote is a mirror. So, I think that it would
-be useful if git-gui notices when the remote is a mirror and does not
-pass the refspec (I shall try to form a patch later when I have some time).
-
-The other issue is that although git-push did print the usage blurb,
-it didn't actually produce a message saying what it's problem was.
-Looking at the source, I would have expected to have seen "--mirror
-can't be combined with refspecs" printed but it didn't happen. Here's
-what I got when I run the same command (as attempted by git-gui) on the
-command line:
-
-$ git push -v tako refs/heads/multi-stream:refs/heads/multi-stream
-usage: git push [--all | --mirror] [--dry-run] [--tags] [--receive-pack=<git-receive-pack>] [--repo=<repository>] [-f | --force] [-v] [<repository> <refspec>...]
-
-    -v, --verbose         be verbose
-    --repo <repository>   repository
-    --all                 push all refs
-    --mirror              mirror all refs
-    --tags                push tags
-    --dry-run             dry run
-    -f, --force           force updates
-    --thin                use thin pack
-    --receive-pack <receive-pack>
-                          receive pack program
-    --exec <receive-pack>
-                          receive pack program
-
-
-Any ideas?
-
-Cheers,
-
-Mark
+no it doesn't. which is why I called it a bad name. no-overwrite would
+still add new lines to the file not in ours (and no-commit isn't
+needed in that case) it just wouldn't overwrite conflicting lines, my
+understanding of ours is that it will keep the files as is.
+Caleb Cushing
