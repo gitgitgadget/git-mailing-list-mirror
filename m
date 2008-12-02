@@ -1,104 +1,88 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: Managing websites with git
-Date: Mon, 1 Dec 2008 20:11:54 -0500
-Message-ID: <20081202011154.GA6390@coredump.intra.peff.net>
-References: <fe5a74300811300830x850d81csc5cf1f9b367bac11@mail.gmail.com> <20081130170722.GJ6572@eratosthenes.sbcglobal.net> <20081130172717.GA7047@coredump.intra.peff.net> <87k5ajflp0.fsf@sparse.dyndns.org>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: David Bryson <david@statichacks.org>,
-	Felix Andersen <felix@nibbo.se>, git@vger.kernel.org
-To: Jason Riedy <jason@acm.org>
-X-From: git-owner@vger.kernel.org Tue Dec 02 02:13:28 2008
+From: Giuseppe Bilotta <giuseppe.bilotta@gmail.com>
+Subject: [PATCH] gitk: map / to focus the search box
+Date: Tue,  2 Dec 2008 02:18:56 +0100
+Message-ID: <1228180736-15707-1-git-send-email-giuseppe.bilotta@gmail.com>
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Giuseppe Bilotta <giuseppe.bilotta@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Dec 02 02:19:57 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1L7JpP-0003bo-ID
-	for gcvg-git-2@gmane.org; Tue, 02 Dec 2008 02:13:28 +0100
+	id 1L7Jvh-00056q-3E
+	for gcvg-git-2@gmane.org; Tue, 02 Dec 2008 02:19:57 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752004AbYLBBL7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 1 Dec 2008 20:11:59 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751965AbYLBBL7
-	(ORCPT <rfc822;git-outgoing>); Mon, 1 Dec 2008 20:11:59 -0500
-Received: from peff.net ([208.65.91.99]:4527 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751954AbYLBBL6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 1 Dec 2008 20:11:58 -0500
-Received: (qmail 6925 invoked by uid 111); 2 Dec 2008 01:11:56 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.32) with SMTP; Mon, 01 Dec 2008 20:11:56 -0500
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Mon, 01 Dec 2008 20:11:54 -0500
-Content-Disposition: inline
-In-Reply-To: <87k5ajflp0.fsf@sparse.dyndns.org>
+	id S1752132AbYLBBSk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 1 Dec 2008 20:18:40 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752069AbYLBBSk
+	(ORCPT <rfc822;git-outgoing>); Mon, 1 Dec 2008 20:18:40 -0500
+Received: from ey-out-2122.google.com ([74.125.78.27]:31428 "EHLO
+	ey-out-2122.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751965AbYLBBSj (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 1 Dec 2008 20:18:39 -0500
+Received: by ey-out-2122.google.com with SMTP id 6so1171990eyi.37
+        for <git@vger.kernel.org>; Mon, 01 Dec 2008 17:18:38 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:from:to:cc:subject:date
+         :message-id:x-mailer;
+        bh=WKl4tXz5go5Ug4H2GbrKevxfbWZtnpEQMH6fx3CdxpY=;
+        b=Y1TbCqRlnAQMWR5XKh/PAXUDAsMB3duHX3GKQseSFNOefAIQXy6XGDFM0TBzkoaCet
+         kIj68qvns7HbWAoMyVTmjN9K5XaUZSp+krIQfXCihms+ZRYDd4IJ5SrQmHg7lTjnSLfQ
+         x8SMWyJu3kFTIpir8JZhmZkrGjc2Of9Fd1Vjg=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=from:to:cc:subject:date:message-id:x-mailer;
+        b=ZMTkIW9aUCFDRGJmOh1caS0tf5D1mVULg+lP8A6HJ68BOz3VXPmtTAfkbrhuvXrQUO
+         edeUnoU6oDu1ucjYqhgPuJLthBuIlvbniPyvXzgZXIINo1PCDkSwqHbo/qQFSwD+LRnJ
+         z1iw/X+XqsAVl7zMiUJU6SAi5flale2JlK9+s=
+Received: by 10.103.176.20 with SMTP id d20mr4900496mup.27.1228180718096;
+        Mon, 01 Dec 2008 17:18:38 -0800 (PST)
+Received: from localhost ([78.13.62.94])
+        by mx.google.com with ESMTPS id t10sm10012330muh.51.2008.12.01.17.18.37
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Mon, 01 Dec 2008 17:18:37 -0800 (PST)
+X-Mailer: git-send-email 1.5.6.5
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/102085>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/102086>
 
-On Mon, Dec 01, 2008 at 07:46:35PM -0500, Jason Riedy wrote:
+The / key is often used to initiate searches (less, vim, some web
+browsers). We change the binding for the / (slash) key from 'find next'
+to 'focus the search box' to follow this convention.
 
-> And David Bryson writes:
-> > One really should not push to a non-bare repo.
-> WHAT?!?!?!
+Signed-off-by: Giuseppe Bilotta <giuseppe.bilotta@gmail.com>
+---
 
-To clarify: one should not push to the _current branch_ of a non-bare
-repo...
+Like this?
 
-> And Jeff King responds:
-> > It's in master and should be in 1.6.1, but it is a config option that
-> > defaults to "warn" for now, so as not to break existing setups.
-> WHAT?!?!?!
+ gitk-git/gitk |    4 ++--
+ 1 files changed, 2 insertions(+), 2 deletions(-)
 
-...and that is what 1.6.1 will warn about.
-
-> I do this all the time.  I clone from my main working directory
-> onto some cluster / MPP where the build system is all wonky.
-> Once I get everything building, I push back to a branch (often
-> new) in my main working directory.  Then I can merge the build
-> changes whenever I get a chance.
-
-As long as you are not pushing to the currently checked-out branch, then
-you will see no change in behavior. If you are pushing to the currently
-checked-out branch, then what are you doing to reconcile the resulting
-mismatch between the index and HEAD?
-
-> Pushing from these systems often is much, much easier than
-> pulling from the origin.  Sometimes you're working in temporary
-> space on a back-end node; you can connect out but you cannot
-> connect in.
-
-Of course. The recommended thing to do is:
-
-  # on pusher
-  git push $remote HEAD:some-branch-that-is-not-checked-out
-  # on $remote
-  git merge some-branch-that-is-not-checked-out
-
-where an obvious choice for branch name is "incoming/master" or whatever
-suits your workflow. You can also do:
-
-  # on pusher
-  git push $remote HEAD:branch-that-is-checked-out
-  # on $remote
-  git reset --hard
-
-but that throws away anything else going on in that branch on $remote.
-
-> It feels like newer gits make more and more decisions about what
-> I shouldn't do.
-
-Doing
-
-  git push $remote HEAD:branch-that-is-checked-out
-
-has _never_ worked without further action on $remote. Now we're warning
-about it.
-
-If you have other specific complaints about new git behavior, I'm sure
-the list would be happy to hear about it. Almost every behavior change
-is in response to user complaints, and a lot of effort is put into
-maintaining backwards compatibility. If we've screwed up somewhere, it
-would be good to know.
-
--Peff
+diff --git a/gitk-git/gitk b/gitk-git/gitk
+index 6b671a6..0c0350b 100644
+--- a/gitk-git/gitk
++++ b/gitk-git/gitk
+@@ -2271,7 +2271,7 @@ proc makewindow {} {
+     bindkey b prevfile
+     bindkey d "$ctext yview scroll 18 units"
+     bindkey u "$ctext yview scroll -18 units"
+-    bindkey / {dofind 1 1}
++    bindkey / {focus $fstring}
+     bindkey <Key-Return> {dofind 1 1}
+     bindkey ? {dofind -1 1}
+     bindkey f nextfile
+@@ -2652,7 +2652,7 @@ proc keys {} {
+ [mc "<%s-F>		Find" $M1T]
+ [mc "<%s-G>		Move to next find hit" $M1T]
+ [mc "<Return>	Move to next find hit"]
+-[mc "/		Move to next find hit, or redo find"]
++[mc "/		Focus the search box"]
+ [mc "?		Move to previous find hit"]
+ [mc "f		Scroll diff view to next file"]
+ [mc "<%s-S>		Search for next hit in diff view" $M1T]
+-- 
+1.5.6.5
