@@ -1,63 +1,128 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] Modified the default git help message to be grouped by
- topic
-Date: Mon, 01 Dec 2008 17:45:12 -0800
-Message-ID: <7v7i6jqriv.fsf@gitster.siamese.dyndns.org>
-References: <20081201173037.GA41967@agadorsparticus>
- <20081201183258.GB24443@coredump.intra.peff.net>
+From: Liu Yubao <yubao.liu@gmail.com>
+Subject: [PATCH 0/5] support reading and writing uncompressed loose object
+Date: Tue, 02 Dec 2008 09:48:29 +0800
+Message-ID: <493493ED.8090903@gmail.com>
+References: <493399B7.5000505@gmail.com> <7voczws3np.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Scott Chacon <schacon@gmail.com>, git@vger.kernel.org,
-	gitster@pobox.com
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Tue Dec 02 02:46:59 2008
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: git list <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Dec 02 02:50:00 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1L7KLq-0003Ad-Nx
-	for gcvg-git-2@gmane.org; Tue, 02 Dec 2008 02:46:59 +0100
+	id 1L7KOk-0003tG-Hi
+	for gcvg-git-2@gmane.org; Tue, 02 Dec 2008 02:49:58 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751954AbYLBBpm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 1 Dec 2008 20:45:42 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752075AbYLBBpm
-	(ORCPT <rfc822;git-outgoing>); Mon, 1 Dec 2008 20:45:42 -0500
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:42526 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751647AbYLBBpl (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 1 Dec 2008 20:45:41 -0500
-Received: from localhost.localdomain (unknown [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 99BE0839E2;
-	Mon,  1 Dec 2008 20:45:40 -0500 (EST)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES256-SHA (256/256 bits)) (No client certificate requested) by
- a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTPSA id 760F5839DD; Mon,
-  1 Dec 2008 20:45:14 -0500 (EST)
-In-Reply-To: <20081201183258.GB24443@coredump.intra.peff.net> (Jeff King's
- message of "Mon, 1 Dec 2008 13:32:59 -0500")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: ECD2F840-C012-11DD-A3BE-465CC92D7133-77302942!a-sasl-fastnet.pobox.com
+	id S1752696AbYLBBsm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 1 Dec 2008 20:48:42 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752693AbYLBBsm
+	(ORCPT <rfc822;git-outgoing>); Mon, 1 Dec 2008 20:48:42 -0500
+Received: from ti-out-0910.google.com ([209.85.142.184]:52330 "EHLO
+	ti-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752559AbYLBBsl (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 1 Dec 2008 20:48:41 -0500
+Received: by ti-out-0910.google.com with SMTP id b6so1743670tic.23
+        for <git@vger.kernel.org>; Mon, 01 Dec 2008 17:48:39 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from
+         :user-agent:mime-version:to:cc:subject:references:in-reply-to
+         :content-type:content-transfer-encoding;
+        bh=+d4PIRFU2xlVD1z/kjO3TD9+YBputw/4QSWUwDhjbG4=;
+        b=sV4AZ/vHZ++MDsB5edzQOYNsVxpKjwqYfx4UKWzOtgefTrgohOHHxdGIHEGKN08d7X
+         2pSHSOYdM27LZHKc8ck5KD6k1wN1+ICd7mYX645G4eQ7YAySnJQFMytMyjNgp+wMPFAf
+         ElOQQwp0/R8aoIRB8WVTeVZDQWfu8vIP6Fn3o=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:user-agent:mime-version:to:cc:subject
+         :references:in-reply-to:content-type:content-transfer-encoding;
+        b=XEBwLnTRgvQm6nURyWx5dm8UlIkDlNVzEcW+pfGzieXorKYQKiXRFinGEW4QJFBGbu
+         lNHtGQiuEpnRjjvL9FbRJ4K+1Xx8V6aHYzhZACqrELxnAHCCIMSuvbnFLLnWF7m+v+X/
+         qzYM5NgpKfnx0FZFZ96krLjkUNa3r3ymHI+Pc=
+Received: by 10.110.5.3 with SMTP id 3mr730790tie.49.1228182519282;
+        Mon, 01 Dec 2008 17:48:39 -0800 (PST)
+Received: from ?10.64.1.142? ([211.157.41.194])
+        by mx.google.com with ESMTPS id b4sm3173845tic.2.2008.12.01.17.48.37
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Mon, 01 Dec 2008 17:48:38 -0800 (PST)
+User-Agent: Thunderbird 2.0.0.18 (Windows/20081105)
+In-Reply-To: <7voczws3np.fsf@gitster.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/102093>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/102094>
 
-Jeff King <peff@peff.net> writes:
+Hi,
 
-> On Mon, Dec 01, 2008 at 09:30:37AM -0800, Scott Chacon wrote:
->
->> It's difficult to process 21 commands (which is what is output
->> by default for git when no command is given).  I've re-grouped
->> them into 4 groups of 5 or 6 commands each, which I think is
->> clearer and easier for new users to process.
->
-> I like it (and I think the categorizations look reasonable, which is
-> something that I recall caused some discussion at the GitTogether).
->
-> The only downside I see is that we're now >24 lines.
+In original implementation, git stores loose object like this:
+    loose object = deflate(typename + <space> + size + data)
 
-If this list is meant to show "the most commonly used" basics, then you
-can trim the list somewhat.  For example, "rm" and "mv" can be safely
-discarded, "status" can be replaced with "diff", and "diff" can be removed
-from "History Commands".
+The patches below add support to read and write uncompressed loose
+object:
+    loose object = typename + <space> + size + data
+
+The cons and pros to use uncompressed loose object:
+
+cons
+    * old git can't read these uncompressed loose objects
+      (I think it's not a big problem because old git can read
+       pack files generated by new git)
+
+    * uncompressed loose objects occupy more disk space
+      (I also think it's not a big problem because loose objects
+       aren't too many in general)
+
+pros
+    * avoid compressing and uncompressing loose objects that are likely
+      frequently used when coding/merging with git add/diff/diff --cached/
+      merge/rebase/log.
+
+    * the code to read and write uncompressed loose objects is
+      simpler, although there are now more code paths for compatibility.
+
+    * better to share loose objects among multiple git processes because
+      sha1 files can be used directly after mmapped. The original git
+      uncompresses loose objects into heap memory area so that they
+      can't be shared by other processes.
+     (NOTICE: The patches below doesn't use mmapped sha1 files directly
+      because I find parse_object() requires a buffer terminated with
+      zero.)
+
+    * easy to grep objects in .git/objects  (...stupid use case :-)
+
+
+If these patches are worth being included into upstream branch,
+I will add a new config variable core.uncompressedLooseObject.
+
+
+Explanation to the patches:
+
+1) avoid parse_sha1_header() accessing memory out of bound
+  Just for more safety, no inflateInit() to detect errors for
+  uncompressed loose objects.
+
+2) don't die immediately when convert an invalid type name
+  So we can fall back to compressed loose objects.
+
+3) optimize parse_sha1_header() a little by detecting object type
+  To quickly detect whether it seems an uncompressed loose object.
+
+4) support reading uncompressed loose object
+  The new feature.
+
+5) support writing uncompressed loose object
+  The new feature, need a git-config variable yet.
+
+
+The patches are generated against git-1.6.1-rc, I have run the test cases
+and it seems ok.
+
+
+ object.c    |   14 +++++++++++++-
+ object.h    |    1 +
+ sha1_file.c |   58 +++++++++++++++++++++++++++++++++++++++++++++-------------
+ 3 files changed, 59 insertions(+), 14 deletions(-)
