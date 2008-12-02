@@ -1,71 +1,82 @@
-From: "Peter Harris" <git@peter.is-a-geek.org>
-Subject: Re: Overwrite master
-Date: Tue, 2 Dec 2008 11:32:29 -0500
-Message-ID: <eaa105840812020832p395ecefdq57e62f95182a3557@mail.gmail.com>
-References: <D1AC0A41-E89A-4B53-A449-DA9C4422998E@zooppa.com>
+From: Jason Riedy <jason@acm.org>
+Subject: Re: Managing websites with git
+Date: Tue, 02 Dec 2008 10:55:34 -0500
+Message-ID: <87vdu2po5l.fsf@sparse.dyndns.org>
+References: <fe5a74300811300830x850d81csc5cf1f9b367bac11@mail.gmail.com>
+	<20081130170722.GJ6572@eratosthenes.sbcglobal.net>
+	<20081130172717.GA7047@coredump.intra.peff.net>
+	<87k5ajflp0.fsf@sparse.dyndns.org>
+	<20081202011154.GA6390@coredump.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-To: "Nicholas Wieland" <nicholas.wieland@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Dec 02 17:33:51 2008
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Tue Dec 02 17:39:01 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1L7YC6-0003T8-9V
-	for gcvg-git-2@gmane.org; Tue, 02 Dec 2008 17:33:50 +0100
+	id 1L7YH6-0005c0-Pe
+	for gcvg-git-2@gmane.org; Tue, 02 Dec 2008 17:39:01 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754575AbYLBQcb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 2 Dec 2008 11:32:31 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753013AbYLBQcb
-	(ORCPT <rfc822;git-outgoing>); Tue, 2 Dec 2008 11:32:31 -0500
-Received: from mail-qy0-f11.google.com ([209.85.221.11]:52818 "EHLO
-	mail-qy0-f11.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751163AbYLBQca (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 2 Dec 2008 11:32:30 -0500
-Received: by qyk4 with SMTP id 4so3503660qyk.13
-        for <git@vger.kernel.org>; Tue, 02 Dec 2008 08:32:29 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:sender
-         :to:subject:cc:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:references
-         :x-google-sender-auth;
-        bh=qV22YSP/WM1zoX3+x4V37JJ49eApkVxgCSE1tMESrYU=;
-        b=gbfvboFWtAPEHE/Gn9OrRskwtQeS7z4mFRNgMXoQC2ojjpwnpOfijSkyHjlfwawZHM
-         BdiwCqWSOW1149UA0piQgI/pWwc6FHqIyz8Zm1/M7SSbLsjy+BcAHu7tXx0JmnyekqRx
-         0U1SM3JokAJgiaQjCc5YSuNTT+l1+q4FT71kk=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:sender:to:subject:cc:in-reply-to:mime-version
-         :content-type:content-transfer-encoding:content-disposition
-         :references:x-google-sender-auth;
-        b=SxvZXEu5HjXXtTv7wxqfaDUiyfVi0yA3C019ADHhns3b7qixQwuB6dirw+v+L6klIl
-         KB7z16z9bgYS7/1O6Yo3ICjo5vU4K+K08QYmpjZL2ZuGewOu7+VgO6uK0zcD/TQ/BLOY
-         KAFk/EKotU8kaVI/LoaXZTjnKEfQuNQJ8z1R4=
-Received: by 10.64.243.19 with SMTP id q19mr12979297qbh.50.1228235549297;
-        Tue, 02 Dec 2008 08:32:29 -0800 (PST)
-Received: by 10.65.230.19 with HTTP; Tue, 2 Dec 2008 08:32:29 -0800 (PST)
-In-Reply-To: <D1AC0A41-E89A-4B53-A449-DA9C4422998E@zooppa.com>
-Content-Disposition: inline
-X-Google-Sender-Auth: b1d20fff57154660
+	id S1755293AbYLBQhd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 2 Dec 2008 11:37:33 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755279AbYLBQhd
+	(ORCPT <rfc822;git-outgoing>); Tue, 2 Dec 2008 11:37:33 -0500
+Received: from a.mail.sonic.net ([64.142.16.245]:37817 "EHLO a.mail.sonic.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755220AbYLBQhc (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 2 Dec 2008 11:37:32 -0500
+X-Greylist: delayed 1713 seconds by postgrey-1.27 at vger.kernel.org; Tue, 02 Dec 2008 11:37:32 EST
+Received: from nan.sparse.yi.org (misc-148-78-88-138.pool.starband.net [148.78.88.138])
+	(authenticated bits=0)
+	by a.mail.sonic.net (8.13.8.Beta0-Sonic/8.13.7) with ESMTP id mB2G8ku2012834;
+	Tue, 2 Dec 2008 08:08:51 -0800
+In-Reply-To: <20081202011154.GA6390@coredump.intra.peff.net> (Jeff King's
+	message of "Mon, 1 Dec 2008 20:11:54 -0500")
+User-Agent: Gnus/5.110011 (No Gnus v0.11) Emacs/23.0.60 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/102155>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/102156>
 
-On Tue, Dec 2, 2008 at 11:10 AM, Nicholas Wieland wrote:
-> Hi *,
-> I need to overwrite my master branch with another branch. I've already
-> created a backup branch of my master.
+And Jeff King writes:
+> To clarify: one should not push to the _current branch_ of a
+> non-bare repo...
 
-While on master,
-"git reset --hard <newbranch>"
+Ah, ok, thanks!  Issuing a warning makes sense.  I'm not sure if
+denying such a push by default does...
 
-Or while on a different branch,
-git branch -D master
-git branch master <newbranch>
+> Doing git push $remote HEAD:branch-that-is-checked-out
+> has _never_ worked without further action on $remote. Now we're warning
+> about it.
 
-Peter Harris
+It works just fine.  I suspect we have different definitions of
+"works".
+
+To me, that push updates the branch's reference.  The working
+copy and index now may be out of sync, but neither the working
+copy nor the index is the branch's reference.  Trying to commit
+from the index correctly refuses.  The warning is a nice
+reminder, but I don't see why this should be denied by default.
+The user (me) hasn't lost anything, and every tool does what it
+is supposed to do (from my point of view).
+
+But I'm one of those people who has always liked the three levels
+of git.  And I use them all.
+
+(And in context: I used to update the IEEE754 group's web site by
+a git push to the checked-out master, with a hook to reset
+everything.  Worked just fine (and very quickly) until they shut
+off shell access.  There was no need for an extra branch on the
+server side.)
+
+> If you have other specific complaints about new git behavior,
+> I'm sure the list would be happy to hear about it.
+
+I'll try to find time when I encounter another.  I'm pretty sure
+that switching to denying pushes to checked-out branches is the
+first one that *really* will make me change how I work.
+
+Jason
