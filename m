@@ -1,113 +1,130 @@
-From: Deskin Miller <deskinm@umich.edu>
-Subject: [PATCH] git-svn: Make branch use correct svn-remote
-Date: Mon,  1 Dec 2008 21:43:00 -0500
-Message-ID: <1228185780-22938-1-git-send-email-deskinm@umich.edu>
-Cc: gitster@pobox.com, normalperson@yhbt.net,
-	Deskin Miller <deskinm@umich.edu>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Dec 02 03:44:34 2008
+From: Liu Yubao <yubao.liu@gmail.com>
+Subject: Re: two questions about the format of loose object
+Date: Tue, 02 Dec 2008 10:43:56 +0800
+Message-ID: <4934A0EC.5010600@gmail.com>
+References: <493399B7.5000505@gmail.com> <7voczws3np.fsf@gitster.siamese.dyndns.org> <4933AE55.2090007@gmail.com> <20081201152148.GG23984@spearce.org>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: Junio C Hamano <gitster@pobox.com>, git list <git@vger.kernel.org>
+To: "Shawn O. Pearce" <spearce@spearce.org>
+X-From: git-owner@vger.kernel.org Tue Dec 02 03:45:25 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1L7LFX-0007Nx-2F
-	for gcvg-git-2@gmane.org; Tue, 02 Dec 2008 03:44:31 +0100
+	id 1L7LGO-0007WV-85
+	for gcvg-git-2@gmane.org; Tue, 02 Dec 2008 03:45:24 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752919AbYLBCnM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 1 Dec 2008 21:43:12 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752920AbYLBCnL
-	(ORCPT <rfc822;git-outgoing>); Mon, 1 Dec 2008 21:43:11 -0500
-Received: from an-out-0708.google.com ([209.85.132.240]:2258 "EHLO
-	an-out-0708.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752917AbYLBCnJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 1 Dec 2008 21:43:09 -0500
-Received: by an-out-0708.google.com with SMTP id d40so1075012and.1
-        for <git@vger.kernel.org>; Mon, 01 Dec 2008 18:43:08 -0800 (PST)
+	id S1752952AbYLBCoF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 1 Dec 2008 21:44:05 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752960AbYLBCoE
+	(ORCPT <rfc822;git-outgoing>); Mon, 1 Dec 2008 21:44:04 -0500
+Received: from ti-out-0910.google.com ([209.85.142.184]:57905 "EHLO
+	ti-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752942AbYLBCoC (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 1 Dec 2008 21:44:02 -0500
+Received: by ti-out-0910.google.com with SMTP id b6so1755181tic.23
+        for <git@vger.kernel.org>; Mon, 01 Dec 2008 18:44:00 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:cc:subject:date
-         :message-id:x-mailer:sender;
-        bh=l8SliVjmKZuDHseWdnWYldKTZpzayCUB1hRKrq8ms68=;
-        b=pH7/KuWb7nbX+PrDyhdPuL14+4h7KOU/a275/BypRgQPa80G6LnceLsvyMp432GG0i
-         vUmxuCQkgsqvTn1NGpA/yAPvvmBiINHkzFrHDIEOCtKkQGvdCqEbZaqUpWI1ErNXhXbs
-         wL5eb+tUspuRhHXvJUSjcqvvNyzuuIIqL4KOk=
+        h=domainkey-signature:received:received:message-id:date:from
+         :user-agent:mime-version:to:cc:subject:references:in-reply-to
+         :content-type:content-transfer-encoding;
+        bh=flYOW5qdpF3T8ewfvhts60lteLUyGhR0CawoR2GWi+U=;
+        b=K7XcwY0snA2R15qSoWTVDWNBkVZI6wRuh9ag3qEEJIXzknCUPYt3fI3vb/oipkElIe
+         DSxbQEDIwQuPTFD6Qkk8A+0rXVLQQo/9OZdG8wNaNF9RJu0icz8G4CTbcuRapB/KNKtW
+         7cwdn7DnT/h6Dxu0rZ/r40ip81WDJGTC0IPOI=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer:sender;
-        b=EJXhYS3+Vhc3Jy/SLF9CvUVMHTjgL++E+rLEW9UdBTHgdJ1S29hX2JcZC0hYk14cQd
-         Gg1/+w2DZxGjstcPULYz/BiFEAj6ThYoyFhkjLN9gOyH954azRKWTR+UfhHra4cvyhrC
-         kqYzkSEBCbNhX2H4FhsPLfQAdFTcf5yX6esKM=
-Received: by 10.100.174.13 with SMTP id w13mr6340319ane.141.1228185788368;
-        Mon, 01 Dec 2008 18:43:08 -0800 (PST)
-Received: from localhost.localdomain ([68.40.49.130])
-        by mx.google.com with ESMTPS id b14sm3693499ana.12.2008.12.01.18.43.06
+        h=message-id:date:from:user-agent:mime-version:to:cc:subject
+         :references:in-reply-to:content-type:content-transfer-encoding;
+        b=c5aCMClGj1l1hM+HD3ZGG1LLBB8VoffgwPPZXgxdk2IpASRTPX/ZjUs795tObOE4m3
+         jNGVimyuOwP0wzZvzOGrcrYynJeo06Nk1QWKNbDRx6SOqSrzcaZAU/yDxBZ5nfmiDe9U
+         RDJnwPV1rVYrPn5J2VjPJ7BZD0T4lXnJP/JPk=
+Received: by 10.110.86.3 with SMTP id j3mr2299005tib.4.1228185840174;
+        Mon, 01 Dec 2008 18:44:00 -0800 (PST)
+Received: from ?10.64.1.142? ([211.157.41.194])
+        by mx.google.com with ESMTPS id 22sm2896166tim.7.2008.12.01.18.43.57
         (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Mon, 01 Dec 2008 18:43:07 -0800 (PST)
-X-Mailer: git-send-email 1.6.1.rc1
+        Mon, 01 Dec 2008 18:43:59 -0800 (PST)
+User-Agent: Thunderbird 2.0.0.18 (Windows/20081105)
+In-Reply-To: <20081201152148.GG23984@spearce.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/102112>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/102113>
 
-The 'branch' subcommand incorrectly had the svn-remote to use hardcoded
-as 'svn', the default remote name.  This meant that branches derived
-from other svn-remotes would try to use the branch and tag configuration
-for the 'svn' remote, potentially copying would-be branches to the wrong
-place in SVN, into the branch namespace for another project.
+Shawn O. Pearce wrote:
+> Liu Yubao <yubao.liu@gmail.com> wrote:
+>> Thanks for your explanation, but I doubt if it's too costly to change the
+>> format of loose object, after all this doesn't change the format of pack
+>> file and affect git-pull/fetch of old git client. 
+> 
+> It is too costly; Jakub pointed out the dumb protocol clients
+> would have issues with the new format.  Anyone copying a repository
+> between machines using scp or a USB memory stick may also run into
+> a problem.  Etc.
+>  
 
-Fix this by using the remote name extracted from the svn info for the
-specified git ref.  Add a testcase for this behaviour.
+Yes, exceptional case, is it acceptable that core.uncompressedLooseObject
+is set to false by default especially for NFS file system?
 
-Signed-off-by: Deskin Miller <deskinm@umich.edu>
----
-Applies on v1.6.1-rc1.  Apologies for not catching this when first
-writing testcases for the branch subcommand.
+>> Some cons and pros.
+>>
+>> cons:
+>>
+>> * old git client can't read loose objects in new format
+>>   (People degrade git rarely and old git can read pack files
+>>    generated by new git, so it's not a big problem)
+> 
+> That's a pretty big con.  We can also add slower performance on NFS,
+> as has been reported already by others.
+>  
 
-Deskin Miller
+I mean to add a format, not to replace the current format of loose object.
 
- git-svn.perl                  |    2 +-
- t/t9128-git-svn-cmd-branch.sh |   17 +++++++++++++++++
- 2 files changed, 18 insertions(+), 1 deletions(-)
+>> pros:
+>>
+>> * avoid compressing and uncompressing loose objects that are likely
+>>   frequently used when you are coding/merging
+> 
+> True, loose objects are among the more frequently accessed items.
+> 
+>> * share loose objects among multipe git processes
+> 
+> Probably not a huge issue.  How many concurrent git processes are
+> you running on the same object store at once?  During development?
+> Its probably not more than 1.  So sharing the objects doesn't make
+> a very compelling argument.
+> 
 
-diff --git a/git-svn.perl b/git-svn.perl
-index 914c707..e64e97b 100755
---- a/git-svn.perl
-+++ b/git-svn.perl
-@@ -558,7 +558,7 @@ sub cmd_branch {
- 
- 	my ($src, $rev, undef, $gs) = working_head_info($head);
- 
--	my $remote = Git::SVN::read_all_remotes()->{svn};
-+	my $remote = Git::SVN::read_all_remotes()->{$gs->{repo_id}};
- 	my $glob = $remote->{ $_tag ? 'tags' : 'branches' };
- 	my ($lft, $rgt) = @{ $glob->{path} }{qw/left right/};
- 	my $dst = join '/', $remote->{url}, $lft, $branch_name, ($rgt || ());
-diff --git a/t/t9128-git-svn-cmd-branch.sh b/t/t9128-git-svn-cmd-branch.sh
-index 47c4d4d..e2b6696 100755
---- a/t/t9128-git-svn-cmd-branch.sh
-+++ b/t/t9128-git-svn-cmd-branch.sh
-@@ -56,4 +56,21 @@ test_expect_success 'git svn branch tests' '
- 	test_must_fail git svn tag tag1
- '
- 
-+test_expect_success 'branch uses correct svn-remote' '
-+	(svn co "$svnrepo" svn &&
-+	cd svn &&
-+	mkdir mirror &&
-+	svn add mirror &&
-+	svn copy trunk tags branches mirror/ &&
-+	svn ci -m "made mirror" ) &&
-+	rm -rf svn &&
-+	git svn init -s -R mirror --prefix=mirror/ "$svnrepo"/mirror &&
-+	git svn fetch -R mirror &&
-+	git checkout mirror/trunk &&
-+	base=$(git rev-parse HEAD:) &&
-+	git svn branch -m "branch in mirror" d &&
-+	test $base = $(git rev-parse remotes/mirror/d:) &&
-+	test_must_fail git rev-parse remotes/d
-+'
-+
- test_done
--- 
-1.6.1.rc1
+In my company we have a central server to host source code repository
+managed by git+ssh. Some collegues also work on the same machine (maybe
+not a good practice) and set alternates to the central repository, so
+there can be multiple git processes operating same git object database.
+
+In fact we have a wrapper script of git to make git fit our development
+process better because git's submodule support isn't good enough. One
+command in the wrapper script can execute many git commands in a short
+time. 
+
+>> * the new code path is simpler although we will have more code paths for
+>>   compatibility
+> 
+> The new code path is more complex, because although one branch is
+> very simple (mmap and use) the other code paths have to stay for
+> backwards compatibility.  Every time you add a branch point the
+> code gets more complex.  It works well enough now, and is at least
+> one branch point simpler than what you are proposing.  So I'm not
+> really interested in seeing the change made.
+> 
+
+Could you review my patches sent just a moment ago? The key changes are
+rather small.
+
+
+Best regards,
+
+Liu Yubao
