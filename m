@@ -1,83 +1,79 @@
-From: "Leo Razoumov" <slonik.az@gmail.com>
-Subject: Re: [RFC PATCH 0/4] deny push to current branch of non-bare repo
-Date: Mon, 1 Dec 2008 22:08:01 -0500
-Message-ID: <ee2a733e0812011908p3310cda4h46815264efee2588@mail.gmail.com>
-References: <20081107220730.GA15942@coredump.intra.peff.net>
-	 <7v3ai3f7oa.fsf@gitster.siamese.dyndns.org>
-	 <20081108142756.GC17100@coredump.intra.peff.net>
-	 <ee2a733e0812011822r4cef6a44ra68d6e84f9e30a90@mail.gmail.com>
-	 <20081202024837.GB6804@coredump.intra.peff.net>
-Reply-To: SLONIK.AZ@gmail.com
+From: Jeff King <peff@peff.net>
+Subject: Re: more merge strategies : feature request
+Date: Mon, 1 Dec 2008 22:30:14 -0500
+Message-ID: <20081202033013.GD6804@coredump.intra.peff.net>
+References: <81bfc67a0811290848m6cb219c0y71a7266001096f2d@mail.gmail.com> <4933AC03.6050300@op5.se> <81bfc67a0812011838m68100020v727da1c06f0bcee4@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: "Junio C Hamano" <gitster@pobox.com>, git@vger.kernel.org,
-	"Sam Vilain" <sam@vilain.net>
-To: "Jeff King" <peff@peff.net>
-X-From: git-owner@vger.kernel.org Tue Dec 02 04:16:38 2008
+Content-Type: text/plain; charset=utf-8
+Cc: Andreas Ericsson <ae@op5.se>, git@vger.kernel.org
+To: Caleb Cushing <xenoterracide@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Dec 02 04:31:35 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1L7LkZ-0005H4-EK
-	for gcvg-git-2@gmane.org; Tue, 02 Dec 2008 04:16:35 +0100
+	id 1L7Lz4-0008AD-8v
+	for gcvg-git-2@gmane.org; Tue, 02 Dec 2008 04:31:34 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753993AbYLBDOw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 1 Dec 2008 22:14:52 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753981AbYLBDOw
-	(ORCPT <rfc822;git-outgoing>); Mon, 1 Dec 2008 22:14:52 -0500
-Received: from mu-out-0910.google.com ([209.85.134.185]:49301 "EHLO
-	mu-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751870AbYLBDOv (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 1 Dec 2008 22:14:51 -0500
-Received: by mu-out-0910.google.com with SMTP id g7so2390202muf.1
-        for <git@vger.kernel.org>; Mon, 01 Dec 2008 19:14:49 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:reply-to
-         :to:subject:cc:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:references;
-        bh=tLMdN9tBZ6L1uqKxJGy3Rmj6eQ1cWIwBIj+d7h0GVoU=;
-        b=iquu0kXOfwB+ASP5ADLLvR6e/pZdG7xWfRML6/M1XF9DuN+rsjSig1SmX1RpS5o5a6
-         uZqwtYBW2l/33AWMjiWa98M2nb7utlPH9BdBspZRvrvi/2yFpW3KrBSmuaf5nb7arm68
-         2ein13nMtEHjv7LHMKQKstAIuLXKsRBjkEjL0=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:reply-to:to:subject:cc:in-reply-to
-         :mime-version:content-type:content-transfer-encoding
-         :content-disposition:references;
-        b=Iq5GXnlpw8U3YeKGDKY2Y934zoE/xLLu1F2Yx4mV9SlfYwjJFEmajUjxP7ucwDCfiC
-         ucxZrkiJyCHFf1uUmRC3KSzNUk0MZtPbyfk+x6XrmzCCfOovl9h0lJNOdDaAaurSGZjc
-         e0KR5LeAeNlqRArh1lukuzcUqQqFkeM/xAL5U=
-Received: by 10.181.25.10 with SMTP id c10mr4127600bkj.181.1228187281786;
-        Mon, 01 Dec 2008 19:08:01 -0800 (PST)
-Received: by 10.181.7.8 with HTTP; Mon, 1 Dec 2008 19:08:01 -0800 (PST)
-In-Reply-To: <20081202024837.GB6804@coredump.intra.peff.net>
+	id S1752659AbYLBDaR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 1 Dec 2008 22:30:17 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752727AbYLBDaR
+	(ORCPT <rfc822;git-outgoing>); Mon, 1 Dec 2008 22:30:17 -0500
+Received: from peff.net ([208.65.91.99]:2830 "EHLO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751623AbYLBDaQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 1 Dec 2008 22:30:16 -0500
+Received: (qmail 8624 invoked by uid 111); 2 Dec 2008 03:30:15 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+    by peff.net (qpsmtpd/0.32) with SMTP; Mon, 01 Dec 2008 22:30:15 -0500
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Mon, 01 Dec 2008 22:30:14 -0500
 Content-Disposition: inline
+In-Reply-To: <81bfc67a0812011838m68100020v727da1c06f0bcee4@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/102119>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/102120>
 
-On 12/1/08, Jeff King <peff@peff.net> wrote:
-> [..snip..]
->  >
-> Er, what? git-fetch takes a refspec very similar to the ones used by
->  git-push. The real reason that (2) is not an acceptable solution is that
->  you can't necessarily connect to the source repo (e.g., it is on your
->  workstation with no ssh or git server running).
->
->  -Peff
+On Mon, Dec 01, 2008 at 09:38:07PM -0500, Caleb Cushing wrote:
 
-I am sorry, I had to be more accurate in my wording. "git fetch" with
-no explicit refspecs fetches everything in. It is quite cumbersome to
-form a refspec for git-fetch operation if you are  not logged in into
-the "source repo" machine. git-fetch does not have a --dry-run option
-to help discover all the branch/tag names on the source side needed
-for a meaningful refspec. "git-push -v --dry-run" allows one to
-experiment and see what branches/tags exist at the destination and
-form refspecs selectively. To the best of my knowledge, git-fetch does
-not provide such discovery tools.
+> conflict: when auto-merging isn't merging the way you want it too, but
+> you still want to see the diffs and handle them by hand. no commit
+> won't do this, it just doesn't commit. I've had 2 situations now where
+> git's fast-forward has overwritten changes in a branch I didn't want
+> it to, it would have been better if I could handle them by hand
+> without having to have 1 terminal open to the diff and the other open
+> to the editor to fix it. and yes git was right by it's perspective,
+> but the code it created was wrong by what I wanted and needed. I'm not
+> really sure what more of a use case is needed for this.
 
---Leo--
+It's not clear to me exactly what you want. Let's say I have a file
+'foo' with changes from my merged branches in two different spots.
+For example:
+
+ merge base     branch A      branch B
+    1              2             1
+    2              3             2
+    3              4             3
+    4              5             4
+    5
+
+Did you want conflict markers in the resulting file? If so, what should
+the conflict markers look like, since there isn't actually a conflict?
+
+Alternatively, you could have git leave the file in an unmerged state,
+and then access the base, ours, and theirs version from the index (or
+even use git mergetool). Then you would get your desired versions into
+the merging tool of your choice.
+
+Of course, you could also just use a custom merge driver to accomplish
+the same thing:
+
+  git config merge.xxdiff.driver 'xxdiff %A %O %B'
+  echo '* merge=xxdiff' >.gitattributes
+  git merge your-branch
+
+and of course you can specify whatever subset of files you want to
+actually do this for instead of '*'.
+
+-Peff
