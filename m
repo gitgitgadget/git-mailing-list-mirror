@@ -1,115 +1,165 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: Managing websites with git
-Date: Tue, 2 Dec 2008 11:55:07 -0500
-Message-ID: <20081202165507.GA15826@coredump.intra.peff.net>
-References: <fe5a74300811300830x850d81csc5cf1f9b367bac11@mail.gmail.com> <20081130170722.GJ6572@eratosthenes.sbcglobal.net> <20081130172717.GA7047@coredump.intra.peff.net> <87k5ajflp0.fsf@sparse.dyndns.org> <20081202011154.GA6390@coredump.intra.peff.net> <87vdu2po5l.fsf@sparse.dyndns.org>
+From: "Boyd Stephen Smith Jr." <bss03@volumehost.net>
+Subject: Re: Grafting mis-aligned trees.
+Date: Tue, 2 Dec 2008 11:19:46 -0600
+Message-ID: <200812021119.51857.bss03@volumehost.net>
+References: <200811171645.12869.bss03@volumehost.net> <200811281701.46778.bss03@volumehost.net> <4935606A.8050906@drmicha.warpmail.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org
-To: Jason Riedy <jason@acm.org>
-X-From: git-owner@vger.kernel.org Tue Dec 02 17:56:31 2008
+Content-Type: multipart/signed;
+  boundary="nextPart1594197.taJu0SC7X7";
+  protocol="application/pgp-signature";
+  micalg=pgp-sha1
+Content-Transfer-Encoding: 7bit
+Cc: Michael J Gruber <git@drmicha.warpmail.net>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Dec 02 18:22:00 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1L7YY2-0004yj-8r
-	for gcvg-git-2@gmane.org; Tue, 02 Dec 2008 17:56:30 +0100
+	id 1L7YwU-0007NX-6i
+	for gcvg-git-2@gmane.org; Tue, 02 Dec 2008 18:21:46 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754714AbYLBQzL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 2 Dec 2008 11:55:11 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754699AbYLBQzL
-	(ORCPT <rfc822;git-outgoing>); Tue, 2 Dec 2008 11:55:11 -0500
-Received: from peff.net ([208.65.91.99]:4361 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754659AbYLBQzK (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 2 Dec 2008 11:55:10 -0500
-Received: (qmail 13033 invoked by uid 111); 2 Dec 2008 16:55:09 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.32) with SMTP; Tue, 02 Dec 2008 11:55:09 -0500
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Tue, 02 Dec 2008 11:55:07 -0500
-Content-Disposition: inline
-In-Reply-To: <87vdu2po5l.fsf@sparse.dyndns.org>
+	id S1753880AbYLBRUZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 2 Dec 2008 12:20:25 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752920AbYLBRUZ
+	(ORCPT <rfc822;git-outgoing>); Tue, 2 Dec 2008 12:20:25 -0500
+Received: from eastrmmtao102.cox.net ([68.230.240.8]:48797 "EHLO
+	eastrmmtao102.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751510AbYLBRUY (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 2 Dec 2008 12:20:24 -0500
+Received: from eastrmimpo03.cox.net ([68.1.16.126])
+          by eastrmmtao102.cox.net
+          (InterMail vM.7.08.02.01 201-2186-121-102-20070209) with ESMTP
+          id <20081202172023.MPEY11203.eastrmmtao102.cox.net@eastrmimpo03.cox.net>;
+          Tue, 2 Dec 2008 12:20:23 -0500
+Received: from localhost ([72.204.50.125])
+	by eastrmimpo03.cox.net with bizsmtp
+	id mHLN1a0062i4SyG02HLNkv; Tue, 02 Dec 2008 12:20:23 -0500
+X-Authority-Analysis: v=1.0 c=1 a=rsX2rq0AEOEA:10 a=nEQGfrJnAAAA:8
+ a=iyr-rTlo5x9_LDfx9rUA:9 a=eIdLO0MTOqbJxwPUbDT2Ic8Z3r8A:4 a=B7iFY6Z7H_gA:10
+ a=LY0hPdMaydYA:10 a=LA7uISSrv9x2G8VzRRgA:9 a=yKcWqDADtfnpNF9feTESgZr6IrkA:4
+ a=rPt6xJ-oxjAA:10
+X-CM-Score: 0.00
+Received: from bss by localhost with local (Exim 4.69)
+	(envelope-from <bss03@volumehost.net>)
+	id 1L7Yui-0005M3-Vz; Tue, 02 Dec 2008 11:19:57 -0600
+User-Agent: KMail/1.9.9
+In-Reply-To: <4935606A.8050906@drmicha.warpmail.net>
+X-Eric-Conspiracy: There is no conspiracy
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/102159>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/102160>
 
-On Tue, Dec 02, 2008 at 10:55:34AM -0500, Jason Riedy wrote:
+--nextPart1594197.taJu0SC7X7
+Content-Type: text/plain;
+  charset="iso-8859-15"
+Content-Transfer-Encoding: quoted-printable
+Content-Disposition: inline
 
-> Ah, ok, thanks!  Issuing a warning makes sense.  I'm not sure if
-> denying such a push by default does...
+On Tuesday 02 December 2008, Michael J Gruber <git@drmicha.warpmail.net>=20
+wrote about 'Re: Grafting mis-aligned trees.':
+>Boyd Stephen Smith Jr. venit, vidit, dixit 29.11.2008 00:01:
+>> On Tuesday 2008 November 18 03:24, Michael J Gruber wrote:
+>>> Boyd Stephen Smith Jr. venit, vidit, dixit 17.11.2008 23:45:
+>>>> Trees look something like this right now.
+>>>>
+>>>> <some history> -> FT
+>>>>
+>>>> TI -> <non-linear history> -> A -> <non-linear history> -> C
+>>>>    \                            \                           \
+>>>>     -> PI ------------------------> B ------------------------> D
+>>>>
+>>>> I'd like to have it look something like:
+>>>>
+>>>> <some history> -> FT -> <non-linear history> -> A' -> <non-linear
+>>>> history> -> C' \                            \                       =20
+>>>>   \ -> PI' ----------------------> B' -----------------------> D'
+>>>>
+>>>> A', B', C', and D' are different commits, but the diff (and history)
+>>>> between FT and A' is the same as the diff (and history) between TI
+>>>> and A.
+>>>
+>>> So, your base directory for TI and FT is different, right? I.e.: In
+>>> the TI repo, your project sits at the root, whereas in the FT repo it
+>>> sits in project/web?
+>>
+>> Yes.
+>>
+>>> Has FT advanced since you took the initial subdir
+>>> snapshot for TI?
+>>
+>> No.
+>
+>OK, here's a possibly primitive solution, but it works with my little
+>toy model of your layout:
 
-I don't know if Junio has made a decision on whether or when the default
-should be flipped to 'deny'.
+That sounds like it will work fine.  Thank you very much.
 
-> > Doing git push $remote HEAD:branch-that-is-checked-out
-> > has _never_ worked without further action on $remote. Now we're warning
-> > about it.
-> 
-> It works just fine.  I suspect we have different definitions of
-> "works".
+It does feel a bit "hacky", I was hoping git would have better support=20
+this, through the subtree merge or something else.  It seems like=20
+something that might happen to others, perhaps as a side-effect of a=20
+failed attempt at using submodules.
 
-Fair enough. To be more precise: such a push has always resulted in a
-state on the remote end that the user must be aware of when making
-further commits, and the result of _not_ being aware and blindly running
-"git commit" is to accidentally revert all of the pushed changes. And
-even if one _is_ aware, sorting out any existing changes in the index
-from pushed changes can be difficult.
+I can't help thinking that rebase -ip might have helped.  I wasn't aware=20
+of -p when I was initially working on this problem.  (It doesn't help that=
+=20
+I generally use Debian stable, and git 1.4 did not have -p.)
 
-So yes, there are workflows that can legitimately make use of a push to
-the current branch. But it is still a dangerous operation for a large
-number of users (I would argue the majority, but I don't have actual
-numbers) that we have seen numerous complaints about.
+>- filter-branch your TI branches so that they are in the proper subdir
+>(you did that already)
 
-> To me, that push updates the branch's reference.  The working
-> copy and index now may be out of sync, but neither the working
-> copy nor the index is the branch's reference.  Trying to commit
-> from the index correctly refuses.  The warning is a nice
+If I need to "undo" this, it's really easy.
 
-How is committing from the index refused? Try this:
+>- take a snapshot (say ftstuff.tar) of everything in FT's head (assuming
+>this is where TI branched off, or else take that point) *but exclude
+>project/web*
+>
+>- using filter-branch again, rewrite your TI branches to contain those
+>missing FT files:
+>git filter-branch --tree-filter 'tar -xf /tmp/ftstuff.tar && git add .'
+>-f -- ti/master ti/whatever
 
-  mkdir parent &&
-  (cd parent &&
-    git init &&
-    echo content >file &&
-    git add file &&
-    git commit -m one) &&
-  git clone parent child &&
-  (cd child &&
-    echo changes >>file &&
-    git commit -a -m two &&
-    git push) &&
-  (cd parent &&
-    git commit -m oops &&
-    git show
-  )
+I probably don't need the -f.  If there are files that should be ignored=20
+(and thus shouldn't be in the repo), I'll filter-branch to cut them out of=
+=20
+the history at some point.
 
-You will find that you have just reverted the changes from 'two' with
-'oops'.
+Now is as good a time as any.
 
-Committing straight from the working tree (via "git commit <path>" or
-"git commit -a") has the same problem.
+>Now your TI branches produce the same diffs as before, but are based on
+>the full tree. You can happily graft FT's head onto TI's root as a
+> parent. In fact those two should produce no diff in between them, so you
+> might as well get rid of one of them.
 
-> (And in context: I used to update the IEEE754 group's web site by
-> a git push to the checked-out master, with a hook to reset
-> everything.  Worked just fine (and very quickly) until they shut
-> off shell access.  There was no need for an extra branch on the
-> server side.)
+Makes sense.
 
-Follow the earlier parts of the thread and you will see that is one of
-the sane workflows that has been mentioned. You are aware of the lack of
-sync (and you have a hook to address it) and you don't plan on having
-any local changes (so sorting them out is easy -- you just "git reset
---hard" to take the pushed content).
+>[cleaning out refs/original and repack -adf might be in order afterwards]
 
-> I'll try to find time when I encounter another.  I'm pretty sure
-> that switching to denying pushes to checked-out branches is the
-> first one that *really* will make me change how I work.
+I generally do these after a successful filter-branch.
 
-It shouldn't make you change how you work. At most, it will break an
-existing setup until you set receive.denycurrentbranch to false (again,
-if and when the default value changes). You can prepare for any such
-change now by pre-emptively setting the config value.
+>The tree-filter part feels hacky but does the job (probably with -f). I
+>don't think a subtree merge can do what you want.
 
--Peff
+What *exactly* is the subtree merge.  The documentation I've read sounds=20
+like this case, sort of, but it's rather unclear to me.
+=2D-=20
+Boyd Stephen Smith Jr.                     ,=3D ,-_-. =3D.=20
+bss03@volumehost.net                      ((_/)o o(\_))
+ICQ: 514984 YM/AIM: DaTwinkDaddy           `-'(. .)`-'=20
+http://iguanasuicide.org/                      \_/    =20
+
+--nextPart1594197.taJu0SC7X7
+Content-Type: application/pgp-signature; name=signature.asc 
+Content-Description: This is a digitally signed message part.
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.9 (GNU/Linux)
+
+iEYEABECAAYFAkk1bjIACgkQ55pqL7G1QFl/GQCeLr7iy/vS/MAUg+UOeKvw04bo
+Uv0AoIQjM53OCtWBKkghAs7POJWi8Pq+
+=S5F0
+-----END PGP SIGNATURE-----
+
+--nextPart1594197.taJu0SC7X7--
