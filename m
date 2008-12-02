@@ -1,99 +1,107 @@
-From: "Peter Harris" <git@peter.is-a-geek.org>
-Subject: Re: Overwrite master
-Date: Tue, 2 Dec 2008 15:28:43 -0500
-Message-ID: <eaa105840812021228v6f6e1252l5099f5dad325f99@mail.gmail.com>
-References: <D1AC0A41-E89A-4B53-A449-DA9C4422998E@zooppa.com>
-	 <eaa105840812020832p395ecefdq57e62f95182a3557@mail.gmail.com>
-	 <67A24C29-12A6-43B0-95D5-70910C5F8841@gmail.com>
+From: Johannes Sixt <j6t@kdbg.org>
+Subject: [PATCH] gitk: Use check-buttons' -text property instead of separate labels
+Date: Tue, 2 Dec 2008 21:42:16 +0100
+Message-ID: <200812022142.16095.j6t@kdbg.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain;
+  charset="us-ascii"
 Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org
-To: "Nicholas Wieland" <nicholas.wieland@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Dec 02 21:30:04 2008
+To: Paul Mackerras <paulus@samba.org>
+X-From: git-owner@vger.kernel.org Tue Dec 02 22:18:14 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1L7bsh-0004mz-8f
-	for gcvg-git-2@gmane.org; Tue, 02 Dec 2008 21:30:03 +0100
+	id 1L7cd7-0006nF-MY
+	for gcvg-git-2@gmane.org; Tue, 02 Dec 2008 22:18:02 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750995AbYLBU2q (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 2 Dec 2008 15:28:46 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750905AbYLBU2q
-	(ORCPT <rfc822;git-outgoing>); Tue, 2 Dec 2008 15:28:46 -0500
-Received: from yx-out-2324.google.com ([74.125.44.29]:57758 "EHLO
-	yx-out-2324.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750729AbYLBU2p (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 2 Dec 2008 15:28:45 -0500
-Received: by yx-out-2324.google.com with SMTP id 8so1293504yxm.1
-        for <git@vger.kernel.org>; Tue, 02 Dec 2008 12:28:44 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:sender
-         :to:subject:cc:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:references
-         :x-google-sender-auth;
-        bh=4KL8gisn8e/3S++Zy16Tv6GTDt+KNvzE7jir0+nYnwA=;
-        b=Q4VTE+jxsAkupb9XsD/ONC+/KS2W9s4N3gOGF6AQ6xXqCMJHKxQoEVhwFeHC1rfvvq
-         l3txqqnBDy0DoBooBHS3ASoyzzDzOyQYDq3CK2xEQRQgtjTNPv85nSvkVTYC+uN/Ycfh
-         MD6Tt7lQTaBzLJnew8SZ/FI7WwpFuhHA3rDts=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:sender:to:subject:cc:in-reply-to:mime-version
-         :content-type:content-transfer-encoding:content-disposition
-         :references:x-google-sender-auth;
-        b=SIE/w/CGUB58K+t39QoUjNE4HgLERG/yjoU585tW39P6OdPkvDz5vG5A0vy29Ox5oP
-         AdiWMUe3x0Nlh9zb/p2blMDIQzgzGscx5yIGFwvs/7OS0+sy+cU0vG9B9UnyAp/WNLkb
-         TLFlqWQrlcJBnwYd+Sov/mVRKKP+tCepnsTl0=
-Received: by 10.65.137.5 with SMTP id p5mr13053836qbn.7.1228249723734;
-        Tue, 02 Dec 2008 12:28:43 -0800 (PST)
-Received: by 10.65.230.19 with HTTP; Tue, 2 Dec 2008 12:28:43 -0800 (PST)
-In-Reply-To: <67A24C29-12A6-43B0-95D5-70910C5F8841@gmail.com>
+	id S1751027AbYLBVQc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 2 Dec 2008 16:16:32 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751064AbYLBVQc
+	(ORCPT <rfc822;git-outgoing>); Tue, 2 Dec 2008 16:16:32 -0500
+Received: from bsmtp.bon.at ([213.33.87.14]:33304 "EHLO lbmfmo03.bon.at"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750842AbYLBVQb (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 2 Dec 2008 16:16:31 -0500
+X-Greylist: delayed 2052 seconds by postgrey-1.27 at vger.kernel.org; Tue, 02 Dec 2008 16:16:31 EST
+Received: from bsmtp.bon.at (mta-out-vip.lix.bon.at [172.18.12.14])
+	by lbmfmo03.bon.at (Postfix) with ESMTP id D92EACE0D5
+	for <git@vger.kernel.org>; Tue,  2 Dec 2008 21:43:49 +0100 (CET)
+Received: from dx.sixt.local (unknown [93.83.142.38])
+	by bsmtp.bon.at (Postfix) with ESMTP id 8320B2C400E;
+	Tue,  2 Dec 2008 21:42:16 +0100 (CET)
+Received: from localhost (localhost [IPv6:::1])
+	by dx.sixt.local (Postfix) with ESMTP id 33BE828071;
+	Tue,  2 Dec 2008 21:42:16 +0100 (CET)
+User-Agent: KMail/1.9.9
 Content-Disposition: inline
-X-Google-Sender-Auth: 19d74f2c1bfe7fef
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/102174>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/102175>
 
-On Tue, Dec 2, 2008 at 3:09 PM, Nicholas Wieland wrote:
-> Il giorno 02/dic/08, alle ore 17:32, Peter Harris ha scritto:
->
->> On Tue, Dec 2, 2008 at 11:10 AM, Nicholas Wieland wrote:
->>>
->>> Hi *,
->>> I need to overwrite my master branch with another branch. I've already
->>> created a backup branch of my master.
->>
->> While on master,
->> "git reset --hard <newbranch>"
->
-> That's what I tried.
-> Unfortunately I don't know where to go after:
->
-> ngw@slicingupeyeballs ~/zooppa$ git commit
-> # On branch master
-> # Your branch and 'origin/master' have diverged,
-> # and have 444 and 25 different commit(s) each, respectively.
-> #
-> nothing to commit (working directory clean)
+Previously the check-buttons' labels in the Preferences were separate
+widgets. This had the disadvantage that in order to toggle the check-button
+with the mouse the check-box had to be clicked. With this change the
+check-box can also be toggled by clicking the label.
 
-That means your tracking branch is different from your local branch, by a lot.
+Signed-off-by: Johannes Sixt <j6t@kdbg.org>
+---
+ gitk |   30 ++++++++++--------------------
+ 1 files changed, 10 insertions(+), 20 deletions(-)
 
-> Do I have to push ? If I pull it tries to merge ...
-
-If you push, it will be denied (non-fast-forward).
-
-If you force push, your state will be as you expect. Be aware that
-you're creating trouble for everyone else who uses 'origin' if you
-force push. Also be aware that you will be undoing any changes that
-anyone else has pushed to origin in the mean time.
-
-Basically, history is history. If you don't want to cause problems for
-the other users of 'origin', you may have to live with history as it
-is. You won't be able to overwrite master, although you will probably
-try to be more careful in the future.
-
-Peter Harris
+diff --git a/gitk b/gitk
+index 64a873d..ee1941c 100755
+--- a/gitk
++++ b/gitk
+@@ -10079,15 +10079,11 @@ proc doprefs {} {
+ 	-font optionfont
+     spinbox $top.maxpct -from 1 -to 100 -width 4 -textvariable maxgraphpct
+     grid x $top.maxpctl $top.maxpct -sticky w
+-    frame $top.showlocal
+-    label $top.showlocal.l -text [mc "Show local changes"] -font optionfont
+-    checkbutton $top.showlocal.b -variable showlocalchanges
+-    pack $top.showlocal.b $top.showlocal.l -side left
++    checkbutton $top.showlocal -text [mc "Show local changes"] \
++	-font optionfont -variable showlocalchanges
+     grid x $top.showlocal -sticky w
+-    frame $top.autoselect
+-    label $top.autoselect.l -text [mc "Auto-select SHA1"] -font optionfont
+-    checkbutton $top.autoselect.b -variable autoselect
+-    pack $top.autoselect.b $top.autoselect.l -side left
++    checkbutton $top.autoselect -text [mc "Auto-select SHA1"] \
++	-font optionfont -variable autoselect
+     grid x $top.autoselect -sticky w
+ 
+     label $top.ddisp -text [mc "Diff display options"]
+@@ -10095,20 +10091,14 @@ proc doprefs {} {
+     label $top.tabstopl -text [mc "Tab spacing"] -font optionfont
+     spinbox $top.tabstop -from 1 -to 20 -width 4 -textvariable tabstop
+     grid x $top.tabstopl $top.tabstop -sticky w
+-    frame $top.ntag
+-    label $top.ntag.l -text [mc "Display nearby tags"] -font optionfont
+-    checkbutton $top.ntag.b -variable showneartags
+-    pack $top.ntag.b $top.ntag.l -side left
++    checkbutton $top.ntag -text [mc "Display nearby tags"] \
++	-font optionfont -variable showneartags
+     grid x $top.ntag -sticky w
+-    frame $top.ldiff
+-    label $top.ldiff.l -text [mc "Limit diffs to listed paths"] -font optionfont
+-    checkbutton $top.ldiff.b -variable limitdiffs
+-    pack $top.ldiff.b $top.ldiff.l -side left
++    checkbutton $top.ldiff -text [mc "Limit diffs to listed paths"] \
++	-font optionfont -variable limitdiffs
+     grid x $top.ldiff -sticky w
+-    frame $top.lattr
+-    label $top.lattr.l -text [mc "Support per-file encodings"] -font optionfont
+-    checkbutton $top.lattr.b -variable perfile_attrs
+-    pack $top.lattr.b $top.lattr.l -side left
++    checkbutton $top.lattr -text [mc "Support per-file encodings"] \
++	-font optionfont -variable perfile_attrs
+     grid x $top.lattr -sticky w
+ 
+     entry $top.extdifft -textvariable extdifftool
+-- 
+1.6.0.4.763.g42102
