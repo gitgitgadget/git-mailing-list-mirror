@@ -1,67 +1,78 @@
-From: Gary Yang <garyyang6@yahoo.com>
-Subject: git-p4 submit, Can't clobber writable file
-Date: Tue, 2 Dec 2008 14:30:51 -0800 (PST)
-Message-ID: <40586.80065.qm@web37902.mail.mud.yahoo.com>
-Reply-To: garyyang6@yahoo.com
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH] Modified the default git help message to be grouped by
+ topic
+Date: Tue, 2 Dec 2008 23:55:03 +0100 (CET)
+Message-ID: <alpine.DEB.1.00.0812022353410.27091@racer>
+References: <20081201173037.GA41967@agadorsparticus>  <20081201183258.GB24443@coredump.intra.peff.net>  <7v7i6jqriv.fsf@gitster.siamese.dyndns.org>  <d411cc4a0812012210h4cb59974sbda71abd2c64f93b@mail.gmail.com>
+ <885649360812021211u3d547982i8e1c3070972363e8@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Dec 02 23:32:15 2008
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Scott Chacon <schacon@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>,
+	Jeff King <peff@peff.net>, git@vger.kernel.org
+To: James Pickens <jepicken@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Dec 02 23:57:02 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1L7dms-0000yx-56
-	for gcvg-git-2@gmane.org; Tue, 02 Dec 2008 23:32:10 +0100
+	id 1L7eAs-0001uF-IC
+	for gcvg-git-2@gmane.org; Tue, 02 Dec 2008 23:56:59 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752555AbYLBWaw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 2 Dec 2008 17:30:52 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751290AbYLBWaw
-	(ORCPT <rfc822;git-outgoing>); Tue, 2 Dec 2008 17:30:52 -0500
-Received: from web37902.mail.mud.yahoo.com ([209.191.91.164]:30190 "HELO
-	web37902.mail.mud.yahoo.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with SMTP id S1751759AbYLBWav (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 2 Dec 2008 17:30:51 -0500
-Received: (qmail 81085 invoked by uid 60001); 2 Dec 2008 22:30:51 -0000
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-  s=s1024; d=yahoo.com;
-  h=X-YMail-OSG:Received:X-Mailer:Date:From:Reply-To:Subject:To:MIME-Version:Content-Type:Message-ID;
-  b=geQT1+bNHJkKd0hD/hrKodNo6L7lp6NoEdFqCALNocYKx33ez0A6cgiq5YWrWiFe2ESJhZrMFTgmh8l2mB528i+6J8MzuHDs4sgwJSxHwLj/fNkSavvoa689ERXnoMwFIsXeQW5U7TLX/xej9jCtv0jFHbBJwAV51PKNRP5U0kM=;
-X-YMail-OSG: fGpgImEVM1kMMzNB8hBULrq3cWpJPceT5Md89y9s0f.8W3v3Tyqtg5TTCHrNqyf_S3WOkD8WAf.7gvY_H9NSksjhKdEQ959lUr_15rx6Mdkw_hNQQHfzI1b1MDp3VjT0qs54tGDm9xFWMmFSJcZgckjfKHPk_blgbhEJHcozsdo0k45NJFsJaurlp5Om
-Received: from [76.195.33.70] by web37902.mail.mud.yahoo.com via HTTP; Tue, 02 Dec 2008 14:30:51 PST
-X-Mailer: YahooMailWebService/0.7.260.1
+	id S1752653AbYLBWzm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 2 Dec 2008 17:55:42 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751485AbYLBWzl
+	(ORCPT <rfc822;git-outgoing>); Tue, 2 Dec 2008 17:55:41 -0500
+Received: from mail.gmx.net ([213.165.64.20]:53692 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1751944AbYLBWzl (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 2 Dec 2008 17:55:41 -0500
+Received: (qmail invoked by alias); 02 Dec 2008 22:55:39 -0000
+Received: from pD9EB3008.dip0.t-ipconnect.de (EHLO noname) [217.235.48.8]
+  by mail.gmx.net (mp026) with SMTP; 02 Dec 2008 23:55:39 +0100
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX19+BzVDBk5+nyuJc1QRZnSqPra+yQDFUO/OSoSo+2
+	KGWYBGuHQIG8XE
+X-X-Sender: gene099@racer
+In-Reply-To: <885649360812021211u3d547982i8e1c3070972363e8@mail.gmail.com>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.64
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/102183>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/102184>
 
+Hi,
 
-I followed the instructions at http://modular.math.washington.edu/home/mhansen/git-1.5.5.1/contrib/fast-import/git-p4.txt
+On Tue, 2 Dec 2008, James Pickens wrote:
 
-But, I am not able to git-p4 submit. Any idea?
+> On Mon, Dec 1, 2008 at 11:10 PM, Scott Chacon <schacon@gmail.com> wrote:
+>
+> > On Mon, Dec 1, 2008 at 5:45 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> >> If this list is meant to show "the most commonly used" basics, then 
+> >> you can trim the list somewhat.  For example, "rm" and "mv" can be 
+> >> safely discarded, "status" can be replaced with "diff", and "diff" 
+> >> can be removed from "History Commands".
+> >
+> > I sent a new patch that removes 'rm' and 'mv' and removes the 
+> > common-cmd.h build process. I did keep the 'status' command, since in 
+> > my personal experience people tend to like having that command.
+> 
+> Even though 'rm' might not be used very often, I think it's an important 
+> enough command that it should not be removed from the 'basics' list. 
+> AFAIK, the only other way to delete a file is 'rm file' followed by 'git 
+> add -u' or 'git commit -a'.  Imagine a git newbie trying to figure that 
+> out.
+> 
+> I'm tempted to say the same thing about 'mv' as well.  And FWIW, I use 
+> 'status' a lot more than I use 'diff', so I would vote to keep 'status' 
+> in the list too.
 
-git-p4 clone //build/scripts build_scripts
-cd build_scripts
-vi foo.h
-git commit foo.h
-git-p4 rebase
-git-p4 submit
+If the whole thing gets longer than 24 lines, we have to leave some things 
+out.  Personally, I consider rm and mv unimportant enough that they could 
+be shown in an extended list, but be left out of the summary page.
 
-  from sets import Set;
-Perforce checkout for depot path //build/scripts/ located at /home/gyang/workspace/build_scripts/
-Syncronizing p4 checkout...
-//build/scripts/foo.h#1 - added as /home/gyang/workspace/build_scripts/foo.h
-Can't clobber writable file /home/gyang/workspace/build_scripts/foo.h
-//build/scripts/foo.c#1 - added as /home/gyang/workspace/build_scripts/foo.c
-Can't clobber writable file /user/home/gyang/workspace/build_scripts/foo.c
-......
-command failed: p4 sync ...
-
-Thanks.
-
-
-
-
-
-      
+Ciao,
+Dscho
