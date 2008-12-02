@@ -1,88 +1,79 @@
-From: Liu Yubao <yubao.liu@gmail.com>
-Subject: Re: two questions about the format of loose object
-Date: Tue, 02 Dec 2008 10:19:52 +0800
-Message-ID: <49349B48.9050603@gmail.com>
-References: <493399B7.5000505@gmail.com>	<7voczws3np.fsf@gitster.siamese.dyndns.org>	<4933AE55.2090007@gmail.com> <m33ah8jfm2.fsf@localhost.localdomain>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 5/6 (v2)] upload-pack: send the HEAD information
+Date: Mon, 01 Dec 2008 18:20:52 -0800
+Message-ID: <7v1vwrqpvf.fsf@gitster.siamese.dyndns.org>
+References: <1228140775-29212-1-git-send-email-gitster@pobox.com>
+ <1228140775-29212-2-git-send-email-gitster@pobox.com>
+ <1228140775-29212-3-git-send-email-gitster@pobox.com>
+ <1228140775-29212-4-git-send-email-gitster@pobox.com>
+ <1228140775-29212-5-git-send-email-gitster@pobox.com>
+ <1228140775-29212-6-git-send-email-gitster@pobox.com>
+ <20081201174414.GA22185@coredump.intra.peff.net>
+ <7vk5ajqs63.fsf@gitster.siamese.dyndns.org>
+ <20081202015924.GA6529@coredump.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>, git list <git@vger.kernel.org>
-To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Dec 02 03:21:40 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Tue Dec 02 03:22:53 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1L7KtM-0002bE-Fz
-	for gcvg-git-2@gmane.org; Tue, 02 Dec 2008 03:21:36 +0100
+	id 1L7KuX-0002rS-4J
+	for gcvg-git-2@gmane.org; Tue, 02 Dec 2008 03:22:49 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752587AbYLBCT7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 1 Dec 2008 21:19:59 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752371AbYLBCT7
-	(ORCPT <rfc822;git-outgoing>); Mon, 1 Dec 2008 21:19:59 -0500
-Received: from ti-out-0910.google.com ([209.85.142.184]:55547 "EHLO
-	ti-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751555AbYLBCT6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 1 Dec 2008 21:19:58 -0500
-Received: by ti-out-0910.google.com with SMTP id b6so1750278tic.23
-        for <git@vger.kernel.org>; Mon, 01 Dec 2008 18:19:56 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from
-         :user-agent:mime-version:to:cc:subject:references:in-reply-to
-         :content-type:content-transfer-encoding;
-        bh=hwAadXP+eYenZ7x6M7xbVoezAXJQerawvsQ+yl5Xun8=;
-        b=qcn0VgIZzl/KtGpKvnZYzF590URTF9lnnrrht1C7OlWJcmvhxdBQx7gT/y8z4qwrVd
-         cdkIZ3pD9NGbI/7i5YLJ7NJuuup5lv+hR5c5D6bhlM46b0fVgXgd27vmHHweVajKnGoh
-         gfPAqzSc4OTqpPeFh5pc3h2LPi9dD8Pz8dRMo=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:user-agent:mime-version:to:cc:subject
-         :references:in-reply-to:content-type:content-transfer-encoding;
-        b=XGIwvOXZidYpbg/dzHX/KJkKf0f5Is+fYZJBDwP4QQDJjBbinI8/PF4xuGnn+VzPuc
-         xOpNor7KB3Y+9sSr/GQ61AiBog/i083v5EpkFaqeQrW7wJKiiNhkxnMaM25tJfla2W6S
-         ptuXNO4k7/Ynky7wmhF4GFnTMoh1oVXHQudRo=
-Received: by 10.110.33.15 with SMTP id g15mr17297357tig.32.1228184396621;
-        Mon, 01 Dec 2008 18:19:56 -0800 (PST)
-Received: from ?10.64.1.142? ([211.157.41.194])
-        by mx.google.com with ESMTPS id w12sm2412748tib.10.2008.12.01.18.19.54
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Mon, 01 Dec 2008 18:19:55 -0800 (PST)
-User-Agent: Thunderbird 2.0.0.18 (Windows/20081105)
-In-Reply-To: <m33ah8jfm2.fsf@localhost.localdomain>
+	id S1753875AbYLBCVb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 1 Dec 2008 21:21:31 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753825AbYLBCVa
+	(ORCPT <rfc822;git-outgoing>); Mon, 1 Dec 2008 21:21:30 -0500
+Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:59996 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753434AbYLBCV3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 1 Dec 2008 21:21:29 -0500
+Received: from localhost.localdomain (unknown [127.0.0.1])
+	by b-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id 0B52417E89;
+	Mon,  1 Dec 2008 21:21:28 -0500 (EST)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES256-SHA (256/256 bits)) (No client certificate requested) by
+ b-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTPSA id 9987B17E80; Mon, 
+ 1 Dec 2008 21:20:53 -0500 (EST)
+In-Reply-To: <20081202015924.GA6529@coredump.intra.peff.net> (Jeff King's
+ message of "Mon, 1 Dec 2008 20:59:25 -0500")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: ECC8B1BE-C017-11DD-816B-F83E113D384A-77302942!a-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/102102>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/102103>
 
-Jakub Narebski wrote:
-> Liu Yubao <yubao.liu@gmail.com> writes:
-> 
->> cons:
->>
->> * old git client can't read loose objects in new format
->>   (People degrade git rarely and old git can read pack files
->>    generated by new git, so it's not a big problem)
-> 
-> You forgot about "dumb" protocols, namely HTTP and (deprecated) rsync
-> (and IIRC also FTP), which doesn't generate packfiles, and would get
-> loose object in format intelligible for old clients.
-> 
-> IIRC this was main reason why core.legacyHeaders = false was abandoned.
-> 
+Jeff King <peff@peff.net> writes:
 
-The server can keep an old git or set core.uncompressedLooseObject = false.
+>   (1) If there are multiple symrefs to report, we have to keep
+>       re-sending the server capabilities (I think you mentioned this in
+>       the subthread with Shawn).
 
-Even the pack file format can be changed so that forward compatability will
-be broken, I think it's unavoidable.
+This is nothing new, so there is nothing to complain about here.
 
-I'm not clear about the story of core.legacyHeaders, I'll dig the mail
-list archive.
+The ref advertisement section is not very extensible to begin with and we
+should consider ourselves lucky that Sergey Vlasov found the hole
+(cf. $gmane/10710) we are exploiting to carry "server capabilities"; I do
+not think we should nor can stuff any more than absolute minimum in the
+section.
 
-Thanks for reminding me of the dumb protocols.
+>   (3) If HEAD doesn't point to a valid object, we have no place to put
+>       the symref. Or is it kosher to say
+>
+>         0000000000000000000000000000000000000000 HEAD\0...\0refs/heads/master
+>
+>       ? I think it would be nice eventually to be able to clone a HEAD
+>       pointing to yet-to-be-born branch.
 
+I think sending 0{40} would break older clients, but older clients cannot
+clone from an empty repository anyway, so that should not be so bad.  I
+however do not think it is such a big thing to be able to clone void
+anyway.
 
-Best regards,
-
-Liu Yubao
+You just have to train yourself to announce that your repository is
+clonable _after_ making it actually clonable.
