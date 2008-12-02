@@ -1,87 +1,104 @@
-From: Miklos Vajna <vmiklos@frugalware.org>
-Subject: [PATCH] git-stash: use git rev-parse -q
-Date: Tue,  2 Dec 2008 01:56:09 +0100
-Message-ID: <1228179369-3766-1-git-send-email-vmiklos@frugalware.org>
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Dec 02 01:57:44 2008
+From: Jeff King <peff@peff.net>
+Subject: Re: Managing websites with git
+Date: Mon, 1 Dec 2008 20:11:54 -0500
+Message-ID: <20081202011154.GA6390@coredump.intra.peff.net>
+References: <fe5a74300811300830x850d81csc5cf1f9b367bac11@mail.gmail.com> <20081130170722.GJ6572@eratosthenes.sbcglobal.net> <20081130172717.GA7047@coredump.intra.peff.net> <87k5ajflp0.fsf@sparse.dyndns.org>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Cc: David Bryson <david@statichacks.org>,
+	Felix Andersen <felix@nibbo.se>, git@vger.kernel.org
+To: Jason Riedy <jason@acm.org>
+X-From: git-owner@vger.kernel.org Tue Dec 02 02:13:28 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1L7Ja9-0008BE-Iy
-	for gcvg-git-2@gmane.org; Tue, 02 Dec 2008 01:57:42 +0100
+	id 1L7JpP-0003bo-ID
+	for gcvg-git-2@gmane.org; Tue, 02 Dec 2008 02:13:28 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751936AbYLBA4N (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 1 Dec 2008 19:56:13 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751708AbYLBA4N
-	(ORCPT <rfc822;git-outgoing>); Mon, 1 Dec 2008 19:56:13 -0500
-Received: from yugo.dsd.sztaki.hu ([195.111.2.114]:43920 "EHLO
-	yugo.frugalware.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751636AbYLBA4M (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 1 Dec 2008 19:56:12 -0500
-Received: from vmobile.example.net (catv-80-98-230-81.catv.broadband.hu [80.98.230.81])
-	by yugo.frugalware.org (Postfix) with ESMTPA id 70BEA446CDA;
-	Tue,  2 Dec 2008 01:56:10 +0100 (CET)
-Received: by vmobile.example.net (Postfix, from userid 1003)
-	id 9F47D19D92A; Tue,  2 Dec 2008 01:56:09 +0100 (CET)
-X-Mailer: git-send-email 1.6.0.4
+	id S1752004AbYLBBL7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 1 Dec 2008 20:11:59 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751965AbYLBBL7
+	(ORCPT <rfc822;git-outgoing>); Mon, 1 Dec 2008 20:11:59 -0500
+Received: from peff.net ([208.65.91.99]:4527 "EHLO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751954AbYLBBL6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 1 Dec 2008 20:11:58 -0500
+Received: (qmail 6925 invoked by uid 111); 2 Dec 2008 01:11:56 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+    by peff.net (qpsmtpd/0.32) with SMTP; Mon, 01 Dec 2008 20:11:56 -0500
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Mon, 01 Dec 2008 20:11:54 -0500
+Content-Disposition: inline
+In-Reply-To: <87k5ajflp0.fsf@sparse.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/102084>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/102085>
 
-Don't redirect stderr to /dev/null, use -q to suppress the output on
-stderr.
+On Mon, Dec 01, 2008 at 07:46:35PM -0500, Jason Riedy wrote:
 
-Signed-off-by: Miklos Vajna <vmiklos@frugalware.org>
----
- git-stash.sh |   12 ++++++------
- 1 files changed, 6 insertions(+), 6 deletions(-)
+> And David Bryson writes:
+> > One really should not push to a non-bare repo.
+> WHAT?!?!?!
 
-diff --git a/git-stash.sh b/git-stash.sh
-index b9ace99..c0532e8 100755
---- a/git-stash.sh
-+++ b/git-stash.sh
-@@ -30,7 +30,7 @@ clear_stash () {
- 	then
- 		die "git stash clear with parameters is unimplemented"
- 	fi
--	if current=$(git rev-parse --verify $ref_stash 2>/dev/null)
-+	if current=$(git rev-parse -q --verify $ref_stash)
- 	then
- 		git update-ref -d $ref_stash $current
- 	fi
-@@ -129,7 +129,7 @@ save_stash () {
- }
- 
- have_stash () {
--	git rev-parse --verify $ref_stash >/dev/null 2>&1
-+	git rev-parse -q --verify $ref_stash >/dev/null
- }
- 
- list_stash () {
-@@ -229,16 +229,16 @@ drop_stash () {
- 	fi
- 	# Verify supplied argument looks like a stash entry
- 	s=$(git rev-parse --verify "$@") &&
--	git rev-parse --verify "$s:"   > /dev/null 2>&1 &&
--	git rev-parse --verify "$s^1:" > /dev/null 2>&1 &&
--	git rev-parse --verify "$s^2:" > /dev/null 2>&1 ||
-+	git rev-parse -q --verify "$s:"   > /dev/null &&
-+	git rev-parse -q --verify "$s^1:" > /dev/null &&
-+	git rev-parse -q --verify "$s^2:" > /dev/null ||
- 		die "$*: not a valid stashed state"
- 
- 	git reflog delete --updateref --rewrite "$@" &&
- 		echo "Dropped $* ($s)" || die "$*: Could not drop stash entry"
- 
- 	# clear_stash if we just dropped the last stash entry
--	git rev-parse --verify "$ref_stash@{0}" > /dev/null 2>&1 || clear_stash
-+	git rev-parse -q --verify "$ref_stash@{0}" > /dev/null || clear_stash
- }
- 
- apply_to_branch () {
--- 
-1.6.0.4
+To clarify: one should not push to the _current branch_ of a non-bare
+repo...
+
+> And Jeff King responds:
+> > It's in master and should be in 1.6.1, but it is a config option that
+> > defaults to "warn" for now, so as not to break existing setups.
+> WHAT?!?!?!
+
+...and that is what 1.6.1 will warn about.
+
+> I do this all the time.  I clone from my main working directory
+> onto some cluster / MPP where the build system is all wonky.
+> Once I get everything building, I push back to a branch (often
+> new) in my main working directory.  Then I can merge the build
+> changes whenever I get a chance.
+
+As long as you are not pushing to the currently checked-out branch, then
+you will see no change in behavior. If you are pushing to the currently
+checked-out branch, then what are you doing to reconcile the resulting
+mismatch between the index and HEAD?
+
+> Pushing from these systems often is much, much easier than
+> pulling from the origin.  Sometimes you're working in temporary
+> space on a back-end node; you can connect out but you cannot
+> connect in.
+
+Of course. The recommended thing to do is:
+
+  # on pusher
+  git push $remote HEAD:some-branch-that-is-not-checked-out
+  # on $remote
+  git merge some-branch-that-is-not-checked-out
+
+where an obvious choice for branch name is "incoming/master" or whatever
+suits your workflow. You can also do:
+
+  # on pusher
+  git push $remote HEAD:branch-that-is-checked-out
+  # on $remote
+  git reset --hard
+
+but that throws away anything else going on in that branch on $remote.
+
+> It feels like newer gits make more and more decisions about what
+> I shouldn't do.
+
+Doing
+
+  git push $remote HEAD:branch-that-is-checked-out
+
+has _never_ worked without further action on $remote. Now we're warning
+about it.
+
+If you have other specific complaints about new git behavior, I'm sure
+the list would be happy to hear about it. Almost every behavior change
+is in response to user complaints, and a lot of effort is put into
+maintaining backwards compatibility. If we've screwed up somewhere, it
+would be good to know.
+
+-Peff
