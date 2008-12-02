@@ -1,114 +1,79 @@
-From: Scott Chacon <schacon@gmail.com>
-Subject: [PATCH] Add a built-in alias for 'stage' to the 'add' command
-Date: Mon, 1 Dec 2008 22:14:55 -0800
-Message-ID: <20081202061455.GA48848@agadorsparticus>
+From: Johannes Sixt <j.sixt@viscovery.net>
+Subject: Re: [PATCH] Makefile: introduce NO_PTHREADS
+Date: Tue, 02 Dec 2008 08:41:48 +0100
+Message-ID: <4934E6BC.9040203@viscovery.net>
+References: <4933A058.3050101@viscovery.net> <1228148005-9404-1-git-send-email-mike@abacus.co.uk>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, peff@peff.net
-To: gitster@pobox.com
-X-From: git-owner@vger.kernel.org Tue Dec 02 07:16:19 2008
+Content-Type: text/plain; charset=ISO-8859-15
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, Mike Ralphson <mike.ralphson@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Dec 02 08:43:29 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1L7OYU-0005i1-1r
-	for gcvg-git-2@gmane.org; Tue, 02 Dec 2008 07:16:18 +0100
+	id 1L7Puq-0007Ce-5s
+	for gcvg-git-2@gmane.org; Tue, 02 Dec 2008 08:43:28 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750918AbYLBGPA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 2 Dec 2008 01:15:00 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750957AbYLBGPA
-	(ORCPT <rfc822;git-outgoing>); Tue, 2 Dec 2008 01:15:00 -0500
-Received: from rv-out-0506.google.com ([209.85.198.225]:27632 "EHLO
-	rv-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750918AbYLBGO7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 2 Dec 2008 01:14:59 -0500
-Received: by rv-out-0506.google.com with SMTP id k40so2821012rvb.1
-        for <git@vger.kernel.org>; Mon, 01 Dec 2008 22:14:58 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:cc:subject
-         :message-id:mime-version:content-type:content-disposition:user-agent;
-        bh=ISIm7J09UyHw6vKGrif9Giy4hdJMDlB1xLKGVttXF/I=;
-        b=u3afMyfS5vBzLFz6QdoEsvlxO8aTSWQctTgThnxfENu4LsNLbsAge8od9pv9O3Yt9a
-         c4yvT3e+B232ARvTrDgx465QANCU5bKaTvLMJAPnvinwsEyq32QSbgt1iV1vguMmkEr/
-         o434aQln9/sntsrTr6AFiyiUCnt8k4SCF7BPo=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:mime-version:content-type
-         :content-disposition:user-agent;
-        b=EJAUTuYkoxgULMqUtbAmE6A+4BCiHjJ/7jZZksTXtUGtQ3IjNOxTBqA2+IUIBQ3TWl
-         L4DgIiFo2nodnEU1/KseUUyjmRn4nlvjINSPo4fYN0WY9DdhTv89t2VZeNqIqyDKdBzO
-         9W+uAq5DyHPAMyh7Atch9kUVxIBINbtZRqQA4=
-Received: by 10.141.53.4 with SMTP id f4mr5608852rvk.155.1228198498794;
-        Mon, 01 Dec 2008 22:14:58 -0800 (PST)
-Received: from @ (adsl-76-254-71-52.dsl.pltn13.sbcglobal.net [76.254.71.52])
-        by mx.google.com with ESMTPS id k37sm13457820rvb.1.2008.12.01.22.14.57
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Mon, 01 Dec 2008 22:14:57 -0800 (PST)
-Content-Disposition: inline
-User-Agent: Mutt/1.5.18 (2008-05-17)
+	id S1750845AbYLBHmF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 2 Dec 2008 02:42:05 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751064AbYLBHmE
+	(ORCPT <rfc822;git-outgoing>); Tue, 2 Dec 2008 02:42:04 -0500
+Received: from lilzmailso02.liwest.at ([212.33.55.13]:10275 "EHLO
+	lilzmailso02.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750845AbYLBHmB (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 2 Dec 2008 02:42:01 -0500
+Received: from cm56-163-160.liwest.at ([86.56.163.160] helo=linz.eudaptics.com)
+	by lilzmailso02.liwest.at with esmtpa (Exim 4.69)
+	(envelope-from <j.sixt@viscovery.net>)
+	id 1L7PtF-0007yt-9E; Tue, 02 Dec 2008 08:41:57 +0100
+Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.96])
+	by linz.eudaptics.com (Postfix) with ESMTP
+	id 00B416D9; Tue,  2 Dec 2008 08:41:48 +0100 (CET)
+User-Agent: Thunderbird 2.0.0.18 (Windows/20081105)
+In-Reply-To: <1228148005-9404-1-git-send-email-mike@abacus.co.uk>
+X-Enigmail-Version: 0.95.5
+X-Spam-Score: -1.4 (-)
+X-Spam-Report: Spam detection software, running on the system "lilzmailsa03.liwest.at", has
+	identified this incoming email as possible spam.  The original message
+	has been attached to this so you can view it (if it isn't spam) or label
+	similar future email.  If you have any questions, see
+	the administrator of that system for details.
+	Content preview:  Mike Ralphson schrieb: > From: Junio C Hamano <gitster@pobox.com>
+	> > This introduces make variable NO_PTHREADS for platforms that lack the
+	> support for pthreads library or people who do not want to use it for >
+	whatever reason. When defined, it makes the multi-threaded index > preloading
+	into a no-op, and also disables threaded delta searching by > pack-objects.
+	> > Signed-off-by: Junio C Hamano <gitster@pobox.com> > Signed-off-by: Johannes
+	Sixt <j6t@kdbg.org> > Signed-off-by: Mike Ralphson <mike@abacus.co.uk> >
+	--- [...] 
+	Content analysis details:   (-1.4 points, 7.0 required)
+	pts rule name              description
+	---- ---------------------- --------------------------------------------------
+	-1.4 ALL_TRUSTED            Passed through trusted hosts only via SMTP
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/102123>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/102124>
 
-This comes from conversation at the GitTogether where we thought it would
-be helpful to be able to teach people to 'stage' files because it tends
-to cause confusion when told that they have to keep 'add'ing them.
+Mike Ralphson schrieb:
+> From: Junio C Hamano <gitster@pobox.com>
+> 
+>  This introduces make variable NO_PTHREADS for platforms that lack the
+>  support for pthreads library or people who do not want to use it for
+>  whatever reason.  When defined, it makes the multi-threaded index
+>  preloading into a no-op, and also disables threaded delta searching by
+>  pack-objects.
+> 
+> Signed-off-by: Junio C Hamano <gitster@pobox.com>
+> Signed-off-by: Johannes Sixt <j6t@kdbg.org>
+> Signed-off-by: Mike Ralphson <mike@abacus.co.uk>
+> ---
 
-This continues the movement to start referring to the index as a
-staging area (eg: the --staged alias to 'git diff'). Also adds a
-doc file for 'git stage' that basically points to the docs for
-'git add'.
+You can add
 
-Signed-off-by: Scott Chacon <schacon@gmail.com>
----
+Tested-by: Johannes Sixt <j6t@kdbg.org> (AIX 4.3.x)
 
-I changed the tense of a few things in the commit message and modified 
-the help file to be simpler.
-
- Documentation/git-stage.txt |   19 +++++++++++++++++++
- git.c                       |    1 +
- 2 files changed, 20 insertions(+), 0 deletions(-)
- create mode 100644 Documentation/git-stage.txt
-
-diff --git a/Documentation/git-stage.txt b/Documentation/git-stage.txt
-new file mode 100644
-index 0000000..7f251a5
---- /dev/null
-+++ b/Documentation/git-stage.txt
-@@ -0,0 +1,19 @@
-+git-stage(1)
-+==============
-+
-+NAME
-+----
-+git-stage - Add file contents to the staging area
-+
-+
-+SYNOPSIS
-+--------
-+[verse]
-+'git stage' args...
-+
-+
-+DESCRIPTION
-+-----------
-+
-+This is a synonym for linkgit:git-add[1].  Please refer to the
-+documentation of that command.
-diff --git a/git.c b/git.c
-index 89feb0b..9e5813c 100644
---- a/git.c
-+++ b/git.c
-@@ -266,6 +266,7 @@ static void handle_internal_command(int argc, const char **argv)
- 	const char *cmd = argv[0];
- 	static struct cmd_struct commands[] = {
- 		{ "add", cmd_add, RUN_SETUP | NEED_WORK_TREE },
-+		{ "stage", cmd_add, RUN_SETUP | NEED_WORK_TREE },
- 		{ "annotate", cmd_annotate, RUN_SETUP },
- 		{ "apply", cmd_apply },
- 		{ "archive", cmd_archive },
--- 
-1.6.0.8.gc9c8
+-- Hannes
